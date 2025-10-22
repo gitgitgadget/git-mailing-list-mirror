@@ -1,138 +1,82 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE04D231836
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 08:36:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1D0311972
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 09:05:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761122178; cv=none; b=syWL4qKlZYneZNgwJCBUcJJMYtIwOXlvqH/xkrijaNrBixuu5DAs6eEBsJiHd2zhr1BOQCayiUbZFIivDtmXUuNt2PY8HqmB4M2dHk/JDVVO7bn7fo5kEFsYRytrPlC1o6NwNZRBMuEXPHNyvjl2MhE8OCr0jJ/Yufde+T2OYvc=
+	t=1761123954; cv=none; b=O35+1NcXufp8JBmV9MXFaVsPPyV6TmVQWehwe65XdTgBcgsM8AW7iG+dFvey2iUQOaxG+R8KYwmuUo73AgIAJyB1v75kQRROUQNIEFst0rseqKG0CrrWW0Jjg6jhRqxcJznvkLcKoImR79ACG7++ZaMFkGCDyyhn7ezoiz5D4pA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761122178; c=relaxed/simple;
-	bh=Wcb5yLcZvtItjGieEBbiZ8cxFj9UE3ucK9W2Ke0XXhU=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=cMxqErq2RhbUr0OAUAFqDRq8JrM3sNkLx4+Ay5DGWtw6a7LxwrykMrSskq91dLMEHxH9mYW/e58Y0f/iLuzV33962jDBpXusr+UNc4wNnrnw5zlaonTenaia90dw6jfWRB28IQ1Tgy5oeeWinqaPH9aEVVaubBpI7LcF4z2gT2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hru3Smmn; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761123954; c=relaxed/simple;
+	bh=Uu9jDd1qzfcw/86LzJ4P2F1OzrtqjfM0f9DPLcjdeP0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=K+2x4iiUo/M05TgcFUZCOEE9ZYt06biDj2fBaC/ST79o6wbkf+ClQ8ntnY3KHW/yBrykFRMYRgYZp3U4KozR0gOXJanYjaT3vjlsbmQPUzStft7Krqht5itiIbPc9omE5XFu+o7sD9tzm1uUaTWpmZ0k0h9aToa/jlCd57S6n2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=goRwb1KI; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hru3Smmn"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-782e93932ffso5721876b3a.3
-        for <git@vger.kernel.org>; Wed, 22 Oct 2025 01:36:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761122175; x=1761726975; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=FTqig+FmJekMWNO94FEQh7K9Ds7k1RSaPvbdO8DQZ/Q=;
-        b=Hru3Smmn2sv7CoIvZO4y2LrlMD3v5sWxelVuV7zXNDrOTwn8uzLDFxmZNT6i3AyWXc
-         +IWew/SfF6dd+62qDtw2JzESlgMMvdNg+srw6V53TQcSjkXbwCzcn1eqSrSnw5/SR1GN
-         tljl5g3FGGoidkdO1nM2Uf2EZ5nYNvtWBn+Th8qSqgfS/jIrIrFAs0zd+dEDxtJi5Qc1
-         PgE00D3CefvFaxv4IMCmfJv5J/j1/eAAm9miA6A6DXLaKR77CKlln3dEaRJFhXmd7B1f
-         0Y/50sgd4XT+U0dELXT+EN8uEc1SbBtVad6H8bn+imZE+oxUVn/pf1VbUArg/bEOXVFm
-         ZExg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761122175; x=1761726975;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FTqig+FmJekMWNO94FEQh7K9Ds7k1RSaPvbdO8DQZ/Q=;
-        b=tqH16azod/xHmnz02W7wUxJ5yG8agZUj6ObJ+CnooGqVa24lwYf8n6rfbouN7pCksB
-         WUw5sJDZITHki/IE9HaxjoyemMtGtSawL/GbD01Waokj2x2fPzg/url4tlizI4KaXJKU
-         R2ZwL/bl/51vbMsuERLshYNRv1WIb1yNQ1iz8HiSeVbji9F9/NnAt17nlQAWRzGyElee
-         1CJxhHd3xlkf3fStlL7p3w3KygrJ2Va24/rVZ7C6x6RH9AHOKmmpDjn9A5Vo3v/iwOGE
-         Vei/B7TYgSsA9oBHBEu64YIbd3qWaOEWckMf8Kqmz5ia7TRVE2tMwXTJRGCsokIb2dnB
-         rp3w==
-X-Gm-Message-State: AOJu0YzskPOmhIWEu9fbSZDhsCGxgaXAEvaek112BYvY90Y5veEn/7HP
-	XncGPD/GksOQFUdOx0qplwHUbZEErXzTvu6qxj+asxdlk/HdKxlpqLHkiZeDzQ==
-X-Gm-Gg: ASbGncuBj1Q991JfjpxyuvQLvz0L/9g3IIfmtDYnWwjkLTjHjtBBEZu1yFFGit/MwAd
-	vXoKR+QhTjntftNBBoaWlRB5bmtbiGNV/yRosPod4ZfjUq18BYbXhyn6+gAGTbw7vIK0o9TIyZK
-	sVCnmInF2DeQBvev6wEyqrmksY69zu7TZWBRvrn/5nYpMebR+M0nj582+27Y0pQFn2t1SGk7GwX
-	FL+lN/XTptC66pbmaOs+znf7ptsCNCEU8kZFBruZGotwz8eRn0CW3H712yqL1DXrHBR/70doiL/
-	x6qHbInNto4Sa/nK1x7DGKuu09A/U97nLwfot0r3XlJQMclN3ibKtrQ1lPhrrvZGFgHOhL/+V5F
-	frdG19HZw5HG+KrrUa45nppdJxFWcEufgutVITqB6BNzMaNuUfHq6xDAxQ1Uk2hWjFFjfmYXLUO
-	Zz0fy9
-X-Google-Smtp-Source: AGHT+IH1IcCFCJUsiNCyxuoK113RKCZhMAY9QG2nqp4yRHM9Q5P0gkrqHu3GZOfkrcIQWusE3qwCYQ==
-X-Received: by 2002:a17:90a:ec8b:b0:32e:a10b:ce48 with SMTP id 98e67ed59e1d1-33bcf86c996mr29071698a91.12.1761122174680;
-        Wed, 22 Oct 2025 01:36:14 -0700 (PDT)
-Received: from [127.0.0.1] ([172.215.208.195])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b6a7669392csm12129461a12.18.2025.10.22.01.36.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Oct 2025 01:36:14 -0700 (PDT)
-Message-Id: <pull.2078.git.git.1761122173126.gitgitgadget@gmail.com>
-From: "Ruoyu Zhong via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 22 Oct 2025 08:36:13 +0000
-Subject: [PATCH] bisect: fix handling of `help` and invalid subcommands
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="goRwb1KI"
+Received: (qmail 303028 invoked by uid 109); 22 Oct 2025 09:05:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Uu9jDd1qzfcw/86LzJ4P2F1OzrtqjfM0f9DPLcjdeP0=; b=goRwb1KId3pzS88stbiuJwVEKnessp2BSczWCMMiX7d4nc8QtcRpN1jjd2YVb7t4YWiXDd4dcZGMChe/Z9fg9xFCHeVSQvvzE8O5YzNK5Z5wksNrt32cjQI4wahUH5xvk8FMTT7hgGr+A8DOSJdreWODlzseRxZaKQIHJHNyQya4b2feu6mE0xeFE0SC5kk3tPdOHP8WZJ4u4NXQsve9aMo4rdAOFQZ11PESdZ7WEloeKCFVvlvurK+07FsZWtYDUYHkUWvpRGIG39wLR8F7F1F/7wbvoNt2iFd025Q2mzWfwmvjAjpUc4DMt5jSFTmJ6JxGdMzmoJbMhK9J70KpFw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 22 Oct 2025 09:05:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 472141 invoked by uid 111); 22 Oct 2025 09:05:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Oct 2025 05:05:40 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 22 Oct 2025 05:05:39 -0400
+From: Jeff King <peff@peff.net>
+To: Koji Nakamaru <koji.nakamaru@gree.net>
+Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH] macOS: queue for munmap operations
+Message-ID: <20251022090539.GA853931@coredump.intra.peff.net>
+References: <pull.1993.git.1760999702581.gitgitgadget@gmail.com>
+ <20251021080625.GD259661@coredump.intra.peff.net>
+ <CAOTNsDxoSFTBwaO0Eqr+r0NQOwdA2Fge3CN7JQtnAWEt2PnDew@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Ruoyu Zhong <zhongruoyu@outlook.com>,
-    Ruoyu Zhong <zhongruoyu@outlook.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAOTNsDxoSFTBwaO0Eqr+r0NQOwdA2Fge3CN7JQtnAWEt2PnDew@mail.gmail.com>
 
-From: Ruoyu Zhong <zhongruoyu@outlook.com>
+On Wed, Oct 22, 2025 at 10:21:32AM +0900, Koji Nakamaru wrote:
 
-As documented in git-bisect(1), `git bisect help` should display usage
-information. However, since the migration of `git bisect` to a full
-builtin command in 73fce29427 (Turn `git bisect` into a full built-in,
-2022-11-10), this behavior was broken. Running `git bisect help` would,
-instead of showing usage, either fail silently if already in a bisect
-session, or otherwise trigger an interactive autostart prompt asking "Do
-you want me to do it for you [Y/n]?".
+> > Ditto here. I'd be curious how well packed the repo is, and how it does
+> > after a repack. If it has a very large packfile, you might also try:
+> >
+> >   git config core.packedGitWindowSize 4G
+> >
+> > or similar (though for just an ls-tree, we should only be looking at
+> > tree objects, which in general I'd expect to be in a confined area of
+> > the packfile; so the 1GB window is probably plenty).
+> 
+> Following your suggestion, I investigated the number of mmap calls in
+> other environments and found much smaller counts. I tracked how
+> xmmap_gently() was called in packfile.c and found
+> settings->packed_git_window_size was different between environments. My
+> ~/.gitconfig defined "packedGitLimit = 128m" and this caused many calls.
 
-Similarly, since df63421be9 (bisect--helper: handle states directly,
-2022-11-10), running invalid subcommands like `git bisect foobar` also
-led to the same behavior.
+Ah, very interesting. Yes, I think that helps explain why there were so
+many mmap calls. I don't think there's a good reason to lower that
+number in general, assuming the OS is reasonably good at dropping mapped
+pages from RAM when there's memory pressure.
 
-This occurred because `help` and other unrecognized subcommands were
-being unconditionally passed to `bisect_state`, which then called
-`bisect_autostart`, triggering the interactive prompt.
+> In my extreme cases, this batching makes them faster. Queue flushing has
+> occurred several times for the private repository case and not occurred
+> for the Linux kernel case. Though I haven't investigated in detail,
+> memory pressure doesn't seem to be critical (and it could also be
+> possible to adopt smarter thresholds).
 
-Fix this by:
-1. Adding explicit handling for the `help` subcommand to show usage;
-2. Validating that unrecognized commands are actually valid state
-   commands before calling `bisect_state`;
-3. Showing an error with usage for truly invalid commands.
+OK, that's quite interesting that batching makes such a difference. I
+guess somebody with more knowledge of macOS kernel internals could
+probably explain it. Though it sounds like your problem was sufficiently
+solved by dropping the extra config, it's a good fact for us to know
+about in general.
 
-This ensures that `git bisect help` displays the usage as documented,
-and invalid commands fail cleanly without entering interactive mode.
-Alternate terms are still handled correctly through
-`check_and_set_terms`.
-
-Signed-off-by: Ruoyu Zhong <zhongruoyu@outlook.com>
----
-    bisect: fix handling of help and invalid subcommands
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2078%2FZhongRuoyu%2Fgit-bisect-subcommands-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2078/ZhongRuoyu/git-bisect-subcommands-v1
-Pull-Request: https://github.com/git/git/pull/2078
-
- builtin/bisect.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/bisect.c b/builtin/bisect.c
-index 8b8d870cd1..993caf545d 100644
---- a/builtin/bisect.c
-+++ b/builtin/bisect.c
-@@ -1453,9 +1453,13 @@ int cmd_bisect(int argc,
- 		if (!argc)
- 			usage_msg_opt(_("need a command"), git_bisect_usage, options);
- 
-+		if (!strcmp(argv[0], "help"))
-+			usage_with_options(git_bisect_usage, options);
-+
- 		set_terms(&terms, "bad", "good");
- 		get_terms(&terms);
--		if (check_and_set_terms(&terms, argv[0]))
-+		if (check_and_set_terms(&terms, argv[0]) ||
-+		    !one_of(argv[0], terms.term_good, terms.term_bad, NULL))
- 			usage_msg_optf(_("unknown command: '%s'"), git_bisect_usage,
- 				       options, argv[0]);
- 		res = bisect_state(&terms, argc, argv);
-
-base-commit: 81f86aacc4eb74cdb9c2c8082d36d2070c666045
--- 
-gitgitgadget
+-Peff
