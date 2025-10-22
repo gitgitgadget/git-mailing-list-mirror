@@ -1,112 +1,112 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-pl1-f196.google.com (mail-pl1-f196.google.com [209.85.214.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE922FFDFE
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 14:04:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495F9347BBB
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 14:21:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761141848; cv=none; b=nJJI/lMyc88uzjQMG6u5lAeBehWqy/jTXIOm2QtD1m9ICvUJlFhSY9tbqPfHgHeL6yWYdEGfnRZcEZ92BCrFi9RKH9LxlCidMm/0FhlHBcA0NBS9faoVJrjbb9QkaX7GUOsehnnbDaX1/yJcwLzeWD8WhDDht4G/EVMmu+Vk4/s=
+	t=1761142875; cv=none; b=EKs31daQw9Lt/TUtc2K9/LCtS1uAQ1dn7z7ky7/4nFQQZKfnPG0uxispwPDNj6bqFRw7Oj0gb5lVxX3OzeQfQhNsbIN7SvE8aU0GcPjnHA/DbsP5HKF17ZB8+3QoR60aqdI1Ivq0GLMA7TJSOZjHXoXrLsagz2CS1UlBmgT+WEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761141848; c=relaxed/simple;
-	bh=JiLtTPkbVFF0rljhpR9RXt8TX1EV6G0q9fJ7b5tsiTk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mX2obt8jDH73NzOmbLfnaRfn8Ok2buon82wXxyRML+ZR5bOD2MUZQjeiujUwC8XvcNk/STF8sViG/wWy4CahU41ohnR+2rnIJQ/K+S8Buo+f2Bpx15ZEoBNm9appkI4wYk8fJyzLAD/sbBoQ7g7PcTPW27ehOdOYC/+639IRgto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XEnclA7U; arc=none smtp.client-ip=209.85.218.44
+	s=arc-20240116; t=1761142875; c=relaxed/simple;
+	bh=6GooiwriCssDuhx5qLAkGfXsxYsbsNEP8wZwmI/RhFM=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=BJfDBAdkGJmt+3gkiUk9NJs5lfG1uj58+wYJU7lRngsI/HrC9mwH6pHMd8A9m4V6Ukt4ucGX+JM1nb5iwkS3L1ATHuOYNwdxjOoZZlA4Hp/BM1sxvAtrCxqZIGqyf3sXzrmd0XMz3yXEvH0ozfLK8ryxYLEEJFUxZJjSfKMkM98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S2BjX9OG; arc=none smtp.client-ip=209.85.214.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XEnclA7U"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b3ee18913c0so1328084466b.3
-        for <git@vger.kernel.org>; Wed, 22 Oct 2025 07:04:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S2BjX9OG"
+Received: by mail-pl1-f196.google.com with SMTP id d9443c01a7336-27c369f8986so67002115ad.3
+        for <git@vger.kernel.org>; Wed, 22 Oct 2025 07:21:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761141843; x=1761746643; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1761142873; x=1761747673; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OJIyhs4UlbjQ9DUXUahVF2Ui6xuwj3hSnrpZ0mVugjY=;
-        b=XEnclA7ULBOkR5WXTwOzQyhh2norKaVaekkPC9utlU1g5o8cqfKRjhX9pqO7kLptSH
-         VEZhrvbuycU9dUzvHz461Di+NUrecchk6jiQHGzMxYJ/tSxR0/AJWGu0zF95T+kNyoBh
-         d1Y6wdMf25VrqXsx3LCU64xk4H3Hu3OuxA0OH7htmQfJ0EeLW5zd2yot53G/yEnYWylo
-         5gsf7Gwc/zR0xDI5sEcJS9IGrRdP1prnlIcpRlzNbgqPDP6dKDzWfv0WpqeIVK+OSTMB
-         6kELiFTSQEnisCNOj/GD1lsCCVFAx8JXPXjcKCcw94wC6ZHGJ3a/e8fLKpIXvEbNIiWV
-         ywPQ==
+        bh=6GooiwriCssDuhx5qLAkGfXsxYsbsNEP8wZwmI/RhFM=;
+        b=S2BjX9OGQwBd51U+aYFbAlhPPWb+KIteym2Y3/cMWHGh1PMX2E5DElnidK1ffqoOI8
+         Nqp0ZmntOMEX5BC0mwjmwoghpnC3jsHAgGNnhN8cbxAjx5DVBz3jRpmhC8BTLOwb6jy4
+         uU42zk8RCisXGYxUnzje5aDH+6XNLXfACZ2BpSLawEg4uIPfPQe6Niewsacg/oIX9XUN
+         S6M7tBvy9O/xoSH+n6z17wKUu4yKcmvNIh7ukoOEqwKeHCHhnvnZLYFmET+fPLMmQaNN
+         dP5/CwmK4hqlHIRvSr3LtFekzLkP2b7WILGQgyyy9S4ds6EoM4iAi8C3WWb+QaXwtalh
+         PYjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761141843; x=1761746643;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1761142873; x=1761747673;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OJIyhs4UlbjQ9DUXUahVF2Ui6xuwj3hSnrpZ0mVugjY=;
-        b=uMzr6QZBFX+nRx3oRCjlBnvJ+ZmAwCPWb8IDuUyYLz0tEaPyBBKgmIoWe5CVehzRYg
-         +qxCIY60NFVSgfEFsDmXd09/g0kb8rebIavuKBETsNRD7pA/zsLGv8uTm15t9pLmZTm8
-         EHvTtgz2Lvr61Cd3OhonpyZkEtuV/JAlqWXPXiMuoO5miJv5etfdEjMDqlVoh8eUmKb4
-         Yzd0IfROHFfLTVP+BLSseQoMc+RRa76SqONfzi7hdin/8pxmDUK7Kiq8GrS0KyDUZ0pN
-         2Yy5ajwnyydlqpEYT3Bmtn9d7ZLuFmVG62hAlR7tXPZKSo8+znhExcwpThGUrG21M0RZ
-         3bRw==
-X-Gm-Message-State: AOJu0YzOMdqLtB1S4/3Cjkn+/Dh+UpO5yK8qcBVpAl0n3tUKYB89Mb4N
-	XKPrEQ5mKHoo8pLdur25lAHFQtZAVvWUpqWEv0HL/uhpkrQCmkLnvtRqBJo3bDhCDMD87WPc+1r
-	/ptoRvZl4D27Sb7ZxuQUgnxQezGMYOEw=
-X-Gm-Gg: ASbGncsT7jzqet7UQGiYCVfAvtHwcuvqDYy64K5JEg/KFUVbeoboYAgjbWaunoC4RHX
-	WP5aOmQqJbrN15DFxNkr40Nedc1MT1XZy3MiDRkuJp+O0Rqu2nyJoAw1i5tfABujN39EnCD/vi/
-	X02lc8U8hVXE0oeY05XqkHAlFUjw+OAOiD4s70bEhq+DQ70aQRH02Yh3DUFx74MYSiLDZKGKQk2
-	FBgPfXAs1BBu8j1H/GbC9BtclUa6IMkgf7++Co2G89YFtw5P3MmKx5iujBXI8YNZBVu57g=
-X-Google-Smtp-Source: AGHT+IEHh5cHJLRVqZ10Jukh3fKcAP+8Mi4ant+/VRim24jsWxhlpyWIJF5dZH5e46OwOGsF0QWOFRcHrldCAWLED+k=
-X-Received: by 2002:a17:907:3f88:b0:b3d:5088:214e with SMTP id
- a640c23a62f3a-b647501277bmr2299545666b.64.1761141842231; Wed, 22 Oct 2025
- 07:04:02 -0700 (PDT)
+        bh=6GooiwriCssDuhx5qLAkGfXsxYsbsNEP8wZwmI/RhFM=;
+        b=aQ16Bs4ZZQXKDO/wgXE9uUO9KpbZeXK1bhc0lYjG0hoyrjkvVthWRAt0vGjgiQxEXz
+         RzA4eDMgeHLh4LLS1OtIRZcchvexx4rz9tqnvdKFT6JbA6wkajqFPNaI0j8Y+uUVfVCi
+         +fVomz2v3Q9KTYZ57PygALo2NGSq5ZMhEKfYbh4BLZHr0Zk74zpkBML99MZL2yTZEgw+
+         BaoIqfcbcnXAG6RBNC6Y0AjjHon0I67VZbTTOjqSy4bqVw5hI8jVIL+euhrmlAwLNGCB
+         DKEs07WZ3wckv1YwopBP6maOBLBTviGssP/zJ6kgSpiWO2nNzG6EXTIpeUtB2x2KmoXs
+         k/Rw==
+X-Forwarded-Encrypted: i=1; AJvYcCX6Xus7808gqABThpM04YmORelxIojwpeQIFTx8ykQLLJ7vAmeF6ui21/DGV6DbeyNJ5cY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxOtTK9ZQrX6dL/FUrv9iLwXS8a83Zg4Wa2OnbuaQxTx/oUdyr
+	wUJipNnKX3P0090TNKJ6DlfbWDjhxxElOQkB62GNYkzhLYXS07kvvHAeAvCNvX9Z42xt5w==
+X-Gm-Gg: ASbGncvBKpgakWE8PZRJI3c0ib7t3LLdLtDZ4z+5Zu5uosCaVxZTUG2fYjTG0CvcsTt
+	UYO7j8RXZl8nA7+pKi5/CcY0BHGZQji+tfJhneYHXncK6CzNLDtD2fEGrHUYkyTZZn36IVRfxZs
+	3MCUGDvFY0OMYuhR49YTjxyLhWD1jPxVXEzMSD1hMhISAM6mjeb78Iqh328nsBhK+UT8HqB3JDz
+	9Fy1Siq0SbagPioCoOX2/PNOXChddt3B8rbxlbiT0bnJjmAWyEgbbm7nw913loxTK/+9irx1NGA
+	pLXDXjVqcet3929aisDGLfAIv5ncbSJ+8juz6fwflxgl80h3gXkjlqn8TZEkKI6C4TTuRw9ClIj
+	M4r9kqxyYO+IFHcJvr+Xpa/mpThZ/jTNpUCFVwpPhHotIXXz1nYWdhLRfjYqCbqI+zPkS2+n771
+	cx8r+442L7yhgF1ZZ02bTupn9VQ8l9RFNRS07v
+X-Google-Smtp-Source: AGHT+IHW8odTbWid5SHWICI1RXAAmdM8h0o3ZoV3O2Q/KWp4qFYkaUzCDIffEE12Vnc5hikq+fa2eA==
+X-Received: by 2002:a17:903:2310:b0:275:1833:96e5 with SMTP id d9443c01a7336-290c9d3744dmr240006195ad.24.1761142873359;
+        Wed, 22 Oct 2025 07:21:13 -0700 (PDT)
+Received: from smtpclient.apple (n058152119060.netvigator.com. [58.152.119.60])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29247219357sm139832755ad.111.2025.10.22.07.21.11
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 Oct 2025 07:21:12 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <cover.1761135129.git.belkid98@gmail.com> <5df667227b8b8951bad6c3cba54230ea8f6d3830.1761135129.git.belkid98@gmail.com>
-In-Reply-To: <5df667227b8b8951bad6c3cba54230ea8f6d3830.1761135129.git.belkid98@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 22 Oct 2025 16:03:50 +0200
-X-Gm-Features: AS18NWBpW8yOHe6j4dk1JvDTXGQ6LdB3bVuMKNDTc2cN08KVWupg3pECO69D27o
-Message-ID: <CAP8UFD3OTMi6uxv+z4rTqJ4wVpmezSG2Yj8tZMpgptWaWU343w@mail.gmail.com>
-Subject: Re: [Outreachy PATCH v5 2/2] gpg-interface: do not use misdesigned strbuf_split*()
-To: Olamide Caleb Bello <belkid98@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, usmanakinyemi202@gmail.com, 
-	kristofferhaugsbakk@fastmail.com
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: Regression in `git diff --quiet HEAD` when a new file is staged
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <20251022091433.GC853931@coredump.intra.peff.net>
+Date: Wed, 22 Oct 2025 22:20:59 +0800
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Jake Zimmerman <jake@zimmerman.io>,
+ git@vger.kernel.org
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <819C2F6E-BE85-4B05-B975-894033E51D96@gmail.com>
+References: <CACJRbWjwOQwJB13CwTfvhV3p+Hbn4KrNM9AtBanGtUS4V_1MbQ@mail.gmail.com>
+ <20251017075153.GA4078773@coredump.intra.peff.net>
+ <xmqq7bwt1kyf.fsf@gitster.g>
+ <20251018094037.GA1060824@coredump.intra.peff.net>
+ <xmqqh5vww7xa.fsf@gitster.g>
+ <20251021073640.GB259661@coredump.intra.peff.net>
+ <xmqqy0p4wcac.fsf@gitster.g> <E76C71D8-103E-4C37-B05C-86DC180BD519@gmail.com>
+ <20251022091433.GC853931@coredump.intra.peff.net>
+To: Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3826.700.81)
 
-On Wed, Oct 22, 2025 at 2:40=E2=80=AFPM Olamide Caleb Bello <belkid98@gmail=
-.com> wrote:
+Jeff King <peff@peff.net> writes:
+>=20
+> We probably also need to restore o->color_moved, too.
+>=20
+> In the long run (and this is the kind of cleanup I was hoping you'd =
+work
+> on for 'master'), we probably could drop that line entirely and just
+> skip running the moved-line detection when dry_run is set. Assuming it
+> even runs at all. =46rom a quick look at the code, it looks like we =
+only
+> do color-moved handling via diff_flush_patch_all_file_pairs(), so it
+> wouldn't trigger at all for the cases that do individual calls to
+> diff_flush_patch_quietly()?
+>=20
 
-[...]
+Sounds interesting, I=E2=80=99d like to dig into this =E2=80=98color_moved=
+=E2=80=99 option and see
+if we can optimize some code path in dry-run mode.
 
-> Simplify the process of retrieving and returning the desired line by
-> using strchr() to isolate the line and xmemdupz() to return a copy of the
-> line.
-> This removes the roundabout way of splitting the string into strbufs, jus=
-t
-> to return the line.
+Thanks,
+Lidong
 
-Nit: here also I think it should be clear that these last two
-sentences are in the same paragraph.
 
-[...]
-
-> @@ -887,19 +887,22 @@ static char *get_default_ssh_signing_key(void)
->                            &key_stderr, 0);
->
->         if (!ret) {
-> -               keys =3D strbuf_split_max(&key_stdout, '\n', 2);
-> -               if (keys[0] && is_literal_ssh_key(keys[0]->buf, &literal_=
-key)) {
-> +               begin =3D key_stdout.buf;
-> +               new_line =3D strchr(begin, '\n');
-> +               end =3D new_line ? new_line : strchr(begin, '\0');
-> +               first_line =3D xmemdupz(begin, end - begin);
-
-That works but I wonder if something like the following is not a bit better=
-:
-
-               if (new_line)
-                       first_line =3D xmemdupz(begin, new_line - begin);
-               else
-                       first_line =3D xstrdup(begin);
-
-Thanks.
