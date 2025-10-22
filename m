@@ -1,84 +1,84 @@
-Received: from flow-b7-smtp.messagingengine.com (flow-b7-smtp.messagingengine.com [202.12.124.142])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966DE2E718F
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 06:41:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FD72EFD9B
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 06:41:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761115276; cv=none; b=hd4BAdnlEjQ0v8Fiz6C0IzFvD9NXjlNxSHv1VGIsbVxl450tQPr32Ic6SoNwKKj7GUt2hsort3VgeFMXo9JKs3sts3tR0VWjFGrdU/TOo4DgS0OGpful+6qXmx33WFc8J+x42t4ILBWIAmoGCMB6iAb53sZ0YRoXy28Pt6Bb4rw=
+	t=1761115279; cv=none; b=XDJQ9yBJOayJxVfRcYCsGT7kKjxxZcu6k0oYaX3+9z/ISLKzb8QDJgAthftkpKQ9/F5rlHrmIcZwiNtAsCThZSxnhHjBtVe0T9OeKAi6/qQ0J9/BkDgJycNhqNdLtV/uLZ2PFrrMajSYw7GwxK6fWdIdbbTfHuB/lYROF4IlJbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761115276; c=relaxed/simple;
-	bh=sY089tuby7BsiLrp/i2Mvue0hFnuFGHm6BkL2aEh3dQ=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=cdUffJ8KMhTgTydQ3HGSo/07Ipr6W9IoUc3pPcKgqkfTcZ2/MkO+gWtW62Nm8KGD+GeZSmlvegfGxsLrckGXoUA2V6E/ud7t6amvScQ/3kz0B1C8VFX8+yIgMYk/YVD/5ezcZgx5ga5gsW4j37jcpWqvKc9tb3y00hKyQuUBibc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d3tf6Z0B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZNRxs5C1; arc=none smtp.client-ip=202.12.124.142
+	s=arc-20240116; t=1761115279; c=relaxed/simple;
+	bh=84OXw2pO3kBGCo+kvBH+BFaXb02/SbpVN5L8qrk+840=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=k5WDiZkPfTzzzs21unUGkd1EDRBsgE90chfupnGhXH76bZ71QwLGwQ7VSSGdxalNNLYbcCRP4CAdGWyEBxkNZn4CkHfqAMUXtB6JCAi6HHcALPWQ3NDrKrpjX2tlew3SihouSW4zaXerFVhJx+qVe6bfLvjbM+JQGzGjc9XnCDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WQRAHC0T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qkEfLoYK; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d3tf6Z0B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZNRxs5C1"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailflow.stl.internal (Postfix) with ESMTP id 9B87613001C7;
-	Wed, 22 Oct 2025 02:41:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WQRAHC0T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qkEfLoYK"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 78FAE1D0006F;
+	Wed, 22 Oct 2025 02:41:15 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 22 Oct 2025 02:41:10 -0400
+  by phl-compute-05.internal (MEProxy); Wed, 22 Oct 2025 02:41:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1761115270;
-	 x=1761122470; bh=prFUFVCvxcqFkb1h0XWphnkkG+yHGYxeuWiRciXN0t0=; b=
-	d3tf6Z0BCV9VUvOktbm0CVEbWJjGRHl90kmHyMP1rBkh4CkJ8lHOVJrxwCgEfEvf
-	RictPV2jQRrqlN6rge2Xr6sUXhtI/DEbwcyFmvPc1UJ25eFuDTAQpLaw1KRR+6A3
-	vr7OMUg7MXcAKBIS0I+kmd2FUe3BnTV3LINCudSeATtFqfISCbT1zR/sf+QLDbYP
-	d3TsIj8wfyJvukm89L/txBdt0bkiT/N3wFR6Hklls+SwKNckl+j2/DFeGhDiokzA
-	9vVWlj2OCbFenl0U+TejImqfaHWEFJCP8WJlpp/C5wZMWA+02tmUhdzwkH8WzFDj
-	+O6CXxz6R/wZD3BTNeIZXw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1761115275;
+	 x=1761201675; bh=DMPjhnOdgZ6Ws+VwyOCwu/DG1iSNI08THbVqGhdDFvE=; b=
+	WQRAHC0TDo8xhhsnnytw3NYZYy4NIbrjx+PzAWB7mHV0QT/AYb/5WLN0oF2NrDdi
+	ozH6sP5LoXBnbWIMbDFt7c6MdqhMCjtoThqhJtkveqvQboAzWC4Ih3X0nP973Eeh
+	qwgnKw4J3iWQ/0uqQGWh+qt+/pVEyu7s1dWZ0vfV90Ni7u+r0MVw8Ewp/wNsTXnm
+	xbKa2T3y+W3vPXOANb4K+HBwPHQ8oaUBs8rQ+uK0UNMxuRG0Dq1W+8ZBUSFKj3tk
+	S+lhhMTQfmm08Q5cZU470dA/ZN8fE2AXyjG7YDKuDSLdtpH/kk28m7RpgnderWAb
+	W/L6EnPdpjewT13cLuxgfw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761115270; x=
-	1761122470; bh=prFUFVCvxcqFkb1h0XWphnkkG+yHGYxeuWiRciXN0t0=; b=Z
-	NRxs5C1t7K7xiu+YcokZKfwP1Rt9hoK0IuOQZEDBZQGK0IGEP4onTO/rh9Tu3cx/
-	12iszvexguoBsCFH+d0toaA/JGeOj8euYIy1DxZCJKuZl3lSkmvDLlWJWPHE9+os
-	bQFMWmASi4jlb2RTqg4bFcr3Qlc4yTuAdaCnpR+SqC0YxfcEWdr2+XDA99ihqWnU
-	Duox9RmC7NaUyH8dfqrj74FuZ1uWnUXR3z9QM2KjIscpoZG6ZsGQ//q2t4bzgPwp
-	vErQ8Ep4rxx/OdpR6JnxLE9DhFDoC9bSExbWLDiAQbNbtVfVjiFhxSrgUZOCZtvH
-	jIgcJ6rFeqrGXDZCpa04Q==
-X-ME-Sender: <xms:hnz4aBJMvm1J07R7Qn4bDqp0hvUys5ATBSigMVQNET7hiJMSVkUBKg>
-    <xme:hnz4aA3RZ2bqHke46PUchppxCUc0QTTLVK7czFGt46FAgbbcWaesYwEHVyyHt5RdL
-    LqEMm2fX_HVOiDrvLSdv0CMVHKHOsr_FW4hPNqDiOEVgUyCLbIVhw>
-X-ME-Received: <xmr:hnz4aDgLxSY3HXykAUbu5-Rryw3qKDZ3dXs_fMLpzQqkB9DPY-m8uF3jNUHlbVNNPOiIZWdd3ZgsUrRjV4RP6iZt7OWHm_BVPB3-3pJjQjA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedvkeekucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761115275; x=
+	1761201675; bh=DMPjhnOdgZ6Ws+VwyOCwu/DG1iSNI08THbVqGhdDFvE=; b=q
+	kEfLoYKA70aedV2VWA47qfPWWHrIKpfNu9qGyKxOqjpM7pNAU1oIuFU2/z5k1zyg
+	4f5RvZNAqTQdU/K8znlRdIHYc0a1AVllAm0ogCKSs/EcVcVMSVsqcGczy+oXNqrs
+	xcImiYPGhTjpCeHA+WFG4v2XmoDrD0BEUvLoTR5zE8JAs4tlE0l+XB7AhByOYrWg
+	BoMXLGf/sxLVL8b63kaLLIynO42WHnpoJYS75K1LwBKOjoz207Yp6oT4RC2vyUET
+	Na06JW+AJoLUeLdyBlvrVxd50dTDCDM9kyWb4dCPVhFwFsDR5K4dxh6EnzlrUfRL
+	iieNKoxbLNmxveSglbMUA==
+X-ME-Sender: <xms:i3z4aIEpKAtnSyfHj0ouDETAwO-9LZhV77dXtggt_q5IIHM7zlA1mw>
+    <xme:i3z4aFDTwO1a6kLNeeQIiLN5ZBI1t9kuHplf_uCfjsEHi3Ome70mjhM7VusxjASNx
+    ohryQzGLR-DoGJp_FHGvJYL0WIP5BOQDeNwzyl1bkoCvahSW94l_A>
+X-ME-Received: <xmr:i3z4aL8zd-_rMC0Ayl49ukM2vU2pNiNTyrZkiQ30i3ZXq-2KLCgAY--J8KTBRy3so2hsSuiRrL-huQL6T4d3WpDhF9ggYJNnl-r3MFjM7dw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedvkeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucfrhhhishhhihhnghdqkffkrfgprhhtucdliedtjedmne
-    cujfgurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedtheefhfegffevgeegtdfhheeu
-    vdenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthht
-    ohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
-    phhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:hnz4aJWGh1WuqnPZwR22d2_IjLj3c_hEB_HYWwkH1qI-VF_omOAJlQ>
-    <xmx:hnz4aKX6b9ssykfulrOuJ95G4TIF6GAaVkDygtFFPA8vcEpTzSyNDw>
-    <xmx:hnz4aBgVKr_fjM8AS1T_B34bYEUZvjfr2bOvd933eShlyLXypKZXFQ>
-    <xmx:hnz4aNYBB4SqYROJ1h16lQ57hgS_K1tFnMyRl6VUyDdPK2K6CB7jGw>
-    <xmx:hnz4aGmT6J5PBeks-HZCtbXMBROa_oFQixFx1ouI2yhlW8u0jAwQXJe1>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpefgueduueefheehhfdtvedtudffuddttdetgeevffevieejvdfgfedugefgleeuffen
+    ucffohhmrghinheprhgvfhdrnhgrmhgvpdhrvghfrdhtrghrghgvthenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhn
+    sggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesth
+    htrgihlhhorhhrrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgs
+    rghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhgrrh
+    hthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:i3z4aBASQEiZt600vbPSTCZcAukF-PcCIPlC2G1yvRPAtoB61TkXug>
+    <xmx:i3z4aATgt0BK-PSpHWi-u6llIoQ7yIHLDng8IvjqpFv2N4xpw1_aDg>
+    <xmx:i3z4aIsYbky072VogyJItsvZa_NOIZndyCWDpzZbxk2dSUilFxJ29w>
+    <xmx:i3z4aM3LGa1GVldk8xAUT-HBqxRi9IUi2V7SIr-3qK1NQkHsQgigXQ>
+    <xmx:i3z4aKDUMH78gGZ4PRzzV3RmnjgBdo8u_EXw60a59I5By_Q24g-e_BXA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Oct 2025 02:41:09 -0400 (EDT)
+ 22 Oct 2025 02:41:14 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e0c6842f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 22 Oct 2025 06:41:07 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 6c9c566e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 22 Oct 2025 06:41:13 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 00/14] refs: improvements and fixes for peeling tags
-Date: Wed, 22 Oct 2025 08:41:00 +0200
-Message-Id: <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-0-eb9f71985ef0@pks.im>
+Date: Wed, 22 Oct 2025 08:41:02 +0200
+Subject: [PATCH v3 02/14] refs: introduce `.ref` field for the base
+ iterator
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,333 +87,550 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHx8+GgC/42OQQ6DIBBFr2JYdxpARemq92i6QASd2ioBQ9oY7
- 1500XTp8k3y35uFBOPRBHLJFuJNxIDTmCA/ZUT3auwMYJuYcMpLKlkNTQFuCOCNBYvP2XgIAzp
- wygccO5iah9FzAEtbZoWyhZKWJJlLA3zvods9cY9hnvxn70a2XfcEo7Q6mogMKEgmtK60qGvRX
- NPqjC+y+SP/dx5+O/LkrITJaVtqWRb851zX9Qs3mhu/LQEAAA==
-X-Change-ID: 20250918-b4-pks-ref-filter-skip-parsing-objects-f0d1f6af4a9f
-In-Reply-To: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
-References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
+Message-Id: <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-2-eb9f71985ef0@pks.im>
+References: <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-0-eb9f71985ef0@pks.im>
+In-Reply-To: <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-0-eb9f71985ef0@pks.im>
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
  Karthik Nayak <karthik.188@gmail.com>, Taylor Blau <me@ttaylorr.com>, 
  Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.3
 
-Hi,
+The base iterator has a couple of fields that tracks the name, target,
+object ID and flags for the current reference. Due to this design we
+have to create a new `struct reference` whenever we want to hand over
+that reference to the callback function, which is tedious and not very
+efficient.
 
-originally, all I wanted to do was the last patch: a small performance
-optimization that stops parsing objects in git-for-each-ref(1) unless we
-really need to parse them. But that fix cause one specific test to fail,
-and only with the reftable backend. So this led me down the rabbit hole
-of tag peeling, ending up with this patch series.
+Convert the structure to instead contain a `struct reference` as member.
+This member is expected to be populated by the implementations of the
+iterator and is handed over to the callback directly.
 
-The series is structured like follows:
+While at it, simplify `should_pack_ref()` to take a `struct reference`
+directly instead of passing its respective fields.
 
-  - Patches 1 to 8 refactor our codebase so that we don't have the
-    `peel_iterated_object()` hack anymore. I just found it hard to
-    follow and thought it shouldn't be too hard to get rid of it.
-
-  - Patches 9 and 10 remove infrastructure that we don't need anymore
-    after the first couple of patches.
-
-  - Patches 11 to 13 fix a couple of issues with peeled tags that I
-    found. The underlying issue is that tags store both the tagged
-    object and their type, but this information may not match. We never
-    verify the actual object type though when allocating the tagged
-    object, so this only blows up much later.
-
-  - Patch 14 was my original motivation, a small performance
-    optimization.
-
-I'm not particularly fond of the patches 11 to 13. It feels more like
-playing whack-a-mole, and I very much assume that there still are edge
-cases where we should properly verify the tagged object type. But
-changing it in `parse_tag_buffer()` itself causes a bunch of tests to
-fail where we intentionally create such corrupted tags. So I didn't
-really dare to touch that part, to be honest.
-
-If anybody has suggestions for an alternative approach I'd be very open
-to it.
-
-Changes in v3:
-  - I've rebuilt the topic on 133d151831 (The twenty-first batch, 2025-10-20) with
-        - tb/incremental-midx-part-3.1 at 935ab44a0a (builtin/repack.c:
-          clean up unused `#include`s, 2025-10-15)
-        - jt/16a93c03c7 at (builtin/repo: add progress meter for
-          structure stats, 2025-10-21)
-    merged into it. This is done to fix a couple of merge conflicts with
-    "seen". Both of the topics are only in "seen" right now, but they
-    are close to be merged.
-  - Link to v2: https://lore.kernel.org/r/20251008-b4-pks-ref-filter-skip-parsing-objects-v2-0-76e30d5c9542@pks.im
-
-Changes in v2:
-  - A couple of improvements to commit messages.
-  - A new commit that ensures that `struct ref_iterator::ref` is always
-    zeroed out to protect against stale state.
-  - Link to v1: https://lore.kernel.org/r/20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (14):
-      refs: introduce wrapper struct for `each_ref_fn`
-      refs: introduce `.ref` field for the base iterator
-      refs: fully reset `struct ref_iterator::ref` on iteration
-      refs: refactor reference status flags
-      refs: expose peeled object ID via the iterator
-      upload-pack: convert to use `reference_get_peeled_oid()`
-      ref-filter: propagate peeled object ID
-      builtin/show-ref: convert to use `reference_get_peeled_oid()`
-      refs: drop `current_ref_iter` hack
-      refs: drop infrastructure to peel via iterators
-      object: add flag to `peel_object()` to verify object type
-      refs: don't store peeled object IDs for invalid tags
-      ref-filter: detect broken tags when dereferencing them
-      ref-filter: parse objects on demand
+ refs.c                  |  8 ++++----
+ refs/debug.c            |  8 +++-----
+ refs/files-backend.c    | 47 +++++++++++++++++++++--------------------------
+ refs/iterator.c         | 39 ++++++++++++---------------------------
+ refs/packed-backend.c   | 46 +++++++++++++++++++++++-----------------------
+ refs/ref-cache.c        | 10 +++++-----
+ refs/refs-internal.h    |  5 +----
+ refs/reftable-backend.c | 12 ++++++------
+ 8 files changed, 75 insertions(+), 100 deletions(-)
 
- bisect.c                    |  24 ++---
- builtin/bisect.c            |  17 +---
- builtin/checkout.c          |   6 +-
- builtin/describe.c          |  18 ++--
- builtin/fetch.c             |  13 +--
- builtin/fsck.c              |  33 +++---
- builtin/gc.c                |  15 ++-
- builtin/ls-remote.c         |   2 +-
- builtin/name-rev.c          |  17 ++--
- builtin/pack-objects.c      |  28 +++---
- builtin/receive-pack.c      |  13 ++-
- builtin/remote.c            |  44 ++++----
- builtin/replace.c           |  21 ++--
- builtin/repo.c              |   9 +-
- builtin/rev-parse.c         |  12 +--
- builtin/show-branch.c       |  35 +++----
- builtin/show-ref.c          |  50 ++++-----
- builtin/submodule--helper.c |  10 +-
- builtin/tag.c               |   2 +-
- builtin/verify-tag.c        |   2 +-
- builtin/worktree.c          |   6 +-
- commit-graph.c              |  14 ++-
- delta-islands.c             |   9 +-
- fetch-pack.c                |  16 +--
- help.c                      |  10 +-
- http-backend.c              |  20 ++--
- log-tree.c                  |  24 ++---
- ls-refs.c                   |  36 ++++---
- midx-write.c                |  17 ++--
- negotiator/default.c        |   7 +-
- negotiator/skipping.c       |   7 +-
- notes.c                     |   8 +-
- object-name.c               |  10 +-
- object.c                    |  20 +++-
- object.h                    |  15 ++-
- pseudo-merge.c              |  21 ++--
- reachable.c                 |   9 +-
- ref-filter.c                | 239 ++++++++++++++++++++++++++++++--------------
- ref-filter.h                |   5 +-
- reflog.c                    |   9 +-
- refs.c                      |  85 +++++++++-------
- refs.h                      |  88 ++++++++++------
- refs/debug.c                |  17 +---
- refs/files-backend.c        |  71 +++++--------
- refs/iterator.c             |  73 +++-----------
- refs/packed-backend.c       |  71 +++++--------
- refs/ref-cache.c            |  18 +---
- refs/refs-internal.h        |  25 +----
- refs/reftable-backend.c     |  47 +++------
- remote.c                    |  27 +++--
- repack-midx.c               |  16 ++-
- replace-object.c            |  16 ++-
- revision.c                  |  12 +--
- server-info.c               |  12 +--
- shallow.c                   |  16 +--
- submodule.c                 |  12 +--
- t/for-each-ref-tests.sh     |   4 +-
- t/helper/test-reach.c       |   2 +-
- t/helper/test-ref-store.c   |   5 +-
- t/pack-refs-tests.sh        |  32 ++++++
- t/t0610-reftable-basics.sh  |  28 ++++++
- tag.c                       |  12 ---
- tag.h                       |   1 -
- upload-pack.c               |  49 ++++-----
- walker.c                    |   8 +-
- worktree.c                  |  11 +-
- 66 files changed, 794 insertions(+), 837 deletions(-)
+diff --git a/refs.c b/refs.c
+index 25f0579d610..f96cf43b128 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2327,8 +2327,8 @@ int refs_optimize(struct ref_store *refs, struct pack_refs_opts *opts)
+ int peel_iterated_oid(struct repository *r, const struct object_id *base, struct object_id *peeled)
+ {
+ 	if (current_ref_iter &&
+-	    (current_ref_iter->oid == base ||
+-	     oideq(current_ref_iter->oid, base)))
++	    (current_ref_iter->ref.oid == base ||
++	     oideq(current_ref_iter->ref.oid, base)))
+ 		return ref_iterator_peel(current_ref_iter, peeled);
+ 
+ 	return peel_object(r, base, peeled) ? -1 : 0;
+@@ -2703,7 +2703,7 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
+ 
+ 			while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
+ 				if (skip &&
+-				    string_list_has_string(skip, iter->refname))
++				    string_list_has_string(skip, iter->ref.name))
+ 					continue;
+ 
+ 				if (transaction && ref_transaction_maybe_set_rejected(
+@@ -2712,7 +2712,7 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
+ 					continue;
+ 
+ 				strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
+-					    iter->refname, refname);
++					    iter->ref.name, refname);
+ 				goto cleanup;
+ 			}
+ 
+diff --git a/refs/debug.c b/refs/debug.c
+index 697adbd0dc3..67718bd1f49 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -160,11 +160,9 @@ static int debug_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 		trace_printf_key(&trace_refs, "iterator_advance: (%d)\n", res);
+ 	else
+ 		trace_printf_key(&trace_refs, "iterator_advance: %s (0)\n",
+-			diter->iter->refname);
++			diter->iter->ref.name);
+ 
+-	diter->base.refname = diter->iter->refname;
+-	diter->base.oid = diter->iter->oid;
+-	diter->base.flags = diter->iter->flags;
++	diter->base.ref = diter->iter->ref;
+ 	return res;
+ }
+ 
+@@ -185,7 +183,7 @@ static int debug_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 	struct debug_ref_iterator *diter =
+ 		(struct debug_ref_iterator *)ref_iterator;
+ 	int res = diter->iter->vtable->peel(diter->iter, peeled);
+-	trace_printf_key(&trace_refs, "iterator_peel: %s: %d\n", diter->iter->refname, res);
++	trace_printf_key(&trace_refs, "iterator_peel: %s: %d\n", diter->iter->ref.name, res);
+ 	return res;
+ }
+ 
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index eb3142f8f2d..fac53fa052d 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -961,26 +961,23 @@ static int files_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 
+ 	while ((ok = ref_iterator_advance(iter->iter0)) == ITER_OK) {
+ 		if (iter->flags & DO_FOR_EACH_PER_WORKTREE_ONLY &&
+-		    parse_worktree_ref(iter->iter0->refname, NULL, NULL,
++		    parse_worktree_ref(iter->iter0->ref.name, NULL, NULL,
+ 				       NULL) != REF_WORKTREE_CURRENT)
+ 			continue;
+ 
+ 		if ((iter->flags & DO_FOR_EACH_OMIT_DANGLING_SYMREFS) &&
+-		    (iter->iter0->flags & REF_ISSYMREF) &&
+-		    (iter->iter0->flags & REF_ISBROKEN))
++		    (iter->iter0->ref.flags & REF_ISSYMREF) &&
++		    (iter->iter0->ref.flags & REF_ISBROKEN))
+ 			continue;
+ 
+ 		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
+-		    !ref_resolves_to_object(iter->iter0->refname,
++		    !ref_resolves_to_object(iter->iter0->ref.name,
+ 					    iter->repo,
+-					    iter->iter0->oid,
+-					    iter->iter0->flags))
++					    iter->iter0->ref.oid,
++					    iter->iter0->ref.flags))
+ 			continue;
+ 
+-		iter->base.refname = iter->iter0->refname;
+-		iter->base.oid = iter->iter0->oid;
+-		iter->base.flags = iter->iter0->flags;
+-		iter->base.referent = iter->iter0->referent;
++		iter->base.ref = iter->iter0->ref;
+ 
+ 		return ITER_OK;
+ 	}
+@@ -1367,30 +1364,29 @@ static void prune_refs(struct files_ref_store *refs, struct ref_to_prune **refs_
+  * Return true if the specified reference should be packed.
+  */
+ static int should_pack_ref(struct files_ref_store *refs,
+-			   const char *refname,
+-			   const struct object_id *oid, unsigned int ref_flags,
++			   const struct reference *ref,
+ 			   struct pack_refs_opts *opts)
+ {
+ 	struct string_list_item *item;
+ 
+ 	/* Do not pack per-worktree refs: */
+-	if (parse_worktree_ref(refname, NULL, NULL, NULL) !=
++	if (parse_worktree_ref(ref->name, NULL, NULL, NULL) !=
+ 	    REF_WORKTREE_SHARED)
+ 		return 0;
+ 
+ 	/* Do not pack symbolic refs: */
+-	if (ref_flags & REF_ISSYMREF)
++	if (ref->flags & REF_ISSYMREF)
+ 		return 0;
+ 
+ 	/* Do not pack broken refs: */
+-	if (!ref_resolves_to_object(refname, refs->base.repo, oid, ref_flags))
++	if (!ref_resolves_to_object(ref->name, refs->base.repo, ref->oid, ref->flags))
+ 		return 0;
+ 
+-	if (ref_excluded(opts->exclusions, refname))
++	if (ref_excluded(opts->exclusions, ref->name))
+ 		return 0;
+ 
+ 	for_each_string_list_item(item, opts->includes)
+-		if (!wildmatch(item->string, refname, 0))
++		if (!wildmatch(item->string, ref->name, 0))
+ 			return 1;
+ 
+ 	return 0;
+@@ -1443,8 +1439,7 @@ static int should_pack_refs(struct files_ref_store *refs,
+ 	iter = cache_ref_iterator_begin(get_loose_ref_cache(refs, 0), NULL,
+ 					refs->base.repo, 0);
+ 	while ((ret = ref_iterator_advance(iter)) == ITER_OK) {
+-		if (should_pack_ref(refs, iter->refname, iter->oid,
+-				    iter->flags, opts))
++		if (should_pack_ref(refs, &iter->ref, opts))
+ 			refcount++;
+ 		if (refcount >= limit) {
+ 			ref_iterator_free(iter);
+@@ -1489,24 +1484,24 @@ static int files_pack_refs(struct ref_store *ref_store,
+ 		 * in the packed ref cache. If the reference should be
+ 		 * pruned, also add it to refs_to_prune.
+ 		 */
+-		if (!should_pack_ref(refs, iter->refname, iter->oid, iter->flags, opts))
++		if (!should_pack_ref(refs, &iter->ref, opts))
+ 			continue;
+ 
+ 		/*
+ 		 * Add a reference creation for this reference to the
+ 		 * packed-refs transaction:
+ 		 */
+-		if (ref_transaction_update(transaction, iter->refname,
+-					   iter->oid, NULL, NULL, NULL,
++		if (ref_transaction_update(transaction, iter->ref.name,
++					   iter->ref.oid, NULL, NULL, NULL,
+ 					   REF_NO_DEREF, NULL, &err))
+ 			die("failure preparing to create packed reference %s: %s",
+-			    iter->refname, err.buf);
++			    iter->ref.name, err.buf);
+ 
+ 		/* Schedule the loose reference for pruning if requested. */
+ 		if ((opts->flags & PACK_REFS_PRUNE)) {
+ 			struct ref_to_prune *n;
+-			FLEX_ALLOC_STR(n, name, iter->refname);
+-			oidcpy(&n->oid, iter->oid);
++			FLEX_ALLOC_STR(n, name, iter->ref.name);
++			oidcpy(&n->oid, iter->ref.oid);
+ 			n->next = refs_to_prune;
+ 			refs_to_prune = n;
+ 		}
+@@ -2379,7 +2374,7 @@ static int files_reflog_iterator_advance(struct ref_iterator *ref_iterator)
+ 					 REFNAME_ALLOW_ONELEVEL))
+ 			continue;
+ 
+-		iter->base.refname = diter->relative_path;
++		iter->base.ref.name = diter->relative_path;
+ 		return ITER_OK;
+ 	}
+ 
+diff --git a/refs/iterator.c b/refs/iterator.c
+index 7f2e718f1c9..fe5980e1b6c 100644
+--- a/refs/iterator.c
++++ b/refs/iterator.c
+@@ -41,10 +41,7 @@ void base_ref_iterator_init(struct ref_iterator *iter,
+ 			    struct ref_iterator_vtable *vtable)
+ {
+ 	iter->vtable = vtable;
+-	iter->refname = NULL;
+-	iter->referent = NULL;
+-	iter->oid = NULL;
+-	iter->flags = 0;
++	memset(&iter->ref, 0, sizeof(iter->ref));
+ }
+ 
+ struct empty_ref_iterator {
+@@ -127,8 +124,8 @@ enum iterator_selection ref_iterator_select(struct ref_iterator *iter_worktree,
+ 		 * latter.
+ 		 */
+ 		if (iter_worktree) {
+-			int cmp = strcmp(iter_worktree->refname,
+-					 iter_common->refname);
++			int cmp = strcmp(iter_worktree->ref.name,
++					 iter_common->ref.name);
+ 			if (cmp < 0)
+ 				return ITER_SELECT_0;
+ 			else if (!cmp)
+@@ -139,7 +136,7 @@ enum iterator_selection ref_iterator_select(struct ref_iterator *iter_worktree,
+ 		  * We now know that the lexicographically-next ref is a common
+ 		  * ref. When the common ref is a shared one we return it.
+ 		  */
+-		if (parse_worktree_ref(iter_common->refname, NULL, NULL,
++		if (parse_worktree_ref(iter_common->ref.name, NULL, NULL,
+ 				       NULL) == REF_WORKTREE_SHARED)
+ 			return ITER_SELECT_1;
+ 
+@@ -212,10 +209,7 @@ static int merge_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 		}
+ 
+ 		if (selection & ITER_YIELD_CURRENT) {
+-			iter->base.referent = (*iter->current)->referent;
+-			iter->base.refname = (*iter->current)->refname;
+-			iter->base.oid = (*iter->current)->oid;
+-			iter->base.flags = (*iter->current)->flags;
++			iter->base.ref = (*iter->current)->ref;
+ 			return ITER_OK;
+ 		}
+ 	}
+@@ -313,7 +307,7 @@ static enum iterator_selection overlay_iterator_select(
+ 	else if (!front)
+ 		return ITER_SELECT_1;
+ 
+-	cmp = strcmp(front->refname, back->refname);
++	cmp = strcmp(front->ref.name, back->ref.name);
+ 
+ 	if (cmp < 0)
+ 		return ITER_SELECT_0;
+@@ -371,7 +365,7 @@ static int prefix_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	int ok;
+ 
+ 	while ((ok = ref_iterator_advance(iter->iter0)) == ITER_OK) {
+-		int cmp = compare_prefix(iter->iter0->refname, iter->prefix);
++		int cmp = compare_prefix(iter->iter0->ref.name, iter->prefix);
+ 		if (cmp < 0)
+ 			continue;
+ 		/*
+@@ -382,6 +376,8 @@ static int prefix_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 		if (cmp > 0)
+ 			return ITER_DONE;
+ 
++		iter->base.ref = iter->iter0->ref;
++
+ 		if (iter->trim) {
+ 			/*
+ 			 * It is nonsense to trim off characters that
+@@ -392,15 +388,11 @@ static int prefix_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 			 * one character left in the refname after
+ 			 * trimming, report it as a bug:
+ 			 */
+-			if (strlen(iter->iter0->refname) <= iter->trim)
++			if (strlen(iter->base.ref.name) <= iter->trim)
+ 				BUG("attempt to trim too many characters");
+-			iter->base.refname = iter->iter0->refname + iter->trim;
+-		} else {
+-			iter->base.refname = iter->iter0->refname;
++			iter->base.ref.name += iter->trim;
+ 		}
+ 
+-		iter->base.oid = iter->iter0->oid;
+-		iter->base.flags = iter->iter0->flags;
+ 		return ITER_OK;
+ 	}
+ 
+@@ -476,14 +468,7 @@ int do_for_each_ref_iterator(struct ref_iterator *iter,
+ 
+ 	current_ref_iter = iter;
+ 	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
+-		struct reference ref = {
+-			.name = iter->refname,
+-			.target = iter->referent,
+-			.oid = iter->oid,
+-			.flags = iter->flags,
+-		};
+-
+-		retval = fn(&ref, cb_data);
++		retval = fn(&iter->ref, cb_data);
+ 		if (retval)
+ 			goto out;
+ 	}
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index a8c22a0a7ff..7987acdc96a 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -908,7 +908,7 @@ static int next_record(struct packed_ref_iterator *iter)
+ 	if (iter->pos == iter->eof)
+ 		return ITER_DONE;
+ 
+-	iter->base.flags = REF_ISPACKED;
++	iter->base.ref.flags = REF_ISPACKED;
+ 	p = iter->pos;
+ 
+ 	if (iter->eof - p < snapshot_hexsz(iter->snapshot) + 2 ||
+@@ -923,22 +923,22 @@ static int next_record(struct packed_ref_iterator *iter)
+ 				      iter->pos, iter->eof - iter->pos);
+ 
+ 	strbuf_add(&iter->refname_buf, p, eol - p);
+-	iter->base.refname = iter->refname_buf.buf;
++	iter->base.ref.name = iter->refname_buf.buf;
+ 
+ 	if (refname_contains_nul(&iter->refname_buf))
+-		die("packed refname contains embedded NULL: %s", iter->base.refname);
++		die("packed refname contains embedded NULL: %s", iter->base.ref.name);
+ 
+-	if (check_refname_format(iter->base.refname, REFNAME_ALLOW_ONELEVEL)) {
+-		if (!refname_is_safe(iter->base.refname))
++	if (check_refname_format(iter->base.ref.name, REFNAME_ALLOW_ONELEVEL)) {
++		if (!refname_is_safe(iter->base.ref.name))
+ 			die("packed refname is dangerous: %s",
+-			    iter->base.refname);
++			    iter->base.ref.name);
+ 		oidclr(&iter->oid, iter->repo->hash_algo);
+-		iter->base.flags |= REF_BAD_NAME | REF_ISBROKEN;
++		iter->base.ref.flags |= REF_BAD_NAME | REF_ISBROKEN;
+ 	}
+ 	if (iter->snapshot->peeled == PEELED_FULLY ||
+ 	    (iter->snapshot->peeled == PEELED_TAGS &&
+-	     starts_with(iter->base.refname, "refs/tags/")))
+-		iter->base.flags |= REF_KNOWS_PEELED;
++	     starts_with(iter->base.ref.name, "refs/tags/")))
++		iter->base.ref.flags |= REF_KNOWS_PEELED;
+ 
+ 	iter->pos = eol + 1;
+ 
+@@ -956,11 +956,11 @@ static int next_record(struct packed_ref_iterator *iter)
+ 		 * definitely know the value of *this* reference. But
+ 		 * we suppress it if the reference is broken:
+ 		 */
+-		if ((iter->base.flags & REF_ISBROKEN)) {
++		if ((iter->base.ref.flags & REF_ISBROKEN)) {
+ 			oidclr(&iter->peeled, iter->repo->hash_algo);
+-			iter->base.flags &= ~REF_KNOWS_PEELED;
++			iter->base.ref.flags &= ~REF_KNOWS_PEELED;
+ 		} else {
+-			iter->base.flags |= REF_KNOWS_PEELED;
++			iter->base.ref.flags |= REF_KNOWS_PEELED;
+ 		}
+ 	} else {
+ 		oidclr(&iter->peeled, iter->repo->hash_algo);
+@@ -976,15 +976,15 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	int ok;
+ 
+ 	while ((ok = next_record(iter)) == ITER_OK) {
+-		const char *refname = iter->base.refname;
++		const char *refname = iter->base.ref.name;
+ 		const char *prefix = iter->prefix;
+ 
+ 		if (iter->flags & DO_FOR_EACH_PER_WORKTREE_ONLY &&
+-		    !is_per_worktree_ref(iter->base.refname))
++		    !is_per_worktree_ref(iter->base.ref.name))
+ 			continue;
+ 
+ 		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
+-		    !ref_resolves_to_object(iter->base.refname, iter->repo,
++		    !ref_resolves_to_object(iter->base.ref.name, iter->repo,
+ 					    &iter->oid, iter->flags))
+ 			continue;
+ 
+@@ -1033,10 +1033,10 @@ static int packed_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 	struct packed_ref_iterator *iter =
+ 		(struct packed_ref_iterator *)ref_iterator;
+ 
+-	if ((iter->base.flags & REF_KNOWS_PEELED)) {
++	if ((iter->base.ref.flags & REF_KNOWS_PEELED)) {
+ 		oidcpy(peeled, &iter->peeled);
+ 		return is_null_oid(&iter->peeled) ? -1 : 0;
+-	} else if ((iter->base.flags & (REF_ISBROKEN | REF_ISSYMREF))) {
++	} else if ((iter->base.ref.flags & (REF_ISBROKEN | REF_ISSYMREF))) {
+ 		return -1;
+ 	} else {
+ 		return peel_object(iter->repo, &iter->oid, peeled) ? -1 : 0;
+@@ -1194,7 +1194,7 @@ static struct ref_iterator *packed_ref_iterator_begin(
+ 	iter->snapshot = snapshot;
+ 	acquire_snapshot(snapshot);
+ 	strbuf_init(&iter->refname_buf, 0);
+-	iter->base.oid = &iter->oid;
++	iter->base.ref.oid = &iter->oid;
+ 	iter->repo = ref_store->repo;
+ 	iter->flags = flags;
+ 
+@@ -1436,7 +1436,7 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
+ 			if (!iter)
+ 				cmp = +1;
+ 			else
+-				cmp = strcmp(iter->refname, update->refname);
++				cmp = strcmp(iter->ref.name, update->refname);
+ 		}
+ 
+ 		if (!cmp) {
+@@ -1459,11 +1459,11 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
+ 					}
+ 
+ 					goto error;
+-				} else if (!oideq(&update->old_oid, iter->oid)) {
++				} else if (!oideq(&update->old_oid, iter->ref.oid)) {
+ 					strbuf_addf(err, "cannot update ref '%s': "
+ 						    "is at %s but expected %s",
+ 						    update->refname,
+-						    oid_to_hex(iter->oid),
++						    oid_to_hex(iter->ref.oid),
+ 						    oid_to_hex(&update->old_oid));
+ 					ret = REF_TRANSACTION_ERROR_INCORRECT_OLD_VALUE;
+ 
+@@ -1527,8 +1527,8 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
+ 			struct object_id peeled;
+ 			int peel_error = ref_iterator_peel(iter, &peeled);
+ 
+-			if (write_packed_entry(out, iter->refname,
+-					       iter->oid,
++			if (write_packed_entry(out, iter->ref.name,
++					       iter->ref.oid,
+ 					       peel_error ? NULL : &peeled))
+ 				goto write_error;
+ 
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index e5e5df16d85..f1abc396241 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -425,10 +425,10 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 			level->prefix_state = entry_prefix_state;
+ 			level->index = -1;
+ 		} else {
+-			iter->base.refname = entry->name;
+-			iter->base.referent = entry->u.value.referent;
+-			iter->base.oid = &entry->u.value.oid;
+-			iter->base.flags = entry->flag;
++			iter->base.ref.name = entry->name;
++			iter->base.ref.target = entry->u.value.referent;
++			iter->base.ref.oid = &entry->u.value.oid;
++			iter->base.ref.flags = entry->flag;
+ 			return ITER_OK;
+ 		}
+ 	}
+@@ -550,7 +550,7 @@ static int cache_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ {
+ 	struct cache_ref_iterator *iter =
+ 		(struct cache_ref_iterator *)ref_iterator;
+-	return peel_object(iter->repo, ref_iterator->oid, peeled) ? -1 : 0;
++	return peel_object(iter->repo, ref_iterator->ref.oid, peeled) ? -1 : 0;
+ }
+ 
+ static void cache_ref_iterator_release(struct ref_iterator *ref_iterator)
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 4ef3bd75c6a..ed749d16572 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -249,10 +249,7 @@ const char *find_descendant_ref(const char *dirname,
+  */
+ struct ref_iterator {
+ 	struct ref_iterator_vtable *vtable;
+-	const char *refname;
+-	const char *referent;
+-	const struct object_id *oid;
+-	unsigned int flags;
++	struct reference ref;
+ };
+ 
+ /*
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index d4b79286202..0e47986cb5b 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -704,10 +704,10 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 					    &iter->oid, flags))
+ 				continue;
+ 
+-		iter->base.refname = iter->ref.refname;
+-		iter->base.referent = referent;
+-		iter->base.oid = &iter->oid;
+-		iter->base.flags = flags;
++		iter->base.ref.name = iter->ref.refname;
++		iter->base.ref.target = referent;
++		iter->base.ref.oid = &iter->oid;
++		iter->base.ref.flags = flags;
+ 
+ 		break;
+ 	}
+@@ -828,7 +828,7 @@ static struct reftable_ref_iterator *ref_iterator_for_stack(struct reftable_ref_
+ 
+ 	iter = xcalloc(1, sizeof(*iter));
+ 	base_ref_iterator_init(&iter->base, &reftable_ref_iterator_vtable);
+-	iter->base.oid = &iter->oid;
++	iter->base.ref.oid = &iter->oid;
+ 	iter->flags = flags;
+ 	iter->refs = refs;
+ 	iter->exclude_patterns = filter_exclude_patterns(exclude_patterns);
+@@ -2072,7 +2072,7 @@ static int reftable_reflog_iterator_advance(struct ref_iterator *ref_iterator)
+ 
+ 		strbuf_reset(&iter->last_name);
+ 		strbuf_addstr(&iter->last_name, iter->log.refname);
+-		iter->base.refname = iter->log.refname;
++		iter->base.ref.name = iter->log.refname;
+ 
+ 		break;
+ 	}
 
-Range-diff versus v2:
-
- 1:  4a78d628cef !  1:  05cfb7e0364 refs: introduce wrapper struct for `each_ref_fn`
-    @@ builtin/remote.c: static void free_remote_ref_states(struct ref_states *states)
-      		string_list_append(&states->tracked, abbrev_branch(refspec.src));
-      		free(refspec.src);
-     
-    - ## builtin/repack.c ##
-    -@@ builtin/repack.c: struct midx_snapshot_ref_data {
-    - 	int preferred;
-    - };
-    - 
-    --static int midx_snapshot_ref_one(const char *refname UNUSED,
-    --				 const char *referent UNUSED,
-    --				 const struct object_id *oid,
-    --				 int flag UNUSED, void *_data)
-    -+static int midx_snapshot_ref_one(const struct reference *ref, void *_data)
-    - {
-    - 	struct midx_snapshot_ref_data *data = _data;
-    -+	const struct object_id *maybe_peeled = ref->oid;
-    - 	struct object_id peeled;
-    - 
-    --	if (!peel_iterated_oid(the_repository, oid, &peeled))
-    --		oid = &peeled;
-    -+	if (!peel_iterated_oid(the_repository, ref->oid, &peeled))
-    -+		maybe_peeled = &peeled;
-    - 
-    --	if (oidset_insert(&data->seen, oid))
-    -+	if (oidset_insert(&data->seen, maybe_peeled))
-    - 		return 0; /* already seen */
-    - 
-    --	if (odb_read_object_info(the_repository->objects, oid, NULL) != OBJ_COMMIT)
-    -+	if (odb_read_object_info(the_repository->objects, maybe_peeled, NULL) != OBJ_COMMIT)
-    - 		return 0;
-    - 
-    - 	fprintf(data->f->fp, "%s%s\n", data->preferred ? "+" : "",
-    --		oid_to_hex(oid));
-    -+		oid_to_hex(maybe_peeled));
-    - 
-    - 	return 0;
-    - }
-    -
-      ## builtin/replace.c ##
-     @@ builtin/replace.c: struct show_data {
-      	enum replace_format format;
-    @@ builtin/replace.c: struct show_data {
-      	}
-      
-     
-    + ## builtin/repo.c ##
-    +@@ builtin/repo.c: struct count_references_data {
-    + 	struct progress *progress;
-    + };
-    + 
-    +-static int count_references(const char *refname,
-    +-			    const char *referent UNUSED,
-    +-			    const struct object_id *oid,
-    +-			    int flags UNUSED, void *cb_data)
-    ++static int count_references(const struct reference *ref, void *cb_data)
-    + {
-    + 	struct count_references_data *data = cb_data;
-    + 	struct ref_stats *stats = data->stats;
-    + 	size_t ref_count;
-    + 
-    +-	switch (ref_kind_from_refname(refname)) {
-    ++	switch (ref_kind_from_refname(ref->name)) {
-    + 	case FILTER_REFS_BRANCHES:
-    + 		stats->branches++;
-    + 		break;
-    +@@ builtin/repo.c: static int count_references(const char *refname,
-    + 	 * While iterating through references for counting, also add OIDs in
-    + 	 * preparation for the path walk.
-    + 	 */
-    +-	add_pending_oid(data->revs, NULL, oid, 0);
-    ++	add_pending_oid(data->revs, NULL, ref->oid, 0);
-    + 
-    + 	ref_count = get_total_reference_count(stats);
-    + 	display_progress(data->progress, ref_count);
-    +
-      ## builtin/rev-parse.c ##
-     @@ builtin/rev-parse.c: static int show_default(void)
-      	return 0;
-    @@ remote.c: static int get_stale_heads_cb(const char *refname, const char *referen
-      
-      clean_exit:
-     
-    + ## repack-midx.c ##
-    +@@ repack-midx.c: struct midx_snapshot_ref_data {
-    + 	int preferred;
-    + };
-    + 
-    +-static int midx_snapshot_ref_one(const char *refname UNUSED,
-    +-				 const char *referent UNUSED,
-    +-				 const struct object_id *oid,
-    +-				 int flag UNUSED, void *_data)
-    ++static int midx_snapshot_ref_one(const struct reference *ref, void *_data)
-    + {
-    + 	struct midx_snapshot_ref_data *data = _data;
-    ++	const struct object_id *maybe_peeled = ref->oid;
-    + 	struct object_id peeled;
-    + 
-    +-	if (!peel_iterated_oid(data->repo, oid, &peeled))
-    +-		oid = &peeled;
-    ++	if (!peel_iterated_oid(data->repo, ref->oid, &peeled))
-    ++		maybe_peeled = &peeled;
-    + 
-    +-	if (oidset_insert(&data->seen, oid))
-    ++	if (oidset_insert(&data->seen, maybe_peeled))
-    + 		return 0; /* already seen */
-    + 
-    +-	if (odb_read_object_info(data->repo->objects, oid, NULL) != OBJ_COMMIT)
-    ++	if (odb_read_object_info(data->repo->objects, maybe_peeled, NULL) != OBJ_COMMIT)
-    + 		return 0;
-    + 
-    + 	fprintf(data->f->fp, "%s%s\n", data->preferred ? "+" : "",
-    +-		oid_to_hex(oid));
-    ++		oid_to_hex(maybe_peeled));
-    + 
-    + 	return 0;
-    + }
-    +
-      ## replace-object.c ##
-     @@
-      #include "repository.h"
- 2:  9efd804f546 =  2:  e3bebc60554 refs: introduce `.ref` field for the base iterator
- 3:  a4d79cf863d =  3:  99849a0323a refs: fully reset `struct ref_iterator::ref` on iteration
- 4:  b4dcba74daf =  4:  6b93b3601b8 refs: refactor reference status flags
- 5:  89cc42156b4 !  5:  8756dc100ab refs: expose peeled object ID via the iterator
-    @@ builtin/pack-objects.c: static int mark_bitmap_preferred_tip(const struct refere
-      
-      	object = parse_object_or_die(the_repository, maybe_peeled, ref->name);
-     
-    - ## builtin/repack.c ##
-    -@@ builtin/repack.c: static int midx_snapshot_ref_one(const struct reference *ref, void *_data)
-    - 	const struct object_id *maybe_peeled = ref->oid;
-    - 	struct object_id peeled;
-    - 
-    --	if (!peel_iterated_oid(the_repository, ref->oid, &peeled))
-    -+	if (!reference_get_peeled_oid(the_repository, ref, &peeled))
-    - 		maybe_peeled = &peeled;
-    - 
-    - 	if (oidset_insert(&data->seen, maybe_peeled))
-    -
-      ## commit-graph.c ##
-     @@ commit-graph.c: static int add_ref_to_set(const struct reference *ref, void *cb_data)
-      	struct object_id peeled;
-    @@ refs/reftable-backend.c: static int reftable_ref_iterator_advance(struct ref_ite
-      		iter->base.ref.flags = flags;
-      
-      		break;
-    +
-    + ## repack-midx.c ##
-    +@@ repack-midx.c: static int midx_snapshot_ref_one(const struct reference *ref, void *_data)
-    + 	const struct object_id *maybe_peeled = ref->oid;
-    + 	struct object_id peeled;
-    + 
-    +-	if (!peel_iterated_oid(data->repo, ref->oid, &peeled))
-    ++	if (!reference_get_peeled_oid(data->repo, ref, &peeled))
-    + 		maybe_peeled = &peeled;
-    + 
-    + 	if (oidset_insert(&data->seen, maybe_peeled))
- 6:  3168a0ca998 =  6:  93ef81780ec upload-pack: convert to use `reference_get_peeled_oid()`
- 7:  e72d8ff494f =  7:  4546770861f ref-filter: propagate peeled object ID
- 8:  1eb5dee1e04 =  8:  fe65e6040f1 builtin/show-ref: convert to use `reference_get_peeled_oid()`
- 9:  f58de2e9eaa =  9:  c656a638c2b refs: drop `current_ref_iter` hack
-10:  1e62da6ed1e = 10:  03f85e095e8 refs: drop infrastructure to peel via iterators
-11:  af36e3bfe80 = 11:  8087e6db211 object: add flag to `peel_object()` to verify object type
-12:  14859152c57 = 12:  1cc87f74e11 refs: don't store peeled object IDs for invalid tags
-13:  2191cfee400 = 13:  a5a6f27aea9 ref-filter: detect broken tags when dereferencing them
-14:  0ef24754924 = 14:  2265eecd4ee ref-filter: parse objects on demand
-
----
-base-commit: 5c120f01eb88f4be8b06fd4bc6893763204b78c4
-change-id: 20250918-b4-pks-ref-filter-skip-parsing-objects-f0d1f6af4a9f
+-- 
+2.51.1.851.g4ebd6896fd.dirty
 
