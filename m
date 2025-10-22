@@ -1,121 +1,112 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8DE3054CC
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 21:38:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AFE27FB2B
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 21:51:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761169128; cv=none; b=rbQEyjwMqW350dS6yeM/fGC2tZhgIi5RBBuCTJ/xighIAFRhBHM+Pj/FSMlQO/5s+uH/Rcg8i+uiyRbZIcqfEEJzSMGmyttyup0yQ0BTQ1s1eXkiNu6dELG1wW9lA8Eo6IzxrEFtpDhgj6rQuckLz0NexVg4oX9rRNy8+7feTy4=
+	t=1761169889; cv=none; b=kYZ6uh18FWfBItSUyAF+cJxxEZivu1wskZB0NJfyIHmjSxTYKcqeWn/1mGRCWNXIF63V/NTVQEb8jlUeAEG9nfd6XnjyjrPrS77mFWlH9QNrtvmAQr0p8h6JIgsob+x1G8DWZ9nOPdheTKVoBG29C51qwB2JM48Rfj7eFCmKYWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761169128; c=relaxed/simple;
-	bh=dY1O6SncZ/4ooTDC1f3hbzlQKMdxQbaLrw+WzIkTGkY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aaDu2m3OLiVh/XhvrQcb0gp9mJmpvVEhMBzhRGKvdKkwWvIbZ1XU8Y3k+fa09327bdoqM6rGAkQLRgYAyCu03FjThJ5/E3cUt9iU0uXNziX54bQPWqXwXPqK3opz+MLB41yntFVQA2oLeJHr4ZTLx/l2RSwSs0YiTivHe0WeOLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AouRjJgV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KX2uajzq; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761169889; c=relaxed/simple;
+	bh=NnU6t/tmFg7vcY0YjC0L3ODu3Jg5htX8pG6Q0R3iKjU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kfxMS5GW3nRuFWci/hCgU86ursdVCOvmP3pOUX4rc+idNGL4MOxSo/ZjzvVNw2M24Uqh7mGJH8MtUS5uhr9vhierQ2cx049y/+eGBpgm7jztaxrVgHoofeI5pivAD+17gp+mz0+PkQY8rFm3Rjr3YyWg2wN5BjOz87QMlGban8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qfbx2rSo; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AouRjJgV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KX2uajzq"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 83512EC01DB;
-	Wed, 22 Oct 2025 17:38:45 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 22 Oct 2025 17:38:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1761169125; x=1761255525; bh=2KjJiv0sWg
-	Q3nzvZ0yWmMalQNHggyh58PvAw/QHLBwk=; b=AouRjJgVfCGXsEJR0jsDQ92Ae7
-	koXdIfPwzn4FLwzEqpi1LjfPho7H7WhofamVRaOby7DRM4SJphQFw2xqglpFEXA+
-	/usk6YrWKKG+4q/GaPgjlvAz271igs1aFvo/jbIiQPRwNBy4vHCHfDDr+nJiQEvX
-	RK/BJWWhcRLDs9M8TSJtnZGFEdUcNjx5Pt23lYD+YTpd4EH/t+4G38++woArAOgY
-	ZSbsFZ+Szxq7NbrkE2V7IUxGQeVi8Eq2Xy9fTBZPlFvzuKj3g15EVyyIn6WeR18X
-	RT8DodP00KkNapArHshjcxs2FNmsMzvRYG+9J4jtUfKgqCSSDXQJZxlEsFfg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761169125; x=1761255525; bh=2KjJiv0sWgQ3nzvZ0yWmMalQNHggyh58PvA
-	w/QHLBwk=; b=KX2uajzqEOssCf050HdgMulfrqbKCtu6xpvkuOUoqZs88nLUNrR
-	rSJn2K30bDUXWbyhBQKeXlHoW8zzWAr61UlUuyuC8QlOOTXrvsk4kUjFJ0FH7eRD
-	rXNcx8KZbow8sx1aWIIB1lPk39VRrCsky3JHLqmDNXNCXTCZeMNtYRO4h8BMzurO
-	eIJy3HlSu2BI1DeKAE9aPvhd2DafXVIY8Xst2aFeM5JvnL+aNln/rYCiqlyfgefk
-	CaYOVPibceNEJLqf13kE2gz17RZ+ukssSkRljLlfJ+lDFmawsZBFtivbGTeQfZt5
-	FCnI3yIo1z97VlAm1hdB8XST63/RBrWIOOw==
-X-ME-Sender: <xms:5U75aG_qH-3txTa5BsBq9DMjbCHcsO6ZpRX_Ir5mKkfXSopaCmdbJQ>
-    <xme:5U75aNlxtx7z91hTBTAkh2jGrmzFJ-6fUIEuLuqqEJVodik5Cn_IOwU3Hcx7HZfYd
-    Em-A9I7FB9eEJoBZ1sKWKn8QGx-xCBnNiAxFwDh-7zFU9lPIfyq>
-X-ME-Received: <xmr:5U75aEUCg6kqX7p9SX7rHa7tt749c7O3omcAQF-v9Ws6WKoTX0sHMz3fa_I1pnBfUE1P2-KJ1-6yDFBJJiUwU3kJFM_j12E074LZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeegieekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:5U75aKEfD1Q0y0yL844jK4FL_haffYTk-rpHymtqMlNgC2VFZPhbqQ>
-    <xmx:5U75aIfaXFwWnjX6pjqzrT9DxvAubtNzL9lvlDbN8GWUv0v43AhZVw>
-    <xmx:5U75aDKvTkpp4gVJBNEusTU5yIqf9-CD8L392ksRLATf1uQDCLYjrA>
-    <xmx:5U75aFHMOInYA0YfxYzJDb1BFom3ra1HDJX4_FBduSrvZaWCWkVRzQ>
-    <xmx:5U75aBX1M4c1ypchqSI6fS--r9i0r5nYD4vuvWxcD_erhLaZ_OjBpP6H>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Oct 2025 17:38:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  Ezekiel Newren via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/9] xdiff: use ssize_t for dstart/dend, make them last
- in xdfile_t
-In-Reply-To: <CAH=ZcbBmdWCBh9zH1Y1JxcnNS-E9AU6Q4rRXPhMOtDBmkxLd8g@mail.gmail.com>
-	(Ezekiel Newren's message of "Wed, 22 Oct 2025 15:07:40 -0600")
-References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
-	<1fa9a7d7d1c309f2f651da351ba7bc0b36272d91.1760563101.git.gitgitgadget@gmail.com>
-	<9eafee4d-ea94-4382-ada0-58000d229d2e@gmail.com>
-	<xmqqecqww4u7.fsf@gitster.g>
-	<CAH=ZcbBmdWCBh9zH1Y1JxcnNS-E9AU6Q4rRXPhMOtDBmkxLd8g@mail.gmail.com>
-Date: Wed, 22 Oct 2025 14:38:43 -0700
-Message-ID: <xmqqqzuuwra4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qfbx2rSo"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-378cffe5e1aso1623011fa.2
+        for <git@vger.kernel.org>; Wed, 22 Oct 2025 14:51:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761169886; x=1761774686; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rwSH+vHsuq0uAdCTVs365QYOkCXFd88tZ4fTPHyAuJU=;
+        b=Qfbx2rSoTz4CNnnYrRrKuWHSVhH4uUdlu6UwuG55gi3c8H47qhgnxA5au3/e0ocCbf
+         x2vnn+MNY350iCNxyqL4rP2BnjpqOpoSaW7nVzj3ptAoCu85MmU3+/TKQ/Ql53lWB1i0
+         UNc6qszgJr/gX32wuNsZKZjgl1/oDzflPAKkSFA20P/hMsz56W94gMSvRFC/2Z/lcu9R
+         aM1ODbjuWLFL7wyTKPDNI3dndL2fWN9G9J5n+3BCXlugeZx5NCR/vVW49sdJw7JYKW6+
+         2/aaZF6ILmKhYTHY+nqHGrZrji5Oy2lDygMrAnSBEildJHC37oXdcd+PJ+sseI/Hl41R
+         XYew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761169886; x=1761774686;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rwSH+vHsuq0uAdCTVs365QYOkCXFd88tZ4fTPHyAuJU=;
+        b=jo5PrR8XQVijTupuzpcDNCOPi3VoATot4lb5KCt0kjoC9PtI/3sElIQPK8Su+By33C
+         4/B5UdLxzKliHF6sr5GMOddtDZK2Oe0cnXi73ZvgWoBfoNEga8pOKtMlvGbOYtjeMmB7
+         JE59aJqSnR4qaNi4VrAbrngPjWnDl/eVlx12rEcawn/v/WpUFBk3mb4KfEshg7p85VpP
+         GViVJs+ijGscjhmdi7B+dalD9lRxnq+nCPt7fpEGPUYq53+IO4VVlqx5PsZJ7+OT2eCV
+         dqJEZFae2lNQixBa/qr52BP0MP2slWaWgUNHZ96JYVIuj3IfdtK25YW1PWQahrOSE7Or
+         nOHA==
+X-Forwarded-Encrypted: i=1; AJvYcCWB0El4Wm2rvkfg3XrxiU8+prhu9WjDW+hPlZFjz23EGRF6WuzDuFicMTh+wZZuTZK2gpE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwCZm6YNAQTJvV6O9M/QKilqCQ0TT4phkqsPFc7dQvwtsWG/w4p
+	Rlb+qITPPcA3AMD3/nQaaoqoDTopZ+izHpLphx2WKOdmolFbj6UZdmPRWvL6ToIuNsd7eG0c6yE
+	gOi4cF1Hj6LUVBbut6SHI7XWH9/6IPVE=
+X-Gm-Gg: ASbGncujQnaQk0RNjFmyVcPq0xOdEHvPFy5NL7gLcAotS4+kBjClwEcijCDhnaRYDpR
+	l9CHb+t3G4X+tVLo57bguOIjq/2PT4fua+Qmut8qjexf28DIuoqt8B25S+pJi/lhW7alkit9uwl
+	fn2BRGtcDT1JotaA5pUscerROQPEnalSMrlna7QEirF8TShnwWZPz6GWcEnjMiOxl5o/nfPgQUy
+	uSJH+4evrvXF0Aq/SaHCfV1737/Zbf7ibQ3LyWBaZOncBtNFTG8R4kttcYJZg==
+X-Google-Smtp-Source: AGHT+IGxd+CK0M5NroRpi/bMaCkLO68KWSF6xusGU4Z3XSm17Ob6Au8ItWnig+yigno+UmHK7OO9P0cNoA3hee9LPNE=
+X-Received: by 2002:a05:651c:1989:b0:365:a58c:3ca with SMTP id
+ 38308e7fff4ca-37797a8946fmr67928691fa.40.1761169885755; Wed, 22 Oct 2025
+ 14:51:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
+ <1fa9a7d7d1c309f2f651da351ba7bc0b36272d91.1760563101.git.gitgitgadget@gmail.com>
+ <9eafee4d-ea94-4382-ada0-58000d229d2e@gmail.com> <xmqqecqww4u7.fsf@gitster.g>
+ <CAH=ZcbBmdWCBh9zH1Y1JxcnNS-E9AU6Q4rRXPhMOtDBmkxLd8g@mail.gmail.com> <xmqqqzuuwra4.fsf@gitster.g>
+In-Reply-To: <xmqqqzuuwra4.fsf@gitster.g>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Wed, 22 Oct 2025 15:51:14 -0600
+X-Gm-Features: AS18NWDFzfsYE76APC6Wx3OfnJ1yn4BfKJtYl7Ljng012hwy_EETWAkAcFHSpak
+Message-ID: <CAH=ZcbDVBWcRzOmJM7OWvtap2F-84qJ0zcU+Z8u8yX4p7CWb=Q@mail.gmail.com>
+Subject: Re: [PATCH 1/9] xdiff: use ssize_t for dstart/dend, make them last in xdfile_t
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, 
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ezekiel Newren <ezekielnewren@gmail.com> writes:
+On Wed, Oct 22, 2025 at 3:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Ezekiel Newren <ezekielnewren@gmail.com> writes:
+>
+> > In my compat/rust_types.h file (which was dropped) I defined isize
+> > using ptrdiff_t rather than ssize_t. Maybe that file should be revived
+> > so that we don't have confusion in code reviews when structs are being
+> > expressly converted for the purpose of Rust FFI? I'd really like to
+> > bring that file back so that everyone has a clear reference for how C
+> > types map to Rust, but no one seemed to like it except me. Maybe it
+> > should be an adoc file rather than a header?
+>
+> I may be mistaken, but I thought that the latest agreement was to
+> use conceptually the "same" type in each language, have each
+> language call that type in its native way, and if needed convert at
+> the FFI boundary.  So if we agree to use, for example, 64-bit signed
+> integer type for counting things plus returning error conditions via
+> negative values, maybe C-side can agree to use i64 for it, without
+> having to worry about how that thing is called in Rust side.
 
-> In my compat/rust_types.h file (which was dropped) I defined isize
-> using ptrdiff_t rather than ssize_t. Maybe that file should be revived
-> so that we don't have confusion in code reviews when structs are being
-> expressly converted for the purpose of Rust FFI? I'd really like to
-> bring that file back so that everyone has a clear reference for how C
-> types map to Rust, but no one seemed to like it except me. Maybe it
-> should be an adoc file rather than a header?
+Your understanding is correct. Would
+Documentation/unambiguous_types.adoc be an appropriate place for this
+documentation?
 
-I may be mistaken, but I thought that the latest agreement was to
-use conceptually the "same" type in each language, have each
-language call that type in its native way, and if needed convert at
-the FFI boundary.  So if we agree to use, for example, 64-bit signed
-integer type for counting things plus returning error conditions via
-negative values, maybe C-side can agree to use i64 for it, without
-having to worry about how that thing is called in Rust side.
+> I am not sure in what way <compat/rust_types.h> should be used, and
+> perhaps a documentation file may be sufficient as you suggest, but
+> in any case, I agree that it should be made clear to everybody what
+> C-types are to be mapped to what Rust types and vice versa, and if
+> some C-types have no corresponding Rust type in that mapping, or if
+> some Rust types have no corresponding C-type, that type needs to be
+> converted before they reach the FFI boundary.
 
-I am not sure in what way <compat/rust_types.h> should be used, and
-perhaps a documentation file may be sufficient as you suggest, but
-in any case, I agree that it should be made clear to everybody what
-C-types are to be mapped to what Rust types and vice versa, and if
-some C-types have no corresponding Rust type in that mapping, or if
-some Rust types have no corresponding C-type, that type needs to be
-converted before they reach the FFI boundary.
-
+Alright. I guess I'll drop the idea of compat/rust_types.h permanently.
