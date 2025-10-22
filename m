@@ -1,108 +1,115 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C506D34F25C
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 14:27:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954002773C3
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 14:31:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761143236; cv=none; b=YsW2iFPWXlwESRhzSJ+db/HhK1RpSHictONc3VVGdm8rWZnZ5rvtRoRmqBL4CvY5p92w0xqmi9vt1M+eMhNCLSCKz7jjZQkX819CJ4f0c2luIh/aw0dqEjDGm20VgMbn8LDrZAl0QmsjoH/b854X6FW9Blvspo51JKBkdShFzgg=
+	t=1761143510; cv=none; b=L+0p9pFSn80OYT9TtdOfNG9qqiJaof5kZjVEkPnIOShyx2nDZ02QBJ9biHhHKKgobTWsuWdWLHhOe9VVNRX5q9hCULJwanOtR0Une1R/HUJM/4tdPHXzd4Oq1Cbs/yc2TqDeSOkTsCr/He/N4ZPuQ/V6r/8FnXgNK7qulD8EYfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761143236; c=relaxed/simple;
-	bh=oVqm19bT+1HdIMlnc7upkjX9CzJe7pBpi/3rmEXUJlI=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u1FfMJn/UsbUI5gIDkkY19HDUrf0XMV0UUN7ltM9p+/gwTOhoY75qEZcQxY7pmt8QM42UHlUWwR5Ckx6raPa2jkBzSpC4Peg2OfAy9dm0eeOlHIBTa3lOUQWaxLauXJn8GXbdNCpERGLHiOGYFjJimnmAqPH9qKfGXFOl7OFDxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 59MER6iQ270987
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Oct 2025 14:27:07 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Jeff King'" <peff@peff.net>
-Cc: "'D. Ben Knoble'" <ben.knoble@gmail.com>, <git@vger.kernel.org>
-References: <012601dc42ce$a1adcb50$e50961f0$@nexbridge.com> <CALnO6CD8JU2qMCnC=qQmNOV6Wy1ZnveT3tRxUz1E0LVMj5oU9w@mail.gmail.com> <013201dc42d5$07a71550$16f53ff0$@nexbridge.com> <20251022092708.GE853931@coredump.intra.peff.net>
-In-Reply-To: <20251022092708.GE853931@coredump.intra.peff.net>
-Subject: RE: [BUG] Strange git notes completion behaviour
-Date: Wed, 22 Oct 2025 10:27:01 -0400
-Organization: Nexbridge Inc.
-Message-ID: <018701dc435f$f1dc1a00$d5944e00$@nexbridge.com>
+	s=arc-20240116; t=1761143510; c=relaxed/simple;
+	bh=jxPuXgH/St4N4GLPW13FiW7JY3tltExuJnxL7yR7Q1c=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Od2ULClA94p1K3gvaM7wPqxkRiQ2YWfBsAo4CHLPAY+6a3BFLYr4n27rfO/90uKuJ3JqTw+UVMe1Cha7eCR4NHXDt34J/cjO8FhF30NrBi9z2Xv/RjAfyPpFn/1LJ77BGMq3GA3REyLtcqp2T6A5jfKxE+KnI3JpqSDHLnUVnQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CyJQ6rJo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qR/j3KeE; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CyJQ6rJo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qR/j3KeE"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id A63D8EC02FD;
+	Wed, 22 Oct 2025 10:31:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 22 Oct 2025 10:31:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1761143506; x=1761229906; bh=PDU2i5cPMM
+	bBdglFx+9uNSVsvTkpAiYcx4M3LCzfCMA=; b=CyJQ6rJoB89qVeAi/MZUyRyUmg
+	LmzxabFxg0NfoI4BPWJLhxusSlmsrF9+dfw/rqXc86bxF5fNAB2HOGXTRMSMAXwP
+	3C9F5WA5dm5DxACw5DP48m7bKttJIFUVQCjM/cb7hCISym3J4AFWk0WcLRlX+BK+
+	f1ncHSjy2P3Jnv6I6cDeNZLqjUuJlm3AIldqCQqaKs7hL8WG0wHpBsHr5BrYKcFl
+	JgvNr2+YZ4miJ8UE2I8hnxN+LA8S73sLwuPzezvFoRHBmkTYVfv3qm+BoB/HNUXr
+	4YaxpnFaJ6SuJJ2QRSU0eOVmcQKIlRMj9tC1hRBFn620mn0PdLi/1w8HeOaQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761143506; x=1761229906; bh=PDU2i5cPMMbBdglFx+9uNSVsvTkpAiYcx4M
+	3LCzfCMA=; b=qR/j3KeEnpRqCiXQDrAfFIgJb/48Qtjwzb4BWCtXeWbVYPoGeTl
+	nG1FzfFqvTPguY83nkyS+KUkIzP0aduxhHXrjypNMHpaBJfbrimaz0M5RqoDZ9++
+	/ZE3bKRRaCCXYpMGliIf+13CblItx1NzAg4+qzyE/Rfg47UT6h4MKwkW0CX3lp7/
+	EedS+AD00xgackRdC4CBIbGyV1f4z3EdWuAiwZqtvQenBqaqdoh4OUKxRDpseMBJ
+	tBhZidT2Mg3bm+/0pdnYWTFUY4Z/Jt4byWRhiC/L4GM6SagA/6HnFWedcDWzBF7X
+	FKH7wxxssBpFC1LGdReaJ+dnCJcotQhEfXA==
+X-ME-Sender: <xms:0ur4aNou4PAzEwpXRUeDX1Xt8nS6VTURd1_4UJwLeeGX7R_p4TDK0Q>
+    <xme:0ur4aGi1sFFrSDI9o9B3cYfPegy21vGnwf6r21uG8tahvAE3xvy2zb2CECWSj1rM9
+    sOj6EWpdHl1jHwdpvOc4DA_OUuiqu-P_cSwATDdb9aUBBmq06N1HQ>
+X-ME-Received: <xmr:0ur4aChAK5qgQMF4sfYjDS9dfAqa0sypkfFudHddttGNK4Ljv2ha3LQaLkCyo1jc4xbKv5_u_smKDGUyd9e3zBr9SebZof2mhLpY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeefkedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohephihlughhohhmvgdvugdvsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehjrghkvgesiihi
+    mhhmvghrmhgrnhdrihhopdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:0ur4aEhrj9rnG8g5TBbqRMAFg8NXIuui1WekeFGNGgtU4eynDIzlEw>
+    <xmx:0ur4aKIa6XSrYTB-oOJQMsSvFBKUnehvcabuCoTv_L3XOcUhjN3A4w>
+    <xmx:0ur4aLE8gkI4INYvy4TNG1TTmXqwkhVYXeqvaFZQxTndp2eV6zC27Q>
+    <xmx:0ur4aGQlYBvXkpvCgrW4g5jC550FLjfFTtN31aeqZDFg1Ui99OiDCA>
+    <xmx:0ur4aAin2FaL7wwL7LkS42Ml_6vrFvdl5RiFzcOzder2nBEMRd0uEtV7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 22 Oct 2025 10:31:45 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Lidong Yan <yldhome2d2@gmail.com>
+Cc: Jeff King <peff@peff.net>,  Jake Zimmerman <jake@zimmerman.io>,
+  git@vger.kernel.org
+Subject: Re: Regression in `git diff --quiet HEAD` when a new file is staged
+In-Reply-To: <E76C71D8-103E-4C37-B05C-86DC180BD519@gmail.com> (Lidong Yan's
+	message of "Wed, 22 Oct 2025 12:46:55 +0800")
+References: <CACJRbWjwOQwJB13CwTfvhV3p+Hbn4KrNM9AtBanGtUS4V_1MbQ@mail.gmail.com>
+	<20251017075153.GA4078773@coredump.intra.peff.net>
+	<xmqq7bwt1kyf.fsf@gitster.g>
+	<20251018094037.GA1060824@coredump.intra.peff.net>
+	<xmqqh5vww7xa.fsf@gitster.g>
+	<20251021073640.GB259661@coredump.intra.peff.net>
+	<xmqqy0p4wcac.fsf@gitster.g>
+	<E76C71D8-103E-4C37-B05C-86DC180BD519@gmail.com>
+Date: Wed, 22 Oct 2025 07:31:44 -0700
+Message-ID: <xmqqa51j0zzj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQHjmO9AERlM/1ZhxKXB7Q1XH17MtgEgLITOApwjn/kCVAmtv7SPB1gg
-X-Antivirus: Norton (VPS 251022-2, 10/22/2025), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: text/plain
 
-On October 22, 2025 5:27 AM, Jeff King wrote:
->On Tue, Oct 21, 2025 at 05:52:38PM -0400, rsbecker@nexbridge.com wrote:
+Lidong Yan <yldhome2d2@gmail.com> writes:
+
+>> + diff_free_file(o);
+>> + o->file = xfopen("/dev/null", "w");
+>> + o->close_file = 1;
+>> + o->color_moved = 0;
+>> o->dry_run = 1;
+>> o->found_changes = 0;
+>> diff_flush_patch(p, o);
+>> 
 >
->> It is the exit code. When in gdb, the return from notes is -12 as
->> above. By the time It gets back to bash, the lower bytes are dropped
->> so I end up with a 0xFF, which bash thinks is a 0, so the exit code =
-is
->> hidden from view. I tried the !!fn construct in a standard alone test =
-program with
->no wisdom gained.
->
->I don't think the "!!fn()" line ever returns here. In the show() =
-function of
->builtin/notes.c (which is what "fn" is pointing to for "git notes =
-show"), we end up
->calling execv_git_cmd() to run "git show". So you are really seeing the =
-exit code of
->something like:
->
->  git show $(git notes list HEAD)
->
->That in turn is propagating the return from show_blob_object(). Which =
-I'd think
->would return "0" here, since it actually showed the blob, though it =
-does look like it
->could return -1 in a few cases.
->
->Another possible point of confusion: that git-show invocation will run =
-a pager. It's
->been a long time since I've looked at that code, but IIRC we try to =
-preserve the exit
->code of the actual Git command (rather than the pager). But you might =
-try:
->
->  git --no-pager notes show HEAD
->
->to see if that behaves differently. I couldn't reproduce the issue at =
-all on my end.
+> This would make everything going to "/dev/null" after the flush_quietly() call.
+> I think we need to restore o->file.
 
-I tried running with --no-pager. No difference. Interesting:
+Ah, true, the original location was only for NO_OUTPUT but the other
+caller to the diff_flush_patch_quietly() helper does deal with other
+cases as well.
 
-git show $(git notes list HEAD)
-
-works correctly with no error report (from inside gdb), while the run of
-
-git --no-pager notes show HEAD
-
-still reports:
-Run till exit from #0  main (argc=3D5, argv=3D0x811d000)
-    at =
-/home/jenkinsbuild/.jenkins/workspace/Git_Pipeline/common-main.c:8
-Process (0,896) exited with code 037777777764.
-
-Is there a path where just an implied return is used? I have seen the =
-optimizer
-return whatever is in an x86 register - rsx and rsi are both 12 at =
-git.c:982
-- on occasion.
-
-
-
+Thanks.
