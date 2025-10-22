@@ -1,119 +1,108 @@
-Received: from mail-pf1-f196.google.com (mail-pf1-f196.google.com [209.85.210.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEEC2110E
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 04:47:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416312DECBF
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 05:01:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761108428; cv=none; b=Cwg5byJGE+/wDGxz1Qf2rYXe/sv3O/6/IDkBnElIziDgloFTYHYNRBJILa9B0vYXrFKyfF6Kfkeus11GIRxoCxc8NfKX+wvv6k/Q6jDuOo89CZiKhcw0R3h5TbPB8QxwJAm9WZL2Dd6fV6u5kB+GFp4o8DX6xaTzfBTxcbvVGL0=
+	t=1761109308; cv=none; b=Zl+v0gFpbzHikkOkRapw3xVu9xmuwMslQry5K2euziJXuA/5ybGquujGju8xGphg4293sqdk2dH7IT33hDHrm6x0A7pJKNTEeAMuNogU/71gELsub2hjSgKHJLzwwEkzVVr2cESTfZwmTT8dkuyjR9i+Tb0dcXp4hIHQ6CQR+cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761108428; c=relaxed/simple;
-	bh=XqzyLOe1c1dwhy3P/CyAj2F/elQUgZUucchS/1+LuPk=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=HFLhCearMRRM/UE7k9XWuGGTVravV0Bhzc+EFjElFHl/EdjbByuRkRTsr/5p1ffiQV44uBm9xX64ArpjTpCEN5c/GHS3ZzUIkL7zWQkUhmvyPjnCsK/nQJEi+B5sJ6TJwm9t62Ausx2GSaBDBGTpVGDM0WkdYBGUfuvuc0W1b7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YikfJGLh; arc=none smtp.client-ip=209.85.210.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761109308; c=relaxed/simple;
+	bh=tYhSW7VgYGXFfagDDcvDcl3KJKIk6vMu9kft6BTXQUA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eK4t/CUU0XiSkJQlCtMsoKQ1fG5Wqt4qqTUbJFKHGrOqvPavrhxxgtohNnfCdLICzHEM/XGSsrEbV6VcwyPkv4x+N6bbPJA8oj+Bu7Homzbil7qsM7BqqCVvEpHKAa8FRBE4eGv50lH0rOm6B2eJz2oIkL0cqVdPBxkxU4r4pmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cmTo0Bxb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AGwwiYA2; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YikfJGLh"
-Received: by mail-pf1-f196.google.com with SMTP id d2e1a72fcca58-781997d195aso4895465b3a.3
-        for <git@vger.kernel.org>; Tue, 21 Oct 2025 21:47:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761108426; x=1761713226; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XqzyLOe1c1dwhy3P/CyAj2F/elQUgZUucchS/1+LuPk=;
-        b=YikfJGLhjT5nVgDpTsHN/MZdjuSY/9/HugjM0CWBqd+9l8QngH+BrlRukkMzbcQByP
-         lnFrxHll8PmPt5TAXRSWfUCMQuCGDRdOXzam/nT+kM8UxtX77Fe/mdjMGklK1T8L8PjY
-         TCygYF9S19Q3vThelF5TGUoqXhGOqglbfqVZHGEaCgxWYboegX2wEWBeFVNQmE3+GlRT
-         DkGi2ILembNtI2UdEdO/eoaisUVMHagPYwAQrx1PEMwGv++cYmpMGScq/O2+s2lwXpjQ
-         o+um1oiIAh1omRf2foyg9nZHqcyOkpS4fnT26pu7evyvT7g8l7JO6N3t33WtAzyU+qm7
-         yhnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761108426; x=1761713226;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XqzyLOe1c1dwhy3P/CyAj2F/elQUgZUucchS/1+LuPk=;
-        b=N4tog5WCc4clmeu1hjnXR3GrN755aifk5cXBG7Pj4mXoCJzKQFg/FOB6w22/rpaPUp
-         IIfDg+VLZFaVsH9YK6p6oUu+8oz3ZpwwCv7YAnssu+E7M6ahz8CgTP/Qw6l5/PSw59Ax
-         mSVj7t0bG2NnzpqzR4KG/AoI5VL0ucDQFNZcZJVcvkN6Oc8lWFrbNIlCNhEqQm1es10/
-         HZuV60TfU6Da7/KbKBcnB4AiKxf3zMcsYhMvSce5v/c+dVKzqaqeGloXlb0q/m+JJ+58
-         +2GKmoDIdZ2GBqdBrKFoBQDU11zefFOSngGflTqqf5LhkfTNI6d/sOABVn19HlnfUCRS
-         5emg==
-X-Forwarded-Encrypted: i=1; AJvYcCUU2S+nmLno1TL5/3MEvRiID4p5HX+nyfbxaBIImb6YJ91eyCE+HgK1TIlZO0wgPuqEqyQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx57JHeRSj322vF4PI7h9ekAaL3vVCZSIPHTEykbc9ZIXAxZM5+
-	qPHvaMlAoHwCr5XYOTbCcmHJ4cPiTJjv07wROcew66NXXD05JXIG54DG
-X-Gm-Gg: ASbGncvWE1OTTszQxnTSuTJRaM6ZdMAytvY46kb0rkZfhxeihOH0BbhadWh+bL8mUv1
-	VAWsqhbRsIyZ0fQ2XBPcxDokeRWJi5hIjlNKGgsZqSP0q0x+mmXs8gjWRL7fit5HFMuGLFOW1F3
-	TLVt+iFEL51Ejd34ImLPoTAoMp+AuAURf27PPqNQDYWXjHtF1gpWyxnWqoG7LelV96JU1TEcTor
-	FPP/9plgtkU9EdYf5HVJhKGj85Rlsx88EpQhsnBsjKO94HI73qwpP61TzWaL05PTDOsxh/fjcLk
-	yc7Ur3ksPEspaHdkWz4VOGSS9ydeSOt89Bn9kBxG7sgvBWOhrOPZTIBOAz3dl8JDkqZVbk2X12Q
-	oschX7IrXjkL0wmLzmH3GvLgF7r5S5N44W0i5KzcKO9BTdJ+wnAEJqQqehXEFuwDdqwRA6CKLK/
-	ubWeiZnYxPcGGNTQvUu0mSr0Xsd3yaBkzP/CB+hGrNUG5ov9A=
-X-Google-Smtp-Source: AGHT+IGiH2DQudeiAtkFtlaFAfTzyg56HNjiqEf0sRRIckyTwUwAezb6XwpgpcrLep9bM68ruw1E5g==
-X-Received: by 2002:a05:6a00:1884:b0:781:156b:425b with SMTP id d2e1a72fcca58-7a220ae0ff9mr23163890b3a.27.1761108426268;
-        Tue, 21 Oct 2025 21:47:06 -0700 (PDT)
-Received: from smtpclient.apple (n058152119060.netvigator.com. [58.152.119.60])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a22ff349dasm13113914b3a.28.2025.10.21.21.47.04
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Oct 2025 21:47:06 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cmTo0Bxb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AGwwiYA2"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4E28114001D3;
+	Wed, 22 Oct 2025 01:01:45 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Wed, 22 Oct 2025 01:01:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1761109305; x=1761195705; bh=/exJKPMu/o
+	+7HTEArVLzvQyhYZNXwBc+W5IUkwcYBVs=; b=cmTo0Bxbx3/vjtxKd/C8/2OhmX
+	A57FBFvXfhLzt3nB4ed0CiSsAJbqVgYjv8/lzOTC/cHlWQLS/726AQiVa4TXjRGu
+	LYMWdq6dX6GSodgH40IUyq/QRO5nl1a+HCFF4Krr2ROu4gAI2FwOJCmmrLO4HnwM
+	CdiZa8U1HOZK5O4gtLnsJsAgD85D6dUXvJH3oYncrQhoUMAuSMNqJ3HuP2jpjCGq
+	ZeNmaXm2gYSb0w95RagHHLzhGnCEssNAahc1nG37aQyEgiIQmaJmj1M53Otnjkw0
+	6Bs0U1N8ENpA9yEsegs3Lz95vRFM2BSLXaSgtuXG4t4vrDaBn4wIAYu8oSYQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761109305; x=1761195705; bh=/exJKPMu/o+7HTEArVLzvQyhYZNXwBc+W5I
+	UkwcYBVs=; b=AGwwiYA2CAgNj2yJZoO9l5dm23LNEsLRRVaKOVnpnWHxJk/B965
+	NvSaq2DnDMNjLejzUMoN8sXFZ7xfuwUHNpbhQHSu2XPKfZzC6d760fVt5x/sBoTy
+	MHFEFlclQ8l1gwi//cSvdRgyG/k2vFLTIhhqHxPwYhxQHA5WgRzT0i1zBEPhb760
+	AS1TNUEja2OYS2Oqb+2VyJ+86mdvNp6BOa1HVL0urjIxKQtToRuFqKtd0GMLcrHk
+	IuOszdWsKlB6iVTD0et8gjsF2nkPeTNLhPhDoge646U3VpBMOKndO21nUFCNMkwn
+	Gp/r3FDXgho6oB5tN8mXiD+z9maRF5uCBpQ==
+X-ME-Sender: <xms:OGX4aO53bzbDn5PJ_2_oZqcT356wDa2Ncx4cLFRwnqm4gIpv6O3EFg>
+    <xme:OGX4aLklDz7yMatXV5JiQUATy08xOC15cHlUFRp48J_rm6x_hu3EF4tJ29OX-T764
+    _ZZ0rTYjgls7NzWWggm1LTYFYPxGkLAPjqh-JNw6VTRl7WQZQ-jSwI>
+X-ME-Received: <xmr:OGX4aHSgpoWFA8UxTenPgSAvhaoGRYycs0c4kOaGt2ISoZ2jl-ibCpMIO1wgfJhOd5E2jHiXpatfaUV-jdk-f2NNI-M2Px0CPAY6y739Fg0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedvieelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehkrg
+    hrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:OWX4aCH59wI8wA6PmD54CKnSPyTWet_tDfSPwIKbsq1jAyDhLHeZ7g>
+    <xmx:OWX4aEGISrz2eyGLDF6TcOrijm2EuDKu53x30ERujl14vDRko1IgYw>
+    <xmx:OWX4aISIQqvDVeyRaWqk53RUyQKaPtV5kgPtFb_BuKpgL2Mvh63aKQ>
+    <xmx:OWX4aNIusxEdQ0Nk5zgunkN3aMis-drFoxHJWcN4wKGYlFz2rCSANg>
+    <xmx:OWX4aH-4oN7Em2Xqp0CepOP2KrM9Oc-Ks3cNuYTqnYG66Tzj9JIyIdHO>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 22 Oct 2025 01:01:43 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d17f54da (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 22 Oct 2025 05:01:42 +0000 (UTC)
+Date: Wed, 22 Oct 2025 07:01:33 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com, sunshine@sunshineco.com,
+	gitster@pobox.com, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v6 4/7] builtin/repo: introduce structure subcommand
+Message-ID: <aPhlLbsOFxeOv5KZ@pks.im>
+References: <20251015211213.361797-1-jltobler@gmail.com>
+ <20251021182601.2687284-1-jltobler@gmail.com>
+ <20251021182601.2687284-5-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: Regression in `git diff --quiet HEAD` when a new file is staged
-From: Lidong Yan <yldhome2d2@gmail.com>
-In-Reply-To: <xmqqy0p4wcac.fsf@gitster.g>
-Date: Wed, 22 Oct 2025 12:46:55 +0800
-Cc: Jeff King <peff@peff.net>,
- Jake Zimmerman <jake@zimmerman.io>,
- git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <E76C71D8-103E-4C37-B05C-86DC180BD519@gmail.com>
-References: <CACJRbWjwOQwJB13CwTfvhV3p+Hbn4KrNM9AtBanGtUS4V_1MbQ@mail.gmail.com>
- <20251017075153.GA4078773@coredump.intra.peff.net>
- <xmqq7bwt1kyf.fsf@gitster.g>
- <20251018094037.GA1060824@coredump.intra.peff.net>
- <xmqqh5vww7xa.fsf@gitster.g>
- <20251021073640.GB259661@coredump.intra.peff.net>
- <xmqqy0p4wcac.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251021182601.2687284-5-jltobler@gmail.com>
 
-Junio C Hamano <gitster@pobox.com> writes:
->=20
-> /* return 1 if any change is found; otherwise, return 0 */
-> static int diff_flush_patch_quietly(struct diff_filepair *p, struct =
-diff_options *o)
-> {
-> @@ -6179,6 +6181,15 @@ static int diff_flush_patch_quietly(struct =
-diff_filepair *p, struct diff_options
-> int saved_found_changes =3D o->found_changes;
-> int ret;
->=20
-> + /*
-> + * run diff_flush_patch for the exit status. setting
-> + * options->file to /dev/null should be safe, because we
-> + * aren't supposed to produce any output anyway.
-> + */
-> + diff_free_file(o);
-> + o->file =3D xfopen("/dev/null", "w");
-> + o->close_file =3D 1;
-> + o->color_moved =3D 0;
-> o->dry_run =3D 1;
-> o->found_changes =3D 0;
-> diff_flush_patch(p, o);
->=20
+On Tue, Oct 21, 2025 at 01:25:58PM -0500, Justin Tobler wrote:
+[snip]
+> +static int count_references(const char *refname,
+> +			    const char *referent UNUSED,
+> +			    const struct object_id *oid UNUSED,
+> +			    int flags UNUSED, void *cb_data)
 
-This would make everything going to "/dev/null" after the =
-flush_quietly() call.
-I think we need to restore o->file.
+Tiniest nit, not worth a reroll: we tend to use these callbacks in
+singular, as you end up doing the thing for one specific entity.
 
-Thanks
-Lidong=
+Other than that this series looks good to me now and is ready to be
+merged from my point of view. Thanks!
+
+Patrick
