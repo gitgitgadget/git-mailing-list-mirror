@@ -1,189 +1,184 @@
-Received: from mail-24428.protonmail.ch (mail-24428.protonmail.ch [109.224.244.28])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774B0351FA0
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 16:19:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EE2246763
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 16:28:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761149999; cv=none; b=CsJ8AFeFgyOgqfor6K6zfQvaX6vPkCF6K+RmF92Zbg6ecXH0afDunt2846htCCN2DJ4GW9jJOowWiloxlQQ8EhCDVQluG65zZ1OygppINtSTAuAp+PWp/7PMjUc/CPMJUF1VxOAzVDY1l7QJE0TubBlzfZGo76iqz3DwJJAk/MY=
+	t=1761150505; cv=none; b=PNYE6NpizC9IBXH1R9i4Seeem57f9a0TgQQj6sO8wxRYloJUcZQf96waBFSH2uFVRNcSFFoI9gwVamtxd4BPUb+8215AhuHhkcdrhRuC0aXCiAsk+D2BWFav5ytww72hffLJoKGzt6wNn1QyxnVOdPnWbSVSsM1MSU6lPX5yX3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761149999; c=relaxed/simple;
-	bh=pra4xY096rlywzeXZXBInmEKCoWf3+JivMaLwQ1R+ok=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n3ZLPALG4DNqKtk5K5FVZzYfuwFiYcuKLwJk9hvG+zd6qgidvYG+1pSh3K7VekODvDKNoH0aHn8e8v08KajAEduKliF8q+eWinqimJBCdBodDFuyKavEY7z/iF2gOtJ86nhNQNSWIi0HZJdhqWQOD0LHchXzqFJi4mZZVCobw64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=bX+chVf5; arc=none smtp.client-ip=109.224.244.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1761150505; c=relaxed/simple;
+	bh=Jn6Ai7vSmxV8b9C6tdFTDses9DLBzRqTLO/N8HwKqfE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CPNl0Xx0d5zAu/6lpja8DlydD2IiuF/caigGK4YA14ss8CwWVykCsF9S/b3qbntUh156/FnoDWMRS30zOKh6UzgnlGp/UFF0cQ4ma1viw250fdW3r1loatMHaESN8qQBCXjfHPhGYP/RHHmgxOKXgVx+n0VjK/JNbg3RfVpKlB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bn2I7o2F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rMHRHaiO; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="bX+chVf5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1761149989; x=1761409189;
-	bh=pra4xY096rlywzeXZXBInmEKCoWf3+JivMaLwQ1R+ok=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=bX+chVf5/f4loKk0MLn3KU5O7PlSB8YcUaNDFv/+QWyAI139ne387axXIY6uoaTnt
-	 oUsRiKoV4UX5t3a0mA/3/tE0vWgD1H8mIc+8B3lfLFkqBM4Tux5SjwkMwOAKTnAT8k
-	 bCuidN/sdq9eQGbXmRmmAzwUtukdVjuJdJlFC6dCbUaNQIHuSgJxEmTfNT24++hp54
-	 PY9T8ddGY6SM9Eow49yvCmnZunbVhUqGJzaYHEvotEVLZn8hi2E63LqOQzY2jJcqGJ
-	 7nPpY3K4YFlqNFVnAa/sU3gMjyh7xW8Oft0h/As7+avqT9FKAqImCsgYIx/5mKqPB3
-	 oeVwY/e+gvE1A==
-Date: Wed, 22 Oct 2025 16:19:42 +0000
-To: Jeff King <peff@peff.net>
-From: Sruteesh Kumar <sruteesh.oss@protonmail.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] match_pathname(): give fnmatch one char of prefix context
-Message-ID: <XGY0s986kDTgWo-2zVwFk7RpjILTHu_-8ngClGh34WTFEvdYbDGe8j2-oX680ufpA1M3vnekbylzLgWJegDHkXolkNbW508cGJNOoLM1mec=@protonmail.com>
-In-Reply-To: <20251014003404.GC1507@coredump.intra.peff.net>
-References: <n_EjA_jj-d398XOogazunHfOBdh-yoa5P-Prb3b7gjkBODqWMtvKNdhnCLuikthwVcbEy4-ryWTRgyuiShJ3tam93j8S7lmGSlyFjNoxzSo=@protonmail.com> <20251014003404.GC1507@coredump.intra.peff.net>
-Feedback-ID: 82334824:user:proton
-X-Pm-Message-ID: 18f1f4486b87ae1a92e9e37fb93fe0e2e2c72a15
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bn2I7o2F";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rMHRHaiO"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B83391400176;
+	Wed, 22 Oct 2025 12:28:22 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 22 Oct 2025 12:28:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1761150502; x=1761236902; bh=O1oOIXJFyR
+	/IkF7/UC6b5Pyu67VUGohE0FRTt6M6U68=; b=bn2I7o2FBm47HDN53PCSNzRgD1
+	njEVwVNXFU3aUuSWO7p0MmzMrd3LsfmIP0Oef9MSjMf4+szGL87blkLaRL31N32e
+	PyDZqPu/wOo+WeIFTDKkEUvk6xYwJlnl+nnJ8xTlza8bPsI2hpNnAmJ+28z36FC6
+	q1lOj03NCsb0S3UgGdWzEWJtfXRe4GbLKGdQ1yxKQnrHhr8R00Dc5SX0mQsBRbvA
+	7mvhTjSPYYr2oVQfic6wul3ZVfDA64WKXilDRJIqo9/G321GN4btIdQdSzKgl4+U
+	dAAdgAWSSbQAKKkL8AYfNG0T/u2mwS/masWr8Mk0qYJPorx+mpj+ZAMqM9pw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761150502; x=1761236902; bh=O1oOIXJFyR/IkF7/UC6b5Pyu67VUGohE0FR
+	Tt6M6U68=; b=rMHRHaiOxf21AsNHDRP4M77xHcbShZItBFLRhAImF85CSkoNOJA
+	ynBF30DfRFcT2GjDXHk51o/BCRpL8D2JEW6qIHByuNjeEBJMivlfY8pbdV9QTgo0
+	8tRZ4cGTm5XJRF0MPkKTxF92oPVId7qhsw7q7OxtTNNla17Pfd1tfOi90cDz5TuS
+	012wyC3gl2WiIG+Cc0jgVRlva3CxoBC6jY+yXhH/ZzKxuwi755Z6mBTnlsEvlSAT
+	4FZyW4duZDMFyhE6wSIgBulolyXmjKEbq7kPouwJW46I8Mm/o3CxUWInJNYkf1rD
+	EhilDa4UTW0CW0b2KlbbJHXO9ZIIlKj6B6g==
+X-ME-Sender: <xms:Jgb5aPxivKcD6vf1PwrFrLPlFs3e60PMffia5GISWgaIgS184cYhVQ>
+    <xme:Jgb5aOJzoY_Dg6Xqduh6yhi-SQEludcqYqnjKYst1KnAIcGultOWpuawZCUKmJ5ly
+    xJ_UAqKWyPtxtds82lGLszqc2m63ZEwfBJX6OEvRgkeKnLJrYSx>
+X-ME-Received: <xmr:Jgb5aBr2RalJ_1fkO3BHvKYjp21NchB59qEAQBfmWCBUTkFi2iX5p0DAwUyHOp2kn8LYGiOOXVDCubzqnY6acGBCl4qwDE0Yxynx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeegtdeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepveegudetudffjeekledvieekvddvheekueeuhedttdejveefkeektefhgfeh
+    ueetnecuffhomhgrihhnpeguihhffhdrtgifnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgs
+    pghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfse
+    hpvghffhdrnhgvthdprhgtphhtthhopeihlhguhhhomhgvvdguvdesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehjrghkvgesiihimhhmvghrmhgrnhdrihhopdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Jgb5aFJPft-_TpxZX4jHhJ_0PE2YrFL4XQYzu0KKHLC-JE6ZOI5mrw>
+    <xmx:Jgb5aOQuuRSkvWyN9wNkRPnTuVpqrt-hRhWWh00FoAOHISphXw-S2w>
+    <xmx:Jgb5aMsoJimZntsEwjNPGPAOdMPIicvze-U4qmHzoUaFm9hXMWI5sg>
+    <xmx:Jgb5aHYIQ8k3S_MIxCBQnZOTK0YsJqOIXK2ewI_7O-lycspz5f1Tcw>
+    <xmx:Jgb5aELMFfTLo2J5gxTlakjTX-TKYGjWawqgQvovnRZPotPPHEW_1I8b>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 22 Oct 2025 12:28:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>, Lidong Yan <yldhome2d2@gmail.com>
+Cc: Jake Zimmerman <jake@zimmerman.io>,  git@vger.kernel.org
+Subject: Re: Regression in `git diff --quiet HEAD` when a new file is staged
+In-Reply-To: <xmqqa51j0zzj.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	22 Oct 2025 07:31:44 -0700")
+References: <CACJRbWjwOQwJB13CwTfvhV3p+Hbn4KrNM9AtBanGtUS4V_1MbQ@mail.gmail.com>
+	<20251017075153.GA4078773@coredump.intra.peff.net>
+	<xmqq7bwt1kyf.fsf@gitster.g>
+	<20251018094037.GA1060824@coredump.intra.peff.net>
+	<xmqqh5vww7xa.fsf@gitster.g>
+	<20251021073640.GB259661@coredump.intra.peff.net>
+	<xmqqy0p4wcac.fsf@gitster.g>
+	<E76C71D8-103E-4C37-B05C-86DC180BD519@gmail.com>
+	<xmqqa51j0zzj.fsf@gitster.g>
+Date: Wed, 22 Oct 2025 09:28:20 -0700
+Message-ID: <xmqqms5izysb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Although this feels like a hack, it fixes the issue without impact much of =
-the code. Otherwise, we would get regression issues. Someone from git commu=
-nity, please check this once.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Lidong Yan <yldhome2d2@gmail.com> writes:
+>
+>>> + diff_free_file(o);
+>>> + o->file = xfopen("/dev/null", "w");
+>>> + o->close_file = 1;
+>>> + o->color_moved = 0;
+>>> o->dry_run = 1;
+>>> o->found_changes = 0;
+>>> diff_flush_patch(p, o);
+>>> 
+>>
+>> This would make everything going to "/dev/null" after the flush_quietly() call.
+>> I think we need to restore o->file.
+>
+> Ah, true, the original location was only for NO_OUTPUT but the other
+> caller to the diff_flush_patch_quietly() helper does deal with other
+> cases as well.
+
+Now it turns out to be rather ugly, having to go back and forth on a
+few members of the diff_options structure.  I suspect there are
+members other than color_moved that would not affect the outcome
+(like --word-diff and --color-words) that cost us without giving any
+benefit in this context that we may want to disable, but that would
+make it even uglier.
+
+I am having second thoughts on this approach to move the redirection
+to patch_quietly(), which means for N-path change, we end up /dev/null
+redirection N times.  We have two callers, so we may be better off
+having the redirection around the loops that contain these callers?
+
+I dunno.
 
 
+ diff.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-
-Sent with Proton Mail secure email.
-
-On Tuesday, October 14th, 2025 at 6:04 AM, Jeff King <peff@peff.net> wrote:
-
-> On Fri, Oct 10, 2025 at 02:57:07PM +0000, Sruteesh Kumar wrote:
->=20
-> > Look at the first scenario in the above link. Git is matching the path
-> > foobar with the pattern foo**/bar which is against the git's official
-> > documentation (Look at the last point in the double asterisk section
-> > at the URL https://git-scm.com/docs/gitignore#_pattern_format).
-> >=20
-> > Is this an issue with the code or the documentation?
->=20
->=20
-> I think the code is buggy. Here's a patch which would fix it, but I've
-> marked it as RFC because:
->=20
-> 1. I haven't entirely convinced myself that there aren't more
-> complicated variants of the same problem.
->=20
-> 2. It's kind of a disgusting hack.
->=20
-> -- >8 --
->=20
-> Subject: match_pathname(): give fnmatch one char of prefix context
->=20
-> In match_pathname(), which we use for matching .gitignore and
-> .gitattribute patterns, we are comparing paths with with fnmatch
-> patterns (actually our extended wildmatch, which will be important).
-> There's an extra optimization there: we pre-compute the number of
-> non-wildcard characters at the beginning of the pattern and do an
-> fspathncmp() on that prefix.
->=20
-> That lets us avoid fnmatch entirely on patterns without wildcards, and
-> shrinks the amount of work we hand off to fnmatch. For a pattern like
-> "foo*.txt" and a path "foobar.txt", we'd cut away the matching "foo"
-> prefix and just pass "*.txt" and "bar.txt" to fnmatch().
->=20
-> But this misses a subtle corner case. In fnmatch(), we'll think
-> "bar.txt" is the start of the path, but it's not. This doesn't matter
-> for the pattern above, but consider the wildmatch pattern "foo**/bar"
-> and the path "foobar". These two should not match, because there is no
-> file named "bar", and the "" applies only to the containing directory
-> name. But after removing the "foo" prefix, fnmatch will get "/bar" and
-> "bar", which it does consider a match, because "/" can match zero
-> directories.
->=20
-> We can solve this by giving fnmatch a bit more context. As long as it
-> has one byte of the matched prefix, then it will know that "bar" is not
-> the start of the path. In this example it would get "o/bar" and
-> "obar", and realize that they cannot match.
->=20
-> In the case that there are no wildcards at all (i.e., the whole prefix
-> matches), we'll continue to return without running fnmatch at all. We
-> just need to account for the extra byte in our adjusted lengths.
->=20
-> Signed-off-by: Jeff King peff@peff.net
->=20
-> ---
-> I wonder how much this prefix-matching buys us in practice. There are
-> two cases that are helped:
->=20
-> 1. When there is no wildcard in the pattern at all, we skip fnmatch
-> entirely.
->=20
-> 2. We do a raw match of the prefix chars, shrinking the size of what
-> is passed to fnmatch.
->=20
-> My suspicion is that most of the improvement comes from (1), and it
-> would be very easy to retain that case and get rid of (2). But I haven't
-> done any measuring.
->=20
-> dir.c | 9 ++++++++-
-> t/t0008-ignores.sh | 11 +++++++++++
-> 2 files changed, 19 insertions(+), 1 deletion(-)
->=20
-> diff --git a/dir.c b/dir.c
-> index 0a67a99cb3..764400d9c5 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1360,6 +1360,13 @@ int match_pathname(const char pathname, int pathle=
-n,
->=20
-> if (fspathncmp(pattern, name, prefix))
-> return 0;
-> +
-> + /
-> + * Retain one character of the prefix to
-> + * pass to fnmatch, which lets it distinguish
-> + * the start of a directory component correctly.
-> + */
-> + prefix--;
-> pattern +=3D prefix;
-> patternlen -=3D prefix;
-> name +=3D prefix;
-> @@ -1370,7 +1377,7 @@ int match_pathname(const char pathname, int pathlen=
-,
-> * then our prefix match is all we need; we
-> * do not need to call fnmatch at all.
-> /
-> - if (!patternlen && !namelen)
-> + if (patternlen =3D=3D 1 && namelen =3D=3D 1)
-> return 1;
-> }
->=20
-> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-> index 273d71411f..db8bde280e 100755
-> --- a/t/t0008-ignores.sh
-> +++ b/t/t0008-ignores.sh
-> @@ -847,6 +847,17 @@ test_expect_success 'directories and ** matches' '
-> test_cmp expect actual
-> '
->=20
-> +test_expect_success ' not confused by matching leading prefix' '
-> + cat >.gitignore <<-\EOF &&
->=20
-> + foo**/bar
-> + EOF
-> + git check-ignore foobar foo/bar >actual &&
->=20
-> + cat >expect <<-\EOF &&
->=20
-> + foo/bar
-> + EOF
-> + test_cmp expect actual
-> +'
-> +
-> #########################################################################=
-###
-> #
-> # test whitespace handling
-> --
-> 2.51.0.754.gd4f5ded95f
+diff --git c/diff.c w/diff.c
+index 9b8d658b9e..d28f69e5ce 100644
+--- c/diff.c
++++ w/diff.c
+@@ -6177,14 +6177,28 @@ static int diff_flush_patch_quietly(struct diff_filepair *p, struct diff_options
+ {
+ 	int saved_dry_run = o->dry_run;
+ 	int saved_found_changes = o->found_changes;
++	int saved_color_moved = o->color_moved;
++	FILE *saved_file = o->file;
+ 	int ret;
+ 
++	/*
++	 * Do the dry-run check while sending output to /dev/null and
++	 * extra computation like color_moved that would not change
++	 * the final outcome disabled.
++	 */
++	o->file = xfopen("/dev/null", "w");
++	o->color_moved = 0;
+ 	o->dry_run = 1;
+ 	o->found_changes = 0;
++
+ 	diff_flush_patch(p, o);
+ 	ret = o->found_changes;
++	fclose((o->file);
++
+ 	o->dry_run = saved_dry_run;
+ 	o->found_changes |= saved_found_changes;
++	o->color_moved = saved_color_moved;
++	o->file = saved_file;
+ 	return ret;
+ }
+ 
+@@ -6876,15 +6890,6 @@ void diff_flush(struct diff_options *options)
+ 	if (output_format & DIFF_FORMAT_NO_OUTPUT &&
+ 	    options->flags.exit_with_status &&
+ 	    options->flags.diff_from_contents) {
+-		/*
+-		 * run diff_flush_patch for the exit status. setting
+-		 * options->file to /dev/null should be safe, because we
+-		 * aren't supposed to produce any output anyway.
+-		 */
+-		diff_free_file(options);
+-		options->file = xfopen("/dev/null", "w");
+-		options->close_file = 1;
+-		options->color_moved = 0;
+ 		for (i = 0; i < q->nr; i++) {
+ 			struct diff_filepair *p = q->queue[i];
+ 			if (check_pair_status(p))
