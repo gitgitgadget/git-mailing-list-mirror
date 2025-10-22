@@ -1,84 +1,83 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593122F12A0
-	for <git@vger.kernel.org>; Wed, 22 Oct 2025 06:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5F02EFD8A
+	for <git@vger.kernel.org>; Wed, 22 Oct 2025 06:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761115306; cv=none; b=fUd8jgCmn9OBqU7SGWWo06+sedT/d35iUKs45wEzWdY5uadtp2ZCLx/Hvm7gb9knamNTaZBoLH4LRffrYpE9bZHhY9FF4gU7DwK/8KGlo7h42tbo68X0VdKZPf/pKgPr1e+SXEtbVnnj912uMHz5Aor6C5BGyAcYWuQonHLdBec=
+	t=1761115309; cv=none; b=BfjIiTJRPwajLvx7Vigxs15PKfHOn79quh7xs4SCYkRPmTosLaVlvfVieNnxDR9Q3hd5kfox+PWd61ZoQmSjUnYMX0c+F/Q2+7S57gNS/gJTc97zmkOKJ21nVmhqW/69i4LPdy/fw9S5MUb9qL9e+qUbsftIiuDZVuaaoZvTL5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761115306; c=relaxed/simple;
-	bh=h9Pw7tPc521+m53HBDyTBMLUu/OYJslAN+urwuML1FM=;
+	s=arc-20240116; t=1761115309; c=relaxed/simple;
+	bh=HRUR8RRFI7bccCzNXnxRQaPcx6ueGtzEaBVxBC84onQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=C2Ia1e/P9KPil0IUrYILL53EaoHzUVxBsL7CiCGbphAHAK161Qt3+zx8Dn/sLUKcEydsLWWaO2NoqlwtatLiv+wdXmB4B4LIHdhXJhNOhFmrVGphVSAU+Ig3twuBiv+A7xZ+CPHLc/VAjzttE+cmU7D+qCkfVrPK8e7dCUme598=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GW0tj7dk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uklhkX44; arc=none smtp.client-ip=202.12.124.152
+	 In-Reply-To:To:Cc; b=lP8F2AFiN6IF7btCKl/LDUOyjLhQe3ll4B+qSR/QdewY7kssgS8hdYrRN4X+PP11+VXZ9mhPaVRp6zFn25Znw2fumuiKasYz1tQucSoMStTc9XnpI2fRM2/V6JZrm+uy3cj+nIIB+LIS7dT0kLdxHXqOJmxrnG/Qe2yB613ju9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hxEC0Xcq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bf3UcboY; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GW0tj7dk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uklhkX44"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 92FB47A008E;
-	Wed, 22 Oct 2025 02:41:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hxEC0Xcq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bf3UcboY"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 721C77A008E;
+	Wed, 22 Oct 2025 02:41:46 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 22 Oct 2025 02:41:43 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 22 Oct 2025 02:41:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1761115303;
-	 x=1761201703; bh=vRuIKgJSb7/0z6ciHE1Q0Q5q3u+pw1WIXWl/o46F6Qc=; b=
-	GW0tj7dknMD1Zx9YqkkFcXGbQ6N+CvmKpvrg2ZezOooTNmEhE4ca1eCspLxU37XZ
-	CJuRgrB31TDpqS0zPSTxLbZiQxOLvQ5kJoZIMXSBkiC84FiEq3b0W4axAFd8wcKE
-	JBShCc1Wq97H7bNeQx9ezMsGCw/DVBTAXkJfMVZVX12FzBef+HpEWubD3nqTAFjT
-	4zpjB5ghJz//Njs36CTv3nnRR9bZ2Ci9ZkUNtw1QDniTrU6gS5G/oe13rItGO/l9
-	o7TQNtB2WI/uHDDkFN+x3ox9p+zxESyHvcZHzjM9V1BmJSAeafR+AYpVefd1vdzm
-	iv/td9zgIMAWhojUW09cjw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1761115306;
+	 x=1761201706; bh=s/W4JTlicYzZ+sCA9VR+/wT0qh3ysOkozzuvJ/WvNJQ=; b=
+	hxEC0XcqQDNdM1deV+4PbtgyblRU9lEay8X+m5wAvsqBEgI9DO3gGq4JDcZyfPtz
+	5B8bPLAWPT9WVdv2p+B4SUrCTsd97cEQEI83JIxcock5RfTc1vlLX0YD7xQ9Czgu
+	cnxMTbS1RkLWTokdzF83tQT05776GgdjVYH9dkdmy9OMI/oQ7RprEjpvbxyeKP7P
+	8G7LpSSh9T9Y9G6KQYzHe81SHMcveMJFquAfKSZWpC7oVXCyJ5cBLsR5Rnpc2wYq
+	f/PnxoE8SgmdB7EgXeTF0WB6e8FQg6VZ9axZHSz37flPnkxbnxS69yccqvqkb6ZP
+	277Kno6tfQpsWZ/aa6beWw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761115303; x=
-	1761201703; bh=vRuIKgJSb7/0z6ciHE1Q0Q5q3u+pw1WIXWl/o46F6Qc=; b=u
-	klhkX44VVenWpPZwy5LZHlTvKuY9nt36VVe9EJ4CsCm78Q+d5lhY+ZRQUe0tJoL7
-	1C3Gm1NKUhKomPFMfag53dHtU0E/sw3p3kxuz9ut+H88cocdazVxCUnSyzk5qmhe
-	SxYA4YxFqOTxToyvhms0hyq+t6mfhxnTGsMUh3PfJFGDFqYdw492coDhOtcnrh8F
-	/7u/PTFYQCKjGgBhZVlshxkHRQjjSYCCTwAlrQoks4YquG1fRFFMAYwk+1hSLMUS
-	bqrouFPUerSIVMBRoqnbgqB4sEwDEiGuePxgWtezE4bUjbsky1KxRoKTqsgJ8ri5
-	1PKQbyJDos+7ccnNl/QlA==
-X-ME-Sender: <xms:p3z4aHYOjIDn19YHkUmJ7bA9K7GyiIJxYn9vN8V8dFtb31oMclV34Q>
-    <xme:p3z4aKFt2TBvpo1IJpbc_ILOoMGhyBFqrLkmdFRD1tytPJ0ry4CarCQ5kaA_UVGH5
-    AYCOEsMkx1KGiKm6vwyEgf11iVhpdcxssO7pmIJDpjBjSjb_qTusQ>
-X-ME-Received: <xmr:p3z4aDyuQRwbW3fF28lmiCCa0ZKpvCqdhpfNit16UV_DluXIGT84Cfk4MM_IGagZiZSq8FYw3dRe6e4rx1o1JiblJ5-NUPbCVHSzk9tgcbs>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761115306; x=
+	1761201706; bh=s/W4JTlicYzZ+sCA9VR+/wT0qh3ysOkozzuvJ/WvNJQ=; b=B
+	f3UcboYMgCuZglPYWHlOmjBlQbotdiSxvZSY/qf8/r1VgqsgD9lrM/LBjPcAm7Uf
+	NssQ2d111DozsC7rXTFv9/D5KZcIFRpvMIWvl4mzDFNmjPY0UOEbtEiTrG1Aut0x
+	IVHS+H1dM93RDgXqGZ9m6sa5wZsItUmOm6WX9bYnsktpdXkXSUPWzKgPcjX0gB+0
+	L8gTQYB/+5frrhdQrCmpM7E9IILZbqRStj3uhd30aniPewkYES3eTCfZbZ8wq34U
+	1ug0Sl7Ii1T0Wk/5LCAQAR7yjv68h41aGMkmje1cSnjK8J7HqizLlp6oSkK92dUr
+	02u1psyfKTvl99Ok7Ds/g==
+X-ME-Sender: <xms:qnz4aDoIljf7tbJ1U_1odCo0RnIVf9v1Qfn_FVGJVDrUQAuc1XDaeQ>
+    <xme:qnz4aBXeLk_pOE1Sc4QoW2TFHjT4tP8zLdIs9iBfTd0FgSkBrgGnp4D0r8k_pH8TP
+    EFEwxMZ5iPTP_eL3vpUrjzhxGy0ZUnMl9UMA02nf8fiMGJrakvLFw>
+X-ME-Received: <xmr:qnz4aKDHmgzNN-2zpk8rAjkxlId3XVFF5HMYmA21Rhg-jFXTbhQj9QLhhZzWYA3CAHJ3eIxLy-cZgdXb8RSRqAHD_pfrouer9207Y-SxEKs>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugedvkeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeljeekveekkeeljeegleduheekkeetfeefudfgkeffhfelueduteeileejgfen
-    ucffohhmrghinhepvhgrlhdvrdhtrghrghgvthenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthho
-    peeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhr
-    rhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomh
-X-ME-Proxy: <xmx:p3z4aEmHvpX1M-CObOLZkwpcEE7hmMkUPi4khpAdG__iRN-3UW5-CQ>
-    <xmx:p3z4aEn_bFu0Nr0rsduU5bMPMP697LfGRbQYaJLVkVWVJiqMbEjR_g>
-    <xmx:p3z4aOxmQA91en6gfw3QZr73yG5auGGIfs4VnTcxtXIXgTAv8XEVxw>
-    <xmx:p3z4aBpRfPItJN2rfhZUrxI1vNNXZZuFPbnwrqsK2cg4aBCcb5Sveg>
-    <xmx:p3z4aEXelVVWzUM_8cdlreTUlBB3AvXJByJ2Yz7Ahi7Ferrjqo5ZjGac>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:qnz4aN0urhjRGtoRFw4kM670QF3WnIVpN2uy9ehh_ppBz7OhPt7tUw>
+    <xmx:qnz4aE1RdkDlU2DnqqVmfGuunv4f-TFDNi9_RAOpWaYsccV8-wn5GQ>
+    <xmx:qnz4aKDqlweZi5X0lpKzP532j6Um8HJrpsmDH6_47-Al2KSOjoIf7g>
+    <xmx:qnz4aL4cA9JxArVUG_h_j4Rmo0k0uP2-9WFmenViw5R9grjQ-3uvsA>
+    <xmx:qnz4aMnLw62q4_9H62PWdvYN2NxrXhmtCT5Nkl50RhzRgCvzaaPScaGY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Oct 2025 02:41:41 -0400 (EDT)
+ 22 Oct 2025 02:41:44 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4d048fde (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 22 Oct 2025 06:41:40 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id db552a4c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 22 Oct 2025 06:41:44 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 22 Oct 2025 08:41:12 +0200
-Subject: [PATCH v3 12/14] refs: don't store peeled object IDs for invalid
- tags
+Date: Wed, 22 Oct 2025 08:41:13 +0200
+Subject: [PATCH v3 13/14] ref-filter: detect broken tags when dereferencing
+ them
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-12-eb9f71985ef0@pks.im>
+Message-Id: <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-13-eb9f71985ef0@pks.im>
 References: <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-0-eb9f71985ef0@pks.im>
 In-Reply-To: <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-0-eb9f71985ef0@pks.im>
 To: git@vger.kernel.org
@@ -96,146 +95,77 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
  Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.3
 
-Both the "files" and "reftable" backend store peeled object IDs for
-references that point to tags:
+Users can ask git-for-each-ref(1) to peel tags and return information of
+the tagged object by adding an asterisk to the format, like for example
+"%(*$objectname)". If so, git-for-each-ref(1) peels that object to the
+first non-tag object and then returns its values.
 
-  - The "files" backend stores the value when packing refs, where each
-    peeled object ID is prefixed with "^".
+As mentioned in preceding commits, it can happen that the tagged object
+type and the claimed object type differ, effectively resulting in a
+corrupt tag. git-for-each-ref(1) would notice this mismatch, print an
+error and then bail out when trying to peel the tag.
 
-  - The "reftable" backend stores the value whenever writing a new
-    reference that points to a tag via a special ref record type.
+But we only notice this corruption in some very specific edge cases!
+While we have a test in "t/for-each-ref-tests.sh" that verifies the
+above scenario, this test is specifically crafted to detect the issue at
+hand. Namely, we create two tags:
 
-Both of these backends use `peel_object()` to find the peeled object ID.
-But as explained in the preceding commit, that function does not detect
-the case where the tag's tagged object and its claimed type mismatch.
+  - One tag points to a specific object with the correct type.
 
-The consequence of storing these bogus peeled object IDs is that we're
-less likely to detect such corruption in other parts of Git.
-git-for-each-ref(1) for example does not notice anymore that the tag is
-broken when using "--format=%(*objectname)" to dereference tags.
+  - The other tag points to the *same* object with a different type.
 
-One could claim that this is good, because it still allows us to mostly
-use the tag as intended. But the biggest problem here is that we now
-have different behaviour for such a broken tag depending on whether or
-not we have its peeled value in the refdb.
+The fact that both tags point to the same object is important here:
+`peel_object()` wouldn't notice the corruption if the tagged objects
+were different.
 
-Fix the issue by verifying the object type when peeling the object. If
-that verification fails we simply skip storing the peeled value in
-either of the reference formats.
+The root cause is that `peel_object()` calls `lookup_${type}()`
+eventually, where the type is the same type declared in the tag object.
+Consequently, when we have two tags pointing to the same object but with
+different declared types we'll call two different lookup functions. The
+first lookup will store the object with an unverified type A, whereas
+the second lookup will try to look up the object with a different
+unverified type B. And it is only now that we notice the discrepancy in
+object types, even though type A could've already been the wrong type.
+
+Fix the issue by verifying the object type in `populate_value()`. With
+this change we'll also notice type mismatches when only dereferencing a
+tag once.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/packed-backend.c      |  2 +-
- refs/reftable-backend.c    |  3 ++-
- t/pack-refs-tests.sh       | 32 ++++++++++++++++++++++++++++++++
- t/t0610-reftable-basics.sh | 28 ++++++++++++++++++++++++++++
- 4 files changed, 63 insertions(+), 2 deletions(-)
+ ref-filter.c            | 3 ++-
+ t/for-each-ref-tests.sh | 4 +++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 4752d3f3981..1ab0c503930 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1528,7 +1528,7 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
+diff --git a/ref-filter.c b/ref-filter.c
+index 9a8ed8c8fc1..c54025d6b4c 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2581,7 +2581,8 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+ 	if (need_tagged) {
+ 		if (!is_null_oid(&ref->peeled_oid)) {
+ 			oidcpy(&oi_deref.oid, &ref->peeled_oid);
+-		} else if (!peel_object(the_repository, &oi.oid, &oi_deref.oid, 0)) {
++		} else if (!peel_object(the_repository, &oi.oid, &oi_deref.oid,
++					PEEL_OBJECT_VERIFY_OBJECT_TYPE)) {
+ 			/* We managed to peel the object ourselves. */
  		} else {
- 			struct object_id peeled;
- 			int peel_error = peel_object(refs->base.repo, &update->new_oid,
--						     &peeled, 0);
-+						     &peeled, PEEL_OBJECT_VERIFY_OBJECT_TYPE);
- 
- 			if (write_packed_entry(out, update->refname,
- 					       &update->new_oid,
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 9febb2322c3..6bbfd5618da 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1632,7 +1632,8 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
- 			ref.refname = (char *)u->refname;
- 			ref.update_index = ts;
- 
--			peel_error = peel_object(arg->refs->base.repo, &u->new_oid, &peeled, 0);
-+			peel_error = peel_object(arg->refs->base.repo, &u->new_oid, &peeled,
-+						 PEEL_OBJECT_VERIFY_OBJECT_TYPE);
- 			if (!peel_error) {
- 				ref.value_type = REFTABLE_REF_VAL2;
- 				memcpy(ref.value.val2.target_value, peeled.hash, GIT_MAX_RAWSZ);
-diff --git a/t/pack-refs-tests.sh b/t/pack-refs-tests.sh
-index 3dbcc01718e..095823d915f 100644
---- a/t/pack-refs-tests.sh
-+++ b/t/pack-refs-tests.sh
-@@ -428,4 +428,36 @@ do
- 	'
- done
- 
-+test_expect_success 'pack-refs does not store invalid peeled tag value' '
-+	test_when_finished rm -rf repo &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		git commit --allow-empty --message initial &&
-+
-+		echo garbage >blob-content &&
-+		blob_id=$(git hash-object -w -t blob blob-content) &&
-+
-+		# Write an invalid tag into the object database. The tag itself
-+		# is well-formed, but the tagged object is a blob while we
-+		# claim that it is a commit.
-+		cat >tag-content <<-EOF &&
-+		object $blob_id
-+		type commit
-+		tag bad-tag
-+		tagger C O Mitter <committer@example.com> 1112354055 +0200
-+
-+		annotated
-+		EOF
-+		tag_id=$(git hash-object -w -t tag tag-content) &&
-+		git update-ref refs/tags/bad-tag "$tag_id" &&
-+
-+		# The packed-refs file should not contain the peeled object ID.
-+		# If it did this would cause commands that use the peeled value
-+		# to not notice this corrupted tag.
-+		git pack-refs --all &&
-+		test_grep ! "^\^" .git/packed-refs
-+	)
-+'
-+
- test_done
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index 3ea5d51532a..6575528f212 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -1135,4 +1135,32 @@ test_expect_success 'fetch: accessing FETCH_HEAD special ref works' '
- 	test_cmp expect actual
+ 			die("bad tag");
+diff --git a/t/for-each-ref-tests.sh b/t/for-each-ref-tests.sh
+index e3ad19298ac..4593be5fd54 100644
+--- a/t/for-each-ref-tests.sh
++++ b/t/for-each-ref-tests.sh
+@@ -1809,7 +1809,9 @@ test_expect_success "${git_for_each_ref} reports broken tags" '
+ 	bad=$(git hash-object -w -t tag bad) &&
+ 	git update-ref refs/tags/broken-tag-bad $bad &&
+ 	test_must_fail ${git_for_each_ref} --format="%(*objectname)" \
+-		refs/tags/broken-tag-*
++		refs/tags/broken-tag-* &&
++	test_must_fail ${git_for_each_ref} --format="%(*objectname)" \
++		refs/tags/broken-tag-bad
  '
  
-+test_expect_success 'writes do not persist peeled value for invalid tags' '
-+	test_when_finished rm -rf repo &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		git commit --allow-empty --message initial &&
-+
-+		# We cannot easily verify that the peeled value is not stored
-+		# in the tables. Instead, we test this indirectly: we create
-+		# two tags that both point to the same object, but they claim
-+		# different object types. If we parse both tags we notice that
-+		# the parsed tagged object has a mismatch between the two tags
-+		# and bail out.
-+		#
-+		# If we instead use the persisted peeled value we would not
-+		# even parse the tags. As such, we would not notice the
-+		# discrepancy either and thus listing these tags would succeed.
-+		git tag tag-1 -m "tag 1" &&
-+		git cat-file tag tag-1 >raw-tag &&
-+		sed "s/^type commit$/type blob/" <raw-tag >broken-tag &&
-+		broken_tag_id=$(git hash-object -w -t tag broken-tag) &&
-+		git update-ref refs/tags/tag-2 $broken_tag_id &&
-+
-+		test_must_fail git for-each-ref --format="%(*objectname)" refs/tags/ 2>err &&
-+		test_grep "bad tag pointer" err
-+	)
-+'
-+
- test_done
+ test_expect_success 'set up tag with signature and no blank lines' '
 
 -- 
 2.51.1.851.g4ebd6896fd.dirty
