@@ -1,108 +1,131 @@
-Received: from mail-il1-f193.google.com (mail-il1-f193.google.com [209.85.166.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50FA3D3B3
-	for <git@vger.kernel.org>; Thu, 23 Oct 2025 21:50:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098AE8405C
+	for <git@vger.kernel.org>; Thu, 23 Oct 2025 22:01:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761256209; cv=none; b=Pn6+sbacEURKLJ1c6cTOmmR6lkebiLQZA/dpKFCrfaAoQP4yg3QYVSUBy1Hu2UzmqdvAstBl81AP3w8YrnA5C5zw1lkxQVQjikpHr9jQQ5E3RTFnccjuEJwFDWQPk3zJNsL/NL41ajgZUu5xfI0ST9VZ0GiTnK2TjKWugYg6WWE=
+	t=1761256898; cv=none; b=EBJcDd09RX/ydhmxoowJghvSq86QXhEdONGU9Yp2YsJgr5q1Z28zzgzee7buFvY1lekpeSsMWxiEQRyJcGQI/atA9w8h8VWd/hp2YcTQjbUtwtPh7bDYwzXwIHRE9gk4hLahR8GY0MUhfyEb9Vtv8zPfhGkbe4HpHVx0bD1wySg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761256209; c=relaxed/simple;
-	bh=ce/LMxdbVspq2KY00aCfDANNwjNqW74v/DjSIkUTE4U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DhQf1QHvjXoBIKpkCrwgiFuTOVaYdiZA26wSOHEf2I5HnRgcHmpsGApI4AzIijJ8+ty/2mTwWK/wHXyzmH1TdiAX/XtFGDKdWKrZHU2uucVwa7mqCeN9K7WvJnsAIMifxD8p4fcLzZWkyz6ms7DdPwirI+24HeKukto+fEy/nX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=OJWUymvb; arc=none smtp.client-ip=209.85.166.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1761256898; c=relaxed/simple;
+	bh=S2ZFC4kvsBc/Y8MEN/8zOLMBlmcOlvZhzWnamD8ACBE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AYwEfGkFsljt2JZw6dMUIthmd4QkDfFSZ90jx/B+zBYsHDu02y81Xy/8YkriyHhmBgeR0GdfhvXxzyR06b8c7brU6UZ5O80ndt52s4/1LyzPZfwLgY9MzPrE9pfxKYPu8jOKk44KMAJL+UAIsb2j1K4wAf+YABjAqgeWWtLzlAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cHUVO7j7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bJ7ZR8Rz; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="OJWUymvb"
-Received: by mail-il1-f193.google.com with SMTP id e9e14a558f8ab-430ab5ee3afso12199525ab.2
-        for <git@vger.kernel.org>; Thu, 23 Oct 2025 14:50:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1761256204; x=1761861004; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vUvDUJx2PxoOupTdqzTi3hsqWvOlel998ghUlFhx460=;
-        b=OJWUymvboa+Vqg684xnt2ySP6rBUaT+97auemps1x/Zc/njwQYMuX9CU4s79xQZE3F
-         eKxg92Gzrw/BHOUacOXN4XcB81Fw5SBURlvAZ9OnnkSMICKscJ5wR8I0NqfPmdTwreML
-         zUkJZGVHZqiaKmiYrP/4Mi34KDLLXSVUrkJI70zjTelOItJEli5uCrII0JMDw4i0DI/3
-         0sreb0+btRmUnaH1C48VtFIlxjG5WpFRbennP9taZWy/wJkuHEdQVCPIqDG4dbsdWDrI
-         OhLDuuFrjAa/PO2vhpARydgw6P7m36sCamE/rDfJLTvu4ZCb7AH7uFE3PaYvqfK1Ftsy
-         t1Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761256204; x=1761861004;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vUvDUJx2PxoOupTdqzTi3hsqWvOlel998ghUlFhx460=;
-        b=rzjU7N+yL4dbB9iuRNd82JWhjO/woXjf0F1VhzvS1cH/59GVqoLf18yqFJ7g6Dh4rn
-         EakBH22ZVGqdTmZO4mxv226T/HAVfOCIeXAisepzYmm5k48DLpwcZs8tapcIVHqp2EtH
-         NL11tx1JWjQDxWPqe8uya86Sr6KpRrHHysspidKqF09QRnV4BM7EwD0eO8jOrkZXgitm
-         2GaHFX0Y1yPUgtkwv3vIhfUfk2XQnTbGM0cIB4c0rZusE2J90Vkh1/zf76/iZ42Gllhy
-         r0oXA6C4SBFY6u0US6mHPe1gBEJf1yNHmtROnfys/QrYQM+9X6noSaJ4HkdVYMRTzGY1
-         bC5w==
-X-Forwarded-Encrypted: i=1; AJvYcCVqXY1jjBirw5hwdtQ2i4HVpV4/7ZI/ZyGaAI4G71Gg0ZraMMTdP5RH+xaJqNu+ERam1N0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQ6Ywc7zK/9xE6njKr6aWmMwnWpzgmtw3tQ3YsWWuw9aloKiuw
-	kPH9PPXiiRqCZrDk+pG2xWwVC5yR44tkf8vgI9wBgjJx1PCGoenBpKgrBgdXxPLan0E=
-X-Gm-Gg: ASbGncu6Hc4jHorHQZ822JqLCMdMFRZ1qn9kMguhgJTkMB5lFX4/254DcKuONGu0Qn3
-	0ZLRXHYZVXV96HEaSE9/Rx1dXBalCzKuAsy323nXvrRkHNXuhngf2O06JA0jdY2dfBsCDCp+wKF
-	noJp6Q6j3hsnGalxKFeKMVLakrZqKmjP9mDTJSeBkZGGyf7yULdLLIM5J9bpqShgNnK1tG0q7Oe
-	2Q63X4+e1mLCN3feO7TAi4yinTavfzp5V8fmxfzT1W4cQirLdowdPIHN68ZJchTY2FHAzpi+wM6
-	np73LTXR+MTC1hwIK54QwYGYPvF/1dHx8KOGrt5artZE6ATGcqoAhmmB2eKpdCRNGsZTbbRFHJ0
-	qM9cOOXHIZqotTBW1k1tbsnJPjrei/12TlhOfiuqthAt7niS5i4wNOK1c8H90mpvFHbOMrad1bx
-	H+TYvsIR9H0A/EUY3tswkoJ7cxGC3Pa45HRQ2cKkr1Id5cYolLcpBDySjw1Giy9VPyRiZZprciK
-	kHFSQQ=
-X-Google-Smtp-Source: AGHT+IEFqXPfeWzb8m4/uzCJVIU+Ox1jM+450nO1a8U7E1SO3+4CoOsiLTIWRKvAmyUjo28gAFOViQ==
-X-Received: by 2002:a05:6e02:2382:b0:430:ca90:d0b with SMTP id e9e14a558f8ab-431ebf6c927mr2789995ab.26.1761256203916;
-        Thu, 23 Oct 2025 14:50:03 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-5abb4e4c935sm1408767173.4.2025.10.23.14.50.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Oct 2025 14:50:03 -0700 (PDT)
-Date: Thu, 23 Oct 2025 17:50:02 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 0/9] builtin/maintenance: introduce "geometric"
- strategy
-Message-ID: <aPqjCiVbM/cFkdzi@nand.local>
-References: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
- <20251021-pks-maintenance-geometric-strategy-v2-0-f0d727832b80@pks.im>
- <xmqq7bwlwoml.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cHUVO7j7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bJ7ZR8Rz"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id ED3B61D00091;
+	Thu, 23 Oct 2025 18:01:34 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 23 Oct 2025 18:01:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1761256894; x=1761343294; bh=AZWPMzPh6X
+	ChVztArp1gRWgtJ/yYBPXHUxb3vQZf7UU=; b=cHUVO7j7tA8iywBgSXcs4P1ftD
+	cIRbZSLXkK8A5FoQQJlHuYrugveATWqDCF2bogLC6KwfvB72y4HwaFZYKHJGTQOM
+	I9sN+fJVrh7VpCBrWdv9Nw1YlGqef4GNQjqv7u1ul5grdnzCHdW15wDhOkpSjYCw
+	ZmZMvOdv7Grrixl/JHgfPKIFO0cvav9JFaZozHJvEwiPRhkEDW9YLabjtHZ3SBgg
+	PBNDSJ/763umQFQcuKDUPXFt+foM47IJVR6KcAdWpmkACPeKDa5zbhfnO1bkHwmf
+	1yaleSRPgDRQ4SRX1Yn/t8J7z6EN5KJ5uwSh5Zm3J4wEYDtCJKWlh+jBBb/g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761256894; x=1761343294; bh=AZWPMzPh6XChVztArp1gRWgtJ/yYBPXHUxb
+	3vQZf7UU=; b=bJ7ZR8RzCzLGZZPsf3v/idlbpDbWtnKF/DcNns2bFzvP/52ZTdy
+	1k/Jq8T3Wul5VQf8AZw0P0L3Ee7L3BU766bZjQarJ3TR99jko9OcjmOZAIjdTN9i
+	UNQFZ2S7ZiCftdDqaz+Ywqg6PFwGSumjxA73+KdKI31OaPLb5xKYwnzSQ1MVXlgf
+	p8sVPOTPPi6wd4zq7zzvhXw7NoVM327HvDWORZc3V/BOx+ncp9dLNzBQ0368zr6j
+	YeUTiqR/5RjtI4KPKlnDh9PFiGyJ6Soh7LsI/2tk0J5ZqwQRxK8kM3DsZ4aOSqpJ
+	pXGBUjSXi5nL0A8k3aI3C/GvD/Xwlj8zC/w==
+X-ME-Sender: <xms:vqX6aDB9c-W-653tRO9dOsQ7pkOuA2QsBmSd1i1x5ucfC2pUDf3lzA>
+    <xme:vqX6aAZUEphFDDTWocfGVXMu9_HGabDOcb5IHmbR1xNeoZWkeQsvEmUXAWOgo62Y_
+    TSMlnR7JndSoMPyEikqW-4YUKJt4Xh2hQe2LKTaeJ-pZLn1ITckqg>
+X-ME-Received: <xmr:vqX6aG695YMIT7E4jh3e0xSRpJdh6x86VfeSZO_DYdvqRV2fcfroejeLgCKL7BZiarU01YNGkPYlJqEufWqtIpYwaUIhded8DIY6>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeejiedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhs
+    thihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepvgiivghkihgvlhhnvgifrh
+    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:vqX6aBamCxyVRIec9g5Tb3A5BYaRtNy8je9c69_v6Q8eA2DgrJ34XA>
+    <xmx:vqX6aFg4i80TvznA0QuosB4e8pP3YP9pc_aP8KOkTXY8FySlvUVzuw>
+    <xmx:vqX6aC9nAt5RKJHhED7ttvs5BqkI6Bjf1_YeHttfO3eCNcKBDx_4vw>
+    <xmx:vqX6aApxR-eeY5b9i3qYVQtaUuDyr_i95CenRgThvDzTeSsU4hHBxQ>
+    <xmx:vqX6aHoIymGfi-ghM4gDHj1IK9eKGK_Dng86DBQ7qH3DXjJ1x17WUMag>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 23 Oct 2025 18:01:33 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 3/3] rust: generate bindings via cbindgen
+In-Reply-To: <20251023-b4-pks-rust-cbindgen-v1-3-c19b61b03127@pks.im> (Patrick
+	Steinhardt's message of "Thu, 23 Oct 2025 09:17:40 +0200")
+References: <20251023-b4-pks-rust-cbindgen-v1-0-c19b61b03127@pks.im>
+	<20251023-b4-pks-rust-cbindgen-v1-3-c19b61b03127@pks.im>
+Date: Thu, 23 Oct 2025 15:01:32 -0700
+Message-ID: <xmqqbjlxs2f7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7bwlwoml.fsf@gitster.g>
+Content-Type: text/plain
 
-On Thu, Oct 23, 2025 at 09:48:18AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> An initial version instead included the bindings in "varint.h". But that
+> would cause us to recompile all dependents of "varint.h" every time the
+> signatures of exported Rust functions change. So instead, we now include
+> it in "varint.c" and compile that file unconditionally again.
 >
-> > The series is built on top of b660e2dcb9 (Sync with 'maint', 2025-10-14)
-> > with tb/incremental-midx-part-3.1 at c886af90f8 (SQUASH??? play well
-> > with other topics by preemptively including "repository.h", 2025-09-29)
-> > merged into it.
-> >
-> > Changes in v2:
-> >   - Make the geometric factor configurable via
-> >     "maintenance.geometric-repack.splitFactor".
-> >   - Wrap some overly long lines in our tests.
-> >   - Link to v1: https://lore.kernel.org/r/20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im
-> >
-> > Thanks!
+> Adapt our CI to install cbindgen(1) accordingly.
 >
-> This round looks good to me (I wasn't very careful picking typos and
-> minor mistakes, but the resulting code overall looked sound).
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
 
-Yeah, I am happy with this round as well. I left a few thoughts
-throughout, but none of them are blockers from my perspective.
+I am debating myself if we want a patch like this.  I tend to prefer
+"make clean" not to be too specific to the build options used to
+leave crufts.
 
-Thanks for working on this, Patrick!
 
-Thanks,
-Taylor
+ Makefile | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git i/Makefile w/Makefile
+index 59e5a2c61c..9b673865e5 100644
+--- i/Makefile
++++ w/Makefile
+@@ -1558,12 +1558,13 @@ endif
+ ALL_CFLAGS = $(DEVELOPER_CFLAGS) $(CPPFLAGS) $(CFLAGS) $(CFLAGS_APPEND)
+ ALL_LDFLAGS = $(LDFLAGS) $(LDFLAGS_APPEND)
+ 
++# allow "make WITH_RUST=Yes && make clean" to discard it
++C_BINDINGS = c-bindings.h
++
+ ifdef WITH_RUST
+ BASIC_CFLAGS += -DWITH_RUST
+ GITLIBS += $(RUST_LIB)
+ 
+-C_BINDINGS = c-bindings.h
+-
+ GENERATED_H += $(C_BINDINGS)
+ 
+ $(C_BINDINGS): cbindgen.toml $(RUST_SOURCES)
