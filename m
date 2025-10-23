@@ -1,140 +1,274 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1897F260575
-	for <git@vger.kernel.org>; Thu, 23 Oct 2025 21:42:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437831991D2
+	for <git@vger.kernel.org>; Thu, 23 Oct 2025 21:49:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761255772; cv=none; b=uDlu/ebfQmiCYneePUq96xMiuaNzjXfF/Xp/6rQUBdVDe7eh5YZDG7blgvudsfZnZQuolve91UsYHRh6BWcclTr/vK2amxT8NrMDGKeAHdD0l+YTLT+FC17l5JrLUBAea6wUHh7Hw9Wgkyj03X2XAmNe2jYYH+qiKTbNNKvuG0Q=
+	t=1761256180; cv=none; b=NL/jifI7hoYHVFqGAVTfirfGP/qcSixqqwQKq+LVQ+jGFFLkr+RzqbsOk9VJMgRNgxro01UUcXcMv0dCuua7BfATCI9F6JSZ8F+AekEZDxh20/vMS1WvZsskjtMiqjwrTcBIjeWq5Fgupmd9h89FQfV07cXu9Ccyd0xvwQPF6PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761255772; c=relaxed/simple;
-	bh=8FGqgeSDW36w2HMX6B5nUHuIP4EVaCb4gxNTH+CGVgg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rb55lsDc85OHyC1mODbDx7GmOMUTDVWADTucXhU5NZ0NPARfjudYgb/Bqkv/5rUy1Y4STsRIJpYkwHUi4TWz8uOl5f99L+kjjRJnI8fn83MeOyMWTkYbjq7yIQZ/xYztnPNNgQvGWyOYosJ8Joha00YPS68BjIVhOqMKMhQ7gO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hYsvTNYh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=u+ZogBIx; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761256180; c=relaxed/simple;
+	bh=4te6uehYnIyBoJbWYPJ0XvTARZOGUGnvWbzgZ57OFRs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I+Bx7VfR6uFaEBFAo0Jf3eqtGG8VXTpEw32q4voCnh2sPBcM6pgT5PI/7bWseXl0spJ9bZd11N9SzGiB613qZRJlmiRH3WC3yofxsajExFHPKyA+7Iet/Q5441jzN9gG5/Pm27AcdQnqKfJ4AA7XeAvDzhDJPbc3baa0ddiDqzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=IFfGj1CP; arc=none smtp.client-ip=209.85.166.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hYsvTNYh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="u+ZogBIx"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 10A567A009B;
-	Thu, 23 Oct 2025 17:42:46 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 23 Oct 2025 17:42:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1761255765; x=1761342165; bh=lB+Fw0Q8P9
-	oDfilizsSV/XCtWdlFJZvmUDtTWDX/FEQ=; b=hYsvTNYhapVSpUG4/KtRGT4SOd
-	NB7ReQY5eX0l6/jjd8nU+l1Y1K1XKJSgi5yJj6uoTskd5oTol41NdnVMyjACAPgC
-	uS3Q+m7OderWlFyB3tqW4V4BkoOp+uXVNiE07xpHcP02DPfakUSutJoXQ8u2L7RN
-	2mXsdoe6MkPMVolRSl79Z96RJIBQSZBt2UE7xkcmdqnTtY+vsX9YCdlWg56O5YBN
-	KBZRffCQ4JoLP8fjY2oDf97YsAqL3mVLnolgOesZzKQyM+Wu105DAMM7w6jMq1iG
-	c58cwCCyeEM9iZO5KL/kveq6lxXLqvi/V34YqA2y1IexIgLftD8qlzd9xDJg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761255765; x=1761342165; bh=lB+Fw0Q8P9oDfilizsSV/XCtWdlFJZvmUDt
-	TWDX/FEQ=; b=u+ZogBIxwzSGiONi149YqGxCwZlJZLTNOOskGAy7/mnb2K7TGGs
-	5wuQwbmvuwqzQdxLwesJivwdC5aV+sHdwusyYgffUfovazReTCoupmDbkUK8e7rs
-	GS3m6dF9F4UZNeWiZdPijU8eVCHPc1HR4KSICCOCEFs4NX68KB2ya3REEy2JH+zo
-	A4oJURZry5dIMGu5f/ZrWOB/sYieCqvzPVeJNSrJVm2okr/8IRqGuK/O3swT0JdK
-	ICk+1X00StBr2Ww+IPdyyGl6gZHa6XmeFRF+pJkMpy2UB1qhvUzBMRB0d5Dm52bH
-	FgHeHEPb50bkG9d7yXvTUxOEmceR7qUiCmg==
-X-ME-Sender: <xms:VaH6aPl94gculijCJEo15fIhXRFKlJ0_4G8nRkp-VXIm72RtgQkNBg>
-    <xme:VaH6aJs_VgPb1Z_HYdf_ecVRd4RiQwM4tYv4ri7PJsea2xIBDJmaOt7cWu4s93v26
-    ag1jQP6iMYbafB15A4jh5sr4G8V_qo-oNHW6d0jhArheEj1Hz-1Xw>
-X-ME-Received: <xmr:VaH6aN_p1JhB1NWWTgsBgHg0QJEAXQ2HVeYYlMuFz05VXM4VK1Yr1NexkShk4kaxbkE11dtlLV6GWs2BBymb6aVM_Uf_qls_2nz9>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeejheejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhs
-    thihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepvgiivghkihgvlhhnvgifrh
-    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:VaH6aDMY-915iSBQuMcg5dzbzuydO73K_nGAHpKYB3SecPDvQeFz6Q>
-    <xmx:VaH6aLHcwNm4UtUPSgdiDIIEzGIDP13TW9raIHs9iGjseEnqznNvsA>
-    <xmx:VaH6aBRXjfInX0DkFdWtpJjTMIkuj0aEoo-Q9MTfFJkxGqP8O0LbKQ>
-    <xmx:VaH6aItTEzd5vNPhrPs8F7TraZWrdgJAixHy4v8qyp_wXkJCU4dR2w>
-    <xmx:VaH6aO-lnOrcp4zO5JvMZT-GlsafZ8SBx0CRmn19cjEEIs-8qdoa35QO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 23 Oct 2025 17:42:45 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="IFfGj1CP"
+Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-430aeaffeaeso6169525ab.3
+        for <git@vger.kernel.org>; Thu, 23 Oct 2025 14:49:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1761256177; x=1761860977; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=s9TC3MUzy81fa0gXxq1nyQFzaMzBIUihpwkG5vbJ1Kg=;
+        b=IFfGj1CPwbekpdXf+/PLACLiVnzuhQpoZSgc8xTMlVVq+lu3WFOhIHuWi/0LwLCvXU
+         QXjo4Wn/jbrZYCkxqnjXYueQSFs+kYhSu9blOY1gGnTb/NxTCo0tHyS3Bl4Fv5PiokCj
+         K7n4ND9R9fLgCxQWyGwi9W7RhSkIAYwcy+eOw5r6p7TMDlI39ZiVpklNoTxB0jF5PFa8
+         NcSPetyGRsr20z64MA4PIn69KUQ5ZK5qb7kfSlc2UoDgVnisPmqjCjPqJaBsc+GDOZJl
+         O4HZhdYccOexrEMZMg9Bs2HPb8dnSpe7+y5Nvis2ZQWL54QSFFyaK6MChNqVC3DnWe+a
+         SMgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761256177; x=1761860977;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=s9TC3MUzy81fa0gXxq1nyQFzaMzBIUihpwkG5vbJ1Kg=;
+        b=ZP+WnzkUdSCWOsgJE3DzLWn2Rbt3a4COnnOCcHyvUSxaMO1wBuhN0XpHA/mLjw3yD3
+         YfdhuiSynlX+wOwWl3njbJ8BKdqNmei66Ul/Pc6dRojGc39il/VEtGOgEoUELXoCNEFl
+         pdunpEgaJFcrOXTUG+EdUWE0yEnjfFdWDNvpdIIIR9JapBC/gxaxxC//U39NogsciJdN
+         rfV8JJFL+bFndM9TGY+y2LchGG+PBfLIR5pueEKYyRWFGAilNvW1RX/nOCFSvTBftOEz
+         7XD11GC6KP2kF7h6HB/CYUhz/iXRSLxBX2Lqann9xsXAUnXvwPPHD8ovZDASVoZEnavM
+         Sfcw==
+X-Gm-Message-State: AOJu0YwyEHqpKe9GX5C981qBDw9wEULfWsipky+T8E+c1Q5ut6nINhPz
+	zqwMHNkW7HphfqH+oMDMDEEeHlIHruECQZnTmVl766Dq8+MRx1tRlCrzcGMd4HJPdsFElXxZolU
+	c2jcbFfSDgw==
+X-Gm-Gg: ASbGnctgKFFzGz0OTI3nRDl3xr98aZzxCDORj7NVkeK1kZ/iCUBb0bsLqAVRGPxnjap
+	sdbUteH/H/Fx13Mz5bGy7QorTvRwv33V0Y4nluWgoHuyt5Z6eWo0SKAY/C35eY76kUdM2cvduML
+	mjeqIDNz1pGOmgjWtk+a1Yzm+srfhHt/MjT5+y7Umw2E7SZyTdkttuGrQEd8aWedCSDa+/mzs87
+	awGda61WQ2oQrwes0Y6X1t81P340X/QadrbW+hlc5ACIJRmUyaTTQo9pfyrkDiiUhGRKQDVIZl8
+	kguJBl7jWMw2IHfc42tTq6xVBmztEpxyVBPunyA0YcqDTeS8Q9Oc7VfcnC0NDyeqv/nsqaS0LlU
+	5l0LRLaS2po9KHdrU8sb1WJox+bGku+1ghtmEifPxDSd+g58B/EuUN27s4CQjVOb5x/v0bt/2IC
+	yMNd/JBsr9wK/26QYKf5e/LzHlUmFdsHRVXi1nlXjBa6yNYThX9XKSpqI4lwEn0zvyIbUCeZyz8
+	o2bS4o=
+X-Google-Smtp-Source: AGHT+IFdRZDYrE7b/YS236zztYCTaZiz+0QdWG4cBmc7trW8IX1NQeTWYKco//qb4dKe5KmbVBErUA==
+X-Received: by 2002:a92:c26c:0:b0:431:d864:3658 with SMTP id e9e14a558f8ab-431d864382dmr69909095ab.20.1761256177094;
+        Thu, 23 Oct 2025 14:49:37 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 8926c6da1cb9f-5abb8fb2a59sm1360264173.64.2025.10.23.14.49.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Oct 2025 14:49:36 -0700 (PDT)
+Date: Thu, 23 Oct 2025 17:49:35 -0400
+From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 3/3] rust: generate bindings via cbindgen
-In-Reply-To: <20251023-b4-pks-rust-cbindgen-v1-3-c19b61b03127@pks.im> (Patrick
-	Steinhardt's message of "Thu, 23 Oct 2025 09:17:40 +0200")
-References: <20251023-b4-pks-rust-cbindgen-v1-0-c19b61b03127@pks.im>
-	<20251023-b4-pks-rust-cbindgen-v1-3-c19b61b03127@pks.im>
-Date: Thu, 23 Oct 2025 14:42:43 -0700
-Message-ID: <xmqqjz0ls3ak.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 9/9] builtin/maintenance: introduce "geometric"
+ strategy
+Message-ID: <aPqi71+zRE2KsnCk@nand.local>
+References: <20251021-pks-maintenance-geometric-strategy-v2-0-f0d727832b80@pks.im>
+ <20251021-pks-maintenance-geometric-strategy-v2-9-f0d727832b80@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251021-pks-maintenance-geometric-strategy-v2-9-f0d727832b80@pks.im>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Oct 21, 2025 at 04:13:31PM +0200, Patrick Steinhardt wrote:
+> We have two different repacking strategies in Git:
+>
+>   - The "gc" strategy uses git-gc(1).
+>
+>   - The "incremental" strategy uses multi-pack indices and `git
+>     multi-pack-index repack` to merge together smaller packfiles as
+>     determined by a specific batch size.
+>
+> The former strategy is our old and trusted default, whereas the latter
+> has historically been used for our scheduled maintenance. But both
+> strategies have their shortcomings:
+>
+>   - The "gc" strategy performs regular all-into-one repacks. Furthermore
+>     it is rather inflexible, as it is not easily possible for a user to
+>     enable or disable specific subtasks.
+>
+>   - The "incremental" strategy is not a full replacement for the "gc"
+>     strategy as it doesn't know to prune stale data.
+>
+> So today, we don't have a strategy that is well-suited for large repos
+> while being a full replacement for the "gc" strategy.
 
-> Set up this infrastructure in both our Makefile and in Meson. To
-> demonstrate its use, the generated "c-bindings.h" header is included in
-> "varint.c". If we now adapt "varint.rs" to have a different function
-> signature than the C code we'll now get a compiler error:
+Well put.
+
+> Introduce a new "geometric" strategy that aims to fill this gap. This
+> strategy invokes all the usual cleanup tasks that git-gc(1) does like
+> pruning reflogs and rerere caches as well as stale worktrees. But where
+> it differs from both the "gc" and "incremental" strategy is that it uses
+> our geometric repacking infrastructure exposed by git-repack(1) to
+> repack packfiles. The advantage of geometric repacking is that we only
+> need to perform an all-into-one repack when the object count in a repo
+> has grown significantly.
 >
->     In file included from ../varint.c:10:
->     ./c-bindings.h:10:10: error: conflicting types for 'decode_varint'
->        10 | uint32_t decode_varint(const uint8_t **bufp);
->           |          ^
->     ../varint.h:5:10: note: previous declaration is here
->         5 | uint64_t decode_varint(const unsigned char **);
+> One downside of this strategy is that pruning of unreferenced objects is
+> not going to happen regularly anymore. Every geometric repack knows to
+> soak up all loose objects regardless of their reachability, and merging
+> two or more packs doesn't consider reachability, either. Consequently,
+> the number of unreachable objects will grow over time.
 >
-> An initial version instead included the bindings in "varint.h". But that
-> would cause us to recompile all dependents of "varint.h" every time the
-> signatures of exported Rust functions change. So instead, we now include
-> it in "varint.c" and compile that file unconditionally again.
+> This is remedied by doing an all-into-one repack instead of a geometric
+> repack whenever we determine that the geometric repack would end up
+> merging all packfiles anyway. This all-into-one repack then performs our
+> usual reachability checks and writes unreachable objects into a cruft
+> pack. As cruft packs won't ever be merged during geometric repacks we
+> can thus phase out these objects over time.
 >
-> Adapt our CI to install cbindgen(1) accordingly.
+> Of course, this still means that we retain unreachable objects for far
+> longer than with the "gc" strategy. But the maintenance strategy is
+> intended especially for large repositories, where the basic assumption
+> is that the set of unreachable objects will be significantly dwarfed by
+> the number of reachable objects.
+>
+> If this assumption is ever proven to be too disadvantageous we could for
+> example introduce a time-based strategy: if the largest packfile has not
+> been touched for longer than $T, we perform an all-into-one repack. But
+> for now, such a mechanism is deferred into the future as it is not clear
+> yet whether it is needed in the first place.
 >
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
+>  Documentation/config/maintenance.adoc |  9 +++++++++
+>  builtin/gc.c                          | 19 +++++++++++++++++++
+>  t/t7900-maintenance.sh                | 20 +++++++++++++++++++-
+>  3 files changed, 47 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/config/maintenance.adoc b/Documentation/config/maintenance.adoc
+> index b2bacdc822..d0c38f03fa 100644
+> --- a/Documentation/config/maintenance.adoc
+> +++ b/Documentation/config/maintenance.adoc
+> @@ -32,6 +32,15 @@ The possible strategies are:
+>    strategy for scheduled maintenance.
+>  * `gc`: This strategy runs the `gc` task. This is the default strategy for
+>    manual maintenance.
+> +* `geometric`: This strategy performs geometric repacking of packfiles and
+> +  keeps auxiliary data structures up-to-date. The strategy expires data in the
+> +  reflog and removes worktrees that cannot be located anymore. When the
+> +  geometric repacking strategy would decide to do an all-into-one repack, then
+> +  the strategy generates a cruft pack for all unreachable objects. Objects that
+> +  are already part of a cruft pack will be expired.
+> ++
+> +This repacking strategy is a full replacement for the `gc` strategy and is
+> +recommended for large repositories.
 
-OK.  I am getting this out of "make c-bindings.h", which looks
-quite reasonable.
+Nice. I always feel like it's tricky for changes like these to know
+where the right place is to draw the line between "this belongs in the
+commit message, because it will be useful to reviewers in understanding
+how I came to this patch" versus "this belongs in the documentation for
+my new feature, because it will be useful to users trying to figure out
+what option to use".
 
-/**
- * Decode the variable-length integer stored in `bufp` and return the decoded value.
- *
- * Returns 0 in case the decoded integer would overflow u64::MAX.
- *
- * # Safety
- *
- * The buffer must be NUL-terminated to ensure safety.
- */
-uint64_t decode_varint(const uint8_t **bufp);
+I like the spot where you drew that line here and I think that the
+patch message has details that are useful to reviewers (like the
+historical differences between all-into-one strategies and geometric
+repacking), but that the documentation has the right user-facing details
+and explanations.
 
-/**
- * Encode `value` into `buf` as a variable-length integer unless `buf` is null.
- *
- * Returns the number of bytes written, or, if `buf` is null, the number of bytes that would be
- * written to encode the integer.
- *
- * # Safety
- *
- * `buf` must either be null or point to at least 16 bytes of memory.
- */
-uint8_t encode_varint(uint64_t value, uint8_t *buf);
+
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index aaff0bae15..9739bb0ea2 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -1878,12 +1878,31 @@ static const struct maintenance_strategy incremental_strategy = {
+>  	},
+>  };
+>
+> +static const struct maintenance_strategy geometric_strategy = {
+> +	.tasks = {
+> +		[TASK_COMMIT_GRAPH].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
+> +		[TASK_COMMIT_GRAPH].schedule = SCHEDULE_HOURLY,
+> +		[TASK_GEOMETRIC_REPACK].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
+> +		[TASK_GEOMETRIC_REPACK].schedule = SCHEDULE_DAILY,
+> +		[TASK_PACK_REFS].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
+> +		[TASK_PACK_REFS].schedule = SCHEDULE_DAILY,
+> +		[TASK_RERERE_GC].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
+> +		[TASK_RERERE_GC].schedule = SCHEDULE_WEEKLY,
+> +		[TASK_REFLOG_EXPIRE].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
+> +		[TASK_REFLOG_EXPIRE].schedule = SCHEDULE_WEEKLY,
+> +		[TASK_WORKTREE_PRUNE].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
+> +		[TASK_WORKTREE_PRUNE].schedule = SCHEDULE_WEEKLY,
+> +	},
+> +};
+> +
+
+What you wrote here all makes sense to me, so I don't have any comments
+on the technical content of 'geometric_strategy'.
+
+As an aside, I wonder if we should use a nested designated initializer
+here? It seems a little cleaner to me than doing:
+
+    .tasks = {
+        [TASK_FOO].type = ...,
+        [TASK_FOO].schedule = ...,
+    }
+
+It's inconsistent with the style of the rest of this file, so if you did
+make this change I'd suggest adding a prerequisite change that modifies
+existing strategies to match the new style. But you could imagine
+something like the following on top:
+
+--- 8< ---
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 9739bb0ea2..881ef6ad88 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1880,18 +1880,30 @@ static const struct maintenance_strategy incremental_strategy = {
+
+ static const struct maintenance_strategy geometric_strategy = {
+ 	.tasks = {
+-		[TASK_COMMIT_GRAPH].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
+-		[TASK_COMMIT_GRAPH].schedule = SCHEDULE_HOURLY,
+-		[TASK_GEOMETRIC_REPACK].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
+-		[TASK_GEOMETRIC_REPACK].schedule = SCHEDULE_DAILY,
+-		[TASK_PACK_REFS].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
+-		[TASK_PACK_REFS].schedule = SCHEDULE_DAILY,
+-		[TASK_RERERE_GC].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
+-		[TASK_RERERE_GC].schedule = SCHEDULE_WEEKLY,
+-		[TASK_REFLOG_EXPIRE].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
+-		[TASK_REFLOG_EXPIRE].schedule = SCHEDULE_WEEKLY,
+-		[TASK_WORKTREE_PRUNE].type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
+-		[TASK_WORKTREE_PRUNE].schedule = SCHEDULE_WEEKLY,
++		[TASK_COMMIT_GRAPH] = {
++			.type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
++			.schedule = SCHEDULE_HOURLY,
++		},
++		[TASK_GEOMETRIC_REPACK] = {
++			.type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
++			.schedule = SCHEDULE_DAILY,
++		},
++		[TASK_PACK_REFS] = {
++			.type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
++			.schedule = SCHEDULE_DAILY,
++		},
++		[TASK_RERERE_GC] = {
++			.type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
++			.schedule = SCHEDULE_WEEKLY,
++		},
++		[TASK_REFLOG_EXPIRE] = {
++			.type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
++			.schedule = SCHEDULE_WEEKLY,
++		},
++		[TASK_WORKTREE_PRUNE] = {
++			.type = MAINTENANCE_TYPE_SCHEDULED | MAINTENANCE_TYPE_MANUAL,
++			.schedule = SCHEDULE_WEEKLY,
++		},
+ 	},
+ };
+
+--- >8 ---
+
+The rest all looks good to me.
+
+Thanks,
+Taylor
