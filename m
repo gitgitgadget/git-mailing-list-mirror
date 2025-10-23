@@ -1,72 +1,72 @@
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
+Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8379413A258
-	for <git@vger.kernel.org>; Thu, 23 Oct 2025 21:31:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244392C3745
+	for <git@vger.kernel.org>; Thu, 23 Oct 2025 21:34:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761255110; cv=none; b=CtQzTNy/Ta3DvcYo4ppyFuz2rXOUXkX8Zeo/fcTNGlEvRlFLesVFLUdqpihokDI/qCNQyD2uhZusv3Pbzoi1SgTs86nvr52e4C4cvGHIPSIf/GEYQ7yiJ49ndizOEXLN3ThSbB8YxWTQWNixWkDHUmIa259Aspxj1muO0AjZhr8=
+	t=1761255260; cv=none; b=YqoTwE5i8cQdUMAnXC0o8767ab3H8izxRuav6PeHPetPVZwIBNnAGMPQG2PrAYdenGLD3NJo/K3HrzCPA3G1pcISjt4V0V+O8I0sV1wfiD4pFFUMaXPqCRu9JZXPhBeQacRmmYjKWiBKZY2/LknUPysLXPevrQSYOYrVzhYuZe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761255110; c=relaxed/simple;
-	bh=06mCV0wyORyn+Ur2d7mRogBEds/mYNw8TnAQSDCNlMY=;
+	s=arc-20240116; t=1761255260; c=relaxed/simple;
+	bh=0gYr0x7tzlxDaheHVp5iBBlBPQSMw4eERsFF+TNVDG0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ilTCmJnmalkP/smKVUuXbydlB6wbop1k5aSlh9BxkJ/0CSw7s97UytFOf/PlBOFJw60SekPntwk6Lo9ygiD+jmiwbiLLvOOpOjgdnmSdHDyT+6RlyHprKq2FYtB7cwOIW4H2lN1bTUrVdRn32aAC1pMuIdcJ0y0i/tTeP4qOBcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=HBfmAyQ+; arc=none smtp.client-ip=209.85.166.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=BHmdXsjjBbVJFk2Xqn/d4+Tq5/6g3JcQ4TpcqNSFQUe1BZ/taI9PDyGpZPjz+zO7rPx0H0g6ma1kaQGZ3KsP/EmPlW0uq662M7WCG9CP5AtHILvJX1b4gy1BOuOGDOI0uWs7AQMMFoInpUAvPCFgcQ0Ym5yOuwHl4t0Nm8rRfY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=bfpJcbVM; arc=none smtp.client-ip=209.85.166.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="HBfmAyQ+"
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-430d08d56caso6081705ab.2
-        for <git@vger.kernel.org>; Thu, 23 Oct 2025 14:31:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="bfpJcbVM"
+Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-941073ba029so41088239f.0
+        for <git@vger.kernel.org>; Thu, 23 Oct 2025 14:34:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1761255107; x=1761859907; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1761255258; x=1761860058; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SQcnExmFzj3cZXKWznRZnoNevym/dYq1KKmjKxmfV1U=;
-        b=HBfmAyQ+6FotEPJeQoY+n4sO9sMc7Ps9QWKB0BZN6pH9EzUWAFpw9rsR/9P3E5hTQy
-         HwB8F7CL1U4q7XxL1pSDwVBn5nO5oRr7lCqJoFWAKBRXedX41RVoKYPrZqgAzxSILZV/
-         8m24+NtC5TCGqgFO+YczKp0VxoqbISCRJm1GuDPy0eORj0dOKrF1QT05SAKJA4t0gFjb
-         HavTUwV4jUVH1LV862x7Q81fhRdi0ZUFTHAl290IE1F7B4F8zNa5XUIzF174XIxkRpdj
-         Tqeye1UwnYuDRVXnTyyizAvAA+rJG5HN1RFIcTJ2eIiTLIKHpyCHIlLhJRzC41qZ3KG1
-         Vlyg==
+        bh=1Er9rWf6KiATD4yUkeoDGlsk5MH7C38eLgTH8kGLr7M=;
+        b=bfpJcbVMq+1/h8drY4aKW8hIoLVNmMuipYgBeG2JkKZsF1h/3S9qXIAjD0S8sMA85T
+         mY1vkPSyQghStTBk/Lo8inF44SZezC6TZa7t8ALOIhlJGU69brIozCgDzUaPRQJkFhzH
+         w8cvCt+OxdzxU+ZByCRwIfYKNrA0lUgnjqm0wrh9lYBuvUUa6xjj+6mB4TMPXtjU95p7
+         QrfZdQMkJNXv1WtYRNVzHdqTNjDBMT9LY3z5S66GjS1Bsj6D18sI5pPCZZ2GLIKmw/4G
+         dv0iF2Sp4k7ocymA3JIe59t7tjlvlxPEoSbUYWkj0U2NpRIluB/sg4XK0QuyvLDVMr0v
+         wBxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761255107; x=1761859907;
+        d=1e100.net; s=20230601; t=1761255258; x=1761860058;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SQcnExmFzj3cZXKWznRZnoNevym/dYq1KKmjKxmfV1U=;
-        b=cQKtOJLAtplO79rxWKm8vZ5KLRrP4nol+e6zaqDvVyeyNNwJy1CnqnOD2+5gFFTVNf
-         MQ4GDBWSCo3pD7DxMWCu5kO782bVRzVkCaZWxslq78C2xx3b2g0UG+yA+z656shtiIhw
-         EHuSy7v1NujGWXwFpYrWvuJ7thmopm5vkhCr3HZKp90C7Cwi6LrIedU3jU4tWaSLL0kG
-         KDnCM5t7vtnhiF9vVRwhcu2XX7UW6Qa+jHpBgnKp87ZPgDUBWEWVLJg1fITtG5L2D1lo
-         WCoHrZ5HLPagfEC3n0PqhEU1Xe1pEbhzDSENqRA05TOZFa/whSC/utow7qFmHXMNWV9B
-         TwnQ==
-X-Gm-Message-State: AOJu0Yxh8dyjgbg6fR/ztyk4SVh1MmRrIVUL8rGzE4RmOOgGUFOIXEpG
-	qOy8T4HNXKpGEwy0JEy0r6ii37DxXRIuOx5tp7vK8CuP/CVTrooai4w4ILWYUCx7spA=
-X-Gm-Gg: ASbGncsJiadz90RjjIO6lH1VZcceO9nHScR8h0ed3+LqAmkDPtdHcML0RP5uz1IRt9B
-	/32CcaRjqenSkA47Le/JvGv5b0d+o6RTCZx9sW+sHIy4GFUE47u2IeZ1at1BFrbcdLWsQuk4dJs
-	cijfRc7Re7XuJDgrWUJr3Qld9ufQnGLmyZTgpHLT/9zTvJQcURsTt2yfqXGijYTdAR7qR+Pz2dT
-	/2ByOX2l4TubdZF7mfiKfOvIN8TjhsfdVfkPLE3pftIK6pLKUA9gQ+/0Z3YybcQrilyaHzMpG2L
-	KrQ/8DvoH+n7jx2Z/HyxR/uUVqlH/4d3hnIrz0tLojY7wDG8aPKwlHZuSs0qpjCb9VY6h5auoQt
-	KuDpAyMv02HM8XQNMXrvhBf86tjPjRnxt/uThffQs/4H72fjuvaAoMFnYvzjb+ANAZIwWzMPRq0
-	M5bN3FvsrUnKYiObDD99YDjhKIAcRTC8XEK9CjnS+vw0WN8D9/0ZJU3fLm4TEDtpmk83pnNGQ/i
-	jY6QsvQO8VlLQebWQ==
-X-Google-Smtp-Source: AGHT+IF1nbLhRjok5Rkd/SjUA2o2V4sG/u0yl4Fk2R4Il8op5gB4NxYfoMKUVy2qOe6XMGDAZ0hn+Q==
-X-Received: by 2002:a05:6e02:3f04:b0:430:c49d:750c with SMTP id e9e14a558f8ab-431ebed79admr2522665ab.27.1761255107353;
-        Thu, 23 Oct 2025 14:31:47 -0700 (PDT)
+        bh=1Er9rWf6KiATD4yUkeoDGlsk5MH7C38eLgTH8kGLr7M=;
+        b=oCiOlEXBvfuAtz4T5cjpo8R7ADdjhopevPIo4p469Wbrbg6jeCOPT4Q2G9cCKG9w3J
+         qxgQRemAOMNj5RzqHMOs/e/KvJQMnITa9U5fn7M1WBvd+/yXmvXXl+6AwPfo875akuAR
+         Yicx+liJ6GXxfs73t6g1WuTbDlEE80hKjVZE3Ha6R4NDa9qdYhmxIPLa7v9ZiFTt3ZuI
+         v84ozqtzAlB9syN2iUElibQ83+OIoPxwYodUBmcWzgxwpCQeEpRwVZNXndS/ruRejG/J
+         PvUblKGpmMSiKPrYzyFPU0TvrXGT9YIrNbRQpxLERsolUHTOKb1ISguxiDHw8Yg4ITgi
+         Smyg==
+X-Gm-Message-State: AOJu0YzFIQh/So0xoaDyyW7cBAnXJ68jBa9Kmv9KTkp/qEx06LVD1uz4
+	04vp5HFg+T2FlKK0J7FB3oH81xSV7BSguYZ5Rcee043ohJCsMossn2K5LTdBxetwME0=
+X-Gm-Gg: ASbGnctT41zWxY+gdrJuaLID24OOK78pc6BjYwB9Is+h158hZb7+TOKomRGoMtn6kHw
+	QvtlPHKRv7hGbtKRxrrODj1sJVPkxLVdCpd4c2jsUndWBOc0nB7mnm0weKBvMhkNWGcIIzKxsOO
+	S0FX6p115SsiXvJmW5yxnp6UwNpLaI+yUnWam5wUzH+XsXQ0XZitJ8lz4MFxqX1Kv7Ejp502f86
+	jLHd7JO2fV4MQofos1Wel7M9kdkrPKT655pitbO3NFN2foXufo9VG1hzrwmVYYHDJZ9dqJ5pCdP
+	SI+DDCH3J8zHX6hhvbXIWfq9ygkgdV7T+LAUfPkagwgWa1bmFiZCL8XfeSY69wGlvCrojhTcn5a
+	m96ahIb7mVtfSMbmxeIBdJb823krL3st+S++HFn2cByqmFZlalBluE87tciitQohTp3HIOPKua6
+	0f457LpBYqRxZFTrgvQGr287E1EuNUBi3qk7rV9t2X4TFbzCo+Oz2N//tv+4jaGctPelMlLwkOd
+	83emHo=
+X-Google-Smtp-Source: AGHT+IEwkTxFVo60YNG3Yc8f7+ntyEZJ6dWGMwx3raOqULSUDH1pcG+JPOoGz7RLmMiwbnX+y21lpw==
+X-Received: by 2002:a05:6602:3e8f:b0:93b:c6aa:5e14 with SMTP id ca18e2360f4ac-93e762c1ddemr4165636639f.7.1761255258157;
+        Thu, 23 Oct 2025 14:34:18 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id e9e14a558f8ab-431dbc31865sm14387535ab.15.2025.10.23.14.31.46
+        by smtp.gmail.com with UTF8SMTPSA id ca18e2360f4ac-941035144ebsm102893539f.15.2025.10.23.14.34.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Oct 2025 14:31:47 -0700 (PDT)
-Date: Thu, 23 Oct 2025 17:31:45 -0400
+        Thu, 23 Oct 2025 14:34:17 -0700 (PDT)
+Date: Thu, 23 Oct 2025 17:34:16 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 5/9] builtin/maintenance: don't silently ignore
- invalid strategy
-Message-ID: <aPqewYkJFEyVohAn@nand.local>
+Subject: Re: [PATCH v2 6/9] builtin/maintenance: run maintenance tasks
+ depending on type
+Message-ID: <aPqfWGN29S+kr9C/@nand.local>
 References: <20251021-pks-maintenance-geometric-strategy-v2-0-f0d727832b80@pks.im>
- <20251021-pks-maintenance-geometric-strategy-v2-5-f0d727832b80@pks.im>
+ <20251021-pks-maintenance-geometric-strategy-v2-6-f0d727832b80@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,15 +75,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251021-pks-maintenance-geometric-strategy-v2-5-f0d727832b80@pks.im>
+In-Reply-To: <20251021-pks-maintenance-geometric-strategy-v2-6-f0d727832b80@pks.im>
 
-On Tue, Oct 21, 2025 at 04:13:27PM +0200, Patrick Steinhardt wrote:
-> ---
->  builtin/gc.c           | 17 +++++++++++------
->  t/t7900-maintenance.sh |  5 +++++
->  2 files changed, 16 insertions(+), 6 deletions(-)
+On Tue, Oct 21, 2025 at 04:13:28PM +0200, Patrick Steinhardt wrote:
+> We basically have three different ways to execute repository
+> maintenance:
+>
+>   1. Manual maintenance via `git maintenance run`.
+>
+>   2. Automatic maintenance via `git maintenance run --auto`.
+>
+>   3. Scheduled maintenance via `git maintenance run --schedule=`.
+>
+> At the moment, maintenance strategies only have an effect for the last
+> type of maintenance. This is about to change in subsequent commits, but
+> to do so we need to be able to skip some tasks depending on how exactly
+> maintenance was invoked.
 
-All looks good here.
+Thanks for writing this down; my initial thought when reading this patch
+was that we could distinguish between scheduled tasks and manual ones
+based on their "schedule" field. But this makes sense: some of the
+scheduled tasks might (or might not) be appropriate for manual runs, so
+distinguishing as you do in this patch makes a ton of sense to me.
+
+The rest makes sense and looks good.
 
 Thanks,
 Taylor
