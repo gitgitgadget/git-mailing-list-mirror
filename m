@@ -1,135 +1,111 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281362580D1
-	for <git@vger.kernel.org>; Thu, 23 Oct 2025 23:06:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7DC2DAFA8
+	for <git@vger.kernel.org>; Thu, 23 Oct 2025 23:29:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761260767; cv=none; b=XExft+p6m1rdfwXu9OXWXLiNGcUQCIn9srUesgAyr8EfH7/L9qyCHMV1yiHD963kGp2qhv34netrvBWdJS3zz5lN2qAlNb2NW96DtIevvGw+94sXOtkHk+4tH3Lg4xtCWNH7zoq/9SK5f7HESKdL11/Gz2oMmhXvw1fPpD7m9HI=
+	t=1761262195; cv=none; b=nHdc3hn6E2N8ipdUKsDQlZ+cLhApgXPzNbC+47qKXLeM06CvhjetAzYi6Cp7jx7sCkBIr1ojBdpp770aEF7GfdNOQ8R8ejf3Ngv4yU0RiXkvZYIFwTd6JyO9/E3rLMMkBF9/+ivHCXoVkkxRf00Av9cFfaluxjREvJ+8ypfiR7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761260767; c=relaxed/simple;
-	bh=U61g5oK+7K9hUHEJ5n9JLHEg8xoJOs/x3mwqDXY6iSw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=df0n5/zlihDT4CSN8vB13HSgD/UDwPetfrYoJHzbi7HEKWJPnnMJaFqbOZJ8KuXNjScNebf2q+Ol+q7+tnOtp469haL6WupXWMELppGRKakpxn7kyj6hUsH9sUZ/y/hMzUsiRa+58rpZbgBujD43JxLIfwLJbvTSpvO2VChQ3j4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JTXKaOyl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AoPrXuS/; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761262195; c=relaxed/simple;
+	bh=WoEim+W9B27mTS2iQGXgYOLM7v2SYr1RLWMQnfLlkaY=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=t9xfs8MFV6hQvj+nrOONvEjoEi0rAh3INKU7nnsgMmewfuwEVy7LvRIbErRAJDMpr8hIUBqyOEJauqcONwsIhe50Miz9MQ95cEW9yV/QrSbfAu0cwfmlf78PpdNASHyVV0iu1tM2kNkOFqRss2Phb8klkSFAEq2MYVgAO88zsBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gesh.uni.cx; spf=pass smtp.mailfrom=gesh.uni.cx; dkim=pass (2048-bit key) header.d=gesh-uni-cx.20230601.gappssmtp.com header.i=@gesh-uni-cx.20230601.gappssmtp.com header.b=byOHX+eW; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gesh.uni.cx
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gesh.uni.cx
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JTXKaOyl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AoPrXuS/"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1480A7A0102;
-	Thu, 23 Oct 2025 19:06:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 23 Oct 2025 19:06:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1761260763; x=1761347163; bh=CIzUuhKWR6
-	qxll8cAOPCU1KAiT/VI8q83e1+Rcle5xg=; b=JTXKaOyl7kTYQ4hv2H/VBAmRkS
-	9mNUIvX0476J2RoZcYZPjGhk7AcM5EJUz95NyhvtFRhar73+wE6h1nKXyY8tqidc
-	JoyeStEh4YbejFZNlbt6WH5U4rm2yibztn3+H/GgYITzm+ywQh3t67mQR8QzyZ8f
-	32pQTo7wu25scl204RjLSCphcjFwMTptuiQSwbpgl7SNTwmCVN7lwai7ZY73/eIq
-	kT0Rz2fI6rECgfe+c9GqmSzk2akICkiqcOuD07LZBysfnpfWXpYDIDo8nty/S3JG
-	gT/X5sFbR0lOpGE490YuxC47dK5nXVUSzwzsOw4rASxSAbySKBJjnx5TlthA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761260763; x=1761347163; bh=CIzUuhKWR6qxll8cAOPCU1KAiT/VI8q83e1
-	+Rcle5xg=; b=AoPrXuS/V199mE21tn8rYfIHpPdMqnR5bZpy85w9PLYr8T025Zv
-	ruKWr6diSCpBvCPCQ2q2Am6u4OWHopn4OEOiILxfKP4gNI2HWfnV4NSRDA9zIE2n
-	GKhVd4Y9gLM9ouPEEmKRgGllGiUo4DysvkWOZ6BnjxCnq77UlQscKwaOKg6yuASU
-	cvlLaZu0KSklbhhIwf6bv1w6qCIKJMGeKN1sPi4+d1s0mG9KIjWNd4xY5XDdoaiN
-	pIV+nPJvIcvUXSR3ULun6JgJossrAggviwLiVqSMIfe46a993HA0xt8RMZOZylWh
-	CLsZ9CDWTqLd+7cSgzdEzCWq8S6r7RHa3HQ==
-X-ME-Sender: <xms:27T6aEo2KfhP5FrpaK0U6UAXNsy2w6BuST5hKtLDd82xkj82ESbRDg>
-    <xme:27T6aM6dWOc2Tjb55Ow9A-hOAY1rH30e51stOR7Qk8tTDT2xHb-LGeVEPXdkuxUla
-    vQzurvXLp7dJMwZ6Y2siAIaiaVNPCFXLmNdHRE5gSlfIT__CWCxjQ>
-X-ME-Received: <xmr:27T6aLcgriezkjfpzDh1vgzIOUWP5qSKVnRI21EXuPLVz8rEKiDYP_M0uaPi9W-DVhGi2XZIHtC4ssU1ov91W3DiihkcMrMzF9NV>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeejjeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgt
-    ohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:27T6aB7G679iH44_JNYmtDaW-v0rRjVpYlwCQnIlbCagRrtZ3UOZ3A>
-    <xmx:27T6aCsjv3os9aNOlYQ5gErAfkGQn5H6XKS8qDHIKR4EmpN78DdTjw>
-    <xmx:27T6aBj76wQs-7QdkODQ6D0Aq-BNsbx2Z_cZ2eXx15Q8vMTuHcB7pA>
-    <xmx:27T6aNrUC9oynDaYPXmQnDDn78vqKBbqmusjGYJtlv6YwR2DA5YV4g>
-    <xmx:27T6aBi387mFqwti8YLIGBEO8mpfcNQm0NJeymRn0DEzG8RZEAB9OFnT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 23 Oct 2025 19:06:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Karthik Nayak
- <karthik.188@gmail.com>,  Taylor Blau <me@ttaylorr.com>,  Justin Tobler
- <jltobler@gmail.com>
-Subject: Re: [PATCH v4 00/14] refs: improvements and fixes for peeling tags
-In-Reply-To: <20251023-b4-pks-ref-filter-skip-parsing-objects-v4-0-2be68ce82c9a@pks.im>
-	(Patrick Steinhardt's message of "Thu, 23 Oct 2025 09:16:09 +0200")
-References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
-	<20251023-b4-pks-ref-filter-skip-parsing-objects-v4-0-2be68ce82c9a@pks.im>
-Date: Thu, 23 Oct 2025 16:06:01 -0700
-Message-ID: <xmqq3479rzfq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gesh-uni-cx.20230601.gappssmtp.com header.i=@gesh-uni-cx.20230601.gappssmtp.com header.b="byOHX+eW"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-426f1574a14so809880f8f.3
+        for <git@vger.kernel.org>; Thu, 23 Oct 2025 16:29:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gesh-uni-cx.20230601.gappssmtp.com; s=20230601; t=1761262191; x=1761866991; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lXhSts+MEguRFypzWDZqKvC16QVl58y2WpdW037V5Bg=;
+        b=byOHX+eWr3GE+DWB9+9DQn99IQy369LP1+gcz0islKnjWhK7lVbRmhQY+Xqt0Bswwf
+         HghFqK/WBjsSuyLJ8gouAry4SiRRdWQ3ccWM4nRVcChP4c13xJHt1o6/0Oj4dhL9O11d
+         K116QU4/qujJd8nkM2DTnHe5ONRG1xbUtgtjW7dyWslrzPGynXmMkTADCeKR0P974Ihj
+         VgR8mFHj0XIJqgvRxXf7Y/dOeJhIVF4gi6rKw0WowzWdZko7EiQz0+Swgwodt1nYQoz2
+         7WPVtxXHuBCgeJtyntYQaxjhTOiDakh+brLBdXNkD5tU4wWqPe8FZJMpFrhSGULBFxo7
+         bm2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761262191; x=1761866991;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lXhSts+MEguRFypzWDZqKvC16QVl58y2WpdW037V5Bg=;
+        b=Luh+qe8z9IBmM2RHfz2WStZhkDcxjlhUpGYMAh2/Bf0LZX/U7pQw7i7od2JPhfSevY
+         A4GDthbhYS0yoLyX0w8Dk9jgivCoLhnJGu1AxGgbAK+FBeefHG+GAsXNM8g/UCClYq8n
+         Dtk3y58eEQeuE+8/CdcDOYgm45fpoboJ7XVplvj2i7hfQnmB7BtDVWX4b/REr1NYz6yK
+         0AdBLTyTFGXcGnmjTGZZZeoeZ+ahf9U3u/aD22jinXqzWL+ndgogDAFWif4VC4vx4NTA
+         HeXUXO/Ha5ucdiK48qMIysSHsH0sBj1XAfkSmpw3du51VsCLiE+3VLYqRjMgX5q3jq2b
+         AFfg==
+X-Gm-Message-State: AOJu0YxbvkOfzHf/yvFqUk2XrhL9CLoEbLwqe+9StQtwA/kaHHSpjrqh
+	yRldr1Cz9G3jptif/s9w1tmKgJYf7adWiR+ySG772mTMeprxBD1rpDPThHblH/dQ95SYMvaNrVc
+	pMG7KPk0=
+X-Gm-Gg: ASbGncvL7ZAtiXoGajn3gKeA4Z/o6fUyAdmUlH6ZkQi50VpAyzmEQewXcZOZgX/TiWL
+	LZ5FWXyFkUzt3zqDiuf1rkCcL8uvRkbq2CAT51WkKFI3RBEVH+BUWTUXvaDQmVqNLkGtdVxBcB4
+	gyVtGsr5eDibhBWY6RchM/s9ygXO/x2LLSjrGhEBndLNjG67wE9+AIAbFqxbLGtAlo+oGLUBUZ3
+	OEJ0cDccTnPSXfB+1z9cfuWBlVvnBFRiPk7hAp35/s73iEXbR2511NWW7SgAdK5JocezGJbX4wk
+	tu1SIhU8pKSWsyQgtA7K25HhWdA3rvInrQkSs7TwH/Mm3IxpcV8CeDtoWuDCJRImH+YQyv3wf2/
+	mdjQi1NKO123HAWR0zcRA1tWDIwGqRY4QiVPXzpLV9royRiTkEoLjJNdNYQUzGtKoIdMYyJjXHz
+	8lSA==
+X-Google-Smtp-Source: AGHT+IGSPKbKteIROTYVEdkopEnjX0Du0ZhggRDAynWH9gs7kyGdSUdIm7OHhvGqDAT6uOq48WMTTQ==
+X-Received: by 2002:a05:6000:2f83:b0:427:880:9538 with SMTP id ffacd0b85a97d-4298a0bd253mr3044340f8f.45.1761262190872;
+        Thu, 23 Oct 2025 16:29:50 -0700 (PDT)
+Received: from telcontar ([46.120.21.40])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429897e7630sm6289244f8f.10.2025.10.23.16.29.49
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Oct 2025 16:29:50 -0700 (PDT)
+Date: Fri, 24 Oct 2025 02:29:47 +0300
+From: Gesh <gesh@gesh.uni.cx>
+To: git@vger.kernel.org
+Subject: Handling of improperly-configured custom diff drivers is confusing
+Message-ID: <ok3e53h6kxxv4ukvwe4e6bac24ph5oykffrc26fqmwkrltm25e@byvhfqgfygsv>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi,
+After investigating what I thought was a git bug, I ultimately found it was due
+to my misconfiguring the diff.pdf driver. In particular, I had (years ago now)
+misread either the git docs or the pdftotext manual, because I had naively
+configured
+diff.pdf.textconv = pdftotext
+Unfortunately, pdftotext's default behaviour is to write the text to a new file,
+not stdout -- the correct configuration is
+diff.pdf.textconv = sh -c 'pdftotext "$0" -'
+All this is well and good, and thankfully this episode has left me with a better
+configuration. Although, it would perhaps be nice to have git warn on a textconv
+configuration that was constantly emitting an empty file for existent files.
 
-> originally, all I wanted to do was the last patch: a small performance
-> optimization that stops parsing objects in git-for-each-ref(1) unless we
-> really need to parse them. But that fix cause one specific test to fail,
-> and only with the reftable backend. So this led me down the rabbit hole
-> of tag peeling, ending up with this patch series.
->
-> The series is structured like follows:
->
->   - Patches 1 to 8 refactor our codebase so that we don't have the
->     `peel_iterated_object()` hack anymore. I just found it hard to
->     follow and thought it shouldn't be too hard to get rid of it.
->
->   - Patches 9 and 10 remove infrastructure that we don't need anymore
->     after the first couple of patches.
->
->   - Patches 11 to 13 fix a couple of issues with peeled tags that I
->     found. The underlying issue is that tags store both the tagged
->     object and their type, but this information may not match. We never
->     verify the actual object type though when allocating the tagged
->     object, so this only blows up much later.
->
->   - Patch 14 was my original motivation, a small performance
->     optimization.
->
-> I'm not particularly fond of the patches 11 to 13. It feels more like
-> playing whack-a-mole, and I very much assume that there still are edge
-> cases where we should properly verify the tagged object type. But
-> changing it in `parse_tag_buffer()` itself causes a bunch of tests to
-> fail where we intentionally create such corrupted tags. So I didn't
-> really dare to touch that part, to be honest.
->
-> If anybody has suggestions for an alternative approach I'd be very open
-> to it.
+Moreover, my investigation yielded some surprising (and underdocumented?)
+information:
+- It appears that triggering a textconv driver with cachetextconv set generates
+  a commit. I caught this because I configure the user information per-repo, so
+  diff was complaining the user wasn't configured
+- Custom diff drivers are run in a temp directory subsequently rmdir'd by git.
+  In particular, they _can_ write to disk, but must cleanup after themselves.
+  Caught this because my configuration *was* leaving files around -- but git
+  only complained it couldn't rmdir.
+- git diff and git log crash if in the course of printing a custom diff driver
+  crashes. In particular, they cut off printing. This was useful, because it
+  meant I actually bumped into this bug, instead of it slipping my notice as I
+  jumped in the output to the tag I was interested in.
+- git log --simplify-by-decoration seems to generate some sort of squash commit
+  of all the commits between two nodes it prints, but display them under the
+  existing SHA. I think this was the first time I used simplify-by-decoration
+  this thoroughly, so I hadn't noticed this before.
 
-Are you still ;-), or are we ready to declare victory for now and
-mark the topic for 'next'?  It seems that another topic depends on
-this and the topic itself is a good shape enough to advance.
+Not sure how much of this is actionable -- it ultimately ended up being my
+fault, but I'd've appreciated clearer diagnostic messages and clarifications in
+the docs.
 
-Thanks.
+Either way, hope this is useful to someone.
+Gesh
