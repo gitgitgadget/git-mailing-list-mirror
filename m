@@ -1,39 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF54F1D555
-	for <git@vger.kernel.org>; Thu, 23 Oct 2025 12:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B54F30B527
+	for <git@vger.kernel.org>; Thu, 23 Oct 2025 12:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761222658; cv=none; b=iFdHhzBDoyIYXeqmlDqhHYYVHmUF79B4APTVAQA+PFhBSZGHyNb2hZrFzZjj8bdMf70DynTFllw9nWac92yPNKAfCI/3RCROKKCcayuU3jV/F4lfl3WtRsBonTja3Ei2rbKSNFy8zon4KYefTWuej68LgaAQS0UWXdy2HpUsaUU=
+	t=1761223404; cv=none; b=hDf/U5ZU8rTez3eOi0uYR1AQfgAr9G6+VRZJBDIX4ENXMsAX2eY3WI+kyH3xlXuAV4zDxjEJkJnCyymtzmGqM2LzOIpYPDC1J7g0+cWnd83FgTm2VUs3cDKCfn4SNB4hwkKH6MTyBN8rsTTkdpmDVSZ4xKZqyY5uAeamQA9ZMYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761222658; c=relaxed/simple;
-	bh=5cPXHRDF6PQJik5fE2DvlxG9myXp6InEKB9sreguW6U=;
+	s=arc-20240116; t=1761223404; c=relaxed/simple;
+	bh=PbWOmy9DKf7+xo+WvRxJXGxUo+2I1pkt8HMt7cjXzTY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K1hsF50A1KAYpx4B1btSUVlUiaIasUeY5Tf9iLUAuWpOEsFhroW141PPjkZgB6NNyZqc0Vr9q0+sbr7qV5nmN0h1wWN/eUPutX2Pb+D/CYrTzlqqhEbKpGhQFN5z7W7yRJkNGPdaNe2MCgVcHLApEF+YgYzNflnaGr9wd8oWslE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=FzhsyBwc; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=GauTftx/XK8pdXBShHkjwLnoi/fVZNieL0hEYlwQ2i2FE8VXsu5iFcXmOC2QfRkyQZ+MY8Ynqmsv4ia5cxFEhPObmh9F41aEqlrPNiHQuijzhykxUPJsKrpLR7kn68GxPlrIECMuLcGDHylIu7On0XQPuBStw27dAz9UemdIvj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GcDC9BGz; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="FzhsyBwc"
-Received: (qmail 315630 invoked by uid 109); 23 Oct 2025 12:30:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=5cPXHRDF6PQJik5fE2DvlxG9myXp6InEKB9sreguW6U=; b=FzhsyBwcyXOK6YSUClzGOvsCWmFCwm1AHliXRgGIoCE8m7PZU6DXLsehFicG1PBP6xZCXTK/e+hgd7FkIknGgV03rikKHgf5z4GEF17Q0ZHyLwQP64k45iuE8Zym549wOt0iAWdvG/Xt84c0CWqAtVnOrsMCuxTejaDD78DnjhXKtAK2SaQU83rlYtelDWxyMyqN1h42m7WGLV2TwUnX8jVEpIQHwy3GbBUPYA3z51rFfdqZYI2rVSaqH9v0aD2OwTrNzJkq6CZNh2K4663QyeOOQZLm77QOUSIH4cGnnw7vkOxfpw3JBUFbK892wjkx5yd0imxAcCUV7kF80GfEgQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GcDC9BGz"
+Received: (qmail 315689 invoked by uid 109); 23 Oct 2025 12:43:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=PbWOmy9DKf7+xo+WvRxJXGxUo+2I1pkt8HMt7cjXzTY=; b=GcDC9BGzgWvlmrGZbFIuSMFBWij1zB3pOO5IbQjBAgUsbEQBqKSD4k25glWZVugValzWPr8vlkoYAZJd0qmUegUWnoXwXXxzV+g4kDdNZTFIeG5P7Kk97N0SIUmcPIUijBBrp1PZ0lhgOUWE7zQ7nOCi9CKJSMxBTUOUWBJqjnCH2QxwFLXafIWe0C71cr0DrKDPD0nKnhXLryx9epWiVaRWr+yIeHXSZ1zCSQcsG6+wUvZjKF0cwhFuHXAiacGgZh3x3Mg3G/I83Nh6zQu2gmi9lOI1Yk0YC10tbEVGw0QeC66zzg0YLFYMCu/OcEBYeqpZGdDExR7xkA+VwV2Q1w==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 23 Oct 2025 12:30:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 23 Oct 2025 12:43:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 490864 invoked by uid 111); 23 Oct 2025 12:30:55 -0000
+Received: (qmail 490983 invoked by uid 111); 23 Oct 2025 12:43:20 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 23 Oct 2025 08:30:55 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 23 Oct 2025 08:43:20 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 23 Oct 2025 08:30:55 -0400
+Date: Thu, 23 Oct 2025 08:43:20 -0400
 From: Jeff King <peff@peff.net>
-To: Lidong Yan <yldhome2d2@gmail.com>
-Cc: gitgitgadget@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-	Johannes.Schindelin@gmx.de, jake@zimmerman.io
-Subject: Re: [PATCH v4] diff: stop output garbled message in dry run mode
-Message-ID: <20251023123055.GA1160519@coredump.intra.peff.net>
-References: <20251018094823.31173-1-yldhome2d2@gmail.com>
- <20251019163024.18939-1-yldhome2d2@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Xi Ruoyao <xry111@xry111.site>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Lauri Tirkkonen <lauri@hacktheplanet.fi>
+Subject: Re: [PATCH] t7528: work around ETOOMANY in OpenSSH 10.1 and newer
+Message-ID: <20251023124320.GA1163932@coredump.intra.peff.net>
+References: <20251023-b4-pks-t7528-ssh-agent-socket-name-too-long-v1-1-f15eeec199f3@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,61 +42,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251019163024.18939-1-yldhome2d2@gmail.com>
+In-Reply-To: <20251023-b4-pks-t7528-ssh-agent-socket-name-too-long-v1-1-f15eeec199f3@pks.im>
 
-On Mon, Oct 20, 2025 at 12:30:24AM +0800, Lidong Yan wrote:
+On Thu, Oct 23, 2025 at 09:14:59AM +0200, Patrick Steinhardt wrote:
 
-> @@ -4420,7 +4423,7 @@ static void run_external_diff(const struct external_diff *pgm,
->  {
->  	struct child_process cmd = CHILD_PROCESS_INIT;
->  	struct diff_queue_struct *q = &diff_queued_diff;
-> -	int quiet = !(o->output_format & DIFF_FORMAT_PATCH);
-> +	int quiet = !(o->output_format & DIFF_FORMAT_PATCH) || o->dry_run;
->  	int rc;
->  
->  	/*
+> As it turns out this is caused by a change in OpenSSH 10.1 [1]:
+> 
+>  * ssh-agent(1), sshd(8): move agent listener sockets from /tmp to
+>    under ~/.ssh/agent for both ssh-agent(1) and forwarded sockets
+>    in sshd(8).
+> 
+> Instead of creating the socket in "/tmp", OpenSSH now creates the socket
+> in our home directory. And as the home directory gets modified to be
+> located in our test output directory we end up with paths that are
+> somewhat long. But Linux has a rather short limit of 108 characters for
+> socket paths, and other systems have even lower limits, so it is very
+> easy now to exceed the limit and run into the above error.
 
-BTW, this hunk is interesting because it is the one spot (that we know
-of!) which cannot be found by looking for mentions of o->file. But I
-think that is a sign that it was already buggy, because it is not
-respecting o->file in the first place!
+There's a secondary issue, too: even if the path is short enough, the
+space in "trash directory" of the path will break the shell eval. That's
+relevant below.
 
-If I make a simple commit like this:
+> Work around the issue by using `ssh-agent -T`, which instructs it to
+> use the old behaviour and create the socket in "/tmp" again. This switch
+> has only been introduced with 10.1 though, so for older versions we have
+> to fall back to not using it. That's fine though, as older versions know
+> to put the socket into "/tmp" already.
 
-  git init
-  echo old >file && git add file && git commit -m old
-  echo new >file && git add file && git commit -m new
+OK. I think this is an improvement over the status quo, though it leaves
+a lot of loose ends, like:
 
-and then run this:
+  - what happens if "ssh-agent" does not exist at all; we do not notice
+    the error because the eval succeeds anyway (with blank input)
 
-  git diff-tree --output=foo.out -p HEAD^ HEAD
+  - one reason we did not notice this immediately is that the failure
+    mode is to fall back to using the user's SSH_AUTH_SOCK variable if
+    set (i.e., their real agent with their keys in it!). We should
+    perhaps be clearing that variable in test-lib.sh.
 
-I should get the diff in foo.out, and I do. But if I instead do:
+But those are not really new issues, and I'm OK with just un-breaking
+things in the most expedient way possible.
 
-  GIT_EXTERNAL_DIFF='echo doing diff:' \
-    git diff-tree --output=foo.out -p --ext-diff HEAD^ HEAD
+> An alternative approach would be to abbreviate the socket name itself so
+> that we create it as e.g. "sshsock" in the trash directory. But taking
+> the above example we'd still end up with a path that is 91 characters
+> long. So we wouldn't really have a lot of headroom, and it is quite
+> likely that some developers would see the issue on their machines.
 
-then the external diff output goes to stdout. Whoops.
+I assume you mean here something like:
 
-AFAICT this has been the case since "--output" was added. So we don't
-need to worry about it in the context of the current regression.
+  ssh-agent "$PWD/sshsock"
 
-Probably the solution is something like:
+Yeah, that is not buying us that much in terms of headroom. Plus it
+would still run afoul of the space issue, since we know that $PWD will
+always contain "trash directory".
 
-diff --git a/diff.c b/diff.c
-index dac3ea9e01..15ef06ac9e 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4458,6 +4458,8 @@ static void run_external_diff(const struct external_diff *pgm,
- 	diff_free_filespec_data(two);
- 	cmd.use_shell = 1;
- 	cmd.no_stdout = quiet;
-+	fflush(o->file);
-+	cmd.out = fileno(o->file);
- 	rc = run_command(&cmd);
- 	if (!pgm->trust_exit_code && rc == 0)
- 		o->found_changes = 1;
+If we are going to provide a fixed name, I think it would have to be a
+true relative path like:
 
-but I didn't test it beyond seeing that it makes the command above work.
+  ssh-agent ./sshsock
+
+That does work (and SSH_AUTH_SOCK contains the relative path), but is
+maybe a bit of a booby trap waiting to spring on somebody who tries to
+access the agent with a different current working directory.
 
 -Peff
