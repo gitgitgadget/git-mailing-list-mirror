@@ -1,123 +1,119 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874B32417C6
-	for <git@vger.kernel.org>; Thu, 23 Oct 2025 05:50:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFED1239E97
+	for <git@vger.kernel.org>; Thu, 23 Oct 2025 05:52:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761198603; cv=none; b=cTbm/ohX3DaSeKLdzKb2pOey9CDOJqzZ6zmmaM4hpZRq8jK9LdHdITh/Aoi5PAvTTZ2qkUQ+JLtysiA8Sfd+taKEnMLko7NL2N5wsbcWDpTLMeQRD8ou9gl0dcXZDFP+3e2aEPRWThBHM0/rtnvDDlYTeViXR0qrS6PIMUsIO0A=
+	t=1761198781; cv=none; b=HWo2BZIQ+gUNJ7hAu77Q43oZ9K4E2tangJ9KC9g2ZgT9J9E1qiD1wxGpKm8coSZ/l5H881V5faCd2H93kSyJ9vglj4fqwqaXH1nPQKu8Iv4Z6u5OxIJ2nhJfDjtDJA/yCdxHxQuGFvROicMSi2im8G+PCUvRyCN3KnsqIN7XqwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761198603; c=relaxed/simple;
-	bh=ucei4NbTcFSbctjqoKcItjlv6WGfA8aD+9zKbXxDt94=;
+	s=arc-20240116; t=1761198781; c=relaxed/simple;
+	bh=xxJxkeJ1mCREPvcJaGV/5YoVRIkD/bNt6mlqiNKKdyc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nxtyXqW2Fp1j9slpx0mYj+Pz4DhT5KR7tQGf4z79Jo4QD0affhvtOm3hULGCa5fo2OY8qcn8E94OcNz6Cc/Tfw8ow8KS7qe2Lx0MFZVKSuOwh8VS32mVTr601rUmKM2TnM2ntFFuJLGb0xALJdniytMCsHBZE6GmkNj9+vLDoMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NBf1skSm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kuTM9BuB; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=c1yOPdKIZ54O9nXGcp3YsWkezi6uif28rkKXbhhuOrfzTE6jgGfotKUguFO1yuqP7s8Oth411BYE4Ek8XEtS9XnmbskuEAdNOkRiP7rRKBsBqhs2xVsWGBxmjfVEwUUlo0IbZIXiPhpkL+LTMYa9GGTKGj4s5p7vz3b0kuyKt0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cJMcuK0Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eW2fbV7n; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NBf1skSm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kuTM9BuB"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 363E2140011F;
-	Thu, 23 Oct 2025 01:50:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cJMcuK0Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eW2fbV7n"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id E2DF9EC0148;
+	Thu, 23 Oct 2025 01:52:57 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 23 Oct 2025 01:50:00 -0400
+  by phl-compute-09.internal (MEProxy); Thu, 23 Oct 2025 01:52:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1761198600;
-	 x=1761285000; bh=YHVwZ2FmSHcR1evYA7gTanYWUYLNy7XTecaaQoDMwt4=; b=
-	NBf1skSmmHoZYGXk/1BUbg8npT3j1bCwulAnYPNuvjRwxe1cBFPOr2mY6fq+yeAG
-	8dKJJEaXnOSbhvdNAR/TWnBkhJxAAhGA3vNgdnmBlwUN7nys5whr2AaExdPYuBd2
-	SJzebKpAa2WS278pglzPS1TAEw873Z/hGBAxqDcoBNC8uIEHLAoEkhzhLVdpX6Zi
-	kPY+kWCAj6QI2cnBc6HawzzfzDkS7dce/zIVL4VcqZPn+gsy6mMuHT+WxZZhnp+u
-	BWXxdszGZ5het1iOcVBBjDoXNtO/wKlhb5YYeLzNt/RFcn8QGw2iDjKvBxVs38qQ
-	bzdrIXK1aItkgfbla8QlJA==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1761198777; x=1761285177; bh=ZF5ugxcUsK
+	O58MRA8SXM/GIS6Wlf6IvWsg0fqtImwro=; b=cJMcuK0YCcXAvbZbGchXcPucUg
+	mzkwKnL5ZXGolc1NmWJl7MUfpYgMjrI84sQiLFXWoY+MjY3pxl+utyl8nEBLoFN7
+	HHxJ3ee+iQXxEOqz3L6YE8s3SpoDJGgEuJ7ErRXMOb+f+qQtCsqu6pwJ+FBcx7r0
+	7Qd31i2rDFUsc3Ou41AiJP6zizpkDBVx37PFnM7v4j4DJV2VY+Ax9MqwYX7ejv6F
+	KXhahjbkL1L0R23C9nB336mkf8b46JgPPjQPuHDLrsC+yf9zlHGX7mMV38RKY122
+	9E2COtcZPW5mQd8GLuwNjr7y25wn2/2vzFgTKP7VW31VitgTAnsrkjFWnxAw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761198600; x=
-	1761285000; bh=YHVwZ2FmSHcR1evYA7gTanYWUYLNy7XTecaaQoDMwt4=; b=k
-	uTM9BuBxp3YzQ8vhwJD2xHeAV5mlaEgRhi5Vd7S/EqrBo8z2DtwVqhTajyP9v76/
-	thV4AlGAuxqKYRrK0a9BzS7RV0wIkKw/CQqogxzDLWsr5McIciaX9vpTRh79WAv0
-	dT2wjD89yY4dbWDBCYAiLlDNbfoElvc9GsCTlR2yjdaU5gtU4rZxPuOxWil7FdLB
-	L4UMukVQA0PBn1hM0sebDt1OgnfusthRy7mxZrr2S+sYrf5khBgcHx4+rmGWBs2k
-	GlwndT3nQtLIYrkLyK8Ur8zXAzDSwi0jeC+UyCs8in/fNnFUqtKg1kSCBqnWHTMV
-	MeT4ffBIW2g/MamSVCNDw==
-X-ME-Sender: <xms:B8L5aERzw9kQl65xsoMYvDfgt8k-dWnaSlqMEpZariUxpKLLtuxPMA>
-    <xme:B8L5aJMjST58wKA_Hh9ChiC2jmVC73aFCZCqfuzVeoMz0gwKZl94p8aPurmG_r8ZY
-    b_uVF7vhOAQu1tPqtDx2WhqHkUnBJY_76BgexHNiq75CP2BrUSMGg>
-X-ME-Received: <xmr:B8L5aPM_HLW6hdCvt9ro7li_vqXTr2RVjWEsFFPWAfALbPk6YlyeCah7yAkdewqoZeMbGljuTf2LqP0VFgkHoZ6f7kU15Wff-_Z7vYqSjZPi-A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeehieeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761198777; x=1761285177; bh=ZF5ugxcUsKO58MRA8SXM/GIS6Wlf6IvWsg0
+	fqtImwro=; b=eW2fbV7nVERB4mmBEYKxV/jpJx4WpIYyMjWwxDHn+GU3niRMlKZ
+	ySWG8yrsaZuHi3f3qUT30m7Cfv0AeAfQU55NF4wz8y4kyBGf1iNiLC3bQ/3pBX59
+	7F5ORhdtiEEz0yrFTroLs+cOaUXRcRGW8swlj8ktMJiiTuZVbu/RzD2GmIikTGfo
+	QhL8wMNTLKzBpzam+2fEm8GAHoOkS60N3DhTitXd+Y5KEFuXQoBt8w/eg3gyGLvb
+	qreF/gDNpmPICczgiQbAdGcAMMMxMdMrcI4rA7CChJ7slj6j67Yfa8TV/pgSrvK+
+	b45u+VGLzX5pjWJsMTZ7wHTk6PsYlUMjrow==
+X-ME-Sender: <xms:ucL5aJG769WvP_KtIGpiMf1IcrNa4VZiFsvs5pYp_XjlKJvx1Tx8-A>
+    <xme:ucL5aCBkAH-rFz1VLlm91I3v17RrqcArdcYXjWV8QO2mLDFw1qFjf4w2NnAepqp1e
+    J4v-SqhOfmBoV6z0SQLNMUy5-FM6YwKWxLw-BBdBMs0a5XCmee_Kg>
+X-ME-Received: <xmr:ucL5aE-8YsOdpGJFkT3sED7gcwNg8fVuGGQwaClBnrmTcpXnaF4wjlCqsaZ3zLqEgomI2XsZIYhXc-253BzeZyq342lsmI4bosFVjezGeCpAFg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeehieejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvgiivghkihgvlhhnvgif
-    rhgvnhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:CML5aBsQShVQZpPjQWyvn-kQq8dV672eAT94OEhS1l9WVMyDKmI5cQ>
-    <xmx:CML5aBWZRkgUEGVPonS_TQ8FQcFHlTnLQKUttrNZts5F4ec64NbtSg>
-    <xmx:CML5aBuNhZMI0i6_z75vCZ5AuX7nLQbvUGHsW2oQTOBYaNpJwnJGjQ>
-    <xmx:CML5aFVgWrnxqLSefN8Vqb7kasK_GJ9YZR39w3l4GRxAlzoEoO5V9A>
-    <xmx:CML5aAq9PdQF4o-x42Qe6dnM4PN7md2cus8eYH5-WF2XRDD-on60Ion4>
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhf
+    vghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:ucL5aGCX-uRjQw54U5KKIwfofyRmTCYWEQL5bRuTt6ekvBpXf5POVQ>
+    <xmx:ucL5aBSDqNX1Kgn-t-B-tgR1WPoestEK5YfDgHSFRd6W32k0i03viw>
+    <xmx:ucL5aFvmIxzmKb67BkmtMJn9Hk5OjrCIwfbLfB_sZM99yMtV-O8INA>
+    <xmx:ucL5aF1NK5Do9lqtTIWLJvrkCBgaimohXgE303qpkD74X8RY__jYkA>
+    <xmx:ucL5aLCF1VrttOJ8xyE56HoxnfGghzzqeTnR3sBJ08w6oIAME0tG7bju>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 23 Oct 2025 01:49:59 -0400 (EDT)
+ 23 Oct 2025 01:52:56 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 435b416d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 23 Oct 2025 05:49:59 +0000 (UTC)
-Date: Thu, 23 Oct 2025 07:49:55 +0200
+	by mail (OpenSMTPD) with ESMTPSA id ef04c0f5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 23 Oct 2025 05:52:55 +0000 (UTC)
+Date: Thu, 23 Oct 2025 07:52:51 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 8/9] xdiff: change rindex from long to size_t in xdfile_t
-Message-ID: <aPnCA7lzREhUETKc@pks.im>
-References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
- <6dca5e6222e1d02092d4ba8296b757b123b85afa.1760563101.git.gitgitgadget@gmail.com>
- <aPdFeHZKEsRw1cTX@pks.im>
- <CAH=ZcbBbnoiBndEYryMpDzav+-iHFA7_3BPNw8hgOBiaFjCq0A@mail.gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v3 00/14] refs: improvements and fixes for peeling tags
+Message-ID: <aPnCs-zK1Mzi4wb8@pks.im>
+References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
+ <20251022-b4-pks-ref-filter-skip-parsing-objects-v3-0-eb9f71985ef0@pks.im>
+ <xmqq4irr0z8k.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAH=ZcbBbnoiBndEYryMpDzav+-iHFA7_3BPNw8hgOBiaFjCq0A@mail.gmail.com>
+In-Reply-To: <xmqq4irr0z8k.fsf@gitster.g>
 
-On Wed, Oct 22, 2025 at 04:14:42PM -0600, Ezekiel Newren wrote:
-> On Tue, Oct 21, 2025 at 2:34 AM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > On Wed, Oct 15, 2025 at 09:18:20PM +0000, Ezekiel Newren via GitGitGadget wrote:
-> > > From: Ezekiel Newren <ezekielnewren@gmail.com>
-> > >
-> > > rindex describes a index offset which means it's an index into memory
-> > > which should use size_t. dstart and dend will be deleted in a future
-> > > patch series. Move them to the end to help avoid refactor conflicts.
-> >
-> > In a patch like this I would appreciate some explanation why we can
-> > change the type without adapting any of its users. So basically explain
-> > why this refactoring is safe to do and won't cause any issues.
+On Wed, Oct 22, 2025 at 07:47:55AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> The values of rindex are only used in 3 places. get_hash() which was
-> created in [1]. and 2 places in xdl_recs_cmp(). All of them use rindex
-> as an index into another array directly so there's no cascading
-> refactor impact. get_hash() was created precisely to reduce refactor
-> churn. How about a commit message like:
+> > Changes in v3:
+> >   - I've rebuilt the topic on 133d151831 (The twenty-first batch, 2025-10-20) with
+> >         - tb/incremental-midx-part-3.1 at 935ab44a0a (builtin/repack.c:
+> >           clean up unused `#include`s, 2025-10-15)
+> >         - jt/16a93c03c7 at (builtin/repo: add progress meter for
+> >           structure stats, 2025-10-21)
+> >     merged into it. This is done to fix a couple of merge conflicts with
+> >     "seen". Both of the topics are only in "seen" right now, but they
+> >     are close to be merged.
 > 
-> Changing the type of rindex from long to size_t has no cascading
-> refactor impact because it is only ever used to directly index other
-> arrays.
+> The latter reference is weird, but I think I know which topic you
+> meant, as I just finished preparing a merge-fix to account for that
+> topic.
+> 
+> Will re-queue.
 
-Sounds good to me, thanks!
+Oh, right, that was supposed to be jt/repo-structure. But I see that you
+managed to figure that out correctly, thanks!
 
 Patrick
