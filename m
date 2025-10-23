@@ -1,83 +1,84 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B528426E6E8
-	for <git@vger.kernel.org>; Thu, 23 Oct 2025 20:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36B926F280
+	for <git@vger.kernel.org>; Thu, 23 Oct 2025 20:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761251296; cv=none; b=iByFux8JZt6QF09XoqyFHa+5QHv/YK4GYgk3UfItvhK61192IGa7USJxzQZelFRFxYfobieZn/vLJKfkog4LON4S30N+bjs2M8hXAO8JymdmQ6XKPSmYSbXlFJtx6PsDdLgI10pnWCrYuYDxXZBLMxKxR2Bn5UrkEO4EbQ3yEx8=
+	t=1761252737; cv=none; b=uADOJOyS0Lk3UzPMVcD2G2aJ2DE5zunSPlRsQiiPZJt7nb/qQHyYXU43GG+grTflffA4uB9sHDEAjg3aBjxs7qT3zjM6WxfSjNyEYk03ZRbm5N3ZByDPBJfVByv5m66Itjt9jwfanZTq4e18lzSg/OqeTxPlsVMYYBX7IZr8veo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761251296; c=relaxed/simple;
-	bh=SPrgrkHKe6lVD25SUm8KSto/SOf8sGFomdv4+d7Md9U=;
+	s=arc-20240116; t=1761252737; c=relaxed/simple;
+	bh=ucc1aPxR+s1SFDWAXEuwsnub66zy2R2HlitOOQ3MRmI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RUwXJ8aJYf08eB1J6QS0VTDUfFU27lCnijoGenErBxVr0PL03pvXGLv1SWCoD20IdELTJ6B6uySSPyUm0aJJ+uvjN1u4Q8Mr1T5Z77bo+FuEZZxkMTz2RXQviN1RzoFrQNnIrNvVJxVEAIplwr1+OJRFvypXuUDQFqcBtJ15ppU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QCGF3aDA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RRmeo76t; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=vDWV2OCg77tpiXP/ggJu94AxnSxfXkIoL3Bw8iLTkq9KUqWi0j66Aj2gMT2rd3cHD+1MGyEhdvYH6HX2qWoa5sLQTozgzQKzvdNYmo0AA6+yZDEXQrh7L2fOZfljoS/dN/6uoSadWmA37QO563KR18N0cV0qgj6qX1jLPrrclvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L9rISWMK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VQq7uwHH; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QCGF3aDA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RRmeo76t"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B4FB27A00B1;
-	Thu, 23 Oct 2025 16:28:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L9rISWMK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VQq7uwHH"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D178E7A0044;
+	Thu, 23 Oct 2025 16:52:13 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 23 Oct 2025 16:28:13 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 23 Oct 2025 16:52:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1761251293; x=1761337693; bh=yFCOGXFV7C
-	OHrBHM5MGMT0cIs7amavLXAuVyc3QsuNQ=; b=QCGF3aDAhyj+Ip0n00Q67F39Sd
-	f3mxlOTWhE2iEOumyEv09l8fydv54vCUhInFhYpf+HAZ57asMm67MM5m8DMyHH+9
-	uverYzrpcJw4UC/1kwGKXomUGGSnAQSbYdBtzbG5PxhpVbAgTKzQijAyS9w3jDd9
-	2uUy5X4PuO/L3AlmDBcvwmcPoVsTWjuRJhCVishrQoYO9/zpLe1qckp5WNunC0gu
-	DuCAHwMV11eaRIHlpAI6+R9bYFtQgjPht+m/ROoo7WpxrzIXSEcOepOtOPNFZHaY
-	YKBz4emWgNh8Aqshi883mXb4ASwClLqdGx+7/81isIlncrBz2rXioQK8FDpw==
+	:subject:to:to; s=fm1; t=1761252733; x=1761339133; bh=NGQySXoyr3
+	a2jFyWZmo6vQPn5jBKgWA6LgATiCyU5wU=; b=L9rISWMKlApmQtus/aHUexenLc
+	IXOyl5Dn4cEkii2ChxEwHOl3RS2su8zF0Eefb2We4lHa/B+VhaZ0btdNgfG5szuA
+	nDMo3FEU4+EHiuXaKkNftYWnbTIFhQ0GrIgIot/dky4ta64+usNqnbSXQW5uO/aV
+	jZ96JHC8ZpGiLkohr8dz+Z+LB5PdXDWaZIJ2Fk4dATvjG3s00gu+1e3UkAtIB9eJ
+	pzUzplB1iqJsHeN3jXtwMeQglp+I8QKci00y/kgRyakNQBSfWwIEdudNFfVCp/E3
+	FdAhasbGgNBYf+VRoGoJ38X/IDaiyueeKM3qtY9789j0wRE4+luAnIEwV06w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761251293; x=1761337693; bh=yFCOGXFV7COHrBHM5MGMT0cIs7amavLXAuV
-	yc3QsuNQ=; b=RRmeo76ttB0AZ7s5qvsIjivwhgfI2yXvBMs1pRd/ElisF/4pR0S
-	z4dEmJyWfi42yu1WhE4++dpmI0Hp5CZm/x0FOKkOu5+ukdxhJ3PvJiLDzZmSckCW
-	iqvXZX+LDmHV4XTHAgGa+fIa9u06dXU80midC0DAJRzb1bAWIQpDVvf3T5pOlQV8
-	Obe/UPnFg1U6ORp/UClj0wGHe1qF6OZl9+dSr3rB/OyZCsXdCr76zV9EpOMfWxaD
-	KhNkw50qEpjyIp7G/JpmKsesHUB108xl0G6ISGP19anvRIMgtJuIJmTKLYTigHh2
-	wxkA0/OmGWsi2KL8Ag/tDbKkGNBmtR/IUXA==
-X-ME-Sender: <xms:3Y_6aNXMt4NWiLaO-MOR66uG4DAeHoktET_ZLZcoBht9JcU-7bq8mw>
-    <xme:3Y_6aElV1CS-m-1Dc-XnUlTcqfUaXJCl6vWojoNo0zyJwsn9p2EHWci9SqPFLR1Bu
-    H4Nz6CjQSgkuXQpYb8PIAr_U881NwHGZJpURTtl792b2lzME17A6g>
-X-ME-Received: <xmr:3Y_6aObzPc7_WKJ1LR90jdsxWlpI4kAwZ1FOTKpG1ghTVpsUQCWRaq_suDC3gAIluJoJhsK9NyAohEqpHW7rQNeZpB32xynIMkmC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeejgeduucetufdoteggodetrf
+	1761252733; x=1761339133; bh=NGQySXoyr3a2jFyWZmo6vQPn5jBKgWA6LgA
+	TiCyU5wU=; b=VQq7uwHHFVQ+2tKLzAretqdz6/+DaSE7rE/dG1jgwPUzbh5buDv
+	yJSDmLqr1TaEeddEWym41pplrI9ekcL/t4toWgg4a5Ypkqm3xDCzTBDrD5o0imoe
+	Q07y8t9OoEqv+lC6/VOtn6botZyhVn+MnN1Dr8ikcDgoI65iQD/f/n0KMEOdtDf6
+	722/LHyQcbsShu3CuJsTR7/rXRv1/p25ULORF4gOEm5eb7UL8Ue4kqWKXGvsQBQU
+	HRdqQ66FxtPu3WDpEwufa0HBsITT4m58O64bfMhdVVhvmz2rGS5GiLyBt3I5luFh
+	OUKMCuWZ9fvsliha5m+vdXi7RRZ4tpQbf5w==
+X-ME-Sender: <xms:fZX6aLQu7pJas9_7rihbUIA3uXpbvi0qU5usj2tp7JconS0VuhGQxw>
+    <xme:fZX6aIQtYlarnH0fruspVPJ9eVQXiGCaVWzV3l_vaK6oplUW1ktpYEk8GiWtW2dhT
+    Da8cMl1xV1FDfjza44RTajpPeG2OqYx005C0ui3e45-1wbOIqYMDg>
+X-ME-Received: <xmr:fZX6aHQjA_DtATPw6kVlQ_13Px-GiGHAaAc0hnk5TT1hoobvsN3wcfj1MMIt5cyCyhVBarBUftb_MfIAgIbAJ2mQDtTQLkubJJox>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeejgeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
     dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
     ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
     ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
     rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtohepshhruhhtvggvshhhrdhoshhssehprhhothhonh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:3Y_6aPOKqZ6d83ai72yi9_tzJwaZ0zqzH19ekfEB3G31ppNlDM7kUQ>
-    <xmx:3Y_6aDaxS2Bd8NQQdql24qOLTjn35vWInGeToPNIgRF0RcarYcbpUw>
-    <xmx:3Y_6aN1Fz4HbEHcOr012MWo_bJs0JHbL-NLfHG4mbZiUdQ6hjb0Kzg>
-    <xmx:3Y_6aJdgrBOZL4b5BA031-2nfgsaPJwD6Ut6M_8PbiamocrD7MVO4w>
-    <xmx:3Y_6aDvcF26s9cmG3XjYUpJVqW-LDEyIR1CkpE-2RtujF7IQNgw-mPuH>
+    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtmhiisehp
+    ohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopegrlhhgohhnvghllhesghhmrghilhdrtghomhdprhgtphhtthhopehm
+    vgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:fZX6aF4NNn98ELjYDqnr4fXQa-qvNvV8irk1Q-Devh8X76A9_1GFtQ>
+    <xmx:fZX6aL1-qpQahtKfLrVTJFReCgOzI32jMyz4El8IZ2NFs1GxFTBPFQ>
+    <xmx:fZX6aIAM64xoWekQzoMzggoAT6jrbpyNknjggDqbRebXmi_zNoNfZg>
+    <xmx:fZX6aOOTwKpPVw4s6VreibOOBk41wzXTeqZH0zUjJcVXwOx4YSl35w>
+    <xmx:fZX6aN33oIvbi55arvNQCHHegOMcTegJEBQlRNq6COXJqR3ZruPcRfeY>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 23 Oct 2025 16:28:12 -0400 (EDT)
+ 23 Oct 2025 16:52:13 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Sruteesh Kumar <sruteesh.oss@protonmail.com>,  "git@vger.kernel.org"
- <git@vger.kernel.org>
-Subject: Re: [PATCH] match_pathname(): give fnmatch one char of prefix context
-In-Reply-To: <20251014003404.GC1507@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 13 Oct 2025 20:34:04 -0400")
-References: <n_EjA_jj-d398XOogazunHfOBdh-yoa5P-Prb3b7gjkBODqWMtvKNdhnCLuikthwVcbEy4-ryWTRgyuiShJ3tam93j8S7lmGSlyFjNoxzSo=@protonmail.com>
-	<20251014003404.GC1507@coredump.intra.peff.net>
-Date: Thu, 23 Oct 2025 13:28:11 -0700
-Message-ID: <xmqq7bwltlb8.fsf@gitster.g>
+To: Todd Zullinger <tmz@pobox.com>
+Cc: git@vger.kernel.org,  Andrew Kreimer <algonell@gmail.com>,  Taylor Blau
+ <me@ttaylorr.com>
+Subject: Re: [PATCH] t1016: make sure to use specified GPG
+In-Reply-To: <aOvz-ac8JTCaRwIm@teonanacatl.net> (Todd Zullinger's message of
+	"Sun, 12 Oct 2025 14:31:21 -0400")
+References: <xmqqsefq7947.fsf@gitster.g> <aOu59eVs7tK6pCoF@teonanacatl.net>
+	<xmqq1pn85f5i.fsf@gitster.g> <aOvz-ac8JTCaRwIm@teonanacatl.net>
+Date: Thu, 23 Oct 2025 13:52:11 -0700
+Message-ID: <xmqq3479tk78.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,139 +88,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Todd Zullinger <tmz@pobox.com> writes:
 
-> Subject: match_pathname(): give fnmatch one char of prefix context
->
-> In match_pathname(), which we use for matching .gitignore and
-> .gitattribute patterns, we are comparing paths with with fnmatch
+> Junio C Hamano wrote:
+>> Todd Zullinger <tmz@pobox.com> writes:
+>> 
+>>> Interesting.  And well-spotted.
+>>>
+>>> This _does_ seem to resolve the failures in our CI and in
+>>> the Fedora build system.  I was able to run a few test
+>>> builds.  With this fix, the tests were successful where they
+>>> were not without it.
+>> ...
+>> FWIW, GitHub CI jobs are failing t1016 at the tip of 'seen' (which
+>> has this change), but only some and not all the jobs, which may
+>> indicate there are timeing-dependent flakes involved.  I didn't dig
+>> further, though.
 
-"with with" -> "with".
+Let's merge this fix down, even though it does not seem to have
+any effect improving the situation of flaky tests here.
 
-> patterns (actually our extended wildmatch, which will be important).
-> There's an extra optimization there: we pre-compute the number of
-> non-wildcard characters at the beginning of the pattern and do an
-> fspathncmp() on that prefix.
->
-> That lets us avoid fnmatch entirely on patterns without wildcards, and
-> shrinks the amount of work we hand off to fnmatch. For a pattern like
-> "foo*.txt" and a path "foobar.txt", we'd cut away the matching "foo"
-> prefix and just pass "*.txt" and "bar.txt" to fnmatch().
->
-> But this misses a subtle corner case. In fnmatch(), we'll think
-> "bar.txt" is the start of the path, but it's not. This doesn't matter
-> for the pattern above, but consider the wildmatch pattern "foo**/bar"
-> and the path "foobar". These two should not match, because there is no
-> file named "bar", and the "**" applies only to the containing directory
-> name. But after removing the "foo" prefix, fnmatch will get "**/bar" and
-> "bar", which it does consider a match, because "**/" can match zero
-> directories.
-
-Ouch.
-
-> We can solve this by giving fnmatch a bit more context. As long as it
-> has one byte of the matched prefix, then it will know that "bar" is not
-> the start of the path. In this example it would get "o**/bar" and
-> "obar", and realize that they cannot match.
->
-> In the case that there are no wildcards at all (i.e., the whole prefix
-> matches), we'll continue to return without running fnmatch at all. We
-> just need to account for the extra byte in our adjusted lengths.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I wonder how much this prefix-matching buys us in practice. There are
-> two cases that are helped:
->
->   1. When there is no wildcard in the pattern at all, we skip fnmatch
->      entirely.
->
->   2. We do a raw match of the prefix chars, shrinking the size of what
->      is passed to fnmatch.
->
-> My suspicion is that most of the improvement comes from (1), and it
-> would be very easy to retain that case and get rid of (2). But I haven't
-> done any measuring.
-
-The above matches my intuition as well.
-
-> diff --git a/dir.c b/dir.c
-> index 0a67a99cb3..764400d9c5 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1360,6 +1360,13 @@ int match_pathname(const char *pathname, int pathlen,
->  
->  		if (fspathncmp(pattern, name, prefix))
->  			return 0;
-> +
-> +		/*
-> +		 * Retain one character of the prefix to
-> +		 * pass to fnmatch, which lets it distinguish
-> +		 * the start of a directory component correctly.
-> +		 */
-> +		prefix--;
->  		pattern += prefix;
->  		patternlen -= prefix;
->  		name    += prefix;
-
-So, checking pattern "fo*o/bar" against "foo/bar", we'd use
-"o*o/bar" to match "oo/bar", which is not necessary but our
-conjecture is that feeding shorter fnmatch() is not buying
-us much, which justifies this change.
-
-If not, we could do a more targetted pessimization, perhaps like
-this, ...
-
-        /* the non-wildcard prefix does not match? */ 
-	if (fspathncmp(pattern, name, prefix))
-		return 0;
-
-	/* the non-wildcard prefix is the whole thing? */
-	if (namelen == prefix && patternlen == prefix)
-		return 1;
-
-	/* avoid making foo**/bar match foobar */
-	if (3 <= prefix && memcmp(pattern, "**/", 3)
-		prefix--;
-	pattern += prefix;
-	patternlen -= prefix;
-	name += prefix;
-	namelen -= prefix;
-
-... but that is even more specific hack than yours.
-
-> @@ -1370,7 +1377,7 @@ int match_pathname(const char *pathname, int pathlen,
->  		 * then our prefix match is all we need; we
->  		 * do not need to call fnmatch at all.
->  		 */
-> -		if (!patternlen && !namelen)
-> +		if (patternlen == 1 && namelen == 1)
->  			return 1;
->  	}
-
-In any case, I do prefer doing this "our non-wildcard part matched
-the whole thing, so let's return true" before stripping matching
-prefix from the pattern and the name (like I showed earlier).
-
-> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-> index 273d71411f..db8bde280e 100755
-> --- a/t/t0008-ignores.sh
-> +++ b/t/t0008-ignores.sh
-> @@ -847,6 +847,17 @@ test_expect_success 'directories and ** matches' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success '** not confused by matching leading prefix' '
-> +	cat >.gitignore <<-\EOF &&
-> +	foo**/bar
-> +	EOF
-> +	git check-ignore foobar foo/bar >actual &&
-> +	cat >expect <<-\EOF &&
-> +	foo/bar
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
->  ############################################################################
->  #
->  # test whitespace handling
