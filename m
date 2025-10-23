@@ -1,158 +1,172 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB9B255F2C
-	for <git@vger.kernel.org>; Thu, 23 Oct 2025 16:03:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18ECC2D6E7A
+	for <git@vger.kernel.org>; Thu, 23 Oct 2025 16:27:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761235409; cv=none; b=m2jLwIxErDWNvqMfG0SKumKVA9YsU0JOeK9gTc6HZ5k+HwwZ9GWodX3fzxx1E2wJGKUakcW7xPtGJW7T7u777j+YgxazYWI7eGrD5nqIJfrmvEcq/zRLDWBsvaEUIV3/lkdyN2ju0vrB6sqyTPsuy7ctI4iSX2QYuG+M/2K9Q0Y=
+	t=1761236860; cv=none; b=lrwhIA2l5XP/GTm8R6P0UBrrt/PbWEltuxwOts3IZYmJ2jbTHBYnTbLFpj9ea7gdZ1aA+Pl+MUIVTdEzD5tdOibGL3EpZlp9/ZmFMrN05UCOqL+hSftI6bza3gdj1ozR/aX20QstInqG7Aalm65EEkUbyxnsgQMp7HLz0qlPyhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761235409; c=relaxed/simple;
-	bh=JfEB0dvpza4/rY6BSR9AiSFui5zcWqUsVCEKPBdShDk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bPQWS14ki9rQcUOWpxQdHYBAAycnAISFb5EROP4OapcMRTqFfnTTUnfKzZzi+3PXDOh+9nECfqLP5wXQk7DBrAhgjNPb1E2tjx50G4sJI3twDhQVqperz72Ltik1cgFepyR193LjCTAa9C+4UTrHaYEl/Jdz8XMrd3OGXxiH1ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ih7Gy/Cp; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761236860; c=relaxed/simple;
+	bh=Kpa4eeycy9iY1KbAIEje7icf/zReH3bx56UY3ycAwMg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=prF6cXfuglHhiM4gbipap9qi1JCh22GofU3YNq3o1hwiU4+0UsuMAXt42fvhV6E2Zpp9iWO2AQ/YkwcT3heauRODILs130s4BOUlzt0Y5Cx+p03em571dV0elbizDPDw0yCPwd3oQOLOhdU9osd+JOAMbKmGT7rCSq83zVxFOPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GR6H0ve7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pwRdlBJd; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ih7Gy/Cp"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-47103b6058fso7724635e9.1
-        for <git@vger.kernel.org>; Thu, 23 Oct 2025 09:03:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761235405; x=1761840205; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=5WqUR7OYVp1XYrfMpdsSqjKsAVJW+c8PxnfEom1m5Gk=;
-        b=Ih7Gy/CpE1JHVrIITVJOXFpJsh0rpEAB3xHFU6yE5oHfFe3sTvxYyC8pdE/JIHTMUf
-         anH4iMk57PtrkO30CHW7UY8gu+42sHuILfpSurS8JV8dPSNQSfmKIwtwRbnOlBQxtr7G
-         NSoNTcDDqJ4/VqY3iSKRTAFQY4vzzkPmGlV2pVfXPavYAG1cAfJZ79sAEfd9mheomLu+
-         wYesEmE2rkcIEgDWlYLkOT+iwFMTghgyZLpiiJqdpzDQELQ1+I/c4HThPnd8twAiVckv
-         c+66bX8qZuym3n4UjTfgFltGz2e2iflyS9Lmrnh9zY5CkavZrqymkxtSPDzpGd4t0Fkp
-         3xOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761235405; x=1761840205;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5WqUR7OYVp1XYrfMpdsSqjKsAVJW+c8PxnfEom1m5Gk=;
-        b=XxGGkEQ07bRp+7RwVYKNyyzSbIWcDdY1cuEGQBmgB0WxahBx8KCbdzPjXKDE477YF0
-         10ejNlOCzuGFdm6XxsW4ilzaaJbat4H0xZnEuyeMZUzal28/JnJs6FxfRVYcJ0dCw6KS
-         Nb0XAwJEdlzcSeDbaKKCaAtwqx9LHktG/z3zZmR7cXd9qkxJxM1cmSY0Ios8fGSHNjoJ
-         D772hKvEtJhNuJBPxQl2ttFuIUcfyUn5Hfn+g//VyelxSub4wiXyuocMy8ZX6wboiX5+
-         QqBiH8QD+oweGDQJmWYgGLPdcfIgs3Zmr6Lows9UmFAHVCz1lbqH5g+SF6LUc/+7AfmR
-         x+AQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUqEIq5rgq3tKmAKXRD0MgYd5+NOvSDW1HzHnDg1cUqRjMQITQhTMj+ZLFtAlgbd6h9ARc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwmMWWn077ZDU/9u75XmVH6dhjKY7VBiuN4mZtPs6hxkcGEn7+o
-	5Xk5tsvCuQZCllJJdfJKUgAM74yBtMUEZ72QgeWxrjhCP7TaKpibxAPf
-X-Gm-Gg: ASbGncttXYQqVxaAGURXQQEwE3bbY90ZTZrl4zUQ2RH8yABONsDUivxnWN+TMotnnMV
-	jaDHHuljgv1QkMNmFR93S2AfjD6LOgG0suviRCbjbYbIo/eRRME+l7Hz9a6YZOyZTNTSNwHbgDB
-	eV2nAN0Y/H2Qmkl8VotSoUr98MJy6Yu93XYBU6b4Golu/xJDbATMTOs/9MZAg0asD8UEdGI17ve
-	uGpWGIps8KUbrVxxVwytTKQwy1A8Cf4sHDP40hHbMzSt2aIvIHkRrQQJ3/1Pfk7xnFSWkQpuXhw
-	RtEMkxS+K2Ww3V33GpgZuwJK7y1MLNEHdt4jrvtiYb44JCW5eurWaSg0bT+kAGFaFPTrtb4IPRO
-	Xys6UZDAhNwzbmho1ABkS/r5yjyR4H+fQ3JkFYytIk47EMUfdgPiCDFZtP1Gf668iDiZ2xWlKF6
-	fzfFaJt9lJfsjO31tjzOpPhGKmDN62DDKOkC3Ob/aKgUuEtMTktpc0GtHxNMFhCfDQuFx3zZrJL
-	w==
-X-Google-Smtp-Source: AGHT+IFrSxHNBOMi6djj+PS/fRhJtKEfhp2abDenH2qXjRX1M8CgXe3nYFAjn3PYNoE6TsjZ959r7Q==
-X-Received: by 2002:a05:600c:3f10:b0:46e:6339:79c5 with SMTP id 5b1f17b1804b1-475c3fa1f3emr64575055e9.5.1761235405239;
-        Thu, 23 Oct 2025 09:03:25 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475caf2eb9csm44145505e9.14.2025.10.23.09.03.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Oct 2025 09:03:24 -0700 (PDT)
-Message-ID: <0d6019c7-5e73-4195-b5d2-b43f2cb6399d@gmail.com>
-Date: Thu, 23 Oct 2025 17:03:23 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GR6H0ve7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pwRdlBJd"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 05B2414000FA;
+	Thu, 23 Oct 2025 12:27:36 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Thu, 23 Oct 2025 12:27:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1761236856; x=1761323256; bh=Fw/rxHVAx8
+	KnB7FMd8e8FIVDdy55vQEDsgvKgC4y0/Y=; b=GR6H0ve7jcu6anvQbr69M5FXor
+	09yWrzsEuxtX1eV41vcWf27R6XzEZ7QbK2XwWZk2KVsu7YGq0OnthlNYrBgpzlZ5
+	tU93bEtRTPeRg03+3HNXqMKgoKKNh3EFTuj7m1Ez5Wa3B6hpJLU2lwaiYahaPG6j
+	Ii5eiOTAwrqJfQMW4KqUt3v2dRkPUp8nf7CGZ+lef6gl1OHhu6DpjU3Btxg/Z6W9
+	7osEmKuMT10ctnS8tSLEQeCL1NXxNR9MHZtmR7lDvbTM7Ds2JKZj6hm5Xab4GrY6
+	/XaQGEQwAZDWEaHHlbx39y1X35+afVmQU/qDHattnGv3sTemEw/ajjVoHs5g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761236856; x=1761323256; bh=Fw/rxHVAx8KnB7FMd8e8FIVDdy55vQEDsgv
+	KgC4y0/Y=; b=pwRdlBJd3jugXrkakxIoIgj/qePAqiBouyoPmOORknLtmkV/g1l
+	o2EHFd/41bjDN+uF/VO39ki5da4Lz5yGch3zVA/Y2QpSHvKyNEABr6EC8Hlamkrg
+	zVH4iZmKFoLumpSe+O+lmqMUQK5GjkEzXZQ5dJtRYg0o0+6ELSaLy49FYVnDt2d/
+	u6WE4q1v15seK3tMlLRUOUJuCaejAQI6vR3Y7l3fG31NBURdBFVvCirjptbd2B0R
+	4T55F98MbOV6yPrxCpdnQCv4kY9WUNidg9rNXWxz4cpklMzFf182klpfn8aCvfaL
+	RJAtqZLcFzsOT0OKZWVdwkiIECE8fKNhngw==
+X-ME-Sender: <xms:d1f6aHPH4yN09EwOE3yB049S1D5s5rsYVxkqzR0BwOR4vqJH-d5MrQ>
+    <xme:d1f6aFp_onx9OhS98JZ74nP-kGjjY8wJh-vLzYcKIjRDtJ-bJodCcOkc_5V2OKQa2
+    hzzsLRYcoZkFFdUNGsoz_Yd6dun7vsX3HjrLt0wWmAPyQUTfx0>
+X-ME-Received: <xmr:d1f6aAFwVstgNIjNOH-Yq1sdv77k7SH9nmEm9I0RkLdFTPdtWHm47XhFablTBRFlB2iQwPpp1h-EFU6zNxWsvdKIt6jEXzaWXv7l>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeeileegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghlkhhi
+    ugelkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:d1f6aCoGSD-keSfR-f3Z-8BZYDim8LbV9I2E4e1E5PA3sQ2rbgocaQ>
+    <xmx:d1f6aBYrYijF9rQ0uC-MMNswtvbdjKu3W1Vr2ZQ-kB7ZmPAfEaGsQA>
+    <xmx:d1f6aDU7-r8G2x0oVERXIIzegPB4N7VZYE1GqJWh1mM_4d3CIGlI3w>
+    <xmx:d1f6aC9KoSdkozghPZYYuggsXV6MZrvWtL-LicicNYL9PvxaBY-pHg>
+    <xmx:d1f6aLxGktiAhhbN9xb5LD6wylUaOzvzhgEvmUGdOhCr6KKIzyowe22j>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 23 Oct 2025 12:27:35 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Olamide Caleb Bello <belkid98@gmail.com>
+Cc: git@vger.kernel.org,  usmanakinyemi202@gmail.com,
+  christian.couder@gmail.com,  kristofferhaugsbakk@fastmail.com
+Subject: Re: [Outreachy PATCH v6 0/2] do not use misdesigned strbuf_split*()
+In-Reply-To: <cover.1761217100.git.belkid98@gmail.com> (Olamide Caleb Bello's
+	message of "Thu, 23 Oct 2025 11:13:45 +0000")
+References: <cover.1761135129.git.belkid98@gmail.com>
+	<cover.1761217100.git.belkid98@gmail.com>
+Date: Thu, 23 Oct 2025 09:27:34 -0700
+Message-ID: <xmqqecqtwpl5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] blame: make diff algorithm configurable
-To: Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Antonin Delpeuch <antonin@delpeuch.eu>
-References: <pull.2075.git.git.1760972162827.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <pull.2075.git.git.1760972162827.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Antonin
+Olamide Caleb Bello <belkid98@gmail.com> writes:
 
-On 20/10/2025 15:56, Antonin Delpeuch via GitGitGadget wrote:
-> From: Antonin Delpeuch <antonin@delpeuch.eu>
-> 
-> The diff algorithm used in 'git-blame(1)' can be configured using the
-> `--diff-algorithm` option or the `diff.algorithm` config variable.
-> Myers diff remains the default.
+> Changes in v6
+> =============
+> - Modify commit messages to have proper structure
+> - Changed logic in get_default_ssh_signing_key() to use xmemdupz() if
+>   key has '\n' and xstrdup() if not.
 
-I think this sounds like a reasonable thing to do, although it is 
-technically a breaking change.
+This round looks good to me.  Christian, should we declare victory
+and mark it for 'next' now?
 
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 2703820258..177b606e81 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -779,6 +779,19 @@ static int git_blame_config(const char *var, const char *value,
->   		}
->   	}
->   
-> +	if (!strcmp(var, "diff.algorithm")) {
-> +		long diff_algorithm;
-> +		if (!value)
-> +			return config_error_nonbool(var);
-> +		diff_algorithm = parse_algorithm_value(value);
-> +		if (diff_algorithm < 0)
-> +			return error(_("unknown value for config '%s': %s"),
-> +				     var, value);
-> +		xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
+Thanks.
 
-I think this should be
-
-	xdl_opts &= ~(XDF_DIFF_ALGORITHM_MASK | XDF_NEED_MINIMAL);
-
-as you have below for the option parsing.
-> +		xdl_opts |= diff_algorithm;
-> +		return 0;
-> +	}
-> +
->   	if (git_diff_heuristic_config(var, value, cb) < 0)
->   		return -1;
->   	if (userdiff_config(var, value) < 0)
-> @@ -824,6 +837,26 @@ static int blame_move_callback(const struct option *option, const char *arg, int
->   	return 0;
->   }
->   
-> +static int blame_diff_algorithm_callback(const struct option *option,
-> +					 const char *arg, int unset)
-> +{
-> +	int *opt = option->value;
-> +	long value = parse_algorithm_value(arg);
-> +
-> +	BUG_ON_OPT_NEG(unset);
-> +
-> +	if (value < 0)
-> +		return error(_("option diff-algorithm accepts \"myers\", "
-> +			       "\"minimal\", \"patience\" and \"histogram\""));
-> +
-> +	// ignore any previous --minimal setting, following git-diff's behavior
-
-Style - oneline comments should look like
-
-	/* comment */
-
-> +	*opt &= ~XDF_NEED_MINIMAL;
-> +	*opt &= ~XDF_DIFF_ALGORITHM_MASK;
-> +	*opt |= value;
-
-"git blame" also has a "--minimal" option which now needs to clear the 
-diff algorithm when it sets the minimal flag.
-
-Thanks
-
-Phillip
+>
+> Olamide Caleb Bello (2):
+>   gpg-interface: do not use misdesigned strbuf_split*()
+>   gpg-interface: do not use misdesigned strbuf_split*()
+>
+>  gpg-interface.c | 34 +++++++++++++++++++++-------------
+>  1 file changed, 21 insertions(+), 13 deletions(-)
+>
+> Range diff versus v5
+> ====================
+>
+> 1:  df8fbbd3a5 ! 1:  92fc78c203 gpg-interface: do not use misdesigned strbuf_split*()
+>     @@ Commit message
+>          gpg-interface: do not use misdesigned strbuf_split*()
+>
+>          In get_ssh_finger_print(), the output of the `ssh-keygen` command is
+>     -    put into `fingerprint_stdout` strbuf.
+>     -    The string in `fingerprint_stdout` is then split into up to 3 strbufs
+>     -    using strbuf_split_max(). However they are not modified after the split
+>     -    thereby not making use of the strbuf API as the fingerprint token is
+>     -    merely returned as a char * and not a strbuf. Hence they do not need to be
+>     -    strbufs.
+>     +    put into `fingerprint_stdout` strbuf. The string in `fingerprint_stdout`
+>     +    is then split into up to 3 strbufs using strbuf_split_max(). However they
+>     +    are not modified after the split thereby not making use of the strbuf API
+>     +    as the fingerprint token is merely returned as a char * and not a strbuf.
+>     +    Hence they do not need to be strbufs.
+>
+>          Simplify the process of retrieving and returning the desired token by
+>          using strchr() to isolate the token and xmemdupz() to return a copy of the
+> 2:  5df667227b ! 2:  e52855242c gpg-interface: do not use misdesigned strbuf_split*()
+>     @@ Commit message
+>
+>          Simplify the process of retrieving and returning the desired line by
+>          using strchr() to isolate the line and xmemdupz() to return a copy of the
+>     -    line.
+>     -    This removes the roundabout way of splitting the string into strbufs, just
+>     -    to return the line.
+>     +    line. This removes the roundabout way of splitting the string into
+>     +    strbufs, just to return the line.
+>
+>          Reported-by: Junio Hamano <gitster@pobox.com>
+>          Helped-by: Christian Couder <christian.couder@gmail.com>
+>     @@ gpg-interface.c: static char *get_default_ssh_signing_key(void)
+>       	int n;
+>       	char *default_key = NULL;
+>       	const char *literal_key = NULL;
+>     -+	char *begin, *new_line, *first_line, *end;
+>     ++	char *begin, *new_line, *first_line;
+>
+>       	if (!ssh_default_key_command)
+>       		die(_("either user.signingkey or gpg.ssh.defaultKeyCommand needs to be configured"));
+>     @@ gpg-interface.c: static char *get_default_ssh_signing_key(void)
+>      -		if (keys[0] && is_literal_ssh_key(keys[0]->buf, &literal_key)) {
+>      +		begin = key_stdout.buf;
+>      +		new_line = strchr(begin, '\n');
+>     -+		end = new_line ? new_line : strchr(begin, '\0');
+>     -+		first_line = xmemdupz(begin, end - begin);
+>     ++		if (new_line)
+>     ++			first_line = xmemdupz(begin, new_line - begin);
+>     ++		else
+>     ++			first_line = xstrdup(begin);
+>      +		if (is_literal_ssh_key(first_line, &literal_key)) {
+>       			/*
+>       			 * We only use `is_literal_ssh_key` here to check validity
+>
+> --
+> 2.51.0.463.g79cf913ea9
