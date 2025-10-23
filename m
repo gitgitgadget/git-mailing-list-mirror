@@ -1,109 +1,99 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B54F30B527
-	for <git@vger.kernel.org>; Thu, 23 Oct 2025 12:43:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D6E27E1D7
+	for <git@vger.kernel.org>; Thu, 23 Oct 2025 12:48:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761223404; cv=none; b=hDf/U5ZU8rTez3eOi0uYR1AQfgAr9G6+VRZJBDIX4ENXMsAX2eY3WI+kyH3xlXuAV4zDxjEJkJnCyymtzmGqM2LzOIpYPDC1J7g0+cWnd83FgTm2VUs3cDKCfn4SNB4hwkKH6MTyBN8rsTTkdpmDVSZ4xKZqyY5uAeamQA9ZMYQ=
+	t=1761223714; cv=none; b=sUnpgJYmVgWh+hJsVCYsizdYjD20lKKMIq5WEnnc/u4dxRnZ7fwuFNwQqPfOXB9UbHO8OQbosoh14+UatDZYggnmsge3VVwpQoQf9abtsJ2NS5Sd2cTQ4XSJA7P3M6VDILzCBtSXL6aVGM0iRsPiOGmY6YlKQFhA8urGCnuRlkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761223404; c=relaxed/simple;
-	bh=PbWOmy9DKf7+xo+WvRxJXGxUo+2I1pkt8HMt7cjXzTY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GauTftx/XK8pdXBShHkjwLnoi/fVZNieL0hEYlwQ2i2FE8VXsu5iFcXmOC2QfRkyQZ+MY8Ynqmsv4ia5cxFEhPObmh9F41aEqlrPNiHQuijzhykxUPJsKrpLR7kn68GxPlrIECMuLcGDHylIu7On0XQPuBStw27dAz9UemdIvj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GcDC9BGz; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1761223714; c=relaxed/simple;
+	bh=n2kMd1FI+A6sQCiEWpWQPLKLFcht0xNS5FBHMJof+bU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ul7kPSMdeSLaNktlPHRa7Qf/2IiefjiRtH41B0eQNzSHMhWHHYbSTvXx4Xn+GKc/SGa6dxaZewXVJakcDPACbmC6imf0ZS9SNbqqt2whajSgtumUNw4HqbsBwM8XxRpDqZGI64VpcqP0dzeqFUg3ogMZGbphHuFdkaw4HsDiMac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KEW7Xql1; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GcDC9BGz"
-Received: (qmail 315689 invoked by uid 109); 23 Oct 2025 12:43:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=PbWOmy9DKf7+xo+WvRxJXGxUo+2I1pkt8HMt7cjXzTY=; b=GcDC9BGzgWvlmrGZbFIuSMFBWij1zB3pOO5IbQjBAgUsbEQBqKSD4k25glWZVugValzWPr8vlkoYAZJd0qmUegUWnoXwXXxzV+g4kDdNZTFIeG5P7Kk97N0SIUmcPIUijBBrp1PZ0lhgOUWE7zQ7nOCi9CKJSMxBTUOUWBJqjnCH2QxwFLXafIWe0C71cr0DrKDPD0nKnhXLryx9epWiVaRWr+yIeHXSZ1zCSQcsG6+wUvZjKF0cwhFuHXAiacGgZh3x3Mg3G/I83Nh6zQu2gmi9lOI1Yk0YC10tbEVGw0QeC66zzg0YLFYMCu/OcEBYeqpZGdDExR7xkA+VwV2Q1w==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 23 Oct 2025 12:43:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 490983 invoked by uid 111); 23 Oct 2025 12:43:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 23 Oct 2025 08:43:20 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 23 Oct 2025 08:43:20 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Xi Ruoyao <xry111@xry111.site>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Lauri Tirkkonen <lauri@hacktheplanet.fi>
-Subject: Re: [PATCH] t7528: work around ETOOMANY in OpenSSH 10.1 and newer
-Message-ID: <20251023124320.GA1163932@coredump.intra.peff.net>
-References: <20251023-b4-pks-t7528-ssh-agent-socket-name-too-long-v1-1-f15eeec199f3@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KEW7Xql1"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-42966ce6dbdso545219f8f.0
+        for <git@vger.kernel.org>; Thu, 23 Oct 2025 05:48:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761223711; x=1761828511; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=aUDiK0EMkDjsHS0j/U8+4VgESEVxbvtfLePXxKWsYME=;
+        b=KEW7Xql1xFnX12eZnrKzostz7s5/8P+S2uMPBr6N5R+w+oIofCcPHlBfGwS1GOnkJw
+         jAt1fPSSWDgGq5caHv/uTevLRm/yThAvOrJ8G7dJ7R5b0jEwH2mZxbcrkbMlaig/YjnI
+         IIhnaE/CZsu+a6J0i6eYjPro/iv/MAKU2pbCDkSNM6uZ6SWc++llNr/9pq8dwC01P1KU
+         kF8nmu50oGaFdVgms9wYU7J+b+Z8c42jVghr11FKJDMmRNOCaJbstMf1DO2y39dYRA+v
+         a8Jw3yMdQqUoaheQoIzmQltGz4HRvlNovfPECk2fdqIjwcKQR90o6vGyVd/k+zpMW3sn
+         NI7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761223711; x=1761828511;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aUDiK0EMkDjsHS0j/U8+4VgESEVxbvtfLePXxKWsYME=;
+        b=inIMMIObsW5ls9OP5oXF8UYb79AcKJDvUVctgK0XykMNkvsG6QUCttG3DWqefUJ/Oj
+         I1E2F/ZzIqFK7nli4nuGoNcXVLHUpFdXX/6jyShrXBhVYIrDQ8rcEj3unCnowDlcA9dC
+         kS5C4raJAsn+TABklE+cw4TzKO6RPTx4TGnlklGT/7JufjYdcV9b5SYTIjaTWg+RU0Q4
+         n29c+LctDg0EakKXKeJO9/hqWwPHJFDaKA3bJIR0E5/MWq0mKdu7Q2Fnw3aHBCQsXQTo
+         z6wuMjRcfdm9Yu1fVmLzJD/+J0lw2EjbObM9KQs+6yWbcNjxZBjSgailyEIj8OnMUNuT
+         hTLA==
+X-Gm-Message-State: AOJu0Yy7AG5c0IqcSasGY8wW0oyz+D5MZWIla79uy4PBWLl6I6H0kGz1
+	XtVxM+/VaZwZJayxWSy1/H/FGwo3w+4iJqzGpoP8THCRYMvRxLoG/Hnv66rMs9Mf
+X-Gm-Gg: ASbGnctDMkp3bhir87H5Srlq4N52c2/UI5BM4w3feh5XtcRimGnj0MseTFEN30+mTEN
+	KrdMrQCOf8tZidMFrnvgL8cGJGpt5eHG62uY0zJptWvYMEUHx1Oz2pY89bxlz0uFpRRdKSsjrDd
+	i0DL2SLl5kqEIU6NX/z4ZcEvLG3b1pJHGJY6YpAMGR+Byut2qMflF5aqDzZNL8P2ayihqa7NrZ9
+	CTxlH9sbtIZW0bd0O9BgXnxI9RJtn2HIYgKf+8gKyDmKAtDGxRplPFMqIEL1CLSu3JMYSNPlv2c
+	38dSWXajpTIqbHa9zpiWj8G8IgGiIqcxNFD46k0XdD69eo22V5GJRxzEgFfVfesfprhiQAQyk4i
+	n7NdLobATC3tofe5ACLDxjiPaLas6AWRmR62wHXxMlggzZumcaJ7ahDyJtfjcEvXeOd46Tm47kV
+	o5itKxTUDXqmojC+OpV2IJZIlpRhI=
+X-Google-Smtp-Source: AGHT+IG9839c/66AtKql7mfTMn+B/yvmogasC46+tx2s0GY7K+ouFeYvhsKMPnxCB0yXCd4UnSr/6g==
+X-Received: by 2002:a05:6000:3107:b0:428:4034:9211 with SMTP id ffacd0b85a97d-42840349443mr12126037f8f.46.1761223710469;
+        Thu, 23 Oct 2025 05:48:30 -0700 (PDT)
+Received: from QueenJ-PC ([105.113.107.213])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429897e763csm3905302f8f.6.2025.10.23.05.48.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Oct 2025 05:48:30 -0700 (PDT)
+From: QueenJcloud <qjessa662@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	usmanakinyemi202@gmail.com,
+	QueenJcloud <qjessa662@gmail.com>
+Subject: [PATCH] docs: simplify help sentence in MyFirstContribution.adoc
+Date: Thu, 23 Oct 2025 13:48:01 +0100
+Message-ID: <20251023124801.334-1-qjessa662@gmail.com>
+X-Mailer: git-send-email 2.51.0.573.gb660e2dcb9
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251023-b4-pks-t7528-ssh-agent-socket-name-too-long-v1-1-f15eeec199f3@pks.im>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 23, 2025 at 09:14:59AM +0200, Patrick Steinhardt wrote:
+This commit simplifies the help sentence in the MyFirstContribution
+document to make it shorter and clearer for new contributors.
 
-> As it turns out this is caused by a change in OpenSSH 10.1 [1]:
-> 
->  * ssh-agent(1), sshd(8): move agent listener sockets from /tmp to
->    under ~/.ssh/agent for both ssh-agent(1) and forwarded sockets
->    in sshd(8).
-> 
-> Instead of creating the socket in "/tmp", OpenSSH now creates the socket
-> in our home directory. And as the home directory gets modified to be
-> located in our test output directory we end up with paths that are
-> somewhat long. But Linux has a rather short limit of 108 characters for
-> socket paths, and other systems have even lower limits, so it is very
-> easy now to exceed the limit and run into the above error.
+Signed-off-by: QueenJcloud <qjessa662@gmail.com>
+---
+ Documentation/MyFirstContribution.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-There's a secondary issue, too: even if the path is short enough, the
-space in "trash directory" of the path will break the shell eval. That's
-relevant below.
+diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+index 91c6296ffe..f0768bd03c 100644
+--- a/Documentation/MyFirstContribution.adoc
++++ b/Documentation/MyFirstContribution.adoc
+@@ -26,7 +26,7 @@ useful additional context:
+ [[getting-help]]
+ === Getting Help
+ 
+-If you get stuck, you can ask for help on the mailing list or Git community channels listed below.
++If you get stuck, ask for help in the following places.
+ 
+ ==== git@vger.kernel.org
+ 
+-- 
+2.51.0.573.gb660e2dcb9
 
-> Work around the issue by using `ssh-agent -T`, which instructs it to
-> use the old behaviour and create the socket in "/tmp" again. This switch
-> has only been introduced with 10.1 though, so for older versions we have
-> to fall back to not using it. That's fine though, as older versions know
-> to put the socket into "/tmp" already.
-
-OK. I think this is an improvement over the status quo, though it leaves
-a lot of loose ends, like:
-
-  - what happens if "ssh-agent" does not exist at all; we do not notice
-    the error because the eval succeeds anyway (with blank input)
-
-  - one reason we did not notice this immediately is that the failure
-    mode is to fall back to using the user's SSH_AUTH_SOCK variable if
-    set (i.e., their real agent with their keys in it!). We should
-    perhaps be clearing that variable in test-lib.sh.
-
-But those are not really new issues, and I'm OK with just un-breaking
-things in the most expedient way possible.
-
-> An alternative approach would be to abbreviate the socket name itself so
-> that we create it as e.g. "sshsock" in the trash directory. But taking
-> the above example we'd still end up with a path that is 91 characters
-> long. So we wouldn't really have a lot of headroom, and it is quite
-> likely that some developers would see the issue on their machines.
-
-I assume you mean here something like:
-
-  ssh-agent "$PWD/sshsock"
-
-Yeah, that is not buying us that much in terms of headroom. Plus it
-would still run afoul of the space issue, since we know that $PWD will
-always contain "trash directory".
-
-If we are going to provide a fixed name, I think it would have to be a
-true relative path like:
-
-  ssh-agent ./sshsock
-
-That does work (and SSH_AUTH_SOCK contains the relative path), but is
-maybe a bit of a booby trap waiting to spring on somebody who tries to
-access the agent with a different current working directory.
-
--Peff
