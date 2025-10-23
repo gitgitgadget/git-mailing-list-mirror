@@ -1,104 +1,140 @@
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244392C3745
-	for <git@vger.kernel.org>; Thu, 23 Oct 2025 21:34:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1897F260575
+	for <git@vger.kernel.org>; Thu, 23 Oct 2025 21:42:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761255260; cv=none; b=YqoTwE5i8cQdUMAnXC0o8767ab3H8izxRuav6PeHPetPVZwIBNnAGMPQG2PrAYdenGLD3NJo/K3HrzCPA3G1pcISjt4V0V+O8I0sV1wfiD4pFFUMaXPqCRu9JZXPhBeQacRmmYjKWiBKZY2/LknUPysLXPevrQSYOYrVzhYuZe4=
+	t=1761255772; cv=none; b=uDlu/ebfQmiCYneePUq96xMiuaNzjXfF/Xp/6rQUBdVDe7eh5YZDG7blgvudsfZnZQuolve91UsYHRh6BWcclTr/vK2amxT8NrMDGKeAHdD0l+YTLT+FC17l5JrLUBAea6wUHh7Hw9Wgkyj03X2XAmNe2jYYH+qiKTbNNKvuG0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761255260; c=relaxed/simple;
-	bh=0gYr0x7tzlxDaheHVp5iBBlBPQSMw4eERsFF+TNVDG0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BHmdXsjjBbVJFk2Xqn/d4+Tq5/6g3JcQ4TpcqNSFQUe1BZ/taI9PDyGpZPjz+zO7rPx0H0g6ma1kaQGZ3KsP/EmPlW0uq662M7WCG9CP5AtHILvJX1b4gy1BOuOGDOI0uWs7AQMMFoInpUAvPCFgcQ0Ym5yOuwHl4t0Nm8rRfY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=bfpJcbVM; arc=none smtp.client-ip=209.85.166.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1761255772; c=relaxed/simple;
+	bh=8FGqgeSDW36w2HMX6B5nUHuIP4EVaCb4gxNTH+CGVgg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rb55lsDc85OHyC1mODbDx7GmOMUTDVWADTucXhU5NZ0NPARfjudYgb/Bqkv/5rUy1Y4STsRIJpYkwHUi4TWz8uOl5f99L+kjjRJnI8fn83MeOyMWTkYbjq7yIQZ/xYztnPNNgQvGWyOYosJ8Joha00YPS68BjIVhOqMKMhQ7gO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hYsvTNYh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=u+ZogBIx; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="bfpJcbVM"
-Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-941073ba029so41088239f.0
-        for <git@vger.kernel.org>; Thu, 23 Oct 2025 14:34:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1761255258; x=1761860058; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1Er9rWf6KiATD4yUkeoDGlsk5MH7C38eLgTH8kGLr7M=;
-        b=bfpJcbVMq+1/h8drY4aKW8hIoLVNmMuipYgBeG2JkKZsF1h/3S9qXIAjD0S8sMA85T
-         mY1vkPSyQghStTBk/Lo8inF44SZezC6TZa7t8ALOIhlJGU69brIozCgDzUaPRQJkFhzH
-         w8cvCt+OxdzxU+ZByCRwIfYKNrA0lUgnjqm0wrh9lYBuvUUa6xjj+6mB4TMPXtjU95p7
-         QrfZdQMkJNXv1WtYRNVzHdqTNjDBMT9LY3z5S66GjS1Bsj6D18sI5pPCZZ2GLIKmw/4G
-         dv0iF2Sp4k7ocymA3JIe59t7tjlvlxPEoSbUYWkj0U2NpRIluB/sg4XK0QuyvLDVMr0v
-         wBxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761255258; x=1761860058;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1Er9rWf6KiATD4yUkeoDGlsk5MH7C38eLgTH8kGLr7M=;
-        b=oCiOlEXBvfuAtz4T5cjpo8R7ADdjhopevPIo4p469Wbrbg6jeCOPT4Q2G9cCKG9w3J
-         qxgQRemAOMNj5RzqHMOs/e/KvJQMnITa9U5fn7M1WBvd+/yXmvXXl+6AwPfo875akuAR
-         Yicx+liJ6GXxfs73t6g1WuTbDlEE80hKjVZE3Ha6R4NDa9qdYhmxIPLa7v9ZiFTt3ZuI
-         v84ozqtzAlB9syN2iUElibQ83+OIoPxwYodUBmcWzgxwpCQeEpRwVZNXndS/ruRejG/J
-         PvUblKGpmMSiKPrYzyFPU0TvrXGT9YIrNbRQpxLERsolUHTOKb1ISguxiDHw8Yg4ITgi
-         Smyg==
-X-Gm-Message-State: AOJu0YzFIQh/So0xoaDyyW7cBAnXJ68jBa9Kmv9KTkp/qEx06LVD1uz4
-	04vp5HFg+T2FlKK0J7FB3oH81xSV7BSguYZ5Rcee043ohJCsMossn2K5LTdBxetwME0=
-X-Gm-Gg: ASbGnctT41zWxY+gdrJuaLID24OOK78pc6BjYwB9Is+h158hZb7+TOKomRGoMtn6kHw
-	QvtlPHKRv7hGbtKRxrrODj1sJVPkxLVdCpd4c2jsUndWBOc0nB7mnm0weKBvMhkNWGcIIzKxsOO
-	S0FX6p115SsiXvJmW5yxnp6UwNpLaI+yUnWam5wUzH+XsXQ0XZitJ8lz4MFxqX1Kv7Ejp502f86
-	jLHd7JO2fV4MQofos1Wel7M9kdkrPKT655pitbO3NFN2foXufo9VG1hzrwmVYYHDJZ9dqJ5pCdP
-	SI+DDCH3J8zHX6hhvbXIWfq9ygkgdV7T+LAUfPkagwgWa1bmFiZCL8XfeSY69wGlvCrojhTcn5a
-	m96ahIb7mVtfSMbmxeIBdJb823krL3st+S++HFn2cByqmFZlalBluE87tciitQohTp3HIOPKua6
-	0f457LpBYqRxZFTrgvQGr287E1EuNUBi3qk7rV9t2X4TFbzCo+Oz2N//tv+4jaGctPelMlLwkOd
-	83emHo=
-X-Google-Smtp-Source: AGHT+IEwkTxFVo60YNG3Yc8f7+ntyEZJ6dWGMwx3raOqULSUDH1pcG+JPOoGz7RLmMiwbnX+y21lpw==
-X-Received: by 2002:a05:6602:3e8f:b0:93b:c6aa:5e14 with SMTP id ca18e2360f4ac-93e762c1ddemr4165636639f.7.1761255258157;
-        Thu, 23 Oct 2025 14:34:18 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id ca18e2360f4ac-941035144ebsm102893539f.15.2025.10.23.14.34.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Oct 2025 14:34:17 -0700 (PDT)
-Date: Thu, 23 Oct 2025 17:34:16 -0400
-From: Taylor Blau <me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hYsvTNYh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="u+ZogBIx"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 10A567A009B;
+	Thu, 23 Oct 2025 17:42:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Thu, 23 Oct 2025 17:42:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1761255765; x=1761342165; bh=lB+Fw0Q8P9
+	oDfilizsSV/XCtWdlFJZvmUDtTWDX/FEQ=; b=hYsvTNYhapVSpUG4/KtRGT4SOd
+	NB7ReQY5eX0l6/jjd8nU+l1Y1K1XKJSgi5yJj6uoTskd5oTol41NdnVMyjACAPgC
+	uS3Q+m7OderWlFyB3tqW4V4BkoOp+uXVNiE07xpHcP02DPfakUSutJoXQ8u2L7RN
+	2mXsdoe6MkPMVolRSl79Z96RJIBQSZBt2UE7xkcmdqnTtY+vsX9YCdlWg56O5YBN
+	KBZRffCQ4JoLP8fjY2oDf97YsAqL3mVLnolgOesZzKQyM+Wu105DAMM7w6jMq1iG
+	c58cwCCyeEM9iZO5KL/kveq6lxXLqvi/V34YqA2y1IexIgLftD8qlzd9xDJg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761255765; x=1761342165; bh=lB+Fw0Q8P9oDfilizsSV/XCtWdlFJZvmUDt
+	TWDX/FEQ=; b=u+ZogBIxwzSGiONi149YqGxCwZlJZLTNOOskGAy7/mnb2K7TGGs
+	5wuQwbmvuwqzQdxLwesJivwdC5aV+sHdwusyYgffUfovazReTCoupmDbkUK8e7rs
+	GS3m6dF9F4UZNeWiZdPijU8eVCHPc1HR4KSICCOCEFs4NX68KB2ya3REEy2JH+zo
+	A4oJURZry5dIMGu5f/ZrWOB/sYieCqvzPVeJNSrJVm2okr/8IRqGuK/O3swT0JdK
+	ICk+1X00StBr2Ww+IPdyyGl6gZHa6XmeFRF+pJkMpy2UB1qhvUzBMRB0d5Dm52bH
+	FgHeHEPb50bkG9d7yXvTUxOEmceR7qUiCmg==
+X-ME-Sender: <xms:VaH6aPl94gculijCJEo15fIhXRFKlJ0_4G8nRkp-VXIm72RtgQkNBg>
+    <xme:VaH6aJs_VgPb1Z_HYdf_ecVRd4RiQwM4tYv4ri7PJsea2xIBDJmaOt7cWu4s93v26
+    ag1jQP6iMYbafB15A4jh5sr4G8V_qo-oNHW6d0jhArheEj1Hz-1Xw>
+X-ME-Received: <xmr:VaH6aN_p1JhB1NWWTgsBgHg0QJEAXQ2HVeYYlMuFz05VXM4VK1Yr1NexkShk4kaxbkE11dtlLV6GWs2BBymb6aVM_Uf_qls_2nz9>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeejheejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhs
+    thihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepvgiivghkihgvlhhnvgifrh
+    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:VaH6aDMY-915iSBQuMcg5dzbzuydO73K_nGAHpKYB3SecPDvQeFz6Q>
+    <xmx:VaH6aLHcwNm4UtUPSgdiDIIEzGIDP13TW9raIHs9iGjseEnqznNvsA>
+    <xmx:VaH6aBRXjfInX0DkFdWtpJjTMIkuj0aEoo-Q9MTfFJkxGqP8O0LbKQ>
+    <xmx:VaH6aItTEzd5vNPhrPs8F7TraZWrdgJAixHy4v8qyp_wXkJCU4dR2w>
+    <xmx:VaH6aO-lnOrcp4zO5JvMZT-GlsafZ8SBx0CRmn19cjEEIs-8qdoa35QO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 23 Oct 2025 17:42:45 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 6/9] builtin/maintenance: run maintenance tasks
- depending on type
-Message-ID: <aPqfWGN29S+kr9C/@nand.local>
-References: <20251021-pks-maintenance-geometric-strategy-v2-0-f0d727832b80@pks.im>
- <20251021-pks-maintenance-geometric-strategy-v2-6-f0d727832b80@pks.im>
+Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 3/3] rust: generate bindings via cbindgen
+In-Reply-To: <20251023-b4-pks-rust-cbindgen-v1-3-c19b61b03127@pks.im> (Patrick
+	Steinhardt's message of "Thu, 23 Oct 2025 09:17:40 +0200")
+References: <20251023-b4-pks-rust-cbindgen-v1-0-c19b61b03127@pks.im>
+	<20251023-b4-pks-rust-cbindgen-v1-3-c19b61b03127@pks.im>
+Date: Thu, 23 Oct 2025 14:42:43 -0700
+Message-ID: <xmqqjz0ls3ak.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251021-pks-maintenance-geometric-strategy-v2-6-f0d727832b80@pks.im>
+Content-Type: text/plain
 
-On Tue, Oct 21, 2025 at 04:13:28PM +0200, Patrick Steinhardt wrote:
-> We basically have three different ways to execute repository
-> maintenance:
->
->   1. Manual maintenance via `git maintenance run`.
->
->   2. Automatic maintenance via `git maintenance run --auto`.
->
->   3. Scheduled maintenance via `git maintenance run --schedule=`.
->
-> At the moment, maintenance strategies only have an effect for the last
-> type of maintenance. This is about to change in subsequent commits, but
-> to do so we need to be able to skip some tasks depending on how exactly
-> maintenance was invoked.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Thanks for writing this down; my initial thought when reading this patch
-was that we could distinguish between scheduled tasks and manual ones
-based on their "schedule" field. But this makes sense: some of the
-scheduled tasks might (or might not) be appropriate for manual runs, so
-distinguishing as you do in this patch makes a ton of sense to me.
+> Set up this infrastructure in both our Makefile and in Meson. To
+> demonstrate its use, the generated "c-bindings.h" header is included in
+> "varint.c". If we now adapt "varint.rs" to have a different function
+> signature than the C code we'll now get a compiler error:
+>
+>     In file included from ../varint.c:10:
+>     ./c-bindings.h:10:10: error: conflicting types for 'decode_varint'
+>        10 | uint32_t decode_varint(const uint8_t **bufp);
+>           |          ^
+>     ../varint.h:5:10: note: previous declaration is here
+>         5 | uint64_t decode_varint(const unsigned char **);
+>
+> An initial version instead included the bindings in "varint.h". But that
+> would cause us to recompile all dependents of "varint.h" every time the
+> signatures of exported Rust functions change. So instead, we now include
+> it in "varint.c" and compile that file unconditionally again.
+>
+> Adapt our CI to install cbindgen(1) accordingly.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
 
-The rest makes sense and looks good.
+OK.  I am getting this out of "make c-bindings.h", which looks
+quite reasonable.
 
-Thanks,
-Taylor
+/**
+ * Decode the variable-length integer stored in `bufp` and return the decoded value.
+ *
+ * Returns 0 in case the decoded integer would overflow u64::MAX.
+ *
+ * # Safety
+ *
+ * The buffer must be NUL-terminated to ensure safety.
+ */
+uint64_t decode_varint(const uint8_t **bufp);
+
+/**
+ * Encode `value` into `buf` as a variable-length integer unless `buf` is null.
+ *
+ * Returns the number of bytes written, or, if `buf` is null, the number of bytes that would be
+ * written to encode the integer.
+ *
+ * # Safety
+ *
+ * `buf` must either be null or point to at least 16 bytes of memory.
+ */
+uint8_t encode_varint(uint64_t value, uint8_t *buf);
