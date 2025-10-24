@@ -1,107 +1,110 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EEB1990A7
-	for <git@vger.kernel.org>; Fri, 24 Oct 2025 17:25:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318A1328613
+	for <git@vger.kernel.org>; Fri, 24 Oct 2025 17:33:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761326710; cv=none; b=ThiNZS3RnSzdkF5QewNvvf14TeQrrKTFKK+kyesD1me7qT83YohcwvymUh2++uZp9emFWCLY4k3CDr3T5DABlj/SLCA6aRMbxc/JyLnG6mtUsnz/gLk99IEMarsBm3mH9EI4xdGp88w88xlDo0co0Vgxx++bGxlvRrv/Il7XU+g=
+	t=1761327200; cv=none; b=ri1nlUD8DtL/OCjO75/VAVBbsqTbjTlurClwGp0W9ZNFcD1LiIJ0w7ZoiVG4NDev3Rt1198K10NKAysMUNTP2X6NyqhsoozUz4/n8nwSDLoTX4SNwW6AxDiyvvldvZtMhaCnLaHWh57ABR3WkIviiNtTtzL2/eb+olumwVZkIso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761326710; c=relaxed/simple;
-	bh=VKruF3RuXe/hvXwewM08YuaRN7Vopdjgmm4C9meOwIo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZNjffpVexZ7FhXCjFek7TZrpHtE5XwspPWpEIH9H39bNz+MbVQ5wOVKjewutQf2RO7I2ojeZmOpS3ewd9de7NF9BEUH2tw1ho3mN03yU02p9pu5mmtpk0Cqckh5Jno8wh64a9vNtqmZr+1kK5H93/NFpjnkwO9Bn6Kk5RahmN50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SGMmaaGk; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SGMmaaGk"
-Received: (qmail 326336 invoked by uid 109); 24 Oct 2025 17:25:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=VKruF3RuXe/hvXwewM08YuaRN7Vopdjgmm4C9meOwIo=; b=SGMmaaGkcpqMq1QxdB2WUhHYmVzXFELl2MxF33V9mJyeDxpaeeYAJkcuwa/edm7Pshr8yo8mqUwWAPA2T66ZKBiPHcGYiMJzhmgJ/rDjs7uUgZwXlt3ImgfrqXMln2Pdd+HxXmJcgCLf+FVH3NiCelC3bSrkt7/CDFBBWLFq1ahlOVoAsmIJcDsaePqbiIIUyvhI6Ze206v94MkyxlC2PSlMx1WfJD/MaNj4E8loJHftqhFcohU0l6XiB4Oina00aKCd1Q0nrn27mRb/MH7j55DGpG1C6ssCwUQ3Arp/57p4uovh5bGJEF0PVyNudhfRjiwypSWkFCb3gsXFyiELPQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 24 Oct 2025 17:25:08 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 513578 invoked by uid 111); 24 Oct 2025 17:25:07 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 24 Oct 2025 13:25:07 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 24 Oct 2025 13:25:07 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Lidong Yan <yldhome2d2@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/4] diff: simplify run_external_diff() quiet logic
-Message-ID: <20251024172507.GA3081793@coredump.intra.peff.net>
-References: <20251024170522.GA2344972@coredump.intra.peff.net>
+	s=arc-20240116; t=1761327200; c=relaxed/simple;
+	bh=TuzCOVyKmW0OC4TGluM4M6Y4CI0Mk+Idmv8VxDuINbo=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OTow43lOgWRKzEp7lQKc0w7fTNaOQHgFDBIdl6sOp8kngy5pXd0xluFQ3MN6WT70cHheCYCmXye3FPa1nggSRzjMbIpJVA209ZtNEJiaALyZ6ps1O8PDIplp9xq61Qjb+C4s3NaSFpvVVq7aT3TAwAqGHHoxlCIb7GtKtdPEuEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 59OHX74k785831
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Oct 2025 17:33:07 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Jeff King'" <peff@peff.net>
+Cc: "'D. Ben Knoble'" <ben.knoble@gmail.com>, <git@vger.kernel.org>
+References: <012601dc42ce$a1adcb50$e50961f0$@nexbridge.com> <CALnO6CD8JU2qMCnC=qQmNOV6Wy1ZnveT3tRxUz1E0LVMj5oU9w@mail.gmail.com> <013201dc42d5$07a71550$16f53ff0$@nexbridge.com> <20251022092708.GE853931@coredump.intra.peff.net> <018701dc435f$f1dc1a00$d5944e00$@nexbridge.com> <20251023124837.GB1163932@coredump.intra.peff.net>
+In-Reply-To: <20251023124837.GB1163932@coredump.intra.peff.net>
+Subject: RE: [BUG] Strange git notes completion behaviour
+Date: Fri, 24 Oct 2025 13:33:02 -0400
+Organization: Nexbridge Inc.
+Message-ID: <029a01dc450c$4318dfe0$c94a9fa0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251024170522.GA2344972@coredump.intra.peff.net>
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQHjmO9AERlM/1ZhxKXB7Q1XH17MtgEgLITOApwjn/kCVAmtvwG1oGkTAur+K2y0bVr7cA==
+X-Antivirus: Norton (VPS 251024-10, 10/24/2025), Outbound message
+X-Antivirus-Status: Clean
 
-We'd sometimes end up in run_external_diff() to do a dry-run diff (e.g.,
-to find content-level changes for --quiet). We recognize this quiet mode
-by seeing the lack of DIFF_FORMAT_PATCH in the output format.
+On October 23, 2025 8:49 AM, Jeff King wrote:
+>On Wed, Oct 22, 2025 at 10:27:01AM -0400, rsbecker@nexbridge.com wrote:
+>
+>> I tried running with --no-pager. No difference. Interesting:
+>>
+>> git show $(git notes list HEAD)
+>>
+>> works correctly with no error report (from inside gdb), while the run =
+of
+>>
+>> git --no-pager notes show HEAD
+>>
+>> still reports:
+>> Run till exit from #0  main (argc=3D5, argv=3D0x811d000)
+>>     at =
+/home/jenkinsbuild/.jenkins/workspace/Git_Pipeline/common-main.c:8
+>> Process (0,896) exited with code 037777777764.
+>>
+>> Is there a path where just an implied return is used? I have seen the =
+optimizer
+>> return whatever is in an x86 register - rsx and rsi are both 12 at =
+git.c:982
+>> - on occasion.
+>
+>Not that I know of (and I'd expect the compiler to complain if we ever
+>had a code path that didn't return).  It is weird that git-show =
+produces
+>the right exit code, but our execvp() of it does not. In your place I
+>guess I'd try walking through the debugger all the way down to the exec
+>system call (and ideally convincing the debugger to keep going in the
+>exec'd process image).
 
-But since introducing an explicit dry-run check via 3ed5d8bd73 (diff:
-stop output garbled message in dry run mode, 2025-10-20), this logic can
-never trigger. We can only get to this function by calling
-diff_flush_patch(), and that comes from only two places:
+What I found is this:
 
-  1. A dry-run flush comes from diff_flush_patch_quietly(), which is
-     always in dry-run mode (so the other half of our "||" is true
-     anyway).
+Git drops into sane_execvp and converts the
 
-  2. A regular flush comes from diff_flush_patch_all_file_pairs(),
-     which is only called when output_format has DIFF_FORMAT_PATCH in
-     it.
+git notes show HEAD
 
-So we can simplify our "quiet" condition to just checking dry-run mode
-(which used to be a specific flag, but recently became just a NULL
-"file" pointer). And since it's so simple, we can just do that inline.
-This makes the logic about o->file more obvious, since we handle the
-NULL and non-stdout cases next to each other.
+to
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Here's one more that I forgot to poke at before sending out the others.
+git show 1aa950256829721750e809788e7b858db79a934a.
 
- diff.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+When execvp is called, it immediately fails with a -12 - not returned,
+just terminates. The -12 is an NonStop-specific execvp error indicating
+the process failed because the object is invalid (strange and likely
+an artifact rather than a real problem).
 
-diff --git a/diff.c b/diff.c
-index 9169ccfaa9..a1961526c0 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4423,7 +4423,6 @@ static void run_external_diff(const struct external_diff *pgm,
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	struct diff_queue_struct *q = &diff_queued_diff;
--	int quiet = !(o->output_format & DIFF_FORMAT_PATCH) || !o->file;
- 	int rc;
- 
- 	/*
-@@ -4432,7 +4431,7 @@ static void run_external_diff(const struct external_diff *pgm,
- 	 * external diff program lacks the ability to tell us whether
- 	 * it's empty then we consider it non-empty without even asking.
- 	 */
--	if (!pgm->trust_exit_code && quiet) {
-+	if (!pgm->trust_exit_code && !o->file) {
- 		o->found_changes = 1;
- 		return;
- 	}
-@@ -4457,7 +4456,7 @@ static void run_external_diff(const struct external_diff *pgm,
- 	diff_free_filespec_data(one);
- 	diff_free_filespec_data(two);
- 	cmd.use_shell = 1;
--	if (quiet)
-+	if (!o->file)
- 		cmd.no_stdout = 1;
- 	else if (o->file != stdout)
- 		cmd.out = xdup(fileno(o->file));
--- 
-2.51.1.797.g1148beab57
+When I use the arguments as presented to execvp via bash directly, I =
+get:
+
+error: no note found for object =
+1aa950256829721750e809788e7b858db79a934a.
+
+and gdb correctly reports
+
+Process (0,709) exited with code 01.
+
+There is no commit with that hash. HEAD is actually =
+3fc1917e0e69b23265f5c49f90fdb6f4ed98f4a3
+so git show is correctly failing. This is Indicating that notes is not =
+invoking git
+correctly.
 
