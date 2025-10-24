@@ -1,41 +1,94 @@
-Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6183A186E40
-	for <git@vger.kernel.org>; Fri, 24 Oct 2025 14:01:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916B9296BBB
+	for <git@vger.kernel.org>; Fri, 24 Oct 2025 15:03:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761314490; cv=none; b=WdmJ3Wb9rR7VlxuRiehMKTc4akMbCE7HY4DSHspPDUaFKDF9pn1MMfShX292dYht23Kn3OU5Oel0KAEu6xZPBbhFPS+40wIm+C/LYn2iDvHgrFzoRMAh+my9Lz0eSfijfwX+Ca8pXnVEDFdlE5M6EEAJLHnBJHoZUV6MWnajyHM=
+	t=1761318187; cv=none; b=PhR5JT+kk6Do2oT4eZfDc2h9pL4f4LcmFNV9wgoJtMbBlVw+on/3AefYTYl1yI3n17ISu2Z05JSQyaEMh0TaBKh+jHQCvea4caElfgb4WRJRfaKkfv5R4F0UVu6+lgLrRyqSHD/meQJfyn+Wj7DwctdIjmiCopdHIoyi1MQgwnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761314490; c=relaxed/simple;
-	bh=Y4k1/eZAyiEnzTOejdnonZCZeRhGryA1uDpinGUYVTE=;
+	s=arc-20240116; t=1761318187; c=relaxed/simple;
+	bh=5mN8PJ8WfebtO2vtV2xMYhaNG7ESlX86iGEH6pWwPuA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Q4fKqQce+nN+9/tIQ7eqkdUdkJqUDmR4rBNhdr9Xp6OMaKchfNsDrJAGtLX0VEucsPKM/mzYVGOcqEdQ53wkR1HBCJ2IsSJhvnYuuzs/1A6mcnmvS6Qw4ZktUINR+YqEe1vZe26OXfsGz9YjhFeTFAQ3A+iWIK3CseQUx1CpeSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=Nv43ZKaa; arc=none smtp.client-ip=95.215.58.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	 MIME-Version:Content-Type; b=O1T+aBgYZ/vNRxgegGJOO7/zpmyUTZwxrzJAiKngXU/iUTRlND52GZ28gek9+6cr+ewmfAZ5jJb3Juifvteq1IhUvBwH7E2/xr9wkqn/4CPXL+13hpSLGDNhjd0owrCPwbYRsW7wsbzpQFC/M1/C5LLc1C6DrT1CeQPJyKsZK40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bxfUQDQb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jh2EYGFm; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="Nv43ZKaa"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1761314481;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=RRJlImni5qYU3GnLItEJ2hvOwMJfTME1MxAKuJ0zr50=;
-	b=Nv43ZKaavLsLm/PeGe2j0a7J1NXGx674y2YFwVtzNgXO3iMBR2uiErsaM56PtpOA5ydLYo
-	aURrQNo9OwUGrrnUbDJhYPraQk5q6eq8Km30My2bmqOm8SYM1B9HIO2TgTWP3WefcPtUE3
-	/HP7AUDCc2zeRoIIymOdr9UAsUSebag=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Ezekiel Newren
- <ezekielnewren@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 5/5] rust: generate bindings via cbindgen
-In-Reply-To: <20251024-b4-pks-rust-cbindgen-v2-5-4b4bd4f18490@pks.im>
-References: <20251024-b4-pks-rust-cbindgen-v2-0-4b4bd4f18490@pks.im>
- <20251024-b4-pks-rust-cbindgen-v2-5-4b4bd4f18490@pks.im>
-Date: Fri, 24 Oct 2025 16:01:07 +0200
-Message-ID: <87v7k4pffg.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bxfUQDQb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jh2EYGFm"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 66F217A0100;
+	Fri, 24 Oct 2025 11:03:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 24 Oct 2025 11:03:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1761318184; x=1761404584; bh=XLiclouksD
+	T1Mu2lzyEHolv2w3ZqbwBg+Oz7sdyaDmg=; b=bxfUQDQbRFrBztHDRy1neAu+t+
+	b2rKmLqDHiVNJbFYbno+pOlhMzPiqZGhB/zyHZdaOEUBbb1Ad9GO7xogBDLa49VQ
+	1QSCuBsszdzJTtTmZxLSZhxj14y3gB8YhNSZXndk1p+TqZLNLcVKESwe3afClaT7
+	6vEG4PNMfz3viCkaHuPQt+RKN/pdSQZP92HQEwOxXTtuDaWnXOP8/BCkeHEQ6ql6
+	NQR+9BN1BNxI+0hOZo5rkCdceXDqgs/thW8XjcEqQ6OPrbOH2Rbd+QNVJOn5VCvH
+	2bxcSa5ESVqhF+I5K5YznB+9+U+IVOh8IDx6e/tUzq/RMdTPdm45b3MTLpFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761318184; x=1761404584; bh=XLiclouksDT1Mu2lzyEHolv2w3ZqbwBg+Oz
+	7sdyaDmg=; b=jh2EYGFmW/k8ntyVfj4p3rVgAWdtr4CcDGsAijyec1pPPvgSRgS
+	1DyOQT+fEG9xjxioVvHaS/9Af5fhb6eDr6s+aWR6sPBjrGq1lSCYGJJ0ixLw6TMg
+	U5NN7f7VmRNjgNjbrpVoAQiE4OrTrAb1+wI9SkR62EugC0CFj5NL018IyrUZLZpY
+	LY46Z5jYWiTC7IPBuubPKuAkF2WyOZ2pSNn+eMrlv3mnfMenmUbu+diGQKATNq9P
+	9IqnMtqtG6WdNfNizPiumfDFKXt4bO/EctiZ6ELODhfQdhAq4bVomoq5v04w+gUo
+	I7kyKpdt3OMOk48B+5x+b80bkFV4j4JXfAw==
+X-ME-Sender: <xms:J5X7aMZSLdhfXHUvQC-qP9TFDLS_VXk8fB7uN1dajASe3VvIZ5JMng>
+    <xme:J5X7aPkypIigdYWD4SSnHk-rUrBS731cZDHOYQJEUbVdO_GYoAgxyb6b2PI-c0k-l
+    IGnZsz3gemRbOJeT1-WiLrLsc0j9kMEB-QxeeZtogtIF3aAnOof0g>
+X-ME-Received: <xmr:J5X7aCgsvCi6IAN77TwLrROAR_YKIGPFUJO-3-HrNbuK445sbq5SzAFlO81kdmSFt8yeukUONaEIWYPWawR9xF5tTbKvUlEa6mTd>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeelieehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkh
+    hsrdhimhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgr
+    nhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepjh
+    hohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepthhm
+    iiesphhosghogidrtghomhdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrg
+    hilhdrtghomh
+X-ME-Proxy: <xmx:J5X7aBRDIy_4GvbzPN7lcD_o9Usv0unNXhBnesW6t13R5ILwVEEkbQ>
+    <xmx:J5X7aDbLBeY0KmZlC-30w7BjnW_Dy9Ni0GWM_Mh7G-FK5-mbesXAnw>
+    <xmx:J5X7aOTctkXoxhAAS2s9XnQlV0orR81vrf959KfZEMjd3LaMRd-t7A>
+    <xmx:J5X7aC8ATCM7HXXX_2AwuOnMLvWQk12VXOAGmJrR2xVR2dfVDT27cQ>
+    <xmx:KJX7aCM66xntsQnBnYEvxZ1hdD6qe3vM50Cv7ShuYzrZjtTbioW2vgMP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 24 Oct 2025 11:03:02 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
+  Patrick Steinhardt <ps@pks.im>,  Jeff King <peff@peff.net>,  "brian m .
+ carlson" <sandals@crustytoothpaste.net>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Todd Zullinger <tmz@pobox.com>,  Collin
+ Funk <collin.funk1@gmail.com>,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 5/5] fast-import: add '--signed-tags=<mode>' option
+In-Reply-To: <CABPp-BGQ=3Tuik-PCerkaK4R0b1roSVLXLKs2-+E11vDrH6WaQ@mail.gmail.com>
+	(Elijah Newren's message of "Thu, 23 Oct 2025 22:03:48 -0400")
+References: <20251007122958.1089680-1-christian.couder@gmail.com>
+	<20251013084857.1646783-1-christian.couder@gmail.com>
+	<20251013084857.1646783-6-christian.couder@gmail.com>
+	<CABPp-BGQ=3Tuik-PCerkaK4R0b1roSVLXLKs2-+E11vDrH6WaQ@mail.gmail.com>
+Date: Fri, 24 Oct 2025 08:03:01 -0700
+Message-ID: <xmqqplacqr4q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,70 +96,30 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
 
-Patrick Steinhardt <ps@pks.im> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> [snip]
+>> +--signed-tags=(verbatim|warn-verbatim|warn-strip|strip|abort)::
+>> +       Specify how to handle signed tags.  Behaves in the same way
+>> +       as the same option in linkgit:git-fast-export[1], except that
+>> +       default is 'verbatim' (instead of 'abort').
 >
-> diff --git a/meson.build b/meson.build
-> index 308798e861..b4acc417ad 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -523,6 +523,7 @@ libgit_sources = [
->    'usage.c',
->    'userdiff.c',
->    'utf8.c',
-> +  'varint.c',
->    'version.c',
->    'versioncmp.c',
->    'walker.c',
-> @@ -1704,7 +1705,9 @@ version_def_h = custom_target(
->  libgit_sources += version_def_h
->  
->  cargo = find_program('cargo', dirs: program_path, native: true, required: get_option('rust'))
-> -rust_option = get_option('rust').disable_auto_if(not cargo.found())
-> +cbindgen = find_program('cbindgen', dirs: program_path, native: true, required: get_option('rust'))
-> +
-> +rust_option = get_option('rust').disable_auto_if(not cargo.found() or not cbindgen.found())
+> Sorry for not catching this earlier with the --signed-commits series
+> (was otherwise occupied), but this worries me.  If we ship with this
+> as the default, people will come to depend upon it, and I think it's a
+> bad long term default.  Long term, we'd want to check if the
+> signatures are valid and keep if so and do something else if not (e.g.
+> re-sign or abort or strip).  Maybe verbatim is better than abort out
+> of the options you've implemented so far, but I think setting the
+> default now to verbatim means people start depending on it and we
+> cannot change it later.  Could we change to 'abort', for both this and
+> --signed-commits, before the 2.52 release, and then re-discuss once
+> you have the other options implemented?
 
-This means to compile with Rust we not only need cargo, but also
-cbindgen. As we ideally want to have a broad platform support, would
-adding another dependency (i.e. `cbindgen`) narrow the platforms we'd
-eventually support? Or can we consider platforms supporting Rust also
-have cbindgen?
-
-> [snip]
->
-> diff --git a/varint.c b/varint.c
-> index 03cd54416b..1ed738a756 100644
-> --- a/varint.c
-> +++ b/varint.c
-> @@ -1,6 +1,14 @@
->  #include "git-compat-util.h"
->  #include "varint.h"
->  
-> +/*
-> + * When building with Rust we don't compile the C code, but we only verify
-> + * whether the function signatures of our C bindings match the ones we have
-> + * declared in "varint.h".
-> + */
-> +#ifdef WITH_RUST
-> +# include "c-bindings.h"
-
-So when we rewrite more subsystems into Rust, this will include
-definitions from all those subsystems into this compilation unit.
-If one subsystem with a Rust alternative implementation includes the
-header from another subsystem with a Rust-alternative implementation,
-the function signatures are checked twice, and errors are surfaced
-twice. I guess this is a tradeoff we can accept for now, because:
-
-* We only have one subsystem in Rust now.
-* The approach in this patch simplifies the build setup.
-
-We might revisit that at some point, but I can agree this is the most
-sensical approach for now.
-
--- 
-Cheers,
-Toon
+Isn't this series a response to the "we only copy verbatim and there
+is no other choice", which we had from the beginning of fast import
+& export?  If we knew better, we may have made it abort when we did
+the fast import & export, but we cannot go back and change it, and
+we cannot change the default with this series without disrupting the
+users, so the next best thing is to make it configurable, which is
+the point of this series (and the other one), no?
