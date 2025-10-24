@@ -1,93 +1,87 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916B9296BBB
-	for <git@vger.kernel.org>; Fri, 24 Oct 2025 15:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6F9324B15
+	for <git@vger.kernel.org>; Fri, 24 Oct 2025 15:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761318187; cv=none; b=PhR5JT+kk6Do2oT4eZfDc2h9pL4f4LcmFNV9wgoJtMbBlVw+on/3AefYTYl1yI3n17ISu2Z05JSQyaEMh0TaBKh+jHQCvea4caElfgb4WRJRfaKkfv5R4F0UVu6+lgLrRyqSHD/meQJfyn+Wj7DwctdIjmiCopdHIoyi1MQgwnY=
+	t=1761318822; cv=none; b=kUrtpqIpVaB1899S0MAXi1JoJNRfF83zYWqiaLYaunCT1f7hBQ7/0tn0WylSvhhZzB3/0OVHOt1smzWAxFyPXAWVFq26XJ48uPG4tZHD5ixnfslxQW2UjiOoN5wwTva51HTlN0rqV3mlRGyfCHxMrfXp1iVx5AEvzKGZVyMRTUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761318187; c=relaxed/simple;
-	bh=5mN8PJ8WfebtO2vtV2xMYhaNG7ESlX86iGEH6pWwPuA=;
+	s=arc-20240116; t=1761318822; c=relaxed/simple;
+	bh=NGSu787by52yH7nHG3mY641K3wORSfPrrAtajBZzX68=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=O1T+aBgYZ/vNRxgegGJOO7/zpmyUTZwxrzJAiKngXU/iUTRlND52GZ28gek9+6cr+ewmfAZ5jJb3Juifvteq1IhUvBwH7E2/xr9wkqn/4CPXL+13hpSLGDNhjd0owrCPwbYRsW7wsbzpQFC/M1/C5LLc1C6DrT1CeQPJyKsZK40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bxfUQDQb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jh2EYGFm; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=SOS19E3iKgl8aTzfBTHwEl7iNfpscjTK3+a6Pp/95qP1LC0AiAoYnUc1zeAho1XlMhKDw5wW+3havhYGC1YYbmJQZKuQEdVnhF82G6vA8RaBGYjksz8jcaCeGqaJ9/XmO/3n5W3WZUYWutZb0cKBZiFtZwSFxoFr75x5M3M28h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I6abUltW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KanphXae; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bxfUQDQb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jh2EYGFm"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I6abUltW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KanphXae"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 66F217A0100;
-	Fri, 24 Oct 2025 11:03:04 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0F6D07A0090;
+	Fri, 24 Oct 2025 11:13:39 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 24 Oct 2025 11:03:04 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 24 Oct 2025 11:13:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1761318184; x=1761404584; bh=XLiclouksD
-	T1Mu2lzyEHolv2w3ZqbwBg+Oz7sdyaDmg=; b=bxfUQDQbRFrBztHDRy1neAu+t+
-	b2rKmLqDHiVNJbFYbno+pOlhMzPiqZGhB/zyHZdaOEUBbb1Ad9GO7xogBDLa49VQ
-	1QSCuBsszdzJTtTmZxLSZhxj14y3gB8YhNSZXndk1p+TqZLNLcVKESwe3afClaT7
-	6vEG4PNMfz3viCkaHuPQt+RKN/pdSQZP92HQEwOxXTtuDaWnXOP8/BCkeHEQ6ql6
-	NQR+9BN1BNxI+0hOZo5rkCdceXDqgs/thW8XjcEqQ6OPrbOH2Rbd+QNVJOn5VCvH
-	2bxcSa5ESVqhF+I5K5YznB+9+U+IVOh8IDx6e/tUzq/RMdTPdm45b3MTLpFQ==
+	:subject:to:to; s=fm1; t=1761318818; x=1761405218; bh=NGSu787by5
+	2yH7nHG3mY641K3wORSfPrrAtajBZzX68=; b=I6abUltWvn5tFUfnA/Ob/dy7KA
+	lmGHT909s1yqZ0Hshw+Ca/I1Fpaeoh3B1v04lAZpWK1ibVM5O2NGAFpA2ukJP5SO
+	T3FzE3jinVhP42sqDjrDBwcvLAikZnz8uRYPZbCpfslPhkwhn6eCVCzl8WAmP9c5
+	A1haWOGzCeYh1Vx5gut88R4ltRyL7A2e627vsfY+dZW6Ye8kPwG4RMMnrmGlTOBb
+	o9WaOoWwssNX4pA0wwJjUDwUbTknaMrQBglcVAkn/XSlRl9VlsvmFxs+0SH4bD4T
+	6KnTuzfNnP5qlSZ62TTPggag/ze3G6mehOZSO5OzY3q+66b+e5Ox4Rt7WJvw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761318184; x=1761404584; bh=XLiclouksDT1Mu2lzyEHolv2w3ZqbwBg+Oz
-	7sdyaDmg=; b=jh2EYGFmW/k8ntyVfj4p3rVgAWdtr4CcDGsAijyec1pPPvgSRgS
-	1DyOQT+fEG9xjxioVvHaS/9Af5fhb6eDr6s+aWR6sPBjrGq1lSCYGJJ0ixLw6TMg
-	U5NN7f7VmRNjgNjbrpVoAQiE4OrTrAb1+wI9SkR62EugC0CFj5NL018IyrUZLZpY
-	LY46Z5jYWiTC7IPBuubPKuAkF2WyOZ2pSNn+eMrlv3mnfMenmUbu+diGQKATNq9P
-	9IqnMtqtG6WdNfNizPiumfDFKXt4bO/EctiZ6ELODhfQdhAq4bVomoq5v04w+gUo
-	I7kyKpdt3OMOk48B+5x+b80bkFV4j4JXfAw==
-X-ME-Sender: <xms:J5X7aMZSLdhfXHUvQC-qP9TFDLS_VXk8fB7uN1dajASe3VvIZ5JMng>
-    <xme:J5X7aPkypIigdYWD4SSnHk-rUrBS731cZDHOYQJEUbVdO_GYoAgxyb6b2PI-c0k-l
-    IGnZsz3gemRbOJeT1-WiLrLsc0j9kMEB-QxeeZtogtIF3aAnOof0g>
-X-ME-Received: <xmr:J5X7aCgsvCi6IAN77TwLrROAR_YKIGPFUJO-3-HrNbuK445sbq5SzAFlO81kdmSFt8yeukUONaEIWYPWawR9xF5tTbKvUlEa6mTd>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeelieehucetufdoteggodetrf
+	1761318818; x=1761405218; bh=NGSu787by52yH7nHG3mY641K3wORSfPrrAt
+	ajBZzX68=; b=KanphXaem5v4YAZKEKN7Vp2bMHDdH/JE8pN3QNNvVkXxi1NwFl9
+	sElztz2bMil8OtW/fKAej0OEYrUR9QtB059Iy6lx3Ap5UFtoof8g/4/u4pj5DjOe
+	k9/bjOSXDBhi8rN1m3FuMxaGhojyP5nX8JdJZOZ+G/n0pGohfn8sDu9yXN7h7Nrj
+	YHfRvZt6ehI5zdMFYTZXRyuYE5lKAvrgbzY9dZZL9yv+VConLq1skOHIDTdj5DNf
+	gm9aFMTeRDgxOJKMXTxew35HU6bn1lPHxZTpBM4rsbhbl1cGKBuo3wjYbYIJiRQO
+	2J91dj9Gb546ADqo1gVSumscl//jz+3ipQQ==
+X-ME-Sender: <xms:opf7aJo-svlK6fNNKv7IyYQ_4NKDi0t5BcgTL-56Y9UdI7SDhGyVzg>
+    <xme:opf7aPVEjK7sSGTUNixMAAOnuPWQWgAOj2fVm5KpztFAHtGSzgizKfWyTZpWRKODO
+    xhtHEMT0IUN6EBFlzI246fjn5-_DQRp3sPuptWw19U-v54nOpEGwQ>
+X-ME-Received: <xmr:opf7aADVTKhuwqM09yoQpak3cLKJcqsf9edsyVdWYNcUjlYyMb975l4TUHjHgU7SuvA2GSKJjVTei5lhxRyL6gCAvGssHs1WZHxk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeelieejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
-    htthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkh
-    hsrdhimhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgr
-    nhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepjh
-    hohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepthhm
-    iiesphhosghogidrtghomhdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrg
-    hilhdrtghomh
-X-ME-Proxy: <xmx:J5X7aBRDIy_4GvbzPN7lcD_o9Usv0unNXhBnesW6t13R5ILwVEEkbQ>
-    <xmx:J5X7aDbLBeY0KmZlC-30w7BjnW_Dy9Ni0GWM_Mh7G-FK5-mbesXAnw>
-    <xmx:J5X7aOTctkXoxhAAS2s9XnQlV0orR81vrf959KfZEMjd3LaMRd-t7A>
-    <xmx:J5X7aC8ATCM7HXXX_2AwuOnMLvWQk12VXOAGmJrR2xVR2dfVDT27cQ>
-    <xmx:KJX7aCM66xntsQnBnYEvxZ1hdD6qe3vM50Cv7ShuYzrZjtTbioW2vgMP>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtgh
+    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepuddtleeigedvuddvheejsehqqhdrtghomh
+    dprhgtphhtthhopehrvddttdelkeduuddufeesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:opf7aL0gAvAJAPbZz76x6brQb_FrWKAxsGzq2mszD8PZ1FReWRC86A>
+    <xmx:opf7aK2NA5X-iQ8kyv_d7F4vN8EccptwF3sdyDEfJvPBVVCZ481GQw>
+    <xmx:opf7aIDfeNTGEK2nD-KxS_ioQeZlNsU8sYDW5-v9PI0V2wG_Tl0zkQ>
+    <xmx:opf7aB6gTChB-7GVxcC0EUAXHXVTylpCjc4iTNT68w9gaxGya-av7g>
+    <xmx:opf7aJE44BHsoe3kXG3l5RO8AKEpVNTAt2f4a7E6dYDaevIi_PJypJSA>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Oct 2025 11:03:02 -0400 (EDT)
+ 24 Oct 2025 11:13:38 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
-  Patrick Steinhardt <ps@pks.im>,  Jeff King <peff@peff.net>,  "brian m .
- carlson" <sandals@crustytoothpaste.net>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Todd Zullinger <tmz@pobox.com>,  Collin
- Funk <collin.funk1@gmail.com>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3 5/5] fast-import: add '--signed-tags=<mode>' option
-In-Reply-To: <CABPp-BGQ=3Tuik-PCerkaK4R0b1roSVLXLKs2-+E11vDrH6WaQ@mail.gmail.com>
-	(Elijah Newren's message of "Thu, 23 Oct 2025 22:03:48 -0400")
-References: <20251007122958.1089680-1-christian.couder@gmail.com>
-	<20251013084857.1646783-1-christian.couder@gmail.com>
-	<20251013084857.1646783-6-christian.couder@gmail.com>
-	<CABPp-BGQ=3Tuik-PCerkaK4R0b1roSVLXLKs2-+E11vDrH6WaQ@mail.gmail.com>
-Date: Fri, 24 Oct 2025 08:03:01 -0700
-Message-ID: <xmqqplacqr4q.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: RuanXinyu via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  RuanXinyu <1096421257@qq.com>,  RuanXinyu
+ <r200981113@gmail.com>
+Subject: Re: [PATCH] refs: add missing remove_on_disk implementation for
+ debug backend
+In-Reply-To: <aPtCvwvNUtFXqrpv@pks.im> (Patrick Steinhardt's message of "Fri,
+	24 Oct 2025 11:11:27 +0200")
+References: <pull.2082.git.git.1761295094982.gitgitgadget@gmail.com>
+	<aPtCvwvNUtFXqrpv@pks.im>
+Date: Fri, 24 Oct 2025 08:13:37 -0700
+Message-ID: <xmqqikg4qqn2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,29 +91,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Elijah Newren <newren@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> +--signed-tags=(verbatim|warn-verbatim|warn-strip|strip|abort)::
->> +       Specify how to handle signed tags.  Behaves in the same way
->> +       as the same option in linkgit:git-fast-export[1], except that
->> +       default is 'verbatim' (instead of 'abort').
+>> Signed-off-by: Xinyu Ruan <r200981113@gmail.com>
 >
-> Sorry for not catching this earlier with the --signed-commits series
-> (was otherwise occupied), but this worries me.  If we ship with this
-> as the default, people will come to depend upon it, and I think it's a
-> bad long term default.  Long term, we'd want to check if the
-> signatures are valid and keep if so and do something else if not (e.g.
-> re-sign or abort or strip).  Maybe verbatim is better than abort out
-> of the options you've implemented so far, but I think setting the
-> default now to verbatim means people start depending on it and we
-> cannot change it later.  Could we change to 'abort', for both this and
-> --signed-commits, before the 2.52 release, and then re-discuss once
-> you have the other options implemented?
+> Tiny nit: typically, the author and DCO should match. But the autor is
+> "RuanXinyu" whereas the DCO says "Xinyu Ruan". I don't really think that
+> this is something that warrants a new version, but I wanted to point
+> this out anyway so that you can fix this going forward.
 
-Isn't this series a response to the "we only copy verbatim and there
-is no other choice", which we had from the beginning of fast import
-& export?  If we knew better, we may have made it abort when we did
-the fast import & export, but we cannot go back and change it, and
-we cannot change the default with this series without disrupting the
-users, so the next best thing is to make it configurable, which is
-the point of this series (and the other one), no?
+It may not warrant a new version in the sense that I could tweak
+while queuing, but I need to be told which between the two is the
+name to be used before doing so.
+
+I can make a guess and use the latter but it would cause me yet
+another piece of extra work if I guessed incorrectly, so...
