@@ -1,84 +1,83 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B0B27978C
-	for <git@vger.kernel.org>; Fri, 24 Oct 2025 06:57:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D3027978C
+	for <git@vger.kernel.org>; Fri, 24 Oct 2025 06:57:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761289051; cv=none; b=E51oPiW0i6db4ExC/RtMN3NEvh/F4767cH4rytadjoc5lPrkvXZIinnXHwX0oULa+pycH+icIRQ6cuMHLITp5N6piRb2PwPfB3tBxKk+7ESMkzLzwGSgPnZZhDV3BcGqhqAmD/CMnEYroIfXJBED59Wi/TFBSoLSA2Yf8c1H0Ig=
+	t=1761289055; cv=none; b=o8DiRVsZQLIuDy3LBQ6U4VqzlgjeTSviW8YiVCFEfw7W8vVAKnWLEbpaaualIu9EHtwdq6YxUFvUP7GDSbcpIjIJo5KODZ9l4uDpODkl2vDAlgCnxja1MuXAIv6VWrUULBve1T3ognc778p/0Q3no5fsl31K8gAexhNEPz8mkuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761289051; c=relaxed/simple;
-	bh=ffDRLNWssRSgPN4Czz3gwifS15b9VXTg/CC3T1tTvBM=;
+	s=arc-20240116; t=1761289055; c=relaxed/simple;
+	bh=e2+CfIXa2aOcRMAMZsYS5ybroSAnEF235bjdIty6UGU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kGb6meUPWJm0NeFnKxGNG6h67yZGeCcEfhb/6ccgjpDUpw9JMTYuU2ePpR+PG3lL3g2yPHKBLBSzadymMFsRwzCyMCD+F6sXi7pb8j868Z7GbXbE7Nmy6INaXRrp2yMzqsug6GzB+7IhEU+T7mXCAtRmWvPt2oAbbcp4se+7Y0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=muJc66Yj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I3M0CwWM; arc=none smtp.client-ip=103.168.172.152
+	 In-Reply-To:To:Cc; b=PTj5wdsODBugZRxMLxf0B+bP6eUVscaUWLqw4BK4UPTtTNeCJLtNd8KPxpHhEylUPao+vGR+XCjzUiSMOWQablRXmJUw71S3jjXMeAl4cbFw0wvgZI6os4x+eZ3yDAUW42ybWlwXkpyP73xOmBQDtzbeOtfdx8e+QNRHACsOt98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pOEcwguw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M4BHY1hX; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="muJc66Yj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I3M0CwWM"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CB0701400151;
-	Fri, 24 Oct 2025 02:57:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pOEcwguw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M4BHY1hX"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 04926EC0278;
+	Fri, 24 Oct 2025 02:57:32 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Fri, 24 Oct 2025 02:57:28 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 24 Oct 2025 02:57:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1761289048;
-	 x=1761375448; bh=6ng1Cd6Jv+X4UC4cnFh2wbgdI9B6iy+A3w5H8+mbnt0=; b=
-	muJc66Yjt5Cemd2pdDc1x8p+9Io21/L8bw0GqOEc7NOtZ5itQNpexQzcOLuiOG7Y
-	EbjpbAJQ1eb7a3WFQTmNiIm7AfUQkTgx1iaxBatK8xgFf1GR7EY/E8wq8sb4eH6j
-	MXoUGouDxynO1/l8yGpui5mfcyC4DtNAZb+q3nHqXhBqBK5ivK9ZIl03HzEt/h+g
-	BvDqg1jjLRRfUevHMZpkzks78hu+TVWCZVa3+xTFduVY64NVhNtcXfHonkndKQqz
-	xbr4BHEpHJjHVQ1qufghs44uYVyCaC6S9jDoSoq0AClmmdNtOglZ60ta7WFDix9K
-	/T6TMxqc3eHI3mHSp4239A==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1761289052;
+	 x=1761375452; bh=tRh7MqR44ObBEIZZwLDtlpIYXGBexT8syrV66B3tBS0=; b=
+	pOEcwguw5/M+P7AwwPZWS+wHI9On/l5YvOY/YOfCCxrBrd3R3Zpk95HptpHTt0Qs
+	yvYvvRXhDr0n6O3LByfFUWe0jnHb08KWj9fBTWWauuE6YIJEOJPzKFF7LmAYP0Q4
+	roobx9MSKIXvSJc60KP8v1+MHcgrLcB+MsYnUbfIrjOMZDD3L6GaUP+xNjl5IQSN
+	DCAI66maciZUvuUsu229PYlnumr28OkJfvtGtQvl9I3JXiva+rhIF5mdAM3nKf+h
+	iEK0TycnmkCzc5K04mVpa/tjsXipHlb8OGX2pZIdDk2QWtdqP5eFphQeCR2FbikZ
+	CN4OsbJahogFo+TRuIaXGg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761289048; x=
-	1761375448; bh=6ng1Cd6Jv+X4UC4cnFh2wbgdI9B6iy+A3w5H8+mbnt0=; b=I
-	3M0CwWMYZXTFOU9hUwSlwjdQ+BDYD+oWWY/FmDJ8Flx265h2rle25Zgd9UWK6lEr
-	7vBHxMM0r8XlGHHTxEhbVI5ApiOMMtFwgje+g9bCGcgofGLbIT8eR87rBXFpJbE7
-	51Arr8+VYeJQvSg4p8hNGmKuW3PZOb3yM0GyUxgMIfT1nC9bqQnMalMGajyeWASo
-	Nw3h1aDTQIBeCehM506bSdwVUtc0OJfVcd2tXjdzgb2gNa7+uvj9LTCsmRidfQPQ
-	KUS3IUv/YpwkJgj6ver+c+37LhqWU9XFpsn0j4NL7UF2Q1DfisMTiLIwQ/BZZqdG
-	NJgtMIB6/MyZhxbIPPdfA==
-X-ME-Sender: <xms:WCP7aOb33u0AzdDtmYBCphMloKdq2NJMf5nNoHyaSLhnc4cZXvBQjw>
-    <xme:WCP7aIQX3bEEIynm_zH6uton89AUyvd78GbIw4O6m7L0AumBuyHsn-aw_0qYVt0R5
-    fytKp0otoZ1CLsA2FIIlELp1YyZEQ3XguDXQm1hQiErrYAnLu0o>
-X-ME-Received: <xmr:WCP7aBQuBicMK6tQQDz_gCP6e4F8CvenbV7YyFkBdR1tWgYuPN5EhleTueVKpiV0Uhowp8fyqrSJs-xIlZNLbLJJf-OZt9OERGCi2HMn2w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeekieekucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761289052; x=
+	1761375452; bh=tRh7MqR44ObBEIZZwLDtlpIYXGBexT8syrV66B3tBS0=; b=M
+	4BHY1hX7BZv5sICln3vci6nF9GSH53lfDlcMU3qPHJ0jHUI6eVHaXVyG2TwyukW+
+	mmYPIMG7jkYtuQ74Pr5wEu9pqpU2n07WnT92CdwgopI3rvENZwZ2cybgJ9ebCoO/
+	TXS0pW7lUm0tG/GqsRGAr5lxCST2sTTHA0lgzjhpYRcmWN7AbcAPbE4AnbTCM2dM
+	wNnd1HQrBE81RTW67yoNCG73wWWawomPdl6m/ssEB+eINhxx2lBloaHHOaS6WCHj
+	xqMtLgyE9vVt9X7OYcNg4mx+2mJtKSPSpmh5tDvntgaEMsTo+QnjmwsqnnBeqiyC
+	JfYIQtRRM2QQg4bkye6nQ==
+X-ME-Sender: <xms:WyP7aBf7wwFRr2nER-qRcazo6glOLJ1LOM7tCRDfr27lVnijGxqiXQ>
+    <xme:WyP7aGF5aVqyfNuvu6OJiJ-vlegoJ9e95c-B141RTsek7TfKzgN2ESBx8KVORR_q-
+    RO0p4xxK9wLK5JeW0Aho_yWVgYJ8Ww7TJnDD_ZwCAC2bk6uRf5B>
+X-ME-Received: <xmr:WyP7aC1ndOgUQj5nO6OJjLnieCSOfOEqGkOwPnqdMb7BgKpvYG0f-qVgqq81vE8kU30CXlpJoqHqgWKN7PDcqm0qwQngc6YFkcGnWuGQsw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeekieejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetteelteektdelffefuddvgfdvieefveeifeeuiefhjeetkeektefhjeegfeduvden
-    ucffohhmrghinhepihhntghrvghmvghnthgrlhdqrhgvphgrtghkrdgruhhtohdpghgvoh
-    hmvghtrhhitgdqrhgvphgrtghkrdgruhhtohdprhgvfhhlohhgqdgvgihpihhrvgdrrghu
-    thhonecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepph
-    hssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosg
-    hlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:WCP7aMTAGINFfZpyWobjUwH5TSOhxa05LTKfqbXsp9u0kgcTmJx_Vw>
-    <xmx:WCP7aG7of_AoCwlKPbUaCoX3Hrz-nInP-56tlnQN4TGiUzwP0VbLMA>
-    <xmx:WCP7aI0krf4o48LBYO5vbe7MUtG3EwJu8EW8UG-yBcuig7H5xEaHPw>
-    <xmx:WCP7aBCGxEyYXixa3iiJIp_PIvqGXFyG3KsNzD5WIFy7ZINPp8AL1w>
-    <xmx:WCP7aAoGUJU2XZltEQo3m5iQKi4pWjHn0v6mKjlcOUTLCA5xqY6Gh__F>
+    hnpeekveejhffhjeevjeefjeegtdejffeltefgjefgfffhueeuueeivefgudefiedthfen
+    ucffohhmrghinhepghgvohhmvghtrhhitgdqrhgvphgrtghkrdgruhhtohdprhgvfhhloh
+    hgqdgvgihpihhrvgdrrghuthhonecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:WyP7aGmGXzddR3__jIMQQ3Lihwtgiju72r-RCf5AaLM7tnn-YvPk_g>
+    <xmx:WyP7aK9NUJLY2QbJ223H6efYH4EIGKx4Y4ScPhcR6u7wij0xx7r2kw>
+    <xmx:WyP7aDqnTNVRrjvSn8DN5IxHmgkIEhETM0lTS0DL-tZMx8XSxjJn5w>
+    <xmx:WyP7aLmXknuJCEJMoJZ2LOZ4VMBxnRRdYSJga7JbKz18OtJfpYtOpA>
+    <xmx:WyP7aA-KUL87dI462Rmd6_dG90JPggrFx4WBqTbONBjlfmY5_0FYUIQb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Oct 2025 02:57:27 -0400 (EDT)
+ 24 Oct 2025 02:57:30 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 049191cd (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 24 Oct 2025 06:57:27 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 5a9e6d85 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 24 Oct 2025 06:57:30 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 24 Oct 2025 08:57:16 +0200
-Subject: [PATCH v3 03/10] builtin/maintenance: introduce "geometric-repack"
- task
+Date: Fri, 24 Oct 2025 08:57:17 +0200
+Subject: [PATCH v3 04/10] builtin/maintenance: make the geometric factor
+ configurable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251024-pks-maintenance-geometric-strategy-v3-3-9b5b3bdb4387@pks.im>
+Message-Id: <20251024-pks-maintenance-geometric-strategy-v3-4-9b5b3bdb4387@pks.im>
 References: <20251024-pks-maintenance-geometric-strategy-v3-0-9b5b3bdb4387@pks.im>
 In-Reply-To: <20251024-pks-maintenance-geometric-strategy-v3-0-9b5b3bdb4387@pks.im>
 To: git@vger.kernel.org
@@ -95,332 +94,111 @@ Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>,
  Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.3
 
-Introduce a new "geometric-repack" task. This task uses our geometric
-repack infrastructure as provided by git-repack(1) itself, which is a
-strategy that especially hosting providers tend to use to amortize the
-costs of repacking objects.
+The geometric repacking task uses a factor of two for its geometric
+sequence, meaning that each next pack must contain at least twice as
+many objects as the next-smaller one. In some cases it may be helpful to
+configure this factor though to reduce the number of packfile merges
+even further, e.g. in very big repositories. But while git-repack(1)
+itself supports doing this, the maintenance task does not give us a way
+to tune it.
 
-There is one issue though with geometric repacks, namely that they
-unconditionally pack all loose objects, regardless of whether or not
-they are reachable. This is done because it means that we can completely
-skip the reachability step, which significantly speeds up the operation.
-But it has the big downside that we are unable to expire objects over
-time.
-
-To address this issue we thus use a split strategy in this new task:
-whenever a geometric repack would merge together all packs, we instead
-do an all-into-one repack. By default, these all-into-one repacks have
-cruft packs enabled, so unreachable objects would now be written into
-their own pack. Consequently, they won't be soaked up during geometric
-repacking anymore and can be expired with the next full repack, assuming
-that their expiry date has surpassed.
+Introduce a new "maintenance.geometric-repack.splitFactor" configuration
+to plug this gap.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/config/maintenance.adoc |  11 +++
- builtin/gc.c                          | 102 +++++++++++++++++++++++++
- t/t7900-maintenance.sh                | 138 ++++++++++++++++++++++++++++++++++
- 3 files changed, 251 insertions(+)
+ Documentation/config/maintenance.adoc |  5 +++++
+ builtin/gc.c                          |  9 ++++++++-
+ t/t7900-maintenance.sh                | 32 ++++++++++++++++++++++++++++++++
+ 3 files changed, 45 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/config/maintenance.adoc b/Documentation/config/maintenance.adoc
-index 2f719342183..26dc5de423f 100644
+index 26dc5de423f..45fdafc2c63 100644
 --- a/Documentation/config/maintenance.adoc
 +++ b/Documentation/config/maintenance.adoc
-@@ -75,6 +75,17 @@ maintenance.incremental-repack.auto::
- 	number of pack-files not in the multi-pack-index is at least the value
- 	of `maintenance.incremental-repack.auto`. The default value is 10.
+@@ -86,6 +86,11 @@ maintenance.geometric-repack.auto::
+ 	objects that would be written into a new packfile. The default value is
+ 	100.
  
-+maintenance.geometric-repack.auto::
-+	This integer config option controls how often the `geometric-repack`
-+	task should be run as part of `git maintenance run --auto`. If zero,
-+	then the `geometric-repack` task will not run with the `--auto`
-+	option. A negative value will force the task to run every time.
-+	Otherwise, a positive value implies the command should run either when
-+	there are packfiles that need to be merged together to retain the
-+	geometric progression, or when there are at least this many loose
-+	objects that would be written into a new packfile. The default value is
-+	100.
++maintenance.geometric-repack.splitFactor::
++	This integer config option controls the factor used for the geometric
++	sequence. See the `--geometric=` option in linkgit:git-repack[1] for
++	more details. Defaults to `2`.
 +
  maintenance.reflog-expire.auto::
  	This integer config option controls how often the `reflog-expire` task
  	should be run as part of `git maintenance run --auto`. If zero, then
 diff --git a/builtin/gc.c b/builtin/gc.c
-index 026d3a1d714..2c9ecd464d2 100644
+index 2c9ecd464d2..fb1a82e0304 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -34,6 +34,7 @@
- #include "pack-objects.h"
- #include "path.h"
- #include "reflog.h"
-+#include "repack.h"
- #include "rerere.h"
- #include "blob.h"
- #include "tree.h"
-@@ -254,6 +255,7 @@ enum maintenance_task_label {
- 	TASK_PREFETCH,
- 	TASK_LOOSE_OBJECTS,
- 	TASK_INCREMENTAL_REPACK,
-+	TASK_GEOMETRIC_REPACK,
- 	TASK_GC,
- 	TASK_COMMIT_GRAPH,
- 	TASK_PACK_REFS,
-@@ -1566,6 +1568,101 @@ static int maintenance_task_incremental_repack(struct maintenance_run_opts *opts
- 	return 0;
- }
+@@ -1582,6 +1582,9 @@ static int maintenance_task_geometric_repack(struct maintenance_run_opts *opts,
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 	int ret;
  
-+static int maintenance_task_geometric_repack(struct maintenance_run_opts *opts,
-+					     struct gc_config *cfg)
-+{
-+	struct pack_geometry geometry = {
-+		.split_factor = 2,
-+	};
-+	struct pack_objects_args po_args = {
-+		.local = 1,
-+	};
-+	struct existing_packs existing_packs = EXISTING_PACKS_INIT;
-+	struct string_list kept_packs = STRING_LIST_INIT_DUP;
-+	struct child_process child = CHILD_PROCESS_INIT;
-+	int ret;
++	repo_config_get_int(the_repository, "maintenance.geometric-repack.splitFactor",
++			    &geometry.split_factor);
 +
-+	existing_packs.repo = the_repository;
-+	existing_packs_collect(&existing_packs, &kept_packs);
-+	pack_geometry_init(&geometry, &existing_packs, &po_args);
-+	pack_geometry_split(&geometry);
+ 	existing_packs.repo = the_repository;
+ 	existing_packs_collect(&existing_packs, &kept_packs);
+ 	pack_geometry_init(&geometry, &existing_packs, &po_args);
+@@ -1591,7 +1594,8 @@ static int maintenance_task_geometric_repack(struct maintenance_run_opts *opts,
+ 
+ 	strvec_pushl(&child.args, "repack", "-d", "-l", NULL);
+ 	if (geometry.split < geometry.pack_nr)
+-		strvec_push(&child.args, "--geometric=2");
++		strvec_pushf(&child.args, "--geometric=%d",
++			     geometry.split_factor);
+ 	else
+ 		add_repack_all_option(cfg, NULL, &child.args);
+ 	if (opts->quiet)
+@@ -1632,6 +1636,9 @@ static int geometric_repack_auto_condition(struct gc_config *cfg UNUSED)
+ 	if (auto_value < 0)
+ 		return 1;
+ 
++	repo_config_get_int(the_repository, "maintenance.geometric-repack.splitFactor",
++			    &geometry.split_factor);
 +
-+	child.git_cmd = 1;
-+
-+	strvec_pushl(&child.args, "repack", "-d", "-l", NULL);
-+	if (geometry.split < geometry.pack_nr)
-+		strvec_push(&child.args, "--geometric=2");
-+	else
-+		add_repack_all_option(cfg, NULL, &child.args);
-+	if (opts->quiet)
-+		strvec_push(&child.args, "--quiet");
-+	if (the_repository->settings.core_multi_pack_index)
-+		strvec_push(&child.args, "--write-midx");
-+
-+	if (run_command(&child)) {
-+		ret = error(_("failed to perform geometric repack"));
-+		goto out;
-+	}
-+
-+	ret = 0;
-+
-+out:
-+	existing_packs_release(&existing_packs);
-+	pack_geometry_release(&geometry);
-+	return ret;
-+}
-+
-+static int geometric_repack_auto_condition(struct gc_config *cfg UNUSED)
-+{
-+	struct pack_geometry geometry = {
-+		.split_factor = 2,
-+	};
-+	struct pack_objects_args po_args = {
-+		.local = 1,
-+	};
-+	struct existing_packs existing_packs = EXISTING_PACKS_INIT;
-+	struct string_list kept_packs = STRING_LIST_INIT_DUP;
-+	int auto_value = 100;
-+	int ret;
-+
-+	repo_config_get_int(the_repository, "maintenance.geometric-repack.auto",
-+			    &auto_value);
-+	if (!auto_value)
-+		return 0;
-+	if (auto_value < 0)
-+		return 1;
-+
-+	existing_packs.repo = the_repository;
-+	existing_packs_collect(&existing_packs, &kept_packs);
-+	pack_geometry_init(&geometry, &existing_packs, &po_args);
-+	pack_geometry_split(&geometry);
-+
-+	/*
-+	 * When we'd merge at least two packs with one another we always
-+	 * perform the repack.
-+	 */
-+	if (geometry.split) {
-+		ret = 1;
-+		goto out;
-+	}
-+
-+	/*
-+	 * Otherwise, we estimate the number of loose objects to determine
-+	 * whether we want to create a new packfile or not.
-+	 */
-+	if (too_many_loose_objects(auto_value)) {
-+		ret = 1;
-+		goto out;
-+	}
-+
-+	ret = 0;
-+
-+out:
-+	existing_packs_release(&existing_packs);
-+	pack_geometry_release(&geometry);
-+	return ret;
-+}
-+
- typedef int (*maintenance_task_fn)(struct maintenance_run_opts *opts,
- 				   struct gc_config *cfg);
- typedef int (*maintenance_auto_fn)(struct gc_config *cfg);
-@@ -1608,6 +1705,11 @@ static const struct maintenance_task tasks[] = {
- 		.background = maintenance_task_incremental_repack,
- 		.auto_condition = incremental_repack_auto_condition,
- 	},
-+	[TASK_GEOMETRIC_REPACK] = {
-+		.name = "geometric-repack",
-+		.background = maintenance_task_geometric_repack,
-+		.auto_condition = geometric_repack_auto_condition,
-+	},
- 	[TASK_GC] = {
- 		.name = "gc",
- 		.foreground = maintenance_task_gc_foreground,
+ 	existing_packs.repo = the_repository;
+ 	existing_packs_collect(&existing_packs, &kept_packs);
+ 	pack_geometry_init(&geometry, &existing_packs, &po_args);
 diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index ddd273d8dc2..ace0ba83002 100755
+index ace0ba83002..e0352fd1965 100755
 --- a/t/t7900-maintenance.sh
 +++ b/t/t7900-maintenance.sh
-@@ -465,6 +465,144 @@ test_expect_success 'maintenance.incremental-repack.auto (when config is unset)'
+@@ -603,6 +603,38 @@ test_expect_success 'geometric repacking with --auto' '
  	)
  '
  
-+run_and_verify_geometric_pack () {
-+	EXPECTED_PACKS="$1" &&
-+
-+	# Verify that we perform a geometric repack.
-+	rm -f "trace2.txt" &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
-+		git maintenance run --task=geometric-repack 2>/dev/null &&
-+	test_subcommand git repack -d -l --geometric=2 \
-+		--quiet --write-midx <trace2.txt &&
-+
-+	# Verify that the number of packfiles matches our expectation.
-+	ls -l .git/objects/pack/*.pack >packfiles &&
-+	test_line_count = "$EXPECTED_PACKS" packfiles &&
-+
-+	# And verify that there are no loose objects anymore.
-+	git count-objects -v >count &&
-+	test_grep '^count: 0$' count
-+}
-+
-+test_expect_success 'geometric repacking task' '
++test_expect_success 'geometric repacking honors configured split factor' '
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	(
 +		cd repo &&
 +		git config set maintenance.auto false &&
-+		test_commit initial &&
 +
-+		# The initial repack causes an all-into-one repack.
-+		GIT_TRACE2_EVENT="$(pwd)/initial-repack.txt" \
-+			git maintenance run --task=geometric-repack 2>/dev/null &&
-+		test_subcommand git repack -d -l --cruft --cruft-expiration=2.weeks.ago \
-+			--quiet --write-midx <initial-repack.txt &&
++		# Create three different packs with 9, 2 and 1 object, respectively.
++		# This is done so that only a subset of packs would be merged
++		# together so that we can verify that `git repack` receives the
++		# correct geometric factor.
++		for i in $(test_seq 9)
++		do
++			echo first-$i | git hash-object -w --stdin -t blob || return 1
++		done &&
++		git repack --geometric=2 -d &&
 +
-+		# Repacking should now cause a no-op geometric repack because
-+		# no packfiles need to be combined.
-+		ls -l .git/objects/pack >before &&
-+		run_and_verify_geometric_pack 1 &&
-+		ls -l .git/objects/pack >after &&
-+		test_cmp before after &&
++		for i in $(test_seq 2)
++		do
++			echo second-$i | git hash-object -w --stdin -t blob || return 1
++		done &&
++		git repack --geometric=2 -d &&
 +
-+		# This incremental change creates a new packfile that only
-+		# soaks up loose objects. The packfiles are not getting merged
-+		# at this point.
-+		test_commit loose &&
-+		run_and_verify_geometric_pack 2 &&
++		echo third | git hash-object -w --stdin -t blob &&
++		git repack --geometric=2 -d &&
 +
-+		# Both packfiles have 3 objects, so the next run would cause us
-+		# to merge all packfiles together. This should be turned into
-+		# an all-into-one-repack.
-+		GIT_TRACE2_EVENT="$(pwd)/all-into-one-repack.txt" \
-+			git maintenance run --task=geometric-repack 2>/dev/null &&
-+		test_subcommand git repack -d -l --cruft --cruft-expiration=2.weeks.ago \
-+			--quiet --write-midx <all-into-one-repack.txt &&
-+
-+		# The geometric repack soaks up unreachable objects.
-+		echo blob-1 | git hash-object -w --stdin -t blob &&
-+		run_and_verify_geometric_pack 2 &&
-+
-+		# A second unreachable object should be written into another packfile.
-+		echo blob-2 | git hash-object -w --stdin -t blob &&
-+		run_and_verify_geometric_pack 3 &&
-+
-+		# And these two small packs should now be merged via the
-+		# geometric repack. The large packfile should remain intact.
-+		run_and_verify_geometric_pack 2 &&
-+
-+		# If we now add two more objects and repack twice we should
-+		# then see another all-into-one repack. This time around
-+		# though, as we have unreachable objects, we should also see a
-+		# cruft pack.
-+		echo blob-3 | git hash-object -w --stdin -t blob &&
-+		echo blob-4 | git hash-object -w --stdin -t blob &&
-+		run_and_verify_geometric_pack 3 &&
-+		GIT_TRACE2_EVENT="$(pwd)/cruft-repack.txt" \
-+			git maintenance run --task=geometric-repack 2>/dev/null &&
-+		test_subcommand git repack -d -l --cruft --cruft-expiration=2.weeks.ago \
-+			--quiet --write-midx <cruft-repack.txt &&
-+		ls .git/objects/pack/*.pack >packs &&
-+		test_line_count = 2 packs &&
-+		ls .git/objects/pack/*.mtimes >cruft &&
-+		test_line_count = 1 cruft
-+	)
-+'
-+
-+test_geometric_repack_needed () {
-+	NEEDED="$1"
-+	GEOMETRIC_CONFIG="$2" &&
-+	rm -f trace2.txt &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
-+		git ${GEOMETRIC_CONFIG:+-c maintenance.geometric-repack.$GEOMETRIC_CONFIG} \
-+		maintenance run --auto --task=geometric-repack 2>/dev/null &&
-+	case "$NEEDED" in
-+	true)
-+		test_grep "\[\"git\",\"repack\"," trace2.txt;;
-+	false)
-+		! test_grep "\[\"git\",\"repack\"," trace2.txt;;
-+	*)
-+		BUG "invalid parameter: $NEEDED";;
-+	esac
-+}
-+
-+test_expect_success 'geometric repacking with --auto' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		# An empty repository does not need repacking, except when
-+		# explicitly told to do it.
-+		test_geometric_repack_needed false &&
-+		test_geometric_repack_needed false auto=0 &&
-+		test_geometric_repack_needed false auto=1 &&
-+		test_geometric_repack_needed true auto=-1 &&
-+
-+		test_oid_init &&
-+
-+		# Loose objects cause a repack when crossing the limit. Note
-+		# that the number of objects gets extrapolated by having a look
-+		# at the "objects/17/" shard.
-+		test_commit "$(test_oid blob17_1)" &&
-+		test_geometric_repack_needed false &&
-+		test_commit "$(test_oid blob17_2)" &&
-+		test_geometric_repack_needed false auto=257 &&
-+		test_geometric_repack_needed true auto=256 &&
-+
-+		# Force another repack.
-+		test_commit first &&
-+		test_commit second &&
-+		test_geometric_repack_needed true auto=-1 &&
-+
-+		# We now have two packfiles that would be merged together. As
-+		# such, the repack should always happen unless the user has
-+		# disabled the auto task.
-+		test_geometric_repack_needed false auto=0 &&
-+		test_geometric_repack_needed true auto=9000
++		test_geometric_repack_needed false splitFactor=2 &&
++		test_geometric_repack_needed true splitFactor=3 &&
++		test_subcommand git repack -d -l --geometric=3 --quiet --write-midx <trace2.txt
 +	)
 +'
 +
