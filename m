@@ -1,95 +1,110 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02E834C99B
-	for <git@vger.kernel.org>; Fri, 24 Oct 2025 19:03:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D1727280E
+	for <git@vger.kernel.org>; Fri, 24 Oct 2025 19:11:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761332610; cv=none; b=K6MSOoPKt6ggAmFVQEzxK8hRw6X4O6o3ySK3vppJRSAQaHc22gmNuUUAtEa67GoAF78tkHiY/0klbpYuF3wRDNWg/w6gATZxDXNRjq9AoXuLnG1MhsBvfEkzQa6b6Uai7wm+64259W0qqxHsOdulXamd0jFGyXrre0OjJjoFJoU=
+	t=1761333071; cv=none; b=qOjadDoKeassXeUSWIvq9r37gihvB0FqEh7/O9iYQlkRtg/43mIDHd7+WDVq9k6NI7bV0Ujw3jmlgQdCxQ8Oxa/16P03H+LqOXwDAXCVgnJCKs2Ln9kCS2i2TFY6WminBcuASOBoDcNXlV1vHAGLpcYoH5jGS0YrGdyIxWX//fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761332610; c=relaxed/simple;
-	bh=+IYfWP1ppT3YfOfJ+GvuhvTjMBu3AyA20jlCDo4CrQg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OiYhXBWq+Na78UhO/dTgxOTFy9ui1cXLRpg22PI4gRvnMdwDV0ew3lQe8YO+BoKYBCA/gj+LVbRuvycZrvt8OqzWaSFi1wNabErSYIAapz1fJZh59Xhl0W0OQEeChtxKnD3iyNnVkEEuPV5sv1kFNfdirToduyawoOi63egCb2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=TKYwtwIs; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1761333071; c=relaxed/simple;
+	bh=Uubod9X+1vErPzzLnAkQsR3o2iQclYwOU8se8XMnOAg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=D5jZZhCRyhPvjwbqQgR3B22zQQWwf1NNXaB9Ed4faOw/5pP/3vUY3zYUbI1es/p5Hxum3h7UCoOmufx6kyKLuMZWs+T1nnUXP09xLnwhFqcwceMFIvfWv1jx/NGOZtAB8t+ZPttzEmVvbw7SI6PnuVqMH8kVfZLY8p+htqV+6nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f8Aa1fta; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aagjojYK; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="TKYwtwIs"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-7829fc3b7deso19670507b3.3
-        for <git@vger.kernel.org>; Fri, 24 Oct 2025 12:03:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1761332607; x=1761937407; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BMnWJ+zZOBIhPnXTS5JiXGNBlwS4FWOtcrxD16KCZTc=;
-        b=TKYwtwIslZpHfUvAyG7Ven1UUdXrQux895Pk48bLVB2GAmZf+WDgZ68x9O1nAOuuSj
-         VLKZv5SDwSv8Y6TXYO0dvc/Ngn7UxmPdCe0kWSk9G38yEqA0sXL0B8k3aVCoS+PG0jYE
-         ajJA1u1/CqzzxdbVW+zr92o6vSEb//SHQSVijaj+3DS0XH7W2LUiy5yU9F8gePKiJPip
-         9+iNAjxuxTu6aVHTdLbPKcvymUb66ocf2k/J2pcFYm9xIyUyCD1YQZvrn1h7DOjtuOVy
-         X/BmaaevC4mpkYoCiIztFonapwKT9f6QY9RHtR8yvBFZVEkYPIZVpr8D8B6m6pWgPGKg
-         YRCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761332607; x=1761937407;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BMnWJ+zZOBIhPnXTS5JiXGNBlwS4FWOtcrxD16KCZTc=;
-        b=SKN9zlHigw/HQhkrViR3P69UaVQ5I9LuERskfo04Kwsfn3emNiNMDAa1z0PNWWXJ4Y
-         aw/SZEgu5Kf6crFRErlwjEb1ctWFRRnnFJsAEl04v7p4UQvzmsAcvrR+oKcYNNFvvHr7
-         eHggjAWXHs0Yo2nL9GXkq459A5j+1+6CTPFElf+LKg3KSSggw1Vj3/DVJXcWx2KTfYa/
-         E+X6aHx5bFAwjBwCbPjsmiTCBJAdb9bL+IsM6mTIaTScaH/DvOIM6SuP4lv9PFiNROAR
-         4FktJHA4DNKQBu9VqFoB+ITU1TF9xtPWsCltoM8XDS8VScidwiPN/GoLfoe95fsy/SCa
-         ajjg==
-X-Gm-Message-State: AOJu0YwNWApXkuAjKc4lVUKT3BgEvuqPJMMyk0kN3wwnGx4YBZO5wHqP
-	UXMBVLslDNi75lEBlUDdesSaA1UeoqkgUaEKrhesIflkkrtNQQea9FRzMKvBPMGxx5s=
-X-Gm-Gg: ASbGncup7Es/USvNvSN3i3rH9rFQ/Aepr+U/E/GukkF1uYqmMkmO1bukAZDHiAqFAeA
-	ipZL/MZtt9/C1OFG9vYU0dI4AwZuzpxN+MKNC6QVWhXBT2UuFUgJnLgcqdwQbRS/I/l/WzTw6El
-	kDadk9cC5dR6KDgDSjy9xXtfyMYGa594eoJB++XvtMdEby+02PgCwABRAEzSRzEHFgnzredApio
-	R2Zm0ojMw1iaMC3T9XUHZ63gY5KaPHZealElvGdAOQh3JEvleo29KLtViROW+xbnnB3wPrnHuqI
-	pNjU9G2JdQ2vdKNRKAZPlKh+3LiUVwcFNzaFVjKInTGLiKca5bXn85LSSYhVZKLfnLUjPn6sWWY
-	VsNy3gg0umhJnSKzYVO5QtgOpTVDHTt9nikTxlqhxkZqWC9XnilLjOBniCU2ECKdpowg4EgW3Sp
-	rY3z4cv0Jd0+Xm9SxxT/XXezd4Q6vr9ULEwHQqlu0QPk0+8Agi/dedB8lKJT5J54BfVFXkNKDAO
-	4gaZynqSZMmgSfR3A==
-X-Google-Smtp-Source: AGHT+IGE37ie7ge2jWUgmzMx6BiXfL0NUdWEnJZHQ/al8wL5RG4BaulxfztChgtLulH+GU87lsWGoQ==
-X-Received: by 2002:a05:690c:61c1:b0:785:bfd8:c4b9 with SMTP id 00721157ae682-785bfd8d1e6mr101504607b3.51.1761332607496;
-        Fri, 24 Oct 2025 12:03:27 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-785cd5b0f33sm15106287b3.4.2025.10.24.12.03.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Oct 2025 12:03:27 -0700 (PDT)
-Date: Fri, 24 Oct 2025 15:03:25 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f8Aa1fta";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aagjojYK"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id A4D881D0021B;
+	Fri, 24 Oct 2025 15:11:03 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 24 Oct 2025 15:11:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1761333063; x=1761419463; bh=haRUGpVbX2
+	xIonONnSjccrGTKc5IdoWBGBa/uzraBd0=; b=f8Aa1ftablI8Yl1V/nHdZANodS
+	ihi6N1wx4FGAqTvSQ5nuyfsIxidvhEMrliT3SoZH6cTcRYo/sTksDaeH8h2PBM5E
+	7s1iHcdKM0NqVBO0UZBvTmy/WXlB02DsA6LK/O+nUoH3EIIYXNAryAnIzhpU2sGk
+	/wbI3/E2P3wEltH7w84ugJdvOpfvYBx5QCWWE+lr11iV4QAdSB3yrv16LuGqVjhb
+	IT706Zfy1wIqAgg/LFRmerBLsC4Z1koCsanRi8EN2wn1hbPF3osB0XhOv6h9Vbzl
+	yvh4wkhobJMIOMOBmKOmhUMFdEuISTXRlPgvzn2RMiE2CoWDj8j16b9HOZ7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761333063; x=1761419463; bh=haRUGpVbX2xIonONnSjccrGTKc5IdoWBGBa
+	/uzraBd0=; b=aagjojYKBTXF+pDdaVH3VJn9A0Ca7yzC1dougDE+df2DkBju4WI
+	q/uwOe4GTJnaulfa3WhYOeoTYHwoysAehe4HWZVywhp6+VRRJ6V1HX36dDJXQZof
+	Ka1gHynAYyuJZiVpaUPTJCGsNNbAjO158frxKJlm10IIli4A1IrXI05TlWWXgKWc
+	3t/RT8AnMXlqz/6tIHHGTsRGq7j/4lAqxRqdbwbjKXxrO6rw7WJckp8VNmQyC22E
+	x3Beg7E6pN2E3YpkWAq6oGr7M39DSExZp6OJOEdFKw4FbB2pCPy16KQgOewxDWLY
+	nguh6UZN/WSV+PTM/adMV+JbiTiF9xOIsDQ==
+X-ME-Sender: <xms:R8_7aHJ90VssYHJobYXNf9pGhwQquesguCdLl_Q9E5OaBIopZzc1og>
+    <xme:R8_7aO0WcMeQQgLgbJi8BH5sURJ3G3Wa7keHcNKjmOi0O9o-lyD0aR4fF6S2oI0Bt
+    3STmZAoxtL6iHDbsyAWVI0-3gW8A7RnONShgqgR72uHFzrvPZEDDg>
+X-ME-Received: <xmr:R8_7aJgLkpDlT0rcFHxP0i8GFQy08SRJVKAkYOl0-kfJQPt0v-DGM8YfENpRpfEQu7fYqNMsJFvW66GodR6zNPHmHpYfSjLQn3bp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduhedtudegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
+    hopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhope
+    hjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:R8_7aHXvpijRYZ1FSybGFTbUL55MrvsSHOx7me4kyM9nNHzhpMAoGg>
+    <xmx:R8_7aAXiiOZYNBaEhu_fmxhL39GHu4TCSAYY9upXHsCZEHG5on__og>
+    <xmx:R8_7aPjYJGXbbJNcb7UWxMRWmc7JUPE_YMWRkEZljHmvkE11q7mpjg>
+    <xmx:R8_7aDaoR04N1pHSy_kyQ-U6N3754vPpIe0_X8T6EX4iDaLYNbMUyg>
+    <xmx:R8_7aIHNO4gUFfA8VdEndinHOg4DBx7372u_3qvbqEwlP2i6xmvx3Y7b>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 24 Oct 2025 15:11:02 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Derrick Stolee
+ <stolee@gmail.com>,  Justin Tobler <jltobler@gmail.com>
 Subject: Re: [PATCH v3 00/10] builtin/maintenance: introduce "geometric"
  strategy
-Message-ID: <aPvNfU0B8J9sRy//@nand.local>
+In-Reply-To: <aPvNfU0B8J9sRy//@nand.local> (Taylor Blau's message of "Fri, 24
+	Oct 2025 15:03:25 -0400")
 References: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
- <20251024-pks-maintenance-geometric-strategy-v3-0-9b5b3bdb4387@pks.im>
+	<20251024-pks-maintenance-geometric-strategy-v3-0-9b5b3bdb4387@pks.im>
+	<aPvNfU0B8J9sRy//@nand.local>
+Date: Fri, 24 Oct 2025 12:11:01 -0700
+Message-ID: <xmqq4irop12y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251024-pks-maintenance-geometric-strategy-v3-0-9b5b3bdb4387@pks.im>
+Content-Type: text/plain
 
-On Fri, Oct 24, 2025 at 08:57:13AM +0200, Patrick Steinhardt wrote:
-> Range-diff versus v2:
+Taylor Blau <me@ttaylorr.com> writes:
 
-The range-diff all looks good to me, so this has my:
+> On Fri, Oct 24, 2025 at 08:57:13AM +0200, Patrick Steinhardt wrote:
+>> Range-diff versus v2:
+>
+> The range-diff all looks good to me, so this has my:
+>
+>     Acked-by: Taylor Blau <me@ttaylorr.com>
+>
+> Thanks for working on this! I'm excited to have an easier way for more
+> uses to interact with geometric repacking without having to juggle in
+> their head when they should use that versus doing an all-into-one
+> repack.
 
-    Acked-by: Taylor Blau <me@ttaylorr.com>
+Thanks, both.  Queued.
 
-Thanks for working on this! I'm excited to have an easier way for more
-uses to interact with geometric repacking without having to juggle in
-their head when they should use that versus doing an all-into-one
-repack.
-
-Thanks,
-Taylor
+Let's mark the topic for 'next'.
