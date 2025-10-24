@@ -1,142 +1,120 @@
-Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DF3230BDF
-	for <git@vger.kernel.org>; Fri, 24 Oct 2025 02:22:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5CC228CB0
+	for <git@vger.kernel.org>; Fri, 24 Oct 2025 05:12:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761272571; cv=none; b=pJ6rPJAKRqOwKUES13wO+MbB9Q2AeM+Jn8xG7hA8zoJUu8PWSPqJt8tqJmMLJN/e+qi5qbwuYntv2vzussZ9jamzv0QR3AGQaJBFyMsihhz7wSu8EKGi3w/FHb+t5+POMrb0ZtlKk9ZnvaHfPkAYgVnWiVeqIgyVqySMjJIsB9Y=
+	t=1761282783; cv=none; b=Dtq9QDxG7W/6W2zVXD9aXtIA3pTAqs6bZpJwiVRiCDxt6nJVRdpdf2hoLAhOkAPtqbF8FljZfBGlspnFnDtjumutEVw+9zG1G5IYRPJbcrqvQdGAB8YqUoei9ADQ8mXZE877oFJ+AHz7jGYI5PoT8krjaYKOV9hczTDcOJQ8QsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761272571; c=relaxed/simple;
-	bh=jjaUcFyDkbS544UTXgQyFyBYyVUo1lISSi54KzcLhV4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Yvv304vbwre8t/5sJcENlCYzH4Pin59a3dKk/xDHqRChPgJlTWkWtJryANvxf0cokZM7twOql+Ve4cqMB12yA76Psqebri8JVI5li+g/N+5WGUay9SIf8405GD2qIMPTd1rqEmLrTvykjTCTFQSbVrb82llTBMn9HI+x5YN4BYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KxR43xz4; arc=none smtp.client-ip=209.85.166.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761282783; c=relaxed/simple;
+	bh=QJAtLOOeIjdEBnCt5lO2Gma9kp/qk0aTqL9DWTgMjJE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Njujf8QMP795XXVW/j1lqCSG1EcpX4p1IA4qyf0Oh/2Qwq8VhX1dE9NkU9vIrK6VNr6huDJr0yVULzrwuOQa06a+bHYlbo6E0Pww3wr40mHGdmusNGZjOzYd8HxmNq56dHUsPs6SQhpqZAOUD582WOyYspLictohZDyfApiXw+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oXfQZsjv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QNxwMC4P; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KxR43xz4"
-Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-430ccd45f19so16444425ab.1
-        for <git@vger.kernel.org>; Thu, 23 Oct 2025 19:22:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761272567; x=1761877367; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sHjIOWElwNEBqG/lFk1aNq8O2YvUHh0zcY7f4eNrOrI=;
-        b=KxR43xz4nWc0TFTL7AZuXzZ9WAc+WcTG/PLlSOJm0vwk5ywk517Sw/XQikybWSXg9D
-         j5Qkm99whSwtIvzd09FJ0rT2PLRr5gqfyAkn2KBhbFS4d2GJvPHZbpX0Zq4mEhPwJo74
-         9qt69oL0SaekPHvh8ikXiHR9CN5v6q66hrPQfsqhSz7R2TR2v4LA76RQwj/kbeegckFd
-         u5fIw9VNn+0JFpIrwKbidH8Ee9jxG5d2BXlXSJDvSHfQw35+Kq1oOyoAoZ7EOKPSO5r2
-         7jz26lXzAmb321tVu1YOqQSix84ROrHWi7losSI8lgZLv2HBr4Ai/cXrKyJ5LbphzQYJ
-         IhZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761272567; x=1761877367;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sHjIOWElwNEBqG/lFk1aNq8O2YvUHh0zcY7f4eNrOrI=;
-        b=lJ8sdRUu0mDhm/nARYMvllrb4YjDRs2vnDrW5Sst5VONJ6G6TFK/7N68dxJAoV/5dh
-         apQh27RcH0EW5EGKYpLhiTpodV2UuILTm9F3fUuyz2SuJ3AIGjVeYfLXEYB2JFMUPmkY
-         BwAx74YjpLQjXNfYF4C912rYEtWNG/mm4AgciaJRlFId2Bgeh5vf4zoTx1cckqzlKf9m
-         RCDpQ/poFa9clf+sPzAYL6sOSQPDx+TMMUOHzyJAlrncK+UCmo1B4U6KaDqXBfr+MtHK
-         h9hEk25Nk3PJW0Oxuo5Jhpy+Dz4qe2G2I8FI9c2K66/lMzzM9rRCdr64nmXKHm1/5104
-         /rFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVU4NqQBUDC0w5TAismukTR0JQWCZMMxT2bQ7G438P3ldXn1mfGurDl4Cba7dT1wU9+ibM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7q0mlgjlpsAJFlXwS225ykRmI2Nyi4HdpfeSBoxhIfE/2g7MW
-	5N0yEuSUAqVWmoBKZY5QkXSCir6e0KO/CvURbk8oo9KdkVojrSfFhuBAa/fuIE/A1JN32do0GIp
-	10mzzaR4u2APRk5/ZFb8SR85EVnxeIE0=
-X-Gm-Gg: ASbGncveFaRdXumatYA2Y9YxUZbSn9ebTTiZTQMHxXGhBKESeNSjZbZxfnWgtkltgl7
-	j4fJLJ31NkiXugWJEyyT2yDJ/jkS4aE/St8CiWbR6aK6eTBGvGlZ2M3rJ7+TtX9MWnfluitGaQA
-	0j8g5p7NkMejZE2ge0AX2dkdhTIcFxzr1KDBDlgI+FPcOHetzHxRtm7eSXke3tTBRpX4C+8XUMB
-	Y9kFc5lFD36UCttB1jIDVK2/yMV2rUwqu0b07YGqO5qXa4kG9PuUmhssAqlZzw/PLqm9cI=
-X-Google-Smtp-Source: AGHT+IE5yU7zqLhETBtJKpRpiVaRR3VAqL4WxwIOyrrsAuzM56q8fxkHiCkh2vOhHkm/scY7bByDGG2pseEkggHmbqo=
-X-Received: by 2002:a92:c248:0:b0:430:b05a:ecbe with SMTP id
- e9e14a558f8ab-431ebeb3a9bmr12913165ab.4.1761272567498; Thu, 23 Oct 2025
- 19:22:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oXfQZsjv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QNxwMC4P"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 494C77A0139;
+	Fri, 24 Oct 2025 01:12:58 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Fri, 24 Oct 2025 01:12:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1761282778; x=1761369178; bh=NWJDVjiZes
+	6v9y1Es0b9jcKWqJuJNBaSlvCvJ7s64ns=; b=oXfQZsjvrLJViLP/TWHlwtPyKt
+	Fbk0BbNArPkGSJoUoJExWW0pFwBZL5ilgAxPpzitu/yvKOfX0Q2IX3a7ivmnyD2r
+	rOhSLhTlpI3YcGbKD3nBzEnVWU5Hj9/4p33G8jTnB3v1kVXB0WVYP78ILzo0d3uy
+	kSxXLFD6bwT1+16dWPUcedsopIwsMIKK5B0QKzCJWJYFYiOtIkYhCoyidTedwXYs
+	6z2Vxb1Pa5bdi8jMNxRmZJE/Yz/axkPyrlRZVTbcS/VCwM1ydz0hHyUJ4I9FgyKZ
+	jxHseesfrCw8VrBTZxI0F2KwTirzeSseoJNNWKtRgcBjusx7R/8bOxR/6I7Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761282778; x=1761369178; bh=NWJDVjiZes6v9y1Es0b9jcKWqJuJNBaSlvC
+	vJ7s64ns=; b=QNxwMC4PQRgB9S/kSD6GgiTCGa3z9rj3tiCRpoP6pATcnFk0FsX
+	kW1tfDkK9PDR7+UeA2bquLGsNJBMFRuMyJ0+408BrEH1n2hQ42koAaD5dIyOmDdH
+	nDocdVDGb4DGh88+KBY7LabtjlPEiSwLPfYLsH6r0MnkASib7H/OEGKyDV19gHMQ
+	7gFqpEzNeV1pV+ThY7sRWwesrde1Pvz1976Joe6Tstc97hV9+Y0UZxp2J8uoXnbv
+	rdY8ku3yHdgEKg3Qw+NGaPZZVDqFv2ZP7pSvfOpCCNrEHV1ZwwudSROh/xbezCS3
+	3mLp3CbNyFcfyZd6IeN6n/+kPfxss7whEgA==
+X-ME-Sender: <xms:2Qr7aMDCiCWHdKW7elY9vjiql47DB_76s-t4FsG-kGPdhhjqhOn88g>
+    <xme:2Qr7aCOtpNrQ1Ly1uVRmGU4FJqdlGBlA60SKpyUqAj8gEbj6RtUc25jd6u6f7UOyO
+    8RdvfZ4kjsZ-sYs0qSPAuqI1o6kO2pyD2ROUrHlWLviyxSaY1a0>
+X-ME-Received: <xmr:2Qr7aJaEskqeBN2v1X0C8l7zr1mxL2c1MuAsfFTvlk_4y9dg_6ODT7ib0JMjx7QifPVCJ8eHduhXDWtaLJtJRm9gT0Kd2IOPteLQ0H8QAQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeekgeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehjlhhtohgslhgvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhr
+    tghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
+    gtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:2Qr7aJunVmOzj5syzWnRYm8wHBb1AXODssVI5KOmiEMM80jRIdx3Pg>
+    <xmx:2Qr7aDNu1Hlmlxs5j9dK4bqoG5hZMY6wQd4PALNPkEnowMr674Q_tA>
+    <xmx:2Qr7aI7cqBqwq_gNY7us-_XRAZprkBxN3pSk_Pd5VILx_u-IWQMv6Q>
+    <xmx:2Qr7aBTz_ZQ6PpTE89PBYKIwYHqIp2kXuZEY97fp5r6bFGl-Tjr7sQ>
+    <xmx:2gr7aO-1mwt9q5rCk9U2R2tAMO4tMuRAM8RHJU6MlqKK6kNPR1r2NNhx>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 24 Oct 2025 01:12:56 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3ea880af (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 24 Oct 2025 05:12:54 +0000 (UTC)
+Date: Fri, 24 Oct 2025 07:12:51 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v4 00/14] refs: improvements and fixes for peeling tags
+Message-ID: <aPsK0ydFVUKa7ReK@pks.im>
+References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
+ <20251023-b4-pks-ref-filter-skip-parsing-objects-v4-0-2be68ce82c9a@pks.im>
+ <xmqq3479rzfq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
- <pull.1941.v3.git.1757673011.gitgitgadget@gmail.com> <a34cc559-5823-4e68-8f3f-07c182f7299b@gmail.com>
-In-Reply-To: <a34cc559-5823-4e68-8f3f-07c182f7299b@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 23 Oct 2025 22:22:36 -0400
-X-Gm-Features: AS18NWB-aKgag2pf0PkfGuFYOnurcXycI_QuLaoZ1gI_VKSYiwZUs_BXRNaI4pU
-Message-ID: <CABPp-BEvCiwxQWSX-JUCA=CGqu6TmuG+vJSUstQ+AediyPKZxg@mail.gmail.com>
-Subject: Re: [PATCH 8/8] sparse-index: improve advice message instructions
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, gitster@pobox.com, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq3479rzfq.fsf@gitster.g>
 
-On Mon, Oct 20, 2025 at 10:24=E2=80=AFAM Derrick Stolee <stolee@gmail.com> =
-wrote:
->
->  From 0ee829fea73d495dd32deda4553ea00f9299c701 Mon Sep 17 00:00:00 2001
-> From: Derrick Stolee <stolee@gmail.com>
-> Date: Mon, 20 Oct 2025 10:19:22 -0400
-> Subject: [PATCH 8/8] sparse-index: improve advice message instructions
->
-> When an on-disk sparse index is expanded to a full one, this could be due=
- to
-> some worktree state that requires looking at file entries hidden within
-> sparse tree entries. These can be avoided if the worktree is cleaned up a=
-nd
-> some other issues related to the index state. Expand the advice message t=
-o
-> include all of these cases, since 'git sparse-checkout clean' is not
-> currently capable of handling all cases.
+On Thu, Oct 23, 2025 at 04:06:01PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > I'm not particularly fond of the patches 11 to 13. It feels more like
+> > playing whack-a-mole, and I very much assume that there still are edge
+> > cases where we should properly verify the tagged object type. But
+> > changing it in `parse_tag_buffer()` itself causes a bunch of tests to
+> > fail where we intentionally create such corrupted tags. So I didn't
+> > really dare to touch that part, to be honest.
+> >
+> > If anybody has suggestions for an alternative approach I'd be very open
+> > to it.
+> 
+> Are you still ;-), or are we ready to declare victory for now and
+> mark the topic for 'next'?  It seems that another topic depends on
+> this and the topic itself is a good shape enough to advance.
 
-This paragraph feels slightly clumsy or awkward to parse, but...
+Yes and no. I still think that this is playing whack-a-mole, and I'm not
+particularly happy about that. But nobody else had a better suggestion,
+and I don't see any downside with merging the current approach. So let's
+merge it down.
 
->
-> In the future, we may improve the behavior of 'git sparse-checkout clean'=
- to
-> handle all of the cases.
->
-> Helped-by: Elijah Newren <newren@gmail.com>
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
-> ---
->
-> Here is an add-on patch to add to this series to hopefully satisfy
-> Elijah's feedback. Sorry it took so long to be able to get back to
-> this!
->
-> -Stolee
->
->
->   sparse-index.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/sparse-index.c b/sparse-index.c
-> index 5d14795063b..76f90da5f5f 100644
-> --- a/sparse-index.c
-> +++ b/sparse-index.c
-> @@ -32,8 +32,9 @@ int give_advice_on_expansion =3D 1;
->         "Your working directory likely has contents that are outside of\n=
-"     \
->         "your sparse-checkout patterns. Use 'git sparse-checkout list' to=
-\n"   \
->         "see your sparse-checkout definition and compare it to your worki=
-ng\n" \
-> -       "directory contents. Running 'git sparse-checkout clean' may assi=
-st\n" \
-> -       "in this cleanup."
-> +       "directory contents. Cleaning up any merge conflicts or staged\n"=
-      \
-> +       "changes before running 'git sparse-checkout clean' or 'git\n"   =
-      \
-> +       "sparse-checkout reapply' may assist in this cleanup."
+Thanks!
 
-I like the message change; thanks for sending this in!
-
->
->   struct modify_index_context {
->         struct index_state *write;
-> --
-> 2.47.0.vfs.0.3
+Patrick
