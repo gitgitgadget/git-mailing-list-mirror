@@ -1,89 +1,86 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5CC228CB0
-	for <git@vger.kernel.org>; Fri, 24 Oct 2025 05:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC104212B31
+	for <git@vger.kernel.org>; Fri, 24 Oct 2025 05:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761282783; cv=none; b=Dtq9QDxG7W/6W2zVXD9aXtIA3pTAqs6bZpJwiVRiCDxt6nJVRdpdf2hoLAhOkAPtqbF8FljZfBGlspnFnDtjumutEVw+9zG1G5IYRPJbcrqvQdGAB8YqUoei9ADQ8mXZE877oFJ+AHz7jGYI5PoT8krjaYKOV9hczTDcOJQ8QsU=
+	t=1761282899; cv=none; b=NSbdXyEM4FYwP7y2DLHbz4a9MVNBzOPPksXZ15Z11Dd60MjuDFMkQOxbzrIPnTelry9+THQ+RDwS6SYn++iJCC6KoDlQswF7H+WuU1xTNNiGXqAPjyOGnLgJKK4UXaVVI4mwf4kQDb9F9ZkFZ6qozKeGNKaShmpQrh3vBxKPFOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761282783; c=relaxed/simple;
-	bh=QJAtLOOeIjdEBnCt5lO2Gma9kp/qk0aTqL9DWTgMjJE=;
+	s=arc-20240116; t=1761282899; c=relaxed/simple;
+	bh=Dr8msDUaGXzMeiOoNzzzrFN817rORBWYPQWygOcwZh0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Njujf8QMP795XXVW/j1lqCSG1EcpX4p1IA4qyf0Oh/2Qwq8VhX1dE9NkU9vIrK6VNr6huDJr0yVULzrwuOQa06a+bHYlbo6E0Pww3wr40mHGdmusNGZjOzYd8HxmNq56dHUsPs6SQhpqZAOUD582WOyYspLictohZDyfApiXw+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oXfQZsjv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QNxwMC4P; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=beHR/IQ/9JcXv+R5wEP34VF8wxjZPInbmrzQX4so4wOhGkw3dQUiNRyE9/HbIsST8Pxe7rVc2HeBOiuB4tMifdd9WF0Y0LU3DjQLPhXD1OnRz3KnWCjOQCwoEt+wkV3MucM7uY4g8BF1aKaVZSzFLNeJcAahTSXeRIDGC0lg3yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aBjqck6F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jx02/d0H; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oXfQZsjv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QNxwMC4P"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 494C77A0139;
-	Fri, 24 Oct 2025 01:12:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aBjqck6F";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jx02/d0H"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AC19E7A0165;
+	Fri, 24 Oct 2025 01:14:56 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 24 Oct 2025 01:12:58 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 24 Oct 2025 01:14:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761282778; x=1761369178; bh=NWJDVjiZes
-	6v9y1Es0b9jcKWqJuJNBaSlvCvJ7s64ns=; b=oXfQZsjvrLJViLP/TWHlwtPyKt
-	Fbk0BbNArPkGSJoUoJExWW0pFwBZL5ilgAxPpzitu/yvKOfX0Q2IX3a7ivmnyD2r
-	rOhSLhTlpI3YcGbKD3nBzEnVWU5Hj9/4p33G8jTnB3v1kVXB0WVYP78ILzo0d3uy
-	kSxXLFD6bwT1+16dWPUcedsopIwsMIKK5B0QKzCJWJYFYiOtIkYhCoyidTedwXYs
-	6z2Vxb1Pa5bdi8jMNxRmZJE/Yz/axkPyrlRZVTbcS/VCwM1ydz0hHyUJ4I9FgyKZ
-	jxHseesfrCw8VrBTZxI0F2KwTirzeSseoJNNWKtRgcBjusx7R/8bOxR/6I7Q==
+	:subject:to:to; s=fm2; t=1761282896; x=1761369296; bh=i99WlWZtXB
+	ffUhebsy2rm5EY6xU/AdCypdfz7bR0qFg=; b=aBjqck6F6/vG45lTkd1+AUUCYx
+	+GLx9h2wFHYreHYvj9IZsRrj5TSwvjnrajpkGyMWBoIVV4FIHOKM3q5liFR6FNQR
+	dm7t3PiHaQ/jaA1pUqIKCLOi/8lYdhcNkfzaL59++A1hyNl5GMmNQFdFVxXnb9ts
+	uBMs09ipRl+xb2GgjDSaWu4tjO9BMa4D8Fq9a1DXTFa1sg4bNZrhMI4MDezCVZhQ
+	nR+JgwWetMnXFAQ82TbuReVntxH4jP5vJn07W9cmlKqokp8QKoHnWi9A+QYPVvGt
+	1hwpsIPIfZtPvrMoFE4OtEFuX5e201Sdbqr6+phV6kdtdvq8dGUpC+bJtQiw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761282778; x=1761369178; bh=NWJDVjiZes6v9y1Es0b9jcKWqJuJNBaSlvC
-	vJ7s64ns=; b=QNxwMC4PQRgB9S/kSD6GgiTCGa3z9rj3tiCRpoP6pATcnFk0FsX
-	kW1tfDkK9PDR7+UeA2bquLGsNJBMFRuMyJ0+408BrEH1n2hQ42koAaD5dIyOmDdH
-	nDocdVDGb4DGh88+KBY7LabtjlPEiSwLPfYLsH6r0MnkASib7H/OEGKyDV19gHMQ
-	7gFqpEzNeV1pV+ThY7sRWwesrde1Pvz1976Joe6Tstc97hV9+Y0UZxp2J8uoXnbv
-	rdY8ku3yHdgEKg3Qw+NGaPZZVDqFv2ZP7pSvfOpCCNrEHV1ZwwudSROh/xbezCS3
-	3mLp3CbNyFcfyZd6IeN6n/+kPfxss7whEgA==
-X-ME-Sender: <xms:2Qr7aMDCiCWHdKW7elY9vjiql47DB_76s-t4FsG-kGPdhhjqhOn88g>
-    <xme:2Qr7aCOtpNrQ1Ly1uVRmGU4FJqdlGBlA60SKpyUqAj8gEbj6RtUc25jd6u6f7UOyO
-    8RdvfZ4kjsZ-sYs0qSPAuqI1o6kO2pyD2ROUrHlWLviyxSaY1a0>
-X-ME-Received: <xmr:2Qr7aJaEskqeBN2v1X0C8l7zr1mxL2c1MuAsfFTvlk_4y9dg_6ODT7ib0JMjx7QifPVCJ8eHduhXDWtaLJtJRm9gT0Kd2IOPteLQ0H8QAQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeekgeejucetufdoteggodetrf
+	1761282896; x=1761369296; bh=i99WlWZtXBffUhebsy2rm5EY6xU/AdCypdf
+	z7bR0qFg=; b=Jx02/d0HSShfEH5yoVzBC8I7JdsdKmB2UQsUpcfvWrnh1lX6MMO
+	6tFAMGTRxzPUOvwnAb9nAMuAZaqKLN7daiAxwLX1Vl8mZYSL/78S8owGa7XRcunq
+	2rOB28PEtNyZRgeRriu0Hs9R+2zyjZwENo+/XaBr+V+v1VLi7o1maeSamDGQcopm
+	opHHd9Nv3V9ScjYd4vRurEFGedSSQrwgVM/0a+Y/fNsM/PEXYpKCE5cObMzR3LAI
+	2EjOmoesId4tTa+Ec4gQOV3lrTNKH/rLPryQ9FIFQ71kkzkGnKTzhhH7Q27iheBV
+	1vTmwy3fRZ9DZ1viOmOenXT+v+RlDLe5efA==
+X-ME-Sender: <xms:UAv7aKfmRGMgj4T9Sr12iY4THP-CoABGg64X6iiTI7XkDgtepvYRaQ>
+    <xme:UAv7aLElsbpuoEmuyIJCf2rnRMMYIH3kcYHvO1Qurm-1sRZL6uoQqN0KWwOOUr9OU
+    I6lvikbJ6_R1plXIlXUDdhz5PHlROz7STGVi9AmkTMehuD5iyEx8sc>
+X-ME-Received: <xmr:UAv7aD2liIXV_7nzwINQpDI5nkIM2MbChnvPOivm-wfJJs1uLHLpSy-ALmYT8ldNCl-f37N66ZEmbvMhoaE56PymMyPN9DGmtSO7Mi9KjA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeekgeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehjlhhtohgslhgvrh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhr
-    tghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
-    gtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:2Qr7aJunVmOzj5syzWnRYm8wHBb1AXODssVI5KOmiEMM80jRIdx3Pg>
-    <xmx:2Qr7aDNu1Hlmlxs5j9dK4bqoG5hZMY6wQd4PALNPkEnowMr674Q_tA>
-    <xmx:2Qr7aI7cqBqwq_gNY7us-_XRAZprkBxN3pSk_Pd5VILx_u-IWQMv6Q>
-    <xmx:2Qr7aBTz_ZQ6PpTE89PBYKIwYHqIp2kXuZEY97fp5r6bFGl-Tjr7sQ>
-    <xmx:2gr7aO-1mwt9q5rCk9U2R2tAMO4tMuRAM8RHJU6MlqKK6kNPR1r2NNhx>
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehkrg
+    hrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:UAv7aDlTgF8YKDFLphMlaJvuty9HgVpIu_dBisJSxTKu1oExxC3kIQ>
+    <xmx:UAv7aD9iClDU9RdbRGqbYXk5dWJOeLbakpQm5FqdTcnaJY3OUec6qg>
+    <xmx:UAv7aIrIwKCR3ORj7dJ9ZW2ovSZCNGKnza2Xp4LoHTzthKYq1vebyw>
+    <xmx:UAv7aMmmsodF__lQodpZ1ay6ZrMfhUUMhictLKaPVp4PoVoJfHwmiA>
+    <xmx:UAv7aCA3QhsXjeZgXvTaoS3Jc-mYB8MP8JUvimfAtijDFSviY0VJkufz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Oct 2025 01:12:56 -0400 (EDT)
+ 24 Oct 2025 01:14:55 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3ea880af (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 24 Oct 2025 05:12:54 +0000 (UTC)
-Date: Fri, 24 Oct 2025 07:12:51 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 4694986e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 24 Oct 2025 05:14:54 +0000 (UTC)
+Date: Fri, 24 Oct 2025 07:14:51 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Taylor Blau <me@ttaylorr.com>, Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v4 00/14] refs: improvements and fixes for peeling tags
-Message-ID: <aPsK0ydFVUKa7ReK@pks.im>
-References: <20251007-b4-pks-ref-filter-skip-parsing-objects-v1-0-916cc7c6886b@pks.im>
- <20251023-b4-pks-ref-filter-skip-parsing-objects-v4-0-2be68ce82c9a@pks.im>
- <xmqq3479rzfq.fsf@gitster.g>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org,
+	karthik.188@gmail.com, sunshine@sunshineco.com
+Subject: Re: [PATCH v6 0/7] builtin/repo: introduce structure subcommand
+Message-ID: <aPsLS6lbzG27W-C8@pks.im>
+References: <20251015211213.361797-1-jltobler@gmail.com>
+ <20251021182601.2687284-1-jltobler@gmail.com>
+ <xmqqtszps5ja.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,28 +89,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq3479rzfq.fsf@gitster.g>
+In-Reply-To: <xmqqtszps5ja.fsf@gitster.g>
 
-On Thu, Oct 23, 2025 at 04:06:01PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > I'm not particularly fond of the patches 11 to 13. It feels more like
-> > playing whack-a-mole, and I very much assume that there still are edge
-> > cases where we should properly verify the tagged object type. But
-> > changing it in `parse_tag_buffer()` itself causes a bunch of tests to
-> > fail where we intentionally create such corrupted tags. So I didn't
-> > really dare to touch that part, to be honest.
-> >
-> > If anybody has suggestions for an alternative approach I'd be very open
-> > to it.
+On Thu, Oct 23, 2025 at 01:54:17PM -0700, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
 > 
-> Are you still ;-), or are we ready to declare victory for now and
-> mark the topic for 'next'?  It seems that another topic depends on
-> this and the topic itself is a good shape enough to advance.
+> > In this initial version, the "structure" subcommand only surfaces counts
+> > of the various reference and object types in a repository. In a
+> > follow-up series, I would like to introduce additional data points that
+> > are present in git-sizer(1) such as largest objects, combined object
+> > sizes by type, and other general repository shape information.
+> >
+> > Some other general features that would be nice to introduce eventually:
+> >
+> > - A "level of concern" meter for reported stats. This could indicate to
+> >   users which stats may be worth looking into further.
+> > - Links to OIDs of interesting objects that correspond to certain stats.
+> > - Options to limit which references to use when evaluating the
+> >   repository.
+> >
+> > Changes since V5:
+> > - Instead of using `filter_refs()` to get an array of all references, we
+> >   now use `refs_for_each_ref()` to count references, and setup OIDs for
+> >   the path walk, in place. Doing this not only allows us to avoid
+> >   wasting memory storing all the reference info, but also to display
+> >   progress info to the user while iterating across the references
+> >   initially.
+> > - Add a prepatory patch to export `ref_kind_from_refname()` via
+> >   "ref_filter.h" so we can reuse logic to categorize references while
+> >   counting.
+> 
+> This round looked pretty well done to me.  Shall we declare victory
+> and mark it for 'next' real soon now?
 
-Yes and no. I still think that this is playing whack-a-mole, and I'm not
-particularly happy about that. But nobody else had a better suggestion,
-and I don't see any downside with merging the current approach. So let's
-merge it down.
+Agreed, I also think that this round looks good and is ready to be
+merged down to next.
 
 Thanks!
 
