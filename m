@@ -1,76 +1,79 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48932DA746
-	for <git@vger.kernel.org>; Thu, 23 Oct 2025 23:59:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D289645
+	for <git@vger.kernel.org>; Fri, 24 Oct 2025 00:01:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761263972; cv=none; b=jarBw1RV8K9XIsayvb0EcfI1iQFiSnOGhYZpSiIiv+igtQ3lwn7+DwBG3lS1zf+FGZ8AsHisYGqP2TKms1F/E+Ym3x3O1sPnuKLSWvHwMiwWjZqpbXmEd6Tjdni8wHIybTasyLMW0PXxt8cJTMBmdRFle4JFNI+oZ6sTV6sOMEU=
+	t=1761264078; cv=none; b=PaHTMFVx6rc+ot+KXirTvIq0rKx/CDGwqltPNWYFpOUuaDAAIxOdG79AfIF/Bn9XZNRDU1o0XfTdZb1lpIpI2mVTezfmz4SZvT9UcQ97f54W/xWg97tJCwBKFhQDFSvL7G9e41ImMvbUNA98m8dfMDrT6rhGfjBy7Ey0ZqSgaVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761263972; c=relaxed/simple;
-	bh=fIEeiBycb9ADc0CRtt9HkxLJiePmdKIgY/CiuGQdVng=;
+	s=arc-20240116; t=1761264078; c=relaxed/simple;
+	bh=uchsosZLw3Bvd92bJDdlkUtPOXtp+PSknW7FQRzKeDM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uaAQpkL3zgB0FnhxUFgMVuqBs2zj2weINaKjQ5MxQecy4mug9VTR/7C3mllG5FLhsjBRW5/DNh0WOikmj7I9nnGqquJ9sV2sDMYSlmgyXfabm1cl+e7GzB7WIzjEJtsFi/0BVBMTBd9z9nfkg0yVCTca94rpkCkJb072uexOchY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=KN0VLuDH; arc=none smtp.client-ip=209.85.128.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=sY9xapZx2Pq32eV5jWazQsEqhE2jpiC6kQeS5IIXyeC+idi0KC/F45bjBmbkeG/8c/nijXb9HhELA4IPmgznHB8fO0SMFbf3Nu06h5SoRBRWSYv/mplHyyw0pDl/+pKhSoY13OdObVWf+Z8TDrSqVjZAfaRXAT0Oa1s64QBeGlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=nzD+VOfe; arc=none smtp.client-ip=209.85.166.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="KN0VLuDH"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-7832691f86cso18194767b3.1
-        for <git@vger.kernel.org>; Thu, 23 Oct 2025 16:59:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="nzD+VOfe"
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-431d2ca8323so7594495ab.3
+        for <git@vger.kernel.org>; Thu, 23 Oct 2025 17:01:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1761263970; x=1761868770; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=sGxFDGdM2JcaxesIDGeQZvoe5wp5I+WGnh36aEzoWPI=;
-        b=KN0VLuDHry0J8sHXZqfRLdaO7pbDy5LM5LRWYJgnQup0dmjgBbexqU+k8f25PZzGNe
-         M01zxphcU10W+msGxSOiRClTBSUi1772jnVGy5U3kdCyXKB1AtIdk2nNXuCYq92+3QfR
-         TYiTt69XmYaFHSsIJut/4PJbvYdTHBHSytE7GL6glZmBfOOTlI0wX5hQpc3cddoxFWK2
-         2G008dG/kQoX0XD6rGZw4Vkdpx6iGLbD3isPwaCJ6wQoVZAiinUpaLyRd+sp3wPY77ji
-         EnN9DWLlofDJr03Euwi9lITGIH6zWFEySbpnIao/gm13uN+SP9owK5HTg5huGqFi/jH3
-         VPGA==
+        d=ttaylorr.com; s=google; t=1761264075; x=1761868875; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jb3hPRPo2VwJs1Av5a66MxQn86vdpxP2Jn00QhKHSMM=;
+        b=nzD+VOfe72FefILUs78KoO+AtV3QxcevjA4up/2yDcgSFYx9MiVEiyS5LAb0sKTEIf
+         A5gSJzuaDSM95eNFwSEwsK1bDG/I25XcR2MKwPQsoXpuWYRfDtIra3JTcUUGf2t2Kd2z
+         07x8dolbP+nKtwFn/GYns5plKSYSgmqCk6BHNAJTH08InH1/TP5T/tP3YmUS4Zjaew2g
+         y3QMc8A4Bqae+KkmsA98wTxaJBCHMafV/899BpPFU+LALzuIkrEsKu3KmJhJUjqMXsuQ
+         eqnLXVMGyFif+PE/h1K8PH8PRyvssLXOhX3+xaVa8L6yNJGUy7CzW8YsO6DO3AQxLbxU
+         qtbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761263970; x=1761868770;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sGxFDGdM2JcaxesIDGeQZvoe5wp5I+WGnh36aEzoWPI=;
-        b=uz7zCj/9jBovvY444f8JYewv3gM+v+Nn1FTPAfs4jImYPu++kXfF30YEPFQ0TKcZHH
-         Y4iDs2E1PIm/3vBMhwVOBZoceeUW7eV0dUlEJHBxldp0mXR2W5RiWxKHALkNOi1v0xNp
-         mFNHhznEZ+lORnwFJIpuNfNLGquQgRB+aur9WqPKOmBWDDYjHWvsaAT5gMA93Teh0o8P
-         kgYc6nL5d+WPC7X/kawjNGamTRfnErClMsK00eH+E1tq0Bv4fl/NDktH2L407Tpo0qdh
-         8ux2QsklfKeYWrK9T0SjYM9tCflBn5MB8gCiyj/6JAllRjijYCaI2U4oWut5pr9qxxrs
-         S92g==
-X-Gm-Message-State: AOJu0YzDQz/wKDasDbYKroevFHMnY4t5PPuyvv91SQXYqjlkaQqfPtYg
-	PlgzwY9RgURv73yZqzjRwK7/Dbe2u+Qas30CtL44g/8zN5R1nCD13doKihtdiaeLeYo=
-X-Gm-Gg: ASbGnct6NwRESqlgKhE8dANkTpGLvsDQ4KvXQLhJNfz9m37GEPKm1h7JpCUGs8HTCH9
-	g9lKZ/xXgXOmR58YQI/5LkfmXV1CAaFg4M8r3oAdv0be7c06qg5XfeJ58Gb9avna7aIbOEQGZ0W
-	M2N50t+5LLKqCiodnvb+3K8ufii/yiKSmqu4v6PI7IzQ29m1UAva4CLxdL3X7/EWL0YJyomX+tK
-	f3sjXqBCnIShHeqVdO+aKGUFWhIHEw8UOPV+UXt4v7E+TywWe5mqdeFWmgW0kpH/VcNYi5gUlnb
-	7qgTSlxkYl2IYliLL2xTh8O8ogVGDqLEgP8PqUeyeMtQ5y0Z5zmIGMkeX963g2057XxdkwOosSs
-	j8+TpRCByaRhDkRZp/19K0Fk9nsapOLBMSHpThaMVp/MXdRWKBn999faIN1HfN+5mMLUIjLdQc8
-	xH5rvQKvj7LyBJLjWfffE8+hVhxaln0kXrdr7hRgfT2hHhm+rjj1FGP9pbYqmagK2xaJxhFiNTH
-	nXfu4NykaTfxaYjMQ==
-X-Google-Smtp-Source: AGHT+IEyIOXSs70+1mGoJAldJH7Mad1VNx8wCFIGyRCuQ6EEnBN/pabriwt6pW5cdoUC1pP+BqyOiw==
-X-Received: by 2002:a05:690c:b06:b0:784:960c:e3bf with SMTP id 00721157ae682-785e006c4f9mr1789487b3.8.1761263969651;
-        Thu, 23 Oct 2025 16:59:29 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1761264075; x=1761868875;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Jb3hPRPo2VwJs1Av5a66MxQn86vdpxP2Jn00QhKHSMM=;
+        b=hY4pmk4ZD7bCxIBYO102IZWZu7PWvXLwQiN0xN/+ff0h6b1aqzg/W8lIs1o9tgAxAR
+         1CCqgfucaJJ+tjzrpWfQfjqrWHpjXRpyY+okeHhTltAc3Kkj2ZErkLmSaMTCfd3bvWAL
+         n2B5TJwkkGWsRL/4Pg0/2/IUZ5wrVWEMpJczXxhgYZTkHRVAqhGmEWp2e31DU82qG7Vs
+         Ek6yLZxzEUL8gepTm6WgLwnz+QWOAFyh5IS5Mwzc9gDngYykfS1yf5F9quTHiNO8CCbo
+         xIZQkSPrH5FUSwNrU4MhVwU6VYYMurI3r+YGxwHm8Fiy/iKnH0WOxAxq+A6DzB7H8Shy
+         2v0w==
+X-Forwarded-Encrypted: i=1; AJvYcCWzLBN+QlYjM355UrKG+dJ7DhksKo3Prh0d0+Hg21mQc0qGfdk9znEdq7B8DOvbptKkPeI=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz9BoMvd8nwXLgjK5AqveIkvjQEUY+740KON5q2Zbxkm9cFBWWE
+	9pxXt6IlzzD5+WCBksRQC/PGarL3yk6GkVQN8gVMnlE698cmOQEcALlM0uR74WMrIVw=
+X-Gm-Gg: ASbGnctH4trOe6uIsIoMXJRLLYLGvGwVkBzq14hNKiCzK0QhWj69FsnHHaMtu0Uw42U
+	MpPTW2SiwU5E/fO8J9cR4qV1DT2YWAcORFtbf38H0Lra+M+l3fMZ+PCAoJ7M4ZTzLf71x83HOO5
+	gPU9hzMSm/EzQqTgY2ey3rNJZzcKMo7LMw5JKatXIM/UkUik0UjE5N25E+gz/nOh8o6KGp6euYE
+	1bMs72OxfSBG0oNRNxgTtAnqPNT1fV//UqBfGsYcA73zeVGPlOdl3tcbl2o4yECn3spEfFFn8oq
+	/Iad6RzoiKMYgR7P+Z8dG/k0WwgH3bRl81soh/ONAVQ90Ct2YlloInlJ6f+bS1q2warIJL1ZrWi
+	YnjqeV/NkSx2wQibBlLaNhB1eczNqzBfubpl5bgaGuav6SNdfjrj18NZdKaAlw4MhRghmHtFg5R
+	UR1xAfNZjYZy4tBj5tazSPLjroI6iLdK38QGhCoeZx3PfbMIQwUncVVn79cd7E3GwoJYr/yffJm
+	1V+J78hDHcn4U4EFw==
+X-Google-Smtp-Source: AGHT+IGvR5cbmzFCYew8w+kak8kKtGlZpwmNsxh10Zex0UOtWINM0SpjTV6PpjXNJlszMwrXso4/VA==
+X-Received: by 2002:a05:6e02:156c:b0:430:aec5:9bd9 with SMTP id e9e14a558f8ab-430c5209291mr355902295ab.5.1761264075293;
+        Thu, 23 Oct 2025 17:01:15 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-785cd5a5fddsm9810647b3.12.2025.10.23.16.59.29
+        by smtp.gmail.com with UTF8SMTPSA id e9e14a558f8ab-431dbc21f25sm15138685ab.7.2025.10.23.17.01.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Oct 2025 16:59:29 -0700 (PDT)
-Date: Thu, 23 Oct 2025 19:59:28 -0400
+        Thu, 23 Oct 2025 17:01:14 -0700 (PDT)
+Date: Thu, 23 Oct 2025 20:01:13 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>,
-	Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] last-modified: implement faster algorithm
-Message-ID: <aPrBYGa6HWUtTI4V@nand.local>
+	"D. Ben Knoble" <ben.knoble@gmail.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2] last-modified: implement faster algorithm
+Message-ID: <aPrByfpOkQ7biyEI@nand.local>
 References: <20251016-b4-toon-last-modified-faster-v1-1-85dca8a29e5c@iotcl.com>
- <aPGB/FJtjDmyNLvG@nand.local>
- <87jz0tu3yh.fsf@iotcl.com>
- <87cy6gtym2.fsf@iotcl.com>
+ <20251021-b4-toon-last-modified-faster-v2-1-f6dcbc26fc5c@iotcl.com>
+ <xmqqy0p4uoqc.fsf@gitster.g>
+ <aPgkwnq87UeusC6v@nand.local>
+ <xmqqecqv1trk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,77 +82,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87cy6gtym2.fsf@iotcl.com>
+In-Reply-To: <xmqqecqv1trk.fsf@gitster.g>
 
-On Tue, Oct 21, 2025 at 11:04:05AM +0200, Toon Claes wrote:
-> > Taylor Blau <me@ttaylorr.com> writes:
+On Tue, Oct 21, 2025 at 08:48:31PM -0700, Junio C Hamano wrote:
+> > Practically speaking that's probably OK, since we are unlikely to have
+> > so many active paths anyway (or if we did, we'd likely have other
+> > problems to deal with ;-)), but it is gross nonetheless.
 >
-> >> Nice, I am glad to see that we are using a bitmap here rather than the
-> >> hacky 'char *' that we had originally written. I seem to remember that
-> >> there was a tiny slow-down when using bitmaps, but can't find the
-> >> discussion anymore. (It wasn't in the internal PR that I originally
-> >> opened, and I no longer can read messages that far back in history.)
-> >>
-> >> It might be worth benchmarking here to see if using a 'char *' is
-> >> faster. Of course, that's 8x worse in terms of memory usage, but not a
-> >> huge deal given both the magnitude and typical number of directory
-> >> elements (you'd need 1024^2 entries in a single tree to occupy even a
-> >> single MiB of heap).
->
-> Using ewah bitmaps is slightly faster, although the difference is almost
-> neglible.
->
->     Benchmark 1: bitmap-ewah
->       Time (mean ± σ):     793.1 ms ±   6.2 ms    [User: 755.1 ms, System: 35.2 ms]
->       Range (min … max):   784.7 ms … 804.8 ms    10 runs
->
->     Benchmark 2: bitmap-chars
->       Time (mean ± σ):     808.9 ms ±  11.2 ms    [User: 770.8 ms, System: 35.4 ms]
->       Range (min … max):   800.2 ms … 830.5 ms    10 runs
->
->     Summary
->       bitmap-ewah ran
->         1.02 ± 0.02 times faster than bitmap-chars
+> The case path_idx() returns -1 is an error case, not "there are too
+> many paths we are following" case.  I do not see what relevance the
+> number of active paths has here.
 
-OK, makes sense, though just to clarify, "bitmap-ewah" is just a
-bog-standard "struct bitmap", right? That happens to come from the EWAH
-implementation, but the bitmap itself is not being EWAH compressed,
-right?
-
-> And ewah bitmap being more memory efficient, it makes more sense to keep
-> using those.
->
-> >> Likewise, I wonder if we should have elemtype here be just 'struct
-> >> bitmap'. Unfortunately I don't think the EWAH code has a function like:
-> >>
-> >>     void bitmap_init(struct bitmap *);
-> >>
-> >> and only has ones that allocate for us. So we may consider adding one,
-> >> or creating a dummy bitmap and copying its contents, or otherwise.
->
-> I've done some testing, and to do so I've made bitmap_grow() public.
->
->     Benchmark 1: bitmap-as-pointers
->       Time (mean ± σ):     783.7 ms ±   8.9 ms    [User: 744.1 ms, System: 37.5 ms]
->       Range (min … max):   774.4 ms … 803.4 ms    10 runs
->
->     Benchmark 2: bitmap-as-values
->       Time (mean ± σ):     856.7 ms ±  10.5 ms    [User: 816.0 ms, System: 38.1 ms]
->       Range (min … max):   845.7 ms … 872.5 ms    10 runs
->
->     Summary
->       bitmap-as-pointers ran
->         1.09 ± 0.02 times faster than bitmap-as-values
->
-> It seems using ewah bitmaps as pointers is faster than using bitmaps as
-> values. I must admit I'm surprised as well, but in case you want to
-> double check, here's the patch:
-
-I think this makes sense; the pointers are half as wide as a struct
-bitmap. Even though we're going through another layer of indirection, I
-think that the smaller slab footprint results in better cache locality,
-and ultimately faster code. Thanks for testing it out.
+I just meant that we are unlikely to ever have so many active paths at
+once that (size_t)-1 would actually have a valid entry, or IOW that
+active_paths_nr is smaller than 2^32-1.
 
 Thanks,
 Taylor
