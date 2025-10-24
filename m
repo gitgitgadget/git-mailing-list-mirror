@@ -1,242 +1,217 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678E53101C8
-	for <git@vger.kernel.org>; Fri, 24 Oct 2025 09:56:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302F72586E8
+	for <git@vger.kernel.org>; Fri, 24 Oct 2025 10:15:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761299808; cv=none; b=ERIBtxczcofTbsrBx/zSNXjmfTX1ME4SeXoJbaSEG9vkV0GsYjLlZ6qtYfD/8PULxJueUnVC+pRdVIE7Sg+W715lCDYzCZ+uHPa1ihRXllQ9UGFeS/1Me2Z6B/x2dFiu3R//+BeFkD8F/30B0z3z6zFW8BXJCk3+Szt/ludq0oA=
+	t=1761300955; cv=none; b=ooF6rBBiVswXVTPHC2b1ksyi9T6mtc7S9voEjiqFZz1pzXmnu2d5OI7CpEMJ3rfdhzBhryGMfypcn4fLsA9Sps6hxMnaK+JWJo5uGBhxKjdxQoCHTiWB8AGtrkVIbad6RsPl/yMFFZYiwVI3WZN4vwayuVQ0y+k3yCLtBVBhPQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761299808; c=relaxed/simple;
-	bh=e4pTA6YFggbOV18aoUYncqxXkcb4bT0NkrXhfkiUGBA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OmEfOvB+qMUDo9nbYJQdw+j1VQ8OyS2ANXx8laZO0FZo2FpU1GLNfTXCzpQZomfe/DvflP3EBvp6xK13q42cIOXgfUxGYhGA7VYEFctHyepgzFPbGRt7INBplrgPsjgYiYgncaI/zKwkUm+vLg1oKEwJkJhBxp8t1utqhCaMHK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pAkSqVoF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OywZKoNb; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1761300955; c=relaxed/simple;
+	bh=6jqq+KjVpXazfrIAGyYC8VXBbaL7vMSmJ42NxLZ1pKE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XTq39b55ogoTTtD7HRxLUg3QSxhZ2kT5Zayt6JjDr3i5HeQhctgLlmceWnykurbZDs6JGyKkw1WcSDX0h/xGyrVuKIWe3NmjPS5aBjFSC/JGN2P0jeYsDLwAu9Cusmt6N777Ab+rASC/WiO35MLIaYH/rmNclwNdr0lQJxHhbcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Fsnqx/tC; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=E42mYHfY; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=mNQao9Hv; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=fE8Bdk7x; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pAkSqVoF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OywZKoNb"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 98A96140016D
-	for <git@vger.kernel.org>; Fri, 24 Oct 2025 05:56:45 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Fri, 24 Oct 2025 05:56:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1761299805;
-	 x=1761386205; bh=J4vfNMasM3Y6Rz6N6/2iX29hAv2y9x+LPioK6kGxCpw=; b=
-	pAkSqVoF648MdaNEVDFD8TrPRyexjWNlIXd7NBYMiWzpaeadSYXY4PZ22T89MKJc
-	aP9WZzi94gClks8rIZjNgK2Bepzpyr2PDSVBPnmAjtc4o4l9OpjOuBOA2yfJVUE6
-	SouYZX4SyT1i14u65JxhA7ixcCYyMVxNatJxHDg69es/xKjr98CD1sI2SpRYCWyH
-	FWHBsF4Xrjm6ipcOE9xGmPBxfAYdbhn5JDNkpe9KzUzuk3vGZmerV/jSLRYjpSR5
-	Gp2TGuEyNmziiwexoel9aWJv2AZwCc2cmZMhgAygkdyN9BRMLDPgzXeX7quefHAx
-	fehYL5Lmu7UCW3pxhdK+8Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1761299805; x=
-	1761386205; bh=J4vfNMasM3Y6Rz6N6/2iX29hAv2y9x+LPioK6kGxCpw=; b=O
-	ywZKoNbpFFszbpGhzYx5RO82K5/3FvPEzp5nBCaUAwLpbkJl0bnEYCBLf17MgMwI
-	DlD0+vydg5CYX5wlXWi9zLzCFct2LRtVRHjsxZVPtbWBe72uXdGaVVhK9sl0jxYd
-	bMhpW0Tw8BZJotwM8MJ3/YqQrAWqE7TVr1emw9CQ2PNS/iKa+PicwrG9jbUbse0U
-	wMPvRHqLIBxD+mbipMm51JQLHBF+8VLIvtwdmUx0S4HQvzIDZJwQUm4xeNjDJd0N
-	NkMqveeLgIy+unf17soV/BgAAWRNmxwjhAOrtgtGbyVB1U25WiGRHdRidLxs+ESm
-	n/8h36GGhLFM+XZDgcr/A==
-X-ME-Sender: <xms:XU37aNO3Ok8Wd25unM1zQLTXo6FOEgWxWRN_PF_JjWZGBWYJBl1OQw>
-    <xme:XU37aG7rS5Qemv1m7qywVkvD4zZrD_SseMOyMJj5Qui0tnkBhfNX5RpJP8g-SyeYw
-    VlSno75_g8rqdoNMefTNQJPInGywiF-LWg_--V7Hd4uugKF8-I>
-X-ME-Received: <xmr:XU37aB59YkN9BtlIA1uU8ElpVe3bQhx58rF9c4-rOr79OuBLpQjZkiXOyQAm_MQGz8b4fQ4KS7T6_X9ge__FEG-hFqzevdhoXZ_dK4baQQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeeltdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
-    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
-    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrgh
-X-ME-Proxy: <xmx:XU37aO26dfHbPZF5itXGEu28JsUBFlT3hVHXWyKT-B3FgcRxQQ1KMg>
-    <xmx:XU37aFV6sg6qq1SD2N3ns1zys6zrZHrYyYkjUq2q4St3Y2dV9N5tgw>
-    <xmx:XU37aB5h7dnrPxx0q90X1QIXHaZ99xPHWt3TRbxj6gS6BrGt9I0Cxg>
-    <xmx:XU37aEJX-qlsqsqkJRcBSxjcoAQ6GS_-9r1JruX70fMspXIvktccNw>
-    <xmx:XU37aJ-fsi-Vn3KuDTcl2HAJlz9qlw6vB_FR6RGwUHr81xMpAO28-uxB>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 24 Oct 2025 05:56:44 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 1caf0f24 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
-	for <git@vger.kernel.org>;
-	Fri, 24 Oct 2025 09:56:44 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 24 Oct 2025 11:56:12 +0200
-Subject: [PATCH 13/13] object-file: refactor writing objects via a stream
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Fsnqx/tC";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="E42mYHfY";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="mNQao9Hv";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="fE8Bdk7x"
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id F102E1F454;
+	Fri, 24 Oct 2025 10:15:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1761300947; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bE/6LyA/WulcZ/U9fXfsvEyoBbhTzrH4tcJ36h07D3g=;
+	b=Fsnqx/tCSDgySMsuPO2FfSnhp3wL1LcQezRW46uz1SQBf1WefF1tKSLa4Fdh8gfah/sKNV
+	Cpy9FQNlMaH2akP4v53YmqlB9Byooi++YUOevBJW4v0thXGksk2mP83s8M325SYFfFmujP
+	ZF2J6XZFzE8jMfQu2RZjOr1LoWYU/B4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1761300947;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bE/6LyA/WulcZ/U9fXfsvEyoBbhTzrH4tcJ36h07D3g=;
+	b=E42mYHfYYtIc0BD/u+7ygOXquD1Gl2yZxRM8h5AG2zuynz5yoVlbvhLk5qyEsMzQVDA8QP
+	mNUlzOxKHrMfdrDA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1761300943; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bE/6LyA/WulcZ/U9fXfsvEyoBbhTzrH4tcJ36h07D3g=;
+	b=mNQao9Hvt0ToNlbgATR8o6BFzSSdxdwW9wTAQL+Ww74uoC5was/DvOA4YeKRGZgDpU3caB
+	cruEb4jHfJFd0aKn+4oy0Auv7ihoV+OZNQGdX9TZvayOZyR8cLX/OU4uT1B/XiWmdlNMPs
+	289LBuGSxb8wSq55i9B3zo5bDzFYPz4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1761300943;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bE/6LyA/WulcZ/U9fXfsvEyoBbhTzrH4tcJ36h07D3g=;
+	b=fE8Bdk7x0RYTWos7DBNvcgwo2U9xLNadD9LJf5T5eiG47ltvuwS5bX4UkADV7XUTyKMr4H
+	renD9V7EIKyhi5BA==
+Date: Fri, 24 Oct 2025 12:15:41 +0200
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org,
+	=?iso-8859-1?Q?Jean-No=EBl?= AVILA <avila.jn@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sergey Organov <sorganov@gmail.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Jason Cho <jason11choca@proton.me>,
+	"Jakub T. Jankiewicz" <jcubic@jcubic.pl>
+Subject: Re: [PATCH v2 2/2] doc: git-worktree: Add side by side branch
+ checkout example
+Message-ID: <aPtRzTwVgVfqjaZT@kitsune.suse.cz>
+References: <a203b35538847f3c9358a5ae26fb4ebea5734cfc.1759420102.git.msuchanek@suse.de>
+ <0e11e6fb394ffa3a1286deea5a8ede5ba3e4bdf4.1760115862.git.msuchanek@suse.de>
+ <CAPig+cSNesf0UwS4=Bxe-Qn+G9y3YYPyOK+7y3q8QJk+o7jaVg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251024-b4-pks-odb-loose-backend-v1-13-1a4202273c38@pks.im>
-References: <20251024-b4-pks-odb-loose-backend-v1-0-1a4202273c38@pks.im>
-In-Reply-To: <20251024-b4-pks-odb-loose-backend-v1-0-1a4202273c38@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cSNesf0UwS4=Bxe-Qn+G9y3YYPyOK+7y3q8QJk+o7jaVg@mail.gmail.com>
+X-Spam-Level: 
+X-Spamd-Result: default: False [-2.80 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.979];
+	MIME_GOOD(-0.10)[text/plain];
+	RCVD_COUNT_ZERO(0.00)[0];
+	TAGGED_RCPT(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,pobox.com,proton.me,jcubic.pl];
+	TO_DN_SOME(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
+X-Spam-Flag: NO
+X-Spam-Score: -2.80
 
-We have two different ways to write an object into the database:
+On Sat, Oct 11, 2025 at 01:17:47AM -0400, Eric Sunshine wrote:
+> On Fri, Oct 10, 2025 at 1:05 PM Michal Suchanek <msuchanek@suse.de> wrote:
+> > doc: git-worktree: Add side by side branch checkout example
+> 
+> Thanks for taking my suggestion[*] regarding a possible git-worktree
+> documentation update and turning it into an actual patch. This is a
+> reasonable beginning, but I think it needs more work.
+> 
+> To begin, the idea was to document that worktrees can be used with
+> bare repositories, but neither the subject of this patch nor the prose
+> added to the documentation itself mentions bare worktrees. Instead,
 
-  - We either provide the full buffer and write the object all at once.
+So it's not documented to start with. I did not read the whole text,
+only focused on the problem with adding worktrees in problematic places.
 
-  - Or we provide an input stream that has a `read()` function so that
-    we can chunk the object.
+That sounds like more general update of the file is needed, also for
+the prevoius patch.
 
-The latter is especially used for large objects, where it may be too
-expensive to hold the complete object in memory all at once.
+> they mention only "side by side branch checkouts", but I'm not even
+> sure what that means. I certainly wouldn't think of "bare repository"
+> when given the phrase "side by side branch checkouts", and I'm pretty
+> sure that phrase is not part of the existing Git lexicon, whereas
+> "bare repository" is, and is well known and well understood. So, I
+> think both the commit message and the prose added to the documentation
+> ought to mention "bare repository" instead.
+> 
+> Next, I think it is quite important that we spell out concretely in
+> prose that worktrees can be used with a bare repository. It is not
+> sufficient to merely infer it by giving an example, especially if the
+> reader is primarily reading the git-worktree.txt introductory material
+> which explains what worktrees are all about. So, for instance, we
+> could expand the "The new worktree is called..." introductory
+> paragraph to instead say something like this:
+> 
+>     This new worktree is called a "linked worktree" as opposed to the
+>     "main worktree" prepared by git-init(1) or git-clone(1). A
+>     repository has one main worktree (if it’s not a bare repository)
+>     and zero or more linked worktrees. Linked worktrees can also be
+>     used with a bare repository, in which case there is no main
+>     worktree but *only* linked worktrees (see EXAMPLES).
+> 
+> and also move the "When you are done with..." sentence from that
+> paragraph down to the "If a working tree is deleted..." paragraph,
+> which would become:
+> 
+>     When you are done with a linked worktree, remove it with `git
+>     worktree remove`. If a working tree is deleted without using `git
+>     worktree remove`, then its associated administrative files, which
+>     reside in the repository (see "DETAILS" below)...
+> 
+> > Signed-off-by: Michal Suchanek <msuchanek@suse.de>
+> > ---
+> > diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
+> > @@ -526,6 +526,16 @@ $ popd
+> >  $ git worktree remove ../temp
+> >  ------------
+> >
+> > +Side by side branch checkouts for a repository using multiple worktrees
+> > +
+> > +------------
+> > +mkdir some-repository
+> > +cd some-repository
+> > +git clone --bare gitforge@someforge.example.com:some-org/some-repository some-repository.git
+> > +git --git-dir=some-repository.git worktree add some-branch
+> > +git --git-dir=some-repository.git worktree add another-branch
+> > +------------
+> 
+> Several comments...
+> 
+> First, as mentioned above, rather than using the phrasing "side by
+> side branch checkouts", let's talk about this as being an example of
+> using worktrees with a bare repository.
+> 
+> Second, for consistency, let's follow the lead of the existing example
+> in git-worktree.txt and show the "$" shell prompt preceding the
+> commands. For instance:
+> 
+>     $ mkdir ...
+>     $ git clone ...
+> 
+> Third, the example seems overly complicated, especially with its use
+> of `--git-dir`, which feels less discoverable (at least to me) than,
+> say `-C`. What I have in mind is an example more like this:
+> 
+>     $ git clone --bare <repository-url> myproj.git
+>     $ git -C myproj.git worktree add feature-a
+>     $ git -C myproj.git worktree add feature-b
+> 
+> That should be more than sufficient to get people up and running with
+> associating worktrees to a bare repository.
 
-While we already have `odb_write_object()` at the ODB-layer, we don't
-have an equivalent for streaming an object. Introduce a new function
-`odb_write_object_stream()` to address this gap so that callers don't
-have to be aware of the inner workings of how to stream an object to
-disk with a specific object source.
+That creates a mess. First part is not creating the directory to contain
+the worktrees related to the repository. Second is creating the
+worktrees inside the bare repository, contrary to any reasonabe usage
+advice.
 
-Rename `stream_loose_object()` to `odb_loose_source_write_stream()` to
-clarify its scope. This matches our modern best practices around how to
-name functions.
+Thanks
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/unpack-objects.c |  7 +++----
- object-file.c            |  6 +++---
- object-file.h            | 14 ++++----------
- odb.c                    |  7 +++++++
- odb.h                    | 10 ++++++++++
- 5 files changed, 27 insertions(+), 17 deletions(-)
+Michal
 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index ef79e43715d..6fc64e9e4b8 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -363,7 +363,7 @@ struct input_zstream_data {
- 	int status;
- };
- 
--static const void *feed_input_zstream(struct input_stream *in_stream,
-+static const void *feed_input_zstream(struct odb_write_stream *in_stream,
- 				      unsigned long *readlen)
- {
- 	struct input_zstream_data *data = in_stream->data;
-@@ -393,7 +393,7 @@ static void stream_blob(unsigned long size, unsigned nr)
- {
- 	git_zstream zstream = { 0 };
- 	struct input_zstream_data data = { 0 };
--	struct input_stream in_stream = {
-+	struct odb_write_stream in_stream = {
- 		.read = feed_input_zstream,
- 		.data = &data,
- 	};
-@@ -402,8 +402,7 @@ static void stream_blob(unsigned long size, unsigned nr)
- 	data.zstream = &zstream;
- 	git_inflate_init(&zstream);
- 
--	if (stream_loose_object(the_repository->objects->sources,
--				&in_stream, size, &info->oid))
-+	if (odb_write_object_stream(the_repository->objects, &in_stream, size, &info->oid))
- 		die(_("failed to write object in stream"));
- 
- 	if (data.status != Z_STREAM_END)
-diff --git a/object-file.c b/object-file.c
-index 67be5371346..967284c9ee5 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -974,9 +974,9 @@ int odb_loose_source_freshen_object(struct odb_source *source,
- 	return !!check_and_freshen_source(source, oid, 1);
- }
- 
--int stream_loose_object(struct odb_source *source,
--			struct input_stream *in_stream, size_t len,
--			struct object_id *oid)
-+int odb_loose_source_write_stream(struct odb_source *source,
-+				  struct odb_write_stream *in_stream, size_t len,
-+				  struct object_id *oid)
- {
- 	const struct git_hash_algo *compat = source->odb->repo->compat_hash_algo;
- 	struct object_id compat_oid;
-diff --git a/object-file.h b/object-file.h
-index 78f0e650d72..905b0f6c9bb 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -67,6 +67,10 @@ int odb_loose_source_write_object(struct odb_source *source,
- 				  enum object_type type, struct object_id *oid,
- 				  struct object_id *compat_oid_in, unsigned flags);
- 
-+int odb_loose_source_write_stream(struct odb_source *source,
-+				  struct odb_write_stream *stream, size_t len,
-+				  struct object_id *oid);
-+
- /*
-  * Populate and return the loose object cache array corresponding to the
-  * given object ID.
-@@ -173,16 +177,6 @@ enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
- struct object_info;
- int parse_loose_header(const char *hdr, struct object_info *oi);
- 
--struct input_stream {
--	const void *(*read)(struct input_stream *, unsigned long *len);
--	void *data;
--	int is_finished;
--};
--
--int stream_loose_object(struct odb_source *source,
--			struct input_stream *in_stream, size_t len,
--			struct object_id *oid);
--
- int force_object_loose(struct odb_source *source,
- 		       const struct object_id *oid, time_t mtime);
- 
-diff --git a/odb.c b/odb.c
-index 432011b4dac..62d65f71a6d 100644
---- a/odb.c
-+++ b/odb.c
-@@ -1025,6 +1025,13 @@ int odb_write_object_ext(struct object_database *odb,
- 					     oid, compat_oid, flags);
- }
- 
-+int odb_write_object_stream(struct object_database *odb,
-+			    struct odb_write_stream *stream, size_t len,
-+			    struct object_id *oid)
-+{
-+	return odb_loose_source_write_stream(odb->sources, stream, len, oid);
-+}
-+
- struct object_database *odb_new(struct repository *repo)
- {
- 	struct object_database *o = xmalloc(sizeof(*o));
-diff --git a/odb.h b/odb.h
-index 8681b7782b4..92df20417b9 100644
---- a/odb.h
-+++ b/odb.h
-@@ -492,4 +492,14 @@ static inline int odb_write_object(struct object_database *odb,
- 	return odb_write_object_ext(odb, buf, len, type, oid, NULL, 0);
- }
- 
-+struct odb_write_stream {
-+	const void *(*read)(struct odb_write_stream *, unsigned long *len);
-+	void *data;
-+	int is_finished;
-+};
-+
-+int odb_write_object_stream(struct object_database *odb,
-+			    struct odb_write_stream *stream, size_t len,
-+			    struct object_id *oid);
-+
- #endif /* ODB_H */
-
--- 
-2.51.1.930.gacf6e81ea2.dirty
-
+> 
+> [*] https://lore.kernel.org/git/CAPig+cQgZijWi8VV1_QScKPhm9cqhQVvow4N-VH00R4oO1m2xA@mail.gmail.com/
