@@ -1,103 +1,171 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D17531327F
-	for <git@vger.kernel.org>; Fri, 24 Oct 2025 13:36:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A69E31BC84
+	for <git@vger.kernel.org>; Fri, 24 Oct 2025 13:38:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761312995; cv=none; b=GeojKPa7j4efEzW7Jp/6SD+pTdd+EtDLBZO7kSF2hzs2nqocSKiUNXT/YilFP0M9wDmWJx9uRcw3sVUpJ5cljiezzgQ0u4LjWpamoWfNFSCcCeQYzt0qP0gx1k6T4gTV/8MRxDpKnn41Iq1t977Mjuhm9uFiKdkZ3BmX/1o+G08=
+	t=1761313093; cv=none; b=nPLiIjiiD5FXM0XN4O84b9HOWd8w91URuwM3bzxLDOCGm14U7rrBw4DVQFpJ9ob6xG57dUv+cGCGZ/R1va0n1O/J30imUez91OblHriZcVG9u1gvce4JeRq08ODPdtlmsF27tcnCAfTULAZPAvUDMhbXsNyUgw6qxDdMUfBxlq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761312995; c=relaxed/simple;
-	bh=YiGo6eTU8Uts53dSpdMegYtpgu3xfBjT7LgsEFJ8vV0=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=GHldOo4Iq7z/5t229OlLSTGg2D9ESRxOOw4GqsjEOK4ELnsIw3Y5UcjI1aDOPBwnN8zlHsSNi3hj0FXGGw0tr1DxoAYlM6yLkPYs0o0/kBKRnzVTXdlaJRwNmaAgaQNSBi0ROE5KRW2rK8SNM6gVgDxAJpc66LvL25zUX6CZo0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VmeYxNHx; arc=none smtp.client-ip=209.85.128.43
+	s=arc-20240116; t=1761313093; c=relaxed/simple;
+	bh=Y6j18C+XM+piByRu9zqViAHKyI0JP2Hj6DWKLlXBhlE=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=mfhTqwcHnCSm2KOS4ej2yxc27EBXLDDioHjQ0VF+XiLwc9AiECnW6LXKB0sq+FUyPHdhyVoiLwfg6J+8wIBmUQc7LMxcsx2JMEoSy44ouuEAc1DgRHwyDf7f9NLfdknYJjbEmnhpXF+3yGKMJTONg4DEKGRQ/utfGNs2v8YM3x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FIG5G41S; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VmeYxNHx"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4710a1f9e4cso16158365e9.0
-        for <git@vger.kernel.org>; Fri, 24 Oct 2025 06:36:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FIG5G41S"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-290dc63fabbso20856255ad.0
+        for <git@vger.kernel.org>; Fri, 24 Oct 2025 06:38:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761312992; x=1761917792; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Dzj+ySzrWwVg/yV+hD0EzHdav7kzuxXjcSBnX9Jrpac=;
-        b=VmeYxNHx/3l1hAERBAcUSbaA4e36aDB8bFfzhqZxdITo2dMxL8H6kNJJWnxfhUfZkS
-         HFWKFUS/oEEYVqLrQgsgoagAxFb5LzqlhOh8ZlNXF2zbazzNGNYRdV+SBFZW7K6UziVy
-         KC9KIpu7YrArAWjkIZmK1Bzkw1V1SGHwqA1juFfAI8p+sp4RwFLJXItA58PVyQDF5vDB
-         PoFuZkQQPGsKiw7eKAWlJ1LifWwEKx2MFjIXfrYioXZ2xkH/FHRdCNYVIXoUorjXthdh
-         lDkbGNY0rRKvEae1OHqPrHUeF4m3Mk414ukQTr7sH+3zhZtMzbPbqL53AUuoWI4DMBqJ
-         aV1w==
+        d=gmail.com; s=20230601; t=1761313091; x=1761917891; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Y6j18C+XM+piByRu9zqViAHKyI0JP2Hj6DWKLlXBhlE=;
+        b=FIG5G41SkrN0Z++OvXtNP1MMtCuWLM9RNXD6kCov+5spqhkExcmtMCbbDchVz9iOLb
+         U+rMjllbXVaDUC2HYkv/+4hwGP462vO+2TSRBwksJtka8n9EbaZZv3VCF/Vy9aApD0n4
+         xDooJZ9NV7g+21mKuwjxS1SsvseP+gGaxU7X1Y/6drKlnaTzg8Xy/SIYF1tqeyGbgQlY
+         6P477+CQRGxJzSfxL3XIEL8CZCopN/Bc46BzezdM0IaOuiJSHPsU7gRmLwjzbIr+lbqf
+         wUYIVF3HlXBU5RR15OoRv+iDg42LQfbT77ApW4M2qx/dQNIscnKbuiHEfLKReSjNWKGd
+         ySEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761312992; x=1761917792;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dzj+ySzrWwVg/yV+hD0EzHdav7kzuxXjcSBnX9Jrpac=;
-        b=PJsw653XCOINE/TKayLLnOnRC3fgUmQn1VcnTaOahW4nHsuA1kfH/79dYSf7Gl3dUK
-         p6HnGjQhWOHY5E0x5VvjzgWQOmUx3U+9JnGBZ0Gn2dT5p6lzM0zC0LON+zh4+w5W7O+s
-         0N7t9SpAwbtGp36Ho6y0GaLyUw8WZatkRcjDwIGMLH5xaojkgQeyrrfkL9KhsptMUjpr
-         sCBIqY22x7xDp9CPQBk2XX0Godw08bOl4NfZG8t/RJ6RblPs3PLi+ltvj9XhLRzCvtk0
-         47VPojQCz607XsXAiWPlaKmt99XqUv2/J11BLZcagO/ekmJ78RR5tSJD1BEkjQISUPaO
-         53Lg==
-X-Forwarded-Encrypted: i=1; AJvYcCV7XlaeulUkRuHMVVGDhgkrlg6ym0H8pHR6UDtIwz+TVTRmuPZ3c1vCgNKNamAA5F+/b/4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxH5NoQDRhW1FENucN3ZYS5a6I689C8f/Aun6efS+6My1mcfGab
-	T9Zsadwi3tRqdiBy2fcYxVa4ydN130OP0necNr78dT8uPmzXsXNaIAuX
-X-Gm-Gg: ASbGncsS9eLviWgZB2HMJQZONcCbO3s/nVvFf2UuFaM2Cjolnz1rmq78N3sus1VoAG1
-	AU3GG80zTJXWRItUuM0Uhns3bQFJua0NxaVkMvFTG0Jc2kVhuA4XPyOIsvNCsOGrJ9jZAEQxFG5
-	PxJbvc83CM6dH5mMbdBOCaGmjHlpUMIk4DD2W+qNCUFHpudQVtCqwcNIV4ajy2ZakgLT89sdatB
-	tcAEI8fkjR+VDgkpy+pVE7KEg1kVnwGD1SyaO7ZB/SbAWObJWa1opQzKZuZcm7dqcmfbjIpRvF1
-	I+A6dKSqgdw/o0rx4/uc6RQ4eMZys7CzlAxzcwACBzZKFc0DeEnrmvJkonzAQ7VIQYVSw7XMKI9
-	e7/350QFPvWHdIcg+h8/P0CYMIU1BjBgCrVh025QGoViPDzxjIDWD83UQeeZjugiUxDtNz7p4ZZ
-	60tklEFTl3gfzohYzvOY382xjWoKu466JJIZs3sh8HjbPXFLGEHCfFOAQDuGBLwxs=
-X-Google-Smtp-Source: AGHT+IFWh719zamm22uzA67Qd5zNsn0499cGMIKGKQojkbnuMcbLQxBHb+ocFf2m9RqFYig+iX5FrQ==
-X-Received: by 2002:a05:600c:6309:b0:46e:4499:ba30 with SMTP id 5b1f17b1804b1-475d2ed1ba5mr19568385e9.30.1761312991537;
-        Fri, 24 Oct 2025 06:36:31 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475c4369b33sm149151165e9.14.2025.10.24.06.36.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Oct 2025 06:36:31 -0700 (PDT)
-Message-ID: <7a3161d1-4e30-4156-876d-7eede4b06705@gmail.com>
-Date: Fri, 24 Oct 2025 14:36:28 +0100
+        d=1e100.net; s=20230601; t=1761313091; x=1761917891;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Y6j18C+XM+piByRu9zqViAHKyI0JP2Hj6DWKLlXBhlE=;
+        b=aNzan668qXxiUBO5ibD5SucLdlWhBRzHXrW1JWUp+XbYRpt2FtTvbw9CKWJXIkKw7g
+         4IQTzj+ajQ2zzwPOAZf8Je7EylLtZrr2FQMpsVAvarrQZF+XQIHBsfz2z7I1Cu9ycQ09
+         ETuPDrSM6ZgEiA4NE055bMU9x1XGOrhjYh5UbLiDMfyNZJCcE46eg6gqd542aZZAf4D9
+         NE5Oq3TO/UZapwJE1CRR6bOk5H5b4lbLOUy8+K0Qb0jmr6f4xIiyXeDW4boiG3AJ67WM
+         gbqJuXgFAEVD6Vj+C5fiAWjKSb8AMtDDZ/+U0hQ67USjSTmqVgG4iMEvj1jzYF3Ez6oZ
+         FqYw==
+X-Gm-Message-State: AOJu0YxC4Et7zuz9MyqnEcoEK6L6xsh1r111JgaOEFDkNSJi9+mc6ojm
+	MItJw+w55r+s3s6I2HonG1+XV1Qn8UcjXFsfdV/vDPfIqYzulh7YwTP8N6/PsaApQzi2aRRsIhK
+	jhxWL3Pt6HONz4J5S+i6NbjU+qLzu5DzFuqJ3
+X-Gm-Gg: ASbGncvXkDr/fYLPjXVEdlu1DEpERPqr7s//SzU1Cp0tpwB+slGAzcfBMx6ZtionVpm
+	DEQX7Z5ZNIpp34B6Z/xVahJBvRbF6zJ6AeAK7oIDSrvlJTEYubTwdp2asbNYpu5TazNk5eg/DLW
+	M3XDDsCZ3af8BZzOJkypX+RNRx30cNpV+PkUrjH56ZjjvQL6+VTHqUF8JdHpMZgufZDzXJ5IXf0
+	S3R+ZPUm2Ix0KCS66uvR9Zm61RezmDGnMZgD7hcbhV2jolJkgWo3iWcNW5C
+X-Google-Smtp-Source: AGHT+IEx4TbplLptuyxy4lf/EI7OjIOVkBlZv68MGdvScpUhd57eK1k5wmTa4aIKa4bLmeJOYUJaaJ5dTL8NIaMdMNs=
+X-Received: by 2002:a17:903:1112:b0:269:7c21:f3f8 with SMTP id
+ d9443c01a7336-2946e117f30mr90063435ad.39.1761313091398; Fri, 24 Oct 2025
+ 06:38:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] replay: add replay.refAction config option
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org
-Cc: christian.couder@gmail.com, phillip.wood@dunelm.org.uk, newren@gmail.com,
- gitster@pobox.com, ps@pks.im, karthik.188@gmail.com, code@khaugsbakk.name,
- rybak.a.v@gmail.com, jltobler@gmail.com, toon@iotcl.com,
- johncai86@gmail.com, johannes.schindelin@gmx.de
-References: <20251013183311.33329-1-siddharthasthana31@gmail.com>
- <20251022185045.29256-1-siddharthasthana31@gmail.com>
- <20251022185045.29256-4-siddharthasthana31@gmail.com>
- <a4cd31ad-7086-4d05-ba00-db65ec24b45a@gmail.com>
-Content-Language: en-US
-In-Reply-To: <a4cd31ad-7086-4d05-ba00-db65ec24b45a@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: John Bevan <johnlbevan@gmail.com>
+Date: Fri, 24 Oct 2025 14:37:59 +0100
+X-Gm-Features: AS18NWDdrqRZkLvvc8fWtUMB_c8YZnZST1aRiYwR0KOZzsIEUthIYANR0OOfMcI
+Message-ID: <CAJLdeLz0p_40vsL=Zu2sHfwD3mdUjbQRpeVZF0WM2gv449pb8Q@mail.gmail.com>
+Subject: color.ui is not working as expected
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 24/10/2025 14:28, Phillip Wood wrote:
-> On 22/10/2025 19:50, Siddharth Asthana wrote:
-> 
->> +    git replay --onto main topic1..topic2 >output &&
->> +    test_line_count = 1 output &&
->> +    grep "^update refs/heads/topic2 " output &&
-> 
-> Rather than test_line_count and grep it would be better to use test_cmp 
-> here.
+Hi,
 
-Oh, I've just realized we don't know the value of the ref so 
-test_line_count() plus test_grep() (not grep) makes sense.
+There seems to be an issue with colour formatting on output from git;
+e.g. error messages are showing in the console's default colour
+instead of red, despite colour.ui being set to always.
 
-Thanks
+I'm using the Windows version of git, but on submitting this issue
+there I was directed to yourselves.
+https://github.com/git-for-windows/git/issues/5907#issuecomment-3433888979
 
-Phillip
+It seems that the issue is down to errors being sent to the error
+function in usage.c
+(https://github.com/git/git/blob/master/usage.c#L291), but that
+function doesn't include colour based formatting.
 
+Thanks in advance,
+
+JB
+
+(Apologies for not following the advice at:
+http://www.chiark.greenend.org.uk/~sgtatham/bugs.html - sadly my
+company blocks access to HTTP (without TLS) sites, and this site
+doesn't present via HTTPS).
+
+Additional Info
+
+Git for Windows version
+git version 2.51.1.windows.1
+cpu: x86_64
+built from commit: 1454f0a9c4a3a22fb3fd7cc33f76f88cd65ced41
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: D:/git-sdk-64-build-installers/usr/bin/sh
+feature: fsmonitor--daemon
+libcurl: 8.16.0
+OpenSSL: OpenSSL 3.5.4 30 Sep 2025
+zlib: 1.3.1
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+
+Windows version
+Windows 11
+
+Windows CPU architecture
+x86_64 (64-bit)
+
+Additional Windows version information
+Microsoft Windows [Version 10.0.22631.6060] Options set during
+installation Editor Option: VIM Custom Editor Path:
+Default Branch Option:
+Path Option: Cmd
+SSH Option: OpenSSH
+Tortoise Option: false
+CURL Option: OpenSSL
+CRLF Option: CRLFAlways
+Bash Terminal Option: MinTTY
+Git Pull Behavior Option: Merge
+Use Credential Manager: Enabled
+Performance Tweaks FSCache: Enabled
+Enable Symlinks: Disabled
+Enable FSMonitor: Disabled
+
+Other interesting things
+ANSI colour codes proven to work by running "e[31mREDe[0m" in pwsh/powershell.
+
+git config --global --list gives:
+core.sshcommand='C:\Windows\System32\OpenSSH\ssh.exe'
+core.autocrlf=false
+core.longpaths=true
+core.editor=code -w -n
+core.pager=less -FRX
+user.name=REDACTED
+user.email=REDACTED
+user.signingkey=~/.ssh/id_ecdsa.pub
+safe.directory=*
+gpg.format=ssh
+gpg.ssh.allowedsignersfile=~/.ssh/allowed_signers
+commit.gpgsign=true
+filter.lfs.clean=git-lfs clean -- %f
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process filter.lfs.required=true
+diff.tool=vscode difftool.vscode.cmd=code -w -n --diff $LOCAL $REMOTE
+merge.tool=vscode mergetool.vscode.cmd=code -w -n --merge $REMOTE
+$LOCAL $BASE $MERGED init.defaultbranch=main color.ui=auto
+color.error=red bold
+
+Git.exe is at: %appdatalocal%\Programs\Git\cmd\git.exe
+
+.gitconfig is at: %UserProfile\.gitconfig
+
+Terminal/shell
+PowerShell
+
+Commands that trigger the issue
+git checkout nonExistantBranch
+
+Expected behaviour
+Output error: pathspec 'nonExistantBranch' did not match any file(s)
+known to git in red
+
+Actual behaviour
+Output error: pathspec 'nonExistantBranch' did not match any file(s)
+known to git in white (terminal default)
