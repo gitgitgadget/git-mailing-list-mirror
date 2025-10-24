@@ -1,136 +1,95 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726622E03ED
-	for <git@vger.kernel.org>; Fri, 24 Oct 2025 19:02:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02E834C99B
+	for <git@vger.kernel.org>; Fri, 24 Oct 2025 19:03:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761332550; cv=none; b=lmFLZyxAXha2dQFIEqIO3JPlSiD7OQI7v7ER/TBrnBRDAeRU0WDHhaHi/ElXok7aG+1gZdp1Ok4b45ieCs9+/bhiE+LSiekZIwmYlDX+ugY0gD5zoiastRJTSu9zLMPRN/Jm8P+LuFT5lBFKONUMPAfj7ojgj8T+tMky9ygucqY=
+	t=1761332610; cv=none; b=K6MSOoPKt6ggAmFVQEzxK8hRw6X4O6o3ySK3vppJRSAQaHc22gmNuUUAtEa67GoAF78tkHiY/0klbpYuF3wRDNWg/w6gATZxDXNRjq9AoXuLnG1MhsBvfEkzQa6b6Uai7wm+64259W0qqxHsOdulXamd0jFGyXrre0OjJjoFJoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761332550; c=relaxed/simple;
-	bh=iCobprn77GPrXOe51TWReSyiXkoLwkzPcbbuKJvxopY=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KazyyVJLpVI9p6ycoQO4+y0xpq16RNIKcfdbihDTLaxROlrYanAcRnG8UecT7dm/RuCVxC5qFBOR6n2BYW8JFwBkNDNFXwI1XTjLtnuSdeItY+Ovl4or/qDvYP9npS62+4I9NRU9GX3fr57+hjSwP8HbCJE5T0SqDLYwotaKwy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 59OJ2No4802419
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Oct 2025 19:02:24 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Jeff King'" <peff@peff.net>
-Cc: "'D. Ben Knoble'" <ben.knoble@gmail.com>, <git@vger.kernel.org>
-References: <012601dc42ce$a1adcb50$e50961f0$@nexbridge.com> <CALnO6CD8JU2qMCnC=qQmNOV6Wy1ZnveT3tRxUz1E0LVMj5oU9w@mail.gmail.com> <013201dc42d5$07a71550$16f53ff0$@nexbridge.com> <20251022092708.GE853931@coredump.intra.peff.net> <018701dc435f$f1dc1a00$d5944e00$@nexbridge.com> <20251023124837.GB1163932@coredump.intra.peff.net> <029a01dc450c$4318dfe0$c94a9fa0$@nexbridge.com> <20251024174659.GA3635620@coredump.intra.peff.net> <029f01dc4515$59ae09c0$0d0a1d40$@nexbridge.com> <20251024185209.GA3637589@coredump.intra.peff.net>
-In-Reply-To: <20251024185209.GA3637589@coredump.intra.peff.net>
-Subject: RE: [BUG] Strange git notes completion behaviour
-Date: Fri, 24 Oct 2025 15:02:18 -0400
-Organization: Nexbridge Inc.
-Message-ID: <02a401dc4518$bbf66110$33e32330$@nexbridge.com>
+	s=arc-20240116; t=1761332610; c=relaxed/simple;
+	bh=+IYfWP1ppT3YfOfJ+GvuhvTjMBu3AyA20jlCDo4CrQg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OiYhXBWq+Na78UhO/dTgxOTFy9ui1cXLRpg22PI4gRvnMdwDV0ew3lQe8YO+BoKYBCA/gj+LVbRuvycZrvt8OqzWaSFi1wNabErSYIAapz1fJZh59Xhl0W0OQEeChtxKnD3iyNnVkEEuPV5sv1kFNfdirToduyawoOi63egCb2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=TKYwtwIs; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="TKYwtwIs"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-7829fc3b7deso19670507b3.3
+        for <git@vger.kernel.org>; Fri, 24 Oct 2025 12:03:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1761332607; x=1761937407; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BMnWJ+zZOBIhPnXTS5JiXGNBlwS4FWOtcrxD16KCZTc=;
+        b=TKYwtwIslZpHfUvAyG7Ven1UUdXrQux895Pk48bLVB2GAmZf+WDgZ68x9O1nAOuuSj
+         VLKZv5SDwSv8Y6TXYO0dvc/Ngn7UxmPdCe0kWSk9G38yEqA0sXL0B8k3aVCoS+PG0jYE
+         ajJA1u1/CqzzxdbVW+zr92o6vSEb//SHQSVijaj+3DS0XH7W2LUiy5yU9F8gePKiJPip
+         9+iNAjxuxTu6aVHTdLbPKcvymUb66ocf2k/J2pcFYm9xIyUyCD1YQZvrn1h7DOjtuOVy
+         X/BmaaevC4mpkYoCiIztFonapwKT9f6QY9RHtR8yvBFZVEkYPIZVpr8D8B6m6pWgPGKg
+         YRCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761332607; x=1761937407;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BMnWJ+zZOBIhPnXTS5JiXGNBlwS4FWOtcrxD16KCZTc=;
+        b=SKN9zlHigw/HQhkrViR3P69UaVQ5I9LuERskfo04Kwsfn3emNiNMDAa1z0PNWWXJ4Y
+         aw/SZEgu5Kf6crFRErlwjEb1ctWFRRnnFJsAEl04v7p4UQvzmsAcvrR+oKcYNNFvvHr7
+         eHggjAWXHs0Yo2nL9GXkq459A5j+1+6CTPFElf+LKg3KSSggw1Vj3/DVJXcWx2KTfYa/
+         E+X6aHx5bFAwjBwCbPjsmiTCBJAdb9bL+IsM6mTIaTScaH/DvOIM6SuP4lv9PFiNROAR
+         4FktJHA4DNKQBu9VqFoB+ITU1TF9xtPWsCltoM8XDS8VScidwiPN/GoLfoe95fsy/SCa
+         ajjg==
+X-Gm-Message-State: AOJu0YwNWApXkuAjKc4lVUKT3BgEvuqPJMMyk0kN3wwnGx4YBZO5wHqP
+	UXMBVLslDNi75lEBlUDdesSaA1UeoqkgUaEKrhesIflkkrtNQQea9FRzMKvBPMGxx5s=
+X-Gm-Gg: ASbGncup7Es/USvNvSN3i3rH9rFQ/Aepr+U/E/GukkF1uYqmMkmO1bukAZDHiAqFAeA
+	ipZL/MZtt9/C1OFG9vYU0dI4AwZuzpxN+MKNC6QVWhXBT2UuFUgJnLgcqdwQbRS/I/l/WzTw6El
+	kDadk9cC5dR6KDgDSjy9xXtfyMYGa594eoJB++XvtMdEby+02PgCwABRAEzSRzEHFgnzredApio
+	R2Zm0ojMw1iaMC3T9XUHZ63gY5KaPHZealElvGdAOQh3JEvleo29KLtViROW+xbnnB3wPrnHuqI
+	pNjU9G2JdQ2vdKNRKAZPlKh+3LiUVwcFNzaFVjKInTGLiKca5bXn85LSSYhVZKLfnLUjPn6sWWY
+	VsNy3gg0umhJnSKzYVO5QtgOpTVDHTt9nikTxlqhxkZqWC9XnilLjOBniCU2ECKdpowg4EgW3Sp
+	rY3z4cv0Jd0+Xm9SxxT/XXezd4Q6vr9ULEwHQqlu0QPk0+8Agi/dedB8lKJT5J54BfVFXkNKDAO
+	4gaZynqSZMmgSfR3A==
+X-Google-Smtp-Source: AGHT+IGE37ie7ge2jWUgmzMx6BiXfL0NUdWEnJZHQ/al8wL5RG4BaulxfztChgtLulH+GU87lsWGoQ==
+X-Received: by 2002:a05:690c:61c1:b0:785:bfd8:c4b9 with SMTP id 00721157ae682-785bfd8d1e6mr101504607b3.51.1761332607496;
+        Fri, 24 Oct 2025 12:03:27 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-785cd5b0f33sm15106287b3.4.2025.10.24.12.03.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Oct 2025 12:03:27 -0700 (PDT)
+Date: Fri, 24 Oct 2025 15:03:25 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+	Justin Tobler <jltobler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 00/10] builtin/maintenance: introduce "geometric"
+ strategy
+Message-ID: <aPvNfU0B8J9sRy//@nand.local>
+References: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
+ <20251024-pks-maintenance-geometric-strategy-v3-0-9b5b3bdb4387@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQHjmO9AERlM/1ZhxKXB7Q1XH17MtgEgLITOApwjn/kCVAmtvwG1oGkTAur+K2wCggldTgJg/ggBAXlNwCkBpM37ibQtbZmQ
-X-Antivirus: Norton (VPS 251024-10, 10/24/2025), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251024-pks-maintenance-geometric-strategy-v3-0-9b5b3bdb4387@pks.im>
 
+On Fri, Oct 24, 2025 at 08:57:13AM +0200, Patrick Steinhardt wrote:
+> Range-diff versus v2:
 
+The range-diff all looks good to me, so this has my:
 
->-----Original Message-----
->From: Jeff King <peff@peff.net>
->Sent: October 24, 2025 2:52 PM
->To: rsbecker@nexbridge.com
->Cc: 'D. Ben Knoble' <ben.knoble@gmail.com>; git@vger.kernel.org
->Subject: Re: [BUG] Strange git notes completion behaviour
->
->On Fri, Oct 24, 2025 at 02:38:05PM -0400, rsbecker@nexbridge.com wrote:
->
->> On October 24, 2025 1:47 PM, Jeff King wrote:
->> >On Fri, Oct 24, 2025 at 01:33:02PM -0400, rsbecker@nexbridge.com =
-wrote:
->> >
->> >> What I found is this:
->> >>
->> >> Git drops into sane_execvp and converts the
->> >>
->> >> git notes show HEAD
->> >>
->> >> to
->> >>
->> >> git show 1aa950256829721750e809788e7b858db79a934a.
->> >>
->> >> When execvp is called, it immediately fails with a -12 - not
->> >> returned, just terminates. The -12 is an NonStop-specific execvp
->> >> error indicating the process failed because the object is invalid
->> >> (strange and likely an artifact rather than a real problem).
->> >
->> >When you say "object" here, you don't mean a Git object, but rather
->> >that
->> >execvp() could not run the "git" binary for some reason (so the =
-"object"
->> >here is the on-disk executable)? Just making sure I understand.
->> >
->> >> When I use the arguments as presented to execvp via bash directly, =
-I get:
->> >>
->> >> error: no note found for object
->> >1aa950256829721750e809788e7b858db79a934a.
->> >>
->> >> There is no commit with that hash. HEAD is actually
->> >> 3fc1917e0e69b23265f5c49f90fdb6f4ed98f4a3
->> >> so git show is correctly failing. This is Indicating that notes is
->> >> not invoking git correctly.
->> >
->> >Are you sure you are running "git show" there and not "git notes =
-show".
->> >Because 1aa950256 should be the blob that the note for HEAD points
->> >to, and thus does not itself have a note. And "git show" should not
->> >be looking up notes at all (and the "no note found" message is from
->builtin/notes.c).
->>
->> I am 100% sure that git notes show is running git show with the notes =
-blob as
->above.
->
->Yes, I am, too. What I was asking is when you tried to replicate that =
-using bash
->directly, how did you get a "no note found" message from "git show"? =
-I.e., it
->sounds like you ran the wrong command. Or I am misunderstanding what =
-you you
->meant by "When I use the arguments as presented to execvp via bash =
-directly".
+    Acked-by: Taylor Blau <me@ttaylorr.com>
 
-I ran the exact command that git passed to execvp but did so via bash. =
-This is what
-gdb showed:
+Thanks for working on this! I'm excited to have an easier way for more
+uses to interact with geometric repacking without having to juggle in
+their head when they should use that versus doing an all-into-one
+repack.
 
-Breakpoint 2, sane_execvp (file=3D0x80aa470 "git", argv=3D0x8122700)
-    at /home/randall/git/run-command.c:244
-*  244          int exec_id =3D trace2_exec(file, (const char **)argv);
-(xInspect 0,1011):n
-*  247          if (!execvp(file, argv))
-(xInspect 0,1011):p file
-$1 =3D (const unsigned char *) 0x80aa470 "git"
-(xInspect 0,1011):p argv[0]
-$2 =3D 0x81224a0 "git"
-(xInspect 0,1011):p argv[1]
-$3 =3D 0x8122770 "show"
-(xInspect 0,1011):p argv[2]
-$4 =3D 0x8122780 "1aa950256829721750e809788e7b858db79a934a"
-(xInspect 0,1011):p argv[3]
-$5 =3D 0x0
-
-I assumed that I should give that command a try from bash.
-
+Thanks,
+Taylor
