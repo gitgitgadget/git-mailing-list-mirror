@@ -1,140 +1,126 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CBD3093C0
-	for <git@vger.kernel.org>; Fri, 24 Oct 2025 09:11:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E942C309F14
+	for <git@vger.kernel.org>; Fri, 24 Oct 2025 09:27:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761297096; cv=none; b=FF+zm7oAo/TqN95BkAV6Blm7v2XF6KOA3ah+Mq53ufBs1ePzooCVFKEeRIusiQA+42OoMGbxhRMdwBAjGPp8r6zsrSZIucO0Zuuhw3waKcfn1iL2FOEjDV3dwjHcDVLA66cW3jmoOeRhso4Omuv1Izl9l9eJ/wb/dnap8GOHszE=
+	t=1761298082; cv=none; b=Njh/foLD94OA+3tIt0dXNYJCLoybF0OKjpzfIFbmqr5TCjWuNlDOslqDxGVWHg3RmL1lrP1v/GpElboeBLPHWjwCxNYUaF5KeUNeuIsvUcnqEimY4r2fq1pLCi5+5aQuJkpYeLeRZnwFKbBnka7kasuXtX2uNiXzXL43wIPEE+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761297096; c=relaxed/simple;
-	bh=4iyYkJwngWZi6uwwSL2hSXqntUviW3usTF2RI98iHn0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jmdyn6BSoCXBqVC7qjf7YRxdmol66tx2+kzTU3xR8RDgzWTvbOvVh2ozWglX0ylysvxaXTY4cOPInfFLQY+kpQl5gA88Q1p7T1mHicIhI5wZexqoJoEtJBlQ+8PqDhTaryb9dIBme2KFILMA7+KiYEuaLv6xLSv8fNfcZQ7d1s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZEGtOsjR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NRjwtq6a; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1761298082; c=relaxed/simple;
+	bh=eeQN6wCntIoa2az1I26oZGnL/s6MjadFqjPa2gPdrB8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dDGo5f+xreCsQA16qvjfmitZHI7dqxtCzXrqER18Y3X05q3nmRHhh5ZwsOp88zsShA1ZXKbnEGqgKKUhOTOiUSgkVFU8NKOzTP7ee01xu1/BMiLku2BUAvb3QKsPpJoPI++a/QJX3ZXD9awleBLIkA4QxC3olqIL61qLPbnaXw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jkPATT+U; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZEGtOsjR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NRjwtq6a"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6D321EC02A7;
-	Fri, 24 Oct 2025 05:11:33 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 24 Oct 2025 05:11:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761297093; x=1761383493; bh=skYVwJMkvr
-	QfC+7HgmHbWCeit/Xv+r2UvJmrO8pmGTg=; b=ZEGtOsjRKNe4TpeBof1avRYs/A
-	A4Wjtncw8K3+L/cElJsfRt8rIjsyTQQPZhaxhc+4g4Z+EaQyrvXy2MksqFikPUeW
-	mExqFtRLoIEcQWrU8GCQo+XiOqrLiXhLGp9SnNW9OlY2v3PLlAemCS+A1kHE4jBX
-	1wyfldN0XP22pDX98Jh9gLu/wGw7VQhdO+vtPIEo5Mextvw6AN7Pe9XVUnDUrDfe
-	wh/dR/PR9GHVm8NnNXruSzxRfQonEdWJ9FVX4JwPAl8iOS6nVjhyQEIHOfTWxHj1
-	/uMzBGNEwrJCWEQ3WEMlpOfFdG1JvqJqqXW3LWI78cc3a7tqUKbfCDubWgxw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1761297093; x=1761383493; bh=skYVwJMkvrQfC+7HgmHbWCeit/Xv+r2UvJm
-	rO8pmGTg=; b=NRjwtq6aT4IvpscN+Mplfr0WA9AsC7KdHoe0EYMVwo152ngbAo8
-	sNUnksXOwD5zZqOBNmktBRJ1IiCvFvAs20irC5VO9S80eRrJSWxlhjdPdkfB2oYn
-	qgB7TZeqiESMdcrFoHUVAcKbHHkMaJpvV7g0oEXI+N+7DBp9I2Nl7g4zjEmChVNF
-	fzfn78tk6ejGB6fckssRv/UjaSv81ADk3AYSixSPBYZWAR3zIYChmbZdNGGC9XsA
-	gV7fjySVasIvcXuDXxHKkjcd2ClAnEIZ6RN2ewzKFh/KxKwXg4lfny67tN1Z5kqY
-	ge5HOoahWZd+Mxa6LOf79lRczGZw3iL+p7w==
-X-ME-Sender: <xms:xUL7aDsVTAYLCY_7l4-CgsbUljUIYTPCznBD3vF21uVn35T4eNBU1Q>
-    <xme:xUL7aLfMCil6GZ0hvpZYDqyRNEWUmmDLvQy9QntHyEsi2WCppfD8vmo3EVYokjsGQ
-    zqilig0HALKUrQWUUL9R140jSh7nRVNofn9VgxAp0x24P2fcaYa-A>
-X-ME-Received: <xmr:xUL7aLyhIwb1HkWpFAVWKJpKVh3DAmbXkL5NyFb9LtfSR6xlbAoFzhLVP9WOsLVgpJj4Ie8cmqSj82_F94OhqSN1IGqjrqfm-YoUNuFODw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddugeekleehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    oheprhdvtddtleekudduudefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepuddtleeige
-    dvuddvheejsehqqhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:xUL7aBHT6pqAYQ82wdeOq15Bfg-unGtlso2oXHE8A8JfTtJkJhztCQ>
-    <xmx:xUL7aPxZiu6xPZEFMGvkabPZwTJk_5E3QhsxFY-xqJC8ase9077Pdw>
-    <xmx:xUL7aCsGp6i_3ku_Sl5VfErSmRaX_3jPrNN7q0UHieSRL3AW0PyPRw>
-    <xmx:xUL7aM1VN2BNk6PhJytIxlxQ8oU_SyE6aDkotC5KIiShc7EEhlEoZA>
-    <xmx:xUL7aBj_I1Gpjp1NxIJsHppZZ2oEks62NRHtrJv4kznJQurinnbX58La>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Oct 2025 05:11:32 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 19b2740f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 24 Oct 2025 09:11:30 +0000 (UTC)
-Date: Fri, 24 Oct 2025 11:11:27 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: RuanXinyu via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, RuanXinyu <1096421257@qq.com>,
-	RuanXinyu <r200981113@gmail.com>
-Subject: Re: [PATCH] refs: add missing remove_on_disk implementation for
- debug backend
-Message-ID: <aPtCvwvNUtFXqrpv@pks.im>
-References: <pull.2082.git.git.1761295094982.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jkPATT+U"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b6d78062424so51750166b.1
+        for <git@vger.kernel.org>; Fri, 24 Oct 2025 02:27:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761298078; x=1761902878; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AkOymqJCJg9BieLRXkJVFu8D1XOLKSO6DwosfCqD1IE=;
+        b=jkPATT+U+/2kysIRAUWhUJxEX0XsTe4YHtthihrgZftABg2rMaUnw/EbSuz3hd3k1y
+         RHYnv0fdFngK0R151uGQVmFtW2ESjneBRGvQJYk39YMBkm3Oaqo5+Qj/nzvzodg7ZB81
+         WNuceHMPOEdexavrBvNsDsXjtpKjEaFz907M+6U8eLBRf/6jvXzw5YGYszGQ+v2joQs6
+         5Su26/usnQHqe8cqz/wivpBSiCOhz24LCzqeKC7VEm6z3/lIKotAwW7tQ/uyUrVPBIuY
+         dXrHPm6XQYTYalzHCztn+LBpsAPdkOev8Em0CLX4860LVWae9dBwEojnG04cfyMbanlA
+         MipQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761298078; x=1761902878;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AkOymqJCJg9BieLRXkJVFu8D1XOLKSO6DwosfCqD1IE=;
+        b=C4IlKsUp0t3SrrX6WiuNYphau9tmt52eFz9eGihzCej2Ln4/UqiG8gNZVrU5yeDTP7
+         xExJff7SsZuLOfg29/WeNjwitVxHD/aqQPbtv5ApCJkmJCkhcud0eUpF7bRS+ARASYFv
+         FK0w627VUlVDrjMnyA48g84Xi9WSTwGPMd1tqK3mw3A33xFeoBjdrPg4+RkkjHNXZHKC
+         dWfo6SFzaml67UAHM9/BkEfT8XiJu7M5vPXZOuFXjUBflg4g7y9rezs+ri0V03fFSu0J
+         lUF3mn/I297Sb+6j5Oh6Wm4rBQVWzsFZJuKUdaHZJ+UxAo87Kgxz3KX7jIsj1Xk4XzKA
+         tfYQ==
+X-Gm-Message-State: AOJu0YyALFg/fdWrHcPuyf05wym2GWGoUOjnsllq3iwLqPtm6hSDkaOb
+	YdvlgGlrWgpiHZ5YdyscKeIswL2q0UrBtSjq4pxMNwXPjTmdjkAs7nSRfCS+DMO0CQGuWmNMm2g
+	acID8btospat7BAUUXrnKwhlGW+gKzCs=
+X-Gm-Gg: ASbGncuovo2DdDGrl/qhYSm+gNCvWTLancDad+t3aRTOud4ajNQ4Uxe/PpRBy5XED1c
+	ENb8qnn9btTuKL1q21imiVYZViZLJmYXkvOR0pzxyOSqcvdfmz8OZXEPtv9V1gBIQoAgQ4Yw2bB
+	dSSmfzB2qBG+2Pd5xI9rh2E+YI42OJ7ZYw34FpFHIgDZknPCik17O18p6wMir4FSt8imiY6RH9w
+	iY8oAp3a20PqOHeOJDLTdGfTPcJ2Xgj5bddmScBMU8TALYKigrk/lkY5fjb
+X-Google-Smtp-Source: AGHT+IH0FQvf9Ab+TItFY+oWNxsYtpFkbgtBjVoplxwhZhDwQZ3WuVX3AZTZ9yAV6dbR56AElh3Xw9StDQS7cxDudZM=
+X-Received: by 2002:a17:907:a0c9:b0:b5d:7a22:ae41 with SMTP id
+ a640c23a62f3a-b6473245835mr2991893866b.24.1761298077806; Fri, 24 Oct 2025
+ 02:27:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2082.git.git.1761295094982.gitgitgadget@gmail.com>
+References: <20251007122958.1089680-1-christian.couder@gmail.com>
+ <20251013084857.1646783-1-christian.couder@gmail.com> <20251013084857.1646783-6-christian.couder@gmail.com>
+ <CABPp-BGQ=3Tuik-PCerkaK4R0b1roSVLXLKs2-+E11vDrH6WaQ@mail.gmail.com>
+In-Reply-To: <CABPp-BGQ=3Tuik-PCerkaK4R0b1roSVLXLKs2-+E11vDrH6WaQ@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 24 Oct 2025 11:27:45 +0200
+X-Gm-Features: AWmQ_bmUrnWgfQjsf2qW6piopCn-HTzFHNhJi6s2uEdbuxeDwuN5YMBCAS-1TIc
+Message-ID: <CAP8UFD01-JDZisaqMUEGd7-WJ29r0eLcXuV3RjqeWNtoJ3-QmA@mail.gmail.com>
+Subject: Re: [PATCH v3 5/5] fast-import: add '--signed-tags=<mode>' option
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Todd Zullinger <tmz@pobox.com>, 
+	Collin Funk <collin.funk1@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 24, 2025 at 08:38:14AM +0000, RuanXinyu via GitGitGadget wrote:
-> From: RuanXinyu <r200981113@gmail.com>
-> 
-> The debug ref backend (refs_be_debug) was missing the remove_on_disk
-> function pointer, which caused a segmentation fault when running
-> 'GIT_TRACE_REFS=1 git refs migrate --ref-format=reftable' commands.
+On Fri, Oct 24, 2025 at 4:04=E2=80=AFAM Elijah Newren <newren@gmail.com> wr=
+ote:
+>
+> On Mon, Oct 13, 2025 at 4:49=E2=80=AFAM Christian Couder
+> <christian.couder@gmail.com> wrote:
 
-Heh, funny, just as I said nobody uses this infra you show up :) Good
-way to prove me wrong, thanks!
+> > +--signed-tags=3D(verbatim|warn-verbatim|warn-strip|strip|abort)::
+> > +       Specify how to handle signed tags.  Behaves in the same way
+> > +       as the same option in linkgit:git-fast-export[1], except that
+> > +       default is 'verbatim' (instead of 'abort').
+>
+> Sorry for not catching this earlier with the --signed-commits series
+> (was otherwise occupied), but this worries me.  If we ship with this
+> as the default, people will come to depend upon it, and I think it's a
+> bad long term default. Long term, we'd want to check if the
+> signatures are valid and keep if so and do something else if not (e.g.
+> re-sign or abort or strip).  Maybe verbatim is better than abort out
+> of the options you've implemented so far, but I think setting the
+> default now to verbatim means people start depending on it and we
+> cannot change it later.  Could we change to 'abort', for both this and
+> --signed-commits, before the 2.52 release, and then re-discuss once
+> you have the other options implemented?
 
-> Signed-off-by: Xinyu Ruan <r200981113@gmail.com>
+"verbatim" was already the default long before this patch series. Any
+tag signature was copied as-is, as part of the tag message. So it's
+possible that users have relied on this for a long time.
 
-Tiny nit: typically, the author and DCO should match. But the autor is
-"RuanXinyu" whereas the DCO says "Xinyu Ruan". I don't really think that
-this is something that warrants a new version, but I wanted to point
-this out anyway so that you can fix this going forward.
+For the --signed-commits series, "verbatim" was also the default
+before the series. Even if importing commit signatures has been
+implemented more recently and even if this is marked as experimental,
+it's the default in Git 2.51. So regular users could already rely on
+it.
 
-> diff --git a/refs/debug.c b/refs/debug.c
-> index da300efaf3..dd49080836 100644
-> --- a/refs/debug.c
-> +++ b/refs/debug.c
-> @@ -48,6 +48,14 @@ static int debug_create_on_disk(struct ref_store *refs, int flags, struct strbuf
->  	return res;
->  }
->  
-> +static int debug_remove_on_disk(struct ref_store *refs, struct strbuf *err)
-> +{
-> +	struct debug_ref_store *drefs = (struct debug_ref_store *)refs;
-> +	int res = drefs->refs->be->remove_on_disk(drefs->refs, err);
-> +	trace_printf_key(&trace_refs, "remove_on_disk: %d\n", res);
-> +	return res;
-> +}
-> +
->  static int debug_transaction_prepare(struct ref_store *refs,
->  				     struct ref_transaction *transaction,
->  				     struct strbuf *err)
-> @@ -432,6 +440,7 @@ struct ref_storage_be refs_be_debug = {
->  	.init = NULL,
->  	.release = debug_release,
->  	.create_on_disk = debug_create_on_disk,
-> +	.remove_on_disk = debug_remove_on_disk,
->  
->  	/*
->  	 * None of these should be NULL. If the "files" backend (in
+The --signed-commits series has been merged to 'master' and this
+series has recently been merged to 'next'. They aren't part of a
+release, but at this point I think we should send separate patches to
+change the default if we want to do that.
 
-Yup, the implementation looks obviously correct to me. Thanks for fixing
-this bug!
+As I plan to work soon on the new modes that would check signatures
+and do something based on that, and as you say that it would likely be
+better if such a new mode becomes the default, I am reluctant to
+change the default mode right now, only to have to change it again
+hopefully in a few weeks or months. If you want to do it, then feel
+free to send patches changing the default though.
 
-Patrick
+> This all looks good to me, other than the default as noted above.
+
+Thanks for your review.
