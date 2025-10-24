@@ -1,148 +1,93 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5875631B805
-	for <git@vger.kernel.org>; Fri, 24 Oct 2025 11:01:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98BB31A7F7
+	for <git@vger.kernel.org>; Fri, 24 Oct 2025 13:25:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761303709; cv=none; b=PKRUSZBYKfDgIohsoml71yn23+e7/uTejBvaI5HaKzqmlYhK/ewpWEzmEJ4oIMYwBawHIOi4YbaX4YkeUJeAUbCpjgtUrI5LUaZsLhtliSa7kH/ldv7BQCIuWR85KN66S6mIgT2tdl5BlX0bEsLSctHNUcJvYwKIzenuhfbrwqU=
+	t=1761312324; cv=none; b=XHHsDLmUufZ2noOaq640GvBynHY5EANG9aB3ru08lJ+sggDDiBEQ+QX1+LMapm3jG9H+ydLltSnnJII3QoM5ou2mhbjqZbCXIXFq8rh2+RUE5xppFUJoNPc+mB5B4P0eoNSpk4x+Jy/3ManeOu7In02p4bokSOcB5aSSB/c69WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761303709; c=relaxed/simple;
-	bh=UctFbPpiBIvaU0VKjeFkT2VavyjXazNpWbLyoqIt9Tw=;
+	s=arc-20240116; t=1761312324; c=relaxed/simple;
+	bh=np8X3cuDYywVrQibCx+Nc4xl7ab5bVIw5TIOc7N4K2w=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cwtZ73M2ygXRYciVdVL3DTTikDpglS/YnduQJNM6hDAF533LHXHd1kjIrzGeYavFuEgevx5ATt91kNyqn9y2IvJPGdT3DBl5xORh8fXtqUu1cceZB/yqYhBO6MEewKF+mh8CeuZkstk1P/hVQdvgyLh+tT2c863L0gnu/Ehh340=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OoUIQDGW; arc=none smtp.client-ip=209.85.218.41
+	 To:Cc:Content-Type; b=qnU9JlWLhRtCpGSfmzb9A+gPr4QwtR4HD+jfzTF/8rrxIGbjjob+w5qDIVvtBglFyuWqe+ivH6lL5zF8v8va2to4kCy2YBZNbQO4BFjRIhYZrpV6dyt+qrt7hEDvqs43mktn9wmwazilOYYO4snLD0HxInj5/N1MCgTwuVfxp2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FbDVZdNv; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OoUIQDGW"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-b3e7cc84b82so73360666b.0
-        for <git@vger.kernel.org>; Fri, 24 Oct 2025 04:01:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FbDVZdNv"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-63c4f1e7243so3309280a12.3
+        for <git@vger.kernel.org>; Fri, 24 Oct 2025 06:25:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761303705; x=1761908505; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1761312321; x=1761917121; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Yx9O+7i3RWjLJj6ZSLo3hLlQMeSnvcZbd+dluCrZ6Tg=;
-        b=OoUIQDGWV5ZA1U1mQOwsJ/VCRWEm7etLSCWQsmR6z1MayJlFACAvamBVX4Hc+lWpPq
-         GJ2BOowrrazyDeUsF1yHaBE5OrYd823BY1g9bYISfl+kYtQON2HZwLMVI3FBrhn4s++v
-         aZTyvMXhMOXEKpl4/SedaU6V0rFA6xnRG4qrpFAmRHOSIp9i0APlMc8cAuoH6QRaEmCa
-         EZ5owdXXskzc3HQYGv/kqHkpH5V0EwV7r/Qw3RmjyL0wL0ClwXV2Qe8SI7SFEKPhVgpK
-         T1PYTqjVwVx56f7fmoU5dYuQdwhAwVk6a4UPLR5wGld78FS1cjufEWf/y0gmqesahNdv
-         RqMg==
+        bh=4tKKjJvbgV6Jp42yunewCfz2llnaZXYQd04YdtVXBgQ=;
+        b=FbDVZdNvjFoMkIoOseGjVvy3K+24GRUyhGKyluazl9+4NYvVumaKLxI7c1CO2mAWZz
+         vLmshkmNw1CW548fOkTx+f5VkFC746q2+vYAQYluhWrIEqopJE48keU4xMtBqPOFQ5cR
+         9clHBQUx7F98+xfznqh7fpx/asMKJsNwNCNCQPAwMUckrUfYL/apWKJpDTNPbqjRoEpR
+         lLIMGybh9+xlJIeAv5qRU3Brn6gBtILEEi4mZqX99sFW4OA7kYJ6AMcM9Q4tVo8FCZXA
+         pZaYJewb39vTJNlekaAK/AtqOPc1xT+PP+MHz+lzWNIoJjsLDWQuIDudVZohk1HOUqOh
+         qMkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761303705; x=1761908505;
+        d=1e100.net; s=20230601; t=1761312321; x=1761917121;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Yx9O+7i3RWjLJj6ZSLo3hLlQMeSnvcZbd+dluCrZ6Tg=;
-        b=kuSYCEat8jCOPv6UVwtB8Ggm4IlAqaU3q7tn+Exk+VZGj5yq53iBA5zXBNJ9O0zXZS
-         fVX9fN/lqwBL0Naf6/L68sHlyJFofSnDjtTWbl0miJs5TLEfJ/XTB4zH0ZOpads+vVxh
-         prRtYZmSUAineL980QVvOHXAbYX+AxuSxOHD47A+ZcbUe9OTyfpQLnYG0v2l9TJojw73
-         zB8IjNQJY9XlBd2PkF2HikcZO6pvNwOFV8o17apBIPQN8hEMoQI5Fi0veH7vKhE8NLvg
-         qUm9u6lFWh0XFaz13jTFbQE7J9KQ19uQsi0XP4+N1CedIgG3Pm9iixWDTnCaPj9Ym3AP
-         sC6A==
-X-Gm-Message-State: AOJu0YxgfkX8pso4iPj5/396nFfhrc/TR9EW5KsucwMBbeu8/dFeLg5e
-	hNNEUiww6JpMqKFNSh8VxKZKGev488DIjtWsyR2W2gsaouSpwBCMzXZNSMIuyZujB0eGn1XFSRo
-	awxes6AiOGZ0XbAmwYc2uaLjpDpTb1uU=
-X-Gm-Gg: ASbGnctR2fTDcA47rMFx17DBWLpUQrDFW+uOaVo7Ce9Oxy39xKtKE7U/vbdyQBQZQjl
-	Buze8FaRoB5/tUiflb3luvSFWUDZHPhOdzcOIOeMCvuHX4Os6gVXJbItcQSCX02vsV0Ntip8ymr
-	uqupQZacRVapmJGLBQc7x+AlEGMcIRgroNbr0YDb2XQFVrFAX6g8DEREzaGGZ6jvj3uxTp9vj1A
-	M43KGUCR8diO7kX037dIQJRjhn4ejCCLux5vmeqVebrlIXAgiSOB/eUZKyt
-X-Google-Smtp-Source: AGHT+IHyDRL5C2hTDUT12fdhs9K/EL70AiViUtWIUyPwTQDQUdpL3uXZYXkgCYctQabYttrCe1nMoDiqyj9XSES/w20=
-X-Received: by 2002:a17:906:7312:b0:b42:f7df:a2ec with SMTP id
- a640c23a62f3a-b6472d5bc00mr3242081966b.9.1761303705379; Fri, 24 Oct 2025
- 04:01:45 -0700 (PDT)
+        bh=4tKKjJvbgV6Jp42yunewCfz2llnaZXYQd04YdtVXBgQ=;
+        b=H1z9+wEmKpKx6BDqCSMthRD/EhRB8aDVk83sHXkq71WTxH5GaE/lzb5Zjovs0htrBw
+         1nADTWREt1Q8YdSgPuqQbh9v6xr0aQSgTedvk7RlfNc79k4nYmQpn4fBbqNGdmPpCCdo
+         looWckfGB/THPr2j1WrHn690+UWbJLxOtIQIPBFjJwUalmW3OcToP1AUXnZ67huQAick
+         NYEyx8Ytza8Xstg/wjvbwpJB/mEFGvX8Q4Z1StBaDRxCH7iLbfW9CnNw1QOh9lLe1/F9
+         CBU8jFKiMMOs+1R52ulbf+aEkpkApJ/fUN948UchT/X5hyE2DBHf/AbZMwVXU8PtZIjM
+         w29Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWV5P5VsMjpD0ZlL1ksO5/3bsGw1bATFVcajcOCvxbwmKwHsff54d9vFS/hI/kCdcfVr4U=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzufM8trqckK3M+0tRHtGaxdyjCLhs7yPeV1xzJpegacJTcc3CH
+	nO6eIEMqnPoAfcdRJKzJFqG/oljICjku1o7h5pucpNbvScdP9oK0M1svRpupTHrZzhEapwy2bUk
+	kkyipi0lYKcquYA5Y06LOxlXQcZydJFA=
+X-Gm-Gg: ASbGnctgTxa2dTzufRmBz+JRDcsCK92yQyB/Ppx+GX+df4GqmLtp0rGGFJAxmvXCNKk
+	sP5ImOGMxt6qciSZve+y48Z1YUAHQ70dtwHb30w2R/zIhdHNa+BUIFHBakWuyu+221MSvuoHjJt
+	7cIKW8V4CGHBBuIia6LQEl8E5CvVFB3EemwubvLeGMmU7H5d3VgwYqZv957/YMpSL3gIDEvo/lB
+	/lCUJKLjg+OBZ8gQeFEQYkgbvs2uQv5APHhGLTQD2cfLZSef8qu38hxwciHyEccpQ/8HBk=
+X-Google-Smtp-Source: AGHT+IFGIeclcPXPblZTMhpDj0jtkTp2kEGWA8vFc1y3Kh/HiZHZ1NPNxklasr0WVkCOq+1MjM1zvpVRgNE9D0MIM6U=
+X-Received: by 2002:a05:6402:3592:b0:63a:5d3:69ef with SMTP id
+ 4fb4d7f45d1cf-63c1f62ab45mr25933891a12.4.1761312320641; Fri, 24 Oct 2025
+ 06:25:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251013183311.33329-1-siddharthasthana31@gmail.com>
- <20251022185045.29256-1-siddharthasthana31@gmail.com> <20251022185045.29256-4-siddharthasthana31@gmail.com>
-In-Reply-To: <20251022185045.29256-4-siddharthasthana31@gmail.com>
+References: <cover.1761135129.git.belkid98@gmail.com> <cover.1761217100.git.belkid98@gmail.com>
+ <xmqqecqtwpl5.fsf@gitster.g>
+In-Reply-To: <xmqqecqtwpl5.fsf@gitster.g>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 24 Oct 2025 13:01:32 +0200
-X-Gm-Features: AWmQ_bnexkfK4SUNkwtcp991RhdI_irxZ6a1pxLsVk8PhwWGBrsFKy1DqkY3lgM
-Message-ID: <CAP8UFD3Bz+Yn4qtCrFoKcE=u-dAtK0cXON1nFMRL8n9wBSS8pg@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] replay: add replay.refAction config option
-To: Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc: git@vger.kernel.org, phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk, 
-	newren@gmail.com, gitster@pobox.com, ps@pks.im, karthik.188@gmail.com, 
-	code@khaugsbakk.name, rybak.a.v@gmail.com, jltobler@gmail.com, toon@iotcl.com, 
-	johncai86@gmail.com, johannes.schindelin@gmx.de
+Date: Fri, 24 Oct 2025 15:25:08 +0200
+X-Gm-Features: AWmQ_bnK-Ma8jQeZOH-VNaZDvXbs9JTFqnYHirQb6dJV-Nn0g-tPhIofNMZCp4c
+Message-ID: <CAP8UFD1fousSKKduFAaZrsV9REnOaRDOQYcqB+rTQ0Ys60OWGA@mail.gmail.com>
+Subject: Re: [Outreachy PATCH v6 0/2] do not use misdesigned strbuf_split*()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Olamide Caleb Bello <belkid98@gmail.com>, git@vger.kernel.org, usmanakinyemi202@gmail.com, 
+	kristofferhaugsbakk@fastmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 22, 2025 at 8:51=E2=80=AFPM Siddharth Asthana
-<siddharthasthana31@gmail.com> wrote:
-
-> @@ -367,7 +368,20 @@ int cmd_replay(int argc,
->         die_for_incompatible_opt2(!!advance_name_opt, "--advance",
->                                   contained, "--contained");
+On Thu, Oct 23, 2025 at 6:27=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> -       /* Default to update mode if not specified */
-> +       /* Set default mode from config if not specified on command line =
-*/
-> +       if (!ref_action_str) {
-> +               const char *config_value =3D NULL;
-> +               if (!repo_config_get_string_tmp(repo, "replay.refAction",=
- &config_value)) {
-> +                       if (!strcmp(config_value, "update"))
-> +                               ref_action_str =3D "update";
-> +                       else if (!strcmp(config_value, "print"))
-> +                               ref_action_str =3D "print";
-> +                       else
-> +                               die(_("invalid value for replay.refAction=
-: '%s'"), config_value);
-> +               }
-> +       }
-> +
-> +       /* Default to update mode if still not set */
->         if (!ref_action_str)
->                 ref_action_str =3D "update";
+> Olamide Caleb Bello <belkid98@gmail.com> writes:
+>
+> > Changes in v6
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > - Modify commit messages to have proper structure
+> > - Changed logic in get_default_ssh_signing_key() to use xmemdupz() if
+> >   key has '\n' and xstrdup() if not.
+>
+> This round looks good to me.  Christian, should we declare victory
+> and mark it for 'next' now?
 
-It seems to me that a dedicated function could handle this a bit
-better. Maybe something like:
-
-static enum ref_action_mode get_ref_action_mode(const char *ref_action_str)
-{
-     const char *config_value =3D NULL;
-
-     if (!strcmp(ref_action_str, "update"))
-             return REF_ACTION_UPDATE;
-      if (!strcmp(ref_action_str, "print"))
-            return REF_ACTION_PRINT;
-      if (ref_action_str)
-            die(_("unknown --ref-action mode '%s'"), ref_action_str);
-
-      if (repo_config_get_string_tmp(repo, "replay.refAction", &config_valu=
-e))
-             return REF_ACTION_UPDATE; /* default */
-
-      if (!strcmp(config_value, "update"))
-             return REF_ACTION_UPDATE;
-      if (!strcmp(config_value, "print"))
-            return REF_ACTION_PRINT;
-      die(_("invalid value for replay.refAction: '%s'"), config_value);
-}
-
-[...]
-
-> +test_expect_success 'replay.refAction config option' '
-> +       # Store original state
-> +       START=3D$(git rev-parse topic2) &&
-> +       test_when_finished "git branch -f topic2 $START && git config --u=
-nset replay.refAction" &&
-> +
-> +       # Set config to print
-> +       git config replay.refAction print &&
-> +       git replay --onto main topic1..topic2 >output &&
-> +       test_line_count =3D 1 output &&
-> +       grep "^update refs/heads/topic2 " output &&
-
-Nit: here and below, it's a bit better to use test_grep instead of
-grep for better error reporting.
+Yeah, v6 looks good to me too. Acked.
 
 Thanks.
