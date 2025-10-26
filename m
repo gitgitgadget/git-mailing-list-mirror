@@ -1,41 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B81D1A3164
-	for <git@vger.kernel.org>; Sun, 26 Oct 2025 15:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86952222A0
+	for <git@vger.kernel.org>; Sun, 26 Oct 2025 15:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761493240; cv=none; b=RiZJ4dI5Dj5EWzqVyPrHcsKQuPHUFsilFHa1B56gaPSV0bj+T54xomM7jT0wzm0nSKEm6nwNVGf0bEpB3No+fvquQbIwV7UQrcFB02Rp79GU15wVLd9Ix9/1nSb3CXhzmyHrZCVBMs5sUwlol6b4yq4cOIY/p96+Fmg1BdsXqHA=
+	t=1761493310; cv=none; b=CMpcZ7Ky6Szbl0TMNg2QiiuHNbn+ew1Qmtl16U6AHVfTFWxcm8TbV4sKsFXp1FWB1L57KHB1FwoavTxPpHLno63ozrPdxQiDFZfGKHTFci48xhzs1OskjMK/AFHGcIsmkGK5hWoOQEGPPhRJS5dkiBmpKYlt7AQ6iV0UItz9/mE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761493240; c=relaxed/simple;
-	bh=nKRAu6RR59AJOJM8H2ZEdZSuxme/95uSyIPF+/wHkFk=;
+	s=arc-20240116; t=1761493310; c=relaxed/simple;
+	bh=87HuWYB+QsIDbCG06swBNCvErEpmN5j5XNYw+0lHaZw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a+utDgS+e1yJ33Py6dPS9JLO6q/ihLAcGykP2Ej93APFqnTkaCK81oTccZOKecSCjQSScBZB8mvJW4X79+Cf0XQUigcwGJeKFclbGqIgxTd01le3zlkP4oIbYXwuj6ZaZYiq1UaFCK/vb2ENd8kSurrmH/Kiy+CQxEM8YkZvLxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DlNnUEt8; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=N3tlTJ6qFBvyQ8StJPH/tibZ+Q4u7wR3z5X8KChaIL4gKF2XsYNMWeGWdGO67XKBF07eIchRBLmlROHlano/6Nqjww8FEu37UuglgMV6sI2ANvgZxKQgwf1x0NINmG1LrIfmKanFxPzo2M1McOVjWC+0h4PAGIGU+8cj5QYmtQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=U5PQxxU6; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DlNnUEt8"
-Received: (qmail 346918 invoked by uid 109); 26 Oct 2025 15:40:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=nKRAu6RR59AJOJM8H2ZEdZSuxme/95uSyIPF+/wHkFk=; b=DlNnUEt8sPlB8MxPPg6BeJ754mQGCawOKsZMtlDCZT44GLyP0nGDFKYAjvFdtO5auRprzKhRRxZdSH7k/n/Kys+f2QGRRjw3svSRA0iJ8h1/jYFlRFwhKh7N77wBd9vo5UcghOUx9HLL7gKTQwoQ25XpdEaDRqRM1g49OjgZ6sSOw4gr8gGZpJHn7sFJg+e/QegNuaiQ8fakjc6P+Y7HaP0NlfnRfUMIdWDWMBVLJong4TrsvUKbzT5GdaY1pIIeWMpeUeLEKUwWxhOMLbjVv3V8xUMWFRxL6dPE6Bz+Hzrf1A5/ofKQmBNpUCEAiAcvy5TuZlDIy/4e0bGvushLAg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="U5PQxxU6"
+Received: (qmail 346935 invoked by uid 109); 26 Oct 2025 15:41:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=87HuWYB+QsIDbCG06swBNCvErEpmN5j5XNYw+0lHaZw=; b=U5PQxxU6PT5B+ngLaG02nvR7u7M7V6b2p1YhNJ+PkGRzLefXA/cnBUEpjWALzrwcPc8OUaKF98F6HF1G4XZUKLYVDE+afRx0RN8T1CIyFsub2l5DnxYHI1A/Fq5btTXQC4PNSE2DUvC/nlehJVgREIs+wobuvrS8+7zMr399N1XnH42Ro+9dfPIMs816L8wrIOFksQCue8lJF3tmOF/21UzTfR1gCkqMFaIpMYTlC2gOfRFT43kcoYJaFNrb63lBGvVTdNneGVcrWjBjUZPWDPxZtnlEp4CA8NuHZXoyFIIm8aNf0nv5LQSMgAH2wdMWqbIG1mvuDwwAt+5G9Px4xA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 26 Oct 2025 15:40:37 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 26 Oct 2025 15:41:46 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 542508 invoked by uid 111); 26 Oct 2025 15:40:36 -0000
+Received: (qmail 542520 invoked by uid 111); 26 Oct 2025 15:41:46 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 26 Oct 2025 11:40:36 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 26 Oct 2025 11:41:46 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sun, 26 Oct 2025 11:40:36 -0400
+Date: Sun, 26 Oct 2025 11:41:46 -0400
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Sruteesh Kumar <sruteesh.oss@protonmail.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH v2 0/2] fix "foo**/bar" matching "foobar"
-Message-ID: <20251026154036.GA2173430@coredump.intra.peff.net>
-References: <n_EjA_jj-d398XOogazunHfOBdh-yoa5P-Prb3b7gjkBODqWMtvKNdhnCLuikthwVcbEy4-ryWTRgyuiShJ3tam93j8S7lmGSlyFjNoxzSo=@protonmail.com>
- <20251014003404.GC1507@coredump.intra.peff.net>
- <xmqq7bwltlb8.fsf@gitster.g>
- <20251026152614.GB2095501@coredump.intra.peff.net>
+Subject: [PATCH v2 1/2] match_pathname(): reorder prefix-match check
+Message-ID: <20251026154146.GA2728835@coredump.intra.peff.net>
+References: <20251026154036.GA2173430@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,22 +41,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251026152614.GB2095501@coredump.intra.peff.net>
+In-Reply-To: <20251026154036.GA2173430@coredump.intra.peff.net>
 
-On Sun, Oct 26, 2025 at 11:26:14AM -0400, Jeff King wrote:
+As an optimization, we use fspathncmp() to match a prefix of the pattern
+that does not contain any wildcards, and then pass the remainder to
+fnmatch(). If it has matched the whole thing, we can return early.
 
-> Me too. I wrote it a few different ways before ending up with the "==
-> 1", just because it made the diff smaller. But let me do it as two
-> steps, which I think will make it all more clear.
+Let's shift this early-return check to before we tweak the pattern and
+name strings. That will gives us more flexibility with that tweaking.
 
-Here it is. Maybe excessive to split it up, but each patch is quite nice
-to read now. :)
+It might also save a few instructions, but I couldn't measure any
+improvement in doing so (and I wouldn't be surprised if an optimizing
+compiler could figure that out itself).
 
-  [1/2]: match_pathname(): reorder prefix-match check
-  [2/2]: match_pathname(): give fnmatch one char of prefix context
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ dir.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
- dir.c              | 18 ++++++++++++------
- t/t0008-ignores.sh | 11 +++++++++++
- 2 files changed, 23 insertions(+), 6 deletions(-)
+diff --git a/dir.c b/dir.c
+index 0a67a99cb3..bbc2bf289d 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1360,18 +1360,19 @@ int match_pathname(const char *pathname, int pathlen,
+ 
+ 		if (fspathncmp(pattern, name, prefix))
+ 			return 0;
+-		pattern += prefix;
+-		patternlen -= prefix;
+-		name    += prefix;
+-		namelen -= prefix;
+ 
+ 		/*
+ 		 * If the whole pattern did not have a wildcard,
+ 		 * then our prefix match is all we need; we
+ 		 * do not need to call fnmatch at all.
+ 		 */
+-		if (!patternlen && !namelen)
++		if (patternlen == prefix && namelen == prefix)
+ 			return 1;
++
++		pattern += prefix;
++		patternlen -= prefix;
++		name    += prefix;
++		namelen -= prefix;
+ 	}
+ 
+ 	return fnmatch_icase_mem(pattern, patternlen,
+-- 
+2.51.1.840.g23b87c0a58
 
--Peff
