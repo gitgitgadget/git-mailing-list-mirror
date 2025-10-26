@@ -1,231 +1,110 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3CC2D0C83
-	for <git@vger.kernel.org>; Sun, 26 Oct 2025 22:54:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617F5286430
+	for <git@vger.kernel.org>; Sun, 26 Oct 2025 23:29:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761519275; cv=none; b=KHzIBB32WHDpfFB8rnh3KncZd7Aui4vKhjBrbNTBdzPB2a2HX4yOCXFT0zVG8yTZDajmSdsOpOb9I52TwI2GJQkI9YCx+ddKBgJIq3WbYTAb/OfzQXnOah9uujy7ITCgvqUmbJU1RoSfDJHX4rXVwsKDwTQb+RUMUQSVpG2H18A=
+	t=1761521385; cv=none; b=b5zK9rSKonzj/4RtM8YXwhRBy1CHrt8hHnA6MmTiBFrILrwbKCleqNLbmdOS79RAoDpBGlizaXIG2su0kefrMWrlvs+z3lluoBI+Ena21OqJcBQVruy25a+ycWWs3lhwlVOy1cDKuYA0TmmyTen+jvW1uHk2ISSzwdM8spDBq2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761519275; c=relaxed/simple;
-	bh=VqbKZH+IgiGLG0PZsBMKHwpuE6liivBasE33PAFnscI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aNpbYwmiVIFeKJZLlqeEUhcigFPLs8JUA9ZHKjcTRb1o9bEQN6/ZDqN6HLr8kDeVAtSlpvIjhHuniSiGnEsjxY8IhDtMZkXwt5pzYXBE/WsjBmqI15+iIweyUfwBH/uI9VHLNjb0qkWqQNiOQ2duQ7Ap8RiGiBz3gEe0nzAvfjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RujfhW6i; arc=none smtp.client-ip=209.85.215.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761521385; c=relaxed/simple;
+	bh=2TyXrlEFaNYzExdqUqjGJdOjDbdwAjuOKj4Dac6Tvn4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CxF+qpTLt72xYCApeGtp1AdrVf+wtMo2grrzLNtrLex+31oDo2iAE4MF4QYZC4sxVuZ28mZ0iQ/g1xiKnW+6EVv/Vg3tecHK2U181qGxgGJirGTbnPxEm78p6mCNyENXgWR3rdrWuyOpJ0IQJFE98ijUidmqJ8PAgycMTC1CvOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=h6flPYpT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SnCDUnDh; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RujfhW6i"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b6a225b7e9eso2851543a12.0
-        for <git@vger.kernel.org>; Sun, 26 Oct 2025 15:54:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761519272; x=1762124072; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fnii937No4dSMzLmgL9SsMhpKU9HPWv7q+n8z/w3XcA=;
-        b=RujfhW6ixAFsrfglneav9+Iif+YG7N0l7ba1RVTaKio1hYeRX5/fNMTy7t/xo6tGup
-         ng9Lflr5j1nTbmhBz7Ehyo4zOGCFHhtI7zR7EQ3UcPdh3c9s7JbGkq88+A7nY50AHXN2
-         lbOdDNqZLTExb2PM8QJE0K1SOi3AvsiiH9ylIQLNikflX96fIIoPCo1q9ws9RwlKoU6u
-         eaiTwXwdmJIScNfvzZ//5R5PmPsfrnE0bopGWy56ZSzoD/aVuQRnayPDZeHd/MNe1bjN
-         YiPb6ujO5JqytyBhjQZ6s2WyzBkuuIFm8I3EH7REtoQtcdMnUpAkzsl5XmxM6zFg3Dz4
-         8xog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761519272; x=1762124072;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fnii937No4dSMzLmgL9SsMhpKU9HPWv7q+n8z/w3XcA=;
-        b=J8JPUZkXMtw4NdHUeHCqGU9Ej0lnnAdUQFz0UyiL67M5W99gQre3YDmH3FxBMUsqWA
-         0YgaBaFqHl8f91EAdevAyFukVI1kznYr2BmuHqm1i/A3z8ULfN5Nm9+sTHqhi/tQ/pwn
-         DRrUu1m7Y96qVwfP6sbdjSfIVS/JKSH09qdu2QUNCFBNPLcluy2FjH+BQTY+3SRFY4YL
-         rGxCSKWnuAFfQLQ7dajKUs0mdHJN07HgUNz+igPJMCnQWQ2tbCGhmSy2woS9gPeQSxlz
-         R5RIELJ7QNwrP8U/0fv3vPrp97O6tvPN5HSDp13LRB2FxIaDgOVfUm3LkxQEyFLFKrdQ
-         tqVw==
-X-Gm-Message-State: AOJu0Yx8QaI7P83ChGiom13MDbDi6RQR2G65FeBU4hDN6y/rl2ROtWQz
-	4PxOv+22CneW1SViG+Mt+YT1XESBbqWQ9YkPeHcxXhpe838xHgid5R0mPr2wbbl2
-X-Gm-Gg: ASbGncsh8cepVvRBDZYwlrIJT5hBLS2xwhSMBLe4ZfnOqjob7lzfNdYQ25e15HKSlPF
-	n7M/MmDzGjm2Ai7PWxMh2/nPGY0TKZDChVGH4YLvF49qbs1aY/dfKP935X0HaGyPK6GvHT2dmlN
-	MJqi07BNLqZV3KkUc43r//SXlQBHw3jDqrD8ZjlgWUB0FC0hwDNAqbLmhIDE5lBPzlThbv01eWJ
-	uQUzU2czexhPswIXsmOnQP9Tp2e2JW37EzRJCZvYpvQiIey/4igEVY2B7mkM5stefJvW9Nfod8t
-	dqHbv6cbNV8Ajwoqmb0v5EKsFcPplD1hn7CM3dQnvi/ZhZkcFTHpXdMz/5soHkiOj7dCq3lPfz5
-	mzIWTp/g8he8oY/G+Z1eexAXjEvt/FXRvwmuc09GQOSRozHsr4elH7490qAtybSPbfFdoXwmZaX
-	eaj4+Im+XZVCg9oEBJ3okpOX/0xuQBSoQxF3GXq/WCpgRQB60KYUoMJhUTNg==
-X-Google-Smtp-Source: AGHT+IF6OojwX7n3hb3WgPgUNsGqhL9aPhPCWL1LwUX2cIF1L41KMK0AARh9XDb6VoNJDLaETxsLTQ==
-X-Received: by 2002:a17:902:c404:b0:250:6d0e:1e40 with SMTP id d9443c01a7336-2948b9575demr107191335ad.7.1761519271647;
-        Sun, 26 Oct 2025 15:54:31 -0700 (PDT)
-Received: from localhost.localdomain ([191.181.59.93])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498d0c6eesm59657435ad.42.2025.10.26.15.54.29
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 26 Oct 2025 15:54:31 -0700 (PDT)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	karthik.188@gmail.com,
-	gitster@pobox.com,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [PATCH v3 2/2] repo: add --all to git-repo-info
-Date: Sun, 26 Oct 2025 19:52:08 -0300
-Message-ID: <20251026225409.46647-3-lucasseikioshiro@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20251026225409.46647-1-lucasseikioshiro@gmail.com>
-References: <20250915223618.13093-1-lucasseikioshiro@gmail.com>
- <20251026225409.46647-1-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="h6flPYpT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SnCDUnDh"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6508C7A01D0;
+	Sun, 26 Oct 2025 19:29:42 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Sun, 26 Oct 2025 19:29:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1761521382; x=1761607782; bh=5iex0Q61KB
+	dE5g+4wUQv4uOObrzCi+SVrAbqms86nNs=; b=h6flPYpTXa5GuuRQJsA0KhTLF4
+	tXOAntZ3+oNDMur3fQ9A8oKkJvj88w/CN4FoivAlaBlwbI1kMKxow81Su7HvrdUo
+	uF/HUUP8KIi4FP4jFVTfvCr+qI0uqUSST4jqLV+eHXgvE7ICsAoQgWBaI96Z/CiZ
+	8Hc0YUUVr9sIudGFHdS/bQbwLIRfC5kEjHTM5Ou5SAkWQn+451EYj6B7DCLTmCKp
+	bLCpcFGhiuE78z9h2sbf3/rq2hI1QoFrXn5gfbFOMbfn2H6/N7TZwGSvTpxBDSPO
+	TFIYdP6+i9Dv/upe5X3DE1rs/BVf26s+Ixzo/5/c5Y/XjGtIq9EOKc2rfnbg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1761521382; x=1761607782; bh=5iex0Q61KBdE5g+4wUQv4uOObrzCi+SVrAb
+	qms86nNs=; b=SnCDUnDh25+qREUWqWUHUaC9mPb8A+BuhcPRPuxrBhEdCxk6gjh
+	YAbhak8sjnCcxBAN6B72LfqPp0e+Q2xSD/SacpOjjaCJVm4wQN2uWPY1r8ddwaku
+	qG0vKIf9qNkTUe66/npjCxfT6uyocHMPReUu+jUJdi1z4XR4IoykghdPrCLJbbl8
+	KOqoz0P0uUESzijACzeaEKtcBi492sBmh898Zx8pTFql1HHZwbB2mPQkVUL4bSok
+	qHIXNdu3DQCMlkcj7VqpkoP3ZEHY4hK5aXdezualPO8LCjmVIRvU5B9KlS/0cI83
+	zF3M4kT9YU+pFbGRUFzYO50OD8ehAsyGw8Q==
+X-ME-Sender: <xms:5q7-aCzbjm_qsuz_ByPBGTeNpBOlAzU2MmuKfzFNa_4TV6WTd857sQ>
+    <xme:5q7-aFSae3B_GLcjPrIdkBn9gELVHVYoYwlkj_XSxqpoAFHWD2lOJrhHmqOlCrT3E
+    UdGlynq9KXpMVJK31kxpgaE9TSdQLpExP7nH6Zooau0XOXSvJjPHQg>
+X-ME-Received: <xmr:5q7-aJU7onw8e4pQFBxKSxKxEmVY4m3DOUl6tSys-qKC1XG44dJywqi6jzAX6raqJEkL6zJSnRitZPLhaDgIQOnwKrIxNNMU0v4Z>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheeigeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
+    phgvfhhfrdhnvghtpdhrtghpthhtohepshhruhhtvggvshhhrdhoshhssehprhhothhonh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:5q7-aHZKF8_eHtQVZ063Qh385K_VABnLH_Ydfll5oIrpyIh2Af45aw>
+    <xmx:5q7-aP3t2b83Vm2xlYsZOCqrUjcYuoStGA5QMRuOVowiFzu2GAAs4g>
+    <xmx:5q7-aJjwbZWESRTPwz9WLnBxh2Aw1LSUgCYKKGOhnfjftHZtDW6o9Q>
+    <xmx:5q7-aDYUA4q9DKxIUy8NYhUeOh7wCWE0kN8xGZHtkLAjA-FC4N7SVw>
+    <xmx:5q7-aBrR6WID1GsN5DHuOaqFt6-raGM-porjWZ7k27LoLt3JPi2GPDaw>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 26 Oct 2025 19:29:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Sruteesh Kumar <sruteesh.oss@protonmail.com>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>
+Subject: Re: [PATCH] match_pathname(): give fnmatch one char of prefix context
+In-Reply-To: <20251026152614.GB2095501@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 26 Oct 2025 11:26:14 -0400")
+References: <n_EjA_jj-d398XOogazunHfOBdh-yoa5P-Prb3b7gjkBODqWMtvKNdhnCLuikthwVcbEy4-ryWTRgyuiShJ3tam93j8S7lmGSlyFjNoxzSo=@protonmail.com>
+	<20251014003404.GC1507@coredump.intra.peff.net>
+	<xmqq7bwltlb8.fsf@gitster.g>
+	<20251026152614.GB2095501@coredump.intra.peff.net>
+Date: Sun, 26 Oct 2025 16:29:40 -0700
+Message-ID: <xmqq7bwhmecb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Add a new flag `--all` to git-repo-info for requesting values for all
-the available keys. By using this flag, the user can retrieve all the
-values instead of searching what are the desired keys for what they
-wants.
+Jeff King <peff@peff.net> writes:
 
-Helped-by: Karthik Nayak <karthik.188@gmail.com>
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
----
- Documentation/git-repo.adoc |  6 +++---
- builtin/repo.c              | 30 +++++++++++++++++++++++++++++-
- t/t1900-repo.sh             | 21 +++++++++++++++++++++
- 3 files changed, 53 insertions(+), 4 deletions(-)
+> I also wonder how expensive that memcmp() is. ;) Obviously not very, but
+> if the point is that we are trying to save fnmatch from looking at that
+> one extra character, we already pinching pennies in a mostly
+> un-measurable way.
 
-diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 209afd1b61..e61af9ce3b 100644
---- a/Documentation/git-repo.adoc
-+++ b/Documentation/git-repo.adoc
-@@ -8,7 +8,7 @@ git-repo - Retrieve information about the repository
- SYNOPSIS
- --------
- [synopsis]
--git repo info [--format=(keyvalue|nul)] [-z] [<key>...]
-+git repo info [--format=(keyvalue|nul)] [-z] [--all | <key>...]
- 
- DESCRIPTION
- -----------
-@@ -18,13 +18,13 @@ THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
- 
- COMMANDS
- --------
--`info [--format=(keyvalue|nul)] [-z] [<key>...]`::
-+`info [--format=(keyvalue|nul)] [-z] [--all | <key>...]`::
- 	Retrieve metadata-related information about the current repository. Only
- 	the requested data will be returned based on their keys (see "INFO KEYS"
- 	section below).
- +
- The values are returned in the same order in which their respective keys were
--requested.
-+requested. The `--all` flag requests the values for all the available keys.
- +
- The output format can be chosen through the flag `--format`. Two formats are
- supported:
-diff --git a/builtin/repo.c b/builtin/repo.c
-index 3b071e9a50..67d647bb3c 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -9,7 +9,7 @@
- #include "shallow.h"
- 
- static const char *const repo_usage[] = {
--	"git repo info [--format=(keyvalue|nul)] [-z] [<key>...]",
-+	"git repo info [--format=(keyvalue|nul)] [-z] [--all | <key>...]",
- 	NULL
- };
- 
-@@ -124,6 +124,24 @@ static int print_fields(int argc, const char **argv,
- 	return ret;
- }
- 
-+static void print_all_fields(struct repository *repo,
-+			     enum output_format format)
-+{
-+	struct strbuf valbuf = STRBUF_INIT;
-+	struct strbuf quotbuf = STRBUF_INIT;
-+
-+	for (unsigned long i = 0; i < ARRAY_SIZE(repo_info_fields); i++) {
-+		struct field field = repo_info_fields[i];
-+
-+		strbuf_reset(&valbuf);
-+		field.get_value(repo, &valbuf);
-+		print_field(format, field.key, &valbuf, &quotbuf);
-+	}
-+
-+	strbuf_release(&valbuf);
-+	strbuf_release(&quotbuf);
-+}
-+
- static int parse_format_cb(const struct option *opt,
- 			   const char *arg, int unset UNUSED)
- {
-@@ -145,6 +163,7 @@ static int repo_info(int argc, const char **argv, const char *prefix,
- 		     struct repository *repo)
- {
- 	enum output_format format = FORMAT_KEYVALUE;
-+	int all_keys = 0;
- 	struct option options[] = {
- 		OPT_CALLBACK_F(0, "format", &format, N_("format"),
- 			       N_("output format"),
-@@ -153,11 +172,20 @@ static int repo_info(int argc, const char **argv, const char *prefix,
- 			       N_("synonym for --format=nul"),
- 			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
- 			       parse_format_cb),
-+		OPT_BOOL(0, "all", &all_keys, N_("return all keys")),
- 		OPT_END()
- 	};
- 
- 	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
- 
-+	if (all_keys) {
-+		if (argc)
-+			die(_("--all and <key> cannot be used together"));
-+
-+		print_all_fields(repo, format);
-+		return 0;
-+	}
-+
- 	return print_fields(argc, argv, repo, format);
- }
- 
-diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
-index 2beba67889..51d55f11a5 100755
---- a/t/t1900-repo.sh
-+++ b/t/t1900-repo.sh
-@@ -4,6 +4,15 @@ test_description='test git repo-info'
- 
- . ./test-lib.sh
- 
-+# git-repo-info keys. It must contain the same keys listed in the const
-+# repo_info_fields, in lexicographical order.
-+REPO_INFO_KEYS='
-+	layout.bare
-+	layout.shallow
-+	object.format
-+	references.format
-+'
-+
- # Test whether a key-value pair is correctly returned
- #
- # Usage: test_repo_info <label> <init command> <repo_name> <key> <expected value>
-@@ -110,4 +119,16 @@ test_expect_success 'git repo info uses the last requested format' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'git repo info --all returns all key-value pairs' '
-+	git repo info $REPO_INFO_KEYS >expect &&
-+	git repo info --all >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git repo info --all <key> aborts' '
-+	echo "fatal: --all and <key> cannot be used together" >expect &&
-+	test_must_fail git repo info --all object.format 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.50.1 (Apple Git-155)
+I added the "limit to known bad case" in the illustration not for
+performance but for correctness.  This was because just like we
+weren't convinced that the "**/" may be the only case that breaks
+the existing optimization, I was worried if stepping back by one
+byte may somehow make a pattern that should not match mistakenly
+match.
 
+In any case, your numbers did make sense and tells us that optimized
+strncmp() is much faster than comparing a byte at a time, which is
+expected.
+
+Thanks.
