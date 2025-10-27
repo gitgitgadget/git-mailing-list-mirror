@@ -1,133 +1,120 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48B61E5724
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 20:58:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD27A319858
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 21:14:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761598716; cv=none; b=Nlk9jQx+dgONp2+SQtcx6uL7WPjYjG5JFVZt1d7aV+I7wYnPA6Bcyr7PqHtAPGNeg59dhorC0fVDF/1KujwMs9FAMlHF+VLj1wbJObsqRnHV8ziqrjvBme0MloIotJWIYEx3berPb8u8shLTbJ7fs5C2OCa27RaYZGnM1NBsdeg=
+	t=1761599696; cv=none; b=loOYDJSTQTC6eF7RvnR8gjoZv9x0fRjY52z032BxsSAI7vq75KbdQAmVX7VoAq4mFBKz7WNMXc2d0dzInr12YPFIjucZIWtICcC0Ge1/yTdCDihczerEkfIv3KCYfkSuAAsYXECllauZMRuw1XcomuVtHu2bxaEj6XprxtAIUDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761598716; c=relaxed/simple;
-	bh=hDNYL9ws9rU5GRZ8rTfZ6zvKqlqO/ylvO7B3xBsqEQ8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jd2XUpAvcH8hho+BDQtOgvvO92PYWeOfrm8zqFlkvTBWS9Rx5f9D/MbXt1Vuu3bMg1PymIXsoDr2vb1L8HbTkdH+LTcaYn0H1nya2r4hryLweD/p89IvYnoPurBnGB0Du3fLOrkSzB64s93+A5OtcdSdTepqSQpdoQTDe/lkE1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Yj29i8I7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KzntL2ah; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761599696; c=relaxed/simple;
+	bh=OrFgLjtoQu5wT/wDU9jEWpg8311iqQMAzMk45NVlKlM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SmJYIL2+L6LLzHoMhDO6kd0I3fqHOfL1H2wv79rgcc1/75GsYenwdnXjo3QglKKE1GuIcXd8dWXeLcsnK3zPR+8Gx+WHGQfvICjE6QwLy1TuoMb3mzHH5VnL4JyyqTOuhvH/qL6tlgqUf+FeMnrhlg+si8XRp94SpPSbi0LLdJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=z4JXbFQx; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Yj29i8I7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KzntL2ah"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id DB3F2EC0368;
-	Mon, 27 Oct 2025 16:58:30 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 27 Oct 2025 16:58:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761598710; x=1761685110; bh=D43Uu8oEUG
-	RRSiO2ZpgaKBvpH05NFtrQS5C47tlbRpg=; b=Yj29i8I7D65Zyg/715T+gKmtks
-	oCljh//GSsz8/o00iw3Ks4+jXztRVtKdl1Rxw49/H2Jgp7K8AOWzxuX6aVl/mwzv
-	gmk1BvFcc/zK2SxNXJX9oq34szOoNJ2HpVWGPNiIadFSLLaz7sy1BGU6+8d0bhpt
-	PXUBJAWylsq7NN2P3lQ4uPKlju5tk07d61nnOGHTWBUNYUeiEtIgf9K4nxxoOSW5
-	sBcltQudt4Q/Iv+AkB8H871/p9rJsajf6kTwYCUJuwrnMJtpU9WqZws7pq9VU9ug
-	mkWfusJhUbHtJK7UeU9F0+RMMvMZ+tQ7uk0PozpR/QM1InKYV5dLuqMZ8tEQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761598710; x=1761685110; bh=D43Uu8oEUGRRSiO2ZpgaKBvpH05NFtrQS5C
-	47tlbRpg=; b=KzntL2ahdPCN3uLp2mx3QrJzRDkhTwb6U5c7pEoeqnUFZWigibT
-	9v0IevFYHxIN2uf0oBqo997kqsmUqQXeqM6Kc0vutIwWItu1+VgZ5ba2QJ2S/K96
-	pTLPtnGIp3z8wBxRiMn5IR4Pf5jGxAlNm1HTWL8AF5CY2cPM24WMdE5exTIHfQJM
-	mCDc6+gh3+MefRuz7rljCrqw4eEG09tDSQn9vgOkQaACrM5aVw9LHw5L/geII0aI
-	O2DLI12antsDrZi8Krgfp7CiSOjCLWdvCpy6u2BfAnfNQleXUqevRKWeqMdkWzmn
-	uWQ/ckEKG1LgSGSpYXhgBugZg1KJNrvK/BA==
-X-ME-Sender: <xms:9tz_aOGPeSILsZtX9gIWc4GPA9Uzna5WobJjM7F499j8M32_umVrgA>
-    <xme:9tz_aBltQKWKclSNarTHtyf4zESW5tgs6WKjqol_eckyXbd8xMRYyU5AyJmRfPLT8
-    VxO1DMmHLLi1nnKQ4MUJ1dObFhvIXjsZTPRjO8fK7lutPd485AmEg>
-X-ME-Received: <xmr:9tz_aKbFwmr0xvk1RKRSWs7ksNCMqz-voNNNLwFD9AZeYlr7P1lIihQu7wqrZ1IVSsEdLYhc18V22hgshTLDptf57hrmlQzPZxqB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheekleelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgv
-    thdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehmvg
-    esthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:9tz_aOG5OCoG0u-FN9CgaS9Ktm-Ky_u82VFVJi4U8mZ8d57Pw7_90w>
-    <xmx:9tz_aDIfSLKnrGDPHGyhWw_RcE59fsksAtVP4ovG6gpIdk9KvM0Q9Q>
-    <xmx:9tz_aBOUISVWHoVG3uULZ7ZwxoKRMxMZLJfADg69mK0l9ycNt9vp6w>
-    <xmx:9tz_aLl5s2kJebL8kMIvNC7R8tE-ck4TI0tfGVXklOFf3q-Zg2_13g>
-    <xmx:9tz_aCsouCdCy-QV5xDMwX0SFbAFo79MQuz22Ze0qTG2Uin5N_heYsoW>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Oct 2025 16:58:30 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Derrick Stolee
- <stolee@gmail.com>,  Taylor Blau <me@ttaylorr.com>,  Justin Tobler
- <jltobler@gmail.com>
-Subject: Re: [PATCH v4 00/10] builtin/maintenance: introduce "geometric"
- strategy
-In-Reply-To: <aP_Qe2QG5w3g4Z9y@pks.im> (Patrick Steinhardt's message of "Mon,
-	27 Oct 2025 21:05:15 +0100")
-References: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
-	<20251027-pks-maintenance-geometric-strategy-v4-0-18049e4a0adf@pks.im>
-	<xmqqtszkjq8d.fsf@gitster.g> <aP_Qe2QG5w3g4Z9y@pks.im>
-Date: Mon, 27 Oct 2025 13:58:29 -0700
-Message-ID: <xmqqbjlshxje.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="z4JXbFQx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1761599692;
+	bh=OrFgLjtoQu5wT/wDU9jEWpg8311iqQMAzMk45NVlKlM=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=z4JXbFQx7dYLXmYI9o75nQHUsanvjLTI2yWo4fPf67+YJSVKld3nZ5AsN8ymm/sp/
+	 leNYGQ4TVjOpJtK71psxa8uw5yRzl4ZtzpgVeU1JqTuwk5/6qfomonLbvS0tK+8xNu
+	 x+OzZZdIjjobofZK7zOAGj2CPRLrlibCImdt4KZ0Sh3R3WhXWxkI0863Z/k9ppeaPi
+	 L9P5RhJQ3s+NsUe1SPsi86kfeeSAanMoWtlxEHVtJAVECpi1x+H1pZ7HWG4gh5A5RS
+	 pezDtiSiY3LfWUCugktdgr2kx+G5UkSxAUdp16BtSLTSfMbP0yBXLgbBH+imWSUcRp
+	 wFhv29W1WorQsY1UMGS7uOmsKBNcrwFNZKSSPKO4UcW9pgyTDbJ4sNQKHNOzpvnfS4
+	 fdBYpt9DKkmt1KqRt33nDdt7gpiclulHEsAO5T3FZep0vm6CE15kMuzk+hZzqS1k6E
+	 vyAsnPxxevdp2GHyMD/Cvw+gPjvdodCdrdX9F+Q98VYv90vG+7F
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:5123:c4f8:c4f5:61ae])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A523E20036;
+	Mon, 27 Oct 2025 21:14:52 +0000 (UTC)
+Date: Mon, 27 Oct 2025 21:14:51 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Ezekiel Newren <ezekielnewren@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] rust: generate bindings via cbindgen
+Message-ID: <aP_gy-Rj8MI7zAWd@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20251023-b4-pks-rust-cbindgen-v1-0-c19b61b03127@pks.im>
+ <20251023-b4-pks-rust-cbindgen-v1-3-c19b61b03127@pks.im>
+ <CAH=ZcbADTLvTioBf+LYQej1G0biZM8s3-iJG+BZjnpxj+8NjsA@mail.gmail.com>
+ <aPsepOtUf92fqDL-@pks.im>
+ <CAH=ZcbBWuS6QVQT4LsxSP-X4GupZwr+NwzXNH2+qZGoufUWDrQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="EFaq097eccvlbIw3"
+Content-Disposition: inline
+In-Reply-To: <CAH=ZcbBWuS6QVQT4LsxSP-X4GupZwr+NwzXNH2+qZGoufUWDrQ@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> On Mon, Oct 27, 2025 at 08:53:22AM -0700, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> 
->> > Changes in v4:
->> >   - Fix a flaky test because git-repack(1) always decides to rewrite the
->> >     MIDX, even though no packs have changed. This isn't a new issue, and
->> >     other maintenance tasks behave the same. So I decided to punt on it
->> >     for now.
->> 
->> Thanks, but this round raced against 'next', so let me fabricate the
->> following and queue it instead.
->
-> Thanks for doing this!
->
->> ------- >8 -------
->> From: Patrick Steinhardt <ps@pks.im>
->> Date: Mon, 27 Oct 2025 09:30:50 +0100
->> Subject: [PATCH] t7900: fix a flaky test due to git-repack always regenerating .midx
->
-> s/.midx/MIDX, as the MIDX file does not have a dot anywhere.
->
->> 
->> When a supposedly no-op "git repack" runs across a second boundary,
->> because the command always touches the MIDX file and updates its
->> timestamp, "ls -l $GIT_DIR/objects/pack/" before and after the
->> operation can change, which causes such a test to fail.  Only
->> compare the *.pack files in the directory before and after the
->> operation to work around this flakyness.
->
-> Maybe add something like the following:
->
->     Arguably, git-repack(1) should learn to not rewrite the MIDX in case
->     we know it is already up-to-date. But this is not a new problem
->     introduced via the new geometric maintenance task, so for now it
->     should be good enough to paper over the issue.
+--EFaq097eccvlbIw3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Will add.  Let me mark it for 'next' after squashing it in.
+On 2025-10-27 at 20:35:59, Ezekiel Newren wrote:
+> On Fri, Oct 24, 2025 at 12:37=E2=80=AFAM Patrick Steinhardt <ps@pks.im> w=
+rote:
+> > > cbindgen is a Rust crate and it should be specified in the Cargo.toml
+> > > under [build-dependencies] block.
+> >
+> > What is the benefit for us? The generated code is not a dependency of
+> > the Rust code, and neither do we use it via "build.rs". And if we use
+> > cbindgen via "Cargo.toml" we'd be forced to build it first, which slows
+> > down our CI jobs.
+> >
+> > Please let me know in case I miss any reasons to have it in our build
+> > dependencies instead.
+>=20
+> You're targeting a very old version of Rust (1.49). I'm not even sure
+> that cbindgen will work with a version that old, but if it does then
+> we should use it in build.rs to make sure we're not using any features
+> of cbindgen that aren't available until later versions. If we use
+> cbindgen that is packaged with the platform then we can't precisely
+> control which version of cbindgen is being used. This is a matter of
+> reproducibility. There may be platforms that can compile Rust, but
+> can't generate C header files via cbindgen because cbindgen hard codes
+> that a certain minimum Rust version is required in its own Cargo.toml
+> file.
+
+Yes, I agree with this.  Not all systems have cbindgen and it's not
+guaranteed that the system's cbindgen will work with the version of Rust
+that you want to target or that's being used to compile.
+
+For instance, I'm using Debian unstable with a system cbindgen 0.27.0.
+This requires Rust 1.70 or newer. If I use rustup to test my code on
+Rust 1.49, then the code won't compile for me.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--EFaq097eccvlbIw3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaP/gygAKCRB8DEliiIei
+gTMIAQC49gPGk0S9G3sltmfZzfjPysQ544UwYuKyRuAvAoR82QD/QQm3+DTWDi8o
+wTu4iIZvKmfAFdhYhEm+UZ4Kv2/xMwU=
+=4giy
+-----END PGP SIGNATURE-----
+
+--EFaq097eccvlbIw3--
