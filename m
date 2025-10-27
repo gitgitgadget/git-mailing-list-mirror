@@ -1,126 +1,98 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC6D30DED8
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 00:53:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849AD35B13C
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 04:02:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761526437; cv=none; b=DF/4Dxa7dFpA233r9lglDV/2mMb3FKYK+5I+VahujWQbfKdjCQ2zMSiVJtvzZ3J6QmXuZ9IJWMvLAOw2L0JSnLtJkPhXfPKsVPMm9CttcwRpEVBLMHCLGBrWRLqNyF1dOOPRWsJo2NqoIdoG7bCgonxjQP/YZVECH4Iwo8MFeIA=
+	t=1761537724; cv=none; b=iEQK/WXB0LFYTiOQuVPnuOwfCKXQKGl++xJVqkOInEUZX/hBxg1dqU7GnQfNi0m2WP1pJA2WmnppD9vzyj05mkpsE3EFt9F4ial2C7yopGwCYujxTbMSfAKLuB33hZDN0VDG3wl9kwMhMER6NF3aYF8CLSaSEYOZW6WYszf2hhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761526437; c=relaxed/simple;
-	bh=ZR+LX/KQFmf6QYzRWzZNY/xen0x312fcjt4C/TW7qNM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CvfpVDkOsVarWIU2rv0J7NTPK2CO8hgojb9DOgTRAj+K/jyt+R0draUwBAz6aMsQ+s6T+TArGbR6OBzKCeJBqWwXOFO1EOz+3qqhEP03X7VgmMZjjR6uh7PPOoly0hkecgoCCJqGt24VKrm7cV/956+OrRvtdc9/mn7J4KtyCeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=mQCYrNaP; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1761537724; c=relaxed/simple;
+	bh=ooQEVTMT8nBpX/KrYh+ECkXoR6aiUS/w6QbKbM9ydOM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hQlZ5YSxvKNYFbCiM3uhRKFSnk/trLTPQyvpwezeePlycYOHR/69TfnG5paN3BmUIEhwnF42X74h3fqDu8e+5z7pxpPux2BY/6Tlr0INGt13io+hsvtDzwg79LFXXPptiste0fdk9bMfwVGZ5NYK28f7t6FfpvRn1bEA86U/IyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xj2kauM3; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mQCYrNaP"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1761525867;
-	bh=ZR+LX/KQFmf6QYzRWzZNY/xen0x312fcjt4C/TW7qNM=;
-	h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=mQCYrNaPl3oNjmOJnn+ibQUyz6YfNkCDcrffkzTzDR5WYQSQCDsYHxh7fuYq1gi53
-	 JJQMQbfFS6L6QO0pkPFQB6HMgENypkjXUc5bFq26CooZIeliLPn0VaSRrwGKH3/F3H
-	 lFdFwY93rGa9U3bOACZwZNuxmrc44VzMi8xL+bwIaynhHHRZ6vWr6vgIEYAZCukfkz
-	 kp19QWgXXQD/E5ZSXUfTB3L5QRucgnNoEKSMk8GNqC3lbvJQKwyndugFCuEJr3fuho
-	 0lp+GnuFG1tzitcHL87FTL+tFkz0V97Etb/Lo/g3bqV1Ca3Ucyjr2oECm/ltZZSCOX
-	 xI0pVK3QxvA1hWDxGDI5HfsgdKRKwylTAzIaEP7OGT9ozkqoK0q0m2bOFZZNs4ArtR
-	 E2Hk4/P9/1fRdup565LIl4W+pST/cC9AvIVnAOQRoviF1lMs5GUc2Q7vo4TC+bWIxC
-	 mDWGinkkTL/sJo+AVoY8dJgL+KFHtbUDFzpesE/zZUP/bweXrlX
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:5675:b769:afe:3fa2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 788EE20036;
-	Mon, 27 Oct 2025 00:44:27 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: [PATCH 00/14] SHA-1/SHA-256 interoperability, part 2
-Date: Mon, 27 Oct 2025 00:43:50 +0000
-Message-ID: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xj2kauM3"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b4539dddd99so894897766b.1
+        for <git@vger.kernel.org>; Sun, 26 Oct 2025 21:02:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761537720; x=1762142520; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ooQEVTMT8nBpX/KrYh+ECkXoR6aiUS/w6QbKbM9ydOM=;
+        b=Xj2kauM3nnm/9AQ7rrgjF69J7BklWEWDVSGRmC6izEBSXAZftB6qw/42yVdvsnJ+e4
+         6S6Q+VXWAgMKJARA2EuubHFOvLfQu22bxxQZWyThwufpy598U+cttBbN2G2DFT0/9ayf
+         Vb3ynqEKbs1W+uDF3xcDbnGXq2DU90i7uWRuStY+RjxfBz3vJ7XIOK24Rasz5VDN1DPE
+         OV4JbCZUkFsgsHUgN3H3nTYd718hpG1XcYIypWcHUe462FVOfFVQFSHiIG9GynXZb0PJ
+         F8V4Af495RNBi5442KpYf6aKT0Pf20kjWsRWHKzrw+dgK2Ma8qBIJoF4mPPzd5uCCxc4
+         qtxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761537720; x=1762142520;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ooQEVTMT8nBpX/KrYh+ECkXoR6aiUS/w6QbKbM9ydOM=;
+        b=m+iaP+nM5bIt0lO4G6ML9gTgnozJZqCStt93ptPAgQkkJwBaJdSrM54d28c4XkC5Du
+         doNzy5OjNL2ebnAOrxdaVAVTpvKWLyAGddt9thq10t9ChzopPCr1Fsx085EYW7fN6iY0
+         Z2ID1QnpxWT55AIviv7CRqO4wYN8GHb1CsALOGS4JhJNxQmVRjxQUbbNLmRJjNJ9u4u9
+         xlK719IeIkEUOpNXqrjZnJmgktjYjFc9hNS5v14ZvcK0R6hijzdE++2We3xcrib9PKkZ
+         Tuy8CP+e55drzqukzAK8f0XpAcJ6AcLryHnz2gK6L//la5FyfkA89/LDb5tqUC8FB2tC
+         NidA==
+X-Forwarded-Encrypted: i=1; AJvYcCWCo8r627d2y+hid8sbTsfTsCtdl76u7BQFH2hg9Qo+eReKaQ0/YBsoAJ7oexGozhjp4dM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx1X3GP/ZmY8YMTrVUVd2+qh4gw8p55dri720fxFfPcu09biUS2
+	j5o73Ffteq8LrKRRjIm0sZiD8uJwLjOw2MAAQmU8WMFU4QnmsWwjNQsnTCiYeIPzxHyt7IV0xK5
+	kXnnzXYmN5c58akDf3K/196oiUZPOxrE=
+X-Gm-Gg: ASbGncsBWEGfYvh7rTW8kJ3/bHNrBMySBl9oNs7ez8ZIS8ruSoluKAchgUh3Ec4NM+Q
+	Q95uuu4wB5t0idTeYAiOkgVlUtzsgAkuV1RN1AsCwDQ0rUIMPjGJh0sHFbRivwew0oCjzLr+ryb
+	w72JSas9SQOlsmWjbswOJaFAiiq3M1HpKURDwLLBlWDDFAXiArJtJdkkz8rrAXRhYeLHAILj8Sv
+	367rOM/ANCK9XEhyrmIaF+pJG3n33QVhRakJ2XTcxZM/+9kjD7Q2NHazr5P24YEv1fQg7DU
+X-Google-Smtp-Source: AGHT+IHXRnQ7p7daNcKMUvVcNyLnnrepfgyTgUAGmGke/0fpT2ZBX/oGTQ7N+H9IsBxpzIiQCzx2ZsO99wyYQdRPQ6g=
+X-Received: by 2002:a17:907:bb49:b0:b45:eea7:e97c with SMTP id
+ a640c23a62f3a-b6d51c30f7cmr1311731766b.47.1761537719610; Sun, 26 Oct 2025
+ 21:01:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.2082.git.git.1761295094982.gitgitgadget@gmail.com>
+ <aPtCvwvNUtFXqrpv@pks.im> <xmqqikg4qqn2.fsf@gitster.g>
+In-Reply-To: <xmqqikg4qqn2.fsf@gitster.g>
+From: =?UTF-8?B?6Ziu5paw5a6H?= <r200981113@gmail.com>
+Date: Mon, 27 Oct 2025 12:01:44 +0800
+X-Gm-Features: AWmQ_blUZXvbs1bMJuWX2ZGjGlpF1hmeUM3flTSD8fkyE03vduxiXfVyyish-3k
+Message-ID: <CANWnLjtWWOMtSKyB4275ZPZM65xkyNMnaF8u+v62tqgrOb_ByA@mail.gmail.com>
+Subject: Re: [PATCH] refs: add missing remove_on_disk implementation for debug backend
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, RuanXinyu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	RuanXinyu <1096421257@qq.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This is the second part of the SHA-1/SHA-256 interoperability work.  It
-introduces our first major use of Rust code to implement a loose object
-format as well as preparatory work to make that happen, including
-changing types to more Rust-friendly ones.  Since Rust will be required
-for the interoperability work, we require that in the testsuite.
+On Fri, Oct 24, 2025 at 11:13=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Patrick Steinhardt <ps@pks.im> writes:
+>
+> >> Signed-off-by: Xinyu Ruan <r200981113@gmail.com>
+> >
+> > Tiny nit: typically, the author and DCO should match. But the autor is
+> > "RuanXinyu" whereas the DCO says "Xinyu Ruan". I don't really think tha=
+t
+> > this is something that warrants a new version, but I wanted to point
+> > this out anyway so that you can fix this going forward.
+>
+> It may not warrant a new version in the sense that I could tweak
+> while queuing, but I need to be told which between the two is the
+> name to be used before doing so.
+>
+> I can make a guess and use the latter but it would cause me yet
+> another piece of extra work if I guessed incorrectly, so...
 
-We also verify that our object ID algorithm is valid when looking up
-data in the hash map since the Rust code intentionally has no knowledge
-about global mutable state like the_repository and so cannot default to
-the main hash algorithm when we've zero-initialized a struct object_id.
-
-The advantage to this Rust code is that it is comprehensively tested
-with unit testing.  We can serialize our loose object map and then
-verify that we can also load it again and perform various testing, such
-as whether certain object IDs are found in the map and mapped correctly.
-We can also test our slightly subtle custom binary search code
-effectively and be confident that it works, since Rust doesn't provide a
-way to binary search slices of variable length.
-
-The new Rust files have adopted an approach that is slightly different
-from some of our other files and placed a license notice at the top.
-This is required because of DCO part (a): "I have the right to submit it
-under the open source license indicated in the file".  It also avoids
-ambiguity if the file is copied into a separate location (such as an LLM
-training corpus).
-
-brian m. carlson (14):
-  repository: require Rust support for interoperability
-  conversion: don't crash when no destination algo
-  hash: use uint32_t for object_id algorithm
-  rust: add a ObjectID struct
-  rust: add a hash algorithm abstraction
-  hash: add a function to look up hash algo structs
-  csum-file: define hashwrite's count as a uint32_t
-  write-or-die: add an fsync component for the loose object map
-  hash: expose hash context functions to Rust
-  rust: add a build.rs script for tests
-  rust: add functionality to hash an object
-  rust: add a new binary loose object map format
-  rust: add a small wrapper around the hashfile code
-  object-file-convert: always make sure object ID algo is valid
-
- Documentation/gitformat-loose.adoc | 104 ++++
- Makefile                           |   5 +-
- build.rs                           |  21 +
- csum-file.c                        |   2 +-
- csum-file.h                        |   2 +-
- hash.c                             |  46 +-
- hash.h                             |  38 +-
- object-file-convert.c              |  14 +-
- oidtree.c                          |   2 +-
- repository.c                       |  13 +-
- repository.h                       |   4 +-
- serve.c                            |   2 +-
- src/csum_file.rs                   |  81 +++
- src/hash.rs                        | 335 +++++++++++
- src/lib.rs                         |   3 +
- src/loose.rs                       | 912 +++++++++++++++++++++++++++++
- src/meson.build                    |   3 +
- t/t1006-cat-file.sh                |  82 ++-
- t/t1016-compatObjectFormat.sh      |   6 +
- t/t1500-rev-parse.sh               |   2 +-
- t/t9305-fast-import-signatures.sh  |   4 +-
- t/t9350-fast-export.sh             |   4 +-
- t/test-lib.sh                      |   4 +
- write-or-die.h                     |   4 +-
- 24 files changed, 1619 insertions(+), 74 deletions(-)
- create mode 100644 build.rs
- create mode 100644 src/csum_file.rs
- create mode 100644 src/hash.rs
- create mode 100644 src/loose.rs
-
+Please use "Xinyu Ruan" for both author and Signed-off-by.
+Sorry for the confusion, and thanks for fixing it while queuing.
