@@ -1,49 +1,49 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759AF2A8C1
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 00:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE7230EF74
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 00:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761525878; cv=none; b=tZ46biIlI+FHLrr9hvEfqdU23naNv+O1Zf1tw1qbNhrMQI4oml4xSvjUT2hVkNK5FWBuB4KYfqvvc+KHKcYDds1sY6mewHwZXCs4NuQJilA1FwoSa392OCz2ZkgUXSULDt7PI8VAxC2IvA8zaRIWkUxSkPEKfBfPVvULK1fF6Qk=
+	t=1761526436; cv=none; b=qTrFrC19xmpK2wOdQw/4i3XKA9ED/qMDcCqqfpEpfA/ozz3U1jjBFsGXwjCmAzP5Y3yag6FnfNVkj2eOSRwFZxWcep57VSwq1IACa+QiJOu7rqAGE+PWbcrOJ9D+JFlZ9RGTOSSqpVo48LQfwba6Iy4/ydGOSVjF0xG4WfJ27Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761525878; c=relaxed/simple;
-	bh=PQ1Km+sjwruAYF8OrtPfhH5zwVv5Gm+vZnoEXlloqeI=;
+	s=arc-20240116; t=1761526436; c=relaxed/simple;
+	bh=482ZHGxYMsu+Ip8/3yWXDJTrCp9rCbjt57+JhCNr0NM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vmwo4HXDRjTsuZMovv0aamPOjVIb5MyieNV93OMpc5DrYojb9zOKmxITl+ea4PZsba3NGdr4rL9Z/kPLrQsqm3t6yK2YGd4MRDyPFUd6/Tp/slKo9LtircQZnYDf3DykfVuNxqHeEz9pvqDrc7TP/1wQrYHsessanzIvuIpbe2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=N7946bHP; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=S4hc+D0x8B4OVfbSlgclyHdkqGLKtmUkNI2vNiFF4GgLVATfkFk/vAlX5pjrlCbdkoq2gdn7dminGvpKQW+8ynmPsL8UnHyhZG/X3zJRbsCrAGWnNN+aWEZVDL9ReKkMWhrc2wmdlO6fv/neGbmiGSvJDE2dpFbJRPak5ZVPdkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=sewnGFCk; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="N7946bHP"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="sewnGFCk"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1761525867;
-	bh=PQ1Km+sjwruAYF8OrtPfhH5zwVv5Gm+vZnoEXlloqeI=;
+	bh=482ZHGxYMsu+Ip8/3yWXDJTrCp9rCbjt57+JhCNr0NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=N7946bHPsqoI5nFY4AdzC6SCA1b2emveq4qg4y6n5WIp+HKjlEjXdHKAcMVbbuYx5
-	 FPZafORd+LDTZQfdOhZnHIGDBuIoDabYNNrw5oTAa6LaXuFps9jCB/miPxOjUq28ct
-	 0srROnOhKygP15uqAiZV4DghwU5Q00lckYwfQhU2kFsKIQyIuOS9wICs1nFi9adYDZ
-	 /qMOt2XFI+Ytj7+ASplBVamI8XfAa78ESK4xNPTZY3K8akLuDDBdYg9UfJR8Kl+JT7
-	 4eY7o118stYtrydftC4KHLbgF/Dd8eA0ur2bFEfB54/S/dDLbJY4+eKIT/EZBd/vuu
-	 GbEI0wJ1wiGRSP9KxNPmcdtOGASfWKI8d8p++FWyepCtL4DCKsZ/cEXZkS9EyBr2Mx
-	 Nu0BKnYdZuHC5JpxFHsuvaK69AmGsHDAXwHlDqPDQqEqafqiyiyEhSPeU2HDsD5/ID
-	 K6ngdN5qxt94SlnC8cesXicCmpGjbznYHq8/PXhoYYMiTE5X26O
+	b=sewnGFCkjKdqI8mVv+SKqcW4dfuMv34MXbCycyEKZukrFUQrH0eIsWa0WZiSZF4oP
+	 EltZEf7vxb9Hxj1ILGSaGi+cq6lUk5Es8SRFd5d9YCD0eGyiHrMOb4YMkxWDhbsgsD
+	 xJkNjtqnoO4K2Ig7+XY3vFMo9Wp4USHhSbVyuQ0XFu+vUf8ZAr9NzLhHH7rjCtsSll
+	 K/Gp2xPzS3lW/2Q4Ih7gA0pGE9S/B2djvgTTYgXPuJzrFpRjZEBo4Xonm7y1foh1mC
+	 HYeT3+hWeSEfMFtoegB98/hj5/OhHuyrJkSGLsbPVmuh1bU7B9ZJ/ExjhCJ0b9HJr7
+	 fLzVDUHuEcNtiZB8cGsU3xGFR2TARc5NczAtXKuGFjxzxwkjVU3e172wMwJjhuJeGM
+	 /mclXaSoOZXxk7a0Ofs/q3ZR2bRnh8aWa3+OBW2Hb/freknmnjVFnfMM9ViHgvfDf0
+	 IZRW99YYPh1ZzYZNmGRrpH7/xYYMcXfqdGaSI2HsELjPWdNonUp
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:5675:b769:afe:3fa2])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C431E201A2;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8B71D20152;
 	Mon, 27 Oct 2025 00:44:27 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: [PATCH 08/14] write-or-die: add an fsync component for the loose object map
-Date: Mon, 27 Oct 2025 00:43:58 +0000
-Message-ID: <20251027004404.2152927-9-sandals@crustytoothpaste.net>
+Subject: [PATCH 02/14] conversion: don't crash when no destination algo
+Date: Mon, 27 Oct 2025 00:43:52 +0000
+Message-ID: <20251027004404.2152927-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
 In-Reply-To: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
 References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
@@ -55,33 +55,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-We'll soon be writing out a loose object map using the hashfile code.
-Add an fsync component to allow us to handle fsyncing it correctly.
+When we set up a repository that doesn't have a compatibility hash
+algorithm, we set the destination algorithm object to NULL.  In such a
+case, we want to silently do nothing instead of crashing, so simply
+treat the operation as a no-op and copy the object ID.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- write-or-die.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ object-file-convert.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/write-or-die.h b/write-or-die.h
-index 65a5c42a47..8d5ec23e1f 100644
---- a/write-or-die.h
-+++ b/write-or-die.h
-@@ -21,6 +21,7 @@ enum fsync_component {
- 	FSYNC_COMPONENT_COMMIT_GRAPH		= 1 << 3,
- 	FSYNC_COMPONENT_INDEX			= 1 << 4,
- 	FSYNC_COMPONENT_REFERENCE		= 1 << 5,
-+	FSYNC_COMPONENT_LOOSE_OBJECT_MAP	= 1 << 6,
- };
+diff --git a/object-file-convert.c b/object-file-convert.c
+index 7ab875afe6..e44c821084 100644
+--- a/object-file-convert.c
++++ b/object-file-convert.c
+@@ -23,7 +23,7 @@ int repo_oid_to_algop(struct repository *repo, const struct object_id *src,
+ 	const struct git_hash_algo *from =
+ 		src->algo ? &hash_algos[src->algo] : repo->hash_algo;
  
- #define FSYNC_COMPONENTS_OBJECTS (FSYNC_COMPONENT_LOOSE_OBJECT | \
-@@ -44,7 +45,8 @@ enum fsync_component {
- 			      FSYNC_COMPONENT_PACK_METADATA | \
- 			      FSYNC_COMPONENT_COMMIT_GRAPH | \
- 			      FSYNC_COMPONENT_INDEX | \
--			      FSYNC_COMPONENT_REFERENCE)
-+			      FSYNC_COMPONENT_REFERENCE | \
-+			      FSYNC_COMPONENT_LOOSE_OBJECT_MAP)
- 
- #ifndef FSYNC_COMPONENTS_PLATFORM_DEFAULT
- #define FSYNC_COMPONENTS_PLATFORM_DEFAULT FSYNC_COMPONENTS_DEFAULT
+-	if (from == to) {
++	if (from == to || !to) {
+ 		if (src != dest)
+ 			oidcpy(dest, src);
+ 		return 0;
