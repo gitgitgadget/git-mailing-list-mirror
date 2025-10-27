@@ -1,216 +1,136 @@
-Received: from out01.mta.xmission.com (out01.mta.xmission.com [166.70.13.231])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A451830F92F
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 16:52:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.70.13.231
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8327238149
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 17:09:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761583969; cv=none; b=sMfDWk2ez4V3/YSGdmFNVdkcvKJp1NCcDIgeXXuzeoLJh+tDf6MBGUrxxAjHvKoybvLemwf2RseSfYVbTv2UDnbbrBLZb6gY8IHwgArlAtj1tTBQAhMjnl+Bd1DnuOAqY34OB5PG8piKYe+fxrpFNjL9+8UwWbHS05+vnUR5J68=
+	t=1761584984; cv=none; b=Egmv+ZloZypv11QpzN6/xq6AzECp3D/JmzkpzE1yhO5XDWHWfQm8To4ejTgPyBGZSsCuH56HMCShq2xlEyNANPTFrqf+QYnUFJEYbIV7Fu9X3Geh7IQcpsO58a/yYAaEocNqAYkfEFaU9HTUAydfz7A6XxLc4dSOH+k1namrGqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761583969; c=relaxed/simple;
-	bh=Z6lXrgh0szIy9vbeqOXkFH+S9uxmDHYfOXTc9ixj6kw=;
-	h=From:To:Cc:In-Reply-To:References:Date:Message-ID:MIME-Version:
-	 Content-Type:Subject; b=ppHq/e3zi0O+4uFenG4VM4yJMChtSp+J2aL2qN2p3OXtlf0Fypqx8w5Bxv1qFSadZVjWmXsEqm9khDwaAFcYPLbwkw1IA4hBCaBlEmOJaeks/2UjcRQcQazeMPeGG3J++kFjG26qFw1Mpp7HiYcQsnDwZbinDX+v7Zf1ZB0QbYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xmission.com; spf=pass smtp.mailfrom=xmission.com; arc=none smtp.client-ip=166.70.13.231
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xmission.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=xmission.com
-Received: from in02.mta.xmission.com ([166.70.13.52]:51416)
-	by out01.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.93)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1vDPtq-00G3tS-QA; Mon, 27 Oct 2025 10:16:50 -0600
-Received: from ip72-198-198-28.om.om.cox.net ([72.198.198.28]:42556 helo=email.froward.int.ebiederm.org.xmission.com)
-	by in02.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.93)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1vDPtp-00422J-NR; Mon, 27 Oct 2025 10:16:50 -0600
-From: "Eric W. Biederman" <ebiederm@xmission.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Todd Zullinger <tmz@pobox.com>,  git@vger.kernel.org,  Kousik
- Sanagavarapu <five231003@gmail.com>,  brian m. carlson
- <sandals@crustytoothpaste.net>
-In-Reply-To: <xmqqbjlump3m.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
-	25 Oct 2025 18:25:01 -0700")
-References: <20240703153738.916469-1-tmz@pobox.com>
-	<ZoV8b2RvYxLOotSJ@teonanacatl.net> <Z8HVkqqD054QGPIE@teonanacatl.net>
-	<xmqqbjlump3m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Mon, 27 Oct 2025 11:16:45 -0500
-Message-ID: <87zf9c8glu.fsf@email.froward.int.ebiederm.org>
+	s=arc-20240116; t=1761584984; c=relaxed/simple;
+	bh=GDoQbneIufEMrIjuXunTJLGbRpa8RAoL38wEiInX1iY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ude0R1yFn0GmszJpKC/wEi5f2hjCiVfk1YzyjxAqIbBCVmu846++iK0RxWlOcJfcT3gJoZpBumRCbI17dLfijV3SZQbs1+WnkoXplhtavxP9e56ZmljUgqGPRgP89fruOPcpKE9d6NzPN4j+f5Ppy0oJCrwnDV6gKukvc/FPqps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lyPTYEJv; arc=none smtp.client-ip=209.85.128.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lyPTYEJv"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7815092cd0bso60076937b3.2
+        for <git@vger.kernel.org>; Mon, 27 Oct 2025 10:09:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761584981; x=1762189781; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1dv3KPiMRn4A93DADzQYvZJV7934ZO1ZfAHLBsTTq58=;
+        b=lyPTYEJvCwqMRMvUQkkXfNivPxCcraDOb0sOL464vAcUHQIPYFtt7F869BAWo1qnRh
+         kyMeVGsm2hAoQYDZSSttuV6txb4oOb7hpza79x4zlki9oqULtuBGdde0FMmrJdrNzmvO
+         CeYyynGVQHLoGNltoPxy43BjISITeKRB+GZXnYe9Pu0iU1BQW1vF/azy0NC6UuBdC9Rt
+         X7/mDGECMyXtb8sh8uRHNGevSYqXR6ePqu6VWxMk4yX/rG0WdWW99xjBKMPT1N3ArJwz
+         Fj/ba3iAWinWWXcd/414r+3D+wfc/3oUAT0CARkoUveSezbeGQdPZ7vkHwFjePDYbaux
+         XwSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761584981; x=1762189781;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1dv3KPiMRn4A93DADzQYvZJV7934ZO1ZfAHLBsTTq58=;
+        b=oSHNLo2FOzRaRO3Ev9nEpBopv86cV92fdJwFe2a4U2qQ8yEwWZlPq58sp03uZGd4ph
+         POXcy7N68205c+SLX9JLmb4x/9zGOFDUtK8CMixbhRYojiqf+8wUTkkqXq7etjWy2liR
+         svSVdfa4/RMlydBN8y9EmyKxsuRFwgQQavd66lez/60ZKdPPyB8qJkX7i51b+OLyhouO
+         TQVKXTCSN/jPZxcFNstM1+j8Q10P/b4QJkzPi8lDl+Zjr3JEVK+czNMfOmP796U1aTVO
+         r8cgLNO2/RZXcINOv3GKkWlM/EA9CqXslzxnDTasBvKnO2YjigHlUY8WzPWGs54ocuoA
+         LFqw==
+X-Gm-Message-State: AOJu0YyUcHeclck42DQhLGlmFEcC7Fr/8RFQip77Z0MkkphpmiAXp1ru
+	tLn32Q/JwRu0m/4ZDBaO0NWTRryeBhTn3R+Pf6YEHMExPqZmTFLffur5cZ+3ZEO6fLR9grVAdV0
+	IVuh1l59j9PYQRFfpcNQsel7IK/+Kix8=
+X-Gm-Gg: ASbGncs/rGJhoXcJH/PxYTOl/WiYWd5A41QX14tKtBuvmR1z0k1SLteKDMwrJsEoCH5
+	ZS8/5jYiIbjeyl77W/CQ5rV2tw+5M/hcdFx3gIL/BkAY6oX27cmDwrJKoYt/rHij70CIBqwok3l
+	vS3RnpSrIi2UMONLvual5l8N3tY4WJTB/D4uw4Gg/IwSXoB7y/wqylfyHTtvcVResoQZ2Y8QAN5
+	NRQk6i/mlqWGlOrsQMofipAeMgiVZUSPvw6bW3aBGLINQhbuZJT7Qp10w8j6pHNEQ==
+X-Google-Smtp-Source: AGHT+IH2uCBnfEdTRiI4PCtip+4C/Qty6wEk+EDAz1y/r+tquTBKqyQqGffAapi/2msCJoRaZNk1hZXKHEBthgIFPvs=
+X-Received: by 2002:a05:690c:b11:b0:783:7081:c483 with SMTP id
+ 00721157ae682-78617ff1fc1mr9087577b3.63.1761584981574; Mon, 27 Oct 2025
+ 10:09:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-SPF: eid=1vDPtp-00422J-NR;;;mid=<87zf9c8glu.fsf@email.froward.int.ebiederm.org>;;;hst=in02.mta.xmission.com;;;ip=72.198.198.28;;;frm=ebiederm@xmission.com;;;spf=pass
-X-XM-AID: U2FsdGVkX1/p0FtHpaGEZLnQyMqY0pWj5OsisLrv74A=
-X-Spam-Level: ***
-X-Spam-Virus: No
-X-Spam-Report: 
-	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
-	* -0.5 BAYES_40 BODY: Bayes spam probability is 20 to 40%
-	*      [score: 0.2160]
-	*  0.7 XMSubLong Long Subject
-	*  1.5 XMNoVowels Alpha-numberic number with no vowels
-	*  1.2 LotsOfNums_01 BODY: Lots of long strings of numbers
-	*  0.0 T_TM2_M_HEADER_IN_MSG BODY: No description available.
-	* -0.0 DCC_CHECK_NEGATIVE Not listed in DCC
-	*      [sa02 1397; Body=1 Fuz1=1 Fuz2=1]
-	*  0.2 XMLngstWrd_01 words over 55 charachters don't exist
-	*  0.2 XMLngstWrd_00 words over 45 charachters don't exist
-	*  1.0 XM_B_SpammyTLD Contains uncommon/spammy TLD
-	*  0.0 T_TooManySym_01 4+ unique symbols in subject
-X-Spam-DCC: XMission; sa02 1397; Body=1 Fuz1=1 Fuz2=1 
-X-Spam-Combo: ***;Junio C Hamano <gitster@pobox.com>
-X-Spam-Relay-Country: 
-X-Spam-Timing: total 603 ms - load_scoreonly_sql: 0.03 (0.0%),
-	signal_user_changed: 3.7 (0.6%), b_tie_ro: 2.6 (0.4%), parse: 0.76
-	(0.1%), extract_message_metadata: 15 (2.4%), get_uri_detail_list: 3.0
-	(0.5%), tests_pri_-2000: 9 (1.5%), tests_pri_-1000: 1.85 (0.3%),
-	tests_pri_-950: 0.94 (0.2%), tests_pri_-900: 0.77 (0.1%),
-	tests_pri_-90: 128 (21.2%), check_bayes: 125 (20.6%), b_tokenize: 8
-	(1.4%), b_tok_get_all: 9 (1.6%), b_comp_prob: 2.4 (0.4%),
-	b_tok_touch_all: 101 (16.7%), b_finish: 0.81 (0.1%), tests_pri_0: 433
-	(71.7%), check_dkim_signature: 0.43 (0.1%), check_dkim_adsp: 2.7
-	(0.5%), poll_dns_idle: 1.33 (0.2%), tests_pri_10: 1.79 (0.3%),
-	tests_pri_500: 7 (1.1%), rewrite_mail: 0.00 (0.0%)
-Subject: Re: [PATCH 0/2] t/lib-gpg: ensure GNUPGHOME is created as needed
-X-SA-Exim-Connect-IP: 166.70.13.52
-X-SA-Exim-Rcpt-To: sandals@crustytoothpaste.net, five231003@gmail.com, git@vger.kernel.org, tmz@pobox.com, gitster@pobox.com
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-X-SA-Exim-Scanned: No (on out01.mta.xmission.com); SAEximRunCond expanded to false
+References: <20251027111600.1481-1-qjessa662@gmail.com> <xmqqms5cl6t8.fsf@gitster.g>
+ <CA+JX8Fq+HwKX0Zkf59kiC=GaQwFJ1DPTgHGVnJ25t8c8vjw9yg@mail.gmail.com>
+ <xmqq8qgwjpo5.fsf@gitster.g> <xmqq4irkjpek.fsf@gitster.g>
+In-Reply-To: <xmqq4irkjpek.fsf@gitster.g>
+From: Queen Jessa <qjessa662@gmail.com>
+Date: Mon, 27 Oct 2025 18:09:30 +0100
+X-Gm-Features: AWmQ_bn7uuEm8lC25_MYO7LNFdGF2DbnsChSn-VmPpG2HkUGzlnRUX08FF46zoA
+Message-ID: <CA+JX8Fq-7Vy7TXB4cfxCJNouBAYzjyaqtA-mxSiGUiNm1DRs8Q@mail.gmail.com>
+Subject: Re: [PATCH v3] MyFirstContribution: add note on confirming patches
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, 
+	usmanakinyemi202@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+okay. Thank you
 
-> Todd Zullinger <tmz@pobox.com> writes:
+
+On Mon, Oct 27, 2025 at 5:11=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
->> I've intended to dig into it further over the past few
->> months but have not managed to spend enough time to work out
->> the root of the problem.
->>
->> I hope that someone more familiar with these tests (or
->> perhaps someone with fresh eyes) will spot the problem.
->>> 
->>> A number of these fail, e.g.:
->>> 
->>> https://github.com/tmzullinger/git/actions/runs/9780387020/job/27001952643#step:4:1871
->>> 
->>>     Error: failed: t1016.173 Verify commit signedcommit4's sha1 oid
->>>     failure: t1016.173 Verify commit signedcommit4's sha1 oid 
->>> 	    git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} > ${name}_sha1 &&
->>> 	    test_cmp ${name}_sha1 ${name}_sha1_expected
->>>       
->>>       + git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 5d70155cc40e4c16515c89ad0b11d8c691436fc4a4d3ca246669a4c21f07e454
->>>       + test_cmp signedcommit4_sha1 signedcommit4_sha1_expected
->>>       + test 2 -ne 2
->>>       + eval diff -u "$@"
->>>       + diff -u signedcommit4_sha1 signedcommit4_sha1_expected
->>>       --- signedcommit4_sha1	2024-07-03 15:11:05.597537579 +0000
->>>       +++ signedcommit4_sha1_expected	2024-07-03 15:11:05.553537766 +0000
->>>       @@ -1 +1 @@
->>>       -9179ccc5b15588bc3a45c5cc75bdec380f8ccb86
->>>       +c6c46f92bc2cfda57ad6bf7981fa654825376b24
->>>       error: last command exited with $?=1
->>>       not ok 173 - Verify commit signedcommit4's sha1 oid
->>>       #	
->>>       #		git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} > ${name}_sha1 &&
->>>       #		test_cmp ${name}_sha1 ${name}_sha1_expected
->>>       #	
->>> 
->>> This seems like it's just exposing a pre-existing failure,
->>> as I can't imagine how creating GNUPGHOME would cause the
->>> actual and expected SHA's to differ. :)
-
-Hmm. Let me see.
-
-The test goes through and creates 2 repositories, one sha1 and the other
-sha256.
-
-In those repositories a gpg signed commit is created.
-That gpg signed commit should contain both the signed sha1
-and the signed sha256 gpg signatures.  As both object-format
-and compat-object-format are set in the config.
-
-Then the commit is extracted and one of the signatures removed.
-
-Then the oid of the signed commit with only a single signed gpg
-signature is computed.
-
-In the sha256 repository the sha256 oid is given to get the sha1 oid.
-
-That sha1 oid is of the signed gpg commit is compared with the
-previously computed sha1 oid.
-
-So I think a messed up GNUPGHOME could result in the wrong signing
-key being used.  Though how that signing key could be inconsistent
-from one part of the test to the other I don't know.
-
-Not seeing t/t1016/gpg as the gpg program does look like a more
-likely cause of the error there.
-
->>> 
->>> Perhaps the intended gpg wrapper script which sets
->>> `--faked-system-time` isn't being used?
->>> 
->>> I'm not sure why that would differ in the Github actions
->>> from my local builds, but I don't know what else differs in
->>> the Ubuntu images and/or environment used by the actions.
->>
->> I have run a good number of builds with the patches applied
->> and t1016-compatObjectFormat regularly fails for all of the
->> tests which use the GPG2 prereq.  A recent Github CI run is
->> here:
->>
->>     https://github.com/tmzullinger/git/actions/runs/13570544425
->>
->> I think this test flakiness should be fixed so that we can
->> apply the patch to fix the GPG2 prereq.  As it is, we're
->> skipping _all_ of the tests which require GPG2.
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Any progress or responses?  All of these tests, that nobody seemed
-> to have caught breakage of because they weren't being run anyway,
-> seem to be flakey with the new GNUPGHOME set-up.
+> > I can make the author identity and sign-off of the version I queue
+> > consistent locally before applying to save an extra patch exchange,
+> > of course.  But now I am not sure if I understand your preference
+> > correctly.
 >
-> I am tempted to do this in the meantime, but I'd really prefer not
-> to have to do so, assuming that these tests, when fixed, would be
-> materially contributing to the health of our codebase.
-
-I just dug into this a little and hopefully I have paged enough
-state back to understand this.
-
-In my testing a missing GNUPGHOME appears enough to prevent the
-prerequisite from succeeding. So let's fix that. Todd Zullinger's sent
-some nice patches to do that (up-thread), or you can take use my minimal
-version.
-
-The only possible source of flakiness in the tests I can see is the
-possibility of t/t1016/gpg not getting called (which uses a fixed
-timestamp).  It appears you just fixed that problem in commit
-516bf45749bb ("t1016: make sure to use specified GPG").
-
-With that commit reverted I can reproduce the flakiness locally
-by just running the test manually a few times.
-
-I believe I used the GPG2 prereq because I don't have the older version
-of GPG to test with.  So I don't know if t1016 would work on the older
-version of GPG or not.
-
-
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index 937b876bd052..c4bbedfe081e 100644
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -62,6 +62,8 @@ test_lazy_prereq GPG2 '
- 		exit 1
- 		;;
- 	*)
-+		mkdir "$GNUPGHOME" &&
-+		chmod 0700 "$GNUPGHOME" &&
- 		(gpgconf --kill all || : ) &&
- 		gpg --homedir "${GNUPGHOME}" --import \
- 			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
-
-
-Eric
+> For now, I'll queue the following for this topic.  Thanks!
+>
+> ----- >8 -----
+> From: Queen Ediri Jessa <qjessa662@gmail.com>
+> Date: Mon, 27 Oct 2025 12:16:00 +0100
+> Subject: [PATCH] MyFirstContribution: add note on confirming patches
+>
+> Add a note after the `git send-email` section explaining how
+> contributors can confirm that their patches reached the mailing
+> list by checking https://lore.kernel.org/git/. This helps
+> contributors verify that their emails were successfully delivered.
+>
+> Signed-off-by: Queen Ediri Jessa <qjessa662@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/MyFirstContribution.adoc | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFir=
+stContribution.adoc
+> index 02ba8ba5f6..f186dfbc89 100644
+> --- a/Documentation/MyFirstContribution.adoc
+> +++ b/Documentation/MyFirstContribution.adoc
+> @@ -1153,6 +1153,11 @@ NOTE: When you are sending a real patch, it will g=
+o to git@vger.kernel.org - but
+>  please don't send your patchset from the tutorial to the real mailing li=
+st! For
+>  now, you can send it to yourself, to make sure you understand how it wil=
+l look.
+>
+> +NOTE: After sending your patches, you can confirm that they reached the =
+mailing
+> +list by visiting https://lore.kernel.org/git/. Use the search bar to fin=
+d your
+> +name or the subject of your patch. If it appears, your email was success=
+fully
+> +delivered.
+> +
+>  After you run the command above, you will be presented with an interacti=
+ve
+>  prompt for each patch that's about to go out. This gives you one last ch=
+ance to
+>  edit or quit sending something (but again, don't edit code this way). On=
+ce you
+> --
+> 2.51.2-678-g0cd646409c
+>
