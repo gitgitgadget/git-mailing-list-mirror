@@ -1,217 +1,139 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704481411DE
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 11:16:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF53B2F9DAE
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 11:21:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761563774; cv=none; b=ezQb5kwoYZQzzex52b3nCtRhovPNGMRM+5UyUDFuST4DuVE15GIMFfeOpT/KQx3QXYCyh/i4Pq6qlfzxyZYZVedicQz5MhZt4jG8cX/9ctZCXGoUS1Onu+XBBbezicf/AZec/gE+NCx6iQaR9IhEqGSh+In9o8rLHI0YToVVBt8=
+	t=1761564099; cv=none; b=CiejGi6hv3JqvJ9TKa4eZzeOMNF3seRahAUv2qVK3FkZjTiQiBHz2KtcuSIqqdfAbfEJP4gnRWKGOMukORkKOrNahty0rqjk9QzV7VLwP0NC7p4aSBzx+JHFqaAoHLxkvF6WFS2zMDcFtfP4hpinFTiug+r10gflZF+ynosnjjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761563774; c=relaxed/simple;
-	bh=4batqbcdKC0JhBeI4C6YcsU1C/CG7Ze3CVyF5UJM3NU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ryiq57AwK88hinz0wZ2ZTcbQA3eQ9srImhAH2JLn889t5O/81egv3JpFSaUn1wbEHlE9tU3k4QvoF/aOuPQoAT1NvSutsCMR9NWfQCOfuekE9b3hUunXw5++hedgcwC8wyomudERJ/iyG/B4c58Gk/2n2FulDHDX3fczRtj7h20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DSzf1sqI; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761564099; c=relaxed/simple;
+	bh=Bw5tJQjOhlWbmX9k6Qt09q5L3pC71GDSt7DE3IduwY0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rmHZnOnbpwpOHq8dw9t2EO9/bA7sJPuPwtL7aot79HrzbafKA91rYk1QDxuoQvXS5JbG0soL/IgUexPoAKHhwBvfx6eWcMgf1CrG6WAi+JG8polJiaWEYE8T2yB4mZ6aRpHDlIYuKCB6kajopHYdR4YJRmaYf3F9WCNIrX/KePE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IcmTRb3N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RCUxORfm; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DSzf1sqI"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-42557c5cedcso3037907f8f.0
-        for <git@vger.kernel.org>; Mon, 27 Oct 2025 04:16:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761563769; x=1762168569; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/+S+c26y+y5LuxMCBedHN/1W+FTOvsX+f5psnd8RtOA=;
-        b=DSzf1sqIGRF5ePI8X2exdjfYlkSa/9ezENZa3ECL8oJuewzykQJfcme4phwgA+5LoL
-         M2Ikvh++pJjrvdXVeg1x2chC28etwNTNJ+EAYrcdf5n/fGjGhY3i3L1XKbboREXk0Ybj
-         fJ9g2bBXZvGrV9lmhBh9T/lzkcmWbwdknRHdjHlV28HkxwuDUkeYV1mjg3VhkyqNBf3p
-         00D8CO9iW1dH+sJty8FY1Gn0mFkmiW5sfX4ILlunzuw8wdgpruqNmzGi0Mpe8PCha0mf
-         LSueJJjm/f8XhPnhwt+drUeaOJlOFEaCqSZeke7CpAT/u62sF4kI1U9EeLSfE1crEuRL
-         6EWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761563769; x=1762168569;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/+S+c26y+y5LuxMCBedHN/1W+FTOvsX+f5psnd8RtOA=;
-        b=DVzv6gStRVz3sDWHkP8v046mtyUFmivpCdFfc+w1ERQx+OjduG+eClexlsQJqTO3vq
-         KE+KSezHe26IL8avmfIGk6S+d01BtUa+8+sc90VnRxnxDKOUMjo9y+nJIqvJUjv+8Y8B
-         zMAFqMnsPtyz30obdQMIT1a5EulyXvftCUYR4N3aOXAsFDAJoCAJN/YzVxd8zfo2IboO
-         YKSLLjJ/R8choEMf1U0vp00YZ+pr/UjD1MTNj1X+eZeSsbbwsY9I4T7p5ptKUfnYUZgG
-         bK6CK2w/9HayDbshBujvrhqqrkn+T8UJAllioAANKyVJt3tapJsl09+xTHp+BU0dg0ZL
-         +ERw==
-X-Gm-Message-State: AOJu0Ywv7KOorJmx5+U15skNOEr27OeNd6P8JJhLfNcp2aXgsa5L+yGL
-	ulN/X2FIErAKzUNrn5CkdaSAy6ONysm0O8RnRcRUBwPG3jifmWJAEkXDZb1rneXx
-X-Gm-Gg: ASbGncvNOZcC5vJKSbikXLu/Z6eIUp2GKOgbA2QP7DyayGxI0G0yJU9t+OFg3n9Q30V
-	Zx2nd0U81s4/aGrCn7gZJ4MQrm8WF3OS5dKhoe7qfX1EXzq2HCjTGtvuGyGPhjYA+ESOYajy6Mc
-	7yuKtbiMP7teWgYo5K7D/ja3a31yNJ0r/BuF10MMa1vWe2JjcH1ruDcAGSukMdLWefSlHvfWyRl
-	CPP0HemxNJIaqW/euSCTnCzlWRz6+rE0YLvKKqikVyrMlnffngWz4aphouJn5nPNF8CVoPEcZo3
-	0V+hI7ZbxscN8sdyee2pZtamtpGIuTbAcwdFzaaZayq6atcGiS/YHOJ33OjTmWV1F1n1QHpkAuf
-	ZPmAjT453XNmMgAkBVphUxeWZ0qvMqnFiWM0nKQOLnBOGmXm7l6goAiTEVWhyc8MDLrMbno5ids
-	kEmJ20CV38qmxiLRK3QEefbmuy2rntQY0Gxrxd
-X-Google-Smtp-Source: AGHT+IFD5XZYgox9e6tassQseAXrVsDMlEFVtTGtbVPYuOJ+yJU4UD37Ol+Fg8CpFnvdU+a5vC21fw==
-X-Received: by 2002:a05:6000:428a:b0:425:8559:5d17 with SMTP id ffacd0b85a97d-42704d9457amr23892488f8f.30.1761563769138;
-        Mon, 27 Oct 2025 04:16:09 -0700 (PDT)
-Received: from QueenJ-PC ([105.113.60.244])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475dd4a5cc4sm129109125e9.11.2025.10.27.04.16.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Oct 2025 04:16:08 -0700 (PDT)
-From: QueenJcloud <qjessa662@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	qjessa662@gmail.com
-Subject: [PATCH v3] MyFirstContribution: add note on confirming patches
-Date: Mon, 27 Oct 2025 12:16:00 +0100
-Message-ID: <20251027111600.1481-1-qjessa662@gmail.com>
-X-Mailer: git-send-email 2.51.0.573.gb660e2dcb9
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IcmTRb3N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RCUxORfm"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E1003140006E;
+	Mon, 27 Oct 2025 07:21:36 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Mon, 27 Oct 2025 07:21:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1761564096; x=1761650496; bh=Nf3uhHAw3b
+	2o0e9VcgmwbCzs7syGUTobW/F10IR9h9I=; b=IcmTRb3N4JcU2R2v8vFWuZu8lv
+	FmR7VeayCXtpQPxNupsyOxOCYiv94ozG5HH0THfuc2smFw2yasgH2hlaDEQfHXcJ
+	Iuxkdd8SQjlmExz/Ty4TvPgYc0mN+a2NWPAIEJuXLFvySPAEZSOXy9APnmQC9dS0
+	TDgFq+aR5GghA8e6pZHaDLnkj0KgevyUj+JIiE+b6ADcXP6vhIeYd3qyRXwcKqnf
+	3idTUDhHHHH2wq+L3PSUyq1C/zozzhPXfo+djm9Fa46aakNKXdiR0uwzJ6Tj6SBN
+	gTagf3zwS100q11tkawiHSOqpH7wZsLtVnr3xLnhLxJ/GOdBMQ6MVxkZlWXA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1761564096; x=1761650496; bh=Nf3uhHAw3b2o0e9VcgmwbCzs7syGUTobW/F
+	10IR9h9I=; b=RCUxORfm1uRziD9l3+1zOdM0zNPTWgloDE3R+IgSPvQBarUcBfp
+	oT9m/wEv/UIHzBEh0s6Gz1j0LyuVa/WJgNiraODEmuUKbIReUKj27uJKLgrBsAmc
+	oZFNDJkTtQ9O+wlxGkst2UgL4bDH97UoLugFmjL7LlyKRhyUsbO8Rrw+CyY4g9fH
+	RXnqFCI6PLAHL7A057kQgQVYG18Pkt32BaVuwfkPZUaFfMtqZarhG75usjLslxyF
+	ehKfXIXjQiAe0ZUEOA0OGAwWHS1RjfKLKnW5cdjuL4lrjqc3sz7PC7lU+AS/icbG
+	U+hIt1eTuBUIAYMmCNfmGY0Rcq5f85aX02Q==
+X-ME-Sender: <xms:wFX_aI6QrpWx60lu2EuBRl9xMVk2cmXU0rqzuu0xOZ9ooRRTuKcOvQ>
+    <xme:wFX_aP6_rtBjqqcwEe6jbPW8xN1fQnhsAucSFnIuJl1SIgBeZC63dYZaDh9PyZap_
+    -4IhBv-zkvNLESJB-F2wwYC0sTRTgPxIs5WFpgqdNE48WfebFioeQ>
+X-ME-Received: <xmr:wFX_aFHpVlG_gzS-Ub2JuH8G_hHLhHWNLzm1Dld-v7eEKK-c_gSWjhZ1OfytWFIT00rxzJlQbUbTktG7WyKdHUH_30tChFrZu0CknHdwkg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheejkeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:wFX_aIRmJjRG5u3E-RjysPgJC6o0wzSvkuNgOahW0AiqB06v5Vwx3Q>
+    <xmx:wFX_aOu76pdYvJSdZYPR_sogiV4G5yqK73T26417qtFXadc2R_Ejbg>
+    <xmx:wFX_aHwQAziLpU9BhfR_fZ_F14pHOIsiLOlGHNcK5SVObhmz8s6isw>
+    <xmx:wFX_aI4fAjBiksFQP9pyHutF20-jfBjkoEwUF1GCzBk70RUO1qNfvg>
+    <xmx:wFX_aMT9DJZciLOVGPegnn4dpytsskIe6BLPxAOnGGeUmRYhhmxt_JXK>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 Oct 2025 07:21:35 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 59c192d8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 27 Oct 2025 11:21:34 +0000 (UTC)
+Date: Mon, 27 Oct 2025 12:21:30 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 02/13] odb: introduce `odb_source_new()`
+Message-ID: <aP9VutHav-f37NHw@pks.im>
+References: <20251024-b4-pks-odb-loose-backend-v1-0-1a4202273c38@pks.im>
+ <20251024-b4-pks-odb-loose-backend-v1-2-1a4202273c38@pks.im>
+ <xmqqjz0kp86k.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqjz0kp86k.fsf@gitster.g>
 
-Add a note after the `git send-email` section explaining how
-contributors can confirm that their patches reached the mailing
-list by checking https://lore.kernel.org/git/. This helps
-contributors verify that their emails were successfully delivered.
+On Fri, Oct 24, 2025 at 09:37:39AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > diff --git a/repository.c b/repository.c
+> > index 6faf5c73981..6aaa7ba0086 100644
+> > --- a/repository.c
+> > +++ b/repository.c
+> > @@ -160,20 +160,24 @@ void repo_set_gitdir(struct repository *repo,
+> >  	 * until after xstrdup(root). Then we can free it.
+> >  	 */
+> >  	char *old_gitdir = repo->gitdir;
+> > +	char *objects_path = NULL;
+> >  
+> >  	repo->gitdir = xstrdup(gitfile ? gitfile : root);
+> >  	free(old_gitdir);
+> >  
+> >  	repo_set_commondir(repo, o->commondir);
+> > +	expand_base_dir(&objects_path, o->object_dir,
+> > +			repo->commondir, "objects");
+> >  
+> >  	if (!repo->objects->sources) {
+> > -		CALLOC_ARRAY(repo->objects->sources, 1);
+> > -		repo->objects->sources->odb = repo->objects;
+> > -		repo->objects->sources->local = true;
+> > +		repo->objects->sources = odb_source_new(repo->objects,
+> > +							objects_path, true);
+> >  		repo->objects->sources_tail = &repo->objects->sources->next;
+> > +		free(objects_path);
+> > +	} else {
+> > +		free(repo->objects->sources->path);
+> > +		repo->objects->sources->path = objects_path;
+> >  	}
+> > -	expand_base_dir(&repo->objects->sources->path, o->object_dir,
+> > -			repo->commondir, "objects");
+> >  
+> >  	repo->objects->sources->disable_ref_updates = o->disable_ref_updates;
+> 
+> Everything else is straight-forward, but this one is trickier.  When
+> the .sources structure already exists, we used to just change the
+> path in it, but now because creation of .sources structure requires
+> path to be computed beforehand, we need an "else" clause to handle
+> the "when we already had .sources when we enter this section of
+> code" case.
 
-Signed-off-by: QueenJcloud <qjessa662@gmail.com>
----
-Changes since v2:
-- Distinctive/correct name to the email
-- Added changelog note after '---'
-- Removed extra blank line at the end of the section
-- No other text or formatting changes
----
- Documentation/MyFirstContribution.adoc        |  6 ++-
- ...bution-add-note-on-confirming-patche.patch | 39 ++++++++++++++++
- ...bution-add-note-on-confirming-patche.patch | 46 +++++++++++++++++++
- 3 files changed, 90 insertions(+), 1 deletion(-)
- create mode 100644 v2-0001-MyFirstContribution-add-note-on-confirming-patche.patch
- create mode 100644 v3-0001-MyFirstContribution-add-note-on-confirming-patche.patch
+Yeah. I plan on revamping this area so that we create the primary object
+source only after we have figured out all details about the repository.
+But for now we'll continue to reach into the already allocated source
+and replace its path.
 
-diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index 02ba8ba5f6..95f96b8451 100644
---- a/Documentation/MyFirstContribution.adoc
-+++ b/Documentation/MyFirstContribution.adoc
-@@ -1153,11 +1153,15 @@ NOTE: When you are sending a real patch, it will go to git@vger.kernel.org - but
- please don't send your patchset from the tutorial to the real mailing list! For
- now, you can send it to yourself, to make sure you understand how it will look.
- 
-+NOTE: After sending your patches, you can confirm that they reached the mailing
-+list by visiting https://lore.kernel.org/git/. Use the search bar to find your
-+name or the subject of your patch. If it appears, your email was successfully
-+delivered.
-+
- After you run the command above, you will be presented with an interactive
- prompt for each patch that's about to go out. This gives you one last chance to
- edit or quit sending something (but again, don't edit code this way). Once you
- press `y` or `a` at these prompts your emails will be sent! Congratulations!
--
- Awesome, now the community will drop everything and review your changes. (Just
- kidding - be patient!)
- 
-diff --git a/v2-0001-MyFirstContribution-add-note-on-confirming-patche.patch b/v2-0001-MyFirstContribution-add-note-on-confirming-patche.patch
-new file mode 100644
-index 0000000000..0e29510cba
---- /dev/null
-+++ b/v2-0001-MyFirstContribution-add-note-on-confirming-patche.patch
-@@ -0,0 +1,39 @@
-+From b6e46728e3ce0714c03b9af548b734deadd95ca3 Mon Sep 17 00:00:00 2001
-+From: QueenJcloud <qjessa662@gmail.com>
-+Date: Fri, 24 Oct 2025 13:58:14 +0100
-+Subject: [PATCH v2] MyFirstContribution: add note on confirming patches
-+
-+Add a note after the `git send-email` section explaining how
-+contributors can confirm that their patches reached the mailing
-+list by checking https://lore.kernel.org/git/.
-+
-+Signed-off-by: QueenJcloud <qjessa662@gmail.com>
-+---
-+ Documentation/MyFirstContribution.adoc | 6 ++++++
-+ 1 file changed, 6 insertions(+)
-+
-+diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-+index 02ba8ba5f6..6e7f3036bb 100644
-+--- a/Documentation/MyFirstContribution.adoc
-++++ b/Documentation/MyFirstContribution.adoc
-+@@ -1153,11 +1153,17 @@ NOTE: When you are sending a real patch, it will go to git@vger.kernel.org - but
-+ please don't send your patchset from the tutorial to the real mailing list! For
-+ now, you can send it to yourself, to make sure you understand how it will look.
-+ 
-++NOTE: After sending your patches, you can confirm that they reached the mailing
-++list by visiting https://lore.kernel.org/git/. Use the search bar to find your
-++name or the subject of your patch. If it appears, your email was successfully
-++delivered.
-++
-+ After you run the command above, you will be presented with an interactive
-+ prompt for each patch that's about to go out. This gives you one last chance to
-+ edit or quit sending something (but again, don't edit code this way). Once you
-+ press `y` or `a` at these prompts your emails will be sent! Congratulations!
-+ 
-++
-+ Awesome, now the community will drop everything and review your changes. (Just
-+ kidding - be patient!)
-+ 
-+-- 
-+2.51.0.573.gb660e2dcb9
-+
-diff --git a/v3-0001-MyFirstContribution-add-note-on-confirming-patche.patch b/v3-0001-MyFirstContribution-add-note-on-confirming-patche.patch
-new file mode 100644
-index 0000000000..d5fe3e0bae
---- /dev/null
-+++ b/v3-0001-MyFirstContribution-add-note-on-confirming-patche.patch
-@@ -0,0 +1,46 @@
-+From ad52256dcdfa5080dcba9451a67af1d3f89ba26d Mon Sep 17 00:00:00 2001
-+From: QueenJcloud <qjessa662@gmail.com>
-+Date: Fri, 24 Oct 2025 13:58:14 +0100
-+Subject: [PATCH v3] MyFirstContribution: add note on confirming patches
-+
-+Add a note after the `git send-email` section explaining how
-+contributors can confirm that their patches reached the mailing
-+list by checking https://lore.kernel.org/git/. This helps
-+contributors verify that their emails were successfully delivered.
-+
-+Signed-off-by: QueenJcloud <qjessa662@gmail.com>
-+---
-+Changes since v2:
-+- Distinctive/correct name to the email
-+- Added changelog note after '---'
-+- Removed extra blank line at the end of the section
-+- No other text or formatting changes
-+---
-+ Documentation/MyFirstContribution.adoc | 6 ++++++
-+ 1 file changed, 6 insertions(+)
-+
-+diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-+index 02ba8ba5f6..6e7f3036bb 100644
-+--- a/Documentation/MyFirstContribution.adoc
-++++ b/Documentation/MyFirstContribution.adoc
-+@@ -1153,11 +1153,17 @@ NOTE: When you are sending a real patch, it will go to git@vger.kernel.org - but
-+ please don't send your patchset from the tutorial to the real mailing list! For
-+ now, you can send it to yourself, to make sure you understand how it will look.
-+ 
-++NOTE: After sending your patches, you can confirm that they reached the mailing
-++list by visiting https://lore.kernel.org/git/. Use the search bar to find your
-++name or the subject of your patch. If it appears, your email was successfully
-++delivered.
-++
-+ After you run the command above, you will be presented with an interactive
-+ prompt for each patch that's about to go out. This gives you one last chance to
-+ edit or quit sending something (but again, don't edit code this way). Once you
-+ press `y` or `a` at these prompts your emails will be sent! Congratulations!
-+ 
-++
-+ Awesome, now the community will drop everything and review your changes. (Just
-+ kidding - be patient!)
-+ 
-+-- 
-+2.51.0.573.gb660e2dcb9
-+
--- 
-2.51.0.573.gb660e2dcb9
-
+Patrick
