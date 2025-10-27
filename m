@@ -1,90 +1,137 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5CE433B3
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 16:10:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A0E433B3
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 16:11:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761581406; cv=none; b=RHHdL+Ip0SjgZiWK3Xy9ArmTPFpbUXaOWj88greZnRbCQmqTNonMQVoRct1r79fwTGCk3OfkQ2UUHaUNHNksHkiOvtYS0hEj9w9U2dBEijk6ckFLbQhmkaWt9okVyXiZRngnYY5uwZYK+GSwbkbxdW8mtJiNOA+MGxaYM6vrbRI=
+	t=1761581479; cv=none; b=HhlOj2X1gMW/0W2QI0EFnj+UuLx2v7BKC1KHPikuu8j9rRrhvMnqUPXJKnQWQ64FXa/MYB//34lbsT1yWZJzkY7SQYmQNzoJIuVFNvGoI9Ske0xaFpmAjCqWDjl2ilx/JnCAz1CSF6NwUUq8nfwRD4sU1Jur4PM+DH+H/+Jq1SQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761581406; c=relaxed/simple;
-	bh=bmYru1L1UKv+iy6iwuRbPJXWPWACYnNyEnbtr9btYkY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rk7Rj7Z2R2heESMjuiDjP1KZ5COyFXKwN77v0omJy/aV5Ydwh4c281uIFRMfG7XyQsV4AQ/Mv6BPUmBqxEyBdKJM7/WJgiHTVaIKAp+yr+RirE4xPoGyzkT4imGNSVf87pdp3cNgdh99lAvrNgonTYkZuPXOu2TGqr9arhOJfpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4e8935059cdso3023821cf.2
-        for <git@vger.kernel.org>; Mon, 27 Oct 2025 09:10:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761581404; x=1762186204;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7p0o8HWqCGiugvomLfWTBDcTW8sX3N+jUccCzImuAm0=;
-        b=nuuTxfwqlXva8WcnVpQscpP5shzs4MhJRC8/UcWx4pRPDPoBovVBoZOIk9dZMLh/q5
-         LCRFfRT0wsv1UC2yXbPPhPG0DlvIdmud6atPT8x8uJPMoeyGewUCsHWzZove/WC5yya7
-         FGn2vCDDkPQQaKtjBdzahiWv2Zlb28kbj+e8ccoe9gfoCMaFzpI3vEpvmrTNznmDMiQN
-         XNzfXYkkNWJ8gIwNgcmeDRCGUCkCwQ/bUr560ha5VIzCrhd90yBCeUPPA/AAvfk9Utjn
-         kuXWtzWnYwa1B3LyN77bedy/lbzs6zkQsDoqJiPN89tv5SCgCpMURwj9CWYBjPKqcTAo
-         Tw3w==
-X-Forwarded-Encrypted: i=1; AJvYcCVYCTmVgBpAxobOHODdh69VqxXowUluH5tKun27sYmu19T7QtDu+Z0vN17c93xQDM60c5s=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxr+sNDJk3aK35Jt+5C3eVqMIFLDgrkH2TYWcWezhr+OIeeJ4uW
-	ILWst4KqpzNpMoZf8f+zoxA3FVEZnxszuD+cbgR3hvU7hzOLcAz9vm9UNv6O34XGnSgCsvV6kae
-	5ueuL83RsjX6OXF+gBIw3La8iSm236Qc=
-X-Gm-Gg: ASbGncufadzxQUQoMXLUAYJbUJQqT+Uth+sPX/0JH7/eBB2jYVrqQK0semXK5PYOKTs
-	v9jgR+Vjr8Byu8u39z5qHFerGbcS+hHPN03HorNP+smR2J284LECUJ1QmjIdhZTyLwZxk0CjhhJ
-	vtEQIDdGaqMYVjJiq48jA5U3wr0g5RV2PglZ5RJoBT4zItfCgKgSwqBRMT/gUI8/8DCHuimBJPE
-	RbK+nsBhIwuOccBCy/t5ZAAMNRkgbEVghF1xxXdEC5ryDssdS6YzxWLtd0PKONAr+wQDn1IgNPf
-	bsGgrD3+TWn7ogPXuT6PkL0Imfx4
-X-Google-Smtp-Source: AGHT+IFuC27izRqpAM4n14gRZoke0kFt9enFrXzA7yA35aDTA5gDDcG1Pz7mB5M0McrliyUF/EPbK5vasn9wER49On4=
-X-Received: by 2002:a05:6214:2602:b0:87c:2360:d41f with SMTP id
- 6a1803df08f44-87ffb0bf00emr1262706d6.3.1761581403457; Mon, 27 Oct 2025
- 09:10:03 -0700 (PDT)
+	s=arc-20240116; t=1761581479; c=relaxed/simple;
+	bh=92H9vcRfFU9M0Q8Fx5BWvt/QLNj9/AQ0nhroFKLsBmA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RwZpbtTqtqY5ezgUZtPV58c36ohNKShH4NngTjfhZsj6xkmJ39oUzIuVxGKk7dOhHJkxe0EBEEZ+jdah3nNFU5U1MT2sme/AyePmwCC1G1q0MeUTU/Z35wSdR8CpH5GGjPxGGx8RXoPnIOh2G8+cszIazpfZeIiQYJ5POZzKfcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ynh6eV64; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qguHaSAV; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ynh6eV64";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qguHaSAV"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 002601400086;
+	Mon, 27 Oct 2025 12:11:17 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 27 Oct 2025 12:11:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1761581476; x=1761667876; bh=zCg774s7g2
+	3EaxQ2iVxukh44QgyBdTCaBewJbu35We0=; b=Ynh6eV642LuUgKYjK2vFC2CUHI
+	7gS++q2wKJqhekHXZxLBRLV0PsgmO6lkh/fomUX50FeFXhyr1nQB9WuCPZWgARRZ
+	FKBoZWtiZ+f6vQ/X3Bo8duCPYMck4NVlcLDyy6ZqWSv4+pMcQlP7okKLVZjo3rC2
+	IrwYXsu2ugyQ+0h43uAzbQqlQ1rjmuvBOjcIyCmRjhswaBoPSLcBC4P0b0GKNjsF
+	z2+0Sz1UXkXOCZDcyQXF6D6Lzad2s2jkr6fEs1Dwpf7jOEoyetmjN51qz8ofnJvC
+	S5txgyS8CcKswp2Yg0pOTZFHxXsok7LHZacGGMq6PnWqROtfqgsooHeaxrZg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1761581476; x=1761667876; bh=zCg774s7g23EaxQ2iVxukh44QgyBdTCaBew
+	Jbu35We0=; b=qguHaSAVgb+RL/C6xVg0yZ+2pIh0Q1i/MFEpslg6DFp/+SlMFYU
+	eFaM5nP6FzGLlOTGAGCSGe/vRhbSFEdVvITfYr3rTfODYcXhQsorHQ9UKPW0tCBa
+	YgbrqerkQcR7Vo8FIC9wj4/CL1MMEyjK1oqcBz/mX8E+S0LLy417bL6niGR6tq6z
+	nef4yZEhhkUFIdKFzuAgzca6eEtVb/4vjryij7fSy5s8RmUqqQQLcR0xIa45avHi
+	NcTIMfwYZ6Tx59aZB4GV2ron4NYZJcNfDcF8jWBsvZDJLK1N9VUYq5QzUAIgELba
+	uHY6ZqGoE09kRQs0h0dYdnYX5FqnE/0PqiQ==
+X-ME-Sender: <xms:pJn_aK8j_DFO7HqKZ_j4y66eza6JdtddmkQNF4LELXyvcAYyJgAJZA>
+    <xme:pJn_aBlS65JOKwdZ7sadbo97pVR84jjBBG_oyS_l07yPdilxiZRMXp8Dl1BcC_F62
+    k1xpnmyzBvdDh8SIfSS48uV0GcyuYZDBrXUVEkiPMFysfOQIzgqWIA>
+X-ME-Received: <xmr:pJn_aIX9EvqZpHjjNdbdvyuoOxa0xpH6nLWUQ2lHZk5s_Fg6TCAi7OTKGuPhO2gprIcuP8GLvSmJI11Avr3PdZzmv-51U5I0LxRr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheekgeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehqjh
+    gvshhsrgeiiedvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:pJn_aOGZGBw-FNBk6XKq9iM4nwAoLT5S-Rr10OPaGyImIRDr3niBlw>
+    <xmx:pJn_aMdnOz8fmB3WgSgBg-_6WPY7Fj1ol_U4iJdOnj00R8zuzINhtA>
+    <xmx:pJn_aHJT-IwKTCCDFCH36hCg33-Fas5wbd4qMxdPebVjiA1Vsm6bnQ>
+    <xmx:pJn_aJE7BUAyAntxZV5V7fJy655I4Mx2xR1MBWHgZ_-IoS2vflvYwA>
+    <xmx:pJn_aI0immael_doOYrESmEQ2Q_MjI_PXYUxTt7O6j0APRo2crL8ORdG>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 Oct 2025 12:11:16 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Queen Jessa <qjessa662@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  usmanakinyemi202@gmail.com
+Subject: Re: [PATCH v3] MyFirstContribution: add note on confirming patches
+In-Reply-To: <xmqq8qgwjpo5.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	27 Oct 2025 09:05:30 -0700")
+References: <20251027111600.1481-1-qjessa662@gmail.com>
+	<xmqqms5cl6t8.fsf@gitster.g>
+	<CA+JX8Fq+HwKX0Zkf59kiC=GaQwFJ1DPTgHGVnJ25t8c8vjw9yg@mail.gmail.com>
+	<xmqq8qgwjpo5.fsf@gitster.g>
+Date: Mon, 27 Oct 2025 09:11:15 -0700
+Message-ID: <xmqq4irkjpek.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250915223618.13093-1-lucasseikioshiro@gmail.com>
- <20251026225409.46647-1-lucasseikioshiro@gmail.com> <20251026225409.46647-2-lucasseikioshiro@gmail.com>
- <CAPig+cQO4_T8K-8wFBDQN-n+rasBF7LR+vJ6ez8swfmDz1ossg@mail.gmail.com>
- <CAPig+cRHKySZ+JPs3G0HowdCEJmE9fP=tCFB=DV-KMPknKTZkQ@mail.gmail.com> <xmqqwm4gl7fg.fsf@gitster.g>
-In-Reply-To: <xmqqwm4gl7fg.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 27 Oct 2025 12:09:50 -0400
-X-Gm-Features: AWmQ_bnW5N3kv-WmrGnZqQU4OPL5gi9RO29rD0tUxgIbIynr1UWMADGU0t4Xutc
-Message-ID: <CAPig+cThZd3urbiPJ6WiToLcdmaj6AqRpj-edEjiD54Lt_r-1Q@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] repo: factor out field printing to dedicated function
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org, ps@pks.im, 
-	karthik.188@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Oct 27, 2025 at 10:56=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > Or, even better, scope the strbuf just to the `case` branch which needs=
- it:
-> >
-> >     case FORMAT_KEYVALUE: {
-> >         struct strbuf buf =3D STRBUF_INIT;
-> >         quote_c_style(value, buf, NULL, 0);
-> >         printf("%s=3D%s\n", key, buf->buf);
-> >         strbuf_release(&buf);
-> >         break;
-> >      }
->
-> For something simple like this, quote_c_style() can take "FILE *"
-> instead of struct "strbuf *" so that you do not have to allocate;
-> especially without any need for i18n, perhaps
->
->     printf("%s=3D", key);
->     quote_c_style(value, NULL, stdout, 0);
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks, that's even better. Nice and clean and easy to read.
+> I can make the author identity and sign-off of the version I queue
+> consistent locally before applying to save an extra patch exchange,
+> of course.  But now I am not sure if I understand your preference
+> correctly.
 
-(I didn't have the Git source code at hand, so didn't know that
-`quote_c_style` could take `FILE *`.)
+For now, I'll queue the following for this topic.  Thanks!
+
+----- >8 -----
+From: Queen Ediri Jessa <qjessa662@gmail.com>
+Date: Mon, 27 Oct 2025 12:16:00 +0100
+Subject: [PATCH] MyFirstContribution: add note on confirming patches
+
+Add a note after the `git send-email` section explaining how
+contributors can confirm that their patches reached the mailing
+list by checking https://lore.kernel.org/git/. This helps
+contributors verify that their emails were successfully delivered.
+
+Signed-off-by: Queen Ediri Jessa <qjessa662@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/MyFirstContribution.adoc | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+index 02ba8ba5f6..f186dfbc89 100644
+--- a/Documentation/MyFirstContribution.adoc
++++ b/Documentation/MyFirstContribution.adoc
+@@ -1153,6 +1153,11 @@ NOTE: When you are sending a real patch, it will go to git@vger.kernel.org - but
+ please don't send your patchset from the tutorial to the real mailing list! For
+ now, you can send it to yourself, to make sure you understand how it will look.
+ 
++NOTE: After sending your patches, you can confirm that they reached the mailing
++list by visiting https://lore.kernel.org/git/. Use the search bar to find your
++name or the subject of your patch. If it appears, your email was successfully
++delivered.
++
+ After you run the command above, you will be presented with an interactive
+ prompt for each patch that's about to go out. This gives you one last chance to
+ edit or quit sending something (but again, don't edit code this way). Once you
+-- 
+2.51.2-678-g0cd646409c
+
