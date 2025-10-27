@@ -1,946 +1,214 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013053.outbound.protection.outlook.com [52.101.72.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FDF2FA0C7
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 11:34:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761564880; cv=none; b=BfjJffvSnacpMFBVOX2Tt2p0uxZ4fz4oiAz0WrvRn9PWKmrof+STNxY1UKPFAjhJIlp27nKq5ItL77eTY2q+LZ+bh9TgMDdSZKiDnV0gHWqVkpOlvR3t8IQK4MCqnhYEqh+cSpCHR4jfUMSNlilxB7AksprcbBXa7MLvaTF8XRw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761564880; c=relaxed/simple;
-	bh=UWmmA6vJ+q+U807f1MNMH0zOTdCaXdVLf2whhrmdPqE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ga1TH5Vn8NIoXlrypjkgTKo3rg76A5VnL+SI+XBSxhSc0NuKcrEmXs58ukgaOMjycYC5BjljQ0zaAEBxisQgYDy3fIr5YhU2v6qDnlgGG9qHvIjaFQ5UzQJl2pjNQ9bhJM6BDKdbnXKdCjKavsZd7oEu8JorIy2Imr3BgVB6rbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pMrkzPFM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wRDsYNYO; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B3F28727B
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 13:20:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.53
+ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761571247; cv=fail; b=BR7Mj7yrvIMGKxKSnIcXwnIH2Xcrh7bLUYdSzPXIO/h+b6w998SCGm0JyyTppevVpe9EqK0JmfVd/9A4Pb0jsME+koH6lGB1aSl1DGo4HMiSzM+gGllU9jz4Yw9elPQT64iJdnvIJn9Ifk/dygjPBMr0mElyJdpfPw6eqo/PZS0=
+ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761571247; c=relaxed/simple;
+	bh=F8CUgh6jfGT1IeZDpoC5Ud892ELE4Om9FboFggIIcig=;
+	h=Date:From:To:Cc:Subject:Message-ID:Content-Type:
+	 Content-Disposition:MIME-Version; b=IBueaAxYbCyRJeb/CHGsiiPx0lvC7wjcuCpUiDDGZ62xgNuvMEYI+IJiel2FGqyLiLzSgmW9T0AOytr5pf7tCTG3SUCfEjQsFczD+w0wrQsu17wbwv4R1qJDJzLxks4zQVYEO24t87cRgxXASIJKc0M9sPiVMFydErcgRY4dgnI=
+ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=sGkojTGx; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=sGkojTGx; arc=fail smtp.client-ip=52.101.72.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pMrkzPFM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wRDsYNYO"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 34AA014002EA;
-	Mon, 27 Oct 2025 07:34:37 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Mon, 27 Oct 2025 07:34:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1761564877;
-	 x=1761651277; bh=TAKJG2ngeSzAPWNpsCfBzKelKgNOWzsAiH1Qs12Bmtg=; b=
-	pMrkzPFMuW2ekBSO04im7tEWZ8gMHZqNlAaetM+uZ02ILMdzfi4BcaHXYd9tbeek
-	C3HWoKw5WG7QXLdpYL2kNjGfe2Ej5LbYFMbPEO7qeokTTdtZ3vLmLSd25c6Sq69h
-	+oKSOOo1geQBc/zJmfLYH+HJqJNkk8VPZcF33roA59RDL96bm9c1XICuS9gfG5h7
-	iRE5xDlazEArJZA3PjvULsmNvI3NddwTb+ooPbNrjCNa6n08P3KPiFQwgwlKEoVW
-	pltbWzOkEgySGZ+Jzq3gt7c6KnMBmLqwu58euaoFNSP1/Zsp7gDcfkyYEM6MDLR3
-	DuPy7SxTBQ3uaDOljboCNQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761564877; x=
-	1761651277; bh=TAKJG2ngeSzAPWNpsCfBzKelKgNOWzsAiH1Qs12Bmtg=; b=w
-	RDsYNYO1jSIEuERh+rRV6w464oTqXHmZQ0Su8SWQosDj3k5QjiNUA0wWu+pAtTcy
-	Vl8wMbcJpRgm9Cq0UK7BZI/1XBye/WfBOnUe8W495vG2q1St0HfPeN9BakaVlZ7I
-	zi70+74oDLWCVDXorUC6mlpM+XrcqxQ/sFGdhEVnA2RQnAzfCVwaBqlVhyJoBfSO
-	srTWL49zNft96aO2pq3dhRtp5mgyg4Ob6Hi8iFSv3cTh6eiJFBOZvFJ3skN4VPME
-	PwwwXYuIVcTzVHdA9H5v9X2UcVAV142vu0Ycmb2RYEH/Q48cPOHx+v79l5o+5T8I
-	SNioRyCfeHVeD+KeKaZQw==
-X-ME-Sender: <xms:zFj_aHfp1XaluqPsEDsB0UqmiN6AoYMBE7im4RdTag0n3rQ6kiTIbQ>
-    <xme:zFj_aPwxPWccA6SyoCZNSptvDBDOjAIXUkWsqvDd5Mtcz5KU7yoStqXADHrQhioiX
-    jCBrKb9RLAAuHR1rJtvm1lAALJd9Nr2eDCNSiRTxWJHfSpDhnhzog>
-X-ME-Received: <xmr:zFj_aEKFZBNSArC0K7DQRbfdlfNlKceXyqPd_fibNzzIaH_k0TAttOznHtJwdv5H4kjnoMfewQ5koHV5bu4Y0UzO8L5z1-3YbDICXmihEw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheejkeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehmrghrthhinhhvohhniiesghhmrghilhdrtghomhdprh
-    gtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehsohhrghgr
-    nhhovhesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtoh
-    hm
-X-ME-Proxy: <xmx:zFj_aJG-6rM0FTdwNO39AaevaMqTpcHPUykuFPfr1X8oX7--EbsgNQ>
-    <xmx:zVj_aI-ZVW-sXENV1rGvjwBLANuhWCopNKHu5unmRCs29zZXNZczsA>
-    <xmx:zVj_aBKS3vJcsnb4PcasZXv8sq4UUEDGZApefzQ5PfsG7gZ24JzWNw>
-    <xmx:zVj_aOtZn23pkCUwryzAZiBupAHljaWvu2y8HlTD9RcQQe2qPziRLA>
-    <xmx:zVj_aOodnDew57LAtk1V620v0MXwUX4VCaSEomo4wDTCmWyvog4Bk8uE>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Oct 2025 07:34:35 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 43ee7bdb (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 27 Oct 2025 11:34:34 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 27 Oct 2025 12:33:59 +0100
-Subject: [PATCH v6 11/11] builtin/history: implement "split" subcommand
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="sGkojTGx";
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="sGkojTGx"
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=qxI7r/PXNfdqm1nG7Vu9KgSngdAuIEXnLQP7+6K+lX6DD08QUxcLXYzmW4yBZrreOQ+jsqfE5NN3cLZKGzqwrqrYA7aVGKAG/3IvuroYstRVNu67+gwz3z6uHZKamXDpqErMk7c4R4SKq87z7Q5h6QW1YOO+8hvAzihFtqaJAtafQGOJHyR0G7UxRTLc299i+RJADzmNTW/kd6ARxymJ+mUav8L+tN9ZB/HIggVQWCJLK/yuUbpNDmbJJYo4cxzT2zGmKh0IaODgkH+7hHjs3ko2I5LMcndWB+ompRiIguMHhfvj1LsnUi/UTduvuDEuZ2IWhYKAHaUvASo4V9T07A==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qn/EZla/JwsE+lAFDsbDGFLxpd7Q0Y8QYVKHVBjvMEE=;
+ b=I5WHLBwkTjNP9kMjz+s6FIYZClV7AkHhE5X9fSFVoNfVeYldRewkjVpVHegkJpZsCid1pC0TtYhSYJVHkfQUVmM4y8QAEeZnhvXku1vmChkfKZ1tHUIzjeZ3ACrIVUoViGJtKxXaHI2mO9dIY60gM8Pk8bOwYMWdDlrCx1bbVAdMVv3Ka3LYmaHlFa/qtmmxtE4qdcylPR9PpB8tDGDG2RpoZuKXI+ERPa3jxD/gMCu9DzQ+Wm9R4ODCGGegUnW2h8yR8vKsWDnY4lq66bfCkVPbM9E3GcgA4Ugkc/lWufGZb+pSr5Q0Jnn3eEpPeFZv9RAUbeaT6asqrIBXA8s6zg==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 4.158.2.129) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=arm.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=arm.com;
+ dkim=pass (signature was verified) header.d=arm.com; arc=pass (0 oda=1 ltdi=1
+ spf=[1,1,smtp.mailfrom=arm.com] dkim=[1,1,header.d=arm.com]
+ dmarc=[1,1,header.from=arm.com])
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qn/EZla/JwsE+lAFDsbDGFLxpd7Q0Y8QYVKHVBjvMEE=;
+ b=sGkojTGx6Lcuwb2gv91vS3eqMMQKXfKXmKRkz/MQSUIGPfjNuy3csCudSYsDiEbk5sjVPkjVGSS2mHS//J34EpzE/0NFcd3vpv2BM2dhBeHjE2NRlh8n/KkSDNYAKcbc4IGSjBlwoGFwdaBnRIK+WPdw7t0EY++FQmpleQzXLpA=
+Received: from DUZPR01CA0171.eurprd01.prod.exchangelabs.com
+ (2603:10a6:10:4b3::17) by AS8PR08MB9220.eurprd08.prod.outlook.com
+ (2603:10a6:20b:5a3::10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.18; Mon, 27 Oct
+ 2025 13:20:40 +0000
+Received: from DU2PEPF00028D12.eurprd03.prod.outlook.com
+ (2603:10a6:10:4b3:cafe::ea) by DUZPR01CA0171.outlook.office365.com
+ (2603:10a6:10:4b3::17) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9253.18 via Frontend Transport; Mon,
+ 27 Oct 2025 13:21:19 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 4.158.2.129)
+ smtp.mailfrom=arm.com; dkim=pass (signature was verified)
+ header.d=arm.com;dmarc=pass action=none header.from=arm.com;
+Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
+ 4.158.2.129 as permitted sender) receiver=protection.outlook.com;
+ client-ip=4.158.2.129; helo=outbound-uk1.az.dlp.m.darktrace.com; pr=C
+Received: from outbound-uk1.az.dlp.m.darktrace.com (4.158.2.129) by
+ DU2PEPF00028D12.mail.protection.outlook.com (10.167.242.26) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9253.7
+ via Frontend Transport; Mon, 27 Oct 2025 13:20:39 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rek+GHp3mbWwI87p4QmnuTiFseVPkCeDylP1rwGLWAr5Cxq5j3SVxv4kQchwkzcq27WWfOQACxbn1PBWiOvhtIliO0HVcLJrQrpnJosnaSMXBchQ3wbBoIuHhEfhorZ1Fhw5WM6IkY1lv0Acjy4z2lTRDNHfVOeqIMZ+gdVSSuhSzXxYd3JniaPcuM0SCGwhMyxANhiGjvkaTzKozXiUPWjGp6fZQvdb+mSEBZR8vOCzOQ2G5aJrrL6opHDwKNuC1bEjgTxiykSlMFuxddqZMAGcO8P2Khpcnd+2nLpbrlPLcpHU+QLz2tOya1w3hVbNmXy6Nisp/1ZEkpiBRVGhJw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qn/EZla/JwsE+lAFDsbDGFLxpd7Q0Y8QYVKHVBjvMEE=;
+ b=NjITikmpEc2leyMc4kr0OPGnIk6kPNX/QmsjBcE0oy2MoO1C0hWo7ZMKyRPY0+3zuwiJBBtifDXa6zh0yiwh5ARPYWvqC3CMTN7DmF0SC1dPRmN+oRUcC1YpP2U8b2vi8NVM4vgj/6UX6vqyIx6kc4dIK38rI+JMeXs37w5GYFSpRlmk3+IfJxpd96IPPJszE2rG5+uhjwD1ZS8w30QHV9lsYaTbQSRH/EH9crLZ+cQlHvD185sJHAxZfSzl5RkNlmStOsBODsqMOqsOrWfHaUfQoiL1TQmnrnM+TuzhvqNA7g/3kc3ELM/PHCmLvNZsxEbZLNdBIwwKgUaoAjZJ7g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
+ header.d=arm.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qn/EZla/JwsE+lAFDsbDGFLxpd7Q0Y8QYVKHVBjvMEE=;
+ b=sGkojTGx6Lcuwb2gv91vS3eqMMQKXfKXmKRkz/MQSUIGPfjNuy3csCudSYsDiEbk5sjVPkjVGSS2mHS//J34EpzE/0NFcd3vpv2BM2dhBeHjE2NRlh8n/KkSDNYAKcbc4IGSjBlwoGFwdaBnRIK+WPdw7t0EY++FQmpleQzXLpA=
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=arm.com;
+Received: from GV2PR08MB8271.eurprd08.prod.outlook.com (2603:10a6:150:b8::21)
+ by PA6PR08MB11264.eurprd08.prod.outlook.com (2603:10a6:102:517::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.12; Mon, 27 Oct
+ 2025 13:20:07 +0000
+Received: from GV2PR08MB8271.eurprd08.prod.outlook.com
+ ([fe80::20e7:cd58:1d48:acde]) by GV2PR08MB8271.eurprd08.prod.outlook.com
+ ([fe80::20e7:cd58:1d48:acde%6]) with mapi id 15.20.9253.013; Mon, 27 Oct 2025
+ 13:20:06 +0000
+Date: Mon, 27 Oct 2025 13:20:03 +0000
+From: Alice Carlotti <alice.carlotti@arm.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: Broken WS_BLANK_AT_EOF highlighting with 0-length diff hunks
+Message-ID: <5447f4f0-68be-b554-9fde-579a8dac69ff@e124511.cambridge.arm.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-ClientProxiedBy: LO2P265CA0487.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:13a::12) To GV2PR08MB8271.eurprd08.prod.outlook.com
+ (2603:10a6:150:b8::21)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251027-b4-pks-history-builtin-v6-11-407dd3f57ad3@pks.im>
-References: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
-In-Reply-To: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, 
- Junio C Hamano <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>, 
- =?utf-8?q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>, 
- Martin von Zweigbergk <martinvonz@gmail.com>, 
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
- Elijah Newren <newren@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.14.3
+X-MS-TrafficTypeDiagnostic:
+	GV2PR08MB8271:EE_|PA6PR08MB11264:EE_|DU2PEPF00028D12:EE_|AS8PR08MB9220:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8cac44cc-228d-4774-bded-08de155b9fbf
+x-checkrecipientrouted: true
+Content-Transfer-Encoding: quoted-printable
+NoDisclaimer: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|366016|1800799024|376014;
+X-Microsoft-Antispam-Message-Info-Original:
+ =?us-ascii?Q?YUjVUvJVf9PgJC70U0C4iZweGsBYc/etTtJxUXJeNiD/P/ZOgWtj3xmUR9I+?=
+ =?us-ascii?Q?U6FMnQyrZp4UCUlKXk5C3JbvWDjIGwA5yDrLOcZXxAVd7cmhQbf+3hNuRkAG?=
+ =?us-ascii?Q?piq9YEEgdeDOwkPJpxx53HyIrxq08a7QsdIvraVZ2LTxOvGwR23ypkkwyCOP?=
+ =?us-ascii?Q?Ga2NfG1AVvy3sQae2ibGX6lol48XvWs0Q7zjM05omNwRE8kSb7+qyvPv4J/Q?=
+ =?us-ascii?Q?AvGywk1xfzqCVbIXU5qg4WRz15uIC/MPbq6Fld2e0e7PsTAkd/SR7tRGfiE7?=
+ =?us-ascii?Q?AhHZVa8WRqL20AwTUeXxD7oUDTnZW13Wt6bm9TmpW41J43m27UkrCENsFqP4?=
+ =?us-ascii?Q?Z43aDAqx7MJracAvftuL9ErsY4j9mkH7t+SpcyRuIou0N2E0xkmIC30c2abx?=
+ =?us-ascii?Q?I4EPMrBTcRj9D6igV4tZk6VDMXoZWgjbZFnaFA6MU7hOO1p1wrpcbahVdheB?=
+ =?us-ascii?Q?KfMCNtEfZBd3YEEVPAOJmMDhHPKBd2oOADyPAsKy4hwf1IE95htd+U+MncMy?=
+ =?us-ascii?Q?Qe8YDDViX5jrBCp8/rVAByqughyODl0bFqioIkmudgTEcFzlVSAE5HS+J+lI?=
+ =?us-ascii?Q?t7wejwk5P6kN4/fpASmjC++6xoOlkWrBkTuw9U6RU+XxWl/bDHjppKbGM2y/?=
+ =?us-ascii?Q?qbKx9M827E+3TIL6s5M829PJKQMJR5TMHY4epIClyyi0t0zrTPVYAt8+kzt8?=
+ =?us-ascii?Q?OEYPQFawUhZBQmlRc5gIcBDYsZbt6n2Mqr6qJg10xokcpra8Dz1vJkGm7DDC?=
+ =?us-ascii?Q?UrCOf27ZpkFAfUPDg9ZLBl7aIvgXPo2eth+FlY9WsPo+G00xElXp1i/XEc1i?=
+ =?us-ascii?Q?D4H2BQxyW+PSX1RN1A83/8CfUiWDFjaNno9VKTz98CX4JDKfd9FqP3xEAQuO?=
+ =?us-ascii?Q?VUk4PpWR5AFescdgIoDg07bfJcje3ty9ZTi2icAKH7fZ3VXxOjWfPph5AN8N?=
+ =?us-ascii?Q?85wM1AgAYqMAUo4YxToW9XCUuPi/014uHo4jgvh1YwBVTKLvF4mVBILyYREf?=
+ =?us-ascii?Q?PttEJfeBw7LlLISFqrQLyfxUOqqEV5YaLgQvhNJfLSG3vazvHWYhLEgL/sJk?=
+ =?us-ascii?Q?mAyzkqnrm08Y9Cin3O4TCcnoXLf8ce+KNNyleP3lhW0GzISlwo+KDSLH1Cu1?=
+ =?us-ascii?Q?WzQoHS0CEJb4qj+EfTM7rh3yXg8p5/5rxNmoEks77k8/TdoqiaQkcXXyAiEK?=
+ =?us-ascii?Q?E0nWY5VaCPpbEYApagxE5ynHAfZM6v54ss3L5EVec3x39Bi9OpSFKbpN5kpZ?=
+ =?us-ascii?Q?BAWrDf4jfU3rDaPd16GSB4frkFGjF0G5QnssJz+qPJUDUEhb+azJDbkmVG+U?=
+ =?us-ascii?Q?3B9Rw41Gi+T2g2CBecSka37MJaOkY7QHMh67MN9xnBzw1uDOP+NW6e7YE/DC?=
+ =?us-ascii?Q?yVvS0YKpEbzpupyAALfczzXa7nX5ddomAv7J7TKdnZTWUbwMuN5cseFWc+/p?=
+ =?us-ascii?Q?NiCoU8eyW5nIwPpmCGbIrVEytP3Aazh4CjwBdFi4zN32bE7Zf8hP+w=3D=3D?=
+X-Forefront-Antispam-Report-Untrusted:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR08MB8271.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA6PR08MB11264
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ DU2PEPF00028D12.eurprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+	9256101d-5b28-4286-2050-08de155b8bbe
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|35042699022|14060799003|1800799024|82310400026|376014|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?t18ApMIVXDecUwZgsX085DtPRDxGudsTGwqAcn3I9G0Q/inZusUmyc/7JFtN?=
+ =?us-ascii?Q?6rAnJ5GbFlS8LGRPRy+NeunRP+yUWnmyvvAlwStcJEzKJ0WQFIGt8l/pHEVu?=
+ =?us-ascii?Q?6KhejiMtYXdy6ukgn/3+cdcLX4KU8IWnGOHDnl6piEr7iTzWkPFS+BT97xDp?=
+ =?us-ascii?Q?5iUiKHBwnMpfHCHfcr9mop2+RqwDga4WZw88AkdL94d1PZI/oWwdpL8NtLC2?=
+ =?us-ascii?Q?6a3bjH8Kctt9l1+S174F3sWSL/XoXmj60+zNl8wdDxUKofQu9bzkJBEKsrV4?=
+ =?us-ascii?Q?ItL+pRJM1GBJD5YF2TRAcy6m7XhovKfr+K6SIDCLlF8ikBs2Xppg37xjL1NF?=
+ =?us-ascii?Q?SnRwBFAtMZ/LSApitNAJgGleRJ8YYWDCxSGScpZfQzotxatqbfw3zQTUi08i?=
+ =?us-ascii?Q?rE6ip0PHhOOdf6x3lxcrMobrMxhfc6vFGHmuo50JAmallKU+/F+oIMfqfb+8?=
+ =?us-ascii?Q?LfhQInTokGdcQc8EKFm4jcDCqLIqeNyBD5x/Vb1IicKQAWB5GXSv4K0SVQko?=
+ =?us-ascii?Q?7mmy6ADWiZRDeHedH8Tvx/+oJKpQeFJjyUcwQUNkQovVdV45RbxnrY9B2oHc?=
+ =?us-ascii?Q?gMrxuqhxhgJ11x+19kPpDSYwvbOyEpFH++sMWciNMLfgczXVKljtxNiGjWee?=
+ =?us-ascii?Q?8mU11Hpmzw/w+a8ERy/R0ny04NkFH9l4iT5AbB6Lri15QZU1749OTb5D3Ley?=
+ =?us-ascii?Q?cv/f/91Q4B8iIWo9giME+B924Cvjn7YRB2Vj31DSwfkcPeopPZ6d/+xbqOT+?=
+ =?us-ascii?Q?5MVxcBp2g3knQc0V4QRPXVf9tLekW9+7jgAUfpnmwh01WAW87uuupTDh0h/v?=
+ =?us-ascii?Q?uSJ2912UWbuWz05XPTJNzJ/0FZ5I7j50gJQCHOxznmz9xTaIiHsEeSl1Nvfs?=
+ =?us-ascii?Q?ph2TpvfQGlz3h84h9yWb9u6EXA2cuPusQRkpzz6UN0UuNOKwWNP5gnRhK6eE?=
+ =?us-ascii?Q?cJmIl8U60ueAptM4SB9gyC6mkCsen1AAv0eVBW/7Hc6iUbFJS+PYoh9PbLbF?=
+ =?us-ascii?Q?/GCWK6E2+UZoZpygS8mGXsvoa063H+UWzXiiqCd4se6EmO0p5vcSVkWFJKcf?=
+ =?us-ascii?Q?IK6jePDtF78madgB9wPxmLPcBmJYg/EW5kXeZNwAiurAHCznr6ygsGFgshC6?=
+ =?us-ascii?Q?D2auY+KV/j0uHLj+Cp/k90+HmGCuUAeOTKzRFJIzxuFwKCPR1A/zZQlmeIdE?=
+ =?us-ascii?Q?u/EaVncjpf8krhT6xI43+VjpBNPTA8iuZjXWqXmnbl9hvKW+fJpZB+Pu+90z?=
+ =?us-ascii?Q?YkaQFqJ4hVbK3YxAKyxys8fS1G5d1pbQ4y2XgpvbtD0zJQ6Aq5MNlsKenJsH?=
+ =?us-ascii?Q?whslPPbbIUIu1FVs5I69gl1P8tkpkY2MDlTrPyNjvFxhr6O7ht/za8gIUKVU?=
+ =?us-ascii?Q?PcKDNP6LCKtnJzxWfPA+a4s9LhyYkPfKZef1JH453xorAKUmmLMildY8UW60?=
+ =?us-ascii?Q?vePB2KCTan2t6peaIiK/M8JPNVGDhRQWYCr+U8Ko2LyZE1F9Yuf/dYERXdkE?=
+ =?us-ascii?Q?PRfBEMFag1IKs2tX133HHu/Y9jPs+aSr7E7l52Dtu/11/WGCYWSJqvpN8tmn?=
+ =?us-ascii?Q?FuMncw7IgYqjnhaqLA4=3D?=
+X-Forefront-Antispam-Report:
+	CIP:4.158.2.129;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:outbound-uk1.az.dlp.m.darktrace.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(35042699022)(14060799003)(1800799024)(82310400026)(376014)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: arm.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2025 13:20:39.9072
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8cac44cc-228d-4774-bded-08de155b9fbf
+X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d;Ip=[4.158.2.129];Helo=[outbound-uk1.az.dlp.m.darktrace.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DU2PEPF00028D12.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB9220
 
-It is quite a common use case that one wants to split up one commit into
-multiple commits by moving parts of the changes of the original commit
-out into a separate commit. This is quite an involved operation though:
+Whitespace error highlighting is missing for blank lines at end of file whe=
+n
+the final hunk contains either zero old lines or zero new lines.  This most
+commonly occurs with new files (which happens to be when WS_BLANK_AT_EOF er=
+rors
+are most likely to be introduced), but can also occur with -U0.
 
-  1. Identify the commit in question that is to be dropped.
+The reason for this is that the initial line number in a hunk header is red=
+uced
+by one for zero length ranges.  In particular, an empty file uses 0,0 where=
+as a
+full nonempty file uses 1,N.  This discrepancy is deliberate, and was agree=
+d in
+https://lore.kernel.org/git/7vbqvictsc.fsf@assigned-by-dhcp.cox.net/.
 
-  2. Perform an interactive rebase on top of that commit's parent.
-
-  3. Modify the instruction sheet to "edit" the commit that is to be
-     split up.
-
-  4. Drop the commit via "git reset HEAD~".
-
-  5. Stage changes that should go into the first commit and commit it.
-
-  6. Stage changes that should go into the second commit and commit it.
-
-  7. Finalize the rebase.
-
-This is quite complex, and overall I would claim that most people who
-are not experts in Git would struggle with this flow.
-
-Introduce a new "split" subcommand for git-history(1) to make this way
-easier. All the user needs to do is to say `git history split $COMMIT`.
-From hereon, Git asks the user which parts of the commit shall be moved
-out into a separate commit and, once done, asks the user for the commit
-message. Git then creates that split-out commit and applies the original
-commit on top of it.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/git-history.adoc |  62 ++++++
- builtin/history.c              | 218 +++++++++++++++++++++
- t/meson.build                  |   1 +
- t/t3452-history-split.sh       | 432 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 713 insertions(+)
-
-diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-index bd903875120..3d6b2665f8d 100644
---- a/Documentation/git-history.adoc
-+++ b/Documentation/git-history.adoc
-@@ -9,6 +9,7 @@ SYNOPSIS
- --------
- [synopsis]
- git history reword <commit>
-+git history split <commit> [--] [<pathspec>...]
- 
- DESCRIPTION
- -----------
-@@ -37,6 +38,26 @@ Several commands are available to rewrite history in different ways:
- 	details of this commit remain unchanged. This command will spawn an
- 	editor with the current message of that commit.
- 
-+`split <commit> [--] [<pathspec>...]`::
-+	Interactively split up <commit> into two commits by choosing
-+	hunks introduced by it that will be moved into the new split-out
-+	commit. These hunks will then be written into a new commit that
-+	becomes the parent of the previous commit. The original commit
-+	stays intact, except that its parent will be the newly split-out
-+	commit.
-++
-+The commit message of the new commit will be asked for by launching the
-+configured editor. Authorship of the commit will be the same as for the
-+original commit.
-++
-+If passed, _<pathspec>_ can be used to limit which changes shall be split out
-+of the original commit. Files not matching any of the pathspecs will remain
-+part of the original commit. For more details, see the 'pathspec' entry in
-+linkgit:gitglossary[7].
-++
-+It is invalid to select either all or no hunks, as that would lead to
-+one of the commits becoming empty.
-+
- CONFIGURATION
- -------------
- 
-@@ -44,6 +65,47 @@ include::includes/cmd-config-section-all.adoc[]
- 
- include::config/sequencer.adoc[]
- 
-+EXAMPLES
-+--------
-+
-+Split a commit
-+~~~~~~~~~~~~~~
-+
-+----------
-+$ git log --stat --oneline
-+3f81232 (HEAD -> main) original
-+ bar | 1 +
-+ foo | 1 +
-+ 2 files changed, 2 insertions(+)
-+
-+$ git history split HEAD
-+diff --git a/bar b/bar
-+new file mode 100644
-+index 0000000..5716ca5
-+--- /dev/null
-++++ b/bar
-+@@ -0,0 +1 @@
-++bar
-+(1/1) Stage addition [y,n,q,a,d,e,p,?]? y
-+
-+diff --git a/foo b/foo
-+new file mode 100644
-+index 0000000..257cc56
-+--- /dev/null
-++++ b/foo
-+@@ -0,0 +1 @@
-++foo
-+(1/1) Stage addition [y,n,q,a,d,e,p,?]? n
-+
-+$ git log --stat --oneline
-+7cebe64 (HEAD -> main) original
-+ foo | 1 +
-+ 1 file changed, 1 insertion(+)
-+d1582f3 split-out commit
-+ bar | 1 +
-+ 1 file changed, 1 insertion(+)
-+----------
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/history.c b/builtin/history.c
-index cb251ae2e01..cae841707d0 100644
---- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -1,6 +1,7 @@
- #define USE_THE_REPOSITORY_VARIABLE
- 
- #include "builtin.h"
-+#include "cache-tree.h"
- #include "commit-reach.h"
- #include "commit.h"
- #include "config.h"
-@@ -8,17 +9,22 @@
- #include "environment.h"
- #include "gettext.h"
- #include "hex.h"
-+#include "oidmap.h"
- #include "parse-options.h"
-+#include "path.h"
-+#include "read-cache.h"
- #include "refs.h"
- #include "replay.h"
- #include "reset.h"
- #include "revision.h"
-+#include "run-command.h"
- #include "sequencer.h"
- #include "strvec.h"
- #include "tree.h"
- #include "wt-status.h"
- 
- #define GIT_HISTORY_REWORD_USAGE N_("git history reword <commit>")
-+#define GIT_HISTORY_SPLIT_USAGE  N_("git history split <commit> [--] [<pathspec>...]")
- 
- static int collect_commits(struct repository *repo,
- 			   struct commit *old_commit,
-@@ -323,6 +329,216 @@ static int cmd_history_reword(int argc,
- 	return ret;
- }
- 
-+static int split_commit(struct repository *repo,
-+			struct commit *original_commit,
-+			struct pathspec *pathspec,
-+			struct object_id *out)
-+{
-+	struct interactive_options interactive_opts = INTERACTIVE_OPTIONS_INIT;
-+	struct strbuf index_file = STRBUF_INIT, split_message = STRBUF_INIT;
-+	struct child_process read_tree_cmd = CHILD_PROCESS_INIT;
-+	struct index_state index = INDEX_STATE_INIT(repo);
-+	struct object_id original_commit_tree_oid, parent_tree_oid;
-+	const char *original_message, *original_body, *ptr;
-+	char original_commit_oid[GIT_MAX_HEXSZ + 1];
-+	char *original_author = NULL;
-+	struct commit_list *parents = NULL;
-+	struct commit *first_commit;
-+	struct tree *split_tree;
-+	size_t len;
-+	int ret;
-+
-+	if (original_commit->parents)
-+		parent_tree_oid = *get_commit_tree_oid(original_commit->parents->item);
-+	else
-+		oidcpy(&parent_tree_oid, repo->hash_algo->empty_tree);
-+	original_commit_tree_oid = *get_commit_tree_oid(original_commit);
-+
-+	/*
-+	* Construct the first commit. This is done by taking the original
-+	* commit parent's tree and selectively patching changes from the diff
-+	* between that parent and its child.
-+	*/
-+	repo_git_path_replace(repo, &index_file, "%s", "history-split.index");
-+
-+	read_tree_cmd.git_cmd = 1;
-+	strvec_pushf(&read_tree_cmd.env, "GIT_INDEX_FILE=%s", index_file.buf);
-+	strvec_push(&read_tree_cmd.args, "read-tree");
-+	strvec_push(&read_tree_cmd.args, oid_to_hex(&parent_tree_oid));
-+	ret = run_command(&read_tree_cmd);
-+	if (ret < 0)
-+		goto out;
-+
-+	ret = read_index_from(&index, index_file.buf, repo->gitdir);
-+	if (ret < 0) {
-+		ret = error(_("failed reading temporary index"));
-+		goto out;
-+	}
-+
-+	oid_to_hex_r(original_commit_oid, &original_commit->object.oid);
-+	ret = run_add_p_index(repo, &index, index_file.buf, &interactive_opts,
-+			      original_commit_oid, pathspec);
-+	if (ret < 0)
-+		goto out;
-+
-+	split_tree = write_in_core_index_as_tree(repo, &index);
-+	if (!split_tree) {
-+		ret = error(_("failed split tree"));
-+		goto out;
-+	}
-+
-+	unlink(index_file.buf);
-+
-+	/*
-+	* We disallow the cases where either the split-out commit or the
-+	* original commit would become empty. Consequently, if we see that the
-+	* new tree ID matches either of those trees we abort.
-+	*/
-+	if (oideq(&split_tree->object.oid, &parent_tree_oid)) {
-+		ret = error(_("split commit is empty"));
-+		goto out;
-+	} else if (oideq(&split_tree->object.oid, &original_commit_tree_oid)) {
-+		ret = error(_("split commit tree matches original commit"));
-+		goto out;
-+	}
-+
-+	/* We retain authorship of the original commit. */
-+	original_message = repo_logmsg_reencode(repo, original_commit, NULL, NULL);
-+	ptr = find_commit_header(original_message, "author", &len);
-+	if (ptr)
-+		original_author = xmemdupz(ptr, len);
-+
-+	ret = fill_commit_message(repo, &parent_tree_oid, &split_tree->object.oid,
-+				  "", "split-out", &split_message);
-+	if (ret < 0)
-+		goto out;
-+
-+	ret = commit_tree(split_message.buf, split_message.len, &split_tree->object.oid,
-+			  original_commit->parents, &out[0], original_author, NULL);
-+	if (ret < 0) {
-+		ret = error(_("failed writing split-out commit"));
-+		goto out;
-+	}
-+
-+	/*
-+	* The second commit is much simpler to construct, as we can simply use
-+	* the original commit details, except that we adjust its parent to be
-+	* the newly split-out commit.
-+	*/
-+	find_commit_subject(original_message, &original_body);
-+	first_commit = lookup_commit_reference(repo, &out[0]);
-+	commit_list_append(first_commit, &parents);
-+
-+	ret = commit_tree(original_body, strlen(original_body), &original_commit_tree_oid,
-+			  parents, &out[1], original_author, NULL);
-+	if (ret < 0) {
-+		ret = error(_("failed writing second commit"));
-+		goto out;
-+	}
-+
-+	ret = 0;
-+
-+out:
-+	if (index_file.len)
-+		unlink(index_file.buf);
-+	strbuf_release(&split_message);
-+	strbuf_release(&index_file);
-+	free_commit_list(parents);
-+	free(original_author);
-+	release_index(&index);
-+	return ret;
-+}
-+
-+static int cmd_history_split(int argc,
-+			     const char **argv,
-+			     const char *prefix,
-+			     struct repository *repo)
-+{
-+	const char * const usage[] = {
-+		GIT_HISTORY_SPLIT_USAGE,
-+		NULL,
-+	};
-+	struct option options[] = {
-+		OPT_END(),
-+	};
-+	struct oidmap rewritten_commits = OIDMAP_INIT;
-+	struct commit *original_commit, *parent, *head;
-+	struct strvec commits = STRVEC_INIT;
-+	struct commit_list *from_list = NULL;
-+	struct object_id split_commits[2];
-+	struct pathspec pathspec = { 0 };
-+	int ret;
-+
-+	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+	if (argc < 1) {
-+		ret = error(_("command expects a revision"));
-+		goto out;
-+	}
-+	repo_config(repo, git_default_config, NULL);
-+
-+	original_commit = lookup_commit_reference_by_name(argv[0]);
-+	if (!original_commit) {
-+		ret = error(_("commit to be split cannot be found: %s"), argv[0]);
-+		goto out;
-+	}
-+
-+	parent = original_commit->parents ? original_commit->parents->item : NULL;
-+	if (parent && repo_parse_commit(repo, parent)) {
-+		ret = error(_("unable to parse commit %s"),
-+			    oid_to_hex(&parent->object.oid));
-+		goto out;
-+	}
-+
-+	head = lookup_commit_reference_by_name("HEAD");
-+	if (!head) {
-+		ret = error(_("could not resolve HEAD to a commit"));
-+		goto out;
-+	}
-+
-+	commit_list_append(original_commit, &from_list);
-+	if (!repo_is_descendant_of(repo, head, from_list)) {
-+		ret = error(_("split commit must be reachable from current HEAD commit"));
-+		goto out;
-+	}
-+
-+	parse_pathspec(&pathspec, 0,
-+		PATHSPEC_PREFER_FULL | PATHSPEC_SYMLINK_LEADING_PATH | PATHSPEC_PREFIX_ORIGIN,
-+		prefix, argv + 1);
-+
-+	/*
-+	 * Collect the list of commits that we'll have to reapply now already.
-+	 * This ensures that we'll abort early on in case the range of commits
-+	 * contains merges, which we do not yet handle.
-+	 */
-+	ret = collect_commits(repo, parent, head, &commits);
-+	if (ret < 0)
-+		goto out;
-+
-+	/*
-+	 * Then we split up the commit and replace the original commit with the
-+	 * new ones.
-+	 */
-+	ret = split_commit(repo, original_commit, &pathspec, split_commits);
-+	if (ret < 0)
-+		goto out;
-+
-+	replace_commits(&commits, &original_commit->object.oid,
-+			split_commits, ARRAY_SIZE(split_commits));
-+
-+	ret = apply_commits(repo, &commits, parent, head, "split");
-+	if (ret < 0)
-+		goto out;
-+
-+	ret = 0;
-+
-+out:
-+	oidmap_clear(&rewritten_commits, 0);
-+	free_commit_list(from_list);
-+	clear_pathspec(&pathspec);
-+	strvec_clear(&commits);
-+	return ret;
-+}
-+
- int cmd_history(int argc,
- 		const char **argv,
- 		const char *prefix,
-@@ -330,11 +546,13 @@ int cmd_history(int argc,
- {
- 	const char * const usage[] = {
- 		GIT_HISTORY_REWORD_USAGE,
-+		GIT_HISTORY_SPLIT_USAGE,
- 		NULL,
- 	};
- 	parse_opt_subcommand_fn *fn = NULL;
- 	struct option options[] = {
- 		OPT_SUBCOMMAND("reword", &fn, cmd_history_reword),
-+		OPT_SUBCOMMAND("split", &fn, cmd_history_split),
- 		OPT_END(),
- 	};
- 
-diff --git a/t/meson.build b/t/meson.build
-index a3ec9199947..5d3014a768f 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -386,6 +386,7 @@ integration_tests = [
-   't3438-rebase-broken-files.sh',
-   't3450-history.sh',
-   't3451-history-reword.sh',
-+  't3452-history-split.sh',
-   't3500-cherry.sh',
-   't3501-revert-cherry-pick.sh',
-   't3502-cherry-pick-merge.sh',
-diff --git a/t/t3452-history-split.sh b/t/t3452-history-split.sh
-new file mode 100755
-index 00000000000..2aac28afdf0
---- /dev/null
-+++ b/t/t3452-history-split.sh
-@@ -0,0 +1,432 @@
-+#!/bin/sh
-+
-+test_description='tests for git-history split subcommand'
-+
-+. ./test-lib.sh
-+
-+set_fake_editor () {
-+	write_script fake-editor.sh <<-EOF &&
-+	echo "$@" >"\$1"
-+	EOF
-+	test_set_editor "$(pwd)"/fake-editor.sh
-+}
-+
-+expect_log () {
-+	git log --format="%s" >actual &&
-+	cat >expect &&
-+	test_cmp expect actual
-+}
-+
-+expect_tree_entries () {
-+	git ls-tree --name-only "$1" >actual &&
-+	cat >expect &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'refuses to work with merge commits' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit base &&
-+		git branch branch &&
-+		test_commit ours &&
-+		git switch branch &&
-+		test_commit theirs &&
-+		git switch - &&
-+		git merge theirs &&
-+		test_must_fail git history split HEAD 2>err &&
-+		test_grep "cannot rearrange commit history with merges" err &&
-+		test_must_fail git history split HEAD~ 2>err &&
-+		test_grep "cannot rearrange commit history with merges" err
-+	)
-+'
-+
-+test_expect_success 'refuses to work with unrelated commits' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit base &&
-+		git branch branch &&
-+		test_commit ours &&
-+		git switch branch &&
-+		test_commit theirs &&
-+		test_must_fail git history split ours 2>err &&
-+		test_grep "split commit must be reachable from current HEAD commit" err
-+	)
-+'
-+
-+test_expect_success 'can split up tip commit' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit initial &&
-+		touch bar foo &&
-+		git add . &&
-+		git commit -m split-me &&
-+
-+		git symbolic-ref HEAD >expect &&
-+		set_fake_editor "split-out commit" &&
-+		git history split HEAD <<-EOF &&
-+		y
-+		n
-+		EOF
-+		git symbolic-ref HEAD >actual &&
-+		test_cmp expect actual &&
-+
-+		expect_log <<-EOF &&
-+		split-me
-+		split-out commit
-+		initial
-+		EOF
-+
-+		expect_tree_entries HEAD~ <<-EOF &&
-+		bar
-+		initial.t
-+		EOF
-+
-+		expect_tree_entries HEAD <<-EOF
-+		bar
-+		foo
-+		initial.t
-+		EOF
-+	)
-+'
-+
-+test_expect_success 'can split up root commit' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		touch bar foo &&
-+		git add . &&
-+		git commit -m root &&
-+		test_commit tip &&
-+
-+		set_fake_editor "split-out commit" &&
-+		git history split HEAD~ <<-EOF &&
-+		y
-+		n
-+		EOF
-+
-+		expect_log <<-EOF &&
-+		tip
-+		root
-+		split-out commit
-+		EOF
-+
-+		expect_tree_entries HEAD~2 <<-EOF &&
-+		bar
-+		EOF
-+
-+		expect_tree_entries HEAD~ <<-EOF &&
-+		bar
-+		foo
-+		EOF
-+
-+		expect_tree_entries HEAD <<-EOF
-+		bar
-+		foo
-+		tip.t
-+		EOF
-+	)
-+'
-+
-+test_expect_success 'can split up in-between commit' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit initial &&
-+		touch bar foo &&
-+		git add . &&
-+		git commit -m split-me &&
-+		test_commit tip &&
-+
-+		set_fake_editor "split-out commit" &&
-+		git history split HEAD~ <<-EOF &&
-+		y
-+		n
-+		EOF
-+
-+		expect_log <<-EOF &&
-+		tip
-+		split-me
-+		split-out commit
-+		initial
-+		EOF
-+
-+		expect_tree_entries HEAD~2 <<-EOF &&
-+		bar
-+		initial.t
-+		EOF
-+
-+		expect_tree_entries HEAD~ <<-EOF &&
-+		bar
-+		foo
-+		initial.t
-+		EOF
-+
-+		expect_tree_entries HEAD <<-EOF
-+		bar
-+		foo
-+		initial.t
-+		tip.t
-+		EOF
-+	)
-+'
-+
-+test_expect_success 'can pick multiple hunks' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		touch bar baz foo qux &&
-+		git add . &&
-+		git commit -m split-me &&
-+
-+		set_fake_editor "split-out-commit" &&
-+		git history split HEAD <<-EOF &&
-+		y
-+		n
-+		y
-+		n
-+		EOF
-+
-+		expect_tree_entries HEAD~ <<-EOF &&
-+		bar
-+		foo
-+		EOF
-+
-+		expect_tree_entries HEAD <<-EOF
-+		bar
-+		baz
-+		foo
-+		qux
-+		EOF
-+	)
-+'
-+
-+
-+test_expect_success 'can use only last hunk' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		touch bar foo &&
-+		git add . &&
-+		git commit -m split-me &&
-+
-+		set_fake_editor "split-out commit" &&
-+		git history split HEAD <<-EOF &&
-+		n
-+		y
-+		EOF
-+
-+		expect_log <<-EOF &&
-+		split-me
-+		split-out commit
-+		EOF
-+
-+		expect_tree_entries HEAD~ <<-EOF &&
-+		foo
-+		EOF
-+
-+		expect_tree_entries HEAD <<-EOF
-+		bar
-+		foo
-+		EOF
-+	)
-+'
-+
-+test_expect_success 'aborts with empty commit message' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		touch bar foo &&
-+		git add . &&
-+		git commit -m split-me &&
-+
-+		set_fake_editor "" &&
-+		test_must_fail git history split HEAD <<-EOF 2>err &&
-+		y
-+		n
-+		EOF
-+		test_grep "Aborting commit due to empty commit message." err
-+	)
-+'
-+
-+test_expect_success 'commit message editor sees split-out changes' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		touch bar foo &&
-+		git add . &&
-+		git commit -m split-me &&
-+
-+		write_script fake-editor.sh <<-\EOF &&
-+		cp "$1" . &&
-+		echo "some commit message" >>"$1"
-+		EOF
-+		test_set_editor "$(pwd)"/fake-editor.sh &&
-+
-+		git history split HEAD <<-EOF &&
-+		y
-+		n
-+		EOF
-+
-+		cat >expect <<-EOF &&
-+
-+		# Please enter the commit message for the split-out changes. Lines starting
-+		# with ${SQ}#${SQ} will be ignored.
-+		# Changes to be committed:
-+		#	new file:   bar
-+		#
-+		EOF
-+		test_cmp expect COMMIT_EDITMSG &&
-+
-+		expect_log <<-EOF
-+		split-me
-+		some commit message
-+		EOF
-+	)
-+'
-+
-+test_expect_success 'can use pathspec to limit what gets split' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		touch bar foo &&
-+		git add . &&
-+		git commit -m split-me &&
-+
-+		set_fake_editor "split-out commit" &&
-+		git history split HEAD -- foo <<-EOF &&
-+		y
-+		EOF
-+
-+		expect_tree_entries HEAD~ <<-EOF &&
-+		foo
-+		EOF
-+
-+		expect_tree_entries HEAD <<-EOF
-+		bar
-+		foo
-+		EOF
-+	)
-+'
-+
-+test_expect_success 'refuses to create empty split-out commit' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit base &&
-+		touch bar foo &&
-+		git add . &&
-+		git commit -m split-me &&
-+
-+		test_must_fail git history split HEAD 2>err <<-EOF &&
-+		n
-+		n
-+		EOF
-+		test_grep "split commit is empty" err
-+	)
-+'
-+
-+test_expect_success 'hooks are executed for rewritten commits' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		touch bar foo &&
-+		git add . &&
-+		git commit -m split-me &&
-+		old_head=$(git rev-parse HEAD) &&
-+
-+		write_script .git/hooks/prepare-commit-msg <<-EOF &&
-+		touch "$(pwd)/hooks.log"
-+		EOF
-+		write_script .git/hooks/post-commit <<-EOF &&
-+		touch "$(pwd)/hooks.log"
-+		EOF
-+		write_script .git/hooks/post-rewrite <<-EOF &&
-+		touch "$(pwd)/hooks.log"
-+		EOF
-+
-+		set_fake_editor "split-out commit" &&
-+		git history split HEAD <<-EOF &&
-+		y
-+		n
-+		EOF
-+
-+		expect_log <<-EOF &&
-+		split-me
-+		split-out commit
-+		EOF
-+
-+		test_path_is_missing hooks.log
-+	)
-+'
-+
-+test_expect_success 'refuses to create empty original commit' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		touch bar foo &&
-+		git add . &&
-+		git commit -m split-me &&
-+
-+		test_must_fail git history split HEAD 2>err <<-EOF &&
-+		y
-+		y
-+		EOF
-+		test_grep "split commit tree matches original commit" err
-+	)
-+'
-+
-+test_expect_success 'retains changes in the worktree and index' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		echo a >a &&
-+		echo b >b &&
-+		git add . &&
-+		git commit -m "initial commit" &&
-+		echo a-modified >a &&
-+		echo b-modified >b &&
-+		git add b &&
-+		set_fake_editor "a-only" &&
-+		git history split HEAD <<-EOF &&
-+		y
-+		n
-+		EOF
-+
-+		expect_tree_entries HEAD~ <<-EOF &&
-+		a
-+		EOF
-+		expect_tree_entries HEAD <<-EOF &&
-+		a
-+		b
-+		EOF
-+
-+		cat >expect <<-\EOF &&
-+		 M a
-+		M  b
-+		?? actual
-+		?? expect
-+		?? fake-editor.sh
-+		EOF
-+		git status --porcelain >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_done
-
--- 
-2.51.1.930.gacf6e81ea2.dirty
-
+We currently parse the hunk headers in diff.c:find_lno().  We could therefo=
+re
+fix the bug here by incrementing lno_in_{pre|post}image whenever the
+corresponding length is zero.  Parsing the full ranges is complicated, but =
+I
+notice that there is code to do this in apply.c:parse_range() - perhaps thi=
+s
+code could be copied or reused?
+IMPORTANT NOTICE: The contents of this email and any attachments are confid=
+ential and may also be privileged. If you are not the intended recipient, p=
+lease notify the sender immediately and do not disclose the contents to any=
+ other person, use it for any purpose, or store or copy the information in =
+any medium. Thank you.
