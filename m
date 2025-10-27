@@ -1,192 +1,178 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237DC2F3C3D
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 09:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9942857F1
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 09:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761559098; cv=none; b=kTKAczT47IYn//D76xQm+8o5aGKXGU4PNJmgEC40Sw+NabwlhfGEEeINhtoCtsOvWZit9ICHeQTixFgrCG5QEyzR8jExWjaN+iCEFV2fIFHMjpP3x+8TFfGR9gGWIl4iQX/HhZBG5pCez/4sSVbbOH+gDpJIHvWtcA910KCy4Xw=
+	t=1761559105; cv=none; b=HAcDCWeQ3LyZsn/7uThQCHLPlLgK7fBVWsmTgUxyWMBmF4VfWOufSUTDml4IV0o8u24hIGkxyh1Tn9Xag66UCEF889IqhT4HI3XCG2lN7pBedZeLKfJxQexd6esof9ftpC83U+FuJaIB1H1Kv5/o0uOm+pQ0XtplMl+cKRg0WGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761559098; c=relaxed/simple;
-	bh=0xQqsvGULIgu2UxmZ4jI+YHrX/jAr2AgMudBmCgAyvg=;
+	s=arc-20240116; t=1761559105; c=relaxed/simple;
+	bh=Unu/xB6PdtRhXEJYkJhNR77ugQJ6kvPldsvaFxVGhvs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nU8SC1fWhO1vzeDc9STjgjkY+3LuEgqL0BLBRhCYvkl2/F5L0d9TNTQIKGXwvqK48g3g7kl0r1XyC3z6OnrK7xTZFruMDC1DQujdfe9aHxagb0aA2vos7JW7HmWw5fUIspqri+INyByW4oierfSuBvFFdjm1NoaXboJYlzmkmC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ijIfPDRy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CVCGNYPL; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=kpJCKnQmDmC52Vtx+f+lf5s3QZLAwXmAlWdhPfslSHFscshcJU9AXyDiqoe07OBW6SXbRBeAJG3Eq6UJ+JSVdmeHi6gQJETdJAUse9JQyJiBsBEmY2HFamsTFF954jukEcGzHxq4IBBhnlP5a+0dvPns47hDYQc9tYrvuRodx+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bQQgkecj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oRo2ef1n; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ijIfPDRy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CVCGNYPL"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4A9E5EC031B;
-	Mon, 27 Oct 2025 05:58:16 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bQQgkecj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oRo2ef1n"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0F413EC012B;
+	Mon, 27 Oct 2025 05:58:23 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 27 Oct 2025 05:58:16 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 27 Oct 2025 05:58:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1761559096; x=1761645496; bh=MhtQF1ZoU8
-	BsxYyOOrEMuRx2TLCymJ/ofwAEo1GdOxw=; b=ijIfPDRyyr4+AzgRi4aVHwN2e8
-	diaJJnwSfINk0PV+XseqJI31fb+P0M7qb8UvxdFgI9EHJI0cKMlhh43qGj0Jm9HG
-	KzI0amRQ/UAvbfybnDe3xmZ30gCZWs1HKVERW/K2dEMv/5KkDOqzV2uEEBe4cCFm
-	/L4bUdemDQ0ObgndLeeGsLIg5TFHGGdy6jHNmnEj8fh3iOgMN54QXAQ2ugwTElQK
-	c+yFvzdXzZhUtFZQywAKmRtH7ZRFxZhdFMrYDy9Ys2TXmSrhJtvIjlCOhpH3FanU
-	CdPinGAlHJL3eQnXsGyq11pzuNZjziqd0jjgzm/B5mREcc8iSj45bxbxUm8g==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1761559103;
+	 x=1761645503; bh=Ll9footmTVnDfpFVv1Nezh89qeyq5SM1rC7Jxz1mX4s=; b=
+	bQQgkecjcMrN9ZjrQkFhJvGfkdNMXfTl7jbrklObYXrF9eW86y3CJ2FgqDbK8rxN
+	lXl+8iQHV2TS8JhPMndnCqghv8WZkLdMJAVGpSvpm2BJv9CsNVhIsmzk5ksHFLKD
+	FJJifz5iGifGvBXTZ0SyUESY1xI8f2J+miA3WMn7+Szd6eJnXimxAuu1p7Tk6793
+	W36za6Gaf8em9EnO0A83tIZciyJXxTczio00yKUXPjoe9mxOGm5Pskf++d9NdFyP
+	p3Uc2izBXANMYLDKhI1Mq69M7MuBKl0NUC6fu3hQkU1SXCZbVDNjKvwH2hmoa2RG
+	xZhGCvk3XHHHlAupafJXgw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761559096; x=1761645496; bh=MhtQF1ZoU8BsxYyOOrEMuRx2TLCymJ/ofwA
-	Eo1GdOxw=; b=CVCGNYPLStIhlyQvCfbkmSnJP7OR4eJUz5t4IkwEnHQEoCrqFV3
-	4gz1nFV37E4l0PHoQr5Q2+qsg7l1uwTgNfOaZhN+V2bIClxNOpCYbT1L93Ztp07l
-	rd4+vgQXLsEU+vcN0r3S6b7GQ2sqfIZqg8qYScofKy0JQTR1sfVe5cA72Sm3He0J
-	dIvR1VQLpsB5MsaDyI/ch+n1CHJdXOv7HEjewr5ytKn79Nak9JFl2ZeVmDyHdPMW
-	L/xSd/gY5XqiTQVIR7zoWAthRr2OBAKZ4zYZ+NIxYSqWXrm5zNyZ4Jum6IXWFWWa
-	lmtMwpx/K7dV2PcrrDFZnHMv54A3FnWYSpA==
-X-ME-Sender: <xms:OEL_aK8peiKeoHXCUm2wvaLfueKN3UX3bktrTx5FD3wWZ6kbRC42Tw>
-    <xme:OEL_aNTZftF5s9KP9UhB2AJp8n52A9a_uXy6a5xNyZ51NLldnCUVnikk5zwadRpzW
-    j91kI4Y3CW9mSrqGx1YLj9RGF1xG6S_ZGmn3bWCQZVLZmFVvpwtgg>
-X-ME-Received: <xmr:OEL_aDoMRVlKJ7qNDfexQJGe02Xy8js6GnTYP-FmNA9ynJf7KX8taSkO3Y0ZVB4xvU2kEfpCyvlWJjCPH25pwz9cE3dTzg4GX9eYR4Eg4A>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761559103; x=
+	1761645503; bh=Ll9footmTVnDfpFVv1Nezh89qeyq5SM1rC7Jxz1mX4s=; b=o
+	Ro2ef1n4yMFphcqRzeIeElugkmwbKC6bEa/1ESdF3TaK+u+n1OJzOKKmjVc8Aevt
+	bGnETf+CUwg33r2epCB4SNK39fLpYJSuDQNsSJvOunGrGHBlFbdTgOGHPl4sJYbA
+	aO3ZFR1tAGl7xB0GukL2OUcIgcIH8NcPuuigkxgSRDIJqVtA9dwOH7B/hsqdr5r+
+	Vv5ckwZtmvWUHIcYRUBjqwlVX+2inMFUFsN0G8Kcz/6obNvSbbDbOtY1qzQCJzkS
+	1+NYiDFqANHqO9AWOxnrozAWHLlAjY5atKrVPxZLaGAdgbDfx3W/xmwpj3uNU7bS
+	h3faGSwXS9X5k8ue8Z12g==
+X-ME-Sender: <xms:PkL_aAJIZ-LxxMIhh1TVJafIpwyD3-XXgFtLN3HkrHFaw2zouZrhvA>
+    <xme:PkL_aNBJodX0-kzVqY4ssOa0cWs5Q9NdUY7Rf7hqjQ5BT4GS46bPJzWhhO9OIOsvY
+    I4BqXGLtFKoSxd6bE8wtoPA8FLSozbmTS_4ugEG_z7KYiQeZNVeBQ>
+X-ME-Received: <xmr:PkL_aAcDSlegi-ua6kJag4I9-JwiOK86i-C6JOvQFc8t62CnXhbNxz6aGLDTqQ9Jxm3kIo7ZnlnnZWt59jJ6DlU5raC7XEltPOoshcykVA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheejieejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegsvghnrdhknhhosg
-    hlvgesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepkhhrihhsthhofhhfvghr
-    hhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepshhorhhgrg
-    hnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhm
-    rghilhdrtghomhdprhgtphhtthhopehmrghrthhinhhvohhniiesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:OEL_aCkGZ6oGnh0uNPmLl8A8fBRLs3yc8qddkouUw0qD_0_haGX2lQ>
-    <xmx:OEL_aEelstp0O8PHIj0oSk4sarp6ssdQscMom89a8n7kT8YfnHb1Qw>
-    <xmx:OEL_aGrfo5-R1SHyZhYf8C3qnEOdMN6seHHd5XHZ3nNUImKYZiqfxg>
-    <xmx:OEL_aGNYPt6a2iCUuiWDZdGMaTJIi6ST2nbVGvx5plTPlpA1hsZDFw>
-    <xmx:OEL_aIJpRcn3Kocjpu67hFxyKKOslF-ZWi5mahK8WLjQvfaPucZIztda>
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvfihrvg
+    hnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhorhhgrghnohhvsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepkh
+    grrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhho
+    sghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehmrghrthhinhhvohhniiesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghp
+    thhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtoh
+    hm
+X-ME-Proxy: <xmx:PkL_aM3DLwc506hdhUK1_NgYcRkJYHYwKsu0_GeHPNBb7Mi2pTLGaA>
+    <xmx:PkL_aHhC3lFf3on0Y6xp5wgm3RzFK9FL4331YCMZ_7RuVZy_jS6gow>
+    <xmx:PkL_aFkZAauOiIoGDW8-rRiA5nGuPKu_xPK41iqPsIm-_aFljY83ww>
+    <xmx:PkL_aNanFdCYRf8gYiSCjreVU6lBTjq2saMkPpWiQKdTPrq5nT2pKQ>
+    <xmx:P0L_aIvaoZq-lHBRTN6CFcoe3N1JrFZxyNN6TW3KpcEkzpmYG_JXiy2d>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Oct 2025 05:58:14 -0400 (EDT)
+ 27 Oct 2025 05:58:21 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e269e4ed (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 27 Oct 2025 09:58:13 +0000 (UTC)
-Date: Mon, 27 Oct 2025 10:58:09 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 54703172 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 27 Oct 2025 09:58:20 +0000 (UTC)
+Date: Mon, 27 Oct 2025 10:58:17 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
 	Sergey Organov <sorganov@gmail.com>,
 	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
 	Martin von Zweigbergk <martinvonz@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v5 06/12] builtin/history: implement "reword" subcommand
-Message-ID: <aP9CMa3dDuV_RGnG@pks.im>
-References: <20251021-b4-pks-history-builtin-v5-0-78d23f578fe6@pks.im>
- <20251021-b4-pks-history-builtin-v5-6-78d23f578fe6@pks.im>
- <xmqqa51kszvc.fsf@gitster.g>
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 12/12] builtin/history: implement "split" subcommand
+Message-ID: <aP9COS96zn3yCRlp@pks.im>
+References: <20251001-b4-pks-history-builtin-v4-0-8e61ddb86317@pks.im>
+ <20251001-b4-pks-history-builtin-v4-12-8e61ddb86317@pks.im>
+ <CAOLa=ZTnsHxK2+rRsAErY_zc1Rg5WNrmcDBiPgDk38zb9TNfkQ@mail.gmail.com>
+ <aPdyBpuLfuYOLe7q@pks.im>
+ <CALnO6CAj2Jynun7Ns5222FFevqEF3O7ACVEU-GzT6DqUSxQNjw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqa51kszvc.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALnO6CAj2Jynun7Ns5222FFevqEF3O7ACVEU-GzT6DqUSxQNjw@mail.gmail.com>
 
-On Tue, Oct 21, 2025 at 02:34:31PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > @@ -9,6 +9,7 @@ SYNOPSIS
-> >  --------
-> >  [synopsis]
-> >  git history [<options>]
-> > +git history reword [<options>] <commit>
+On Tue, Oct 21, 2025 at 05:19:19PM -0400, D. Ben Knoble wrote:
+> On Tue, Oct 21, 2025 at 7:44 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > On Tue, Oct 14, 2025 at 09:38:51AM -0400, Karthik Nayak wrote:
+> > > Patrick Steinhardt <ps@pks.im> writes:
+> > > > diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+> > > > index b55babe206..83d675afea 100644
+> > > > --- a/Documentation/git-history.adoc
+> > > > +++ b/Documentation/git-history.adoc
+> > > > @@ -40,6 +41,26 @@ rewrite history in different ways:
+> > > >     provided, then this command will spawn an editor with the current
+> > > >     message of that commit.
+> > > >
+> > > > +`split [--message=<message>] <commit> [--] [<pathspec>...]`::
+> > > > +   Interactively split up <commit> into two commits by choosing
+> > > > +   hunks introduced by it that will be moved into the new split-out
+> > > > +   commit. These hunks will then be written into a new commit that
+> > > > +   becomes the parent of the previous commit. The original commit
+> > > > +   stays intact, except that its parent will be the newly split-out
+> > > > +   commit.
+> > > >
+> > >
+> > > So in essence we do this:
+> > >
+> > >   Before split:
+> > >   P1 ── C0 ── C1 ── ... ── CN
+> > >         └─(target)         └─(HEAD)
+> > >
+> > >   After split:
+> > >   P1 ── S0 ── C0' ── C1 ── ...... ── CN
+> > >         │     └─(modified original)  └─(HEAD)
+> > >         └─(split-out hunks)
+> > >
+> > > I do wonder if S0 should contain the existing message and the new
+> > > message should go to C0'. So perhaps more like
+> > >
+> > >   After split:
+> > >   P1 ── C0' ── S0 ── C1 ── ..... ── CN
+> > >         │      └─(split-out hunks)  └─(HEAD)
+> > >         └─(modified original)
+> > >
+> > > Mostly because when you say split, I would assume we keep the original
+> > > as is and add on top of it. I don't really have a strong argument though
+> > > :)
+> >
+> > Yeah, this has already caused some discussion beforehand. I guess you
+> > can argue either way, and the suggestion from others was to simply allow
+> > the user to edit both commit messages.
+> >
+> > I don't at all mind going into that direction, but I wonder how to call
+> > the "--message" switch in that case. We could of course just call these
+> > "--first-message" and "--second-message", but that feels somewhat
+> > awkward.
+> >
+> > Also, I already have it in my mind that it would be cool to extend this
+> > command so that you can split into arbitrary many commits. That is,
+> > after you have split out the first commit we simply go back into
+> > interactive mode to create a second commit tree. Rinse and repeat until
+> > we have no chunks left anymore. But if we had such a mode though, then
+> > numbered parameters don't make much sense anymore.
+> >
+> > An alternative could be to just accept multiple "-m" arguments, and we
+> > then apply the messages to the respective commits? Dunno.
 > 
-> It is curious that a command-less form is still listed here,
-> especially since this command "requires" a subcommand.  I would have
-> expected that there will be a single line here after implementing a
-> single subcommand.
+> Or *gasp* not support "-m" at all, and require the user to put
+> _something_ in an editor? 🤔
 
-True. You can execute `git history` alone, but it doesn't do anything
-useful except for giving you an error and all the potential subcommands.
-That's in contrast to e.g. git-reflog(1), which supports a command-less
-mode that does something useful.
-
-> > +`reword <commit> [--message=<message>]`::
-> 
-> That should be `reword [--message=<message>] <commit>` no?
-
-Indeed.
-
-> > +	Rewrite the commit message of the specified commit. All the other
-> > +	details of this commit remain unchanged. If no commit message is
-> > +	provided, then this command will spawn an editor with the current
-> > +	message of that commit.
-> 
-> As long as it takes more than one -m and concatenates them just like
-> "git commit -m <message1> -m <message2>" does, I would not complain
-> too much that a command line option to give message encourages sloppy
-> log messages.
-
-I'll for now defer the discussion around "-m" completely, as the design
-isn't entirely clear yet in the first place. So I'll just drop the
-option in the next iteration.
-
-> > +		if (!onto) {
-> > +			onto = commit;
-> > +			result.clean = 1;
-> > +			result.tree = repo_get_commit_tree(repo, commit);
-> > +		} else {
-> > +			onto = replay_pick_regular_commit(repo, commit, replayed_commits,
-> > +							  onto, &merge_opts, &result);
-> > +			if (!onto)
-> > +				break;
-> > +		}
-> 
-> Hmph, I would have expected that the overall flow of this command
-> would be
-> 
->  * find the commits above and including the <commit> in question,
->    making sure there is no merge.
-> 
->  * read metadata of <commit> like the parent (as we do not allow
->    merges), tree, author ident & time.
-> 
->  * create a new commit object that has the same metadata as <commit>
->    on top of the parent of <commit>, but with the updated message
->    and new committer ident & time.
-> 
->  * initialize a variable Current to point at the rewritten <commit>
-> 
->  * loop for each commit C in <commit>..HEAD range in reverse order
->    (we know we have a single strand of pearls):
-> 
->    - read metadata of C
-> 
->    - create a new commit object C' that has the same metadata and
->      message as C on top of the Current commit, with new committer
->      ident & time.
-> 
->    - make Current point at the resulting C'
-> 
->  * Point the Current with HEAD.
-> 
-> without having to touch any "pick" machinery.  Why do we need to go
-> down to the merge machinery for a mere "reword" operation?
-
-You're exactly right, we don't need the "pick" machinery at all right
-now. I think this is still a leftover from previous iterations, where I
-was also driving things like an "edit" command that _do_ require merges.
-But neither splitting a commit nor rewording it does require a merge at
-all.
-
-Will simplify. We can reintroduce the heavier machinery at a later point
-in time as needed.
+Let's do that for now and discuss in more detail in follow-up patch
+series.
 
 Thanks!
 
