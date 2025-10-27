@@ -1,116 +1,175 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9242798E5
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 20:36:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A798A3054FA
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 20:36:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761597375; cv=none; b=SCWbbaYWcbS+ZC0Lqt80sb4n0/L7gK54hLKK3IOPpxmuogb7/pydH8iHjTQhFL9c0QIInsvAaXYNSryn6c2aHH7XVU8xlyXpyb5Yig2LgHqclui0/eLbO8s7U16j+if8tl5FqPdAM1FJbiLk5H2zFQ1Lcho4BShgVu6x4xKCgX4=
+	t=1761597411; cv=none; b=eJNKajxos2/doVlrrJAdHTmc54XZ0GUsD28jVz/UMNXgcxP+LvD9HI6UewOtPir42MFv5lNjRnMaxJ3B8ZetdwpNWrYyue7J92qh0yRFqQOf3n/4Xz/gu4z37eOUjMQcLr6PBBXJ4WnexCmNyta/APrxJAxYDtsT4PO0KhFCtbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761597375; c=relaxed/simple;
-	bh=6VAV77BxLGcFR+O9zVBI+8RRVnLNjklJL1Pj/WmU330=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cvacaESOEFhsd6LzZjZggihS03IgR+Felj3PU+xMaJ8ILULVJcrAHIuLeKtktGf2+cG4W0j9SNYCGxSjo3DtBDhtn1eoctpO25gNQE48NsdSo2gpxEkDR8YToz50CfavvDQKm2GiwxtKeTvkuh/fksdXq8UihmzUYbcH9ZcLEmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uk7Ph/2S; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761597411; c=relaxed/simple;
+	bh=gP2XYYoGYRYbKF3yHu9KdzPG+koWWlHVRzkpxnfTw/4=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EzQMFKAwfwysXZmUmf7UkieK7QCExS02VhO8B9My/HDUg29LNHp5oeS8ZFsYvkhET15GIU4ApMO9oWbM67lgGAf4zPu74BDq7sybBhNPscHedGVzHGffU1Pv6jJN5L+DGpB8g6CgugQMR0AczxDysfh4cBwhgmPz87S8oAiF/X4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=acyDSFjS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KJ5AcLmE; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uk7Ph/2S"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-592f7e50da2so5735650e87.0
-        for <git@vger.kernel.org>; Mon, 27 Oct 2025 13:36:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761597371; x=1762202171; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6VAV77BxLGcFR+O9zVBI+8RRVnLNjklJL1Pj/WmU330=;
-        b=Uk7Ph/2SK085O1i97FMSBu0XmWJe+MonspvJDKQTqF92mwGTqJlaxh7XturJOZwiBl
-         qnnmjoqrEPenaDixMwroSm/3WPEiPhS8GKvwwywVndCD957flN3Jzdzys2hQPHQ1I3gw
-         vCnAZTBsUAMhhvh4+XEGd+MuErytFuAXaMGhTLFeLMT1MDugMd+Ij5lCLbwirFmrep7x
-         VcShqVtB7mCxMixpYOxhMsU01/7V6hclPkRL2AVcHMzHP9QnBE/E41U3OOuOATiZRSCN
-         L+hqOVUL9577Jaxmta2Tum27jk5ocZXYkUV4wu3auOaoPLc5y117NzSMmGDPpFZ8FiqK
-         g5Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761597371; x=1762202171;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6VAV77BxLGcFR+O9zVBI+8RRVnLNjklJL1Pj/WmU330=;
-        b=fgcXZTLKRsOLCw8my/Ts2190EZmfHH8uVD2XJNhCfTtJnnAYImwIZOOXSYChP2aG1p
-         i1xBfXujuyUuIppidVZVQjavdVhoxdXnIlIsfWw/jLXWo4tMdtAsCiKYfv7k65PtYlWT
-         MgLYrSIrlog5/K0ZjzvF//4KV59YxQf3OfK9JqDcPJ6UzFvdfZma9EqCywLSZbcKfeBO
-         nfthT4os7m7xn09s012uJ8aPqdYMIJTZpALjkYvp9mUK0vg2oh2PTyH9mWC05qMUSrec
-         LFeJ2jcwytjyrS0MO0C3ctQTUPhIwv61j0l0IGKuam7UKSulruNPMnV/efHyYJ8J6Ndc
-         BY2Q==
-X-Gm-Message-State: AOJu0Yzgtbj3yjbBsPbjfVwvadkZ4JLvFkCtBlfUm+dC+culSfoRyFBu
-	iniJXHzD+OqYerYUGnbvCvNJPJUBe0IfrvO4Q0qH6hE9K7yIDV3kU7VaBAfQXEedCVxgdy9vZe5
-	6ipogDtpvQy1pzGdys8EDLEPLG6G6j8k6pQ==
-X-Gm-Gg: ASbGncvOIeC5ubnrXKWytIOsq0hc5i9H6b2wc7k5QJFaQYQq9JufMRbWD7Q5zWddKAR
-	Z6/13lNvvp6mjpIhCr6AfAsyw+JlHiguMy829LDhrxz+TVaXfjMsOjNiyhf6IyBi4wF58lnDtRb
-	fC19pPOgtBhaPDhwoSmFXMwl4efnGu7uqW7+TXnQeNScoSqXsGi/QqaYqcowptkdqHeRbkAiURQ
-	8HHPe1ezmPn/D9RL9n/yerSdFMaBqDnjNtPx42EfRsTkCMIyeT40aOKPYscgg==
-X-Google-Smtp-Source: AGHT+IG94ugVJShyr60kDDIbYRWvqzYzUYtaT31QjzzTU3KQVD16WKv21RBxORua8lSA+uYYRBamEe+bjNufMFQT8N8=
-X-Received: by 2002:a05:6512:b20:b0:57f:492:324d with SMTP id
- 2adb3069b0e04-5930edf802cmr252997e87.17.1761597370891; Mon, 27 Oct 2025
- 13:36:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="acyDSFjS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KJ5AcLmE"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id C3146EC0096;
+	Mon, 27 Oct 2025 16:36:47 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Mon, 27 Oct 2025 16:36:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1761597407; x=1761683807; bh=JzwnGzcBVbjBtxcEiV5W9o2WI9OpMyAZ
+	NqT89JPpbeg=; b=acyDSFjSQEF+10nNDFzmw0KJgcUPRUlMvdacEnheBiy6j9YC
+	PJSsRVXcG1n5TRTHKQpWVdX69Jc7ZeRqXQfGk0EnBjHDySqWD9ZHuXy3ZDOPnrOD
+	cibefSo8li7bquUCeReb/8rH+Ei7Zk90Io0Rj9wOzlFv0oyFPwErLt4N4OSvr89n
+	OwCWGLrB9G3d59IYkIQZxKrb87feFExuMZNoXyagRxN9QIZqnXQzjaRkNJfa1QTX
+	yTyZH7qObMUppHBVo9trzFyWZLA9pAq+dR3+qtK7mtZZu4ZIFdbh8aXvLSkq3X0x
+	9cxST6MVqCt0CEclHZoI/vOoMezWaWjhny1xtg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761597407; x=
+	1761683807; bh=JzwnGzcBVbjBtxcEiV5W9o2WI9OpMyAZNqT89JPpbeg=; b=K
+	J5AcLmEmW66Qa4RMJFjImvwqzGsVWs/Ro0DlHrCTef025C9cRNfGptTWRR6UdMmU
+	MjxwEqjTyiZ7JuMpdqixk7ekgelr8uIJpzGUOYc40YjCvSpIXbHHC1g9TsAJG6fm
+	BAMknQqaihMIIw6P2IZFnJ1uSEvN7Mo2z/vlDzlhFjxpwRg8y2MaIl7uAXbwC7wD
+	tpgsrONOhfayGJbwxkdLJJGhUsPjFd3pLoNGiJZn3YFNdq3mdFaQT0bAEIT+8vZb
+	FcNUZXckzafQzcH3RpGM5P+p5K+CgO6QXu0JEdjbC7YvD9gG9ppsNlPMYP5kebIw
+	tNwD7Qdu9truA37f3x/9Q==
+X-ME-Sender: <xms:39f_aEC0Ncu0IiQVUvtmBXAV_E9ZAxMdt43lUSLMMu-21uldhm8_8g>
+    <xme:39f_aMjeYkke5Ek2-hQ_66cfxHAL7SZuyg6ePrgjYSpqU-IkApZE544yDZW13pjMy
+    unIAyFVOiWXhg5VCFljsydO4KEXQBWvdc70QLMHq_PXDRkKaS4>
+X-ME-Received: <xmr:39f_aFOB6Rcwu_gpGx-vklmWhR1KdnfWJKb4tLXZJe1An3oLUeZvz-bWunocIbbgvZXc68xtbhL-xT3TkxeORLXFc_fPWgXI9K0L>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheekleegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
+    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
+    gidrtghomheqnecuggftrfgrthhtvghrnhepledvfedtfedtkeefueevlefgleetieeuff
+    ffkefhgfekveehkefhgfetjefhffegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
+    hpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:39f_aF7r-lLWjO6ENfgpSohT0w69Ewv5mZbfl1Qz1LisScVseGbEJw>
+    <xmx:39f_aL0ouyzBUnofa-_KxkYSfpGhsQbWFiZouM_ZR2yxMtXUScbS6w>
+    <xmx:39f_aOYRHkQkzGUNLxEUxlWGmbO-Gib9lHQ7hJWHApMQb7zcc5jJKw>
+    <xmx:39f_aLD1ftT9yMvxcrmCqk59tlo4HT94BLA8WazGgmMMY1jRJxkgjg>
+    <xmx:39f_aGGvnFBAEXQHOdxQGan0aHymt9iBGCWgfE0t7f9rL-aX4ucZ3obN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 Oct 2025 16:36:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] whitespace: correct bit assignment comments
+Date: Mon, 27 Oct 2025 13:36:46 -0700
+Message-ID: <xmqqfrb4hyjl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251023-b4-pks-rust-cbindgen-v1-0-c19b61b03127@pks.im>
- <20251023-b4-pks-rust-cbindgen-v1-3-c19b61b03127@pks.im> <CAH=ZcbADTLvTioBf+LYQej1G0biZM8s3-iJG+BZjnpxj+8NjsA@mail.gmail.com>
- <aPsepOtUf92fqDL-@pks.im>
-In-Reply-To: <aPsepOtUf92fqDL-@pks.im>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Mon, 27 Oct 2025 14:35:59 -0600
-X-Gm-Features: AWmQ_bmgb1XtzfekE4RR4sh95iufIL4RMtou9eNnFXhgcgb08I1Eq_0S4ayh5Xs
-Message-ID: <CAH=ZcbBWuS6QVQT4LsxSP-X4GupZwr+NwzXNH2+qZGoufUWDrQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] rust: generate bindings via cbindgen
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Oct 24, 2025 at 12:37=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
-te:
-> > cbindgen is a Rust crate and it should be specified in the Cargo.toml
-> > under [build-dependencies] block.
->
-> What is the benefit for us? The generated code is not a dependency of
-> the Rust code, and neither do we use it via "build.rs". And if we use
-> cbindgen via "Cargo.toml" we'd be forced to build it first, which slows
-> down our CI jobs.
->
-> Please let me know in case I miss any reasons to have it in our build
-> dependencies instead.
+A comment in diff.c claimed that bits up to 12th (counting from 0th)
+are whitespace rules, and 13th thru 15th are for new/old/context,
+but it turns out it was miscounting.  Correct the comment.
 
-You're targeting a very old version of Rust (1.49). I'm not even sure
-that cbindgen will work with a version that old, but if it does then
-we should use it in build.rs to make sure we're not using any features
-of cbindgen that aren't available until later versions. If we use
-cbindgen that is packaged with the platform then we can't precisely
-control which version of cbindgen is being used. This is a matter of
-reproducibility. There may be platforms that can compile Rust, but
-can't generate C header files via cbindgen because cbindgen hard codes
-that a certain minimum Rust version is required in its own Cargo.toml
-file.
+Also update the way these bit constants are defined to use (1
+shifted by count) notation, instead of octal constants, as it tends
+to make it easier to notice a breakage like this.
 
-> > Also I think that we should convert from using a Cargo crate to using
-> > a Cargo workspace, so that we can generate multiple header files (1
-> > per crate) rather than a monolithic generated header. This is because
-> > cbindgen operates at the granularity of a crate.
->
-> I'm basically still punting this into the future. There is no good
-> reason yet to have workspaces, so I'd rather introduce them once we have
-> a better way to sell them and demonstrate their immediate benefits.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-I'd like to avoid creating a gordian knot in Rust like how the
-existing C code is a gordian knot. Creating multiple crates will
-encourage better api design so that our code can be more modular and
-easier to maintain. The reason why I don't want to put this off is
-because the more we add to Rust the harder it'll be to refactor the
-code to use Cargo workspaces. Let's do it now while it's still really
-easy. As there is only 1 crate conceptually the code changes required
-to convert it to a workspace will be very minimal.
+ * I happened to be looking at this code today, and noticed this,
+   but I very often make stupid mistakes while counting things, so
+   sending it out (which should not change any behaviour) in the
+   hope that somebody would (again) notice that I cannot count.
+
+   Next step would be to make a gap between whitespace rules bits
+   and WSEH_NEW/CONTEXT/OLD bits, so that we can smoothly add new
+   whitespace rules later.
+
+ diff.c |  4 ++--
+ diff.h |  6 +++---
+ ws.h   | 20 ++++++++++----------
+ 3 files changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index a74e701806..08136ad5c5 100644
+--- a/diff.c
++++ b/diff.c
+@@ -803,8 +803,8 @@ enum diff_symbol {
+ };
+ /*
+  * Flags for content lines:
+- * 0..12 are whitespace rules
+- * 13-15 are WSEH_NEW | WSEH_OLD | WSEH_CONTEXT
++ * 0..11 are whitespace rules
++ * 12-14 are WSEH_NEW | WSEH_CONTEXT | WSEH_OLD
+  * 16 is marking if the line is blank at EOF
+  */
+ #define DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF	(1<<16)
+diff --git a/diff.h b/diff.h
+index 2fa256c3ef..60749154e7 100644
+--- a/diff.h
++++ b/diff.h
+@@ -331,9 +331,9 @@ struct diff_options {
+ 
+ 	int ita_invisible_in_index;
+ /* white-space error highlighting */
+-#define WSEH_NEW (1<<12)
+-#define WSEH_CONTEXT (1<<13)
+-#define WSEH_OLD (1<<14)
++#define WSEH_NEW	(1<<12)
++#define WSEH_CONTEXT	(1<<13)
++#define WSEH_OLD	(1<<14)
+ 	unsigned ws_error_highlight;
+ 	const char *prefix;
+ 	int prefix_length;
+diff --git a/ws.h b/ws.h
+index 5ba676c559..611c6b6d50 100644
+--- a/ws.h
++++ b/ws.h
+@@ -7,19 +7,19 @@ struct strbuf;
+ /*
+  * whitespace rules.
+  * used by both diff and apply
+- * last two digits are tab width
++ * last two octal-digits are tab width (we support only up to 63).
+  */
+-#define WS_BLANK_AT_EOL         0100
+-#define WS_SPACE_BEFORE_TAB     0200
+-#define WS_INDENT_WITH_NON_TAB  0400
+-#define WS_CR_AT_EOL           01000
+-#define WS_BLANK_AT_EOF        02000
+-#define WS_TAB_IN_INDENT       04000
+-#define WS_TRAILING_SPACE      (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
++#define WS_BLANK_AT_EOL         (1<<6)
++#define WS_SPACE_BEFORE_TAB     (1<<7)
++#define WS_INDENT_WITH_NON_TAB  (1<<8)
++#define WS_CR_AT_EOL            (1<<9)
++#define WS_BLANK_AT_EOF         (1<<10)
++#define WS_TAB_IN_INDENT        (1<<11)
++#define WS_TRAILING_SPACE       (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
+ #define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB|8)
+-#define WS_TAB_WIDTH_MASK        077
++#define WS_TAB_WIDTH_MASK       ((1<<6)-1)
+ /* All WS_* -- when extended, adapt diff.c emit_symbol */
+-#define WS_RULE_MASK           07777
++#define WS_RULE_MASK            ((1<<12)-1)
+ extern unsigned whitespace_rule_cfg;
+ unsigned whitespace_rule(struct index_state *, const char *);
+ unsigned parse_whitespace_rule(const char *);
+-- 
+2.51.2-686-gf92ff40d17
+
