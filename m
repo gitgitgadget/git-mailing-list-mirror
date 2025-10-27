@@ -1,52 +1,49 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD0B30E854
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC6D30DED8
 	for <git@vger.kernel.org>; Mon, 27 Oct 2025 00:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761526437; cv=none; b=XFn6c9+eArI1fFIT066S3/NBkaUPI6VNu9IwpxqHrhsIxLWG8EVEjBh4KO49/0PG7aVnl+jT6bp12leIvq1Rkge4XONGckUwRh+8bXhT2m1SPOAEQDh1HjKypEi8yIz6qb4YG26gyHzIvSb8lH7oMy990dvmutmNRmqMvDcbk0g=
+	t=1761526437; cv=none; b=DF/4Dxa7dFpA233r9lglDV/2mMb3FKYK+5I+VahujWQbfKdjCQ2zMSiVJtvzZ3J6QmXuZ9IJWMvLAOw2L0JSnLtJkPhXfPKsVPMm9CttcwRpEVBLMHCLGBrWRLqNyF1dOOPRWsJo2NqoIdoG7bCgonxjQP/YZVECH4Iwo8MFeIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1761526437; c=relaxed/simple;
-	bh=EahI8YYf4f3nywFQVo3y+72tjZeQDpdHdMDYVfTG8AA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KvdzKz5e/MvLGajwmkQwB0ZShSA9yzbbW7u1mRhIGU6BwiPnFI6FClKUWmhsOA51liNMK3LMl+T46hWXS+OCu34oNnMkqKD8oXlArTHqxREZ6X+wrmKdGrUfX/vB0u/G9/wzq5D5P6vO+9engFBDlmp293AqRtjR6f4czQiubcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=t3uQ8szH; arc=none smtp.client-ip=172.105.7.114
+	bh=ZR+LX/KQFmf6QYzRWzZNY/xen0x312fcjt4C/TW7qNM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CvfpVDkOsVarWIU2rv0J7NTPK2CO8hgojb9DOgTRAj+K/jyt+R0draUwBAz6aMsQ+s6T+TArGbR6OBzKCeJBqWwXOFO1EOz+3qqhEP03X7VgmMZjjR6uh7PPOoly0hkecgoCCJqGt24VKrm7cV/956+OrRvtdc9/mn7J4KtyCeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=mQCYrNaP; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="t3uQ8szH"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mQCYrNaP"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1761525867;
-	bh=EahI8YYf4f3nywFQVo3y+72tjZeQDpdHdMDYVfTG8AA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=t3uQ8szH/r/N3rfcIw+TszQgD+rLYGLeT1Ji+wd8HfEV8sU9XQBx5oqOtClj+PLu7
-	 IBTRp40whcGSXbQlM+N0PbEVSNNJICQ35sdAQWLlMu+O/e5Gv3LK1rOSz9iXWhZ2KC
-	 8Vo6mWEGHYUx8YvDVO6m8WySyEk1iC3smwoF8w5MwyNH47iuJNn2106wdDeJd5kzZl
-	 wYOd+wwMZSnpc/CKN5nU8qYzvJGHjcC709eddHnDhoU+GegQbR0/T73BJIYEpxvSaw
-	 1DpzDjnrarS+Ra5u5BvheBTANHh9hz5Q6O7Hk8VmJUsFOfMywedPbDH08Yucojcy7l
-	 3BSXdph23UBZBlHQ677jR76llgLRun+2MUtgP5RKPK8jZ30gKZIFIdg81HcBHPDjji
-	 5y5G79sr4KW9Ujk0Wxi/Q+DqKAaJ8bWq4PUziv6EODQptYA7nUXUv5UUjGsL9V2Iob
-	 icRtctRZQ+dQxt7cJdSlNGwMJmOmAjiZp/3P2TIUcrxE4HIdC6o
+	bh=ZR+LX/KQFmf6QYzRWzZNY/xen0x312fcjt4C/TW7qNM=;
+	h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=mQCYrNaPl3oNjmOJnn+ibQUyz6YfNkCDcrffkzTzDR5WYQSQCDsYHxh7fuYq1gi53
+	 JJQMQbfFS6L6QO0pkPFQB6HMgENypkjXUc5bFq26CooZIeliLPn0VaSRrwGKH3/F3H
+	 lFdFwY93rGa9U3bOACZwZNuxmrc44VzMi8xL+bwIaynhHHRZ6vWr6vgIEYAZCukfkz
+	 kp19QWgXXQD/E5ZSXUfTB3L5QRucgnNoEKSMk8GNqC3lbvJQKwyndugFCuEJr3fuho
+	 0lp+GnuFG1tzitcHL87FTL+tFkz0V97Etb/Lo/g3bqV1Ca3Ucyjr2oECm/ltZZSCOX
+	 xI0pVK3QxvA1hWDxGDI5HfsgdKRKwylTAzIaEP7OGT9ozkqoK0q0m2bOFZZNs4ArtR
+	 E2Hk4/P9/1fRdup565LIl4W+pST/cC9AvIVnAOQRoviF1lMs5GUc2Q7vo4TC+bWIxC
+	 mDWGinkkTL/sJo+AVoY8dJgL+KFHtbUDFzpesE/zZUP/bweXrlX
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:5675:b769:afe:3fa2])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 81D122012B;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 788EE20036;
 	Mon, 27 Oct 2025 00:44:27 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: [PATCH 01/14] repository: require Rust support for interoperability
-Date: Mon, 27 Oct 2025 00:43:51 +0000
-Message-ID: <20251027004404.2152927-2-sandals@crustytoothpaste.net>
+Subject: [PATCH 00/14] SHA-1/SHA-256 interoperability, part 2
+Date: Mon, 27 Oct 2025 00:43:50 +0000
+Message-ID: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
-In-Reply-To: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
-References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,312 +52,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-We'll be implementing some of our interoperability code, like the loose
-object map, in Rust.  While the code currently compiles with the old
-loose object map format, which is written entirely in C, we'll soon
-replace that with the Rust-based implementation.
+This is the second part of the SHA-1/SHA-256 interoperability work.  It
+introduces our first major use of Rust code to implement a loose object
+format as well as preparatory work to make that happen, including
+changing types to more Rust-friendly ones.  Since Rust will be required
+for the interoperability work, we require that in the testsuite.
 
-Require the use of Rust for compatibility mode and die if it is not
-supported.  Because the repo argument is not used when Rust is missing,
-cast it to void to silence the compiler warning, which we do not care
-about.
+We also verify that our object ID algorithm is valid when looking up
+data in the hash map since the Rust code intentionally has no knowledge
+about global mutable state like the_repository and so cannot default to
+the main hash algorithm when we've zero-initialized a struct object_id.
 
-Add a prerequisite in our tests, RUST, that checks if Rust functionality
-is available and use it in the tests that handle interoperability.
+The advantage to this Rust code is that it is comprehensively tested
+with unit testing.  We can serialize our loose object map and then
+verify that we can also load it again and perform various testing, such
+as whether certain object IDs are found in the map and mapped correctly.
+We can also test our slightly subtle custom binary search code
+effectively and be confident that it works, since Rust doesn't provide a
+way to binary search slices of variable length.
 
-This is technically a regression in functionality compared to our
-existing state, but pack index v3 is not yet implemented and thus the
-functionality is mostly quite broken, which is why we've recently marked
-this functionality as experimental.  We don't believe anyone is getting
-useful use out of the interoperability code in its current state, so no
-actual users should be negatively impacted by this change.
+The new Rust files have adopted an approach that is slightly different
+from some of our other files and placed a license notice at the top.
+This is required because of DCO part (a): "I have the right to submit it
+under the open source license indicated in the file".  It also avoids
+ambiguity if the file is copied into a separate location (such as an LLM
+training corpus).
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- repository.c                      |  7 +++
- t/t1006-cat-file.sh               | 82 +++++++++++++++++++++----------
- t/t1016-compatObjectFormat.sh     |  6 +++
- t/t1500-rev-parse.sh              |  2 +-
- t/t9305-fast-import-signatures.sh |  4 +-
- t/t9350-fast-export.sh            |  4 +-
- t/test-lib.sh                     |  4 ++
- 7 files changed, 77 insertions(+), 32 deletions(-)
+brian m. carlson (14):
+  repository: require Rust support for interoperability
+  conversion: don't crash when no destination algo
+  hash: use uint32_t for object_id algorithm
+  rust: add a ObjectID struct
+  rust: add a hash algorithm abstraction
+  hash: add a function to look up hash algo structs
+  csum-file: define hashwrite's count as a uint32_t
+  write-or-die: add an fsync component for the loose object map
+  hash: expose hash context functions to Rust
+  rust: add a build.rs script for tests
+  rust: add functionality to hash an object
+  rust: add a new binary loose object map format
+  rust: add a small wrapper around the hashfile code
+  object-file-convert: always make sure object ID algo is valid
 
-diff --git a/repository.c b/repository.c
-index 6faf5c7398..823f110019 100644
---- a/repository.c
-+++ b/repository.c
-@@ -3,6 +3,7 @@
- #include "repository.h"
- #include "odb.h"
- #include "config.h"
-+#include "gettext.h"
- #include "object.h"
- #include "lockfile.h"
- #include "path.h"
-@@ -192,11 +193,17 @@ void repo_set_hash_algo(struct repository *repo, int hash_algo)
- 
- void repo_set_compat_hash_algo(struct repository *repo, int algo)
- {
-+#ifdef WITH_RUST
- 	if (hash_algo_by_ptr(repo->hash_algo) == algo)
- 		BUG("hash_algo and compat_hash_algo match");
- 	repo->compat_hash_algo = algo ? &hash_algos[algo] : NULL;
- 	if (repo->compat_hash_algo)
- 		repo_read_loose_object_map(repo);
-+#else
-+	(void)repo;
-+	if (algo)
-+		die(_("compatibility hash algorithm support requires Rust"));
-+#endif
- }
- 
- void repo_set_ref_storage_format(struct repository *repo,
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 1f61b666a7..29a9503523 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -241,10 +241,16 @@ hello_content="Hello World"
- hello_size=$(strlen "$hello_content")
- hello_oid=$(echo_without_newline "$hello_content" | git hash-object --stdin)
- 
--test_expect_success "setup" '
-+test_expect_success "setup part 1" '
- 	git config core.repositoryformatversion 1 &&
--	git config extensions.objectformat $test_hash_algo &&
--	git config extensions.compatobjectformat $test_compat_hash_algo &&
-+	git config extensions.objectformat $test_hash_algo
-+'
-+
-+test_expect_success RUST 'compat setup' '
-+	git config extensions.compatobjectformat $test_compat_hash_algo
-+'
-+
-+test_expect_success 'setup part 2' '
- 	echo_without_newline "$hello_content" > hello &&
- 	git update-index --add hello &&
- 	echo_without_newline "$hello_content" > "path with spaces" &&
-@@ -273,9 +279,13 @@ run_blob_tests () {
-     '
- }
- 
--hello_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $hello_oid)
- run_blob_tests $hello_oid
--run_blob_tests $hello_compat_oid
-+
-+if test_have_prereq RUST
-+then
-+	hello_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $hello_oid)
-+	run_blob_tests $hello_compat_oid
-+fi
- 
- test_expect_success '--batch-check without %(rest) considers whole line' '
- 	echo "$hello_oid blob $hello_size" >expect &&
-@@ -286,62 +296,76 @@ test_expect_success '--batch-check without %(rest) considers whole line' '
- '
- 
- tree_oid=$(git write-tree)
--tree_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $tree_oid)
- tree_size=$((2 * $(test_oid rawsz) + 13 + 24))
--tree_compat_size=$((2 * $(test_oid --hash=compat rawsz) + 13 + 24))
- tree_pretty_content="100644 blob $hello_oid	hello${LF}100755 blob $hello_oid	path with spaces${LF}"
--tree_compat_pretty_content="100644 blob $hello_compat_oid	hello${LF}100755 blob $hello_compat_oid	path with spaces${LF}"
- 
- run_tests 'tree' $tree_oid "" $tree_size "" "$tree_pretty_content"
--run_tests 'tree' $tree_compat_oid "" $tree_compat_size "" "$tree_compat_pretty_content"
- run_tests 'blob' "$tree_oid:hello" "100644" $hello_size "" "$hello_content" $hello_oid
--run_tests 'blob' "$tree_compat_oid:hello" "100644" $hello_size "" "$hello_content" $hello_compat_oid
- run_tests 'blob' "$tree_oid:path with spaces" "100755" $hello_size "" "$hello_content" $hello_oid
--run_tests 'blob' "$tree_compat_oid:path with spaces" "100755" $hello_size "" "$hello_content" $hello_compat_oid
-+
-+if test_have_prereq RUST
-+then
-+	tree_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $tree_oid)
-+	tree_compat_size=$((2 * $(test_oid --hash=compat rawsz) + 13 + 24))
-+	tree_compat_pretty_content="100644 blob $hello_compat_oid	hello${LF}100755 blob $hello_compat_oid	path with spaces${LF}"
-+
-+	run_tests 'tree' $tree_compat_oid "" $tree_compat_size "" "$tree_compat_pretty_content"
-+	run_tests 'blob' "$tree_compat_oid:hello" "100644" $hello_size "" "$hello_content" $hello_compat_oid
-+	run_tests 'blob' "$tree_compat_oid:path with spaces" "100755" $hello_size "" "$hello_content" $hello_compat_oid
-+fi
- 
- commit_message="Initial commit"
- commit_oid=$(echo_without_newline "$commit_message" | git commit-tree $tree_oid)
--commit_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $commit_oid)
- commit_size=$(($(test_oid hexsz) + 137))
--commit_compat_size=$(($(test_oid --hash=compat hexsz) + 137))
- commit_content="tree $tree_oid
- author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> $GIT_AUTHOR_DATE
- committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
- 
- $commit_message"
- 
--commit_compat_content="tree $tree_compat_oid
-+run_tests 'commit' $commit_oid "" $commit_size "$commit_content" "$commit_content"
-+
-+if test_have_prereq RUST
-+then
-+	commit_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $commit_oid)
-+	commit_compat_size=$(($(test_oid --hash=compat hexsz) + 137))
-+	commit_compat_content="tree $tree_compat_oid
- author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> $GIT_AUTHOR_DATE
- committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
- 
- $commit_message"
- 
--run_tests 'commit' $commit_oid "" $commit_size "$commit_content" "$commit_content"
--run_tests 'commit' $commit_compat_oid "" $commit_compat_size "$commit_compat_content" "$commit_compat_content"
-+	run_tests 'commit' $commit_compat_oid "" $commit_compat_size "$commit_compat_content" "$commit_compat_content"
-+fi
- 
- tag_header_without_oid="type blob
- tag hellotag
- tagger $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
- tag_header_without_timestamp="object $hello_oid
- $tag_header_without_oid"
--tag_compat_header_without_timestamp="object $hello_compat_oid
--$tag_header_without_oid"
- tag_description="This is a tag"
- tag_content="$tag_header_without_timestamp 0 +0000
- 
--$tag_description"
--tag_compat_content="$tag_compat_header_without_timestamp 0 +0000
--
- $tag_description"
- 
- tag_oid=$(echo_without_newline "$tag_content" | git hash-object -t tag --stdin -w)
- tag_size=$(strlen "$tag_content")
- 
--tag_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $tag_oid)
--tag_compat_size=$(strlen "$tag_compat_content")
--
- run_tests 'tag' $tag_oid "" $tag_size "$tag_content" "$tag_content"
--run_tests 'tag' $tag_compat_oid "" $tag_compat_size "$tag_compat_content" "$tag_compat_content"
-+
-+if test_have_prereq RUST
-+then
-+	tag_compat_header_without_timestamp="object $hello_compat_oid
-+$tag_header_without_oid"
-+	tag_compat_content="$tag_compat_header_without_timestamp 0 +0000
-+
-+$tag_description"
-+
-+	tag_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $tag_oid)
-+	tag_compat_size=$(strlen "$tag_compat_content")
-+
-+	run_tests 'tag' $tag_compat_oid "" $tag_compat_size "$tag_compat_content" "$tag_compat_content"
-+fi
- 
- test_expect_success "Reach a blob from a tag pointing to it" '
- 	echo_without_newline "$hello_content" >expect &&
-@@ -590,7 +614,8 @@ flush"
- }
- 
- batch_tests $hello_oid $tree_oid $tree_size $commit_oid $commit_size "$commit_content" $tag_oid $tag_size "$tag_content"
--batch_tests $hello_compat_oid $tree_compat_oid $tree_compat_size $commit_compat_oid $commit_compat_size "$commit_compat_content" $tag_compat_oid $tag_compat_size "$tag_compat_content"
-+
-+test_have_prereq RUST && batch_tests $hello_compat_oid $tree_compat_oid $tree_compat_size $commit_compat_oid $commit_compat_size "$commit_compat_content" $tag_compat_oid $tag_compat_size "$tag_compat_content"
- 
- 
- test_expect_success FUNNYNAMES 'setup with newline in input' '
-@@ -1226,7 +1251,10 @@ test_expect_success 'batch-check with a submodule' '
- 	test_unconfig extensions.compatobjectformat &&
- 	printf "160000 commit $(test_oid deadbeef)\tsub\n" >tree-with-sub &&
- 	tree=$(git mktree <tree-with-sub) &&
--	test_config extensions.compatobjectformat $test_compat_hash_algo &&
-+	if test_have_prereq RUST
-+	then
-+		test_config extensions.compatobjectformat $test_compat_hash_algo
-+	fi &&
- 
- 	git cat-file --batch-check >actual <<-EOF &&
- 	$tree:sub
-diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
-index a9af8b2396..af3ceac3f5 100755
---- a/t/t1016-compatObjectFormat.sh
-+++ b/t/t1016-compatObjectFormat.sh
-@@ -8,6 +8,12 @@ test_description='Test how well compatObjectFormat works'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-gpg.sh
- 
-+if ! test_have_prereq RUST
-+then
-+	skip_all='interoperability requires a Git built with Rust'
-+	test_done
-+fi
-+
- # All of the follow variables must be defined in the environment:
- # GIT_AUTHOR_NAME
- # GIT_AUTHOR_EMAIL
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-index 7739ab611b..98c5a772bd 100755
---- a/t/t1500-rev-parse.sh
-+++ b/t/t1500-rev-parse.sh
-@@ -208,7 +208,7 @@ test_expect_success 'rev-parse --show-object-format in repo' '
- '
- 
- 
--test_expect_success 'rev-parse --show-object-format in repo with compat mode' '
-+test_expect_success RUST 'rev-parse --show-object-format in repo with compat mode' '
- 	mkdir repo &&
- 	(
- 		sane_unset GIT_DEFAULT_HASH &&
-diff --git a/t/t9305-fast-import-signatures.sh b/t/t9305-fast-import-signatures.sh
-index c2b4271658..63c0a2b5c4 100755
---- a/t/t9305-fast-import-signatures.sh
-+++ b/t/t9305-fast-import-signatures.sh
-@@ -70,7 +70,7 @@ test_expect_success GPGSSH 'strip SSH signature with --signed-commits=strip' '
- 	test_must_be_empty log
- '
- 
--test_expect_success GPG 'setup a commit with dual OpenPGP signatures on its SHA-1 and SHA-256 formats' '
-+test_expect_success RUST,GPG 'setup a commit with dual OpenPGP signatures on its SHA-1 and SHA-256 formats' '
- 	# Create a signed SHA-256 commit
- 	git init --object-format=sha256 explicit-sha256 &&
- 	git -C explicit-sha256 config extensions.compatObjectFormat sha1 &&
-@@ -91,7 +91,7 @@ test_expect_success GPG 'setup a commit with dual OpenPGP signatures on its SHA-
- 	test_grep -E "^gpgsig-sha256 " out
- '
- 
--test_expect_success GPG 'strip both OpenPGP signatures with --signed-commits=warn-strip' '
-+test_expect_success RUST,GPG 'strip both OpenPGP signatures with --signed-commits=warn-strip' '
- 	git -C explicit-sha256 fast-export --signed-commits=verbatim dual-signed >output &&
- 	test_grep -E "^gpgsig sha1 openpgp" output &&
- 	test_grep -E "^gpgsig sha256 openpgp" output &&
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 8f85c69d62..bf55e1e2e6 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -932,7 +932,7 @@ test_expect_success 'fast-export handles --end-of-options' '
- 	test_cmp expect actual
- '
- 
--test_expect_success GPG 'setup a commit with dual signatures on its SHA-1 and SHA-256 formats' '
-+test_expect_success GPG,RUST 'setup a commit with dual signatures on its SHA-1 and SHA-256 formats' '
- 	# Create a signed SHA-256 commit
- 	git init --object-format=sha256 explicit-sha256 &&
- 	git -C explicit-sha256 config extensions.compatObjectFormat sha1 &&
-@@ -953,7 +953,7 @@ test_expect_success GPG 'setup a commit with dual signatures on its SHA-1 and SH
- 	test_grep -E "^gpgsig-sha256 " out
- '
- 
--test_expect_success GPG 'export and import of doubly signed commit' '
-+test_expect_success GPG,RUST 'export and import of doubly signed commit' '
- 	git -C explicit-sha256 fast-export --signed-commits=verbatim dual-signed >output &&
- 	test_grep -E "^gpgsig sha1 openpgp" output &&
- 	test_grep -E "^gpgsig sha256 openpgp" output &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index ef0ab7ec2d..3499a83806 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1890,6 +1890,10 @@ test_lazy_prereq LONG_IS_64BIT '
- 	test 8 -le "$(build_option sizeof-long)"
- '
- 
-+test_lazy_prereq RUST '
-+	test "$(build_option rust)" = enabled
-+'
-+
- test_lazy_prereq TIME_IS_64BIT 'test-tool date is64bit'
- test_lazy_prereq TIME_T_IS_64BIT 'test-tool date time_t-is64bit'
- 
+ Documentation/gitformat-loose.adoc | 104 ++++
+ Makefile                           |   5 +-
+ build.rs                           |  21 +
+ csum-file.c                        |   2 +-
+ csum-file.h                        |   2 +-
+ hash.c                             |  46 +-
+ hash.h                             |  38 +-
+ object-file-convert.c              |  14 +-
+ oidtree.c                          |   2 +-
+ repository.c                       |  13 +-
+ repository.h                       |   4 +-
+ serve.c                            |   2 +-
+ src/csum_file.rs                   |  81 +++
+ src/hash.rs                        | 335 +++++++++++
+ src/lib.rs                         |   3 +
+ src/loose.rs                       | 912 +++++++++++++++++++++++++++++
+ src/meson.build                    |   3 +
+ t/t1006-cat-file.sh                |  82 ++-
+ t/t1016-compatObjectFormat.sh      |   6 +
+ t/t1500-rev-parse.sh               |   2 +-
+ t/t9305-fast-import-signatures.sh  |   4 +-
+ t/t9350-fast-export.sh             |   4 +-
+ t/test-lib.sh                      |   4 +
+ write-or-die.h                     |   4 +-
+ 24 files changed, 1619 insertions(+), 74 deletions(-)
+ create mode 100644 build.rs
+ create mode 100644 src/csum_file.rs
+ create mode 100644 src/hash.rs
+ create mode 100644 src/loose.rs
+
