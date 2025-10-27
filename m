@@ -1,82 +1,109 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DF319006B
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 00:25:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8604730E0FB
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 00:44:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761524712; cv=none; b=GvmJDh/+Cqq9S/Y5sQgHhC8lz0g7NFxH/xWnJeb8tS5qK6L2cRfbXfK57gsiFZM3w+oQXfqaPXx2dzGHU1JDulKX4TPYnW6RFMdXeaRDIzYQE/gKOIn4Loj+f+bqFrGikDesGh9Rv8prbufnBxlXKdXpRzINKvCR5t7S+XIoYtU=
+	t=1761525877; cv=none; b=hgHOYKzz4FUm6NQGpgqH8r66cyzobPdm0VsaZkQQeG3TqHeIWzp2p6Esz80otpvVhbZ+4Fry4XDqF5B+RBbRQnCMNRo/s9lDL9hoUX/ZWQ3zGh5jyV8bXI90yT2STzMeGo/yF5xG4AGnJeEhSPo+wPpwXsSDWd8DLBiUGgLt79I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761524712; c=relaxed/simple;
-	bh=YaT3jiSi7W9DgZ5X0H2tAaH0w9skk61XtnBRuqrfgpA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=O+t2piLqX4tDWlL0t3BSTPIK38lM5ZIUNWVjtzpSlkdAtLYuxm1kDBjq7VdvfQezT2O5kjtw/Snw6aVWpSMSa/6usLzUO2BKDueIILmEaxTrm5xE1zPvLt7+nIlHPVpnvbThgingUSoRD2trl0dPfMByXUBtLkYKeIv1b8cSlaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-863762d794cso68173485a.2
-        for <git@vger.kernel.org>; Sun, 26 Oct 2025 17:25:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761524708; x=1762129508;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dAkPQqDxrNxQfZ7t+ZLdVFrQgYKWRezZWoK8iNouC0w=;
-        b=q2lplLowB43cIz9FVUL6EIwfalBRJpj/0LBZQm9fYWEyr7z3BJUcBJe7ne9uuZJHoS
-         uNcIO+lI11XkbpeCavY4yuRySH3pqQyQA4rx65abIOG820+3wpZRv+g7aWRwFCjBF8p9
-         OPazfoF1/sGZJivgGIJrQXesvTPDPRmlrr+NBY1ULNLOyM/e2eGgegg+27ESxPtLHZl7
-         J0IGI5f/npb+1mlYoEdvpEVGEwuKft0/qP9apNHHc3/BA00SGZouJFhLPmcosnFOToiy
-         rSbsS6l2oaI17Y7tqMDRMiUI5eq7QY7g3okI47IfcJwe2wSXMLYkhKpCnIoKhj971dii
-         SrYQ==
-X-Gm-Message-State: AOJu0YyqeAgAykpRGawAUvlK3v+0tsYVZdamKAAkUPfGkVrLA0KioXdo
-	fTdZYg5yuh6esJJiQ0OYVQfrCnz0S2xQ1txIXxYBaawEjCcBiQzcq0BVdJmO03T3MaNY6MdhHaZ
-	M/m4Pct6X76nY1fcAzYaw4jVzKYI/hXE=
-X-Gm-Gg: ASbGncsURaO5NsmAhkSYvIELxgGG+V+fd8KFqqXQaKFkCREPVVzZaXca3qaz5zIV7+I
-	FAA+PRU0dKzUTsNrNxomHi+CVphLF/n1sFlPghPK/QYTCb/B2ryhgXbDzu4gNcZIpm4vhPql2rT
-	FCuYRsjg08aMqpjXSA2Av2wRfKe5Mjmlmp3kyWMdbybi5rwu7l5bdAZ+F9h/0/rNPCRlVMhIpdR
-	K8AsIM9giqyxRI2AxiM2AjN2AJmVg4mFCXJCcUbe2m/LuGjCkf9bEOyL7DzQtapOFlA+rZwhUNs
-	NhMxWE3g5KR4p1gHyg==
-X-Google-Smtp-Source: AGHT+IFRo9dcCcyjOeQDXmi2EewmrIr7BFtQEn40Ck+F/3ftx4pHYZe1Dzpj20qEJFTji+4i7YgDm0etNzJ53kHooZA=
-X-Received: by 2002:ad4:5de6:0:b0:87c:19b6:398e with SMTP id
- 6a1803df08f44-87de70b4724mr192184956d6.2.1761524708440; Sun, 26 Oct 2025
- 17:25:08 -0700 (PDT)
+	s=arc-20240116; t=1761525877; c=relaxed/simple;
+	bh=kg41+dqjOzuXFZWYaLWiR0bhM8dISTlb+UAzLYeybg8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IWo+j86uwjxblUE0VY04yzyQihU5OyWioc9yzeO84vaKolAh+xrbbNZrEGSq0WKdon9JOfLNuTv8CuU6hN0NCcf9ohMi3wGC2JWLeXWURVD/V3ogybKeo0b8fFFp+UqujrgFx4Qb41c4ByIPIPDZDBHdeY1n2jXhWt2WhQO6RR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ltbUMPNP; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ltbUMPNP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1761525868;
+	bh=kg41+dqjOzuXFZWYaLWiR0bhM8dISTlb+UAzLYeybg8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	 In-Reply-To:References:Content-Type:Content-Disposition;
+	b=ltbUMPNPjxWTVN1K9WquOi89gCUeoWzfAuOMhYYLJY5Jl6FsIai8gSXHnWpq9o5uQ
+	 eU0uHWfBzkZUQvlq8CBwZ/d6tc7Z1LuibIXZEq6IQnYoeO+J80e7A/x1q+Pe+7Z4Rh
+	 ga8q2R+BjNpUYK55snEsLuNAlBhokEfOJ2fGiXp42janP03dwAsYfbqme848Nv8Oik
+	 MgAjStkN7SGK0ozZymadMWxXROv4cPcjTknQJmAdvjUd68ZAvuCRXVrSdiI0bU7vE5
+	 nI5bEqF7UCYDPf8GfyiujBlsxnCuiezBCaxWxPbZgfn/hq7QTjBuX0lbZb7bzujnSs
+	 Him3ZA0hZIKkhbpgHzZSPgsk1VSuuCi6vmW8S/raNyGrG1Rm05JWfqCAL/Xke0JS6c
+	 SSHiD75T8+nyUUe1SqF8lMT1FWkxsEl3gRFhBSLUuqsU4h4DPSE+yqO91pGeH/HraV
+	 LrfElR0B2p8zTU86b4l/Rnj85akcoJUa+X5w/Ra44yIo3VGcOFn
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:5675:b769:afe:3fa2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id F26D223201;
+	Mon, 27 Oct 2025 00:44:27 +0000 (UTC)
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: [PATCH 14/14] object-file-convert: always make sure object ID algo is valid
+Date: Mon, 27 Oct 2025 00:44:04 +0000
+Message-ID: <20251027004404.2152927-15-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
+In-Reply-To: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250915223618.13093-1-lucasseikioshiro@gmail.com>
- <20251026225409.46647-1-lucasseikioshiro@gmail.com> <20251026225409.46647-3-lucasseikioshiro@gmail.com>
- <CAPig+cSOE1Du52Y8-s=b7HvKQyk-XHdGh3XzZR_tVktut9R1YA@mail.gmail.com>
-In-Reply-To: <CAPig+cSOE1Du52Y8-s=b7HvKQyk-XHdGh3XzZR_tVktut9R1YA@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 26 Oct 2025 20:24:57 -0400
-X-Gm-Features: AWmQ_bkPRsxiOCH0s1PDJJm6xlJZv6FgGMf5u9FiQTXOHKH4cbkhMJJLbHNCFHI
-Message-ID: <CAPig+cT3hkBu2kKPQp74JKvO7ct5ooV1wba8xHTzOn_9FGbz7A@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] repo: add --all to git-repo-info
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, Oct 26, 2025 at 8:22=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.=
-com> wrote:
-> On Sun, Oct 26, 2025 at 6:54=E2=80=AFPM Lucas Seiki Oshiro
-> <lucasseikioshiro@gmail.com> wrote:
-> > +       for (unsigned long i =3D 0; i < ARRAY_SIZE(repo_info_fields); i=
-++) {
-> > +               struct field field =3D repo_info_fields[i];
->
-> Why do we need to make a copy of the field record? Can't we just use a
-> const pointer?
->
->     struct field *field =3D &repo_info_fields[i];
->
-> or:
->
->    struct field *field =3D repo_info_fields + i;
+In some cases, we zero-initialize our object IDs, which sets the algo
+member to zero as well, which is not a valid algorithm number.  This is
+a bad practice, but we typically paper over it in many cases by simply
+substituting the repository's hash algorithm.
 
-Of course, I mean to have a `const` in there:
+However, our new Rust loose object map code doesn't handle this
+gracefully and can't find object IDs when the algorithm is zero because
+they don't compare equal to those with the correct algo field.  In
+addition, the comparison code doesn't have any knowledge of what the
+main algorithm is because that's global state, so we can't adjust the
+comparison.
 
-    const struct field *field =3D &repo_info_fields[i];
+To make our code function properly and to avoid propagating these bad
+entries, if we get a source object ID with a zero algo, just make a copy
+of it with the fixed algorithm.  This has the benefit of also fixing the
+object IDs if we're in a single algorithm mode as well.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ object-file-convert.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/object-file-convert.c b/object-file-convert.c
+index e44c821084..f8dce94811 100644
+--- a/object-file-convert.c
++++ b/object-file-convert.c
+@@ -13,7 +13,7 @@
+ #include "gpg-interface.h"
+ #include "object-file-convert.h"
+ 
+-int repo_oid_to_algop(struct repository *repo, const struct object_id *src,
++int repo_oid_to_algop(struct repository *repo, const struct object_id *srcoid,
+ 		      const struct git_hash_algo *to, struct object_id *dest)
+ {
+ 	/*
+@@ -21,7 +21,15 @@ int repo_oid_to_algop(struct repository *repo, const struct object_id *src,
+ 	 * default hash algorithm for that object.
+ 	 */
+ 	const struct git_hash_algo *from =
+-		src->algo ? &hash_algos[src->algo] : repo->hash_algo;
++		srcoid->algo ? &hash_algos[srcoid->algo] : repo->hash_algo;
++	struct object_id temp;
++	const struct object_id *src = srcoid;
++
++	if (!srcoid->algo) {
++		oidcpy(&temp, srcoid);
++		temp.algo = hash_algo_by_ptr(repo->hash_algo);
++		src = &temp;
++	}
+ 
+ 	if (from == to || !to) {
+ 		if (src != dest)
