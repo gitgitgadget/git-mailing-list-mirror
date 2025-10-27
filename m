@@ -1,145 +1,164 @@
-Received: from out02.mta.xmission.com (out02.mta.xmission.com [166.70.13.232])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1D7233155
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 20:02:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.70.13.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F871CDFAC
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 20:05:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761595354; cv=none; b=VDAa4dxGTRB33lYMWQLXwQ/VJLTkHQXJKOIXbRXmr3yjBhmBnXzxzvsqewWbZZk7DlomeGilLFExxM129UhqwmCpZts043ocIndKQiTDyllJAkxNqBYiC0eu/AnoUp6Ohy8f/VQfoGKwmD1YEdtBbTvxDHxkXayhJvYIenNMX5Y=
+	t=1761595528; cv=none; b=uWae20n75T+VatCAvsnJumnRixjCeJTtyzFVe29oNcypRZFCo0DuD0u7gEA1bLe4GzsqzzX2CA+Rjw/bvdIMnRxDN/N0T9CVHQSaDa6cXhOL8rMzMobpDhtPgdgmwJgTx654UxnDM6DY8U5Y1wi6nPN74d+qs/UJ4FIdB16qnbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761595354; c=relaxed/simple;
-	bh=pN3OD2/7IM+wPFcgRJE9Q9WrFNqbYZEGxlNa9sBIVeE=;
-	h=From:To:Cc:In-Reply-To:References:Date:Message-ID:MIME-Version:
-	 Content-Type:Subject; b=t2MjeYzECv7rkQTiguBrIFqAKf/ICJ+0nTljWTQs/Fv5ed90MkYe2ulahx5MbWRwuXjLtC1nSPDA2IO1CFCU4eROLi6epS4SbM2ikzJLRXL8sFvctzo/wWTuX/DevHy8M5aoCAD1lYSlqMoxmwreBU6zN/dtYgZ0jgRJWVHAKrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xmission.com; spf=pass smtp.mailfrom=xmission.com; arc=none smtp.client-ip=166.70.13.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xmission.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=xmission.com
-Received: from in01.mta.xmission.com ([166.70.13.51]:34728)
-	by out02.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.93)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1vDSUr-002lxe-M8; Mon, 27 Oct 2025 13:03:13 -0600
-Received: from ip72-198-198-28.om.om.cox.net ([72.198.198.28]:42180 helo=email.froward.int.ebiederm.org.xmission.com)
-	by in01.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.93)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1vDSUq-003k73-LZ; Mon, 27 Oct 2025 13:03:13 -0600
-From: "Eric W. Biederman" <ebiederm@xmission.com>
+	s=arc-20240116; t=1761595528; c=relaxed/simple;
+	bh=aJSTrk6YD5IrlLm/NzMklDRO2PGr4MpPSVyhOPqFgLE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rKcascd5NXCSgR0mDkb48DXLUHCdkIntGTUWroyA9YBXWdZoRFEGomTVHhezgvFdhnhdwONuHAg1h62FtCdRYU0oNpZHXhwyOA6l/J2O5MUTKC4FkLBj+myMdTvK1u5IjDkdM7Nx7HONK/XnCRrTdjgx4UEVTQq4YRCC2nbMgbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZNxQB5zk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EnE7dJ09; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZNxQB5zk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EnE7dJ09"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E072614002AA;
+	Mon, 27 Oct 2025 16:05:24 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 27 Oct 2025 16:05:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1761595524; x=1761681924; bh=ff+Pe+eXqM
+	9ICsTK/8zxH50OQFIQCnX7bt3m0d6SBPo=; b=ZNxQB5zk8XMCJKkXLAXDTGh/y4
+	+acLSqJ+X78bdrsEpXNSU+q3sCmBCjgQnyLA81rfJQkvbVuVLajXbfPMOLSAJdKu
+	4AOO7mEIx36/BfK7giMk7S7vzYm2AThF2LKgolKURq/l1yDR+KI0JiR/86ZSuoyr
+	/SjtTi9/VWe1Qu2zQEbGJp1Z5zOYDsuMQGJGrtsrNIQ5kf3bxy1w3mdCvRhxtXME
+	vOCucYVcV51h8FvC3QzX/AtiAFQuX5zrU4H+ZWh1LMSTv6BRYJzk3idBS52k3dLg
+	ss5rnOP5KcmBEKosJpQqUfY2shF9sGQMZ2mXqnO9zD0nn0gMGHSdUiyksAGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1761595524; x=1761681924; bh=ff+Pe+eXqM9ICsTK/8zxH50OQFIQCnX7bt3
+	m0d6SBPo=; b=EnE7dJ09Z0W57rxniMT6MT75DyI8TW4KdCcckOV7skSW7B0YNJl
+	pju4vO/BIXkkYeFYVu7Fe5ga0Qb62N4AqcxYVPahUpsMz68y6kTpseLXB/7l6vhg
+	402zT0WOh1VEz+cjryYon9nmOupsdPsr3FKI6r0m3hMhiKH2Jj8RJA0rnONSwEyd
+	Ic/LOYdTimSE7GQzl/aLNdxd/1qIxsGwyVJjhsPhe1ESEZCTyrnTMzBfUlhPpe/Y
+	ZSQnNSttyFtf6xtjMzh7qCQgzp5iat1qZI4V3td95sMpYsOYEZYo/4NTUQFRaiuE
+	RAY6lmb73Wk6yVmQcAqehZSJ+yv5zS5c3SQ==
+X-ME-Sender: <xms:hND_aG5GylKahe93bU1sKdNEzo-xOH1FZh_Tx5w1EKwIg9mSa51Kbw>
+    <xme:hND_aDkSQEShc0MyY5L9VCVu3BYd5lpzTut9_AFDx4ITp49RikISN5g0i-qiJ6UwM
+    3Oat4ivpgGR9snB2tB9WXICzj-vkSTj7h_cp4KLfFWKfz8ag8PvrdQ>
+X-ME-Received: <xmr:hND_aPRS9iJRy3sggNP9t9fMdAKzI8nmjntfqnc68jbRL0oY6mrcglhrJ436sgVFMjsc7WaSeD4ehQnlhKtmKPojpwnpHDyjBqNRWmu0Tg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheekkeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvg
+    hffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehsthholhgvvg
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:hND_aKH5RSbaBuK2rlXZYfdQboUK7nZWRgGzdr9WxASYtBvVhrDq8w>
+    <xmx:hND_aMG-805u03BdUqV-w9ibJOwjnbRnzjCPiHjTTDvMpm1hSYUc3g>
+    <xmx:hND_aAS9RWLM7PVoxdCM3hz9PumtntGkxIYAqygX2wbasaSqCYxwOg>
+    <xmx:hND_aFKJO0U59HdMQ1aNMefNFnnlw_EOInjme9nO7eyeLFeidPhNRA>
+    <xmx:hND_aGERHVAb7V2LxyydXKksOEZ1qAvAUstE367jgC7syaNEM8u1nj9Z>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 Oct 2025 16:05:23 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c6bc570d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 27 Oct 2025 20:05:20 +0000 (UTC)
+Date: Mon, 27 Oct 2025 21:05:15 +0100
+From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Todd Zullinger <tmz@pobox.com>,  git@vger.kernel.org,  Kousik
- Sanagavarapu <five231003@gmail.com>,  brian m. carlson
- <sandals@crustytoothpaste.net>
-In-Reply-To: <xmqqqzuoi6sg.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	27 Oct 2025 10:38:39 -0700")
-References: <20240703153738.916469-1-tmz@pobox.com>
-	<ZoV8b2RvYxLOotSJ@teonanacatl.net> <Z8HVkqqD054QGPIE@teonanacatl.net>
-	<xmqqbjlump3m.fsf@gitster.g>
-	<87zf9c8glu.fsf@email.froward.int.ebiederm.org>
-	<xmqqqzuoi6sg.fsf@gitster.g>
-Date: Mon, 27 Oct 2025 14:03:09 -0500
-Message-ID: <875xc02mmq.fsf@email.froward.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v4 00/10] builtin/maintenance: introduce "geometric"
+ strategy
+Message-ID: <aP_Qe2QG5w3g4Z9y@pks.im>
+References: <20251016-pks-maintenance-geometric-strategy-v1-0-18943d474203@pks.im>
+ <20251027-pks-maintenance-geometric-strategy-v4-0-18049e4a0adf@pks.im>
+ <xmqqtszkjq8d.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-SPF: eid=1vDSUq-003k73-LZ;;;mid=<875xc02mmq.fsf@email.froward.int.ebiederm.org>;;;hst=in01.mta.xmission.com;;;ip=72.198.198.28;;;frm=ebiederm@xmission.com;;;spf=pass
-X-XM-AID: U2FsdGVkX19llrfM0ASu/wQG47exdcEA+09Q53itNIE=
-X-Spam-Level: ***
-X-Spam-Report: 
-	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
-	*  0.1 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-	*      [score: 0.4990]
-	*  1.5 XMNoVowels Alpha-numberic number with no vowels
-	*  0.7 XMSubLong Long Subject
-	*  1.2 LotsOfNums_01 BODY: Lots of long strings of numbers
-	*  0.0 T_TM2_M_HEADER_IN_MSG BODY: No description available.
-	* -0.0 DCC_CHECK_NEGATIVE Not listed in DCC
-	*      [sa07 1397; Body=1 Fuz1=1 Fuz2=1]
-	*  1.0 XM_B_SpammyTLD Contains uncommon/spammy TLD
-	*  0.0 T_TooManySym_01 4+ unique symbols in subject
-X-Spam-DCC: XMission; sa07 1397; Body=1 Fuz1=1 Fuz2=1 
-X-Spam-Combo: ***;Junio C Hamano <gitster@pobox.com>
-X-Spam-Relay-Country: 
-X-Spam-Timing: total 510 ms - load_scoreonly_sql: 0.05 (0.0%),
-	signal_user_changed: 10 (2.0%), b_tie_ro: 9 (1.7%), parse: 1.47 (0.3%),
-	 extract_message_metadata: 23 (4.5%), get_uri_detail_list: 2.5 (0.5%),
-	tests_pri_-2000: 25 (4.9%), tests_pri_-1000: 3.7 (0.7%),
-	tests_pri_-950: 1.71 (0.3%), tests_pri_-900: 1.32 (0.3%),
-	tests_pri_-90: 127 (25.0%), check_bayes: 120 (23.4%), b_tokenize: 11
-	(2.2%), b_tok_get_all: 9 (1.7%), b_comp_prob: 3.8 (0.7%),
-	b_tok_touch_all: 92 (17.9%), b_finish: 0.96 (0.2%), tests_pri_0: 301
-	(59.0%), check_dkim_signature: 0.79 (0.2%), check_dkim_adsp: 3.1
-	(0.6%), poll_dns_idle: 0.58 (0.1%), tests_pri_10: 2.1 (0.4%),
-	tests_pri_500: 8 (1.6%), rewrite_mail: 0.00 (0.0%)
-Subject: Re: [PATCH 0/2] t/lib-gpg: ensure GNUPGHOME is created as needed
-X-SA-Exim-Connect-IP: 166.70.13.51
-X-SA-Exim-Rcpt-To: sandals@crustytoothpaste.net, five231003@gmail.com, git@vger.kernel.org, tmz@pobox.com, gitster@pobox.com
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-X-SA-Exim-Scanned: No (on out02.mta.xmission.com); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqtszkjq8d.fsf@gitster.g>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Oct 27, 2025 at 08:53:22AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > Changes in v4:
+> >   - Fix a flaky test because git-repack(1) always decides to rewrite the
+> >     MIDX, even though no packs have changed. This isn't a new issue, and
+> >     other maintenance tasks behave the same. So I decided to punt on it
+> >     for now.
+> 
+> Thanks, but this round raced against 'next', so let me fabricate the
+> following and queue it instead.
 
-> "Eric W. Biederman" <ebiederm@xmission.com> writes:
->
->> The only possible source of flakiness in the tests I can see is the
->> possibility of t/t1016/gpg not getting called (which uses a fixed
->> timestamp).  It appears you just fixed that problem in commit
->> 516bf45749bb ("t1016: make sure to use specified GPG").
->
-> I think that one also is in 'seen', and yet we saw t1016 flaky X-<.
->
-> Let me isolate the relevant topics and test them again, i.e.
->
->     $ git checkout --detach v2.51.0
->     $ git merge --no-ff jc/t1016-setup-fix ;# 516bf45749
->     $ git merge --no-ff tz/test-prepare-gnupghome~1 ;# 6cd8369ef3
->     $ git log --no-merges --oneline v2.51.0..
->     516bf45749 (jc/t1016-setup-fix) t1016: make sure to use specified GPG
->     6cd8369ef3 t/lib-gpg: call prepare_gnupghome() in GPG2 prereq
->     a35952b493 t/lib-gpg: add prepare_gnupghome() to create GNUPGHOME dir
->     $ make
->     $ cd t && ./t1016-*.sh --stress
->     FAIL 10.1
->     FAIL  5.1
->     FAIL 34.1
->     ...
->     ++ eval 'diff -u' '"$@"'
->     +++ diff -u signedcommit3_sha1 signedcommit3_sha1_expected
->     --- signedcommit3_sha1	2025-10-27 17:34:58.237496945 +0000
->     +++ signedcommit3_sha1_expected	2025-10-27 17:34:58.145497051 +0000
->     @@ -1 +1 @@
->     -de9cabc2419f97eb665452c198ed93e890a7ef87
->     +c87cd5157461a81b60ef6d3c47562c12b328ef54
->     error: last command exited with $?=1
->     not ok 163 - Verify commit signedcommit3's sha1 oid
->     #	
->     #			git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} >${name}_sha1 &&
->     #			test_cmp ${name}_sha1 ${name}_sha1_expected
->     #		
->     1..163
+Thanks for doing this!
 
-Interesting.  With --stress I can reproduce the flakiness locally as
-well.
+> ------- >8 -------
+> From: Patrick Steinhardt <ps@pks.im>
+> Date: Mon, 27 Oct 2025 09:30:50 +0100
+> Subject: [PATCH] t7900: fix a flaky test due to git-repack always regenerating .midx
 
-I am starting to dig any but I haven't found any smoking guns yet.  So
-far manually running the commands that resulted in the failure are
-giving me the same output, but I have several more to run.
+s/.midx/MIDX, as the MIDX file does not have a dot anywhere.
 
->> With that commit reverted I can reproduce the flakiness locally
->> by just running the test manually a few times.
->
-> The above is with all three patches mentioned.
-> FWIW, "gpg --version | head -2" says
->
->     gpg (GnuPG) 2.4.8
->     libgcrypt 1.11.2
->
-> Hmmmm.....
+> 
+> When a supposedly no-op "git repack" runs across a second boundary,
+> because the command always touches the MIDX file and updates its
+> timestamp, "ls -l $GIT_DIR/objects/pack/" before and after the
+> operation can change, which causes such a test to fail.  Only
+> compare the *.pack files in the directory before and after the
+> operation to work around this flakyness.
 
-I have gpg 2.4.7 but otherwise things are identical.
+Maybe add something like the following:
 
-Eric
+    Arguably, git-repack(1) should learn to not rewrite the MIDX in case
+    we know it is already up-to-date. But this is not a new problem
+    introduced via the new geometric maintenance task, so for now it
+    should be good enough to paper over the issue.
+
+But I think this looks good enough already, so please feel free to
+ignore. Happy to have my authorship with either of these versions.
+
+Thanks!
+
+Patrick
+
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> [jc: taken from diff to v4 from v3 that was already merged to 'next']
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  t/t7900-maintenance.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> index 0d76693fee..614184a097 100755
+> --- a/t/t7900-maintenance.sh
+> +++ b/t/t7900-maintenance.sh
+> @@ -500,9 +500,9 @@ test_expect_success 'geometric repacking task' '
+>  
+>  		# Repacking should now cause a no-op geometric repack because
+>  		# no packfiles need to be combined.
+> -		ls -l .git/objects/pack >before &&
+> +		ls -l .git/objects/pack/*.pack >before &&
+>  		run_and_verify_geometric_pack 1 &&
+> -		ls -l .git/objects/pack >after &&
+> +		ls -l .git/objects/pack/*.pack >after &&
+>  		test_cmp before after &&
+>  
+>  		# This incremental change creates a new packfile that only
+> -- 
+> 2.51.2-678-g0cd646409c
+> 
