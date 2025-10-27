@@ -1,149 +1,177 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2BE92EC563
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 08:58:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79962F7471
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 09:57:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761555532; cv=none; b=JLYMtQ6Mr47YsgPgR7DcS9vtmWRfaG8EyraCLUorJItAeSyD3v3gAb8kaxsQw5Kc1Usolg9zBbaBre2MSzAX+YRd3B/p2c/eTQW6IyIjMQoJy9xRDtJXQT3rl7BWtXyXZ4wwKsbsKS07E3XUsu//LvmLfckRITXHIAzCONFMJyk=
+	t=1761559036; cv=none; b=tNiLjck2YCWD3PWHKY5sxDIQd9/HTMoCa2Y84EozRBwiE2BRz7DRtPASf2FTVl3N0qpy2bS0TDr0+NhKhfIX0vBK/sF9hfkBwQ5JWDjp0no14TuRmnYb/8dUpzLM5hBPV0QDz+C+2yHfXllsJ+ubohOmfWNXQIZ5M81P0enmWR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761555532; c=relaxed/simple;
-	bh=I5u7P53TR5g+jdnfvrUgllLHlRztFwDGkU9wzHce8Uo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X572wv2Dfc1EsSeZTfXfvFFIvHRKYdsoxH1NUMEW/SD+Ixa3k7KbqG2sR2uaYJ/oiYLidrx/fVgBve5ZNulsRopaFJcouO2eeX+uKctip2TvT1tJrX4TGo9itSFO/ByYH+5FEQf2okXBrS4IUQsTE8K/2APxNaKB6p3aebHF99A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=imMEpZAl; arc=none smtp.client-ip=209.85.215.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761559036; c=relaxed/simple;
+	bh=1GNknekJ00ZLzAJZh+no8qOmxmIry4BRz5+lt71xkXI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=r7Lx5LU1O84hrIIk6xorfV5FeNaToPlqh6+C4nRBpd5yfK6cDFXZ4RkEJVwLdiBtZqS+Y1yZuFs5vYcg38lxWrBmp7BaEBzrGeHEfSopgqt/zPbR0l7ZYEUly8eli0Q1g1k70CQG9tcxnPLPQyoHSBSsgDUhICizV//zKAHsSns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZQ0Av9uM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jRatHaFi; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="imMEpZAl"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b6ce806af3eso4013853a12.0
-        for <git@vger.kernel.org>; Mon, 27 Oct 2025 01:58:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761555530; x=1762160330; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I5u7P53TR5g+jdnfvrUgllLHlRztFwDGkU9wzHce8Uo=;
-        b=imMEpZAl4rEEtl387FG/6gtrZH+Hq8Wh+iT1pOzked+tPUte7anMMZOQxsNmfjuUi3
-         tSby4CAOVaWrz3oQkXbJk0nn4drt/ZiTBCeoiRyZJAeLxyHHFxfIqkfCpeufjx64TSof
-         Nd6d2Kn3QbTDNgkfATM4m42iMQEJXo5ccOGVFaBZUo4cUhSUfyxE1NkGMGf6NtTJB3Q6
-         B2rS/O6FSTJ0XVbhd0b8BjGqH6J+yMqplKiATaAePRg454vCn8c71t5TqP1tUHjGpxDq
-         eBwgqAwNmGJvhpR1Q0v7MGLrLYEKQR71wOa2eL79oJCZN36nnZ1c5c8wHy8U2Zdr3dY6
-         VV9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761555530; x=1762160330;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=I5u7P53TR5g+jdnfvrUgllLHlRztFwDGkU9wzHce8Uo=;
-        b=aZvAk3QVOnrtv9OE4vZedyAueW+yUmNjBVaHczRWiFOc8I5nHEoKcRYgB6rd+9tvKt
-         pBW8DABdcjzrn2ExNlQ8Yp+92d9tYwx1BOb4Dv+Mj0j1db1F7sXlH3paeWGvIrA4HI0L
-         n2A1rYEQchmtOqWfArvk6k4B3uq3YAqlBAMSOkSVTO61VqZhdEZnV/39HVr+KGM06GhP
-         FsbEGcD+cV1NY2xFeSLPJJHBEdojdaJCIAnMTVwxB1dWxzGustdqpKnKZPHv94zhX8vp
-         ix/WLKCS/M7lO23fddUdyJQ4E9LeEDLwFh5nAhiqEeuJi3J9CPH2bs0Rg6zxloupDmXU
-         6BqA==
-X-Gm-Message-State: AOJu0YxZgLAGuF7jYl1tuQYHLwzwdaTk3o+J4ptpBr9iriV8FljBc0rL
-	GOGDq0/M9jqc6Z3dQT/vgSfS4tM11OYJP/37jXI0+FrcCW8BcP2ULW+XPCqQV+8OyM3UAiWmqrs
-	ZM/6NC6f7KwZWh63Br8a1AvOENrgchYXPxbaD
-X-Gm-Gg: ASbGncvMN4KdTHCpr8TQ/oZBkYEGHf3oSfJrN050ul1Be+zxB7ivDSJcFzKNbMFSQbL
-	bsbRfb+ZmjxBNNZMQrwBVQCDeMk+D30mhA63yaWeGVcr6LuZqsK6uRJzna/SU4k0uB3C+4FtwCu
-	9t5kTurn8Fb+tJ6VV3mN0VIxxB7A9/WkfIFbPn8ntTs+Grc6kLwHPQWil6Cj9WSGQsmWLUP4QRo
-	dkRAxpUeTjAMvLKWM9kqs038X+KI/DI2ORfYMFIf4Sl1finGFAT5qt+j8IidD5l1I+YlY3N
-X-Google-Smtp-Source: AGHT+IGo/Uk97kyxzK5N2cE3JvN7Zi0LT8D9L/PWFIt33+/+Ky0UsTiN/P0W5dYr8SbS6DfMSLBhxTzam8/o7zQSddQ=
-X-Received: by 2002:a17:902:ea01:b0:27d:69de:edd3 with SMTP id
- d9443c01a7336-2948b9a141bmr167084205ad.20.1761555529873; Mon, 27 Oct 2025
- 01:58:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZQ0Av9uM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jRatHaFi"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BBA6914002F2;
+	Mon, 27 Oct 2025 05:57:13 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Mon, 27 Oct 2025 05:57:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1761559033; x=1761645433; bh=hI1IU66TDv
+	1XBsikLlVAWaHD2x2irlySjxZdLvqRRIs=; b=ZQ0Av9uMqc3dSeujn1O49fgZTb
+	0rWPfOVM7Wom+pGCTh7J5hYAr9LImZdTTRy2uNfKI/6Cxcc5ZmcAdT82WV1w9FOJ
+	kG1Wk/UkEgXTsB1BwLEWASTlr2VJ4SbL+VScajXxprLHjplyXI9lae44ROApmuSF
+	+nASM6ebNqIFIWPoKAqYx0hZKe5U1ZOb5WXd3/4UTLqo6RjSKJFdb7tHE77QrCvW
+	6ZwXHMmRO8AAFNySh3iDZtRAxWcYbWRZR+Fd1dxF5SMAfJObKgFpvZi87toar9xa
+	Z9urw2j8LBQHQcBeGS/S9CcK3X8blQkH1Ws8nmXZ7jNZEJfN7WHZ3vyNvLdg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1761559033; x=1761645433; bh=hI1IU66TDv1XBsikLlVAWaHD2x2irlySjxZ
+	dLvqRRIs=; b=jRatHaFiz5YoW7qpaRjQZgCrZzdTUk81D3EGtkgyNMMXgN2eR3H
+	PGjmIS8ofog/efHDYd0EOZeh4ZPCrdQVgDwqG4lQVmU7Y7zClevkOakjmUvmVCPz
+	4hUIdV8cAoZsBabWV194JNm/nwZK/ytPIt2wWkmYIWSBQZcFIxt7kEpSkcwGkLGg
+	PcmOblTRLg3GTfKs4Y6KX+cUVDuM+yCVqrNBOjI+URIJo9oSpDcUkUOVvPqOko39
+	vYh9QsdVeSx+mVzelmuKO+V4mz/Vnhct4urvfAbhBECBaYEUd9l+g/0ZQHynC0NJ
+	FETOiIUWXe2gjFlXonulMrNcIVVGQzE1s1A==
+X-ME-Sender: <xms:-UH_aMg-IlNt-jx1hmyN00cCrhWUQNUGXxo2Sck3Ig6vGVUgqDUdpw>
+    <xme:-UH_aHlLEK1QDaf0PN92u7zYEgnkE4VZLKlPkaJOyDrHAFZ5Lw7UUlCY6MWqpEjX3
+    t0fYvFavcjhgvMbx5TlPEW3EhFlzLKW8UDFR-OuXMOFb4P6nggBVlQ>
+X-ME-Received: <xmr:-UH_aHutaFzQUb0rVbaHXRDjvPQCrMVvHe8sUUhBpnDPsVCS6WoVu25_-r1FHSlTaZ38idIii47OgRq9gR24PVnGOD_CwXawupyVth7Pmg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheejieejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
+    hrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopegsvghnrd
+    hknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehsohhrghgrnhhovhesghhm
+    rghilhdrtghomhdprhgtphhtthhopehmrghrthhinhhvohhniiesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:-UH_aNYUXwl2aSQ-B_ds1RWd5NCLK22nuUM93t7ljmUVP5a99DuVTw>
+    <xmx:-UH_aPBS_LR-IRqU0D62gmGgNkyWdlewjErQz3VfoqEedWvNxeouIw>
+    <xmx:-UH_aF-m1GgmSbKC-of37JzkDlLY0-TiJru_zEieJeO1tWpiLkjkaQ>
+    <xmx:-UH_aLQsnzqzC_wJo2P0gNbknmwuoRDBaJMbiw4tmjtUyg0DcjgMgA>
+    <xmx:-UH_aK_HXHLhbGAhIpGwj1zKiyN2N49_kqmUrXExtcnB7DU08BBniGHN>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 Oct 2025 05:57:11 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 2523bd15 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 27 Oct 2025 09:57:10 +0000 (UTC)
+Date: Mon, 27 Oct 2025 10:57:07 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Sergey Organov <sorganov@gmail.com>,
+	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v5 05/12] builtin: add new "history" command
+Message-ID: <aP9B8yd0JJL9nue8@pks.im>
+References: <20251021-b4-pks-history-builtin-v5-0-78d23f578fe6@pks.im>
+ <20251021-b4-pks-history-builtin-v5-5-78d23f578fe6@pks.im>
+ <xmqqikg8t0rl.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAD=f0L-Pr9MtQ1=Wrm3tybZFWKDUtDpVcOahoFUgdVcGKJm7Vg@mail.gmail.com>
- <CAP8UFD39hqkcy3WeOdS3Z_N8t5kMTipmE6-N_MwR6PhozZLfXg@mail.gmail.com>
-In-Reply-To: <CAP8UFD39hqkcy3WeOdS3Z_N8t5kMTipmE6-N_MwR6PhozZLfXg@mail.gmail.com>
-From: Bello Olamide <belkid98@gmail.com>
-Date: Mon, 27 Oct 2025 09:58:51 +0100
-X-Gm-Features: AWmQ_bnbbeIxgpaQD7ENh_nfQn6W1AbP1jCp0JKNl1_e5yMCWiWF2WDbOK-9y_Y
-Message-ID: <CAD=f0L-c4GYEq1pNDGy+=hqig768YEsBLSDC-r8ksS1bhGGPGw@mail.gmail.com>
-Subject: Re: [Outrechy][RFC] Request for final application guides
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqikg8t0rl.fsf@gitster.g>
 
-On Mon, 27 Oct 2025 at 09:15, Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi,
->
-> On Mon, Oct 27, 2025 at 7:09=E2=80=AFAM Bello Olamide <belkid98@gmail.com=
-> wrote:
+On Tue, Oct 21, 2025 at 02:15:10PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+> > new file mode 100644
+> > index 00000000000..57560525a70
+> > --- /dev/null
+> > +++ b/Documentation/git-history.adoc
+> > @@ -0,0 +1,45 @@
+> > +git-history(1)
+> > +==============
+> > +
+> > +NAME
+> > +----
+> > +git-history - EXPERIMENTAL: Rewrite history of the current branch
 > >
-> > Hello, I hope you all are doing well.
-> > I'd like to appreciate everyone including Christian, Junio,
-> > Usman and Kristoffer for the guides and assistance during
-> > this contribution phase.
-> > The deadline for the final application is in exactly a week's time.
-> > I'd like to know if there is any new information on how to submit
-> > the final application as the Outreachy page requires us to record
-> > a contribution by submitting a link to the contribution and also
-> > submit a final application to the project.
->
-> There is no new information. Most of the interesting information
-> should already be on Outreachy's website and on:
->
-> https://git.github.io/General-Application-Information/
+> >
+> > +SYNOPSIS
+> > +--------
+> > +[synopsis]
+> > +git history [<options>]
+> > +
+> > +DESCRIPTION
+> > +-----------
+> 
+> We would want to make sure that all experimental things identify
+> themselves in a similar way.
+> 
+> The way how replay identifies itself as experimental, which this
+> patch is modeled after, is somewhat different from what is done by
+> backfill, for-each-repo, last-modified, and sparse-checkout
+> commands.
 
-Okay thank you very much.
->
-> I would suggest fully reading that page again. You might find ideas
-> about things you could add to your application.
+I guess the only thing that's different with git-replay(1) is that we
+also have the `(EXPERIMENTAL!)` tag in the synopsis. No other man page
+does that as far as I can see.
 
-Yes, I will do that now.
+But yeah, I agree that things should be consistent here. I think the
+most sensible thing to do is to:
 
->
-> > While going through the mailing list for previous final applications,
-> > I came across this thread
-> > https://lore.kernel.org/git/CAPSxiM-kf8U=3Dvzp5MoD3tUuOtnNjcCgPhLdriyeQ=
-o5CGf=3DEhyQ@mail.gmail.com/
->
-> Patrick's suggestions are great
->
-> > where the main points regarding my questions were answered as follows.
-> > 1. We should use the link to the microprojects for the patch reviews as=
- the
-> > contribution link.
-> > 2. We should specify the current status of the patch, 'master' or 'next=
-'
->
-> Yeah, it's nice if you can give the object ID of the merge commits for
-> patches that are merged into 'master' too. For those that aren't
-> merged into 'master', the branch name (like it appears in Junio's
-> "What's cooking from git.git ..." emails) is interesting.
+  - Have the "EXPERIMENTAL:" tag in the NAME section.
 
-Okay thank you very much.
+  - Have "THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE." in the
+    DESCRIPTION section, ideally after the first summarizing sentence.
 
->
-> > 3. Send the final application to the mailing list for review which shou=
-ld
-> > include an explanation of the project we want to tackle, links to the
-> > microprojects and a rough estimate of the project timeline.
->
-> It's important to send the application soon, so we have time to review
-> it and iterate on it (like for patches that are sent to the mailing
-> list).
+> > +Rewrite history by rearranging or modifying specific commits in the
+> > +history.
+> > +
+> > +This command is similar to linkgit:git-rebase[1] and uses the same
+> > +underlying machinery. You should use rebases if you want to reapply a range of
+> > +commits onto a different base, or interactive rebases if you want to edit a
+> > +range of commits.
+> > +
+> > +Note that this command does not (yet) work with histories that contain
+> > +merges. You should use linkgit:git-rebase[1] with the `--rebase-merges`
+> > +flag instead.
+> > +
+> > +THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+> > +
+> > +COMMANDS
+> > +--------
+> > +
+> > +This command requires a subcommand. Several subcommands are available to
+> > +rewrite history in different ways:
+> 
+> Looking at "refs", "repo" and "sparse-checkout", none of them say
+> "requires a subcommand", even though they do.  It would probably be
+> obvious from the syntax, so drop the first sentence, perhaps?
+> 
+> And "subcommand" -> "command" to match the section title.
 
-Okay I will prepare and send it as soon as possible.
+Makes sense.
 
->
-> > Is there any other information we should know of or this is good enough=
-?
->
-> I see that Usman just replied and gave good suggestions too. So I
-> think you definitely have enough good material to help you prepare a
-> good application.
+Thanks!
 
-Yes I surely have now and you for your time and response
-
-Bello.
+Patrick
