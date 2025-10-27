@@ -1,53 +1,53 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79962F7471
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 09:57:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8042F3632
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 09:57:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761559036; cv=none; b=tNiLjck2YCWD3PWHKY5sxDIQd9/HTMoCa2Y84EozRBwiE2BRz7DRtPASf2FTVl3N0qpy2bS0TDr0+NhKhfIX0vBK/sF9hfkBwQ5JWDjp0no14TuRmnYb/8dUpzLM5hBPV0QDz+C+2yHfXllsJ+ubohOmfWNXQIZ5M81P0enmWR0=
+	t=1761559072; cv=none; b=n7qr9ptWuWat8sUC4RihxrwUIKx5lH8krbA/+SJU/fIPdEByarBwJ5x+4HWBWV2w/i9StFtlZRhppJF+PNPlbnlcYvHswrnP9UCROXu/6QWlg6R7s6CUMB4n74w8+WBhrPpmYc0aU1sLT8vjL9bdFaEortLMwTxFRQFd/0k/Sgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761559036; c=relaxed/simple;
-	bh=1GNknekJ00ZLzAJZh+no8qOmxmIry4BRz5+lt71xkXI=;
+	s=arc-20240116; t=1761559072; c=relaxed/simple;
+	bh=xwC7VFK3BsqMYcSdJbfFiAeNeqwU5uzxMwOAaibVk3I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r7Lx5LU1O84hrIIk6xorfV5FeNaToPlqh6+C4nRBpd5yfK6cDFXZ4RkEJVwLdiBtZqS+Y1yZuFs5vYcg38lxWrBmp7BaEBzrGeHEfSopgqt/zPbR0l7ZYEUly8eli0Q1g1k70CQG9tcxnPLPQyoHSBSsgDUhICizV//zKAHsSns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZQ0Av9uM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jRatHaFi; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=MsVPJy4r4yGkevyK6kucSa/eAwJtIJBYY7xqqarDs6Mfd1Vq4KI1vy8ZNL/iAfvVRO4irSiNLl9r+VFaXTOSQ3onEERw7BK3z4K5bWtl9npeMW6b30sHxFGhdI1YkMH18hU7Xs96rju6JfcXsQgZIreW4qrxB5veEZfSD0vNjDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gXd1pSPi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dl18CnFF; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZQ0Av9uM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jRatHaFi"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BBA6914002F2;
-	Mon, 27 Oct 2025 05:57:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gXd1pSPi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dl18CnFF"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id B696DEC011F;
+	Mon, 27 Oct 2025 05:57:49 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Mon, 27 Oct 2025 05:57:13 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 27 Oct 2025 05:57:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1761559033; x=1761645433; bh=hI1IU66TDv
-	1XBsikLlVAWaHD2x2irlySjxZdLvqRRIs=; b=ZQ0Av9uMqc3dSeujn1O49fgZTb
-	0rWPfOVM7Wom+pGCTh7J5hYAr9LImZdTTRy2uNfKI/6Cxcc5ZmcAdT82WV1w9FOJ
-	kG1Wk/UkEgXTsB1BwLEWASTlr2VJ4SbL+VScajXxprLHjplyXI9lae44ROApmuSF
-	+nASM6ebNqIFIWPoKAqYx0hZKe5U1ZOb5WXd3/4UTLqo6RjSKJFdb7tHE77QrCvW
-	6ZwXHMmRO8AAFNySh3iDZtRAxWcYbWRZR+Fd1dxF5SMAfJObKgFpvZi87toar9xa
-	Z9urw2j8LBQHQcBeGS/S9CcK3X8blQkH1Ws8nmXZ7jNZEJfN7WHZ3vyNvLdg==
+	:subject:to:to; s=fm3; t=1761559069; x=1761645469; bh=Vupy/pkexm
+	zBI09RziOW2DVHHJs52Qce2MdCMqCSdAQ=; b=gXd1pSPikeBMqN2giQZ8CxVxRK
+	cAfKGc8ad93oEKZz9C40YxkdgxgnvWuTq2NvaHE6ZUBlB8ESokLtoBlmoYCpYqfa
+	w1kWwteg+c+4Rslz1vREvve2dpMGbHd+UiuMMqzREnklvPO4lT0ZJARmTPHIUnBL
+	+Co1QLY8jGVicCE+2CPAUpPRwKW2+PI6lQt1adND3Wz2cYFZ1F9EFNZHeS2Fc14v
+	OEuu+orDweqLDBaYDLNUjBNbl6VOsgvfR3+Svc+o1sJpaw6of/7zzeBsXpI2y3H4
+	Cj2/q3LlX6Sabt6HS+t7L1ubDGE/vmyOFC1jc92ZsSyCMZ3G7KJ1oifc/ECw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761559033; x=1761645433; bh=hI1IU66TDv1XBsikLlVAWaHD2x2irlySjxZ
-	dLvqRRIs=; b=jRatHaFiz5YoW7qpaRjQZgCrZzdTUk81D3EGtkgyNMMXgN2eR3H
-	PGjmIS8ofog/efHDYd0EOZeh4ZPCrdQVgDwqG4lQVmU7Y7zClevkOakjmUvmVCPz
-	4hUIdV8cAoZsBabWV194JNm/nwZK/ytPIt2wWkmYIWSBQZcFIxt7kEpSkcwGkLGg
-	PcmOblTRLg3GTfKs4Y6KX+cUVDuM+yCVqrNBOjI+URIJo9oSpDcUkUOVvPqOko39
-	vYh9QsdVeSx+mVzelmuKO+V4mz/Vnhct4urvfAbhBECBaYEUd9l+g/0ZQHynC0NJ
-	FETOiIUWXe2gjFlXonulMrNcIVVGQzE1s1A==
-X-ME-Sender: <xms:-UH_aMg-IlNt-jx1hmyN00cCrhWUQNUGXxo2Sck3Ig6vGVUgqDUdpw>
-    <xme:-UH_aHlLEK1QDaf0PN92u7zYEgnkE4VZLKlPkaJOyDrHAFZ5Lw7UUlCY6MWqpEjX3
-    t0fYvFavcjhgvMbx5TlPEW3EhFlzLKW8UDFR-OuXMOFb4P6nggBVlQ>
-X-ME-Received: <xmr:-UH_aHutaFzQUb0rVbaHXRDjvPQCrMVvHe8sUUhBpnDPsVCS6WoVu25_-r1FHSlTaZ38idIii47OgRq9gR24PVnGOD_CwXawupyVth7Pmg>
+	1761559069; x=1761645469; bh=Vupy/pkexmzBI09RziOW2DVHHJs52Qce2Md
+	CMqCSdAQ=; b=dl18CnFFeH2KtbSeb7aYIWt1AhMCnL7jnmqq8k42kABQGfvVUnb
+	79ZSKMMVST5fwW3z9D9eSPfpfgEzwwFK8MKOY5M6rbWiVjheYA7oHW9o4mPLYOcF
+	38gtIOsJKKFnk4lw+c49SzywtsbHQRJQA6Q5zBPGPqs5EGPTbnuXlfJ7OEn+CvDE
+	BytIE+nfxENqip1BlIqNZE888AO/6yfKpJbmpLPqxhF583jUbziA26R6x7BQmXdz
+	P9/+lC0O8I98diHuH/1grdHphiisFE698qH6CQKGWgMmmlsh/vGqMZ1SA1WpeNKN
+	voevAHaGygG4rNbxT4BQ4FxH/UjIbn9/wQw==
+X-ME-Sender: <xms:HUL_aHqB3MX1h6kkRt9DKwEi-prF2FvX-8KPLlDZ73Dqvdz3MluKCw>
+    <xme:HUL_aEOdYrZEjFAptqtqaditJxh-PicKw_EXPouzDdiW48UIPhJBn3QVkfL8cumil
+    fXbYZMNlGH7U8zHB3HYzb4iCYhPiwyuM8ni1MPpQnM9uaOf2RU92A>
+X-ME-Received: <xmr:HUL_aH38KNy5PWp79K6b6oK1b2O0WLsXyxapywGbtlMl5EV1-9cdE2BDkwFUTuBVim6L5gEFd3SUCwJScMICXEU6_tQo3wCVW6fBOFxrBg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheejieejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -56,25 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheejieejucetufdote
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
-    hrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopegsvghnrd
-    hknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehsohhrghgrnhhovhesghhm
-    rghilhdrtghomhdprhgtphhtthhopehmrghrthhinhhvohhniiesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:-UH_aNYUXwl2aSQ-B_ds1RWd5NCLK22nuUM93t7ljmUVP5a99DuVTw>
-    <xmx:-UH_aPBS_LR-IRqU0D62gmGgNkyWdlewjErQz3VfoqEedWvNxeouIw>
-    <xmx:-UH_aF-m1GgmSbKC-of37JzkDlLY0-TiJru_zEieJeO1tWpiLkjkaQ>
-    <xmx:-UH_aLQsnzqzC_wJo2P0gNbknmwuoRDBaJMbiw4tmjtUyg0DcjgMgA>
-    <xmx:-UH_aK_HXHLhbGAhIpGwj1zKiyN2N49_kqmUrXExtcnB7DU08BBniGHN>
+    ohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvh
+    hilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
+    hmrghilhdrtghomhdprhgtphhtthhopehsohhrghgrnhhovhesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepsggvnh
+    drkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudek
+    keesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:HUL_aLCEFMe_IDlDI-xlXJmVltDOWmlfF1gZZl26-FiwxKEe-mCo0A>
+    <xmx:HUL_aMLOsqZR4DvtjaNQDQ4xdJC3wLr0sAChfJQvag5EfjXvSEuJ4A>
+    <xmx:HUL_aMkKXojYDDwwNn95hcfaHXjDjkev8XhIr7-swlX1y08t4S3Epg>
+    <xmx:HUL_aNYpDpbe62wexRviqUmJhc7l4uLPirygHvbZoGDE3p8deAEO2A>
+    <xmx:HUL_aImWAim9gILZfX29UdggH0sXLB9qhOzYyc86mm8fWpkFFeFnOnKB>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Oct 2025 05:57:11 -0400 (EDT)
+ 27 Oct 2025 05:57:48 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2523bd15 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 27 Oct 2025 09:57:10 +0000 (UTC)
-Date: Mon, 27 Oct 2025 10:57:07 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 5dd065d0 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 27 Oct 2025 09:57:47 +0000 (UTC)
+Date: Mon, 27 Oct 2025 10:57:44 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
@@ -84,11 +84,11 @@ Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Elijah Newren <newren@gmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v5 05/12] builtin: add new "history" command
-Message-ID: <aP9B8yd0JJL9nue8@pks.im>
+Subject: Re: [PATCH v5 04/12] replay: parse commits before dereferencing them
+Message-ID: <aP9CGN39LSaFU-Ru@pks.im>
 References: <20251021-b4-pks-history-builtin-v5-0-78d23f578fe6@pks.im>
- <20251021-b4-pks-history-builtin-v5-5-78d23f578fe6@pks.im>
- <xmqqikg8t0rl.fsf@gitster.g>
+ <20251021-b4-pks-history-builtin-v5-4-78d23f578fe6@pks.im>
+ <xmqqo6q0t1kd.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -97,80 +97,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqikg8t0rl.fsf@gitster.g>
+In-Reply-To: <xmqqo6q0t1kd.fsf@gitster.g>
 
-On Tue, Oct 21, 2025 at 02:15:10PM -0700, Junio C Hamano wrote:
+On Tue, Oct 21, 2025 at 01:57:54PM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-> > new file mode 100644
-> > index 00000000000..57560525a70
-> > --- /dev/null
-> > +++ b/Documentation/git-history.adoc
-> > @@ -0,0 +1,45 @@
-> > +git-history(1)
-> > +==============
-> > +
-> > +NAME
-> > +----
-> > +git-history - EXPERIMENTAL: Rewrite history of the current branch
+> > When looking up a commit it may not be parsed yet. Callers that wish to
+> > access the fields of `struct commit` have to call `repo_parse_commit()`
+> > first so that it is guaranteed to be populated.
 > >
+> > We didn't yet care about doing so, because code paths that lead to
+> > `pick_regular_commit()` in "builtin/replay.c" already implicitly parsed
+> > the commits. But now that the function is exposed to outside callers
+> > it's quite easy to get this wrong.
 > >
-> > +SYNOPSIS
-> > +--------
-> > +[synopsis]
-> > +git history [<options>]
-> > +
-> > +DESCRIPTION
-> > +-----------
+> > Make the function easier to use by calling `repo_parse_commit()`.
 > 
-> We would want to make sure that all experimental things identify
-> themselves in a similar way.
+> Two-and-half obvious questions.
 > 
-> The way how replay identifies itself as experimental, which this
-> patch is modeled after, is somewhat different from what is done by
-> backfill, for-each-repo, last-modified, and sparse-checkout
-> commands.
+>  * With this change, can we lose the parse-commit call(s) from
+>    existing callers, or do the need to look at the in-core commit
+>    object themselves before calling this function so they need to
+>    have their parse-commit call(s) anyway?
 
-I guess the only thing that's different with git-replay(1) is that we
-also have the `(EXPERIMENTAL!)` tag in the synopsis. No other man page
-does that as far as I can see.
+There's only a single caller in "builtin/replay.c", and that caller
+parses commits deep inside the callstack via `prepare_revision_walk()`.
+So we cannot easily get rid of any calls.
 
-But yeah, I agree that things should be consistent here. I think the
-most sensible thing to do is to:
+>  * Can new callers you plan to add decide without having an already
+>    parsed "pickme" commit object if they want to call this function,
+>    iow, can they decide to call or not to call this function without
+>    looking at the members of the commit structure?
 
-  - Have the "EXPERIMENTAL:" tag in the NAME section.
+Not quite sure I understand this question. In any case, I was hitting
+segfaults in tests when I didn't have this call. But your questions made
+me double-check this now, and I cannot see any of these failures
+anymore. And we do use the same infra to pick commits as
+"builtin/replay.c" does, so things should work alright.
 
-  - Have "THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE." in the
-    DESCRIPTION section, ideally after the first summarizing sentence.
-
-> > +Rewrite history by rearranging or modifying specific commits in the
-> > +history.
-> > +
-> > +This command is similar to linkgit:git-rebase[1] and uses the same
-> > +underlying machinery. You should use rebases if you want to reapply a range of
-> > +commits onto a different base, or interactive rebases if you want to edit a
-> > +range of commits.
-> > +
-> > +Note that this command does not (yet) work with histories that contain
-> > +merges. You should use linkgit:git-rebase[1] with the `--rebase-merges`
-> > +flag instead.
-> > +
-> > +THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-> > +
-> > +COMMANDS
-> > +--------
-> > +
-> > +This command requires a subcommand. Several subcommands are available to
-> > +rewrite history in different ways:
-> 
-> Looking at "refs", "repo" and "sparse-checkout", none of them say
-> "requires a subcommand", even though they do.  It would probably be
-> obvious from the syntax, so drop the first sentence, perhaps?
-> 
-> And "subcommand" -> "command" to match the section title.
-
-Makes sense.
+Let me drop this commit for now. Things work without it, and in theory
+they should. And now that I'm revamping the infra to not use the merge
+machinery in the first place we don't even hit this code path anymore.
 
 Thanks!
 
