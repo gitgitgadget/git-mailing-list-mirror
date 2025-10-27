@@ -1,98 +1,92 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849AD35B13C
-	for <git@vger.kernel.org>; Mon, 27 Oct 2025 04:02:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4818258EF3
+	for <git@vger.kernel.org>; Mon, 27 Oct 2025 06:09:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761537724; cv=none; b=iEQK/WXB0LFYTiOQuVPnuOwfCKXQKGl++xJVqkOInEUZX/hBxg1dqU7GnQfNi0m2WP1pJA2WmnppD9vzyj05mkpsE3EFt9F4ial2C7yopGwCYujxTbMSfAKLuB33hZDN0VDG3wl9kwMhMER6NF3aYF8CLSaSEYOZW6WYszf2hhg=
+	t=1761545354; cv=none; b=VQdZFAJOORnBObhsdR2W+7dSEZR3DEroq4lJab6MeWBnkFaAJpEQ0f8tCH0TVixWIJOQ/JNdTnbDzD++XXyA5VSeI3V6M4FXRFhH+pxHbPm+klyhE0rTTdWBOzPSMB6TjmxCJMCQ2pOKvQ4q9pAsOvSJGLdizVJeT1lezu7DUgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761537724; c=relaxed/simple;
-	bh=ooQEVTMT8nBpX/KrYh+ECkXoR6aiUS/w6QbKbM9ydOM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hQlZ5YSxvKNYFbCiM3uhRKFSnk/trLTPQyvpwezeePlycYOHR/69TfnG5paN3BmUIEhwnF42X74h3fqDu8e+5z7pxpPux2BY/6Tlr0INGt13io+hsvtDzwg79LFXXPptiste0fdk9bMfwVGZ5NYK28f7t6FfpvRn1bEA86U/IyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xj2kauM3; arc=none smtp.client-ip=209.85.218.42
+	s=arc-20240116; t=1761545354; c=relaxed/simple;
+	bh=Jg3+Y+GGRJiSdgAL/rZUIHrkGPFpSUuUVYl9cAObJt8=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=NDG3E8hqQhRmUtMwIKrn0uC235E6ryr7yO3JOmFhon6GHw9LQieaEZ9tXaFVsth5iJHCejbCZuicf4LTjqPMEpa2qaZ6At/Jc0Cnm+J6af+ZJrHkLGpV4FkNzcVlxi/diODvMLWvJV3KgqvePmbVpPXhz13rVXDQeEPZl3zirZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ShXXLPlJ; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xj2kauM3"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b4539dddd99so894897766b.1
-        for <git@vger.kernel.org>; Sun, 26 Oct 2025 21:02:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ShXXLPlJ"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-27ee41e0798so61380785ad.1
+        for <git@vger.kernel.org>; Sun, 26 Oct 2025 23:09:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761537720; x=1762142520; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ooQEVTMT8nBpX/KrYh+ECkXoR6aiUS/w6QbKbM9ydOM=;
-        b=Xj2kauM3nnm/9AQ7rrgjF69J7BklWEWDVSGRmC6izEBSXAZftB6qw/42yVdvsnJ+e4
-         6S6Q+VXWAgMKJARA2EuubHFOvLfQu22bxxQZWyThwufpy598U+cttBbN2G2DFT0/9ayf
-         Vb3ynqEKbs1W+uDF3xcDbnGXq2DU90i7uWRuStY+RjxfBz3vJ7XIOK24Rasz5VDN1DPE
-         OV4JbCZUkFsgsHUgN3H3nTYd718hpG1XcYIypWcHUe462FVOfFVQFSHiIG9GynXZb0PJ
-         F8V4Af495RNBi5442KpYf6aKT0Pf20kjWsRWHKzrw+dgK2Ma8qBIJoF4mPPzd5uCCxc4
-         qtxw==
+        d=gmail.com; s=20230601; t=1761545351; x=1762150151; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Jg3+Y+GGRJiSdgAL/rZUIHrkGPFpSUuUVYl9cAObJt8=;
+        b=ShXXLPlJo2fofzLF9mOFcFsC84kvCIMTAKgvAoVKU8j/cpxw6A6jdVC47M68oUZOrq
+         0Fcxq+Hqc0IKJHICJKKU3fKWTd8wAYZ53YsV/F1pGYj+Etq9ONI/2Sg6wG0WivdC8bod
+         ow5618m7VQWG7PgRDBV7EAO2sGa1aaV2xFPlV1ZyDIj/FSuvZ0PBaQjF76HQNspxfcVy
+         afwHGjdkDKKW0XAg9g5TkoFkLKGVaarn2NQPr7Ow1Hc4FWsvLW0T8jDwNQjGc3IRyd6W
+         ajn98/aKKwP/Dld7d+Q8xcQoxLmYOSVzDpCh6Uvt25HLQVwykpDYadENN+NmRbabNOZo
+         osyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761537720; x=1762142520;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ooQEVTMT8nBpX/KrYh+ECkXoR6aiUS/w6QbKbM9ydOM=;
-        b=m+iaP+nM5bIt0lO4G6ML9gTgnozJZqCStt93ptPAgQkkJwBaJdSrM54d28c4XkC5Du
-         doNzy5OjNL2ebnAOrxdaVAVTpvKWLyAGddt9thq10t9ChzopPCr1Fsx085EYW7fN6iY0
-         Z2ID1QnpxWT55AIviv7CRqO4wYN8GHb1CsALOGS4JhJNxQmVRjxQUbbNLmRJjNJ9u4u9
-         xlK719IeIkEUOpNXqrjZnJmgktjYjFc9hNS5v14ZvcK0R6hijzdE++2We3xcrib9PKkZ
-         Tuy8CP+e55drzqukzAK8f0XpAcJ6AcLryHnz2gK6L//la5FyfkA89/LDb5tqUC8FB2tC
-         NidA==
-X-Forwarded-Encrypted: i=1; AJvYcCWCo8r627d2y+hid8sbTsfTsCtdl76u7BQFH2hg9Qo+eReKaQ0/YBsoAJ7oexGozhjp4dM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx1X3GP/ZmY8YMTrVUVd2+qh4gw8p55dri720fxFfPcu09biUS2
-	j5o73Ffteq8LrKRRjIm0sZiD8uJwLjOw2MAAQmU8WMFU4QnmsWwjNQsnTCiYeIPzxHyt7IV0xK5
-	kXnnzXYmN5c58akDf3K/196oiUZPOxrE=
-X-Gm-Gg: ASbGncsBWEGfYvh7rTW8kJ3/bHNrBMySBl9oNs7ez8ZIS8ruSoluKAchgUh3Ec4NM+Q
-	Q95uuu4wB5t0idTeYAiOkgVlUtzsgAkuV1RN1AsCwDQ0rUIMPjGJh0sHFbRivwew0oCjzLr+ryb
-	w72JSas9SQOlsmWjbswOJaFAiiq3M1HpKURDwLLBlWDDFAXiArJtJdkkz8rrAXRhYeLHAILj8Sv
-	367rOM/ANCK9XEhyrmIaF+pJG3n33QVhRakJ2XTcxZM/+9kjD7Q2NHazr5P24YEv1fQg7DU
-X-Google-Smtp-Source: AGHT+IHXRnQ7p7daNcKMUvVcNyLnnrepfgyTgUAGmGke/0fpT2ZBX/oGTQ7N+H9IsBxpzIiQCzx2ZsO99wyYQdRPQ6g=
-X-Received: by 2002:a17:907:bb49:b0:b45:eea7:e97c with SMTP id
- a640c23a62f3a-b6d51c30f7cmr1311731766b.47.1761537719610; Sun, 26 Oct 2025
- 21:01:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1761545351; x=1762150151;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Jg3+Y+GGRJiSdgAL/rZUIHrkGPFpSUuUVYl9cAObJt8=;
+        b=fVCApfFR6UYfOeiOWr8WnAUqeOYos6n/vtvPiNK5gcp4LZ1K0lFWEv2qYEXNTlstUr
+         wnjaTrTzC018kCl5TZTrdqHylEtwwIELb7fDDHZ02y/Ji+2k9FATWa8jWGCSqhA+r3kV
+         ZiVIIUC+3IGjKqVPJtFn+2n41QP7UXulO78jCzFarwmYE+7Rl6LxXnRU+j0OWnLpj4oC
+         cucWvJLK4G4SsLAVx9jAcvGb93gtg5OAFF89H65rnlZIefrpKeubAvBjgR67blKVESQf
+         loevYTvio3Px/w3QtwPWn3/9O3FcLq9QClLu7iZUfD5tp/bIDsYi0p5j55AzUo0JT+6v
+         a5gg==
+X-Gm-Message-State: AOJu0YzyH2juPOEYfCE0T3vh5M/uy4H2e8U+NKiCwxoytvFA3TyarPXh
+	Nx+nq+8WbBhMnEruEfPhNFIqhm4tFcgAtXTxTdpxB1ZDxJm310R5VDGRVhIdWVMSBAWdHvSxnfk
+	fWlowNhUpUhSsUTxwKOvbhkdSr6FiKm8g5D78zck=
+X-Gm-Gg: ASbGncvUunRtUj3m5oj646u+VDfYpsgoEIk1pQWJMZnRAfVLInhj2ttfNDN/AKvtY57
+	xUUqjIOJtyB7tCRBBRMRhDvjKKNfACR7vm4yNysY10CQf7ymVl2HezmtG/ZkPWciRcDn05OYGLt
+	P//inqV/RrW/0D3mBtWTyMtSVPHiYFvwGnr3S/qMQPggUgzZRTiYORpSl6nulp8p6DeqKL6mOy+
+	5bLoKyDC04WWa28fpJxsezxQ4GA3pByoJMOqSvBVilfNpTiFMTled2Ls5KtivCtkft5rFaD
+X-Google-Smtp-Source: AGHT+IGAA3dsoTZnhvAO7Fhgxzpe0n8GWjKkeee+GKz6Zm/g8wMfWo0WHotDeBMdlnQKzu1MN1upXK8YQ9tZ+QDXi1I=
+X-Received: by 2002:a17:902:f68a:b0:292:39b4:e785 with SMTP id
+ d9443c01a7336-2948b9be076mr152925395ad.26.1761545350676; Sun, 26 Oct 2025
+ 23:09:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2082.git.git.1761295094982.gitgitgadget@gmail.com>
- <aPtCvwvNUtFXqrpv@pks.im> <xmqqikg4qqn2.fsf@gitster.g>
-In-Reply-To: <xmqqikg4qqn2.fsf@gitster.g>
-From: =?UTF-8?B?6Ziu5paw5a6H?= <r200981113@gmail.com>
-Date: Mon, 27 Oct 2025 12:01:44 +0800
-X-Gm-Features: AWmQ_blUZXvbs1bMJuWX2ZGjGlpF1hmeUM3flTSD8fkyE03vduxiXfVyyish-3k
-Message-ID: <CANWnLjtWWOMtSKyB4275ZPZM65xkyNMnaF8u+v62tqgrOb_ByA@mail.gmail.com>
-Subject: Re: [PATCH] refs: add missing remove_on_disk implementation for debug backend
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, RuanXinyu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	RuanXinyu <1096421257@qq.com>
+From: Bello Olamide <belkid98@gmail.com>
+Date: Mon, 27 Oct 2025 07:09:12 +0100
+X-Gm-Features: AWmQ_bmSJqR28dlKE_DLXTfWexZ3_q9FwQE-J5Z48STGr2J8br62lFcKMtdWIjE
+Message-ID: <CAD=f0L-Pr9MtQ1=Wrm3tybZFWKDUtDpVcOahoFUgdVcGKJm7Vg@mail.gmail.com>
+Subject: [Outrechy][RFC] Request for final application guides
+To: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
+	christian.couder@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 24, 2025 at 11:13=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> >> Signed-off-by: Xinyu Ruan <r200981113@gmail.com>
-> >
-> > Tiny nit: typically, the author and DCO should match. But the autor is
-> > "RuanXinyu" whereas the DCO says "Xinyu Ruan". I don't really think tha=
-t
-> > this is something that warrants a new version, but I wanted to point
-> > this out anyway so that you can fix this going forward.
->
-> It may not warrant a new version in the sense that I could tweak
-> while queuing, but I need to be told which between the two is the
-> name to be used before doing so.
->
-> I can make a guess and use the latter but it would cause me yet
-> another piece of extra work if I guessed incorrectly, so...
+Hello, I hope you all are doing well.
+I'd like to appreciate everyone including Christian, Junio,
+Usman and Kristoffer for the guides and assistance during
+this contribution phase.
+The deadline for the final application is in exactly a week's time.
+I'd like to know if there is any new information on how to submit
+the final application as the Outreachy page requires us to record
+a contribution by submitting a link to the contribution and also
+submit a final application to the project.
 
-Please use "Xinyu Ruan" for both author and Signed-off-by.
-Sorry for the confusion, and thanks for fixing it while queuing.
+While going through the mailing list for previous final applications,
+I came across this thread
+https://lore.kernel.org/git/CAPSxiM-kf8U=vzp5MoD3tUuOtnNjcCgPhLdriyeQo5CGf=EhyQ@mail.gmail.com/
+where the main points regarding my questions were answered as follows.
+1. We should use the link to the microprojects for the patch reviews as the
+contribution link.
+2. We should specify the current status of the patch, 'master' or 'next'
+3. Send the final application to the mailing list for review which should
+include an explanation of the project we want to tackle, links to the
+microprojects and a rough estimate of the project timeline.
+
+Is there any other information we should know of or this is good enough?
+Thank you.
+
+Bello
