@@ -1,61 +1,63 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE3D27144A
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 08:13:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1770D2D739C
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 08:13:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761639185; cv=none; b=G4n00r13JP4GQr5AKr192LbKN59+Nx4z3E0tAb3qU8sXUAXYszVuEj46s8YXDsvBHvbQkLp80hG24/QppIKkBRcjH8G7G1F2BL8Ulez4g/VXzDmn8UJ8R/B+cT0H1RhbZkodddMJ3F1Pl8NSbs+sMl5rqdHe4dqir4Jc3sBsN00=
+	t=1761639189; cv=none; b=EpF9UGjXC7cyDvNmEzl/5wPOl6PJUNr7wxxGraRtgRCqqoEedWk5xCATiKgOd1LvIWi0kZhA2SESYLeNlakktP05tBF5XZIjGWw3MjD5I5BPhEx4qAkN5k0lJzytXMDmOTrpD2Nh+qgSKiO66PeHtf6arfU4GhF7xL4ofqM8jYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761639185; c=relaxed/simple;
-	bh=5EheeBr2QF9OP4C+dZ7R+BCbZNGYDYWEGT/F5VZXgU0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=juJZyVT6beX6VWN6qYXx/Wl5Wl6KGgNvkkxGLVVKbBqqES92gOyBlhX4wIV8Diz93EdCCmijp17Nuz97FxSzLw+ZzuPatZ9sGgRaEsarKnrwyPs98z8cTKsKKc/j77w78lAjaPp9w8GnsRMwxo1VATxAIlsdUhUo7/hwI+POTaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q7b3defv; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1761639189; c=relaxed/simple;
+	bh=zRDBHPmi3HAVjrYLzJSA30/BSPrd9QAhq4wDiX8LGZs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=aPnVAUdrntYMmoAYVfq7FocFj/0fhXnyVVv7DioVEMyh9EAHrMcvR2IITqC2i8PGu9Hw4GvKp02U/JIDz02jpdd0FSYQ+JGRzc6zWgTh3Yttnym6ZuON9c9lJ6QzeYU3v1QsPci8TSKNn/VyJh+Ub8R3ZAVVxdkDeIHwhXwAqyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g+HKvlGS; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q7b3defv"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4770c2cd96fso19496605e9.3
-        for <git@vger.kernel.org>; Tue, 28 Oct 2025 01:13:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g+HKvlGS"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-42420c7de22so2805573f8f.1
+        for <git@vger.kernel.org>; Tue, 28 Oct 2025 01:13:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761639181; x=1762243981; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ka8yl3gxGVX1dgGw4uLeb14o5Vf+qatBtYsMno5FjrE=;
-        b=Q7b3defvE7IuVWCo/lKkRGFryaXkr0num1D34SbNW2OP7OrNwBiYQZqtRFmbOG/K6D
-         W6CaSn5RU4o44zRfvqFirbBzv/SO3A0r1vjK7fp7HKQWc+A0kF43RguUo8xoSmewmZ4u
-         fIlckotT/dIeTICeGXdblOdSmwq9MyoqfZRzZnXvmDUqEL0kx436FHQ/6vc542E/5Oqz
-         sWdR9cwHQd8navj5B2dGRXLiSI3lwzKhYaQaY1ksl2Fo1mg7ctu2TO+O8TXXWZBSwXAI
-         e5+0BtN8hH9i2XnYcW9FviNqIyAf98oAdCt1Hh03dZOf4FHIfIYmjPPbqNSgpe7B/ABq
-         osfg==
+        d=gmail.com; s=20230601; t=1761639183; x=1762243983; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tyQ05EYVWrLBRWkDQel5ldfPtn92oQBbkUI1hW4cC/E=;
+        b=g+HKvlGSWh8tj8nX/U8NeSykEfYLBZn9vkShWc80hbgbGdUMvouI+nNgeEKsL7lcrK
+         m0hZ0AIJrHigfH8zdISukfauuOQwiFzJb1n2bQsxO1nP1AjKnitEoU5GdK9MNrvXFFUw
+         M6KH+nqjgbgNXy9ejdjYClrJNAeZHKNVeaPONdXcECQsIKA6a2NmUVlUP0mtNXof5vnD
+         1WnoX4WoV5qvOIrR+tNfbo0e6Gda8rvvXtlmdluK93dySaebPBdLUU4/5jAImIYmWTKS
+         +CwnUgIolNlEMcyi720cchaXBi1QHbmofou89Cp3jTIKrDrccM0fO7C8nbTBPeF/Ha6M
+         Nnow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761639181; x=1762243981;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ka8yl3gxGVX1dgGw4uLeb14o5Vf+qatBtYsMno5FjrE=;
-        b=n5pFyQdeGMM9KYZvLSg68Dwc+3LeZrJd00WDpBPE7UNZvaiZ5IieY/C3CCh8gOEhVf
-         ELj6DhTtfsLuq6WRG/8RhUEYEvdD0gjm0ULTx1prvoQ9G0VeRKl3pggkEC2ZZKSclhdG
-         UWz6cc6IhiWIAo19F4vNRl7uyqJGMh8o9TFyiBKf4pfe9LN9nVitLrwoIj4i367ppHrP
-         3RWQdqlTyByU6ynOh3O+qTwOdjyX3bIofvDAB2ET4+ZmXBbWg9HyYj3LhM5iVWeTYO/6
-         XjzPkJyB9JJi7ESW5yob0oQvF7mI/akK8T3Z2bRGCEtYJRXPdO6EVYyHTaNVQAbysaIA
-         oh2g==
-X-Gm-Message-State: AOJu0Yyus8YSeuGLkKAR7m6SwDp5fip6BfJ1j5OVlQiWUxs6V0Fle8ts
-	FazvZWS1vECEmkYjF71cwztBAj3k7j4Owc9npPveX/+QwCnwmHgZTgt2QVJmPA==
-X-Gm-Gg: ASbGncuieoT6fz5/kZgcZMnoMqQ0C3MWzqBPxatcTl8SIKo1K+7zkRP/VUoB+Xl2Zgj
-	KqmGt/fpvG/WNSiSehPyGyrfMq0VVYXHF5tRwWI48ee/mH4eSqVo6jDmT87x33O/7t6gU8F+529
-	ggSqacu6dfAMx10erPlDdHgATgPqkvRmP+ORAm/45oHSJEbstCYYsycfqjzuDBuxNMK2ZLmPNyF
-	6OkoYbhNv7IUtyKJvzpl1XmHyO7IGo100pud8IBKVPkyH4TbNnvMwuoxqv2L2c1D/wXfMboO8Su
-	XjrYkQKxwaL0Ev67u2iizL8QJEuJ/s1h9tO70cwtCj9NGrosT0+AhWlaXEPitn/CPOx3c0fB7RH
-	bNVfUyHBj8HiQqVneHSCbk85HCcYIguntwCXlr7e6RzTzi8m0IxqnfMwMpI+HcwEChGY3ofbTEa
-	1+ce6M6cd6b8nx+LKQbSe0UXyXEZk=
-X-Google-Smtp-Source: AGHT+IFhVhjsf5hWdchSbnRhplXkKqi2swkQkRBBfBTwDD6a68RKLPzQ8UYSJ0DBEma1giTsaL5z0A==
-X-Received: by 2002:a05:600c:620f:b0:46e:1a5e:211 with SMTP id 5b1f17b1804b1-47717e413f5mr17186935e9.21.1761639181138;
-        Tue, 28 Oct 2025 01:13:01 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1761639183; x=1762243983;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tyQ05EYVWrLBRWkDQel5ldfPtn92oQBbkUI1hW4cC/E=;
+        b=PybwveQoAJMLL0VEk84HZvDkv9kXR3L1fF7VxWbWxpqUMQAr3Y0+tYx+IQJlkRmLfj
+         3JZJHF1i7ncv+AN8n/2qYWSBvR8JuBZ9+ycC82g8229lTo69/m9DaE5OedDS4/Wsfyz7
+         u1yGhz4mQV0Q6TpQl/wdGjLLJTvstIgLVKxoNXvyQ+W1jPfzije5sJQt5ICN6riqXOyA
+         sy9IjOUp3S2/uW5u7WwtpsovVV0wQdS6xPE02H4n+AzdPdfZIblCynTDkow5X6hgjdL0
+         TzX04IuabrHDSKJphBjbJGuZYUbE5s/LZ+WBYGCcfBNbkmvOFcvav+eJzDx25C9boZCV
+         bzag==
+X-Gm-Message-State: AOJu0Yzc30teGXbfcPrvCyYbY0yMTGe8aqHv/dVEQo7VhOrKm72BSkwC
+	9TgYcalIZzMQt7P7kAXfbkLpSl7LZJV9kLTL7gPhH+9RaZP2xEct67RfEAi+SQ==
+X-Gm-Gg: ASbGncsUbG6Gb1+bO5JjMc9KxrbYP+gJco7SkGG4GFfEy0Cy3DEwfDrpHxL7HtI32BT
+	FHq10/oeGcfMHfoql0RjKwBUFndjizyPuxvEBKH4Ftr7lKfqZ4uJ7gb/b4KtMSFHw0wGXngrcI7
+	xYNVrW6pwFrmUtuFQ4QJzcAf62gOiLQUt0Swc9BbF3bt3dCuzXY5tIB9l2P68yKboAO6yhx+EHG
+	ndCIGGktw2bVutgocRs6gW4DnM/scD+ndZ8BjtEkdkicDhxhtUl+MefLvOn3kXiSOTyBdNwVzg6
+	fpDT00IQc+2mB++G2JBaqj5or7PzpTxamM9lFgqJPB8TX6vGf5RiBebZuk7xp6P7j3LVfGC2vH+
+	crzq3fSgAgZu54E3J51R5dZYcaZx4ygNsIjnk9fUxTkgrmjPfPulgJbgrWfYHKolguZbE9hFKTC
+	EXHcUrJTHNXvp9UKAqT2abBD1FGrA=
+X-Google-Smtp-Source: AGHT+IHuqreGNtojf4D/slE6f/BmVtTJhwRZOLtKWqJl1DhqyPScaJRDrzVvZbB8n26r7R2Tlc6w9g==
+X-Received: by 2002:a05:600c:4686:b0:471:15bb:ad7b with SMTP id 5b1f17b1804b1-47717deeb8cmr23449865e9.6.1761639182678;
+        Tue, 28 Oct 2025 01:13:02 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4771906af34sm12830335e9.14.2025.10.28.01.13.00
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4771906af34sm12830335e9.14.2025.10.28.01.13.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Oct 2025 01:13:00 -0700 (PDT)
+        Tue, 28 Oct 2025 01:13:01 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -64,11 +66,14 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 0/5] fast-export/import: cleanups and translation
-Date: Tue, 28 Oct 2025 09:12:27 +0100
-Message-ID: <20251028081232.3068147-1-christian.couder@gmail.com>
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/5] gpg-interface: simplify ssh fingerprint parsing
+Date: Tue, 28 Oct 2025 09:12:28 +0100
+Message-ID: <20251028081232.3068147-2-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.51.2.540.g4ad31e1014
+In-Reply-To: <20251028081232.3068147-1-christian.couder@gmail.com>
+References: <20251028081232.3068147-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,44 +82,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In a previous v2 patch series[1] that I sent last May, there were two
-preparatory cleanup patches[2][3] that have been dropped in the v3 and
-next versions. I think these two cleanup patches are worth resending
-in their own series though.
+In "gpg-interface.c", the 'parse_ssh_output()' function takes a
+'struct signature_check *sigc' argument and populates many members of
+this 'sigc' using information parsed from 'sigc->output' which
+contains the ouput of an `ssh-keygen -Y ...` command that was used to
+verify an SSH signature.
 
-While at cleaning things up, I realized that, when working in this
-area of the code, I have often been annoyed by the fact that few error
-and warning messages were marked for translation. So I decided to also
-address this here.
+When it populates 'sigc->fingerprint' though, it uses
+`xstrdup(strstr(line, "key ") + 4)` while `strstr(line, "key ")` has
+already been computed a few lines above and is already available in
+the `key` variable.
 
-So patches 1/5 and 2/5 are small code cleanups that are resent, while
-patches 3/5, 4/5 and 5/5 are about marking strings for translation.
+Let's simplify this.
 
-[1] https://lore.kernel.org/git/20250526103314.1542316-1-christian.couder@gmail.com/
-[2] https://lore.kernel.org/git/20250526103314.1542316-2-christian.couder@gmail.com/
-[3] https://lore.kernel.org/git/20250526103314.1542316-3-christian.couder@gmail.com/
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ gpg-interface.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-CI build:
----------
-
-All the tests pass, except for the "win + Meson build" which seems to
-fail at a Rust related step:
-
-https://github.com/chriscool/git/actions/runs/18856740498
-
-Christian Couder (5):
-  gpg-interface: simplify ssh fingerprint parsing
-  gpg-interface: use left shift to define GPG_VERIFY_*
-  fast-export: mark strings for translation
-  fast-import: mark strings for translation
-  gpg-interface: mark a string for translation
-
- builtin/fast-export.c |  77 ++++++------
- builtin/fast-import.c | 270 +++++++++++++++++++++---------------------
- gpg-interface.c       |   4 +-
- gpg-interface.h       |   6 +-
- 4 files changed, 179 insertions(+), 178 deletions(-)
-
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 2f4f0e32cb..91d1b58cb4 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -443,7 +443,7 @@ static void parse_ssh_output(struct signature_check *sigc)
+ 
+ 	key = strstr(line, "key ");
+ 	if (key) {
+-		sigc->fingerprint = xstrdup(strstr(line, "key ") + 4);
++		sigc->fingerprint = xstrdup(key + 4);
+ 		sigc->key = xstrdup(sigc->fingerprint);
+ 	} else {
+ 		/*
 -- 
 2.51.2.540.g4ad31e1014
 
