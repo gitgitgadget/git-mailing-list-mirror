@@ -1,176 +1,176 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82ECD27B353
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 19:18:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC731DDC37
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 19:26:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761679088; cv=none; b=ZkLdxhjkdKRxt7Fb6PPJ3K+ts9xByp5p+gdbRKaVIbJ8RmasINhgwGptTodVimRMCi70jhIw0uiNYnAX0N0DDeapvG3pGl1/rAPj/1MF8GMP5zI0UmGjB4eOao2O1kmmNMMD2/rsooTQ6wkTIk/lt8m+FdMi+3TR5y9wVLk2XCY=
+	t=1761679584; cv=none; b=QFa9/6hCcRZrnZzuLjsa+564eXu/qmImb52h6IP9dt34gE136YCI09Qtd5/FePwlV7Ohrb4EuH3TdGJECCMnF2lDjDx8jzb3BEoYkNYInMyvdOINJoEYWW7cy8FVfpM3k/Hm67z7nYul7LS27Cggwt8EfTNO7/dGsnBzsA9n0rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761679088; c=relaxed/simple;
-	bh=h5cNR0xY2fUX8URzeEKX0a/F/ftLWhp/QsSzOPW+kO4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pvqxabfLCKRdOsDbAPdvPv+lWsajpsKcOtExvVpAjoHHEvsPYgM7QhRhKuqoa/0qwo67F05+TqZ9ckrRDWJc6kjWTARoym6V1DY+c8Bty6yD+XddE8710Leilue1uXF01Ug0oP24j/hqpsmV/iOFdEZ8IBaeugj3AzdF9aQDt1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JztMUZRv; arc=none smtp.client-ip=209.85.208.180
+	s=arc-20240116; t=1761679584; c=relaxed/simple;
+	bh=XIV8ArTOWORf0kG58IDeYXQyKA42fKcuf4iHd8iY3KM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mX5xjFoW2VoH14VLgSAfxlVaeo7EbQTjwTjlKZeerECruuCfHRiKb8fJVXuo2EJaJANkhI/i1hfiUCr/G1iyDKCO2n6w8XNnoyDvjmwJY8ZzuRiMcDbsWzNb3cWRWfg1v/tcZfYSTliQ9uSLQmHsirUIEcwrUoRf/vK3DpS6vTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iye1nZCq; arc=none smtp.client-ip=209.85.215.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JztMUZRv"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-378e8d10494so51842481fa.2
-        for <git@vger.kernel.org>; Tue, 28 Oct 2025 12:18:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iye1nZCq"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b5579235200so4489509a12.3
+        for <git@vger.kernel.org>; Tue, 28 Oct 2025 12:26:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761679085; x=1762283885; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=N6fpz2hOfVh6Z5Xcog4g2o46SI57vRRl/XqEqfi+l9k=;
-        b=JztMUZRv/DXOn1O+pROp0qlpNcN0ZAO3XkSw0O6rRRJDbn0AJSUsPEVreO8SmbjTpk
-         us0VOhU81OGhGgwJTMIhXvyuGybvENU4BbtigfGMOxtsm6j0IjWxwm74eurBhkj7KEnB
-         EOC7hpTf38+TEDyc+mrCH+vBI8uc5HegDCKAcl7KID9TODMfs/fCFyRoZg5DLNjwGEVN
-         Fn/F3nHTyZ6I0pdPgOZR56euxDkogp6cBHRxY9auiA+TkdFrogiDRDli5Sidcl3GeQFm
-         x6Twa6vamuNMhIZirNRrohaVSaWCVuEK4peg8nCo+pgZZVDf5Md+riMgfVsLfGC+Q2un
-         g+7w==
+        d=gmail.com; s=20230601; t=1761679582; x=1762284382; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oYzJnHAzRQAm4W3sd4d3PELiF+UePW6G26Ebi02UGDU=;
+        b=iye1nZCqv/HNjV1hLAcdaFvEkSfG5K3GfaAAcaLajM6veD+Fvo/QvoKz0F1ImWy+Be
+         qUTRNp7pwDuh2dQux1VPcygPYFfiUy56CQ8h8/Byh7g6O5PmNnmgxhguAdQHFEWP0bGD
+         Y7IlcioEyIeGprfFT4EoFJvHyQo6nJ+zpA/J37swmc5J1K2ajTU/CVLQFh3MJRZZ0byf
+         eFTCjAXJJcM5BqhKEpKmuzq0u8WvN9v95KlcdqCg56nS3jpfVAzTacHWe5zf4EMp+T0f
+         rds/3Ysd6I0aSRSLYVA4P5trNRhr8cRDYZLjb3bkl/9qmwkokDXYBGCnGMoc0W+PxF91
+         uNRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761679085; x=1762283885;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=N6fpz2hOfVh6Z5Xcog4g2o46SI57vRRl/XqEqfi+l9k=;
-        b=vMei30wLWLn/JWX6urIhiQAmKBDgoXsYDaFu1Ll/68tsbhlhh+IpPT5KpdN+OmLL4P
-         QvPkL2IZGTgK3xs4I/zYBQzufR9LWy0ul/MeBrYcB13xchZ/xdzbSXVkivcr2yuRboZA
-         fVWzVJMLFnSXsoXiSpW7pL7WdFy6Rxn6CMFfhD/L8hBsxp/dmzBqD7XH2g93BNFcPjrf
-         LPr4F8q2eS102tChci57uciZKAgWzHTX0L6YTfF89PkfpTwrU6fAyS734V9XckUc1ABp
-         /LqV7bUpMPcFtpCAFZCHBJLLMqgOYlbKQRnEd99XOlMvcA2axNgR/dqRorIr4caVtX+F
-         G6jA==
-X-Gm-Message-State: AOJu0Yz7bkv4NjtEzO40YXQkI7z7HRsoN6uonrZela1dBo1CwbzB0XmP
-	2u8h1e43kk4OnfYyC4uVXXya3mX8TeDpxCjoCm2LofQs76knMyjF7bOx3oO75GqYv1Xc3AMolIU
-	MLJVkDju2TnQSC19Yqu3cNo/CCgRIRQDiyQ==
-X-Gm-Gg: ASbGncvSeqDIKDoN2mWPsPBlEUsTZPXJywAzZ6WdQzR6UiZNWV47n2gRYShG/PTCRJx
-	OkqyOeaRKG9tH9tCTCRUcS4klLRvkNcN1G29dNvjsvEuu0IScT49v432zweht2v22CA9jvwGUAa
-	wYPVNxkxXfw5Vxt0vZ7V3Ml8lJnvF2tEPC+sLEKNPT/Iw+k3WLLmeddYostiDKZ4ehzTlBIHk+q
-	wBhZozA6+AHbcsyr6zwILACzsnQMjhODu3iZnYZ9I8m9vhlgeti3ei8W4TF9A==
-X-Google-Smtp-Source: AGHT+IHjYeJUuePM5ySSS4sWGjdyUB/W63swzaJM/CRra9F07M22SUSNmHb4lU+oTazshUDhOFzbGAmNSFDm4OJujXc=
-X-Received: by 2002:a05:651c:b2b:b0:336:b941:4ab1 with SMTP id
- 38308e7fff4ca-37a023c4069mr2115361fa.17.1761679084439; Tue, 28 Oct 2025
- 12:18:04 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1761679582; x=1762284382;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oYzJnHAzRQAm4W3sd4d3PELiF+UePW6G26Ebi02UGDU=;
+        b=ERNMxK9U9Ko/LZbut4XkEtavVjLWV/qQCScoLAYR5VrZXO16bHNsD0dDL0mS15pvE9
+         01uB5AsCu2bflMchU3qagmWpbpKXF2VqYqe20a+oiOvdSnZ2kVEAF7dEx7V9VeMjrD66
+         JFJHNRyodl4lsKSk+vHl2BIj3PjoyQ6IMg4MSCLeNyqCw4pFkv3+ocr2bjUkY8TJVnZy
+         CsK60QhytIH0hh/Yy94dDpy8tXKUTGYpAsR0XrKM0NM7rIvY/PNMGhnkqOjGw2Za9dia
+         OIptodu7v7XtsS7quCGOX4+cpSk5k0Wu2NWxgsl4CmfDSHG/oDV+jpsyp3FlX+xx+ZJW
+         HAdg==
+X-Gm-Message-State: AOJu0Ywu3tmKGa4CExY+oE8u49Es6LGtyAlxqMKZvCUVFiWyR64ytrJG
+	FdKSSJqDZW3JCS1DNNWgl2HDlXkACZx+gi7j/s/4wv/Zeyrc8Veo8reo
+X-Gm-Gg: ASbGncsTiT6qVIecMWc4wJCmObchvT/IzlwA32QarLCW4WDuva+bc0CW82xhAAaSfoU
+	+Hkog+qwW8SmXpvvji2JoFxt6WGME1dQfzICm/oNR7/t0yJBNdT2/j5F6GwxryXwFt5TlTA7ONr
+	rMDTgRYKqdjfR6/vwHpx9rJHmKydvsIX7HvXoUXXXKCUuUH2jxhHHrbeqdcOD9FEioiwsp3CN7j
+	1IO7HZWD9HsZa6mWqtUVaT7B8UsnphiVScUgkFwZ9FmCQsDmCGouvHsTfwSHzDeos6s3/Tkk1Ub
+	+MnTvxUHmMru3fgbEb3JU7OSjp2oTKwNqEcjotlwd2xiAVo878+bUtsooYz3lVdElZrzSL/o5wI
+	64fLrGVdW60ZJ9BGazBbSbKCmcFpfW/50o+WTlaXteBUR3dfJ1lwxQPeGrRkMpBRc1Y33reuMYn
+	DJf7ARQhU3mID+TzM24nHNvtIQmEoIAhHzJyZkAItT1nokBYLwGXArgDc/myUZOemdt9HJgOCuH
+	3wPNHa7S0oPDltzqwS/sWjhX0JYfR7i3XfOOY6bY9qJmcin0XFuONFlTDGV1u2lx7Tg6VroCg==
+X-Google-Smtp-Source: AGHT+IGW40XRQAJ29VJvYgqJ8oVEjviNvM/SpvcQmccD9zLUa9mv+BQ9ivxUMebPhxKmJUvJ8uqQKA==
+X-Received: by 2002:a17:902:f682:b0:294:df75:4251 with SMTP id d9443c01a7336-294df7543dbmr1143315ad.31.1761679582424;
+        Tue, 28 Oct 2025 12:26:22 -0700 (PDT)
+Received: from ?IPV6:2409:40e3:177:42ef:798a:642a:892e:b13? ([2409:40e3:177:42ef:798a:642a:892e:b13])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498cf3433sm124578905ad.21.2025.10.28.12.26.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Oct 2025 12:26:22 -0700 (PDT)
+Message-ID: <3dc2325a-9551-41a4-a747-c9c2c4aeca94@gmail.com>
+Date: Wed, 29 Oct 2025 00:56:16 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251024-b4-pks-rust-cbindgen-v2-0-4b4bd4f18490@pks.im> <20251024-b4-pks-rust-cbindgen-v2-3-4b4bd4f18490@pks.im>
-In-Reply-To: <20251024-b4-pks-rust-cbindgen-v2-3-4b4bd4f18490@pks.im>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Tue, 28 Oct 2025 13:17:53 -0600
-X-Gm-Features: AWmQ_bmHFzwNGb2J3H1nafTXSHBSVK6QAkL3gwpmOghgc3br7ks_RBLMC0Ln920
-Message-ID: <CAH=ZcbB3J2Jt5Najc8p3z1iaig_Q0S_t5hGWRN-4fNRVGggARQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] ci: use Debian instead of deprecated i386/ubuntu
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/3] replay: add replay.refAction config option
+Content-Language: en-GB
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, phillip.wood123@gmail.com,
+ phillip.wood@dunelm.org.uk, newren@gmail.com, gitster@pobox.com, ps@pks.im,
+ karthik.188@gmail.com, code@khaugsbakk.name, rybak.a.v@gmail.com,
+ jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com,
+ johannes.schindelin@gmx.de
+References: <20251013183311.33329-1-siddharthasthana31@gmail.com>
+ <20251022185045.29256-1-siddharthasthana31@gmail.com>
+ <20251022185045.29256-4-siddharthasthana31@gmail.com>
+ <CAP8UFD3Bz+Yn4qtCrFoKcE=u-dAtK0cXON1nFMRL8n9wBSS8pg@mail.gmail.com>
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <CAP8UFD3Bz+Yn4qtCrFoKcE=u-dAtK0cXON1nFMRL8n9wBSS8pg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 24, 2025 at 3:51=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> Ubuntu has ended support for 32 bit platforms and is not maintaining any
-> release anymore that has 32 bit support. But we still use i386/ubuntu in
-> our CI pipeline to test for compatibility with 32 bit systems, even
-> though that specific image does not receive updates anymore.
->
-> Besides being end-of-life, this image also doesn't have all packages
-> available to it anymore. This creates problems with a subsequent patch,
-> where we're about to pull in cbindgen for generating Rust to C bindings.
->
-> Drop the Ubuntu image and use Debian instead, which continues to
-> maintain its 32 bit port.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  .github/workflows/main.yml | 3 +--
->  .gitlab-ci.yml             | 2 +-
->  ci/install-dependencies.sh | 6 +++---
->  ci/lib.sh                  | 2 +-
->  4 files changed, 6 insertions(+), 7 deletions(-)
->
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index cc54824c388..0b16970cd7e 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -395,9 +395,8 @@ jobs:
->            cc: gcc
->          - jobname: linux-musl-meson
->            image: alpine:latest
-> -        # Supported until 2025-04-02.
->          - jobname: linux32
-> -          image: i386/ubuntu:focal
-> +          image: i386/debian:latest
->          # A RHEL 8 compatible distro.  Supported until 2029-05-31.
->          - jobname: almalinux-8
->            image: almalinux:8
-> diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-> index f61ec2b6989..31d5e5a3e0d 100644
-> --- a/.gitlab-ci.yml
-> +++ b/.gitlab-ci.yml
-> @@ -66,7 +66,7 @@ test:linux:
->        - jobname: linux-musl-meson
->          image: alpine:latest
->        - jobname: linux32
-> -        image: i386/ubuntu:20.04
-> +        image: i386/debian:latest
->        # A RHEL 8 compatible distro.  Supported until 2029-05-31.
->        - jobname: almalinux-8
->          image: almalinux:8
-> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> index 50628ee2dd6..b7b3cf35edf 100755
-> --- a/ci/install-dependencies.sh
-> +++ b/ci/install-dependencies.sh
-> @@ -39,7 +39,7 @@ fedora-*|almalinux-*)
->         dnf -yq update >/dev/null &&
->         dnf -yq install shadow-utils sudo make pkg-config gcc findutils d=
-iffutils perl python3 gawk gettext zlib-devel expat-devel openssl-devel cur=
-l-devel pcre2-devel $MESON_DEPS cargo >/dev/null
->         ;;
-> -ubuntu-*|i386/ubuntu-*|debian-*)
-> +ubuntu-*|i386/debian-*|debian-*)
->         # Required so that apt doesn't wait for user input on certain pac=
-kages.
->         export DEBIAN_FRONTEND=3Dnoninteractive
->
-> @@ -48,9 +48,9 @@ ubuntu-*|i386/ubuntu-*|debian-*)
->                 SVN=3D'libsvn-perl subversion'
->                 LANGUAGES=3D'language-pack-is'
->                 ;;
-> -       i386/ubuntu-*)
-> +       i386/debian-*)
->                 SVN=3D
-> -               LANGUAGES=3D'language-pack-is'
-> +               LANGUAGES=3D'locales-all'
->                 ;;
->         *)
->                 SVN=3D'libsvn-perl subversion'
-> diff --git a/ci/lib.sh b/ci/lib.sh
-> index a5c4eb40bea..fdfde612339 100755
-> --- a/ci/lib.sh
-> +++ b/ci/lib.sh
-> @@ -250,7 +250,7 @@ then
->                 CI_OS_NAME=3Dosx
->                 JOBS=3D$(nproc)
->                 ;;
-> -       *,almalinux:*|*,alpine:*|*,debian:*|*,fedora:*|*,ubuntu:*|*,i386/=
-ubuntu:*)
-> +       *,almalinux:*|*,alpine:*|*,debian:*|*,fedora:*|*,ubuntu:*|*,i386/=
-debian:*)
->                 CI_OS_NAME=3Dlinux
->                 JOBS=3D$(nproc)
->                 ;;
->
-> --
-> 2.51.1.930.gacf6e81ea2.dirty
->
 
-Makes sense to me, but I wonder if we should test with other 32 bit
-linux distros. This isn't a critique or a suggestion, I'm just
-wondering out loud.
+On 24/10/25 16:31, Christian Couder wrote:
+> On Wed, Oct 22, 2025 at 8:51 PM Siddharth Asthana
+> <siddharthasthana31@gmail.com> wrote:
+>
+>> @@ -367,7 +368,20 @@ int cmd_replay(int argc,
+>>          die_for_incompatible_opt2(!!advance_name_opt, "--advance",
+>>                                    contained, "--contained");
+>>
+>> -       /* Default to update mode if not specified */
+>> +       /* Set default mode from config if not specified on command line */
+>> +       if (!ref_action_str) {
+>> +               const char *config_value = NULL;
+>> +               if (!repo_config_get_string_tmp(repo, "replay.refAction", &config_value)) {
+>> +                       if (!strcmp(config_value, "update"))
+>> +                               ref_action_str = "update";
+>> +                       else if (!strcmp(config_value, "print"))
+>> +                               ref_action_str = "print";
+>> +                       else
+>> +                               die(_("invalid value for replay.refAction: '%s'"), config_value);
+>> +               }
+>> +       }
+>> +
+>> +       /* Default to update mode if still not set */
+>>          if (!ref_action_str)
+>>                  ref_action_str = "update";
+
+
+Hi Christian,
+Thanks for the config parsing improvements!
+
+
+> It seems to me that a dedicated function could handle this a bit
+> better. Maybe something like:
+
+
+Excellent suggestion! I will extract `parse_ref_action_mode()` and 
+`get_ref_action_mode()`
+helpers to centralize the string-to-enum conversion and config 
+precedence logic, Much
+cleaner than the current inline approach.
+
+
+>
+> static enum ref_action_mode get_ref_action_mode(const char *ref_action_str)
+> {
+>       const char *config_value = NULL;
+>
+>       if (!strcmp(ref_action_str, "update"))
+>               return REF_ACTION_UPDATE;
+>        if (!strcmp(ref_action_str, "print"))
+>              return REF_ACTION_PRINT;
+>        if (ref_action_str)
+>              die(_("unknown --ref-action mode '%s'"), ref_action_str);
+>
+>        if (repo_config_get_string_tmp(repo, "replay.refAction", &config_value))
+>               return REF_ACTION_UPDATE; /* default */
+>
+>        if (!strcmp(config_value, "update"))
+>               return REF_ACTION_UPDATE;
+>        if (!strcmp(config_value, "print"))
+>              return REF_ACTION_PRINT;
+>        die(_("invalid value for replay.refAction: '%s'"), config_value);
+> }
+>
+> [...]
+>
+>> +test_expect_success 'replay.refAction config option' '
+>> +       # Store original state
+>> +       START=$(git rev-parse topic2) &&
+>> +       test_when_finished "git branch -f topic2 $START && git config --unset replay.refAction" &&
+>> +
+>> +       # Set config to print
+>> +       git config replay.refAction print &&
+>> +       git replay --onto main topic1..topic2 >output &&
+>> +       test_line_count = 1 output &&
+>> +       grep "^update refs/heads/topic2 " output &&
+> Nit: here and below, it's a bit better to use test_grep instead of
+> grep for better error reporting.
+
+
+Will switch to `test_grep` throughout for better error reporting.
+
+Thanks,
+Siddharth
+
+
+>
+> Thanks.
