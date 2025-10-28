@@ -1,90 +1,87 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FC932E690
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 13:43:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6EA24DFF9
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 15:22:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761659011; cv=none; b=H6toOiwFczsoB7Xbh0AdjwqdNGUnJtzN9Ra5OCyj/5qJi0TPYkDDT594u/GLOM17PX4HcU8O1bltjScxzBOSa59Yd0f3ZD38rcUlNrOZ/2wSlWbWvuJHH5wcBLLMLZcpQ8iPIgPha6TvXJyCkGDJ/MJGxU1/BWqAiRRr7Ek9JSw=
+	t=1761664970; cv=none; b=TL91M8DkLW1MZdj3mcHr9VjAVzZuhUwgDAoQY96q28gJtLgR/o7ukhI79XtMqkTSDUUQPE7FzA68kgHY7W/WpH2Ya05D6ExjIMyfMLnsc2uD983NJ5oxvV5LE6xqB0fBWm334PRU+OY0/Atg/WzHQhnno1Np1LZ0F4Jj7TJCQ6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761659011; c=relaxed/simple;
-	bh=sHE7SgO3w0MwA2lukzICH5vABqP/9S/bkMsQltUxhiw=;
+	s=arc-20240116; t=1761664970; c=relaxed/simple;
+	bh=sqjFBGnnHEgVvswHeHhfErbztB4mJkPMG5XsN+JQiCU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LOX/Fa13CqMxgOcJuYcizElaaFUA8mEW+xywLu9fkIXPdyNdx84EvumnHqGaWcz1HMOfqDzYIeeyGLjUY3sMLQYirwrDzLw1ejQZuDl9YiR0/Yn8jRayqy39CHxgt823Unb84LKvar4IMOP7PfDrYoSiMi5BjCJq4QISwpuwzi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EnKQcdYs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C39F81HI; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=JXTS8m8qQekbL5dT3sHDvg86VrMLSb46acJ1yhVI3+vhte8JvnCkccbbrI3qiMZoOhKsJHcNzkgSj4yPooXU1cuZjbzyrwo3d9cLRp5n+FKf9wqep0ObT0Tp5vWkOvaphorbE49UfYh4On0zVPfg7T8HrFNaPYlcmCMnmkdJNSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ljl5/a49; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QDbRNduU; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EnKQcdYs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C39F81HI"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ljl5/a49";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QDbRNduU"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id B6A59EC04D9;
-	Tue, 28 Oct 2025 09:43:28 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 6E467EC0357;
+	Tue, 28 Oct 2025 11:22:46 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 28 Oct 2025 09:43:28 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 28 Oct 2025 11:22:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761659008; x=1761745408; bh=vkEEkRCnkk
-	DR4UtwlT6N1/p9CsTnQyAyHOH/StEwTAw=; b=EnKQcdYsBhtDhSv+uH2g06i3A4
-	CJ8EARfV87JKC6tRBh21Hiw/ro/862M//MwZsdn7VlAG81WmTDoTvEXIhaT7zI6u
-	Joq9UkW+nIs0aARZPYsyLSPUpUEwoixVIe17eW9/gur+S2WJIr0F91qhuMylJL9G
-	v1C73+2dFb+d5EaaPA5bnjHhFp3n1lzDTTF9/uM+JlooKvR8ryiKg77qHZnlsG8e
-	jtFMmqLk37d13K6DBHAViPsyMZsZ82rP9G6HF6zw2KOXY0MZZnTX4DU8vd60FI9f
-	5a+duaqowPo9CwXkbZRaBe7uCGIc8Vd7NGMz9ccS/MOPhdQM4KjufL89Nu1w==
+	:subject:to:to; s=fm2; t=1761664966; x=1761751366; bh=CyZe2/ZEXN
+	KyfSBk8qFWIvdpNL51z64W446zJuV+h2Q=; b=Ljl5/a49e1b1VkJbybkWznmzHL
+	3g4N+JLcEq1rvxp3RVwVOw9by3tLJ+08RdwRMaa/b47srPxG0OY2lBfIIdkIZyrk
+	T1IEAmebBEAmWxJve8VQier75NQen9viOP3+p2XBsEXFuNK1ScNwzxlywYE6H8+C
+	zUtBp6EMHUzt8PkUO/OsXkvlEVHNJUj18clB9Gw0zry88jaQaczAG78uhwxjvYi+
+	OrBzyYBYvT9oeISqRMkuVMbV4nwmYEDg92/fDoWIS7M/eREghKTg+3v2vHi2nA5r
+	9oKc3MuemAcL+fmXrjzUIkXB3lj6TL5OeYEElgtc4STR6P1vRQi+vktq8VAw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761659008; x=1761745408; bh=vkEEkRCnkkDR4UtwlT6N1/p9CsTnQyAyHOH
-	/StEwTAw=; b=C39F81HIrxEuYObwW4DYVIwmbk2kcWis7FsAeH/BWIppzol4BKi
-	njt33BoipuHCng0ZdCOUhX+AxEy4LG2lPWEpzOSPc2DoBhVpkD7Z3pB/2iHLqSaZ
-	qubba/QLu3SLNoslOcVTNi7SvDFluVTqns5n44km+F160cFIpCC61lokTzkP9kKb
-	jDkeUQ2nhC6HEo+sx2bHF860Sgk6gJMU9WMVui9gUB6rL3CCWXTXsjKOt3EAEqwx
-	l6qslEqCMqQyHIhpngw7E8kw95bgvwvEnsW2EvugQptXURcpUJukHSE34G6rRDtB
-	cZcFPXvBSxcvc/sNhWKG4eVNFF6bggYypvQ==
-X-ME-Sender: <xms:f8gAaSgry8Smz9g5XB4IZXoiH4_UJmKtqjSV7i5qFMgwIK7-vH12JQ>
-    <xme:f8gAaVkw2_6UZgyn7GpNpK1D5SQ4-7_-42jQxQzyH90EmbPdt9j43ZBX5WuZqAsBz
-    -4VZeDK5eJ1YDZtbAAFTCOk7PGnUlJMkJ-wDc9oXm2kCK6sSFu0>
-X-ME-Received: <xmr:f8gAadtg7bf9xN50834Aa0gt1EoHhs3OxxVYkB5mC7xsxB5qP_BS08F05MC_Al63b6SRYhel6fjCxYDy-CLJsvjQIVS8u6GIgvUs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduiedutddtucetufdoteggodetrf
+	1761664966; x=1761751366; bh=CyZe2/ZEXNKyfSBk8qFWIvdpNL51z64W446
+	zJuV+h2Q=; b=QDbRNduUS0/eUPvF5KHhUPCAbB/1tvXcn1BkIp6oXoZydJxV26l
+	lTwroLX6tRIUlA3woKJSx2QgiH+GBv+QytqgzIeqxQNvJm41nZSBGY6oMLaV50Uj
+	w/EaWvc8CzUM7mDzUP4DK6VTckI2wzgKi5d5nZ72pEFAanD/wm3serrs9ffHTZc0
+	YcdlBSUlC8ZZ/cB15GFL+I8csjiSjYdFUm3aTIssQqdISFIJmQbJMUlM75QSzwhl
+	++hFyETrsBcNiE12afYYcuhk4o3RA0PMz8IE/JzfMA+xB4tmBQhZi1Ip5FvXOQcB
+	py16Y+aYBguBPLPcF/S7WSeoJhj8Bzsn/LQ==
+X-ME-Sender: <xms:xt8AaRLVLRZe7F5eQDBs6d53cwZc4O4KGUO9SL0-XmXpTHXH_yJ1-A>
+    <xme:xt8AaQ0m-54-cW33WaXQu54eICuLrWGIxRg74t7HJQJlWisoTt8RRnqZq3-P-iWXK
+    peh_UUXB8HofNU_ZhajocrAAKpZ9PgMW30isw3VXsuJNdSHTQ23>
+X-ME-Received: <xmr:xt8AaTg83veOWTiWl8cdOzeEAB0aKMb863WJS-69Lnqt6AEckI6dd0dQlQBvxzlIu3sr2ObFYUvkdi5SN1k5LSlQJgtlq7EnYdYu>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieduvddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsrghn
-    uggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehjoh
-    hhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopegthhhr
-    ihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:gMgAaba0h9Z77nLO1kIslwyhkxP7pR7wzgCumUcGUTxM4zlMrVtVNw>
-    <xmx:gMgAaVClazGSTspbd5uyuAejm2n8skkOna9CKRReWvSfHwErq65SaQ>
-    <xmx:gMgAaT_5vJgLCzi1cN4bLp4ISow6ilc0FmT-iGs1LTrqoTd61SynDA>
-    <xmx:gMgAaRS2fwE6buDOVLeWzLMzRxzZ6SBtRV-1BqKpYDrDqJqq32p6Kg>
-    <xmx:gMgAadMh6_R9KAHA9kXGedJmxxX4rbdGIFLt3YV_WdBStJKoUdEYcsWD>
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdp
+    rhgtphhtthhopegrnhhtohhnihhnseguvghlphgvuhgthhdrvghupdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:xt8AaZVjRytod5YByjoy2bYsagE8Xqxju7XiHlvieFsskUBrfWS-zA>
+    <xmx:xt8AaaUTr_pLy0GFRkrkq1NlBKYPkg9VnzU9jVkdvuWlmuV2QsMR5w>
+    <xmx:xt8AaRi6fcn4G6dcuoDOLA4Mbs3ZMqMOWaH2tsic61ltswXWxzjRFA>
+    <xmx:xt8AadZC4isdEQZ43-c60-73nQrPulq2wRV2yCQJcMNczA_0NaK_Gw>
+    <xmx:xt8AaQWR0dU-KApuW4X6FQ9EjkpfjABa4HLP_Xv2JkEit68JbAcAfNyX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Oct 2025 09:43:27 -0400 (EDT)
+ 28 Oct 2025 11:22:45 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
- <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/5] fast-export: mark strings for translation
-In-Reply-To: <20251028081232.3068147-4-christian.couder@gmail.com> (Christian
-	Couder's message of "Tue, 28 Oct 2025 09:12:30 +0100")
-References: <20251028081232.3068147-1-christian.couder@gmail.com>
-	<20251028081232.3068147-4-christian.couder@gmail.com>
-Date: Tue, 28 Oct 2025 06:43:26 -0700
-Message-ID: <xmqqv7jzdtvl.fsf@gitster.g>
+To: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Antonin Delpeuch <antonin@delpeuch.eu>
+Subject: Re: [PATCH v2] blame: make diff algorithm configurable
+In-Reply-To: <pull.2075.v2.git.git.1761658643278.gitgitgadget@gmail.com>
+	(Antonin Delpeuch via GitGitGadget's message of "Tue, 28 Oct 2025
+	13:37:23 +0000")
+References: <pull.2075.git.git.1760972162827.gitgitgadget@gmail.com>
+	<pull.2075.v2.git.git.1761658643278.gitgitgadget@gmail.com>
+Date: Tue, 28 Oct 2025 08:22:44 -0700
+Message-ID: <xmqqjz0fdpa3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,296 +91,148 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+"Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Some error or warning messages in "builtin/fast-export.c" are marked
-> for translation, but many are not.
+> From: Antonin Delpeuch <antonin@delpeuch.eu>
 >
-> To be more consistent and provide a better experience to people using a
-> translated version, let's mark all the remaining error or warning
-> messages for translation.
+> The diff algorithm used in 'git-blame(1)' is set to 'myers',
+> without the possibility to change it aside from the `--minimal` option.
 
-Makes sense.  Should we also downcase some Unknown and Unexpected?
+Hmph.  It is very unfortunate that we had --minimal already.  We
+should have done --diff-algorithm=<which> instead, but that is way
+too late.
 
-> While at it, improve how some arguments to some error functions are
-> indented.
-
-OK.
-
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  builtin/fast-export.c | 77 ++++++++++++++++++++++---------------------
->  1 file changed, 39 insertions(+), 38 deletions(-)
+> There has been long-standing interest in changing the default diff
+> algorithm to "histogram", and Git 3.0 was floated as a possible occasion
+> for taking some steps towards that:
 >
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index dc2486f9a8..cb532f6325 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -65,7 +65,7 @@ static int parse_opt_sign_mode(const struct option *opt,
->  		return 0;
->  
->  	if (parse_sign_mode(arg, val))
-> -		return error("Unknown %s mode: %s", opt->long_name, arg);
-> +		return error(_("Unknown %s mode: %s"), opt->long_name, arg);
->  
->  	return 0;
->  }
-> @@ -82,7 +82,7 @@ static int parse_opt_tag_of_filtered_mode(const struct option *opt,
->  	else if (!strcmp(arg, "rewrite"))
->  		*val = REWRITE;
->  	else
-> -		return error("Unknown tag-of-filtered mode: %s", arg);
-> +		return error(_("Unknown tag-of-filtered mode: %s"), arg);
->  	return 0;
->  }
->  
-> @@ -107,7 +107,7 @@ static int parse_opt_reencode_mode(const struct option *opt,
->  		if (!strcasecmp(arg, "abort"))
->  			*val = REENCODE_ABORT;
->  		else
-> -			return error("Unknown reencoding mode: %s", arg);
-> +			return error(_("Unknown reencoding mode: %s"), arg);
->  	}
->  
->  	return 0;
-> @@ -318,16 +318,16 @@ static void export_blob(const struct object_id *oid)
->  	} else {
->  		buf = odb_read_object(the_repository->objects, oid, &type, &size);
->  		if (!buf)
-> -			die("could not read blob %s", oid_to_hex(oid));
-> +			die(_("could not read blob %s"), oid_to_hex(oid));
->  		if (check_object_signature(the_repository, oid, buf, size,
->  					   type) < 0)
-> -			die("oid mismatch in blob %s", oid_to_hex(oid));
-> +			die(_("oid mismatch in blob %s"), oid_to_hex(oid));
->  		object = parse_object_buffer(the_repository, oid, type,
->  					     size, buf, &eaten);
->  	}
->  
->  	if (!object)
-> -		die("Could not read blob %s", oid_to_hex(oid));
-> +		die(_("Could not read blob %s"), oid_to_hex(oid));
->  
->  	mark_next_object(object);
->  
-> @@ -336,7 +336,7 @@ static void export_blob(const struct object_id *oid)
->  		printf("original-oid %s\n", oid_to_hex(oid));
->  	printf("data %"PRIuMAX"\n", (uintmax_t)size);
->  	if (size && fwrite(buf, size, 1, stdout) != 1)
-> -		die_errno("could not write blob '%s'", oid_to_hex(oid));
-> +		die_errno(_("could not write blob '%s'"), oid_to_hex(oid));
->  	printf("\n");
->  
->  	show_progress();
-> @@ -499,10 +499,10 @@ static void show_filemodify(struct diff_queue_struct *q,
->  			break;
->  
->  		default:
-> -			die("Unexpected comparison status '%c' for %s, %s",
-> -				q->queue[i]->status,
-> -				ospec->path ? ospec->path : "none",
-> -				spec->path ? spec->path : "none");
-> +			die(_("Unexpected comparison status '%c' for %s, %s"),
-> +			    q->queue[i]->status,
-> +			    ospec->path ? ospec->path : _("none"),
-> +			    spec->path ? spec->path : _("none"));
->  		}
->  	}
->  }
-> @@ -699,14 +699,14 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
->  
->  	author = strstr(commit_buffer_cursor, "\nauthor ");
->  	if (!author)
-> -		die("could not find author in commit %s",
-> +		die(_("could not find author in commit %s"),
->  		    oid_to_hex(&commit->object.oid));
->  	author++;
->  	commit_buffer_cursor = author_end = strchrnul(author, '\n');
->  
->  	committer = strstr(commit_buffer_cursor, "\ncommitter ");
->  	if (!committer)
-> -		die("could not find committer in commit %s",
-> +		die(_("could not find committer in commit %s"),
->  		    oid_to_hex(&commit->object.oid));
->  	committer++;
->  	commit_buffer_cursor = committer_end = strchrnul(committer, '\n');
-> @@ -781,8 +781,8 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
->  		case REENCODE_NO:
->  			break;
->  		case REENCODE_ABORT:
-> -			die("Encountered commit-specific encoding %.*s in commit "
-> -			    "%s; use --reencode=[yes|no] to handle it",
-> +			die(_("Encountered commit-specific encoding %.*s in commit "
-> +			      "%s; use --reencode=[yes|no] to handle it"),
->  			    (int)encoding_len, encoding,
->  			    oid_to_hex(&commit->object.oid));
->  		}
-> @@ -798,11 +798,11 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
->  	if (signatures.nr) {
->  		switch (signed_commit_mode) {
->  		case SIGN_ABORT:
-> -			die("encountered signed commit %s; use "
-> -			    "--signed-commits=<mode> to handle it",
-> +			die(_("encountered signed commit %s; use "
-> +			      "--signed-commits=<mode> to handle it"),
->  			    oid_to_hex(&commit->object.oid));
->  		case SIGN_WARN_VERBATIM:
-> -			warning("exporting %"PRIuMAX" signature(s) for commit %s",
-> +			warning(_("exporting %"PRIuMAX" signature(s) for commit %s"),
->  				(uintmax_t)signatures.nr, oid_to_hex(&commit->object.oid));
->  			/* fallthru */
->  		case SIGN_VERBATIM:
-> @@ -812,7 +812,7 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
->  			}
->  			break;
->  		case SIGN_WARN_STRIP:
-> -			warning("stripping signature(s) from commit %s",
-> +			warning(_("stripping signature(s) from commit %s"),
->  				oid_to_hex(&commit->object.oid));
->  			/* fallthru */
->  		case SIGN_STRIP:
-> @@ -890,7 +890,8 @@ static void handle_tag(const char *name, struct tag *tag)
->  		tagged = ((struct tag *)tagged)->tagged;
->  	}
->  	if (tagged->type == OBJ_TREE) {
-> -		warning("Omitting tag %s,\nsince tags of trees (or tags of tags of trees, etc.) are not supported.",
-> +		warning(_("Omitting tag %s,\nsince tags of trees (or tags "
-> +			  "of tags of trees, etc.) are not supported."),
->  			oid_to_hex(&tag->object.oid));
->  		return;
->  	}
-> @@ -898,7 +899,7 @@ static void handle_tag(const char *name, struct tag *tag)
->  	buf = odb_read_object(the_repository->objects, &tag->object.oid,
->  			      &type, &size);
->  	if (!buf)
-> -		die("could not read tag %s", oid_to_hex(&tag->object.oid));
-> +		die(_("could not read tag %s"), oid_to_hex(&tag->object.oid));
->  	message = memmem(buf, size, "\n\n", 2);
->  	if (message) {
->  		message += 2;
-> @@ -936,17 +937,17 @@ static void handle_tag(const char *name, struct tag *tag)
->  		if (signature)
->  			switch (signed_tag_mode) {
->  			case SIGN_ABORT:
-> -				die("encountered signed tag %s; use "
-> -				    "--signed-tags=<mode> to handle it",
-> +				die(_("encountered signed tag %s; use "
-> +				      "--signed-tags=<mode> to handle it"),
->  				    oid_to_hex(&tag->object.oid));
->  			case SIGN_WARN_VERBATIM:
-> -				warning("exporting signed tag %s",
-> +				warning(_("exporting signed tag %s"),
->  					oid_to_hex(&tag->object.oid));
->  				/* fallthru */
->  			case SIGN_VERBATIM:
->  				break;
->  			case SIGN_WARN_STRIP:
-> -				warning("stripping signature from tag %s",
-> +				warning(_("stripping signature from tag %s"),
->  					oid_to_hex(&tag->object.oid));
->  				/* fallthru */
->  			case SIGN_STRIP:
-> @@ -961,8 +962,8 @@ static void handle_tag(const char *name, struct tag *tag)
->  	if (!tagged_mark) {
->  		switch (tag_of_filtered_mode) {
->  		case TAG_FILTERING_ABORT:
-> -			die("tag %s tags unexported object; use "
-> -			    "--tag-of-filtered-object=<mode> to handle it",
-> +			die(_("tag %s tags unexported object; use "
-> +			      "--tag-of-filtered-object=<mode> to handle it"),
->  			    oid_to_hex(&tag->object.oid));
->  		case DROP:
->  			/* Ignore this tag altogether */
-> @@ -1026,7 +1027,7 @@ static struct commit *get_commit(struct rev_cmdline_entry *e, const char *full_n
->  			tag = (struct tag *)tag->tagged;
->  		}
->  		if (!tag)
-> -			die("Tag %s points nowhere?", e->name);
-> +			die(_("Tag %s points nowhere?"), e->name);
->  		return (struct commit *)tag;
->  	}
->  	default:
-> @@ -1064,7 +1065,7 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
->  
->  		commit = get_commit(e, full_name);
->  		if (!commit) {
-> -			warning("%s: Unexpected object of type %s, skipping.",
-> +			warning(_("%s: Unexpected object of type %s, skipping."),
->  				e->name,
->  				type_name(e->item->type));
->  			free(full_name);
-> @@ -1079,7 +1080,7 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
->  			free(full_name);
->  			continue;
->  		default: /* OBJ_TAG (nested tags) is already handled */
-> -			warning("Tag points to object of unexpected type %s, skipping.",
-> +			warning(_("Tag points to object of unexpected type %s, skipping."),
->  				type_name(commit->object.type));
->  			free(full_name);
->  			continue;
-> @@ -1175,7 +1176,7 @@ static void export_marks(char *file)
->  
->  	f = fopen_for_writing(file);
->  	if (!f)
-> -		die_errno("Unable to open marks file %s for writing.", file);
-> +		die_errno(_("Unable to open marks file %s for writing."), file);
->  
->  	for (i = 0; i < idnums.size; i++) {
->  		if (deco->base && deco->base->type == 1) {
-> @@ -1192,7 +1193,7 @@ static void export_marks(char *file)
->  	e |= ferror(f);
->  	e |= fclose(f);
->  	if (e)
-> -		error("Unable to write marks file %s.", file);
-> +		error(_("Unable to write marks file %s."), file);
->  }
->  
->  static void import_marks(char *input_file, int check_exists)
-> @@ -1215,20 +1216,20 @@ static void import_marks(char *input_file, int check_exists)
->  
->  		line_end = strchr(line, '\n');
->  		if (line[0] != ':' || !line_end)
-> -			die("corrupt mark line: %s", line);
-> +			die(_("corrupt mark line: %s"), line);
->  		*line_end = '\0';
->  
->  		mark = strtoumax(line + 1, &mark_end, 10);
->  		if (!mark || mark_end == line + 1
->  			|| *mark_end != ' ' || get_oid_hex(mark_end + 1, &oid))
-> -			die("corrupt mark line: %s", line);
-> +			die(_("corrupt mark line: %s"), line);
->  
->  		if (last_idnum < mark)
->  			last_idnum = mark;
->  
->  		type = odb_read_object_info(the_repository->objects, &oid, NULL);
->  		if (type < 0)
-> -			die("object not found: %s", oid_to_hex(&oid));
-> +			die(_("object not found: %s"), oid_to_hex(&oid));
->  
->  		if (type != OBJ_COMMIT)
->  			/* only commits */
-> @@ -1236,12 +1237,12 @@ static void import_marks(char *input_file, int check_exists)
->  
->  		commit = lookup_commit(the_repository, &oid);
->  		if (!commit)
-> -			die("not a commit? can't happen: %s", oid_to_hex(&oid));
-> +			die(_("not a commit? can't happen: %s"), oid_to_hex(&oid));
->  
->  		object = &commit->object;
->  
->  		if (object->flags & SHOWN)
-> -			error("Object %s already has a mark", oid_to_hex(&oid));
-> +			error(_("Object %s already has a mark"), oid_to_hex(&oid));
->  
->  		mark_object(object, mark);
->  
-> @@ -1395,7 +1396,7 @@ int cmd_fast_export(int argc,
->  	get_tags_and_duplicates(&revs.cmdline);
->  
->  	if (prepare_revision_walk(&revs))
-> -		die("revision walk setup failed");
-> +		die(_("revision walk setup failed"));
->  
->  	revs.reverse = 1;
->  	revs.diffopt.format_callback = show_filemodify;
+> https://lore.kernel.org/git/xmqqed873vgn.fsf@gitster.g/
+
+Micronit.  I think the reference to 3.0 only about potentially
+breaking backward compatibility by making the family of diff-*
+plumbing commands ignore diff.algorithm configuration, and other
+usability changes like this one are fair game without having to wait
+for 3.0 boundary (the plumbing commands do ignore the configuration
+already, so there is nothing we have to wait 3.0 before doing).
+
+>     Changes since v1:
+>     
+>      * add tests
+>      * ignore --diff-algorithm when it is provided before --minimal
+
+Sensible.
+
+I presume the reverse is true, i.e. giving "--minimal" and then
+"--diff-algorithm=histogram" in this order would make "histogram"
+survive, in other words, the usual "last one wins" rule is applied?
+
+> +static int blame_diff_algorithm_minimal(const struct option *option,
+> +					const char *arg, int unset)
+> +{
+> +	int *opt = option->value;
+> +
+> +	BUG_ON_OPT_NEG(unset);
+> +	BUG_ON_OPT_ARG(arg);
+> +
+> +	*opt &= ~XDF_DIFF_ALGORITHM_MASK;
+> +	*opt |= XDF_NEED_MINIMAL;
+> +
+> +	return 0;
+> +}
+
+This and diff.c:diff_opt_diff_algorithm_no_arg(), which I think is
+the original from which this was copied from, look somewhat
+different, but this can afford to be simpler, as it does not have to
+parse "--histogram", "--patience", etc., as independent command line
+options.  OK.
+
+> +static int blame_diff_algorithm_callback(const struct option *option,
+> +					 const char *arg, int unset)
+> +{
+> +	int *opt = option->value;
+> +	long value = parse_algorithm_value(arg);
+> +
+> +	BUG_ON_OPT_NEG(unset);
+> +
+> +	if (value < 0)
+> +		return error(_("option diff-algorithm accepts \"myers\", "
+> +			       "\"minimal\", \"patience\" and \"histogram\""));
+> +
+> +	*opt &= ~(XDF_NEED_MINIMAL | XDF_DIFF_ALGORITHM_MASK);
+> +	*opt |= value;
+> +
+> +	return 0;
+> +}
+
+Quite straight-forward and sensible.
+
+>  static int is_a_rev(const char *name)
+>  {
+>  	struct object_id oid;
+> @@ -915,10 +960,17 @@ int cmd_blame(int argc,
+>  		OPT_BIT('s', NULL, &output_option, N_("suppress author name and timestamp (Default: off)"), OUTPUT_NO_AUTHOR),
+>  		OPT_BIT('e', "show-email", &output_option, N_("show author email instead of name (Default: off)"), OUTPUT_SHOW_EMAIL),
+>  		OPT_BIT('w', NULL, &xdl_opts, N_("ignore whitespace differences"), XDF_IGNORE_WHITESPACE),
+> +		OPT_CALLBACK_F(0, "diff-algorithm", &xdl_opts, N_("<algorithm>"),
+> +			       N_("choose a diff algorithm"),
+> +			       PARSE_OPT_NONEG, blame_diff_algorithm_callback),
+>  		OPT_STRING_LIST(0, "ignore-rev", &ignore_rev_list, N_("rev"), N_("ignore <rev> when blaming")),
+>  		OPT_STRING_LIST(0, "ignore-revs-file", &ignore_revs_file_list, N_("file"), N_("ignore revisions from <file>")),
+>  		OPT_BIT(0, "color-lines", &output_option, N_("color redundant metadata from previous line differently"), OUTPUT_COLOR_LINE),
+>  		OPT_BIT(0, "color-by-age", &output_option, N_("color lines by age"), OUTPUT_SHOW_AGE_WITH_COLOR),
+> +		OPT_CALLBACK_F(0, "minimal", &xdl_opts, NULL,
+> +			       N_("spend extra cycles to find better match"),
+> +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+> +			       blame_diff_algorithm_minimal),
+>  		OPT_BIT(0, "minimal", &xdl_opts, N_("spend extra cycles to find better match"), XDF_NEED_MINIMAL),
+
+This OPT_BIT() can stay here?  I thought parse_options_check() was
+capable of detecting duplicated long-form commands as programming
+error, but apparently it does not.  (#leftoverbits) We should look
+into teaching parse_options_check() to check duplicated option
+names.
+
+>  		OPT_STRING('S', NULL, &revs_file, N_("file"), N_("use revisions from <file> instead of calling git-rev-list")),
+>  		OPT_STRING(0, "contents", &contents_from, N_("file"), N_("use <file>'s contents as the final image")),
+> ...
+> +test_expect_success 'blame honors --minimal option' '
+> +	cat >expected <<-\EOF &&
+> +	Initial
+> +	Initial
+> +	Initial
+> +	Second
+> +	Second
+> +	Second
+> +	Second
+> +	Initial
+> +	Second
+> +	Second
+> +	Second
+> +	EOF
+> +
+> +	git blame file.txt --minimal | \
+> +		grep --only-matching -e Initial -e Second > actual &&
+> +	test_cmp expected actual
+> +'
+
+Do we need to test combination of configuration variables and
+command line options (to verify that options trump configuration),
+or two command line options (to verify that the last one wins)?
+
+When xdiff/ part of the system gets improved, the above expected
+patterns may have to change, these tests may fail.  Whoever updates
+the diff algorithm to cause such a failure has to tell between a
+genuine _bug_ in their update to diff implementation and the test
+expecting a suboptimal result based on the behaviour of the diff
+algorithm before their improvement.  And for that, they need to
+debug these tests.  But I suspect that these tests will probably be
+very difficult to debug, as it is almost impossible to see which
+line in the original each of these lines correspond to.
+
+I guess that's inevitable, and we'll cross that bridge when it
+becomes necessary.
+
+Thanks, will queue, but I do find the leftover --minimal bit
+disturbing.
+
+
