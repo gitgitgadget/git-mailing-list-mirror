@@ -1,55 +1,55 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6BD2F0C67
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 11:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F941301711
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 11:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761649727; cv=none; b=l/4ymgakUcx9UmNgb6qAkjXHCoTa68aJwJZOzMkjGYjbT/kzG9Zx7xSTji1JJZ6eiFyJdQvdxSNyia8iEJ88sAwUB6DORbqJcF4FIOHMCIXV5RQ6yo11Nezi3MiHhAiXghbCX3zKhi7lxJEA+WLvzQdxZVbBoCflvOPopoS2QFk=
+	t=1761649728; cv=none; b=MODqS/CLpa3De8/OPczhmt+xW8DuWGc0Ufi+uGZSxVzHPGXJqYNqYhfOQlt3hP3HILRHedGZVTOYgPz3RycXcf6qzNONuV4WdmA54IAOB7DmswNd5nyua6RMyV0SeCvG/rRsms0LFz438tVr874rkIb/B1RvKa69lJ7to11C5J8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761649727; c=relaxed/simple;
-	bh=xT4T2gbB7bP8OncISphtiFZ/HsyPQyb7tK6h1AcZvtk=;
+	s=arc-20240116; t=1761649728; c=relaxed/simple;
+	bh=23hNdW6YvJ8RYlDVAraKEy23nvNRlSJB9LYDBfh/uwE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lnrkGXPxqsjfkb1iTzCJJx8hQE5WIGmCTLz+1ksu4FyPH3YtEXo9uKVKT3Bbl4poejJJ1HlbpTlpxWhkb6VW8ECEbKd/Di1KnVr8iwXGTydhuEr1bCYWkJPz7LmWwMmpwTXNaoweu+ZQY/UXBnSgv9G7ELnSvFE5qPdP+E0vxy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EHXCtOul; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ARmmVW40; arc=none smtp.client-ip=103.168.172.157
+	 In-Reply-To:To:Cc; b=vAP61aRLZJWOW3VZ/ZhrWgS0IvGTPhVBJUPGC5/fQqXPOwqmwJeYf4hpxStFg29Ed3v+vXaVKiNGZH0ShIH+Lz8BnHyRx+8hqRpK6SSkqK6bCPes8p1qi7IRgD8WQz82O/yn/he5Vhu1U71xtgQqKPZX3P2mRdE8ws85lg5H7Kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UmNqhWmP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t6F3s/ps; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EHXCtOul";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ARmmVW40"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8E597140034D;
-	Tue, 28 Oct 2025 07:08:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UmNqhWmP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t6F3s/ps"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 957071400362;
+	Tue, 28 Oct 2025 07:08:45 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 28 Oct 2025 07:08:43 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 28 Oct 2025 07:08:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1761649723;
-	 x=1761736123; bh=c9Z/ODrIpzvlHZi+RBDndmKDwnhq54VJzhMqHq+a7JM=; b=
-	EHXCtOulsavxSFuxQubLwFWVBgrlzGm6xap+4bw3BTC9d/CK6uRQGP0Gu0fus863
-	SQtQHcL9xXHN+Ohlc3LMLGOkHhKPd6GlQrc7cv3VC8M2Uv6NXm7KW8lGwaK1Y4OQ
-	MKS9YP7NUhaQwMrWcUwBEo7f5gWa8z2uJMxYxrPMJfAaTjN9+g+6OJLJYj+RJvA2
-	bZWxWRwQbzlFEOpIpzi9wJskqD0tCUsDlpixyYQcvor1bCpzPwp2ECFyam6LFvqg
-	IhNgIu7ZWZqRUssY3Y2bF0KHxMS3j60y3lSGbYh6xWvRpQprKTWOjtzMPE2RMAwG
-	jbPsngj6K4nCOYeudUiFTw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1761649725;
+	 x=1761736125; bh=4hCTOGt5mSU9KSXt+TtFPsZLCcoeujiENFaxRXjZXKk=; b=
+	UmNqhWmPsViEKpbKd/nkFs+BHJnauHycSSKxfla5hhU/EhBofH0np6GZC9VJdTLI
+	m2hL19w6/Aczn2cRrf6ulL8oYQ9CJfxXECB2GBLSvzmek7rbBiD2JLHfCFDcNLVa
+	8Yvur65Httjw6DJHfklMWVZubXSI4V6DaKWsmB2K6r2NWZKvJFmQZgugPM0Ea2WD
+	6SkA+YTzvQBD7a4GWfrO87ku7DMYzJwbG0yhTZnTLyfOXPtm8Y4NCg0pe3dZbXQd
+	gTuMKfZMMk5Xc79UDBEo6cR39Vyjne76H3mEmXKR15GpB3hjyQpYmFG8BwRJauKV
+	9i/cTYCfM/5L3Of2zhuBDw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761649723; x=
-	1761736123; bh=c9Z/ODrIpzvlHZi+RBDndmKDwnhq54VJzhMqHq+a7JM=; b=A
-	RmmVW40nWkv9MW6ix64qAjmNIOjZjYiMMP7u4/AkBvlifIlpzvsJXPZQk2crV1qr
-	FUsX5J+bSeJ6+xIQAJOTbLPhgHRTq4Ze7GyHzWyWbo8a8P2CxgziPa4jTQRXDzwK
-	G1184/EPNPZvFCONtNOg7AU9Yp25/LN8xmSxMu9HYwbmof5cEui8kESP0AS9MH/X
-	gTgjg/UoIJLZUhZVSwMa7iee4kfvLnZxjkDyDZd5ZN/jwMpFUGy7YWcCa9in6GSJ
-	7u5Uc5kgLzE1pT2cGkAWjb2923caUc8ECzNnHMHKiq8miy/oswikXVbngI19lZA2
-	db6Pk6n8wp3Mr5zc1ojQA==
-X-ME-Sender: <xms:O6QAad5k357z6y9vA9vvJ7ntjJYCIzvakCbnqn71s2ohytWG1z5cIA>
-    <xme:O6QAaSVeN4xR5kJl4GXDWkakWthJZpU0bl03C-zveRsd4wZibolsqfLS9mfofZpHf
-    L4PEkwa9qqQRqHJ1gAtTHFG0EATBgE8_wa5663QcY2golL2C2cn5Q>
-X-ME-Received: <xmr:O6QAaR1cwoZgcQM3C4r5C_72HAWnr-ePgGb_j5VHHoQ0Pkv94JYhSVa-le-da7a8BAJbcouWKEpnHZnBWf3kVpt81dy92iGGnzNJo3cN9g>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761649725; x=
+	1761736125; bh=4hCTOGt5mSU9KSXt+TtFPsZLCcoeujiENFaxRXjZXKk=; b=t
+	6F3s/psHeSzJBliM9s+m3HCWQu9WsgOoj5SzuOp2EJb9Q/qk+UZE89aDt2cxx3tV
+	0+fNfFExqlbfq4nKToXashH3AN/wNoriJRhv5J+FKh8cB+EIBbc9lHS+dPXWJTnk
+	BJwDZ7i9a3T4fqzd624sEZWKvU8jYJhWVdHhMzbbQ/krPwB/xaNq/s2uEeTcg8e6
+	ONUgrlIOC92hx+62q5lDzcrq4uLqHKHyU0+7DLD3PG4g8a3jtlfV+QY8BIEHRGbx
+	1td+oSVPL4C1TVLFToDGPTw5l61SUhPti5dWF7UsXhZkCXom/rk2FlUO0UPrDIzZ
+	2wxXc8pg8Zx1fKWek+tww==
+X-ME-Sender: <xms:PaQAabnJgq8nVTzBoE0vidYf9DQfOdN6xA13JOJLyvOVsTd4L-qfBQ>
+    <xme:PaQAaWQRSlJPfKBpjJZTh9Zc1Z4Li3ry-61cM1XUf-H_lJ18uWkZTJPsWGivJEE9a
+    WyDxHBzyNChsCG7Ft9ZEq6H_pTOu-yD1K492ziVixpH6HKKDRNrhQ>
+X-ME-Received: <xmr:PaQAafBH14nskDgY8OsxC6TRIU2V2DRogdhfjGIOGMbPQdKsOJ9I8wuGICqRrZyjKBBZ5qK9sqiLpQhYf-7vg_O2lxA5gUz26OtUL8jJNQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduiedtieelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
@@ -58,22 +58,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduiedtieelucetufdote
     etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmh
     houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvse
-    htthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:O6QAaf3JCflpk_Du26h6oUWnJ-OKal8J5XsQaz3xIEEy3QIinOP1Lg>
-    <xmx:O6QAaU_KQdrP7CC_COYMW2iRzO3t8ESw_NPHl8s5ShqEJfC4EdEtpw>
-    <xmx:O6QAac2eKxfAO1QewjcrJ_0h6G0OMaj24AFDCXZopyp9T_X5TftJhw>
-    <xmx:O6QAaR_VDafnie9a8PKPjnIxK0ds9hvObRSQaCx3rT0sbXfnlox1OA>
-    <xmx:O6QAaVPo2BSQ5uYBvBoXj5tL6CC6EbIG7mCQOjcBbSppj0-p6Cbh2bz3>
+    ohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepph
+    gvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:PaQAadTEVXU1OMwGmj22ZMdfpcem2-q60144FmONNpd_inM3CifCZA>
+    <xmx:PaQAadrBLLrAobn0VA13apfb2cXza-Ot4ag6bfT9z3r0zH_0-5ajRg>
+    <xmx:PaQAafzmwUaOARLEapzsO_8EJRreEyPzPFW4Br3RvKQJY5y4QGLdOw>
+    <xmx:PaQAaSLLODyTv3tum3ODaWbbsjkf9d4bUHBn8xrBAW42tqKs-OIXNA>
+    <xmx:PaQAaWJn2C03Xnvo_VUCKCJo47VpNsiae00waBHS83ZCQUS4JlIQNQUR>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Oct 2025 07:08:42 -0400 (EDT)
+ 28 Oct 2025 07:08:44 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3841a50e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 28 Oct 2025 11:08:41 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 5167cabf (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 28 Oct 2025 11:08:44 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 28 Oct 2025 12:08:31 +0100
-Subject: [PATCH 1/8] packfile: use a `strmap` to store packs by name
+Date: Tue, 28 Oct 2025 12:08:32 +0100
+Subject: [PATCH 2/8] packfile: move the MRU list into the packfile store
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,115 +82,290 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251028-pks-packfiles-store-drop-list-v1-1-1a3b82030a7a@pks.im>
+Message-Id: <20251028-pks-packfiles-store-drop-list-v1-2-1a3b82030a7a@pks.im>
 References: <20251028-pks-packfiles-store-drop-list-v1-0-1a3b82030a7a@pks.im>
 In-Reply-To: <20251028-pks-packfiles-store-drop-list-v1-0-1a3b82030a7a@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
 X-Mailer: b4 0.14.3
 
-To allow fast lookups of a packfile by name we use a hashmap that has
-the packfile name as key and the pack itself as value. But while this is
-the perfect use case for a `strmap`, we instead use `struct hashmap` and
-store the hashmap entry in the packfile itself.
+Packfiles have two lists associated to them:
 
-Simplify the code by using a `strmap` instead.
+  - A list that keeps track of packfiles in the order that they were
+    added to a packfile store.
+
+  - A list that keeps track of packfiles in most-recently-used order so
+    that packfiles that are more likely to contain a specific object are
+    ordered towards the front.
+
+Both of these lists are hosted by `struct packed_git` itself, So to
+identify all packfiles in a repository you simply need to grab the first
+packfile and then iterate the `->next` pointers or the MRU list. This
+pattern has the problem that all packfiles are part of the same list,
+regardless of whether or not they belong to the same object source.
+
+With the upcoming pluggable object database effort this needs to change:
+packfiles should be contained by a single object source, and reading an
+object from any such packfile should use that source to look up the
+object. Consequently, we need to break up the global lists of packfiles
+into per-object-source lists.
+
+A first step towards this goal is to move those lists ouf of `struct
+packed_git` and into the packfile store. While the packfile store is
+currently sitting on the `struct object_database` level, the intent is
+to push it down one level into the `struct odb_source` in a subsequent
+patch series.
+
+Introduce a new `struct packfile_list` that is used to manage lists of
+packfiles and use it to store the list of most-recently-used packfiles
+in `struct packfile_store`. For now, the new list type is only used in a
+single spot, but we'll expand its usage in subsequent patches.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- packfile.c | 24 ++++--------------------
- packfile.h |  4 ++--
- 2 files changed, 6 insertions(+), 22 deletions(-)
+ builtin/pack-objects.c |  9 +++--
+ midx.c                 |  2 +-
+ packfile.c             | 92 +++++++++++++++++++++++++++++++++++++++++++++-----
+ packfile.h             | 19 +++++++++--
+ 4 files changed, 104 insertions(+), 18 deletions(-)
 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index b5454e5df13..5348aebbe9f 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1706,8 +1706,8 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
+ 				     uint32_t found_mtime)
+ {
+ 	int want;
++	struct packfile_list_entry *e;
+ 	struct odb_source *source;
+-	struct list_head *pos;
+ 
+ 	if (!exclude && local) {
+ 		/*
+@@ -1748,12 +1748,11 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
+ 		}
+ 	}
+ 
+-	list_for_each(pos, packfile_store_get_packs_mru(the_repository->objects->packfiles)) {
+-		struct packed_git *p = list_entry(pos, struct packed_git, mru);
++	for (e = the_repository->objects->packfiles->mru.head; e; e = e->next) {
++		struct packed_git *p = e->pack;
+ 		want = want_object_in_pack_one(p, oid, exclude, found_pack, found_offset, found_mtime);
+ 		if (!exclude && want > 0)
+-			list_move(&p->mru,
+-				  packfile_store_get_packs_mru(the_repository->objects->packfiles));
++			packfile_list_prepend(&the_repository->objects->packfiles->mru, p);
+ 		if (want != -1)
+ 			return want;
+ 	}
+diff --git a/midx.c b/midx.c
+index 1d6269f957e..8022be9a45e 100644
+--- a/midx.c
++++ b/midx.c
+@@ -463,7 +463,7 @@ int prepare_midx_pack(struct multi_pack_index *m,
+ 	p = packfile_store_load_pack(r->objects->packfiles,
+ 				     pack_name.buf, m->source->local);
+ 	if (p)
+-		list_add_tail(&p->mru, &r->objects->packfiles->mru);
++		packfile_list_append(&m->source->odb->packfiles->mru, p);
+ 	strbuf_release(&pack_name);
+ 
+ 	if (!p) {
 diff --git a/packfile.c b/packfile.c
-index 1ae2b2fe1ed..04649e52920 100644
+index 04649e52920..4d2d3b674f3 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -788,8 +788,7 @@ void packfile_store_add_pack(struct packfile_store *store,
- 	pack->next = store->packs;
- 	store->packs = pack;
+@@ -47,6 +47,80 @@ static size_t pack_mapped;
+ #define SZ_FMT PRIuMAX
+ static inline uintmax_t sz_fmt(size_t s) { return s; }
  
--	hashmap_entry_init(&pack->packmap_ent, strhash(pack->pack_name));
--	hashmap_add(&store->map, &pack->packmap_ent);
-+	strmap_put(&store->packs_by_path, pack->pack_name, pack);
- }
- 
- struct packed_git *packfile_store_load_pack(struct packfile_store *store,
-@@ -806,8 +805,7 @@ struct packed_git *packfile_store_load_pack(struct packfile_store *store,
- 	strbuf_strip_suffix(&key, ".idx");
- 	strbuf_addstr(&key, ".pack");
- 
--	p = hashmap_get_entry_from_hash(&store->map, strhash(key.buf), key.buf,
--					struct packed_git, packmap_ent);
-+	p = strmap_get(&store->packs_by_path, key.buf);
- 	if (!p) {
- 		p = add_packed_git(store->odb->repo, idx_path,
- 				   strlen(idx_path), local);
-@@ -2311,27 +2309,13 @@ int parse_pack_header_option(const char *in, unsigned char *out, unsigned int *l
- 	return 0;
- }
- 
--static int pack_map_entry_cmp(const void *cmp_data UNUSED,
--			      const struct hashmap_entry *entry,
--			      const struct hashmap_entry *entry2,
--			      const void *keydata)
--{
--	const char *key = keydata;
--	const struct packed_git *pg1, *pg2;
--
--	pg1 = container_of(entry, const struct packed_git, packmap_ent);
--	pg2 = container_of(entry2, const struct packed_git, packmap_ent);
--
--	return strcmp(pg1->pack_name, key ? key : pg2->pack_name);
--}
--
- struct packfile_store *packfile_store_new(struct object_database *odb)
++void packfile_list_clear(struct packfile_list *list)
++{
++	struct packfile_list_entry *e, *next;
++
++	for (e = list->head; e; e = next) {
++		next = e->next;
++		free(e);
++	}
++
++	list->head = list->tail = NULL;
++}
++
++static struct packfile_list_entry *packfile_list_remove_internal(struct packfile_list *list,
++								 struct packed_git *pack)
++{
++	struct packfile_list_entry *e, *prev;
++
++	for (e = list->head, prev = NULL; e; prev = e, e = e->next) {
++		if (e->pack != pack)
++			continue;
++
++		if (prev)
++			prev->next = e->next;
++		if (list->head == e)
++			list->head = e->next;
++		if (list->tail == e)
++			list->tail = prev;
++
++		return e;
++	}
++
++	return NULL;
++}
++
++void packfile_list_remove(struct packfile_list *list, struct packed_git *pack)
++{
++	free(packfile_list_remove_internal(list, pack));
++}
++
++void packfile_list_prepend(struct packfile_list *list, struct packed_git *pack)
++{
++	struct packfile_list_entry *entry;
++
++	entry = packfile_list_remove_internal(list, pack);
++	if (!entry) {
++		entry = xmalloc(sizeof(*entry));
++		entry->pack = pack;
++	}
++	entry->next = list->head;
++
++	list->head = entry;
++	if (!list->tail)
++		list->tail = entry;
++}
++
++void packfile_list_append(struct packfile_list *list, struct packed_git *pack)
++{
++	struct packfile_list_entry *entry;
++
++	entry = packfile_list_remove_internal(list, pack);
++	if (!entry) {
++		entry = xmalloc(sizeof(*entry));
++		entry->pack = pack;
++	}
++	entry->next = NULL;
++
++	if (list->tail) {
++		list->tail->next = entry;
++		list->tail = entry;
++	} else {
++		list->head = list->tail = entry;
++	}
++}
++
+ void pack_report(struct repository *repo)
  {
+ 	fprintf(stderr,
+@@ -995,10 +1069,10 @@ static void packfile_store_prepare_mru(struct packfile_store *store)
+ {
+ 	struct packed_git *p;
+ 
+-	INIT_LIST_HEAD(&store->mru);
++	packfile_list_clear(&store->mru);
+ 
+ 	for (p = store->packs; p; p = p->next)
+-		list_add_tail(&p->mru, &store->mru);
++		packfile_list_append(&store->mru, p);
+ }
+ 
+ void packfile_store_prepare(struct packfile_store *store)
+@@ -1040,10 +1114,10 @@ struct packed_git *packfile_store_get_packs(struct packfile_store *store)
+ 	return store->packs;
+ }
+ 
+-struct list_head *packfile_store_get_packs_mru(struct packfile_store *store)
++struct packfile_list_entry *packfile_store_get_packs_mru(struct packfile_store *store)
+ {
+ 	packfile_store_prepare(store);
+-	return &store->mru;
++	return store->mru.head;
+ }
+ 
+ /*
+@@ -2048,7 +2122,7 @@ static int fill_pack_entry(const struct object_id *oid,
+ 
+ int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e)
+ {
+-	struct list_head *pos;
++	struct packfile_list_entry *l;
+ 
+ 	packfile_store_prepare(r->objects->packfiles);
+ 
+@@ -2059,10 +2133,11 @@ int find_pack_entry(struct repository *r, const struct object_id *oid, struct pa
+ 	if (!r->objects->packfiles->packs)
+ 		return 0;
+ 
+-	list_for_each(pos, &r->objects->packfiles->mru) {
+-		struct packed_git *p = list_entry(pos, struct packed_git, mru);
++	for (l = r->objects->packfiles->mru.head; l; l = l->next) {
++		struct packed_git *p = l->pack;
++
+ 		if (!p->multi_pack_index && fill_pack_entry(oid, e, p)) {
+-			list_move(&p->mru, &r->objects->packfiles->mru);
++			packfile_list_prepend(&r->objects->packfiles->mru, p);
+ 			return 1;
+ 		}
+ 	}
+@@ -2314,7 +2389,6 @@ struct packfile_store *packfile_store_new(struct object_database *odb)
  	struct packfile_store *store;
  	CALLOC_ARRAY(store, 1);
  	store->odb = odb;
- 	INIT_LIST_HEAD(&store->mru);
--	hashmap_init(&store->map, pack_map_entry_cmp, NULL, 0);
-+	strmap_init(&store->packs_by_path);
+-	INIT_LIST_HEAD(&store->mru);
+ 	strmap_init(&store->packs_by_path);
  	return store;
  }
- 
-@@ -2341,7 +2325,7 @@ void packfile_store_free(struct packfile_store *store)
- 		next = p->next;
- 		free(p);
- 	}
--	hashmap_clear(&store->map);
-+	strmap_clear(&store->packs_by_path, 0);
- 	free(store);
- }
- 
 diff --git a/packfile.h b/packfile.h
-index c9d0b93446b..9da7f14317b 100644
+index 9da7f14317b..39ed1073e4a 100644
 --- a/packfile.h
 +++ b/packfile.h
-@@ -5,12 +5,12 @@
- #include "object.h"
- #include "odb.h"
- #include "oidset.h"
-+#include "strmap.h"
- 
- /* in odb.h */
- struct object_info;
+@@ -12,7 +12,6 @@ struct object_info;
  
  struct packed_git {
--	struct hashmap_entry packmap_ent;
  	struct packed_git *next;
- 	struct list_head mru;
+-	struct list_head mru;
  	struct pack_window *windows;
-@@ -85,7 +85,7 @@ struct packfile_store {
- 	 * A map of packfile names to packed_git structs for tracking which
- 	 * packs have been loaded already.
- 	 */
--	struct hashmap map;
-+	struct strmap packs_by_path;
+ 	off_t pack_size;
+ 	const void *index_data;
+@@ -52,6 +51,20 @@ struct packed_git {
+ 	char pack_name[FLEX_ARRAY]; /* more */
+ };
+ 
++struct packfile_list {
++	struct packfile_list_entry *head, *tail;
++};
++
++struct packfile_list_entry {
++	struct packfile_list_entry *next;
++	struct packed_git *pack;
++};
++
++void packfile_list_clear(struct packfile_list *list);
++void packfile_list_remove(struct packfile_list *list, struct packed_git *pack);
++void packfile_list_prepend(struct packfile_list *list, struct packed_git *pack);
++void packfile_list_append(struct packfile_list *list, struct packed_git *pack);
++
+ /*
+  * A store that manages packfiles for a given object database.
+  */
+@@ -79,7 +92,7 @@ struct packfile_store {
+ 	} kept_cache;
+ 
+ 	/* A most-recently-used ordered version of the packs list. */
+-	struct list_head mru;
++	struct packfile_list mru;
  
  	/*
- 	 * Whether packfiles have already been populated with this store's
+ 	 * A map of packfile names to packed_git structs for tracking which
+@@ -153,7 +166,7 @@ struct packed_git *packfile_store_get_packs(struct packfile_store *store);
+ /*
+  * Get all packs in most-recently-used order.
+  */
+-struct list_head *packfile_store_get_packs_mru(struct packfile_store *store);
++struct packfile_list_entry *packfile_store_get_packs_mru(struct packfile_store *store);
+ 
+ /*
+  * Open the packfile and add it to the store if it isn't yet known. Returns
 
 -- 
 2.51.2.997.g839fc31de9.dirty
