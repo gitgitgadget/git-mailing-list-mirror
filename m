@@ -1,117 +1,126 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B3911713
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 19:47:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5062332EB5
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 19:58:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761680863; cv=none; b=J13+yoos2yd60MkKOsINkbhiFvMEN7ZXHVglBuHiPvXe7x9g1ulPdKAqFybqUl+2Walm8hMOjj5s6RaRI+Q/QRk/NE5LxvRIdVaXyGBySNfZs+gwt2Rw0SynOtAoRVZSWeikgYfdwG421WIqU2hfBKCgKpyy0gR9Z8DhAT7VuS4=
+	t=1761681516; cv=none; b=MVtxpx1gT/bVPm2lEFXJCcPsXOQxja4HK35PH+XCi9ViaMFvb6ALwgvv+ZNJYmGkFCg3MiSpozpxu0hRZFGCG4+dD6rcavio4BHLYH7iN+j9WvwLsMUC330R8A5Bjjoueha/lpqSJXJ3/hgSxdLnjtAhSE07p8rwhPQWgJRj+LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761680863; c=relaxed/simple;
-	bh=TbMOuwEcNWRd11yXQmhT0EioqXoyd4GZskn8Vt06ypo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WZj+e/DZ6Yo9wyUj6yzJY3XrgSR63NXSNNfOwLcbHbdGz63Urt7JQyo/hH641kP2ynS0DWYGtB27vet5SXM/crJNk2+RKkOFlKqnVT3bDhThzXvjudrC4D7h2g84ZEkuEQ0r4bjstpFTgHIehsvQIN7Cv0MDjh267d4Ax/YRp6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lshy6Xs8; arc=none smtp.client-ip=209.85.216.49
+	s=arc-20240116; t=1761681516; c=relaxed/simple;
+	bh=Tmx+FoxxcdU3+mpmSDbloGu71pw0AXAW6vZBMUL6x/0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Nizi+n4ktkjM07/tXfO31GdszIjpts4IW2Zdg/EoVdXdz7BQtMQQKmLITtU5o3Egr8VDZu45sDE3CD5GXaoE2gpyBLXxgTdgDjcv8eovkZy8UqEaheFOL8W4ior2auWqbRMH/CYw84hHXa6JiZGPySaotwbtqS3TSn/LayI0yfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R9sCZ5jD; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lshy6Xs8"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-33e27a3b153so6310742a91.3
-        for <git@vger.kernel.org>; Tue, 28 Oct 2025 12:47:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R9sCZ5jD"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-378e622e9e3so3708471fa.0
+        for <git@vger.kernel.org>; Tue, 28 Oct 2025 12:58:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761680861; x=1762285661; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AfEsRdLUTUNQl9P7UigtSQngDIMEM5wNoxBdeOjomSc=;
-        b=lshy6Xs841TL5b3Emsbkbpe9rWV7Y6A+BrUJLNP6byVJLMyACHikgf8k4zoDJGicZm
-         Z2yBNRtpRhx9uhrxwK6hVZkciYv4f73kIrsQHco1ZUQteKAbhfJ/pCxJlt2hRpGwHHLu
-         s4nFPNEWTjHfhoHt/88q90lhStHdRKmvCYe4lbJCYDZ89lEg8guwVG1Wip1165xkALg+
-         fn/wK6EfIa/5OGyB/K41Wy4Jpadl+XfvJxj/le7Ho0VVk/Gi9EY+yXLOP5zGAH61HL5M
-         sMpNR4QkxsXuwVnV5kQMI/G62keYWnGb04vTnMAzhE2w1l77FKY7EupAFulA9FJ72M9w
-         o3aw==
+        d=gmail.com; s=20230601; t=1761681513; x=1762286313; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wkChbaArSRV5M9uO4gM0j+A/PH1/oJBNH6ZxONF7mq0=;
+        b=R9sCZ5jDoNCBC4SWWC49e0v/vrdwJ4Q5GeqWiUrWJl92TDHJVmLN0SdNB9BYf1tt4R
+         1RTBM3jLZXImGr3N/zOAhFLZ31jR3DRYnby+wPXC8h/hT/ZRzAhPGt/WjdAmURn0pLz8
+         yG4L/lYlu4vqwMgepDh5M4rYykoE9mm39l7CLHhfAVY3RGVumjWlogyPq14ODoREUGvJ
+         zG0BS5myGg62vxVwvuZPu+OHFQqr25cZeAFs8iv8f1Lh5A2zyaKAd4985W6tcaEfMsSN
+         2KjSKzRhnZ3lmWqSShmBY9T5nEFktnHyidjfTBZTvG1k3KLxApGWVIIHgvUKIUTT/9jx
+         Ui7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761680861; x=1762285661;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AfEsRdLUTUNQl9P7UigtSQngDIMEM5wNoxBdeOjomSc=;
-        b=MEMqx1bantPHhF4gCWKu+loh5c+GsFsg7B3lCLgcK1w58XwqW7e/JSln/bXZpvZkzb
-         2ddGajDvRbMGTvg7FGoHKrRgwk8wVkP9XFjJhCnfRqSS9+j67EIX6c9aso31QgHR8gjw
-         YfE2mHj2g1gPyP1XUtdfZhZnpyNzEUCePFBDFLeSC/Hxvkahcu2Ai9RCTjNpmYSS+1mF
-         aCrpA1lwd3f8QecMKrI59cmT5WMI+3aZGi4d95bdBpaCINb3o1DhpMYTJwDT7Zu0jZKw
-         uToFdp07n5NkOhiJY6Kk9dQ5BitzrHK5c9GFRlsYIrhxQlrn4xbDGEhMCLWSrmvYUgU4
-         IecA==
-X-Forwarded-Encrypted: i=1; AJvYcCWnniqsRJZ+YhbLlQMM4b7wqKEiD5lVitRN6Aw9KqdWyGy9XT+6AkITiZ0ZCKA33WJAGTQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGEQ7wfSDTP9hXSYm+oUV1MhxA056BFzATmCpm5lOaUsP9Y5SA
-	C7SRwSNyr4zu3dQ+zduJb7ZOX6zcVPvTsb/AdO6WocRbS8MOXtEyTEM4
-X-Gm-Gg: ASbGncu0I7xKaJM/h55U91RKIc88nStWsSu2XHooVozSBJl+mNPKNTrLv+sPuQ5xNDf
-	QsRfVpvUXFaJH3+dA0ydS7v+wjlhCZY9oJRze4UL8XgA8CxOtldM2q2WQGvngEBS8M/bF2hs8eF
-	ij1VdO08D9VtVzGDNl7LW7YMVFoVbLCnZcXwb3pMxX0RtB0On2giuALuT5Dcpcy1AVcdXqHMj+t
-	dpRqQpg5UY7puMoh/WQTthNu6u5R4oeHhOy9v1CTludYg5TzPDOah1dJSbQ55nOqvkJXbzKROHH
-	9U6zS856zntBw89LQhcoFdEDn1Ih36WTuoI1kfRK2g3CzUh8OoF8etLDXWA78R9596WBS1oK6rc
-	5P75BISELgvLquun0lQKNvH5MsKTtKvyLp/J0C83IRFJLeSbuv/e9Z9DVNpUaJF9w5VHjdVMoIW
-	PuNkoZtVWqn00ORBaegMhz6wleyPoce/VActm2SGLB9ploI2gqCgZWx+joIuWbwEa10ERGg2Af9
-	f4f3RHRg2oGynRE4PBtbMsrxfzW9hYjP0nCtUnRzSWb1NDI+r64qSDtfe1ff1g=
-X-Google-Smtp-Source: AGHT+IFsP+D2HgE8fIf6SYeOlb1+FMCpKz4WDoFOhtQxmmTLlYzpfebks9py7kh1STFB4lKtfqsANA==
-X-Received: by 2002:a17:90b:4986:b0:33e:28ea:9bdb with SMTP id 98e67ed59e1d1-3403a2aaac2mr181129a91.31.1761680860791;
-        Tue, 28 Oct 2025 12:47:40 -0700 (PDT)
-Received: from ?IPV6:2409:40e3:177:42ef:798a:642a:892e:b13? ([2409:40e3:177:42ef:798a:642a:892e:b13])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33fed70a86fsm13104952a91.1.2025.10.28.12.47.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Oct 2025 12:47:40 -0700 (PDT)
-Message-ID: <84729f5b-87a5-4a5e-a875-c28ddcea3b5b@gmail.com>
-Date: Wed, 29 Oct 2025 01:17:34 +0530
+        d=1e100.net; s=20230601; t=1761681513; x=1762286313;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wkChbaArSRV5M9uO4gM0j+A/PH1/oJBNH6ZxONF7mq0=;
+        b=rZUXTl8ylejJnig1A6ZP4rV5D5/y324fEeZvlquaBMxoBYTRpySjAirJqX4rNruVmt
+         /vnypP1rFJ/9ONYBvNJ7u6zjxOckm4fk1kV2CaVluxYMzqG24G5eCWhIJTk+0f5k5L8t
+         6LNgSUS+RBKtPY0pUvWiAypLHdfWvZ+d0GpP7F/mjYhm7FzpGOHPfbjznILg0ZUIyEaU
+         aUCnr7QHYo9B/ifNMdeKhxJOSKtbNtKxUg4CGyVm/trr30cU4H8mn6QcMN21wW8ZI4Et
+         /EwToQu0iU/z9ySVNH8d1mb5XtJ/T5G8G+xn+nsWBelPXrKB3NaEVf56ZeUT1fvD56wI
+         fVsw==
+X-Forwarded-Encrypted: i=1; AJvYcCXHivrXWeTU7uhta81eTeqD76jZINLusw9aJkJk3JHjy1MurIwb7yRLRg2yocZEJhDqz6Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwaVCTDUQXx5yTsPFQkC4B0Y/BLhJbVQsMDdqg7M7KmZFAiO8ak
+	z1o/kK4qH0kqz3RIUq9oIJZip/I/CZ/pgOQXne2znZn1clogGrEM94kUkRBpLaYQEa+zfLmX+OR
+	bNk6EhUIAG2JSBHfSSFhs28+vO+v9vNk=
+X-Gm-Gg: ASbGncsLRMwx1MmbZoLSAU1OoEhJ7zuRl1KwpOLqb59G0Z2V4mfQhF8MoAJPyc1Lv9o
+	wTuXBF5kaR6jzQJzmTddZqC1nNlrful5GCrAJrGGAgl2oZwdIZWUehbQcl3+D+nf3Qm7ok0T0Rg
+	tQ19uUtI8OxaY75fv+K0G8142EN8Tsg3PCShem6n7rCOkTx1+KFi6v5qt11HMKNqssXecAzKAxz
+	mg2PjGk9HddwS3hPa6m6H07/si2d6Lff+bVcH7aOjcTRhHU3fBMxTwWdK4qsQ==
+X-Google-Smtp-Source: AGHT+IG7G9a/Z03zWaLqEJ9godzXV6GStzxjI1WiKSMlJcOaSeLzKT++xs4h1ETa4dU4yfUSRYD7kahMPi5vZbhu0O4=
+X-Received: by 2002:a05:651c:4c9:b0:378:dfa3:ffd1 with SMTP id
+ 38308e7fff4ca-37a05e4dfa6mr1222311fa.11.1761681512604; Tue, 28 Oct 2025
+ 12:58:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] replay: add replay.refAction config option
-Content-Language: en-GB
-To: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
-Cc: christian.couder@gmail.com, phillip.wood@dunelm.org.uk, newren@gmail.com,
- gitster@pobox.com, ps@pks.im, karthik.188@gmail.com, code@khaugsbakk.name,
- rybak.a.v@gmail.com, jltobler@gmail.com, toon@iotcl.com,
- johncai86@gmail.com, johannes.schindelin@gmx.de
-References: <20251013183311.33329-1-siddharthasthana31@gmail.com>
- <20251022185045.29256-1-siddharthasthana31@gmail.com>
- <20251022185045.29256-4-siddharthasthana31@gmail.com>
- <a4cd31ad-7086-4d05-ba00-db65ec24b45a@gmail.com>
- <7a3161d1-4e30-4156-876d-7eede4b06705@gmail.com>
-From: Siddharth Asthana <siddharthasthana31@gmail.com>
-In-Reply-To: <7a3161d1-4e30-4156-876d-7eede4b06705@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+ <20251027004404.2152927-4-sandals@crustytoothpaste.net> <aQCKCfuaEKBArD-g@pks.im>
+ <xmqqh5viddo3.fsf@gitster.g>
+In-Reply-To: <xmqqh5viddo3.fsf@gitster.g>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Tue, 28 Oct 2025 13:58:21 -0600
+X-Gm-Features: AWmQ_bkhfc0n7rIx6JZVRj72bzisC3PO9cTzcuniNIpMEAGUJP0brHCC7vi43co
+Message-ID: <CAH=ZcbDEo2xcqpRrF400zHe=w-kK+rfnp85YhcE5kQ6jjS+8Hw@mail.gmail.com>
+Subject: Re: [PATCH 03/14] hash: use uint32_t for object_id algorithm
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 24/10/25 19:06, Phillip Wood wrote:
-> On 24/10/2025 14:28, Phillip Wood wrote:
->> On 22/10/2025 19:50, Siddharth Asthana wrote:
->>
->>> +    git replay --onto main topic1..topic2 >output &&
->>> +    test_line_count = 1 output &&
->>> +    grep "^update refs/heads/topic2 " output &&
->>
->> Rather than test_line_count and grep it would be better to use 
->> test_cmp here.
+On Tue, Oct 28, 2025 at 1:33=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Oh, I've just realized we don't know the value of the ref so 
-> test_line_count() plus test_grep() (not grep) makes sense.
-
-
-Exactly, since we can't predict the exact hash values, `test_line_count` +
-`test_grep` is the right approach. I will definitely switch from `grep` to
-`test_grep` as you and Christian both suggested.
-
-Thanks,
-Siddharth
-
-
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> Thanks
+> > On Mon, Oct 27, 2025 at 12:43:53AM +0000, brian m. carlson wrote:
+> >> We currently use an int for this value, but we'll define this structur=
+e
+> >> from Rust in a future commit and we want to ensure that our data types
+> >> are exactly identical.  To make that possible, use a uint32_t for the
+> >> hash algorithm.
+> >
+> > An alternative would be to introduce an enum and set up bindgen so that
+> > we can pull this enum into Rust. I'd personally favor that over using a=
+n
+> > uint32_t as it conveys way more meaning. Have you considered this?
 >
-> Phillip
+> Yeah, I do not very much appreciate change from "int" to "uint32_t"
+> randomly done only for things that happen to be used by both C and
+> Rust.  "When should I use 'int' or 'unsigned' and when should I use
+> 'uint32_t'?" becomes extremely hard to answer.
+
+I think the most appropriate time to change from C's ambiguous types
+to unambiguous types is when it's going to be used for Rust FFI.
+uint32_t should be used everywhere and casting to int or unsigned
+should be done where that code hasn't been converted yet. This commit
+isn't random, it's a deliberate effort to address code debt.
+
+> I suspect that it would be much more palatable if these functions
+> and struct members are to use a distinct type that is used only by
+> hash algorithm number (your "enum" is fine), that is typedef'ed to
+> be the 32-bit unsigned integer, e.g,
 >
+>     +typedef uint32_t hash_algo_type;
+>     -int hash_algo_by_name(const char *name)
+>     +hash_algo_type hash_algo_by_name(const char *name)
+>
+> Yeah, I know that C does not give us type safety against mixing two
+> different things, both of which are typedef'ed to the same uint32_t,
+> but doing something like the above would still add documentation
+> value.
+
+I'm against passing Rust enum types over the FFI boundary since Rust
+is free to add extra bytes to distinguish between types (and it's
+documented by Rust as not being ABI stable). Even if something like
+#[repr(C)] is used the problem is that the enum on the Rust side will
+have an implicit field where that implicit field will need to be made
+explicit on the C side, and if C sets an invalid value for that
+implicit field then that will result in Rust UB. Converting Rust enum
+types to C is non-trival and has many gotchas.
