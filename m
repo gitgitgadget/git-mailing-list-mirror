@@ -1,142 +1,155 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B695C2AD32
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 04:15:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861DA2BE024
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 06:39:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761624957; cv=none; b=psR5djTsGiOVTMNM5k9zb554MpaMwxGfB/nRxKtdx5JT/g7t8vWYnsKp67ThULoi7OlUu5a+jKcbHfcURQ86uF8AdZSyk2woFXst1O4+IBFpyngCUR2AcUmpfZGLB9hgWrDoS0ApqZ5uWzb7Ot7OKNqOvyzIup2NJ/iNQ3nQTgE=
+	t=1761633554; cv=none; b=Cr8d49rS5PqjVaYz0Mdn7Di+Z3Nf8kXKkCBD+kpfLHteVKzKY+mLfv8e356PsNKONNMiKS3FBsms3VU2icxk4tKLGeChiuwdK72iAwiERpQ3ZP/e2SgT7xfgJmeOP61eDOdLJTKPHVw6UOv4mlahUq/uv2UOJmseJVxB3MByfVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761624957; c=relaxed/simple;
-	bh=KNjwr6mbza6PsEt6cjftONBiIpL9MM3hV4ujG2Dh8l0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XmLvfKQnni2IvIieGBUVqYBQF4RlKU58dMof8yA9E94M9ft0n/rCA1QQw4Gt8zGarpWFZCaH2iqCZbSArH2Bwi8WcWsqlyj6KsB+NIHtWFDao5aDRR7OOhq0QvtU4JCM5s/6DBWH0p21ID1DW8rVVl/O1XTuhOBj+zpyuQYjWZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lzICqUiq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wrnL+QxW; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761633554; c=relaxed/simple;
+	bh=UITO7Y9EECWFNOIWTry4lJUIUVXG33JOvdMpHInHtT4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oYRKf5mnJY6qurFK+zVk36yVR/lrJOZXSglrD/pUcOzHl5jdXaeeG3C7874Hvdng9JFgFFZdA2I0gs+ZZuJbulzHvKG9/oMbsJmSIy/2Ial+jpenlRk7g7ExdasCIxVP5gpeMCXpPBkUGYXdrkZ+WugoItr4kjl1kqfUskWD/wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hJVxQYV/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=x3SybxIb; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lzICqUiq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wrnL+QxW"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hJVxQYV/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="x3SybxIb"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B7FF4140022F;
-	Tue, 28 Oct 2025 00:15:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 28 Oct 2025 00:15:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1761624953;
-	 x=1761711353; bh=P402tN+q0zrrGLLrWcS/BtZEXurYkyheG3a6DyteZGk=; b=
-	lzICqUiqENfydiebmkEJjLh40QQ0izvIi1p5TUiXAoHgZ5pHvW1U9cAU/kt44TyK
-	ixyueh22KRQBDp2170+RLKjaOysZ8n8shg36ORlhzDHrtOzbAzteVP7pQrsz+r8O
-	iZecWZ8eZf7wjY+E75ixQtwPUyC1ECgNTGSv5xTVbZErnrF8iKoqXSq9tWARfU8X
-	+6/AIvaKyybmW2Ajh28rqEj4i6Nj9VzyEIASfzIWeX+GEeyt63UixtofB/s+l4OX
-	JhmaZBMVi95sKZJQRL/sYyBUPl8beFGzyYB+VYloW8tOL5WlgcfSoTYQhow3uiDF
-	wW/ximxzN8/N35Zg/XY+6w==
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8B1621400286;
+	Tue, 28 Oct 2025 02:39:10 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 28 Oct 2025 02:39:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1761633550; x=1761719950; bh=5wIsnPIWLY
+	A8oCtuBwnZdYhbpbZRrCkHxDRIRVQJjcE=; b=hJVxQYV/yJ+Fkcb61K0j3g1U7L
+	p2eVTjrfFh8ao24I0t3mflYk5VQaRiqgxjlXFRQdaip5JwYnEFumWaojVTWK9LQv
+	LKHkd/gdKwctmj35epm61L7UTeDrTIJq9Io6sEYAoHjZKYeyDga+p5PLRBkMZTjq
+	P3uHexvxdijpT9gILQkCYjDJwBVBTJ0bL2SEe8S++MToQkg+dOZv5NiDkSswbeO9
+	OOIjQgXSZB9zUY0iKLBQzcLGopmCC36LO8OVhPDxKJWKnppYO+d4nK/qrGmsp7pq
+	JaqekUH6ZHOHJ+ilX7CvvEZTPG5IJ7qFcFy/xp/F+V3cPMDCMIpmXMicZwHw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761624953; x=
-	1761711353; bh=P402tN+q0zrrGLLrWcS/BtZEXurYkyheG3a6DyteZGk=; b=w
-	rnL+QxW3NThPUz5uwjfi5YhCfy3gwkoeSX5DT9TNEtceifjLjXCQ8LNZqGYfJdKj
-	CbI/8quujerO4j4038UoVlQvmpoOEALemX0Y4ogQynbgEebwYs9o++y13OBPC3BA
-	2DVerRyAEWFS+bs0Jmh/n374fXLX6/SGcdkglT0AQTyV9mG0HE8UAgh4YSOs3uus
-	Z+BdBv9O+3AvZCCFdOm9hrwwqq1tcgHjX4pfYZ0389WGl4zCItKYIZ3fNctrQQLf
-	D7hYftnTGHkD2qrCvx+cXEVd77EIt38NmNURbmcpc0QE8a8fRPRLXfwu033/Ty2f
-	VXkNlipGVjwcA0NMUwAUw==
-X-ME-Sender: <xms:eUMAaWex_NN41MzI-nD2ZVBCZ65sgg2BjGWAOsC50ESANDwlJwuOzg>
-    <xme:eUMAaXH5GkL-J2aICkrdspkKbbWIkpr9XvAIxuS-rLnWiwwnrm9gh0sRaJ8P3dEws
-    LhKUp5eydhYME7kzda0xAcpavqC5i-QgVY6TjHjH_dfuLn0Z7df>
-X-ME-Received: <xmr:eUMAaf1N1va9vs0Csg0dXvnf8j24dmcW0oZC21Vzhon939EZFDfCEOvVUK5pGF9dbT6gtEM8c9gqYo9QwBjDCqw61MEVuoZgc-Tg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduheelkeeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1761633550; x=1761719950; bh=5wIsnPIWLYA8oCtuBwnZdYhbpbZRrCkHxDR
+	IRVQJjcE=; b=x3SybxIbS9OFIMrN1KyoeSfy4NVjwrObV3hrvj++L6TZxm0G++4
+	n1KenWnvUMRw8DFa9kIPqBZar7XJbQfD1IeTcHr9MY5knQCteSaCI1bwwOAH7HdW
+	3j5z2x+/hMyd98Tei3gfGbBvluGlDkZGyBc85lJG7mMUiWUOLAYkvQWySkjOa0zj
+	OmIPC1xWE1x945ij0I+bu0bEu2AaRUspP5ISLI1471UE3CG9TDi2xF60dpAMhaBc
+	KM9Fe3QJlTF/C1QUeq5T/k5QgSlFjts+P6nTh8FHzTKNCqSpHpSTevWUWYC2KWUa
+	/RrqiStQHRjrZd2qYEHFLoC/9pOkE4YKZxw==
+X-ME-Sender: <xms:DmUAaQ1EAVmmPE3IQJYo8QE5sBtGYTRs8yE2VhrXPuAGfJLyBcaN_g>
+    <xme:DmUAaRFHPeM71ewDjl6elU4shmEwbsv8ImzzKjBtlox2_ur2EFSZBMwJ2CZSuj8Ao
+    ezGae662XqZPmpAr1AW23dOZP_vWR123uI2lZWHNQaoFeQnwz9JEA>
+X-ME-Received: <xmr:DmUAaWh-5US6gOORUcdy3zfSKIL0dfb5x1MaYFNYcAvQ0GpfF_Tg01TpkFNilQCkVmQP-zgxAtRFvnNnwEUkVViIaHl9eAjEdJQ6NrtBew>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduiedtudehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpefhtedvjeehudehgeelheefieevtdegleefvdfftdevtdduffeikeeiieej
-    vdelhfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsh
-    grnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohep
-    vgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesph
-    hkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:eUMAafmsLXTG6pv2ACYgu9E6pcFUZdfr1gYsntwGaffW4BMlzSyTKQ>
-    <xmx:eUMAaf8YfBlP4q0rad-PkMoT6at9osLqSmi7ubWvfNWkmTmKviFSBQ>
-    <xmx:eUMAaUoYXIkmKTFkdIa4qycjC3mrf3Zn0wVbgqB7qnquugQyNibfzA>
-    <xmx:eUMAaYkbeiCklpP_WQNmkZReCb9FVmb_FCc6J0JUFo1MBAir4N7J1Q>
-    <xmx:eUMAaSVKZs9geAZtP2_HIHShKwh-bYk0RKuw81TXWOj0ogOWLNnjGsDr>
-Feedback-ID: if26b431b:Fastmail
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:DmUAaU-LAmUEbGIaoMCYrSwWs9KgNmdB6LfsQ3_VgnkoajPbxXuHnA>
+    <xmx:DmUAaVrI2CMNzCTsu2lWZEfMTdXiygwgbR5P5ioErXXpxhx4f2BEzQ>
+    <xmx:DmUAab8V3mNiZ1DHBGr92Ss05tcr3AkY71tFNgVe1ijkcdPXSXS5Ww>
+    <xmx:DmUAaRWPwZa6TBd4fYgBk2MXj6jsPpVDjWchN5xi9iHAzk5dx2gLhg>
+    <xmx:DmUAaZ7FQSaTVQhA9418sYidlvwo33u-MOtSGPn1RqD0ikTsevilfq-m>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Oct 2025 00:15:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Ezekiel Newren <ezekielnewren@gmail.com>,  Patrick Steinhardt
- <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 3/3] rust: generate bindings via cbindgen
-In-Reply-To: <aP_gy-Rj8MI7zAWd@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Mon, 27 Oct 2025 21:14:51 +0000")
-References: <20251023-b4-pks-rust-cbindgen-v1-0-c19b61b03127@pks.im>
-	<20251023-b4-pks-rust-cbindgen-v1-3-c19b61b03127@pks.im>
-	<CAH=ZcbADTLvTioBf+LYQej1G0biZM8s3-iJG+BZjnpxj+8NjsA@mail.gmail.com>
-	<aPsepOtUf92fqDL-@pks.im>
-	<CAH=ZcbBWuS6QVQT4LsxSP-X4GupZwr+NwzXNH2+qZGoufUWDrQ@mail.gmail.com>
-	<aP_gy-Rj8MI7zAWd@fruit.crustytoothpaste.net>
-Date: Mon, 27 Oct 2025 21:15:51 -0700
-Message-ID: <xmqq8qgvfyq0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 28 Oct 2025 02:39:09 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 44f615b6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 28 Oct 2025 06:39:07 +0000 (UTC)
+Date: Tue, 28 Oct 2025 07:39:04 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] whitespace: correct bit assignment comments
+Message-ID: <aQBlCCDWMhLX_aBa@pks.im>
+References: <xmqqfrb4hyjl.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqfrb4hyjl.fsf@gitster.g>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Mon, Oct 27, 2025 at 01:36:46PM -0700, Junio C Hamano wrote:
+> diff --git a/diff.h b/diff.h
+> index 2fa256c3ef..60749154e7 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -331,9 +331,9 @@ struct diff_options {
+>  
+>  	int ita_invisible_in_index;
+>  /* white-space error highlighting */
+> -#define WSEH_NEW (1<<12)
+> -#define WSEH_CONTEXT (1<<13)
+> -#define WSEH_OLD (1<<14)
+> +#define WSEH_NEW	(1<<12)
+> +#define WSEH_CONTEXT	(1<<13)
+> +#define WSEH_OLD	(1<<14)
+>  	unsigned ws_error_highlight;
+>  	const char *prefix;
+>  	int prefix_length;
 
-> On 2025-10-27 at 20:35:59, Ezekiel Newren wrote:
->> On Fri, Oct 24, 2025 at 12:37 AM Patrick Steinhardt <ps@pks.im> wrote:
->> > > cbindgen is a Rust crate and it should be specified in the Cargo.toml
->> > > under [build-dependencies] block.
->> >
->> > What is the benefit for us? The generated code is not a dependency of
->> > the Rust code, and neither do we use it via "build.rs". And if we use
->> > cbindgen via "Cargo.toml" we'd be forced to build it first, which slows
->> > down our CI jobs.
->> >
->> > Please let me know in case I miss any reasons to have it in our build
->> > dependencies instead.
->> 
->> You're targeting a very old version of Rust (1.49). I'm not even sure
->> that cbindgen will work with a version that old, but if it does then
->> we should use it in build.rs to make sure we're not using any features
->> of cbindgen that aren't available until later versions.
-> ...
-> For instance, I'm using Debian unstable with a system cbindgen 0.27.0.
-> This requires Rust 1.70 or newer. If I use rustup to test my code on
-> Rust 1.49, then the code won't compile for me.
+Here you're using tabs for indentation, whereas below you use spaces. We
+should probably be consistent.
 
-Have we even agreed on which Rust version we would aim for?  With
-BreakingChanges.adoc We have agreed to make some version of Rust
-mandatory by the time we hit Git 3.0 but IIRC, there isn't anything
-written down except for an old message from you
+> diff --git a/ws.h b/ws.h
+> index 5ba676c559..611c6b6d50 100644
+> --- a/ws.h
+> +++ b/ws.h
+> @@ -7,19 +7,19 @@ struct strbuf;
+>  /*
+>   * whitespace rules.
+>   * used by both diff and apply
+> - * last two digits are tab width
+> + * last two octal-digits are tab width (we support only up to 63).
+>   */
+> -#define WS_BLANK_AT_EOL         0100
+> -#define WS_SPACE_BEFORE_TAB     0200
+> -#define WS_INDENT_WITH_NON_TAB  0400
+> -#define WS_CR_AT_EOL           01000
+> -#define WS_BLANK_AT_EOF        02000
+> -#define WS_TAB_IN_INDENT       04000
+> -#define WS_TRAILING_SPACE      (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
+> +#define WS_BLANK_AT_EOL         (1<<6)
+> +#define WS_SPACE_BEFORE_TAB     (1<<7)
+> +#define WS_INDENT_WITH_NON_TAB  (1<<8)
+> +#define WS_CR_AT_EOL            (1<<9)
+> +#define WS_BLANK_AT_EOF         (1<<10)
+> +#define WS_TAB_IN_INDENT        (1<<11)
+> +#define WS_TRAILING_SPACE       (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
+>  #define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB|8)
 
-  https://lore.kernel.org/git/ZZ9K1CVBKdij4tG0@tapette.crustytoothpaste.net/
+The "8" here is a bit curious, but this matches what the comment says:
+the last two digits are the tab width, and there of course is no macro
+for that.
 
-that expressed your preference to support the version of Rust in the
-latest Debian stable plus the version in Debian's oldstable until
-the latest stable has been out for a year, which nobody responded
-to, so we cannot quite say that is the consensus of the community,
-yet.
+> -#define WS_TAB_WIDTH_MASK        077
+> +#define WS_TAB_WIDTH_MASK       ((1<<6)-1)
+>  /* All WS_* -- when extended, adapt diff.c emit_symbol */
+> -#define WS_RULE_MASK           07777
+> +#define WS_RULE_MASK            ((1<<12)-1)
+>  extern unsigned whitespace_rule_cfg;
+>  unsigned whitespace_rule(struct index_state *, const char *);
+>  unsigned parse_whitespace_rule(const char *);
 
-Given that the stable/trixie was released on August 9th, 2025, we
-still need to go by oldstable/bookworm, which has Rust 1.63, if
-people agree that your rule to decide the floor version is sensible
-(which I would say is OK).
+All of these conversion look correct to me, and I agree that this is
+easier to read.
 
+Thanks!
 
-
+Patrick
