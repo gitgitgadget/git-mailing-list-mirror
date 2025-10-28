@@ -1,122 +1,82 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E2728C5B1
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 17:15:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C6434B434
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 17:22:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761671728; cv=none; b=P057KnTZqm+SCosNzCcRehhG4b9CexH/7UxWcMJNP0fGYNOzGORGR3tA2oygLm+RAH2Bt7MchshGU8oQHOTWUS5HEYm5/SbbkNw9pPqoChbixrSU2pM1yAyjMJlUkIycQdrDyGHNd0uFd9K3L88PLy23ItUiMubSLTYqGGH2N9Y=
+	t=1761672165; cv=none; b=l+agM9rA/TB9EvTrUrKy2je+TPBfehPnG2uwW9trQZLXlEidOB0zNjrUeP+zGaMxcD2bcECJag/hY4P2hKuRCjqVVuyln7I4WQ5ROAyc0i5WaXcdms2mRTO5dhXuB40edym71z+5Sel4UHa8WzSwhnfh8ZgYiIU1vsLwaIhkPM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761671728; c=relaxed/simple;
-	bh=IGDd+jmh1EFNk/HMQB64Q9d0EEcLbnSYm3m3lxoXC0w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eJLISjRpxEIbwWMhd+kwFWwqDVJwCHHuOwQyFYExaPfnk8/y5uLWNcHD76vx9yMKez2YV5RHZQDOZrGxv8/Asrwphhs5Oyv+c75Q+zknP6ZcHywP1IVTmMHPMPjWUFxLALZWAM48gItXxZEBNkP8sqSPV6Q44qGlLesHkzK92s4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IsNI2BAY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IrC0XMpy; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761672165; c=relaxed/simple;
+	bh=t12pLepbaiywwtxiX8NW7VNspIgek31FI2DW8n0Bm+4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mzTpOAtsHoMeOhlhxgJr6khACvgXxB8dMgkX07ig4kEN1wiVHbD25LP8+tqoq2ig1etvJvrd9nUHSzzTkmB3RffHl00OdqQbmvuDY8OBjOpRvs7ekLkSpOGBVR43Cu3bKDjNC2jlQRtVNv+a6j415SLVWHBvR9qHqggJnIZm49U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ILwe1k45; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IsNI2BAY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IrC0XMpy"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B8B717A0050;
-	Tue, 28 Oct 2025 13:15:25 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 28 Oct 2025 13:15:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761671725; x=1761758125; bh=WB0mLGKSpu
-	WpVwCV0ztMLokUkFSH6V7DcobNjkxok/w=; b=IsNI2BAYLxlp7XQoyM6qrX8Ovv
-	yyIIP2HKDaObd4dT2/6ZlaUioRT4jZxBcvPcqykFCSyRhyvW1Fx/y9dZMO5exwge
-	9w72DuuFkSIql6RjFAdfEJorhbn8DHSks4+Qc82eFApWQqY3oIGvGQc26ObkEGZ+
-	sjlvJlAJJmYNfJPsg3T2b/sxQrsdBnIqyW0qD8SPDdmsPr4gQANf0CCDsv7+Rktb
-	COzc6jVj7V/PXzKSNT9sDNpOl4vPfaT1oUbg8tRE+wozAMV5rVmjcbU2LB1W9rZU
-	2eDdhEsQE/FqUsyyQHkuaTjyEm+gP2pkoTUxAK0+ytlE44vEncKJpUX+Zalg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761671725; x=1761758125; bh=WB0mLGKSpuWpVwCV0ztMLokUkFSH6V7Dcob
-	Njkxok/w=; b=IrC0XMpyN0XwpfpP9zSdpEuiQnmA9qudZgC2NQw8qztb1qtynfE
-	GPLB5NdhFS7mK55rYs2RogPRtXCK/FQ1UXsSuyYEBlvhpUD9/YRreL67h2LR1L6d
-	Ds6GUXrLOsu5/ZEURv8XSXmFDVg4uqHkZQjtN6sqWtyNLMQExOE3dyn7ezw9qY6H
-	+ZFZAYd732+jyIGBoGKhKyIA8Ad11vEbMeGS7OALbujwmDHlOqR0+BXR9IvfJ2OV
-	BovyIV/Qx3VkULZMHkH/XRvQBxvH8cOFl78IM5ZdhixdCXJNaPNWLmSNuSbVizMI
-	FCuzjPTsKIahbh/35Xyegq51/ca9UcCu2MQ==
-X-ME-Sender: <xms:LPoAac0UAnqQO-81Ml7zIJKNHBu8480Bp5iYCtadARLK9vMlllmjig>
-    <xme:LPoAaaxKALws7_CDiFGcu_79yPULzJ_ML_IjYEKdhDtV6OHoDatAvtPg9hdZOdBo_
-    yGnudBXuskmigoLJoYe05LEk8B8JNB8Ug_wJWubmg6Aclp0VAXatg>
-X-ME-Received: <xmr:LPoAaeutiZYRMfVLzfF-LQPCarbfTDcIRhO1Zt4-nvKGzamJ4ANYHDg_6cs-HjLdnX_cmPk6kmjGsMGoSfod3ikUfqoFBWatKmCG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduiedugedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvggsihgvuggvrhhmseigmhhishhsihhonhdrtghomh
-    dprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehfihhvvgdvfedutddtfeesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgr
-    shhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:LfoAacyecc2ONkB8X5sGZk0vKkhwNYg30UuzpM3grwY9jP5scXUchg>
-    <xmx:LfoAaRC0kUDpo7lPavdOG0SA1YPilRRYtNad0TfyTYLQWtPuP7BOlw>
-    <xmx:LfoAaacpwNNGk0aiBAZwVv-jYMFond7D7gsdPXGfZZLX321wUppukw>
-    <xmx:LfoAabk8OhShTVvo-4fY6bLBClz-MqbOKv5VoS1gwUt5acVteNryxQ>
-    <xmx:LfoAad4nVxH9qnffYo5-TQSEIwIp6FcqQTNagbbCUL8d77WA7Scmj9x_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Oct 2025 13:15:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: Todd Zullinger <tmz@pobox.com>,  git@vger.kernel.org,  Kousik
- Sanagavarapu <five231003@gmail.com>,  brian m. carlson
- <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] t1016-compatObjectFormat: Really freeze time for
- reproduciblity
-In-Reply-To: <87frb310d2.fsf_-_@email.froward.int.ebiederm.org> (Eric
-	W. Biederman's message of "Tue, 28 Oct 2025 11:01:45 -0500")
-References: <20240703153738.916469-1-tmz@pobox.com>
-	<ZoV8b2RvYxLOotSJ@teonanacatl.net> <Z8HVkqqD054QGPIE@teonanacatl.net>
-	<xmqqbjlump3m.fsf@gitster.g>
-	<87zf9c8glu.fsf@email.froward.int.ebiederm.org>
-	<xmqqqzuoi6sg.fsf@gitster.g>
-	<875xc02mmq.fsf@email.froward.int.ebiederm.org>
-	<87o6ps16pj.fsf@email.froward.int.ebiederm.org>
-	<xmqqms5chyr8.fsf@gitster.g>
-	<87frb310d2.fsf_-_@email.froward.int.ebiederm.org>
-Date: Tue, 28 Oct 2025 10:15:23 -0700
-Message-ID: <xmqqv7jzc5hw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ILwe1k45"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-362acd22c78so59066011fa.2
+        for <git@vger.kernel.org>; Tue, 28 Oct 2025 10:22:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761672162; x=1762276962; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3HIyZ3eljq7xvDywECoIqQfwaeX6Ymh7q8LvJUFvxvc=;
+        b=ILwe1k45v2q2UHtzc52DaPugZwo6fM2Ti3cfqXTlTk/7+1zlldMmN/en2i82YhSPbl
+         RPXwvyxMc55sinksjhQ3ucLGwuveB8XTrGt+wtZoocILkf3+J7cCsbDSBDvTCRA2WMg2
+         72luMtw5zhmDN5EpwwYhAp5f6WDwgOHoGXEPgaM4MOALS+3TMzHHoyUevozHZ1JgZbEb
+         Gv/K3Bvt8wjT4vvR8c60UvxDPWB1zi+qarx9JPkLtmtkdBdJTNqBU/M7xjKOx7lzuVyn
+         cm9+a6tL2kjiH37/eYAXQ/YtjL2PY0dU5ZIhcxsUlcvNW6M9TcigBaKYSappfwLAaC6q
+         nWhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761672162; x=1762276962;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3HIyZ3eljq7xvDywECoIqQfwaeX6Ymh7q8LvJUFvxvc=;
+        b=UozebQvw2ueJBDPrEmAQKoQ2rsuZlRiljcaMrtZNeDX/57QKp6HDOs6Txn3TAG+a1z
+         3O4vTIsdwJtfkdDxk2NdL1tb+/kRNVKD3/avd9UBVVKmJEZg+CWDrE8cOT0LYyE8G9lT
+         Ihy9i65ZchFfYX6IqZwyUm9WVW1MA9vM4MJkZ8TeS97KOxS6Vp69Zxlt3yl2uUnnWqAW
+         ChwiUWyjTzdnzvvIQR+6rnG2KvY2AdipzY7Nl9wVR3AIsEwFg1eDOrPE2rMHwnGyfaqi
+         3hTGCv7S3twwYm+lTBBaC/ryEkoiD9oaeRMeauSvS2mfkwE02jPVD8q3HTOewnFhXHeh
+         /TBg==
+X-Gm-Message-State: AOJu0YyiT355N+zaIMqQHA9G77qVCa9ZaexoRs9LIqH4o8O3sx9VKVFx
+	BWKWrdVqEmikTYe4CYqWlD572nhFcKu5XAjol3ZTM0GUCTTz4XZB5TCsUpetxXH0Gy4KczjQNDh
+	cwbzPdv62b4KdqNcpCjZ/c45EU5b6p7U=
+X-Gm-Gg: ASbGncsqhQS/WebeY3vJaKgA/eUWUCci/NYAjyYwk/95XsI+oLYwbqk6mBrhT+VEKTW
+	Cuc1a5CnuF7kag19dd0d3ycqQPz5BS1tNVuHX5CaQcafStwdB7Jv12op2fIBrAA94eVleW3nakt
+	/Okb2HOoeYqLGWxykE86EM7Fp0HQXHMpIHzKSygFYCiHvKtaoFr00Vsm4luuHKrwszWo+R717kD
+	ZXb/rP186Oo1OsMM0GYDYbMfiP8uqK8wyr5/Pzwp8UBJxs5udYx7rF1JgSUyw==
+X-Google-Smtp-Source: AGHT+IES6RED6aNREWq+NFLsMd4NFSwfty3AHvTfJ3v4x0OgWGew44e/lTj0uDAfCWU59e6rSVVzu1JOgKPLuuHo2tE=
+X-Received: by 2002:a05:651c:1462:b0:378:dced:2c89 with SMTP id
+ 38308e7fff4ca-37a0537d1cfmr608521fa.49.1761672161443; Tue, 28 Oct 2025
+ 10:22:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net> <20251027004404.2152927-8-sandals@crustytoothpaste.net>
+In-Reply-To: <20251027004404.2152927-8-sandals@crustytoothpaste.net>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Tue, 28 Oct 2025 11:22:30 -0600
+X-Gm-Features: AWmQ_bm8T6mmeTq_JHSGeEMmOs27isYBR4kgp2ltU7lv48_ZBuNl-92HlqCoAtM
+Message-ID: <CAH=ZcbDYq1A79rNmFULtwPMM2z+4zBH-DCgCFOEA4Pt1D76Swg@mail.gmail.com>
+Subject: Re: [PATCH 07/14] csum-file: define hashwrite's count as a uint32_t
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Eric W. Biederman" <ebiederm@xmission.com> writes:
-
-> By default gpg still allows time to move forward with --faked-system-time.
-> So in those rare instances when the system is heavily loaded an gpg runs
-> slower than other times, signatures over the exact same data differ
-> due to timestamps with a minuscule difference.
+On Sun, Oct 26, 2025 at 6:44=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
-> Reading through the gpg documentation with a close eye, time can be
-> frozen by including an exclamation point at the end of the argument to
-> --faked-system-time.
-> ...
->  t/t1016-compatObjectFormat.sh | 6 ++++++
->  t/t1016/gpg                   | 2 +-
->  2 files changed, 7 insertions(+), 1 deletion(-)
+> We want to call this code from Rust and ensure that the types are the
+> same for compatibility, which is easiest to do if the type is a fixed
+> size.  Since unsigned int is 32 bits on all the platforms we care about,
+> define it as a uint32_t instead.
 
-Geez, how are we expected to find the need for '!' ourselves X-<.
-
-Thanks for root causing the issue so quickly once it was raised.
-
-And let me drop the "let's disable flakey ones" band-aid patch from
-the queue.
-
+I'm always in favor of converting to unambiguous types.
