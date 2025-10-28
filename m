@@ -1,146 +1,193 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E738634FF70
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 19:40:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A0211713
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 19:46:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761680444; cv=none; b=rmCuR98CGZoJLeTSbm48xwqfl8VKOtgAD4Oucjaw08ygI1wreg5XTWbbZX1fwohXff0+y8Lm90XBgyz6sbTxALe1PcXCToZjYKRhzXua4dc02fOjuhRwRU1LOxkfx2bBh2XR/FsQbyO5ibvdl5EqFZ7FdfTvSZBQ1vJP6M8lXdk=
+	t=1761680803; cv=none; b=PsCgMVy3Bn+s5/yQO0xQVsk4wFVtsdKGVKM/d4K55OSZlDOlm5M+w1cSfzv+8ct79xKb/FzceOHv7B9E2YIPg2b2i2ymfZbwyzR+ZqaxlVJIWVJa+RYeP1aw/41UTQ1lW2iFPeRtfGgOeBwFppVcrjX83l4104z1nc3xszeZp70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761680444; c=relaxed/simple;
-	bh=itPkJ8diwitEUOT+WHj1+1guAwhCO7qrGttbkZMj6mo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=INy7qBvX2OWhxvO+cX4QHufztoG3Z8mLtBznwOtgXL3sYYbbORXTBmwMR5RlXRSTw67jviAR5S0/YhyX5Xqyb4sL6YmAoJ+Whzb120VJJWzJYIWojIIPARHPiLGtTz7YyOtqDPa17l9+1ps+edgtyXT+HJKvNa4z0seo2zzS6IU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BZN7xzXC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xYTbIqFx; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761680803; c=relaxed/simple;
+	bh=3W+Fetb/Y4i+/7+8lpKvh/gdFsnY/hx6jCaMnkq/uxI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QP6bJqZ5j3gURebSCsGry1pZf2ZRqrRt9fAYT/SISYygjReXnYHN+aWT52vMT3en7pj9blAE1jNVilQIb4xIMXadEk7RB5ICPZv6+L8HWalClWjlQH1BGp2w4DL2HbDYi5mY8ME8k+zNqxwBYLodu1vZMCLSzBEgTsifOQBYAdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iGusXfDe; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BZN7xzXC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xYTbIqFx"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0A9087A00BC;
-	Tue, 28 Oct 2025 15:40:42 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 28 Oct 2025 15:40:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761680441; x=1761766841; bh=yTgDyVuZoV
-	wr+4kZoGAx6UZVDUE2FVNI5eMIBFQkM3E=; b=BZN7xzXCJlSkw5jL7KKVsJcgH4
-	EnztycDpNM6l+bTrbf87JDEgwwwdoo/Y46fys+2g0MOCN7C/HJEC5HR9MPLOILRq
-	LfaWQqouoU7XwswBXZa936e5SIPal+6GLs5hR7GkWZTlsQPx5v4bFO4Y+v2toct7
-	YBsJ37Ww1f0P4LT+3W9FeU4Z+XM4ebZpsCZIDAzItN+RTneL0DjlSxeeXGtYvThR
-	XlQ+SOWJIDrqBPNB5Q2buEWf9oJcsxr4cIhSzYHA/xeiK8iduUM5y6Q+/Gka2agT
-	P+0C1O0u8k2CIgh0OdjOqrxJ8GeaJ9snrkQksfcleNUKldRrSNKecyAApebg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761680441; x=1761766841; bh=yTgDyVuZoVwr+4kZoGAx6UZVDUE2FVNI5eM
-	IBFQkM3E=; b=xYTbIqFxzLmuBHyEqCHF2W0cDIZbqi91aLu+BRCrnK1rkcHchaQ
-	hQvbhi6Bxm5RF01Mu5VBJwK/uRWA43hFjP51rwEX6V/8XDazxSWCBFHAQ9W0+Ngw
-	Gl5XCn+Au7OY72lLBfU2wx+06dZHyBDIjJrtHuOmEv31BaeIV55yc40GJc+6ROBA
-	lBV7CTtPOwikoxHd3f8/NcAhX/n3JIJ13CkzLdpUxfSxcvzeXSE7kBzvxZRePkf8
-	oaOzzUq4eGM1syovLts3VqLLSePyX4XtG8BhsX4rbHC7u4AMrozpVvSZW9kiuIJJ
-	SZbjz8vS7Vj+t1m8b81NBHUwE961oYUnssg==
-X-ME-Sender: <xms:ORwBafLoivhj9dIdvLNszjzkGxMIPtPMRCw2EtM_m4zdcEgp91QZAg>
-    <xme:ORwBaaCBs1b4971KLnqzPjwHxzngOytX-XBul8H8chuR6Ng-6RVFvFJ0G0VdjoR29
-    IAKxpLqjrAucaqCVZhhgkdins0JitBIGPWJMMhLCXHEYYigfBayDw>
-X-ME-Received: <xmr:ORwBaQCEdhOnm_EEdIJha__x_tehSFFusOoIZG5wDSxG4NvRD4ZYUOjdg49m-6WGt7oJEko-3whJorTNP8f3dlhdRes-UHU9XWr7>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduiedujeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieeuleffheduudffffegjeelffeilefhleegheeltddtgfelhfejueekhedt
-    kefgnecuffhomhgrihhnpehgnhhurdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgs
-    pghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkh
-    hsrdhimhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshht
-    vgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ORwBaUBer_nZHdrAq_sEI5VAQpRyiwfVKpyrg8po-OWORtgj7sZz6Q>
-    <xmx:ORwBaTpebnbyyGXZpIe5r0rrigUXRiqGSFDbqmc12QMnc7T0R8YGUQ>
-    <xmx:ORwBaWmUGsMh4ZLCcIMyQ7kha1dSAK_RWwxKjQPW8JaxokBadli88A>
-    <xmx:ORwBabzOrCh7UYwh20iYccT6L3a4vNzUB84FO2ZNsvUrTeUZhsnumw>
-    <xmx:ORwBadTjJn1T8KYQvtSnkEatSB5R9JbHfyFsAbYiFDYWU9I5NAGfTz85>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Oct 2025 15:40:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
-  Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 04/14] rust: add a ObjectID struct
-In-Reply-To: <aQCKD--ZmKnwBWs9@pks.im> (Patrick Steinhardt's message of "Tue,
-	28 Oct 2025 10:17:03 +0100")
-References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
-	<20251027004404.2152927-5-sandals@crustytoothpaste.net>
-	<aQCKD--ZmKnwBWs9@pks.im>
-Date: Tue, 28 Oct 2025 12:40:39 -0700
-Message-ID: <xmqqa51addc8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iGusXfDe"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-33be037cf73so6671187a91.2
+        for <git@vger.kernel.org>; Tue, 28 Oct 2025 12:46:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761680801; x=1762285601; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LfxKEkiC2NQTDrHJbgygWRCIhAF3NejTvsYe9LrzlIM=;
+        b=iGusXfDe5naQnMazDVoNP5YergbVqoqAfzZMLSDC4C03d5nz2sh3AZncSDklIQjE5c
+         vaROGNA4jUGkvUmxMirv+9zBa9DAYH0pHa8HtMmerpjrThMHFHdvvHCnsZvBk9VknGmr
+         CeQlEibgasfT4bdr+MgTPqrZbvTdidYCpDQpZ51uSU2s/4rkY2kC8MD7E0SgVI2xFSTK
+         47xwEXZjxEXM1vqsSyRsQTjCDMllZmopToQEFP5r6F0YMMMFFhgUCSctKT/UxAjXUHpn
+         WQNKtDoXSO6tZWhwtHST8WXijqk+yqAYKNgVAD7s5etGkfEaUoxRqxDGUPGUqJN2rxOf
+         JiyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761680801; x=1762285601;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LfxKEkiC2NQTDrHJbgygWRCIhAF3NejTvsYe9LrzlIM=;
+        b=JpQoQMQOjepoFc9nLyaSARZUPCwVKbeUJCUtjmXJZARhRJ2fK1BuVoAQNy5JU+ChLa
+         EPC1G8hC6NBPEUy80kj9OC4zvUF4R80skLs3C0dIaEd/+5N92E6wIhH8WkwoMft9QgKb
+         s4jO157zjRgJiuXxGbxSNzLTgNtXFc/fTcTeUTEjr5/kIETxpN6R+MJG+Xocs4MUlXr+
+         oFjji46vrX88YKK8hwlCwNVE2UFq/+c4fQz1/XyNoAeuElr3Vo/eJ7k75mxU//X/3co/
+         GIjwkEVmeap5uSKlvl2jYLBA3laWlwQzGP2oPxAaCil4XP69ayW3zHN/pu6bto+NWut8
+         FUEA==
+X-Forwarded-Encrypted: i=1; AJvYcCVxfbOcWt3zlKMrOIUiyZ1GUTsFLP9z3Yf2jGhNB5yM9ByMEJFz9K5cUVgSk8svdnVcqNI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZ24aBJClK6c38bqe5PQH62qbLJ7K46l+o8uEOaMyYLltVTLeM
+	wz/ydz8KSMXlg8nDc9MY1x9wV5WCh4NzRchlYsulJiHOh6WVmB4/eDNB
+X-Gm-Gg: ASbGncvNfYeAeXQy1B3ZUciHUVsFWz2ZI0EzyQwBZeCF0LDGxUEnZkDrcXMBQyrtngE
+	gT1hx/Ye0+Ki0OygjphakcIorSAj9ASHwSW/vk/yenJcX1Xi6tvxiBR9xruqfcRdYWOa7y7zOhf
+	4hss79gig8LB/yzCoBL/HNyyW+gHi9cgZSBLrLP/FpImedZb5u620UWi9+noxcoKpDcZWnPAOVx
+	0NM1ZzaJYNrfxSTDk7faUEoA6cZM1LGz1T6qtIft8IXDKVzrIOKHOg390By8x90SGBJs2yGfQoY
+	cUOseWWFvZj3rlb7QChOxRh5sk/R/vHAPK9YJvBOOvbQMI3jD/mG488pDR3A+D3fIEQi75M0IAN
+	BXjmtvNr8UEju0gCCwUTJObdF7LbQi+utCcV06AwZ4432e03/riIRXCyID526KhBnRtYl2TaMUe
+	syeIHJjg6Pza5ckYux6FkqDvJAuhV9b3YFv3q8CGiG9dfc6QJ/ZrnpuS4EbKbZct6WNqbZND6qH
+	RvWtKy83Y9fmwz6gx3S9oaCkDgXXN98fnx0afjI9UmI7FLrRMSSc8dv3/ipSH8=
+X-Google-Smtp-Source: AGHT+IHNBz2nFtvxJwkYgjrrgimIwBgEvyNjZFpxoqdWU9Ki5ZKqgto8jWY1MrY6Y1cYwiptG4Lf5g==
+X-Received: by 2002:a17:90b:3942:b0:339:cece:a99 with SMTP id 98e67ed59e1d1-3403a265016mr264388a91.13.1761680801031;
+        Tue, 28 Oct 2025 12:46:41 -0700 (PDT)
+Received: from ?IPV6:2409:40e3:177:42ef:798a:642a:892e:b13? ([2409:40e3:177:42ef:798a:642a:892e:b13])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33fed7e9571sm12996837a91.9.2025.10.28.12.46.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Oct 2025 12:46:40 -0700 (PDT)
+Message-ID: <359f1d65-b5b9-451a-95cc-c62343798c60@gmail.com>
+Date: Wed, 29 Oct 2025 01:16:34 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/3] replay: add replay.refAction config option
+Content-Language: en-GB
+To: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
+Cc: christian.couder@gmail.com, phillip.wood@dunelm.org.uk, newren@gmail.com,
+ gitster@pobox.com, ps@pks.im, karthik.188@gmail.com, code@khaugsbakk.name,
+ rybak.a.v@gmail.com, jltobler@gmail.com, toon@iotcl.com,
+ johncai86@gmail.com, johannes.schindelin@gmx.de
+References: <20251013183311.33329-1-siddharthasthana31@gmail.com>
+ <20251022185045.29256-1-siddharthasthana31@gmail.com>
+ <20251022185045.29256-4-siddharthasthana31@gmail.com>
+ <a4cd31ad-7086-4d05-ba00-db65ec24b45a@gmail.com>
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <a4cd31ad-7086-4d05-ba00-db65ec24b45a@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> On Mon, Oct 27, 2025 at 12:43:54AM +0000, brian m. carlson wrote:
->> diff --git a/src/hash.rs b/src/hash.rs
->> new file mode 100644
->> index 0000000000..0219391820
->> --- /dev/null
->> +++ b/src/hash.rs
->> @@ -0,0 +1,21 @@
->> +// This program is free software; you can redistribute it and/or modify
->> +// it under the terms of the GNU General Public License as published by
->> +// the Free Software Foundation: version 2 of the License, dated June 1991.
->> +//
->> +// This program is distributed in the hope that it will be useful,
->> +// but WITHOUT ANY WARRANTY; without even the implied warranty of
->> +// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
->> +// GNU General Public License for more details.
->> +//
->> +// You should have received a copy of the GNU General Public License along
->> +// with this program; if not, see <https://www.gnu.org/licenses/>.
+On 24/10/25 18:58, Phillip Wood wrote:
+> On 22/10/2025 19:50, Siddharth Asthana wrote:
 >
-> We typically don't have these headers for our C code, so why have it
-> over here?
+> This is looking pretty nice now, I've left some on he tests comments 
+> below
 
-Yeah, another thing that puzzles me is if src/ is a good name for
-the directory in the longer run (unless we plan to rewrite
-everything in Rust, that is) for housing our source code written in
-Rust (I am assuming that *.c files are unwelcome in that directory).
-But it may be a separate topic, perhaps?
 
->> +pub const GIT_MAX_RAWSZ: usize = 32;
+Thanks for the test improvements!
+
+
+>
+>> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+>> index 54c86b87d8..307beb667e 100755
+>> --- a/t/t3650-replay-basics.sh
+>> +++ b/t/t3650-replay-basics.sh
+>> @@ -217,4 +217,46 @@ test_expect_success 
+>> 'merge.directoryRenames=false' '
+>>           --onto rename-onto rename-onto..rename-from
+>>   '
+>>   +test_expect_success 'replay.refAction config option' '
+>> +    # Store original state
+>> +    START=$(git rev-parse topic2) &&
+>
+> Isn't there a tag we can use here from the initial setup?
+
+
+Good point - I'll use `topic1` instead of `$(git rev-parse topic2)` for
+consistency with the existing test patterns.
+
+
+>
+>> +    test_when_finished "git branch -f topic2 $START && git config 
+>> --unset replay.refAction" &&
 >> +
->> +/// A binary object ID.
->> +#[repr(C)]
->> +#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq)]
->> +pub struct ObjectID {
->> +    pub hash: [u8; GIT_MAX_RAWSZ],
->> +    pub algo: u32,
->> +}
->
-> An alternative to represent this type would be to use an enum:
->
->     pub enum ObjectID {
->         SHA1([u8; GIT_SHA1_RAWSZ]),
->         SHA256([u8; GIT_SHA256_RAWSZ]),
->     }
->
-> That would give us some type safety going forward, but it might be
-> harder to work with for us?
+>> +    # Set config to print
+>> +    git config replay.refAction print &&
+> I think it would be better to use test_config here rather than having 
+> to clear the config manually with test_when_finished() above.
 
-Can the latter be made interoperate with the C side well, with the
-same memory layout?  Perhaps there may be a way, but the way written
-in the patch looks more obviously identical to what we have on the C
-side, so...
+
+Absolutely, `test_config` is much cleaner and handles the cleanup 
+automatically.
+I will refactor all the config tests to use this pattern.
+
+
+>
+>> +    git replay --onto main topic1..topic2 >output &&
+>> +    test_line_count = 1 output &&
+>> +    grep "^update refs/heads/topic2 " output &&
+>
+> Rather than test_line_count and grep it would be better to use 
+> test_cmp here.
+
+
+Will switch to `test_cmp` where appropriate, and definitely change 
+`grep` to
+`test_grep` for better error reporting.
+
+Thanks,
+Siddharth
+
+
+>
+> The same comments apply to the rest of the tests
+>
+> Thanks
+>
+> Phillip
+>
+>> +
+>> +    # Reset and test update mode
+>> +    git branch -f topic2 $START &&
+>> +    git config replay.refAction update &&
+>> +    git replay --onto main topic1..topic2 >output &&
+>> +    test_must_be_empty output &&
+>> +
+>> +    # Verify ref was updated
+>> +    git log --format=%s topic2 >actual &&
+>> +    test_write_lines E D M L B A >expect &&
+>> +    test_cmp expect actual
+>> +'
+>> +
+>> +test_expect_success 'command-line --ref-action overrides config' '
+>> +    # Store original state
+>> +    START=$(git rev-parse topic2) &&
+>> +    test_when_finished "git branch -f topic2 $START && git config 
+>> --unset replay.refAction" &&
+>> +
+>> +    # Set config to update but use --ref-action=print
+>> +    git config replay.refAction update &&
+>> +    git replay --ref-action=print --onto main topic1..topic2 >output &&
+>> +    test_line_count = 1 output &&
+>> +    grep "^update refs/heads/topic2 " output
+>> +'
+>> +
+>> +test_expect_success 'invalid replay.refAction value' '
+>> +    test_when_finished "git config --unset replay.refAction" &&
+>> +    git config replay.refAction invalid &&
+>> +    test_must_fail git replay --onto main topic1..topic2 2>error &&
+>> +    grep "invalid value for replay.refAction" error
+>> +'
+>> +
+>>   test_done
+>
+>
