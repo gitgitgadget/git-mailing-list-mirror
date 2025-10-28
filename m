@@ -1,94 +1,123 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893D7340DBE
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 18:29:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E55032ABC3
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 18:40:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761676152; cv=none; b=rATM5jua3kLul4YoKrUeuG2kD0ffITkUtzbPTxRAsLs3Js4W0ICvGZZ5AveHyfhQic6UZPWuLOTPl29G35lTGuLVWIFrzkW44fKKjVFkLptO+aKZuXxqKNUk/IBb9KV21QINKnkJQc8HsK4OKA8G5IX7g5boaGASgZR0Ol9j8fg=
+	t=1761676817; cv=none; b=WMBD9Ygff2K1J93r3gOdmwFTN3G58XUlTyvdKnC/NJj/Tk4DXqxEEfv9aFrE4Ww4a85lzrtNbeUmkepLhucEe4YiNk5snZ7wWnkrdAFPThdDntpsZYyurE89pDEkjd7M7Ddrt16eFW+yo+a0hnt3zzzsFsNADd/yywDiAO/m+Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761676152; c=relaxed/simple;
-	bh=YLzjoRXDkoJ2AdY71Q+H+SSfXvNGwoRwrG2ebbATuI0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BMR+JRkzX7IH3VpAUt7glmUCjigESCOBEAaoFMKPdcsSAQmiq2CeVqkhXqHo0qAqFMPq6qn99Hbm4txWYhTnmHoHPzGT7ZksZ7hwOthZ2Po2vqz1WxQe71GuuWLzePR+B2HEyCrPjS+n/nh+vhSJxAY11an3TL4UYX7Y/jpyCTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AokYiwWo; arc=none smtp.client-ip=209.85.166.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761676817; c=relaxed/simple;
+	bh=Jsj8zUh7q4JRP1svl9GdvQm6T0HJZhzp2o/xoMXZEkQ=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Y/JmMwE8B9SpE0z8CAKLwDLJxSSUiBOBRSten7DmCDupgzEldcJMHmQEuQXW54FpFE4KpKi3rIwXsPfXKJI/EtbWBQ0jIRWf8BDLP2krn23r/8chTNMquaVcCsZGXGg8eUrVPk34B6P7PQeDyYGj5dQ95TNEdj0dnIG6K4R3lNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ks7hQbiH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NOSR+/yi; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AokYiwWo"
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-430abca3354so59471175ab.2
-        for <git@vger.kernel.org>; Tue, 28 Oct 2025 11:29:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761676148; x=1762280948; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LGYGEkmsBOgihp2Yzf6zjQDSwTmqTT8llzHbgwKiuMY=;
-        b=AokYiwWoJRO3rMo4pYLbZ+b/Hho1pF3HdI5tq7QnoN0JmcEpBNGHdf26GGRBebHZ9i
-         sGD8Ct54ASVdLCZXA+jLzvb0KQM3LO+YatMBBkSxXby04aj9Htr4eygGCOMg6rWzDSXm
-         78Boetk3yhPtl6Fwc67jEsTTPJMYriOfVxu0nJbTHIW8kuO2dPBxWopsuyDup/l8f20y
-         A1xLPdDzzmc62xOknklfBi76KDSBCs8ktXDYtjqvna2ceGsD0iH+DnqLj16EKTbAD8Ki
-         IEDq9pxGNk2Piqn382RUY932ZgA/2JxH2vZztiudThmdZeLcfzOxWUjBmifiXokinFj9
-         Sp7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761676148; x=1762280948;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LGYGEkmsBOgihp2Yzf6zjQDSwTmqTT8llzHbgwKiuMY=;
-        b=tlzY+ddf+TfpQR9dWAY9nx43N+GwW0z81UvF3cJq5eA9DVJa9xBeewaiNBh1j486O7
-         cKd64qbZ280YQyKm6qO5AtFKvRpFR6ag5eKhTEOc23scVLT7DxkNZxy4dQujablCMf/U
-         4FUC8BiGw2Gh5KI8HfRtuugLul4jvUgXCATkAmK7ZOT4aLWRYkXnWzpyIsZsguuW39f5
-         LIJZ03Fgj0BQzvuucIQVGvlbjIJWXjk5yekm4UhZk7V+kK0DA+Hw9vjJrqZ+Sry4HIMv
-         nAJAooLjuvkNZcxB+ylbTDvcjULwNAc8cxC2IqMsRpXdxBhtbi62UFs3b1pFQ5btAmPG
-         UEhg==
-X-Forwarded-Encrypted: i=1; AJvYcCWouLKxG2jkNQJoIxn88HTkW7vlUiwN/JCDXf49CxK28Y5XX2I0Voykz8jT65zrdwtGmsw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwZ4k7H2kcs8lM+E4eMgcKyxiNknV7lHPW0857/5p+RwfJoUn8r
-	lRZyqAuBBR0OYNyZBeXZ0YyHlX3nVtd0Ai9rV3mj9bNQpLZf2nnB+9jgFxRmY54HVOh0n1brpEF
-	xgA7SyyYO5jBQZgbA+hrQ7XxpB5PfwuK7bw==
-X-Gm-Gg: ASbGncv+ym6oLuG+poTA5PvAIS1zHi2NefnOxu42h1vaOAqSEexDZyuApfv5WD0vUX5
-	D97YTlcMwY1aYMCaSOZXTDb2VvZ+3tJ6DmX4CN42xBC7AKXQfiD9aZSbHixhrB62ybjrYk4DBAt
-	PhKBjK+mVorOGUSHrJvnQVc4s3XiMLOgmhYMpkKEksMZd8Pg7P/hJiB8Nvk1WqGQHTAuVP7c1SR
-	KvMJqEVQDGiSLH2PNUvkW8AwdpgNHctzGgou3YSqldajue5J1SPLapYfF9n/Q==
-X-Google-Smtp-Source: AGHT+IHb/uizWaZxWOyOzvvfmYZx6ykANboZdAlDOP/vT552fc+xINrBTQTP7f0wedWSe4A018zWI4pGn56kKKiKUr0=
-X-Received: by 2002:a05:6e02:1f07:b0:430:b1ff:74cd with SMTP id
- e9e14a558f8ab-432f8fe127emr2917925ab.10.1761676148500; Tue, 28 Oct 2025
- 11:29:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ks7hQbiH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NOSR+/yi"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 345D97A00C3;
+	Tue, 28 Oct 2025 14:40:13 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Tue, 28 Oct 2025 14:40:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1761676813;
+	 x=1761763213; bh=Jsj8zUh7q4JRP1svl9GdvQm6T0HJZhzp2o/xoMXZEkQ=; b=
+	ks7hQbiH4dc/qQHo9Ud/pqwJUWF1oJMlw9Xc5Fxe/W+NcOKI/IoBiNkn9+SLViFU
+	PgaFpi6NJzNx0oYYv2mh12s0j+2IhhIeVVlZrngox5DLpFQDIwT8HH0C6XAc1Sgt
+	bMEL3mGbcw1FzFK1HJGuHT8FYD4Bvv11F189sQlYQpkGj6O7wyGOqHFUwoD0RA3K
+	7HVm2EJRQqHg82wx/TWRwjQmyIZ0l2jl+el+94VSghyvBe1RJa2jSi948NxRo8gK
+	Hcdx7T93yL9NhHp3KsWKeQheQVy2tRS3EZOIsCHelhDcOUD/9QDAk23tWe4Pjsq4
+	0Nw9vAuOaYdzz8Ers4OYsw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761676813; x=
+	1761763213; bh=Jsj8zUh7q4JRP1svl9GdvQm6T0HJZhzp2o/xoMXZEkQ=; b=N
+	OSR+/yi8YKHakdyEVTZ1XtXBCIp5mfqNpTYE+WxnjcVJ2Y+qx+rr1ZNSX303OaKm
+	h743rF382VoxLjdmwxOQM4yXbo6pm3uwJq4QHdK2PO1aZltiPeTnhdIeaohDMsfp
+	13VpGIYnVq+yBxS583s70vIs6lwcZRLP8LArkZD/2wUCecwjXUmnpKSgS+UXwY8Q
+	AXv8b4HOi5WWB/wKR3SuJHQ5uRenUFzzWaAzqjO7/xHOZrIE/rZvFRRzuqK2Ngil
+	RWXzKIPItZsob8bTZyDobHTXEweuFRZGmkjLkoELVj1kDYlOXNQfvBCOJxoncpQ/
+	Mq2LNxjzLlHkem03MKuUQ==
+X-ME-Sender: <xms:DA4Bacin-50CtsOO0tHzR0DpBsjjg9N9PGEG_6EDhLDSywCVWyzsknQ>
+    <xme:DA4Baf3z0lRb5WlIqFu0Jrjw2E19fN3iRUF7a-CYXz4LKNH95kBvNsMx-c5lzfbrM
+    MVfXZfagkKbaCbmXPPB4JOas09TpBQk3AKc_gVQS73cuGf6e4VK>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieduheelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedutddpmh
+    houggvpehsmhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhl
+    lhgrsghorhgrrdgtohhmpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    phhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegvmh
+    hilhihshhhrghffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtoheprhgurghmrgii
+    ihhosehgohhoghhlvgdrtghomhdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglh
+    gvrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:DA4BaYDTou9LzThC7zCk7mlZ-39Dympb8HcyZSaT8RtrbdHylE33DQ>
+    <xmx:DA4BadkOznzNcxfQGzn14CLCt3TTa9e2I5Lu6f0xN0FwtaoZQej-0g>
+    <xmx:DA4BaWMgPX_RIsklOUiBFE25pAedifmcueosYvomzX-UODqQg6duRQ>
+    <xmx:DA4Baa8zZqYQLfP0fghLA1zCWsoq_xGIGPXx2DrQqrlZgAZizNmwjw>
+    <xmx:DQ4BaaXvEN-soT-p3BmjVUw9OCz2yWO7klDB9fUcdnQTpqPV7IbXA82F>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id A3DC61EA0062; Tue, 28 Oct 2025 14:40:12 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
- <20251027004404.2152927-4-sandals@crustytoothpaste.net> <aQCKCfuaEKBArD-g@pks.im>
-In-Reply-To: <aQCKCfuaEKBArD-g@pks.im>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Tue, 28 Oct 2025 12:28:54 -0600
-X-Gm-Features: AWmQ_bnwmRdMd9E8Tb1gcakwUpE2fdlMBeHL6C7Env_E327VH0dJJ27VS5o5q6E
-Message-ID: <CAH=ZcbCWNiu5OqJO1m-1QYrZRXFydD5Pt7mg_1BhOwVHu_PKJQ@mail.gmail.com>
-Subject: Re: [PATCH 03/14] hash: use uint32_t for object_id algorithm
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: AfSC1qETFHyR
+Date: Tue, 28 Oct 2025 19:39:51 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Adrian Ratiu" <adrian.ratiu@collabora.com>, git@vger.kernel.org
+Cc: "Emily Shaffer" <emilyshaffer@google.com>,
+ "Rodrigo Damazio Bovendorp" <rdamazio@google.com>,
+ "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>,
+ "Josh Steadmon" <steadmon@google.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Phillip Wood" <phillip.wood123@gmail.com>,
+ =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>
+Message-Id: <56e0efa8-3412-4a61-a1d9-f1acd03e7ca1@app.fastmail.com>
+In-Reply-To: <20251017141544.1538542-10-adrian.ratiu@collabora.com>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20251017141544.1538542-1-adrian.ratiu@collabora.com>
+ <20251017141544.1538542-10-adrian.ratiu@collabora.com>
+Subject: Re: [PATCH v2 09/10] receive-pack: convert update hooks to new API
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 28, 2025 at 3:17=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+On Fri, Oct 17, 2025, at 16:15, Adrian Ratiu wrote:
+> From: Emily Shaffer <emilyshaffer@google.com>
 >
-> On Mon, Oct 27, 2025 at 12:43:53AM +0000, brian m. carlson wrote:
-> > We currently use an int for this value, but we'll define this structure
-> > from Rust in a future commit and we want to ensure that our data types
-> > are exactly identical.  To make that possible, use a uint32_t for the
-> > hash algorithm.
+> Use the new hook sideband API introduced in the previous commit.
 >
-> An alternative would be to introduce an enum and set up bindgen so that
-> we can pull this enum into Rust. I'd personally favor that over using an
-> uint32_t as it conveys way more meaning. Have you considered this?
+> The hook API avoids creating a custom struct child_process and other
+> internal hook plumbing (e.g. calling find_hook()) and prepares for
+> the specification of hooks via configs or running parallel hooks.
+>
+> Execution is still sequential through the current hook.[ch] via the
+> run_proces_parallel_opts.processes=3D1 arg.
 
-I think uint32_t is appropriate here over an enum because this value
-will also exist on disk. An enum in Rust is really only safe if it
-exists exclusively in memory, and is untouched by C. Later in this
-patch series there is a function that creates an enum from a u32. I
-agree with Brian's design choice here.
+s/run_proces_parallel_opts/run_process_parallel_opts/
+
+>
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
+m>
+> Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+> ---
