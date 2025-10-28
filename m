@@ -1,321 +1,173 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB06E34D4F5
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 20:11:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E90F34EEEC
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 20:12:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761682284; cv=none; b=oy3q+92qmr8FVROfJ0JTunIC5vGNrSpEryHMA3o7CIZdDMzhuW6jWCj6m22qKfs7gQfpILBjremTibcSgNFwHzqRmyUZUMmOj7vx7A2n0GPpqTErpuUG0V++RUYgKv8eYjfAJs7sHgyy4TG2Te905zn972ncu0wIcale0JrZPRw=
+	t=1761682356; cv=none; b=Nnlw0+sKaHLX8yqiWHpz0dTJnk1spw7WejD1YYQXNfaTvHkNM+UbzY+FuCAah4ynAtq/BwKRCyQ81WQHfvFkZAUY+h6I0A1TlOZk+wpukQchDzA/5kxU1sJmTt8hHuOOGe41JADaVB29trq7Py2OgwsRW1qK0EH4MOCmw2lMxBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761682284; c=relaxed/simple;
-	bh=eMLohjyw/XX+gfFVhrlMg9/cwqn9CW25NOXxKKgp05I=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=sZPhZ0mPNyYncqZbGeEjFofVYfn2TpbEgV6UTCJNqk0ZDIcjCow4TTUNdZJapv1KYb/AtzPZRAZkd1drAu1vrIhyGT+sMVLsKx1+wK4rAHsArLaoKGLU4I1Tr7y4pJooiqGxWQLOUGU5CRRlRjF2tEFAgOFlXLOfvThDl8q/VTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=A+pw3wtY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GTQA1dmq; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1761682356; c=relaxed/simple;
+	bh=YONGfv2tUc/ysA34KNQUL8782RV+GBXuSoY6p4uA3K4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kenRFsl8+P/cZth1iGQnasVenztjYy1fAxSh7szKQkylYfXqIEplo5uTS55kJ+XEwozkWlxFAxPtNbDzw+SaWw1+dhuhqRvbHO9HbHoJ3gSQpwXslUjWQFD4wLQ/Z+ccshjT/otkafhiiz+218ZVenRgka1UiEmoPn42Rh+B9ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J915vmZ6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eVEtaYh9; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="A+pw3wtY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GTQA1dmq"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E3D7F1400219;
-	Tue, 28 Oct 2025 16:11:20 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Tue, 28 Oct 2025 16:11:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1761682280;
-	 x=1761768680; bh=2CgCnu1Hv6Pe8UxU5OQhWIRSB6IzaUc6M3RajUK+Wac=; b=
-	A+pw3wtYKNMrj6bMqSY+a9nHPFI4KJx44l1tlSPzZOKkFio7lG4641YXggwYbfHo
-	owy9RVegbJiGMoLYK/fE4HUDgTRpNlbYjs4mSKLrNMscoInYhOOVXpIdYguCAMDw
-	lO17VYyGeiGE2Ia9MoVYza1NK+oCg32cAEImopvSgIJVeLS+FuXSdBBNKSHquDDa
-	L2iLeJRCkBMD+6t+W0f3B2TxpgjCHNu8irSC2xp8xJJXPb61mNod4wgq6voaIdzB
-	VYMzGiVFXrJcBeXHb4FZ/oWz29l9TXF66nfdFXvyiC78Mcf0YmYkWpY6LpMO10Nt
-	ZwfXunoD/Qi4wqOr2+9pmQ==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J915vmZ6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eVEtaYh9"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id BDE521D000BD;
+	Tue, 28 Oct 2025 16:12:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 28 Oct 2025 16:12:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1761682352; x=1761768752; bh=Nv3HFoWaUg
+	kMFw5OCwgH+cPO4pBQdxHomnvtEZ3l8e4=; b=J915vmZ6S8raRNnuoIKIf+qAnB
+	PvuSIRzQHH6+qojbgc0ZYsZ6bIRdnvDoeHrHeFcqR0RDpTbWygxx9YVfJsrFbHcG
+	YWK4VofllbYPPIIYGcSnem6Tt8fYoCvgF06GC9IW8XROlmmh58rBbZEMh7x6lyt7
+	E4VsR8pdPLkyym6nZjLPCIGDeacvhd4XJDL41sgajsVdJEbsm83sc06DZnbXXiWs
+	31gs0YuBFqR13Y0aSTqnCLJ37G9ACJQBQFCPMjMFL+L1BkVqVjgnRwDYN6BE4Gav
+	pYZrjKzhEui1iLGxvDvwcPw48hnjBlTj5bGtZqh+flv57T4lV333sRA8Gh5A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761682280; x=
-	1761768680; bh=2CgCnu1Hv6Pe8UxU5OQhWIRSB6IzaUc6M3RajUK+Wac=; b=G
-	TQA1dmqupJRUp6MNLcICpn6CDb5i0WWhCXITkzWDeccRDp7I471F41S1CtQfzypI
-	+oCVAP9C+x+a69597z2RQv0k/JkI6bzGXnohG3J4o/bz530/dwJGPLKSkisOCtjP
-	A/P6NWfeorOcdt0RjXWuGV0eKMu4VpqP164y7VoxeVYT0c0bujTaLBzGChmqHun8
-	xVCXu3NRnnJ9t/rwaRGafLYhsctuJoBFftBgiknICNgRBGlyQQgACMlvzQhGOBFS
-	FdlUcfs4PZ6PQDuDh2Bl9k5zua4OQB1d85BBQYzWZ7AKfxvVLc/pTySE3mWMzdak
-	83UYWfXgNwyVajwKzS0pw==
-X-ME-Sender: <xms:aCMBae07XSM80VuwsDXkEp-P2zAnSDfrhospeUR26Vd3oCoupHKEnQ>
-    <xme:aCMBab5FlHJR_2PsYAGAEmfnXXbzofSlQK_pFdU736sOzNIp6NJiiypslZBu2QddT
-    uQKsib05XatL6iFfAVX4JMX__b1lOCD78rpdythVHvdO0bmckbQ__c8>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1761682352; x=1761768752; bh=Nv3HFoWaUgkMFw5OCwgH+cPO4pBQdxHomnv
+	tEZ3l8e4=; b=eVEtaYh9ogrIBZJJoqrvxX+vMDbi5S8yjEBEvlxvKIfVA8Vd5n6
+	j4+bcbNd/lgRMGnGQWWlN8QEDyEanBi4VxUpVt28vQaqI2+8dzAiVR4mq9OVbUKN
+	MJ5/C1rGImQSZMEgb+F9zq/aAHrOA2pHpRsV47dKXQiPfDcbt4d/P8M6pMII3PhL
+	6bVP5fxYw4hkpiDfwvsYpKhd72h8ZrSpoV6sJjvI2eGRKTvL/rmq2WC0iXR+PtPl
+	GT7jZN+5bi8BKHjxjL73MPLDfxrGFn383rU+a+o6DTh2e+Lr89uKFPILjObDvkzd
+	UtpOZKcA8f0AQ2tpOJm7oduWTMAxwK8VhWA==
+X-ME-Sender: <xms:sCMBaTUU7aV-Qdos5qzO4ROWS0CvFELZR4yzTdSPDn_PhXDrCu0UwA>
+    <xme:sCMBaScfIlj5iDoC54Ro_xMHheHFko5TtLeBgpyZKnn_kilaGz2O8hKACrOZXReQt
+    c0ez2h8YtsZj8PIq25QT6zYMKUWhRnwShLIDfSHl0xswWJD3c0wiQ>
+X-ME-Received: <xmr:sCMBaXvgilsM6Q8twJ5bVB4H2GjX3_1dUNSBo4V9qg32oOWoEAjOXH1XwGPagUb9qyJQch7eTfd39q9df9gjdQw-m7CCWYq0_80g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduiedujeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
-    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
-    epgfevkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
-    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
-    gtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepph
-    hssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:aCMBacjbk1k6LuxT7AIRdV9E0NscLC48_eUrDgGrcT9VF0rZpS99Xg>
-    <xmx:aCMBaeWzt-tY7Xwk9fen-tkrGS3UDCVHimc3clqM2Qv2pv780n0RTg>
-    <xmx:aCMBabUlaTyHYEhhSnG2Bw20_jer8v7QdQf2ms1zAMwuWTgfIPetJw>
-    <xmx:aCMBaejKsXiK5RthLj1muaB6mQpBpIJxusdDt3wJFRaIw2bn78exnA>
-    <xmx:aCMBaXJY6BT4-OjNEGFJirCvKD1UDL7tyziEfEFP4FN_H0zwui2Pr7rj>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 88905780076; Tue, 28 Oct 2025 16:11:20 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
+    hsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrh
+    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:sCMBaZ9A1eC4y3XjMopulBPPsbcAHj8x1RpDYs2fP_hLjuSik9noaA>
+    <xmx:sCMBaa0ahfysEJCSTs5Bq2CSDBKVoow0bDY640HHSMfEA2_golkvnQ>
+    <xmx:sCMBaWAjHLw9pGYw3JqZcBd7xl1JKX63q40hvy4R_7PyYAfCUE297w>
+    <xmx:sCMBaeeXfJKPXNWqMnF0vB0cvqEHP3ngZ1XZi_2H_PO9tBtNB9Jdig>
+    <xmx:sCMBafux8BXNsL3RTELEgKW477qzDzsbaGj5UTuFVvyAM3LF8fvcPCed>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 Oct 2025 16:12:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,  Ezekiel Newren
+ <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 06/14] hash: add a function to look up hash algo structs
+In-Reply-To: <20251027004404.2152927-7-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Mon, 27 Oct 2025 00:43:56 +0000")
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+	<20251027004404.2152927-7-sandals@crustytoothpaste.net>
+Date: Tue, 28 Oct 2025 13:12:30 -0700
+Message-ID: <xmqqwm4ebxap.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AGkC0gJjnH2B
-Date: Tue, 28 Oct 2025 16:10:52 -0400
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>, "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <5b078fae-6fe9-4fde-ba84-1070761c168b@app.fastmail.com>
-In-Reply-To: <xmqqikg0f1tk.fsf@gitster.g>
-References: <pull.1981.v3.git.1760476346040.gitgitgadget@gmail.com>
- <pull.1981.v4.git.1761593537924.gitgitgadget@gmail.com>
- <xmqqikg0f1tk.fsf@gitster.g>
-Subject: Re: [PATCH v4] doc: add an explanation of Git's data model
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
->> +
->> +It's not necessary to understand Git's data model to use Git, but it's
->> +very helpful when reading Git's documentation so that you know what it
->> +means when the documentation says "object", "reference" or "index".
->
-> "While it is not necessary ..., it is helpful ..." may flow better
-> than "It is not necesary ..., but it is very helpful".
->
->> +This means that if you have an object's ID, you can always recover its
->> +exact contents as long as the object hasn't been deleted.
->
-> Somewhere in distant footnote, we may want to mention that objects
-> that are in use are never deleted, and when they get removed (i.e.,
-> garbage collection).  As part of the data model, "everything is
-> retained by default, until we can prove it is no longer reachable"
-> probably belongs somewhere.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Agreed, I really like this idea. Came up with the following, which I'll put at
-the bottom of the "References" section if I don't come up with a better idea.
-(I don't feel strongly about where exactly it should go):
+> In C, it's easy for us to look up a hash algorithm structure by its
+> offset by simply indexing the hash_algos array.  However, in Rust, we
+> sometimes need a pointer to pass to a C function, but we have our own
+> hash algorithm abstraction.
+>
+> To get one from the other, let's provide a simple function that looks up
+> the C structure from the offset and expose it in Rust.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  hash.c      |  5 +++++
+>  hash.h      |  1 +
+>  src/hash.rs | 15 +++++++++++++++
+>  3 files changed, 21 insertions(+)
+>
+> diff --git a/hash.c b/hash.c
+> index 81b4f87027..2f4e88e501 100644
+> --- a/hash.c
+> +++ b/hash.c
+> @@ -241,6 +241,11 @@ const char *empty_tree_oid_hex(const struct git_hash_algo *algop)
+>  	return oid_to_hex_r(buf, algop->empty_tree);
+>  }
+>  
+> +const struct git_hash_algo *hash_algo_ptr_by_offset(uint32_t algo)
+> +{
+> +	return &hash_algos[algo];
+> +}
 
-NOTE: Objects will only be deleted if they aren't "reachable" from any reference.
-An object is "reachable" if we can find it by following tags to whatever
-they tag, commits to their parents or trees, and trees to the trees or
-blobs that they contain.
-For example, if you amend a commit, with `git commit --amend`,
-the old commit will usually not be reachable, so it may be deleted eventually.
+Hmph, technically "algo" may be an "offset" into the array, but I'd
+consider it an implementation detail.  We have hash_algo instances
+floating somewhere in-core, and have a way to obtain a pointer to
+one of these instances by "algorithm number".  For the user of the
+API, the fact that these instances are stored in contiguous pieces
+of memory as an array of struct is totally irrelevant.  For that
+reason, I was somewhat repelled by the "by-offset" part of the
+function name.
 
->> +Here's how each type of object is structured:
->> +
->> +[[commit]]
->> +commit::
->> +    A commit contains the full directory structure of every file
->> +    in that version of the repository and each file's contents.
->
-> What you are describing here is more of the property of a tree; a
-> commit is a bit richer.
->
->     A commit records a snapshot of the every file in the project at
->     one point in time, records who contributed to create such a
->     snapshot and why, and how that particular snapshot relates to
->     other snapshots in the history.
+The next function ...
 
-I don't understand the goal of explaining a commit in detail in
-paragraph form when we already explain everything in a commit right
-below this.
+>  uint32_t hash_algo_by_name(const char *name)
 
-My goal of this intro sentence is just to emphasize what I think is the
-least obvious point in that list, which is that commits contain every file. 
+... calls what it returns "hash_algo", but the "hash_algo" returned
+by this new function is quite different.  One is just the "algorithm
+number", while the other is "algorithm instance".  Perhaps calling
+both with the same name "hash algo" is the true source of confusing
+naming of this new function?
 
-Happy to change it to something shorter like
-"A commit records a snapshot of the every file in the project" if you
-prefer that wording.
+> +use std::os::raw::c_void;
+> +
+>  pub const GIT_MAX_RAWSZ: usize = 32;
+>  
+>  /// A binary object ID.
+> @@ -160,4 +162,17 @@ impl HashAlgorithm {
+>              HashAlgorithm::SHA256 => &Self::SHA256_NULL_OID,
+>          }
+>      }
+> +
+> +    /// A pointer to the C `struct git_hash_algo` for interoperability with C.
+> +    pub fn hash_algo_ptr(self) -> *const c_void {
+> +        unsafe { c::hash_algo_ptr_by_offset(self as u32) }
+> +    }
+> +}
+> +
+> +pub mod c {
+> +    use std::os::raw::c_void;
+> +
+> +    extern "C" {
+> +        pub fn hash_algo_ptr_by_offset(n: u32) -> *const c_void;
+> +    }
+>  }
 
->> +    It has these these required fields
->
-> "these these".
+I am somewhat surprised that we do not expose "struct git_hash_algo"
+the same way a previous step exposed "struct object_id" in C as
+"struct ObjectID" in Rust, but instead pass its address as a void
+pointer.  Hopefully the reason for doing so may become apparent as I
+read further into the series?
 
-Oops, will fix
 
->> +Like all other objects, commits can never be changed after they're created.
->> +For example, "amending" a commit with `git commit --amend` creates a new
->> +commit with the same parent.
->
-> "same parent." -> "same parent, without modifying the original
-> commit object at all"?  Maybe redundant?  I dunno.
->
->> +[[tree]]
->> +tree::
->> +    A tree is how Git represents a directory.
->
-> "a directory" -> "contents in a directory"?  I dunno.
->
->> +    It can contain files or other trees (which are subdirectories).
->> +    It lists, for each item in the tree:
->> ++
->> +1. The *filename*, for example `hello.py`
->> +2. The *type*: either <<blob,`blob`>> (a file), `tree` (a directory),
->> +  or <<commit,`commit`>> (a Git submodule, which is a
->> +  commit from a different Git repository)
->
-> This is a bit of white lie.  A tree object entry never stores the
-> type of the object.  It records <mode, object name, path component>.
->
-> The second field you see in git ls-tree output is computed from the
-> object name (when the object is available) or inferred from the mode
-> bits.
 
-Thanks, I didn't realize how tree object entries were stored.
-Will remove "type".
 
->> +3. The *file mode*. Git has these file modes. which are only
->> +   spiritually related to Unix permissions:
->
-> In the cover letter part of the message I am responding to, I saw
-> repeated mention of "permissions should be "file mode"; let's be
-> consistent.
->
-> "Git has these file modes, which are ..." -> 
-
-Makes sense. Will change to "Unix file modes" from "Unix permissions".
-I don't think this needs a more dramatic rewrite though.
-
->     Git uses the following file mode to represent what each tree
->     entry is (because an object of the same type, e.g. "blob", is
->     used to represent more than one kind of things).  The file mode
->     are assigned to resemble Unix file mode.
->
->     Note that Git does not _store_ permissions, and there are only
->     two kinds of regular files; non-executable (100644) or
->     executable (100755).  To Git, there are no files that are
->     "readable only by the owner" etc., so file mode bits like
->     100600, 100400, etc., are never used.
->
->> +[[tag-object]]
->> +tag object::
->> +    Tag objects contain these required fields
->> +    (though there are other optional fields):
->> ++
->> +1. The *ID* and *type* of the object (often a commit) that they reference
->
-> Not wrong per-se, but it is a bit curious to lump these two into a
-> single enumerated item here, unlike "author" and "committer" were
-> enumerated separately for commit objects.  If you are going to show
-> "cat-file -p" output for illustration, it may be help readers
-> understand them if you had them separately listed here.
-
-Agreed, I'll split them into two items.
-
->> +2. The *tagger* and tag date
->> +3. A *tag message*, similar to a commit message
->
->> +[[index]]
->> +THE INDEX
->> +---------
->> +The index, also known as the "staging area", is a list of files and
->> +the contents of each file, stored as a <<blob,blob>>.
->> +You can add files to the index or update the contents of a file in the
->> +index with linkgit:git-add[1]. This is called "staging" the file for commit.
->> +
->> +Unlike a <<tree,tree>>, the index is a flat list of files.
->
-> This is a bit of white lie, as modern versions of Git could be
-> collapsing uninteresting parts of the directory structure as a
-> single tree in an index entry (this is called "sparse index"), and
-> can expand such collapsed "tree" in the index on-demand into its
-> constituent files and directories.  But I do not mind presenting the
-> traditional world model for conceptual simplicity.
-
-I didn't know that, thanks. I guess I'll leave it the way it is for now.
-It could be good to add a footnote, but I don't actually know how
-to add footnotes in this document format.
-
->> +When you commit, Git converts the list of files in the index to a
->> +directory <<tree,tree>> and uses that tree in the new <<commit,commit>>.
->> +
->> +Each index entry has 4 fields:
->> +
->> +1. The *<<tree,file mode>>*
->> +2. The *<<blob,blob>> ID* of the file
->
-> If you were to collapse descriptions like you did for tag objects
-> where ID and TYPE were treated as a unit, here is the place to do
-> so.  With the mode bits and object ID, we can represent regular
-> files that are non-executable, regular files that are executable,  
-> symbolic links, and submodules (if a sparse-index is in use, an
-> index entry could be a subdirectory, but I suggested above that we
-> can ignore them for simplicity).
->
-> But <<blob,blob>> is highly misleading.  Even if we ignore
-> sparse-index, we may see a commit object there.
-
-Thanks, I didn't realize that. Will change to say that it can be a blob
-or commit ID. I don't think that collapsing will help, IMO it's
-important to keep a consistent format.
-
->     Each index entry records
->
->     1. The object that occupies the path, as (file mode, object
->        name) tuple.  Most often, it is a regular file whose contents
->        are stored in a blob object, that is either non-executable
->        (100644), executable (100755), or a symbolic link (120000),
->        but the object can be a commit in another repository if it
->        represents a submodule.
->
->     2. The stage number, which is normally 0, but entries with
->        higher stages for the same path are used during a conflicted
->        merge.
->
->     3. The path name for the index entry.
->
->> +3. The *file path*, for example `src/hello.py`
->> +4. The *stage number*, either 0, 1, 2, or 3. This is normally 0, but if
->> +   there's a merge conflict there can be multiple versions of the same
->> +   filename in the index.
->
-> If you are going by "ls-files -s" output, it may be better to swap 3
-> and 4 above for ease of understanding.
-
-Good point, will do.
-
->> +It's extremely uncommon to look at the index directly: normally you'd
->> +run `git status` to see a list of changes between the index and <<HEAD,HEAD>>.
->> +But you can use `git ls-files --stage` to see the index.
->> +Here's the output of `git ls-files --stage` in a repository with 2 files:
->> +
->> +----
->> +100644 8728a858d9d21a8c78488c8b4e70e531b659141f 0 README.md
->> +100644 665c637a360874ce43bf74018768a96d2d4d219a 0 src/hello.py
->> +----
->> +
->> +[[reflogs]]
->> +REFLOGS
->> +-------
->> +
->> +Every time a branch, remote-tracking branch, or HEAD is updated, Git
->> +updates a log called a "reflog" for that <<references,reference>>.
->
-> If we want to avoid using word X while explaining X, then we can
-> rephrase it as "Git updates a record in the reflog for that
-> reference".
-
-I think the current phrasing is okay. I also didn't respond to some of the
-phrasing suggestions above if I didn't understand the goal of them.
-Hope that's okay.
