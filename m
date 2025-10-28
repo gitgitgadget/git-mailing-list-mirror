@@ -1,122 +1,130 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1753734FF71
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 19:33:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78112BDC05
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 19:37:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761680018; cv=none; b=KaHflNTTkXdBw/ThroHYE997Swvsj+YU4GwAiV7AV+TENYXQ2Z166UvcJvj/6L0Gsr/V00TP9ZHdGD+ldQ//Hp3e6wPNT4BiXNgBuuSi0JzZepINqaoLKYfgl9gFroN/71I/JHVWJZa97HgkSuh/aONwuT+clc1shvKYi6iRfrc=
+	t=1761680235; cv=none; b=GC9u0IdgLZdT6LQ2FsDa3OhDK5/IkaHtDT/hUxC+rxs8ucnogh+P1KXCFrk7uT54ik0U185ixV8xpBTNcBV5GW/7agNGQbcdYtkbc6Rmo8a2KeZd7wxv262BTPIL0Rur1gZ5byqgsE+VShhKNyHGF9yeQaDQp47l5mKkTRjs6ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761680018; c=relaxed/simple;
-	bh=qxOl3Zzkl7zSAmf32Yznsw8cl8rjfEQmwNfeZLJeWiU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QVixV26OW2KNC1k17+IRQX9pLfNZWoubBUL9i8CxeEEEIBtaTVnhzAJmUXTtkTlcfOnxOin6ZNjBSi3DJrL8luvXt+EBJrS/a+nIWvgJyqJ39wWFYuzux8W9Kp6mzPiNysTk/gPvJTiOYoa1kJKyyMSG9w2M1fmvbkeZ+oBVtvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mFcU1Zzq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=2aJEBgS7; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761680235; c=relaxed/simple;
+	bh=IMTvDFYLV4ckdRHBiIKTRe+Ggvt0reK/Te4Ly2exzMw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fxAAne2vwneJetr1s+e+UCBDWY7BB8kTR0D57xVMuA0opMcFF7rlaMbe59TicNLqPyUnWCanfiNq2rp9d0iDHw6UFpSYkI2gVkLZQN4EerU0sqVKnb9k/mYTS8XY+Fn9x3/p6ItiNWnwVTtgDQEN08igvTFjAKuErewxKzM2FT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YtPJVYD3; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mFcU1Zzq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="2aJEBgS7"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2CCE07A008E;
-	Tue, 28 Oct 2025 15:33:35 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 28 Oct 2025 15:33:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761680015; x=1761766415; bh=3t6JS93kRc
-	roBs3+cx88oiVTY6Wvwt7GEFQ9WRrHapU=; b=mFcU1ZzqX/UgW2KMBWaKx8G9xz
-	ewENQ4Qh0L5iuW5qZR42PsdJG2N8vUx7V1n8t3RfzrYQkA3rlVYtQhxGrODCADTA
-	7/t+Z/ge/i5NDfapn1LYFCaDm/AknO9AC4jx+0Wiwou2L5qkIWJfuAtakKOWXWp7
-	3TFYygB5wUYCxHqdGevjCk0e+ehT4OhkaKEUAk7f4oNU1fwB5MdEV59Tp4N7t1zo
-	kHgoWtWA74TGws1JQMdqQRAu+55IpN0faekWo+iqWGPmUwqKWlvXMWexxO/XMyd/
-	/JSkQc6g4j4vMGks3NvVxSQFUlUYM0PqC7Yw7PKCHSTWGzbA2xX4ndGhdQSw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761680015; x=1761766415; bh=3t6JS93kRcroBs3+cx88oiVTY6Wvwt7GEFQ
-	9WRrHapU=; b=2aJEBgS7UbNdQxbn+Wd92auVWxJs3HMb/hFtRqdIErZ86wBSrFF
-	jjWjIwgDfvLH0QoSeN64PyNgXXotxyD+xFlXkSX9ajqP8HFER8gUs4W8aMjotSgT
-	n7bZ7Gz4KTcqzhcibBnzMSp4TyLn7HFao0+YRbE7SX617ERdggoOlREJn2w/8ldi
-	/S/THT8DZO9GouNx/fOzAX5sWjBxMEbxAVwPbNCKH+sx1Af1NgCwSuEqX+fqtQ5+
-	/mPC9NpMmAtq48Q0HHj8mBqb8lQWy7FKo1ezXkmUc1Kq5RcWUV4B6ZzA3afsWf+z
-	j887/IkUzdVlVT+IDOxGBBmemmhKlhoUTLg==
-X-ME-Sender: <xms:jhoBaX-IXfbWRig4921kuDv-fqaX04dJyVlMGYbSWYxmgot81yvUBQ>
-    <xme:jhoBaaketgA53EMbYY_zDR0KkdMuZagJgPaQgvpJjkaa0SCb2MIO6H1bctv7m9D7K
-    1BJN-S59TBaeNsOu4lp669suxh2Op5lGc3rnmLP_llDAtGMlHNImxE>
-X-ME-Received: <xmr:jhoBadV29WGo2nkZtGePl35u0xxKuXMnAnzs_dMdApMaoxrU1zPEinMA_OL4S4wVKJTBnZpIO_2oVztcSiJHihGelk5xODyJCgS5>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduiedujedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsrghnug
-    grlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvgiivghkihgvlhhnvgifrh
-    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:jhoBafEgRAYljfaFK9QeghX7IdT03mP3m_nhD2eMkvLOl5I3OAafug>
-    <xmx:jhoBaZdJ3HFOttbo7r5XW9zysE-iHVdt11-BerQ5eEoM4F1nF-n_sQ>
-    <xmx:jhoBaQJZGTI-F14kM-Hc2a1gCVeyn1a2E_JE4bKPCHzJRjEG0rElIw>
-    <xmx:jhoBaeH50zqghObLiTc8btPFifq6aE35gaA7kkr4k3es9IVDbdPsiQ>
-    <xmx:jxoBaT1muMzbtV0F4aaXLM7mOaN8mKLbkUpJhwzbWoCO_ASKq6kHBPko>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Oct 2025 15:33:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
-  Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 03/14] hash: use uint32_t for object_id algorithm
-In-Reply-To: <aQCKCfuaEKBArD-g@pks.im> (Patrick Steinhardt's message of "Tue,
-	28 Oct 2025 10:16:57 +0100")
-References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
-	<20251027004404.2152927-4-sandals@crustytoothpaste.net>
-	<aQCKCfuaEKBArD-g@pks.im>
-Date: Tue, 28 Oct 2025 12:33:32 -0700
-Message-ID: <xmqqh5viddo3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YtPJVYD3"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-378de7d3057so57880721fa.1
+        for <git@vger.kernel.org>; Tue, 28 Oct 2025 12:37:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761680232; x=1762285032; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g3XvbWgdI7pRtfxjvi/BYafT69muSjbqvGPA3z3FgFI=;
+        b=YtPJVYD3TdVfhVFuNrW0eKBdXT2e+Yk+A7qB/8coRl7VRQVhrYnVl1bvlTyzhItfrT
+         WE1lo8pPylJuF9Ps/F4Ypz+jMlZhQvrljjy62KaM6xaUr9NCkDbBPGqRl0oy8nUvmzu/
+         vtYGq6eE5OKjxqlNBr6Gu/TSA9SLE+od05kM96wkoPzDyswcreEJMVKux3y/k8gfahq7
+         n8/dn9xw6pSKKQ5ZVldQEPJL6d9sxGfOXdbYgV7UkMzlbj08uMFZnzJ+y13Q1k8GFegO
+         WIRFB1tOjHwGKtn2/yGxyp1CsSxguclWG2IoZzLWBONZCX5BJI37MoUtREbxplx6NPoj
+         KSsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761680232; x=1762285032;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=g3XvbWgdI7pRtfxjvi/BYafT69muSjbqvGPA3z3FgFI=;
+        b=roUh6m4xMpx/JCsMN+U467mQwFF+ssfq+44hdRXLOCFYAcagYuTUKUefwi5C9COecf
+         hhnqenPkasALYzZgGUsuk+KKm31HEjfr1uN+la6u5HH3P2wOI60V4mmugor7XvLhooR8
+         hXHP8kexiAmmFtMZCDSY/eUBQ9KMT4MgEKmEe+IxZQWwLDIfIvPF8C4EBkovtoR+eHMx
+         YU/mEV+uEjWulcrxynTDsKSED87VZqlsNGMx65vuh6PkNf0fiCJgzg3T/2LqRIwS3pY0
+         s5yS6ADb5LVovxlGwq3NCx1Z38dK4Chd2ZTaBexpBy/QzZ6uvz5oC4e4wSzhb5c5j3jG
+         FL9A==
+X-Gm-Message-State: AOJu0Yxyuu9ctFBdIlwnRT7QEgUSB4Fe9UuFrP4m/Fq4yp/wwwMIjKBy
+	OwWPXZ6r/OnqOyzeMaG18spWQUMFICHMnowkMjhyOfGF59HQZlh3mBpE5VtzWLoqcDwE6RRzW39
+	3AlOtRHKOcp7LioQtolHC4zU+oGG6QRIUcVo6
+X-Gm-Gg: ASbGncu+JAFd6F2dc+o9vedpRutVvyGfLZlBd0XNw20PYPxQ5f45TTwryiHFEdo1IyJ
+	34rip2Gn0vX/aeiQkKxlw34lkRgw4p4B64S//bH44NXaE7NX/6sqPjAZe4svMB7TkIFPy6Bh2EP
+	W3otm1weX3SzM5jLhtiJbL/up0tN8jwFew5hvJVySiyAZLH/bTtqUqm8641BnSqy2gdMs6aboFM
+	vFsLEuqcsuVJFgKFYWQMUjn5LJocf/j+XNdDovRVMn3ldEKI4OVOfEMLsVYXg==
+X-Google-Smtp-Source: AGHT+IE1F08ApV/TJ9IBX0oKuGKEcQVE2TBeubB8bklVHXkt1Oresj4n956vfjx238n3LaU2N/Wr2D/pphdX2bEe874=
+X-Received: by 2002:a2e:a016:0:10b0:378:d65a:9ceb with SMTP id
+ 38308e7fff4ca-37a023fac0emr1655911fa.24.1761680231686; Tue, 28 Oct 2025
+ 12:37:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20251023-b4-pks-rust-cbindgen-v1-0-c19b61b03127@pks.im> <20251024-b4-pks-rust-cbindgen-v2-0-4b4bd4f18490@pks.im>
+In-Reply-To: <20251024-b4-pks-rust-cbindgen-v2-0-4b4bd4f18490@pks.im>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Tue, 28 Oct 2025 13:37:00 -0600
+X-Gm-Features: AWmQ_bkaby5abXO1UfPqoNezJ_Fo3u3YqGb2RWq7wXzOmAGjaFbeAZaD1Y-aq1I
+Message-ID: <CAH=ZcbAC_u88_cD33bRxAuAPhJh02zNOHAVnkhxthncDFdZOOA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] rust: generate bindings via cbindgen
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Mon, Oct 27, 2025 at 12:43:53AM +0000, brian m. carlson wrote:
->> We currently use an int for this value, but we'll define this structure
->> from Rust in a future commit and we want to ensure that our data types
->> are exactly identical.  To make that possible, use a uint32_t for the
->> hash algorithm.
+On Fri, Oct 24, 2025 at 3:51=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
-> An alternative would be to introduce an enum and set up bindgen so that
-> we can pull this enum into Rust. I'd personally favor that over using an
-> uint32_t as it conveys way more meaning. Have you considered this?
+> Hi,
+>
+> this small patch series introduces support for cbindgen(1). This tool is
+> used to generate C headers from `extern "C"` blocks so that Rust code
+> can easily be called from C code.
+>
+> For now, the only use case is to verify that our varint reimplementation
+> matches the C implementation. But later on this can and will be used to
+> call Rust-specific features from C, as well.
+>
+> The topic is built on top of c54a18ef67 (The twenty-second batch,
+> 2025-10-22) with ps/ci-rust at e509b5b8be (rust: support for Windows,
+> 2025-10-15) merged into it.
+>
+> Changes in v2:
+>   - Take some of the pieces from Ezekiel's "cbindgen.toml" file. I have
+>     not yet taken `usize_is_size_t`, as that option requires cbindgen
+>     v0.16.0, which is not available on Ubuntu 20.04.
+>   - Backfill missing jobs for GitLab CI.
+>   - Fix CI failures on Alma Linux 8 because cbindgen isn't available
+>     there.
+>   - Link to v1: https://lore.kernel.org/r/20251023-b4-pks-rust-cbindgen-v=
+1-0-c19b61b03127@pks.im
 
-Yeah, I do not very much appreciate change from "int" to "uint32_t"
-randomly done only for things that happen to be used by both C and
-Rust.  "When should I use 'int' or 'unsigned' and when should I use
-'uint32_t'?" becomes extremely hard to answer.
+I really think that this patch series should include migrating to a
+Cargo Workspace. That'll mean moving /Cargo.toml and /src into
+gitcore/ and creating a new top-level /Cargo.toml with the following
+content:
+[workspace]
+members =3D [
+    "gitcore",
+]
+resolver =3D "2"
 
-I suspect that it would be much more palatable if these functions
-and struct members are to use a distinct type that is used only by
-hash algorithm number (your "enum" is fine), that is typedef'ed to
-be the 32-bit unsigned integer, e.g,
+Along with the other cascading refactor changes needed to make this
+work. Let's do this now while it's still easy.
 
-    +typedef uint32_t hash_algo_type;
-    -int hash_algo_by_name(const char *name)
-    +hash_algo_type hash_algo_by_name(const char *name)
-
-Yeah, I know that C does not give us type safety against mixing two
-different things, both of which are typedef'ed to the same uint32_t,
-but doing something like the above would still add documentation
-value.
+If we don't do this now then we'll be locked into a single crate
+project forever because there'll be too much momentum later. Having
+the ability to define multiple crates allows us to:
+* Easier to understand the big picture of Git as each logical
+component will be its own crate
+* Make Git more modular
+* Design better api interfaces between logically separate code
+* define a header file per crate via cbindgen
+* avoid gordian knot problems from making Rust a monolithic component
+* easier to reduce dependency sprawl as each crate only defines what it nee=
+ds
+* Improves compile times through incremental rebuilds. Cargo caches
+build artifacts per crate. When only one crate changes, others don=E2=80=99=
+t
+need to recompile. This becomes a major quality-of-life improvement as
+the Rust footprint grows.
