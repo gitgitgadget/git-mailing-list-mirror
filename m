@@ -1,126 +1,122 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A44D338F56
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 17:10:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E2728C5B1
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 17:15:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761671411; cv=none; b=IAtiC1PHzW5FNGEN2JB+EwL37b/oE4558FyB+OleH9e5KZanIN4+Q3dv7YdQGJVrxHJeO3fpMsuzaP+vjAqOO28DlSfrAqB8CGyuJuQXDXWGZvB65NlxW7G2d1oiq1ZKVvao8UxDnPziMUz4tHVJi/nBAiOCSXI5MYUakb+mS+w=
+	t=1761671728; cv=none; b=P057KnTZqm+SCosNzCcRehhG4b9CexH/7UxWcMJNP0fGYNOzGORGR3tA2oygLm+RAH2Bt7MchshGU8oQHOTWUS5HEYm5/SbbkNw9pPqoChbixrSU2pM1yAyjMJlUkIycQdrDyGHNd0uFd9K3L88PLy23ItUiMubSLTYqGGH2N9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761671411; c=relaxed/simple;
-	bh=X3edWp3kCkFQo8I/6Sv4pSYVhp2YCuoXvWAmEuPneyQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KK6z6RWhcSfTxrPG/m7qpqvwCK85ahMP3KaRbPJqAd5G1IiCWN7GPo8C2miG33K8522McYsOqfDoN5e892mfFCGWEv0tncYNJvkcIwaT+B7y7ozNZrDoO3hw+jAJkjhmadre+LKEzBalrYWuQq+zAmHVC8zckYTwy566S9xhTOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m/bQoypu; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761671728; c=relaxed/simple;
+	bh=IGDd+jmh1EFNk/HMQB64Q9d0EEcLbnSYm3m3lxoXC0w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eJLISjRpxEIbwWMhd+kwFWwqDVJwCHHuOwQyFYExaPfnk8/y5uLWNcHD76vx9yMKez2YV5RHZQDOZrGxv8/Asrwphhs5Oyv+c75Q+zknP6ZcHywP1IVTmMHPMPjWUFxLALZWAM48gItXxZEBNkP8sqSPV6Q44qGlLesHkzK92s4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IsNI2BAY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IrC0XMpy; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m/bQoypu"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-378d50e1c77so56893081fa.0
-        for <git@vger.kernel.org>; Tue, 28 Oct 2025 10:10:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761671406; x=1762276206; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Q8V5YA8xDD3NI84t5BMnByAk/niDBLCFSUTj/OmurhA=;
-        b=m/bQoypuVQNs+OrxqHP8zETGR/sLifyla02jPUC9ZxEhRaO/Cx2VYiCtbj2PC1yXK9
-         LV40BcVr2g5/Iw/4hiVFwI4xXLla5g1x8ezI8FVOYsFnskYM4Kmnpkn4BSy+Sf2oHkGZ
-         KpqSZ4dHVrcnfkODqRrJ/Y5lsV2+Wuduiyo+P797SS1V6lETW1anoMFEWZo3zNszyOas
-         s7114/nAD5BMTl1a4iM3BM14p2SgCfoxrZcJU8GivMoiI60AfZkV/1RCF9F5nJOxUWmB
-         hkmhz1XRPqPOoKcveNlR+fihS9lzxngGtfbS8HrPG+BZs8a5OieXOgWHXgRU3RjhwFY/
-         o0IA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761671406; x=1762276206;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Q8V5YA8xDD3NI84t5BMnByAk/niDBLCFSUTj/OmurhA=;
-        b=c/yf0Vg0lzTPtPvz5acR5youlYxeUMxAxBnUKe3OGdgcxWa1LKJ6h7yhhruuXpjWFu
-         2J2/QM4GWaWPkVd9dY36EvAuYWe+bPtITlXEX/JMXDhpwHwEf0zBMv4AooUgxn8Dvz4O
-         Fhrp7Ua/+7EdTlPBsLmJu+c1oZCFwbJ54aJ675k+/zJ5anWVRK0fB4C08azGansznFRH
-         fbgKmsXBvP9mhv0QYwIAuq3JeYZs3eInS08LW2vWlwjkl/cse29PejE4F+l8lWnwJGka
-         CovC56zwilItceDwWHE3kVEZfLiJFDi8DmMLjq8z/sWoC3w51e98+PazMrEiHCQ9Rwjb
-         GhlQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUrkpWr7CufYx8NZOrm2qKvCRyevobNomYO4cDQr6igu4xc2qRxbrpwCt7iXdtRzkndKmg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzssLwATrO3/qRjIY5BSnH58KjfActExoUVbmRvg4zEYZkbf9jU
-	I4OcObc3FGEHPDKNgdz8KsFxlwXsdYsAxT6ty47uk6jGL6CqbXog+nT+pye+0CCarbuEOpjH0QK
-	pFdwm5W8TzSlDu5L/lF35odoh6wbPjJY=
-X-Gm-Gg: ASbGncv3sQwBouocEPeW6AZ7uA4noWeuhMM22jxG9MVotyAbZJwGCfwNfgvw9+3kLWo
-	pIReJA0U21BwM91QyvnmQYc44RwdBB8C0tHBSxgCzX8HM8TubIk/IeIPNhPKWe2I+qOlRlfa9Pt
-	d0Qpg3AMNkwWmPJpvmJRrORVi1Eyv0W7DCbVdf3cyjhqTQSa59TE5r/Up+j6Gy+EL72szswzzc9
-	aRqWtnTiEuB9p/3rbe+bDLdYtYVFDXjQQ60ZrDRMbCT4wlqSvktCzU7IZ8wyjv9InD6fgV5
-X-Google-Smtp-Source: AGHT+IFPAuQ6UQ/psAWPAfvxI4CwISNAPEjDsbjTjM+STfYx3OwMumeCfy3+SL1HG1oq+p6/oyvFi2zR00bdm1aOaAA=
-X-Received: by 2002:a2e:a913:0:b0:36c:f6:a4e1 with SMTP id 38308e7fff4ca-37a023caa68mr668101fa.14.1761671406157;
- Tue, 28 Oct 2025 10:10:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IsNI2BAY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IrC0XMpy"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B8B717A0050;
+	Tue, 28 Oct 2025 13:15:25 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 28 Oct 2025 13:15:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1761671725; x=1761758125; bh=WB0mLGKSpu
+	WpVwCV0ztMLokUkFSH6V7DcobNjkxok/w=; b=IsNI2BAYLxlp7XQoyM6qrX8Ovv
+	yyIIP2HKDaObd4dT2/6ZlaUioRT4jZxBcvPcqykFCSyRhyvW1Fx/y9dZMO5exwge
+	9w72DuuFkSIql6RjFAdfEJorhbn8DHSks4+Qc82eFApWQqY3oIGvGQc26ObkEGZ+
+	sjlvJlAJJmYNfJPsg3T2b/sxQrsdBnIqyW0qD8SPDdmsPr4gQANf0CCDsv7+Rktb
+	COzc6jVj7V/PXzKSNT9sDNpOl4vPfaT1oUbg8tRE+wozAMV5rVmjcbU2LB1W9rZU
+	2eDdhEsQE/FqUsyyQHkuaTjyEm+gP2pkoTUxAK0+ytlE44vEncKJpUX+Zalg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1761671725; x=1761758125; bh=WB0mLGKSpuWpVwCV0ztMLokUkFSH6V7Dcob
+	Njkxok/w=; b=IrC0XMpyN0XwpfpP9zSdpEuiQnmA9qudZgC2NQw8qztb1qtynfE
+	GPLB5NdhFS7mK55rYs2RogPRtXCK/FQ1UXsSuyYEBlvhpUD9/YRreL67h2LR1L6d
+	Ds6GUXrLOsu5/ZEURv8XSXmFDVg4uqHkZQjtN6sqWtyNLMQExOE3dyn7ezw9qY6H
+	+ZFZAYd732+jyIGBoGKhKyIA8Ad11vEbMeGS7OALbujwmDHlOqR0+BXR9IvfJ2OV
+	BovyIV/Qx3VkULZMHkH/XRvQBxvH8cOFl78IM5ZdhixdCXJNaPNWLmSNuSbVizMI
+	FCuzjPTsKIahbh/35Xyegq51/ca9UcCu2MQ==
+X-ME-Sender: <xms:LPoAac0UAnqQO-81Ml7zIJKNHBu8480Bp5iYCtadARLK9vMlllmjig>
+    <xme:LPoAaaxKALws7_CDiFGcu_79yPULzJ_ML_IjYEKdhDtV6OHoDatAvtPg9hdZOdBo_
+    yGnudBXuskmigoLJoYe05LEk8B8JNB8Ug_wJWubmg6Aclp0VAXatg>
+X-ME-Received: <xmr:LPoAaeutiZYRMfVLzfF-LQPCarbfTDcIRhO1Zt4-nvKGzamJ4ANYHDg_6cs-HjLdnX_cmPk6kmjGsMGoSfod3ikUfqoFBWatKmCG>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduiedugedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepvggsihgvuggvrhhmseigmhhishhsihhonhdrtghomh
+    dprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehfihhvvgdvfedutddtfeesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgr
+    shhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:LfoAacyecc2ONkB8X5sGZk0vKkhwNYg30UuzpM3grwY9jP5scXUchg>
+    <xmx:LfoAaRC0kUDpo7lPavdOG0SA1YPilRRYtNad0TfyTYLQWtPuP7BOlw>
+    <xmx:LfoAaacpwNNGk0aiBAZwVv-jYMFond7D7gsdPXGfZZLX321wUppukw>
+    <xmx:LfoAabk8OhShTVvo-4fY6bLBClz-MqbOKv5VoS1gwUt5acVteNryxQ>
+    <xmx:LfoAad4nVxH9qnffYo5-TQSEIwIp6FcqQTNagbbCUL8d77WA7Scmj9x_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 Oct 2025 13:15:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Todd Zullinger <tmz@pobox.com>,  git@vger.kernel.org,  Kousik
+ Sanagavarapu <five231003@gmail.com>,  brian m. carlson
+ <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] t1016-compatObjectFormat: Really freeze time for
+ reproduciblity
+In-Reply-To: <87frb310d2.fsf_-_@email.froward.int.ebiederm.org> (Eric
+	W. Biederman's message of "Tue, 28 Oct 2025 11:01:45 -0500")
+References: <20240703153738.916469-1-tmz@pobox.com>
+	<ZoV8b2RvYxLOotSJ@teonanacatl.net> <Z8HVkqqD054QGPIE@teonanacatl.net>
+	<xmqqbjlump3m.fsf@gitster.g>
+	<87zf9c8glu.fsf@email.froward.int.ebiederm.org>
+	<xmqqqzuoi6sg.fsf@gitster.g>
+	<875xc02mmq.fsf@email.froward.int.ebiederm.org>
+	<87o6ps16pj.fsf@email.froward.int.ebiederm.org>
+	<xmqqms5chyr8.fsf@gitster.g>
+	<87frb310d2.fsf_-_@email.froward.int.ebiederm.org>
+Date: Tue, 28 Oct 2025 10:15:23 -0700
+Message-ID: <xmqqv7jzc5hw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
- <20251027004404.2152927-6-sandals@crustytoothpaste.net> <aQCKTFrmtlp9UEL6@pks.im>
-In-Reply-To: <aQCKTFrmtlp9UEL6@pks.im>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Tue, 28 Oct 2025 11:09:54 -0600
-X-Gm-Features: AWmQ_blU-jvB5sBd2Rd3Kijbd5jW9gmlMp53xBrpv0YtsOPkEGr-RU7vP1r26iI
-Message-ID: <CAH=ZcbACQt6a=8AtsRD3UUx+-6xB14HJM1p0XC4Nu9ZWKL4fkQ@mail.gmail.com>
-Subject: Re: [PATCH 05/14] rust: add a hash algorithm abstraction
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Oct 28, 2025 at 3:18=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Mon, Oct 27, 2025 at 12:43:55AM +0000, brian m. carlson wrote:
-> > diff --git a/src/hash.rs b/src/hash.rs
-> > index 0219391820..1b9f07489e 100644
-> > --- a/src/hash.rs
-> > +++ b/src/hash.rs
-> > @@ -19,3 +19,145 @@ pub struct ObjectID {
-> >      pub hash: [u8; GIT_MAX_RAWSZ],
-> >      pub algo: u32,
-> >  }
-> > +
-> > +#[allow(dead_code)]
-> > +impl ObjectID {
-> > +    pub fn as_slice(&self) -> &[u8] {
-> > +        match HashAlgorithm::from_u32(self.algo) {
-> > +            Some(algo) =3D> &self.hash[0..algo.raw_len()],
-> > +            None =3D> &self.hash,
-> > +        }
-> > +    }
-> > +
-> > +    pub fn as_mut_slice(&mut self) -> &mut [u8] {
-> > +        match HashAlgorithm::from_u32(self.algo) {
-> > +            Some(algo) =3D> &mut self.hash[0..algo.raw_len()],
-> > +            None =3D> &mut self.hash,
-> > +        }
-> > +    }
-> > +}
-> > +
-> > +/// A hash algorithm,
-> > +#[repr(C)]
-> > +#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
-> > +pub enum HashAlgorithm {
-> > +    SHA1 =3D 1,
-> > +    SHA256 =3D 2,
-> > +}
-> > +
->
-> Seeing all the `match` statements: we could alternatively implement this
-> as a trait. This would have the added benefit that we cannot miss
-> updating any of the functions if we ever were to add another hash
-> function.
+"Eric W. Biederman" <ebiederm@xmission.com> writes:
 
-match is more strict than switch. If another enum type is added then
-the current code will not compile. While I do like the idea of using
-traits the problem is that the hash algorithm used needs to be known
-on disk. We can still use traits, but in conjunction with this enum.
-The part where we need to be careful is HashAlgorithm::from_u32()
-because if _3_ ever becomes valid then this code (currently) will say
-it's not.
+> By default gpg still allows time to move forward with --faked-system-time.
+> So in those rare instances when the system is heavily loaded an gpg runs
+> slower than other times, signatures over the exact same data differ
+> due to timestamps with a minuscule difference.
+>
+> Reading through the gpg documentation with a close eye, time can be
+> frozen by including an exclamation point at the end of the argument to
+> --faked-system-time.
+> ...
+>  t/t1016-compatObjectFormat.sh | 6 ++++++
+>  t/t1016/gpg                   | 2 +-
+>  2 files changed, 7 insertions(+), 1 deletion(-)
+
+Geez, how are we expected to find the need for '!' ourselves X-<.
+
+Thanks for root causing the issue so quickly once it was raised.
+
+And let me drop the "let's disable flakey ones" band-aid patch from
+the queue.
+
