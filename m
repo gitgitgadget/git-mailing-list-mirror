@@ -1,818 +1,342 @@
-Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EB826FD9A
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 21:14:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E6F2E88A1
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 21:46:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761686067; cv=none; b=lw3pNJrsf4sTT0ITkZs5LO0Dj7xJAgBpxUezoJ9BEv7dYlX1D3erEAVUil5DjPcnAMH82e86/qfP6f35+aRYnqG3r3KFf32cmP9suleyNv4NT5ZnYnRG+IshrvokWnMiP1xr7uBAvedfH04ecJQy0zpS9sSn251QnpkkdxgHC7k=
+	t=1761687984; cv=none; b=Ot6ULzfjLDFMZGhUoK8TXQoKIS7rpIzSMvLJwK0TN6YBXTJkOwK1VEg93gt3Ggnvov4T5Ysw8K7v39f/KIAx//G4awiO0ygyuN5AsqZyfbx9Nkntps7mqYIrnUg8osqn6XqVaM+koFqiHXKcJN0EBRIdj8VIFXV78CfgYeInsiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761686067; c=relaxed/simple;
-	bh=/WWx+gzHiVbBthTR8H+vbAp9tju9sJ92w91o0JFeQK8=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=fhsA3sY7LlrGs3tU7Qy0nn/wxzy+zvIjnWH40pPUcJ4GfPdzaECZhTnmbXEtVT2rczKC+JTTpv4KdWBFJiazn7gOwLOInEPr2qAQwUDnU6/gQ9/nOxNeWHRItUpmXJHfD9uJLSNXlSRF6Gue3a8qbnx55yvnQTqK3IeBolD6xxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L38PASMu; arc=none smtp.client-ip=209.85.166.169
+	s=arc-20240116; t=1761687984; c=relaxed/simple;
+	bh=6F3K13KrFhsQ8yknQHskLFIhx3PpkI8VXM9mnynqlCA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Vjbf2X78CC8vaL1hfzbIRo2gFHfXAWJxQmTMyLwVLfcVpz+nAjz7X4mPdeMQKD57XWp8C3kcFTeogseTC9OFYkqwAc9HoplJ/EnukaqgugudznO0k87ZfAMPJpfZhRSZoXVevFXi97g6vEOMB8jLas1dMVzWqAaCM7Tk0YzttEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cTX0hfPM; arc=none smtp.client-ip=209.85.215.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L38PASMu"
-Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-430a5fe0c5cso58185625ab.0
-        for <git@vger.kernel.org>; Tue, 28 Oct 2025 14:14:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cTX0hfPM"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b6cf30e5bbcso239792a12.0
+        for <git@vger.kernel.org>; Tue, 28 Oct 2025 14:46:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761686064; x=1762290864; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1761687982; x=1762292782; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0kUXmmPfwlqI3u4b6z31Agw191B25cO1Mk4rcSa/MpA=;
-        b=L38PASMuw+Msfq98DU9pBy83d3XB/KWK9VyUMvMrMAP+5EIHFzErPo74kQoEpMWwvy
-         I9JqOwxbatMNPlGF9d7MhzXfU4kZghiKNwMvLNkEZr4WssHeb6oZoxLpoaWZpMwP7c2r
-         fnD0KBVCQbJpE/gJvsALtLR06FefWOl0fBTk1STdVA0pVYjedlampUmH3/4fW3bIFQPj
-         vvU0LXZ6635ND2+lVTqJtIYXlCuS4+czPe1nmfiVyYu/9RHEb5O9TzrqyTry2K6lp0Nk
-         MgZANUeLMfLI6AT0KtM15u7wpMsm7dXI+20PxXsqtTu3BhesJ4wL2SA9Bf97jeYENtSt
-         I0JQ==
+        bh=JEXWxRcqwKtylsJ5++fHyBY/NfparbSIp4AH8kFhKZI=;
+        b=cTX0hfPMh8zDAu5BYCgVhP0q+Uiuei5Nc+S+STNdNpkYE0bxrXz+0R1nTuD2TJwgzM
+         U8JbeP0HAHZQ8oML5GoVJqCqmZ3WopL7IAgPTx3uqHPVzN2uMqfdFAE3D6AY9wOEWR5m
+         hP0sS7n5F/kUI5KHGNsqFxK1595ZzKOU558a6Ve6qs0UhAe05m5oHiy+xA4WgRynAe2E
+         XKEjkJ1YyU0GKhxgAJHdMO7pEWLjf1Lm+VNJosPrHfrFrBgLi35SOM6SZTxlgqy+EKFe
+         /KbCnqQ5HA/xyw5wJGQRRVjV4JR0rGzmpLyHTjHJL9/Ij8SEUevU5Vw5FPBk5ntJGryb
+         QWmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761686064; x=1762290864;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1761687982; x=1762292782;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0kUXmmPfwlqI3u4b6z31Agw191B25cO1Mk4rcSa/MpA=;
-        b=a9LRrF4YzyW4DmW1yeCV7Hmbi4Rczm7/1SfFYnjvFgn7jMh0lDz7MG91V4T2EDa4sE
-         alrUfU+r+h7036TMhPQZgpAdohyiK/nsvm00mqAjNGocOjKGM3i7uR/3/6YfLpH25Vq+
-         x45kdynRqVE6mvxZ+/AmQSalIHPukPnT0aNfFfR5nRaakldYjrgjnWBl6TfuRGpOWze/
-         h3XfxdoYjliThK8T8VVQMdWghs6049v9hSNYi8qHWroFqNEVWTGczvCnZatUJk4dbyGi
-         R0qdy0Cr2fZLVgeSEwE7EFNAgnHDMxmb85caOI+p5AZx4VSfF5D0AaujqjZ5FZ2xm6T4
-         b3xA==
-X-Gm-Message-State: AOJu0YzPF0wx4XuJgTndLZnLWpqRywHQMqcvD0L3g3aTpQSsarm9ZuTb
-	GSYBTuDbW9QKWa5IqlQiZIxiUqW43D/PA2SRx4hipsLeZd/I/F91OEcVui8VOA==
-X-Gm-Gg: ASbGncv7DVWwjRnfj8AjjAa2s38DdErf3CYLiIB6833uv91m0av2XFyogB+9yrxEYnA
-	vrCKO74en2Nx3bgZzuFwzKt9tK30FjaK1WVRaCLvmErLbXmu2lD3FpKZZtLhdgJ4bM9G4plNRIv
-	XjH/onBbncPRyZUPKaNjVZxP+WTRE88SuM2ZBedqMcMx2pMo00BK1b46fBtqhnenfC+ORcwmbRZ
-	v/IkG09BtfdzcDt5uwqGyd/Q9bwGaA8RfYHbMDmXnpfC1U1JMu9+h8ZQNs+0N0RQ9mC1ztMa3QC
-	iaaNpl0KFnAAhHL9MD3k89APzQ3mtFm4q2YLOqcxa4ZlR5ul2i5/20uQHVIgOZUy6P8b+Ocidq7
-	C4NctxCbk6+XPjbfzMMGAi9RMnisxDt4al5HdS+xR4qATtxHDVIU+Tu3PhJbTk7fPT4Zk6+Vpii
-	CuoA==
-X-Google-Smtp-Source: AGHT+IEc2MnkwWCTBiWga6t1rhqfMRy+bDjSUlK1Q7A3jUQgxPjzu/+adsLws3mrU4C//RT3OqN8EA==
-X-Received: by 2002:a92:cd84:0:b0:430:ae8a:40ae with SMTP id e9e14a558f8ab-432f9028c5emr8948695ab.15.1761686063967;
-        Tue, 28 Oct 2025 14:14:23 -0700 (PDT)
-Received: from [127.0.0.1] ([52.176.19.197])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-431f688b3d6sm47839075ab.24.2025.10.28.14.14.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Oct 2025 14:14:21 -0700 (PDT)
-Message-Id: <pull.2075.v3.git.git.1761686060477.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2075.v2.git.git.1761658643278.gitgitgadget@gmail.com>
-References: <pull.2075.v2.git.git.1761658643278.gitgitgadget@gmail.com>
-From: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 28 Oct 2025 21:14:20 +0000
-Subject: [PATCH v3] blame: make diff algorithm configurable
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=JEXWxRcqwKtylsJ5++fHyBY/NfparbSIp4AH8kFhKZI=;
+        b=d+36pv1zZi23A6hDBpX81cev1g2KM4seNsnqG7yryIUMV35II2WtzBlLM5FhLjUdh1
+         xfN7y9c8p3uMWwhjeKmDy64c8u7smBjn+2+ZV2K1hXKirR0fjBoM+SiR1uLURuKFHDea
+         MWoj7/y4ek2nZu9Y0Bxpas5j0UYYT7t+04GnAaGai+NIAYTwoZbbhRG0fyioWh0stVkv
+         yTKPf7FgzwWjE9dDBzEiOjoheT75jhIxoSB8WaOrlTYm2N8weTmgDdZtsjv7hBAdFdLE
+         hTOmByPxM31YW0HpxlPOPYsCN8fX+TDXXuvsVOA5Yzd7yF5FJ2BFwcFXeGvZ55zQtVUt
+         VeRw==
+X-Gm-Message-State: AOJu0YxrxB9uuJWlI/DlHMayzeAKN6tTzUwYFHbZ4436Q0fGau5TVjHf
+	0ZiAx9gLU/5krTydeOF7DJrrFwTiuhpTBO0rMTbJ4Sm+I5j+urUDc+nombLY0vskq5E=
+X-Gm-Gg: ASbGncuYcv6hPWITnDL5vDthPrJjXEfKBGur1G0uYAom4qAaZTnXHlKnHOHEn1fIK5Q
+	uvxQHB5u32ECayHK3SRsC5y1SFHKab4sV/Xi1uLYM2fyznuYHO3Lu6sHt51AOT83JheUAXZL/i5
+	sKW905YaL79hagCg7Gifue+hRrkXfK5Jc4GvKcIUz8mQX6J6/YK5xP08cOSd6wMZNX3tLdL8Wl0
+	9u2pZRBVYKkAGpNoKuNFqBtVehJZPVT6oCvhbLYRYHFW2JXyTdekd5VPcWQIGuZvY6kc0VFFIqo
+	DhmAn/cL/+18c4dU2b8ws74Uk7PfJEkVKeIjXgOYBpbvSfmift5mZ0t3yyKDKiZJ35iODAoZoU3
+	biJgUFAAu8/GmDrIreGqTc3iYovsi/sxSGqjGoLb8Eh+Y74mZ3sZ2Oj6/dOLnj+RBVGleXVda/R
+	YXbDmq4JqKBHsqGarDQfZZ4wB70q81yRgLa1AwIWWhTCtmDod5QWFVAxCEFHoBz3UbJ05lq1vQg
+	kCMapJHWnkXVxyBJSHI8oDpEqkhq5mJAA0RbMsOMv8=
+X-Google-Smtp-Source: AGHT+IGIlD4YZwL7+5zg8Xeqcm1YktG5r4jSwEDgHi+nVydHMp0OiTaCodoWMK/tZ1+eq1vj/HpDJQ==
+X-Received: by 2002:a17:903:38cf:b0:279:373b:407f with SMTP id d9443c01a7336-294cc68682amr52745315ad.5.1761687981514;
+        Tue, 28 Oct 2025 14:46:21 -0700 (PDT)
+Received: from localhost.localdomain ([2409:40e3:177:42ef:798a:642a:892e:b13])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498e42afdsm125645655ad.99.2025.10.28.14.46.16
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 28 Oct 2025 14:46:20 -0700 (PDT)
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	phillip.wood123@gmail.com,
+	phillip.wood@dunelm.org.uk,
+	newren@gmail.com,
+	gitster@pobox.com,
+	ps@pks.im,
+	karthik.188@gmail.com,
+	code@khaugsbakk.name,
+	rybak.a.v@gmail.com,
+	jltobler@gmail.com,
+	toon@iotcl.com,
+	johncai86@gmail.com,
+	johannes.schindelin@gmx.de,
+	Siddharth Asthana <siddharthasthana31@gmail.com>
+Subject: [PATCH v5 0/3] replay: make atomic ref updates the default
+Date: Wed, 29 Oct 2025 03:16:06 +0530
+Message-ID: <20251028214609.10041-1-siddharthasthana31@gmail.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251022185045.29256-1-siddharthasthana31@gmail.com>
+References: <20251022185045.29256-1-siddharthasthana31@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Antonin Delpeuch <antonin@delpeuch.eu>,
-    Antonin Delpeuch <antonin@delpeuch.eu>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From: Antonin Delpeuch <antonin@delpeuch.eu>
+This is v5 of the git-replay atomic updates series.
 
-The diff algorithm used in 'git-blame(1)' is set to 'myers',
-without the possibility to change it aside from the `--minimal` option.
+This version addresses all feedback from v4 reviews. Thanks to Junio,
+Christian, and Phillip for the detailed technical reviews that helped
+refine the implementation to Git standards.
 
-There has been long-standing interest in changing the default diff
-algorithm to "histogram", and Git 3.0 was floated as a possible occasion
-for taking some steps towards that:
+## Changes in v5
 
-https://lore.kernel.org/git/xmqqed873vgn.fsf@gitster.g/
+**Added enum trailing comma**
 
-As a preparation for this move, it is worth making sure that the diff
-algorithm is configurable where useful.
+Per Junio's suggestion, added trailing comma to enum definition for
+future extensibility. This follows Git's established pattern and
+minimizes patch noise when adding new enum values.
 
-Make it configurable in the `git-blame(1)` command by introducing the
-`--diff-algorithm` option and make honor the `diff.algorithm` config
-variable. Keep Myers diff as the default.
+**Fixed error message formatting**
 
-Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
----
-    blame: make diff algorithm configurable
-    
-    Changes since v1:
-    
-     * add tests
-     * ignore --diff-algorithm when it is provided before --minimal
-     * improve patch description
-     * remove duplication of documentation sections
-     * style improvements
+Following CodingGuidelines, wrapped ref names in single quotes in
+error messages:
+  - error(_("failed to update ref '%s': %s"), ...)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2075%2Fwetneb%2Fblame_respects_diff_algorithm-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2075/wetneb/blame_respects_diff_algorithm-v3
-Pull-Request: https://github.com/git/git/pull/2075
+This provides better visual clarity and matches Git's error reporting
+conventions throughout the codebase.
 
-Range-diff vs v2:
+**Extracted helper functions for config parsing**
 
- 1:  107f51620b ! 1:  b8bdb03516 blame: make diff algorithm configurable
-     @@ builtin/blame.c: int cmd_blame(int argc,
-       		OPT_STRING_LIST(0, "ignore-revs-file", &ignore_revs_file_list, N_("file"), N_("ignore revisions from <file>")),
-       		OPT_BIT(0, "color-lines", &output_option, N_("color redundant metadata from previous line differently"), OUTPUT_COLOR_LINE),
-       		OPT_BIT(0, "color-by-age", &output_option, N_("color lines by age"), OUTPUT_SHOW_AGE_WITH_COLOR),
-     +-		OPT_BIT(0, "minimal", &xdl_opts, N_("spend extra cycles to find better match"), XDF_NEED_MINIMAL),
-      +		OPT_CALLBACK_F(0, "minimal", &xdl_opts, NULL,
-      +			       N_("spend extra cycles to find better match"),
-      +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-      +			       blame_diff_algorithm_minimal),
-     - 		OPT_BIT(0, "minimal", &xdl_opts, N_("spend extra cycles to find better match"), XDF_NEED_MINIMAL),
-       		OPT_STRING('S', NULL, &revs_file, N_("file"), N_("use revisions from <file> instead of calling git-rev-list")),
-       		OPT_STRING(0, "contents", &contents_from, N_("file"), N_("use <file>'s contents as the final image")),
-     + 		OPT_CALLBACK_F('C', NULL, &opt, N_("score"), N_("find line copies within and across files"), PARSE_OPT_OPTARG, blame_copy_callback),
+Per Christian and Junio's feedback, refactored config parsing into
+clean helper functions:
+  - parse_ref_action_mode(): String-to-enum conversion with source context
+  - get_ref_action_mode(): Handles command-line vs config precedence
+
+This eliminates code duplication and provides a single point for
+validation logic, making the code more maintainable.
+
+**Improved test suite with Git best practices**
+
+Following Phillip and Christian's suggestions:
+  - Switched from grep to test_grep for better error reporting
+  - Used test_config for automatic config cleanup
+  - Improved test isolation with proper state management
+  - Used topic1 tag instead of $(git rev-parse) where appropriate
+
+**Documentation improvements**
+
+Fixed terminology and wording per Christian's feedback:
+  - "ergonomical" → "ergonomic"
+  - "configuration option" → "configuration variable"
+  - "By default (with `--ref-action=update`)" → "By default, or with `--ref-action=update`,"
+
+**Reverted unnecessary style change**
+
+Per Junio's feedback, reverted the `const char * const` → `const char *const`
+spacing change. The original spacing follows the prevalent codebase style.
+
+## Technical Implementation
+
+The atomic ref updates leverage Git's ref transaction API:
+- ref_store_transaction_begin() with default atomic behavior
+- ref_transaction_update() to stage each ref update
+- ref_transaction_commit() for atomic application (all succeed or all fail)
+
+The helper functions provide clean separation of concerns:
+- parse_ref_action_mode() validates strings and converts to enum
+- get_ref_action_mode() implements command-line > config > default precedence
+- handle_ref_update() uses type-safe enum with switch statement
+
+The on-demand config reading via repo_config_get_string_tmp() is simpler
+than the traditional repo_config() callback pattern for this single-variable
+case, while maintaining proper precedence behavior.
+
+## Testing
+
+All tests pass:
+- t3650-replay-basics.sh (20 tests pass)
+- New atomic behavior tests verify direct ref updates
+- Config tests verify proper precedence and error handling
+- Existing pipeline tests ensure backward compatibility
+
+CI results: https://gitlab.com/gitlab-org/git/-/pipelines/2123403204
+
+Siddharth Asthana (3):
+  replay: use die_for_incompatible_opt2() for option validation
+  replay: make atomic ref updates the default behavior
+  replay: add replay.refAction config option
+
+ Documentation/config/replay.adoc |  11 +++
+ Documentation/git-replay.adoc    |  65 +++++++++++------
+ builtin/replay.c                 | 121 +++++++++++++++++++++++++++----
+ t/t3650-replay-basics.sh         |  91 +++++++++++++++++++++--
+ 4 files changed, 245 insertions(+), 43 deletions(-)
+ create mode 100644 Documentation/config/replay.adoc
+
+Range-diff against v4:
+1:  baa0cfdd4a = 1:  3e27d07d3b replay: use die_for_incompatible_opt2() for option validation
+2:  3b5df166f3 ! 2:  643d9ca86a replay: make atomic ref updates the default behavior
+    @@ Metadata
+     Author: Siddharth Asthana <siddharthasthana31@gmail.com>
+     
+      ## Commit message ##
+         replay: make atomic ref updates the default behavior
+         
+         [Commit message unchanged - explains problem and solution]
+     
+     @@ builtin/replay.c: #include <tree.h>
       
-       ## t/meson.build ##
-      @@ t/meson.build: integration_tests = [
-     @@ t/t8015-blame-diff-algorithm.sh (new)
-      +	cat >file.c <<-\EOF &&
-      +	int f(int x, int y)
-      +	{
-     -+		if (x == 0)
-     -+		{
-     -+			return y;
-     -+		}
-     -+		return x;
-     ++	  if (x == 0)
-     ++	  {
-     ++	    return y;
-     ++	  }
-     ++	  return x;
-      +	}
-      +
-      +	int g(size_t u)
-      +	{
-     -+		while (u < 30)
-     -+		{
-     -+			u++;
-     -+		}
-     -+		return u;
-     ++	  while (u < 30)
-     ++	  {
-     ++	    u++;
-     ++	  }
-     ++	  return u;
-      +	}
-      +	EOF
-      +	test_write_lines x x x x >file.txt &&
-      +	git add file.c file.txt &&
-     -+	GIT_AUTHOR_NAME=Initial git commit -m Initial &&
-     ++	GIT_AUTHOR_NAME=Commit_1 git commit -m Commit_1 &&
-      +
-      +	cat >file.c <<-\EOF &&
-      +	int g(size_t u)
-      +	{
-     -+		while (u < 30)
-     -+		{
-     -+			u++;
-     -+		}
-     -+		return u;
-     ++	  while (u < 30)
-     ++	  {
-     ++	    u++;
-     ++	  }
-     ++	  return u;
-      +	}
-      +
-      +	int h(int x, int y, int z)
-      +	{
-     -+		if (z == 0)
-     -+		{
-     -+			return x;
-     -+		}
-     -+		return y;
-     ++	  if (z == 0)
-     ++	  {
-     ++	    return x;
-     ++	  }
-     ++	  return y;
-      +	}
-      +	EOF
-      +	test_write_lines x x x A B C D x E F G >file.txt &&
-      +	git add file.c file.txt &&
-     -+	GIT_AUTHOR_NAME=Second git commit -m Second
-     ++	GIT_AUTHOR_NAME=Commit_2 git commit -m Commit_2
-      +'
-      +
-      +test_expect_success 'blame uses Myers diff algorithm by default for now' '
-      +	cat >expected <<-\EOF &&
-     -+	Second
-     -+	Initial
-     -+	Second
-     -+	Initial
-     -+	Second
-     -+	Initial
-     -+	Second
-     -+	Initial
-     -+	Initial
-     -+	Second
-     -+	Initial
-     -+	Second
-     -+	Initial
-     -+	Second
-     -+	Initial
-     -+	Second
-     -+	Initial
-     ++	Commit_2 int g(size_t u)
-     ++	Commit_1 {
-     ++	Commit_2   while (u < 30)
-     ++	Commit_1   {
-     ++	Commit_2     u++;
-     ++	Commit_1   }
-     ++	Commit_2   return u;
-     ++	Commit_1 }
-     ++	Commit_1
-     ++	Commit_2 int h(int x, int y, int z)
-     ++	Commit_1 {
-     ++	Commit_2   if (z == 0)
-     ++	Commit_1   {
-     ++	Commit_2     return x;
-     ++	Commit_1   }
-     ++	Commit_2   return y;
-     ++	Commit_1 }
-      +	EOF
-      +
-     -+	# git blame file.c | grep --only-matching -e Initial -e Second > actual &&
-     -+	# test_cmp expected actual
-     -+	echo goo
-     ++
-     ++	git blame file.c | \
-     ++		sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" | \
-     ++		sed -e "s/ *$//g" > actual &&
-     ++	test_cmp expected actual
-      +'
-      +
-      +test_expect_success 'blame honors --diff-algorithm option' '
-      +	cat >expected <<-\EOF &&
-     -+	Initial
-     -+	Initial
-     -+	Initial
-     -+	Initial
-     -+	Initial
-     -+	Initial
-     -+	Initial
-     -+	Initial
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Second
-     ++	Commit_1 int g(size_t u)
-     ++	Commit_1 {
-     ++	Commit_1   while (u < 30)
-     ++	Commit_1   {
-     ++	Commit_1     u++;
-     ++	Commit_1   }
-     ++	Commit_1   return u;
-     ++	Commit_1 }
-     ++	Commit_2
-     ++	Commit_2 int h(int x, int y, int z)
-     ++	Commit_2 {
-     ++	Commit_2   if (z == 0)
-     ++	Commit_2   {
-     ++	Commit_2     return x;
-     ++	Commit_2   }
-     ++	Commit_2   return y;
-     ++	Commit_2 }
-      +	EOF
-      +
-     -+	git blame file.c --diff-algorithm=histogram | \
-     -+		grep --only-matching -e Initial -e Second > actual &&
-     ++	git blame file.c --diff-algorithm histogram | \
-     ++		sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" | \
-     ++		sed -e "s/ *$//g" > actual &&
-      +	test_cmp expected actual
-      +'
-      +
-      +test_expect_success 'blame honors diff.algorithm config variable' '
-      +	cat >expected <<-\EOF &&
-     -+	Initial
-     -+	Initial
-     -+	Initial
-     -+	Initial
-     -+	Initial
-     -+	Initial
-     -+	Initial
-     -+	Initial
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Second
-     ++	Commit_1 int g(size_t u)
-     ++	Commit_1 {
-     ++	Commit_1   while (u < 30)
-     ++	Commit_1   {
-     ++	Commit_1     u++;
-     ++	Commit_1   }
-     ++	Commit_1   return u;
-     ++	Commit_1 }
-     ++	Commit_2
-     ++	Commit_2 int h(int x, int y, int z)
-     ++	Commit_2 {
-     ++	Commit_2   if (z == 0)
-     ++	Commit_2   {
-     ++	Commit_2     return x;
-     ++	Commit_2   }
-     ++	Commit_2   return y;
-     ++	Commit_2 }
-      +	EOF
-      +
-      +	git config diff.algorithm histogram &&
-      +	git blame file.c | \
-     -+		grep --only-matching -e Initial -e Second > actual &&
-     ++		sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" | \
-     ++		sed -e "s/ *$//g" > actual &&
-      +	test_cmp expected actual
-      +'
-      +
-     ++test_expect_success 'blame gives priority to --diff-algorithm over diff.algorithm' '
-     ++	cat >expected <<-\EOF &&
-     ++	Commit_1 int g(size_t u)
-     ++	Commit_1 {
-     ++	Commit_1   while (u < 30)
-     ++	Commit_1   {
-     ++	Commit_1     u++;
-     ++	Commit_1   }
-     ++	Commit_1   return u;
-     ++	Commit_1 }
-     ++	Commit_2
-     ++	Commit_2 int h(int x, int y, int z)
-     ++	Commit_2 {
-     ++	Commit_2   if (z == 0)
-     ++	Commit_2   {
-     ++	Commit_2     return x;
-     ++	Commit_2   }
-     ++	Commit_2   return y;
-     ++	Commit_2 }
-     ++	EOF
-     ++
-     ++	git config diff.algorithm myers &&
-     ++	git blame file.c --diff-algorithm histogram | \
-     ++		sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" | \
-     ++		sed -e "s/ *$//g" > actual &&
-     ++	test_cmp expected actual
-     ++'
-      +test_expect_success 'blame honors --minimal option' '
-      +	cat >expected <<-\EOF &&
-     -+	Initial
-     -+	Initial
-     -+	Initial
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Second
-     -+	Initial
-     -+	Second
-     -+	Second
-     -+	Second
-     ++	Commit_1 x
-     ++	Commit_1 x
-     ++	Commit_1 x
-     ++	Commit_2 A
-     ++	Commit_2 B
-     ++	Commit_2 C
-     ++	Commit_2 D
-     ++	Commit_1 x
-     ++	Commit_2 E
-     ++	Commit_2 F
-     ++	Commit_2 G
-      +	EOF
-      +
-      +	git blame file.txt --minimal | \
-     -+		grep --only-matching -e Initial -e Second > actual &&
-     ++		sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" > actual &&
-      +	test_cmp expected actual
-      +'
-      +
-     ++test_expect_success 'blame respects the order of diff options' '
-     ++	cat >expected <<-\EOF &&
-     ++	Commit_1 x
-     ++	Commit_1 x
-     ++	Commit_1 x
-     ++	Commit_2 A
-     ++	Commit_2 B
-     ++	Commit_2 C
-     ++	Commit_2 D
-     ++	Commit_2 x
-     ++	Commit_2 E
-     ++	Commit_2 F
-     ++	Commit_2 G
-     ++	EOF
-     ++
-     ++	git blame file.txt --minimal --diff-algorithm myers | \
-     ++		sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" > actual &&
-     ++	test_cmp expected actual
-     ++'
-     ++
-     ++
-      +test_done
+     +enum ref_action_mode {
+     +	REF_ACTION_UPDATE,
+    -+	REF_ACTION_PRINT
+    ++	REF_ACTION_PRINT,
+     +};
+      
+     @@ builtin/replay.c: int cmd_replay
+    -					ret = error(_("failed to update ref %s: %s"),
+    -						    decoration->name, transaction_err.buf);
+    +					ret = error(_("failed to update ref '%s': %s"),
+     
+     @@ builtin/replay.c: int cmd_replay
+    -			ret = error(_("failed to update ref %s: %s"),
+    -				    advance_name, transaction_err.buf);
+    +			ret = error(_("failed to update ref '%s': %s"),
+     
+     @@ Documentation/git-replay.adoc
+    -+    almost certainly find it more ergonomical to simply have the updating
+    ++    almost certainly find it more ergonomic to simply have the updating
+     
+     @@ Documentation/git-replay.adoc
+    -+The default mode can be configured via `replay.refAction` configuration option.
+    ++The default mode can be configured via the `replay.refAction` configuration variable.
+     
+     @@ Documentation/git-replay.adoc: OUTPUT
+    -+By default (with `--ref-action=update`), this command produces no output on
+    ++By default, or with `--ref-action=update`, this command produces no output on
+     
+     -       const char * const replay_usage[] = {
+    -+       const char *const replay_usage[] = {
+    ++       const char * const replay_usage[] = {
+     
+3:  c35049881d ! 3:  334da71911 replay: add replay.refAction config option
+    @@ Metadata
+     Author: Siddharth Asthana <siddharthasthana31@gmail.com>
+     
+      ## Commit message ##
+         replay: add replay.refAction config option
+         
+         [Commit message unchanged]
+     
+     @@ builtin/replay.c: static struct commit *pick_regular_commit
+      	return create_commit(repo, result->tree, pickme, replayed_base);
+      }
+      
+    ++static enum ref_action_mode parse_ref_action_mode(const char *mode_str, const char *source)
+    ++{
+    ++	if (!mode_str || !strcmp(mode_str, "update"))
+    ++		return REF_ACTION_UPDATE;
+    ++	if (!strcmp(mode_str, "print"))
+    ++		return REF_ACTION_PRINT;
+    ++	die(_("invalid %s value: '%s'"), source, mode_str);
+    ++}
+    ++
+    ++static enum ref_action_mode get_ref_action_mode(struct repository *repo, const char *ref_action_str)
+    ++{
+    ++	const char *config_value = NULL;
+    ++
+    ++	/* Command line option takes precedence */
+    ++	if (ref_action_str)
+    ++		return parse_ref_action_mode(ref_action_str, "--ref-action");
+    ++
+    ++	/* Check config value */
+    ++	if (!repo_config_get_string_tmp(repo, "replay.refAction", &config_value))
+    ++		return parse_ref_action_mode(config_value, "replay.refAction");
+    ++
+    ++	/* Default to update mode */
+    ++	return REF_ACTION_UPDATE;
+    ++}
+    ++
+     @@ builtin/replay.c: int cmd_replay
+      	die_for_incompatible_opt2(!!advance_name_opt, "--advance",
+      				  contained, "--contained");
+      
+    -+	/* Set default mode from config if not specified on command line */
+    -+	if (!ref_action_str) {
+    -+		const char *config_value = NULL;
+    -+		if (!repo_config_get_string_tmp(repo, "replay.refAction", &config_value)) {
+    -+			if (!strcmp(config_value, "update"))
+    -+				ref_action_str = "update";
+    -+			else if (!strcmp(config_value, "print"))
+    -+				ref_action_str = "print";
+    -+			else
+    -+				die(_("invalid value for replay.refAction: '%s'"), config_value);
+    -+		}
+    -+	}
+    -+
+    -+	/* Default to update mode if still not set */
+    -+	if (!ref_action_str)
+    -+		ref_action_str = "update";
+    -+
+    -+	/* Parse ref action mode */
+    -+	if (!strcmp(ref_action_str, "update"))
+    -+		ref_action = REF_ACTION_UPDATE;
+    -+	else if (!strcmp(ref_action_str, "print"))
+    -+		ref_action = REF_ACTION_PRINT;
+    -+	else
+    -+		die(_("unknown --ref-action mode '%s'"), ref_action_str);
+    ++	/* Parse ref action mode from command line or config */
+    ++	ref_action = get_ref_action_mode(repo, ref_action_str);
+     
+     @@ t/t3650-replay-basics.sh
+     +test_expect_success 'replay.refAction config option' '
+     +	START=$(git rev-parse topic2) &&
+    -+	test_when_finished "git branch -f topic2 $START && git config --unset replay.refAction" &&
+    ++	test_when_finished "git branch -f topic2 $START" &&
+    ++	test_when_finished "git config --unset replay.refAction || true" &&
+     +
+     +	git config replay.refAction print &&
+     +	git replay --onto main topic1..topic2 >output &&
+     +	test_line_count = 1 output &&
+    -+	grep "^update refs/heads/topic2 " output &&
+    ++	test_grep "^update refs/heads/topic2 " output &&
+     +
+     +	git branch -f topic2 $START &&
+     +	git config replay.refAction update &&
+     
+     +test_expect_success 'command-line --ref-action overrides config' '
+     +	START=$(git rev-parse topic2) &&
+    -+	test_when_finished "git branch -f topic2 $START && git config --unset replay.refAction" &&
+    ++	test_when_finished "git branch -f topic2 $START" &&
+     +
+    -+	git config replay.refAction update &&
+    ++	test_config replay.refAction update &&
+     +	git replay --ref-action=print --onto main topic1..topic2 >output &&
+     +	test_line_count = 1 output &&
+    -+	grep "^update refs/heads/topic2 " output
+    ++	test_grep "^update refs/heads/topic2 " output
+     +'
+     +
+     +test_expect_success 'invalid replay.refAction value' '
+    -+	test_when_finished "git config --unset replay.refAction" &&
+    -+	git config replay.refAction invalid &&
+    ++	test_config replay.refAction invalid &&
+     +	test_must_fail git replay --onto main topic1..topic2 2>error &&
+    -+	grep "invalid value for replay.refAction" error
+    ++	test_grep "invalid.*replay.refAction.*value" error
+     +'
 
-
- Documentation/diff-algorithm-option.adoc |  20 +++
- Documentation/diff-options.adoc          |  21 +--
- Documentation/git-blame.adoc             |   2 +
- builtin/blame.c                          |  53 +++++-
- t/meson.build                            |   1 +
- t/t8015-blame-diff-algorithm.sh          | 206 +++++++++++++++++++++++
- 6 files changed, 282 insertions(+), 21 deletions(-)
- create mode 100644 Documentation/diff-algorithm-option.adoc
- create mode 100755 t/t8015-blame-diff-algorithm.sh
-
-diff --git a/Documentation/diff-algorithm-option.adoc b/Documentation/diff-algorithm-option.adoc
-new file mode 100644
-index 0000000000..8e3a0b63d7
---- /dev/null
-+++ b/Documentation/diff-algorithm-option.adoc
-@@ -0,0 +1,20 @@
-+`--diff-algorithm=(patience|minimal|histogram|myers)`::
-+	Choose a diff algorithm. The variants are as follows:
-++
-+--
-+   `default`;;
-+   `myers`;;
-+	The basic greedy diff algorithm. Currently, this is the default.
-+   `minimal`;;
-+	Spend extra time to make sure the smallest possible diff is
-+	produced.
-+   `patience`;;
-+	Use "patience diff" algorithm when generating patches.
-+   `histogram`;;
-+	This algorithm extends the patience algorithm to "support
-+	low-occurrence common elements".
-+--
-++
-+For instance, if you configured the `diff.algorithm` variable to a
-+non-default value and want to use the default one, then you
-+have to use `--diff-algorithm=default` option.
-diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-index ae31520f7f..9cdad6f72a 100644
---- a/Documentation/diff-options.adoc
-+++ b/Documentation/diff-options.adoc
-@@ -197,26 +197,7 @@ and starts with _<text>_, this algorithm attempts to prevent it from
- appearing as a deletion or addition in the output. It uses the "patience
- diff" algorithm internally.
- 
--`--diff-algorithm=(patience|minimal|histogram|myers)`::
--	Choose a diff algorithm. The variants are as follows:
--+
----
--   `default`;;
--   `myers`;;
--	The basic greedy diff algorithm. Currently, this is the default.
--   `minimal`;;
--	Spend extra time to make sure the smallest possible diff is
--	produced.
--   `patience`;;
--	Use "patience diff" algorithm when generating patches.
--   `histogram`;;
--	This algorithm extends the patience algorithm to "support
--	low-occurrence common elements".
----
--+
--For instance, if you configured the `diff.algorithm` variable to a
--non-default value and want to use the default one, then you
--have to use `--diff-algorithm=default` option.
-+include::diff-algorithm-option.adoc[]
- 
- `--stat[=<width>[,<name-width>[,<count>]]]`::
- 	Generate a diffstat. By default, as much space as necessary
-diff --git a/Documentation/git-blame.adoc b/Documentation/git-blame.adoc
-index e438d28625..adcbb6f5dc 100644
---- a/Documentation/git-blame.adoc
-+++ b/Documentation/git-blame.adoc
-@@ -85,6 +85,8 @@ include::blame-options.adoc[]
- 	Ignore whitespace when comparing the parent's version and
- 	the child's to find where the lines came from.
- 
-+include::diff-algorithm-option.adoc[]
-+
- --abbrev=<n>::
- 	Instead of using the default 7+1 hexadecimal digits as the
- 	abbreviated object name, use <m>+1 digits, where <m> is at
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 2703820258..da4dbdf50a 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -779,6 +779,19 @@ static int git_blame_config(const char *var, const char *value,
- 		}
- 	}
- 
-+	if (!strcmp(var, "diff.algorithm")) {
-+		long diff_algorithm;
-+		if (!value)
-+			return config_error_nonbool(var);
-+		diff_algorithm = parse_algorithm_value(value);
-+		if (diff_algorithm < 0)
-+			return error(_("unknown value for config '%s': %s"),
-+				     var, value);
-+		xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
-+		xdl_opts |= diff_algorithm;
-+		return 0;
-+	}
-+
- 	if (git_diff_heuristic_config(var, value, cb) < 0)
- 		return -1;
- 	if (userdiff_config(var, value) < 0)
-@@ -824,6 +837,38 @@ static int blame_move_callback(const struct option *option, const char *arg, int
- 	return 0;
- }
- 
-+static int blame_diff_algorithm_minimal(const struct option *option,
-+					const char *arg, int unset)
-+{
-+	int *opt = option->value;
-+
-+	BUG_ON_OPT_NEG(unset);
-+	BUG_ON_OPT_ARG(arg);
-+
-+	*opt &= ~XDF_DIFF_ALGORITHM_MASK;
-+	*opt |= XDF_NEED_MINIMAL;
-+
-+	return 0;
-+}
-+
-+static int blame_diff_algorithm_callback(const struct option *option,
-+					 const char *arg, int unset)
-+{
-+	int *opt = option->value;
-+	long value = parse_algorithm_value(arg);
-+
-+	BUG_ON_OPT_NEG(unset);
-+
-+	if (value < 0)
-+		return error(_("option diff-algorithm accepts \"myers\", "
-+			       "\"minimal\", \"patience\" and \"histogram\""));
-+
-+	*opt &= ~(XDF_NEED_MINIMAL | XDF_DIFF_ALGORITHM_MASK);
-+	*opt |= value;
-+
-+	return 0;
-+}
-+
- static int is_a_rev(const char *name)
- {
- 	struct object_id oid;
-@@ -915,11 +960,17 @@ int cmd_blame(int argc,
- 		OPT_BIT('s', NULL, &output_option, N_("suppress author name and timestamp (Default: off)"), OUTPUT_NO_AUTHOR),
- 		OPT_BIT('e', "show-email", &output_option, N_("show author email instead of name (Default: off)"), OUTPUT_SHOW_EMAIL),
- 		OPT_BIT('w', NULL, &xdl_opts, N_("ignore whitespace differences"), XDF_IGNORE_WHITESPACE),
-+		OPT_CALLBACK_F(0, "diff-algorithm", &xdl_opts, N_("<algorithm>"),
-+			       N_("choose a diff algorithm"),
-+			       PARSE_OPT_NONEG, blame_diff_algorithm_callback),
- 		OPT_STRING_LIST(0, "ignore-rev", &ignore_rev_list, N_("rev"), N_("ignore <rev> when blaming")),
- 		OPT_STRING_LIST(0, "ignore-revs-file", &ignore_revs_file_list, N_("file"), N_("ignore revisions from <file>")),
- 		OPT_BIT(0, "color-lines", &output_option, N_("color redundant metadata from previous line differently"), OUTPUT_COLOR_LINE),
- 		OPT_BIT(0, "color-by-age", &output_option, N_("color lines by age"), OUTPUT_SHOW_AGE_WITH_COLOR),
--		OPT_BIT(0, "minimal", &xdl_opts, N_("spend extra cycles to find better match"), XDF_NEED_MINIMAL),
-+		OPT_CALLBACK_F(0, "minimal", &xdl_opts, NULL,
-+			       N_("spend extra cycles to find better match"),
-+			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-+			       blame_diff_algorithm_minimal),
- 		OPT_STRING('S', NULL, &revs_file, N_("file"), N_("use revisions from <file> instead of calling git-rev-list")),
- 		OPT_STRING(0, "contents", &contents_from, N_("file"), N_("use <file>'s contents as the final image")),
- 		OPT_CALLBACK_F('C', NULL, &opt, N_("score"), N_("find line copies within and across files"), PARSE_OPT_OPTARG, blame_copy_callback),
-diff --git a/t/meson.build b/t/meson.build
-index 401b24e50e..9f2fe7af8b 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -955,6 +955,7 @@ integration_tests = [
-   't8012-blame-colors.sh',
-   't8013-blame-ignore-revs.sh',
-   't8014-blame-ignore-fuzzy.sh',
-+  't8015-blame-diff-algorithm.sh',
-   't8020-last-modified.sh',
-   't9001-send-email.sh',
-   't9002-column.sh',
-diff --git a/t/t8015-blame-diff-algorithm.sh b/t/t8015-blame-diff-algorithm.sh
-new file mode 100755
-index 0000000000..efc4b47ce1
---- /dev/null
-+++ b/t/t8015-blame-diff-algorithm.sh
-@@ -0,0 +1,206 @@
-+#!/bin/sh
-+
-+test_description='git blame with specific diff algorithm'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	cat >file.c <<-\EOF &&
-+	int f(int x, int y)
-+	{
-+	  if (x == 0)
-+	  {
-+	    return y;
-+	  }
-+	  return x;
-+	}
-+
-+	int g(size_t u)
-+	{
-+	  while (u < 30)
-+	  {
-+	    u++;
-+	  }
-+	  return u;
-+	}
-+	EOF
-+	test_write_lines x x x x >file.txt &&
-+	git add file.c file.txt &&
-+	GIT_AUTHOR_NAME=Commit_1 git commit -m Commit_1 &&
-+
-+	cat >file.c <<-\EOF &&
-+	int g(size_t u)
-+	{
-+	  while (u < 30)
-+	  {
-+	    u++;
-+	  }
-+	  return u;
-+	}
-+
-+	int h(int x, int y, int z)
-+	{
-+	  if (z == 0)
-+	  {
-+	    return x;
-+	  }
-+	  return y;
-+	}
-+	EOF
-+	test_write_lines x x x A B C D x E F G >file.txt &&
-+	git add file.c file.txt &&
-+	GIT_AUTHOR_NAME=Commit_2 git commit -m Commit_2
-+'
-+
-+test_expect_success 'blame uses Myers diff algorithm by default for now' '
-+	cat >expected <<-\EOF &&
-+	Commit_2 int g(size_t u)
-+	Commit_1 {
-+	Commit_2   while (u < 30)
-+	Commit_1   {
-+	Commit_2     u++;
-+	Commit_1   }
-+	Commit_2   return u;
-+	Commit_1 }
-+	Commit_1
-+	Commit_2 int h(int x, int y, int z)
-+	Commit_1 {
-+	Commit_2   if (z == 0)
-+	Commit_1   {
-+	Commit_2     return x;
-+	Commit_1   }
-+	Commit_2   return y;
-+	Commit_1 }
-+	EOF
-+
-+
-+	git blame file.c | \
-+		sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" | \
-+		sed -e "s/ *$//g" > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame honors --diff-algorithm option' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 int g(size_t u)
-+	Commit_1 {
-+	Commit_1   while (u < 30)
-+	Commit_1   {
-+	Commit_1     u++;
-+	Commit_1   }
-+	Commit_1   return u;
-+	Commit_1 }
-+	Commit_2
-+	Commit_2 int h(int x, int y, int z)
-+	Commit_2 {
-+	Commit_2   if (z == 0)
-+	Commit_2   {
-+	Commit_2     return x;
-+	Commit_2   }
-+	Commit_2   return y;
-+	Commit_2 }
-+	EOF
-+
-+	git blame file.c --diff-algorithm histogram | \
-+		sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" | \
-+		sed -e "s/ *$//g" > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame honors diff.algorithm config variable' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 int g(size_t u)
-+	Commit_1 {
-+	Commit_1   while (u < 30)
-+	Commit_1   {
-+	Commit_1     u++;
-+	Commit_1   }
-+	Commit_1   return u;
-+	Commit_1 }
-+	Commit_2
-+	Commit_2 int h(int x, int y, int z)
-+	Commit_2 {
-+	Commit_2   if (z == 0)
-+	Commit_2   {
-+	Commit_2     return x;
-+	Commit_2   }
-+	Commit_2   return y;
-+	Commit_2 }
-+	EOF
-+
-+	git config diff.algorithm histogram &&
-+	git blame file.c | \
-+		sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" | \
-+		sed -e "s/ *$//g" > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame gives priority to --diff-algorithm over diff.algorithm' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 int g(size_t u)
-+	Commit_1 {
-+	Commit_1   while (u < 30)
-+	Commit_1   {
-+	Commit_1     u++;
-+	Commit_1   }
-+	Commit_1   return u;
-+	Commit_1 }
-+	Commit_2
-+	Commit_2 int h(int x, int y, int z)
-+	Commit_2 {
-+	Commit_2   if (z == 0)
-+	Commit_2   {
-+	Commit_2     return x;
-+	Commit_2   }
-+	Commit_2   return y;
-+	Commit_2 }
-+	EOF
-+
-+	git config diff.algorithm myers &&
-+	git blame file.c --diff-algorithm histogram | \
-+		sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" | \
-+		sed -e "s/ *$//g" > actual &&
-+	test_cmp expected actual
-+'
-+test_expect_success 'blame honors --minimal option' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 x
-+	Commit_1 x
-+	Commit_1 x
-+	Commit_2 A
-+	Commit_2 B
-+	Commit_2 C
-+	Commit_2 D
-+	Commit_1 x
-+	Commit_2 E
-+	Commit_2 F
-+	Commit_2 G
-+	EOF
-+
-+	git blame file.txt --minimal | \
-+		sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame respects the order of diff options' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 x
-+	Commit_1 x
-+	Commit_1 x
-+	Commit_2 A
-+	Commit_2 B
-+	Commit_2 C
-+	Commit_2 D
-+	Commit_2 x
-+	Commit_2 E
-+	Commit_2 F
-+	Commit_2 G
-+	EOF
-+
-+	git blame file.txt --minimal --diff-algorithm myers | \
-+		sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" > actual &&
-+	test_cmp expected actual
-+'
-+
-+
-+test_done
-
-base-commit: 4253630c6f07a4bdcc9aa62a50e26a4d466219d1
 -- 
-gitgitgadget
+2.51.0
+
+base-commit: 419c72cb8ada252b260efc38ff91fe201de7c8c3
+
+Thanks
+- Siddharth
