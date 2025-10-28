@@ -1,87 +1,84 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6EA24DFF9
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 15:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61FA3396FD
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 16:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761664970; cv=none; b=TL91M8DkLW1MZdj3mcHr9VjAVzZuhUwgDAoQY96q28gJtLgR/o7ukhI79XtMqkTSDUUQPE7FzA68kgHY7W/WpH2Ya05D6ExjIMyfMLnsc2uD983NJ5oxvV5LE6xqB0fBWm334PRU+OY0/Atg/WzHQhnno1Np1LZ0F4Jj7TJCQ6E=
+	t=1761667252; cv=none; b=IxqEvpIsP74FsPF68xg3KK8FwzSuGkmZQUjPlYhBEqUqsYn11Dq7yLAWtZhDbVE4Y977PLZBpcsWti7hF5xNuZiUHYeZSahI4B0Q5iIiiAvYTXf7uUyYRH1LG5Ne47m56O1FDZJn8aHnZUWFMjONGprNGG4HUe0oG0EuFVd5pJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761664970; c=relaxed/simple;
-	bh=sqjFBGnnHEgVvswHeHhfErbztB4mJkPMG5XsN+JQiCU=;
+	s=arc-20240116; t=1761667252; c=relaxed/simple;
+	bh=q31jQy1h3xGiHWP7faCZ/mM5kHN5O+NpsH/XJgzD3U0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JXTS8m8qQekbL5dT3sHDvg86VrMLSb46acJ1yhVI3+vhte8JvnCkccbbrI3qiMZoOhKsJHcNzkgSj4yPooXU1cuZjbzyrwo3d9cLRp5n+FKf9wqep0ObT0Tp5vWkOvaphorbE49UfYh4On0zVPfg7T8HrFNaPYlcmCMnmkdJNSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ljl5/a49; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QDbRNduU; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=RPhspkRqPcRJFZDSS2K+LgKvOZbXW7TZbIYrUNU8UsagFaJ3ys4PR4/YeXYZoZWAx7/HoVf0W0avfjF6/lVVfN7C8w77j6vIEkr4EEyOQAewbleFR39RQ65x4Bs7Tnxj2rY70O0L/XqXC8vNk+cZdDop90f1qaMMN2kaO4jW3iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GcIXaQv9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OebotSkO; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ljl5/a49";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QDbRNduU"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6E467EC0357;
-	Tue, 28 Oct 2025 11:22:46 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GcIXaQv9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OebotSkO"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id F3976EC04AE;
+	Tue, 28 Oct 2025 12:00:45 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 28 Oct 2025 11:22:46 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 28 Oct 2025 12:00:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761664966; x=1761751366; bh=CyZe2/ZEXN
-	KyfSBk8qFWIvdpNL51z64W446zJuV+h2Q=; b=Ljl5/a49e1b1VkJbybkWznmzHL
-	3g4N+JLcEq1rvxp3RVwVOw9by3tLJ+08RdwRMaa/b47srPxG0OY2lBfIIdkIZyrk
-	T1IEAmebBEAmWxJve8VQier75NQen9viOP3+p2XBsEXFuNK1ScNwzxlywYE6H8+C
-	zUtBp6EMHUzt8PkUO/OsXkvlEVHNJUj18clB9Gw0zry88jaQaczAG78uhwxjvYi+
-	OrBzyYBYvT9oeISqRMkuVMbV4nwmYEDg92/fDoWIS7M/eREghKTg+3v2vHi2nA5r
-	9oKc3MuemAcL+fmXrjzUIkXB3lj6TL5OeYEElgtc4STR6P1vRQi+vktq8VAw==
+	:subject:to:to; s=fm2; t=1761667245; x=1761753645; bh=ECgKlZvIaQ
+	o/E5vN55SgV2ZSiQX4UVXCSHLF5hJv13k=; b=GcIXaQv9tBYvchcGOr0nGSVDZe
+	c5GIbuqHrpC7zaPCYWQ7E9Iw7rcZY3w1TXsFFJbxMc1pkkme3MbzuMXuoP3b7GiB
+	N6lG3BjOB5WSWUZ4tt8TAdoPXTmPQ/YWlYqJ62EMsVi5E9zWLSobDYU++hS1JOY5
+	hLjNTyi6LLNY27+U6gqfHI7eDSHFi4riejpGMpIRwpp8/N7/uPJqttvfGXdZT6xV
+	Y22EgwR1sMOPalQPzCWQNBcF9/eZM5X1RWT1jyHEdOAiMaI/Woa02ynjmCLuZVE3
+	td1D6hnQoThyY5wCAQ5bowXaAYuUcySk6yi6VsJeLv5mhjfc+nqGLvT0yMfA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761664966; x=1761751366; bh=CyZe2/ZEXNKyfSBk8qFWIvdpNL51z64W446
-	zJuV+h2Q=; b=QDbRNduUS0/eUPvF5KHhUPCAbB/1tvXcn1BkIp6oXoZydJxV26l
-	lTwroLX6tRIUlA3woKJSx2QgiH+GBv+QytqgzIeqxQNvJm41nZSBGY6oMLaV50Uj
-	w/EaWvc8CzUM7mDzUP4DK6VTckI2wzgKi5d5nZ72pEFAanD/wm3serrs9ffHTZc0
-	YcdlBSUlC8ZZ/cB15GFL+I8csjiSjYdFUm3aTIssQqdISFIJmQbJMUlM75QSzwhl
-	++hFyETrsBcNiE12afYYcuhk4o3RA0PMz8IE/JzfMA+xB4tmBQhZi1Ip5FvXOQcB
-	py16Y+aYBguBPLPcF/S7WSeoJhj8Bzsn/LQ==
-X-ME-Sender: <xms:xt8AaRLVLRZe7F5eQDBs6d53cwZc4O4KGUO9SL0-XmXpTHXH_yJ1-A>
-    <xme:xt8AaQ0m-54-cW33WaXQu54eICuLrWGIxRg74t7HJQJlWisoTt8RRnqZq3-P-iWXK
-    peh_UUXB8HofNU_ZhajocrAAKpZ9PgMW30isw3VXsuJNdSHTQ23>
-X-ME-Received: <xmr:xt8AaTg83veOWTiWl8cdOzeEAB0aKMb863WJS-69Lnqt6AEckI6dd0dQlQBvxzlIu3sr2ObFYUvkdi5SN1k5LSlQJgtlq7EnYdYu>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieduvddtucetufdoteggodetrf
+	1761667245; x=1761753645; bh=ECgKlZvIaQo/E5vN55SgV2ZSiQX4UVXCSHL
+	F5hJv13k=; b=OebotSkO47HwVrCCaAoJdtULfuso+MGIrw+9H8FN7nz8yEkoRGi
+	osyx3WW5xJTy/QusXQe8mZ3/LEoPE4emx2ylio1bQwGlq87naQGZ/mXGJLxc5pCs
+	5oCJdoU9nTmPrAIHyUUiNihkSUR1Vos29Asg3oCFSwS1+igQKNXk2OUTguNWumO2
+	CG90NLuFE/t76/oKN9MVtpjzNLOHnNa5ZpdUz9KUvUnwK4A8O67N1LbKY5mSnpox
+	WJAHW0W+iwKJFu66ZYv9ojR9YS6VyklelMjnGBv8EuKuUDTaqwTz/c5+IymIFlSF
+	w7npP50XA/hF/6IBLK/aGUdd0kldBEJk7Zg==
+X-ME-Sender: <xms:regAabaGiqb1Fu4YOhXpp4jTrNmBLpFCAIhL_onQdqGbW0B0z58fhA>
+    <xme:regAaRTG93z2pYPU2uqx_3tYpJl4qdwiPdyAHnedS_Q0_NMs5PGap7v_ehrt10AdX
+    GGwaFEyzfMNrjkuIJEESa6XAsgy5KxajIz49eJabqOh6_U7nL6rBQ>
+X-ME-Received: <xmr:regAaWTh92YvnMsEjengIHtUjdg-Big6L0VXiFerm7F3ET5k4blybB5lxlTOanwN7hIyaC3riaq8UIguEnsQoD7tBOIrCC6meueI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieduvdejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdp
-    rhgtphhtthhopegrnhhtohhnihhnseguvghlphgvuhgthhdrvghupdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:xt8AaZVjRytod5YByjoy2bYsagE8Xqxju7XiHlvieFsskUBrfWS-zA>
-    <xmx:xt8AaaUTr_pLy0GFRkrkq1NlBKYPkg9VnzU9jVkdvuWlmuV2QsMR5w>
-    <xmx:xt8AaRi6fcn4G6dcuoDOLA4Mbs3ZMqMOWaH2tsic61ltswXWxzjRFA>
-    <xmx:xt8AadZC4isdEQZ43-c60-73nQrPulq2wRV2yCQJcMNczA_0NaK_Gw>
-    <xmx:xt8AaQWR0dU-KApuW4X6FQ9EjkpfjABa4HLP_Xv2JkEit68JbAcAfNyX>
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtgh
+    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrmhdrsghoshhtohgtkhesshhhohhpih
+    hfhidrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:regAadT525G-MY1miLPAYmAvoF0ykVsLKeFzMqqYZXRKGitN83FuEg>
+    <xmx:regAaT6UoxlI9L0rTl8Dz2o6buUKUkMAwc8wGAm-_63YCdUHO_FAnQ>
+    <xmx:regAaR0s-lJIV6rG0CuEVZNikEKtnbXDY53ah1t9_qur4Grbsmh0qw>
+    <xmx:regAaWAeHD_VJfpnGJeEG4QxCIke7up_iy8Dww4TzWU1zfESVqiR5g>
+    <xmx:regAaRDwHNRkGRYArjoPdNW8keuK-Xfxtftz8dhYZ4tJKIWxJr1FmAsv>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Oct 2025 11:22:45 -0400 (EDT)
+ 28 Oct 2025 12:00:45 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Antonin Delpeuch <antonin@delpeuch.eu>
-Subject: Re: [PATCH v2] blame: make diff algorithm configurable
-In-Reply-To: <pull.2075.v2.git.git.1761658643278.gitgitgadget@gmail.com>
-	(Antonin Delpeuch via GitGitGadget's message of "Tue, 28 Oct 2025
-	13:37:23 +0000")
-References: <pull.2075.git.git.1760972162827.gitgitgadget@gmail.com>
-	<pull.2075.v2.git.git.1761658643278.gitgitgadget@gmail.com>
-Date: Tue, 28 Oct 2025 08:22:44 -0700
-Message-ID: <xmqqjz0fdpa3.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Sam Bostock via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Sam Bostock <sam.bostock@shopify.com>
+Subject: Re: [PATCH] refs: support migration with worktrees
+In-Reply-To: <aQBwiE-bhqcaSHG_@pks.im> (Patrick Steinhardt's message of "Tue,
+	28 Oct 2025 08:28:08 +0100")
+References: <pull.2077.git.git.1761589580028.gitgitgadget@gmail.com>
+	<aQBwiE-bhqcaSHG_@pks.im>
+Date: Tue, 28 Oct 2025 09:00:43 -0700
+Message-ID: <xmqqfrb3dnis.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,148 +88,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> From: Antonin Delpeuch <antonin@delpeuch.eu>
+>>  `migrate`::
+>> -	Migrate ref store between different formats.
+>> +	Migrate ref store between different formats. Supports repositories
+>> +	with worktrees; migration must be run from the main worktree.
 >
-> The diff algorithm used in 'git-blame(1)' is set to 'myers',
-> without the possibility to change it aside from the `--minimal` option.
-
-Hmph.  It is very unfortunate that we had --minimal already.  We
-should have done --diff-algorithm=<which> instead, but that is way
-too late.
-
-> There has been long-standing interest in changing the default diff
-> algorithm to "histogram", and Git 3.0 was floated as a possible occasion
-> for taking some steps towards that:
+> It feels a bit weird to single our worktrees specifically. We don't say
+> that the tool supports bare and non-bare repositories, either, so the
+> only reason why we'd have the note about worktrees is historic legacy.
+> How about this instead:
 >
-> https://lore.kernel.org/git/xmqqed873vgn.fsf@gitster.g/
+>     Migrate ref storage between different formats. Must be run from the
+>     main worktree in case the repository uses worktrees.
 
-Micronit.  I think the reference to 3.0 only about potentially
-breaking backward compatibility by making the family of diff-*
-plumbing commands ignore diff.algorithm configuration, and other
-usability changes like this one are fair game without having to wait
-for 3.0 boundary (the plumbing commands do ignore the configuration
-already, so there is nothing we have to wait 3.0 before doing).
+Two thoughts.
 
->     Changes since v1:
->     
->      * add tests
->      * ignore --diff-algorithm when it is provided before --minimal
+ * Would it be unacceptable if the primary repository and refstore
+   uses reftable backend, and a newly attached worktree to the
+   repository uses ref-files only for its per-worktree refs?  If we
+   should allow it, then "if the ref store you are migrating is in a
+   repository with multiple worktrees, you must migrate from the
+   primary and migrate _all_ ref store for all worktrees at once,
+   into the same backend", which the design of this patch seems to
+   aim at, would contradict with it, no?
 
-Sensible.
+ * If "you must do so from the primary worktree and we convert all
+   the worktrees attached to the same repository" is the only mode
+   of operation we support (which by the way I have no problem
+   with---the first bullet point above was asking question, not
+   suggesting change of design), then would it be easier for the
+   user to use if the command noticed that it is not in the primary
+   worktree and switched to it for the user, instead of complaining
+   and failing?
 
-I presume the reverse is true, i.e. giving "--minimal" and then
-"--diff-algorithm=histogram" in this order would make "histogram"
-survive, in other words, the usual "last one wins" rule is applied?
+>> @@ -95,7 +96,7 @@ KNOWN LIMITATIONS
+>>  
+>>  The ref format migration has several known limitations in its current form:
+>>  
+>> -* It is not possible to migrate repositories that have worktrees.
+>> +* Migration must be run from the main worktree.
+>>  
+>
+> I'd drop this bullet point entirely, as I don't really see this as a
+> limitation anymore.
 
-> +static int blame_diff_algorithm_minimal(const struct option *option,
-> +					const char *arg, int unset)
-> +{
-> +	int *opt = option->value;
-> +
-> +	BUG_ON_OPT_NEG(unset);
-> +	BUG_ON_OPT_ARG(arg);
-> +
-> +	*opt &= ~XDF_DIFF_ALGORITHM_MASK;
-> +	*opt |= XDF_NEED_MINIMAL;
-> +
-> +	return 0;
-> +}
-
-This and diff.c:diff_opt_diff_algorithm_no_arg(), which I think is
-the original from which this was copied from, look somewhat
-different, but this can afford to be simpler, as it does not have to
-parse "--histogram", "--patience", etc., as independent command line
-options.  OK.
-
-> +static int blame_diff_algorithm_callback(const struct option *option,
-> +					 const char *arg, int unset)
-> +{
-> +	int *opt = option->value;
-> +	long value = parse_algorithm_value(arg);
-> +
-> +	BUG_ON_OPT_NEG(unset);
-> +
-> +	if (value < 0)
-> +		return error(_("option diff-algorithm accepts \"myers\", "
-> +			       "\"minimal\", \"patience\" and \"histogram\""));
-> +
-> +	*opt &= ~(XDF_NEED_MINIMAL | XDF_DIFF_ALGORITHM_MASK);
-> +	*opt |= value;
-> +
-> +	return 0;
-> +}
-
-Quite straight-forward and sensible.
-
->  static int is_a_rev(const char *name)
->  {
->  	struct object_id oid;
-> @@ -915,10 +960,17 @@ int cmd_blame(int argc,
->  		OPT_BIT('s', NULL, &output_option, N_("suppress author name and timestamp (Default: off)"), OUTPUT_NO_AUTHOR),
->  		OPT_BIT('e', "show-email", &output_option, N_("show author email instead of name (Default: off)"), OUTPUT_SHOW_EMAIL),
->  		OPT_BIT('w', NULL, &xdl_opts, N_("ignore whitespace differences"), XDF_IGNORE_WHITESPACE),
-> +		OPT_CALLBACK_F(0, "diff-algorithm", &xdl_opts, N_("<algorithm>"),
-> +			       N_("choose a diff algorithm"),
-> +			       PARSE_OPT_NONEG, blame_diff_algorithm_callback),
->  		OPT_STRING_LIST(0, "ignore-rev", &ignore_rev_list, N_("rev"), N_("ignore <rev> when blaming")),
->  		OPT_STRING_LIST(0, "ignore-revs-file", &ignore_revs_file_list, N_("file"), N_("ignore revisions from <file>")),
->  		OPT_BIT(0, "color-lines", &output_option, N_("color redundant metadata from previous line differently"), OUTPUT_COLOR_LINE),
->  		OPT_BIT(0, "color-by-age", &output_option, N_("color lines by age"), OUTPUT_SHOW_AGE_WITH_COLOR),
-> +		OPT_CALLBACK_F(0, "minimal", &xdl_opts, NULL,
-> +			       N_("spend extra cycles to find better match"),
-> +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-> +			       blame_diff_algorithm_minimal),
->  		OPT_BIT(0, "minimal", &xdl_opts, N_("spend extra cycles to find better match"), XDF_NEED_MINIMAL),
-
-This OPT_BIT() can stay here?  I thought parse_options_check() was
-capable of detecting duplicated long-form commands as programming
-error, but apparently it does not.  (#leftoverbits) We should look
-into teaching parse_options_check() to check duplicated option
-names.
-
->  		OPT_STRING('S', NULL, &revs_file, N_("file"), N_("use revisions from <file> instead of calling git-rev-list")),
->  		OPT_STRING(0, "contents", &contents_from, N_("file"), N_("use <file>'s contents as the final image")),
-> ...
-> +test_expect_success 'blame honors --minimal option' '
-> +	cat >expected <<-\EOF &&
-> +	Initial
-> +	Initial
-> +	Initial
-> +	Second
-> +	Second
-> +	Second
-> +	Second
-> +	Initial
-> +	Second
-> +	Second
-> +	Second
-> +	EOF
-> +
-> +	git blame file.txt --minimal | \
-> +		grep --only-matching -e Initial -e Second > actual &&
-> +	test_cmp expected actual
-> +'
-
-Do we need to test combination of configuration variables and
-command line options (to verify that options trump configuration),
-or two command line options (to verify that the last one wins)?
-
-When xdiff/ part of the system gets improved, the above expected
-patterns may have to change, these tests may fail.  Whoever updates
-the diff algorithm to cause such a failure has to tell between a
-genuine _bug_ in their update to diff implementation and the test
-expecting a suboptimal result based on the behaviour of the diff
-algorithm before their improvement.  And for that, they need to
-debug these tests.  But I suspect that these tests will probably be
-very difficult to debug, as it is almost impossible to see which
-line in the original each of these lines correspond to.
-
-I guess that's inevitable, and we'll cross that bridge when it
-becomes necessary.
-
-Thanks, will queue, but I do find the leftover --minimal bit
-disturbing.
-
-
+I agree that such a limitation should be lifted, but if we have to
+say "you must do it this way, not that way", that is still a
+limitation ;-).
