@@ -1,180 +1,140 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F373633375A
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 19:03:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682ED20F08C
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 19:07:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761678192; cv=none; b=u0oSzPtyK/UFYXg9HaW2DtOS4NOZlyeja4AXXgdjdwmPdDapqIFao1G3/EJmXNE/SAQ9WX4Zr4+kXkT4q+EkfK6mylpODREGm/ZxmkRBMlfJgdfNQGu8nikdK1D897m1eqgImAF1baIiF1Wq5m32WZ+n5pvP/scSuP6A7DoRBsI=
+	t=1761678471; cv=none; b=GCYSyGz27WCQq+UhrhdtRpEVzwjJ18V6uh8PcoBUx6QusXlAkpYnFc1+A/8ItVxQofj8w5BMCQ1O6sBXMGmpNazFjidAo+xZDe+V52leuc7qeS006tWW2xZQ+uSovmrNRcW8Iyzn7BeV2qdeaqRlaia/SMsMPWz93V+9CT7D1Ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761678192; c=relaxed/simple;
-	bh=bvTP4BVS6EKcO5G89AnDHfy1F3ZX2nE/ZcDY4ybkSl4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FxL88E+r6nSz1GaHulMOxSx9i8/XSRrafZO66aEpUZEzyQpfXl5UxihoVQ7CFiytl10a0y51GqMbCKV1W7dJTAR2wh2KAztUshHuBVVCVhciTQDfxJuFEuZcSe6TC4Rj4HEXovzUKS4g30HGBrQK7ZgYq1SsJByM765d/EKw8EA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TzEsXgdI; arc=none smtp.client-ip=209.85.210.180
+	s=arc-20240116; t=1761678471; c=relaxed/simple;
+	bh=nie9UKV3UQXHAdb6obkhgwnnFnxr6aKDaW9H/YcHQCI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cWTY7pBja5Eq43D8saPxQqFpd5tl6e0w410dY8XJgPSSHn4j/5vb4Y30ejjHJmNl9KioRVAfGRJyChnSTWlgKjNtqMNFjoT0BAGp3254LYQoBg1dY95O2o0hZuKLsLp+3kYTXlSwzvLimDRr7k7xTv73LGtfdl3cXwKPSPlpAgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EkcWUCwS; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TzEsXgdI"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-7a27bf4fbcbso5410709b3a.1
-        for <git@vger.kernel.org>; Tue, 28 Oct 2025 12:03:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EkcWUCwS"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-36bf096b092so60497731fa.1
+        for <git@vger.kernel.org>; Tue, 28 Oct 2025 12:07:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761678190; x=1762282990; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=886JnqUuBhiNP8SE+xgne4b4WmXKjv5a+q9yN7iJth4=;
-        b=TzEsXgdIDA9kUzZ8r0kU5LaCnVtCth2YniWkSRdl6ceigDDcIlL0aXrVAs8rV+Z8h5
-         slebwZEF7Wcpqfw9H7OyJ24i5MPeESz1UO7dolf0XPBvhKWRfhofwxLL8EsmCQce4gAP
-         YRP7FUcTSgGpoCgx8dStg1lynCscckxdW6L2xSK5GyA1+ahgNJtlUN1URcQ5BmcdQBt0
-         U7MkTjiVl36k0+uRZoX8FWFhh3akzfLsrbA6xXyGxxw2ddyhqAn3ST4LGuqf3InOkp75
-         QsN4GsbYalVUHNvm1kMKnjBDt748yNYvZvSNufvWCG0NYKNb2hacruAVqi+e5u8W8uKU
-         6bpw==
+        d=gmail.com; s=20230601; t=1761678468; x=1762283268; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KQUp399lCiOssgFIiIxjK4lyUmwkGn3DmnE7vy0HR7c=;
+        b=EkcWUCwSDi4UtdSDeCdT7NXo+RNIZZu/CVgJVBWRenNFW5dx9IGJ3SlBYm1lpWWTFA
+         gFesp2EYF7LEIyxUif2rJSBv/WTRxU1Zl45CQRapXTDoGMwBj/AlDopbU8vhx7rEgt1D
+         EKG5JDM/BLl4oij8x79B1ryOqCy0HlcoTlvOcGPl00bSxstuJHAW5I7OI78aHgiz1bnu
+         lJTb8urSJYXyK6akVPAEtcL5eaCXyI/OwJ0j9cndMxGNVfbAmAfRqnppHhKJ87dKYFg7
+         lOCtI7sdciiKJX611X8SbXNsjGAfti2UCoIvk1LXz24AbfbSGK49lRcosuAhv9pq3/rl
+         sNdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761678190; x=1762282990;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=886JnqUuBhiNP8SE+xgne4b4WmXKjv5a+q9yN7iJth4=;
-        b=KGfM5MaiiKdz5zSvdpY7XmZYejHyFuXJ1Jb1toVkiVVnk59zBv26zdmXor4EvzusyX
-         PUZ1GwmraFLXCa/VWHvxLK9CSXim/qWMpuhQTXQm3nkUqpeZmGYmCp+FIm3MhAT8u9SW
-         fEjRVfwvpY/ch+GZ0znPjdmRrOS7hf2DshbRmc2FuGcH5w0c+woHkAT1TryVwpnywmqr
-         M9uXv3K2DXmvBP1moFtjB6DGDh9aglH6rdnCeVd02XEUfDsGlz9vDE+Ag1twf1np+Uqq
-         M2J1ASvAmYinKPJsAKETb7njKPUvAxWz/7js5k+vUOSxB6JmUeNT0h4RSviqxo0KvAZG
-         wo4A==
-X-Gm-Message-State: AOJu0YynIe+w99YYas/7MQxy1S1oXVsy0klHGSXg6hw29+6g+Yf+D2+r
-	DNA5hDlMTknYC1KqJeBqfnv3rVyBWg1q1v9ir9Lsz2DvGutVXEqIJjKC
-X-Gm-Gg: ASbGnctBDFD1Ec8yGTiZq8DSVq3ltUeUrMB2mtLWn1I8vB9bz16ifb1ZwHrU9s7Jtjh
-	syFYJcESzrq/EwHBHjBynxkKm7AzF7iG+F1nKTc4RD+kJovMAPlxxTBOWA3SDiXPZbak5ttPBvn
-	P+XJun0Iea9PoumVcFncqpMXRsv+X/E2RzuAVEqRdhc5YpmS9kvNjhvC1ZiUX+vLVgIOltaZcPs
-	oXPmDau0/b80i95LzGU8XdRMADM+HYrLzDKWKA0mIKM0LDNLI2Z6SQWuLfYGIxEOphlJ8VXEkNJ
-	lDNoWzwM+M1KOUYA4SL9pLrZNKrxzfgP0ZKBIl+cl5gaSvpbxAPRrpVyKPapQom2yAM3IY9isq0
-	uXDeLTN1aeNdlNTf9aJ+vWun4mz+3jSrUb/0o3RwLOXo71wtUhuVIuqBwu4/rM4TyWKo88QbdxH
-	G7w3HfhysOvzTJYOf7gO7kcDDhiQGnr7sneIqV1P+MpUndEui5b2XD0l0OZhwFUSukdqB55ZkU9
-	5PJInmvBzQ6DFYntsuTKi2UBKeVzYx6r3UeDo8/dV6aCshKeCwpQBNgKDkOEh8=
-X-Google-Smtp-Source: AGHT+IHpMM4TU4NT+JcI/SutetvY/Ikv+GqwvLRpblmkSi8uAJZ4PD2BrEctQ/Gz6V4dxRhtI2Tv3A==
-X-Received: by 2002:a05:6a21:6da7:b0:301:daeb:58ad with SMTP id adf61e73a8af0-346533349demr65675637.14.1761678189738;
-        Tue, 28 Oct 2025 12:03:09 -0700 (PDT)
-Received: from ?IPV6:2409:40e3:177:42ef:798a:642a:892e:b13? ([2409:40e3:177:42ef:798a:642a:892e:b13])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b712d7cdf28sm11156965a12.31.2025.10.28.12.03.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Oct 2025 12:03:09 -0700 (PDT)
-Message-ID: <6a41eae1-8d44-401b-85e2-4e52187da525@gmail.com>
-Date: Wed, 29 Oct 2025 00:33:01 +0530
+        d=1e100.net; s=20230601; t=1761678468; x=1762283268;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KQUp399lCiOssgFIiIxjK4lyUmwkGn3DmnE7vy0HR7c=;
+        b=Drccj9ITvpKSNTIra4oVCezp5PgPqGHYEoYu1dY9TxLPh3LTEU4/+CM7OjYNsVIzbs
+         3YtrgcN6R5FVKMn800EBBBZbZC6h0nr5I3Q+e4xDXn/bg/DotVEQUqBJUTEt3+OurZI7
+         Be/ydwhE+anJMhk+ssjtTYGk2IoO+EiRH8dNqyOotf6AnEXgC8TrourXAAx3601jy8jw
+         bG2Kf3o27rQX4zbtcHvq3uH8tFSD5h0XUu+2hxsuk4Kafoi8LYnDKK7lkDdkooK8YFR2
+         BAUST6K2MRxrO4F8iBH0ITigpeulRqyjwYVa2y1AifoHvTAs6g30AXSRdZaZ1dLPVq70
+         s6/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWjoBpKDa5kD1Ag6fJYwZVcG1vvsdBSdUH1M/xaTEmXDxPitaiZoN4b/LfgzT45/+nQP9s=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUgT055kAtcz1Q2UdUnTDzDfC2Gtv/cGYzzIorl+OmEIT+T2f+
+	dpKf44PX1ILgKwZ8XEBe46gpOcqpumR/Ir/lmGAJ/0XcD5JYkxwn+Mn2+t1p0bNQPMV7E3OkdZF
+	dd1kPYrrEDqBb+8l3MfdblsbfiBsfP8E=
+X-Gm-Gg: ASbGnctPQ/in/Nng4+SOCV5ZfXr/D3I7umwmPrijfA/YhsfPLxcZm3ZcHpMtVwL7C5P
+	t711EllEEK9k7ZSxWenzQiLqQVLGPIu8DfOvAuSLPCDe6nb/XkjwOwfD4gyCbdSYy8NYoivaoZ/
+	YiW4Hu2HynomKhvNXYIdkOhYfxdE1O8oKsZg9yf+QgYNP2XEXrq5GiQz4EXOs4IIx62p8ABbws7
+	DnNT9/R9N27sfdmlKiznF6il/EAoRP62CAKrn50W+qfJS75nQdyg19ZJzdZ9w==
+X-Google-Smtp-Source: AGHT+IFz6hbSYEhTLiWBi8IvnfZOn51POu17c8zRwYd4R9w3VQbWDaR4Wd7eSySFA2kvyaVEDbXNblsIsjP21wQaXGU=
+X-Received: by 2002:a2e:9a0d:0:b0:377:78a7:9711 with SMTP id
+ 38308e7fff4ca-37a05316e4emr1439181fa.29.1761678467262; Tue, 28 Oct 2025
+ 12:07:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] replay: make atomic ref updates the default
- behavior
-Content-Language: en-GB
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
- phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk, newren@gmail.com,
- ps@pks.im, karthik.188@gmail.com, code@khaugsbakk.name, rybak.a.v@gmail.com,
- jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com,
- johannes.schindelin@gmx.de
-References: <20251013183311.33329-1-siddharthasthana31@gmail.com>
- <20251022185045.29256-1-siddharthasthana31@gmail.com>
- <20251022185045.29256-3-siddharthasthana31@gmail.com>
- <xmqq7bwmy6r6.fsf@gitster.g>
-From: Siddharth Asthana <siddharthasthana31@gmail.com>
-In-Reply-To: <xmqq7bwmy6r6.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+ <20251027004404.2152927-5-sandals@crustytoothpaste.net> <aQCKD--ZmKnwBWs9@pks.im>
+In-Reply-To: <aQCKD--ZmKnwBWs9@pks.im>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Tue, 28 Oct 2025 13:07:36 -0600
+X-Gm-Features: AWmQ_bnB9fmGGyP57HS5rXtF8FMwHWQfHhS-TIt4aNurs4_9YaA8qNexJji-iPQ
+Message-ID: <CAH=ZcbBnTAWe=2SihD5G63e6T__wWj870u3eRE+rueH51gpqnA@mail.gmail.com>
+Subject: Re: [PATCH 04/14] rust: add a ObjectID struct
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 23/10/25 02:49, Junio C Hamano wrote:
-> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+On Tue, Oct 28, 2025 at 3:17=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
->> diff --git a/builtin/replay.c b/builtin/replay.c
->> index b64fc72063..1246add636 100644
->> --- a/builtin/replay.c
->> +++ b/builtin/replay.c
->> @@ -20,6 +20,11 @@
->>   #include <oidset.h>
->>   #include <tree.h>
->>   
->> +enum ref_action_mode {
->> +	REF_ACTION_UPDATE,
->> +	REF_ACTION_PRINT
->> +};
->> +
-
-
-Hi Junio,
-Thank you for the detailed review! Both are straightforward fixes:
-
-
-> We allow and encourage the last item in enum definition to have
-> trailing comma, i.e.
+> On Mon, Oct 27, 2025 at 12:43:54AM +0000, brian m. carlson wrote:
+> > diff --git a/src/hash.rs b/src/hash.rs
+> > new file mode 100644
+> > index 0000000000..0219391820
+> > --- /dev/null
+> > +++ b/src/hash.rs
+> > @@ -0,0 +1,21 @@
+> > +// This program is free software; you can redistribute it and/or modif=
+y
+> > +// it under the terms of the GNU General Public License as published b=
+y
+> > +// the Free Software Foundation: version 2 of the License, dated June =
+1991.
+> > +//
+> > +// This program is distributed in the hope that it will be useful,
+> > +// but WITHOUT ANY WARRANTY; without even the implied warranty of
+> > +// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> > +// GNU General Public License for more details.
+> > +//
+> > +// You should have received a copy of the GNU General Public License a=
+long
+> > +// with this program; if not, see <https://www.gnu.org/licenses/>.
 >
->          enum ref_action_mode {
->                  REF_ACTION_UPDATE,
->                  REF_ACTION_PRINT,
->          };
+> We typically don't have these headers for our C code, so why have it
+> over here?
 
+I'm wondering this too even though you gave a reason in your cover
+letter. I'm against putting licenses in each source file, and don't
+see how it's better than having a separate license file.
 
-Will add the trailing comma in v5 - makes future additions much cleaner.
-
-
+> > +pub const GIT_MAX_RAWSZ: usize =3D 32;
+> > +
+> > +/// A binary object ID.
+> > +#[repr(C)]
+> > +#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq)]
+> > +pub struct ObjectID {
+> > +    pub hash: [u8; GIT_MAX_RAWSZ],
+> > +    pub algo: u32,
+> > +}
 >
-> unless the last one is somehow special and we are not supposed to
-> add any new item after that (e.g., a sentinel REF_ACTION_MAX that is
-> supposed to give the upper limit of the values).  That way, future
-> developers can add new items with minimum patch noise.
+> An alternative to represent this type would be to use an enum:
 >
->> @@ -434,10 +491,15 @@ int cmd_replay(int argc,
->> ...
->> +					ret = error(_("failed to update ref %s: %s"),
->> +						    decoration->name, transaction_err.buf);
-> Hmph, don't we want to use '%s' when reporting the ->name thing?
-
-
-
-You are absolutely right about the codingGuidelines. I will fix both error
-messages to properly quote the ref names:
-
-
-         error(_("failed to update ref '%s': %s"), decoration->name, 
-transaction_err.buf);
-
-
-These will be in v5 along with Christian and Philip's feedback.
-
-Thanks,
-Siddharth
-
-
-> Documentation/CodingGuidelines has this:
+>     pub enum ObjectID {
+>         SHA1([u8; GIT_SHA1_RAWSZ]),
+>         SHA256([u8; GIT_SHA256_RAWSZ]),
+>     }
 >
->     Error Messages
->
->      - Do not end a single-sentence error message with a full stop.
->
->      - Do not capitalize the first word, only because it is the first word
->        in the message ("unable to open '%s'", not "Unable to open '%s'").  But
->        "SHA-3 not supported" is fine, because the reason the first word is
->        capitalized is not because it is at the beginning of the sentence,
->        but because the word would be spelled in capital letters even when
->        it appeared in the middle of the sentence.
->
->      - Say what the error is first ("cannot open '%s'", not "%s: cannot open").
->
->      - Enclose the subject of an error inside a pair of single quotes,
->        e.g. `die(_("unable to open '%s'"), path)`.
->
->      - Unless there is a compelling reason not to, error messages from
->        porcelain commands should be marked for translation, e.g.
->        `die(_("bad revision %s"), revision)`.
->
->      - Error messages from the plumbing commands are sometimes meant for
->        machine consumption and should not be marked for translation,
->        e.g., `die("bad revision %s", revision)`.
->
->      - BUG("message") are for communicating the specific error to developers,
->        thus should not be translated.
->
+> That would give us some type safety going forward, but it might be
+> harder to work with for us?
+
+This would be fine if it was used exclusively in Rust, but since this
+is a type that has to cross the FFI boundary it should be defined as a
+struct in C and Rust. If you run size_of::<ObjectId>() you'll get 33
+(but it could be something else). Without #[repr(C, u8)] the Rust
+compiler is free to choose how to define the discriminant (its length
+and values) to distinguish the 2 types. If you do use #[repr(C, u8)]
+then you have the possible problem of C setting an invalid
+discriminant value which would result in undefined behavior. It also
+doesn't make sense as an FFI type since a Rust enum is closer to a C
+union than a C enum. The point here is that Brian is matching the
+existing C struct with an equivalent Rust struct.
