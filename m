@@ -1,148 +1,102 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939EC72625
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 20:00:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B99218626
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 20:03:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761681619; cv=none; b=gbFZ4dZys4qiqy7vhBXrE0ci5GsJoQXJB73k474wIMcC19OybOyJFpmLI68tyHFtqP1A8qHdEgqxiWkBXtt4TBxbPX7soDWFKQ2Zq0NSUkcvl83Ddaxb3HKEa7Llhagvegn7BFr1gGO5oBinLBQHm9bH+hw5FadzqWdSlrwthk8=
+	t=1761681805; cv=none; b=gpm30o1N+d9RgM6qPhUp/dattgFRXzW+86yJAeQr/D4LagzCT/+3A2nU9e9tE5fMqKtvi4VTePW2vPKFulyYatIk0kQy9Z8XPs6qRTQ+g1N7o/I4/RruwQPutVX+WTnE1ion9MJrujfrSO+kegdmoVvzsN9SIiBccqdZyCKTHWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761681619; c=relaxed/simple;
-	bh=XbDrGOKBhDfDuGc7VbrwYDzQ7aQ8FfZyTtYTUpbBbVo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Z49jg8KNvn3jOojsXC6nuX4GlN6fT3Cuf5YLiW73bv5z8Xn9R8Qmlmmek2gJIQ8/vgHfczir8cOwV7X6fMlT2Z1xfczGn3eIDJX/6zMPiopwcWjOv083yXPIzAmeMnYS1D5ItgUAMmmKgQPI1BRXLEVgjmOa7J72JUBcd5KzpuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=n8O+jUkZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t229XPXQ; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761681805; c=relaxed/simple;
+	bh=M3PEoLMdjfiiZht6yRIhN3tSgAGyHuylqIuJa+ig9UA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bcf/PHImglUvQuWH7ChTqC7eJABkYPxFMPETtl1oIsJs8yQ00qKyrd1ufgjdRFz98AZYw/rvb12ngHUe6uwm/vowep2lI5NTWRdiIfMb130OO0b+hxDSvX/3WfnOjmh601jq/goWkPKs70H3bFQ0lsExSeF2+1mYX+Y/a2ZyKzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lc7kBz2Y; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="n8O+jUkZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t229XPXQ"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 92FC21D000FD;
-	Tue, 28 Oct 2025 16:00:16 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 28 Oct 2025 16:00:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761681616; x=1761768016; bh=Rx98tHPmqj
-	LXmtMn8lA+TK0Y8x/b5jp7i9FWBa0qh9w=; b=n8O+jUkZNkdpagQM8vUGeqYmq8
-	Qx3aq+9aWQ8QUiXM3aqqf/HwmurHwl/U4OFzAx+XQON+byBlZCJaR0/RoEybud/v
-	7LI+YNj7yEKb1byMFH50dTiAcQK376ByFPe8fdxBeSpYel5EOPTd/ULag2P/M4qr
-	QcRZSEaRr8umaMDVA9N7hxkjOlquA9+be881jYjGnc9SF+AKESZolztV9Eb+k/ie
-	SUlsQFTPt8+v/il66DBDiHLQwu3QqwDGZcu0rZZqgPoGFGVueuo68xlQtL3SHn7S
-	vkM9jFpj3AYXA9sMC1UDcP6Z+ETwZYtE9/KAnML9ggtNCQ32YT+SYnRmUvsw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761681616; x=1761768016; bh=Rx98tHPmqjLXmtMn8lA+TK0Y8x/b5jp7i9F
-	WBa0qh9w=; b=t229XPXQtE53GRhY0MViP5rCeZb7TUMevkypclJrjZx7XAsvfL7
-	pRetjyayXoWV3ti8qWInbLrGY4spj9hxJ5tnCzlGBHBhV97La+iR4rxTDVv2913N
-	7TTf4hLcBUK0yUNGhxR3x+xDnXR+MAHs74/CnU+JENBRzDtZf0Hj7lPPmhWfNFJi
-	xnCr7MllC5IsD23JEJRAjjzis0yNugDJnfcU56newXdAWZiYz/h7bYOLv194Giq0
-	3EJ3Y4PWKW42F8uU0hhne7oowN85fXB7tJ3SssjXFXwl1M6pVokKUXVWwM4MD7HA
-	NLmBzq+275M2x0POc0JHdjYBVhCa7Dk0rcg==
-X-ME-Sender: <xms:0CABaXSBORaDps9Ee_t049x58kheWrMcWdWkSqCmKvqSqb2DxxD2Fw>
-    <xme:0CABafo85yqXK-6XY6un5T7lus1MpOQonTmL77VxQ-VeXcY3jPCESbsV0Ic8iIQ4i
-    zGD_S75gOIqOIcHYwReZSbQSqnckV8PZJy6PZFO43YuLG3dQjrQuw>
-X-ME-Received: <xmr:0CABaVIlyKqFT8TE0Jq_akkNzRi0Iq0fETmJW5z0njQ2hqA_VMu_YhkWqk7oNfNDmmV0YgnMiAGGmfy1RrCN1zjfr7G53B-sf2Yu>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduiedujeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
-    hsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrh
-    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:0CABaSq6-JG0LbfLHZk96at-pGu9Pq08tsor-H5g5A5eJOUdNY29Gw>
-    <xmx:0CABady89t3n8sntaP3uI9kn5ANxE5e_XXAHnBf8il3xUHhScZhFqQ>
-    <xmx:0CABaWNriBaihJ39PaufiOxGALyxnYI4axNMz8EYh8IV_eKb7LX8Eg>
-    <xmx:0CABaS7zDVg7-51SU8JhGsNkcsz0suekXpeHH7k16wbnf6Adz-Azrg>
-    <xmx:0CABae70qj6RXtJzpIJU9eLQEiPRvZnkQp4i8pe_fpM6bMsUVnvgeZdj>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Oct 2025 16:00:15 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,  Ezekiel Newren
- <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 05/14] rust: add a hash algorithm abstraction
-In-Reply-To: <20251027004404.2152927-6-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Mon, 27 Oct 2025 00:43:55 +0000")
-References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
-	<20251027004404.2152927-6-sandals@crustytoothpaste.net>
-Date: Tue, 28 Oct 2025 13:00:14 -0700
-Message-ID: <xmqq3472dcfl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lc7kBz2Y"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-378e622e9e3so3773521fa.0
+        for <git@vger.kernel.org>; Tue, 28 Oct 2025 13:03:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761681802; x=1762286602; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TyXSHQeULz2ZdF5Nevz5v3XTgHK6MCWbz88aXP2+oHM=;
+        b=lc7kBz2YkAGEoYaRjUsgImyn8PE5m7G1x1+IzQBeGgJJPx4rUslDW6VigUlac818Iw
+         yWwKOabX5BydjoycevTp9V+yxcFCv1AoyWORT5RRktqkvsuhbQnKcmpaTJCCKwaitvfz
+         EsCnw6I9MQzkIyI2Qh7SJsgL3zLVvFVSpBOURqU7DyiPw6tMLLY7kmpWiys6Ce7HAVx4
+         4jNXmvJGIEXdMtfv+9gJbtRgoa+ewXwncZa1IUcArhanoz3UToTPgoTuBSgCsBZEHg/E
+         07/acqm0yJEExDyl54o7z9dK+LTqLD664mttS5Pm9U0wIaFB3Rc6ibtR5ccRhcfvuobI
+         RvdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761681802; x=1762286602;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TyXSHQeULz2ZdF5Nevz5v3XTgHK6MCWbz88aXP2+oHM=;
+        b=p3CASNbqsgxnRMf4RGzJrRH2UAktJJQbVKdDhIWIc/BW75/afgK9ORkRn0SN2XimW2
+         v7qMCiWbSSOuJxZrq08qTIaBB6vVPZb71Q4N03blI6zOxorZg66H3a7dqGfI9+yEXR6f
+         DGvZCDzjfK75cgSfvSL/EIpitNfMc4qQQbYFlOd2+HATb6AnCQljaAK7SJR4qDhur/Fl
+         7AFiWkJxZxK/Lv1QnRvTYoq3DFbuSsstsENkB1DTEEXC9LzDl81fF1Ivu0KlftwO/wTU
+         Fz47LNTgwmN7fevo2l0dJq9+kf8dk44paJi1Kj1cjMGbeF7Zv4zPTArikXalqYfVQ98K
+         LmUw==
+X-Forwarded-Encrypted: i=1; AJvYcCU7Ppvbd+wIFKUxA1bSZf8lq5Kcgr3SkcLe8jkmpPHlu6vZDb25S6sXd2+WsUPZu35fBuY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyRgSurwhnOXDTEiTF9YEtPeXIySA769l+MAkuw+FLZ1ToJDNTk
+	Calot/lprXxT8IiyWTHvLu1XMReKcP0wIK/SAXM+fQr/e+QUlGqHqoZeBVvl19OQbk0LU+oXfNT
+	7S6tsX10DFriYsC8Id1IGZn+y6fzBAHg=
+X-Gm-Gg: ASbGncuZsDa9iHzL6pomQuH2BfyLiKythfmxme2HjlsAnshasOLAsEtcNNFGG6y852S
+	etJYCEHwyrGg6ai5h6R7X28K7RZZBGlloEnglrQOy6xZGqvIUdINe9dtON3gw+uTfG+EuVGcnut
+	TVBkW1cDEpj1ShRrMqv7PfWyk/uMLSy4a1j1SuZ1Cazoh/3htKqEFYXqSEwx4Fy1SXhxRxaz1Rr
+	PL9Eb7X/dNWfJSq7lsVPrrflt6HYWpF1dYF1S9CmAcMHJ6zV2i9iNsbmoMI5A==
+X-Google-Smtp-Source: AGHT+IFZcU9/IuS/P257+u5lgU2wSuxQXQPAhSmtkDb/2U5s+9JDpoSmVbTmk0FR+IG0QePqabrBCw6tevlkExqp3Pk=
+X-Received: by 2002:a05:651c:3146:b0:378:d020:b6b3 with SMTP id
+ 38308e7fff4ca-37907c4d528mr10378101fa.7.1761681802180; Tue, 28 Oct 2025
+ 13:03:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+ <20251027004404.2152927-6-sandals@crustytoothpaste.net> <xmqq3472dcfl.fsf@gitster.g>
+In-Reply-To: <xmqq3472dcfl.fsf@gitster.g>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Tue, 28 Oct 2025 14:03:11 -0600
+X-Gm-Features: AWmQ_blY0X5N3Zcg34SERYSb9eRFBQtEWu3Ayw2F6R9rmmR_hNPa5TvFAyoHHmQ
+Message-ID: <CAH=ZcbD80RGeuxqcDiWr2KNaQzFCrd=9fQOGo_+pW9E6+HmtQA@mail.gmail.com>
+Subject: Re: [PATCH 05/14] rust: add a hash algorithm abstraction
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Tue, Oct 28, 2025 at 2:00=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>
+> > +#[allow(dead_code)]
+> > +impl ObjectID {
+> > +    pub fn as_slice(&self) -> &[u8] {
+> > +        match HashAlgorithm::from_u32(self.algo) {
+> > +            Some(algo) =3D> &self.hash[0..algo.raw_len()],
+> > +            None =3D> &self.hash,
+> > +        }
+> > +    }
+> > +
+> > +    pub fn as_mut_slice(&mut self) -> &mut [u8] {
+> > +        match HashAlgorithm::from_u32(self.algo) {
+> > +            Some(algo) =3D> &mut self.hash[0..algo.raw_len()],
+> > +            None =3D> &mut self.hash,
+> > +        }
+> > +    }
+> > +}
+>
+> These cases for "None" surprised me a bit; I would have expected us
+> to error out when given an algorithm we do not recognise.
 
-> +#[allow(dead_code)]
-> +impl ObjectID {
-> +    pub fn as_slice(&self) -> &[u8] {
-> +        match HashAlgorithm::from_u32(self.algo) {
-> +            Some(algo) => &self.hash[0..algo.raw_len()],
-> +            None => &self.hash,
-> +        }
-> +    }
-> +
-> +    pub fn as_mut_slice(&mut self) -> &mut [u8] {
-> +        match HashAlgorithm::from_u32(self.algo) {
-> +            Some(algo) => &mut self.hash[0..algo.raw_len()],
-> +            None => &mut self.hash,
-> +        }
-> +    }
-> +}
-
-These cases for "None" surprised me a bit; I would have expected us
-to error out when given an algorithm we do not recognise.
-
-> +    /// Return a hash algorithm based on the internal integer ID used by Git.
-> +    ///
-> +    /// Returns `None` if the algorithm doesn't indicate a valid algorithm.
-> +    pub const fn from_u32(algo: u32) -> Option<HashAlgorithm> {
-> +        match algo {
-> +            1 => Some(HashAlgorithm::SHA1),
-> +            2 => Some(HashAlgorithm::SHA256),
-> +            _ => None,
-> +        }
-> +    }
-> +
-> +    /// Return a hash algorithm based on the internal integer ID used by Git.
-> +    ///
-> +    /// Returns `None` if the algorithm doesn't indicate a valid algorithm.
-> +    pub const fn from_format_id(algo: u32) -> Option<HashAlgorithm> {
-> +        match algo {
-> +            0x73686131 => Some(HashAlgorithm::SHA1),
-> +            0x73323536 => Some(HashAlgorithm::SHA256),
-> +            _ => None,
-> +        }
-> +    }
-
-> +    /// The number of bytes which is processed by one iteration of this algorithm's compression
-> +    /// function.
-> +    pub const fn block_size(self) -> usize {
-> +        match self {
-> +            HashAlgorithm::SHA1 => 64,
-> +            HashAlgorithm::SHA256 => 64,
-> +        }
-> +    }
-
-What we see in this patch seems to be a fairly complete rewrite of
-what we have in <hash.h>.  I totally forgot that we had this "block
-size" there, which is only used in receive-pack.c when we compute
-the push certificate.
+I think _Result_ would be more appropriate here.
