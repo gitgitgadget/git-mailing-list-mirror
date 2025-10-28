@@ -1,84 +1,46 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from out03.mta.xmission.com (out03.mta.xmission.com [166.70.13.233])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61FA3396FD
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 16:00:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E067E343D62
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 16:01:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.70.13.233
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761667252; cv=none; b=IxqEvpIsP74FsPF68xg3KK8FwzSuGkmZQUjPlYhBEqUqsYn11Dq7yLAWtZhDbVE4Y977PLZBpcsWti7hF5xNuZiUHYeZSahI4B0Q5iIiiAvYTXf7uUyYRH1LG5Ne47m56O1FDZJn8aHnZUWFMjONGprNGG4HUe0oG0EuFVd5pJQ=
+	t=1761667313; cv=none; b=AOI65O2vCukPAExsQlo2B51TSG9Hr8yjL5ZubvWZ244Q0JQgONgSUeTklZWiX+5vn5zJ4N5lTq5Jb1nvDwo4lpTFWmzw5ws2I2/puUfYtFROEtZ8A/VGF7CG8gOp/X/cCOXhIJRvI+jzVq7DgBrZkf+c6waTQisSXRLLUK4FqmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761667252; c=relaxed/simple;
-	bh=q31jQy1h3xGiHWP7faCZ/mM5kHN5O+NpsH/XJgzD3U0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RPhspkRqPcRJFZDSS2K+LgKvOZbXW7TZbIYrUNU8UsagFaJ3ys4PR4/YeXYZoZWAx7/HoVf0W0avfjF6/lVVfN7C8w77j6vIEkr4EEyOQAewbleFR39RQ65x4Bs7Tnxj2rY70O0L/XqXC8vNk+cZdDop90f1qaMMN2kaO4jW3iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GcIXaQv9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OebotSkO; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GcIXaQv9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OebotSkO"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id F3976EC04AE;
-	Tue, 28 Oct 2025 12:00:45 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 28 Oct 2025 12:00:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761667245; x=1761753645; bh=ECgKlZvIaQ
-	o/E5vN55SgV2ZSiQX4UVXCSHLF5hJv13k=; b=GcIXaQv9tBYvchcGOr0nGSVDZe
-	c5GIbuqHrpC7zaPCYWQ7E9Iw7rcZY3w1TXsFFJbxMc1pkkme3MbzuMXuoP3b7GiB
-	N6lG3BjOB5WSWUZ4tt8TAdoPXTmPQ/YWlYqJ62EMsVi5E9zWLSobDYU++hS1JOY5
-	hLjNTyi6LLNY27+U6gqfHI7eDSHFi4riejpGMpIRwpp8/N7/uPJqttvfGXdZT6xV
-	Y22EgwR1sMOPalQPzCWQNBcF9/eZM5X1RWT1jyHEdOAiMaI/Woa02ynjmCLuZVE3
-	td1D6hnQoThyY5wCAQ5bowXaAYuUcySk6yi6VsJeLv5mhjfc+nqGLvT0yMfA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761667245; x=1761753645; bh=ECgKlZvIaQo/E5vN55SgV2ZSiQX4UVXCSHL
-	F5hJv13k=; b=OebotSkO47HwVrCCaAoJdtULfuso+MGIrw+9H8FN7nz8yEkoRGi
-	osyx3WW5xJTy/QusXQe8mZ3/LEoPE4emx2ylio1bQwGlq87naQGZ/mXGJLxc5pCs
-	5oCJdoU9nTmPrAIHyUUiNihkSUR1Vos29Asg3oCFSwS1+igQKNXk2OUTguNWumO2
-	CG90NLuFE/t76/oKN9MVtpjzNLOHnNa5ZpdUz9KUvUnwK4A8O67N1LbKY5mSnpox
-	WJAHW0W+iwKJFu66ZYv9ojR9YS6VyklelMjnGBv8EuKuUDTaqwTz/c5+IymIFlSF
-	w7npP50XA/hF/6IBLK/aGUdd0kldBEJk7Zg==
-X-ME-Sender: <xms:regAabaGiqb1Fu4YOhXpp4jTrNmBLpFCAIhL_onQdqGbW0B0z58fhA>
-    <xme:regAaRTG93z2pYPU2uqx_3tYpJl4qdwiPdyAHnedS_Q0_NMs5PGap7v_ehrt10AdX
-    GGwaFEyzfMNrjkuIJEESa6XAsgy5KxajIz49eJabqOh6_U7nL6rBQ>
-X-ME-Received: <xmr:regAaWTh92YvnMsEjengIHtUjdg-Big6L0VXiFerm7F3ET5k4blybB5lxlTOanwN7hIyaC3riaq8UIguEnsQoD7tBOIrCC6meueI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieduvdejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtgh
-    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrmhdrsghoshhtohgtkhesshhhohhpih
-    hfhidrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:regAadT525G-MY1miLPAYmAvoF0ykVsLKeFzMqqYZXRKGitN83FuEg>
-    <xmx:regAaT6UoxlI9L0rTl8Dz2o6buUKUkMAwc8wGAm-_63YCdUHO_FAnQ>
-    <xmx:regAaR0s-lJIV6rG0CuEVZNikEKtnbXDY53ah1t9_qur4Grbsmh0qw>
-    <xmx:regAaWAeHD_VJfpnGJeEG4QxCIke7up_iy8Dww4TzWU1zfESVqiR5g>
-    <xmx:regAaRDwHNRkGRYArjoPdNW8keuK-Xfxtftz8dhYZ4tJKIWxJr1FmAsv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Oct 2025 12:00:45 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Sam Bostock via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Sam Bostock <sam.bostock@shopify.com>
-Subject: Re: [PATCH] refs: support migration with worktrees
-In-Reply-To: <aQBwiE-bhqcaSHG_@pks.im> (Patrick Steinhardt's message of "Tue,
-	28 Oct 2025 08:28:08 +0100")
-References: <pull.2077.git.git.1761589580028.gitgitgadget@gmail.com>
-	<aQBwiE-bhqcaSHG_@pks.im>
-Date: Tue, 28 Oct 2025 09:00:43 -0700
-Message-ID: <xmqqfrb3dnis.fsf@gitster.g>
+	s=arc-20240116; t=1761667313; c=relaxed/simple;
+	bh=/m6sQpILV0dLhDMED4BgHiHJSGwu4Os6qiVAB405iWY=;
+	h=From:To:Cc:In-Reply-To:References:Date:Message-ID:MIME-Version:
+	 Content-Type:Subject; b=nKQxyZ0yw0jDDPZ23MFkjiK3+AU4yhzpJEJMFYrrHhgsJamkk87RfzY6RerBO+hOsBwJd7CRu4W5zPYpnSGY6MMJw6EhmSJ6B55mn83lDQV1Ox4cnSWfznoGd/NwhJqIrApY4pplImfmSslphRpIQ+ZHphkbYUjHqd6EdKXTd/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xmission.com; spf=pass smtp.mailfrom=xmission.com; arc=none smtp.client-ip=166.70.13.233
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xmission.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=xmission.com
+Received: from in01.mta.xmission.com ([166.70.13.51]:33626)
+	by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.93)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1vDm8s-007jlw-NC; Tue, 28 Oct 2025 10:01:50 -0600
+Received: from ip72-198-198-28.om.om.cox.net ([72.198.198.28]:40452 helo=email.froward.int.ebiederm.org.xmission.com)
+	by in01.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.93)
+	(envelope-from <ebiederm@xmission.com>)
+	id 1vDm8r-005Gjk-PZ; Tue, 28 Oct 2025 10:01:50 -0600
+From: "Eric W. Biederman" <ebiederm@xmission.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Todd Zullinger <tmz@pobox.com>,  git@vger.kernel.org,  Kousik
+ Sanagavarapu <five231003@gmail.com>,  brian m. carlson
+ <sandals@crustytoothpaste.net>
+In-Reply-To: <xmqqms5chyr8.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	27 Oct 2025 13:32:11 -0700")
+References: <20240703153738.916469-1-tmz@pobox.com>
+	<ZoV8b2RvYxLOotSJ@teonanacatl.net> <Z8HVkqqD054QGPIE@teonanacatl.net>
+	<xmqqbjlump3m.fsf@gitster.g>
+	<87zf9c8glu.fsf@email.froward.int.ebiederm.org>
+	<xmqqqzuoi6sg.fsf@gitster.g>
+	<875xc02mmq.fsf@email.froward.int.ebiederm.org>
+	<87o6ps16pj.fsf@email.froward.int.ebiederm.org>
+	<xmqqms5chyr8.fsf@gitster.g>
+Date: Tue, 28 Oct 2025 11:01:45 -0500
+Message-ID: <87frb310d2.fsf_-_@email.froward.int.ebiederm.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,53 +49,103 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-XM-SPF: eid=1vDm8r-005Gjk-PZ;;;mid=<87frb310d2.fsf_-_@email.froward.int.ebiederm.org>;;;hst=in01.mta.xmission.com;;;ip=72.198.198.28;;;frm=ebiederm@xmission.com;;;spf=pass
+X-XM-AID: U2FsdGVkX18AiA2QIhKM2quCqWxrnrQDvlJsM1UoG4M=
+X-Spam-Level: 
+X-Spam-Report: 
+	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
+	*  0.1 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+	*      [score: 0.4795]
+	*  0.7 XMSubLong Long Subject
+	* -0.0 DCC_CHECK_NEGATIVE Not listed in DCC
+	*      [sa05 1397; Body=1 Fuz1=1 Fuz2=1]
+	*  1.0 XM_B_SpammyTLD Contains uncommon/spammy TLD
+X-Spam-DCC: XMission; sa05 1397; Body=1 Fuz1=1 Fuz2=1 
+X-Spam-Combo: ;Junio C Hamano <gitster@pobox.com>
+X-Spam-Relay-Country: 
+X-Spam-Timing: total 441 ms - load_scoreonly_sql: 0.06 (0.0%),
+	signal_user_changed: 12 (2.7%), b_tie_ro: 10 (2.4%), parse: 1.44
+	(0.3%), extract_message_metadata: 22 (5.0%), get_uri_detail_list: 3.6
+	(0.8%), tests_pri_-2000: 19 (4.3%), tests_pri_-1000: 2.9 (0.6%),
+	tests_pri_-950: 1.45 (0.3%), tests_pri_-900: 1.26 (0.3%),
+	tests_pri_-90: 86 (19.5%), check_bayes: 84 (19.0%), b_tokenize: 8
+	(1.9%), b_tok_get_all: 8 (1.7%), b_comp_prob: 2.6 (0.6%),
+	b_tok_touch_all: 61 (13.9%), b_finish: 0.86 (0.2%), tests_pri_0: 280
+	(63.6%), check_dkim_signature: 0.54 (0.1%), check_dkim_adsp: 2.2
+	(0.5%), poll_dns_idle: 0.17 (0.0%), tests_pri_10: 2.1 (0.5%),
+	tests_pri_500: 8 (1.9%), rewrite_mail: 0.00 (0.0%)
+Subject: [PATCH] t1016-compatObjectFormat: Really freeze time for
+ reproduciblity
+X-SA-Exim-Connect-IP: 166.70.13.51
+X-SA-Exim-Rcpt-To: sandals@crustytoothpaste.net, five231003@gmail.com, git@vger.kernel.org, tmz@pobox.com, gitster@pobox.com
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+X-SA-Exim-Scanned: No (on out03.mta.xmission.com); SAEximRunCond expanded to false
 
-Patrick Steinhardt <ps@pks.im> writes:
 
->>  `migrate`::
->> -	Migrate ref store between different formats.
->> +	Migrate ref store between different formats. Supports repositories
->> +	with worktrees; migration must be run from the main worktree.
->
-> It feels a bit weird to single our worktrees specifically. We don't say
-> that the tool supports bare and non-bare repositories, either, so the
-> only reason why we'd have the note about worktrees is historic legacy.
-> How about this instead:
->
->     Migrate ref storage between different formats. Must be run from the
->     main worktree in case the repository uses worktrees.
+The strategy in t1016-compatObjectFormat is to build two trees with
+identical commits, one tree encoded in sha1 the other tree encoded
+in sha256 and to use the compatibility code to test and see if
+the two trees are identical.
 
-Two thoughts.
+GPG signatures include the current time as part of the signature.
 
- * Would it be unacceptable if the primary repository and refstore
-   uses reftable backend, and a newly attached worktree to the
-   repository uses ref-files only for its per-worktree refs?  If we
-   should allow it, then "if the ref store you are migrating is in a
-   repository with multiple worktrees, you must migrate from the
-   primary and migrate _all_ ref store for all worktrees at once,
-   into the same backend", which the design of this patch seems to
-   aim at, would contradict with it, no?
+To make gpg deterministic I forced the use of gpg --faked-system-time.
+Unfortunately I did not look closely enough.
 
- * If "you must do so from the primary worktree and we convert all
-   the worktrees attached to the same repository" is the only mode
-   of operation we support (which by the way I have no problem
-   with---the first bullet point above was asking question, not
-   suggesting change of design), then would it be easier for the
-   user to use if the command noticed that it is not in the primary
-   worktree and switched to it for the user, instead of complaining
-   and failing?
+By default gpg still allows time to move forward with --faked-system-time.
+So in those rare instances when the system is heavily loaded an gpg runs
+slower than other times, signatures over the exact same data differ
+due to timestamps with a minuscule difference.
 
->> @@ -95,7 +96,7 @@ KNOWN LIMITATIONS
->>  
->>  The ref format migration has several known limitations in its current form:
->>  
->> -* It is not possible to migrate repositories that have worktrees.
->> +* Migration must be run from the main worktree.
->>  
->
-> I'd drop this bullet point entirely, as I don't really see this as a
-> limitation anymore.
+Reading through the gpg documentation with a close eye, time can be
+frozen by including an exclamation point at the end of the argument to
+--faked-system-time.
 
-I agree that such a limitation should be lifted, but if we have to
-say "you must do it this way, not that way", that is still a
-limitation ;-).
+Add the exclamation point so gpg really runs with a fixed notion of time,
+resulting in the exact same data having identical gpg signatures.
+
+That is enough that I can run "t1016-compatObjectFormat.sh --stress"
+and I don't see any failures.
+
+It is possible a future change to gpg will make replay protection more
+robust and not provide a way to allow two separate runs of gpg to
+produce exactly the same signature for exactly the same data.  If that
+happens a deeper comparison of the two repositories will need to be
+performed.  A comparison that simply verifies the signatures and
+compares the data for equality.  For now that is a lot of work
+for no gain so I am just documenting the possibility.
+
+Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
+---
+ t/t1016-compatObjectFormat.sh | 6 ++++++
+ t/t1016/gpg                   | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
+index a9af8b239626..0efce53f3aad 100755
+--- a/t/t1016-compatObjectFormat.sh
++++ b/t/t1016-compatObjectFormat.sh
+@@ -21,6 +21,12 @@ test_description='Test how well compatObjectFormat works'
+ # different hash functions result in the same content in the commits.
+ # This means that when the commit is translated between hash functions
+ # the commit is identical to the commit in the other repository.
++#
++# Similarly this test relies on:
++#	gpg --faked-system-time '20230918T154812!
++# freezing the system time from gpg perspective so that two different
++# runs of gpg applied to the same data result in identical signatures.
++#
+ 
+ compat_hash () {
+ 	case "$1" in
+diff --git a/t/t1016/gpg b/t/t1016/gpg
+index 2601cb18a5b3..34d6e055fc9e 100755
+--- a/t/t1016/gpg
++++ b/t/t1016/gpg
+@@ -1,2 +1,2 @@
+ #!/bin/sh
+-exec gpg --faked-system-time "20230918T154812" "$@"
++exec gpg --faked-system-time '20230918T154812!' "$@"
+-- 
+2.41.0
+
