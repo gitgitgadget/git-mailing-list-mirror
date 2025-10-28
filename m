@@ -1,81 +1,83 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFF11A255C
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 13:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C58225390
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 13:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761658784; cv=none; b=M5SzhSBj3IhlzOJwp7Bz2hw9K6bhL1WmX9p6qKQ2RDE8SiIbsvbFjkrqJZ5w/zriksABSs98kqv7pWKxU381I1O2ssTmv/MiLagoMtz9JEtCEoPyQOxwXX/yldxyo7WZ9dH/FW9Z10ZwCUFmRiUAC+ZAtuMJF+GET8JiVi43rhg=
+	t=1761658808; cv=none; b=pYHTypqcGDowaFJqlnYd9yTn3KBchADozrhiloHTkFHESVT7WWmq/80PKfiXt9GewA6M1Uyek3LLhojwjXx8sEiFM2wBS/3iY+ZN9C4yhcBST5Ki72HZ5gKAzupNAjoGu22omqpkKzD3ytJRfd0UbFFWMnydL9nCb3eGF6/fZ94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761658784; c=relaxed/simple;
-	bh=EgHE31TPNhQ5yYXBiHWAxdcSVYmfODEI5Z7IzzeXOIM=;
+	s=arc-20240116; t=1761658808; c=relaxed/simple;
+	bh=9d4SiEsO7LmBlWwhGt47qhy0Zxdd8axlJS+U6Z9m57U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fzGam7axqKI+95co7A6ICNC70gSgPoXV/N1H6SHW6jJYHOLxmfeBm6GIJLgc9Tw1LbYFAXNhZA+VyxbMppncKFZJi/7XMYttJPIdR66kqDLuyM/FGkRa4mVgUpJAivakuMQYDU5bixOliu7ZztLa9E/XJo5VmRlCqBBv8pulhSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E++gMdIs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qp6uniEO; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=GJEVukXeqx+KTpaeYfpa5s9TahKjixYhMGqw0XWcUzzgSE0qmD2gWEpru3V2J6DxP6xY25b0HnqCUNirP9QUjfWpJzA+Fq3ickent6cUGbuSFW5QCfFHxfjRj7NqVyryJGv/RpVc6INUEDnbrPCnbQ98mJkm+qn44EbFxfnzckE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c4qhg5oR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=1smv9BT3; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E++gMdIs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qp6uniEO"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 14C65EC039D;
-	Tue, 28 Oct 2025 09:39:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c4qhg5oR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1smv9BT3"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 98943EC051D;
+	Tue, 28 Oct 2025 09:40:04 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 28 Oct 2025 09:39:41 -0400
+  by phl-compute-09.internal (MEProxy); Tue, 28 Oct 2025 09:40:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761658781; x=1761745181; bh=6YOy9FjaL4
-	PbKJwiaF5EAoIeRBc2LnqYF3a2ClPkHjc=; b=E++gMdIsEEFJ7vgWKLruY/3gk7
-	WSAEhdyAxSS8/p9E8Zzx1vNShek4bsnJfkAWkC6pYqHkU1+/jus3hFiF3wrfoyr+
-	palIVcYqL//3g4dySPR+roSbcPKySzjpH5KclN6FjMIA6q+cm44YpAaH/2viT8Ua
-	4uGFpp7SQRK9qI1I26+5YiJUZrEM4sJIqoLvoy9qeEbVf38ny7KCCe/ueLIyeTT4
-	09D5ydWWJD3x0DvR6iHcrnEu4R1kAvY+t5wEqQwF+Ljmu2kiR2Gb5Zh39heXPMFY
-	PicfwXTm6Opv2CM9ViJyknuqsHdtKTv0wCWItf9xz5AchAvsKRSd1yoSXhWA==
+	:subject:to:to; s=fm2; t=1761658804; x=1761745204; bh=+j/M8/wR3I
+	eL/ie2pLffdZ//w54gAd+d/FRPX/ndHd0=; b=c4qhg5oR1ZPaKXrw4rjZkQ22S8
+	9O9RyroeXNI0THb3vW0lTiIbUiPzioMvQhDAFffujI/zLE8ebfnZDKx4I83P59jX
+	7NVUnL2qUiHgAzBCFWkfYpC6ySEcR9S7MtHfi5ooC2pRO/zL8AN+KkkaAZ1CRFwm
+	Q7n/EdAgYKSK48IHwYTJgFdbafhZzuq3apy0iajZGFjl85d25qgQt+Y99YAdzlle
+	SF3CU8TL6GfzsjLmCoxgORvGGvmPjyHKd9WFVDOamVI0t+ETeFTvgcYEU+VJ8oEI
+	7X5iPz1E5B1OIe1KGMdqNGqS2W9p0zL5BNBMEdq+uwaJ5uqTyOahqQUpJksg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761658781; x=1761745181; bh=6YOy9FjaL4PbKJwiaF5EAoIeRBc2LnqYF3a
-	2ClPkHjc=; b=qp6uniEOcaKTo69rTDXL9YiLTJs7DVd9lje7JXnbjz5gBYls6Tm
-	BSQu8QeZwxm3Fdyunkc/n4OZM2fE0mh51SzDpgoRGuN5iLnoHiJVEY0VbB8wTYlI
-	htNRUmHwn8UehpZJKSMLqgGmK0UVFMdK75hVkVqMMyF9bwPyUukGp4nBNau3A7dB
-	WEaOqVnRkPDduZckZUIFtQF+23wpk3JqL6BSSk+ixNWkMcWf54f6BSmtFd3BLkve
-	3cJ7gBcuQwXcQ+KM5Q+7SXaPKqaBNiMKzWirleBOyW5rWMDj0ae2PnfHFDgiwR2q
-	jWgZmBU2D7MT/KK/92JOLYvnzxO77GMeEQA==
-X-ME-Sender: <xms:nMcAaQq4wwNMnuRS_WroZwsl-al2wbRAxrC92UZmH4UyGWgVtWmoDw>
-    <xme:nMcAaeFPuHjTDMhs4zbkxUURE-LaYOeDkzP3iZi8I-suup1Jnjcyg7-r22JnXf45j
-    rjRdmQEqnfycyin109cc8ukG_ZtMHVpIy5U-U4MJOjR2VohKQNNxg>
-X-ME-Received: <xmr:nMcAaSkxKPTki6mnThuk3qCFDuD01QPiYw8xHygW7l4g2ChwmIxXx1QxWRduuOxcWC-4e68__GE_KziFevrJ43vITv6b1E4EsKAm>
+	1761658804; x=1761745204; bh=+j/M8/wR3IeL/ie2pLffdZ//w54gAd+d/FR
+	PX/ndHd0=; b=1smv9BT3dlnSR9CUQ8/oN1sO5UIFDSs3ouqbNM6/Z24qY0/KpXd
+	brMl1sFeDhWf7x97HOSMLSfHSK1Epf8iiH1wJFecL59Hfap+4gR+P6KfDXoPSiH2
+	kvvIgZnhP3U+2BfQ+eNO4OiRU4wP0BcYSK1luOGVdK1DNU9hOri010qMS7zl6Pf8
+	AzpZFsSuq8QyklFafH3ikf9Mw3ygUTaM4HAeLBrvXP47oUkkPoErvevhYWg4sgI8
+	26RKHy07Gcb006Aoh2wPxUDUJP8X8xXICJsiQwb2hgumxnqhTt3VztpRUJvuFFXH
+	B5rqCjk93PDT+tZdOBoEz5bpEw0U9Xx23zQ==
+X-ME-Sender: <xms:tMcAaU1NLqwj5OHXN9EnpmrOmE4gcWMnx5AsF0CSBykjyBjfJyikJg>
+    <xme:tMcAaWHYVFXSRSUIskHF-liqNexP7E5S0hqG2KX39TD9GXYvg-WKH2-vXOXYh3NKc
+    d-iwJb_S1PrbQMsmyQnpCyd5QjSuGVRQeuxWGHVn6wIdXzST_oM>
+X-ME-Received: <xmr:tMcAaR5V3ZTsn4KgbH07z4tRri2Fj0R5Lq9PALJw3CGtr8TyUhtUfSE5b6T7RVyMOIt3D4gRy6Fw_iDNL36-uJ5JNbWPuGkjDHnR>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduiedtleelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:nMcAaRlI3tmsRon7l3OpWC4fed8qZA7QqW65HBE5sk9al58w82ugog>
-    <xmx:nMcAaTuk2Af8Iw9qTYW9cEEaAh2Jev18bYsq9erbQ7j1ucxl8DyAxg>
-    <xmx:nMcAaUlwwJXE1PnC6Bf9q-tX5syME6mdl0JClzR0I0sOw-NBAQJLOQ>
-    <xmx:nMcAaetu8Oanl-g2fp9FOJmIe_eH3SaYKsNkK2h7NFKrewGolUqI2g>
-    <xmx:nccAaU_tDx9CLOmu8s3Gr_xkb3-xCChRiNLTJRl8BC2b-2StuUYv8iBE>
+    htvghrnhepkeeuffdukeejvefhgeeuhfeiueeggfekuefhffekuedugfettdekleeludff
+    ueejnecuffhomhgrihhnpehgihhtfhhorhifihhnughofihsrdhorhhgnecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphho
+    sghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtg
+    hpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtqd
+    hprggtkhgrghgvrhhssehgohhoghhlvghgrhhouhhpshdrtghomhdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:tMcAacs_fpFGcfjDmfueVbtolAy3jv0BW1nCziGXl6IUYygS_T2_sA>
+    <xmx:tMcAaS7BduYWTu8t1z7K2Djn6ZFY67oD42L-CU5pX8FwD1IURiRQ7g>
+    <xmx:tMcAaXXiHRvgeKOsCSbTndmHij2YiN4gwu9BQnhRC3j1YGhSXQxkhg>
+    <xmx:tMcAaU-d9SbIw7kkb70lf31CQKRZMYm0d-5byojS4anp9k8wZ6DWgA>
+    <xmx:tMcAae9Jq8HiBR0Bk6KUGsGUJPziV7jRwmg8JYlVFJ9VWQj2_RTm_IMu>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Oct 2025 09:39:40 -0400 (EDT)
+ 28 Oct 2025 09:40:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] whitespace: correct bit assignment comments
-In-Reply-To: <aQBlCCDWMhLX_aBa@pks.im> (Patrick Steinhardt's message of "Tue,
-	28 Oct 2025 07:39:04 +0100")
-References: <xmqqfrb4hyjl.fsf@gitster.g> <aQBlCCDWMhLX_aBa@pks.im>
-Date: Tue, 28 Oct 2025 06:39:39 -0700
-Message-ID: <xmqq4irjf8mc.fsf@gitster.g>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: git@vger.kernel.org,  git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git for Windows 2.51.2
+In-Reply-To: <1MSt8Q-1vhzwk30xy-00Usrn@mail.gmx.net> (Johannes Schindelin's
+	message of "Tue, 28 Oct 2025 14:03:34 +0100 (CET)")
+References: <1MSt8Q-1vhzwk30xy-00Usrn@mail.gmx.net>
+Date: Tue, 28 Oct 2025 06:40:03 -0700
+Message-ID: <xmqqzf9bdu18.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,44 +87,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> On Mon, Oct 27, 2025 at 01:36:46PM -0700, Junio C Hamano wrote:
->> diff --git a/diff.h b/diff.h
->> index 2fa256c3ef..60749154e7 100644
->> --- a/diff.h
->> +++ b/diff.h
->> @@ -331,9 +331,9 @@ struct diff_options {
->>  
->>  	int ita_invisible_in_index;
->>  /* white-space error highlighting */
->> -#define WSEH_NEW (1<<12)
->> -#define WSEH_CONTEXT (1<<13)
->> -#define WSEH_OLD (1<<14)
->> +#define WSEH_NEW	(1<<12)
->> +#define WSEH_CONTEXT	(1<<13)
->> +#define WSEH_OLD	(1<<14)
->>  	unsigned ws_error_highlight;
->>  	const char *prefix;
->>  	int prefix_length;
+> Dear Git users,
 >
-> Here you're using tabs for indentation, whereas below you use spaces. We
-> should probably be consistent.
-
-Thanks for sharp eyes.
-
->> +#define WS_TAB_IN_INDENT        (1<<11)
->> +#define WS_TRAILING_SPACE       (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
->>  #define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB|8)
+> I hereby announce that Git for Windows 2.51.2 is available from:
 >
-> The "8" here is a bit curious, but this matches what the comment says:
-> the last two digits are the tab width, and there of course is no macro
-> for that.
-
-Yeah, we may need to do something about it later if we further touch
-the code around here.
-
-> All of these conversion look correct to me, and I agree that this is
-> easier to read.
+>     https://gitforwindows.org/
+>
+> Changes since Git for Windows v2.51.1 (October 17th 2025)
+>
+> New Features
+>
+>   * Comes with Git v2.51.2.
+>
+> Bug Fixes
+>
+>   * The default credential helper in the portable variant of Git for
+>     Windows (credential-helper-selector) is now high DPI aware.
 
 Thanks.
+
+> Git-2.51.2-64-bit.exe | ebd318e1d3ee0cc1ac8ead026f1edf8678dcb42c7d74d757b8e2fa8a1be0b25f
+> Git-2.51.2-arm64.exe | cfa59dc9ca121844a9346224e856ee11916ebd606b211d4291f8b97aa482dd94
+> PortableGit-2.51.2-64-bit.7z.exe | f5764d546ff9a2511b50ec4e20424c5f4669de1695abc3fa4128e7f7d4a7b2cd
+> PortableGit-2.51.2-arm64.7z.exe | 73375f4278c84611e788b2adb604fb98213bc8f0accecf3d5d5800748c6fa32e
+> MinGit-2.51.2-64-bit.zip | 8f0a7bc389c0bccc9daf6107cff4efb176348e34b8d787f02a36679a5588e072
+> MinGit-2.51.2-arm64.zip | a050e17fedb2e5e8025850194c1e43df1b5f96ec93b0f43c99f43d7fc4da7da7
+> MinGit-2.51.2-32-bit.zip | 7ccaecf25ad5bcdacd50a162b8de798638dda1c0fc4f4893bbd90867a8a57279
+> MinGit-2.51.2-busybox-64-bit.zip | 7c85f2cd62453ff24eb5c7c466152b3e5882255f744284518216a76876e02923
+> MinGit-2.51.2-busybox-32-bit.zip | efd750af9855ad3ad32e268cd7590557a45fd1b0917367687e7c8181eec046b7
+> Git-2.51.2-64-bit.tar.bz2 | 79b257dd677ed2c18bec0b5357fcd68cdd6cfa32bce4d379ad06e32a15a4b31f
+> Git-2.51.2-arm64.tar.bz2 | cb119217e363cbcb6d8acc94d1c4b23b3ce8a603ec6a633675c853cfc16d2452
+>
+> Ciao,
+> Johannes
