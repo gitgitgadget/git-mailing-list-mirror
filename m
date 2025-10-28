@@ -1,140 +1,118 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919841917F1
-	for <git@vger.kernel.org>; Tue, 28 Oct 2025 20:19:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBDE29CB4D
+	for <git@vger.kernel.org>; Tue, 28 Oct 2025 20:21:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761682762; cv=none; b=Wn+dyJGtap87L21F71VM8eavidpQZaQTTLCC3hmu+aJg4td1+lEwZfw4BQC0IJwYJZ8wq046oOT4q4Sa/L3HRtsRUk8WzSVJFDoWYNLdy5wDxqiMy0fLv4eUD2Ns8cmNqpBREIEOziXVnRWVghHZt8VCa1Blg2MEGWbS+qd05e4=
+	t=1761682865; cv=none; b=mo/bnij5D2RRgWh+uY7NBNVU4eT4VqNbXmi91kOPLft94NHpkLhD+q9GjfZHjuQ7rtEwlKPWIn4ytqqWExoLNk1NY+EgKnJlKP9X1Go79hj1xvBJzucm2miNe4vrRVvcrg4bINNRvN3u86QOl67KGiziPpOML+NjhP5zB4uIEyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761682762; c=relaxed/simple;
-	bh=KNqZJd1U0lXlUgkFbfs0UrMHFjut5t5EzYeWCI57LyQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QpqOu18LsR45jvnebvOqhLvE+dqb68/Pif7o2e/d53pMbPhLMFu/IT3keV8wls62uIipHLoE2XtJNFd55MoRgAsmwj1qPhbljHbRVahnn9beHaSnIqso052T0g49ZvAv0337/T6nBt0L4QH9yH0TnFFT1MjbQA1EecRVcN2vN+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lspoM2j3; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761682865; c=relaxed/simple;
+	bh=8OSJwCjqwSsyKXHKgekY9dHB07gsFf+nsHMMRzHzn7A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=P/5rcqiMqk/3Xqb9dVilkxaQVvalmmTgPksZAPKAtQVdN0+RYGM0vQqU+9lRVvkeu3a9S3fiHwGNr5kTPgfxJ8UBxRdTwUpALktqE4jAvo5GA4R4ONIws9Jsj8h+xfxJwWov0oDoOrkabATO1w7m71PccwoIWJ/iU9w+WAf3E90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZgFvfA/N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OCmIp1YE; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lspoM2j3"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2698d47e776so51477245ad.1
-        for <git@vger.kernel.org>; Tue, 28 Oct 2025 13:19:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761682760; x=1762287560; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zdBTs9qkKPgp0F5RARpou+0gWfm70YF4zdU+cpshv2o=;
-        b=lspoM2j3NlXv9DYqCVabX57nSwyU/r7h9KBoNwhz25fEVr6sA6snS5y4X1og4bNYyD
-         2iKBhiYzqR3gJx/ghDiNVb1hEuDRXrPaiVXII8Pg8HFhD2EborwGmHsSu9qeQzBJPlNQ
-         Zr1haKWOohhSp5tOItzxSXrb7+AG3D++tOho93b1Uu9hs9/Mr5d18AVJ9/hPI16gMCJx
-         Fqv9UdYwB4/mIeRj72o46vuU+Q459cKDFqQIM3w0ATOS9RYTD+BBFsE1Jzn0BdThBEkU
-         Ybc2ICqy/uRY/4Ch/6sNTXE5FQB2s+0PHdm8XkqeThEODi5aV7UuJMj474IBxka2gkr9
-         zjWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761682760; x=1762287560;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zdBTs9qkKPgp0F5RARpou+0gWfm70YF4zdU+cpshv2o=;
-        b=hceuXcFKgzGpqCzKKd5wHxodXAVI1sPSmYMi6FteUHfEuJWHhRg05QPOcrzi1xtcve
-         ziJhB0x8FUdbbV0H5BoW8Zsr9o36+iisE2GLPGLCJhgFhAaBAgbFjTt1e/mXXQoNG6S/
-         XFQi6DDScOEptrIJnn07He7blMUdJUUSQxQN8ug8WxsXAKLV5P0ulPVd8pi0BxUmXl8J
-         0lc3T5YUUnl3J55NfyPVsCr/RPT/7S0aIRYxv+dhR2hfRP96bDxM00zc3z4m6C3ad4XD
-         2vjjYhUKiHYWuRdSj8UKRiahCC8J1mS2qXqUPxmFvDl8TzFXq6vrjVB2zf7vdTLDPM6X
-         PBhw==
-X-Gm-Message-State: AOJu0Yy89DioOsB4lVwvkKLGDUZxFhVWsKbTfBC8Rtvvfg8VXF3D7iTS
-	I6ICHUgVrtUaE4xmC9n7O5QGSKFm49m9kfBeeSBfo7+/pm8vluMT3VobTUniC6ri
-X-Gm-Gg: ASbGncunKcQCwv1lNvwVAakYaTBTOMzEUGf2aZksfY/BCmVkUAYGz7U0HBrRqBE5TSv
-	3Sf0vKMLkjpTriElOOlc2TAlbn7MZVuzBgJ0CYSp2SfUylwWxOiOsaVSG+jOc5hUBPLKSJx3mn2
-	1ecgLaZD39bUJY2NSfzSQtjaMOYDOWZjIq/T3lLlH55Qew7ysJGUgQRrvwXDpPLIbRCCjWxlMDS
-	/VrQvygj+vViNCYj/Y8hikx3gl+3S3tAjTBMFWv0QVrJqa/mcIA8dmFBLlxN9w13aMtPsy4dkZh
-	+qdEt9VQc/TRp1aUYUYXXEze8hlJvUE1ied/QyklinWim8q5wzZoYbNda2eoO6nviy4wICoaA++
-	isYS3JEfoPGdG0HUi913koX6ICXJZdLciDdGS8E7+S4C3uuUU2Lx4G0NtCNRZqQHP5sVOdx2mJz
-	sDTQRNkvWe3wiDfvC7PcMHU8AiXk05fco0Ptqh84eiaaIlHzWP/NZgfmsOvi6RKYF9RHfJpVeeM
-	p7745+w7vWXD2E8iB0nXRy8JOA0JPqpzwEGEZ4IWbPPCLDZiOK7FXU/Cg==
-X-Google-Smtp-Source: AGHT+IEY0rsdJE20JAv8GTNsa6VtxSQBrLRG8naDrGvZj1ESRcUDu7mPT00FQCtSCabpZ8Z9Bs8fig==
-X-Received: by 2002:a17:902:ceca:b0:264:a34c:c6d with SMTP id d9443c01a7336-294def2e7aemr4689625ad.37.1761682759644;
-        Tue, 28 Oct 2025 13:19:19 -0700 (PDT)
-Received: from ?IPV6:2409:40e3:177:42ef:798a:642a:892e:b13? ([2409:40e3:177:42ef:798a:642a:892e:b13])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498cf423esm125049275ad.19.2025.10.28.13.19.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Oct 2025 13:19:19 -0700 (PDT)
-Message-ID: <1a4740b8-eb63-4266-b627-d329451b7a4b@gmail.com>
-Date: Wed, 29 Oct 2025 01:49:13 +0530
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZgFvfA/N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OCmIp1YE"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8D7311D00118;
+	Tue, 28 Oct 2025 16:21:00 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 28 Oct 2025 16:21:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1761682860; x=1761769260; bh=aUQPgXqRqM
+	vr7dH90SiI4jHoXGw8CuHH8Ji9IxOVIng=; b=ZgFvfA/NzWv3vbxwjjnWwEnSHl
+	aM6fmRHGxakq8bBQhiJnrv0i8W7xcTBgCuxO9y8Dgk0GATjpzhg83XDe+5UGL9OM
+	BI3wvm+OjZQV160VR7KSapnRhwRD5OMHLvfwpkpNPdBrmZxeO8YcMAmcut1jB6ca
+	r0UFQ8uADS4hCxcG5l/zc5Ae3ngu3pCFXNVUduWTwHQh49PWZmSmFQD+bXZrXTKZ
+	N4D9ZfgKQDSnhwM3Os4V6/pjTCbiY2vKqkv+y1ZgqQOXdR7D+6WbHL/InMMDVcUC
+	Go0TqOiEXL01XJ11WA57NH/ETiuGU+kgoOlD6+ZHregGiwpwGlr/dUDwuBRw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1761682860; x=1761769260; bh=aUQPgXqRqMvr7dH90SiI4jHoXGw8CuHH8Ji
+	9IxOVIng=; b=OCmIp1YEfh8FWezJi19+LhSrrvk+do/uMAsXBrSIpigOEwkj5LR
+	xvst/ZgLoPKwGOPbTNykxKK5v4iZw2UDQ+7EbkgmAwP+9zafPvc2QNTgrcqdMNia
+	ucNhpygjPK50KMY6/nIqQTlYFvkFiONCpSn5LIzEOi1ewR5uEhWi7BUcrlKa14Dc
+	Qp1aIZQ72OVXQzuUtZ0W5mAOqhdIFUVOzYgN3Dnc3FCPw5+p0k4p5TENJHrzXtBk
+	niPl6NXn4zrX+sG8XrxBzQlOX70f8NSQBVrHi/E/hSdFQ93pGiROJJc3EM54DiAN
+	MQwAnXqeFMO4w75mdj1aCxpxFL9KUGHobrQ==
+X-ME-Sender: <xms:rCUBaYfZpU9kK9phmVjPBjbsTBKjnGfo5w9_FM2V9Ukc7CVWoU1f0A>
+    <xme:rCUBaRHPraDp18BACI9_XVyG5tQDJqGeKy16Fhqhpb2iGLfZOndoRmE3l900T1fw0
+    Z7XvhxgThmkLvLBIhyYn-89wVZPSP0ObV2V9DmE56UDGXGTAthe-Q>
+X-ME-Received: <xmr:rCUBaR0DydZvySyI-HF4qcBzAGkAhqZrZfJJseKLVTgc63VLPI1KS0sSy25avLTYmjdj3rWfgdgqIQ1tkHWZePGQihzsczinPjPM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduiedujeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshgrnhgurghlshes
+    tghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:rCUBaZmLv5YrxG2bgELnKU7NYAz7H841YNwGquo6sJJKeFqIjslZKA>
+    <xmx:rCUBaR-jG9tSDJOJMxxqFaC6Hq7n1d1SX7zViLPQbIJWvBeptdsomA>
+    <xmx:rCUBaeqn4mUJIe6yN08aUS2EmvfSKprzGlW4La5DeHqO-YkZdAhJ7Q>
+    <xmx:rCUBaakCTxLfbh5JVoUIv2-YDCC6TwYU7yrnGvfYXEMZsTrfYZI0Ag>
+    <xmx:rCUBaaWNEFo14LErSTz-MqDx2tOZ5dH9ruBEBvg79h07JEACInwtwBEr>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 Oct 2025 16:20:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ezekiel Newren <ezekielnewren@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  git@vger.kernel.org
+Subject: Re: [PATCH 03/14] hash: use uint32_t for object_id algorithm
+In-Reply-To: <CAH=ZcbDEo2xcqpRrF400zHe=w-kK+rfnp85YhcE5kQ6jjS+8Hw@mail.gmail.com>
+	(Ezekiel Newren's message of "Tue, 28 Oct 2025 13:58:21 -0600")
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+	<20251027004404.2152927-4-sandals@crustytoothpaste.net>
+	<aQCKCfuaEKBArD-g@pks.im> <xmqqh5viddo3.fsf@gitster.g>
+	<CAH=ZcbDEo2xcqpRrF400zHe=w-kK+rfnp85YhcE5kQ6jjS+8Hw@mail.gmail.com>
+Date: Tue, 28 Oct 2025 13:20:58 -0700
+Message-ID: <xmqqsef2bwwl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] replay: make atomic ref updates the default
-Content-Language: en-GB
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
- phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk, newren@gmail.com,
- ps@pks.im, karthik.188@gmail.com, code@khaugsbakk.name, rybak.a.v@gmail.com,
- jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com,
- johannes.schindelin@gmx.de
-References: <20251013183311.33329-1-siddharthasthana31@gmail.com>
- <20251022185045.29256-1-siddharthasthana31@gmail.com>
- <xmqq7bwlv4jh.fsf@gitster.g>
-From: Siddharth Asthana <siddharthasthana31@gmail.com>
-In-Reply-To: <xmqq7bwlv4jh.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
+Ezekiel Newren <ezekielnewren@gmail.com> writes:
 
-On 24/10/25 00:17, Junio C Hamano wrote:
-> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+>> I suspect that it would be much more palatable if these functions
+>> and struct members are to use a distinct type that is used only by
+>> hash algorithm number (your "enum" is fine), that is typedef'ed to
+>> be the 32-bit unsigned integer, e.g,
+>>
+>>     +typedef uint32_t hash_algo_type;
+>>     -int hash_algo_by_name(const char *name)
+>>     +hash_algo_type hash_algo_by_name(const char *name)
+>>
+>> Yeah, I know that C does not give us type safety against mixing two
+>> different things, both of which are typedef'ed to the same uint32_t,
+>> but doing something like the above would still add documentation
+>> value.
 >
->> This is v4 of the git-replay atomic updates series.
->>
->> Based on feedback from v3, this version improves the naming and
->> implementation for clarity and type safety. Thanks to Junio, Christian,
->> Elijah, Phillip, Patrick, and Karthik for the detailed reviews.
->>
->> ## Changes in v4
->>
->> **Renamed --update-refs to --ref-action**
->>
->> Junio pointed out that "--update-refs=print" is semantically awkward.
->> Answering "print" to the question "update refs?" doesn't make sense.
->> The actual question is "what action should we take on the refs?"
->>
->> Changed to --ref-action=(update|print) where both values are verbs that
->> answer "what action?". This makes the interface clearer.
->>
->> **Aligned config name with command-line option**
->>
->> Changed replay.defaultAction to replay.refAction. The config variable
->> now mirrors the option name, making the relationship obvious.
->>
->> **Unified config and command-line values**
-> I didn't see anything glaringly wrong in this round, even though I
-> picked a couple of small nits in one patch, so we might want a
-> hopefully small and final reroll before marking the topic for
-> 'next'.
+> I'm against passing Rust enum types over the FFI boundary since Rust
+> is free to add extra bytes to distinguish between types (and it's
+> documented by Rust as not being ABI stable).
 
+It's OK for you to be against it.
 
-Thanks! I will address all the feedback from you, Christian, and Phillip 
-in v5:
-
-- Add trailing comma to enum definition
-- Fix error message quoting with single quotes
-- Revert the `const char * const` formatting change
-- Follow standard Git config pattern (repo_config before parse_options)
-- Extract proper helper functions for string-to-enum conversion
-- Switch to `test_grep` and `test_config` in tests
-- Fix documentation wording issues
-
-Should have v5 ready soon with these fixes.
-
-Thanks,
-Siddharth
-
-
->
-> Is everybody else happy with this iteration otherwise?
->
-> Thanks.
+My mention of "enum" was enum on the purely C-side and I didn't have
+Rust's enum in mind at all.  As Brian defined ObjectID on the Rust
+side, the type tag was done as u32, IIUC, not Rust's enum.
