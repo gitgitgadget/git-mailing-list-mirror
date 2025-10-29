@@ -1,143 +1,154 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A812B2DF707
-	for <git@vger.kernel.org>; Wed, 29 Oct 2025 15:32:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C601134845C
+	for <git@vger.kernel.org>; Wed, 29 Oct 2025 15:51:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761751962; cv=none; b=PFud8VHPTvUdiC3zrBPifSbOZ0lLD1RfhjC3WMSvnMvryZ2egk5mf0lH6wZvqyssYp7tIlL90DGGTcYBGeFVqek09MVfkEv2elHRHhyN61iRWXSRMknNaNwu+NwcVHD3+r/zdqSJSaWH+HtNn/skz6MP0sAMph9Do1F/9bzjmxY=
+	t=1761753085; cv=none; b=NFYKupwgpGTjBjzQH7QweRd9HiFLOHI1sKj+Ldp+r+p93c9cOgUYKRZMJ82Amexs+fHN9iYMaoXEOqdoASYXa46mIZg+Awm25mE4TLk/sT43l4wHAFAK6FdOriZasgKh+BwqC5N+Z8Oykkcp6UNXaEEn41ST4CFMiiYBia0qgwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761751962; c=relaxed/simple;
-	bh=meE2eGO7OQcnwuCK7hrK1EXOohMc1S42CJa3KM09baY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jGWv1yYidYCPv2BepHxwOw9ENxk53VafHDLdIHy49lYDNvV0Ygc8IPmuKzUICSIhrYsQU56KJWq+CtBZRpTdH1Na4WxNREKB0TZGUIMCaD7nSXX7TSjy7J5u8PNv4IxETePIF6rw+AxZIu2Pno+/FRnR8erDaGlVSqax2kFojtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PjPq39ZE; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1761753085; c=relaxed/simple;
+	bh=9m2SqvLiKwNJ+Mgyv7PxG5KYC1LGWswkcGl/sO4yJeM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ppe4qMNS7lcCBlOFSkKa1woXOPbCion0K4ow4OlZ0UVFrjlJeMWqeNMdX9WnNyqKkGipKCl7M4dkFCJNEAkhPWd0+tbl/84PMWH7uIWIAeUBnvPKqTbGtiIxdUjg1y/r8okbFJVh2zpngRH1ClUCYKfrKYuN/2tOsz8ZSARjfVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dT+0e47B; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PjPq39ZE"
-Received: (qmail 377518 invoked by uid 109); 29 Oct 2025 15:32:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=meE2eGO7OQcnwuCK7hrK1EXOohMc1S42CJa3KM09baY=; b=PjPq39ZEvpXBKoqcxTKUyBVh/eN3qFGa7t33P7SPrr6sYmYKRCwtueYWY/Oce89aHa5JuWMuDvOwyCt7rd7ndiQxIssRBcxI8+eM2zZW49YfC8lTrLg50WDLvQJ41la6iKpxUm+78X9Ax43SeO2rFYY2fA8Snf+dSwKgBHKbPkKHstPYkOBz8w1ctGG6BJUTvglROZ3D/U9ROGI34mcW3ev5B0iuD8B9mQWdBFUYLdCP/V3cx3UTQWv7Q8yDO3oN686nPRh6vosDmYLPyHQh0me05aEEOQDtUpsOb4pK3L4E2+H/ujnjArRESiH+ns+6mDJQbREfyYD7sLzRXz2S9A==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 29 Oct 2025 15:32:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 585144 invoked by uid 111); 29 Oct 2025 15:32:37 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 29 Oct 2025 11:32:37 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 29 Oct 2025 11:32:37 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Sruteesh Kumar <sruteesh.oss@protonmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH] doc: document backslash in gitignore patterns
-Message-ID: <20251029153237.GA1133542@coredump.intra.peff.net>
-References: <n_EjA_jj-d398XOogazunHfOBdh-yoa5P-Prb3b7gjkBODqWMtvKNdhnCLuikthwVcbEy4-ryWTRgyuiShJ3tam93j8S7lmGSlyFjNoxzSo=@protonmail.com>
- <20251014003404.GC1507@coredump.intra.peff.net>
- <xmqq7bwltlb8.fsf@gitster.g>
- <20251026152614.GB2095501@coredump.intra.peff.net>
- <xmqq7bwhmecb.fsf@gitster.g>
- <20251027142902.GB2758515@coredump.intra.peff.net>
- <xmqq4irkl5ms.fsf@gitster.g>
- <20251028231945.GA4128296@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dT+0e47B"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-63c21467e5bso6047672a12.0
+        for <git@vger.kernel.org>; Wed, 29 Oct 2025 08:51:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761753082; x=1762357882; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uKMLMwZBZ6qj6NtiOzx10r0AIj/IC2iFRpdKHVI/Yrg=;
+        b=dT+0e47BSNeF4nSBzLcdC3D8e8X2xHURr67ARU8R4sfgex951TQpgjFmEAwroyxM9b
+         IbU2OTOVeujhilo33ifnl00EB4CdyKgPQsokU7de99LpcF9kzq9Nf062eT2Po2ONzXuE
+         HtyrVdGHTtE8D82TXUKecSLPlDDhKThOvyQr+W4z/vA9zd7T6IBHj3Lc7ly/R64AUt8n
+         IIWxLW+wYqZYLWkfCfLPPUdzZoXvK/m68Ka0f9yoSHJGPj+94RjcaZbUExTO4rx/irHm
+         DEy9QQg7qeH8b2dUBVVaKPGKdE8kN6yrPZ18ACLDSTYnoQ1aD/2qdZSmqn9QBNiaztzA
+         Y3ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761753082; x=1762357882;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uKMLMwZBZ6qj6NtiOzx10r0AIj/IC2iFRpdKHVI/Yrg=;
+        b=Mog5kDRE1rFs9/ItD2cEm0Is6d5NMtz78SOwBmDIrOfOV+sij0p+5XC64dbDHy6TrV
+         xI9EkzP9skhKfn7RUu8nP+Vlndw4u4RuBUStAQlXxoMLzFIp/g+IwDR+PTlWYLJ6RcKu
+         FYk6qJlwa1Pkj+IIL8ER4hv0ku/zWMHXJrRWjcC307Tleq/Npf34W07+lN5aQ1f83MoA
+         bnbDIpZ364kIWiAcKL5FcOtdvzfvqUfZ7LePimOsdi/fZlDeUwCRFsi5cDe8KDd0X/jG
+         exFMGsPNB/RLM/6OY2jonbF5ZfQrdeYadDAbt1D/TlTnaRPD0Aa9sp3vHxPmydjCx6e/
+         K2ng==
+X-Gm-Message-State: AOJu0YzxPPppLpnkTkBVUx1c6qK+mf0vIm8GC4+NVK0/IGWd4IG8dS5f
+	leMKQpR3GdFhoafIfI90L8qDt3zutNvli2EUz6Xf9DnzeFKvB+cyPFE9ZzSlAQ8TDuvEgiiiHRW
+	53PzOABOR+t4Ggoy2HP9iKQ03rkxFfHMb9U/4
+X-Gm-Gg: ASbGnct32S5tid9JDT6rh1eiYiWlcG+GyYawtr1J7TLO/WWCpuqNRKXbLJ8HTk/qcII
+	VHcuKQqOP3EyRtzHjcdusf1Bl+32PRceygco3hQacLXTcE9yfTIcJLvdSKwZDsudmm1TlPlCq+G
+	pfcqI8PMrZoc+HID9DP+UCSu9xcBwRT9zQlk8iwplx/InGQEcsGkMZ6RM776509/GgryHfhrp0s
+	R0H43VTzjpNMAoW9FC6M9PUh78A7WxY+h/8KI/jpgSTq03UE3tRDaapL5KGxtkgHevdBc+pUQZy
+	wGJgmYSA15a2lozajg==
+X-Google-Smtp-Source: AGHT+IEqO2oZzXOJBoH3sX2lkWw3c2YYDt7AxQGVGB8l/FFxiw9TcEqzNhSONBlRk16few0QVEtBczI9untqAzBfL3o=
+X-Received: by 2002:a05:6402:1598:b0:63c:1066:8bec with SMTP id
+ 4fb4d7f45d1cf-6404437fceemr2663584a12.35.1761753081938; Wed, 29 Oct 2025
+ 08:51:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251028231945.GA4128296@coredump.intra.peff.net>
+References: <CAD=f0L9anYu4LKWGDKrwzBBytMunJ3UjTehNN9m2DigG8yCNHA@mail.gmail.com>
+In-Reply-To: <CAD=f0L9anYu4LKWGDKrwzBBytMunJ3UjTehNN9m2DigG8yCNHA@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 29 Oct 2025 16:51:09 +0100
+X-Gm-Features: AWmQ_blVUzzClnKz--OtlvVrZQZ27kTIJbIV8cXS83uIhZvWxC-VQhydOh5gB1I
+Message-ID: <CAP8UFD0a+RxQ-pPWrmwOYhBic6Oy9C1NeA7EmEyj2KYYDyS4QA@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_=5BOutreachy=5D=5BProposal=5D=3A_Refactor_in_order_to_redu?=
+	=?UTF-8?Q?ce_Git=E2=80=99s_global_state?=
+To: Bello Olamide <belkid98@gmail.com>
+Cc: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 28, 2025 at 07:19:45PM -0400, Jeff King wrote:
+Hi,
 
-> So I think the input is really nonsense, and we're following POSIX here
-> in rejecting it. I can't fault an alternative implementation too much
-> for treating the "\" as a literal char, since that's the only other
-> sensible behavior. It's probably what I'd do if I hadn't read that bit
-> of POSIX. ;)
-> 
-> But to a certain degree, I think this is a case of "if it hurts, don't
-> do it". If you are trying to match "foo\", the correct pattern is
-> "foo\\".
+On Wed, Oct 29, 2025 at 2:18=E2=80=AFAM Bello Olamide <belkid98@gmail.com> =
+wrote:
+>
+> Hello,
+> This is my proposal for the project
+> "Refactor in order to reduce Git=E2=80=99s global state" for the 2025 Out=
+reachy
+> Internship program.
 
-This was all non-obvious enough to me (and to the JGit folks) that I
-think it might be worth beefing up the docs a little, like this:
+Thanks for this proposal.
 
--- >8 --
-Subject: [PATCH] doc: document backslash in gitignore patterns
+[...]
 
-Because gitignore patterns are passed to fnmatch, the handling of
-backslashes is the same as it is there: it can be used to escape
-metacharacters. We do reference fnmatch(3) for more details, but it may
-be friendlier to point out this implication explicitly (especially for
-people who want to know about backslash handling and search the
-documentation for that word). There are also two cases that I've seen
-some other backslash-escaping systems handle differently, so let's
-describe those:
+> From a high level overview, environment.[ch] exposes some global
+> variables that reflect a per-repository state and examples of such includ=
+e
+> git_work_tree_cfg, is_bare_repository_cfg, and core.* settings and functi=
+ons
+> which also depend on `the_repository` such as have_git_dir(),
+> is_bare_repository().
+> After a brief study of some related work done on the project,
+> it is important to understand the purpose of the identified global variab=
+le
+> and how it is used across the code base, observing how it relates with ot=
+her
+> subsystems and moving it to the `struct repository` or `struct
+> repo-settings` if its
+> use is repository specific, or specify an appropriate context based on it=
+s scope
+> and use this context in the accessor functions.
+> For example in [1], Patrick Steinhardt observes that `core.hooksPath`
+> is repository specific and is stored in the global variable `git_hooks_pa=
+th`.
+> The variable is then moved into local scope in the repo-settings
+> struct and a new
+> accessor function `repo_settings_get_hooks_path()` is written and used to
+> set the `hooks_path` of the repo specific struct which the path subsystem
+> reads from.
+> Similarly in [2], `core.sharedRepository` is tracked via the global varia=
+bles
+> `the_shared_repository ` and `need_shared_repository`. These are then
+> moved into the repo-settings struct, with new accessors functions
+> written to modify them,
+> and calls to the accessors in the path subsystem are then modified to
+> replace the old
+> accessors which modify the global variables.
 
-  1. A backslash before any character treats that character literally,
-     even if it's not otherwise a meta-character. As opposed to
-     including the backslash itself (like "foo\bar" in shell expands to
-     "foo\bar") or forbidding it ("foo\zar" is required to produce a
-     diagnostic in C).
+Nit: the above paragraph looks very big. Maybe it could be split a bit.
 
-  2. A backslash at the end of the string is an invalid pattern (and not
-     a literal backslash).
+> I also studied [3], [4] by Ayush Chandeker,] and [5] by John Cai to broad=
+en my
+> understanding of the project.
 
-This second one in particular was a point of confusion between our
-implementation and the one in JGit. Our wildmatch behavior matches what
-POSIX specifies for fnmatch, so the code and documentation are in line.
-But let's add a test to cover this case. Note that the behavior here
-differs between wildmatch itself (which is what gitignore will use) and
-pathspec matching (which will only turn to wildmatch if a literal match
-fails). So we match "foo\" to "foo\" in pathspecs, but not via
-gitignore.
+Are there some cases where strategies other than writing new accessors
+functions were used?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I like the compact format of the tests in t3070, but it is not at all
-obvious what the two lines of zeroes in ones means just from the diff
-context. ;)
+Are there pieces of work on this that were started but not finished?
+Are you planning to finish them?
 
-The first line is wildmatch directly, and the second is pathspec
-matching. The surrounding tests, without a second set, default to the
-same outcome for both.
+What are the roadblocks that were faced when working on this?
 
- Documentation/gitignore.adoc | 5 +++++
- t/t3070-wildmatch.sh         | 2 ++
- 2 files changed, 7 insertions(+)
+> 3. Review Existing Patch and Define Criteria (December 16 - January 9, 20=
+26):
+> -------------------------------------------------------------
+> - Thoroughly examine the existing patch series submitted to the mailing
+>     list  to understand;
+>     * What criteria makes a global variable a suitable candidate to be
+>        moved to the `struct repository` or `struct repo-settings`
+>     * What appropriate context it should be moved into based on its
+>        interactions with other subsystems.
+>     * If remaining a global variable is the best approach in its case.
+> - This information can be gotten by paying attention to the discussions
+> in the patches and also engaging with my mentors and the Git community.
 
-diff --git a/Documentation/gitignore.adoc b/Documentation/gitignore.adoc
-index 5e0964ef41..9fccab4ae8 100644
---- a/Documentation/gitignore.adoc
-+++ b/Documentation/gitignore.adoc
-@@ -111,6 +111,11 @@ PATTERN FORMAT
-    one of the characters in a range. See fnmatch(3) and the
-    FNM_PATHNAME flag for a more detailed description.
- 
-+ - A backslash ("`\`") can be used to escape any character. E.g., "`\*`"
-+   matches a literal asterisk (and "`\a`" matches "`a`", even though
-+   there is no need for escaping there). As with fnmatch(3), a backslash
-+   at the end of a pattern is an invalid pattern that never matches.
-+
- Two consecutive asterisks ("`**`") in patterns matched against
- full pathname may have special meaning:
- 
-diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
-index 3da824117c..655bb1a0f2 100755
---- a/t/t3070-wildmatch.sh
-+++ b/t/t3070-wildmatch.sh
-@@ -235,6 +235,8 @@ match 1 1 1 1 aaaaaaabababab '*ab'
- match 1 1 1 1 'foo*' 'foo\*'
- match 0 0 0 0 foobar 'foo\*bar'
- match 1 1 1 1 'f\oo' 'f\\oo'
-+match 0 0 0 0 \
-+      1 1 1 1 'foo\' 'foo\'
- match 1 1 1 1 ball '*[al]?'
- match 0 0 0 0 ten '[ten]'
- match 1 1 1 1 ten '**[!te]'
--- 
-2.51.2.833.g5cd7b514cb
+Are you sure that it will be possible to define clear criteria?
 
+Thanks.
