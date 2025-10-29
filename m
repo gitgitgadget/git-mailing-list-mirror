@@ -1,132 +1,120 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BF12DF6F8
-	for <git@vger.kernel.org>; Wed, 29 Oct 2025 22:54:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A102E6CC9
+	for <git@vger.kernel.org>; Wed, 29 Oct 2025 23:12:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761778492; cv=none; b=bA4OFawfLA9EmuZXSLxXzaghT0D+s/MKTiMfpLu4h717DUUVCXqgibsEs5qWb+HsGzsI0LTZpLsLtkWh5incLyevutjwOOckKn0eWNY4cKFz6CaGDNFH2eWXJlJSjx6dTP+MYkyIeiosGGYV6Qtcc6veqFI0NlAfoyDIiSFB9oA=
+	t=1761779531; cv=none; b=uJk9mb0puybYthuCfyKRUOsBmiNYzD36p1D8WlECP694xEiLglQ/eNJYUj+lvUGNzZEAd9s6yvYcWa3YQdLAmaj3PD9HGbP0VyaQWRcjjpzBPZ4Eekn0bD6XcSV/p0QUMI3atT5ngVtGq2ZCrh6EUHPQx06f+in/OJchUxwq0fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761778492; c=relaxed/simple;
-	bh=ogEnh1CB7RwQsKJyALTLFKS+jK5QNQtFuvlMcYZWPbo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ArjfcNuL2DGI8fNRvoL06PVw/ULO0ZL5bz7WIGMNU5OzLY6PpDPVUVhLAJXMUnjK9aqWX4s0rVutXD+Jbyg4foLSZ8qYKe8byrt9Zw0woBy/JzDpLfndjIxjcLfvWHyLVmGYpuPS3KOQk4zYA/EmvWFuCDpPmzfX7PBIpue3sjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k+cb/DCR; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761779531; c=relaxed/simple;
+	bh=Gl3XAGj4GAWaoQYyFunXA8VzAc3TUhXfdgKOBVnIghc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=REtXszzK0SncrtILtz7cELnFWDKS9xTK1RDDeCM0SbNAhhyvq7C5H0AVjp41kDRRTzCtNqGBb54tINapKjiQwmKK6LF5+ztFvSCU6K7ePr99z22wGNt0DFV/sN+rj+w6h+OgsvyzWf39jUZx2mCTiLWdR6yyKoe1pK8yBfPFaQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L1K+M1I8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TTCeP4W+; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k+cb/DCR"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b6d3340dc2aso111816066b.0
-        for <git@vger.kernel.org>; Wed, 29 Oct 2025 15:54:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761778489; x=1762383289; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ni0FdlD7kWVH8hD0kb3Ox6bY5jbmc+PoJF8o7vh8xIk=;
-        b=k+cb/DCRyMae7YsO6szeGs2fXSmplyIbZwhq1hYh5ovBdOJPOOGkz4316RCfptLqg3
-         tb5miJXAf+aJ4EWx5RxSu394FP+FCvsEXcCDLQYtbR8SlhKgm97qHpkqnbzDVL3XrRK+
-         se4yfUhy9Qc9rUTl0K2zHHDF56UsRwKgLEbz1x3npHGxDozdrxX8cGkV5F8oU8i0QQed
-         hgTulhJAmnZ8U5G+rUkLgulIkkxZMBE4OLtYo8YU02tvMlcBeMVA/6n06943vGoEBhXy
-         pTXWqokopvDxEHG65dsCXMr9Yi9zmeUjfmIHreyv0lGFt5Er+e55yVoy5CvHQstBKwqz
-         swlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761778489; x=1762383289;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ni0FdlD7kWVH8hD0kb3Ox6bY5jbmc+PoJF8o7vh8xIk=;
-        b=IJzwCdMjBUAzURLm7qOy0hpT0CSgoXdSTYGCCc5CFXGtuXAsAnXBUuYWaSc410j2zi
-         WSl68uYx7ROwqlHqosJjZeIq3vnypoY8w2jK5pzRhWr+51IBh8qjEajsozt4Og8zkGf9
-         s/R5I5LQwoXuilEzK8TaniMPGATU28C8uqhruRgtxOQIku1to7pLcwz+8ZLktOJDuwJw
-         EGaRX24dAy2Fhew8+FkZEV4ujFMkrtJbnUuAtBVfFhGeBFeWvD/7v3iMM3Wz3aL/EE7m
-         obRHEZ7zucPUYAx2in7acK1yaoJOliqUMAXiFni9Rm50yesuuEKVOxQVpG7ia+suf+w8
-         cpqw==
-X-Forwarded-Encrypted: i=1; AJvYcCXDddCCr14mkEkGPvA9msdVr9uzh3h0ligaO8JJQ65Sy7Dj5qh7yGeZcTwbNYrD/8HygWY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2SAsDqEts/QZ16TX1dw44n4nElWqkcDlJwsusBUMOEtdmI0fJ
-	r22sR0eY9hsoFD5sKfokGJu4pOz9hICS+Wh62+PAfkpcHFM0XbtU9AYL
-X-Gm-Gg: ASbGncurrmS/us4e1cB/ip5cLoRnSkz45Uz+hz2s16XKfeN/USKAKVpMprhjshtGNtR
-	xqfeXo3cgQmuT6gvl9zrcsnJw0qjSof0fk/sBVRgCxK1+ozJfav1mX5W65yNVz+xCQFRD62CeeA
-	GW0Op7o8aJl1EIwthHlvwN9XNkKSOKf9VuQjF1ygIlIXR9Y8NThd9m3qtkFHgWzxkJiwNzrb+vC
-	p11AOyWPzgzOvieiBLfOnjDW3JBdpKGXFHiN8q6DljT3JAJZd9PL4AkVH8QVY4aGgnFLMOGUt7d
-	d1oW1Cxddwb0ME+Q8yP0OTjADDc861dOJgATm8EBnHNukGCWJKQ2O0eVGADiw2w9r39eIHqyMhr
-	h263+4edrSFYLzV1O0W2Qyv5MhkSHZFYNtepGILGDoL8IsRQQYzJhmcl2QX1D+T/PD2RdvgdiqI
-	Plc3EMWnsf8m0oS7U5G0SmgsZllPLDqg==
-X-Google-Smtp-Source: AGHT+IGu8EROqlFiKQuV5YdEp8yVyKS4aTNthjV/55iT6FRH+1GzeF5TrDOY/dER8KyRkW/tnLgJ+w==
-X-Received: by 2002:a17:907:72d1:b0:b50:a87e:efe5 with SMTP id a640c23a62f3a-b70520e0653mr137241666b.19.1761778489410;
-        Wed, 29 Oct 2025 15:54:49 -0700 (PDT)
-Received: from localhost (62-165-236-60.pool.digikabel.hu. [62.165.236.60])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d853f97f7sm1530967766b.51.2025.10.29.15.54.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Oct 2025 15:54:48 -0700 (PDT)
-Date: Wed, 29 Oct 2025 23:54:47 +0100
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Eric Sunshine <ericsunshine@gmail.com>, git@vger.kernel.org,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/6] ci: check formatting of our Rust code
-Message-ID: <aQKbN157AMJi59rV@szeder.dev>
-References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
- <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im>
- <CAPig+cQ7xJky+F=g=NMrN6BQfP+ZV2KF4RF2eLqtULKgMTR5_g@mail.gmail.com>
- <aOWXSO5GInJI8-NZ@fruit.crustytoothpaste.net>
- <aOXsjnWBOt0qFGwc@pks.im>
- <xmqqms61h0g1.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L1K+M1I8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TTCeP4W+"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6C8797A00FE;
+	Wed, 29 Oct 2025 19:12:07 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Wed, 29 Oct 2025 19:12:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1761779527; x=1761865927; bh=5eYjd7cTnS
+	cU/Net8gZsEqNilOU/5Oj6NGb2He9Xw9s=; b=L1K+M1I8oR2tL8okQcv5vKcYrK
+	4pxhIEYP4Q/+fTvGNTmADj9JBYf47LyiJp5ZMlGT3ORxMFqrcrbZTvKGZBv1e/7B
+	MVUO314OGJO1FYXSkL1bGg/xuH5ZNPq2yh737BMfxT17Zso3YbjRQQouyIeWo0J4
+	s/ux3Sv9tnWouVHSCs0A3bGP1B/8djZHqBq2SJjXLaJI++fXdKWEJqAPTGDp1Io8
+	oeOJawPnEhNFxMzg4eCWD5+4gvKkddm/p2kxV1V0g25WFKLWi15/d5759TYqbAOH
+	0yaKpb5QOktWgIIcrEz+9kRAiLnUC3YmjEvKCneGX6XftWANBwIJooeh6kwg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1761779527; x=1761865927; bh=5eYjd7cTnScU/Net8gZsEqNilOU/5Oj6NGb
+	2He9Xw9s=; b=TTCeP4W+ErWrd5MqLTLV0GhVaDAkLtHZmHbnpw9rsZR6MNIGqxg
+	xrf1L6ZJdkrRr9Bx51XiKB40Y4z3whQluazcNt2KzTiXC1Rw3y4MQ97nAHplUSeZ
+	KNA/yRVSi+cY2+H5HsCP4nGajyHwl8trIL53GK56tJLwVY7PiFGUpM0qTIzUPphm
+	e7v9oblZQeSOt8klYgTBmFESMiKVVrhmR/3AaRpG7r/7Ougr4aIoKx3ZhSRIQcUp
+	juCEpvFDhP7pPEQ3gME7DISEh/C2Jaiu/4zhRZarQk4xrh8ZX4E0V/IVJFo2KVDh
+	+7GXzuf5+5o0E5js+TJaFVSv1tWze89lxQA==
+X-ME-Sender: <xms:Rp8CaUUnmOR0ZxxYEq18myK5fd7PXRjIJH2LLamHsjuvIfOEma6klg>
+    <xme:Rp8Cafec2SyTsgmgBpAOwCR_2LtA2n4XXtXU5aB2jvH0yUtkqVQ0NuW4Pc60Niish
+    lzghss1Bzkq8HEWBlrqxVQ-axhat3nR1SbT_YkNQhzNFUjbVMjdiyQ>
+X-ME-Received: <xmr:Rp8CaQtSdCT5XEVkA7xor_ui89L59lmSb9VAUt-jlLKowY7Q2zA_P008gCUDmkOVJmx7DR8oSmkIWrz6ri3zsqATjHtZaNRzdyvy>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieehtddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdr
+    nhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:Rp8Cae_6AbkaTKlTIyZiXw6VhQ_V7VtIxWccaxCJQDGNDg-8qn0rYA>
+    <xmx:Rp8Cab1OtFjBPBb8pVKMotqGBqTeRvf1K5OmpAfrvze4CnvnrWOB5g>
+    <xmx:Rp8CaTCuu0Mlw5GDJ5_9jBkg3YPlxu7vdOODsJ2FcZdmxbyUd1ZiIg>
+    <xmx:Rp8CaXeS4f8E0xU0n0ooRh_NN2AnSme5raNIET3ydiqNOUMHBDBtaw>
+    <xmx:R58Cacv9XYu-3QQmJawvxmEguNyih2NKqT1vts0sWTMyMyE2zFXif2Tg>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 29 Oct 2025 19:12:06 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ezekiel Newren <ezekielnewren@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
+  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 10/14] rust: add a build.rs script for tests
+In-Reply-To: <CAH=ZcbBYRiceXQ-9FNq0aK0WzN4nDhqonaoafweStC37mx7JBA@mail.gmail.com>
+	(Ezekiel Newren's message of "Wed, 29 Oct 2025 16:10:27 -0600")
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+	<20251027004404.2152927-11-sandals@crustytoothpaste.net>
+	<xmqqms59acak.fsf@gitster.g>
+	<CAH=ZcbBYRiceXQ-9FNq0aK0WzN4nDhqonaoafweStC37mx7JBA@mail.gmail.com>
+Date: Wed, 29 Oct 2025 16:12:05 -0700
+Message-ID: <xmqqwm4d716i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqms61h0g1.fsf@gitster.g>
+Content-Type: text/plain
 
-On Wed, Oct 08, 2025 at 08:34:22AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> >> ... but I also think we should take this
-> >> opportunity to choose the Rust defaults for Rust.  C, Perl, and text
-> >> formats like AsciiDoc do not have rigid defaults about indentation
-> >> style, tabs vs. spaces, and line length; Rust does.  We wouldn't use
-> >> tabs in Rust (the default is four spaces) because we use it everywhere
-> >> else, so I think we should take the opportunity to use the Rust defaults
-> >> here as well.
-> >
-> > I am also slightly leaning into the direction of sticking with Rust's
-> > default of 100 characters. It's not substantially more than 80, should
-> > be reasonable to accommodate for in most modern setups, and sticks with
-> > what the remainder of the ecosystem is doing.
-> >
-> > So for now I'll leave it at 80 characters. But I don't feel strongly
-> > about this, so if there is a majority in favor of 80 characters I'm
-> > happy to adjust.
-> 
-> So the question is if we want consistency across files regardless of
-> what language they are written in (i.e. 80-columns everywhere) or we
-> treat our existing rules a "fallback rules" we have adopted while
-> dealing with languages without their own strict rules, and use the
-> default for a language with its own rule (i.e. whatever rustfmt
-> wants is used for Rust, our own rules still apply to everything
-> else)?
+Ezekiel Newren <ezekielnewren@gmail.com> writes:
 
-Consistency across files regardless of language was great, because I,
-for one, prefer to use the same editor for all files regardless of
-language.
+>> Hmm, I recall Ezekiel earlier arguing to roll reftable and xdiff
+>> libraries into libgit.a as it is a lot more cumbersome to have to
+>> link with multiple libraries (sorry, I may be misremembering and do
+>> not have reference handy), but if the above is all it takes to link
+>> with these, perhaps it is not such a huge deal?
+>
+> I think Brian might have written this before my series was merged in.
+> ...
+>> I am a bit confused.
+>>
+>> XDIFF_LIB and REFTABLE_LIB are gone from Makefile on 'master'
+>> already.  Perhaps we should revert earlier series from him?
+> ...
+> I don't think we should revert my series.
 
-I find 100 columns much worse than 80, because on my laptop I can put
-three 80 columns editors next to each other (and still have a bit of
-room to spare), but with 100 columns there is only room for two.
+The order of events does not really matter, does it?
 
-> I actually am fine with the latter myself.
-> 
-> If people strongly prefer, I also can be talked into adopting
-> slightly wider limit for our fallback rules for everything else, but
-> that is probably a separate discussion.  It is a bit unfriendly move
-> against folks with aging eyeballs like myself, though.
-> 
-> Thanks.
-> 
-> 
+If we can happily link with more than one libraries [*], it would
+give us a much more pleasant developer experience than having to
+roll everything into a single library archive, no?  Or are you
+saying that the way this series links these multiple libraries
+somehow does not work?
+
+You somehow manged to confuse me even more ... X-<.
+
