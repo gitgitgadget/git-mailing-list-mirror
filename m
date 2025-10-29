@@ -1,71 +1,79 @@
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66CF2E1747
-	for <git@vger.kernel.org>; Wed, 29 Oct 2025 22:49:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BF12DF6F8
+	for <git@vger.kernel.org>; Wed, 29 Oct 2025 22:54:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761778161; cv=none; b=tSpxQa4OJDXFaE1RY5zOw34Caz3ithv78ajAbL7zsMXH4qW7QcO7Y8H5qteehNblSTeltUDJCz4yG597UCX64v3CGn9aW7+HgoDTK1mERJLDRnM2tLao2zCo0Ck+mn7lbN8unHIHmxFPLcYSd9xhh7k9O370MLtk7FxiUIiuQlI=
+	t=1761778492; cv=none; b=bA4OFawfLA9EmuZXSLxXzaghT0D+s/MKTiMfpLu4h717DUUVCXqgibsEs5qWb+HsGzsI0LTZpLsLtkWh5incLyevutjwOOckKn0eWNY4cKFz6CaGDNFH2eWXJlJSjx6dTP+MYkyIeiosGGYV6Qtcc6veqFI0NlAfoyDIiSFB9oA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761778161; c=relaxed/simple;
-	bh=rpNPFE563X+9Vos/BdlKrdpP0VFKMK2owR6pW39AkXs=;
+	s=arc-20240116; t=1761778492; c=relaxed/simple;
+	bh=ogEnh1CB7RwQsKJyALTLFKS+jK5QNQtFuvlMcYZWPbo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I92TWY42Anovcu9YdXx6uSPmEWp+f3T1NKGBVhstF8irkwBO7zABoPX7tbWV+O4NPtPmYLoEwou9SjFpKlIkPjENFPsZ9pdd0RTGF6uA5cLHETTXhyejq2ZOixzsf315s8Ax+FyQX5hd6weHszV4GwYzVy2q6Bb23F4XhPnPEOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=QbhZpL2R; arc=none smtp.client-ip=209.85.166.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=ArjfcNuL2DGI8fNRvoL06PVw/ULO0ZL5bz7WIGMNU5OzLY6PpDPVUVhLAJXMUnjK9aqWX4s0rVutXD+Jbyg4foLSZ8qYKe8byrt9Zw0woBy/JzDpLfndjIxjcLfvWHyLVmGYpuPS3KOQk4zYA/EmvWFuCDpPmzfX7PBIpue3sjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k+cb/DCR; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="QbhZpL2R"
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-430da09aa87so1427585ab.2
-        for <git@vger.kernel.org>; Wed, 29 Oct 2025 15:49:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k+cb/DCR"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b6d3340dc2aso111816066b.0
+        for <git@vger.kernel.org>; Wed, 29 Oct 2025 15:54:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1761778159; x=1762382959; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1761778489; x=1762383289; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=I4po2tznXdxyJ/G/kvNn7UgWtNABss/kMGUQJ/b3bdA=;
-        b=QbhZpL2Rp23l1Gkhpkq+ewaIh7tH3K1wZWbj2ll2I4960HlWcQCen4yDWvwRVIDYCW
-         0BXzYRp/VJGDbxnl04S1UFHDu3PeEsHoJCWMRBjkUHI87ZNghDCzBrIUwHT9I2jqlG4D
-         8z59GYVu2Q1r3afBARmo1v1oPzXEp64p9ssmXDlOtoNF2t01DshXew0soQwbSQ6ZwGNK
-         7JszdburluPOvtcRUX+zl/XPRsKhJirRJcLXD5Oy4PEjWZTMXPCF+JBmBpL9tagCnmVm
-         vBE2PH44/Q6lncnXmztyCot1AAly5cjTZOvStTdVLrntLtCxP3BeRdNuz/va2erM5Mwm
-         /JHg==
+        bh=Ni0FdlD7kWVH8hD0kb3Ox6bY5jbmc+PoJF8o7vh8xIk=;
+        b=k+cb/DCRyMae7YsO6szeGs2fXSmplyIbZwhq1hYh5ovBdOJPOOGkz4316RCfptLqg3
+         tb5miJXAf+aJ4EWx5RxSu394FP+FCvsEXcCDLQYtbR8SlhKgm97qHpkqnbzDVL3XrRK+
+         se4yfUhy9Qc9rUTl0K2zHHDF56UsRwKgLEbz1x3npHGxDozdrxX8cGkV5F8oU8i0QQed
+         hgTulhJAmnZ8U5G+rUkLgulIkkxZMBE4OLtYo8YU02tvMlcBeMVA/6n06943vGoEBhXy
+         pTXWqokopvDxEHG65dsCXMr9Yi9zmeUjfmIHreyv0lGFt5Er+e55yVoy5CvHQstBKwqz
+         swlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761778159; x=1762382959;
+        d=1e100.net; s=20230601; t=1761778489; x=1762383289;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=I4po2tznXdxyJ/G/kvNn7UgWtNABss/kMGUQJ/b3bdA=;
-        b=MFEgxoyKGHIcf3EHbPY84m50WOtZFRDgDmgUZ3iJRS04xXVv7yIX25LG/i6O11JHp2
-         pS/bGNjlIpPM/r7BoSb3KrU21xfiqquoSLWbVCPGoE6aMG7hEXKr6YT2P/toThfO/Fuc
-         xmaDRCkzmgMspE7DqaSvVCscgGddRrdMn5r0nwRtZik3PmNX3UdjqR4epL8dvb5AQHLY
-         5qGDRhM5/3sCDv9afOtPQAFjTR0B8nI/wNVZDPYIunKl1B9Bk567kuzm8zBKsRhuHmVz
-         NYhKiltLTDYZp/Xkfl8vHh8clR4ctKReSNLHzxCvup4GlnMo64u2SYgX+LyJE40g80FV
-         L//Q==
-X-Gm-Message-State: AOJu0YwbcaZD+vuOVU6M++5uM8X1LdPfIAg4iKxQ/uLxjZolpd2FUeaE
-	lOkDTcP0PCY1U3AQEXpAH73B8QTFUDJVnugoDkBu7VkoPc67+1xzhOU9pvucD93nSmY=
-X-Gm-Gg: ASbGncvH41y6xQXGmUYb4X5LwYdVRK1ey97H7L8tEDqoJqlwMa1NzP/H/2Q2+JwviHY
-	tyAfdno0RsVDXi8C3oV7FvUv41Rcu9o+HSiCiIKGLUhAhDmfDgS3SSAB0K2shYqVm0RgC5KrqB4
-	Y8PZ4ob2JNrJiHpjXCBoK4uYz+bRa3owDjefpySEsUgvkoIhmIyrBfFquT+Hh5L72TM55j24DxS
-	//C42ZImAPBBXQVacU0zWHIk1H5c4XG9mlV/bCD0wVBnAxGbVQut81o/50yMNUSPm1cAZyYiVjk
-	QPGdp6J+pA/07k4uBVLmPseVZhG5Z+mPz6K40m3xY88IyLuBhWngJxWIqMCsPY1CEHwnhgIddoE
-	j0DFeuY5AaSbueawEVDsKSQB11tWbXA+E9CJCJhF5dcLMEM+IPElnx4LWHQmLmtl8N164Os/QuB
-	IMktUipzZCh+vm0saFnKLHpcDYVpsMnUD0b5uFsgK7BBWznLHt7Rog72Y2NFhXIficgRIk7LkOd
-	9BdJJU=
-X-Google-Smtp-Source: AGHT+IGsHxMnWjy13sKvvTdq0iL/saZZckZIhwM/hIh5WQ6hFEttcplFpjg3foKPannwQFxtejQ3JA==
-X-Received: by 2002:a05:6e02:3303:b0:42e:72ee:cde6 with SMTP id e9e14a558f8ab-432f8fad6eemr73354965ab.12.1761778158896;
-        Wed, 29 Oct 2025 15:49:18 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id e9e14a558f8ab-431f689a0c0sm61774285ab.35.2025.10.29.15.49.17
+        bh=Ni0FdlD7kWVH8hD0kb3Ox6bY5jbmc+PoJF8o7vh8xIk=;
+        b=IJzwCdMjBUAzURLm7qOy0hpT0CSgoXdSTYGCCc5CFXGtuXAsAnXBUuYWaSc410j2zi
+         WSl68uYx7ROwqlHqosJjZeIq3vnypoY8w2jK5pzRhWr+51IBh8qjEajsozt4Og8zkGf9
+         s/R5I5LQwoXuilEzK8TaniMPGATU28C8uqhruRgtxOQIku1to7pLcwz+8ZLktOJDuwJw
+         EGaRX24dAy2Fhew8+FkZEV4ujFMkrtJbnUuAtBVfFhGeBFeWvD/7v3iMM3Wz3aL/EE7m
+         obRHEZ7zucPUYAx2in7acK1yaoJOliqUMAXiFni9Rm50yesuuEKVOxQVpG7ia+suf+w8
+         cpqw==
+X-Forwarded-Encrypted: i=1; AJvYcCXDddCCr14mkEkGPvA9msdVr9uzh3h0ligaO8JJQ65Sy7Dj5qh7yGeZcTwbNYrD/8HygWY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx2SAsDqEts/QZ16TX1dw44n4nElWqkcDlJwsusBUMOEtdmI0fJ
+	r22sR0eY9hsoFD5sKfokGJu4pOz9hICS+Wh62+PAfkpcHFM0XbtU9AYL
+X-Gm-Gg: ASbGncurrmS/us4e1cB/ip5cLoRnSkz45Uz+hz2s16XKfeN/USKAKVpMprhjshtGNtR
+	xqfeXo3cgQmuT6gvl9zrcsnJw0qjSof0fk/sBVRgCxK1+ozJfav1mX5W65yNVz+xCQFRD62CeeA
+	GW0Op7o8aJl1EIwthHlvwN9XNkKSOKf9VuQjF1ygIlIXR9Y8NThd9m3qtkFHgWzxkJiwNzrb+vC
+	p11AOyWPzgzOvieiBLfOnjDW3JBdpKGXFHiN8q6DljT3JAJZd9PL4AkVH8QVY4aGgnFLMOGUt7d
+	d1oW1Cxddwb0ME+Q8yP0OTjADDc861dOJgATm8EBnHNukGCWJKQ2O0eVGADiw2w9r39eIHqyMhr
+	h263+4edrSFYLzV1O0W2Qyv5MhkSHZFYNtepGILGDoL8IsRQQYzJhmcl2QX1D+T/PD2RdvgdiqI
+	Plc3EMWnsf8m0oS7U5G0SmgsZllPLDqg==
+X-Google-Smtp-Source: AGHT+IGu8EROqlFiKQuV5YdEp8yVyKS4aTNthjV/55iT6FRH+1GzeF5TrDOY/dER8KyRkW/tnLgJ+w==
+X-Received: by 2002:a17:907:72d1:b0:b50:a87e:efe5 with SMTP id a640c23a62f3a-b70520e0653mr137241666b.19.1761778489410;
+        Wed, 29 Oct 2025 15:54:49 -0700 (PDT)
+Received: from localhost (62-165-236-60.pool.digikabel.hu. [62.165.236.60])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d853f97f7sm1530967766b.51.2025.10.29.15.54.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Oct 2025 15:49:18 -0700 (PDT)
-Date: Wed, 29 Oct 2025 18:49:16 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/8] packfile: fix approximation of object counts
-Message-ID: <aQKZ7FW925zvscgh@nand.local>
-References: <20251028-pks-packfiles-store-drop-list-v1-0-1a3b82030a7a@pks.im>
- <20251028-pks-packfiles-store-drop-list-v1-4-1a3b82030a7a@pks.im>
+        Wed, 29 Oct 2025 15:54:48 -0700 (PDT)
+Date: Wed, 29 Oct 2025 23:54:47 +0100
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Eric Sunshine <ericsunshine@gmail.com>, git@vger.kernel.org,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/6] ci: check formatting of our Rust code
+Message-ID: <aQKbN157AMJi59rV@szeder.dev>
+References: <20251007-b4-pks-ci-rust-v1-0-394502abe7ea@pks.im>
+ <20251007-b4-pks-ci-rust-v1-2-394502abe7ea@pks.im>
+ <CAPig+cQ7xJky+F=g=NMrN6BQfP+ZV2KF4RF2eLqtULKgMTR5_g@mail.gmail.com>
+ <aOWXSO5GInJI8-NZ@fruit.crustytoothpaste.net>
+ <aOXsjnWBOt0qFGwc@pks.im>
+ <xmqqms61h0g1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,75 +82,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251028-pks-packfiles-store-drop-list-v1-4-1a3b82030a7a@pks.im>
+In-Reply-To: <xmqqms61h0g1.fsf@gitster.g>
 
-On Tue, Oct 28, 2025 at 12:08:34PM +0100, Patrick Steinhardt wrote:
-> None of these are really game-changing. But it's nice to fix those
-> issues regardless.
+On Wed, Oct 08, 2025 at 08:34:22AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> >> ... but I also think we should take this
+> >> opportunity to choose the Rust defaults for Rust.  C, Perl, and text
+> >> formats like AsciiDoc do not have rigid defaults about indentation
+> >> style, tabs vs. spaces, and line length; Rust does.  We wouldn't use
+> >> tabs in Rust (the default is four spaces) because we use it everywhere
+> >> else, so I think we should take the opportunity to use the Rust defaults
+> >> here as well.
+> >
+> > I am also slightly leaning into the direction of sticking with Rust's
+> > default of 100 characters. It's not substantially more than 80, should
+> > be reasonable to accommodate for in most modern setups, and sticks with
+> > what the remainder of the ecosystem is doing.
+> >
+> > So for now I'll leave it at 80 characters. But I don't feel strongly
+> > about this, so if there is a majority in favor of 80 characters I'm
+> > happy to adjust.
+> 
+> So the question is if we want consistency across files regardless of
+> what language they are written in (i.e. 80-columns everywhere) or we
+> treat our existing rules a "fallback rules" we have adopted while
+> dealing with languages without their own strict rules, and use the
+> default for a language with its own rule (i.e. whatever rustfmt
+> wants is used for Rust, our own rules still apply to everything
+> else)?
 
-Well explained, thank you.
+Consistency across files regardless of language was great, because I,
+for one, prefer to use the same editor for all files regardless of
+language.
 
-> While at it, convert the code to use `repo_for_each_pack()`.
-> Furthermore, use `odb_prepare_alternates()` instead of explicitly
-> preparing the packfile store. We really only want to prepare the object
-> database sources, and `get_multi_pack_index()` already knows to prepare
-> the packfile store for us.
->
-> Helped-by: Taylor Blau <me@ttaylorr.com>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  packfile.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/packfile.c b/packfile.c
-> index 6aa2ca8ac9e..6722c3b2b88 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -1143,16 +1143,16 @@ unsigned long repo_approximate_object_count(struct repository *r)
->  		unsigned long count = 0;
->  		struct packed_git *p;
->
-> -		packfile_store_prepare(r->objects->packfiles);
-> +		odb_prepare_alternates(r->objects);
+I find 100 columns much worse than 80, because on my laptop I can put
+three 80 columns editors next to each other (and still have a bit of
+room to spare), but with 100 columns there is only room for two.
 
-I was wondering how this worked, since odb_prepare_alternates() does not
-eagerly load the packs belonging to a MIDX, but get_multi_pack_index()
-does, so this makes sense.
-
-(Writing this out, I realized that you wrote this as the last sentence
-in your patch, which is helpful and I think worth doing.)
-
->  		for (source = r->objects->sources; source; source = source->next) {
->  			struct multi_pack_index *m = get_multi_pack_index(source);
->  			if (m)
-> -				count += m->num_objects;
-> +				count += m->num_objects + m->num_objects_in_base;
-
-Oops. This fix is definitely right, thanks for spotting and fixing it.
-
-As a general aside, I expect that we're going to find some more of
-these. I tried my best to audit all the places where we use
-m->num_objects and m->num_packs, but without having great infrastructure
-that encourages the use of MIDX chains, most of this code is all dead
-anyway.
-
-Hopefully soon we will see some more usage of MIDX chains with the
-incremental repacking work that I've been sending patches for recently.
-I'm sure that will flush out more of these issues.
-
-> -		for (p = r->objects->packfiles->packs; p; p = p->next) {
-> -			if (open_pack_index(p))
-> +		repo_for_each_pack(r, p) {
-> +			if (open_pack_index(p) || p->multi_pack_index)
-
-Do we care about opening the pack index if we already accounted for it
-via the MIDX path above? My guess is not, so I would probably suggest
-writing this conditional as:
-
-    if (p->multi_pack_index || open_pack_index(p))
-        continue;
-
-to avoid loading pack indexes unless we have to.
-
-Thanks,
-Taylor
+> I actually am fine with the latter myself.
+> 
+> If people strongly prefer, I also can be talked into adopting
+> slightly wider limit for our fallback rules for everything else, but
+> that is probably a separate discussion.  It is a bit unfriendly move
+> against folks with aging eyeballs like myself, though.
+> 
+> Thanks.
+> 
+> 
