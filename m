@@ -1,275 +1,327 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F8E2DA751
-	for <git@vger.kernel.org>; Wed, 29 Oct 2025 01:18:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA542D063E
+	for <git@vger.kernel.org>; Wed, 29 Oct 2025 01:37:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761700735; cv=none; b=Qx9Ftqf7L8hRcD/IgBEpONdhLVmqHwHd8mhdIKp7Ak4Xy2Uvt1N5oOGlkdlvg91q4VoCiK/AVAdmCuMqOoLLS2GJA9i3atzKuSB3dO5SdYWSMfaxwvWetxM39dtIrj0MXeFo/7JyO3Y7WQvTygnv0cLORaVOIMtL2QtaA3STLjQ=
+	t=1761701875; cv=none; b=Zr7onlA+viotrCQcGlguKzrs0WOJjzkRxklCSgabzEUYsC9txyDqfW/JRXegX+r7MQ+f35xRynyfzIio67/yK3uPFxjGv41SucvHkDHypY0MhAV+SegW45HdC4zqW87o51AHyAwoItkJTNDpzyN93KfBtuIC4ai66BRvaEtR000=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761700735; c=relaxed/simple;
-	bh=tN3tgVn6KKTEXR6P7rG14o5loR1W/htGFECVUPO0AYQ=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=KGBJ8XqCpJSUDXOONyJjN3vp3OXMrv+p2K2Xe0ga5VlF0UsQfnvkrkMu12rAgQpTgXIaETKtkhC/Oc0axrP4CSb3WJg6xYTHb4piwOPC5obk+5h4AUBjZBJUr+8YDM8iX/1GJxpyzUIt6UygbC7RuvHTx0AkgnvYTa0JGisZo7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m31uvbD9; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761701875; c=relaxed/simple;
+	bh=m/tR5hOeSMm+lm1ddsPtY27C202tjpVH9/k+/pVTQeQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KeZd9wibskqNSd/CvqoMlh/NE0C5YDEGNoF4+B1t7xXQ998zVqIjfCJnYTjmTui00Xv6Zpe5BSnWv79ntlIKP1VPYkwLGa2TEUyxerDwyazpfwJpdxpxdgReWKj/AlUceEIRdgqgLXrxXyYPO+gbAd3qqj+wYWRPFmS+0jMBcgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Xd8orucH; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m31uvbD9"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-b593def09e3so4046409a12.2
-        for <git@vger.kernel.org>; Tue, 28 Oct 2025 18:18:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761700733; x=1762305533; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QZ0dkE57CzXrtY7YG1hMrab0ErgUeITbZ0Wp+cE4SHU=;
-        b=m31uvbD9nbOMycIq2rELib5IBv0fff0v6id3r36GVw/CpRmZDBYEMnSuT9y/KUwwQ5
-         LQz0kf6jaVoeGRTyeqi3YahKz60qJUJGv3xhLWpU25p1HO4UL4Qd0oWC6udITUu2TiXn
-         9kWVLldsv/6LKlIFpuLOVcT1AMjpfHYR9ZT/k+tgetd7qBfWJi3NWiZjUIOQqtg4tdKr
-         SwKRh2qIfj1MRAcxL6MfvrNjCgA/WROaOTlxmqcxNBfL2Z/9xv3UMD/J4pPLYLIww1Qp
-         +omB0hGHmTw55sDtuGemr9kkr9rVFP9eH2JapGSGIvPxEvX5ywC98X2NVX5a2Xqplc5P
-         jyaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761700733; x=1762305533;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QZ0dkE57CzXrtY7YG1hMrab0ErgUeITbZ0Wp+cE4SHU=;
-        b=jJF+0taovvFAvKv9y1jp1cp+CYHhwbGYudygBez/AFsk/pR+etA8EQzCMrXuLeNT2c
-         rSjR//0OQbqVurwksQVNjcSIVzUCV22SFpqaaOO5DkJhY6dRMzuM9N49KMZXjIk5/NZo
-         /zFXkS/yOfBJj5YkIqIliXQ4TKQOOclns0kkNgN/pFcdLjCQJuVVG5VFf6+UZ0ldhi01
-         JuhhYAY27FcOuUdVWv978rdgCEYXiCNtsy2OESbAKirEszBaFcHATBfwyxjaLknHwBno
-         c4z3aYXdvjpLayKO48lysmZH4yKFFo3w86zeeSnH+hGMzASbohB354JPu2rs0e5MTIzn
-         xo/A==
-X-Gm-Message-State: AOJu0YxgPvD5NsCvZogtJ2yK9tZuOGUQuqQ5wDGQQVHZk49KT3qVLT3T
-	3AeiYvqIo5OFBpajQvl9NZ2AoGQazRtnm+wamqZPdDyuGGESgX+Qa9KuiPGve9LbFtQmNNLvzLH
-	l7fBdRnPYxnpeM9mAyQgbkr0j4lQZxZTyOqBy
-X-Gm-Gg: ASbGncv3MnTCQCDG8ACW4QNUvo6LFk7ATp5gZv55Hf+jirBL2407rkoGcFMGjJdcc1H
-	KHpSyc1sxf3YW7yRQhaKI71DR2YeWShqpvNoz2yD9S/zABOhAZEec1gW5tE0LP1pqa5nIn7MqB7
-	QV9q8LAx2CfHZXC1hpSQiejXdED0lrCWIQO8M+zNhH1giDt55pNvePlnQdXXjxRzBZD+pr/JH0O
-	sREqpGA7DKj6+MmR/egVgSRdMNJlyNSfOLT1VeBDadIUgCWJJAl5l/fl8UlLk5Q
-X-Google-Smtp-Source: AGHT+IEArkj9zm6+tQOQk8XhDO9DmHkIGpIyQBj/s+ykm5LBFmxeBxAJTyNLWQNO9Z/wLT7Z3P5RtvhuaGn+N6d+jTk=
-X-Received: by 2002:a17:903:1ca:b0:25c:46cd:1dc1 with SMTP id
- d9443c01a7336-294def2d884mr11429625ad.33.1761700732615; Tue, 28 Oct 2025
- 18:18:52 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Xd8orucH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1761701871;
+	bh=m/tR5hOeSMm+lm1ddsPtY27C202tjpVH9/k+/pVTQeQ=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=Xd8orucH+ZXJ1A5/feP36rSBqzdmtUO+kmwkoSsmXLqCTbeN4xtsV9Lin4P4QmpUP
+	 ZagVYNjBAGgnuNEoHOQYq6UnYmnBAmWhL2AvXdltjKVevEfb2a70vACLfBsz9+uhHn
+	 t2C4Yol9WgXbrNvG2B7kZIGMWis8S4p6NIYAb2bp2p7Yqo7fWKPhh4YmWDE72uujMa
+	 E4asO0XBVA1O8Q00I1zVcbdcDh7aKqYVjl07jPWPSMECy6UgU1Ytku618A/Xiu0FaB
+	 p3IRLWaHCTi9CeY5TS33k7ZYpPaAAMnW/pX25sGTwhkODmmjJtRtU1Dy9gBUXXgmos
+	 5I+VjAZK7XB6jd8uNQhTlyGkYckKrFBf3K4mw9zaBJz5XYqgtVH2EiafbvGYtRr1Eq
+	 YL31NISxRkeCdCEiGy7PybzC6si3zbE4BRsS5GZkS5tMniWjtimvjA/VlD38fusiXd
+	 iUUgMbX9U6ijtdznPJcVm27mCS5bIZ4TeYr5IP5fndLxbBV4vTN
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9578:8587:8ed:424b])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3AD3620036;
+	Wed, 29 Oct 2025 01:37:51 +0000 (UTC)
+Date: Wed, 29 Oct 2025 01:37:49 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 12/14] rust: add a new binary loose object map format
+Message-ID: <aQFv7cJUYaSUipF-@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+ <20251027004404.2152927-13-sandals@crustytoothpaste.net>
+ <aQCKaK6kTfwoj28O@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Bello Olamide <belkid98@gmail.com>
-Date: Wed, 29 Oct 2025 02:18:53 +0100
-X-Gm-Features: AWmQ_bkau6sSmA7DrQlacu7VMzx2kF-QCkU_Bf5HWno-4Doudfah_7T24rBTuW8
-Message-ID: <CAD=f0L9anYu4LKWGDKrwzBBytMunJ3UjTehNN9m2DigG8yCNHA@mail.gmail.com>
-Subject: =?UTF-8?Q?=5BOutreachy=5D=5BProposal=5D=3A_Refactor_in_order_to_reduce_G?=
-	=?UTF-8?Q?it=E2=80=99s_global_state?=
-To: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
-	Christain Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="a4O1hb0znIwxc+ia"
+Content-Disposition: inline
+In-Reply-To: <aQCKaK6kTfwoj28O@pks.im>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--a4O1hb0znIwxc+ia
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hello,
-This is my proposal for the project
-"Refactor in order to reduce Git=E2=80=99s global state" for the 2025 Outre=
-achy
-Internship program.
+On 2025-10-28 at 09:18:32, Patrick Steinhardt wrote:
+> Doesn't this indicate that calling this "loose object map" is kind of a
+> misnomer? If we want to be able to store arbitrary objects regardless of
+> the way those are stored (or not stored) in the ODB then I think it's
+> overall quite confusing to have "loose" in the name.
+>=20
+> This isn't something we can fix for the old loose object map. But
+> shouldn't we fix this now for the new format you're about to introduce?
 
-Personal Bio:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Full Name: Bello Caleb Olamide
-Email: belkid98@gmail.com
-Personal Blog: https://cloobtech.hashnode.dev/
-GitHub: https://github.com/cloobtech
+Sure.  I will admit I'm terrible at naming things.  What do you think it
+should be called.
 
-About Me:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-I'm Bello Olamide. I am passionate about software engineering and
-I love to figure out things. I like participating in tech
-events such as hackathons but this will be my first open source experience
-and I have relished the opportunity and experience so far.
-I love being part of a community that strive to achieve a goal and one that
-I found myself is a small albeit growing community that helps to guide and
-mentor younger boys find their way into the tech ecosystem. I have develope=
-d
-my coding skill via various sources including personal learning, freelancin=
-g,
-collaboration with other developers and from the ALX Software Engineering
-program.
+> s/enabling//
 
-Past Experience with Git:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-I have been a Git user for sometime now majorly for collaborating with othe=
-r
-developers, tracking version changes to files and during this contribution
-stage, I have understood the ropes of how to send patches to Git.
+Will fix in v2.
 
-Contributions to the Git Community:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-I have been able to send some patches to the Git codebase with the guidance
-and direction of community members.
+> As far as I understood, this legacy mapping wasn't really used anywhere
+> as it is basically nonfunctional in the first place. Can we get away
+> with dropping it altogether?
 
-Microproject:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Link: https://lore.kernel.org/git/cover.1761217100.git.belkid98@gmail.com/
-Branch: ob/gpg-interface-cleanup
-Status: Merged to next
-Commit ID: ce6d041635
-Description: strbuf_split*() to split a string into multiple strbufs
-is often a wrong API to use.
-A few uses of it have been removed by simplifying the code.
+Sure, I can do that.
 
-Project Overview
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Git uses a single global `struct repository` object called `the_repository`
-which internal functions rely on to store, access and modify environment
-and configuration variables.
-With this approach, multi-repository instances running in the same process
-can lead to inconsistent behaviours and race conditions.
-By refactoring the code to stop storing repository-scoped
-configurations in global variables in
-`environment.c file`, that is by moving the appropriate global
-variables into localised state
-within the `struct repository` and `struct repo-settings`, the
-codebase becomes more maintainable,
-easier to test and future work such as libifying Git becomes feasible.
+> Given that we're talking about multiple different hashes: which hash
+> function is used for this checksum? I assume it's the main hash, but it
+> might be sensible to document this.
 
-Internship Objectives and Plans
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-The project aims to identify repository scoped global variables in
-`environment.c`
-and related files that can be moved to local scope within `struct
-repository` and
-`struct repo-settings`, find an appropriate strategy to move them to
-local scope and implement the changes. This architectural improvement
-will make the
-codebase more maintainable and enable better multi-repository handling
-in the future.
+It is the main hash.  I'll update that for v2.
 
-From a high level overview, environment.[ch] exposes some global
-variables that reflect a per-repository state and examples of such include
-git_work_tree_cfg, is_bare_repository_cfg, and core.* settings and function=
-s
-which also depend on `the_repository` such as have_git_dir(),
-is_bare_repository().
-After a brief study of some related work done on the project,
-it is important to understand the purpose of the identified global variable
-and how it is used across the code base, observing how it relates with othe=
-r
-subsystems and moving it to the `struct repository` or `struct
-repo-settings` if its
-use is repository specific, or specify an appropriate context based on its =
-scope
-and use this context in the accessor functions.
-For example in [1], Patrick Steinhardt observes that `core.hooksPath`
-is repository specific and is stored in the global variable `git_hooks_path=
-`.
-The variable is then moved into local scope in the repo-settings
-struct and a new
-accessor function `repo_settings_get_hooks_path()` is written and used to
-set the `hooks_path` of the repo specific struct which the path subsystem
-reads from.
-Similarly in [2], `core.sharedRepository` is tracked via the global variabl=
-es
-`the_shared_repository ` and `need_shared_repository`. These are then
-moved into the repo-settings struct, with new accessors functions
-written to modify them,
-and calls to the accessors in the path subsystem are then modified to
-replace the old
-accessors which modify the global variables.
+> > +`git pack-objects` will repack existing entries into one file, removin=
+g any
+> > +unnecessary objects, such as obsolete shallow entries or loose objects=
+ that
+> > +have been packed.
+>=20
+> Curious that this is put into git-pack-objects(1), as it doesn't quite
+> feel related to the task. Sure, it generates packfiles, but it doesn't
+> really handle the logic to manage loose objects/packfiles in the repo.
+> This feels closer to what git-repack(1) is doing, so would that be a
+> better place to put it?
 
-I also studied [3], [4] by Ayush Chandeker,] and [5] by John Cai to broaden=
- my
-understanding of the project.
+I've actually put this into `git gc`, which will come in in a future
+series, so I'll update this for v2.
 
-Proposed Project Execution Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> As far as I understand this allows us to even store multiple
+> compatibility hashes if we were ever to grow a third hash. We would
+> still be able to binary-search through the file as we can compute the
+> size of every record with this header.
 
-1. Study Code Base To Identify Suitable Candidates (Now - December 8, 2025)=
-:
-------------------------------------------------------------------------
-- The first step will be familiarising myself with the code base to
-   understand how these global variables in environment.c are initialised,
-   used and how they interact with other subsystems.
+Exactly.  We were discussing BLAKE3 at the contributor summit as a
+potential option.
 
-2. Community Feedback Bonding ( December 9 - December 15, 2025):
-------------------------------------------------------------
-- Discuss environment variables with mentors and community members
-- Understand best refactoring approach based on feedback from mentors
+The careful reader will note that this format looks suspiciously like
+pack index v3, which is intentional.
 
-3. Review Existing Patch and Define Criteria (December 16 - January 9, 2026=
-):
--------------------------------------------------------------
-- Thoroughly examine the existing patch series submitted to the mailing
-    list  to understand;
-    * What criteria makes a global variable a suitable candidate to be
-       moved to the `struct repository` or `struct repo-settings`
-    * What appropriate context it should be moved into based on its
-       interactions with other subsystems.
-    * If remaining a global variable is the best approach in its case.
-- This information can be gotten by paying attention to the discussions
-in the patches and also engaging with my mentors and the Git community.
+> > +  * 8-byte offset to the trailer from the beginning of this file.
+> > +	* Zero or more additional key/value pairs (4-byte key, 4-byte value),=
+ which
+> > +		may optionally declare one or more chunks.  No chunks are currently
+> > +		defined. Readers must ignore unrecognized keys.
+>=20
+> How does the reader identify these key/value pairs and know how many of
+> those there are? Also, do you already have an idea what those should be
+> used for?
 
-4. Implement Candidates and Submit PRs ( January 10 - February 28, 2026):
---------------------------------------------------------------------------
-- With collaboration from mentors and the Git community, identify
-suitable candidates for relocation.
-- Relocate them into `struct repository`, `struct repo-settings` and
-other appropriate
-contexts.
-- Pass the repository parameter to accessor functions to replace the
-global dependence
-- Write new accessor functions if necessary
-- Modify accessor callers to reflect the new changes while ensuring
-all affected code paths works
-  correctly
-- Update tests and documentations
-- Recursively submit patches for reviews, engaging in discussions and
-implement suggestions
+I'd imagined we could do something like fanout entries for tree
+structures to help parse large trees better (since trees cannot be
+binary searched).  That's something I wanted to add to multi-pack index
+as a set of chunks.
 
-5. Final Report on Project (February 29 - March 6)
---------------------------------
-- Document final report in my blog with details on my experience
-- Finalize any pending tasks or reviews on any submitted patch
+They are read until the end of the header section.
 
-Availability
-=3D=3D=3D=3D=3D=3D=3D=3D
-I am currently not enrolled in any school or jobs, so I will be able to giv=
-e
-30 hours a week or more to make the project a success.
+> How does one figure out how many NUL bytes there's going to be? I guess
+> the reader doesn't need to know as it simply uses the length of the
+> header section to seek to the tables?
 
-Blogging
-=3D=3D=3D=3D=3D=3D=3D
-I have set up my blog where i will document my progress, insights,
-challenges and experience weekly.
+Exactly.  This is what we do with pack index v3 as well.  As a practical
+matter, every chunk of NUL padding contains 0 to 3 bytes: just enough to
+align the data for 4-byte access.
 
-Post Outreachy
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-The welcoming and patient atmosphere during this short contribution
-period with the Git
-community has made me want to keep getting involved with the
-community. I am committed to
-continuously contributing to Git and become a part of of the next set
-of contributors
-to champion the continuous development of Git.
+> > +- Tables for the first object format:
+> > +	* A sorted table of shortened object names.  These are prefixes of th=
+e names
+> > +		of all objects in this file, packed together without offset values to
+> > +		reduce the cache footprint of the binary search for a specific objec=
+t name.
+>=20
+> Okay. The length of the shortened object names is encoded in the header,
+> so all of the objects have the same length.
+>=20
+> Does the reader have a way to disambiguate the shortened object names?
+> They may be unambiguous at the point in time where the mapping is
+> written, but when they are being shortened it becomes plausible that the
+> object names becomes ambiguous at a later point in time.=20
+>=20
+> > +  * A sorted table of full object names.
+>=20
+> Ah, I see! We have a second table further down that encodes full object
+> names, so yes, we can fully disambiguate.
+>=20
+> > +	* A table of 4-byte metadata values.
+> > +	* Zero or more chunks.  A chunk starts with a four-byte chunk identif=
+ier and
+> > +		a four-byte parameter (which, if unneeded, is all zeros) and an eigh=
+t-byte
+> > +		size (not including the identifier, parameter, or size), plus the ch=
+unk
+> > +		data.
+> > +- Zero or more NUL bytes.
+> > +- Tables for subsequent object formats:
+> > +	* A sorted table of shortened object names.  These are prefixes of th=
+e names
+> > +		of all objects in this file, packed together without offset values to
+> > +		reduce the cache footprint of the binary search for a specific objec=
+t name.
+> > +  * A table of full object names in the order specified by the first o=
+bject format.
+>=20
+> Interesting, why are these sorted by the first object format again?
+> Doesn't that mean that I have to do a linear search now to locate the
+> entry for the second object format?
 
-Appreciation
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-To Junio and Christian, I really appreciate your guidance, patience
-and direction while
-reviewing and helping with my patches and to Usman for your inputs and to e=
-very
-member of the Git community, I thank you all.
+No, it doesn't.  The full object names are always in the order of the
+first format.  The shortened names for second and subsequent formats
+point into an offset table that finds the offset in the first format.
 
-References
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-[1]: https://public-inbox.org/git/20250207-b4-pks-path-drop-the-repository-=
-v2-14-13cad3c11b8a@pks.im/#Z31config.c
-[2]: https://public-inbox.org/git/20250206-b4-pks-path-drop-the-repository-=
-v1-15-4e77f0313206@pks.im/
-[3]: https://lore.kernel.org/git/d0e2042b3061320fac8a8fdf9043c6ab4dbed5a2.1=
-752882401.git.ayu.chandekar@gmail.com/
-[4]: https://lore.kernel.org/git/c82620a1f54ea6760bff204fd2b5fe5c2df1896c.1=
-753804956.git.ayu.chandekar@gmail.com/
-[5]: https://public-inbox.org/git/pull.1826.git.git.1730926082.gitgitgadget=
-@gmail.com/
+Therefore, to look up an OID in the second format knowing its OID in the
+first format, you use the first format's prefixes to find its offset,
+verify its OID in the full object names, and then look up that offset in
+the list of full object names in the second format.
+
+To go the other way, you find the prefix in the second format, find its
+corresponding offset in the mapping table, verify the full object ID in
+the second format, and then look up that offset in the full object names
+in the first format.
+
+>     Disclaimer: the following paragraphs go into how I would have
+>     designed this. This is _not_ meant as a "you have to do it this
+>     way", but as a discussion starter to figure out why you have picked
+>     the proposed format and for me to get a better understanding of it.
+
+The answer is that it very much resembles pack index v3, except that
+instead of having pack order, we just always use the sorted order of the
+first object format (since we don't have a pack).  That also makes the
+data deterministic so that we always write identical files for identical
+objects.
+
+> Stepping back a bit, my expectation is that we'd have one lookup table
+> per object format so that we can map into all directions: SHA1 -> SHA256
+> and in reverse. If we had more than two hash functions we'd also need to
+> have a table for e.g. Blake3 -> SHA1 and Blake3 -> SHA256 and reverse.
+
+Yeah, and then the file gets very large.  We mmap these into memory and
+never free them during the life of the program (except when compacting
+them and deleting the unused ones), so we want to be quite conservative
+with our memory.
+
+> One way to do this is to have three tables, one for each object format.
+> The object formats would be ordered lexicographically by their own
+> object ID, so that one can perform a binary search for an object ID in
+> every format.
+
+We have that with the shortened object IDs and we do a binary search
+over those.  This is more cache-friendly and all we need to do is verify
+that the full object ID matches our value (as opposed to a different
+object stored elsewhere with an identical shortened prefix).
+
+> Each row could then either contain all compatibility hashes directly,
+> but this would explode quite fast in storage space. An optimization
+> would thus be to have one table per object format that contains the
+> shortened object ID plus an offset where the actual record can be found.
+> You know where to find the tables from the header, and you know the
+> exact size of each entry, so you can trivially perform a binary search
+> for the abbreviated object ID in that index.
+>=20
+> Once you've found that index you take the stored offset to look up the
+> record in the "main" table. This main table contains the full object IDs
+> for all object hashes. So something like the following simplified
+> format:
+>=20
+>         +---------------------------------+
+>         | header                          |
+>         | Format version                  |
+>         | Number of object IDs            |
+>         | SHA1: abbrev, offset            |
+>         | SHA256: abbrev, offset          |
+>         | Blake3: abbrev, offset          |
+>         | Main: offset                    |
+>         +---------------------------------+
+>         | table for SHA1                  |
+>         | 11111 -> 1                      |
+>         | 22222 -> 2                      |
+>         +---------------------------------+
+>         | table for SHA256                |
+>         | aaaaa -> 2                      |
+>         | bbbbb -> 1                      |
+>         +---------------------------------+
+>         | table for Blake3                |
+>         | 88888 -> 2                      |
+>         | 99999 -> 1                      |
+>         +---------------------------------+
+>         | main table                      |
+>         | 11111111 -> bbbbbbbb -> 9999999 |
+>         | 22222222 -> aaaaaaaa -> 8888888 |
+>         +---------------------------------+
+>         | trailer                         |
+>         | trailer hash                    |
+>         +---------------------------------+
+>=20
+> Overall you only have to store the full object ID for each hash exactly
+> once, and the mappings also only have to be stored once. But you can
+> look up an ID by each of its formats via its indices.
+
+This is very similar to what we have now, except that it has mapping
+offsets for each algorithm instead of the second and subsequent
+algorithms and it re-orders the location of the full object IDs.
+
+I also intentionally wanted to produce completely deterministic output,
+since in `git verify-pack` we verify that the output is byte-for-byte
+identical and I wanted to have the ability to do that here as well.  (It
+isn't implemented yet, but that's a goal.)  In order to do that, we need
+to write every part of the data in a fixed order, so we'd have to define
+the main table as being sorted by the first algorithm.
+
+> With some slight adjustments one could also adapt this format to become
+> streamable:
+
+I don't think these formats are as streamable as you might like.  In
+order to create the tables, we need to sort the data for each algorithm
+to find the short name length, which requires knowing all of the data up
+front in order.
+
+I, too, thought that might be a nice idea, but when I implemented pack
+index v3, I realized that effectively all of the data has to be computed
+up front.  Once you do that, computing the offsets isn't hard because
+it's just some addition and multiplication.
+
+I personally like a header with offsets better than a trailer since it
+makes parsing easier.  We can peek at the first 64 bytes of the file to
+see if it meets our needs or has data we're interested in.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--a4O1hb0znIwxc+ia
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaQFv7QAKCRB8DEliiIei
+gTKxAP9kL6FkeJ6fqFMlMbM3z0vO/uZmkQziNDCkcA/gTv9z9wD+IzWMCw7F9BBn
+GzXf/r2bJYWwblR9OP2pxe7aqdTDXQM=
+=+g4p
+-----END PGP SIGNATURE-----
+
+--a4O1hb0znIwxc+ia--
