@@ -1,188 +1,93 @@
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AE5320A3C
-	for <git@vger.kernel.org>; Wed, 29 Oct 2025 22:20:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B035C1C5D46
+	for <git@vger.kernel.org>; Wed, 29 Oct 2025 22:28:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761776406; cv=none; b=lygqYqibVBjhJDtn5+HqJtDJg10k867AjUFKNdT7WN6MBrcuzlZLEVNvxCEbrdiKpsK2GU//TkOvM1d40KTykSh5Gc9xZJP8vxfY9E+gF7g9V9/yxhLsqjiI0W8YJG9TE6zjMI/3AJ6SKNM7QIXaiO7vTbr9IRhLUpyM4j2FfpM=
+	t=1761776908; cv=none; b=NUa7bg+Y4dpZIXsfR7v/Yfuyvudj3M/lXXGR2L2nCd22TNKSZZmCmhwDVFHmBjZPkNVzQNaau1kBzu3GsT/ust99o6YI5jxLGyK+l9YiJUs/Xz4U+EjxTG0sPu/PqQmGUI3O/gbQbR6shltz1kea8V9y+235tfwWXAK9FwGYdDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761776406; c=relaxed/simple;
-	bh=nwU+vluQiXE6x57E2eaP4i1FOazc+SbC8r3YuaJViYo=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=iPSGkD3MumlZ+MyIiNmOSofifbzOmBdJkf00xrEJQIDYHyTqKq0GeDpUJIFS1dc5b3JCQSO++N/qkx2d4kQJwNuZLBZKhTcWhoy+kTHBnBQ0UoDGJoFxuTmuwbfmsq+c03/rlVfkGWvHQjbJn5OmQdMBo9VF3C7riIriyyXu81I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bijf4ko0; arc=none smtp.client-ip=209.85.166.52
+	s=arc-20240116; t=1761776908; c=relaxed/simple;
+	bh=34VXHu3rv5MI26S+PNzBZyl+Nuj2dahh3+BHBTdorD4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HMj2BGXMyW0s08ccgBUZPGqSr+USEtKGp0Ye8yNn9MVfei4mKnVeh/ONjlvRdDUc7oQIqUd8y2GYk472Ck9tu5VCmN7/pfdc2cuNYmpw0cICxS3VoDg+AFYzirW3WbpiYv7RozZsPxjyX6bgiN1rCOeKwpzpgz53EWD/g8sDJkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h/QrqaZT; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bijf4ko0"
-Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-93e7ece3025so17473439f.1
-        for <git@vger.kernel.org>; Wed, 29 Oct 2025 15:20:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h/QrqaZT"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b3b3a6f4dd4so74363666b.0
+        for <git@vger.kernel.org>; Wed, 29 Oct 2025 15:28:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761776403; x=1762381203; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YToev9cL8iRJ2HJAAGQC0Lvh8SuDUgrr/OVI1Az1ffk=;
-        b=bijf4ko0w8Y4cZIjNencwj9RzYdv3o/IEoqnUeBjUyktIvUbt+tNOXjyw+DTndnOoB
-         E7g88GlcZ6S8h973ylUc6479lCZ5EquDRcZm5jbGHUzZ74X5D47X0s3Nz7ZqpMiejlwp
-         M4bW7rCrGUNNjwGZ5TqHIKmAhm2ZdAY88Dfi9brDc65UD5cNse55trTYBIhvMlHIWYT2
-         ICsKQEDujTO6b9aJtdDAv4HBvFZDSivMniSgakmCMBrUIOWZ2fdBr78jUvKpg4vDOcm7
-         kOs9h/T+5D7tn0NEJixKnU3gc5TreG7sI3SZUTcuU+1Crs0meR0gP8uJJqG8bGFujTBO
-         0cqw==
+        d=gmail.com; s=20230601; t=1761776905; x=1762381705; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CO0HA984aGsV+Z5LH3iOXL/n+dW2lWsFqXP+VUkk9mE=;
+        b=h/QrqaZTgtVDJ+Be83xIQh5FYuKUT8agVROoTxNrVSP9S9gEiwaDAwKDDAIU90Q54P
+         tjC68Q2o8ktWKQnrNHJ7BhzZ9oZ1+1GSY/rWRnB3xN+vq4DIvk/MX63UhXFjrbzsie5F
+         VpJU8LWH76Z0aGTkZC1AEycIkYbMs8RfC28a3VYnom9KvNCYoYr38xthXc4bpEeA6EFg
+         ir3JflBSDrrb5JroVGbjaW+6VmGXm/8I/YkU3dCCMTlCcxGXkhxhkC39g0rNIbSZ0I8F
+         MS7K+a0oZWuuLzkWr/Do2QA6TKD8rbPMN+G17v6dvI8ANHwuXrcMtQ9xfHA1P6EQzGr/
+         oo8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761776403; x=1762381203;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YToev9cL8iRJ2HJAAGQC0Lvh8SuDUgrr/OVI1Az1ffk=;
-        b=VPsiz8Kvt8+dye+n65F6geJq+eNlIO98PVdyK0OvpLhs6qpF50VgUNmVdWpX6xbGX4
-         JKePw/bAn/c3o3FYGpHHggDi376SpZHS44KMQeSPl7tkJ3SHJd4piw9PeSeo1fOXbei7
-         4EYE6+OOfok+bVbpxcrMBzU+WJ4tk8vyCsFXrN5Mx92ZQ7NMJTPAlCc67XUjdIeaLyUU
-         YrVx843Zhmj/gfLkZi0XO88ljSBcsAXnzoBjndJPCRZGMhn7y/VncRnAocPnvpASO2Xn
-         k3T6d7HULozyN2RfgThpqHC69d0Wnk/WbxRjXy1o06/DAUCcDNnXrMgJIbaUUT/jkUuv
-         BpAg==
-X-Gm-Message-State: AOJu0Yx8/dM1Xi02Mc194PerDowNnZ65U2jGMwcs4dPn0730fOrTJCu8
-	eGN9Jv/0/k55765U9qKmae6y8ooLFq4vs2yLkLfhaixHkr/CXtovpC0zew1cSQ==
-X-Gm-Gg: ASbGncvsYWEy9W54UkfuZb/wR4o8jhz4hSjORkRdv3iN76Si35sQ89pUCXfnhHTE/Lt
-	F5XkL42k9KxauXjbeC30t9bJRmL7PbrFfinGxgeH5ERnieg4ywNNPEYHwJC7kyhF8dJaCEXWNwg
-	LKSDE58mNDoIJQWg/DPBCD3/vLc1Caxp8IBfRQ6ECYq1bu7QD9CiC/LmfPm4UIYY3CZXOgTqF52
-	+W4Hnmg2KJu1EM94KL6So/UxOEjV5S2XyrhQqNVJ4u9sxqmHkyXhFeQ9z9n5jLlIfrDOkomfekQ
-	v3EC0r9MTj9VTeTaz7H1qMFPRPbOFhSHhP5kV9WG3Mvp8pF+j7giEXGSyB3XyPg8anB/YIs9jKB
-	roUewfHw+kezVXezobeyKIWUJRCm7VxW7v9iC2suV7Armnvt5yhRZAXHvSp5SIz8As5HwCNxMgq
-	/1Sg==
-X-Google-Smtp-Source: AGHT+IH5HTQOTy2SD5Z6D+oTIRAmcf27xLN4K3ofrbCMMH0MIWiZBp2eYUf23zzosZ1brBLK9uKJww==
-X-Received: by 2002:a05:6602:1653:b0:940:d3df:39c2 with SMTP id ca18e2360f4ac-9481508e641mr205603639f.4.1761776403436;
-        Wed, 29 Oct 2025 15:20:03 -0700 (PDT)
-Received: from [127.0.0.1] ([64.236.193.20])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5aea77ebf94sm5881891173.23.2025.10.29.15.20.02
+        d=1e100.net; s=20230601; t=1761776905; x=1762381705;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CO0HA984aGsV+Z5LH3iOXL/n+dW2lWsFqXP+VUkk9mE=;
+        b=Rkpg1vmypdnoe05MMFhOaG81WYntcIOQOdWFNUjG55wTjBrvk9rH+VGQFX1O8RLcb7
+         v+i1dLR0i5rfQ8GD8h/agrsFsJIk0itk28gzYmqf0T1bMI9xfFgqTwBLxEdpkCE0PoIg
+         Lu1aTQNiqx1WJdYV0g7mvnabVM1JpbjG80P7KzIdGug/WLG9S8a4Dkkm2jqTKXnktSXm
+         O8dKYAwy4/RTHKDJTuBvCaqo8jUKM1ZZjVEI+lHIVHdmhitKLfP5GtHaywJ94yKF8H4K
+         J9IJxVBZyNwuOLXKj1ZxH/MDxcIOYKeJgykuTKfefewlZXVc51lO7HcomTpvmmS/UGHA
+         eUng==
+X-Gm-Message-State: AOJu0YyaS+mNx+1TngLi2YSB+OPwb0sDUJo9w+hYDwCL6ds/29WnVYym
+	V3hsWkHVsYrDJeOdhwJOty15Kzfa2QVsA3aUpyX2HkWsOq0NrVcglbPn7usXtg==
+X-Gm-Gg: ASbGncsTTnTkK02bWof7mVyIWJTKT3w2+9h2wwBdFYa+8qkmXpM4PZ13rbvVonnaCB4
+	aP0X09X58trTH28VzTD5uyQYQdBEOgGNue6xL583orMqgXi8ea7lAhGQPrhhraDn+dZzsLtjsqH
+	73BvQtESSREcEAcSzc9Al1H3ghfeJxemKdGqzwowkQ7EvK4gI43uNvWFnGsm/gueJtdRfJ/1ROR
+	5FVPZD1BCsHvglu9YPnQh4J1FSOOW/ysXZQcZ93S9WyJfAIJKlhe3hAquGWlMkawdzUbZfeBHq+
+	YBWzo54LnihDdHBK9Cm2Gaq0qmPT/M9xaLjYD5OiDEp/z1CkmVIcZRzXzzl7h4uc0YimhjAQApv
+	Ra/hHC9OxTJDUm8HmsvoPW+RctCqGLVKi2jqYftVoZ68CXCX/49UGsUHo1PClUMAPC/slUa4TsL
+	dcElIpsc9tkvI3IMzgniGnMuu8WdkkiA==
+X-Google-Smtp-Source: AGHT+IFNnXeGOh8Mb0lA48fCtNkL5MR/GReDaKkreedQtLCERKUZyTmy0x24jbxJEVVP9htMW/AcbQ==
+X-Received: by 2002:a17:907:96ab:b0:b57:1d99:ac93 with SMTP id a640c23a62f3a-b703d5bff18mr408173966b.51.1761776904636;
+        Wed, 29 Oct 2025 15:28:24 -0700 (PDT)
+Received: from localhost (62-165-236-60.pool.digikabel.hu. [62.165.236.60])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d85445e81sm1551604266b.64.2025.10.29.15.28.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Oct 2025 15:20:03 -0700 (PDT)
-Message-Id: <1856a29026d8c3d824723e253dc68b052a5d8b9a.1761776388.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
-References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
-	<pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
-From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 29 Oct 2025 22:19:48 +0000
-Subject: [PATCH v2 10/10] xdiff: rename rindex -> reference_index
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 29 Oct 2025 15:28:24 -0700 (PDT)
+Date: Wed, 29 Oct 2025 23:28:23 +0100
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: rsbecker@nexbridge.com
+Cc: git@vger.kernel.org
+Subject: Re: [BUGS] Git v2.51.2 on NonStop
+Message-ID: <aQKVByfUdYHSEcDz@szeder.dev>
+References: <xmqqo6psjq2n.fsf@gitster.g>
+ <000d01dc4831$ff049500$fd0dbf00$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Chris Torek <chris.torek@gmail.com>,
-    Ezekiel Newren <ezekielnewren@gmail.com>,
-    Ezekiel Newren <ezekielnewren@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <000d01dc4831$ff049500$fd0dbf00$@nexbridge.com>
 
-From: Ezekiel Newren <ezekielnewren@gmail.com>
+On Tue, Oct 28, 2025 at 01:40:42PM -0400, rsbecker@nexbridge.com wrote:
+> I have found new defects on 2.51.2 that were not present in 2.51.1 when building with OpenSSL 3.5 (probably unrelated).
+> 
+> Many failures in t7900 resulting from the use of test_subcommand ! as seen below. This is run in bash 5.0.18:
+> 
+> + test_subcommand git gc --quiet --no-detach --skip-foreground-tasks
+> + 0< run-no-auto.txt
+> {"event":"child_start","sid":"20251028T172435.690328Z-H36b1c598-P7b00002d","thread":"main","time":"2025-10-28T17:24:35.879833Z","file":"/home/jenkinsbuild/.jenkins/workspace/Git_Pipeline/run-command.c","line":740,"child_id":2,"child_class":"?","use_shell":false,"argv":["git","gc","--quiet","--no-detach","--skip-foreground-tasks"]}
+> + test_subcommand ! git gc --auto --quiet --no-detach --skip-foreground-tasks
+> + 0< run-auto.txt
+> test_subcommand[5]: test: argument expected
 
-The classic diff adds only the lines that it's going to consider,
-during the diff, to an array. A mapping between the compacted
-array, and the lines of the file that they reference, are
-facilitated by this array.
+This is a strange trace output, as it includes file descriptor
+redirections, but lacks the trace of commands executed in
+test_subcommands.  This trace doesn't look like it's coming from Bash.
 
-Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
----
- xdiff/xdiffi.c   |  6 +++---
- xdiff/xprepare.c | 10 +++++-----
- xdiff/xtypes.h   |  2 +-
- 3 files changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 759193fe5d..8eb664be3e 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -24,7 +24,7 @@
- 
- static size_t get_hash(xdfile_t *xdf, long index)
- {
--	return xdf->recs[xdf->rindex[index]].minimal_perfect_hash;
-+	return xdf->recs[xdf->reference_index[index]].minimal_perfect_hash;
- }
- 
- #define XDL_MAX_COST_MIN 256
-@@ -278,10 +278,10 @@ int xdl_recs_cmp(xdfile_t *xdf1, long off1, long lim1,
- 	 */
- 	if (off1 == lim1) {
- 		for (; off2 < lim2; off2++)
--			xdf2->changed[xdf2->rindex[off2]] = true;
-+			xdf2->changed[xdf2->reference_index[off2]] = true;
- 	} else if (off2 == lim2) {
- 		for (; off1 < lim1; off1++)
--			xdf1->changed[xdf1->rindex[off1]] = true;
-+			xdf1->changed[xdf1->reference_index[off1]] = true;
- 	} else {
- 		xdpsplit_t spl;
- 		spl.i1 = spl.i2 = 0;
-diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index c690bafeb1..1dd420a2ff 100644
---- a/xdiff/xprepare.c
-+++ b/xdiff/xprepare.c
-@@ -128,7 +128,7 @@ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
- 
- static void xdl_free_ctx(xdfile_t *xdf)
- {
--	xdl_free(xdf->rindex);
-+	xdl_free(xdf->reference_index);
- 	xdl_free(xdf->changed - 1);
- 	xdl_free(xdf->recs);
- }
-@@ -141,7 +141,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 	uint8_t const *blk, *cur, *top, *prev;
- 	xrecord_t *crec;
- 
--	xdf->rindex = NULL;
-+	xdf->reference_index = NULL;
- 	xdf->changed = NULL;
- 	xdf->recs = NULL;
- 
-@@ -169,7 +169,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 
- 	if ((XDF_DIFF_ALG(xpp->flags) != XDF_PATIENCE_DIFF) &&
- 	    (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF)) {
--		if (!XDL_ALLOC_ARRAY(xdf->rindex, xdf->nrec + 1))
-+		if (!XDL_ALLOC_ARRAY(xdf->reference_index, xdf->nrec + 1))
- 			goto abort;
- 	}
- 
-@@ -312,7 +312,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
- 	     i <= xdf1->dend; i++, recs++) {
- 		if (action1[i] == KEEP ||
- 		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xdf1->dstart, xdf1->dend))) {
--			xdf1->rindex[xdf1->nreff++] = i;
-+			xdf1->reference_index[xdf1->nreff++] = i;
- 			/* changed[i] remains false, i.e. keep */
- 		} else
- 			xdf1->changed[i] = true;
-@@ -324,7 +324,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
- 	     i <= xdf2->dend; i++, recs++) {
- 		if (action2[i] == KEEP ||
- 		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xdf2->dstart, xdf2->dend))) {
--			xdf2->rindex[xdf2->nreff++] = i;
-+			xdf2->reference_index[xdf2->nreff++] = i;
- 			/* changed[i] remains false, i.e. keep */
- 		} else
- 			xdf2->changed[i] = true;
-diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-index 3bcc0920e0..5accbec284 100644
---- a/xdiff/xtypes.h
-+++ b/xdiff/xtypes.h
-@@ -49,7 +49,7 @@ typedef struct s_xdfile {
- 	xrecord_t *recs;
- 	size_t nrec;
- 	bool *changed;
--	size_t *rindex;
-+	size_t *reference_index;
- 	size_t nreff;
- 	ptrdiff_t dstart, dend;
- } xdfile_t;
--- 
-gitgitgadget
