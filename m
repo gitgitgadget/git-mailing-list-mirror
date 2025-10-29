@@ -1,127 +1,91 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139F12D5932
-	for <git@vger.kernel.org>; Wed, 29 Oct 2025 13:27:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761744441; cv=none; b=Wwzwebn8LVxyf0D0b2nKZwgSO34hnMLumFetxCU0SzE+0UHs2LyPZQrgFCej3MJQPIa2fbktB+PDruKCq5o8zLS7MHD6WgtKOF3GJdVih/SKF27X+dmHSBZLA7goSYVYrHizF2ojb0n/75D/zcnaV+iLEQbE3qJAGM1Oa40UaU0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761744441; c=relaxed/simple;
-	bh=4H36rKtAflmWJ8Idnh6T4x+zVbtAHYAAnJLwfpakyHI=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D9B30499B
+	for <git@vger.kernel.org>; Wed, 29 Oct 2025 13:47:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761745646; cv=pass; b=D4ehf7ZlCB1OYSFnICez9f22qjSaF/6W+vljVnEtqyWY/Jd1lmiVsl1taAgCIy28RQAERoPspr9gFXnU7N5Ilad0cRT7SOI997lZ2XziekR17KIGFTel+FnNE3AtvRlLtP4wU3Yo9QWsODB7gi5ECsLW7hMFmLYUWPWb0h60LQs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761745646; c=relaxed/simple;
+	bh=8k2Px79vAeeRlB8zBWac6Iwx/If4eCAxT0ioK6kgQyw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pGoB4ve9VBm8VOK/w6DjI00Ez8j8BRCvRrRNwQZuVKEnFu1HRiuRrdeEcJfdWYGqAskvMRFs/EgDllflT0KF4BSLXhlFo8BiivfIsxLJ68sVfUzgJZIQ9HQQl6McY1ccwKNDK6G4wySQo8m7XNQBeT65t2TJNVD3QMgN/Kc+1KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IxLUBoKh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Okabgb6a; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=WUIzAozCDiYfy1HgZzASgdYIQLG5L55TVh9dyinhp/H5HxCUbjcgi8unUNyAvDtxGmVCSRILgibjvHRfl/EedW4EDUTu/s76y46DHxVpT0dk9IjDxuixIbWR+3niiR6dUhoUKyh6gXSFH8FJq0s/YHfqdyh5o8aiU7B03k7kA+k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=cArR8xTM; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IxLUBoKh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Okabgb6a"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 31C2BEC08A5;
-	Wed, 29 Oct 2025 09:27:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Wed, 29 Oct 2025 09:27:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761744439; x=1761830839; bh=Upt5xXjg+p
-	uBzygbOttcRLk7GQMxj94pGtEDkxjEgjE=; b=IxLUBoKhJTYPGToXBapYeZb16F
-	Wx3r6VPuxWvkVlQddBlXxWj7ixlHrXGlDmgnVM6842zLqPwnD8SZ4yCgdTMzBI9b
-	r3HOet+sJnB0EgeBxfC1PpUiYLMLM3wnZvhhcg12MIv2KAO9fzwoNQKREDV+1lO5
-	4YIywraZ20yloGIauodA/nJhObZcyx3DRmyjKhQrpU+dnpE0mbEyj11urCGqNTmD
-	mtOcjm6ElSoykw4RJI0cOYLkzncgdEHVk4g2mdxS3ButBJD3Y9JKQJ5E2vR3bBIj
-	SFJOiMsow/lKH93MSZd+IxaKPrmxXL6HrBwCpSpoCImkk9j6fKiFXOQjUmGw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761744439; x=1761830839; bh=Upt5xXjg+puBzygbOttcRLk7GQMxj94pGtE
-	DkxjEgjE=; b=Okabgb6aY0x3U4//tXnwydYYhFZxuAbHuhtRP7Ued9Lw2QRse+r
-	hv1IREsuG8wXg61LTAqXZN8HW1T7KZV0yybd+w7/yEnZ8AW0614FijfwLur+2qIG
-	D2HVoqocGRMBWeaSkRGt3KrGS74I/tIEmK9XIYqjECezhXspyMdGoLSPwBIObyeH
-	J146RIFjzcpaw2N37EuARVRdgxvL8j61pTHRFFAU7VVUXe42ie5kWhByX4TZN6NE
-	kJYh5qyojlQ0+APC8te6BR/WceHxw3amYZr8Jg7yR5hEvcGXUBjo3u6Y7j/ZfP66
-	fVHYcuDj6lGfsTdJmHg35S/rEQdgitrXkxw==
-X-ME-Sender: <xms:NhYCaTwpYv5kX8oSTILRfrUU2ZGsYeROoPeho2AuPyH_WnyWb6fS-A>
-    <xme:NhYCaSJdVKe4o2-xXKiCT6P2cXuar6ZgMsnrKe8eaA2M_G38ZEX3XZ0BKP8m_9nHZ
-    Y6g_byjLFD3PeB-GogRUzHqwumt68mfpHrE1a85LH7D4_7-haZbcA>
-X-ME-Received: <xmr:NhYCaVrGAgUc9D7r4n28Re6JtmvRxOsW9W1aKcJH-lJL_t1a8hlqiq5ujFeL65b6Fmrdtk_EQoru-b08brPgEq8582-SWozKAHMS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieefkeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdr
-    nhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:NhYCaZJ6_AxjIvnvvWAEliGnP7Qm5Smd6DoYij6P1oZrhQRDvWTnjg>
-    <xmx:NhYCaSQZTS2uBOQ2VBVU5vJtiIaRXXHnRcFnP4Q6FCTa0ha5gQxF9w>
-    <xmx:NhYCaQtmlvfu1qFrA57nzBqMsF7DI96EvcTlZYtbVpMGUAgvz6TWag>
-    <xmx:NhYCabacFH1Noha4fisb_BuMToVbC640EpT8ItipFnILKaBgOB_V6w>
-    <xmx:NxYCaRb0xQJ_hE3bEF49ahQ310ElrjKmPeQuv7ij457SkozyydqZq3aH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Oct 2025 09:27:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
-  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 05/14] rust: add a hash algorithm abstraction
-In-Reply-To: <CAH=ZcbD80RGeuxqcDiWr2KNaQzFCrd=9fQOGo_+pW9E6+HmtQA@mail.gmail.com>
-	(Ezekiel Newren's message of "Tue, 28 Oct 2025 14:03:11 -0600")
-References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
-	<20251027004404.2152927-6-sandals@crustytoothpaste.net>
-	<xmqq3472dcfl.fsf@gitster.g>
-	<CAH=ZcbD80RGeuxqcDiWr2KNaQzFCrd=9fQOGo_+pW9E6+HmtQA@mail.gmail.com>
-Date: Wed, 29 Oct 2025 06:27:17 -0700
-Message-ID: <xmqq8qgtbzyi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="cArR8xTM"
+ARC-Seal: i=1; a=rsa-sha256; t=1761745631; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=AU3j9nQkhNF8e9KC9eDu0l8/NzIEstENvy/snSKevXsDdX+6ss57rHAHYZZeJF3zBwaCtPmbqB2EMRG4zhfrbYyeP4f24ytEO/mu8GywBpB+F8xAo4FfKcp14rFaV7usW+b1aufsP8d+AdGi9kcmrv5JMtodpRckEqGeqL5VX2E=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1761745631; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=8k2Px79vAeeRlB8zBWac6Iwx/If4eCAxT0ioK6kgQyw=; 
+	b=jZHrM7/5rxqZ8hpFwv/MC7xtITRNTMG+OJxJ+Sx8E8qmULTZ5DRGaxAuKsaXisHgenUxtI4RxkOg9gebi6SZDZQ4IyDDz0RY9u5Mahd0uFb0NZXRCyo8NMHljUssW796PFqoh7df7dsHxk4hdyjpaSHADPMlNphHCG7rEussKjA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761745631;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=8k2Px79vAeeRlB8zBWac6Iwx/If4eCAxT0ioK6kgQyw=;
+	b=cArR8xTMfpjllsuyHVKTp1p0KW68pKd/flj076kTgMcxdsY6QmpaGEIQGvBNAbZj
+	v+xqzTMzX49O/O03D+FLJEehXWNMSCjAe+ngQAH2CH5Za0CvHF2J+zOyLJmCxf9O9FP
+	2DpMrQELwaip3uO/WbmjA/B5cVWjGBKmviG0erCc=
+Received: by mx.zohomail.com with SMTPS id 1761745626103346.747879365809;
+	Wed, 29 Oct 2025 06:47:06 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ git@vger.kernel.org
+Cc: Emily Shaffer <emilyshaffer@google.com>, Rodrigo Damazio Bovendorp
+ <rdamazio@google.com>, Junio C Hamano <gitster@pobox.com>, Patrick
+ Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, "D. Ben
+ Knoble" <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
+ =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v2 10/10] receive-pack: convert receive hooks to hook API
+In-Reply-To: <b03a96a8-af42-427a-8cf1-4d195be6a7c7@app.fastmail.com>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20251017141544.1538542-1-adrian.ratiu@collabora.com>
+ <20251017141544.1538542-11-adrian.ratiu@collabora.com>
+ <b03a96a8-af42-427a-8cf1-4d195be6a7c7@app.fastmail.com>
+Date: Wed, 29 Oct 2025 15:46:58 +0200
+Message-ID: <87bjlp7rcd.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
 
-Ezekiel Newren <ezekielnewren@gmail.com> writes:
+On Tue, 28 Oct 2025, "Kristoffer Haugsbakk"=20
+<kristofferhaugsbakk@fastmail.com> wrote:
+> On Fri, Oct 17, 2025, at 16:15, Adrian Ratiu wrote:=20
+>> From: Emily Shaffer <emilyshaffer@google.com>=20
+>>=20
+>> This converts the last remaining hooks to the new hook API, for=20
+>> the same benefits as the previous conversions (no need to=20
+>> toggle signals, manage custom struct child_process, call=20
+>> find_hook(), prepares for specifyinig hooks via configs, etc.).=20
+>>=20
+>> I noticed a performance degradation when processing large=20
+>> amounts of hook input with just 1 line per callback, due to=20
+>> run-command's ppoll loop, therefore I batched 500 lines per=20
+>> callback, to ensure=20
+>=20
+> I don=E2=80=99t see `ppoll` in `run-command.c`.=20
 
->> > +impl ObjectID {
->> > +    pub fn as_slice(&self) -> &[u8] {
->> > +        match HashAlgorithm::from_u32(self.algo) {
->> > +            Some(algo) => &self.hash[0..algo.raw_len()],
->> > +            None => &self.hash,
->> > +        }
->> > +    }
->> > +
->> > +    pub fn as_mut_slice(&mut self) -> &mut [u8] {
->> > +        match HashAlgorithm::from_u32(self.algo) {
->> > +            Some(algo) => &mut self.hash[0..algo.raw_len()],
->> > +            None => &mut self.hash,
->> > +        }
->> > +    }
->> > +}
->>
->> These cases for "None" surprised me a bit; I would have expected us
->> to error out when given an algorithm we do not recognise.
->
-> I think _Result_ would be more appropriate here.
+Good point, it's poll not ppoll. :)
 
-Perhaps.  But the Option/Result was not what I was suprised about.
+(The while(1) loop in run_processes_parallel() from run-command.c=20
+calls pp_buffer_stderr() then poll with an output_timeout of 100).
 
-When algo is available, we gave back a slice that is properly sized,
-but when algo is not, I would have expected it to say "nope",
-instead of yielding the full area of memory available.  That was the
-part I was surprised about.
+I will fix this together with the other typos you pointed out in=20
+v3.
 
-Perhaps as_mut_slice() side is justifiable (an uninitialized
-instance of ObjectID is filled by getting the full self.hash and
-filling it, plus filling the algo), but the same explanation would
-not apply on the read-only side.
+Thank you,
+Adrian
