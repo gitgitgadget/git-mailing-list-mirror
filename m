@@ -1,86 +1,41 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from out-183.mta0.migadu.com (out-183.mta0.migadu.com [91.218.175.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D40E34CFA1
-	for <git@vger.kernel.org>; Wed, 29 Oct 2025 14:47:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F5B2C234F
+	for <git@vger.kernel.org>; Wed, 29 Oct 2025 14:55:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761749243; cv=none; b=ILi5gJnPJROkCpfbzqGMP5lN7QJDdVVB6tUUTXk1NM2zPLUJyiilaeeQR/HBH70C5U39boQ/yuFLA5119SA/PrOrbFtWaUgHcQcjwtXgSw8yG+xADjQm2H0dtbeMjtDKf6jSTIzh8hYq/L4ShJzDjbA6Ra2hyypmcppWHjUtjK0=
+	t=1761749749; cv=none; b=KafmzWRMrJjtcuP3jGSrRjXAedfZaYprKS9uQS+MEk2NIFZLqkhHOeVKlg6WXPrjJ5gsJqDLyOgHaLVGyn+ocqefOqO7lnFJ7HR9+Ti8cdh+Did5PN+mIMi2OTGls4nXQaH7mltpkaguoMnJsvPuHxaxJ4VpgMsSVhNowuIkenw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761749243; c=relaxed/simple;
-	bh=vpdUk2E7YSpZis9hFqqYbiQEewMMRf3nt31L6YucPr8=;
+	s=arc-20240116; t=1761749749; c=relaxed/simple;
+	bh=xtjoAMeh3L1qBzbKQUeu9+mnrBn99AGnOsi/7PUaXTg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GTrTNyPICoIX7rAdt1K7UIZhUDachHP4Fljk16IsnoVg+rPrO/ZBUC4Pp/cJnH5trtftT61zt5bvjPTbxJ2Z6VH6aRirXBa90Vx17JUgT98zfvLai31xP6uyPyboga27nwdM9HwWd6gr2Lq3AkyHgJ1iJJ1k9cxGp5P3aX9Ezjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WoQlNLEH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L5ug+S40; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=cXtJL3KKlNbBBs0NkDY7qMS42MiOJzoFzNdlPZXdMjNYDs1+dt8vD3u0QuipMwFrW9HD8hEzIVo05uChTB7j9KooXbV5Tc7ZNQu8JbBqFartEH7+BjxPFexcoIy+9fXFrTTPK/nA0FenOWWrphME40NXEMG8+2G3zJVIGU6jhCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=nPesjYTr; arc=none smtp.client-ip=91.218.175.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WoQlNLEH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L5ug+S40"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3E0351400226;
-	Wed, 29 Oct 2025 10:47:20 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 29 Oct 2025 10:47:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761749240; x=1761835640; bh=CMh9R65A1c
-	GHUzEdVW4v4sEHAYoeZfBx4VbSJYdARCY=; b=WoQlNLEHfqFUgmApbQxE9VYIhG
-	sBH8aEF8rC4k0MtqjTZL0O4WHiesM+4dLMS/x/x9eLSr2hKiBWcU4y/iHBSzXccc
-	KD52jWhVjL9RL0GJ0eBzbDs0WYOLuuU/VdyphdzLhT05dx821G9RC2hOsNXLu9pZ
-	7FxesOmccNafMOkGGuAaAMTLcYvUs/x5IoT+qp5gmEz+NnlI6zMmRdQtXyyXxlYz
-	FNAJA/YDtLCgHDM2n4CxlcC66mFBxqMy61reU+01FpSca6o365PmXWELf9JZ57XY
-	TVBhgRtUy7beSDZRWHYyNT3DsB5XWJuKs/KvPV+TKxwAaIYdZbDXcdOm5/Jw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761749240; x=1761835640; bh=CMh9R65A1cGHUzEdVW4v4sEHAYoeZfBx4Vb
-	SJYdARCY=; b=L5ug+S40VQ7oUyxQBYPznMfJTsZPtObOF8bEbq2uV9UidyqMFhC
-	sqr0SZVDXaMY4Pc8+p0OGPEJcnyLKVKSvpRYI9xQeo/gQ7ickuEv9D4Phm4E/Gds
-	/fHPNx0FzBZRX0+bAEyEp3qIMOIDJCUrJuh2oDlA23KmSU+RGf4ksNGeG4efNLZo
-	pA+VQyjbb2HcDP7fpKqQhjppUeNZ2d/dyyEuzjE/eg8Kl5LpbWKONdGpF7PFi9b4
-	b0olNP+ksYuSWs9R49UE+xVZDFMsEq7TNKoqbHMQXvjDkLyUmYfJD0o/dAtge0Uf
-	nF+0fTJP5KENAnhkY0BZxB3omgC4jjzY1gA==
-X-ME-Sender: <xms:9ygCaW7zxPM5T7jovk4mqyS0apBkp70vxBXRHP3OJhf2890GVouznQ>
-    <xme:9ygCaWxgJabbqDNNQ2nfE9Etv8ABS8XzZtM7OyISQ5rUtZumWEuWH7Mj0z9EDGaPN
-    WJjs_lctg5sONxnNX8JxPlsI5-uwwGw8MjAUouD-47rFqGt_hxjjg>
-X-ME-Received: <xmr:9ygCadyoLYFXL92kG2cLT0_VXCUXF_BsSpFoh4FsQkdOWx-koEqo_kvaTXoJ7VzSnFw57XKbSV4v8A0W0PyQTE9KLlXjbCvEA3qE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieegtdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtgh
-    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrmhdrsghoshhtohgtkhesshhhohhpih
-    hfhidrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:-CgCaey3l_7_mw0SDdwtFx1rHWX8tbvxpeEZaljVHzcaOyPieEo79w>
-    <xmx:-CgCaXYUfSANCbCRgYMPysONmrgt-pr9_uAmkVTrs5VFQjsZgR1UAQ>
-    <xmx:-CgCafUTaGr7MkIIPhi0ZhjC-vXunTpnyZ5NQ_qgsveY8FvpyhLu4w>
-    <xmx:-CgCaVjlUwKHBXXu25UGkl94EMFLUzE4HFE-0gEWDr0XbUa1dAp8Xw>
-    <xmx:-CgCabSli2D-emQuEwzIjmv_7uAqirgEXpcdOQv58s8jm2NAGdupD8Xe>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Oct 2025 10:47:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Sam Bostock via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Sam Bostock <sam.bostock@shopify.com>
-Subject: Re: [PATCH] refs: support migration with worktrees
-In-Reply-To: <aQHoKXtrbDx6eNpH@pks.im> (Patrick Steinhardt's message of "Wed,
-	29 Oct 2025 11:10:49 +0100")
-References: <pull.2077.git.git.1761589580028.gitgitgadget@gmail.com>
-	<aQBwiE-bhqcaSHG_@pks.im> <xmqqfrb3dnis.fsf@gitster.g>
-	<aQHoKXtrbDx6eNpH@pks.im>
-Date: Wed, 29 Oct 2025 07:47:18 -0700
-Message-ID: <xmqqzf99ahop.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="nPesjYTr"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1761749742;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=SRZ/2eOu7E/D163Kg7O+0r3Emb4c62fZf7Rfx3BJQ9E=;
+	b=nPesjYTr4Gzru1Fxeg9EaZArLJNTW24XEqgiAiEhY8lbs3AG6yMwKNBrwoxs1pfYVr0NVh
+	Ij7G/e/Rkb/OPldIScb7OAZLY0wORtF6uAX1GgG51jnYPDqZzF7HghZa4Gr0UwX9ZViwAM
+	3LJ9UctAxcac0eyUfTie6pV8qQgJfeI=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 5/8] builtin/pack-objects: simplify logic to find kept
+ or nonlocal objects
+In-Reply-To: <20251028-pks-packfiles-store-drop-list-v1-5-1a3b82030a7a@pks.im>
+References: <20251028-pks-packfiles-store-drop-list-v1-0-1a3b82030a7a@pks.im>
+ <20251028-pks-packfiles-store-drop-list-v1-5-1a3b82030a7a@pks.im>
+Date: Wed, 29 Oct 2025 15:55:17 +0100
+Message-ID: <875xbxrc4q.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,26 +43,95 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The problem we have here is backwards compatibility. Right now we assume
-> that `extensions.refStorage` applies to all worktrees, so if we wanted
-> to change it like you propose then we'd have to introduce a backwards
-> incompatible change.
+> The function `has_sha1_pack_kept_or_nonlocal()` takes an object ID and
+> then searches through packed objects to figure out whether the object
+> exists in a kept or non-local pack. As a performance optimization we
+> remember the packfile that contains a given object ID so that the next
+> call to the function first checks that same packfile again.
+>
+> The way this is written is rather hard to follow though, as the caching
+> mechanism is intertwined with the loop that iterates through the packs.
+> Consequently, we need to do some gymnastics to re-start the iteration if
+> the cached pack does not contain the objects.
 
-That settles it.  If we have long declared that a set of worktrees
-attached to a repository share the same backend, then we do not have
-to worry about overlaying refs stored in a different backend on top
-of the base set of refs at all.  That simplifies things a lot, I
-would imagine.
+Okay, this took me while, but yes this function was really hard to
+understand. Thanks for simplifying.
 
-> So with the above reasoning I'm not sure I'd call this a limitation.
-> It's rather a mechanism to protect users from unexpected consequences.
+Naive question, what's the point of keeping a "last_found"? We have one
+global "last_found" for the last time this function was called, and we
+have no control which OIDs get passed to this function. Why look into
+"last_found" first?
 
-The need for that mechanism would imply that it may not be clear to
-the users that worktrees of the same repository must use the same
-ref backend.  Some education is needed, and erroring this operation
-out may be one of the ways to give that, perhaps.
+> Refactor this so that we check the cached packfile at the beginning. We
+> don't have to re-verify whether the packfile meets the properties as we
+> have already verified those when storing the pack in `last_found` in the
+> first place. So all we need to do is to use `find_pack_entry_one()` to
+> check whether the pack contains the object ID, and to skip the cached
+> pack in the loop so that we don't search it twice.
+>
+> This refactoring significantly simplifies the logic and makes it much
+> easier to follow.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/pack-objects.c | 26 +++++++++++++-------------
+>  1 file changed, 13 insertions(+), 13 deletions(-)
+>
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 5348aebbe9f..861fef3f38a 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -4388,27 +4388,27 @@ static void add_unreachable_loose_objects(struct rev_info *revs)
+>  
+>  static int has_sha1_pack_kept_or_nonlocal(const struct object_id *oid)
+>  {
+> -	struct packfile_store *packs = the_repository->objects->packfiles;
+>  	static struct packed_git *last_found = (void *)1;
+>  	struct packed_git *p;
+>  
+> -	p = (last_found != (void *)1) ? last_found :
+> -					packfile_store_get_packs(packs);
+> +	if (last_found != (void *)1 && find_pack_entry_one(oid, last_found))
+> +		return 1;
+>  
+> -	while (p) {
+> -		if ((!p->pack_local || p->pack_keep ||
+> -				p->pack_keep_in_core) &&
+> -			find_pack_entry_one(oid, p)) {
+> +	repo_for_each_pack(the_repository, p) {
+> +		if ((!p->pack_local || p->pack_keep || p->pack_keep_in_core) &&
+> +		    find_pack_entry_one(oid, p)) {
+>  			last_found = p;
+>  			return 1;
+>  		}
+> -		if (p == last_found)
+> -			p = packfile_store_get_packs(packs);
+> -		else
+> -			p = p->next;
+> -		if (p == last_found)
+> -			p = p->next;
+> +
+> +		/*
+> +		 * We have already checked `last_found`, so there is no need to
+> +		 * re-check here.
+> +		 */
 
-Thanks.
+I had to reason with myself why you need to extra `(void *)1` check,
+maybe you can extend the comment a bit:
+
+		/*
+		 * When `last_found` was set to something else then
+		 * `(void *)1` we have already checked it,
+		 * so there is no need to re-check here.
+		 */
+
+> +		if (p == last_found && last_found != (void *)1)
+> +			continue;
+
+-- 
+Cheers,
+Toon
