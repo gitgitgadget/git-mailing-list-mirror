@@ -1,294 +1,276 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657CF2F3C3D
-	for <git@vger.kernel.org>; Wed, 29 Oct 2025 10:16:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B941E285C89
+	for <git@vger.kernel.org>; Wed, 29 Oct 2025 11:33:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761732996; cv=none; b=E6at6chEfphFq5swAVLslQXt5rX5R7/eX37YrdsxA2BvZBZUoob4ZPRNj3M+iVOX24bIVSLQVs2FlwVFscbkHyQ7StEm0b5+LZtiv89XjnY/bndI8C2svAaFgSsHgEAcUT5F8BfM7RzAduXwaSjgkVGaPnoUvf4zxaozH/If25o=
+	t=1761737621; cv=none; b=qAW31SxQa4ZZxZypIwhGlbHbj5DteIkx/xNJGhEc68nqIMbfAHf4/TzsqH2m6OKzf2nT3oD1mrYQ1MLg9E54MW0ei97qkMaREJuOGdRrk9tTtKrdrD7C9Zqx+EmQ6BIWCHxs55zR9mfA2DfMP4EV8qrp2iTQVouBKDFG0vSFfwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761732996; c=relaxed/simple;
-	bh=JwOyftPl2T0BsbbayJmEA9KGYPFEp20KwBldhNTyR1A=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=sWEgHUGQr+RE87XeP6AogwVaXKwic9Jqs6dPpuvPOFpiX4+yeH8qGmSoF88QaCp9jor4SEORnI1sB98AP4Ipea9ry7RbT6egEdaZ45eD1ATbpXinkc+g9yNwtKpDTo12fEFuYofe5Q2XqS4LO1Y4wy25MtN1wWC5vSXai8WdQ6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IKdVaJ0V; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761737621; c=relaxed/simple;
+	bh=J3SmHbHcPN9vsdCJ2qJ1YkkjiV0LPkKYsADbY87w650=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Bw+zGEDpe3jxVQMH8EZtGDVxRu5AMzXoi6XyI86Ehgc8ymZruDvz+tTaARWkz8s2gmkg9AKCCr0Pff2uLvtetY/XjBfQY3AdSJsNoyHW85NmK1nvvGBUvGonVj1O/sLssHHRH6KKzuVjm1IMYazvFH/Drd7lkFybRuLT+n45UXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=MyX1Uiep; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uEMbXTPY; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IKdVaJ0V"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3ece0e4c5faso6302675f8f.1
-        for <git@vger.kernel.org>; Wed, 29 Oct 2025 03:16:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761732991; x=1762337791; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mCXehaLH9MdKB8OTr3h14P0a27v1nu/ATvf1I0vDjos=;
-        b=IKdVaJ0V+owpngojXGS2N7HK85imUBvsATRMET9IOC0ulzwWnPz9M4Cnb8bMCD23AX
-         eqx8IhTTa862+cBUJj6D9OcU2OXYQhvjRq4qvKLZxj8i1YKGa9jF+624xWBh7DjPsrnF
-         jMkdLFZGobFVOFJ7Fnx3Ln55/9yQ2zIsSG0smhSY8klBE245JZtV3/6h7dYymPpbc9JK
-         hBw/ofd61TdpIm47l6jaV6gJUr4LnD8EydyaVcwLuLgXk3k9jCXQxUsZgMkov5gOr8gX
-         2SbuuYfrQJ0kgBaMUVr94DRw3DqfmC+ctMUdWga/k6t08RkGtY8onUtdhOczHNf3not7
-         6l6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761732992; x=1762337792;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mCXehaLH9MdKB8OTr3h14P0a27v1nu/ATvf1I0vDjos=;
-        b=KAO3Bw+RphYYgdxwMPm+Up54ULAApTstsHLwHJU56bUP5iDEIqpeKkb4HEzlHVIPDm
-         WCbiNy3aFt73g8Ge2pWdVziJApCklnlz9zAgoEdS6CjUu8bUyCftLhihJ279Tgf5hlPn
-         oYo5W1qNkwugJhGKJD1Aps+pj5GMhxuCE/HAGvNdDwF19Z1JejeR/FDV5Wu3+oInmDn0
-         z82OoytfnGNZJC6xO483WoFL9UD5FhnJW3JAbNbf5mgzoULjSaswB9WuzDiDWePqwKDb
-         5IsRcgd+/NDmJ+8xkCMDuzzWWlUjf6w+lVZTYtY79vBVoYKCqkYJBJMjuBuvdsE+GSwg
-         ERUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUgRuS3mHmD0FMoIrR+dAhIYdnSrTiJQ9UE+eguI/0D3HUa5/zQXyl+Y3rVr9lnX7nEFuk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw2k584ysOmldhEwx/c41Y5kcouSrVc1ZqIWAwsjA8An2s6YOSW
-	+9ls3+o8g4a1ie3GbEdFTPn1jhlMevulgbKD7IO4LVREqnrPQFzZDsOj
-X-Gm-Gg: ASbGnctMFkQqrl6XQlQfm414ElS+0FSdPsFNf6t4hWaq0rhzEZ213D0AXd1KgCeTYML
-	VsY8zCRzSt+DlgedQcz1oxfzEMsQhPgsZ3eDwuUAjqUn7TtSn09x8YsFURiq82beidxVYF3JPM2
-	kEZ5pn1W+fI0FeGkhDpccwJO/zWMzIxKMl2Zt+DnxdcqYgNuLPKJNZWOmk49elHCa710X8eEmE9
-	U12o5FJegsjUODcLXfr14uXnq8mYh/ge7CoR7I/avRCZVOXOn3eJotKz5sTIlm5M8oJkFT3xy9S
-	qe8gbawHLsgOmCLZvleBcFd9gaIMDbZaS3XBUZte9UKcdnxlpC/14BGJ7xRa1DBrB8qaumS5kQU
-	qlk0v93DqBW7tPyDBcxnc+1Qsdm49quL/03tEDEMLXuPNIM5h9+I6ToTSbe/aESeSMZwHnALS3+
-	rm1N3Oah1Ud/JkQOCM7mdTQnL8kEJJbueX24JiFymTR5hiCxQsbhou
-X-Google-Smtp-Source: AGHT+IFPiMu6R02rWAHgJHyS8H89E4Gtm86WBQGNMNVVx1dc8p/XHNJVYUx2D/pWbyru7YRqI58Y/w==
-X-Received: by 2002:a5d:5888:0:b0:425:742e:7823 with SMTP id ffacd0b85a97d-429aef71db8mr1920294f8f.12.1761732991273;
-        Wed, 29 Oct 2025 03:16:31 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:62a:101:611a:6fa9:aa15:af04? ([2a0a:ef40:62a:101:611a:6fa9:aa15:af04])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429952df6b9sm26424044f8f.44.2025.10.29.03.16.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Oct 2025 03:16:30 -0700 (PDT)
-Message-ID: <fde3dae1-bb11-45e8-9211-50ae003ca497@gmail.com>
-Date: Wed, 29 Oct 2025 10:16:27 +0000
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="MyX1Uiep";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uEMbXTPY"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id D2A7D1D00075;
+	Wed, 29 Oct 2025 07:33:37 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Wed, 29 Oct 2025 07:33:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1761737617;
+	 x=1761824017; bh=GInO+Bu4c4hfS8JE/D3RMw/dsgfJTtLSc2kzbRyI8Jc=; b=
+	MyX1UiepmLNWtnYCEN/X6rddud7ykwfazPTOwB0qMucPJF7nErB2dbMpObAk8OCk
+	3K0OkvOPQxoB9/79TABGiiLUfxpzCeCoNrhRGlBIzpVDaJ2K6+a6QbT/KHWcajwA
+	ub+XyjJb8uDucL9v4AMfsfcMIRblKMedyDqoroWbYoHJzuUSzToJe2pNVl7Mxg+a
+	xaiZul2LaHQBLti1y1fP5mUICCoxf1gSpbC8SkZiMwNi17O/KhtCWhoP9cy0zXU2
+	BkOQ8it0jLobTQCit0bLjz0z7COpyezUyh32Kc5CcL3A4F4pzg7gBgc9Azn+JT07
+	XmQPnGyM9I2su0gjUBqTIg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761737617; x=
+	1761824017; bh=GInO+Bu4c4hfS8JE/D3RMw/dsgfJTtLSc2kzbRyI8Jc=; b=u
+	EMbXTPY0aC4GA27SwV376k/f6QwZkvH7jib9CJjcNvDYOINQzvSsOB4tU/AmQcZ7
+	ZKqlENiFv/ke51VN00Sidft5o0AH5svwHZZirlAFxVXVzcC0q2LN7uatNong5L8n
+	urS5g03sNi8+sBAwHRpYgDSR4R3x2ZOZtbDZBYNETCwkDFk87KGJWKAHPbOBmbyR
+	G/b8wsviEMUUDA1hGXBojnNwv30KP8jrsDFwxYLfzKSBIgFL3lnTjstY6orn53lZ
+	T/IdcIo5mrOxh8tKIhxC4+EazGojipVq8jmD62e8ZPVDd0OFRK0n0AlV8SkTG4XA
+	TBfNZCje+7Yv5Et7Vn+JQ==
+X-ME-Sender: <xms:kfsBaX36J0hpBq-FE_T75wjnWhXSmGvQ8yP9ciXU5j-MYpy4RnQnYVg>
+    <xme:kfsBaQ7J3NAftW3l4FYJDQ2aBqRXV_n31rIUugkbTVm5IH54k9c_hQUSlJXVBveWZ
+    cV0NeT4bOIgFF2fejQet6gctGPEV-b3PI4c867lvrvsLOIM00WVPA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieefiedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomhdprhgtphhtthhopehsrghmrdgsohhsthhotghksehshhho
+    phhifhihrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:kfsBaZ5x1CN4aV25ipK1GZWZ8JkQP4WEvd0PybmpjAfCma5ipuyFig>
+    <xmx:kfsBaUARRhZXsWfiDqYKNcI9Cjn1NluSreDu2w0ui2hN3mE9ndQifA>
+    <xmx:kfsBafcxUdr0WCMKgkgP0iYIK-xgIGIPq6babX_OpeTrhHmmsf973Q>
+    <xmx:kfsBaTJ4Y3_csd7Lt9JT0fKENnhAnM7t6C1znDB_liiaJRe55Or6gw>
+    <xmx:kfsBaWZjJgRVmtXJs2BWexC-V-mJnEGIAHFN4eyivcmOmcLik8SgOSje>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 3172E1EA0062; Wed, 29 Oct 2025 07:33:37 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3] blame: make diff algorithm configurable
-To: Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Antonin Delpeuch <antonin@delpeuch.eu>
-References: <pull.2075.v2.git.git.1761658643278.gitgitgadget@gmail.com>
- <pull.2075.v3.git.git.1761686060477.gitgitgadget@gmail.com>
-Content-Language: en-US
-In-Reply-To: <pull.2075.v3.git.git.1761686060477.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-ThreadId: AwMCQN4XWsM-
+Date: Wed, 29 Oct 2025 12:33:15 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>, "Junio C Hamano" <gitster@pobox.com>
+Cc: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ "Sam Bostock" <sam.bostock@shopify.com>
+Message-Id: <85d6fdcc-cee3-448a-8bda-72791f342be3@app.fastmail.com>
+In-Reply-To: <aQHoKXtrbDx6eNpH@pks.im>
+References: <pull.2077.git.git.1761589580028.gitgitgadget@gmail.com>
+ <aQBwiE-bhqcaSHG_@pks.im> <xmqqfrb3dnis.fsf@gitster.g>
+ <aQHoKXtrbDx6eNpH@pks.im>
+Subject: Re: [PATCH] refs: support migration with worktrees
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi Antonin
+On Wed, Oct 29, 2025, at 11:10, Patrick Steinhardt wrote:
+> On Tue, Oct 28, 2025 at 09:00:43AM -0700, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>>
+>> >>  `migrate`::
+>> >> -	Migrate ref store between different formats.
+>> >> +	Migrate ref store between different formats. Supports repositori=
+es
+>> >> +	with worktrees; migration must be run from the main worktree.
+>> >
+>> > It feels a bit weird to single our worktrees specifically. We don't=
+ say
+>> > that the tool supports bare and non-bare repositories, either, so t=
+he
+>> > only reason why we'd have the note about worktrees is historic lega=
+cy.
+>> > How about this instead:
+>> >
+>> >     Migrate ref storage between different formats. Must be run from=
+ the
+>> >     main worktree in case the repository uses worktrees.
+>>
+>> Two thoughts.
+>>
+>>  * Would it be unacceptable if the primary repository and refstore
+>>    uses reftable backend, and a newly attached worktree to the
+>>    repository uses ref-files only for its per-worktree refs?  If we
+>>    should allow it, then "if the ref store you are migrating is in a
+>>    repository with multiple worktrees, you must migrate from the
+>>    primary and migrate _all_ ref store for all worktrees at once,
+>>    into the same backend", which the design of this patch seems to
+>>    aim at, would contradict with it, no?
+>
+> The problem we have here is backwards compatibility. Right now we assu=
+me
+> that `extensions.refStorage` applies to all worktrees, so if we wanted
+> to change it like you propose then we'd have to introduce a backwards
+> incompatible change.
 
-On 28/10/2025 21:14, Antonin Delpeuch via GitGitGadget wrote:
-> From: Antonin Delpeuch <antonin@delpeuch.eu>
-> 
-> The diff algorithm used in 'git-blame(1)' is set to 'myers',
-> without the possibility to change it aside from the `--minimal` option.
-> 
-> There has been long-standing interest in changing the default diff
-> algorithm to "histogram", and Git 3.0 was floated as a possible occasion
-> for taking some steps towards that:
-> 
-> https://lore.kernel.org/git/xmqqed873vgn.fsf@gitster.g/
-> 
-> As a preparation for this move, it is worth making sure that the diff
-> algorithm is configurable where useful.
-> 
-> Make it configurable in the `git-blame(1)` command by introducing the
-> `--diff-algorithm` option and make honor the `diff.algorithm` config
-> variable. Keep Myers diff as the default.
-> 
-> Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
-> ---
+I don=E2=80=99t understand the motivation or use case for supporting dif=
+ferent
+backends for different worktrees. But Junio would have to explain that.
 
-Apart from a problem with clearing XDF_NEED_MINIMAL (which is really the 
-fault of a terrible api) this is looking good.
+Maybe the motivation is this weird (from a user=E2=80=99s perspective) l=
+imi-
+tation that you have to run a command from the main worktree?  Okay,
+that=E2=80=99s strange but you get the error and switch to wherever the =
+main
+worktree is (that the error message hopefully helpfully provides you
+with) and run the command there.  Then you forget that weird thing five
+minutes later since this was a one-off command.
 
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -779,6 +779,19 @@ static int git_blame_config(const char *var, const char *value,
->   		}
->   	}
->   
-> +	if (!strcmp(var, "diff.algorithm")) {
-> +		long diff_algorithm;
-> +		if (!value)
-> +			return config_error_nonbool(var);
-> +		diff_algorithm = parse_algorithm_value(value);
-> +		if (diff_algorithm < 0)
-> +			return error(_("unknown value for config '%s': %s"),
-> +				     var, value);
-> +		xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
+>
+> I agree though that it would've been great if we would have said from
+> the beginning that the worktree-specific configuration is allowed to
+> override the ref storage format for a worktree. If so, we could easily
+> convert any of the worktrees (including the main one) by without having
+> any impact on all the other worktrees.
 
-Unfortunately XDF_DIFF_ALGORITHM_MASK does not include XDF_NEED_MINIMAL 
-so if the user has a config file that looks like
-	
-	[diff]
-		algorithm = minimal
-		algorithm = myers
+As a user I don=E2=80=99t understand why that is a great thing to have.
 
-We'll parse it as "minimal" rather than "myers"
+>
+> But we do not live in such a world right now, and getting there would
+> require some significant reworking of how we handle per-worktree
+> references. Unfortunate, but I also don't think there's a strong enough
+> reason to change this.
+>
+>>  * If "you must do so from the primary worktree and we convert all
+>>    the worktrees attached to the same repository" is the only mode
+>>    of operation we support (which by the way I have no problem
+>>    with---the first bullet point above was asking question, not
+>>    suggesting change of design), then would it be easier for the
+>>    user to use if the command noticed that it is not in the primary
+>>    worktree and switched to it for the user, instead of complaining
+>>    and failing?
+>
+> I'm not sure. The question is whether the user recognizes that migrati=
+ng
+> references in the worktree would also migrate references in the main
+> repository. It might be surprising behaviour if we did that without
+> asking.
 
-As we need to reset the diff algorithm in a number of places I think it 
-would be best to define a macro
+On the contrary, as a user I think it mattering what worktree I run this
+command from sounds very weird.  (But again I can tolerate it requiring
+me to run it from the main worktree if there are technical difficulties/
+limitations.  But using different backends for different
+worktrees is very weird, again.)
 
-     	#define CLEAR_DIFF_ALGORITHM(flags) \
-		flags &= ~(XDF_DIFF_ALGORITHM_MASK | XDF_NEED_MINIMAL)
+If I run `git gc` I don=E2=80=99t want it to do different things based o=
+n what
+worktree I am. I want to operate on the repository, and the repository
+is the same no matter what worktree I am in.  The same principle applies
+to this command in my mind.
 
-and use that where we want to reset the algorithm.
-> +		xdl_opts |= diff_algorithm;
-> +		return 0;
-> +	}
-> +
->   	if (git_diff_heuristic_config(var, value, cb) < 0)
->   		return -1;
->   	if (userdiff_config(var, value) < 0)
-> @@ -824,6 +837,38 @@ static int blame_move_callback(const struct option *option, const char *arg, int
->   	return 0;
->   }
->   
-> +static int blame_diff_algorithm_minimal(const struct option *option,
-> +					const char *arg, int unset)
-> +{
-> +	int *opt = option->value;
-> +
-> +	BUG_ON_OPT_NEG(unset);
+Is the =E2=80=9Cmain worktree=E2=80=9D even something that makes sense f=
+rom the user=E2=80=99s
+perspective?  It seems like it=E2=80=99s just a side-effect of the fact =
+that the
+repository itself has to live somewhere.  Imagine I have one main
+worktree and two linked ones.  I delete the main worktree.  Imagine that
+it works because the repository itself is moved to one of the linked
+worktrees (arbitrary).  Which then becomes the main worktree.  But the
+user does not have to care as long the user does not poke inside the
+`.git` directory.  Which the user should not have to do (there should be
+commands to answer whatever `.git`-poking motivations).
 
-This is a change in behavior as we currently accept "--no-minimal" which 
-clears XDF_NEED_MINIMAL
-> +	BUG_ON_OPT_ARG(arg);
-> +
-> +	*opt &= ~XDF_DIFF_ALGORITHM_MASK;
+I am of course not suggesting such a change.  But the point is that the
+=E2=80=9Cmain worktree=E2=80=9D is not such a useful end-user concept.
 
-This is correct becase we're about to set XDF_NEED_MINIMAL so it does 
-not matter that we leave it set here, but would still be clearer if it 
-used the new macro I suggested above.
+Sure, I happen to use a =E2=80=9Cmain worktree=E2=80=9D in the informal =
+sense that I
+often have the original path where I cloned or created the repository
+and I have the other ones in satellite locations with more
+pointed/topical names (e.g. `git-mine` is the basename of the Git
+worktree that I use to `make install`).  But I never ever consult `git
+worktree list` to remind me what the main worktree is.
 
-> +	*opt |= XDF_NEED_MINIMAL;> +	return 0;
-> +}
-> +
-> +static int blame_diff_algorithm_callback(const struct option *option,
-> +					 const char *arg, int unset)
-> +{
-> +	int *opt = option->value;
-> +	long value = parse_algorithm_value(arg);
-> +
-> +	BUG_ON_OPT_NEG(unset);
-> +
-> +	if (value < 0)
-> +		return error(_("option diff-algorithm accepts \"myers\", "
-> +			       "\"minimal\", \"patience\" and \"histogram\""));
-> +
-> +	*opt &= ~(XDF_NEED_MINIMAL | XDF_DIFF_ALGORITHM_MASK);
+Okay.  Let=E2=80=99s say I get tripped up by the gitlink or whatever it =
+is kind
+of file that worktrees use for `.git`.  Because I really want to poke at
+the `.git` directory.  Then I think =E2=80=9CI need to find the main wor=
+ktree=E2=80=9D
+because it happens to have the repository and the link to that directory
+could not be implemented using a symlink, maybe because of Windows
+filesystems, I don=E2=80=99t know.  Again a technical limitation to my m=
+ind.
+No worktree is special except because of technical limitations.
 
-This is correct
+(The =E2=80=9Cmain worktree=E2=80=9D even becomes a technically contradi=
+ctory concept in
+the case when the =E2=80=9Cmain worktree=E2=80=9D is bare. And that is a=
+ popular
+practice for some reason.)
 
-> +	*opt |= value;
-> +
-> +	return 0;
-> +}
-> +
+And I wonder how many worktree users even actively think about the fact
+that per-worktree refs exist.  It=E2=80=99s the kind of thing that you h=
+ave to
+logically conclude *has* to be the case:
 
-> -		OPT_BIT(0, "minimal", &xdl_opts, N_("spend extra cycles to find better match"), XDF_NEED_MINIMAL),
-> +		OPT_CALLBACK_F(0, "minimal", &xdl_opts, NULL,
-> +			       N_("spend extra cycles to find better match"),
+1. `HEAD` is a ref and you need that for a worktree
+2. You can have a bisect session in a worktree and that uses refs under
+   the hood
 
-This is just copying the existing text so it is not a new problem but I 
-think it would be better if we said "find a better" rather than "find 
-better". We should prehaps think about hiding this option now that we 
-support --diff-algorithm.
+But:
 
-> +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+1. Conceptually I never really think about `HEAD` as a ref; =E2=80=9Cwhat
+   branch/commit am I on=E2=80=9D is what I care about. It=E2=80=99s the=
+ only builtin
+   symref that I know of (or ref or symref depending on...). Not a usual
+   ref at all.
+2. I use git-bisect(1) to find a commit given a criteria.  Ones I have
+   it I note the commit.  I don=E2=80=99t care that refs are used to sto=
+re the
+   bisect state while a session is active.
 
-As I said above using PARSE_OPT_NONEG here is a regression
+According to gitglossary(7) these are currently the only per-worktree
+refs.  I do not know if you are allowed to use the `refs/worktree/`
+hierarchy to create refs beyond that.
 
-> +			       blame_diff_algorithm_minimal),
-> diff --git a/t/t8015-blame-diff-algorithm.sh b/t/t8015-blame-diff-algorithm.sh
-> new file mode 100755
-> index 0000000000..efc4b47ce1
-> --- /dev/null
-> +++ b/t/t8015-blame-diff-algorithm.sh
-> [...]
-> +test_expect_success 'blame uses Myers diff algorithm by default for now' '
-
-I'm not sure we need to say "for now" here.
-
-> +	cat >expected <<-\EOF &&
-> +	Commit_2 int g(size_t u)
-> +	Commit_1 {
-> +	Commit_2   while (u < 30)
-> +	Commit_1   {
-> +	Commit_2     u++;
-> +	Commit_1   }
-> +	Commit_2   return u;
-> +	Commit_1 }
-> +	Commit_1
-> +	Commit_2 int h(int x, int y, int z)
-> +	Commit_1 {
-> +	Commit_2   if (z == 0)
-> +	Commit_1   {
-> +	Commit_2     return x;
-> +	Commit_1   }
-> +	Commit_2   return y;
-> +	Commit_1 }
-> +	EOF
-> +
-> +
-
-There's an extra blank line here
-
-> +	git blame file.c | \
-
-We don't pipe the output git commands as it hides unexpected failures. 
-Instead you should redirect the output of git to a file and then process 
-that file with sed.
-
-> +		sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" | \
-> +		sed -e "s/ *$//g" > actual &&
-
-This can be a single process by passing -e twice. It does not really 
-matter but neither pattern needs a trailing "g" as they only match once 
-within the line.
-
-> +test_expect_success 'blame gives priority to --diff-algorithm over diff.algorithm' '
-> +	cat >expected <<-\EOF &&
-> +	Commit_1 int g(size_t u)
-> +	Commit_1 {
-> +	Commit_1   while (u < 30)
-> +	Commit_1   {
-> +	Commit_1     u++;
-> +	Commit_1   }
-> +	Commit_1   return u;
-> +	Commit_1 }
-> +	Commit_2
-> +	Commit_2 int h(int x, int y, int z)
-> +	Commit_2 {
-> +	Commit_2   if (z == 0)
-> +	Commit_2   {
-> +	Commit_2     return x;
-> +	Commit_2   }
-> +	Commit_2   return y;
-> +	Commit_2 }
-> +	EOF
-> +
-> +	git config diff.algorithm myers &&
-
-You can use test_config() here which will clear the config setting at 
-the end of the test. Alternatively you can save a couple of processes by 
-using "git -c diff.algorithm=myers blame ...". This is setting the 
-config to the default value, I wonder if it would be better to do
-
-	git -c diff.algorithm=histogram blame --diff-algorithm=myers
-
-instead.
-
-The coverage looks good
-
-Thanks
-
-Phillip
-
+>
+> It might of course also be surprising if you do that from the main
+> working tree. But I think there's an argument to be made that it's at
+> least _less_ surprising.
+>
+>> >> @@ -95,7 +96,7 @@ KNOWN LIMITATIONS
+>> >>
+>> >>  The ref format migration has several known limitations in its cur=
+rent form:
+>> >>
+>> >> -* It is not possible to migrate repositories that have worktrees.
+>> >> +* Migration must be run from the main worktree.
+>> >>
+>> >
+>> > I'd drop this bullet point entirely, as I don't really see this as a
+>> > limitation anymore.
+>>
+>> I agree that such a limitation should be lifted, but if we have to
+>> say "you must do it this way, not that way", that is still a
+>> limitation ;-).
+>
+> So with the above reasoning I'm not sure I'd call this a limitation.
+> It's rather a mechanism to protect users from unexpected consequences.
