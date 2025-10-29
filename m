@@ -1,129 +1,264 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6125D2EA17E
-	for <git@vger.kernel.org>; Wed, 29 Oct 2025 16:12:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6272EA17E
+	for <git@vger.kernel.org>; Wed, 29 Oct 2025 16:14:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761754374; cv=none; b=CNbx1rLkejuUoRMmDhiErDjQCafKWPAj9I6OsXasHS9ORP4yhSERbMZxaxG4vemt4w0VvIvxs+2WdSU0yE0o5UYvr3BzLMrV5fT216Gza4/ih8JNfYdTaShWRx46nYbu589M4LD/5dwlVt0R+oVYVHTfywh0ZuHmxOyWdaawE68=
+	t=1761754499; cv=none; b=S71YfUW40x8l+TaJI0dezTxccTn3/1lThrRCTMotIBJO4Z1skR3jVpPsHNAEZdmaP3p4yGz6YrHKKiSBzm5m599zUlHu2CijhGaJX053alrVdOW60vUADhkYULkNIx+FDHEWPMRYxhTNThebX8XbSrKhmJJi34wy0MtHWa5T2/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761754374; c=relaxed/simple;
-	bh=cD/Byr8fmZv6JQG5BgsxedcUnXOKmNhfs8OKDeoM6k8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pzp+RmuOJJjmff5mmO8kAjlp64wV+qAVIuouSnB4EcPr10iGWJEwR0R3NLV7IqayKgfvTqpBXJfwREPukl+bJzCEGOWgoXs3t1NSIAycE+zSE0mzadHz1OjTKhb5DK2K7LlnfWZIKD8jmidxADJ5dIo9rslpL//Ia8MYANCep28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gzG2ZwCa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P8L9VJcM; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761754499; c=relaxed/simple;
+	bh=GmMe6qZKZ3yNC5Fs6X3YzF0KoJBrP1VYoJcUjSP8q4w=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=ERZ95kw/UpojWvCXMKl9VLp1lR3c9/1H25nsws9j/pa3ASpK8IfNDqWywnRnbuSUPW+9bzpytlRB9zlKEkXXdEMmlBuVwFyjoxTgX7aLR0WWtTKTpWQpVeizLMho27Na8JKli2h9x+kKtKFkgD/o1704kPYbz/Zz3s9ha1KM8FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jOdn1wI+; arc=none smtp.client-ip=74.125.224.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gzG2ZwCa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P8L9VJcM"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 79F7C14000B6;
-	Wed, 29 Oct 2025 12:12:51 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 29 Oct 2025 12:12:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1761754371;
-	 x=1761840771; bh=I3ZaYnyI4kmXK4QqWFkvyeCFwqph47ONvgGIpTbVUig=; b=
-	gzG2ZwCalkFR33j70PkXs2wkBc1sx9EuFHKyWGNJoi0dMQIE6SJSCK2nh5/RPn5V
-	MgZD08mD08ohjOARNNSgb3LqAXeTVxtHae9/p2s/UjwE5Inml7XPMZfazL9fXv/X
-	W3rgZEumiq84sI3e2YPwaX88YUX27EK3f+j3Gt1r9AMshfRmruXd8Xzjaf7hxkco
-	VFg+8BKFJh7HxRQjXQc0zwlVdfxfEztl7LLCvr2OUnYVyuTrefjcXSPsJNVpbfp7
-	PcxbOqJ93ovOWxwMHn0f09VhMk4ivjQTcT510YR6/A28q/dVZSbaLsZCSkVEV3WT
-	pA4gigTrIX3wQZN+qzQFew==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761754371; x=
-	1761840771; bh=I3ZaYnyI4kmXK4QqWFkvyeCFwqph47ONvgGIpTbVUig=; b=P
-	8L9VJcM3RO/8cWUQrklAh5kOa4I/CUxGq3gLY1y0ayMAqYM3I9JAOEPInAoFMAss
-	UWcS75n8BElkN9n9V8FoX9FppNhJzxG11jWmzqH4u+mJKdmvHx5geaZpKv6DR16b
-	AI2ECVzR0DSbzQlS833DTSjncZ719tcNo4YMZ0f8l7rF/ROEnM7MA9BiFRXWufeu
-	HvWY65hsQumNcur5o18epneKoJWzP+hxLV7vyJ5VI/bJUYF57JhT/NNLrNWpSNAp
-	G8dAoeN7rdsog3s7hxR67ngpMd/pweOFtg0xH2DVHQ/4iVRuj8VAvEv6fi/DpD6Y
-	P2uCPwfqWb1P5qaRO/drw==
-X-ME-Sender: <xms:Aj0CaS0UvuxLJc6hHQVZwy6SwSXhZS6vu09AH_UD5E3139mutJF9qQ>
-    <xme:Aj0CaXrlPmWjpnGcN9ljpUCV5DX0o1Hbk7K-tuXIxcq4hhOoYmzTCP7lkxhadGJUb
-    mwG5u-vBzEAGv51vGmiVKpQsuOR18ZkE-bEbCWjix0SSMlXBP9mBg>
-X-ME-Received: <xmr:Aj0CaegliX35RASRnSCFQGRJy6295ZJSLT4grvfiT9k9UUF692nPwTLBaROuCcOA3fRjvPPU9KD3DVgDg5pnz5A5KW6er61kdfca>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieegudekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilh
-    drtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgr
-    nhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepjh
-    hohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheptghh
-    rhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Aj0CaT9J4No7QNmvKkQCWshb1M6adgp0HxHUxelB5fC7EMY-r7UkJg>
-    <xmx:Aj0CaaX54Vz6Xqo9fGov1iaX6kh0aINPUfexLf80HgFMBZ0QE2Q6hA>
-    <xmx:Aj0CaXA_P97FGxSnEWwF5mF4NSY92_2QBK3F44j0UqGzriZrVbRJbg>
-    <xmx:Aj0CafGeM9i5ZY_vfIc84AiFTFAG_5gEBGtzXtRUvZa_d-O9bAD9Dw>
-    <xmx:Az0CaZzqpW7eI_CJCkfltl5lSUCqRHz8yPGo3ckSkH9v9sNcVq2o6T08>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Oct 2025 12:12:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
- <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/5] fast-export: mark strings for translation
-In-Reply-To: <CAP8UFD3S1s3_p3m-ZzRO=B7nQwJvbYMBew8_MZWJwSJEm4oFTA@mail.gmail.com>
-	(Christian Couder's message of "Wed, 29 Oct 2025 15:29:51 +0100")
-References: <20251028081232.3068147-1-christian.couder@gmail.com>
-	<20251028081232.3068147-4-christian.couder@gmail.com>
-	<xmqqv7jzdtvl.fsf@gitster.g>
-	<CAP8UFD3S1s3_p3m-ZzRO=B7nQwJvbYMBew8_MZWJwSJEm4oFTA@mail.gmail.com>
-Date: Wed, 29 Oct 2025 09:12:49 -0700
-Message-ID: <xmqqv7jxadq6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jOdn1wI+"
+Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-63e35e48a27so146160d50.0
+        for <git@vger.kernel.org>; Wed, 29 Oct 2025 09:14:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761754496; x=1762359296; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LiYm5tm0EsDIVWA8j8UGiPwI7FICjr7ZbhzrHvoFVOQ=;
+        b=jOdn1wI+axYKSb+SoJ9EJZOwUk2y2AsiFe+UkpEjMtwu2Rg58LV49fVJX5IiIP4HkG
+         RIMxqgDHKhd6+fx7nYANTy3GeZvgHdEJZ1A/sIGJtxWOm5HhdnlvC39yhlYddtE6GXL4
+         gW9IPczIb6LzJyYgiKVEqgotvSMRwKHvCI4mgiTwa8g4FidwNNA6cyIWjc5qwu/JMoUW
+         liPfjy36diEDdCWQG3g2pu0jsX01BmjCI9Lx/aITlAeXfXNoJSHb1BpK+IS313dPKT7L
+         Sf32DSI8lozzHe1vSaX6BCOAKfRk7cVaabZ2obCBH+TpnYbwU9W2uAawnI06Qpw9fdwO
+         7ulA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761754496; x=1762359296;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LiYm5tm0EsDIVWA8j8UGiPwI7FICjr7ZbhzrHvoFVOQ=;
+        b=uMwpXywEvyfMylWrrF23l4F8KyWvHtsY3PsNz0EHP6IooqwCHRHqGRxzlOYJL+yVNF
+         6Q3Cm7sRQsNO15wGmEXsSSenKUY8fLpqaZNmkGe1uLMk5sWk2NfaGUQjI7LzHS7K8/i5
+         h5WDUyGwdvsEOMVA0F21yG/xArN72+zuzV7XK8vE7gghi0hKe/w4poeYa4+vtSjYUFbk
+         g6sUnYxsmXMAGSnjqTXTlBp6SXqU3d4+5CLgiyViUhgrkyiRSTdqdFud56atIS6JFMqP
+         jjl9WJgG7BeY+fvsm7hZbiJ2Z5VfBFsTxdcbjcXdBwC8CSp8I78eF7ij4ydnvVo8oWjI
+         cE6g==
+X-Gm-Message-State: AOJu0YwVTJoqZTJPXGIc+LuGIVgQfTG8QuGCp8yJuy0M8lOzAa1L+mWw
+	qvdEZ+4jPr3ZuoVUPdPAs/r2YJ9B+JT7gcUC3d3lAunJ04qRHSTy2Kcc
+X-Gm-Gg: ASbGncueTAaYCYvq54G9Eca5nxoaUtxNhn6Gxq1xrzN3qQ+PZj4xxRqjIyMiP36q3kk
+	6Z410oopzOKEeT0BUXZLT8wPSdh7Pc50b/nIc3+YgTrWLXeenz5ydCxY2vIFj9/7cx5AqE831cw
+	mWHjp+GVoqNbnLjbTUtO46gVioF/NjvKwnyudfd/cpjy63dDsJds/DN8GEXxHPt3fzx3gFYNtlT
+	zEFTr+5m1uZ8eatLKOHGkUOljRPZg7Ek3PcLqZ0TAHC3zz9Qr8kL1osXAfqo2Y0JBURqelSQwhq
+	FoF5ESeezAm4KMvBN9hPe5+DnauiWxmOCwVHvWKMcRpWkp/ZRx32VhPBfhT8Fg0hhRfjh3yvjUN
+	m5//+RLzOB1HlkLI99H17BLvwLM4MYKlaI19rtf21szRmdLM1jv38ok9zJp/EI/XaqdxYejUr/l
+	geeVnn0uhw8d3t6EI634gWunbvew==
+X-Google-Smtp-Source: AGHT+IHG2aonxVSffm0q7CzPRKIRjWRzfLbyhsupuWiCrlBmfuqdkTNfbnXNtzIdNlETBVMDggbipg==
+X-Received: by 2002:a05:690e:251c:20b0:63e:2906:e811 with SMTP id 956f58d0204a3-63f76d0e982mr2591495d50.2.1761754496001;
+        Wed, 29 Oct 2025 09:14:56 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:e43d:9f0:7b52:4db])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-785ed1b24e7sm37092767b3.35.2025.10.29.09.14.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Oct 2025 09:14:55 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] bisect: update usage and docs to match each other
+Date: Wed, 29 Oct 2025 12:14:45 -0400
+Message-Id: <A3B6994C-508A-4052-AD19-C5D773C0CC9F@gmail.com>
+References: <pull.2084.git.git.1761690461697.gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Ruoyu Zhong <zhongruoyu@outlook.com>
+In-Reply-To: <pull.2084.git.git.1761690461697.gitgitgadget@gmail.com>
+To: Ruoyu Zhong via GitGitGadget <gitgitgadget@gmail.com>
+X-Mailer: iPhone Mail (21F90)
 
-Christian Couder <christian.couder@gmail.com> writes:
 
-> On Tue, Oct 28, 2025 at 2:43 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Christian Couder <christian.couder@gmail.com> writes:
->>
->> > Some error or warning messages in "builtin/fast-export.c" are marked
->> > for translation, but many are not.
->> >
->> > To be more consistent and provide a better experience to people using a
->> > translated version, let's mark all the remaining error or warning
->> > messages for translation.
->>
->> Makes sense.  Should we also downcase some Unknown and Unexpected?
->
-> I am fine with doing it as part of this series, but I wonder if it
-> should be part of this patch or in a separate patch.
->
-> If it's in a separate patch, each patch might be easier to review
-> independently, but a number of lines will be changed several times in
-> this series. So not sure what's the best practice.
+> Le 28 oct. 2025 =C3=A0 18:27, Ruoyu Zhong via GitGitGadget <gitgitgadget@g=
+mail.com> a =C3=A9crit :
+>=20
+> =EF=BB=BFFrom: Ruoyu Zhong <zhongruoyu@outlook.com>
+>=20
+> Update the usage string of `git bisect` and documentation to match each
+> other. While at it, also:
+>=20
+> 1. Move the synopsis of `git bisect` subcommands to the synopsis
+>   section, so that the test `t0450-txt-doc-vs-help.sh` can pass.
+>=20
+> 2. Document the `git bisect next` subcommand, which exists in the code
+>   but is missing from the documentation.
+>=20
+> See also: [1].
+>=20
+> [1]: https://lore.kernel.org/git/3DA38465-7636-4EEF-B074-53E4628F5355@gmai=
+l.com/
+>=20
+> Suggested-by: Ben Knoble <ben.knoble@gmail.com>
+> Signed-off-by: Ruoyu Zhong <zhongruoyu@outlook.com>
+> ---
+>    bisect: update usage and docs to match each other
+>=20
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2084=
+%2FZhongRuoyu%2Fgit-bisect-docs-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2084/Zh=
+ongRuoyu/git-bisect-docs-v1
+> Pull-Request: https://github.com/git/git/pull/2084
+>=20
+> Documentation/git-bisect.adoc | 43 +++++++++++++++++++++--------------
+> builtin/bisect.c              | 21 ++++++++++-------
+> t/t0450/adoc-help-mismatches  |  1 -
+> 3 files changed, 39 insertions(+), 26 deletions(-)
+>=20
+> diff --git a/Documentation/git-bisect.adoc b/Documentation/git-bisect.adoc=
 
-Rephrasing the messages may need more careful thinking while
-reviewing, but if you limit your changes to only downcasing the
-first letter, I would think it would fall in the same bucket as
-"While at it, improve code indentation".
+> index 58dbb74a15..b0078dda0e 100644
+> --- a/Documentation/git-bisect.adoc
+> +++ b/Documentation/git-bisect.adoc
+> @@ -9,26 +9,22 @@ git-bisect - Use binary search to find the commit that i=
+ntroduced a bug
+> SYNOPSIS
+> --------
+> [verse]
+> -'git bisect' <subcommand> <options>
+> +'git bisect' start [--term-(bad|new)=3D<term-new> --term-(good|old)=3D<te=
+rm-old>]
+> +           [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pa=
+thspec>...]
+> +'git bisect' (bad|new|<term-new>) [<rev>]
+> +'git bisect' (good|old|<term-old>) [<rev>...]
+> +'git bisect' terms [--term-(good|old) | --term-(bad|new)]
+> +'git bisect' skip [(<rev>|<range>)...]
+> +'git bisect' next
+> +'git bisect' reset [<commit>]
+> +'git bisect' (visualize|view)
+> +'git bisect' replay <logfile>
+> +'git bisect' log
+> +'git bisect' run <cmd> [<arg>...]
+> +'git bisect' help
+>=20
+> DESCRIPTION
+> -----------
+> -The command takes various subcommands, and different options depending
+> -on the subcommand:
+> -
+> - git bisect start [--term-(bad|new)=3D<term-new> --term-(good|old)=3D<ter=
+m-old>]
+> -          [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pat=
+hspec>...]
+> - git bisect (bad|new|<term-new>) [<rev>]
+> - git bisect (good|old|<term-old>) [<rev>...]
+> - git bisect terms [--term-(good|old) | --term-(bad|new)]
+> - git bisect skip [(<rev>|<range>)...]
+> - git bisect reset [<commit>]
+> - git bisect (visualize|view)
+> - git bisect replay <logfile>
+> - git bisect log
+> - git bisect run <cmd> [<arg>...]
+> - git bisect help
+> -
+> This command uses a binary search algorithm to find which commit in
+> your project's history introduced a bug. You use it by first telling
+> it a "bad" commit that is known to contain the bug, and a "good"
+> @@ -295,6 +291,19 @@ $ git bisect skip v2.5 v2.5..v2.6
+> This tells the bisect process that the commits between `v2.5` and
+> `v2.6` (inclusive) should be skipped.
+>=20
+> +Bisect next
+> +~~~~~~~~~~~
+> +
+> +Normally, after marking a revision as good or bad, Git automatically
+> +computes and checks out the next revision to test. However, if you need t=
+o
+> +explicitly request the next bisection step, you can use:
+> +
+> +------------
+> +$ git bisect next
+> +------------
+> +
+> +You might use this to resume the bisection process after interrupting it
+> +by checking out a different revision.
+>=20
+> Cutting down bisection by giving more parameters to bisect start
+> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> diff --git a/builtin/bisect.c b/builtin/bisect.c
+> index 8b8d870cd1..a500993bcb 100644
+> --- a/builtin/bisect.c
+> +++ b/builtin/bisect.c
+> @@ -27,13 +27,14 @@ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BI=
+SECT_FIRST_PARENT")
+> static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
+>=20
+> #define BUILTIN_GIT_BISECT_START_USAGE \
+> -    N_("git bisect start [--term-(new|bad)=3D<term> --term-(old|good)=3D<=
+term>]" \
+> -       "    [--no-checkout] [--first-parent] [<bad> [<good>...]] [--]" \
+> -       "    [<pathspec>...]")
+> -#define BUILTIN_GIT_BISECT_STATE_USAGE \
+> -    N_("git bisect (good|bad) [<rev>...]")
+> +    N_("git bisect start [--term-(bad|new)=3D<term-new> --term-(good|old)=
+=3D<term-old>]\n" \
+> +       "                 [--no-checkout] [--first-parent] [<bad> [<good>.=
+..]] [--] [<pathspec>...]")
+> +#define BUILTIN_GIT_BISECT_BAD_USAGE \
+> +    N_("git bisect (bad|new|<term-new>) [<rev>]")
+> +#define BUILTIN_GIT_BISECT_GOOD_USAGE \
+> +    N_("git bisect (good|old|<term-old>) [<rev>...]")
+> #define BUILTIN_GIT_BISECT_TERMS_USAGE \
+> -    "git bisect terms [--term-good | --term-bad]"
+> +    "git bisect terms [--term-(good|old) | --term-(bad|new)]"
+> #define BUILTIN_GIT_BISECT_SKIP_USAGE \
+>    N_("git bisect skip [(<rev>|<range>)...]")
+> #define BUILTIN_GIT_BISECT_NEXT_USAGE \
+> @@ -41,17 +42,20 @@ static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN"=
+)
+> #define BUILTIN_GIT_BISECT_RESET_USAGE \
+>    N_("git bisect reset [<commit>]")
+> #define BUILTIN_GIT_BISECT_VISUALIZE_USAGE \
+> -    "git bisect visualize"
+> +    "git bisect (visualize|view)"
+> #define BUILTIN_GIT_BISECT_REPLAY_USAGE \
+>    N_("git bisect replay <logfile>")
+> #define BUILTIN_GIT_BISECT_LOG_USAGE \
+>    "git bisect log"
+> #define BUILTIN_GIT_BISECT_RUN_USAGE \
+>    N_("git bisect run <cmd> [<arg>...]")
+> +#define BUILTIN_GIT_BISECT_HELP_USAGE \
+> +    "git bisect help"
+>=20
+> static const char * const git_bisect_usage[] =3D {
+>    BUILTIN_GIT_BISECT_START_USAGE,
+> -    BUILTIN_GIT_BISECT_STATE_USAGE,
+> +    BUILTIN_GIT_BISECT_BAD_USAGE,
+> +    BUILTIN_GIT_BISECT_GOOD_USAGE,
+>    BUILTIN_GIT_BISECT_TERMS_USAGE,
+>    BUILTIN_GIT_BISECT_SKIP_USAGE,
+>    BUILTIN_GIT_BISECT_NEXT_USAGE,
+> @@ -60,6 +64,7 @@ static const char * const git_bisect_usage[] =3D {
+>    BUILTIN_GIT_BISECT_REPLAY_USAGE,
+>    BUILTIN_GIT_BISECT_LOG_USAGE,
+>    BUILTIN_GIT_BISECT_RUN_USAGE,
+> +    BUILTIN_GIT_BISECT_HELP_USAGE,
+>    NULL
+> };
+>=20
+> diff --git a/t/t0450/adoc-help-mismatches b/t/t0450/adoc-help-mismatches
+> index 2c6ecd5fc8..8ee2d3f7c8 100644
+> --- a/t/t0450/adoc-help-mismatches
+> +++ b/t/t0450/adoc-help-mismatches
+> @@ -2,7 +2,6 @@ add
+> am
+> apply
+> archive
+> -bisect
+> blame
+> branch
+> check-ref-format
+>=20
+> base-commit: 57da342c786f59eaeb436c18635cc1c7597733d9
+> --
+> gitgitgadget
 
-Thanks.
+Nothing particularly surprising here, I think. Thanks!=
