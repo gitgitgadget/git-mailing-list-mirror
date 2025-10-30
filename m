@@ -1,73 +1,134 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6899221D9E
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 02:53:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3991F2BE7CD
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 06:26:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761792794; cv=none; b=gffKJIGGVJrx4KNgWvb5I0S2zBDBAvdOpt/NEYg3B2224ns9cuNQr7QyAGWa/9KsKSRtoXRCMeB7SwTL7N2SPpPTiTmHjZiDaVms7b0E+EMaxOcxaYr1zq3mKZ5EAE/WwpqJAt7nnKqc/6Q4gwccPuV4vdOT8jZMevflwRv1wbk=
+	t=1761805605; cv=none; b=ZNgD5FjZ4VKRmHY8Tnyqsai12SLlFj+b7HbLjWU4hrhr0loHx9swyFGBy0mqNZQ75mLsRHsRKZDRbDYkLg/AA0Ni2m8NqqtEe7Oo7o6d3vU5pG2yg1AgcCdKzcT9Uu5CRgFHUKeTYg5qy3MkFB9PR9V4QalmlDy5Kuxioeq+sDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761792794; c=relaxed/simple;
-	bh=8fdqCE7Qht9q4PXClHpvn2e497bXMTqUY2bTPRWie+4=;
+	s=arc-20240116; t=1761805605; c=relaxed/simple;
+	bh=REaYYByeJ65iKLQ2K+GrpOTNM5QqHjoF2BS0TqbQTv8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bb0JynC57gVnWsyZuC8XgPAYyWLHTMQVkUZXudFtF61pFED/csUwKsck1/1r696+mGYMLgFaHzoeK7fVkHVGZg4VAGDuW2x28q5QS72bocDLFOvJ04kQvAwHnzWJ88hxBAFb/3yYR/hj0CxswIFZSEbpxUikz9q0MbWeGOqdIEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=I4weLfC6; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=aw26ce4dQzp+FMZVPxq0ANqm1jEbeBv+uF61H8SXRrR8ScIaN3pIQLJKEeD9bd+F6ovJZ/I7PGiGpY069tYUx1qNJ090l9T8lJqwHH+2bsXG++h6Evbh3/YzPOKJMIpDxbhYPhb1Fbzpoary1di8qJOG6QTbxCDjWaFZY45mQ68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QxjVwLce; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GxGteMer; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="I4weLfC6"
-Received: (qmail 381492 invoked by uid 109); 30 Oct 2025 02:53:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=8fdqCE7Qht9q4PXClHpvn2e497bXMTqUY2bTPRWie+4=; b=I4weLfC6yQoIgu0bQ+2W9Osdop/oqQxRggrmkxvHIi5qTUDfVYq161p8T5cw4wV9MrMBCansEDsWr/7yy73haEn5uYMdtf6Sxp22cBXczB7n/3ygkA2XcVoUM0CZu/slVIo1+YuKwktLQTNvKQPdbf9zLUPUrh+EEvx+9DlPhcAd8Ax6ovtgmNgyflVpTtxf9DwcNePHU42NH2jV2hON0UF43NKJvjFVRgRpCZ6BMgs8FjyWQnDM7h8aXl3XfVMmxdFlXZLaqqlWxNKraOtWjKEbrKA15V+x76naQN/SuHrpogUDfCcCbbZ+v+pZmRJZ4Ul76kY3fwrJ0YCbnBbvxQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 30 Oct 2025 02:53:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 593345 invoked by uid 111); 30 Oct 2025 02:53:02 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 29 Oct 2025 22:53:02 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 29 Oct 2025 22:53:01 -0400
-From: Jeff King <peff@peff.net>
-To: rsbecker@nexbridge.com
-Cc: 'SZEDER =?utf-8?Q?G=C3=A1bor'?= <szeder.dev@gmail.com>,
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QxjVwLce";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GxGteMer"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2CC13EC00DD;
+	Thu, 30 Oct 2025 02:26:42 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Thu, 30 Oct 2025 02:26:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1761805602; x=1761892002; bh=Sh/y+wLShj
+	jwe34tYEL/XEf5rY5d4Wfvh0jZoaEAXLw=; b=QxjVwLceo45L2pLxK19gjtWtAq
+	HhnR5a7w4sCSFnmiHObgWMtj85AYyi3eyGE8orLsMNcDGjLJ+WrgrE+llLnrvdWR
+	Rt0l38VbTWdO+nE0JLQnQz2KEUFhBU+EzssZvd6hOs1JcnFaZVXvkXbK9wfX1FOx
+	xIPU+GHP9E1aohJS2D9R55EzHfDaO4T7N1Scva1c/7SMHy9KNdxU8HMA3/tx6x+Y
+	k0QmXOoVNl+VuRu9NbXz7WYbUnZSFOlhFMSoofkGnoJIynw9t6oDmh+kKhK9NJT2
+	NCDaR/smzKlQreOW05IB2/1LwD5pMSaf0gRctGEuZzx/WjRCwPnOiTWR6g1g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1761805602; x=1761892002; bh=Sh/y+wLShjjwe34tYEL/XEf5rY5d4Wfvh0j
+	ZoaEAXLw=; b=GxGteMeroz4B33FVpRNa/vtFc7T7H7GpjHZoJsBTc21+BJmy6TC
+	NNU3IdxMDjowFzSTaoHEp4UMZisO6OntJHQo2oTvUJ435f0ya8YU/u75VqddZ3vn
+	UVBqg8ls5D6eBEx/kAEmZZviKS/HEzYqU3qeeWPrvk1O+T9h+SArMdon2cvMag99
+	Hl8YYv+C+XtH3hMUW/uOjo39xYDc/V81XyNfpknLYvF8Imz9hxfVkVI8NI88bHcZ
+	JzBvYpPjF5doFT9tFN3k9JO9gJG97DYNSPQ9H2w4jR5++J/qHKX47Ldvdo11mZjX
+	nlJVD+6c14LvK4J4ka11VQY+EwLzGs/1xag==
+X-ME-Sender: <xms:IQUDab1JS898IK2NfBAdKbTN7WcWf54yquP72in-QBD9kpKpsEUiBQ>
+    <xme:IQUDaRH0uCrhN03gQwCx5V_yHctZTW0qS6iX8t-mK95922KYQjatBLIZvjlAUX-CH
+    0Fvd_NWQlMJz5L6GYz7ZJJhMY_w2cn_UTEgNGyOqxf3VU4rSkLz9g>
+X-ME-Received: <xmr:IQUDaQ4_nYcwl5Z_MGXENtLbLZD24NqLjoMPCxLtlH0NSoO5MKhtJ2JlW8mEU9o8lW3AhKGQCutt9QDUDnTZCsGt5Mj3-fxoTp-EHbyS8g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieehkeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehsrg
+    hnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:IQUDaft6oiKMWMwYqfl4w5wXuotSyPH_GWjXYQ2vuu3_iB1F4xzKKg>
+    <xmx:IQUDaZ4UUXAJc_PFGOlxS-mrZS66baCPpIDqUVOTiKroKcq92QJ4zA>
+    <xmx:IQUDaSUJSv9q6e10mJlzVFeVxBa3Py7QpCAE7lTDNa7jxThOoMMRnA>
+    <xmx:IQUDaT82xELhLdtu23BuJqLBHTu2xBl9ZXpIHQ7XDyfX40D3d8inIQ>
+    <xmx:IgUDaVrIJPwOiMMmkYk9TXPq_roxxqlgr_08adJ5hotgEf-8m8luMz4c>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 30 Oct 2025 02:26:41 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 6626c2ae (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 30 Oct 2025 06:26:39 +0000 (UTC)
+Date: Thu, 30 Oct 2025 07:26:29 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	git@vger.kernel.org
-Subject: Re: [BUGS] Git v2.51.2 on NonStop
-Message-ID: <20251030025301.GA1266932@coredump.intra.peff.net>
-References: <xmqqo6psjq2n.fsf@gitster.g>
- <000d01dc4831$ff049500$fd0dbf00$@nexbridge.com>
- <aQKVByfUdYHSEcDz@szeder.dev>
- <000201dc4925$2cdbc450$86934cf0$@nexbridge.com>
- <aQKgxfZ9WQjyrhpa@szeder.dev>
- <000701dc4933$9f79c670$de6d5350$@nexbridge.com>
+Subject: Re: [PATCH 10/14] rust: add a build.rs script for tests
+Message-ID: <aQMFFZ_uDZxHvExW@pks.im>
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+ <20251027004404.2152927-11-sandals@crustytoothpaste.net>
+ <xmqqms59acak.fsf@gitster.g>
+ <CAH=ZcbBYRiceXQ-9FNq0aK0WzN4nDhqonaoafweStC37mx7JBA@mail.gmail.com>
+ <xmqqwm4d716i.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <000701dc4933$9f79c670$de6d5350$@nexbridge.com>
+In-Reply-To: <xmqqwm4d716i.fsf@gitster.g>
 
-On Wed, Oct 29, 2025 at 08:24:52PM -0400, rsbecker@nexbridge.com wrote:
-
-> What appears to be happening is that the Make environment is only using SHELL=/bin/bash
-> for the outer processing but not the inner #!/bin/sh of t7900. The system is using /bin/sh
-> as specified, which uses ksh, not bash, which is the trace above. When I run the individual
-> tests with bash, the error reported goes away. The problem is, with my version of Gnu Make,
-> 4.1.2, the SHELL variable is only being replaced for the command processing of each
-> recipe. Once the system loader sees the shebang of #!/bin/sh, /bin/sh is used as requested,
-> and fails out. This means that I have to remember to manually run each test that fails with
-> bash instead of the default. It is frustrating and now adds hours to my manual evaluation
-> of the CI/CD results.
+On Wed, Oct 29, 2025 at 04:12:05PM -0700, Junio C Hamano wrote:
+> Ezekiel Newren <ezekielnewren@gmail.com> writes:
 > 
-> The trace above is from sh, not bash because of this.
+> >> Hmm, I recall Ezekiel earlier arguing to roll reftable and xdiff
+> >> libraries into libgit.a as it is a lot more cumbersome to have to
+> >> link with multiple libraries (sorry, I may be misremembering and do
+> >> not have reference handy), but if the above is all it takes to link
+> >> with these, perhaps it is not such a huge deal?
+> >
+> > I think Brian might have written this before my series was merged in.
+> > ...
+> >> I am a bit confused.
+> >>
+> >> XDIFF_LIB and REFTABLE_LIB are gone from Makefile on 'master'
+> >> already.  Perhaps we should revert earlier series from him?
+> > ...
+> > I don't think we should revert my series.
+> 
+> The order of events does not really matter, does it?
+> 
+> If we can happily link with more than one libraries [*], it would
+> give us a much more pleasant developer experience than having to
+> roll everything into a single library archive, no?  Or are you
+> saying that the way this series links these multiple libraries
+> somehow does not work?
+> 
+> You somehow manged to confuse me even more ... X-<.
 
-Does "make TEST_SHELL_PATH=/bin/bash" work?
+Simplification was only one of the reasons we had. The other reason was
+to unify how Meson and Makefiles build libgit.a, where the former wasn't
+ever building separate xdiff and reftable libraries.
 
-The default there is $(SHELL_PATH), which is distinct again from
-$(SHELL). The former is a Git-ism for the shell we replace in #! lines
-and invoke from within C programs, and the latter is a make-ism for how
-to run make recipes. If your /bin/sh isn't fully functional you might
-want to be setting SHELL_PATH, too.
+The question I have here is what the benefit would be to have separate
+libraries. I don't really see the "more pleasant developer experience",
+and I'm not really aware of any other benefits. So personally, I'm all
+for the build system simplification that Ezekiel introduced.
 
--Peff
+Patrick
