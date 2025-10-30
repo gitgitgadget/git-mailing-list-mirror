@@ -1,113 +1,101 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BC6243968
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 15:08:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8379E35970F
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 15:15:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761836899; cv=none; b=sy8sStIGdXJRX51M2iFB+LnrXv180/c8XZ85mZpHKeBHOneZTtHfhe8ImHi1ePOVfzNMYMtl+teoT2dG8NFSgqH81zRK9impa3T1+Nb/mBwpgLyVrwXDflawssk1CI8P/PMpKunBRqP1u/6fbsyVdGu4KLJ4oyWpiQqgSwcz47g=
+	t=1761837353; cv=none; b=MM+mSoK+M9dn27wXEVnO9eeoKPmPtwQ/BisRpa8qOyxMql/yVCs9MYgHq02tVEntDfHWKYt6XsDNNdGh+mrSxSnt09LLW6AWQ8jAJhF1y28a3YyHAzmo6OinwPp5eZ3lNiogyfE8STVZZyEZaiX29OxPFzJk5wFhwb9ZXaF76DY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761836899; c=relaxed/simple;
-	bh=A9Z4BfQrSpCIgFhiYUWXEzLxSX7VOlpe/PL99Jl7sCg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W6psrqxURfC/PYY2poqLJE013sK1qBIrnDSvMRj5ZvFCwbppDf8vFows1rKQirlQJaFni8dNx+WP2FxGr4jjIdccw4piaULRrmryYvo5S/+CLcoJnj/AERgf2hO57iBx+9C9omS/rRh3edU5rdskPm36gFDu7+mhb4YTl1o+7T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XfOtZpRF; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1761837353; c=relaxed/simple;
+	bh=XZIFzgMOHb5vQF1QRvynnzj7Np+Ea0C66sy1/n0QQuI=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=bovuFzQBOnTeJicSXk+zt8HkCRXtVX4pTOFm+jRaC8CoZFxeQQmOxcpCOUfoRA2lrivpQV57eDnzlJMiHulxlQ/YUOidEPArUoUyHHmDdpGf+YDcCPnYRpsxHdEWeLcLou7qRQCZWQ9DW1jddQpk1v+j8fNsedEh/BWdAWSGTNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=m7KxWZS/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kQxoer/l; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XfOtZpRF"
-Received: (qmail 387053 invoked by uid 109); 30 Oct 2025 15:08:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=A9Z4BfQrSpCIgFhiYUWXEzLxSX7VOlpe/PL99Jl7sCg=; b=XfOtZpRFK5MueWDHjze/ZXIv5SF3VX2BeAslow16ZnhICgooWc7XQbuxAADzkDackkiCDf5BnwdOQmGIsHhkLW6OfyLQS6oeVcxGPw6ENfVyVIeDjZNaZVW8IfMmpTQz0Xl0Jch8fTOm/2Ng/LlLahU19F1OxjphXtUueh6SCerykNiguGxvSLQpeBR24ziI81bvxlgWj6eQAymk6Hx5cTnztZ/XWCajH2bl4QySTV0ffkE0QYyXiPgnw33r/MxR7/1kNVylm88b7CG//HDnMUf6WsPe/ifmjqDwYFuSML4NQwU63XTcyAF7oFHNFZlYcBax/+1cRC03KkGbaLAWkw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 30 Oct 2025 15:08:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 603196 invoked by uid 111); 30 Oct 2025 15:08:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 30 Oct 2025 11:08:14 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 30 Oct 2025 11:08:14 -0400
-From: Jeff King <peff@peff.net>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sruteesh Kumar <sruteesh.oss@protonmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] doc: document backslash in gitignore patterns
-Message-ID: <20251030150814.GA1275070@coredump.intra.peff.net>
-References: <20251014003404.GC1507@coredump.intra.peff.net>
- <xmqq7bwltlb8.fsf@gitster.g>
- <20251026152614.GB2095501@coredump.intra.peff.net>
- <xmqq7bwhmecb.fsf@gitster.g>
- <20251027142902.GB2758515@coredump.intra.peff.net>
- <xmqq4irkl5ms.fsf@gitster.g>
- <20251028231945.GA4128296@coredump.intra.peff.net>
- <20251029153237.GA1133542@coredump.intra.peff.net>
- <20251029155559.GA1134232@coredump.intra.peff.net>
- <CALnO6CButUc89H0a+FrrdY4pWh10=U8yeWfd7Oesb=1wpHMmSg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="m7KxWZS/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kQxoer/l"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 804EB140015A;
+	Thu, 30 Oct 2025 11:15:49 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Thu, 30 Oct 2025 11:15:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1761837349;
+	 x=1761923749; bh=MFJv1AjHbACA/blZ1uM3hhWYhZB9h9Y9CsMY92AcOGA=; b=
+	m7KxWZS/yPdU6QITPQTX8CmHyIBJx4Qkn5IwOhqbTAJkhMtWbHSpRDGQwO3Ru9G8
+	Hz7hLd2ESlYIBgyraFqpUXIk3vSiAj5DTfgE9dPDXGlfdcXC/SCwFs5cJx8YLaNV
+	Oam4G4hjezvqQ+QdYssffuE0680VvkxZhhUy5SkTiJhUWlR+F7UNfKtYFtsq7puJ
+	Tk3da/qluQr6nQ/CqkGuw5Z7ieBB/SEmuB/SRwt/T+k9uGSnfE0KjWOxKxMoWv2z
+	eRltqK68ctoUg+1KLvJ/E80elZPGjLgFiC+MCtMGt+v1c9bC3scY0NtInkL9wc6k
+	VeF4UT11a3fIEax+fLkY0w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1761837349; x=1761923749; bh=M
+	FJv1AjHbACA/blZ1uM3hhWYhZB9h9Y9CsMY92AcOGA=; b=kQxoer/lbgjWUaVb3
+	+HUYc2FPO72kSn3HT94aJuNqzulSaTiwGieS0EzWpwYgZKMorvkAFDFAVVk6dFme
+	Btde3KrLn8QAQ44NY4pRko9SuiIIia8GLBIoG917ucbnAMDov14imu5ERutqqTF3
+	3ABmR6csKseWGeKLMq0S2BWAE2EMcN3gRRw4n96KHFI3Tk9z7Ect09h8HGN5vBSD
+	AGGzvlJxtubsROX4gbavp7/Gvf0PfJi4RGMm2NeqKROZUyS/39ZQqZQYvdQ5XlTj
+	bpDJDLoETQp/wH0q/jpCn+hGum43VBgL46no+8QAvn2SpIU0/5vUwwESWQ0SD1A7
+	VXoMA==
+X-ME-Sender: <xms:JYEDaVLuBu0QezQ3oDp5s0VzCncRfrUiYh0NIqJRJ0CBeajJbXASS8s>
+    <xme:JYEDab_4N9F0-RLQQ4JCHKayc-BmHdMA8xlwfZUVdmk-0h-u4ixqRYI5tybx6QQPD
+    c2ItSpBlhd6SzwMmqRLK0GqvaxqpVF1eUkI9uwjoFZBy8O8KHIbvg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieeileegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkfgjfhfutgfgsehtjeertd
+    ertddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
+    ftrfgrthhtvghrnhepvdeigedtgfetgefhffetteeludevheetfeekffehheefieehudek
+    veelveffhfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
+    pdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrsh
+    gsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:JYEDaf2NEfVIdlQHsKZyF3tZRZXd9l0KRaromaMvemchf0T-6tyjDg>
+    <xmx:JYEDacALIZEgZyLu-Dxh5B1wtOwHpK3RKxChALbhh8Uc6XZwP3XYwQ>
+    <xmx:JYEDaXf-ZrrVfwBpOSRXA3dslF1rTrv8lFz8_L6vrqX8iBVaS8eBqQ>
+    <xmx:JYEDaRguxUuBVRGvHwasCnhlyBEZnW3VkOMAUQICK9QlU9VEM3fOwA>
+    <xmx:JYEDaVZ9lLATMdIRxvVSNNC2yp741Y4jP8J5mLQTQsFiwiyF6MC77ASQ>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 3165F1EA0068; Thu, 30 Oct 2025 11:15:49 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALnO6CButUc89H0a+FrrdY4pWh10=U8yeWfd7Oesb=1wpHMmSg@mail.gmail.com>
+X-ThreadId: A6deAsQV7uqg
+Date: Thu, 30 Oct 2025 16:15:27 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: rsbecker <rsbecker@nexbridge.com>, git@vger.kernel.org
+Message-Id: <729f9bbf-b75b-4161-b8aa-505ff906bb8a@app.fastmail.com>
+In-Reply-To: <000d01dc4831$ff049500$fd0dbf00$@nexbridge.com>
+References: <xmqqo6psjq2n.fsf@gitster.g>
+ <000d01dc4831$ff049500$fd0dbf00$@nexbridge.com>
+Subject: Re: [BUGS] Git v2.51.2 on NonStop
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Thu, Oct 30, 2025 at 09:40:36AM -0400, D. Ben Knoble wrote:
-
-> > There's also the "pathspec" entry in gitglossary(7), which does mention
-> > fnmatch(3). Though it is even more confusing because of the literal
-> > matching that pathspecs do. I don't know if we'd want anything there
-> > (and I kind of doubt people get as exotic about patterns there as they
-> > would in gitignore).
+On Tue, Oct 28, 2025, at 18:40, rsbecker@nexbridge.com wrote:
+> I have found new defects on 2.51.2 that were not present in 2.51.1 when
+> building with OpenSSL 3.5 (probably unrelated).
 >
-> I certainly wondered about the pathspec case, since the commit message
-> called out the difference in behavior. For example, at least in this
-> one corner, we can't reliably use Git commands with pathspecs to build
-> up example gitignore patterns to throw in .gitignore?
+> Many failures in t7900 resulting from the use of test_subcommand ! as
+> seen below. This is run in bash 5.0.18:
+>
+>[snip]
 
-They're close enough that I suspect people do use them interchangeably,
-but there are definitely important corner cases. Like the anchoring
-stuff below.
-
-> BTW, is the literal matching intended to be conveyed by
-> 
->            •   any path matches itself
-> 
-> ? If so, I'm not quite sure how to interpret a pathspec like a/b given
-> a repo with a/b and dir/a/b—do both match or only the former? I expect
-> in combination with the 2 subsequent bullets that only the former
-> matches. Conversely, with a pathspec "b" in that case, I think I could
-> read the docs as suggesting both match, when IIRC none do. Hm!
-
-I may not be the right person to ask, as I wasn't aware of the literal
-match behavior here until I tried to write that wildmatch test, and then
-walked it through the debugger. ;) Finding the documentation
-justification came later.
-
-But yeah, I think that a pathspec "a/b" will not match "dir/a/b",
-because pathspecs are implicitly anchored to the start of the path. So
-"foo" in .gitignore will match "some/dir/foo". You'd need to "/foo" to
-anchor it to the top-level. But pathspecs always start at the top-level,
-and you'd need "**/foo" to be the equivalent of gitignore's "foo".
-
-But even that's not entirely true. We allow "*" to match even directory
-separators in pathspecs (which is what makes "*.c" match anywhere), so
-"*/foo" is enough.
-
-> But this is a bit of a tangent, and the pathspec entry is already, uh,
-> complicated [1]. Without a good place to leave extra notes for cases
-> like this, I'm not sure what to do. Certainly unifying the behavior
-> would be incompatible (if obscure).
-
-It's definitely complicated, but I'm not sure which of those features
-are important for command-line ergonomics, and which are just pointless
-inconsistencies. I'd be scared to start changing things and finding out. :)
-
-I certainly don't have any objection to improving the pathspec
-documentation if it's unclear, though I think that can be done
-separately on top of the patch in this thread (and I'm not planning to
-tackle it myself).
-
--Peff
+Would it make sense for maintenance releases to have a small release
+candidate pre-release?  Both of these maintenance releases have had
+issues.
