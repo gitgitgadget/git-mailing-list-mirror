@@ -1,84 +1,86 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD77D33508C
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 08:59:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A251A32E13A
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 08:59:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761814746; cv=none; b=IkEYgZ7tUgGbQ8UKc/lZw3aCXrfOQ1QV4eTSBePL7EWvPZv2bC0ChLnFYK8m8GXBcJc1lVFARzmZB8nSPuGHwjYnighzLwb7SSU3djOYo8BWbTeDwvkODuW9CYufp1KB5BtcF46VhGtDJeU5fmQIFRZVkKdSAxef/k/CM6S6Gfc=
+	t=1761814760; cv=none; b=HPfnTMpVO2cTbYboVx/04b05ifSoK2xOMt5IjeBuT16qpmqAeWKj0CghMkoDLmVtPf//IFub9iWwYcOSswoHoRLiRA+TKzIS5yLXmNAg6eQdicfhpXCPGUtN/rx2bVh5RIVXCnUZAlEmAThu3+YsLbxtV1zmFhK3BMkw8fCPduk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761814746; c=relaxed/simple;
-	bh=wRoTcM617Ia1IMjcentRuhjwFZlxXa0U9khAkLNKdz4=;
+	s=arc-20240116; t=1761814760; c=relaxed/simple;
+	bh=59KvhKjjqjjmL4vnZFqE65e13FQt7FlCkUXQHXo9yqY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cVYufZB5BnQcc07Bfr3q/IXafjAuOt5aKjPYTxsifOAHQXdSn5YtM91+lrgVKAk/OyZ+zxigr+eW8tnQy9k4IHBUi7/V4AYLvl3w21QYc7hfkDhymyhx6g1neQUdDOFJfX+4HU1uVjrheGqGQww8E2nyLqB8qXh9lVUjC6uOPkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=k4bts5aV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vTEYWnwf; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=g2fGgbMwc2lj5Wi093boy+GnyVsF2bXqC9Qe1nudPvxTMl7h8KUh3xlE1DHXyOIhvNz4GRG3CS2cDEne7z2V5TOiIjTBMhKx6LKybhwWc0q+p8wOAb6mwJP5SBxxLfF3wB7PECNK1zk+YszrPjuzVRCMF/OGIPJFnUprsVKCGg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Q8TUJq1M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=x/K2lyBG; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="k4bts5aV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vTEYWnwf"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CDB69140015E;
-	Thu, 30 Oct 2025 04:59:02 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 30 Oct 2025 04:59:02 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Q8TUJq1M";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="x/K2lyBG"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id C6E02EC0114;
+	Thu, 30 Oct 2025 04:59:17 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Thu, 30 Oct 2025 04:59:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1761814742; x=1761901142; bh=co/zB0CTL4
-	jn6EVKjki3miZmaTDXvG0UF2ltTn0tq/c=; b=k4bts5aVe8GEt9cQ+TI2N0hbMr
-	tq0AnbUiW6B6DsxxvXCLD7WZ0JasMbmCk8/WxxS01cZwFCBAMCy+pnA4pbF1XLh2
-	5Sxqf3lHJp71tiUx/c37hUecGyS9wx61KPweN5f/dGRAsVkYVAZYrLtgFPhax5c0
-	NFWj8o7H/jUJhFT+BG0mZW32dQ3eIDvz3d8hv2v3QVtmncgLh1D7ymNKpnaP7hpL
-	vctGWhm4kDNB9Fh53NH6y2q5lnyJWHgEiE1u6Aul7GSKyqRqSvLf6LLzKGRa7k8U
-	FWEkqVpmeT/WK36dF/EawIywlsFkG/YtvfJhU2VeraGVhNkND0EN8GbZKsFQ==
+	:subject:to:to; s=fm3; t=1761814757; x=1761901157; bh=t0g9TOpLbO
+	2epLNStyJKoLBq8a/gXmsmB4QiqtcnbMk=; b=Q8TUJq1MDo2s8V+yVgk9m8D6sj
+	GePdF37AJnEyodfISR8MVLWnXlZw2vvkyJwsPto+VrVLwqeRTWVVSbQPaRIRarJD
+	fCDBhuvIEELpsWDZKMYy++ruodfRmN3I7+ZWfAC50zrsqkvpvbuEKVPxoiEkZUMy
+	azo4B/uUpYAIuz3rPyKhA8A46Hg8w4YHsqMm/RxqMjAX6Kwz3AWJHwqAlzYHiL5N
+	I5s0Gzus2OYng3WgvtdlEo9gkPSFi5ldfV7Ia0NDE40Qn9rjKQPAo5SaMGlpSDhK
+	Xn8bnYwhSVpOTYcccQs/mTXOz3KWQxbNPFDQ45TanIEZJWlj4fnoo2Gb++jg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761814742; x=1761901142; bh=co/zB0CTL4jn6EVKjki3miZmaTDXvG0UF2l
-	tTn0tq/c=; b=vTEYWnwfTOJy3QnjWXpkAjEiDyiPTcRHqZrTo9Jv4KUVAFi8Bo5
-	DHDMululwqM9Pt3Z04nHjmXXyYfwu7J7jVmgN8jvwT3DqHsfd8ayPkmKkaGGVgzU
-	abAeTQ0maAtGcbA+rW2tRH+9idCYOLDzE41wjFjCXHtqh/C4WSpca3G54KakKr2p
-	8qM7r9Djb0fsKYTRQFk2xVXFycUXdOJZaQgwOuY3mqf8oNuHJpRTRcYew75P2hW3
-	dWfMD2O0vbYwtljomL0Ft8vvdi580G+ZzL8TiNZIC0T54MiGdIDKVuJ8teWI/Xn7
-	SU6DpR3kdyxnXyzbDuAJY5Ljl6/ovmDMaew==
-X-ME-Sender: <xms:1igDaXCr193Vvhb0LdAPkEfahwSDNYg7z8TB6w_47P3DqMteyZCO9g>
-    <xme:1igDaU-W7BXKqY28Hx2t7_lngbhTV0K6O2GAwwTebIUooqMzj_8_b_4MGHUWt9X_c
-    VChK_VKBnLrxGcf_M6fyYrVNiYnQOFBBScLvbiGmo7vZpb0S_4shQ>
-X-ME-Received: <xmr:1igDaf8BGSyp69XyvVvNDA6cCTKpSh1f0IYXyao28EfC4sESrbNNErhbYKRuu6rQJ6hmhIrX6hKcJECNoPFz9jqFNl2qn74I81f8Yj9VZQ>
+	1761814757; x=1761901157; bh=t0g9TOpLbO2epLNStyJKoLBq8a/gXmsmB4Q
+	iqtcnbMk=; b=x/K2lyBGCU3Q3zkSiE+jx5z6g/lu0I/CZwK6fGSDgTk6wQ6xe61
+	4oSfoWLC9+X3/xHhBulg3ZTAN0Oz3rFg6/dhXCBgIiMq7pzJ8s+PlpfSdIMKANBJ
+	nu+QQCDnKm8FaxK5emq52xBhzvCYPZSHvd6k34WLeh7bjMVDFfL3Lqi7wTx+KW+c
+	pRdInoO5GnOu2xv6dizMuVIQJ5pFtEmh4IQfI8zuSC5jfGeXJC8TUqGaXUB8Xo1Y
+	9gyO8lJT7qqa0VnNEvCCVEzBFgtsYhDpEaTPPNFWqCUlnGxklotGBXKPF6cdfKjo
+	dcZIo+PI0YvmV4Jkwih8YOcucrsXv11aw6w==
+X-ME-Sender: <xms:5SgDaTFAiBBZ2dSEuQmAG6MMdMaCpuiVdJcy6_cCQbDZMULbAV-0sw>
+    <xme:5SgDaXUbCoLRER0da9BjuqgqMch76D1JIwtdFGCLmCyD-Qv2kOrjNFGcY7rw8MAJS
+    PRTrSAZODFVqEpjddR6e4kRPFNNvbEjSJRQnfOsga6LLNCNYncamw>
+X-ME-Received: <xmr:5SgDaaLcvqb_Wh9T-WepmBfS2vtm7KCuQjoeTXHTHx_fWdpTVH-Yu6GEL-v22L0hFTFdbqHmFUMswCNUP0DDrxtdRapJNr3JP99zaEfvEw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieeiudelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedunecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehpvg
-    hffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:1igDaTd3TyBDw7Xbs1Pk7beknuWiFSuVCMEG5Kr4UVcDy26PmZDwbQ>
-    <xmx:1igDaQGoBip3BwcXDiHWM9aAUMNLrY5PHnMGjK9GMsqpOO9eWvm5xA>
-    <xmx:1igDaZfvQ6kC6i2UxjMEDSzoJZHDUBpVmO3IOsGWCCE7gTOWgM5XuA>
-    <xmx:1igDaSG3NVqhZkf4yQfLnqaDN5x3pLqx8Nx8HkI807O1UB0nDkJhTQ>
-    <xmx:1igDaYb7aElJzUgLIP3eQiyiE_aqQZyJGzoUrWAXyR9dQmf6BACYU0wg>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhonhesih
+    hothgtlhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghp
+    thhtohepphgvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:5SgDaf-K9TPPN81E4Jls0pkQNEed0nm9nTWDBtprlb_86pKfKOUpNQ>
+    <xmx:5SgDaVJ-wqws21uuxb1SZ6hbq53KUpX7tFVbL-I_cm8lgi5ZgvI85w>
+    <xmx:5SgDacnCeyp-dR0OYEGcVedo5UYTpV571jnXAwrFYHr_URUE8MIj2A>
+    <xmx:5SgDaROZ6a5T1ZOsahRVXQQPLyQDzg5WLq4Ftvq-49sPoPVYKJ7jKQ>
+    <xmx:5SgDaVph9Yt9MLr99sF9hBuaZsAICS7UK_chYV5HujoFGWHqxEoAxLUb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Oct 2025 04:59:01 -0400 (EDT)
+ 30 Oct 2025 04:59:16 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4b66b5b8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 30 Oct 2025 08:59:01 +0000 (UTC)
-Date: Thu, 30 Oct 2025 09:58:57 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 50210aa9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 30 Oct 2025 08:59:15 +0000 (UTC)
+Date: Thu, 30 Oct 2025 09:59:12 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Taylor Blau <me@ttaylorr.com>
 Subject: Re: [PATCH 5/8] builtin/pack-objects: simplify logic to find kept or
  nonlocal objects
-Message-ID: <aQMo0QJUPWqkbRNC@pks.im>
+Message-ID: <aQMo4PqG_U6JIkOt@pks.im>
 References: <20251028-pks-packfiles-store-drop-list-v1-0-1a3b82030a7a@pks.im>
  <20251028-pks-packfiles-store-drop-list-v1-5-1a3b82030a7a@pks.im>
- <aQKfnd2gWS2T9GaD@nand.local>
+ <875xbxrc4q.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,53 +89,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aQKfnd2gWS2T9GaD@nand.local>
+In-Reply-To: <875xbxrc4q.fsf@iotcl.com>
 
-On Wed, Oct 29, 2025 at 07:13:33PM -0400, Taylor Blau wrote:
-> On Tue, Oct 28, 2025 at 12:08:35PM +0100, Patrick Steinhardt wrote:
-> > @@ -4388,27 +4388,27 @@ static void add_unreachable_loose_objects(struct rev_info *revs)
-> > -	while (p) {
-> > -		if ((!p->pack_local || p->pack_keep ||
-> > -				p->pack_keep_in_core) &&
-> > -			find_pack_entry_one(oid, p)) {
-> > +	repo_for_each_pack(the_repository, p) {
-> > +		if ((!p->pack_local || p->pack_keep || p->pack_keep_in_core) &&
-> > +		    find_pack_entry_one(oid, p)) {
-> >  			last_found = p;
-> >  			return 1;
-> >  		}
-> > -		if (p == last_found)
-> > -			p = packfile_store_get_packs(packs);
-> > -		else
-> > -			p = p->next;
-> > -		if (p == last_found)
-> > -			p = p->next;
-> > +
-> > +		/*
-> > +		 * We have already checked `last_found`, so there is no need to
-> > +		 * re-check here.
-> > +		 */
-> > +		if (p == last_found && last_found != (void *)1)
-> > +			continue;
+On Wed, Oct 29, 2025 at 03:55:17PM +0100, Toon Claes wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> Can 'p' ever be (void *)1 here? I would imagine not since this is coming
-> from repo_for_each_pack(), so I think it would suffice to limit this
-> conditional to just "if (p == last_found)".
+> > The function `has_sha1_pack_kept_or_nonlocal()` takes an object ID and
+> > then searches through packed objects to figure out whether the object
+> > exists in a kept or non-local pack. As a performance optimization we
+> > remember the packfile that contains a given object ID so that the next
+> > call to the function first checks that same packfile again.
+> >
+> > The way this is written is rather hard to follow though, as the caching
+> > mechanism is intertwined with the loop that iterates through the packs.
+> > Consequently, we need to do some gymnastics to re-start the iteration if
+> > the cached pack does not contain the objects.
+> 
+> Okay, this took me while, but yes this function was really hard to
+> understand. Thanks for simplifying.
+> 
+> Naive question, what's the point of keeping a "last_found"? We have one
+> global "last_found" for the last time this function was called, and we
+> have no control which OIDs get passed to this function. Why look into
+> "last_found" first?
 
-Oh, you're right of course, will adapt.
-
-Furthermore, do we even need the `(void *)1` thingy? I think it should
-be perfectly fine to instead use a `NULL` pointer here. A valid pack
-obviously cannot be a `NULL` pointer, so the sentinel feels kind of
-pointless to me.
-
-> Otherwise looks good. I think you could make use of the kept_cache here
-> at least for the local-but-kept packs, but what you wrote is definitely
-> an improvement in readability.
-
-Makes sense. I'll leave this out of this series though as a #leftoverbit
-for a future patch series :)
-
-Thanks!
+I guess it's just a micro-optimization. I'm sure it exists for a reason,
+but honestly I didn't feel like opening that can of worms. The caching
+just made me scratch my head in subsequent refactorings, so I cared more
+about making it maintainable than questioning its existence.
 
 Patrick
