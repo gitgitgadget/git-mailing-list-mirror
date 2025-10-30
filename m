@@ -1,104 +1,114 @@
 Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F71299950
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 12:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C66C341645
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 12:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761827994; cv=none; b=Zy2qYxmRIHXrRowtipZLBOxghSCTBWMykbzWzvzbzUqhLd/YrUqwxun4k8CI+EOSkr2DxFg/iOWDsIpFK2dx3TROMuyGnmdF4Ub7NRfyEfSGXiWFbCYLNTwGs2KdwO5DvaUzNpxm9qGz7fDSNr9Jbx3X052RJiaR9RNtPen+GYU=
+	t=1761828930; cv=none; b=AtoiWBPQ3lYotcAd3QYsaCxhI7labXD0FvYlwIODbW7deI/Aw87BaaK3teXZ5mMjlJgTbg+b3SKwtA9urlQ/TEaf89CBR0del7QNBcM0+rMaN6I326e8Z85hlZH41k4O3zIBYTvGDwUeuWEEak0NZDeBwuS4pbSbV228GgbkLtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761827994; c=relaxed/simple;
-	bh=Ko/1GnE9PrQoFqagKTLhFYo5HUIldx9AXXnFT+Mr3zo=;
+	s=arc-20240116; t=1761828930; c=relaxed/simple;
+	bh=VsGr8P34YN2jkWQdLMJh0B3pChrJ4RwnnH0rlTYFEFc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U8/PYy3MTHNbcJZFo270Oi1ZeV/ljqvPp9KnzLrie581+T4n/Y2W5kVT/SvH3+eXPWdaxoJI6Ob6UbaH0ulh7vB7TtOQKnHIFXwfxjcQKRebAeAbtEyZr2pwAldiAJU3RrLKIGv/Sczjim7KPENqSErJserxVJA28ia8VUmHxKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FmUhdRSz; arc=none smtp.client-ip=209.85.208.48
+	 To:Cc:Content-Type; b=p6UA72dXnfiT6PBA9S5Pzmr8osPsXz0vDwPQcxBwS4azq7SWOWm42e5hpYdiweDoam9Ah1Fuw7xWuVmaiYKtkwAb5gO+P+A33i8gsKHExCXziRaKhfancv5Cs7EL68LPXAmFM/ZeM7uqwsL9LUlTgqePvG067jbEpTgOlAvZ/uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hz0SapDz; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FmUhdRSz"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6399328ff1fso1699229a12.0
-        for <git@vger.kernel.org>; Thu, 30 Oct 2025 05:39:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hz0SapDz"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-63c3d7e2217so1615925a12.3
+        for <git@vger.kernel.org>; Thu, 30 Oct 2025 05:55:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761827991; x=1762432791; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1761828927; x=1762433727; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6W0oFA5r8QOA1AvfU/V6EvVoh/yfc+P5SM43d2Fn5n8=;
-        b=FmUhdRSzYpAK8oEqRKfNDIan0c9jjepuv7H6X+cyr2ynoUmuLbyh/3ceHkCYwtYizU
-         XgckUUVBeWab1I86sHYQ7QHoSnhV5ZLMaK2m5eka+JaNi7GuTgfhMnmIiZcq6ifN7Kgz
-         osWG/k21jT8QfFW8QMwhSXSy2amkq29SrvO3R8sSRMjDHBlpgg4TlqLgdyrKF3AojNZf
-         JbdudoTIa5TRrxtxIvt0uOF4e4EqDIoi1612VXbGwR+AlOmfvPbc2/eP8aCRw387AcV2
-         Qv5T3tCN4U0x5vmHkbFOmYVTPH8sVNNVm/4+WZdYA9qc+i3Z5CvpxF1eQ002M2t+hAZm
-         HSjA==
+        bh=VsGr8P34YN2jkWQdLMJh0B3pChrJ4RwnnH0rlTYFEFc=;
+        b=Hz0SapDzEovijl70KdEr4C8V8C+KlDaR6XHrTccR80rU7T7TZPBnrjeqM16JRoyWaM
+         lPE9TP3IogWRvqJgNUWTCh+2WMmMHsGxhojVQ0LgoRxjoHLeQc+5MkNqxyUUAhJ0YSAq
+         qNxRYPLcsOe6z+KWbNLWDwKD/RS92jJMraVVjrtlA6IScHSOYC+eEV3KhwbHXvDdKJa3
+         2LS54aMKemu5xeVzRKw5M87zJHSp3gYLzYYiiiKTLpOvcQjuxW8H3KhfDLMd+Gy/yAaP
+         LR6JbavewJ0/XD6OWpM2ICZJPqtMeKAO8PzIBtci54eC9aWdc9fYMFSbgBrpYBVJGhqH
+         UbMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761827991; x=1762432791;
+        d=1e100.net; s=20230601; t=1761828927; x=1762433727;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6W0oFA5r8QOA1AvfU/V6EvVoh/yfc+P5SM43d2Fn5n8=;
-        b=W4NSyxl6mKhEzsUVnQSVRkYnLZHbHBw6ekIFPf2qsPMWKGYy3xZroYgVYONlhi2/7o
-         rTzAeoXxjUQRgw414RxeZwj3idOTkESPWoiBF6Am09HoB3lCa1cYzw+cq3iskEOvsXP/
-         8oc9A6QbCnRaD2XqpKBuE25YRsXqkwRBUJl06d1GlpTBQ0OlbaQ3/pEn97/jcaDPNcag
-         fM4jLpaeEQSeRVa3YC/aQBVS4HmsDM+rLq+1NkJZwis6/uUUxgRuiC7PNd6GskcX4OfJ
-         u5lUDwUFLK4SSNaAJ8cjF/DcwQXPb6vbz6LEJxkEuEAIe31I5TIXYUoXPkYSX/JFxrit
-         +Trw==
-X-Gm-Message-State: AOJu0YyNbhzlpbqIlCMM0uzN70Zr3x1S8Dg8cp463yFWyxtmcVy76nT9
-	F7bNa4P2WBknFGyajmPBuqmt3SeCfj2vWjYzT3BpE37M7u/VgBP16JprmpTqqtz3vZ9iUo6heHt
-	AcBbWFjhs2A3x2WesWxK5gip+hQ7ZqeIDSJ36
-X-Gm-Gg: ASbGncvlR3aG1qgM6SXbJZ6vLa3C4BGedd+O2BhwJttpfx5sE3dGEfeDVtToTol9xZQ
-	5br67tD8gkYCeRJTlKh3yfdNu5iRh8N6eqFeQkv6laE6zutm64sesYAIGwT0Gglv12Cjtn1C067
-	j/E23tQGY00wndmsRfabVq9NUA5DCb/8tmvSKWS62jk19sVLemNNRMnYBro2c84jIiSUo6Hsd1D
-	nnoYWYCapCLAXRqQinFaBmRHBK6/rDSUUuM6wa9JxHWAwuBzJluFci6BL9kf87xSsiwBW+0iU85
-	NbFpoZUSklx5jDVR07D19IFexC8y
-X-Google-Smtp-Source: AGHT+IEcC1LkaKxcTiqdtoqwNZHuPFDttQlojK/oeIFGFWvL9jWVd4caEU51H6MYgo8n6ep2GjUasX4uAYe3QsdzqQ8=
-X-Received: by 2002:a05:6402:a0ce:b0:63e:155c:3ae with SMTP id
- 4fb4d7f45d1cf-64044188b93mr5627202a12.6.1761827991190; Thu, 30 Oct 2025
- 05:39:51 -0700 (PDT)
+        bh=VsGr8P34YN2jkWQdLMJh0B3pChrJ4RwnnH0rlTYFEFc=;
+        b=iqAmAdixzPfvX+LgKt+eRYPov4r+suWYRn3vSj4/lHAKK+nRvmDm+xhRoq38fwwlLS
+         Vki3+811888PB2Zb0J5KVQ/fgGL9KspV2Ki7r00xB0vUN9rFpWveQfDgYVjyaWREsXy7
+         +Gwa+VLypu5H//vBXECwCMkx/K8qRdLNDQAEf6o7IcsrTEHGelnP8gIMOg9skSFYJo77
+         Ydva0AbbLUs2Wa63BlYNXcl57zF6AtSs3eNxv2pvOc+/mP3hkmCT8caa35cSJIpiNgcn
+         m+zbF8KYkwYR+zR0msV3As/TQp35pgckbCYhYEEdJu2AMZJFQO3UEHnmHydfvtfBOIW8
+         XpJw==
+X-Gm-Message-State: AOJu0YzuU3k8auAqwzFcgII1lLOUw1f/R5GV5xbgWSNz1lQHr2gUN+tP
+	AajzOMqia05sw0ATZfyWWWMUYUrDO0VkWrRlwtJDk2ayxH5MkZVwhUIjeKEMcuGh3XGC3ZUdw1a
+	xeYc27FhmIwumrfGWqaSCOf9cGTolCskCPg==
+X-Gm-Gg: ASbGncvRbAlaf1b6zbzBbsI9tQPz8pBuSdiucEpyTZ+ZWaHHW2a+PlqRrMDnCEofyu3
+	g4zItC/N8Dqhv+bHBQp0PmkY2BT90+xQzH0f4VksTX9lgUuzJgfaTDaXK8uZma4pTALsAbb3vjg
+	MSXfIAtx6D5mn67LR1RrpNtLtZxc8NBAlAp7daKyEknMXubLj8ahDVB/GkQdDb0YJ4VWGkk7LI/
+	Z2/XCHfhyMmLxd9jhREWYmTmsMRFyg/I/9W7dO8EdwTZ2GQehw7JH59sns3t9QrH+Z9WTrwZErs
+	K0Pbsp7m/jOgsGkP1Q==
+X-Google-Smtp-Source: AGHT+IF++PjUy2gKmIF0ghgaH7ajMv6Pv1n/7Sl4T0ABnhiQxEfcFzbgqP7AVGH9+ovBaRG2e3SqZmg+EFEcklhlilo=
+X-Received: by 2002:a05:6402:35d4:b0:63e:802f:3682 with SMTP id
+ 4fb4d7f45d1cf-640441aef01mr5940349a12.6.1761828926830; Thu, 30 Oct 2025
+ 05:55:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251028081232.3068147-1-christian.couder@gmail.com>
- <20251028081232.3068147-4-christian.couder@gmail.com> <xmqqv7jzdtvl.fsf@gitster.g>
- <CAP8UFD3S1s3_p3m-ZzRO=B7nQwJvbYMBew8_MZWJwSJEm4oFTA@mail.gmail.com> <xmqqv7jxadq6.fsf@gitster.g>
-In-Reply-To: <xmqqv7jxadq6.fsf@gitster.g>
+References: <CAD=f0L9anYu4LKWGDKrwzBBytMunJ3UjTehNN9m2DigG8yCNHA@mail.gmail.com>
+ <CAP8UFD0a+RxQ-pPWrmwOYhBic6Oy9C1NeA7EmEyj2KYYDyS4QA@mail.gmail.com> <CAD=f0L8=eBJjj77xBw7m7WcQf80sYbF-X1wbFc9ToC9F0AWVAQ@mail.gmail.com>
+In-Reply-To: <CAD=f0L8=eBJjj77xBw7m7WcQf80sYbF-X1wbFc9ToC9F0AWVAQ@mail.gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 30 Oct 2025 13:39:38 +0100
-X-Gm-Features: AWmQ_bmzMl6djIYRGzNMdcf6iTKRs5n0T4VXdSCCv0r-k57CJ6R3eAgGXma6A4Y
-Message-ID: <CAP8UFD0oOLnvk3wKROeKEWWFcQPVB-x9JUjpeE=8nWsWZYUnrw@mail.gmail.com>
-Subject: Re: [PATCH 3/5] fast-export: mark strings for translation
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
-	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
+Date: Thu, 30 Oct 2025 13:55:14 +0100
+X-Gm-Features: AWmQ_bmrdlFdkJDK48MndqS-jtFDsqNtOXfU7YcxjoXh7gDzxLcfCZvZcfi1QZ4
+Message-ID: <CAP8UFD1v7yec7JwBGekJPvcq7kNJPuPTgWOVn+gBaw1+Sh2mdA@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_=5BOutreachy=5D=5BProposal=5D=3A_Refactor_in_order_to_redu?=
+	=?UTF-8?Q?ce_Git=E2=80=99s_global_state?=
+To: Bello Olamide <belkid98@gmail.com>
+Cc: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 29, 2025 at 5:12=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > On Tue, Oct 28, 2025 at 2:43=E2=80=AFPM Junio C Hamano <gitster@pobox.c=
+On Thu, Oct 30, 2025 at 11:59=E2=80=AFAM Bello Olamide <belkid98@gmail.com>=
+ wrote:
+> On Wed, 29 Oct 2025 at 16:51, Christian Couder
+> <christian.couder@gmail.com> wrote:
+> > On Wed, Oct 29, 2025 at 2:18=E2=80=AFAM Bello Olamide <belkid98@gmail.c=
 om> wrote:
 
-> >> Makes sense.  Should we also downcase some Unknown and Unexpected?
+> > > I also studied [3], [4] by Ayush Chandeker,] and [5] by John Cai to b=
+roaden my
+> > > understanding of the project.
 > >
-> > I am fine with doing it as part of this series, but I wonder if it
-> > should be part of this patch or in a separate patch.
-> >
-> > If it's in a separate patch, each patch might be easier to review
-> > independently, but a number of lines will be changed several times in
-> > this series. So not sure what's the best practice.
+> > Are there some cases where strategies other than writing new accessors
+> > functions were used?
 >
-> Rephrasing the messages may need more careful thinking while
-> reviewing, but if you limit your changes to only downcasing the
-> first letter, I would think it would fall in the same bucket as
-> "While at it, improve code indentation".
+> Yes there were cases where the functions were adapted to use
+> exactly what it needs down the call chain rather than writing new
+> accessor functions.
+> An example is
+> https://public-inbox.org/git/20250306-b4-pks-objects-without-the-reposito=
+ry-v2-1-f3465327be69@pks.im/#Z31csum-file.h
+> where the global variable `the_hash_algo` is replaced with an explicit pa=
+rameter
+> `const struct git_hash_algo *algo` in low-level functions such as
+> `static struct hashfile *hashfd_internal()` and the call sites adapted
+> to use r->hash_algo
+> or the_repository->hash_algo in places where the subsystem has not gotten=
+ rid of
+> `the-repository`.
+>
+> This is also a strategy that can be used to replace global variables.
 
-I did it in the same patches in the v2 I just sent, but an issue I
-faced was that some tests in "t9300-fast-import.sh" check for some
-error messages in a case sensitive way, so I had to make changes in
-those tests.
+Your answers are appreciated, but, just to be clear, I think it would
+be nice if the answers to my questions like this one were part of a v2
+of your proposal. If I don't see a v2, I am less tempted to discuss
+this further (which could hopefully help move the analysis forward and
+make your proposal better).
+
+Thanks.
