@@ -1,282 +1,130 @@
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E150C86347
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 12:19:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B5D2FBE16
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 12:24:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761826773; cv=none; b=lZS3cqdc2idADYwxlVz+UGlQWFmDCZS1ha2R0DQv8pbwQEhhyoe7kbdhBE4phd5yt0hZwZ2polTdKehAPef9Dia3I7qOifLPiysVw/06yjqPJ1NruTNvAprLiNjhMLuR/IrGvGg81Enm3EFYrq8e9R5h7EnKCkVegr2cKOK23YI=
+	t=1761827048; cv=none; b=Oi2PM8Fk8VZ6bwTl/tqdFa0rMHjgCK2XnaSQDcAcD8OWTwyZ4B+V7oM3/kkaoBmrKZsfndbN262GJ4agTzaYMu0TWplzBhK/M4HfyQdwtPfIYGE3+pOwAXm0HX9oBHfmVDLc/HFUewhuA0KAmMhxK3WyHcVYNj8jzp46sAyuv5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761826773; c=relaxed/simple;
-	bh=/B9+bq5ykvJDVTKQ2p04wLuD7zdIRwIom2RqAU8cRgc=;
+	s=arc-20240116; t=1761827048; c=relaxed/simple;
+	bh=jFUW/w2yoMnloM7JgG38uvrMS6Abl1wnM8Yk/k6+joI=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=sulJKtM1B/GQKbziPlJz4eO526QzIUossWqflLfY8vh2LFEy5nXRAtO4xjgj97CH4Xfg4DDRDzGmFHRH6dzL+L8Fz8xhD+1s29G6PL8kdRo1L4mpy7skII0cjfbsQ2MGqFPTgW6/54vcLUAv/7xPcMozBrjZV39dJ2SgANmHJx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eYRkETtA; arc=none smtp.client-ip=209.85.222.54
+	 To:Content-Type; b=BSdjHu/uQ9fnjmzmaQPMEhpDAyApyQAAG7UQv3teTnogXPM44wd9vSBhlLNKZNbEeTsIDK88Xhj/+rV4sCRVw+Lb33FhH521xip0QFlqqOqkQSuv3Ye2woNOQTRAAJOpFfY4aTQhwyLZrndDCDH6a03p49qD0EiwekwGFUs/whA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EtepijEn; arc=none smtp.client-ip=209.85.222.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eYRkETtA"
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-932bc48197bso485206241.0
-        for <git@vger.kernel.org>; Thu, 30 Oct 2025 05:19:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EtepijEn"
+Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-932dfe14b2eso806417241.3
+        for <git@vger.kernel.org>; Thu, 30 Oct 2025 05:24:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761826771; x=1762431571; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1761827043; x=1762431843; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7xToUPFK10JvRAbFpbeg6i3G+1ecXA1hZMR2CivjNUw=;
-        b=eYRkETtA+8+vGRdc5Gy0W93EqxUWRIiyAgqXN45LNT5CzJpGGcA6XFzL6INyvL0zUk
-         sypI01MtHMo1uxj2jsnTCK4ZNV0xy5yHvsXDbMZxGA6mA8Q2QIaXLyH8vbowWm2tTMvK
-         rxXYnphXBHXPOVkr6Tur87+C2kZkVw+PZ1tUN2L3R92qb/HjZrymtmnqKvkugiokcUGz
-         5RT1pu3nx1H4HquGNJ8MCNqPdlQyOUKsb/SNrPJN0tBH9SLW0eEpcJBPqd1iF+TarBPR
-         NQmIEBWuu4QpACyWdcyZ65g3JIF6Gjqy81a+EbiKydU+IMxL1QuUCGrRvY056FJ/1NiS
-         rHXA==
+        bh=1RtERp3lq+rpGvMNsN+waYAM87E0oKQINMJ91YO8PIo=;
+        b=EtepijEndu/Wp2lxwuKf2LuqflWUXevmipzR+E0Kt2G6B0G4O09JxNmPgGPUufwB28
+         U7eknRqVCXJB4qSfE4wuJIB59PgpdKsi8V9hed2rDTaUJ5iWzwq3YzWWXlrM8Gt4SIyb
+         lJ58P3+P7WKpC2uoGxNYqdDhDaGRa54H4TFzHBw2TckPoTJrFfNjALwHbQhIVQpjM6Ev
+         Xozqdk/K26z9NW1SabnnbqW8kxo9jLjF+PVpWF4pG/1H49XLTLxAjsr4R0zngga9kags
+         0dezteWbP8uyl5ZoMsnaGl17CN3Kcj3diB3VjJV7jKtvSjOBnA1Pq7qu8WEsknSDMwOg
+         S2uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761826771; x=1762431571;
+        d=1e100.net; s=20230601; t=1761827043; x=1762431843;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7xToUPFK10JvRAbFpbeg6i3G+1ecXA1hZMR2CivjNUw=;
-        b=gevPpULppVVETapuXzwkqVnDRQMAJ9WRxwqu5uHwSdmtIFIijcRY/0vB9EBVRIWoIz
-         ScaqwvpYjCT4O9EZQEZL2ilC5egDBz3k9kraSbmcWZAmOw9gdz2I/ARtfdzgNgp6eEjV
-         zqrb5H88YOMnWZ9G40TWGLwIaIVtKgl6Wv4aS1Xa4Vezvt+bDALePSzCia8DtwubkvvD
-         EYg69GKunzA+Iz9MXHZX1YsnXwOOKu89PdVOoQK2Fu8QdolqBJm9zp4r3tXEs7re5x0d
-         Ai+ih7HYwHrlj/HpSNsz5DEs9Db2wFqiOJsoKgt78bQ4FgodZpUNCFimeHJYfx6adB2b
-         vkBw==
-X-Forwarded-Encrypted: i=1; AJvYcCVjMIW+9Y4egk8e26xz+A92NDoncp2v+jTYBK/EMOR8Hfoy5Y4tujOG1fY/1e5hI2pxuaU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzRAymQKRQPhGJbWjto586Vf1Wa6yH2LuU1kERb7rDwbsm1IfjQ
-	0/rhxgotd/2qo9leRPk3YXob5Yye4p0JueWOnASsZT5MIrhIzf1BQssFVonkZHPzF5asc8/IEiR
-	Obhno+xh3z6MFCKcjnmD7UVR2bYI3aeo=
-X-Gm-Gg: ASbGncvCcPQ7zSe+xm7Gr5KtEL9NCufX0CLEBRMnIeMTvjSAqc95D2mSVMsJ6z13syG
-	wc/7wFGGuJGAqGTESpSTYWe264E1On+G4BsaGZR+TF8aC7jEny0tpyA3rHg499QtO5zuf5PoIva
-	pfPW1lq/ZwuI+zRxBZ94EMgtzvChCBxWglBBYgZWPBgvVlDZoBhwscJ+IWkjk4GwHWpZTlw6S5a
-	+P9wrsnX4pMBMSlrgRbq9C6zZaXdSMCDyAo8arC+Zc6sqtx3hsUnLb0LOmVx3etJl2AjIT/qbAg
-	g56t3HJNIzkyK3sgBA==
-X-Google-Smtp-Source: AGHT+IGJIgBKm5Zc7Fq35d2X4K3n7loddZvBwbt0ysQ5WbEkhug2MTZNEARACUs4PN4xhXGnxUCfwG+vHdvhWXsmaQE=
-X-Received: by 2002:a05:6102:3f16:b0:5d5:f544:a88e with SMTP id
- ada2fe7eead31-5db90681e8cmr1755946137.35.1761826770098; Thu, 30 Oct 2025
- 05:19:30 -0700 (PDT)
+        bh=1RtERp3lq+rpGvMNsN+waYAM87E0oKQINMJ91YO8PIo=;
+        b=P4V863g08qyae553EWTubT9WSRYzwrq9Y4AFZ93YrL/sEj5+O+cZW6UQBPMK5Jy7ao
+         g0hsF1IUwIvk2akkFqhnBrAOjALCnRm/63y2/wBw05Qf7shT2BeHNj+ra5ehpFpP7hbY
+         +ex+Q/PGzanVm0e1YPj3JlISc/CQt2TT+oBnFB4SNyMP64k7mFJ8XCFxV84VNNA6Xa/x
+         MnZLCeVaPK83oJD4EraSJqUghrzaVsHj0/kIlQ4PE49iERq9t+NF9QyWFj9k9FM1Fnke
+         9gYUXzmr9qzcpYba/vvXBpRCo8NhS2Q4mn1c+bXaBWFZAmbPmJ68xm+VyCn97ZCPQAct
+         k0cw==
+X-Forwarded-Encrypted: i=1; AJvYcCW2ZZ0fI+/GLjR0YEArNZ6XZq/5cYg6vXgnN8gt7JUvyhDca9b5+4fncKNXBTzgdFvrgY0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4+AtjLCbWWc6cQETBb9GTkGR2fpunmx/J0CKgZcJ4phpeYbGt
+	PI5rOk/vDiWaylGQtwuURmkexaZVoqorGphtVtvj7hqqfitJ0eSXO2w2OoaB7EklLeZifrhO+TF
+	Pff3YxgyRjQsefb9KZ753N19ZF6++foj5f27N
+X-Gm-Gg: ASbGncvmzHOP2BSC799m+mszydxqyEo9wXNFtTEgdTvJTw1ztBTugFgx7C4K97G6YZJ
+	oT7oa+ojjLgMeQAMLRNAz/7rac3XasEQKtOW9CgUMZRkyWzNNdJ96GzrKMGdN7mXMbJJMIVx8x+
+	81Xxqimu6BErdaKwdKQ78liyHWlOayZ7Ku/hcGfrf2EYExtJZSRR9pKvrCaGhMqOon3oyGcnL+9
+	nmDWVk84p3ewBMryxMu94q7Va3i6GfeD3MkAvAcEMFQ3qtcfbP7N4yAxsFZEJ/249uWYdRv8WER
+	fOpkMMPol9UJ+FSUww==
+X-Google-Smtp-Source: AGHT+IHjgwDPD4xbyPAmJR8+/TjZ0BSkOXmupirumf+mGAaunK+o6tMy0OvKL0ksvPmhEbwo7lOh6QScgy97Q/ZMyVg=
+X-Received: by 2002:a05:6102:32c3:b0:5d6:1565:e4fe with SMTP id
+ ada2fe7eead31-5dba1fdac99mr782105137.36.1761827043441; Thu, 30 Oct 2025
+ 05:24:03 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 30 Oct 2025 05:19:28 -0700
+ HTTPREST; Thu, 30 Oct 2025 08:24:02 -0400
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 30 Oct 2025 05:19:28 -0700
+ HTTPREST; Thu, 30 Oct 2025 08:24:02 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20251024-b4-pks-odb-loose-backend-v1-9-1a4202273c38@pks.im>
-References: <20251024-b4-pks-odb-loose-backend-v1-0-1a4202273c38@pks.im> <20251024-b4-pks-odb-loose-backend-v1-9-1a4202273c38@pks.im>
+In-Reply-To: <20251024-b4-pks-odb-loose-backend-v1-0-1a4202273c38@pks.im>
+References: <20251024-b4-pks-odb-loose-backend-v1-0-1a4202273c38@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 30 Oct 2025 05:19:28 -0700
-X-Gm-Features: AWmQ_bmbPQE1DumsbX9tQxqeSQ3fjlELPKLARpT89bzLOqIZwZ5IUGkgp3jUKCg
-Message-ID: <CAOLa=ZRXtT=5R1vM=4xcvJtRSNhC=7wqTAstK5QTaD0qbhYZrg@mail.gmail.com>
-Subject: Re: [PATCH 09/13] object-file: read objects via the loose object source
+Date: Thu, 30 Oct 2025 08:24:02 -0400
+X-Gm-Features: AWmQ_blUvCDhLDEqJAMeHQgUA8OPCiL7sweBOIjBLIwHP392n9lG6aBC3T8g1aM
+Message-ID: <CAOLa=ZTr-9==Xs1G39EbjKaT3PDOVTY5uDXiJYmzEwqpZLdY6Q@mail.gmail.com>
+Subject: Re: [PATCH 00/13] Carve out loose object source
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000c9b6b806425f421c"
+Content-Type: multipart/mixed; boundary="00000000000014b80906425f532f"
 
---000000000000c9b6b806425f421c
+--00000000000014b80906425f532f
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> When reading an object via `loose_object_info()` or `map_loose_object()`
-> we hand in the whole repository. We then iterate through each of the
-> object sources to figure out whether that source has the object in
-> question.
+> Hi,
+>
+> this patch series carves out loose object sources. The idea is to store
+> all data that relates to loose objects in a single structure, similar to
+> our `struct packfile_store`.
+>
+> The series is structured as follows:
+>
+>   - Patches 1 to 4 perform some cleanups in the vicinity of object
+>     databases.
+>
+>   - Patches 5 to 8 create a new `struct odb_loose_source` and move all
+>     state that is specific to loose objects into it.
+>
+>   - Patches 9 to 13 then adjust functions to work on top of that new
+>     structure.
+>
+> The motivation here is to make handling of loose objects completely
+> self-contained as a step towards pluggable object databases.
+>
+> Thanks!
+>
+> Patrick
 >
 
-Okay so earlier these two functions would call `open_loose_object()` and
-that function would iterate over all object sources like you mentioned.
+The series looks good in its current form, I only had one comment. Will
+leave it to if it needs to be re-rolled :)
 
-> This logic is reversing responsibility though: a specific backend should
-> only care about one specific source, where the object sources themselves
-> are then managed by the object database.
->
-> Refactor the code accordingly by passing an object source to both of
-> these functions instead. The different sources are then handled by
-> either `do_oid_object_info_extended()`, which sits on the object
-> database level, and by `open_istream_loose()`. The latter function
-> arguably is still at the wrong level, but this will be cleaned up at a
-> later point in time.
+Karthik
 
-And we move this check to a layer above, which can check if any of the
-sources contain the object.
-
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  object-file.c | 68 ++++++++++++++++++++++-------------------------------------
->  object-file.h | 15 +++++++------
->  odb.c         |  9 ++++++--
->  streaming.c   | 11 +++++++++-
->  4 files changed, 50 insertions(+), 53 deletions(-)
->
-> diff --git a/object-file.c b/object-file.c
-> index 14daa2bdd90..d9724e3105f 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -167,25 +167,22 @@ int stream_object_signature(struct repository *r, const struct object_id *oid)
->  }
->
->  /*
-> - * Find "oid" as a loose object in the local repository or in an alternate.
-> + * Find "oid" as a loose object in given source.
->   * Returns 0 on success, negative on failure.
->   *
->   * The "path" out-parameter will give the path of the object we found (if any).
->   * Note that it may point to static storage and is only valid until another
->   * call to stat_loose_object().
->   */
-> -static int stat_loose_object(struct repository *r, const struct object_id *oid,
-> +static int stat_loose_object(struct odb_loose_source *source,
-> +			     const struct object_id *oid,
->  			     struct stat *st, const char **path)
->  {
-> -	struct odb_source *source;
->  	static struct strbuf buf = STRBUF_INIT;
->
-> -	odb_prepare_alternates(r->objects);
-> -	for (source = r->objects->sources; source; source = source->next) {
-> -		*path = odb_loose_path(source, &buf, oid);
-> -		if (!lstat(*path, st))
-> -			return 0;
-> -	}
-> +	*path = odb_loose_path(source->source, &buf, oid);
-> +	if (!lstat(*path, st))
-> +		return 0;
->
->  	return -1;
->  }
-> @@ -194,39 +191,24 @@ static int stat_loose_object(struct repository *r, const struct object_id *oid,
->   * Like stat_loose_object(), but actually open the object and return the
->   * descriptor. See the caveats on the "path" parameter above.
->   */
-> -static int open_loose_object(struct repository *r,
-> +static int open_loose_object(struct odb_loose_source *source,
->  			     const struct object_id *oid, const char **path)
->  {
-> -	int fd;
-> -	struct odb_source *source;
-> -	int most_interesting_errno = ENOENT;
->  	static struct strbuf buf = STRBUF_INIT;
-> +	int fd;
->
-> -	odb_prepare_alternates(r->objects);
-> -	for (source = r->objects->sources; source; source = source->next) {
-> -		*path = odb_loose_path(source, &buf, oid);
-> -		fd = git_open(*path);
-> -		if (fd >= 0)
-> -			return fd;
-> +	*path = odb_loose_path(source->source, &buf, oid);
-> +	fd = git_open(*path);
-> +	if (fd >= 0)
-> +		return fd;
->
-> -		if (most_interesting_errno == ENOENT)
-> -			most_interesting_errno = errno;
-> -	}
-> -	errno = most_interesting_errno;
->  	return -1;
->  }
->
-> -static int quick_has_loose(struct repository *r,
-> +static int quick_has_loose(struct odb_loose_source *source,
->  			   const struct object_id *oid)
->  {
-> -	struct odb_source *source;
-> -
-> -	odb_prepare_alternates(r->objects);
-> -	for (source = r->objects->sources; source; source = source->next) {
-> -		if (oidtree_contains(odb_loose_source_cache(source, oid), oid))
-> -			return 1;
-> -	}
-> -	return 0;
-> +	return !!oidtree_contains(odb_loose_source_cache(source->source, oid), oid);
->  }
->
-
-These above functions are much simpler now that they have to only worry
-about the source level and not the repository level.
-
-[snip]
-
-> diff --git a/odb.c b/odb.c
-> index 96059456f20..5dc1e2c7eb0 100644
-> --- a/odb.c
-> +++ b/odb.c
-> @@ -697,13 +697,18 @@ static int do_oid_object_info_extended(struct object_database *odb,
->  		return 0;
->  	}
->
-> +	odb_prepare_alternates(odb);
-> +
->  	while (1) {
-> +		struct odb_source *source;
-> +
->  		if (find_pack_entry(odb->repo, real, &e))
->  			break;
->
->  		/* Most likely it's a loose object. */
-> -		if (!loose_object_info(odb->repo, real, oi, flags))
-> -			return 0;
-> +		for (source = odb->sources; source; source = source->next)
-> +			if (!odb_loose_source_read_object_info(source, real, oi, flags))
-> +				return 0;
->
-
-The iteration over all sources is now moved here, makes sense.
-
->  		/* Not a loose object; someone else may have just packed it. */
->  		if (!(flags & OBJECT_INFO_QUICK)) {
-> diff --git a/streaming.c b/streaming.c
-> index 4b13827668e..8e554abd084 100644
-> --- a/streaming.c
-> +++ b/streaming.c
-> @@ -230,12 +230,21 @@ static int open_istream_loose(struct git_istream *st, struct repository *r,
->  			      enum object_type *type)
->  {
->  	struct object_info oi = OBJECT_INFO_INIT;
-> +	struct odb_source *source;
-> +
->  	oi.sizep = &st->size;
->  	oi.typep = type;
->
-> -	st->u.loose.mapped = map_loose_object(r, oid, &st->u.loose.mapsize);
-> +	odb_prepare_alternates(r->objects);
-> +	for (source = r->objects->sources; source; source = source->next) {
-> +		st->u.loose.mapped = odb_loose_source_map_object(source, oid,
-> +								 &st->u.loose.mapsize);
-> +		if (st->u.loose.mapped)
-> +			break;
-> +	}
->  	if (!st->u.loose.mapped)
->  		return -1;
-> +
->  	switch (unpack_loose_header(&st->z, st->u.loose.mapped,
->  				    st->u.loose.mapsize, st->u.loose.hdr,
->  				    sizeof(st->u.loose.hdr))) {
->
-> --
-> 2.51.1.930.gacf6e81ea2.dirty
-
-Same here. The patch looks good.
-
---000000000000c9b6b806425f421c
+--00000000000014b80906425f532f
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 9896163234a622d4_0.1
+X-Attachment-Id: 1f0b32763769ae4d_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1rRFY4NFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNnVZQy85d3l2MnBCRktMMS9zTUhyMlVCZHAxNjZXeAorVnNUU1lCRjRG
-NHB5TE42dE5XQmNEWlhFU0lFcHNWUkpzSUJhNStRbUNJUzNNMGZZWENTVXFDN0JGWE5UZGVyCmNT
-M1VOZFErV29tKzF0amtQc3c2SE1iVG5uOGlxWkZ1NE9RSjJLdDhjSnBOU2MyWUtnRXFrV3VUczdt
-aEFacXoKaWtSTzhQWlZsVGFKQ2M1MWdWcFdIWlo0UVdkZFYzOUp0UEpJRGdIR3Vybko5UTZaZDRD
-Rnd6b01VREgyS29UTQp3Unpmd2RtMTlMZGtMencvOU1LK255aEJOSmFBRnhuS3J5eWRGQ2FwVXFw
-V3dxejZBVFpYaVQ1RENDanpBaDNlCklxWWhtNnFpeFE5cmpGeUhaSEN4RFNDZmNLbXZBRXNSNE51
-ZEt4R0NYYnhoVTc0U0lubVJtSWlyZFQwd0h6eVAKVjhhS3QwNWNFUGZLSEJRVXpYbloyekJLOGRP
-VVFBRlEwcUZtSVVoS0t3V05aSXJ6bEFWZUNXQ1U4Z2J4b3VtZwptVWgzbjhmU3V3c3dsRXI3V2hS
-bTJKNUNVMkFkM2x1K0UyWUVLZFRNemxiNE8xMU01UWhKSnZTS1A5bVNiRzBuClNwaHQyRmM5OWZs
-aDlJRmg1bnBCcmdHcWhIbzdDdWVRVHlnbTFNST0KPXhDdjcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rRFdPQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMTRrQy85UTh4ZERtVUlRZ0FCVE5nUXY0NzE5T0lubAp0WFk0SENHSjVP
+c1VQT2xScVlXNHVWRks3VEVQdytkTnVvN3FBTWNEOUpBT0JjcFFnNmVScUpob3dpOWM1c2grCmw1
+NWFmWStTRUI2czZobmt5UzRlMGZpRjArSmhibkpXVXkzV08xbHFOOVc4NTBpaXRzeWxHZ0RjY0FQ
+NXFpdXoKVk5xZU4zL2pPNXBKTkc4cGNQYzgzZkdPNXFwNlVKYjlQRCtvTGpDenRVWjd2NUhQYSth
+UkpEcjFiWHlHdEFwcQp4K2NaMGJ0VXlTY2ZpU1h4MVZVSjNWOFBuK0h6M0M5ZFNKMDhIVks1MWZr
+V1VkNDczQ1dLVkNJYnRuQkFSSjkwCkN2SUpwVEtTVTNYQkJzT0E1cWl2YytsOGNvc0ttSVVYaVpa
+cWNqbVRaN2NzdXUwSXZLRENZbHNnczFHU2dSbkQKSXpsWnV5S3VnRDlvWTFKcWVDVS9jMVk0VWti
+dk13MUY0VUVyQllURUpHay9kRm82V1FmT0J4M3VuMUN1QnAwZgoxa1ZUTDJnbEF3OXBESVZsN3ow
+bzg3NXhtZE1UU25USUNULzBiandyYVE3SmE5Tmdac3lDQzhreERTWkw1clovClhYaEdCM2pvc2ZW
+ZjdsN0Y5MU0xelhpYVVHeFAxaW1pMFZweUdHTT0KPWlWblIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000c9b6b806425f421c--
+--00000000000014b80906425f532f--
