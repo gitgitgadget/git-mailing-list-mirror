@@ -1,207 +1,101 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C616E1E2858
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 06:37:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3DD285CB6
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 08:00:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761806253; cv=none; b=MxB9Umv4q1blJSP+e5n8rPZXbQQifiwhACyiJZd5hetLuxt/JIBLgPqP+FAr9sx37jAcNMfBACFi9H9VIUlysIJLAT+oxZM6qHbZN2UU3XlirTz8MKcgfXAV8T3TyjMeCDLEZMJYJEJzAJGoebS+16PlYwKAI9rsk1b2XNgSGYY=
+	t=1761811208; cv=none; b=iiAVaFfK4HRrf6FPuwmvXy0WqIBeH9NT1v3d64AOf95IJXputj1rge6nHzcQ+9UQLEw9cyyrsJRM4M/mRp0aLdPvKALkitIdhtSyuEE+1XrHapEdc36Z7VN86I52JktDfR1aY1vB4vDpdcahwGisBF9i5CHg3TovqBD4p5Y7mt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761806253; c=relaxed/simple;
-	bh=BDquwKx93S6bDbmegDlAEQ19ZU9VaEVOMS0wi67qvBw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y+1ez/OBSgSwVdE0MuuFGXuEGfpiUifo/PasLjSTSfNcjH7RkohYTkQBitOlibdkyi74Ec0/coedutzJLXqQ2REvt66ZXLMgM58GflbdtV/4V779K1K9EolTtXYc3FK3gbUIKnJHy/B0BaEoppf9qvRpgga0ucSBZi2JO7tVRDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IkPg1xWo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QFrbyD7t; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1761811208; c=relaxed/simple;
+	bh=RJzhP66oLiBHMpgVOZQACZiWSNhmjZ+Tj5URlsu3cOI=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=YxhOeWXshtWr504ojYA0lwyhZkRHfgeWKg9bcU/4u3fcVfL3NJV7ZTAK9yiXMlJBIBk7Ym6DoARuWEgVmCZsfiqXx8PhyNr4yWkHhIdKZA/WAuhoMAmaavQXf+aA6Yd8FpTtYoRU2tzrBaHV3YAs2QcPjnryBVn+MIb0NaluKhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ldwF/AXT; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IkPg1xWo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QFrbyD7t"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CB3A714000BE;
-	Thu, 30 Oct 2025 02:37:30 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 30 Oct 2025 02:37:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1761806250;
-	 x=1761892650; bh=sTKVycGbAr8AAb4Y7SeledodxfmQe28FH/q6MAOoIqw=; b=
-	IkPg1xWoB7G9KZRtUR9ZQrlreT+rj4i84e1hlVNR74sRbtsiXH6S/nQr33jyOOai
-	WLNU9j/3gK5DHsq4r0Br4hPG1UKDTXM5OW5FS5fyLti8ZcaIN/ZTgrfFOvss1BUo
-	UWJi4p1PqZHQSRyW6kHnmPrVJ7LY1Lpa24/AP9SXypV8hzNI66BJ6lg6PyxyPjLF
-	7maerquDX7AtVZVmYRmWVWOmhqopicsaBO7/aNz0hzqsPMC9rBMBM+Wgu4iNrtJO
-	T/lR3I4AP0xmMlYx5auU3xL8Mql2SBh18RS/IjSTLSEdQqPYcEYxpEkTK5r2UdNC
-	SR7R4pDNmyWpgAfqYM1vZQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761806250; x=
-	1761892650; bh=sTKVycGbAr8AAb4Y7SeledodxfmQe28FH/q6MAOoIqw=; b=Q
-	FrbyD7t+vxbLoJwKh/Rlb4njH0yvab4HE8SQXE+HZt1waERPlyOH+3lVKEsgBpE4
-	HsJSG1cgkfdM07dWzFFKzThcFuayr2wJefeXbNCyz29nvCb/s6WhaCwKvvRDj1+V
-	KE9VAvJoKNnXYol7D+zmlqEDXd9gQfd2FkIjawFmlKBPya9caS++XrnsLxXU6jc9
-	S6n7aHIfUCihwy6ztMMFDM7c/ZJZZFJ3BBJ2c6xxOskYAqP5vX7+LruUwfmiGpVK
-	Ql0GmlSWFDi17BW+ulGn7ygMXuu8JqLrtDaN362gNONtag2c2t33cxV6Gazi32Hc
-	+pQpPOoPL0bkcifzuAHvA==
-X-ME-Sender: <xms:qgcDacSsYDxb0xya-tyoXwSy_Pb-uyL1hsgXOxjRWecMS_imsd4pYA>
-    <xme:qgcDaQqOPuhFZWGh-9gMIlqKVsvPM1zXdpyq9lRjJtJyzc3vmSvufqWXFpz9PbLnZ
-    1djsHzWNByVpgeJxBvoP_f8GGgxFYmW1MhwvCEEinjDYXevs6CVgg>
-X-ME-Received: <xmr:qgcDaSIJilbaoX_IKit8U0fUj9WAZ2y_osGLUg1nrj391ugJJHr55QCHTqi2kWeHjcxlc8razKwgcjw_DmUMbCbcRqyEXEQ0suQ037kDMw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieehleduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
-    dprhgtphhtthhopehsrghmrdgsohhsthhotghksehshhhophhifhihrdgtohhmpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtghhith
-    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:qgcDabqZ80khOFWnpgu5J1SC2LKizMmerv-hRKejWCU5AhjH-K_ZmQ>
-    <xmx:qgcDaSxNY5FGusfA_p9Idq4KW-kV7jAgrPjDECerTlcnMaCCOEAJKA>
-    <xmx:qgcDaXO9KW_abgmwZiuGMMxVj2AwC1TEf1sGzMTrEx4e9nAJs-CSSg>
-    <xmx:qgcDaf5DOIvnTDQVbK4LSbyRMA3MZK8ROulK1Eq3chBGGbsPTC8TAg>
-    <xmx:qgcDaYKDmEIT9HqrxhgCvNUfknYsIpz3TCk_e5aIi4ngWg95l5rrB0yz>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Oct 2025 02:37:29 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fe929c07 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 30 Oct 2025 06:37:28 +0000 (UTC)
-Date: Thu, 30 Oct 2025 07:37:25 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Josh Soref <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Sam Bostock <sam.bostock@shopify.com>
-Subject: Re: [PATCH] refs: support migration with worktrees
-Message-ID: <aQMHpfwZs2eqRAwS@pks.im>
-References: <pull.2077.git.git.1761589580028.gitgitgadget@gmail.com>
- <aQBwiE-bhqcaSHG_@pks.im>
- <xmqqfrb3dnis.fsf@gitster.g>
- <aQHoKXtrbDx6eNpH@pks.im>
- <85d6fdcc-cee3-448a-8bda-72791f342be3@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ldwF/AXT"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-63c45c11be7so1104000a12.3
+        for <git@vger.kernel.org>; Thu, 30 Oct 2025 01:00:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761811204; x=1762416004; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=352urKWraBrufjJV05l39qDQ12wDLNezHaFib6477/I=;
+        b=ldwF/AXT1VsZzFf2c4cNJeGbOxBhqBg6ud4znQdAIxFkquVetkdD+gCjTWgwYtGj+C
+         NpPBKFMLPIFGl8ptV0/efgJ7ZKClXo/LHsgiSN2Fr9Rjw/013ZuBpmDVdLjBh2w7ukjZ
+         Hx8BynbJdBi9AhFgsqyXinz4cVwGjkWcqWiUA2IFy7FtjEu7KP4PUW5XsNmBMYJBnRyH
+         BZw/VwFRDq7e5dLXwiMZOSruhbGMqixz0w404QIXDFDsC8weBEMQrtjCzGGHGaC43PlT
+         yKU+wl8Rr8cgNC2zUjxKjejKFdw6VJ4571LNTqQX+WH/qM7YGmlxu2eJFWn3irXmvUZC
+         KzIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761811204; x=1762416004;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=352urKWraBrufjJV05l39qDQ12wDLNezHaFib6477/I=;
+        b=JkiNC4pmgBny8d791d8mMHkwMMEGvc5muon7eX+7CSHA3+0FtgFv+i+yeXgTmnpFoZ
+         oqo9VEzSreUsqUjU1YBxgKeNFstxomIb56cBdUitoDU7fcytX/1Z7OfEt4vrDmHgD70H
+         SvbFWsy4QlT7MBn8yEkvhRXEh5ZDIz5pQkwvy8AzgUxaEFiD1PVZ3UxVFzCXOLTGoJGD
+         hBqQue1kJE9upsQkTRzsJCreo7DCf4o9Jlqo/RnXstHqaZT3RzMdXsHnZLfXrss3H1Ks
+         CjgeDrYxtv3xzMKFiKsQ+G7RyQwpW+zrod4irpa6bJicG7HFAHxKVJr7wwgTXtuumOLA
+         64ww==
+X-Gm-Message-State: AOJu0Yzr5corJvbTVE2mJkCcpkepuK91HrcWXXc5ci67IGAuJ2yDq04x
+	SDuqWwfpNY20YXqOmS1zkakz0KZkM59etLO+/LXcBi5C1dmIaBfgcgn1W4y1yVp66uUOITiDM+2
+	vBp8q0Qf3WIl8ZbYWUqdqq4HosRjATsklB0Vc
+X-Gm-Gg: ASbGncstwiAB3OrbEy03HqKQgu/dCB582m/n49s0G9tvIAg6fORtyLM8sooXxrL2xpp
+	/PhFNg1bpXSRbk9rUZ1V419YdFtYCr5Lhyt+m+ZwlcYbzVQ9lI2psiVRkZ19H01MuEPZVsF6I36
+	ZuFY0mLqInLb89gAiSYzQ8f1waj4cC6WyXOfZh1hdnE4vkF51BtrRuOdzw3MGeULmMKi9oXRldv
+	C2+9alIppIaFNgtbAQsNu/TBXWYnq/Ve5X6G3DkwPDgvF8nbBybxT1W9SJ9PQssaMvPBbd/kvCD
+	H4TtYB6ML3p2OvH3AnAM05prKg==
+X-Google-Smtp-Source: AGHT+IGAl0fVhXrHQWeDUto+4GrK/jjvvnzNamu94GJWqyYGEFZYVwHAs9QRrC0pZUj5HUu2krCzHjhjAviZkY42KUo=
+X-Received: by 2002:a05:6402:3514:b0:640:6700:5972 with SMTP id
+ 4fb4d7f45d1cf-64067005e43mr1171326a12.0.1761811203860; Thu, 30 Oct 2025
+ 01:00:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <85d6fdcc-cee3-448a-8bda-72791f342be3@app.fastmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 30 Oct 2025 08:59:51 +0100
+X-Gm-Features: AWmQ_blime1gdzHT7xL0MWoKqru-Tj3JSqvVsukF1blDt9QRNSfgxsVdDzB9EBg
+Message-ID: <CAP8UFD375A28P6hDxj9rKOjZCCNtSPh1UnLT244SBW+wu3vUsA@mail.gmail.com>
+Subject: Draft of Git Rev News edition 128
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	"Randall S. Becker" <rsbecker@nexbridge.com>, Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, 
+	Lee Reilly <leereilly@github.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Oct 29, 2025 at 12:33:15PM +0100, Kristoffer Haugsbakk wrote:
-> On Wed, Oct 29, 2025, at 11:10, Patrick Steinhardt wrote:
-> > On Tue, Oct 28, 2025 at 09:00:43AM -0700, Junio C Hamano wrote:
-> >> Patrick Steinhardt <ps@pks.im> writes:
-> >>
-> >> >>  `migrate`::
-> >> >> -	Migrate ref store between different formats.
-> >> >> +	Migrate ref store between different formats. Supports repositories
-> >> >> +	with worktrees; migration must be run from the main worktree.
-> >> >
-> >> > It feels a bit weird to single our worktrees specifically. We don't say
-> >> > that the tool supports bare and non-bare repositories, either, so the
-> >> > only reason why we'd have the note about worktrees is historic legacy.
-> >> > How about this instead:
-> >> >
-> >> >     Migrate ref storage between different formats. Must be run from the
-> >> >     main worktree in case the repository uses worktrees.
-> >>
-> >> Two thoughts.
-> >>
-> >>  * Would it be unacceptable if the primary repository and refstore
-> >>    uses reftable backend, and a newly attached worktree to the
-> >>    repository uses ref-files only for its per-worktree refs?  If we
-> >>    should allow it, then "if the ref store you are migrating is in a
-> >>    repository with multiple worktrees, you must migrate from the
-> >>    primary and migrate _all_ ref store for all worktrees at once,
-> >>    into the same backend", which the design of this patch seems to
-> >>    aim at, would contradict with it, no?
-> >
-> > The problem we have here is backwards compatibility. Right now we assume
-> > that `extensions.refStorage` applies to all worktrees, so if we wanted
-> > to change it like you propose then we'd have to introduce a backwards
-> > incompatible change.
-> 
-> I don’t understand the motivation or use case for supporting different
-> backends for different worktrees. But Junio would have to explain that.
-> 
-> Maybe the motivation is this weird (from a user’s perspective) limi-
-> tation that you have to run a command from the main worktree?  Okay,
-> that’s strange but you get the error and switch to wherever the main
-> worktree is (that the error message hopefully helpfully provides you
-> with) and run the command there.  Then you forget that weird thing five
-> minutes later since this was a one-off command.
-> 
-> >
-> > I agree though that it would've been great if we would have said from
-> > the beginning that the worktree-specific configuration is allowed to
-> > override the ref storage format for a worktree. If so, we could easily
-> > convert any of the worktrees (including the main one) by without having
-> > any impact on all the other worktrees.
-> 
-> As a user I don’t understand why that is a great thing to have.
+Hi everyone,
 
-I am commenting more from the developer side here. In the best case the
-user wouldn't ever care what ref storage format they use. We simply pick
-the best format available and the user lives happily ever after.
+A draft of a new Git Rev News edition is available here:
 
-But from a developer standpoint it matters. If we had per-worktree ref
-formats we would for example be able to make the ref migration code a
-lot more robust, as we could now migrate worktrees one by one. In the
-current situation we basically have to migrate all worktrees at once,
-and that significantly increases the risk of the migration going wrong
-at any point in time.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-128.md
 
-> >
-> > But we do not live in such a world right now, and getting there would
-> > require some significant reworking of how we handle per-worktree
-> > references. Unfortunate, but I also don't think there's a strong enough
-> > reason to change this.
-> >
-> >>  * If "you must do so from the primary worktree and we convert all
-> >>    the worktrees attached to the same repository" is the only mode
-> >>    of operation we support (which by the way I have no problem
-> >>    with---the first bullet point above was asking question, not
-> >>    suggesting change of design), then would it be easier for the
-> >>    user to use if the command noticed that it is not in the primary
-> >>    worktree and switched to it for the user, instead of complaining
-> >>    and failing?
-> >
-> > I'm not sure. The question is whether the user recognizes that migrating
-> > references in the worktree would also migrate references in the main
-> > repository. It might be surprising behaviour if we did that without
-> > asking.
-> 
-> On the contrary, as a user I think it mattering what worktree I run this
-> command from sounds very weird.  (But again I can tolerate it requiring
-> me to run it from the main worktree if there are technical difficulties/
-> limitations.  But using different backends for different
-> worktrees is very weird, again.)
-> 
-> If I run `git gc` I don’t want it to do different things based on what
-> worktree I am. I want to operate on the repository, and the repository
-> is the same no matter what worktree I am in.  The same principle applies
-> to this command in my mind.
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-It does though :) Only very slightly so, but for example maintenance of
-references is dependent on the worktree you are in. We don't maintain
-references from other worktrees. So it's not really a new thing that I'm
-proposing here.
+  https://github.com/git/git.github.io/issues/805
 
-In any case, I'm happy to change my stance if the majority of folks
-thinks that migrating the whole repository from secondary worktrees is
-fine. I mostly wanted to avoid that operations that the user perform
-have a wider blast radius than they understood, but if everyone agrees
-that this is a non-issue then I don't mind much. It's only going to make
-the implementation simpler.
+You can also reply to this email.
 
-Patrick
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
+
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and I plan to publish this edition on Saturday
+November 1st, 2025.
+
+Thanks,
+Christian.
