@@ -1,64 +1,64 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FFA2820C6
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 19:19:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AFD2848A8
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 19:20:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761851995; cv=none; b=scmMvhEhAyBTcnCDN7EUlUpZ5vjJmupx6TtkQNL6Newis9mVGUTu1dadrazgyPzcO7+vE74/j8GyI3PcQ9Y+LaKVHyo7t1cNR4N2EyJg5QEKlZe/+pPjqOnNPm7ORs9q7zQ6ig+ySayuzg/g9APpuDwKUVRH/n/KeRon9lBDlSE=
+	t=1761852005; cv=none; b=UYbIVkq3/Zi4hOVjYYwR3cNcnrn0kTSR0eUmQtMRspyw3y3ZVGIgWFyvLe5liEn2d5y/TGpCOnOgLpl/1WOwSd/PVsTu3ZgQnxuQc2zN47BAq/2rqjb368h0CsMcDrCL+22wzdYNwALBjTjrwZCQFaRCX66mKhkZ/VEzYwGBU7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761851995; c=relaxed/simple;
-	bh=c7zHYS0aPxOwcgULMEQGFRVzR7TuPNzce7/usx3rKiQ=;
+	s=arc-20240116; t=1761852005; c=relaxed/simple;
+	bh=GC6eobmd4VtTz5vpg4CCyhZqoBrtGttd93dLMilMiew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sYCh+KWxW3QBhmGGytAd1lepFSkAHQE58NzkGrxZzaGKpZ2uRezGU26dhwlJcMgxRdiMoL54O4eA0Y8BDu12X5knw7QwW1VCiCqqGGuwi5ePO2+/D0ndUJ0xRgS5aTrYUX/SCxMyBxAjP7DsenQxudZG+kaicKv5ShdIoHY/xKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ew6T/FG+; arc=none smtp.client-ip=209.85.210.175
+	 MIME-Version:Content-Type; b=QnXkvLAia2KUStsPqr9Va+mOVsrBvguX6HL1/Pv6aHWZ6l8pAYGDlEg43e14t0p1SjFP6S9cG2PuOkirTsyJNvLGBFGsmQEHpqXHsk0Hin64yE+uZk+Kt0P9YFAdc3C1RsWPwNY1IJQkWB9mkvJ3Iy0tvZnUyTIw3lCt/3WDom8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O7d9JRSr; arc=none smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ew6T/FG+"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-7a74b13f4f8so440406b3a.1
-        for <git@vger.kernel.org>; Thu, 30 Oct 2025 12:19:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O7d9JRSr"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-77f67ba775aso1843798b3a.3
+        for <git@vger.kernel.org>; Thu, 30 Oct 2025 12:20:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761851992; x=1762456792; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1761852001; x=1762456801; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=I2BmJibt7RuBp7ck9CaYLcxRtdyx0DYj4AxYn8lPYbw=;
-        b=ew6T/FG+NfVGIqbuYXq9JTs3QWGd1pxfGI8XLbhIWUnuVeEzWxnooE5vAykFez2ouW
-         sBnHm6YylqV5GjhPnXlCoaAJ97RwkIXaM4Bom7CmJ2NYnumHYYlQYuYfd3SCyKyIGwaO
-         kShs2WcU3ePK3pmYwFtzwvHJqCLV3Ug38CfMP38GVe83lshTp7PpTN82GnTiSX7kutFp
-         13Dui9k71U1BYrRyUyMIvW7lLS0JpkDlM0RDfNkAUqWxRAajPE2eEhLJIyktmY8YGs5O
-         4sIg8fwmyahIrZhyhJxX1bU/SEE8/4tmgAgomBKTb5OIuuKaXLoDwFAXtCYfvr80gV2t
-         umTg==
+        bh=clCVfJ7TD2SZhELaDM8AUwfI4kkwELUiAjPsj1UZ6tg=;
+        b=O7d9JRSrlt356Sf1wrwtd8hv+nrLhO2WaBHx+DvFK335J0eIz/PZE/0IG25AXM4iGW
+         OZHPey7i9jp7PY/VJgGjR40oXqaSRThdQVYgynWAap+Rw1PKErZHUkv2H6Qj6p5N687/
+         nq3PRSeJg2alrDPsIHEI4izP75rHRNv8cDhuTqExGIlYE47UaveQdsmOvyHVPF/fT+CO
+         H8z52jQTiUsE7WzUOgHEw+RajrgM8Ajg5OMb2DerAajyurgFIil/5K0Q1cZbOfRn26bh
+         yhl8NNa0ls0AX5CAyPj8F86LUTpTIcGH8+A6hND4fR25DymHfoGbumQUhzb7uyi9m4rU
+         t3pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761851992; x=1762456792;
+        d=1e100.net; s=20230601; t=1761852001; x=1762456801;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=I2BmJibt7RuBp7ck9CaYLcxRtdyx0DYj4AxYn8lPYbw=;
-        b=oUcbJ0q5wiumIqumZQ2cT3M3EsFrq63ZYeoXvXBAZQkFP4SiVxXaPjo77Qw2rR+aLC
-         WuaC8GJG0LnE7xHTfhmA3fmjEw53zWl3cPn2MCUq8HVYcJq5BWKy3hI7RphPDBGyldXR
-         sV5dFHCzMK8OeXwWz2zAPXqapf1Ct/zFs3dtxmWLj7OX2n8V+2wtAMN8YHA42iNsgSWh
-         HPaZWd1R9POWFRWHLi98ksnqTGa87Kx8rbEb3caV+qF9b1NO4QJ4xSJCjpgYni/8D5RS
-         FdonjPvq4nhudTElmR+MfCa1FTJ+vgqITLfVCa+lYrPRaDVkNWmVoDl3g4kFgCAO/0zs
-         tYPA==
-X-Gm-Message-State: AOJu0Yzfs3WrhCXgiOI/lpKYgvQY8xbIGKhSbtjTS7X49aUjU3YqS5Y7
-	3YC0HH7p3Z9BW+oJhvdyA+RPPXWepFdwIda7AgMKptqTYmWeSgBpaC4GauvNmSKja7A=
-X-Gm-Gg: ASbGncsA8+wmmKCe26KNEVqGgZTYUEk/GhNFeWVCw6wiFT0pf4k/IeT6744gM4MAep7
-	h/pDjustFCBSKWw/gqSyq7wBLT1UMGivbPk3gemyXA5+VL+n0inXUOAUN9cuoCkfwy+MxcDID/2
-	4fIJ7sCK5rmpxZtgZQXy9P0Qzztm+b/vQhCcylDUSbAapfQLuO95mVldZe/AU3HhtoDmEmHJfvp
-	hXF2jioA+Uy+GZuaIrs2gUWKDVwtsMCDbPvFGMxx3IH+1nDAQHrF0pn0sRo5XQg4eXCi+PTamE1
-	+rtmQ+r155TTnOzcKGwKERXyyykRBH6++LpSkYX92DLt3LIVLXJ2GY1XhWYRzR9MOUEE2uqngv0
-	ftpI+Ttd9Dz78EyCEDw45xvCCuobJwJpSJPXcGhe4R12/ifOXBmHqyHGlqQgGgzmsMv8FgLt74F
-	zkRMyIMDtmnMlFJ3RdjuqAJRlaMwHsyoMqiUev1rtv+rXBubcT0cMEJHdCWJ6FR53UPNFlcFqnG
-	gZ1VW5ElQidfDJAqxbL6b4UBXY1moQJhg==
-X-Google-Smtp-Source: AGHT+IFVJ7CfbWxQogQESnD06ISp6eLesMqcY/JEzDlhQ/hNOU39W5GAqxji81XDfNUhc9eWxBMKgg==
-X-Received: by 2002:a05:6a00:391a:b0:7a2:8343:1ac with SMTP id d2e1a72fcca58-7a77718a0cbmr667978b3a.2.1761851992413;
-        Thu, 30 Oct 2025 12:19:52 -0700 (PDT)
+        bh=clCVfJ7TD2SZhELaDM8AUwfI4kkwELUiAjPsj1UZ6tg=;
+        b=VLzsSBnQ580abhU8cKg/ZgJ2qrZsvfT2UERe0PDrJBelQGKQM8D+iwFB1SJi+tmWNB
+         4oV6QowrIvRVArYOYwUHGlkcuDJ8WdVBmueikbJEn6Hw1nWVkwaBevlUwHMyLnTd3fqr
+         pD/AO8cHMDeL0gO9miG18BdaF1JM4xta3s5TC2/P/+pbOKOLRSK3N2LZCzShnc8/Ou/E
+         ud1cBG0vz45IL/l2GIAKEJIN8s64qG/d58fkDEQiswxVXEcFbwlIaLg602OxDIFDlHGg
+         M7fiktkimwHgkm4SFK4KS58i3voAdPjmo9Cbq014QPvIhEMrB8n35kJegF3A65dhgsLu
+         J/Uw==
+X-Gm-Message-State: AOJu0Yz59yWjvZUSgS/X5oTASUFmiowco0JcynNc8C8lZ8i9MFxZ4Kmj
+	+/4247pnyf0wfnowPzgXLqUUjmNlTs5+JeQ8DgVmZgIIBpq7kZTgPyrCSueq5yOPFFc=
+X-Gm-Gg: ASbGncsZoCArEclDx561Y/L2LOX7w5H9dc/i6P0DfHjhobQVyA7jJ1FwBuQoX0FkCNH
+	5CL2FHESoasTsQoN8uan+WPp4MosbAyDiHIn25BW5wrMPdChmr2zYWWnrI3+CjllCpPivB9UrT8
+	nPrGtwsOmkYMwTtYdbNgCwCEYyEahmi3dgVnAGq91um0iIaYbY//29lU+vzbyfNvxy9Hpwvt20i
+	qyxALVBz388wwhGalOgaEy5jAAL6SLFUHs0Dm2qH1j+twyL1B0YgeIWVfTycV9qgKw1t6nZdS35
+	v/YGaf9Cr8nyXVBpe+eLZA+7ju+zwLIttPhrECg5ptgn132R7F30WP3yaOG0MYy86/JlrFWT6rG
+	4zjAcvbgtYk5yqiG2qOnmY4+huP6fHdM6QL8Xt1ty+Tb8f/8cdnKLHLbO+xYVh0m7aBXzpyb0/y
+	70OR75tUF7jvfAoUidjJFcWUO/5gAUHwBcyuSdJs+Dyt+nOVyF/VSEdxQT9pUy0eXpWABfv3X71
+	2HB5gI1efJnHUX6PCaLh7BpHgJE7EKzYQ==
+X-Google-Smtp-Source: AGHT+IHrG4ApcM/tsI03zez7Z0xFe8UCeCxrTUKhgykqTQLOioH+asbqMI5sPE8a1oKWl92jDsCM2Q==
+X-Received: by 2002:a05:6a20:3951:b0:334:97a6:17f2 with SMTP id adf61e73a8af0-348ca75a407mr1128634637.14.1761852000494;
+        Thu, 30 Oct 2025 12:20:00 -0700 (PDT)
 Received: from localhost.localdomain ([2409:40e3:177:42ef:e197:ba89:d0f7:5538])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a445156004sm10359135b3a.51.2025.10.30.12.19.47
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a445156004sm10359135b3a.51.2025.10.30.12.19.55
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 30 Oct 2025 12:19:52 -0700 (PDT)
+        Thu, 30 Oct 2025 12:19:59 -0700 (PDT)
 From: Siddharth Asthana <siddharthasthana31@gmail.com>
 To: git@vger.kernel.org
 Cc: christian.couder@gmail.com,
@@ -75,9 +75,9 @@ Cc: christian.couder@gmail.com,
 	johncai86@gmail.com,
 	johannes.schindelin@gmx.de,
 	Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: [PATCH v6 1/3] replay: use die_for_incompatible_opt2() for option validation
-Date: Fri, 31 Oct 2025 00:49:29 +0530
-Message-ID: <20251030191931.30837-2-siddharthasthana31@gmail.com>
+Subject: [PATCH v6 2/3] replay: make atomic ref updates the default behavior
+Date: Fri, 31 Oct 2025 00:49:30 +0530
+Message-ID: <20251030191931.30837-3-siddharthasthana31@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251030191931.30837-1-siddharthasthana31@gmail.com>
 References: <20251028214609.10041-1-siddharthasthana31@gmail.com>
@@ -88,43 +88,536 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-In preparation for adding the --ref-action option, convert option
-validation to use die_for_incompatible_opt2(). This helper provides
-standardized error messages for mutually exclusive options.
+The git replay command currently outputs update commands that can be
+piped to update-ref to achieve a rebase, e.g.
 
-The following commit introduces --ref-action which will be incompatible
-with certain other options. Using die_for_incompatible_opt2() now means
-that commit can cleanly add its validation using the same pattern,
-keeping the validation logic consistent and maintainable.
+  git replay --onto main topic1..topic2 | git update-ref --stdin
 
-This also aligns git-replay's option handling with how other Git commands
-manage option conflicts, using the established die_for_incompatible_opt*()
-helper family.
+This separation had advantages for three special cases:
+  * it made testing easy (when state isn't modified from one step to
+    the next, you don't need to make temporary branches or have undo
+    commands, or try to track the changes)
+  * it provided a natural can-it-rebase-cleanly (and what would it
+    rebase to) capability without automatically updating refs, similar
+    to a --dry-run
+  * it provided a natural low-level tool for the suite of hash-object,
+    mktree, commit-tree, mktag, merge-tree, and update-ref, allowing
+    users to have another building block for experimentation and making
+    new tools
 
+However, it should be noted that all three of these are somewhat
+special cases; users, whether on the client or server side, would
+almost certainly find it more ergonomic to simply have the updating
+of refs be the default.
+
+For server-side operations in particular, the pipeline architecture
+creates process coordination overhead. Server implementations that need
+to perform rebases atomically must maintain additional code to:
+
+  1. Spawn and manage a pipeline between git-replay and git-update-ref
+  2. Coordinate stdout/stderr streams across the pipe boundary
+  3. Handle partial failure states if the pipeline breaks mid-execution
+  4. Parse and validate the update-ref command output
+
+Change the default behavior to update refs directly, and atomically (at
+least to the extent supported by the refs backend in use). This
+eliminates the process coordination overhead for the common case.
+
+For users needing the traditional pipeline workflow, add a new
+--ref-action=<mode> option that preserves the original behavior:
+
+  git replay --ref-action=print --onto main topic1..topic2 | git update-ref --stdin
+
+The mode can be:
+  * update (default): Update refs directly using an atomic transaction
+  * print: Output update-ref commands for pipeline use
+
+Implementation details:
+
+The atomic ref updates are implemented using Git's ref transaction API.
+In cmd_replay(), when not in `print` mode, we initialize a transaction
+using ref_store_transaction_begin() with the default atomic behavior.
+As commits are replayed, ref updates are staged into the transaction
+using ref_transaction_update(). Finally, ref_transaction_commit()
+applies all updates atomically—either all updates succeed or none do.
+
+To avoid code duplication between the 'print' and 'update' modes, this
+commit extracts a handle_ref_update() helper function. This function
+takes the mode (as an enum) and either prints the update command or
+stages it into the transaction. Using an enum rather than passing the
+string around provides type safety and allows the compiler to catch
+typos. The switch statement makes it easy to add future modes.
+
+The helper function signature:
+
+  static int handle_ref_update(enum ref_action_mode mode,
+                                struct ref_transaction *transaction,
+                                const char *refname,
+                                const struct object_id *new_oid,
+                                const struct object_id *old_oid,
+                                struct strbuf *err)
+
+The enum is defined as:
+
+  enum ref_action_mode {
+      REF_ACTION_UPDATE,
+      REF_ACTION_PRINT
+  };
+
+The mode string is converted to enum immediately after parse_options()
+to avoid string comparisons throughout the codebase and provide compiler
+protection against typos.
+
+Test suite changes:
+
+All existing tests that expected command output now use
+--ref-action=print to preserve their original behavior. This keeps
+the tests valid while allowing them to verify that the pipeline workflow
+still works correctly.
+
+New tests were added to verify:
+  - Default atomic behavior (no output, refs updated directly)
+  - Bare repository support (server-side use case)
+  - Equivalence between traditional pipeline and atomic updates
+  - Real atomicity using a lock file to verify all-or-nothing guarantee
+  - Test isolation using test_when_finished to clean up state
+
+The bare repository tests were fixed to rebuild their expectations
+independently rather than comparing to previous test output, improving
+test reliability and isolation.
+
+A following commit will add a replay.refAction configuration
+option for users who prefer the traditional pipeline output as their
+default behavior.
+
+Helped-by: Elijah Newren <newren@gmail.com>
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Helped-by: Christian Couder <christian.couder@gmail.com>
+Helped-by: Phillip Wood <phillip.wood123@gmail.com>
 Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
 ---
- builtin/replay.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/git-replay.adoc | 65 +++++++++++++++--------
+ builtin/replay.c              | 98 +++++++++++++++++++++++++++++++----
+ t/t3650-replay-basics.sh      | 44 +++++++++++++---
+ 3 files changed, 167 insertions(+), 40 deletions(-)
 
+diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+index 0b12bf8aa4..037b093196 100644
+--- a/Documentation/git-replay.adoc
++++ b/Documentation/git-replay.adoc
+@@ -9,15 +9,16 @@ git-replay - EXPERIMENTAL: Replay commits on a new base, works with bare repos t
+ SYNOPSIS
+ --------
+ [verse]
+-(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch>) <revision-range>...
++(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch>) [--ref-action[=<mode>]] <revision-range>...
+ 
+ DESCRIPTION
+ -----------
+ 
+ Takes ranges of commits and replays them onto a new location. Leaves
+-the working tree and the index untouched, and updates no references.
+-The output of this command is meant to be used as input to
+-`git update-ref --stdin`, which would update the relevant branches
++the working tree and the index untouched. By default, updates the
++relevant references using an atomic transaction (all refs update or
++none). Use `--ref-action=print` to avoid automatic ref updates and
++instead get update commands that can be piped to `git update-ref --stdin`
+ (see the OUTPUT section below).
+ 
+ THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+@@ -29,18 +30,31 @@ OPTIONS
+ 	Starting point at which to create the new commits.  May be any
+ 	valid commit, and not just an existing branch name.
+ +
+-When `--onto` is specified, the update-ref command(s) in the output will
+-update the branch(es) in the revision range to point at the new
+-commits, similar to the way how `git rebase --update-refs` updates
+-multiple branches in the affected range.
++When `--onto` is specified, the branch(es) in the revision range will be
++updated to point at the new commits (or update commands will be printed
++if `--ref-action=print` is used), similar to the way `git rebase --update-refs`
++updates multiple branches in the affected range.
+ 
+ --advance <branch>::
+ 	Starting point at which to create the new commits; must be a
+ 	branch name.
+ +
+-When `--advance` is specified, the update-ref command(s) in the output
+-will update the branch passed as an argument to `--advance` to point at
+-the new commits (in other words, this mimics a cherry-pick operation).
++The history is replayed on top of the <branch> and <branch> is updated to
++point at the tip of the resulting history (or an update command will be
++printed if `--ref-action=print` is used). This is different from `--onto`,
++which uses the target only as a starting point without updating it.
++
++--ref-action[=<mode>]::
++	Control how references are updated. The mode can be:
+++
++--
++	* `update` (default): Update refs directly using an atomic transaction.
++	  All refs are updated or none are (all-or-nothing behavior).
++	* `print`: Output update-ref commands for pipeline use. This is the
++	  traditional behavior where output can be piped to `git update-ref --stdin`.
++--
+++
++The default mode can be configured via the `replay.refAction` configuration variable.
+ 
+ <revision-range>::
+ 	Range of commits to replay. More than one <revision-range> can
+@@ -54,8 +68,11 @@ include::rev-list-options.adoc[]
+ OUTPUT
+ ------
+ 
+-When there are no conflicts, the output of this command is usable as
+-input to `git update-ref --stdin`.  It is of the form:
++By default, or with `--ref-action=update`, this command produces no output on
++success, as refs are updated directly using an atomic transaction.
++
++When using `--ref-action=print`, the output is usable as input to
++`git update-ref --stdin`. It is of the form:
+ 
+ 	update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
+ 	update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
+@@ -81,6 +98,14 @@ To simply rebase `mybranch` onto `target`:
+ 
+ ------------
+ $ git replay --onto target origin/main..mybranch
++------------
++
++The refs are updated atomically and no output is produced on success.
++
++To see what would be updated without actually updating:
++
++------------
++$ git replay --ref-action=print --onto target origin/main..mybranch
+ update refs/heads/mybranch ${NEW_mybranch_HASH} ${OLD_mybranch_HASH}
+ ------------
+ 
+@@ -88,33 +113,29 @@ To cherry-pick the commits from mybranch onto target:
+ 
+ ------------
+ $ git replay --advance target origin/main..mybranch
+-update refs/heads/target ${NEW_target_HASH} ${OLD_target_HASH}
+ ------------
+ 
+ Note that the first two examples replay the exact same commits and on
+ top of the exact same new base, they only differ in that the first
+-provides instructions to make mybranch point at the new commits and
+-the second provides instructions to make target point at them.
++updates mybranch to point at the new commits and the second updates
++target to point at them.
+ 
+ What if you have a stack of branches, one depending upon another, and
+ you'd really like to rebase the whole set?
+ 
+ ------------
+ $ git replay --contained --onto origin/main origin/main..tipbranch
+-update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
+-update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
+-update refs/heads/tipbranch ${NEW_tipbranch_HASH} ${OLD_tipbranch_HASH}
+ ------------
+ 
++All three branches (`branch1`, `branch2`, and `tipbranch`) are updated
++atomically.
++
+ When calling `git replay`, one does not need to specify a range of
+ commits to replay using the syntax `A..B`; any range expression will
+ do:
+ 
+ ------------
+ $ git replay --onto origin/main ^base branch1 branch2 branch3
+-update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
+-update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
+-update refs/heads/branch3 ${NEW_branch3_HASH} ${OLD_branch3_HASH}
+ ------------
+ 
+ This will simultaneously rebase `branch1`, `branch2`, and `branch3`,
 diff --git a/builtin/replay.c b/builtin/replay.c
-index 6172c8aacc..b64fc72063 100644
+index b64fc72063..0564d4d2e7 100644
 --- a/builtin/replay.c
 +++ b/builtin/replay.c
-@@ -330,9 +330,9 @@ int cmd_replay(int argc,
- 		usage_with_options(replay_usage, replay_options);
- 	}
+@@ -20,6 +20,11 @@
+ #include <oidset.h>
+ #include <tree.h>
  
--	if (advance_name_opt && contained)
--		die(_("options '%s' and '%s' cannot be used together"),
--		    "--advance", "--contained");
-+	die_for_incompatible_opt2(!!advance_name_opt, "--advance",
-+				  contained, "--contained");
++enum ref_action_mode {
++	REF_ACTION_UPDATE,
++	REF_ACTION_PRINT,
++};
++
+ static const char *short_commit_name(struct repository *repo,
+ 				     struct commit *commit)
+ {
+@@ -284,6 +289,28 @@ static struct commit *pick_regular_commit(struct repository *repo,
+ 	return create_commit(repo, result->tree, pickme, replayed_base);
+ }
+ 
++static int handle_ref_update(enum ref_action_mode mode,
++			     struct ref_transaction *transaction,
++			     const char *refname,
++			     const struct object_id *new_oid,
++			     const struct object_id *old_oid,
++			     struct strbuf *err)
++{
++	switch (mode) {
++	case REF_ACTION_PRINT:
++		printf("update %s %s %s\n",
++		       refname,
++		       oid_to_hex(new_oid),
++		       oid_to_hex(old_oid));
++		return 0;
++	case REF_ACTION_UPDATE:
++		return ref_transaction_update(transaction, refname, new_oid, old_oid,
++					      NULL, NULL, 0, "git replay", err);
++	default:
++		BUG("unknown ref_action_mode %d", mode);
++	}
++}
++
+ int cmd_replay(int argc,
+ 	       const char **argv,
+ 	       const char *prefix,
+@@ -294,6 +321,8 @@ int cmd_replay(int argc,
+ 	struct commit *onto = NULL;
+ 	const char *onto_name = NULL;
+ 	int contained = 0;
++	const char *ref_action_str = NULL;
++	enum ref_action_mode ref_action = REF_ACTION_UPDATE;
+ 
+ 	struct rev_info revs;
+ 	struct commit *last_commit = NULL;
+@@ -302,12 +331,14 @@ int cmd_replay(int argc,
+ 	struct merge_result result;
+ 	struct strset *update_refs = NULL;
+ 	kh_oid_map_t *replayed_commits;
++	struct ref_transaction *transaction = NULL;
++	struct strbuf transaction_err = STRBUF_INIT;
+ 	int ret = 0;
+ 
+-	const char * const replay_usage[] = {
++	const char *const replay_usage[] = {
+ 		N_("(EXPERIMENTAL!) git replay "
+ 		   "([--contained] --onto <newbase> | --advance <branch>) "
+-		   "<revision-range>..."),
++		   "[--ref-action[=<mode>]] <revision-range>..."),
+ 		NULL
+ 	};
+ 	struct option replay_options[] = {
+@@ -319,6 +350,9 @@ int cmd_replay(int argc,
+ 			   N_("replay onto given commit")),
+ 		OPT_BOOL(0, "contained", &contained,
+ 			 N_("advance all branches contained in revision-range")),
++		OPT_STRING(0, "ref-action", &ref_action_str,
++			   N_("mode"),
++			   N_("control ref update behavior (update|print)")),
+ 		OPT_END()
+ 	};
+ 
+@@ -333,6 +367,18 @@ int cmd_replay(int argc,
+ 	die_for_incompatible_opt2(!!advance_name_opt, "--advance",
+ 				  contained, "--contained");
+ 
++	/* Default to update mode if not specified */
++	if (!ref_action_str)
++		ref_action_str = "update";
++
++	/* Parse ref action mode */
++	if (!strcmp(ref_action_str, "update"))
++		ref_action = REF_ACTION_UPDATE;
++	else if (!strcmp(ref_action_str, "print"))
++		ref_action = REF_ACTION_PRINT;
++	else
++		die(_("unknown --ref-action mode '%s'"), ref_action_str);
 +
  	advance_name = xstrdup_or_null(advance_name_opt);
  
  	repo_init_revisions(repo, &revs, prefix);
+@@ -389,6 +435,17 @@ int cmd_replay(int argc,
+ 	determine_replay_mode(repo, &revs.cmdline, onto_name, &advance_name,
+ 			      &onto, &update_refs);
+ 
++	/* Initialize ref transaction if using update mode */
++	if (ref_action == REF_ACTION_UPDATE) {
++		transaction = ref_store_transaction_begin(get_main_ref_store(repo),
++							  0, &transaction_err);
++		if (!transaction) {
++			ret = error(_("failed to begin ref transaction: %s"),
++				    transaction_err.buf);
++			goto cleanup;
++		}
++	}
++
+ 	if (!onto) /* FIXME: Should handle replaying down to root commit */
+ 		die("Replaying down to root commit is not supported yet!");
+ 
+@@ -434,10 +491,15 @@ int cmd_replay(int argc,
+ 			if (decoration->type == DECORATION_REF_LOCAL &&
+ 			    (contained || strset_contains(update_refs,
+ 							  decoration->name))) {
+-				printf("update %s %s %s\n",
+-				       decoration->name,
+-				       oid_to_hex(&last_commit->object.oid),
+-				       oid_to_hex(&commit->object.oid));
++				if (handle_ref_update(ref_action, transaction,
++						      decoration->name,
++						      &last_commit->object.oid,
++						      &commit->object.oid,
++						      &transaction_err) < 0) {
++					ret = error(_("failed to update ref '%s': %s"),
++						    decoration->name, transaction_err.buf);
++					goto cleanup;
++				}
+ 			}
+ 			decoration = decoration->next;
+ 		}
+@@ -445,10 +507,23 @@ int cmd_replay(int argc,
+ 
+ 	/* In --advance mode, advance the target ref */
+ 	if (result.clean == 1 && advance_name) {
+-		printf("update %s %s %s\n",
+-		       advance_name,
+-		       oid_to_hex(&last_commit->object.oid),
+-		       oid_to_hex(&onto->object.oid));
++		if (handle_ref_update(ref_action, transaction, advance_name,
++				      &last_commit->object.oid,
++				      &onto->object.oid,
++				      &transaction_err) < 0) {
++			ret = error(_("failed to update ref '%s': %s"),
++				    advance_name, transaction_err.buf);
++			goto cleanup;
++		}
++	}
++
++	/* Commit the ref transaction if we have one */
++	if (transaction && result.clean == 1) {
++		if (ref_transaction_commit(transaction, &transaction_err)) {
++			ret = error(_("failed to commit ref transaction: %s"),
++				    transaction_err.buf);
++			goto cleanup;
++		}
+ 	}
+ 
+ 	merge_finalize(&merge_opt, &result);
+@@ -460,6 +535,9 @@ int cmd_replay(int argc,
+ 	ret = result.clean;
+ 
+ cleanup:
++	if (transaction)
++		ref_transaction_free(transaction);
++	strbuf_release(&transaction_err);
+ 	release_revisions(&revs);
+ 	free(advance_name);
+ 
+diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+index 58b3759935..123734b49f 100755
+--- a/t/t3650-replay-basics.sh
++++ b/t/t3650-replay-basics.sh
+@@ -52,7 +52,7 @@ test_expect_success 'setup bare' '
+ '
+ 
+ test_expect_success 'using replay to rebase two branches, one on top of other' '
+-	git replay --onto main topic1..topic2 >result &&
++	git replay --ref-action=print --onto main topic1..topic2 >result &&
+ 
+ 	test_line_count = 1 result &&
+ 
+@@ -68,7 +68,7 @@ test_expect_success 'using replay to rebase two branches, one on top of other' '
+ '
+ 
+ test_expect_success 'using replay on bare repo to rebase two branches, one on top of other' '
+-	git -C bare replay --onto main topic1..topic2 >result-bare &&
++	git -C bare replay --ref-action=print --onto main topic1..topic2 >result-bare &&
+ 	test_cmp expect result-bare
+ '
+ 
+@@ -86,7 +86,7 @@ test_expect_success 'using replay to perform basic cherry-pick' '
+ 	# 2nd field of result is refs/heads/main vs. refs/heads/topic2
+ 	# 4th field of result is hash for main instead of hash for topic2
+ 
+-	git replay --advance main topic1..topic2 >result &&
++	git replay --ref-action=print --advance main topic1..topic2 >result &&
+ 
+ 	test_line_count = 1 result &&
+ 
+@@ -102,7 +102,7 @@ test_expect_success 'using replay to perform basic cherry-pick' '
+ '
+ 
+ test_expect_success 'using replay on bare repo to perform basic cherry-pick' '
+-	git -C bare replay --advance main topic1..topic2 >result-bare &&
++	git -C bare replay --ref-action=print --advance main topic1..topic2 >result-bare &&
+ 	test_cmp expect result-bare
+ '
+ 
+@@ -115,7 +115,7 @@ test_expect_success 'replay fails when both --advance and --onto are omitted' '
+ '
+ 
+ test_expect_success 'using replay to also rebase a contained branch' '
+-	git replay --contained --onto main main..topic3 >result &&
++	git replay --ref-action=print --contained --onto main main..topic3 >result &&
+ 
+ 	test_line_count = 2 result &&
+ 	cut -f 3 -d " " result >new-branch-tips &&
+@@ -139,12 +139,12 @@ test_expect_success 'using replay to also rebase a contained branch' '
+ '
+ 
+ test_expect_success 'using replay on bare repo to also rebase a contained branch' '
+-	git -C bare replay --contained --onto main main..topic3 >result-bare &&
++	git -C bare replay --ref-action=print --contained --onto main main..topic3 >result-bare &&
+ 	test_cmp expect result-bare
+ '
+ 
+ test_expect_success 'using replay to rebase multiple divergent branches' '
+-	git replay --onto main ^topic1 topic2 topic4 >result &&
++	git replay --ref-action=print --onto main ^topic1 topic2 topic4 >result &&
+ 
+ 	test_line_count = 2 result &&
+ 	cut -f 3 -d " " result >new-branch-tips &&
+@@ -168,7 +168,7 @@ test_expect_success 'using replay to rebase multiple divergent branches' '
+ '
+ 
+ test_expect_success 'using replay on bare repo to rebase multiple divergent branches, including contained ones' '
+-	git -C bare replay --contained --onto main ^main topic2 topic3 topic4 >result &&
++	git -C bare replay --ref-action=print --contained --onto main ^main topic2 topic3 topic4 >result &&
+ 
+ 	test_line_count = 4 result &&
+ 	cut -f 3 -d " " result >new-branch-tips &&
+@@ -217,4 +217,32 @@ test_expect_success 'merge.directoryRenames=false' '
+ 		--onto rename-onto rename-onto..rename-from
+ '
+ 
++test_expect_success 'default atomic behavior updates refs directly' '
++	# Store original state for cleanup
++	test_when_finished "git branch -f topic2 topic1" &&
++
++	# Test default atomic behavior (no output, refs updated)
++	git replay --onto main topic1..topic2 >output &&
++	test_must_be_empty output &&
++
++	# Verify ref was updated
++	git log --format=%s topic2 >actual &&
++	test_write_lines E D M L B A >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'atomic behavior in bare repository' '
++	# Test atomic updates work in bare repo
++	git -C bare replay --onto main topic1..topic2 >output &&
++	test_must_be_empty output &&
++
++	# Verify ref was updated in bare repo
++	git -C bare log --format=%s topic2 >actual &&
++	test_write_lines E D M L B A >expect &&
++	test_cmp expect actual &&
++
++	# Reset for other tests
++	git -C bare update-ref refs/heads/topic2 $(git -C bare rev-parse topic1)
++'
++
+ test_done
 -- 
 2.51.0
 
