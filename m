@@ -1,125 +1,103 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CC62D24BF
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 22:30:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4632C30F95A
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 23:38:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761863445; cv=none; b=KsHnctHTmGFTL33UTwF+KARlmBMX51ru8xCVXfacY2QrtKoovuZ5yzCTsu5lumIzAPwRZmDaeWSal4nuOQcD/+oC/ZtOqjoDjtvifjt21hGhmcNUWCO95RWqxkDxRu/MlieTNzAVSe/WjbzafLnp6m2T2j+MW1Hp4OFtvGeAHEs=
+	t=1761867496; cv=none; b=iHq93QvXhg+d7HbWbLVWXtGf63rnnCPauk/9FVENKCZDlbeH59kscW42kFDBs83lNbJf3YcCCacALH7eU6+9xwg0viCazkDNFGzyAhlFs723qaOIjpvPol5rsyDbyIMzMZS+VO6Bde63oiViaJ7rQrWP9YbAuRieip7y/c/JCdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761863445; c=relaxed/simple;
-	bh=z+6GRMzAM73ik2TzoFjTMWKzfxcbx2zxRBIMXZaT4xA=;
+	s=arc-20240116; t=1761867496; c=relaxed/simple;
+	bh=l3QTqJj7pq0iQFQFW9xx2qf0t5wNqXF+uLPhbMpEzio=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gaFHjeKANGZ9yauUTzj8/mc0Pb8EnB++GqzAZ/4wx/aVDoryBWFTUSKH7qcybutXaHvd9TseR8EwDx1B7QH0E4VJNBVl3qGAzrdO7NjTL/LeLA3sJYvN2KARyNqp4dKzVE4veLVIdejXnVGTySyovSljMOBU36quGNwGB2B0bns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O2IWNZY6; arc=none smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=OWBbukiJMeccrYwiRC0zVckzfSLZ4TWFSCQD0PIYyineR35PTUQOWatFZdwBPnKel5AmIi/tRayL/DeO3RpV2ziHTUBofiH0yWLnqxM3UZP0G4gWixbzXi5YfV16PPs0jA8lqqMlr+uEffqKFoR4agVymNibuCtdYx4nS6+UP/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=i7+dBF2Z; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O2IWNZY6"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b70406feed3so231454266b.3
-        for <git@vger.kernel.org>; Thu, 30 Oct 2025 15:30:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761863442; x=1762468242; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3nTKes/Bv8KZMSKzD0iVN/jLxJeL8UD+9IkiF024YYw=;
-        b=O2IWNZY6CpZu2/yOO2S3kOeHVEUnOcWZr0e38eE01+ByZp+lS6rKU0WiBy4TE308UI
-         FjRTcV+ENkC2udTAnyjabG+sL5AGA5fmqu3PHy6Lb7fVsNKg56s9Yl1U3z8lm3DYQt/g
-         4Qh+kQK6syFSQtb3LEsXFmwfENGBtJrr+UwcFjICwTb+5V+olqP8sxCFo7DNAXlsr195
-         Xy1o9WCT0qbrhKeEiE1u6YY+/ooOdBZV2HRBetULPO+ftCzwd5AcR0MRzEvQp2HHzPXi
-         7qa6anyGHoJ+SkJEzyc7rxpy6mxvC4CtubLN3yl/E0kAr1dNZf9/wHHGl2ZX8EsNKX4l
-         9bDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761863442; x=1762468242;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3nTKes/Bv8KZMSKzD0iVN/jLxJeL8UD+9IkiF024YYw=;
-        b=EDdsMeendGx47favXVTgMfaNHfF3qv08X0eZefvTtMIZWKSci55/UNh9csSBAfRMnJ
-         RGJxe+99sCIx1+DxQa0fNWEFojG/OuqcllUTJcMlzd0wGRpAKGtjIurEUrGsn85OvWwW
-         nRleSxR3q2Y6oyRkznmyT3liiVhZhONv+3LLzoN715zLrL2RVdWa4CBb5+BU+Q7Ompe3
-         +A+zDQO2X9TTJXSh+bzOOhTLVJYJqZOc2KhHWlO2pH5cA2WYEQEwXx7wD5d7lYYBvrD3
-         sy1RC4u5zXZkJdAsPwQnLDqbA6yzZ4eA0rFAevOfWv390I6fdIpiW/H9nmyImzSHeaiy
-         hUww==
-X-Forwarded-Encrypted: i=1; AJvYcCV0bKGIE6OFuNY7FoS7xlpaNwp2o7XrsVLToQh7ei6CyX+cnqeKQFNjEBRx0jxaVgmfHrw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyOJwVPZmZkJtUDYFVtoK5C7cMyrknMQ7HhHZCtpf0iSEAuV3cz
-	KtH679jDAXJ6Wk9sDdeHd29PbliF87a1dvm4KAxuIZBir+On0Q8ROmZuNVDhsw==
-X-Gm-Gg: ASbGncueA9wFXCux5vNrbQ52UrfHMspwZH9UQcVOnfE9FylnhrXvFgoi8EH9xILaDcg
-	aVcIgb4trtXu6wP4Gk2/bbCPZmR4OdRz6FddX3J5N4Vhyu1pBGuTheobA87XC+YwBn8l0nkloqX
-	IByC+sHk4CNWddYsMhEDCYOmCMewg6W9KvI5/wQT9MPEpyLCJcpXpn8TOgkUZlgbI/EQ56b9E/u
-	7x6/e0c/N0EtrPFQOhpffh5YWfL8LYi9/Q4f6MOgtS5sVe5RUYXWGMOefGaMUtlxl9BzX/yRSro
-	vbKqilY+OQ05BCJTDc1BgO/42oZjoS1ldMb6WC+G5pA+akb6KcbIA8vUaoLbZFwxiJ2epAiSeNJ
-	b5c8Rj7918MjAiuVNaErg1f4OZKZv4gXbTNmLePxN3QstBD1dD0lITqL/ukzgeRZddMSX0IbFOD
-	L+m/ADRtSMjDhX82JIUCnndtEtrBnPZH1lrB8PrOJK/hEHDLS9WEhPu1uG33FABw==
-X-Google-Smtp-Source: AGHT+IHEILT+thA6fLGfzNVOOdGZw49GfUuWhmPU34aQxuITXvW7g/0b3bjEuhsLSL0UOi1vp1DpSQ==
-X-Received: by 2002:a17:906:fd82:b0:b57:2b82:732b with SMTP id a640c23a62f3a-b70708607a8mr141028666b.54.1761863441772;
-        Thu, 30 Oct 2025 15:30:41 -0700 (PDT)
-Received: from localhost (20014C4D24CE560055F120778E994861.dsl.pool.telekom.hu. [2001:4c4d:24ce:5600:55f1:2077:8e99:4861])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b7077cc4918sm320766b.57.2025.10.30.15.30.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Oct 2025 15:30:41 -0700 (PDT)
-Date: Thu, 30 Oct 2025 23:30:38 +0100
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: rsbecker@nexbridge.com
-Cc: 'Kristoffer Haugsbakk' <kristofferhaugsbakk@fastmail.com>,
-	'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [BUGS] Git v2.51.2 on NonStop5
-Message-ID: <aQPnDrsKLsLpaxgI@szeder.dev>
-References: <xmqqo6psjq2n.fsf@gitster.g>
- <000d01dc4831$ff049500$fd0dbf00$@nexbridge.com>
- <729f9bbf-b75b-4161-b8aa-505ff906bb8a@app.fastmail.com>
- <xmqqecqk5g7r.fsf@gitster.g>
- <3dad5cb9-976b-4e60-9e6e-05c12c7d9f2d@app.fastmail.com>
- <009f01dc49e6$98c5ae30$ca510a90$@nexbridge.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="i7+dBF2Z"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1761867492;
+	bh=l3QTqJj7pq0iQFQFW9xx2qf0t5wNqXF+uLPhbMpEzio=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=i7+dBF2ZcbKurHyoTbggkGrZICPuKLsmjRvPRK+nB89KS0xAjkr/opIOu+xOZRosj
+	 2zEU19aO4r71Y7UE/2vQldAb6z40zeaRsXuEWQz13SYuEKZ1hkQpIlpNa4jwJQ+cHc
+	 vcuaB7Jry3wLP8ULZl7FxAid7znbDtqBUjoALsZLQEM5DFw0qGDq75W6Q9OuVgO9AP
+	 tR+YIfMoF81qY6K+TPDHvPWgaBxm7HTHyXVBPb5avgBy0VkO1Oc63oFAAU+ftqwuA0
+	 ZpO9TIqMGYNFXUpDmHeLMbeG9My42vJdz+QH0IvP22oKjxoIBLnOzR9NIBNIoV8vwn
+	 E08EPAA6AO6SrO08gQkv6op9Cz7JqpzkxOIlCdkuWG6kL0ApNgm8m2irZz+/zqoDIr
+	 53EG3ow66Tsz6zzsgBROTNar+Z+euKcEZVucpsSuAjhPMlXIb2LDJ3WAhKhwKh+Rs2
+	 KllFAS7h0HDxiMzGOXTSnEMbH0zsB605XMILMxr6Ons0hYw//Ts
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:bbe9:68f3:1302:8e3b])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 42A6A20036;
+	Thu, 30 Oct 2025 23:38:12 +0000 (UTC)
+Date: Thu, 30 Oct 2025 23:38:10 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Ezekiel Newren <ezekielnewren@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] rust: generate bindings via cbindgen
+Message-ID: <aQP24hFPF5DhaQai@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	Ezekiel Newren <ezekielnewren@gmail.com>, git@vger.kernel.org
+References: <20251023-b4-pks-rust-cbindgen-v1-0-c19b61b03127@pks.im>
+ <20251023-b4-pks-rust-cbindgen-v1-3-c19b61b03127@pks.im>
+ <CAH=ZcbADTLvTioBf+LYQej1G0biZM8s3-iJG+BZjnpxj+8NjsA@mail.gmail.com>
+ <aPsepOtUf92fqDL-@pks.im>
+ <CAH=ZcbBWuS6QVQT4LsxSP-X4GupZwr+NwzXNH2+qZGoufUWDrQ@mail.gmail.com>
+ <aP_gy-Rj8MI7zAWd@fruit.crustytoothpaste.net>
+ <xmqq8qgvfyq0.fsf@gitster.g>
+ <aQM07BQrGJocPKea@pks.im>
+ <aQPbMZpYZJQH_Fd6@fruit.crustytoothpaste.net>
+ <xmqqldks3vqq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="USlPbHG8oaT9DXYR"
+Content-Disposition: inline
+In-Reply-To: <xmqqldks3vqq.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--USlPbHG8oaT9DXYR
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <009f01dc49e6$98c5ae30$ca510a90$@nexbridge.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 30, 2025 at 05:46:01PM -0400, rsbecker@nexbridge.com wrote:
-> On October 30, 2025 4:26 PM, Kristoffer Haugsbakk wrote:
-> >On Thu, Oct 30, 2025, at 20:42, Junio C Hamano wrote:
-> >> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
-> >>
-> >>> On Tue, Oct 28, 2025, at 18:40, rsbecker@nexbridge.com wrote:
-> >>>>[snip]
-> >>>
-> >>> Would it make sense for maintenance releases to have a small release
-> >>> candidate pre-release?  Both of these maintenance releases have had
-> >>> issues.
-> >>
-> >> Well, that is usually called "the tip of 'master'".  Has NonStop been
-> >> having issues with the tip of 'master'?  For how long?  Why haven't we
-> >> heard about it at all?  After things are merged there (which requires
-> >> them to be cooking in 'next'---oh, has NonStop been having issues with
-> >> 'next'?  For how long?), only fixes are chosen and merged to 'maint'
-> >> to be the next maintenance release.
-> >> ...
-> >> I doubt any pre-release on 'maint' has much value in that anybody who
-> >> are not testing the tip of 'master' would not be testing it either.
-> >
-> >You are probably 99.9% likely to be correct.
-> 
-> We tried setting up a CI/CD process for git on NonStop. The problem is that
-> we use Jenkins, which gets triggered each time a change is made on a branch.
-> The actual difficulty is that a single run takes more than a day. Once the
-> committer adds each commit to a branch, we end up with a queue that is
-> 2-3 weeks long, so end up not running a continuous process. Instead, we
-> run about 1 a week, which should catch things. The difficulty is with the
-> latest release is that 2.25.2 came out before our cycle and the breaks were
-> in there because of changes to one test that just did not end up dequeuing
-> in time. NonStop is building and testing fine now after Peff's suggestion on
-> SHELL_PATH, but that was only apparent at 2.52.2. 2.51.1 did not have this
-> issue with our inadvertent use of ksh to run each test script.
+On 2025-10-30 at 21:50:05, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > with my proposal.  I can send a patch to that effect later on.
+>=20
+> Presumably 1.63 is older than 1.77 so we would need the single-colon
+> syntax in the output from build.rs in your series?
 
-Neither the test library nor t7900 changed in the last two maintenance
-releases:
+Yes, I will include that in v2.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-  $ git rev-list --count v2.51.0..v2.51.2 -- t/test-lib.sh t/test-lib-functions.sh t/t7900-maintenance.sh
-  0
+--USlPbHG8oaT9DXYR
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaQP24gAKCRB8DEliiIei
+gdBFAQCwLean2LF60bkPsggMBChvwVScnosgBT9v0bbviEJ9IwD+MJCSY3WQIfdZ
+rExBrBWztXMNX0l4GJDf0IyojSkHHwk=
+=eocY
+-----END PGP SIGNATURE-----
+
+--USlPbHG8oaT9DXYR--
