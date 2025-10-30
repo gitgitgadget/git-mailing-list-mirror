@@ -1,106 +1,118 @@
-Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4AD309EF8
-	for <git@vger.kernel.org>; Wed, 29 Oct 2025 23:25:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044981D5ADE
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 00:23:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761780309; cv=none; b=ej7JZPuLCSY0PmMdFIMMWW3FkD6xzHX1NWm3gP/GPVoNVkCNJS8X/Kiuj2PJ5xdV0ox9Tr1OOO53xrz9BxVqxGkz1rv3OciVVR2PeRKvAxDuT+IyQA9TeLRN+SS5WwHZpDTdood+TUg4xSKBjIPbvcuGyUfz2NmHTnXYPma0enM=
+	t=1761783789; cv=none; b=lic+oKhc37IyISpNMtN1CPwPam10ZxafMa4q3xc0IPUICj4SVK9QYvppbX0gJk9gJlRdyDzuKe1sx5lmlRuVQauboi96oSWI/MNGYd/huSIEU/7LDRRJSz9Xrs4wvxwoyXP9geRP1ZS0vI9VB6epHe9+N3kjHIfiqRfscabOd4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761780309; c=relaxed/simple;
-	bh=pBsA1bBrk5eOYyLzZnchnRR5gK0MK6zW5oNrybSR9Hw=;
+	s=arc-20240116; t=1761783789; c=relaxed/simple;
+	bh=uMFF0x8nKM7Vg448iYNwQzVNx1bzNIL7Q34hrLE1or0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g0e0W4hi/xfgkzI6p29zOx7GnZpdpMklYx7HdwL//FpZnvKDSe6g2ws/nP1w/S39NeaxXvJvN2Ew8n65NR+vCbBjvcts1eyVfPkC0CGcZr60bWyUJvpQfkYoZMZ+0apXebC13MxRvibsXePXuuNYnPDWFeUO++qqHQPNh2NoZus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=I5cL6FHE; arc=none smtp.client-ip=74.125.224.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=OZECcmgmDMLh841v7/jiFGveLIKdNajt2aILaLuOHK0zJ82LiMAuDxuODWHc045oKUfrFzSZ0STtpFL8D/gO26FjJGAkttInWhg0Et6fw3BZ4ISKgmqES+AAB740FH+ql6Hq3qiHi32Px9zNdu1tGcsF3mPFDAQdaV3DFXD5WAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=LsQB9b7Y; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="I5cL6FHE"
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-63e3804362cso535561d50.2
-        for <git@vger.kernel.org>; Wed, 29 Oct 2025 16:25:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1761780305; x=1762385105; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pBsA1bBrk5eOYyLzZnchnRR5gK0MK6zW5oNrybSR9Hw=;
-        b=I5cL6FHEr0NcJ1GDgYgktmVfWeMKilGhDEbk79WGOBpsLyDNDmyRB3tP8/rBLCCt/Z
-         WouiUmRW9NfBSu2ol7GowfbnTcHk6sVrLrhcrjOC8OuGfHVp6uQR53xDhZ/5kgmOAYB/
-         7ABM+x96sify7n0ZhYH58cIAXY6PNl+qvzsdL55rJYwShjVd6a//LA/9viPF3an5830r
-         dsVV+nAEW6sytDC+DPcAFBXQ3MzZsofaJifCAb2wtAueSE+In3NclJIUYlsPNPMZfjcL
-         RIaTQeYyqqUmUUD1mhJO2GbDcYdb5bCk2+M/wB05FEfE5JONgxa7En6WP0JsqR1MBl/F
-         XubA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761780305; x=1762385105;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pBsA1bBrk5eOYyLzZnchnRR5gK0MK6zW5oNrybSR9Hw=;
-        b=VHte8GAZhwGI/AB2KcD0G+E9huhh2tItxZjScJp7JTD7Xh0LNELWSVTHo9xMJH4DjG
-         pU6803JljpQhg92EQAdinSyUG2ijrGgK5djefd6vWZpoAmdULrFNjRPZLVKAFqmxvWk9
-         3puPsJgqLpU1Gnhek6u7fOD9dim8cKNp5y6ndYKtnzRQVmsQw8e7/1DyaZOfjO6FpKJ7
-         YqxX0EjnRIPNBK8ueUQxCF41lcCxS94QtpRrbcur6uR6cdZE/hOzm5fFZx/wjMFIkV7A
-         cjmhIevLhAMtIiTBE9Q7yeeMWt50O6uvCmZseZHsG3Wdzg5q4UU+HujbJGz25IGRtaRX
-         Y1PQ==
-X-Gm-Message-State: AOJu0YwtBxFuIoaBYNjdrNjr5ay4Km/3aFhJ79+V3z1UmapBNph9E3ox
-	AUpIZhwhrYZyfpV/31MSI2dAoaOcneca3sE7SCUSy5HOXv48f8OpKwmxDWX/Q3Rhk/4=
-X-Gm-Gg: ASbGncuVzVoqMsEv/IslhOQOdkXpApSQw8Z12EtfLiXhBFAL184P5l3h4bRkHVTLYvX
-	VnQjo17IOIzo2rS2WVRLI7LDWhYJPseGWwkmErNx9rKKaVKs4wQWAOHneckmmbMxSUgoCOarxuJ
-	fqeeeknDe0xYuoOjAZmQU3aF+xGhFdD2GVStX6jIfuUiVhsJa27y/+zJHo77wmadMAmBP/EOUv3
-	Dj1ZPu+I8HyR3dWu+/orxPcN01Sqx38R593I+6Vavac7aa2EmRXjm+ZLtHxNTM45sx/qR8YkpPa
-	GvmXcTqCrwmTozDrp/RdjulJ93ypPfYl+zbA0uGoC8CotEu/JGsyQl2LOyLTpaetBmo/d6wVTRf
-	fnh5ABdRP8abK2bXCedIoiEiPLad7OyfIHppXcKrHDIaITjhk7y+Ltq6M0Nc+/09NnPte5P02cX
-	wIU3blXfO1hEKBsgoozdvS+AL9AquZtmfaihTTrcOyK0S5AJLjEiGoLlIBQ7EMbckGonjgyCOzd
-	5y8GjIBjYZpfYyDkQ==
-X-Google-Smtp-Source: AGHT+IF/gSuH7nBvu4J39N9uv0WORnDDUrMJFdREoU8FjcfTxErEzTWHDML7dBymywiQGavBZPlmew==
-X-Received: by 2002:a05:690c:6d13:b0:783:67c9:6d6d with SMTP id 00721157ae682-786390f5ccemr24632407b3.61.1761780305313;
-        Wed, 29 Oct 2025 16:25:05 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-785ed1fb943sm40996097b3.61.2025.10.29.16.25.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Oct 2025 16:25:04 -0700 (PDT)
-Date: Wed, 29 Oct 2025 19:25:03 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 7/8] packfile: always add packfiles to MRU when adding a
- pack
-Message-ID: <aQKiT9JA+3zF4DHA@nand.local>
-References: <20251028-pks-packfiles-store-drop-list-v1-0-1a3b82030a7a@pks.im>
- <20251028-pks-packfiles-store-drop-list-v1-7-1a3b82030a7a@pks.im>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="LsQB9b7Y"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1761783784;
+	bh=uMFF0x8nKM7Vg448iYNwQzVNx1bzNIL7Q34hrLE1or0=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=LsQB9b7Y1cbnqhZ5aErclLWnnvp0z6oNxon39vqvAuMGkNtr7WT7/aNap3Ek0N0qL
+	 oRp1WlQk8FzrPic0Ip47qyiDVoVpzRRezuEuqgO6VOYCGVXiLwokTyYb/vf/CQmZIl
+	 UqGX7bQJqN+1f7f3ORIFj5fB5hbZ5a1CIApKHv2ZY5AHv033g7FxFQ7nngrhGNyhv4
+	 1uKLExgKlazaZemyhE+2QbFaDAQcAq8mSRNfyp+5EH4CEcw6wqESk6LyNFvx4apeyH
+	 C0xLrGzyQxsh37t2eKqG/Xq41T0ss04nsIlW8LkXkAG2ETfQUMPHvPAkj/YCHzMo+L
+	 qh3YT2qiwu2SyDytzmPeRlgkvGzr3ghnDDDiqwwzjRu6ZCxLXd1jDWBj2stnXJ/DGa
+	 KgRCu0fi2A4/vqaLNAxtMmL1hnwH3Igm9QdCYK7Q2ijhvRXdi2j4l3a5EA0g8XYCkw
+	 WtEjy8qoPBsJeBkW8A+uBSqHLKttW2W5LKSoGkzOlvYq+TW43fm
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:8caa:b0a3:2e22:c46c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A52F220036;
+	Thu, 30 Oct 2025 00:23:04 +0000 (UTC)
+Date: Thu, 30 Oct 2025 00:23:03 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 03/14] hash: use uint32_t for object_id algorithm
+Message-ID: <aQKv550C6nXhCzf0@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+ <20251027004404.2152927-4-sandals@crustytoothpaste.net>
+ <aQCKCfuaEKBArD-g@pks.im>
+ <xmqqh5viddo3.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="YO/V0k3riCovn2n4"
+Content-Disposition: inline
+In-Reply-To: <xmqqh5viddo3.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--YO/V0k3riCovn2n4
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251028-pks-packfiles-store-drop-list-v1-7-1a3b82030a7a@pks.im>
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 28, 2025 at 12:08:37PM +0100, Patrick Steinhardt wrote:
-> When adding a packfile to it store we add it both to the list and map of
-> packfiles, but we don't append it to the most-recently-used list of
-> packs. We do know to add the packfile to the MRU list as soon as we
-> access any of its objects, but in between we're being inconistent. It
-> doesn't help that there are some subsystems that _do_ add the packfile
-> to the MRU after having added it, which only adds to the confusion.
->
-> Refactor the code so that we unconditionally add packfiles to the MRU
-> when adding them to a packfile store.
+On 2025-10-28 at 19:33:32, Junio C Hamano wrote:
+> Yeah, I do not very much appreciate change from "int" to "uint32_t"
+> randomly done only for things that happen to be used by both C and
+> Rust.  "When should I use 'int' or 'unsigned' and when should I use
+> 'uint32_t'?" becomes extremely hard to answer.
 
-Reading this, I thought that the MRU cache lazily added packs only upon
-a successful object lookup, but looking more closely,
-packfile_store_prepare_mru() adds all of the known packs to the MRU
-cache eagerly.
+In general, the answer is that we should use `int` or `unsigned` when
+you're defining a loop index or other non-structure types that are only
+used from C.  Otherwise, we should use one of the stdint.h or stddef.h
+types ((u)int*_t, (s)size_t, etc.), since these have defined,
+well-understood sizes.  Also, in general, we want to use unsigned types
+for things that cannot have valid negative values (such as the hash
+algorithm constants that are also array indices), especially since Rust
+tends not to use sentinel values (preferring `Option` instead).
 
-I think I would probably advocate in the long term that we go the other
-way here, which would be to avoid adding packs to the MRU cache until we
-have found an object within them. But that is a larger change, since we
-don't add packs outside of the MRU cache to them, only move packs which
-are already in the MRU cache around.
+Part of our problem is that being lazy and making lots of assumptions in
+our codebase has led to some suboptimal consequences.  Our diff code
+can't handle files bigger than about 1 GiB because we use `int` and
+Windows has all sorts of size limitations because we assumed that
+sizeof(long) =3D=3D sizeof(size_t) =3D=3D sizeof(void *).  Nobody now would=
+ say,
+"Gee, I think we'd like to have these arbitrary 32-bit size limits," and
+using something with a fixed size helps us think, "How big should this
+data type be?  Do I really want to limit this data structure to
+processing only 32 bits worth of data?"
 
-But I think in the immediate term what you wrote here makes sense, and
-it makes the behavior consistent in the meantime.
+In this case, the use of a 32-bit value is fine because we already have
+that for the existing type (via `int`) and it is extremely unlikely that
+4 billion cryptographic hash algorithms will ever be created, let alone
+implemented in Git, so the size is not a factor.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Thanks,
-Taylor
+--YO/V0k3riCovn2n4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaQKv5gAKCRB8DEliiIei
+gRYYAQC5hdlsdsG9Gb9U5MiB2kPCtuEGZg1m0lbgS4smnO7tjQEA0F3JPwIDjoOL
+0hiHtFc1/UPwp/k+CyOaXd8mKrIp9Aw=
+=2AR2
+-----END PGP SIGNATURE-----
+
+--YO/V0k3riCovn2n4--
