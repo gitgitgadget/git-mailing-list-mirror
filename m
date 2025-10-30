@@ -1,83 +1,80 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F1D3446A5
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 10:39:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7601634D936
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 10:39:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761820749; cv=none; b=HAsHPHnlNr7nxtjVW1pNjWpPxF2mSgHczSV5RLHUmfDS1MAaXkfAOc7Q5ihY4U9+Vm6ortHtZJ9FUW/znycR975n+0ZvCuFX/eI1VZ0/2NtuhGcB3QxaFpYgQLfFCTWHa5B0KcVyVOra5Wz4W0zyVJvp+CepUex+j5FO1XRSd4w=
+	t=1761820754; cv=none; b=dbAhavlFNxc8waRSiEB9m2juK8Oqa6ejBneDi9YcqtNl9qcYWZ5KWCPng6Hp/hkz6WNFAtIMfNvts/fcMZZWAn9QYxcLioAwIno/Rk1a3CMedXqH/4dw5sRCUUw39Dzitt4xVVCqigcG6P1bS6YruwD2VkYEz9nTYGXYVvxICJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761820749; c=relaxed/simple;
-	bh=9F3jGAZ6XYzL9Ez6q5c6sJsV01mSRLPo7nkYbxoVz40=;
+	s=arc-20240116; t=1761820754; c=relaxed/simple;
+	bh=d8ngBONJxaP12Js0pjhfmWvWk43ougccXg7NbNBwEb0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CJy3MK2DsfawoBm3JwXpNMfsJd2sBYgygKauH2KwEUJ3gKPlPOfEgPiTOhge8626+zKZfsCOmdOmwvCyEgH/EADUJ0zff0/ovUdZfZRp8Rh4qFhLpq1jISTH4w+3yUowahflf8KjO7rB8Cgh5KQap9t4XU8GafV0ElbeuQtoxXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T8sefEMA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X+pqQWoW; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=CYakMmtXDCZ3EpeWeTOinSlQkPPmDYrSauzp60p5twb/fo8bLa/lv5XmroD1OFzBL09NxdKipHv9QdZ50OnBCbXzHNUhsin2g0iOJpKNafhW8zbNbGQI8n05Ha9YSHTGla+fohFcOkGaXHh/BlW8EUNgSpHwGjhsXp5NSZQoif4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mVB+1eyO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hu94ZPJA; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T8sefEMA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X+pqQWoW"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 608A6EC01C9;
-	Thu, 30 Oct 2025 06:39:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mVB+1eyO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hu94ZPJA"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 964E914000C3;
+	Thu, 30 Oct 2025 06:39:09 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 30 Oct 2025 06:39:06 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 30 Oct 2025 06:39:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1761820746;
-	 x=1761907146; bh=WpNZ/g9oLDdcHOVCOc+au2dlMnflM8zu6jPs3jymmTU=; b=
-	T8sefEMASMM2bxgIv6BOyQ4kgWNM+1iybubz47Ko55y0nzJPwz3P66iyMIR+4L5+
-	m1Bpo0PIWYsIhGDE4JrhfONB9+06EPGoH94MJIFiMJxnPvCSeuie8YBxkU+N/nNn
-	BKgo4Eqydc1tu1XLcaccDQoZmO6iBwjDljefw6AYlvtb4N7XSsoxVoTM9WGc6hir
-	wI8iW1NOE7JLnVi94XmITXAaWcEx5QOoY0IfL8AUUJW3Ct8NxLT8S4A7N0WVVGoN
-	5swwXt+ENzMXqtSoRqXgryZVWooEk22Bcx7gWl27AH/iQpFim5o4AHa70Bo/lZRE
-	5ZdEd6o8cLBuDsujRW2yWw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1761820749;
+	 x=1761907149; bh=Zy/LqwDwfRdovhvHTG58hSeQNdUgjuJlX+Nx4fw+4pQ=; b=
+	mVB+1eyOkiWOX9a67MRNs6JZZeNxSnjRJ6MD2/043nzWyLCGUMjFjkSyW1K+DpjA
+	iKSOHit5C4/CL2w5f0dwWnxchGEnpUTmIiX+CDnxpugLZZd3h/t+gIuO6u6HSyOu
+	Nku+kfbyuc5Gc7eAFIxyksQ9C7pTasjEvyzLQfQ3g0G2szQZBRb2HTHxAcve8K39
+	ocyYwWVLLoWNwH2+1xT5t5axp3bjgq89IYlIKpZkjQw6+RDkvLoP36TcMwb3NniK
+	/VqsNS3mZdS7nwXdxFkf4Z61D/qncMnWV830Ox8/2pTs1c1RGoCxJIbt8UcOBhsD
+	Ba9Ho0gE3iBGWqbbdFmUtg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761820746; x=
-	1761907146; bh=WpNZ/g9oLDdcHOVCOc+au2dlMnflM8zu6jPs3jymmTU=; b=X
-	+pqQWoWJJnc0PZo/y/DxpKDmAoLfH7ZRaXmNGoB5kgrdkrBiDGdvygD80ZB1Kku1
-	Dkh3n6esEpLa8d1KeL0Sheedfxg+o27LeMFCtONEQutjG1+0R3kGR261DkeiOocC
-	3kZuCrNOt7sReUbLqRgu77MxE7gDWMWlBIVY6ssoia0CmuEfOWTvb0KTCPXPKJ8d
-	UWVgb5y+i0SeME4VpJ9SP9kuUjYv7UGHIwajswrZQck30ulqAP5+YuDO/CPewRq8
-	iVaGXjrby242sv7qZBEkJs3vwZm/W09Sj3Zh7Z53BB41jBm1etZwzRJQe6TfciUS
-	NB0U7omUivIiBsROg7uPQ==
-X-ME-Sender: <xms:SkADaTMddz4FOEe_IClRcmwVm8qetJthuKEhBefHdTS2gOwF1YsrQQ>
-    <xme:SkADaU8BJiViJT-XbFCCl90O-4QZuTRHInN42nZOLb2BqZ5rlBOq4gcpNk9LOvuW8
-    g9KcS9Sdfd0p5cx0xINzoF1EYkTihOBFeyVa6-9EFCr5kUjhdg>
-X-ME-Received: <xmr:SkADaXSWGRskw8wquDklPHxke2viFT_ihybxuy6iQJtde-AOUxZcRS10y29QkQYp0h563b5ApWBZLgACKRkP17RjmaFrMHTfEKm6d79D5A>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761820749; x=
+	1761907149; bh=Zy/LqwDwfRdovhvHTG58hSeQNdUgjuJlX+Nx4fw+4pQ=; b=h
+	u94ZPJAIfiWHPRAlBUbSxrR2tjWnoUo8ITN8OvfEvcDh6GrGPRaE3qx7QPG3KiHO
+	pmhQOWMJR5m1lHNRDz8knu5nYHleS/lpWoTvNIdLDxC3rf3ecyKsDvIK1JLVZMwu
+	gPUtbNi2RlJpWbQvgpuEEkKzDGpDJ7UfASNgUPc/Ge0MwL37Zcs59UkNusuakFyy
+	5by+GP8BqgGEJIxg89nVDkwP4Upf2P2RwVRakS4dwh6xzSbue7NA/HQnbZ3MnVem
+	MJB40QRpSlan5XxhtCKq5XIx/xUT8tmgVReT+VXHTJz0QALhe18guqK7T0G/6ejm
+	6Bl1+mEVcGesz5ikBrdYw==
+X-ME-Sender: <xms:TUADaUX5hHMt8B_mp6K7Sr88pHb4kmErbL5kZWSc_dwBh_ha9R_XiQ>
+    <xme:TUADafngXKx8JR3iu_boVeCITkzdJUwZlWl_cWoJ8zTPKzyq75Yhg4Nu1dloTaNE1
+    7d5hz5ElieWxHsXzzFWfwrlWkG24hoZCkqZ-E9qHfzdpFPu4ebI>
+X-ME-Received: <xmr:TUADadaNIZeoA9pbSMOSTqgzBZNZkb9BMJzSXyzE_9pk-PHScjAA-Eeu8iWESR7wDkWObQ2OEz-chaGX_VPzk8MnFpQQbVS1XIxD6h4nRA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieeifeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeefieduhedvveffkeffvdelueejhfffudfggfduueelgeevgeffveeifeettdejgeen
-    ucffohhmrghinheptggruggushhthhgvfhgvthgthhgvughprggtkhhtohhthhgvshhtoh
-    hrvghsohhthhgrthifvggtrghnrggttggvshhsihhtshhosghjvggtthhsrdhinhenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtg
-    homhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:SkADaWlVIas_NvVhUUCfMPulKZpNJfzpR-72lLhcleJOpA4Yoyq0nw>
-    <xmx:SkADaXTp-kfZe9f3Z1Zl4mWgw1Q1EGgRlYqXrBNqPewutsF83VgLfg>
-    <xmx:SkADaUPsGTHwlJRThxpNAUqWDzqugYmCdA9jWZOh3WzAXhCcCjbLFA>
-    <xmx:SkADaQXe_KEyuW4MttMssOvNRsBH2a47PRxWe-xwoRVU4VreOO5jfw>
-    <xmx:SkADaazVObbQw1ovd2kzqoDPaUEy05l68Vp0n3O8DtGpG6ZP9IuC9xV4>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtth
+    grhihlohhrrhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghp
+    thhtohepthhoohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:TUADaSO2H60-kSw-nDKQ90Esk8znyGn6kadvmvHiGxAoZMsNG8Gogg>
+    <xmx:TUADaaY0qSPjxXNhXRngSQUXSTwy7ROcAC1lmUN9j_5ufJdAm0fg3A>
+    <xmx:TUADaY3c9v81ekIi3yoxc65PuB-OxlqIkP_g15O2SLxSx09UKfExkg>
+    <xmx:TUADaYepKebNNYRj1kGH9ppg1TNzRE2rw25n2xrxDy2jY2NKoSURyg>
+    <xmx:TUADaY4benadlYVo8mHqLdXE8HW5jlbN_qMIOcZmFWh5muAFt78pV-Or>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Oct 2025 06:39:05 -0400 (EDT)
+ 30 Oct 2025 06:39:08 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 91a37b66 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 30 Oct 2025 10:39:05 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id d933b3be (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 30 Oct 2025 10:39:08 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 30 Oct 2025 11:38:44 +0100
-Subject: [PATCH v2 7/8] packfile: always add packfiles to MRU when adding a
- pack
+Date: Thu, 30 Oct 2025 11:38:45 +0100
+Subject: [PATCH v2 8/8] packfile: track packs via the MRU list exclusively
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251030-pks-packfiles-store-drop-list-v2-7-84654f080cc0@pks.im>
+Message-Id: <20251030-pks-packfiles-store-drop-list-v2-8-84654f080cc0@pks.im>
 References: <20251030-pks-packfiles-store-drop-list-v2-0-84654f080cc0@pks.im>
 In-Reply-To: <20251030-pks-packfiles-store-drop-list-v2-0-84654f080cc0@pks.im>
 To: git@vger.kernel.org
@@ -94,100 +91,212 @@ Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
  Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.3
 
-When preparing the packfile store we know to also prepare the MRU list
-of packfiles with all packs that are currently loaded in the store via
-`packfile_store_prepare_mru()`. So we know that the list of packs in the
-MRU list should match the list of packs in the non-MRU list.
+We track packfiles via two different lists:
 
-But there are some direct or indirect callsites that add a packfile to
-the store via `packfile_store_add_pack()` without adding the pack to the
-MRU. And while functions that access the MRU (e.g. `find_pack_entry()`)
-know to call `packfile_store_prepare()`, which knows to prepare the MRU
-via `packfile_store_prepare_mru()`, that operation will be turned into a
-no-op because the packfile store is already prepared. So this will not
-cause us to add the packfile to the MRU, and consequently we won't be
-able to find the packfile in our MRU list.
+  - `struct packfile_store::packs` is a list that sorts local packs
+    first. In addition, these packs are sorted so that younger packs are
+    sorted towards the front.
 
-There are only a handful of callers outside of "packfile.c" that add a
-packfile to the store:
+  - `struct packfile_store::mru` is a list that sorts packs so that
+    most-recently used packs are at the front.
 
-  - "builtin/fast-import.c" adds multiple packs of imported objects, but
-    it knows to look up objects via `packfile_store_get_packs()`. This
-    function does not use the MRU, so we're good.
+The reasoning behind the ordering in the `packs` list is that younger
+objects stored in the local object store tend to be accessed more
+frequently, and that is certainly true for some cases. But there are
+going to be lots of cases where that isn't true. Especially when
+traversing history it is likely that one needs to access many older
+objects, and due to our housekeeping it is very likely that almost all
+of those older objects will be contained in one large pack that is
+oldest.
 
-  - "builtin/index-pack.c" adds the indexed pack to the store in case it
-    needs to perform consistency checks on its objects.
+So whether or not the ordering makes sense really depends on the use
+case at hand. A flexible approach like our MRU list addresses that need,
+as it will sort packs towards the front that are accessed all the time.
+Intuitively, this approach is thus able to satisfy more use cases more
+efficiently.
 
-  - "http.c" adds the fetched pack to the store so that we can access
-    its objects.
+This reasoning casts some doubt on whether or not it really makes sense
+to track packs via two different lists. It causes confusion, and it is
+not clear whether there are use cases where the `packs` list really is
+such an obvious choice.
 
-In all of these cases we actually want to access the contained objects.
-And luckily, reading these objects works as expected:
+Merge these two lists into one most-recently-used list.
 
-  1. We eventually end up in `do_oid_object_info_extended()`.
-
-  2. Calling `find_pack_entry()` fails because the MRU list doesn't
-     contain the newly added packfile.
-
-  3. The callers don't pass `OBJECT_INFO_QUICK`, so we end up
-     repreparing the object database. This will also cause us to
-     reprepare the MRU list.
-
-  4. We now retry reading the object via `find_pack_entry()`, and now we
-     succeed because the MRU list got populated.
-
-This logic feels quite fragile: we intentionally add the packfile to the
-store, but we then ultimately rely on repreparing the entire store only
-to make the packfile accessible. While we do the correct thing in
-`do_oid_object_info_extended()`, other sites that access the MRU may not
-know to reprepare.
-
-But besides being fragile it's also a waste of resources: repreparing
-the object database requires us to re-read the alternates file and
-discard any caches.
-
-Refactor the code so that we unconditionally add packfiles to the MRU
-when adding them to a packfile store. This makes the logic less fragile
-and ensures that we don't have to reprepare the store to make the pack
-accessible.
-
-Note that this does not allow us to drop `packfile_store_prepare_mru()`
-just yet: while the MRU list is already populated with all packs now,
-the order in which we add these packs is indeterministic for most of the
-part. So by first calling `sort_pack()` on the other packfile list and
-then re-preparing the MRU list we inherit its sorting.
+Note that there is one important edge case: `for_each_packed_object()`
+uses the MRU list to iterate through packs, and then it lists each
+object in those packs. This would have the effect that we now sort the
+current pack towards the front, thus modifying the list of packfiles we
+are iterating over, with the consequence that we'll see an infinite
+loop. This edge case is worked around by introducing a new field that
+allows us to skip updating the MRU.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- midx.c     | 2 --
- packfile.c | 1 +
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ builtin/pack-objects.c |  4 ++--
+ packfile.c             | 27 +++++++--------------------
+ packfile.h             | 27 +++++++++++++++++----------
+ 3 files changed, 26 insertions(+), 32 deletions(-)
 
-diff --git a/midx.c b/midx.c
-index 8022be9a45e..24e1e721754 100644
---- a/midx.c
-+++ b/midx.c
-@@ -462,8 +462,6 @@ int prepare_midx_pack(struct multi_pack_index *m,
- 		    m->pack_names[pack_int_id]);
- 	p = packfile_store_load_pack(r->objects->packfiles,
- 				     pack_name.buf, m->source->local);
--	if (p)
--		packfile_list_append(&m->source->odb->packfiles->mru, p);
- 	strbuf_release(&pack_name);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index b83eb8ead14..0e4e9f80682 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1748,11 +1748,11 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
+ 		}
+ 	}
  
- 	if (!p) {
+-	for (e = the_repository->objects->packfiles->mru.head; e; e = e->next) {
++	for (e = the_repository->objects->packfiles->packs.head; e; e = e->next) {
+ 		struct packed_git *p = e->pack;
+ 		want = want_object_in_pack_one(p, oid, exclude, found_pack, found_offset, found_mtime);
+ 		if (!exclude && want > 0)
+-			packfile_list_prepend(&the_repository->objects->packfiles->mru, p);
++			packfile_list_prepend(&the_repository->objects->packfiles->packs, p);
+ 		if (want != -1)
+ 			return want;
+ 	}
 diff --git a/packfile.c b/packfile.c
-index 71e95ae11c5..60f2e42876a 100644
+index 60f2e42876a..378b0b1920d 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -871,6 +871,7 @@ void packfile_store_add_pack(struct packfile_store *store,
+@@ -870,9 +870,7 @@ void packfile_store_add_pack(struct packfile_store *store,
+ 	if (pack->pack_fd != -1)
  		pack_open_fds++;
  
- 	packfile_list_prepend(&store->packs, pack);
-+	packfile_list_append(&store->mru, pack);
- 
+-	packfile_list_prepend(&store->packs, pack);
+-	packfile_list_append(&store->mru, pack);
+-
++	packfile_list_append(&store->packs, pack);
  	strmap_put(&store->packs_by_path, pack->pack_name, pack);
  }
+ 
+@@ -1077,14 +1075,6 @@ static int sort_pack(const struct packfile_list_entry *a,
+ 	return -1;
+ }
+ 
+-static void packfile_store_prepare_mru(struct packfile_store *store)
+-{
+-	packfile_list_clear(&store->mru);
+-
+-	for (struct packfile_list_entry *e = store->packs.head; e; e = e->next)
+-		packfile_list_append(&store->mru, e->pack);
+-}
+-
+ void packfile_store_prepare(struct packfile_store *store)
+ {
+ 	struct odb_source *source;
+@@ -1103,7 +1093,6 @@ void packfile_store_prepare(struct packfile_store *store)
+ 		if (!e->next)
+ 			store->packs.tail = e;
+ 
+-	packfile_store_prepare_mru(store);
+ 	store->initialized = true;
+ }
+ 
+@@ -1128,12 +1117,6 @@ struct packfile_list_entry *packfile_store_get_packs(struct packfile_store *stor
+ 	return store->packs.head;
+ }
+ 
+-struct packfile_list_entry *packfile_store_get_packs_mru(struct packfile_store *store)
+-{
+-	packfile_store_prepare(store);
+-	return store->mru.head;
+-}
+-
+ /*
+  * Give a fast, rough count of the number of objects in the repository. This
+  * ignores loose objects completely. If you have a lot of them, then either
+@@ -2134,11 +2117,12 @@ int find_pack_entry(struct repository *r, const struct object_id *oid, struct pa
+ 	if (!r->objects->packfiles->packs.head)
+ 		return 0;
+ 
+-	for (l = r->objects->packfiles->mru.head; l; l = l->next) {
++	for (l = r->objects->packfiles->packs.head; l; l = l->next) {
+ 		struct packed_git *p = l->pack;
+ 
+ 		if (!p->multi_pack_index && fill_pack_entry(oid, e, p)) {
+-			packfile_list_prepend(&r->objects->packfiles->mru, p);
++			if (!r->objects->packfiles->skip_mru_updates)
++				packfile_list_prepend(&r->objects->packfiles->packs, p);
+ 			return 1;
+ 		}
+ 	}
+@@ -2270,6 +2254,7 @@ int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
+ 	int r = 0;
+ 	int pack_errors = 0;
+ 
++	repo->objects->packfiles->skip_mru_updates = true;
+ 	repo_for_each_pack(repo, p) {
+ 		if ((flags & FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
+ 			continue;
+@@ -2290,6 +2275,8 @@ int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
+ 		if (r)
+ 			break;
+ 	}
++	repo->objects->packfiles->skip_mru_updates = false;
++
+ 	return r ? r : pack_errors;
+ }
+ 
+diff --git a/packfile.h b/packfile.h
+index d95275e666c..27ba607e7c5 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -79,8 +79,8 @@ struct packfile_store {
+ 	struct object_database *odb;
+ 
+ 	/*
+-	 * The list of packfiles in the order in which they are being added to
+-	 * the store.
++	 * The list of packfiles in the order in which they have been most
++	 * recently used.
+ 	 */
+ 	struct packfile_list packs;
+ 
+@@ -98,9 +98,6 @@ struct packfile_store {
+ 		unsigned flags;
+ 	} kept_cache;
+ 
+-	/* A most-recently-used ordered version of the packs list. */
+-	struct packfile_list mru;
+-
+ 	/*
+ 	 * A map of packfile names to packed_git structs for tracking which
+ 	 * packs have been loaded already.
+@@ -112,6 +109,21 @@ struct packfile_store {
+ 	 * packs.
+ 	 */
+ 	bool initialized;
++
++	/*
++	 * Usually, packfiles will be reordered to the front of the `packs`
++	 * list whenever an object is looked up via them. This has the effect
++	 * that packs that contain a lot of accessed objects will be located
++	 * towards the front.
++	 *
++	 * This is usually desireable, but there are exceptions. One exception
++	 * is when the looking up multiple objects in a loop for each packfile.
++	 * In that case, we may easily end up with an infinite loop as the
++	 * packfiles get reordered to the front repeatedly.
++	 *
++	 * Setting this field to `true` thus disables these reorderings.
++	 */
++	bool skip_mru_updates;
+ };
+ 
+ /*
+@@ -171,11 +183,6 @@ void packfile_store_add_pack(struct packfile_store *store,
+  */
+ struct packfile_list_entry *packfile_store_get_packs(struct packfile_store *store);
+ 
+-/*
+- * Get all packs in most-recently-used order.
+- */
+-struct packfile_list_entry *packfile_store_get_packs_mru(struct packfile_store *store);
+-
+ /*
+  * Open the packfile and add it to the store if it isn't yet known. Returns
+  * either the newly opened packfile or the preexisting packfile. Returns a
 
 -- 
 2.51.2.997.g839fc31de9.dirty
