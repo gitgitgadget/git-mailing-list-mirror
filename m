@@ -1,145 +1,128 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653C43A1C9
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 00:25:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5666D3A1C9
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 00:32:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761783905; cv=none; b=i96LDIao4YnJ3pos1q0trugt7VozUSmGXocJtmtJU1tEDMVd40L9C/ikfGXRyyx/xfI5xwW2dbcXiS4remM77xMRP+zrWuLZXEVMh39KHqwNt3El+2A8jEl8A/53UWHvXc4QSOZHyjJY4Z3ce3yNgoARI3FxZFlgcyqTEWJV1Pk=
+	t=1761784366; cv=none; b=sGmBUy5DrzouTKl7JoirutxVY7L7H/8UVubI8a/zh5CtRgYssz95PLNPtedUO2+AEc5TnnwIpdmcxDgwOXuB02VGeFITDbey9B1aCPo0a0JVrkg6p3xOW3fpE4dh8I69divibpIz8cRCESN0UxzX73l/6SS3w4gjFZvRun2tA1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761783905; c=relaxed/simple;
-	bh=ob9er6YhyUdu/czMMZEjtE1dgKS6rJMQiANuihwdOjc=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OBuYuyycn9X3tX6POFvcTFQOSqlFg45hjpHszP6+FQgZ/Vr1+3ApbZYxAllTh4pg1+KsjQYCbjPs3XfDOZ+fEy383qmLEj90/7xrU9ijxw0N4gXeqc6z1Z3B6B3MxznP25rqImjaIY/lnpUKBfLxdQuMquYZndhZupanCcuevVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 59U0Ovl51848255
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 Oct 2025 00:24:58 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "=?utf-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>
-Cc: <git@vger.kernel.org>
-References: <xmqqo6psjq2n.fsf@gitster.g> <000d01dc4831$ff049500$fd0dbf00$@nexbridge.com> <aQKVByfUdYHSEcDz@szeder.dev> <000201dc4925$2cdbc450$86934cf0$@nexbridge.com> <aQKgxfZ9WQjyrhpa@szeder.dev>
-In-Reply-To: <aQKgxfZ9WQjyrhpa@szeder.dev>
-Subject: RE: [BUGS] Git v2.51.2 on NonStop
-Date: Wed, 29 Oct 2025 20:24:52 -0400
-Organization: Nexbridge Inc.
-Message-ID: <000701dc4933$9f79c670$de6d5350$@nexbridge.com>
+	s=arc-20240116; t=1761784366; c=relaxed/simple;
+	bh=RhPocg5PLunoCP8EqJE4hZoHUMMkVvEHz7NpWfnB9No=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EwVOGkSPv+KJmamCObZUBzlEMrii90QGUMDYgreMN711BtZMq/kVyfP9VJsVC+qJRMPqoFmVlWmQWlmXvIOsHqzMJvnMtniPN20tQ8mb7p6OYnTuQ3H4zA4JwSB58DCPKpjSykubkbYhkl5r2so8JxGn7rF4bBQ6FYyPLAHqiRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=cITS8C9w; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="cITS8C9w"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1761784363;
+	bh=RhPocg5PLunoCP8EqJE4hZoHUMMkVvEHz7NpWfnB9No=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=cITS8C9wgSDeaUhBDF9Fg3vdOUtqijMtNlNrJ8pRBliIY1IO+PFetHr+Y6Pmj0D1S
+	 DZ8kHqqtDy4b1Y9MY7U8j03dn8R5GSeg6E27RJ0PEdXhRx1doJqh0+konhlyqw0fQa
+	 1o2BENSjKJnuflRg7gOnbssyQdALz2WayYMS3CERz5MxST/vQcOm2JsIKobnVjA+Wh
+	 yasrKN9HhSeoKiEqVtiaAdPtcwhiIaE3UwvrEB1qH8uHY/Qp0LVqqWsS5gCRXPitMy
+	 3jLWLOTNKjMhfB1E4pndaZMNF6UrugN2ZfEZwgDxfiZcAN7ElWptqVpfFtKMMkaEZy
+	 Z5PHA6odkg6uvWPX2JBna7cP/NvP7s30Redd/iV6dFivshr6UHLVcnVTlKrBlluOit
+	 s8gENyStLoFIZEDnXneTFP8S5CEkHloW2g8dZo6tsP7O3NeLpBrr2VED85PTiAYGwb
+	 zUbrdhDkaExNgDU3c767x3kJNkojriaafM3yvjn72dt706C7BCh
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:8caa:b0a3:2e22:c46c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2D02620036;
+	Thu, 30 Oct 2025 00:32:43 +0000 (UTC)
+Date: Thu, 30 Oct 2025 00:32:41 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 04/14] rust: add a ObjectID struct
+Message-ID: <aQKyKU12229se0tU@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+ <20251027004404.2152927-5-sandals@crustytoothpaste.net>
+ <aQCKD--ZmKnwBWs9@pks.im>
+ <aQFhpAinB6HLC-Tw@fruit.crustytoothpaste.net>
+ <aQHZda5I0JPSRwv1@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="9uBCPYa1rbRtQ4zC"
+Content-Disposition: inline
+In-Reply-To: <aQHZda5I0JPSRwv1@pks.im>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--9uBCPYa1rbRtQ4zC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGUZTuwh66ijI7aIz2t8Y1znRjrdQMi5nLUAqYtrUMA8xKehADwUhlftSw2foA=
-Content-Language: en-ca
-X-Antivirus: Norton (VPS 251029-2, 10/29/2025), Outbound message
-X-Antivirus-Status: Clean
 
-On October 29, 2025 7:18 PM, SZEDER G=C3=A1bor wrote:
->On Wed, Oct 29, 2025 at 06:41:27PM -0400, rsbecker@nexbridge.com wrote:
->> On October 29, 2025 6:28 PM, SZEDER G=C3=A1bor wrote:
->> >On Tue, Oct 28, 2025 at 01:40:42PM -0400, rsbecker@nexbridge.com =
-wrote:
->> >> I have found new defects on 2.51.2 that were not present in 2.51.1
->> >> when building
->> >with OpenSSL 3.5 (probably unrelated).
->> >>
->> >> Many failures in t7900 resulting from the use of test_subcommand !
->> >> as seen
->> >below. This is run in bash 5.0.18:
->> >>
->> >> + test_subcommand git gc --quiet --no-detach
->> >> + --skip-foreground-tasks 0< run-no-auto.txt
->> >> =
-{"event":"child_start","sid":"20251028T172435.690328Z-H36b1c598-P7b
->> >> 000
->> >> =
-02d","thread":"main","time":"2025-10-28T17:24:35.879833Z","file":"/
->> >> hom
->> >> =
-e/jenkinsbuild/.jenkins/workspace/Git_Pipeline/run-command.c","line
->> >> ":7
->> >> =
-40,"child_id":2,"child_class":"?","use_shell":false,"argv":["git","gc"
->> >> ,"--quiet","--no-detach","--skip-foreground-tasks"]}
->> >> + test_subcommand ! git gc --auto --quiet --no-detach
->> >> + --skip-foreground-tasks 0< run-auto.txt
->> >> test_subcommand[5]: test: argument expected
->> >
->> >This is a strange trace output, as it includes file descriptor
->> >redirections, but lacks the trace of commands executed in
->> >test_subcommands.  This trace doesn't look like it's coming from =
-Bash.
->>
->> The test_subcommand[5]: test: argument expect is coming from bash. I
->> cannot see how it is coming from anywhere else. The test was run with
->> -x but snipped. Reference to test_subcommand ! git... fails exactly =
-the same way.
->Is there something else I can provide?
->
->The -x trace from Bash doesn't include file descriptor redirections, =
-but includes the
->commands executed in test_subcommand, and the number of '+' characters =
-at the
->beginning of each trace line indicates the number of subshells, so when =
-the test is
->really run by Bash the trace from a test_subcommand invocation looks =
-like this:
->
->  ++ test_subcommand git gc --quiet --no-detach --skip-foreground-tasks
->  ++ local negate=3D
->  ++ test git =3D '!'
->  +++ printf '"%s",' git gc --quiet --no-detach --skip-foreground-tasks
->  ++ local =
-'expr=3D"git","gc","--quiet","--no-detach","--skip-foreground-tasks",'
->  ++ =
-expr=3D'"git","gc","--quiet","--no-detach","--skip-foreground-tasks"'
->  ++ test -n ''
->  ++ grep =
-'\["git","gc","--quiet","--no-detach","--skip-foreground-tasks"\]'
->  {"event":"child_start","sid":"20251029T230304.507599Z-H3fb05a16-
->P001a33ae","thread":"main","time":"2025-10-29T23:03:04.512913Z","file":"=
-run-
->command.c","line":740,"child_id":2,"child_class":"?","use_shell":false,"=
-argv":["git",
->"gc","--quiet","--no-detach","--skip-foreground-tasks"]}
->  ++ test_subcommand '!' git gc --auto --quiet --no-detach =
---skip-foreground-tasks
->  ++ local negate=3D
->
->Since the trace you showed doesn't look like this I still doubt that it =
-came from Bash.
+On 2025-10-29 at 09:08:05, Patrick Steinhardt wrote:
+> I'm mostly asking all of these questions because this is our first Rust
+> code in Git that is a bit more involved. So it's likely that this code
+> will set precedent for how future code will look like, and ideally I'd
+> like us to have code that is idiomatic Rust code.
 
-What appears to be happening is that the Make environment is only using =
-SHELL=3D/bin/bash
-for the outer processing but not the inner #!/bin/sh of t7900. The =
-system is using /bin/sh
-as specified, which uses ksh, not bash, which is the trace above. When I =
-run the individual
-tests with bash, the error reported goes away. The problem is, with my =
-version of Gnu Make,
-4.1.2, the SHELL variable is only being replaced for the command =
-processing of each
-recipe. Once the system loader sees the shebang of #!/bin/sh, /bin/sh is =
-used as requested,
-and fails out. This means that I have to remember to manually run each =
-test that fails with
-bash instead of the default. It is frustrating and now adds hours to my =
-manual evaluation
-of the CI/CD results.
+In general, I'd like that, too, and that's a fair question.
 
-The trace above is from sh, not bash because of this.
+> With the FFI code it's of course going to be a mixed bag, as we are
+> somewhat bound by the C interfaces. But in the best case I'd imagine
+> that we have low-level FFI primitives that bridge the gap between C and
+> Rust, and then we build a higher-level interface on top of that which
+> allows us to use it in an idiomatic fashion.
 
-With Frustration,
-Randall
+The reason I've made the decision to minimize conversions here is
+because the object ID lookups are in a hot path in `index-pack` and
+various protocol code.  If we clone the Linux repository (in SHA-1) and
+want to convert it to SHA-256 as part of that clone, we may need to
+convert every object and then deltify it to write the SHA-256 pack.
+This is never going to really scream in terms of performance as you
+might imagine, but it can be better or worse and I've tried to make it
+a little better.
 
+Similarly, if we have 500,000 refs on the remote[0], each of those
+have/want pairs has to be potentially converted and we want people to
+feel positively about our performance.
+
+I will send a patch in a future series that will make this a little more
+idiomatic on the Rust side as well.
+
+> I guess all of this will require a lot of iteration anyway as we gain
+> more familiarity with Rust in our codebase. And things don't have to be
+> perfect on the first try *shrug*
+
+Yeah, we'll come up with some standards and design guidance as things go
+along.
+
+[0] Some major users of Git do have this order of number of refs.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--9uBCPYa1rbRtQ4zC
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaQKyKQAKCRB8DEliiIei
+gWWdAQCmgRQnkk/OOGJ3aa/+bkk8Lj+2n+OOW0QWZN35Y5RVWgEAuwOIU3wWjFNL
+0xDtPvKye3MrtyxP0JLqsE40sQDeRwM=
+=vMIU
+-----END PGP SIGNATURE-----
+
+--9uBCPYa1rbRtQ4zC--
