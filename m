@@ -1,128 +1,111 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3569A2459F8
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 13:40:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A41C22A80D
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 13:52:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761831652; cv=none; b=kuxJXjtS6QW7pR2PXxny+05GN+WXMRYAfeD5hKUVzE12tpxwt3o25H8eiZ68EuZRn5G5uCNrOnTmBLHmnBsWGF3iLaJY6EzvNwPaZdNJmjs/HKr+buLOI0x2zDp7i+O2eDFRMaMbiD0SwO2evwxk6uto8TNBlR5pugEw/kInXcA=
+	t=1761832370; cv=none; b=SqtB9wNmpyFVvVzAekuW0IgBfvR7hwYFmPjtApPXr+/zGouGSQS12BHfOxV70dKxwtNsIUOaL+jyD0uV3R1+UNFZcVHzxPTJjwYArBja381sc5FVUu2nfh1ji0Pd3IXR70meq08xboTk77VYMrJJHt9UBidZshbv4Ntj2DS3ch0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761831652; c=relaxed/simple;
-	bh=jgVUApPVJOOjUKaau5SiWBcxHIVYEcdo+/tk+HDXDZc=;
+	s=arc-20240116; t=1761832370; c=relaxed/simple;
+	bh=sWWNiF9h6JWln3jVQTzZ/sdyPtidu6AQFCgdF5lQJQw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VjRUzVJx8HC10ipoVE32ifDMc9sFIeGfs2kPcs0O9ctsuYhVBTi/my0zRlsvUohDE1Tu4xVWGFjH9O47M52BzT0vv1BKbL8wY/7ishJUjWyk1v06lGNcSHyReknG6spqw9ZZUUo3L17jEqOyvTUEPm9Z3paKlXH9SAs8yRhyNZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JEe5WVjK; arc=none smtp.client-ip=209.85.208.53
+	 To:Cc:Content-Type; b=L04PekfhFRkxJqDHmY8iyS0MXzMBVHxLj21Zpo7GhKMGe8owJe/jTqSEPa9xp0CHw/wX9JN+7rfOyAq8bn0fWHyjUew1O09/IVnwMrcNWfIsy/7PEkR4UnK5sZ4HXVFvgKTeVdT57qWBq+w6WX5BPwz9jXR7JknFfeIQbzmdyP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ft/sILdT; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JEe5WVjK"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-63c2d72582cso1835931a12.1
-        for <git@vger.kernel.org>; Thu, 30 Oct 2025 06:40:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ft/sILdT"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b3c2c748bc8so143867366b.2
+        for <git@vger.kernel.org>; Thu, 30 Oct 2025 06:52:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761831648; x=1762436448; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1761832366; x=1762437166; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PB5xdqHLbKEJQPYIazQmu4BtiJ6zQNVlAJunOvgV1CM=;
-        b=JEe5WVjKQTw4q0zO4Qrsdr4ONQPHpx01V+iU8i3SHjYTQmsTj9F+CRBTkKBCtYQo1X
-         laccBnVwK86fx1MVsXGG2JW8ePd7H5OnT19eRjIXWJq9BBKhnwnCVBsLJvycbuvJA3Tx
-         OP8Vi4d8KrJJAXcedU0n8KXXgZ1GGEpraF4txb3Gmo2BrOkqEsHRxrEP5rRPs5qZ0bJ1
-         sCZzc66nnrWsKqWFhEH4WoyAbEv84bmsR0O2zFFjpEW3zpMPzyo1OPBhHD1uWu/6zk7B
-         djU/rkBM7h7W5scxFrLKUouJHz7gFnIMDgY7uPhDdc3hFKcRwsU2LCTWVfJMaVRvP4oO
-         A0uw==
+        bh=sWWNiF9h6JWln3jVQTzZ/sdyPtidu6AQFCgdF5lQJQw=;
+        b=Ft/sILdT5BPu6nIUsH4I+13SneX1ijHpYeAidB51kn++gbs4CL2QlIzJaeMQlLECrN
+         hZC5jahSAAu+x6KuKrqFWVPOHq+0SV7nHFmotI7c+2c9qvVVIl2DS4M9Qknpv6le8iEW
+         7hIHwdf50yZMMExuqYM8N4RC/BfqPI5AgCK3xCGV9J/RWwOaRZMhMxDqBJmqq9jegpXz
+         entZchr/XAuKSM18d8S2T/wK3V1WvGpwX/W4MfFLzvzfreZ6ohsVjDgKPslC/DOUYtrk
+         vKRk649LV/9+Bv4GOpJNzNi/2hJWTNaYBAX17hvSCK7uPBzPiZmPDqZ9ovrl3O7q4f/I
+         dDrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761831648; x=1762436448;
+        d=1e100.net; s=20230601; t=1761832366; x=1762437166;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PB5xdqHLbKEJQPYIazQmu4BtiJ6zQNVlAJunOvgV1CM=;
-        b=QOq11wNpOnvwaEq8DHaghx0M9i9PqEKsobwMXBY57p7aIIN2CcIvPTlyaTHfc2QG8D
-         DyuImTZvBZh+KGi/PQfsO9L1aC0s2e4ai0K+t88JmcpkewBt/JK3y9V1C0jlS7tDtEF1
-         pkaaPED94OMEOtUZk/E+hEcgVddFPeZd7HAw9F+tNhXfTr5Y2Kd0OGTHwa8kFPZgk4pu
-         +3KfAYK+j/ABCkO1fdpaX1c5FnZgZYuck3e13bu6by3HYxBsY0ESi7rtRWIvCYPwOJ+O
-         vkkzY5rn+Ex6d724pghjLOnjkfEXi9LpSqK5Tov5MaQTTPuKBTn4SVxS9CiAwWcAi+LI
-         Gd3g==
-X-Forwarded-Encrypted: i=1; AJvYcCX9V1xHqw0MMuAySY4xewsggTQiT6vCCdy9icfxegXotgk+r4nWhMUCx9no8Pq+MAirdQA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYmp2scb0dbmuJltRYNkuFp22F9ARfUpTigFmpqLA92Ufpz7Az
-	r4NYN+nQi99iTDtCJXakt+IJoEMyiX/G1xeeUOyphC2Qhf5ci6pYrAUie642Hh8r7WJLTbOjZdv
-	rYrYMWqwNWHzsN0Ba8efomEkVY9+Asa0=
-X-Gm-Gg: ASbGncvXo+aH4J36fZmJXY8gcgNWvtJKjJSN6ZP4+ls4BFAahG09wqoBUhdY3MQuI1w
-	5L39MIlfJx/dRd0on4Yu5sHwRXg9sC3J1i6XQvKdunlBrEU5HY+UH+ZzbMAY0CrXxsqozGOfcJk
-	i3PFwkjXXvrWh1akNY8cOtcJw1Lpl6YFpr1nGVrOZXH5qGQPXRu7mMaMW3jzwQXWUQMt6b0LWrU
-	Mxp3YBO0bigOT173IlXbigqAG2l/ymUXWwl8cT6ra8wNIkkEecwpxiyVSTfMZJBty3OONS3aapv
-	g3KAJ1Y3W98yxAj7T7s=
-X-Google-Smtp-Source: AGHT+IFkRD7WWgA5nZoK5fyFTpIlgwXPgp9qnKEE8fK1JC8bbkQBs+MxfxqbQUPag0bFFzbbpG1lYC7r+5f/dSHWJ0U=
-X-Received: by 2002:a05:6402:2687:b0:63c:4e00:5cad with SMTP id
- 4fb4d7f45d1cf-6404424b178mr5729260a12.20.1761831648346; Thu, 30 Oct 2025
- 06:40:48 -0700 (PDT)
+        bh=sWWNiF9h6JWln3jVQTzZ/sdyPtidu6AQFCgdF5lQJQw=;
+        b=tT0GBfPxtu4xCDTDpgg5+yZh3TkOzjJ7aE4KJWR4trASvP0nl/0aWaSxLT5QJgEFFw
+         dsrSnBDHks5fGP5c0Ken1d5FStjlZ4qsxGG4BGWMsy+xbLaqqKrxWVqPSOkxFraUE+L0
+         GCnArvCS8Kwehjtll+hwtdVZhaZDvKOaxzEvrOBVPUk2WOQ9Z/05dydRgXo0zLKi8fwa
+         uEAEtHZFWIy2h+BxXSXLou8GiMunFpv2sYQTM9flbnElBeQoFXem7yL3OxFhqe7317cg
+         psf/Y+LrzdT3XbDYI7VFVWEKPfGUX4AC7FqwU/so965bB5z0dY5NBBUBiHsaSa0DwLdJ
+         jjkQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUT7efIo90jpWkS4xnbLyE6vEoC8wjOOvT5Vfmq8q3wLZZh7bzTpALg03jGRvDglwqXHNA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxAbP7Qy34wr3ENDczovNCii6eywATdFy5O+KZVdPhbX5rzWMBo
+	6yZpSJ0ZP9QJzI/Y4Bly3TaqsRx65YWVemcTjkrb/yCKrwwMgM0wBunDAfQD4Kxbi2o1r0tLIe2
+	h3Is0z3tDiDrgm7+di2tjmEXiZHx4bco=
+X-Gm-Gg: ASbGncsR9Zk2oW0y57Ush4rrI5tH/NkEiWaN0LCZJvXb3UKnl0Go0KB3XpthhemHBe4
+	9ILWM7WoTHy5uYH90JXoctecYD2UBE2ttyNnJx3E5u5VX2UlfrNus6/DMNaNeD08wvgR/6PFt7k
+	wn8j6tazSeUHqJGYuY9FDPzJ6/ji8m9W0mjeH9j9lLomTN8krvhoskacXL3Dm8j6eAyT0GmLucc
+	ua6sBZH09DieH7cqUynRDfHoltIaHm/7gt+wpAgzHGaPTZfg5DOx2WK7jW8LJGoHq5tXS801uFK
+	kHNMR3L0Yll95fBbyMbMZ4aH8BovcQ==
+X-Google-Smtp-Source: AGHT+IH/xRdlpYQpJ1zYIGx5AEXJPU6H7zNrPPSZ3HqHdooJ5TPdTzWlWjGDBYppha2M3C1FVVcdzo0HSpmKVK0SidQ=
+X-Received: by 2002:a17:907:72ca:b0:b3b:110c:d343 with SMTP id
+ a640c23a62f3a-b703d2e4318mr602981566b.8.1761832366448; Thu, 30 Oct 2025
+ 06:52:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <n_EjA_jj-d398XOogazunHfOBdh-yoa5P-Prb3b7gjkBODqWMtvKNdhnCLuikthwVcbEy4-ryWTRgyuiShJ3tam93j8S7lmGSlyFjNoxzSo=@protonmail.com>
- <20251014003404.GC1507@coredump.intra.peff.net> <xmqq7bwltlb8.fsf@gitster.g>
- <20251026152614.GB2095501@coredump.intra.peff.net> <xmqq7bwhmecb.fsf@gitster.g>
- <20251027142902.GB2758515@coredump.intra.peff.net> <xmqq4irkl5ms.fsf@gitster.g>
- <20251028231945.GA4128296@coredump.intra.peff.net> <20251029153237.GA1133542@coredump.intra.peff.net>
- <20251029155559.GA1134232@coredump.intra.peff.net>
-In-Reply-To: <20251029155559.GA1134232@coredump.intra.peff.net>
+References: <xmqqo6psjq2n.fsf@gitster.g> <000d01dc4831$ff049500$fd0dbf00$@nexbridge.com>
+ <aQKVByfUdYHSEcDz@szeder.dev> <000201dc4925$2cdbc450$86934cf0$@nexbridge.com>
+ <aQKgxfZ9WQjyrhpa@szeder.dev> <000701dc4933$9f79c670$de6d5350$@nexbridge.com>
+In-Reply-To: <000701dc4933$9f79c670$de6d5350$@nexbridge.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 30 Oct 2025 09:40:36 -0400
-X-Gm-Features: AWmQ_bkm2OedvvA5pbfj9Ni7LZyxM30rAzZvnzutgpYDL0G8_t9cw5uGsLG_rDM
-Message-ID: <CALnO6CButUc89H0a+FrrdY4pWh10=U8yeWfd7Oesb=1wpHMmSg@mail.gmail.com>
-Subject: Re: [PATCH] doc: document backslash in gitignore patterns
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Sruteesh Kumar <sruteesh.oss@protonmail.com>, 
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Date: Thu, 30 Oct 2025 09:52:34 -0400
+X-Gm-Features: AWmQ_bkNjEMPdsyj4DxYWxbsdq3_hlYshrF85RwtvpuK8BGJsHN7jan2OBh6STg
+Message-ID: <CALnO6CAYmtDmfk36nX6TCCaV2c=8J0BXv9eN+L=j1PU=gPmJUQ@mail.gmail.com>
+Subject: Re: [BUGS] Git v2.51.2 on NonStop
+To: rsbecker@nexbridge.com
+Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 29, 2025 at 12:32=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+On Wed, Oct 29, 2025 at 8:25=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
 >
-> On Wed, Oct 29, 2025 at 11:32:37AM -0400, Jeff King wrote:
+> What appears to be happening is that the Make environment is only using S=
+HELL=3D/bin/bash
+> for the outer processing but not the inner #!/bin/sh of t7900. The system=
+ is using /bin/sh
+> as specified, which uses ksh, not bash, which is the trace above. When I =
+run the individual
+> tests with bash, the error reported goes away. The problem is, with my ve=
+rsion of Gnu Make,
+> 4.1.2, the SHELL variable is only being replaced for the command processi=
+ng of each
+> recipe. Once the system loader sees the shebang of #!/bin/sh, /bin/sh is =
+used as requested,
+> and fails out. This means that I have to remember to manually run each te=
+st that fails with
+> bash instead of the default. It is frustrating and now adds hours to my m=
+anual evaluation
+> of the CI/CD results.
 >
-> > Subject: [PATCH] doc: document backslash in gitignore patterns
+> The trace above is from sh, not bash because of this.
 >
-> Oh, I forgot to mention: obviously gitattributes inherits the same
-> behavior here. I looked at whether it would want a similar patch, but it
-> does not define the pattern format at all, and just punts to "see
-> gitignore(5) for details". I think that's OK. Unlike where we refer to
-> fnmatch(3) here, you cannot even begin to wonder how backslashes are
-> handled by gitattributes without reading gitignore(5). ;)
->
-> There's also the "pathspec" entry in gitglossary(7), which does mention
-> fnmatch(3). Though it is even more confusing because of the literal
-> matching that pathspecs do. I don't know if we'd want anything there
-> (and I kind of doubt people get as exotic about patterns there as they
-> would in gitignore).
->
-> -Peff
+> With Frustration,
+> Randall
 
-I certainly wondered about the pathspec case, since the commit message
-called out the difference in behavior. For example, at least in this
-one corner, we can't reliably use Git commands with pathspecs to build
-up example gitignore patterns to throw in .gitignore?
+Is this the only ksh-induced failure? And if so, what is inducing the
+failure=E2=80=94is it something the test library can work around, or is the
+system {k,}sh not behaving portably here?
 
-BTW, is the literal matching intended to be conveyed by
-
-           =E2=80=A2   any path matches itself
-
-? If so, I'm not quite sure how to interpret a pathspec like a/b given
-a repo with a/b and dir/a/b=E2=80=94do both match or only the former? I exp=
-ect
-in combination with the 2 subsequent bullets that only the former
-matches. Conversely, with a pathspec "b" in that case, I think I could
-read the docs as suggesting both match, when IIRC none do. Hm!
-
-But this is a bit of a tangent, and the pathspec entry is already, uh,
-complicated [1]. Without a good place to leave extra notes for cases
-like this, I'm not sure what to do. Certainly unifying the behavior
-would be incompatible (if obscure).
-
-[1]: https://lore.kernel.org/git/20250802094657.GG3711639@coredump.intra.pe=
-ff.net/
+My preference would be towards making your setup "just work" assuming
+there's not a clear contradiction of portable standards somewhere.
 
 --=20
 D. Ben Knoble
