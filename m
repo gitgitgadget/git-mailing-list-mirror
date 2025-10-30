@@ -1,101 +1,117 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8379E35970F
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 15:15:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9371933F8AC
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 15:27:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761837353; cv=none; b=MM+mSoK+M9dn27wXEVnO9eeoKPmPtwQ/BisRpa8qOyxMql/yVCs9MYgHq02tVEntDfHWKYt6XsDNNdGh+mrSxSnt09LLW6AWQ8jAJhF1y28a3YyHAzmo6OinwPp5eZ3lNiogyfE8STVZZyEZaiX29OxPFzJk5wFhwb9ZXaF76DY=
+	t=1761838046; cv=none; b=C6zpQYTtoNoSAMG0gVoa22NXIDfi62AT3S07SHxB4A//uvm904hHdteV5pMVMXvyGyZHBExgS+tT0VqNTqCYZnxkZREpCqV0VwQfnpSzIiYN1sAbh0fifk0PE/Hf69WK6QVuU1Jy4r8UsVrTYXQVojtD55xKUj2qOqKDgA/gPOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761837353; c=relaxed/simple;
-	bh=XZIFzgMOHb5vQF1QRvynnzj7Np+Ea0C66sy1/n0QQuI=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=bovuFzQBOnTeJicSXk+zt8HkCRXtVX4pTOFm+jRaC8CoZFxeQQmOxcpCOUfoRA2lrivpQV57eDnzlJMiHulxlQ/YUOidEPArUoUyHHmDdpGf+YDcCPnYRpsxHdEWeLcLou7qRQCZWQ9DW1jddQpk1v+j8fNsedEh/BWdAWSGTNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=m7KxWZS/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kQxoer/l; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1761838046; c=relaxed/simple;
+	bh=lTei4dl3Fd2phAXC/AbaIgUscYEjn6Z2Oir9Lv3NCXM=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=OpNSGsNsmoz/p23VswhGX1mGQxnNsdCh32Pw1q9LZgwiANrwrueihgETtOAgN7bHbVS0x2S5yo6qQ8QlaI7HVslpHyqdqX4S8rDXvkL0MILw6NVyR/fOM3LdiuQ/aEHrRQvzMwnwh+jI0ScTGqjUQpugRlc/DHpQwTOeacOuad8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XP7fvtoP; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="m7KxWZS/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kQxoer/l"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 804EB140015A;
-	Thu, 30 Oct 2025 11:15:49 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Thu, 30 Oct 2025 11:15:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1761837349;
-	 x=1761923749; bh=MFJv1AjHbACA/blZ1uM3hhWYhZB9h9Y9CsMY92AcOGA=; b=
-	m7KxWZS/yPdU6QITPQTX8CmHyIBJx4Qkn5IwOhqbTAJkhMtWbHSpRDGQwO3Ru9G8
-	Hz7hLd2ESlYIBgyraFqpUXIk3vSiAj5DTfgE9dPDXGlfdcXC/SCwFs5cJx8YLaNV
-	Oam4G4hjezvqQ+QdYssffuE0680VvkxZhhUy5SkTiJhUWlR+F7UNfKtYFtsq7puJ
-	Tk3da/qluQr6nQ/CqkGuw5Z7ieBB/SEmuB/SRwt/T+k9uGSnfE0KjWOxKxMoWv2z
-	eRltqK68ctoUg+1KLvJ/E80elZPGjLgFiC+MCtMGt+v1c9bC3scY0NtInkL9wc6k
-	VeF4UT11a3fIEax+fLkY0w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1761837349; x=1761923749; bh=M
-	FJv1AjHbACA/blZ1uM3hhWYhZB9h9Y9CsMY92AcOGA=; b=kQxoer/lbgjWUaVb3
-	+HUYc2FPO72kSn3HT94aJuNqzulSaTiwGieS0EzWpwYgZKMorvkAFDFAVVk6dFme
-	Btde3KrLn8QAQ44NY4pRko9SuiIIia8GLBIoG917ucbnAMDov14imu5ERutqqTF3
-	3ABmR6csKseWGeKLMq0S2BWAE2EMcN3gRRw4n96KHFI3Tk9z7Ect09h8HGN5vBSD
-	AGGzvlJxtubsROX4gbavp7/Gvf0PfJi4RGMm2NeqKROZUyS/39ZQqZQYvdQ5XlTj
-	bpDJDLoETQp/wH0q/jpCn+hGum43VBgL46no+8QAvn2SpIU0/5vUwwESWQ0SD1A7
-	VXoMA==
-X-ME-Sender: <xms:JYEDaVLuBu0QezQ3oDp5s0VzCncRfrUiYh0NIqJRJ0CBeajJbXASS8s>
-    <xme:JYEDab_4N9F0-RLQQ4JCHKayc-BmHdMA8xlwfZUVdmk-0h-u4ixqRYI5tybx6QQPD
-    c2ItSpBlhd6SzwMmqRLK0GqvaxqpVF1eUkI9uwjoFZBy8O8KHIbvg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieeileegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkfgjfhfutgfgsehtjeertd
-    ertddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
-    ftrfgrthhtvghrnhepvdeigedtgfetgefhffetteeludevheetfeekffehheefieehudek
-    veelveffhfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
-    pdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrsh
-    gsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:JYEDaf2NEfVIdlQHsKZyF3tZRZXd9l0KRaromaMvemchf0T-6tyjDg>
-    <xmx:JYEDacALIZEgZyLu-Dxh5B1wtOwHpK3RKxChALbhh8Uc6XZwP3XYwQ>
-    <xmx:JYEDaXf-ZrrVfwBpOSRXA3dslF1rTrv8lFz8_L6vrqX8iBVaS8eBqQ>
-    <xmx:JYEDaRguxUuBVRGvHwasCnhlyBEZnW3VkOMAUQICK9QlU9VEM3fOwA>
-    <xmx:JYEDaVZ9lLATMdIRxvVSNNC2yp741Y4jP8J5mLQTQsFiwiyF6MC77ASQ>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 3165F1EA0068; Thu, 30 Oct 2025 11:15:49 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XP7fvtoP"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-429b7ba208eso569246f8f.1
+        for <git@vger.kernel.org>; Thu, 30 Oct 2025 08:27:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761838042; x=1762442842; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=lTei4dl3Fd2phAXC/AbaIgUscYEjn6Z2Oir9Lv3NCXM=;
+        b=XP7fvtoPkagXm8JLfnaGf/S3/G9bdMJ/bHNGlG4rDOmqPbpfood6gCPB5hM/fcRbIw
+         RWz3p2CCRcyxfxz8xT1MEXoRXMVlSvRUI31oOOP68JJZ1QYrzoVlyklUDsNOOECkHp4A
+         7LhBtnjL2xRVo7CZEorxnFNsIGd2ebUcIr8Y4jDxbn22dm8hHtMR6eIR1A0ShaTr8F0K
+         AlCQD6XcP/IzYYTyot4bUkvzGxQph7/IOR1ZdmYJ9GOfAq3eIEph29GfKuy1xjfUgTCV
+         HVkdGNNKd4XQUF0tvf/PrJbLI9ihx+AGCrWxE0xY7GUsOyj/3mrPEvv4GGpRTZzEaYTK
+         QrLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761838042; x=1762442842;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lTei4dl3Fd2phAXC/AbaIgUscYEjn6Z2Oir9Lv3NCXM=;
+        b=IhIBjuw40/yHJTqkRJwUV5NLzcx6SlePMKGyyihgF/iChmFLQtKOhPybwagJffBV5G
+         CL/wWiZYE3GiLuWJ802qsactrtzU2oUQgxbcS16sp4YjKwzS/0YeIDiZYwbE572YJSsS
+         cty9mYM0RlntjSKT/vTZZ2KezYuOvtPmvHa+VnyKCESyzcrkqmZk+v1/H9sl0KctGZ4n
+         TuN5/VWUflA1vJZCIsm8SKtGQM/CgV9llLlwDYX2nPHKKAxf0DpWNV5Mh9SlQStpPSL3
+         UIjqEMTVdBfW+LVlyrQ5Mvf4aRm/lH5EI9ProBohdBlwNn8fK+VfUf8RiKWKKN6Ac5En
+         cBjQ==
+X-Gm-Message-State: AOJu0YzA/A+Uxw3/tLVtxddleeSBS09rXk4tEeBLIkHfGPYXxKhHhO3n
+	RvlhlbvyJ/zmYu6Z70uK7SiJpKf02A/ChTyPiQFB/nh3nZA2j6YRbZtVSOLc0BeTc+govD5VIzc
+	R8ckdrYRQqdIKZAzhijVlDIad4HNwMOzBl0lFalc=
+X-Gm-Gg: ASbGnctCrGFftkOh42568yLhvZP2pUHgwuTu2t8ZiCFQ9Fuh5utICmR26GOKOW5tzN+
+	la5OI5uX6xuatcn7QvohIIa3J/ny6iaX/Xj8NBXmdtFDAoLhw1+PwKehzrXyu7K4auhDrbaIMH4
+	zu5EpQnhqGyNVRVCIzCUGZCqaInZam/c3PNsD08lT9ACkvjKASGiCvQuTKZn9khfOKc84UvxGR5
+	eLDsY3/0z5Yy0hFveYiso1nFkZN2U9vOSZRj+Sg260RIWl5zVnQ8YabdacxIzt014CUxislUVy9
+	YGWHjqug1NlvehIDhpt1Q8eLGe4J
+X-Google-Smtp-Source: AGHT+IFmGe0SW6x5ha5RBc87sC40/IG9Z5+4dzaI7ZnG17AQcfnTTzrt3+4Nxo7uaCHExkx1y4bH1cv7z+ic/4bYL1w=
+X-Received: by 2002:a5d:5f95:0:b0:427:5cf:a284 with SMTP id
+ ffacd0b85a97d-429b4ca313fmr3311671f8f.60.1761838041938; Thu, 30 Oct 2025
+ 08:27:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A6deAsQV7uqg
-Date: Thu, 30 Oct 2025 16:15:27 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: rsbecker <rsbecker@nexbridge.com>, git@vger.kernel.org
-Message-Id: <729f9bbf-b75b-4161-b8aa-505ff906bb8a@app.fastmail.com>
-In-Reply-To: <000d01dc4831$ff049500$fd0dbf00$@nexbridge.com>
-References: <xmqqo6psjq2n.fsf@gitster.g>
- <000d01dc4831$ff049500$fd0dbf00$@nexbridge.com>
-Subject: Re: [BUGS] Git v2.51.2 on NonStop
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+From: Mark Bauermeister <warfan2007@gmail.com>
+Date: Thu, 30 Oct 2025 16:27:10 +0100
+X-Gm-Features: AWmQ_bnH596bz5wo3xGWFp4u2Trj-YNV2LUlLUuM375eb1NVbpGBbhl6pQmsR1o
+Message-ID: <CADanQgA3h52hax-mdSTBV-tNDGvNRSxLU217aVygj7Cs7Lu8Bg@mail.gmail.com>
+Subject: Cease and desist for companies and government agencies misusing git
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Oct 28, 2025, at 18:40, rsbecker@nexbridge.com wrote:
-> I have found new defects on 2.51.2 that were not present in 2.51.1 when
-> building with OpenSSL 3.5 (probably unrelated).
->
-> Many failures in t7900 resulting from the use of test_subcommand ! as
-> seen below. This is run in bash 5.0.18:
->
->[snip]
+Ok, this post (as well as the title. As much as I wish we could
+prohibit such institutions from using our products) is partially
+tongue in cheek, partially me venting and partially asking the
+community for ideas on how to properly educate the vast masses of
+"professional" developers still unaware of the soul crushing damage
+their workflows (that barely work and definitely don't flow) cause to
+others.
 
-Would it make sense for maintenance releases to have a small release
-candidate pre-release?  Both of these maintenance releases have had
-issues.
+Earlier this year I got hired by a Swiss government agency. My late
+mother was incredibly happy and proud of me at the time and knowing
+that I just got bullied out of that job and finding myself once again
+in the unemployment line is weighing heavily on me.
+
+Long story short. The guy who was responsible for my firing spent a
+good 4 months journaling my work and harassing management behind my
+back only to blow up while on the phone with me, accusing me of such
+heinous crimes as sending a PR from a fork (at a time I didn't have
+write access to the main repository...) and *gasp* REBASING.
+
+This dude is convinced (to a religious fervor) that Linus Torvalds was
+possessed by a demon when he came up with `git rebase` and that in
+order to defeat the devil, we need to plaster merge commits
+EVERYWHERE.
+
+His workflow is thusly:
+
+- Create new feature branch based on the master or release branch (this is fine)
+- Make changes
+- Create PR (all PRs end in a merge commit, btw. This is fine but
+makes his git behavior look even more unhinged)
+- Check for changes on master/release and create a merge commit on his
+branch (there's no logic behind this. He isn't creating a "logical
+checkpoint", he just generally runs merge every time)
+- If the PR doesn't get approved for a while, he'll keep creating more
+merge commits
+- Rinse and repeat this for every single feature branch under his
+control. Merging merges into his merge (insert Pimp my Ride meme)
+- Once the release PRs have been completed, merge (with a merge
+commit, naturally...) the release branch into master.
+
+Today I've counted 8 merge commits on changes that amount to about 20 LOC.
+
+I don't wanna live in this world anymore. Beam me up, Scotty!
+
+/end of rant
+
+Is it time for an online campaign ala "Merge commits considered harmful"?
+
+I have nothing against a merge commit being the result of a successful
+PR but people spamming merge commits are ... something else.
