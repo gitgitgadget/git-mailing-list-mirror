@@ -1,130 +1,119 @@
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B5D2FBE16
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 12:24:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E123E19E7F7
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 12:33:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761827048; cv=none; b=Oi2PM8Fk8VZ6bwTl/tqdFa0rMHjgCK2XnaSQDcAcD8OWTwyZ4B+V7oM3/kkaoBmrKZsfndbN262GJ4agTzaYMu0TWplzBhK/M4HfyQdwtPfIYGE3+pOwAXm0HX9oBHfmVDLc/HFUewhuA0KAmMhxK3WyHcVYNj8jzp46sAyuv5U=
+	t=1761827632; cv=none; b=LQL4AiJq9Vd974tmyKXTI+5VDcw8+STzhR7NJxX7aHA71+ZPVKXrPItqs188Sd83CNyhFRRYiwgaoMIpqkjbVWkLg09utpyTIxnEG5zp/1aE3BX4JLoKxXhMc7JX0w/Gj4V+FIupdvkrXOe+WdAdIQezmGUAwnCEPegshKzEHoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761827048; c=relaxed/simple;
-	bh=jFUW/w2yoMnloM7JgG38uvrMS6Abl1wnM8Yk/k6+joI=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=BSdjHu/uQ9fnjmzmaQPMEhpDAyApyQAAG7UQv3teTnogXPM44wd9vSBhlLNKZNbEeTsIDK88Xhj/+rV4sCRVw+Lb33FhH521xip0QFlqqOqkQSuv3Ye2woNOQTRAAJOpFfY4aTQhwyLZrndDCDH6a03p49qD0EiwekwGFUs/whA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EtepijEn; arc=none smtp.client-ip=209.85.222.42
+	s=arc-20240116; t=1761827632; c=relaxed/simple;
+	bh=aCxa4Sgomj+GpoBRTTUPG6hkeK8tHrk9YwEHiptNIOI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GG2UtIqyNOtLFF538NwijwtOgTsR03Q1PPk5tH1f2g+N1pJAFO8RxfJ7tcSf9i/VaHRQZea5WNL3cJhIsyX7JSAuMJncsvw7vk/FQTIOau4EE2fu3c/YzUNiKhUZwrdlPWa4HKg8OCBmcmk5Xgo9mvl3V733Di6k8t0olQWo6Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PrfnNKmI; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EtepijEn"
-Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-932dfe14b2eso806417241.3
-        for <git@vger.kernel.org>; Thu, 30 Oct 2025 05:24:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PrfnNKmI"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-42421b1514fso616503f8f.2
+        for <git@vger.kernel.org>; Thu, 30 Oct 2025 05:33:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761827043; x=1762431843; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1RtERp3lq+rpGvMNsN+waYAM87E0oKQINMJ91YO8PIo=;
-        b=EtepijEndu/Wp2lxwuKf2LuqflWUXevmipzR+E0Kt2G6B0G4O09JxNmPgGPUufwB28
-         U7eknRqVCXJB4qSfE4wuJIB59PgpdKsi8V9hed2rDTaUJ5iWzwq3YzWWXlrM8Gt4SIyb
-         lJ58P3+P7WKpC2uoGxNYqdDhDaGRa54H4TFzHBw2TckPoTJrFfNjALwHbQhIVQpjM6Ev
-         Xozqdk/K26z9NW1SabnnbqW8kxo9jLjF+PVpWF4pG/1H49XLTLxAjsr4R0zngga9kags
-         0dezteWbP8uyl5ZoMsnaGl17CN3Kcj3diB3VjJV7jKtvSjOBnA1Pq7qu8WEsknSDMwOg
-         S2uA==
+        d=gmail.com; s=20230601; t=1761827628; x=1762432428; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fvGWZQDD+gwMAnyvqX2C+WF8Q2yRFU/eYJeWfGjwprY=;
+        b=PrfnNKmIbivVaH2j5fC1yH6GjqkSXqzlar8uzVeFyexGiv8y5S6byhfR37sw11226w
+         b+CJbPWsgHGaSSJ9C5wxYFnr6BXLs3cCVw09TTdGWugNA2E9KMnoAd5xT9kj4jpKQ+a+
+         lt/06yIsN+Vxc9LwPOUwEnMYHzec+KV3Qhl26u4aDAAANICt5OiIvnH4DNcJlH4oLUrF
+         aADdJTz77/YjLepOP5LJrajYSP6d4FIj79eJGWOlEVaatP185Y3p85mMWFJxen3LtXG0
+         Y3AuNM5nRogWe0DEp8oJXaTnVlBgNsJ1oq79zkpA++Ks+UEXhxN4oiDEEXT0ff+Vk98e
+         6yQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761827043; x=1762431843;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1RtERp3lq+rpGvMNsN+waYAM87E0oKQINMJ91YO8PIo=;
-        b=P4V863g08qyae553EWTubT9WSRYzwrq9Y4AFZ93YrL/sEj5+O+cZW6UQBPMK5Jy7ao
-         g0hsF1IUwIvk2akkFqhnBrAOjALCnRm/63y2/wBw05Qf7shT2BeHNj+ra5ehpFpP7hbY
-         +ex+Q/PGzanVm0e1YPj3JlISc/CQt2TT+oBnFB4SNyMP64k7mFJ8XCFxV84VNNA6Xa/x
-         MnZLCeVaPK83oJD4EraSJqUghrzaVsHj0/kIlQ4PE49iERq9t+NF9QyWFj9k9FM1Fnke
-         9gYUXzmr9qzcpYba/vvXBpRCo8NhS2Q4mn1c+bXaBWFZAmbPmJ68xm+VyCn97ZCPQAct
-         k0cw==
-X-Forwarded-Encrypted: i=1; AJvYcCW2ZZ0fI+/GLjR0YEArNZ6XZq/5cYg6vXgnN8gt7JUvyhDca9b5+4fncKNXBTzgdFvrgY0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4+AtjLCbWWc6cQETBb9GTkGR2fpunmx/J0CKgZcJ4phpeYbGt
-	PI5rOk/vDiWaylGQtwuURmkexaZVoqorGphtVtvj7hqqfitJ0eSXO2w2OoaB7EklLeZifrhO+TF
-	Pff3YxgyRjQsefb9KZ753N19ZF6++foj5f27N
-X-Gm-Gg: ASbGncvmzHOP2BSC799m+mszydxqyEo9wXNFtTEgdTvJTw1ztBTugFgx7C4K97G6YZJ
-	oT7oa+ojjLgMeQAMLRNAz/7rac3XasEQKtOW9CgUMZRkyWzNNdJ96GzrKMGdN7mXMbJJMIVx8x+
-	81Xxqimu6BErdaKwdKQ78liyHWlOayZ7Ku/hcGfrf2EYExtJZSRR9pKvrCaGhMqOon3oyGcnL+9
-	nmDWVk84p3ewBMryxMu94q7Va3i6GfeD3MkAvAcEMFQ3qtcfbP7N4yAxsFZEJ/249uWYdRv8WER
-	fOpkMMPol9UJ+FSUww==
-X-Google-Smtp-Source: AGHT+IHjgwDPD4xbyPAmJR8+/TjZ0BSkOXmupirumf+mGAaunK+o6tMy0OvKL0ksvPmhEbwo7lOh6QScgy97Q/ZMyVg=
-X-Received: by 2002:a05:6102:32c3:b0:5d6:1565:e4fe with SMTP id
- ada2fe7eead31-5dba1fdac99mr782105137.36.1761827043441; Thu, 30 Oct 2025
- 05:24:03 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 30 Oct 2025 08:24:02 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 30 Oct 2025 08:24:02 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20251024-b4-pks-odb-loose-backend-v1-0-1a4202273c38@pks.im>
-References: <20251024-b4-pks-odb-loose-backend-v1-0-1a4202273c38@pks.im>
+        d=1e100.net; s=20230601; t=1761827628; x=1762432428;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fvGWZQDD+gwMAnyvqX2C+WF8Q2yRFU/eYJeWfGjwprY=;
+        b=wd9dDGJe4VV8xQFvqLb0zc1s/z/lYGIlFhovHVx1ctp+yrsYQvDwVByDg6+0ypfo2v
+         xiLoarAJpSyfMdKM1wnvfQvwKVd0iBhqjhIRAvckSnRQosou3zujKGSSX3Lfhv0NChDi
+         2G9AgDGIX5wCNrBYjA3SxPUzoBsaLoI5vvwnDPQwDR6/sobmA3/ZJXk7kM9H3kxekokF
+         Gl1hs+KriiylLbD+ZxbL+n305D5XuX6NwMrGonz1/N/xKqIZsJqpv3AAWYqkkHwdTFYi
+         NN93Xl3ukteXdA0fBIeSf54yoZYAYm3/VbjKkQvn95FWUmNnGHEyNQspIketIoUoNv4o
+         ZJ7g==
+X-Gm-Message-State: AOJu0YxBuTDvOjyZJMB79B6Ro+co7FuNT/D+jlt8c2jxLH4JkfaEtZu7
+	8nu7BR1jr8vKUxPGyjCCwrUILEuatK7QSL5/x00dNBmsITzmbaPFHBdYYVfpSg==
+X-Gm-Gg: ASbGncvK64PuMvhjvsNsjM6z9+YH4X2JyvOcxopkNoA2kPuCIK3/ytSPh++myG9evSo
+	V24627ubEMLN6pNU/LfG53839JXkDtISkm/R2eNbywSAASv4edXZ5MU09euZ8RikGl6sHrqivN8
+	+471H+qTH7WIA/nEv20NpffwxZ9cCBdU5hiqEZ6C3Fk/RmoPZk38Ju1XhU3ylisJPItYww2bU29
+	nXfVdxsxaMYx0WcZ5ar1/HWlHIbcl+pjAsJ/Gyn7ix1HEzQwjUnA2l4umjQcv8rLqAepJb9PJz9
+	7xOoZckccO0/64P3YY3subRWS1AqhUJ61kLiNY0jGbKzAFRJcIzKNFHR58qA7XuPOQ52toRyR5C
+	18zhs3XAY1xAhUbLY7MDz9LXczKDx/OljbUtAp3GugzPvkP49vG/AkumRbueFL8Bb82Qvc06b+i
+	GZN8ZPeJbBSkMxURG69ahP+J1oE1X30rVrwpI4I6M7pMVhniw=
+X-Google-Smtp-Source: AGHT+IEmYToSmrIqjc5wC4mdO7RqPFAHX0GIp5zBCPMWLnmjSThWg8cwWDoYnnwIydK2PVQwG41adw==
+X-Received: by 2002:a05:6000:1786:b0:427:a05:2ff with SMTP id ffacd0b85a97d-429aefbb8e4mr5392468f8f.33.1761827628173;
+        Thu, 30 Oct 2025 05:33:48 -0700 (PDT)
+Received: from christian--20230123--2G7D3.lan ([2001:861:2074:39a0:8aa2:a86f:99be:b78d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429ba3574a2sm2364595f8f.44.2025.10.30.05.33.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Oct 2025 05:33:47 -0700 (PDT)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2 1/5] gpg-interface: simplify ssh fingerprint parsing
+Date: Thu, 30 Oct 2025 13:33:28 +0100
+Message-ID: <20251030123332.3337684-2-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.51.2.617.g2aaa867cd1
+In-Reply-To: <20251030123332.3337684-1-christian.couder@gmail.com>
+References: <20251028081232.3068147-1-christian.couder@gmail.com>
+ <20251030123332.3337684-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 30 Oct 2025 08:24:02 -0400
-X-Gm-Features: AWmQ_blUvCDhLDEqJAMeHQgUA8OPCiL7sweBOIjBLIwHP392n9lG6aBC3T8g1aM
-Message-ID: <CAOLa=ZTr-9==Xs1G39EbjKaT3PDOVTY5uDXiJYmzEwqpZLdY6Q@mail.gmail.com>
-Subject: Re: [PATCH 00/13] Carve out loose object source
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000014b80906425f532f"
+Content-Transfer-Encoding: 8bit
 
---00000000000014b80906425f532f
-Content-Type: text/plain; charset="UTF-8"
+In "gpg-interface.c", the 'parse_ssh_output()' function takes a
+'struct signature_check *sigc' argument and populates many members of
+this 'sigc' using information parsed from 'sigc->output' which
+contains the ouput of an `ssh-keygen -Y ...` command that was used to
+verify an SSH signature.
 
-Patrick Steinhardt <ps@pks.im> writes:
+When it populates 'sigc->fingerprint' though, it uses
+`xstrdup(strstr(line, "key ") + 4)` while `strstr(line, "key ")` has
+already been computed a few lines above and is already available in
+the `key` variable.
 
-> Hi,
->
-> this patch series carves out loose object sources. The idea is to store
-> all data that relates to loose objects in a single structure, similar to
-> our `struct packfile_store`.
->
-> The series is structured as follows:
->
->   - Patches 1 to 4 perform some cleanups in the vicinity of object
->     databases.
->
->   - Patches 5 to 8 create a new `struct odb_loose_source` and move all
->     state that is specific to loose objects into it.
->
->   - Patches 9 to 13 then adjust functions to work on top of that new
->     structure.
->
-> The motivation here is to make handling of loose objects completely
-> self-contained as a step towards pluggable object databases.
->
-> Thanks!
->
-> Patrick
->
+Let's simplify this.
 
-The series looks good in its current form, I only had one comment. Will
-leave it to if it needs to be re-rolled :)
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ gpg-interface.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Karthik
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 2f4f0e32cb..91d1b58cb4 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -443,7 +443,7 @@ static void parse_ssh_output(struct signature_check *sigc)
+ 
+ 	key = strstr(line, "key ");
+ 	if (key) {
+-		sigc->fingerprint = xstrdup(strstr(line, "key ") + 4);
++		sigc->fingerprint = xstrdup(key + 4);
+ 		sigc->key = xstrdup(sigc->fingerprint);
+ 	} else {
+ 		/*
+-- 
+2.51.2.617.g2aaa867cd1
 
---00000000000014b80906425f532f
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 1f0b32763769ae4d_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1rRFdPQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMTRrQy85UTh4ZERtVUlRZ0FCVE5nUXY0NzE5T0lubAp0WFk0SENHSjVP
-c1VQT2xScVlXNHVWRks3VEVQdytkTnVvN3FBTWNEOUpBT0JjcFFnNmVScUpob3dpOWM1c2grCmw1
-NWFmWStTRUI2czZobmt5UzRlMGZpRjArSmhibkpXVXkzV08xbHFOOVc4NTBpaXRzeWxHZ0RjY0FQ
-NXFpdXoKVk5xZU4zL2pPNXBKTkc4cGNQYzgzZkdPNXFwNlVKYjlQRCtvTGpDenRVWjd2NUhQYSth
-UkpEcjFiWHlHdEFwcQp4K2NaMGJ0VXlTY2ZpU1h4MVZVSjNWOFBuK0h6M0M5ZFNKMDhIVks1MWZr
-V1VkNDczQ1dLVkNJYnRuQkFSSjkwCkN2SUpwVEtTVTNYQkJzT0E1cWl2YytsOGNvc0ttSVVYaVpa
-cWNqbVRaN2NzdXUwSXZLRENZbHNnczFHU2dSbkQKSXpsWnV5S3VnRDlvWTFKcWVDVS9jMVk0VWti
-dk13MUY0VUVyQllURUpHay9kRm82V1FmT0J4M3VuMUN1QnAwZgoxa1ZUTDJnbEF3OXBESVZsN3ow
-bzg3NXhtZE1UU25USUNULzBiandyYVE3SmE5Tmdac3lDQzhreERTWkw1clovClhYaEdCM2pvc2ZW
-ZjdsN0Y5MU0xelhpYVVHeFAxaW1pMFZweUdHTT0KPWlWblIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000014b80906425f532f--
