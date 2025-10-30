@@ -1,80 +1,81 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8893F3546E0
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 10:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D103546FB
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 10:39:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761820740; cv=none; b=Efv/WP+JjEOAJAxstCLihexfT3fn/3x+Kd3O98Uq1zRbiYXnnEvt2fwEDALf7UfSiyXNzU39HZ2sVc92sJ5MV7PWS7FUKP6p5u7MqnWOAIGFxJMYHht7oD0vnJpY9sC54Y7nahzzknh3bKro4xaIlQoduOluyxsfO/iohN3iVDo=
+	t=1761820743; cv=none; b=YFd4mEwdiqb3phJAbKKduv7cvtymx16tI190Sczr+fVy4GRLx9VSy9Z6XdHCSzZ5bx/2kBvH3EHq08fB17Ebusdlyne82F8Tdcggd+lS31qAHeR1eYzkqhfhVOCfiWAZr9FRrI9jRCaFcwN5z2rAz4Y+CRwOGilIildZ1M1Lwec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761820740; c=relaxed/simple;
-	bh=sU1KGexVpjGzOQJPFqV7lDWme679r8KgGE2bA+8V8Bo=;
+	s=arc-20240116; t=1761820743; c=relaxed/simple;
+	bh=WskWrEEQRb5ysSnhS7AiW+mp0AcA2OxCZvKGuIWx0zw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ta39tFmKFuxv7UN1Ho6vxE1+k+/bp/PbBnmFYAc8MPPXUT/6O4uDpTwnJtKxaSw+zXPTmtWJeeeFOwPg7sd/9vpuMMvZuBanLEk/kWCn4K2bXQVvok5hwAExj2r8b24YOEhwPVlrxv1uMx2dpnuSOippo+44AHa4rcO+eP9S1Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Pe7lVfPy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=y29KNxsx; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=M30vjc/uSmHHBfKYsidQU44nfPvXQmK5C3MvKmEX3H3zmqZf0/V7yR6y3WTaxATAWLM6rvWjT7opMy0sL3UZVVKhat7ftibb8IRLOA5vnjSOht9HQmbqdJqu4x9WGRKjYkmx0KwXEuXgt2mRMNaRgZAUjnweOWDctslO0DAAYGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mZWyO/bi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qxlekSMy; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Pe7lVfPy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="y29KNxsx"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id D1AC3EC01C9;
-	Thu, 30 Oct 2025 06:38:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mZWyO/bi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qxlekSMy"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0ACFFEC01BD;
+	Thu, 30 Oct 2025 06:39:01 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 30 Oct 2025 06:38:57 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 30 Oct 2025 06:39:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1761820737;
-	 x=1761907137; bh=7dLLSGqV84JUxhLMgbHCcIw5l6B1oHni29Nf6CjmuTI=; b=
-	Pe7lVfPyse0zpV9JHjQoPW3wBuz/FStZzHzHLcplCQpdAz8xX6hFI4/J/WJ5DaUH
-	c1LUAzpxpjDYINixwvPrNm7Ag9RHtezLTyurPN6vxRgX07a1c5XnxxmbWN6Vdtk3
-	B68WMipWz7QFO6Yunu7Kvphigz8ZQpC3g98C4vQeMXf8x1jOoNlgHhY/U9UKq/pJ
-	+apoNs7MfFrgUzuRjjqUo5a2TO62vCQFllDdBk6pEYGU3OP1hs4BAzfByapOyl1E
-	PV+UEcZpjiwXt8Wm/Fnm0GQH1cJqk/65glIdBH6uUH2XbyoAAooR2YRb5oxlw713
-	x5CFKQ2XXXodeatT0dM7Zg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1761820741;
+	 x=1761907141; bh=2vX+R2YVw7XumahH65Mw2hd1bAg1wsFK8SDH+/FNnzU=; b=
+	mZWyO/bi9WBUdFQs/3ANVzC6ZSJHECCynG6pyioW9v6/jeybcwq62mFt2EUq86Fs
+	i3h9xEtXXuh1yq+ZUAG+vue/KvaRUzrpXvtJMLsXUC5GERW/DpFiScOQULAF430S
+	MghYQeHlQVsvMFlW0KkRikwFMIkR/4ypTBhZlw/X0gWRdrbActm1pgXRiuoZA15u
+	qL9RLy9YRlQ7wNVA1W8e7JulqDZTUmMsAx+OgthSxt4fXwDYWTCEXIdnCz9+9fc9
+	kkuIravSJMBk3mgV2rSptxYLvD1N+Tyu7OQDiDhJgXhPpVn+VPYYfDeGuAc6H5AN
+	TQWNkx1QbY6lYlRcxJFHKw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761820737; x=
-	1761907137; bh=7dLLSGqV84JUxhLMgbHCcIw5l6B1oHni29Nf6CjmuTI=; b=y
-	29KNxsxSbYIgsNXy7wJ/1zuerLW5GaLa4d4YjN/B8TPr2ywLH1jNbLxex0pT1Aq+
-	iznBQW6UB7kFADSkB8qqs2oYMIH+7fRNTAWF3X7sw5lJ0DpjVy6uxMbP4HSyJ9Gv
-	Mn+jD7LXl+FkM5oaKFw4DYbPBm3mPx1hr61fLuHCYJrE2WkjSe1NtZUIyAvPEYSg
-	8LYte01xMhzZOBLvhlFDNKMoGvPZdkk4t5FGjbG3pVbDmTBPcHLNuznTvDCUzhUb
-	qKIrfoB7diGodRVqh8xD+TeCafoq7wLbxv23irKFnq4gHZhjO/7JmhW9f9JnJE/0
-	Y5B19aMWW3A+Bo2XD9pvQ==
-X-ME-Sender: <xms:QUADaVlytWORrzTyqproOgST47GJED6nZ_mj5ddu6OyDdKSr4JKH5w>
-    <xme:QUADaX1mOHQ67J4aJelj2D_UslAcnSyRbZ2jRhleSuI4IEllPr0ZSSugzAJemUNxE
-    S5rpklFOfggT6wa19D9HxsWMlqx87qp9SyKmraUCeImkalnctLB>
-X-ME-Received: <xmr:QUADaQr_PXc4s6v4BT0ssVsV2ZrS2xQYOFhuyKBZIt9BhlINpW43Q9sONktLMhnh-V8vj2J6tMkftNKBiHMe5TTNIaj5lFgZn1M9k4ZYpQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761820741; x=
+	1761907141; bh=2vX+R2YVw7XumahH65Mw2hd1bAg1wsFK8SDH+/FNnzU=; b=q
+	xlekSMyJx1oMBv6N0alR1wii402Fcl9B2nyEK+mvV0ZmRlGmLJMuH9rQy9a/fC3e
+	yiVeqt3eXwvzE+cTWpxZxsRaCDx9d+2+ltCu2S/D7AbjBh6QSegLF+wj7qpQGaNl
+	WyEOFzJMEvdnD+mho0gGYOndBloSEMge7W7wxCmqijKeIYLiEUICv/VjoInnYjlC
+	A5gKcv+Dame8R05m+W8WQvoMXmkVyC80937YeQfGNY7/YEHPttsLVuH7rc6UPM3N
+	A/Sk8bl0DVEAXmaABZVFn+kyCVB3ni8jeKD78y9NkR4SDiX682kBK48nrdHH+pI/
+	NG1IMSYDrjUa7/PTV/HPQ==
+X-ME-Sender: <xms:READaTFPQ4wkDCUn36SEUlawS_7HAgGCcUnVAN_RRVxjXtPsfZ6wRg>
+    <xme:READaXV-KRQQY6lO-x9K2S5h3qXWg26ohUSmLFpyIWMfIxxI7KCMwABNLXi6znTBf
+    ZJVAZnGEshp-FdZGVCRhCcvTWliHBQJxv3ZT3dh-i8Rwp4rVJ0M>
+X-ME-Received: <xmr:READaaIDDlW7Rey8yWI_aRMSwiW-ZQH1ZgI8Fld2Dq2KiYTd6YYo_xb7ExvbAG7vYHQhXfvP2zENYq4Ed3MI8M_WkWBO6jmMC5QyBtiEpQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieeifeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphht
-    thhopehmvgesthhtrgihlhhorhhrrdgtohhm
-X-ME-Proxy: <xmx:QUADaUeh4Bo-RTUjuB3JGXKGh_W51xQtOu6mIA_XFtM0FWSTJVltiQ>
-    <xmx:QUADafqqPy_nBS930AMMGQkk0UrDKRSGySkWB-wkyAR0qdkxcIj2ew>
-    <xmx:QUADaVG2xgpxAz1xXVEOFbE8sq8FszQy64rAyYO4iPXEO1bVQ_VMwg>
-    <xmx:QUADaft5__Z2WIzxG_fzKiqIz2SWMqnbrHa_-FEJH4FDTsj_Z2bkTg>
-    <xmx:QUADacKVaNJYO1wM-eVTDVOFoOwJKu2eIUhzdfwNO_6f0B2B2QVSVvgi>
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhoohhnse
+    hiohhttghlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
+    phhtthhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:READaf8ls3ydybqYgxqPxyTrtms0znvk9oRPeI4T_-SxYj2Vx28N3w>
+    <xmx:READaVJ9v-JGAC385oG3flKVAWMKM0eW1STi8UEs7EpBCpPlet0lyg>
+    <xmx:READaclVTogH1004NZMWO5ZcOrJOMboEbqYucMImwyQBHs6FKiQ7qw>
+    <xmx:READaRMwpFVhG_vjF9gK_Wwf36cGoXah6h84z5-C1kZioOuBWrM93A>
+    <xmx:RUADaVpIG_9oP_oGpP0Zk0pofACQSnN2klf39kGHUHFyNM_WIc-VuImf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Oct 2025 06:38:56 -0400 (EDT)
+ 30 Oct 2025 06:38:59 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ce3949c3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 30 Oct 2025 10:38:56 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 545cc8cb (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 30 Oct 2025 10:38:59 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 30 Oct 2025 11:38:41 +0100
-Subject: [PATCH v2 4/8] packfile: fix approximation of object counts
+Date: Thu, 30 Oct 2025 11:38:42 +0100
+Subject: [PATCH v2 5/8] builtin/pack-objects: simplify logic to find kept
+ or nonlocal objects
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251030-pks-packfiles-store-drop-list-v2-4-84654f080cc0@pks.im>
+Message-Id: <20251030-pks-packfiles-store-drop-list-v2-5-84654f080cc0@pks.im>
 References: <20251030-pks-packfiles-store-drop-list-v2-0-84654f080cc0@pks.im>
 In-Reply-To: <20251030-pks-packfiles-store-drop-list-v2-0-84654f080cc0@pks.im>
 To: git@vger.kernel.org
@@ -91,87 +92,82 @@ Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
  Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.3
 
-When approximating the number of objects in a repository we only take
-into account two data sources, the multi-pack index and the packfile
-indices, as both of these data structures allow us to easily figure out
-how many objects they contain.
+The function `has_sha1_pack_kept_or_nonlocal()` takes an object ID and
+then searches through packed objects to figure out whether the object
+exists in a kept or non-local pack. As a performance optimization we
+remember the packfile that contains a given object ID so that the next
+call to the function first checks that same packfile again.
 
-But the way we currently approximate the number of objects is broken in
-presence of a multi-pack index. This is due to two separate reasons:
+The way this is written is rather hard to follow though, as the caching
+mechanism is intertwined with the loop that iterates through the packs.
+Consequently, we need to do some gymnastics to re-start the iteration if
+the cached pack does not contain the objects.
 
-  - We have recently introduced initial infrastructure for incremental
-    multi-pack indices. Starting with that series, `num_objects` only
-    counts the number of objects of a specific layer of the MIDX chain,
-    so we do not take into account objects from parent layers.
+Refactor this so that we check the cached packfile at the beginning. We
+don't have to re-verify whether the packfile meets the properties as we
+have already verified those when storing the pack in `last_found` in the
+first place. So all we need to do is to use `find_pack_entry_one()` to
+check whether the pack contains the object ID, and to skip the cached
+pack in the loop so that we don't search it twice.
 
-    This issue is fixed by adding `num_objects_in_base`, which contains
-    the sum of all objects in previous layers.
+Furthermore, stop using the `(void *)1` sentinel value and instead use a
+simple `NULL` pointer to indicate that we don't have a last-found pack
+yet.
 
-  - When using the multi-pack index we may count objects contained in
-    packfiles twice: once via the multi-pack index, but then we again
-    count them via the packfile itself.
+This refactoring significantly simplifies the logic and makes it much
+easier to follow.
 
-    This issue is fixed by skipping any packfiles that have an MIDX.
-
-Overall, given that we _always_ count the packs, we can only end up
-overestimating the number of objects, and the overestimation is limited
-to a factor of two at most.
-
-The consequences of those issues are very limited though, as we only
-approximate object counts in a small number of cases:
-
-  - When writing a commit-graph we use the approximate object count to
-    display the upper limit of a progress display.
-
-  - In `repo_find_unique_abbrev_r()` we use it to specify a lower limit
-    of how many hex digits we want to abbreviate to. Given that we use
-    power-of-two here to derive the lower limit we may end up with an
-    abbreviated hash that is one digit longer than required.
-
-  - In `estimate_repack_memory()` we may end up overestimating how much
-    memory a repack needs to pack objects. Conseuqently, we may end up
-    dropping some packfiles from a repack.
-
-None of these are really game-changing. But it's nice to fix those
-issues regardless.
-
-While at it, convert the code to use `repo_for_each_pack()`.
-Furthermore, use `odb_prepare_alternates()` instead of explicitly
-preparing the packfile store. We really only want to prepare the object
-database sources, and `get_multi_pack_index()` already knows to prepare
-the packfile store for us.
-
-Helped-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- packfile.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/pack-objects.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/packfile.c b/packfile.c
-index 6aa2ca8ac9e..b07509b69bd 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1143,16 +1143,16 @@ unsigned long repo_approximate_object_count(struct repository *r)
- 		unsigned long count = 0;
- 		struct packed_git *p;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 5348aebbe9f..b83eb8ead14 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4388,27 +4388,27 @@ static void add_unreachable_loose_objects(struct rev_info *revs)
  
--		packfile_store_prepare(r->objects->packfiles);
-+		odb_prepare_alternates(r->objects);
+ static int has_sha1_pack_kept_or_nonlocal(const struct object_id *oid)
+ {
+-	struct packfile_store *packs = the_repository->objects->packfiles;
+-	static struct packed_git *last_found = (void *)1;
++	static struct packed_git *last_found = NULL;
+ 	struct packed_git *p;
  
- 		for (source = r->objects->sources; source; source = source->next) {
- 			struct multi_pack_index *m = get_multi_pack_index(source);
- 			if (m)
--				count += m->num_objects;
-+				count += m->num_objects + m->num_objects_in_base;
+-	p = (last_found != (void *)1) ? last_found :
+-					packfile_store_get_packs(packs);
++	if (last_found && find_pack_entry_one(oid, last_found))
++		return 1;
+ 
+-	while (p) {
+-		if ((!p->pack_local || p->pack_keep ||
+-				p->pack_keep_in_core) &&
+-			find_pack_entry_one(oid, p)) {
++	repo_for_each_pack(the_repository, p) {
++		/*
++		 * We have already checked `last_found`, so there is no need to
++		 * re-check here.
++		 */
++		if (p == last_found)
++			continue;
++
++		if ((!p->pack_local || p->pack_keep || p->pack_keep_in_core) &&
++		    find_pack_entry_one(oid, p)) {
+ 			last_found = p;
+ 			return 1;
  		}
+-		if (p == last_found)
+-			p = packfile_store_get_packs(packs);
+-		else
+-			p = p->next;
+-		if (p == last_found)
+-			p = p->next;
+ 	}
++
+ 	return 0;
+ }
  
--		for (p = r->objects->packfiles->packs; p; p = p->next) {
--			if (open_pack_index(p))
-+		repo_for_each_pack(r, p) {
-+			if (p->multi_pack_index || open_pack_index(p))
- 				continue;
- 			count += p->num_objects;
- 		}
 
 -- 
 2.51.2.997.g839fc31de9.dirty
