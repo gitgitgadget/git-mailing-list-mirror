@@ -1,128 +1,127 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5666D3A1C9
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 00:32:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F27D2E2DD4
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 01:58:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761784366; cv=none; b=sGmBUy5DrzouTKl7JoirutxVY7L7H/8UVubI8a/zh5CtRgYssz95PLNPtedUO2+AEc5TnnwIpdmcxDgwOXuB02VGeFITDbey9B1aCPo0a0JVrkg6p3xOW3fpE4dh8I69divibpIz8cRCESN0UxzX73l/6SS3w4gjFZvRun2tA1I=
+	t=1761789535; cv=none; b=gKEYkmWpyxZcPt6HlHZp5Qcjs+86O/sMPOda2aYYsB2p7Nr6q9EyKNKX0IojFcA3hAxYsUST2MBiCpNJKL09X0FgSRLj+T3oJpntxziDASDTjTYSIJ9tMr9eryydtP+BaGUwXqn9Vp4dse1aIlCq1Gq79G535SOcACzPMSedg5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761784366; c=relaxed/simple;
-	bh=RhPocg5PLunoCP8EqJE4hZoHUMMkVvEHz7NpWfnB9No=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EwVOGkSPv+KJmamCObZUBzlEMrii90QGUMDYgreMN711BtZMq/kVyfP9VJsVC+qJRMPqoFmVlWmQWlmXvIOsHqzMJvnMtniPN20tQ8mb7p6OYnTuQ3H4zA4JwSB58DCPKpjSykubkbYhkl5r2so8JxGn7rF4bBQ6FYyPLAHqiRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=cITS8C9w; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1761789535; c=relaxed/simple;
+	bh=Ohq3gGNqSxaRubfrYk1IT6blGcrpEBWqQYA9VkCiZ10=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=V3gU2M9BuY+E4qhhsC2ZhYKAHXowQ2TjajyXGa5v+YQrW/24W+nDWHFhHP8nIkmN1RawxmsYgLd99I/yIp4jlYllsnGKmAAJ1w1ksIO1LyORpIV0O52PglDOxaQrboLayln8xGlPlpAkEybWIcss52KHlD9wGPvmykwp2SRuJeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y2VPNSrO; arc=none smtp.client-ip=209.85.210.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="cITS8C9w"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1761784363;
-	bh=RhPocg5PLunoCP8EqJE4hZoHUMMkVvEHz7NpWfnB9No=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=cITS8C9wgSDeaUhBDF9Fg3vdOUtqijMtNlNrJ8pRBliIY1IO+PFetHr+Y6Pmj0D1S
-	 DZ8kHqqtDy4b1Y9MY7U8j03dn8R5GSeg6E27RJ0PEdXhRx1doJqh0+konhlyqw0fQa
-	 1o2BENSjKJnuflRg7gOnbssyQdALz2WayYMS3CERz5MxST/vQcOm2JsIKobnVjA+Wh
-	 yasrKN9HhSeoKiEqVtiaAdPtcwhiIaE3UwvrEB1qH8uHY/Qp0LVqqWsS5gCRXPitMy
-	 3jLWLOTNKjMhfB1E4pndaZMNF6UrugN2ZfEZwgDxfiZcAN7ElWptqVpfFtKMMkaEZy
-	 Z5PHA6odkg6uvWPX2JBna7cP/NvP7s30Redd/iV6dFivshr6UHLVcnVTlKrBlluOit
-	 s8gENyStLoFIZEDnXneTFP8S5CEkHloW2g8dZo6tsP7O3NeLpBrr2VED85PTiAYGwb
-	 zUbrdhDkaExNgDU3c767x3kJNkojriaafM3yvjn72dt706C7BCh
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:8caa:b0a3:2e22:c46c])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2D02620036;
-	Thu, 30 Oct 2025 00:32:43 +0000 (UTC)
-Date: Thu, 30 Oct 2025 00:32:41 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 04/14] rust: add a ObjectID struct
-Message-ID: <aQKyKU12229se0tU@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y2VPNSrO"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-77f5d497692so760960b3a.1
+        for <git@vger.kernel.org>; Wed, 29 Oct 2025 18:58:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761789534; x=1762394334; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wUvaize+YyOyDtIfZ2TYw4w8S5dcZ+CWKAN3knK3b30=;
+        b=Y2VPNSrOu4Z0ZbZfdN38/yZAeE8x4OkRXFKPShH2grehifJhH4t6wE14I2yEE+rQP9
+         +41We+SajDakM7Lgh4cgsgUGps3m0bjPTxCcbrzwwl8aXTk9JyiADoLahYkamByCektK
+         PlG6PbTZkUnTDORBlmQRfrH5Zn7nd9ZmvjXN9ddAUhawQ2vRWxmpOLu9LA/nqVXsXFI+
+         KlTSyv8edlvMbvtQvHaJaA+mAHJ8iwVK/XOJeXySYtTsqdeO2c21qpUHO6dkwsWEJIdr
+         V3Vfmjlqm1OAWFviR/knBeg+/VWmFv1AtiNLHMMSp6wF4WlcbqSSW3nj8uulIN2ra/sy
+         prfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761789534; x=1762394334;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wUvaize+YyOyDtIfZ2TYw4w8S5dcZ+CWKAN3knK3b30=;
+        b=FxSoeEFaP5U8d1b5xcCtp1NgHwYUv/w4kHOqiSM+88fRC5FP0Yqfqkks4VvUkZAw/Q
+         TM00x1RnAY6ZvpaDFl9alldnTQbmLqtSNq6357Ud7l4kXB+K809ri7kjE/i2pvKKBL2E
+         jgT/r6XuoGqMsCOJdljPxODKeO0zliIbPxC51Y57y3UuHrKQznXXM/FG/GhIooTEqW5f
+         EUUJoC327qfzD/+Il8ACW5QFs0uuhd1fMN9A7nsP1CF8V0+FwWalOngX8hrO9e7efetS
+         Idw6rK+hprRQqt4M64IDp+hk6/DxObV499O/ltd7th1mi8JTl6YHdd9ptBm3NxLFCIoQ
+         Whww==
+X-Forwarded-Encrypted: i=1; AJvYcCXjn26/+lExk7LbrIug3O/AsChe8rNi+St9XgmIfBddXCvUDDY8ANfHsLtB8U6sFtx+n/A=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNnNCVPVxyzbmwqH3cswMBYqRvqBJ+WQAzj9IXnLo7HAB4M5ZK
+	HgIO2GK8Bir2RWinQoB6b2NKvBWPbEfV6qcZcsGAZd7yN1xGgdmIUp/k
+X-Gm-Gg: ASbGncsijsbDe0mB7PcmXsVuGrgPj0cfXaA9WB6uZRnP8oJKE0+Pp5sBLtWTFUguEa3
+	FMqRW2ZIKy542MY+EgxEdrYjbyeePM9bvpGxm2KNC3EyoIvYaGL9LCp8jcGMzASPg+NcWb9yOtK
+	YA7Lk0+mSnwlyFUnskIp4+hz8MtlrfcaYmE8XyWG6MWGr40MJhBAU3vCuvjkDN0ma5lFNzWbsI1
+	0pN9PbpHzm4sKMariHxj31DhHBDcHm/hBxvQ/a24g42OfID4lP4WI/SRjkXfIuMggHFl0H/ARjm
+	5Awq0xpoLyvxMtfOC24th8rRA8Vjm7pBFUcjv4Yz3TCKQ1I2kCq0bKjYE2WDzwXBtDlgoiqeZOC
+	34hIlfpc7fgpYk3M+emKym2QCYpXtXVFwWGFbSYx73LxQhR9EbPkP4kWE8PNPuUMF4TE3
+X-Google-Smtp-Source: AGHT+IHYUlaOv7qEqtmR8tmw3SkRjNhBPP34bS8dIm/kc6pxeE4GD89Ni9WkXD5rwcA+6C5UsYxU4g==
+X-Received: by 2002:a05:6a00:3d42:b0:7a2:6a86:c7a3 with SMTP id d2e1a72fcca58-7a62a84c44fmr1620172b3a.8.1761789533656;
+        Wed, 29 Oct 2025 18:58:53 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770::43bc])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7a414072487sm16568702b3a.52.2025.10.29.18.58.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Oct 2025 18:58:53 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Junio C Hamano <gitster@pobox.com>,  Patrick Steinhardt <ps@pks.im>,
+  git@vger.kernel.org,  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 03/14] hash: use uint32_t for object_id algorithm
+In-Reply-To: <aQKv550C6nXhCzf0@fruit.crustytoothpaste.net>
 References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
- <20251027004404.2152927-5-sandals@crustytoothpaste.net>
- <aQCKD--ZmKnwBWs9@pks.im>
- <aQFhpAinB6HLC-Tw@fruit.crustytoothpaste.net>
- <aQHZda5I0JPSRwv1@pks.im>
+	<20251027004404.2152927-4-sandals@crustytoothpaste.net>
+	<aQCKCfuaEKBArD-g@pks.im> <xmqqh5viddo3.fsf@gitster.g>
+	<aQKv550C6nXhCzf0@fruit.crustytoothpaste.net>
+Date: Wed, 29 Oct 2025 18:58:52 -0700
+Message-ID: <874irh6tgj.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9uBCPYa1rbRtQ4zC"
-Content-Disposition: inline
-In-Reply-To: <aQHZda5I0JPSRwv1@pks.im>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Hi Brian,
 
---9uBCPYa1rbRtQ4zC
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-On 2025-10-29 at 09:08:05, Patrick Steinhardt wrote:
-> I'm mostly asking all of these questions because this is our first Rust
-> code in Git that is a bit more involved. So it's likely that this code
-> will set precedent for how future code will look like, and ideally I'd
-> like us to have code that is idiomatic Rust code.
+> On 2025-10-28 at 19:33:32, Junio C Hamano wrote:
+>> Yeah, I do not very much appreciate change from "int" to "uint32_t"
+>> randomly done only for things that happen to be used by both C and
+>> Rust.  "When should I use 'int' or 'unsigned' and when should I use
+>> 'uint32_t'?" becomes extremely hard to answer.
+>
+> In general, the answer is that we should use `int` or `unsigned` when
+> you're defining a loop index or other non-structure types that are only
+> used from C.  Otherwise, we should use one of the stdint.h or stddef.h
+> types ((u)int*_t, (s)size_t, etc.), since these have defined,
+> well-understood sizes.  Also, in general, we want to use unsigned types
+> for things that cannot have valid negative values (such as the hash
+> algorithm constants that are also array indices), especially since Rust
+> tends not to use sentinel values (preferring `Option` instead).
 
-In general, I'd like that, too, and that's a fair question.
+I don't necessarily disagree with your point, just want to reiterate a
+point a touched on in another thread [1]. In some cases it is valuable
+to use signed integers even if a valid value will never be negative.
+This is because signed integer overflow can be easily caught with
+-fsanitize=undefined. An unsigned integer wrapping around is perfectly
+defined, but may lead to strange bugs in your program.
 
-> With the FFI code it's of course going to be a mixed bag, as we are
-> somewhat bound by the C interfaces. But in the best case I'd imagine
-> that we have low-level FFI primitives that bridge the gap between C and
-> Rust, and then we build a higher-level interface on top of that which
-> allows us to use it in an idiomatic fashion.
+> Part of our problem is that being lazy and making lots of assumptions in
+> our codebase has led to some suboptimal consequences.  Our diff code
+> can't handle files bigger than about 1 GiB because we use `int` and
+> Windows has all sorts of size limitations because we assumed that
+> sizeof(long) == sizeof(size_t) == sizeof(void *).  Nobody now would say,
+> "Gee, I think we'd like to have these arbitrary 32-bit size limits," and
+> using something with a fixed size helps us think, "How big should this
+> data type be?  Do I really want to limit this data structure to
+> processing only 32 bits worth of data?"
+>
+> In this case, the use of a 32-bit value is fine because we already have
+> that for the existing type (via `int`) and it is extremely unlikely that
+> 4 billion cryptographic hash algorithms will ever be created, let alone
+> implemented in Git, so the size is not a factor.
 
-The reason I've made the decision to minimize conversions here is
-because the object ID lookups are in a hot path in `index-pack` and
-various protocol code.  If we clone the Linux repository (in SHA-1) and
-want to convert it to SHA-256 as part of that clone, we may need to
-convert every object and then deltify it to write the SHA-256 pack.
-This is never going to really scream in terms of performance as you
-might imagine, but it can be better or worse and I've tried to make it
-a little better.
+I guess intmax_t and uintmax_t are probably not usable with Rust, since
+they are not fixed width?
 
-Similarly, if we have 500,000 refs on the remote[0], each of those
-have/want pairs has to be potentially converted and we want people to
-feel positively about our performance.
+Collin
 
-I will send a patch in a future series that will make this a little more
-idiomatic on the Rust side as well.
-
-> I guess all of this will require a lot of iteration anyway as we gain
-> more familiarity with Rust in our codebase. And things don't have to be
-> perfect on the first try *shrug*
-
-Yeah, we'll come up with some standards and design guidance as things go
-along.
-
-[0] Some major users of Git do have this order of number of refs.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---9uBCPYa1rbRtQ4zC
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaQKyKQAKCRB8DEliiIei
-gWWdAQCmgRQnkk/OOGJ3aa/+bkk8Lj+2n+OOW0QWZN35Y5RVWgEAuwOIU3wWjFNL
-0xDtPvKye3MrtyxP0JLqsE40sQDeRwM=
-=vMIU
------END PGP SIGNATURE-----
-
---9uBCPYa1rbRtQ4zC--
+[1] https://public-inbox.org/git/87jz16dux5.fsf@gmail.com/
