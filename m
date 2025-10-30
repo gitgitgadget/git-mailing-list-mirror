@@ -1,88 +1,89 @@
-Received: from flow-a5-smtp.messagingengine.com (flow-a5-smtp.messagingengine.com [103.168.172.140])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C2033CEB5
-	for <git@vger.kernel.org>; Thu, 30 Oct 2025 09:50:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC2D34D90E
+	for <git@vger.kernel.org>; Thu, 30 Oct 2025 09:51:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761817856; cv=none; b=OCoxfujwpUmozz+bIQa+hhWShQjUl+BuAhWJabsib2yASrf6gDqyww8e82OfBEqvUcn6hbXjBGG3O5I0tjqeCwYkfKL0p8BhG0mUCrb1qYrZd2bEEcdfdSSRLI2oYjMRi6vrHzDL5ZPFvr/y28kqEivMfZZ8y9hK4kFyWQLihCI=
+	t=1761817863; cv=none; b=BaXdsvCabiVElGdC04EzWPJ5SxDC/D0Nr+M/Fr+C82tEe3BY5bE/btddHN1W8qOFeFNst25agM2ZOBjN8ql1HeQNVvsNqVbtCHHmDmEitsnG4NnX3AfcuHOGLAgSrUdHQjDY2xV2YszgsskC68vYxouV4E5X9FGBlXRjXXja3ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761817856; c=relaxed/simple;
-	bh=eKjSgyu7B71IlJueKV1GgZvguD9JTn409iitb9pX5JQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UXDjbLf32zQpKO5fMKl5AOU7yWeqk29n2qQQkMiH29MbMMPgZgGLr3/rimXFg/jJT6tVFyLJiUPlw3qtfQwCWQvGRrh9ofwOrmTmNUyKvN2hCMMw/nf+53BKGfcPHnT35wAgvKA35mfXLAQhyQpZPl8fkbd1seghqak2zgztecc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BlOgVQY5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uWKzNX2o; arc=none smtp.client-ip=103.168.172.140
+	s=arc-20240116; t=1761817863; c=relaxed/simple;
+	bh=oY6+go+rh/vYBljRwQQv4gou5W9YgSdGTHZ4FbUfkwk=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gNxsLGElYnS0jHm/VtT3OO3iT+KW+IOEcKOPgG3hGjI79Ni+D9SsE3L15twUyFf3tgzTRvqmOI4qB5SyfdcJAKJHn3cSJJLSkhZVW0ifWnaKB0WSMp3t0iWjoBqIVv6hDn7ISw7gUoj3YwQ0fmJVdYBALM30AIHaxSSRJEHsjBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SNXsdUQu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rgk0fMvS; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BlOgVQY5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uWKzNX2o"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailflow.phl.internal (Postfix) with ESMTP id 846731380595;
-	Thu, 30 Oct 2025 05:50:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SNXsdUQu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rgk0fMvS"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id B4225EC011A;
+	Thu, 30 Oct 2025 05:50:59 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Thu, 30 Oct 2025 05:50:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+  by phl-compute-07.internal (MEProxy); Thu, 30 Oct 2025 05:50:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1761817853;
-	 x=1761825053; bh=8CGqB5jAyuZ4LVthvlTRTCd4GlrZWQUj+Cmk+6ps2Ck=; b=
-	BlOgVQY5e2E6ywwyEF4jAaC/R1/L4vcHUtIcI+pzkSYS7sLKB0vZDn5izP0dpcN9
-	wFhcrMeymdgDqycxEXJ85EtVVZWBY+kyuaOwwhdgf6n/J+3sRMbXaAIgRqSc2dLx
-	cQQ7Zu+vX1+vesE5/z0qssGjNU191OAtJO9DGl4AYTGY+QnmfkugTf9kC5AeosT1
-	QyPcLtRWfbxhOKvcBMG4qtg04gRqWRQ6v0nfBkTNepg6Jyiw70h3lR37NzBiIajz
-	L6+6cJY9ttWUdSDpjJXVEREczWlHSgaJLAewh+Nt1QTZ6FgkWhugg/OSPLndXO8B
-	d+kuH6IEjXHb8+cvAZFg2Q==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1761817859;
+	 x=1761904259; bh=WPnkCR8kO4G9xx93ItWPl2LCvfum6rzying+4M9TmXo=; b=
+	SNXsdUQu8VIeRzEb/yWjobIKug04Ke5b1oiXGGNnVcdUPsSUnDtYOhOgXv0akeu0
+	7VH3tfuonvbyGPvO+3DOO+P9J0kT/yByHCpJ2yDp4zbo/DgY6vnSAsRky3GmgD3U
+	Yf7ax50/7Nhgkinlp4u9HtMaqBo7lIOAaX5bvkN3YbdQQxfIcE4UnBOP0s7Zt0+o
+	Q4wlk1SQAdVPKWcdkhd4x8An2PRffupaULvF7RR/+Bzxnc5bUgZxOJGwSGF8BppC
+	lMg5NsDK4Vk2X06kon6W48QHIN5nu23TZgdJyxizE4TEluwFgexAee8JSHYI0Hsf
+	6O9VX/f6XAnjsLugXf+PhQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761817853; x=
-	1761825053; bh=8CGqB5jAyuZ4LVthvlTRTCd4GlrZWQUj+Cmk+6ps2Ck=; b=u
-	WKzNX2oRjTavL1OHHAxu0wWhWu7rZHWUzDZLKowj6As2Z2yFDwX4AHMNN5zD12tY
-	KInY+fm/hnHx6BjbX3++gqM70xOTYsCkLn3d5kQnZ1AuGzt6dMItP0u04S6NlFw6
-	SLzOKPEJnZnqaSJDjXBAZ/auA2JQMwcOxU+DLDCVvT51z1fOr2gA+YwpzyEAN9/c
-	G38Vnn1wlQguI7osj6uwYlYTPdcOmvDUJ9EnGRdOPhEt3Pjdu1MsTH0RezsyRHep
-	N7j7QYTcBseB6lJuK4yQx1NSagTJWCA1QL5nBMfnlxQOFoWtmVyzP7kTbyIJXz8F
-	t56kXuEO6tj0UsQcQP5PQ==
-X-ME-Sender: <xms:_TQDaSnhKxuRGRq8iARE3hoTeNvoiowSIfKuyiqIVaUoG-MtjVE1Ow>
-    <xme:_TQDaQ119IBo5Bh1__07_xG_5Rwd0D4HdHlpf591hORBiVzcOE8oRI9jaf7DgVRu8
-    WZ2kjMe1MzGFVswmsp570qw_p8d1vI_9Njmk6IF7A9FOTd9DTT98Q>
-X-ME-Received: <xmr:_TQDaVqSJSV3I15QA4gtUa8IjwpO1ZvoJsHR3tngv74f3qvjcy-FwIxqeRysNO_zLykZdd9q1rGYm0DBq7zKIkchzYUUy_vop-_JjcbIBA>
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1761817859; x=1761904259; bh=W
+	PnkCR8kO4G9xx93ItWPl2LCvfum6rzying+4M9TmXo=; b=Rgk0fMvSkqa7pd5Yr
+	5btcTaC9LjVIKBtL1uoveaq6FamlSNLQhG6wSX+JUwv5bBpRi8gLN93g8+jHAlsI
+	/pCgVF3H6pXUaVIM7MCHLk5gzsRQlnHFveV2UDkMkWVM+/GlpyM6RrqT9H+kiMwY
+	U9FI2EGCRaoeB8SzEkAZayazWq0b0lL/imw2lvBnu8EVw529+z7m1jTYASECZZgN
+	BRi+qnXqsRNVpaBXymAVp5ymcK3rRqnQAgjjav7vvYebc6RzDcI0Q32uHF7V3erN
+	dd95ff0o0pqphh9JLmzi4GT2Yic6CDr6fo3uO21zahOSJjCAeurF/gqEDmNMLgi7
+	iTsrA==
+X-ME-Sender: <xms:AzUDaYzvHRc_Syde6MCedgeulYvLERhCkbN3wM5lLUtDDCcugiWJkQ>
+    <xme:AzUDaTu-2KtnUjfyAycFduxEqJWgawwV7euxMm1BSuUMRCG-ncME6yoxWbIKw3J4F
+    6bCNCyywj8E9sB4q-UlVYp81hXWgK2rYeHZBhLILLl0zpX0JTJbsPU>
+X-ME-Received: <xmr:AzUDaXsJFKOjpXDRqi6AEEF7Vfknu_0zv0-ehm91phD7YJYesjUNynunfaHJsWLvmpY01UCVMi1DcbFjHbIqyd5tEPNGOqVn3iqjVVkMzQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieeivdelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucfrhhhishhhihhnghdqkffkrfgprhhtucdliedtjedmne
-    cujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeetheffvddtleettdetueeukedugeettedutdegueeukeetheefueevvdeitddt
-    veenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthht
-    ohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtth
-    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:_TQDaVc6lGLTKYHVK6z_rFgGNc5N0uTAU_WRsuHjYw-uE5des_sSIg>
-    <xmx:_TQDaco2_AzJefoWTlnz6ahkOm5W36aLFalPlfly5i7wCZBbn4ytRw>
-    <xmx:_TQDaeEdax30l_A2OEQkcqHmp_TOMIuIG37dC7TA9UuDU4WABl4S9A>
-    <xmx:_TQDaUvyyvQX7dJqQVTQWHfvh89Vx94iNajsFCMOmXuRn5wrpTJTSw>
-    <xmx:_TQDaQ2noP9B42PZDVrms_VhsUsaCyfI52RW0Km7VWWedRdBxrDa7B9Q>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvffukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epleehfffggeeiueefheeitefhgeevjedvvdejtdeuudevvddvtdektdfggeejffeknecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegviigvkhhi
+    vghlnhgvfihrvghnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:AzUDaQMPO8CSELYF1znXqudc2nsJi_-fB3kJfzMZAh1tryyy9DqjeQ>
+    <xmx:AzUDad2Rx8NR1077gpThR3sRJ1qWNlrF4Ptk3QZxLnQyK1rBtVsb3Q>
+    <xmx:AzUDaUMqU9GSlggUoG9FPdIKrhlMMQ4RpPcovBWz0vZqIoG97gq6-A>
+    <xmx:AzUDaV06-FW9zFNpETt9ljn25ErnHxahBGNC5BQCl9ydgDIHnV4ApQ>
+    <xmx:AzUDadaDrG3qswjXPEmcvsLkhckDc24XZfXOd0Xa5v-ZdeyfGofRJmGo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Oct 2025 05:50:52 -0400 (EDT)
+ 30 Oct 2025 05:50:58 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 51d10a6d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 30 Oct 2025 09:50:52 +0000 (UTC)
-Date: Thu, 30 Oct 2025 10:50:48 +0100
+	by mail (OpenSMTPD) with ESMTPSA id b789af92 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 30 Oct 2025 09:50:58 +0000 (UTC)
+Date: Thu, 30 Oct 2025 10:50:55 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/5] rust: generate bindings via cbindgen
-Message-ID: <aQM0-IwB3e4t7YKE@pks.im>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ezekiel Newren <ezekielnewren@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] rust: generate bindings via cbindgen
+Message-ID: <aQM0_6uRZcQYfO8R@pks.im>
 References: <20251023-b4-pks-rust-cbindgen-v1-0-c19b61b03127@pks.im>
- <20251024-b4-pks-rust-cbindgen-v2-0-4b4bd4f18490@pks.im>
- <CAH=ZcbAC_u88_cD33bRxAuAPhJh02zNOHAVnkhxthncDFdZOOA@mail.gmail.com>
+ <20251023-b4-pks-rust-cbindgen-v1-3-c19b61b03127@pks.im>
+ <CAH=ZcbADTLvTioBf+LYQej1G0biZM8s3-iJG+BZjnpxj+8NjsA@mail.gmail.com>
+ <aPsepOtUf92fqDL-@pks.im>
+ <CAH=ZcbBWuS6QVQT4LsxSP-X4GupZwr+NwzXNH2+qZGoufUWDrQ@mail.gmail.com>
+ <aP_gy-Rj8MI7zAWd@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,58 +93,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAH=ZcbAC_u88_cD33bRxAuAPhJh02zNOHAVnkhxthncDFdZOOA@mail.gmail.com>
+In-Reply-To: <aP_gy-Rj8MI7zAWd@fruit.crustytoothpaste.net>
 
-On Tue, Oct 28, 2025 at 01:37:00PM -0600, Ezekiel Newren wrote:
-> On Fri, Oct 24, 2025 at 3:51 AM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > Hi,
-> >
-> > this small patch series introduces support for cbindgen(1). This tool is
-> > used to generate C headers from `extern "C"` blocks so that Rust code
-> > can easily be called from C code.
-> >
-> > For now, the only use case is to verify that our varint reimplementation
-> > matches the C implementation. But later on this can and will be used to
-> > call Rust-specific features from C, as well.
-> >
-> > The topic is built on top of c54a18ef67 (The twenty-second batch,
-> > 2025-10-22) with ps/ci-rust at e509b5b8be (rust: support for Windows,
-> > 2025-10-15) merged into it.
-> >
-> > Changes in v2:
-> >   - Take some of the pieces from Ezekiel's "cbindgen.toml" file. I have
-> >     not yet taken `usize_is_size_t`, as that option requires cbindgen
-> >     v0.16.0, which is not available on Ubuntu 20.04.
-> >   - Backfill missing jobs for GitLab CI.
-> >   - Fix CI failures on Alma Linux 8 because cbindgen isn't available
-> >     there.
-> >   - Link to v1: https://lore.kernel.org/r/20251023-b4-pks-rust-cbindgen-v1-0-c19b61b03127@pks.im
+On Mon, Oct 27, 2025 at 09:14:51PM +0000, brian m. carlson wrote:
+> On 2025-10-27 at 20:35:59, Ezekiel Newren wrote:
+> > On Fri, Oct 24, 2025 at 12:37 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > > > cbindgen is a Rust crate and it should be specified in the Cargo.toml
+> > > > under [build-dependencies] block.
+> > >
+> > > What is the benefit for us? The generated code is not a dependency of
+> > > the Rust code, and neither do we use it via "build.rs". And if we use
+> > > cbindgen via "Cargo.toml" we'd be forced to build it first, which slows
+> > > down our CI jobs.
+> > >
+> > > Please let me know in case I miss any reasons to have it in our build
+> > > dependencies instead.
+> > 
+> > You're targeting a very old version of Rust (1.49). I'm not even sure
+> > that cbindgen will work with a version that old, but if it does then
+> > we should use it in build.rs to make sure we're not using any features
+> > of cbindgen that aren't available until later versions. If we use
+> > cbindgen that is packaged with the platform then we can't precisely
+> > control which version of cbindgen is being used. This is a matter of
+> > reproducibility. There may be platforms that can compile Rust, but
+> > can't generate C header files via cbindgen because cbindgen hard codes
+> > that a certain minimum Rust version is required in its own Cargo.toml
+> > file.
 > 
-> I really think that this patch series should include migrating to a
-> Cargo Workspace. That'll mean moving /Cargo.toml and /src into
-> gitcore/ and creating a new top-level /Cargo.toml with the following
-> content:
-> [workspace]
-> members = [
->     "gitcore",
-> ]
-> resolver = "2"
-> 
-> Along with the other cascading refactor changes needed to make this
-> work. Let's do this now while it's still easy.
+> Yes, I agree with this.  Not all systems have cbindgen and it's not
+> guaranteed that the system's cbindgen will work with the version of Rust
+> that you want to target or that's being used to compile.
 
-I simply think that cbindgen and workspaces are quite unrelated to one
-another for now. So an alternate suggestion: once this patch series here
-lands we could introduce workspaces in the subsequent patch series. I
-think that's still early enough, and this patch series here shouldn't
-cause significant additional churn.
+Okay. In that case the question to me is how to drive cbindgen from our
+Makefile and from Meson if it's going to be invoked via "build.rs". It
+doesn't make much sense from my PoV to make generation of the C headers
+depend on building the complete Rust library. Doubly so because we'd now
+have a chicken-and-egg problem:
 
-In any case, I'd prefer if you wrote that patch series to introduce
-workspaces. I don't feel like I have enough experience with them to be
-able to argue properly why we want to have them.
+  1. To build libgit.a we need to have the C interop header.
 
-Does that work for you?
+  2. To build the C interop header we need to build the Rust library.
+
+  3. The Rust library depends on libgit.a.
+
+So am I missing anything obvious here for how to declare cbindgen in our
+"Cargo.toml" file and invoke it directly from our other build systems?
 
 Thanks!
 
