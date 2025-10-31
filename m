@@ -1,105 +1,112 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C94E31A05E
-	for <git@vger.kernel.org>; Fri, 31 Oct 2025 11:43:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735EC1DDA24
+	for <git@vger.kernel.org>; Fri, 31 Oct 2025 13:26:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761911024; cv=none; b=Yb4uPN2FT0pdhYbPTNVm4FyVS0cVumUTFX1gc3AYfBay65e1o4EnL9K/IneOb3x6VWPTCn2GTGYFOXG8A9BXIqM7gukTsqnjH7qLk1Eiw5LFDpF68PwBbgcdA2riHtTVI/lHjjhSF9FG62jgFjh089+2OM2Gmr16jrkxew5jeAI=
+	t=1761917186; cv=none; b=l3+Fek5bcqTJ6/4uHP0ZST7g0ud+Lh4cTsXGqkSVdo//m0OODYRFte+68EvPZyd2XS9FFBCIytMZs7xbFMxVfxE2yk8mtdYIHdBQuTWCdLtlI1qcpZpFjBpQVITN5s70h7JrjGXMA6Q6FKhO+xms+/lWKPJsziQCEzMPsx1Guh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761911024; c=relaxed/simple;
-	bh=m4Dbjt+oQ6oqrvTdMU5W1AKPQHELhXZUFN5tbE5gIFc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Y70FZxqlS4U2MpYgg+KNXuEqqSxCDJtwFFAgYCCuRUmANaN9tH6s92D1jaMFJEeKjC4WEBMIcC/nms9W0tBrZpuoHIz4/WC/Ufcs37Jairn6MR0DfYVs72Svp0Y8ld9ncB5aR89eTthQCMwJY4kPbtOxttU+SWW4zDiYapVwfvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NLYzUm3v; arc=none smtp.client-ip=209.85.214.180
+	s=arc-20240116; t=1761917186; c=relaxed/simple;
+	bh=bDIUxKP+CHIxspRGdmj7qTjNhBGxuWtKZ5SKtgEO+ng=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=gWyJwtcdeg/4BcRZwsYZ88lTT+1B0OyzTpj01oeRMhQd2I/HKot6e6yfvvEXrdfa6QuoYyRAfWeVetbAV7YmRTCuAVVhfywUE8wx5yfllbyYyYbMzNJaB6EUURTR94qqa173BYonG5wiGbFcsdMAdigJfWrIFTjHx4swlDQYi5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OTEuqXK/; arc=none smtp.client-ip=209.85.222.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NLYzUm3v"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-295070beaa4so15597205ad.0
-        for <git@vger.kernel.org>; Fri, 31 Oct 2025 04:43:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OTEuqXK/"
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8a1744d9b8fso292228585a.1
+        for <git@vger.kernel.org>; Fri, 31 Oct 2025 06:26:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761911022; x=1762515822; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=m4Dbjt+oQ6oqrvTdMU5W1AKPQHELhXZUFN5tbE5gIFc=;
-        b=NLYzUm3vksOd+FEa7GWc2/OoZ9WfLl5pJ5gM8exSX/2cTY3RnMUPWbTjIRJIAf2G9Y
-         WvKRVP9cBBatVQt3YZahJpsEge7QGqcxrs7svvBtWB7INPdv4lHYzEpCvv2rxR5N0YoY
-         I6XEJqldj+InkXyZHuZF9QtmXE0yM5gJ4iKPUTRCXi3kJh2ymjFEPh9iBodSuLguz3bb
-         GIJhsjJQOlj+8E6aY1QloIcW2XtERB0Iae7KqVhDZ9KQVopMwwnBrTlht5InRtVlCH3o
-         pt4P57clF5KV3zhwYQU3fw55PIayXp+dq57vIGhLlutDhu3E/VvvYExAQn5+xn1zZl/l
-         V7iA==
+        d=gmail.com; s=20230601; t=1761917183; x=1762521983; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=N2YG+kATCuh+pxurOYZ6Gxsj3Ca9kmi/K8zSgSg+5Jc=;
+        b=OTEuqXK/Wz30g9xOe9OmnQb/3eFWau0QWPZPL66WZd4h5lZwnRzxivzS1av1pRI6AG
+         MsVzdIL5jaTEmzj7Eikd0y6/UognjnOztnbu6+7fjfrw+5gbmoO3TNng/Kj462RQK7yD
+         7kTUhak7Lc+j+N0nEOOq1haCO4WW2C0PRKd6gK59fBOqm+CC7oZCXyRCom/X82Nfvqww
+         c0Q8cWHQHpSIHjoYp8/MWze3FyaBSELh0xNsLrR7HPuxp/H6V1oqaB1kgMEIVWuUAQsN
+         OJpowAHRZTNMORentoGPrzLsOj1j59kRCg2CaTwgZTxlXtyEozOsSH01fU3JS7FCbCrG
+         jDpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761911022; x=1762515822;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1761917183; x=1762521983;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=m4Dbjt+oQ6oqrvTdMU5W1AKPQHELhXZUFN5tbE5gIFc=;
-        b=QAL1iSXawmvhj/hN4wESeiC6SDh4MB2OKtO/GGmaCWXmN1g2W3ivN00C8TIcsDQAY/
-         gpeYTnXN8+LNOIuos/JN7nRpSE5uBBdlB6AcmH5V+GVYdTkebtGxkPPba3MrD5z8jjwY
-         qLVERoahhzcXBkjiFC9urUClBVvPEPx27WLBfadng4or6dWsg7Wzttf7eFNtq/ZE8ujH
-         slz7sAN4ynrVlfuAHz+XwBZ6F3KUqtI6mivw43arS2HUvj7tvhXWEB/FgNGesFbRM//v
-         jK9h72hke+I/so7V9/ZEfz/7agb2rFeD+e10ItNy8okpzZ2yidEs1RtRbSDtn/Gh7mZD
-         Aw/A==
-X-Gm-Message-State: AOJu0YwSLYNIraR9BCG3+ujQU7ZmfKoWSnpaBXQalY/rOIfUeRzQIrO5
-	AAmAgmqpkM2Ckgr32FKrqOG1Prbx/OpN1lSBdYqkp5O3u/f47w5OZmEjQCRgV7xj512blJtN8Fy
-	tMmQWV/MmnBp1m1xka0M9Pekldp895ko=
-X-Gm-Gg: ASbGncvaxClfRCkchwK+QLvUYFKf7aS7Qumyv7eu8nZkDGHDvRZBEV3SLmB0b/xZ767
-	SO0FTiJTnwVcv6jzwLpDW6dlefMct1ObpXhr0uvtlyR8bAZV0v0phkZ7lEktRG/KzeejBc9Al2V
-	CfSCyQq3tYS3Me5PmT5Nh6vj9m1fiyEIrcVsgfQMjUoEE+jYbskh4X9ZN5TH5kGKSw07O4De0T7
-	zNdBO8Q8zp9bjMXcUsH2HCZ9Uel9OKM1WTij8TxTspiWZbE6MQbD4nNIDEOcNI=
-X-Google-Smtp-Source: AGHT+IHvcGUWhY9snY9BkSSU2gl0ic5W/MB82J9dEzRbP5vjMe28Fd+0PjBObOVPhMkjbTu639ws7x+cQXPgqeldNtE=
-X-Received: by 2002:a17:903:37cd:b0:273:3f62:6eca with SMTP id
- d9443c01a7336-2951a3eac4emr50166505ad.18.1761911022286; Fri, 31 Oct 2025
- 04:43:42 -0700 (PDT)
+        bh=N2YG+kATCuh+pxurOYZ6Gxsj3Ca9kmi/K8zSgSg+5Jc=;
+        b=qEU+t7FCugcwvidGjYNF2Yr1Fth12qvyltRx8uK6YH5C0pQ1/ylDu0xE+y/1tt5SEL
+         9JnzjnIDhYIF4lDRTRybbT5Fe+KapAsqfYikNmuM7Rie+oKvjKora21Jx2WTdBtO3pKi
+         +BCvzIMrnm2ydJzfYphOIaveaDQROufDzcsDsEUY+sZdfrN7Ecid0ti+A3Zm181AoFLO
+         eG7u0vEuSZsbyngu5G/6mMulgfWHNiB8YuKKhdYczFJGRth3G0fs3iWF2O2VPjnw1yEQ
+         pDjV24DWdp+XuSfuhoW7GquGwJBxvpGpBomiSqCHnbHcuNUP4eFufG0C20WzGpHq21q+
+         ydOw==
+X-Gm-Message-State: AOJu0Yy+BgSU0M+L9WsWW4JrNJjmYLOVPRhv6I2GT10oHvPIVxP6y2dJ
+	ve9jkrJ917ywBXOVDYpd+YZgaH9fLgAJq+aVUWehkkQ04TNKOFk5xNCQyxgmfQ==
+X-Gm-Gg: ASbGnctL1l0gEy86j60BGR+w7A5RRe0ThH5UgwbzDwW4PtDNXYFZIiT4pznAoGztuGR
+	WpI7A9RLOnv3W3VWAxLrwkd19kA3Z/kxKJeXG5fNkFq9RYlF3IoF5u+OBC1FkHqfVSDnfsRP5rd
+	Sf/2W8wAsN9Vsa5G/tMHyMLk4fBfZc0ViUBXR/nifpT7oNB5spiziG5wC3x3ls6lxJvx9iULO5t
+	PiWXtaTMW8ohgRu1oI7NXFUuVH7Rd3kfVvyOInvYvua0s+NcyL8EHmGyhFzqZyOGkKqYQ4vQx0p
+	zO6yLYo498DpoRrIWZwRubWeNr7flym3r0mwhYEOM0wZZkY6oGtELJLKpSqlgWlF9zX1sJWzRXq
+	vmgu6stlxfrlbkRPPqeHV5V3RL1rQuSoF0fQUrFpRic5h1eVPHs4utDOxsokOSEJmexEKfPrrES
+	C3rg==
+X-Google-Smtp-Source: AGHT+IGtJTO4Y5Fcq+KZkFtCV6fi07w5pKZTLTfbpw19xdDwB1/88noeCFiLVQamhms6XEfVoi+a0g==
+X-Received: by 2002:a05:620a:3720:b0:89f:19e:46fa with SMTP id af79cd13be357-8ab99498a0amr339159385a.20.1761917182742;
+        Fri, 31 Oct 2025 06:26:22 -0700 (PDT)
+Received: from [127.0.0.1] ([40.76.191.134])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8ac00c87281sm108736085a.21.2025.10.31.06.26.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Oct 2025 06:26:22 -0700 (PDT)
+Message-Id: <pull.2087.git.git.1761917181558.gitgitgadget@gmail.com>
+From: "Pavel Dydyshko via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 31 Oct 2025 13:26:21 +0000
+Subject: [PATCH] svn: fix path strip for branches
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAD=f0L9anYu4LKWGDKrwzBBytMunJ3UjTehNN9m2DigG8yCNHA@mail.gmail.com>
- <CAP8UFD0a+RxQ-pPWrmwOYhBic6Oy9C1NeA7EmEyj2KYYDyS4QA@mail.gmail.com>
- <CAD=f0L8=eBJjj77xBw7m7WcQf80sYbF-X1wbFc9ToC9F0AWVAQ@mail.gmail.com> <CAP8UFD1v7yec7JwBGekJPvcq7kNJPuPTgWOVn+gBaw1+Sh2mdA@mail.gmail.com>
-In-Reply-To: <CAP8UFD1v7yec7JwBGekJPvcq7kNJPuPTgWOVn+gBaw1+Sh2mdA@mail.gmail.com>
-From: Bello Olamide <belkid98@gmail.com>
-Date: Fri, 31 Oct 2025 12:43:43 +0100
-X-Gm-Features: AWmQ_bnIeQbAmn9yp-LaAB_6BVuRjzV72kocbenKrGha1oKc6aA6DmiG5RUugpQ
-Message-ID: <CAD=f0L8aMT+Qjgk4Gij1fVCVjKSyGfWS_tb6O54PT1=4KpbRJA@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BOutreachy=5D=5BProposal=5D=3A_Refactor_in_order_to_redu?=
-	=?UTF-8?Q?ce_Git=E2=80=99s_global_state?=
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Pavel Dydyshko <paul.dydyshko@gmail.com>,
+    Pavel Dydyshka <paul.dydyshko@gmail.com>
 
-On Thu, 30 Oct 2025 at 13:55, Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> > Yes there were cases where the functions were adapted to use
-> > exactly what it needs down the call chain rather than writing new
-> > accessor functions.
-> > An example is
-> > https://public-inbox.org/git/20250306-b4-pks-objects-without-the-repository-v2-1-f3465327be69@pks.im/#Z31csum-file.h
-> > where the global variable `the_hash_algo` is replaced with an explicit parameter
-> > `const struct git_hash_algo *algo` in low-level functions such as
-> > `static struct hashfile *hashfd_internal()` and the call sites adapted
-> > to use r->hash_algo
-> > or the_repository->hash_algo in places where the subsystem has not gotten rid of
-> > `the-repository`.
-> >
-> > This is also a strategy that can be used to replace global variables.
->
-> Your answers are appreciated, but, just to be clear, I think it would
-> be nice if the answers to my questions like this one were part of a v2
-> of your proposal. If I don't see a v2, I am less tempted to discuss
-> this further (which could hopefully help move the analysis forward and
-> make your proposal better).
->
-> Thanks.
+From: Pavel Dydyshka <paul.dydyshko@gmail.com>
 
-Hello Christian
-Thank you very much.
-I have added the answers to your question and submitted a v2 of the
-proposal.
+When checking path against ignore-include regexps $path argument is
+given relatively to svn repo root. This results in unwanted prefix which
+is path to svn branch location and should be stripped before testing
+path against ignore-include regexps
 
-Bello
+Signed-off-by: Pavel Dydyshka <paul.dydyshko@gmail.com>
+---
+    svn: fix path strip for branches
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2087%2Fpddshk%2Fsvn-fix-strip-path-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2087/pddshk/svn-fix-strip-path-v1
+Pull-Request: https://github.com/git/git/pull/2087
+
+ perl/Git/SVN/Fetcher.pm | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/perl/Git/SVN/Fetcher.pm b/perl/Git/SVN/Fetcher.pm
+index 968309e6d6..5ac8c71a3d 100644
+--- a/perl/Git/SVN/Fetcher.pm
++++ b/perl/Git/SVN/Fetcher.pm
+@@ -123,6 +123,10 @@ sub in_dot_git {
+ # This will also check whether the path is explicitly included
+ sub is_path_ignored {
+ 	my ($self, $path) = @_;
++	if ($self->{path_strip}) {
++		$path =~ s/$self->{path_strip}//;
++		$path =~ s{^/}{};
++	}
+ 	return 1 if in_dot_git($path);
+ 	return 1 if defined($self->{ignore_regex}) &&
+ 	            $path =~ m!$self->{ignore_regex}!;
+
+base-commit: 419c72cb8ada252b260efc38ff91fe201de7c8c3
+-- 
+gitgitgadget
