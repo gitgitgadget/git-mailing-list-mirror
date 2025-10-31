@@ -1,88 +1,88 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92157320380
-	for <git@vger.kernel.org>; Fri, 31 Oct 2025 14:44:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EE82594B9
+	for <git@vger.kernel.org>; Fri, 31 Oct 2025 15:16:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761921888; cv=none; b=g7E86yOnB1cYsHlxpS9rIXme4pHDmS1o8rdjIFcUevFJir+G3vPJf1fC2ptMPfOEqTfwd0nnAlRgdidL1hh6mc+HFpNGtbVGzhzmhEgV1mub7fnqpEUQaxwcdskz7QhbkhvHQXnu4s98J21t8kQla9Zcj2X4RLpO95W39I1bQ04=
+	t=1761923780; cv=none; b=S8jULU4+mW+fIbL2wjfES3u7SzSlzmbSx6D7kedRR6JTIcBxjicUjVsQZr5H6fA2rSgU8EMKnqtqOs1Gnz0FmiCFmihnUOLe3/bld7LijD9AnMf+Hm2E0VHBqivksT2o9hKWz7+USv5ulmA+HUr2l8nz+HcvD2F99vEXZ47MKIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761921888; c=relaxed/simple;
-	bh=wRx8oYFhBN3IjAYhXUoso0VSd0mslHS8Mve7SaYUciQ=;
+	s=arc-20240116; t=1761923780; c=relaxed/simple;
+	bh=dUmKb4kIyWcAhxa/sYt2VWCfA/K+JidK7nQEgSnUlho=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TssgBvZSME0PiU+ism0AG9WLqFptBB3/H5RtarN4JvKe7TjmM+2TgwMQZ2NassO33y09foshYxYgY6T8R7cfOfkPs9dhTGWOBKr0l7kv0TloPjsjMKtd6vhQPQNMh2070YhZAlp98kxFrH2ovAFmet2GRupMVNVdH5LWZyVKzrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DYQ5Ya8o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j1OJq3nq; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=fAUuuKtIWrTGAehpkE9mChNsFunlvBOZbKY4a6d0Q5RRCrWX/jHGCBo37AP6f6Pi52iUit4jT0rp3ovHsEvn9f+CwCO8rSDhnCHuAmcWIA17CacIAJK7r7ZlpK1hOovZeGGD5OWgcK+FKr+JUjnxY9Mjobak5sBjhLE9VU7WSHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L9KoPTYv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XCdSTy6a; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DYQ5Ya8o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j1OJq3nq"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id BCE171D001E1;
-	Fri, 31 Oct 2025 10:44:45 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L9KoPTYv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XCdSTy6a"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A29DB7A0053;
+	Fri, 31 Oct 2025 11:16:16 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Fri, 31 Oct 2025 10:44:45 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 31 Oct 2025 11:16:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761921885; x=1762008285; bh=lcJE4aLd06
-	zu6IY2W+dTCZSlflJ61wSSPg2DBEouYr0=; b=DYQ5Ya8oxgXb5+AB6sPHcxiHpa
-	yEUYz1FxqERRE9tnnZBuDmnmvcuwzB3hno17C9/TbDQWom20HaDXoXL+il8BWl0f
-	4hSgWxJRm+HFK2KlY0xTvr5OZMmPlm4gJgPXVRyXkQ1ipuWXvZRT1XJsHa0Fze33
-	rVWJr6ct7BRMAJ105eVWfq8YBUXy32td/jpJh5Dfg6g7IeNO4S65LkZ9uDwePwi5
-	NDKFxFGFqu4jBwodtill6an+BIwwKQKuFZjAd8gPts+mxtSZfLV5Dm2JqQY/Cjcr
-	wtg+kZ7nWV+17wNvisrk66AmarxlSOUT/NHT83ZX6MQqQiP1r0Yl/G2OuQ2g==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1761923776;
+	 x=1762010176; bh=gndlZ3fJpfYtwyiCQ9dSzZAPm2KmpeBEbxhHHfD1kGk=; b=
+	L9KoPTYvsih3mxpup6KgU2W0mAV2Y1z4uAxrroZwyJTcnmXHyYXY3xg6X/qvcETm
+	OqFlKWoEAYW8tbhdv5Cn6uN5NMznimjIcdW6MfIldVm/+XkE4LTGRqn6pS/yDj9g
+	p1VNMv6Xq+ddfcOLXC5/gLOluwuP70JDlnTVuC45uZJVRBPV1qRXUhlAKIjGKXuc
+	GMzIYqqFhbTryTSBzHVyhK3D3alVAdJwvuZdbVRp1v0L2IeeXp+0aXFsrluLZ1m7
+	isPyXax5SjJAlhmpO9zRiWSb9KgR0rbGc+LNdi2v5amQpeM7pyot5qX3dNFa0UAA
+	GDM/vw64HOa3uSNZM4rSwQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761921885; x=1762008285; bh=lcJE4aLd06zu6IY2W+dTCZSlflJ61wSSPg2
-	DBEouYr0=; b=j1OJq3nqPgielBhJBUfOQR3ECqxa+MK29r0EDGMsDvQbmgPNEgh
-	ZilOLGt81Tj/akvmIxUw46vkmk23zg8ml/ATpkFImU3usSUHybNgzHiUBUjlNB0d
-	n5ByhyiitcskBI3bndW4vLEVwMSTmwCsb/G6Qv6LKdl1JSKFal/WV6cezKuA9o3N
-	YS09DqqXW3AHVK5oTEM87sQ75Y55tUCTV/z3Nsah0ahpFqjSy6EmmhLhOq4s1Fos
-	5zDLAnShaIv5GeS64QkfUemGWWzbIsp4ioYnR7DPa5yVsJZDp4brO/AuWc0DYtg1
-	hZkVHIUpwVqa7M/bCNrmTAIr3eWK8U7UdFQ==
-X-ME-Sender: <xms:XcsEaeRi6_iEX2pTQqzTO5zMBkaoxUIyQMAQrrU6SGbu3ibBThroPw>
-    <xme:XcsEaWD3D1jFC0_UIjIShQaBx9i3ouX_t6sXGU6gvR2dx8S1sHowGfqQRFTuKCz3w
-    E3ElN8JyupUoyM4zLRo8v0H_P-SFMDRc-8UMFfXKIBY5KMYbnY9bA>
-X-ME-Received: <xmr:XcsEaeFv0A7fckw1fPblkJqqOayCtCcR6MKliAqoBJPV117aktR-vvRUX73efPaFP4YOOnp4qt6xVFGSjIBp7kKZRurwgGpeFlRV>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieeljeeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761923776; x=
+	1762010176; bh=gndlZ3fJpfYtwyiCQ9dSzZAPm2KmpeBEbxhHHfD1kGk=; b=X
+	CdSTy6ahOSkVuJp/J9qIIXF30XjYQdg8maON4MKPk/1XEUkub0aoRRVCK3WdKVhl
+	UEuOFda4gyFLyIHri5xnhXlByy96/vnmWyl1mN0L0DM5XfX5uYygRKE550XfiCS8
+	EPVYp0TXJlRkSVmVQSvVZMMUjT/nIT5JZ1XNbVMDiHUdeJFVi2FekCz3V1Zh3MIU
+	HdN19E5JYAZoRZDQs6iz5i6xqKkJWrh4e9HEQz1tUfZVp3vLIxiK011xXxRf8gFu
+	51C77zS5qDhagDaOZKGwZvwyUUiWKXvaM2rC56mXAnGXimLRXzbZRQvvuUKZCuvK
+	U5OVbfWMUj/N/x736dmfA==
+X-ME-Sender: <xms:v9IEaWbF7LI76l27sp5OP0XnNEOiOKi-5-nj8aDO5P50oRY-BAcslA>
+    <xme:v9IEaa7a0ttJ3yVZJGXEWTGw_WL6zJsjWju-qmNUecfuoZh94yqjL6nvXdNEXkrId
+    El39eMccIW7npg1jAYj4Oxzqh-xOV-kZ2x7MK4QzJxD0xsB8_27Yw>
+X-ME-Received: <xmr:v9IEaRAtvbpeXrJt1tZgSm5QXfxMNT_kFbWp5PlazvCrnojnp1FbiDvPSJ-5ciNCGKl36uYtHo1qOX_vJOIIWMLD2k9FAoPys3qF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieelkeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
-    gtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehp
-    shesphhkshdrihhmpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:XcsEaQA3X2O3wJmEzVpsFWPudM7GJ9789HYCz8G8Ud-H1xf0M7X4Fg>
-    <xmx:XcsEaWU_qdbuFyFHafLWhECdjmQVAh2RQyN_Tb4cI3FEzieEXwzpqw>
-    <xmx:XcsEacobbs6iNGzT1K3XVGtjf6GPpiIPT7BmWmhce5xyh9uczFta5A>
-    <xmx:XcsEaaSs6w-lM1WkwHxQYKDHZVwrSNA_dRc3EwZVB82hRZoQSugWbA>
-    <xmx:XcsEaY2w-yj5XJyvtAZhv5O3TtTOrWWSrSbe-1jFH-XHF20m-iV3G5MD>
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehurdifihhnughlsehukhhrrdguvgdprhgtphhtth
+    hopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdroh
+    hrghdruhhkpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:v9IEaYfpxOdFJnHXMihLPbWJH-tKxJaNIX1y8QtmdY47mYVpA2ficQ>
+    <xmx:v9IEaYIAVEmdNVJrKMXUPJoaaELMJcnCgKezhewGjb1aEWtL2zFvxg>
+    <xmx:v9IEab1EgtxAac4QCAwkd20BEdRbHMMXL38j8MFeUct9zKpjGvLZaQ>
+    <xmx:v9IEaShtOHohGtJKwB3Yt_OYhjv8grFo1sLfseohBBK6H3Ojb7a7Pg>
+    <xmx:wNIEaRQSyALIYRrdaeCl6a7EJ12iDeK8mGYpxOZ9I24F7uQXfu3GaILa>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Oct 2025 10:44:44 -0400 (EDT)
+ 31 Oct 2025 11:16:15 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Julia Evans
- <julia@jvns.ca>
-Subject: Re: [PATCH v5] doc: add an explanation of Git's data model
-In-Reply-To: <pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com> (Julia
-	Evans via GitGitGadget's message of "Thu, 30 Oct 2025 20:32:16 +0000")
-References: <pull.1981.v4.git.1761593537924.gitgitgadget@gmail.com>
-	<pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com>
-Date: Fri, 31 Oct 2025 07:44:43 -0700
-Message-ID: <xmqqtszf2kro.fsf@gitster.g>
+To: "Windl, Ulrich" <u.windl@ukr.de>
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>,  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [EXT] [PATCH v3 6/6] add-patch: reset "permitted" at loop start
+In-Reply-To: <77991a11c53f40b8b0a050a4d081809a@ukr.de> (Ulrich Windl's message
+	of "Fri, 31 Oct 2025 10:28:47 +0000")
+References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
+	<fe8e8097-2b05-4dd2-a754-f59e4ba5f95a@web.de>
+	<ed73a585-5074-4e36-9f41-228909513237@web.de>
+	<77991a11c53f40b8b0a050a4d081809a@ukr.de>
+Date: Fri, 31 Oct 2025 08:16:13 -0700
+Message-ID: <xmqqfraz2jb6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,143 +90,51 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Windl, Ulrich" <u.windl@ukr.de> writes:
 
-> diff --git a/Documentation/gitdatamodel.adoc b/Documentation/gitdatamodel.adoc
-> new file mode 100644
-> index 0000000000..1cefbb4833
-> --- /dev/null
-> +++ b/Documentation/gitdatamodel.adoc
-> @@ -0,0 +1,296 @@
-> +gitdatamodel(7)
-> +===============
-> +
-> +NAME
-> +----
-> +gitdatamodel - Git's core data model
-> +
-> +SYNOPSIS
-> +--------
-> +gitdatamodel
-> +
-> +DESCRIPTION
-> +-----------
-> +
-> +It's not necessary to understand Git's data model to use Git, but it's
-> +very helpful when reading Git's documentation so that you know what it
-> +means when the documentation says "object", "reference" or "index".
-> +
-> +Git's core operations use 4 kinds of data:
-> +
-> +1. <<objects,Objects>>: commits, trees, blobs, and tag objects
-> +2. <<references,References>>: branches, tags,
-> +   remote-tracking branches, etc
-> +3. <<index,The index>>, also known as the staging area
-> +4. <<reflogs,Reflogs>>: logs of changes to references ("ref log")
-> +
-> +[[objects]]
-> +OBJECTS
-> +-------
-> +
-> +All of the commits and files in a Git repository are stored as "Git objects".
-> +Git objects never change after they're created, and every object has an ID,
-> +like `1b61de420a21a2f1aaef93e38ecd0e45e8bc9f0a`.
-> +
-> +This means that if you have an object's ID, you can always recover its
-> +exact contents as long as the object hasn't been deleted.
-> +
-> +Every object has:
-> +
-> +[[object-id]]
-> +1. an *ID* (aka "object name"), which is a cryptographic hash of its
-> +  type and contents.
-> +  It's fast to look up a Git object using its ID.
-> +  This is usually represented in hexadecimal, like
-> +  `1b61de420a21a2f1aaef93e38ecd0e45e8bc9f0a`.
-> +2. a *type*. There are 4 types of objects:
-> +   <<commit,commits>>, <<tree,trees>>, <<blob,blobs>>,
-> +   and <<tag-object,tag objects>>.
-> +3. *contents*. The structure of the contents depends on the type.
-> +
-> +Here's how each type of object is structured:
-> +
-> +[[commit]]
-> +commit::
-> +    A commit contains these required fields
-> +    (though there are other optional fields):
-> ++
-> +1. The full directory structure of all the files in that version of the
-> +   repository and each file's contents, stored as the *<<tree,tree>>* ID
-> +   of the commit's base directory.
+> Just a comment of personal taste: I think declaring an anonymous
+> enum inside a loop is just bad style. I think that gcc is smart
+> enough to optimize if "permitted" is declared outside the loop, or
+> make the "permitted" use a typedef for a "named enum" (declared
+> outside the loop while the variable may be inside the loop).
 
-"base directory" is a new term; I think we most often use
-"top-level" directory (in various spellings).
+If this is more than just a personal preference (which to me does
+sound like), a patch to improve it on top is very much welcomed.
 
-$ git grep -e 'base directory' -e 'level directory' Documentation/
-
-> +[[tree]]
-> +tree::
-> +    A tree is how Git represents a directory.
-> +    It can contain files or other trees (which are subdirectories).
-> +    It lists, for each item in the tree:
-> ++
-> +1. The *filename*, for example `hello.py`
-> +2. The *file mode*. Git has these file modes. which are only
-
-"has these" -> "uses only these" to clarify that this is an
-exhaustive enumeration and users cannot invent 100664 and others,
-which is a mistake Git itself used to make/allow.
-
-> +[[tag-object]]
-> +tag object::
-> +    Tag objects contain these required fields
-> +    (though there are other optional fields):
-> ++
-> +1. The object *ID* it references
-> +2. The object *type*
-
-I would rephrase these to
-
-    1. The *ID* of the object it references
-    2. The *type* of the object it references
-
-because (1) a tag object references another object, not ID.  To name
-the object it reference, it uses the object name of it, but just
-like your name is not you, object name is not the object (it merely
-is *one* way to refer to it). (2) unless it is very clear to readers
-that "The object" in 1. and 2. refer to the same object, 2. invites
-a question "type of which object?".
-
-> +[[branch]]
-> +branches: `refs/heads/<name>`::
-> +    A branch refers to a commit ID.
-
-A branch refers to a commit object (by its ID).  Ditto for tags.
-
-> +NOTE: Git may delete objects that aren't "reachable" from any reference.
-> +An object is "reachable" if we can find it by following tags to whatever
-> +they tag, commits to their parents or trees, and trees to the trees or
-> +blobs that they contain.
-> +For example, if you amend a commit, with `git commit --amend`,
-> +the old commit will usually not be reachable, so it may be deleted eventually.
-> +Reachable objects will never be deleted.
-
-Very good write-up.  As we would touch upon reflog later in the same
-document, we may want to extend the "amend" example a bit, perhaps
-like
-
-    Note: Git never deletes objects that are "reachable".  An object
-    is "reachable" if ....  An unreachable object may be deleted.
-
-    For example, ... a newly created commit will replace the old
-    commit and the current branch ref points at the new commit.  The
-    old commit is recorded in the <<reflogs,reflog>> of the current
-    branch, so it is still "reachable", but sufficiently old reflog
-    entries are expired away, the old commit may become unreachable
-    at that point, and would get deleted.
-
-Other than the above, I found everything very nicely written.
+The change itself would be just reverting the code movement, drop
+the 0 initialization and resetting the ariable at the top of the
+loop every iteration.  But the rationale being that it would give
+compilers a chance to do a better job, I'd prefer to see a compiler
+person write the proposed log message, possibly backed by data
+(perhaps "generated assembly is objectively better---compare this
+and that" in this case?  I dunno).
 
 Thanks.
+
+>> -----Original Message-----
+>> From: René Scharfe <l.s.r@web.de>
+>> Sent: Monday, October 6, 2025 7:24 PM
+>> To: git@vger.kernel.org
+>> Cc: Windl, Ulrich <u.windl@ukr.de>; Junio C Hamano <gitster@pobox.com>;
+>> Phillip Wood <phillip.wood@dunelm.org.uk>
+>> Subject: [EXT] [PATCH v3 6/6] add-patch: reset "permitted" at loop start
+>> 
+> [...] 
+>>  	for (;;) {
+>> +		enum {
+>> +			ALLOW_GOTO_PREVIOUS_HUNK = 1 << 0,
+>> +			ALLOW_GOTO_PREVIOUS_UNDECIDED_HUNK = 1 <<
+>> 1,
+>> +			ALLOW_GOTO_NEXT_HUNK = 1 << 2,
+>> +			ALLOW_GOTO_NEXT_UNDECIDED_HUNK = 1 << 3,
+>> +			ALLOW_SEARCH_AND_GOTO = 1 << 4,
+>> +			ALLOW_SPLIT = 1 << 5,
+>> +			ALLOW_EDIT = 1 << 6
+>> +		} permitted = 0;
+>> +
+>>  		if (hunk_index >= file_diff->hunk_nr)
+>>  			hunk_index = 0;
+>>  		hunk = file_diff->hunk_nr
