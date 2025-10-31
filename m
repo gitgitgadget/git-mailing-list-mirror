@@ -1,107 +1,160 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BBD34D3B0
-	for <git@vger.kernel.org>; Fri, 31 Oct 2025 22:44:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1475F2F656A
+	for <git@vger.kernel.org>; Fri, 31 Oct 2025 23:37:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761950650; cv=none; b=Xata52TQITx0S7CQrLbw6yJvQjjIXHOyhpUdrjsHcRBHBizcGMWKbB1ArZE4UOFq84QxSTRpMbCiMb9Zb9Uj8IZvY/DxT00SFwhvcJTs97jRce5FRto3NkLUAHrO76523M3E8ua7/ksyCDfp4VlUxyasulbJzjZpJahv3k2NzEU=
+	t=1761953832; cv=none; b=ZpHND5M0BzVIBooUF74aHM/QK8lauOHIRZj2NrymPfLK/dvrZxGnQH8dWAgrrCab0rBW+OhE+FHP8WHvTsoGUGsQ6DRw1cMo+Lw5SGZLWFjISVLocXIGarBUAFLV5xQHGfizEf806n2XpvjMJTxxgaEE0Bl9GRzUzTmnIlyneSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761950650; c=relaxed/simple;
-	bh=9Rk0UYO4zn2JL1QY7iGF0z4wNSfO6gLaZmsuQDZBojg=;
+	s=arc-20240116; t=1761953832; c=relaxed/simple;
+	bh=zEbBsYjcnnn5eYJaL0iuNciWl/rhMwI+W9ExtG8WkJ4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aHtyEFiM7iWbPuSL1LtVWVrBGXLHsb9KF1pFprYw88bBPbu+EA9mdQ0d+JY+xs7CkfFKoA+RPvcHT7B3MqdrS7aBVu2RuWFDMWEzGzk12qexr53D+f4yXGF2fKKvCGybKDWlkf5HhLSlUlNOXR+1sN6a7nrP9TSmF+E8R3Z2p6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gEtvZAj+; arc=none smtp.client-ip=209.85.208.176
+	 To:Cc:Content-Type; b=WQPZYpWxNaPkMK/bx4HSOTLAxHTGuX1u9LaNxXlhrHA3U5VgHY0mcudLuZu3anL0WIfTGzWNpaPbk1mjiGuus+QWsSq4nDhvwGFtUSfDijEx7qEfTUrbnBg2Fq5ag56l7KAWIVAkSAnW20OTGsgw5azt0toGFhbtouWuo59N+8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fWU0qk0P; arc=none smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gEtvZAj+"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-3737d0920e6so795031fa.1
-        for <git@vger.kernel.org>; Fri, 31 Oct 2025 15:44:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fWU0qk0P"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-378e0f355b9so820171fa.0
+        for <git@vger.kernel.org>; Fri, 31 Oct 2025 16:37:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761950646; x=1762555446; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1761953828; x=1762558628; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GNe2SXHvR01zUgxT6bBxDqipiOtRFbdvSfSvwP1HL2A=;
-        b=gEtvZAj+Swo244lgfVz/aAloHQzrX21DzQs1QMBwyXKyja6Xgdqo4XuB2cIERBLfdB
-         HUU31RmeFGh7LvqHPnd0SbjAhCGq9i7c2SBDTitsqEOAoB82fN8CIZsLmFk5YWnrPgRP
-         bkClxdj8QTiy74rJvwnorP45O3wtDC76UG+WrSPlaQRmpVrgBfs9ycvJRW9e+HLxhH+A
-         wWjzcA4arLPcee5ScpZoq6hbLYORkalusVblSdkPVPeps8VFkDZqqyBTXn7+SYnfBbO7
-         jDx9h/Iq/CFABdL0rGavJaw8SrdIzOEh5hp7sd8UFzt/YblmkMI/snX/scqxs5mSiKrn
-         0OWw==
+        bh=FVL24o/Mlcdwom695bhqpHHXZRCEcKrymncFC9CWVIY=;
+        b=fWU0qk0PYoPqd4vJLhStFpS44SoAO9Qc73yRRws8aAIPDx4a6s97H3PBcJYXmJZ9S4
+         4IHIPNS+l6XHGUphd9VVF5mnoYo+VbNP1LLB1LV6IyTl4/rk2AmiCXoBaLz2ya3SQxAM
+         zXXNp9eMnMVlycrt8v7gxOJiQmX3rNUn5JqAZU8E0s5L1vb3uRoFELgDz/g/mSYYU8FU
+         A63abSL6sO4tRC955FmvkOceddTHdh44JLpGEs1R7U43Rwjx5OrxxW+2kFvch7g4oyCS
+         ACuRTWkR2JEafPK6qcc8F/gKWdMaQ02/HCY4KIH36WwNNxBtedS2w2lpse+vmat44wuJ
+         Zoyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761950646; x=1762555446;
+        d=1e100.net; s=20230601; t=1761953828; x=1762558628;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GNe2SXHvR01zUgxT6bBxDqipiOtRFbdvSfSvwP1HL2A=;
-        b=S5mGi2Y3/jOy79jS0KS1q6bhnY1B/21zd2yNC7uyQttC4MqRwj/puMXKlZoFNGmgBt
-         zmIcdaDWNbhdKhlKX3crlhDgaZAnmPkd+rS1EL5BSJLKSyW6vGU3iviGu9/jKCU70p9z
-         4kQtfij7arwMGwjR8o9SONffbczNFx0dlOX/bVGvYmqXx2FljCsQmjOt/4IqRJkkaozp
-         vcm3RfJDr0x5Rp7kIdSvrCGUhj4FeEMq2TWfYq7gZH6XPdAeME7NvByCX/nmNjCVNOOB
-         7/Mo1c+Mh7OC+UHH0Sz1iHMGWIe6HbXyDeDvHCMlegAkq749Ctqb45DyT1wF0C0MlvR5
-         lqtQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWson35fkVmFJ+7069Sdr/FJXUaNMcMRKZ/rQoLnYPLHrUfDjoyre3KWvBb5kqiAtcFdZk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxAPkbZGS/8lbxNGhCBinVYQsWK6DjltCJHsJtJcHe5YA9mW5ji
-	oIhO8KXZz2IRp0tFMi87Gw3vg7781SSteKt5HSDPjRPdss/ucTjX3JPocnRBl0dbEYjosLH6DPZ
-	qO9/ye7NMMRKjC+FUaUAmSlElg3+U39Y=
-X-Gm-Gg: ASbGnctse2Nsss6c3OzjEHWntv3Fv3Mk7tTvdbZUxM1BS89+5SgVpsKy9aLXEfJzUHZ
-	oeemM6xwevGOhwlcjsJYwUXTPXHlbxaX9f1d8XIPQ2yjN0hol4f6epH2XtJcHtp9AnzDvXkuoXb
-	1YcW7UVpoGft3PrsbasU7N6AoFRWT3Rt+oCBGdaJo5fvWeqVvMYqLQzWsIahZvlROaw4xzroMo7
-	hVCp2jHp0YNddqQcoH5jvRWN4Imzijt3ruWfjiMbIePpdUdixsUWeBU1HlMzAq6DgfglqtK
-X-Google-Smtp-Source: AGHT+IFm1JfEen8y7VEa46LEn2O1ArkzWm/iQ1b+ZwKCDnWpQgRkIAlFwzR2w3F5cyuSD/onf/wLpn/W0E0bTAlUnz0=
-X-Received: by 2002:a2e:82ce:0:b0:375:ebfa:2986 with SMTP id
- 38308e7fff4ca-37a18dd5164mr12684841fa.34.1761950645563; Fri, 31 Oct 2025
- 15:44:05 -0700 (PDT)
+        bh=FVL24o/Mlcdwom695bhqpHHXZRCEcKrymncFC9CWVIY=;
+        b=rsU09LdEnphzXbeSzLmRmln73h00YpApzOxYLeYE6wZrrLGQ6on0Szfkj9fSNQxgIi
+         A1d+DH/FrckfPGZDq0eaegFC+uixY94BIChjiQgfB5amxDnuaGPx6k88/ceiQp8MkXoS
+         +hFUJdjASB1nsCad2ZbLZFPwyUMENIshOSfJacS8ezt+Htn53B0iyEthRVJzPguxFV9o
+         yqQFhRHHQipSx0T4mNqVXLJK9yOtxsu0XLa6iIT8yBwccaM31KuxB2buRhQQcl4PNrKZ
+         46FO25r5texBtMgXlCZdIB4EWhUd41xpfWGt4mniQWOf9XeIypGA1w8sp1mmmLCYHjOC
+         Mgpw==
+X-Forwarded-Encrypted: i=1; AJvYcCXnSh2Amtpk1nNe/+5Dmup+xwUje1RfnO/+D5K9TMU25nGYC7ckJQ1g2VyfzL64/ft6oZg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxKd+mB0JluTnweSg8L66HhgVaJkw7xcItHAnTjoJhxkQ2ZiACY
+	ZI3iEvd6yDFh7MUFZMB/uU7I7H01fx27UaGB/s2LGnIt9AypBbMARExG0q1Y+SQMp5V3Cg+6Mem
+	5xefA455mkFdMaZF3kTp8GFet+iC/p58=
+X-Gm-Gg: ASbGncvbX9Wve5cD9Q2WYegCB3oX4JTmU1BinUoMcLTL/m0l/Hp00YVKxL8+UoxpXBD
+	wDu8TH1B0svyT7Rdp33LLXHwEDuraiDDZliHXtPpdk+adV7jE8zepcuAVYAFkWKzwhi9besdKXy
+	IxS4D2eGX9U5RC9UfNnqdhha5A2gz29IIlsmYpHr+b4iVsyq/aePDNN0WZC4FiseY72J8Mm71ds
+	pGRdVe4Ktr32SDpTQiNGk7ofqrnrbbf8/+nyxQCq3o0Ctkap27uyAi0U99pBQ==
+X-Google-Smtp-Source: AGHT+IF8a2dqVlt51OMWryxxE6OpJ+hBtG9CgHdb5oK6qgGXs+/Mz3dgwwoSVZf3VVsXXU+XFQIOjzbGuyIeSOR9lqI=
+X-Received: by 2002:a05:651c:23d3:20b0:378:e055:315e with SMTP id
+ 38308e7fff4ca-37a18dc63d8mr13830171fa.24.1761953827858; Fri, 31 Oct 2025
+ 16:37:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
- <20251027004404.2152927-11-sandals@crustytoothpaste.net> <xmqqms59acak.fsf@gitster.g>
- <CAH=ZcbBYRiceXQ-9FNq0aK0WzN4nDhqonaoafweStC37mx7JBA@mail.gmail.com>
- <xmqqwm4d716i.fsf@gitster.g> <aQMFFZ_uDZxHvExW@pks.im> <xmqqsef07avt.fsf@gitster.g>
-In-Reply-To: <xmqqsef07avt.fsf@gitster.g>
+References: <20251023-b4-pks-rust-cbindgen-v1-0-c19b61b03127@pks.im>
+ <20251023-b4-pks-rust-cbindgen-v1-3-c19b61b03127@pks.im> <CAH=ZcbADTLvTioBf+LYQej1G0biZM8s3-iJG+BZjnpxj+8NjsA@mail.gmail.com>
+ <aPsepOtUf92fqDL-@pks.im> <CAH=ZcbBWuS6QVQT4LsxSP-X4GupZwr+NwzXNH2+qZGoufUWDrQ@mail.gmail.com>
+ <aP_gy-Rj8MI7zAWd@fruit.crustytoothpaste.net> <aQM0_6uRZcQYfO8R@pks.im>
+In-Reply-To: <aQM0_6uRZcQYfO8R@pks.im>
 From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Fri, 31 Oct 2025 16:43:53 -0600
-X-Gm-Features: AWmQ_bmpjhO9ZTsz9lnXVRzOWaQM73xvnoSOjOsGW4GCTqgEXfu9o6mRIyxFXGU
-Message-ID: <CAH=ZcbALuWqaAF21Dho38xJpoaa66Hzs-SgBV4HhywdKopCgoQ@mail.gmail.com>
-Subject: Re: [PATCH 10/14] rust: add a build.rs script for tests
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Date: Fri, 31 Oct 2025 17:36:56 -0600
+X-Gm-Features: AWmQ_bkuYTLf6ZGoGI2LSVU9v6Qtt2ATYnkwndMb8yWKdAUbmNmRf3ljnbSMwt8
+Message-ID: <CAH=ZcbCq98m-yBcpoQG=iVN9EgRJrpjSWMq0QESs-1xSdRQu6Q@mail.gmail.com>
+Subject: Re: [PATCH 3/3] rust: generate bindings via cbindgen
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 30, 2025 at 7:54=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Thu, Oct 30, 2025 at 3:51=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
-> Patrick Steinhardt <ps@pks.im> writes:
+> On Mon, Oct 27, 2025 at 09:14:51PM +0000, brian m. carlson wrote:
+> > On 2025-10-27 at 20:35:59, Ezekiel Newren wrote:
+> > > On Fri, Oct 24, 2025 at 12:37=E2=80=AFAM Patrick Steinhardt <ps@pks.i=
+m> wrote:
+> > > > > cbindgen is a Rust crate and it should be specified in the Cargo.=
+toml
+> > > > > under [build-dependencies] block.
+> > > >
+> > > > What is the benefit for us? The generated code is not a dependency =
+of
+> > > > the Rust code, and neither do we use it via "build.rs". And if we u=
+se
+> > > > cbindgen via "Cargo.toml" we'd be forced to build it first, which s=
+lows
+> > > > down our CI jobs.
+> > > >
+> > > > Please let me know in case I miss any reasons to have it in our bui=
+ld
+> > > > dependencies instead.
+> > >
+> > > You're targeting a very old version of Rust (1.49). I'm not even sure
+> > > that cbindgen will work with a version that old, but if it does then
+> > > we should use it in build.rs to make sure we're not using any feature=
+s
+> > > of cbindgen that aren't available until later versions. If we use
+> > > cbindgen that is packaged with the platform then we can't precisely
+> > > control which version of cbindgen is being used. This is a matter of
+> > > reproducibility. There may be platforms that can compile Rust, but
+> > > can't generate C header files via cbindgen because cbindgen hard code=
+s
+> > > that a certain minimum Rust version is required in its own Cargo.toml
+> > > file.
+> >
+> > Yes, I agree with this.  Not all systems have cbindgen and it's not
+> > guaranteed that the system's cbindgen will work with the version of Rus=
+t
+> > that you want to target or that's being used to compile.
 >
-> > The question I have here is what the benefit would be to have separate
-> > libraries.
+> Okay. In that case the question to me is how to drive cbindgen from our
+> Makefile and from Meson if it's going to be invoked via "build.rs". It
+> doesn't make much sense from my PoV to make generation of the C headers
+> depend on building the complete Rust library. Doubly so because we'd now
+> have a chicken-and-egg problem:
 >
-> Mostly flexibility.  If we do not value it, then that is OK, though.
+>   1. To build libgit.a we need to have the C interop header.
 >
-> And personally I would have to say that "meson rolled everything
-> into a single library archive" is a bad excuse---whatever came later
-> doing things differently from the incumbent has to have a good reason
-> to do things differently, or it is a regression.
+>   2. To build the C interop header we need to build the Rust library.
+>
+>   3. The Rust library depends on libgit.a.
+>
+> So am I missing anything obvious here for how to declare cbindgen in our
+> "Cargo.toml" file and invoke it directly from our other build systems?
 
-I don't understand why "Simplify Cargo's job of linking with the build
-systems of Makefile and Meson" Isn't a good enough reason by itself.
-Nor do I understand why having libxdiff.a and libreftable.a produces a
-better developer experience. My developer experience has been strictly
-worse because of this separation. If we keep Makefile the way that it
-was and change Meson to also produce separate static libraries then
-we'll need to keep 3 build systems in sync with each other. If we roll
-everything into libgit.a then Cargo only ever needs to know about that
-static library, Meson doesn't change, and there's no question about
-where new object files should be added in Makefile. If we do add a 3rd
-conceptual stand alone library then we'd only need to add the source
-files to Makefile and Meson, but if we insist on separate static
-libraries then we'll have to add the source files (as usual) and make
-sure that Makefile, Meson, and Cargo are all in agreement about the
-static libraries being produced.
+You would need a separate crate whose only job is to generate the
+header files and then Makefile or Meson can be invoked. But since we
+only have a single crate we can't do that.
+
+As to why version 1.63.0 it's because of Debian [1]. "Our discussed
+plan is to support the version in Debian stable, plus a
+year.  So we'd be supporting 1.63.0 for a year after trixie's
+release." - Brian M. Carlson
+
+Rust version 1.49 can't use cbindgen newer than 0.1.0 (the latest is
+0.29.2). Any cbindgen version newer than 0.1.0 requires a minimum of
+Rust 1.68.0. The way that I got cbindgen to work with version 1.63.0
+is that I overrode cbindgen's dependencies in Cargo.toml. That hack
+only works so far because the older the Rust version the less likely
+older and older sub dependencies will work.
+
+Since you're worried about build times I think that cbindgen should be
+in its own crate whose only job is to generate the header files and
+then have the subsequent CI jobs copy in those generated header files.
+For local development cargo will need to be invoked first to generate
+the header files and then Makefile or Meson can be invoked. If we put
+cbindgen into its own crate then we won't have a chicken-and-egg
+problem. That's why we need to convert to a cargo workspace in this
+patch series or before. It cannot come after.
+
+[1]  https://lore.kernel.org/git/aHlp1joMwexLZAAb@fruit.crustytoothpaste.ne=
+t/
