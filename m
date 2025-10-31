@@ -1,81 +1,84 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F55C27E040
-	for <git@vger.kernel.org>; Fri, 31 Oct 2025 15:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFC6170826
+	for <git@vger.kernel.org>; Fri, 31 Oct 2025 16:10:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761925920; cv=none; b=ma9jF70UZSVztGvKEWirMW5YwvKKhy2b4LZNcfyHUs/K/9vuEzLyEBePRLHp7OEfDI6l/WXtCe8+RIfOx0PNdCjHqC2IRJak7+CT5KR/HMBAtNCjUc6rMyipTz2/5iVKB4VA9npdr1ZTdqtROunxcCA+RzvEpZFP+GbrHg5XfhM=
+	t=1761927034; cv=none; b=lo9xtDK0NGZxcSMSPvNVOFPu0duSDxW2psYACs8wXvuHuBGnMwUI0iXQKp0JmGDNgC+PDl8oOWkfYFAjPqG8IjbgB6p8q+jKm0cMxRHnt+A1ZNUx4rzYthnJVrLivnsnOYlxSv1ePf1mWUMpoOOcBU3PTB/MxAF0A/idkvskQ/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761925920; c=relaxed/simple;
-	bh=FwzuhjiYpTqYQs71pKcbXacymI7t2eNbsBWTS7/WlMU=;
+	s=arc-20240116; t=1761927034; c=relaxed/simple;
+	bh=hQaayyqRcRLpSdBiv4T06tRk3JQjOI1+f9ubDOzktjM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kV3yglnqVsfgnGFrmV9csD9jKjRkxI6bPN9Fw/bxjyOQT8WGwRO5k+/crUl5gcl5SLNEP87zRXIO7vYvn3yWDZ81DQ9KDnDSo32zNGftHpswL7uyq6WZjxVO+lhM6jwRySqM7h2aIiq+T/OgN9c6wdYVJDFt0+HUUyN3+JEpOSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WIxCpSiM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ENxTujD8; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=WmDiCAuIQ3QCYE0xU572d30V6pFHfDLXrF6ZeGeWT24sihWWcxD2EYpc4Htm7pXyZozhM7sNk3sp8u8l84vHFwr2rkoTvw6RQHCWSiAr1wwLSugUCrUgU0aVc0BD5FbfwpV9ZX50fb+BTMCd37Wz2E22HlMXjfO+M5NlW7A77+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CPmMwBNH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h0lBNWEE; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WIxCpSiM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ENxTujD8"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6FC681D000F7;
-	Fri, 31 Oct 2025 11:51:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CPmMwBNH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h0lBNWEE"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4F34A1D001B0;
+	Fri, 31 Oct 2025 12:10:31 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Fri, 31 Oct 2025 11:51:57 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 31 Oct 2025 12:10:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761925917; x=1762012317; bh=6pva7raNvR
-	LIi2FWq1Rpfi0uqDlt9qektoX5xrYYTno=; b=WIxCpSiMKFKjMWAhYqVR7t3Kp8
-	0/RXrvyEpjme7iXKqufBQc+Wm6AzJ7yR3AOAqsfn6Hodq6rSBwlCzsqN8XcVewrg
-	hYshzLc9JblPmbpUlVgkZ7/iIcjyi6R6po6vppgCCgM1zqWPIgsd0V/b69cPBWeD
-	QydGFo2kxv/3UCio0dXcSApBjpN0oF/JkELps1jEqjW84FjYjejaZfduQg6do69t
-	HvtKG5u+TufXN2SdUxTNv0vAhcs/mYsrKdnW99QX8sIQ4czvmm2LLpRMl6hkGDqX
-	KrAq+Y4dRz24jDBKCZ/hVWdETAzF4JRe7NwVn/cXfcbm8PgvRviWKHW9ZOZg==
+	:subject:to:to; s=fm2; t=1761927031; x=1762013431; bh=LPZsrlpGKP
+	MGG4/DnQydbHAL3uaxqUpRriX8XZfenPs=; b=CPmMwBNHWphWSSx1VnACpsq4Pf
+	r6aIrXaRCeRc7+raLDXPtxvR8HuCnWqwvCeiTDUiIR03GR6egI8Er/78d5ZpezAf
+	O/z6/k3mZkE5RO/cuxYbSwnh0dV7hnFkqDO/BXuXWrTAGcfQ1O0PyQhN8tWT1P0N
+	Lj/E+MbSLmBsFCF0MXRehmP0jloHtwB1ZWjCXIGDhtxFPGXffnssrwepsLM9SRbB
+	geDtnsmH3HFW6O7J97Bu4H2lms67dmnmIlmOEalHcV3pC9duRY76aS9wxwAXKrkO
+	479IagyM3dXy5JwYSKV3/MzJv2t36XFlD7VPD7NylHDF4eeMUETQ7vShwtpQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761925917; x=1762012317; bh=6pva7raNvRLIi2FWq1Rpfi0uqDlt9qektoX
-	5xrYYTno=; b=ENxTujD8N0cWQ/qG5DhBgoL2mq9rsZMdgdTqzhtRmlxcg0xWPDy
-	1BCUIBcC6yWGnS5wTCdUoRGcLLNKlrDJ5RExc6+ptyKYdBwIxPym+Im93Pq4bhtJ
-	HdfvyqbGxKbpWZnhCLRX4MS4xLewsE9Vb/W6wUKEjY1RVyUMPdZD5coqU9C20Pyv
-	Uy15PapHR05RNVjmcQ29SwR4SAUZPyFxcxve219+8q1N+Mto4wKfDDXrdo0xteYn
-	XUlYM7rp1fO7+MF3Xe2Pa8LI0OMoRsbCmEnO0p4UPriTit5rBNkENp1f7cz/SkJh
-	+cIYiz26w0W201j4QsW/fLP69Za7phVyQXw==
-X-ME-Sender: <xms:HNsEaR3vkf5aCPzMo44-q-AtE0FzEcnJAKq25jC7rQiL1w8rzDiycA>
-    <xme:HNsEafjUhMdxf3nkQoIY8FoSJVtlQfZMk33EKHbX4sSVJwlNCk77rLSYP5cBP37Vs
-    6IYpq1KnoqKXT_S19vbuCXbaMSb9G_ykrejMCr3MttXqaRxeaW9>
-X-ME-Received: <xmr:HNsEafSFA-TbEI7X6TYwk7iyGOhAWGoC04uZWvclKuR6bhqksXf2fpfus6LaK923biU-pyWHjgpIKcdTzq2Mgcq_yA_ZZhS_an34>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieelledtucetufdoteggodetrf
+	1761927031; x=1762013431; bh=LPZsrlpGKPMGG4/DnQydbHAL3uaxqUpRriX
+	8XZfenPs=; b=h0lBNWEEk2T4QYVRysITlMh2YTvynK6PDFSn+uqQaOR3cEEzr9f
+	KpSzsJHg6X66h8TQSOKoBnYNps4PHUhTKtwoc1ED1eQT2XNw0XKvlRklwZQLHoEU
+	ukdUM4U7OMJnUB15Bmno/n6fsF3U/lkYgGCf+3T+FpQHgjVuruUQcFqbknuqnpk3
+	2merw+dKF2wX3oApVHNGS0gZpJX5FtTJvuZZrgl691QO9lSFzsKdn6CunoOdU573
+	ZJOeK1SPhEPi/zV6AiKuceLvq9t4dtz+0WY4Vp46gxTtuleqC3VpPVbtiGPt8XpM
+	zTgy2Kb8Uri3TWvCAe3/9PXLkXh/Xo7rKNw==
+X-ME-Sender: <xms:dt8EabBoICun36RbISRNWryLYpChdn1yQ7TG3awlFu3oVggnS0Otyw>
+    <xme:dt8EaYhzSQC_DQuK0HNFzuHPZp8Rx8QxJVSiSbD2FSf3tcOyv_PvvU7joDaSBGRaF
+    sRzb6ENJ3iaZeuQWY2JUPdq9wIKUUt1ps_5AMCte8wcYIzIDznVbg>
+X-ME-Received: <xmr:dt8EabluXPwiHl6Qe6bA2PTRqjiglZ0GR461Dt6JiNxO-Z9DSSgtk_CPBXS_BYGk-DxZKmRJIwcnx6zGIQblNWYwHvp0u6d7qMM6>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieelleegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:HdsEaYjEkz3PyIfX2wmBwXvF9FHhDDNEjjkiZpiHUSuTV3ktUi_BKw>
-    <xmx:HdsEaX5ZPoLaotGUL_-6BgiEoW3fMnJSLCPncncpBMLrwtOM9yDcVg>
-    <xmx:HdsEadDPrEeLHLbrf4SXVT1GBXuMC6LSyuuM53EXcPiSy9ZoJAX4hw>
-    <xmx:HdsEaWZl3CjW8d-8-4Ncsott0PhaQgrQyfhGsGmISBZuNpJ9200Rug>
-    <xmx:HdsEafoeZmi83CLYOcA9k1Y0q2pE8Y_5eZcB8vrelGEQbpZzKb2EcTrD>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehkrghrth
+    hhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:dt8Eacpogdg_7GAs4TIwxjym7_rAWHga7gyXzJOyutNs7MLIJ-39cQ>
+    <xmx:dt8EacFPuObZ33hdMnGt924boiuE3mPoGtrC9BjnBJMgsBYTHE-ChQ>
+    <xmx:dt8EaQypowYuG2VfnIOM3ZXopYBELRdvNsoKkGVWz4G1UqrcJZLTcA>
+    <xmx:dt8EaZrViqTqwHWsAdyF5b78eeE1xHL24cyHeXDvFdxERYsQdYhS0w>
+    <xmx:d98EaTHW_kjujlsGPrXcx9ClZxH-JGtnEZMYWh7owJsf3DgHwmuzrDsA>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Oct 2025 11:51:56 -0400 (EDT)
+ 31 Oct 2025 12:10:30 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2025, #12; Thu, 30)
-In-Reply-To: <aQRaRuBtt_r7SamL@pks.im> (Patrick Steinhardt's message of "Fri,
-	31 Oct 2025 07:42:14 +0100")
-References: <xmqqpla43wcp.fsf@gitster.g> <aQRaRuBtt_r7SamL@pks.im>
-Date: Fri, 31 Oct 2025 08:51:55 -0700
-Message-ID: <xmqqa5172hno.fsf@gitster.g>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 05/13] object-file: introduce `struct odb_loose_source`
+In-Reply-To: <aQNMwve9sUP-QDN6@pks.im> (Patrick Steinhardt's message of "Thu,
+	30 Oct 2025 12:32:18 +0100")
+References: <20251024-b4-pks-odb-loose-backend-v1-0-1a4202273c38@pks.im>
+	<20251024-b4-pks-odb-loose-backend-v1-5-1a4202273c38@pks.im>
+	<CAOLa=ZQdit7N0aQWyqYHAoO6nuXaU3QqZbQmsbp52jW8C-zbzA@mail.gmail.com>
+	<aQNMwve9sUP-QDN6@pks.im>
+Date: Fri, 31 Oct 2025 09:10:29 -0700
+Message-ID: <xmqq346z2gsq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,17 +90,23 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
->> * je/doc-data-model (2025-10-27) 1 commit
->>  - doc: add an explanation of Git's data model
+>> I wonder if the naming should instead be `struct obd_source_loose` that
+>> way other backends (if added) would be something like:
 >> 
->>  Add a new manual that describes the data model.
+>>     struct obd_source_loose
+>>     struct obd_source_postgres
+>>     struct obd_source_mongo
 >> 
->>  Comments?
->>  source: <pull.1981.v4.git.1761593537924.gitgitgadget@gmail.com>
+>> This is easier to read and also for autocompletion it leads nicely into
+>> the 'obd_source_...' namespace.
 >
-> Will have another look at v5 of this series. I think it's nearing a
-> state where it's good enough to be merged down.
+> Hm, I see your point. I think that "loose source" flows a bit more
+> natural, but I agree that the above is more accessible in code.
+>
+> Before I change this: does anybody else have an opinion here?
 
-I share that assessment.
+I have a slight preference for what Karthik suggested.  To me,
+"There are three variants of odb-source, which are odb-source-A,
+odb-source-B and odb-source-C" flows more naturally than
+"odb-A-source, odb-B-source, ..."
 
-Thanks.
