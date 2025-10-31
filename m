@@ -1,114 +1,112 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6019819E7F7
-	for <git@vger.kernel.org>; Fri, 31 Oct 2025 01:03:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1B026CE25
+	for <git@vger.kernel.org>; Fri, 31 Oct 2025 03:37:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761872583; cv=none; b=SzX08cEqIp/S5ZTc9mAOV+tSOVzy3jFcczCQLc98WCCduV81prLE7y/QSnzvVP/qKi4GiS7Q3CRqSw1v6yDA6oQIOII+B7E207eyvpqIw06R9eoOeYAChLWkFnqIO6wiIrdthjNXR/RsEwBDkGNz8EPKk1OknwWj8yYYZVs6GZc=
+	t=1761881831; cv=none; b=TgrNB663JQDjyGAv69zHrr6eYq+21rGFTJ1GDbBZoxhO6mo0qTrbkZxejl/TavL6oE7EiL9xJ4JSs8yzZonq51XXEJYgvv1z4erZr8y2PrA8YAlkDdj5zm/ra6ijkt2L4/m9qJJEdROZqvc7SzDaYgQRxj98sGBIOB3YYTirN5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761872583; c=relaxed/simple;
-	bh=lrM0UZUz/JhGARvpeucZNOZb9OkDiSAkHzQZjGCgsI4=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gQvc1pITjnGctlTDZtOIgDy2M1KOmvlQeEE/JGXh/CI5vMq+MqrdgpunmQ3XZMfv+wcODOLzyBePjGnqX3Q826KpDk32yMccFd7wD7nv5xsYKMDkamQzmq2KUvzbBRH6RNbRR4gLhGGOCBJiQSNrvhu49E5V9zLK4EyCjmYQyHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 59V12oYj2078086
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 Oct 2025 01:02:50 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "=?utf-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>
-Cc: "'Kristoffer Haugsbakk'" <kristofferhaugsbakk@fastmail.com>,
-        "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <xmqqo6psjq2n.fsf@gitster.g> <000d01dc4831$ff049500$fd0dbf00$@nexbridge.com> <729f9bbf-b75b-4161-b8aa-505ff906bb8a@app.fastmail.com> <xmqqecqk5g7r.fsf@gitster.g> <3dad5cb9-976b-4e60-9e6e-05c12c7d9f2d@app.fastmail.com> <009f01dc49e6$98c5ae30$ca510a90$@nexbridge.com> <aQPnDrsKLsLpaxgI@szeder.dev>
-In-Reply-To: <aQPnDrsKLsLpaxgI@szeder.dev>
-Subject: RE: [BUGS] Git v2.51.2 on NonStop5
-Date: Thu, 30 Oct 2025 21:02:45 -0400
-Organization: Nexbridge Inc.
-Message-ID: <00c401dc4a02$14ae4eb0$3e0aec10$@nexbridge.com>
+	s=arc-20240116; t=1761881831; c=relaxed/simple;
+	bh=3MpvsKdA1RMHCrLtBWDUk1HozMfgyiHcrdfJ+Y5+JYg=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=uSw6cqY2pN/xNojwb6tXKFzQE5ULcVEPayW0BqhoSfiS5mF8JF8myjJOLL1QDV7mncep/n750lZ3/vwZEG+bkIeeoeZ8mZdEXxoLUnN4koXf8YCNzDtg0vTkH3KYkJR+TZCbmiyVcJvHXi8gDtKgunOlffcotp5WMpiOd8CUqgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VzrI53aL; arc=none smtp.client-ip=209.85.222.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VzrI53aL"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-88f8f346c2cso171316385a.0
+        for <git@vger.kernel.org>; Thu, 30 Oct 2025 20:37:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761881826; x=1762486626; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=//hTKFfW4oeXD7XQSoVlDTgh83/8q3tzdO3AcNybuQI=;
+        b=VzrI53aLEx1b81j+IsIpfLATSyql4snCL+XXgmtmT4fja8fnbWn8a3F9F5/DpgGxaN
+         nJQSC7FcJOiUgh7cg1DkGTaHnaWpd1im6FG7nw/NBD/nCjE7cM1t+F2mq7O8c02uyElw
+         7q1HuaZx33Qma+/cyuGcDFzjAgNL7xbPDOzlbeFFRuRN5LC11AoHv0hMiLweeq/ipyu3
+         VOUgi65qfi2u5SCI95dH+N8Znm8sUgxMaUq9gI5fAEQbD7J8XudQLo/tjYt76YHF6ibz
+         raPACV59z7bMR6FYq0L5vWoQBgG8xAEq0b9yscwBYl2HixmPZ2ale/xJqLPakl28w3z/
+         XVxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761881826; x=1762486626;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=//hTKFfW4oeXD7XQSoVlDTgh83/8q3tzdO3AcNybuQI=;
+        b=V856/e3GkDx+YNVffKnz2VAGaWKoqalldIrVj78MaLdaNLNj91S9L+nJXtep0VaBpF
+         k6/VNq0OF9UKZ70sGo1f6j71lN4NrPO/Nee4IE51VSxtWQqfUHTPW81RIR+58wJkQHuH
+         N9DJnOilnaNodZL2O2w3Gkj3Ut/gFNVP3hpp9aDdZa6Ut9lv8/5G7I/m4/5GFs7nlXUp
+         BPcJilGUU/r/cB2U4g6q7DfZvsiVpsgyHZ9rG37CbxWUQBAcH0BDBehk1My2axEYOJG9
+         43wKnWehS94qxJnNbgnW2qXS675NyPDZnyj+O5Qd2YLqGeuQ+r5mUG2tXZJWQz0oeRp2
+         mM+g==
+X-Gm-Message-State: AOJu0YxqoRnmj03x4PNap+JuE6BiTN+oqXu8NF+UgVIMoWfBpfIy0r7u
+	Ebv7vknXmsbQiz4/4V0+xyK/GFvj/6mLh3gTqBw6jOgjVwgfrumkGnplBEAV1g==
+X-Gm-Gg: ASbGncu6EgBOusgwxH4/OtHFI4A/AKGGXgksH7M6hui9J4G+XN+KLPaMzPedeVjOkMT
+	p1vUeHxJkHSiMDtZIOAH3m5X2eAqyU+ZkifvwnQ92vsPwIKDOSZd0R8YnQllvAiIAcTykgqAZCQ
+	Kyfy/Dr7dVSjee49v6OW2qFgvZ9AZ/4lV8pfPaN8wKn6ZcVagUbF3Lf0V7+kDKiq5U5l+OnOD9t
+	0JzNhU1A4kZD/lKhpTzOfqrEOBuHwXjlDqQmmAKYgk/sy6pP3GYJp5Eem/gMudoz5bbAKw+qbar
+	vUYwEmq1oHSAnKludRs4FYaTQeSZrMe1OfuVym/8euvuL0sSgcnLdX7SWQJSGeJs3oqAAIfBJ47
+	g6WVyodb1T7pLuzjOnRTq8Bt1N3l+WtehwE6PqOOqaFujQ5pe+E68pDa57gglJN+J5OUJyZ2HZh
+	0gYoQzgmQo0xdM
+X-Google-Smtp-Source: AGHT+IGaEOJvASRdDsLSKo5cJz5K8tmTqrIvgbrapvvV4qy61IXfVJfHB3E92WWvg6mom+N8FSxEcQ==
+X-Received: by 2002:a05:620a:4589:b0:89e:99b3:2e91 with SMTP id af79cd13be357-8ab9abf89a8mr214945685a.60.1761881826236;
+        Thu, 30 Oct 2025 20:37:06 -0700 (PDT)
+Received: from [127.0.0.1] ([20.161.68.241])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8ac0387b245sm34001085a.46.2025.10.30.20.37.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Oct 2025 20:37:05 -0700 (PDT)
+Message-Id: <pull.2089.git.git.1761881825025.gitgitgadget@gmail.com>
+From: "Xinyu Ruan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 31 Oct 2025 03:37:05 +0000
+Subject: [PATCH] refs: don't clear oid before read_raw_ref in the debug ref
+ backend
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGUZTuwh66ijI7aIz2t8Y1znRjrdQMi5nLUAqyTHv8CtpTgNQGF/rGCAO35pZgBI7rTqbUKSw+w
-Content-Language: en-ca
-X-Antivirus: Norton (VPS 251030-6, 10/30/2025), Outbound message
-X-Antivirus-Status: Clean
+To: git@vger.kernel.org
+Cc: Xinyu Ruan <r200981113@gmail.com>,
+    Xinyu Ruan <r200981113@gmail.com>
 
-On October 30, 2025 6:31 PM, SZEDER G=C3=A1bor wrote:
->On Thu, Oct 30, 2025 at 05:46:01PM -0400, rsbecker@nexbridge.com wrote:
->> On October 30, 2025 4:26 PM, Kristoffer Haugsbakk wrote:
->> >On Thu, Oct 30, 2025, at 20:42, Junio C Hamano wrote:
->> >> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
->> >>
->> >>> On Tue, Oct 28, 2025, at 18:40, rsbecker@nexbridge.com wrote:
->> >>>>[snip]
->> >>>
->> >>> Would it make sense for maintenance releases to have a small
->> >>> release candidate pre-release?  Both of these maintenance =
-releases
->> >>> have had issues.
->> >>
->> >> Well, that is usually called "the tip of 'master'".  Has NonStop
->> >> been having issues with the tip of 'master'?  For how long?  Why
->> >> haven't we heard about it at all?  After things are merged there
->> >> (which requires them to be cooking in 'next'---oh, has NonStop =
-been
->> >> having issues with 'next'?  For how long?), only fixes are chosen =
-and merged to
->'maint'
->> >> to be the next maintenance release.
->> >> ...
->> >> I doubt any pre-release on 'maint' has much value in that anybody
->> >> who are not testing the tip of 'master' would not be testing it =
-either.
->> >
->> >You are probably 99.9% likely to be correct.
->>
->> We tried setting up a CI/CD process for git on NonStop. The problem =
-is
->> that we use Jenkins, which gets triggered each time a change is made =
-on a branch.
->> The actual difficulty is that a single run takes more than a day. =
-Once
->> the committer adds each commit to a branch, we end up with a queue
->> that is
->> 2-3 weeks long, so end up not running a continuous process. Instead,
->> we run about 1 a week, which should catch things. The difficulty is
->> with the latest release is that 2.25.2 came out before our cycle and
->> the breaks were in there because of changes to one test that just did
->> not end up dequeuing in time. NonStop is building and testing fine =
-now
->> after Peff's suggestion on SHELL_PATH, but that was only apparent at
->> 2.52.2. 2.51.1 did not have this issue with our inadvertent use of =
-ksh to run each
->test script.
->
->Neither the test library nor t7900 changed in the last two maintenance
->releases:
->
->  $ git rev-list --count v2.51.0..v2.51.2 -- t/test-lib.sh =
-t/test-lib-functions.sh
->t/t7900-maintenance.sh
->  0
+From: Xinyu Ruan <r200981113@gmail.com>
 
-Honestly, I do not know. I am just reporting my experience from my own
-CI/CD system. All builds are from scratch. Given that I am now using =
-bash,
-the situation is resolved as far as I am concerned. If the team wants me =
-to
-try to do a bisect, I can, but it will take weeks to do this based on =
-how long
-the compile/test cycles are.
+The debug_read_raw_ref function clears the oid to null_oid before
+calling read_raw_ref, which causes the oid to be lost even when
+read_raw_ref successfully reads the reference. This leads to failures
+when executing commands like "git branch new_branch <commit_id>" with
+GIT_TRACE_REFS=1, as the command cannot find a valid branch point
+because the oid is null.
 
+Signed-off-by: Xinyu Ruan <r200981113@gmail.com>
+---
+    refs: don't clear oid before read_raw_ref in the debug ref backend
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2089%2FRuanXinyu%2Fref-debug-disable-clear-oid-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2089/RuanXinyu/ref-debug-disable-clear-oid-v1
+Pull-Request: https://github.com/git/git/pull/2089
+
+ refs/debug.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/refs/debug.c b/refs/debug.c
+index 697adbd0dc..c8dde3558d 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -227,7 +227,6 @@ static int debug_read_raw_ref(struct ref_store *ref_store, const char *refname,
+ 	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
+ 	int res = 0;
+ 
+-	oidcpy(oid, null_oid(ref_store->repo->hash_algo));
+ 	res = drefs->refs->be->read_raw_ref(drefs->refs, refname, oid, referent,
+ 					    type, failure_errno);
+ 
+
+base-commit: a99f379adf116d53eb11957af5bab5214915f91d
+-- 
+gitgitgadget
