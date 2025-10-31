@@ -1,120 +1,312 @@
-Received: from mail02.ukr.de (mail02.ukr.de [193.175.194.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D78E3358DC
-	for <git@vger.kernel.org>; Fri, 31 Oct 2025 10:09:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.175.194.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26A4335571
+	for <git@vger.kernel.org>; Fri, 31 Oct 2025 10:09:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761905374; cv=none; b=CvYPw2n6HcvJHs39tXntoqUgfu+nb716Ye6ZuKQ6CyOpXzI4oCCyC/BXyAPj3xsyPH0OK3LYSylFKr1wkvBsS+2JnmR+KraSG5eJgJFfDkeTwCkPv843XEFW83szW4uJh6nLXeMLQEryiV9P7CIsos5iFCg9TwQvx3J/cbw8HTM=
+	t=1761905378; cv=none; b=BZgSJT9RAghgPINwP2boG3tbJsx9bKqdFZR7eIPhAtn4xGZ0ZkJnL62YJ0r3wBS/bsyFJvE5YAKvQ426vK5OW1ibEVbIoRHhV2oom96BVG04FxBjWFTXRja33W+0Q24oG+iFDLBmeUqKdBEM+gNv2GQcB0eQEVz1tYzJ15KMrdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761905374; c=relaxed/simple;
-	bh=LpKRKvTpBIuWTZNvSpRoXL18htJpdUoaSHDF62GZSmk=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=a6qaInjSYlHorIcMdMaZNx8mnngV/8B9sUqB+l7anZMc14l2GZnXTI4ndHv2VdTzVp0QKOblzKxpr4CwIG9kkY5D8PfaVB5pg2fp/NlsNod/qC/BcDob/lwDo/ZWeBdAImiL3l37VcpA7D5F9/CI15lz+eKXLwRyt42qmtQlG9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ukr.de; spf=pass smtp.mailfrom=ukr.de; arc=none smtp.client-ip=193.175.194.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ukr.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ukr.de
-X-CSE-ConnectionGUID: 6IICeMr1RlWbFZYqCGExyg==
-X-CSE-MsgGUID: lKSe0zqcS0C+6ZH5cNCKmw==
-X-ThreatScanner-Verdict: Negative
-X-IronPort-AV: E=McAfee;i="6800,10657,11598"; a="2191922"
-X-IronPort-AV: E=Sophos;i="6.19,269,1754949600"; 
-   d="scan'208";a="2191922"
-Received: from unknown (HELO ukr-excmb05.ukr.local) ([172.24.2.105])
-  by dmz-infcsg02.ukr.dmz with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Oct 2025 11:08:14 +0100
-Received: from ukr-excmb07.ukr.local (172.24.2.107) by ukr-excmb05.ukr.local
- (172.24.2.105) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.29; Fri, 31 Oct
- 2025 11:08:14 +0100
-Received: from ukr-excmb07.ukr.local ([fe80::4dee:3e0b:b33f:60ac]) by
- ukr-excmb07.ukr.local ([fe80::4dee:3e0b:b33f:60ac%8]) with mapi id
- 15.02.2562.029; Fri, 31 Oct 2025 11:08:14 +0100
-From: "Windl, Ulrich" <u.windl@ukr.de>
-To: =?utf-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>, "git@vger.kernel.org"
-	<git@vger.kernel.org>
-CC: Junio C Hamano <gitster@pobox.com>, Phillip Wood
-	<phillip.wood@dunelm.org.uk>
-Subject: RE: [EXT] [PATCH v2 1/5] add-patch: improve help for options j, J, k,
- and K
-Thread-Topic: [EXT] [PATCH v2 1/5] add-patch: improve help for options j, J,
- k, and K
-Thread-Index: AQHcNhB5h92o3YVwSkaQ6QGQLAv9GLTcL7KA
-Date: Fri, 31 Oct 2025 10:08:14 +0000
-Message-ID: <697bf0301cd9459195bdd3cc79e517ae@ukr.de>
-References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
- <17ef29a7-5214-4729-82eb-92a2af33e465@web.de>
- <75b08ed6-4f0f-4ede-b84a-c2f1c3d15734@web.de>
-In-Reply-To: <75b08ed6-4f0f-4ede-b84a-c2f1c3d15734@web.de>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-tm-snts-smtp: 46C5B4D86B080B3ED60EE4CB21A79AF236FC3081106D5FC8EADFFA803769968B2000:8
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	s=arc-20240116; t=1761905378; c=relaxed/simple;
+	bh=XFfUZ/xH863RQRWa7dV3960buU0Etsw9WmBGYkXZgFE=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=kVwgzMLBsG+Cf/nw4HZQ67atxwOllqD2W5YyAErn2H+fuW7uLlHOQ/eLPvpwnNPReATIpxbh27jBWzbBvZl7+y/3HOOdNsIcsA6VZzX95Y3jv8fudhNz23R+Ppmrdy+DavCZQWolYbPe5wuq8fif+nlJMxvjS8Ngao1ZMrFgDo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=De7UcMNc; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="De7UcMNc"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-294fc62d7f4so16196585ad.2
+        for <git@vger.kernel.org>; Fri, 31 Oct 2025 03:09:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761905373; x=1762510173; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nyesd1uICfMnOj0Pa5Xa5gTVRkIfAGwjJP9RABvZSZM=;
+        b=De7UcMNcaSmF62JW9SfHBtFl2OhHCEXla7uQypY8SJw3HBDGkk6raHCMwwktz6Kh3x
+         xk8sYr8glIiEqnFraJR1nKydJlNy9sA23X2k5DLYDSVoYv+fQmrw6SznMxfaG9IdCFCg
+         TNtNOPvGg2ctK5kMifgKUDXtDygceqoz5Y0uEGzm7g3MD2qiL4Uz6o6xzozfCqelii1e
+         rBTUvqQ8v5xk5JbGGYal8uaCKWgTxWZ5px6GTNpoPHWCSbcpYqH9vwo7aS1HZRglL1us
+         2JmqAvwdcEVtupwMsO2/kEegs6h9edb4q0jCXDPXtGwCW5aS9koMi91ZrpoMZXu+kapb
+         lgvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761905373; x=1762510173;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nyesd1uICfMnOj0Pa5Xa5gTVRkIfAGwjJP9RABvZSZM=;
+        b=Ee/9qv/n0IwIzprjRfdEq1S9lPI8B2GTjz8X029YPc4ZjPGAOGfiMj99usn1+Em+nM
+         c0/RduZb6s4QnucTtvE28gv7sz5l9cdjUsJkhtxUCTMU+eLnJUpJo5Ye8ecZwFu8u7vG
+         jUd6EPFLJNZ3TtQ93BbXXYIWYHnZQ2YhAJdtvf15SWSxlCK9eTVeqW85Ez8R5dqD5gz5
+         omiTsqq9L3Wc2DEtim55azlf0d+B4UPbfiSMAhYuOb6gx8ssfCWJ2TRqHY0dIfxKxUcn
+         /u+SFb7h7r9wzcM30TYEzeyuGYwlEEJqR35U4VNybJJNTZf0/2M9U0ycaS+nbxy0QNoF
+         m/CA==
+X-Gm-Message-State: AOJu0YyIEviGUDzX7a6U7eDhLYwcgMRCMu5tNtRrkFgEz/cnnTbG1ETd
+	CmP6r90u7t8BT5szytFm8RttMLhEkSEkekNY5mx0h4oCh5/PGTprA4RHab35Ew==
+X-Gm-Gg: ASbGncsnZa8WfAxfIyK3jTUTS6ENNx1OKpqDgsmZMfzNF+fpztdGaHLZ0BVgxzUBFSY
+	w3ZrqhwsPmQO6mmzVqjhNxSxw5BpeKcXjXriIl+J6glBQQPHjEgnwGGxTaKb4jRimBHGsbfIftk
+	xTjmgymvvi6mcu0JmodnWhEKEmSbIqqI7xizPEhqL6htvuFUglaFdePC7Gtn8iTxSUlJF96LGlY
+	2xrq78rP2fckSDtzv1NrmJRkK3dr//05bn6SbtqqeDActDFAenmtesKMxsScWDuThZpLPGoHZUR
+	2AexPfgN2p7c/jaWApN9U4ndDZsctouA8n1eGvHrVRurCttYzxlD059aQRyWajRt6sshxViiiMo
+	x0F6aEg3Jw7zULukrYuHL8VsFfW3Edk+2j3Nctf356UBlOouuwry+Ht9lGU8syVB4pjSmFlLbnC
+	rxQCElQBT8Zs5uWS88WHk0cJzF
+X-Google-Smtp-Source: AGHT+IFlmO1buMk+5z+Yy2YXdzoeVK7ndwz33ipnlIk38nDoGDP5t5peFPA3XvMBSgMmBtDIKK1H2w==
+X-Received: by 2002:a17:902:d487:b0:273:59ef:4c30 with SMTP id d9443c01a7336-2951a39e2eemr43427495ad.15.1761905372628;
+        Fri, 31 Oct 2025 03:09:32 -0700 (PDT)
+Received: from [127.0.0.1] ([172.184.211.36])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2953f35bc28sm471685ad.109.2025.10.31.03.09.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Oct 2025 03:09:31 -0700 (PDT)
+Message-Id: <pull.1774.v7.git.1761905371163.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1774.v6.git.1750755954011.gitgitgadget@gmail.com>
+References: <pull.1774.v6.git.1750755954011.gitgitgadget@gmail.com>
+From: "ToBoMi via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 31 Oct 2025 10:09:31 +0000
+Subject: [PATCH v7] gitk: add external diff file rename detection
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>,
+    tobias.boesch@miele.com,
+    ToBoMi <tobias.boesch@miele.com>,
+    Tobias Boesch <tobias.boesch@miele.com>
 
-SGkhDQoNClNvcnJ5IGZvciB0aGUgZGVsYXksIGJ1dCBJIHdhcyBvbiB2YWNhdGlvbiB3aXRob3V0
-IGFjY2VzcyB0byB0aGlzIG1haWxib3guDQoNCkZvciB0aGUgcGF0Y2gNCmRpZmYgLS1naXQgYS9E
-b2N1bWVudGF0aW9uL2dpdC1hZGQuYWRvYyBiL0RvY3VtZW50YXRpb24vZ2l0LWFkZC5hZG9jDQpp
-bmRleCBhZDYyOWM0NmM1Li4zMjY2Y2NmMTA1IDEwMDY0NA0KDQpJIGRvbid0IHNlZSBhbiBhY3R1
-YWwgaW1wcm92ZW1lbnQsIGFuZCBJJ2QgcHJlZmVyIHRoZSBwcmV2aW91cyB2ZXJzaW9uIG9mIHRo
-ZSBkb2MuDQpMaWt3aXNlIGZvcg0KZGlmZiAtLWdpdCBhL2FkZC1wYXRjaC5jIGIvYWRkLXBhdGNo
-LmMNCmluZGV4IGIwMzg5YzVkNWIuLjkxMjI2NmEzZjggMTAwNjQ0DQoNCktpbmQgcmVnYXJkcywN
-ClVscmljaCBXaW5kbA0KDQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IFJl
-bsOpIFNjaGFyZmUgPGwucy5yQHdlYi5kZT4NCj4gU2VudDogU3VuZGF5LCBPY3RvYmVyIDUsIDIw
-MjUgNTo1NSBQTQ0KPiBUbzogZ2l0QHZnZXIua2VybmVsLm9yZw0KPiBDYzogV2luZGwsIFVscmlj
-aCA8dS53aW5kbEB1a3IuZGU+OyBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2JveC5jb20+Ow0K
-PiBQaGlsbGlwIFdvb2QgPHBoaWxsaXAud29vZEBkdW5lbG0ub3JnLnVrPg0KPiBTdWJqZWN0OiBb
-RVhUXSBbUEFUQ0ggdjIgMS81XSBhZGQtcGF0Y2g6IGltcHJvdmUgaGVscCBmb3Igb3B0aW9ucyBq
-LCBKLCBrLCBhbmQNCj4gSw0KPiANCj4gU2ljaGVyaGVpdHMtSGlud2VpczogRGllc2UgRS1NYWls
-IHd1cmRlIHZvbiBlaW5lciBQZXJzb24gYXXDn2VyaGFsYiBkZXMgVUtSDQo+IGdlc2VuZGV0LiBT
-ZWllbiBTaWUgdm9yc2ljaHRpZyB2b3IgZ2Vmw6Rsc2NodGVuIEFic2VuZGVybiwgd2VubiBTaWUg
-YXVmIExpbmtzDQo+IGtsaWNrZW4sIEFuaMOkbmdlIMO2ZmZuZW4gb2RlciB3ZWl0ZXJlIEFrdGlv
-bmVuIGF1c2bDvGhyZW4sIGJldm9yIFNpZSBkaWUNCj4gRWNodGhlaXQgw7xiZXJwcsO8ZnQgaGFi
-ZW4uDQo+IA0KPiBUaGUgb3B0aW9ucyBqLCBKLCBrLCBhbmQgSyBkb24ndCBhZmZlY3QgdGhlIHN0
-YXR1cyBvZiB0aGUgY3VycmVudCBodW5rLg0KPiBUaGV5IGp1c3QgZ28gdG8gYSBkaWZmZXJlbnQg
-b25lLiAgVGhpcyBpcyB0cnVlIHdoZXRoZXIgdGhlIGN1cnJlbnQgaHVuaw0KPiBpcyB1bmRlY2lk
-ZWQgb3Igbm90LiAgQXZvaWQgbWlzdW5kZXJzdGFuZGluZyBieSBubyBsb25nZXIgbWVudGlvbmlu
-Zw0KPiB0aGUgY3VycmVudCBodW5rIGV4cGxpY2l0bHkgaW4gdGhlaXIgaGVscCB0ZXh0cy4NCj4g
-DQo+IFNpZ25lZC1vZmYtYnk6IFJlbsOpIFNjaGFyZmUgPGwucy5yQHdlYi5kZT4NCj4gLS0tDQo+
-ICBEb2N1bWVudGF0aW9uL2dpdC1hZGQuYWRvYyB8IDggKysrKy0tLS0NCj4gIGFkZC1wYXRjaC5j
-ICAgICAgICAgICAgICAgIHwgOCArKysrLS0tLQ0KPiAgMiBmaWxlcyBjaGFuZ2VkLCA4IGluc2Vy
-dGlvbnMoKyksIDggZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlv
-bi9naXQtYWRkLmFkb2MgYi9Eb2N1bWVudGF0aW9uL2dpdC1hZGQuYWRvYw0KPiBpbmRleCBhZDYy
-OWM0NmM1Li4zMjY2Y2NmMTA1IDEwMDY0NA0KPiAtLS0gYS9Eb2N1bWVudGF0aW9uL2dpdC1hZGQu
-YWRvYw0KPiArKysgYi9Eb2N1bWVudGF0aW9uL2dpdC1hZGQuYWRvYw0KPiBAQCAtMzQyLDEwICsz
-NDIsMTAgQEAgcGF0Y2g6Og0KPiAgICAgICAgIGQgLSBkbyBub3Qgc3RhZ2UgdGhpcyBodW5rIG9y
-IGFueSBvZiB0aGUgbGF0ZXIgaHVua3MgaW4gdGhlIGZpbGUNCj4gICAgICAgICBnIC0gc2VsZWN0
-IGEgaHVuayB0byBnbyB0bw0KPiAgICAgICAgIC8gLSBzZWFyY2ggZm9yIGEgaHVuayBtYXRjaGlu
-ZyB0aGUgZ2l2ZW4gcmVnZXgNCj4gLSAgICAgICBqIC0gbGVhdmUgdGhpcyBodW5rIHVuZGVjaWRl
-ZCwgc2VlIG5leHQgdW5kZWNpZGVkIGh1bmsNCj4gLSAgICAgICBKIC0gbGVhdmUgdGhpcyBodW5r
-IHVuZGVjaWRlZCwgc2VlIG5leHQgaHVuaw0KPiAtICAgICAgIGsgLSBsZWF2ZSB0aGlzIGh1bmsg
-dW5kZWNpZGVkLCBzZWUgcHJldmlvdXMgdW5kZWNpZGVkIGh1bmsNCj4gLSAgICAgICBLIC0gbGVh
-dmUgdGhpcyBodW5rIHVuZGVjaWRlZCwgc2VlIHByZXZpb3VzIGh1bmsNCj4gKyAgICAgICBqIC0g
-Z28gdG8gdGhlIG5leHQgdW5kZWNpZGVkIGh1bmsNCj4gKyAgICAgICBKIC0gZ28gdG8gdGhlIG5l
-eHQgaHVuaw0KPiArICAgICAgIGsgLSBnbyB0byB0aGUgcHJldmlvdXMgdW5kZWNpZGVkIGh1bmsN
-Cj4gKyAgICAgICBLIC0gZ28gdG8gdGhlIHByZXZpb3VzIGh1bmsNCj4gICAgICAgICBzIC0gc3Bs
-aXQgdGhlIGN1cnJlbnQgaHVuayBpbnRvIHNtYWxsZXIgaHVua3MNCj4gICAgICAgICBlIC0gbWFu
-dWFsbHkgZWRpdCB0aGUgY3VycmVudCBodW5rDQo+ICAgICAgICAgcCAtIHByaW50IHRoZSBjdXJy
-ZW50IGh1bmsNCj4gZGlmZiAtLWdpdCBhL2FkZC1wYXRjaC5jIGIvYWRkLXBhdGNoLmMNCj4gaW5k
-ZXggYjAzODljNWQ1Yi4uOTEyMjY2YTNmOCAxMDA2NDQNCj4gLS0tIGEvYWRkLXBhdGNoLmMNCj4g
-KysrIGIvYWRkLXBhdGNoLmMNCj4gQEAgLTEzOTcsMTAgKzEzOTcsMTAgQEAgc3RhdGljIHNpemVf
-dCBkaXNwbGF5X2h1bmtzKHN0cnVjdCBhZGRfcF9zdGF0ZQ0KPiAqcywNCj4gIH0NCj4gDQo+ICBz
-dGF0aWMgY29uc3QgY2hhciBoZWxwX3BhdGNoX3JlbWFpbmRlcltdID0NCj4gLU5fKCJqIC0gbGVh
-dmUgdGhpcyBodW5rIHVuZGVjaWRlZCwgc2VlIG5leHQgdW5kZWNpZGVkIGh1bmtcbiINCj4gLSAg
-ICJKIC0gbGVhdmUgdGhpcyBodW5rIHVuZGVjaWRlZCwgc2VlIG5leHQgaHVua1xuIg0KPiAtICAg
-ImsgLSBsZWF2ZSB0aGlzIGh1bmsgdW5kZWNpZGVkLCBzZWUgcHJldmlvdXMgdW5kZWNpZGVkIGh1
-bmtcbiINCj4gLSAgICJLIC0gbGVhdmUgdGhpcyBodW5rIHVuZGVjaWRlZCwgc2VlIHByZXZpb3Vz
-IGh1bmtcbiINCj4gK05fKCJqIC0gZ28gdG8gdGhlIG5leHQgdW5kZWNpZGVkIGh1bmtcbiINCj4g
-KyAgICJKIC0gZ28gdG8gdGhlIG5leHQgaHVua1xuIg0KPiArICAgImsgLSBnbyB0byB0aGUgcHJl
-dmlvdXMgdW5kZWNpZGVkIGh1bmtcbiINCj4gKyAgICJLIC0gZ28gdG8gdGhlIHByZXZpb3VzIGh1
-bmtcbiINCj4gICAgICJnIC0gc2VsZWN0IGEgaHVuayB0byBnbyB0b1xuIg0KPiAgICAgIi8gLSBz
-ZWFyY2ggZm9yIGEgaHVuayBtYXRjaGluZyB0aGUgZ2l2ZW4gcmVnZXhcbiINCj4gICAgICJzIC0g
-c3BsaXQgdGhlIGN1cnJlbnQgaHVuayBpbnRvIHNtYWxsZXIgaHVua3NcbiINCj4gLS0NCj4gMi41
-MS4wDQo=
+From: Tobias Boesch <tobias.boesch@miele.com>
+
+If a file is renamed between commits and an external diff is started
+through gitk on the original or the renamed file name,
+gitk is unable to open the renamed file in the external diff editor.
+It fails to fetch the renamed file from git, because it fetches it
+using its original path in contrast to using the renamed path of the
+file.
+Detect the rename and open the external diff with the original and
+the renamed file instead of no file (fetch the renamed file path and
+name from git) no matter if the original or the renamed file is
+selected in gitk.
+
+Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
+---
+    gitk: add external diff file rename detection
+    
+    Changes since v1:
+    
+     * Commit message ident
+     * Commit message line length
+    
+    Changes since v2:
+    
+     * Removed option for rename detection (Adding GUI options seems to be
+       not desired - which is understandable)
+     * Rebased on current master of git-for-windows
+     * Renamed variables for a better understanding
+     * Made rename detection also work when the renamed file is selected in
+       gitk
+    
+    Changes since v3:
+    
+     * Changed message to use present tense, removed bullet points and
+       described changes in imperative mood
+    
+    Changes sine v4:
+    
+     * Use a git command to gather the changed file paths rather than
+       parsing the text from the diff window panel for efficiency and to
+       avoid regex containing the filename as a variable.
+     * Change != to ne in string comparison
+     * removed extra set of parentheses around &&
+     * shorter variable names
+    
+    Changes sine v5:
+    
+     * Include filename in rename check. Find only the file and its renamed
+       version that is selected in the GUI.
+     * Escape special characters in the filename to prevent that they are
+       intepreted as part of a regular expression
+    
+    Changes since v6:
+    
+     * Don't extra mention moved files in commit message
+     * Create empty list properly (avoid creting a list containing an empty
+       string)
+     * Avoid snake case in variable names
+     * Change logic that checks the renames and gathers the file paths to
+       use the difffilestart variable for efficient file path extraction
+     * Removed underscores in file names
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1774%2FToBoMi%2Fdetect_renamed_files_when_opening_diff-v7
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1774/ToBoMi/detect_renamed_files_when_opening_diff-v7
+Pull-Request: https://github.com/gitgitgadget/git/pull/1774
+
+Range-diff vs v6:
+
+ 1:  f1c71e5632 ! 1:  7c09a28951 gitk: add external diff file rename detection
+     @@ Commit message
+          the renamed file instead of no file (fetch the renamed file path and
+          name from git) no matter if the original or the renamed file is
+          selected in gitk.
+     -    Since moved or renamed file are handled the same way do this also
+     -    for moved files.
+      
+          Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
+      
+     @@ gitk-git/gitk: proc external_diff_get_one_file {diffid filename diffdir} {
+                      "revision $diffid"]
+       }
+       
+     -+proc check_for_renames_in_diff {diffidfrom diffidto filepath} {
+     -+    global nullid nullid2
+     ++proc check_for_renames_in_diff {filepath} { # renames
+     ++    global difffilestart ctext
+      +
+     -+    if {$diffidfrom eq $nullid} {
+     -+        set rev [list $diffidto -R]
+     -+    } elseif {$diffidfrom eq $nullid2} {
+     -+        set rev [list $diffidto --cached -R]
+     -+    } elseif {$diffidto eq $nullid} {
+     -+        set rev [list $diffidfrom]
+     -+    } elseif {$diffidto eq $nullid2} {
+     -+        set rev [list $diffidfrom --cached]
+     -+    } else {
+     -+        set rev [list $diffidfrom..$diffidto]
+     -+    }
+     -+
+     -+    set renames [list {}]
+     -+    if {[catch {eval exec git diff $rev --find-renames --stat --raw --diff-filter=R} cmd_result]} {
+     -+        error_popup "[mc "Error getting file rename info for file \"%s\" from commit %s to %s." \
+     -+                            $filepath $diffidfrom $diffidto] $cmd_result.\n\n"
+     -+    }
+      +    set filename [file tail $filepath]
+     -+    set esc_chars {\\ | ? ^ * . $ \[ \] + \( \) \{ \}}
+     -+    foreach char $esc_chars {
+     -+        set filename [string map [list $char \\$char] $filename]
+     -+    }
+     -+    set regex_base {\d+\s\d+\s\S+\s\S+\s\S+\s+}
+     -+    set regex_ren_from $regex_base[subst -nobackslashes -nocommands {(\S+$filename)\s+(\S+)}]
+     -+    set regex_ren_to $regex_base[subst -nobackslashes -nocommands {(\S+)\s+(\S+$filename)}]
+     -+    if {[regexp -line -- $regex_ren_from $cmd_result whole_match ren_from ren_to]} {
+     -+        if {$ren_from ne {} && $ren_to ne {}} {
+     -+            lappend renames $ren_from
+     -+            lappend renames $ren_to
+     -+        }
+     -+    } elseif {[regexp -line -- $regex_ren_to $cmd_result whole_match ren_from ren_to]} {
+     -+        if {$ren_from ne {} && $ren_to ne {}} {
+     -+            lappend renames $ren_from
+     -+            lappend renames $ren_to
+     ++    set renames {}
+     ++    
+     ++    foreach loc $difffilestart {
+     ++        set loclineend [string map {.0 .end} $loc]
+     ++        set ctextline [$ctext get $loc $loclineend]
+     ++        if {[string first $filename $ctextline] != -1} {
+     ++            set fromlineloc "$loc + 2 lines"
+     ++            set tolineloc "$loc + 3 lines"
+     ++            set renfromline [$ctext get $fromlineloc [string map {.0 .end} $fromlineloc]]
+     ++            set rentoline [$ctext get $tolineloc [string map {.0 .end} $tolineloc]]
+     ++            if {[string match "rename from *" $renfromline]
+     ++                && [string match "rename to *" $rentoline]} {
+     ++                set renfrom [string range $renfromline 12 end]
+     ++                set rento [string range $rentoline 10 end]
+     ++                lappend renames $renfrom
+     ++                lappend renames $rento
+     ++                break
+     ++            }
+      +        }
+      +    }
+     ++    
+      +    return $renames
+      +}
+      +
+     @@ gitk-git/gitk: proc external_diff {} {
+           # gather files to diff
+      -    set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
+      -    set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
+     -+    set renamed_filenames [check_for_renames_in_diff $diffidfrom $diffidto $flist_menu_file]
+     -+    set rename_from_filename [lindex $renamed_filenames 1]
+     -+    set rename_to_filename [lindex $renamed_filenames 2]
+     -+    if { ($rename_from_filename != {}) && ($rename_to_filename != {}) } {
+     -+        set difffromfile [external_diff_get_one_file $diffidfrom $rename_from_filename $diffdir]
+     -+        set difftofile [external_diff_get_one_file $diffidto $rename_to_filename $diffdir]
+     ++    set renames [check_for_renames_in_diff $flist_menu_file]
+     ++    set renamefrom [lindex $renames 0]
+     ++    set renameto [lindex $renames 1]
+     ++    if { ($renamefrom != {}) && ($renameto != {}) } {
+     ++        set difffromfile [external_diff_get_one_file $diffidfrom $renamefrom $diffdir]
+     ++        set difftofile [external_diff_get_one_file $diffidto $renameto $diffdir]
+      +    } else {
+      +        set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
+      +        set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
+
+
+ gitk-git/gitk | 40 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 38 insertions(+), 2 deletions(-)
+
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index c02db0194d..8f8f1cb9ab 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -3788,6 +3788,34 @@ proc external_diff_get_one_file {diffid filename diffdir} {
+                "revision $diffid"]
+ }
+ 
++proc check_for_renames_in_diff {filepath} { # renames
++    global difffilestart ctext
++
++    set filename [file tail $filepath]
++    set renames {}
++    
++    foreach loc $difffilestart {
++        set loclineend [string map {.0 .end} $loc]
++        set ctextline [$ctext get $loc $loclineend]
++        if {[string first $filename $ctextline] != -1} {
++            set fromlineloc "$loc + 2 lines"
++            set tolineloc "$loc + 3 lines"
++            set renfromline [$ctext get $fromlineloc [string map {.0 .end} $fromlineloc]]
++            set rentoline [$ctext get $tolineloc [string map {.0 .end} $tolineloc]]
++            if {[string match "rename from *" $renfromline]
++                && [string match "rename to *" $rentoline]} {
++                set renfrom [string range $renfromline 12 end]
++                set rento [string range $rentoline 10 end]
++                lappend renames $renfrom
++                lappend renames $rento
++                break
++            }
++        }
++    }
++    
++    return $renames
++}
++
+ proc external_diff {} {
+     global nullid nullid2
+     global flist_menu_file
+@@ -3818,8 +3846,16 @@ proc external_diff {} {
+     if {$diffdir eq {}} return
+ 
+     # gather files to diff
+-    set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
+-    set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
++    set renames [check_for_renames_in_diff $flist_menu_file]
++    set renamefrom [lindex $renames 0]
++    set renameto [lindex $renames 1]
++    if { ($renamefrom != {}) && ($renameto != {}) } {
++        set difffromfile [external_diff_get_one_file $diffidfrom $renamefrom $diffdir]
++        set difftofile [external_diff_get_one_file $diffidto $renameto $diffdir]
++    } else {
++        set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
++        set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
++    }
+ 
+     if {$difffromfile ne {} && $difftofile ne {}} {
+         set cmd [list [shellsplit $extdifftool] $difffromfile $difftofile]
+
+base-commit: 57da342c786f59eaeb436c18635cc1c7597733d9
+-- 
+gitgitgadget
