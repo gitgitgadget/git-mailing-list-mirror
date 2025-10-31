@@ -1,109 +1,142 @@
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A306B2222A0
-	for <git@vger.kernel.org>; Fri, 31 Oct 2025 19:37:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7440D31961E
+	for <git@vger.kernel.org>; Fri, 31 Oct 2025 20:00:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761939469; cv=none; b=Vhiz0G5yt4H+zLwNODn80hWb3yjK1dqNPGtOZOAzthlff4dY4mpmlPQmXaPISkmkb4xAKdK3eluFru/XrSolAkhDCPfyBxZiIu0kuWHfinIli/3B7S8TkpGqRQ2SWi1oA+z77ILJ2eWd76+HpOLwcD++9ToHc/5mGLhlky6M7uU=
+	t=1761940804; cv=none; b=hgliODvtATmYqbDPoWbMX9Wo/YIblaKuuWa6b9xt8E0fGSDDcNf3uT6JiBDe2KmAtk3jWKIY414iNdhsFsgMNMPQqCyQEyKV84hZs/K5wKDiOvOb9Mp3lwH2eeDq9LH4deillf9V0F6r3JAUtRRvQBqMF8/7A36ci/VFV/IwM7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761939469; c=relaxed/simple;
-	bh=CU4RL/nCo3f/JRi6nu1QspFfu94565CiKFcEwtojufM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WYvnzntPiGrwpw2FMjzS0+d+p5wBRZpsVc/L3288DmLEAWdHcRKJM0i9MJgKsedhLSCfx4RxzXzfewc2XW0zCtlxETga5yLlzhBGG7SkXAjpgI6Fu8tpqUpU4oEhGhzae0EJL+riFMQqHH+ckw5ynsfz2lXYL/PNWotWHkXU/dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q1yZpmkL; arc=none smtp.client-ip=209.85.166.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761940804; c=relaxed/simple;
+	bh=W4i1/Mud+qDbhG/jRx2YWdz1QyD1xMNiuouHVdDMGFc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=t3j7WfeieiJYwRS6u4mImPiUbFxhZ80ZvVv9oF+3yG1wXtuMH56+Dbv3q6ZxGuAblN/aEovgUz4GBFxXf1Rpz88NwQJ/Zs/UKpRmVzEHAiPSCfSWua/8yn0vcS3ikjNg2B16GS9+MWPghKAsICr8dHQGsaI7T9DRi1O/YhvPCT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JJDiHDoN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qIBnpByE; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q1yZpmkL"
-Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-93e89a59d68so108954739f.0
-        for <git@vger.kernel.org>; Fri, 31 Oct 2025 12:37:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761939467; x=1762544267; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=luJipT2HOV8Rxd6c/NYT4eHvZUn4evG4vLPrfyBJPwU=;
-        b=Q1yZpmkLSRmyIC0EK4ADuNIlNvs9SVtuLzhaaLyb6dri+RNygy8IqWZsU14idfr2l/
-         DXPwRo2j001v4vCueSuAHMW9RJlLd9zhSSzjj9MXqszutPZ9zW3YGvqPCQFzZy47r9KL
-         BEPyO5YpZ0DhAg9oiYhXH4MRCZsI6pABexnPNovR6sLXM0TSWCZpMTyP0XNgU078n3ln
-         y09xRrzOoo+krNEaBw6bzh2YOmcHbk5WmqIFIVczhcFrDNdDoo2c2yRUpp+sV9F3YKUk
-         5o3WW9SlzmguLG1yZqXd5breS+fNr1oRpfl2ZFSc0IHMttNnZm1LrrXWHLrOFDPVLyrX
-         21jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761939467; x=1762544267;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=luJipT2HOV8Rxd6c/NYT4eHvZUn4evG4vLPrfyBJPwU=;
-        b=KKBTUHG1M7aaWMvTo4aSZAF6iBSiCD/mRZf9aZxE9SRTCHgMM2UK9wdfAVSAvmi+Jw
-         3tfpxGZ3vgj8NVu1SuHVlfLo2DnOm42xCBl63eWPj9nViw+EyDtkvKuX7BXEBQj6k2+j
-         zxIDba7gQpj21Zp7fH5QKu6spnhA93dcie2YrZ7hfNmoOtlR99RYN/IRnlw2EIprCrSv
-         9oIpYjwL1biQkbhqDfCWONKyZzMerBhgbZd9BfXOug010A+pvgFo4ZqXRp6M/OpvTRV0
-         01KkDxIkKVuVvHLtrLSdeg5r376662pi07RO/8NInPFL9s0oeWYSXgB+e6zH5ONx3tpV
-         sxhQ==
-X-Gm-Message-State: AOJu0YxZ6ZA74Rz1SwbI3bqzil9tFjT5UK95ujim0+hHF0UK3I/DEipS
-	H9kwLsUzGhM8gRZFiS/UKNDX5Q29wiXlgXkNg3FbMSuUQQG8ymjd8E+9MYINeOvgaFbVfhNI6Je
-	U27DTU5nUhsYe/HrJqNkd5XCx45CXOug=
-X-Gm-Gg: ASbGncsoHNEvKkVK1duIAod+0RZJ9PdA5zvatUjIH68wDsm0odfY8rFwckTqRO/cc+6
-	9zCan7Mk4NGSZdIG62wEWCSET/qnmkh5x+hrOE2Ipe0oD78kSqzGkTwGySpjXPT+TJDqHEBy5ra
-	5gS3C3ce+By51Q4nJU+2hYlL4e4+BVF8v6yttVuJKv27gT2awa8er/uETAFTqjb9x7j961W1o8z
-	q2PxIKQeJgVZyBW8zlod66ER8U4WmxkWhjCQC6fEOllB42LKz8TIam9IU5pBmh7Hm708koKpXUF
-	vLJ3+iXkNrY+9J5g
-X-Google-Smtp-Source: AGHT+IFveZdsaVyFd5bgVsoyqjs+kiPZCDMkGFSvPL86U6SD/o98d4Cjf+iaPBMwWcvka4ydCg5yBefWETjFtkymU1g=
-X-Received: by 2002:a05:6602:740e:b0:948:1730:c30c with SMTP id
- ca18e2360f4ac-94822976519mr778299139f.8.1761939466832; Fri, 31 Oct 2025
- 12:37:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JJDiHDoN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qIBnpByE"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5D6FC14000F5;
+	Fri, 31 Oct 2025 16:00:00 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 31 Oct 2025 16:00:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1761940800; x=1762027200; bh=YusvCmhPG4
+	5WcW5soK47GZjx7shluI4+Q8rTUrsILl4=; b=JJDiHDoN821U/Hh+DHNJft+Mme
+	j8qLw8joY41uCmg086UlklCTUZ9nPG/Bp25RTYTt3WqUAUFICHwrhWVjqz0mgWOw
+	ij9WKh81115rnEsPvnw/lUL2wUuRIQXpuH9mLxAvEsG5vXHNtbmeHSSdEegmBUdd
+	5jxAv/HQP56pMtXg/6D6/EeFGSr2aq0hEGxhAwOSe8DtQ97++6GrO0i46QwW/4Dz
+	os0g74hYgvKVqzspTPPuFpQ76cQzqvLG24P7Q2XeorO2U1DEUlSh74BGu7L5TQaW
+	dvF24TrZc729Mhgh1JFfyumIoaW/wELpmRQzw2AyN/10eEHJjnS2kLWHOJWQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1761940800; x=1762027200; bh=YusvCmhPG45WcW5soK47GZjx7shluI4+Q8r
+	TUrsILl4=; b=qIBnpByEA+NyL2PGswqVY7TXCHgnKNj2IvxpeWGOGvv/CxKThRX
+	VspYwkXmY8rowA9budTpKQT0fH88MNAEnLXSg5+Han7AjlCJTKQs2hS5i9X2qnUs
+	yG8DaNoT7t95J9irdKr890bHyk7Ux3i58taA/UltYIYR+sFwNxwqN21R++5AhB83
+	ExTbezGlcH6/O5ZoN83QZdnvGfvyQHbRME4YfuiB1tNSeSZTReiTogwgDZ/erN1d
+	2RmwA5O4iwvUMRVLrW3ESJBPYAFkVpl6mfzSxfEy2VksNV0r1QXUAw2VFw584oGX
+	aRFtG294puwSHpPAd/Y2Q88HbEe55Ge6khw==
+X-ME-Sender: <xms:PhUFadc8oRGLPA_-QBwb307zRs5fDOJ5Zyhj7vcKrwrYmXjySLVsSg>
+    <xme:PhUFaVkmuW0Ex8bN472EFZ4_aw8n9TvPLgFJZbNn2KnLNDgGzffdWWq0xMQq7xr9q
+    bVBFl4HAvZZPtegN5xz1PgMAj5xo7zAAE1WuXiZhAa-s_5da4oJ56o>
+X-ME-Received: <xmr:PhUFacrpG0W_LqFOdBJ2VCKcSbhCnS1ZxOFAWEgT1NJ67g96NQJ-ZGImu4MCPVmEcT4OWsV0OohT22XJ9E2UhRENc9zaSGHuFTzM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujedtfeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopehsihguughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrh
+    hishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhl
+    lhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehpshesphhkshdr
+    ihhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtph
+    htthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:PhUFaSErjU4BobIDD-yUTb49ug0jMGcNn7Hz5s33V3KcwA1tVrTzqA>
+    <xmx:PhUFaSQIcjtQlQHNcch86ewgk4xswA_teTHlnKuUNMnmShEtsy_6zQ>
+    <xmx:PhUFaYNCuK-qcxBVh9eM1kHO6mTegOTVVy7dIQa5Z6Vowqu3jygv3Q>
+    <xmx:PhUFaflz3ahVXsGOfJxFyxINJw50qTfqpUSZ00CWXhjY1XDTvDkYEw>
+    <xmx:QBUFabok5fh5-L9srgdYQKVLiJMTbi0EqxZa0Fesm5R9K77QrRuc4RIH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 31 Oct 2025 15:59:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Siddharth Asthana <siddharthasthana31@gmail.com>,  git@vger.kernel.org,
+  christian.couder@gmail.com,  phillip.wood123@gmail.com,
+  phillip.wood@dunelm.org.uk,  ps@pks.im,  karthik.188@gmail.com,
+  code@khaugsbakk.name,  rybak.a.v@gmail.com,  jltobler@gmail.com,
+  toon@iotcl.com,  johncai86@gmail.com,  johannes.schindelin@gmx.de
+Subject: Re: [PATCH v6 2/3] replay: make atomic ref updates the default
+ behavior
+In-Reply-To: <CABPp-BGmHegyqvN48vJO1Y9gWVDk5u2SO5_i9KMw2aoAtmNuyw@mail.gmail.com>
+	(Elijah Newren's message of "Fri, 31 Oct 2025 11:49:31 -0700")
+References: <20251028214609.10041-1-siddharthasthana31@gmail.com>
+	<20251030191931.30837-1-siddharthasthana31@gmail.com>
+	<20251030191931.30837-3-siddharthasthana31@gmail.com>
+	<CABPp-BGmHegyqvN48vJO1Y9gWVDk5u2SO5_i9KMw2aoAtmNuyw@mail.gmail.com>
+Date: Fri, 31 Oct 2025 12:59:56 -0700
+Message-ID: <xmqqldkq266b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251028081232.3068147-1-christian.couder@gmail.com> <20251030123332.3337684-1-christian.couder@gmail.com>
-In-Reply-To: <20251030123332.3337684-1-christian.couder@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 31 Oct 2025 12:37:35 -0700
-X-Gm-Features: AWmQ_bkjQvNTP5affA_JAVxajvG0ZMeUZCUfTmJm0RHUBeUMzCx5sp2bVSBcBbM
-Message-ID: <CABPp-BG_PhbFOS-Tre249nzMyc5YGK1yHMVgo8XGMq7Y4LewWw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] fast-export/import: cleanups and translation
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Oct 30, 2025 at 5:33=E2=80=AFAM Christian Couder
-<christian.couder@gmail.com> wrote:
->
->
-> Introduction
-> ------------
->
-> In a previous v2 patch series[1] that I sent last May, there were two
-> preparatory cleanup patches[2][3] that have been dropped in the v3 and
-> next versions. I think these two cleanup patches are worth resending
-> in their own series though.
->
-> While at cleaning things up, I realized that, when working in this
-> area of the code, I have often been annoyed by the fact that few error
-> and warning messages were marked for translation. So I decided to also
-> address this here.
->
-> So patches 1/5 and 2/5 are small code cleanups that are resent, while
-> patches 3/5, 4/5 and 5/5 are about marking strings for translation.
->
-> [1] https://lore.kernel.org/git/20250526103314.1542316-1-christian.couder=
-@gmail.com/
-> [2] https://lore.kernel.org/git/20250526103314.1542316-2-christian.couder=
-@gmail.com/
-> [3] https://lore.kernel.org/git/20250526103314.1542316-3-christian.couder=
-@gmail.com/
+Elijah Newren <newren@gmail.com> writes:
 
-These all look like simple sensible fixes to me.  The only problem I
-found looking over the patch is that you undersell the benefits of one
-of the changes in the commit message, but that's not even really a
-problem.
+> I'm not sure the implementation details section above makes sense to
+> include in the commit message; it feels like it's not providing much
+> high level information nor much "why" information, but just presenting
+> an alternative view of the information people will find in the patch.
+> Perhaps leave it out?
 
-Series looks good to me.
+Sounds like a good thing to do.
+
+>> Test suite changes:
+>>
+>> All existing tests that expected command output now use
+>> --ref-action=print to preserve their original behavior. This keeps
+>> the tests valid while allowing them to verify that the pipeline workflow
+>> still works correctly.
+>>
+>> New tests were added to verify:
+>>   - Default atomic behavior (no output, refs updated directly)
+>>   - Bare repository support (server-side use case)
+>>   - Equivalence between traditional pipeline and atomic updates
+>>   - Real atomicity using a lock file to verify all-or-nothing guarantee
+>>   - Test isolation using test_when_finished to clean up state
+>>
+>> The bare repository tests were fixed to rebuild their expectations
+>> independently rather than comparing to previous test output, improving
+>> test reliability and isolation.
+>
+> The above paragraph sounds like you are comparing to an earlier
+> series, which will confuse future readers who only compare to code
+> that existed before your patches.
+
+Yup, such an update relative to previous iterations belongs in the
+cover letter and below the three-dash line.
+
+> Otherwise, the patch looks good.  This is really close to being ready
+> to merge; just a few minor fixups needed that I highlighted above.
+
+Yup, I agree with all the comments I saw here.  Thanks for a great
+review.
+
+
