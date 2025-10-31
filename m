@@ -1,127 +1,230 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from mail-05.mail-europe.com (mail-05.mail-europe.com [85.9.206.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B652D328B47
-	for <git@vger.kernel.org>; Fri, 31 Oct 2025 21:49:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FAC1E260C
+	for <git@vger.kernel.org>; Fri, 31 Oct 2025 22:00:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.9.206.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761947390; cv=none; b=LcturmY0tnqXV4QKfRhCxkw89qyskKQxO3QrJjuEqVOrNACmpTdSeH2AW12/jU0gDowBivukqSdvIslCjnWgyIatZKn5ZcxVE2B5A5gf/fQtwchbsdWFp1PB4Cn6i4kW2djDaRoh+zZQb71KsBj2MJxsaMVFaxag1I6WUwe6TkM=
+	t=1761948049; cv=none; b=LVJ/E5y3MaWc55Do0N6pWggI3pJQ83Rf6HtnI7ZXdbFcT2t/i8hwazQEk2w3wQ6tLKTZ3OZpwV0JO5c0gUwmw+FKJft9y27lAkPjH2T2nXVBzO/ATC3HxTKU9txfDyHKtthkyj3+htcS64JdFYsy4EKT20UzKSaiMEX0vLE4FQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761947390; c=relaxed/simple;
-	bh=hMlJwQFl0+aAwm7lCfXOcNYAJqXs/hDg7MNdDI17JYo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=c1ohhfQragxkVD37v+w0CvOaWaT46ArkPrHUrAonrr0JRd88nbGBf4ZNu1+4MEoSdQnzQbXglNRPx/Vd673k+nhIpHTwWBxMUaW4sdmlOlO4x1YuCQ7KO5hv8Eb7frYOq8MlqifQhif1zkXBHVPwVYnMj9i/eAqVhZrAzEfNjyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k/AhdsaW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LsPimv/h; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1761948049; c=relaxed/simple;
+	bh=WzVorsmuo72Yz+Q6etB24X5RfrdE19UE8Uai4mJVpOI=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=dJ0NneQHCRDtwbKYxxAnPkgL4aTchaid+H5Wc09d8oE42Bkp759lGAvLJWYGLIBRgTAqYC2KHkjU5ADWHCO4xQcPICnOvP/gwtrCQVl/WaZHOCb2LQ2gLNMne/aHccWvzAxqAksdWiEXUiKqfwWMRRTJZ+QUkqTko7DtfZp4eNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=DNQWtKGP; arc=none smtp.client-ip=85.9.206.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k/AhdsaW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LsPimv/h"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CE927140008D;
-	Fri, 31 Oct 2025 17:49:47 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Fri, 31 Oct 2025 17:49:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1761947387; x=1762033787; bh=PXYL4lEBe6
-	pFmjcYN/kPb5jBuHSLWYkPLaiautCxH3Q=; b=k/AhdsaWWqjrHtdmeZ1U5JE276
-	KnXFoOdKuU5gd9kVs+aLJfVJiOf3zkIa3PJxXscxduJPQuA9vze4UFnWCsKqQO2o
-	j/OWov7bvEQavUe6bSQ1RBLgh6ANRkrXuYsZa/oz7kmkMbqE24tHm21dQDaOi6kV
-	0Zv52AIIlYF+aLpwKjF6bmMXGIkSoZQkrJSFNHeEg3VATMNvdQw8FxFJu/M0ubVR
-	zFBLHyIIcuZjz58cHI2ITdouUOz5x1xo8WnqgrA6Asjl38NoaR604VX4tkCLBUGl
-	C3Ptgok9wOgydEdrcbfhA5XvhsCY/3bfgriz6E5aAeyC8WaoGWwkgZ7aB1lQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761947387; x=1762033787; bh=PXYL4lEBe6pFmjcYN/kPb5jBuHSLWYkPLai
-	autCxH3Q=; b=LsPimv/hVHchFA45FqhDekExub4qAqffE/DyPXK209Httjz5jaO
-	yF+fLJXMWECORBF90e0dp9LIuTSg/bO9rhCQot4HT5Ve97/nDlxZwLQbua5JNorc
-	VyqgrfdEB5gfiRocCtn/WVVWp6AMHkqjVffzQMTzyWAxuKmypwB8SVf7NmkXuzZt
-	Twpe69zodc2CSw1cXaz3x8jKSWOB/jxNty0rMGPGR+21cpUsBGUS2OJea/W/ql2T
-	KWK46eqGOQCRHqTUzuMAZfkL7DR9cjxgbMoRIdv8NCfMWt+Ol6EgA0JKek5caNAp
-	yTN4hPe8ChU6G5xHCCVdyFwlGULJuzNnVPg==
-X-ME-Sender: <xms:-y4FaRNjywufJ2oUnLgnnCKgC6W6v9BqG3UbTzKpP_hgwY95YS03sw>
-    <xme:-y4FaWNF7o51yLBYdIeJr_DRHUuNHE5UDuzxg1vA9eOJwT8ZIgVpTjwd6OBfbK6X3
-    VMOauA2BCWtpouwkXXKS3aQKSjiS0TxR3E-fWLOH0Msy-KKqi7q>
-X-ME-Received: <xmr:-y4FaShZUqrBDQ6ADncqO5F8ECp-f__HOzlyB7WWeNrz_efiB0WWClFPN1FV2Biy3Yf5LmTuwteaJ3gfzLp8_vZCrMApb4ju11IC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujedtieduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
-    gtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehp
-    shesphhkshdrihhmpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:-y4FaTtUufD7wb83dkir2kUOWI5K6jVCe0AYvtNHxLxjQWV4K29NpQ>
-    <xmx:-y4FaYSzrhjY_bCj9JFf9QTnZ8EQJm7MetKjqJQobIFEJ8Pa9fhZUQ>
-    <xmx:-y4Faf1mqL9KnEtJvfh23suYPDlFvGxoafgt8dN37m8_E8TbCVRjmQ>
-    <xmx:-y4FaVuDUbKe2XE-lkJv_VyEsE1U58HtxwsYQcrc9Z5R0dzolJmLzA>
-    <xmx:-y4FaYDZvTxDRAxxeaKmRpqC8MNjRZaL4Q3D4-AnRkOsTp5zVbfwiZbX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Oct 2025 17:49:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Julia Evans
- <julia@jvns.ca>
-Subject: Re: [PATCH v5] doc: add an explanation of Git's data model
-In-Reply-To: <pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com> (Julia
-	Evans via GitGitGadget's message of "Thu, 30 Oct 2025 20:32:16 +0000")
-References: <pull.1981.v4.git.1761593537924.gitgitgadget@gmail.com>
-	<pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com>
-Date: Fri, 31 Oct 2025 14:49:45 -0700
-Message-ID: <xmqqcy62213a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="DNQWtKGP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1761948031; x=1762207231;
+	bh=WzVorsmuo72Yz+Q6etB24X5RfrdE19UE8Uai4mJVpOI=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=DNQWtKGP+pnuqsbOjHGPuT9zzc4ygzMb4/lTswusSzfBCQz9EwR9Pcw1VK80g0GFh
+	 hXjxgMr0XiNh2nDhokZ14UAVw4XDmo5gtf4SvbrUWvX+G1yco1Huw6UbxVB4U7R3vB
+	 XkqQccj+ET+jXRUpFASgNHpYICraxFkxW50cEutqxmF4vl5rE3W1ulcvT4DTgnGR32
+	 DJhzaT0B7ve3+iBH72ZcOci6qDyani7S+xjHZwwZyJLc/F3nEKfclk4p0zWbZnv6zt
+	 po6zmD7Vm0Mg67+ixhuqcjLg0CrahYd8A+6zpgvKS7r6KtuPwD+JBxg7GA3e1nfQxg
+	 fkMkpI44bUqpA==
+Date: Fri, 31 Oct 2025 22:00:27 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: keita <rudykeita@proton.me>
+Cc: "outreachy@gitgitgadget.github.io" <outreachy@gitgitgadget.github.io>
+Subject: [PATCH] fsck: use starts_with() in fsck_commit()
+Message-ID: <q4heOh8stc94r_P5mX-tucCyqQ1JdGP2dJ9Dot3WTyDboRWsboWMAIoCQIXuyuRvNRmN5AGQYjhmAnjuxgOXNooUDjPAEEvKPc2k_DCDEtY=@proton.me>
+Feedback-ID: 145215173:user:proton
+X-Pm-Message-ID: d11b4512abb2aa71532ab6e36022fb531e7c7b58
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-The document refers to <<object,object type>> but the id to refer
-the descripion of the object is defined as [[objects]]; we need a
-band-aid like this one to pass GitHub Actions CI.
-
-As description for individual object types are titled singular like
-[[commit]], [[blob]], etc., this band-aid drops the plural 's' from
-the tail of [[objects]], but as long as we are consistent, of course,
-we could go the other direction.
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
 
-diff --git a/Documentation/gitdatamodel.adoc b/Documentation/gitdatamodel.adoc
-index 1cefbb4833..eaab3f800b 100644
---- a/Documentation/gitdatamodel.adoc
-+++ b/Documentation/gitdatamodel.adoc
-@@ -18,13 +18,13 @@ means when the documentation says "object", "reference" or "index".
- 
- Git's core operations use 4 kinds of data:
- 
--1. <<objects,Objects>>: commits, trees, blobs, and tag objects
-+1. <<object,Objects>>: commits, trees, blobs, and tag objects
- 2. <<references,References>>: branches, tags,
-    remote-tracking branches, etc
- 3. <<index,The index>>, also known as the staging area
- 4. <<reflogs,Reflogs>>: logs of changes to references ("ref log")
- 
--[[objects]]
-+[[object]]
- OBJECTS
- -------
- 
--- 
-2.51.2-719-gbbf487eab4
 
+
+From 30136adebaffb97edacae2c58c4ea491e39e3f5b Mon Sep 17 00:00:00 2001From:=
+ Songiso Cooper Lyambai <rudykeita@proton.me>
+Date: Fri, 31 Oct 2025 23:45:23 +0200
+Subject: [PATCH] fsck: use starts_with() in fsck_commit()
+
+Replace manual buffer checks with starts_with() for safety and clarity.
+
+This avoids buffer overreads and follows Git's idiomatic style used=C2=
+=A0
+
+
+Signed-off-by: Songiso Cooper Lyambai <rudykeita@proton.me>
+---
+=C2=A0fsck.c | 124 +++++++++++++++++++++++++++++++-------------------------=
+-
+=C2=A01 file changed, 67 insertions(+), 57 deletions(-)
+
+diff --git a/fsck.c b/fsck.c
+index 341e100d24..7172c4ff1c 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -921,67 +921,77 @@ static int fsck_ident(const char **ident,
+=C2=A0}
+
+=C2=A0static int fsck_commit(const struct object_id *oid,
+- =C2=A0 =C2=A0 =C2=A0 const char *buffer, unsigned long size,
+- =C2=A0 =C2=A0 =C2=A0 struct fsck_options *options)
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const char *buffer, unsi=
+gned long size,
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 struct fsck_options *opt=
+ions)
+=C2=A0{
+- struct object_id tree_oid, parent_oid;
+- unsigned author_count;
+- int err;
+- const char *buffer_begin =3D buffer;
+- const char *buffer_end =3D buffer + size;
+- const char *p;
++ =C2=A0 =C2=A0struct object_id tree_oid, parent_oid;
++ =C2=A0 =C2=A0unsigned author_count =3D 0;
++ =C2=A0 =C2=A0int err =3D 0;
++ =C2=A0 =C2=A0const char *buffer_end =3D buffer + size;
++ =C2=A0 =C2=A0const char *p;
+
+- /*
+- * We _must_ stop parsing immediately if this reports failure, as the
+- * memory safety of the rest of the function depends on it. See the
+- * comment above the definition of verify_headers() for more details.
+- */
+- if (verify_headers(buffer, size, oid, OBJ_COMMIT, options))
+- return -1;
+
+- if (buffer >=3D buffer_end || !skip_prefix(buffer, "tree ", &buffer))
+- return report(options, oid, OBJ_COMMIT, FSCK_MSG_MISSING_TREE, "invalid f=
+ormat - expected 'tree' line");
+- if (parse_oid_hex(buffer, &tree_oid, &p) || *p !=3D '\n') {
+- err =3D report(options, oid, OBJ_COMMIT, FSCK_MSG_BAD_TREE_SHA1, "invalid=
+ 'tree' line format - bad sha1");
+- if (err)
+- return err;
+- }
+- buffer =3D p + 1;
+- while (buffer < buffer_end && skip_prefix(buffer, "parent ", &buffer)) {
+- if (parse_oid_hex(buffer, &parent_oid, &p) || *p !=3D '\n') {
+- err =3D report(options, oid, OBJ_COMMIT, FSCK_MSG_BAD_PARENT_SHA1, "inval=
+id 'parent' line format - bad sha1");
+- if (err)
+- return err;
+- }
+- buffer =3D p + 1;
+- }
+- author_count =3D 0;
+- while (buffer < buffer_end && skip_prefix(buffer, "author ", &buffer)) {
+- author_count++;
+- err =3D fsck_ident(&buffer, oid, OBJ_COMMIT, options);
+- if (err)
+- return err;
+- }
+- if (author_count < 1)
+- err =3D report(options, oid, OBJ_COMMIT, FSCK_MSG_MISSING_AUTHOR, "invali=
+d format - expected 'author' line");
+- else if (author_count > 1)
+- err =3D report(options, oid, OBJ_COMMIT, FSCK_MSG_MULTIPLE_AUTHORS, "inva=
+lid format - multiple 'author' lines");
+- if (err)
+- return err;
+- if (buffer >=3D buffer_end || !skip_prefix(buffer, "committer ", &buffer)=
+)
+- return report(options, oid, OBJ_COMMIT, FSCK_MSG_MISSING_COMMITTER, "inva=
+lid format - expected 'committer' line");
+- err =3D fsck_ident(&buffer, oid, OBJ_COMMIT, options);
+- if (err)
+- return err;
+- if (memchr(buffer_begin, '\0', size)) {
+- err =3D report(options, oid, OBJ_COMMIT, FSCK_MSG_NUL_IN_COMMIT,
+- =C2=A0 =C2=A0 "NUL byte in the commit object body");
+- if (err)
+- return err;
+- }
+- return 0;
++ /*
++ * We _must_ stop parsing immediately if this reports failure, as the
++ * memory safety of the rest of the function depends on it. See the
++ * comment above the definition of verify_headers() for more details.
++ */
++
++ =C2=A0 =C2=A0if (verify_headers(buffer, size, oid, OBJ_COMMIT, options))
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0return -1;
++
++ =C2=A0 =C2=A0
++ =C2=A0 =C2=A0if (!skip_prefix(buffer, "tree ", &buffer))
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0return report(options, oid, OBJ_COMMIT, FSCK_M=
+SG_MISSING_TREE,
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"invalid fo=
+rmat - expected 'tree' line");
++ =C2=A0 =C2=A0if (parse_oid_hex(buffer, &tree_oid, &p) || *p !=3D '\n') {
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0return report(options, oid, OBJ_COMMIT, FSCK_M=
+SG_BAD_TREE_SHA1,
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"invalid 't=
+ree' line format - bad sha1");
++ =C2=A0 =C2=A0}
++ =C2=A0 =C2=A0buffer =3D p + 1;
++
++ =C2=A0 =C2=A0while (starts_with(buffer, "parent ")) {
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!skip_prefix(buffer, "parent ", &buffer) |=
+|
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0parse_oid_hex(buffer, &parent_oi=
+d, &p) || *p !=3D '\n') {
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return report(options, oid, OBJ_=
+COMMIT, FSCK_MSG_BAD_PARENT_SHA1,
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0"invalid 'parent' line format - bad sha1");
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0}
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0buffer =3D p + 1;
++ =C2=A0 =C2=A0}
++
++ =C2=A0 =C2=A0while (starts_with(buffer, "author ")) {
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0author_count++;
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!skip_prefix(buffer, "author ", &buffer))
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return report(options, oid, OBJ_=
+COMMIT, FSCK_MSG_MISSING_AUTHOR,
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0"invalid format - expected 'author' line");
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0if ((err =3D fsck_ident(&buffer, oid, OBJ_COMM=
+IT, options)))
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return err;
++ =C2=A0 =C2=A0}
++
++ =C2=A0 =C2=A0if (author_count < 1)
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0return report(options, oid, OBJ_COMMIT, FSCK_M=
+SG_MISSING_AUTHOR,
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"invalid fo=
+rmat - expected 'author' line");
++ =C2=A0 =C2=A0if (author_count > 1)
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0return report(options, oid, OBJ_COMMIT, FSCK_M=
+SG_MULTIPLE_AUTHORS,
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"invalid fo=
+rmat - multiple 'author' lines");
++
++ =C2=A0 =C2=A0if (!starts_with(buffer, "committer "))
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0return report(options, oid, OBJ_COMMIT, FSCK_M=
+SG_MISSING_COMMITTER,
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"invalid fo=
+rmat - expected 'committer' line");
++
++ =C2=A0 =C2=A0if (!skip_prefix(buffer, "committer ", &buffer))
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0return report(options, oid, OBJ_COMMIT, FSCK_M=
+SG_MISSING_COMMITTER,
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"invalid fo=
+rmat - expected 'committer' line");
++
++ =C2=A0 =C2=A0if ((err =3D fsck_ident(&buffer, oid, OBJ_COMMIT, options)))
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0return err;
++
++ =C2=A0 =C2=A0if (memchr(buffer, '\0', buffer_end - buffer))
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0return report(options, oid, OBJ_COMMIT, FSCK_M=
+SG_NUL_IN_COMMIT,
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"NUL byte i=
+n the commit object body");
++
++ =C2=A0 =C2=A0return 0;
+=C2=A0}
