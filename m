@@ -1,83 +1,80 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EB6222568
-	for <git@vger.kernel.org>; Fri, 31 Oct 2025 06:39:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D592EE5FD
+	for <git@vger.kernel.org>; Fri, 31 Oct 2025 06:42:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761892755; cv=none; b=LaeBlv2nyD3VCyvG8GnB0lEkTiQo+y7W0Lt3X5vZ+IqdyXUb74+VHhpaWoQH5alYgn6AMBT8jQlYBhjZAk9Hc2Zsl1uWTC/S5X7v1lX6AkukzE2ugMOBZPAAfDNFgeg1JHk9y7EugU4u/bWD9MDbgHckeaX8c0vl1hxnuC/vol0=
+	t=1761892942; cv=none; b=X4FDAr1x1YNRZF4gyxweNhyz0ihq/l6rVpNONBiENnujX2/ps7eHFG8BuwK6UMPHxVXU2qJV/dCJfFk6iKSo74/8u0CaAI7nIMYTsFlQGjvlu1dLnIkl3I7jvfEnWsVRKeUGWUxjg5U052BlhvwslE1mJe+11NzvLUV5LR53ZwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761892755; c=relaxed/simple;
-	bh=Bddpu1/etI/o+8O5Hh/4bQF/J/ofirlSl3W9nGL3t8Y=;
+	s=arc-20240116; t=1761892942; c=relaxed/simple;
+	bh=umtH1l/bEBNsvi20au4tOfcjLX6ei/y3MaGEWxZcjyc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FnU15LToIpMUWaGSpnvyn5rrLfc/zU/ibdwR/DosHImlTFvkI+KlTlbrxRBd9xpsL5KG9eV8lqUXTjALVf9QyWd6lqKSZ5RiGd1msmcEb/ZUsELeN6Jj7K5/CKE7bKuwR4MS1txEpPdlspcX83juByY+12Hwp/ho814WVE3aGw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lAZPGaZn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DiF0BVJj; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=E29lMpR0wF7HNDbFQ2+2ApqVW3qJPrhDPn+Ctksx0gEtG6jNqtHtNYoDZsEfXTemVfjfTbS4C9GUs+ahCpsIYQ6o3aBwMjkY2DKoVkQFRb20L2lO8zoy9q1hewHJ8jj/3X2hTGZOSqpUFZcA+xdinuCoKYN1lCCSb5ryNpoqxw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Mpj4V0pz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Tw9giE0+; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lAZPGaZn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DiF0BVJj"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E6DF01400183;
-	Fri, 31 Oct 2025 02:39:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Mpj4V0pz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tw9giE0+"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 367AB14000D7;
+	Fri, 31 Oct 2025 02:42:19 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 31 Oct 2025 02:39:12 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 31 Oct 2025 02:42:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1761892752; x=1761979152; bh=Tb63FEL5Gx
-	bU6YL20XT5XlsdOrgGOMcrGrOKsxMzPmU=; b=lAZPGaZnA4CjU18FELode/KKCi
-	4qywzfJNYc8F/5IMXtiXlyiJQPR9O+YLR4R7tHCL+qSuol1ryqzWoA0bbwqgssoA
-	uXwVzRReMonJjxdA35Ru5865vFQBz2q3VQhQvc4YWJuJvrPn4W7FiwP3Rxlmkr3h
-	GCsGg7S/iGR9uOjLrcoPB5Kby7kOdpD4nc4u/GOolLxG1tHzeohddftFVKOkdyzg
-	JNzqyxHyOvMmnlkOWPVtB0WfW/19E/hbKufOS3q3FWatEvGerYF40lmzfV00LSsT
-	bVJQn1jkZsaWuGEujgs5fiaJ04l4+caEehbx0+E8c99ZcK241Q4L/+NniU2g==
+	:subject:to:to; s=fm3; t=1761892939; x=1761979339; bh=srGzzNxfjY
+	+IBDD2xfOgJE2sh2xLRFf7DCw1flubBA0=; b=Mpj4V0pzzL0HXpUELqAPMrZr2/
+	zgNxIWTkxJCeS04/fy+DOiuUsEWMHF69/bxVcwXXFzuOUHMELXDZyi9gDtIJEL+i
+	jvGsyKbPr0/849IRW6gbwnBM2ukslxKY1wyWZ06ilFQY0vD4LCEyouK7m+0jwsYm
+	GPRpsZ3esov1ZfQOmn3EfvAS4MqhndbJf7gGYAC+H4nsKkvOs/XOP+AivCy8VvLw
+	/nxUpfInJi8p7OxGwmOTrZgm7TrtfokBsjzfJNhl1Gelanej/Hu9yDI8LMKjz3+S
+	IruRxjZ1rKQAxDm/eHspOo9ecoVsb3UDWjdMTzoqjorzzIqYNLrt14FlHp5Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1761892752; x=1761979152; bh=Tb63FEL5GxbU6YL20XT5XlsdOrgGOMcrGrO
-	KsxMzPmU=; b=DiF0BVJj5gVug5DlGwJ7tBS08WZsF2ifmh/VtDbi8uMrGA7RdY4
-	vDVCR+tKFb8/37fAJBOvhIO4rwRToJaygvdJQ3uYxlt89fJDdebInXXTAXOCbhfX
-	x7lQ7Q0txc/FdDZ+IOey0CKavC9eR1f+tgM/Fa5iVk2jw2fjBwFi6BAM3Q3c2tBa
-	qOQWsa5Ndx75vmuut8qvlIMk41HZr2NSKLjFxRKqZ54bi43MUOh8/MRFayRqoEA8
-	wUUX3OlD5S+WT/O4ElvFsGSoetUPERbbgs1cjE3eJ02AOxrQBCZYrds58XzSZ/U6
-	amLv2lezWATESd6auCUvA8PXKzZZ5zK8KoQ==
-X-ME-Sender: <xms:kFkEad0ObviVttlEga-7slMyxi9h8-r7kzixoZdJMMUbakR2HWd9hg>
-    <xme:kFkEabjZxLOo5BMmLNXq7j5LwaNDJF5Pf6SHK0ymwcYZ2XCngFwcehVFHqhAkmB_K
-    QXSYnhPP5XvnCRv6UJsefT8hVerOSARfOUWW3FfrpcRkQBK6BH3MfU>
-X-ME-Received: <xmr:kFkEabQLiuAolY6NVZleqpcWb5yub_ukeOE_xy_00S5WtOwTD07UEaLwsi4MB22erlitGLPNuLgJ6XOOkAhffIFCYkRri4YSs3jd9iqAtuyDYw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieekjeelucetufdoteggodetrf
+	1761892939; x=1761979339; bh=srGzzNxfjY+IBDD2xfOgJE2sh2xLRFf7DCw
+	1flubBA0=; b=Tw9giE0+TKfzArhOKpC2egttMgTtYcWvxeS76Axo9BPtnuO4iRX
+	eHqDYZz8phjyjOwryqAOB0Id5yDMSSSGkuyiPEh/a4UpWFL0s70kFN1JEv3COjEj
+	rXRQt1k38odcBJHz1CZ6TpiHbzntlCF2zUAiw4A0MW/1AmqCocK4I1dEJpEvHR1d
+	2Yyc9sMLqDGfn8gDiwwoE1l0H5JY7xKHbjr1O/aFUsDFxf/t9BQoF+GJvJyLjTPm
+	eEZ9VqNOPKKndF+Whr82O6n7Dkfu6cjD3l8TBIEmJtWaEQ3Ue68of2TKHkHAPKv0
+	v16tdhaMP9g4lL3UTvwgMLD1nHZ9IggH3AQ==
+X-ME-Sender: <xms:S1oEaQro7ZZL1qzs3emYIRZcqKcJNce0mASRiusFbuhfWxfUzLxeIw>
+    <xme:S1oEacpnkG_NAWRCBRTdWOjqmSTvpWA9aCarfIJ2mlYyqFnhr0M3vJ6JlYIQb_UmL
+    9eIjH8CxCUodmv8GPF2jG6giDG_r4jsM7vPTq_VERzg5wgqyCNaq1M>
+X-ME-Received: <xmr:S1oEaS2jPEzkhiwczxMgZyNPAFK4AoN4BTjBiuNSGcfSqWgtndRKshCteAxANcDFgo5afMYxer1CZojosiDZ9vAqUM466A3-oYjJkLgoI5kNgg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieekkedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtghhith
-    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehrvddttdelkeduuddufees
-    ghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:kFkEaUg3BWwfasSjyg8n_8vS5Ci-PD8cGpPfL4RPgRln_Io7vGxSIA>
-    <xmx:kFkEaT61pH48Qn1VQ7x10UIA0ZTVWtXyBYEHJGFrl3NQxpV1UVUu1A>
-    <xmx:kFkEaZBgsMpAwupTKHE3rIBTRJZTywCsp_lNZJaHlgRDj2ed5wep9A>
-    <xmx:kFkEaSaHbRYcFk8iRxeZlfTcZkRJCdbCvsJ3m_vqoow9SBdH8vozMg>
-    <xmx:kFkEaX-NuaurPUjVpDZI1eGTuotcjCFGqTiuP9JCuc4_q5elF-YyQRHL>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:S1oEaTAxwotk01B53_wr9bCCjlZ25K98hh9b2Y9rg0mDq6uX7QrzGg>
+    <xmx:S1oEaSeP5tvkYKaRSJzZ5zkbyXxY2CALO38cahTr4X_sEEw6mQbRmg>
+    <xmx:S1oEaQjpUy31kY3ZGFiHQX4T6vXz5209avI0Zoc3Or4-ASI4qyZmCQ>
+    <xmx:S1oEaSobDE9G3aSvCKESWRjy3jgK-0gUX6j-XxlEh83N4utNSc50cQ>
+    <xmx:S1oEaUDDmf_JPjVSOvrb9Sexep8zYocVa0NQbEEOclisndG7vdK3Czk_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Oct 2025 02:39:11 -0400 (EDT)
+ 31 Oct 2025 02:42:18 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d48d4a56 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 31 Oct 2025 06:39:10 +0000 (UTC)
-Date: Fri, 31 Oct 2025 07:39:07 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 85c53395 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 31 Oct 2025 06:42:17 +0000 (UTC)
+Date: Fri, 31 Oct 2025 07:42:14 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Xinyu Ruan via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Xinyu Ruan <r200981113@gmail.com>
-Subject: Re: [PATCH] refs: add missing optimize implementation for debug ref
- backend
-Message-ID: <aQRZizsobXECzvJI@pks.im>
-References: <pull.2090.git.git.1761881859881.gitgitgadget@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2025, #12; Thu, 30)
+Message-ID: <aQRaRuBtt_r7SamL@pks.im>
+References: <xmqqpla43wcp.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,19 +83,102 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <pull.2090.git.git.1761881859881.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqpla43wcp.fsf@gitster.g>
 
-On Fri, Oct 31, 2025 at 03:37:39AM +0000, Xinyu Ruan via GitGitGadget wrote:
-> From: Xinyu Ruan <r200981113@gmail.com>
+On Thu, Oct 30, 2025 at 02:36:54PM -0700, Junio C Hamano wrote:
+> * cc/fast-import-export-i18n-cleanup (2025-10-30) 5 commits
+>  - gpg-interface: mark a string for translation
+>  - fast-import: mark strings for translation
+>  - fast-export: mark strings for translation
+>  - gpg-interface: use left shift to define GPG_VERIFY_*
+>  - gpg-interface: simplify ssh fingerprint parsing
 > 
-> The debug ref backend (refs_be_debug) was missing the optimize
-> function pointer, which caused a segmentation fault when running
-> 'GIT_TRACE_REFS=1 git pack-refs --all' command.
+>  Messages from fast-import/export are now marked for i18n.
+> 
+>  Will merge to 'next'?
+>  source: <20251030123332.3337684-1-christian.couder@gmail.com>
 
-Thanks for sending the patch! As far as I can see though it's redundant
-with Karthik's patch series that is currently cooking in 'seen' [1]. So
-once that's merged down we should be good.
+I just read through that series. All of the changes look like obvious
+improvements to me.
+
+> * ps/packed-git-in-object-store (2025-10-30) 9 commits
+>  - packfile: track packs via the MRU list exclusively
+>  - packfile: always add packfiles to MRU when adding a pack
+>  - packfile: move list of packs into the packfile store
+>  - builtin/pack-objects: simplify logic to find kept or nonlocal objects
+>  - packfile: fix approximation of object counts
+>  - http: refactor subsystem to use `packfile_list`s
+>  - packfile: move the MRU list into the packfile store
+>  - packfile: use a `strmap` to store packs by name
+>  - Merge branch 'ps/remove-packfile-store-get-packs' into ps/packed-git-in-object-store
+> 
+>  The list of packfiles used in a running Git process is moved from
+>  the object-database layer down to object-store layer.
+
+Correction: the list of packfiles is still essentially on the object
+database layer. The change here is that it's not contained in `struct
+packed_git` anymore, but instead it's moved into the packfile store.
+So packfiles become a standalone entity, and the packfile store is
+completely responsible for managing the list of packfiles.
+
+>  Will merge to 'next'?
+>  source: <20251030-pks-packfiles-store-drop-list-v2-0-84654f080cc0@pks.im>
+
+I think the series is already in a good shape after the last round of
+reviews, but let's give reviewers a few more days to reply to the second
+version.
+
+> * lo/repo-info-all (2025-10-26) 2 commits
+>  - repo: add --all to git-repo-info
+>  - repo: factor out field printing to dedicated function
+> 
+>  "git repo info" learned "--all" option.
+> 
+>  Will merge to 'next'?
+>  source: <20251026225409.46647-1-lucasseikioshiro@gmail.com>
+
+I think there's still a couple of comments from Eric on v3 of this
+series that probably need addressing?
+
+> * ps/ref-peeled-tags (2025-10-23) 16 commits
+>  - ref-filter: parse objects on demand
+>  - ref-filter: detect broken tags when dereferencing them
+>  - refs: don't store peeled object IDs for invalid tags
+>  - object: add flag to `peel_object()` to verify object type
+>  - refs: drop infrastructure to peel via iterators
+>  - refs: drop `current_ref_iter` hack
+>  - builtin/show-ref: convert to use `reference_get_peeled_oid()`
+>  - ref-filter: propagate peeled object ID
+>  - upload-pack: convert to use `reference_get_peeled_oid()`
+>  - refs: expose peeled object ID via the iterator
+>  - refs: refactor reference status flags
+>  - refs: fully reset `struct ref_iterator::ref` on iteration
+>  - refs: introduce `.ref` field for the base iterator
+>  - refs: introduce wrapper struct for `each_ref_fn`
+>  - Merge branch 'jt/repo-structure' into ps/ref-peeled-tags
+>  - Merge branch 'tb/incremental-midx-part-3.1' into ps/ref-peeled-tags
+>  (this branch is used by kn/refs-optim-cleanup; uses jt/repo-structure.)
+> 
+>  Some ref backend storage can hold not just the object name of an
+>  annotated tag, but the object name of the object the tag points at.
+>  The code to handle this information has been streamlined.
+> 
+>  Will merge to 'next' after base topics are merged.
+>  source: <20251023-b4-pks-ref-filter-skip-parsing-objects-v4-0-2be68ce82c9a@pks.im>
+
+Both dependencies have landed, so this should be ready to be merged now.
+
+> * je/doc-data-model (2025-10-27) 1 commit
+>  - doc: add an explanation of Git's data model
+> 
+>  Add a new manual that describes the data model.
+> 
+>  Comments?
+>  source: <pull.1981.v4.git.1761593537924.gitgitgadget@gmail.com>
+
+Will have another look at v5 of this series. I think it's nearing a
+state where it's good enough to be merged down.
+
+Thanks!
 
 Patrick
-
-[1]: <20251020-refs-code-cleanup-v2-1-f5349ed0f6a5@gmail.com>
