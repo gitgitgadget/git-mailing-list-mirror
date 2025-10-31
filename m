@@ -1,122 +1,98 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761971DDA24
-	for <git@vger.kernel.org>; Fri, 31 Oct 2025 13:26:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0634B256C6D
+	for <git@vger.kernel.org>; Fri, 31 Oct 2025 14:10:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761917202; cv=none; b=F/09c+irXWR/bnfPRaehkBX6gdrH0DZ90prZSx7dL4ZBCLfM4QUN5gpcG6SYNvJGcQCQs6R4f680n/KXl+UezVTu5IRMbloDITgoZyQdr7vyaYRVAr/N2V/hGQy64YlH/4bAsKvRwDIuXm5J39G41TWbMz09+iW/7mNkcCqO5AA=
+	t=1761919809; cv=none; b=g7GPwsF5v6t2za75TouVjOrbNb41qi6+0o5oRb7M18UOsNtOQ67ziTG6uW0/ptK9tt7bKhCQwvnx6aB4YeWvke/BlnRKFl0luymOa5HnJQSYhB7ekmODwreJpN/7N6m16KTtIYMs2VftPfE0Oy/N/8iQf05Tg3FBjEsDpP942X0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761917202; c=relaxed/simple;
-	bh=X8v+bevu0y4UcATt+vGhcqjF7VbfpgUlAjgGxciSzF0=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=XvLdCZTELVDVeYV9WrOLU5Xqz9cpQ9CUMUZuhG5YYRb/5GMpoZnwbk35JRAv073UWPidP9Gnn766puzWb1RaK0+UdG5MFs7ZY8aVXc7IH+5rOAypaB8edZgkpurrgZKONlurmEq4t/py55mSmaVwxgfvj+O40QiYzDiKk1zBcUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BNhknU2O; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BNhknU2O"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-89048f76ec2so240330585a.1
-        for <git@vger.kernel.org>; Fri, 31 Oct 2025 06:26:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761917199; x=1762521999; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ILCMQIhX6z9V/0/Mekkevtk7ophFdJZu8S2HLHRvUKk=;
-        b=BNhknU2Or1Qk7oTNluyCRtY5eJuOaW7ZIOXeG7bz6DWdieaQ2F3yE77TdWNdlKxHuR
-         ghZuVLhDhBlF3G7II9c1D1wJh1niSdJ4Gt3AwP+4QWhYwIOQPZsgdnaawdM8fCRkJvmg
-         iK/hYA4vDC4OamW3BH4oWWxvTQJfA2qYVj+bYCVPU4/mYzzOLQSpE8lYw7aX82srL8xH
-         OsC+lvXpaGB6mXkVXZcC4Vrx8SUEdA1fY52/deHGMUtY+B4Xopwa9bm5asf6IhcrSbzf
-         BeDrF2cIrkGDULQlElIdZAsOfgpFw2aP7vv4Vib4ivfB0VEWDLa8kPP2AEbEg385v/5I
-         +32w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761917199; x=1762521999;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ILCMQIhX6z9V/0/Mekkevtk7ophFdJZu8S2HLHRvUKk=;
-        b=HqomZMo5zKPJu78wtj4GcmCtntjDldZ3ptroDDb7vqqkHiDz5CuZc6ksGeAbHdn2KS
-         cXvi6Tgck1PFByoouiiuNZwYSlY914I8sCNltX8up8BM6mGx2RgxFJJg8hmwzpm2mGCE
-         ZOpKzhXz33bqOQqUBn4+xAbEhqJKURan/o8a80g4lEN5ITAfKrtX4FfDGg1haKUuy7/w
-         zDdz33cWkDdpJrNuvQqEMWjHMGb6Ud8Ke7+Cbm9bkGMP9CU7I4KJia/HuyUn56Phhb1Y
-         z21ToKn9r2Zev5VjyZC1luSKSY/nHMAjsCTZ70+y3jkAeYqnYZu+Riem6xqMYS4n4182
-         TGMw==
-X-Gm-Message-State: AOJu0YxROcL2y9B+sbhdk/klECnp6IlcxsWNbCuPWnVyKli75XJy0egA
-	OogkOQ8P94Un7Xy8Gc7ZLxiEAMPs8UbDygPPnnQ1r39hHSRZncflPKc9wNbXGA1/
-X-Gm-Gg: ASbGncu4qyTzVA4/uG8dM5s/KYXE+mBdmr4trQUn+kROZYpyWIFmlkSuB6vqOvJJIUD
-	mqtZsyI8wd6Ya5V8FGbnMcU0UMb9XOeIqpLfN1h9M4xO6omRo3kpvW7oSOXRvKrLGTISDP+N9+5
-	alx9uYxHNJAJo308HlKUpwTJn3g9WIEXoF2Kx5Nt2s9CWZasrAKPgoqJ8+EFuu20HRMIvETq4y+
-	PB9RbgMVolTd0Cr/Ugi2QWh1FWxCKDappwgk/fGleLLd/Ix/ukzLG6zLmmi12YWh8TGP+myZhhQ
-	9ISmPIWcol1DG0qZo/4FCUuuEd6qS+3Yrbk8PuZZdfjpYM+H0r3hSAOUCOwg5LJiuZIzz4MDq5R
-	tPumvNRCXllST93pT9ALilJsA2gOPm1LJJt6/G593bE02RIlrm0fBT61TLdbhlZOhAmHFe5Hoq5
-	qMaZRn2RJfjdmE
-X-Google-Smtp-Source: AGHT+IGf/5mu10chhUBC9OH+L+cvAtCxihMsJUQNyYZFFReaTidzFJEzds9RTJN8u2JUTR+LAhNbpw==
-X-Received: by 2002:a05:620a:4013:b0:84a:7191:6d11 with SMTP id af79cd13be357-8ab9a534446mr304741785a.52.1761917198753;
-        Fri, 31 Oct 2025 06:26:38 -0700 (PDT)
-Received: from [127.0.0.1] ([40.76.191.133])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8ac03d63ae5sm106319085a.54.2025.10.31.06.26.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Oct 2025 06:26:38 -0700 (PDT)
-Message-Id: <pull.2091.git.git.1761917197824.gitgitgadget@gmail.com>
-From: "Pavel Dydyshko via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 31 Oct 2025 13:26:37 +0000
-Subject: [PATCH] svn: add multi-line support for ignore-paths and
- include-paths
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1761919809; c=relaxed/simple;
+	bh=Ml7BW4IEuAU8uB9Ux3efhk20fERNSH2hRJleT21iNiQ=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CKdtD30GvKdycYTArLRddmkMmTT4Xm0MEFOtJ02Jrjhimz+NPubJltfETSqotb+fam56lg4xDXWTooG2FM+/ycMevadkDTrXa20zJoTBVWDoq0LV0gsxauajxO4FDddtWUe+Cq0u7meD8YDO9rj7pxaqc2lBtavXcXZcnBh2Bi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 59VEA1RM2181514
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 Oct 2025 14:10:01 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: <rsbecker@nexbridge.com>,
+        "'Kristoffer Haugsbakk'" <kristofferhaugsbakk@fastmail.com>,
+        "'Junio C Hamano'" <gitster@pobox.com>
+Cc: <git@vger.kernel.org>
+References: <xmqqo6psjq2n.fsf@gitster.g> <000d01dc4831$ff049500$fd0dbf00$@nexbridge.com> <729f9bbf-b75b-4161-b8aa-505ff906bb8a@app.fastmail.com> <xmqqecqk5g7r.fsf@gitster.g> <3dad5cb9-976b-4e60-9e6e-05c12c7d9f2d@app.fastmail.com> <009f01dc49e6$98c5ae30$ca510a90$@nexbridge.com>
+In-Reply-To: <009f01dc49e6$98c5ae30$ca510a90$@nexbridge.com>
+Subject: RE: [BUGS] Git v2.51.2 on NonStop5
+Date: Fri, 31 Oct 2025 10:09:56 -0400
+Organization: Nexbridge Inc.
+Message-ID: <010001dc4a70$0c7d67d0$25783770$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Pavel Dydyshko <paul.dydyshko@gmail.com>,
-    Pavel Dydyshka <paul.dydyshko@gmail.com>
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGUZTuwh66ijI7aIz2t8Y1znRjrdQMi5nLUAqyTHv8CtpTgNQGF/rGCAO35pZi1FEThcA==
+Content-Language: en-ca
+X-Antivirus: Norton (VPS 251031-2, 10/31/2025), Outbound message
+X-Antivirus-Status: Clean
 
-From: Pavel Dydyshka <paul.dydyshko@gmail.com>
+On October 30, 2025 5:46 PM, I wrote:
+>To: 'Kristoffer Haugsbakk' <kristofferhaugsbakk@fastmail.com>; 'Junio C
+Hamano'
+><gitster@pobox.com>
+>Cc: git@vger.kernel.org
+>Subject: RE: [BUGS] Git v2.51.2 on NonStop5
+>
+>On October 30, 2025 4:26 PM, Kristoffer Haugsbakk wrote:
+>>On Thu, Oct 30, 2025, at 20:42, Junio C Hamano wrote:
+>>> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+>>>
+>>>> On Tue, Oct 28, 2025, at 18:40, rsbecker@nexbridge.com wrote:
+>>>>>[snip]
+>>>>
+>>>> Would it make sense for maintenance releases to have a small release
+>>>> candidate pre-release?  Both of these maintenance releases have had
+>>>> issues.
+>>>
+>>> Well, that is usually called "the tip of 'master'".  Has NonStop been
+>>> having issues with the tip of 'master'?  For how long?  Why haven't we
+>>> heard about it at all?  After things are merged there (which requires
+>>> them to be cooking in 'next'---oh, has NonStop been having issues with
+>>> 'next'?  For how long?), only fixes are chosen and merged to 'maint'
+>>> to be the next maintenance release.
+>>> ...
+>>> I doubt any pre-release on 'maint' has much value in that anybody who
+>>> are not testing the tip of 'master' would not be testing it either.
+>>
+>>You are probably 99.9% likely to be correct.
+>
+>We tried setting up a CI/CD process for git on NonStop. The problem is that
+>we use Jenkins, which gets triggered each time a change is made on a
+branch.
+>The actual difficulty is that a single run takes more than a day. Once the
+>committer adds each commit to a branch, we end up with a queue that is
+>2-3 weeks long, so end up not running a continuous process. Instead, we
+>run about 1 a week, which should catch things. The difficulty is with the
+>latest release is that 2.25.2 came out before our cycle and the breaks were
+>in there because of changes to one test that just did not end up dequeuing
+>in time. NonStop is building and testing fine now after Peff's suggestion
+on
+>SHELL_PATH, but that was only apparent at 2.52.2. 2.51.1 did not have this
+>issue with our inadvertent use of ksh to run each test script.
 
-Allow multiple ignore-paths and include-paths entries in config. Instead
-of reading single entry and storing it as is editor now concatenates all
-values through a '|'
+The current CI/CD run passed with only t9001 failing as expected. I am
+wondering whether we could add a switch like SENDMAIL=NoThanks. There
+is an object called sendmail on the box I am on, but it is not a compliant
+port - someone tried this decades ago.
 
-Signed-off-by: Pavel Dydyshka <paul.dydyshko@gmail.com>
----
-    svn: add multi-line support for ignore-paths and include-paths
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2091%2Fpddshk%2Fsvn-multi-line-ignore-include-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2091/pddshk/svn-multi-line-ignore-include-v1
-Pull-Request: https://github.com/git/git/pull/2091
-
- perl/Git/SVN/Fetcher.pm | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/perl/Git/SVN/Fetcher.pm b/perl/Git/SVN/Fetcher.pm
-index 968309e6d6..b2991480e1 100644
---- a/perl/Git/SVN/Fetcher.pm
-+++ b/perl/Git/SVN/Fetcher.pm
-@@ -31,15 +31,15 @@ sub new {
- 	# override options set in an [svn-remote "..."] section
- 	$repo_id = $git_svn->{repo_id};
- 	my $k = "svn-remote.$repo_id.ignore-paths";
--	my $v = eval { command_oneline('config', '--get', $k) };
--	$self->{ignore_regex} = $v;
-+	my @ignores = eval { command('config', '--get-all', $k) };
-+	$self->{ignore_regex} = join('|', @ignores) if @ignores;
- 
- 	$k = "svn-remote.$repo_id.include-paths";
--	$v = eval { command_oneline('config', '--get', $k) };
--	$self->{include_regex} = $v;
-+	my @includes = eval { command('config', '--get-all', $k) };
-+	$self->{include_regex} = join('|', @includes) if @includes;
- 
- 	$k = "svn-remote.$repo_id.preserve-empty-dirs";
--	$v = eval { command_oneline('config', '--get', '--bool', $k) };
-+	my $v = eval { command_oneline('config', '--get', '--bool', $k) };
- 	if ($v && $v eq 'true') {
- 		$_preserve_empty_dirs = 1;
- 		$k = "svn-remote.$repo_id.placeholder-filename";
-
-base-commit: 419c72cb8ada252b260efc38ff91fe201de7c8c3
--- 
-gitgitgadget
