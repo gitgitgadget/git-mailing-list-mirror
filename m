@@ -1,55 +1,55 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8C02ECEAC
-	for <git@vger.kernel.org>; Fri, 31 Oct 2025 06:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5020B2EBDFD
+	for <git@vger.kernel.org>; Fri, 31 Oct 2025 06:13:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761891180; cv=none; b=umb37KF+7JpjKz1WjRAoo+qF38BeLrrDkr7MwS+Wgn4d6Z6vkapzRzm5BQaVzkQmV8sbUdfH7eAEYG3L9HA+eTCaKCQmTZog/hkdiwi7zD8fhgxaaG7RqDPBxa8MtosQj0XxxfgC9psz8S4Vbjkhx522hejrLShM5aiOnLkGOgs=
+	t=1761891184; cv=none; b=cLDAn+2pFc9KUJ+8qSNE/5oghb8CaULmQpGgKU6Asim49GkxpARhkv4D1VzZiOqJUK/4cPRfdSbzG5IOQNeTiiKmTUApifugob5GcJjd/8l3FQS1DxDmErGtCTIwk9WJHJWYBmFNy8auKoImqXIO/Zw/TSg6O/x5UkdSWSDZMYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761891180; c=relaxed/simple;
-	bh=OSTxvVqeytRp3+l5EWeTOd/lJPI+JxAxg8C7iRsTErI=;
+	s=arc-20240116; t=1761891184; c=relaxed/simple;
+	bh=6zKNpYYylidoLcuo5+I6O7FFvd88JIKYp93M6tqqYHM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Uk3eE8GaiJ8s5FIF+mY+H48gqBwC/T6PP+jbOBTaDJt8503CmOWv+SJ4k97T0RywLT0p0iHdhMErnq7GsMKO1DHDBRfaw37atNGI5jNXA6a735KCTWpfHXZTledqc6TlgQK+CkVD8ymzAtyRrc6C76gGZypxdOmjGUHZqojSSkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T7duCfLP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=noBILrZQ; arc=none smtp.client-ip=103.168.172.147
+	 In-Reply-To:To:Cc; b=gG2ggmF7bmqKwjj2MIeOAvhaG7SqoDRHgYJkSYTMw9QtE8/Bo+tui3piUKiCaxyir+YCGGNjuynxOG6Iq5JDJayV2fP7+25HrOEOZgnARR36nApnj1W8ZkZyTzhVVCvJIujpANVbOulcsib2bm7RUs1sJxPRVA0FsaeK3bJ4Ph4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a9x+cTxP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HXBc/11e; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T7duCfLP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="noBILrZQ"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4FCCCEC0084;
-	Fri, 31 Oct 2025 02:12:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a9x+cTxP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HXBc/11e"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 768B7EC0084;
+	Fri, 31 Oct 2025 02:13:01 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Fri, 31 Oct 2025 02:12:58 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 31 Oct 2025 02:13:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1761891178;
-	 x=1761977578; bh=kzEYWsaqXybZc1zc+P8mMLj9ooEkubE4f+sy5qw0v1E=; b=
-	T7duCfLPzgejaOp+MluN/WysOu0/Cxf8sKfCwsxRGoqQ8U5z3NcNlaafmURlDUnh
-	gqNoeFRwww1hER+WgQErY6KfEOopQyJgJ3BAgkJr0IL3AZh9Eb7swxCMdcdaMMRG
-	ixz05jil2YfDKkH3FueoGkoKUY+LJcnrpRCsDYW4Fr8a94oQpn4KTv0P3H7nsZa1
-	Z17gQrcFLYyu1ZUTY9uSBuJFtkKzWfloYVHS9HtfC8ZWV4B12TtHUy7IKJ+JAs8r
-	aiLi2NcQk9cFLB57Awoyu5ruC581htq+KaPDbRsdn+KTbkZPkNwTTL1N0VMG6yUy
-	u9Q+uWu8xjYV0cc47Dt6fA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1761891181;
+	 x=1761977581; bh=rk3s/PSDx447yUTb9dquSjGUmMyAA6LpIiRtod/O0OY=; b=
+	a9x+cTxPfej8er6b1lJv1FLlGE83HfxbvbGfhiEB6jjj4bkCG8CSw9PCRTKB64ld
+	s09EIqCqAbewuIWSnLtfnsAjsNYOqkZvkjxl0+BFgxC8rQJUQrJ3okSYRFXsdR/D
+	ExoZh2bVJp2y4rRQ0ejQM6MauJgh087HzQbcUxDHQZqo8rqZ3ND2zLC69zISJ1Ls
+	jnREq8Sj1LPsDQAV9AYniFwBde+aPgEupX9mbSPRWDM5SSUalqn/Ejp+YZKdmAZf
+	sIs9JwCAn1TocDFCj2u+UvrEsrSDAoOJgDtanNvvJ/ELtofBd5iBvloBRpQdlV9h
+	2dLRttJ3bwUgyWzhVWNQjQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761891178; x=
-	1761977578; bh=kzEYWsaqXybZc1zc+P8mMLj9ooEkubE4f+sy5qw0v1E=; b=n
-	oBILrZQK+uF0Xcy7bBOEvK0B8A1rRsvt+LAr5YPEr4bCWVW8vAJNuscUmh2jhRqH
-	4hRlYDkttA+82ZAUBQmEymBgGjxnL5nyEred6MjXRRgqbr7U13mvmxHXhcw6MRPH
-	/bf2Fb5a9m0LLYX5k6wnnPS8nCNJX1XyefRWoOMWA54FU2Fgthb/n4vfLwdcpPIV
-	xGpFrCTr/Jfd2MeZfGA3lM1nnOqw1hxOpe0Adly/K91Axk2edoaWtcQnpLYF1Azu
-	Mjyl3lL4sXLzy08e88YLGCigpeR9WhM4UAkV/i2XfDDZAvRJJcRS04BWPIT+gM7g
-	YjQH58lgME8JjRKTb7Xyw==
-X-ME-Sender: <xms:alMEaVQmT7oyGFbhfYiRq9hvG-rZx_NyDkBxHQmRPgT7QfJcuvFuww>
-    <xme:alMEaWPBZE--ObU37GPh6Q0qGPFDKk6Bm7p60ifbmMvhGc_dZ4bYbdG8D7Bdpq46s
-    v2BdgRee1pBEK7pq3xzYZUNwxZXDJm6_EuLTf-ILaHkYCP156sq>
-X-ME-Received: <xmr:alMEaYNRZ6nV0CbW73v2huMCGlp2CvoOWrSVwrFgfYXRNeiO-Hi69Ob1WieZxq_9dbu0nFifqzd0vX8BqZWCb_aXovLCoBPyhxZCAFAh0r82rA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1761891181; x=
+	1761977581; bh=rk3s/PSDx447yUTb9dquSjGUmMyAA6LpIiRtod/O0OY=; b=H
+	XBc/11e6M81G1+Aciw60e8piZRS2A0xyvRrUr213nBHCl4dBEWMhaEVKRszq2BKA
+	vlCSLRKIJ42UkCM4EwaqWkwaRF0OS8rPC4ZSTjrDX9TxdOAY9Yy1FKqLGFF1GVYC
+	NyvNfymqC94wmWKthxhjBQMDEG8DseM8HU71HXwdg/qhktwfL4++h5B2TBXwCF4v
+	AqwKKxKW1AE9kJltdvYxsJ7u0LJwy3ZWzFagANyebplJFUAhSJdKlFMoZJR7VDrz
+	2E3/7VnIYErFFiw2ed+fencTMDKyzWg4slQ1Q2/iwPyH8xIKc4bDl83ghuBGJjVU
+	OJyk+ReLqeMI+G+XdFG6w==
+X-ME-Sender: <xms:bVMEaWIbbgrqcwM_qypoPEVVKfxHSPNqy7UimiHv50U_3DgVHMWnBg>
+    <xme:bVMEaVmspUmfz8jQXa4huo3Fbup_37Fr2t3r_gPLgdCTu8kneZfjpwHRxftWFT5zz
+    qiG1i2sD2rrwoO-JrRpXGzXazCauqmn7OvoMzJ2CH_yGscm15vXMw>
+X-ME-Received: <xmr:bVMEaUFg7Hi1ViXXcZZVOOvx1sutszKwFh8OxZjGYtqSbyERtmFl5u6lWQkZPHorskAds8qS3egKMAgYvq_IEWPmj8L6zJ0dIALYikvPtf8xEA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieekjeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,23 +58,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieekjeegucetufdote
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
     ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthh
-    hikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhm
-X-ME-Proxy: <xmx:alMEaWvqx5vQKmIPkFNQaMv9L5bLVt5XEGyswgYLv6ZIhuO_uAKgxg>
-    <xmx:alMEaSVtwD-0dJPAK9786wZFnWuQn6WTaCNJDRnmoo6g34X2xEtN4w>
-    <xmx:alMEaes3q8XKq1iFuLb5_uruJDTEl3FfFqfZHAEcyu3bas2cPXInPg>
-    <xmx:alMEaeX6msID2tTMuaZKuBBYC8JyRcAFIlQfjCvotIHiUp9m8WNzsw>
-    <xmx:alMEaWPlSQHVjhyB9AXzvwPWDPg_MFluyRvWKzwwZyOGI3bPfsKitj0E>
+    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhg
+X-ME-Proxy: <xmx:bVMEaVHl1d32S4N7hJgMmAZS2PqQtrXRcnrtk5li1xpzeZTyXFnacg>
+    <xmx:bVMEaRPlJq_XQKKIXZAZF_9NgB9OCdo1RbYdr2mNKZjc3zhWn4SFFw>
+    <xmx:bVMEaUEcdDdsu7IB4c_f67k65wGVoO9RnJvtVLldDFrBIjX6rgsM1g>
+    <xmx:bVMEaYN3kcXv4akz5jKfXFYiB2PrtWbZ8agJTHsMeIIlZOA4jn_q5Q>
+    <xmx:bVMEadnfCw3cTXLjfF8CmOIcQatj8IGsZXnjJX5M_TZfD1vISKlo17YD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Oct 2025 02:12:57 -0400 (EDT)
+ 31 Oct 2025 02:13:00 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9b04b8b0 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 31 Oct 2025 06:12:56 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 010e76cd (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 31 Oct 2025 06:12:59 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 31 Oct 2025 07:12:40 +0100
-Subject: [PATCH v2 04/13] object-file: move `fetch_if_missing`
+Date: Fri, 31 Oct 2025 07:12:41 +0100
+Subject: [PATCH v2 05/13] object-file: introduce `struct odb_loose_source`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251031-b4-pks-odb-loose-backend-v2-4-920f721aef71@pks.im>
+Message-Id: <20251031-b4-pks-odb-loose-backend-v2-5-920f721aef71@pks.im>
 References: <20251031-b4-pks-odb-loose-backend-v2-0-920f721aef71@pks.im>
 In-Reply-To: <20251031-b4-pks-odb-loose-backend-v2-0-920f721aef71@pks.im>
 To: git@vger.kernel.org
@@ -91,55 +91,95 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.3
 
-The `fetch_if_missing` global variable is declared in "object-file.h"
-but defined in "odb.c". The variable relates to the whole object
-database instead of only loose objects, so move the declaration into
-"odb.h" accordingly.
+Currently, all state that relates to loose objects is held directly by
+the `struct odb_source`. Introduce a new `struct odb_loose_source` to
+hold the state instead so that it is entirely self-contained.
+
+This structure will eventually morph into the backend for accessing
+loose objects. As such, this is part of the refactorings to introduce
+pluggable object databases.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- object-file.h | 8 --------
- odb.h         | 8 ++++++++
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ object-file.c | 13 +++++++++++++
+ object-file.h |  7 +++++++
+ odb.c         |  2 ++
+ odb.h         |  3 +++
+ 4 files changed, 25 insertions(+)
 
+diff --git a/object-file.c b/object-file.c
+index 4675c8ed6b6..4dfea0ebebd 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1995,3 +1995,16 @@ void object_file_transaction_commit(struct odb_transaction *transaction)
+ 	transaction->odb->transaction = NULL;
+ 	free(transaction);
+ }
++
++struct odb_loose_source *odb_loose_source_new(struct odb_source *source)
++{
++	struct odb_loose_source *loose;
++	CALLOC_ARRAY(loose, 1);
++	loose->source = source;
++	return loose;
++}
++
++void odb_loose_source_free(struct odb_loose_source *loose)
++{
++	free(loose);
++}
 diff --git a/object-file.h b/object-file.h
-index 3fd48dcafbf..097e9764be1 100644
+index 097e9764be1..d9d2de5055e 100644
 --- a/object-file.h
 +++ b/object-file.h
-@@ -7,14 +7,6 @@
+@@ -18,6 +18,13 @@ int index_path(struct index_state *istate, struct object_id *oid, const char *pa
  
- struct index_state;
+ struct odb_source;
  
--/*
-- * Set this to 0 to prevent odb_read_object_info_extended() from fetching missing
-- * blobs. This has a difference only if extensions.partialClone is set.
-- *
-- * Its default value is 1.
-- */
--extern int fetch_if_missing;
--
- enum {
- 	INDEX_WRITE_OBJECT = (1 << 0),
- 	INDEX_FORMAT_CHECK = (1 << 1),
-diff --git a/odb.h b/odb.h
-index 2bec895d135..2346ffeca85 100644
---- a/odb.h
-+++ b/odb.h
-@@ -14,6 +14,14 @@ struct strbuf;
- struct repository;
- struct multi_pack_index;
- 
-+/*
-+ * Set this to 0 to prevent odb_read_object_info_extended() from fetching missing
-+ * blobs. This has a difference only if extensions.partialClone is set.
-+ *
-+ * Its default value is 1.
-+ */
-+extern int fetch_if_missing;
++struct odb_loose_source {
++	struct odb_source *source;
++};
++
++struct odb_loose_source *odb_loose_source_new(struct odb_source *source);
++void odb_loose_source_free(struct odb_loose_source *loose);
 +
  /*
-  * Compute the exact path an alternate is at and returns it. In case of
-  * error NULL is returned and the human readable error is added to `err`
+  * Populate and return the loose object cache array corresponding to the
+  * given object ID.
+diff --git a/odb.c b/odb.c
+index 77490d7fdbe..f1b250ceffe 100644
+--- a/odb.c
++++ b/odb.c
+@@ -151,6 +151,7 @@ struct odb_source *odb_source_new(struct object_database *odb,
+ 	source->odb = odb;
+ 	source->local = local;
+ 	source->path = xstrdup(path);
++	source->loose = odb_loose_source_new(source);
+ 
+ 	return source;
+ }
+@@ -368,6 +369,7 @@ struct odb_source *odb_set_temporary_primary_source(struct object_database *odb,
+ static void odb_source_free(struct odb_source *source)
+ {
+ 	free(source->path);
++	odb_loose_source_free(source->loose);
+ 	odb_clear_loose_cache(source);
+ 	loose_object_map_clear(&source->loose_map);
+ 	free(source);
+diff --git a/odb.h b/odb.h
+index 2346ffeca85..f7e1bf87803 100644
+--- a/odb.h
++++ b/odb.h
+@@ -48,6 +48,9 @@ struct odb_source {
+ 	/* Object database that owns this object source. */
+ 	struct object_database *odb;
+ 
++	/* Private state for loose objects. */
++	struct odb_loose_source *loose;
++
+ 	/*
+ 	 * Used to store the results of readdir(3) calls when we are OK
+ 	 * sacrificing accuracy due to races for speed. That includes
 
 -- 
 2.51.2.1041.gc1ab5b90ca.dirty
