@@ -1,143 +1,132 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816981F4C87
-	for <git@vger.kernel.org>; Fri, 31 Oct 2025 06:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786062E7BAA
+	for <git@vger.kernel.org>; Fri, 31 Oct 2025 06:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761890749; cv=none; b=LRt2JxvnwFTlZr41wkIn4eulEf33tpVTHpmVYPOhCybZgFPm+vN+YQhoUVeOP8X1zT3egek/Z6T5kd4u0ItTwEcujLdO+j2xaORTaPqNZcthHj+X3BU7TQoi5g2UDGVntrwkRLAp0/ezhu0AgMYQMwO5Yd/TmSo7zLU1KdfdXH8=
+	t=1761891075; cv=none; b=uCLMkD6xWOLldf6HXcCpt8fyBvfqG2/CAW9EULiaKKfBHVwTlqzg0KIeWhSnMCHZCkczxPrAmdtzT/Ucd9RwCo6M8zt8iDeFmkvzJrYCbBgKNPVbUQZzG/Bz0xObIsdrNFN0qxiENysYI4ysfRcIbQygqyiyTfDF19uRD8/jU34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761890749; c=relaxed/simple;
-	bh=X4xZHN11V1/FNDMabqL1U2v9cynaevOFdhmgbln99Fc=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S/c9PEhxii/W+Q7+6EvPEB2DAh9ERJMpoyXSkZjgQUuklHKkexWs1TJLP47a48RVPEw5x/xcMMW/olbYuglCBZWe13pUdnEVzORbTiyOvKn9RIRaHVrzaux1uPSbxTCxIf/GPYJFb14keifjzgj01VkWGIkorl7GintgraQpYkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d/Td3U2t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PbBXlSLj; arc=none smtp.client-ip=103.168.172.147
+	s=arc-20240116; t=1761891075; c=relaxed/simple;
+	bh=KNH4mxpSBnXFsJmVAQaE2yXgkO/1+M0rslEdLrJyRFc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dcKne5pfZpU5uOwzJjrAffqBoi0qraG6PgpbX5K7hlpVkRjXte8+3Mm46m8rvd0Ttchz/kjLuachrckNfs/MwzinIYwIGCcq86B3g3wZXvCtHchA843qvOMWXZCPPzlZlnCxe6qIBHOHF5ISQXCIzdj+vK1T+JrMEXHJgrP5urQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UX9nhS5k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E39X1Cak; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d/Td3U2t";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PbBXlSLj"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 569DCEC00C5;
-	Fri, 31 Oct 2025 02:05:41 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 31 Oct 2025 02:05:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1761890741;
-	 x=1761977141; bh=WMJCGeVHz0E6q+A4fYJRq0Shrc7//qtaTCK+JhAU4P8=; b=
-	d/Td3U2teyS/phHBv8vrZSg6SUcMdYtCdU0NT+dJKvoe3bJU/PN5KCUGOx6HPwwN
-	pGl4fL7hmxYrt8O2wh5OL6olzWfPVbYJRKjUTtv4kyKMf6jHoMjHGLuKRPxr/zNb
-	bQkzCPuxJs8E8wv1pseOG4RjA0y7f3tPbQDWdi5wpjSx6GUOoMwqh4OYobLyg2zt
-	oE/dPhR1bho95cJwNlqY8QSTxMwUCPxaro7ZUX4o+Z3i5VozcDiQl7fk4AcQ4YOH
-	pHchQ7lG00Sau4UnCQCSWl4EcMGhvYHh6iSJ8l7DgO2O1ACU5YNATyGyv57U3m6b
-	l4Tmj7P/1T5z9VknO+4KiA==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UX9nhS5k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E39X1Cak"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 67BCAEC0246;
+	Fri, 31 Oct 2025 02:11:11 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Fri, 31 Oct 2025 02:11:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1761891071; x=1761977471; bh=zt9mZuOm6O
+	PE3oJAi5sjvvgTcCmQ8VTCo5ObKgsTuqc=; b=UX9nhS5km1H6KxI2JPtIl6z7dG
+	YKrX554rUHCFZOcGycXo37OOxI6yHhgDEyaR2IrAdMUZMzRua4Dn1IWyX0iT5uEX
+	QyPr085QfvotRqRDSvdk/y5T9hry7DnlDieCM2FEJrjXJHVOZjxDdPUMKsxnG8vb
+	YqohK59kbGfz0aF0hC7HZ0SgxFo1wyg8hsaRgTHoe/+x1OkpdNeyABt3gEir0nyI
+	wdvuXpSHRgZsrFYjqc4kY/qxKFmNFQ7bzVQVuHw3CJt25OF/C4ZevncoPawlTjY3
+	rLcgyoIGFGyRJidn7bfD4UWXnbJs9SKJ+XGOUlgqqy53ggzdhxE4HjBRYy/Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1761890741; x=1761977141; bh=W
-	MJCGeVHz0E6q+A4fYJRq0Shrc7//qtaTCK+JhAU4P8=; b=PbBXlSLjMoGCfmJjM
-	D8WS7I/Qsk0cPsX354DQH8h48ok20hM4QB1JRMGiLqfdILXh2VLH/uHibG+h/wgD
-	QHBifgUtolq12/o3qp0qGoh00Jhg6CyTJ8NRQXZsEGISL2JTAFwAuQyNtyx586sn
-	AKSIEB/Q24vT7FuIoSatkdEaPQuDoHej2tQx4hXxFIg49yeZ07MtP7kDH14jBPxm
-	Vacrdq310+7ROxxg3oboLMEQarKPa82vYge7N/LErqXJa34xnu9W4/52odoBFH27
-	DZKqDR2fJiN74Wc9+JXOntJBjWulD+9t3IhhLAN/v9zaxMBkCzcm904AaYc0D770
-	kNZMA==
-X-ME-Sender: <xms:tFEEaaWu9q81McWxncR30Ff3fD02A23rbHysIQN7faWv2OW8Zc8v-w>
-    <xme:tFEEadlaOwZKwd4MxfCPahd2UiJfGJwSAWEsXAD1F6TveeFGHi5k9J9kudD12yA4X
-    X94HL9vjRdk6UWfA6ol067eKszwEkvPweWyusSpZFFBeL91OSLh_w>
-X-ME-Received: <xmr:tFEEaTay2laStJGf6Ioo4CPnEQRx8qoZbHBjBxXA1fBG-17-ZnYma87_mO7-3gMVkdd86vVgDoEAFhWtB5zY2NsMcg_7zWDwaCVvAPiIz5j6AA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieekjeefucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1761891071; x=1761977471; bh=zt9mZuOm6OPE3oJAi5sjvvgTcCmQ8VTCo5O
+	bKgsTuqc=; b=E39X1Cakp+F1jXT5zlY6B0aItEFU2pILvUwO1MBPV5DyfduyKGz
+	p0uCrcSCf4dphGiJ1zgoLuyhVNvOyqVmpxvehugew5Orb22o0evNAvsVEOZLoLBL
+	mfCudO6vyGrJPCMqSqXpx1yXT8H/v0073nx3LsRJthJdCRgJlqxOzVQADRxRV0CM
+	JDICI5qBb8JqSnLX7lFwVdCfhEkGzM4wlaMdzd93+GyjfATjPy8goYKcVpRH1jX/
+	+otx9WXBKC9owVMYH0NIcI132DkLzwQVKGMxzRlctjSp3WwqlhSoANMeyJdctEFo
+	JkRKTyzwdgJOeLYfq1+Za3880bMmdqbDpbg==
+X-ME-Sender: <xms:_1IEaZEWzeDNXQkIXrXvglmTRq5Qcevqp3ON6eb6A7ktMwrCvIkWyg>
+    <xme:_1IEaUWB2F31zweYBOn23fLFEgA0BaV-DKKwuGyjOmNRW5XW3MHb9NPSful4CB_xu
+    4Gqv1SEWpyj9TuMR_66knO70Ducdi2J2BnKrQKgFMAl3qr-LZh7GA>
+X-ME-Received: <xmr:_1IEaYz-N69AiKFtQ1l77JJ5vkLkYAQHWXc_2kqUSHNDtlmiV3gp_b3AdeqAUfdESrMWf7Zfar38BhszDhpdU6Ji04mcJ8pjxnn531hs-D2xOg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduieekjeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvffukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    ephedvheehgfeffeeljefgteekudejtdeuueduveegjeehleetffdvfeelhedvheehnecu
-    ffhomhgrihhnpehlfihnrdhnvghtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhho
-    uggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    vgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnug
-    grlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:tFEEaQNzIm7MRNEz2eLBDHsrdqcNZcwyrYoedOPQPGwWLObVCY42hA>
-    <xmx:tVEEaQbgBCY65-j1sM7_62QiQtc2Ly_S2yk75J4a8HEMzPf9v4Zkjg>
-    <xmx:tVEEaW0Ud5kn8gV40O6ZUuruXrQtHjt_qTNt3isPnKKd0bz0jW9jcg>
-    <xmx:tVEEaeezdDbRecOYeWQ8IKKGRliWIp72LwMvQld2Ysgn_3x3VenUXA>
-    <xmx:tVEEaUJU9YZfIHbBHn1iTmuezcXP5IhJYG5UZMgLveC1ADzDh1pRlaq0>
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:_1IEaaNycyLF1l3KTx8BV1WM0HOrPFfvORBpBjm4fCyYK7YzPFnSwQ>
+    <xmx:_1IEaR6_MFY_VhDA9VX4i82JJYP2BaBL_VTNIstVUgtnHP17T7YBbg>
+    <xmx:_1IEaTM_tk8vAg4Xy4xdGnJdSW8XhlaoQ7lHfdsTDc1xKc-2DXIaUQ>
+    <xmx:_1IEaXlt-QUi9LTPYqsEQVznXsEZHN6slOkE5jnHzsn3SGwg4wfvAA>
+    <xmx:_1IEaZ1SfzU05wqM8V937BBpP6hHfN1xCrusWJs_BThlLmV2Ba6H9DFI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Oct 2025 02:05:40 -0400 (EDT)
+ 31 Oct 2025 02:11:10 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f9557f41 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 31 Oct 2025 06:05:38 +0000 (UTC)
-Date: Fri, 31 Oct 2025 07:05:34 +0100
+	by mail (OpenSMTPD) with ESMTPSA id b4e4ad01 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 31 Oct 2025 06:11:08 +0000 (UTC)
+Date: Fri, 31 Oct 2025 07:11:04 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/3] rust: generate bindings via cbindgen
-Message-ID: <aQRRrvSoZQxH2-nw@pks.im>
-References: <20251023-b4-pks-rust-cbindgen-v1-0-c19b61b03127@pks.im>
- <20251023-b4-pks-rust-cbindgen-v1-3-c19b61b03127@pks.im>
- <CAH=ZcbADTLvTioBf+LYQej1G0biZM8s3-iJG+BZjnpxj+8NjsA@mail.gmail.com>
- <aPsepOtUf92fqDL-@pks.im>
- <CAH=ZcbBWuS6QVQT4LsxSP-X4GupZwr+NwzXNH2+qZGoufUWDrQ@mail.gmail.com>
- <aP_gy-Rj8MI7zAWd@fruit.crustytoothpaste.net>
- <xmqq8qgvfyq0.fsf@gitster.g>
- <aQM07BQrGJocPKea@pks.im>
- <aQPbMZpYZJQH_Fd6@fruit.crustytoothpaste.net>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 05/13] object-file: introduce `struct odb_loose_source`
+Message-ID: <aQRS-KcNLD9prRYa@pks.im>
+References: <20251024-b4-pks-odb-loose-backend-v1-0-1a4202273c38@pks.im>
+ <20251024-b4-pks-odb-loose-backend-v1-5-1a4202273c38@pks.im>
+ <CAOLa=ZQdit7N0aQWyqYHAoO6nuXaU3QqZbQmsbp52jW8C-zbzA@mail.gmail.com>
+ <aQNMwve9sUP-QDN6@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aQPbMZpYZJQH_Fd6@fruit.crustytoothpaste.net>
+In-Reply-To: <aQNMwve9sUP-QDN6@pks.im>
 
-On Thu, Oct 30, 2025 at 09:40:01PM +0000, brian m. carlson wrote:
-> On 2025-10-30 at 09:50:36, Patrick Steinhardt wrote:
-> > For now that Rust version is 1.49, and that's enforced by our CI. The
-> > reason for this specific version is that it's the target version for the
-> > gcc-rs folks, so it may help currently-unsupported platforms to get
-> > support earlier.
+On Thu, Oct 30, 2025 at 12:32:21PM +0100, Patrick Steinhardt wrote:
+> On Thu, Oct 30, 2025 at 03:47:58AM -0700, Karthik Nayak wrote:
+> > Patrick Steinhardt <ps@pks.im> writes:
+> > 
+> > > Currently, all state that relates to loose objects is held directly by
+> > > the `struct odb_source`. Introduce a new `struct odb_loose_source` to
+> > > hold the state instead so that it is entirely self-contained.
+> > >
+> > 
+> > I wonder if the naming should instead be `struct obd_source_loose` that
+> > way other backends (if added) would be something like:
+> > 
+> >     struct obd_source_loose
+> >     struct obd_source_postgres
+> >     struct obd_source_mongo
+> > 
+> > This is easier to read and also for autocompletion it leads nicely into
+> > the 'obd_source_...' namespace.
 > 
-> As I mentioned a couple of times, gcc-rs uses the standard library of
-> Rust 1.49 since that's what it's targeting, and as a result it will not
-> support any platforms that Rust 1.49 didn't support since there isn't
-> standard library support for those platforms in that version.  It's like
-> trying to use a 2009 version of glibc and expecting it to work on
-> RISC-V, which was released in 2010—it simply won't.
+> Hm, I see your point. I think that "loose source" flows a bit more
+> natural, but I agree that the above is more accessible in code.
 > 
-> That's why I was very clear at the Contributor's Summit that the message
-> we must send to platforms that do not have Rust is that they need to
-> port LLVM and target Rust that way, since that is the surest path to
-> success and to being able to get the necessary standard library changes
-> for things to work properly.  gcc-rs may be a viable solution in the
-> future, but it is not now, and absent substantial advances and an
-> order-of-magnitude faster development, it is unlikely to meet that
-> standard in time for Git 3.0.
+> Before I change this: does anybody else have an opinion here?
 
-It seems like there is good progress in gccrs, and it seems like the
-speed is picking up a bit. They also recently said that it shouldn't be
-that complicated to move to 1.80 once the 1.49 baseline is implemented,
-so that makes me more amenable towards picking a more recent Rust version
-[1].
+I think for now I'll stick to the current naming. This is due to two
+reasons:
 
-> So given that, I would propose that we target Rust 1.63 in conjunction
-> with my proposal.  I can send a patch to that effect later on.
+  - As said, I think this flows more naturally in language. When talking
+    about this you'll say "I'm using the files source" or "I'm using the
+    whatever source".
 
-I might've missed it, but why 1.63 in particular? Happy to defer the
-discussion until you post the patch though. I mostly want to make sure
-that we pick the version with intent.
+  - It somewhat matches the naming we have in the reference backends,
+    where we have `struct reftable_backend` and `struct files_backend`.
+
+That being said I don't feel very strong about this. So I'll post v2
+with the current naming, but if either you or somebody else feels
+strongly that this should be adjusted I'm happy to adapt.
 
 Thanks!
 
 Patrick
-
-[1]: https://lwn.net/Articles/1040197/
