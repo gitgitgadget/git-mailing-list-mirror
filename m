@@ -1,487 +1,153 @@
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E231298CDE
-	for <git@vger.kernel.org>; Sat,  1 Nov 2025 21:57:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AF61FC8
+	for <git@vger.kernel.org>; Sat,  1 Nov 2025 23:17:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762034265; cv=none; b=VvgClpdouNRJDMwGi1Xnb0YfcK9u4Poc8J999slguzZawtKiucLz3zHQLEihH8NW4EtcdD75VsnKhmHvxrDp5jm8KeVF3835J2t5Gu7ogSENihgDSFPEm4Jf1hfc8U4VTld7VRQsCnBRLJksUcbKue3HEEOkHlu8k88FJjPWj6I=
+	t=1762039053; cv=none; b=cQKc95vix4syU4dTGzcqdxlIiypFVS6Z3MT3NQwp1UPWWxSHcMCkz5JZPcbUe3HzTncZslL3kof+9ts3L+7zitHYyT2f8P21wAYS5Pcv9X45lTWrG7ovoekpep2HYi/HE4Nf2gBx/vrNFANFRLWteTIs/QBxCXXjgu2dwCo+imE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762034265; c=relaxed/simple;
-	bh=HHM63DVynlaRgQLJT0F+onR4zH/0uVkOyz+aR1QXUJA=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=D4sFk9XKoPXelbeqRqJmmh7DDopUuQ5IDmiaE4zvFX3u1IEUH9k/eUHkryjzL/ocEWccadf8QBTWEtFF0xfEwPsrz/Rq0kaNBWJgjqxkj1W+fTxkbVjOvHbtXNKFt8YKNU52LvASa4VEbaXHit6GlgpmXiRcCrcyCIm/fTIK3mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LdApJHGK; arc=none smtp.client-ip=209.85.166.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762039053; c=relaxed/simple;
+	bh=P36gzth8JcBoxQnG473G5BiZoTgx2nWQ4U2jm/vKWaU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LOoDPrICCzdAH/GyRtri1pCyACCy2hyTHSFW+5jInzlds8frr0Yw0t2+GEeakIrkUP2YsAQlSk5urSInFxSdrQnBHzQIO+oX4H7eMiUJaH7mVOa8rpLrq6PnQaof7hgtQRdpZPGxbuj5jVcJT0/DYjk9UZoSPRyaXk0cEEDM/sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f6Y1SoE7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CNbfALtc; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LdApJHGK"
-Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-93e7ece3025so138407439f.1
-        for <git@vger.kernel.org>; Sat, 01 Nov 2025 14:57:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762034262; x=1762639062; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QS5Rq88OhDZZKO56auzDWDMG2IwOoMNpcvipo5H1iuI=;
-        b=LdApJHGKnKC0FIUYApep5G+GD8STszjXvcXAKmzzZuKthVW3vINSjcdT8M8bpVNJ0f
-         2hQqKPNDCvBcBvS/VPlnWJ4hqD2tZ4ZvHAlAlsMK5sF3PJDSkZzgppXl2WYwd2e+NN+R
-         fzxZD7xBdIm7ZMvhVWfSEYU0XD+CepqJ8S1bk8wSHTFxaOnYv6bWXx36f9a2ISfRWJp3
-         p+XJgjyXVgPWkNMWOMmOY4qoE4sOZ9EFQjNplm+JxLtHsxp6vVlxwf4yJs4WDKYF2yid
-         SZ8ypk01R6EC5AVLuO6iBWjxMXh1O82mThNFOo1ZoEvX6cHtsrVJieY82rWHjBTAIj4G
-         GXjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762034262; x=1762639062;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QS5Rq88OhDZZKO56auzDWDMG2IwOoMNpcvipo5H1iuI=;
-        b=VwFyCTtacpvY1YoOtUDE6d6XHwoUSrNLlD0x5/31RDgUD0Wj6td8HNUc4apgOF+Vtp
-         nO+oRJXa0eErvUTIHvA6ukyAZnrXVg6nlLGJXziO8R3Sb+76aQVTPYtaKadc2yisDHN6
-         Ua6vagvYTfUHW2rIJKIdK/Y4ftz4X3sUZXaGt7NrmTnSpR36pwuwnGyblxjKoTVsvKgZ
-         6k35Qdl2q4md4UTK9DN6mC0isoGmfBC8Bervdj3P+GBc36Af6ERtCZSRyKQjyWULbdWs
-         4iOHfWu64HN0qZ3HdzEAcvFgVCjsttt8HSJU6JXgT3h/bXl0EdtYYSklIOsCujD2dULJ
-         ImgA==
-X-Gm-Message-State: AOJu0YyDk9vIbPwxqlQ7ONBcJBcCyek+8k1zJcXIDOKZVxEf03YGvVLI
-	q90hx9xL/t7iXlbz7bulCbNG3fKzk119k60SjTNjWxsGr+6nw5RkjrqROXpQfQ==
-X-Gm-Gg: ASbGncvt3KxqSlzv/P/R2SG/jQAONMbqDPdqA8+m0SfUM4JG6U2DNG5AFu4Ng3xAT+r
-	Pd6VSmD0v46LjGARP2l5a6Uok1BxTdvcSRXTM6m9BZe6sPHQXodd1fU1ZjLB38Q3/MzSBIiXiMq
-	zKl42blTTEYXzv9/ZgDOdGww0x+fHFFfo1xp1VcqSJEVNIj5UXy+1KJ/8Cse5KLjgEmqVQ+19eA
-	48RX//ebJts+WRuXLnWoKCAWNsLTpkNG3qI1uKKXJ68zDnRunLsYoGoT+mPNXCzyqArAYC9dwz6
-	W72Rg85dF7Xr/FYeR2yHsMNzwLHGIMWGA+iuL00Rfjfxe+lAg51A9s295aM/7uGxA8mhI9sW0Kt
-	WraxesfvRpChlPqBMXVwTa5LJWWEOFsJyQCrbHocf8nlMWBlWxwJpmH9TNiLazhGW1PYmAvM3Ru
-	T94RwQZ3ONMF5bDNJHX3E0+Wk=
-X-Google-Smtp-Source: AGHT+IEQ+ov5IEqG0H9z5d5V56bCglhe0bRzwUyHSMkfdQ65Olb7/EaDKRkJBo1e3PtCKk6qTimlTg==
-X-Received: by 2002:a05:6602:1581:b0:940:36e0:ad2f with SMTP id ca18e2360f4ac-9482295c10dmr1494724139f.7.1762034261694;
-        Sat, 01 Nov 2025 14:57:41 -0700 (PDT)
-Received: from [127.0.0.1] ([64.236.133.96])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-94827ca2e0fsm187118939f.15.2025.11.01.14.57.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Nov 2025 14:57:40 -0700 (PDT)
-Message-Id: <920a6f3acbc86e72c6ea236f8dbd3d559398409a.1762034252.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2075.v4.git.git.1762034252.gitgitgadget@gmail.com>
-References: <pull.2075.v3.git.git.1761686060477.gitgitgadget@gmail.com>
-	<pull.2075.v4.git.git.1762034252.gitgitgadget@gmail.com>
-From: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 01 Nov 2025 21:57:32 +0000
-Subject: [PATCH v4 2/2] blame: make diff algorithm configurable
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f6Y1SoE7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CNbfALtc"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9793B1D001B7;
+	Sat,  1 Nov 2025 19:17:29 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sat, 01 Nov 2025 19:17:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1762039049; x=1762125449; bh=SkfzT0BEJS
+	0wM1FRfEIVdHrU6m1svVTQxuMZJTxMF18=; b=f6Y1SoE7GYee4tcUtjOYRVh5RS
+	74w8Wk2J3PPIGcwV+75uVCXSUdcvVPmtatGNBH8eg01gMapANVoNVK88RichfZMT
+	3PAvYF3ztUNnabHngy4gasOPokT7nktBF2KdbaOrxEf+QJKX9CYPhGSS7vrpNI4n
+	hTZz1Ossc6VS/e5DyMP8n4q5mnfwxrxVE3BFib+nN2FevRuCzd6s8Zdyy4NM5liP
+	zP4Ue9TfMBihb6gG38NzhSzv+qi2zOWR07guhwTZl0jXmQU2omIJr8mDix2h84eW
+	68yAGSULTMbQ/H6m9p2ZZbh/fszwjGpE9jiZOnw7sJNhhSAQeKXZe9sgAGmg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762039049; x=1762125449; bh=SkfzT0BEJS0wM1FRfEIVdHrU6m1svVTQxuM
+	ZJTxMF18=; b=CNbfALtc2A/1lNJi+8ArbUbzUWftmXX9T6ExH+bXof2nI+JT/B/
+	DNqKAcPeww4vjgxxzWKdNIndMbXaTtFKtdY7adx+6ddCrZSX2I1izyipf+LR5F0t
+	5lXAGg+Xqrvmk9xdIaJOEhDXwLJ566EDhYZ/pSJP6j/+CzLbe51yvjUWtSiD6Wuy
+	OS/P3nwEWhvvvzk4fqQXzhUlrjEhx8v2nP6zb9uupADIIutUJ2uw8pgYJWsuhMgw
+	/0eM0kluhSGlwNFEwcXk8qpofgp22OKIrxJr7xmK02stPH5i2eKSxjL7zU3ERr3Z
+	+UOj80nA21QtzW5REuNxwe3TiOv8cwFrAIw==
+X-ME-Sender: <xms:CZUGae72T-oVhDEghwKBzskw6PPUSsW_4H2tQaDyxN9SFgGhoH6GEQ>
+    <xme:CZUGafXuH1XH0yuNU-oYOBqyOKe0ekxHfsfxnQUyk8U5aw7Wi4EsKwhsIMjcenwP9
+    -hpFh984utQdng2VnY7DPyHnONB-rPBCf_RTe_NMo4k4nCv_-X-SA>
+X-ME-Received: <xmr:CZUGaa3kouNhEbKqA39YJZGB-yAkKDBrtZi8b4xCPlwNyki9LA1uUQW_2OifGQBczI40dBlRzdoDA6ltSycHIIRfaWZtF6WGXGFR>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeefieejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehqjhgvshhs
+    rgeiiedvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:CZUGaU1PFQS5oeYOsED6UwU0mJG1bs-7nUafgET9mRYIkJbnu0OFyw>
+    <xmx:CZUGaV9try1BM_EV7paRtICcQvK_nlu3073diwpuNfaC3A7cAA4BJQ>
+    <xmx:CZUGaZ1sGlAcvXekIhJ6PG-irriSFwEf_zEaFJLNCLzod--QqO7DWw>
+    <xmx:CZUGaa9WZI30H5MvcNVn4AmcbaLBN6Oqvh0SwLUahVjGEGehcdbW1w>
+    <xmx:CZUGaXX93MI9CjRAPopbRlL7gHHmiGOwrmmolVFFtdQTDw-3dx_gv79f>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 1 Nov 2025 19:17:28 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: QueenJcloud <qjessa662@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] gitprotocol-http: document invalid 'want' error handling
+In-Reply-To: <20251101161513.1794-1-qjessa662@gmail.com> (QueenJcloud's
+	message of "Sat, 1 Nov 2025 17:15:12 +0100")
+References: <20251101161513.1794-1-qjessa662@gmail.com>
+Date: Sat, 01 Nov 2025 16:17:27 -0700
+Message-ID: <xmqqwm49wdfc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Antonin Delpeuch <antonin@delpeuch.eu>,
-    Antonin Delpeuch <antonin@delpeuch.eu>
+Content-Type: text/plain
 
-From: Antonin Delpeuch <antonin@delpeuch.eu>
+QueenJcloud <qjessa662@gmail.com> writes:
 
-The diff algorithm used in 'git-blame(1)' is set to 'myers',
-without the possibility to change it aside from the `--minimal` option.
+In the header part of this e-mail, we see this name/address
 
-There has been long-standing interest in changing the default diff
-algorithm to "histogram", and Git 3.0 was floated as a possible occasion
-for taking some steps towards that:
+> From: QueenJcloud <qjessa662@gmail.com>
 
-https://lore.kernel.org/git/xmqqed873vgn.fsf@gitster.g/
+which I know from the past exchange is different from what you want
+to be known as to this community (you have your preferred identity
+on the Signed-off-by: line we see below).  In such a case, you can
+do one of two things.
 
-As a preparation for this move, it is worth making sure that the diff
-algorithm is configurable where useful.
+ * Fix your mail client program so that it places your preferred
+   identity on the "From:" header; or
 
-Make it configurable in the `git-blame(1)` command by introducing the
-`--diff-algorithm` option and make honor the `diff.algorithm` config
-variable. Keep Myers diff as the default.
+ * Start the body of your message with an extra "in-body header",
+   i.e. "From: Queen Ediri Jessa <qjessa662@gmail.com>", and a blank
+   line to separate the in-body header from the body of the message.
 
-Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
----
- Documentation/diff-algorithm-option.adoc |  20 +++
- Documentation/diff-options.adoc          |  21 +--
- Documentation/git-blame.adoc             |   2 +
- builtin/blame.c                          |  52 +++++-
- t/meson.build                            |   1 +
- t/t8015-blame-diff-algorithm.sh          | 203 +++++++++++++++++++++++
- 6 files changed, 278 insertions(+), 21 deletions(-)
- create mode 100644 Documentation/diff-algorithm-option.adoc
- create mode 100755 t/t8015-blame-diff-algorithm.sh
+The former may be preferable, as you'd need to do so only once.
 
-diff --git a/Documentation/diff-algorithm-option.adoc b/Documentation/diff-algorithm-option.adoc
-new file mode 100644
-index 0000000000..8e3a0b63d7
---- /dev/null
-+++ b/Documentation/diff-algorithm-option.adoc
-@@ -0,0 +1,20 @@
-+`--diff-algorithm=(patience|minimal|histogram|myers)`::
-+	Choose a diff algorithm. The variants are as follows:
-++
-+--
-+   `default`;;
-+   `myers`;;
-+	The basic greedy diff algorithm. Currently, this is the default.
-+   `minimal`;;
-+	Spend extra time to make sure the smallest possible diff is
-+	produced.
-+   `patience`;;
-+	Use "patience diff" algorithm when generating patches.
-+   `histogram`;;
-+	This algorithm extends the patience algorithm to "support
-+	low-occurrence common elements".
-+--
-++
-+For instance, if you configured the `diff.algorithm` variable to a
-+non-default value and want to use the default one, then you
-+have to use `--diff-algorithm=default` option.
-diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-index ae31520f7f..9cdad6f72a 100644
---- a/Documentation/diff-options.adoc
-+++ b/Documentation/diff-options.adoc
-@@ -197,26 +197,7 @@ and starts with _<text>_, this algorithm attempts to prevent it from
- appearing as a deletion or addition in the output. It uses the "patience
- diff" algorithm internally.
- 
--`--diff-algorithm=(patience|minimal|histogram|myers)`::
--	Choose a diff algorithm. The variants are as follows:
--+
----
--   `default`;;
--   `myers`;;
--	The basic greedy diff algorithm. Currently, this is the default.
--   `minimal`;;
--	Spend extra time to make sure the smallest possible diff is
--	produced.
--   `patience`;;
--	Use "patience diff" algorithm when generating patches.
--   `histogram`;;
--	This algorithm extends the patience algorithm to "support
--	low-occurrence common elements".
----
--+
--For instance, if you configured the `diff.algorithm` variable to a
--non-default value and want to use the default one, then you
--have to use `--diff-algorithm=default` option.
-+include::diff-algorithm-option.adoc[]
- 
- `--stat[=<width>[,<name-width>[,<count>]]]`::
- 	Generate a diffstat. By default, as much space as necessary
-diff --git a/Documentation/git-blame.adoc b/Documentation/git-blame.adoc
-index e438d28625..adcbb6f5dc 100644
---- a/Documentation/git-blame.adoc
-+++ b/Documentation/git-blame.adoc
-@@ -85,6 +85,8 @@ include::blame-options.adoc[]
- 	Ignore whitespace when comparing the parent's version and
- 	the child's to find where the lines came from.
- 
-+include::diff-algorithm-option.adoc[]
-+
- --abbrev=<n>::
- 	Instead of using the default 7+1 hexadecimal digits as the
- 	abbreviated object name, use <m>+1 digits, where <m> is at
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 2703820258..888ce708a6 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -779,6 +779,19 @@ static int git_blame_config(const char *var, const char *value,
- 		}
- 	}
- 
-+	if (!strcmp(var, "diff.algorithm")) {
-+		long diff_algorithm;
-+		if (!value)
-+			return config_error_nonbool(var);
-+		diff_algorithm = parse_algorithm_value(value);
-+		if (diff_algorithm < 0)
-+			return error(_("unknown value for config '%s': %s"),
-+				     var, value);
-+		xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
-+		xdl_opts |= diff_algorithm;
-+		return 0;
-+	}
-+
- 	if (git_diff_heuristic_config(var, value, cb) < 0)
- 		return -1;
- 	if (userdiff_config(var, value) < 0)
-@@ -824,6 +837,38 @@ static int blame_move_callback(const struct option *option, const char *arg, int
- 	return 0;
- }
- 
-+static int blame_diff_algorithm_minimal(const struct option *option,
-+					const char *arg, int unset)
-+{
-+	int *opt = option->value;
-+
-+	BUG_ON_OPT_ARG(arg);
-+
-+	*opt &= ~XDF_DIFF_ALGORITHM_MASK;
-+	if (!unset)
-+		*opt |= XDF_NEED_MINIMAL;
-+
-+	return 0;
-+}
-+
-+static int blame_diff_algorithm_callback(const struct option *option,
-+					 const char *arg, int unset)
-+{
-+	int *opt = option->value;
-+	long value = parse_algorithm_value(arg);
-+
-+	BUG_ON_OPT_NEG(unset);
-+
-+	if (value < 0)
-+		return error(_("option diff-algorithm accepts \"myers\", "
-+			       "\"minimal\", \"patience\" and \"histogram\""));
-+
-+	*opt &= ~(XDF_NEED_MINIMAL | XDF_DIFF_ALGORITHM_MASK);
-+	*opt |= value;
-+
-+	return 0;
-+}
-+
- static int is_a_rev(const char *name)
- {
- 	struct object_id oid;
-@@ -915,11 +960,16 @@ int cmd_blame(int argc,
- 		OPT_BIT('s', NULL, &output_option, N_("suppress author name and timestamp (Default: off)"), OUTPUT_NO_AUTHOR),
- 		OPT_BIT('e', "show-email", &output_option, N_("show author email instead of name (Default: off)"), OUTPUT_SHOW_EMAIL),
- 		OPT_BIT('w', NULL, &xdl_opts, N_("ignore whitespace differences"), XDF_IGNORE_WHITESPACE),
-+		OPT_CALLBACK_F(0, "diff-algorithm", &xdl_opts, N_("<algorithm>"),
-+			       N_("choose a diff algorithm"),
-+			       PARSE_OPT_NONEG, blame_diff_algorithm_callback),
- 		OPT_STRING_LIST(0, "ignore-rev", &ignore_rev_list, N_("rev"), N_("ignore <rev> when blaming")),
- 		OPT_STRING_LIST(0, "ignore-revs-file", &ignore_revs_file_list, N_("file"), N_("ignore revisions from <file>")),
- 		OPT_BIT(0, "color-lines", &output_option, N_("color redundant metadata from previous line differently"), OUTPUT_COLOR_LINE),
- 		OPT_BIT(0, "color-by-age", &output_option, N_("color lines by age"), OUTPUT_SHOW_AGE_WITH_COLOR),
--		OPT_BIT(0, "minimal", &xdl_opts, N_("spend extra cycles to find better match"), XDF_NEED_MINIMAL),
-+		OPT_CALLBACK_F(0, "minimal", &xdl_opts, NULL,
-+			       N_("spend extra cycles to find a better match"),
-+			       PARSE_OPT_NOARG, blame_diff_algorithm_minimal),
- 		OPT_STRING('S', NULL, &revs_file, N_("file"), N_("use revisions from <file> instead of calling git-rev-list")),
- 		OPT_STRING(0, "contents", &contents_from, N_("file"), N_("use <file>'s contents as the final image")),
- 		OPT_CALLBACK_F('C', NULL, &opt, N_("score"), N_("find line copies within and across files"), PARSE_OPT_OPTARG, blame_copy_callback),
-diff --git a/t/meson.build b/t/meson.build
-index 401b24e50e..9f2fe7af8b 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -955,6 +955,7 @@ integration_tests = [
-   't8012-blame-colors.sh',
-   't8013-blame-ignore-revs.sh',
-   't8014-blame-ignore-fuzzy.sh',
-+  't8015-blame-diff-algorithm.sh',
-   't8020-last-modified.sh',
-   't9001-send-email.sh',
-   't9002-column.sh',
-diff --git a/t/t8015-blame-diff-algorithm.sh b/t/t8015-blame-diff-algorithm.sh
-new file mode 100755
-index 0000000000..5318e18cb3
---- /dev/null
-+++ b/t/t8015-blame-diff-algorithm.sh
-@@ -0,0 +1,203 @@
-+#!/bin/sh
-+
-+test_description='git blame with specific diff algorithm'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	cat >file.c <<-\EOF &&
-+	int f(int x, int y)
-+	{
-+	  if (x == 0)
-+	  {
-+	    return y;
-+	  }
-+	  return x;
-+	}
-+
-+	int g(size_t u)
-+	{
-+	  while (u < 30)
-+	  {
-+	    u++;
-+	  }
-+	  return u;
-+	}
-+	EOF
-+	test_write_lines x x x x >file.txt &&
-+	git add file.c file.txt &&
-+	GIT_AUTHOR_NAME=Commit_1 git commit -m Commit_1 &&
-+
-+	cat >file.c <<-\EOF &&
-+	int g(size_t u)
-+	{
-+	  while (u < 30)
-+	  {
-+	    u++;
-+	  }
-+	  return u;
-+	}
-+
-+	int h(int x, int y, int z)
-+	{
-+	  if (z == 0)
-+	  {
-+	    return x;
-+	  }
-+	  return y;
-+	}
-+	EOF
-+	test_write_lines x x x A B C D x E F G >file.txt &&
-+	git add file.c file.txt &&
-+	GIT_AUTHOR_NAME=Commit_2 git commit -m Commit_2
-+'
-+
-+test_expect_success 'blame uses Myers diff algorithm by default' '
-+	cat >expected <<-\EOF &&
-+	Commit_2 int g(size_t u)
-+	Commit_1 {
-+	Commit_2   while (u < 30)
-+	Commit_1   {
-+	Commit_2     u++;
-+	Commit_1   }
-+	Commit_2   return u;
-+	Commit_1 }
-+	Commit_1
-+	Commit_2 int h(int x, int y, int z)
-+	Commit_1 {
-+	Commit_2   if (z == 0)
-+	Commit_1   {
-+	Commit_2     return x;
-+	Commit_1   }
-+	Commit_2   return y;
-+	Commit_1 }
-+	EOF
-+
-+	git blame file.c > output &&
-+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
-+	sed -e "s/ *$//g" without_varying_parts > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame honors --diff-algorithm option' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 int g(size_t u)
-+	Commit_1 {
-+	Commit_1   while (u < 30)
-+	Commit_1   {
-+	Commit_1     u++;
-+	Commit_1   }
-+	Commit_1   return u;
-+	Commit_1 }
-+	Commit_2
-+	Commit_2 int h(int x, int y, int z)
-+	Commit_2 {
-+	Commit_2   if (z == 0)
-+	Commit_2   {
-+	Commit_2     return x;
-+	Commit_2   }
-+	Commit_2   return y;
-+	Commit_2 }
-+	EOF
-+
-+	git blame file.c --diff-algorithm histogram > output &&
-+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
-+	sed -e "s/ *$//g" without_varying_parts > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame honors diff.algorithm config variable' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 int g(size_t u)
-+	Commit_1 {
-+	Commit_1   while (u < 30)
-+	Commit_1   {
-+	Commit_1     u++;
-+	Commit_1   }
-+	Commit_1   return u;
-+	Commit_1 }
-+	Commit_2
-+	Commit_2 int h(int x, int y, int z)
-+	Commit_2 {
-+	Commit_2   if (z == 0)
-+	Commit_2   {
-+	Commit_2     return x;
-+	Commit_2   }
-+	Commit_2   return y;
-+	Commit_2 }
-+	EOF
-+
-+	git -c diff.algorithm=histogram blame file.c > output &&
-+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
-+	sed -e "s/ *$//g" without_varying_parts > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame gives priority to --diff-algorithm over diff.algorithm' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 int g(size_t u)
-+	Commit_1 {
-+	Commit_1   while (u < 30)
-+	Commit_1   {
-+	Commit_1     u++;
-+	Commit_1   }
-+	Commit_1   return u;
-+	Commit_1 }
-+	Commit_2
-+	Commit_2 int h(int x, int y, int z)
-+	Commit_2 {
-+	Commit_2   if (z == 0)
-+	Commit_2   {
-+	Commit_2     return x;
-+	Commit_2   }
-+	Commit_2   return y;
-+	Commit_2 }
-+	EOF
-+
-+	git -c diff.algorithm=myers blame file.c --diff-algorithm histogram &&
-+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
-+	sed -e "s/ *$//g" without_varying_parts > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame honors --minimal option' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 x
-+	Commit_1 x
-+	Commit_1 x
-+	Commit_2 A
-+	Commit_2 B
-+	Commit_2 C
-+	Commit_2 D
-+	Commit_1 x
-+	Commit_2 E
-+	Commit_2 F
-+	Commit_2 G
-+	EOF
-+
-+	git blame file.txt --minimal > output &&
-+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame respects the order of diff options' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 x
-+	Commit_1 x
-+	Commit_1 x
-+	Commit_2 A
-+	Commit_2 B
-+	Commit_2 C
-+	Commit_2 D
-+	Commit_2 x
-+	Commit_2 E
-+	Commit_2 F
-+	Commit_2 G
-+	EOF
-+
-+	git blame file.txt --minimal --diff-algorithm myers > output &&
-+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_done
--- 
-gitgitgadget
+> Add documentation to describe how the server responds when a client sends an
+> invalid 'want' line during the HTTP protocol exchange. This helps clarify the
+> behavior of Git when handling malformed or unknown object requests, and
+> ensures developers understand how such errors are reported.
+
+Is it describing what happens to be the behaviour of one
+implementation (namely, ours), or do all server implementations give
+identical error message?  Back when the TODO: comment was written
+and back when there weren't other reimplementations of Git, by
+definition the error message our implementation give would have been
+the only official one.  But now, it is way too late to declare "here
+is what our implementation gives out, so everybody else must do the
+same or they are in error".  We'd need to clarify what the intention
+of this update is in this part of the proposed log message,
+something like "HTTP server implementation of git-core and jGit give
+different messages but since their messages share this and that
+characteristics, which is something any reasonable reimplementations
+of Git would sharee, specify that as the requirement here" (I am not
+claiming that it was what you did to come up with this patch and
+what you want the text of the patch to be taken as; I am just giving
+a rough illustration of the level of detail expected in the proposed
+log message to explain what backs the new text in the documentation
+and how seriously the server implementors need to take it).
+
+>  If any "want" object is not reachable, send an error:
+> +When the client sends an invalid `want` line, the server responds with an
+> +appropriate error message indicating the invalid object request. This ensures
+> +the client can detect and handle protocol violations gracefully.
+> +
+> +For example, a malformed or unknown object hash in a `want` command will result
+> +in a response similar to:
+> +
+> +    error invalid 'want' <object-id>
+> +
+> +This helps maintain clear communication between client and server during
+> +fetch operations.
+
+I am not sure if the additional information given here is worth this
+many number of lines.  Wouldn't something like this
+
+	If any "want" object is not reachable, send an error message
+	that includes the offending object name to help the client
+	diagnose which "want" command was the bad one.
+
+tell the same thing more concisely and clearly?
+
+Thanks.
