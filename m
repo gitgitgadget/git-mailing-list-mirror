@@ -1,118 +1,119 @@
-Received: from mx0a-000f7c01.pphosted.com (mx0a-000f7c01.pphosted.com [66.159.248.59])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F421C155389
-	for <git@vger.kernel.org>; Sat,  1 Nov 2025 01:47:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.159.248.59
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3A3284B4F
+	for <git@vger.kernel.org>; Sat,  1 Nov 2025 08:18:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761961631; cv=none; b=Y56TO4MjdC66DSLMa1ITEC2HWlHnTgIh6qD4Xz+hYCclfBtYgiSbsFbPK/+Yi5m1BugTqVUOuYsFt/BbYNEaf5Qp+/x3cuscFI4wInMMfQMgDC/EU3ExKM7K/jCPkVRtz+WVfNEjBMYIKBJWIBYadw8BMN+ZKCLOasZtj0PFzwo=
+	t=1761985120; cv=none; b=m+9qBBmE25L2TsSgxz6vlH6ksCzmMKLKQnrTMr/3T8x9VKSA1Ohxm1tmYEgTyj9QqYNKUnK2DR+SXyfcC/jU4hIZs308ry5uifoP1tDT1H14mc4VNfi56mJizfangIjwRUxHoUFAzxR2sFIRaUjMS5i/Oft1F4XMNL3yZbo7Y6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761961631; c=relaxed/simple;
-	bh=uJVmWpNpopM2QWv8Nvep8gWjLitBMR5QJOHAMSUedQg=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=newIvG26RDGDQR9IUaQo6bv6lcezRuVzaUfKKQ+EvibSBIGgqQfUp/4Bty7ZDXo4VEtMAmPIASPPbFa9kRDf5xIKrjFnrLTrg59B5nfD5cf3aIZtQmQFfTCuGLje35ADMUkLNkGOg1EYIeOmykdiY2Chx4K9AGVmSvETq69NGeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=metropolis.io; spf=pass smtp.mailfrom=metropolis.io; dkim=pass (2048-bit key) header.d=metropolis.io header.i=@metropolis.io header.b=UsB5Ndbg; dkim=pass (2048-bit key) header.d=metropolis.io header.i=@metropolis.io header.b=Sbuyd2CM; arc=none smtp.client-ip=66.159.248.59
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=metropolis.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=metropolis.io
+	s=arc-20240116; t=1761985120; c=relaxed/simple;
+	bh=OiveoFLtnZIdPDIktPdt4vXS0SwK+MnM4phWF58mGOg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ETUqqFnf6wsOTdGwtzAo/qZZKOj8GmXpnlCq0IzcTqVQNN2/jnvOBpYz8maFZwwr5BBqJnd3vzesZmrBLKttzaZ98RVKS4nuaCywD8AFxWO8yENlqC99BngOTPhFAuSSM35b45Q6yNvXkfBcScULmnl6aGxseIcZje4GRPzl6Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ef2wnNMC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FCEynACH; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=metropolis.io header.i=@metropolis.io header.b="UsB5Ndbg";
-	dkim=pass (2048-bit key) header.d=metropolis.io header.i=@metropolis.io header.b="Sbuyd2CM"
-Received: from pps.filterd (m0443656.ppops.net [127.0.0.1])
-	by mx0a-000f7c01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 59VFxkxD3595185
-	for <git@vger.kernel.org>; Sat, 1 Nov 2025 01:39:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=metropolis.io;
-	 h=content-type:date:from:message-id:mime-version:subject:to; s=
-	pphosted; bh=uJVmWpNpopM2QWv8Nvep8gWjLitBMR5QJOHAMSUedQg=; b=UsB
-	5NdbgM2/mVwJjhkuppsPrteUbRuqyOsotVMYbpttm9SdVkSoVTTeUF65iSTeQZD0
-	UtnlFTFAwokHvcirA0+7D1epio/LtCR3+SzirCOGuI4CeYzInkfVoeL6CP7Yw1LH
-	4LBpEpvYTvAJsrJ2MD5jCC4xqEU9pCunWIFwyUNoZ+o4KGI+hneblaDA4JX21gGS
-	r9j1/kUk9DmbwhX/Ftfvri35xxIbGXKJqXOkT984WcanBjsj9IHxVyZ/RsvqqINg
-	64zkYbp7VUuedkSKTD1teWSlGYnTqnlMQbIVrsm5k4Ft0gSSMzbgfphDLh08PV9S
-	ihNkqd+Ee00lGn3/D6A==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-000f7c01.pphosted.com (PPS) with ESMTPS id 4a5089gwsn-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Sat, 01 Nov 2025 01:39:12 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-79a3c16b276so56070466d6.0
-        for <git@vger.kernel.org>; Fri, 31 Oct 2025 18:39:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metropolis.io; s=google; t=1761961151; x=1762565951; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=uJVmWpNpopM2QWv8Nvep8gWjLitBMR5QJOHAMSUedQg=;
-        b=Sbuyd2CMmUsGu3Zgd4TEf6QL426SENJy3NwzgjiBm1en3JfFtqo76jeiIW7ciuPcu7
-         u0wfIUPbh+y4YSdwiCrkTQCEHaVAQD3pBBQy15HTTF3R2Hv+D9HG75wT0mBRuH+fTA1y
-         4sQNw3FnbavK5w2Hm5DwhPrkOhTvikZhlmhDKl2LblXJBGiB10EF3O84S2nGKRpc5JSA
-         qPuJAzuGqqVHMjJb0OKgX+8h1skANlFRY8R7CyV60mZ275xSQJXr6gwATxALHTdJtqvo
-         WKoj/ra35po50HFGqvZ+Jy8nGUjZfLNKCIvDSKwZmvqmj+pv8xGTxkdagOlvCX6M6zlC
-         /FVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761961151; x=1762565951;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uJVmWpNpopM2QWv8Nvep8gWjLitBMR5QJOHAMSUedQg=;
-        b=GRT2n2pKZZx7rEd3YxTHD98qpENYMZ4PnSfw9lrRoo+JmPUiGzMeDH/RdkQyZ3RqBV
-         mhwgPze0YT2zIZQWkPj30sWL4wyAd01XvrT1fuHF2EpXXQB/pjwheJZiM5uGBPvHfvur
-         G9OPD3AV7wLopDVa+uAn/Mc7F108PxOllgnwyt6Hh3SLyBPuukDqo3G2ZEkSpr8ZpDzc
-         nEdmpOe4hwNq5rZ3ANm7cpJ2UFElBI64QFWXz4SfczCtv/x708Ik5RN3sTRKsjbUojji
-         Qfvf9ufrXHuoR3dMzxQs5DZnCJ3y2zmzCdwjwbzZKAurvbZrGKP3xiZyj8KmRJWCY/p4
-         Hscg==
-X-Gm-Message-State: AOJu0Yw3FxhHmbYj3QSX+yAKBF3pLVHt++JQBpCwf9HZpoENWNUkted0
-	hS3BtFSclsouQTteEjN8i4trck/Prq/ozOb5s8unrfQgPA6uJmugMf9O5eIdFHwVE3rP4FI1awQ
-	WSEeWROgL+ZjiIW3J9Pq/HW2R8rvDq/G2zfCblumXUqRdiOks4Uy0EXP6QaUXYQzL27jR7iP6XM
-	84LwvkDkciLMY/ZpU6bCTUs6LFgG9eIMaVj917xdU=
-X-Gm-Gg: ASbGnct5c9dUeZPRUzLhQUwCgL/ch/lXIwupUcAbdnuX0p3rjjX2lNliAxigeGvDsdA
-	BIgD1jnIZiw8fdRkge6dgi8YA9xCTjAjW6+uPfDpWhHrC7jSeNt3M2ktf9cJCU6DFv92Fco5XGk
-	PvXYP3x9Vn1LNBcqp7FXU8qdLbhj9/VGhPE19tQs78rLcojvro53Gtcw==
-X-Received: by 2002:a05:6214:da2:b0:880:1be2:82d4 with SMTP id 6a1803df08f44-8802f317687mr63194326d6.26.1761961151566;
-        Fri, 31 Oct 2025 18:39:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGU3gfnMvg/FTJbbniEpA5tLUSErgmY8wIvOipeS23WeGg03pzv4P/z2aNm5rcM5TnB22R95Y+LfFbIt1tU59I=
-X-Received: by 2002:a05:6214:da2:b0:880:1be2:82d4 with SMTP id
- 6a1803df08f44-8802f317687mr63194206d6.26.1761961151176; Fri, 31 Oct 2025
- 18:39:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ef2wnNMC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FCEynACH"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 574BE7A0184;
+	Sat,  1 Nov 2025 04:18:36 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Sat, 01 Nov 2025 04:18:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1761985116; x=1762071516; bh=nT1dQF03Tm
+	J95ZWGbVxx4hHSqrJY+kNGqCfTlVAZ/mY=; b=ef2wnNMCjms5nfTwxu44TUwnHi
+	y04X1SUwmOk7PRYJwnTjrFYfKSi+fNbzxFgPrkDeLdGWHa9VIFRLrHei5kCWaVAh
+	84/r6p7TDCwkS8AxfLu4isujvl/AiatybW0iAKQNDfva4cl5ulecBFYUxYRxbbU4
+	ajlrBbzyJiD0FAXj2p/hw4nUMG9EhtXexfB3iwJ/LCDT/H+HwrHR811FTLGtxMKj
+	YuHuGBQwaXKu08YGROFxyN+MaWlo7X5zDg+2ItgEu2y4Vf6IsZ6pFcfiSiE57aso
+	KsdGCTrO96es6D26Kc7ri37PzCYeUMf9Ep/MuFR16OkjmKgMSjgHwD6Wi+GA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1761985116; x=1762071516; bh=nT1dQF03TmJ95ZWGbVxx4hHSqrJY+kNGqCf
+	TlVAZ/mY=; b=FCEynACHODwkoSg5kJaaafhreFDpTDD2Zqcza6NxqFuS8qGtUaE
+	4LwlQkqySAvwlgUBTTiGJtostS5kMurAdLl5FAcCd03wbrNeS/QqWwLJw0+rCxp9
+	+6zfjwh7vfnFyzdM6ujf40SsjK4X6N0inwi5ebafbVUIs7kd/KcjKg9tQJW/Ln5b
+	b+n2Q3qjXYbOvRHShZht9+mbQopAKpOIrj+gFvycjj6u+5g7pbw5u1tFgkNo9034
+	AoEeCIVTLV1QXWPOz7gzs20Pd1TKGeiPAzy/Kcw/mo7Dj4pI7zcN0K2CXx5J4grF
+	zi3mWv0ViGraU6yPtkPSiW675/Nb61h56qA==
+X-ME-Sender: <xms:W8IFaRlr3UTfBIPWm_5mBYa-FYcMFSMOobr1iaHMNK1h4B2V2--Ujw>
+    <xme:W8IFaeU5LC-3CTZg0s6UeDFX67GTd04uGJM7ifsZGaVIO9oEiJkdTk4Zvvu8q3Xbv
+    b0MgrWpQxmIcoB2jh3JZSm0vrQ-T43mUpTh7mveLvKcc_8FEo-z7Q>
+X-ME-Received: <xmr:W8IFaXshCvyFz3Nu0tX5D6bv7ITApto0eqAbW2qEN1Hy9ChDHyfuKbGPTY6PS6Q13Qv--RFdAO3EB9Jglt1_teFdvuw6_EwvrbWR>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujedukeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepuhdrfihinhgulhesuhhkrhdruggvpdhrtghpthhtoh
+    eplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorh
+    hgrdhukhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:W8IFaRYdxfW5AzL3UAiseAirivufvYyo6Fgj6EdN-tnNxwBL7MTiCg>
+    <xmx:W8IFaWVukPdu5cOy2iNSIWimu5_eX0R27qg42NDkeZYSWTw-k4whFA>
+    <xmx:W8IFaWQAO34FmnZBwIdo0AIEKaSenpXfLcRIoqLgJaLC73dZtzitsA>
+    <xmx:W8IFaUNdbB6oqHBXUokVwA9Gcus-VRIwk8HpdyxoacnXvSUY9mhtUQ>
+    <xmx:XMIFactnP42S-eDGSxtwfhK62IB6U20Pg041qUutbImoTDnSVAICqElK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 1 Nov 2025 04:18:34 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Windl, Ulrich" <u.windl@ukr.de>
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>,  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [EXT] [PATCH v2 1/5] add-patch: improve help for options j, J,
+ k, and K
+In-Reply-To: <697bf0301cd9459195bdd3cc79e517ae@ukr.de> (Ulrich Windl's message
+	of "Fri, 31 Oct 2025 10:08:14 +0000")
+References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
+	<17ef29a7-5214-4729-82eb-92a2af33e465@web.de>
+	<75b08ed6-4f0f-4ede-b84a-c2f1c3d15734@web.de>
+	<697bf0301cd9459195bdd3cc79e517ae@ukr.de>
+Date: Sat, 01 Nov 2025 01:18:33 -0700
+Message-ID: <xmqqjz0axj1i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Michael Woodard <mwoodard@metropolis.io>
-Date: Fri, 31 Oct 2025 20:38:55 -0500
-X-Gm-Features: AWmQ_bkKke4HsrF58j3ii9v8ZRnKfj2KT5RoOZ5nC9mPMgbnxYwUPMBaUbNBMMI
-Message-ID: <CAJ6i6FDqj0yCymuGd+f89XQvTLGRj3nVC-36Z4tbJfwNRKSt+w@mail.gmail.com>
-Subject: git remote rename command help
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Proofpoint-ORIG-GUID: 4v8LgbzW7EFnRVNepBzmY61j8fv6AhAH
-X-Authority-Analysis: v=2.4 cv=XLs9iAhE c=1 sm=1 tr=0 ts=690564c0 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
- a=2EukRn8VhYUA:10 a=VkNPw1HP01LnGYTKEx00:22 a=d1NFmZyc0IEKV_nbD6EA:9
- a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22 a=c9OMC2MNn3O6V6TCevYZ:22
- a=HhbK4dLum7pmb74im6QT:22
-X-Proofpoint-GUID: 4v8LgbzW7EFnRVNepBzmY61j8fv6AhAH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTAxMDAxMiBTYWx0ZWRfX2SRZU53RVTgP
- UYVEBrXxfRplwRE3Ub2W/QgwHDd27AUK4JLrn4xmK9Ff6my2Xz+wk9ZXHrdvyXCKtB6E5lH0xoE
- sdEMCkxvvv26gjRGHE7bJHTgdubdicesFg2SM8AeCW/Ph7miqHy6ydAL9ZeXcZunIk4ffHxhh0m
- 9RAYiKfoP6NQAiSypXwWAyS68wMs0xyD3/FUdJRMgTXoam9D7fTFQMa6m3oghE4EWdE0hCVG5WO
- iJUlUIZToffMKuZScSzHOV8/dDqRGyjhkFqRoaBZxBPj00BsOtFrcgnBbpxCf5r77s8d+28BVwX
- Y2IZhYYuNMNd4/eKJsPl8QVZxGwGS7WeSyc/BysxiRDi/e8SPbOsWF/yJvMPBuhzvy/XQObkUt1
- QJFzHppLqM3KirZifddpn1m0mYAIKw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-10-31_08,2025-10-29_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 adultscore=0 lowpriorityscore=0
- impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0 suspectscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2511010012
+Content-Type: text/plain
 
-Hello,
+"Windl, Ulrich" <u.windl@ukr.de> writes:
 
-I entered the command "git remote rename Old_Name New_Name" but it
-appears to only have affected the Local Repo I am working with. Other
-requests or connections to remote repo still see the Old_Name. What am
-I missing?
+> For the patch
+> diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+> index ad629c46c5..3266ccf105 100644
+>
+> I don't see an actual improvement, and I'd prefer the previous
+> version of the doc.
 
-Michael Woodard | SP+ | A Metropolis Company | Manager, IT Operations
+We'd prefer to see something more concrete that refuses the
+reasoning that led to the change, than a subjective "I don't see,
+I'd prefer".
 
-Mobile: 251.463.2791
+At least, the commit log messge given by 2c3cc43f (add-patch:
+improve help for options j, J, k, and K, 2025-10-06) explains why
+the change is an improvement, and I found it sensible.
+(<b5034851-65bd-49da-b270-48b68d9210ff@web.de>) 
+
+The old description said 'j' leaves this hunk undecided and goes to
+the next undecided hunk, but it is both pointless and misleading to
+say 'leave this hunk undecided'.  Unlike 'y' or 'n', the movement
+options 'j', 'k' are not about changing the state of the current
+thing we are on (so it is pointless to say "LEAVE it undecided"),
+and more importantly, when we say 'j', the state of the current
+thing we are on may not necessarily be 'undecided' (so it is
+misleading to say "leave it UNDECIDED").
