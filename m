@@ -1,70 +1,70 @@
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
+Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0418D2749F2
-	for <git@vger.kernel.org>; Sat,  1 Nov 2025 21:57:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E231298CDE
+	for <git@vger.kernel.org>; Sat,  1 Nov 2025 21:57:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762034261; cv=none; b=bXZOu8vnHjFHxd6slJkdhqpyjLmQ7pRbWWbetsc1flaPRDpazqkxn1O6RrQnzrzb1kaz4WeoOFbNaRxI3vKj7pWJCzfADjccAxtFRFom5KQP0X1x9iWGIUo0epH/q98xmLd/e9Pr+N1E11p5/5tEW51+ObVq+wR2+96W0Lw8trQ=
+	t=1762034265; cv=none; b=VvgClpdouNRJDMwGi1Xnb0YfcK9u4Poc8J999slguzZawtKiucLz3zHQLEihH8NW4EtcdD75VsnKhmHvxrDp5jm8KeVF3835J2t5Gu7ogSENihgDSFPEm4Jf1hfc8U4VTld7VRQsCnBRLJksUcbKue3HEEOkHlu8k88FJjPWj6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762034261; c=relaxed/simple;
-	bh=umP8Xttt2i0w5mytegOPtCF6mncpmH8Q3T0A2P6b57M=;
+	s=arc-20240116; t=1762034265; c=relaxed/simple;
+	bh=HHM63DVynlaRgQLJT0F+onR4zH/0uVkOyz+aR1QXUJA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ZjhFuwtNC9nFI0Z8aa0p0EwDM+n0E9IQb0Tbk5EPrG8fSXoIRLnxV3NOjm4FbOJiwiBAVeOwKInuxOBLKJF8zQfDC4/naEoe/Vs2bYM+n/FEHgiTXNXMSvXaiTCuw5c0iXmXx9VVF0lu9RYRzLZngL6wnwmNKEau5LzME9v6e+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IbZhmM7w; arc=none smtp.client-ip=209.85.166.173
+	 MIME-Version:To:Cc; b=D4sFk9XKoPXelbeqRqJmmh7DDopUuQ5IDmiaE4zvFX3u1IEUH9k/eUHkryjzL/ocEWccadf8QBTWEtFF0xfEwPsrz/Rq0kaNBWJgjqxkj1W+fTxkbVjOvHbtXNKFt8YKNU52LvASa4VEbaXHit6GlgpmXiRcCrcyCIm/fTIK3mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LdApJHGK; arc=none smtp.client-ip=209.85.166.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IbZhmM7w"
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-4330d78f935so19074615ab.2
-        for <git@vger.kernel.org>; Sat, 01 Nov 2025 14:57:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LdApJHGK"
+Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-93e7ece3025so138407439f.1
+        for <git@vger.kernel.org>; Sat, 01 Nov 2025 14:57:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762034259; x=1762639059; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762034262; x=1762639062; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ovjc0x6hy6GDLiO0T8l+I3/dxbdgB3kEwMVSxZbqjNA=;
-        b=IbZhmM7wylfoOgWsR8+ulpoGTPT8tXDcI/k43VCbwxrbkx71lX3s5Wl/CE2bbfeIzC
-         HxYproiqaz8EjbTAHp1rx6K9IoONCsikeXsSqVGvjUiWmCYUYMVvOGWwRj6W6wHeBl7w
-         No0kyxHLPxCHJINkJxEA3/UknVklpXjpVvkpRrzaqqu2moYu5QU40fOSjTzh15wUR169
-         vtG9AzUSW4sUwbvdaUKyDmt8XdfkfAfVQYpJ8tAkP09MU/UsLDRfnb94z9WuePIOUE0U
-         cr7r5EnHfPse6OGhhh2rxeUCvoG/oKYFnjYmJUKRfQDIW3ilD0hr/rN8/i0tw0Lq7PS1
-         8mLw==
+        bh=QS5Rq88OhDZZKO56auzDWDMG2IwOoMNpcvipo5H1iuI=;
+        b=LdApJHGKnKC0FIUYApep5G+GD8STszjXvcXAKmzzZuKthVW3vINSjcdT8M8bpVNJ0f
+         2hQqKPNDCvBcBvS/VPlnWJ4hqD2tZ4ZvHAlAlsMK5sF3PJDSkZzgppXl2WYwd2e+NN+R
+         fzxZD7xBdIm7ZMvhVWfSEYU0XD+CepqJ8S1bk8wSHTFxaOnYv6bWXx36f9a2ISfRWJp3
+         p+XJgjyXVgPWkNMWOMmOY4qoE4sOZ9EFQjNplm+JxLtHsxp6vVlxwf4yJs4WDKYF2yid
+         SZ8ypk01R6EC5AVLuO6iBWjxMXh1O82mThNFOo1ZoEvX6cHtsrVJieY82rWHjBTAIj4G
+         GXjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762034259; x=1762639059;
+        d=1e100.net; s=20230601; t=1762034262; x=1762639062;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ovjc0x6hy6GDLiO0T8l+I3/dxbdgB3kEwMVSxZbqjNA=;
-        b=r3auaAp+KT2oPPjizK5cdoufYE7F6eMx6GNbAnRZmMBO2gWe5O99Ra986eodolCwGh
-         E9Dn9kUT+mmsXp3oQa90tNoY7bYvREwwMXXwVehgooYX8V4/kRlNRBj1eC7uyseMy+AO
-         PPwTvORHCHcTS6KCLe0DgehrPdJTBlK55DhsGSzJr+JbJBbd9I2SthqRvH+SOrqdqsef
-         Hu4xWBmiTA8r44L1glLr79RcebO7lP7ZVri6ib7WTRnArQcxVlwYniYXSZUyEIudNv7I
-         ipH4GQgIaQrkJmxqogNVC6h7Aw+UD0q7v8dAA/87SwhIFbsrAEaSEnVBxjaA3lgCLsKd
-         1UjQ==
-X-Gm-Message-State: AOJu0Yxh6jDHornRqKGUnT8bp6Nn4MjsEz+9raO6vmJVX6HTlEDycHRJ
-	S60cICJgcwidfAgkGMNTcUsXwZM6JPtH0FPn8zWdtt12llSj27IxGMMl4T9eyg==
-X-Gm-Gg: ASbGnct3jvU4XYRGGuIVOQZMlN4WVeKqMYUIaVDtcJvKejBLOjMn+MTs0KzVp3TqFsB
-	Mnw4iROfSg+WGF+iQLRiaBGbKZa7tzgPltPxkB9x9pdUUDeFeCQzRXTO17DKDqKD7T81geKP75E
-	uOaYPllCX2GQAsoKz2Ra18Aa5KNMgr5YZWeVipjicg9sMUbFuY8HwVrn0U5PoOgn5iHG4eLCzQS
-	dlxMfLJIBxR5Lz0rldTO15m4iaHLUOG5xc+63ERBfCmtqy6oFGV3NNJpkzEOVyRUAq3dcUjx3HH
-	tomtIKG2Z94A5yvHmDA8dagQ45b1zRFpeSfyrLKAg0LBaKSpCC+61S1St8EcdirrbiS0YyG85IL
-	PnPotksm/3+8h+i8C5dhWEE2Dh5eJ9Alm2iMTDaRlsuB0dkb70Dk0ziDu7TupbZr2qvmi8pxt2G
-	bfIKCGhYV9g2+P
-X-Google-Smtp-Source: AGHT+IEXDSkhtfiohBS0WhKsU8f29ME0ksi/6LnHFQbiKCT77AtfHaU8tkpZ3edyEbolnymqOOJA3Q==
-X-Received: by 2002:a05:6e02:1608:b0:433:283c:bab with SMTP id e9e14a558f8ab-433283c0cbdmr13579795ab.19.1762034258795;
-        Sat, 01 Nov 2025 14:57:38 -0700 (PDT)
+        bh=QS5Rq88OhDZZKO56auzDWDMG2IwOoMNpcvipo5H1iuI=;
+        b=VwFyCTtacpvY1YoOtUDE6d6XHwoUSrNLlD0x5/31RDgUD0Wj6td8HNUc4apgOF+Vtp
+         nO+oRJXa0eErvUTIHvA6ukyAZnrXVg6nlLGJXziO8R3Sb+76aQVTPYtaKadc2yisDHN6
+         Ua6vagvYTfUHW2rIJKIdK/Y4ftz4X3sUZXaGt7NrmTnSpR36pwuwnGyblxjKoTVsvKgZ
+         6k35Qdl2q4md4UTK9DN6mC0isoGmfBC8Bervdj3P+GBc36Af6ERtCZSRyKQjyWULbdWs
+         4iOHfWu64HN0qZ3HdzEAcvFgVCjsttt8HSJU6JXgT3h/bXl0EdtYYSklIOsCujD2dULJ
+         ImgA==
+X-Gm-Message-State: AOJu0YyDk9vIbPwxqlQ7ONBcJBcCyek+8k1zJcXIDOKZVxEf03YGvVLI
+	q90hx9xL/t7iXlbz7bulCbNG3fKzk119k60SjTNjWxsGr+6nw5RkjrqROXpQfQ==
+X-Gm-Gg: ASbGncvt3KxqSlzv/P/R2SG/jQAONMbqDPdqA8+m0SfUM4JG6U2DNG5AFu4Ng3xAT+r
+	Pd6VSmD0v46LjGARP2l5a6Uok1BxTdvcSRXTM6m9BZe6sPHQXodd1fU1ZjLB38Q3/MzSBIiXiMq
+	zKl42blTTEYXzv9/ZgDOdGww0x+fHFFfo1xp1VcqSJEVNIj5UXy+1KJ/8Cse5KLjgEmqVQ+19eA
+	48RX//ebJts+WRuXLnWoKCAWNsLTpkNG3qI1uKKXJ68zDnRunLsYoGoT+mPNXCzyqArAYC9dwz6
+	W72Rg85dF7Xr/FYeR2yHsMNzwLHGIMWGA+iuL00Rfjfxe+lAg51A9s295aM/7uGxA8mhI9sW0Kt
+	WraxesfvRpChlPqBMXVwTa5LJWWEOFsJyQCrbHocf8nlMWBlWxwJpmH9TNiLazhGW1PYmAvM3Ru
+	T94RwQZ3ONMF5bDNJHX3E0+Wk=
+X-Google-Smtp-Source: AGHT+IEQ+ov5IEqG0H9z5d5V56bCglhe0bRzwUyHSMkfdQ65Olb7/EaDKRkJBo1e3PtCKk6qTimlTg==
+X-Received: by 2002:a05:6602:1581:b0:940:36e0:ad2f with SMTP id ca18e2360f4ac-9482295c10dmr1494724139f.7.1762034261694;
+        Sat, 01 Nov 2025 14:57:41 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.133.96])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5b6a615e5f3sm2070673173.61.2025.11.01.14.57.36
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-94827ca2e0fsm187118939f.15.2025.11.01.14.57.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Nov 2025 14:57:37 -0700 (PDT)
-Message-Id: <e81a5d2bd23add19e04184f6b37910bc89a514a5.1762034252.git.gitgitgadget@gmail.com>
+        Sat, 01 Nov 2025 14:57:40 -0700 (PDT)
+Message-Id: <920a6f3acbc86e72c6ea236f8dbd3d559398409a.1762034252.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2075.v4.git.git.1762034252.gitgitgadget@gmail.com>
 References: <pull.2075.v3.git.git.1761686060477.gitgitgadget@gmail.com>
 	<pull.2075.v4.git.git.1762034252.gitgitgadget@gmail.com>
 From: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 01 Nov 2025 21:57:31 +0000
-Subject: [PATCH v4 1/2] xdiff: add 'minimal' to XDF_DIFF_ALGORITHM_MASK
+Date: Sat, 01 Nov 2025 21:57:32 +0000
+Subject: [PATCH v4 2/2] blame: make diff algorithm configurable
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,61 +82,406 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Antonin Delpeuch <antonin@delpeuch.eu>
 
-The XDF_DIFF_ALGORITHM_MASK bit mask only includes bits for the patience
-and histogram diffs, not for the minimal one. This means that when
-reseting the diff algorithm to the default one, one needs to separately
-clear the bit for the minimal diff. There are places in the code that fail
-to do that: merge-ort.c and builtin/merge-file.c.
+The diff algorithm used in 'git-blame(1)' is set to 'myers',
+without the possibility to change it aside from the `--minimal` option.
 
-Add the XDF_NEED_MINIMAL bit to the bit mask, and remove the separate
-clearing of this bit in the places where it hasn't been forgotten.
+There has been long-standing interest in changing the default diff
+algorithm to "histogram", and Git 3.0 was floated as a possible occasion
+for taking some steps towards that:
+
+https://lore.kernel.org/git/xmqqed873vgn.fsf@gitster.g/
+
+As a preparation for this move, it is worth making sure that the diff
+algorithm is configurable where useful.
+
+Make it configurable in the `git-blame(1)` command by introducing the
+`--diff-algorithm` option and make honor the `diff.algorithm` config
+variable. Keep Myers diff as the default.
 
 Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
 ---
- diff.c        | 2 --
- merge-ort.c   | 2 --
- xdiff/xdiff.h | 2 +-
- 3 files changed, 1 insertion(+), 5 deletions(-)
+ Documentation/diff-algorithm-option.adoc |  20 +++
+ Documentation/diff-options.adoc          |  21 +--
+ Documentation/git-blame.adoc             |   2 +
+ builtin/blame.c                          |  52 +++++-
+ t/meson.build                            |   1 +
+ t/t8015-blame-diff-algorithm.sh          | 203 +++++++++++++++++++++++
+ 6 files changed, 278 insertions(+), 21 deletions(-)
+ create mode 100644 Documentation/diff-algorithm-option.adoc
+ create mode 100755 t/t8015-blame-diff-algorithm.sh
 
-diff --git a/diff.c b/diff.c
-index 87fa16b730..6ce3591c5b 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3526,8 +3526,6 @@ static int set_diff_algorithm(struct diff_options *opts,
- 	if (value < 0)
- 		return -1;
+diff --git a/Documentation/diff-algorithm-option.adoc b/Documentation/diff-algorithm-option.adoc
+new file mode 100644
+index 0000000000..8e3a0b63d7
+--- /dev/null
++++ b/Documentation/diff-algorithm-option.adoc
+@@ -0,0 +1,20 @@
++`--diff-algorithm=(patience|minimal|histogram|myers)`::
++	Choose a diff algorithm. The variants are as follows:
+++
++--
++   `default`;;
++   `myers`;;
++	The basic greedy diff algorithm. Currently, this is the default.
++   `minimal`;;
++	Spend extra time to make sure the smallest possible diff is
++	produced.
++   `patience`;;
++	Use "patience diff" algorithm when generating patches.
++   `histogram`;;
++	This algorithm extends the patience algorithm to "support
++	low-occurrence common elements".
++--
+++
++For instance, if you configured the `diff.algorithm` variable to a
++non-default value and want to use the default one, then you
++have to use `--diff-algorithm=default` option.
+diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
+index ae31520f7f..9cdad6f72a 100644
+--- a/Documentation/diff-options.adoc
++++ b/Documentation/diff-options.adoc
+@@ -197,26 +197,7 @@ and starts with _<text>_, this algorithm attempts to prevent it from
+ appearing as a deletion or addition in the output. It uses the "patience
+ diff" algorithm internally.
  
--	/* clear out previous settings */
--	DIFF_XDL_CLR(opts, NEED_MINIMAL);
- 	opts->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
- 	opts->xdl_opts |= value;
+-`--diff-algorithm=(patience|minimal|histogram|myers)`::
+-	Choose a diff algorithm. The variants are as follows:
+-+
+---
+-   `default`;;
+-   `myers`;;
+-	The basic greedy diff algorithm. Currently, this is the default.
+-   `minimal`;;
+-	Spend extra time to make sure the smallest possible diff is
+-	produced.
+-   `patience`;;
+-	Use "patience diff" algorithm when generating patches.
+-   `histogram`;;
+-	This algorithm extends the patience algorithm to "support
+-	low-occurrence common elements".
+---
+-+
+-For instance, if you configured the `diff.algorithm` variable to a
+-non-default value and want to use the default one, then you
+-have to use `--diff-algorithm=default` option.
++include::diff-algorithm-option.adoc[]
  
-diff --git a/merge-ort.c b/merge-ort.c
-index 29858074f9..9b2b0fce7e 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -5495,8 +5495,6 @@ int parse_merge_opt(struct merge_options *opt, const char *s)
- 		long value = parse_algorithm_value(arg);
- 		if (value < 0)
- 			return -1;
--		/* clear out previous settings */
--		DIFF_XDL_CLR(opt, NEED_MINIMAL);
- 		opt->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
- 		opt->xdl_opts |= value;
+ `--stat[=<width>[,<name-width>[,<count>]]]`::
+ 	Generate a diffstat. By default, as much space as necessary
+diff --git a/Documentation/git-blame.adoc b/Documentation/git-blame.adoc
+index e438d28625..adcbb6f5dc 100644
+--- a/Documentation/git-blame.adoc
++++ b/Documentation/git-blame.adoc
+@@ -85,6 +85,8 @@ include::blame-options.adoc[]
+ 	Ignore whitespace when comparing the parent's version and
+ 	the child's to find where the lines came from.
+ 
++include::diff-algorithm-option.adoc[]
++
+ --abbrev=<n>::
+ 	Instead of using the default 7+1 hexadecimal digits as the
+ 	abbreviated object name, use <m>+1 digits, where <m> is at
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 2703820258..888ce708a6 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -779,6 +779,19 @@ static int git_blame_config(const char *var, const char *value,
+ 		}
  	}
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 2cecde5afe..dc370712e9 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -43,7 +43,7 @@ extern "C" {
  
- #define XDF_PATIENCE_DIFF (1 << 14)
- #define XDF_HISTOGRAM_DIFF (1 << 15)
--#define XDF_DIFF_ALGORITHM_MASK (XDF_PATIENCE_DIFF | XDF_HISTOGRAM_DIFF)
-+#define XDF_DIFF_ALGORITHM_MASK (XDF_PATIENCE_DIFF | XDF_HISTOGRAM_DIFF | XDF_NEED_MINIMAL)
- #define XDF_DIFF_ALG(x) ((x) & XDF_DIFF_ALGORITHM_MASK)
++	if (!strcmp(var, "diff.algorithm")) {
++		long diff_algorithm;
++		if (!value)
++			return config_error_nonbool(var);
++		diff_algorithm = parse_algorithm_value(value);
++		if (diff_algorithm < 0)
++			return error(_("unknown value for config '%s': %s"),
++				     var, value);
++		xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
++		xdl_opts |= diff_algorithm;
++		return 0;
++	}
++
+ 	if (git_diff_heuristic_config(var, value, cb) < 0)
+ 		return -1;
+ 	if (userdiff_config(var, value) < 0)
+@@ -824,6 +837,38 @@ static int blame_move_callback(const struct option *option, const char *arg, int
+ 	return 0;
+ }
  
- #define XDF_INDENT_HEURISTIC (1 << 23)
++static int blame_diff_algorithm_minimal(const struct option *option,
++					const char *arg, int unset)
++{
++	int *opt = option->value;
++
++	BUG_ON_OPT_ARG(arg);
++
++	*opt &= ~XDF_DIFF_ALGORITHM_MASK;
++	if (!unset)
++		*opt |= XDF_NEED_MINIMAL;
++
++	return 0;
++}
++
++static int blame_diff_algorithm_callback(const struct option *option,
++					 const char *arg, int unset)
++{
++	int *opt = option->value;
++	long value = parse_algorithm_value(arg);
++
++	BUG_ON_OPT_NEG(unset);
++
++	if (value < 0)
++		return error(_("option diff-algorithm accepts \"myers\", "
++			       "\"minimal\", \"patience\" and \"histogram\""));
++
++	*opt &= ~(XDF_NEED_MINIMAL | XDF_DIFF_ALGORITHM_MASK);
++	*opt |= value;
++
++	return 0;
++}
++
+ static int is_a_rev(const char *name)
+ {
+ 	struct object_id oid;
+@@ -915,11 +960,16 @@ int cmd_blame(int argc,
+ 		OPT_BIT('s', NULL, &output_option, N_("suppress author name and timestamp (Default: off)"), OUTPUT_NO_AUTHOR),
+ 		OPT_BIT('e', "show-email", &output_option, N_("show author email instead of name (Default: off)"), OUTPUT_SHOW_EMAIL),
+ 		OPT_BIT('w', NULL, &xdl_opts, N_("ignore whitespace differences"), XDF_IGNORE_WHITESPACE),
++		OPT_CALLBACK_F(0, "diff-algorithm", &xdl_opts, N_("<algorithm>"),
++			       N_("choose a diff algorithm"),
++			       PARSE_OPT_NONEG, blame_diff_algorithm_callback),
+ 		OPT_STRING_LIST(0, "ignore-rev", &ignore_rev_list, N_("rev"), N_("ignore <rev> when blaming")),
+ 		OPT_STRING_LIST(0, "ignore-revs-file", &ignore_revs_file_list, N_("file"), N_("ignore revisions from <file>")),
+ 		OPT_BIT(0, "color-lines", &output_option, N_("color redundant metadata from previous line differently"), OUTPUT_COLOR_LINE),
+ 		OPT_BIT(0, "color-by-age", &output_option, N_("color lines by age"), OUTPUT_SHOW_AGE_WITH_COLOR),
+-		OPT_BIT(0, "minimal", &xdl_opts, N_("spend extra cycles to find better match"), XDF_NEED_MINIMAL),
++		OPT_CALLBACK_F(0, "minimal", &xdl_opts, NULL,
++			       N_("spend extra cycles to find a better match"),
++			       PARSE_OPT_NOARG, blame_diff_algorithm_minimal),
+ 		OPT_STRING('S', NULL, &revs_file, N_("file"), N_("use revisions from <file> instead of calling git-rev-list")),
+ 		OPT_STRING(0, "contents", &contents_from, N_("file"), N_("use <file>'s contents as the final image")),
+ 		OPT_CALLBACK_F('C', NULL, &opt, N_("score"), N_("find line copies within and across files"), PARSE_OPT_OPTARG, blame_copy_callback),
+diff --git a/t/meson.build b/t/meson.build
+index 401b24e50e..9f2fe7af8b 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -955,6 +955,7 @@ integration_tests = [
+   't8012-blame-colors.sh',
+   't8013-blame-ignore-revs.sh',
+   't8014-blame-ignore-fuzzy.sh',
++  't8015-blame-diff-algorithm.sh',
+   't8020-last-modified.sh',
+   't9001-send-email.sh',
+   't9002-column.sh',
+diff --git a/t/t8015-blame-diff-algorithm.sh b/t/t8015-blame-diff-algorithm.sh
+new file mode 100755
+index 0000000000..5318e18cb3
+--- /dev/null
++++ b/t/t8015-blame-diff-algorithm.sh
+@@ -0,0 +1,203 @@
++#!/bin/sh
++
++test_description='git blame with specific diff algorithm'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	cat >file.c <<-\EOF &&
++	int f(int x, int y)
++	{
++	  if (x == 0)
++	  {
++	    return y;
++	  }
++	  return x;
++	}
++
++	int g(size_t u)
++	{
++	  while (u < 30)
++	  {
++	    u++;
++	  }
++	  return u;
++	}
++	EOF
++	test_write_lines x x x x >file.txt &&
++	git add file.c file.txt &&
++	GIT_AUTHOR_NAME=Commit_1 git commit -m Commit_1 &&
++
++	cat >file.c <<-\EOF &&
++	int g(size_t u)
++	{
++	  while (u < 30)
++	  {
++	    u++;
++	  }
++	  return u;
++	}
++
++	int h(int x, int y, int z)
++	{
++	  if (z == 0)
++	  {
++	    return x;
++	  }
++	  return y;
++	}
++	EOF
++	test_write_lines x x x A B C D x E F G >file.txt &&
++	git add file.c file.txt &&
++	GIT_AUTHOR_NAME=Commit_2 git commit -m Commit_2
++'
++
++test_expect_success 'blame uses Myers diff algorithm by default' '
++	cat >expected <<-\EOF &&
++	Commit_2 int g(size_t u)
++	Commit_1 {
++	Commit_2   while (u < 30)
++	Commit_1   {
++	Commit_2     u++;
++	Commit_1   }
++	Commit_2   return u;
++	Commit_1 }
++	Commit_1
++	Commit_2 int h(int x, int y, int z)
++	Commit_1 {
++	Commit_2   if (z == 0)
++	Commit_1   {
++	Commit_2     return x;
++	Commit_1   }
++	Commit_2   return y;
++	Commit_1 }
++	EOF
++
++	git blame file.c > output &&
++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
++	sed -e "s/ *$//g" without_varying_parts > actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'blame honors --diff-algorithm option' '
++	cat >expected <<-\EOF &&
++	Commit_1 int g(size_t u)
++	Commit_1 {
++	Commit_1   while (u < 30)
++	Commit_1   {
++	Commit_1     u++;
++	Commit_1   }
++	Commit_1   return u;
++	Commit_1 }
++	Commit_2
++	Commit_2 int h(int x, int y, int z)
++	Commit_2 {
++	Commit_2   if (z == 0)
++	Commit_2   {
++	Commit_2     return x;
++	Commit_2   }
++	Commit_2   return y;
++	Commit_2 }
++	EOF
++
++	git blame file.c --diff-algorithm histogram > output &&
++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
++	sed -e "s/ *$//g" without_varying_parts > actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'blame honors diff.algorithm config variable' '
++	cat >expected <<-\EOF &&
++	Commit_1 int g(size_t u)
++	Commit_1 {
++	Commit_1   while (u < 30)
++	Commit_1   {
++	Commit_1     u++;
++	Commit_1   }
++	Commit_1   return u;
++	Commit_1 }
++	Commit_2
++	Commit_2 int h(int x, int y, int z)
++	Commit_2 {
++	Commit_2   if (z == 0)
++	Commit_2   {
++	Commit_2     return x;
++	Commit_2   }
++	Commit_2   return y;
++	Commit_2 }
++	EOF
++
++	git -c diff.algorithm=histogram blame file.c > output &&
++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
++	sed -e "s/ *$//g" without_varying_parts > actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'blame gives priority to --diff-algorithm over diff.algorithm' '
++	cat >expected <<-\EOF &&
++	Commit_1 int g(size_t u)
++	Commit_1 {
++	Commit_1   while (u < 30)
++	Commit_1   {
++	Commit_1     u++;
++	Commit_1   }
++	Commit_1   return u;
++	Commit_1 }
++	Commit_2
++	Commit_2 int h(int x, int y, int z)
++	Commit_2 {
++	Commit_2   if (z == 0)
++	Commit_2   {
++	Commit_2     return x;
++	Commit_2   }
++	Commit_2   return y;
++	Commit_2 }
++	EOF
++
++	git -c diff.algorithm=myers blame file.c --diff-algorithm histogram &&
++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
++	sed -e "s/ *$//g" without_varying_parts > actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'blame honors --minimal option' '
++	cat >expected <<-\EOF &&
++	Commit_1 x
++	Commit_1 x
++	Commit_1 x
++	Commit_2 A
++	Commit_2 B
++	Commit_2 C
++	Commit_2 D
++	Commit_1 x
++	Commit_2 E
++	Commit_2 F
++	Commit_2 G
++	EOF
++
++	git blame file.txt --minimal > output &&
++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'blame respects the order of diff options' '
++	cat >expected <<-\EOF &&
++	Commit_1 x
++	Commit_1 x
++	Commit_1 x
++	Commit_2 A
++	Commit_2 B
++	Commit_2 C
++	Commit_2 D
++	Commit_2 x
++	Commit_2 E
++	Commit_2 F
++	Commit_2 G
++	EOF
++
++	git blame file.txt --minimal --diff-algorithm myers > output &&
++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > actual &&
++	test_cmp expected actual
++'
++
++test_done
 -- 
 gitgitgadget
-
