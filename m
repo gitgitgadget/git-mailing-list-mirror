@@ -1,146 +1,87 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6191E34CDD
-	for <git@vger.kernel.org>; Sat,  1 Nov 2025 14:59:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2E5199939
+	for <git@vger.kernel.org>; Sat,  1 Nov 2025 15:16:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762009199; cv=none; b=UYgIWgiL6YUQyAtCbZLO3W5yUzz1EhVrEf86mg/KZor44uOoVJwzp1qFiddiKoHGIE1vienLJvGHgzNn/QupRVAXh1AO3A4/cwsAIjS7eBbwa6DUEI6jITUh6OvlL+1jv6yqFl3BSDJjh3BetDzIXoem12Py96OG1I5cBUC/TQM=
+	t=1762010199; cv=none; b=piRsjCQnULm4DnNwviDCkS3mqGhtQ+ocHQchEDiB7VW8nvvKFwdpj3RfRiytys+PcTsUcZ70+62h5Ep/Gcw4zumINWF25moNC59OXGtNs4Ad2oY+PC41C4o1I6YMOvgKSoE9bsqFfXrAfYMXEwGqQPxJWDVgjRrgWzStcsIiUHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762009199; c=relaxed/simple;
-	bh=GcES4ifcpjJzTlDnCI5j68prZIyODUIn+W3Jy/twsVY=;
+	s=arc-20240116; t=1762010199; c=relaxed/simple;
+	bh=n74+Q8lNeBC/Cp27XpX+RycKWhegnV+urvP3STv7zEk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jPtnUi01Vr+u0VDtgkHqZfJZkNc80djp45PfxoJ44kI31J1amomKorT41aWrip6FYZ4exKJHDhKi8o+O9JHCOfBIx9SNd/GU2O+uzOYSDCbhjA0k1nDq83DBDZKMq3TfJWJ1SroIepYuQAfF8r5eZIUVAYm/2+/UBKL5yEkhpNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VaW8DeFp; arc=none smtp.client-ip=209.85.218.50
+	 To:Cc:Content-Type; b=cCBwqprRXktwMFrHxN48STBfJpadFFZuPO1fACbq8OwMIMOh+XxFGiooN/r1OKXgulv9NIIDFiEBcAFauaaS3o7s4z/gOs8LKLQSZNgPZG38/1R5Xw8clnIxKVDTwO/VU7Lthi8Xpg1BLyAyLsgpLGs/l8DdG753d1ER1dL8kpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aWHW5MAz; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VaW8DeFp"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b4aed12cea3so590226866b.1
-        for <git@vger.kernel.org>; Sat, 01 Nov 2025 07:59:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aWHW5MAz"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b6d3340dc2aso843781366b.0
+        for <git@vger.kernel.org>; Sat, 01 Nov 2025 08:16:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762009196; x=1762613996; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762010196; x=1762614996; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SOlBNfPYo053Fcm/z+qTbjySEFNTfgh3kDRpBA4pNg8=;
-        b=VaW8DeFpySvt0GktRwggGydT4YGXjT+Zz61vezSfHBv5IKscwEkVnV8vheDx+o1cYB
-         g4hFZ+PnVha0Ay7h+kcUG2CVVcMwcHgT6Xe7DpucADw9MhIzwBNsE515ByfDeLjkyofa
-         acpSLhrXI+hCjZGqo8Bx0HVIVxyMUKLJ2s4XH6xt95tlmtBJr9CtFBk/DOvs3TOg1/OC
-         IYxiLR37SlzZfjuvjwUJoSiMAp4irf+O2HHsNxJJTRjLkT/jMScf6K7sbQ9srAOM3X7b
-         A9Tfzqklew3F0lCdcLNJlYGgcZM8eoao/ZZyscNmqq+PUPx8RxTfcjktRU0o6W2nUGbK
-         ZLag==
+        bh=9jDX8GsnSh83mszYDnp87zyJQslztXFURp/PIJE1zbU=;
+        b=aWHW5MAzakaVYFJ15AODy96yWPE1/z5ZLgu7q3Y/O1S7qr79L5kVk8sYkK2MwFRh63
+         V0PYJotzSlCsMfDncGCTjDpG3VK+z1x9ItiDWCVX3NlpR4KfKkMWw0io3gOU542aB2RK
+         m7vgNYnvc/JOIAIoYStAv7+WfkCAMHsW9cOXrPTeS/wmJthiwDoef2eaSswpCW12wCaf
+         /Y8uSSHW3b3F4yjhc9a7MX6TO4MEKw+nX7GdV+nzw0Pc9QJb/yEE/VGUg+cyB/MaQuqr
+         M6/IZ/jRBGjht646Bp1SoKStJHECHhM1FB8kAmFkZn4n20nbvDuH/jh7AboS1n9MJVFh
+         VFGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762009196; x=1762613996;
+        d=1e100.net; s=20230601; t=1762010196; x=1762614996;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SOlBNfPYo053Fcm/z+qTbjySEFNTfgh3kDRpBA4pNg8=;
-        b=HgO/sHIYJYjhOPU6+sVM+nE246Y7XIWm8q4RiCo9vNy67Pfi3BPZ13jIFwpZAa1Sk6
-         OqKZ8pDTEShoCyzu0F24QQfhgOdp/xhQf/17uRypNOZfUVQIGCl7NhL3t7Na0EFwnvWP
-         B3uAGOjw3/4F9Dqc7zW3fi2uLZfmwjWGHQ+kMQW3uY6EExT8DS+7x8CjP/t4a7LctRIB
-         aEsw3VEphdl5Z13jXyxuAb79hejnVwZJcFqAns7+evtPhVT0oZUgQ7btrm/agBQanqhp
-         XwgjEHHYrA4nH1D6+WArA/Rr5Ltz0TBZm5h3j7vjJj+dJg32kRV4mgo0nA3zwvbyl59w
-         QZAA==
-X-Gm-Message-State: AOJu0YyB+Ox0So0XIo7LpcrMJR7hkZ7nE50Dz0nqRXfeUmV1nC65+16D
-	7CMoWMeE0jcZhF+9Xn/Jcr2pm7F+DoAvTi2bYGpuL6xRqoWPCKlR7pCQtylJn8vRIYgP3hSFIuF
-	lsnoEC5MCvTyEAdPVRMtE2Rshp5aO529iyFGH
-X-Gm-Gg: ASbGnctnmjoEK+NyXHtQU+yN2yO9yAwAl2XpTqQjcdsQ6rgF4OVs+Tk5OaHpPuHhv0b
-	Xrp1u7Al4t1bkTh3DrAhGzgdWgXjefCWqSx/jarIJkORGus73yfHns/T7vP759lWzjAkCkXM6Kt
-	vx52e4QWH3o2LIhVPUuxvl2px5+vRmXt3uPlMd+/zECwgU1pjQbq0CqeGkDR4iG1VVQ+el9gT0b
-	CrH8o8drQ8/+MEXBMEHYSErU1XNVfZLvxA3r61eOIqbALwxpxiGAnwdTxB8x6o36Uxd3kM=
-X-Google-Smtp-Source: AGHT+IFltj422oqPtbiOzLWJX8DxCecb0lZY9oCb/FbAEaOqdy4WH/pluzjB3XtNc6NFHXmdMddK0OnfSWlue19H5Xo=
-X-Received: by 2002:a17:907:728e:b0:b4b:dd7e:65ea with SMTP id
- a640c23a62f3a-b70704c3e7fmr714300866b.35.1762009195512; Sat, 01 Nov 2025
- 07:59:55 -0700 (PDT)
+        bh=9jDX8GsnSh83mszYDnp87zyJQslztXFURp/PIJE1zbU=;
+        b=e/RsCo/0BMA2tEAVOn+5c/uzGLuqGlbY+hbhnromMGbB9j8HgXnZmtGYm/KW7KB38+
+         WuN3uXkxpM9o1+PU/N88JO7Yeip8N7DQBEUYj3OSu5DVK5AFoIdPU8YuMHsclKTIv8/k
+         gqWs4i7/Cn2dmP4J2AyL27qV9rzy0TtkqcYS/kPSAEi9jYl9xKejZCbvsBKnvfw0y5JF
+         x8XMeofANCQBQP2h/IjmJIt3R97hIPoXEGXIVrqdqrlTx00JksBfyHLZRENNeetDVdMO
+         rDOHCwFvVr64DJJJd6DwAB2/McOz5PeaQTD0MfPeMmrQUxaFG1mdMY2Tsb0LiovSl/cO
+         L3Kw==
+X-Gm-Message-State: AOJu0YzwAX6JOhEJaTzecvQWaLbEbbrgGIRJlQGFoQqcbsDZePVUiAg8
+	sf67iaYBhX5q0KzeitO1UqQC7TqwP1tzphxgZ6YicVwuIezLd11CjtLP1MYDQ0prOYRwAKtnO8i
+	u20JV++15CenDpJgD8UbSNmDSzepgdGE=
+X-Gm-Gg: ASbGncuE/yw6o6kTH6w5QbMYk86OJ2/O6vMhi5EeJeRn69nTpl9m7PlE5x5x3q0hA8W
+	7cZHRTdKVIGR6Czck9vG97UBYzhM4MumDS2R/midDtgv7twD6MeAD7cgDyE5y0dsAIFXcRlETf7
+	VljZpp+UV/I0TlOWupPDyVmOQzxBv/WIvHViNhFKCpyhQnN4vs1JVMU85+1O6wW1ZAQARRqdzSm
+	exGZFaKj/7rqX9nqbFW6t6Yzm5IfR1eH6DKzrAhnztuov6DCthJCbRCJW1jfnOhbVGHwkE=
+X-Google-Smtp-Source: AGHT+IHu/aQsmKVraxOxqkgShvUV6XhMSGCx02ZcVU8f6b5Bmv2MwaRmB4WeRNHQnQQlb5855/wDSSn8YomRlsCqcW0=
+X-Received: by 2002:a17:907:1b24:b0:b6d:3e23:b68f with SMTP id
+ a640c23a62f3a-b706e07b096mr928823166b.0.1762010196004; Sat, 01 Nov 2025
+ 08:16:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <q4heOh8stc94r_P5mX-tucCyqQ1JdGP2dJ9Dot3WTyDboRWsboWMAIoCQIXuyuRvNRmN5AGQYjhmAnjuxgOXNooUDjPAEEvKPc2k_DCDEtY=@proton.me>
-In-Reply-To: <q4heOh8stc94r_P5mX-tucCyqQ1JdGP2dJ9Dot3WTyDboRWsboWMAIoCQIXuyuRvNRmN5AGQYjhmAnjuxgOXNooUDjPAEEvKPc2k_DCDEtY=@proton.me>
+References: <20251028081232.3068147-1-christian.couder@gmail.com>
+ <20251030123332.3337684-1-christian.couder@gmail.com> <CABPp-BG_PhbFOS-Tre249nzMyc5YGK1yHMVgo8XGMq7Y4LewWw@mail.gmail.com>
+In-Reply-To: <CABPp-BG_PhbFOS-Tre249nzMyc5YGK1yHMVgo8XGMq7Y4LewWw@mail.gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Sat, 1 Nov 2025 15:59:43 +0100
-X-Gm-Features: AWmQ_bm0Nn3P_SCHBAsjevjX8MMaDGjQ8ZmeLqv2oTWae4Jsgo_JzL5uxKB4U7Q
-Message-ID: <CAP8UFD0CqC2tgERkPHuoOPO2ON9NNw_C1R-6UpBXjpgYEM8yxQ@mail.gmail.com>
-Subject: Re: [PATCH] fsck: use starts_with() in fsck_commit()
-To: keita <rudykeita@proton.me>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>, 
-	"outreachy@gitgitgadget.github.io" <outreachy@gitgitgadget.github.io>
+Date: Sat, 1 Nov 2025 16:16:24 +0100
+X-Gm-Features: AWmQ_bkLYEF6O2859LQvF-yjqFcLqelel9I42DqT-WCPAk9XUJGtxzdtyBeLExM
+Message-ID: <CAP8UFD0ZV56pRtOBUT-d7=n_Eyu0Pbzy3+i7v_p=OrqRMB6zYg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] fast-export/import: cleanups and translation
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Fri, Oct 31, 2025 at 8:37=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
+ote:
 
-On Fri, Oct 31, 2025 at 11:01=E2=80=AFPM keita <rudykeita@proton.me> wrote:
-
-> From 30136adebaffb97edacae2c58c4ea491e39e3f5b Mon Sep 17 00:00:00 2001Fro=
-m: Songiso Cooper Lyambai <rudykeita@proton.me>
-> Date: Fri, 31 Oct 2025 23:45:23 +0200
-> Subject: [PATCH] fsck: use starts_with() in fsck_commit()
-
-If this is related to Outreachy, it would be better to put
-"[Outreachy]" at the start of the subject.
-
-> Replace manual buffer checks with starts_with() for safety and clarity.
+> These all look like simple sensible fixes to me.  The only problem I
+> found looking over the patch is that you undersell the benefits of one
+> of the changes in the commit message, but that's not even really a
+> problem.
 >
-> This avoids buffer overreads and follows Git's idiomatic style used
+> Series looks good to me.
 
-It looks like the above sentence is not finished. Maybe s/ used/./ ?
-
-> Signed-off-by: Songiso Cooper Lyambai <rudykeita@proton.me>
-> ---
->  fsck.c | 124 +++++++++++++++++++++++++++++++--------------------------
->  1 file changed, 67 insertions(+), 57 deletions(-)
-
-A lot of lines seem to be changed for a patch that wants to use
-starts_with() in fsck_commit(). Let's see below.
-
-> diff --git a/fsck.c b/fsck.c
-> index 341e100d24..7172c4ff1c 100644
-> --- a/fsck.c
-> +++ b/fsck.c
-> @@ -921,67 +921,77 @@ static int fsck_ident(const char **ident,
->  }
->
->  static int fsck_commit(const struct object_id *oid,
-> -       const char *buffer, unsigned long size,
-> -       struct fsck_options *options)
-> +               const char *buffer, unsigned long size,
-> +               struct fsck_options *options)
-
-If a patch does other things than it's main goal, it should be
-mentioned in the commit message that it's doing those other things
-"while at it".
-
-Anyway when I look at fsck_commit() in "fsck.c" on 'master', it seems
-to me that the function is properly indented. So I suspect that your
-patch changes its indentation for no good reason.
-
->  {
-> - struct object_id tree_oid, parent_oid;
-> - unsigned author_count;
-> - int err;
-> - const char *buffer_begin =3D buffer;
-> - const char *buffer_end =3D buffer + size;
-> - const char *p;
-> +    struct object_id tree_oid, parent_oid;
-> +    unsigned author_count =3D 0;
-> +    int err =3D 0;
-> +    const char *buffer_end =3D buffer + size;
-> +    const char *p;
-
-Here also I suspect that the indentation changes are not necessary.
-They are also making it more difficult to spot actual changes like
-'buffer_begin' being removed and 'author_count' and 'err' being
-initialized to 0.
-
-Sorry I am stopping my review here as there seems to be too many
-indentation changes that are masking the actual changes.
-
-Please make sure you send patches that don't change the indentation
-for no good reason.
-
-Thanks.
+Thanks for your review!
