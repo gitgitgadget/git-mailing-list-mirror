@@ -1,169 +1,113 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE6770810
-	for <git@vger.kernel.org>; Sun,  2 Nov 2025 03:58:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD60813635E
+	for <git@vger.kernel.org>; Sun,  2 Nov 2025 15:58:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762055919; cv=none; b=Nlp90jtbGviHQFKB9frus1MleYlQmfxFf5hhaxwLKeIje7q8ZRRlQgl9OR/IBhi7K/TLpTtbu+PMPdEum2n8bADt+4nnSLVCHnVnIcB/QfZRgRAMS6ij+S/raS/wFGZMFuTGMMVghmQoJR5emOdOkBooo3r+u//RhhtCtIZczUY=
+	t=1762099095; cv=none; b=Xkx+Ev+L6UzXxfIUxmU389xkRJMA1mDnVUQjwYgRB5Yp39BBBxe0gFChEyf8UNasVMCZHZaVprUahBd9TbF/N4h0IDtwBAAjdzjG8Ke/ZK2dfW9k22clV0SRALHjWaH0tNyMPlplNKH04AJ58CvEswRirQFO1oIiDLH7HZIXQW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762055919; c=relaxed/simple;
-	bh=37mdxYNpc4wC57SsD5u713bb2jHy/QxpPphRDCBzLoE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UWuXEZrCJSTmyB+zoFi2WpGqjezzTJfCJwdxu2UvnRo1Az1NqII7R0TCKtuKMfpt0WrbuZ3ZRFmXT2cArfdTKMNvT/OEbKI8SWeIztUh0nYHBUbqXzuFCObZDyK1Ezh44sWBP9hKguVaaAiJ1LRMCatqwvgvs8P701/iUWdJaM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OqMhgf67; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JzseKZME; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762099095; c=relaxed/simple;
+	bh=7oKdMnn1WnuuhAdqGMWToP9FpYARaDO9GQv0TBUcwto=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jagyFtK+4/iFL1bw6FBMZQZW3ZXb1fbM4M759OG3qQynB7VxAhPgDv1G7IsZy4pyvisyvDyu/Pt6FMjdEJ0/hjsCwdMiVXSNMeqgdYlYMXe5f8qsuw1NMW6UvzBgpSFwr2Vc9EFdwdXNSrWDMIJ3gkutwJQLkt2Vh/r39d92kg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=BguF5/ud; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OqMhgf67";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JzseKZME"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id B91A4EC01C4;
-	Sat,  1 Nov 2025 23:58:35 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Sat, 01 Nov 2025 23:58:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1762055915;
-	 x=1762142315; bh=c35q6h5zCOXtN1PaaP+KoNyeR0iRSXe7Gx1FD18FnU8=; b=
-	OqMhgf67ZODqk4mtc7SFLWr0WZC4Yumfhw63H/ov7t+rusMezOMONf+k8gs3RBcD
-	pSjMN25ac2RWPZezBOfBlolxG5I/8mE2WEVb05F67whSC++IU+72Idk+Gf9sjtH/
-	sAF+fxNUO5PSMFTW6U/z3n8hxnfPC+NyRyrupPNyXAa2DzRGgZYtG43SgBIn1I1z
-	bf5Hw7l/OGT1QyshWrDfY4Z87WTwb084QhtdVEru96EvyV+ps+HkVgKWdnixm3al
-	rmmsRq/oYiS+Nufku8MMkhVGJYwYe0BiWy66yxuZMZLU/fkYBYHR45dKijajwCY8
-	wFL2n3DP9nSxeqsXaE+Fqw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762055915; x=
-	1762142315; bh=c35q6h5zCOXtN1PaaP+KoNyeR0iRSXe7Gx1FD18FnU8=; b=J
-	zseKZMEXZagmH3PkAoflYcSQt7PI0k/8ibMUnZ6BCPZ8AhyoH6+bWqvK8cyqridE
-	unDfSFoG8GyefH87oZTAJtdwTyPHjr8YmRajLQuNa/DQWEWq/+STgBmWRaPZVsd7
-	tl7PkGDCBdFlnHB6gfd6vrZlQw+ZDdZlkUkNQ2VtwYYH7IrYSu/Kw/6cmI81iGZ1
-	v7IvUlOTT5CB83qTd7lfKJlVuBP+XWjaaYtHM54eIYLB3uQFXsbyncFGZZzAF/GI
-	DePwteEWWJpCsf49LXPQ74SoPMuxQLvPxh/RmmN/7ZtfG9WXJS36IHsDiTRwquho
-	er77AztySsycJ2cJKsorg==
-X-ME-Sender: <xms:69YGaXV7UHZajPMbBwcteyQgKwBL5zlkKeVrESWiUztjCX7fj0zXMw>
-    <xme:69YGaRHZrHpfLUkVxwaF8mwIGawqXHVWOmP2kNAVpPur50SuachUh5qS6Azi6n64B
-    cYkd1zoTmckRT3uVESaYvKPimRfYcMbzj5fVgXCmSZA11eATDnjon8>
-X-ME-Received: <xmr:69YGaTdvX5UQcHVLvjHNjtNsZvIWBZ6B9nXZI1a6GIm9FhYwoOk_wriAYwGfwe8lGHMnQaqFHhCCvtJMQYzpHOSwbFYvtZltlKr5>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeegvdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpefhtedvjeehudehgeelheefieevtdegleefvdfftdevtdduffeikeeiieej
-    vdelhfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptg
-    hhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhhu
-    ugihkhgvihhtrgesphhrohhtohhnrdhmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepohhuthhrvggrtghhhiesghhithhgihhtghgr
-    ughgvghtrdhgihhthhhusgdrihhopdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:69YGaSIePpSVbdhyeRrqD_5xfrM51fVTRmkbsij-_I4FAIatUf1Cgw>
-    <xmx:69YGaYGoFoeShAC7fDAeVHRqbupyd-xViIB-7qvQf55HAxk3GwF2Xg>
-    <xmx:69YGaVDmZgyg38-p22XgOpJlZr7qgnhisiWfcGUc4cw5EDQpBGKmKA>
-    <xmx:69YGab9KP7VH2hL6osNQjORY_M4wFmjbp85PJDXQy3kZjZ8tFRtJ9w>
-    <xmx:69YGaVITfEZgfhAx9ubOJMWQGjdY-8I-mlAvOufiw_zz7KQuZMcDB3Wv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 1 Nov 2025 23:58:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: keita <rudykeita@proton.me>,  "git@vger.kernel.org"
- <git@vger.kernel.org>,  "outreachy@gitgitgadget.github.io"
- <outreachy@gitgitgadget.github.io>
-Subject: Re: [PATCH] fsck: use starts_with() in fsck_commit()
-In-Reply-To: <CAP8UFD0CqC2tgERkPHuoOPO2ON9NNw_C1R-6UpBXjpgYEM8yxQ@mail.gmail.com>
-	(Christian Couder's message of "Sat, 1 Nov 2025 15:59:43 +0100")
-References: <q4heOh8stc94r_P5mX-tucCyqQ1JdGP2dJ9Dot3WTyDboRWsboWMAIoCQIXuyuRvNRmN5AGQYjhmAnjuxgOXNooUDjPAEEvKPc2k_DCDEtY=@proton.me>
-	<CAP8UFD0CqC2tgERkPHuoOPO2ON9NNw_C1R-6UpBXjpgYEM8yxQ@mail.gmail.com>
-Date: Sat, 01 Nov 2025 20:58:33 -0700
-Message-ID: <xmqqseexw0eu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="BguF5/ud"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1762099084;
+	bh=7oKdMnn1WnuuhAdqGMWToP9FpYARaDO9GQv0TBUcwto=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=BguF5/udcfG6vSjwrSkNBIWEW7B94+j6d0CZ1WcifLpY6Z9nCbUqxPkYI1SWbtzc1
+	 fOUDhdafr7xo1TKi06Y4aePMX+dYaMup6k2SRtbPvNTRWawhNmOXvMYJKRyld7PVSt
+	 Pocwo/MqMvNUKGGL8zvlFqSHFxQdA0U1iK9QBCLi5rELStl/KKjg2ax5Yjn3ZrZR46
+	 B2ZnSTeC27gYrMs0AZCrMIaSis1FAQCjvHlfrosV9Qn83D0vNuHcsXvzEsOM6KsTTW
+	 PL9JkGUSYlUv4ElZ6bc3kutPRN4eufvQaehotetKfLhlvCLfWKZZF6uTw3sit7o4TY
+	 QzFJbfFjsql/brUp7wcW1K6zXZzu0GQF8o2Go68MJ4oVBOBJh3gYs/jd0RUGc1c1fI
+	 y/niMPlOmtyif2fHwaJcXNNHVAVVSrBVXQ8k6s8W+V2sgrEAeD1Esf/hW1BPb+LR2P
+	 a1YsSw0HDPLJ5Ssz4KEd6RayStREiqvSMH0N08Ve06U+Q0LKqcs
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f137:1a1:be0f:4e87])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7AFB820037;
+	Sun,  2 Nov 2025 15:58:04 +0000 (UTC)
+Date: Sun, 2 Nov 2025 15:58:02 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Thomas Klausner <wiz@gatalith.at>
+Cc: git@vger.kernel.org
+Subject: Re: CVE-2024-52005 status?
+Message-ID: <aQd_iisOrwX909Fr@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Thomas Klausner <wiz@gatalith.at>, git@vger.kernel.org
+References: <7mfgh4ufx6wr3ict2ee6utg3vvfpiy6xi3rfyfu4yionmcwu6a@yry3kefdxbwf>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ojv/hKmNqaUnxPfF"
+Content-Disposition: inline
+In-Reply-To: <7mfgh4ufx6wr3ict2ee6utg3vvfpiy6xi3rfyfu4yionmcwu6a@yry3kefdxbwf>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--ojv/hKmNqaUnxPfF
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
+On 2025-11-02 at 00:48:53, Thomas Klausner wrote:
+> Hi!
+>=20
+> I'm trying to find out more details about CVE-2024-52005 so I can
+> handle it correctly in pkgsrc.
+>=20
+> https://nvd.nist.gov/vuln/detail/CVE-2024-52005
+>=20
+> points to
+>=20
+> https://github.com/git/git/security/advisories/GHSA-7jjc-gg6m-3329
+>=20
+> which lists many affected versions, but no fixed versions.  I only
+> found one reference to the CVE in the release announcement for 'Git
+> for Windows' 2.47.1(2):
+>=20
+> https://groups.google.com/g/git-packagers/c/ZWDc6K6tYcc/m/VxikezMeCgAJ
+>=20
+> The CVE description sounds like this also might affect non-Windows Git
+> versions. Can someone please tell me if this was fixed, and in which
+> version?
 
-> Hi,
->
-> On Fri, Oct 31, 2025 at 11:01 PM keita <rudykeita@proton.me> wrote:
->
->> From 30136adebaffb97edacae2c58c4ea491e39e3f5b Mon Sep 17 00:00:00 2001From: Songiso Cooper Lyambai <rudykeita@proton.me>
->> Date: Fri, 31 Oct 2025 23:45:23 +0200
->> Subject: [PATCH] fsck: use starts_with() in fsck_commit()
->
-> If this is related to Outreachy, it would be better to put
-> "[Outreachy]" at the start of the subject.
+We determined this was not a vulnerability.  The Git for Windows
+maintainer disagreed and listed it as one nevertheless.
 
-Plus there is a lot more important thing to be said for this part fo
-the lines that you forgot to point out.  They should *NOT* be part
-of the e-mail body.  The Subject: header of the e-mail seems to be
-set to the same as this line, so the sender only needs to delete all
-these four lines from the e-mail body and correct the subject.
+The problem is that on some terminal emulators, including at least some
+of the ones available on Windows, you can execute arbitrary binaries by
+creating a hyperlink via terminal codes and having someone click on it.
+That is, however, a bug in the terminal emulator and not in Git, since
+clicking a URL should not lead to code execution.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
->>  {
->> - struct object_id tree_oid, parent_oid;
->> - unsigned author_count;
->> - int err;
->> - const char *buffer_begin = buffer;
->> - const char *buffer_end = buffer + size;
->> - const char *p;
->> +    struct object_id tree_oid, parent_oid;
->> +    unsigned author_count = 0;
->> +    int err = 0;
->> +    const char *buffer_end = buffer + size;
->> +    const char *p;
->
-> Here also I suspect that the indentation changes are not necessary.
-> They are also making it ...
+--ojv/hKmNqaUnxPfF
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Does the preimage even match our code?  There is no C code in our
-codebase that uses a single space indent, so I would not expect
-these 7 lines of preimage to be found in fsck.c or anywhere in our
-codebase.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
 
-Hence, another more important thing to point out is that the patch
-would not apply.  A suggestion to the author (and other aspiring
-folks who want to become Git developers) is to
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaQd/igAKCRB8DEliiIei
+gfibAP0a9JBEgDBNt6gVAgkXYj5UIbts7HKve+0lZj+tWz5gPQD+NVj/XG2AfufK
+GDO9bbTn3oTPb8XgK2ks1JVkCCADqAA=
+=XpbC
+-----END PGP SIGNATURE-----
 
- - Send the patch you are planning to submit, but not to the list
-   but only to yourself.
-
- - Subscribe to the list and then observe the traffic for a day or
-   two to find patch e-mails from others.  Find other patch e-mails
-   from each of these people at https://lore.kernel.org/git and pick
-   the author who is highly regarded.
-
- - Compare the e-mailed patch you received from yourself, and the
-   one you received from the list written by that highly regarded
-   author you picked.  I am reasonably sure that they do not have
-   the e-mail headers repeated.
-
- - In your clone of Git, check out an appropriate target; if you are
-   fixing something, you want to use a tag that corresponds to a
-   released version, if you are proposing a new feature, you want to
-   build on the latest released version.  Use "git am" to apply the
-   e-mailed patch you received from yourself.
-
-We may want to #leftoverbits add something like the above to the
-MyFirstContribution document near the part that it teachs to send
-patches.
-
-> Please make sure you send patches that don't change the indentation
-> for no good reason.
-
-A good suggestion that applies much wider than the indentation.
-Your patch should not do anything related to the theme of the patch,
-whcih you explained in your proposed log message.
+--ojv/hKmNqaUnxPfF--
