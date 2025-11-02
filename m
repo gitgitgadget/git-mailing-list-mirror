@@ -1,96 +1,203 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25334199FBA
-	for <git@vger.kernel.org>; Sun,  2 Nov 2025 16:19:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C6E199FBA
+	for <git@vger.kernel.org>; Sun,  2 Nov 2025 16:20:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762100402; cv=none; b=kbB+IFzf5GvUC7PTC7no1LA7SCUrrRcLg1xaCV8AdOIKZzQNA0e2EvhozCfPMsTm1YQ4MaklUhR08PDEchPqvVGuuxeFvhf4Uwwbvsco2tIWl5vuU22Vslli6wukYdGUxAcbrPKgUBzEDCpZBfEeZj3HpXMZCN2xLNVdAtdS4Ss=
+	t=1762100443; cv=none; b=vFp+Z1dCDzS9jdk3h1gc4fRvK6KKoToNajzIfnqArFo7JL1uR7oW1IbOIbA8LcVng6dztg/VbtDL30n0VhmkQgNNA+Wci+vbcBcauWeLI8wm3OHNTyXKrqUILXEyGdkeKN2/9pQ4y0SEY6pDOvL9tYCBcKOi5IrWNP7uajiSFvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762100402; c=relaxed/simple;
-	bh=vZyti3JN/P2zqQ26QBQ9TgnoshV24pvU81AWKKLaC3s=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u6PN2A7BXXUdad5eiYn8UdwPTB8ne+/XZlbbq63E2/8ImsRj6j7TgPSunzjm1qkF/iCafT/hO9CtZj59qINEhQsyeHcjFpyTv2BaTS9oueBYNlmbHVBesbXZ/+F3JUto2Wjj5QRV6BkeF4rldG2ZJmEbF1W364Zh7rqv7XCl97E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 5A2GJhSJ2530779
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 2 Nov 2025 16:19:43 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Thomas Klausner'" <wiz@gatalith.at>
-Cc: <git@vger.kernel.org>
-References: <7mfgh4ufx6wr3ict2ee6utg3vvfpiy6xi3rfyfu4yionmcwu6a@yry3kefdxbwf> <aQd_iisOrwX909Fr@fruit.crustytoothpaste.net>
-In-Reply-To: <aQd_iisOrwX909Fr@fruit.crustytoothpaste.net>
-Subject: RE: CVE-2024-52005 status?
-Date: Sun, 2 Nov 2025 11:19:37 -0500
-Organization: Nexbridge Inc.
-Message-ID: <01a101dc4c14$7f8f8000$7eae8000$@nexbridge.com>
+	s=arc-20240116; t=1762100443; c=relaxed/simple;
+	bh=WrIS8H/P+/v14bMgq73HihGTs2zJWg9OMu0fN/5LYEY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lz6zFJB7OBjRlPvpMxlmOZELMcjwbFE8VCV9KcX2frULY6efuRPIQyV3cT30Pd+Qvhw3C89gd8rhc2xs4ohggY9TLSCzkxjAfbYLtbtQXvjw0i2BhqSCx1Rf8GOijUGmYs/4Kfl8DYZZc8bZMmZsT7s+ssL7epBEAGlbXeAJCXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LbSTde1I; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LbSTde1I"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-b6d2f5c0e8eso763905466b.3
+        for <git@vger.kernel.org>; Sun, 02 Nov 2025 08:20:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762100440; x=1762705240; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DXyiTQEQS+MFE7Jb/5cxZzlB9t+PNhvlt5k7zBq/wn8=;
+        b=LbSTde1IbDVJDodREEAaf09TdaEhYUGvoPiW4Hbf506j5L7+PbTunLhyNtvh9MMx19
+         J9wcUVQfNEruFHexZ4buO3xZ/ZOGccTIv/7t6VKxyldCqQv/vQFxhClTMWQLg04iUm8y
+         lmv+bVbNxU71U6ztNCYvFjH5o4tDtl7zvml2S17YsPeBpXSsTi70+lD43CaeWsLN35Zh
+         E876yTaN69smQV4pXzWu2loHcbTaFN8WF9EhM2K4DGaE8XXbcNWgbAbmDPDIFoVQ9sZH
+         uxPUCZ+BuE4SdRgcUuRgcNzPrSyGA78Fb/nperxx9eNgu2EwebIe/0Q+pqidblYSgMCy
+         +tqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762100440; x=1762705240;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DXyiTQEQS+MFE7Jb/5cxZzlB9t+PNhvlt5k7zBq/wn8=;
+        b=R3xaAaLAlXKBcAcbaDyEu+OMeXHReRuKnz9bLId3rSNYH5eSkkL6JywbG7j85Ss0DP
+         LwFLU9yjPOZA/HyEKqwC4JBLwpigF+YoQK+VP5Eqw5JycIEAlBgdd1ANxBiJgVXO2hSF
+         iARm4ozjvytHc776pvBsdGCqyMahZ+dja9xkcOtV41yAU1oR05/0pww8ocSq/ZnCFxGX
+         eIHB0a7qEa4uMjeTw1K6yN3W0t3xQ7nlsqC/n3kBC1ybxgFVT07/40JJLxAKWW0O3CV/
+         CLHAdkGIQkc2/4mSbcdQTmZxIlwP80infaB+T5vG/u5fwCTtolyvCbMZ3CieFffni9MM
+         QH/Q==
+X-Gm-Message-State: AOJu0YwSauw2mBm0QHm3/TesPmr1Qg3hSX2RrM3LBnkqmVP8H7NvYzWb
+	gA9Hd88jY7JLf7s+B+d3qPykQfElmgCRlrC3dTLiWo/I/dLJwJxV/GGAL0qbzL+M9iOexpC1WCc
+	sP3kRjeRSBOM44ECdVjwHqtoM8CuhR8M=
+X-Gm-Gg: ASbGncu8SvkIlLCy8ByaoluisVZHIzZ3QLwVFkTRY08LP781oVXbNLPfIY/TVrxT6BX
+	WiAwCGxJ0uFcuouG/xGEtJdbplJjOE18oOECuuRkkB05HNo0Q3wvLeWaMbMq2wV+CK14qC+ufzQ
+	SCK9PPXbarGYCHmmyKyuyeSgMCtxPiS2GmCmh2lUGYRoX/slBpdbKprrUpWEwLosq2RD34+xO6B
+	plQkAAkOaft5aAPo9p9dIFCqVWzNju78L0EXa3OGiqHQuTnm+baiZoPYwSw6FF2U0tn3ICkEgcb
+	ROMJ61ylS2xa59GFPlessRV8b1XMiw==
+X-Google-Smtp-Source: AGHT+IHH5lBPh5t9RkgIsOKGEMHeD/QcUCT+QJIf/ypZ/ItivNHn5zRRPRIRh6g0VYybccss1CIZDfjt8yHzzfKD34E=
+X-Received: by 2002:a17:907:9403:b0:b40:6d68:349a with SMTP id
+ a640c23a62f3a-b70704dc16bmr962014166b.39.1762100440129; Sun, 02 Nov 2025
+ 08:20:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+References: <20250501214057.371711-1-gitster@pobox.com> <cover.1759094936.git.ben.knoble+github@gmail.com>
+ <5f7057c236c9af3152bd531eed2e4ad0ac35e291.1759094936.git.ben.knoble+github@gmail.com>
+ <e8755a04-bd44-4ead-ba44-c603bffcc75e@gmail.com>
+In-Reply-To: <e8755a04-bd44-4ead-ba44-c603bffcc75e@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Date: Sun, 2 Nov 2025 11:20:27 -0500
+X-Gm-Features: AWmQ_bm_mmFtJXT4cVZNljrMrtnt9UlIFDFuWJE0UHUTMj7tljCN-G-_PxI3fkg
+Message-ID: <CALnO6CC=FFuMmBfJPzunUqDOBMBtmXm3i73y9M9LgRrhxzrs9g@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] parseopt: values of pathname type can be prefixed
+ with :(optional)
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Noah Pendleton <noah.pendleton@gmail.com>, Patrick Steinhardt <ps@pks.im>, Thranur Andul <thranur@gmail.com>, 
+	Michael Grosser <grosser.michael@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHgfvU8V4Lk27wIa0Kpb1rFsOReWAEbR8sStM5QCdA=
-Content-Language: en-ca
-X-Antivirus: Norton (VPS 251102-4, 11/2/2025), Outbound message
-X-Antivirus-Status: Clean
 
-On November 2, 2025 10:58 AM, brian m. carlson wrote:
->On 2025-11-02 at 00:48:53, Thomas Klausner wrote:
->> Hi!
->>
->> I'm trying to find out more details about CVE-2024-52005 so I can
->> handle it correctly in pkgsrc.
->>
->> https://nvd.nist.gov/vuln/detail/CVE-2024-52005
->>
->> points to
->>
->> https://github.com/git/git/security/advisories/GHSA-7jjc-gg6m-3329
->>
->> which lists many affected versions, but no fixed versions.  I only
->> found one reference to the CVE in the release announcement for 'Git
->> for Windows' 2.47.1(2):
->>
->> =
-https://groups.google.com/g/git-packagers/c/ZWDc6K6tYcc/m/VxikezMeCgAJ
->>
->> The CVE description sounds like this also might affect non-Windows =
-Git
->> versions. Can someone please tell me if this was fixed, and in which
->> version?
+Hi Phillip, apologies for the long delay.
+
+On Tue, Sep 30, 2025 at 11:26=E2=80=AFAM Phillip Wood <phillip.wood123@gmai=
+l.com> wrote:
 >
->We determined this was not a vulnerability.  The Git for Windows =
-maintainer
->disagreed and listed it as one nevertheless.
+> Hi Ben
 >
->The problem is that on some terminal emulators, including at least some =
-of the ones
->available on Windows, you can execute arbitrary binaries by creating a =
-hyperlink via
->terminal codes and having someone click on it.
->That is, however, a bug in the terminal emulator and not in Git, since =
-clicking a URL
->should not lead to code execution.
+> On 28/09/2025 22:29, D. Ben Knoble wrote:
+> > From: Junio C Hamano <gitster@pobox.com>
+> >
+> > In the previous step, we introduced an optional filename that can be
+> > given to a configuration variable, and nullify the fact that such a
+> > configuration setting even existed if the named path is missing or
+> > empty.
+> >
+> > Let's do the same for command line options that name a pathname.
+>
+> Sounds sensible
+>
+> > +Magic filename options
+>
+> I assume we're calling these "magic" to match to pathspec "magic"
+> options? I wonder if that is a good idea but I don't have a better
+> suggestion.
 
-If the code that dumps messages like this is localized, perhaps we can =
-run a filter that
-removes any non-printable characters (like \ESC) that could trigger =
-this. It might be
-switchable in some variable like core.filterUnprintableCharacters=3Dtrue =
-to opt-in to
-prevent this. However, some emulators might just see a URL and treat it =
-like a link,
-so I don't know.
+Yeah, best I could come up with.
 
+> > +~~~~~~~~~~~~~~~~~~~~~~
+> > +Options that take a filename allow a prefix `:(optional)`. For example=
+:
+> > +
+> > +----------------------------
+> > +git commit -F :(optional)COMMIT_EDITMSG
+> > +# if COMMIT_EDITMSG does not exist, equivalent to
+>
+> This doesn't quite scan for me, maybe s/, /, it is/ ?
+
+Will include in a follow-up series now this has been merged.
+
+> > +git commit
+> > +----------------------------
+> > +
+> > +Like with configuration values, if the named file is missing Git behav=
+es as if
+>
+> I'd drop "with" here
+
+"Like configuration values" seems strange since the subject is
+"Git"=E2=80=94other ideas?
+
+> > +the option was not given at all. See "Values" in linkgit:git-config[1]=
+.
+> > +
+>
+> > @@ -209,21 +208,31 @@ static enum parse_opt_result do_get_value(struct =
+parse_opt_ctx_t *p,
+> >       case OPTION_FILENAME:
+> >       {
+> >               const char *value;
+> > -
+> > -             FREE_AND_NULL(*(char **)opt->value);
+> > -
+> > -             err =3D 0;
+> > +             int is_optional;
+>
+> This can be a bool as in the last patch.
+
+Agreed.
+
+> >               if (unset)
+> >                       value =3D NULL;
+> >               else if (opt->flags & PARSE_OPT_OPTARG && !p->opt)
+> > -                     value =3D (const char *) opt->defval;
+> > -             else
+> > -                     err =3D get_arg(p, opt, flags, &value);
+> > +                     value =3D (char *)opt->defval;
+>
+> I'm not sure why we're changing the cast here (or why we need one in the
+> first place assuming opt->defval is "void*")
+
+It looks like opt->defval is intpr_t ? At any rate, I'm not sure why
+the const was dropped here either. Might be an artifact of carrying an
+old patch forward?
+
+A quick pickaxe search says the const qualifier is from df217ed643
+(parse-opts: add OPT_FILENAME and transition builtins, 2009-05-23),
+unmodified by cf8c4237eb (parse-options: free previous value of
+`OPTION_FILENAME`, 2024-09-26). The original patch is from
+https://lore.kernel.org/git/20241014204427.1712182-4-gitster@pobox.com/,
+I think, so may just be a typo. Will fix.
+
+> > +             else {
+> > +                     int err =3D get_arg(p, opt, flags, &value);
+> > +                     if (err)
+> > +                             return err;
+> > +             }
+> > +             if (!value)
+> > +                     return 0;
+> >
+> > -             if (!err)
+> > -                     *(char **)opt->value =3D fix_filename(p->prefix, =
+value);
+> > -             return err;
+> > +             is_optional =3D skip_prefix(value, ":(optional)", &value)=
+;
+> > +             if (!value)
+> > +                     is_optional =3D 0;
+>
+> I'm struggling to see how value can be NULL here as we return early if
+> it NULL before calling skip_prefix()
+
+Doesn't the "skip_prefix" above write into value? So I think if
+"value" is exactly the string ":(optional)", then after the call to
+skip_prefix it points at the null terminator.
+
+> > +             value =3D fix_filename(p->prefix, value);
+> > +             if (is_optional && is_empty_or_missing_file(value)) {
+> > +                     free((char *)value);
+>
+> I think we want to call is_missing_file() here. If the file is missing
+> then we do nothing which matches the documentation above - Good.
+
+Agreed! Missed this when editing the patches. Will fix.
