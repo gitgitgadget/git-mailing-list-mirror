@@ -1,73 +1,74 @@
-Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE23F22F74D
-	for <git@vger.kernel.org>; Sun,  2 Nov 2025 16:18:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038F2241679
+	for <git@vger.kernel.org>; Sun,  2 Nov 2025 16:18:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762100298; cv=none; b=L63NwUR4Y26TNo/5KBGSkT5MVvYy08VnKMxhgmvDa+EB/RYFh4qmMChJiOQofn30Hizqi0x6+f+HhcZ4mRNZkpicO7GCuBN/tPtzjmHu/ccIgoKpCIAYY8TXQ75AEZQep1HbI67D1O4X3INv7SVqgICv2jYZ+Ir6ouEbb9B8C5k=
+	t=1762100301; cv=none; b=eXYBbTlsfDX0XI6sjkumBryV6oFfX3L4Qw/5gEUi+/BXlHrBQ/OlCUQ1507m1S0Xa5fELs2YJ0uy3GElriZzDFBBaPwW/1gYV3ad1HdrkC+mxYet/3dAKOTL4pm+thwJWvnLIl23q10NmRx2RBSeLaAC2PVkyRceijG2F4ZHiHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762100298; c=relaxed/simple;
-	bh=bX68HOw4MfR07i7PIw4qULV9kXWh9Emzs284k7mOBgY=;
+	s=arc-20240116; t=1762100301; c=relaxed/simple;
+	bh=az9TNEqugCFux6XmgGXB1ZZpOV59pkO34Ypei2/0mv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQNfDadeVvfd5brYVBCyhGEHyH+PPpRJzmkdwAaCuKQMV8U8XvmGL59cJ0K7a78pm2gRRU819EqVz5w3NyysiTFhgib7IcKsIzD0XP8LadUbgOqaGddrG59z8EebpOy03z69W2St5+gsMXoVPjcV89ftYQcSPymP70EkzBtnNZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WhlYH+1t; arc=none smtp.client-ip=74.125.224.54
+	 MIME-Version; b=J8GvUZn2YHQq4wpgHiTzqNtFw2xYFiXGOFBrdknFEslgOpPkYo3OeSQnTh27AxnIgNjMhzduf3s9P6qt7CVnPmCrfdMO/SHQ/KBZnUg99P27/PVjLp1OluUcNzNZOm8J3tJF6iGEqb7xd9lk8oHBIgx1LHq6Mg0OtW2NBXerCbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dk8fswmx; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WhlYH+1t"
-Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-63e336b1ac4so5821650d50.1
-        for <git@vger.kernel.org>; Sun, 02 Nov 2025 08:18:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dk8fswmx"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7815092cd0bso48525687b3.2
+        for <git@vger.kernel.org>; Sun, 02 Nov 2025 08:18:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762100295; x=1762705095; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762100299; x=1762705099; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FTXUpCqqAAWX2y26qVlMIK5ou/bhG09xiZ2Nrux4ydQ=;
-        b=WhlYH+1tjdK1nLUQsz33GMahNl1DrPENDldJtHgaslQhdvHETYh4cbOUq70UPXAsG7
-         dFZVuuYnjObKgYD+CA/mjKdSNmXimyALU6/WWP4MFonzJtGUR2RiUj+CcNBqMK+xGVl+
-         NDZpJrbyiHrhW2Ei7ChOXquMeiU/R6ZzifzA9N2EVLIUpoa0VdQuAS+OJ6ewUSSbDEb3
-         X9ETP8eK0A4yNohXd0NpN7y7Qvxw94j+iW3j4MW9dr9lAzHCHsbAi59t7iu5SBbcrMyG
-         g30VwyKS9OBVkGG9qvs4d9V2cspJgnou8X2WB2JCnb1tevU/LqSO8eH9UWQm3AMDe+1G
-         h6Zg==
+        bh=lxGHKYxcD3Qzc3a+gm1FiVxAZww00r3H3RpMykeEv+g=;
+        b=Dk8fswmxmh8VD4rdgFgGKeWlfJU6ROxk/28mntqXjgnaGAlPHztB2/+2LKY/22paZy
+         fZZ361T4rVX0l/Sd68bEI2mlRt8S48K2I5f7f4zsl+0wnzEC0ta+ZjOkm1Nf2EokKBZR
+         ziB/6RhwBaLh2uNRvbch24Cv55KdXU9Khrd6PrTLZZBAtnw3rWzKRz3UVgohxLmRaVt3
+         5nYMsQ4kmLvCQEQqBXRmEpwV0QhrM+4htq5vT+2LV9FGi3g4lrcu2JIoyi9DB42Chewi
+         cW31j0wa07IkEC/oL8hZVS0PFv9RYTGOiNP1qulW5f2Pbqc0J15Q4qVwcelRbhfv54IS
+         7ebg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762100295; x=1762705095;
+        d=1e100.net; s=20230601; t=1762100299; x=1762705099;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=FTXUpCqqAAWX2y26qVlMIK5ou/bhG09xiZ2Nrux4ydQ=;
-        b=S13osbZKBBi9XEhx7tGIfv6HMbFLo4E2sLYG3d38sCNlzeoo5Za5pEM+wADW+dY+xv
-         GZsv0tyKTdTRHwp6TDsS9KLbSxwtB0Hwg1uRhyohvr51IOiWPuIFuTJPIMRhpboX2Y0p
-         O6krnw2F5A3Gi7Orju9cqzT/DM3qoyV/et+iem4X5w7mAPIJvHxReEF/sItj7HJvSPdC
-         tOxThF+aoB260Tk9eoyjKZ/b/4v4IDu0Z6Gyy6k3aYo2q5LGKbSOFflEA+BK8IYdKwLX
-         hOtZ9ByirZe4bFMSlA5BKprH6WdSpdOHUZEXPhm8WOV2Ab0t/pncEXn+njtQysxI8Wld
-         IFEQ==
-X-Gm-Message-State: AOJu0YxwYAE8asC+cOkLzEGGTs812TFxKM9aVIqpWuc7k/41f1k+QaME
-	eGzTNu8dmX9IVf660n3tCCg6G2wQZ4qt/0mzwuly7HD7BbbQGesFLN54zh9qsbx9
-X-Gm-Gg: ASbGncvcszGAW1XcRrEVEwrsgsph42F2iFVkeJlM7kpLUw01sssR2Khfi9NTvAEOcWB
-	g3+CNAy87BC++XSmKmvZcJiivcgTTTPV+R3ELmcPKCNTMuDoyiqh5IpHnKwnzDZ0sHHs8wshsbf
-	A1Wg+2NCeH+kvS23m5eGsvuiC+WK/Bvs+j2nE5gsnOKLcUPA1eEB2TpRqzA+ES/h4BHsPY4B788
-	+ieqg2BZygzaELGuCvk6nJWLS7t+AB8j+4vuKxZcDsQteD0BqBy99mjbgmOs+gCaNsQ7Qg1T0EP
-	SBCuBhmcicTx0j3hNvooTii4RQ8WVAmF2s4myjpkQLRb21LXSEl8S2q77FX1ZiM8tuVYEXZRnu+
-	Arp+yJrSj2NAAiz7ZBwTasXi9oDU/uLBNCw286xWw+yeNrdWBzKW0przRgVglsxVxeK/sddejzL
-	7xRUT1mvjaylwhAEEHVvXQ2HyjD5HYxWFpdAQReA==
-X-Google-Smtp-Source: AGHT+IFbjHfSM+YIQygPFxfS5QGEuqTr2CDOxYowChvaiKs7BkPUw7NfoVGJRGLuY4HHjDQaLzLAcQ==
-X-Received: by 2002:a53:accc:0:10b0:63b:a941:90c1 with SMTP id 956f58d0204a3-63f828dc3damr10871453d50.12.1762100295409;
-        Sun, 02 Nov 2025 08:18:15 -0800 (PST)
+        bh=lxGHKYxcD3Qzc3a+gm1FiVxAZww00r3H3RpMykeEv+g=;
+        b=wAqWgEjma6T13RaOXyzGTM18rZsiPDEBd8lRhtaDm0jZozimf+Q2ICb1Hsb0oZcJxI
+         UEf6LgFqd073PzyHyQprEA0wx+3j0HV2Fw8SUB6HywHpIa26RygPy6kjSTTpKyr7sv1G
+         CMM9j6fx3DeWljF8ETR+/3StBf1ANb3OC/XlVdUCDlBlIGhSh1DGEIYcVLf1NOV3Xawm
+         b8+liPZWsbBIFrhZHHx+JjGmE4jX/x5e42+2SSSrnK/+LDec0zUX80aJz9NPZL75SGeU
+         G1fmofv/1A//N5L8jNvWWQPYPh10MYQEv3M+SbI5OttEer78sp1rk+0FW1g4BY3l22J/
+         +GnQ==
+X-Gm-Message-State: AOJu0YzHaKyzS85N+nB2JeXROHVis/rSm1LK6VSCEtGViK1NzCs2roHG
+	OMNYtmAFMyzi6APLBI2pY2s2efnth/uk6ViW0Gihzm28NzGk67ngDi3mRA7FsNRRVXI=
+X-Gm-Gg: ASbGncssbbK/9E+5IrEPN9nXCcddAYWNV8OuBNHt1dqzVW4lbZQ/2965l3SVhu7vr/c
+	+2idResWILfh2NW/1R4fnszCQSyNDUB/ETzpwQhyAqUu3IPOhaovuUmtC2elJQjKkwthJvaRyZR
+	9gu+eZnjrtrvJP1xJFBtvjSTzPfNrQck63gRig+iy6Q8NnFQHg7LcYahA+zzsJsjxrSbBQoiP89
+	rkp0B/VlhNj8uhQunq7sOKyj72ZoavFuMAoR9L6cpSHNZxjfCOQ6QyS8JqXeOqm09TeZ2E/aE2c
+	jAUHYbcT/R38D6BWVjWdeYyvEkAkY7fP96nHp5GGxANUqjSVGFxXkN2a8btWj0YzoALrnTfoSe+
+	N4xSHZRrFAXjCn4SIjvXDtlwZwkMvG+c2vd3ND8eIwqFtFXMvle2jDag1/390km0dmxKTIvh/21
+	pvnMmr5yN0MtIlhE9mAMlco0vgFl9RHoYtYyg1TQ==
+X-Google-Smtp-Source: AGHT+IESIQDoWwpLw8fnQObeUJVOFC7oO9whEsxM5UlOHSpP6fBLM7ll4TebLsQ6ak8Gu6ezSlrG9A==
+X-Received: by 2002:a05:690c:5c01:b0:786:4fd5:e5db with SMTP id 00721157ae682-7864fd5f630mr114993257b3.49.1762100298628;
+        Sun, 02 Nov 2025 08:18:18 -0800 (PST)
 Received: from macaroon.lan ([2605:a601:90a8:8b00:c038:e715:f394:297e])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7864c6185c5sm22626967b3.32.2025.11.02.08.18.14
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7864c6185c5sm22626967b3.32.2025.11.02.08.18.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Nov 2025 08:18:14 -0800 (PST)
+        Sun, 02 Nov 2025 08:18:17 -0800 (PST)
 Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
 From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
 To: git@vger.kernel.org
 Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
 	Phillip Wood <phillip.wood@dunelm.org.uk>,
 	Taylor Blau <me@ttaylorr.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/5] doc: clarify command equivalence comment
-Date: Sun,  2 Nov 2025 11:17:45 -0500
-Message-ID: <30908830025a3004fa34080793b610b5fe1eef9e.1762100242.git.ben.knoble+github@gmail.com>
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 3/5] parseopt: use boolean type for a simple flag
+Date: Sun,  2 Nov 2025 11:17:46 -0500
+Message-ID: <10d531daf2c90d1bb53c07f1d72b087ebc1dd9c8.1762100242.git.ben.knoble+github@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1762100242.git.ben.knoble+github@gmail.com>
 References: <cover.1762100242.git.ben.knoble+github@gmail.com>
@@ -79,28 +80,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Documentation of command parsing for :(optional) includes a terse
-comment; expand it to be clearer to readers.
-
 Suggested-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
 ---
- Documentation/gitcli.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ parse-options.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/gitcli.adoc b/Documentation/gitcli.adoc
-index ef2a0a399d..6815d6bfb7 100644
---- a/Documentation/gitcli.adoc
-+++ b/Documentation/gitcli.adoc
-@@ -223,7 +223,7 @@ Options that take a filename allow a prefix `:(optional)`. For example:
+diff --git a/parse-options.c b/parse-options.c
+index 6211b55a83..197c01987e 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -208,7 +208,7 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
+ 	case OPTION_FILENAME:
+ 	{
+ 		const char *value;
+-		int is_optional;
++		bool is_optional;
  
- ----------------------------
- git commit -F :(optional)COMMIT_EDITMSG
--# if COMMIT_EDITMSG does not exist, equivalent to
-+# if COMMIT_EDITMSG does not exist, the above is equivalent to
- git commit
- ----------------------------
+ 		if (unset)
+ 			value = NULL;
+@@ -224,7 +224,7 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
  
+ 		is_optional = skip_prefix(value, ":(optional)", &value);
+ 		if (!value)
+-			is_optional = 0;
++			is_optional = false;
+ 		value = fix_filename(p->prefix, value);
+ 		if (is_optional && is_missing_file(value)) {
+ 			free((char *)value);
 -- 
 2.48.1
 
