@@ -1,113 +1,98 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD60813635E
-	for <git@vger.kernel.org>; Sun,  2 Nov 2025 15:58:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349DE1EA84
+	for <git@vger.kernel.org>; Sun,  2 Nov 2025 16:18:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762099095; cv=none; b=Xkx+Ev+L6UzXxfIUxmU389xkRJMA1mDnVUQjwYgRB5Yp39BBBxe0gFChEyf8UNasVMCZHZaVprUahBd9TbF/N4h0IDtwBAAjdzjG8Ke/ZK2dfW9k22clV0SRALHjWaH0tNyMPlplNKH04AJ58CvEswRirQFO1oIiDLH7HZIXQW4=
+	t=1762100295; cv=none; b=ZQfxAxBZ61+e9ewdYcMIwdvIC4lq3EoAXjT1CMI7AUFc+v8mTeS+D3XBnyjhvzD1W3DGObfo6O1tzC2TVqI5Ps+D74x1U8888Dbdyv1PHncB52GnOut0v5DET5qdElrNsEqW1BFSgRYfTlMGy3bZfJtO0M924+1l45198PwBcw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762099095; c=relaxed/simple;
-	bh=7oKdMnn1WnuuhAdqGMWToP9FpYARaDO9GQv0TBUcwto=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jagyFtK+4/iFL1bw6FBMZQZW3ZXb1fbM4M759OG3qQynB7VxAhPgDv1G7IsZy4pyvisyvDyu/Pt6FMjdEJ0/hjsCwdMiVXSNMeqgdYlYMXe5f8qsuw1NMW6UvzBgpSFwr2Vc9EFdwdXNSrWDMIJ3gkutwJQLkt2Vh/r39d92kg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=BguF5/ud; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1762100295; c=relaxed/simple;
+	bh=El4RHYpPgxrp33V1x/QughO2w4vfpqph90k6MkdQ8oI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LF4OY/RXTnQnLyjX+dhVowuk/OLlnydEBax5/80qr/fPPLXkMe0i8Sx1jNAB0C0bJkdLQiCrYlO5ES9c0Rtxvgg4n7BL1xcjvewSZ+B8Fh3ODxyTeYu+F9y3A/bxAvj7bmZokTqqX8XSc3YHZ0c8BZEHOB2flVBdCFjvJH5vnl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JiIzbIsx; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="BguF5/ud"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1762099084;
-	bh=7oKdMnn1WnuuhAdqGMWToP9FpYARaDO9GQv0TBUcwto=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=BguF5/udcfG6vSjwrSkNBIWEW7B94+j6d0CZ1WcifLpY6Z9nCbUqxPkYI1SWbtzc1
-	 fOUDhdafr7xo1TKi06Y4aePMX+dYaMup6k2SRtbPvNTRWawhNmOXvMYJKRyld7PVSt
-	 Pocwo/MqMvNUKGGL8zvlFqSHFxQdA0U1iK9QBCLi5rELStl/KKjg2ax5Yjn3ZrZR46
-	 B2ZnSTeC27gYrMs0AZCrMIaSis1FAQCjvHlfrosV9Qn83D0vNuHcsXvzEsOM6KsTTW
-	 PL9JkGUSYlUv4ElZ6bc3kutPRN4eufvQaehotetKfLhlvCLfWKZZF6uTw3sit7o4TY
-	 QzFJbfFjsql/brUp7wcW1K6zXZzu0GQF8o2Go68MJ4oVBOBJh3gYs/jd0RUGc1c1fI
-	 y/niMPlOmtyif2fHwaJcXNNHVAVVSrBVXQ8k6s8W+V2sgrEAeD1Esf/hW1BPb+LR2P
-	 a1YsSw0HDPLJ5Ssz4KEd6RayStREiqvSMH0N08Ve06U+Q0LKqcs
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f137:1a1:be0f:4e87])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7AFB820037;
-	Sun,  2 Nov 2025 15:58:04 +0000 (UTC)
-Date: Sun, 2 Nov 2025 15:58:02 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Thomas Klausner <wiz@gatalith.at>
-Cc: git@vger.kernel.org
-Subject: Re: CVE-2024-52005 status?
-Message-ID: <aQd_iisOrwX909Fr@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Thomas Klausner <wiz@gatalith.at>, git@vger.kernel.org
-References: <7mfgh4ufx6wr3ict2ee6utg3vvfpiy6xi3rfyfu4yionmcwu6a@yry3kefdxbwf>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JiIzbIsx"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-7815092cd0bso48525267b3.2
+        for <git@vger.kernel.org>; Sun, 02 Nov 2025 08:18:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762100292; x=1762705092; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=zb5MtAjXFu/O3p5Ftt06fiKrI3E0EZW3k1tVl6dTIaw=;
+        b=JiIzbIsx6hAE/RrU/dG2T7hDy7791yb3qLsY1odsykMxrWbvQIi7PJImN/N0u01CWB
+         vQOlMq7DcM6Tw+KFX0BiKAMPu651WF924j+YbjKzDm2XIV2ox6KlWpiYAZzQQlaXroYi
+         l7Z5oXzhcpmDxMlNkGJk4jsJl3yzkF0cCEOmdR+EfP0hmNE8073vDH+DOiuWM7jZ22SH
+         ikk/wivwAbmjhpDuvWghAQCAs7PSaLyu91A97y7QVj3DZsH5kUqCuV9/Za6CHmiQ1AvY
+         4fjU+otyRW88tPJ9yRNRK7JwQyCfP0IrF9xJM1p6CwQgkJcu0k2cTU875EiWn4h+Pa9I
+         /MUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762100292; x=1762705092;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zb5MtAjXFu/O3p5Ftt06fiKrI3E0EZW3k1tVl6dTIaw=;
+        b=fZCFbX5VpxMOllYVy/aq9fOWAGfE9C4K0jHSPgTX2lMQCyF9Ox+VU8UCE2BKohTR60
+         ayDljmFEx4JrR2LK7pdZpbsayb8ikAo5Yvb87rtffoiEsGInRQUQUIrVvz4ShTy3hicQ
+         VZ+juNJVZgZhfueWNgxBhWW+ojsj8jPDBThdlsHN4Jqqsx9D4O6XhZUVO6QwZfHhFZV7
+         cmp8PKe2vdQMrnOkevqBc/KQQVQC4e1l1pbUoVtQ5hMkHtXhX9VE5sji5xrjYSbwS+fF
+         dyfj4RgkjVcepR+meHWSqtBAVsF1GHmYANDuVeRr2x35AXDg6LA4wLH/oHhq0+OdN9FI
+         OpJA==
+X-Gm-Message-State: AOJu0YxmuKUNNUc7aqWZ5GYYP1kKnkXzsB6uvQ5FgkoqzyeguLlY5twC
+	9gkhhuBi3Gh4urVZSEwEiF0WuanR87sMBRBA4ZGMHAixXQwl32K9bZ+NNbSJQYyj
+X-Gm-Gg: ASbGncuf24fHOU4+oLWTI35QEp/zWxsv8szQSPhyHeiok+cDiV5VhwMUZcawMWG91xF
+	jrysL13B/ipvPJdlFi1xHFSydDxcTwXMUnJsG7p/KbMirNvv76/3qkbs+DqfQuV1SOyutDzyyid
+	Exy3bBIVQtV9QqvCrtOqnVHGV7+qNLA9smlbwRLP0VNayUymJMj69PIjWRzhhAmlsc/mpAd2LEe
+	fxWLyDTK+6NvJnjkUVafLXP7QAXlJ/TkoCQ3pO7xVvEDKyYgjm8gI9JDWzrhKzLxOEFea6Ur20T
+	u3W1w51zdvyL1e5tVKSrsYxs/b7Cd/5x5Phbld8quSaEi7tUNrzb7N3I9BgYGn+Cm7tE9lz/gGr
+	/A9xyPqBDHFOggskU02QYsM3WcwzYX+jm402uehRc8XHT3OLVs2FSbqmX5XvRy71CVPZrw3fan3
+	iF2TdYDOEYWuwwVoCQoande0NEEH29bh9cXBHnyrzPcgiS25Rl
+X-Google-Smtp-Source: AGHT+IG3NUK4FmrIEWTSk1w96CI+FBBFqrH/NjI+pkaP97CP54hFaeWXcdiRREKiXb4sMiaDKeiP6w==
+X-Received: by 2002:a05:690c:6a83:b0:784:9076:a0f5 with SMTP id 00721157ae682-786484df969mr155542527b3.44.1762100291709;
+        Sun, 02 Nov 2025 08:18:11 -0800 (PST)
+Received: from macaroon.lan ([2605:a601:90a8:8b00:c038:e715:f394:297e])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7864c6185c5sm22626967b3.32.2025.11.02.08.18.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 02 Nov 2025 08:18:10 -0800 (PST)
+Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH 0/5] Fixes for :(optional) path code
+Date: Sun,  2 Nov 2025 11:17:43 -0500
+Message-ID: <cover.1762100242.git.ben.knoble+github@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ojv/hKmNqaUnxPfF"
-Content-Disposition: inline
-In-Reply-To: <7mfgh4ufx6wr3ict2ee6utg3vvfpiy6xi3rfyfu4yionmcwu6a@yry3kefdxbwf>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 8bit
+
+This series has a few fixes from Phillip's review, set up as individual
+patches. Justification is light, as many are hopefully straightforward?
+
+The most important patch comes first. The rest are probably
+take-or-leave.
+
+D. Ben Knoble (5):
+  parseopt: fix :(optional) at command line to only ignore missing files
+  doc: clarify command equivalence comment
+  parseopt: use boolean type for a simple flag
+  config: use boolean type for a simple flag
+  parseopt: restore const qualifier to parsed filename
+
+ Documentation/gitcli.adoc | 2 +-
+ config.c                  | 2 +-
+ parse-options.c           | 8 ++++----
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
 
---ojv/hKmNqaUnxPfF
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+base-commit: a99f379adf116d53eb11957af5bab5214915f91d
+-- 
+2.48.1
 
-On 2025-11-02 at 00:48:53, Thomas Klausner wrote:
-> Hi!
->=20
-> I'm trying to find out more details about CVE-2024-52005 so I can
-> handle it correctly in pkgsrc.
->=20
-> https://nvd.nist.gov/vuln/detail/CVE-2024-52005
->=20
-> points to
->=20
-> https://github.com/git/git/security/advisories/GHSA-7jjc-gg6m-3329
->=20
-> which lists many affected versions, but no fixed versions.  I only
-> found one reference to the CVE in the release announcement for 'Git
-> for Windows' 2.47.1(2):
->=20
-> https://groups.google.com/g/git-packagers/c/ZWDc6K6tYcc/m/VxikezMeCgAJ
->=20
-> The CVE description sounds like this also might affect non-Windows Git
-> versions. Can someone please tell me if this was fixed, and in which
-> version?
-
-We determined this was not a vulnerability.  The Git for Windows
-maintainer disagreed and listed it as one nevertheless.
-
-The problem is that on some terminal emulators, including at least some
-of the ones available on Windows, you can execute arbitrary binaries by
-creating a hyperlink via terminal codes and having someone click on it.
-That is, however, a bug in the terminal emulator and not in Git, since
-clicking a URL should not lead to code execution.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---ojv/hKmNqaUnxPfF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaQd/igAKCRB8DEliiIei
-gfibAP0a9JBEgDBNt6gVAgkXYj5UIbts7HKve+0lZj+tWz5gPQD+NVj/XG2AfufK
-GDO9bbTn3oTPb8XgK2ks1JVkCCADqAA=
-=XpbC
------END PGP SIGNATURE-----
-
---ojv/hKmNqaUnxPfF--
