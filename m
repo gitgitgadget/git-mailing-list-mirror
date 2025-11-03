@@ -1,87 +1,86 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252F829B775
-	for <git@vger.kernel.org>; Mon,  3 Nov 2025 07:20:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582D82C0F78
+	for <git@vger.kernel.org>; Mon,  3 Nov 2025 07:40:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762154409; cv=none; b=Cl4HwIcK+0ciSFOfDDNUOpvWGvtKUGWd/Duqifu0Zbm5bkgffadzC0r/O/+FiF40dOWoxl0aQBilRyER5bf2TyIi0Ruqw1/OH6gRhdXfEQJqNOWEJMp58xHOX0qPSnohLeVCRnsoYJJfNo5dRhVjI9xRIQHWu1bt2SvberUUv50=
+	t=1762155633; cv=none; b=LXtMkzUCppc8QSahYH8Ib1HuZYlHz8xgOfC/DxyIR9UQAuoU87XRCw5iXEPVqRhgLVYMINRxYXCjEcCL0Sfl12jHQipgu5UoCDJp2BJ4+X/kzylfKsbrzOw48V9ohAZ8qGNiD9CDy9FIp5mzXdkz70aKbuRqwY9+aQcDIjWbAko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762154409; c=relaxed/simple;
-	bh=egUz8k/yoroW7J8NUZpOcR/1D2KJejT3lpBScyPJeJs=;
+	s=arc-20240116; t=1762155633; c=relaxed/simple;
+	bh=mh7HrW3TnD1OTD2C7zplCYD0XRSdHRfvmtlZUSHLyqM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aRFyV46Lad9ah9x5ywuKx+/cmtbNNtOaomnwHfKhachEpbNScvBbJL8lEFr0J8WRMvU5LqoNRmv4sO9IuDvzb1V/AAYXFynKTFBqTEjEgXRUy1hez8UhlkMAmzwVTaD8sC5dhyejd8Ua6IgLyzVb0y3XmYqK32PenQAS7BNIDbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JcHx7PfL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FFLlBB+T; arc=none smtp.client-ip=202.12.124.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=R4VN4wIuYBLzLYVGL9J8vsu5u1FcJ3of9qf51/K7a8LGicW7+gEJtRi+B3pLzkujW73nsCNXRqBSOWIJpPF4fbD+1VbcvVpi8pNWXpFjl+T0HQiiz2acLlvKnUHBTmGbi6a0eDcnbn/Vboodd89wG2LfkHX4dmnxgIFQA2xmAQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RRVRMGRv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NWHU6skh; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JcHx7PfL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FFLlBB+T"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 41C3E7A0194;
-	Mon,  3 Nov 2025 02:20:06 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RRVRMGRv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NWHU6skh"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 423E47A014F;
+	Mon,  3 Nov 2025 02:40:29 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Mon, 03 Nov 2025 02:20:06 -0500
+  by phl-compute-12.internal (MEProxy); Mon, 03 Nov 2025 02:40:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1762154406; x=1762240806; bh=vd47xfQurA
-	q0KCwfRFnVP4XXFxFyLGsHemcleb49oIc=; b=JcHx7PfLK3kYoJTGJesfdSv3gL
-	IFTO7sxa+o2FxySa0NvmNNZskwPw7xq34zgwWb/WOIRAp0lzu6xptct5BgjaidvF
-	X8j701FD4LJ2ayln9xhI0+ASFcEj4hZhEeR4FPsI5raSD44hvHZvBwUekx013sQQ
-	0x5zzyy8NBvQABW01nVo3AjF73JXa6qp1v6BABSGHekdke6N4t9kYYh0ashO6SaV
-	XtpyUxLAAEabgxRA7RL24wrj2PSQuE/NQrC/3hHtbR0NtsHE91jwXs3E7AXm0o5h
-	iOZuX8Mf4CHDOr8Cxn0mYjSFHSkkHwHwHrajFRB0EPBcxNVv4flPACO2upXw==
+	:subject:to:to; s=fm3; t=1762155629; x=1762242029; bh=Agn8z2H89O
+	6heuil3PJOIh8y/SIWJBtC1LadJvim3bw=; b=RRVRMGRvWJPlkFRhNCWq5VEsDr
+	F1el7I+vyk33JvkUbbgigCdeeiEEPybboQtvFsahTuj0OUJFQantJnhvJQ8knPFR
+	P7pwjC3PgNzDpiYYxQgLh33H3keI/X2ROhGkZKcUZJpD8O3HOk9Lo8qyTXXfp1vE
+	G6WMaZIy2Y/1RRvad08dErHPFWiTP9f+grHVtZUxegUIAtklV/yeR576l95YsrUW
+	fs9zqFXdoxr+QiMBMNK51bciRa6k+WoGS/YRCNuvouaGpF6sYBNUsxGkPuTP8NP3
+	m9rOQ8DaaQY77sLJ2ujzvkvAUK1ffjG7iqpMCEvzns+8ZyzYR5PBsVsNGCkg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762154406; x=1762240806; bh=vd47xfQurAq0KCwfRFnVP4XXFxFyLGsHemc
-	leb49oIc=; b=FFLlBB+TVwnd+tY1DzdmQRpIzWDXqGmoUUrYWaCz1QJxh4cxy7E
-	ROEMCNx5JIj3XrZ0oILChIdtqYcPQsI3JqgnMCSqHekXjLzQwNjweUD/rCJwCLVs
-	jcJzwOwrRvOC1e0NwZ93z6zVxDcDTi/mq7sZbWL0SueTNpe0gbkaC/y8Zt/G9P4i
-	1FW72dfEuK2KaUzsO1hfkidHsWRgFpvCnDqHnKe+MeB1rBqQCTvBJtyt0QvHgDFP
-	Wh9kn0V9LjvQRlX7bYC6wQCL0yViGCXW5Uejd/rf65WIOGIKEMJoUErGh6tXCvTp
-	NJZMFdGg8rhUFfm8MZ2ug0Y5EDgevcoShkQ==
-X-ME-Sender: <xms:pVcIadjGBQG0FsjxokHTg8eKNklhSeUICsw_rbuxtE74mvaB5cSq9w>
-    <xme:pVcIaZexDfEKwgHZwoZhX2B5kDJKx4SzX7ZWObGOZ5JEvNxR5Q2EFSCvgLfjYlQhU
-    i8awEdu0BxXBe_REeed4FxVj1PSbRf4L8RmP55CTqncP17jCDSW>
-X-ME-Received: <xmr:pVcIaadPFM7ohd55rT4N7ZYvHVfrKihWiXNfD3VFrY5Z3NYN6CVpZEw7K08combcUrqFrXRms9AYDQThjLiHNTJ5PJD2dXvfW5S_PDdPzhDK>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeejheduucetufdoteggodetrf
+	1762155629; x=1762242029; bh=Agn8z2H89O6heuil3PJOIh8y/SIWJBtC1La
+	dJvim3bw=; b=NWHU6skhYhjwgqnps5+plkQ3wjINoAw0OIjOvwej7SbH3PU75Xp
+	5QyuG8ADPW6YXimWnkwY8wdSOVb5wHw7QzXI9KAspfrkXCg1ujS/U9qO9pvDORjM
+	L9maxO9VAfI7l80Lj615bQL//1Cpd0pmUat3qcPxkaReGBlhRSqebuBuVfRwTsNm
+	GqZamYq/k3CiD7G1x8jNqbq6tSkajCNuO2AYDcLumh+EEIeQYsYqwpgwYqf5eFrU
+	RZ9Y+99t89zuhvT09l1P22324idwr79G+AfUlCcHQkRe59z96tmU/zRwSIfKc60E
+	5mo6NMmQrRyEjjz88WL8OeegcNc8YLargkw==
+X-ME-Sender: <xms:bFwIafi57nJEbcbdgM2W0dS_64WUGukGjGIVFiCsvD9mxae4zdlSBg>
+    <xme:bFwIaS7lhgZLqpZookli0_IbKbkd5ZHy5MdM37oX28c6svBVOnsFvA9XDvxbPRMOO
+    al74sUm9XVNLzslS0xRs0qwRjixcPRPt_NcEMqjei3KNEfaldWMSy0>
+X-ME-Received: <xmr:bFwIaXZ70cZnQwdZJtTgUrg8JchN8T7sZY30Bt3caty8sCvaxLgdd2fgeBaxqT2JxB4pla1-H89AXmFnptHmfvbJ8bZSCs-47UrECOAJh9Fi>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeejheehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhih
-    hkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:pVcIab939CaC2kyC5ltStDWkpipE6OHjDeB54GZHXqwPuHpAj1RXWw>
-    <xmx:pVcIaekRIqr3_7mGA7g3PCZ72od-Wog-JSBL9q7fcDc0z-aBxytmEw>
-    <xmx:pVcIaV939qdg1h9nO40FaHia9NY2mzpgjZFiyVq7sMwnBOqZR7UP3g>
-    <xmx:pVcIaUk3l85pM34o5_LG5s4BnB2dp2FY4OruHa_EELmigzhauqiqKQ>
-    <xmx:plcIaZeeufxBfEyKDQmPGyv3K7EhwpdEP_P6ipJivQokwWXMVsGntQVU>
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
+    hrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjuhhlihgrsehjvh
+    hnshdrtggrpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:bFwIaX6_hoYsPTPlTk2FxrbEZJwnf9PuJlR0u_1K-8uU74t9r-0_xA>
+    <xmx:bFwIaaB5qFji1URiMBoN0-aMGLZh5f7Okgv4R3gyGoVOKgee5850Ag>
+    <xmx:bFwIadfifQCd_8CN6ozJ7ayA95ga2cxW-67dyZ0oBkkaPGBKT3eaKA>
+    <xmx:bFwIaZIH1DVv1Hp9dF6EwjbwQ-pkynmj9p93kmgrmquZvRjaXIBBOw>
+    <xmx:bVwIaTIrgntQD2HSFHipkYUIItjOOa4YZg_LfiPcaAC8tWoJXlCwr_22>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Nov 2025 02:20:04 -0500 (EST)
+ 3 Nov 2025 02:40:27 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 08013d64 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 3 Nov 2025 07:20:03 +0000 (UTC)
-Date: Mon, 3 Nov 2025 08:19:55 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 2e375d7f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 3 Nov 2025 07:40:26 +0000 (UTC)
+Date: Mon, 3 Nov 2025 08:40:23 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 05/13] object-file: introduce `struct odb_loose_source`
-Message-ID: <aQhXm1uQlP3wYfgX@pks.im>
-References: <20251024-b4-pks-odb-loose-backend-v1-0-1a4202273c38@pks.im>
- <20251024-b4-pks-odb-loose-backend-v1-5-1a4202273c38@pks.im>
- <CAOLa=ZQdit7N0aQWyqYHAoO6nuXaU3QqZbQmsbp52jW8C-zbzA@mail.gmail.com>
- <aQNMwve9sUP-QDN6@pks.im>
- <aQRS-KcNLD9prRYa@pks.im>
- <xmqqwm4b11xh.fsf@gitster.g>
+To: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>, Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v5] doc: add an explanation of Git's data model
+Message-ID: <aQhcZwv0PdwNc6RW@pks.im>
+References: <pull.1981.v4.git.1761593537924.gitgitgadget@gmail.com>
+ <pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,45 +89,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqwm4b11xh.fsf@gitster.g>
+In-Reply-To: <pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com>
 
-On Fri, Oct 31, 2025 at 09:16:58AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> >> Hm, I see your point. I think that "loose source" flows a bit more
-> >> natural, but I agree that the above is more accessible in code.
-> >> 
-> >> Before I change this: does anybody else have an opinion here?
-> >
-> > I think for now I'll stick to the current naming. This is due to two
-> > reasons:
-> 
-> Ah, I should have scanned my mailbox down to the end before starting
-> to respond.
-> 
-> >
-> >   - As said, I think this flows more naturally in language. When talking
-> >     about this you'll say "I'm using the files source" or "I'm using the
-> >     whatever source".
-> 
-> I do not happen to agree with this, although my preference is minor.
-> 
-> >   - It somewhat matches the naming we have in the reference backends,
-> >     where we have `struct reftable_backend` and `struct files_backend`.
-> 
-> loose_source (without odb) may mirror calling "ref backend that uses
-> files" files_backend, because "ref" is redundant in the context of
-> talking about ref backends.  "odb" is redundant when talking about
-> odb sources.  But we are not calling them loose_odb_source,
-> hbase_odb_source, etc. and instead saying "odb_loose_source", which
-> I find is a bit strange order.
-> 
-> > That being said I don't feel very strong about this.
-> 
-> Neither do I.
+On Thu, Oct 30, 2025 at 08:32:16PM +0000, Julia Evans via GitGitGadget wrote:
+> diff --git a/Documentation/gitdatamodel.adoc b/Documentation/gitdatamodel.adoc
+> new file mode 100644
+> index 0000000000..1cefbb4833
+> --- /dev/null
+> +++ b/Documentation/gitdatamodel.adoc
+[snip]
+> +2. Its *parent commit ID(s)*. The first commit in a repository has 0 parents,
+> +  regular commits have 1 parent, merge commits have 2 or more parents
+> +3. An *author* and the time the commit was authored
+> +4. A *committer* and the time the commit was committed.
+> +5. A *commit message*
 
-Okay, this makes one in favor favor of `odb_source_loose`, one slightly
-in favor, and me slightly in favor of `odb_loose_source`. I'll rename,
-thanks both for your input!
+Nit: The punctuation is a bit inconsistent here, as some list items have
+a trailing dot while others don't.
+
+> +[[references]]
+> +REFERENCES
+> +----------
+> +
+> +References are a way to give a name to a commit.
+> +It's easier to remember "the changes I'm working on are on the `turtle`
+> +branch" than "the changes are in commit bb69721404348e".
+> +Git often uses "ref" as shorthand for "reference".
+> +
+> +References can either refer to:
+> +
+> +1. An object ID, usually a <<commit,commit>> ID
+> +2. Another reference. This is called a "symbolic reference".
+
+Same here.
+
+Other than these two nits and Junio's comments I think this is in a good
+enough shape. Thanks for working on this!
 
 Patrick
