@@ -1,83 +1,82 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13922765ED
-	for <git@vger.kernel.org>; Mon,  3 Nov 2025 14:00:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D05615ADB4
+	for <git@vger.kernel.org>; Mon,  3 Nov 2025 14:00:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762178435; cv=none; b=nkShdw3W6/a6SZh6H3aXwJdBk1W732KiND9bboRSF2OzAcEirHYjH4QjFsaSz2WH7WSV2ZVUaBasu1T8POGlOe7SjTuK/ita5mdJD5feIbOqB6mLOLPYM6m82F6QBCorAKZett0hbU7Xg+yWMOX7pHcLf3IOqFRc2NmeOXTDq24=
+	t=1762178443; cv=none; b=CDGDHuyVve/rFDdNwC1/ZoVw5Tsf9HcBZSpINwdQVXvS/HBsx2fte8lm9cIUj6qAa+Rjw2DNvXvlWyp1QPaP/qBvg7K2DnpB+gtxadl0zDDvq541RbfD1bIK2N1wbSs1Oy8uuKUBDcyoDgbB9v7io6lTmDIZoXZtMxccV6+l7sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762178435; c=relaxed/simple;
-	bh=/Ln1Ydou7s1v8fPKd1QHZwH0uEJp3cWo3OSw+aGB+0o=;
+	s=arc-20240116; t=1762178443; c=relaxed/simple;
+	bh=pHw/gItFNxqIfRKADURtwdLr48JsOJHgxmmYjoKg1B0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WhTXz29YGocoQuJ4kg8M9dCtm7BFePb+fSmA8O4L/HWZOQLQSjVQFlf0A9Y62OuwPKVLl3cl6yhtO21xQrMV0EC8Fh5J7fReET7ryHl+ixQUl4rPe8bvC/fC8C9wN9jiqx4se3z3G7KdNLsG9+yMytMwhBK0KP7UJVQaWvzQ1g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Za/XKWFH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EuqTDX/a; arc=none smtp.client-ip=202.12.124.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=t0dxnuJ/eg8b4fTXK2sGXB4WDUePV02qKN7PmeEBINBhhA+7HlXRVOzuHrvqqibu1j07dlvVVV0Ypd5aBDHFNO/2JwCicHkCExZqsJoCPXqfH0Ne1VzWwsXvcQ6P0J1odacxB7V5KDYZHuS2Sjdce+ZXYfYhmS3xCq6qLaZb7bo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kZuozLQ1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MddYliUt; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Za/XKWFH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EuqTDX/a"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id EA7241D001A9;
-	Mon,  3 Nov 2025 09:00:32 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kZuozLQ1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MddYliUt"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3145B7A01B9;
+	Mon,  3 Nov 2025 09:00:40 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 03 Nov 2025 09:00:33 -0500
+  by phl-compute-06.internal (MEProxy); Mon, 03 Nov 2025 09:00:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1762178432; x=1762264832; bh=EAs9CDkyyR
-	fk/2hLPVG5G5yoxIM/9bebqLKvx5a9Wow=; b=Za/XKWFHDqZcBvvXpehd1CJ8D0
-	RzyKv+8EfIWE6lY8GZOJ20vpoIRfU/9RoZCIVOjruoUOXcVtM4URaSjY/kn1QQRF
-	D1Jg31NuCDlozVmkstyV6JkvXpWI+czFhcS/HBNVPg9MczfBx011ppBajOER5ihp
-	AIIvdRIcNtcIO0guAGUHUL64fjCoUcMBIsvLOeke44yl2+SbAHDn+AAQv5Mg55tk
-	/FjPQsSpB7m7QNAI2aPJ0qyhZYacIjxCWAztHL729uGr/zwva5zuPkrSjuu1D2sy
-	Zzs6cZTYnp+UEJp9I9l6TVIlY6D4cz7TesO2XqRlQPPCsglYYsANpkCOpetw==
+	:subject:to:to; s=fm3; t=1762178440; x=1762264840; bh=BVUHDlC2HD
+	1nE0mGEP8Yc2XUq9xcwEoywICmN4r5EZc=; b=kZuozLQ1mRHn2it5T2E1NeMbWH
+	CM/fHG21W25EdGRzAphTyk3TRA3YdAjMhQJeRnrntbVDcl1TxH5pJKQCrljYtpTV
+	BdKfii+rdJtfV8HMbbDa3FDJMb4J6RuwJ+dcfDytsUiDaiEzSOqka2+GJ5cUanQK
+	nPkyPp47FJjIfuN1FmgIQgLFBoOImFpCPnOybKGM3RjddrFJA3ZBHBvkM3cYvgUH
+	YTGWY0QuZJdHZmnMlD+YgumQjyql7Xt+zhXHhx42Q+YE3+Wbhr+I5WYG9gddtDE5
+	FHyKCHimZ9RfN4t9uqPZHFfBq5uBCPAPDVgvvBhwl36O2dlE0SXLO0zFyG4A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762178432; x=1762264832; bh=EAs9CDkyyRfk/2hLPVG5G5yoxIM/9bebqLK
-	vx5a9Wow=; b=EuqTDX/aJNu4ew78sGxofBG8icOFd1kY59Bg6AmDNbHx/TQFkkq
-	7R5yN2lYutUMXL3lDi864E/ZjzkDgpRXr2H7G8vQbPIfZqF+77B8mURlLrOEz9DD
-	we+mT64LusfAyqls0NzRANrr5+FzAI/E3oBzotfZpXnYWgyTnkDDGSpz4s0Xz3dQ
-	bXFS+iptP7C0P+MRShDBc5kdtLMmW6Rw7guC+i6obPAMxmt5bG1Gy+ta1xV7kbhF
-	cbW4nqOArPvORt12aCPHE9rVlJIYfg4xiyk1ct8cqKen5Z8z61VK9SdzAlAlByzC
-	jPLiMCYanALLOXAcW1bFpjgPT+4VXLUiUxQ==
-X-ME-Sender: <xms:gLUIaQv9i3zViL1pZvQyrKIFVJD6pTDR0Q2F9m6ZD9SqvhMqjcGUkQ>
-    <xme:gLUIaTc_qnXggvoBr5rBpOPPYtVhhpsZXNMBRZbnfT0fHcMm2foEYpq8rGoB_mf-K
-    hftgYSbGJPOVPqzifugXVQRGPMG8aTf0MrxEtrkw8K6qfP0qeu1-40>
-X-ME-Received: <xmr:gLUIaZZKRTtZhhTYf_rNLJjPq3wpclsQDRmAdfLumctpWI7kVan0XXVy120dBjbVQxT7nQ5xa5qbapVsH58Y8HPDjzu3KwZ5GqSFo_UpwIjs>
+	1762178440; x=1762264840; bh=BVUHDlC2HD1nE0mGEP8Yc2XUq9xcwEoywIC
+	mN4r5EZc=; b=MddYliUtwLTbmP/l0PcWy2GSobE+3VmRo2PbOwuhl/o8g1fG6lE
+	ISzYrXNQ07vrAID5hmsFYY/IeTbzecbDfeYDRzIWFOW3Xh3FNh/OCNLZj+1pfIUD
+	HoMeU2ZqOlGbcgxsvTg6FErUaS8Ln5BP7t+NDrsoHg8iKxzXrRVhtidy2DCGDQsJ
+	IsdsCM/yh9GWM6vpXVSx6yYxKIBvB1PmFh5Gd8blvjssKJOgOFZ/MEqYktXJtNsH
+	v24Vq+dt9vc8rO/ePRIRMEXNmDdTH9PX017txftPuVzxx/IZAoMdoXDx4yocBzNE
+	UQ2do0mLfNMabiNtPQJi17NCIdHwmVLYcHA==
+X-ME-Sender: <xms:h7UIaUj-15MmXimqHdgkKwGYE6WwL6zj5S8tOsAeb_6OE_4wKJZ8LA>
+    <xme:h7UIaTCUX7TePTz7aNYV8FhxNoY7PmSORQ_d73cyMiN4IA4TodkAxs5usIoyE_uDi
+    tgnrji2hW0PWTfsgDTiGCtrjvq7QmgmAlsC3W9ZYGcby1AsPZug3Yo>
+X-ME-Received: <xmr:h7UIaZsuXhw0OUp8MknHBKQoGPXvhO-pbASUzzp6c36meg9XNGARX6GSIEvXE5220FZCR4nX-zt0YM3r9Pitsu3WNjfcfeLbjuXgu9Ab9V9M>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeekfeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:gLUIaeXOpXui6FTB6VtXywSc81Bn14pAwNyDD9LURazMlDWzXl_lTA>
-    <xmx:gLUIaThTXdijgXZJGhXKxPq2rImCRS0TH2oBMCoCTksefT-sJoHtZQ>
-    <xmx:gLUIaUWquN24DPRexwE2J1im9BusPJmhP3xVQzeElRWb3vFbXQX1Ng>
-    <xmx:gLUIaSMwy_lr-Kqul79NLncOpUlTCN1MKmAxPT2HLafKh0POfirgwQ>
-    <xmx:gLUIabeQNh1RtZtPoltLo8ujT3ERgehTVnQXxl6m6nAcAcJECHfGoDzs>
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhih
+    hkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:h7UIaQZjtzrlyykLkLFKyH3tE3XRcM0HYQ9ot0CCbuw-nOQ1e_L_OA>
+    <xmx:h7UIaUULWyro4q-x9Keaj6IrVDfiP8UFQJwtiEMbXS1ZOBY9p7YsMA>
+    <xmx:h7UIac61F6wYiPXXzLlYtT9Pc_rpmV4JpB7h462l7p1OM_5R-l4V0g>
+    <xmx:h7UIaXgv7KyAbWPlkdF9SPM4ettKRmcsSR19pN68waadhhaQk6k0BA>
+    <xmx:iLUIacSdFzIDqJICkTe38tXr_cSf2fxqa9w2CxjvBkcG4uRhDKMCklDc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Nov 2025 09:00:31 -0500 (EST)
+ 3 Nov 2025 09:00:39 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e7682e63 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 3 Nov 2025 14:00:30 +0000 (UTC)
-Date: Mon, 3 Nov 2025 15:00:27 +0100
+	by mail (OpenSMTPD) with ESMTPSA id b5a6e189 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 3 Nov 2025 14:00:38 +0000 (UTC)
+Date: Mon, 3 Nov 2025 15:00:35 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/5] maintenance: add checking logic in
- `pack_refs_condition()`
-Message-ID: <aQi1e0zWfRaxSKtz@pks.im>
+Subject: Re: [PATCH 5/5] maintenance: add 'is-needed' subcommand
+Message-ID: <aQi1g9TX7FoDgo9n@pks.im>
 References: <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-0-a03d53e28d0e@gmail.com>
- <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-4-a03d53e28d0e@gmail.com>
+ <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-5-a03d53e28d0e@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,86 +85,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-4-a03d53e28d0e@gmail.com>
+In-Reply-To: <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-5-a03d53e28d0e@gmail.com>
 
-On Fri, Oct 31, 2025 at 03:22:24PM +0100, Karthik Nayak wrote:
-> The 'git-maintenance(1)' command support an '--auto' flag. Usage of the
+On Fri, Oct 31, 2025 at 03:22:25PM +0100, Karthik Nayak wrote:
+> diff --git a/Documentation/git-maintenance.adoc b/Documentation/git-maintenance.adoc
+> index 540b5cf68b..edcc88f4d0 100644
+> --- a/Documentation/git-maintenance.adoc
+> +++ b/Documentation/git-maintenance.adoc
+> @@ -84,6 +85,11 @@ The `unregister` subcommand will report an error if the current repository
+>  is not already registered. Use the `--force` option to return success even
+>  when the current repository is not registered.
+>  
+> +is-needed::
+> +    Check whether maintenance needs to be run without actually running it.
+> +    Exits with a 0 status code if maintenance needs to be run, 1 otherwise.
+> +    Can be used along with `--task`. Ideally should be used with '--auto'.
 
-s/support/&s/
-
-> flag ensures to run maintenance tasks only if certain thresholds are
-> met. The heuristic is defined on a task level, wherein each task defines
-> a 'auto_condition', which states if the task should be run.
-
-s/a/an/
-
-> The 'pack-refs' task is hard-coded to return 1 as:
-> 1. There was never a way to check if the reference backend needs to be
-> optimized without actually performing the optimization.
-> 2. We can pass in the '--auto' flag to 'git-pack-refs(1)' which would
-> optimize based on heuristics.
-> 
-> The previous commit added a `refs_optimize_required()` function, which
-> can be used to check if a reference backend required optimization. Use
-> this within `pack_refs_condition()`.
-> 
-> This allows us to add a 'git maintenance is-needed' subcommand which can
-> notify the user if maintenance is needed without actually performing the
-> optimization, without this change, the reference backend would always
-
-s/optimize, without/optimize. Without/
-
-> state that optimization is needed.
-> 
-> Since we import 'revision.h', we need to remove the definition for
-> 'SEEN' which is duplicated in the included header.
-
-Quite weird that it was redefined in the first place. Feels like a nice
-side effect.
+Okay. I assume when `--task` is not given we'll check all tasks
+specified by the configured strategy? Might make sense to document if
+so.
 
 > diff --git a/builtin/gc.c b/builtin/gc.c
-> index c6d62c74a7..72177305ff 100644
+> index 72177305ff..4d20487ed6 100644
 > --- a/builtin/gc.c
 > +++ b/builtin/gc.c
-> @@ -285,12 +286,26 @@ static void maintenance_run_opts_release(struct maintenance_run_opts *opts)
+> @@ -3253,7 +3253,60 @@ static int maintenance_stop(int argc, const char **argv, const char *prefix,
+>  	return update_background_schedule(NULL, 0);
+>  }
 >  
->  static int pack_refs_condition(UNUSED struct gc_config *cfg)
->  {
-> -	/*
-> -	 * The auto-repacking logic for refs is handled by the ref backends and
-> -	 * exposed via `git pack-refs --auto`. We thus always return truish
-> -	 * here and let the backend decide for us.
-> -	 */
-> -	return 1;
-> +	struct string_list included_refs = STRING_LIST_INIT_NODUP;
-> +	struct ref_exclusions excludes = REF_EXCLUSIONS_INIT;
-> +	struct refs_optimize_opts optimize_opts = {
-> +		.exclusions = &excludes,
-> +		.includes = &included_refs,
-
-A bit weird that we have to declare these two fields even though we
-don't really care for either of them. But I don't mind that too much.
-
-> +		.flags = REFS_OPTIMIZE_PRUNE | REFS_OPTIMIZE_AUTO,
+> -static const char * const builtin_maintenance_usage[] = {
+> +static const char *const builtin_maintenance_is_needed_usage[] = {
+> +	"git maintenance is-needed [--task=<task>] [--schedule]",
+> +	NULL
+> +};
+> +
+> +static int maintenance_is_needed(int argc, const char **argv, const char *prefix,
+> +				 struct repository *repo UNUSED)
+> +{
+> +	struct maintenance_run_opts opts = MAINTENANCE_RUN_OPTS_INIT;
+> +	struct string_list selected_tasks = STRING_LIST_INIT_DUP;
+> +	struct gc_config cfg = GC_CONFIG_INIT;
+> +	struct option options[] = {
+> +		OPT_BOOL(0, "auto", &opts.auto_flag,
+> +			 N_("run tasks based on the state of the repository")),
+> +		OPT_CALLBACK_F(0, "task", &selected_tasks, N_("task"),
+> +			       N_("check a specific task"),
+> +			       PARSE_OPT_NONEG, task_option_parse),
+> +		OPT_END()
 > +	};
-> +	bool required;
+> +	bool is_needed = false;
 > +
-> +	// Check for all refs, similar to 'git refs optimize --all'.
+> +	argc = parse_options(argc, argv, prefix, options,
+> +			     builtin_maintenance_is_needed_usage,
+> +			     PARSE_OPT_STOP_AT_NON_OPTION);
+> +
+> +	gc_config(&cfg);
+> +	initialize_task_config(&opts, &selected_tasks);
+> +
+> +	if (argc)
+> +		usage_with_options(builtin_maintenance_is_needed_usage, options);
 
-Style: this should use `/* */` comments.
+Shouldn't this check be directly after the call to `parse_options()`?
 
-> +	string_list_append(optimize_opts.includes, "*");
-> +
-> +	if (refs_optimize_required(get_main_ref_store(the_repository),
-> +				   &optimize_opts, &required))
-> +		return 0;
-> +
-> +	clear_ref_exclusions(&excludes);
-> +	string_list_clear(&included_refs, 0);
-> +
-> +	return required;
+> +	if (opts.auto_flag) {
+> +		for (size_t i = 0; i < opts.tasks_nr; i++) {
+> +			if (tasks[opts.tasks[i]].auto_condition &&
+> +			    tasks[opts.tasks[i]].auto_condition(&cfg)) {
+> +				is_needed = true;
+> +				break;
+> +			}
+> +		}
 
-You return a boolean, but the function is declared to return an integer.
-This works, but it feels wrong.
+Okay, we need to guard against the auto-condition not existing indeed.
+This is only due to the "prefetch" task though, all the others do have
+the callback.
+
+> +	} else {
+> +		/* When not using --auto, we should always require maintenance. */
+> +		is_needed = true;
+> +	}
+
+I guess for now this is good enough, but it's not quite true. Some tasks
+won't require maintenance even without `--auto`, like for example when
+the reftable stack only has a single table.
 
 Patrick
