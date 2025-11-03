@@ -1,276 +1,150 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECB0274B2A
-	for <git@vger.kernel.org>; Mon,  3 Nov 2025 13:49:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF4A1D9324
+	for <git@vger.kernel.org>; Mon,  3 Nov 2025 14:00:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762177757; cv=none; b=l5uSAnWl1BvNAWc+/s9ddM0f5IhK8q6f8U5N/kYkaj6sUcGMeqxDPq2udm7xebWCup26woqS2Rsl+fGxPPbIqgqspUMtqK55U+hP3zmffXqN++aX0ekKbiXR9N/S3E/tEbAFk1Z/1VmvbmTLWHOBxQM32jht+NnTHC891RXF0nw=
+	t=1762178429; cv=none; b=dD0XDqDwhBoLDnaA64J9wpOXhUZxN4ZuAGNXQzzhxsbrb2J4v+Zenw7e4rfqhxblzvZ7wUbBxSLSpncoxbrgEdwKwcqE/XVXCG39E3UHFKyz49W7qJPjjqAyVJwpMa8+eb2awO00KfjBfqVztKMHHb3Cyrj+evUJj1UnKyFBf68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762177757; c=relaxed/simple;
-	bh=OwfFPm/eQ9oNgoe0UJ35laE04Zi/3GAdCwNAsayw+k0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=WzE+ECcFn0W42SerK7TBfIx+j+5gPsS7LRoQenvmwj+yxxoVS3dUwtB31Q/BVAvvkuAp7+kdF9ciaXBfiyN8QZYz22QYvq9YbssmNLVY2OoYzE/joQ7lwjWxQqZ9UGlltkgCmw6znX0JrdOL/ayUBCtgxflLwu0auaWRYdJWm4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GBn9BbDQ; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762178429; c=relaxed/simple;
+	bh=UyiPKv4ArfDL55X68nwN85MakMalI+izahViCQpL5ss=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LQlvIWJe2IDCBTbdYnDwxUWvQ69RjifBspUghIQcrEsDXq7JePJFfOex6zHHOGayzIo1RNYTp1Cekhe/yzx0Eb5mqHs3uEWs2vQws3wc36imuFQ34X0Ayz2rxXyFvPIs9yZxkauUsIUNqtjyJaKBdL125WZWpWsnYA+gd6s7WOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AmAjOLGY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zt9DgomV; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GBn9BbDQ"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-b713c7096f9so124825666b.3
-        for <git@vger.kernel.org>; Mon, 03 Nov 2025 05:49:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762177753; x=1762782553; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=inipCdDnnGvL+HTbxi/1weCXKTwgRFifcJ9OskfHokQ=;
-        b=GBn9BbDQ/gWB7/qpuGkRwz5dTPhID93nFwujLzZ5i0apYZGPq6gptala/9uGT024jA
-         xlTzBLZ7gkg/OKlNTaQsgkMlnVdb1za2Onr7q/yPvy+D3ImDZ/XX8YMyC8RwJuggRGJR
-         6cFv7FUASgwGVBZReLC4ljCpx65UA6NFbn5N3kLtnTeFCWrY1xdzMhzUAqUJvFQLyihE
-         kJXs44fa7NDBPHEPnbl3Y9Tg+7myIfd/nEjx6WwvhQ0W3ScGG8OT+uMY4LJEqFX81GAm
-         IMyyaPKLOplA2vSL14CbviNNWjg5pxDGfhgnnubT1kFB4RNktyEWsZLg80si3H6cd05a
-         tkEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762177753; x=1762782553;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=inipCdDnnGvL+HTbxi/1weCXKTwgRFifcJ9OskfHokQ=;
-        b=DvBtzOCqljdRY6bswAF/bi1+y29CBW/80d5O1uJm2kCyItfJfBvLrnDr0jAh8tdAJI
-         geL3CQLaxPvcqpDe/HPOvzIjxa9jE+LF7af1LgwotTStTC6wXwM+kpFaS+MSgLCqTS4v
-         92wXmLsUe06IJkjiK0umanIAlVYUiiL3XOHiwoUZ/N+F4cnwORk40yTyEJ2f4iY6YMyK
-         ubW1Uhy6JuNzgMaoygI9xfQaLi3gniGmNpa/Sqrckw7RU1C+Ia/yfuKPrBE+r3vyHIUa
-         MjcZ1D9jZf2ECiLFdFtUiv6lnOYUuNprsbXhzNUE44Gyon2YUP7V8uSzeEzUP95Svm46
-         2NRQ==
-X-Gm-Message-State: AOJu0YyJ/MYlZnk2SvBIJtWqlo0/IPnc82Fbi2KpafCPW8wZSntkYIBG
-	Yte+j/jsNUjEzxC0Q2IlXTq6Y8Oymf89+cXoJlgfJs6IBcVYOkUcW9ZrNFmrvo+X
-X-Gm-Gg: ASbGncsPe1xfS3HldG9Pr97PODy6RwvzFfR1Lyx6SdmbNDTQNjRAQsn3of6dFssRLPv
-	qh9EAWR2hI+Uev9Q2Zlq9nDXsvMEiw+KiIDww8l+dwuQnW0hXhnB8daeBIakSBdA3kzvb69jREu
-	tIcwjvuPtgIPuumh3xWyz7Azh7haNEufjEbjWmPDhSX8qkz0CXuB17RPocq8TiKsoMLj5a/B18C
-	nSFRI2/glHEGwmvWPWJP+iMPDcY/jsZdJkZPKW6YBKcCWQ9k6VKbf2aw0Ht8yHsquTen+bCTPqA
-	wP5u0jo6N9F0cWbSDgohb+kRBbMKF6RMcHiO7lzNtZqv0jQM3NYcGN6wnfWs8W9qoYOBiyFWxye
-	1t8phN25Nm0quCoD1MrTXIAjaNeAUT5glK+V8HF35RCjynQvFNWu4T+T9+1LQ7VVaQetXn1UpbU
-	puz0zy16ll90PAPA==
-X-Google-Smtp-Source: AGHT+IHI8JLfEVOOBWiPSsQwaTM+8Gw5ylHj3kkqSqaQPwnuf06M39LDxVjLQEmrTzCblfspIxM4Hw==
-X-Received: by 2002:a17:906:9fcc:b0:b6d:68cf:68e2 with SMTP id a640c23a62f3a-b70708a235emr1266627866b.65.1762177753073;
-        Mon, 03 Nov 2025 05:49:13 -0800 (PST)
-Received: from [127.0.0.2] ([2a01:599:c27:4bfd:ebaf:70c:f4d2:acb7])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b71b1a37e14sm76720866b.53.2025.11.03.05.49.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Nov 2025 05:49:12 -0800 (PST)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Mon, 03 Nov 2025 14:49:06 +0100
-Subject: [PATCH] fetch: fix non-conflicting tags not being committed
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AmAjOLGY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zt9DgomV"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 855C71D001A8;
+	Mon,  3 Nov 2025 09:00:25 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 03 Nov 2025 09:00:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1762178425; x=1762264825; bh=BNciQppWn3
+	1verGSNFx9Q12TOWsM4RzOvpGYD9RMpTQ=; b=AmAjOLGYPHUoT9Wd0b9t9zc/VN
+	6EN9taHKb2FYIGB53I+50isaFS+7RrsKX10OzjPREXGKhigkAsaggo7wy38X3eJS
+	hdpA1aetVlCeqwUcj2wb1anS7XFOT9WNVZwJNMWukd1VXowFfnGLZRi+JT03lg3M
+	zu5gKYQ7qIlMSkOVOSswFgc/ezUST12YYYXoa1SqMFUX9TSACSma7GN3iD7IJnqJ
+	Nr8SV1u/HyTSmUxRfHHvSTJgnbWwRCZB4S9SsO6rHig3yuQsjtXdTpQ7SIPfCHlq
+	1LZoJd9AvmYmlQ1NVef9Ks98102hTg3lvzQJQWwzpyqMahlM41JuYjgA5rzQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762178425; x=1762264825; bh=BNciQppWn31verGSNFx9Q12TOWsM4RzOvpG
+	YD9RMpTQ=; b=zt9DgomVCZW1NPGnIluBZy9liQVHWGpw6vtVhwlGlZxkj2Km8pH
+	hVlsJY0UMk3x7QFnewZndC2XqHuPHVeNpyVHmN5gEYOm1EyG7RTKQhMF4Ny7mZYx
+	Lb5o0uOEyFida8GkiylJ+wX+saGYeqHxz8rmvliXkgKIK0BIdwkMi9bzafNnDXZg
+	WinlvHzCGOJeR9Y7oY5JaJJP/WxLqzYJp+ryB8733Bl7Voqv+wYpKGdu8eBQogfp
+	nrJEJNrjmqtV7nK0Ou1/cdoqGRAOQ17vPLb9EZaVixbRR7bhvOl6q2+3lDLBDipM
+	RVMbqe+0zymieagrPybaUBnEl6g53iGG7TA==
+X-ME-Sender: <xms:ebUIaZXgsuXDU7p6Y7j836waoFhj6_12iQhTJtywRLYd3gXUHU0Bfw>
+    <xme:ebUIafkc35oaDcDc-A-68jpJQAwNSdDn4e-eocb6Nst_qm7w95owaXsBkAzbVoR7q
+    EEfTWkRKyUIS5mWD6U9bHIoL9uKpP1XwK0qOvUC3hpOtpFGF23mUMY>
+X-ME-Received: <xmr:ebUIaTAC3Dzimis-pxYPKUg6J39zDAWJAEpZThiFesYCWhoA3tK400C0AvwIBUZHp7Oqtcm3lQu2fGZEGP2oOD9Xdc8FVH1SlMdAu1u0nypN>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeekfeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhih
+    hkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:ebUIaXdXvl8VZUeYzOoHWo3uXvjB-SnGh5__n8qLshSXRNMFn4Twyw>
+    <xmx:ebUIaWKlGoRp4XLaByfxDEmczFwqCAd1wpx_RNJynkHh_8-50OOLvA>
+    <xmx:ebUIaSdi3j9OHtaIRyQ7YpXXthNMpydQpudzRYSEmGinDatU2oO0eQ>
+    <xmx:ebUIaV2HZycqYPJ27gc5r1_BP4x4JXotY0AmJkk33NlT7SXz6nLTjg>
+    <xmx:ebUIaeEcU9j5xodmbEx-liKNfWDVIOFjbd064x3Qk8mFYmKom6bQRpw3>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 3 Nov 2025 09:00:24 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d2399518 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 3 Nov 2025 14:00:22 +0000 (UTC)
+Date: Mon, 3 Nov 2025 15:00:19 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/5] reftable/stack: add function to check if
+ optimization is required
+Message-ID: <aQi1c6ZLM-1dqrCI@pks.im>
+References: <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-0-a03d53e28d0e@gmail.com>
+ <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-2-a03d53e28d0e@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251103-fix-tags-not-fetching-v1-1-e63caeb6c113@gmail.com>
-X-B4-Tracking: v=1; b=H4sIANGyCGkC/x2MQQqAIBAAvxJ7bsE1K+gr0UFstb1oqEQQ/T3pO
- DAzDxTOwgWW7oHMlxRJsQH1HbjDxsAoe2PQSo9EakAvN1YbCsZU0XN1h8SAytOkyZrZ7AZae2Z
- u4v9dt/f9AMzWfURnAAAA
-X-Change-ID: 20251103-fix-tags-not-fetching-0f1621a474d4
-To: git@vger.kernel.org
-Cc: David Bohman <debohman@gmail.com>, 
- Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5655; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=OwfFPm/eQ9oNgoe0UJ35laE04Zi/3GAdCwNAsayw+k0=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGkIstiDA0usYhdd45ueF4FhdOQhcNe7Tdi7x
- qv8YBLZHe3lxIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpCLLYAAoJED7VnySO
- Rox/itkMAJqyladJhYdtKsItf1rDnKJb3lr03hNmqlZhNA64lK6Ya80bK2+LlNB4CnVffN9oZtf
- cEhrhL2fdzBPLBeXQK0lmvbThefkRQVPaIy/OEP1Z2u786CJ7c4tbKMGsRAPjCrgzYPDyu7ZLiV
- sU/RtEKNQ8WG/OSCP9VpRX5KKvOMaNnumbCodzdZS+8l8p43+vMRNO0mLYyV40MQF4HgmWUX9nM
- DLL+Zi3K9gFb4W3hMPJDaYTVQQ1Zab6O1WFMyhg34pgwwCVH0RZ3zztGhBcdD4q8bRIPGZax+Vn
- IkkS9zvaxq9FxSpxnWsx3VncEP/0pfC9lKpxv2AmOb/l4J8Y9c9+VHO5W0laclYLDUc3pZpmqGV
- NoD32XdCIMGhoNVtIkiHBZj+UG9n8ehg4X5Ee/AysycqJYqWAdssLGbsoMCpnjy+SwEAjoBh0oc
- lxabPUrWh5yc5at5U/CCZxXdTw6bK9AIlGp/LpVmolKJb0356Xjck7zcmr2GBLWlTWnIxgHx4p5
- z8=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-2-a03d53e28d0e@gmail.com>
 
-The commit 0e358de64a (fetch: use batched reference updates, 2025-05-19)
-updated the 'git-fetch(1)' command to use batched updates. This batches
-updates to gain performance improvements. When fetching references, each
-update is added to the transaction. Finally, when committing, individual
-updates are allowed to fail with reason, while the transaction itself
-succeeds.
+On Fri, Oct 31, 2025 at 03:22:22PM +0100, Karthik Nayak wrote:
+> The reftable backend, performs auto-compaction as part of its regular
 
-One scenario which was missed here, was fetching tags. When fetching
-conflicting tags, the `fetch_and_consume_refs()` function returns '1',
-which skipped committing the transaction and directly jumped to the
-cleanup section. This mean that no updates were applied.
+s/,//
 
-Fix this by committing the transaction even when we have an error code.
-This ensures other references are applied. Do this by extracting out the
-transaction commit code into a new `commit_ref_transaction()` function
-and using that.
+> diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
+> index d70fcb705d..a875149439 100644
+> --- a/reftable/reftable-stack.h
+> +++ b/reftable/reftable-stack.h
+> @@ -123,6 +123,11 @@ struct reftable_log_expiry_config {
+>  int reftable_stack_compact_all(struct reftable_stack *st,
+>  			       struct reftable_log_expiry_config *config);
+>  
+> +/* Check if compaction is required. */
+> +int reftable_stack_compaction_required(struct reftable_stack *st,
+> +				       bool use_heuristics,
+> +				       bool *required);
+> +
 
-Add two tests to check for this regression. While here, add a missing
-cleanup from previous test.
+I think the documentation here could be improved a bit. Somebody not
+deeply familiar with reftables wouldn't know what `use_heuristics`
+really is supposed to mean.
 
-Reported-by: David Bohman <debohman@gmail.com>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
-This fixes the bug reported by David Bohman [1].
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index 49387f9344..18fa41cd5c 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -1647,6 +1647,31 @@ static int stack_segments_for_compaction(struct reftable_stack *st,
+>  	return 0;
+>  }
+>  
+> +int reftable_stack_compaction_required(struct reftable_stack *st,
+> +				       bool use_heuristics,
+> +				       bool *required)
+> +{
+> +	struct segment seg;
+> +	int err = 0;
+> +
+> +	if (st->merged->tables_len < 2) {
+> +		*required = false;
+> +		return 0;
+> +	}
+> +
+> +	if (!use_heuristics) {
+> +		*required = true;
+> +		return 0;
+> +	}
+> +
+> +	err = stack_segments_for_compaction(st, &seg);
+> +	if (err)
+> +		return err;
+> +
+> +	*required = segment_size(&seg) > 0;
+> +	return 0;
+> +}
+> +
 
-[1]: id:CAB9xhmPcHnB2+i6WeA3doAinv7RAeGs04+n0fHLGToJq=UKUNw@mail.gmail.com
----
- builtin/fetch.c  | 65 +++++++++++++++++++++++++++++++++-----------------------
- t/t5510-fetch.sh | 41 +++++++++++++++++++++++++++++++++++
- 2 files changed, 79 insertions(+), 27 deletions(-)
+All of these conditions make sense.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index c7ff3480fb..8dea08dc74 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1686,6 +1686,38 @@ static void ref_transaction_rejection_handler(const char *refname,
- 	*data->retcode = 1;
- }
- 
-+static int commit_ref_transaction(struct ref_transaction **transaction,
-+				  bool is_atomic, const char *remote_name,
-+				  struct strbuf *err)
-+{
-+	int retcode = ref_transaction_commit(*transaction, err);
-+	if (retcode) {
-+		/*
-+		 * Explicitly handle transaction cleanup to avoid
-+		 * aborting an already closed transaction.
-+		 */
-+		ref_transaction_free(*transaction);
-+		*transaction = NULL;
-+	}
-+
-+	if (*transaction && !is_atomic) {
-+		struct ref_rejection_data data = {
-+			.conflict_msg_shown = 0,
-+			.remote_name = remote_name,
-+			.retcode = &retcode,
-+		};
-+
-+		ref_transaction_for_each_rejected_update(*transaction,
-+							 ref_transaction_rejection_handler,
-+							 &data);
-+
-+		ref_transaction_free(*transaction);
-+		*transaction = NULL;
-+	}
-+
-+	return retcode;
-+}
-+
- static int do_fetch(struct transport *transport,
- 		    struct refspec *rs,
- 		    const struct fetch_config *config)
-@@ -1826,6 +1858,10 @@ static int do_fetch(struct transport *transport,
- 
- 	if (fetch_and_consume_refs(&display_state, transport, transaction, ref_map,
- 				   &fetch_head, config)) {
-+		/* As we're using batched updates, commit any pending updates. */
-+		if (!atomic_fetch)
-+			commit_ref_transaction(&transaction, false,
-+					       transport->remote->name, &err);
- 		retcode = 1;
- 		goto cleanup;
- 	}
-@@ -1858,33 +1894,8 @@ static int do_fetch(struct transport *transport,
- 	if (retcode)
- 		goto cleanup;
- 
--	retcode = ref_transaction_commit(transaction, &err);
--	if (retcode) {
--		/*
--		 * Explicitly handle transaction cleanup to avoid
--		 * aborting an already closed transaction.
--		 */
--		ref_transaction_free(transaction);
--		transaction = NULL;
--		goto cleanup;
--	}
--
--	if (!atomic_fetch) {
--		struct ref_rejection_data data = {
--			.retcode = &retcode,
--			.conflict_msg_shown = 0,
--			.remote_name = transport->remote->name,
--		};
--
--		ref_transaction_for_each_rejected_update(transaction,
--							 ref_transaction_rejection_handler,
--							 &data);
--		if (retcode) {
--			ref_transaction_free(transaction);
--			transaction = NULL;
--			goto cleanup;
--		}
--	}
-+	retcode = commit_ref_transaction(&transaction, atomic_fetch,
-+					 transport->remote->name, &err);
- 
- 	commit_fetch_head(&fetch_head);
- 
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index b7059cccaa..92b3a8e79e 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -1552,6 +1552,7 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'D/F conflict on case insensiti
- '
- 
- test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with lock' '
-+	test_when_finished rm -rf base repo &&
- 	(
- 		git init --ref-format=reftable base &&
- 		cd base &&
-@@ -1577,6 +1578,46 @@ test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with loc
- 	)
- '
- 
-+test_expect_success 'fetch --tags fetches existing tags' '
-+	test_when_finished rm -rf base repo &&
-+	(
-+		git init base &&
-+		git -C base commit --allow-empty -m "empty-commit" &&
-+
-+		git clone --bare base repo &&
-+
-+		git -C base tag tag-1 &&
-+		git -C repo for-each-ref >out &&
-+		test_grep ! "tag-1" out &&
-+		git -C repo fetch --tags &&
-+		git -C repo for-each-ref >out &&
-+		test_grep "tag-1" out
-+	)
-+'
-+
-+test_expect_success 'fetch --tags fetches non-conflicting tags' '
-+	test_when_finished rm -rf base repo &&
-+	(
-+		git init base &&
-+		git -C base commit --allow-empty -m "empty-commit" &&
-+		git -C base tag tag-1 &&
-+
-+		git clone --bare base repo &&
-+
-+		git -C base tag tag-2 &&
-+		git -C repo for-each-ref >out &&
-+		test_grep ! "tag-2" out &&
-+
-+		git -C base commit --allow-empty -m "second empty-commit" &&
-+		git -C base tag -f tag-1 &&
-+
-+		! git -C repo fetch --tags 2>out &&
-+		test_grep "tag-1  (would clobber existing tag)" out &&
-+		git -C repo for-each-ref >out &&
-+		test_grep "tag-2" out
-+	)
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
-
-
-
+Patrick
