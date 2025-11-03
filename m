@@ -1,76 +1,80 @@
 Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F13A23EA82
-	for <git@vger.kernel.org>; Mon,  3 Nov 2025 07:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174B62D2499
+	for <git@vger.kernel.org>; Mon,  3 Nov 2025 07:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762156355; cv=none; b=G54DDnWp60VokBRB1bxZ18FZlUvEgfWoIFbnfcWi4/FLX+MkvQnIAyWSn/SQEpMjMH60CQqBKM1Wl1BssFuvgouR9OvZM5joFwGhy6sFwgYY74k1sOlmHol/5qY0hcxFYAsmPViBqHkpu+wOKWXQ+ulJ+RmDcS5H3PlX3ZD3bq0=
+	t=1762156732; cv=none; b=DTJ0btNfz4WnQ+WyEVJpjjTOL+4S9Xh5G7c1zUarw6BtrndRYl00qRF/cSDEvYPQ070OOac42EOHmLzmFELYdFF5/8qF12QexrM3wl4dyAuLQ6laAbkiXkCAN+0OxosX0flvDEMH8QV4cMlJG1jtMUL3pCn/OW5zKZIuUuue72Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762156355; c=relaxed/simple;
-	bh=FE0qtV8bZNdAr26JCJrprQmBDYMulUrSqBbjt5WQFTk=;
+	s=arc-20240116; t=1762156732; c=relaxed/simple;
+	bh=K+1PK1+R/VbxLSpW6dTcrU+QR3GcmvhlhFtH74+Jax0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YoBRX71cIRLzvCBNpQoYuAHXItyCfTKrU4zWFf49S8/CTphsVfAs5Z91J79kGlum/YSjXq2tO9QC0tfcLvBjdG+MG1gAYPV2E7GHDC/hxz3eHtNpdjAbvXtaXNSohJNT9QInNHEFSGI/4m1pZNuu40SHyhY6RUbfI2Vg+7SB1as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hf7HouWw; arc=none smtp.client-ip=209.85.208.44
+	 To:Cc:Content-Type; b=gY+fw5HXE5FEThx2OalP/BoeGMkKHxdMNtc1GL3a78pE5W+NDOl0knbQXgbWFm58HLHbBKo60M55Wo/DjYp6vT2MswL1htZQjnmXbZCjGYLz+uVym/JKTDIAfBoeq1nhpfagXIGYEpAWq08znV4n6gAlSnwKAMsfSWYvPVwff3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SRpOuFco; arc=none smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hf7HouWw"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-640d0ec9651so351555a12.3
-        for <git@vger.kernel.org>; Sun, 02 Nov 2025 23:52:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SRpOuFco"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-6409e985505so2198919a12.2
+        for <git@vger.kernel.org>; Sun, 02 Nov 2025 23:58:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762156352; x=1762761152; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762156728; x=1762761528; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FE0qtV8bZNdAr26JCJrprQmBDYMulUrSqBbjt5WQFTk=;
-        b=hf7HouWwOR6ZCeh2kmCW6UT1lXQZvOmWKbpinfro2kCCdwniZHno47LSVS5jZwMBpY
-         Z41HHp7MEw2cH3D1zEHyzFagm8fXiuZrHYCwSMoZmXyIO/FpZ8yZNkJb6Fa5jm3jvQer
-         wFlxZgBlBNaBhpTQEFcqLKko0HyPOYBdEwsq7EoqYDBcv/AkQD+HHESilWYHy14tyIhz
-         yUrwh4kI39JZ8fbnCWXyJf+vMbxOBtIXaISUXJB/+q3ZyAbOPWAj+evFhh45X9JSlNYV
-         HSypeX++iFm2kIFzx8oqILotRrqzVfvfo+pmWLT+hXT0O4uIZbpY/4XkJmYB4C8XkXf6
-         Ptww==
+        bh=K+1PK1+R/VbxLSpW6dTcrU+QR3GcmvhlhFtH74+Jax0=;
+        b=SRpOuFcoXZjuMgoM5gIa4NbLiXZ16MVwjjLsclY3GzNbUexyCKYpzgV+E1jI2I5bg8
+         CGKMeYx32q2h4Qu4n0FcHK6vbYQnBvJc8lRUFVmYJLRSg2ZYP0ZH/r25+sp/JJN+Y3a6
+         qKYnDF3hIsdYT3ehxgwvCwhiJKNh1HpDc2S68ufgsXF/9Ty0dTIUkOyUWYE15QGnBGLQ
+         08rqoGufIsEyO5dMCW8D7GPLhush/4YCPcIu1FNNbLNQauW0JI1fVixg8lVtb37zZxmn
+         76pPG0NhVJZ6Y/IGGQBokVRW1jOHPq5ILHcg4MdN5t8Tvnu93IsYBvSIhOTOnXAzZFiW
+         U7aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762156352; x=1762761152;
+        d=1e100.net; s=20230601; t=1762156728; x=1762761528;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FE0qtV8bZNdAr26JCJrprQmBDYMulUrSqBbjt5WQFTk=;
-        b=e26XcVgLbJuz3GB7oZNqFVlGMznCldn9oeop2ZQmsOGOFN0vwJVwD5Skazn7R2Md43
-         QLCClpMijGdmwd+mvQYi4kPY+Z8w+vFnehh/9XqL35FHK0M+3WkTsMb2SB9HoT3UUClj
-         kU1t5lI6ToqEEPRnQkMyVTtw+pHRkGkZ6hwxHSv2R6HpVnrIldjnTPhIU0Xpkc3KRoB+
-         2Vj1Z8JhLJoR3l8KwhI/1Toz765SxKROLISTC+iE5bk9UH3CVCgZqzqHOOb1/s0zEMjW
-         6yT9BDQ9z/YviDDsJaCdH7VZPVOHZZHSbqCgMV+cKNCgFoTitUK0uyB+4C0LleLA2goT
-         Sc3g==
-X-Gm-Message-State: AOJu0YwDzpDQ0sqqiUkJRFsu1ZjhkK1opg5zEySu1GSczowxbLepHhir
-	lcBjZIUNHCd2ntUL7Z9aQDpZg8oFJDo2b9L0xG5HdbHMu16qhnQanpbicR2Glr9AJDrw5rGGenK
-	UfHmjlBgkCprCJGgmpd8YEyvE0x+HQ9s=
-X-Gm-Gg: ASbGncsH+QgRocWAC2D0UOUhIkIH5gfRrKRP5BMte48vQzrpulci5EeHcVlEb3I7ceM
-	mH/SlKg4+C32Y0kSSVUfJHRYyTvc9BEPIpdCKhGshg1O8lV2t5YMu4t4sgyR3QnGnpCBceWkLH9
-	Yx31LwkTBQdY4/mj3X5O//HAES4Io5laGaRgIOrbB/aAFcCaTTyIyA0S0Qoefp+8PJJdKLY3zsq
-	HvTBl5CKAwtCixnZ/SjKOaEH9iCIPrRlfT9bv8GF0BLgxSggElFhXY157qx
-X-Google-Smtp-Source: AGHT+IE7OscWzLdbUaNVToJMCMy3WA52v+PgdmS8DMC9O/RHg/3KPawOCJF766WPTIAiDqBTAdDI+7axnqyDoHWnFOc=
-X-Received: by 2002:a05:6402:d08:b0:640:d184:cf0e with SMTP id
- 4fb4d7f45d1cf-640d184cf5bmr488879a12.21.1762156352142; Sun, 02 Nov 2025
- 23:52:32 -0800 (PST)
+        bh=K+1PK1+R/VbxLSpW6dTcrU+QR3GcmvhlhFtH74+Jax0=;
+        b=J4xkcyhzkP9M0eiTxxO8aOPFHBtPqp0icabSDv1XHtr6FRryR6//gdMSXqiRAI31Pt
+         gUjVTj+VtYT/3xOysOPwIZIiOO18k4hVth7OzNbWvTXUoATYjaIDuzMpZ7Ne0NCh/fRO
+         3gokX+G7t40bI/GYqvfo3x+qE1zlpPQm9toxtnRTzgNRds7f7QlvAL/Ob8oReFQuOOVg
+         aD5JFoisGxvS/bltiIDA7gR91jus4sZF/NBoUMc7Y4lMWxvIUWCfAJDhHGwmQN/Gvzrr
+         cbD5spt+C5EJt0WC/zLFg7MUYF9xBjlAanU5P7bT8Xl0+XRR8teegIk6CiwXQM9pujh+
+         Jizw==
+X-Gm-Message-State: AOJu0YwPFOCAA3RUz4/bXDYOHengR3gmMc8Y8Av4MAh3YoWzZIfBA6cL
+	FnGSAYHMtGZlZNp//9+H3i5uODieix20MPGUJhhLzesOEP8Tr7H0oDx91zpI9Yv8M7bjF+zxb6l
+	+1b09ZqFYCmMMjlVEx8HzMhgqxuOzkTN/l/+Y
+X-Gm-Gg: ASbGncvlwD0+Nf7dXucLOm8K/oQmI0PECS1Hdm5/Pe+rSpXS0YfxZ4J5d9hGc8g56rb
+	1VhnKih6EykW8zy/mFXtORKZ5VObp3XnzAVaEwLw5HOpB49Evx0uXYq7UtYPOdggMVH3uNUW80n
+	YphEL70uVsUFPvX2bRlU/Bczz1g3CMHCOPuKJGwP7YOTuE4K1IekIU40ZL5jFXbHM/ef9ocjgYn
+	MFOa1wodhBB82uAXUJyFvzHVvsEn3bQG2UnmcXxy/HCp/Ct7so23KP/8CTw
+X-Google-Smtp-Source: AGHT+IFYy0f0uDmFGgrCdUdjouloVRNBu4Ol2eJ0wnvoAo+zreioC7/Fp5QhV6+SB9DzD2gxcsjsblxPnCIb0JvV/vo=
+X-Received: by 2002:a17:907:6d09:b0:b70:fd2f:6a46 with SMTP id
+ a640c23a62f3a-b70fd2f6c1emr170510666b.20.1762156728148; Sun, 02 Nov 2025
+ 23:58:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <aQZaqG6t4F6XE0nt@ubuntu>
-In-Reply-To: <aQZaqG6t4F6XE0nt@ubuntu>
+References: <aQZaqG6t4F6XE0nt@ubuntu> <CAP8UFD3TdUb9RBktdxwA7Qj=6Oxqpzg-ZrVP5eT_+38TPE+n-A@mail.gmail.com>
+In-Reply-To: <CAP8UFD3TdUb9RBktdxwA7Qj=6Oxqpzg-ZrVP5eT_+38TPE+n-A@mail.gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 3 Nov 2025 08:52:19 +0100
-X-Gm-Features: AWmQ_bmVKed6dZQMmb6WknB2WEf2xUW19upWcgpzG8aE__0roVGdcfNkYBX8C74
-Message-ID: <CAP8UFD3TdUb9RBktdxwA7Qj=6Oxqpzg-ZrVP5eT_+38TPE+n-A@mail.gmail.com>
+Date: Mon, 3 Nov 2025 08:58:36 +0100
+X-Gm-Features: AWmQ_bnHc1wxW5Ja6l06LO295mmO4VTThys_KjJ6gHW_2ApDTlEeELC3H6o2CoQ
+Message-ID: <CAP8UFD0yamBJQHT8eh1=u9-m2f80K9FM21nozB6paPpEJrP5wA@mail.gmail.com>
 Subject: =?UTF-8?Q?Re=3A_=5BOutreachy=5D=5BProposal_v3=5D=3A_Refactor_in_order_to_r?=
 	=?UTF-8?Q?educe_Git=E2=80=99s_global_state?=
-To: 20251030144934.9689-1-belkid98@gmail.com
+To: Bello Caleb Olamide <belkid98@gmail.com>
 Cc: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+
+(There is a "Reply-to: 20251030144934.9689-1-belkid98@gmail.com"
+header in the email you sent, but that email address doesn't work. So
+I am resending to Bello Caleb Olamide <belkid98@gmail.com>.)
 
 Hi,
 
