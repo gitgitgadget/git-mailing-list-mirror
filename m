@@ -1,172 +1,121 @@
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4BE27144E
-	for <git@vger.kernel.org>; Mon,  3 Nov 2025 08:50:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CF32ED86F
+	for <git@vger.kernel.org>; Mon,  3 Nov 2025 09:37:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762159838; cv=none; b=iqMtmNd+fbhijTVSkvh9Hfa24Kk5bvA2wXlQ3vzPQB8c1K41mM4NGLdRxKVuqQngFUTYMk5VxVy+ycHzFGLQD+WNtOdekvg5aj0BW23oS3hTF/gI5eoi9exE0L8y4bIiEgiliBpUotMktX4YhkzpELDYhJ6yIHQ1j7dMOjF/QVM=
+	t=1762162676; cv=none; b=bmJaavf9ky49VIg3sMnPnfprAgyIw6FAgx5k51TYCCDhB+aqb2HDQB3Oaw1gSbR9s4/Zh90ipTg0T0A0St1v9lLo6zkOm3mct6bjQzHU8bwtjOkghio0TScOI4g/MeIwB+uIac+o1RkNJQJnlYojZs9DJAZR01s3Qgx2aB52Nhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762159838; c=relaxed/simple;
-	bh=SPpyG9/C2NIdA9KozZIGrr0SiNYQvyfls/+SvWHTOlQ=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fEeWP//US6ouebJqjRBbNYZKoFXNIexPvjEZS0ymTCNEJOj/QGgYlZeHotppi60cH4DUUkXCOFj+smbF4gHy/SKvXyb/pNTIORKY1ACbTrriKd78pKNhnKsEQV5jSQtZnbjuLvNEi0c5R+2LfA0qo7na+zbJ1cPljJ1B+6QEkfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lW/f4dgr; arc=none smtp.client-ip=209.85.217.54
+	s=arc-20240116; t=1762162676; c=relaxed/simple;
+	bh=KjZCJpgJBCpiEdIg2/2x56q76sjwEAY1F9ePB4vggS4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B7wxWsKjBOSlZS2tIEYHOLxk/Co6UMgiXjwoHnbjLO7fW48L9lqJ7vqAlZNbtIoIOjc9aegiDzUWXPVmz5YbaP3CnbUeOkqzi7pp53Y/+A3xHuW0hJtdzeUhB3DekKoapgpQc6WzTlDI0izC6v7oLxLA3pPp3zHzlJmXkeNbT8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YcE4kq/0; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lW/f4dgr"
-Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-5dbd8bb36fcso1098558137.1
-        for <git@vger.kernel.org>; Mon, 03 Nov 2025 00:50:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YcE4kq/0"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-475dc6029b6so37217295e9.0
+        for <git@vger.kernel.org>; Mon, 03 Nov 2025 01:37:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762159835; x=1762764635; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HdgFkR7gE/Z1u0cXrOm5DXI2TOxJTBzZVS7MiscC4JE=;
-        b=lW/f4dgrG6x38SYD/TpUu2vdp2GEOmGa6GCK77zkDiLTPfKSwmSYyHOZ20Bhd5RgJV
-         CAOfvHb3TfGZBpPSRCy6Sqoy4wDBSilSqvQHfpAAlbMdoSQ1/LtC77Zt/nJ1Zylw5vaa
-         sX/WqG3iABHJ2oe0ppxWDQsGazJ6zgWoezhpq4DLlWL8B7AdwXfMRNMVESCQ4F0xAB3A
-         8AU2BKEd62G/PVt9PHYEja21Nw0ZGvH/+88hOm9p13dgdQ/g21iiUweD8GkhsxOcfsi7
-         w1uRTa2c+a5a0GxsFvS7xnipUs0by9DEcKctvydEzdxQQWXFJozL6aKY7O8T3hfOLyYf
-         BseQ==
+        d=gmail.com; s=20230601; t=1762162673; x=1762767473; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=AY5IQ1aC50XjChq0noPaQdEWyGDVUkLp8hDjg7aKUPc=;
+        b=YcE4kq/09uE0DYPWdFbo6giC90cPPexIGhJCwM8h7oImHYufBcefvcmS4gqTBcfK2z
+         o7E1AMexAGPLorf2jvmy5Y8l4VSs61Put1xvGgp1RqgPW32/cOEnCaIqN7hcxqknMs78
+         ubDQ2aToPuHJdpYRJnX4o4wc8S+9FpkoMVhdsUupnW6yD/PLnbmqweFshOQPHwqmZg9r
+         P4FIYPec2p9lrwAZ/5P2xksxI616q0kLfxhfm/TV6SLTxuem9ZONP2DORqadYtl/ystQ
+         TG5Rjfeh0q9s+3ZrI+JXa1f5a1J7TqtKTnDaUHI36Sj6K3oPWBgCHdD6i0jB8ziQrToU
+         y6VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762159835; x=1762764635;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HdgFkR7gE/Z1u0cXrOm5DXI2TOxJTBzZVS7MiscC4JE=;
-        b=qRrjkBeX6LS8AN89y36w3IFJyAnNmISjsAhsg7VMWpFe/sfpvRPO1aeSgrZeu1tdZV
-         x0oIMznjLsUnfuYlYYbTbhk7euZoSfkrQDXyL7FsCEARRVl+eMcgmEgbQ+DWFwxcY8cV
-         bz4/02Ua5QaawrpdWQMIXeShzGeoCoS+qAMuk2zLPhvdNQ/5FzEiKFJW9TZhpCFXjUiQ
-         ZPaI+6we0X7iLx+UCTuiKXit9ItVn1fuDZjNv6VHmXSSA2W33HjvelV5hpnDoHSSEAQ2
-         mnnPS0YHeGKQCKZO1tDPpKjbTqmr3uCLXwm9lSrw8k8qZkts4TewszIS3665+Ro9Sjk4
-         ijPw==
-X-Gm-Message-State: AOJu0YwQsVwrA3vZDXadDkl4gdLyngUu2rTOA+RfTL9KD55Y8VJFUn2m
-	p0GhyOsi81+X4DKlPUvOFn7hrKDmnB+4oM2GJ6xTt1Ax3kWPPKXXH05eindT7q+HD/AOnIPrYU/
-	1/wXUBRfvlov3wQ2qObnUcn8NdQyf6hM=
-X-Gm-Gg: ASbGncu1b/CabFqxznTBS9G4U7gz1qGG4mDWz32cZAPVpgUgfsXfQw5zBjUPOqOwurS
-	669HBrTiQl9Fsu3Mv3sAVtCMheXUnNRoN3T2qai9OGIKIeAZt2ix9ZJaFNvcQg30ef1v71WLAB1
-	PxnT1FFfThfmcFrhcLBR/LBFEOkjTCPtkthnCBRRM6n377i40oZivK0QhC3OzKOMt0Ag8179tqx
-	hSrknRLiHOWgF8FcvdLbbDYqJaTMe6YZKc/dwnbpW79avu4H/EO0VENNRfwS/YRdISu3LMC3X3i
-	EzX6Xl06kKVilWl68+1ICiDU92Y=
-X-Google-Smtp-Source: AGHT+IEWxSc0Vms6n9AOwvLiJTfwjiLn26jTdZ0N/Vzsf4CJ42xrI40e1UlcFoB7z04Yd3jmOI8BoUZywrPLgvh498w=
-X-Received: by 2002:a05:6102:5128:b0:5db:1e4e:6b04 with SMTP id
- ada2fe7eead31-5dbb02380b2mr3712724137.18.1762159835250; Mon, 03 Nov 2025
- 00:50:35 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 3 Nov 2025 00:50:34 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 3 Nov 2025 00:50:34 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <CAB9xhmPAe1z8wqWnbpPuPE=y=nuKMsGG3_bk+DkGmXDfshaaiA@mail.gmail.com>
-References: <CAB9xhmPcHnB2+i6WeA3doAinv7RAeGs04+n0fHLGToJq=UKUNw@mail.gmail.com>
- <xmqqcy8418me.fsf@gitster.g> <CAB9xhmPw6P1J2a3P+btUT1chhNQrhcx3pSkq+vqZbhFhCqcX9w@mail.gmail.com>
- <CAB9xhmPAe1z8wqWnbpPuPE=y=nuKMsGG3_bk+DkGmXDfshaaiA@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1762162673; x=1762767473;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AY5IQ1aC50XjChq0noPaQdEWyGDVUkLp8hDjg7aKUPc=;
+        b=JSXdptnujs9bouCDR9eXqg+4fgUVNTmUJZgeSbkHElIK7LMFT18WjyHsi54o305/IT
+         ZfPQaHu3Pfc7AX5kSYJU+5qU5gHy+weDLMGqdTfv2BGomDrm5xA+7t5Q9yNzc4BwD5YR
+         sNyDtqGnoRk7OyCWg55th5ZBQ2joS5Sz7JzpOsYNYvmBhM55PfwJvivpa9AI63r3XEWP
+         gjvMlSm9EiFkHTxQtmD676Cv26iAhdiXu3cv52YvnDhzEOqdhEjlxoR9NCkJ4re+7S52
+         gwKlCTxGrbagUaNsWkLk03bTO2iPlkBhMi27GRrFeSX+3HtSVWX6tSHwq+REj0mGHhpC
+         K8ag==
+X-Gm-Message-State: AOJu0YyIacWhvv8S251fBDhx+y1eYAi/RHA3DLnk3tLcbTYfs/8hjg8L
+	QLAo0cG3DgAcI6v/xiob2d4Aofv5CASmZezX/teoyUHpPc2sReXPYiun
+X-Gm-Gg: ASbGncvEVM6oGLpIakWRSUcWwx3KEGQt8YsYoQ4A5zyMFdGgIJ99bBOuCfyPUQ50ut7
+	F1RXdi/ZopNeTQTsQQeXaJp1mB/GUbQNzbe44uu4PTeo/EAzBeP22XkYlpG72Yso3e8EhK5mq7l
+	aKF06XBgOp9Fiyo4M9jFlKLwnGgM3SCJ21z0No5PNcu331d+NMvu4v5Zxvoeq/O3GyB0OSYWUEA
+	JRdSsIHir0igOpoRVPT4ni9zaKSw4NkDWQmKjBMBWcXqaQTcfa7PSPaOuCUsT4io2dVJ7bBF+Ri
+	hobBdi2AOb3vtiCmeSeRYig8u2zTp9FuCIcoTKxlKRiNgRNP9ypIqzg9lzULQ9XgsqI+/WoM6Cu
+	MYQoKbV3vWdjPTsFpt5x6037nYnf6FePHBvXaBseZD4J5QowWlW80Qm+0YD2esr2NcoAztODO
+X-Google-Smtp-Source: AGHT+IEfdOB2DVO6EKQLnVhXY8ixjzT+zJn4svfOrjjo+b9ZMgSxo86EuYRMH0TiHFHQ8EhGnWxf7Q==
+X-Received: by 2002:a05:600c:628e:b0:46d:3a07:73cd with SMTP id 5b1f17b1804b1-477346ee158mr96641245e9.23.1762162673034;
+        Mon, 03 Nov 2025 01:37:53 -0800 (PST)
+Received: from ubuntu ([105.112.122.216])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4773c48de65sm144550715e9.1.2025.11.03.01.37.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Nov 2025 01:37:52 -0800 (PST)
+Date: Mon, 3 Nov 2025 09:37:12 +0000
+From: Bello Caleb Olamide <belkid98@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, usmanakinyemi202@gmail.com, belkid98@gmail.com
+Subject: Re: [Outreachy][Proposal v3]: =?utf-8?Q?Re?=
+ =?utf-8?Q?factor_in_order_to_reduce_Git=E2=80=99s?= global state
+Message-ID: <aQh3Ic+iXsiqMo4D@ubuntu>
+References: <aQZaqG6t4F6XE0nt@ubuntu>
+ <CAP8UFD3TdUb9RBktdxwA7Qj=6Oxqpzg-ZrVP5eT_+38TPE+n-A@mail.gmail.com>
+ <CAP8UFD0yamBJQHT8eh1=u9-m2f80K9FM21nozB6paPpEJrP5wA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 3 Nov 2025 00:50:34 -0800
-X-Gm-Features: AWmQ_bl8UL0vSN5bB5VfBryjgenrp0eZrFrDNleEranb-YtDUAuFcWRQqGemGC0
-Message-ID: <CAOLa=ZT3abHfkNVzwpJyGEhvm5dijdaKSCkoEFgQuLhvab-=aQ@mail.gmail.com>
-Subject: Re: git-2.51.0: Fetching tags does not work
-To: David Bohman <debohman@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000000498030642accf1d"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD0yamBJQHT8eh1=u9-m2f80K9FM21nozB6paPpEJrP5wA@mail.gmail.com>
 
---0000000000000498030642accf1d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Mon, Nov 03, 2025 at 08:58:36AM +0100, Christian Couder wrote:
+> (There is a "Reply-to: 20251030144934.9689-1-belkid98@gmail.com"
+> header in the email you sent, but that email address doesn't work. So
+> I am resending to Bello Caleb Olamide <belkid98@gmail.com>.)
 
-David Bohman <debohman@gmail.com> writes:
+Thank you very much.
 
-> I am able to reproduce this locally using a bare main repository, a
-> local bare clone of it, and a non bare clone of the main to insert
-> revisions and tags into the main. If you move an existing tag in the
-> main using push -f and then try to fetch --tags into the bare clone,
-> it fails to insert a new tag into the bare clone:
 >
-> % ( cd test2.git; git fetch --tags )
-> From /private/tmp/test
->  * branch            HEAD       -> FETCH_HEAD
->  ! [rejected]        stable     -> stable  (would clobber existing tag)
->  * [new tag]         v5         -> v5
-> % ( cd test2.git; git fetch --tags )
-> From /private/tmp/test
->  * branch            HEAD       -> FETCH_HEAD
->  ! [rejected]        stable     -> stable  (would clobber existing tag)
->  * [new tag]         v5         -> v5
-> % print $?
-> 1
-> % ( cd test2.git; git fetch --tags )
-> From /private/tmp/test
->  * branch            HEAD       -> FETCH_HEAD
->  ! [rejected]        stable     -> stable  (would clobber existing tag)
->  * [new tag]         v5         -> v5
-> % ( cd test2.git; git tag ) | grep v5
-> %
+> Hi,
 >
+> On Sat, Nov 1, 2025 at 8:08 PM Bello Caleb Olamide <belkid98@gmail.com> wrote:
+> >
+> > Hello,
+> > This is the third iteration on my proposal for the project
+> > "Refactor in order to reduce Git’s global state" for the 2025 Outreachy
+> > Internship program.
+> >
+> > The change from v2 includes correction to the subject line to have the
+> > correct encoding on the mailing list.
+> 
+> Thanks for iterating on your proposal.
+> 
+> Please make sure you properly submit it to Outreachy though. It looks
+> like you haven't submitted it yet, while the deadline is today at 4PM
+> UTC, so you don't have much time left.
 
-Thanks for reporting back, I missed your first email.
+Thank you very much Christian.
+I have successfully submitted it to Outreachy.
 
-I can confirm that I could reproduce this too. I'm currently looking
-into this and I'm certain that this is due to the transaction reference
-updates. Nevertheless, I am looking into it and will come back when I
-find the cause.
+> 
+> I will try to take another look, but I am not sure I will have time to
+> do it before the deadline today. So don't wait for it before
+> submitting.
 
-- Karthik
+Okay, I will be expecting further feedbacks from you.
 
-> On Sun, Nov 2, 2025 at 4:47=E2=80=AFPM David Bohman <debohman@gmail.com> =
-wrote:
->>
->> I am sorry to have to bring this up again, but I am still occasionally
->> seeing this problem with git 2.51.2.
->>
->> What is happening is that I am cloning a repository as bare, and then
->> later I try to fetch the new content including the tags:
->>
->> % ( cd bind9.git; git fetch --tags )
->> From https://gitlab.isc.org/isc-projects/bind9
->>  * branch                  HEAD       -> FETCH_HEAD
->>  ! [rejected]              stable     -> stable  (would clobber existing=
- tag)
->>  * [new tag]               v9.18.41   -> v9.18.41
->>  * [new tag]               v9.20.15   -> v9.20.15
->>  * [new tag]               v9.21.14   -> v9.21.14
->> % ( cd bind9.git; git fetch --tags )
->> From https://gitlab.isc.org/isc-projects/bind9
->>  * branch                  HEAD       -> FETCH_HEAD
->>  ! [rejected]              stable     -> stable  (would clobber existing=
- tag)
->>  * [new tag]               v9.18.41   -> v9.18.41
->>  * [new tag]               v9.20.15   -> v9.20.15
->>  * [new tag]               v9.21.14   -> v9.21.14
->> % print $?
->> 1
->> % ( cd bind9.git; git tag ) | grep v9.20.15
->> %
->>
->> As you can see, it is getting an error for one of the tags, but it is
->> also failing to record the other new tags into the repository.
+Thanks
 
---0000000000000498030642accf1d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 2a4affc6f2ffed8b_0.1
+> 
+> Thanks.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1rSWJOTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK1cxQy80bWtYVmN3UEhLNjB3YWdOUmxaeEhwenpGUwpjTlFxeW9jQWti
-UnQ0SU8yZW5OTjIxWEhXTU1KQWFTL21ONW96d2lZRWhIeVdyeWRXYUtWUzJCb1FTRTlMQTBoCmpR
-bmpvMTRLaiswcGwrRXcwTkk1aDhTdldUdVVIeXFVOHduNjB3aGdMT1lnYTNYT2ZCc2VNNDNsYzh1
-ckh2MVgKZTNpZzNVSEVmc3h2Y0g0OUs2TlY0MTczeVo2cGYzWTVQbEtoUG40K3dEekp1M2FmdFFj
-L3RILzgvTmNqeDE3TQpFNjR5NkNJaTBqTUo2cXowT3A4L1IyaEx4ekRCMXVGRkVoUWcyaWdqVXVD
-M3FEYk1GaHpscDZBT0NnM250aXJaCjk0VmJlOUtqajVKSUtadWhmY0JQQ2tPSGVwZ0pLUFJIRmlk
-S1NxU25TbFVEVEdkemk1VDVGUzR6M3o5UkM2QTUKSWhmaGdFbHp4TDBpNU9wUUgxS1ZGVkJ0MXFl
-bjdnS0R3VFJVVVZZWmZ4MVZxaEFwcC9CTUFTVW43S0hjZHpGaQpRWTJNNnNWSXViZTErQXNuWUZu
-U29rV0NUZGxkRUdrVjM1VWNFdXkvbkl2UDBOZE5TNllUY0Z2cmEzL3JaSStiCmFEWUtmWkFxa2ts
-TGNyOFowSHV2VEt5Tm5qaWorNE1NTnhtZ1lBOD0KPW5MVW8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000000498030642accf1d--
