@@ -1,100 +1,112 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAC817D2
-	for <git@vger.kernel.org>; Mon,  3 Nov 2025 00:47:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DC278F4B
+	for <git@vger.kernel.org>; Mon,  3 Nov 2025 01:30:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762130840; cv=none; b=YDBVGVLl5ANRjcdIMwuH3zRmDMl54IEOXOXi137rpC/Wy/dqm/0+sYNy5ZVkj7V0UqPJz8pSkyvnAw3eIH2hgy9i1usJcjjfj4aT6Uy51vua0VvY3N4Foe/jmNq2+Tq1BTyQrRDZ9rtYFD+xe7NMH6H3Mu52ka3/zcnmRh1MyIg=
+	t=1762133443; cv=none; b=m00Ql9nmFqLKo+AbkGcSUmzTlSC/lRrEzxR+y00UUQUorvStZc/QZnghw3wp640n9kjH8HRk/F3cbn0NbJT6R6xEEKoLJWbh2/4U9LPgFgG5cLKmS6Yn4Cnyn1RbSIK3t06rwcVS4MxI0cgckeBbzt3sQUnMIzZ+MgO0xW8JLZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762130840; c=relaxed/simple;
-	bh=8fYjG1Zc0ynegOseDKPHr3JQ7UGHSxvLWcoRJUNxjJk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GYm8FXqEnsfWG4mrtLIhECYfv4OMkJKe6pNtnj0STsnF1MFp4H43OKr0A59dhlTZm+rgCmNO8jv9mUGlt9eyCEwEaPjT3150mGP3U9Z37rmpIRaGKDFSfB1VoQ4IvhWuAfr5voAf1tVZJt8lTJIjVQGV4VXzz04qAsPIL8I7qIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fpRpI+Aq; arc=none smtp.client-ip=74.125.224.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762133443; c=relaxed/simple;
+	bh=evgogiADSkKvdvKshiWz012GGuw2WKlliaSy29pJDQA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MD4tgSNElmopDVYqwd+jvCekWaEt081FATNK5MTyalvRQ1XygoP9+9+oKl1+C3UmQ5AQRXRxwcmr3YArAKaVQjW0NefTPEE+mM9SjBR0d6PlShTgDGQJQnLauEw3I5MQ0ye04QhCmG0GY0Gwa+4A/gWyzAGvyZ/pbP8fYhqxkrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=q8AXbifp; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fpRpI+Aq"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-63f976ef4bdso2053359d50.1
-        for <git@vger.kernel.org>; Sun, 02 Nov 2025 16:47:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762130838; x=1762735638; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=j10y+mDA3dZy51W+j7yMnlSio8gfvhdPUrftC6wQljs=;
-        b=fpRpI+Aqo265Y6NfwPwAbGkD0ZFH2ur/mQl6+BlcLICYOBhkBFOaSOO3VQviF7LWA3
-         HaATKWVTNWSkYm36+39zCVs0vGZUJUzz9he+ME9CtWmi8MDo82jUgdqZtIUFTBMKhylU
-         yqp6gdf+YSpiKDmn/Pvjzv6AjkRxQusyzG8oYjDGUTQcCHrYlrEBIOHY/Nln2LN30a/S
-         vQu0c9qhbgfvvC5wX/23FXP06U/tjpHrvIbdrhRK6ATc5duvjv19fOXeRdIjwhcijYoO
-         DPWKcJPB12Sf92q3pbB+5HUJkiZHSQCpV4TdB5YfjFDhtR1K1f8RDMeB5zivEiuv8c8Y
-         FMxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762130838; x=1762735638;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j10y+mDA3dZy51W+j7yMnlSio8gfvhdPUrftC6wQljs=;
-        b=UcCsMFVIJh1wQFn8B7VF7gzROqri1k1Xx13dqY8+QRXJH/OS+PqVkdYSdyt5o2mcQr
-         0oU6cENNr92mpOjlKJ2ozmaNk61AV4PoQx+4NGP/ubKf2LNAW0W2eRiW+6qTXruWd7rH
-         sVdzwY5NiSN1Z2qX+2x+rXsJB4xMaVsMipvz5i10lDphc/mq9slVab1HfLU/4DgARavF
-         U7RUknpa5UyzSF0MhpCD7wNwAJR8c2mBv6KlF8B6WGZe5+Gm60Mjl/Wm5wlW/afnBoti
-         GfvfkjnMQx6wyyB4UvGW0cKKsgdIma+/RHjHBPaTkAhkiBgQw4aop1uz2yldJ0BPpoFm
-         mDeg==
-X-Gm-Message-State: AOJu0YxkoMa5gXXgaXbdQe9FTmIIVQUfnfv5hPZNuJbazIMJXyn80+ZP
-	A65ka6zv3n77h/Yuf1J8AAvvDvJpAlxF+oS1b+bd5BliRdXSK7tABf19hgQZvXddcl/DiHVZYC8
-	IAwFG5IEhYmyE8EPN8wewVo5Tyqxv7i8=
-X-Gm-Gg: ASbGnct/ED0nV1JmlSOmlRCiwVhOgdU6Q1ZDZoXFOAJEsPTxfObbeBqMmn5vwAzz9T7
-	ga0sc2VbglgnkQAruZ0yz2mY62SvMy5u0SK5XGZm6PgMT+zeP5J62VLFE+mskERdWGIUeSqJfVz
-	x3GyDLb2YyKjnRzHJWCt3YMjWXZKdYPHWGkfj8FbJGS9T+crnHzoFTBziEO+Qk+KN7+5JPOYfvS
-	G4Re15fr8vs/14bLOQ+fR9suVu5PGxFzwFzVOP7hsyFmMWWI0wC3tkwLn8eecsq+6zG9rsvRdMZ
-	Dij9B/X76KMz/oe+NdkGz1xQ
-X-Google-Smtp-Source: AGHT+IGJYpXqxbryvTackZ1P2CN5rqN/JrZv0fvW4uLkHMswm1TXHH91JvsW5nCiZV/JGYL/WCNymJTVMMPAa5wDQ5Q=
-X-Received: by 2002:a05:690c:7288:b0:77f:949a:d08e with SMTP id
- 00721157ae682-7864840b229mr95780837b3.26.1762130838366; Sun, 02 Nov 2025
- 16:47:18 -0800 (PST)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="q8AXbifp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1762133438;
+	bh=evgogiADSkKvdvKshiWz012GGuw2WKlliaSy29pJDQA=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=q8AXbifpPxfSaFdrM5VyqG6qcShSTIHdtRJ91QR6ADrMbcJguQrGA5cElhAbu70B5
+	 mnjAr/INTIcKPt65XODS6mBadDapFb4BxyGf9qVmOYg+uchn8WRbZzTFOWk5sKuo0N
+	 7zEWOO3tHDaOn43hDooX10Hh44tGNjr5tZ24EQyWLe3pHD2efhOFXnqWeNxEPSEV9M
+	 tNCaiZ7JxIxXTn+Hjpq3/ZGhYSDNzbfIQ+c2bES4rG0+EBOtZ4jR/sa74Tb9xlR1ZD
+	 4Zmq6tXBUsYnr/ovRUKYTJ8HvmfspgP85YCTuVVd32wJ/YvRzD+KIqpvGftxxfzpWJ
+	 JPKzghz/DolFK/lEJXYP/aWyxDBh/t8G1SWay/GHp1kKmEhZxOhUCMryGOKwHTSSwm
+	 IgwkntoKNjpYL9pnF3vBIf61fTADUJGYhDdJ5JzMDRfo5YLj48SHuGJjDiJv6tjFWc
+	 PBx3fNQHoyi1LjuRPIU8J1ezHwMrxjst14AkxrmaMo+fH+ERUMB
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:8116:1140:7c3:372d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8100B20036;
+	Mon,  3 Nov 2025 01:30:38 +0000 (UTC)
+Date: Mon, 3 Nov 2025 01:30:37 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 03/14] hash: use uint32_t for object_id algorithm
+Message-ID: <aQgFvfMwPcXgYHX7@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	git@vger.kernel.org, Ezekiel Newren <ezekielnewren@gmail.com>
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+ <20251027004404.2152927-4-sandals@crustytoothpaste.net>
+ <aQCKCfuaEKBArD-g@pks.im>
+ <xmqqh5viddo3.fsf@gitster.g>
+ <aQKv550C6nXhCzf0@fruit.crustytoothpaste.net>
+ <874irh6tgj.fsf@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAB9xhmPcHnB2+i6WeA3doAinv7RAeGs04+n0fHLGToJq=UKUNw@mail.gmail.com>
- <xmqqcy8418me.fsf@gitster.g>
-In-Reply-To: <xmqqcy8418me.fsf@gitster.g>
-From: David Bohman <debohman@gmail.com>
-Date: Sun, 2 Nov 2025 16:47:06 -0800
-X-Gm-Features: AWmQ_bnF-hbT8NRUMdPVXTrpZ0Be9ea2vUBSMert3xk1sgGPFb5pflwaLwky-kE
-Message-ID: <CAB9xhmPw6P1J2a3P+btUT1chhNQrhcx3pSkq+vqZbhFhCqcX9w@mail.gmail.com>
-Subject: Re: git-2.51.0: Fetching tags does not work
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="1AcXZoRHc2ho5H+k"
+Content-Disposition: inline
+In-Reply-To: <874irh6tgj.fsf@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-I am sorry to have to bring this up again, but I am still occasionally
-seeing this problem with git 2.51.2.
 
-What is happening is that I am cloning a repository as bare, and then
-later I try to fetch the new content including the tags:
+--1AcXZoRHc2ho5H+k
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-% ( cd bind9.git; git fetch --tags )
-From https://gitlab.isc.org/isc-projects/bind9
- * branch                  HEAD       -> FETCH_HEAD
- ! [rejected]              stable     -> stable  (would clobber existing tag)
- * [new tag]               v9.18.41   -> v9.18.41
- * [new tag]               v9.20.15   -> v9.20.15
- * [new tag]               v9.21.14   -> v9.21.14
-% ( cd bind9.git; git fetch --tags )
-From https://gitlab.isc.org/isc-projects/bind9
- * branch                  HEAD       -> FETCH_HEAD
- ! [rejected]              stable     -> stable  (would clobber existing tag)
- * [new tag]               v9.18.41   -> v9.18.41
- * [new tag]               v9.20.15   -> v9.20.15
- * [new tag]               v9.21.14   -> v9.21.14
-% print $?
-1
-% ( cd bind9.git; git tag ) | grep v9.20.15
-%
+On 2025-10-30 at 01:58:52, Collin Funk wrote:
+> I guess intmax_t and uintmax_t are probably not usable with Rust, since
+> they are not fixed width?
 
-As you can see, it is getting an error for one of the tags, but it is
-also failing to record the other new tags into the repository.
+They are effectively 64 bit everywhere, so `i64` or `u64` is
+appropriate.  These types are not actually the largest possible integers
+anymore, since they were originally defined as 64 bit and implementers
+refused to change them once 128-bit values were supported because that
+would break ABI.
+
+With gcc or clang, you can do this to see:
+
+    % clang -E -dM - </dev/null | grep INTMAX_TYPE
+    #define __INTMAX_TYPE__ long int
+    #define __UINTMAX_TYPE__ long unsigned int
+
+Rust also has `i128` and `u128`, which are part of the ABI and are also
+used for things like `std::time::Duration::as_nanos`.  Rust claims that
+it is ABI-compatible with C's `__int128` where that exists, but it does
+not in all C compilers and on all architectures.  Compatibility with C's
+`_BitInt(128)` is explicitly disclaimed.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--1AcXZoRHc2ho5H+k
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaQgFvAAKCRB8DEliiIei
+gbOqAPwIQQImOgh6psQ8hlThy+V2x7sImtX1pxgwhzgD3/AzlgD/a+u+uYEn3uYf
+vq9P20re3qTJVx0SqNdCvaRxTbSpRQY=
+=d4SU
+-----END PGP SIGNATURE-----
+
+--1AcXZoRHc2ho5H+k--
