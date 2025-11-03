@@ -1,125 +1,129 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD6F32142F
-	for <git@vger.kernel.org>; Mon,  3 Nov 2025 18:03:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B9828507E
+	for <git@vger.kernel.org>; Mon,  3 Nov 2025 18:43:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762193011; cv=none; b=HXwh2RJX+jSznCs+RXgjnA3tqsGX2AmtlpULZmIRQ/iis5vOYCs5InEShI2MtRN+sJbmYuvUTw0p8pVaIi2J8WcUSpMX6HYhFtTb0zgN3c/rjUWDnh3SF1Rr4HqCctDE4RgpURYcfyHP7GCa16oylI9/V0TAysty/OWy1O+Efo8=
+	t=1762195398; cv=none; b=sHfVXZlIfZTuY02mZdMpRqza1V0eYOWWJBoRtNDF+BRL16cgiehdeLt9GUglDzEzIyROfYqrmwMI023hkh3srCJEdl9ytn3gT8uXRSGPx9cIeXkogpo7jbfg0BjNwBIhmuLIEAWyOXXAS/8NCoZxhIhMUtKxI1k65GpG2cIZde0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762193011; c=relaxed/simple;
-	bh=+T31xdPJ+fXXuRblo9clRTDV91ckLm+2cjI7EWCo+bc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DszJpBPaMJ48JedL5DKzhssqr1XdBHJdZyFWX5eRG2qQzpiDLcBm7jIeszFWYzOPfhcrVv93bswV7l3DzbgAgUTUH6H/K1C23ikukpDuN4DiFixg93kR5uSnmPfWQpCLLXvY2K5fliaE84KiuiI89GMBhvb2h7mZ8NBizxP6SZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J3nC2I2p; arc=none smtp.client-ip=209.85.210.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762195398; c=relaxed/simple;
+	bh=C6ZiTPHu15MKD5fRUzFkjtDMoURIIX4IWbCZicOchLc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KAoRIfnhYF/IetsnCRcJ8PRq7dPX1aYFhLsc0Cj5Kfr0vrq5Q1FxeKyM7jT9nvCELgY7bbeNLq/9q6gkxhbk41B+OLXNOJEQOImeDDhDhRH8zO/cIv2TZGV2dagRBE1be5J626Y4ypEBhBKjgE8FU+Jml4exZRkGD7GqllmEGi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HA6qmVNA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=doB374TL; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J3nC2I2p"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-7c281c649ccso3263605a34.2
-        for <git@vger.kernel.org>; Mon, 03 Nov 2025 10:03:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762193008; x=1762797808; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y1KYyMn4GmxcsWbsuywJCRk4cZtkh6rN78XXq/7fcfk=;
-        b=J3nC2I2pgRt2+aqKBmXmEIXWF+H0o24JDxI7pipJu1QTH6O4yzxmlZg6m/hG3aFLJE
-         qKbNm0GfNwOUZR0rydkN163ub3FplSv4FkbLxUP6fDNnU+nV7mWGsAUdqzpmi4aulovX
-         64mzLfNwB5/ebYFjcofHdEdl142mlvoINhXpsi8PUyVl/KQq+/ukHlAbEzVHDqA2Plqw
-         GolwSr4X4U54P/iv9klbWpI4plUBA7t4pcooq/sNi4cCHrtCBw54lXvNU6BfLXHXDG4L
-         8UnLWOyE4HGdf8Fi9Ww9QuXdb3KAYanccFNbtH7F5AWhqdWXkFQHwF6vtDZXYUvT/gLT
-         GRmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762193008; x=1762797808;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Y1KYyMn4GmxcsWbsuywJCRk4cZtkh6rN78XXq/7fcfk=;
-        b=tbeS7UugEViLdgIxAkJcVOBU95ckfgdHBHx8cD9OLIEcChXNVY5AEfmmuu0VrdVBZt
-         zcZlqz4s/sMhoH7cNgFluPUbt+ijZ8ru73uN8naCYXfCEH5dkEvT1dnWFpqeLittQUHd
-         pctBk7oMnPBRD4MdT43xvZr3ERFd5Z3shbpYeA1dy7LLWk5r90GF+fkEPIx9KFVIUEuZ
-         5N6OtYv1nmS8zZZeF9aIreJAA6mJyXV2RzuyZw7sZhzRRYsQhe4htcI0W5CjLCDvX8cf
-         nLuDZ2CXgTTd9GlAVjjqqNcv/Mr/a6JqvgiDyM+WZALlzM5vBzDztRPiaqgM8PI1gasw
-         Ywww==
-X-Gm-Message-State: AOJu0YxoXsgID774NBrpi+/MNGC9iKVKojzUTKIxwh4RgEmIOeGy5t14
-	bIpL4aunT0/0JcolBgSNlWYCpSF3B1gisnl6JX2dfo9fZn9VAImoN//IOlkO1g==
-X-Gm-Gg: ASbGncsND7IVjbJ52uh9Mas+SYqxIUIAFCJcnvaUyTQqNRr1eEI+aLFYQBbLXO07Iqv
-	wInnnW5oW8ogtlbjF2/tZ54msusouyVDh95ABDnP7dZsBQ/nE8P/ijUMo7tM4PHuv85usjrNp1l
-	M624gSq13vt13udtXZwaG3N5DBZYoKaUUgzc5OQkDHPzHld2BT/LEGGHL+LRwikCpzfYy8R1TXc
-	s4eaogQCOqnPXT1koPURDO9F3rIHM8Vfi/jQ4sGm99h4pApZpAx7Y5Axrimog524SrBVipnZ3Fr
-	EpvzLYb5bgEIcVSfYgeqdRHLWkTY3hYmnncpQ4vX3OsS10+v0ayO0uAdNo6ooB7r1nwkryjKVZ+
-	6ioTxw3PKm7sSjeeUFUrIv6crOUTwg5cDeV02p6aWg16919FRSy7gJRvr6cc/opPbn6VCooDBLu
-	Hh/21GddlR57Poh5Y=
-X-Google-Smtp-Source: AGHT+IH0MXuUhvELKqRQsqrx2NJMhTeNUfdACXG0lmihIGcFZrc1s44Xo4BC5LuY70i9Do7l4L+27w==
-X-Received: by 2002:a05:6808:3204:b0:442:39a:7bc3 with SMTP id 5614622812f47-44f9600963dmr6027744b6e.59.1762193008234;
-        Mon, 03 Nov 2025 10:03:28 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-44fd888363asm234846b6e.19.2025.11.03.10.03.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Nov 2025 10:03:27 -0800 (PST)
-Date: Mon, 3 Nov 2025 12:03:27 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HA6qmVNA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="doB374TL"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7B4561D00307;
+	Mon,  3 Nov 2025 13:43:14 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 03 Nov 2025 13:43:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1762195394; x=1762281794; bh=h3gztTudBq
+	ZoGNqspFy0URr3flHVhUNYBe8oijHJ1go=; b=HA6qmVNAJxDG1CpEKVTz9HcIod
+	FFrEbhEGQJCt/rwCDtr+S20Rz/8+3aaiVSydjV9Aegp1iOUn4V51Y2JD5rp3k8j+
+	KgcN1Kx23k2OJEMWPbhXQlyaujNrFUK+TpXH9zSOZTL7JBem+xZTl24DdEZGNTc/
+	HpCJZXKgoYF+f15PbGt+FF2ZaBNVQ+/0zX/yg3l8Qe6Tka5sK1Um+8V+huD7h7Oi
+	OG6cYEmBnBffSlVC3ts/K4M6HKbuBcJsCTKdfh6UPyYC7Et2C94MWR2mYJ9IP6AS
+	+UWLznW3QHGNDm13c0XAgJvmd32hc9ZJ+qu/Izvw+42yd6oOycL2Xvz0iGCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762195394; x=1762281794; bh=h3gztTudBqZoGNqspFy0URr3flHVhUNYBe8
+	oijHJ1go=; b=doB374TL1DUdqtXeI6T1m91f0JQpMEvWDMgt7MiYL3P3e3bIVjq
+	7pOEeZnhqQ8QLPGy1fuyYif482RbcjC0Hx71v6GB4Cd3o5aIuKQ9RvnclhHDM2Ie
+	BmlZC3lzZ6aXcoelMfygxXpB1g06PYWKSB2hZmE2aUUZh569LMowb1H3Koyu3EnJ
+	QxFUevoR1mNKKp/dnyZXYKLBedmUChutqxLyPwYWMu9n60PBtHL3vOunAfiFzVvD
+	QHPop496Ifv/XnmRH2KL2810RsRgfdvWCve7muAtrPZO4Ohy4ByTw98nN5REUHkg
+	yaoZi/l6NJ3fc9eP4VdG3MF5y4G99Q2BcEg==
+X-ME-Sender: <xms:wfcIaULg9dOJ99thwdVtrqV2jD9yThoj7vse550JlxpYQ4nBU1FzhA>
+    <xme:wfcIabm_1dEdgIfV4ueuLKWICVPc3b8jpiuqjCG5GEy-PwVk8b0fIXo56M3hRzg2n
+    tbcnvwLOGuMkKh-eN3hhXRtrUuDDcKXdm8__WUqvOrrHs5LlcPzbw>
+X-ME-Received: <xmr:wfcIaSHgTMNcb0aaibNb6ZWnIwFteWPJTEuHhkcFnyC4ErWEZJsguRHOIFZJpTo3KJT41QWY64cyGHANO9dfl4ZB6c1lMBB-lJ8Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeekkeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:wfcIabGXT14EIulmObsh1WWUjQLQG1lentH9pmT0AyI4N5q3IhfYcw>
+    <xmx:wfcIafMXummYIY6ix702S5bXY80ldl-in3i5ouiV_zB-t0czrTF5MA>
+    <xmx:wfcIaaEFVg7suepxPciRXBoDpaJ8d2uC7FqPAGMMoeilXQxI0IeIxA>
+    <xmx:wfcIaWMV7p9OZz2OucTqdvzgXgpE2s-PLJ3AOfC5tN-Vq5Uk2PsjjA>
+    <xmx:wvcIaTt-MIzQIEbUiWaZuKnPe806-voeXXA7Ch0tMz6iIfo-nADKv6p9>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 3 Nov 2025 13:43:13 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/5] reftable/stack: return stack segments directly
-Message-ID: <2nr5ig2cg5bc2zvtinm4p2fxssuim5kb4bsflrx3xnos2pwkk3@tya7zuj4pgg6>
-References: <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-0-a03d53e28d0e@gmail.com>
- <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-1-a03d53e28d0e@gmail.com>
- <7gjrsjgi32akawqwcamzil2rblqelfvgmrxmgef5ssrslntmc6@43cra6zhledc>
- <CAOLa=ZQa21A+fF=ukZMmx3zu1DrMFU-EcZGrZConS-L16+ih1A@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2025, #12; Thu, 30)
+In-Reply-To: <xmqqo6pjt2wn.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	03 Nov 2025 09:57:28 -0800")
+References: <xmqqpla43wcp.fsf@gitster.g> <aQRaRuBtt_r7SamL@pks.im>
+	<xmqqo6pjt2wn.fsf@gitster.g>
+Date: Mon, 03 Nov 2025 10:43:12 -0800
+Message-ID: <xmqqh5vbt0sf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQa21A+fF=ukZMmx3zu1DrMFU-EcZGrZConS-L16+ih1A@mail.gmail.com>
+Content-Type: text/plain
 
-On 25/11/03 07:05AM, Karthik Nayak wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> [snip]
-> 
-> >>
-> >>  	if (segment_size(&seg) > 0)
-> >>  		return stack_compact_range(st, seg.start, seg.end - 1,
-> >
-> > Do we expect the errors returned by `stack_segments_for_compaction()` to
-> > always be negative? If so, I wonder if we should also have it return the
-> > number of tables in the segment. That way it could also handle the
-> > followup `segment_size()`.
-> >
-> 
-> Currently yes, since all 'REFTABLE_<error>' errors return negative
-> value. But I must say I'm not a fan of combining errors and values
-> together in a single return. This only creates confusion.
-> 
-> I'm not sure removing `segment_size()` is also a good idea, because it
-> describes what the check is. Otherwise we're looking at something like:
-> 
-> @@ -1655,11 +1646,10 @@ int reftable_stack_auto_compact(struct
-> reftable_stack *st)
->  	if (st->merged->tables_len < 2)
->  		return 0;
-> 
-> -	err = stack_segments_for_compaction(st, &seg);
-> -	if (err)
-> +	err_or_stack_size = stack_segments_for_compaction(st, &seg);
-> +	if (err_or_stack_size < 0)
->  		return err;
-> -
-> -	if (segment_size(&seg) > 0)
-> +	else if (err_or_stack_size > 0)
->  		return stack_compact_range(st, seg.start, seg.end - 1,
->  					   NULL, STACK_COMPACT_RANGE_BEST_EFFORT);
-> 
-> I'm not sure that this would be better? Or am I missing something?
+Junio C Hamano <gitster@pobox.com> writes:
 
-That's fair. I was thinking that we could just make
-`stack_segments_for_compaction()` responsible for the boolean check of
-whether compaction is required or not. It's probably not worth
-overloading the return value though.
+> The tip of 'next' as of today after merging this topic, it seems.
+>
+>     $ git tag --list --sort=version:tag 'v*.0'
+>
+> no longer works correctly and shows ascii sort.
+>
+>     v1.0.0
+>     v1.1.0
+>     ...
+>     v2.0.0
+>     v2.1.0
+>     v2.10.0
+>     v2.11.0
+>     ...
+>     v2.19.0
+>     v2.2.0
+>     v2.20.0
+>     v2.21.0
+>     ...
+>     v2.49.0
+>     v2.5.0
+>     v2.50.0
+>     v2.51.0
+>     v2.6.0
+>     v2.7.0
+>     v2.8.0
+>     v2.9.0
+>
+> The merge on 'next' immediately before this topic got merged, i.e.,
+> 9ab444ed (Merge branch 'tc/last-modified-active-paths-optimization'
+> into next, 2025-11-03), is the last commit on the 'next'
+> first-parent chain with which the above command works correctly.
+>
+> I haven't dug it further yet.
 
--Justin
+Bisect points at 054f5f45 (ref-filter: parse objects on demand,
+2025-10-23), which is unfortunate, as that is the motivating step of
+the whole topic.
+
