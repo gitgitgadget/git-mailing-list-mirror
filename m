@@ -1,132 +1,134 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18A01E9919
-	for <git@vger.kernel.org>; Mon,  3 Nov 2025 05:19:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252F829B775
+	for <git@vger.kernel.org>; Mon,  3 Nov 2025 07:20:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762147176; cv=none; b=jeFo7NdHvzFH88k0De1ChGmyfYS083qsHrFh1JFO1KnblTCzDgb/vdC5kzD7f+sE9RAMUlYkvNF0PFaYWUm7jQro5KyDOFbX+PaKpNKcwvM7P3YhXgjXz3mQ33OFH5YFqXh7QmG4W3+AbItLcZn6eRMVh5cqDpIb62up4z83XV8=
+	t=1762154409; cv=none; b=Cl4HwIcK+0ciSFOfDDNUOpvWGvtKUGWd/Duqifu0Zbm5bkgffadzC0r/O/+FiF40dOWoxl0aQBilRyER5bf2TyIi0Ruqw1/OH6gRhdXfEQJqNOWEJMp58xHOX0qPSnohLeVCRnsoYJJfNo5dRhVjI9xRIQHWu1bt2SvberUUv50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762147176; c=relaxed/simple;
-	bh=xIkz5k2LoAsfZ85kqIqIW1FNXzrsgD7/90W5nQrQrbU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GHbubM8vFzRK5/Lo4RQsO9pp6z9YbuEZ38YbelrC8q7EG47dqW1JloAv7f0lJp3lAjZ0UCA0n9Fy0mOZA3O7pkCMkoJ5z7x9QMJyBNqS61cscr8OSaaWqAHBRY8fZlWpdFp6ECHYY0gcYXnmfRkkF/86XIC/94dSgtZeNTsVm+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lXaAyb8D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O2NNOG/k; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762154409; c=relaxed/simple;
+	bh=egUz8k/yoroW7J8NUZpOcR/1D2KJejT3lpBScyPJeJs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aRFyV46Lad9ah9x5ywuKx+/cmtbNNtOaomnwHfKhachEpbNScvBbJL8lEFr0J8WRMvU5LqoNRmv4sO9IuDvzb1V/AAYXFynKTFBqTEjEgXRUy1hez8UhlkMAmzwVTaD8sC5dhyejd8Ua6IgLyzVb0y3XmYqK32PenQAS7BNIDbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JcHx7PfL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FFLlBB+T; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lXaAyb8D";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O2NNOG/k"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id B01771D00141;
-	Mon,  3 Nov 2025 00:19:32 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 03 Nov 2025 00:19:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JcHx7PfL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FFLlBB+T"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 41C3E7A0194;
+	Mon,  3 Nov 2025 02:20:06 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Mon, 03 Nov 2025 02:20:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762147172; x=1762233572; bh=KQqavnC7Fp
-	SSzNQHAXYrhPehRHTEDEPKqiV8dNiSjS4=; b=lXaAyb8DejsyHXA4BSPbJufV7j
-	s4fwnNErQrCxLUMdwHbQo1xd2hXoQ3u1UB2oi1G0+8rs2qMbVj7JB8YxhowuFapl
-	d1YqAEEvKezEvg0LAsJxYxGmYWaRG7na+htbbmTsw6DnzDNpb2mGsUHSCTI/OBus
-	FfDMFSdRqzHwKrgGg3DqF6gQjvMNNYc75bFEwh2exLsPQm5UWpFah3jpkMvKrHj8
-	C3z0pC41S9FJ1P3YmlyT+zqXqiNa++Z/vW6JADBswWaL6EWSDzGff3iJnQx3FgAL
-	fkrtKzRuuA+r0GazDxyB4uVeiuvWhtZYy3hhwtyo3DybHi3MCdSbDbBuGs4w==
+	:subject:to:to; s=fm3; t=1762154406; x=1762240806; bh=vd47xfQurA
+	q0KCwfRFnVP4XXFxFyLGsHemcleb49oIc=; b=JcHx7PfLK3kYoJTGJesfdSv3gL
+	IFTO7sxa+o2FxySa0NvmNNZskwPw7xq34zgwWb/WOIRAp0lzu6xptct5BgjaidvF
+	X8j701FD4LJ2ayln9xhI0+ASFcEj4hZhEeR4FPsI5raSD44hvHZvBwUekx013sQQ
+	0x5zzyy8NBvQABW01nVo3AjF73JXa6qp1v6BABSGHekdke6N4t9kYYh0ashO6SaV
+	XtpyUxLAAEabgxRA7RL24wrj2PSQuE/NQrC/3hHtbR0NtsHE91jwXs3E7AXm0o5h
+	iOZuX8Mf4CHDOr8Cxn0mYjSFHSkkHwHwHrajFRB0EPBcxNVv4flPACO2upXw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762147172; x=1762233572; bh=KQqavnC7FpSSzNQHAXYrhPehRHTEDEPKqiV
-	8dNiSjS4=; b=O2NNOG/kKPP7fLJTHpb9UjOfgrsv3iUV/gWl2eem7NBRjLe3R59
-	L2eYX67SxtMIZnUVIgH3ly/I0Pwk+IgBceYvDhHXPCeuR6NYlY4cIb8UcGO7HKm1
-	v6BB/En1rImymg7QFrKFNhttbQRlgKnUu4rRVg7rHJyDg4CD5YIzmWUrvSx+gfsn
-	EG13Pwy1TmDFfll2Ceo0o4HCKCbM5WDfChJ8zzlS9oKQ5t7FEDF6NpXj8IhHOFG7
-	nlat1L5EDrHAsl3F87LYIPfKS96AHomrbpREXpVWcEE13m86YJt6OODJxGdZb+lh
-	jIMYlN4Yvl/s8JlFmqUWXI/mdWbio9nkfDA==
-X-ME-Sender: <xms:ZDsIaZPVdcIMdvnBC6CAaVnNekNebJuqAQk-npEAFk-9sMolQP_YGw>
-    <xme:ZDsIaVRxf-vwqTt0JaViZvsLuV4v7DeQUjbFAir3Zh7HRvYVHmpcfKwb3Q3w21fF-
-    aAP0CkREh3Qj5isTgF1i5WgWeLXabEZpQn3LQvLrynH_priC7fM>
-X-ME-Received: <xmr:ZDsIafiH-nwOd__WGZDX6n7FGlkiPz9xw8Wi_VzNan7qbviZJ6k5wEgd35vqrXpEHb3TLITOUMW2dbmFxUaOvkIwlIbvENMUc4LY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeejvdekucetufdoteggodetrf
+	1762154406; x=1762240806; bh=vd47xfQurAq0KCwfRFnVP4XXFxFyLGsHemc
+	leb49oIc=; b=FFLlBB+TVwnd+tY1DzdmQRpIzWDXqGmoUUrYWaCz1QJxh4cxy7E
+	ROEMCNx5JIj3XrZ0oILChIdtqYcPQsI3JqgnMCSqHekXjLzQwNjweUD/rCJwCLVs
+	jcJzwOwrRvOC1e0NwZ93z6zVxDcDTi/mq7sZbWL0SueTNpe0gbkaC/y8Zt/G9P4i
+	1FW72dfEuK2KaUzsO1hfkidHsWRgFpvCnDqHnKe+MeB1rBqQCTvBJtyt0QvHgDFP
+	Wh9kn0V9LjvQRlX7bYC6wQCL0yViGCXW5Uejd/rf65WIOGIKEMJoUErGh6tXCvTp
+	NJZMFdGg8rhUFfm8MZ2ug0Y5EDgevcoShkQ==
+X-ME-Sender: <xms:pVcIadjGBQG0FsjxokHTg8eKNklhSeUICsw_rbuxtE74mvaB5cSq9w>
+    <xme:pVcIaZexDfEKwgHZwoZhX2B5kDJKx4SzX7ZWObGOZ5JEvNxR5Q2EFSCvgLfjYlQhU
+    i8awEdu0BxXBe_REeed4FxVj1PSbRf4L8RmP55CTqncP17jCDSW>
+X-ME-Received: <xmr:pVcIaadPFM7ohd55rT4N7ZYvHVfrKihWiXNfD3VFrY5Z3NYN6CVpZEw7K08combcUrqFrXRms9AYDQThjLiHNTJ5PJD2dXvfW5S_PDdPzhDK>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeejheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvodhgihhthhhusgesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtg
-    hpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehpshesphhkshdr
-    ihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ZDsIaW_TpERvNRspySos6jRUvIxRSAE5MiaXh_p9ZgKXkWs07xtVgw>
-    <xmx:ZDsIaeE2gIoI2d-GnMXi9YKzWRuOwV2My4CYC2vkTSCcgRhB6nZg0A>
-    <xmx:ZDsIaRmIH94X2Rw1YHSzU850Tgl7NOi7iyCvaWiCZXvjn4WR_-udaQ>
-    <xmx:ZDsIaaZEA_i5Ej9uPCtbpHGuSDIJngEOjYNtS-guzHC8p7OeyPwWpw>
-    <xmx:ZDsIacIXkMTQPWqypssLm0gyE578jRlKb-CRc3Lq1r4avHljfybaycmQ>
-Feedback-ID: if26b431b:Fastmail
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhih
+    hkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:pVcIab939CaC2kyC5ltStDWkpipE6OHjDeB54GZHXqwPuHpAj1RXWw>
+    <xmx:pVcIaekRIqr3_7mGA7g3PCZ72od-Wog-JSBL9q7fcDc0z-aBxytmEw>
+    <xmx:pVcIaV939qdg1h9nO40FaHia9NY2mzpgjZFiyVq7sMwnBOqZR7UP3g>
+    <xmx:pVcIaUk3l85pM34o5_LG5s4BnB2dp2FY4OruHa_EELmigzhauqiqKQ>
+    <xmx:plcIaZeeufxBfEyKDQmPGyv3K7EhwpdEP_P6ipJivQokwWXMVsGntQVU>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Nov 2025 00:19:31 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood@dunelm.org.uk>,  Taylor
- Blau <me@ttaylorr.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 3/5] parseopt: use boolean type for a simple flag
-In-Reply-To: <10d531daf2c90d1bb53c07f1d72b087ebc1dd9c8.1762100242.git.ben.knoble+github@gmail.com>
-	(D. Ben Knoble's message of "Sun, 2 Nov 2025 11:17:46 -0500")
-References: <cover.1762100242.git.ben.knoble+github@gmail.com>
-	<10d531daf2c90d1bb53c07f1d72b087ebc1dd9c8.1762100242.git.ben.knoble+github@gmail.com>
-Date: Sun, 02 Nov 2025 21:19:30 -0800
-Message-ID: <xmqq5xbrwv4t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 3 Nov 2025 02:20:04 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 08013d64 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 3 Nov 2025 07:20:03 +0000 (UTC)
+Date: Mon, 3 Nov 2025 08:19:55 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 05/13] object-file: introduce `struct odb_loose_source`
+Message-ID: <aQhXm1uQlP3wYfgX@pks.im>
+References: <20251024-b4-pks-odb-loose-backend-v1-0-1a4202273c38@pks.im>
+ <20251024-b4-pks-odb-loose-backend-v1-5-1a4202273c38@pks.im>
+ <CAOLa=ZQdit7N0aQWyqYHAoO6nuXaU3QqZbQmsbp52jW8C-zbzA@mail.gmail.com>
+ <aQNMwve9sUP-QDN6@pks.im>
+ <aQRS-KcNLD9prRYa@pks.im>
+ <xmqqwm4b11xh.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwm4b11xh.fsf@gitster.g>
 
-"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
+On Fri, Oct 31, 2025 at 09:16:58AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> >> Hm, I see your point. I think that "loose source" flows a bit more
+> >> natural, but I agree that the above is more accessible in code.
+> >> 
+> >> Before I change this: does anybody else have an opinion here?
+> >
+> > I think for now I'll stick to the current naming. This is due to two
+> > reasons:
+> 
+> Ah, I should have scanned my mailbox down to the end before starting
+> to respond.
+> 
+> >
+> >   - As said, I think this flows more naturally in language. When talking
+> >     about this you'll say "I'm using the files source" or "I'm using the
+> >     whatever source".
+> 
+> I do not happen to agree with this, although my preference is minor.
+> 
+> >   - It somewhat matches the naming we have in the reference backends,
+> >     where we have `struct reftable_backend` and `struct files_backend`.
+> 
+> loose_source (without odb) may mirror calling "ref backend that uses
+> files" files_backend, because "ref" is redundant in the context of
+> talking about ref backends.  "odb" is redundant when talking about
+> odb sources.  But we are not calling them loose_odb_source,
+> hbase_odb_source, etc. and instead saying "odb_loose_source", which
+> I find is a bit strange order.
+> 
+> > That being said I don't feel very strong about this.
+> 
+> Neither do I.
 
-> Suggested-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> ---
->  parse-options.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/parse-options.c b/parse-options.c
-> index 6211b55a83..197c01987e 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -208,7 +208,7 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
->  	case OPTION_FILENAME:
->  	{
->  		const char *value;
-> -		int is_optional;
-> +		bool is_optional;
->  
->  		if (unset)
->  			value = NULL;
-> @@ -224,7 +224,7 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
->  
->  		is_optional = skip_prefix(value, ":(optional)", &value);
->  		if (!value)
-> -			is_optional = 0;
-> +			is_optional = false;
+Okay, this makes one in favor favor of `odb_source_loose`, one slightly
+in favor, and me slightly in favor of `odb_loose_source`. I'll rename,
+thanks both for your input!
 
-Whether it is spelled 0 or false, I do not think this makes any
-sense.  skip_prefix() either touches &value to point at the
-substring in value that comes after ":(optional)", or it does not
-touch it at all, so there is no way value can be NULL here (and we
-know value is not NULL before we call skip_prefix()).
-
-Shouldn't you be removing the entire "if value is NULL, it is not
-optional" thing instead?  That is exactly what Phillip pointed out
-in his review.
-
->  		value = fix_filename(p->prefix, value);
->  		if (is_optional && is_missing_file(value)) {
->  			free((char *)value);
+Patrick
