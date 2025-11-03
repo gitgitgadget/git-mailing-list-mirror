@@ -1,98 +1,138 @@
-Received: from mail02.ukr.de (mail02.ukr.de [193.175.194.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1C43002CB
-	for <git@vger.kernel.org>; Mon,  3 Nov 2025 12:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.175.194.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC50261B70
+	for <git@vger.kernel.org>; Mon,  3 Nov 2025 13:39:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762173803; cv=none; b=d/ZOukiAsBr7slDvPucdUXBaQF9az0b6JZjTiHWJTgCmAPd67aGJ9SlH1aJqaz3oIXRN8oHkwk4kbCvD4IyJ2249a/CWLv+BCIL+6ma1L+iPNJXmGaCOITQcOrLPd6XYO1Ka5LViWLmYC4PewuXIWevkIDdD4Y1L4jlbfU3T+Lk=
+	t=1762177154; cv=none; b=OZZFmaB9O4bDZ4ZRC/Ooopfp3xhJhsWpcuV3tTxpi3ieJG3QmwHYELrHA5KITpitPrCs6GPgMkpxon7eGy1wxgxJ0mtYYLQqTC64BarmqSOWZvUWZb3sWfPxJQc4sunhynyk47bt8rqXXGGOkSxlyv7ZxxzpFpGJ1GkFg8hJt60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762173803; c=relaxed/simple;
-	bh=RyjBnkKw9TVckWicjLtefm3RNm7cUJzpxMWbbH/K/5Y=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=aXVD3vMHM2W93UeGyRXH3icpC4tA9lL0ll/8sEFseRKHnUwpnvM7zwaYcCdGh/WHsJ7I6lgPglTTiY+PSqFBclBj1oqEuHPoRnFNBKyT0kkvAZVsERYIvU8i0oPYCuQS8KX5scEHGX03EvkKke4FxZ9lEU7E/PnNoqc2sULqyFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ukr.de; spf=pass smtp.mailfrom=ukr.de; arc=none smtp.client-ip=193.175.194.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ukr.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ukr.de
-X-CSE-ConnectionGUID: +DuaQp5XRZG+wdCHAXuhNw==
-X-CSE-MsgGUID: wLx+oBcERf66ZpjtpmHrNQ==
-X-ThreatScanner-Verdict: Negative
-X-IronPort-AV: E=McAfee;i="6800,10657,11601"; a="2199675"
-X-IronPort-AV: E=Sophos;i="6.19,276,1754949600"; 
-   d="scan'208";a="2199675"
-Received: from unknown (HELO ukr-excmb08.ukr.local) ([172.24.2.108])
-  by dmz-infcsg02.ukr.dmz with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2025 13:43:11 +0100
-Received: from ukr-excmb07.ukr.local (172.24.2.107) by ukr-excmb08.ukr.local
- (172.24.2.108) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.29; Mon, 3 Nov
- 2025 13:43:10 +0100
-Received: from ukr-excmb07.ukr.local ([fe80::4dee:3e0b:b33f:60ac]) by
- ukr-excmb07.ukr.local ([fe80::4dee:3e0b:b33f:60ac%8]) with mapi id
- 15.02.2562.029; Mon, 3 Nov 2025 13:43:10 +0100
-From: "Windl, Ulrich" <u.windl@ukr.de>
-To: Junio C Hamano <gitster@pobox.com>
-CC: =?utf-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>, "git@vger.kernel.org"
-	<git@vger.kernel.org>, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: RE: [EXT] Re: [PATCH v2 1/5] add-patch: improve help for options j,
- J, k, and K
-Thread-Topic: [EXT] Re: [PATCH v2 1/5] add-patch: improve help for options j,
- J, k, and K
-Thread-Index: AQHcSwgm8ACWbet+8E+E2C+0eK7iOLTg6EXQ
-Date: Mon, 3 Nov 2025 12:43:10 +0000
-Message-ID: <61fcb89b5843474693ea6d6c90609180@ukr.de>
-References: <c72518099a3b465c8761e41210fe3fcb@ukr.de>
-	<17ef29a7-5214-4729-82eb-92a2af33e465@web.de>
-	<75b08ed6-4f0f-4ede-b84a-c2f1c3d15734@web.de>
-	<697bf0301cd9459195bdd3cc79e517ae@ukr.de> <xmqqjz0axj1i.fsf@gitster.g>
-In-Reply-To: <xmqqjz0axj1i.fsf@gitster.g>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-tm-snts-smtp: 13543EA88A796CE2F2E7920CF696A7FEAA91FB3610EC1C42A5EE47E4997678262000:8
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	s=arc-20240116; t=1762177154; c=relaxed/simple;
+	bh=Vqmo4xYhyMbR1xkAr8rSNYXjm89mHerATpbcre2R3tw=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kriC5ciUFjemRzWyNCL1uxWZPNURCf73mqM6h60SpIO3BPuqbzkUk9pLuFDYz4qzV9zNc3H4jF3CJodxXQxrrmHg0utWQVra1LJFWeSBcDPUM/Xkfz259Uwxb5Vye8SdILe96q8joYP+3geRB1n9VMS50mct1RilTZojvqYofUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cXGQicg6; arc=none smtp.client-ip=209.85.217.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cXGQicg6"
+Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-5ce093debf6so4903465137.1
+        for <git@vger.kernel.org>; Mon, 03 Nov 2025 05:39:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762177150; x=1762781950; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yikK3qi21rnxsc2ielfGKwF3JQytSGfgHAac5xUw51U=;
+        b=cXGQicg6BhTHoBP0y9vEROrCWU1H5RmqGNIwwaUsKZxdHJyx+7BKRCNrFHS6c3rHWM
+         1FxV1Htanuj5/5FpNJubeiQO6S6i7cDsW+OBiW2bff6hs1rtzG9382/qsKwbzoHcPgA5
+         AWXswjm4DBcHABb2L2ntV8taa3W9svn3Bshf7hXrf2uE+mRQFStRubg4xeMVD6+UdAUz
+         iP7q75uS8czj8oYFXs35nZnL8B2jYxiQz/2rGXRA8zgkLuN164OzOWGzy/hA/Dt8a/Lp
+         pds40IpPhF5iJvLvch32guzLRQHfGkgGGD/c3kB6tlLggPanCsvR8lDP/MF6NoNcLqtl
+         jcpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762177150; x=1762781950;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yikK3qi21rnxsc2ielfGKwF3JQytSGfgHAac5xUw51U=;
+        b=fdak+rm3V5zqJI9GQ6GJi+HlSMhTadplLXuktlqP3ExwxEAdqwGN2Dp1YlfbKSZfo5
+         NSeZVMeqo8s2VmyV4gCuxvLnNF0NrBirgfrECrAfb1soFCfQ4NoIOGtlkaMEp58YYGWE
+         zhwXFNhAAQzDdiOfrH7m3PrvPv/sZrHShSqS54d4dYAMOw23caOHa8pIGdZThfJ2eT2/
+         FtjF/CZwSnUgkBvcl6QKGktrESypOoQrXIGgSF25rUBUQDaD9gaVqSyeeAdWk/vpeM/A
+         hLlUAzBmnx7R68D2hDI3xI6HikFFMAFYZY2G2yMWZ32dVlRxgWBSKmr1BUf0xE6lYNEQ
+         gLyw==
+X-Forwarded-Encrypted: i=1; AJvYcCWkWmfdzNe+SSY0HpIxwYAVArjFNg9g34Lhh1u7nlrw0NnbNQM+Xii+fG1mlvqwsM439OQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfctMG+f45TsqlFCqUgTwMOSBX/OHR/gNNqqvFWo5tPpS88d7W
+	TbIu8+xCFdpyRohdsHlnONa3eccSnY/URlCDJOnFTm4ReyCwTuZxo2m0sNbRvW2n0/xVXV+s9WU
+	LDKhLjc3pUmAsC9iHJYpQObX/qvhc8iI=
+X-Gm-Gg: ASbGncuKgqq4ZX9DtX3pqY7YVK2qpqQkehbFMkeyRxFaPFlV0JAVj8J9qgXAhow8yXx
+	2yZ6OGl6LwcftK7IaRzGYy+HgtRSo080NLahTpwoiGQ2mZw4g/7IaddA1VgU0juBpeAipikZCFx
+	GtVqpk1ZNwym/PbNKR4XvxNm6IN9PiinR91rlQpjbRm2/c39kLx38aUURpsVVVPTsFPFqZUQCPu
+	OtXgorvA8W/WFBKY6UccIpyM3SdGWQHdHR2O2tYn0vFEUFkD7IKjriI4/VZFJyaVhraQsWBe97P
+	LSY1s1FPO5QqFvuQbdhJVR61qg==
+X-Google-Smtp-Source: AGHT+IH4rawlDFKLAnfbxvxr8rnsMimVLvtSuaAj0NSWgizzEo26nJRW7lfeVeESlXObU4HA3YzT9bTqQJ1qXOeoGLU=
+X-Received: by 2002:a05:6102:6cb:b0:5db:e6fa:f7fe with SMTP id
+ ada2fe7eead31-5dbe6fafa2bmr641433137.24.1762177150236; Mon, 03 Nov 2025
+ 05:39:10 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 3 Nov 2025 05:39:08 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 3 Nov 2025 05:39:08 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20251103-b4-pks-odb-loose-backend-v3-0-6a61ea977393@pks.im>
+References: <20251024-b4-pks-odb-loose-backend-v1-0-1a4202273c38@pks.im> <20251103-b4-pks-odb-loose-backend-v3-0-6a61ea977393@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Date: Mon, 3 Nov 2025 05:39:08 -0800
+X-Gm-Features: AWmQ_bmMjIyrGfUN8vhL90PBtJF_xkKwW6DIijkZoqaPEihTp8qopne5domGu44
+Message-ID: <CAOLa=ZToV8KvgG44Yn5QniTNYwKo2d1QS9ngfazQ63uOWrc60A@mail.gmail.com>
+Subject: Re: [PATCH v3 00/13] Carve out loose object source
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="0000000000001261910642b0d765"
 
-T0ssDQoNCmZhaXIgZW5vdWdoOiBJIHRoaW5rIHRoZSBvcmlnaW5hbCB3b3JkaW5nIGlzIG1vcmUg
-Y2xlYXIsIHNvIEkgZG9uJ3Qgc2VlIHRoZSBuZWVkIHRvIGNoYW5nZSBpdCBhdCBhbGwuDQpQb3Nz
-aWJsZSBjb3JuZXIgY2FzZXMgZWNlcHRlZCwgZS5nLiB3aGV0aGVyICJuZXh0IiBjYW4gd3JhcCBh
-dCB0aGUgZW5kIG9yIG5vdC4NCg0KS2luZCByZWdhcmRzLA0KVWxyaWNoIFdpbmRsDQoNCj4gLS0t
-LS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogSnVuaW8gQyBIYW1hbm8gPGdpdHN0ZXJA
-cG9ib3guY29tPg0KPiBTZW50OiBTYXR1cmRheSwgTm92ZW1iZXIgMSwgMjAyNSA5OjE5IEFNDQo+
-IFRvOiBXaW5kbCwgVWxyaWNoIDx1LndpbmRsQHVrci5kZT4NCj4gQ2M6IFJlbsOpIFNjaGFyZmUg
-PGwucy5yQHdlYi5kZT47IGdpdEB2Z2VyLmtlcm5lbC5vcmc7IFBoaWxsaXAgV29vZA0KPiA8cGhp
-bGxpcC53b29kQGR1bmVsbS5vcmcudWs+DQo+IFN1YmplY3Q6IFtFWFRdIFJlOiBbUEFUQ0ggdjIg
-MS81XSBhZGQtcGF0Y2g6IGltcHJvdmUgaGVscCBmb3Igb3B0aW9ucyBqLCBKLCBrLA0KPiBhbmQg
-Sw0KPiANCj4gU2ljaGVyaGVpdHMtSGlud2VpczogRGllc2UgRS1NYWlsIHd1cmRlIHZvbiBlaW5l
-ciBQZXJzb24gYXXDn2VyaGFsYiBkZXMgVUtSDQo+IGdlc2VuZGV0LiBTZWllbiBTaWUgdm9yc2lj
-aHRpZyB2b3IgZ2Vmw6Rsc2NodGVuIEFic2VuZGVybiwgd2VubiBTaWUgYXVmIExpbmtzDQo+IGts
-aWNrZW4sIEFuaMOkbmdlIMO2ZmZuZW4gb2RlciB3ZWl0ZXJlIEFrdGlvbmVuIGF1c2bDvGhyZW4s
-IGJldm9yIFNpZSBkaWUNCj4gRWNodGhlaXQgw7xiZXJwcsO8ZnQgaGFiZW4uDQo+IA0KPiAiV2lu
-ZGwsIFVscmljaCIgPHUud2luZGxAdWtyLmRlPiB3cml0ZXM6DQo+IA0KPiA+IEZvciB0aGUgcGF0
-Y2gNCj4gPiBkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9naXQtYWRkLmFkb2MgYi9Eb2N1bWVu
-dGF0aW9uL2dpdC1hZGQuYWRvYw0KPiA+IGluZGV4IGFkNjI5YzQ2YzUuLjMyNjZjY2YxMDUgMTAw
-NjQ0DQo+ID4NCj4gPiBJIGRvbid0IHNlZSBhbiBhY3R1YWwgaW1wcm92ZW1lbnQsIGFuZCBJJ2Qg
-cHJlZmVyIHRoZSBwcmV2aW91cw0KPiA+IHZlcnNpb24gb2YgdGhlIGRvYy4NCj4gDQo+IFdlJ2Qg
-cHJlZmVyIHRvIHNlZSBzb21ldGhpbmcgbW9yZSBjb25jcmV0ZSB0aGF0IHJlZnVzZXMgdGhlDQo+
-IHJlYXNvbmluZyB0aGF0IGxlZCB0byB0aGUgY2hhbmdlLCB0aGFuIGEgc3ViamVjdGl2ZSAiSSBk
-b24ndCBzZWUsDQo+IEknZCBwcmVmZXIiLg0KPiANCj4gQXQgbGVhc3QsIHRoZSBjb21taXQgbG9n
-IG1lc3NnZSBnaXZlbiBieSAyYzNjYzQzZiAoYWRkLXBhdGNoOg0KPiBpbXByb3ZlIGhlbHAgZm9y
-IG9wdGlvbnMgaiwgSiwgaywgYW5kIEssIDIwMjUtMTAtMDYpIGV4cGxhaW5zIHdoeQ0KPiB0aGUg
-Y2hhbmdlIGlzIGFuIGltcHJvdmVtZW50LCBhbmQgSSBmb3VuZCBpdCBzZW5zaWJsZS4NCj4gKDxi
-NTAzNDg1MS02NWJkLTQ5ZGEtYjI3MC00OGI2OGQ5MjEwZmZAd2ViLmRlPikNCj4gDQo+IFRoZSBv
-bGQgZGVzY3JpcHRpb24gc2FpZCAnaicgbGVhdmVzIHRoaXMgaHVuayB1bmRlY2lkZWQgYW5kIGdv
-ZXMgdG8NCj4gdGhlIG5leHQgdW5kZWNpZGVkIGh1bmssIGJ1dCBpdCBpcyBib3RoIHBvaW50bGVz
-cyBhbmQgbWlzbGVhZGluZyB0bw0KPiBzYXkgJ2xlYXZlIHRoaXMgaHVuayB1bmRlY2lkZWQnLiAg
-VW5saWtlICd5JyBvciAnbicsIHRoZSBtb3ZlbWVudA0KPiBvcHRpb25zICdqJywgJ2snIGFyZSBu
-b3QgYWJvdXQgY2hhbmdpbmcgdGhlIHN0YXRlIG9mIHRoZSBjdXJyZW50DQo+IHRoaW5nIHdlIGFy
-ZSBvbiAoc28gaXQgaXMgcG9pbnRsZXNzIHRvIHNheSAiTEVBVkUgaXQgdW5kZWNpZGVkIiksDQo+
-IGFuZCBtb3JlIGltcG9ydGFudGx5LCB3aGVuIHdlIHNheSAnaicsIHRoZSBzdGF0ZSBvZiB0aGUg
-Y3VycmVudA0KPiB0aGluZyB3ZSBhcmUgb24gbWF5IG5vdCBuZWNlc3NhcmlseSBiZSAndW5kZWNp
-ZGVkJyAoc28gaXQgaXMNCj4gbWlzbGVhZGluZyB0byBzYXkgImxlYXZlIGl0IFVOREVDSURFRCIp
-Lg0K
+--0000000000001261910642b0d765
+Content-Type: text/plain; charset="UTF-8"
+
+Patrick Steinhardt <ps@pks.im> writes:
+
+[snip]
+
+> Range-diff versus v2:
+>
+>  1:  330b7c17e6a =  1:  ed548a7ee4e odb: fix subtle logic to check whether an alternate is usable
+>  2:  68b2e736d20 =  2:  59d5548ddfa odb: introduce `odb_source_new()`
+>  3:  b6f9a3f6d26 =  3:  a417bd30153 odb: adjust naming to free object sources
+>  4:  fe38c58ab20 =  4:  add2b7d112f object-file: move `fetch_if_missing`
+>  5:  5fed6e7c429 !  5:  5245ba0c6a5 object-file: introduce `struct odb_loose_source`
+>     @@ Metadata
+>      Author: Patrick Steinhardt <ps@pks.im>
+>
+>       ## Commit message ##
+>     -    object-file: introduce `struct odb_loose_source`
+>     +    object-file: introduce `struct odb_source_loose`
+>
+>          Currently, all state that relates to loose objects is held directly by
+>     -    the `struct odb_source`. Introduce a new `struct odb_loose_source` to
+>     +    the `struct odb_source`. Introduce a new `struct odb_source_loose` to
+>          hold the state instead so that it is entirely self-contained.
+>
+>          This structure will eventually morph into the backend for accessing
+>     @@ object-file.c: void object_file_transaction_commit(struct odb_transaction *trans
+>       	free(transaction);
+>       }
+>      +
+>     -+struct odb_loose_source *odb_loose_source_new(struct odb_source *source)
+>     ++struct odb_source_loose *odb_source_loose_new(struct odb_source *source)
+>      +{
+>     -+	struct odb_loose_source *loose;
+>     ++	struct odb_source_loose *loose;
+
+This is one of the points that Junio mentioned and I think the new
+naming schemes flows more naturally into. Nice.
+
+The range-diff looks good to me. Thanks.
+
+--0000000000001261910642b0d765
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: a5511af5dd994dc9_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rSXNIb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNHVDQy8wUko2eEpQcGUwSks2L0dRK3NlOThFaE45ZApuNm81L1lsRjJy
+amM0QStIZHAwbmNBeDB6WEhCSHJ1WXhhWTF4QzVMeVlpY2lNdnZaK0R1aHNkWmRSeThnQVVHCjFN
+ZVpOUnFVbGsyZ1NLWkZGZDQvczhkaWxkQ2tyNklIMkhyL2Jqc0Rwa3VXc0hCNkthWnpFaml0OFZ6
+OHYzZEgKVzl5ZDdLYmRjNWNLMXlZVHMzU2dWblpJNUR3R3BERy9haFlVMVY2UGdzcHBHR0F2UWR1
+VXVhTjJ0YmJmU21IcwpWOEpXYlV4VmVaWGk4b3N2SlV5aGpTT3VKTmdSTmRFK2EvN2JWak9WUlFa
+WW5kRUMvbTlmU1FpWHc5OVJMYlIyCkhwQUFVZVJITEtXMndHbXVOUnd3dTJjQXF0MmJ2ZTBqS2VX
+WTNUUzVYaEgxeURsd2RQUkhLZzZyVXdBYnh6c08KQVhqWWVnbDZOakppQ2p6ZmpybW1EUzRsdHlN
+WW5tejdjNkhCWDNLUnhFNXZveVV1eW1zRCtONkdDYzhSUnRsUwpYL0VzRk5DSmwzYnI5bGk1ZXNu
+TzZzZXhHeWxoWjk0NDhvUUF0NE1XTGhZcndEUklzVm96ZWZjeTF0Mkxab3RuCmoxczJkcU94a3pq
+OW1xdzJCKzVqaXg0ejRJVGwxWWpNbjFjSk4rOD0KPU9CMHAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000001261910642b0d765--
