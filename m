@@ -1,128 +1,105 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEBE322537
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 16:48:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D5A320CD5
+	for <git@vger.kernel.org>; Tue,  4 Nov 2025 17:25:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762274883; cv=none; b=U91jsyC4MIXUc0ZWjre+eCNt/Np1JwgKLXewfexlVyGiOpoM63OtdcQaAizMwBv2rqAvqS3pUtqqdkbbH3gce6O8g8INsJ3CLcRUn6pFIFHxplwArvO92AFFstuVA4Yv5WjuEhr5EQx265QMVTIV4/ieJMRolijKJL8D20zevTA=
+	t=1762277103; cv=none; b=YDCi12nSqrWl81ZOK/9auFhYsk9HNqeGXbODYX9Yhg392hqvhy8a3sEOw9eWeVwATLpE9tQqP97pi3InSMUisBS1pzBxaWQgAavDPyqPZ2KAZigM3H8O7gp2uWIUKldLnR1LrSME6OsCEHkWC5Ooisqk85EiQrRzXSRpAS1ZdnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762274883; c=relaxed/simple;
-	bh=InPvMZJXVdFC7PwfYleX9gik7jGys3IpMf3zhJ//hzk=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=ZhfaDYXBQWQFFDsccVDv9rN9ju3PmufZyOcdc6DGW5SndfzRDOdjTveQ61Qq2MYq4h7MKeramgk4pm78WbQEwCHM5cTtAaTHD9Gr0LLi9B/efUa3xePqSkS9TKYPJsLILmTKIy1l/SECqBhkucrKI1JAvwWradr4SkWq7PFz2Sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jy2gQfpm; arc=none smtp.client-ip=74.125.224.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762277103; c=relaxed/simple;
+	bh=ARfwPtL1YKO2qhG01FKwxsiMwM3AHJu1gwZgRrXYiFE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DbFj5AraFWVfLPa885y4wZGEqhztWujeJb3BqnkSvKDPfePEX4BFGOyA/GRRbVMxRgi0MeEatsdEBQtlwavPiS06YMUGv3pkyxwtsFQV5gpuTKL9XWSVXqc3OGMOsBkFOO5SX5iXXZngkVPnR3IIERaodniN3Htciacd+nkqey8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UhbDS8+H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yf0+SQFI; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jy2gQfpm"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-63f9beb2730so3413558d50.0
-        for <git@vger.kernel.org>; Tue, 04 Nov 2025 08:48:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762274881; x=1762879681; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8RjZLWoHithqbST7WvFz3QYZ6BN+dmKH3g07FqJYBks=;
-        b=Jy2gQfpme51qxjUuHBS8mBadCoUrVoZdKBRlnQAhcOOIo/Ypla3vRf8Bb91LsiIolT
-         nKWPMU/IFhfzCZgS0OWZhKdjhIZPdW85WJNeM43FJRekIPiebpD5QrXIXWU5yj51xDjA
-         VxUV9Ij9Y8j19RYVyrDLY1u6sXI+fC+yWxgP326jKA1XxDDqDvjtMU5WqXjiLRVf2K4z
-         6ywht0bJKMvnnpuWCXVdoj9+4x/VvzahxqgQbrdSEsN/vYo0ZMRSxgk5A8OfHO9+DJsn
-         irwA5JL6Xrs87ypXcQZZ5VynEyfZJYmfp+KY2PRw91gMSXs1qOJuJ0ia+TReDc0IWCon
-         wmvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762274881; x=1762879681;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8RjZLWoHithqbST7WvFz3QYZ6BN+dmKH3g07FqJYBks=;
-        b=Ck6C3w9sj22FuLzSN0LGv/L+9LsWT0/gOtWUnR/BAporrlVZ+M+h7pnx9RDADQneeD
-         CwjQB6dcmjksGs6WXmxsUiZimV/1BHp4SMZ1BN3J6QR3p15CdW+Bp9YUKs6FY5a1uzh5
-         LwBwPKB3f2KvXwAowNMHO3Sh7M5ImqGPKIb4O1of/xEsaPd7qHltJsXNKpzcYebW90tL
-         IaoN8AmWKcI1D8igOPtSHBbTSDA4sPU+FDJ+iS8eaB9vf2IAL2cJxv8u/VLTeP40TtPF
-         MAmkjqfb7+BFKf2Tzy435fNJ9ZamGfVVrugxBVNMId613AJ7xxvmsT32GcDq6ic9uugN
-         +2Kg==
-X-Forwarded-Encrypted: i=1; AJvYcCWfE+rYZ9HIeOv7UPh+XqKy59b/dpNs5E7h6Y9zCBqGXcvTm62XgNo7muRHxrXR0totVjk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHYHQl6dJopRyxTdqsh6FVK2JT6ppB+X6vn0rsexs7VPHKl1CV
-	TyHTnvIOeU0+7/KKGmb8XJpvtqx7rh2QzdaAPxB5uTdp310u1mRh2Qrf
-X-Gm-Gg: ASbGnctAu5LYo2rj2lbSPv/ON/kt8lmiwxP4RqMP5PtyFenRqTU7gjT/jop/JSUSFM5
-	vkKMnL+fb4i6k0Vct1JZiv38kD1gHm56EJhuiEQ88kdDW7THrmuPTPq2Zl3zhJM7bDwBfRBZxz/
-	oyp0MtUz+hZKD7q8+/1jg02sfm87jAf7DzUQqmkNaCycYvPgKn+GIegUkiVzWACVwOYcstIt/pi
-	xTeZ4OcrOQFUjwB+lUZVyJsRTVvQXDLwAqYAYICqPXMAjtzYmzkSCs6X4ksBORCcPn2F7HhdIIR
-	hvCQ1OwwyMAZnt8ehbR54gnJvXIC9B3HcpemI9PR9LveTseIe1FhbgJlaR//n73TA/VIV5T1aNO
-	tmyT9rY97pcdd9z+RNVFmOCZskKu/yOWpEflYAExES7UN4wYc/jaaEP60/kDpnYepcyW8sbRNpq
-	F2LXCHQ9ZioQebHeARdWM+Xw4QahvI
-X-Google-Smtp-Source: AGHT+IHgWLlxmdfhX0+eMaSsgrDI+yNfW1cIqumpbpyAg0DWVvbUCr5h6Cz81/GaeV6c4OMhHRZX2g==
-X-Received: by 2002:a05:690e:4258:b0:63f:ba88:e8f7 with SMTP id 956f58d0204a3-63fd34cf84amr95308d50.27.1762274881125;
-        Tue, 04 Nov 2025 08:48:01 -0800 (PST)
-Received: from smtpclient.apple ([2600:1005:b003:f0e5:b1c3:2fb7:5212:36a5])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-63fc95de673sm865827d50.23.2025.11.04.08.48.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Nov 2025 08:48:00 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UhbDS8+H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yf0+SQFI"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id A5BE7EC0538;
+	Tue,  4 Nov 2025 12:24:59 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 04 Nov 2025 12:24:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1762277099; x=1762363499; bh=U5pu556NQG
+	0UsMoP+dyYC38wozxV6I7bPovbHKwvqQs=; b=UhbDS8+H2D4N+ThlJfMhQBAUdY
+	bVNVCzEDFxMOngqqf0LzkGKXAwj45mYQyGv2MMnOuTe/ONyyimU0w7PLRUMe3iz3
+	IIe1/Y0jqnJsS/sTBmvPCNDzeYBokjdbvSfclKPT+0YqBuQITGYY14TywdMPH++9
+	L6cmQbkHT2cihTepUPPT3eOVQG4c1eFrNsHV8BLSxtAHJhjx5Gjd3Owp/v6KUOC8
+	0MwVtX5a+lbDZJVF2gkQf2XjgEgRWhiHcQ+0yRZxBLvyhbyq5YJKiDKpx/Hg3Hyt
+	48S7e+EIPIE58rGgD+WOJlx8buTAbsfE/YNm/7VerY5hqhCXUMZn+LWIhdWw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762277099; x=1762363499; bh=U5pu556NQG0UsMoP+dyYC38wozxV6I7bPov
+	bHKwvqQs=; b=yf0+SQFICqkcbFPHfdo+URL0lx3pfJPzmKBrjUR6ZJ1z1u16CTe
+	6qFVKR2CpgoKkKnNH2rTgDSzX5C0C04F6hYusfoNe83aHvkUWo0kNclQ2Ct1p4/y
+	gmYafNDUn9ce08uGaVEtxTWup9O3sdUcv4NqElKOnXvVENIa7oEycBfcKl4BUfsS
+	JlrDi9Q+MRlOTQcH/8lAmpbmEOTR04ZtZYUxeYTyQVNn//ZuiRez4GExYeSDq/gS
+	p6odbAfMY0IBJqFtf29xKObQeaF2DNzxMuqN7xhvk+I6nXoNwYth3A5qvE6xJq+L
+	hsn4ESb/z1Eb7NyZNEFM/9L4YA8BqIq+cHw==
+X-ME-Sender: <xms:6zYKabrJEBBSQkejUSTU3NlEQOdtD9aod3hZ2SawqFRQACOW8eYgCQ>
+    <xme:6zYKae9vyBPCBUNO5NBncthe1HEaw_wFo3_XriDZSSNZfQ0IBVIyL0kReSMP1Ucsx
+    jSD4Akr_z3C_-qDvqz91l6iyyW9F-SjW61TIPcWdXU8tyWzUWptNw>
+X-ME-Received: <xmr:6zYKafcxsln1FoPyjUngNjhMwFPqIcIJpYEOxiMLU1E8GQOgKbslfpL7cLJwPvzK0cZDoGcR82wTE0PVKIRmdCxkYdyzcLiWNKJX>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeduiedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhithhhuhgssehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphht
+    thhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:6zYKaQJPpxor7nSII1v0nWHLK8jHZ9Cxc0BgUD2Tv1iTuILbiVjN1A>
+    <xmx:6zYKaXjmGEp9_LT4tMeHwApnT3Gf2Tn6-8aV_Agvu70XfMdFhi3aIA>
+    <xmx:6zYKaWT1F3ElRqK74U0Pz7eAqbQu-9UZPEcC5V99b1PXtre4qzKv4w>
+    <xmx:6zYKaZUvH4nSDbYNhtEeNbEah-No7z-NoM_XhwLiSN7QnFPIJKWRRw>
+    <xmx:6zYKaanhegFjS5MUMkySV3elhaLXUErAnAEhz9qrEKUCvczYLHH0g2KO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Nov 2025 12:24:58 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,  git@vger.kernel.org,
+  Phillip Wood <phillip.wood@dunelm.org.uk>,  Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 1/5] parseopt: fix :(optional) at command line to only
+ ignore missing files
+In-Reply-To: <ec8d1764-649d-4edf-b0ae-a19ead5f6f9a@gmail.com> (Phillip Wood's
+	message of "Tue, 4 Nov 2025 16:19:31 +0000")
+References: <cover.1762100242.git.ben.knoble+github@gmail.com>
+	<9ec696eaac647aa01466b101129da2b12ef5dbd5.1762100242.git.ben.knoble+github@gmail.com>
+	<ec8d1764-649d-4edf-b0ae-a19ead5f6f9a@gmail.com>
+Date: Tue, 04 Nov 2025 09:24:57 -0800
+Message-ID: <xmqq1pmdr9qu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] meson: make GIT_HTML_PATH configurable
-Date: Tue, 4 Nov 2025 11:47:49 -0500
-Message-Id: <0423F0C4-D0AD-471D-9315-FB208A8171B4@gmail.com>
-References: <xmqqms51rhbx.fsf@gitster.g>
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>, Todd Zullinger <tmz@pobox.com>
-In-Reply-To: <xmqqms51rhbx.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
+> Hi Ben
+>
+> These all look good to me though I agree with Junio's comments on patch 
+> 3. It would be nice to get at least the fist patch merged in time for 
+> 2.52.0.
 
-> Le 4 nov. 2025 =C3=A0 09:41, Junio C Hamano <gitster@pobox.com> a =C3=A9cr=
-it :
->=20
-> =EF=BB=BF"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
->=20
->> Makefile-based builds can configure Git's internal HTML_PATH by defining
->> htmldir, which is useful for packagers that put documentation in
->> different locations. Gentoo, for example, uses version-suffixed
->> directories like ${prefix}/share/doc/git-2.51 and puts the HTML
->> documentation in an 'html' subdirectory of the same.
->>=20
->> Propagate the same configuration knob to Meson-based builds so that
->> "git --html-path" on such systems can be configured to output the
->> correct directory.
->>=20
->> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
->> ---
->=20
-> Makes sense (a more meson-minded person needs to double check my
-> knee-jerk reaction, though).  It is surprising that
->=20
->    $ git grep "dir', " meson_options.txt
->    meson_options.txt:option('perllibdir', type: 'string', value: '',
->=20
-> has only a single hit (now two), though.  I thought we have a lot
-> more flexibility in our build process.
+Yup, let me do exactly that ;-)
 
-I learned just enough Meson to write this; many of the other =E2=80=9Cdir=E2=
-=80=9D options are builtin for it. Try =E2=80=9Cmeson configure=E2=80=9D
-
->=20
-> I am also a bit surprised that these things are of type 'string'; I
-> somehow was expecting that more modern build system would offer
-> richer (relative to Makefile, that is) types like 'filename' or
-> 'path'.
-
-Yea. At least there is a / operator to concatenate paths, but it looks like t=
-hey are just strings on either side. =20
-
->=20
->> I've tested this with a modified live Gentoo ebuild [1] and had good resu=
-lts.
->=20
-> Thanks.  Will queue and wait for others to chime in.
-
-Looking forward to it.=20
+Thanks, both.
