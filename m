@@ -1,84 +1,80 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52E31448D5
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 05:54:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE34E18EFD1
+	for <git@vger.kernel.org>; Tue,  4 Nov 2025 06:11:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762235656; cv=none; b=XHwnTu+ixQohiQX54QPvcE1EvWblfUuP/YdyaCp/bQDEfQPeeKt2DS1+4nX01AyCY9lXNX+NHo4VREOwacSUN3wTY2AQLqMsZQV+8/yZYHGmS1FE0Fk9mDDApME1GfpSekyjzuhpFFlNcERtabrD9fBKNKNWq4KioswHUc/um1s=
+	t=1762236721; cv=none; b=ms3pepQCKuaboG8Z/YP9JA6UH0YnqIxiEXyRYuzfSqLk1RIralfT2Z3I9eSbQaoS2QbLJZ0BzL4cYu0ZyNfOnSH1i//ay8idsPmWTa8s9u051SjklxevXSNX1rUgQXZLmwALJ7DmS8ak5/LluP5VqfMWYht/gy7hS06hKr2+hXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762235656; c=relaxed/simple;
-	bh=BFj9dkmjDEuECLVz2JZdacnB2HUmKcq7DMrmlvutGgo=;
+	s=arc-20240116; t=1762236721; c=relaxed/simple;
+	bh=/xkXUlpAjOH/gFMiDwMdhTWCHZMG/kOQ2sfGTco/k4I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=op/FWCvEHMYm+5bmjSBvKEW9ekBueFe4NyO+GrSBDkETMdkeCKcFIbFjCMrTIsAtBjxQuDiYqZkpiBBahbKfBk1cj4tvhE4RVl+fAeIzjUG6T27Cmc3V6TM5Uhf4/zxZEVvjbxpqLpioWf8Srh7XKkvln0tp/5BnqsZEJ5uzr08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OsSVyE2S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vhdMxOat; arc=none smtp.client-ip=202.12.124.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=V51WxT3GIU/fptn1zEyv2Drp31k2XIhF87UHY1bp7G7TsOqOKf1b5Cz6x0Xa6zfXn1bhGCq8goYqsi7huC8jrsP2x+yTd2BzvZi+08sRSnM/SbVcKQx1ugo3FBPgOZ7enaEdy8CD/SPAh3CVy4OZtcFHN4iKZRGHo9XVwH59Ww0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jpjcN+4m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mF5wrlLb; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OsSVyE2S";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vhdMxOat"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EE98E7A011F;
-	Tue,  4 Nov 2025 00:54:12 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 04 Nov 2025 00:54:13 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jpjcN+4m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mF5wrlLb"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CE4681400188;
+	Tue,  4 Nov 2025 01:11:57 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 04 Nov 2025 01:11:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1762235652; x=1762322052; bh=Z6mnVWoL4E
-	2B7Zj7uMqETORMxzcEg7rBmsEVdGvf4mA=; b=OsSVyE2SYoZVvWhZc29rdQ0UEZ
-	SIfvy6wrlSPJVMRT36sDsEqW5InFuOT/eKB/pr3SY2c4uFS7ACAdJXlF7BGbLe3D
-	rcofvF2fenyAUKYTI9OsEvsdXue8eaTK9YcEoNafwNQ2zxkbGXUZCYGEtR1Z1Lu/
-	isiDZyuzQm7kG7OFDyeDs6iOiitTML/psc/yZHUsohZfseENrShP2c7t1h8UHB7x
-	Pv0seUmGJGE7YqUSF7WHetB0WibPjygoLhB0WslvQJOERH7MTrBWfvWtCEjf6+V5
-	+NpNT2Gw0Qsumi77FuqpTfkCS98UAuxlfC72oWgIIgAQhN8+Zq7ZXwiaPjTA==
+	:subject:to:to; s=fm3; t=1762236717; x=1762323117; bh=bqNP8wUd1M
+	GvEIthobDeuCzwLFhcQiJxzoF5hNSWNUI=; b=jpjcN+4m0+Jl0oNWdInv0Aqifo
+	kDLiYOvZheyL5KA6k4UxxvZwThWaAlZV1WD8QDPKPR8+OwlBOrYxL6N1KGu6bKTH
+	2QLSvT1ifHmx0//as3Vj0m40Mt5+GhUuf5MnoXm+cJKDHZ0IQ9g+0Zu/hJcgtG0J
+	EurKJIWIcFtkoBzFt4nZ5OafR9it3HyiW7chto/NOtCj7pTsiN6z0zJajyHolKOp
+	43yy3E06sOQMJspsux3IHErm00Xa8rwIl3CjEtuVegv7nThsRgs/t9ap6VmjvHeG
+	0t837I6gjnLQ5d0tW23ji6Q99s0BjI5qkJf9xKzQy96XjEVpcJEyJ3elDopQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762235652; x=1762322052; bh=Z6mnVWoL4E2B7Zj7uMqETORMxzcEg7rBmsE
-	VdGvf4mA=; b=vhdMxOatdYtWr4712oujiblS9oA7JcG8bhHFe/XpSCtCNYDP7r2
-	a+0RXRhIHrT1IzLrJpW34k/iQOhUUU7ZpwIaMAR6G/aIC1nYwuMMo4OXIF4DylKW
-	ceFB+hvoRZewLnyTMnQ2EBQulh8P0uyYa9hRYQ64Lljvlm/Fx1BcUt/8A6OcypHu
-	OoUvvFiNxWbCPk4KX33QIz4rBoT8M+kSZm/HkwP8l/Pq4PtTxudZb0soNcDHIi3X
-	mCPlwnB+XsxuO7lvGImXsdUjY6t9LQ86kKmenWkO5rFkd0lCy7xlgzFjk1hWcOnK
-	PVx0wS0YGMCKiVhBUykSr89e//jiosRb+uQ==
-X-ME-Sender: <xms:BJUJaQG3Xn_MXwrrt3BsK-C_bKN24xp3EhBq3IhHHss1wVYBywJ2_g>
-    <xme:BJUJafVwPr_RjsNegbuE5HhODusr7u_NDHReehi53SFk16S2Xx92Wi0C6Sp8tq3Ik
-    Q9s98lq-aBgKYbfCUX6Ude767WG9535rlnkIVNuWvVVQ95he563_w>
-X-ME-Received: <xmr:BJUJaXwsN1PVOXFd5EKppMhAjl0GpDpOq1QOS-6SgL3K_4P55Wjum3IlSORnc5RZuVVaCfzZ6sICKBcDI6O17uExNfsGtlyWv6cisQSefA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukedtvddvucetufdoteggodetrf
+	1762236717; x=1762323117; bh=bqNP8wUd1MGvEIthobDeuCzwLFhcQiJxzoF
+	5hNSWNUI=; b=mF5wrlLbraLa5WvceziGe0O/Xb9qll5hiW5Qyzumr3wixLqPwGh
+	Oq9RiPEwIUtx/VLp468ewj4HV/lMIR6iUZLx5ILaJ3ccb3Z389d9pTiJugS7h6qs
+	YSQQWBQXrwJW81JRcfUoKtPXZ6eCUGfmTvniy6KSvrl/tvCP//YsWh7UV8HvO5Iu
+	N38IJDoxQGmLQxIGXrNOVxgvMU6zHVxBgPpV8SpHAZmyhw610RLBX9iM3zYFvoXA
+	CLw50Lve8rKM/KwToPJVuQKxY08LF3pBozzwMa/TFlFSpyemWf+LVefmLcSxk/Xk
+	NyCVQJGTfxzGvpxIqn/xxK7GV4M+fHW5mHg==
+X-ME-Sender: <xms:LZkJaeTp-Ts_58Sl99SlJe85zn62D6V8R-p5_9tKQRuGCab8HwpNoQ>
+    <xme:LZkJaZwNT0BVCasaAthZVFUhmDZWRt7OhHj4p7GXppMtc1pVKGMyPJItUku0hydMl
+    NAWQvafemB_zdw7S1s9CXT1_N90Kd86Zqle1BWtKslLQIRE1wpRixA>
+X-ME-Received: <xmr:LZkJaZfp-2-D92UCtp9hAvsvuXoSSbnjpjO_k7WIgpW5mL5gnev1Bvoz8aDRsOx552t3QRjdGDUoj2-PEBA8psJV2zgxNr3VfoECDPTmhw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukedtvdeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhih
-    hkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:BJUJadOhn7Iw4PbF3QnaYG-GAG5QWgGihrXyGUTR1a4EKaSFp7WghA>
-    <xmx:BJUJaY72pYuyBzC-QnUgkhgNf4ZsI8-ttczBgxAeAi6w34Dw8WPYug>
-    <xmx:BJUJaeN5rZ1sWhMSwfo_jJg7OKuhm1XA1u5RxyGzpL_sCcUFgmV9-w>
-    <xmx:BJUJaWmKNxEqFKTRLzRS9k6iA90w5QwMiNs_wLQbGBrBdbBGIgbQmQ>
-    <xmx:BJUJaQ160QdDXD-RPIwP8K8fSy-vLkelWcvzLDA64tnEMGhpbgjJxqrS>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:LZkJaVJoLnNW2bsIClzrqpWEvayLAoCP5Pr4As7B3mMvgTne0IevPA>
+    <xmx:LZkJaaGU2u2FqL4fsULveaIHHllWxauFrTxr60klsq_rwFyay8XFrw>
+    <xmx:LZkJafrZned7Zf9kVDv-7QfvjrLe97ze8ObzcAb7uoemVECtyjoSWg>
+    <xmx:LZkJaTQeGQpF9VFYHSpWKPh2nSsc2O_qaW9bHa5hRyTIbeWkA6_WLA>
+    <xmx:LZkJaRq6ndVlLzU8T9OHUzSHeCSlo_oeePsM1qo-XJKUlvCMZUkZg0xn>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Nov 2025 00:54:11 -0500 (EST)
+ 4 Nov 2025 01:11:56 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7c237683 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 4 Nov 2025 05:54:09 +0000 (UTC)
-Date: Tue, 4 Nov 2025 06:54:06 +0100
+	by mail (OpenSMTPD) with ESMTPSA id fd8c2fb3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 4 Nov 2025 06:11:55 +0000 (UTC)
+Date: Tue, 4 Nov 2025 07:11:52 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/5] maintenance: add 'is-needed' subcommand
-Message-ID: <aQmU_hOPO55_ojw2@pks.im>
-References: <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-0-a03d53e28d0e@gmail.com>
- <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-5-a03d53e28d0e@gmail.com>
- <aQi1g9TX7FoDgo9n@pks.im>
- <CAOLa=ZSsEygvz1_aj4KomfF0Jo0vJi3yVLtJbhLX=RLgW6_GzQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2025, #01; Mon, 3)
+Message-ID: <aQmZKCUH-SXjZONV@pks.im>
+References: <xmqqseevt4gf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,71 +83,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZSsEygvz1_aj4KomfF0Jo0vJi3yVLtJbhLX=RLgW6_GzQ@mail.gmail.com>
+In-Reply-To: <xmqqseevt4gf.fsf@gitster.g>
 
-On Mon, Nov 03, 2025 at 09:18:35AM -0800, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Nov 03, 2025 at 09:24:00AM -0800, Junio C Hamano wrote:
+> * ps/object-source-loose (2025-10-30) 13 commits
+>  - object-file: refactor writing objects via a stream
+>  - object-file: rename `write_object_file()`
+>  - object-file: refactor freshening of objects
+>  - object-file: rename `has_loose_object()`
+>  - object-file: read objects via the loose object source
+>  - object-file: move loose object map into loose source
+>  - object-file: hide internals when we need to reprepare loose sources
+>  - object-file: move loose object cache into loose source
+>  - object-file: introduce `struct odb_loose_source`
+>  - object-file: move `fetch_if_missing`
+>  - odb: adjust naming to free object sources
+>  - odb: introduce `odb_source_new()`
+>  - odb: fix subtle logic to check whether an alternate is usable
 > 
-> > On Fri, Oct 31, 2025 at 03:22:25PM +0100, Karthik Nayak wrote:
-> >> diff --git a/Documentation/git-maintenance.adoc b/Documentation/git-maintenance.adoc
-> >> index 540b5cf68b..edcc88f4d0 100644
-> >> --- a/Documentation/git-maintenance.adoc
-> >> +++ b/Documentation/git-maintenance.adoc
-> >> @@ -84,6 +85,11 @@ The `unregister` subcommand will report an error if the current repository
-> >>  is not already registered. Use the `--force` option to return success even
-> >>  when the current repository is not registered.
-> >>
-> >> +is-needed::
-> >> +    Check whether maintenance needs to be run without actually running it.
-> >> +    Exits with a 0 status code if maintenance needs to be run, 1 otherwise.
-> >> +    Can be used along with `--task`. Ideally should be used with '--auto'.
-> >
-> > Okay. I assume when `--task` is not given we'll check all tasks
-> > specified by the configured strategy? Might make sense to document if
-> > so.
-> >
+>  A part of code paths that deals with loose objects has been cleaned
+>  up.
 > 
-> Actually no. It's similar to the 'run' command, if nothing is specified,
-> we check `maintenance.<task>.enabled`. By default it is only enabled for
-> 'gc'. This is important information, I will add it in.
+>  Will merge to 'next'?
+>  source: <20251031-b4-pks-odb-loose-backend-v2-0-920f721aef71@pks.im>
 
-But we use `initialize_task_config()`, and that function knows to use
-the configured strategy unless it's given an explicit list of tasks. So
-we do use the maintenance strategy.
+This still seems to be using v2, and I've since sent v3 that renames
+`struct odb_loose_source` to `struct odb_source_loose`. But that version
+should be ready for "next" indeed.
 
-> >> diff --git a/builtin/gc.c b/builtin/gc.c
-> >> index 72177305ff..4d20487ed6 100644
-> >> --- a/builtin/gc.c
-> >> +++ b/builtin/gc.c
-[snip]
-> >> +	} else {
-> >> +		/* When not using --auto, we should always require maintenance. */
-> >> +		is_needed = true;
-> >> +	}
-> >
-> > I guess for now this is good enough, but it's not quite true. Some tasks
-> > won't require maintenance even without `--auto`, like for example when
-> > the reftable stack only has a single table.
-> >
-> > Patrick
-> 
-> Good point. Thought I'm not sure how we'd go about it. Initially I
-> wanted to not have an `--auto` flag and simply make it the default
-> behavior. But that would restrict us from introducing the `schedule`
-> flag in the future. Which I think might be a worthwhile addition.
-
-Yeah, agreed.
-
-I guess eventually we could extend `auto_condition()` to honor the
-"--auto" flag:
-
-  - If it's set the task verifies that it needs to trigger housekeeping
-    tasks with heuristics.
-
-  - Otherwise it checks whether there even is anything that could be
-    cleaned up.
-
-But that's certainly out of scope of this patch series, I think it's
-good enough to bail on that specific part for now.
+Thanks!
 
 Patrick
