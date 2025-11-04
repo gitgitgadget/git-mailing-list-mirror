@@ -1,76 +1,80 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03EDA1E1E1E
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 02:09:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBFA1FFC6D
+	for <git@vger.kernel.org>; Tue,  4 Nov 2025 02:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762222174; cv=none; b=lxDdU2gbie3QKbB8vB3rlnpU3S4/tV34Sg3m1YvXubnoeRM7MLwZ70brpUFx/aaOg7SB0+MF0aN3aXqf8KESc9rGvVNuveDFLasT+9qFA1Eb4Jw+qlfd3iCGRA7wvXI2lIeB24PSsT7pOAmK9iwK0WOW/wofDAkw0VaNi1vYW64=
+	t=1762222175; cv=none; b=FbHPK31wKI9psfNKa4d0Uxf98hkCqWd0JlWxJZMpKGI+KMrovZT9ID91Ezn5rFVznWaEHTmlEZedjhepzCmM3JB4197Kic9Y+j1UYtgBme98QupZI2nVqH3kkzAUuVAhjfyzlxmsxz3fYFzekAz43fjVjbeuThC9AMi3RcaXljY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762222174; c=relaxed/simple;
-	bh=Jxo78C4S/QfmVgiOCLU5nyhjAwMfoEmyiXRoGvKJFTI=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version; b=lcN4SWt2AkYQNiCkUDWCo9ciwzx80pvcSo8L2QNFueBfxRQe0vZJ4xu5PN8Gik2IKPsQEcd4UjAX/tY+Qb+3Lly6QVzyzb5rcH8knfvyX3xdPBMgADJQWR0aU31gYYJ+wCKLzmzw9WNsexaZFsAkamLjDuQc8dbgU0mRnEYTsd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jmQu3CzN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YxO0tWjW; arc=none smtp.client-ip=202.12.124.155
+	s=arc-20240116; t=1762222175; c=relaxed/simple;
+	bh=8eV5YGRyQGxklq7lA6qqs5s0JYxney9CtWD9c6k4MFI=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=F+sIOHyMy0j+nCOppKbhitqgveHarYLL75Zz86Xb33nbsuJdtB8v4mrWlM324CCt9m13kMpNRJXEGqW1UCx042vuHK58te1iTn6e+aUjS2qrJfh6PR+I0deEbvyjwGhPpsSSVyBXKAl8PNomtXDXZep4KhRVPB0Yk9p9C2AsQNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E5YK481N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XtiG3tQN; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jmQu3CzN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YxO0tWjW"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E46067A03F6;
-	Mon,  3 Nov 2025 21:09:30 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E5YK481N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XtiG3tQN"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id ABC9F1D003F1;
+	Mon,  3 Nov 2025 21:09:32 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 03 Nov 2025 21:09:30 -0500
+  by phl-compute-12.internal (MEProxy); Mon, 03 Nov 2025 21:09:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=fm2; t=1762222170; x=1762308570; bh=ypad7p5GgoIhj7Qbvoeyu
-	ouoLkoW2uYgXPM4NXXcOXY=; b=jmQu3CzNEE2MstZHhS6MsONiPmZP/pQ7Neubg
-	80SaiO3MYV9vBVMiRgat8Rbug+brVVMmZBMajjCDX/724tx2XVJ5TLkitMdoEFxi
-	7gKXx8GwXHJjJgyBmjSmAzSczFefun2ROKsiy20HrEBUjSL+qXrRcu7HN5UFQ1Ts
-	E/3EXwPqAxmjh9htacgsBoQwKwaGpElzgdEP/Pz70Fpp81jklX9B3W8rE7M49kDJ
-	EbvBgmeExbrXMyvUkDL/4EWdN/J6wchyGk0hDxRXACfyI+8Z+swPzDgBAPRStbbR
-	LF8eMX+cWVXXcYWRSs5ubaYyrT/sARUIm3aSILATA2sCiT4dw==
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1762222172; x=
+	1762308572; bh=F0tV1ayGn5+RqHRLCyxYTrUcQMVUDRt9Q7GjHcWIgqg=; b=E
+	5YK481NDGrpZzLqMmdEWnvlKGxE6l/d0DBgVk26T59saUe5lo3TeriGXZlm9CeKw
+	+2+frFAHc0ZqBzCbhk8Rd5t6My71437L9UmXVcfz9p+iHtirQmHjbfh8Ys8ZVg7z
+	3+Jmsv0EAEN4lJz/n5TbDjvtkDD2IF8Id7blYBz6CAN/S10xUxqw4dw1/hhOc2VT
+	lg+gTWIkmwcvTyVKUHnS1gw6PVpGuHR0Bx4l/W97aJX64rr+FqmHoLnGF/zMAEIs
+	KoBtKqZ7CzlDCHcCL8R3zsmpFJrOWfe+kbCytr1hpdyfFZPZot0gfeHYc8f0B45t
+	p1YLBEJiI6/qb/arUX9UQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762222170; x=1762308570; bh=ypad7p5GgoIhj7QbvoeyuouoLkoW2uYgXPM
-	4NXXcOXY=; b=YxO0tWjWTWDGwinvJgqF5TY3XvgDG32t1fMM7vikYWJhW8PfHcf
-	02UvoVNCEONJUBEGMifOsk4A3rZvY7uKBOT99YXMsxazeTj9ezlxae8dDly6m2oi
-	2dIGm5L4xG6BaRPhiqdjFH8OyZL2ATfr61QoCKF1Q6Tbb2OT8joqakIUACDjT437
-	YY1cNxL+A/ahdVJi0q7snzMmX3tX6RylXjk5j6NC5/eRFYkRJceEFGa8+W1PkYVk
-	JNdOvUFEoJE11JuOPywPMUMsE/5cM29se0BGNwn6754NWpL45tOoFCqGLi45ITwD
-	XVLOb6KI0YaXmeNyIysmSMpQ/vqKf1gFOjA==
-X-ME-Sender: <xms:WmAJaQrXPQpfgoGRPZydCUgmU2ejgKDN04_aO8JGESIGH-Q1aMl5Ig>
-    <xme:WmAJacoqU62jWyZQS9aAQK5y_j3Q2cswpAY8UJT-7VQ7GflZvR0Dh3xegt9CpoxOE
-    6jFXBs1m36ipG5KGTTS7rph_cHZbEeLCbiXIT9EdXkuLcVu4o_6gFk>
-X-ME-Received: <xmr:WmAJaS2qW1ebD34sX7VsaQMZKQXVECG2SGtH_ruEwAxvKjZ7Mk6F44wvRjLXX1SuSNe8fS1oMqoTCW62QyJgZpQOjF9pL6SJJ7CV>
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1762222172; x=1762308572; bh=F0tV1ayGn5+RqHRLCyxYTrUcQMVU
+	DRt9Q7GjHcWIgqg=; b=XtiG3tQNK/8aT4d4xnaCEvWqFpYccQo83+PAbH0bOtu7
+	vG3TKbAxyBpN8FpeKPr4zHDvwCOXbSxahG8eeW1UFIsHFi1J61iRp+ViEhoQKWrn
+	g358lIrHkJ6uDF2lEfDxqofCMx1/TvzbzlvgldWMyVfNZ7+KW+gZ6ISwwaS1IVR4
+	nCVlNHgYEJKeqMUJ7+glJWOzoX36GvSDcO9dWikZxrHgqFnBn0tHFk/HhIpVSkaI
+	JlCJzcKdSWrHVLTJyHh8GaOf9vsMk6I5kkoooN8fAprHkTHRPzSNROKGwUKxCYi/
+	U/boIbwGOUt/uOHsenOef1721ClEef6wWHkUO2lMnA==
+X-ME-Sender: <xms:XGAJaeBHNYxm6QJgENkxR8tkEFtx2ZrLA4aJq3WaCOkNNCDGsnpGAg>
+    <xme:XGAJaeh5VuwT5tmYvvW80SIFLoh4CeVcTRgOinzlVl9WssuMCPMzHtfpobxbjOsh6
+    1HJnN_-QFjyOT0XNevh4_4ahFIc2q1NZkosNi_ZXGMwJCMTY0XTZ-c>
+X-ME-Received: <xmr:XGAJafNNgRiDW_ZkqgKqmxscTj9k-Mb9jXz2MXKuvkb6Ps-VNXj9tog7PnATkORKvuGEsV3vvmSZqviqtOi4G47XGHZGS67WCE_T>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeeljeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtredttd
-    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
-    gidrtghomheqnecuggftrfgrthhtvghrnhepledugfefvdejtdehtddujeekjedvieevgf
-    ehteeugfdthfdvleegtefhudegjeeknecuffhomhgrihhnpehkvghrnhgvlhdrohhrghen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:WmAJaTAsQpxgFbUpJ-dyEvJtWrF86PoTEEIgTJhvuVlsuzNMlavU8A>
-    <xmx:WmAJaSdu5kFdFc2znmIUnqKAqDYKHzROwUSF2l5XZmB5OJ8k9r3qew>
-    <xmx:WmAJaQjcnxHhc1zhYNuC7L4RCIlT9cNF_Rm4p_vKuIZctyBAr9YRiA>
-    <xmx:WmAJaSqStMM4F1dhWotnIZJy90f4zL4gyxKK89XqciLj3oH-uAUohA>
-    <xmx:WmAJaXNT8-Qm6SojGmplDu3-V2_b44NW9U5q1TV43IpiO6kGZMSUkpF8>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
+    dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
+    sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
+    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
+    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:XGAJaX7L9FgWO-FcsJMUMzTsHWFLKnItEOKwqFll0vKZMMhhXej6CA>
+    <xmx:XGAJaV1W_JQeg3cpJ4I-JzRWFBlBk6LugemlqsxJcg67klPYWwQwCg>
+    <xmx:XGAJaQY_XAZ2YfgsfiN8E52vGqaTeXNWJjMV7oJjRg-Fz6kyfamFkg>
+    <xmx:XGAJaVDsAr_p_mCkLtRaq4umLqWHMdiij8L3DdjqFzFR9ClYfxR3rA>
+    <xmx:XGAJaRbGK8G94qR5LZfsnySWxMdkUOIJhoOpjuBMhO36wfxRCNKyK4Di>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Nov 2025 21:09:30 -0500 (EST)
+ 3 Nov 2025 21:09:32 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH 00/12] Incomplete lines
-Date: Mon,  3 Nov 2025 18:09:16 -0800
-Message-ID: <20251104020928.582199-1-gitster@pobox.com>
+Subject: [PATCH 01/12] whitespace: correct bit assignment comments
+Date: Mon,  3 Nov 2025 18:09:17 -0800
+Message-ID: <20251104020928.582199-2-gitster@pobox.com>
 X-Mailer: git-send-email 2.52.0-rc0
+In-Reply-To: <20251104020928.582199-1-gitster@pobox.com>
+References: <20251104020928.582199-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,88 +83,108 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-One of the common kind of whitespace errors is to lack the
-terminating newline at the end of a file, but so far, neither "git
-diff" or "git apply" did anything about them.
+A comment in diff.c claimed that bits up to 12th (counting from 0th)
+are whitespace rules, and 13th thru 15th are for new/old/context,
+but it turns out it was miscounting.  Correct them, and clarify
+where the whitespace rule bits come from in the comment.  Extend bit
+assignment comments to cover bits used for color-moved, which
+weren't described.
 
-This series introduces "incomplete-line" whitespace error class,
-that you can add to either the core.whitespace configuration
-variable, or the whitespace attribute in your .gitattributes files.
-The class is disabled by default.
+Also update the way these bit constants are defined to use (1 << N)
+notation, instead of octal constants, as it tends to make it easier
+to notice a breakage like this.
 
-When incomplete-line whitespace error is enabled, a patch file that
-has "\ No newline at the end of file" line for the postimage file is
-considered to introduce a whitespace error.  This is true even if
-the corresponding preimage file ends in a different contents on the
-final line that is incomplete.  The incomplete line marker that is
-given for a context line is not considered an error.  The reasoning
-is that your preimage did have incomplete line, but you did not
-touch the contents on that incomplete line in your patch, so you
-left the line intact.  It is not a new breakage you are responsible
-for.  If the incomplete line marker follows a postimage line, on the
-other hand, it means that you either made a file that used to end
-with a complete line to end with an incomplete line, or the file
-ended with an incomplete line before your change, and you did not
-fix it even though you modified other bytes on that same last line,
-which you could have easily fixed while at it, and that is flagged
-as an error.
+Sprinkle a few blank lines between logically distinct groups of CPP
+macro definitions to make them easier to read.
 
- * "git diff --check" notices and errors out.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ diff.c |  7 +++++--
+ diff.h |  6 +++---
+ ws.h   | 25 ++++++++++++++-----------
+ 3 files changed, 22 insertions(+), 16 deletions(-)
 
- * "git diff" and friends highlight the offending "\ No newline ..."
-   line.
-
- * "git apply --whitespace=(error|warn)" triggers an error, and "git
-   apply --whitespace=fix" would correct it by appending a newline.
-
-The organization of the series is
-
- * The first patch [01/12] is a clean-up we have seen earlier on the
-   list already (https://lore.kernel.org/git/xmqqfrb4hyjl.fsf@gitster.g/).
-
- * The patches [02/12] - [08/12] are preliminary clean-up made to
-   both "git diff" and "git apply" machinery.
-
- * The patch [09/12] shifts the bit assignment (cleaned-up in
-   [01/12] without changing any values) to make room for new
-   whitespace error class (which was last updated in 2007 IIRC, so
-   the set of whitespace errors surprisingly haven't changed for
-   quite some time).
-
- * The patch [10/12] teaches "git apply --whitespace=<mode>" about
-   the incomplete-line error class.
-
- * The patch [11/12] teaches "git diff [--check]" about the
-   incomplete-line error class.
-
- * The final patch [12/12] enables the incomplete-line error class
-   for our project for C source files and shell scripts.  I didn't
-   touch the cover-all * entry.
-
-Junio C Hamano (12):
-  whitespace: correct bit assignment comments
-  diff: emit_line_ws_markup() if/else style fix
-  diff: correct suppress_blank_empty hack
-  diff: fix incorrect counting of line numbers
-  diff: refactor output of incomplete line
-  diff: call emit_callback ecbdata everywhere
-  diff: update the way rewrite diff handles incomplete lines
-  apply: revamp the parsing of incomplete lines
-  whitespace: allocate a few more bits
-  apply: check and fix incomplete lines
-  diff: highlight and error out on incomplete lines
-  attr: enable incomplete-line whitespace error for this project
-
- .gitattributes             |   4 +-
- apply.c                    |  70 ++++++++++++------
- diff.c                     | 148 +++++++++++++++++++++++++------------
- diff.h                     |   6 +-
- t/t4015-diff-whitespace.sh |  63 +++++++++++++++-
- t/t4124-apply-ws-rule.sh   | 112 ++++++++++++++++++++++++++++
- ws.c                       |  20 +++++
- ws.h                       |  26 ++++---
- 8 files changed, 361 insertions(+), 88 deletions(-)
-
+diff --git a/diff.c b/diff.c
+index a74e701806..74261b332a 100644
+--- a/diff.c
++++ b/diff.c
+@@ -801,16 +801,19 @@ enum diff_symbol {
+ 	DIFF_SYMBOL_CONTEXT_MARKER,
+ 	DIFF_SYMBOL_SEPARATOR
+ };
++
+ /*
+  * Flags for content lines:
+- * 0..12 are whitespace rules
+- * 13-15 are WSEH_NEW | WSEH_OLD | WSEH_CONTEXT
++ * 0..11 are whitespace rules (see ws.h)
++ * 12..14 are WSEH_NEW | WSEH_CONTEXT | WSEH_OLD
+  * 16 is marking if the line is blank at EOF
++ * 17..19 are used for color-moved.
+  */
+ #define DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF	(1<<16)
+ #define DIFF_SYMBOL_MOVED_LINE			(1<<17)
+ #define DIFF_SYMBOL_MOVED_LINE_ALT		(1<<18)
+ #define DIFF_SYMBOL_MOVED_LINE_UNINTERESTING	(1<<19)
++
+ #define DIFF_SYMBOL_CONTENT_WS_MASK (WSEH_NEW | WSEH_OLD | WSEH_CONTEXT | WS_RULE_MASK)
+ 
+ /*
+diff --git a/diff.h b/diff.h
+index 2fa256c3ef..cbd355cf50 100644
+--- a/diff.h
++++ b/diff.h
+@@ -331,9 +331,9 @@ struct diff_options {
+ 
+ 	int ita_invisible_in_index;
+ /* white-space error highlighting */
+-#define WSEH_NEW (1<<12)
+-#define WSEH_CONTEXT (1<<13)
+-#define WSEH_OLD (1<<14)
++#define WSEH_NEW        (1<<12)
++#define WSEH_CONTEXT    (1<<13)
++#define WSEH_OLD        (1<<14)
+ 	unsigned ws_error_highlight;
+ 	const char *prefix;
+ 	int prefix_length;
+diff --git a/ws.h b/ws.h
+index 5ba676c559..23708efb73 100644
+--- a/ws.h
++++ b/ws.h
+@@ -7,19 +7,22 @@ struct strbuf;
+ /*
+  * whitespace rules.
+  * used by both diff and apply
+- * last two digits are tab width
++ * last two octal-digits are tab width (we support only up to 63).
+  */
+-#define WS_BLANK_AT_EOL         0100
+-#define WS_SPACE_BEFORE_TAB     0200
+-#define WS_INDENT_WITH_NON_TAB  0400
+-#define WS_CR_AT_EOL           01000
+-#define WS_BLANK_AT_EOF        02000
+-#define WS_TAB_IN_INDENT       04000
+-#define WS_TRAILING_SPACE      (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
++#define WS_BLANK_AT_EOL         (1<<6)
++#define WS_SPACE_BEFORE_TAB     (1<<7)
++#define WS_INDENT_WITH_NON_TAB  (1<<8)
++#define WS_CR_AT_EOL            (1<<9)
++#define WS_BLANK_AT_EOF         (1<<10)
++#define WS_TAB_IN_INDENT        (1<<11)
++
++#define WS_TRAILING_SPACE       (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
+ #define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB|8)
+-#define WS_TAB_WIDTH_MASK        077
+-/* All WS_* -- when extended, adapt diff.c emit_symbol */
+-#define WS_RULE_MASK           07777
++#define WS_TAB_WIDTH_MASK       ((1<<6)-1)
++
++/* All WS_* -- when extended, adapt constants defined after diff.c:diff_symbol */
++#define WS_RULE_MASK            ((1<<12)-1)
++
+ extern unsigned whitespace_rule_cfg;
+ unsigned whitespace_rule(struct index_state *, const char *);
+ unsigned parse_whitespace_rule(const char *);
 -- 
 2.52.0-rc0
 
