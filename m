@@ -1,113 +1,110 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6262A23B604
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 18:22:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5435E1EB1A4
+	for <git@vger.kernel.org>; Tue,  4 Nov 2025 18:23:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762280561; cv=none; b=gHjUNaEhKjR+QD/IunVHtBtpU5iu3I6JAgWt1Ulo0ZpxWKCH+99fEMMaS+6e3x9/bgsZNZFvH+Vh58fgQVEpfLoQFrvIwfTI1/kt0eiBkfnk12fyGbLXp4u7SaTPfpP73fPwrZqwGzX53Jkgx0EotVCqzCUmnZnO43zhdMZiJPQ=
+	t=1762280584; cv=none; b=YlL3c1+FRnB3AfXk/2tr8ro6paV/4JSuGKp69cyuuVlFUvtwH6QuDGKtmS4WOQn43yYqXx8D5vNa2w4hKnBZFpecC2uXxox/Hp5JUjuOnkIbny+DutuRDVdktGmbpnfw+kzE3MyCI3C5NgXqYWFaih+SA6LnBqK6M8Le1nfi5ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762280561; c=relaxed/simple;
-	bh=bVZGGTu+yFUF6oVRqipMTji42wK3hUu1KDh0yBrJyAY=;
+	s=arc-20240116; t=1762280584; c=relaxed/simple;
+	bh=e1DflJ5ME5zwYIplN2twYgkTpRct+bW+sFSiJqrYAnw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JTfYM499++wWhZoYdWcOJnkL6DTOuxA0AinfQpSJxK+/uQgNeiNEo8o2sHuE1Sg7QaLHNX3CfRMTtLIp12+PGzWZFx3M9NdSFT3/xbCf7FLvPRpMzq+bO+tbwrdeURG3ByUu4rij8QsSsnt55fBS5yE2Kmy4GogrTFABVylrsXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BIOpd8u8; arc=none smtp.client-ip=209.85.218.49
+	 To:Cc:Content-Type; b=X7zS36LfsvhiioVPhmf2TFydzY4MpeuL8uv30hP3yIQImYufqcMuF7sSZXfgKfIU0M/pIu3t9c39jC59HFFQ8sfILfHTtvOMUJ4ztd+lN2aEeVHWOKXpYIBltnjUGpJp+WZGLmgZsaMp8MlY+kogpjveOoyibH+jY48hbs5nERM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nB+D+erK; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BIOpd8u8"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b72134a5125so217611166b.0
-        for <git@vger.kernel.org>; Tue, 04 Nov 2025 10:22:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nB+D+erK"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b710601e659so373072666b.1
+        for <git@vger.kernel.org>; Tue, 04 Nov 2025 10:23:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762280558; x=1762885358; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762280582; x=1762885382; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mCv/yUlvCUDFd60R1ObJoBQd4+kHwnywQSb3XnJxmTM=;
-        b=BIOpd8u84Ym2rny4yG7n66rfAt9etQKYEk8eiGT7N0BclzUQDzKtOBgkJXBEbOArxp
-         YBvsKJGG0saMr2wzHCVczOyrOE1+VoZslBrvhpzX5EQMu/XTZtLfdysuLX5BrS1aTBeZ
-         +2FvIkZ4kRoHtZSXXWIQCdiZVilST9rcGQkpBCjnrqLnu7UwvUpJBfAmsdN3EmeHHW4G
-         1La1yK9D6ZPAMhicsfuTb0rGP6x95KCmXt+xsCgCVSVi+7GAZFZfF2dCTCAvNmTYYW9T
-         OGXOe1NhlNixrgG3Pu8WV7O2MtxHKTHxSicbHYIoQVxUAPKM7roKXpzl3tL/Tjti9ihr
-         33Mw==
+        bh=MDXYbN01oVU3xKTzHtbzkWld3oom/1hXYvu/0OO/sQg=;
+        b=nB+D+erKNJTJPruxr4k6bzi7Y/uTxXRHzUcUJubkAtExuEFBT4VxEkVpQecVtgBZXD
+         /MnRQBl3vXKD76WATATn7+fXf1EzMFs9wtSdQWIqbVbK3FXWjhsdD7gR0b+PMvKsme7C
+         Ix8r4uNRpMWaOIYniPHpAREQc3RGN766lC5geg3eoE9tajFx9TcLcHrvQcG7R12PgzVX
+         mhYCVx54kiWqfklJsUmHU3Ayfd7R1wGdXZORQ7ofNboALW4vqJSgRjOqjW+ifhE4R2Ie
+         v2QM2lRhPkB8L7dOAipWllrMDEHyJqQmeyRC152D8huhH0GQKhxmOGGNfs+Gj7nJFYmy
+         n2YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762280558; x=1762885358;
+        d=1e100.net; s=20230601; t=1762280582; x=1762885382;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mCv/yUlvCUDFd60R1ObJoBQd4+kHwnywQSb3XnJxmTM=;
-        b=F3GCoHDqu4+FhHtiuUw6bILqrYHZRKcdS45LFIyarNd6eUBke+oHOUMtANT4qSKZnS
-         F4eOUvcRcLnRnscCRd1mg303ZSLJRO7RbtOogoaUOJfr8UeVdE6sqY9yLno1XXK0O0Bj
-         Vt1nEGhHoGt5rZRh59/Q7Oiv/N1foUJn9+AYwI/9QlkGUT5L9CnFDe9WAq+cJ/tR9o8J
-         4dERJCG3cD4SJ4/i0c4CLaYJdyY6sr9IgV0XezJgqv+ZQ6sSk88//9i4uypXFpiOqIGf
-         /AXlu8A6hFwp8j+Yb2CZZNptQt2Hfd5V/3o/Mxa6Tg5BmaP1RXDCX0COGbi0ML7UZWdJ
-         CQhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUjwTNqv0Hbz82Xn/2/dM8pqtXOm35azXRpt5c1j3PKRUQV+WDyd9qhdYwUNK0pQq+LZB0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWFHgPt3a/jfgAYkkgfor30H0hgWmqPxTIDXdgudG//EJHHxqj
-	SCkvDQWnYbY/Y19YlDF+x3pbP9OQdZq0deEUB0JG672hMZ6U2Dq1RJfccFLB1OCdZCyPSzayikz
-	8cxK1PrYQX3SnlthC9R6yt/l2VCBlGFw=
-X-Gm-Gg: ASbGncvgyB2L0hprWCn53xyHb9rqisnDAO+9JdIeiDNfIZi4UhD+qpVYPAfVTQNTqAv
-	ECtbTnL0c8e1/1mOkPx5jdA8Vm1mPepP2q9DY5ptIpaGjn1jovTjtchchi4VHeKQNx3mbc1jinz
-	p29ss9OrQSDzS56k2FoNK4AqgRhUfIyvXpH3paRRYZ5HZ1gs3dtJqc3rp+ihs0Uovv41cBqtjiP
-	FdxARAyo60Aiuo2Hz3tUPDs+CgCTZv+nCwBOAc3qwk4QFEGpR9CSLlIuO9eTsiiz1ny1jIGQlZR
-	tyN2zxm44NGDnyDa5Qs=
-X-Google-Smtp-Source: AGHT+IHCZDtG/7jSHK6y3cLHP2s4CJPHXM92hpsi/0MnjvGN/wdj2vsl8z1DaJ9GN9gQ3KSYFH/sudQS4VUyaMQCIbs=
-X-Received: by 2002:a17:907:9492:b0:b70:ce44:113 with SMTP id
- a640c23a62f3a-b72654c24c2mr12220266b.30.1762280557457; Tue, 04 Nov 2025
- 10:22:37 -0800 (PST)
+        bh=MDXYbN01oVU3xKTzHtbzkWld3oom/1hXYvu/0OO/sQg=;
+        b=WZcNzCCbGx6zwaZb3E9hMTdzAV2HNjNkrhCmzvs1TUI6wjiasVl9GH/u4eYkxmJa0o
+         f+E68mhc7TtGWBvalRTMUo2zOoDWwc/Dg472r3M0gB7dyR760fj9jxBvEem3AVz3OCq7
+         V7FGkMqVDG2sLsECROljh2pDYVoSn5hajcZGqcMPLuwEo7Bo/mAS8uRJq74v1ivV1BKi
+         iMZZavSWlj7xi8I4jNsngDi5jQze4XULGlXiJW6U1VMQsu5iGvxdLW9Gc8L2V+BKzUpj
+         JIj5IxsQICulCoYqBW4VEfjb8vKwOM6K54sDwop/5t7sj+Jrr/0zPlxVCB6O0V8TUppS
+         Io0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCW2hGexSW5fW8PBPX9j0hjO6815b5bDXWEThK0wpqHrbRROQKWkDR4SmOZRK4ZPdtfOReI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwcSH2W59EeXy1ToS7v1T05JGuFpxdBSjdTsFB5mBllrpie2Zjv
+	vavDljqKWy31YdjNJmPchBkaRA7fifc8wlrgDe0Kzc1RzZ9RP6SK9xtgleyV9C7CVP3QAsAK2nG
+	ClzPcYG8Xp7p0VMChZLeQRIxQOdYOXdo=
+X-Gm-Gg: ASbGncslQcJ1xxxnxYWATP+8dRC3SLqhMkmVX6wvAMFJ5eavbczQ6BPUrrJtb8cKmOK
+	jy2uNilv4TY3znLnrOMNIOjy2u403Z6uhrvJEBDzsBVXXjHGb+fqIm80B733PtGJVyXsXF5FAHJ
+	pVcI5+Vy22VW+Zgpe9Imzs3unr2if/Xy3wRnjRX0BFceUnvzRimF9aDtKnKsUMnDpyK9vGb+35m
+	5MZr/wmqnGWZSEbK8FMUIRr6dEeybsaFH8LS56YIPnkRtCnVuFmztoogf4Wx37d2bcRJNKIv7yV
+	vOdBnhLTULSsm4rtpLGAwzHDqhLNPw==
+X-Google-Smtp-Source: AGHT+IEPZT22gD5+QaYPvQHfWuvT+iW47OhVEPNSvvBR7IG/d2Meun4jzjmwnv4JyQbJn0qhpZiFpbIetkdVcsrC7Hs=
+X-Received: by 2002:a17:906:f59b:b0:b71:51b:bd4c with SMTP id
+ a640c23a62f3a-b726554bb96mr8921766b.50.1762280581640; Tue, 04 Nov 2025
+ 10:23:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250501214057.371711-1-gitster@pobox.com> <cover.1759094936.git.ben.knoble+github@gmail.com>
- <5f7057c236c9af3152bd531eed2e4ad0ac35e291.1759094936.git.ben.knoble+github@gmail.com>
- <e8755a04-bd44-4ead-ba44-c603bffcc75e@gmail.com> <CALnO6CC=FFuMmBfJPzunUqDOBMBtmXm3i73y9M9LgRrhxzrs9g@mail.gmail.com>
- <CAPig+cQLri3m9398R0JEf2fafKVkZBvOdxvpg=xPF2aZ6ayDvQ@mail.gmail.com>
-In-Reply-To: <CAPig+cQLri3m9398R0JEf2fafKVkZBvOdxvpg=xPF2aZ6ayDvQ@mail.gmail.com>
+References: <cover.1762100242.git.ben.knoble+github@gmail.com>
+ <10d531daf2c90d1bb53c07f1d72b087ebc1dd9c8.1762100242.git.ben.knoble+github@gmail.com>
+ <xmqq5xbrwv4t.fsf@gitster.g> <962654fc-02ea-47a9-a2ae-913101281240@gmail.com>
+In-Reply-To: <962654fc-02ea-47a9-a2ae-913101281240@gmail.com>
 From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Tue, 4 Nov 2025 13:22:26 -0500
-X-Gm-Features: AWmQ_blQF7G4UAFHdMGBRWy2oEST_JcI76LFSmNgDe1Rq8U28ZiVdqKnZIFBjW4
-Message-ID: <CALnO6CCDuUNiRTKbuRtJ6nY6OsxqGKvqzzZgYDOqTPZjEJ4MjA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] parseopt: values of pathname type can be prefixed
- with :(optional)
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Noah Pendleton <noah.pendleton@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Thranur Andul <thranur@gmail.com>, 
-	Michael Grosser <grosser.michael@gmail.com>, Taylor Blau <me@ttaylorr.com>
+Date: Tue, 4 Nov 2025 13:22:49 -0500
+X-Gm-Features: AWmQ_bnDHkGtM2ZM9X27k_6aJruJZISuS8jl6KSTgYFJmsZIE7-Oe-Dw2VN3NOg
+Message-ID: <CALnO6CCLUfQyMb2DU5OXowvO6SLhdso4mOr4ukQe_A_kAL1t0Q@mail.gmail.com>
+Subject: Re: [PATCH 3/5] parseopt: use boolean type for a simple flag
+To: phillip.wood@dunelm.org.uk
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
+	Patrick Steinhardt <ps@pks.im>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Nov 2, 2025 at 7:10=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.c=
-om> wrote:
+On Tue, Nov 4, 2025 at 11:21=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
 >
-> On Sun, Nov 2, 2025 at 11:20=E2=80=AFAM D. Ben Knoble
-> <ben.knoble+github@gmail.com> wrote:
-> > On Tue, Sep 30, 2025 at 11:26=E2=80=AFAM Phillip Wood <phillip.wood123@=
-gmail.com> wrote:
-> > > On 28/09/2025 22:29, D. Ben Knoble wrote:
-> > > > +             is_optional =3D skip_prefix(value, ":(optional)", &va=
-lue);
-> > > > +             if (!value)
-> > > > +                     is_optional =3D 0;
-> > >
-> > > I'm struggling to see how value can be NULL here as we return early i=
-f
-> > > it NULL before calling skip_prefix()
+> On 03/11/2025 05:19, Junio C Hamano wrote:
+> > "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
 > >
-> > Doesn't the "skip_prefix" above write into value? So I think if
-> > "value" is exactly the string ":(optional)", then after the call to
-> > skip_prefix it points at the null terminator.
+> >>              is_optional =3D skip_prefix(value, ":(optional)", &value)=
+;
+> >>              if (!value)
+> >> -                    is_optional =3D 0;
+> >> +                    is_optional =3D false;
+> >
+> > Whether it is spelled 0 or false, I do not think this makes any
+> > sense.  skip_prefix() either touches &value to point at the
+> > substring in value that comes after ":(optional)", or it does not
+> > touch it at all, so there is no way value can be NULL here (and we
+> > know value is not NULL before we call skip_prefix()).
+> >
+> > Shouldn't you be removing the entire "if value is NULL, it is not
+> > optional" thing instead?  That is exactly what Phillip pointed out
+> > in his review.
 >
-> I haven't particularly been following this topic, but your response
-> suggests that you're reading the code as if it says:
+> Looking at this again I wonder if the intention was to error out if
+> there wasn't a filename after the ":(optional)" prefix which I think
+> would be a reasonable thing to do but that's not what this code actually
+> does.
 >
->     if (!*value)
->         is_optional =3D 0;
+> Thanks
 >
-> whereas, Philip is reading the code as written, which lacks the `*` deref=
-erence.
+> Phillip
 
-Indeed, thanks
+Agreed both, will reroll
