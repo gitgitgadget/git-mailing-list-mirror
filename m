@@ -1,150 +1,103 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FCBF256C61
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 15:17:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8162566D3
+	for <git@vger.kernel.org>; Tue,  4 Nov 2025 15:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762269481; cv=none; b=RIFmvZOrHC/7r7PbIKyReAsz39S/uwk0yzVj5SBP+n94oZxcGLAeMrSvdqj5OyS44ACf/R1m0mVLcZxJb5ZGBQsYD44a/yo23iyHSD8GY9yE8g5bsnWtyL2cqL4vE1rXqddhO0rgYQbM4IYlnutD5bQ+etBCQyyAYT+IVteVuBQ=
+	t=1762269991; cv=none; b=FW1f1GjbwaO0LsmqIdRf6fYQF2sme5t37UXyYGXMTcalCER1mgvBSEvIxMQycNLCpEF8fdteTdeaZvi+RHiosubSPW02L1LhTeqZStz3Myrmn8YHqAnXTsKTSAUzTkMgHv+s09ZYczRZ1y2GWVfiwOiNqvn5WTr+mJka3iFu0Co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762269481; c=relaxed/simple;
-	bh=cg5ZU0NAML+qrTESc0fQ2ujP6hM0fnt/msy/9sxOZFQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gOIPYS9D0o3G3w5zvufYMhi8Vwqf9NMZQsAwghRHG/3DN5iBE2tj+yIQqnSOBPaiU3SPba//znNx6S+vie/a4rOG+dAoPob1Y67PT+xuBdH8iJansXWgGFx+OlGoJqK27i46SW9YBdfzJMvo/s/qFauOeIBtaJvxuBzogurRj1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UdvPdmDH; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762269991; c=relaxed/simple;
+	bh=etdjiYVXjkCF73stfglQBgdthbav11RApoXSkUwjFlE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QJFi4C3IrJu07MKRTIFR0+OvPKCa5b3jdTp/I5zHue13l4HWGiNVPqSltNOXqXtEPRhShlMo6evfhRs1qOvfvNeCMryq9cfZ3xZNruiK/O7BGNYNJ7Ln25mtnyO8CdxKW+uE02yv4gGSxirX4Bwwm6dx00lz3wzchi7b3NPELOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TzUkG4we; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jHRF60R9; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UdvPdmDH"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-78665bc1aecso27262067b3.2
-        for <git@vger.kernel.org>; Tue, 04 Nov 2025 07:17:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762269478; x=1762874278; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K1+6qLqZUhx72siObnHrP2xCv5ujVYYCTdJ/mcRRCco=;
-        b=UdvPdmDHfaiZokTynxZpHn7hajxzpM6Cb0utzxMh4hHd1cH3VY5VgpfFf+wA/HyH1+
-         20+LEuDUTDjZeYcTNqrju629DGjoiJcjjSirEfoTiGf0h96AVCCr6hpuz2K6838X/NGZ
-         m5e9coHd5RSeywLTkMHgF2Rty1FtGC3jjM37TbKj1/WNjjUR5YOruZC9nr9t7fQU6c0A
-         yzbGE8bG/fTGIry2dUN1eyRQrHXIku6r8wYreWa3qHjGeFlHBC7XVzJ+5np4IRpd3eT4
-         E1MsE2fjGtij68v2H6AOBaybYy9kAQWJNnN3Yv8+4vKDas1xVkh28K9ig1hq6g3LkMny
-         VUrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762269478; x=1762874278;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=K1+6qLqZUhx72siObnHrP2xCv5ujVYYCTdJ/mcRRCco=;
-        b=bNqKDKRQZTrOYFE6CIyWb/WG+IHXNufyV9Ap3EO3mkEltCFsT9yaBa6xSmJVh7n0up
-         14zdIXHFlQz78KdvoCnIirB+kxTUNJjTKPqHGkfP5bpGQV456R1Hk6t2kXNvLPWQFr6y
-         bCz7Q7mqPN4GMPRMaavh+EoVlD2AvZa+/nkw/WY/gkYH+/gxspUMK7jo7KvscB4N75eD
-         OsRasd48ccXfniKUR2ysWXZjztaCilmtYxkMAW8GmIxWfp7x1GLIlRBzW6QBuxfZrqC0
-         8chFlEZWAVScm2ut7VvCDjMnQ7r3jZ32hZDS8EnvZ9CNGj1EgtVE+RaabqHHOOvc1TUF
-         p+VQ==
-X-Gm-Message-State: AOJu0Yw13MToMBYEkIlDhpWax5TViPxuo02QvvO0TNfedFXpi+CquhGq
-	reREK/OMGxo8PExc5kNiQ1LhZ4Si2OXLkviBO534vcSZ9LPjvNcMRPOY+9cgD9bLN0MD3V9m5LK
-	N6yOFDT9Tjfd+Qxg/plOPjsWnRaxFj5s=
-X-Gm-Gg: ASbGncuzp9s1ec6UFtLCnfJPCh4cBYIpxnj12sqM8g2BYe9YGP+nRPS2IEWI8MDpeWx
-	T6GBATKJ+9k8VTIwVnxio/wa8gYY/AgtKytEy5AyLAm2zmSEjDeGeoXFYS+WWct+ayx4X5lMRbY
-	abx7l7PBH47in2+rKuY3f1H4yPxG+tlSRDsoGaRsKYFOcjKSBFMlZwTENM18rwfjQkW68vjrV15
-	o+RUM5AGE0b2xGQ5xdz/ZHALqqjqalDxw7ew89JaOBCmPkQZdWYnnw2RS1E5CQp7A==
-X-Google-Smtp-Source: AGHT+IHGN2mZV18fyukRzY+6paDOmoLrCUUKmrOL0GonE+XcERpD+dVIP+LubhLMtQLPmwLbnDJR5nDwrGA39nod/Qg=
-X-Received: by 2002:a05:690c:10:b0:783:cfa0:3b69 with SMTP id
- 00721157ae682-786483d470cmr149637227b3.4.1762269478560; Tue, 04 Nov 2025
- 07:17:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TzUkG4we";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jHRF60R9"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id E0566EC04FC;
+	Tue,  4 Nov 2025 10:26:27 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 04 Nov 2025 10:26:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1762269987; x=1762356387; bh=5097pTva2p
+	BuaCArdWRQ+pZj5Fx3JyjQyMSRpu9hE/I=; b=TzUkG4weAJ86ApKyssDQcqVVPR
+	DbQIyfSKnYlyh/v5ohfd93OjeiI+JaNiyK6cgqHS95PK2YvD1ZKqYn8D8LWH9o2k
+	ImbIniNYhERkbCRJRIoKEokypfvx5EJEE5nfbWJQM5hlAHlAIfxaNhr1oRCer3io
+	ksEEfP2j/oGYdSdNf4qSwjIE0TSfSoaMabHVqo1G0AqOniO4fD2C2BPfc4RC5HvC
+	Ulx9klOG+f1lumxgL7+cRLcEiXERjB0pDxvHSrc/20pV0h3PnrxlhkE2taXRyd4T
+	XvaInJI/vEP4fUbFjwxBwhUM69lJj7n120yyGa0U4O9QZoMokbnBy8sQPMTQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762269987; x=1762356387; bh=5097pTva2pBuaCArdWRQ+pZj5Fx3JyjQyMS
+	Rpu9hE/I=; b=jHRF60R9Pvz10xOgYsUNJ1FoPEp6ruoHbmj8whVhrFRUICpPD3p
+	GZWMFsMX9eHKd/haaceTEMpvYBsxMZUClYfvSYQFTVHmFhTb05MVTER6eeAOfZKo
+	8beHz/d4Nd5kLUT9EXlNRhL8Lqn6eR04/Y40HWdxWi1SZcwAR5wLXJGjeHAP4U6n
+	JgT3FsU1j9L3L9MlzcrHTtlteY8WFbeDKYHLSkjdKeYsYrtLr6n1B1zYZg1G+o9g
+	2kFvBWwhwCw18zzN3S5Jspej+aPtHM+Yagsj6LwNdGjXIPU388kSwB7jgMU+ZpN3
+	gjWLqj6QMOulCISK7/u7lg21dJQ1ecqAlKA==
+X-ME-Sender: <xms:IxsKadgeI8RabsXYzkTw-RcGK1PGFqTOssKM2lnEqrmb0DuFf64sBg>
+    <xme:IxsKaZDy-DIu4_RZqX_6Lcmdn_KM8wMwApT_MtzO7aHpmdVQdpCdUPCCUY93sQW0p
+    kn9Sfj2p-SrHFVQGqbhJLdhgWzXBEwKK5OwtfdFkEEW7afxpgoz8Q>
+X-ME-Received: <xmr:IxsKaSG1lkjF2NzeKKqfwyyKNMDEnwQzmgDUEXMbFDDY5sB0rlQmcnfv9vj5BWZ9GVnH4tnGzo0V2sUcMKA5rak7MO5ecb5u1bSt>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukedufeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgv
+    thdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:IxsKaRLTcsCRlFzajdfzc22_KHXK6Cpe_1A98aJswnY1g6ueByY-tw>
+    <xmx:IxsKaWlAX_hLwM-dIVNF5RCo2v6rZbns39Lo9tTJIfls7ZWG5iSGHw>
+    <xmx:IxsKaZQQzxECuv9t3UY4cq4ZMnc6fYhfzNYZQY3PZZxgOktNOR5Kcg>
+    <xmx:IxsKaYIaasY9DztrDjWBaaQLaolOyBmBzVAGVqu41kgcajZQ-Cbtyw>
+    <xmx:IxsKaRDvio_GHz5-Fd7kthXgkw5893eZzFz-AZFjsXGA6H6E9Q5hU0Tt>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Nov 2025 10:26:27 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH] ref-filter: fix stale parsed objects
+In-Reply-To: <20251104-b4-pks-ref-filter-fixup-v1-1-2fbca52d76d9@pks.im>
+	(Patrick Steinhardt's message of "Tue, 04 Nov 2025 15:36:13 +0100")
+References: <20251104-b4-pks-ref-filter-fixup-v1-1-2fbca52d76d9@pks.im>
+Date: Tue, 04 Nov 2025 07:26:25 -0800
+Message-ID: <xmqqikfprf8e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251104100653.2152-1-qjessa662@gmail.com> <xmqqqzudrhkv.fsf@gitster.g>
-In-Reply-To: <xmqqqzudrhkv.fsf@gitster.g>
-From: Queen Ediri Jessa <qjessa662@gmail.com>
-Date: Tue, 4 Nov 2025 16:17:47 +0100
-X-Gm-Features: AWmQ_bnjf8O-zoXe8_07nJX9_MrdW5v0748nrXYa904ZcwBaXno1px9DFfSLxB4
-Message-ID: <CA+JX8FoXiDF7RtNM7Rx4idEZsQn=tsB2jUsWeCVk8o_OUR5bZA@mail.gmail.com>
-Subject: Re: [PATCH v2] doc: clarify server behavior for invalid 'want' lines
- in HTTP protocol
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, 
-	usman.akinyemi@outlook.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Thanks for the feedback, Junio.
-I=E2=80=99ll fix the duplicate =E2=80=9CFrom=E2=80=9D line and move the =E2=
-=80=9CChanges since=E2=80=9D
-section below the --- line as suggested.
-I=E2=80=99ll resend this as v3 after testing locally.
+Patrick Steinhardt <ps@pks.im> writes:
 
-On Tue, Nov 4, 2025 at 3:35=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
+> This is only an issue for a subset of retrieved values, as not all of
+> the infrastructure ends up calling `get_or_parse_object()`. So the
+> effect is limited, which is probably why the issue wasn't detected
+> earlier.
 >
-> Queen Ediri Jessa <qjessa662@gmail.com> writes:
->
-> > From: QueenJcloud <qjessa662@gmail.com>
-> >
-> >
-> > From: Queen Ediri Jessa <qjessa662@gmail.com>
-> >
-> >
-> > Update the documentation to clearly describe how the server responds wh=
-en a
-> > client sends an invalid or malformed `want` line during the HTTP protoc=
-ol
-> > exchange. This improves understanding of Git=E2=80=99s behavior when ha=
-ndling
-> > incorrect object requests and helps developers detect and handle such
-> > protocol issues accurately.
-> >
-> > Signed-off-by: Queen Ediri Jessa <qjessa662@gmail.com>
-> >
-> > Changes since v1:
-> > - Rephrased the explanation to be more concise and aligned with reviewe=
-r
-> >   feedback.
-> > - Clarified that the server includes the offending object name in its e=
-rror
-> >   message.
-> > - Adjusted tone to describe the expected behavior rather than prescribi=
-ng
-> >   implementation-specific messages.
-> > - Improved readability and technical consistency of the section.
-> > ---
-> >  Documentation/gitprotocol-http.adoc | 5 ++++-
-> >  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> I'll locally fix up before queuing this time, but
->
->  * You now have one in-body header to force "From: QueenJcloud",
->    after which the blank line declares everything below is the body
->    and no in-body header remains, and then you have another line
->    "From: Queen Ediri Jessa" that is not an in-body header.  Perhaps
->    you should send your e-mail only to yourself without sending to
->    the list as practice to prevent them from appearing again?  You
->    only want the second one, IIUC.
->
->  * Describing "Changes since..." is a very good idea, but that
->    should be done _after_ the three-dash line, not beffore.
->
-> Thanks.
->
-> > diff --git a/Documentation/gitprotocol-http.adoc b/Documentation/gitpro=
-tocol-http.adoc
-> > index d024010414..f3f48d3f35 100644
-> > --- a/Documentation/gitprotocol-http.adoc
-> > +++ b/Documentation/gitprotocol-http.adoc
-> > @@ -443,7 +443,10 @@ If no "want" objects are received, send an error:
-> >  TODO: Define error if no "want" lines are requested.
-> >
-> >  If any "want" object is not reachable, send an error:
-> > -TODO: Define error if an invalid "want" is requested.
-> > +When a Git server receives an invalid or malformed `want` line, it
-> > +responds with an error message that includes the offending object name=
-.
-> > +This clarifies the expected behavior for Git implementations and helps
-> > +clients detect protocol issues accurately during fetch operations.
-> >
-> >  Create an empty list, `s_common`.
+> Fix the issue by resetting `maybe_object` in `get_object()`.
+
+Yup, I got lucky as  --sort=version:tag is one of the things I use
+at least once a week.
+
+Will queue on top of that topic and immediately merge down to
+'next'.
+
+Thanks.
