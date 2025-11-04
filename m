@@ -1,155 +1,265 @@
-Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD55A230BD5
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 13:46:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E7E176ADE
+	for <git@vger.kernel.org>; Tue,  4 Nov 2025 14:01:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762264001; cv=none; b=EoQU+uXHWx2oHMMI4XgE9v+lu4eKsZyg/Z6xlqODJVv8eLU+rfsu8y0PVflPVaB7pxt6GAOzbtwuU59aB8o6XLyqWDFyQaZrtPqIC9REyicz6uieOCFQpUPYWgysLIrEJzJwH4BkM1e9w/slmVaxRIrCxJqQxjte4zEpVCnaSF4=
+	t=1762264885; cv=none; b=betlh0e1qw9orLfl3ae4CiCzEzB4hmIpri7oF6Z3JcgFQovAY/q7w/dYqY1lFQt/+f2eVWKSGVBIiuQsjesn0QQ4DQX8dxT+Tj3E1ZOH0qAfpSfELH9eleCKoN1OUdTX0W8+HBd/Cm8eS3xnFW2PfdjLxllLEUrzGguFnRVbzIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762264001; c=relaxed/simple;
-	bh=491pS95JfOQ7bzhnlaFK19r9ITxlpsFqgufYc5NS718=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=FT7r9lv3b4uOLNbtAQeSOVc0UgbL7JQEHMLdwsCLycy6YRxm7KM52m+3QUsAtXR4DBppSHLf5q6DTXGkOxNfrSWfcCpoFOvwD74HQSvxU15YEasHNJK+RUxdD9IdhYu0AmWNHmyt+3NIZaobEKRqa3v4r/a8857ODFEs3zU72Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bwhR6vjH; arc=none smtp.client-ip=74.125.224.48
+	s=arc-20240116; t=1762264885; c=relaxed/simple;
+	bh=qQtk3v7ZJI+BXexkri1Jtn0q3dpaZilOzWmLo8pbOSE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LHcwfpa6umUO07CW4pGBdJHGf7T2Y9jEv1K/OkVGUU7X08ZhhEKc0/S9ALMsNxB6+aGx+/q0fKnP1RJpha3N06tg6ePKxofb8Y1SAWXEHqPMPposF/h0DS1RnzEiv2i/A65L2meRNolqnHUADth8xhn9LggQ82Ooz1EKNsWqq+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QPi/PiQN; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bwhR6vjH"
-Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-63f74b43db8so5693245d50.3
-        for <git@vger.kernel.org>; Tue, 04 Nov 2025 05:46:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QPi/PiQN"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-7866aca9e25so23735427b3.3
+        for <git@vger.kernel.org>; Tue, 04 Nov 2025 06:01:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762263999; x=1762868799; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=491pS95JfOQ7bzhnlaFK19r9ITxlpsFqgufYc5NS718=;
-        b=bwhR6vjH/fyLhikH5wIlWNeMvB4+8kShDqaFooWSqXwbbZAqmw0Ow9S+MLk17esWwp
-         cPDRDByhCfZqOfM+bVUI4ldKkG/8BnZVRe4TgZHJakA2yi8I1tUXDF7Bn9x5uAjpSfwJ
-         72/SFHu0dSDo3N9Suybl9CdH5ovKiV8e11BTKNq+LmOKa0nXGrDtHeD5CuKNWg+HZZd5
-         +v4RB6klknR2aaNaawZ+uKopT6lByOwOz25yHszHGJB7hl7WZMw3QZV6kC2Wtq8CYiB3
-         ssHGd5jmFbnOEJDIuC27NMw6TK5X8HiD0K8zXs/2ruSrMDnOlpbaKqfaCPRE6TALjd1z
-         2O2A==
+        d=gmail.com; s=20230601; t=1762264882; x=1762869682; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=y8bKtlFsuya4DvJ75JEnOvA29OBgMRPuWkKdiy+cBLs=;
+        b=QPi/PiQNTpjNphiGiw5IBTqPvqql576GUq+hzhd8yIfbbZvHom6vvcwBgtD8j1FsDk
+         M0DPYriLmg1OuTdBh7VsTi+rLt90gGMRIiTAqFp3NbtSEu6pWdi2uPG9NyUKySiOKZqv
+         cg86rclT4eyO+xXd7vlnlgt1g11Ckj6nEtotQzYHuTcDeMHIOMcZkd1KD+b0U8/BhyKa
+         FZX2ss8DOY3t4zdkakzm8T9+MWIPXuxORJRZqPWVN6OMHsBDvAJS0kQUt03a0iD0Lcju
+         UsPQl5UkK68TBcxZmKOZNKBirmtxLjcL6f94CQOEuqv8cUiwmoGuWolGIkdgKctB4FJx
+         GogQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762263999; x=1762868799;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=491pS95JfOQ7bzhnlaFK19r9ITxlpsFqgufYc5NS718=;
-        b=qRpjDdAah67DLlOC2g3dJ+D7tfSn57zjDkrgAWC+9fuHGp6cP31osIwnszsApvzrxy
-         mC0ZqMiSTUeW1SisBgHBUA3YMxejKbZOmc89rw+jMyCBhjvgvJGs71xmVzC4aDXuQ2W0
-         7BSLaiq4QF70RsAhPJEwZ/wNkPs6Jj3A6nSZTOEf++BIjMV7PQwz+BzHPxJ87NX7y19V
-         61KsiUGALHLOdkMLrMwcCpvHe+PhBnZXPNcr4Et9ZSmKnOzg94uk/qt0DXum5sHVRg4P
-         Lt7z7TSBYQxGC6rV6a5qcb6OLs+00n3iYeh49NM4RRyzP/+daNFyWnbmbyodvBXT7jUu
-         mhEQ==
-X-Gm-Message-State: AOJu0YyDtcASDTNwEBZKhyUQ4+6RZTrJw9tcaMHrdSWckKs8zw3pmzSp
-	VYfi6sgvc5+ve/ibiY8/MxsMNVSPxzl7/2f8NfMijAldjDVzWSOo4iHxUqXy0DZsr8nZJblqLJZ
-	J1uQiYZF2u9LmcQeQCs4KqC3CtEoNchheXRuzhbA=
-X-Gm-Gg: ASbGncvqk2Sh70goNKREXlmKb59XvYAcQ3onS6d6wHI/mykf+MoP6MIueuAgHxZDKr1
-	iiZ8lHmFzJ7gA+rmmB3pedA8iqbjM2hbqbuTyjoN1pxvRgWT2pgQkU1aFO+GHII/91p2lIBfHvv
-	oWlku9BRTlSvMw0Qw+jaMgXcdqc7xkm58go8N/CylcDItfir00opnwpiAyk6M3PpBDAX9+fzRWA
-	o0TU647rDi1yjS62qozwkC/Rhz6AmDl52DDQ6lbHrk30BnTGadZa8vOBNTHUj/6Fg==
-X-Google-Smtp-Source: AGHT+IFWve6jk4mafMJsnFw67enw/vIk6U52S+jX5MLVN6MEKnvAQtlVXKfLj/5iCV50YgNwYWYrI9B0yju5XfS2IJM=
-X-Received: by 2002:a53:ac8b:0:b0:63f:ad02:8d8 with SMTP id
- 956f58d0204a3-63fad0209e1mr7125515d50.31.1762263998639; Tue, 04 Nov 2025
- 05:46:38 -0800 (PST)
+        d=1e100.net; s=20230601; t=1762264882; x=1762869682;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=y8bKtlFsuya4DvJ75JEnOvA29OBgMRPuWkKdiy+cBLs=;
+        b=Uun86UKpSi3QbGNVm8C31pX56QaZIc1nqiQvFHsF0nmk7Jg8a6vmNIdVflwh/P1vlt
+         BVShyRBzxzRwc/plM+hrnY6jXIj/qfmulZ7sBVczEa0OiqkXMPYjloRJlqe955GB1N62
+         UU9HqbbKTRIlwhmVBU8WiNBq8nSmc+tHxjfavIBzO96cE09K0OUx58iS05Ac1NtHdQ84
+         PKD8s0JeN/tQN8bgPqUfKV6rzu3yGqDeGDVOOfotJHRBv0Jl6tQveuGnqSMZljkdBADA
+         sAIXKic7tyQ7Hb9Vv+2YUV3tE/4DkPD0E+Ds+xb9rkO3VnaBLyyAR5Ub2HPImcTQntag
+         mOSA==
+X-Gm-Message-State: AOJu0YynoB0eEaudXyN4CVYeBAqg6XV33T3kX9mbZ5RyGoy39yYBUs0d
+	nW6Sk53dkiaF31qBKfrZsjBMqzXAV97mBVB1h7bbteCdsYlZZjnDWbHFCso06E50
+X-Gm-Gg: ASbGnctPBqgjjOQDFrR6XDmP5NO8IGyUvPgDLU+neQWnErvvEYR9gYqIiKRjB5JHAez
+	s89+yxITkBtL+HQrATCvCfwN1W/RErf8uoLH1iyrIOwuQy1kL7jalA2KCy4cr4ToK8OICwXATPP
+	5d6vua4gkLM03EKANNgpTu8vRZO1ysx+WjCsYMHAOsKxmnyxA6ZwPU0Pcq6US/dICRa1Md5NUoB
+	FdyQuMPDiWJot31SrfqcqSKluTosTH+4wH1bK1Lz2624WDbrZ7GiDDYgjR8pwwHX+9DI0CS2Psx
+	xyAt/ma/0NFbZJltel9kuoIofHF0cbijhLdpzcnYkzAm9Qw3V8oilaRaZdvpIObwyP+GYU74fZw
+	f/FiR+YKPvlKizuwFUV3YzIu66CqzobD2OCoacYdx/DReET+EEL7NFk53HmAXXGBoF4vktoAPVr
+	rNKmfjWLutKyKnsXYZXTk3m0thNw763oLXr0pU
+X-Google-Smtp-Source: AGHT+IHcDyCFkFt4DKaC9EDEY570OqG7xxhvmCiYe13gKr5RHWjzBHK7A3dZkKM8yPQNT3vRB3cIuQ==
+X-Received: by 2002:a05:690c:6ac3:b0:784:1f81:8c39 with SMTP id 00721157ae682-7864855928bmr154318367b3.59.1762264881825;
+        Tue, 04 Nov 2025 06:01:21 -0800 (PST)
+Received: from macaroon.lan ([2605:a601:90a8:8b00:c994:debe:d31f:7aa])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-78691d8eecfsm10219337b3.12.2025.11.04.06.01.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Nov 2025 06:01:20 -0800 (PST)
+Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Todd Zullinger <tmz@pobox.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] meson: make GIT_HTML_PATH configurable
+Date: Tue,  4 Nov 2025 08:58:29 -0500
+Message-ID: <385992f6020703558f0ba75a1be6c4f9dae08b83.1762264709.git.ben.knoble+github@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Queen Ediri Jessa <qjessa662@gmail.com>
-Date: Tue, 4 Nov 2025 14:46:26 +0100
-X-Gm-Features: AWmQ_bl_IrbrMbzLRYky1meFEgKCzIX-JjUYUEYIXVVxqvRp9mzONz5W0vGsXjw
-Message-ID: <CA+JX8FoKKB8LrCbPgXgiqSLvtpk=HBsxCcZAW2M_Y1-Of48Y+Q@mail.gmail.com>
-Subject: Outreachy Proposal: Refactor Git to reduce global state
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com, usmanakinyemi202@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hello mentors,
+Makefile-based builds can configure Git's internal HTML_PATH by defining
+htmldir, which is useful for packagers that put documentation in
+different locations. Gentoo, for example, uses version-suffixed
+directories like ${prefix}/share/doc/git-2.51 and puts the HTML
+documentation in an 'html' subdirectory of the same.
 
-I=E2=80=99m submitting my Outreachy internship proposal for the project
-=E2=80=9CRefactor Git to reduce global state.=E2=80=9D This proposal outlin=
-es my plan
-for the 12-week internship, including my understanding of the project
-goals, proposed approach, and weekly milestones. I=E2=80=99d appreciate you=
-r
-feedback and approval so I can begin preparations accordingly.
+Propagate the same configuration knob to Meson-based builds so that
+"git --html-path" on such systems can be configured to output the
+correct directory.
 
+Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+---
 
-Project Title:
-Refactor Git to Reduce Global State
+I've tested this with a modified live Gentoo ebuild [1] and had good results.
 
-Overview
-The goal of this project is to identify and refactor areas of Git=E2=80=99s
-codebase that rely heavily on global variables, converting them to
-localized or function-specific scopes where possible. Reducing Git=E2=80=99=
-s
-global state improves code modularity, enhances testability, and
-reduces side effects across different modules.
+[1]: https://github.com/benknoble/gentoo-repo/commit/f2e6bbc8ec5e061a7f8151e56fa91a9d31b5b30b
 
+ Documentation/howto/meson.build     |  4 ++--
+ Documentation/meson.build           | 12 ++++++------
+ Documentation/technical/meson.build |  4 ++--
+ contrib/contacts/meson.build        |  2 +-
+ contrib/subtree/meson.build         |  2 +-
+ meson.build                         |  7 ++++++-
+ meson_options.txt                   |  2 ++
+ 7 files changed, 20 insertions(+), 13 deletions(-)
 
-Objectives
-- Study the current usage of global variables within Git=E2=80=99s codebase=
-.
-- Identify opportunities to move global variables to local or function scop=
-es.
-- Implement refactoring strategies in small, reviewable patches.
-- Submit, discuss, and iterate on patches through the Git mailing list.
-- Improve maintainability and test coverage of affected modules.
+diff --git a/Documentation/howto/meson.build b/Documentation/howto/meson.build
+index ece20244af..16b9056f24 100644
+--- a/Documentation/howto/meson.build
++++ b/Documentation/howto/meson.build
+@@ -35,7 +35,7 @@ doc_targets += custom_target(
+   output: 'howto-index.html',
+   depends: documentation_deps,
+   install: true,
+-  install_dir: get_option('datadir') / 'doc/git-doc',
++  install_dir: htmldir,
+ )
+ 
+ foreach howto : howto_sources
+@@ -57,6 +57,6 @@ foreach howto : howto_sources
+     output: fs.stem(howto_stripped.full_path()) + '.html',
+     depends: documentation_deps,
+     install: true,
+-    install_dir: get_option('datadir') / 'doc/git-doc/howto',
++    install_dir: htmldir / 'howto',
+   )
+ endforeach
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index 9d24f2da54..c00c9fe7f4 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -412,7 +412,7 @@ foreach manpage, category : manpages
+       input: manpage,
+       output: fs.stem(manpage) + '.html',
+       install: true,
+-      install_dir: get_option('datadir') / 'doc/git-doc',
++      install_dir: htmldir,
+     )
+   endif
+ endforeach
+@@ -423,7 +423,7 @@ if get_option('docs').contains('html')
+     output: 'docinfo.html',
+     copy: true,
+     install: true,
+-    install_dir: get_option('datadir') / 'doc/git-doc',
++    install_dir: htmldir,
+   )
+ 
+   configure_file(
+@@ -431,11 +431,11 @@ if get_option('docs').contains('html')
+     output: 'docbook-xsl.css',
+     copy: true,
+     install: true,
+-    install_dir: get_option('datadir') / 'doc/git-doc',
++    install_dir: htmldir,
+   )
+ 
+   install_symlink('index.html',
+-    install_dir: get_option('datadir') / 'doc/git-doc',
++    install_dir: htmldir,
+     pointing_to: 'git.html',
+   )
+ 
+@@ -466,7 +466,7 @@ if get_option('docs').contains('html')
+     input: 'docbook.xsl',
+     output: 'user-manual.html',
+     install: true,
+-    install_dir: get_option('datadir') / 'doc/git-doc',
++    install_dir: htmldir,
+   )
+ 
+   articles = [
+@@ -492,7 +492,7 @@ if get_option('docs').contains('html')
+       output: fs.stem(article) + '.html',
+       depends: documentation_deps,
+       install: true,
+-      install_dir: get_option('datadir') / 'doc/git-doc',
++      install_dir: htmldir,
+     )
+   endforeach
+ 
+diff --git a/Documentation/technical/meson.build b/Documentation/technical/meson.build
+index be698ef22a..faff3964a9 100644
+--- a/Documentation/technical/meson.build
++++ b/Documentation/technical/meson.build
+@@ -53,7 +53,7 @@ doc_targets += custom_target(
+   output: 'api-index.html',
+   depends: documentation_deps,
+   install: true,
+-  install_dir: get_option('datadir') / 'doc/git-doc/technical',
++  install_dir: htmldir / 'technical',
+ )
+ 
+ foreach article : api_docs + articles
+@@ -63,6 +63,6 @@ foreach article : api_docs + articles
+     output: fs.stem(article) + '.html',
+     depends: documentation_deps,
+     install: true,
+-    install_dir: get_option('datadir') / 'doc/git-doc/technical',
++    install_dir: htmldir / 'technical',
+   )
+ endforeach
+diff --git a/contrib/contacts/meson.build b/contrib/contacts/meson.build
+index c8fdb35ed9..4ae6b32a03 100644
+--- a/contrib/contacts/meson.build
++++ b/contrib/contacts/meson.build
+@@ -50,6 +50,6 @@ if get_option('docs').contains('html')
+     input: 'git-contacts.adoc',
+     output: 'git-contacts.html',
+     install: true,
+-    install_dir: get_option('datadir') / 'doc/git-doc',
++    install_dir: htmldir,
+   )
+ endif
+diff --git a/contrib/subtree/meson.build b/contrib/subtree/meson.build
+index 46cdbcc30c..161435abeb 100644
+--- a/contrib/subtree/meson.build
++++ b/contrib/subtree/meson.build
+@@ -68,6 +68,6 @@ if get_option('docs').contains('html')
+     input: 'git-subtree.adoc',
+     output: 'git-subtree.html',
+     install: true,
+-    install_dir: get_option('datadir') / 'doc/git-doc',
++    install_dir: htmldir,
+   )
+ endif
+diff --git a/meson.build b/meson.build
+index 2b763f7c53..1f95a06edb 100644
+--- a/meson.build
++++ b/meson.build
+@@ -768,13 +768,18 @@ if test_output_directory == ''
+   test_output_directory = meson.project_build_root() / 'test-output'
+ endif
+ 
++htmldir = get_option('htmldir')
++if htmldir == ''
++  htmldir = get_option('datadir') / 'doc/git-doc'
++endif
++
+ # These variables are used for building libgit.a.
+ libgit_c_args = [
+   '-DBINDIR="' + get_option('bindir') + '"',
+   '-DDEFAULT_GIT_TEMPLATE_DIR="' + get_option('datadir') / 'git-core/templates' + '"',
+   '-DFALLBACK_RUNTIME_PREFIX="' + get_option('prefix') + '"',
+   '-DGIT_HOST_CPU="' + host_machine.cpu_family() + '"',
+-  '-DGIT_HTML_PATH="' + get_option('datadir') / 'doc/git-doc"',
++  '-DGIT_HTML_PATH="' + htmldir + '"',
+   '-DGIT_INFO_PATH="' + get_option('infodir') + '"',
+   '-DGIT_LOCALE_PATH="' + get_option('localedir') + '"',
+   '-DGIT_MAN_PATH="' + get_option('mandir') + '"',
+diff --git a/meson_options.txt b/meson_options.txt
+index 143dee9237..13d421c067 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -1,6 +1,8 @@
+ # Configuration for Git installation
+ option('perllibdir', type: 'string', value: '',
+   description: 'Directory to install perl lib to. Defaults to <datadir>/perl5')
++option('htmldir', type: 'string', value: '',
++  description: 'Directory to install HTML docs to. Defaults to <datadir>/doc/git-doc')
+ 
+ # Configuration for how Git behaves at runtime.
+ option('default_pager', type: 'string', value: 'less',
 
+base-commit: 7f278e958afbf9b7e0727631b4c26dcfa1c63d6e
+-- 
+2.48.1
 
-12-Weeks Work Plan
-
-Week 1 =E2=80=93 2:
-=E2=80=A2 Study the codebase and related documentation.
-=E2=80=A2 Review previous contributions related to global variable refactor=
-ing.
-=E2=80=A2 Understand how recent global-to-local transitions were implemente=
-d.
-
-Week 3 =E2=80=93 4:
-=E2=80=A2 Identify specific global variables that can be localized.
-=E2=80=A2 Map their dependencies and understand potential side effects.
-=E2=80=A2 Draft a clear plan for refactoring each variable.
-
-Week 5 =E2=80=93 6:
-=E2=80=A2 Begin implementing small refactors, moving selected global variab=
-les
-to local scope.
-=E2=80=A2 Test and verify correctness through existing Git test suites.
-=E2=80=A2 Prepare initial patches for submission.
-
-Week 7 =E2=80=93 8:
-=E2=80=A2 Submit patches to the mailing list for review.
-=E2=80=A2 Gather mentor and community feedback.
-=E2=80=A2 Address review comments and refine changes.
-
-Week 9 =E2=80=93 10:
-=E2=80=A2 Continue refactoring additional variables or modules as agreed wi=
-th mentors.
-=E2=80=A2 Update documentation if necessary to reflect internal changes.
-=E2=80=A2 Maintain consistent communication on progress.
-
-Week 11 =E2=80=93 12:
-=E2=80=A2 Finalize pending patches and ensure smooth integration.
-=E2=80=A2 Conduct a review of refactored modules to confirm expected behavi=
-or.
-=E2=80=A2 Document key learnings and results.
-=E2=80=A2 Prepare a final summary report and presentation
-
-Expected Outcomes
-By the end of this internship, Git will have reduced dependency on
-global variables, resulting in cleaner, more modular, and maintainable
-code. The project will also provide a clearer path for future
-contributors to continue reducing global state across the codebase.
-
-
-Thank you for reviewing my proposal. I'm looking forward to hearing
-your feedback and guidance.
-
-Best regards,
-Queen Ediri Jessa
-Email: qjessa662@gmail.com
-GitHub: [https://github.com/QueenJcloud](https://github.com/QueenJcloud)
