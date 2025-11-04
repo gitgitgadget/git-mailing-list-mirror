@@ -1,116 +1,113 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E742FC880
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 18:21:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6262A23B604
+	for <git@vger.kernel.org>; Tue,  4 Nov 2025 18:22:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762280471; cv=none; b=iIiT+OD/Q62VjDvu6m+BwtxgDK7waVhrILFUEMxb+X7Hwm/6mb8oijDR7frV4tkLaHW6GXAFCkS6Xq36anl9POt8qm6ssXgvJYNS2REcv5JNLFMdp8K117nKhKIYiKvI/Z7Vzo0qpHcrrwH4/nU/wSiKctk+X4/TG7F7pdSVAnI=
+	t=1762280561; cv=none; b=gHjUNaEhKjR+QD/IunVHtBtpU5iu3I6JAgWt1Ulo0ZpxWKCH+99fEMMaS+6e3x9/bgsZNZFvH+Vh58fgQVEpfLoQFrvIwfTI1/kt0eiBkfnk12fyGbLXp4u7SaTPfpP73fPwrZqwGzX53Jkgx0EotVCqzCUmnZnO43zhdMZiJPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762280471; c=relaxed/simple;
-	bh=jR6EpnvhHnggM6QPlNOhc6kp6AuSqFW92f6Os83kS6o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Wi3446tPGbeh12keDIsEAPgpBD3OSG/pbZJxmr66Dw90ljbAovRNLhcGZUYqbk8peMednKcWv5UZ2dLCpFu+Caj43ULrIOSEPYnKdzGVs9Bphuw5qAJBMEHGPXh4NJS1sts4zlbPGCSCj+/SRag7OuvSKLXkqaLzwgBVC/zaS1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=POxMGvsI; arc=none smtp.client-ip=209.85.128.176
+	s=arc-20240116; t=1762280561; c=relaxed/simple;
+	bh=bVZGGTu+yFUF6oVRqipMTji42wK3hUu1KDh0yBrJyAY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JTfYM499++wWhZoYdWcOJnkL6DTOuxA0AinfQpSJxK+/uQgNeiNEo8o2sHuE1Sg7QaLHNX3CfRMTtLIp12+PGzWZFx3M9NdSFT3/xbCf7FLvPRpMzq+bO+tbwrdeURG3ByUu4rij8QsSsnt55fBS5yE2Kmy4GogrTFABVylrsXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BIOpd8u8; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="POxMGvsI"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-784966ad073so70211777b3.1
-        for <git@vger.kernel.org>; Tue, 04 Nov 2025 10:21:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BIOpd8u8"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b72134a5125so217611166b.0
+        for <git@vger.kernel.org>; Tue, 04 Nov 2025 10:22:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762280467; x=1762885267; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=D2t/F7hXRARJbSFVakoQpqu9GzDVexkkRbuuj/e7xZ0=;
-        b=POxMGvsIMUOCmNNkoSE5SBzO9FD6eCxYqko0YeDK4pq2fEnUcYLbTNOuE0ADUT93Y7
-         rBVpm7CYbrtNtmonYxxcUI7ybwRatgwLaw/i/Pg6zWvY/XnyuyDnXjMxiHQ1E0MKtuot
-         7IBFVMTJTkPEF+voeA2Qt3/l6+HSFGpK+Hlc2T4b+vWT5PNF2rZui43IY6E6I8jggDwV
-         Xc+YsSjPtr+DNLJ3czz3Pys+tfaCLZjtpqHt7iO0hgVHJCNcDfLnqB1MDfHGASX5AdXu
-         v1Czxr0KMGdDanR41H/rU2EwA7RflS1W5Cu1W5Rsp4Y0keqcx8wrtdEaUWGOv9BoHshW
-         vdIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762280467; x=1762885267;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:sender:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1762280558; x=1762885358; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=D2t/F7hXRARJbSFVakoQpqu9GzDVexkkRbuuj/e7xZ0=;
-        b=nBmZGXxuTNrd9uv0qDVXWV0/ktB1jHCAaga3modss8cctGWntwVm8eNBRqRW7P/aHY
-         dSeD+UxB/utPA/9iQgRBqKSIfHuEyM89eS/mBv92N+CABSoHl6kdPk/sPQSf6gnLya71
-         CgnwoIUnUTdmRDeWMX+l/Yyphaae4sOBACJJ3ijGdQZkwapihODCKQxEJ73cBdhb6ROM
-         IcCzjiQN0o/6wwrmB5F/QNppZoxPDaZ/js7Y6sajDdoE2Tt2p34ds9WvCIb550GTbcyb
-         TN+bDbLCujMw0wY620dM4rMk5fn98eC8UQ584BGizPhoWLpzCSmLpNJ0eezY7LqYc43M
-         WUEA==
-X-Gm-Message-State: AOJu0YzeNYOdUlprovs6OMDS4/qVuYCf+xkOMROp6QGqHHqgAfFFEDZI
-	8KzdIVo1ARwM3KwY/oVlFdoaGed8uI7GPx1OcQWThP1taOiNA0Y5DCJpX8GRElgj
-X-Gm-Gg: ASbGncs7l/8yfnOjzPe75bAUVmIQ0BujlSGYZBx8R1NGuzTTHEj+fJdaGMCVCs+d5VX
-	97RN9yQsRhqu08RRTTyYw91OOJh4iu/LugtHV5w3GRPk+aRMyyWPkItj5UI6A+ozt5wD9pzCpGP
-	N3I/MyGm/wT+5l3lIhnoeJwsKCUr4/Qj1vTm+LoO0h6s5KsGC/k7d7ysJFHRHIfHipH73ycCRga
-	DCbxQHp8Ms6W9i+ZWXH20XRW4k+ppWlHtjvxfb2g+N+iUn7qxPwpup8yYJu7lwrzKFoC9gO6LeA
-	HyEfiiq/H9NMLTXHpeyBnblbJtYUOyCn795VP9PqPhCTyj/BhLQOe5EJ4dW7u/USikFpUy6KsF3
-	VcILhx4y28/ot4baPJ3BLnE0I8bYIZDvpVyTRHDVstSbgIUy5KzFa+u144l6rrgC32oTfpa6OFx
-	NHuj6EG3vCOF4Dz6vLQXLEFqikptQ8oz3kXeq6gw==
-X-Google-Smtp-Source: AGHT+IH68uU3afTTj2Di1Ml74W8laSJha6RW/JVE6xPKghdw8NeZGHbbbCdL4ou37+spikU3tbNsAA==
-X-Received: by 2002:a05:690e:1551:20b0:63f:a87b:2066 with SMTP id 956f58d0204a3-63fd34c4f47mr395530d50.16.1762280466592;
-        Tue, 04 Nov 2025 10:21:06 -0800 (PST)
-Received: from macaroon.lan ([2605:a601:90a8:8b00:2dc0:ec5b:d324:2217])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-63fc96086c3sm938008d50.25.2025.11.04.10.21.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Nov 2025 10:21:06 -0800 (PST)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH] perl: also mark git-contacts executable
-Date: Tue,  4 Nov 2025 13:14:57 -0500
-Message-ID: <7fbb341e8f05fcde3a1543e3bb4e5a3ec1101692.1762280097.git.ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.48.1
+        bh=mCv/yUlvCUDFd60R1ObJoBQd4+kHwnywQSb3XnJxmTM=;
+        b=BIOpd8u84Ym2rny4yG7n66rfAt9etQKYEk8eiGT7N0BclzUQDzKtOBgkJXBEbOArxp
+         YBvsKJGG0saMr2wzHCVczOyrOE1+VoZslBrvhpzX5EQMu/XTZtLfdysuLX5BrS1aTBeZ
+         +2FvIkZ4kRoHtZSXXWIQCdiZVilST9rcGQkpBCjnrqLnu7UwvUpJBfAmsdN3EmeHHW4G
+         1La1yK9D6ZPAMhicsfuTb0rGP6x95KCmXt+xsCgCVSVi+7GAZFZfF2dCTCAvNmTYYW9T
+         OGXOe1NhlNixrgG3Pu8WV7O2MtxHKTHxSicbHYIoQVxUAPKM7roKXpzl3tL/Tjti9ihr
+         33Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762280558; x=1762885358;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mCv/yUlvCUDFd60R1ObJoBQd4+kHwnywQSb3XnJxmTM=;
+        b=F3GCoHDqu4+FhHtiuUw6bILqrYHZRKcdS45LFIyarNd6eUBke+oHOUMtANT4qSKZnS
+         F4eOUvcRcLnRnscCRd1mg303ZSLJRO7RbtOogoaUOJfr8UeVdE6sqY9yLno1XXK0O0Bj
+         Vt1nEGhHoGt5rZRh59/Q7Oiv/N1foUJn9+AYwI/9QlkGUT5L9CnFDe9WAq+cJ/tR9o8J
+         4dERJCG3cD4SJ4/i0c4CLaYJdyY6sr9IgV0XezJgqv+ZQ6sSk88//9i4uypXFpiOqIGf
+         /AXlu8A6hFwp8j+Yb2CZZNptQt2Hfd5V/3o/Mxa6Tg5BmaP1RXDCX0COGbi0ML7UZWdJ
+         CQhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUjwTNqv0Hbz82Xn/2/dM8pqtXOm35azXRpt5c1j3PKRUQV+WDyd9qhdYwUNK0pQq+LZB0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWFHgPt3a/jfgAYkkgfor30H0hgWmqPxTIDXdgudG//EJHHxqj
+	SCkvDQWnYbY/Y19YlDF+x3pbP9OQdZq0deEUB0JG672hMZ6U2Dq1RJfccFLB1OCdZCyPSzayikz
+	8cxK1PrYQX3SnlthC9R6yt/l2VCBlGFw=
+X-Gm-Gg: ASbGncvgyB2L0hprWCn53xyHb9rqisnDAO+9JdIeiDNfIZi4UhD+qpVYPAfVTQNTqAv
+	ECtbTnL0c8e1/1mOkPx5jdA8Vm1mPepP2q9DY5ptIpaGjn1jovTjtchchi4VHeKQNx3mbc1jinz
+	p29ss9OrQSDzS56k2FoNK4AqgRhUfIyvXpH3paRRYZ5HZ1gs3dtJqc3rp+ihs0Uovv41cBqtjiP
+	FdxARAyo60Aiuo2Hz3tUPDs+CgCTZv+nCwBOAc3qwk4QFEGpR9CSLlIuO9eTsiiz1ny1jIGQlZR
+	tyN2zxm44NGDnyDa5Qs=
+X-Google-Smtp-Source: AGHT+IHCZDtG/7jSHK6y3cLHP2s4CJPHXM92hpsi/0MnjvGN/wdj2vsl8z1DaJ9GN9gQ3KSYFH/sudQS4VUyaMQCIbs=
+X-Received: by 2002:a17:907:9492:b0:b70:ce44:113 with SMTP id
+ a640c23a62f3a-b72654c24c2mr12220266b.30.1762280557457; Tue, 04 Nov 2025
+ 10:22:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250501214057.371711-1-gitster@pobox.com> <cover.1759094936.git.ben.knoble+github@gmail.com>
+ <5f7057c236c9af3152bd531eed2e4ad0ac35e291.1759094936.git.ben.knoble+github@gmail.com>
+ <e8755a04-bd44-4ead-ba44-c603bffcc75e@gmail.com> <CALnO6CC=FFuMmBfJPzunUqDOBMBtmXm3i73y9M9LgRrhxzrs9g@mail.gmail.com>
+ <CAPig+cQLri3m9398R0JEf2fafKVkZBvOdxvpg=xPF2aZ6ayDvQ@mail.gmail.com>
+In-Reply-To: <CAPig+cQLri3m9398R0JEf2fafKVkZBvOdxvpg=xPF2aZ6ayDvQ@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Date: Tue, 4 Nov 2025 13:22:26 -0500
+X-Gm-Features: AWmQ_blQF7G4UAFHdMGBRWy2oEST_JcI76LFSmNgDe1Rq8U28ZiVdqKnZIFBjW4
+Message-ID: <CALnO6CCDuUNiRTKbuRtJ6nY6OsxqGKvqzzZgYDOqTPZjEJ4MjA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] parseopt: values of pathname type can be prefixed
+ with :(optional)
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Noah Pendleton <noah.pendleton@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Thranur Andul <thranur@gmail.com>, 
+	Michael Grosser <grosser.michael@gmail.com>, Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When install git-contacts with Meson via -Dcontrib=contacts, the default
-Perl generation fails to mark it executable. As a result, "git contacts"
-reports "'contacts' is not a git command."
+On Sun, Nov 2, 2025 at 7:10=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.c=
+om> wrote:
+>
+> On Sun, Nov 2, 2025 at 11:20=E2=80=AFAM D. Ben Knoble
+> <ben.knoble+github@gmail.com> wrote:
+> > On Tue, Sep 30, 2025 at 11:26=E2=80=AFAM Phillip Wood <phillip.wood123@=
+gmail.com> wrote:
+> > > On 28/09/2025 22:29, D. Ben Knoble wrote:
+> > > > +             is_optional =3D skip_prefix(value, ":(optional)", &va=
+lue);
+> > > > +             if (!value)
+> > > > +                     is_optional =3D 0;
+> > >
+> > > I'm struggling to see how value can be NULL here as we return early i=
+f
+> > > it NULL before calling skip_prefix()
+> >
+> > Doesn't the "skip_prefix" above write into value? So I think if
+> > "value" is exactly the string ":(optional)", then after the call to
+> > skip_prefix it points at the null terminator.
+>
+> I haven't particularly been following this topic, but your response
+> suggests that you're reading the code as if it says:
+>
+>     if (!*value)
+>         is_optional =3D 0;
+>
+> whereas, Philip is reading the code as written, which lacks the `*` deref=
+erence.
 
-Unlike generate-script.sh, we aren't testing the basename here; so, glob
-the script name in the case arm to match wherever the input comes from.
-
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
-
-Tested like [1]. I was surprised to find my packager didn't have contacts
-installed, despite it being requested. But the issue is upstream (here): the
-installer doesn't mark the program as executable. I wrote this on top of the
-patch in [1], but it should be independent. A quick test says the
-prerequisite-patch-id shouldn't bother application?
-
-[1]: https://lore.kernel.org/git/0423F0C4-D0AD-471D-9315-FB208A8171B4@gmail.com/T/#t
-
- generate-perl.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/generate-perl.sh b/generate-perl.sh
-index 65f122ebfc..796d835932 100755
---- a/generate-perl.sh
-+++ b/generate-perl.sh
-@@ -30,7 +30,7 @@
-     "$INPUT" >"$OUTPUT"
- 
- case "$INPUT" in
--*.perl)
-+*.perl|*git-contacts)
- 	chmod a+x "$OUTPUT";;
- *)
- 	;;
-
-base-commit: 7f278e958afbf9b7e0727631b4c26dcfa1c63d6e
-prerequisite-patch-id: 664e4667d11a226a89da52814505a0c8d31b9fba
--- 
-2.48.1
-
+Indeed, thanks
