@@ -1,143 +1,125 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED8521CC56
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 18:25:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533D3324B32
+	for <git@vger.kernel.org>; Tue,  4 Nov 2025 18:31:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762280707; cv=none; b=ghnpdiOEaZf/GgvIPdNZkz3t91e/7ViMeepjoIUDv/YHTASS5a/SVAieq/zagDq1UmCreTgwXKamtkHI+c1dUtG405cABmdtNNI/lkgr7axNmsgbcQ6JjCYO/X/AM+ivYQfHwV0UslsHOEJM66StqxR5DDmHOn0GDkpHicwl88Y=
+	t=1762281080; cv=none; b=BLGdTSpX8awetsvvFs+fwN3oMGarOa69vhw1yCscEVoKow+RyUt1scJrl44hXBC/8x9KOpAdcWyx1ozaXocJV3cPfedbRIbYSY/WkpFfG/GYr6+LEY6cIa5bkJijomDI2Gx5rOF65tTap8g4JepLy7X07vsrT4PK2J2a2hdFClQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762280707; c=relaxed/simple;
-	bh=SgeZWT1uCR7GSrj90AWKRRFjudpTt98sTX1zjZE1/vk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AcPFzr+SldhQDGrWcP/0dn26pCGXEh31pXex18OKvKwWZqTXtZZBlk/n0UePI4XlMl0POiVuCQ+84EMGxwFHnM4aER/zCdvjLP32+XUh9Mm6Nrv9p1CYCuJcHpHnv0LNR0DrFLJhbRA7G7AxW+AY4RHBkEu3HQugJfBJ/BoJOgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CpEuAhp0; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762281080; c=relaxed/simple;
+	bh=tems1277u6tRcxxcX9Iho9os+VgYbSzvX0TyimE/q0A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FA2JJXskAcm376g5WdDo8mIjHoBk6O2SfC+WzxYbJ9paf0x2x5SQVphisaspgsLGov+dT1u6mJHbYoQ0vBXKFL+Mu+XVO21UewMdXrBeD3UC3knaRkmIhYzWVvtjwCxhG0uJI116wYxTK+4F9wb6PgytGmBKR66OU9Ed+1XpeEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VyA3QNIP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HLi1vyX+; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CpEuAhp0"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-b7042e50899so1018296066b.0
-        for <git@vger.kernel.org>; Tue, 04 Nov 2025 10:25:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762280704; x=1762885504; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GS6OCX1zDH1WGkQagcDFeUyKtwyMxpNZUdL2cZbqWqQ=;
-        b=CpEuAhp0WTjERBkyvjx9uR+9rV8Hlp1cs987reFi7bIQwUy8r4txhAFEc/JqaOX8Ab
-         fbUSWsHrG1ExA6nwHbA6GuwYbkW3zU7ThiWo47KtNZEylGkBwElqEAF1yHiPSGYncyVF
-         bFjysShVlYhOl+BnpF69cLfkpkbiu8cgvJpDH3ybb68GQ8HbIQIb141hSAOUot2YAums
-         ilOfdIi6s8VS9NiSBF5ksIXXTSj78xTB8lc4bZVO3/DFBUdzdSeMD3Iz9KpzkepZ+lmd
-         +PVjGu0G1pWfE7nwem30aGVz1JGIOGgZFbCjYennQP4KmlU3+RRWm6NI9zIsxU0tNuEg
-         4iUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762280704; x=1762885504;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GS6OCX1zDH1WGkQagcDFeUyKtwyMxpNZUdL2cZbqWqQ=;
-        b=taHo/DxchbCj8Chztp3nRR+y+dfpx06swcNrwsf2axr6nH2ggmsGfwv0/df54Yjyhz
-         Q96OtRGoGsgYgpDW9vqK1HSM2pzaMAr1IR0+zJNj4fYwRR1NtAqe+U3Cc+TLxKQID5Co
-         Q3wIa6+aol+cLFErAVgcoEWvNfUgEGibkmw43hibJd9wyceq3qe80PVoYK2HKfqabnGl
-         Y+hU8vW6N6sYAagdc6bYGNYW0ZyUWZQ7Rq+aD6uId2xkwgHm1y28oVZMZJ4Mzjxp2Rcx
-         XyRV5mE9wr7ZU0F2yOxgq2ghOoWnzy0VXNhS++KsCk4hAiaGUvTBDFIN0irXSeKiCSg3
-         WwvA==
-X-Forwarded-Encrypted: i=1; AJvYcCWnmlaBmrYgORr0MHqih969XHslRcyanFkGxc2ZeXi1DSCdG1BtGAb9fApaunNAyC1EbtY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2TKu5Gr4o9vjHaS1rUxoQwTwHHYxP6YeTsQLQrbLwwU47k/Lk
-	vM7UPm2741836vDcehVhH+oIl/pTmgokNNMub99P1ZP9E5wzGnYYjvhE4qusJ2U5yualK73UaCK
-	3DVmWwBm4KGr9fcRZmmbfONHrgXKYaRo=
-X-Gm-Gg: ASbGncuAoVx5ZC7I8KF2LOYeZ3CPcWAkcMkuhDVvsquNYQw6M+j8w/hSknC6mFT7r6D
-	G20ggswTj0SHZMhPKLY8C09pKqoISUHBcFRLKXmcnkppZUmRNt3eAWV7KSxUX9W3HGTbVqx1ANn
-	kOI57oTR5DhJckzrF/01qyz8jr5Yarv+GDyRQ6Vx/AGJlgmq5LE3LfO5ojAO+sKS1rtJBMiDu/F
-	XpKm94KH1HLXrs8y4WXtICmGyQOOf5TfOiQ/8keMBQUXTBew/ApCIMwNo0LYJ/iCYp9vY3nnhjB
-	wZLlhgYpBuIz5EdxE8o=
-X-Google-Smtp-Source: AGHT+IEpjZ9lGLwHzjAzg84K9o6Uo6rfGAVZDDdASd8tklRImheUwQHNDToc03q2vEetHrQUGztFDQq5ZBphpE8nB8Y=
-X-Received: by 2002:a17:907:3e8d:b0:b44:f9fe:913a with SMTP id
- a640c23a62f3a-b726564a973mr9836466b.65.1762280703623; Tue, 04 Nov 2025
- 10:25:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VyA3QNIP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HLi1vyX+"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5237C14000C0;
+	Tue,  4 Nov 2025 13:31:16 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 04 Nov 2025 13:31:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1762281076; x=1762367476; bh=UzGBX5pVGi
+	zE5T1+5xORsB4wwniAvrsxFX+7Q60gdRA=; b=VyA3QNIPn9dJwo7ESdQn80kcsb
+	C/AGGU+8X4PJFD/mO/zJh5uW64dznNKz4iIJZd6G4HcUM62vh6l5nP/MsQ0vXRJf
+	/8jdnLhrfSgi7BsMvUKQJoD3t8QJnr4tpzoddqrIBth5M3lH1SWUlOmMfa55jnEY
+	8Vw8O5vVYQ2+vI3ewBlNg8haNZtAlzeZ70nC29i2N6LJNtOajS3w+iLFexcG7QCf
+	2FTLSh0oSGZcJV0cDpiUfH/VeRAFzrlEcgGWc50APj/9eTnBbcyrC+io49TL4iEd
+	Tk2i1pnX69mdjHTrYBqp6mnphvW64M8RuHfi1EIFS1qwcvfQIKPLyw0Mh0+g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762281076; x=1762367476; bh=UzGBX5pVGizE5T1+5xORsB4wwniAvrsxFX+
+	7Q60gdRA=; b=HLi1vyX+oULaqdRRLrzOfMtZhJNaT9Yz3Ui3eoHZUunwl75vuvY
+	AKH5vJ3W/llaBRmyjK5iWBHSqPhj073K2EQAQgoNpj7mhKGT9wNBjxszFUur4MbC
+	om22hoOM9mmkN6dpKpah9p6yshkOcm4Dre7WHwRgF70sG91Uu0ab2IMiVJb7fGZp
+	orCXwhEgAWhReM2V8MaWsHP8aDC/g1Wo/9mYQ43Ea49eF3u4uyD3wtBTlGolzh3m
+	IrkB+AKQmpYsx80e9Ycth/lgQ/ZIyEneyUVIitzDgMJ1WH5YXfkL78GJNyMFX4EG
+	5oWjX8aeyhy0cfAPEMuxZGB1NfhTEdsbp1w==
+X-ME-Sender: <xms:c0YKaX0iKEEj5Eu9xCv5WaSwzgsdDa0SDc906WO21RKDoKiyL5PPiw>
+    <xme:c0YKadG9fWEOzbylwA18qfuX48G9VJQnCpQ-ctNrU5Nx2skUEt9wJ2feJ_CFTXXyM
+    AmqpFeiu_zxcoO51QPuiyOPA47h0O3amEvVVaB6F1l-s9vBpK6e>
+X-ME-Received: <xmr:c0YKac6lqSO644Pce8PF3jJPzvnCAbxHL8Yp1-xaVShc8gBwFptPQ0TvGvKrFqBjaYggtMMepmwVc_oXomhmcD3TuM40gRmAuByR>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukedujeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgv
+    thdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:c0YKabu6OvF4O_0Kayt1214T_L8DThX8T2w6RLmr6SrJ24IY_bscxw>
+    <xmx:dEYKaV65anXiGsPx9Aatd40DEnY-JEm6_ePiRpZn3QF8fltiD9We4A>
+    <xmx:dEYKaeWuOZZjYg-EI27jsvblB8YlThmb7SlhkZabglsiGfIDCMrR2w>
+    <xmx:dEYKaf9IuCKNqFcgrX-mhHDpReMBVAyFDsih0G9TC2fS8TWDSnmO2g>
+    <xmx:dEYKad0S-N5E-16HPy2ITQZaA3odnM5Bg8_J-xQjgzTUAFq6QSSiIlX3>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Nov 2025 13:31:15 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH] ref-filter: fix stale parsed objects
+In-Reply-To: <20251104-b4-pks-ref-filter-fixup-v1-1-2fbca52d76d9@pks.im>
+	(Patrick Steinhardt's message of "Tue, 04 Nov 2025 15:36:13 +0100")
+References: <20251104-b4-pks-ref-filter-fixup-v1-1-2fbca52d76d9@pks.im>
+Date: Tue, 04 Nov 2025 10:31:14 -0800
+Message-ID: <xmqqpl9xps3x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1762100242.git.ben.knoble+github@gmail.com>
- <9ec696eaac647aa01466b101129da2b12ef5dbd5.1762100242.git.ben.knoble+github@gmail.com>
- <ec8d1764-649d-4edf-b0ae-a19ead5f6f9a@gmail.com> <xmqq1pmdr9qu.fsf@gitster.g> <xmqqwm45puqr.fsf@gitster.g>
-In-Reply-To: <xmqqwm45puqr.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Tue, 4 Nov 2025 13:24:52 -0500
-X-Gm-Features: AWmQ_bnsHl3fdruLikjhZgh4jZtbKuU6amk3Dpwmg0pBiJuBYWD70dyx_6hOS0M
-Message-ID: <CALnO6CBgTu4Qtr8xwPCerrpqfAf02SV-bONLOUgq0X70eDThfw@mail.gmail.com>
-Subject: Re: [PATCH 1/5] parseopt: fix :(optional) at command line to only
- ignore missing files
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood@dunelm.org.uk>, Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Nov 4, 2025 at 12:34=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> In 054f5f457e (ref-filter: parse objects on demand, 2025-10-23) we have
+> started to skip parsing some objects in case we don't need to access
+> their values in the first place. This was done by introducing a new
+> member `struct expand_data::maybe_object` that gets populated on demand
+> via `get_or_parse_object()`.
 >
-> Junio C Hamano <gitster@pobox.com> writes:
+> This has led to a regression though where the object now gets reused
+> because we don't reset it properly. The `oi` structure is declared in
+> global scope, and there is no single place where we reset it before
+> invoking `get_object()`. The consequence is that the `maybe_object`
+> member doesn't get reset across calls, so subsequent calls will end up
+> reusing the same object.
 >
-> > Phillip Wood <phillip.wood123@gmail.com> writes:
-> >
-> >> Hi Ben
-> >>
-> >> These all look good to me though I agree with Junio's comments on patc=
-h
-> >> 3. It would be nice to get at least the fist patch merged in time for
-> >> 2.52.0.
-> >
-> > Yup, let me do exactly that ;-)
-> >
-> > Thanks, both.
+> This is only an issue for a subset of retrieved values, as not all of
+> the infrastructure ends up calling `get_or_parse_object()`. So the
+> effect is limited, which is probably why the issue wasn't detected
+> earlier.
 >
-> Let me have this on top of Ben's 5-patch series.
+> Fix the issue by resetting `maybe_object` in `get_object()`.
 >
-> ----- >8 -----
-> Subject: [PATCH] parseopt: remove unreachable code
->
-> At this point in the code after running skip_prefix() on the
-> variable and receiving the result in the same variable, the contents
-> of the variable can never be NULL.  The function either (1) updates
-> the variable to point at a later part of the string it originally
-> pointed at, or (2) leaves it intact if the string does not have the
-> prefix.  (1) will never make the variable NULL, and (2) cannot be
-> the source of NULL, because the variable cannot be NULL before
-> calling skip_prefix(), which would die immediately by dereferencing
-> the NULL pointer in that case.
->
-> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Reported-by: Junio C Hamano <gitster@pobox.com>
+> Based-on-patch-by: Jeff King <peff@peff.net>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  parse-options.c | 2 --
->  1 file changed, 2 deletions(-)
+> As reported by Junio in <xmqqo6pjt2wn.fsf@gitster.g>. This applies
+> directly on top of ps/ref-peeled-tags at 054f5f457e (ref-filter: parse
+> objects on demand, 2025-10-23)
 >
-> diff --git a/parse-options.c b/parse-options.c
-> index 27c1e75d53..97a55300e8 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -223,8 +223,6 @@ static enum parse_opt_result do_get_value(struct pars=
-e_opt_ctx_t *p,
->                         return 0;
->
->                 is_optional =3D skip_prefix(value, ":(optional)", &value)=
-;
-> -               if (!value)
-> -                       is_optional =3D false;
->                 value =3D fix_filename(p->prefix, value);
->                 if (is_optional && is_missing_file(value)) {
->                         free((char *)value);
-> --
-> 2.52.0-rc0-28-g4cf919bd7b
->
+> Thanks!
 
-Ah, that's fine, and I won't send a new version unless we need it. Thanks!
+Thanks.  As we stop reusing a stale maybe_object and instead start
+parsing the right object when we need to, I wondered if the "on
+demand" commit needs a new benchmark, but the example cited in the
+message used %(raw) so it would not be affected, I guess.
 
-I do wonder about Phillip's comment: perhaps it should have been
-`!*value`? But then something else has to be fixed because value is no
-longer ":(optional)" which maybe was intended as a literal filename?
-IDK.
+Queued.  Thanks.
