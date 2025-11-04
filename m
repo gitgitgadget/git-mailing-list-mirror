@@ -1,158 +1,149 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AD9381C4
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 18:39:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B4D33890C
+	for <git@vger.kernel.org>; Tue,  4 Nov 2025 18:40:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762281543; cv=none; b=HNTSpNe6O0XgDR/22dVhtViCGnzlVI4YshBPdhjrhtAaKOKj0W3JEsc9E1OKIx+OWPHrplDjZakRDckOlsiwdqbRroYwktiuxIFZxWWjSD3v9aUGjcBuOwwII9HYlLyt/qdWEWKMGHW2KvdXLLtk0eYIK52/1JcGrX93+4H7BJI=
+	t=1762281636; cv=none; b=J7Li6SxxGaOeYm3OWTrLs2PiVSk3BnXWnohZqdks0OI2sM2A3y+7YwB+AM9yAWLQp1ZB7bP92PW7kZY8/GERxN7dTxIiykNXUb+WnfZyq4hfiKZukv1We0yOcutRdjYUP3wxZlW7wJLmK8BXOvTZvTEnkv6sF4M4j1Nkfzzg+dM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762281543; c=relaxed/simple;
-	bh=xGxGcPzp+qlXvVFPOmcHe3YaOYM6LK/1uAvzQ0XRzsQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hJ0uUuZXjA5224ymlhrWToiST7Up/q2dgWOQ1vESr2WhLZc+Wo4Jm3M08CC371hgy1l1ZBHtXEh74Fmi3gf3paxGLJpRGjpoLxQxpKL6fv51JvGxlF/HLQtpPg8JJMZRad+SdrRQbOPNfgx3jpmKkCEXBUjsVi//IkPOoZcVO6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp2.bon.at (unknown [192.168.181.105])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4d1GZV5RH0z7R4wh
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 19:05:06 +0100 (CET)
-Received: from [192.168.0.104] (unknown [93.83.142.38])
-	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4d1GZL0dLwzRq1q;
-	Tue,  4 Nov 2025 19:04:57 +0100 (CET)
-Message-ID: <1a180754-bbb1-48ca-84d4-8915201d086f@kdbg.org>
-Date: Tue, 4 Nov 2025 19:04:57 +0100
+	s=arc-20240116; t=1762281636; c=relaxed/simple;
+	bh=dr/nG6+BdWEfw0DsqxfkAHqNXbwXgSz31HJ0luJSnl4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SlpvtCzM47sLDiLG3acdFE7VB5ERs/VWBnjJds275lk9TCgABCa719YvFlrFCok1bMJo8BW1RLEveLZkwkkpK+pwQq0K2fEcIjISy+o6uMyXRlkQXqfMDbrKJYdBK+kXPsp8cflCXHhCPOj86ymCnG/qFWQbqAVyvwma5xOk848=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JcaJIENk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rHihxkpS; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JcaJIENk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rHihxkpS"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 83E1414001DD;
+	Tue,  4 Nov 2025 13:40:33 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 04 Nov 2025 13:40:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1762281633;
+	 x=1762368033; bh=hJglg/OSbkWgKd2X1VPqVZQLWBQhZKouZ5SfG7dH0cM=; b=
+	JcaJIENkwbg7vPWUiUkOnnEF4lT5B7dUVfj61qzf9EGBey/vbvcS+D8UJqsdAz1q
+	EZRF+caNumeGImNMDzhcMF5ZbjiKVOysPscimzH7rPUDkKj3M91aRneEWr08R7XA
+	x17GpKxADxt6J2DcN1QrF8OhP+ZEKYCslLebCPwBelSvzb/EJC9QsTtUJaHXqe0J
+	SzeEJmXySpK1oEEjd5cfr1BxoCPVtmOgkm3+EeljycVurTJJ6Gm2EOYbvjABqu6O
+	svQNBKV/aSHh4O9HlYwnAlX8gmRFVURyc0M+uPAm7fhbwrY50DKKU7sSsRHKAhwf
+	A3wxmJ7kY0lP8Xo3hDAsGQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762281633; x=
+	1762368033; bh=hJglg/OSbkWgKd2X1VPqVZQLWBQhZKouZ5SfG7dH0cM=; b=r
+	HihxkpSQ/s3ZlNaALseUMTXmfQIJBgi9LTOdJWdMRzHhnN0DAS6vnVPMe7Z+Si8Z
+	BWfOPxnkUVufeUySkpzvKypOsJimPNCXZMudC9dIFgMAdoa7ZwaRWJQJQkjPkddw
+	7ZnYRN1LlRu5Gk9cfzz18SHy+Sp55vHbZUN6tzU+8fqO9IpxyCEsnFA7v3mqKaMN
+	U7XFeROSCCPq8XyEtN3Ov5ZAIxYdT0Ac4rGd4EkGHCgcpqm9hiMYJ4xLcZMyYrbJ
+	wJCsMoN6LzwwF/F24XC1Vzr2PCY97goi/V5bwIvW++dN1a3WEREIqIEtBLKbHAhn
+	KyehKzWdltA3FoKdYTWJw==
+X-ME-Sender: <xms:oUgKaSi1eBBtASRMe6_3IfZAxSY_z3jCkYxTnBfVfz-zvGMQsqMJRQ>
+    <xme:oUgKaUg8qKxlKPt6B9sIOnbCY9cBBGmfQPrYQPMTqM-haP4b_2C_8t55x4gxZa7Hq
+    PR5EJ22EloaVBTWev0N4a7mKL9YBNPrOJwlv84XYCNGpr7A81o5tg>
+X-ME-Received: <xmr:oUgKaaIXQOGHIVJQQJFLCw_6jAcYK6C213u7UeOlKMa6LxpjzWEg1T1af0iPvYW4iDEBcSvGTzsUwk6ThQ4Fk-GQFfaYJLTiV9He>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukedujeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehqjhgvshhsrgeiiedvsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegt
+    hhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehush
+    hmrghnrghkihhnhigvmhhisehgmhgrihhlrdgtohhmrdgtohhmpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:oUgKabH12cbBE4dx2z3uvJxNK_BeqIBtM_M7OzGXWmI7DYa50PgFaQ>
+    <xmx:oUgKaWTq79BHfNq2tKP5krAxuphIy82FTA4roOLezzE2izIdBQFH5Q>
+    <xmx:oUgKafflXUYZ5CAEj1sDlYIbf1NY3o-Ks5DWO-3m_2izXnjsbJmUNw>
+    <xmx:oUgKadouDs0S7iL999V1hKKXaPN-8WyEsNRNFzbfkbvQOfUxe7JkLQ>
+    <xmx:oUgKaXGSIOMJcAhieYlibiy-qdOO9PglrAR2dsxhyrrAYOCfCxEUA8_N>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Nov 2025 13:40:32 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Queen Ediri Jessa <qjessa662@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  usmanakinyemi@gmail.com.com
+Subject: Re: [PATCH v3] doc: clarify server behavior for invalid 'want'
+ lines in HTTP protocol
+In-Reply-To: <20251104155127.1079-1-qjessa662@gmail.com> (Queen Ediri Jessa's
+	message of "Tue, 4 Nov 2025 16:51:27 +0100")
+References: <20251104155127.1079-1-qjessa662@gmail.com>
+Date: Tue, 04 Nov 2025 10:40:31 -0800
+Message-ID: <xmqqjz05prog.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7] gitk: add external diff file rename detection
-To: tobias.boesch@miele.com
-Cc: git@vger.kernel.org, ToBoMi via GitGitGadget <gitgitgadget@gmail.com>
-References: <pull.1774.v6.git.1750755954011.gitgitgadget@gmail.com>
- <pull.1774.v7.git.1761905371163.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <pull.1774.v7.git.1761905371163.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Am 31.10.25 um 11:09 schrieb ToBoMi via GitGitGadget:
-> From: Tobias Boesch <tobias.boesch@miele.com>
-> 
-> If a file is renamed between commits and an external diff is started
-> through gitk on the original or the renamed file name,
-> gitk is unable to open the renamed file in the external diff editor.
-> It fails to fetch the renamed file from git, because it fetches it
-> using its original path in contrast to using the renamed path of the
-> file.
-> Detect the rename and open the external diff with the original and
-> the renamed file instead of no file (fetch the renamed file path and
-> name from git) no matter if the original or the renamed file is
-> selected in gitk.
+Queen Ediri Jessa <qjessa662@gmail.com> writes:
 
-Make a mental note of this sentence.
-
-> 
-> Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
+> Update the documentation to clearly describe how the server responds when a
+> client sends an invalid or malformed `want` line during the HTTP protocol
+> exchange. This improves understanding of Git’s behavior when handling
+> incorrect object requests and helps developers detect and handle such
+> protocol issues accurately.
+>
+> Signed-off-by: Queen Ediri Jessa <qjessa662@gmail.com>
+>
 > ---
+>
+> Changes since v1:
+> - Rephrased the explanation to be more concise and aligned with reviewer
+>   feedback.
+> - Clarified that the server includes the offending object name in its error
+>   message.
+> - Adjusted tone to describe the expected behavior rather than prescribing
+>   implementation-specific messages.
+> - Improved readability and technical consistency of the section.
+>
+>  Documentation/gitprotocol-http.adoc | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 
->     Changes since v6:
->      * Change logic that checks the renames and gathers the file paths to
->        use the difffilestart variable for efficient file path extraction
+Perfect.  Hopefully your future contributions we won't have to worry
+about these procedural issues.
 
-Nice to see this change!
-
->  gitk-git/gitk | 40 ++++++++++++++++++++++++++++++++++++++--
->  1 file changed, 38 insertions(+), 2 deletions(-)
-> 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index c02db0194d..8f8f1cb9ab 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -3788,6 +3788,34 @@ proc external_diff_get_one_file {diffid filename diffdir} {
->                 "revision $diffid"]
->  }
+> diff --git a/Documentation/gitprotocol-http.adoc b/Documentation/gitprotocol-http.adoc
+> index d024010414..f3f48d3f35 100644
+> --- a/Documentation/gitprotocol-http.adoc
+> +++ b/Documentation/gitprotocol-http.adoc
+> @@ -443,7 +443,10 @@ If no "want" objects are received, send an error:
+>  TODO: Define error if no "want" lines are requested.
 >  
-> +proc check_for_renames_in_diff {filepath} { # renames
-> +    global difffilestart ctext
-> +
-> +    set filename [file tail $filepath]
-> +    set renames {}
-> +    
-> +    foreach loc $difffilestart {
-> +        set loclineend [string map {.0 .end} $loc]
-> +        set ctextline [$ctext get $loc $loclineend]
-> +        if {[string first $filename $ctextline] != -1} {
-
-At this point, we are looking at the separator line, which contains the
-renamed-to file name. This means that we skip the following if the
-renamed-from file name was selected in the file list. The consequence is
-that the external diff shows differences between renamed files only when
-the renamed-to file name was selected, in contrast to what the commit
-message announces.
-
-I suggest to check the file names extracted from the "renamed from" and
-"renamed to" lines instead.
-
-> +            set fromlineloc "$loc + 2 lines"
-> +            set tolineloc "$loc + 3 lines"
-> +            set renfromline [$ctext get $fromlineloc [string map {.0 .end} $fromlineloc]]
-> +            set rentoline [$ctext get $tolineloc [string map {.0 .end} $tolineloc]]
-> +            if {[string match "rename from *" $renfromline]
-> +                && [string match "rename to *" $rentoline]} {
-
-These could be [string equal ...] with -length 12 and 10, respectively.
-
-> +                set renfrom [string range $renfromline 12 end]
-> +                set rento [string range $rentoline 10 end]
-
-Here we now have a problem if the file names are not plain ASCII. Then
-we see escaped file names here. I consider this an independent bug in
-Gitk, and we can ignore the problem for now in this patch.
-
-> +                lappend renames $renfrom
-> +                lappend renames $rento
-> +                break
-> +            }
-> +        }
-> +    }
-> +    
-> +    return $renames
-> +}
-> +
->  proc external_diff {} {
->      global nullid nullid2
->      global flist_menu_file
-> @@ -3818,8 +3846,16 @@ proc external_diff {} {
->      if {$diffdir eq {}} return
+>  If any "want" object is not reachable, send an error:
+> -TODO: Define error if an invalid "want" is requested.
+> +When a Git server receives an invalid or malformed `want` line, it
+> +responds with an error message that includes the offending object name.
+> +This clarifies the expected behavior for Git implementations and helps
+> +clients detect protocol issues accurately during fetch operations.
 >  
->      # gather files to diff
-> -    set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
-> -    set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
-> +    set renames [check_for_renames_in_diff $flist_menu_file]
-> +    set renamefrom [lindex $renames 0]
-> +    set renameto [lindex $renames 1]
-> +    if { ($renamefrom != {}) && ($renameto != {}) } {
+>  Create an empty list, `s_common`.
 
-Please let's write this as
+I am not sure what "This clarifies the expected behavior of Git
+implementations" here, though.  Who exactly are "implementations"
+that the clarification is given, and what are they expected to do in
+response?  What does it really mean to detect "accurately" in this
+case?  For a client that received this error, they know what they
+sent as "want", and they are told that the other side does not like
+that object name, but then what would they do after that?  The last
+two lines invite more questions than it answers.  Perhaps we are
+better off without them?  I dunno.
 
-    if {$renamefrom ne {} && $renameto ne {}} {
-
-> +        set difffromfile [external_diff_get_one_file $diffidfrom $renamefrom $diffdir]
-> +        set difftofile [external_diff_get_one_file $diffidto $renameto $diffdir]
-> +    } else {
-> +        set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
-> +        set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
-> +    }
->  
->      if {$difffromfile ne {} && $difftofile ne {}} {
->          set cmd [list [shellsplit $extdifftool] $difffromfile $difftofile]
-> 
-> base-commit: 57da342c786f59eaeb436c18635cc1c7597733d9
-
--- Hannes
+Thanks.
 
