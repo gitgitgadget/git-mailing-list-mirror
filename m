@@ -1,146 +1,116 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0275E33B962
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 17:34:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E742FC880
+	for <git@vger.kernel.org>; Tue,  4 Nov 2025 18:21:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762277664; cv=none; b=HZw1PlFkNYkHQVks2xajr16yyErJYsKAw1zipqCablD/6RAs5JqiayFtKo2wDQQIOiIL59L+3ljBp/Qg1/Vfg1ipM9ksYjEHE/+5TrNHWY44CfWsIOLg+ZKoZpjoJX7hYh59iD88kznY3YCvuOPA6wynXDcsUgb11oRaAQ4qbOE=
+	t=1762280471; cv=none; b=iIiT+OD/Q62VjDvu6m+BwtxgDK7waVhrILFUEMxb+X7Hwm/6mb8oijDR7frV4tkLaHW6GXAFCkS6Xq36anl9POt8qm6ssXgvJYNS2REcv5JNLFMdp8K117nKhKIYiKvI/Z7Vzo0qpHcrrwH4/nU/wSiKctk+X4/TG7F7pdSVAnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762277664; c=relaxed/simple;
-	bh=U6KW4ltmwRW+W4Olr175OyjpP5AE/+UrkcI4pkGwB0s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rLi8UTerI2hLq5RSj3Wy5B7Nxcdh4rSuYvepL41jBH+lb5dRUy73pTemycomLGNja+wPHPjGMzHq7KqgdywQ3QL+f3DjZObTKE/GPU1VF8sbvY5ljoY83/YEZ6h8xYQ74Uf/Xvn3aevpJxbPmq/ZVw2JMsErwUk1orz2tIBw0Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L5n1705l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lYZ2JpLA; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762280471; c=relaxed/simple;
+	bh=jR6EpnvhHnggM6QPlNOhc6kp6AuSqFW92f6Os83kS6o=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Wi3446tPGbeh12keDIsEAPgpBD3OSG/pbZJxmr66Dw90ljbAovRNLhcGZUYqbk8peMednKcWv5UZ2dLCpFu+Caj43ULrIOSEPYnKdzGVs9Bphuw5qAJBMEHGPXh4NJS1sts4zlbPGCSCj+/SRag7OuvSKLXkqaLzwgBVC/zaS1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=POxMGvsI; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L5n1705l";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lYZ2JpLA"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 300CAEC04D8;
-	Tue,  4 Nov 2025 12:34:22 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 04 Nov 2025 12:34:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762277662; x=1762364062; bh=dL3QiHicGr
-	dBddmR0hxyM9ZUZjatYAdFw0Ytg7lsxwo=; b=L5n1705lznQrfSkEOtPKPg0uDA
-	svWjcupZZQ3fecV6aDeGhu8nyzxCEHlD1TgP75Lgd+7mAyor5TaK7jO+1MM8Ac7N
-	e471qcnjCaf1uDF2UNi2fPZHjLdSqeHrpYLJ8DBDAQSjY5ldp2Sf6QBshwuSI0W8
-	V7FOXq3RUYOkb9fZX8ZKgcyqdNDeTl/9rgmchLlFbZrKZ4FhIfaEsy3zjwOwThq+
-	3grWOS9xgJXW8u0UduRJiLY3XDTFJcbs3uZEChpsbwbaONkOM2ZPJiEkXLtRAhni
-	YRkl/pGyf9WrctJa19bAbcytUC5TOvPhaEKUdCzpbf+Maj+JV2h3L9zNHsMA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762277662; x=1762364062; bh=dL3QiHicGrdBddmR0hxyM9ZUZjatYAdFw0Y
-	tg7lsxwo=; b=lYZ2JpLAuVymAAAam4q7woCiMtM1tJR/He6AIDDlTPdTGIQukQr
-	q6olTcsaM34TFX4dSD53B+1FhnkBia40zqlc01ITjLP7DhhvOmIxxrknqyWHxx1r
-	4aF6OGAZFUnj1thrPYyRHObQims5Z9X69wsN54+en5PNNWVobLaLSTMRjQo4vwf7
-	kMA+ITCepPcaJQtnVwZBb+t4uGvt1jtEDfhK2c2GJSQnK498f0VzeXadReC/Cbvn
-	WvdRo1LJWxngFjWxDsTbAZJcm2jCI2co/9PSUcFoKqPH8v0bWJg3QeFEa3LEjTaX
-	030YBgLpwUKsVqKp4Am4qKodUBIvoCY2n2w==
-X-ME-Sender: <xms:HTkKaQubXeJ-jzlX7DguUr3i-VJhhDXNqmBwAwUzZllVAgB-TjnObw>
-    <xme:HTkKaWxVONc8XlVYSToCVDDry0J_By0kYzBfsR6RHdSRtvRkh9PCbiqrNgjwapZfB
-    rKMDenjUBKdB4FPfx7SNU-sAU1TEVP5j0d39Zm3Pq9GhpfxW7UX>
-X-ME-Received: <xmr:HTkKaTA2wQ2-ip-O_7ggUuLZN0Ad-UOpzVIbVRVUl9KglsGoCpOL_RvknUdOwYkWt012KpMDkBt5rzq0bQVHm0dj19k67bD5YX7I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeduieefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
-    drtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhithhhuhgssehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphht
-    thhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:HTkKaUdRY5WDyQ4JZD8ii0ZVDpeqFDZCOuG_MHzWJ2SvNpI4dm2eyw>
-    <xmx:HTkKadnby2N38dw8VejHKy9j_BNRKJbhVbPFS0y2ax9kNP0JmRKqLA>
-    <xmx:HTkKabGVK346oBaSBPgPv_qQkMcs5zwXWMzIkbv8BwxrXJAcmvhnKQ>
-    <xmx:HTkKaV6ee0kvSJy30O9x7Ozz7N8u5AieQvmQLecCevfTXAJJtxGstQ>
-    <xmx:HjkKaTqbZP1JeqCh_nvX0y3MmzXABCB1hb-OtanXLO_fTF0IpIEEScZe>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Nov 2025 12:34:21 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,  git@vger.kernel.org,
-  Phillip Wood <phillip.wood@dunelm.org.uk>,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 1/5] parseopt: fix :(optional) at command line to only
- ignore missing files
-In-Reply-To: <xmqq1pmdr9qu.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	04 Nov 2025 09:24:57 -0800")
-References: <cover.1762100242.git.ben.knoble+github@gmail.com>
-	<9ec696eaac647aa01466b101129da2b12ef5dbd5.1762100242.git.ben.knoble+github@gmail.com>
-	<ec8d1764-649d-4edf-b0ae-a19ead5f6f9a@gmail.com>
-	<xmqq1pmdr9qu.fsf@gitster.g>
-Date: Tue, 04 Nov 2025 09:34:20 -0800
-Message-ID: <xmqqwm45puqr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="POxMGvsI"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-784966ad073so70211777b3.1
+        for <git@vger.kernel.org>; Tue, 04 Nov 2025 10:21:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762280467; x=1762885267; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=D2t/F7hXRARJbSFVakoQpqu9GzDVexkkRbuuj/e7xZ0=;
+        b=POxMGvsIMUOCmNNkoSE5SBzO9FD6eCxYqko0YeDK4pq2fEnUcYLbTNOuE0ADUT93Y7
+         rBVpm7CYbrtNtmonYxxcUI7ybwRatgwLaw/i/Pg6zWvY/XnyuyDnXjMxiHQ1E0MKtuot
+         7IBFVMTJTkPEF+voeA2Qt3/l6+HSFGpK+Hlc2T4b+vWT5PNF2rZui43IY6E6I8jggDwV
+         Xc+YsSjPtr+DNLJ3czz3Pys+tfaCLZjtpqHt7iO0hgVHJCNcDfLnqB1MDfHGASX5AdXu
+         v1Czxr0KMGdDanR41H/rU2EwA7RflS1W5Cu1W5Rsp4Y0keqcx8wrtdEaUWGOv9BoHshW
+         vdIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762280467; x=1762885267;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=D2t/F7hXRARJbSFVakoQpqu9GzDVexkkRbuuj/e7xZ0=;
+        b=nBmZGXxuTNrd9uv0qDVXWV0/ktB1jHCAaga3modss8cctGWntwVm8eNBRqRW7P/aHY
+         dSeD+UxB/utPA/9iQgRBqKSIfHuEyM89eS/mBv92N+CABSoHl6kdPk/sPQSf6gnLya71
+         CgnwoIUnUTdmRDeWMX+l/Yyphaae4sOBACJJ3ijGdQZkwapihODCKQxEJ73cBdhb6ROM
+         IcCzjiQN0o/6wwrmB5F/QNppZoxPDaZ/js7Y6sajDdoE2Tt2p34ds9WvCIb550GTbcyb
+         TN+bDbLCujMw0wY620dM4rMk5fn98eC8UQ584BGizPhoWLpzCSmLpNJ0eezY7LqYc43M
+         WUEA==
+X-Gm-Message-State: AOJu0YzeNYOdUlprovs6OMDS4/qVuYCf+xkOMROp6QGqHHqgAfFFEDZI
+	8KzdIVo1ARwM3KwY/oVlFdoaGed8uI7GPx1OcQWThP1taOiNA0Y5DCJpX8GRElgj
+X-Gm-Gg: ASbGncs7l/8yfnOjzPe75bAUVmIQ0BujlSGYZBx8R1NGuzTTHEj+fJdaGMCVCs+d5VX
+	97RN9yQsRhqu08RRTTyYw91OOJh4iu/LugtHV5w3GRPk+aRMyyWPkItj5UI6A+ozt5wD9pzCpGP
+	N3I/MyGm/wT+5l3lIhnoeJwsKCUr4/Qj1vTm+LoO0h6s5KsGC/k7d7ysJFHRHIfHipH73ycCRga
+	DCbxQHp8Ms6W9i+ZWXH20XRW4k+ppWlHtjvxfb2g+N+iUn7qxPwpup8yYJu7lwrzKFoC9gO6LeA
+	HyEfiiq/H9NMLTXHpeyBnblbJtYUOyCn795VP9PqPhCTyj/BhLQOe5EJ4dW7u/USikFpUy6KsF3
+	VcILhx4y28/ot4baPJ3BLnE0I8bYIZDvpVyTRHDVstSbgIUy5KzFa+u144l6rrgC32oTfpa6OFx
+	NHuj6EG3vCOF4Dz6vLQXLEFqikptQ8oz3kXeq6gw==
+X-Google-Smtp-Source: AGHT+IH68uU3afTTj2Di1Ml74W8laSJha6RW/JVE6xPKghdw8NeZGHbbbCdL4ou37+spikU3tbNsAA==
+X-Received: by 2002:a05:690e:1551:20b0:63f:a87b:2066 with SMTP id 956f58d0204a3-63fd34c4f47mr395530d50.16.1762280466592;
+        Tue, 04 Nov 2025 10:21:06 -0800 (PST)
+Received: from macaroon.lan ([2605:a601:90a8:8b00:2dc0:ec5b:d324:2217])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-63fc96086c3sm938008d50.25.2025.11.04.10.21.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Nov 2025 10:21:06 -0800 (PST)
+Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH] perl: also mark git-contacts executable
+Date: Tue,  4 Nov 2025 13:14:57 -0500
+Message-ID: <7fbb341e8f05fcde3a1543e3bb4e5a3ec1101692.1762280097.git.ben.knoble+github@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+When install git-contacts with Meson via -Dcontrib=contacts, the default
+Perl generation fails to mark it executable. As a result, "git contacts"
+reports "'contacts' is not a git command."
 
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
->> Hi Ben
->>
->> These all look good to me though I agree with Junio's comments on patch 
->> 3. It would be nice to get at least the fist patch merged in time for 
->> 2.52.0.
->
-> Yup, let me do exactly that ;-)
->
-> Thanks, both.
+Unlike generate-script.sh, we aren't testing the basename here; so, glob
+the script name in the case arm to match wherever the input comes from.
 
-Let me have this on top of Ben's 5-patch series.
-
------ >8 -----
-Subject: [PATCH] parseopt: remove unreachable code
-
-At this point in the code after running skip_prefix() on the
-variable and receiving the result in the same variable, the contents
-of the variable can never be NULL.  The function either (1) updates
-the variable to point at a later part of the string it originally
-pointed at, or (2) leaves it intact if the string does not have the
-prefix.  (1) will never make the variable NULL, and (2) cannot be
-the source of NULL, because the variable cannot be NULL before
-calling skip_prefix(), which would die immediately by dereferencing
-the NULL pointer in that case.
-
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
 ---
- parse-options.c | 2 --
- 1 file changed, 2 deletions(-)
 
-diff --git a/parse-options.c b/parse-options.c
-index 27c1e75d53..97a55300e8 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -223,8 +223,6 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
- 			return 0;
+Tested like [1]. I was surprised to find my packager didn't have contacts
+installed, despite it being requested. But the issue is upstream (here): the
+installer doesn't mark the program as executable. I wrote this on top of the
+patch in [1], but it should be independent. A quick test says the
+prerequisite-patch-id shouldn't bother application?
+
+[1]: https://lore.kernel.org/git/0423F0C4-D0AD-471D-9315-FB208A8171B4@gmail.com/T/#t
+
+ generate-perl.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/generate-perl.sh b/generate-perl.sh
+index 65f122ebfc..796d835932 100755
+--- a/generate-perl.sh
++++ b/generate-perl.sh
+@@ -30,7 +30,7 @@
+     "$INPUT" >"$OUTPUT"
  
- 		is_optional = skip_prefix(value, ":(optional)", &value);
--		if (!value)
--			is_optional = false;
- 		value = fix_filename(p->prefix, value);
- 		if (is_optional && is_missing_file(value)) {
- 			free((char *)value);
+ case "$INPUT" in
+-*.perl)
++*.perl|*git-contacts)
+ 	chmod a+x "$OUTPUT";;
+ *)
+ 	;;
+
+base-commit: 7f278e958afbf9b7e0727631b4c26dcfa1c63d6e
+prerequisite-patch-id: 664e4667d11a226a89da52814505a0c8d31b9fba
 -- 
-2.52.0-rc0-28-g4cf919bd7b
+2.48.1
 
