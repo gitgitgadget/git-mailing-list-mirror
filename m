@@ -1,109 +1,179 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E932561D9
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 15:43:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934A034D3B6
+	for <git@vger.kernel.org>; Tue,  4 Nov 2025 15:45:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762271012; cv=none; b=nM/HBJkNnk56RK9FcKin7zzMGQtW/l1pTxfkjclM1oI96fwZ1Q87L4hoSlPxbrC55VDzFttwPdgLd8K3iQrb5F6LOcFH9lyT+Mpls/CZItwc83LXiUVxOEx9bnTbeHzfuM/6h0XBPG6GrEQp3vL31dBqTgfoEFQzV/DGFeU/fIk=
+	t=1762271154; cv=none; b=q8x4oNVIumq+OO6qIqCFJ6wypwOkz8RrWSxbJ5Qde5Z3k0WCRtahhA6Z1lvst82gGXx2Z3pyenfn0ykSc48OdH+bvwirsPqYuiWm9xGGNjVyyA6lcRjj43n6p0U0HQJljk6vSYq49RW1oehhgSvdTqhV0uFKR487Cx5F+sZx8Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762271012; c=relaxed/simple;
-	bh=Q8b0kzFftvRmXeZA2L+Bns0kU+CKsqq5yHKCBECPoi8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lqIhPg1n3txKQRxUAf3BAkW5d/u0/s28I8/Q7JFVC9+ew+NFfa3m0CZdyUPTrj1bXbrPGyq/hOMBK5gA2/0v1snttjT2Iw3F6S2yzcHbK1f5Ho9Bb0gr/tm5w6P16RxfQaQ2esdjsLkgTa2yG+tmASWjO64UWZRLzvcPkrckxb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VWwZKn4P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qen+abR6; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762271154; c=relaxed/simple;
+	bh=n21St7jOIqeHD7I9iXe7yNiueCnzqYHySoYsKVFWJIQ=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=M27YMkVVnTC25Mr9Ju4kDJzMT2+CIcVoyl7DrG28eMIsCaABqdWuZJqlX9G6cJu0gQn/ArPcEVZLsJiy/XB6/sHt5SDDn9S0YNQZ2zlnrinmIva2lz9Msg0tHW0dIf75zAyv7KcVUzbRzu7bGEKDvsbiSsxI22wF5ayMh41HNsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=0twt8roV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M9KElBNc; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VWwZKn4P";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qen+abR6"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 57B9FEC049C;
-	Tue,  4 Nov 2025 10:43:29 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 04 Nov 2025 10:43:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762271009; x=1762357409; bh=nSYnaFxKeC
-	C/10wb7as1/lEeM6PP5U4kGFcswBm9iYE=; b=VWwZKn4P1OJ9gHHNm2ivebslLf
-	LSFlBcrwyh7xNslaOecL5ir8J/SK0cczFkMY56948wy68KWgP/DUc6ct0stfqIPk
-	1LhEp/xWRAhDtRgESmmkwt2KBHE+rTQ2o12J6jTiOuvweApUwSzRGrJav79qOHN/
-	uN7KnrCEjkqh6+WbbIrb02MzQfYd7RGvSPS7/AWb1RNpnnINkNVjIjHWkkbDh2Fg
-	iJWgXFX1GuyxyXiq4JgDG0rn778LYWItDVQANRP3sOnRmPjtp8vnnInFdo1WHPKi
-	B+4kC9GfCLRCliVndQNEsltOm5xGXcEg8vdc6Ri4R/cK3IxsBDviD43goKIA==
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="0twt8roV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M9KElBNc"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 95D0F1D0039F;
+	Tue,  4 Nov 2025 10:45:51 -0500 (EST)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Tue, 04 Nov 2025 10:45:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1762271151;
+	 x=1762357551; bh=4P+t0yWnuZOKNPwDnLraOS4YRCJzSmYLCiNWsprpBtk=; b=
+	0twt8roVXqskuzrvvHUeX2bDFRqNr3/LFsVucvDfQjhPPugOg7qqWOsy97OwEJt1
+	PWt09CFw6UP2WTbz2wjsAV8mV7tG/bcvBPVZF3PQP3mJ2n4kp+ZlO3LZZ/RxHXDq
+	Fp3NFGx67+R3VxFHKi/ONS1VcuQbqUqwg+/9nq0bLKITe1eCuqZp/CMgYYk6OXhj
+	j/M6FI5hUEzG1dU4DrcdEJ9uRSeyK+YbyNf/JdlY4rzSyFMldvRWrqKP5lu1GqWK
+	6b9N9l4dJvMdXPV0gGSKWxXHRudLIQP3k/8HOYBKkgmf8qqrwZr/OqNLqIj09owW
+	mcjQu5rQ/GpkogLPUvwiBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762271009; x=1762357409; bh=nSYnaFxKeCC/10wb7as1/lEeM6PP5U4kGFc
-	swBm9iYE=; b=Qen+abR6beru03dsdS83OIP31uCaSwXy1SH72oZbVgV3h3Olv9O
-	0HhxpWy3KSSCxVN3RnNqTGVhwVyytwIMuFlvanURJtMUo3dBu8DlzG7nyXvmavSz
-	b6WLh8tLWbfK6jR1WZ5SZYxYjygPALfjgEIhkjnU88urZXI0+mjRgVqO+3/LfYAG
-	8o28XokhAfKC8dhM9t7ymmDoPlHqdEzr1Kf9rYbPPiGabvBnFjUFTJtKG7uUQXdP
-	6qY5TnUCSVFpVVBLRxjWBFsEY/FpzNjaTR+sU7k6/c5Ek2ONAQmmMJk6/Gk8+dqw
-	XkHl8qPAWL1AtKT2R9PWXIWsvF7b5w31rRw==
-X-ME-Sender: <xms:IR8Kac4ZahXtqZsY4FQ8jfxhZ63GouWGkElRoFDNx-El6ZQk-H43YQ>
-    <xme:IR8KaUz3cPo43Iv3gN5Bd8xOsmInji_a_1NeKktUoLlLtK8RlTzyBfoWLzIai1dR6
-    rjjszuYtN3kSgV5_47F_j23-x4k4hcQgPgg76t_iGjeSUJBWXBY>
-X-ME-Received: <xmr:IR8KaTwmaqVx-nCzMOW9CMBJdUaiFPlBRy7zYoE7FHzhJjpl19i95mFUpW6azRgdTCSI8WpW8F4eDySBuRmDmKea4Ctrsc5zGBVL>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762271151; x=
+	1762357551; bh=4P+t0yWnuZOKNPwDnLraOS4YRCJzSmYLCiNWsprpBtk=; b=M
+	9KElBNcETvsimtgK9G6QXUdDXC4WDGL1Tu8AB4F9Nz4rkfzjVwkuvQHvWe5OXrSA
+	n5Cr5OxLSjcbclUBON11tqKW9AYU6Fh86bT3IkySjVskZPtxUEcYhbhp6AQ+QNhu
+	QrkaW/c8vEMhvG0Ck9t94IGBV4yJBIfDp41jwO5e+iqjYxW5++CfBurg/A2/jY0+
+	YlmbuRDYdVXodCJltNXdYQ/lsCEcbtY+d2cnQzinnn16cg0tZCvi4WxK3MlC4pAY
+	VRcHiV0JfK3qvyir/5P5KUlDXtUzNTVDInDRaKcgJWxk4R8krx5FenMhaVl/QhxI
+	6c4OF/C09lgLcHpXnLPYw==
+X-ME-Sender: <xms:rh8KabJm3-vo7ymzkK-Tc0x7S0tW4gp_7N_d94UsNCeiKhR-PHuQ2g>
+    <xme:rh8KaZ95CQhlSerrY8UAlVVhAxCqm5M0J1ZE54OpQtOg2-DeuO19C_XCLqxTg1oHi
+    efrJAZ_exr6IOhxvSigLc0YxkYO98Fx7nEgMo58bL27qL__ZcR2lic>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukedugeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeeiheeuveffieejvdekgfdtveejuedufeekfffghefftdduveetlefgfeff
-    gfegnecuffhomhgrihhnpeihuhgtkhdrphhsnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgs
-    pghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthh
-    hikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehjlh
-    htohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhm
-X-ME-Proxy: <xmx:IR8KacxZfZmEGcAWnebOLIElmrUseFrCJWFaLClxsXICX9hRkhxk5g>
-    <xmx:IR8KadZAMt55Q9ijU28aqp174MjLd1YxtxZ5i8JBA0kOwAbH7xOu4g>
-    <xmx:IR8KadU46h47oQT2yDZbO0f5KxWe3ZaigSk3IwJKtwJVjrbsM8usPg>
-    <xmx:IR8KabjYXgkhZTqC8Fy_AK4782u5R6NLVyRsgDMl4mrHuMj1zNa-Xg>
-    <xmx:IR8KaQBz1YNOktJaQCRajdKgQDhWl6WTWWLDlIZQRyplfP58a-MkP0fI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Nov 2025 10:43:28 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  jltobler@gmail.com
-Subject: Re: [PATCH v2 0/5] maintenance: add an 'is-needed' subcommand
-In-Reply-To: <20251104-562-add-sub-command-to-check-if-maintenance-is-needed-v2-0-303462a9e4ed@gmail.com>
-	(Karthik Nayak's message of "Tue, 04 Nov 2025 09:43:55 +0100")
-References: <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-0-a03d53e28d0e@gmail.com>
-	<20251104-562-add-sub-command-to-check-if-maintenance-is-needed-v2-0-303462a9e4ed@gmail.com>
-Date: Tue, 04 Nov 2025 07:43:27 -0800
-Message-ID: <xmqqa511reg0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
+    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
+    epgfevkeduveeivdevueehhfdvteeggfffudefgedutdekgedtledtvefhtddutddtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
+    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
+    gtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepph
+    hssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:rx8Kaa3QtOPuoHFjdtLu4-pnL0enz3XZ5SHK7FR_m4MGfEtW9xJKtA>
+    <xmx:rx8KaWa34bDdOPiTqgxianJHkeMeCf5E7kaMb9hh2IFLcFG-KhtpUg>
+    <xmx:rx8KaaKJXgdlzRusoYAXMbJbJY1Idkr3gSrJhHJai-aVe6D_yE3g5Q>
+    <xmx:rx8KadFEcP8AESHAYbK5wX5MYjKl50sRVKdrkqmO3oMKXILLeTe1rQ>
+    <xmx:rx8KaUjMNZ0Tl0tML4pi7cdS-Ue5Q5SARPR6j4UdtT1IEF5blP0yO_w1>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id E5E4B7800DA; Tue,  4 Nov 2025 10:45:50 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: AGkC0gJjnH2B
+Date: Tue, 04 Nov 2025 10:45:25 -0500
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>, "Patrick Steinhardt" <ps@pks.im>
+Message-Id: <9ff9d97e-2fae-488c-990b-cb574fbe8c71@app.fastmail.com>
+In-Reply-To: <xmqqpl9yshrr.fsf@gitster.g>
+References: <pull.1981.v4.git.1761593537924.gitgitgadget@gmail.com>
+ <pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com>
+ <xmqqtszf2kro.fsf@gitster.g>
+ <8b70796e-b5a4-4f70-8b27-c0ed80d1fc4d@app.fastmail.com>
+ <xmqqpl9yshrr.fsf@gitster.g>
+Subject: Re: [PATCH v5] doc: add an explanation of Git's data model
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Karthik Nayak <karthik.188@gmail.com> writes:
 
-> This is based on top of master a99f379adf (The 27th batch, 2025-10-30)
-> and is dependent on the following series:
+
+On Mon, Nov 3, 2025, at 8:34 PM, Junio C Hamano wrote:
+> "Julia Evans" <julia@jvns.ca> writes:
 >
->     - kn/refs-optim-cleanup
->     - ps/ref-peeled-tags
+>>>> +tree::
+>>>> +    A tree is how Git represents a directory.
+>>>> +    It can contain files or other trees (which are subdirectories).
+>>>> +    It lists, for each item in the tree:
+>>>> ++
+>>>> +1. The *filename*, for example `hello.py`
+>>>> +2. The *file mode*. Git has these file modes. which are only
+>>>
+>>> "has these" -> "uses only these" to clarify that this is an
+>>> exhaustive enumeration and users cannot invent 100664 and others,
+>>> which is a mistake Git itself used to make/allow.
+>>
+>> I like the idea to make it more explicit that this is an exhaustive
+>> enumeration. I'll try changing it to this instead: "These are all of the file
+>> modes in Git (which are only spiritually related to Unix file modes):"
+>
+> The primary reason why I suggested "uses only these" was because I
+> thought it would strongly hint that random additions beyond the set
+> is unwelcome.  As long as that implication is not lost, I do not
+> have strong preference between "we only use these and nothing else"
+> and your "these are all that we use".
+>
+>>>> +[[tag-object]]
+>>>> +tag object::
+>>>> +    Tag objects contain these required fields
+>>>> +    (though there are other optional fields):
+>>>> ++
+>>>> +1. The object *ID* it references
+>>>> +2. The object *type*
+>>>
+>>> I would rephrase these to
+>>>
+>>>     1. The *ID* of the object it references
+>>>     2. The *type* of the object it references
+>>>
+>>> because (1) a tag object references another object, not ID.  To name
+>>> the object it reference, it uses the object name of it, but just
+>>> like your name is not you, object name is not the object (it merely
+>>> is *one* way to refer to it). (2) unless it is very clear to readers
+>>> that "The object" in 1. and 2. refer to the same object, 2. invites
+>>> a question "type of which object?".
+>>
+>> That makes sense to me, will change it to that.
+>>
+>>>> +[[branch]]
+>>>> +branches: `refs/heads/<name>`::
+>>>> +    A branch refers to a commit ID.
+>>>
+>>> A branch refers to a commit object (by its ID).  Ditto for tags.
+>>
+>> What's the goal of this? I can't tell what misconception you're
+>> trying to avoid here.
+>
+> This comes from the same place as the suggestion for the tag object
+> above, i.e. "a tag object references another object, not ID.".
+>
+> Exactly the same reasoning applies here.  A branch refers to a
+> commit, and to name the object it references, it uses the object
+> name of it, but just like your name is not you, object name is not
+> the object itself.
 
-Yuck.  ps/ref-peeled-tags needed an update so kn/refs-optim-cleanup
-that depends on it needs rebuilding on top (no action needed from
-your side, but somebody is doing the necessary rebasing somewhere),
-and then these five patches need to be queued on top, which will
-require further shuffling when any of these two series need to be
-updated again.
+I agree the ID of a commit is not the same as the commit itself.
+The reason I said "refers to a commit ID" is that it's a very concise
+explanation and  I don't see any risk that the reader will be
+confused by it.
 
-I expect that during the pre-release freeze things will be slowing
-down, so I'll manage and survive ;-)
+Unlike with my name, commit IDs uniquely identify commits, so
+I think it will be clear to the reader that the commit ID is going to
+be used to retrieve the commit object.
 
-Will queue.  Thanks.
+The problem with "A branch refers to a commit object (by its ID)." is
+that it introduces some more potential for confusion: it makes it
+sound like there might be other ways to refer to a commit object
+than by its ID.
+
+Maybe there's another option? To me this introduces the potential
+for more confusion and does not solve any specific problem.
