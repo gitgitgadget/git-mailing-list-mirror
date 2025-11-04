@@ -1,132 +1,88 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F1ED27E
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 20:53:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965972ECD2E
+	for <git@vger.kernel.org>; Tue,  4 Nov 2025 21:11:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762289612; cv=none; b=hak/fGMW6BSU5Px40oX0IEmLTLKmubqeP0kksn1o+13OgAuVOuTSjW5ocKsUxP/FRY4hUDCJ98J272a6/CAD7vT5LiNgN4/6Y33+Eld8PrZ+RdXem+ncFLMlKDbDJI30F7UStnL2feBniiYUvFtRDOKpr0vF223v/+N+qs3mOC0=
+	t=1762290699; cv=none; b=kqSEITsFkDCeKZydNE0xgcknPFImk7bsqnJiwpH0IhUXK6u0fZi+DEyTJ/ZAmSG/Ga1myW1GBeS3iHE4jP4kyht4qftE7BC9pAro28t4mUBxUPOFa291iXnwZQSHoVMdJ26eO25PbIqzxFx+1eUDKKlyZu5xRVz958u3FYKuwEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762289612; c=relaxed/simple;
-	bh=xAOjPu8YrbFYkxkrrDyCnHo3pgxZ74/iAIC+fP6HqGI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ijQRZDuo+5QJw19S00Lcb9tRQ7IhGtNZjyZjcA2JvEPoICrfNUtbHtNaqpClC4IBM8Ft6Aa71ryy79nBwrKa8lHKfLluZtUbg1EMLwToehOpT0XEVIBAh20Vb17OnCP+N9PmAOriSwjDqjl34jjTtSK26xR1yJu5PhInkUMrwKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZsO7dWlo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MFZSZKKu; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762290699; c=relaxed/simple;
+	bh=mQ4L89vTWNr5V1+L2YEGiqwrNHtadQY4G29Rxe121zM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nOW1XK8fHhhRkn/8yY5fIy+L8nZ4XKsFlT9xKIfHREBid32FA2eecKNM4p6+wv2mIAuqNxEetEARZrmoJAjsVdAJszgpA7huKa7Smx60agTtub+CXKH5blU00BWUR5tihobF6jTOw858vKm9Ft/X9TVZzfgI+5GrnnisXtJucnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=iP+yN5Eq; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZsO7dWlo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MFZSZKKu"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3329B140011C;
-	Tue,  4 Nov 2025 15:53:29 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 04 Nov 2025 15:53:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762289609; x=1762376009; bh=RtgLvxyy8b
-	iyWBfIGDknzYMKNgwHZzkIWzlMMlcYHqg=; b=ZsO7dWlonVf1jcvCmHbg5L/IWi
-	BLirugTRteYUWnD2Pb5a4EI8bowUnUia30TWOqQKO6VCKsim5wop1knvRGNYubl+
-	ZcW9rMjk5sLYCTfsR7B9Gl7HXz2uy79WF9LN3pyyjywZEjK8CX7TpuuAyWEYoZ3y
-	F3GTzTo+BZ8h2AhE2CE9AMCF/fw9PxYf8SXGFWo7BJNhfnzPdi99Fws3U3S1ZOHy
-	prCij0+pHZrvwpoE4XSu803jwgtN42QA+TgzYv1483Nf1EJC58Qd9iDPWDeQXY9c
-	sjyFOJImYED1onw7qVKDYEmBidxfLCypNBQl2Gh60FUdcHZCNtmJbu3USfzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762289609; x=1762376009; bh=RtgLvxyy8biyWBfIGDknzYMKNgwHZzkIWzl
-	MMlcYHqg=; b=MFZSZKKuXvuFeoYiGU3nRl2wvb02VnTXbpvOyAmm0ahH6U/2zSb
-	c4wnEAgBJamNASQXmJPi/k4032bUZNtU6UOzvCKnIIav1uJiDqnuytCVCrDu2aoW
-	K/oj8+iY2v8ydFMf/76ERxXZpJsFKu4NmMgYxtetx2kZaoq/bP0eTeH8i+Zh0670
-	x5atR6YnlkoVwES5beMuqI3SCPGVhOU4b2Hg2sDMhA4z0/mNI8fm0AflxyxAhb4k
-	d9v9dE6f/rYVpjb56nOTdpHOWjeu2JeLjRtGsqJK/7FnlEbVSt8z6PtxlHtzkA70
-	gJGCCfnb/lNqgP0RVPpo5MEl1aL5ozJW+tA==
-X-ME-Sender: <xms:yGcKaSosAVajot4dmJJIefMplK9yxVajgW1AiDdRb1NglRRdUsXiDA>
-    <xme:yGcKaS6Os80hN1q13npYLbD2rSkELNX4Yzc80VE952rm5zj6HF5CKp9xQRHQBGQCZ
-    dZdw2FZl0wS4cjHqE8YM2o5tk7OxEjKfq7D5rxBnA0yDhLxkp6oxw>
-X-ME-Received: <xmr:yGcKaZe53Mj1Qpj6448IldPTL_AXNeEtPPD43u4FTMAF8EvRwGiZ67gY8ds8HzMiv-IabeQIdFq1AtXv1_m5NoHzgpefoWzO0qg3>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukedvtdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
-    hgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruh
-    hgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgs
-    lhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:yGcKaX4dnGwrEpdh8_sUFPF0fWBc3FE_o-UHo7ZtbpiwN5OxNzyh9A>
-    <xmx:yGcKaQuX1DwY74KuoJLb8Ubgth3O9OJnzQMATVH4UU2LRwFcbmAzWQ>
-    <xmx:yGcKaXiRqQCfnMOeK4frYX-AiiylUYyniVRdTpiMIb22vszThvdYvA>
-    <xmx:yGcKabobXz9SFQP1hIk1vHEB-9cUBOuY9dmgm8rbkXL1J0CagTx1Nw>
-    <xmx:yWcKabvLk43SfC7-AmAekCfsV5Ce3I1LXA1d-SmUnqne_upP94BEsIMU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Nov 2025 15:53:28 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org,
-  "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  "Patrick Steinhardt" <ps@pks.im>
-Subject: Re: [PATCH v5] doc: add an explanation of Git's data model
-In-Reply-To: <9ff9d97e-2fae-488c-990b-cb574fbe8c71@app.fastmail.com> (Julia
-	Evans's message of "Tue, 04 Nov 2025 10:45:25 -0500")
-References: <pull.1981.v4.git.1761593537924.gitgitgadget@gmail.com>
-	<pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com>
-	<xmqqtszf2kro.fsf@gitster.g>
-	<8b70796e-b5a4-4f70-8b27-c0ed80d1fc4d@app.fastmail.com>
-	<xmqqpl9yshrr.fsf@gitster.g>
-	<9ff9d97e-2fae-488c-990b-cb574fbe8c71@app.fastmail.com>
-Date: Tue, 04 Nov 2025 12:53:27 -0800
-Message-ID: <xmqq346tpliw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="iP+yN5Eq"
+Received: (qmail 430865 invoked by uid 109); 4 Nov 2025 21:11:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=mQ4L89vTWNr5V1+L2YEGiqwrNHtadQY4G29Rxe121zM=; b=iP+yN5EqKooQjakvxyzAFxKLeLWJteZyBCDYinZi5DQ4ado8s+mNLWWxJCKAfDcu3MVNCvRfknleoEBgQgaEfH1pJ2rIwIz09+WY0lnavqc2W9uKGU1w8rfX3kCYOBHvkkWYd5j7rQFgd8Poq71cpdvYtA3P0e3KwUa96itk5+xtf77gq5957vlFn89DpU1HIKJxNpMFGqVGao53O6qF8V6xM0HuHGnGKq1EfZ4P8vqmUPUAaC9MPJODS8XBFhPjDjMswnWGomTcBj9WaeO7iNaZgRWthIyq8M9MqlVUvqttftintvWvcQUlD74jEL89SUVQ5qjuTeZ0GIy2m8cP2A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Nov 2025 21:11:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 677362 invoked by uid 111); 4 Nov 2025 21:11:30 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Nov 2025 16:11:30 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 4 Nov 2025 16:11:30 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH] ref-filter: fix stale parsed objects
+Message-ID: <20251104211130.GA2618884@coredump.intra.peff.net>
+References: <20251104-b4-pks-ref-filter-fixup-v1-1-2fbca52d76d9@pks.im>
+ <xmqqpl9xps3x.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqpl9xps3x.fsf@gitster.g>
 
-"Julia Evans" <julia@jvns.ca> writes:
+On Tue, Nov 04, 2025 at 10:31:14AM -0800, Junio C Hamano wrote:
 
-> The problem with "A branch refers to a commit object (by its ID)." is
+> > As reported by Junio in <xmqqo6pjt2wn.fsf@gitster.g>. This applies
+> > directly on top of ps/ref-peeled-tags at 054f5f457e (ref-filter: parse
+> > objects on demand, 2025-10-23)
+> >
+> > Thanks!
+> 
+> Thanks.  As we stop reusing a stale maybe_object and instead start
+> parsing the right object when we need to, I wondered if the "on
+> demand" commit needs a new benchmark, but the example cited in the
+> message used %(raw) so it would not be affected, I guess.
 
-Ah, I didn't mean to say "you must use exactly that phrase".
+Yeah. The point was to speed up stuff like %(raw) that needs the object
+contents but doesn't want to do the parse. So it never looked at
+maybe_object in the first place, which is why it got faster.
 
-But branch refers to a commit object, it does not refer to the name
-of a commit object.
+I actually wonder if there is any other placeholder that benefits at
+all. The ref-filter code already tries to avoid doing unneeded work. The
+most obvious there is not loading the object at all, which is why stuff
+like "%(refname) %(objectname)" is faster than adding in %(raw), which
+needs the object contents (but no parsing). And likewise stuff like
+%(tag) needs parsing, and thus also triggers loading the object.
 
-Perhaps "a branch ref records the object name of a commit object",
-would be better?  The untold implication of the phrasing is that
-anybody who reads what is recorded by that ref can then use the
-result to refer to (find) the commit object.
+So 054f5f457e helps formats which require the object contents but _not_
+parsing. I can't think of another placeholder besides %(raw) which would
+benefit from that.
 
-> it introduces some more potential for confusion: it makes it
-> sound like there might be other ways to refer to a commit object
-> than by its ID.
+What _would_ help more formats is doing the parsing more progressively,
+skipping parts that aren't needed. If you just want %(tree), for
+example, then:
 
-Yes, there are unbound number of ways to refer to a commit object.
+  1. You don't need to look at non-commit objects.
 
- $ git show-ref refs/heads/maint
- bb5c624209fcaebd60b9572b2cc8c61086e39b57 refs/heads/maint
+  2. You can stop parsing the commit objects after the "tree" line.
 
-The branch ref let you refer to a commit object by recording its
-commit object name bb5c6242, but for humans, it is much easier to
-refer to the same commit as "v2.51.2^{commit}", which is far more
-memorable.  Of course I can use master~32^2 to call the same commit
-object, which is less memorable gives us a hint that the tip of
-master fully contains that maintenance release.  What's more useful
-depends on how the name will be used, and the hexadecimal object
-names happen to be how refs record the objects they refer to.
+But doing that is more involved. So not an argument against the patch,
+but just noting its limitations. ;)
 
+I think the parser in pretty.c tries to be a bit more careful here. It
+would be nice if we could unify these.
 
-
-
+-Peff
