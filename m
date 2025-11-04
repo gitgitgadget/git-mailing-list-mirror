@@ -1,351 +1,89 @@
-Received: from avasout-ptp-002.plus.net (avasout-ptp-002.plus.net [84.93.230.235])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12769DF71
-	for <git@vger.kernel.org>; Tue,  4 Nov 2025 23:52:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801F934B68C
+	for <git@vger.kernel.org>; Tue,  4 Nov 2025 23:54:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762300382; cv=none; b=pa4ZjTv/i1XssMEWdWEXktcoiM0fRwU3fednr648VW8dVBqzGix67iR4pgEPgn4FFhaXqRYfq/CyKF67iYpUYqR2TIDZemhO5xAjn/+bVscAWKUzaQvb1XIynxdsLq+EuaxzYoO20Ig+OG4EmlhFbNvZmSHsSpDARK5NdXRfi44=
+	t=1762300491; cv=none; b=I1lgZHavMa6FQlWTrXXucSCVFZ+nmvQoxRq2MuRXIGuhXW8Xf975UQNgEWEV6FqIoC3WqSOCe/SVNFaSwPEnh9a1c+x9NvXqJ9MbqLDq1Wb00YdP8ijM7cKmTO2PCY1hAuW4b61VeRCA4BbqB3rkdefWUPNPe22jRZfxZRB9lKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762300382; c=relaxed/simple;
-	bh=ZuHZjmiP9J1bfZiEsKKxmWOtlvSt6+GzTCdt5RIf6Uw=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=kgxpkpE/7XO2otjUkfD+koiAuKUC2pJbxk0ZiKIm71xLsvyMhgUGNio9RfK8T5xDb1VW+oUivuPVydjAn0koUCmEP+ceLdR3GmFfmvidhHNNqGK9H0GDav4WusVz1N3lp6sXLDoW9ojVpKJ7DyApn+HC0fka1TvvElGRLDcN5lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=Gvj5I40e; arc=none smtp.client-ip=84.93.230.235
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1762300491; c=relaxed/simple;
+	bh=YhyqgcXmw8E1AE2ER5EBJwU4N8WPfqVnlNmfUASx2Ys=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mLa1pDiG2prVe8Ye2pjOY8/A8S7143kfYGFFFK4ZO31slAD30Qtg0svcBcEK0EwC6mLJFinQP2c7Zhoygj4sAqZ0KF1rzn+O8NcIDNKkgk1CV50oozJ/rJnX5M7n7+ou+/QYrVTd5UPqM6d5Hd46iUZu57IyIx95XdgDsCrCHRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ZL6c9yw0; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="Gvj5I40e"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id GQmYv1cxn9u4DGQmZvcP5e; Tue, 04 Nov 2025 23:49:49 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1762300189; bh=UxCcKsTeQXsJnWSDvonAPSZ3W8KqPMf9iG4fJMgkWX8=;
-	h=Date:To:Cc:From:Subject;
-	b=Gvj5I40eVUD5R5zqo0CE7UQGwP0AYNzyQNdRNWk+zITHvKH1PPFe+zCdYoZUUnaag
-	 /XmWFDvyQF7Z8lOyFdla95fvSME31a0KZuopMJhJSev57zOzm8S2KcpV/AChCH6LLp
-	 31SStKegD0bZ7QHeJrec378fhjJPwBSAZdVE4buvNPUYjmhfmWSdiDp8LtNsJhUNOb
-	 Lxp36Fz3N/IxvQO9W+6DzTFl56gfLRSGQQ7HamOi8kabC/+Ypk9Jakp84LjEwKLCAi
-	 LKH3zjSaQtDdMYeV4lqYaZ1C96lE9FaM1GfECHdCypkUhviAj4heUgYOwBo8hZkOsx
-	 HUJNMZ0c/kM/Q==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=UKJ+Hzfy c=1 sm=1 tr=0 ts=690a911d
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=A1X0JdhQAAAA:8 a=EtC-CzOzkOxthMReZZkA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <f22c95ad-43c8-41de-8315-e707224e830b@ramsayjones.plus.com>
-Date: Tue, 4 Nov 2025 23:49:46 +0000
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ZL6c9yw0"
+Received: (qmail 431662 invoked by uid 109); 4 Nov 2025 23:54:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=YhyqgcXmw8E1AE2ER5EBJwU4N8WPfqVnlNmfUASx2Ys=; b=ZL6c9yw0qe2LGeLZuQlHRo70WvseeN6s+78EOU9g+hQC533muImohOFn4QWgLp0uBcr3Wy1hif3aYELtc7Ff2vHKzs0/TaOHl4kPbKgVHiAB514WuniK2DQ6csQJnieompOmREWmjjbC5PpovGYMfzLGlprxU+Ms8g6cCyvlzYyc+n1mTNLk5u0MRX0CMAo/Oy+aLW+c2uD3uEG5pUBbjrGb1l3LMfd038u1r2F5qLPxGqyKhK3Qh3qx/QTZzrgDCbDY13O+KKo488xkywYWm+SsXfxIWj8J78fAYzMux20fETOCNTYWxRq1FbTdIbNfBn75CeUuQk1b9hwdcZOJQw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 04 Nov 2025 23:54:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 679457 invoked by uid 111); 4 Nov 2025 23:54:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 04 Nov 2025 18:54:46 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 4 Nov 2025 18:54:46 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v4 14/14] ref-filter: parse objects on demand
+Message-ID: <20251104235446.GA3667@coredump.intra.peff.net>
+References: <20251023-b4-pks-ref-filter-skip-parsing-objects-v4-0-2be68ce82c9a@pks.im>
+ <20251023-b4-pks-ref-filter-skip-parsing-objects-v4-14-2be68ce82c9a@pks.im>
+ <20251104220748.GA2638011@coredump.intra.peff.net>
+ <xmqqcy5xnz7e.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: GIT Mailing-list <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Adam Dinwoodie <git@dinwoodie.org>,
- Patrick Steinhardt <ps@pks.im>
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: v2.52.0-rc0 test failure on cygwin
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfBXyQeHBUyYplNT7K84ZyDrMEsmYXcZHJuDdG4+tztbjcjqZ9DnozOEOV+ymbYIDUkMGgMmNAh4O1StW4vC0YDLR2tVnKcB8bsVmvBDGrhLLQmx9BzNK
- fzvGHSzDMrcw8uWUxO5FL945tRkC37xHuJ1ddtO3MBnRTCII7fnJ/zZLXzJQosVMLHi3XsErY4pJdO/fa831XGG2vghCzHHisIE=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqcy5xnz7e.fsf@gitster.g>
 
-Hi Junio,
+On Tue, Nov 04, 2025 at 03:40:53PM -0800, Junio C Hamano wrote:
 
-Just a quick heads up: the rc0 build on cygwin has a flaky test, thus:
-  
-  $ tail test-out-2-52-rc0 
-  Test Summary Report
-  -------------------
-  t0610-reftable-basics.sh                         (Wstat: 256 (exited 1) Tests: 90 Failed: 1)
-    Failed test:  29
-    Non-zero exit status: 1
-  Files=1024, Tests=32232, 2703 wallclock secs (23.38 usr 60.53 sys + 7886.88 cusr 10419.88 csys = 18390.67 CPU)
-  Result: FAIL
-  make[1]: *** [Makefile:78: prove] Error 1
-  make[1]: Leaving directory '/home/ramsay/git/t'
-  make: *** [Makefile:3327: test] Error 2
-  $ 
- 
-Initially, while investigating the failure, I was running the test by hand and it
-didn't fail ... So, I tried a stess test, like so: 
-  
-  $ cd t
-  $ ./t0610-reftable-basics.sh --run=29 --stress-limit=10
-  FAIL  3.1
-  OK    7.1
-  OK   19.1
-  OK   18.1
-  OK    2.1
-  OK    6.1
-  OK    9.1
-  OK    0.1
-  OK   21.1
-  OK    8.1
-  OK    4.1
-  OK   10.1
-  OK   12.1
-  OK   26.1
-  OK   29.1
-  OK   17.1
-  OK    1.1
-  OK   23.1
-  OK    5.1
-  OK   11.1
-  OK   27.1
-  OK   16.1
-  OK   14.1
-  OK   30.1
-  OK   15.1
-  OK   25.1
-  OK   31.1
-  OK   22.1
-  OK   24.1
-  OK   20.1
-  OK   28.1
-  OK   13.1
-  Log(s) of failed test run(s):
-  Contents of '/home/ramsay/git/t/test-results/t0610-reftable-basics.stress-3.out':
-  Initialized empty Git repository in /home/ramsay/git/t/trash directory.t0610-reftable-basics.stress-3/.git/
-  ok 1 # skip pack-refs does not crash with -h (--run)
-  
-  ok 2 # skip init: creates basic reftable structures (--run)
-  
-  ...
- 
-  ok 27 # skip clone: can clone reffiles into reftable repository (--run)
-  
-  ok 28 # skip clone: can clone reftable into reffiles repository (--run)
-  
-  expecting success of 0610.29 'ref transaction: corrupted tables cause failure': 
-  	test_when_finished "rm -rf repo" &&
-  	git init repo &&
-  	(
-  		cd repo &&
-  		test_commit file1 &&
-  		for f in .git/reftable/*.ref
-  		do
-  			: >"$f" || return 1
-  		done &&
-  		test_must_fail git update-ref refs/heads/main HEAD
-  	)
-  
-  ++ test_when_finished 'rm -rf repo'
-  ++ test 0 = 0
-  ++ test_cleanup='{ rm -rf repo
-  		} && (exit "$eval_ret"); eval_ret=$?; :'
-  ++ git init repo
-  Initialized empty Git repository in /home/ramsay/git/t/trash directory.t0610-reftable-basics.stress-3/repo/.git/
-  ++ cd repo
-  ++ test_commit file1
-  ++ local notick=
-  ++ local echo=echo
-  ++ local append=
-  ++ local author=
-  ++ local signoff=
-  ++ local indir=
-  ++ local tag=light
-  ++ test 1 '!=' 0
-  ++ case "$1" in
-  ++ break
-  ++ indir=
-  ++ local file=file1.t
-  ++ test -n ''
-  ++ echo file1
-  ++ git add -- file1.t
-  ++ test -z ''
-  ++ test_tick
-  ++ test -z ''
-  ++ test_tick=1112911993
-  ++ GIT_COMMITTER_DATE='1112911993 -0700'
-  ++ GIT_AUTHOR_DATE='1112911993 -0700'
-  ++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-  ++ git commit -m file1
-  [main (root-commit) 69af168] file1
-   Author: A U Thor <author@example.com>
-   1 file changed, 1 insertion(+)
-   create mode 100644 file1.t
-  ++ case "$tag" in
-  ++ git tag file1
-  ++ for f in .git/reftable/*.ref
-  ++ :
-  ./test-lib.sh: line 1017: .git/reftable/0x000000000001-0x000000000002-3b7f1804.ref: Permission denied
-  error: last command exited with $?=1
-  not ok 29 - ref transaction: corrupted tables cause failure
-  #	
-  #		test_when_finished "rm -rf repo" &&
-  #		git init repo &&
-  #		(
-  #			cd repo &&
-  #			test_commit file1 &&
-  #			for f in .git/reftable/*.ref
-  #			do
-  #				: >"$f" || return 1
-  #			done &&
-  #			test_must_fail git update-ref refs/heads/main HEAD
-  #		)
-  #	
-  1..29
-  $ 
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Thu, Oct 23, 2025 at 09:16:23AM +0200, Patrick Steinhardt wrote:
+> >
+> >> -static int get_object(struct ref_array_item *ref, int deref, struct object **obj,
+> >> +static int get_object(struct ref_array_item *ref, int deref,
+> >>  		      struct expand_data *oi, struct strbuf *err)
+> >>  {
+> >> -	/* parse_object_buffer() will set eaten to 0 if free() will be needed */
+> >> -	int eaten = 1;
+> >> +	/* parse_object_buffer() will set eaten to 1 if free() will be needed */
+> >> +	int eaten = 0;
+> >
+> > This comment is surely wrong now, isn't it? It will be set to 1 if
+> > free() is _not_ needed:
+> >
+> >> +out:
+> >>  	if (!eaten)
+> >>  		free(oi->content);
+> >
+> > -Peff
+> 
+> Wow.  Is it just the comment or the updated logic is upside down,
+> too?
 
-Note the 'Permission denied' error when attempting to corrupt (empty)
-the '*.ref' tables. (Also, this shows 1 error in 32 parallel attempts).
+I think the logic is fine. The meaning of "eaten" did not change. It's
+just that some code paths will not bother calling parse_object_buffer()
+now (if no atoms need it). So we need to default to "0" (the buffer must
+be freed) for those cases. And if parse_object_buffer() is called, it
+will always correctly set the value to 1.
 
-However, the 'trash' directory shows that the file permissions are set
-such that I should be able to corrupt them:
-  
-  $ cd trash\ directory.t0610-reftable-basics.stress-failed/
-  $ cd repo
-  $ ls -l .git/reftable
-  total 3.0K
-  -rw-r--r-- 1 ramsay None 296 Nov  4 17:56 0x000000000001-0x000000000002-3b7f1804.ref
-  -rw-r--r-- 1 ramsay None 139 Nov  4 17:56 0x000000000003-0x000000000003-66444a41.ref
-  -rw-r--r-- 1 ramsay None  86 Nov  4 17:56 tables.list
-  $ 
+The new code does mean that if contentp is NULL, we will always call
+free(oi->content), even though nobody would ever have set it. But
+presumably it was initialized to NULL in that case and the free is a
+noop.
 
-Indeed, I can do just that:
-  
-  $ : >.git/reftable/0x000000000001-0x000000000002-3b7f1804.ref 
-  $ ls -l .git/reftable
-  total 2.0K
-  -rw-r--r-- 1 ramsay None   0 Nov  4 18:54 0x000000000001-0x000000000002-3b7f1804.ref
-  -rw-r--r-- 1 ramsay None 139 Nov  4 17:56 0x000000000003-0x000000000003-66444a41.ref
-  -rw-r--r-- 1 ramsay None  86 Nov  4 17:56 tables.list
-  $ git update-ref refs/heads/main HEAD
-  fatal: HEAD: not a valid SHA1
-  $ 
- 
-So, this appears to be a timing issue (a bit difficult to think how it
-actually could be, but ...), so maybe try:
- 
-  $ cd ../..
-  $ vim t0610-reftable-basics.sh
-  $ git diff
-  diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-  index 3ea5d51532..4fc5cbca99 100755
-  --- a/t/t0610-reftable-basics.sh
-  +++ b/t/t0610-reftable-basics.sh
-  @@ -205,6 +205,7 @@ test_expect_success 'ref transaction: corrupted tables cause failure' '
-          (
-                  cd repo &&
-                  test_commit file1 &&
-  +               sleep 1 &&
-                  for f in .git/reftable/*.ref
-                  do
-                          : >"$f" || return 1
-  $ ./t0610-reftable-basics.sh --run=29 --stress-limit=10
-  OK    0.1
-  OK   13.1
-  OK    4.1
-  OK    1.1
-  OK    2.1
-  OK    3.1
-  OK   10.1
-  OK    8.1
-  OK   26.1
-  OK   21.1
-  OK    7.1
-  OK   19.1
-  OK    9.1
-  OK    5.1
-  OK   14.1
-  OK   22.1
-  OK   11.1
-  OK   27.1
-  OK   17.1
-  OK   29.1
-  OK    6.1
-  OK   30.1
-  OK   15.1
-  OK   23.1
-  OK   12.1
-  OK   24.1
-  OK   25.1
-  OK   16.1
-  OK   18.1
-  OK   28.1
-  OK   31.1
-  OK   20.1
-  OK    0.2
-  OK   13.2
-  OK    4.2
-  OK   10.2
-  OK    2.2
-  OK    3.2
-  OK    1.2
-  OK   22.2
-  OK    8.2
-  OK   21.2
-  OK   19.2
-  OK    5.2
-  OK    9.2
-  OK    7.2
-  OK   26.2
-  OK   11.2
-  OK   14.2
-  OK   25.2
-  OK   28.2
-  OK   15.2
-  OK   17.2
-  OK   27.2
-  OK    6.2
-  OK   18.2
-  OK   30.2
-  OK   31.2
-  OK   29.2
-  OK   20.2
-  OK   16.2
-  OK   12.2
-  OK   23.2
-  OK   24.2
-  OK   13.3
-  OK    4.3
-  OK    0.3
-  OK    3.3
-  OK   10.3
-  OK    2.3
-  OK    1.3
-  OK    8.3
-  OK   22.3
-  OK   19.3
-  OK    5.3
-  OK   14.3
-  OK   26.3
-  OK    7.3
-  OK   25.3
-  OK   15.3
-  OK   28.3
-  OK   21.3
-  OK    9.3
-  OK   11.3
-  OK   12.3
-  OK   23.3
-  OK   16.3
-  OK   17.3
-  OK   18.3
-  OK   29.3
-  OK    6.3
-  OK   30.3
-  OK   27.3
-  OK   24.3
-  OK   31.3
-  OK   20.3
-  $ 
- 
-[I hit ctrl-c here]
-
-So, not really an answer, but I have noted several times over the years
-that cygwin seems to delay setting some file attributes until after the
-process has exited ... [yeah, I don't see how either! ;) ].
-
-I noted the above last night and, unfortunately, I haven't had any
-time to look into this tonight. (hopefully tomorrow).
-
-[I haven't tried bisecting because, well ... flaky test! ;) ]
-
-ATB,
-Ramsay Jones
-
+-Peff
