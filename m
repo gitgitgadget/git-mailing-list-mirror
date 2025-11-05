@@ -1,152 +1,128 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F612F56
-	for <git@vger.kernel.org>; Wed,  5 Nov 2025 13:23:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC073218CC
+	for <git@vger.kernel.org>; Wed,  5 Nov 2025 14:00:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762349008; cv=none; b=Ja3CmxSR27RVluqTbv6AE4TCL0nJjSBbXiyBSY+L8ki5/Opq1dwXBYQe9KJiwUUI8YY8vfd3VGjbLFWapyqIcEsdvbTZL3LIoW01dulypthWp6CuquusXGWYqjD9nmqq/HnNbrQRKD3A942NPOyMxgwBv+Aaag14hO13/gkrnsw=
+	t=1762351219; cv=none; b=EtwMls7yYixRVy394mvGoLJA7gFs8ytx9QgmC4wdiVL7cXeNNTmDD2OszyRwXetjydLR5P7bn5JNOmxrEDohJ24l1QV+MzAeKc2fd3rBt/bDs0C6W5H7tTlx00RgF5uV9vjRO1gdtb8/CZ+ITno54tn90lKjMFfvy+CiWlukjXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762349008; c=relaxed/simple;
-	bh=clsgtapjA8GnMs6wUD8FgdJPKUHsFVRLwqfRiji37HM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=teoWF5HE8sCVUniDEpTqOVnxoJVN828+BpxD6z8yZFFu688aKLe63opI8DJXmEFBd2GYkimPg/h0ngCxjGWL+lQLo6Im6bixWnUuLv41DTLx2ePZpTLRfDZqf/Bg86m3CqMtDSAD++/lpEmjtKgo75dRqdJ7L4QK2UzfLk0bHLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b33I6Zwv; arc=none smtp.client-ip=209.85.128.171
+	s=arc-20240116; t=1762351219; c=relaxed/simple;
+	bh=erZCEq1HPU99r4bw0UVA3sdYqZEQk88YV48hnU2LA0E=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZAYcmb+fEq1bO4gPDQkfdEw/gIb5cK45bEzIPabJNDy8ArlC4UD5SdHbLk3cl5HF8SesxgQDW5STmzlbpxI34Ah+9u2wXmHcI5jrPlTzYVHU6UE/6x/nrDdDEsFe38YKXAW8U6+Jqv870JjBf9KmrruuFO0uBU+OBTuWqIz/uNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YtgQ6F2x; arc=none smtp.client-ip=209.85.217.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b33I6Zwv"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-786572c14e3so48754067b3.2
-        for <git@vger.kernel.org>; Wed, 05 Nov 2025 05:23:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YtgQ6F2x"
+Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-5dbde7f4341so748587137.1
+        for <git@vger.kernel.org>; Wed, 05 Nov 2025 06:00:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762349006; x=1762953806; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0mQFq6ZBZ9iWXv8zGcl4iXwTWbp88FEgyesVkC7mmpg=;
-        b=b33I6ZwvgRGY/cXEdZ7OKbsQDVADDDTZ6BuQPUk1tRtdVfUGO5Nhq7/SDzGW+NczOM
-         l3uWSN77207IphSKrGcNZTZ9Q+gJDQujKx3OOk3aEjtEBeSEmzr312y5db8Qqh6XBN1X
-         uLh3nWFpVqg0SolX0BanQlb7ueev+k6WRzhBTr/IvjRldC90aQLDjshMou9JXeKQJL0B
-         xNNwWVhGyh/qGH0EzX7CDTsBm0zHSn3Pg4qJRjfD6KxHmjJ12bb0asmQ4zdScLi/cyqD
-         ovti6TQoCSfeGQDSk9xx3IdutVNKvEGfChclzI0UZX73WJklVf/TxnAg+Whs61HbbRbI
-         VRjw==
+        d=gmail.com; s=20230601; t=1762351217; x=1762956017; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Mzk5MprldWF73KpbpO9KSa5OVRm3yYh0Y1LOqILZczU=;
+        b=YtgQ6F2xg8gLVGScrWzNXWomPM0JMr1vvwXzpnrz064GLERE3Ba49uhaKEXNsj30KM
+         uCozBBNHdQzakdN41B/MG6OJUGFTFhNrRqzC8OSiJfidMADS3LdlHGlbrLlG08y1wb4m
+         PLJ1Bax8mM1zPHpoN5dwe9fVAI65FASWkzeMHHJgayEkzPlnWhzv/RHZtMaEhCcgdxPZ
+         IizngnpcHDCvnQysKr5rejtlumKXpHnuzk9ZJZ3rIHGcuxmqeh2c4PjLDwmwcuy7Oy+h
+         RJ56jXfIrLnPnJjcWxKRNzUhk8ssjyWYua4PJj3ZOO88PefuF8GdrtjuHWLdbenMwXQy
+         wx9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762349006; x=1762953806;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0mQFq6ZBZ9iWXv8zGcl4iXwTWbp88FEgyesVkC7mmpg=;
-        b=BeNI6ziU37Svc+r2kBV4e70k1btngJN1ilId18TlVoSpbYQuFYkIgXvLwSDxnBNRMT
-         j6Zqma5IEMksAm6jD02EHiNoAe01roKvwWAii0nvYGYj5wEpU0bkDsiXgOeWPMdp/+AT
-         HHQirfVlP1T3/EZUvMQHMuCb751zZSBaHQu3i4J6qgQHZgJQU2a4BmgJP8p4fAmdEv5Y
-         1Wi0CEaMDh+OChGmL9rt5ZzV8mnwF3NKxJBpDGNSIOgyQkxVCA/CyZo6LjLu4X4QivDF
-         93k8rucc+DmgcTZLARbKOsPha362dBKeMu546+EnTTgOVaYD+e74CYrLlfKtIkCWmF2r
-         nh7A==
-X-Gm-Message-State: AOJu0YxAs4Dnou325Ig5cwDOU+ZDxCnqBEY9QxLHDWsWTOFrFMWsZoVh
-	3NdV2nMTPZkNtV3gPEusviYutqUIXLqa4RaWUqaYRSrSrLML0TuQvVVkNjnHPNOuutIJO9WZMBJ
-	lWbBRxcuu1fZRrd1jVfJKTxy4Mh1ZD1I=
-X-Gm-Gg: ASbGncsxv7ZwLJp97koHTYA7KSlv/UDllnWcdW8vjOgqEldAJgv2RBy9ov1UXUibe70
-	7XIlOKQZ3thstVqQ4Jvc2NgBzCw14Nk0YhN/jmn0l0tY4s2zK37FVXyIOVpyv8wDQxZsqdNsLDQ
-	SWcgWNrlBEFbNA2waXPPxPh0ThTP36wBDYx0YQrsjw79lY/8dAlD2Gx/1hxg+QtcTnmG3sELvNC
-	APwqjJ8mQpXNg2UJ4m9GlWhgd4CmEJmeNYgSm0s4hR9DBaqCYKya1z/ekBljotT
-X-Google-Smtp-Source: AGHT+IEka0ZhCIahP9yv9TlylhbEBWXOJWBLpvE1Cuz7aa5hc4bYyo6TFj2/7v2DJCye7LMMH2BtTuM3HsV5ur5U6qU=
-X-Received: by 2002:a05:690e:4291:20b0:63f:a399:3972 with SMTP id
- 956f58d0204a3-63fd35a2b4fmr2371755d50.56.1762349005689; Wed, 05 Nov 2025
- 05:23:25 -0800 (PST)
+        d=1e100.net; s=20230601; t=1762351217; x=1762956017;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Mzk5MprldWF73KpbpO9KSa5OVRm3yYh0Y1LOqILZczU=;
+        b=m6SBj/Vkmqb9Db+ZOzkjJfa5lQ76ZP/SOKkTwgU8rD9GpkWazEX1YMr8n+MKcryqjm
+         zRiIrSVzoK15XqphYjKmYXysjEe7Mf1oBPbHP8MKCHA0XsuyJ9LT6qjrcy6s2Syr4g8f
+         tRf+Dqjy8qwxLnfyFMTtKNlXx3OH8AD1aLDxhLELhyKJPeqN8EmfD9BGJDcrumt6whGt
+         7fx2ZCI2eeAqFDkyqzlnRF4/BpK8kB4rIXL45nH8+9DV5cqjBieYP/cD433YFaHJr2MG
+         HiWIxRLQJEvElFhj4uJppEm4gXyBzNJbalXfSDWOabg13MD4Xt5nt33NjNKOIfhgFcsn
+         FnbA==
+X-Gm-Message-State: AOJu0YzeD9i0Anh2RiGJWNEbjOPn0n/ksrxUr+rG+BR5F6eFLmxo4CiT
+	iIrOrSOMya4sry2fniyxnrP6RrM5F5yOjg4s/wOvImNh57KWCRer8XWczYN3oaWjEsO1RC567JT
+	ZqQwnVtNu9TwqnWNHhD5I8zcQqQNIK2A=
+X-Gm-Gg: ASbGncsBEZ7Fr1Gtt7MqDvqcHgi4orXTS4KZOIiC0IqVXhdZD/tUgURNURgSSy9gBwS
+	ttmEtEm3zOK9NDPfZcVhRBLim5dtbZWD5LceCbloOGV68deAmCiyQXxxe5gh0F8Ok53PACMupUT
+	3hA0yZfLmHC1CDlbK/Chee5qxUDnh2HZzWCEkYDHjkftTJTw6zCUxivJAdXp2JLhMtceIgKF+xz
+	ozVzPFiB6EQwG4qYTAGXnBx6skmrALIhEOY/Oq2AxNJX46j8BIQCqgsK9erkwS1fiYg2HPPJPgM
+	J8UiWrU9fJci1DyTWjzGgDJoFnA=
+X-Google-Smtp-Source: AGHT+IF20BNQuUKKTV0VrVpLKxhhas0zC/gT/mzwNCvG4+RVwAICx05EGN73gO3AbsnYrGdSWWowuou7IvceO2cHJos=
+X-Received: by 2002:a05:6102:d86:b0:5db:e885:6b0b with SMTP id
+ ada2fe7eead31-5dd8872f4e1mr1258042137.2.1762351216626; Wed, 05 Nov 2025
+ 06:00:16 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 5 Nov 2025 09:00:13 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 5 Nov 2025 09:00:13 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqa511reg0.fsf@gitster.g>
+References: <20251031-562-add-sub-command-to-check-if-maintenance-is-needed-v1-0-a03d53e28d0e@gmail.com>
+ <20251104-562-add-sub-command-to-check-if-maintenance-is-needed-v2-0-303462a9e4ed@gmail.com>
+ <xmqqa511reg0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251104155127.1079-1-qjessa662@gmail.com> <xmqqjz05prog.fsf@gitster.g>
-In-Reply-To: <xmqqjz05prog.fsf@gitster.g>
-From: Queen Ediri Jessa <qjessa662@gmail.com>
-Date: Wed, 5 Nov 2025 14:23:15 +0100
-X-Gm-Features: AWmQ_bkGKblV5klaYOhhcxRJP8xytd2bDOhP3NKB-UJ4xCbr4DQGSXtAnJU7AmA
-Message-ID: <CA+JX8Fpw215XPv9u8g3jVjwLKLDsTNXnxtcmGK5L3oo54SHvdw@mail.gmail.com>
-Subject: Re: [PATCH v3] doc: clarify server behavior for invalid 'want' lines
- in HTTP protocol
+Date: Wed, 5 Nov 2025 09:00:13 -0500
+X-Gm-Features: AWmQ_bnywW5FI82wg-O1By_j_btFcGYrgm-YhoDnWJUNl0QOxTREJY_sd4fwA5s
+Message-ID: <CAOLa=ZTqqenfKETuvssJ-8KbaVAp5gG1n_jypkm-uBuH6vAO0A@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] maintenance: add an 'is-needed' subcommand
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, 
-	usmanakinyemi@gmail.com.com
+Cc: git@vger.kernel.org, ps@pks.im, jltobler@gmail.com
+Content-Type: multipart/mixed; boundary="0000000000003caebe0642d95ef3"
+
+--0000000000003caebe0642d95ef3
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Thanks for the feedback.
- Like you rightly said, the last two lines invite more questions than
-they answer.
-I=E2=80=99ll remove them so the section stays focused on describing the act=
-ual
-server behavior.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks again for the guidance.
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> This is based on top of master a99f379adf (The 27th batch, 2025-10-30)
+>> and is dependent on the following series:
+>>
+>>     - kn/refs-optim-cleanup
+>>     - ps/ref-peeled-tags
+>
+> Yuck.  ps/ref-peeled-tags needed an update so kn/refs-optim-cleanup
+> that depends on it needs rebuilding on top (no action needed from
+> your side, but somebody is doing the necessary rebasing somewhere),
+> and then these five patches need to be queued on top, which will
+> require further shuffling when any of these two series need to be
+> updated again.
+>
 
-Queen Ediri Jessa
+I know, and I must thank you in this regard for putting up with this.
+This dependency chain is certainly not pleasant.
 
-On Tue, Nov 4, 2025 at 7:40=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
+> I expect that during the pre-release freeze things will be slowing
+> down, so I'll manage and survive ;-)
 >
-> Queen Ediri Jessa <qjessa662@gmail.com> writes:
->
-> > Update the documentation to clearly describe how the server responds wh=
-en a
-> > client sends an invalid or malformed `want` line during the HTTP protoc=
-ol
-> > exchange. This improves understanding of Git=E2=80=99s behavior when ha=
-ndling
-> > incorrect object requests and helps developers detect and handle such
-> > protocol issues accurately.
-> >
-> > Signed-off-by: Queen Ediri Jessa <qjessa662@gmail.com>
-> >
-> > ---
-> >
-> > Changes since v1:
-> > - Rephrased the explanation to be more concise and aligned with reviewe=
-r
-> >   feedback.
-> > - Clarified that the server includes the offending object name in its e=
-rror
-> >   message.
-> > - Adjusted tone to describe the expected behavior rather than prescribi=
-ng
-> >   implementation-specific messages.
-> > - Improved readability and technical consistency of the section.
-> >
-> >  Documentation/gitprotocol-http.adoc | 5 ++++-
-> >  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> Perfect.  Hopefully your future contributions we won't have to worry
-> about these procedural issues.
->
-> > diff --git a/Documentation/gitprotocol-http.adoc b/Documentation/gitpro=
-tocol-http.adoc
-> > index d024010414..f3f48d3f35 100644
-> > --- a/Documentation/gitprotocol-http.adoc
-> > +++ b/Documentation/gitprotocol-http.adoc
-> > @@ -443,7 +443,10 @@ If no "want" objects are received, send an error:
-> >  TODO: Define error if no "want" lines are requested.
-> >
-> >  If any "want" object is not reachable, send an error:
-> > -TODO: Define error if an invalid "want" is requested.
-> > +When a Git server receives an invalid or malformed `want` line, it
-> > +responds with an error message that includes the offending object name=
-.
-> > +This clarifies the expected behavior for Git implementations and helps
-> > +clients detect protocol issues accurately during fetch operations.
-> >
-> >  Create an empty list, `s_common`.
->
-> I am not sure what "This clarifies the expected behavior of Git
-> implementations" here, though.  Who exactly are "implementations"
-> that the clarification is given, and what are they expected to do in
-> response?  What does it really mean to detect "accurately" in this
-> case?  For a client that received this error, they know what they
-> sent as "want", and they are told that the other side does not like
-> that object name, but then what would they do after that?  The last
-> two lines invite more questions than it answers.  Perhaps we are
-> better off without them?  I dunno.
->
-> Thanks.
->
+> Will queue.  Thanks.
+
+Thanks!
+
+--0000000000003caebe0642d95ef3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: c5fb7be4bcff68b2_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rTFdHa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mem81Qy85V2t3R05wSjh3NjE3ekpJTHM5a1hYVG1Ndgp4VmtqVDNZRUpN
+dnEzUmZObFBlOVdheUk2SEYvVklCNXJCaWlGWGRHMkpNR1lTUFIzdU13VXlWeS9hb3h2ZVVEClla
+NWl1Y2FaZUtDOHRMVEF2MVREMlQvdVJWY1cxNjVnK0dISG9jWk5lVUpEeWlITzBYQy9sNmdZQ3hq
+L3pyeEQKSHZwR2x2V2JHOEtUYk5OdmlQbnc0cklPeDBxN2xOZENQL1RpcjdqYTFRZ3VobXQySGtB
+ZVd6ekh2Q1JObHBZQgpaMkE3cktsRnlLcXozbUlFNzRneGRKVVFmbmlqT2V4OWVYdkNvc3ZiMVJ2
+cWlVTnRlMG5IcFFJK1ZoSys0eVlsCkFxYUZlMFUxRm5COW5Wd0U3aHQxaG1nckx1ZG1PY0Zjb0tW
+eFpoM0ZRT3NpMndVN0J1d2lCUkRyMm1sZVYwRjUKeEZtNVBsdVRMY25vWFBWNG9iRnNTbHNkWXlW
+bHNuY0ZRR2p5eWVZZ2ZGZEdPVk5zTjgvZ0s1bjI5TC9FMG9hMgoyZWFkNW5tRk1jUTV2ZXpzaG9V
+c0lSd09YbWlIYllSL3hSa0ZaQ1RSVkZjU2tjbUlidXEyaFV4STc3d0JTUnVGCi91bzBLVTNMT2Qy
+UXZ0M1NkWGhxTUFyUHhSeFgyTFJqWEhoRGZlYz0KPXora0cKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000003caebe0642d95ef3--
