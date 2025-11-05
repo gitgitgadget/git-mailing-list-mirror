@@ -1,121 +1,73 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9B32D24B3
-	for <git@vger.kernel.org>; Wed,  5 Nov 2025 08:04:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2876D30BF79
+	for <git@vger.kernel.org>; Wed,  5 Nov 2025 11:12:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762329846; cv=none; b=dZvdQspjEY3QrUNv4JIfUjgC3KCn0uOPYi5TfInfaEmfzzP7T5yP5xFbxrU2oQPdHL9JsetP9+lXjqk4qsqSD9Cpmidck0UXMuVSXgKSueC2zFoHoO3NKsBeqWHJ2E18fMCi1WGuq9ZBgZVZgwmJxPuofS1Wu6fB2vzH71Z261I=
+	t=1762341145; cv=none; b=li4wYWVbMbl3sdWVq0mSaWxQoXjqv15NDmZlpqoZ4pm1Mr9GfF+Umq3S9AvEagiU5XcS96Hgs0licReSmPdMFqze1HiFhE8+AvOJePoHYqwRzb4iQI1UzgGfB5/SE2uLOjeLAFAfDy61FgVO4/unkmgmZL5eQng1+SF6WBcSIB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762329846; c=relaxed/simple;
-	bh=czYPQfZQPCxRIX7Oq0qASwK5ukfo8V0HG4zbeb5jcTs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CObpeNzyukTj9WQY0TJyrd7qs8aPQd3b0afB+wFr6t17oF3DiBN/f494HJlN/1m1yTp+B17SlWcgHMOrVBUxaKyGWaxszSuZ+Exa6foL9OnaI1xIs2o18i+2TgVQ5LJEToishv2XcUL/TQ32yy9PRrejGyrEr4+isWMtr0v24/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gwwd19no; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YDyvM/JK; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762341145; c=relaxed/simple;
+	bh=Rbw2JiZS7Ga2Jz8ByA5LlhwVo3LJacYduOFbzcio6nY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=D+txAZkHVQaipfV88+VEVWmT+FhqG8EDhBhXTza3SsdcykVzUVt5ySqg91BjbevYQvaWTHDCCqWzL1J9YqqZt6eSexA3aC+XlkN7AndX31sPEIJE9STo0mvj1wRSGGNq5tmEWYG/KEURasFjwFXm5SlIId1wGQEeYnXY4CLWkuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e43PYNQN; arc=none smtp.client-ip=209.85.217.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gwwd19no";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YDyvM/JK"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id A4EC61D00142;
-	Wed,  5 Nov 2025 03:04:02 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Wed, 05 Nov 2025 03:04:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762329842; x=1762416242; bh=rvn9Q9XFAB
-	SPZXj8rwnr1E04/af40ip+oiDPi1s0xCM=; b=Gwwd19no4pQRoz/fPWYVu3YyY0
-	r8i7sYWMMZYbj0JXTv2EEPvjD0QPrD6ejbWn2jvQlUScfeXk9HqdVV3LcuTRwskx
-	rVzHTRlXGIs7Y9EQ13Q3YMGvS2fc4ihYU2g1VYgujKwG/KeEJgTOvqnGLq4XfOde
-	8+TQC0ALxnEGzKNQL7PtquIHBujgaeSyhJ5HD3Zz0Mh8CArVApAa97B0LxMjulZb
-	orOzDB6RvqzIJmbOAVSJSpjtg7P8pXx55NdouQM86r5rsFZBBu4MyAY8s/jDBWVx
-	DUDeRG44KSerqKFP1fy+FRp73xLjrPnikFYsZvhTq5ydnI6Apn/gctGbbunA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762329842; x=1762416242; bh=rvn9Q9XFABSPZXj8rwnr1E04/af40ip+oiD
-	Pi1s0xCM=; b=YDyvM/JKVC2ivHduzzihiuGnnvWLhdAIuBCobg0iToDYDMlZyxs
-	uImesYT/UORlrV9dw8OzJPesguM3heRx8IKfOvNTH2vwNcYknmMppAXk0LNX8dDE
-	nqpGNMK6a+TAOgeMWwhbICUDwvnY5R0Wg8f8EdG9iud4RU3eF5m+Aoe4JU8qYJ2E
-	i6mXw6ByPVrlcEqCVC1Mvy+mEeDjMA5pAxoJh5bAfdvgKSyf5/fGrin4oGOT9EZi
-	glQQDplvdLQovivY4tO8Xygk6m4QmIAcgDD9pMeMIyP3COM2GPlu4G2OmqesxpE+
-	31WgDaG9rJ4Ocz2MHYM3AaNHw+xxNwZ+kBQ==
-X-ME-Sender: <xms:8gQLaUvZZ40ji3HpSSKNLM2a9QvGLDwJ8bVPTqJT3dRPCZlYtbDodw>
-    <xme:8gQLaYenw0C7AtwKbBg-7Y7FPl6H2aF-YA8EG5PRd8CReweFtPQapdOCTW8EvVRH7
-    AJCgyFQLOwwxrPobP1S7VoLwXgzVGbqq0Td-XZOe6XNweX-WanJrXs>
-X-ME-Received: <xmr:8gQLaUysL0xaZnKrkaTOWnKDUliVW4TMDextCD6XtcBQ9VnZh_6qlU37A99HM21VbvhE9Y_xs8e8idkf2UEDwTyQBgDQmwbgloGi>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeeffeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghr
-    thhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:8gQLaWGySNz7NymeOb7dddrZZ2e49Ng8p0nIHHshfu3xRBxfgrb-7A>
-    <xmx:8gQLaQxP5FdqBoslJOIUrNId3oQzDtVWWR9SMDssRdN9hsHBE00VYw>
-    <xmx:8gQLafu94CDnFi-TJobxCDppWwA1jdYRf0f9gF-e6RDtZ6pSQ1ydEg>
-    <xmx:8gQLaV15rz9pZqNCFeZyyNqNbqL4Hjp3Yq1PlwBxuUpAoixrqzsgGw>
-    <xmx:8gQLaYSpvGrnO-DW3qQqggm0uY700FxGwoVbk1hD6cEv4GPhOw1OuSnE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Nov 2025 03:04:01 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com
-Subject: Re: [RFC PATCH] diff: add option to report binary files in raw diffs
-In-Reply-To: <nxl3sgs3h2psylifnbwcjmubdfmfhj53jjun5nsa4aqq5robh7@quga463ajvbu>
-	(Justin Tobler's message of "Tue, 4 Nov 2025 18:17:05 -0600")
-References: <20251104021455.379807-1-jltobler@gmail.com>
-	<xmqqa512sfcj.fsf@gitster.g> <xmqqzf92quen.fsf@gitster.g>
-	<nxl3sgs3h2psylifnbwcjmubdfmfhj53jjun5nsa4aqq5robh7@quga463ajvbu>
-Date: Wed, 05 Nov 2025 00:04:00 -0800
-Message-ID: <xmqqtsz8nbwv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e43PYNQN"
+Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-5dd8a02e808so635055137.0
+        for <git@vger.kernel.org>; Wed, 05 Nov 2025 03:12:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762341142; x=1762945942; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Rbw2JiZS7Ga2Jz8ByA5LlhwVo3LJacYduOFbzcio6nY=;
+        b=e43PYNQNJ218qB/m8Mvaw/OKNL6NpOwCVgVAS7Qbz5A2hynvgogfi2NKpmP8xcDxUc
+         XWC2d9aFvnyhx066oYWFCoIRV8x6ljOaBmI7L/NOJfAm9fdgGPPLmnnaX1hglbVDyblZ
+         vgfTJM6BvfF7QueUDwPAXQ/+tj4smUfayj3cWDpjbTrn5RsZM4QAiEVDFtaKuBpECadP
+         jdJRmZQhw0K7DlH3/CruFoVzuK1m1z3p6VVdndkxTTKXjHPp3BUVmYPsHJ2Wa6LO1jDb
+         sy9UpOdBDJKHHtZRi5cwjy9iHvtIRroJLL+LmTmGYvVM82g14yY84pCe6tI7ul7fXD/a
+         NCqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762341142; x=1762945942;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Rbw2JiZS7Ga2Jz8ByA5LlhwVo3LJacYduOFbzcio6nY=;
+        b=sEkPa4T4WA9N49mCI2gtlD0URuxzxdBMQUMXbY0GNovJ1DRG2HAeSci5B1mZsylqdh
+         sdGaSDwUlqiOtZzE4QM7DlsKHznLiBJ9G/Fc2sBdP8p51Gu/XV7My4in31y5NDZL7TNb
+         ay6nHdRbXpEMa1XAMi8jW/xS1jL/X+KBMnxMsybgmu54cMJH4/IOD2ORbQGQUcPUtSdN
+         9g4OT97UDWSPyOnHH/1SlrbwIyrKRlRTm3IJC+YRstVjzD/2OgupNzWtAN6fDijQMuKH
+         2cv8D+GRGh+IUxe2yFiMGdoUaJHeWePCyLBpvT/uS9Q+/VK+3ljWi+EfmiIEMutJUgOh
+         MVTQ==
+X-Gm-Message-State: AOJu0Yw37mVMwOBGtkJA8lwU2uY5Ti7h/Bga9Rt+d990skjPRpZEsoPX
+	+43G59C1uddTyslEdDoIAGeF16OL3kX1uy9j7XbJ58j0oyjwWugs0i2y6/PW+fxuNuM8rxuX0cD
+	yYy4kuXedRwxTGJtcSN8iFpQNz56ZZC237VM+a3DLMA==
+X-Gm-Gg: ASbGncvV/lJ/c/Nq2mRtmL6aloFLfOAMzW+f2CUJN6gcpu86hRS3mbIadpShBo9+kK4
+	6xrw7Up0Ig3647gOkL59jfccganLsXYPlIaCSYU2gPTCs8q1Px36dKTxbgQ5Pz42wlxfb5vHXvO
+	D5Gt6nkwW37fKRB03J93/bEVH7o/TF1ZU/l0p44kW5lD2mRxiwzXSEVngmJjFdBY8TvyaNAIrzW
+	PMbucUL7se/OVORhaVqlyomDbc4YnRoY2giFqwy9taUw3mFdW1rUKqfbfDPYsnAAsMHwPMSM0ga
+	Uv1l8SPDoT3lG4D8
+X-Google-Smtp-Source: AGHT+IGfzx930m2caJM5RiiQhItDzlf0/uX0ZPtfJu06gT8smLeuNmcmQwb1FqUrOhZjvfiPlvss/PEqHMKKYjGr/90=
+X-Received: by 2002:a05:6102:548a:b0:5db:27e9:933f with SMTP id
+ ada2fe7eead31-5dd8921eac8mr980518137.40.1762341141869; Wed, 05 Nov 2025
+ 03:12:21 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CA+JX8FoKKB8LrCbPgXgiqSLvtpk=HBsxCcZAW2M_Y1-Of48Y+Q@mail.gmail.com>
+In-Reply-To: <CA+JX8FoKKB8LrCbPgXgiqSLvtpk=HBsxCcZAW2M_Y1-Of48Y+Q@mail.gmail.com>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Wed, 5 Nov 2025 16:42:09 +0530
+X-Gm-Features: AWmQ_bnZJpqtXxjWLiGkPPniBi9vga5MOxWCqABFeQ_pARYa8lncbPBsH2WK0DA
+Message-ID: <CAPSxiM9wOuzW-Qc0dagsHNjFh4Hj7Hd0yq_G_wA6Gm3-Vr3Xmw@mail.gmail.com>
+Subject: Re: Outreachy Proposal: Refactor Git to reduce global state
+To: Queen Ediri Jessa <qjessa662@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-Justin Tobler <jltobler@gmail.com> writes:
-
-> Maybe the output should be something like:
->
->   binary=tt,incomplete=ic,crlf=cl
->
-> or something along those lines. That way we could freely extend in the
-> future without having to worry about a specific order. If we think all
-> of the raw diff extension modes would only report with yes/no for each
-> file we could just do:
->
->   binary=yn,incomplete=yy,crlf=nn
->
-> but maybe we should be more flexible and leave it up to the mode to
-> decide what its values can be?
->
-> Also, maybe this info could be on a newline following each raw diff
-> entry? Something like:
->
->   :100644 100644 a1961526 e231acb1 M	foo
->   binary=yy
->   :100644 100644 31eedd5c 402a70d7 M	bar
->   binary=nn
-
-I know these are parse-able, but quite honestly, both sounds
-somewhat backwards, if you meant to make this easier to parse by
-simple scripts.  Scripts do not mind their input line wider than 80
-columns, but it is cumbersome if they have to take each pair of
-lines and combine them to process.  And repeated keywords like
-binary= etc., do not look like it is less error prone for scripts to
-parse them out, either.  So, I dunno.
+Acked.
