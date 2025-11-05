@@ -1,161 +1,152 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECF02FB087
-	for <git@vger.kernel.org>; Wed,  5 Nov 2025 12:14:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F612F56
+	for <git@vger.kernel.org>; Wed,  5 Nov 2025 13:23:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762344866; cv=none; b=oQKmg1aAkx8bCPw/nL9NPTSQ0NXKTggdNHk4jDAnNfuo8SgILr6XAW5CfFoNasNuN640gBL9v2aQZdO2dSXuREab0n4RYDZ5VUxg4C/fF90Qhj31P6QcWOeBxFjRleS3J1XQHW7/MQvlC3qeycozACzdtdenqx1MP9qeFB89320=
+	t=1762349008; cv=none; b=Ja3CmxSR27RVluqTbv6AE4TCL0nJjSBbXiyBSY+L8ki5/Opq1dwXBYQe9KJiwUUI8YY8vfd3VGjbLFWapyqIcEsdvbTZL3LIoW01dulypthWp6CuquusXGWYqjD9nmqq/HnNbrQRKD3A942NPOyMxgwBv+Aaag14hO13/gkrnsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762344866; c=relaxed/simple;
-	bh=kRfkFYOu0j81robCLDiSmwACdUcwigUfdoA7f5X29Aw=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=DDAqrb3UpsDGbEOGxUaPHsgwT4Gqp80gSvqsoMhvH9jyDeGpkC6SlqCI2Un8RjJVNge6tymrPmpuqAWuWji37TN56QDsRXvKXdpXEPOpEMOAWKPBKFfXLY/8dqe+NndC7z9ZPsnnYRAuRjNncZk9iS4QMqHY14+qhfsUD3e7GTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P3yRNbLt; arc=none smtp.client-ip=209.85.128.172
+	s=arc-20240116; t=1762349008; c=relaxed/simple;
+	bh=clsgtapjA8GnMs6wUD8FgdJPKUHsFVRLwqfRiji37HM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=teoWF5HE8sCVUniDEpTqOVnxoJVN828+BpxD6z8yZFFu688aKLe63opI8DJXmEFBd2GYkimPg/h0ngCxjGWL+lQLo6Im6bixWnUuLv41DTLx2ePZpTLRfDZqf/Bg86m3CqMtDSAD++/lpEmjtKgo75dRqdJ7L4QK2UzfLk0bHLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b33I6Zwv; arc=none smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P3yRNbLt"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-7868b7b90b8so26580367b3.1
-        for <git@vger.kernel.org>; Wed, 05 Nov 2025 04:14:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b33I6Zwv"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-786572c14e3so48754067b3.2
+        for <git@vger.kernel.org>; Wed, 05 Nov 2025 05:23:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762344864; x=1762949664; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eQm4No/qkEihg4OfwP0Jf1bRAOG71B3rercpy64QQxc=;
-        b=P3yRNbLtaG2ElhRN9HHXQehHr0+EyZ2PKKMy4jSe+Rg0+alkxYG1l8gpnxckOFks2T
-         u/hOQQVTid6CNgFJAUUT1cXqYR+aelPYhz1B0wLgWJUWqrg68nGCxEwIA+VFE3on+JND
-         fzWHbAOn8PlviCWVAk9LS34uGT4x06y07En/yVlPXyHpYr636XJJ5c6DcCRVJtjE+rbb
-         ++ohzmvVhRPA9IEylVs70N11L/Ydvp/GeN9DV21Z1rT8kLslLuv/F+wQFirn1nbYpdu9
-         gKRmth2RjIQDY0LNvWdWxOGr/uHCjJv7HZs1CbG54jZuBYkangcNUrHzkkrff7Dz8+p0
-         YdPA==
+        d=gmail.com; s=20230601; t=1762349006; x=1762953806; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0mQFq6ZBZ9iWXv8zGcl4iXwTWbp88FEgyesVkC7mmpg=;
+        b=b33I6ZwvgRGY/cXEdZ7OKbsQDVADDDTZ6BuQPUk1tRtdVfUGO5Nhq7/SDzGW+NczOM
+         l3uWSN77207IphSKrGcNZTZ9Q+gJDQujKx3OOk3aEjtEBeSEmzr312y5db8Qqh6XBN1X
+         uLh3nWFpVqg0SolX0BanQlb7ueev+k6WRzhBTr/IvjRldC90aQLDjshMou9JXeKQJL0B
+         xNNwWVhGyh/qGH0EzX7CDTsBm0zHSn3Pg4qJRjfD6KxHmjJ12bb0asmQ4zdScLi/cyqD
+         ovti6TQoCSfeGQDSk9xx3IdutVNKvEGfChclzI0UZX73WJklVf/TxnAg+Whs61HbbRbI
+         VRjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762344864; x=1762949664;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1762349006; x=1762953806;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eQm4No/qkEihg4OfwP0Jf1bRAOG71B3rercpy64QQxc=;
-        b=vZ+AdrFHck3Bfuqf4AmGbqa/QKJlgBe+WEOB+RuUr1S9xnQhSXFpgOlwHFr+EhNUqd
-         u1og4m6gLs8UGlQ8f/lLMT0yJmCWOLBLJfIQMYDW6C7wNWXuSR+62gGpOi2IC2ruybG2
-         mhNy42v5NYLpJPiM/V9QGQuREgYrWxzlEANan9XWTCyBUwh+1RB0/yKVVaPXaBGiQ40k
-         5jaXwerGn/fR8PPMarm6wv5N2Bt+lPyQ1d2HAx+rvjkPYSwx4Ucks7R8ORsSfDUwKGml
-         TTZxcc8BNE7Wki83nFTqCbDirwG8/mBnq8rrLvGW4czw6IfiO3dcsXf4n4FKmrVaEmkF
-         9pZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVI+iI4gncrWHZORxrcYrgdQGV97F3TiYxvJ6WXnKwzJCBHdMv8l9biKEKd1m20koFIXa0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQGUPW5sVH3ihv4eue8UeTZlNE8vFstPU7uyRmo7Jd09FQTCrd
-	zpZZqgFQiNw6K0o7tQZw9bQrOHT6YrPQEQoEk5lNdR8zjs4EsfAd1iNJ
-X-Gm-Gg: ASbGncvOrT+b4OEjqvCi6fhCd5WCXifbgm26uB/Qb4JE6jjCwt7l0K1ifbUQvfxgPfh
-	RPz49j3f9xR22bSVqfJMcWGqmrux3WuiLZylCcBjcEHaUDNs9QpzE+Rfyj2NPvyhO9xmyqlZMly
-	S4ofyaD7nv38ppout3bLn8q1TNsRBaOnZk9suRM7FT/geEKSHzuFYbWwy/bY81mIStsgG/Df6cU
-	ttLmYuofb5JxdGMz54HkV6M9annCnQaMCtmHMGZ9dryaWELVL3Y0Uc6Q14gxUmnii4Aljgz+ZNq
-	rzKa8AEmDW7r9aQOSS2sxuZRIUZtbA8FFMTJBYqMOonhT/9zO/QWupCpKCu5APerZcGmUfp4mUC
-	L3TXpsMbyHEkwmpyHDId+9fGsHXICbZECrQOhmnAp/tkT28cSyv4U1iMg8rOtLsVpZQ4Z9BsquS
-	wtjNnihnmXGkg3014VK4RFCaM6Z0xt
-X-Google-Smtp-Source: AGHT+IHaEOjL/fZ5phA5h4BVmsyYDdd6nv+88Bsdwqb1j7ss2HLqQpfJIt7Pef33BMhEtKfEFQFDNQ==
-X-Received: by 2002:a05:690c:9a81:b0:786:2f01:16fb with SMTP id 00721157ae682-786a4473d88mr25498107b3.26.1762344863667;
-        Wed, 05 Nov 2025 04:14:23 -0800 (PST)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:eccb:aea8:c690:2cd8])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-78691dd54bdsm18323037b3.26.2025.11.05.04.14.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Nov 2025 04:14:23 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        bh=0mQFq6ZBZ9iWXv8zGcl4iXwTWbp88FEgyesVkC7mmpg=;
+        b=BeNI6ziU37Svc+r2kBV4e70k1btngJN1ilId18TlVoSpbYQuFYkIgXvLwSDxnBNRMT
+         j6Zqma5IEMksAm6jD02EHiNoAe01roKvwWAii0nvYGYj5wEpU0bkDsiXgOeWPMdp/+AT
+         HHQirfVlP1T3/EZUvMQHMuCb751zZSBaHQu3i4J6qgQHZgJQU2a4BmgJP8p4fAmdEv5Y
+         1Wi0CEaMDh+OChGmL9rt5ZzV8mnwF3NKxJBpDGNSIOgyQkxVCA/CyZo6LjLu4X4QivDF
+         93k8rucc+DmgcTZLARbKOsPha362dBKeMu546+EnTTgOVaYD+e74CYrLlfKtIkCWmF2r
+         nh7A==
+X-Gm-Message-State: AOJu0YxAs4Dnou325Ig5cwDOU+ZDxCnqBEY9QxLHDWsWTOFrFMWsZoVh
+	3NdV2nMTPZkNtV3gPEusviYutqUIXLqa4RaWUqaYRSrSrLML0TuQvVVkNjnHPNOuutIJO9WZMBJ
+	lWbBRxcuu1fZRrd1jVfJKTxy4Mh1ZD1I=
+X-Gm-Gg: ASbGncsxv7ZwLJp97koHTYA7KSlv/UDllnWcdW8vjOgqEldAJgv2RBy9ov1UXUibe70
+	7XIlOKQZ3thstVqQ4Jvc2NgBzCw14Nk0YhN/jmn0l0tY4s2zK37FVXyIOVpyv8wDQxZsqdNsLDQ
+	SWcgWNrlBEFbNA2waXPPxPh0ThTP36wBDYx0YQrsjw79lY/8dAlD2Gx/1hxg+QtcTnmG3sELvNC
+	APwqjJ8mQpXNg2UJ4m9GlWhgd4CmEJmeNYgSm0s4hR9DBaqCYKya1z/ekBljotT
+X-Google-Smtp-Source: AGHT+IEka0ZhCIahP9yv9TlylhbEBWXOJWBLpvE1Cuz7aa5hc4bYyo6TFj2/7v2DJCye7LMMH2BtTuM3HsV5ur5U6qU=
+X-Received: by 2002:a05:690e:4291:20b0:63f:a399:3972 with SMTP id
+ 956f58d0204a3-63fd35a2b4fmr2371755d50.56.1762349005689; Wed, 05 Nov 2025
+ 05:23:25 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [RFC PATCH] diff: add option to report binary files in raw diffs
-Date: Wed, 5 Nov 2025 07:14:12 -0500
-Message-Id: <D80AE9D4-EE8D-4CAE-9212-2A592F45AB90@gmail.com>
-References: <nxl3sgs3h2psylifnbwcjmubdfmfhj53jjun5nsa4aqq5robh7@quga463ajvbu>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
- karthik.188@gmail.com
-In-Reply-To: <nxl3sgs3h2psylifnbwcjmubdfmfhj53jjun5nsa4aqq5robh7@quga463ajvbu>
-To: Justin Tobler <jltobler@gmail.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+References: <20251104155127.1079-1-qjessa662@gmail.com> <xmqqjz05prog.fsf@gitster.g>
+In-Reply-To: <xmqqjz05prog.fsf@gitster.g>
+From: Queen Ediri Jessa <qjessa662@gmail.com>
+Date: Wed, 5 Nov 2025 14:23:15 +0100
+X-Gm-Features: AWmQ_bkGKblV5klaYOhhcxRJP8xytd2bDOhP3NKB-UJ4xCbr4DQGSXtAnJU7AmA
+Message-ID: <CA+JX8Fpw215XPv9u8g3jVjwLKLDsTNXnxtcmGK5L3oo54SHvdw@mail.gmail.com>
+Subject: Re: [PATCH v3] doc: clarify server behavior for invalid 'want' lines
+ in HTTP protocol
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, 
+	usmanakinyemi@gmail.com.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Thanks for the feedback.
+ Like you rightly said, the last two lines invite more questions than
+they answer.
+I=E2=80=99ll remove them so the section stays focused on describing the act=
+ual
+server behavior.
 
-> Le 4 nov. 2025 =C3=A0 19:17, Justin Tobler <jltobler@gmail.com> a =C3=A9cr=
-it :
->=20
-> =EF=BB=BFOn 25/11/03 08:44PM, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>=20
->>> Justin Tobler <jltobler@gmail.com> writes:
->>>=20
->>>> I have a usecase where I would like to know exactly which files in a
->>>> diff pair are considered binary by Git when computing diffs. When
->>>> computing patch diff output, Git already omits filepair diffs where at
->>>> least one side is considered binary and prints a "binary files differ"
->>>> message instead. =46rom this message we cannot discern exactly which fi=
-les
->>>> were considered binary by Git though.
->>>=20
->>> I have a usecase where I would like to know exactly which side of a
->>> diff filepair ends in an incomplete line in a concise format.
->>>=20
->>> Should we add yet another column to the raw output to indicate who
->>> is complete and who is incomplete?
->>>=20
->>> Where does it lead us and when will it stop?
->>>=20
->>> IOW, yuck ;-).
->>=20
->> My point being that it will be a huge mistake to do this only by
->> singling a trait that is not so special as if it is very special,
->> only because you have been thinking about it too long (the "ends in
->> an incomplete line" trait is what has been on my mind for the past
->> few days, "this side is binary" may be what you've been thinking
->> about).  There are many other things people would want to learn
->> concisely in machine readable format, like "where did the file stop
->> using CRLF line endings and swithced to LF line endings", that are
->> equally plausible as the question you are asking, or the question I
->> would be asking "which commit lost the final newline?"
->=20
-> Completely fair. Having a bunch specific options for special info we
-> want to add to the raw diff format would get messy quickly and is not
-> very extensible.
->=20
->> Perhaps an extensible command line option syntax like
->>=20
->>    $ git log --raw-extended=3Dbinary,incomplete,crlf,...
->=20
-> I quite like this and agree it would be better to have a single
-> extensible option.
->=20
->> is in order, and the presense of these options would add "tt,ic,cl"
->> somewhere in the output to signal that both sides are text, preimage
->> ends in an incomplete line but not postimage, and preimage uses crlf
->> but postimage uses lf, or something?
->=20
-> Maybe the output should be something like:
->=20
->  binary=3Dtt,incomplete=3Dic,crlf=3Dcl
->=20
-> or something along those lines. That way we could freely extend in the
-> future without having to worry about a specific order. If we think all
-> of the raw diff extension modes would only report with yes/no for each
-> file we could just do:
->=20
->  binary=3Dyn,incomplete=3Dyy,crlf=3Dnn
->=20
-> but maybe we should be more flexible and leave it up to the mode to
-> decide what its values can be?
->=20
-> Also, maybe this info could be on a newline following each raw diff
-> entry? Something like:
->=20
->  :100644 100644 a1961526 e231acb1 M    foo
->  binary=3Dyy
->  :100644 100644 31eedd5c 402a70d7 M    bar
->  binary=3Dnn
->=20
+Thanks again for the guidance.
 
-Whether combined or separate, self-documenting output is nice. Separate migh=
-t be easier for line-oriented tools? Having to split on commas and loop look=
-ing for keywords seems like more work than just processing a line at a time.=
- Idk.=
+Queen Ediri Jessa
+
+On Tue, Nov 4, 2025 at 7:40=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Queen Ediri Jessa <qjessa662@gmail.com> writes:
+>
+> > Update the documentation to clearly describe how the server responds wh=
+en a
+> > client sends an invalid or malformed `want` line during the HTTP protoc=
+ol
+> > exchange. This improves understanding of Git=E2=80=99s behavior when ha=
+ndling
+> > incorrect object requests and helps developers detect and handle such
+> > protocol issues accurately.
+> >
+> > Signed-off-by: Queen Ediri Jessa <qjessa662@gmail.com>
+> >
+> > ---
+> >
+> > Changes since v1:
+> > - Rephrased the explanation to be more concise and aligned with reviewe=
+r
+> >   feedback.
+> > - Clarified that the server includes the offending object name in its e=
+rror
+> >   message.
+> > - Adjusted tone to describe the expected behavior rather than prescribi=
+ng
+> >   implementation-specific messages.
+> > - Improved readability and technical consistency of the section.
+> >
+> >  Documentation/gitprotocol-http.adoc | 5 ++++-
+> >  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> Perfect.  Hopefully your future contributions we won't have to worry
+> about these procedural issues.
+>
+> > diff --git a/Documentation/gitprotocol-http.adoc b/Documentation/gitpro=
+tocol-http.adoc
+> > index d024010414..f3f48d3f35 100644
+> > --- a/Documentation/gitprotocol-http.adoc
+> > +++ b/Documentation/gitprotocol-http.adoc
+> > @@ -443,7 +443,10 @@ If no "want" objects are received, send an error:
+> >  TODO: Define error if no "want" lines are requested.
+> >
+> >  If any "want" object is not reachable, send an error:
+> > -TODO: Define error if an invalid "want" is requested.
+> > +When a Git server receives an invalid or malformed `want` line, it
+> > +responds with an error message that includes the offending object name=
+.
+> > +This clarifies the expected behavior for Git implementations and helps
+> > +clients detect protocol issues accurately during fetch operations.
+> >
+> >  Create an empty list, `s_common`.
+>
+> I am not sure what "This clarifies the expected behavior of Git
+> implementations" here, though.  Who exactly are "implementations"
+> that the clarification is given, and what are they expected to do in
+> response?  What does it really mean to detect "accurately" in this
+> case?  For a client that received this error, they know what they
+> sent as "want", and they are told that the other side does not like
+> that object name, but then what would they do after that?  The last
+> two lines invite more questions than it answers.  Perhaps we are
+> better off without them?  I dunno.
+>
+> Thanks.
+>
