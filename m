@@ -1,111 +1,89 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from web23.osl1.nordkapp.net (web23.osl1.nordkapp.net [185.114.57.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDA52E612F
-	for <git@vger.kernel.org>; Wed,  5 Nov 2025 21:31:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E027260F
+	for <git@vger.kernel.org>; Wed,  5 Nov 2025 22:48:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.114.57.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762378277; cv=none; b=QWEYPUWyb9fbNGYm31GXNCmoKPM2afTjsG/d4xUiQJJOzizIF1aLrSY/6GqHcKJqK682uDRktFN0nB8pRtQlnryKzG9I0ibkOhy9talDkEuIgiwp7Ca7jC6HCPmACzfi4u2VgilQzfW5fW/jIm4WiJHGd0j3+KUxx05uRUFpil4=
+	t=1762382907; cv=none; b=QlO/Q7reLJERCdF2OEuxyDcaV5H1ozS0vZQErHQLrqmTsmsYTvSZ5Iey0XnsZ0K3+PCqOBuICWMKLEkhMinWenwmcixQB/UPCJYE66t/Rlk1Dycpk8HFvTZMSlZXZbKr3yUYrzRQP6jOMWdqjuChPJUHvbLkOWHRQFxz/vhSGDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762378277; c=relaxed/simple;
-	bh=ovo3UT1EeuTn1zTAerPRaS1SOgdHSmTWpzi4MpR1Gqw=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdpJhdQCFsVmrz2AEAskQPKTOc72gmsbeXS206+LG9N0iIosj5JmBsnpitFTqSHw40WWshmIeuLN0nYfuZGVzLpnTKsT2MPSy/lmsktdYRzVLiqEcvuX+I/eGz7RxFPg8nK2qGTAFnP+xfbbTNEWlQXjDzhU3j3FOEuZC9MoM/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QtzRuMCL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lj4WP8O5; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762382907; c=relaxed/simple;
+	bh=tgrrFAr6UVyqmA4QIVK6AvdtfAOzGqZvJ71bxdJHl3s=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type; b=JCMngN0lg1noib+tgOBuQcFGxuqbKx6HR9mdjjeoPhDDREvwZtECY814MbepYJGKmvkH3cvYIVPDFJE6RyLVqYguUh2mqkSQH7H4jN3/BS5XXnuXOQYHI2rvXLd1EGfeY2uZ60k2iBNj245KplL5cfAkQLuROnrKwHTsuz6NFDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se; spf=pass smtp.mailfrom=softwolves.pp.se; dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b=fX51Z3MF; arc=none smtp.client-ip=185.114.57.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=softwolves.pp.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=softwolves.pp.se
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QtzRuMCL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lj4WP8O5"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 31CF77A0027;
-	Wed,  5 Nov 2025 16:31:15 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Wed, 05 Nov 2025 16:31:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1762378275; x=
-	1762464675; bh=YJ0Mk3Rjg/oabCYph6teRyRRK+VINo2Qvm5BdCq6reY=; b=Q
-	tzRuMCL66FXBBHzFaivbHIJbi0wxA1dy3Vg9wtrMD2Y+dbE+PQ2TFSwDzk7/rCBe
-	MNXRkhYlOxmWI6k5bjMi0eyfCXS4Fo2owhOjTHiPY+fzH2mG4hTcaEAVE6bMlPS/
-	tv4UQ94+YFqavnIZPL/RjLq70OJVqIV+8tqSy/zQN9Fg1X033tvr8LOjd5hmyJPa
-	d6P3HFrH9rZWoxFBl7BqnJ8hvxREJ/7y9iHV/Xpe+Mrpg4MjpRTh0WOszYkIznoc
-	XiMxX+1iqqMuyEY/6phkKxBJOTH7tzQw99rKsnsgqYo1EwcrMB2ON7dQ2bNMXouP
-	SazSH8oFSfXQMR5ZEe+Aw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:date:feedback-id:feedback-id:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1762378275; x=1762464675; bh=YJ0Mk3Rjg/oabCYph6teRyRRK+VI
-	No2Qvm5BdCq6reY=; b=lj4WP8O57OVB2nySFRr5qvqVu+oIFXeRHvVmK3yKTRTN
-	krfduOwITmvO7zkpikvI0hPdDm2Yg09l5jLyvkB9VF1B35QQisfrldYy5nOvPR0e
-	mXIjBKG/feq6kmCSXqGF1We9lbPsG20+d3ztR2Q8gGZDyyvUVqjLZxKkxsoCLAqG
-	LvQMHJKAkBkfDs3rRTpjtmVRnHJDEoo8DTnzZM+l9Zr/ICBeVGSwnxYRSQh6YwXI
-	w8Qor5NNLaerNAvQKTzWm0Qu9f0TW6wc/uQ+0UaAyB5Z2tC11RV3bjlwrPpbxHr7
-	yYH42U9jBUr3lxhzrQzLkuhJq2O4FgsR1GKVF86GRQ==
-X-ME-Sender: <xms:IsILaYP4Hep2enk50BfxXDvrSpNcEwoNIi6vJFTk7WpGfvdt6rr4MQ>
-    <xme:IsILaU8hYCfoX0RIwQox_MpGqnZg4L_01JEzQyhJznCgcucvsZS21R-9XLCHHiX-d
-    TQC8282ou138EOfQjhxUSfPR2h38phmsdX55vbyljjjaTBV2v7b2Hg>
-X-ME-Received: <xmr:IsILac4e-IyY8ek2oR2tH4c3a4CWKGQw8PqeePE56QfYmizoAdYGQR5zbabAsPykgAGvLhIeHn-uaHBaMBod5voUIblEmftFjvNJ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeegleelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
-    dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
-    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:IsILab16FCP32IjEaUKHKTlfIH09McoO-gFHrlKrpGnbaXWgja9llw>
-    <xmx:IsILaTCOAEz0kqoZwFMWA9F1EeK0FB2dr6UVj7Q4-ADJfRJBMKbhSA>
-    <xmx:IsILad2V0y0IdXBQx4V0up9Mmzruox_2ecCOqp-Y5k9aa9C9npk9GA>
-    <xmx:IsILadsPDEXLQCE7wBm1UBCdyPVA4WZJZWT37j5TjvQ2LelSYLWhug>
-    <xmx:I8ILaTmEIGacUIa7R3L3Jz2u6CGK0venCX-44NK_ctdIwr8odkvuDkEI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Nov 2025 16:31:14 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=softwolves.pp.se header.i=@softwolves.pp.se header.b="fX51Z3MF"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=softwolves.pp.se; s=x; h=Content-Type:MIME-Version:Message-ID:Subject:To:
+	From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=rwrdiCpjJwrqtHer0R3jdD5BTDuqAIVzAGcAgxRLczI=; b=fX51Z3MF6IH8DBKaHYi7nSH3RO
+	q5tiX32UqbGHe51CVZSRKoHpcJaqNFp5LPTMhtFgjAYnjhQfvbLZE1JLk2PwSfYurA+Hs/LOtyb3R
+	BMTV797kbYxmkl2QfAeuN0QZOdaEUUEalwuCuduXVnULVy4I7weM1nYgIHHUQ0SRa2Zng0xEKLH2R
+	+S/Z9tbIP/qM+igsY97QbozcJ+VTj/eQ9qmC1I/REN6XOb6KV1byqQxav/cc1wg3sNaxyzKGaX2GP
+	DZl0EkjJwQvNGNTFP3S4NJ3sIQu/AenowUTuz7+vOi27ln+SNMBdrouBAw1OHr9XTZ+fl9LedkuE0
+	4xX/WOkQ==;
+Received: from mail01.osl1.nordkapp.net ([185.114.57.50] helo=mail.nordhost.no)
+	by web23.osl1.nordkapp.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <peter@softwolves.pp.se>)
+	id 1vGlLd-0000000GRot-2Ve2
+	for git@vger.kernel.org;
+	Wed, 05 Nov 2025 22:47:21 +0100
+Date: Wed, 5 Nov 2025 22:47:17 +0100 (CET)
+From: Peter Krefting <peter@softwolves.pp.se>
 To: git@vger.kernel.org
-Subject: [PATCH v2 12/12] attr: enable incomplete-line whitespace error for this project
-Date: Wed,  5 Nov 2025 13:30:52 -0800
-Message-ID: <20251105213052.1499224-13-gitster@pobox.com>
-X-Mailer: git-send-email 2.52.0-rc0-105-gc08128fbb6
-In-Reply-To: <20251105213052.1499224-1-gitster@pobox.com>
-References: <20251104020928.582199-1-gitster@pobox.com>
- <20251105213052.1499224-1-gitster@pobox.com>
+Subject: [PATCH] refs: Add missing space in message
+Message-ID: <a8220721-3260-15cb-6960-ca8b6433d7b5@softwolves.pp.se>
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+Organization: /universe/earth/europe/norway/oslo
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
+X-Authenticated-Id: peter@softwolves.pp.se
 
-Now "git diff --check" and "git apply --whitespace=warn/fix" learned
-incomplete line is a whitespace error, enable them for this project
-to prevent patches to add new incomplete lines to our sources.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
 ---
- .gitattributes | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ refs/files-backend.c    | 2 +-
+ refs/reftable-backend.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/.gitattributes b/.gitattributes
-index 32583149c2..0accd23848 100644
---- a/.gitattributes
-+++ b/.gitattributes
-@@ -1,6 +1,6 @@
- * whitespace=!indent,trail,space
--*.[ch] whitespace=indent,trail,space diff=cpp
--*.sh whitespace=indent,trail,space text eol=lf
-+*.[ch] whitespace=indent,trail,space,incomplete diff=cpp
-+*.sh whitespace=indent,trail,space,incomplete text eol=lf
- *.perl text eol=lf diff=perl
- *.pl text eof=lf diff=perl
- *.pm text eol=lf diff=perl
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 054cf42f4e..1adc4b5182 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3124,7 +3124,7 @@ static int parse_and_write_reflog(struct files_ref_store *refs,
+ 		if (!(update->flags & REF_HAVE_OLD) ||
+ 		    !(update->flags & REF_HAVE_NEW) ||
+ 		    !(update->flags & REF_LOG_ONLY)) {
+-			strbuf_addf(err, _("trying to write reflog for '%s'"
++			strbuf_addf(err, _("trying to write reflog for '%s' "
+ 					   "with incomplete values"), update->refname);
+ 			return REF_TRANSACTION_ERROR_GENERIC;
+ 		}
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index d4b7928620..eeec64798f 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1103,7 +1103,7 @@ static enum ref_transaction_error prepare_single_update(struct reftable_ref_stor
+ 		if (!(u->flags & REF_HAVE_OLD) ||
+ 		    !(u->flags & REF_HAVE_NEW) ||
+ 		    !(u->flags & REF_LOG_ONLY)) {
+-			strbuf_addf(err, _("trying to write reflog for '%s'"
++			strbuf_addf(err, _("trying to write reflog for '%s' "
+ 					   "with incomplete values"), u->refname);
+ 			return REF_TRANSACTION_ERROR_GENERIC;
+ 		}
 -- 
-2.52.0-rc0-105-gc08128fbb6
+2.47.2
 
