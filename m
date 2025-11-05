@@ -1,63 +1,63 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEBF2C0272
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB4A176ADE
 	for <git@vger.kernel.org>; Wed,  5 Nov 2025 06:19:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762323588; cv=none; b=FNaJ03gGeu47f1qHpLiU0g1677AY0j3Od2yDn+QuH5QQ6lfDqCQhvDHapWY3t8CLqR94VKIzZzGV9YP4+qO6l25BNUE8ZJl3TBXHMmefLjxcZwusNTZ09YEKyDXfcyHx3t8Ew5jO8O4ljdPYcKdnVCTzUVATu3JGzoD6NoiDAe0=
+	t=1762323589; cv=none; b=natvxmv0R1TtCEphn8xJcXXfYUKfKORnEvq+odxd8gMmJ6BhIvwKkw3R38Cq+3QD8vtjAO49LX9LXWn/VCE1AtZFV1ijO0lh5EV9raldLCprrTemkfRQHnEkkhaC7Irlj9eePAbdhlPhnAWQb864lcJrYv4/I692ZWmGwybnL10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762323588; c=relaxed/simple;
-	bh=CML+OazW4bma2Zs8AE9EpNyGQtxscRRJJiy6LriZf84=;
+	s=arc-20240116; t=1762323589; c=relaxed/simple;
+	bh=ybvNxhm8K+XyNfxMWw0SijeS7bZcEQ+u83gfoN2aLag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PHOC02wv+DK0T2oFjdOVEGwRpODNGW2jD02NBR8jPwngS2Qv19rxnjyBpeGNrTPeKzUPc/oFxZaXuGImmBFOL7iSrFQJqV/1Ak5mhhLD5kpoOcbt8KuypyTle2huj4im3rx4qnksMvIapBD9GhF3Pf+qCsgVRxKL9e/t9s4zg7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VTPkcjKd; arc=none smtp.client-ip=209.85.128.45
+	 MIME-Version; b=O8kwRMYUiiLVF3OchgDGyHnfXbjkzRr1RrRZr4vYwE2YPS5HVuZciGcFwL84+40GbJtnBVbc01FHNksXSgttJVsCq9p4t7X6g9+fhHPlg0Hz9rSNvDbb7AmOHZLy+T7yJEiut9pizewEuFxMUjB79brj2TmP4ksF3+T7nXqFlzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PAiPpeyp; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VTPkcjKd"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4775e891b5eso781555e9.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PAiPpeyp"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3ed20bdfdffso5318674f8f.2
         for <git@vger.kernel.org>; Tue, 04 Nov 2025 22:19:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762323584; x=1762928384; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762323585; x=1762928385; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VZV/1/TSudoTTlWNyVdE9WolviA7Erfj4uezQ5MeypE=;
-        b=VTPkcjKd1ub2W6sceOHztg/eDTgJkSgc5Dk50ZC8HmfPTCeouAVKPF9ur2IR+tzgTv
-         oTPddKLthXZG70mS2XlQTuLuyxLAWiV4+gCmzO4+U3+lLgsU/afzF2m2zTQPoyppXEwP
-         DLUG1FP/eCkrwBrRe7DKqzOb3wqOZWt5TWGSNW1YxYdvtcLeMvzhjN0q7T79Adw8ofzJ
-         MWySxZvwzLAsRnXA+o7FF1k7VsGpdVjJCKayhmM7Pj9WH9rtMlZlizTncZbB7TgXfGs9
-         BufUEhxU3jYg2Tdl3YBYpSu84Gc7QAjLP6fWGMEj9eSPDgCGemxxJN0NrMKIL6F0qwM1
-         Skxw==
+        bh=gqge8apSxkOp++s7SptcGAeaBrYLdly9EHywIyPff6M=;
+        b=PAiPpeypr1S8Ro/zNw5ZtBhYg0CRraJfhnX7USZaohGx5GaxhGHSFzLq0aDqvmEwiO
+         lgJ/hQxyMlbS+R+zsew+RAx61SxWyAhnp29PGTKNlEBhyvqo4T6oDRjDPwChJz4C1vcy
+         Tv/MsSKLEPin8nv+5XTxhj+oCFtQdc5vYR3M2pXjPElN1CrZ/wQJk5mbJ7vMgXllvNGO
+         K2TRD6N7WUQZaXGO/M+1Y/COqSzrsoK8GVrelfeN/NBprXlBTzfCBQe2bqTO4E6T7/Zp
+         xBJZQ/2blqwVe4xa72NQ2xyDCeN9PNKvVJKNjdI5dHuUgUj98W+kE/mCUkrGRckxqgZj
+         N+ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762323584; x=1762928384;
+        d=1e100.net; s=20230601; t=1762323585; x=1762928385;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VZV/1/TSudoTTlWNyVdE9WolviA7Erfj4uezQ5MeypE=;
-        b=rJbFjpPeodkk9KECIu108etbuZDJgER0elbEiBZNGemL+YV351q4v3Wi5gUjlqx5aL
-         xGGijM3DLE5BEu9DTqYga3goGpT+zxTSRFidcZc1Sf3UUbkuBsApm2UIzIqaqOAQMa0Y
-         5FFVVFR4rOj6yhMXuTioRMKuQBfpW1f7G5F/6tTlcq/hOy71AbzpMal3Fs8s9ei6zl61
-         Ynrc6XkGhAs0x8j4h9BouTtR4ezoX4ZpwgJBPMMbNkxH7L9/85DwpglzxFs+SbFbSfyF
-         0v4eDZNw4e81AXHlfPhnp7+hNZoO3aNubpvNobMNxoVzY4zNU82R4Zh5UoRWVDSNpGEG
-         wKdw==
-X-Gm-Message-State: AOJu0Yx9A96lPbW0YtSbD3/ZbnqYIfxd4gHrjAs21anttqI174OqqNSx
-	cXjtTMgU0oh9TO+fIUZOJBVHGgr7zEEU00GCrwrpH0PILcvvUrlAYmpKQq1Ppw==
-X-Gm-Gg: ASbGncunR4AC7rv6WvLtzNAnUEyT17yONBGd57XoUxmWl951DjHbefO8+U3iyWhDE7F
-	UzHaxjnCqEFcRYnr/77U46pSi9xAf8pcLpW2UEzni20PnVgf+MLMTpyKFmdG/muzwzGK7CT6VDF
-	ZJOjTZsfXj78xi4bC+IQUa32qH//ikm364QZz90MhyFVfPjLn8UbaRr7lb/2OJ3JhtCLXg1Josl
-	wJnvs45bWGL1Qd30fl+jc9e115b1faqAOKAetHfH02mtOxv8xtOoesdhyr/QMoEMaIFAmgbxHNO
-	vOL9H2tzskna8J6mf9VkZCSLb8WN+VfFSBH8DtyGFRT+wLCQjSPedTWUZUXkCfh8G6MpxN4yEfr
-	lYXD3Yi84RTpChfsfplNhyqJV9rZNrvf5bLTg/ckmnJbHvGEEm/1VB3S8ukDLLWEus4qe27TddH
-	syEyKklDl4KO8MkIbyr+X1llT6LRk=
-X-Google-Smtp-Source: AGHT+IHfXR8oAfpa5k8q9VKIAHwJQiSR/NNeFOvK1BTbWEEni+Vzq+IvnwbHgyW13huaGTC6yhxgWQ==
-X-Received: by 2002:a05:600c:4687:b0:46e:4925:c74f with SMTP id 5b1f17b1804b1-4775cde59bdmr16467755e9.20.1762323583542;
-        Tue, 04 Nov 2025 22:19:43 -0800 (PST)
+        bh=gqge8apSxkOp++s7SptcGAeaBrYLdly9EHywIyPff6M=;
+        b=J92iZorx/ihp94msN1ZyW220E+4Y6iK3xat30DeUs/4keFpLvZEh4FtU4MOPhgxfnI
+         /rrrU092cZRYiZ5LFnyN4jzEeh+JuCrjIHzBwhh/4s4TNLj1wF1dhz/hQ1oDkE1KnFb+
+         nhtdlCd2zkIpMydeDiHarKPShPyu750R5CMxsyQrbdM6mX+v1O3FXVqRCdrN1yJoK/+s
+         mYE6+LFhcnHwsyrJw+LUMNZwssgQ19XtUfgtM11nQVWan+76VvKlDpLzJIvu9Xkkkrcv
+         Yv9vjsUyIqluKuFUjkxGkypU78C6bygP77W4yVZS9dM9fpZMgyp45DRaQm5Z6bAQKlSc
+         UEgQ==
+X-Gm-Message-State: AOJu0YxvSoUfsmqU4Uk3Z1jU4BUwDsG0r0oNABgHzSPjfggnrk8C6mYM
+	rvpI1OTiRkb6e5DMj5peGqf04OXUo+O+qkB6tRH199FxGWwaKyz24xIPcT9kDg==
+X-Gm-Gg: ASbGncuaA1+8xfjerpQ1oXJ70giKCD8w+4pd4hux1oy9ydKbcrrwpDKB7ECA/nQJZmc
+	/+irp55q5QqsLFIEj9tbSNFIiIbaQIBnCjm5dDhgS+34SSNtWU3cR8NdKUUGwNvReHvjt/oIUs2
+	gIIEg1oXy3PtvAK8h0SqDLBaFtRsDJPurPe8WXXuI0etdGxWtucC7jM4xY1Uab6XucqWsYvcTCQ
+	zY6tpwR3wQZRmr3MPoRzh1v21CxIbcOTiZk0dWISwROYb/zKapjai/c+gaTq0/xRx1EtSwrACpH
+	UXC8YV8WzfPATkNh/6u54InwyKbPoKfs+32jO/VsNJ3hgh6orVYZuNBEDrx3cNCpNA05UmKH8DC
+	8LzDXPl4xESOy539Khn0f00xOr9gHODhJuCk6b17sfAM6lXyCzabKxqoeS+Qd6jGSTcutla1G+A
+	JjIwaRsxMuaaJ+bQtxsi5Z+1g33eU=
+X-Google-Smtp-Source: AGHT+IHAFgH38Nd8u0Zdtlbi1WszTet6wBMJZKbSZLRrW3upQDxloxFZr9dRKUBxB8axCKlXpMHSBw==
+X-Received: by 2002:a05:6000:210c:b0:429:b751:792b with SMTP id ffacd0b85a97d-429e33064femr1054355f8f.32.1762323584549;
+        Tue, 04 Nov 2025 22:19:44 -0800 (PST)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429dc1f5f8csm8225944f8f.23.2025.11.04.22.19.42
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429dc1f5f8csm8225944f8f.23.2025.11.04.22.19.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Nov 2025 22:19:42 -0800 (PST)
+        Tue, 04 Nov 2025 22:19:43 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -68,9 +68,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 2/3] commit: refactor verify_commit_buffer()
-Date: Wed,  5 Nov 2025 07:19:17 +0100
-Message-ID: <20251105061918.3688870-3-christian.couder@gmail.com>
+Subject: [PATCH 3/3] fast-import: add 'strip-if-invalid' mode to --signed-commits=<mode>
+Date: Wed,  5 Nov 2025 07:19:18 +0100
+Message-ID: <20251105061918.3688870-4-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.52.0.rc0.3.gf264cd25e5
 In-Reply-To: <20251105061918.3688870-1-christian.couder@gmail.com>
 References: <20251105061918.3688870-1-christian.couder@gmail.com>
@@ -82,92 +82,438 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In a following commit, we are going to check commit signatures, but we
-won't have a commit yet, only a commit buffer, and we are going to
-discard this commit buffer if the signature is invalid. So it would be
-wasteful to create a commit that we might discard, just to be able to
-check a commit signature.
+Tools like `git filter-repo`[1] use `git fast-export` and
+`git fast-import` to rewrite repository history. When rewriting
+history using one such tool though, commit signatures might become
+invalid because the commits they sign changed due to the changes
+in the repository history made by the tool between the fast-export
+and the fast-import steps.
 
-It would be simpler instead to be able to check commit signatures
-using only a commit buffer instead of a commit.
+Having invalid signatures in a rewritten repository could be
+confusing, so users rewritting history might prefer to simply
+discard signatures that are invalid at the fast-import step.
 
-To be able to do that, let's extract some code from the
-check_commit_signature() function into a new verify_commit_buffer()
-function, and then let's make check_commit_signature() call
-verify_commit_buffer().
+To let them do that, let's add a new 'strip-if-invalid' mode to the
+`--signed-commits=<mode>` option of `git fast-import`.
 
-Note that this doesn't fundamentally change how
-check_commit_signature() works. It used to call parse_signed_commit()
-which calls repo_get_commit_buffer(), parse_buffer_signed_by_header()
-and repo_unuse_commit_buffer(). Now these 3 functions are called
-directly by verify_commit_buffer().
+It would be interesting for the `--signed-tags=<mode>` option to
+have this mode too, but we leave that for a future improvement.
+
+It might also be possible for `git fast-export` to have such a mode
+in its `--signed-commits=<mode>` and `--signed-tags=<mode>`
+options, but the use cases for it are much less clear, so we also
+leave that for possible future improvements.
+
+For now let's just die() if 'strip-if-invalid' is passed to these
+options where it hasn't been implemented yet.
+
+While at it, let's also mark for translation some error messages
+linked to the `--signed-commits=<mode>` and `--signed-tags=<mode>`
+in `git fast-export`.
+
+[1]: https://github.com/newren/git-filter-repo
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- commit.c | 17 +++++++++++++++--
- commit.h |  7 +++++++
- 2 files changed, 22 insertions(+), 2 deletions(-)
+ Documentation/git-fast-import.adoc |  28 ++++---
+ builtin/fast-export.c              |  46 ++++++++---
+ builtin/fast-import.c              |  59 +++++++++++++--
+ gpg-interface.c                    |   2 +
+ gpg-interface.h                    |   1 +
+ t/t9305-fast-import-signatures.sh  | 118 ++++++++++++++++++++++++++++-
+ 6 files changed, 226 insertions(+), 28 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index 16d91b2bfc..709c9eed58 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1315,7 +1315,8 @@ static void handle_signed_tag(const struct commit *parent, struct commit_extra_h
- 	free(buf);
- }
+diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
+index b74179a6c8..c9e49497cd 100644
+--- a/Documentation/git-fast-import.adoc
++++ b/Documentation/git-fast-import.adoc
+@@ -66,15 +66,25 @@ fast-import stream! This option is enabled automatically for
+ remote-helpers that use the `import` capability, as they are
+ already trusted to run their own code.
  
--int check_commit_signature(const struct commit *commit, struct signature_check *sigc)
-+int verify_commit_buffer(const char *buffer, size_t size,
-+			 struct signature_check *sigc)
+---signed-tags=(verbatim|warn-verbatim|warn-strip|strip|abort)::
+-	Specify how to handle signed tags.  Behaves in the same way
+-	as the same option in linkgit:git-fast-export[1], except that
+-	default is 'verbatim' (instead of 'abort').
+-
+---signed-commits=(verbatim|warn-verbatim|warn-strip|strip|abort)::
+-	Specify how to handle signed commits.  Behaves in the same way
+-	as the same option in linkgit:git-fast-export[1], except that
+-	default is 'verbatim' (instead of 'abort').
++`--signed-tags=(verbatim|warn-verbatim|warn-strip|strip|abort)`::
++	Specify how to handle signed tags. Behaves in the same way as
++	the `--signed-commits=<mode>` below, except that the
++	`strip-if-invalid` mode is not yet supported. Like for signed
++	commits, the default mode is `verbatim`.
++
++`--signed-commits=<mode>`::
++	Specify how to handle signed commits. The following <mode>s
++	are supported:
+++
++* `verbatim`, which is the default, will silently import commit
++  signatures.
++* `warn-verbatim` will import them, but will display a warning.
++* `abort` will make this program die when encountering a signed
++  commit.
++* `strip` will silently make the commits unsigned.
++* `warn-strip` will make them unsigned, but will display a warning.
++* `strip-if-invalid` will check signatures and, if they are invalid,
++  will strip them and display a warning.
+ 
+ Options for Frontends
+ ~~~~~~~~~~~~~~~~~~~~~
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 7adbc55f0d..1ad195b639 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -797,12 +797,10 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
+ 	       (int)(committer_end - committer), committer);
+ 	if (signatures.nr) {
+ 		switch (signed_commit_mode) {
+-		case SIGN_ABORT:
+-			die("encountered signed commit %s; use "
+-			    "--signed-commits=<mode> to handle it",
+-			    oid_to_hex(&commit->object.oid));
++
++		/* Exporting modes */
+ 		case SIGN_WARN_VERBATIM:
+-			warning("exporting %"PRIuMAX" signature(s) for commit %s",
++			warning(_("exporting %"PRIuMAX" signature(s) for commit %s"),
+ 				(uintmax_t)signatures.nr, oid_to_hex(&commit->object.oid));
+ 			/* fallthru */
+ 		case SIGN_VERBATIM:
+@@ -811,12 +809,25 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
+ 				print_signature(item->string, item->util);
+ 			}
+ 			break;
++
++		/* Stripping modes */
+ 		case SIGN_WARN_STRIP:
+-			warning("stripping signature(s) from commit %s",
++			warning(_("stripping signature(s) from commit %s"),
+ 				oid_to_hex(&commit->object.oid));
+ 			/* fallthru */
+ 		case SIGN_STRIP:
+ 			break;
++
++		/* Aborting modes */
++		case SIGN_ABORT:
++			die(_("encountered signed commit %s; use "
++			      "--signed-commits=<mode> to handle it"),
++			    oid_to_hex(&commit->object.oid));
++		case SIGN_STRIP_IF_INVALID:
++			die(_("'strip-if-invalid' is not a valid mode for "
++			      "git fast-export with --signed-commits=<mode>"));
++		default:
++			BUG("invalid signed_commit_mode value %d", signed_commit_mode);
+ 		}
+ 		string_list_clear(&signatures, 0);
+ 	}
+@@ -934,23 +945,34 @@ static void handle_tag(const char *name, struct tag *tag)
+ 		size_t sig_offset = parse_signed_buffer(message, message_size);
+ 		if (sig_offset < message_size)
+ 			switch (signed_tag_mode) {
+-			case SIGN_ABORT:
+-				die("encountered signed tag %s; use "
+-				    "--signed-tags=<mode> to handle it",
+-				    oid_to_hex(&tag->object.oid));
++
++			/* Exporting modes */
+ 			case SIGN_WARN_VERBATIM:
+-				warning("exporting signed tag %s",
++				warning(_("exporting signed tag %s"),
+ 					oid_to_hex(&tag->object.oid));
+ 				/* fallthru */
+ 			case SIGN_VERBATIM:
+ 				break;
++
++			/* Stripping modes */
+ 			case SIGN_WARN_STRIP:
+-				warning("stripping signature from tag %s",
++				warning(_("stripping signature from tag %s"),
+ 					oid_to_hex(&tag->object.oid));
+ 				/* fallthru */
+ 			case SIGN_STRIP:
+ 				message_size = sig_offset;
+ 				break;
++
++			/* Aborting modes */
++			case SIGN_ABORT:
++				die(_("encountered signed tag %s; use "
++				      "--signed-tags=<mode> to handle it"),
++				    oid_to_hex(&tag->object.oid));
++			case SIGN_STRIP_IF_INVALID:
++				die(_("'strip-if-invalid' is not a valid mode for "
++				      "git fast-export with --signed-tags=<mode>"));
++			default:
++				BUG("invalid signed_commit_mode value %d", signed_commit_mode);
+ 			}
+ 	}
+ 
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index 493de57ef6..e2c6894461 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -2772,7 +2772,7 @@ static void add_gpgsig_to_commit(struct strbuf *commit_data,
  {
- 	struct strbuf payload = STRBUF_INIT;
- 	struct strbuf signature = STRBUF_INIT;
-@@ -1323,7 +1324,8 @@ int check_commit_signature(const struct commit *commit, struct signature_check *
+ 	struct string_list siglines = STRING_LIST_INIT_NODUP;
  
- 	sigc->result = 'N';
+-	if (!sig->hash_algo)
++	if (!sig || !sig->hash_algo)
+ 		return;
  
--	if (parse_signed_commit(commit, &payload, &signature, the_hash_algo) <= 0)
-+	if (parse_buffer_signed_by_header(buffer, size, &payload,
-+					  &signature, the_hash_algo) <= 0)
- 		goto out;
- 
- 	sigc->payload_type = SIGNATURE_PAYLOAD_COMMIT;
-@@ -1337,6 +1339,17 @@ int check_commit_signature(const struct commit *commit, struct signature_check *
- 	return ret;
+ 	strbuf_addstr(commit_data, header);
+@@ -2827,6 +2827,45 @@ static void finalize_commit_buffer(struct strbuf *new_data,
+ 	strbuf_addbuf(new_data, msg);
  }
  
-+int check_commit_signature(const struct commit *commit, struct signature_check *sigc)
++static void handle_strip_if_invalid(struct strbuf *new_data,
++				    struct signature_data *sig_sha1,
++				    struct signature_data *sig_sha256,
++				    struct strbuf *msg)
 +{
-+	unsigned long size;
-+	const char *buffer = repo_get_commit_buffer(the_repository, commit, &size);
-+	int ret = verify_commit_buffer(buffer, size, sigc);
++	struct strbuf tmp_buf = STRBUF_INIT;
++	struct signature_check signature_check = { 0 };
++	int ret;
 +
-+	repo_unuse_commit_buffer(the_repository, commit, buffer);
++	/* Check signature in a temporary commit buffer */
++	strbuf_addbuf(&tmp_buf, new_data);
++	finalize_commit_buffer(&tmp_buf, sig_sha1, sig_sha256, msg);
++	ret = verify_commit_buffer(tmp_buf.buf, tmp_buf.len, &signature_check);
 +
-+	return ret;
++	if (ret) {
++		const char *signer = signature_check.signer ?
++			signature_check.signer : _("unknown");
++		const char *subject;
++		int subject_len = find_commit_subject(msg->buf, &subject);
++
++		if (subject_len > 100)
++			warning(_("stripping invalid signature for commit '%.100s...'\n"
++				  "  allegedly by %s"), subject, signer);
++		else if (subject_len > 0)
++			warning(_("stripping invalid signature for commit '%.*s'\n"
++				  "  allegedly by %s"), subject_len, subject, signer);
++		else
++			warning(_("stripping invalid signature for commit\n"
++				  "  allegedly by %s"), signer);
++
++		finalize_commit_buffer(new_data, NULL, NULL, msg);
++	} else {
++		strbuf_swap(new_data, &tmp_buf);
++	}
++
++	signature_check_clear(&signature_check);
++	strbuf_release(&tmp_buf);
 +}
 +
- void verify_merge_signature(struct commit *commit, int verbosity,
- 			    int check_trust)
+ static void parse_new_commit(const char *arg)
  {
-diff --git a/commit.h b/commit.h
-index 1d6e0c7518..5406dd2663 100644
---- a/commit.h
-+++ b/commit.h
-@@ -333,6 +333,13 @@ int remove_signature(struct strbuf *buf);
-  */
- int check_commit_signature(const struct commit *commit, struct signature_check *sigc);
+ 	static struct strbuf msg = STRBUF_INIT;
+@@ -2878,6 +2917,7 @@ static void parse_new_commit(const char *arg)
+ 			warning(_("importing a commit signature verbatim"));
+ 			/* fallthru */
+ 		case SIGN_VERBATIM:
++		case SIGN_STRIP_IF_INVALID:
+ 			import_one_signature(&sig_sha1, &sig_sha256, v);
+ 			break;
  
-+/*
-+ * Same as check_commit_signature() but accepts a commit buffer and
-+ * its size, instead of a `struct commit *`.
-+ */
-+int verify_commit_buffer(const char *buffer, size_t size,
-+			 struct signature_check *sigc);
+@@ -2962,7 +3002,11 @@ static void parse_new_commit(const char *arg)
+ 			"encoding %s\n",
+ 			encoding);
+ 
+-	finalize_commit_buffer(&new_data, &sig_sha1, &sig_sha256, &msg);
++	if (signed_commit_mode == SIGN_STRIP_IF_INVALID &&
++	    (sig_sha1.hash_algo || sig_sha256.hash_algo))
++		handle_strip_if_invalid(&new_data, &sig_sha1, &sig_sha256, &msg);
++	else
++		finalize_commit_buffer(&new_data, &sig_sha1, &sig_sha256, &msg);
+ 
+ 	free(author);
+ 	free(committer);
+@@ -2984,9 +3028,6 @@ static void handle_tag_signature(struct strbuf *msg, const char *name)
+ 	switch (signed_tag_mode) {
+ 
+ 	/* First, modes that don't change anything */
+-	case SIGN_ABORT:
+-		die(_("encountered signed tag; use "
+-		      "--signed-tags=<mode> to handle it"));
+ 	case SIGN_WARN_VERBATIM:
+ 		warning(_("importing a tag signature verbatim for tag '%s'"), name);
+ 		/* fallthru */
+@@ -3003,7 +3044,13 @@ static void handle_tag_signature(struct strbuf *msg, const char *name)
+ 		strbuf_setlen(msg, sig_offset);
+ 		break;
+ 
+-	/* Third, BUG */
++	/* Third, aborting modes */
++	case SIGN_ABORT:
++		die(_("encountered signed tag; use "
++		      "--signed-tags=<mode> to handle it"));
++	case SIGN_STRIP_IF_INVALID:
++		die(_("'strip-if-invalid' is not a valid mode for "
++		      "git fast-import with --signed-tags=<mode>"));
+ 	default:
+ 		BUG("invalid signed_tag_mode value %d from tag '%s'",
+ 		    signed_tag_mode, name);
+diff --git a/gpg-interface.c b/gpg-interface.c
+index d1e88da8c1..fe653b2464 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -1146,6 +1146,8 @@ int parse_sign_mode(const char *arg, enum sign_mode *mode)
+ 		*mode = SIGN_WARN_STRIP;
+ 	else if (!strcmp(arg, "strip"))
+ 		*mode = SIGN_STRIP;
++	else if (!strcmp(arg, "strip-if-invalid"))
++		*mode = SIGN_STRIP_IF_INVALID;
+ 	else
+ 		return -1;
+ 	return 0;
+diff --git a/gpg-interface.h b/gpg-interface.h
+index 50487aa148..71dde8cb80 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -111,6 +111,7 @@ enum sign_mode {
+ 	SIGN_VERBATIM,
+ 	SIGN_WARN_STRIP,
+ 	SIGN_STRIP,
++	SIGN_STRIP_IF_INVALID,
+ };
+ 
+ /*
+diff --git a/t/t9305-fast-import-signatures.sh b/t/t9305-fast-import-signatures.sh
+index c2b4271658..db77ace472 100755
+--- a/t/t9305-fast-import-signatures.sh
++++ b/t/t9305-fast-import-signatures.sh
+@@ -79,7 +79,7 @@ test_expect_success GPG 'setup a commit with dual OpenPGP signatures on its SHA-
+ 	echo B >explicit-sha256/B &&
+ 	git -C explicit-sha256 add B &&
+ 	test_tick &&
+-	git -C explicit-sha256 commit -S -m "signed" B &&
++	git -C explicit-sha256 commit -S -m "signed commit" B &&
+ 	SHA256_B=$(git -C explicit-sha256 rev-parse dual-signed) &&
+ 
+ 	# Create the corresponding SHA-1 commit
+@@ -103,4 +103,120 @@ test_expect_success GPG 'strip both OpenPGP signatures with --signed-commits=war
+ 	test_line_count = 2 out
+ '
+ 
++test_expect_success GPG 'import commit with no signature with --signed-commits=strip-if-invalid' '
++	git fast-export main >output &&
++	git -C new fast-import --quiet --signed-commits=strip-if-invalid <output >log 2>&1 &&
++	test_must_be_empty log
++'
 +
- /* record author-date for each commit object */
- struct author_date_slab;
- void record_author_date(struct author_date_slab *author_date,
++test_expect_success GPG 'keep valid OpenPGP signature with --signed-commits=strip-if-invalid' '
++	rm -rf new &&
++	git init new &&
++
++	git fast-export --signed-commits=verbatim openpgp-signing >output &&
++	git -C new fast-import --quiet --signed-commits=strip-if-invalid <output >log 2>&1 &&
++	IMPORTED=$(git -C new rev-parse --verify refs/heads/openpgp-signing) &&
++	test $OPENPGP_SIGNING = $IMPORTED &&
++	git -C new cat-file commit "$IMPORTED" >actual &&
++	test_grep -E "^gpgsig(-sha256)? " actual &&
++	test_must_be_empty log
++'
++
++test_expect_success GPG 'strip signature invalidated by message change with --signed-commits=strip-if-invalid' '
++	rm -rf new &&
++	git init new &&
++
++	git fast-export --signed-commits=verbatim openpgp-signing >output &&
++
++	# Change the commit message, which invalidates the signature.
++	# The commit message length should not change though, otherwise the
++	# corresponding `data <length>` command would have to be changed too.
++	sed "s/OpenPGP signed commit/OpenPGP forged commit/" output >modified &&
++
++	git -C new fast-import --quiet --signed-commits=strip-if-invalid <modified >log 2>&1 &&
++
++	IMPORTED=$(git -C new rev-parse --verify refs/heads/openpgp-signing) &&
++	test $OPENPGP_SIGNING != $IMPORTED &&
++	git -C new cat-file commit "$IMPORTED" >actual &&
++	test_grep ! -E "^gpgsig" actual &&
++	test_grep "stripping invalid signature" log
++'
++
++test_expect_success GPG 'keep valid dual OpenPGP signatures with --signed-commits=strip-if-invalid' '
++	rm -rf new &&
++	git init new &&
++
++	git -C explicit-sha256 fast-export --signed-commits=verbatim dual-signed >output &&
++	git -C new fast-import --quiet --signed-commits=strip-if-invalid <output >log 2>&1 &&
++
++	git -C new cat-file commit refs/heads/dual-signed >actual &&
++	test_grep -E "^gpgsig " actual &&
++	test_grep -E "^gpgsig-sha256 " actual &&
++	test_must_be_empty log &&
++
++	IMPORTED=$(git -C new rev-parse refs/heads/dual-signed) &&
++	if test "$GIT_DEFAULT_HASH" = "sha1"
++	then
++		test $SHA1_B = $IMPORTED
++	else
++		test $SHA256_B = $IMPORTED
++	fi
++'
++
++test_expect_success GPG 'strip both invalid dual OpenPGP signatures with --signed-commits=strip-if-invalid' '
++	rm -rf new &&
++	git init new &&
++
++	git -C explicit-sha256 fast-export --signed-commits=verbatim dual-signed >output &&
++
++	# Change the commit message, which invalidates the signature.
++	# The commit message length should not change though, otherwise the
++	# corresponding `data <length>` command would have to be changed too.
++	sed "s/signed commit/forged commit/" output >modified &&
++
++	git -C new fast-import --quiet --signed-commits=strip-if-invalid <modified >log 2>&1 &&
++
++	git -C new cat-file commit refs/heads/dual-signed >actual &&
++	test_grep ! -E "^gpgsig " actual &&
++	test_grep ! -E "^gpgsig-sha256 " actual &&
++
++	IMPORTED=$(git -C new rev-parse refs/heads/dual-signed) &&
++	if test "$GIT_DEFAULT_HASH" = "sha1"
++	then
++		test $SHA1_B != $IMPORTED
++	else
++		test $SHA256_B != $IMPORTED
++	fi &&
++
++	test_grep "stripping invalid signature" log
++'
++
++test_expect_success GPGSM 'keep valid X.509 signature with --signed-commits=strip-if-invalid' '
++	rm -rf new &&
++	git init new &&
++
++	git fast-export --signed-commits=verbatim x509-signing >output &&
++	git -C new fast-import --quiet --signed-commits=strip-if-invalid <output >log 2>&1 &&
++	IMPORTED=$(git -C new rev-parse --verify refs/heads/x509-signing) &&
++	test $X509_SIGNING = $IMPORTED &&
++	git -C new cat-file commit "$IMPORTED" >actual &&
++	test_grep -E "^gpgsig(-sha256)? " actual &&
++	test_must_be_empty log
++'
++
++test_expect_success GPGSSH 'keep valid SSH signature with --signed-commits=strip-if-invalid' '
++	rm -rf new &&
++	git init new &&
++
++	test_config -C new gpg.ssh.allowedSignersFile "${GPGSSH_ALLOWED_SIGNERS}" &&
++
++	git fast-export --signed-commits=verbatim ssh-signing >output &&
++	git -C new fast-import --quiet --signed-commits=strip-if-invalid <output >log 2>&1 &&
++	IMPORTED=$(git -C new rev-parse --verify refs/heads/ssh-signing) &&
++	test $SSH_SIGNING = $IMPORTED &&
++	git -C new cat-file commit "$IMPORTED" >actual &&
++	test_grep -E "^gpgsig(-sha256)? " actual &&
++	test_must_be_empty log
++'
++
+ test_done
 -- 
 2.52.0.rc0.3.gf264cd25e5
 
