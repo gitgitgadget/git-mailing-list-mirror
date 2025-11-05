@@ -1,108 +1,163 @@
 Received: from sender3-pp-f112.zoho.com (sender3-pp-f112.zoho.com [136.143.184.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9FE32C953
-	for <git@vger.kernel.org>; Wed,  5 Nov 2025 14:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCFA314A83
+	for <git@vger.kernel.org>; Wed,  5 Nov 2025 14:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.184.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762353012; cv=pass; b=LAqVZj2a5tJ5GJdo+NTDoBXM6bubUngvqbVcLDjCBrSRECgHA9F9xCN4SQQNcvx6isgp5kNqtSxe7oJkT4xgASokd70TlfuHAsRmUpa+7zmooEG4+zd1QSFzSpo9+mBSPrTIMaB0OqGxasyd/9DotZwyvKL5k7urp2jGF+uPBXY=
+	t=1762353024; cv=pass; b=ES4Nvr7BwLQvqdZ++bozV72juFIiAF/p96q2DOP8Tpfmauq5aoIcHobc6dmvxbfckna9tCBVOZY1JvuIH3OZytnmadaWGtHyqiaj44yruqzbYRFLNsHU/W85Uj/hGL+ochgxfnraIEzE4SCttJPdns8dveB1HUKo4qBTAPZ1TYk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762353012; c=relaxed/simple;
-	bh=8oAYgeOIeXG/DVfwscdnmm2OKyUJUN0ZpwgTza9pCwk=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=haIBk1Ke/sWUe0l0uFuqa1nKgfaq82htuCr5VJX2rU4fA9n4k8cCCx9IoIKMMcMIuH/wNgRQDAvU+yjG6EHP4tuwvc05+SzYpy67vM1pW6uMI7EjL2hR3SUBKKkEVvLomgRtXzCqGaqzRaSVT9lOb4FM3FKUlmaEW4EJPrsl+iE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=RnpdHfGm; arc=pass smtp.client-ip=136.143.184.112
+	s=arc-20240116; t=1762353024; c=relaxed/simple;
+	bh=hBpybWByQ75flqgh+Se1j37c+eHQwCRWVjavBdq81/Y=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=kmBTBQWJ5l/LhZEf6HfOzu9VuGwKZr9Y3tITRTFOtxSIyRY5XAelkfp9CbWFxJL2gFGw4kiO50X/wEiil2aoypUrsDgewtDM8vQxXqPcgPJyqM7/q81507wtarJto3K7tjOdkFNk6VNec6z5beShhA0FBrdgxzAEVaAE8SO+0qo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=KOkRmvWn; arc=pass smtp.client-ip=136.143.184.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="RnpdHfGm"
-ARC-Seal: i=1; a=rsa-sha256; t=1762352994; cv=none; 
+	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="KOkRmvWn"
+ARC-Seal: i=1; a=rsa-sha256; t=1762352998; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=M474RNm9GkqQqtnWe8DtUkgxhiz+sLzApChn+S/3kt/WLYfIR1b9BS8k+kpgPk32GAwOZpAWEDk3OfMZo/mHrTyYL5peXNYfE6/CAsrlSsjzE04DO+on59TG8JOdMVQYwMRfqW3lWUYtOmbabjV+uUpUQdtaBCc1/1zDrahLa3I=
+	b=G+AKgK1BY2HBARaYNtd8rokJZXHNcwSHOi2VJ4m7PhVOW2zoC7yhfOD6COvF9K0fiqUg75KNnviHqkZL70QEX2z/uuoz73/iJgndT/DDXzHQiwoBfUPU70SQ7T4M7sokCisIvVge0IkMJdW6UrGo6mTZEqvlY6j5DdAzY3e5XzI=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1762352994; h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
-	bh=0R9u0PT2oB+/pAnNbsa0B9DKEPWYhsUeWmYMeHm+XtY=; 
-	b=Zo+2b81b7UhGOeFzhWL0s9ArcOYteHeQltvwhZOvi6gITtj1u8JEVTMBmlFa8FxXOhwGS/zFkq3/etSrTqVbwgKXp53sGh3vQkbC1EMWNbJ72WAXOCGsLlsfNwblr3HtJtC/OJILu+3IVfX3YYOxQV/A2JEA4DNm4s00rt9O+5M=
+	t=1762352998; h=Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=12P3XXPd/WYjH9dawfwQm0YoXNBNW7gkg66gYYs+NS0=; 
+	b=gg0YOO1tRADOlhYmMe8Rfs+aqZuLxuGuVEqXJL9XEYzavFcZ9z67mVqfb/EX6guu0PJVuOI+BlUCpgSciEfIiJSfohe3KU0dlteFuhcF/3xV+vDIkSztm5T46JiLmvyu0sP9wz75Ve9SKes6i3Y4vzGOnX6JNV3JGeSC0svcqz8=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=linux.beauty;
 	spf=pass  smtp.mailfrom=me@linux.beauty;
 	dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762352994;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762352998;
 	s=zmail; d=linux.beauty; i=me@linux.beauty;
-	h=From:From:To:To:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=0R9u0PT2oB+/pAnNbsa0B9DKEPWYhsUeWmYMeHm+XtY=;
-	b=RnpdHfGmKWaNnDQ5q1m1ia67a4GwM5UCoR9Kqw2YQ9EDwRFYX2cs+BtMeGqlViT7
-	io5E6eEQWLg6ANE3c1SGxwK3Qyq4aHEreah1Vkp6oGHg6dZztPdQeH2ZJxeuatOSALR
-	5WKBl5UAndE/39vgMRex3ZaVd2walw1yOLFJPq50=
-Received: by mx.zohomail.com with SMTPS id 1762352991447469.4348294426162;
-	Wed, 5 Nov 2025 06:29:51 -0800 (PST)
+	h=From:From:To:To:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
+	bh=12P3XXPd/WYjH9dawfwQm0YoXNBNW7gkg66gYYs+NS0=;
+	b=KOkRmvWnk0sIHe6L03DdAC5ToCvZaQYRAR6JYhPXkMJJzZtLfR4qSQrAiOeUbci5
+	oyz5cJ4fR0J8e3qnCZIje2NKQIypEik8xGEdvGSIp5mCdIhuzVCDWPO+Z1j6He5klZm
+	DCos6RJQgrlRUrVUgInBenCXZUKossNPajHX4jME=
+Received: by mx.zohomail.com with SMTPS id 1762352996688212.08967570682216;
+	Wed, 5 Nov 2025 06:29:56 -0800 (PST)
 From: Li Chen <me@linux.beauty>
 To: "phillipwood" <phillip.wood@dunelm.org.uk>,
 	"git" <git@vger.kernel.org>,
 	"Junio C Hamano" <gitster@pobox.com>,
 	"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v6 0/4] rebase: support --trailer
-Date: Wed,  5 Nov 2025 22:29:40 +0800
-Message-ID: <20251105142944.73061-1-me@linux.beauty>
+Subject: [PATCH v6 1/4] interpret-trailers: factor out buffer-based processing to process_trailers()
+Date: Wed,  5 Nov 2025 22:29:41 +0800
+Message-ID: <20251105142944.73061-2-me@linux.beauty>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251105142944.73061-1-me@linux.beauty>
+References: <20251105142944.73061-1-me@linux.beauty>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
 From: Li Chen <chenl311@chinatelecom.cn>
 
-This series routes all trailer insertion through an in-process path, removing
-the fork/exec to builtin/interpret-trailers and tempfile juggling. The first
-three commits centralize logic to reduce overhead and simplify error handling.
-The final commit adds git rebase --trailer, currently supported with the merge
-backend only (rejecting apply-only scenarios and validating input early).
+Extracted trailer processing into a helper that accumulates output in
+a strbuf before writing.
 
-all t/*.sh testcases have run successfully.
+Updated interpret_trailers() to reuse the helper, buffer output, and
+clean up both input and output buffers after writing.
 
-v6: squash all fix commits and split refactor step from the original patch based on Phillip's suggestion and codes [4].
-v5: fix all Kristoffer's review comments form v4[3] in place and without new patches.
-v4: fix all reviewer comments in v3. [2], and add patch 1~8 & 10~29 to fix review comments.
-v3: merges the remaining trailer paths into one in-process helper, dropping the
-duplicate code, as pointed by Junio and Phillip [1]
-v2: fix issues pointed by Phillip
-RFC link: https://lore.kernel.org/git/196a5ac1393.f5b4db7d187309.2451613571977217927@linux.beauty/
+Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+---
+ builtin/interpret-trailers.c | 51 ++++++++++++++++++++----------------
+ 1 file changed, 29 insertions(+), 22 deletions(-)
 
-Comments very very welcome!
-
-[1]: https://lore.kernel.org/git/xmqq8qlzkukw.fsf@gitster.g/
-[2]: https://lore.kernel.org/git/20250803150059.402017-1-me@linux.beauty/
-[3]: https://lore.kernel.org/git/20251014122452.1851103-1-me@linux.beauty/
-[4]: https://lore.kernel.org/git/7d12b046-365f-441c-af8e-8a39d61efbbd@gmail.com/
-
-Li Chen (4):
-  interpret-trailers: factor out buffer-based processing to
-    process_trailers()
-  trailer: move process_trailers to trailer.h
-  trailer: append trailers in-process and drop the fork to
-    `interpret-trailers`
-  rebase: support --trailer
-
- Documentation/git-rebase.adoc |   9 ++-
- builtin/commit.c              |   2 +-
- builtin/interpret-trailers.c  |  81 ++------------------
- builtin/rebase.c              |  50 +++++++++++++
- builtin/tag.c                 |   3 +-
- sequencer.c                   |  34 +++++++++
- sequencer.h                   |   4 +-
- t/meson.build                 |   1 +
- t/t3440-rebase-trailer.sh     | 134 ++++++++++++++++++++++++++++++++++
- trailer.c                     | 129 +++++++++++++++++++++++++++++---
- trailer.h                     |  13 +++-
- wrapper.c                     |  16 ++++
- wrapper.h                     |   6 ++
- 13 files changed, 392 insertions(+), 90 deletions(-)
- create mode 100755 t/t3440-rebase-trailer.sh
-
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+index 41b0750e5a..4c90580fff 100644
+--- a/builtin/interpret-trailers.c
++++ b/builtin/interpret-trailers.c
+@@ -136,32 +136,21 @@ static void read_input_file(struct strbuf *sb, const char *file)
+ 	strbuf_complete_line(sb);
+ }
+ 
+-static void interpret_trailers(const struct process_trailer_options *opts,
+-			       struct list_head *new_trailer_head,
+-			       const char *file)
++static void process_trailers(const struct process_trailer_options *opts,
++			     struct list_head *new_trailer_head,
++			     struct strbuf *sb, struct strbuf *out)
+ {
+ 	LIST_HEAD(head);
+-	struct strbuf sb = STRBUF_INIT;
+-	struct strbuf trailer_block_sb = STRBUF_INIT;
+ 	struct trailer_block *trailer_block;
+-	FILE *outfile = stdout;
+-
+-	trailer_config_init();
+ 
+-	read_input_file(&sb, file);
+-
+-	if (opts->in_place)
+-		outfile = create_in_place_tempfile(file);
+-
+-	trailer_block = parse_trailers(opts, sb.buf, &head);
++	trailer_block = parse_trailers(opts, sb->buf, &head);
+ 
+ 	/* Print the lines before the trailer block */
+ 	if (!opts->only_trailers)
+-		fwrite(sb.buf, 1, trailer_block_start(trailer_block), outfile);
++		strbuf_add(out, sb->buf, trailer_block_start(trailer_block));
+ 
+ 	if (!opts->only_trailers && !blank_line_before_trailer_block(trailer_block))
+-		fprintf(outfile, "\n");
+-
++		strbuf_addch(out, '\n');
+ 
+ 	if (!opts->only_input) {
+ 		LIST_HEAD(config_head);
+@@ -173,22 +162,40 @@ static void interpret_trailers(const struct process_trailer_options *opts,
+ 	}
+ 
+ 	/* Print trailer block. */
+-	format_trailers(opts, &head, &trailer_block_sb);
++	format_trailers(opts, &head, out);
+ 	free_trailers(&head);
+-	fwrite(trailer_block_sb.buf, 1, trailer_block_sb.len, outfile);
+-	strbuf_release(&trailer_block_sb);
+ 
+ 	/* Print the lines after the trailer block as is. */
+ 	if (!opts->only_trailers)
+-		fwrite(sb.buf + trailer_block_end(trailer_block), 1,
+-		       sb.len - trailer_block_end(trailer_block), outfile);
++		strbuf_add(out, sb->buf + trailer_block_end(trailer_block),
++			   sb->len - trailer_block_end(trailer_block));
+ 	trailer_block_release(trailer_block);
++}
++
++static void interpret_trailers(const struct process_trailer_options *opts,
++			       struct list_head *new_trailer_head,
++			       const char *file)
++{
++	struct strbuf sb = STRBUF_INIT;
++	struct strbuf out = STRBUF_INIT;
++	FILE *outfile = stdout;
++
++	trailer_config_init();
++
++	read_input_file(&sb, file);
++
++	if (opts->in_place)
++		outfile = create_in_place_tempfile(file);
++
++	process_trailers(opts, new_trailer_head, &sb, &out);
+ 
++	fwrite(out.buf, out.len, 1, outfile);
+ 	if (opts->in_place)
+ 		if (rename_tempfile(&trailers_tempfile, file))
+ 			die_errno(_("could not rename temporary file to %s"), file);
+ 
+ 	strbuf_release(&sb);
++	strbuf_release(&out);
+ }
+ 
+ int cmd_interpret_trailers(int argc,
 -- 
 2.51.0
 
