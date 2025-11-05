@@ -1,61 +1,63 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7327176ADE
-	for <git@vger.kernel.org>; Wed,  5 Nov 2025 06:19:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9BE22424E
+	for <git@vger.kernel.org>; Wed,  5 Nov 2025 06:19:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762323585; cv=none; b=qeiG6+XSX4k/mvIOWiGIREI01l5PpPBJYkANC0ZXGqP38JElFjFpDP2DFFliR1WLtA4S34yrw2QJXQVr1Jc9f9B0jooP/2WlE2V4+zummTGXbmdFD0JKxcxdUTCDx1n76kJRgjx9xI4GJ1KbSLuuUyhTZ1CG9+3i/UoSRN8R2qM=
+	t=1762323586; cv=none; b=CEfqkwdTW8iDk6rwUqiJnC6hKlvbKSEGQcizAW2QTNvyOrIP+0z0eBNhxyXymswghw3whqW+uozUnpaAWdzLON1aXFXrWz4bx+TF48kbusf63Bb8e+C9H+Ul9Ks1Bqn6n1o1p1lKPonUFd98yIJWJTzXhyh6+HNU/FCrJcfnC9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762323585; c=relaxed/simple;
-	bh=aY4q37Zitr/7tTLQdKzIj1jIAzHNC3JJAg3/yZ4jDWU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=P8fDCLm7HSAhHFAjpq5Va8TA1I+Rb6lU/Xbtj8GI3nIxdlDrUR4PpeECUde4uoFrdMzah43x4/iaCTNJONQvlMororWkDvO5+Em/BRLnE4/JSGVb7PVN8wARJ9QJmrCSufhjxex2W+uKVRUPd79SGWPZeFvETiICIkjtPTTHzK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gLJJXFRO; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1762323586; c=relaxed/simple;
+	bh=YNSzV/V8bu9TdsFg7R3lKaFF3olp+CgeEIMvsNjWQTM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dworhrP6hRcKd9cnzwntLm5Kmn0iGeOWaMoApBzzbVCJRQKEPZA7X0V8f7d/4u6NgzS6A/IQR7/uNXANzE4/enPM/qVFSs/SsPxTIOSm9yi+TvK27n47aQUCdnWNx17HRGtGgctIti4rRUXCA9siCA6FxZEiOsexQkPp7jdqzbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DLtxaXey; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gLJJXFRO"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4775895d69cso6641935e9.0
-        for <git@vger.kernel.org>; Tue, 04 Nov 2025 22:19:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DLtxaXey"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-4298b865f84so2990981f8f.3
+        for <git@vger.kernel.org>; Tue, 04 Nov 2025 22:19:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762323581; x=1762928381; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RgyQ1YDSrTFTTAScb4l/Go3jxfPmhippv1n/j//GotU=;
-        b=gLJJXFROEtub0LTxwPB8AA/X9glUz8cKbTHYCVoihyN1in++hNdf3bmaYglJbyWQ4q
-         bnNnY/ERPaHLGqsq9HHDRE28BOawimM8XxA2+Qqtm6xU7Bfb6MBBAyp0+7wEwdWhLPSP
-         6eryoI3r0/UNcXN4gXK6ZxbJrD3BMc2EeIz9suURQAjcV/wuc6Qx3rSjRrVeqlb2xncK
-         6cauqvyJ5vB0CVVk4X8iaGdpZwmqJNmve1ZIubzP/dfJ6XDfG6lJZP26q7Io1/zEUmcO
-         doxFU3A0k9/zZW1Qa5Tz5z7b83t9Pmw4GtxD7cGhKVHbqioxquQ0O3/sZUOkg8pJDQW/
-         OCkg==
+        d=gmail.com; s=20230601; t=1762323582; x=1762928382; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U/XyRdfwlu/E55LWCL9gAHeUNEqyds+MQxzcPhdM+Rk=;
+        b=DLtxaXeywf0wdSSRTDyGVOSNJcuKCxxclQKiWSVM8a/2LelbNhIDdoB7/sjQRMaRwM
+         m6jt7r937E1jshKelTBlGu/uyo2rRPoxM6UM01wZAsYHNe300k/U2oh4M9gjXnU7Ca4N
+         h+MZEbXUtYcq+3lR9yW6n2CzMaNgZt24wbvfFIGGu51YD1nhepczYynn3YueVShPsvEd
+         tV1fqw5xuEokfUW2+y4pPK8S87Vg9F3tEMar4+1uCw/YFQ5/vK6oTaVO5oyVZw37rbFH
+         Enf+l0GcJLacGcyLdM78kTeP1b9jJkezlCi6knCvyFmR53Vweb43u3ZU9isMqqwmj7CJ
+         92Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762323581; x=1762928381;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RgyQ1YDSrTFTTAScb4l/Go3jxfPmhippv1n/j//GotU=;
-        b=Gk2ckE5xeO+ykw962LDMb4WSXhQYZzudzndgsDYzMCW/XlbQVcP5ycKhjiqkwbx0yt
-         bkYOtRnjWjBIQhrVQ8dpfjNbFWPZkodohnykVToB5eZkt6eqSwqjdAz+MnDe4cytjuO2
-         NsmPmCB6JzHnFXxva1e3hu0tStRUMnNLtS/ts5F6RpzvZZ6zbdKuud8X0+yyMVXcmE43
-         tjUH1vbIgP6Wi8NG0nUMh5J2totHujzko05/+HyimaMSjH6jOw8FFEkgdqwzwDwscnDr
-         X79pMLMNhq4hdU51QLlta+IO+PXDXZZBESXWI+C5WuJxcLI8osJnPGlgBi1kaagkNFVf
-         LdpQ==
-X-Gm-Message-State: AOJu0YyfUyCCdoNXf9srbZw4lADIhaKzlVCjAqy5qJ1rfFCeAv/khMXK
-	y0OoI5oJcpz2Zf4PspHX5F6AH1VDa+UEvCVoky0SDqPgGVVoZrSwNsy9YXifLQ==
-X-Gm-Gg: ASbGncu8OXBSFO6eldqUwOrt2Id/8S9KuwBj37tayRBJ/A8KoKkAIiLDRmS9pfs5zVX
-	84IdsE1i2XlMIvM+R2Uz5MJCmxN2h//+JWN5qyd7m5kWqjGoA+BdeWA/bXjJtww1un4+l2MUZP5
-	f2bziPxXaXgUdySDOyLXs8b5ijYsp9ER8IVgn5tihSrRtZN7sMQ8ufAkpF5i7oMNWMPDi5MVak1
-	ga3qJurtEBMDJvBwaI/c9hK3Bak/+/UGM08aRG84bN9mp+OMKUXPnb9vz9CCNo2dgZgzrCfX1Zy
-	nYHQu4DF5qtRuoqFRhFBztJtxzYhz86utkFAd9DW2ijg5NNNSlAtOsHQ+2mJIPJ6TUa0C8Tsj4+
-	J21fGNNRGaIFt+uvDEXjOBhMePeVs+/Z3uMpsEHFqEorRHnRZLwt07HSD9UW4zlStllYVYkDKmB
-	DmQutM1yfzOtou/t6IY6te/fSEOQk=
-X-Google-Smtp-Source: AGHT+IGPZdwOol3OGXStD2yEFukmjrlSXlw214WvvOK2RHdazgI8UGtlWmQfEbb2X1GXOzeD35ERlw==
-X-Received: by 2002:a05:600c:620f:b0:477:557b:6926 with SMTP id 5b1f17b1804b1-4775cdc7123mr14713545e9.10.1762323581024;
+        d=1e100.net; s=20230601; t=1762323582; x=1762928382;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=U/XyRdfwlu/E55LWCL9gAHeUNEqyds+MQxzcPhdM+Rk=;
+        b=fCyazglRYWvBczUxbD11j+rLhan8V/R2dAJwFGNhBQR4dDoBQLjGdcpmrgc5Q+mhPT
+         1ey4ao0Iodi/Eezf3X7NJMHYQCVJTK8MJheaH33kIGe6wqub6ORYQvs0DLLqqnIfKSsq
+         1QOP8Yb6WWuGvjr0TWtEudPYwKn+6jNLdHQvdaq2IxVm4qZSSECgM86xT4TQ6XRmCemi
+         HUrLxOUTJZ8KvddrYh3e9cgiDofuZkJnbrL/+fgseQcNgFGjxKrtL7oEAee5Mus0shk7
+         W2n6tHt0Ok1S3w2N2qJBkY5+LQDljHdxmN9mKuVnQkTQpAUwMB/TN2nJNOIAOZaco7HV
+         hSnA==
+X-Gm-Message-State: AOJu0YwOVSnjn4UxwTzh28/FdXmU83dNsnD31ywp/GtXLWFHaJavsQw4
+	qr0l4Gb0X2xkNOiqAPmGQ9NxgVBqqU2jBxBDsX0N9FVBpuUFduxAZBgjvkHdVA==
+X-Gm-Gg: ASbGncvgu87qc11kDJcBf0fIe/TZ267ERAO0H0dyK2Zi4kkQzQvG9wgiOejHtTLleQ1
+	J7jFanXbenNpdG2Q5eOA+wac6y0bIkhCvGw4tS4UlvJTAwhesHnaxOQevNa+tRs7GWIyo4Tkxv2
+	VnTvU2RsCyB3J8jqOm6B4tckqeN+UfjWxAAwv6I+QtSMlb2za79XoZniwtUuXLpEH80Vt9N+XeU
+	7f4Egjbuxf+vknVCefWapKuCovgCnF4j4UIFxH/apX30zXTwYi2lfDVFAio/FYNIQ03VNGlt4OR
+	lwAcHiewz5TCgZg32TC8BMUlZk9fkBTMs4150iP6TS15h0FMT9PR4/zsDdQYt6+pW6cj2NZm3+F
+	mSET0l3TIY8QkBPwmywkwm80M9u0HuPC5t8+6bDVr22DEKflEyzUQTVpU2P/EiFc84zdrF3fmlF
+	GL8g7/HblaA4/ntdRhv8LC+DK9RycG8rrumvJtmw==
+X-Google-Smtp-Source: AGHT+IGxk9kMc/QYEliUTtX+bO/19BjODOclygN8N4TOtv84OUuaRDfxy4aRoXtVjH1UhNFI/hRNWg==
+X-Received: by 2002:a05:6000:4112:b0:425:7e38:a09e with SMTP id ffacd0b85a97d-429e32c4b26mr975272f8f.2.1762323581904;
         Tue, 04 Nov 2025 22:19:41 -0800 (PST)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429dc1f5f8csm8225944f8f.23.2025.11.04.22.19.40
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429dc1f5f8csm8225944f8f.23.2025.11.04.22.19.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Nov 2025 22:19:40 -0800 (PST)
+        Tue, 04 Nov 2025 22:19:41 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -64,11 +66,14 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 0/3] fast-import: add 'strip-if-invalid' mode to --signed-commits=<mode>
-Date: Wed,  5 Nov 2025 07:19:15 +0100
-Message-ID: <20251105061918.3688870-1-christian.couder@gmail.com>
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/3] fast-import: refactor finalize_commit_buffer()
+Date: Wed,  5 Nov 2025 07:19:16 +0100
+Message-ID: <20251105061918.3688870-2-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.52.0.rc0.3.gf264cd25e5
+In-Reply-To: <20251105061918.3688870-1-christian.couder@gmail.com>
+References: <20251105061918.3688870-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,44 +82,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The `--signed-commits=<mode>` option in `git fast-import` allows users
-to decide what should be done when commits with signatures are
-imported.
+In a following commit we are going to finalize commit buffers with or
+without signatures in order to check the signatures and possibly drop
+them.
 
-For tools like `git filter-repo`, it would be useful to be able to
-strip signatures when they are invalid, so let's add a new
-'strip-if-invalid' mode for that purpose.
+To do so easily and without duplication, let's refactor the current
+code that finalizes commit buffers into a new finalize_commit_buffer()
+function.
 
-Maybe this new mode should become the default mode, but this would be
-breaking backward compatibility, and perhaps this could be decided
-after other new modes that might be even better default modes have
-been added. So we leave that for future work.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin/fast-import.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-This 'strip-if-invalid' mode should also be added to
-`--signed-tags=<mode>`, but we leave that for future work too.
-
-CI tests
-========
-
-They have all passed, see:
-
-https://github.com/chriscool/git/actions/runs/19091593841/job/54543228129
-
-Christian Couder (3):
-  fast-import: refactor finalize_commit_buffer()
-  commit: refactor verify_commit_buffer()
-  fast-import: add 'strip-if-invalid' mode to --signed-commits=<mode>
-
- Documentation/git-fast-import.adoc |  28 ++++---
- builtin/fast-export.c              |  46 ++++++++---
- builtin/fast-import.c              |  74 +++++++++++++++---
- commit.c                           |  17 ++++-
- commit.h                           |   7 ++
- gpg-interface.c                    |   2 +
- gpg-interface.h                    |   1 +
- t/t9305-fast-import-signatures.sh  | 118 ++++++++++++++++++++++++++++-
- 8 files changed, 260 insertions(+), 33 deletions(-)
-
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index 54d3e592c6..493de57ef6 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -2815,6 +2815,18 @@ static void import_one_signature(struct signature_data *sig_sha1,
+ 		die(_("parse_one_signature() returned unknown hash algo"));
+ }
+ 
++static void finalize_commit_buffer(struct strbuf *new_data,
++				   struct signature_data *sig_sha1,
++				   struct signature_data *sig_sha256,
++				   struct strbuf *msg)
++{
++	add_gpgsig_to_commit(new_data, "gpgsig ", sig_sha1);
++	add_gpgsig_to_commit(new_data, "gpgsig-sha256 ", sig_sha256);
++
++	strbuf_addch(new_data, '\n');
++	strbuf_addbuf(new_data, msg);
++}
++
+ static void parse_new_commit(const char *arg)
+ {
+ 	static struct strbuf msg = STRBUF_INIT;
+@@ -2950,11 +2962,8 @@ static void parse_new_commit(const char *arg)
+ 			"encoding %s\n",
+ 			encoding);
+ 
+-	add_gpgsig_to_commit(&new_data, "gpgsig ", &sig_sha1);
+-	add_gpgsig_to_commit(&new_data, "gpgsig-sha256 ", &sig_sha256);
++	finalize_commit_buffer(&new_data, &sig_sha1, &sig_sha256, &msg);
+ 
+-	strbuf_addch(&new_data, '\n');
+-	strbuf_addbuf(&new_data, &msg);
+ 	free(author);
+ 	free(committer);
+ 	free(encoding);
 -- 
 2.52.0.rc0.3.gf264cd25e5
 
