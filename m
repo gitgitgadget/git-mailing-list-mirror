@@ -1,105 +1,125 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8807023D7C3
-	for <git@vger.kernel.org>; Wed,  5 Nov 2025 00:54:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03BA15853B
+	for <git@vger.kernel.org>; Wed,  5 Nov 2025 03:21:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762304045; cv=none; b=aZ2yhUKOqpxSg5ry00AtDnOeeTL7o5SykRq4gJOBzb7nROG5/sw0ie9hu+a7yJy/YD3rKJqffBSNWHMHcKN5oGvRun1HvggNuZEYmyjzweyRWHO4lwME5NgIff0OseUX16/O1A3lyrvlPFx1fb+cZdUuR5vTNHtyLndF2MSQpQc=
+	t=1762312897; cv=none; b=gZXEZvbwbGxq8ySeI1k336o2AtoaK1Wk62dHT5Nr1cE9YN4ObzRLkWJzKiZZhCk6+tj/QEr1ifFUbpuukyGRUwqoPsguvi7gJ7yZ77vi3yWWNKH4Fl8rThGNjWh+YQavz+OLZ7XMVX/QgjwQkNjnQglzJlUGpwwzFUwf0GaEFlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762304045; c=relaxed/simple;
-	bh=kzgFi7ukRB0hOZ8+cu0UjVT7/AIE6IvCjhyqyB+neLY=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Fe550iPg2blBAkDBsNm2MCTxHMDcVx/dcoEHqdTdcU8tDOBn24+s7nWE0qzPiEDeM9c3nrxqxyYiG7uh19yut82ivKhDV3/fcf6PPGbmPubl8zEUnh4rnIOzuiqhkh2knddGtu46xkqWbGFJ7hVavFQkian5+jYrknEY5MOvU98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j2LKoNwc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rua9fQ5F; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762312897; c=relaxed/simple;
+	bh=fwAw950mJlr7EcYxf3+sW3va/BBf6Qqv05IjdPQ7CFc=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Cc:Date:
+	 Message-Id:References:To; b=bRhZRV4eiD8+kdUb3F3+/sgucCFgs/LLGg4wM9X4ADRTQDLmzevttRTpwCD9fJLlV0SXaSE24RyF/cV1Dxx5hb3KIsBRjciA/ZUbx5iceWuolejSTdNSjkt8ywFWxbDOXff84xZEtgyaejRr3/fOT0MYgll80UtBgc+OUIBizas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SsfIwnCs; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j2LKoNwc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rua9fQ5F"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7C3A17A00B0;
-	Tue,  4 Nov 2025 19:54:02 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 04 Nov 2025 19:54:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762304042; x=1762390442; bh=kzgFi7ukRB
-	0hOZ8+cu0UjVT7/AIE6IvCjhyqyB+neLY=; b=j2LKoNwcxy7twXGCf2eIacGkKz
-	wM7muz3vb/NXeWFQRFYp/TGyinPqi6xfUQvdr1G8tVh/jIfkXKw0J5TD6qCuNr4k
-	61U1FfBiyhq61snZKrI3Nx8XlxKJO1HM12L++klFD5E1fPfNP9mLP9fTKBF+XAL0
-	UabPI4YLbxFxP8f7jfsw1HU+iaWK2VbmZdovAnvNWPZpxj56jtGyti+8AsCvgd20
-	TTvc4WYFzC+cv/dAGYPsOY4+rTHnhHw+Izgq3sa/dS5ek7Pk0Zv3Rnouc2FuZbUV
-	TFL2W7bvvI0A4GoHvfrk6Eli1UY1R3bmZkznFNCdcQcRFsom49vqM+FoqW2A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762304042; x=1762390442; bh=kzgFi7ukRB0hOZ8+cu0UjVT7/AIE6IvCjhy
-	qyB+neLY=; b=Rua9fQ5FlV4ZebbBV5M4566Ol6Za6rusriYu5UsIE9VaCrSYOT/
-	5FIqKqHKEpMJyazBjeSrsgGsmEFuNNYqlJCAw1PEe2DBrMQ6x09/AQThgTD7tlqa
-	7aTxIweLgXnT9okxzqeY/4N5a5ynMRxm3D9pkAhVI1r+2VUXMOiLYmgglXh0eS2M
-	+BVX0F8TMMzsMcNce+bhIk3dX14wEU7B1VcIqrStlCE7agHURlljLcwxoJubzqLO
-	LyINSY4PcwMFloatJU2URTwvBHfrQYgkCMBuHmQg7YSXIVt+DHrex1ProcHWBbpO
-	3183lq3ZPrBKPnnwih89+Pbtzi0Mcm6oWlA==
-X-ME-Sender: <xms:KqAKaTWX0CdSR1m7NlTNdpPiBb_lbA1enpmE-YwyPfp3mgOtobSGIQ>
-    <xme:KqAKaRmfGY8obRTCl0eSq-QEwJSAN2f-rBwcGi6LbQ8pBgnPpxKnhQJuc55Dd_9NI
-    BXtBbEVx8wkMhCiZAZbIe2i4x6GSDD5OslCfs0dEqVV5mdXGvCHxMk>
-X-ME-Received: <xmr:KqAKadApLoC3YRSSL3w_PTxdD_gJpIkGThUg1A_Xfu396-fj0zLsAfjaydPZQ_PLjSZD9s92nMyT2viR3lWHk32wI9sBSKqS3fnq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukedvheduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepkefhueduteekgfdtueegvdfgueeiue
-    dvlefggfefkedvffduvddvkeeuhfeifeejnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:KqAKaZf20iAoDj71eB_s6wjmw98AT8Sn8wH8t3Vwr4Hicyak4UZqmg>
-    <xmx:KqAKaQImWbIxX12BnhWshKykBOaRdSri36gPwoc2bD8046ifKAcyXg>
-    <xmx:KqAKaUfmimsVoUKauFWA_JJVOxjyPWE2H5Y1_o6TbOG9ZbFQoqKECA>
-    <xmx:KqAKaf2IEEyZT81ETx_g7v3fij6bCokmTqX5Efjt97tXRO2yYsr7Bw>
-    <xmx:KqAKaetjUtD69-C_KM0grEwySFgU1qYccfJ5T1gAHHh-GvUrpQFyyHXs>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Nov 2025 19:54:01 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git-add ignores exclude markers for ignored files
-In-Reply-To: <xmqqtsz9o3cn.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	04 Nov 2025 14:11:20 -0800")
-References: <MN0PR01MB761143093D1A4D226E8883A380C4A@MN0PR01MB7611.prod.exchangelabs.com>
-	<xmqqtsz9o3cn.fsf@gitster.g>
-Date: Tue, 04 Nov 2025 16:54:00 -0800
-Message-ID: <xmqq4ir9nvtj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SsfIwnCs"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-786a85a68c6so1956637b3.3
+        for <git@vger.kernel.org>; Tue, 04 Nov 2025 19:21:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762312894; x=1762917694; darn=vger.kernel.org;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SbxSoMI8vPuKqtmQRdm5h1VbBFJrgdqwxzFnffMEcas=;
+        b=SsfIwnCsdQxIJ6nYyTh5Ne1mYSLeSVzQEHBkVqWqPROclipBOc2V3va3brcSkfkn3p
+         KMDk23lxjo04MC1k5TK8ZBTnxpCiG74xnNfyYz0sk2RS0rWExvIS4kA9cSjAah+pSgFi
+         tOrXqmAFvweAPpM3dMFtfbPRSJCvZSBps2Uss3fmgLmBtKuFwcRt5vUZRF7OUNAYVrUv
+         uyKREthKeINmCzP/iRhemyj7/wqposfZzQ9PkKArpWQvtelXYjihgJft0GpRXcD0Ofq4
+         vnh5sEq+b0o+zEKC7Ftrmy4IrIxU9y6i3xuI3YNJiZTt1UIhRDw1xOP5RCb0t1byUOFV
+         DSDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762312894; x=1762917694;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=SbxSoMI8vPuKqtmQRdm5h1VbBFJrgdqwxzFnffMEcas=;
+        b=WD82uYeIpxOwqO4P4NjClJAisQ5yC8F5EtueKaBw3X+sXJqzcgc/wWvzQKi8N/aRiT
+         EU6zZmJFwPlTNtHlljpA8TQy8XIOdAC/WiMo4gu0UCksC8ELvPztsRa+ETJ64NDft7FH
+         J3yyEqNxRmGROqv7l6oj//FSiTVHHSMZbWXuWztYWYFyeHK3yS7SoZvWOmlaeCdyHzJj
+         SmWYAS4CcjbIdgaHUrBJ5ZYr3I+E0dkqy5MK57I/IKqF28+WHhN9wb4N0oWhHRLqzjF2
+         BHp7iEkIjAKO9uztIZ6a5XDFgBnUVrkiqeRH/wNrcb45SFT3jno+DTXchu63xwvnTTsN
+         TRXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXEUzuMsf7i/hHf5/t+fIT1pHZpSrp4gEqf2B8IJU0S5yPji4WRyYD0PiBg75J5lECvzls=@vger.kernel.org
+X-Gm-Message-State: AOJu0YySRJc4PAnP0qBLKhHyvm9IM9z2MS+JDCR5JD49aBAnXYcZFEvh
+	AyYEi/ADSLi8bYMTJXeTnkeJgHiu1jUUrTgRJjCPrNiWWwTS7krBZFEr
+X-Gm-Gg: ASbGnct7u+jkKwNDIVIwTjLiGYKAHhooakWbLWsku+EW3VTFQWkSkik1PYVmJGVQ0qZ
+	rIChyRj9t87gqKSzbobGWLJjqXIR6IZ8U72psMRJWj4+zZn2DEXhQX1D2bVCYToqIlRXcMcEI0j
+	WVF/CInT2AqGlX2nkKaDpHxFS3ocevAl4pYPPHCIAGdaEyO/9mqgWMH3nJkg1R0fn5lYseGVa9X
+	5Z6AgSNBSPqjy4oTb8gseC3L7k8ip08l0szBtZTBK3I2ZI6DvTRrA1bCBcad7GQvaUeyM3iRBVf
+	RUOEi4WY1p+bnPZZMvHQoH8BV32IUq25yt189iV314FQnwtwhjC/RP0cFYuFMXjENPlP0eQHsA7
+	oCGNs4oQB44Q0jsQ2cRYonDsIffRzzjsgMAF8IZVntMBo3DuaR4bl32pQEShU+0UOM9JZEkz3wP
+	cDoklOzHD9p1jVe+n/GNS7hpp6qEmd
+X-Google-Smtp-Source: AGHT+IGX+NbRJCb/2zrx/9Mb3NBY8juNU4rJxXLq21EPIDhuNmwIXjAFz+J2uSgYSpvR0CWSVQM2lQ==
+X-Received: by 2002:a05:690c:498d:b0:786:314f:849a with SMTP id 00721157ae682-786a410ba8amr17864927b3.17.1762312894179;
+        Tue, 04 Nov 2025 19:21:34 -0800 (PST)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:eccb:aea8:c690:2cd8])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-78692035fc0sm15716127b3.60.2025.11.04.19.21.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Nov 2025 19:21:33 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v5] doc: add an explanation of Git's data model
+From: Ben Knoble <ben.knoble@gmail.com>
+In-Reply-To: <c268c98d-0a8d-48fe-99dd-b4a2fdcd0fb9@app.fastmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Patrick Steinhardt <ps@pks.im>
+Date: Tue, 4 Nov 2025 22:21:23 -0500
+Message-Id: <7E8706EF-6C15-43AD-A847-5C896D9235AA@gmail.com>
+References: <c268c98d-0a8d-48fe-99dd-b4a2fdcd0fb9@app.fastmail.com>
+To: Julia Evans <julia@jvns.ca>
+X-Mailer: iPhone Mail (21F90)
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> This may be an ancient regression when e1b8c7bd (dir: remove struct
-> path_simplify, 2017-01-04) was rewritten exclude_matches_pathspec()
-> function, which was written in 29209cbe (dir: fix COLLECT_IGNORED on
-> excluded prefixes, 2010-03-11), back in the days before ":(exclude)"
-> and other pathspec magic was even invented.
->
-> Perhaps try this patch?
->
-> I have no idea what the ramifications of the change is, though.
-> There may be unintended fallouts in some distant corner, even though
-> it does not seem to break any existing tests.
+> Le 4 nov. 2025 =C3=A0 19:02, Julia Evans <julia@jvns.ca> a =C3=A9crit :
+>=20
+> =EF=BB=BF
+>=20
+>> On Tue, Nov 4, 2025, at 6:45 PM, Junio C Hamano wrote:
+>> "Julia Evans" <julia@jvns.ca> writes:
+>>> I do not see the point of implying that the commit ID is not "special", o=
+r that
+>>> it's only one of many ways to find a commit because to me it seems very s=
+pecial,
+>>> since there is no way I know of to retrieve a commit that doesn't ultima=
+tely
+>>> end up using the commit ID at some point. (though that ID might not be e=
+ncoded
+>>> in hexadecimal)
+>> That is not what I am trying to say.  The hexadecimal name is the
+>> most neutral way to refer to a commit object, and in that sense it
+>> is special.  It is the way ref subsystem uses to record the name of
+>> objects, and that makes it special enough.
+>> But that does not mean that the name _is_ the object.  The
+>> hexadecimal name is a way you use to name the object, but is not the
+>> object itself, and the special-ness of that name does not change it.
+>=20
+> Okay. I still do not understand at all why this is so important to you
+> (for the reasons I mentioned before) but I'll see if there's anything I ca=
+n do.
 
-One thing that I am extremely uncomfortable about this change is
-that I do not quite see why we use this function to begin with.
-Given a <path, pathlen>, it seems if the pathspec matches, but why
-aren't we using dir.c:match_pathspec() for and have our own separate
-and much simple-minded variant instead?
+Perhaps one way to look at is, what diagram would I draw given different tex=
+tual explanations?
+
+The diagram we _want_ folks to draw (?) is the one where a branch points at a=
+ commit [a circle, perhaps], which points to a tree [triangle] and recursive=
+ly blobs [squares], like I=E2=80=99ve seen Stolee draw for GitHub blogs.
+
+We might also want folks to label the arrows with names, or not.
+
+One way to interpret the =E2=80=9Cbranch refers to a commit ID=E2=80=9D migh=
+t be to draw a diagram where the branch points to an ID label, and to find t=
+he circle you have to separately consult a different part of the diagram.
+
+Both seem useful to me, though as the former has fewer moving pieces might b=
+e better for the model this document describes? I dunno.=20=
