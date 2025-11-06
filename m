@@ -1,106 +1,148 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE692BDC33
-	for <git@vger.kernel.org>; Thu,  6 Nov 2025 03:19:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D6C2C21F4
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 06:04:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762399147; cv=none; b=L3KZdlk/SliPp9dxCw//G6UiCdRLYBCDPoH7/Fn4TyPiXOnbK2XuJ70eG7/Y4F+USuHm+meJlUSZGdq2VHFneJ1SG685byGt3K457U9ACe8SRzUFIkHQHD+vZqJUpkBMFo/hQ4gwyh8sauTpxSCe7ck68Zk1eiU2eVUfF5tvQYU=
+	t=1762409086; cv=none; b=HWpFoMwxjdwBsXLuI7mG4tWv9JLe/fqaPQ1aDB8rdlxWDZ06Pdre17oEsvXk1Y5XTG8PIQ2bFJoBR16+VNzMJHyRSVBwW7rNenU+N34vuR1cxDg4VSKJ9qa3UdsCSVxH/d3EjeN5oAlSiYguEuokCGxTN/+SIDBfzu+dewr4P88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762399147; c=relaxed/simple;
-	bh=tZBPjKYrMdU0JV/CVaWxe1Qgm5EXB3X4qgEWylsI6lI=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=BbV76UXgKJRm9QcXehnfxo6BPkXBP6O7VdZgN2Hg3SFibb2XgWJIw2a3uezP+hhg4mSCnWMQLtMDXa5DAf3mIuUdYJJ/RphqNS+qR1MccDrLe04FR0rYsUoFsIhGo3L1QCassbU4x5xw3PZ5147NLjxqEzLIsOHdThfQBbRV7Ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HeHE4pll; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762409086; c=relaxed/simple;
+	bh=w+vTbGGmm2D3xtvm6Mf3sX7+9jt7ijDg6gzCjVopFKE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=unWpt0WpMunp8OGMrJWfgbETHPAyyScDvhZIFmTJQZflmEbP0xZlBnTLxhK7vuFdSV0FC3brIUwIz0w4u0aXmfems0OfkHi3WHOLcpGAoWyhxN2FUp4XopYs/M1s9JlS3h/z/Nlqy31bNKLtrIX2lIbjmnIIKvpqliPHIjcg/RU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MBU29ZkN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CHeTLKu6; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HeHE4pll"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-78677ff31c2so4490877b3.2
-        for <git@vger.kernel.org>; Wed, 05 Nov 2025 19:19:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762399145; x=1763003945; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cVFsZSPawOWEFlrhqF5nssSoQxp9PCt7AtT1pQqQtK4=;
-        b=HeHE4pllC0Pebikl95PU3E8BCRT14wqYNweGxzFSnbs4ixcxkjbVPH/HNlj5WDBRr2
-         xtSk8qOWfQiuCbixYhQqRpzbExp3Z83o7MhI0xj+XKVF9Zzl5yiSEFdS37QKY9eNHy78
-         MWg1EWurqxdgsTAj8sAjWImXYH9rw5rYVbp5pS3sn7gbsGju32/gZfB+WJsKkYi+oySU
-         X8Ug+9egiSDamyGJ+938GAlYkU73vdUVfoAf5g8LyiUbUgQF9F/opjsepYYTHPsUgN2J
-         +tBfDDmu8OMuOPN1055/nO5Lf8R9E+4gks/7fAys4xDqINLQroMexDh/zwtEgleRQeaR
-         eV2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762399145; x=1763003945;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cVFsZSPawOWEFlrhqF5nssSoQxp9PCt7AtT1pQqQtK4=;
-        b=mnqIDXAy+XKoiPXirOyXmz5RUdnk8dJqFD/un1JiiHVgxFJsOoly47LMH8J7TaJJSc
-         IZg2jeQBajC42yHx+IZ/oHr7w+7JDszVtoU2ff+2ENa85EBbM65BUVZXgvKo/yv8TzK2
-         UWppjgA/wNuE75CzNa/KsBvfAdN+xIzNPynrLIFYzudVTTVwjDuoGGtim6+HPNcIwR43
-         v2j5tcowOB/VwIm52tVAyWHoaRUb77X5Wi9yKkJ2vPGORId4qCsUrBUsJlWBFC5HlI8K
-         ZgLFXniKUUif7xxWda9v1pc0cuddaHzrsdEZTg7uiD3KA6Z6SwUxfuy/ZjQaLokLFFs+
-         gjRg==
-X-Gm-Message-State: AOJu0Yy1rTzUQXhIa2NlaJjd0txpPKAo2HTRyg9Vp4Lh4VaqJSQGstQ9
-	vjUsBpr1MJhxtnmrpN8+QIuPFIbWEmF00C6TeW9hlFNo6nb5K/wgQM43dMk+ZRDl
-X-Gm-Gg: ASbGncsVdKVA5DuEAl/3O/KXE4u+Ijv1Xaj41bXZS6jrEe6Y4q9BL8mF73N9cSDlpWA
-	zxnez7MFjyXWDTFY8bUMiN0cYMf01vHj+IDAO9S90raJUgyI+Kqwc5X/NgI1h18Xqk7BJejv1qR
-	vtZmk3vJsExxZ9nFh62HzXXt51eMnt5RJgzfCGjZ1lIy3qnDpSCAR4w533lxc5v/h/2CSa3wYMj
-	ZiSEnLfiGrmUrvvVyPOo/0HTSRCWKuKOc0GkAeuKEjitNbQ3g52f6vTXEwfdxd/ToKzrcEEZCWt
-	/EAuWw/zldx3piB5av25Y/wFuwBVbQS10xpNecKnfFLyRSbuciUOk0zjTNWXjW3npVI1C9aoTUy
-	YXS/mLBBvjqeumKdxiNcc2p4MrqhZyOu15b3b3bU58HbS0uAvBwKhaqkHNlQcmtXn30uOk3yrtY
-	E4JLS1QUAReP7MbM3q9iiluYXLBp9tONM/2pX9Nqjy2ZOami04q8zPuDrX9nobyCB6NjqK
-X-Google-Smtp-Source: AGHT+IHtitGVI4RmpnCm7CU7XPfiOlDg85eqKOnnVXf0aOvGAJqRB0jui800SVGGaq6/gDJdF/l1ww==
-X-Received: by 2002:a05:690e:1517:b0:63f:b5d8:9da9 with SMTP id 956f58d0204a3-63fd34b5dc8mr4477951d50.12.1762399144731;
-        Wed, 05 Nov 2025 19:19:04 -0800 (PST)
-Received: from smtpclient.apple (99-144-70-174.lightspeed.chrlnc.sbcglobal.net. [99.144.70.174])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-787b14169c6sm4544197b3.22.2025.11.05.19.19.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Nov 2025 19:19:04 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MBU29ZkN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CHeTLKu6"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8B2CFEC0265;
+	Thu,  6 Nov 2025 01:04:42 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Thu, 06 Nov 2025 01:04:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1762409082;
+	 x=1762495482; bh=57SVLqq7YOhFNPMgleV8i5PhljKqYZp2NcWO7mHsw+A=; b=
+	MBU29ZkNpDVIujhMsO4uD/O9wh8wuipcTKpcHX2erOoCt3fZUSKAJdcPTcf0VeLG
+	0Wxkpv/0hMiA1AEZ1vrQDFX10ZWO1CAiWhaQDciTg0UHdCRHNTwEYi/E+lIUNgF8
+	qqpnJOht+PCVvGwNV1TExr6MJ8kP5scTGxwruPOSxIBcCEwb8ic9RLFD16kympEW
+	YMUYzUNUSzGzVB/udJpUZVPfK8AfZSTOTH3svdFYl/WfVsYx1Ua+ovQXTCVy8hGF
+	v9w8W0NXUZCaCE/WYq+U1N179C6JAyRBZeHvN2lxIMQeFpbDee2HPrFimGmC92li
+	KCYJ1AlwkhL887aR87zhEQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762409082; x=
+	1762495482; bh=57SVLqq7YOhFNPMgleV8i5PhljKqYZp2NcWO7mHsw+A=; b=C
+	HeTLKu65f2x1aZep4+8bkYfH8IUPBIE78JszWLL+ppvVD/wyJjsPwt984da30Px0
+	bFTbezdX0mMS7OvyQQ1+21LMADvUlV3R358i4oP+MGJhq7fnDoMV3sF21gAO33De
+	9XgrUcE7UfEnG0PgdVckdBivGtB4pOFdwPpe9kzfjKd66BfqGnCLjxGJpRA45YmK
+	DA4Z9LlEfgaQBE+AjDfbb9Tnp07Joo59HdSvYDF40P42Ugt4R1hHy7NVXmj/75Zc
+	ZBtbku3LgX9lcQb1wBgELNAdv2fLXklkmzZXdl6TA4O1gi85wDns7AGciskY83Zj
+	57Nd4lHeRYHlcP6tG1F/w==
+X-ME-Sender: <xms:ejoMaXV9K7Xq70mSUlZ_JMZu1jf5OFknbbDP437DqejjTUJw3sJK3w>
+    <xme:ejoMaXCA6QWAeyfBDfwKqQcuvnMBmbbC21PGtNDUjsL-tLOnlrH4U3mdz_1-TVVFE
+    tSUIhVgUk2Al8tLWVSdffhwre-6TMS1a8vu2Wiu9yq1kvLWa3h8snE>
+X-ME-Received: <xmr:ejoMaQxYjglt9bm11bCjBcsSda4wgJPIm8Tvn0FCXo8OEpDDzSnKhJn14GCsVMf5UqD_FrtUhmbUdU9nkz15mUR3pUxJhLxoks9lBqGFa39H>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeeitddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtugfgjgesthekre
+    dttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvhe
+    ekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmh
+    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ejoMacDIkHBni_myb5JiKElvs5N88R2rhIMLV_JjR8lJFP-L1N7--A>
+    <xmx:ejoMaVZ1Y_0Q5VgDsRGWbXPJzYqrbVHEbO9FfmBCXomoHZ0_UxB8Kw>
+    <xmx:ejoMaci6nQjre7EuGEbVFzxl0XDVsg7y8WiHi16B-fLjy6_erQslcw>
+    <xmx:ejoMaf5AK2_bfmcPuPUrYPYPF2AZnCd-bLFcEYEzE8HNfY0v2vyDMg>
+    <xmx:ejoMabzWpQ3DsSlZVM0AvzuX8nllnDMWlD6bM_snLrWam4umjcN8Tkno>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Nov 2025 01:04:41 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ce1bf083 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 6 Nov 2025 06:04:39 +0000 (UTC)
+Date: Thu, 6 Nov 2025 07:04:36 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] ref-filter: fix stale parsed objects
+Message-ID: <aQw6dM2O5wSoLd9E@pks.im>
+References: <20251104-b4-pks-ref-filter-fixup-v1-1-2fbca52d76d9@pks.im>
+ <xmqqpl9xps3x.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: Going one step further from git blame --reverse ?
-Date: Wed, 5 Nov 2025 22:18:53 -0500
-Message-Id: <7954BB69-7F5F-48EA-A6A0-907963E28C74@gmail.com>
-References: <5bfd5a1d-5d4c-4bc6-9ad3-bdbdf11b031e@hogyros.de>
-Cc: git <git@vger.kernel.org>
-In-Reply-To: <5bfd5a1d-5d4c-4bc6-9ad3-bdbdf11b031e@hogyros.de>
-To: Simon Richter <Simon.Richter@hogyros.de>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqpl9xps3x.fsf@gitster.g>
 
+On Tue, Nov 04, 2025 at 10:31:14AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > In 054f5f457e (ref-filter: parse objects on demand, 2025-10-23) we have
+> > started to skip parsing some objects in case we don't need to access
+> > their values in the first place. This was done by introducing a new
+> > member `struct expand_data::maybe_object` that gets populated on demand
+> > via `get_or_parse_object()`.
+> >
+> > This has led to a regression though where the object now gets reused
+> > because we don't reset it properly. The `oi` structure is declared in
+> > global scope, and there is no single place where we reset it before
+> > invoking `get_object()`. The consequence is that the `maybe_object`
+> > member doesn't get reset across calls, so subsequent calls will end up
+> > reusing the same object.
+> >
+> > This is only an issue for a subset of retrieved values, as not all of
+> > the infrastructure ends up calling `get_or_parse_object()`. So the
+> > effect is limited, which is probably why the issue wasn't detected
+> > earlier.
+> >
+> > Fix the issue by resetting `maybe_object` in `get_object()`.
+> >
+> > Reported-by: Junio C Hamano <gitster@pobox.com>
+> > Based-on-patch-by: Jeff King <peff@peff.net>
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> > As reported by Junio in <xmqqo6pjt2wn.fsf@gitster.g>. This applies
+> > directly on top of ps/ref-peeled-tags at 054f5f457e (ref-filter: parse
+> > objects on demand, 2025-10-23)
+> >
+> > Thanks!
+> 
+> Thanks.  As we stop reusing a stale maybe_object and instead start
+> parsing the right object when we need to, I wondered if the "on
+> demand" commit needs a new benchmark, but the example cited in the
+> message used %(raw) so it would not be affected, I guess.
 
-> Le 5 nov. 2025 =C3=A0 21:30, Simon Richter <Simon.Richter@hogyros.de> a =C3=
-=A9crit :
->=20
-> =EF=BB=BFHi,
->=20
-> Once again I've found myself in the annoying position to find out why a pa=
-rticular line that was present in an older version was removed (i.e. I neede=
-d to find the first commit it is not present in).
->=20
-> git blame --reverse brings me close, but not quite there, and quite often i=
-t will point at a commit where several branches diverged.
->=20
-> Is there a way to make it go one step further and report the commit whose m=
-essage is most likely to explain things?
->=20
->   Simon
+I just did another benchmark, and relative numbers still look the same
+as in the original one:
 
-This is a situation in which I usually reach for the pickaxe. Say you know c=
-ommit deadbeef had the line 'hello world' in file co.de; then the following s=
-hould find where it disappeared, assuming the line is unique enough:
+    Benchmark 1: for-each-ref (revision = a29e2e8fe7e3935e23d2a03dc429cc9c2e68bfbe~)
+      Time (mean ± σ):     369.6 ms ±   0.5 ms    [User: 311.9 ms, System: 56.3 ms]
+      Range (min … max):   368.7 ms … 370.1 ms    10 runs
 
-    git log -S 'hello world' deadbeef.. co.de
+    Benchmark 2: for-each-ref (revision = a29e2e8fe7e3935e23d2a03dc429cc9c2e68bfbe)
+      Time (mean ± σ):     327.9 ms ±   0.5 ms    [User: 279.9 ms, System: 46.6 ms]
+      Range (min … max):   327.3 ms … 328.8 ms    10 runs
 
-Omit the commit range if not sure. For deleted lines, the pickaxe should fir=
-st fine the deletion of interest. It helps to feed as much of the line as po=
-ssible, but partial contents are still useful (and I often use function or v=
-ariable names to see uses over time).=
+    Summary
+      for-each-ref (revision = a29e2e8fe7e3935e23d2a03dc429cc9c2e68bfbe) ran
+        1.13 ± 0.00 times faster than for-each-ref (revision = a29e2e8fe7e3935e23d2a03dc429cc9c2e68bfbe~)
+
+Thanks!
+
+Patrick
