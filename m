@@ -1,67 +1,66 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BACD27FB0E
-	for <git@vger.kernel.org>; Thu,  6 Nov 2025 09:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55761303A1C
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 09:55:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762422939; cv=none; b=EBpcNWR6IcfE57LBU+RF4FHBmJqAbaiKu2ANKFZnjEQGlcg30RJtXju9XauObErHWhcRaTw6iG1/8/e3v8Uo+LNgF3SOwrUzdCFofqiQWJfYViDf4aXYk/tJ5d/Mf0hg2geX3hdh/2wXyo27Ya9kkyGoiIVpTxZPTxnY3NeNm5A=
+	t=1762422951; cv=none; b=Br4e3AmdpAIpJFBw94xLVkUThZFrPKWRqdQJq+D+glQsxzl13emYzNozhpz4YlQZOVZTQMieSDArFLdGIDQ0MnjzgbEy2Zz660xLNbbxoRKloyyss2Y9/1SXVAyGWuBwMhbeXyWiYOr0E4tnLzHsb+klc9D9csymkaUte1km0EI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762422939; c=relaxed/simple;
-	bh=tIucWvr019OYjQVnCxjSQtO/W5cP807WeKggFYLF8fs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uPg0XvaXRAnFyAU6THsGmD5+O6i9qAAerUyt1NqfYQk2SS3JUozMXA8ltOmQKm6Z15YTQJ4lv5y6s1qJDDWjd31VHbzsA7RqhJIV9kvHFQ8dX8FtHvPQWlZqpcGL8odDHZAktl2wOtgQ0l3tr10klgLW2rcGygBTBhbL4ZicKHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BJbjpW83; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1762422951; c=relaxed/simple;
+	bh=cKJ5DzxfEFRjDex77hyog57Fb8BuG7hxaFyZcXLyotQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=akjcZhZFEsd3mD/srSCPKOFu6WDiBAQuR+GHTJJHN6B97PTLFKh6/+VvS9IweOz8j9fWcsv7HB1X9CI0peftyAcLqRmOzyBnFIaa0yJvvWmuw8GQe1TqR0tXEllGlkf6um3GX3tU5OOAjoeaTH9YZmUGYg0NwscE3VTBG/ptcGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OUL4UAnj; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BJbjpW83"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-477563bcbbcso3616105e9.0
-        for <git@vger.kernel.org>; Thu, 06 Nov 2025 01:55:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OUL4UAnj"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-429bccca1e8so486080f8f.0
+        for <git@vger.kernel.org>; Thu, 06 Nov 2025 01:55:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762422935; x=1763027735; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xy52WU0m+ibHSit7XawZKUg3deCSYVbNSQ3c2mEnKmA=;
-        b=BJbjpW83wVaptuV0wo5OPPSqUqPrufbCBm/9R2qvV6pECHVMFSwCTsBcpdpCOnyPKo
-         7JvlCO3IL1/yNwGS4x6mhApkWx76YXkAINO16DQ4nXU5tF3Sr2Nldbom0pBXkVcTpUdE
-         f7Knh30o39Z4pRnq+zg7rUmId8TIdLpx1X+tSx256Mp9fp3zIOmdDcvV/1lmTkd6uiaV
-         qhOpgDP1v9bwCdYTe9SmHeyjRHtBMI6OK3Mhs+B3XhApsw0/KakfPjM1fHeK2mze3Z9Y
-         xTh2869iW0iJRd2d7XSxVyJH9aCCeNMQkuR6i2q/UpcQ39yxlxzJ/5nfUYE5IS5MpBHR
-         JExg==
+        d=gmail.com; s=20230601; t=1762422946; x=1763027746; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Sq4cHGdQDUNs4wQCaCGYLu7auK6uRWYFe6vpF3BpfkY=;
+        b=OUL4UAnj8Kyv8RF4cef9iOGnLhE3FAUCfSBparzCVhbzznS0QlIb+IjJEYOs6SEbLz
+         iyd/1tAvW2qaPrJqdt1CEPS1hChkG7BgzKS0sYG5YbvkSQ3kbs36qyz6SsWWVsQ9/1/M
+         fk5eS59OxPhvMyqVsFiSBXgJgnZUHYzdklSOnLhNKmlqomIYQ9bbm9pLYkmjnTEVHb0e
+         cVyV1jEU1EOpEXOtRw2yS0e6uMbn/xrGL2jWVF4FhCLvu3lWkY2No+ayemn9Amf1he2W
+         TjSN4KpJmof/TB7fuAxoUqK/hGdeW5SzHKKNO1V/tvPXaOaOpGCcQia3jEBjrxnJvH3F
+         6ZjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762422935; x=1763027735;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Xy52WU0m+ibHSit7XawZKUg3deCSYVbNSQ3c2mEnKmA=;
-        b=jYhRIgkfeG6z0tLO237R1BjQV1alpxjMMP0KZMJDaX/i2DMLPI7gAWS3lw660tCHXd
-         xQxACTuI7RSRcnMdfg3d1oG4+Ibc/LdBKgfeul5w9AagUq2kJY3Q0wG8h/Xy0xD87sNv
-         WuvTa5lkR1uWDM/CESIlXifEvY+QmZ6vSwbY+ZU0m8YkvOeTmhex8DZW0c1ngl84HAvc
-         JH8ZmcrsemTcLJiY1YIQ70g84+XFQc2ftFl02uSt+j9GD2+/CMpmPLSd5yrXrloiZeQf
-         1ZR2yFSXKjfAoa5hBVV14L+XTS4MOipNlPLACSDNj3bFoRihPqYBZx5q6hBZKiAxF/pH
-         33Rw==
-X-Forwarded-Encrypted: i=1; AJvYcCUvxTv4dh3m6Xy3gig7iySvuYL46F08mqIZXXXTlWhppVH9B1V8ue2jng7u1XlYelI8mto=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxRnfoRTxBK9fE/YiKlFRCopNlYfaSe2OvxSmRDUAXU/jbz6xuf
-	MTYKklg03qhKH/TGR8fwQghA3WWxC8UNAyxwD0vkJh9SMMkxKfjdig+uO305/g==
-X-Gm-Gg: ASbGnctqmEDlxZGdY87AZtrixxEroThjVMSbwksq9GEcZhBibY0NycLsseBQVH89b0P
-	79ExMTijQ4dDmh4z5jCy4xdIw0/33nbpYkWVYFFHEugIv+FvkJBkEWMqQOdpbq5gzoQ4/fhyfZN
-	uPLCkWHBbCv84YQzZOMNRer4qipYxB4zKznTC6kIoEAbFROJsRYpzEZRZNH13j3Lsd8W8yh+P6h
-	VQ83hvSHUqyG6iaPicJ+a2Dg+oAl1svqmziFrgfc4QB7sPHxzHQtOwxXL6s/Z7bzLI6fa+0/4tb
-	RI/9jkfCB5kuiOdSxQruptyt0C0HylmhvhUSwtHzGoYzo0sVk1eEzRWMHWhZfkFB2JH1bhH0GRe
-	7OhjLeHWo2z98iPl//Vb5lcJB8tU8y8zosoNIgQV2445R8WFSyDxHWh5BpGYhX77Qasl93fTfDZ
-	e4H16tqkewMX9eNcjoOZevviMxy4g2CgXUhI63CWXDCsUDoDUJ+XyHCmdKJQ0VXeOFKg==
-X-Google-Smtp-Source: AGHT+IH9PoIkrftzfNsjkToE3jn6MoyefFd5DX4l6MN0WRTWvFKpNWO4m07xwk8jQDraCritnRRPKg==
-X-Received: by 2002:a05:600c:450b:b0:477:5897:a0c4 with SMTP id 5b1f17b1804b1-4775cdad63cmr55185845e9.4.1762422935077;
-        Thu, 06 Nov 2025 01:55:35 -0800 (PST)
+        d=1e100.net; s=20230601; t=1762422946; x=1763027746;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sq4cHGdQDUNs4wQCaCGYLu7auK6uRWYFe6vpF3BpfkY=;
+        b=GPTR96fWa5QVvT28yfwYu9cQDXFTuiRvv0zdZdhSsaHTYocRJrFWaBPtj+oAwvTL+d
+         uKP3gl2A27dlJmfCT3o+hhvj0Wdnj1U0Lcc5XzgR2RlLl1PY9VxM/9buha6gab1l1s7N
+         fgm2taGUq6iwIqv+KfMefE7KWEn6fXzV9ZsD7AuSIjp5CBLtAmE4D0cQyuXENmtXEsxk
+         y7DqRl+4YSZi45OyUZZ9Sa5582cLd+obcH9muude7CAZ1EHiRA+u7AIbQlIQ5qsdHUOQ
+         iklfPgDUpaZ3MBbMgXhizwPWjAQZH5m81Wu6oXqPXBERTdKEnlPFw8oy/aSR9L6lFgiD
+         gMWw==
+X-Forwarded-Encrypted: i=1; AJvYcCWfuBEzEPfR+izvQ8mbEKiYAa3TOo4LKOXWB9R588x6EFpbqMrH1Rs9/VQMCjP4hD6O53k=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwrDQWR+NoTV0+XNrH2tj/6BOpv9utTauNCSFN+QCEEcDrprUfC
+	Df5pjlMho9FqwTrqRZ9eQslPU8F+ktRkzzE/rXiwTLZwtg4/5EgHNE+Mo7C0sw==
+X-Gm-Gg: ASbGncsSg5NEljLsHt5KkH1KGTfMsc66aGRpVPA5pNk7+PrPQM2F6u62EGHCuQJH8nH
+	ukGGp0DryPrAvvn78jf4OJkOHki16w2wTRTSBGDhQdgmOjooBZJwLJzIDv4nS8uQV8UVULFHfvr
+	XtUHb7VTRL8JJdjH0nLXY3bggaR7bG2z31c2A0KWfy5wKuSNjMNIcChTK7OUoda7uEMgyUbxOxw
+	DMw9w687M06avAj6pzb2pQbrOpToj0XkvNRiZlfUPq0lhx0TKMQ2G33adi6RtFqim16YNBvJYxg
+	BUYEu6FAO0I0zQbBJa6z3FLm62WmiMwL5tFOSWA6HPcJVOe3OHFainiwhYPXwEaSrPQc02+lRB4
+	2Ubb8Xm5SU505YseJtnT+58fstG4VOMXb4G+I9QMbcsuHgf6rDVVopF4fdMq7FNv5sxdoj9MYnD
+	YFxFDtEEXQMILoMOJeXnbF8EY0pmnwkXLcfYZP2tSPp1K5UvktfmHSW5U=
+X-Google-Smtp-Source: AGHT+IEk9GOV5Nwek2PXMQe85ZiIJV+QnfsrxSSFfj60/08tQCf2VrrO4WZFOLg+dr3j5FGv4Mj3KQ==
+X-Received: by 2002:a5d:5f50:0:b0:3ff:d5c5:6b0d with SMTP id ffacd0b85a97d-429e32c8238mr5277336f8f.4.1762422945492;
+        Thu, 06 Nov 2025 01:55:45 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:7b5:6701:5a25:209b:be41:f23f? ([2a0a:ef40:7b5:6701:5a25:209b:be41:f23f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47763da0242sm12224685e9.0.2025.11.06.01.55.33
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429eb410d43sm4046858f8f.12.2025.11.06.01.55.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Nov 2025 01:55:34 -0800 (PST)
-Message-ID: <995f77a3-b94c-46df-87d3-22c7b2a3c762@gmail.com>
-Date: Thu, 6 Nov 2025 09:55:31 +0000
+        Thu, 06 Nov 2025 01:55:45 -0800 (PST)
+Message-ID: <14496da7-3d9e-4e07-8893-0a5414fbbe70@gmail.com>
+Date: Thu, 6 Nov 2025 09:55:42 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,9 +68,10 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 02/10] xdiff: use ssize_t for dstart/dend, make them
+ last in xdfile_t
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 01/10] doc: define unambiguous type mappings across C
- and Rust
 To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
@@ -79,10 +79,9 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
  Ezekiel Newren <ezekielnewren@gmail.com>
 References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
  <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
- <88133848d1a317f8a95c19ee5482b828a3f8705f.1761776388.git.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
+ <9197903add26e5b8af0bb2dd25bf115670e18e8c.1761776388.git.gitgitgadget@gmail.com>
 Content-Language: en-US
-In-Reply-To: <88133848d1a317f8a95c19ee5482b828a3f8705f.1761776388.git.gitgitgadget@gmail.com>
+In-Reply-To: <9197903add26e5b8af0bb2dd25bf115670e18e8c.1761776388.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -91,270 +90,41 @@ Hi Ezekiel
 On 29/10/2025 22:19, Ezekiel Newren via GitGitGadget wrote:
 > From: Ezekiel Newren <ezekielnewren@gmail.com>
 > 
-> Document other nuances with crossing the FFI boundary. Other language
-> mappings may be added in the future.
+> ssize_t is appropriate for dstart and dend because they both describe
+> positive or negative offsets relative to a pointer.
 
-Thanks for adding this, I've left a few comments below. Overall I 
-thought it was very well written. I tried building an html version of 
-this but even after adding it to the list of TECH_DOCS in 
-Documentation/Makefile with
+This paragraph and the subject need updating to match the change from 
+ssize_t to ptrdiff_t.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 47208269a2e..2699f0b24af 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -143,6 +143,7 @@ TECH_DOCS += technical/shallow
-  TECH_DOCS += technical/sparse-checkout
-  TECH_DOCS += technical/sparse-index
-  TECH_DOCS += technical/trivial-merge
-+TECH_DOCS += technical/unambiguous-types
-  TECH_DOCS += technical/unit-tests
-  SP_ARTICLES += $(TECH_DOCS)
-  SP_ARTICLES += technical/api-index
+> A future patch will move these fields to a different struct. Moving
+> them to the end of xdfile_t now, means the field order of xdfile_t will
+> be disturbed less.
 
-it fails with
-
-$ make -C Documentation/ technical/unambiguous-types.html 
-                                       Merge branch 
-'ps/object-source-loose' into seen
-make: Entering directory '/home/phil/src/git/Documentation'
-     GEN asciidoc.conf
-     * new asciidoc flags
-     ASCIIDOC technical/unambiguous-types.html
-asciidoc: ERROR: unambiguous-types.adoc: line 139: undefined filter 
-attribute in command: source-highlight --gen-version -f xhtml -s 
-{language} {src_numbered?--line-number=' '} {src_tab?--tab={src_tab}} 
-{args=}
-asciidoc: ERROR: unambiguous-types.adoc: line 162: undefined filter 
-attribute in command: source-highlight --gen-version -f xhtml -s 
-{language} {src_numbered?--line-number=' '} {src_tab?--tab={src_tab}} 
-{args=}
-asciidoc: ERROR: unambiguous-types.adoc: line 177: undefined filter 
-attribute in command: source-highlight --gen-version -f xhtml -s 
-{language} {src_numbered?--line-number=' '} {src_tab?--tab={src_tab}} 
-{args=}
-asciidoc: ERROR: unambiguous-types.adoc: line 187: undefined filter 
-attribute in command: source-highlight --gen-version -f xhtml -s 
-{language} {src_numbered?--line-number=' '} {src_tab?--tab={src_tab}} 
-{args=}
-asciidoc: ERROR: unambiguous-types.adoc: line 199: undefined filter 
-attribute in command: source-highlight --gen-version -f xhtml -s 
-{language} {src_numbered?--line-number=' '} {src_tab?--tab={src_tab}} 
-{args=}
-asciidoc: ERROR: unambiguous-types.adoc: line 213: undefined filter 
-attribute in command: source-highlight --gen-version -f xhtml -s 
-{language} {src_numbered?--line-number=' '} {src_tab?--tab={src_tab}} 
-{args=}
-asciidoc: ERROR: unambiguous-types.adoc: line 224: undefined filter 
-attribute in command: source-highlight --gen-version -f xhtml -s 
-{language} {src_numbered?--line-number=' '} {src_tab?--tab={src_tab}} 
-{args=}
-make: *** [Makefile:396: technical/unambiguous-types.html] Error 1
-make: *** Deleting file 'technical/unambiguous-types.html'
-make: Leaving directory '/home/phil/src/git/Documentation'
-
-> +== Character types
-> +
-> +This is where C and Rust don't have a clean one-to-one mapping. A C `char` is
-> +an 8-bit type that is signless (neither signed nor unsigned) 
-
-I found this a bit confusing. Isn't the signedness of "char" 
-implementation defined rather than it being "signless"
-
-> which causes
-> +problems with e.g. `make DEVELOPER=1`.
-
-I'm not sure what this is referring to - maybe -Wsign-compare?
-
-> Rust's `char` type is an unsigned 32-bit
-> +integer that is used to describe Unicode code points. Even though a C `char`
-> +is the same width as `u8`, `char` should be converted to u8 where it is
-> +describing bytes in memory. 
-
-I'm dreading the point where we start sharing "struct strbuf" with rust 
-and have to change the "buf" member from "char*" to "uint8_t*". While it 
-is not used in the xdiff code it is ubiquitous everywhere else and there 
-are lots of places where be pass the "buf" member to functions expecting 
-a "char*".
-
-	git grep -E '(\.|->)buf\W'
-
-has over 4000 matches
-
-> If a C `char` is not describing bytes, then it
-> +should be converted to a more accurate unambiguous type.
-
-That's a good point.
-
-> +While you could specify `char` in the C code and `u8` in Rust code, it's not as
-> +clear what the appropriate type is, but it would work across the FFI boundary.
-> +However the bigger problem comes from code generation tools like cbindgen and
-> +bindgen. When cbindgen see u8 in Rust it will generate uint8_t on the C side
-> +which will cause differ in signedness warnings/errors. Similaraly if bindgen
-> +see `char` on the C side it will generate `std::ffi::c_char` which has its own
-> +problems.
-
-Yeah, we definitely don't want to be using "std::ffi::c_char" in our 
-rust implementations. I do wonder if we might want to use it (or CStr) 
-judiciously in function parameters and immediately convert it to u8 in 
-the function body where the function is called from C though.
-
-> +=== Notes
-> +^1^ This is only true if stdbool.h (or equivalent) is used. +
-> +^2^ C does not enforce IEEE-754 compatibility, but Rust expects it. If the
-> +platform/arch for C does not follow IEEE-754 then this equivalence does not
-> +hold. Also, it's assumed that `float` is 32 bits and `double` is 64, but
-> +there may be a strange platform/arch where even this isn't true. +
-> +^3^ C also defines uintptr_t, but this should not be used in Git. +
-> +^4^ C also defines ssize_t and intptr_t, but these should not be used in Git. +
-
-[u]intptr_t and ssize_t are used in git already. As Junio has pointed 
-out there are sane uses for these types but we don't want to use them in 
-structs or function parameters where the struct or function is shared 
-with rust.
-
-> +
-> +== Problems with std::ffi::c_* types in Rust
-> +TL;DR: They're not guaranteed to match C types for all possible C
-> +compilers/platforms/architectures.
-
-Is this official policy of the rust project?
+I'm not sure why that matters but I also don't object
 
 Thanks
 
 Phillip
 
-> +Only a few of Rust's C FFI types are considered safe and semantically clear to
-> +use: +
-> +
-> +* `c_void`
-> +* `CStr`
-> +* `CString`
-> +
-> +Even then, they should be used sparingly, and only where the semantics match
-> +exactly.
-> +
-> +The std::os::raw::c_* (which is deprecated) directly inherits the problems of
-> +core::ffi, which changes over time and seems to make a best guess at the
-> +correct definition for a given platform/target. This probably isn't a problem
-> +for all platforms that Rust supports currently, but can anyone say that Rust
-> +got it right for all C compilers of all platforms/targets?
-> +
-> +On top of all of that we're targeting an older version of Rust which doesn't
-> +have the latest mappings.
-> +
-> +To give an example: c_long is defined in
-> +footnote:[https://doc.rust-lang.org/1.63.0/src/core/ffi/mod.rs.html#175-189[c_long in 1.63.0]]
-> +footnote:[https://doc.rust-lang.org/1.89.0/src/core/ffi/primitives.rs.html#135-151[c_long in 1.89.0]]
-> +
-> +=== Rust version 1.63.0
-> +
-> +[source]
-> +----
-> +mod c_long_definition {
-> +    cfg_if! {
-> +        if #[cfg(all(target_pointer_width = "64", not(windows)))] {
-> +            pub type c_long = i64;
-> +            pub type NonZero_c_long = crate::num::NonZeroI64;
-> +            pub type c_ulong = u64;
-> +            pub type NonZero_c_ulong = crate::num::NonZeroU64;
-> +        } else {
-> +            // The minimal size of `long` in the C standard is 32 bits
-> +            pub type c_long = i32;
-> +            pub type NonZero_c_long = crate::num::NonZeroI32;
-> +            pub type c_ulong = u32;
-> +            pub type NonZero_c_ulong = crate::num::NonZeroU32;
-> +        }
-> +    }
-> +}
-> +----
-> +
-> +=== Rust version 1.89.0
-> +
-> +[source]
-> +----
-> +mod c_long_definition {
-> +    crate::cfg_select! {
-> +        any(
-> +            all(target_pointer_width = "64", not(windows)),
-> +            // wasm32 Linux ABI uses 64-bit long
-> +            all(target_arch = "wasm32", target_os = "linux")
-> +        ) => {
-> +            pub(super) type c_long = i64;
-> +            pub(super) type c_ulong = u64;
-> +        }
-> +        _ => {
-> +            // The minimal size of `long` in the C standard is 32 bits
-> +            pub(super) type c_long = i32;
-> +            pub(super) type c_ulong = u32;
-> +        }
-> +    }
-> +}
-> +----
-> +
-> +Even for the cases where C types are correctly mapped to Rust types via
-> +std::ffi::c_* there are still problems. Let's take c_char for example. On some
-> +platforms it's u8 on others it's i8.
-> +
-> +=== Subtraction underflow in debug mode
-> +
-> +The following code will panic in debug on platforms that define c_char as u8,
-> +but won't if it's an i8.
-> +
-> +[source]
-> +----
-> +let mut x: std::ffi::c_char = 0;
-> +x -= 1;
-> +----
-> +
-> +=== Inconsistent shift behavior
-> +
-> +`x` will be 0xC0 for platforms that use i8, but will be 0x40 where it's u8.
-> +
-> +[source]
-> +----
-> +let mut x: std::ffi::c_char = 0x80;
-> +x >>= 1;
-> +----
-> +
-> +=== Equality fails to compile on some platforms
-> +
-> +The following will not compile on platforms that define c_char as i8, but will
-> +if it's u8. You can cast x e.g. `assert_eq!(x as u8, b'a');`, but then you get
-> +a warning on platforms that use u8 and a clean compilation where i8 is used.
-> +
-> +[source]
-> +----
-> +let mut x: std::ffi::c_char = 0x61;
-> +assert_eq!(x, b'a');
-> +----
-> +
-> +== Enum types
-> +Rust enum types should not be used as FFI types. Rust enum types are more like
-> +C union types than C enum's. For something like:
-> +
-> +[source]
-> +----
-> +#[repr(C, u8)]
-> +enum Fruit {
-> +    Apple,
-> +    Banana,
-> +    Cherry,
-> +}
-> +----
-> +
-> +It's easy enough to make sure the Rust enum matches what C would expect, but a
-> +more complex type like.
-> +
-> +[source]
-> +----
-> +enum HashResult {
-> +    SHA1([u8; 20]),
-> +    SHA256([u8; 32]),
-> +}
-> +----
-> +
-> +The Rust compiler has to add a discriminant to the enum to distinguish between
-> +the variants. The width, location, and values for that discriminant is up to
-> +the Rust compiler and is not ABI stable.
+> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+> ---
+>   xdiff/xtypes.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
+> index f145abba3e..7c8c057bca 100644
+> --- a/xdiff/xtypes.h
+> +++ b/xdiff/xtypes.h
+> @@ -47,10 +47,10 @@ typedef struct s_xrecord {
+>   typedef struct s_xdfile {
+>   	xrecord_t *recs;
+>   	long nrec;
+> -	long dstart, dend;
+>   	bool *changed;
+>   	long *rindex;
+>   	long nreff;
+> +	ptrdiff_t dstart, dend;
+>   } xdfile_t;
+>   
+>   typedef struct s_xdfenv {
 
