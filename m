@@ -1,66 +1,67 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E95B1C1F02
-	for <git@vger.kernel.org>; Thu,  6 Nov 2025 08:22:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CDA3009E2
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 08:22:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762417359; cv=none; b=fDL4OooAN5dQbZ1kd9yxZneFnFBwVLr07Ts0y/+0ACjzeN8kuqAloIkyWk4Qj4xCdMY2SN3NtJACimEA2IOSk8OHH9FdMu0/InUIxHZSiu57FytQnCox5moq53ISJLMVdvI6MBXKYd3ueHmqW4Cug1Yy2J+Fxp8EM678qmfVfNQ=
+	t=1762417361; cv=none; b=fy0gAtNEfIPqs8xHJ2mBlCUkixOcm9/ESp2LWRSgLrYqmxyLlnoZj8G8qT+g/P2v0aD1IqEEhzITqPrUr3EswpZ/cgSNMlOiuzccM7LWhdklE4+ecLJmc1IwaA0ws00QsnJmZ7r//yIexv2BjsoreVdxuA5ASZqo/GNPdV1ZSwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762417359; c=relaxed/simple;
-	bh=nXv/D0964WDF3I13tKcI4dvcGkfsN3K9G1mgppaxm7k=;
+	s=arc-20240116; t=1762417361; c=relaxed/simple;
+	bh=mBuIcObFMa5/g0tjuhQgrYMN6PxpIPFwcu+OcrXeJBk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kdD5c4HDCdA+UEhiI7wjgX3Wwu/lLyLrxcrt0zhx+XLUrDcYVqmj+OJqYh6NcL0rWeeYsjC4KoovJmlPHkOcO0TkUQr/ju4vW1nj69qCQBgrxfd1nasDmjXUaMqvP81D5wpGFNGzu5tYDKExpagxuFBHD1riTmddYoO18awZXGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WPkFHTPk; arc=none smtp.client-ip=209.85.208.49
+	 In-Reply-To:To:Cc; b=sd+z/ANKPGasb9ZSOen9w9YroOC2KB1yK6jhfA/sBEPGmww3q+uPkfzhWZAzKneK2vkzxV8U5S9tnKc1SyqpK8iFyo5BYHKmXtxtkP9q2IZaNHBAHj8rfQAHfYkkOL2zTlvZrXBPQUqvpnawyYajAaoJHjnG5sb+N/7aPiD3Aj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R1dyjV7m; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WPkFHTPk"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-640a0812658so998561a12.0
-        for <git@vger.kernel.org>; Thu, 06 Nov 2025 00:22:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R1dyjV7m"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b7277324054so110318966b.0
+        for <git@vger.kernel.org>; Thu, 06 Nov 2025 00:22:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762417355; x=1763022155; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762417358; x=1763022158; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NykvUQY1FpKBsuCy6iARb3IY6LOyKL6sHkpwgpSkMdE=;
-        b=WPkFHTPkgnvpDTOZwRDNpIctrK8BwVgrnmo/ha9TmHx1n2RnKDcW+yKJRRNDuZwkDx
-         xoQtOu6lI54ZL7aWS1bdSNCRXyVimui03SVLGjQ4NAKuzZWa/ADDIICdPcYwbuWy27ya
-         +57mVfLB+BHYj5eVyG0cjpD6aer7D4oAe2ddG8vzusBVi6+TL9nk3egpE2fTKWvwcO8z
-         SfM4HkjAYX2PP/ZRjN9568GXHk0TC04Y4bfttdERapexNZMZOGWkvaU+5GwDNNGHmuII
-         FtaHSlxuQPqQKoE0RCoWfkEEkaO6qo1QYltDgERAZJ+/EY2ecL3ZNtIC+0yH4BxP5p5F
-         wRBA==
+        bh=j3585tbsF2osb0g8bNYLFxd0LxlN6u0TGNg7hX6RM1M=;
+        b=R1dyjV7m9Fv4G3kl5vxiR4lt8iFi2RnsB3qP+yhsbxPJmxhBaB4MhyoIO147gBz0CI
+         7AFKSKvnACFgDtghWDDLNzNnFbaU5fSbTVeqne6VEu5mBP7EN8/A0VNgh7eSTQmxrree
+         xkboTOVh5z21VsQYqYs04u5j1etbaCPOSkXL9BtcbM80cs0VNLHCrhiNNoyD1JzjYkyT
+         +xsQ8nu7d0rjgcPb/r3K3xGASPg1rrgu41OMLr2SA0Gi0Ja/Ktyu4FEmgTwP/QR1wsEr
+         i7TTMrPMnaDYMnRvcRcignws6KDM9wfuZU22uzDcmo0CIqLdVd8RlEH7RfVr5ds5neJq
+         x/Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762417355; x=1763022155;
+        d=1e100.net; s=20230601; t=1762417358; x=1763022158;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NykvUQY1FpKBsuCy6iARb3IY6LOyKL6sHkpwgpSkMdE=;
-        b=fa5qW76aMKqKDs8r8Qvi4WAxPpHMeKJdcYQkYoo+BCOCj6MyXW4AM+Q25u1fNHSDFD
-         ENo8CN9/DEtFIrYyUozHEsIxbofaCLCroI1bkZ9A/3FtfbrSfqX1o6qGNR489RowUUbf
-         Nj6znsEWGtzi0MzN96IFWk15D/Sq7k5K+dexlClTW8mTErCIvNc+ouBuulpKNqhr83eR
-         p7RrK6Z3mSaQv8aSSU9L7eX5Cq/Vmk42dkcWgpSEkLyeUyahSTIc4PVj6hcMH0/kc+Ij
-         94sdTfgl2YjajaBVCJL9f34pabDTa2DTS+D6TMzRySGpYMTOd7XmW2rqYVTOVrl8XqAu
-         FaTg==
-X-Gm-Message-State: AOJu0YyRA3k/MreGS/JjMxgHIdCYCmo5/8U6HakoGFHfCxVspfdWRmYw
-	ERoTQNeXMNfFcrJUptwVHEc4Kx8utHN8aC2CWqngdNM6+zSA+fTPJYth
-X-Gm-Gg: ASbGncuWPy0FlI/0K9km+2/aX/mbUtPTfNG/WWkAfHkji2w8kWy4EtLXAOa8ZbKagQl
-	ygvdfWMeVKtjoQFZejlWLDSQXY0GN8yLbBhkUl/y5waWIVhsboy3EHJHnHYAv/BI52/qxL+4g0L
-	tHSnYuLzjcOpjVZGyR63tv28S9nCeqiRENxWxZtrMVM2GiaRHexF/61IZSpuSvnaetFbx2G1VgP
-	/84TXQ0n9WPlhas7+V2LK1lZV9BnG3huoM9oMQDYJd49Zwx2dQVOQtTnAlcaV1/rjyyXYihlaA3
-	czzLw9VeQLOlpBG61eKzYzLZOBAzfpfFt9PFMQ6Uen3R4Y/yPuPw/743th0ENrUFTNkdHNOdTta
-	sQWGhuC9Ruh6YPbjpu7Ro19v5BO9Tk9sf9MZKHgVrleJW3WnBPXDk2sNgWFwNaoOHQUYARWRx3z
-	G8AfylykdUQ6G1uoc=
-X-Google-Smtp-Source: AGHT+IHjbhKOGD3YHwxZcGQk8/KSsESZd63fbMfLuS8KfJKHG618H03w26s7UrRlTO1IkLxpCWfpzw==
-X-Received: by 2002:a17:907:9486:b0:b72:a899:169f with SMTP id a640c23a62f3a-b72a8992787mr30676766b.4.1762417355253;
-        Thu, 06 Nov 2025 00:22:35 -0800 (PST)
+        bh=j3585tbsF2osb0g8bNYLFxd0LxlN6u0TGNg7hX6RM1M=;
+        b=Hiple1A+Xp55I51H+h6iXxyWV4n8U4BP90MlzPQJylIUYZODjD3mub1fhrsNFBDxBa
+         QZAEFlF/gr+BoFwe/7KU8xmR2bBk3MlZOMJnd9+5u4CSm9oFneBHCmPnDgv8c0Px5Z37
+         nX31nEJ2V96wYqNxPU8C/QcbuN/0xJUAcZ4lD0wLzosoHmqNsXLJ5so/TB48j7ZlFZJR
+         y2g8hJ94acc3387GpkRjCErc+Zbt42cOiOf0ZWM9ubBkStrnbI8G28xXRSAx+VYNyKo2
+         vnHKAVRs6ch66hwxTKNIzk11oeC8LXIA0VimsXXWYOUTowrHxVH/nbdG2yAj4aqrqRgA
+         eEUQ==
+X-Gm-Message-State: AOJu0YzCK/PZHUdeUIMNOzWPOm0Slwqa6PRdUa50fVsJKD9VyIqxeGu6
+	8KQwaCO2HErev6eBPyD1vSrO3zsDsYBnwqpSZY4sb0DFJCFKkWcGI5FeRyAvlu3S
+X-Gm-Gg: ASbGncvVD8ziIxWaiyVbgt+ElbA9AHxxCZGeZGtB64L6g3ICF5CRxfT3GvGBrfEMi/h
+	6fuCTu5FBp/RLF9TgP1fqTWMjP7NOH/+CDx81JWUE1Zfrqh04QpVE0s8mvb6BPu2cXYmPigek7n
+	jVyj/5U0B2kYAvJuYrxGE+hsNDf5kRbKzSFc17MD+kYyYoCK6THyX81WGbEyAGE0BevqfDWsA/t
+	NPKnmaq5XyUkPPiNe8QxY3lHwQPsD4Pc3kSaixHhMUTlwOsmtqYF4W+W4nll6YRykf7SpZwGcFj
+	r1scD0PFS+oYqlD5erRLELiFSoWROlk3BrF5yPtR2bS+JQRWSHYq7Z0U/uHHmN0NBkhd38Mr9nV
+	UqnYgTYX3dm31Mf1lrBPy+xVrdFRq0bYRH7oNgbquFhVbkhZFVnNm/wg97vU95MBQ5f0UgdXy9L
+	BnGeKy
+X-Google-Smtp-Source: AGHT+IEymVLp2ThRFRX2pZNBLLUPvaWVMJOltCssmO+x+ZATAP4tdb8gumn5voCLGfMysGh5MkIUrw==
+X-Received: by 2002:a17:907:701:b0:b72:6143:60c2 with SMTP id a640c23a62f3a-b726553bc14mr642989566b.51.1762417357661;
+        Thu, 06 Nov 2025 00:22:37 -0800 (PST)
 Received: from [127.0.0.2] ([2a01:599:107:48a1:df96:bd1c:78ca:785c])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b72893360f6sm160577566b.10.2025.11.06.00.22.33
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b72893360f6sm160577566b.10.2025.11.06.00.22.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Nov 2025 00:22:34 -0800 (PST)
+        Thu, 06 Nov 2025 00:22:37 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Thu, 06 Nov 2025 09:22:30 +0100
-Subject: [PATCH v3 1/5] reftable/stack: return stack segments directly
+Date: Thu, 06 Nov 2025 09:22:31 +0100
+Subject: [PATCH v3 2/5] reftable/stack: add function to check if
+ optimization is required
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,100 +70,165 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-1-d611a2a95cf5@gmail.com>
+Message-Id: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-2-d611a2a95cf5@gmail.com>
 References: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-0-d611a2a95cf5@gmail.com>
 In-Reply-To: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-0-d611a2a95cf5@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, jltobler@gmail.com, 
  gitster@pobox.com
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2383; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=nXv/D0964WDF3I13tKcI4dvcGkfsN3K9G1mgppaxm7k=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGkMWsePvBV5DiqRs4vfKoa3GK53UzNWI9uWt
- ilk5Q0+uyZTWIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpDFrHAAoJED7VnySO
- Rox/jXcL/0VCM3qji7X8pL16sG6I/3am5wv+pZJvMr6IM8l/4K6qkgHnQWWmwWCu+jefxvxF1vX
- aWhtmnJTf/jcFqwPKkbzgHwPSV0hRLggoxG1ApoFneXbwuuc4zH3mtaPER2zSKfDtVLKKXg5SK6
- aXlPW46djf6lYCbEtsCpha66/chVIzPr/ZI2ikxZbIUWsXhP3e6JCFEj/Ml1T7G7nKb21eVnCyC
- wJWSr+Vl9WJ/PphSQLAggcxFoY39MZY6tUti3BDfI3PV2hCNxHY8Rzcw2kk4Uaki9VV8LLuxdXv
- 0Z/RHlsf1B6LPjJjKtrZ8+nOJ1fQwgNzHPWxD6tPm+RrSqp+z4Fq/xsfa0LQvWt9jtlt1lToPsy
- o48VAbZRxYh6czXE9n4o/p/Hze6En3zaRsPD/3X1Ov4k+ME5ymwSVlqKZ05Sdkeyb+wLwHB3n1A
- Qkuh+U3ggaaw2n+u9d7wCTmH98v3wvLXNKOwTvYe3METyaVN5hAe6VAoacjerZkLHmTKWODg/c8
- ss=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4487; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=mBuIcObFMa5/g0tjuhQgrYMN6PxpIPFwcu+OcrXeJBk=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGkMWscEdQMk/VmZrTmRV94aQnJbpvigtW5SC
+ +cBgeMjVZuBRokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpDFrHAAoJED7VnySO
+ Rox/dx0L/RCPsyNRbo0GTiUhU6HuHiVdCWfwghVqpqL5m+X6BiXqZjC+122TNCpmKsaLJT1FgaU
+ SIArZYUNp/0iFUuwDEmrC/RejvaU70N7Dj8zKlueC13tNpCOlUWi4sDMDlLVKnIhDH/QSF7U7ur
+ J15O9d5EMTt2Rdd+YX96gXQK3iWWK7mzxH1kC9KVOZh2S42GX9aCTMJlCVvJjcAF9VeOQCaHiry
+ mi7nrJB7Pc4xNDLGSgHl/iJOavAfWJziYbYf7C5m3qbLsR5C8W7r10mehYipa3N7LuQTQBXxx2Y
+ XHj1QSiFN2VVRCNIqjqI+/4UzFOAZbk7bZkHI5LlF5WG6W6qFmlC+yHoTcoLmOdpVt7Qlo8nDPT
+ +fth5W3wjzlQVHKtptHaUMtFR1diN3spEP1FKtFAqtj2EEkDoz7GWzibQ+jwD6cRRj7tiASJpJy
+ RQ0aULd9MDfoMTbEi8CRYNFCFpCKKXDfoQ+tidNhWoolx+/nsBQyefH4Dm7logLx+Q4P3cBxi+3
+ +o=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The `stack_table_sizes_for_compaction()` function returns individual
-sizes of each reftable table. This function is only called by
-`reftable_stack_auto_compact()` to decide which tables need to be
-compacted, if any.
+The reftable backend performs auto-compaction as part of its regular
+flow, which is required to keep the number of tables part of a stack at
+bay. This allows it to stay optimized.
 
-Modify the function to directly return the segments, which avoids the
-extra step of receiving the sizes only to pass it to
-`suggest_compaction_segment()`.
+Compaction can also be triggered voluntarily by the user via the 'git
+pack-refs' or the 'git refs optimize' command. However, currently there
+is no way for the user to check if optimization is required without
+actually performing it.
 
-A future commit will also add functionality for checking whether
-auto-compaction is necessary without performing it. This change allows
-code re-usability in that context.
+Extract out the heuristics logic from 'reftable_stack_auto_compact()'
+into an internal function 'update_segment_if_compaction_required()'.
+Then use this to add and expose `reftable_stack_compaction_required()`
+which will allow users to check if the reftable backend can be
+optimized.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- reftable/stack.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ reftable/reftable-stack.h       | 11 +++++++++++
+ reftable/stack.c                | 42 ++++++++++++++++++++++++++++++++++++-----
+ t/unit-tests/u-reftable-stack.c | 12 ++++++++++--
+ 3 files changed, 58 insertions(+), 7 deletions(-)
 
+diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
+index d70fcb705d..c2415cbc6e 100644
+--- a/reftable/reftable-stack.h
++++ b/reftable/reftable-stack.h
+@@ -123,6 +123,17 @@ struct reftable_log_expiry_config {
+ int reftable_stack_compact_all(struct reftable_stack *st,
+ 			       struct reftable_log_expiry_config *config);
+ 
++/*
++ * Check if compaction is required.
++ *
++ * When `use_heuristics` is false, check if all tables can be compacted to a
++ * single table. If true, use heuristics to determine if the tables need to be
++ * compacted to maintain geometric progression.
++ */
++int reftable_stack_compaction_required(struct reftable_stack *st,
++				       bool use_heuristics,
++				       bool *required);
++
+ /* heuristically compact unbalanced table stack. */
+ int reftable_stack_auto_compact(struct reftable_stack *st);
+ 
 diff --git a/reftable/stack.c b/reftable/stack.c
-index 65d89820bd..49387f9344 100644
+index 49387f9344..826500abed 100644
 --- a/reftable/stack.c
 +++ b/reftable/stack.c
-@@ -1626,7 +1626,8 @@ struct segment suggest_compaction_segment(uint64_t *sizes, size_t n,
- 	return seg;
+@@ -1647,19 +1647,51 @@ static int stack_segments_for_compaction(struct reftable_stack *st,
+ 	return 0;
  }
  
--static uint64_t *stack_table_sizes_for_compaction(struct reftable_stack *st)
-+static int stack_segments_for_compaction(struct reftable_stack *st,
-+					 struct segment *seg)
+-int reftable_stack_auto_compact(struct reftable_stack *st)
++static int update_segment_if_compaction_required(struct reftable_stack *st,
++						 struct segment *seg,
++						 bool use_heuristics,
++						 bool *required)
  {
- 	int version = (st->opts.hash_id == REFTABLE_HASH_SHA1) ? 1 : 2;
- 	int overhead = header_size(version) - 1;
-@@ -1634,29 +1635,29 @@ static uint64_t *stack_table_sizes_for_compaction(struct reftable_stack *st)
+-	struct segment seg;
+ 	int err;
  
- 	REFTABLE_CALLOC_ARRAY(sizes, st->merged->tables_len);
- 	if (!sizes)
--		return NULL;
-+		return REFTABLE_OUT_OF_MEMORY_ERROR;
- 
- 	for (size_t i = 0; i < st->merged->tables_len; i++)
- 		sizes[i] = st->tables[i]->size - overhead;
- 
--	return sizes;
-+	*seg = suggest_compaction_segment(sizes, st->merged->tables_len,
-+					  st->opts.auto_compaction_factor);
-+	reftable_free(sizes);
+-	if (st->merged->tables_len < 2)
++	if (st->merged->tables_len < 2) {
++		*required = false;
++		return 0;
++	}
 +
-+	return 0;
- }
- 
- int reftable_stack_auto_compact(struct reftable_stack *st)
- {
- 	struct segment seg;
--	uint64_t *sizes;
-+	int err;
- 
- 	if (st->merged->tables_len < 2)
++	if (!use_heuristics) {
++		*required = true;
  		return 0;
- 
--	sizes = stack_table_sizes_for_compaction(st);
--	if (!sizes)
--		return REFTABLE_OUT_OF_MEMORY_ERROR;
--
--	seg = suggest_compaction_segment(sizes, st->merged->tables_len,
--					 st->opts.auto_compaction_factor);
--	reftable_free(sizes);
-+	err = stack_segments_for_compaction(st, &seg);
++	}
++
++	err = stack_segments_for_compaction(st, seg);
 +	if (err)
 +		return err;
++
++	*required = segment_size(seg) > 0;
++	return 0;
++}
++
++int reftable_stack_compaction_required(struct reftable_stack *st,
++				       bool use_heuristics,
++				       bool *required)
++{
++	struct segment seg;
++	return update_segment_if_compaction_required(st, &seg, use_heuristics,
++						     required);
++}
++
++int reftable_stack_auto_compact(struct reftable_stack *st)
++{
++	struct segment seg;
++	bool required;
++	int err;
  
- 	if (segment_size(&seg) > 0)
+-	err = stack_segments_for_compaction(st, &seg);
++	err = update_segment_if_compaction_required(st, &seg, true, &required);
+ 	if (err)
+ 		return err;
+ 
+-	if (segment_size(&seg) > 0)
++	if (required)
  		return stack_compact_range(st, seg.start, seg.end - 1,
+ 					   NULL, STACK_COMPACT_RANGE_BEST_EFFORT);
+ 
+diff --git a/t/unit-tests/u-reftable-stack.c b/t/unit-tests/u-reftable-stack.c
+index a8b91812e8..b8110cdeee 100644
+--- a/t/unit-tests/u-reftable-stack.c
++++ b/t/unit-tests/u-reftable-stack.c
+@@ -1067,6 +1067,7 @@ void test_reftable_stack__add_performs_auto_compaction(void)
+ 			.value_type = REFTABLE_REF_SYMREF,
+ 			.value.symref = (char *) "master",
+ 		};
++		bool required = false;
+ 		char buf[128];
+ 
+ 		/*
+@@ -1087,10 +1088,17 @@ void test_reftable_stack__add_performs_auto_compaction(void)
+ 		 * auto compaction is disabled. When enabled, we should merge
+ 		 * all tables in the stack.
+ 		 */
+-		if (i != n)
++		cl_assert_equal_i(reftable_stack_compaction_required(st, true, &required), 0);
++		if (i != n) {
+ 			cl_assert_equal_i(st->merged->tables_len, i + 1);
+-		else
++			if (i < 1)
++				cl_assert_equal_b(required, false);
++			else
++				cl_assert_equal_b(required, true);
++		} else {
+ 			cl_assert_equal_i(st->merged->tables_len, 1);
++			cl_assert_equal_b(required, false);
++		}
+ 	}
+ 
+ 	reftable_stack_destroy(st);
 
 -- 
 2.51.0
