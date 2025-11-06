@@ -1,181 +1,102 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637542EC095
-	for <git@vger.kernel.org>; Thu,  6 Nov 2025 10:54:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1762E21CC58
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 10:55:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762426453; cv=none; b=jiBQMfQ/9gw3hfkl830CCEHv63TzdoX0p5hYlYo3gJtTsVd/+zVAIB0HCQWki1BX6cRsN3evuI54I4SFRKy8KEjlgFyA0HSZ1oiU4maGWoZRNYx0+DPMHXa7NpbdcaYcreH0r5F2NjcI1N0eSQEAF+So1ftqjKBk3qY8skET+B8=
+	t=1762426544; cv=none; b=DoTAUomcXZisJJ09s4j3jCFwjmJqLPjI7i/j5wpNr75/Lvh5gpayVKvAPELsxE+by8P0y8OKk201N3tLn8eaWSEVRlvqp1xyyRx75Wkuhm+DbAjhEV1hNvXrHMqfsQxJkadiadOZt6ijyuzWKDWexY1aokEFTWxri01DXks1ao8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762426453; c=relaxed/simple;
-	bh=2zwUiNZCcVeTZ7MsGgRoeld8QzJW6Wl343mXqq1Cfxw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mG6nxIP+3GY8mGXctUV02FjlhuzNIFyWv5s18uHC8eXmZIsZoUrGA9ErADcYbOftLC1wYRLc8KwMbDT+NSmlmPu4dGqqK+jNnkuCFwKSRaTX8frvTCWRD/7kv2besjDCBNfye3IQ1mHdGFWKnww+qEVqnsX/XDMfgFaK8svhU6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KrPitwUp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GXKxoM5N; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1762426544; c=relaxed/simple;
+	bh=k/dJayh10Ihm+JmcpwPRHOI2HWH6QpHiQ1SooVfx8fo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FNUoHNJmIzz5lpCRM9sr+H50NoYsL2Y+mDAosFyV5jPjDVZGfplsffyd30XGwPgnBEbUCvT+EFd0zxhY5m6UpXzpe21hopi4PEC1XwLx73xv5MKlvYbzTfq6i0hRLbJi86fifZTI6br808yQz3HrIVz9fgVgYW22skyD7A3wLNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DAXT37VR; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KrPitwUp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GXKxoM5N"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5E34814001B0;
-	Thu,  6 Nov 2025 05:54:10 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 06 Nov 2025 05:54:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1762426450; x=1762512850; bh=BJuSezuqCj
-	PICEQqJmvASRYDj8YCjWS1VWdZ9zJK49o=; b=KrPitwUpX7fRsJpTFwHBxhiAl/
-	VihAMjNepfj1Stm3mXt/SHhxWVAzhieANChqaJyRCuW+4q6kcwzuKQhfZDy3iNLO
-	HxchY9y2t+sKxSHjqETIY+8jySP7FAMIgGCDFtxSUDbrO5DKPQF8rnrL/BcFKvw3
-	MbyqlnNaTp9uWwmNobwy4riaxe9SrB3nEDu/Knwm+e7yOjek9kaZVVNuxGU2kvhy
-	v79JnyKeqcfiBschSJTgZgKye092QWf1ra1gyarPni8/S96g9kTBta859PZuXbWm
-	x9hnp1D12je9noBvufy/Xw50lohv2fsKS7a5UEygQ5O3NuyXrV1UxiA8qszw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762426450; x=1762512850; bh=BJuSezuqCjPICEQqJmvASRYDj8YCjWS1VWd
-	Z9zJK49o=; b=GXKxoM5NguGhP0tTMY4fBIi+66PHirvvAyJBg8cl+uzpSNsJqDU
-	GFe/3O1Ma1X6psPUsm/FsqF6G43XCK5FwhQb8y31LTE3aQgUA/rhZd+3thmEt32D
-	VKwNDOYtoW0N04XZ/nNd8ovOCCso1CKPFZs1Z4FeUSDVBjX+Ndqw8IO1vJF01x6O
-	eor7A8SElEbIt6kr/GE7uPrYXQ6/I+q+FHalPh7qrJK/vr7A6eNeLpS6w3mg5/M0
-	7vlmsdqB7UAtxunSm9K2Kkv3wkVamt1as2+1i6meg9ATNXA1A1+iW+POa7IaUcQ1
-	OtNMCBTyxYDtf/Wh4QRupIaZnKB+zS+duwQ==
-X-ME-Sender: <xms:UX4MafhSfkB4mVrniQ8znl8fLVzf1eT6azCaNlSKx3c6zLo2gU-kWQ>
-    <xme:UX4MaZ0xFFqdlVZMsR8KVJGB788su3nCEX9K1tE6C0IZz7klMVeQU5-o04HQ_LUwb
-    7XlHO9ur4gLGTcYWCCimyJIIU6C9KDsMCRYBKuZ3NKY7dejN6a8nw>
-X-ME-Received: <xmr:UX4MaZhjKQ-3FSqEuUqYD1uTJPuQ8yDRlzJ6tjQqq5EtnmeYvxx1mvnp-OW4ELMWC__iv_n3sUu_6JFRA291sZHKPqDn5HnNFit0l92eOU0b>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeeiheelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesughinhifohhoughivgdrohhrghdprhgtphhtthhopehrrghmshgrhiesrh
-    grmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:UX4MaZdF0JJPEWsk9I2nEJ0FAC8iVHNrYe0ui1A16i9DT8lsyQf_TQ>
-    <xmx:UX4MacleUkKVT7RbMLxe4WPRUEPMyLHrjzt17ojcElYP2WWhrEhPgA>
-    <xmx:UX4MaSvYswiy4EXlpzs3BEFwdO_oGgOiBP5UP5uYGNJKhqwMr-HpTw>
-    <xmx:UX4MaS8_gH08m6QuM8T0lJYSquLl0QPaWam2C7pnyrujvJxp-o2rVQ>
-    <xmx:Un4MaTcHW-JQPt7Yi_8DFJTv8RxY2anV14AaqSLQAOT8zDbK3QiCJWO->
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Nov 2025 05:54:08 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 808bb246 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 6 Nov 2025 10:54:07 +0000 (UTC)
-Date: Thu, 6 Nov 2025 11:53:58 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Adam Dinwoodie <git@dinwoodie.org>
-Subject: Re: v2.52.0-rc0 test failure on cygwin
-Message-ID: <aQx-RnNX28BPU2cS@pks.im>
-References: <f22c95ad-43c8-41de-8315-e707224e830b@ramsayjones.plus.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DAXT37VR"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-afcb7ae6ed0so133605466b.3
+        for <git@vger.kernel.org>; Thu, 06 Nov 2025 02:55:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762426541; x=1763031341; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :reply-to:user-agent:mime-version:date:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=5KAOdimHGS9QIcOb0yM0+pJi12d2QA1FdZIjogypBgU=;
+        b=DAXT37VRVcS09oX5qZNEMQ5PpSyp4UYP7ekxarXpN8sQwc8sG0MJ+A3ngqzayvevQ2
+         184DKz0/l38xpW4LpN04VN8FlkuFc6vrz5iALDbM9er0tHzpoUHOkpVLi4qwfdw3Ltpx
+         Wp6K3AZgE3aFFgn4zGhpkSka0VDfoP59nBWZfSI0DgKOM87P2SYniYtGHA83gvr1QhIC
+         /AP9Y+7t1DXksbRkORjcxUbgZH383+6M8fIWDxAHw3ss1L49c0PL4lC/O+YyXEwr7/zj
+         Q4Ll5EIyvGOpkpQ8ZI1uKVW6XLSn7kPBwL+zZHbgww3+c4ytZu0v66cR8iWHV565UE8i
+         rgXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762426541; x=1763031341;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :reply-to:user-agent:mime-version:date:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5KAOdimHGS9QIcOb0yM0+pJi12d2QA1FdZIjogypBgU=;
+        b=NgBo8js71yI/W1Qx32XitygxfvfWCmVpBHHPuth+hBRr4Lwg8GnD6B4+DH3Bw6HoJ4
+         U2Kq2LbWNAlZ30C4RoW9O1g2TnOW8UFQJDRroRsKTAvejiEHOVhztoysGlKsxSwsgtUS
+         bcZ5BiOxrzF7Vdw5cc6Y1L/Q9OlTc79eZ/qz7NTEUMsK7ulgqVGXFgkigw7Riv304F4X
+         SWwp56ROJ1oxQHhPXvJo+OWmYLqZ9V2+Ozlp5Pc0D9ptNhaRNEeuHlZOyD+52BoZBgHN
+         E2ES/kcBCM490ozFXP8pPXA4gKLhWhTBlrvYz1LwRdZTSdHRrVkpqvM314zv183lOA53
+         VjDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWO2xYUkWU4eg6bwRY9+E9r3HxWhnWm+H0ZHWvitdP/Uu7j5oe5pSQuoAOklUeYGVz6yDE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwjihZEVVZKIAqndPvs6aJu7Sxl4hmHdkxzO0JdoPkkH037LQYS
+	NgmWYuJtAGKdQ2GH0nXGcpnjO0cTECICscIIOB70Sm7pEQmAsHd+vb+4
+X-Gm-Gg: ASbGncuJyCY6nlI2Rt1xYf2F/I09YP4o2zeU3CR0vWyqdgKKcDYOTsS3i7ATNlXa8Kh
+	GIyIM6kkLSgO2qOkN2NcPPN0+S9C0qzAJO3ChCxQ723p0I0CCOWT/1chM6UYn/e9fi9fu6MPRxs
+	Gjoh15FvDjaUYetsl04DdC1ajH5Zb2kjrtq2EebqhrBxOMqbNHDdEL5cvXPg4Z5et6QXAvP8Vq8
+	KwST4Cy8yaj3USLuR/ls6z018PT264N2eXRH7k/bVIDYXTl9fdiAUHC8Va9phSUwuj0fizZNX4M
+	xA34+zNsmQetwk9ohNLRZS1T4W2IN38h8+LcCcD1f1/yexs5mo5Bt923+PVAEwCgVjLatbsaW6N
+	0IuxPLqQ6VgnCd+/Th4IIrUbYuW4ySr5I4AWsUBiATSM4UiIWnm4qS8PLh2vDFyilHSjWACbf2b
+	BcbxGFvf1K5OV2z/30iuvBqlD+Pl6am6jLchosNAysC+19e69aPfC76eLcXSyk1Ud89w==
+X-Google-Smtp-Source: AGHT+IEQ5tFzBi77pjkqjDU7hllUCVSQca4mo4IWCq9ukXWRf3JLf6b/1rL5DNrX/4/I7xq3diP5oA==
+X-Received: by 2002:a17:906:1f4d:b0:b72:7c52:8e9c with SMTP id a640c23a62f3a-b727c5291efmr367341966b.65.1762426541285;
+        Thu, 06 Nov 2025 02:55:41 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:7b5:6701:5a25:209b:be41:f23f? ([2a0a:ef40:7b5:6701:5a25:209b:be41:f23f])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b72896837fesm182333666b.62.2025.11.06.02.55.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Nov 2025 02:55:40 -0800 (PST)
+Message-ID: <3f7bbb5e-0d67-4ef2-82fb-e0b00683c178@gmail.com>
+Date: Thu, 6 Nov 2025 10:55:39 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f22c95ad-43c8-41de-8315-e707224e830b@ramsayjones.plus.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 03/10] xdiff: make xrecord_t.ptr a uint8_t instead of
+ char
+To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Patrick Steinhardt <ps@pks.im>, Chris Torek <chris.torek@gmail.com>,
+ Ezekiel Newren <ezekielnewren@gmail.com>
+References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
+ <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
+ <46bc1b3e25885fbd324a6428ee7ac3b5d272c4ce.1761776388.git.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <46bc1b3e25885fbd324a6428ee7ac3b5d272c4ce.1761776388.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 04, 2025 at 11:49:46PM +0000, Ramsay Jones wrote:
-> Just a quick heads up: the rc0 build on cygwin has a flaky test, thus:
->   
->   $ tail test-out-2-52-rc0 
->   Test Summary Report
->   -------------------
->   t0610-reftable-basics.sh                         (Wstat: 256 (exited 1) Tests: 90 Failed: 1)
->     Failed test:  29
->     Non-zero exit status: 1
->   Files=1024, Tests=32232, 2703 wallclock secs (23.38 usr 60.53 sys + 7886.88 cusr 10419.88 csys = 18390.67 CPU)
->   Result: FAIL
->   make[1]: *** [Makefile:78: prove] Error 1
->   make[1]: Leaving directory '/home/ramsay/git/t'
->   make: *** [Makefile:3327: test] Error 2
->   $ 
->  
-> Initially, while investigating the failure, I was running the test by hand and it
-> didn't fail ... So, I tried a stess test, like so: 
+On 29/10/2025 22:19, Ezekiel Newren via GitGitGadget wrote:
+> @@ -156,8 +156,8 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
+>   			if (XDL_ALLOC_GROW(xdf->recs, xdf->nrec + 1, narec))
+>   				goto abort;
+>   			crec = &xdf->recs[xdf->nrec++];
+> -			crec->ptr = prev;
+> -			crec->size = (long) (cur - prev);
+> +			crec->ptr = (uint8_t const *)prev;
+> +			crec->size =(long) ( cur - prev);
 
-Interesting. My first hunch is that the root cause is auto-maintenance.
-git-maintenance(1) spawns `git pack-refs --auto`, and that process will
-open the stack so that it can verify whether it needs to be packed or
-not. And Windows being Windows, the file being open may mean that it
-cannot be written by another process at the same point in time.
+The changes to crec->size here look unintentional
 
-In any case, I was able to reproduce the issue. But disabling auto
-maintenance with the following patch does not fix the flake.
+Thanks
 
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index 3ea5d51532..52bbf4fe57 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -204,6 +204,7 @@ test_expect_success 'ref transaction: corrupted tables cause failure' '
- 	git init repo &&
- 	(
- 		cd repo &&
-+		git config set maintenance.auto false &&
- 		test_commit file1 &&
- 		for f in .git/reftable/*.ref
- 		do
+Phillip
 
-And I guess that makes sense? I'd assume that Cygwin already knows to
-open files with POSIX semantics, so it should be possible to write to
-the file even if it was held open by another Git process.
-
-[snip]
-> So, not really an answer, but I have noted several times over the years
-> that cygwin seems to delay setting some file attributes until after the
-> process has exited ... [yeah, I don't see how either! ;) ].
-
-What? That's horrible if true. How doesn't this cause more issues?
-
-I wonder whether the issue is surfaced because we use the shell to
-truncate the file. If you instead use `file-tool truncate 0` for example
-then I cannot reproduce the flake anymore:
-
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index 3ea5d51532..1058f83993 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -207,7 +207,7 @@ test_expect_success 'ref transaction: corrupted tables cause failure' '
- 		test_commit file1 &&
- 		for f in .git/reftable/*.ref
- 		do
--			: >"$f" || return 1
-+			test-tool truncate "$f" 0 || return 1
- 		done &&
- 		test_must_fail git update-ref refs/heads/main HEAD
- 	)
-
-But this may very well just be due to timing again -- spawning the
-process will be slower than using shell redirection to trim the file.
-
-All of this is quite curious. I don't really have any better idea than
-to use something like the above patch. It's ugly, doubly so because I
-don't understand either the root cause nor why the patch properly fixes
-it. So I'd be grateful if anyone were to enlighten me :)
-
-> I noted the above last night and, unfortunately, I haven't had any
-> time to look into this tonight. (hopefully tomorrow).
-> 
-> [I haven't tried bisecting because, well ... flaky test! ;) ]
-
-I have verified that the flake already exists in Git 2.51, so at least
-it's not a regression in the current release cycle.
-
-Thanks!
-
-Patrick
