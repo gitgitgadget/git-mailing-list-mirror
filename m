@@ -1,128 +1,88 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140321FDE31
-	for <git@vger.kernel.org>; Wed,  5 Nov 2025 23:03:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C9A1758B
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 00:06:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762383789; cv=none; b=ApM0GqCINHy9Pst9QrdyXiLzzwvVzh9ocLIm8hT2KZysKS8wIjefDProBcmXCMmTlkEAox9KPOLJqbdFMTvmNXv5xjnDjps/vvvZB9JPkKBsjJ7oGt+MXfXe9T9PdlI9owl5g6KYBG6B2u5bzbBVMa9dR57h9Gh4TBZcU85uiac=
+	t=1762387571; cv=none; b=co9NTlEG+GsAmxbBuWK4MRS/KNgEN5r3T+e35Yb5AtNmDdYHKqURDTksVI1N8xK4bGrxl7xOuQLnobN+enOrgpatwdQdNIHXUsJXByMLMdyz9ZAqUndKNz6dOud+vqsJS2dBQQv7DuxTn7g8S/Dr03PHsZjKPT6SSLwzD0jPX5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762383789; c=relaxed/simple;
-	bh=yja0dTqKJ8gB1ndXeU3u0HAKfuo1JcmSBDq0b6xSCME=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AHZ1odM+TF92sP32yPSh2y0RQS/v0bMSW44mLyuk0WsT3RaiV+XszNy/8XeEIFS4rLiyGXepX+Iwal+rpG9C9Fc+mh9xP6oB2qDKw9T6jbTl4XHBd3hnXWXjtlmf9Qhk6R2Ym/1heMzgkaaryQfMUnX8+A8FhbzSNd+bdQum6EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jsLT9zi0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WLbuwS8A; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762387571; c=relaxed/simple;
+	bh=KGWwWDAYsJaw4DEnjGP1cqUNyUGw0tG9CvElaL2CP4I=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=Vf4vQMUUSEn1MA5WN6lNtD1tP+VXxOy2QRgM6ILTihhSR4nh9+TDkAFf1AcMUI85g3wbSSs0ocB4K4FoXZ/f5Rf5liYH86DqupuFekh/F4mo5/WwD1EI5uaLt8M+OABNKZFEAHr23JpWisKVMeIYDU/EivT6GpHpHam+M+KSp7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iFauRmVG; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jsLT9zi0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WLbuwS8A"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 16D671D001AB;
-	Wed,  5 Nov 2025 18:03:06 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Wed, 05 Nov 2025 18:03:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762383785; x=1762470185; bh=RAlF0a3+RS
-	94ODZbUvI+wFMVulfomEGCkDmqJCBuRks=; b=jsLT9zi0NjJFJEOtV6CyATTX8x
-	6fVqkmLBwRCnLVgO2Kn30nl4jbKNhOQjxeQhCA4gb4bwOKBcWY8sV0TiWNFtniN1
-	WadCIc0pA5szj1A/+uWo1AJsSgf8z+cefDb/vbtpYav3Ta1vd640wxywl1cgQJAI
-	86a5lTrFHW/ZP9n4omsniILBw33lMYpGHkVA/nsWmvQ4yLfPl7D9RuBlEjrMf7uu
-	RgYtgiebNh0mmUjzwvWntgoSiqhNeNoqJ7ziwMpoeVMO8nxWXSZ4Pte/lYhV7tgG
-	EaEL73VKm34odkkkT7X8j1nr0ddMLPjO3ItR5O9QtLqEdqDFBZVoLecY5Q6A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762383785; x=1762470185; bh=RAlF0a3+RS94ODZbUvI+wFMVulfomEGCkDm
-	qJCBuRks=; b=WLbuwS8ARrAqcF9uMLcWSR5q5qCRey8Kqso5MLXiOFm8MymhPkk
-	5Enz4QC7s9jxyybVeesjzF6r/j0mRV6KnPQ6qYkzphF8M5p6CpLmNIFC36Pal9YB
-	QwDgNe3ZLWmy+BA/Y5iuHMVV3el196wKxmrDocNIa24UfMvRh3WDTlVDA675+BSa
-	+rMM0tPlppFAyKzqxKEcz+JLVqg/myfuyoPH0ZabAaBH0WauWo+b+dzCWPW4l1d8
-	5ElmPTj20ivv5+ykOh3tIY6aXw/2q8QlOf921mYjJ/gJuElqfHyn2dHGiIO5OmsV
-	Sk99IOwIvvGq5KeUDjo3kUOqjP+olLFDd7A==
-X-ME-Sender: <xms:qdcLabgQITSUCGhXtglOGCyQachAOJC-VsvKxPPsieQhhP7rtzUevQ>
-    <xme:qdcLafzxg8no6jdBg4GkgtUlrv-WMYdSNWJPk-u10GK01MUN7sb99mRsRrHSeYvT5
-    yV0H4tVGCCLM53n7KqJ3naO6zso5qveqRwpP0BsLYDaoZbvLnxYmwE>
-X-ME-Received: <xmr:qdcLaeLrR19UvJj7og04K1M1nS0BKICeUN0mZH2AjcZ7pocoHl5P_7eujgKrZbuUMusm7xyea-VxHjGzCuRH4FvOO6H2-_BrAEfU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeehudejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvthgvrhesshhofhhtfiholhhvvghsrdhpphdrsh
-    gvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:qdcLaWT8dapekg__bqD0R9qwaXj30oRUTCmvRM86NvJnAdUIwHlJ0w>
-    <xmx:qdcLaWpYAWfYvg-4pdNuu5KaoqlnDEKbOI9RVPIf7LPHPCDdp4Iumw>
-    <xmx:qdcLabqh6OFB0l8JrRdEcdjL9xPljmBgxm2fPrth7frj0YBNIdCGTw>
-    <xmx:qdcLaQMGvALVjcGzlcxVwLTpYqWEv8msSbcLxz9_Ll0_Z1cvQ8f_Ow>
-    <xmx:qdcLaRj06cOEWEotfyJxcPqd6L6Clxd1dRazUohdQTICzNoUa_T4EkQ0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Nov 2025 18:03:05 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Peter Krefting <peter@softwolves.pp.se>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] refs: Add missing space in message
-In-Reply-To: <a8220721-3260-15cb-6960-ca8b6433d7b5@softwolves.pp.se> (Peter
-	Krefting's message of "Wed, 5 Nov 2025 22:47:17 +0100 (CET)")
-References: <a8220721-3260-15cb-6960-ca8b6433d7b5@softwolves.pp.se>
-Date: Wed, 05 Nov 2025 15:03:03 -0800
-Message-ID: <xmqqikfokrq0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iFauRmVG"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-295548467c7so4180085ad.2
+        for <git@vger.kernel.org>; Wed, 05 Nov 2025 16:06:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762387569; x=1762992369; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KGWwWDAYsJaw4DEnjGP1cqUNyUGw0tG9CvElaL2CP4I=;
+        b=iFauRmVGQbMioUT1LsUe3qNunA6wRwDKP75erHVXsXWF+7SMDMh8SliXLS1LBaroRM
+         wlt5Bjkf7g2+q/Yq9/6NcPqD2PHdnkxmJrbZnGt2/db7cXOFhBHUpHfRyb2y/72EFlBK
+         AckL+vHErEMO2qY5pz1OFuhf4DVwLPS+qMKrQ10yKs5sRIxTlJGujVrqWoJqB2848clz
+         j2K3rBWwMtXjQndcR1Hh78k/woXUyz+kNQpXWsOloP9rd7GJJ4XBWipIpJNDN/Tr/Wh+
+         4WnybO62VCRQ+1F1OQVvFt3dv5r/4I+tj4L9piJtp+szfet30XMwKuY4C/Vgam7ZteBZ
+         1g0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762387569; x=1762992369;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KGWwWDAYsJaw4DEnjGP1cqUNyUGw0tG9CvElaL2CP4I=;
+        b=Ipra6ePxrqAmV0w6uxlB4FGjPYWJ8HnT10Pb2tyBQRkHUpswg31U+mRt5CQB8SRrzn
+         +YTxGDEMyIU+zl+dEqLjKH8ezKZp9Huh3cTlE5+h3UX7OiaCbNBKRHx94tYAlvC0BzPn
+         yPrw2O6tHibobSnk5K7O/5rATM02glpP0Mcw/nSfwqkV477YjY9poMfmHwap5/Ukv3ii
+         g6RT2r/uEvnnRbsxpl/ys1omUVoI9J83IK+CIWA9xifpeGuUtv/lvUQSNYTwwEAs9MGG
+         oTkPPexdwQVIoEBQRhir3+0a60C4gsoPSBluIAgyga/OAUEW2VhppHEw2Ry6b7cF76wH
+         lhqA==
+X-Forwarded-Encrypted: i=1; AJvYcCUHlVTluJfe2Ql4bUN/Sr/cKHxb05PNgFoYkz6ItxpZymB73sD76RdMjUjTOSblvpqTOpU=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxft/9MmIe9lskg5K0fPyEFvIQMD7/frmJHpUWwStAwLXCy+Jgv
+	UqyDvkgQrJ3YAYlApDCSwynnfCgxjvQx2FbNoEf6jdpqnoPxIwJH6bus
+X-Gm-Gg: ASbGncvZ7Lv/fNc6twe4+4+yeJGVZ8Imm0lirOufRGvZB+/Wbg2vWyJkPvDOBAoxZil
+	nFl7liCWL0fbnFPWYu9g9+6TEyQUBobDqaXPCt4q2TRw/TX4qg37NaxB+2RpgR5XBVQH7EfXNZE
+	n71eM6sh2FU8sA+6WSkYc3C2lVWBfMm/IhjwUas9uMxE+x4vsko+dr4xCrhjLBcVKb6cuMlEsrj
+	O+kuPNtXagtp6Wt6S3ISHBIsZsU9LHkfPIY+dbqoye1n78+zcguNhSgr9DKFvzPzo/ViyHQXr3s
+	xNyHNPVA1KAMs8On5qHez7TeVze2oc9/1FXqiwfQ/QDZgzIPf6+6dN0O14eddFNcXYJSalDm+fc
+	FeuHLip02Gudomnq2Ww2Nynn/Z6hJlYWW4ZGFkETkeHZWJ7l6ztmNza0vL6DMlKZirT3qpZHHER
+	dy2w8SzvYW+2zCXLfBjI+aohAeFED35w==
+X-Google-Smtp-Source: AGHT+IEQ0EMhIH6TaFAp8vBMbmFcTaZS+d59aHHQI0KfjErKil2yxUvjoCHoNQTo5vrYkFAT3qwA4g==
+X-Received: by 2002:a17:903:2f82:b0:295:7b89:cb8f with SMTP id d9443c01a7336-2962abf4e54mr64217845ad.0.1762387568720;
+        Wed, 05 Nov 2025 16:06:08 -0800 (PST)
+Received: from smtpclient.apple ([191.181.59.93])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ba902207232sm437937a12.32.2025.11.05.16.06.06
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 05 Nov 2025 16:06:08 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
+Subject: Re: 
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <9f8acce4-1a4c-4f4f-b8f1-827d778fe6e3@app.fastmail.com>
+Date: Wed, 5 Nov 2025 21:05:54 -0300
+Cc: Michael Roach <mroach@mroach.com>,
+ git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <FE487800-06D5-46ED-9C78-3C42EC62EB4E@gmail.com>
+References: <0be81c5272a5e42c8471239a1369ee6c32401bb1@mroach.com>
+ <ed8a6d59-9b85-4ca6-a23a-1e43efaa7efa@app.fastmail.com>
+ <F8EAD922-315A-42F8-8E77-5C562B5041ED@gmail.com>
+ <9f8acce4-1a4c-4f4f-b8f1-827d778fe6e3@app.fastmail.com>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+X-Mailer: Apple Mail (2.3864.100.1.1.5)
 
-Peter Krefting <peter@softwolves.pp.se> writes:
 
-> Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
-> ---
->  refs/files-backend.c    | 2 +-
->  refs/reftable-backend.c | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+> Sorry, I didn=E2=80=99t see that he only replied to me previously:
 
-Good eyes.  Both of these came from 465eff81 (refs: fix invalid old
-object IDs when migrating reflogs, 2025-08-06), which appeared in
-Git 2.51.1 already.  Let's merge it before the upcoming release.
-
-Thanks.
-
-
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 054cf42f4e..1adc4b5182 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -3124,7 +3124,7 @@ static int parse_and_write_reflog(struct files_ref_store *refs,
->  		if (!(update->flags & REF_HAVE_OLD) ||
->  		    !(update->flags & REF_HAVE_NEW) ||
->  		    !(update->flags & REF_LOG_ONLY)) {
-> -			strbuf_addf(err, _("trying to write reflog for '%s'"
-> +			strbuf_addf(err, _("trying to write reflog for '%s' "
->  					   "with incomplete values"), update->refname);
->  			return REF_TRANSACTION_ERROR_GENERIC;
->  		}
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index d4b7928620..eeec64798f 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -1103,7 +1103,7 @@ static enum ref_transaction_error prepare_single_update(struct reftable_ref_stor
->  		if (!(u->flags & REF_HAVE_OLD) ||
->  		    !(u->flags & REF_HAVE_NEW) ||
->  		    !(u->flags & REF_LOG_ONLY)) {
-> -			strbuf_addf(err, _("trying to write reflog for '%s'"
-> +			strbuf_addf(err, _("trying to write reflog for '%s' "
->  					   "with incomplete values"), u->refname);
->  			return REF_TRANSACTION_ERROR_GENERIC;
->  		}
+Thanks for forwarding that!=
