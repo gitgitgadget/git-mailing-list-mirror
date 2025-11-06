@@ -1,304 +1,181 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A196C2DA774
-	for <git@vger.kernel.org>; Thu,  6 Nov 2025 10:49:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637542EC095
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 10:54:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762426151; cv=none; b=jvJp9Xh85Y99o7wIvV1KYXvYVoCUPGz/3C5xOLtYoU3NWfNUBtglL+hIJsL4pCyH046O+9p1mBASkKVXgLyUyPXMlk2jwpthE0SjaqodZZRUSY9cAmCcKbkkbLctR841GegBzi0p66NZovcO3rur8kO+g0SU4aC83+W14TZWyQE=
+	t=1762426453; cv=none; b=jiBQMfQ/9gw3hfkl830CCEHv63TzdoX0p5hYlYo3gJtTsVd/+zVAIB0HCQWki1BX6cRsN3evuI54I4SFRKy8KEjlgFyA0HSZ1oiU4maGWoZRNYx0+DPMHXa7NpbdcaYcreH0r5F2NjcI1N0eSQEAF+So1ftqjKBk3qY8skET+B8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762426151; c=relaxed/simple;
-	bh=W5jAt7rSxzMZtGY4Otz+SMGkb8KMwd3IxIIjNdV9hMM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PQsrFmhgC6y2+UeiE1tUWyRil7Z9ZGMsRULm65D/6a4O5l+bqSakithMzzYg5SWZab9kD5BLLByJK+lpdrvS9dPbpxucBiw2gCKqng1mhYOQ+x0Fi/7L/7bUeirNQ7VL7AIRj5gPgTnrmD53dTDgDZ4I1uhhNLvj9q3l50QyA5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cMa93uZS; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762426453; c=relaxed/simple;
+	bh=2zwUiNZCcVeTZ7MsGgRoeld8QzJW6Wl343mXqq1Cfxw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mG6nxIP+3GY8mGXctUV02FjlhuzNIFyWv5s18uHC8eXmZIsZoUrGA9ErADcYbOftLC1wYRLc8KwMbDT+NSmlmPu4dGqqK+jNnkuCFwKSRaTX8frvTCWRD/7kv2besjDCBNfye3IQ1mHdGFWKnww+qEVqnsX/XDMfgFaK8svhU6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KrPitwUp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GXKxoM5N; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cMa93uZS"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-47114a40161so7987415e9.3
-        for <git@vger.kernel.org>; Thu, 06 Nov 2025 02:49:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762426148; x=1763030948; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Tq/tloacaHOd2ay4jG7ylk5FUm1erncCX/H7eAIMZNs=;
-        b=cMa93uZS3Ln2WIQKPQIpEj/TLR77KwE2BkZLe6ZohHKye1ARrT6yUZhscEC2C8Nj9c
-         FOATdDk9H4EIhPSaIZrdQgFknLfD8gop7pbe6MJMhMRRYeSzZcchpf0ghSEXvo1rR07s
-         4wyfOwUCLXsCOHtsMNhzqWM/l6LEa5HKu0vLT750UmzgZ9rguRp8t8JsQ+BKuhGODGSH
-         N8kkBcCB5Lcr+olyKSS0AyHISv6pflgsWFLTHWb+8sUCVccKm1Ys9XM5fmT5OWVGKKAf
-         Wl+XOeALbvvMbX4fI0ocRQyV8JiNE9xap/lk/jYg7kc5LxI3IwAB1s5nr4hBP0gAX8U4
-         2mFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762426148; x=1763030948;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Tq/tloacaHOd2ay4jG7ylk5FUm1erncCX/H7eAIMZNs=;
-        b=CXbBNLnp40sTfKOOV50wokkb/N1ENxitwhfH4/tQt8jVGv7iVhNQxJoqcDjbf6NqZJ
-         avTzvfbN/KB9nvHf6fBAkL37+0Mz4UxUKiuiFcyz7i/7yWpobT9Nt275OcCcJAmaD5SS
-         Ncg3oRCGBlTx7HexWFeC0xHGGIX3yaset7Clpxdk6dLudrVw/whKIwjCs3PCQik8TnO4
-         ouFYNkNTW8hpI5jGo117fxTnytWeyacNsyKwACzqHiXiucEdfMwt91xv+MK3l+zVe8B1
-         zeAjAfdDYs7ym+SZ33Q9yw5n2e7YmpRjC8MVwAa3bsY+S3+MOsUwNYddr2OET5eSoOz9
-         2jag==
-X-Forwarded-Encrypted: i=1; AJvYcCXkBDT7x4p00OnIp2cSm1gFbmsEm4wNca25SRO85oI7/1A4/dr0EfbkunCI0MpDVjXSL08=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwpaUJBfa2CucmTiu10waE0tIzxJv6ZsiTRiK24Q6kLqV2g2cdz
-	72Lh04zKgu7RUDKovq0wHYBbcgKrJ9WuoUn2Wp0xomfbOY+lebgjoeQ1LYhYLA==
-X-Gm-Gg: ASbGncsX9Zk5kJK3STjR+4uE2714mWjkL4s0/OvkvfAwPwu/qBn3JGzEDV6Kut8DJdD
-	sjjj+vDUEMZ0uedGlFU00Sr0dkp1ckTroPKNrfNgQffs7Vn3u2+ElzUPK/cmw/FRclKRyuwXEIJ
-	pxXfbya+kDgZSQEIbTNnLs0A0jLLgcEQPDDYsAkAMPV1QrfkdxoEjted2Q4euIflQnKsicr7NB9
-	G7bg7lm1/TsPVLn7ltdRWahxY3pZl8prulp72mO2MOkJzgjQEvGsRNAQ1IvBYN4ZldMKK0nG+Mz
-	LqiaMX+fOgv0yb9RBwgHhAlZaEP3Y/loe82VHUp1utKtQ44EqREtMG2zICmGf5eo/T2fe55HbFx
-	PiY6Z0YurfdhRcmVF6opiSd/ml4nJws4AgkUtTPznexyu2TEKNe0F590cxvQ/KiQHk6i8BKAiAK
-	rd3+gNxqKoxjPSV/3rvuCbM3WyFhwjpjXjdEp1M+kLAuuy4R10Q7ttFCkP255hH0RG6dYNE3IRs
-	zlK
-X-Google-Smtp-Source: AGHT+IGWcdzaaSpExyaZgCUv4iYci86PP5LGy/qn97ioxEOAO+qghXflqnhte95OE6vMLt4HChQtcw==
-X-Received: by 2002:a05:600c:621a:b0:471:14f5:126f with SMTP id 5b1f17b1804b1-4775ce206f3mr51434725e9.33.1762426147831;
-        Thu, 06 Nov 2025 02:49:07 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:7b5:6701:5a25:209b:be41:f23f? ([2a0a:ef40:7b5:6701:5a25:209b:be41:f23f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429ec767edasm3551821f8f.43.2025.11.06.02.49.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Nov 2025 02:49:07 -0800 (PST)
-Message-ID: <299e25d6-caaf-4672-8160-53fdafe96134@gmail.com>
-Date: Thu, 6 Nov 2025 10:49:05 +0000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KrPitwUp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GXKxoM5N"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5E34814001B0;
+	Thu,  6 Nov 2025 05:54:10 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Thu, 06 Nov 2025 05:54:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1762426450; x=1762512850; bh=BJuSezuqCj
+	PICEQqJmvASRYDj8YCjWS1VWdZ9zJK49o=; b=KrPitwUpX7fRsJpTFwHBxhiAl/
+	VihAMjNepfj1Stm3mXt/SHhxWVAzhieANChqaJyRCuW+4q6kcwzuKQhfZDy3iNLO
+	HxchY9y2t+sKxSHjqETIY+8jySP7FAMIgGCDFtxSUDbrO5DKPQF8rnrL/BcFKvw3
+	MbyqlnNaTp9uWwmNobwy4riaxe9SrB3nEDu/Knwm+e7yOjek9kaZVVNuxGU2kvhy
+	v79JnyKeqcfiBschSJTgZgKye092QWf1ra1gyarPni8/S96g9kTBta859PZuXbWm
+	x9hnp1D12je9noBvufy/Xw50lohv2fsKS7a5UEygQ5O3NuyXrV1UxiA8qszw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762426450; x=1762512850; bh=BJuSezuqCjPICEQqJmvASRYDj8YCjWS1VWd
+	Z9zJK49o=; b=GXKxoM5NguGhP0tTMY4fBIi+66PHirvvAyJBg8cl+uzpSNsJqDU
+	GFe/3O1Ma1X6psPUsm/FsqF6G43XCK5FwhQb8y31LTE3aQgUA/rhZd+3thmEt32D
+	VKwNDOYtoW0N04XZ/nNd8ovOCCso1CKPFZs1Z4FeUSDVBjX+Ndqw8IO1vJF01x6O
+	eor7A8SElEbIt6kr/GE7uPrYXQ6/I+q+FHalPh7qrJK/vr7A6eNeLpS6w3mg5/M0
+	7vlmsdqB7UAtxunSm9K2Kkv3wkVamt1as2+1i6meg9ATNXA1A1+iW+POa7IaUcQ1
+	OtNMCBTyxYDtf/Wh4QRupIaZnKB+zS+duwQ==
+X-ME-Sender: <xms:UX4MafhSfkB4mVrniQ8znl8fLVzf1eT6azCaNlSKx3c6zLo2gU-kWQ>
+    <xme:UX4MaZ0xFFqdlVZMsR8KVJGB788su3nCEX9K1tE6C0IZz7klMVeQU5-o04HQ_LUwb
+    7XlHO9ur4gLGTcYWCCimyJIIU6C9KDsMCRYBKuZ3NKY7dejN6a8nw>
+X-ME-Received: <xmr:UX4MaZhjKQ-3FSqEuUqYD1uTJPuQ8yDRlzJ6tjQqq5EtnmeYvxx1mvnp-OW4ELMWC__iv_n3sUu_6JFRA291sZHKPqDn5HnNFit0l92eOU0b>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeeiheelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesughinhifohhoughivgdrohhrghdprhgtphhtthhopehrrghmshgrhiesrh
+    grmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:UX4MaZdF0JJPEWsk9I2nEJ0FAC8iVHNrYe0ui1A16i9DT8lsyQf_TQ>
+    <xmx:UX4MacleUkKVT7RbMLxe4WPRUEPMyLHrjzt17ojcElYP2WWhrEhPgA>
+    <xmx:UX4MaSvYswiy4EXlpzs3BEFwdO_oGgOiBP5UP5uYGNJKhqwMr-HpTw>
+    <xmx:UX4MaS8_gH08m6QuM8T0lJYSquLl0QPaWam2C7pnyrujvJxp-o2rVQ>
+    <xmx:Un4MaTcHW-JQPt7Yi_8DFJTv8RxY2anV14AaqSLQAOT8zDbK3QiCJWO->
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Nov 2025 05:54:08 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 808bb246 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 6 Nov 2025 10:54:07 +0000 (UTC)
+Date: Thu, 6 Nov 2025 11:53:58 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Adam Dinwoodie <git@dinwoodie.org>
+Subject: Re: v2.52.0-rc0 test failure on cygwin
+Message-ID: <aQx-RnNX28BPU2cS@pks.im>
+References: <f22c95ad-43c8-41de-8315-e707224e830b@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 03/10] xdiff: make xrecord_t.ptr a uint8_t instead of
- char
-To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Patrick Steinhardt <ps@pks.im>, Chris Torek <chris.torek@gmail.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>
-References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
- <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
- <46bc1b3e25885fbd324a6428ee7ac3b5d272c4ce.1761776388.git.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <46bc1b3e25885fbd324a6428ee7ac3b5d272c4ce.1761776388.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f22c95ad-43c8-41de-8315-e707224e830b@ramsayjones.plus.com>
 
-Hi Ezekiel
+On Tue, Nov 04, 2025 at 11:49:46PM +0000, Ramsay Jones wrote:
+> Just a quick heads up: the rc0 build on cygwin has a flaky test, thus:
+>   
+>   $ tail test-out-2-52-rc0 
+>   Test Summary Report
+>   -------------------
+>   t0610-reftable-basics.sh                         (Wstat: 256 (exited 1) Tests: 90 Failed: 1)
+>     Failed test:  29
+>     Non-zero exit status: 1
+>   Files=1024, Tests=32232, 2703 wallclock secs (23.38 usr 60.53 sys + 7886.88 cusr 10419.88 csys = 18390.67 CPU)
+>   Result: FAIL
+>   make[1]: *** [Makefile:78: prove] Error 1
+>   make[1]: Leaving directory '/home/ramsay/git/t'
+>   make: *** [Makefile:3327: test] Error 2
+>   $ 
+>  
+> Initially, while investigating the failure, I was running the test by hand and it
+> didn't fail ... So, I tried a stess test, like so: 
 
-On 29/10/2025 22:19, Ezekiel Newren via GitGitGadget wrote:
-> From: Ezekiel Newren <ezekielnewren@gmail.com>
+Interesting. My first hunch is that the root cause is auto-maintenance.
+git-maintenance(1) spawns `git pack-refs --auto`, and that process will
+open the stack so that it can verify whether it needs to be packed or
+not. And Windows being Windows, the file being open may mean that it
+cannot be written by another process at the same point in time.
+
+In any case, I was able to reproduce the issue. But disabling auto
+maintenance with the following patch does not fix the flake.
+
+diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+index 3ea5d51532..52bbf4fe57 100755
+--- a/t/t0610-reftable-basics.sh
++++ b/t/t0610-reftable-basics.sh
+@@ -204,6 +204,7 @@ test_expect_success 'ref transaction: corrupted tables cause failure' '
+ 	git init repo &&
+ 	(
+ 		cd repo &&
++		git config set maintenance.auto false &&
+ 		test_commit file1 &&
+ 		for f in .git/reftable/*.ref
+ 		do
+
+And I guess that makes sense? I'd assume that Cygwin already knows to
+open files with POSIX semantics, so it should be possible to write to
+the file even if it was held open by another Git process.
+
+[snip]
+> So, not really an answer, but I have noted several times over the years
+> that cygwin seems to delay setting some file attributes until after the
+> process has exited ... [yeah, I don't see how either! ;) ].
+
+What? That's horrible if true. How doesn't this cause more issues?
+
+I wonder whether the issue is surfaced because we use the shell to
+truncate the file. If you instead use `file-tool truncate 0` for example
+then I cannot reproduce the flake anymore:
+
+diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+index 3ea5d51532..1058f83993 100755
+--- a/t/t0610-reftable-basics.sh
++++ b/t/t0610-reftable-basics.sh
+@@ -207,7 +207,7 @@ test_expect_success 'ref transaction: corrupted tables cause failure' '
+ 		test_commit file1 &&
+ 		for f in .git/reftable/*.ref
+ 		do
+-			: >"$f" || return 1
++			test-tool truncate "$f" 0 || return 1
+ 		done &&
+ 		test_must_fail git update-ref refs/heads/main HEAD
+ 	)
+
+But this may very well just be due to timing again -- spawning the
+process will be slower than using shell redirection to trim the file.
+
+All of this is quite curious. I don't really have any better idea than
+to use something like the above patch. It's ugly, doubly so because I
+don't understand either the root cause nor why the patch properly fixes
+it. So I'd be grateful if anyone were to enlighten me :)
+
+> I noted the above last night and, unfortunately, I haven't had any
+> time to look into this tonight. (hopefully tomorrow).
 > 
-> Rust uses u8 to refer to bytes in memory. Since xrecord_t.ptr is also
-> referring to bytes in memory, rather than Unicode code points, use
-> uint8_t instead of char.
+> [I haven't tried bisecting because, well ... flaky test! ;) ]
 
-The reference to unicode code points here still makes no sense to me. I 
-thought the reason for the conversion was to match rust's u8.
+I have verified that the flake already exists in Git 2.51, so at least
+it's not a regression in the current release cycle.
 
-> Every usage of this field was inspected and cast to char*, or similar,
-> to avoid signedness warnings/errors from the compiler. Casting was used
-> so that the whole of xdiff doesn't need to be refactored in order to
-> change the type of this field.
+Thanks!
 
-Thanks for adding this. Having played a little with changing some 
-function parameters to avoid adding these casts I agree this patch is a 
-good place to stop as the number of changes required quickly spiraled 
-out of control.
-
-Thanks
-
-Phillip
-
-> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-> ---
->   xdiff/xdiffi.c    |  8 ++++----
->   xdiff/xemit.c     |  6 +++---
->   xdiff/xmerge.c    | 14 +++++++-------
->   xdiff/xpatience.c |  2 +-
->   xdiff/xprepare.c  |  8 ++++----
->   xdiff/xtypes.h    |  2 +-
->   xdiff/xutils.c    |  4 ++--
->   7 files changed, 22 insertions(+), 22 deletions(-)
-> 
-> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-> index 6f3998ee54..411a8aa69f 100644
-> --- a/xdiff/xdiffi.c
-> +++ b/xdiff/xdiffi.c
-> @@ -407,7 +407,7 @@ static int get_indent(xrecord_t *rec)
->   	int ret = 0;
->   
->   	for (i = 0; i < rec->size; i++) {
-> -		char c = rec->ptr[i];
-> +		uint8_t c = rec->ptr[i];
->   
->   		if (!XDL_ISSPACE(c))
->   			return ret;
-> @@ -993,11 +993,11 @@ static void xdl_mark_ignorable_lines(xdchange_t *xscr, xdfenv_t *xe, long flags)
->   
->   		rec = &xe->xdf1.recs[xch->i1];
->   		for (i = 0; i < xch->chg1 && ignore; i++)
-> -			ignore = xdl_blankline(rec[i].ptr, rec[i].size, flags);
-> +			ignore = xdl_blankline((const char *)rec[i].ptr, rec[i].size, flags);
->   
->   		rec = &xe->xdf2.recs[xch->i2];
->   		for (i = 0; i < xch->chg2 && ignore; i++)
-> -			ignore = xdl_blankline(rec[i].ptr, rec[i].size, flags);
-> +			ignore = xdl_blankline((const char *)rec[i].ptr, rec[i].size, flags);
->   
->   		xch->ignore = ignore;
->   	}
-> @@ -1008,7 +1008,7 @@ static int record_matches_regex(xrecord_t *rec, xpparam_t const *xpp) {
->   	size_t i;
->   
->   	for (i = 0; i < xpp->ignore_regex_nr; i++)
-> -		if (!regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
-> +		if (!regexec_buf(xpp->ignore_regex[i], (const char *)rec->ptr, rec->size, 1,
->   				 &regmatch, 0))
->   			return 1;
->   
-> diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-> index b2f1f30cd3..ead930088a 100644
-> --- a/xdiff/xemit.c
-> +++ b/xdiff/xemit.c
-> @@ -27,7 +27,7 @@ static int xdl_emit_record(xdfile_t *xdf, long ri, char const *pre, xdemitcb_t *
->   {
->   	xrecord_t *rec = &xdf->recs[ri];
->   
-> -	if (xdl_emit_diffrec(rec->ptr, rec->size, pre, strlen(pre), ecb) < 0)
-> +	if (xdl_emit_diffrec((char const *)rec->ptr, rec->size, pre, strlen(pre), ecb) < 0)
->   		return -1;
->   
->   	return 0;
-> @@ -113,8 +113,8 @@ static long match_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri,
->   	xrecord_t *rec = &xdf->recs[ri];
->   
->   	if (!xecfg->find_func)
-> -		return def_ff(rec->ptr, rec->size, buf, sz);
-> -	return xecfg->find_func(rec->ptr, rec->size, buf, sz, xecfg->find_func_priv);
-> +		return def_ff((const char *)rec->ptr, rec->size, buf, sz);
-> +	return xecfg->find_func((const char *)rec->ptr, rec->size, buf, sz, xecfg->find_func_priv);
->   }
->   
->   static int is_func_rec(xdfile_t *xdf, xdemitconf_t const *xecfg, long ri)
-> diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-> index fd600cbb5d..75cb3e76a2 100644
-> --- a/xdiff/xmerge.c
-> +++ b/xdiff/xmerge.c
-> @@ -101,8 +101,8 @@ static int xdl_merge_cmp_lines(xdfenv_t *xe1, int i1, xdfenv_t *xe2, int i2,
->   	xrecord_t *rec2 = xe2->xdf2.recs + i2;
->   
->   	for (i = 0; i < line_count; i++) {
-> -		int result = xdl_recmatch(rec1[i].ptr, rec1[i].size,
-> -			rec2[i].ptr, rec2[i].size, flags);
-> +		int result = xdl_recmatch((const char *)rec1[i].ptr, rec1[i].size,
-> +			(const char *)rec2[i].ptr, rec2[i].size, flags);
->   		if (!result)
->   			return -1;
->   	}
-> @@ -324,8 +324,8 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
->   
->   static int recmatch(xrecord_t *rec1, xrecord_t *rec2, unsigned long flags)
->   {
-> -	return xdl_recmatch(rec1->ptr, rec1->size,
-> -			    rec2->ptr, rec2->size, flags);
-> +	return xdl_recmatch((const char *)rec1->ptr, rec1->size,
-> +			    (const char *)rec2->ptr, rec2->size, flags);
->   }
->   
->   /*
-> @@ -382,10 +382,10 @@ static int xdl_refine_conflicts(xdfenv_t *xe1, xdfenv_t *xe2, xdmerge_t *m,
->   		 * we have a very simple mmfile structure.
->   		 */
->   		t1.ptr = (char *)xe1->xdf2.recs[m->i1].ptr;
-> -		t1.size = xe1->xdf2.recs[m->i1 + m->chg1 - 1].ptr
-> +		t1.size = (char *)xe1->xdf2.recs[m->i1 + m->chg1 - 1].ptr
->   			+ xe1->xdf2.recs[m->i1 + m->chg1 - 1].size - t1.ptr;
->   		t2.ptr = (char *)xe2->xdf2.recs[m->i2].ptr;
-> -		t2.size = xe2->xdf2.recs[m->i2 + m->chg2 - 1].ptr
-> +		t2.size = (char *)xe2->xdf2.recs[m->i2 + m->chg2 - 1].ptr
->   			+ xe2->xdf2.recs[m->i2 + m->chg2 - 1].size - t2.ptr;
->   		if (xdl_do_diff(&t1, &t2, xpp, &xe) < 0)
->   			return -1;
-> @@ -440,7 +440,7 @@ static int line_contains_alnum(const char *ptr, long size)
->   static int lines_contain_alnum(xdfenv_t *xe, int i, int chg)
->   {
->   	for (; chg; chg--, i++)
-> -		if (line_contains_alnum(xe->xdf2.recs[i].ptr,
-> +		if (line_contains_alnum((const char *)xe->xdf2.recs[i].ptr,
->   				xe->xdf2.recs[i].size))
->   			return 1;
->   	return 0;
-> diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
-> index 669b653580..bb61354f22 100644
-> --- a/xdiff/xpatience.c
-> +++ b/xdiff/xpatience.c
-> @@ -121,7 +121,7 @@ static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
->   		return;
->   	map->entries[index].line1 = line;
->   	map->entries[index].hash = record->ha;
-> -	map->entries[index].anchor = is_anchor(xpp, map->env->xdf1.recs[line - 1].ptr);
-> +	map->entries[index].anchor = is_anchor(xpp, (const char *)map->env->xdf1.recs[line - 1].ptr);
->   	if (!map->first)
->   		map->first = map->entries + index;
->   	if (map->last) {
-> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-> index 192334f1b7..4cb18b2b88 100644
-> --- a/xdiff/xprepare.c
-> +++ b/xdiff/xprepare.c
-> @@ -99,8 +99,8 @@ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
->   	hi = (long) XDL_HASHLONG(rec->ha, cf->hbits);
->   	for (rcrec = cf->rchash[hi]; rcrec; rcrec = rcrec->next)
->   		if (rcrec->rec.ha == rec->ha &&
-> -				xdl_recmatch(rcrec->rec.ptr, rcrec->rec.size,
-> -					rec->ptr, rec->size, cf->flags))
-> +				xdl_recmatch((const char *)rcrec->rec.ptr, rcrec->rec.size,
-> +					(const char *)rec->ptr, rec->size, cf->flags))
->   			break;
->   
->   	if (!rcrec) {
-> @@ -156,8 +156,8 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
->   			if (XDL_ALLOC_GROW(xdf->recs, xdf->nrec + 1, narec))
->   				goto abort;
->   			crec = &xdf->recs[xdf->nrec++];
-> -			crec->ptr = prev;
-> -			crec->size = (long) (cur - prev);
-> +			crec->ptr = (uint8_t const *)prev;
-> +			crec->size =(long) ( cur - prev);
->   			crec->ha = hav;
->   			if (xdl_classify_record(pass, cf, crec) < 0)
->   				goto abort;
-> diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-> index 7c8c057bca..b1c520a378 100644
-> --- a/xdiff/xtypes.h
-> +++ b/xdiff/xtypes.h
-> @@ -39,7 +39,7 @@ typedef struct s_chastore {
->   } chastore_t;
->   
->   typedef struct s_xrecord {
-> -	char const *ptr;
-> +	uint8_t const *ptr;
->   	long size;
->   	unsigned long ha;
->   } xrecord_t;
-> diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-> index 447e66c719..7be063bfb6 100644
-> --- a/xdiff/xutils.c
-> +++ b/xdiff/xutils.c
-> @@ -465,10 +465,10 @@ int xdl_fall_back_diff(xdfenv_t *diff_env, xpparam_t const *xpp,
->   	xdfenv_t env;
->   
->   	subfile1.ptr = (char *)diff_env->xdf1.recs[line1 - 1].ptr;
-> -	subfile1.size = diff_env->xdf1.recs[line1 + count1 - 2].ptr +
-> +	subfile1.size = (char *)diff_env->xdf1.recs[line1 + count1 - 2].ptr +
->   		diff_env->xdf1.recs[line1 + count1 - 2].size - subfile1.ptr;
->   	subfile2.ptr = (char *)diff_env->xdf2.recs[line2 - 1].ptr;
-> -	subfile2.size = diff_env->xdf2.recs[line2 + count2 - 2].ptr +
-> +	subfile2.size = (char *)diff_env->xdf2.recs[line2 + count2 - 2].ptr +
->   		diff_env->xdf2.recs[line2 + count2 - 2].size - subfile2.ptr;
->   	if (xdl_do_diff(&subfile1, &subfile2, xpp, &env) < 0)
->   		return -1;
-
+Patrick
