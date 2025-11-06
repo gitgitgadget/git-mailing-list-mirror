@@ -1,85 +1,84 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8724132274B
-	for <git@vger.kernel.org>; Thu,  6 Nov 2025 11:50:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C387B2475D0
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 11:58:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762429834; cv=none; b=LfgIBrGPCT2ZUbnmKpOl3xNLbxu0JVh3QcqtgJRCuNQwYHzs08cK/LnuNkcpp6upXYD60Qs8pm9JY+RRxQuE4tomV+4h5PV1yPGA+2wJ3SmPyWuYmmvl6Od0TWb+4OZCIzTZE7kaxzKKJe12uUbB37U1RjqgoJPxryI9+snmft0=
+	t=1762430291; cv=none; b=LhDTNPQlrypYqBx/RmqcPGRbOQi6UiC2t/ZfBts3PbK6N8T0WfXaoJBpEI+//K6hSE6nGrhEVIAeMHU92wT+/H/v2CJRZx0Ed18mxxEBt3hUD+ji/KJmX9V4AeSfyntSMgmFUqcpq5bI27k1+WImQHQYOkW66LJ0jqDsnpBJl5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762429834; c=relaxed/simple;
-	bh=i6f52aRA3s1hnSotXfysCKmd6WapTgE0wTg9TOTgDEg=;
+	s=arc-20240116; t=1762430291; c=relaxed/simple;
+	bh=67hRGkq2MoJcJHihGzzoEC+TOg9vfFcZS9m2HmME6RA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EnhtxuWObm56wmJFHtplQpFUYOv42GxhSd1cmXC71Wspkgq+ZlouRUrJpuLRM3MSy0PeE6mCFe+MH/6jJnyotN4t+ohBw9pkGg+Hd2WwNKkpdKSL3HTqCeiQLx4TU1dJJNe3vCn203QmyUSDNJdkIC6tJbv+FLz0R86IkbtUXIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SgWR2qSa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vnZHkFnR; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=f6sMZv8Zim7pN+EYMC6kRQL8+FY19TbA0Rqdkbv+qhcWIFNbDL1tL7W2esDj/gWXcV2b4F7JQVheFCbllKfpBqG+YsfC7ctTCeo632rzi8TPRmPxSC6kjfav4vS5kdhOzPGlfGu/DoEx86BTAEwZXsxaW+i9WATlD3YD2sBhCxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XpALCWIe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fZDQPBI+; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SgWR2qSa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vnZHkFnR"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B119514001EE;
-	Thu,  6 Nov 2025 06:50:31 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XpALCWIe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fZDQPBI+"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id D3C32EC0265;
+	Thu,  6 Nov 2025 06:58:07 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 06 Nov 2025 06:50:31 -0500
+  by phl-compute-04.internal (MEProxy); Thu, 06 Nov 2025 06:58:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1762429831; x=1762516231; bh=pq/BqtaCx6
-	ZZSBDIrwOEms1ddSjNrC9QVPgGkSc4A+E=; b=SgWR2qSadKyG2EfqA78x1ZSuan
-	BTeZThTlV7TDghqBcxjMrfoF/iGcjfYaUGwMmFrU+Z/f1/ZmTw6fil1FkSLcCsQd
-	MVgD4dV04fMcYkzJVgjyHS9CUZAiTtFhxGQaWh2YTNNxfswxl7tgiszq+pjAe+NL
-	YNNup6k0j83lPTTmcrFT4V8UVl4L2Rd7VwC8NewSjeZ2CrpZgCS0P/+ban3Hzewc
-	LjD2Wq9ACMiFfIzi9LX9ffZJENY2TxZpPkBti3xUizxpaqIj6nCJ7tdMLzGYUJoy
-	Epou8BYt+Ooo7pwWCERKbLXaPu9Z8GhUuviy8g40pzQ7aXeHl3/Bk8wMjF+A==
+	:subject:to:to; s=fm3; t=1762430287; x=1762516687; bh=eB8so14Thi
+	CiX+t2G4yO0vSQMfvPXfOhFK1uqBO2zCw=; b=XpALCWIecgKVkIC94fQHrYLREy
+	r8yf5S+nH7fCOvr+l6D/s/SHsMx27PwfKCf77ZcDy0eiARnCSmzjQOa8WZoYvyIq
+	BX4NIleM1M35AqIKzr+Dt16zDKzCh2PVofSF/MYTwHY0DDNH9K6igc7XvZju5qDV
+	Ps/B8E7a2oGGGD8mCqXmRCpA4oGtaEYQUNM1xMTbrJ/EmbUOIQd/cjO1kY5/ghDB
+	m72/xLBy2zxIcEn1lngY/eOWctU4J/iPJQfbY4Ku5z0qjeG8buvW4bqG0Y5+Gtvm
+	lQqnDmsIppRMenfRTo6iVLwUKgj2PS33CHDsiVI5Hl3DqiWaQxP8T1slmSlQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762429831; x=1762516231; bh=pq/BqtaCx6ZZSBDIrwOEms1ddSjNrC9QVPg
-	GkSc4A+E=; b=vnZHkFnRi+pB3M9k49xWkx4T1S8jMLq1AK+0fdm4uh3PV5VvuCX
-	fwVwygjw8iFKxEXZdDJkHW4zzLNd7Y38rdQ0A3QMVJXQdjGMtdgb956/j/LysIGW
-	SuzTetHsfXhBNn+j39EVtsbu2+yqzG5bMyXRmVfZEZDj8/kJsdHYHfYFCySTSE47
-	33eSvhqlp/uCN5UsJlNhcR2bUzVLl8sEvQuTXDYoq3avVaryxGVQ1Tb3LKDr9/nT
-	mqhSuMwIGP35yLSvfQrxg2KUxMWmcHC3Qe7u7dAtBsgPBR4zB6S9sdWCMPF+04cn
-	7/GqmVw9vNcEiplZ7HICDlxVaWO02Sol8pQ==
-X-ME-Sender: <xms:h4sMaTKZzeRyQ7cmji-4sUP17LpKHe4fSTPdiw8JNWOPZ4g_sYpS2Q>
-    <xme:h4sMaeAMctS51w74MCjnkQb_ejsDQsBwJhgQzJt9ihqvALWpL4X_4BQT0A3BYvNci
-    u9VBHGkH16OghTP-IjiUf6ff7BH-0q-rOPbJDpzP5Rm0mHX_wbFQEY>
-X-ME-Received: <xmr:h4sMaUBOs62ALb88UX79BjzPY88yIOSNh--BBvqMoOMO4aYSj6rc-1L5qyanDtLW4NSH4sR4cyvQRI1Qj3pmHcUm3nCqxulpeXcs37-0wxvA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeeijedtucetufdoteggodetrf
+	1762430287; x=1762516687; bh=eB8so14ThiCiX+t2G4yO0vSQMfvPXfOhFK1
+	uqBO2zCw=; b=fZDQPBI+K0As6ARrCq1XAtYXpdMt+tuD0h6DjqCbY6FglcGOMWA
+	XkwCKlE68pMbUnU76VsZz8zvEh5R7e/R0j6RFdNw230yARRnbp9lZuZ4Wzjm+hRK
+	gjpZrcDJaCdpkrvI7Q+CJBIdAyrn+XryPZihYKiWmKhn7bHto7VtuxRBrM7qBDPE
+	v2uLxp3NkIz0s9rAqkcXaKIx7XnSKN3aza42JGT3Vux0VNWLS5kKjSgTfKjRR+5t
+	LyNyUDOXmEw2szF4FQUV2ZkBREVd0z+0VWms4T6I5TeNjmnEnu8b6MnECM5et7i/
+	mr/RWrpl0TRPCJdZCIeiPeLgrCINUDOJnGw==
+X-ME-Sender: <xms:T40MaZUm7vXsxdkBsexYEhKY1Palx8MFMLhuvQdc3qgWJ1qvlHpTqg>
+    <xme:T40MaQkMm9eMOuJYKVPJPSD8hfrqkAX-pJV6MMPS_18l7dLjA4pGKPxxgn3YUi2PC
+    d0XpM0KLjkTOT7cZW4L2v1stSRsXvir2p9niQ2qICp711qy566GoUw>
+X-ME-Received: <xmr:T40MaaZDCm5-vaIWzrLAkUyeOiRTNzMbufhK4V72GN15s_Pgr0phnphvR9tIjx0YUpZuNsz78wOl6c6Dxgl-5z7JTW_rM4dUgQ8kj7k8D2x_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeeijedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnsh
-    hhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepjhhlthhosghlvghr
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepuggvsghohhhmrghnsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:h4sMaYD7RjZbKAJyjx5UyKm9Rz6nejxKYmqZOkeFnfwqEL7LIvrMTg>
-    <xmx:h4sMaXrSQ_FHy38GeNaUCM86APs1B4VxnOv6QVVjwjwc9x6Ob7hTbw>
-    <xmx:h4sMaamTboHoTLKef2Z23zauWUfYAFVmIlGADg-bT5lJmqfgtVg72A>
-    <xmx:h4sMafz8w3jXPl8Dug8qKf_BHSSZxNRlAeUW8TiyWrHRkJ2mDjmxaQ>
-    <xmx:h4sMabS9IsY-brz0zsRVUIq7O4qeZkFA1lDQKYxXQwqx30BR3_8k5d7l>
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:T40MabP_TT3kREd2Suuc5g_fzxQbpW1xzDSGRzgkPECtKILC0GNShg>
+    <xmx:T40MafbmNc55uF9VgYrtH_H8KC1KZ2Ut1fkCJSZ95Sly7tH_wE4QBg>
+    <xmx:T40MaZ2o0sdI5RcmcwMHv3_sxXHRfMqNfQlMRi4baGiC4DVSTIG2TA>
+    <xmx:T40MaVfs1Xa15kpCVC_RykEHL7mJpBqiT-FiwVUDE9u9FGv9q-udQg>
+    <xmx:T40MaT2ro8dIKHwSnnjPDoXnxumptEhJsKqnmLEUWpldzgh9Gr8yTrq7>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Nov 2025 06:50:30 -0500 (EST)
+ 6 Nov 2025 06:58:06 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 51d4a4d0 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 6 Nov 2025 11:50:29 +0000 (UTC)
-Date: Thu, 6 Nov 2025 12:50:20 +0100
+	by mail (OpenSMTPD) with ESMTPSA id d05cd387 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 6 Nov 2025 11:58:04 +0000 (UTC)
+Date: Thu, 6 Nov 2025 12:58:00 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, sunshine@sunshineco.com,
-	David Bohman <debohman@gmail.com>
-Subject: Re: [PATCH v2] fetch: fix non-conflicting tags not being committed
-Message-ID: <aQyLfD_zx0ndCLvU@pks.im>
-References: <20251103-fix-tags-not-fetching-v1-1-e63caeb6c113@gmail.com>
- <20251106-fix-tags-not-fetching-v2-1-610cb4b0e7c8@gmail.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH v3 4/5] maintenance: add checking logic in
+ `pack_refs_condition()`
+Message-ID: <aQyNSOdPWAxm15U3@pks.im>
+References: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-0-d611a2a95cf5@gmail.com>
+ <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-4-d611a2a95cf5@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,167 +87,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251106-fix-tags-not-fetching-v2-1-610cb4b0e7c8@gmail.com>
+In-Reply-To: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-4-d611a2a95cf5@gmail.com>
 
-On Thu, Nov 06, 2025 at 09:39:25AM +0100, Karthik Nayak wrote:
-> The commit 0e358de64a (fetch: use batched reference updates, 2025-05-19)
-> updated the 'git-fetch(1)' command to use batched updates. This batches
-> updates to gain performance improvements. When fetching references, each
-> update is added to the transaction. Finally, when committing, individual
-> updates are allowed to fail with reason, while the transaction itself
-> succeeds.
-> 
-> One scenario which was missed here, was fetching tags. When fetching
-> conflicting tags, the `fetch_and_consume_refs()` function returns '1',
-> which skipped committing the transaction and directly jumped to the
-> cleanup section. This mean that no updates were applied.
-
-Okay, this is obviously broken indeed.
-
-> This also extends to backfilling tags when using the now deprecated
-> 'branches/' format for remotes.
-
-I'm a bit lost here -- what does backfilling have to do with the
-"branches/" directory? The backfill is supposed to create tags that
-point into the history that one has just fetched. So:
-
-  - With `--tags` we fetch all tags announced by the remote.
-
-  - With `--no-tags` we fetch no tags.
-
-  - Otherwise we fetch those tags that point into our history.
-
-The last behaviour is a bit more on the esoteric side, but it's
-described as such in git-fetch(1):
-
-    By default, any tag that points into the histories being fetched is
-    also fetched; the effect is to fetch tags that point at branches
-    that you are interested in. This default behavior can be changed by
-    using the --tags or --no-tags options or by configuring
-    remote.<name>.tagOpt. By using a refspec that fetches tags
-    explicitly, you can fetch tags that do not point into branches you
-    are interested in as well.
-
-The following test demonstrates this behaviour:
-
-	test_expect_success "fetch single branch without explicit tag option" '
-		git init source &&
-		git -C source commit --allow-empty --message common &&
-		git clone file://"$(pwd)"/source target &&
-		(
-			cd source &&
-			git commit --allow-empty --message discard-me &&
-			git tag discard-me &&
-			git commit --amend --allow-empty --message fetch-me &&
-			git tag fetch-me
-		) &&
-
-		# The "discard-me" tag does not point into the history that we are
-		# about to fetch, so it should not have been created.
-		git -C target fetch origin &&
-		git -C target tag -l >actual &&
-		echo "fetch-me" >expect &&
-
-		# But with "--tags" we instruct git-fetch(1) to fetch all tags, so we
-		# should now see it.
-		git -C target fetch origin --tags &&
-		git -C target tag -l >actual &&
-		cat >expect <<-\EOF &&
-		discard-me
-		fetch-me
-		EOF
-		test_cmp expect actual
-	'
-
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index c7ff3480fb..d5aee5af10 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1686,6 +1686,42 @@ static void ref_transaction_rejection_handler(const char *refname,
->  	*data->retcode = 1;
->  }
+On Thu, Nov 06, 2025 at 09:22:33AM +0100, Karthik Nayak wrote:
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index c6d62c74a7..c3e7a84ec2 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -285,12 +286,26 @@ static void maintenance_run_opts_release(struct maintenance_run_opts *opts)
 >  
-> +/*
-> + * Commit the reference transaction. If it isn't an atomic transaction, handle
-> + * rejected updates as part of using batched updates.
-> + */
-> +static int commit_ref_transaction(struct ref_transaction **transaction,
-> +				  bool is_atomic, const char *remote_name,
-> +				  struct strbuf *err)
-> +{
-> +	int retcode = ref_transaction_commit(*transaction, err);
-> +	if (retcode) {
-> +		/*
-> +		 * Explicitly handle transaction cleanup to avoid
-> +		 * aborting an already closed transaction.
-> +		 */
-> +		ref_transaction_free(*transaction);
-> +		*transaction = NULL;
-> +	}
+>  static int pack_refs_condition(UNUSED struct gc_config *cfg)
+>  {
+> -	/*
+> -	 * The auto-repacking logic for refs is handled by the ref backends and
+> -	 * exposed via `git pack-refs --auto`. We thus always return truish
+> -	 * here and let the backend decide for us.
+> -	 */
+> -	return 1;
+> +	struct string_list included_refs = STRING_LIST_INIT_NODUP;
+> +	struct ref_exclusions excludes = REF_EXCLUSIONS_INIT;
+> +	struct refs_optimize_opts optimize_opts = {
+> +		.exclusions = &excludes,
+> +		.includes = &included_refs,
+> +		.flags = REFS_OPTIMIZE_PRUNE | REFS_OPTIMIZE_AUTO,
+> +	};
+> +	bool required;
 > +
-> +	if (*transaction && !is_atomic) {
-> +		struct ref_rejection_data data = {
-> +			.conflict_msg_shown = 0,
-> +			.remote_name = remote_name,
-> +			.retcode = &retcode,
-> +		};
+> +	/* Check for all refs, similar to 'git refs optimize --all'. */
+> +	string_list_append(optimize_opts.includes, "*");
 > +
-> +		ref_transaction_for_each_rejected_update(*transaction,
-> +							 ref_transaction_rejection_handler,
-> +							 &data);
+> +	if (refs_optimize_required(get_main_ref_store(the_repository),
+> +				   &optimize_opts, &required))
+> +		return 0;
 > +
-> +		ref_transaction_free(*transaction);
-> +		*transaction = NULL;
-> +	}
-
-Okay. Do we need to discern cases where this is called and we haven't
-managed to even queue a single reference update?
-
-> +	return retcode;
-> +}
+> +	clear_ref_exclusions(&excludes);
+> +	string_list_clear(&included_refs, 0);
 > +
->  static int do_fetch(struct transport *transport,
->  		    struct refspec *rs,
->  		    const struct fetch_config *config)
+> +	return required == true;
 
-Nit: it might make sense to have a preparatory commit that extracts the
-function but that is otherwise a no-op change.
+Tiny nit: I think in our codebase this can be written in a more
+idiomatic way by saying `!!required`.
 
-> @@ -1826,6 +1862,10 @@ static int do_fetch(struct transport *transport,
->  
->  	if (fetch_and_consume_refs(&display_state, transport, transaction, ref_map,
->  				   &fetch_head, config)) {
-> +		/* As we're using batched updates, commit any pending updates. */
-> +		if (!atomic_fetch)
-> +			commit_ref_transaction(&transaction, false,
-> +					       transport->remote->name, &err);
->  		retcode = 1;
->  		goto cleanup;
->  	}
-
-Hm. Don't we also have to unset the transaction now? Ah, no, you pass
-the pointer to the transaction here and set it to `NULL` in
-`commit_ref_transaction()`. Makes sense.
-
-> @@ -1848,8 +1888,12 @@ static int do_fetch(struct transport *transport,
->  			 * the transaction and don't commit anything.
->  			 */
->  			if (backfill_tags(&display_state, transport, transaction, tags_ref_map,
-> -					  &fetch_head, config))
-> +					  &fetch_head, config)) {
-> +				if (!atomic_fetch)
-> +					commit_ref_transaction(&transaction, false,
-> +							       transport->remote->name, &err);
->  				retcode = 1;
-> +			}
->  		}
->  
->  		free_refs(tags_ref_map);
-
-We now have three different callsites where we commit the transaction.
-It gets better due to the newly introduced function, but it overall
-feels somewhat fragile regardless of that.
-
+Other than that I don't have anything more to add to this series.
 Thanks!
 
 Patrick
