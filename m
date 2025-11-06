@@ -1,81 +1,82 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30BD345CD4
-	for <git@vger.kernel.org>; Thu,  6 Nov 2025 14:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A23341644
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 14:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762439631; cv=none; b=KTwTs8IwKWJ95+XRw9/8/N1vfv/SvcUbO5hnVJbDEGVq4XKspjcUiip6ThUu0jQ8hVdDGmDsppRj13WGpa+o/tb1/vhH2EA2w4Yh9i5VGsQPeexZmR2p8GfjK7xssgxYQQxDaptPlKxmXdPfNpXkbC2buvr3nXi7tzGI1zzzfRU=
+	t=1762439858; cv=none; b=NZBquF7tVhkmWElDZ51Ld5wb6lulmXcpwjpl7+XT4+/3nJLwOMPIsm+QM50ajzDYbO20ylVFwlGAB0ogdvZVRFSQffBwiXTM70ZbSDTvWBgzWiIz5sZTtiR+euYqmcyjtyY3bci4hBeMIEc4tV/O+/21dA6zyblkYn4n9wuDk3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762439631; c=relaxed/simple;
-	bh=uIk9w5pEn+OKj+/B8ZDt4SvqBVeYXbHnbtkbr1UM1l4=;
+	s=arc-20240116; t=1762439858; c=relaxed/simple;
+	bh=mswq228AEpp0rihtTEaOYiDUk0VLY47+4i6fL4di+1Y=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=N2e9TCRdOOAwb1hzxPCRpC7nPbwcd+BoRqSjgJDZrg4XCWy4yYN6wo2GmYGtL1dlDesKHnkLwB9vZIzsIwG4PDFVpRr/Dwl2AV29JXLKvrm+acTXvN+2cg/TBArs7Oa0qFYzNVWapiicO+z054ZHJhjp6VFZIFsfKw8wbAU+8js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bDCz8h8U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=srq7H2v1; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=nI6lf/NsMRF7gjonNmviIN/XKzeAYTGh0GMEleDbvZiX4eGvfZB718775L0wwDJyvh/AMDONg4e6GgjJfQibYFyKUsmeQqM0AlnnvwG1bqSBsDoq2XJ+4RSIeTupB7nKOpo9g1GOZ8XE9jj6ehAA6zCgOC8cuq+PRGLUPzVCs14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HeC/gbAz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O7Ul1TAf; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bDCz8h8U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="srq7H2v1"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id BF482EC00B8;
-	Thu,  6 Nov 2025 09:33:46 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HeC/gbAz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O7Ul1TAf"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id DB356EC0433;
+	Thu,  6 Nov 2025 09:37:35 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 06 Nov 2025 09:33:46 -0500
+  by phl-compute-01.internal (MEProxy); Thu, 06 Nov 2025 09:37:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762439626; x=1762526026; bh=coBladRQWn
-	hFd/u0vzHd1eOfKIek2isGI1DryoetEvQ=; b=bDCz8h8Us2ZMgCpU6lgMKc2YZV
-	WBPEBzomZnbJu1Etkj60F74STVnPZfx8fDbNRL3E2x8rR6zt4CUPz4y6Z75JR5as
-	UlLnBxCbvLmyL5Uzov8qnumsLPYeKd9n9T+/KfKqGwrfkpAFggSM7GQhRHXB1QNO
-	7HOYxHPWsdKtXJoltfepRtHwQrd32F8qtruQpa5qQWC8rpFgM9ayXiodfVvNnRrI
-	en26Jw5wZ8so7oXz1BtgCfTN8UyUDiV2PkGRLu5pAgym8U6BYwLy2cxLAgZGLe/l
-	LzCouTMfgKPuR5UVKN4jv8wWaDW7Qr7/Zv4zJLA1mdCJqpncfHmwv+1pMS6Q==
+	:subject:to:to; s=fm2; t=1762439855; x=1762526255; bh=N1U7M8bCLQ
+	2Q2qwMrq27anaK0qmw4ehm9dVBDkprK74=; b=HeC/gbAzi/+n8+syO0TbzFIcCG
+	bKYxJ7l6wKgDi/F1OmYy77CBqZoBGmnJSUHaxtXx9OfRCbn0hvH2XyqhXTQkd1Mw
+	LvqUuehqn1vA4En7iv+oG5K1mlXAXVb44hs1lSav2IfVOze4ErDSVVvC+wylnVZC
+	qH0IB/j3xr7SvNfi0J8UxQswkhXYlnqqIx08tL1hOoGgmuvKk2VYHhTsC9bdHFcd
+	kcOSCltWWpsw1qR3U2ZAXTl9ONz5b2E+KsViiEFBPqkDZgHrIodq4kqzGLsw56DI
+	8i28ikTn8r31p6svisPra22gIgzS5vAhK+lQOmjhRGretdzZAIHcdMfUE1mA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762439626; x=1762526026; bh=coBladRQWnhFd/u0vzHd1eOfKIek2isGI1D
-	ryoetEvQ=; b=srq7H2v1KKX/Qej+88xprRVdChQP4jJEqZjU2oyawThIpKw9zMk
-	Br1qvsb91JMuPljN/HfxWVW1/AF4si1iWCkAX4eMKN3+LeqgqxFxPEhIC4Z1ut3q
-	eQnWn1sZOOY6Mwe23ehb8/3V/nLBB/JPI70Z5XKRH8ZQ1xrkc12Wh/V3i8/X095i
-	V/VzYZK8/k9o2/Yaw0f0w0JL3syoXeOM+n678TynhnOcZG3V5gFvuQN8RfXypU23
-	oF9NR1KLVIyd6IsmGe3icpbOj10nDpiFQql2sFllJF5JjTxD9Fvr4MRft2KuCMYO
-	WiAgJSkz46ZpcHwqYTbqI7LPz0jfv3HyIXg==
-X-ME-Sender: <xms:yrEMadg5P3K_WnzOw3pWf04LECzVSYGA4ROPlXWr0opndxNl9rmbbw>
-    <xme:yrEMaZeo1cdtm6M70POdUmWYPNkb6ZC7BnCHK0dl1ooCJEmVCiz2AkaeL_cGwOX1x
-    gGrb5TdljCWnTglIluduZsRjTFgFnoRC_4PIYsOiByJE2UfqxbZnw>
-X-ME-Received: <xmr:yrEMaad6Ip2eFqoyzcWixfY06w3RaLjsYE1lBCO3JgU6KAzoMjmd76n1cB2648c6EqaRcMX4YBwzA97vh0VmXQvzjSZnaf97LGr2>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeejtdefucetufdoteggodetrf
+	1762439855; x=1762526255; bh=N1U7M8bCLQ2Q2qwMrq27anaK0qmw4ehm9dV
+	BDkprK74=; b=O7Ul1TAfvV3p6LI2Kw+EacdAG6rgyhnp6WC8tlY2YmhUQ/p8xLh
+	6Mc7Vl+spU8ymesGE1WgOgmxDFs583wUDEqD0nJClNrjULCYppToZdlWFECoo07n
+	vzKURGSF/5NPtkCxnluSH0Ar9EdLapkb92I3nbMQFlE0Lw+EII8xc27IO8R1gTDI
+	JXbsVxswo7+RsK8mTMC1c01Hfp6E3WxUFTiuumKXApoHE6mqs1XsjkhCY2NUXcSt
+	RwiLV+1z0ZnaOAl+lFv8DjBUSaCDub7coBvnfDt/y7aWeLim6E+3lpIg+F0lB1jH
+	mRqtAS/4cvmzo/Ga6/d0Fr/Ivi4jQi+wkXw==
+X-ME-Sender: <xms:r7IMaSiBjGVlo-weUbkD5H7Lh9lAVhxG2aj1Z4-9pekPJ7_E-_9Kfg>
+    <xme:r7IMaQ383BLEO1nn3U_9s8SjVwThI_W1G0Q0Ik3pxjstbxoAlebvNZ1QxLSMJuOAR
+    pCNO9Ho6AY0YYNn3YPWU4I_nu4EIkG_Lfeabd-fexarS5P8SCp0>
+X-ME-Received: <xmr:r7IMaUg1yOEUye7kGNOyEo1HfwOJWxQWpwVL__ORRlLuQMRomcLpZYYQ2OJs2DQZjMrlCVs-zh3s5h7_xAdUROr7DweKfvwciIEx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeejtdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:yrEMab_Gnq7Zg1N8NsqJl4ALCmeKA_i2Z6YtfDHHUxN1O_YMd24aYg>
-    <xmx:yrEMaem0n0SPVhIo-Uy0S9QOA9wGZe-84HrRyBHkVCb-gPb_-BIBdg>
-    <xmx:yrEMaV_e5pO3NldZE8Vsz3ndqvwhp00xXZXJs6WTRyTLOCbnL0PHLA>
-    <xmx:yrEMaUkSfTQwwkGvzaPi4nD2HYrmJ-QQ-59Uzgq0PUAj51XR2ig-lQ>
-    <xmx:yrEMaRku3EGvpZoFyf8T_BMdpnuOdEE-VwBufFRn89jrtfBQo4RyZuIk>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepthhhohhmrghsrdhuhhhlvgesmhgrihhlsghogidrth
+    huqdgurhgvshguvghnrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgi
+    druggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:r7IMaYetE9_SwZfRtbzQxo8sb3BLO1-LnJIqOSAZzVMAzTj3OBi5Tw>
+    <xmx:r7IMafk_pzulQC2OegywD9z1B6EMchYI6SvPL6FKyUKZEmSIltZuiA>
+    <xmx:r7IMaZvZaKxz6QIY31XEUqeP36SdDqUNfk9msKuZk4tbjey5whTsmQ>
+    <xmx:r7IMad97HERl5mAbcUvALvXaD2yca23VqPRRlKVcZ1MZEzTWQ36gEQ>
+    <xmx:r7IMaWCpRfJVRO2VppUeDcX7X708HmclF7xGLmChf2b0pO78J4ZvEhAY>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Nov 2025 09:33:45 -0500 (EST)
+ 6 Nov 2025 09:37:35 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] object: fix performance regression when peeling tags
-In-Reply-To: <20251106-b4-pks-peel-object-performance-regression-v1-1-a386147750b0@pks.im>
-	(Patrick Steinhardt's message of "Thu, 06 Nov 2025 09:52:54 +0100")
-References: <20251106-b4-pks-peel-object-performance-regression-v1-1-a386147750b0@pks.im>
-Date: Thu, 06 Nov 2025 06:33:44 -0800
-Message-ID: <xmqqy0ojjkmv.fsf@gitster.g>
+To: Thomas Uhle <thomas.uhle@mailbox.tu-dresden.de>
+Cc: <git@vger.kernel.org>,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] wincred: align Makefile with other Makefiles in contrib
+In-Reply-To: <3869ec21-e20d-cf9b-5913-6389c372a5f0@mailbox.tu-dresden.de>
+	(Thomas Uhle's message of "Wed, 5 Nov 2025 20:55:19 +0100")
+References: <3869ec21-e20d-cf9b-5913-6389c372a5f0@mailbox.tu-dresden.de>
+Date: Thu, 06 Nov 2025 06:37:34 -0800
+Message-ID: <xmqqtsz7jkgh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,50 +86,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Thomas Uhle <thomas.uhle@mailbox.tu-dresden.de> writes:
 
-> Bisecting the issue lands us at 6ec4c0b45b (refs: don't store peeled
-> object IDs for invalid tags, 2025-10-23). The gist of the commit is that
-> we may end up storing peeled objects in both reftables and packed-refs
-> for corrupted tags, where the claimed tagged object type is different
-> than the actual tagged object type. This will then cause us to create
-> the `struct object *` with a wrong type, as well, and obviously nothing
-> good comes out of that.
-
-So does the flow of the logic, which led to the original "validation
-while recording peeled tags", go like this?
-
- - It is handy to be able to get peeled object cheaply, let's cache
-   it, because the same tag peels to the same object every time.
-
- - Usually when we see an object we make sure that is what we
-   expect.  Not having to do this validation costs us less, so why
-   not validate when caching peeled object?  It would amortise the
-   cost of validating the peeled object at runtime every time we use
-   it into a one-time cost when we cache.
-
-But of course we do not really get rid of the type checking at
-runtime, so we certainly should notice, no?
-
-> Taking a step back though reveals an oddity in the new verification
-> logic: we not only verify the _tagged_ object's type, but we also verify
-> the type of the tag itself. But this isn't really needed, as we wouldn't
-> hit the bug in such a case anyway, as we only hit the issue with corrupt
-> tags claiming an invalid type for the tagged object.
+> * Replace $(LOADLIBES) because it is deprecated since long and it is
+>   used nowhere else in the git project.
+> * Use $(gitexecdir) instead of $(libexecdir) because config.mak defines
+>   $(libexecdir) as $(prefix)/libexec, not as $(prefix)/libexec/git-core.
+> * Similar to other Makefiles, let install target rule create
+>   $(gitexecdir) to make sure the directory exists before copying the
+>   executable and also let it respect $(DESTDIR).
+> * Shuffle the lines for the default settings to align them with the
+>   other Makefiles in contrib/credential.
+> * Define .PHONY for all special targets (all, install, clean).
 >
-> The consequence of this is that we now started to look up the target
-> object of every single reference we're about to write, regardless of
-> whether it even is a tag or not. And that is of course quite costly.
+> Signed-off-by: Thomas Uhle <thomas.uhle@mailbox.tu-dresden.de>
+> ---
+>  contrib/credential/wincred/Makefile | 18 ++++++++++--------
+>  1 file changed, 10 insertions(+), 8 deletions(-)
 
-;-).
+Looks sensible (to a person who does not do Windows, anyway), but I
+do not know what depends on the way it is currently laid out, so
+will queue only after I see a Windows person or two give their acks
+to the patch.
 
-> Fix the issue by only verifying the type of the tagged objects. This
-> means that we of course still have a performance hit for actual tags.
-> But this only happens for writes anyway, and I'd claim it's preferable
-> to not store corrupted data in the refdb than to be fast here. Rename
-> the flag accordingly to clarify that we only verify the tagged object's
-> type.
+Thanks.
 
-OK.
 
-Will queue.
+
+> diff --git a/contrib/credential/wincred/Makefile b/contrib/credential/wincred/Makefile
+> index 5b795fc..d92e721 100644
+> --- a/contrib/credential/wincred/Makefile
+> +++ b/contrib/credential/wincred/Makefile
+> @@ -4,20 +4,22 @@
+>  -include ../../../config.mak.autogen
+>  -include ../../../config.mak
+>
+> -CC ?= gcc
+> -RM ?= rm -f
+> -CFLAGS ?= -O2 -Wall
+> -
+>  prefix ?= /usr/local
+> -libexecdir ?= $(prefix)/libexec/git-core
+> +gitexecdir ?= $(prefix)/libexec/git-core
+>
+> +CC ?= gcc
+> +CFLAGS ?= -O2 -Wall
+>  INSTALL ?= install
+> +RM ?= rm -f
+>
+> -git-credential-wincred.exe : git-credential-wincred.c
+> -	$(LINK.c) $^ $(LOADLIBES) $(LDLIBS) -o $@
+> +git-credential-wincred.exe: git-credential-wincred.c
+> +	$(LINK.c) -o $@ $^ $(LDFLAGS) $(LDLIBS)
+>
+>  install: git-credential-wincred.exe
+> -	$(INSTALL) -m 755 $^ $(libexecdir)
+> +	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
+> +	$(INSTALL) -m 755 $< $(DESTDIR)$(gitexecdir)
+>
+>  clean:
+>  	$(RM) git-credential-wincred.exe
+> +
+> +.PHONY: all install clean
+>
+> base-commit: 4cf919bd7b946477798af5414a371b23fd68bf93
