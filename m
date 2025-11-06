@@ -1,164 +1,215 @@
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494CC2820AC
-	for <git@vger.kernel.org>; Thu,  6 Nov 2025 13:07:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BDF86353
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 13:59:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762434447; cv=none; b=Q1iM10WQGSNF2HzM5J42R94S/m9nDsyNNrd+W14ZVC0DeSdGtbJR76z1JJLiNmYNevXYc6kZPq28xq6XlzysPuUyvFT3T4NRJ70sbvFRMnLVtjjTcg7uDOIy5COr0O8I7SnI3YclV/E7hjoSVZDMdd0sVNtaWJ5DHEYI0qjOb6o=
+	t=1762437580; cv=none; b=nGqzGDhuOIf1z2rWq7zjbIcTRfvRyClf2OMVytdcb0eE+SDncXLOamw0tTN/iDao7klpIMulchNhG2+Ot8bwR9Ym9/MsMdHiEATmouqk0zp3ybUjry6B1Tka7U9QJKurS0vQSliZRbdD3x5+9OGcjjpiDf8nTtPYEsJpd24S3N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762434447; c=relaxed/simple;
-	bh=fFSpZQR/U7AFXDPAXzLeoj0RxeaWgS6NFmm0Cxa7jL4=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nyQUXjdBfBLFbXsg7wg0wOrYkFA6ScWA57Cr7+9nfTHgbMPt4/nPZ2nZeEtitMWyi52WjJjHrjZaoUZd1ltsqc7NRna/ogpMDGGJq/AmBA7+cp6GneFk+sQw39QOgLac066yPPG0HSYa4NDjAXZSfw2VZZslp3ikiTq+kXQDqqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mkxfCM8o; arc=none smtp.client-ip=209.85.217.47
+	s=arc-20240116; t=1762437580; c=relaxed/simple;
+	bh=MQYIvhriq/AvhNDicgxD2awlPLhYXagYDaE8i7l/vGo=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=h6PPyFtVYmKdZ1FE9AAG5KQDhtnsHjhK7XurD/9uFLNxOrGKnyAd3Q8W+dv8AJZY3KvwVjNe/WCPWT4M69WuysHrgTlTgBkR+hUj9ahjKVVI3Mk3QMCRUnfPCS6GNqRzzCmg2sO9GHs5is28OnenxA+yp2V82PjetbBcC8r87CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O0eCq+YW; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mkxfCM8o"
-Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-5ddaff87c82so844137.3
-        for <git@vger.kernel.org>; Thu, 06 Nov 2025 05:07:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O0eCq+YW"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-33b9dc8d517so832891a91.0
+        for <git@vger.kernel.org>; Thu, 06 Nov 2025 05:59:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762434445; x=1763039245; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pxVI+l+OhwR3AammJowhzLeS3V/+bpMvtO3DhdqW9RA=;
-        b=mkxfCM8oRtRCsj+IdICj6fG/QQiR62NWkPCjVD0OJxL8ANdRFfW54ZcJEZAkTSUTe8
-         GOYw7ORsQcewHlqI1H97uKWBr2YJeP+6r4REI2m1nP0sf+0qfDiUb2uV+BQtOTGukHzx
-         gu0QiKTd9v5iYR49WLTBx8gdZMUsqmtT3Yd+xm5oD8uRZjL4MKVBpiVD0MMZz+uUlX7I
-         kMNU/7zw7NaNgyz9L2jDpE56aIdDFdubQvkzo7QPCRnPh/FezQP8gZgSbBWZK/7AJq8g
-         glnKQZwHcP9wKifIKgvD6tIUzrB38YwoouCfyI6jzm2vi5st37osq4qR4B1YG+2d2MnQ
-         sp7Q==
+        d=gmail.com; s=20230601; t=1762437578; x=1763042378; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2KciljZ4YkvjJ286A8TrqEmy2E5OZJvgXBwd8tVxiQE=;
+        b=O0eCq+YWr/cHvPFblxKfd5fDvKVeDT5fGOourCi81jiHvzyVQ6Pz/kA7Q30BWHHTD2
+         A37s8w8C3WVlFMvUzHQCy+h47E+CoeJwpc9QxVs65HxYh4wOFszRnzLxtZklJCCPNi+e
+         cS8X5J4jkIQPYZY+Ct5geOlxIPSjVVm/FOjc8A0no4cn4qX3W14/0rYLCaUSqpz7CGx8
+         zZa1cG904odmoX3lheR/1+imJr8yuL/H3/XrnM66PkQQje7v4y8giSpSx+mnZ3gD6dGt
+         1lhqpIuQqm2vFbbPP4HTCYW23s59WqueuWnP+zWA1QjDBW568qd09mbRVyBZQx8Vbl2f
+         YwlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762434445; x=1763039245;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pxVI+l+OhwR3AammJowhzLeS3V/+bpMvtO3DhdqW9RA=;
-        b=VURK0pciE2BJXSvhe0kLx+/wfq72ZH3BekG6pB8oc0fHjUeR+XBarQdkVoptcGlrOb
-         fqwYx5XIK1DfpNGA3NKxrdJzl0ITYIZS02zp4gAa0ZhwEgQ/U8qXvuEUMtA0Z32YJS7Y
-         OQ50vooVmTyNJskIPFyjPBQIDKQfaFz/V/7mN37BEKhtJG2GDbfIH5OoyL0WFj+NU7I3
-         wI5UBoBS8Z2e/Fxyd+HChMjqpND15RfwrLbe7qaOUQg/WgB6kF6O+X757kG3BA3oJ/GR
-         BZl+7U3dQQpzM2HPQPf87YR0kHaoY8Q+NsiCCVbXqZHL33nc84KEAGzIw8mYQGvjGVq1
-         oYjQ==
-X-Gm-Message-State: AOJu0Yw1FkE6P6acFzuMxDDsNbHViKhuD98er5ErIFe7mQ4EBoVjm8QR
-	vz97lyc4HB8KYR6CyMpL8OuuEigYVN9LKExxDNRJ12/IgLfW30F3ndGCng2nE1h7fCaaVX++fBN
-	laJ/1I2PH3QGMZM4jBj/r5TJtc7N0aYI=
-X-Gm-Gg: ASbGncvDORPes8QPu9nbyJtzQgDn4yk85CLMd4UzatrJfKyOSEdyv60JWC+GTsLLse+
-	Fg6d/zLWBmv99HMD0+VJ2pGVtgDdFZNwUujksuBQqydzTRZ9K3dTlA1f96OKDcOs6ETqtOFnwoX
-	/C4mPdM7VSEgArpJEjGs4e8AgVn1PR8Ls9mDJAO3/5qS33+S/13oLDNEg67ZPw+ErGBghgKpbft
-	m2j4x3Fh7s3qWHhmSvhOoGClIRRpY5s3sihGZvI+DqXSgxVidx/RNWwS4LKDxMHEapN5g==
-X-Google-Smtp-Source: AGHT+IE4hv8y26nfUHmFIZ2eWwS1Ognc2AQtjYlZhQpSI1QBHgC8SzrvfTst9dcLiRpV9AflHH34nRvwMB4vY1p7Gkc=
-X-Received: by 2002:a05:6102:32c3:b0:5d7:bd64:cc72 with SMTP id
- ada2fe7eead31-5dd88ec771dmr2481694137.15.1762434445079; Thu, 06 Nov 2025
- 05:07:25 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 6 Nov 2025 13:07:23 +0000
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 6 Nov 2025 13:07:23 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aQyOZ0e6HO0_77Au@pks.im>
-References: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-0-d611a2a95cf5@gmail.com>
- <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-5-d611a2a95cf5@gmail.com>
- <aQyOZ0e6HO0_77Au@pks.im>
+        d=1e100.net; s=20230601; t=1762437578; x=1763042378;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2KciljZ4YkvjJ286A8TrqEmy2E5OZJvgXBwd8tVxiQE=;
+        b=ZADevkVXKWGCcluhcGIt32sG5EINSnLlRyS2zEFfIBWY/C3PkJrI0go6Rw210FBKM7
+         gbMwKVqNjC12rp0CQ67wrhoH4sOk3Nu6xyRWMijcxW/4yukvOjL6/UXlO/BhFG3DmsDG
+         cGehQGl96VxA7R4fmO00hgcb/l9jc5NEs3/Oct1bML1sSK5tu+sbf+dvkeFdmPhvaPS+
+         utHRVm2MvmHDbNoUwY/H30v6d8t33+o/rIPN92CbX4GoCAEvXUV+anaWKcVu2nYywIUO
+         cNPwxUsnOxHuZHWHzRKm8QdW+8wig486faFbqvKpoPW7QOFBNfK+Ch/4vlnFfQj3Vlo0
+         h+iA==
+X-Gm-Message-State: AOJu0YzGpTuYaU9yDZ0A8fnkMWiHPuhUr890K5j285tlVzAU4iCDo3p6
+	z0UwmDxdatyupIwgOa7sth7vLCGlKGyElmvn4eO8N+WfIdUAszdPF6Nw40geLw==
+X-Gm-Gg: ASbGncvedIyileOUQPbj/CL4XRtG7KnV0Yye5FkQbhGfInlOwA3rt8W3SvUsYlDcOF2
+	+H22H51k1ISX4aqppXBCDVIu7q3iJo+qcn7SRvtggceCjIRHaLrmXKeLyLcB61ZY6XDhu+K2rPD
+	3Zib1J/OJ32BSXjVmhQq0GsmbfT+sV/2XE85Uy0nSmoKDwa1ixjjpjfQEVRBBLn8bCtCLUnRH70
+	k+yjd1rANfbi9dxqZVhWyV5L6R7mzlW8g+AJ3qJaSSiOWVgRq4lm8SwVKwoK67yGvWqgbOIEIcI
+	xoiJWZBJZSKym+LH82yxUhAoKLxB7PaAG/ifbikAJQruyoU9z1/Y+zwm5K/ovpzUsf9dyFuO4Au
+	ffbhNrC2a96RJRgh/cFoL3Fj+1xYvNlZtl59csZncg7rd7NJKaFhBYU25SGdJ8+o3keEFDkW4Sv
+	WGfJg=
+X-Google-Smtp-Source: AGHT+IEZbumwfKfCOBCvHX+/DiIIBGjYhGWmD4giFQ/CSKIIecYwP+xvyrjG3DBpQkBGaBTJ3g3/lw==
+X-Received: by 2002:a17:90b:3bcc:b0:336:bfce:3b48 with SMTP id 98e67ed59e1d1-341a6c4ce13mr8084489a91.9.1762437577971;
+        Thu, 06 Nov 2025 05:59:37 -0800 (PST)
+Received: from [127.0.0.1] ([172.182.203.57])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-341a6993b43sm6415252a91.15.2025.11.06.05.59.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Nov 2025 05:59:37 -0800 (PST)
+Message-Id: <pull.1996.git.1762437576488.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 06 Nov 2025 13:59:36 +0000
+Subject: [PATCH] ci: update {download,upload}-artifact Action versions
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 6 Nov 2025 13:07:23 +0000
-X-Gm-Features: AWmQ_blD5Gne216oVXFqWCJP2iwQn2XKuzzaCEjcyTI3X5l-IA4VGrMkbjdGsGc
-Message-ID: <CAOLa=ZS9J9SfMFp7+dmue=isJrpFSbTU7z8TCShOb36XdB8Y_Q@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] maintenance: add 'is-needed' subcommand
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, jltobler@gmail.com, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="0000000000000a12020642ecbfee"
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
---0000000000000a12020642ecbfee
-Content-Type: text/plain; charset="UTF-8"
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Patrick Steinhardt <ps@pks.im> writes:
+Bumps `actions/upload-artifact` from 4 to 5.
+- [Release notes](https://github.com/actions/upload-artifact/releases)
+- [Commits](https://github.com/actions/upload-artifact/compare/v4...v5)
 
-> On Thu, Nov 06, 2025 at 09:22:34AM +0100, Karthik Nayak wrote:
->> diff --git a/Documentation/git-maintenance.adoc b/Documentation/git-maintenance.adoc
->> index 540b5cf68b..37939510d4 100644
->> --- a/Documentation/git-maintenance.adoc
->> +++ b/Documentation/git-maintenance.adoc
->> @@ -84,6 +85,16 @@ The `unregister` subcommand will report an error if the current repository
->>  is not already registered. Use the `--force` option to return success even
->>  when the current repository is not registered.
->>
->> +is-needed::
->> +    Check whether maintenance needs to be run without actually running it.
->> +    Exits with a 0 status code if maintenance needs to be run, 1 otherwise.
->> +    Ideally used with the '--auto' flag.
->> ++
->> +If one or more `--task` options	are specified, then those tasks are checked
->
-> I spoke too soon, forgot that there's one more patch :) s/\t/ /
+---
+    ci: update {download,upload}-artifact Action versions
+    
+    These changes correspond to
+    https://github.com/git-for-windows/git/pull/5914 and
+    https://github.com/git-for-windows/git/pull/5916.
 
-Weird, not sure how that happened, good catch.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1996%2Fdscho%2Factions-updates-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1996/dscho/actions-updates-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1996
 
->
->> +in that order. Otherwise, the tasks are determined by which
->> +`maintenance.<task>.enabled` config options are true. By default, only
->> +`maintenance.gc.enabled` is true.
->
-> This could use a pointer to "maintenance.strategy", but I see that you
-> took this explanation from the "run" subcommand. I think this is good
-> enough for now.
+updated-dependencies:
+- dependency-name: actions/upload-artifact
+  dependency-version: '5'
+  dependency-type: direct:production
+  update-type: version-update:semver-major
+...
 
-Yeah, that's what I went with, so I'll leave it as is :)
+Bumps `actions/download-artifact` from 5 to 6.
+- [Release notes](https://github.com/actions/download-artifact/releases)
+- [Commits](https://github.com/actions/download-artifact/compare/v5...v6)
 
-[snip]
+---
+updated-dependencies:
+- dependency-name: actions/download-artifact
+  dependency-version: '6'
+  dependency-type: direct:production
+  update-type: version-update:semver-major
+...
 
->> +	if (opts.auto_flag) {
->> +		for (size_t i = 0; i < opts.tasks_nr; i++) {
->> +			if (tasks[opts.tasks[i]].auto_condition &&
->> +			    tasks[opts.tasks[i]].auto_condition(&cfg)) {
->> +				is_needed = true;
->> +				break;
->> +			}
->> +		}
->> +	} else {
->> +		/* When not using --auto, we should always require maintenance. */
->
-> Nit: we might add a TODO comment here.
->
->     /*
->      * When not using --auto we always require maintenance right now.
->      *
->      * TODO: this certainly is too eager, as some maintenance tasks may
->      * decide to not do anything because the data structures are already
->      * fully optimized. We may eventually want to extend the auto
->      * condition to also cover non-auto runs so that we can detect such
->      * cases.
->      /
->
-> Patrick
+Originally-authored-by: dependabot[bot] <support@github.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ .github/workflows/main.yml | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-Sure this makes sense, will add it in.
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index cc54824c38..6334ae6a77 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -123,7 +123,7 @@ jobs:
+     - name: zip up tracked files
+       run: git archive -o artifacts/tracked.tar.gz HEAD
+     - name: upload tracked files and build artifacts
+-      uses: actions/upload-artifact@v4
++      uses: actions/upload-artifact@v5
+       with:
+         name: windows-artifacts
+         path: artifacts
+@@ -140,7 +140,7 @@ jobs:
+       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent == 'yes' }}
+     steps:
+     - name: download tracked files and build artifacts
+-      uses: actions/download-artifact@v5
++      uses: actions/download-artifact@v6
+       with:
+         name: windows-artifacts
+         path: ${{github.workspace}}
+@@ -157,7 +157,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v4
++      uses: actions/upload-artifact@v5
+       with:
+         name: failed-tests-windows-${{ matrix.nr }}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -208,7 +208,7 @@ jobs:
+     - name: zip up tracked files
+       run: git archive -o artifacts/tracked.tar.gz HEAD
+     - name: upload tracked files and build artifacts
+-      uses: actions/upload-artifact@v4
++      uses: actions/upload-artifact@v5
+       with:
+         name: vs-artifacts
+         path: artifacts
+@@ -226,7 +226,7 @@ jobs:
+     steps:
+     - uses: git-for-windows/setup-git-for-windows-sdk@v1
+     - name: download tracked files and build artifacts
+-      uses: actions/download-artifact@v5
++      uses: actions/download-artifact@v6
+       with:
+         name: vs-artifacts
+         path: ${{github.workspace}}
+@@ -244,7 +244,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v4
++      uses: actions/upload-artifact@v5
+       with:
+         name: failed-tests-windows-vs-${{ matrix.nr }}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -270,7 +270,7 @@ jobs:
+       shell: pwsh
+       run: meson compile -C build
+     - name: Upload build artifacts
+-      uses: actions/upload-artifact@v4
++      uses: actions/upload-artifact@v5
+       with:
+         name: windows-meson-artifacts
+         path: build
+@@ -292,7 +292,7 @@ jobs:
+       shell: pwsh
+       run: pip install meson ninja
+     - name: Download build artifacts
+-      uses: actions/download-artifact@v5
++      uses: actions/download-artifact@v6
+       with:
+         name: windows-meson-artifacts
+         path: build
+@@ -339,7 +339,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v4
++      uses: actions/upload-artifact@v5
+       with:
+         name: failed-tests-${{matrix.vector.jobname}}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -439,7 +439,7 @@ jobs:
+       run: sudo --preserve-env --set-home --user=builder ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v4
++      uses: actions/upload-artifact@v5
+       with:
+         name: failed-tests-${{matrix.vector.jobname}}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
 
-Thanks
-Karthik
-
---0000000000000a12020642ecbfee
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 57830b0ce880d8dd_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1rTW5Zb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meXU5REFDUXg4WUYwbzYvMkliVDk1c0FabnVKcXF6RgpKNS9mSmFyZDhI
-cHhVbzBFdXdyUXczT3RIaVZOL1p2NHlvS1RjT0lIU1RNbVlTK1hyZHhFZ2J1K0JXK2wxODhqCnBO
-Y21aSVE5Q3QyeVY1L2s0TXFIem0vZHN1WStxb0dMV0NEbnZ4bUhpY1JIbmN3Ums4aTZwaTBHd1Zh
-c2xuUHEKZUllTWlEOWt5NkVCZFJTbmxub0VydFdGRXRHa1NKVGxPTngrbFBOeEJJYUFMTVMycmw3
-dUZlVldMa2ZQMHN2egpZUmhEK3lvVG9zT3d6QTVTZHIwVTZKYnl4U2YzUkh1WTRjeWUrVlBMOXN2
-VUpqOFNTbEtrSEF0bDNXcWRld0toCkdBSTJUK0k3RHlENTV4djlhQk9NV1ZTZDBIak82NHFrZFl4
-VXVKYXNMaTIwZVdZcXVMUXNhOTY5UHYyRXVvZzQKamsySlJ0cGFrblRNdE0rZ0ZkRlprQWdLUVlt
-TDF2NWF4T3B3NUlsR3ozaHZlTlIzMnpsaHhidHVTV2U5UXJsNApNY0tjeWcrNGloYWZwQVVISjN0
-NkptSTZPNnp3UlVDMkhXdUFMMUNIaERHOTNCdElDNk9sM0ltd2hRYjhqdVpGCmpjRHJlMmZmOHlx
-eW9DZExzdDhoN1o0TzVpTmhjeUVrcE9Sc2UzZz0KPStOa3IKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000000a12020642ecbfee--
+base-commit: 4cf919bd7b946477798af5414a371b23fd68bf93
+-- 
+gitgitgadget
