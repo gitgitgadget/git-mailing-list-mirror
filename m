@@ -1,487 +1,278 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D7C3451D6
-	for <git@vger.kernel.org>; Thu,  6 Nov 2025 22:41:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D628F1EB9FA
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 22:52:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762468921; cv=none; b=kNja4d3uT1iZTPs/hjMrT5Bf4W29PbsDPEAZZ42xsqwLrTmXwjjd9N4whrpVvCYcQu5Q86b2bRe+yaft2hfcyi4qtUkW5DPTiS3Qof//cO1e5YQSh5IwLWwvQZnttOSbD7ZAb7ak9OF1VD9eNw7315dgOtzu3etkiPUNWxI60WM=
+	t=1762469575; cv=none; b=bASYhx3rB+SlPunhG+A0RSj+ceN7b65cgV5AaIt+Q4V8m/KCV3UwE6Y8BX/KkNgzN85gXP/dCpGbbKgCoa1Po5oA4mxSNZpQQdu8+JL+kZvBgOsD4XTv/DM3jsOdtB0J/aunAVI0l559dVOGra1mnmgQR0Ax2FB3/E9sMCWTCYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762468921; c=relaxed/simple;
-	bh=gRZdaW0qrVtui1tzHl+8ZrpmQjM7N77D2JqmTv+ikY4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=HduOwHPZ14APXPwAICERCEIe7M2Ws5Jp0DcwOL7QQM/ZHzwCRKAr7IxoEQaxw0wtIyejc9S1U2/LJUcDnwTK8ZyoI2gyyNP3cxaqf1BAHR11SkaM3BcKYNdpHTnD+Zhmvoc4cxhEe4aMH0TuZ5lJK3ZRI95OtK0oPebbsRE1ZrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nITBy++J; arc=none smtp.client-ip=209.85.210.178
+	s=arc-20240116; t=1762469575; c=relaxed/simple;
+	bh=UpjoOqGjLMHlKgqlOZypVpU6Gfj3ADUwdEY0tfLz//I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uUQ71rbGaxMt+qIsmUsNwjN1d1Ndwg6ARznt4cWYReO6WuE6Wq01y10GJBR9Uf20fp6Mmn96BGabch4CfsvtmMiwsV5E0NtJkXVVGZHUNvHLqk2EyMNZy3qBELflG9mWY/xTFVNjgqsJ/Hpa/JLLgObMtAnNZChcD86jW1mD1AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JkMF2Clx; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nITBy++J"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-7b0c3451272so223555b3a.0
-        for <git@vger.kernel.org>; Thu, 06 Nov 2025 14:41:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JkMF2Clx"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-37a49389deeso1254361fa.0
+        for <git@vger.kernel.org>; Thu, 06 Nov 2025 14:52:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762468918; x=1763073718; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1762469571; x=1763074371; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CSWHasNKUfKttlOr2fR04nGz1xGZs9zHwOeGxayA1+M=;
-        b=nITBy++JggtsHU4OyFfzS64ivN1uTFtXkKos4OERErpp9qs+BHrQnTLmsgGER20iA7
-         Z25rbr624vyzSrn60RAqmx+Zafnv5yPbLZYjVXFDs8gJcvwrAxJEN1dIa7uxqcMtQ8ze
-         tLhNjUw32R/7NWcCmqjtI/30brwCGiix39/ZPXgc54lDpBgniXbTAgVQMRSZGuWhNKs0
-         R2LVRUMl9SSSxiEwRQR0/QHuXlRfnkQbw9cI+2XXp4UxYThDtGTtMvHO86fZWsKEPS6k
-         c1LD0vIuNkqMx1699r0Ygt03SKIW6JviAoet0DVnNnfkYi/Iz+uExYGTXg0QVhJtdPki
-         VzIA==
+        bh=JYAnaGTj7WmJE3I7KkYqJ4UxdvHa0X10ieALGBFFgzA=;
+        b=JkMF2ClxwVSu8d2Gzy8JV6uxcc6wzk6/1J1QSA6kDixev6BPjEaN4QrAAUHxAFDnIK
+         TnEKYFcUZ2St9kVIWi96/4vg7uF45D/d7PzbuslR+mzoF1f0shuPBRfzi2rLcuhvSyF/
+         8aGE07XejsWW/c0bMQFuwszLe7LjGCyLHyNzrtxpaUNSrSsaZEtPPkXGk9xVIKFa7iQh
+         SlJyYuSU7h6vYxD4DjQRY8u0Fjo6j4jjLACJekRvNI8duhBQnPmE5XxlZJjes7vDxqXz
+         k1uN8OucJlZVy/tWrcHw4KCLfdGrnjzbGozj1Iyx817loAm9p3BITRu+d6GLhrr56fGC
+         NDAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762468918; x=1763073718;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1762469571; x=1763074371;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=CSWHasNKUfKttlOr2fR04nGz1xGZs9zHwOeGxayA1+M=;
-        b=fwg5wJz9ErdlnwUroe9VZCng3Tu90MBT8txQ+s1NEOKfr6hgnOEPwMpWdDZQw9dPg1
-         EAW8jGimWoJLrJY/X5ZvyqaXUx8iOZDS1Ffyxs3vkgNJFAjxL+pWg0cl5wafGHb4RdYS
-         /13UZYW8Qd4QFnKlvH3r0jUC1K1/vyVcgktpZqmCjLWpdKuGHrbH3EVWIx/8JCN8Tfh1
-         8nWIWA1G6BiYB+LApHgpTGMjPlzts1r6e6reYyG6KF8SHrg27nbHIRNZpZTU+q6AUG31
-         qHP2b6dnLWZusumIUWyoIhB5a3o9yfWGawgsU3P9tJtk2reoQRqKl/h80MqfXyBrwb6Y
-         PXbQ==
-X-Gm-Message-State: AOJu0YyP6LyfryG2yrAYOF9DEdIz4Nt45BQDwRh9hSSoxw+/1bqgq0Pk
-	9G6gT1Wx+Do7nF4o9kVQ7PBYhUGYHFbR4YvNDEKto8F3WJwSsys41luqgOP0yg==
-X-Gm-Gg: ASbGncv+8ETQznY4jcvhd99ImN73t7EjXFQmdtUfiBX6nmY3WJSzPfIG+Pk6Y0e1/wQ
-	115Qg/jI15IZ7bfU9aaO5kxjFflLZhSX9T4mlUmCqELaxC810AT5xs3sBPzFIHn/B1ZsVMD9oya
-	5+aAIZtcg64sgmPfTiiQR/DEuVZuiyd6xLGpK2wTbulmxD3i0qSjJJ4Y9ISBJso+WkLSAm7lmHI
-	gD2+JvIJ5rFiBo3xZ1p1NA4BeSiQMlFZloVWO0+TzQ9fv3VmYxiw39wBjJWQZVpzsPVQQ2hQRH8
-	BLGMXkqAAG+fa1/HXocmNTuxFNFdq8gv53EVsmAWxejmNbYWHmucAnkL+iEq/Jenkw8Zy9LFcAL
-	vRsQEbIc5pqEqXspG+kW8zG+SEOyeYll5u5eU1LfP/Cy2PplsCj4fAR8ja0S7GkSRRHyrmrtXuE
-	2y
-X-Google-Smtp-Source: AGHT+IE9U7zFGdsSuvgA9SdnoLewsuIB34kJy2/gwgX0GcnA53lpV6OMCis7s9RnAPnZml7SaXf1fg==
-X-Received: by 2002:a17:90b:578c:b0:340:c151:2d6c with SMTP id 98e67ed59e1d1-3434c576561mr875516a91.29.1762468918282;
-        Thu, 06 Nov 2025 14:41:58 -0800 (PST)
-Received: from [127.0.0.1] ([68.220.59.49])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3434c332f1csm509169a91.11.2025.11.06.14.41.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Nov 2025 14:41:57 -0800 (PST)
-Message-Id: <60015bbadaf90f40b3b56d2e32b9f48818cb8675.1762468914.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2075.v5.git.git.1762468914.gitgitgadget@gmail.com>
-References: <pull.2075.v4.git.git.1762034252.gitgitgadget@gmail.com>
-	<pull.2075.v5.git.git.1762468914.gitgitgadget@gmail.com>
-From: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 06 Nov 2025 22:41:54 +0000
-Subject: [PATCH v5 2/2] blame: make diff algorithm configurable
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=JYAnaGTj7WmJE3I7KkYqJ4UxdvHa0X10ieALGBFFgzA=;
+        b=GYLvONfoROMifhgvf/cSO+e9IMNnc9TnZ5jWTbFWlE3LSFSFbfrrZJ4fsFfilVPnJF
+         g062q+x0F1o7psmgRMW/giP0D8eBbVx/sszn1JHszZ3GrnxP2XyJsTuoZ/DJLU0gw7Dc
+         Sc1XG+fjgH301onq20nzqiXemoBe20o1TbnADxonHer5Ts7ScX+h1WRHDXEnMLnluvRj
+         zj7NTTBzvm6PlC8J5OTEcNpRhyHuU+Y7GduOooxcBOwX2yeAIDeoe3NjASOif1EUjtbS
+         gUi3xAstD8KvvZaBy2LfPk98PpgcPlyKTPxO2MKnv9XEaBFKLepqDoNrBnD6W25dJKHg
+         Gh7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWwalFG80MFICdDA5CYCxloLuGKh1HnN8j35JtswWeOpnO3Dy6DOm4vcInhumvuZwtXq5U=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwB0WcT2a9V/0mo02KzUoX5jA6XYfYayCcKw2L7pDDc/r9h3iib
+	VaNw+MrnDG0ux0aPz0/Z1Q9yWFoNKzMAiAhugxAagFlAAfcek12zbF3qF3VhVkTJc5vSd4jgNUE
+	3OvRL/bSDJFULHpkyyfhSFGB1VjWAuds=
+X-Gm-Gg: ASbGncudx6gtNJVV+9FrKVjf0g4IfzlWK1Mm/5/qY7A69fB+lPRdtcsCpuChsR3Nz3r
+	GpWrl1No7oVHuRklCEfXvEFUW3qNDPPwt5GC93UMqEuv9AtY+OXqxT09XmX0Q76SP2KthSlM1bo
+	uw0LiGy9zhnTMvLUu3qHLHIy/rBvz6lAxTlCo/rKSnzsPyHRsNbA8e+mx7mD7L2oyIV0F0K6HrH
+	CKr+G6xEaDnGbmafG19Us8qk+DS7urEgj+DApgJLRrF7ORAzvwm8O6KWN41og==
+X-Google-Smtp-Source: AGHT+IGke+e6ybWmhgF9EbOzsS9k9ZbYRqzdEkU390rR3oVQvyuYb5LwarOQEo8bUGreBy4ZQwEueRSesZ0g0Kfy+ME=
+X-Received: by 2002:a2e:870c:0:b0:37a:485b:5c62 with SMTP id
+ 38308e7fff4ca-37a7311e9dcmr2147841fa.4.1762469570508; Thu, 06 Nov 2025
+ 14:52:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Antonin Delpeuch <antonin@delpeuch.eu>,
-    Antonin Delpeuch <antonin@delpeuch.eu>
+References: <pull.2070.git.git.1760563101.gitgitgadget@gmail.com>
+ <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com> <88133848d1a317f8a95c19ee5482b828a3f8705f.1761776388.git.gitgitgadget@gmail.com>
+ <995f77a3-b94c-46df-87d3-22c7b2a3c762@gmail.com>
+In-Reply-To: <995f77a3-b94c-46df-87d3-22c7b2a3c762@gmail.com>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Thu, 6 Nov 2025 15:52:39 -0700
+X-Gm-Features: AWmQ_bmQKagtvQm7Xqmou76rqnpmit8Mh1up3FWyEi7-KcYYqEAvT5m25F-N_iI
+Message-ID: <CAH=ZcbA25eyMhQpvK7eh=ydZkg5RdzbdRFEdj-22T+d1VuTazA@mail.gmail.com>
+Subject: Re: [PATCH v2 01/10] doc: define unambiguous type mappings across C
+ and Rust
+To: phillip.wood@dunelm.org.uk
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>, 
+	Chris Torek <chris.torek@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Antonin Delpeuch <antonin@delpeuch.eu>
+On Thu, Nov 6, 2025 at 2:55=E2=80=AFAM Phillip Wood <phillip.wood123@gmail.=
+com> wrote:
+>
+> Hi Ezekiel
+>
+> On 29/10/2025 22:19, Ezekiel Newren via GitGitGadget wrote:
+> > From: Ezekiel Newren <ezekielnewren@gmail.com>
+> >
+> > Document other nuances with crossing the FFI boundary. Other language
+> > mappings may be added in the future.
+>
+> Thanks for adding this, I've left a few comments below. Overall I
+> thought it was very well written.
 
-The diff algorithm used in 'git-blame(1)' is set to 'myers',
-without the possibility to change it aside from the `--minimal` option.
+Thanks.
 
-There has been long-standing interest in changing the default diff
-algorithm to "histogram", and Git 3.0 was floated as a possible occasion
-for taking some steps towards that:
+I felt it was necessary since C vs Rust types keep coming up over and
+over again. I'm flexible with the wording of this document. I was just
+trying to convey a firm and clear stance on what is and isn't proper
+in Git.
 
-https://lore.kernel.org/git/xmqqed873vgn.fsf@gitster.g/
+> I tried building an html version of
+> this but even after adding it to the list of TECH_DOCS in
+> Documentation/Makefile with
+>
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 47208269a2e..2699f0b24af 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -143,6 +143,7 @@ TECH_DOCS +=3D technical/shallow
+>   TECH_DOCS +=3D technical/sparse-checkout
+>   TECH_DOCS +=3D technical/sparse-index
+>   TECH_DOCS +=3D technical/trivial-merge
+> +TECH_DOCS +=3D technical/unambiguous-types
+>   TECH_DOCS +=3D technical/unit-tests
+>   SP_ARTICLES +=3D $(TECH_DOCS)
+>   SP_ARTICLES +=3D technical/api-index
+>
+> it fails with
+>
+> $ make -C Documentation/ technical/unambiguous-types.html
+>                                        Merge branch
+> 'ps/object-source-loose' into seen
+> make: Entering directory '/home/phil/src/git/Documentation'
+>      GEN asciidoc.conf
+>      * new asciidoc flags
+>      ASCIIDOC technical/unambiguous-types.html
+> asciidoc: ERROR: unambiguous-types.adoc: line 139: undefined filter
+> attribute in command: source-highlight --gen-version -f xhtml -s
+> {language} {src_numbered?--line-number=3D' '} {src_tab?--tab=3D{src_tab}}
+> {args=3D}
+> asciidoc: ERROR: unambiguous-types.adoc: line 162: undefined filter
+> attribute in command: source-highlight --gen-version -f xhtml -s
+> {language} {src_numbered?--line-number=3D' '} {src_tab?--tab=3D{src_tab}}
+> {args=3D}
+> asciidoc: ERROR: unambiguous-types.adoc: line 177: undefined filter
+> attribute in command: source-highlight --gen-version -f xhtml -s
+> {language} {src_numbered?--line-number=3D' '} {src_tab?--tab=3D{src_tab}}
+> {args=3D}
+> asciidoc: ERROR: unambiguous-types.adoc: line 187: undefined filter
+> attribute in command: source-highlight --gen-version -f xhtml -s
+> {language} {src_numbered?--line-number=3D' '} {src_tab?--tab=3D{src_tab}}
+> {args=3D}
+> asciidoc: ERROR: unambiguous-types.adoc: line 199: undefined filter
+> attribute in command: source-highlight --gen-version -f xhtml -s
+> {language} {src_numbered?--line-number=3D' '} {src_tab?--tab=3D{src_tab}}
+> {args=3D}
+> asciidoc: ERROR: unambiguous-types.adoc: line 213: undefined filter
+> attribute in command: source-highlight --gen-version -f xhtml -s
+> {language} {src_numbered?--line-number=3D' '} {src_tab?--tab=3D{src_tab}}
+> {args=3D}
+> asciidoc: ERROR: unambiguous-types.adoc: line 224: undefined filter
+> attribute in command: source-highlight --gen-version -f xhtml -s
+> {language} {src_numbered?--line-number=3D' '} {src_tab?--tab=3D{src_tab}}
+> {args=3D}
+> make: *** [Makefile:396: technical/unambiguous-types.html] Error 1
+> make: *** Deleting file 'technical/unambiguous-types.html'
+> make: Leaving directory '/home/phil/src/git/Documentation'
 
-As a preparation for this move, it is worth making sure that the diff
-algorithm is configurable where useful.
+I've never created documentation for Git before, so this helps. I'll
+incorporate your suggestions.
 
-Make it configurable in the `git-blame(1)` command by introducing the
-`--diff-algorithm` option and make honor the `diff.algorithm` config
-variable. Keep Myers diff as the default.
+> > +=3D=3D Character types
+> > +
+> > +This is where C and Rust don't have a clean one-to-one mapping. A C `c=
+har` is
+> > +an 8-bit type that is signless (neither signed nor unsigned)
+>
+> I found this a bit confusing. Isn't the signedness of "char"
+> implementation defined rather than it being "signless"
+>
+> > which causes
+> > +problems with e.g. `make DEVELOPER=3D1`.
+>
+> I'm not sure what this is referring to - maybe -Wsign-compare?
 
-Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
----
- Documentation/diff-algorithm-option.adoc |  20 +++
- Documentation/diff-options.adoc          |  21 +--
- Documentation/git-blame.adoc             |   2 +
- builtin/blame.c                          |  52 +++++-
- t/meson.build                            |   1 +
- t/t8015-blame-diff-algorithm.sh          | 203 +++++++++++++++++++++++
- 6 files changed, 278 insertions(+), 21 deletions(-)
- create mode 100644 Documentation/diff-algorithm-option.adoc
- create mode 100755 t/t8015-blame-diff-algorithm.sh
+When I build Git with `make DEVELOPER=3D1` and I compare uint8_t with
+char it complains about a difference in signedness. When I compare
+int8_t with char it also complains about a difference in signedness.
+So it is implementation defined, but it's also neither signed nor
+unsigned according to DEVELOPER=3D1 since it complains either way.
 
-diff --git a/Documentation/diff-algorithm-option.adoc b/Documentation/diff-algorithm-option.adoc
-new file mode 100644
-index 0000000000..8e3a0b63d7
---- /dev/null
-+++ b/Documentation/diff-algorithm-option.adoc
-@@ -0,0 +1,20 @@
-+`--diff-algorithm=(patience|minimal|histogram|myers)`::
-+	Choose a diff algorithm. The variants are as follows:
-++
-+--
-+   `default`;;
-+   `myers`;;
-+	The basic greedy diff algorithm. Currently, this is the default.
-+   `minimal`;;
-+	Spend extra time to make sure the smallest possible diff is
-+	produced.
-+   `patience`;;
-+	Use "patience diff" algorithm when generating patches.
-+   `histogram`;;
-+	This algorithm extends the patience algorithm to "support
-+	low-occurrence common elements".
-+--
-++
-+For instance, if you configured the `diff.algorithm` variable to a
-+non-default value and want to use the default one, then you
-+have to use `--diff-algorithm=default` option.
-diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-index ae31520f7f..9cdad6f72a 100644
---- a/Documentation/diff-options.adoc
-+++ b/Documentation/diff-options.adoc
-@@ -197,26 +197,7 @@ and starts with _<text>_, this algorithm attempts to prevent it from
- appearing as a deletion or addition in the output. It uses the "patience
- diff" algorithm internally.
- 
--`--diff-algorithm=(patience|minimal|histogram|myers)`::
--	Choose a diff algorithm. The variants are as follows:
--+
----
--   `default`;;
--   `myers`;;
--	The basic greedy diff algorithm. Currently, this is the default.
--   `minimal`;;
--	Spend extra time to make sure the smallest possible diff is
--	produced.
--   `patience`;;
--	Use "patience diff" algorithm when generating patches.
--   `histogram`;;
--	This algorithm extends the patience algorithm to "support
--	low-occurrence common elements".
----
--+
--For instance, if you configured the `diff.algorithm` variable to a
--non-default value and want to use the default one, then you
--have to use `--diff-algorithm=default` option.
-+include::diff-algorithm-option.adoc[]
- 
- `--stat[=<width>[,<name-width>[,<count>]]]`::
- 	Generate a diffstat. By default, as much space as necessary
-diff --git a/Documentation/git-blame.adoc b/Documentation/git-blame.adoc
-index e438d28625..adcbb6f5dc 100644
---- a/Documentation/git-blame.adoc
-+++ b/Documentation/git-blame.adoc
-@@ -85,6 +85,8 @@ include::blame-options.adoc[]
- 	Ignore whitespace when comparing the parent's version and
- 	the child's to find where the lines came from.
- 
-+include::diff-algorithm-option.adoc[]
-+
- --abbrev=<n>::
- 	Instead of using the default 7+1 hexadecimal digits as the
- 	abbreviated object name, use <m>+1 digits, where <m> is at
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 2703820258..27b513d27f 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -779,6 +779,19 @@ static int git_blame_config(const char *var, const char *value,
- 		}
- 	}
- 
-+	if (!strcmp(var, "diff.algorithm")) {
-+		long diff_algorithm;
-+		if (!value)
-+			return config_error_nonbool(var);
-+		diff_algorithm = parse_algorithm_value(value);
-+		if (diff_algorithm < 0)
-+			return error(_("unknown value for config '%s': %s"),
-+				     var, value);
-+		xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
-+		xdl_opts |= diff_algorithm;
-+		return 0;
-+	}
-+
- 	if (git_diff_heuristic_config(var, value, cb) < 0)
- 		return -1;
- 	if (userdiff_config(var, value) < 0)
-@@ -824,6 +837,38 @@ static int blame_move_callback(const struct option *option, const char *arg, int
- 	return 0;
- }
- 
-+static int blame_diff_algorithm_minimal(const struct option *option,
-+					const char *arg, int unset)
-+{
-+	int *opt = option->value;
-+
-+	BUG_ON_OPT_ARG(arg);
-+
-+	*opt &= ~XDF_DIFF_ALGORITHM_MASK;
-+	if (!unset)
-+		*opt |= XDF_NEED_MINIMAL;
-+
-+	return 0;
-+}
-+
-+static int blame_diff_algorithm_callback(const struct option *option,
-+					 const char *arg, int unset)
-+{
-+	int *opt = option->value;
-+	long value = parse_algorithm_value(arg);
-+
-+	BUG_ON_OPT_NEG(unset);
-+
-+	if (value < 0)
-+		return error(_("option diff-algorithm accepts \"myers\", "
-+			       "\"minimal\", \"patience\" and \"histogram\""));
-+
-+	*opt &= ~XDF_DIFF_ALGORITHM_MASK;
-+	*opt |= value;
-+
-+	return 0;
-+}
-+
- static int is_a_rev(const char *name)
- {
- 	struct object_id oid;
-@@ -915,11 +960,16 @@ int cmd_blame(int argc,
- 		OPT_BIT('s', NULL, &output_option, N_("suppress author name and timestamp (Default: off)"), OUTPUT_NO_AUTHOR),
- 		OPT_BIT('e', "show-email", &output_option, N_("show author email instead of name (Default: off)"), OUTPUT_SHOW_EMAIL),
- 		OPT_BIT('w', NULL, &xdl_opts, N_("ignore whitespace differences"), XDF_IGNORE_WHITESPACE),
-+		OPT_CALLBACK_F(0, "diff-algorithm", &xdl_opts, N_("<algorithm>"),
-+			       N_("choose a diff algorithm"),
-+			       PARSE_OPT_NONEG, blame_diff_algorithm_callback),
- 		OPT_STRING_LIST(0, "ignore-rev", &ignore_rev_list, N_("rev"), N_("ignore <rev> when blaming")),
- 		OPT_STRING_LIST(0, "ignore-revs-file", &ignore_revs_file_list, N_("file"), N_("ignore revisions from <file>")),
- 		OPT_BIT(0, "color-lines", &output_option, N_("color redundant metadata from previous line differently"), OUTPUT_COLOR_LINE),
- 		OPT_BIT(0, "color-by-age", &output_option, N_("color lines by age"), OUTPUT_SHOW_AGE_WITH_COLOR),
--		OPT_BIT(0, "minimal", &xdl_opts, N_("spend extra cycles to find better match"), XDF_NEED_MINIMAL),
-+		OPT_CALLBACK_F(0, "minimal", &xdl_opts, NULL,
-+			       N_("spend extra cycles to find a better match"),
-+			       PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, blame_diff_algorithm_minimal),
- 		OPT_STRING('S', NULL, &revs_file, N_("file"), N_("use revisions from <file> instead of calling git-rev-list")),
- 		OPT_STRING(0, "contents", &contents_from, N_("file"), N_("use <file>'s contents as the final image")),
- 		OPT_CALLBACK_F('C', NULL, &opt, N_("score"), N_("find line copies within and across files"), PARSE_OPT_OPTARG, blame_copy_callback),
-diff --git a/t/meson.build b/t/meson.build
-index 401b24e50e..9f2fe7af8b 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -955,6 +955,7 @@ integration_tests = [
-   't8012-blame-colors.sh',
-   't8013-blame-ignore-revs.sh',
-   't8014-blame-ignore-fuzzy.sh',
-+  't8015-blame-diff-algorithm.sh',
-   't8020-last-modified.sh',
-   't9001-send-email.sh',
-   't9002-column.sh',
-diff --git a/t/t8015-blame-diff-algorithm.sh b/t/t8015-blame-diff-algorithm.sh
-new file mode 100755
-index 0000000000..55e1d540dc
---- /dev/null
-+++ b/t/t8015-blame-diff-algorithm.sh
-@@ -0,0 +1,203 @@
-+#!/bin/sh
-+
-+test_description='git blame with specific diff algorithm'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	cat >file.c <<-\EOF &&
-+	int f(int x, int y)
-+	{
-+	  if (x == 0)
-+	  {
-+	    return y;
-+	  }
-+	  return x;
-+	}
-+
-+	int g(size_t u)
-+	{
-+	  while (u < 30)
-+	  {
-+	    u++;
-+	  }
-+	  return u;
-+	}
-+	EOF
-+	test_write_lines x x x x >file.txt &&
-+	git add file.c file.txt &&
-+	GIT_AUTHOR_NAME=Commit_1 git commit -m Commit_1 &&
-+
-+	cat >file.c <<-\EOF &&
-+	int g(size_t u)
-+	{
-+	  while (u < 30)
-+	  {
-+	    u++;
-+	  }
-+	  return u;
-+	}
-+
-+	int h(int x, int y, int z)
-+	{
-+	  if (z == 0)
-+	  {
-+	    return x;
-+	  }
-+	  return y;
-+	}
-+	EOF
-+	test_write_lines x x x A B C D x E F G >file.txt &&
-+	git add file.c file.txt &&
-+	GIT_AUTHOR_NAME=Commit_2 git commit -m Commit_2
-+'
-+
-+test_expect_success 'blame uses Myers diff algorithm by default' '
-+	cat >expected <<-\EOF &&
-+	Commit_2 int g(size_t u)
-+	Commit_1 {
-+	Commit_2   while (u < 30)
-+	Commit_1   {
-+	Commit_2     u++;
-+	Commit_1   }
-+	Commit_2   return u;
-+	Commit_1 }
-+	Commit_1
-+	Commit_2 int h(int x, int y, int z)
-+	Commit_1 {
-+	Commit_2   if (z == 0)
-+	Commit_1   {
-+	Commit_2     return x;
-+	Commit_1   }
-+	Commit_2   return y;
-+	Commit_1 }
-+	EOF
-+
-+	git blame file.c > output &&
-+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
-+	sed -e "s/ *$//g" without_varying_parts > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame honors --diff-algorithm option' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 int g(size_t u)
-+	Commit_1 {
-+	Commit_1   while (u < 30)
-+	Commit_1   {
-+	Commit_1     u++;
-+	Commit_1   }
-+	Commit_1   return u;
-+	Commit_1 }
-+	Commit_2
-+	Commit_2 int h(int x, int y, int z)
-+	Commit_2 {
-+	Commit_2   if (z == 0)
-+	Commit_2   {
-+	Commit_2     return x;
-+	Commit_2   }
-+	Commit_2   return y;
-+	Commit_2 }
-+	EOF
-+
-+	git blame file.c --diff-algorithm histogram > output &&
-+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
-+	sed -e "s/ *$//g" without_varying_parts > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame honors diff.algorithm config variable' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 int g(size_t u)
-+	Commit_1 {
-+	Commit_1   while (u < 30)
-+	Commit_1   {
-+	Commit_1     u++;
-+	Commit_1   }
-+	Commit_1   return u;
-+	Commit_1 }
-+	Commit_2
-+	Commit_2 int h(int x, int y, int z)
-+	Commit_2 {
-+	Commit_2   if (z == 0)
-+	Commit_2   {
-+	Commit_2     return x;
-+	Commit_2   }
-+	Commit_2   return y;
-+	Commit_2 }
-+	EOF
-+
-+	git -c diff.algorithm=histogram blame file.c > output &&
-+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" \
-+	    -e "s/ *$//g" output > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame gives priority to --diff-algorithm over diff.algorithm' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 int g(size_t u)
-+	Commit_1 {
-+	Commit_1   while (u < 30)
-+	Commit_1   {
-+	Commit_1     u++;
-+	Commit_1   }
-+	Commit_1   return u;
-+	Commit_1 }
-+	Commit_2
-+	Commit_2 int h(int x, int y, int z)
-+	Commit_2 {
-+	Commit_2   if (z == 0)
-+	Commit_2   {
-+	Commit_2     return x;
-+	Commit_2   }
-+	Commit_2   return y;
-+	Commit_2 }
-+	EOF
-+
-+	git -c diff.algorithm=myers blame file.c --diff-algorithm histogram > output &&
-+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" \
-+	    -e "s/ *$//g" output > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame honors --minimal option' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 x
-+	Commit_1 x
-+	Commit_1 x
-+	Commit_2 A
-+	Commit_2 B
-+	Commit_2 C
-+	Commit_2 D
-+	Commit_1 x
-+	Commit_2 E
-+	Commit_2 F
-+	Commit_2 G
-+	EOF
-+
-+	git blame file.txt --minimal > output &&
-+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blame respects the order of diff options' '
-+	cat >expected <<-\EOF &&
-+	Commit_1 x
-+	Commit_1 x
-+	Commit_1 x
-+	Commit_2 A
-+	Commit_2 B
-+	Commit_2 C
-+	Commit_2 D
-+	Commit_2 x
-+	Commit_2 E
-+	Commit_2 F
-+	Commit_2 G
-+	EOF
-+
-+	git blame file.txt --minimal --diff-algorithm myers > output &&
-+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > actual &&
-+	test_cmp expected actual
-+'
-+
-+test_done
--- 
-gitgitgadget
+> > Rust's `char` type is an unsigned 32-bit
+> > +integer that is used to describe Unicode code points. Even though a C =
+`char`
+> > +is the same width as `u8`, `char` should be converted to u8 where it i=
+s
+> > +describing bytes in memory.
+>
+> I'm dreading the point where we start sharing "struct strbuf" with rust
+> and have to change the "buf" member from "char*" to "uint8_t*". While it
+> is not used in the xdiff code it is ubiquitous everywhere else and there
+> are lots of places where be pass the "buf" member to functions expecting
+> a "char*".
+>
+>         git grep -E '(\.|->)buf\W'
+>
+> has over 4000 matches
+
+This is why I started in Xdiff since its code is mostly isolated. I
+think that we might have to bite the bullet and deal with the ugly
+mapping of char on the C side and u8 on the Rust side when dealing
+with strbuf. Maybe as we translate more of C into Rust someone will
+have a better suggestion. I think my ivec type would be better since
+strbuf is almost a special case of my ivec type, but dealing with
+strbuf is outside the scope of this patch series.
+
+> > If a C `char` is not describing bytes, then it
+> > +should be converted to a more accurate unambiguous type.
+>
+> That's a good point.
+>
+> > +While you could specify `char` in the C code and `u8` in Rust code, it=
+'s not as
+> > +clear what the appropriate type is, but it would work across the FFI b=
+oundary.
+> > +However the bigger problem comes from code generation tools like cbind=
+gen and
+> > +bindgen. When cbindgen see u8 in Rust it will generate uint8_t on the =
+C side
+> > +which will cause differ in signedness warnings/errors. Similarly if bi=
+ndgen
+> > +see `char` on the C side it will generate `std::ffi::c_char` which has=
+ its own
+> > +problems.
+>
+> Yeah, we definitely don't want to be using "std::ffi::c_char" in our
+> rust implementations. I do wonder if we might want to use it (or CStr)
+> judiciously in function parameters and immediately convert it to u8 in
+> the function body where the function is called from C though.
+
+That's basically the design pattern I've been using.
+
+In many of my translations from C to Rust I create a Rust stub
+function that takes pointer types and wraps them into safe types which
+then get handed off to a safe Rust function. I think that in the cases
+where CString/CStr is required the Rust stub function would create a
+&[u8] slice for the safe function to operate on.
+
+> > +=3D=3D=3D Notes
+> > +^1^ This is only true if stdbool.h (or equivalent) is used. +
+> > +^2^ C does not enforce IEEE-754 compatibility, but Rust expects it. If=
+ the
+> > +platform/arch for C does not follow IEEE-754 then this equivalence doe=
+s not
+> > +hold. Also, it's assumed that `float` is 32 bits and `double` is 64, b=
+ut
+> > +there may be a strange platform/arch where even this isn't true. +
+> > +^3^ C also defines uintptr_t, but this should not be used in Git. +
+> > +^4^ C also defines ssize_t and intptr_t, but these should not be used =
+in Git. +
+>
+> [u]intptr_t and ssize_t are used in git already. As Junio has pointed
+> out there are sane uses for these types but we don't want to use them in
+> structs or function parameters where the struct or function is shared
+> with rust.
+
+You're right, I should update the phrasing. Something like: "These
+types shouldn't be used if their explicit purpose is for FFI. Whether
+as a field in a struct or part of a function signature." I'll update
+the wording.
+
+> > +
+> > +=3D=3D Problems with std::ffi::c_* types in Rust
+> > +TL;DR: They're not guaranteed to match C types for all possible C
+> > +compilers/platforms/architectures.
+>
+> Is this official policy of the rust project?
+
+No, this is a personal inference based on logical deduction. The c_*
+definitions have changed over time with new Rust version releases, and
+Git targets more platforms/architectures than what Rust officially
+supports. While it's not guaranteed that it won't work everywhere.
+It's also not guaranteed to work everywhere either. On top of that
+we're targeting 1.63.0 who's c_* definitions are different in 1.89.0
+which I show an example of with c_long_definition. Can anyone say with
+certainty that Rust got these mappings right or wrong for all possible
+C compilers/architectures/platforms? If so (which I highly doubt)
+could someone provide a link?
