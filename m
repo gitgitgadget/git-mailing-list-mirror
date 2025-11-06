@@ -1,143 +1,134 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2517933B6D2
-	for <git@vger.kernel.org>; Thu,  6 Nov 2025 14:08:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30BD345CD4
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 14:33:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762438103; cv=none; b=q4DpUilvOU2bnXTkxXObzMzyRh7oN3YzIpCR9+Gy9rYGHK34BZJbHVT2I34a5xHyRjcFVjhGMX1PtJXluBUJ6L5X4aTX/jgDwtMpkTR+GwDuzRvWzP6umENymYyzPlgYSXkZ3fKRUNWbtIidRfz86tZ4LbOuBh8T59/6pHtZ26I=
+	t=1762439631; cv=none; b=KTwTs8IwKWJ95+XRw9/8/N1vfv/SvcUbO5hnVJbDEGVq4XKspjcUiip6ThUu0jQ8hVdDGmDsppRj13WGpa+o/tb1/vhH2EA2w4Yh9i5VGsQPeexZmR2p8GfjK7xssgxYQQxDaptPlKxmXdPfNpXkbC2buvr3nXi7tzGI1zzzfRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762438103; c=relaxed/simple;
-	bh=jYCX40wNRKi+T0G3ATvbuD8M2lN+cE7DDvJMulg+ecU=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=HumGFPPLESJQZWuC5O2iyVQgmnl28dRjbfLWXc7fE0Ly6P/k1yetL36EeRToi16P9ibStdeWoepdx9/HSiCN8b8hptNkk0IlqE504QigLNY7hRl/pLpk5jwfktKSPpjsf4LgMWQB4Ym/VXqI/vqRYwjAv4L7Fvj1I50Dffd902w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jXIQxMr3; arc=none smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762439631; c=relaxed/simple;
+	bh=uIk9w5pEn+OKj+/B8ZDt4SvqBVeYXbHnbtkbr1UM1l4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=N2e9TCRdOOAwb1hzxPCRpC7nPbwcd+BoRqSjgJDZrg4XCWy4yYN6wo2GmYGtL1dlDesKHnkLwB9vZIzsIwG4PDFVpRr/Dwl2AV29JXLKvrm+acTXvN+2cg/TBArs7Oa0qFYzNVWapiicO+z054ZHJhjp6VFZIFsfKw8wbAU+8js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bDCz8h8U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=srq7H2v1; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jXIQxMr3"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-78665368a5cso10209537b3.3
-        for <git@vger.kernel.org>; Thu, 06 Nov 2025 06:08:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762438101; x=1763042901; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rUoUyPLZBwrPO0VAdvrN5zRMmv9EC+Pmd/AMpovYPJo=;
-        b=jXIQxMr3ZoOCSsQSx94jIQVP4YEostJxDCawsMP1EKWNOKrFCxBCABKTl6Qwc08lZD
-         QN+icBCxdaf4dg9yOQq9nF01HyPFC2bIzJEO65MviRqFnbgKAIZzq/GqKMXgy2JJZbzQ
-         ePenvT2M4uV+FbpSIuBFgK0Jz7J02uHnsr9h2R6XgT2I2gysH1O4qqMvGWc3tG0KiE55
-         gEJ31mh/qH0Cu2SVDxlWypIKYnUpIU5FCTYa+B/v7JLbEFOEhUl+ND+daA9HZCz7vblW
-         0KxXkJvTJtg90gR8uY0E/mGqzf6QRJdaFiEenZjgsvOt7+oaQE2kVsop5t/mJgCxLvdy
-         1ieg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762438101; x=1763042901;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rUoUyPLZBwrPO0VAdvrN5zRMmv9EC+Pmd/AMpovYPJo=;
-        b=UmswWToqeDE03QDa2hjgIUvrnrh3I6VxzuzX2JbSrMWborkquiPyWkiaqBSOqW9bUy
-         uHF44PKe/rPEsRXYXdC2BfvmKcW/AJzhn6yPeE3RNwvun6E/wyBc7nwnwk5jldYZDZNQ
-         meAjdrdGbqLqWNU97ioD0JGiFB1zxOKBhkIsZf0PAc5Hy8gJNLqfcEdjZSaI1CU9FSpd
-         TNryDBHLqL/r2gmlPqd+FYG43UDBnEbs0WZuIGUuE0yUp79Pq3mqoyIDr1L8AYrXUNth
-         QAoRDSR6xSK5E8wWnZ1Xj+iOjCSiRBEKTTY0T1aOuNgUZ2zJ0kChsnBUyiw/0a0oq45k
-         4kbA==
-X-Forwarded-Encrypted: i=1; AJvYcCXlAuBMR6LhqIDbHhBYU2/XEHb7hKSIiG+mcSMlNHSivlCzer9JNMnYqqVz5q8TSRC2j3A=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/IjYt3fnw55Wm7kKvOr0WdpSADuAzElcG8BcAkldlNAh9AIQa
-	sFX8+KtmqhnUgYX7pL6b1PqpQtBU1RGJ+HNNWIVh/tiJvwyxHup5kq8T
-X-Gm-Gg: ASbGncsea0EyXakdHJL2cXTUU+v3MfOi4+L+CQ/GdVqVyzhgG+hrcCSBghzVJuOz/Ld
-	MYRQGoFpKko81lmfkGhvKhiFuanVOAl0usQB8MYoDS1yQBy+kZiVpQ/FnO0ghPUfdr5I1h2Z7Zw
-	ao7Cno+Mn+MYdRGNrzYndqInWFgIq+4U5Dk3rHuO7+xZkqdOg6Sdn9KjXkbeD5mRm9mndSVzlQ2
-	k7MazCWyzcUFvXtiG/UJfYJ0MrS2g1/ESmSL08eu2xLSY5I25L5tOSAGtAc/153Yw6/b2W4KipR
-	ChjqtUS1n7zvzueSB9vyZx0xtiiVq0g+vDWiq2A0LGv1fk1L4XdNUf8uJXaJFzoEBk/I2MJyrkL
-	6+imvZzFNWzl82+9eNb40eA55eP5g2tJZ3ui+THuHl8rmNbHacsNcusaANxWKQkr9msb0w46UBX
-	vNNhVHK6asBNS+shIaVI1RFJGVkvbm
-X-Google-Smtp-Source: AGHT+IFXGYBhdon9MZDpbhD9kqQpgBbjDjBTCOrUaR2MBwmt1xyvDiFVsl/pGTVmK6h/gMPh7OgjQw==
-X-Received: by 2002:a05:690c:888:b0:77f:952b:951d with SMTP id 00721157ae682-786a41acb5amr73865447b3.34.1762438100971;
-        Thu, 06 Nov 2025 06:08:20 -0800 (PST)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:81d7:5975:fbe7:7159])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-787b13df6d5sm8451677b3.14.2025.11.06.06.08.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Nov 2025 06:08:20 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bDCz8h8U";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="srq7H2v1"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id BF482EC00B8;
+	Thu,  6 Nov 2025 09:33:46 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 06 Nov 2025 09:33:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1762439626; x=1762526026; bh=coBladRQWn
+	hFd/u0vzHd1eOfKIek2isGI1DryoetEvQ=; b=bDCz8h8Us2ZMgCpU6lgMKc2YZV
+	WBPEBzomZnbJu1Etkj60F74STVnPZfx8fDbNRL3E2x8rR6zt4CUPz4y6Z75JR5as
+	UlLnBxCbvLmyL5Uzov8qnumsLPYeKd9n9T+/KfKqGwrfkpAFggSM7GQhRHXB1QNO
+	7HOYxHPWsdKtXJoltfepRtHwQrd32F8qtruQpa5qQWC8rpFgM9ayXiodfVvNnRrI
+	en26Jw5wZ8so7oXz1BtgCfTN8UyUDiV2PkGRLu5pAgym8U6BYwLy2cxLAgZGLe/l
+	LzCouTMfgKPuR5UVKN4jv8wWaDW7Qr7/Zv4zJLA1mdCJqpncfHmwv+1pMS6Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762439626; x=1762526026; bh=coBladRQWnhFd/u0vzHd1eOfKIek2isGI1D
+	ryoetEvQ=; b=srq7H2v1KKX/Qej+88xprRVdChQP4jJEqZjU2oyawThIpKw9zMk
+	Br1qvsb91JMuPljN/HfxWVW1/AF4si1iWCkAX4eMKN3+LeqgqxFxPEhIC4Z1ut3q
+	eQnWn1sZOOY6Mwe23ehb8/3V/nLBB/JPI70Z5XKRH8ZQ1xrkc12Wh/V3i8/X095i
+	V/VzYZK8/k9o2/Yaw0f0w0JL3syoXeOM+n678TynhnOcZG3V5gFvuQN8RfXypU23
+	oF9NR1KLVIyd6IsmGe3icpbOj10nDpiFQql2sFllJF5JjTxD9Fvr4MRft2KuCMYO
+	WiAgJSkz46ZpcHwqYTbqI7LPz0jfv3HyIXg==
+X-ME-Sender: <xms:yrEMadg5P3K_WnzOw3pWf04LECzVSYGA4ROPlXWr0opndxNl9rmbbw>
+    <xme:yrEMaZeo1cdtm6M70POdUmWYPNkb6ZC7BnCHK0dl1ooCJEmVCiz2AkaeL_cGwOX1x
+    gGrb5TdljCWnTglIluduZsRjTFgFnoRC_4PIYsOiByJE2UfqxbZnw>
+X-ME-Received: <xmr:yrEMaad6Ip2eFqoyzcWixfY06w3RaLjsYE1lBCO3JgU6KAzoMjmd76n1cB2648c6EqaRcMX4YBwzA97vh0VmXQvzjSZnaf97LGr2>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeejtdefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:yrEMab_Gnq7Zg1N8NsqJl4ALCmeKA_i2Z6YtfDHHUxN1O_YMd24aYg>
+    <xmx:yrEMaem0n0SPVhIo-Uy0S9QOA9wGZe-84HrRyBHkVCb-gPb_-BIBdg>
+    <xmx:yrEMaV_e5pO3NldZE8Vsz3ndqvwhp00xXZXJs6WTRyTLOCbnL0PHLA>
+    <xmx:yrEMaUkSfTQwwkGvzaPi4nD2HYrmJ-QQ-59Uzgq0PUAj51XR2ig-lQ>
+    <xmx:yrEMaRku3EGvpZoFyf8T_BMdpnuOdEE-VwBufFRn89jrtfBQo4RyZuIk>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Nov 2025 09:33:45 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] object: fix performance regression when peeling tags
+In-Reply-To: <20251106-b4-pks-peel-object-performance-regression-v1-1-a386147750b0@pks.im>
+	(Patrick Steinhardt's message of "Thu, 06 Nov 2025 09:52:54 +0100")
+References: <20251106-b4-pks-peel-object-performance-regression-v1-1-a386147750b0@pks.im>
+Date: Thu, 06 Nov 2025 06:33:44 -0800
+Message-ID: <xmqqy0ojjkmv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] meson: make GIT_HTML_PATH configurable
-Date: Thu, 6 Nov 2025 09:08:10 -0500
-Message-Id: <0930DCB8-D545-4043-87F9-4359EA5351D9@gmail.com>
-References: <aQxTZNYKKAsmL9Sg@pks.im>
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org,
- Todd Zullinger <tmz@pobox.com>, Junio C Hamano <gitster@pobox.com>
-In-Reply-To: <aQxTZNYKKAsmL9Sg@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Patrick Steinhardt <ps@pks.im> writes:
 
->=20
-> Le 6 nov. 2025 =C3=A0 02:51, Patrick Steinhardt <ps@pks.im> a =C3=A9crit :=
+> Bisecting the issue lands us at 6ec4c0b45b (refs: don't store peeled
+> object IDs for invalid tags, 2025-10-23). The gist of the commit is that
+> we may end up storing peeled objects in both reftables and packed-refs
+> for corrupted tags, where the claimed tagged object type is different
+> than the actual tagged object type. This will then cause us to create
+> the `struct object *` with a wrong type, as well, and obviously nothing
+> good comes out of that.
 
->=20
-> =EF=BB=BFOn Tue, Nov 04, 2025 at 08:58:29AM -0500, D. Ben Knoble wrote:
->> Makefile-based builds can configure Git's internal HTML_PATH by defining
->> htmldir, which is useful for packagers that put documentation in
->> different locations. Gentoo, for example, uses version-suffixed
->> directories like ${prefix}/share/doc/git-2.51 and puts the HTML
->> documentation in an 'html' subdirectory of the same.
->>=20
->> Propagate the same configuration knob to Meson-based builds so that
->> "git --html-path" on such systems can be configured to output the
->> correct directory.
->=20
-> Makes sense.
->=20
->> diff --git a/Documentation/meson.build b/Documentation/meson.build
->> index 9d24f2da54..c00c9fe7f4 100644
->> --- a/Documentation/meson.build
->> +++ b/Documentation/meson.build
->=20
-> All of the conversions look sensible to me.
->=20
->> diff --git a/meson.build b/meson.build
->> index 2b763f7c53..1f95a06edb 100644
->> --- a/meson.build
->> +++ b/meson.build
->> @@ -768,13 +768,18 @@ if test_output_directory =3D=3D ''
->>   test_output_directory =3D meson.project_build_root() / 'test-output'
->> endif
->>=20
->> +htmldir =3D get_option('htmldir')
->> +if htmldir =3D=3D ''
->> +  htmldir =3D get_option('datadir') / 'doc/git-doc'
->> +endif
->=20
-> This retains the status quo, good.
->=20
->> diff --git a/meson_options.txt b/meson_options.txt
->> index 143dee9237..13d421c067 100644
->> --- a/meson_options.txt
->> +++ b/meson_options.txt
->> @@ -1,6 +1,8 @@
->> # Configuration for Git installation
->> option('perllibdir', type: 'string', value: '',
->>   description: 'Directory to install perl lib to. Defaults to <datadir>/p=
-erl5')
->> +option('htmldir', type: 'string', value: '',
->> +  description: 'Directory to install HTML docs to. Defaults to <datadir>=
-/doc/git-doc')
->=20
-> Tiny nit: let's keep these options ordered lexicographically.
+So does the flow of the logic, which led to the original "validation
+while recording peeled tags", go like this?
 
-Can do. Shall I send v2, Junio?
+ - It is handy to be able to get peeled object cheaply, let's cache
+   it, because the same tag peels to the same object every time.
 
->=20
-> Other than that the patch looks good to me, thanks!
->=20
-> Patrick
+ - Usually when we see an object we make sure that is what we
+   expect.  Not having to do this validation costs us less, so why
+   not validate when caching peeled object?  It would amortise the
+   cost of validating the peeled object at runtime every time we use
+   it into a one-time cost when we cache.
 
-Thank you!=
+But of course we do not really get rid of the type checking at
+runtime, so we certainly should notice, no?
+
+> Taking a step back though reveals an oddity in the new verification
+> logic: we not only verify the _tagged_ object's type, but we also verify
+> the type of the tag itself. But this isn't really needed, as we wouldn't
+> hit the bug in such a case anyway, as we only hit the issue with corrupt
+> tags claiming an invalid type for the tagged object.
+>
+> The consequence of this is that we now started to look up the target
+> object of every single reference we're about to write, regardless of
+> whether it even is a tag or not. And that is of course quite costly.
+
+;-).
+
+> Fix the issue by only verifying the type of the tagged objects. This
+> means that we of course still have a performance hit for actual tags.
+> But this only happens for writes anyway, and I'd claim it's preferable
+> to not store corrupted data in the refdb than to be fast here. Rename
+> the flag accordingly to clarify that we only verify the tagged object's
+> type.
+
+OK.
+
+Will queue.
