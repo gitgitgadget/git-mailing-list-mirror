@@ -1,66 +1,76 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA51B61FFE
-	for <git@vger.kernel.org>; Thu,  6 Nov 2025 08:39:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FA42A1BB
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 08:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762418373; cv=none; b=iAhl0yqwJrMTkFzUED+Eqi6vmlAQQvJaMX98zD2vS5zxe8M3Z/4P28GPpPILIKHz40/97gLCmfXVHAz1KP27c/dxy0I9Cy0JqDBXWJPRGkNHeUVQYMD5mQEAbSmVwsSKsBESsafnCUpyJKsdn5RKyDNkgv3BnTNkGAzN7hdcnBI=
+	t=1762419192; cv=none; b=sMYBW3sQ1gI5fFF5y8e+LXG2FomKxbJ9h4zxFFJgezGFpu6YARz2eA9wnYW90ROyyWAeBt3KiLMhTgIVG3MR2NJxZV5FIrdokwGV+AHkSdsW+tCPzLD77AV+2B2i+x07iSxN2TOfVbRlBaCicvO3KSlxVJFfsFsyxmol9p7zVCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762418373; c=relaxed/simple;
-	bh=IbJmjhN7Z60W6czOBr/n1M3bmFggAPscCpMt1D8d7u4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
-	 In-Reply-To:References:To:Cc; b=a6aRWxLsMMIvUL+GPqKcSenxAcdYslJGd/Dj9VwUIWG6OriKz/idBevvvuLLVLfBq3i7J1mZasjCeN+a99rWeg+xLOzIFItuxXyRF/tWH63hbVFq162m94F1BlN5z//8zg9ti4BpJuAkDnbrYsKmag97xk2vNC9bXyQ/2AEWu80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NI9DJ3/U; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762419192; c=relaxed/simple;
+	bh=FiMY+H7qV+6pVFxhqzmLBE5npdOoUXzbi2Fqup9KOtY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hB4Jv4eZmv2Ppz5/GlF03dZr/Rwxy2Fi8Eoe5aEnLzgqnKb32bw07RVrP1BbnELwjq32xmCF/cu4sLrunrtIxOSq+5NxBDh2dxP0vIvFh6pjwYBe9bCwgtLPXgbyU9u8I4SnZID/glQQq11gtYPKWT1T7tG7oWFfm+vedlS6gKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bc8W7UEr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ck5a3qoe; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NI9DJ3/U"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-63bea08a326so446417a12.3
-        for <git@vger.kernel.org>; Thu, 06 Nov 2025 00:39:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762418370; x=1763023170; darn=vger.kernel.org;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Eurc3YQ1CKts0U1y06N7ZJCEXtIo3AghpNVt9qI2/dg=;
-        b=NI9DJ3/UZc1DiLxRphWlKjZPnK0OWdbmsIMo+bcntinG8FluQL/vOGkw3/QbPBL0z9
-         9KGvMKwGCm3F0EB1hYkPyOIWcreEsRTQ3oQFPrfJCAEjm8q5ii4h1B1xUU7Nh0eS4zfv
-         GZmoz823bez7DKevvW85lTxT05xam+RWSNr2uqWfe8/otfqNOdOnIXer4lt8lCEAY90o
-         v5NnlpfIxInB432HHVlmyiz7zJ8OTB0J8MvjOYWyGcfiTQeyxlE1/VndkolCbMxnDLdW
-         1dLdiMrrSEjUBFIj0uP6LVQweTKoY9HtOww1Xrbvfscg5I9HNGJXGqJ5lq03w5lTWkpk
-         5BdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762418370; x=1763023170;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Eurc3YQ1CKts0U1y06N7ZJCEXtIo3AghpNVt9qI2/dg=;
-        b=rAhp7wY4yPNHQBgyAjUJAynvIk0uZMZZUQa0N/B99oJe7lBGluq39fOFWs/LMtioLf
-         HYECQ17QwKMYHlaUszUMeP9mKnJAVRHwRpTEIypnkQli2/uuZjIq5IJvk4Tf58KQa1Fh
-         amqOUbxv0S//L1FTB2wXEldseHgdRy+7l70YjGK0Yluwf5G+Tdw2VYyaqmYO8ySfvoxl
-         Y+yBHHjIjUJaf24A9rho53lTQ7fbyXV+gDy3sWSfOR2nhxIBRP+UmI8i/96t1BP1PdcY
-         CeAEeB90zWzhyNIAUENaizgPLHqTrHArsURpWaLmdpsBdHGU0Qqr49br3k93RWPxHP3H
-         aa1g==
-X-Gm-Message-State: AOJu0YwZXMXmE4iExJYD9ljD3VJlzpeLPrcX0chzmmvYzAj4cw8VfPb0
-	JNKvKUXl81wjXHXDc+Nqdsqpjvw7xMerw97PAiJrC3l1RHotRcHs7dtM
-X-Gm-Gg: ASbGncsuJ/5eG6+QdVhQ3D9s/F4yON62aFAPS8F1f1ZMb3N8Cmwd9wXakTqMDUZ7b89
-	uCqVy5cz/+uYry73FO3pDKN+3FvbwO8uOV3vMwmuXGHGzo5kuqHxkbhZn++DrMDt/+918SOkZ94
-	vseBd5zQg8oIc0xN+2h17OWlpK+ZoguUPIEC1Kt0xLBw9PVg0zvJudmhHdSPO6WrSErdYfV6PYD
-	6r5MLrc3eTxJ3z1wp5FYmLLJz9HTq63USJaF4SIYs61zhsV3EMpN399Se5vwhkmHhIPAjgm5Xn4
-	5GWUWoFm+atnSbkOFvFGqxxCTIVh1ucyBjy6gMb42LgFdA5EWnHz7gEYg9bUgqo0nXgGk9+SIzR
-	4b6Tgj5WZKQN6nGtajp22zUFrdyg7IU3NdLxhAMaR9CjmryuaQfE/9llONm6gw/yeLJGzAA7Zvg
-	StMBna+HDiiYMp1lk=
-X-Google-Smtp-Source: AGHT+IHAQ+wjFnK8GUFGBr3QnEcsQKznFIWzwiefIgpQtfXJYhJO2EMZAAJ4rFwVx8l888DKNEA9cA==
-X-Received: by 2002:a05:6402:34c2:b0:640:74f5:d9f6 with SMTP id 4fb4d7f45d1cf-64105a5c79fmr5706397a12.25.1762418369866;
-        Thu, 06 Nov 2025 00:39:29 -0800 (PST)
-Received: from [127.0.0.2] ([2a01:599:107:48a1:df96:bd1c:78ca:785c])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6411f85f8c7sm1364781a12.27.2025.11.06.00.39.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Nov 2025 00:39:29 -0800 (PST)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Thu, 06 Nov 2025 09:39:25 +0100
-Subject: [PATCH v2] fetch: fix non-conflicting tags not being committed
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bc8W7UEr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ck5a3qoe"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3AA7214001BB
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 03:53:08 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Thu, 06 Nov 2025 03:53:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1762419188; x=1762505588; bh=cGkpf99Tpy
+	PwvBDSOFQLxd7zScUSpEsEXN36XRD2DE4=; b=bc8W7UEr9fFRaymHO+eWXxWd0X
+	Y8THacDs761KktTGGql15UUAnFNLQeIIj9kltf6m7QNz5Y3Wr+bQMz51R12zs063
+	IXpELIcJxuRsYDUJj4LEArKJxdrrwJPwTSXLnKJTM3m0zw63LJmvbA2rkXkmvtGS
+	kAfxZ4hYYHvL5Nj/LFejZdGNZD80hp8Ebg7oLjJodB0Oz1NqBD5pKOKRmd/A4Hj4
+	pgnzTgcHgCR2JldDAcIFrHcmuWUVwMmgOjpv9HwpSIanmwL002KXIilPHZqasjBr
+	qW6KieKTJZRzVPq8eNW94x9utSBQ4sEFWDOJBN3vatE7Vp9sHWCj1hCQcHQQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1762419188; x=1762505588; bh=cGkpf99TpyPwvBDSOFQLxd7zScUS
+	pEsEXN36XRD2DE4=; b=ck5a3qoedAzF6MvWLnefGRFbyWb6IQVZNwXS/hfg08Bv
+	4sMaHifVImrAb8hLEdFRb9YJB66U6T5lt0NJ+008LZXLuI1TYfU75sP2RvHDP/ES
+	LgAvelZ176oeOPGZkoXkC8J1yBQUYatKkbXB5ERizAj03dFbG6EsbjkqfCtOUcbF
+	XFUNuE6Jno2b2xwewkY396uqDIkWHggeF5vy0npYct67bQQiVahVXxyyC1iuL8NP
+	f6jVk5bDOvEwvD8cndER/9hYgQAZ2CXhNA4p8fVZ4nZKCkTFjA0DKf7s5rQsgPQ2
+	gL9aPiQ1L3UJvVIToJPkQp+GcVoDDXMsXHOWrZ2sKg==
+X-ME-Sender: <xms:9GEMaU_Iuquwwo0xlMl4vTFOMO58YHCVRt1P_Q8T_CpXyWtwdmAyaA>
+    <xme:9GEMaTpY8r_jsvcH_BjAj_UlM2z4_UKZuZtqT3j6Rn45yhbBK15R03vfjLffDk21O
+    Rk-mb_YOMml4CzEwe4tLHCw92BaNBOO6Hb_1O-g1neFEVW8fwiY2RU>
+X-ME-Received: <xmr:9GEMafoXDpOj95qY9rC5Y57NtBhZQzNC5_DgQHNRyY_Wt4LQgMtv55w3_q2ZoEVrtOyr8yB1Z90RNu7e-2LEaG0zLf8nIaEWcHgyq-K7xUyJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeeifeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkvfevofesthekredtre
+    dtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnheptdegvdffudfgvdeigeduueegieelvdffgeduve
+    ekledvgefggefhfeevleffleevnecuffhomhgrihhnpegsvghntghhvghrrdguvghvpdhv
+    rghlvddrthgrrhhgvghtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:9GEMaZlSeJUC51zjT6Pr3X9Qu2e3sArqZXLSZC7R_-53oynwcJm-sw>
+    <xmx:9GEMaZGWoTL9p9c-uAayJMn8o-HF_ZSpSt7j6Ao23E1yKPPWQSXFzw>
+    <xmx:9GEMaapOagl3w-GIsb1-ITuXtfHrhbQD0fFD7nsVa4wQUZw_VxkmcA>
+    <xmx:9GEMad5Dp4Sd9poQDm65kdw32gt60besxt3t4e4BIlx0uMExrRqyJw>
+    <xmx:9GEMaUt6ehOz8uB7-sMA_8IvRZRGFVvn0684zyOCyrcMmEFDhTBaUERQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Thu, 6 Nov 2025 03:53:07 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 53b77bea (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	for <git@vger.kernel.org>;
+	Thu, 6 Nov 2025 08:53:05 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Thu, 06 Nov 2025 09:52:54 +0100
+Subject: [PATCH] object: fix performance regression when peeling tags
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,265 +78,188 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251106-fix-tags-not-fetching-v2-1-610cb4b0e7c8@gmail.com>
-X-B4-Tracking: v=1; b=H4sIALxeDGkC/4WNQQrCMBBFr1Jm7UgnrRVceY/SRUwn6YBNJAlFK
- bm7sRdw+T7/v79D4iic4NbsEHmTJMFXUKcGzKK9Y5S5MqhWXYjaDq28MWuX0IeMlrNZxDtsLQ2
- KdH/t5x7q9hW5Fg/vOFVeJOUQP8fNRr/0n3EjJOShM5ofgyHq7m7V8jybsMJUSvkCAn0hyLoAA
- AA=
-X-Change-ID: 20251103-fix-tags-not-fetching-0f1621a474d4
-In-Reply-To: <20251103-fix-tags-not-fetching-v1-1-e63caeb6c113@gmail.com>
-References: <20251103-fix-tags-not-fetching-v1-1-e63caeb6c113@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20251106-b4-pks-peel-object-performance-regression-v1-1-a386147750b0@pks.im>
+X-B4-Tracking: v=1; b=H4sIAOVhDGkC/x2NSQrDMBAEv2LmnAHJ2Nm+EnzQ0naURRIzIQSM/
+ x4lt6pL1UoKSVA6dysJ3klTyU3srqNwdXkBp9icetOP1po9+4HrXbkCDy7+hvBqLHORp8sBLFg
+ E+qvwwdjhGP0Y3QnUelUwp8//dZm27QsinpFjewAAAA==
+X-Change-ID: 20251106-b4-pks-peel-object-performance-regression-70148db5da9e
 To: git@vger.kernel.org
-Cc: jltobler@gmail.com, sunshine@sunshineco.com, 
- David Bohman <debohman@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7537; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=IbJmjhN7Z60W6czOBr/n1M3bmFggAPscCpMt1D8d7u4=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGkMXsBKXBzSgxio4of+mSAtphe1oIWuHdJYR
- ZlRz4CPkAj6KYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpDF7AAAoJED7VnySO
- Rox/uqcMAKOhgatr/iMxB9MskWCldGJfwb/nCYWEyEtl90GYgneScotMq8sIAr9baXHdW61fuWL
- 47AnFxXN5/mLGrMtTPc0EAEzbyFD0Jsgb9nRjwU/d6ruA2hLRXi8qauHU0HNfaBoVR4Rf2Q2o3D
- XMDfCeRebm9DY4VCEHUaQKjdDpe0pfitmTI+EnkrN0A781zEDAV1Bzoe1ua95jwPPca3Q8sGmPK
- LYGV52PJqUP+VuitVNCwIZ4PtZo/du4MIta+xdJ4nzDiWeWeQTvmDFLqCKAtqekFfjRE2nHLnG7
- snEmSy0uKsXYeK7ZwUM6j0E+PC7cEmtAeseUZ7Gm+J6FUAmERLeZ5fUm6n+RjX0rqnAgp3CJvjq
- evIaJHEDWulenAL0lpFXKtWzJOOEjupDfI6REp3KrjGeDf6Wc3eS80XVhvd8JOKE/reTgyFsTbl
- oM2JR0IthB4y4WynrQSgg0Jm/c9tZyGxvMNbLzRvP6uqT9686/RNeOokJgj8WYFQLcy/IL7YUM7
- oU=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Cc: 
+X-Mailer: b4 0.14.3
 
-The commit 0e358de64a (fetch: use batched reference updates, 2025-05-19)
-updated the 'git-fetch(1)' command to use batched updates. This batches
-updates to gain performance improvements. When fetching references, each
-update is added to the transaction. Finally, when committing, individual
-updates are allowed to fail with reason, while the transaction itself
-succeeds.
+Our Bencher dashboards [1] have recently alerted us about a bunch of
+performance regressions when writing references, specifically with the
+reftable backend. There is a 3x regression when writing many refs with
+preexisting refs in the reftable format, and a 10x regression when
+migrating refs between backends in either of the formats.
 
-One scenario which was missed here, was fetching tags. When fetching
-conflicting tags, the `fetch_and_consume_refs()` function returns '1',
-which skipped committing the transaction and directly jumped to the
-cleanup section. This mean that no updates were applied. This also
-extends to backfilling tags when using the now deprecated 'branches/'
-format for remotes.
+Bisecting the issue lands us at 6ec4c0b45b (refs: don't store peeled
+object IDs for invalid tags, 2025-10-23). The gist of the commit is that
+we may end up storing peeled objects in both reftables and packed-refs
+for corrupted tags, where the claimed tagged object type is different
+than the actual tagged object type. This will then cause us to create
+the `struct object *` with a wrong type, as well, and obviously nothing
+good comes out of that.
 
-Fix this by committing the transaction even when we have an error code.
-This ensures other references are applied. Do this by extracting out the
-transaction commit code into a new `commit_ref_transaction()` function
-and using that.
+The fix for this issue was to introduce a new flag to `peel_object()`
+that causes us to verify the tagged object's type before writing it into
+the refdb -- if the tag is corrupt, we skip writing the peeled value.
+To verify whether the peeled value is correct we have to look up the
+object type via the ODB and compare the actual type with the claimed
+type, and that additional object lookup is costly.
 
-Add tests to check for this regression. While here, add a missing
-cleanup from previous test.
+This also explains why we see the regression only when writing refs with
+the reftable backend, but we see the regression with both backends when
+migrating refs:
 
-Reported-by: David Bohman <debohman@gmail.com>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+  - The reftable backend knows to store peeled values in the new table
+    immediately, so it has to try and peel each ref it's about to write
+    to the transaction. So the performance regression is visible for all
+    writes.
+
+  - The files backend only stores peeled values when writing the
+    packed-refs file, so it wouldn't hit the performance regression for
+    normal writes. But on ref migrations we know to write all new values
+    into the packed-refs file immediately, and that's why we see the
+    regression for both backends there.
+
+Taking a step back though reveals an oddity in the new verification
+logic: we not only verify the _tagged_ object's type, but we also verify
+the type of the tag itself. But this isn't really needed, as we wouldn't
+hit the bug in such a case anyway, as we only hit the issue with corrupt
+tags claiming an invalid type for the tagged object.
+
+The consequence of this is that we now started to look up the target
+object of every single reference we're about to write, regardless of
+whether it even is a tag or not. And that is of course quite costly.
+
+Fix the issue by only verifying the type of the tagged objects. This
+means that we of course still have a performance hit for actual tags.
+But this only happens for writes anyway, and I'd claim it's preferable
+to not store corrupted data in the refdb than to be fast here. Rename
+the flag accordingly to clarify that we only verify the tagged object's
+type.
+
+This fix brings performance back to previous levels:
+
+    Benchmark 1: baseline
+      Time (mean ± σ):      46.0 ms ±   0.4 ms    [User: 40.0 ms, System: 5.7 ms]
+      Range (min … max):    45.0 ms …  47.1 ms    54 runs
+
+    Benchmark 2: regression
+      Time (mean ± σ):     140.2 ms ±   1.3 ms    [User: 77.5 ms, System: 60.5 ms]
+      Range (min … max):   138.0 ms … 142.7 ms    20 runs
+
+    Benchmark 3: fix
+      Time (mean ± σ):      46.2 ms ±   0.4 ms    [User: 40.2 ms, System: 5.7 ms]
+      Range (min … max):    45.0 ms …  47.3 ms    55 runs
+
+    Summary
+      update-ref: baseline
+        1.00 ± 0.01 times faster than fix
+        3.05 ± 0.04 times faster than regression
+
+[1]: https://bencher.dev/perf/git/plots
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-This fixes the bug reported by David Bohman [1].
-
-[1]: id:CAB9xhmPcHnB2+i6WeA3doAinv7RAeGs04+n0fHLGToJq=UKUNw@mail.gmail.com
+Patrick
 ---
-Changes in v2:
-- Add a comment to explain the purpose of `commit_ref_transaction()` and
-  how it works.
-- Also extend the same logic towards backfilling tags. While I was able
-  to add a test for the happy path, I couldn't figure out how to test
-  when `backfill_tags()` tags would fail.
-  Tangentially, this flow seems to only be triggered when using the now
-  deprecated 'branches/' remote format.
-- Remove unneeded subshells from the tests.
-- Link to v1: https://patch.msgid.link/20251103-fix-tags-not-fetching-v1-1-e63caeb6c113@gmail.com
+ object.c                |  4 ++--
+ object.h                | 12 ++++++------
+ ref-filter.c            |  2 +-
+ refs/packed-backend.c   |  2 +-
+ refs/reftable-backend.c |  2 +-
+ 5 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/object.c b/object.c
+index e72b0ed436..b08fc7a163 100644
+--- a/object.c
++++ b/object.c
+@@ -214,7 +214,7 @@ enum peel_status peel_object(struct repository *r,
+ {
+ 	struct object *o = lookup_unknown_object(r, name);
+ 
+-	if (o->type == OBJ_NONE || flags & PEEL_OBJECT_VERIFY_OBJECT_TYPE) {
++	if (o->type == OBJ_NONE) {
+ 		int type = odb_read_object_info(r->objects, name, NULL);
+ 		if (type < 0 || !object_as_type(o, type, 0))
+ 			return PEEL_INVALID;
+@@ -228,7 +228,7 @@ enum peel_status peel_object(struct repository *r,
+ 		if (o && o->type == OBJ_TAG && ((struct tag *)o)->tagged) {
+ 			o = ((struct tag *)o)->tagged;
+ 
+-			if (flags & PEEL_OBJECT_VERIFY_OBJECT_TYPE) {
++			if (flags & PEEL_OBJECT_VERIFY_TAGGED_OBJECT_TYPE) {
+ 				int type = odb_read_object_info(r->objects, &o->oid, NULL);
+ 				if (type < 0 || !object_as_type(o, type, 0))
+ 					return PEEL_INVALID;
+diff --git a/object.h b/object.h
+index 1499f63d50..e9baade1e0 100644
+--- a/object.h
++++ b/object.h
+@@ -289,13 +289,13 @@ enum peel_status {
+ 
+ enum peel_object_flags {
+ 	/*
+-	 * Always verify the object type, even in the case where the looked-up
+-	 * object already has an object type. This can be useful when the
+-	 * stored object type may be invalid. One such case is when looking up
+-	 * objects via tags, where we blindly trust the object type declared by
+-	 * the tag.
++	 * Always verify the object type of the tagged object, even in the case
++	 * where the looked-up object already has an object type. This can be
++	 * useful when the tagged object type may be invalid. One such case is
++	 * when looking up objects via tags, where we blindly trust the object
++	 * type declared by the tag.
+ 	 */
+-	PEEL_OBJECT_VERIFY_OBJECT_TYPE = (1 << 0),
++	PEEL_OBJECT_VERIFY_TAGGED_OBJECT_TYPE = (1 << 0),
+ };
+ 
+ /*
+diff --git a/ref-filter.c b/ref-filter.c
+index d8667c569a..d7454269e8 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2654,7 +2654,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+ 		if (!is_null_oid(&ref->peeled_oid)) {
+ 			oidcpy(&oi_deref.oid, &ref->peeled_oid);
+ 		} else if (!peel_object(the_repository, &oi.oid, &oi_deref.oid,
+-					PEEL_OBJECT_VERIFY_OBJECT_TYPE)) {
++					PEEL_OBJECT_VERIFY_TAGGED_OBJECT_TYPE)) {
+ 			/* We managed to peel the object ourselves. */
+ 		} else {
+ 			die("bad tag");
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 1ab0c50393..5aa615011a 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1528,7 +1528,7 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
+ 		} else {
+ 			struct object_id peeled;
+ 			int peel_error = peel_object(refs->base.repo, &update->new_oid,
+-						     &peeled, PEEL_OBJECT_VERIFY_OBJECT_TYPE);
++						     &peeled, PEEL_OBJECT_VERIFY_TAGGED_OBJECT_TYPE);
+ 
+ 			if (write_packed_entry(out, update->refname,
+ 					       &update->new_oid,
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 6bbfd5618d..1ac1f6156f 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1633,7 +1633,7 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
+ 			ref.update_index = ts;
+ 
+ 			peel_error = peel_object(arg->refs->base.repo, &u->new_oid, &peeled,
+-						 PEEL_OBJECT_VERIFY_OBJECT_TYPE);
++						 PEEL_OBJECT_VERIFY_TAGGED_OBJECT_TYPE);
+ 			if (!peel_error) {
+ 				ref.value_type = REFTABLE_REF_VAL2;
+ 				memcpy(ref.value.val2.target_value, peeled.hash, GIT_MAX_RAWSZ);
+
 ---
- builtin/fetch.c  | 75 +++++++++++++++++++++++++++++++++++---------------------
- t/t5510-fetch.sh | 61 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 108 insertions(+), 28 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index c7ff3480fb..d5aee5af10 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1686,6 +1686,42 @@ static void ref_transaction_rejection_handler(const char *refname,
- 	*data->retcode = 1;
- }
- 
-+/*
-+ * Commit the reference transaction. If it isn't an atomic transaction, handle
-+ * rejected updates as part of using batched updates.
-+ */
-+static int commit_ref_transaction(struct ref_transaction **transaction,
-+				  bool is_atomic, const char *remote_name,
-+				  struct strbuf *err)
-+{
-+	int retcode = ref_transaction_commit(*transaction, err);
-+	if (retcode) {
-+		/*
-+		 * Explicitly handle transaction cleanup to avoid
-+		 * aborting an already closed transaction.
-+		 */
-+		ref_transaction_free(*transaction);
-+		*transaction = NULL;
-+	}
-+
-+	if (*transaction && !is_atomic) {
-+		struct ref_rejection_data data = {
-+			.conflict_msg_shown = 0,
-+			.remote_name = remote_name,
-+			.retcode = &retcode,
-+		};
-+
-+		ref_transaction_for_each_rejected_update(*transaction,
-+							 ref_transaction_rejection_handler,
-+							 &data);
-+
-+		ref_transaction_free(*transaction);
-+		*transaction = NULL;
-+	}
-+
-+	return retcode;
-+}
-+
- static int do_fetch(struct transport *transport,
- 		    struct refspec *rs,
- 		    const struct fetch_config *config)
-@@ -1826,6 +1862,10 @@ static int do_fetch(struct transport *transport,
- 
- 	if (fetch_and_consume_refs(&display_state, transport, transaction, ref_map,
- 				   &fetch_head, config)) {
-+		/* As we're using batched updates, commit any pending updates. */
-+		if (!atomic_fetch)
-+			commit_ref_transaction(&transaction, false,
-+					       transport->remote->name, &err);
- 		retcode = 1;
- 		goto cleanup;
- 	}
-@@ -1848,8 +1888,12 @@ static int do_fetch(struct transport *transport,
- 			 * the transaction and don't commit anything.
- 			 */
- 			if (backfill_tags(&display_state, transport, transaction, tags_ref_map,
--					  &fetch_head, config))
-+					  &fetch_head, config)) {
-+				if (!atomic_fetch)
-+					commit_ref_transaction(&transaction, false,
-+							       transport->remote->name, &err);
- 				retcode = 1;
-+			}
- 		}
- 
- 		free_refs(tags_ref_map);
-@@ -1858,33 +1902,8 @@ static int do_fetch(struct transport *transport,
- 	if (retcode)
- 		goto cleanup;
- 
--	retcode = ref_transaction_commit(transaction, &err);
--	if (retcode) {
--		/*
--		 * Explicitly handle transaction cleanup to avoid
--		 * aborting an already closed transaction.
--		 */
--		ref_transaction_free(transaction);
--		transaction = NULL;
--		goto cleanup;
--	}
--
--	if (!atomic_fetch) {
--		struct ref_rejection_data data = {
--			.retcode = &retcode,
--			.conflict_msg_shown = 0,
--			.remote_name = transport->remote->name,
--		};
--
--		ref_transaction_for_each_rejected_update(transaction,
--							 ref_transaction_rejection_handler,
--							 &data);
--		if (retcode) {
--			ref_transaction_free(transaction);
--			transaction = NULL;
--			goto cleanup;
--		}
--	}
-+	retcode = commit_ref_transaction(&transaction, atomic_fetch,
-+					 transport->remote->name, &err);
- 
- 	commit_fetch_head(&fetch_head);
- 
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index b7059cccaa..9ff656a2bc 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -1552,6 +1552,7 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'D/F conflict on case insensiti
- '
- 
- test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with lock' '
-+	test_when_finished rm -rf base repo &&
- 	(
- 		git init --ref-format=reftable base &&
- 		cd base &&
-@@ -1577,6 +1578,66 @@ test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with loc
- 	)
- '
- 
-+test_expect_success 'fetch --tags fetches existing tags' '
-+	test_when_finished rm -rf base repo &&
-+
-+	git init base &&
-+	git -C base commit --allow-empty -m "empty-commit" &&
-+
-+	git clone --bare base repo &&
-+
-+	git -C base tag tag-1 &&
-+	git -C repo for-each-ref >out &&
-+	test_grep ! "tag-1" out &&
-+	git -C repo fetch --tags &&
-+	git -C repo for-each-ref >out &&
-+	test_grep "tag-1" out
-+'
-+
-+test_expect_success 'fetch --tags fetches non-conflicting tags' '
-+	test_when_finished rm -rf base repo &&
-+
-+	git init base &&
-+	git -C base commit --allow-empty -m "empty-commit" &&
-+	git -C base tag tag-1 &&
-+
-+	git clone --bare base repo &&
-+
-+	git -C base tag tag-2 &&
-+	git -C repo for-each-ref >out &&
-+	test_grep ! "tag-2" out &&
-+
-+	git -C base commit --allow-empty -m "second empty-commit" &&
-+	git -C base tag -f tag-1 &&
-+
-+	test_must_fail git -C repo fetch --tags 2>out &&
-+	test_grep "tag-1  (would clobber existing tag)" out &&
-+	git -C repo for-each-ref >out &&
-+	test_grep "tag-2" out
-+'
-+
-+test_expect_success 'backfill tags with branches remote format' '
-+	test_when_finished rm -rf base repo &&
-+
-+	git init base &&
-+	git -C base commit --allow-empty -m "empty-commit" &&
-+	git -C base tag tag1 &&
-+
-+	git clone --no-tags base repo &&
-+
-+	git -C repo remote remove origin &&
-+	mkdir -p repo/.git/branches &&
-+	echo "$(cd base && pwd)#master" >repo/.git/branches/origin &&
-+
-+	git -C base commit --allow-empty -m "second empty-commit" &&
-+	git -C base tag tag2 &&
-+
-+	git -C repo fetch origin &&
-+	git -C repo for-each-ref refs/tags >out &&
-+	test_grep "tag1" out &&
-+	test_grep "tag2" out
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
-
-
+base-commit: ad5e7227123df84edc0cc82d18c5962cd9983b85
+change-id: 20251106-b4-pks-peel-object-performance-regression-70148db5da9e
 
