@@ -1,66 +1,66 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63876301460
-	for <git@vger.kernel.org>; Thu,  6 Nov 2025 08:22:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA51B61FFE
+	for <git@vger.kernel.org>; Thu,  6 Nov 2025 08:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762417366; cv=none; b=ORpGmEAajI26cvzgWnLim0F9pKfd1SrTCQ1gk4pE2vNWYKIqb7kkLUxhXrMXFx31UDKWOBaTr1x8qqvIXHKOcEJf/S6e9H2cprqp97v1sz8vpl7ePITh/Z1q730YqADusyIWAcpUvIFN/HJXEOx82eOGHl031PrIFHeo9gDiNx0=
+	t=1762418373; cv=none; b=iAhl0yqwJrMTkFzUED+Eqi6vmlAQQvJaMX98zD2vS5zxe8M3Z/4P28GPpPILIKHz40/97gLCmfXVHAz1KP27c/dxy0I9Cy0JqDBXWJPRGkNHeUVQYMD5mQEAbSmVwsSKsBESsafnCUpyJKsdn5RKyDNkgv3BnTNkGAzN7hdcnBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762417366; c=relaxed/simple;
-	bh=QQgPB/uGBOWYGRLo1bGi7Yx2rrewVZyr2ob9SNcvieg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WYKZZcC42mmUbxGF9uii/5a38OuOZK5hX9Hycw1wlg1qONC8NzuFTO66UDsVR2kUHOKVnypVQNaPuQAsKYV1hpKG0Zgcs8+/SS3H/q7yGs6oNIT5XjgOTMiIejTPRdORlEGyB6KpWb0bGpTPuDNic83Dm5QTVjb9rZXjJefRsDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZuOI/8zz; arc=none smtp.client-ip=209.85.218.48
+	s=arc-20240116; t=1762418373; c=relaxed/simple;
+	bh=IbJmjhN7Z60W6czOBr/n1M3bmFggAPscCpMt1D8d7u4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
+	 In-Reply-To:References:To:Cc; b=a6aRWxLsMMIvUL+GPqKcSenxAcdYslJGd/Dj9VwUIWG6OriKz/idBevvvuLLVLfBq3i7J1mZasjCeN+a99rWeg+xLOzIFItuxXyRF/tWH63hbVFq162m94F1BlN5z//8zg9ti4BpJuAkDnbrYsKmag97xk2vNC9bXyQ/2AEWu80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NI9DJ3/U; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZuOI/8zz"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b7042e50899so113944666b.0
-        for <git@vger.kernel.org>; Thu, 06 Nov 2025 00:22:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NI9DJ3/U"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-63bea08a326so446417a12.3
+        for <git@vger.kernel.org>; Thu, 06 Nov 2025 00:39:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762417363; x=1763022163; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+        d=gmail.com; s=20230601; t=1762418370; x=1763023170; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=B0kyJkAfnEaVgKwW4Q6fKIqrx2Vy/zvsXIhFwcmI4I8=;
-        b=ZuOI/8zziBuRtIIplwrfrT8IiQgvYRV5mqKxaWg4ciKVUCznPod/tYBmVkBoOeyubM
-         NtI+rnG2a9XdmOX5suuISVReI45eYlweifLjuTCVIrvDCV3uxisQ11yKwmr0i8fe5w7e
-         SZLaMISnOXW94imuSz6Nvi1RENaFSh3LuPdB5ZNpZQjj9B6cf78MlcMri7NQc2SZqI6o
-         01A6WwdOHIcagv+hPfRnYN2GO2SUaqqSM66iuBL3hv+lnbMhn8klcteYBoxGDEhh0jcG
-         54niFeM4QJUKDFEeNNlXPEyANisWvT/GwFNhcTIZWxD+dqr/LX4+KsxLuMpQnDAM+GMG
-         Ge1g==
+        bh=Eurc3YQ1CKts0U1y06N7ZJCEXtIo3AghpNVt9qI2/dg=;
+        b=NI9DJ3/UZc1DiLxRphWlKjZPnK0OWdbmsIMo+bcntinG8FluQL/vOGkw3/QbPBL0z9
+         9KGvMKwGCm3F0EB1hYkPyOIWcreEsRTQ3oQFPrfJCAEjm8q5ii4h1B1xUU7Nh0eS4zfv
+         GZmoz823bez7DKevvW85lTxT05xam+RWSNr2uqWfe8/otfqNOdOnIXer4lt8lCEAY90o
+         v5NnlpfIxInB432HHVlmyiz7zJ8OTB0J8MvjOYWyGcfiTQeyxlE1/VndkolCbMxnDLdW
+         1dLdiMrrSEjUBFIj0uP6LVQweTKoY9HtOww1Xrbvfscg5I9HNGJXGqJ5lq03w5lTWkpk
+         5BdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762417363; x=1763022163;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+        d=1e100.net; s=20230601; t=1762418370; x=1763023170;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=B0kyJkAfnEaVgKwW4Q6fKIqrx2Vy/zvsXIhFwcmI4I8=;
-        b=Uc5dFVkdux6FaIIRtOf4HISzkx7DYwtLSMPyOhqVwU9T+JqiCm0l4kajZnpmtrYqm1
-         3TiSQaOYutiI1zihL716Wy7o+QqiQQu7Sm/O78ynlFxYtoQSAuP1CR64WAaIty7lAqQ8
-         A6LAyp3BAzxMCr6B8rEz7IaFOO9wPHl2bjQENvx7lPz+smVNcLOHhJt+gZCyj2WeQMzy
-         O44BPONxhWw3MG330sQlb6rciUWhNTWpWIlpaNgOBXrG024bhRWIcKuA2mgoQPFB2r6X
-         id+w6e445FUCin7lJ/H4SFFaU6wHb0oRydTDuWqN/59tiOZU0IK4IuoeJ98DAo0C2whM
-         PiTg==
-X-Gm-Message-State: AOJu0YzdeaIva55rFeSirenZW4SU/D5V0d0zUTKYvRIFhWPOItOb/dxk
-	h5Lvu9GhaCKF8z6i4EbBRN7kYPYObCEu+j6bREslxLnpqF2JPtRgNKy5
-X-Gm-Gg: ASbGncuyzCkxeJ1LKyxnQ47LQ+2Oe5M7pGQJx4Z42E/029+SbB3st/O1k74EJ9ygvXW
-	tKxCYV6b4eTsIJ29UwoYb8UXUXLJ3hvTYOX4GKWhcomwDsQ/uPm08O0Pn2fugJFPbIO78F8dKza
-	+8wXLceKwBSxAr1w+QmPWe444W20gjzNqw8ZnD82fy7Lu0A2j82vty+tswXjGZEUiBqjQeDbT9J
-	Az5OKC7ZBiG9Lt2yfXKVSiQJYEZWpD8RP5r5kahtYxYJgA+SL31G4UobCA13liyDsm8Dq8ELdS1
-	I0GhsDLskIq1RHX5/bYbz4fUNr7WVTMIkQQBYSKrXoHjgG11JbUBdVGvtlNQUv6idi/0PRZI8Ll
-	2d1O0xU/sthaLxEflu/GB3APGmSDXddTw1nEB6WUbAzfJr5ePW2EhaYr6W+UawPN9nm0Csf2jdX
-	NTojNWjnNBkJEayVM=
-X-Google-Smtp-Source: AGHT+IEOL5+UoNQdVbgt3SsmmnlMpif7mGD+55lg3dE9R4wrLwlK5KEz6zKE+4ekNI7cJL9ncpZKwQ==
-X-Received: by 2002:a17:906:6a11:b0:b72:6306:bf8a with SMTP id a640c23a62f3a-b72655adf63mr671883066b.54.1762417362423;
-        Thu, 06 Nov 2025 00:22:42 -0800 (PST)
+        bh=Eurc3YQ1CKts0U1y06N7ZJCEXtIo3AghpNVt9qI2/dg=;
+        b=rAhp7wY4yPNHQBgyAjUJAynvIk0uZMZZUQa0N/B99oJe7lBGluq39fOFWs/LMtioLf
+         HYECQ17QwKMYHlaUszUMeP9mKnJAVRHwRpTEIypnkQli2/uuZjIq5IJvk4Tf58KQa1Fh
+         amqOUbxv0S//L1FTB2wXEldseHgdRy+7l70YjGK0Yluwf5G+Tdw2VYyaqmYO8ySfvoxl
+         Y+yBHHjIjUJaf24A9rho53lTQ7fbyXV+gDy3sWSfOR2nhxIBRP+UmI8i/96t1BP1PdcY
+         CeAEeB90zWzhyNIAUENaizgPLHqTrHArsURpWaLmdpsBdHGU0Qqr49br3k93RWPxHP3H
+         aa1g==
+X-Gm-Message-State: AOJu0YwZXMXmE4iExJYD9ljD3VJlzpeLPrcX0chzmmvYzAj4cw8VfPb0
+	JNKvKUXl81wjXHXDc+Nqdsqpjvw7xMerw97PAiJrC3l1RHotRcHs7dtM
+X-Gm-Gg: ASbGncsuJ/5eG6+QdVhQ3D9s/F4yON62aFAPS8F1f1ZMb3N8Cmwd9wXakTqMDUZ7b89
+	uCqVy5cz/+uYry73FO3pDKN+3FvbwO8uOV3vMwmuXGHGzo5kuqHxkbhZn++DrMDt/+918SOkZ94
+	vseBd5zQg8oIc0xN+2h17OWlpK+ZoguUPIEC1Kt0xLBw9PVg0zvJudmhHdSPO6WrSErdYfV6PYD
+	6r5MLrc3eTxJ3z1wp5FYmLLJz9HTq63USJaF4SIYs61zhsV3EMpN399Se5vwhkmHhIPAjgm5Xn4
+	5GWUWoFm+atnSbkOFvFGqxxCTIVh1ucyBjy6gMb42LgFdA5EWnHz7gEYg9bUgqo0nXgGk9+SIzR
+	4b6Tgj5WZKQN6nGtajp22zUFrdyg7IU3NdLxhAMaR9CjmryuaQfE/9llONm6gw/yeLJGzAA7Zvg
+	StMBna+HDiiYMp1lk=
+X-Google-Smtp-Source: AGHT+IHAQ+wjFnK8GUFGBr3QnEcsQKznFIWzwiefIgpQtfXJYhJO2EMZAAJ4rFwVx8l888DKNEA9cA==
+X-Received: by 2002:a05:6402:34c2:b0:640:74f5:d9f6 with SMTP id 4fb4d7f45d1cf-64105a5c79fmr5706397a12.25.1762418369866;
+        Thu, 06 Nov 2025 00:39:29 -0800 (PST)
 Received: from [127.0.0.2] ([2a01:599:107:48a1:df96:bd1c:78ca:785c])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b72893360f6sm160577566b.10.2025.11.06.00.22.41
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6411f85f8c7sm1364781a12.27.2025.11.06.00.39.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Nov 2025 00:22:42 -0800 (PST)
+        Thu, 06 Nov 2025 00:39:29 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Thu, 06 Nov 2025 09:22:34 +0100
-Subject: [PATCH v3 5/5] maintenance: add 'is-needed' subcommand
+Date: Thu, 06 Nov 2025 09:39:25 +0100
+Subject: [PATCH v2] fetch: fix non-conflicting tags not being committed
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,349 +69,264 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-5-d611a2a95cf5@gmail.com>
-References: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-0-d611a2a95cf5@gmail.com>
-In-Reply-To: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-0-d611a2a95cf5@gmail.com>
+Message-Id: <20251106-fix-tags-not-fetching-v2-1-610cb4b0e7c8@gmail.com>
+X-B4-Tracking: v=1; b=H4sIALxeDGkC/4WNQQrCMBBFr1Jm7UgnrRVceY/SRUwn6YBNJAlFK
+ bm7sRdw+T7/v79D4iic4NbsEHmTJMFXUKcGzKK9Y5S5MqhWXYjaDq28MWuX0IeMlrNZxDtsLQ2
+ KdH/t5x7q9hW5Fg/vOFVeJOUQP8fNRr/0n3EjJOShM5ofgyHq7m7V8jybsMJUSvkCAn0hyLoAA
+ AA=
+X-Change-ID: 20251103-fix-tags-not-fetching-0f1621a474d4
+In-Reply-To: <20251103-fix-tags-not-fetching-v1-1-e63caeb6c113@gmail.com>
+References: <20251103-fix-tags-not-fetching-v1-1-e63caeb6c113@gmail.com>
 To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, jltobler@gmail.com, 
- gitster@pobox.com
+Cc: jltobler@gmail.com, sunshine@sunshineco.com, 
+ David Bohman <debohman@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=14580;
- i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=QQgPB/uGBOWYGRLo1bGi7Yx2rrewVZyr2ob9SNcvieg=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGkMWsjGjrGHyuajouCFn1BQu4kMkOgN1Pu+6
- iWPreaJ4+foeYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpDFrIAAoJED7VnySO
- Rox/p5AL/0U8gPWnan6oiRz/SjZMFCIUJsdg+fX3CUgSU82q8YElrzsPDOv8CQUlTG6qb1tV2rX
- nDpM1MpoPouFttC89R6+MoRpSGTRKYMYtt48rXwhZJBFluvB6D7au6temjKqJ0k4f/XGY5ll+4v
- /ks9W345qwkz0UB/Eu2tBB8JYKW3TU5n7q+ZoXG11MXgVFo2f+GhcjiQvpEZ3e7dbzS5Ff4vtn0
- ejASiQ1+zB2qewhPCvbQJuaKI0uOcbkFum3REsyt9pHzJEy9r6ZA7bZfHABtBwfZUWn+1TSivjP
- WwjxDzHX7xrnQMZ5JIBhSEktF0rJKJfE91SzDhonkpSqT/bVQnCSPfh6WUUxrShnOtLs4MhLGTH
- F4nvHnniQA8uIhIfdZW0EG2AtjCTV8fLkH82XAg+muCPs5gcVr53v3jTfiWRQQyqKTzhBxGkLzI
- 7if1r+U8eQi/+sJQbThEyisXn0Qncl4CMGmhaA9rqWSq3Vb2ypKQiqfHro9p83GW5kO9t7jS2n6
- 9I=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7537; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=IbJmjhN7Z60W6czOBr/n1M3bmFggAPscCpMt1D8d7u4=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGkMXsBKXBzSgxio4of+mSAtphe1oIWuHdJYR
+ ZlRz4CPkAj6KYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpDF7AAAoJED7VnySO
+ Rox/uqcMAKOhgatr/iMxB9MskWCldGJfwb/nCYWEyEtl90GYgneScotMq8sIAr9baXHdW61fuWL
+ 47AnFxXN5/mLGrMtTPc0EAEzbyFD0Jsgb9nRjwU/d6ruA2hLRXi8qauHU0HNfaBoVR4Rf2Q2o3D
+ XMDfCeRebm9DY4VCEHUaQKjdDpe0pfitmTI+EnkrN0A781zEDAV1Bzoe1ua95jwPPca3Q8sGmPK
+ LYGV52PJqUP+VuitVNCwIZ4PtZo/du4MIta+xdJ4nzDiWeWeQTvmDFLqCKAtqekFfjRE2nHLnG7
+ snEmSy0uKsXYeK7ZwUM6j0E+PC7cEmtAeseUZ7Gm+J6FUAmERLeZ5fUm6n+RjX0rqnAgp3CJvjq
+ evIaJHEDWulenAL0lpFXKtWzJOOEjupDfI6REp3KrjGeDf6Wc3eS80XVhvd8JOKE/reTgyFsTbl
+ oM2JR0IthB4y4WynrQSgg0Jm/c9tZyGxvMNbLzRvP6uqT9686/RNeOokJgj8WYFQLcy/IL7YUM7
+ oU=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The 'git-maintenance(1)' command provides tooling to run maintenance
-tasks over Git repositories. The 'run' subcommand, as the name suggests,
-runs the maintenance tasks. When used with the '--auto' flag, it uses
-heuristics to determine if the required thresholds are met for running
-said maintenance tasks.
+The commit 0e358de64a (fetch: use batched reference updates, 2025-05-19)
+updated the 'git-fetch(1)' command to use batched updates. This batches
+updates to gain performance improvements. When fetching references, each
+update is added to the transaction. Finally, when committing, individual
+updates are allowed to fail with reason, while the transaction itself
+succeeds.
 
-There is however a lack of insight into these heuristics. Meaning, the
-checks are linked to the execution.
+One scenario which was missed here, was fetching tags. When fetching
+conflicting tags, the `fetch_and_consume_refs()` function returns '1',
+which skipped committing the transaction and directly jumped to the
+cleanup section. This mean that no updates were applied. This also
+extends to backfilling tags when using the now deprecated 'branches/'
+format for remotes.
 
-Add a new 'is-needed' subcommand to 'git-maintenance(1)' which allows
-users to simply check if it is needed to run maintenance without
-performing it.
+Fix this by committing the transaction even when we have an error code.
+This ensures other references are applied. Do this by extracting out the
+transaction commit code into a new `commit_ref_transaction()` function
+and using that.
 
-This subcommand can check if it is needed to run maintenance without
-actually running it. Ideally it should be used with the '--auto' flag,
-which would allow users to check if the thresholds required are met. The
-subcommand also supports the '--task' flag which can be used to check
-specific maintenance tasks.
+Add tests to check for this regression. While here, add a missing
+cleanup from previous test.
 
-While adding the respective tests in 't/t7900-maintenance.sh', remove a
-duplicate of the test: 'worktree-prune task with --auto honors
-maintenance.worktree-prune.auto'.
-
+Reported-by: David Bohman <debohman@gmail.com>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-maintenance.adoc | 13 +++++++++
- builtin/gc.c                       | 55 +++++++++++++++++++++++++++++++++++++-
- t/t7900-maintenance.sh             | 54 ++++++++++++++++++++++++++-----------
- 3 files changed, 105 insertions(+), 17 deletions(-)
+This fixes the bug reported by David Bohman [1].
 
-diff --git a/Documentation/git-maintenance.adoc b/Documentation/git-maintenance.adoc
-index 540b5cf68b..37939510d4 100644
---- a/Documentation/git-maintenance.adoc
-+++ b/Documentation/git-maintenance.adoc
-@@ -12,6 +12,7 @@ SYNOPSIS
- 'git maintenance' run [<options>]
- 'git maintenance' start [--scheduler=<scheduler>]
- 'git maintenance' (stop|register|unregister) [<options>]
-+'git maintenance' is-needed [<options>]
- 
- 
- DESCRIPTION
-@@ -84,6 +85,16 @@ The `unregister` subcommand will report an error if the current repository
- is not already registered. Use the `--force` option to return success even
- when the current repository is not registered.
- 
-+is-needed::
-+    Check whether maintenance needs to be run without actually running it.
-+    Exits with a 0 status code if maintenance needs to be run, 1 otherwise.
-+    Ideally used with the '--auto' flag.
-++
-+If one or more `--task` options	are specified, then those tasks are checked
-+in that order. Otherwise, the tasks are determined by which
-+`maintenance.<task>.enabled` config options are true. By default, only
-+`maintenance.gc.enabled` is true.
-+
- TASKS
- -----
- 
-@@ -183,6 +194,8 @@ OPTIONS
- 	in the `gc.auto` config setting, or when the number of pack-files
- 	exceeds the `gc.autoPackLimit` config setting. Not compatible with
- 	the `--schedule` option.
-+	When combined with the `is-needed` subcommand, check if the required
-+	thresholds are met without actually running maintenance.
- 
- --schedule::
- 	When combined with the `run` subcommand, run maintenance tasks
-diff --git a/builtin/gc.c b/builtin/gc.c
-index c3e7a84ec2..e5ba2a2e72 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -3253,7 +3253,59 @@ static int maintenance_stop(int argc, const char **argv, const char *prefix,
- 	return update_background_schedule(NULL, 0);
+[1]: id:CAB9xhmPcHnB2+i6WeA3doAinv7RAeGs04+n0fHLGToJq=UKUNw@mail.gmail.com
+---
+Changes in v2:
+- Add a comment to explain the purpose of `commit_ref_transaction()` and
+  how it works.
+- Also extend the same logic towards backfilling tags. While I was able
+  to add a test for the happy path, I couldn't figure out how to test
+  when `backfill_tags()` tags would fail.
+  Tangentially, this flow seems to only be triggered when using the now
+  deprecated 'branches/' remote format.
+- Remove unneeded subshells from the tests.
+- Link to v1: https://patch.msgid.link/20251103-fix-tags-not-fetching-v1-1-e63caeb6c113@gmail.com
+---
+ builtin/fetch.c  | 75 +++++++++++++++++++++++++++++++++++---------------------
+ t/t5510-fetch.sh | 61 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 108 insertions(+), 28 deletions(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index c7ff3480fb..d5aee5af10 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1686,6 +1686,42 @@ static void ref_transaction_rejection_handler(const char *refname,
+ 	*data->retcode = 1;
  }
  
--static const char * const builtin_maintenance_usage[] = {
-+static const char *const builtin_maintenance_is_needed_usage[] = {
-+	"git maintenance is-needed [--task=<task>] [--schedule]",
-+	NULL
-+};
-+
-+static int maintenance_is_needed(int argc, const char **argv, const char *prefix,
-+				 struct repository *repo UNUSED)
++/*
++ * Commit the reference transaction. If it isn't an atomic transaction, handle
++ * rejected updates as part of using batched updates.
++ */
++static int commit_ref_transaction(struct ref_transaction **transaction,
++				  bool is_atomic, const char *remote_name,
++				  struct strbuf *err)
 +{
-+	struct maintenance_run_opts opts = MAINTENANCE_RUN_OPTS_INIT;
-+	struct string_list selected_tasks = STRING_LIST_INIT_DUP;
-+	struct gc_config cfg = GC_CONFIG_INIT;
-+	struct option options[] = {
-+		OPT_BOOL(0, "auto", &opts.auto_flag,
-+			 N_("run tasks based on the state of the repository")),
-+		OPT_CALLBACK_F(0, "task", &selected_tasks, N_("task"),
-+			       N_("check a specific task"),
-+			       PARSE_OPT_NONEG, task_option_parse),
-+		OPT_END()
-+	};
-+	bool is_needed = false;
-+
-+	argc = parse_options(argc, argv, prefix, options,
-+			     builtin_maintenance_is_needed_usage,
-+			     PARSE_OPT_STOP_AT_NON_OPTION);
-+	if (argc)
-+		usage_with_options(builtin_maintenance_is_needed_usage, options);
-+
-+	gc_config(&cfg);
-+	initialize_task_config(&opts, &selected_tasks);
-+
-+	if (opts.auto_flag) {
-+		for (size_t i = 0; i < opts.tasks_nr; i++) {
-+			if (tasks[opts.tasks[i]].auto_condition &&
-+			    tasks[opts.tasks[i]].auto_condition(&cfg)) {
-+				is_needed = true;
-+				break;
-+			}
-+		}
-+	} else {
-+		/* When not using --auto, we should always require maintenance. */
-+		is_needed = true;
++	int retcode = ref_transaction_commit(*transaction, err);
++	if (retcode) {
++		/*
++		 * Explicitly handle transaction cleanup to avoid
++		 * aborting an already closed transaction.
++		 */
++		ref_transaction_free(*transaction);
++		*transaction = NULL;
 +	}
 +
-+	string_list_clear(&selected_tasks, 0);
-+	maintenance_run_opts_release(&opts);
-+	gc_config_release(&cfg);
++	if (*transaction && !is_atomic) {
++		struct ref_rejection_data data = {
++			.conflict_msg_shown = 0,
++			.remote_name = remote_name,
++			.retcode = &retcode,
++		};
 +
-+	if (is_needed)
-+		return 0;
-+	return 1;
++		ref_transaction_for_each_rejected_update(*transaction,
++							 ref_transaction_rejection_handler,
++							 &data);
++
++		ref_transaction_free(*transaction);
++		*transaction = NULL;
++	}
++
++	return retcode;
 +}
 +
-+static const char *const builtin_maintenance_usage[] = {
- 	N_("git maintenance <subcommand> [<options>]"),
- 	NULL,
- };
-@@ -3270,6 +3322,7 @@ int cmd_maintenance(int argc,
- 		OPT_SUBCOMMAND("stop", &fn, maintenance_stop),
- 		OPT_SUBCOMMAND("register", &fn, maintenance_register),
- 		OPT_SUBCOMMAND("unregister", &fn, maintenance_unregister),
-+		OPT_SUBCOMMAND("is-needed", &fn, maintenance_is_needed),
- 		OPT_END(),
- 	};
+ static int do_fetch(struct transport *transport,
+ 		    struct refspec *rs,
+ 		    const struct fetch_config *config)
+@@ -1826,6 +1862,10 @@ static int do_fetch(struct transport *transport,
  
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index ddd273d8dc..a17e2091c2 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -49,7 +49,9 @@ test_expect_success 'run [--auto|--quiet]' '
- 		git maintenance run --auto 2>/dev/null &&
- 	GIT_TRACE2_EVENT="$(pwd)/run-no-quiet.txt" \
- 		git maintenance run --no-quiet 2>/dev/null &&
-+	git maintenance is-needed &&
- 	test_subcommand git gc --quiet --no-detach --skip-foreground-tasks <run-no-auto.txt &&
-+	! git maintenance is-needed --auto &&
- 	test_subcommand ! git gc --auto --quiet --no-detach --skip-foreground-tasks <run-auto.txt &&
- 	test_subcommand git gc --no-quiet --no-detach --skip-foreground-tasks <run-no-quiet.txt
- '
-@@ -180,6 +182,11 @@ test_expect_success 'commit-graph auto condition' '
+ 	if (fetch_and_consume_refs(&display_state, transport, transaction, ref_map,
+ 				   &fetch_head, config)) {
++		/* As we're using batched updates, commit any pending updates. */
++		if (!atomic_fetch)
++			commit_ref_transaction(&transaction, false,
++					       transport->remote->name, &err);
+ 		retcode = 1;
+ 		goto cleanup;
+ 	}
+@@ -1848,8 +1888,12 @@ static int do_fetch(struct transport *transport,
+ 			 * the transaction and don't commit anything.
+ 			 */
+ 			if (backfill_tags(&display_state, transport, transaction, tags_ref_map,
+-					  &fetch_head, config))
++					  &fetch_head, config)) {
++				if (!atomic_fetch)
++					commit_ref_transaction(&transaction, false,
++							       transport->remote->name, &err);
+ 				retcode = 1;
++			}
+ 		}
  
- 	test_commit first &&
+ 		free_refs(tags_ref_map);
+@@ -1858,33 +1902,8 @@ static int do_fetch(struct transport *transport,
+ 	if (retcode)
+ 		goto cleanup;
  
-+	! git -c maintenance.commit-graph.auto=0 \
-+		maintenance is-needed --auto --task=commit-graph &&
-+	git -c maintenance.commit-graph.auto=1 \
-+		maintenance is-needed --auto --task=commit-graph &&
-+
- 	GIT_TRACE2_EVENT="$(pwd)/cg-zero-means-no.txt" \
- 		git -c maintenance.commit-graph.auto=0 $COMMAND &&
- 	GIT_TRACE2_EVENT="$(pwd)/cg-one-satisfied.txt" \
-@@ -290,16 +297,23 @@ test_expect_success 'maintenance.loose-objects.auto' '
- 		git -c maintenance.loose-objects.auto=1 maintenance \
- 		run --auto --task=loose-objects 2>/dev/null &&
- 	test_subcommand ! git prune-packed --quiet <trace-lo1.txt &&
-+
- 	printf data-A | git hash-object -t blob --stdin -w &&
-+	! git -c maintenance.loose-objects.auto=2 \
-+		maintenance is-needed --auto --task=loose-objects &&
- 	GIT_TRACE2_EVENT="$(pwd)/trace-loA" \
- 		git -c maintenance.loose-objects.auto=2 \
- 		maintenance run --auto --task=loose-objects 2>/dev/null &&
- 	test_subcommand ! git prune-packed --quiet <trace-loA &&
-+
- 	printf data-B | git hash-object -t blob --stdin -w &&
-+	git -c maintenance.loose-objects.auto=2 \
-+		maintenance is-needed --auto --task=loose-objects &&
- 	GIT_TRACE2_EVENT="$(pwd)/trace-loB" \
- 		git -c maintenance.loose-objects.auto=2 \
- 		maintenance run --auto --task=loose-objects 2>/dev/null &&
- 	test_subcommand git prune-packed --quiet <trace-loB &&
-+
- 	GIT_TRACE2_EVENT="$(pwd)/trace-loC" \
- 		git -c maintenance.loose-objects.auto=2 \
- 		maintenance run --auto --task=loose-objects 2>/dev/null &&
-@@ -421,10 +435,13 @@ run_incremental_repack_and_verify () {
- 	test_commit A &&
- 	git repack -adk &&
- 	git multi-pack-index write &&
-+	! git -c maintenance.incremental-repack.auto=1 \
-+		maintenance is-needed --auto --task=incremental-repack &&
- 	GIT_TRACE2_EVENT="$(pwd)/midx-init.txt" git \
- 		-c maintenance.incremental-repack.auto=1 \
- 		maintenance run --auto --task=incremental-repack 2>/dev/null &&
- 	test_subcommand ! git multi-pack-index write --no-progress <midx-init.txt &&
-+
- 	test_commit B &&
- 	git pack-objects --revs .git/objects/pack/pack <<-\EOF &&
- 	HEAD
-@@ -434,11 +451,14 @@ run_incremental_repack_and_verify () {
- 		-c maintenance.incremental-repack.auto=2 \
- 		maintenance run --auto --task=incremental-repack 2>/dev/null &&
- 	test_subcommand ! git multi-pack-index write --no-progress <trace-A &&
-+
- 	test_commit C &&
- 	git pack-objects --revs .git/objects/pack/pack <<-\EOF &&
- 	HEAD
- 	^HEAD~1
- 	EOF
-+	git -c maintenance.incremental-repack.auto=2 \
-+		maintenance is-needed --auto --task=incremental-repack &&
- 	GIT_TRACE2_EVENT=$(pwd)/trace-B git \
- 		-c maintenance.incremental-repack.auto=2 \
- 		maintenance run --auto --task=incremental-repack 2>/dev/null &&
-@@ -485,9 +505,15 @@ test_expect_success 'reflog-expire task --auto only packs when exceeding limits'
- 	git reflog expire --all --expire=now &&
- 	test_commit reflog-one &&
- 	test_commit reflog-two &&
-+
-+	! git -c maintenance.reflog-expire.auto=3 \
-+		maintenance is-needed --auto --task=reflog-expire &&
- 	GIT_TRACE2_EVENT="$(pwd)/reflog-expire-auto.txt" \
- 		git -c maintenance.reflog-expire.auto=3 maintenance run --auto --task=reflog-expire &&
- 	test_subcommand ! git reflog expire --all <reflog-expire-auto.txt &&
-+
-+	git -c maintenance.reflog-expire.auto=2 \
-+		maintenance is-needed --auto --task=reflog-expire &&
- 	GIT_TRACE2_EVENT="$(pwd)/reflog-expire-auto.txt" \
- 		git -c maintenance.reflog-expire.auto=2 maintenance run --auto --task=reflog-expire &&
- 	test_subcommand git reflog expire --all <reflog-expire-auto.txt
-@@ -514,6 +540,7 @@ test_expect_success 'worktree-prune task --auto only prunes with prunable worktr
- 	test_expect_worktree_prune ! git maintenance run --auto --task=worktree-prune &&
- 	mkdir .git/worktrees &&
- 	: >.git/worktrees/abc &&
-+	git maintenance is-needed --auto --task=worktree-prune &&
- 	test_expect_worktree_prune git maintenance run --auto --task=worktree-prune
- '
- 
-@@ -530,22 +557,7 @@ test_expect_success 'worktree-prune task with --auto honors maintenance.worktree
- 	test_expect_worktree_prune ! git -c maintenance.worktree-prune.auto=0 maintenance run --auto --task=worktree-prune &&
- 	# A positive value should require at least this many prunable worktrees.
- 	test_expect_worktree_prune ! git -c maintenance.worktree-prune.auto=4 maintenance run --auto --task=worktree-prune &&
--	test_expect_worktree_prune git -c maintenance.worktree-prune.auto=3 maintenance run --auto --task=worktree-prune
--'
+-	retcode = ref_transaction_commit(transaction, &err);
+-	if (retcode) {
+-		/*
+-		 * Explicitly handle transaction cleanup to avoid
+-		 * aborting an already closed transaction.
+-		 */
+-		ref_transaction_free(transaction);
+-		transaction = NULL;
+-		goto cleanup;
+-	}
 -
--test_expect_success 'worktree-prune task with --auto honors maintenance.worktree-prune.auto' '
--	# A negative value should always prune.
--	test_expect_worktree_prune git -c maintenance.worktree-prune.auto=-1 maintenance run --auto --task=worktree-prune &&
+-	if (!atomic_fetch) {
+-		struct ref_rejection_data data = {
+-			.retcode = &retcode,
+-			.conflict_msg_shown = 0,
+-			.remote_name = transport->remote->name,
+-		};
 -
--	mkdir .git/worktrees &&
--	: >.git/worktrees/first &&
--	: >.git/worktrees/second &&
--	: >.git/worktrees/third &&
--
--	# Zero should never prune.
--	test_expect_worktree_prune ! git -c maintenance.worktree-prune.auto=0 maintenance run --auto --task=worktree-prune &&
--	# A positive value should require at least this many prunable worktrees.
--	test_expect_worktree_prune ! git -c maintenance.worktree-prune.auto=4 maintenance run --auto --task=worktree-prune &&
-+	git -c maintenance.worktree-prune.auto=3 maintenance is-needed --auto --task=worktree-prune &&
- 	test_expect_worktree_prune git -c maintenance.worktree-prune.auto=3 maintenance run --auto --task=worktree-prune
+-		ref_transaction_for_each_rejected_update(transaction,
+-							 ref_transaction_rejection_handler,
+-							 &data);
+-		if (retcode) {
+-			ref_transaction_free(transaction);
+-			transaction = NULL;
+-			goto cleanup;
+-		}
+-	}
++	retcode = commit_ref_transaction(&transaction, atomic_fetch,
++					 transport->remote->name, &err);
+ 
+ 	commit_fetch_head(&fetch_head);
+ 
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index b7059cccaa..9ff656a2bc 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -1552,6 +1552,7 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'D/F conflict on case insensiti
  '
  
-@@ -554,11 +566,13 @@ test_expect_success 'worktree-prune task honors gc.worktreePruneExpire' '
- 	rm -rf worktree &&
- 
- 	rm -f worktree-prune.txt &&
-+	! git -c gc.worktreePruneExpire=1.week.ago maintenance is-needed --auto --task=worktree-prune &&
- 	GIT_TRACE2_EVENT="$(pwd)/worktree-prune.txt" git -c gc.worktreePruneExpire=1.week.ago maintenance run --auto --task=worktree-prune &&
- 	test_subcommand ! git worktree prune --expire 1.week.ago <worktree-prune.txt &&
- 	test_path_is_dir .git/worktrees/worktree &&
- 
- 	rm -f worktree-prune.txt &&
-+	git -c gc.worktreePruneExpire=now maintenance is-needed --auto --task=worktree-prune &&
- 	GIT_TRACE2_EVENT="$(pwd)/worktree-prune.txt" git -c gc.worktreePruneExpire=now maintenance run --auto --task=worktree-prune &&
- 	test_subcommand git worktree prune --expire now <worktree-prune.txt &&
- 	test_path_is_missing .git/worktrees/worktree
-@@ -583,10 +597,13 @@ test_expect_success 'rerere-gc task without --auto always collects garbage' '
- 
- test_expect_success 'rerere-gc task with --auto only prunes with prunable entries' '
- 	test_when_finished "rm -rf .git/rr-cache" &&
-+	! git maintenance is-needed --auto --task=rerere-gc &&
- 	test_expect_rerere_gc ! git maintenance run --auto --task=rerere-gc &&
- 	mkdir .git/rr-cache &&
-+	! git maintenance is-needed --auto --task=rerere-gc &&
- 	test_expect_rerere_gc ! git maintenance run --auto --task=rerere-gc &&
- 	: >.git/rr-cache/entry &&
-+	git maintenance is-needed --auto --task=rerere-gc &&
- 	test_expect_rerere_gc git maintenance run --auto --task=rerere-gc
+ test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with lock' '
++	test_when_finished rm -rf base repo &&
+ 	(
+ 		git init --ref-format=reftable base &&
+ 		cd base &&
+@@ -1577,6 +1578,66 @@ test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with loc
+ 	)
  '
  
-@@ -594,17 +611,22 @@ test_expect_success 'rerere-gc task with --auto honors maintenance.rerere-gc.aut
- 	test_when_finished "rm -rf .git/rr-cache" &&
- 
- 	# A negative value should always prune.
-+	git -c maintenance.rerere-gc.auto=-1 maintenance is-needed --auto --task=rerere-gc &&
- 	test_expect_rerere_gc git -c maintenance.rerere-gc.auto=-1 maintenance run --auto --task=rerere-gc &&
- 
- 	# A positive value prunes when there is at least one entry.
-+	! git -c maintenance.rerere-gc.auto=9000 maintenance is-needed --auto --task=rerere-gc &&
- 	test_expect_rerere_gc ! git -c maintenance.rerere-gc.auto=9000 maintenance run --auto --task=rerere-gc &&
- 	mkdir .git/rr-cache &&
-+	! git -c maintenance.rerere-gc.auto=9000 maintenance is-needed --auto --task=rerere-gc &&
- 	test_expect_rerere_gc ! git -c maintenance.rerere-gc.auto=9000 maintenance run --auto --task=rerere-gc &&
- 	: >.git/rr-cache/entry-1 &&
-+	git -c maintenance.rerere-gc.auto=9000 maintenance is-needed --auto --task=rerere-gc &&
- 	test_expect_rerere_gc git -c maintenance.rerere-gc.auto=9000 maintenance run --auto --task=rerere-gc &&
- 
- 	# Zero should never prune.
- 	: >.git/rr-cache/entry-1 &&
-+	! git -c maintenance.rerere-gc.auto=0 maintenance is-needed --auto --task=rerere-gc &&
- 	test_expect_rerere_gc ! git -c maintenance.rerere-gc.auto=0 maintenance run --auto --task=rerere-gc
- '
++test_expect_success 'fetch --tags fetches existing tags' '
++	test_when_finished rm -rf base repo &&
++
++	git init base &&
++	git -C base commit --allow-empty -m "empty-commit" &&
++
++	git clone --bare base repo &&
++
++	git -C base tag tag-1 &&
++	git -C repo for-each-ref >out &&
++	test_grep ! "tag-1" out &&
++	git -C repo fetch --tags &&
++	git -C repo for-each-ref >out &&
++	test_grep "tag-1" out
++'
++
++test_expect_success 'fetch --tags fetches non-conflicting tags' '
++	test_when_finished rm -rf base repo &&
++
++	git init base &&
++	git -C base commit --allow-empty -m "empty-commit" &&
++	git -C base tag tag-1 &&
++
++	git clone --bare base repo &&
++
++	git -C base tag tag-2 &&
++	git -C repo for-each-ref >out &&
++	test_grep ! "tag-2" out &&
++
++	git -C base commit --allow-empty -m "second empty-commit" &&
++	git -C base tag -f tag-1 &&
++
++	test_must_fail git -C repo fetch --tags 2>out &&
++	test_grep "tag-1  (would clobber existing tag)" out &&
++	git -C repo for-each-ref >out &&
++	test_grep "tag-2" out
++'
++
++test_expect_success 'backfill tags with branches remote format' '
++	test_when_finished rm -rf base repo &&
++
++	git init base &&
++	git -C base commit --allow-empty -m "empty-commit" &&
++	git -C base tag tag1 &&
++
++	git clone --no-tags base repo &&
++
++	git -C repo remote remove origin &&
++	mkdir -p repo/.git/branches &&
++	echo "$(cd base && pwd)#master" >repo/.git/branches/origin &&
++
++	git -C base commit --allow-empty -m "second empty-commit" &&
++	git -C base tag tag2 &&
++
++	git -C repo fetch origin &&
++	git -C repo for-each-ref refs/tags >out &&
++	test_grep "tag1" out &&
++	test_grep "tag2" out
++'
++
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
  
 
--- 
-2.51.0
+
 
