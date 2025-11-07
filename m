@@ -1,598 +1,901 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF58A21770A
-	for <git@vger.kernel.org>; Fri,  7 Nov 2025 18:56:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820AD3009DA
+	for <git@vger.kernel.org>; Fri,  7 Nov 2025 19:53:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762541781; cv=none; b=FPDHY+dWh4uX9ddGRARh6H/gI3E5UT/ClOt9eDWGzPKqVcXUg3aGj887cqO2mdid6Vl5sZNmn/Qlzcieo4K5fTKSFtY2ApX9WVHaQ53hHcG4QqFwhLbA9ql/5WTiqWEowtV5Arx+W5NWPGuGJRgSKmLYJvnZfkxc6FPKdA7xoM4=
+	t=1762545183; cv=none; b=q5gn9cAomshiVZ1fNYQQWxLND6LoVDKybGX+XttrZgPjU/aZ7/03gS3ZtbILJxuT+H4hIjJjNGyLdhcTSanFG6PTghtv/xHPmY79YZh4sZhgORH2ZfX2viMWITVlU5o6FiuSHA0dQiWl5zYtzQTTn+Wz7hZW5z+UtKt8xGFzZww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762541781; c=relaxed/simple;
-	bh=o1jcZRYrDjMtxJFzXt3Fk0HaQetPekwtr/t1FF5L3ms=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VzyKY2VUwHjD5KUmPuKD91obfvx8FnlRXohCz0NiAaw1n2c0sUzsro8QsvWiFFVdByBXlnwdPmsbHT4Pfk08QiguN3pgyVLcZB1KVk/qSg6A2pF3gMZzmYtmswwwCr5b54a6epdyNXm4QU6W1xMfiMb+XS4zWIlVqThM1W5IQhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hW+aEOW0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o9wZ3fRS; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762545183; c=relaxed/simple;
+	bh=WKtYoZCwi87KaRHfP58FzH+FAfR20tq+YtgNOG9P5xY=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=bHvqXZhRqmSRZ56kKTd1OJel6RZuSSHFNilysM2TQQdYg/GqI8WhuZnpHBfZ0dvKM5tQICklL7TbpbnQfurD7PXP21+pGq8/vs4M9lSEHK6M1loiMdgir0li4Ls0B0qvdUls+CP8QjWSar5PGjlC/fB6T3JHof3CEq+7dYGNAC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rly4XrLo; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hW+aEOW0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o9wZ3fRS"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EF02514000BA;
-	Fri,  7 Nov 2025 13:56:16 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 07 Nov 2025 13:56:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1762541776; x=1762628176; bh=9eyIyOY0A+DO+KR01g03N0pB5LNJZLgF
-	TkTzVQ6wRUk=; b=hW+aEOW0REWVdw5QidezBAQMuhgLg2P+9IegXH2wPuiq23Ia
-	VvHxNUO6SkkVVttrqM1I0LN7lhHwrVCplm2EztYZcBklmEEG6R5EPYgsFNBT7zap
-	xA7FRVsj5e+DRofxm2CogUGyefj/CphXQmkC4RbZI1DRfNnWchi//cTy0SjKy68D
-	esx0hcQLKiWK7pAo7detgvebmuBcQj6Tm0GyKXB4ze/ErU/Gf7x6kl6LG/dvlebw
-	ryODpym+3aPgEuYPnf4zI0Y8R1tbIV4356BT/owtcr23TXlOnjK4eZ5XTrP9fbf5
-	O3irQBstFn/8+/altCkIYoKcos28YFlp1LuTxQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762541776; x=
-	1762628176; bh=9eyIyOY0A+DO+KR01g03N0pB5LNJZLgFTkTzVQ6wRUk=; b=o
-	9wZ3fRS+nkOpnZbEJR00csxrgoibCJv3tej1bpTa6TnHCHfOwgUv0nWJ2bB/j79I
-	S5x5SlQ1a0/ODOEgmzQmEmX5MPbTHdA2UnKCu+9xhUrkr/XFPtlvORCX4hPyB4Ab
-	OrcBpSnsMIu0ZKGoCHrhxvrrSH6Z+xIwTJR6Bm0Ld/ZwZ8RTdllI5+uv/8RtZnlE
-	ooESrlnB381ZUon4n+z4qBDhlz34E3HJEeC5pFaDZtAPYHF9Sfq/xby53KV1uDO1
-	Fw8ZzsE5owfXMeZ1smkM8+WFPvxo4rAbhMRfHaHlYCmE9aT0M5HYwT4sha1QxI0r
-	Q25c3eMyVYZfs7e3L2ZjQ==
-X-ME-Sender: <xms:0EAOaYofCXPYtcA9m0HFRHorwyE65FRTK2Lykm0OXVXHAptvXhbb2A>
-    <xme:0EAOaWFhQp4wIA9-s2hg-CmFaqgsd4kPe0P00-EXNBAnI2JgTlXkIaRIlNpoPQHHA
-    spn8P99dEmZwEfeB20va-nq_C53S2ZOFtdXNdqEmcVqJBdunBSwjQ>
-X-ME-Received: <xmr:0EAOaamkqh3d4Mdu1lyBU1zDNVCXMW0AiuJ0F6sv01FIidtKCeuPqlfDszmJvkROz3ysBxlJJT24_27aTyZkbeukriLxuj91PlM3>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduledtgeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
-    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
-    gidrtghomheqnecuggftrfgrthhtvghrnheptddtvdffleejvefhjeeigfelffefjefgfe
-    egjeelheekffegiedvkedvkeeiledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdp
-    ohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtohhmpdhgihhthhhusgdrtghomhdpgh
-    hithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfe
-    dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehlfihnsehlfihnrdhnvghtpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:0EAOaZl1LjRaP9tjeGpGJ8kFtPc0_MRgY7QxTnEgCtJjKxFEcg0Htg>
-    <xmx:0EAOabsD3Xb_Yk2u7oVmYc5rVLh7IYm-oi3bJTGJjEgWF1bjVgpwyQ>
-    <xmx:0EAOackZatL-Z4blBcWDkUUbcy8K73G1ihaDjZZ6RKTo-hgXYO3gqA>
-    <xmx:0EAOaWuadmvoSwBHkGzIjAGv1d9_kq5GBES92N7Q809l3PRTW4a3BQ>
-    <xmx:0EAOaZRut-lFsx6xJCjgdOgOoifEbHkYxEBnHnrfKa9hb-l1dFpr5cLO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Nov 2025 13:56:16 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Nov 2025, #03; Fri, 7)
-X-master-at: 4badef0c3503dc29059d678abba7fac0f042bc84
-X-next-at: 30608eb744ed5714313f016f8dabdd2811e7cf7c
-Date: Fri, 07 Nov 2025 10:56:14 -0800
-Message-ID: <xmqq8qghfz8x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rly4XrLo"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-7aca3e4f575so976807b3a.2
+        for <git@vger.kernel.org>; Fri, 07 Nov 2025 11:53:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762545179; x=1763149979; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+HpaM7E7cSIyIA+4dH6mRGdQwL+9dIxAr6G5dFU/Dhw=;
+        b=Rly4XrLo38tI9t0+VjAcwukLCG4/uYepoeCIPZtJLOf8frseVIGsd5xAtUgqH1OqU2
+         qLwaZO1beoijCNMJNHJsZv2TbeLyUCBE9fStTuGkX4+qsMd2UFbe7bW/ZNSUieXCBtig
+         uyYB+Tvb8ZkqO+HGZDLm9yepXw5iZGw3pGSz1iKhsDwAG9wlN6xcWu+kG7MfclzNihCb
+         6WNVTdDRCvFpYyJCliab+ggxwyPxhVCl51iG7+GTJwJCVnw+m9RSoZw+Wr9f7SD/J35C
+         v3zEcLVjbYu/tc7UB/o3bCno3IucU5gsgCYaDqEC9YOSLC8OaMsUgj9wN1TnAJJMtk8G
+         Brlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762545179; x=1763149979;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=+HpaM7E7cSIyIA+4dH6mRGdQwL+9dIxAr6G5dFU/Dhw=;
+        b=mgCO6xa/ovthfazKaN6i6aGDCMl8SOKN7TuUK/gR/ZhGXZmHSHAV1arojfP9VTkWCP
+         Nw4qSGCobBjg2lD9/oHlw0ECRPrqQZuaoXu+MA6D+i3lkKQncj1l4LAD9kBKhfn99WNQ
+         /1qdhZSr8TFW7Yc1y4NF0hmE+NGsURfqxc91qK+A8hTqdRbu+jCc7YyTZhqWlVkE3TpK
+         kSdLYmn/zhMLSzjMlIlqr7z46stIWsz5TEBI/23RXaBVVW0XT4uSRyTwUM8vdyZMQw33
+         +P6+Ussq25hqlW/qcqtQKMLg4R9DRGEOkZ/EDK4ee2sE4MMnMNT1G7O+vp9lAPKs/qWu
+         C87Q==
+X-Gm-Message-State: AOJu0YxkBLiuBoA2s6eBj2E4EDy2w9UsQNY8NbNs9IiaAMQgk98WQi8Y
+	SQbeVD3pGQIqhFcodtyO1rRy/mWxGF13v6RFEJ6ofUcozVpeeWHF2HFeljQTddxa
+X-Gm-Gg: ASbGncswNghU6CgPePGIvJnqzXQvIhJT9GMwTSDHMqPdB+IJK69WeU6D8fSyatEFtZA
+	Zn2mQmRiN7q4Bd4bzzOFoFVcx5jVqWpZ/6WAbMlAHDiifxrZxzLVsv5h5BbMZkKN+y46dfPshhI
+	cfTxF3JM8XjOe0dUAFhWqHcGPyZ717e226HkAj2HDY6kjB4IfjKs5K29CWMR6l8YEVFy6MkN2/z
+	XFq1W5qQZrgTNPOC6QIJRkOHYHGPkggQMu1JLVA9bT4F86C0/lWWd09SDKKXKt3DlZTrhO8kXDE
+	dSHVDfDKRswERHQ296NIvEKxSYZKS90FQ5mJ9v5ObmIv0IaoqDutbugfoLq+ug/PFpMqXWGtV63
+	ffXeDTE2P8N8NBNn+Crtb0OKGlKFyxAKI/QyoFsksQJwSF0Sw3YZxv6r/5hw1FN0Fmw0mpUN7iI
+	s72QI=
+X-Google-Smtp-Source: AGHT+IH2Tt7/A5LNCSenNiS9p2iXAGh3ld9geUANDLhoZePD81oemxqGEAF/WksgVB+CrI72YVf6Uw==
+X-Received: by 2002:a05:6a21:3290:b0:341:78fa:1514 with SMTP id adf61e73a8af0-353a375f586mr400119637.34.1762545178795;
+        Fri, 07 Nov 2025 11:52:58 -0800 (PST)
+Received: from [127.0.0.1] ([20.171.125.215])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ba902ba5d10sm5854874a12.35.2025.11.07.11.52.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Nov 2025 11:52:58 -0800 (PST)
+Message-Id: <pull.1981.v6.git.1762545177204.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com>
+References: <pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com>
+From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 07 Nov 2025 19:52:57 +0000
+Subject: [PATCH v6] doc: add an explanation of Git's data model
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Git 2.52-rc1 has been tagged.  Hopefully we can have a reasonably
-solid Git 2.52 in the middle of this month.  Until then let's
-concentrate on finding and fixing regressions introduced during this
-cycle, if any.
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* cc/fast-import-export-i18n-cleanup (2025-10-30) 5 commits
-  (merged to 'next' on 2025-11-03 at 41a35c3e52)
- + gpg-interface: mark a string for translation
- + fast-import: mark strings for translation
- + fast-export: mark strings for translation
- + gpg-interface: use left shift to define GPG_VERIFY_*
- + gpg-interface: simplify ssh fingerprint parsing
-
- Messages from fast-import/export are now marked for i18n.
- source: <20251030123332.3337684-1-christian.couder@gmail.com>
-
-
-* dk/parseopt-optional-filename-fixes (2025-11-04) 6 commits
-  (merged to 'next' on 2025-11-04 at 1cb7573414)
- + parseopt: remove unreachable code
- + parseopt: restore const qualifier to parsed filename
- + config: use boolean type for a simple flag
- + parseopt: use boolean type for a simple flag
- + doc: clarify command equivalence comment
- + parseopt: fix :(optional) at command line to only ignore missing files
-
- A recently added configuration variable and command line option
- syntax ":(optional)" for values that are of filename type
- inconsistently behaved on an empty file (configuration took it
- happily, while the command line option pretended as if it did not
- exist), which has been corrected.
- source: <cover.1762100242.git.ben.knoble+github@gmail.com>
- source: <xmqq1pmdr9qu.fsf@gitster.g>
-
-
-* js/ci-github-actions-update (2025-11-06) 1 commit
-  (merged to 'next' on 2025-11-06 at 68957de207)
- + ci: update {download,upload}-artifact Action versions
-
- CI updates.
- source: <pull.1996.git.1762437576488.gitgitgadget@gmail.com>
-
-
-* pk/reflog-migrate-message-fix (2025-11-05) 1 commit
-  (merged to 'next' on 2025-11-06 at c9c574a496)
- + refs: add missing space in messages
-
- Message fix.
- source: <a8220721-3260-15cb-6960-ca8b6433d7b5@softwolves.pp.se>
-
---------------------------------------------------
-[New Topics]
-
-* lc/rebase-trailer (2025-11-05) 4 commits
- - rebase: support --trailer
- - trailer: append trailers in-process and drop the fork to `interpret-trailers`
- - trailer: move process_trailers to trailer.h
- - interpret-trailers: factor out buffer-based processing to process_trailers()
-
- Refactor code paths to run "interpret-trailers" from "git
- commit/tag" and use it in "git rebase".
-
- Comments?
- source: <20251105142944.73061-1-me@linux.beauty>
-
-
-* ps/ref-peeled-tags-fixes (2025-11-06) 2 commits
- - object: fix performance regression when peeling tags
- - Merge branch 'ps/ref-peeled-tags' into ps/ref-peeled-tags-fixes
- (this branch uses ps/ref-peeled-tags.)
-
- Another fix-up to "peeled-tags" topic.
-
- Will merge to 'next'.
- source: <20251106-b4-pks-peel-object-performance-regression-v1-1-a386147750b0@pks.im>
-
-
-* tu/credential-wincred-makefile-update (2025-11-05) 1 commit
-  (merged to 'next' on 2025-11-07 at ed74befe91)
- + wincred: align Makefile with other Makefiles in contrib
-
- Build procedure for Wincred credential helper has been updated.
-
- Will cook in 'next'.
- source: <3869ec21-e20d-cf9b-5913-6389c372a5f0@mailbox.tu-dresden.de>
-
---------------------------------------------------
-[Cooking]
-
-* en/ort-rename-another-fix (2025-11-03) 3 commits
- - merge-ort: fix failing merges in special corner case
- - merge-ort: remove debugging crud
- - t6429: update comment to mention correct tool
-
- Yet another corner case fix around renames in the "ort" merge
- strategy.
-
- Will merge to 'next'?
- source: <pull.1992.git.1762192908.gitgitgadget@gmail.com>
-
-
-* dk/make-git-contacts-executable (2025-11-04) 1 commit
-  (merged to 'next' on 2025-11-07 at 30608eb744)
- + perl: also mark git-contacts executable
-
- Building "git contacts" script (in contrib/) leaves the resulting
- file unexecutable, which has been corrected.
-
- Will cook in 'next'.
- source: <7fbb341e8f05fcde3a1543e3bb4e5a3ec1101692.1762280097.git.ben.knoble+github@gmail.com>
-
-
-* dk/meson-html-dir (2025-11-04) 1 commit
-  (merged to 'next' on 2025-11-07 at b30cf1f060)
- + meson: make GIT_HTML_PATH configurable
-
- The build procedure based on meson learned to allow builders to
- specify the directory to install HTML documents.
-
- Will cook in 'next'.
- source: <385992f6020703558f0ba75a1be6c4f9dae08b83.1762264709.git.ben.knoble+github@gmail.com>
-
-
-* kn/maintenance-is-needed (2025-11-06) 7 commits
- - maintenance: add 'is-needed' subcommand
- - maintenance: add checking logic in `pack_refs_condition()`
- - refs: add a `optimize_required` field to `struct ref_storage_be`
- - reftable/stack: add function to check if optimization is required
- - reftable/stack: return stack segments directly
- - Merge branch 'kn/refs-optim-cleanup' into kn/maintenance-is-needed
- - Merge branch 'ps/ref-peeled-tags' into kn/maintenance-is-needed
- (this branch uses kn/refs-optim-cleanup and ps/ref-peeled-tags.)
-
- "git maintenance" command learned "is-needed" subcommand to tell if
- it is necessary to perform various maintenance tasks.
-
- Will merge to 'next'?
- source: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-0-d611a2a95cf5@gmail.com>
-
-
-* qj/doc-http-bad-want-response (2025-11-05) 1 commit
- - doc: clarify server behavior for invalid 'want' lines in HTTP protocol
-
- Doc update.
-
- Will merge to 'next'?
- source: <20251105143849.1192-1-qjessa662@gmail.com>
-
-
-* jc/exclude-with-gitignore (2025-11-04) 1 commit
- - dir.c: do not be fooled by :(exclude) pathspec elements
-
- "git add ':(exclude)foo.o'" is clearly a request not to add 'foo.o',
- but the command complained about listing an ignored path foo.o on
- the command line, which has been corrected.
-
- Comments?
- source: <xmqqtsz9o3cn.fsf@gitster.g>
-
-
-* cc/fast-import-strip-if-invalid (2025-11-04) 3 commits
- - fast-import: add 'strip-if-invalid' mode to --signed-commits=<mode>
- - commit: refactor verify_commit_buffer()
- - fast-import: refactor finalize_commit_buffer()
-
- "git fast-import" learns "--strip-if-invalid" option to drop
- invalid cryptographic signature from objects.
-
- Comments?
- source: <20251105061918.3688870-1-christian.couder@gmail.com>
-
-
-* jc/whitespace-incomplete-line (2025-11-05) 12 commits
- - attr: enable incomplete-line whitespace error for this project
- - diff: highlight and error out on incomplete lines
- - apply: check and fix incomplete lines
- - whitespace: allocate a few more bits and define WS_INCOMPLETE_LINE
- - apply: revamp the parsing of incomplete lines
- - diff: update the way rewrite diff handles incomplete lines
- - diff: call emit_callback ecbdata everywhere
- - diff: refactor output of incomplete line
- - diff: fix incorrect counting of line numbers
- - diff: correct suppress_blank_empty hack
- - diff: emit_line_ws_markup() if/else style fix
- - whitespace: correct bit assignment comments
-
- Both "git apply" and "git diff" learn a new whitespace error class,
- "incomplete-line".
-
- Comments?
- source: <20251105213052.1499224-1-gitster@pobox.com>
-
-
-* tc/last-modified-active-paths-optimization (2025-10-23) 1 commit
-  (merged to 'next' on 2025-11-03 at 9ab444edfb)
- + last-modified: implement faster algorithm
-
- "git last-modified" was optimized by narrowing the set of paths to
- follow as it dug deeper in the history.
-
- Will cook in 'next'.
- source: <20251023-b4-toon-last-modified-faster-v3-1-40a4ddbbadec@iotcl.com>
-
-
-* ps/object-source-loose (2025-11-02) 13 commits
- - object-file: refactor writing objects via a stream
- - object-file: rename `write_object_file()`
- - object-file: refactor freshening of objects
- - object-file: rename `has_loose_object()`
- - object-file: read objects via the loose object source
- - object-file: move loose object map into loose source
- - object-file: hide internals when we need to reprepare loose sources
- - object-file: move loose object cache into loose source
- - object-file: introduce `struct odb_source_loose`
- - object-file: move `fetch_if_missing`
- - odb: adjust naming to free object sources
- - odb: introduce `odb_source_new()`
- - odb: fix subtle logic to check whether an alternate is usable
-
- A part of code paths that deals with loose objects has been cleaned
- up.
-
- Will merge to 'next'?
- source: <20251103-b4-pks-odb-loose-backend-v3-0-6a61ea977393@pks.im>
-
-
-* bc/sha1-256-interop-02 (2025-10-29) 15 commits
- - SQUASH??? downgrade build.rs syntax
- - object-file-convert: always make sure object ID algo is valid
- - rust: add a small wrapper around the hashfile code
- - rust: add a new binary loose object map format
- - rust: add functionality to hash an object
- - rust: add a build.rs script for tests
- - hash: expose hash context functions to Rust
- - write-or-die: add an fsync component for the loose object map
- - csum-file: define hashwrite's count as a uint32_t
- - hash: add a function to look up hash algo structs
- - rust: add a hash algorithm abstraction
- - rust: add a ObjectID struct
- - hash: use uint32_t for object_id algorithm
- - conversion: don't crash when no destination algo
- - repository: require Rust support for interoperability
-
- The code to maintain mapping between object names in multiple hash
- functions is being added, written in Rust.
-
- Expecting a reroll.
- source: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
-
-
-* ad/blame-diff-algorithm (2025-11-06) 2 commits
- - blame: make diff algorithm configurable
- - xdiff: add 'minimal' to XDF_DIFF_ALGORITHM_MASK
-
- "git blame" learns "--diff-algorithm=<algo>" option.
-
- Will merge to 'next'?
- source: <pull.2075.v5.git.git.1762468914.gitgitgadget@gmail.com>
-
-
-* ps/packed-git-in-object-store (2025-10-30) 9 commits
-  (merged to 'next' on 2025-11-03 at 1eb3440abd)
- + packfile: track packs via the MRU list exclusively
- + packfile: always add packfiles to MRU when adding a pack
- + packfile: move list of packs into the packfile store
- + builtin/pack-objects: simplify logic to find kept or nonlocal objects
- + packfile: fix approximation of object counts
- + http: refactor subsystem to use `packfile_list`s
- + packfile: move the MRU list into the packfile store
- + packfile: use a `strmap` to store packs by name
- + Merge branch 'ps/remove-packfile-store-get-packs' into ps/packed-git-in-object-store
-
- The list of packfiles used in a running Git process is moved from
- the packed_git structure into the packfile store.
-
- Will cook in 'next'.
- source: <20251030-pks-packfiles-store-drop-list-v2-0-84654f080cc0@pks.im>
-
-
-* kn/refs-optim-cleanup (2025-10-20) 4 commits
-  (merged to 'next' on 2025-11-04 at dbab18969a)
- + t/pack-refs-tests: move the 'test_done' to callees
- + refs: rename 'pack_refs_opts' to 'refs_optimize_opts'
- + refs: move to using the '.optimize' functions
- + Merge branch 'ps/ref-peeled-tags' into kn/refs-optim-cleanup
- (this branch is used by kn/maintenance-is-needed; uses ps/ref-peeled-tags.)
-
- Code clean-up.
-
- Will cook in 'next'.
- source: <20251020-refs-code-cleanup-v2-0-f5349ed0f6a5@gmail.com>
-
-
-* lo/repo-info-all (2025-10-26) 2 commits
- - repo: add --all to git-repo-info
- - repo: factor out field printing to dedicated function
-
- "git repo info" learned "--all" option.
-
- Expecting a (hopefully small and final) reroll.
- cf. <xmqqpla43wcp.fsf@gitster.g> <aQRaRuBtt_r7SamL@pks.im>
- source: <20251026225409.46647-1-lucasseikioshiro@gmail.com>
-
-
-* en/xdiff-cleanup-2 (2025-10-29) 10 commits
- - xdiff: rename rindex -> reference_index
- - xdiff: change rindex from long to size_t in xdfile_t
- - xdiff: make xdfile_t.nreff a size_t instead of long
- - xdiff: make xdfile_t.nrec a size_t instead of long
- - xdiff: split xrecord_t.ha into line_hash and minimal_perfect_hash
- - xdiff: use unambiguous types in xdl_hash_record()
- - xdiff: use size_t for xrecord_t.size
- - xdiff: make xrecord_t.ptr a uint8_t instead of char
- - xdiff: use ssize_t for dstart/dend, make them last in xdfile_t
- - doc: define unambiguous type mappings across C and Rust
-
- Code clean-up.
-
- Comments?
- source: <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
-
-
-* ar/run-command-hook (2025-10-17) 10 commits
- - receive-pack: convert receive hooks to hook API
- - receive-pack: convert update hooks to new API
- - hooks: allow callers to capture output
- - run-command: allow capturing of collated output
- - reference-transaction: use hook API instead of run-command
- - hook: allow overriding the ungroup option
- - transport: convert pre-push to hook API
- - hook: convert 'post-rewrite' hook in sequencer.c to hook API
- - hook: provide stdin via callback
- - run-command: add stdin callback for parallelization
-
- Use hook API to replace ad-hoc invocation of hook scripts with the
- run_command() API.
-
- Comments?
- source: <20251017141544.1538542-1-adrian.ratiu@collabora.com>
-
-
-* je/doc-reset (2025-10-17) 4 commits
- - doc: git-reset: clarify `git reset <pathspec>`
- - doc: git-reset: clarify `git reset [mode]`
- - doc: git-reset: clarify intro
- - doc: git-reset: reorder the forms
-
- Documentation updates.
-
- Expecting a reroll.
- cf. <8099e7ef-2673-407e-8cca-e6b566b99549@app.fastmail.com>
- source: <pull.1991.git.1760731558.gitgitgadget@gmail.com>
-
-
-* ps/ref-peeled-tags (2025-11-04) 18 commits
-  (merged to 'next' on 2025-11-04 at 3818774c94)
- + t7004: do not chdir around in the main process
- + ref-filter: fix stale parsed objects
- + ref-filter: parse objects on demand
- + ref-filter: detect broken tags when dereferencing them
- + refs: don't store peeled object IDs for invalid tags
- + object: add flag to `peel_object()` to verify object type
- + refs: drop infrastructure to peel via iterators
- + refs: drop `current_ref_iter` hack
- + builtin/show-ref: convert to use `reference_get_peeled_oid()`
- + ref-filter: propagate peeled object ID
- + upload-pack: convert to use `reference_get_peeled_oid()`
- + refs: expose peeled object ID via the iterator
- + refs: refactor reference status flags
- + refs: fully reset `struct ref_iterator::ref` on iteration
- + refs: introduce `.ref` field for the base iterator
- + refs: introduce wrapper struct for `each_ref_fn`
- + Merge branch 'jt/repo-structure' into ps/ref-peeled-tags
- + Merge branch 'tb/incremental-midx-part-3.1' into ps/ref-peeled-tags
- (this branch is used by kn/maintenance-is-needed, kn/refs-optim-cleanup and ps/ref-peeled-tags-fixes.)
-
- Some ref backend storage can hold not just the object name of an
- annotated tag, but the object name of the object the tag points at.
- The code to handle this information has been streamlined.
-
- Will cook in 'next'.
- source: <20251023-b4-pks-ref-filter-skip-parsing-objects-v4-0-2be68ce82c9a@pks.im>
-
-
-* je/doc-data-model (2025-10-31) 2 commits
- - SQUASH??? fix xml that does not validate
- - doc: add an explanation of Git's data model
-
- Add a new manual that describes the data model.
-
- Expecting a (hopefully small and final) reroll?
- cf. <aQhcZwv0PdwNc6RW@pks.im>
- source: <pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com>
-
-
-* ps/history (2025-10-27) 12 commits
- - builtin/history: implement "split" subcommand
- - cache-tree: allow writing in-memory index as tree
- - add-patch: add support for in-memory index patching
- - add-patch: remove dependency on "add-interactive" subsystem
- - add-patch: split out `struct interactive_options`
- - add-patch: split out header from "add-interactive.h"
- - builtin/history: implement "reword" subcommand
- - builtin: add new "history" command
- - replay: stop using `the_repository`
- - replay: extract logic to pick commits
- - wt-status: provide function to expose status for trees
- - Merge branch 'sa/replay-atomic-ref-updates' into ps/history
- (this branch uses sa/replay-atomic-ref-updates.)
-
- "git history" history rewriting UI.
-
- Comments?
- source: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
-
-
-* ms/doc-worktree-side-by-side (2025-10-10) 2 commits
- - doc: git-worktree: Add side by side branch checkout example
- - doc: git-worktree: Link to examples
-
- Document "git worktree add" and use of out-of-tree worktrees with
- examples.
-
- Expecting a reroll.
- cf. <CAPig+cSNesf0UwS4=Bxe-Qn+G9y3YYPyOK+7y3q8QJk+o7jaVg@mail.gmail.com>
- source: <a203b35538847f3c9358a5ae26fb4ebea5734cfc.1759420102.git.msuchanek@suse.de>
-
-
-* sa/replay-atomic-ref-updates (2025-11-05) 3 commits
- - replay: add replay.refAction config option
- - replay: make atomic ref updates the default behavior
- - replay: use die_for_incompatible_opt2() for option validation
- (this branch is used by ps/history.)
-
- "git replay" (experimental) learned to perform ref updates itself
- in a transaction by default, instead of emitting where each refs
- should point at and leaving the actual update to another command.
-
- Will merge to 'next'?
- source: <20251105191650.89975-1-siddharthasthana31@gmail.com>
-
-
-* ar/submodule-gitdir-tweak (2025-11-07) 4 commits
- - submodule: fix case-folding gitdir filesystem colisions
- - submodule: add extension to encode gitdir paths
- - builtin/credential-store: move is_rfc3986_unreserved to url.[ch]
- - submodule--helper: use submodule_name_to_gitdir in add_submodule
-
- Avoid local submodule repository directory paths overlapping with
- each other by encoding submodule names before using them as path
- components.
-
- Comments?
- source: <20251107150547.3272180-1-adrian.ratiu@collabora.com>
-
---------------------------------------------------
-[Discarded]
-
-* ps/rust-cbindgen (2025-10-24) 6 commits
- . rust: generate bindings via cbindgen
- . meson: rename Rust library target
- . ci: use Debian instead of deprecated i386/ubuntu
- . gitlab-ci: backfill missing Linux jobs
- . gitlab-ci: reorder Linux job matrix to match GitHub's order
- . Merge branch 'ps/ci-rust' into ps/rust-cbindgen
-
- Introduce cbindgen in the build framework to help interfacing with
- Rust.
-
- Retracted.
- cf. <aQ3XOTX0AT_eFc5P@pks.im>
- source: <20251024-b4-pks-rust-cbindgen-v2-0-4b4bd4f18490@pks.im>
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Julia Evans <julia@jvns.ca>,
+    Julia Evans <julia@jvns.ca>
+
+From: Julia Evans <julia@jvns.ca>
+
+Git very often uses the terms "object", "reference", or "index" in its
+documentation.
+
+However, it's hard to find a clear explanation of these terms and how
+they relate to each other in the documentation. The closest candidates
+currently are:
+
+1. `gitglossary`. This makes a good effort, but it's an alphabetically
+    ordered dictionary and a dictionary is not a good way to learn
+    concepts. You have to jump around too much and it's not possible to
+    present the concepts in the order that they should be explained.
+2. `gitcore-tutorial`. This explains how to use the "core" Git commands.
+   This is a nice document to have, but it's not necessary to learn how
+   `update-index` works to understand Git's data model, and we should
+   not be requiring users to learn how to use the "plumbing" commands
+   if they want to learn what the term "index" or "object" means.
+3. `gitrepository-layout`. This is a great resource, but it includes a
+   lot of information about configuration and internal implementation
+   details which are not related to the data model. It also does
+   not explain how commits work.
+
+The result of this is that Git users (even users who have been using
+Git for 15+ years) struggle to read the documentation because they don't
+know what the core terms mean, and it's not possible to add links
+to help them learn more.
+
+Add an explanation of Git's data model. Some choices I've made in
+deciding what "core data model" means:
+
+1. Omit pseudorefs like `FETCH_HEAD`, because it's not clear to me
+   if those are intended to be user facing or if they're more like
+   internal implementation details.
+2. Don't talk about submodules other than by mentioning how they
+   relate to trees. This is because Git has a lot of special features,
+   and explaining how they all work exhaustively could quickly go
+   down a rabbit hole which would make this document less useful for
+   understanding Git's core behaviour.
+3. Don't discuss the structure of a commit message
+   (first line, trailers etc).
+4. Don't mention configuration.
+5. Don't mention the `.git` directory, to avoid getting too much into
+   implementation details
+
+Signed-off-by: Julia Evans <julia@jvns.ca>
+---
+    doc: Add a explanation of Git's data model
+    
+    Changes in v2:
+    
+    The biggest change is to remove all mentions of the .git directory, and
+    explain references in a way that doesn't refer to "directories" at all,
+    and instead talks about the "hierarchy" (from Kristoffer and Patrick's
+    reviews).
+    
+    Also:
+    
+     * objects: Mention that an object ID is called an "object name", and
+       update the glossary to include the term "object ID" (from Junio's
+       review)
+     * objects: Replace "SHA-1 hash" with "cryptographic hash" which is more
+       accurate (from Patrick's review)
+     * blobs: Made the explanation of git gc a little higher level and took
+       some ideas from Patrick's suggested wording (from Patrick's and
+       Kroftoffer's reviews)
+     * commits: Mention that tag objects and commits can optionally have
+       other fields. I didn't mention the GPG signature specifically, but
+       don't have any objections to adding it. (from Patrick and Junio's
+       reviews)
+     * commits: Remove one of the mentions of git gc, since it perhaps opens
+       up too much of a rabbit hole: "how does git gc decide which commits
+       to clean up?". (from Kristoffer's review)
+     * tag objects: Add an example of how a tag object is represented (from
+       user feedback on the draft)
+     * index: Use the term "file mode" instead of "permissions", and list
+       all allowed file modes (from Patrick's review)
+     * index: Use "stage number" instead of "number" for index entries (from
+       Patrick's review)
+     * reflogs: Remove "any ref can be logged", it raises some questions of
+       "how do you tell Git to log a ref that it isn't normally logging?"
+       and my guess is that it's uncommon to ask Git to log more refs. I
+       don't think it's a "lie" to omit this but I can bring it back if
+       folks disagree. (from Patrick's review)
+     * reflogs: Fix an error I noticed in the explanation of reflogs: tags
+       aren't logged by default and remote-tracking branches are, according
+       to man git-config
+     * branches and tags: Be clearer about how branches are usually updated
+       (by committing), and make it a little more obvious that only branches
+       can be checked out. This is a bit tricky because using the word
+       "check out" introduces a rabbit hole that I want to avoid (what does
+       "check out" mean?). I've dealt this by just talking about the
+       "current branch" (HEAD) since that is defined here, and making it
+       more explicit that HEAD must either be a branch or a commit, there's
+       no "HEAD is a tag" option. (from Patrick's review)
+     * tags: Explain the differences between annotated and lightweight tags
+       (this is the main piece of user feedback I've gotten on the draft so
+       far)
+     * Various style/typo changes ("2 or more", linkgit:git-gc[1], removed
+       extra asterisks, added empty SYNOPSIS, "commits -> tags" typo fix,
+       add to meson build)
+    
+    non-changes:
+    
+     * I still haven't mentioned things that aren't part of the "data
+       model", like revision params and configuration. I think there could
+       be a place for them but I haven't found it yet.
+     * tag objects: I noticed that there's a "tag" header field in tag
+       objects (like tag v1.0.0) but I didn't mention it yet because I
+       couldn't figure out what the purpose of that field is (I thought the
+       tag name was stored in the reference, why is it duplicated in the tag
+       object?)
+    
+    Changes in v3:
+    
+    I asked for feedback from Git users on Mastodon and got 220 pieces of
+    feedback from 48 different users. People seemed very excited to read
+    about Git's data model. Usually I judge explanations by what folks
+    report learning from them. Here people reported learning:
+    
+     * how branches are stored (that a branch is "a name for a commit")
+     * how objects work
+     * that Git has separate "author" and "committer" fields
+     * that amending a commit does not change it
+     * that a tree is "just a directory" (not something more complicated),
+       and how trees are stored
+     * that Git repos can contain symlinks
+     * that Git saves modes separately from the OS.
+     * how the stage number works
+     * that when you git add a file, Git will create an object
+     * that third-party tools can create their own refs.
+     * that the reflog stores the history of branches (not just HEAD), and
+       what reflogs are for
+    
+    Also (of course) there were quite a few points of confusion! The main 4
+    pieces of feedback were
+    
+     1. The index section doesn't explain what the word "staged" means, and
+        one person says that it makes it sounds like only files that you
+        "git add"ed are in the index. Rewrite the explanation to avoid using
+        the word "staged" to define the index and instead define the word
+        "staging".
+     2. Explain the difference between "annotated tags" and "lightweight
+        tags" (done)
+     3. Add examples for tag objects and reflogs (done)
+     4. Mention a little more about where things are stored in the .git
+        directory, which I'd removed in v2. This seems most important for
+        .git/refs, so I added a hopefully accurate note about how refs are
+        stored by default, with a comment about one of the major
+        implications. I did not discuss where objects or the index are
+        stored, because I don't think the implementation details of how
+        objects are stored are as important, and there are better tools for
+        viewing the "raw" state of objects and the index (with git cat-file
+        -p or git ls-files --staged).
+    
+    Here's every other change I made in response to the feedback, as well as
+    a few comments that I did not address.
+    
+    intro:
+    
+     * Give a 1-sentence intro to "reflog"
+    
+    objects:
+    
+     * people really like having git ls-files --stage as a way to view the
+       index, so add git cat-file -p as well in a note
+    
+    commits:
+    
+     * 2 people asked "Are commits stored as a diff?". Say that diffs are
+       calculated at runtime, this is very important.
+     * The order the fields are given in don't match the order in the
+       example. Make them match.
+     * "All the files in the commit, stored as a tree" is throwing a few
+       people off. Be clearer that it's the tree ID of the base directory.
+     * Several people asked "What's the difference between an author and
+       committer? I added an example using git cherry-pick that I'm not 100%
+       happy with (what if the reader doesn't know what cherry-pick does?).
+       There might be a better example to give here.
+     * In the note about commits being amended: one person suggested saying
+       "creates a new commit with the same parent" to make it clearer what
+       the relationship between the new and old commit are. I liked that
+       idea so I did it.
+    
+    trees:
+    
+     * file modes. 2 people want to know more about "The file mode, for
+       example 100644". Also 2 people are curious about what relationship
+       these have to Unix permissions. Say that they're inspired by Unix
+       permissions, and move the list of possible file modes up to make the
+       relationship clearer
+     * On "so git-gc(1) periodically compresses objects to save disk space",
+       there are a few follow up comments wondering about more, which makes
+       me think the comment about compression is actually a distraction. Say
+       something simpler instead, ("Git only needs to store new versions of
+       files which were changed in that commit"), from Junio's suggestion
+     * Re "commit (a Git submodule)": 2 people say it's not clear how trees
+       relate to submodules. Say that it refers to a commit in a different
+       repository.
+     * One person says they're not sure if the "object ID" is a hash. Link
+       it to the definition of "object ID".
+    
+    tag objects:
+    
+     * Requests for an example, added one.
+     * Requests to explain the difference between "lightweight" and
+       "annotated" tags, added it.
+    
+    tags:
+    
+     * one person thinks "It’s expected that a tag will never change after
+       you create it." is too strong (since of course you can change it with
+       git tag -f). Say instead that tags are "usually" not changed.
+    
+    HEAD:
+    
+     * Several people are asking for more detail about detached HEAD state.
+       There's actually quite a lot to talk about here (what it means, how
+       it happens, what it implies, and how you might adjust your workflow
+       to avoid it by using git switch). I don't think we can get into all
+       of that here, so refer to the DETACHED HEAD section of git-checkout
+       instead. I'm not totally happy with the current version of that
+       section but that seems like the most practical solution right now.
+    
+    remote-tracking branches:
+    
+     * discuss refs/remotes/<remote>/HEAD.
+    
+    the index:
+    
+     * "permissions" should be "file mode" (like with trees). Changed.
+     * "filename" should be "file path". Changed.
+     * the stage number can only be 0, 1, 2, or 3, since it's 2 bits. Also
+       maybe say that the numbers have specific meanings. Said it can only
+       be 0/1/2/3 but did not give the specific meanings.
+    
+    reflogs
+    
+     * Request for an example. Added one.
+     * It's not clear if there's one reflog per branch/tag/HEAD, or if
+       there's one universal reflog. Make this clearer.
+     * Mention the role of the reflog in retrieving "lost" commits or
+       undoing bad rebases.
+    
+    Not fixed:
+    
+     * intro: A couple of people say that it's confusing that tags are both
+       "an object" and "a reference". Handled this by just explaining the
+       difference between an annotated and a lightweight tag further down.
+       I'd like to make this clearer in the intro but not sure if there's a
+       way to do it.
+     * commits and tag objects: one person asks if there's a reference for
+       the other "optional fields", like "encoding" and "gpgsig". I couldn't
+       find one, so left this as is.
+     * HEAD: A couple of people ask if there are any other symbolic
+       references other than HEAD, or if they can make their own symbolic
+       references. I don't know the answer to this.
+     * HEAD: the HEAD: HEAD thing looks weird, it made more sense when it
+       was HEAD: .git/HEAD. Will think about this.
+     * reflogs: One person asks: if reflogs only store local changes, why
+       does it track the user who made the change? Is that for remote
+       operations like fetches and pulls? Or for cases where more than one
+       user is using the same repo on a system? I don't know the answer to
+       this.
+     * reflogs: How can you see the full data in the reflog? git reflog show
+       doesn't list the user who made the change. git reflog show <refname>
+       --format="%h | %gd | %gn <%ge> | %gs" --date=iso seems to work but
+       it's really a mouthful, not sure it's useful to include all that.
+     * index: Is it worth mentioning that the index can be locked? I don't
+       have an opinion about this.
+     * other: One person asks what a "working tree" is. It made me wonder if
+       "the current working directory" has a place in Git's data model. My
+       feeling is "no" but I could be convinced otherwise.
+     * overall: "How can Git be so fast? If I switch branches, how does it
+       figure out what to add, remove or replace?". I don't think this is
+       the right place for that discussion but it would
+     * there are some docs CI errors I haven't figured out yet (IDREF
+       attribute linkend references an unknown ID "tree")
+    
+    changes in v4:
+    
+    This is a combination of trying to make some of the intro text a little
+    more "friendly" for someone new to Git's data model, avoiding implying
+    things that are false, and removing information that isn't relevant to
+    the data model.
+    
+    intro:
+    
+     * Add a 1-line description of what a "reflog" is (from user feedback)
+    
+    objects:
+    
+     * Start with a "friendly" description of what an object is, similar to
+       what we do for references and the reflog
+     * Rename "commits" to "commit" and similarly for trees etc (from
+       Junio's review)
+     * Remove the explanation of what git cat-file -p does, since it might
+       be misleading and if people want to know they can read the man page
+       (from Junio's review)
+    
+    commits:
+    
+     * Start by saying that the commit contains the full directory structure
+       of all the files (from Junio's comment about how it may not be clear
+       that the commit contains all the files' exact contents at the time of
+       the commit)
+     * Remove the comment about cherry-pick (from Junio's review)
+     * Replace "ask Git for a diff" with "ask Git to show the commit with
+       git show" (from Junio's review)
+    
+    trees:
+    
+     * Make the description a little more friendly
+     * Reorder so that "type" is defined before we refer to the "type"
+     * Say that file modes are "only spiritually related" to Unix
+       permissions instead of talking about what Git "supports" (from
+       Junio's review)
+    
+    blobs:
+    
+     * Try to make it clearer how "commits use relatively little disk space"
+       is true while not implying that commits are diffs, by using an
+       example (from Junio's review)
+    
+    branches:
+    
+     * Replace "a branch is a name for a commit ID" with "a branch refers to
+       a commit ID" (except in the intro sentence for the "references"
+       section). Similarly for tags etc. (from Junio's review)
+     * Remove the note about how branches are stored in .git (from Junio's
+       review)
+    
+    HEAD:
+    
+     * Be clearer that HEAD is not always the current branch, because there
+       may not be a current branch (from Junio's review)
+    
+    index:
+    
+     * Be a little more specific about how exactly the index is converted
+       into a commit. (from Junio's comment about how it's not clear what
+       "every file in the repository" means)
+    
+    reflog:
+    
+     * Be clearer that there are many reflogs (one for each reference with a
+       log), not just one reflog (from Junio and Patrick's reviews)
+     * Omit the user and "Before" commit IDs from the list of fields,
+       because you usually don't see them (from Junio's review)
+     * Show the output of git reflog main in the example instead of the
+       contents of the reflog file, to avoid showing the user and before
+       commit ID
+    
+    changes in v5:
+    
+    Mostly smaller tweaks this time. The only major addition is to add a
+    note about how unreachable objects may be deleted.
+    
+    From Junio's review:
+    
+     * Remove "type" in the description of what's in a tree (since I have
+       learned that is not a separate field, it's part of the file mode)
+     * Fix a typo ("these these")
+     * Remove the intro sentence about what a "commit" is and instead only
+       describe its contents in the list of fields, to avoid implying that a
+       commit is the same as a tree
+     * Say "Unix file modes" instead of "Unix permissions"
+     * In the tag objects contents: make "ID" and "type" separate list items
+       since they're separate fields
+     * in the index section:
+       * list all of the possible file modes (since from my understanding
+         there are fewer allowed file modes here than in a tree)
+       * mention that the object can be either a commit or blob
+       * make the order match the order in git ls-files
+    
+    changes in v6:
+    
+     * Make punctuation more consistent (from Patrick's review)
+     * Explain more about when exactly amended commits will get deleted
+       (when their reflog entry expires), from Junio's review
+     * Be more explicit that there are only 5 file modes in Git (from
+       Junio's review)
+     * Make tag object description clearer (from Junio's review)
+     * We had a long discussion about the phrasing of "A branch refers to a
+       commit ID" but I didn't come up with any ideas for how to improve the
+       phrasing so I left it as is.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1981%2Fjvns%2Fgitdatamodel-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1981/jvns/gitdatamodel-v6
+Pull-Request: https://github.com/gitgitgadget/git/pull/1981
+
+Range-diff vs v5:
+
+ 1:  d342255dad ! 1:  6e2a7bbe6b doc: add an explanation of Git's data model
+     @@ Documentation/gitdatamodel.adoc (new)
+      ++
+      +1. The full directory structure of all the files in that version of the
+      +   repository and each file's contents, stored as the *<<tree,tree>>* ID
+     -+   of the commit's base directory.
+     ++   of the commit's base directory
+      +2. Its *parent commit ID(s)*. The first commit in a repository has 0 parents,
+      +  regular commits have 1 parent, merge commits have 2 or more parents
+      +3. An *author* and the time the commit was authored
+     -+4. A *committer* and the time the commit was committed.
+     ++4. A *committer* and the time the commit was committed
+      +5. A *commit message*
+      ++
+      +Here's how an example commit is stored:
+     @@ Documentation/gitdatamodel.adoc (new)
+      +    It lists, for each item in the tree:
+      ++
+      +1. The *filename*, for example `hello.py`
+     -+2. The *file mode*. Git has these file modes. which are only
+     -+   spiritually related to Unix file modes:
+     ++2. The *file mode*. These are all of the file modes in Git.
+     ++   They're only spiritually related to Unix file modes.
+      ++
+      +  - `100644`: regular file (with <<object,object type>> `blob`)
+      +  - `100755`: executable file (with type `blob`)
+     @@ Documentation/gitdatamodel.adoc (new)
+      +    Tag objects contain these required fields
+      +    (though there are other optional fields):
+      ++
+     -+1. The object *ID* it references
+     -+2. The object *type*
+     ++1. The *ID* of the object it references
+     ++2. The *type* of the object it references
+      +3. The *tagger* and tag date
+      +4. A *tag message*, similar to a commit message
+      +
+     @@ Documentation/gitdatamodel.adoc (new)
+      +References can either refer to:
+      +
+      +1. An object ID, usually a <<commit,commit>> ID
+     -+2. Another reference. This is called a "symbolic reference".
+     ++2. Another reference. This is called a "symbolic reference"
+      +
+      +References are stored in a hierarchy, and Git handles references
+      +differently based on where they are in the hierarchy.
+     @@ Documentation/gitdatamodel.adoc (new)
+      +Git may also create references other than `HEAD` at the base of the
+      +hierarchy, like `ORIG_HEAD`.
+      +
+     -+NOTE: Git may delete objects that aren't "reachable" from any reference.
+     ++NOTE: Git may delete objects that aren't "reachable" from any reference
+     ++or <<reflogs,reflog>>.
+      +An object is "reachable" if we can find it by following tags to whatever
+      +they tag, commits to their parents or trees, and trees to the trees or
+      +blobs that they contain.
+     -+For example, if you amend a commit, with `git commit --amend`,
+     ++For example, if you amend a commit with `git commit --amend`,
+     ++there will no longer be a branch that points at the old commit.
+     ++The old commit is recorded in the current branch's <<reflogs,reflog>>,
+     ++so it is still "reachable", but when the reflog entry expires it may
+     ++become unreachable and get deleted.
+     ++
+      +the old commit will usually not be reachable, so it may be deleted eventually.
+      +Reachable objects will never be deleted.
+      +
+
+
+ Documentation/Makefile              |   1 +
+ Documentation/gitdatamodel.adoc     | 302 ++++++++++++++++++++++++++++
+ Documentation/glossary-content.adoc |   4 +-
+ Documentation/meson.build           |   1 +
+ 4 files changed, 306 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/gitdatamodel.adoc
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 6fb83d0c6e..5f4acfacbd 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -52,6 +52,7 @@ MAN7_TXT += gitcli.adoc
+ MAN7_TXT += gitcore-tutorial.adoc
+ MAN7_TXT += gitcredentials.adoc
+ MAN7_TXT += gitcvs-migration.adoc
++MAN7_TXT += gitdatamodel.adoc
+ MAN7_TXT += gitdiffcore.adoc
+ MAN7_TXT += giteveryday.adoc
+ MAN7_TXT += gitfaq.adoc
+diff --git a/Documentation/gitdatamodel.adoc b/Documentation/gitdatamodel.adoc
+new file mode 100644
+index 0000000000..b54ff0e52b
+--- /dev/null
++++ b/Documentation/gitdatamodel.adoc
+@@ -0,0 +1,302 @@
++gitdatamodel(7)
++===============
++
++NAME
++----
++gitdatamodel - Git's core data model
++
++SYNOPSIS
++--------
++gitdatamodel
++
++DESCRIPTION
++-----------
++
++It's not necessary to understand Git's data model to use Git, but it's
++very helpful when reading Git's documentation so that you know what it
++means when the documentation says "object", "reference" or "index".
++
++Git's core operations use 4 kinds of data:
++
++1. <<objects,Objects>>: commits, trees, blobs, and tag objects
++2. <<references,References>>: branches, tags,
++   remote-tracking branches, etc
++3. <<index,The index>>, also known as the staging area
++4. <<reflogs,Reflogs>>: logs of changes to references ("ref log")
++
++[[objects]]
++OBJECTS
++-------
++
++All of the commits and files in a Git repository are stored as "Git objects".
++Git objects never change after they're created, and every object has an ID,
++like `1b61de420a21a2f1aaef93e38ecd0e45e8bc9f0a`.
++
++This means that if you have an object's ID, you can always recover its
++exact contents as long as the object hasn't been deleted.
++
++Every object has:
++
++[[object-id]]
++1. an *ID* (aka "object name"), which is a cryptographic hash of its
++  type and contents.
++  It's fast to look up a Git object using its ID.
++  This is usually represented in hexadecimal, like
++  `1b61de420a21a2f1aaef93e38ecd0e45e8bc9f0a`.
++2. a *type*. There are 4 types of objects:
++   <<commit,commits>>, <<tree,trees>>, <<blob,blobs>>,
++   and <<tag-object,tag objects>>.
++3. *contents*. The structure of the contents depends on the type.
++
++Here's how each type of object is structured:
++
++[[commit]]
++commit::
++    A commit contains these required fields
++    (though there are other optional fields):
+++
++1. The full directory structure of all the files in that version of the
++   repository and each file's contents, stored as the *<<tree,tree>>* ID
++   of the commit's base directory
++2. Its *parent commit ID(s)*. The first commit in a repository has 0 parents,
++  regular commits have 1 parent, merge commits have 2 or more parents
++3. An *author* and the time the commit was authored
++4. A *committer* and the time the commit was committed
++5. A *commit message*
+++
++Here's how an example commit is stored:
+++
++----
++tree 1b61de420a21a2f1aaef93e38ecd0e45e8bc9f0a
++parent 4ccb6d7b8869a86aae2e84c56523f8705b50c647
++author Maya <maya@example.com> 1759173425 -0400
++committer Maya <maya@example.com> 1759173425 -0400
++
++Add README
++----
+++
++Like all other objects, commits can never be changed after they're created.
++For example, "amending" a commit with `git commit --amend` creates a new
++commit with the same parent.
+++
++Git does not store the diff for a commit: when you ask Git to show
++the commit with linkgit:git-show[1], it calculates the diff from its
++parent on the fly.
++
++[[tree]]
++tree::
++    A tree is how Git represents a directory.
++    It can contain files or other trees (which are subdirectories).
++    It lists, for each item in the tree:
+++
++1. The *filename*, for example `hello.py`
++2. The *file mode*. These are all of the file modes in Git.
++   They're only spiritually related to Unix file modes.
+++
++  - `100644`: regular file (with <<object,object type>> `blob`)
++  - `100755`: executable file (with type `blob`)
++  - `120000`: symbolic link (with type `blob`)
++  - `040000`: directory (with type `tree`)
++  - `160000`: gitlink, for use with submodules (with type `commit`)
++
++3. The <<object-id,*object ID*>> with the contents of the file or directory
+++
++For example, this is how a tree containing one directory (`src`) and one file
++(`README.md`) is stored:
+++
++----
++100644 blob 8728a858d9d21a8c78488c8b4e70e531b659141f README.md
++040000 tree 89b1d2e0495f66d6929f4ff76ff1bb07fc41947d src
++----
++
++[[blob]]
++blob::
++    A blob object contains a file's contents.
+++
++When you make a commit, Git stores the full contents of each file that
++you changed as a blob.
++For example, if you have a commit that changes 2 files in a repository
++with 1000 files, that commit will create 2 new blobs, and use the
++previous blob ID for the other 998 files.
++This means that commits can use relatively little disk space even in a
++very large repository.
++
++[[tag-object]]
++tag object::
++    Tag objects contain these required fields
++    (though there are other optional fields):
+++
++1. The *ID* of the object it references
++2. The *type* of the object it references
++3. The *tagger* and tag date
++4. A *tag message*, similar to a commit message
++
++Here's how an example tag object is stored:
++
++----
++object 750b4ead9c87ceb3ddb7a390e6c7074521797fb3
++type commit
++tag v1.0.0
++tagger Maya <maya@example.com> 1759927359 -0400
++
++Release version 1.0.0
++----
++
++NOTE: All of the examples in this section were generated with
++`git cat-file -p <object-id>`.
++
++[[references]]
++REFERENCES
++----------
++
++References are a way to give a name to a commit.
++It's easier to remember "the changes I'm working on are on the `turtle`
++branch" than "the changes are in commit bb69721404348e".
++Git often uses "ref" as shorthand for "reference".
++
++References can either refer to:
++
++1. An object ID, usually a <<commit,commit>> ID
++2. Another reference. This is called a "symbolic reference"
++
++References are stored in a hierarchy, and Git handles references
++differently based on where they are in the hierarchy.
++Most references are under `refs/`. Here are the main types:
++
++[[branch]]
++branches: `refs/heads/<name>`::
++    A branch refers to a commit ID.
++    That commit is the latest commit on the branch.
+++
++To get the history of commits on a branch, Git will start at the commit
++ID the branch references, and then look at the commit's parent(s),
++the parent's parent, etc.
++
++[[tag]]
++tags: `refs/tags/<name>`::
++    A tag refers to a commit ID, tag object ID, or other object ID.
++    There are two types of tags:
++    1. "Annotated tags", which reference a <<tag-object,tag object>> ID
++       which contains a tag message
++    2. "Lightweight tags", which reference a commit, blob, or tree ID
++       directly
+++
++Even though branches and tags both refer to a commit ID, Git
++treats them very differently.
++Branches are expected to change over time: when you make a commit, Git
++will update your <<HEAD,current branch>> to point to the new commit.
++Tags are usually not changed after they're created.
++
++[[HEAD]]
++HEAD: `HEAD`::
++    `HEAD` is where Git stores your current <<branch,branch>>,
++    if there is a current branch. `HEAD` can either be:
+++
++1. A symbolic reference to your current branch, for example `ref:
++   refs/heads/main` if your current branch is `main`.
++2. A direct reference to a commit ID. In this case there is no current branch.
++   This is called "detached HEAD state", see the DETACHED HEAD section
++   of linkgit:git-checkout[1] for more.
++
++[[remote-tracking-branch]]
++remote-tracking branches: `refs/remotes/<remote>/<branch>`::
++    A remote-tracking branch refers to a commit ID.
++    It's how Git stores the last-known state of a branch in a remote
++    repository. `git fetch` updates remote-tracking branches. When
++    `git status` says "you're up to date with origin/main", it's looking at
++    this.
+++
++`refs/remotes/<remote>/HEAD` is a symbolic reference to the remote's
++default branch. This is the branch that `git clone` checks out by default.
++
++[[other-refs]]
++Other references::
++    Git tools may create references anywhere under `refs/`.
++    For example, linkgit:git-stash[1], linkgit:git-bisect[1],
++    and linkgit:git-notes[1] all create their own references
++    in `refs/stash`, `refs/bisect`, etc.
++    Third-party Git tools may also create their own references.
+++
++Git may also create references other than `HEAD` at the base of the
++hierarchy, like `ORIG_HEAD`.
++
++NOTE: Git may delete objects that aren't "reachable" from any reference
++or <<reflogs,reflog>>.
++An object is "reachable" if we can find it by following tags to whatever
++they tag, commits to their parents or trees, and trees to the trees or
++blobs that they contain.
++For example, if you amend a commit with `git commit --amend`,
++there will no longer be a branch that points at the old commit.
++The old commit is recorded in the current branch's <<reflogs,reflog>>,
++so it is still "reachable", but when the reflog entry expires it may
++become unreachable and get deleted.
++
++the old commit will usually not be reachable, so it may be deleted eventually.
++Reachable objects will never be deleted.
++
++[[index]]
++THE INDEX
++---------
++The index, also known as the "staging area", is a list of files and
++the contents of each file, stored as a <<blob,blob>>.
++You can add files to the index or update the contents of a file in the
++index with linkgit:git-add[1]. This is called "staging" the file for commit.
++
++Unlike a <<tree,tree>>, the index is a flat list of files.
++When you commit, Git converts the list of files in the index to a
++directory <<tree,tree>> and uses that tree in the new <<commit,commit>>.
++
++Each index entry has 4 fields:
++
++1. The *file mode*, which must be one of:
++  - `100644`: regular file (with <<object,object type>> `blob`)
++  - `100755`: executable file (with type `blob`)
++  - `120000`: symbolic link (with type `blob`)
++  - `160000`: gitlink, for use with submodules (with type `commit`)
++2. The *<<blob,blob>>* ID of the file,
++   or (rarely) the *<<commit,commit>>* ID of the submodule
++3. The *stage number*, either 0, 1, 2, or 3. This is normally 0, but if
++   there's a merge conflict there can be multiple versions of the same
++   filename in the index.
++4. The *file path*, for example `src/hello.py`
++
++It's extremely uncommon to look at the index directly: normally you'd
++run `git status` to see a list of changes between the index and <<HEAD,HEAD>>.
++But you can use `git ls-files --stage` to see the index.
++Here's the output of `git ls-files --stage` in a repository with 2 files:
++
++----
++100644 8728a858d9d21a8c78488c8b4e70e531b659141f 0 README.md
++100644 665c637a360874ce43bf74018768a96d2d4d219a 0 src/hello.py
++----
++
++[[reflogs]]
++REFLOGS
++-------
++
++Every time a branch, remote-tracking branch, or HEAD is updated, Git
++updates a log called a "reflog" for that <<references,reference>>.
++This means that if you make a mistake and "lose" a commit, you can
++generally recover the commit ID by running `git reflog <reference>`.
++
++A reflog is a list of log entries. Each entry has:
++
++1. The *commit ID*
++2. *Timestamp* when the change was made
++3. *Log message*, for example `pull: Fast-forward`
++
++Reflogs only log changes made in your local repository.
++They are not shared with remotes.
++
++You can view a reflog with `git reflog <reference>`.
++For example, here's the reflog for a `main` branch which has changed twice:
++
++----
++$ git reflog main --date=iso --no-decorate
++750b4ea main@{2025-09-29 15:17:05 -0400}: commit: Add README
++4ccb6d7 main@{2025-09-29 15:16:48 -0400}: commit (initial): Initial commit
++----
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/glossary-content.adoc b/Documentation/glossary-content.adoc
+index e423e4765b..20ba121314 100644
+--- a/Documentation/glossary-content.adoc
++++ b/Documentation/glossary-content.adoc
+@@ -297,8 +297,8 @@ This commit is referred to as a "merge commit", or sometimes just a
+ 	identified by its <<def_object_name,object name>>. The objects usually
+ 	live in `$GIT_DIR/objects/`.
+ 
+-[[def_object_identifier]]object identifier (oid)::
+-	Synonym for <<def_object_name,object name>>.
++[[def_object_identifier]]object identifier, object ID, oid::
++	Synonyms for <<def_object_name,object name>>.
+ 
+ [[def_object_name]]object name::
+ 	The unique identifier of an <<def_object,object>>.  The
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index e34965c5b0..ace0573e82 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -192,6 +192,7 @@ manpages = {
+   'gitcore-tutorial.adoc' : 7,
+   'gitcredentials.adoc' : 7,
+   'gitcvs-migration.adoc' : 7,
++  'gitdatamodel.adoc' : 7,
+   'gitdiffcore.adoc' : 7,
+   'giteveryday.adoc' : 7,
+   'gitfaq.adoc' : 7,
+
+base-commit: bb69721404348ea2db0a081c41ab6ebfe75bdec8
+-- 
+gitgitgadget
