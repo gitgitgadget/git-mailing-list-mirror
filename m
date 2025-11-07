@@ -1,160 +1,150 @@
-Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5DA208D0
-	for <git@vger.kernel.org>; Fri,  7 Nov 2025 04:39:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD0D280A20
+	for <git@vger.kernel.org>; Fri,  7 Nov 2025 06:04:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762490386; cv=none; b=Qv0Opdpep8+JeBuOMT5gFtkdPRWLtOxeC7hIbe75CHMyMK4KQc+WQiJNmSucNx1QmMfJrJ6/oQHkVmK9q6dWvvfGh0XGLOUjCoNpMeSN0tr1xnmIVgfbWd7Vosw7cS+G8Vbtzy8wNjYmvmbLEPWe+NULK2fl47QSkHGsR453Qso=
+	t=1762495497; cv=none; b=HvSQVlwvgotueG+XvAYQ+xGhkoWaiOSUnuSzU1nqRPUT5+1UlDQMFXzLe3Ih18CfsvgBReN3DPv2BNHGGgBj3ZLbzAaB+ndiB8hvPQinkW7lh8epRaZjYEl0gltsh57Dar8ucDV+yCT+r6ZJ/NNmWPKglxa+Zw5a70EIsmnSMHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762490386; c=relaxed/simple;
-	bh=ibFJp0GzOJ5DAU9dRDUQcjSLstz7BZ/J4ysv6kO+KKo=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=q3v0xlNFtfH2953RNY/2tyH63HF5TWA8m3ckPrbHMjoWiIz97SnjnNGNZquLDWsPky1qQwtUsSZxEmQZ17a7miIBBrtmOFpTFOLgaKdfM/56vZerDwD2DxZNnWqOcaqZd+jgegVDt/tGEy2JM+fPtdGxfqNOBvKtVlXvIQF39Qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MXB2x9OD; arc=none smtp.client-ip=209.85.222.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762495497; c=relaxed/simple;
+	bh=XbB0c1Bt/8YCgbuB/kJez2PIKqaKc8GtJr7xbpuFEF0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tRXz8XHEId3nXYJfb3d53NOebfebMHh7uPk2pv+spcM2H7fkiEoNlvhQLkheUxmdNucN5OxzAJttLdtjm37jIgpGrrL+H7VhG4BTQX2HDABBI/ReknuZIHqTwlnrcRvNJfG2WksoqGfY2fAlI9T5bBLatZLRVPVfJ+0XDZ2rPGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Dvsk4e/o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=szI1M3Dh; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MXB2x9OD"
-Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-932c2071cf5so200309241.0
-        for <git@vger.kernel.org>; Thu, 06 Nov 2025 20:39:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762490383; x=1763095183; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DSjS/QDPRGD5eRWBa5w5ctHLwqw+L5WP4qcKwr83l2Q=;
-        b=MXB2x9ODh3mQD97iCOwYO6fWM+4Ha8q2cxdGJFgkpuLRmxR2kxTQjocMyovu2QuTQO
-         rHx/SPNJ5t9ZLgnVzT2qminXPILEOHe4DhRVkitUU1mHO/Vq0l+7Vfgd96WGqTBZkI/f
-         T8XiPGm2tymmSFX8pHQjVWoJ1UTBD2FbkCBhHiALs44rE9ZqT00i/MVQvO1/g95FgzYM
-         WqEmpg+6ksmpBhe4Mc5h6h3p+kAnCZTOb3U2mQ/+EmredTTilZ9RWyL0qXgBOywIXygq
-         rrqqs7eZ5m+HWGgGqF1vYZHDJLV1OItMmVqVfQHM9ivVup8Jzz8we3yNIeve7c9N0vyl
-         QVsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762490383; x=1763095183;
-        h=to:subject:message-id:date:from:reply-to:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DSjS/QDPRGD5eRWBa5w5ctHLwqw+L5WP4qcKwr83l2Q=;
-        b=FB8mCF8YdxshhYILp85AY6GrSm48u0OvCqlCDrksUBH3/RbblxH5dF6AV3Xhff7025
-         m7+iTS47PdNKbS7uMIHdISCybPyFPsfThUH/vBHljPlRlZPBBxViEg0NX4qC66MAN1/y
-         H2e3Ct4cVh9zyGV0wFpFxKPu19vReVVjRBmDMy8gy4LHPbep8PxYp6WQs1meEdbTL74k
-         u8kBH0yhCtZeqDBk5uae8m6ErCeQAiaE6Duj0mf3v3AjM+lc36sp4XRoBe8KnFOiQOEk
-         tsUFUbLgzgjUpf7GLVcwvqoqGVIVvIdlbhqPA+9NA2/Q0hM3TDzFOUYgePsW+tzF7UUa
-         cp7A==
-X-Gm-Message-State: AOJu0YwAOAZ0BSljY0/G6avvbCsTSaVzLjLE0CTZ+N1yCgyIRkDtaRaz
-	o5EClyE1EIXuSyfHmJD9AsN3cGChkF3/WK0XDPTP+z4XotgSLMfV4sfKUauwR06Zrvbd82pqiop
-	ISXneP7FoaiAUBX7KE5iG3n3YZJzy2/qkSoTq
-X-Gm-Gg: ASbGnct1W1OGoxVozrUcXbfKF8n0syPAFyxN5nRIoaxtHSqdwTSM2MXGuNFallY5PcC
-	LdS4TEPIhToHnL2y6FuzVwmA7P2NkeiHrKOz0tJ94mnnBKIqjdFvIq3ItkvkJmOo3+17IZUQ9Mk
-	BKX5dGc8NHTJdeZMktfh693ucZEVQW7YVyX5DHzkVQ+CR5s/+epISbchQePoJ6S1TnV3Py1pDqs
-	rMBtSF0wToSFkOcgf0W0Bmgta4dIyw3h6rO8foby4XM+cLnA8+5Xc744xuv9Um8EZU9ocQ7
-X-Google-Smtp-Source: AGHT+IGFbbvkxANQRtEHcnseALuEFFpEomSsFGEeWZ9sykB5BstRczQdThnIm1J0IaUJv2Lm4KtkfH7NHbzkTdY4vDc=
-X-Received: by 2002:a05:6102:290c:b0:5d6:85a:229f with SMTP id
- ada2fe7eead31-5ddb9dd43fdmr121570137.15.1762490383128; Thu, 06 Nov 2025
- 20:39:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Dvsk4e/o";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="szI1M3Dh"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 74DDDEC020E;
+	Fri,  7 Nov 2025 01:04:53 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 07 Nov 2025 01:04:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1762495493; x=1762581893; bh=OteCGldb50
+	6PmqVz3MGTq3w3juap5NkD0GOGilUlyI8=; b=Dvsk4e/oE+zsB9AAfGno6lXOwk
+	E8VHSk8hXwACkiUUU3mIxs0bTuPKxGjbp6IvSoug3q0ZkCqCGDDIj2qGUMx7fIYu
+	y2TTwXfhGJJhtlrBGEmDGdBhBHDp6k5fc4u3aE1ByHv2X+xk5ABH7NBKlwvyU4hu
+	I0Pxs4USJA/bt/geb8bagavRKhnGwQTZ5g+e9IBWdS8CzYnXEBbmCloBaunsFOlr
+	BCFQf2reL6XJj2EkWWYDLorPGfr9lSLomJq6GG3uJWWBL3U5Ald3pgA3lgTzYiZA
+	ZuAixKNvfYAoinGKgBypNR33wHm1IynmG1zT9N5JXQyMWqNd58xkVAcM+n3g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762495493; x=1762581893; bh=OteCGldb506PmqVz3MGTq3w3juap5NkD0GO
+	GilUlyI8=; b=szI1M3DhB/yjiLcbrbwqUsJvAgzged9g5tlQU6b87Zl7tUstwB5
+	jukYfQI3/FfMNMCJp6V/oD9Psyc56pV4nib1KwDJ/ggFFFScwmYcxFrZtCQOJWAj
+	28wQeFu/n+t7t7uicy/vwowbb6F20015IoraBIbP6035F/qu7vBOprFZxJdX9RSj
+	o6Wd9UGLwTBfQZvwhoafykA4zpgGmqJT5t/hZkyVg4tXAT4sTdNi2ZG5Zy2qpdm6
+	fOGvJHxoYz973Dcmv00CbvteAuMnaxdfLRnCVPjI6CcIAYKXQsjCIyYakl1g5ii0
+	pIFD8aJkMfjtcT08b6hvij+8PTdZZn7/yIA==
+X-ME-Sender: <xms:BIwNaamh9gkkugywFmjEIW4r6OdEtaKBWxyW3DgTZwZvtXLSE9aAQg>
+    <xme:BIwNafq4LEKMdfSVuyX1hnu8XZvI6fQ9KWkmZDcSFamLiAFVW8e3TAsT2-3Eptg5m
+    2h33tV3Fybvz1g1rbL9TxxHyFs5N9xnXk2YhB32YogHJX1YqI8JOg>
+X-ME-Received: <xmr:BIwNaTGU9Fo3B1SxURTkFkg7oLTNRy30gsMYzy3shga9MFU-7FIdTMxGQXEgdiIZA5E1rLKQDHvfI8ShUoJXdzl7gRrxgJvmPSAUHUP_958WYg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeekkeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithesughinhifohhoughivgdrohhr
+    ghdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtoh
+    hm
+X-ME-Proxy: <xmx:BIwNabxsCeF3IXlm-yAmkJzhQaOk182MTlCG76ou8AD69wis4V6m8g>
+    <xmx:BIwNaYpH7xXKo614QSSoazss1tFFGN6IcqtVS1pYrwTwezBlJ4-AUw>
+    <xmx:BIwNaVhYjAtLrLwdrunIOPX0P9I4l0OFHNPRHbM5z3f6tZm9ANOPCw>
+    <xmx:BIwNaVhAU2a81j5mvCQbTMpZchNM62UWiJnqFU75MSqVhb2tHRnnkg>
+    <xmx:BYwNaUiqEV4_CBEjo2A8D3LWrpwFNL71c9hIThvP3igRnL46Hz7WeZqc>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 7 Nov 2025 01:04:51 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id fe1b2f8f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 7 Nov 2025 06:04:49 +0000 (UTC)
+Date: Fri, 7 Nov 2025 07:04:45 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Adam Dinwoodie <git@dinwoodie.org>
+Subject: Re: v2.52.0-rc0 test failure on cygwin
+Message-ID: <aQ2L_a3q7MAUJI-L@pks.im>
+References: <f22c95ad-43c8-41de-8315-e707224e830b@ramsayjones.plus.com>
+ <aQx-RnNX28BPU2cS@pks.im>
+ <a8a03a31-8e06-4b72-b847-b59548156e60@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Reply-To: bhavikdbavishi@gmail.com
-From: Bhavik Bavishi <bhavikdbavishi@gmail.com>
-Date: Fri, 7 Nov 2025 10:09:32 +0530
-X-Gm-Features: AWmQ_bmUmOnCgB9jvXSG1ljuDvEB9rpCVAi9xQmLhO2ke9uusO4Inic94zvYIEw
-Message-ID: <CAEyHQXWd77_jJachC6FYbWMJ+L=KkKoUqiACQ7z8r-ZwYq8JYw@mail.gmail.com>
-Subject: [Bug report] git cherry-pick silently ignores error whereas git apply
- fails for hunk apply
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a8a03a31-8e06-4b72-b847-b59548156e60@ramsayjones.plus.com>
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On Thu, Nov 06, 2025 at 08:28:35PM +0000, Ramsay Jones wrote:
+> On 06/11/2025 10:53 am, Patrick Steinhardt wrote:
+> > I wonder whether the issue is surfaced because we use the shell to
+> > truncate the file. If you instead use `file-tool truncate 0` for example
+> > then I cannot reproduce the flake anymore:
+> > 
+> > diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+> > index 3ea5d51532..1058f83993 100755
+> > --- a/t/t0610-reftable-basics.sh
+> > +++ b/t/t0610-reftable-basics.sh
+> > @@ -207,7 +207,7 @@ test_expect_success 'ref transaction: corrupted tables cause failure' '
+> >  		test_commit file1 &&
+> >  		for f in .git/reftable/*.ref
+> >  		do
+> > -			: >"$f" || return 1
+> > +			test-tool truncate "$f" 0 || return 1
+> >  		done &&
+> >  		test_must_fail git update-ref refs/heads/main HEAD
+> >  	)
+> > 
+> > But this may very well just be due to timing again -- spawning the
+> > process will be slower than using shell redirection to trim the file.
+> 
+> I tried this patch tonight, letting:
+> 
+>     $ ./t0610-reftable-basics.sh --run=29 --stress-limit=10
+> 
+> finish, which it did without failure. So that's 32 * 10 successful runs.
+> 
+> (I had expected 16 * 10 yesterday, ie 2 * cores * 10, but this laptop
+> has 8 cores 16 threads, so 'getconf _NPROCESSORS_ONLN' returns 16 not 8).
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-> ran git cherry-pick command, which went fine without any error, but missed to apply change
-> created patch with 'git fromat-patch' and applied with 'git apply --verbose', which error for the issue
+Nice :)
 
-What did you expect to happen? (Expected behavior)
-> git cherry-pick should fail, since it failed to apply hunk
+> > All of this is quite curious. I don't really have any better idea than
+> > to use something like the above patch. It's ugly, doubly so because I
+> > don't understand either the root cause nor why the patch properly fixes
+> > it. So I'd be grateful if anyone were to enlighten me :)
+> 
+> Me too! :)
+> 
+> > I have verified that the flake already exists in Git 2.51, so at least
+> > it's not a regression in the current release cycle.
+> OK, that's good to know.
+> 
+> Despite the mystery, I think a patch based on the above would be
+> the best solution for now. (Assuming nobody has a better idea).
 
-What happened instead? (Actual behavior)
-> git cherry-pick completed successfully without any error
+Please feel free to take it and turn it into a proper patch. My main
+goal was to verify that this is not a regression and that nothing new
+broke in the reftable backend. I'm happy to let you take over from here,
+as I'm a bit short on time otherwise.
 
-What's different between what you expected and what actually happened?
-> git apply --verbose, failed with error about the issue, whereas git cherry-pick didn't fail for the same
+Thanks!
 
-Anything else you want to add:
-> same error observed with '2.51.2' version as well
-> we do primarily use Gerrit UI for cherry-pick, so JGIT has similar behaviour as git cli for cherry-pick.
-
-> can we have verbose mode for git cherry-pick, like git apply --verbose ?
-
-> below is output of git apply (note I've changed words for source code references)
-=======================================================================
-git apply --verbose ../test.patch
-Checking patch mango/connectors/apple/ops/query_check_hierarchy_op.cc...
-Checking patch mango/connectors/container/loc_base/util.cc...
-Checking patch mango/connectors/container/loc_base/util.h...
-Checking patch mango/main/http_test_ops/new_op.cc...
-Hunk #1 succeeded at 56 (offset 2 lines).
-Hunk #2 succeeded at 1074 (offset 21 lines).
-Checking patch mango/main/main.cc...
-Hunk #1 succeeded at 9876 (offset -63 lines).
-Checking patch mango/main/ops/refresh_apple_hierarchy_op.cc...
-Hunk #4 succeeded at 1713 (offset 18 lines).
-Checking patch mango/main/validation_util.cc...
-Hunk #1 succeeded at 42 (offset -1 lines).
-Hunk #2 succeeded at 106 (offset -2 lines).
-Hunk #3 succeeded at 11167 (offset -14 lines).
-Checking patch mango/conn/ops/apple_box_storage_package_op.cc...
-Checking patch mango/utils/apple_utils.cc...
-error: while searching for:
-
-//-----------------------------------------------------------------------------
-
-// Returns true if Apple Box Pack usecases + the corresponding updates flag
-// is enabled.
-bool Converter::IsAppleBoxPackEnabled(
-    std::shared_ptr<const orange::FeatureEnabler> updates_checks,
-    std::shared_ptr<const mango::RegisteredParams>
-        newed_params) {
-  for (const auto& usecase :
-       newed_params->apple_params().use_cases()) {
-    if ((usecase == RegisteredAppleParams_UseCase_kBoxPack) &&
-        updates_checks->updates_list_map()
-            .apple_box_storage_protection_enabled()) {
-      return true;
-    }
-  }
-  return false;
-}
-
-//-----------------------------------------------------------------------------
-
-}}}  // namespace org::mango::apple
-
-error: patch failed: mango/utils/apple_utils.cc:658
-error: mango/utils/apple_utils.cc: patch does not apply
-Checking patch mango/utils/apple_utils.h...
-=======================================================================
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.34.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.15.0-160-generic #170-Ubuntu SMP Wed Oct 1 10:06:56 UTC
-2025 x86_64
-compiler info: gnuc: 11.4
-libc info: glibc: 2.35
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-commit-msg
+Patrick
