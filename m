@@ -1,223 +1,234 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86711327214
-	for <git@vger.kernel.org>; Fri,  7 Nov 2025 15:06:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762528013; cv=pass; b=H6YfMt/1270QNubwJFORztM6+C8m4WkRGls8f+9rU97flf4NmMp2473Y5ZVzflB4qpN0aMJGnGftZPwfuBLzi0Cx9yx5y03q01feFQ0HugXd2QmkycJAt5V+7z+GC0C5sKjMiHsj2ikn4jvuebZRwG98afGwee0jv+3nvya4SWk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762528013; c=relaxed/simple;
-	bh=isQFpDh8PeVrYxJdmk6DL9IjMdYu64KGPdHj6ojrwtw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJwiHN41QebEkXZIIWnD2lMfzQDcrAMeTGzy7/Gkb9YGJVBy1SFWQQJBlYBSAy0tHolLvLGUJFWS5DJIzqgSSKRNqCp0BsPhdOyCurH3LQpqVCIQ8YvMNEUGhfto+ndOP6LJPYYLUYKA0cBEwm6tZvMgSmQF/1djrzC9lv9FwBM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=TYXWhYpz; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A4632B995
+	for <git@vger.kernel.org>; Fri,  7 Nov 2025 15:13:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762528441; cv=none; b=jLWD3W2d0ZYEnO/N/iSAivu2KDqiqkLyfmnDyLBzKl8EyvWMuMT3VS11/LvJxlf0bzhRqcAvuqgWJCvGHytw+CuPmtAvr73uh2CPu67IgQQutCyBx0Ad0Cne3yldf5XdYi5YzGIpY5N4wTO1VSZGz/eBq8fRvb8x3FJ41ZdmUus=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762528441; c=relaxed/simple;
+	bh=wuBYTCaXqOtTA2ST369IMF8NyNXyW0MwrqBMoBNX3Gw=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=r+mcVY6hCJ1qTOt3GyD/kwSXvsn30ld763v66WvjZILKoJ83h+xn1MeKviEF+aNrPRRIvMdPhTGbiAgopvbIUrR2EFkgR4yFI+IDY7B1vzniTvx9q2EtGVBNpwtlE/g0X4P8BzFtw6ckIImYMWVMJ37bSANkbCThBSjoPc7ijPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FLalaokB; arc=none smtp.client-ip=209.85.221.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="TYXWhYpz"
-ARC-Seal: i=1; a=rsa-sha256; t=1762527993; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=FyoBO9iW6RMWZ597rcnyhUGJ3zput17PUxV8L+ckucDugYsrQOZk7IXElMiyYHU6EDnLv4d22v/wKU+3JQ2RpIiX8uYk6yFf/y/J/H9HQKyGYlnGG7eMM4v1No93Hga1/xOu8Omt3C4zFtgum4t6dPt6RwapEpa8hUQCVXhQ3IA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1762527993; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=0jUmVtNEfVsuiDZQz2swenJCklF9Qot/fpEQNKhMoXQ=; 
-	b=OfGVAzi1czC4dzwkLUEJzCs9fBs0lnLdZCiU0yqVUxJdv51tzwC+GrXAZNnmLkh9f+XzR+KuTB0fZoTYrExCQ8wdc3qqkGOXpuPCE+3V4RjTjrdwa1s/wfahWzfhYXJ+yJ3I70fxLAI/EYHXhliCBmUdt8aQnX7TRw/+946k/Wc=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762527993;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=0jUmVtNEfVsuiDZQz2swenJCklF9Qot/fpEQNKhMoXQ=;
-	b=TYXWhYpz7y1uIRHppThXiZhB9YFpDC17Mau/Hik+PbLgnrnmP+wWNNL4ko7OSxcR
-	RFgilnuMUHm0QZQGgat8HByhca7amZ7zcTBHx+qys6bUY99nKezFLKWSOS4kWmcXYhj
-	f1+Nu9vWgoUJ3sjTj/Nrxlxhv0Z3bg+U0ZDUTGMY=
-Received: by mx.zohomail.com with SMTPS id 1762527990621571.8269921605121;
-	Fri, 7 Nov 2025 07:06:30 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: git@vger.kernel.org
-Cc: Emily Shaffer <emilyshaffer@google.com>,
-	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
-	Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Aaron Schrab <aaron@schrab.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Josh Steadmon <steadmon@google.com>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v4 4/4] submodule: fix case-folding gitdir filesystem colisions
-Date: Fri,  7 Nov 2025 17:05:47 +0200
-Message-ID: <20251107150547.3272180-5-adrian.ratiu@collabora.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251107150547.3272180-1-adrian.ratiu@collabora.com>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20251107150547.3272180-1-adrian.ratiu@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FLalaokB"
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-559748bcf99so775530e0c.3
+        for <git@vger.kernel.org>; Fri, 07 Nov 2025 07:13:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762528438; x=1763133238; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9rRL7XpiJAk8bJKNva1LCEvaMbqZcUmsms6/8EkimX0=;
+        b=FLalaokBxBsk/JFp67cL+G6J/Lwm1pYAPSsaXuznzaV9mshyM4wGR1GrYWy27D3ipc
+         tU/ow/F8NDUEiGbPN6qLK8Z+TJUdO/TiDwDQqLVTHWyWzpBabRHRyew9GFSHsEgmV7x6
+         gJjccz8xxROK7PQabykKITjTRxUxKEOxCf1ZeMh4KYZFh5jt1gPEiesuoygoTb3QWf66
+         1YRF+TYN4euT83vgkc++LhCSH87FIT04wqVRmwLvElJTmDL2gQbHeSOYl+02cL4WpWLp
+         cStvfr6HklMKHO45J1aUYhOja4xod94KmGvicPWZIMDfTSJfvbXtbfbUjlbE0aNGv6rw
+         ISUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762528438; x=1763133238;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9rRL7XpiJAk8bJKNva1LCEvaMbqZcUmsms6/8EkimX0=;
+        b=ZswWhLOzsyX/4pCw522exBf9ULfviQ/amAa3vZ8CN1hanTeGuDzMVC4dA/7tV13ju5
+         5VjbA9QYx5h9Vh7feEVUe2yNxYxIBAyvGEb59CcPZ6yk2AwVelYcuuXDZ6UOkfYC5d9J
+         Y2nOxPVyPS8Sr3GAhtgNtOMh3sovdiN1X9TNge54p3fpMePR9lhVgfRNJE6XbSq8YXIe
+         jKMf7tZSKFVh/dGH8S0DjZVDQQjH9jUiutFZzMfyQBuiUwBz7yk89IqwRHV4NQGhWr8I
+         SmzYdrz44zqAO0UncfNo8G0Aa8mt6kUy1h3io2YMuCJaUrOxJNARo0zyMLe1IxYhRnOo
+         vroQ==
+X-Gm-Message-State: AOJu0Yzx5Dkp1cuR5YemyBt7k6h0sWS8m/AKJTjpUL4MDpE578P8se8L
+	wDdto2q3n8hfGYdTMox5XczVnauyHZyrr7hm52gDc6ysJXU6aaD8XY1t/1kSHYuYhT3wULJVZKS
+	i9Nim1darajEP5FhCpvMgOPfPGMFfjpQ=
+X-Gm-Gg: ASbGncup75MdGHYJ8N2uL4tkB5VZHPk9dwX0a9TGgfjmcNBDR+TjjjAWXzA4bo4sHco
+	Y22+fnMir+EpMxSLsKZfO0xZJkukV8KDVSMHHj4oamyJETTsgk7C8hlL30UT37ze2W0z0UTJHq1
+	Qutwiel1dDmQ2NYTLSu9bPdCtL0eFfmRw6wWXnbtuxJaC5r6HlcIJ/yMvBydg66ct8B4OnTvQS5
+	Q0ZFIm002AfP06ONdKOitA3l/jF+A4vP4BmD3MO/RWGS9Qyz4xqL1cwQMzqodwGgT2n75LY0PAk
+	jUYhxUVo1q5+pw8lkXqDnYlIvp1NOIQjCrNXLA==
+X-Google-Smtp-Source: AGHT+IH1wZPa6H4iDMoBSb+ZWeex8VctZWXQECJ5lEXoh7u6WAqgKRC2kUlSTxfS6Zfe/ROAcT4DAsbEOGK8HPC2PSo=
+X-Received: by 2002:a05:6122:4584:b0:557:b52a:d553 with SMTP id
+ 71dfb90a1353d-559a3b0df84mr1235892e0c.7.1762528438382; Fri, 07 Nov 2025
+ 07:13:58 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 7 Nov 2025 07:13:54 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 7 Nov 2025 07:13:54 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aQ39P0mAFqDGPYxS@pks.im>
+References: <20251103-fix-tags-not-fetching-v1-1-e63caeb6c113@gmail.com>
+ <20251106-fix-tags-not-fetching-v2-1-610cb4b0e7c8@gmail.com>
+ <aQyLfD_zx0ndCLvU@pks.im> <CAOLa=ZQpTqnCQs4=wcUwJOWy5mXiG4y_eTiFtPkS2uOk4U66Tw@mail.gmail.com>
+ <aQ39P0mAFqDGPYxS@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Date: Fri, 7 Nov 2025 07:13:54 -0800
+X-Gm-Features: AWmQ_bl_8XnwcgfBdAhyVPz9XZCO7fzlVu7nREumoLXwJHopsCTIxSNdVso2XVA
+Message-ID: <CAOLa=ZS3oFiopf0ys2ZS5z0MdE8s6jqapPyaR86gj5CcJ9jaYQ@mail.gmail.com>
+Subject: Re: [PATCH v2] fetch: fix non-conflicting tags not being committed
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, jltobler@gmail.com, sunshine@sunshineco.com, 
+	David Bohman <debohman@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000007a0c7e064302a10f"
 
-Add a new check in validate_submodule_git_dir() to detect and
-prevent case-folding filesystem colisions. When this new check
-is triggered, a stricter casefolding aware URI encoding is used
-to percent-encode uppercase characters, e.g. Foo becomes %46oo.
+--0000000000007a0c7e064302a10f
+Content-Type: text/plain; charset="UTF-8"
 
-By using this check/retry mechanism the uppercase encoding is
-only applied when necessary, so case-sensitive filesystems are
-not affected.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
----
- submodule.c                   | 47 +++++++++++++++++++++++++++++++++--
- t/t7425-submodule-encoding.sh | 15 +++++++++++
- url.c                         | 12 +++++++++
- url.h                         |  1 +
- 4 files changed, 73 insertions(+), 2 deletions(-)
+> On Fri, Nov 07, 2025 at 05:15:32AM -0800, Karthik Nayak wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> > On Thu, Nov 06, 2025 at 09:39:25AM +0100, Karthik Nayak wrote:
+>> > The following test demonstrates this behaviour:
+>> >
+>> > 	test_expect_success "fetch single branch without explicit tag option" '
+>> > 		git init source &&
+>> > 		git -C source commit --allow-empty --message common &&
+>> > 		git clone file://"$(pwd)"/source target &&
+>> > 		(
+>> > 			cd source &&
+>> > 			git commit --allow-empty --message discard-me &&
+>> > 			git tag discard-me &&
+>> > 			git commit --amend --allow-empty --message fetch-me &&
+>> > 			git tag fetch-me
+>> > 		) &&
+>> >
+>> > 		# The "discard-me" tag does not point into the history that we are
+>> > 		# about to fetch, so it should not have been created.
+>> > 		git -C target fetch origin &&
+>> > 		git -C target tag -l >actual &&
+>> > 		echo "fetch-me" >expect &&
+>> >
+>> > 		# But with "--tags" we instruct git-fetch(1) to fetch all tags, so we
+>> > 		# should now see it.
+>> > 		git -C target fetch origin --tags &&
+>>
+>> Here, we don't really backfill, but rather we request all tags from the
+>> remote, hence we end up with the 'discard-me' tag. Not because of the
+>> diverged history. I also confirmed this by adding a breakpoint into the
+>> `backfill_tags()` function, while running this test.
+>
+> Oh, exactly. But there's two fetches here: the first one only fetches
+> "fetch-me" because we don't pass "--tags". The second one was simply as
+> a demonstration that we would also fetch the other tag that doesn't
+> point into our fetched history with "--tags".
+>
 
-diff --git a/submodule.c b/submodule.c
-index ceaff0c1aa..ecbffac2c6 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2280,7 +2280,7 @@ int validate_submodule_git_dir(char *git_dir, const char *submodule_name)
- 	size_t len = strlen(git_dir), suffix_len = strlen(submodule_name);
- 	char *p = git_dir + len - suffix_len;
- 	bool suffixes_match = !strcmp(p, submodule_name);
--	int ret = 0;
-+	int ret = 0, config_ignorecase = 0;
- 
- 	/*
- 	 * We prevent the contents of sibling submodules' git directories to
-@@ -2318,6 +2318,42 @@ int validate_submodule_git_dir(char *git_dir, const char *submodule_name)
- 	if (p && strchr(p, '/') != NULL)
- 		return error("submodule gitdir name '%s' contains unexpected '/'", p);
- 
-+	/* Prevent conflicts on case-folding filesystems */
-+	repo_config_get_bool(the_repository, "core.ignorecase", &config_ignorecase);
-+	if (ignore_case || config_ignorecase) {
-+		char *lower_gitdir = xstrdup(git_dir);
-+		char *module_name = find_last_submodule_name(lower_gitdir);
-+
-+		if (module_name) {
-+			for (p = module_name; *p; p++)
-+				*p = tolower(*p);
-+
-+			/*
-+			 * If lower path is different and already exists, check for collision.
-+			 * Intentionally double-check to eliminate false-positives.
-+			 */
-+			if (strcmp(lower_gitdir, git_dir) && is_git_directory(lower_gitdir)) {
-+				char *canonical = real_pathdup(git_dir, 0);
-+				if (canonical) {
-+					struct strbuf norm_git_dir = STRBUF_INIT;
-+					strbuf_addstr(&norm_git_dir, git_dir);
-+					strbuf_normalize_path(&norm_git_dir);
-+
-+					if (strcmp(canonical, norm_git_dir.buf))
-+						ret = error(_("submodule git dir '%s' "
-+							      "collides with '%s'"),
-+							    canonical, norm_git_dir.buf);
-+
-+					strbuf_release(&norm_git_dir);
-+					FREE_AND_NULL(canonical);
-+				}
-+			}
-+		}
-+
-+		FREE_AND_NULL(lower_gitdir);
-+		return ret;
-+	}
-+
- 	return 0;
- }
- 
-@@ -2653,13 +2689,20 @@ void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
- 	if (!validate_and_set_submodule_gitdir(buf, submodule_name))
- 		return;
- 
--	/* Case 2: Try URI-safe (RFC3986) encoding first, this fixes nested gitdirs */
-+	/* Case 2.1: Try URI-safe (RFC3986) encoding first, this fixes nested gitdirs */
- 	strbuf_reset(buf);
- 	repo_git_path_append(r, buf, "modules/");
- 	strbuf_addstr_urlencode(buf, submodule_name, is_rfc3986_unreserved);
- 	if (!validate_and_set_submodule_gitdir(buf, submodule_name))
- 		return;
- 
-+	/* Case 2.2: Try extended uppercase URI (RFC3986) encoding, to fix case-folding */
-+	strbuf_reset(buf);
-+	repo_git_path_append(r, buf, "modules/");
-+	strbuf_addstr_urlencode(buf, submodule_name, is_casefolding_rfc3986_unreserved);
-+	if (!validate_and_set_submodule_gitdir(buf, submodule_name))
-+		return;
-+
- 	/* Case 3: error out */
- 	die(_("Cannot construct a valid gitdir path for submodule '%s': "
- 	      "please set a unique git config for 'submodule.%s.gitdir'."),
-diff --git a/t/t7425-submodule-encoding.sh b/t/t7425-submodule-encoding.sh
-index a42d358f5b..f92b3e6338 100755
---- a/t/t7425-submodule-encoding.sh
-+++ b/t/t7425-submodule-encoding.sh
-@@ -143,4 +143,19 @@ test_expect_success 'submodule git dir nesting detection must work with parallel
- 	verify_submodule_gitdir_path clone_parallel hippo/hooks modules/hippo%2fhooks
- '
- 
-+test_expect_success 'verify case-folding conflict is correctly encoded' '
-+	git clone -c extensions.submoduleEncoding=true -c core.ignoreCase=true main cloned-folding &&
-+	(
-+		cd cloned-folding &&
-+
-+		git submodule add ../new-sub "folding" &&
-+		test_commit lowercase &&
-+
-+		git submodule add ../new-sub "FoldinG" &&
-+		test_commit uppercase
-+	) &&
-+	verify_submodule_gitdir_path cloned-folding "folding" "modules/folding" &&
-+	verify_submodule_gitdir_path cloned-folding "FoldinG" "modules/%46oldin%47"
-+'
-+
- test_done
-diff --git a/url.c b/url.c
-index 0fb1859b28..057e6e5c6e 100644
---- a/url.c
-+++ b/url.c
-@@ -14,6 +14,18 @@ int is_rfc3986_unreserved(char ch)
- 		ch == '-' || ch == '_' || ch == '.' || ch == '~';
- }
- 
-+/*
-+ * This is a variant of is_rfc3986_unreserved() that treats uppercase
-+ * letters as "reserved". This forces them to be percent-encoded, allowing
-+ * 'Foo' (%46oo) and 'foo' (foo) to be distinct on case-folding filesystems.
-+ */
-+int is_casefolding_rfc3986_unreserved(char c)
-+{
-+	return (c >= 'a' && c <= 'z') ||
-+	       (c >= '0' && c <= '9') ||
-+	       c == '-' || c == '.' || c == '_' || c == '~';
-+}
-+
- int is_urlschemechar(int first_flag, int ch)
- {
- 	/*
-diff --git a/url.h b/url.h
-index 131a262066..92e3c63514 100644
---- a/url.h
-+++ b/url.h
-@@ -22,5 +22,6 @@ void end_url_with_slash(struct strbuf *buf, const char *url);
- void str_end_url_with_slash(const char *url, char **dest);
- 
- int is_rfc3986_unreserved(char ch);
-+int is_casefolding_rfc3986_unreserved(char c);
- 
- #endif /* URL_H */
--- 
-2.51.0
+Yup, even the first 'fetch' doesn't hit the backfill flow. Since it
+points to the reference being fetched.
 
+> I notice though that the first fetch forgot to `test_cmp`.
+>
+>> > 		git -C target tag -l >actual &&
+>> > 		cat >expect <<-\EOF &&
+>> > 		discard-me
+>> > 		fetch-me
+>> > 		EOF
+>> > 		test_cmp expect actual
+>> > 	'
+>>
+>> But I was able to slightly modify the test to get the required affect:
+>>
+>>   test_expect_success "backfill tags when providing a refspec" '
+>>   	git init source &&
+>>   	git -C source commit --allow-empty --message common &&
+>>   	git clone file://"$(pwd)"/source target &&
+>>   	(
+>>   	    cd source &&
+>>   	    git commit --allow-empty --message history &&
+>>   	    git tag history &&
+>>   	    git commit --allow-empty --message fetch-me &&
+>>   	    git tag fetch-me
+>>   	) &&
+>>
+>>   	# The "history" tag is backfilled eventhough we requested
+>>   	# to only fetch the master
+>>   	git -C target fetch origin master:branch &&
+>>   	git -C target tag -l >actual &&
+>>   	cat >expect <<-\EOF &&
+>>   	fetch-me
+>>   	history
+>>   	EOF
+>>   	test_cmp expect actual
+>>   '
+>>
+>> I will add this in. Thanks for the explanation, it really helped
+>> consolidate my understanding here.
+>
+> Yup, that should work, as well.
+>
+>> >> diff --git a/builtin/fetch.c b/builtin/fetch.c
+>> >> index c7ff3480fb..d5aee5af10 100644
+>> >> --- a/builtin/fetch.c
+>> >> +++ b/builtin/fetch.c
+>> >> @@ -1686,6 +1686,42 @@ static void ref_transaction_rejection_handler(const char *refname,
+> [snip]
+>> >> +	if (*transaction && !is_atomic) {
+>> >> +		struct ref_rejection_data data = {
+>> >> +			.conflict_msg_shown = 0,
+>> >> +			.remote_name = remote_name,
+>> >> +			.retcode = &retcode,
+>> >> +		};
+>> >> +
+>> >> +		ref_transaction_for_each_rejected_update(*transaction,
+>> >> +							 ref_transaction_rejection_handler,
+>> >> +							 &data);
+>> >> +
+>> >> +		ref_transaction_free(*transaction);
+>> >> +		*transaction = NULL;
+>> >> +	}
+>> >
+>> > Okay. Do we need to discern cases where this is called and we haven't
+>> > managed to even queue a single reference update?
+>> >
+>>
+>> I don't see a reason. This is anyways a post-commit action, if there are
+>> no updates, there will be no rejections. So this will be a no-op.
+>
+> I guess the question was rather whether we fear a negative consequence
+> by trying to commit an empty transaction. The commit doesn't know to
+> short-circuit empty transactions, so we'd still end up locking data even
+> though we eventually end up doing nothing.
+>
+> Thanks!
+>
+> Patrick
+
+That's correct, but that's also an internal detail of the reference
+backend.
+
+  - In the files backend, since we lock individual files, no updates
+    means no locks.
+
+  - The packed backend and reftable backend would lock the entire
+    backend.
+
+So I guess this is something we should fix on the backends themselves.
+
+--0000000000007a0c7e064302a10f
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: bc77e2432000d75f_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rT0RMRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN0VMQy85eERRRjRtYjBxd0JLU0VIOVlrN3A3YUV5YQp6T1BsSWRPUXlv
+dUd3Q1BVVXFXMU5DT0hFamxJRHAzYUE3VTBSTTJyN2E2RVlMMFBXdHZVVHZPaDFtSkVRRDg0ClhI
+NXhVUDBoa3gwaE5adFFjUXcybERGdExhYkFtRmdXMVdnN1M2RjdyZ1pRSW8rVCtIVnhaSzFJS0Mr
+ME5XSnYKMDdjUnFQeE1ERHluNUh4d2RFa0xXSVBBTXZXZ2Y2SmF5KzBncUtFTmp6enBOd2hJSk9N
+VGErZGtvUnpxNXR1NgpQRWU3K2NuVCtqTDg4RWpoQThUbUFuM21McitYRmFGOEs1SkxOODAraTdi
+bFU2MmhUSlQ2bndBTVZzT3dkYWNWCkRVam44cEtQWlBxOCt3bGFxUUxKWTZyZWhLQVRCMHZaL3Nv
+dGZQbE03MmRmckdRRjlROHovaFlBcFo0YWFib1kKcVZhVENLTng1RDlrTTlPRld6SmZNdCtaQVFl
+WkFmeUtsRWJKTDBFa3pEY1FmVDRxR241ZmJzT1R2VktjZTZ4MQp0Mm16dTQvR0hBZkVsUUlFZm5D
+S3lxUGYvTFpYd2xXMW1DMXFLM245dkkwd0xQcGh2MmRPeUo5a1NSNHc4RStQCmFlODdQVnZOS3JQ
+N3VtUjFkWEgzN0JFbjAwd1JBWC80cXJZUGk1dz0KPTNidTEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000007a0c7e064302a10f--
