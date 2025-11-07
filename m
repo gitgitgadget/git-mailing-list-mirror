@@ -1,60 +1,60 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952062192EE
-	for <git@vger.kernel.org>; Fri,  7 Nov 2025 21:03:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA74928A3EF
+	for <git@vger.kernel.org>; Fri,  7 Nov 2025 21:23:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762549414; cv=none; b=YGYz17vlfUoT7dFhyYxiZWmSXvuV4M89fJovPPLrQHw3IIWv7gY5aPOxx3bUfEzHJMscDIi6FD+ILP/wGTP/D/GczoD9SKvJrFNt60Tp3GM3Pc790wCKBgRs0zb/h936gFBQBXxB0RZSORxagNJgYwDhBpjopNS/cAsestmQBnE=
+	t=1762550638; cv=none; b=phQ4hTaGvBX2If/Y1UecHPZyg+/xgE+EbURPXd6N9GDzGZ1r6ny7VqDCLA3htrmLOjb+b0c7Pg+25W9MDTzcP013JUqqyIK6A8SPHldWR9PhSCiSntIj3p6EclfzM2vp90N7qxxp6Xm3U7+Jkpep450TV7beNXQxCNJeMA/DBN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762549414; c=relaxed/simple;
-	bh=l2XLIjsiZOltz9SqnvpGrjhNnUpKrSfNuXAi/EaqAio=;
+	s=arc-20240116; t=1762550638; c=relaxed/simple;
+	bh=f2laNYYJRreCCwrRxmYbS0SdqJMtt7J7SXstlHiWRRg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VwsSNv2eKJnYXJMOlF1x9DKRxXo232s4tUdbzKyDDN2jUuhzVIbYkkN84bvf8NEAYD5FG+N2rioayJseX7Ii9GmabliiyYeOg/cZxBhqZBAZHa7BwUzefYcPd9eGZfU762fVm4U6NQCWGL/IHp4ZoFqeOHMFvK/g1aP71OLzoGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fin1tOly; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vI3Lbfon; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=FKiGdu33JkHhs4W78tHrvIJVGtAAQE+OAnTFuK5Js6IFWnmKYcQEUjSzJipqTQBfsjCTvoNg1GSGmea3ANxBrJMmBkhgkYFEmd931CFqch24rIT0K2K6qxVyi5DEn2WwASJxPAAtzFxXP9UujGcKF3D7bEnSu8oUvV54VzkKM5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kg+SpTV0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TmWAm/aF; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fin1tOly";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vI3Lbfon"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8D0E6EC00DF;
-	Fri,  7 Nov 2025 16:03:30 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kg+SpTV0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TmWAm/aF"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 006F8EC02A0;
+	Fri,  7 Nov 2025 16:23:56 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 07 Nov 2025 16:03:30 -0500
+  by phl-compute-04.internal (MEProxy); Fri, 07 Nov 2025 16:23:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762549410; x=1762635810; bh=+6jTytPhWd
-	M33JP4lp9P7pQdDYp+VOMrZe5Gu1obj+s=; b=fin1tOly3LBmDuwZ8VlCjfyy5h
-	AwN2PdVCR2ytk5BhiaafygOWiFtbk9QCtPkAaVbN+Esc4JAh+Gk/Vn3f2GffZTRZ
-	rdFp7buYojAnX0dO6ZwaKPvtoFA+iJhH9NDf241fApiohYaxTlTH1gpZhqUnLRt2
-	NuBcObOor930H1Db8sF8wQnEaf0uVKewGudPRqOzUIc+0Coab1Vxd+fxkIt/RXUU
-	g7cgaMVaLnc7x0E7XjcuYnQaj/NXc+rfg/n3QsMmDGa4988DHag8G0I0y1LdU+gJ
-	hmWHMpk2lJtZwJJxFJFl3lOxgqsbbcqRwjf1AOJse4V3oD80S7RvaJKdNktw==
+	:subject:to:to; s=fm2; t=1762550635; x=1762637035; bh=D6kfUPucH9
+	oOS/lDQX1ftIKnAoCtTpnIJTJSlUc6L/E=; b=kg+SpTV0VgPWWJ+XfvGrhgB3+5
+	j981G0HfDRMJuJ+c8xz1RgzVuzAThwaUSuCM0uyexkAokOdK4ApPkzQeaVRxK0Nh
+	2vZ3m7AqbSqSxwJWj4GP3quNcMprO325QmO1SFI2/RtEuNhAL7d45t2SWrMZDm7K
+	d3g8Q1ZkWtb88TcOk2AHt/vtbbyv34U2jajuRjFaBQ4sGAIbH8qAarQyvM/InK5r
+	mekFyNwosMr9EmmLsqtNEUEVV0Aeuwng6zwW1x0t/P53aVAmd3kAx0LaUFCEt5pK
+	j+TVGiCgRKkZn/CSRvY/JKcPK4G7ku95MgmoJKKW8uyZ3/evGs85uJBb3weQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762549410; x=1762635810; bh=+6jTytPhWdM33JP4lp9P7pQdDYp+VOMrZe5
-	Gu1obj+s=; b=vI3Lbfonn5mKhdtdC5IGBYd/Vwiy3jK27u6GgOZ3P7rQhpsEYez
-	BzV2VeHeKGNiHOTLd6dOlxjDTBxpubu2Aa5wLTsr5horJcz9KsULjCg9l1DBvX/V
-	xNnC1F6hh0dKggaD935QHd7FgwvNFsH1tLJfvGDRD4QHWrTad2R40i1VkzaA4k0l
-	4u7XTKvrQL3u46kCbNkIwk2V8eZHFMqsHgeUWYIdf+B2m1ORmq1ulhjX42xtLQTN
-	XOdR7gs5ylYjknEa1/qNz8iiilbWjs4IxAKRhKohTfK3YiCutFkXgKDyne2tBN+R
-	kw5OX7pyoCrNXJqGxOqQEmsqWhBWWGkgq2A==
-X-ME-Sender: <xms:ol4OaddaSmaq9o2jqkKuoRk62sSzwxRb9dpo1nDbidSFB81Wimv4OQ>
-    <xme:ol4OaYyzvXZJay6_Itl6FaB08tRAUlU5OcBZYA75O9s9ins6lWAeM0ZUpMootNOmb
-    4w28iPCyYS65hNDxc4wynXcvcTybrS3HJeiGqw4u2eu4QhXbO5vMw>
-X-ME-Received: <xmr:ol4Oac-o1HkK-iS4uLy0xna68dZx4glAO5LD9D64ohy3WIRa2kTUcRH6Ch5RdPy94kKoksGNxSeVURlfHN6HyvPbVtzqr2pMAKdI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduledtieelucetufdoteggodetrf
+	1762550635; x=1762637035; bh=D6kfUPucH9oOS/lDQX1ftIKnAoCtTpnIJTJ
+	SlUc6L/E=; b=TmWAm/aFPO4kn4j2ZEWRrDM/RfWbNDIWkvV7JDDaHzuBiD+aqVE
+	Nm7DrocEoads1IbYLc9YzgLAIVJ/mR3SnEdvPRsTQEQhOo+yynXTwLJu6sAt/v10
+	VEUnXvuNK/l7wbIMJOtRpl/OJIyOLsyUmg1SNw343ErYhHj+zbVW7LQ0pnH4ZBZV
+	/Fl3CtN8fxNAK1r76zaF8zW65ehQjikGX4Epxtf57VofsrKa/g22jHY6i9qdYibq
+	pw/t4gdvt1MZlclhsN2pFp+CeyDASFIV89N+Gep3RbKDxZBUYS+j3QZC+FwXxFOy
+	r8FIU0Vtfn3LrinrQZGfKi/s4MLdJNQsMnA==
+X-ME-Sender: <xms:a2MOaSO2w5kvdHetdt7GKwhMREQ38aOFWtDt5ysm7FXZ6PFUx-pLIA>
+    <xme:a2MOaTMDCo8EjncLTBJ9f4IyliqCv8NVOr9RWxwcDrDvL1enhMWXdIDVQFNy27s3d
+    -4XcE1UkTKwpHjQsr6FxRjFvewIqVyETSbAN-KYDd8TJJ8c6J3J0Rg>
+X-ME-Received: <xmr:a2MOabgKa_4AQ9y75q_0BuVhp01Jb3FE66nwaXGrbozKCAfFzbPaigwMd7yYQZ6_uKEbG9rSJ8WHv3NPw8NPyo3rbW1w8ILvl9TO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduledtjeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    htvghrnhepgfetjeegudevueetieduhffhgedutdejhfejvdffleetlefhtdevjeeuhedu
+    ffeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
     dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
     pdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
     htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
@@ -63,14 +63,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduledtieelucetufdote
     sehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhope
     hjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
     tghomh
-X-ME-Proxy: <xmx:ol4OaYiuvlcZ1OQE27NdMEYOCZPo5Vw_95h4tTPw-8t_wbPOeh7P7g>
-    <xmx:ol4OabHfq9RXcIVvsGr2ufUdvTfKKEp6NxR_jfGQYUr150Zi0onprQ>
-    <xmx:ol4Oaf-fLSHu02tQHvQwIiq6EsfayKILNK2bnf-ayOl8rnRzWL6ssQ>
-    <xmx:ol4Oaaw0qU339jYLl82WXc7v_RxkntDahRsLH0JP81wobkX1P-0yKg>
-    <xmx:ol4OaSdUjz7ZhUobLifi1dGNHmFJC6YKOTjR-ZRUnkQWPkMFESHfBU0I>
+X-ME-Proxy: <xmx:a2MOaYtOhH_h_ol8NvOsI8B0ktzFBFl4ukGGbiytFoMO6nwTbUiDeg>
+    <xmx:a2MOaZQnv2NUNTvggF8VCDzFZuiFO7n9D5MIUghSiW-znyCwhjDm_g>
+    <xmx:a2MOac0xsFx3ziexOEkJHZ867yJ5iPOBDpzrfpSpxaiuYGVdp-Ot6A>
+    <xmx:a2MOaeu9meY1btj02H3I4I66AffioiJTLYuzlDkEIjBX33NhlHR-mw>
+    <xmx:a2MOaVBIkVg3MRfjUC1YDXxlZewpnG3q-sxemnyn5-cL9GbUbKH2Abs3>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Nov 2025 16:03:29 -0500 (EST)
+ 7 Nov 2025 16:23:55 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
@@ -82,8 +82,8 @@ In-Reply-To: <pull.1981.v6.git.1762545177204.gitgitgadget@gmail.com> (Julia
 	Evans via GitGitGadget's message of "Fri, 07 Nov 2025 19:52:57 +0000")
 References: <pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com>
 	<pull.1981.v6.git.1762545177204.gitgitgadget@gmail.com>
-Date: Fri, 07 Nov 2025 13:03:28 -0800
-Message-ID: <xmqq4ir5ftcv.fsf@gitster.g>
+Date: Fri, 07 Nov 2025 13:23:53 -0800
+Message-ID: <xmqqseepedue.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,58 +95,46 @@ Content-Type: text/plain
 
 "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Julia Evans <julia@jvns.ca>
->
-> Git very often uses the terms "object", "reference", or "index" in its
-> documentation.
+>     changes in v6:
+>     
+>      * Make punctuation more consistent (from Patrick's review)
 
-Not about the updated text (which I haven't carefully read yet), but
-we'd need this squashed in to avoid xml that does not validate when
-using AsciiDoc (not Asciidoctor) to format gitdatamode.7
-documentation.
+Good.
 
-    XMLTO gitdatamodel.7
-xmlto: /home/gitster/w/git.git/Documentation/gitdatamodel.xml does not validate (status 3)
-xmlto: Fix document syntax or use --skip-validation option
-Document /home/gitster/w/git.git/Documentation/gitdatamodel.xml does not validate
+>      * Explain more about when exactly amended commits will get deleted
+>        (when their reflog entry expires), from Junio's review
 
-Perhaps I forgot to send this after queuing the previous round, even
-though it was queued on top of the previous round in 'seen'.  The
-patch still applies cleanly to this version, and seems to fix the
-breakage for me.
+Looked good.
 
-   ... goes and looks ...
+>      * Be more explicit that there are only 5 file modes in Git (from
+>        Junio's review)
 
-Ah, no, I did not forget.  The same patch is in the review thread of
-the previous round:
+I find "These are all of the file modes in Git" hard to read and
+understand, and more importantly, does not imply that we won't be
+adding any others strongly enough, than something like "Git uses
+only the following modes to represent the objects it stores".
 
-    https://lore.kernel.org/git/xmqqcy62213a.fsf@gitster.g/
+>      * Make tag object description clearer (from Junio's review)
 
+OK.
 
+>      * We had a long discussion about the phrasing of "A branch refers to a
+>        commit ID" but I didn't come up with any ideas for how to improve the
+>        phrasing so I left it as is.
 
- Documentation/gitdatamodel.adoc | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I gave you something that is clearly an improvement there, though.
+Just like a tag object records "the ID of the object it references",
+a branch records "the ID of the commit it references".
 
-diff --git a/Documentation/gitdatamodel.adoc b/Documentation/gitdatamodel.adoc
-index 1cefbb4833..eaab3f800b 100644
---- a/Documentation/gitdatamodel.adoc
-+++ b/Documentation/gitdatamodel.adoc
-@@ -18,13 +18,13 @@ means when the documentation says "object", "reference" or "index".
- 
- Git's core operations use 4 kinds of data:
- 
--1. <<objects,Objects>>: commits, trees, blobs, and tag objects
-+1. <<object,Objects>>: commits, trees, blobs, and tag objects
- 2. <<references,References>>: branches, tags,
-    remote-tracking branches, etc
- 3. <<index,The index>>, also known as the staging area
- 4. <<reflogs,Reflogs>>: logs of changes to references ("ref log")
- 
--[[objects]]
-+[[object]]
- OBJECTS
- -------
- 
--- 
-2.52.0-rc1-455-g30608eb744
+Another thing we discussed and a better alternative offered during
+the last round was "base directory", to which Patrick mentioned 
+"we rather consistently use 'root tree'"
+
+ cf. https://lore.kernel.org/git/aQhcbHJjiI5GtV6Y@pks.im/
+
+Other than a few minor points I pointed out above, and the broken
+xml id/idref that does not validate, this round looks good to me.
+
+Thanks.
+
 
