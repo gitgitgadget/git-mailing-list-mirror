@@ -1,85 +1,86 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B5E331A75
-	for <git@vger.kernel.org>; Fri,  7 Nov 2025 16:30:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DDE27F736
+	for <git@vger.kernel.org>; Fri,  7 Nov 2025 16:41:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762533024; cv=none; b=b2a0bFCsJ7ojPAygAFqiANHbupmD/mGL/mbmMgwNqzN0f8rH68KjmtS/dudegQUhLzYrI32xc4jw/pmA12je7VV7tXS77flb13qtdkjpIRkGgqdxnVeHqAH+wL7JbARZwjcRI5FSA5PFH8ghdhIIcnM5B6yv4WVbuBmVnBk/bJU=
+	t=1762533684; cv=none; b=TRC8itT/Z69/bre9r6ydy0/D+QTEiMxyBnuHxQaI5IkybeXKkx7w/g0n3cCEzbtwtYZbOYejzL1uzsXVx/6bf6YEGpZ3ieulYzfdX/K7c9JQDTZICpJffXxJC2BnZ7CkmYX5P0wvERqeokZ/ZmXzWQ6EZa3Ys1XPxnWtGO+vcew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762533024; c=relaxed/simple;
-	bh=ntpVJV4HR/XnYWpgqzULCVzN4FHmeXKgcSNYZ1+9ePA=;
+	s=arc-20240116; t=1762533684; c=relaxed/simple;
+	bh=92kWemCGPhJ0RxZZSKspuAFwlC2T/ex4E906aTwbJGg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sNpfQBUDhXyk4/WgN/cDgmtp4dyeYCGcMM5r34cD7bMxPap6ce1dUXC6qAeLfnkGrnNoTt+932trxcp2xVdE5OQ68/1giBFC1nu1VaapQsgsUajKAQYJjL5U1kTct+USuCovCJfm5CeCGwKYJPtF14cQevnYqAHQh+O4gUs4c94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ewJdoqVs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C0d7KoKp; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=iqUGrrv5OqqwFdeU+XhymUojH6Bxji3vyBUxcYvHfA4x8SOCBnifczRE9f1H43EYhDev7pjXSXKYWOHrbEXBaRDkWYCgnMq3eWB4MD2W65hYdcStD2/VbIh3Q6E33dtxnFupc8K6WXlBcdF1X6SWgoHO0ku/g0bvW18oMr2SrZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lc+MtAML; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yooYWbZL; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ewJdoqVs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C0d7KoKp"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5EFBB1D00141;
-	Fri,  7 Nov 2025 11:30:21 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lc+MtAML";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yooYWbZL"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B741E7A0158;
+	Fri,  7 Nov 2025 11:41:21 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 07 Nov 2025 11:30:21 -0500
+  by phl-compute-05.internal (MEProxy); Fri, 07 Nov 2025 11:41:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762533021; x=1762619421; bh=B8EHJyx7Xt
-	wMMe3WUhiqxW0X8MN12Al+RN5zKKXOotw=; b=ewJdoqVsPZOmkV2XmxZ+6N28jS
-	DV0Lkq+qYrlWh+33aiiqe3aAPJNBoGY92Lk126ZjQ7XeTlAmn/eavRmK0HSHIO6Y
-	UaG0m0DqM8ARIJ+vAAop2qw1tBfYgls+7d7G0cehit7ir3ZDaJa0PJaJ8EqhdxgN
-	gxMht5TnPwGKFBKjUJOKuQ8/OjbAyqjZvmzEjQSJa30x9MbHLUuejls10nNQd+6c
-	ckpNFGaWU5qp0phI8zVFiYam4igQcy2RK+aD64F3olX9QsjEibX1ANaMAni9T7ep
-	i/CoNFdoVmqiEkm0VWFY25Q2bbycCd7q1MO344DH7tl7sRrB7mp64luA3Smg==
+	:subject:to:to; s=fm2; t=1762533681; x=1762620081; bh=nc0kejgySz
+	g9gDBzoQwrzPE/EXS8dJtJnjUz1TzdKCs=; b=lc+MtAMLJBLZ9KFa3W5JUcD6Vb
+	mrIqtkBgsQax9Z6uoToWcCR1RnYSH/bFeRBfMzqTPTENWCyEYCBDhblhQHjDgExZ
+	VZ+CJrQR9igucpqO9RXFKIeDILmCcnipxmg9tpS0ww828dA6WdYkS3zpM64jEO8/
+	5NDUrXtKMUerd+5unyHoOvgpGEm8LYrX/I2a+6L2ef2tQ7/EAJOvC/rVaXMA5pl2
+	zEkcDXSVYR/MiLqd5N6KXp8VytJ9vLG5nGWRKiiSGWBN/nkuPEfbfd9pRSG4RLQO
+	IR+woM3LAEeHzTVallQaDa5PXabnx3X3v1slOLer39tHmsPCnks627SKEEUw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762533021; x=1762619421; bh=B8EHJyx7XtwMMe3WUhiqxW0X8MN12Al+RN5
-	zKKXOotw=; b=C0d7KoKp7mBHICaIuQXSTCIzCVJypycfp2e1YZqEVkM3FxohysA
-	wjrsWexGELdttT4Mpvh6Ge/jBC/K3+AI5u1IQUg2xYIya4oYGs5a2uRUoTnONiBm
-	HBobekLXU1Se98oondquxubg88pp1MggbBYH5p+zQfuNM8DQMLKzFEXeB9YsDtgR
-	0YrxwA+diM1W4ENCiem0+zMqnXeXUHmYxg9yMZ3MZYyEdmcHTdSOBtBfHGIxubbp
-	uFtxfCK8+CBeTa1LwQ+vs5HYeoc2/SoU7F+KUSWahNRJDnfS9lDSQXP7XGEUH2Ft
-	47q0qPNM8fS/eFvgCVVv3/gWXpUqSvahTow==
-X-ME-Sender: <xms:nB4OaYXvZqPlJaillaFAPsKh868YfMwIjFqJ4C-nlxRVh4CO-K8mhA>
-    <xme:nB4OaaaHwQsWgh-Wmdb7PFMmkVgZNQo0dl8U2KKl031Vskl51UKriZybPHcYR3zRx
-    HGjnxPuKE6-WrhFF8OJAXmZfo1Wn5V_KxAS0lyyxdQ38Jy6R_OTkAw>
-X-ME-Received: <xmr:nB4OaW0bj4-mf_sRgP_YxQyvEQ8oClYE6S9aWidA6aALdxR78CQ8byjiBzmmUE10-7cU1GgnRZxW1kydRrdR_YXuWlSJUmS5sHHO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduledtudehucetufdoteggodetrf
+	1762533681; x=1762620081; bh=nc0kejgySzg9gDBzoQwrzPE/EXS8dJtJnjU
+	z1TzdKCs=; b=yooYWbZLiTxhBTPexmiCXedCWz98EU141mQ4nwBgLCwbzQ6Tskc
+	1la/laAjV++u8f5BYIJUl6NCIeQNLTLe04JE1XVUV5ylbtIvLDq0Lbm805caJ5Wj
+	cPLfhSNdNeGafIHDxveGnay71cJ8/vtTlFL1S5kyT8f9rrnGa0UD7o7kCVfRGTKj
+	lYE/POcC9htM/4qJQfFgsKdrsr6hSbJU/1EKAr+2VqMdE4oR/qOmb8rUSHVck6zD
+	BNHigtkNCgpueWGHdaIWp8Ao1tZ3HO//c9Xd8cLVO5DzPCULK3h5a4tPEq3PdpA3
+	V/+/xrABCvXJazb6sgOq/qwmksdiBrsWbKw==
+X-ME-Sender: <xms:MSEOaZ-5upb74152z2T4iWYZXvoKQ4lGuh8dabYVaqCPB_SHzuo9zA>
+    <xme:MSEOaUnJBgy9fi0S36vaFO-cT1d84RRzkJFTojv42TtauVDM3ofh7II5oXwTC7HfE
+    zwaI_v6UXBB_hHS3m2AwewyqSfcUweLcUoKLsCAZPw_gvq7pCeP>
+X-ME-Received: <xmr:MSEOafXcGbh_NFC1AxDAjh82hAToso8-6hTelPugpc0JtDxz_SCAQdOC5TXwUE9cNfHzoBOziIhkOaxyrqcLyO3WXCwdRDguekWu>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduledtudejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhhohhmrghsrdhuhhhlvgesmhgrihhlsghogidrth
-    huqdgurhgvshguvghnrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgi
-    druggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:nB4OaUjppM9MF61ZqRZs9Y1yOyA5J4zFQ-YGPc5yLRgzqrDccT0zWw>
-    <xmx:nB4OaSYXGZlBOn87oXqErnN9qomCCGPJVN-c8122z4VPkz-UssdLNg>
-    <xmx:nB4OacTlryDLXJOqbZYN4eIrgh3j6W94LDJxZANRmWpDI-h-PTVZjw>
-    <xmx:nB4OaVR_FV_k1pkLhLrAD0zvvxGT1d68h86FvG3Cx0TRZ3madaG0-Q>
-    <xmx:nR4Oaf3NmR2DVn2AvY0GX84ivSYvaf3O7dBfouv0-M9VaeAqb-1sXlnS>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:MSEOaZFcBE2BMW2y_2ZBFULrUpZK0tcV-CmkgXgbe_3pHRhDQw5iqg>
+    <xmx:MSEOabdsx_57XN9pOrJyAHYSjfHNXss73BdOwphd3FwqCmu0R-8_PQ>
+    <xmx:MSEOaaINRpW3qwAt6IsSjMbnICs57u77OChC-EHIdQtBqBhl0o0nyA>
+    <xmx:MSEOaQGipOI3H-IPMLCEFJWitjpexGu7ExFXsoYW7k3_k0xk6h5JQg>
+    <xmx:MSEOaQW-TB3uh8ngSK_8CqyBR0RgdD3YdXjaJJOMXJz4sstkBVHhhzEQ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Nov 2025 11:30:20 -0500 (EST)
+ 7 Nov 2025 11:41:20 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Thomas Uhle <thomas.uhle@mailbox.tu-dresden.de>
-Cc: <git@vger.kernel.org>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] wincred: align Makefile with other Makefiles in contrib
-In-Reply-To: <19573251-81e1-e07d-0f21-1f90ea5153a3@mailbox.tu-dresden.de>
-	(Thomas Uhle's message of "Fri, 7 Nov 2025 12:45:33 +0100")
-References: <3869ec21-e20d-cf9b-5913-6389c372a5f0@mailbox.tu-dresden.de>
-	<927c2094-3654-edec-072e-1f6ca7d91f96@gmx.de>
-	<xmqqv7jnhzmh.fsf@gitster.g>
-	<19573251-81e1-e07d-0f21-1f90ea5153a3@mailbox.tu-dresden.de>
-Date: Fri, 07 Nov 2025 08:30:18 -0800
-Message-ID: <xmqqwm41g605.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  jltobler@gmail.com
+Subject: Re: [PATCH v3 4/5] maintenance: add checking logic in
+ `pack_refs_condition()`
+In-Reply-To: <CAOLa=ZT6CnTRz5bX+Vv7pb_3oqV0XNSMEzh=57sF6O5bFYxWhQ@mail.gmail.com>
+	(Karthik Nayak's message of "Fri, 7 Nov 2025 07:58:21 -0800")
+References: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-0-d611a2a95cf5@gmail.com>
+	<20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-4-d611a2a95cf5@gmail.com>
+	<aQyNSOdPWAxm15U3@pks.im> <xmqqpl9vjiaj.fsf@gitster.g>
+	<CAOLa=ZT6CnTRz5bX+Vv7pb_3oqV0XNSMEzh=57sF6O5bFYxWhQ@mail.gmail.com>
+Date: Fri, 07 Nov 2025 08:41:19 -0800
+Message-ID: <xmqqo6pdg5hs.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,49 +90,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Thomas Uhle <thomas.uhle@mailbox.tu-dresden.de> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> Thank you!  Does this patch qualify for the final version 2.52.0 or is it 
-> already too late?  And if it is the latter, wouldn't it make sense to have 
-> it in an updated version 2.52.1?
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Patrick Steinhardt <ps@pks.im> writes:
+>>
+>>>> +	/* Check for all refs, similar to 'git refs optimize --all'. */
+>>>> +	string_list_append(optimize_opts.includes, "*");
+>>>> +
+>>>> +	if (refs_optimize_required(get_main_ref_store(the_repository),
+>>>> +				   &optimize_opts, &required))
+>>>> +		return 0;
+>>>> +
+>>>> +	clear_ref_exclusions(&excludes);
+>>>> +	string_list_clear(&included_refs, 0);
+>>>> +
+>>>> +	return required == true;
+>>>
+>>> Tiny nit: I think in our codebase this can be written in a more
+>>> idiomatic way by saying `!!required`.
+>>
+>> Comparing for equality with Boolean in general is stupid, as
+>> Booleans are designed to be usable as-is.  If it is "true", it is
+>> true, and you do not have to compare it with "true" to ascertain
+>> that it is true.
+>>
+>> I do 100% prefer "!!required" over "required == true" or "required
+>> != false" all the time, since it is more idiomatic, but I vaguely
+>> recall we had something that contradicts it in the CodingGuidelines
+>> document.  Perhaps we'd want to fix that.
+>>
+>
+> I could only find
+>
+>   - Some clever tricks, like using the !! operator with arithmetic
+>      constructs, can be extremely confusing to others.  Avoid them,
+>      unless there is a compelling reason to use them.
+>
+> I think its okay? This is more of a suggestion than a rule.
 
-Highly unlikely, I would suspect.
+"Unless there is a reason to use" sounds like an outright
+prohibition to me, though.
 
-In general, after -rc1 gets tagged, nothing will become candidate
-for the final release without a valid excuse.  One common reason is
-that it is a bugfix for a regression that was introduced during the
-cycle.  This clearly isn't one---the aspect of the wincred Makefile
-your patch fixes haven't changed since ccfb5bda (wincred: add
-install target, 2012-10-24).  People lived with that awkwardness for
-13 years.  They can live with it a few more months just fine.
+By the way, in the on-topic part of the discussion, "required" is a
+bool, the helper function that takes &required takes a pointer to a
+bool, and the function in question returns a bool.  So I should
+update my preference above.  "return required" is the most natural
+way to write, and it uses "bool" as it was designed to be used.
+When the reader knows that required is a bool already, "return
+!!required" is just as pointless as "return required == true".
 
-Those who _have_ been building wincred and installing it for their
-own (or for their colleages) would have an established procedure to
-work around the unusual arrangement the Makefile has (which you have
-fixed), and changing it this close to the final release would only
-add extra work on them, without helping anybody else.  A good time
-to merge such a change is early in a fresh cycle, so that they have
-longer preparation period to adjust their build infrastructure.
+If required and the helper that takes a pointer to it were "int",
+and this function returns a bool, then my original preference would
+apply; even if an "int required" has 3 in it, we probably can still
+say "return required" and the function would coerce that 3 into
+"true", but manually coercing it to 0/1 with !!required is more
+explicit and less confusing.
 
-There are reasons we may want to have changes newly floated after
--rc1 got tagged; for example, I merged 8d716966 (ci: update
-{download,upload}-artifact Action versions, 2025-11-06) after
-tagging -rc1.  There were another CI fix merged immediately before
--rc1.
+Thanks.
 
-The benefit any late changes that get merged has to outweigh the
-risks by a large margin, and CI changes like these have very small
-blast radius even if it goes wrong (nobody other than our developers
-would be affected, and they know what to do) while the damage
-unfixed CI job can cause is larger (CI can deliberately stop to make
-us realize that the service we rely on is being deprecated).
-
-There also is a message typofix merged post -rc1, to correct new
-messages that appeared during this cycle.  The output from the
-programs before the release candidate were properly localizable, but
-left unfixed, our translators need to translate typoed messages, and
-then when the typofix hits 'master' later, they have to adjust their
-translations by updating what original gets translated again.
-
-Is there comparable justification why wincred/Makefile change has to
-be in the upcoming release?  I do not think of any.
