@@ -1,41 +1,41 @@
 Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667412DAFBE
-	for <git@vger.kernel.org>; Fri,  7 Nov 2025 15:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C1032B991
+	for <git@vger.kernel.org>; Fri,  7 Nov 2025 15:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762528010; cv=pass; b=Ch/tTwNClR4KiOD2Wa2gdeQCXkeqITyly+9j5OD4cGakcetPeRAlSiaoBX+SpxyVBSQVncXZEXaS5O9vjI95WwIyuM40OTcM3P0Z2PqOu+GUyqreg+QPrsauTG4qh7gGl4fAQjTRZARgmVqu5kxDQt35rDRLA6msrXeGzMXQTX0=
+	t=1762528012; cv=pass; b=PIU0DeDhqYE/+nBTft6yU0HSkkuZJMbQ3tpDWQJtVKmmCH67nkt3TOCe9r74iQwbL930lJlWtbd4c8qwPcKFTCa9VCF2zO1D3jeHRaeBLirU1+h+nMz3k9GjMcXYkYgHYxoZAENgvr+Qk8gq/dTG9HW4zbtaYFpCTLtbBGFkAvk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762528010; c=relaxed/simple;
-	bh=n3v70NKwe61XCpGSh0h7HRYZ7FoenXPFdkKxUn8yHAE=;
+	s=arc-20240116; t=1762528012; c=relaxed/simple;
+	bh=TAufOcCoPQRLZT4abWa7F1H7K/VCXFu1kIW39fLCsIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LJE0oCuCwMHrMt8nwcmmaV4n+Mv46JV2LyseAH55znNI0nz1DJ6C2zhY3Me54bWhMpeVzdZPS3HWelwg9FlLARzp1aCNfgos9jG5NiQXeOs7sq7jUdj+iEfPIF9AvGx3wz9u/Cof2uk66HtTbG2m2JNk5JXfOTx/z3rqwmgq9Gc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=J59eQQGy; arc=pass smtp.client-ip=136.143.188.112
+	 MIME-Version; b=KXzwIwyCGDb1qWQaytgx1H4Tszi83BSIaW0CUukkl5sd/rSYNeaVdAGLAEaobCkNwi/U+A7yHHPk5oX/UFReElh571vbve15ybayavlVKmkmn9Cv9GFFdf8QIfaAKysX+ooQcBg7IKpAVix75I4CfPfmlBcRGEbgfOGxwvGiuwI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=c7GXIeBk; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="J59eQQGy"
-ARC-Seal: i=1; a=rsa-sha256; t=1762527985; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="c7GXIeBk"
+ARC-Seal: i=1; a=rsa-sha256; t=1762527981; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=La1Wl+xgZwCOtq2Yro6SQitNQwIpMW0/ohj1rmZ3/vTSa7eDnqzS2BrdTHmqq/j5hBIrm6GeCUI6iaEMOP2O+YHDMO6c9dvgzrmoPyOKW2Uc82IgebxG4zW8yP4nymW8D+krWMB9e4GslY8og76HNy7CpI3hcMYZn6YgmjjIc+U=
+	b=dRHCRsMOfzT+ojIrHCpdfvYe88HhbCfFH41yWm+s+T5xuPxNwEAzFbOwMgF1V0w7oHltrZQbD+S7OJvStJaxmXTBbcX/M+BXENaseQs8GAVoFSqOUaDWTzXsbQ45gqJqGXlFFrNkGFyhQ8Aj+2AQP3WvwdpEtxtHNoXdTMFH5IM=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1762527985; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=c4cq4eZbJss+tJX3Mh8LgilpJFJ/m8kG82TpmuCbw88=; 
-	b=bHB8TRzfq+Is9DxlwQRpl8/iNkp+RO6L1q6gXhhCUvoAgaj1zw5aRCg+USSAbG+YHgctBVMIeyEI0gSkZ+keSRsPUcvFIcAokdchq7L8sWKTgcBfGl4PvNj0HPPbDxnnIC3B5iQFM6N1HOT0iMHnlcxEUWvrgN9hDPgAkiPl91U=
+	t=1762527981; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=bdYcBaXWF6RY5d33R2D3Rr+o2HeG8Vf+6CIUitXG730=; 
+	b=gcu8/LWOI7zqnxN4NHyus4XYIuQnp6++zX4XscIvZAS7tDdVWroBrsT7XnQHZtCAUSrr47WxipU8UPxqnVdGY+AcJ0nW/x0e1/DF2UUI5vofftdOORuqHLmWRvzBLbBMXJiSeKmdSBEshr1K+3MTLiSnvo+a2pKiZoRyHBcnuSE=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762527985;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762527981;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=c4cq4eZbJss+tJX3Mh8LgilpJFJ/m8kG82TpmuCbw88=;
-	b=J59eQQGy9BPQ2JeHeaZ1P9+ECv6pWUZ7YV3QcFkdgYExw/4eZh0Mx/PcJBKqlBiG
-	AEYx4RWSsdYIYSRsObnOWkOccABIEWs3kwttO1YtOZOnA8HRJGBLC2GJYo5BfxijvF9
-	O0AZ0iH5LmT3mRzgzNkjcWjTH5UtPb6+vwsOfkuQ=
-Received: by mx.zohomail.com with SMTPS id 1762527983272205.67254580696954;
-	Fri, 7 Nov 2025 07:06:23 -0800 (PST)
+	bh=bdYcBaXWF6RY5d33R2D3Rr+o2HeG8Vf+6CIUitXG730=;
+	b=c7GXIeBkP68w9zDWC70jg5jJqe6OpWd5spgS3LES4sRhS7lVWV4tfgbP+FmVB0yJ
+	NasFtI8nJak2dxYc/v1HgeGT/GU+bVwYzPht025Ukb+lrbN7uzdqzUOV2weKzcw6jAJ
+	6AaAn9MVnZgJuGxLgVFA76l8Mz6kzuxFzeyNO6Lw=
+Received: by mx.zohomail.com with SMTPS id 176252797958417.447754283963945;
+	Fri, 7 Nov 2025 07:06:19 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -49,9 +49,9 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v4 2/4] builtin/credential-store: move is_rfc3986_unreserved to url.[ch]
-Date: Fri,  7 Nov 2025 17:05:45 +0200
-Message-ID: <20251107150547.3272180-3-adrian.ratiu@collabora.com>
+Subject: [PATCH v4 1/4] submodule--helper: use submodule_name_to_gitdir in add_submodule
+Date: Fri,  7 Nov 2025 17:05:44 +0200
+Message-ID: <20251107150547.3272180-2-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251107150547.3272180-1-adrian.ratiu@collabora.com>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
@@ -65,83 +65,74 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-is_rfc3986_unreserved() was moved to credential-store.c and was made
-static by f89854362c (credential-store: move related functions to
-credential-store file, 2023-06-06) under a correct assumption, at the
-time, that it was the only place using it.
+While testing submodule gitdir path encoding, I noticed submodule--helper
+is still using a hardcoded modules gitdir path leading to test failures.
 
-However now we need it to apply URL-encoding to submodule names when
-constructing gitdir paths, to avoid conflicts, so bring it back as a
-public function exposed via url.h, instead of the old helper path
-(strbuf), which has nothing to do with 3986 encoding/decoding anymore.
+Call the submodule_name_to_gitdir() helper instead, which was invented
+exactly for this purpose and is already used by all the other locations
+which work on gitdirs.
 
-This function will be used by submodule.c in the next commit.
+Also narrow the scope of the submod_gitdir_path variable which is not
+used anymore in the updated "else" branch.
 
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- builtin/credential-store.c |  7 +------
- url.c                      | 11 +++++++++++
- url.h                      |  2 ++
- 3 files changed, 14 insertions(+), 6 deletions(-)
+ builtin/submodule--helper.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/credential-store.c b/builtin/credential-store.c
-index b74e06cc93..bc1453c6b2 100644
---- a/builtin/credential-store.c
-+++ b/builtin/credential-store.c
-@@ -7,6 +7,7 @@
- #include "path.h"
- #include "string-list.h"
- #include "parse-options.h"
-+#include "url.h"
- #include "write-or-die.h"
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index fcd73abe53..2873b2780e 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -3187,13 +3187,13 @@ static void append_fetch_remotes(struct strbuf *msg, const char *git_dir_path)
  
- static struct lock_file credential_lock;
-@@ -76,12 +77,6 @@ static void rewrite_credential_file(const char *fn, struct credential *c,
- 		die_errno("unable to write credential store");
- }
- 
--static int is_rfc3986_unreserved(char ch)
--{
--	return isalnum(ch) ||
--		ch == '-' || ch == '_' || ch == '.' || ch == '~';
--}
--
- static int is_rfc3986_reserved_or_unreserved(char ch)
+ static int add_submodule(const struct add_data *add_data)
  {
- 	if (is_rfc3986_unreserved(ch))
-diff --git a/url.c b/url.c
-index 282b12495a..0fb1859b28 100644
---- a/url.c
-+++ b/url.c
-@@ -3,6 +3,17 @@
- #include "strbuf.h"
- #include "url.h"
+-	char *submod_gitdir_path;
+ 	struct module_clone_data clone_data = MODULE_CLONE_DATA_INIT;
+ 	struct string_list reference = STRING_LIST_INIT_NODUP;
+ 	int ret = -1;
  
-+/*
-+ * The set of unreserved characters as per STD66 (RFC3986) is
-+ * '[A-Za-z0-9-._~]'. These characters are safe to appear in URI
-+ * components without percent-encoding.
-+ */
-+int is_rfc3986_unreserved(char ch)
-+{
-+	return isalnum(ch) ||
-+		ch == '-' || ch == '_' || ch == '.' || ch == '~';
-+}
-+
- int is_urlschemechar(int first_flag, int ch)
- {
- 	/*
-diff --git a/url.h b/url.h
-index 2a27c34277..131a262066 100644
---- a/url.h
-+++ b/url.h
-@@ -21,4 +21,6 @@ char *url_decode_parameter_value(const char **query);
- void end_url_with_slash(struct strbuf *buf, const char *url);
- void str_end_url_with_slash(const char *url, char **dest);
+ 	/* perhaps the path already exists and is already a git repo, else clone it */
+ 	if (is_directory(add_data->sm_path)) {
++		char *submod_gitdir_path;
+ 		struct strbuf sm_path = STRBUF_INIT;
+ 		strbuf_addstr(&sm_path, add_data->sm_path);
+ 		submod_gitdir_path = xstrfmt("%s/.git", add_data->sm_path);
+@@ -3207,10 +3207,11 @@ static int add_submodule(const struct add_data *add_data)
+ 		free(submod_gitdir_path);
+ 	} else {
+ 		struct child_process cp = CHILD_PROCESS_INIT;
++		struct strbuf submod_gitdir = STRBUF_INIT;
  
-+int is_rfc3986_unreserved(char ch);
-+
- #endif /* URL_H */
+-		submod_gitdir_path = xstrfmt(".git/modules/%s", add_data->sm_name);
++		submodule_name_to_gitdir(&submod_gitdir, the_repository, add_data->sm_name);
+ 
+-		if (is_directory(submod_gitdir_path)) {
++		if (is_directory(submod_gitdir.buf)) {
+ 			if (!add_data->force) {
+ 				struct strbuf msg = STRBUF_INIT;
+ 				char *die_msg;
+@@ -3219,8 +3220,8 @@ static int add_submodule(const struct add_data *add_data)
+ 						    "locally with remote(s):\n"),
+ 					    add_data->sm_name);
+ 
+-				append_fetch_remotes(&msg, submod_gitdir_path);
+-				free(submod_gitdir_path);
++				append_fetch_remotes(&msg, submod_gitdir.buf);
++				strbuf_release(&submod_gitdir);
+ 
+ 				strbuf_addf(&msg, _("If you want to reuse this local git "
+ 						    "directory instead of cloning again from\n"
+@@ -3238,7 +3239,7 @@ static int add_submodule(const struct add_data *add_data)
+ 					 "submodule '%s'\n"), add_data->sm_name);
+ 			}
+ 		}
+-		free(submod_gitdir_path);
++		strbuf_release(&submod_gitdir);
+ 
+ 		clone_data.prefix = add_data->prefix;
+ 		clone_data.path = add_data->sm_path;
 -- 
 2.51.0
 
