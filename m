@@ -1,62 +1,62 @@
-Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7F928312F
-	for <git@vger.kernel.org>; Fri,  7 Nov 2025 15:58:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E657632E130
+	for <git@vger.kernel.org>; Fri,  7 Nov 2025 15:58:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762531105; cv=none; b=nxZfBDKmF5G578RWp03mjJ0lcQRrp4NV88nQ2ZFX0G0Y+icrP+zasX/9J4DGkdNQ+70/efQMaDYsZlX5GMOEo+2NbP3TxuoXcd8j7H47CJKsmZL/f3dSIYP85C2Kn1JLLdgTaxwWFCr5yXmHw2WO7beyd3FYlttqowFLo9vcSGQ=
+	t=1762531136; cv=none; b=pXMTe+aS+6ak/ASTLUkvyon7lP8exR2FDEagI0pKiqPUyulM1s88JPTExhEzNd055cVuC0kjxY8vmwcBLVAB5GjFnlFxneOfkRi9Pp5DpPl2DqgRuDyV5AgRhDAKlH0Qgdp0Sxy2nZlfc3lJXLrzI8cM9NafmigT3M10WKlxyB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762531105; c=relaxed/simple;
-	bh=aFjOLuq44YVw04Au/EWUN83b8u9Zuu/ArncrP+l2Fu0=;
+	s=arc-20240116; t=1762531136; c=relaxed/simple;
+	bh=nD7cd0XEM8DSstsjE1nVt1iu6TlOPA8Q3ZbQiKCbGUI=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jb3rRvTviiR9NJHrSQiRDTGvOEAkstiwUgXEjRcS5HXfhdjLwCQSp9UB7A695g4Qm+BY4VdJzy6l+OlgiGaUdH7J5+w6njPANaKxragDOdrY/rdyH124+S6MS26eXSSQeaeNaN5autMUL4YtdrQtKlbt+zaNbHw8Vw/EdRf8NfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RSZvkDJ9; arc=none smtp.client-ip=209.85.222.45
+	 To:Cc:Content-Type; b=GZkoOR/L8yg3FvChSImsZ02AudQdehNOp01iha868PAO3q0afMdriNl4uTxQKFXl9I7CsWDycVdGhwVVPR8ntq5QHxXGvnGn4gUy40bbWwXuaNQO6olSTf/zOSzAmdv5s9rncsNtMP5+sC4oLzRmYykUczTDyNtRSvD88mVAzeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mAb1HCQ6; arc=none smtp.client-ip=209.85.217.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RSZvkDJ9"
-Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-89019079fbeso256028241.2
-        for <git@vger.kernel.org>; Fri, 07 Nov 2025 07:58:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mAb1HCQ6"
+Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-5dd6fbe5091so352955137.1
+        for <git@vger.kernel.org>; Fri, 07 Nov 2025 07:58:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762531102; x=1763135902; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762531133; x=1763135933; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CG1F1mHMlfJof5QG/E/WPMlWAMiTeusSPFMr/cd0Zds=;
-        b=RSZvkDJ9Ei2Q0EvN4n86u1da4wvad57UmQJf4ilpheaY17XEXfovakXRVWYMysOCNv
-         rlayzEAFhlmdqDOYyGkrz5DLfCSGFlxZ7oPaVqSf9mNI0iJlbYj9TzrgbYd3WVT2GHfh
-         r8K6iPvapvSteNQoPBhoplZIgnV/xj/I/T/EJR/45g0wZtSLS+nMNU8WCXYVB3AUKwOd
-         D4vu0o9wwwLQl8YzDSOGEBSZMPzs+LKcFGF1CT4U99Zsm7Py9GUpaLpH0ed7tTsaiQjn
-         d/FaR7druN4s2fFnXoD5a0fJ7tDCw1rFX/EEHVZvhy/5ew0N9dumbD+0R7EnOnu4Ch5M
-         wk4A==
+        bh=vfkFcvlwrdgivGuMKxXGjTyj7IlIPttpSYFAcyoQpio=;
+        b=mAb1HCQ62N//1EJ1M/0ku3WFBdOmtbyGg9tfsDqnwDL47DvpY+biMATOG7ggQm2OFV
+         190Yywy/fnv8WP3DtUyCeaeCD0t7caDKWaZaqiy4g+N8+CYT9o/D36gHmxgmwAI19Qx9
+         1odUz67IxpNX/7XNPWXTNxDr+qrzpecNoO5TkN2fqIClR8o5MKZBMQL929odf4gaErWD
+         F9rpCajeXbfGIOWUsT/quUQYs6gc1RAXa+BPRS1NWhRopmDnWPDBtWPI/WXAwBEc/MSp
+         1cNA5I5yTw9YmNhZdXD173oPrheSF0gUv6lQIXhIHOFWocu/nrpnC6LgQJev9HlRXOOx
+         wBzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762531102; x=1763135902;
+        d=1e100.net; s=20230601; t=1762531133; x=1763135933;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=CG1F1mHMlfJof5QG/E/WPMlWAMiTeusSPFMr/cd0Zds=;
-        b=isw9ZGIhkURUfsaObcQaw6kc3/lEqaAXqnsJUxSD4Sx2YrjZKH8CKKOIIqfRwiqq0F
-         RCxH6CwxgFib78N7NHv3lan1tp4HMtDaQFQHD05d8rTsgqsHQfkVIGJsA9Ok6gvUNvH8
-         KaPNMeIuPdLO02OgZrgzBBVBt3M2stcB9qEvzEX00uGXTIvqxZnPm8sQxo6hiYsAdgdk
-         AO7eLGMFf9yahFVIfxdNrYQWKynb/nqeGZiqdEyWP5DExIbscv8ezsyvGkEFWY4w32mk
-         iRf5Lds612/wfRwnxuDwrv3+00fp3m+qhvZK8jILamc81kr8Vt2OXd2Ygf+i1HHnyGPG
-         AMiA==
-X-Gm-Message-State: AOJu0YwPOQg6r0dWH4aYeT461M6qKO65l/ZxDEWbA/JxRbjJEoQJUf5N
-	ltWu9TEWHiuYmL2rk0R0yp6LPII3BdB1JwXqbEYJSh0y/8PJdejTQDCNQgO/3uxK/250TL7QYx7
-	zquqLz4HG9FhdW9BW8D+vETyBd5So6pU=
-X-Gm-Gg: ASbGnct96V3KErTofVKeqIrTp3rqb12bCc5nkBrAcwyFGpuICghWofY1QT5AHqLV1HD
-	Md/Q66GfJDCthLRmTa5msAU7qJU0CFU9OUOWXGEhApnsMKzFEAlA728Bz5jIFdt4jDXivyxhk5E
-	KupKQJ7naVykZ+W78lhnjBRQ7Q9p2lFcIKMxZncHzP53N9e4JNWwR3EVbepak0qDw3BdW8mcd5L
-	EYaIyE1zLr7lNu5qGZ0WV0QEktbYMVbw49xiZisx5ancVtv43yBYxoXp7RkX1LuAl3Y0pC8cc6O
-	90Ai1rsjz0CYOV+T+mtu3A5VnIc=
-X-Google-Smtp-Source: AGHT+IHQTiXYC9TEl4JTxoEJ6ASwrj3TtI/kWDh1Jx+8xx1WpTxEnmDQLFurjgIKiGgmkG9u5EKJ6nROPk+TeDtpybk=
-X-Received: by 2002:a05:6102:3f10:b0:5db:23ed:3840 with SMTP id
- ada2fe7eead31-5ddb22a94b7mr1293446137.37.1762531102421; Fri, 07 Nov 2025
- 07:58:22 -0800 (PST)
+        bh=vfkFcvlwrdgivGuMKxXGjTyj7IlIPttpSYFAcyoQpio=;
+        b=i8ahtKhIc+DLgRLH/oDXkNNZQKMwEOtekuaeJYJJE96XsbufVftk8Pv9HNvHf5jNH0
+         BSKuaS6kcAsoIAZK76HnivymDbAptNV/ohbU40wmSjnCG2fxZ9zDUNczXR0+iKb/4GdN
+         8D4hgZeHyPZYrgehXqw64nooitdQ8hwK2B/EvaaVc8hNqnPg/N7xlio6ViYPtqsAfKUN
+         30Ipjd6T5wC7djRgJGEhjKI99nISRTAKoNuh3KZJMnd0sQs2xA+v3WzkB4Vvs7jQlR3+
+         xK3TxZYc9mQbETqhJlnO6eLalSxkAM1Q+ZGLnFcvQpDjlJPrEFbsMpPAL2PfHrP+rG5j
+         aGjw==
+X-Gm-Message-State: AOJu0YwOYOOkMS/o+aHZgClCgFHLI7BMbgNyZgun9TekEkb6GGr0naBe
+	rpyVPmlNRsK/LQ5Kr/kVYHjcUXDW+mleZRUSnm3ztRBldGt2NZc0cr86M/gnkcVIv9of8mORsvB
+	SGtaihfbPacqF93Af8+81qzpRs6h+V34=
+X-Gm-Gg: ASbGncs8Kj5h8qDvt6cwjR7dQn9hPDG4LnZkIjv+2voXVOiWPbW4+2vW9a8H6ij+Hzm
+	XGBb5QVOyJHK8etdUcsOJvuGK8hQZ/Nx7v2gfcmfOC77Tn84JQAikZFLe1ZYMLdmg3FsE4dnlIR
+	m0Xk2qQbryEVrED8z/NZAgC8YlcXQ0TfWs5yNr8Mj6YS9oA5djFStocjgrcvJJiK46QCaFeAHr4
+	VmveeQaWYmmvT/LppoD9X1bH1JhjJfiPH5Jw8gFeaLm0wAL3eXPJdFG/fsTimNdmWkIWTaIOpMy
+	DBp/dBdn/Zf/s5uuB5+2nSO6Xj8=
+X-Google-Smtp-Source: AGHT+IG+bEk3lcLVUknCg4s+/n4t+5cM08asG7wf4X+oH/1TJQ52h3mUjwQd/wIOSPV3CQg+HQfMC/LvCFb+saTE6W4=
+X-Received: by 2002:a05:6102:41a8:b0:5d3:fecb:e4e8 with SMTP id
+ ada2fe7eead31-5ddb20e6e72mr1160039137.5.1762531133233; Fri, 07 Nov 2025
+ 07:58:53 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 7 Nov 2025 07:58:21 -0800
+ HTTPREST; Fri, 7 Nov 2025 07:58:51 -0800
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 7 Nov 2025 07:58:21 -0800
+ HTTPREST; Fri, 7 Nov 2025 07:58:51 -0800
 From: Karthik Nayak <karthik.188@gmail.com>
 In-Reply-To: <xmqqpl9vjiaj.fsf@gitster.g>
 References: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-0-d611a2a95cf5@gmail.com>
@@ -68,15 +68,15 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 7 Nov 2025 07:58:21 -0800
-X-Gm-Features: AWmQ_bmxN5yvb3XjzyUuO42X9UDZF8Y_t_tRQ1gxNNKQiweGUjg1fMwDEsH0ITM
-Message-ID: <CAOLa=ZT6CnTRz5bX+Vv7pb_3oqV0XNSMEzh=57sF6O5bFYxWhQ@mail.gmail.com>
+Date: Fri, 7 Nov 2025 07:58:51 -0800
+X-Gm-Features: AWmQ_blWEDRCHRayCXLPaTdywn1M3tifpdR9iBSkdrZgqDZGthpBmRai4jldZes
+Message-ID: <CAOLa=ZT9_d5yKPP9g_pWZL23RkbMLN+SXgPCuSmto0mF6XCy4g@mail.gmail.com>
 Subject: Re: [PATCH v3 4/5] maintenance: add checking logic in `pack_refs_condition()`
 To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="0000000000004411380643034014"
+Content-Type: multipart/mixed; boundary="0000000000001a35490643034280"
 
---0000000000004411380643034014
+--0000000000001a35490643034280
 Content-Type: text/plain; charset="UTF-8"
 
 Junio C Hamano <gitster@pobox.com> writes:
@@ -134,23 +134,23 @@ I get what you mean, but with the context that required is of type
 With all this, perhaps `return required` as used in the v1 was the best
 approach. I'm happy to go either ways.
 
---0000000000004411380643034014
+--0000000000001a35490643034280
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: f08f515a079d9f5d_0.1
+X-Attachment-Id: 7ee564154c536fe9_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1rT0Z4c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMFVuQy85VXBXUXZOd0dLSmxLZ3lpSkJXK3Y3YTZYUgorcmpCR2owdTRp
-d0VlYWJIS1U2NVI1aDd5cWE3RGVsTW1IZWhaaU1EZjB0d1M0aHZBdUt4SkdubnFNUkMraXl0Cmhk
-SGxrVnVRSnZFYlVGOFllRjFkQjhPMFdRcGhMaDV1QTAxc1dPaGlxU2pwNU52c1BBRmYyb014UWdH
-bjcvZEwKN3lHcXJVaTExN1g4b1VUWXZjc0lhVGNMUWRTU1hzZmRZdE56S21ZUlM1KytObkJuVmMv
-N1lqM1RkMDJNUzRQVAo1V3N2Ym9UTCtCUDM1VHM3S0s3bUVPK0lFSEtTSkhLYUNVK3VLbGttYWVu
-cGNxN2x4aG9UTDdzdGZ5V2pvb1U3CjJEV25jcFpBM2p0ZklRUUpJQk5TN1RhQzJiT1BJdnlHZGI2
-SVRBcGUxaUhkQWVwUzRvZ0J0VWZMSW0yeUM1TlIKRWZWNWdBOGVMM296WnpmM1ZhVGtrcG5CWjlS
-Ti9YWFJ0SnRCRTQ4SDVGenpVekRpVldWdjhoVnJtZUFHMmRtMgpoRmNkN0tud1FoZXJYTDVpRlE1
-VDh5aGg0eVRBckpVVUJsOC8rVjN0MHFabGVDeDh3cWRObjQzeCtIaDg5ZzQyCkp1VWV3bnpDazJt
-bnp6VURNbFp4VHpWb0ZoYWg2RXY4M3BrbWhJdz0KPUtUOEQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rT0Z6UVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mM28wQy80cktHM3k3Y3FnZ2pXMkZLWThtVEt3ZzluWQorc1JlRFd6aWVN
+RUZuV1hmZmdaRjZNbVhIWE9QbDRUejhKSW1PNjdjams4TFlLTEJ3WS9vWDRRS3FaMXMxWXNwCkkw
+Z2dqeVFjTnBQdzJpWnA0YWZwWEtPc3YwOXlXaE8zeW9ydFN6T0NJOFYwK056MDRMaUQxc01KK2Jl
+MEcxUi8KRHZFNlB2YWllYm1aUjB4MjBqRjQybTk0eHp6NnNDOUd2YWtMaE5jKzlTZ0c5RElGeSs2
+RFZTQ2F0Nlg4K1V0NApNVU9KU2tkT09FUGFXSHFObngrbDJ6QlJKbW5xU2p2ZnJDbXJCbGhEUHBD
+K1M3RHJhdjVkSmg5cnhoOU1FVlZGCjZpK0JNclMzNWZzWUp0VysrdjE5ZnpIWVZSczNWeTVsaWJN
+RHd1ZlQyMTRnOHA3Qk1YM25ucDljWnlGRGt3V1MKeEprYUtMZlNTc3hoS0FXVFVkeUpFZ2p3a2FU
+L3NpaTFFZEdHcThzMTNvc2NvUklnWUpjSzh2MFJ6OXA3TENncQo0NjVMaDFpbEtrRW5iWjZoQ2xB
+VkNCRkY1Umt6ZS9aWGxneFdwVlBobTA3QTNFMTVZd2VpUHZDYVprU0xhV3ZvCksyTHByaHNmSkNU
+d3RBaFZ6bno2aE4vWXpnZDZ5ZVdCQS8vZGN2bz0KPVRmaEUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000004411380643034014--
+--0000000000001a35490643034280--
