@@ -1,41 +1,41 @@
 Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DE029E115
-	for <git@vger.kernel.org>; Fri,  7 Nov 2025 15:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80044327214
+	for <git@vger.kernel.org>; Fri,  7 Nov 2025 15:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762527999; cv=pass; b=fDESyYqM70QI3RmcmHGehUuOLwTBjNI0uaEHIqyxiv1u6Ci5VTKxNW6WVUFgMVtLe5p62iE8w94ALj/Bfmbn7aEVzLcYAMi1rEqw47jYsmH/XZO15yTcA8VF3m3HjyX8NwcR901avxN523PrA/37ArXQMGRnbTWW16B1VZwygIM=
+	t=1762528009; cv=pass; b=ZKlCBacPY35zd8xvg8LAve4FnmgEPPranm3QhsKgNsk6YW2menqQRc1rdJtE9GtZoM3xSn+PgWwx/yhlTsHTcK/riBIdRPQAmptabWuJZGAQ1AdTfaCOb9B9sNlSfndHA3v9mqNZsBASWVfB2+yVTVyorbIULDv2LWXEYRrt0b8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762527999; c=relaxed/simple;
-	bh=oZB/M47mf+wMxKkUNhGt6mh8HBkbFgl473i1zSzrTZQ=;
+	s=arc-20240116; t=1762528009; c=relaxed/simple;
+	bh=Ylz+QcvCEuM+Sh1MUhiwZo5VgXG7KSu1a6D1bHfW9zM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WOZHqGkt1j373HxbiZro2HFjBxN80abuUcOX/1+nBNqdE9ITLPWNYwfucF+3+0Vi+543b9a2FroEMU+rnwQVkGVbHfMtFUYB00EAZH18MzPKqSVmofSH7SwUlcY2WgJmzXfwe/dO5lJPCpo1ioa5jgifoNV/gjCf0kPgjPH3tsQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=W+05b+Gg; arc=pass smtp.client-ip=136.143.188.112
+	 MIME-Version; b=DhKwjIRjtup+kk7sM+dxtiUxjy2kZc5d80UQMPhrQEROaCfqtnhBWp3NEpWEk9X+2+v1g0HCxeqjup1uumclxqNsOZvvVokWj/IQ4HKvgm+Eyt9LZe3sHlUaVq2uq9Z8lPNAvWz+y/si79RQau6ZCvJ/7ee6Bq0nWopGZUp3ovo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=TQsTjzjT; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="W+05b+Gg"
-ARC-Seal: i=1; a=rsa-sha256; t=1762527977; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="TQsTjzjT"
+ARC-Seal: i=1; a=rsa-sha256; t=1762527989; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=drxiHf26adkywja+i3V8FFDDatDwjJUygiPiZn5K2rClJddm8a7VeH4xmc/+E4zzpauYTwxVOTwa5WU7y03FpQkxgVlgDAS2yvcdpuwDpZdeDa9zUaVEN1VjRiLqn5zV5fqtAy879wMj42MATHv0RGknLQ5j6Bh5NKEQUZO5g4I=
+	b=ebLnO2SVZIxVnd4J9jauxT87f/OFPHJLPh2iSuyB8aFDGanoZfW9yq9Wy+KkPkOex3Z90YlKUQNYD8C96vbfQEnGzmbBlnStPJgIG/b9a1/uFfS3v7TnpZwbdjkg7EPXLl7tGGC2jW8zTl15fcWV5qaYiXOEYx2pzp66Mj4zPsg=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1762527977; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=AiaX5RN9eKWs7CNZtRt+Y38F2PIImGpxYhh9TUrDzDg=; 
-	b=TEGwM4VZSmnb+Z094GvDQuPAPsAn+NhK4sbbwULw4GIlvQZYsaF3ldFrpdU0qeFfzmwpyVFE+QLBSiRxyK5fk4/azuklgd/195JQdooVEkE283MTeh3YVraUCj+7OaU6W3xKBQtyanlzM9QoyhopinBAEKrEAmoDBftJ8K+HRPs=
+	t=1762527989; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=x5c8P0A3vuu4Qseg/GfK1zE6xoSyz7m1d8QBF2ljTt4=; 
+	b=b9Xkvf58y7FF2POx1bCG1QnOXE9mXr6R5ZSGKJwcFzCNySPKA2f2XbuPxHqwW7BdPDDnvFmTQEWNlxHEZ84wUEQEd38jzyX31oMoGXPXY2YcGupwqFj6nvTG7v73Dg+nxGzahIw56D5uZ4ZJF3uQCaerIvhRAvziJonW7wPjRJc=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762527977;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762527989;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=AiaX5RN9eKWs7CNZtRt+Y38F2PIImGpxYhh9TUrDzDg=;
-	b=W+05b+GgA06DE/LpTxNJ53pRZ1mqVnCTF3rkDXkBybGT8e9eIeP/tQpuZuHaMlqD
-	RU38tmRFpfliWOpQDLGNA8kkFak/xk+JGBmfrOox+DTyVPHN0An1Pc7wSJG0bih43Vy
-	rwMiZWKSD+F8tRqznZm/+9OOJB8KD8n4wnr83b44=
-Received: by mx.zohomail.com with SMTPS id 1762527975575878.0654023510208;
-	Fri, 7 Nov 2025 07:06:15 -0800 (PST)
+	bh=x5c8P0A3vuu4Qseg/GfK1zE6xoSyz7m1d8QBF2ljTt4=;
+	b=TQsTjzjTPlKTGve/BK1QaJloZe9Ttckd5uPYxpmCpklK3k37GFq/RkPGHe+j4UmI
+	yU4pK2JL3CU3TZY0CKx7Cbk2dFvmf75iTovhDmQovcHYMgpgj/qOLrfZRJTufUM1Tva
+	elZCn9cs7PH0uIaxAW8FIg+n/arVo5dQ/fYoaSNI=
+Received: by mx.zohomail.com with SMTPS id 1762527987066762.1115910506599;
+	Fri, 7 Nov 2025 07:06:27 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -48,13 +48,15 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v4 0/4] Encode submodule gitdir names to avoid conflicts
-Date: Fri,  7 Nov 2025 17:05:43 +0200
-Message-ID: <20251107150547.3272180-1-adrian.ratiu@collabora.com>
+	Adrian Ratiu <adrian.ratiu@collabora.com>,
+	Brandon Williams <bwilliams.eng@gmail.com>
+Subject: [PATCH v4 3/4] submodule: add extension to encode gitdir paths
+Date: Fri,  7 Nov 2025 17:05:46 +0200
+Message-ID: <20251107150547.3272180-4-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+In-Reply-To: <20251107150547.3272180-1-adrian.ratiu@collabora.com>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20251107150547.3272180-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -64,506 +66,546 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Hello everyone,
+Add a submoduleEncoding extension which fixes filesystem collisions by
+encoding gitdir paths. At a high level, this implements a mechanism to
+encode -> validate -> retry until a working gitdir path is found.
 
-For those new to this series, we are adding an extension to encode submodule
-gitdir paths to avoid filesystem conflicts.
+Credit goes to Junio for coming up with this design: encoding is only
+applied when necessary, e.g. uppercase characters are encoded only on
+case-folding filesystems and only if a real conflict is detected.
 
-v4 continues with the simplifications started in v3, based on reviewer feedback
-(many thanks to everyone, especially to Junio and Patrick).
+To make this work, we rely on the submodule.<name>.gitdir config as the
+single source of truth for gitidir paths: the config is always set when
+the extension is enabled. Users who care about gitdir paths are expected
+to get/set the config and not the underlying encoding implementation.
 
-The biggest design change in v4 is that config submodule.<name>.gitdir becomes
-mandatory when extensions.submoduleEncoding is enabled, so instead of being just
-an optional override like in previous iterations, in v4 it's the centerpiece of
-design, the single point of truth from which submodule gitdir paths are located.
+This commit adds the basic encoding logic which addresses nested gitdirs.
+The next commit fixes case-folding, the next commit fixes names longer
+than NAME_MAX. The idea is the encoding can be improved over time in a
+way which is transparent to users.
 
-This allows users to not care about the specific encoding being used and also
-allows git to improveme the encoding implementation over time: everyone just gets
-the submodule gitdirs from the config after the extension is enabled.
-
-Another important change is that we do not encode everything by default when the
-extension is enabled: submodule_name_to_gitdir() validates multiple candidates
-and picks the best one and encoding only when required.
-
-As always this is based on latest master branch, I've merged into next/seen for
-any conflicts, pushed to GitHub [1] and ran the CI with all tests passing [2].
-
-I also added a rangediff between v3 and v4, which might help some reviewers,
-though it's rather big because we changed the config/encoding design like I
-mentioned above so it might be easier to give it a full review.
-
-Changes between v3 -> v4:
-* Replaced bmwill@google.com -> bwilliams.eng@gmail.com (Kristoffer)
-* Made the gitdir config the authoritative source of truth for all submodule
-  git dirs when the extension is enabled (Junio, Patrick)
-* Replaced the "encode everything by default" design with a stepwise/retry
-  validation in submodule_name_to_gitdir() to pick the best canditate (Junio)
-* Moved is_rfc3986_unreserved() to url.[ch] instead of strbuf (Junio)
-* Fixed a parallel job execution bug I introduced with the extension in v3 (Adrian)
-* Improved lib-verify-submodule-gitdir-path.sh to handle relative/abs paths (Adrian)
-* Fixed submodule.<name>.gitdir documentation vs code mismatch (Junio)
-* Defined the config together with the extension by squashing commits (Patrick)
-* Removed the A -> _a, B -> _b custom encoding in favor of a simplified percent
-  encodin which is only done when case-folding to allow uppercase chars (Junio)
-* Dropped patch with pathconf wrapper, as it's not required for basic encoding,
-  it can be added back if we implement sharding (Junio, Peff, Patrick)
-* Used repo_config_get_string_tmp to avoid a char* free call (Patrick)
-* Added comment to document is_rfc3986_unreserved() (Patrick)
-* Fixed heredoc body indentation (Patrick)
-* Fixed trivial doc markup conflict with upstream commit (Adrian)
-* Reworded multiple commits for clarity (Junio)
-
-Please let me know if you have any questions or other feedback.
-
-Thank you,
-Adrian
-
-[1] https://github.com/10ne1/git/tree/dev/aratiu/encoding-v4
-[2] https://github.com/10ne1/git/actions/runs/19170390360
-
-Range-diff against v3:
-1:  b2e317a8f6 ! 1:  7d34507692 submodule--helper: use submodule_name_to_gitdir in add_submodule
-    @@ Commit message
-         submodule--helper: use submodule_name_to_gitdir in add_submodule
-     
-         While testing submodule gitdir path encoding, I noticed submodule--helper
-    -    is still using a hardcoded name-based path leading to test failures, so
-    -    convert it to the common helper function introduced by commit ce125d431a
-    -    (submodule: extract path to submodule gitdir func, 2021-09-15)  and used
-    -    in other locations across the source tree.
-    +    is still using a hardcoded modules gitdir path leading to test failures.
-    +
-    +    Call the submodule_name_to_gitdir() helper instead, which was invented
-    +    exactly for this purpose and is already used by all the other locations
-    +    which work on gitdirs.
-    +
-    +    Also narrow the scope of the submod_gitdir_path variable which is not
-    +    used anymore in the updated "else" branch.
-     
-         Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
-     
-2:  17838ad13f < -:  ---------- submodule: add gitdir path config override
-3:  4fc7020f26 < -:  ---------- strbuf: bring back is_rfc3986_unreserved
--:  ---------- > 2:  1e609bdd1a builtin/credential-store: move is_rfc3986_unreserved to url.[ch]
-4:  dc6d5069ff ! 3:  c51fd58669 submodule: encode gitdir paths to avoid conflicts
-    @@ Metadata
-     Author: Adrian Ratiu <adrian.ratiu@collabora.com>
-     
-      ## Commit message ##
-    -    submodule: encode gitdir paths to avoid conflicts
-    +    submodule: add extension to encode gitdir paths
-     
-    -    This adds a new submoduleEncoding extension which encodes gitdir names
-    -    to avoid collisions due to nested gitdirs or case insensitive filesystems.
-    +    Add a submoduleEncoding extension which fixes filesystem collisions by
-    +    encoding gitdir paths. At a high level, this implements a mechanism to
-    +    encode -> validate -> retry until a working gitdir path is found.
-     
-    -    A custom encoding can become unnecessarily complex, while url-encoding is
-    -    relatively well-known, however it needs some extending to support case
-    -    insensitive filesystems, hence why A is encoded as _a, B as _b and so on.
-    +    Credit goes to Junio for coming up with this design: encoding is only
-    +    applied when necessary, e.g. uppercase characters are encoded only on
-    +    case-folding filesystems and only if a real conflict is detected.
-     
-    -    Unfortunately encoding A -> _a (...) is not enough to fix the reserved
-    -    Windows file names (e.g. COM1) because worktrees still use names like COM1
-    -    even if the gitdirs paths are encoded, so future work is needed to fully
-    -    address Windows reserved names.
-    +    To make this work, we rely on the submodule.<name>.gitdir config as the
-    +    single source of truth for gitidir paths: the config is always set when
-    +    the extension is enabled. Users who care about gitdir paths are expected
-    +    to get/set the config and not the underlying encoding implementation.
-     
-    -    For now url-encoding is the only option, however in the future we may
-    -    add alternatives (other encodings, hashes or even hash_name).
-    +    This commit adds the basic encoding logic which addresses nested gitdirs.
-    +    The next commit fixes case-folding, the next commit fixes names longer
-    +    than NAME_MAX. The idea is the encoding can be improved over time in a
-    +    way which is transparent to users.
-     
-    +    Suggested-by: Junio C Hamano <gitster@pobox.com>
-         Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-         Suggested-by: Patrick Steinhardt <ps@pks.im>
-    +    Based-on-patch-by: Brandon Williams <bwilliams.eng@gmail.com>
-         Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
-     
-      ## Documentation/config/extensions.adoc ##
-    -@@ Documentation/config/extensions.adoc: relativeWorktrees::
-    +@@ Documentation/config/extensions.adoc: relativeWorktrees:::
-      	repaired with either the `--relative-paths` option or with the
-      	`worktree.useRelativePaths` config set to `true`.
-      
-    -+submoduleEncoding::
-    ++submoduleEncoding:::
-     +	If enabled, submodule gitdir paths are encoded to avoid filesystem
-    -+	conflicts due to nested gitdirs or case insensitivity. For now, only
-    -+	url-encoding (rfc3986) is available, with a small addition to encode
-    -+	uppercase to lowercase letters (`A  -> _a`, `B -> _b` and so on).
-    -+	Other encoding or hashing methods may be added in the future.
-    -+	Any preexisting non-encoded submodule gitdirs are used as-is, to
-    -+	ease migration and reduce risk of gitdirs not being recognized.
-    -+
-    - worktreeConfig::
-    ++	conflicts due to nested gitdirs, case insensitivity or other issues
-    ++	When enabled, the submodule.<name>.gitdir config is always set for
-    ++	all submodulesand is the single point of authority for gitdir paths.
-    ++
-    + worktreeConfig:::
-      	If enabled, then worktrees will load config settings from the
-      	`$GIT_DIR/config.worktree` file in addition to the
-     
-      ## Documentation/config/submodule.adoc ##
-     @@ Documentation/config/submodule.adoc: submodule.<name>.active::
-    - submodule.<name>.gitdir::
-    - 	This option sets the gitdir path for submodule <name>, allowing users
-    - 	to override the default path or change the default path name encoding.
-    -+	Submodule gitdir encoding is enabled via `extensions.submoduleEncoding`
-    -+	(see linkgit:git-config[1]). This config works both with the extension
-    -+	enabled or disabled.
-    + 	submodule.active config option. See linkgit:gitsubmodules[7] for
-    + 	details.
-      
-    ++submodule.<name>.gitdir::
-    ++	This option sets the gitdir path for submodule <name>, allowing users to
-    ++	override the default path. Only works when `extensions.submoduleEncoding`
-    ++	is enabled, otherwise does nothing. See linkgit:git-config[1] for details.
-    ++
-      submodule.active::
-      	A repeated field which contains a pathspec used to match against a
-    + 	submodule's path to determine if the submodule is of interest to git
-    +
-    + ## builtin/submodule--helper.c ##
-    +@@ builtin/submodule--helper.c: static int module_summary(int argc, const char **argv, const char *prefix,
-    + 	return ret;
-    + }
-    + 
-    ++static int module_gitdir(int argc, const char **argv, const char *prefix UNUSED,
-    ++			 struct repository *repo)
-    ++{
-    ++	struct strbuf gitdir = STRBUF_INIT;
-    ++
-    ++	if (argc != 2)
-    ++		usage(_("git submodule--helper gitdir <name>"));
-    ++
-    ++	submodule_name_to_gitdir(&gitdir, repo, argv[1]);
-    ++
-    ++	printf("%s\n", gitdir.buf);
-    ++
-    ++	strbuf_release(&gitdir);
-    ++	return 0;
-    ++}
-    ++
-    + struct sync_cb {
-    + 	const char *prefix;
-    + 	const char *super_prefix;
-    +@@ builtin/submodule--helper.c: int cmd_submodule__helper(int argc,
-    + 		NULL
-    + 	};
-    + 	struct option options[] = {
-    ++		OPT_SUBCOMMAND("gitdir", &fn, module_gitdir),
-    + 		OPT_SUBCOMMAND("clone", &fn, module_clone),
-    + 		OPT_SUBCOMMAND("add", &fn, module_add),
-    + 		OPT_SUBCOMMAND("update", &fn, module_update),
-    +
-    + ## repository.c ##
-    +@@ repository.c: int repo_init(struct repository *repo,
-    + 	repo->repository_format_worktree_config = format.worktree_config;
-    + 	repo->repository_format_relative_worktrees = format.relative_worktrees;
-    + 	repo->repository_format_precious_objects = format.precious_objects;
-    ++	repo->repository_format_submodule_encoding = format.submodule_encoding;
-    + 
-    + 	/* take ownership of format.partial_clone */
-    + 	repo->repository_format_partial_clone = format.partial_clone;
-     
-      ## repository.h ##
-     @@ repository.h: struct repository {
-    @@ setup.h: struct repository_format {
-      	int compat_hash_algo;
-     
-      ## submodule.c ##
-    -@@ submodule.c: int validate_submodule_git_dir(char *git_dir, const char *submodule_name)
-    - 	char *p;
-    +@@
-    + #include "commit-reach.h"
-    + #include "read-cache-ll.h"
-    + #include "setup.h"
-    ++#include "url.h"
-    + 
-    + static int config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
-    + static int initialized_fetch_ref_tips;
-    +@@ submodule.c: int submodule_move_head(const char *path, const char *super_prefix,
-    + 	return ret;
-    + }
-    + 
-    ++/*
-    ++ * Find the last submodule name in the gitdir path (modules can be nested).
-    ++ * Returns a pointer into `path` to the beginning of the name or NULL if not found.
-    ++ */
-    ++static char *find_last_submodule_name(char *git_dir_path)
-    ++{
-    ++	const char *modules_marker = "/modules/";
-    ++	char *p = git_dir_path;
-    ++	char *last = NULL;
-    ++
-    ++	while ((p = strstr(p, modules_marker))) {
-    ++		last = p + strlen(modules_marker);
-    ++		p++;
-    ++	}
-    ++
-    ++	return last;
-    ++}
-    ++
-    + int validate_submodule_git_dir(char *git_dir, const char *submodule_name)
-    + {
-    + 	size_t len = strlen(git_dir), suffix_len = strlen(submodule_name);
-    +-	char *p;
-    ++	char *p = git_dir + len - suffix_len;
-    ++	bool suffixes_match = !strcmp(p, submodule_name);
-      	int ret = 0;
-      
-    -+	/*
-    -+	 * Skip these checks when extensions.submoduleEncoding is enabled because
-    -+	 * it fixes the nesting issues and the suffixes will not match by design.
-    -+	 */
-    -+	if (the_repository->repository_format_submodule_encoding)
-    +-	if (len <= suffix_len || (p = git_dir + len - suffix_len)[-1] != '/' ||
-    +-	    strcmp(p, submodule_name))
-    +-		BUG("submodule name '%s' not a suffix of git dir '%s'",
-    +-		    submodule_name, git_dir);
-    +-
-    + 	/*
-    + 	 * We prevent the contents of sibling submodules' git directories to
-    + 	 * clash.
-    +@@ submodule.c: int validate_submodule_git_dir(char *git_dir, const char *submodule_name)
-    + 	 * but the latter directory is already designated to contain the hooks
-    + 	 * of the former.
-    + 	 */
-    +-	for (; *p; p++) {
-    ++	for (; *p && suffixes_match; p++) {
-    + 		if (is_dir_sep(*p)) {
-    + 			char c = *p;
-    + 
-    +@@ submodule.c: int validate_submodule_git_dir(char *git_dir, const char *submodule_name)
-    + 		}
-    + 	}
-    + 
-    ++	/* tests after this check are only for encoded names, when the extension is enabled */
-    ++	if (!the_repository->repository_format_submodule_encoding)
-     +		return 0;
-     +
-    - 	if (len <= suffix_len || (p = git_dir + len - suffix_len)[-1] != '/' ||
-    - 	    strcmp(p, submodule_name))
-    - 		BUG("submodule name '%s' not a suffix of git dir '%s'",
-    ++	/* Prevent the use of '/' in names */
-    ++	p = find_last_submodule_name(git_dir);
-    ++	if (p && strchr(p, '/') != NULL)
-    ++		return error("submodule gitdir name '%s' contains unexpected '/'", p);
-    ++
-    + 	return 0;
-    + }
-    + 
-     @@ submodule.c: int submodule_to_gitdir(struct repository *repo,
-      	return ret;
-      }
-      
-    -+static void strbuf_addstr_case_encode(struct strbuf *dst, const char *src)
-    ++static int validate_and_set_submodule_gitdir(struct strbuf *gitdir_path,
-    ++					     const char *submodule_name)
-     +{
-    -+	for (; *src; src++) {
-    -+		unsigned char c = *src;
-    -+		if (c >= 'A' && c <= 'Z') {
-    -+			strbuf_addch(dst, '_');
-    -+			strbuf_addch(dst, c - 'A' + 'a');
-    -+		} else {
-    -+			strbuf_addch(dst, c);
-    -+		}
-    -+	}
-    ++	char *key;
-    ++
-    ++	if (validate_submodule_git_dir(gitdir_path->buf, submodule_name))
-    ++		return -1;
-    ++
-    ++	key = xstrfmt("submodule.%s.gitdir", submodule_name);
-    ++	repo_config_set_gently(the_repository, key, gitdir_path->buf);
-    ++	FREE_AND_NULL(key);
-    ++
-    ++	return 0;
-    ++
-     +}
-     +
-      void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
-      			      const char *submodule_name)
-      {
-    --	/*
-    ++	const char *gitdir;
-    ++	char *key;
-    ++
-    ++	repo_git_path_append(r, buf, "modules/");
-    ++	strbuf_addstr(buf, submodule_name);
-    ++
-    ++	/* If extensions.submoduleEncoding is disabled, use the plain path set above */
-    ++	if (!r->repository_format_submodule_encoding)
-    ++		return;
-    ++
-    ++	/* Extension is enabled: use the gitdir config if it exists */
-    ++	key = xstrfmt("submodule.%s.gitdir", submodule_name);
-    ++	if (!repo_config_get_string_tmp(r, key, &gitdir)) {
-    ++		strbuf_reset(buf);
-    ++		strbuf_addstr(buf, gitdir);
-    ++		FREE_AND_NULL(key);
-    ++		return;
-    ++	}
-    ++	FREE_AND_NULL(key);
-    ++
-    + 	/*
-     -	 * NEEDSWORK: The current way of mapping a submodule's name to
-     -	 * its location in .git/modules/ has problems with some naming
-     -	 * schemes. For example, if a submodule is named "foo" and
-    @@ submodule.c: int submodule_to_gitdir(struct repository *repo,
-     -	 * submodule.<name>.gitdir config in .gitmodules that repo
-     -	 * administrators can explicitly set. Nothing has been decided,
-     -	 * so for now, just append the name at the end of the path.
-    --	 */
-    - 	char *gitdir_path, *key;
-    - 
-    - 	/* Allow config override. */
-    -@@ submodule.c: void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
-    - 
-    - 	repo_git_path_append(r, buf, "modules/");
-    - 	strbuf_addstr(buf, submodule_name);
-    ++	 * The gitdir config does not exist, even though the extension is enabled.
-    ++	 * Therefore we are in one of the following cases:
-    + 	 */
-     +
-    -+	/* Existing legacy non-encoded names are used as-is */
-    -+	if (is_git_directory(buf->buf))
-    ++	/* Case 1: legacy migration of valid plain submodule names */
-    ++	if (!validate_and_set_submodule_gitdir(buf, submodule_name))
-     +		return;
-     +
-    -+	if (the_repository->repository_format_submodule_encoding) {
-    -+		struct strbuf tmp = STRBUF_INIT;
-    ++	/* Case 2: Try URI-safe (RFC3986) encoding first, this fixes nested gitdirs */
-    ++	strbuf_reset(buf);
-    + 	repo_git_path_append(r, buf, "modules/");
-    +-	strbuf_addstr(buf, submodule_name);
-    ++	strbuf_addstr_urlencode(buf, submodule_name, is_rfc3986_unreserved);
-    ++	if (!validate_and_set_submodule_gitdir(buf, submodule_name))
-    ++		return;
-     +
-    -+		strbuf_reset(buf);
-    -+		repo_git_path_append(r, buf, "modules/");
-    ++	/* Case 3: error out */
-    ++	die(_("Cannot construct a valid gitdir path for submodule '%s': "
-    ++	      "please set a unique git config for 'submodule.%s.gitdir'."),
-    ++	    submodule_name, submodule_name);
-    + }
-    +
-    + ## t/lib-verify-submodule-gitdir-path.sh (new) ##
-    +@@
-    ++# Helper to verify if repo $1 contains a submodule named $2 with gitdir path $3
-     +
-    -+		strbuf_addstr_urlencode(&tmp, submodule_name, is_rfc3986_unreserved);
-    -+		strbuf_addstr_case_encode(buf, tmp.buf);
-    ++# This does not check filesystem existence. That is done in submodule.c via the
-    ++# submodule_name_to_gitdir() API which this helper ends up calling. The gitdirs
-    ++# might or might not exist (e.g. when adding a new submodule), so this only
-    ++# checks the expected configuration path, which might be overridden by the user.
-     +
-    -+		strbuf_release(&tmp);
-    -+	}
-    - }
-    ++verify_submodule_gitdir_path() {
-    ++	repo="$1" &&
-    ++	name="$2" &&
-    ++	path="$3" &&
-    ++	(
-    ++		cd "$repo" &&
-    ++		# Compute expected absolute path
-    ++		expected="$(git rev-parse --git-common-dir)/$path" &&
-    ++		expected="$(test-tool path-utils real_path "$expected")" &&
-    ++		# Compute actual absolute path
-    ++		actual="$(git submodule--helper gitdir "$name")" &&
-    ++		actual="$(test-tool path-utils real_path "$actual")" &&
-    ++		echo "$expected" >expect &&
-    ++		echo "$actual" >actual &&
-    ++		test_cmp expect actual
-    ++	)
-    ++}
-     
-      ## t/meson.build ##
-     @@ t/meson.build: integration_tests = [
-    @@ t/t7425-submodule-encoding.sh (new)
-     +
-     +test_expect_success 'verify submodule name is properly encoded' '
-     +	verify_submodule_gitdir_path main legacy modules/legacy &&
-    -+	verify_submodule_gitdir_path main "New Sub" modules/_new%20_sub
-    ++	verify_submodule_gitdir_path main "New Sub" "modules/New Sub"
-     +'
-     +
-     +test_expect_success 'clone from repo with both legacy and new-style submodules' '
-    @@ t/t7425-submodule-encoding.sh (new)
-     +		cd cloned-encoding &&
-     +
-     +		test_path_is_dir .git/modules/legacy &&
-    -+		test_path_is_dir .git/modules/_new%20_sub &&
-    ++		test_path_is_dir ".git/modules/New Sub" &&
-     +
-     +		git submodule status >list &&
-     +		test_grep "$legacy_rev legacy" list &&
-    @@ t/t7425-submodule-encoding.sh (new)
-     +		git submodule update --init --recursive &&
-     +
-     +		test_path_is_dir .git/modules/legacy &&
-    -+		test_path_is_dir .git/modules/_new%20_sub &&
-    ++		test_path_is_dir ".git/modules/New Sub" &&
-     +
-     +		# Verify both submodules are at the expected commits
-     +		git submodule status >list &&
-    @@ t/t7425-submodule-encoding.sh (new)
-     +'
-     +
-     +test_done
-    +
-    + ## t/t9902-completion.sh ##
-    +@@ t/t9902-completion.sh: test_expect_success 'git config set - variable name - __git_compute_second_level
-    + 	submodule.sub.fetchRecurseSubmodules Z
-    + 	submodule.sub.ignore Z
-    + 	submodule.sub.active Z
-    ++	submodule.sub.gitdir Z
-    + 	EOF
-    + '
-    + 
-5:  775cf131bf < -:  ---------- submodule: error out if gitdir name is too long
--:  ---------- > 4:  01a5b10d5a submodule: fix case-folding gitdir filesystem colisions
-
-Adrian Ratiu (4):
-  submodule--helper: use submodule_name_to_gitdir in add_submodule
-  builtin/credential-store: move is_rfc3986_unreserved to url.[ch]
-  submodule: add extension to encode gitdir paths
-  submodule: fix case-folding gitdir filesystem colisions
-
- Documentation/config/extensions.adoc  |   6 +
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+Suggested-by: Patrick Steinhardt <ps@pks.im>
+Based-on-patch-by: Brandon Williams <bwilliams.eng@gmail.com>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+---
+ Documentation/config/extensions.adoc  |   6 ++
  Documentation/config/submodule.adoc   |   5 +
- builtin/credential-store.c            |   7 +-
- builtin/submodule--helper.c           |  30 ++++-
+ builtin/submodule--helper.c           |  17 +++
  repository.c                          |   1 +
  repository.h                          |   1 +
  setup.c                               |   7 ++
  setup.h                               |   1 +
- submodule.c                           | 155 ++++++++++++++++++++-----
- t/lib-verify-submodule-gitdir-path.sh |  24 ++++
+ submodule.c                           | 110 ++++++++++++++-----
+ t/lib-verify-submodule-gitdir-path.sh |  24 +++++
  t/meson.build                         |   1 +
- t/t7425-submodule-encoding.sh         | 161 ++++++++++++++++++++++++++
+ t/t7425-submodule-encoding.sh         | 146 ++++++++++++++++++++++++++
  t/t9902-completion.sh                 |   1 +
- url.c                                 |  23 ++++
- url.h                                 |   3 +
- 15 files changed, 387 insertions(+), 39 deletions(-)
+ 12 files changed, 294 insertions(+), 26 deletions(-)
  create mode 100644 t/lib-verify-submodule-gitdir-path.sh
  create mode 100755 t/t7425-submodule-encoding.sh
 
+diff --git a/Documentation/config/extensions.adoc b/Documentation/config/extensions.adoc
+index 532456644b..e33040fff5 100644
+--- a/Documentation/config/extensions.adoc
++++ b/Documentation/config/extensions.adoc
+@@ -73,6 +73,12 @@ relativeWorktrees:::
+ 	repaired with either the `--relative-paths` option or with the
+ 	`worktree.useRelativePaths` config set to `true`.
+ 
++submoduleEncoding:::
++	If enabled, submodule gitdir paths are encoded to avoid filesystem
++	conflicts due to nested gitdirs, case insensitivity or other issues
++	When enabled, the submodule.<name>.gitdir config is always set for
++	all submodulesand is the single point of authority for gitdir paths.
++
+ worktreeConfig:::
+ 	If enabled, then worktrees will load config settings from the
+ 	`$GIT_DIR/config.worktree` file in addition to the
+diff --git a/Documentation/config/submodule.adoc b/Documentation/config/submodule.adoc
+index 0672d99117..ddaadc3dc5 100644
+--- a/Documentation/config/submodule.adoc
++++ b/Documentation/config/submodule.adoc
+@@ -52,6 +52,11 @@ submodule.<name>.active::
+ 	submodule.active config option. See linkgit:gitsubmodules[7] for
+ 	details.
+ 
++submodule.<name>.gitdir::
++	This option sets the gitdir path for submodule <name>, allowing users to
++	override the default path. Only works when `extensions.submoduleEncoding`
++	is enabled, otherwise does nothing. See linkgit:git-config[1] for details.
++
+ submodule.active::
+ 	A repeated field which contains a pathspec used to match against a
+ 	submodule's path to determine if the submodule is of interest to git
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 2873b2780e..abd20eee53 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1208,6 +1208,22 @@ static int module_summary(int argc, const char **argv, const char *prefix,
+ 	return ret;
+ }
+ 
++static int module_gitdir(int argc, const char **argv, const char *prefix UNUSED,
++			 struct repository *repo)
++{
++	struct strbuf gitdir = STRBUF_INIT;
++
++	if (argc != 2)
++		usage(_("git submodule--helper gitdir <name>"));
++
++	submodule_name_to_gitdir(&gitdir, repo, argv[1]);
++
++	printf("%s\n", gitdir.buf);
++
++	strbuf_release(&gitdir);
++	return 0;
++}
++
+ struct sync_cb {
+ 	const char *prefix;
+ 	const char *super_prefix;
+@@ -3591,6 +3607,7 @@ int cmd_submodule__helper(int argc,
+ 		NULL
+ 	};
+ 	struct option options[] = {
++		OPT_SUBCOMMAND("gitdir", &fn, module_gitdir),
+ 		OPT_SUBCOMMAND("clone", &fn, module_clone),
+ 		OPT_SUBCOMMAND("add", &fn, module_add),
+ 		OPT_SUBCOMMAND("update", &fn, module_update),
+diff --git a/repository.c b/repository.c
+index 6faf5c7398..26a21c0d71 100644
+--- a/repository.c
++++ b/repository.c
+@@ -288,6 +288,7 @@ int repo_init(struct repository *repo,
+ 	repo->repository_format_worktree_config = format.worktree_config;
+ 	repo->repository_format_relative_worktrees = format.relative_worktrees;
+ 	repo->repository_format_precious_objects = format.precious_objects;
++	repo->repository_format_submodule_encoding = format.submodule_encoding;
+ 
+ 	/* take ownership of format.partial_clone */
+ 	repo->repository_format_partial_clone = format.partial_clone;
+diff --git a/repository.h b/repository.h
+index 5808a5d610..7e39b2acf7 100644
+--- a/repository.h
++++ b/repository.h
+@@ -158,6 +158,7 @@ struct repository {
+ 	int repository_format_worktree_config;
+ 	int repository_format_relative_worktrees;
+ 	int repository_format_precious_objects;
++	int repository_format_submodule_encoding;
+ 
+ 	/* Indicate if a repository has a different 'commondir' from 'gitdir' */
+ 	unsigned different_commondir:1;
+diff --git a/setup.c b/setup.c
+index 7086741e6c..bf6e815105 100644
+--- a/setup.c
++++ b/setup.c
+@@ -687,6 +687,9 @@ static enum extension_result handle_extension(const char *var,
+ 	} else if (!strcmp(ext, "relativeworktrees")) {
+ 		data->relative_worktrees = git_config_bool(var, value);
+ 		return EXTENSION_OK;
++	} else if (!strcmp(ext, "submoduleencoding")) {
++		data->submodule_encoding = git_config_bool(var, value);
++		return EXTENSION_OK;
+ 	}
+ 	return EXTENSION_UNKNOWN;
+ }
+@@ -1865,6 +1868,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 				repo_fmt.worktree_config;
+ 			the_repository->repository_format_relative_worktrees =
+ 				repo_fmt.relative_worktrees;
++			the_repository->repository_format_submodule_encoding =
++				repo_fmt.submodule_encoding;
+ 			/* take ownership of repo_fmt.partial_clone */
+ 			the_repository->repository_format_partial_clone =
+ 				repo_fmt.partial_clone;
+@@ -1963,6 +1968,8 @@ void check_repository_format(struct repository_format *fmt)
+ 				    fmt->ref_storage_format);
+ 	the_repository->repository_format_worktree_config =
+ 		fmt->worktree_config;
++	the_repository->repository_format_submodule_encoding =
++		fmt->submodule_encoding;
+ 	the_repository->repository_format_relative_worktrees =
+ 		fmt->relative_worktrees;
+ 	the_repository->repository_format_partial_clone =
+diff --git a/setup.h b/setup.h
+index 8522fa8575..66ec1ceba5 100644
+--- a/setup.h
++++ b/setup.h
+@@ -130,6 +130,7 @@ struct repository_format {
+ 	char *partial_clone; /* value of extensions.partialclone */
+ 	int worktree_config;
+ 	int relative_worktrees;
++	int submodule_encoding;
+ 	int is_bare;
+ 	int hash_algo;
+ 	int compat_hash_algo;
+diff --git a/submodule.c b/submodule.c
+index 35c55155f7..ceaff0c1aa 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -31,6 +31,7 @@
+ #include "commit-reach.h"
+ #include "read-cache-ll.h"
+ #include "setup.h"
++#include "url.h"
+ 
+ static int config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
+ static int initialized_fetch_ref_tips;
+@@ -2256,17 +2257,31 @@ int submodule_move_head(const char *path, const char *super_prefix,
+ 	return ret;
+ }
+ 
++/*
++ * Find the last submodule name in the gitdir path (modules can be nested).
++ * Returns a pointer into `path` to the beginning of the name or NULL if not found.
++ */
++static char *find_last_submodule_name(char *git_dir_path)
++{
++	const char *modules_marker = "/modules/";
++	char *p = git_dir_path;
++	char *last = NULL;
++
++	while ((p = strstr(p, modules_marker))) {
++		last = p + strlen(modules_marker);
++		p++;
++	}
++
++	return last;
++}
++
+ int validate_submodule_git_dir(char *git_dir, const char *submodule_name)
+ {
+ 	size_t len = strlen(git_dir), suffix_len = strlen(submodule_name);
+-	char *p;
++	char *p = git_dir + len - suffix_len;
++	bool suffixes_match = !strcmp(p, submodule_name);
+ 	int ret = 0;
+ 
+-	if (len <= suffix_len || (p = git_dir + len - suffix_len)[-1] != '/' ||
+-	    strcmp(p, submodule_name))
+-		BUG("submodule name '%s' not a suffix of git dir '%s'",
+-		    submodule_name, git_dir);
+-
+ 	/*
+ 	 * We prevent the contents of sibling submodules' git directories to
+ 	 * clash.
+@@ -2277,7 +2292,7 @@ int validate_submodule_git_dir(char *git_dir, const char *submodule_name)
+ 	 * but the latter directory is already designated to contain the hooks
+ 	 * of the former.
+ 	 */
+-	for (; *p; p++) {
++	for (; *p && suffixes_match; p++) {
+ 		if (is_dir_sep(*p)) {
+ 			char c = *p;
+ 
+@@ -2294,6 +2309,15 @@ int validate_submodule_git_dir(char *git_dir, const char *submodule_name)
+ 		}
+ 	}
+ 
++	/* tests after this check are only for encoded names, when the extension is enabled */
++	if (!the_repository->repository_format_submodule_encoding)
++		return 0;
++
++	/* Prevent the use of '/' in names */
++	p = find_last_submodule_name(git_dir);
++	if (p && strchr(p, '/') != NULL)
++		return error("submodule gitdir name '%s' contains unexpected '/'", p);
++
+ 	return 0;
+ }
+ 
+@@ -2581,29 +2605,63 @@ int submodule_to_gitdir(struct repository *repo,
+ 	return ret;
+ }
+ 
++static int validate_and_set_submodule_gitdir(struct strbuf *gitdir_path,
++					     const char *submodule_name)
++{
++	char *key;
++
++	if (validate_submodule_git_dir(gitdir_path->buf, submodule_name))
++		return -1;
++
++	key = xstrfmt("submodule.%s.gitdir", submodule_name);
++	repo_config_set_gently(the_repository, key, gitdir_path->buf);
++	FREE_AND_NULL(key);
++
++	return 0;
++
++}
++
+ void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
+ 			      const char *submodule_name)
+ {
++	const char *gitdir;
++	char *key;
++
++	repo_git_path_append(r, buf, "modules/");
++	strbuf_addstr(buf, submodule_name);
++
++	/* If extensions.submoduleEncoding is disabled, use the plain path set above */
++	if (!r->repository_format_submodule_encoding)
++		return;
++
++	/* Extension is enabled: use the gitdir config if it exists */
++	key = xstrfmt("submodule.%s.gitdir", submodule_name);
++	if (!repo_config_get_string_tmp(r, key, &gitdir)) {
++		strbuf_reset(buf);
++		strbuf_addstr(buf, gitdir);
++		FREE_AND_NULL(key);
++		return;
++	}
++	FREE_AND_NULL(key);
++
+ 	/*
+-	 * NEEDSWORK: The current way of mapping a submodule's name to
+-	 * its location in .git/modules/ has problems with some naming
+-	 * schemes. For example, if a submodule is named "foo" and
+-	 * another is named "foo/bar" (whether present in the same
+-	 * superproject commit or not - the problem will arise if both
+-	 * superproject commits have been checked out at any point in
+-	 * time), or if two submodule names only have different cases in
+-	 * a case-insensitive filesystem.
+-	 *
+-	 * There are several solutions, including encoding the path in
+-	 * some way, introducing a submodule.<name>.gitdir config in
+-	 * .git/config (not .gitmodules) that allows overriding what the
+-	 * gitdir of a submodule would be (and teach Git, upon noticing
+-	 * a clash, to automatically determine a non-clashing name and
+-	 * to write such a config), or introducing a
+-	 * submodule.<name>.gitdir config in .gitmodules that repo
+-	 * administrators can explicitly set. Nothing has been decided,
+-	 * so for now, just append the name at the end of the path.
++	 * The gitdir config does not exist, even though the extension is enabled.
++	 * Therefore we are in one of the following cases:
+ 	 */
++
++	/* Case 1: legacy migration of valid plain submodule names */
++	if (!validate_and_set_submodule_gitdir(buf, submodule_name))
++		return;
++
++	/* Case 2: Try URI-safe (RFC3986) encoding first, this fixes nested gitdirs */
++	strbuf_reset(buf);
+ 	repo_git_path_append(r, buf, "modules/");
+-	strbuf_addstr(buf, submodule_name);
++	strbuf_addstr_urlencode(buf, submodule_name, is_rfc3986_unreserved);
++	if (!validate_and_set_submodule_gitdir(buf, submodule_name))
++		return;
++
++	/* Case 3: error out */
++	die(_("Cannot construct a valid gitdir path for submodule '%s': "
++	      "please set a unique git config for 'submodule.%s.gitdir'."),
++	    submodule_name, submodule_name);
+ }
+diff --git a/t/lib-verify-submodule-gitdir-path.sh b/t/lib-verify-submodule-gitdir-path.sh
+new file mode 100644
+index 0000000000..62794df976
+--- /dev/null
++++ b/t/lib-verify-submodule-gitdir-path.sh
+@@ -0,0 +1,24 @@
++# Helper to verify if repo $1 contains a submodule named $2 with gitdir path $3
++
++# This does not check filesystem existence. That is done in submodule.c via the
++# submodule_name_to_gitdir() API which this helper ends up calling. The gitdirs
++# might or might not exist (e.g. when adding a new submodule), so this only
++# checks the expected configuration path, which might be overridden by the user.
++
++verify_submodule_gitdir_path() {
++	repo="$1" &&
++	name="$2" &&
++	path="$3" &&
++	(
++		cd "$repo" &&
++		# Compute expected absolute path
++		expected="$(git rev-parse --git-common-dir)/$path" &&
++		expected="$(test-tool path-utils real_path "$expected")" &&
++		# Compute actual absolute path
++		actual="$(git submodule--helper gitdir "$name")" &&
++		actual="$(test-tool path-utils real_path "$actual")" &&
++		echo "$expected" >expect &&
++		echo "$actual" >actual &&
++		test_cmp expect actual
++	)
++}
+diff --git a/t/meson.build b/t/meson.build
+index a5531df415..4187b35aee 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -884,6 +884,7 @@ integration_tests = [
+   't7422-submodule-output.sh',
+   't7423-submodule-symlinks.sh',
+   't7424-submodule-mixed-ref-formats.sh',
++  't7425-submodule-encoding.sh',
+   't7450-bad-git-dotfiles.sh',
+   't7500-commit-template-squash-signoff.sh',
+   't7501-commit-basic-functionality.sh',
+diff --git a/t/t7425-submodule-encoding.sh b/t/t7425-submodule-encoding.sh
+new file mode 100755
+index 0000000000..a42d358f5b
+--- /dev/null
++++ b/t/t7425-submodule-encoding.sh
+@@ -0,0 +1,146 @@
++#!/bin/sh
++
++test_description='submodules handle mixed legacy and new (encoded) style gitdir paths'
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-verify-submodule-gitdir-path.sh
++
++test_expect_success 'setup: allow file protocol' '
++	git config --global protocol.file.allow always
++'
++
++test_expect_success 'create repo with mixed encoded and non-encoded submodules' '
++	git init -b main legacy-sub &&
++	test_commit -C legacy-sub legacy-initial &&
++	legacy_rev=$(git -C legacy-sub rev-parse HEAD) &&
++
++	git init -b main new-sub &&
++	test_commit -C new-sub new-initial &&
++	new_rev=$(git -C new-sub rev-parse HEAD) &&
++
++	git init -b main main &&
++	(
++		cd main &&
++		git submodule add ../legacy-sub legacy &&
++		test_commit legacy-sub &&
++
++		git config core.repositoryformatversion 1 &&
++		git config extensions.submoduleEncoding true &&
++
++		git submodule add ../new-sub "New Sub" &&
++		test_commit new
++	)
++'
++
++test_expect_success 'verify submodule name is properly encoded' '
++	verify_submodule_gitdir_path main legacy modules/legacy &&
++	verify_submodule_gitdir_path main "New Sub" "modules/New Sub"
++'
++
++test_expect_success 'clone from repo with both legacy and new-style submodules' '
++	git clone --recurse-submodules main cloned-non-encoding &&
++	(
++		cd cloned-non-encoding &&
++
++		test_path_is_dir .git/modules/legacy &&
++		test_path_is_dir .git/modules/"New Sub" &&
++
++		git submodule status >list &&
++		test_grep "$legacy_rev legacy" list &&
++		test_grep "$new_rev New Sub" list
++	) &&
++
++	git clone -c extensions.submoduleEncoding=true --recurse-submodules main cloned-encoding &&
++	(
++		cd cloned-encoding &&
++
++		test_path_is_dir .git/modules/legacy &&
++		test_path_is_dir ".git/modules/New Sub" &&
++
++		git submodule status >list &&
++		test_grep "$legacy_rev legacy" list &&
++		test_grep "$new_rev New Sub" list
++	)
++'
++
++test_expect_success 'commit and push changes to encoded submodules' '
++	git -C legacy-sub config receive.denyCurrentBranch updateInstead &&
++	git -C new-sub config receive.denyCurrentBranch updateInstead &&
++	git -C main config receive.denyCurrentBranch updateInstead &&
++	(
++		cd cloned-encoding &&
++
++		git -C legacy switch --track -C main origin/main  &&
++		test_commit -C legacy second-commit &&
++		git -C legacy push &&
++
++		git -C "New Sub" switch --track -C main origin/main &&
++		test_commit -C "New Sub" second-commit &&
++		git -C "New Sub" push &&
++
++		# Stage and commit submodule changes in superproject
++		git switch --track -C main origin/main  &&
++		git add legacy "New Sub" &&
++		git commit -m "update submodules" &&
++
++		# push superproject commit to main repo
++		git push
++	) &&
++
++	# update expected legacy & new submodule checksums
++	legacy_rev=$(git -C legacy-sub rev-parse HEAD) &&
++	new_rev=$(git -C new-sub rev-parse HEAD)
++'
++
++test_expect_success 'fetch mixed submodule changes and verify updates' '
++	(
++		cd main &&
++
++		# only update submodules because superproject was
++		# pushed into at the end of last test
++		git submodule update --init --recursive &&
++
++		test_path_is_dir .git/modules/legacy &&
++		test_path_is_dir ".git/modules/New Sub" &&
++
++		# Verify both submodules are at the expected commits
++		git submodule status >list &&
++		test_grep "$legacy_rev legacy" list &&
++		test_grep "$new_rev New Sub" list
++	)
++'
++
++test_expect_success 'setup submodules with nested git dirs' '
++	git init nested &&
++	test_commit -C nested nested &&
++	(
++		cd nested &&
++		cat >.gitmodules <<-EOF &&
++		[submodule "hippo"]
++			url = .
++			path = thing1
++		[submodule "hippo/hooks"]
++			url = .
++			path = thing2
++		EOF
++		git clone . thing1 &&
++		git clone . thing2 &&
++		git add .gitmodules thing1 thing2 &&
++		test_tick &&
++		git commit -m nested
++	)
++'
++
++test_expect_success 'git dirs of encoded sibling submodules must not be nested' '
++	git clone -c extensions.submoduleEncoding=true --recurse-submodules nested clone_nested &&
++	verify_submodule_gitdir_path clone_nested hippo modules/hippo &&
++	verify_submodule_gitdir_path clone_nested hippo/hooks modules/hippo%2fhooks
++'
++
++test_expect_success 'submodule git dir nesting detection must work with parallel cloning' '
++	git clone -c extensions.submoduleEncoding=true --recurse-submodules --jobs=2 nested clone_parallel &&
++	verify_submodule_gitdir_path clone_parallel hippo modules/hippo &&
++	verify_submodule_gitdir_path clone_parallel hippo/hooks modules/hippo%2fhooks
++'
++
++test_done
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 964e1f1569..ffb9c8b522 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -3053,6 +3053,7 @@ test_expect_success 'git config set - variable name - __git_compute_second_level
+ 	submodule.sub.fetchRecurseSubmodules Z
+ 	submodule.sub.ignore Z
+ 	submodule.sub.active Z
++	submodule.sub.gitdir Z
+ 	EOF
+ '
+ 
 -- 
 2.51.0
 
