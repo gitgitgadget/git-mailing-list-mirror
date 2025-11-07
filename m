@@ -1,152 +1,142 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DDE27F736
-	for <git@vger.kernel.org>; Fri,  7 Nov 2025 16:41:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C46C23C516
+	for <git@vger.kernel.org>; Fri,  7 Nov 2025 17:16:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762533684; cv=none; b=TRC8itT/Z69/bre9r6ydy0/D+QTEiMxyBnuHxQaI5IkybeXKkx7w/g0n3cCEzbtwtYZbOYejzL1uzsXVx/6bf6YEGpZ3ieulYzfdX/K7c9JQDTZICpJffXxJC2BnZ7CkmYX5P0wvERqeokZ/ZmXzWQ6EZa3Ys1XPxnWtGO+vcew=
+	t=1762535801; cv=none; b=goW3HqtSWhHI3iH7QPlsUpeucbYjhIaXEM++MhUFqfjeI23v8hvtTPFO586O5oHOrLMI1aImCjeW7USIDeoUlCGUr7QZMLgGwHsD+Mmj0vEYA2VSJrnMwQu3qLI7e6/f6K4liteIWX/5volksmalsLDMSshYoi4ZnUOKzUgd1Ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762533684; c=relaxed/simple;
-	bh=92kWemCGPhJ0RxZZSKspuAFwlC2T/ex4E906aTwbJGg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iqUGrrv5OqqwFdeU+XhymUojH6Bxji3vyBUxcYvHfA4x8SOCBnifczRE9f1H43EYhDev7pjXSXKYWOHrbEXBaRDkWYCgnMq3eWB4MD2W65hYdcStD2/VbIh3Q6E33dtxnFupc8K6WXlBcdF1X6SWgoHO0ku/g0bvW18oMr2SrZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lc+MtAML; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yooYWbZL; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762535801; c=relaxed/simple;
+	bh=aBwr87zs3eRzMixiPq83LVGtD8gWjfGQkuDU1+WNyOc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dhdQgr3mb+ksFbHWHIsNz4e9Ll2ibck6lCHXY0VoWTTfFLA/rHAQ/mmtle8hWamSdU1gp1/VkXqBch2OlaqINQ+zsRJj5axUvsJwCbM43Fu5DFtKL2WslhUJsZbc+4W0bAolUlz8hcZbwSUs+PcPuHBeMnS4satVteyqWFyZq4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EwAQjp2R; arc=none smtp.client-ip=209.85.167.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lc+MtAML";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yooYWbZL"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B741E7A0158;
-	Fri,  7 Nov 2025 11:41:21 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 07 Nov 2025 11:41:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762533681; x=1762620081; bh=nc0kejgySz
-	g9gDBzoQwrzPE/EXS8dJtJnjUz1TzdKCs=; b=lc+MtAMLJBLZ9KFa3W5JUcD6Vb
-	mrIqtkBgsQax9Z6uoToWcCR1RnYSH/bFeRBfMzqTPTENWCyEYCBDhblhQHjDgExZ
-	VZ+CJrQR9igucpqO9RXFKIeDILmCcnipxmg9tpS0ww828dA6WdYkS3zpM64jEO8/
-	5NDUrXtKMUerd+5unyHoOvgpGEm8LYrX/I2a+6L2ef2tQ7/EAJOvC/rVaXMA5pl2
-	zEkcDXSVYR/MiLqd5N6KXp8VytJ9vLG5nGWRKiiSGWBN/nkuPEfbfd9pRSG4RLQO
-	IR+woM3LAEeHzTVallQaDa5PXabnx3X3v1slOLer39tHmsPCnks627SKEEUw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762533681; x=1762620081; bh=nc0kejgySzg9gDBzoQwrzPE/EXS8dJtJnjU
-	z1TzdKCs=; b=yooYWbZLiTxhBTPexmiCXedCWz98EU141mQ4nwBgLCwbzQ6Tskc
-	1la/laAjV++u8f5BYIJUl6NCIeQNLTLe04JE1XVUV5ylbtIvLDq0Lbm805caJ5Wj
-	cPLfhSNdNeGafIHDxveGnay71cJ8/vtTlFL1S5kyT8f9rrnGa0UD7o7kCVfRGTKj
-	lYE/POcC9htM/4qJQfFgsKdrsr6hSbJU/1EKAr+2VqMdE4oR/qOmb8rUSHVck6zD
-	BNHigtkNCgpueWGHdaIWp8Ao1tZ3HO//c9Xd8cLVO5DzPCULK3h5a4tPEq3PdpA3
-	V/+/xrABCvXJazb6sgOq/qwmksdiBrsWbKw==
-X-ME-Sender: <xms:MSEOaZ-5upb74152z2T4iWYZXvoKQ4lGuh8dabYVaqCPB_SHzuo9zA>
-    <xme:MSEOaUnJBgy9fi0S36vaFO-cT1d84RRzkJFTojv42TtauVDM3ofh7II5oXwTC7HfE
-    zwaI_v6UXBB_hHS3m2AwewyqSfcUweLcUoKLsCAZPw_gvq7pCeP>
-X-ME-Received: <xmr:MSEOafXcGbh_NFC1AxDAjh82hAToso8-6hTelPugpc0JtDxz_SCAQdOC5TXwUE9cNfHzoBOziIhkOaxyrqcLyO3WXCwdRDguekWu>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduledtudejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:MSEOaZFcBE2BMW2y_2ZBFULrUpZK0tcV-CmkgXgbe_3pHRhDQw5iqg>
-    <xmx:MSEOabdsx_57XN9pOrJyAHYSjfHNXss73BdOwphd3FwqCmu0R-8_PQ>
-    <xmx:MSEOaaINRpW3qwAt6IsSjMbnICs57u77OChC-EHIdQtBqBhl0o0nyA>
-    <xmx:MSEOaQGipOI3H-IPMLCEFJWitjpexGu7ExFXsoYW7k3_k0xk6h5JQg>
-    <xmx:MSEOaQW-TB3uh8ngSK_8CqyBR0RgdD3YdXjaJJOMXJz4sstkBVHhhzEQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Nov 2025 11:41:20 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  jltobler@gmail.com
-Subject: Re: [PATCH v3 4/5] maintenance: add checking logic in
- `pack_refs_condition()`
-In-Reply-To: <CAOLa=ZT6CnTRz5bX+Vv7pb_3oqV0XNSMEzh=57sF6O5bFYxWhQ@mail.gmail.com>
-	(Karthik Nayak's message of "Fri, 7 Nov 2025 07:58:21 -0800")
-References: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-0-d611a2a95cf5@gmail.com>
-	<20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-4-d611a2a95cf5@gmail.com>
-	<aQyNSOdPWAxm15U3@pks.im> <xmqqpl9vjiaj.fsf@gitster.g>
-	<CAOLa=ZT6CnTRz5bX+Vv7pb_3oqV0XNSMEzh=57sF6O5bFYxWhQ@mail.gmail.com>
-Date: Fri, 07 Nov 2025 08:41:19 -0800
-Message-ID: <xmqqo6pdg5hs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EwAQjp2R"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-443ac891210so442844b6e.1
+        for <git@vger.kernel.org>; Fri, 07 Nov 2025 09:16:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762535799; x=1763140599; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ibSSM3Ez/iHZVX9HfIPrhFzaBb39VshU3Xf4Y8ZY8G4=;
+        b=EwAQjp2RblhB4PAH+lT/KngZ/l0fmM9Ep2MZ/qDC+rebomTpCP75vj6gnXy/Lu+kvv
+         LXqUIEApVuMiCDyyjh9ubDX6mfUu5wEfwpV2iYE/est+bnQino5ZdhR6Cg0G7o39scgM
+         SsInAAvWvYcjHaSMajhL6Cv2MTK/TzG8Kcgh9PP9oZadq6izsAATFJdz41ZnWxwVU40R
+         i/QesZXdI4Z9o/PmvDVG9owmBsYEdq71Dvc2Qe/LTDwQQ8RWmytaR276aFzkygXAAwPY
+         txe0SNkaFBcSig7l08YjmypMjahIFA78wZV4qdYMkQ2flm4ftkGkrMB6oXktyx72vRap
+         gC3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762535799; x=1763140599;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ibSSM3Ez/iHZVX9HfIPrhFzaBb39VshU3Xf4Y8ZY8G4=;
+        b=UXTVS4+MyrRYOCjjSfGduSNUwkoy4OvqsSuP/NizT3gopR04OeeWFU5SCVAcRczBiT
+         2bcMTU5gcDcGZO9BjtV1o/LZRVvupPjVTtb9FSUFAeBaZKrOmmuw2BfFv7j/XPsPKAz2
+         q8wwASIjH9TJQqzLJTxEwaImH19TVBlInKXdP5/TEuIbS0SxYby8+MlblKHOLsSyHno8
+         ekKmSsC8/PqYEoGsIUKnwte7E/dCBxSuFP4kPKboRpN2YKZiZ9/ckh9Ro/kPgzqalFGI
+         LLPYkAheha9/1rAUGSDCNb9nUkatobBa6MOzgF5FMphjNuz9AGVRC3R0awKI+tIfmbx9
+         hyhw==
+X-Forwarded-Encrypted: i=1; AJvYcCVfa1jNrTvjeNM7mC7x6ZOn5FdNVXWWUWUyW96M12gVv9JZaLyHAls6JOxAk/KejoiHcjw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwvxtQkBAn+Are0MlyKKhjxzy1Wp0FBUT9XnBYZa0B8VLoDiTj+
+	CTVoE4bWItJXOq52uZNe82rrhXDiaKfnfm5/m4RCqg6KjPAdvPb+PYlt
+X-Gm-Gg: ASbGncsT9heIg+LtzbqgnreJdetL+XAZKTD8VzipVmQDbHVsf3Ib1zfrC1xVvGWjep/
+	iQW6z+EMoifQXLB5qqkivAiwY1EBpYQ058ljQxB1RP/Q+3oWZff+13Koy1wg7J2QKcXsX9qw0i9
+	Re4rKLkgyYXv8ifKZcKUi4Bbc/vRee4QyoWNtUS4X3QaO6qNiOE2qjPnjmOYWaS2jvkiUSiM4cw
+	QzMQnJ6yapnbDfb0X4Coro5um4eagaObTseS5MruRdVjUb7iVZ25soEE3hasPWc5SzW2y42WJlq
+	m+ikPlkUXgmrKtnFiV/rtd/Cfye9qNRjpho2NRO2aGQj2zj+ZT4OJR52NmlLgermU+ctfwvzr89
+	MH/JiVqkw/AchIOs2w1oeXsO0kkz/sK5DjSwMZiEPxELOfRD+/EQHha84yqs2q+13lNzTeg==
+X-Google-Smtp-Source: AGHT+IEWY1Aj2xPE+YSJdBuCEEczxO5G7hdFRv33dx/3F19RnZ9EB3WXNvAp34OeNxhGibUBL1eBbg==
+X-Received: by 2002:a05:6808:2223:b0:44f:6d70:45af with SMTP id 5614622812f47-45015d04a95mr2253207b6e.9.1762535798995;
+        Fri, 07 Nov 2025 09:16:38 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-656c57bf0casm2587458eaf.10.2025.11.07.09.16.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Nov 2025 09:16:38 -0800 (PST)
+Date: Fri, 7 Nov 2025 11:16:35 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	karthik.188@gmail.com
+Subject: Re: [RFC PATCH] diff: add option to report binary files in raw diffs
+Message-ID: <ikzwvvyyhuhvr7picunl3r4zem4cn566zpjxpmh6u4oq6ncswa@cdfokimobtms>
+References: <20251104021455.379807-1-jltobler@gmail.com>
+ <xmqqa512sfcj.fsf@gitster.g>
+ <xmqqzf92quen.fsf@gitster.g>
+ <nxl3sgs3h2psylifnbwcjmubdfmfhj53jjun5nsa4aqq5robh7@quga463ajvbu>
+ <xmqqtsz8nbwv.fsf@gitster.g>
+ <z5mkdl67vx47na5critwtyz7cacvhs6iixy46ia3svdoq7xui5@ckpfnjw3dkoq>
+ <20251107083015.GA18670@tb-raspi4>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251107083015.GA18670@tb-raspi4>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On 25/11/07 09:30AM, Torsten Bögershausen wrote:
+> On Thu, Nov 06, 2025 at 03:42:49PM -0600, Justin Tobler wrote:
+> > On 25/11/05 12:04AM, Junio C Hamano wrote:
+> > > Justin Tobler <jltobler@gmail.com> writes:
+> > Currently the output in the next version will look like:
+> > 
+> >   :100644 100644 a1961526 e231acb1 binary=yy M	foo
+> >   :100644 100644 31eedd5c 402a70d7 binary=nn M	bar
+> >
+> 
+> I think that is a good solutution ;-)
+> When I once developped the
+> git ls-files --eol option someone (Junio ?) convinced my to
+> use a TAB as a seperator.
+> In this case just before the filename:
+> 
+> git ls-file --eol | xxd 
+> 00000000: 692f 6c66 2020 2020 772f 6c66 2020 2020  i/lf    w/lf    
+> 00000010: 6174 7472 2f20 2020 2020 2020 2020 2020  attr/           
+> 00000020: 2020 2020 2020 092e 6369 7272 7573 2e79        ..cirrus.y
+>                          ^^
+> 00000030: 6d6c 0a                                   ml.
+> 
+> This makes the output both human readable and machine parsable:
+> All info is before the TAB here. (And may be parsed again in a second
+> round, if needed).
+> Thoughts ?
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->>>> +	/* Check for all refs, similar to 'git refs optimize --all'. */
->>>> +	string_list_append(optimize_opts.includes, "*");
->>>> +
->>>> +	if (refs_optimize_required(get_main_ref_store(the_repository),
->>>> +				   &optimize_opts, &required))
->>>> +		return 0;
->>>> +
->>>> +	clear_ref_exclusions(&excludes);
->>>> +	string_list_clear(&included_refs, 0);
->>>> +
->>>> +	return required == true;
->>>
->>> Tiny nit: I think in our codebase this can be written in a more
->>> idiomatic way by saying `!!required`.
->>
->> Comparing for equality with Boolean in general is stupid, as
->> Booleans are designed to be usable as-is.  If it is "true", it is
->> true, and you do not have to compare it with "true" to ascertain
->> that it is true.
->>
->> I do 100% prefer "!!required" over "required == true" or "required
->> != false" all the time, since it is more idiomatic, but I vaguely
->> recall we had something that contradicts it in the CodingGuidelines
->> document.  Perhaps we'd want to fix that.
->>
->
-> I could only find
->
->   - Some clever tricks, like using the !! operator with arithmetic
->      constructs, can be extremely confusing to others.  Avoid them,
->      unless there is a compelling reason to use them.
->
-> I think its okay? This is more of a suggestion than a rule.
+So the raw diff format for a normal diff pair is as follows:
 
-"Unless there is a reason to use" sounds like an outright
-prohibition to me, though.
+  :<src mode>SP<dst mode>SP<src sha>SP<dest sha>SP<status>[score]TAB<src path>[TAB<dest path>]LF
 
-By the way, in the on-topic part of the discussion, "required" is a
-bool, the helper function that takes &required takes a pointer to a
-bool, and the function in question returns a bool.  So I should
-update my preference above.  "return required" is the most natural
-way to write, and it uses "bool" as it was designed to be used.
-When the reader knows that required is a bool already, "return
-!!required" is just as pointless as "return required == true".
+When the `-z` option is used, tab and LF are replaced with a NUL byte.
+So we do already use a tab to delimit between the score/paths. If we
+wanted to drop avoid using comma to delimit between extended raw diff
+output we could use a space instead and use TAB to indicate the end.
+Maybe something like:
 
-If required and the helper that takes a pointer to it were "int",
-and this function returns a bool, then my original preference would
-apply; even if an "int required" has 3 in it, we probably can still
-say "return required" and the function would coerce that 3 into
-"true", but manually coercing it to 0/1 with !!required is more
-explicit and less confusing.
+  :100644 100644 a1961526 e231acb1 binary=yy crlf=nn    M    foo
+  :100644 100644 31eedd5c 402a70d7 binary=nn crlf=yy    M    bar
 
-Thanks.
+or we could maybe move the extended info towards the start of the line
+and leave the remaining bits the same:
 
+  :binary=yy crlf=nn    100644 100644 a1961526 e231acb1 M    foo
+  :binary=nn crlf=yy    100644 100644 31eedd5c 402a70d7 M    bar
+
+With either of these formats, the expectation would be parsers continue
+reading space delimited "key=value" pairs until they encounter a tab. I
+do think this latter format looks a bit nicer and I don't think it would
+meaningfully impact the complexity of the parser. Ultimately, I don't
+feel super strongly one way or the other though. I may go with this last
+format in the next version since it does look a little nicer IMO. I'm
+still very much interested in folks thoughts here though. :)
+
+Thanks,
+-Justin
