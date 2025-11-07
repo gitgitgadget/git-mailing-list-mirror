@@ -1,81 +1,51 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE92283686
-	for <git@vger.kernel.org>; Fri,  7 Nov 2025 06:50:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F5828725F
+	for <git@vger.kernel.org>; Fri,  7 Nov 2025 08:30:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762498218; cv=none; b=MhNr2I+R7VwbK/E/aXJElFra03ZbkyHabNQq7ojzgPbwk9AUYW4UsmiFsoeuOnpxYr5QdA0BiogzUC2I3JtXu1A69lrOszIyNGVPgg9wvVFHAEb0qbj4QldcGDPzDGMnFV2TwP/JpmgEuwWC1XXPjPQx2PutBoVHUC7NiTLYOUg=
+	t=1762504224; cv=none; b=JhkPMeZ6mkYjRo/Ouhiqc64rAwbfGN7sIHryO+Ap/5+rmDGrAt9DhqhcdTXU610Y9P3dEDZOZtU/OnW4rkEs+HNwpss+SBO07cL0jK6/Y287WDcyJ0RWzQdv5GnIVeBqlBUaj1W1K55/PcnYstA38E7xGWNzYODFotDEDywaR1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762498218; c=relaxed/simple;
-	bh=ZX9rHRjncf6aUHw6fviOzIcR5mg/Rem9I5AE6N26or4=;
+	s=arc-20240116; t=1762504224; c=relaxed/simple;
+	bh=yopozltK0FZxhwsLQu+f4PN06o+M+qXzeHJvirf0dJs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tKazrIiWuaUPkw34B3McMThrAwGt0YRgqTebPnj8DvPF5rMhJB0bNBwZ1aBYzYAejsSY0HCVbkwivw6g56o/bb7Dy+iRK94LKCz0qxlN1RHg+22dAzMiSj8t8EURKiPXQR7DsidtooxoB1IvmALviFMCYxVnNdbY9inHujA092I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RbNStZFB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bSQwV/ON; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=SxTnmj8a+yTU4yhUswOTMsmn15dMVHaw/hEt7kw5QUv2oYFtzR06+RxD2XIOZytZxAJ9manlCpky8pr6QwaLMpwtd88jqpUla21HNrJcAYgRgkJe8vYcnUYCkH4m/079crkRRy0KIflBaf4PvQ79B5dXrMiZYh4KbP3WXknSPF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=thl5JAAk; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RbNStZFB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bSQwV/ON"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id CEEE9EC0495;
-	Fri,  7 Nov 2025 01:50:14 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 07 Nov 2025 01:50:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1762498214; x=1762584614; bh=uIohSJs0mf
-	ceP0rw1zKC8ClPDVdFDsQsan58eGaDgw4=; b=RbNStZFBTxn/9G50QcnEdDxEhU
-	eaauxnOrd+4Zc8626S43EjMS5TsRTvqyEWtf1z60g0V6LQPLu9V042T9UOVC7iOJ
-	KQGY9MnB3zcJnJ0rb47Bnm/2J35zkDZNbwkfBDf292s1y/bmp1wwVXkK3ld1tAlW
-	53JQnjmRVglyrTELYyIyx+bF51UbonB8datp3NbUNqjt8PTD59gL3KATbu4J+bKx
-	la01+lW0kAl8j+QmVJWHF9+jqKqk1c90aH9482Q8zA66uHhLKInDtkN5vY8o4vVA
-	1VwuePRt0y+qJ9wcCIUGHpZlXWksG30dKJAIa3+W1mVfHxiPlNE9IOxQ0LqQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762498214; x=1762584614; bh=uIohSJs0mfceP0rw1zKC8ClPDVdFDsQsan5
-	8eGaDgw4=; b=bSQwV/ONYZk+Zqwp7we+Zvau+eBrhJhC+l0hJvtDfP1edUgH/6l
-	19QkRFY9f0UJjF1AKr3hLbx9+zOZa00zPRtVkS5W+njyI7zPcLrXGRrZ9PAAgh8D
-	6hryV7WUH0HbVRh0brG+fNV3/nlEYeqrret+XT+CBadG7+HM3w/sdlDJQWQ0QhaM
-	Kg91CaqRdrNMPz0thnKw5BwG4mGcI9dKvGJU+4Jyw7xvOPFyORWONPtpf2PSmo3c
-	VH/0loAxD2JTIjLQkf/SosaOYZxcEF1d78X/JRj86SKkua+/71Tn8hCRNUzNXvOt
-	YqF4qZNXr/RaGcETFdyNwy6xISb8WnuRjXQ==
-X-ME-Sender: <xms:ppYNaeKmPHHsP1P542bi67h48j5BxQMgAdlCi4job0RJiwAFjZwsMg>
-    <xme:ppYNacK5rWH3H6WCcRyWwJ1okJsAEX6FodOzxf4r-X-cMy0sytotmi_dazluuDWGj
-    Y04N3ex7wvucsiJwErK9vfkyICitT6MbsGEsTnkPks0qF7GIMFU>
-X-ME-Received: <xmr:ppYNacVZ_Vr2gyeQHgYHSKhyjXFnxTQsiuOkRzSfJBJnv49oStrPD2e7Z4Vv7eW5EocYJL2xq4TSVBfRr358KSMUrBWJ3sJCIqsvnUUZYowLAw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeekleelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeejkedvtdetvdekvdetfeelveegfeegudeive
-    dvueekhedtudeitedvgfeivdejvdenucffohhmrghinhepmhgvrhhgvggurdgukhdpfigv
-    lhhlrdhpshdpmhgvrhhgvggurdhpshenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ppYNaeh__Bs4bM2-XKJhR8-Lq27MpU62dF9l4gCydysSkfoC3jPIOg>
-    <xmx:ppYNaX9jE8kxkOBkEeY9dJ090Wct7e2OAYRQu3c33RiRsJ1PQE2pTw>
-    <xmx:ppYNaYBiUYFFpNOp5HhduY9zQx_YR1k0T2uwdkZR3ag2KoV6aToNLg>
-    <xmx:ppYNaUKjute5D9tUc3Hg-zYny7CxseuaaPHsdBxb8ACGxRpN_Ia-Uw>
-    <xmx:ppYNaRjOKEZfnT36PUiWkgBSOFWgdO93HsIhCnVVWakBYV7BL2TgHocj>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Nov 2025 01:50:13 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 18226ed1 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 7 Nov 2025 06:50:12 +0000 (UTC)
-Date: Fri, 7 Nov 2025 07:50:03 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2025, #02; Thu, 6)
-Message-ID: <aQ2WkAmkEep4AWqT@pks.im>
-References: <xmqqms4zhxp4.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="thl5JAAk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1762504216; x=1763109016; i=tboegi@web.de;
+	bh=vB4KVMQKiB9U2BFwr/t/WMQcEYNLSGmJ63WjTU7pa0I=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=thl5JAAk7gUBUflzz8UbaUM4af++zNldbQk7pFKAtdGRKVqSkNRyWivPW9/Jds6V
+	 zm0eXb0f5BfiyylZ0kJsyiMgJ7pWGxMnkGbMkplopK7SPAdmtiFrt8CG3XP6xu7dS
+	 LQW1OAzSeaupDyUbPTxs6jQfu6G5h6Fy26fKz1BiFcpkoVhKo5udOB+BaA0iavjox
+	 bAtlMSywRYQ+30NzeSIj1fdyK+6uhLC7VEQRMjUApbEAV/7p0FwktDIaet98nDmAM
+	 ZIyz5sjrLKJcBAik35cZwerjtoO4Lbhqdl6dUF2KMciM/JfYmZnqAg9lQXXhZo8C1
+	 QKpVRsbwO/nFYwZx8A==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([81.224.105.209]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MRk0k-1vg3kY20d8-00Ldfe; Fri, 07
+ Nov 2025 09:30:16 +0100
+Date: Fri, 7 Nov 2025 09:30:15 +0100
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	karthik.188@gmail.com
+Subject: Re: [RFC PATCH] diff: add option to report binary files in raw diffs
+Message-ID: <20251107083015.GA18670@tb-raspi4>
+References: <20251104021455.379807-1-jltobler@gmail.com>
+ <xmqqa512sfcj.fsf@gitster.g>
+ <xmqqzf92quen.fsf@gitster.g>
+ <nxl3sgs3h2psylifnbwcjmubdfmfhj53jjun5nsa4aqq5robh7@quga463ajvbu>
+ <xmqqtsz8nbwv.fsf@gitster.g>
+ <z5mkdl67vx47na5critwtyz7cacvhs6iixy46ia3svdoq7xui5@ckpfnjw3dkoq>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,74 +54,112 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqms4zhxp4.fsf@gitster.g>
+In-Reply-To: <z5mkdl67vx47na5critwtyz7cacvhs6iixy46ia3svdoq7xui5@ckpfnjw3dkoq>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:uwTENGoEMykMal16bEBH4PjSjcWDYJToAaQuoXAia2wUIVu0PB0
+ GMq9ISMB/tMI/zVJJ5aI70qNOs75DNBL0EmEpKd3/a97yCoRU62Jdf5LVH1h9aYKosKBnVE
+ oycIZUYIxLREmFzsi+r/FL9l2vCZMA08tG1txXT2mznCOE2WnFvuNLOnHK3wndFJ73X/z89
+ dZ2+sr1XmMwskV8DLbgJQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:DpxIbPEhevk=;/jK4P7xB31sIn/+/i502aPi5ruo
+ geBX54NYpbuUqVnNa1az1ZETFRyNDvKodn1uua3qg8OyrFSW7cog7HZGaMzl1FwLDwRIvuF4L
+ 2DjZKSxqWfld9/d4rhNWUGDOhn2zlCSixb0XMEEC6XAIElywruOGvAijHL+vjcQftdt+RjJpv
+ 9irddEv5uMt9v8waAt7DbVwXM97lMxKtNkpDiN7hCmerSttOQmi0zR0Fub2Zcd6nkUlk+wOks
+ SqJ0Y32PnI+XzHIkbwPJMVFmdqZPHiA3/nrQToRAUOQzG+ORJyPlSDJC5h3r4vH3YM4P4me/q
+ EFOf/+nHkchRx4+Ue/b6jk/KRzJqxdPMhzgKhCG+IQYnZOqlzstMqzCqQ7RwYFbDCZuh9YUUz
+ UYDelid2AMvDCsQ0rjpZZzaFl+4Kt3v+UoQk8VAFwQX2M0bAVKUm/BBFTLoPaU/OyqIB/U3hH
+ Xc0pIF5UjZEd60LOLkBR+xkGdTPQJbEy4+iONRnTUpaiv9si+KZGk7rPHsgjblq2E+mQXHjy+
+ /5zhOx7SYLxmE5TKil8LNPUwXP2xvlY7vOt+00k3vQeKDhO943awO5wd7xSak8js7mKtdbg5W
+ QCsLMlT4Q1iIxKrNUO+UV52b6PQ9q+Ma7bRgcEK/T6BqqeaZhaNOV2v0VBC9EX4OJVpmn+xuJ
+ BolbfOmhW7rB/HYlA0RFlewrMjT4DehRW1rWoybn72oPojDoenGi4z3w48SSAk8VqaRIai6ig
+ /eJqD/GEI7cOSxxHm96BE8ptl59A823TQm9rHCjvOjVxzK4MuRyzUNZVLym0EuBLNVKJ9vBi0
+ DzXtffEpb7whsp1pBXHxN2rZgy0MR9zm4nVUXq1z/l5qchlk7A1ysrO7hDOpzZf16NqJ3nBuq
+ 7lavaMTGMH61JSSSpv7wYtodJgmzgtz/MiXK7Kjoswq4t86r2cfZ61zAFyrE9HpZStBItFrfb
+ Sr8i07iu6kBcqezcQkzn2VdmmbYJ4nAZRpmEPTss9vivcs15Om+ariSnGjaEaGNLZBJK0ybcL
+ zY6yLd7OrvWpM1UV5oRSTJ4Lhbh3MlQreqmSW/+tcEsGCsFvh43KSdnTFi6U0+2VO5y/xURx6
+ fbvh2i2EHr133qLLJN4GJA0PQoji2De0w5HGTFOiBMnqPBZVyKJ6/jezgvYQqufBaB/7mrNLD
+ M/M0N8QZOH4panMCLnRUXXBSQJ3nH14QPtwNak2Gb3yq4bza5CE2W7o7CW0RXEKqNkXFvo2W1
+ 48vXYaw8mVp94U6wNkBvXonpJxofpf35ngRumPph9EndBWxPLzodAHf1d64x2OE1e2WjFgPFb
+ Pb5Y9rNMPluLQge+WbBoibZnpekgwA3JTlQkrFFmuAwixIIUaIaIImBFgBBCcZ1Hu80GFUD+1
+ zEaJWhTXNAjoNiTeEaZx6CF4dmQt3zE2lFmBRT8Icix/7pAGEeWyQ//7vfKstSgb/MaXut9Ds
+ cHlEd8ibPqLrA5PdzlGaR51l7DkELuYGiVSf4l8fR7bz0Ik6X8E2bvlYENkXJg1DiLVfhT4oC
+ ldIlW0EiZ8b0aYnbmlhR82UiLiWxVvJ5y0eRiCtN0tzJuvDEeZoIlxq5JrOrAdQKFB3j5hl9h
+ 7QnG/RBS0vcQBAH9OpVUY1g8cx00ypm6DsJ5w1zMRAlif2gPxcUmSBNcKopP60COZmnqcDTms
+ tKJ7NKje5ua14BXMdkxWSxP1/LGuohqRjutVAD3QrAOgCdligtr8yAI6c10OsOHcaIT8BbZml
+ bQ8CkHHWLobi16FMJFyQ63O85SfqMkrScEcqwAMzXznABGuo7HkjV4b49ueW9LOd9tCU8je+U
+ +cT/BIx5lsQ2Jbb2uEvSpFnjcs9749frEI/K0VaA/mfSYMW0DzxDNaowoGgz9MbOJ0JInui1f
+ 8mAdXEpBgrqpvSqGPtGJ9bhPVajfa/JaNq8NgMA6uqvvPIXij57BfOHMK8cNNrn//4rOtB8mv
+ Igq2ocSPy1U8GhORuxxSDOhpZEmxaR2e+r/rJv0SaEzcdHF4NfMVFpQVa1o92+ZkcBC4WQUXS
+ OR1wPPn+8WXth3KIL1iMA7Vg7A6OjgHUHaei2XT90jHlo6HLd0728g0/0Xc8vgrp7lD6V+AZG
+ D8iEY+dajT1/oLP6DR+2cwLG1f6OGNPvEdcDkTMOJyQ27EaWUGvUgNXvvdhUbU+UtAR9jBwJS
+ MefCwcbh8400HgRzPFwTyDpaQ2qUpxemdKjFmGcGNNb2QXM4MVn3akPZtMB8qKpmL2VIv8RIE
+ OK3JcmzQts0ySvq8b+gddGvOVz5pivMcEg16Ts8rMzPQxNyE2iNBTQm74G6Y5OjnYcXlmmSNz
+ OcpXxPJ+46UG04VDVNut6iNnO+RGnlpt3F72YDs95FFoeIKI1lVnrGaxzoufOhyc2pjLy2QR5
+ UpHtNnazyGQDzWDMD6f5+fP4GVIQ2+nQUfIradSIX9tOYzaDtDSNG0+NKyyfildQ1Lbr/rruM
+ ut0oWH3kfb6VNUKd+3caZGDhNKb5u2hlpDHFNCzCNiYe9Y45ygb0PJtAP1wTL+gaTvfIfd5va
+ FQxcxUPP1t2xnBjyuLypcXMB0czdKu0+YPxyEBgOLmSWfGruvFv9vZlCNrCiugU81M5lhfyqs
+ Vacxd7CIgBKcEav4gqxPTEmRWjhqG0pKQKKfPmO1jZW1BptWcRHq56X0aAum2jwp0mwEbY0gO
+ SVHfKdG9NvGHpyywK+EIucLI1rNHYL/gXRXrbtb7Kv6M5ZmVC5Ib+oagI1qb++fStUff0cGFO
+ sG8lZuu0sRl8EK0yTpcQkX5JC8TjVc5zZ36hGfMCWjLHkHX6+8SegFWGe57i+3L4ySQLJVjOM
+ fK7++HVTKXYGJpeasJaKuGP36vYgDiSDpU+FSG+zlwEdRpOzPWyl5/S0lssIVO5gW9QJxfcMp
+ E1gOBetSnMcNpOX1xxpFv8BCavLNp/tigLxtzD5QBIccDdNT4/z4r6JCIdoBlvgahwO4yRcOE
+ h7XByd0VWxwAGqgsUlO2/x41mG99SUukn3LHUnHz2+RTiZxL0ZKszkiYlCeiLIi0KycLaJvbw
+ c7cEDPD5CBdp5EtsHZ8ePYpiqOycKBZKnB2Ivmd+EcCco9Quu0CuG+r1mrO0bS+jNDEVIztq2
+ fX0oZMBAwnzZA7mtKO+wmet6TRj4V7WnrL/FpdRY2hFJC0ZKTOtFQG7o2jYR47uBRAnU7c2bG
+ CXqmDP8mLKFSDnUNqgsIQhvMhddAoanEiVnWNMVO0wOjiGMf85UUVYelpcv1/D5l7mzUqfX84
+ 14DkSYzVjct3YaXOinkpGliCoZfcPTXMt8vbM+mYVtf164KVCDxXIJcBVexr79HPNsuLoi0Dq
+ KNntzEFkF7T04UccyEhgBUetrmTgk8ZdZokQKtf/evYQa/aRU16b4hsvsdrv7CMogyEba4xDt
+ I52zaxdN9gbb1UC+WvcJFByPuMwugJfOky15XqenbFeXpKme0iChP8AVlTlEZmmddm0OFaN2y
+ 9rWzDWp2TEIVPHlfPNOYLbMrCE8Bpbw/5BP8OrRvVIK+xAvBaOcqeBsp9O8wimbJSWYTtr6f+
+ C84vT9fTiTJ9ji/+SW6ei/KWe4e7W8qb8N+1EJoU6pAKT45heRccohbdpjc1lW4+9gXW1oDCS
+ jOz7i7ke9M5IjXM6a2NBn7D4uXz284DBlrZ9Wrj9w4Dflz/wY5Ae3AKa4ufsuUVSpguvVGQBN
+ V4vg3xf45HZ735jDdqQ8qDwhdHHn/0m0JQQ2vuMn64Tv356cBQHzlsQ+rVlq1FABVVt6XMNWO
+ vZO8ybrtNFbhw92JXsdeMcY0eLODfb+asu2jtHMkm5wXb3Fn4xVJ2CHEtPaU+Ya6+bCjgqnrV
+ ifdYu7DOArdmph/pSvhjgvhkje5mwoOpazx/mRavf0vlIVFfqcHDZgVpk3Zclga/w7ivTfTlo
+ MEBlCItz0JNVMCX43rBpbYyYPOwMzPhkXaRPrd8XzzhU7gRnrBEiv5V4L19knzbOiY2yJ4Ry5
+ cJW75e9YwKzelOiKsUiQo7Z4U+akxyXpZAgLhONNn9ehEeKX4XiYLe8V0JdtwiVI6ax33FEit
+ 7sehwKWR1pRurl+KjsodSdTKjyr3tdu2Wa4AXiyEBWj9NjfxA+ux2T6lj+yt+a67Kb4QePDUT
+ KiMbZ4SL3P5/0Q1hnB3WXJ7uLCRKtdD0TwN1XxIt6UAtq4RP1Ii68Qbrr/c6deZh0/opkvueZ
+ u1ybWVy1QoVBJB5zaSgjaWXAh/WWKkV8qN+658c4b1luMF2qTK+RQweZMFuxeZoTzELTco9F1
+ 0AO9L/vwJjS+gXGaJjpxfQJvGokIeEaZ1r+DTWoWPppcnCdcZ07BhTHnJ91Flov0dT2Mw6VRb
+ erEcLNNmDuZUN5Z2oBrp3Xzxuxx4a7zxR1q211L/jF5zfOyzGBSI4ZY9pYwopDUWjD8hNcuoW
+ v3JEUhAZeckGMCkXF2KP7x8WwRpQx6WWrQKy4M6y9r4GFhsbIZj1hUxmK3akrMxVip8xTICAj
+ d5QMflG/TFp5SrNlBqUASvpkK0w8nWn6iIEEHmyCbT7WkpupkRQFvmvSsJwKf1FNB9EUl4rhQ
+ oDBehhGXa8hODXqJfOmw07TwyrNKg4a70iTzgggeakGiHg9It66+IDAP0UmDtdot39Q+youuT
+ Y9nwGNDoIBEuyLZ66r3d4oAxFT85zAgYf+KMurmjz9pSs/nfzfA9BuQEcAJP3Qb3cdy2EeNXk
+ XbOY4f2YLFLymizJPjQ7Jy9lCtumFyQRytcPXJDDTm/HDcqsrFo+ygq1Urn+Wav2CwwbHLvII
+ kKXcQVhlVxNrkLNg3iOLRG+KJuYdKniHbnz8giAq9QmH2RRldG2Ot676c43ITVWivMQE1tXW5
+ AiyIEzE0OXoXvdLjGMfEx7xQsnbxjjEKKWzVo9OT5s0QUfxZhUrHZ2j7PDScFmvo2dcUj9Qy7
+ gVOFIaW9nU7hRCgp4Iq0EgbXGVgbQOeIjw99QeghBrdjF4z38/fZeHU5Nv0ZpnrY/T/S3NE3+
+ /3WbQL6xJWnMkr+X43+PDlGV3ik16fmBl7NALl9IGf7We0Q9NX/w/GmYaD8PwbviPX6V1mkjt
+ bOGrQV7ONlhhjVoT1S+wGd0Fas=
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 06, 2025 at 09:34:31AM -0800, Junio C Hamano wrote:
-> * dk/make-git-contacts-executable (2025-11-04) 1 commit
->  - perl: also mark git-contacts executable
-> 
->  Building "git contacts" script (in contrib/) leaves the resulting
->  file unexecutable, which has been corrected.
-> 
->  Will merge to 'next'?
->  source: <7fbb341e8f05fcde3a1543e3bb4e5a3ec1101692.1762280097.git.ben.knoble+github@gmail.com>
+On Thu, Nov 06, 2025 at 03:42:49PM -0600, Justin Tobler wrote:
+> On 25/11/05 12:04AM, Junio C Hamano wrote:
+> > Justin Tobler <jltobler@gmail.com> writes:
+> >=20
+[snip]
+> Currently the output in the next version will look like:
+>=20
+>   :100644 100644 a1961526 e231acb1 binary=3Dyy M	foo
+>   :100644 100644 31eedd5c 402a70d7 binary=3Dnn M	bar
+>
 
-Yup. I see you fixed up the grammar issue in the commit message, so I'm
-good with this being merged.
+I think that is a good solutution ;-)
+When I once developped the
+git ls-files --eol option someone (Junio ?) convinced my to
+use a TAB as a seperator.
+In this case just before the filename:
 
-> * dk/meson-html-dir (2025-11-04) 1 commit
->  - meson: make GIT_HTML_PATH configurable
-> 
->  The build procedure based on meson learned to allow builders to
->  specify the directory to install HTML documents.
-> 
->  Will merge to 'next'?
->  source: <385992f6020703558f0ba75a1be6c4f9dae08b83.1762264709.git.ben.knoble+github@gmail.com>
+git ls-file --eol | xxd=20
+00000000: 692f 6c66 2020 2020 772f 6c66 2020 2020  i/lf    w/lf   =20
+00000010: 6174 7472 2f20 2020 2020 2020 2020 2020  attr/          =20
+00000020: 2020 2020 2020 092e 6369 7272 7573 2e79        ..cirrus.y
+                         ^^
+00000030: 6d6c 0a                                   ml.
 
-Likewise, you've fixed the ordering of the Meson options, which was my
-only nit. So this looks good to me, as well.
-
-> * ps/object-source-loose (2025-11-02) 13 commits
->  - object-file: refactor writing objects via a stream
->  - object-file: rename `write_object_file()`
->  - object-file: refactor freshening of objects
->  - object-file: rename `has_loose_object()`
->  - object-file: read objects via the loose object source
->  - object-file: move loose object map into loose source
->  - object-file: hide internals when we need to reprepare loose sources
->  - object-file: move loose object cache into loose source
->  - object-file: introduce `struct odb_source_loose`
->  - object-file: move `fetch_if_missing`
->  - odb: adjust naming to free object sources
->  - odb: introduce `odb_source_new()`
->  - odb: fix subtle logic to check whether an alternate is usable
-> 
->  A part of code paths that deals with loose objects has been cleaned
->  up.
-> 
->  Will merge to 'next'?
->  source: <20251103-b4-pks-odb-loose-backend-v3-0-6a61ea977393@pks.im>
-
-Yup, I think v3 is ready to be merged.
-
-> * ps/rust-cbindgen (2025-10-24) 6 commits
->  . rust: generate bindings via cbindgen
->  . meson: rename Rust library target
->  . ci: use Debian instead of deprecated i386/ubuntu
->  . gitlab-ci: backfill missing Linux jobs
->  . gitlab-ci: reorder Linux job matrix to match GitHub's order
->  . Merge branch 'ps/ci-rust' into ps/rust-cbindgen
-> 
->  Introduce cbindgen in the build framework to help interfacing with
->  Rust.
-> 
->  More discussion?
->  cf. <20251024-b4-pks-rust-cbindgen-v2-0-4b4bd4f18490@pks.im>
->  source: <20251024-b4-pks-rust-cbindgen-v2-0-4b4bd4f18490@pks.im>
-
-Yeah. I'll probably have to introduce workspaces as Ezekiel explained,
-but I didn't have the time recently to handle this yet.
-
-Thanks!
-
-Patrick
+This makes the output both human readable and machine parsable:
+All info is before the TAB here. (And may be parsed again in a second
+round, if needed).
+Thoughts ?
