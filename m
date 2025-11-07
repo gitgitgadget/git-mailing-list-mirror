@@ -1,142 +1,156 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7976931771E
-	for <git@vger.kernel.org>; Fri,  7 Nov 2025 15:57:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7F928312F
+	for <git@vger.kernel.org>; Fri,  7 Nov 2025 15:58:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762531040; cv=none; b=PK6xkeyNwVY1JS1ubeGYnSC3bPNASjSrDsWTvHEmt2F8XD+jG8XdXcahD/7556s9lmb1lKQILVYNBNK2bU0TWFLppqXhJqR/8il5iVSkqr9OqcR8aF5wSOHwx5yJKHQoKL8YNBeRzQmIK9Ycqraqw93zh5RdOcA3qrUE4dxveKg=
+	t=1762531105; cv=none; b=nxZfBDKmF5G578RWp03mjJ0lcQRrp4NV88nQ2ZFX0G0Y+icrP+zasX/9J4DGkdNQ+70/efQMaDYsZlX5GMOEo+2NbP3TxuoXcd8j7H47CJKsmZL/f3dSIYP85C2Kn1JLLdgTaxwWFCr5yXmHw2WO7beyd3FYlttqowFLo9vcSGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762531040; c=relaxed/simple;
-	bh=xH/P4SYJMqMrM5J5fYLYUyp2tqEnP/Wp4xXxkgudhTs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FSClsV4+l2SjhfIBOFdHN/mWCB404FEJ62idPgoqaPy7lAuBLp1YavMcqYptD/Aco/KbWdSI+f4OjNiKwmstnvUYkYnOdVadfqS/WQ73CAbZVkKPBvrNYNmaXR/EIjJFhxaq23djiJcl0FYaLgMkzhS9gTJ3QkHLIeLfScRwoOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ckAxMUYt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vq470c57; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762531105; c=relaxed/simple;
+	bh=aFjOLuq44YVw04Au/EWUN83b8u9Zuu/ArncrP+l2Fu0=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jb3rRvTviiR9NJHrSQiRDTGvOEAkstiwUgXEjRcS5HXfhdjLwCQSp9UB7A695g4Qm+BY4VdJzy6l+OlgiGaUdH7J5+w6njPANaKxragDOdrY/rdyH124+S6MS26eXSSQeaeNaN5autMUL4YtdrQtKlbt+zaNbHw8Vw/EdRf8NfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RSZvkDJ9; arc=none smtp.client-ip=209.85.222.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ckAxMUYt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vq470c57"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id A15281D00039;
-	Fri,  7 Nov 2025 10:57:17 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 07 Nov 2025 10:57:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762531037; x=1762617437; bh=I7WbG8HVle
-	8oMhNIl6lgswpdI7EWwEAOLzlXvpe7Gto=; b=ckAxMUYtMV9lI9G2VDZubj76A5
-	AvtBcyFiST0RJkEdwDF5uN/13HVMbDQM7bnOHxMeJsFDq9FdKS7erNU6CnM4Y4O0
-	LQvXfS0e7GnqaKilAOKgDGwvGjrsSqWP1GEOA2W/ESGwe8y5wqzcN/NIWMOBrjXc
-	GLR6ki+DlVTDnsqI7Oxbk9DFgvrsj5oR5ieE6P2GNLmftbpsdcpijY90o7vCcWvS
-	4RAfE4u+mq92WMAXUmlthGF2VYOuGKxwJyQLt712qiua2k7pd/b54lIge/OhKZqW
-	VSxOB/3AtgvG8GrWEDUXI9/ChGlx5Nnvnnq0I8isg7Ba3NDn+Y4E1CwThwaA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762531037; x=1762617437; bh=I7WbG8HVle8oMhNIl6lgswpdI7EWwEAOLzl
-	Xvpe7Gto=; b=Vq470c57O/XCjHxJ+xPt1Q2WWT6iy0JTIjcmMk4/rfR5P84MGVj
-	uonO9uTbXq2uG5RqAZz5ARz+4lLVfS1s+61dMt4hKCpQ/UkeHfpcivWEQpVIyxho
-	AJsLZiUD9e1Q1RDrlwuxU4F0qzriXiPGsY9Ht0ogPBru8L+KWP6seGTjSHLR14hE
-	kqPNfiuHN4oXlBWlmiRwsxay0L4F+s1v/3seND/3MKWOIQNUZ/DreLWSPWr0uPIp
-	spG03CBqvzxStCH3cP/7HC8EOuodQaNcIhPTRr6tAGRbbQB0v+BBSdgUrvkq8kJJ
-	O1yjnKiAN2buFMdKHKnyFkD24xX8Phgq+OQ==
-X-ME-Sender: <xms:3BYOaevK3-dFcJ23bbY6q8mOQ0vSk8sjnJa3dXlv6cnHWvYAuSOo5g>
-    <xme:3BYOab7i_-2zgopwSZs5mYCniT1O65iE5Dxd1JnH6Ec1aG6h1pteDl0Fr9sNus-1W
-    LZiU6t2TwbdLE4FfvMCHTZHlwX7ZDi1y07cMwgfU6aw9rGMtFx2Qg>
-X-ME-Received: <xmr:3BYOaaOuv-pN70G0g8FglCVdNPBPNn1g-bmS5YW7yrGUeWqfl8H8JdPay7Z9wG9ubb2CI52tAqSor9M51wyZci1f9XbnIR_4brrl>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduledttdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdp
-    rhgtphhtthhopegrnhhtohhnihhnseguvghlphgvuhgthhdrvghupdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:3BYOaZucPelhMPWdxRICi9CVqPzE9DRtYq5Ms2cdVJdR-BtGhYRR1g>
-    <xmx:3RYOadYOAwIAfLYtMtbnndJBSG1qi5a8U5k_r7U5Y291_OpfbcWhwA>
-    <xmx:3RYOabwL8umf-f2naVwQyYrcUOD3iGgMOz83Qw2twXxSnaJUlLq-Bg>
-    <xmx:3RYOaVjrt-pVc0jphcpixq0YThC7aQoQ9eHzoXju4tSvtZHX4YDhdw>
-    <xmx:3RYOaaxEgqrbXamAXOcMql7E4xLtY-t8xWh5cijR2kuz6ldhQY_T0riG>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Nov 2025 10:57:16 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Antonin Delpeuch <antonin@delpeuch.eu>
-Subject: Re: [PATCH v5 2/2] blame: make diff algorithm configurable
-In-Reply-To: <60015bbadaf90f40b3b56d2e32b9f48818cb8675.1762468914.git.gitgitgadget@gmail.com>
-	(Antonin Delpeuch via GitGitGadget's message of "Thu, 06 Nov 2025
-	22:41:54 +0000")
-References: <pull.2075.v4.git.git.1762034252.gitgitgadget@gmail.com>
-	<pull.2075.v5.git.git.1762468914.gitgitgadget@gmail.com>
-	<60015bbadaf90f40b3b56d2e32b9f48818cb8675.1762468914.git.gitgitgadget@gmail.com>
-Date: Fri, 07 Nov 2025 07:57:15 -0800
-Message-ID: <xmqqbjldhm3o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RSZvkDJ9"
+Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-89019079fbeso256028241.2
+        for <git@vger.kernel.org>; Fri, 07 Nov 2025 07:58:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762531102; x=1763135902; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CG1F1mHMlfJof5QG/E/WPMlWAMiTeusSPFMr/cd0Zds=;
+        b=RSZvkDJ9Ei2Q0EvN4n86u1da4wvad57UmQJf4ilpheaY17XEXfovakXRVWYMysOCNv
+         rlayzEAFhlmdqDOYyGkrz5DLfCSGFlxZ7oPaVqSf9mNI0iJlbYj9TzrgbYd3WVT2GHfh
+         r8K6iPvapvSteNQoPBhoplZIgnV/xj/I/T/EJR/45g0wZtSLS+nMNU8WCXYVB3AUKwOd
+         D4vu0o9wwwLQl8YzDSOGEBSZMPzs+LKcFGF1CT4U99Zsm7Py9GUpaLpH0ed7tTsaiQjn
+         d/FaR7druN4s2fFnXoD5a0fJ7tDCw1rFX/EEHVZvhy/5ew0N9dumbD+0R7EnOnu4Ch5M
+         wk4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762531102; x=1763135902;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CG1F1mHMlfJof5QG/E/WPMlWAMiTeusSPFMr/cd0Zds=;
+        b=isw9ZGIhkURUfsaObcQaw6kc3/lEqaAXqnsJUxSD4Sx2YrjZKH8CKKOIIqfRwiqq0F
+         RCxH6CwxgFib78N7NHv3lan1tp4HMtDaQFQHD05d8rTsgqsHQfkVIGJsA9Ok6gvUNvH8
+         KaPNMeIuPdLO02OgZrgzBBVBt3M2stcB9qEvzEX00uGXTIvqxZnPm8sQxo6hiYsAdgdk
+         AO7eLGMFf9yahFVIfxdNrYQWKynb/nqeGZiqdEyWP5DExIbscv8ezsyvGkEFWY4w32mk
+         iRf5Lds612/wfRwnxuDwrv3+00fp3m+qhvZK8jILamc81kr8Vt2OXd2Ygf+i1HHnyGPG
+         AMiA==
+X-Gm-Message-State: AOJu0YwPOQg6r0dWH4aYeT461M6qKO65l/ZxDEWbA/JxRbjJEoQJUf5N
+	ltWu9TEWHiuYmL2rk0R0yp6LPII3BdB1JwXqbEYJSh0y/8PJdejTQDCNQgO/3uxK/250TL7QYx7
+	zquqLz4HG9FhdW9BW8D+vETyBd5So6pU=
+X-Gm-Gg: ASbGnct96V3KErTofVKeqIrTp3rqb12bCc5nkBrAcwyFGpuICghWofY1QT5AHqLV1HD
+	Md/Q66GfJDCthLRmTa5msAU7qJU0CFU9OUOWXGEhApnsMKzFEAlA728Bz5jIFdt4jDXivyxhk5E
+	KupKQJ7naVykZ+W78lhnjBRQ7Q9p2lFcIKMxZncHzP53N9e4JNWwR3EVbepak0qDw3BdW8mcd5L
+	EYaIyE1zLr7lNu5qGZ0WV0QEktbYMVbw49xiZisx5ancVtv43yBYxoXp7RkX1LuAl3Y0pC8cc6O
+	90Ai1rsjz0CYOV+T+mtu3A5VnIc=
+X-Google-Smtp-Source: AGHT+IHQTiXYC9TEl4JTxoEJ6ASwrj3TtI/kWDh1Jx+8xx1WpTxEnmDQLFurjgIKiGgmkG9u5EKJ6nROPk+TeDtpybk=
+X-Received: by 2002:a05:6102:3f10:b0:5db:23ed:3840 with SMTP id
+ ada2fe7eead31-5ddb22a94b7mr1293446137.37.1762531102421; Fri, 07 Nov 2025
+ 07:58:22 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 7 Nov 2025 07:58:21 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 7 Nov 2025 07:58:21 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqpl9vjiaj.fsf@gitster.g>
+References: <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-0-d611a2a95cf5@gmail.com>
+ <20251106-562-add-sub-command-to-check-if-maintenance-is-needed-v3-4-d611a2a95cf5@gmail.com>
+ <aQyNSOdPWAxm15U3@pks.im> <xmqqpl9vjiaj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Fri, 7 Nov 2025 07:58:21 -0800
+X-Gm-Features: AWmQ_bmxN5yvb3XjzyUuO42X9UDZF8Y_t_tRQ1gxNNKQiweGUjg1fMwDEsH0ITM
+Message-ID: <CAOLa=ZT6CnTRz5bX+Vv7pb_3oqV0XNSMEzh=57sF6O5bFYxWhQ@mail.gmail.com>
+Subject: Re: [PATCH v3 4/5] maintenance: add checking logic in `pack_refs_condition()`
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, jltobler@gmail.com
+Content-Type: multipart/mixed; boundary="0000000000004411380643034014"
 
-"Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com> writes:
+--0000000000004411380643034014
+Content-Type: text/plain; charset="UTF-8"
 
-> From: Antonin Delpeuch <antonin@delpeuch.eu>
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> The diff algorithm used in 'git-blame(1)' is set to 'myers',
-> without the possibility to change it aside from the `--minimal` option.
+>>> +	/* Check for all refs, similar to 'git refs optimize --all'. */
+>>> +	string_list_append(optimize_opts.includes, "*");
+>>> +
+>>> +	if (refs_optimize_required(get_main_ref_store(the_repository),
+>>> +				   &optimize_opts, &required))
+>>> +		return 0;
+>>> +
+>>> +	clear_ref_exclusions(&excludes);
+>>> +	string_list_clear(&included_refs, 0);
+>>> +
+>>> +	return required == true;
+>>
+>> Tiny nit: I think in our codebase this can be written in a more
+>> idiomatic way by saying `!!required`.
 >
-> There has been long-standing interest in changing the default diff
-> algorithm to "histogram", and Git 3.0 was floated as a possible occasion
-> for taking some steps towards that:
+> Comparing for equality with Boolean in general is stupid, as
+> Booleans are designed to be usable as-is.  If it is "true", it is
+> true, and you do not have to compare it with "true" to ascertain
+> that it is true.
 >
-> https://lore.kernel.org/git/xmqqed873vgn.fsf@gitster.g/
+> I do 100% prefer "!!required" over "required == true" or "required
+> != false" all the time, since it is more idiomatic, but I vaguely
+> recall we had something that contradicts it in the CodingGuidelines
+> document.  Perhaps we'd want to fix that.
 >
-> As a preparation for this move, it is worth making sure that the diff
-> algorithm is configurable where useful.
+
+I could only find
+
+  - Some clever tricks, like using the !! operator with arithmetic
+     constructs, can be extremely confusing to others.  Avoid them,
+     unless there is a compelling reason to use them.
+
+I think its okay? This is more of a suggestion than a rule.
+
+> Thanks.
 >
-> Make it configurable in the `git-blame(1)` command by introducing the
-> `--diff-algorithm` option and make honor the `diff.algorithm` config
-> variable. Keep Myers diff as the default.
 >
-> Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
-> ---
+> [Footnote]
+>
+> But doesn't your suggested rewrite potentially change the meaning?
+>
+> The original allows required to be "true" and nothing else, while
+> "!!required" allows it to be any form of true (and in C, things that
+> are not zero, even a pointer that is not NULL, are all true).
 
-This step does not have anything surprising in it, knowing what the
-previous iteration contained.  Looking good.
+I get what you mean, but with the context that required is of type
+'bool', this would mean that we simply convert it to '0'/'1' here.
 
-Other than that many redirections into a file are written with a
-space between redirection operator and its target, i.e.
+With all this, perhaps `return required` as used in the v1 was the best
+approach. I'm happy to go either ways.
 
-    command > output &&
+--0000000000004411380643034014
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f08f515a079d9f5d_0.1
 
-that should be, according to the coding guidelines, written like
-
-    command >output &&
-
-that is.
-
-> +test_expect_success 'blame respects the order of diff options' '
-> +	cat >expected <<-\EOF &&
-> +...
-> +	EOF
-> +
-> +	git blame file.txt --minimal --diff-algorithm myers > output &&
-> +	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > actual &&
-> +	test_cmp expected actual
-> +'
-
-Thanks.
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rT0Z4c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMFVuQy85VXBXUXZOd0dLSmxLZ3lpSkJXK3Y3YTZYUgorcmpCR2owdTRp
+d0VlYWJIS1U2NVI1aDd5cWE3RGVsTW1IZWhaaU1EZjB0d1M0aHZBdUt4SkdubnFNUkMraXl0Cmhk
+SGxrVnVRSnZFYlVGOFllRjFkQjhPMFdRcGhMaDV1QTAxc1dPaGlxU2pwNU52c1BBRmYyb014UWdH
+bjcvZEwKN3lHcXJVaTExN1g4b1VUWXZjc0lhVGNMUWRTU1hzZmRZdE56S21ZUlM1KytObkJuVmMv
+N1lqM1RkMDJNUzRQVAo1V3N2Ym9UTCtCUDM1VHM3S0s3bUVPK0lFSEtTSkhLYUNVK3VLbGttYWVu
+cGNxN2x4aG9UTDdzdGZ5V2pvb1U3CjJEV25jcFpBM2p0ZklRUUpJQk5TN1RhQzJiT1BJdnlHZGI2
+SVRBcGUxaUhkQWVwUzRvZ0J0VWZMSW0yeUM1TlIKRWZWNWdBOGVMM296WnpmM1ZhVGtrcG5CWjlS
+Ti9YWFJ0SnRCRTQ4SDVGenpVekRpVldWdjhoVnJtZUFHMmRtMgpoRmNkN0tud1FoZXJYTDVpRlE1
+VDh5aGg0eVRBckpVVUJsOC8rVjN0MHFabGVDeDh3cWRObjQzeCtIaDg5ZzQyCkp1VWV3bnpDazJt
+bnp6VURNbFp4VHpWb0ZoYWg2RXY4M3BrbWhJdz0KPUtUOEQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000004411380643034014--
