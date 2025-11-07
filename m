@@ -1,178 +1,97 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F483259CAF
-	for <git@vger.kernel.org>; Fri,  7 Nov 2025 21:40:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4A73148B2
+	for <git@vger.kernel.org>; Fri,  7 Nov 2025 22:40:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762551631; cv=none; b=IhaxVblOhorwgABGNvsbP9dlIlmy+LWIjb2xjtCkacYbfvFar+moFsDD+qczt/1GDqV48ZgHSPRSahzex6hc2OtucIDlslEr39elrAHRf0lsKTko19AzzOK3XdkhFuXmPZ4LDiJPTshzA9g8/kR1edz5Ma9mkvhj2/q2Z5rFaqY=
+	t=1762555242; cv=none; b=MsF3D5tumOrJjTdRNeewNrfkfj7SDyqo01b1yFp8LD4FCGrVdn3UvqGrI3H/EYn1LY76oQjmnFAbWrLLwnrGDVcnfjAX6gzfb8SLNhwttNMxm/csDuipGtSTUXeao6Gvt3PeERnMyP+DYmhqxuJJ7CluVozp4d2JWOh1e8bTB+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762551631; c=relaxed/simple;
-	bh=sw5T0OyALIjb9p4Igs18YrvB3dM1EBbWP5LiUkv9LT0=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Y4qJOdNzHGzqB9crVHHVaCaWdx4eKxcQgbD8+CcaGH4ebuFqxVM42ONZJ0WZQ5Dk1yze2/TJD9GohAhsjQguYGPM5PufiVyx1Edm/LZeOdwPm6v9uLJC1xkc7n1XwXs0guGtcM5XhiOLG0/JAtnzWsLxTel5D9Luh8OcsrTBsJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=GKzH5jYY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=irsDqdCA; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
+	s=arc-20240116; t=1762555242; c=relaxed/simple;
+	bh=Tw5EPfbd0bqX/XpX2f1H50+ofJiaNcKF8o7ZMKmXZwY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UZJGziASQ2Bt4AeDjckowlB1zzx9yiPUo7nkmCDhPmTEhPfmf4AwlfnNQyFJzkKe+h0SSp/DF/NyVFXwh1NxnXn2YX28l7t8tNkWf/UV7s7YKDX54AAui+NrAW+jCZqW2xbjsex6FodlZoCGQuVA18uGnZbYmwjsrGl9gkSh/Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hwW58Xtx; arc=none smtp.client-ip=209.85.166.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="GKzH5jYY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="irsDqdCA"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9E718EC0288;
-	Fri,  7 Nov 2025 16:40:28 -0500 (EST)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-05.internal (MEProxy); Fri, 07 Nov 2025 16:40:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1762551628;
-	 x=1762638028; bh=+v/fX4ZCl0Q9ZzGSfUmmqvF5JyJS/lyVNmKqu6/41Fc=; b=
-	GKzH5jYYad7V4dnL51cMZxgPB2cKwzCddfuX19IGpJKCSx5eHNwHMCqEiAWW/sPB
-	01yAktf5JZWN/hx4HRH2L9cxbGsKRPskDon6X4LppeKbULfa6gEHNiFX3jwCSD9A
-	u4+61wBFWtAH3BM3w76OOoic6VkQ6wjNuMlBGiL0RHZKIXqhsVWj3cEuPMkgiazc
-	BrU/Pnl383Wa/tyhvTMQPF7/7soX1pwD+UQJc0aB+z4o6OIXOP60PjonKSqHOMNr
-	FHOPCdARgekCPhoNMj7xsLe3e4g6KAbX8yh+pKfXe46qw0mw9UjqcD2nNPOz4OZ1
-	vMkskzBSTcaY8mqqchX1Eg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762551628; x=
-	1762638028; bh=+v/fX4ZCl0Q9ZzGSfUmmqvF5JyJS/lyVNmKqu6/41Fc=; b=i
-	rsDqdCA5R0lQSypFJnP+Bh9cJgQ5sAICZyFYuvI6YU/O1FzlgrNIWcrap0mgRWf/
-	aYpkRZm4Bnt9pueLOcomfCbFQRsGm4xHpce7WAUVmq1REC5rhVogRYM8wxJCZOnB
-	wAovg67MC2w28bAW866D3DZv0/lJvo/tpArl27L+trssGHMgIme7d2BphXz8xasw
-	KTqBVSI5EzSYwwm+SERh/fkSyURcVOfrN5yaozhDXwK/lUsp84qAPQ1/KEEOExEB
-	sNZ9TS4Ck9nh7siiusx6gLJB1MIskCaQZdLl5IMTk5BbpSqtQ1bEItGZE2xmwOS4
-	IKzHQNTpWaxQwkfW8jl/g==
-X-ME-Sender: <xms:TGcOaWnYiHFU2Wuj4uBzRVSYLmAs52f88Zz8CojuKxl5KQY2zPWczA>
-    <xme:TGcOaYpODbREXnpi-cQOMcsVDjQg-sHV5YGJuVhjdmgtWPoTSCVQpu9qOu1YwoJB_
-    z2rOmo9kTnIzN2YRpKk3kjcCA7xuL0j-1ML_NhvUr4iLwPBzL4sEow>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduledtjeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfhulhhi
-    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
-    epteejveehjeejudfhvefggeegtdetueeikeffuedtgfeggedugfekieduffetgeelnecu
-    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehjuhhlihgrsehjvhhnshdrtggrpdhnsggprhgtphht
-    thhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrh
-    hhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhk
-    nhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvth
-    esghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:TGcOacS5c_vjY0FW1Fj_D-Z929odp6KSA3lrmXuyzlIBMg063t47sA>
-    <xmx:TGcOaTGgySVt8QjJPGfKxjkthHzuVnwfu5rl_1wO-8vPJh1H8nxUuQ>
-    <xmx:TGcOaREKZ852_BbGpQ0Szxx_dE2xp49v4b5mqDnTDysS3HtCSMCHug>
-    <xmx:TGcOaRSuxgkwrSVEXO5Ii4gL2fFbwRRQQ_moc3NMstvcV5LUkt9j_Q>
-    <xmx:TGcOab4bNCwTQRxMasbDdikjG0vlzAwDQ5KEyXGI0FHN_K1m-XnQPW5C>
-Feedback-ID: i2aa947c3:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 32D257800DA; Fri,  7 Nov 2025 16:40:28 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hwW58Xtx"
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-9486b567c18so48141139f.0
+        for <git@vger.kernel.org>; Fri, 07 Nov 2025 14:40:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762555240; x=1763160040; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GPdtsExAde+4nIfXUKC/rTmhcAs+FofWIxXhujJmSEE=;
+        b=hwW58XtxYqvh8DMbbTEw8h4cLcUgqS5I66h61oj0/CNcZrIaGjoalRvz1JYZRQN3Jk
+         vZ/gw69bj9/OKMkVEzMnC+NLAUacHgWKWhPwuSpxLBTDm+QBPsvb/yQCiR6qXoW0EffB
+         YY//ivBz2Av20eXPfERagR3VkP1V5q1n9aR0cXzSuPq8/jKVInpffPRC/pMm/Ddcbd+w
+         y+2sQRiK8VRSPfRRA0oibhuSmEZPIng7FXasZM/UY8D7QSCL56yLDtT00izBJGqmUTD7
+         US/d1k/mDYaY8BL5wedRDg3NBB4dLZsVZGVX1zqWZOL3lQFqOGl/djQmTeWV8zJK3aQS
+         MuRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762555240; x=1763160040;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=GPdtsExAde+4nIfXUKC/rTmhcAs+FofWIxXhujJmSEE=;
+        b=cVG495OAcQ2ya+lpRxo/1161TGl9zylZgkPv30/aFjlQeJBrCxuYTh2lNICHqJOQim
+         FV81KPx21EELW85csZj+Mpi7soXj7m44BYl5Ihb0qzHmXZZ2ax7JSbr2xoB0dVvqVpAK
+         /k1xRFll1xrgf3QlKYHtNCKaZdJhybOj1zuNiKnAa1IjItjwHAUBfIczY+a5Pf1UVyGX
+         NCduKGEEXbzAf3Mp9P1G0DRQ1lpof8SsvshnCW7Xso6CsQjF1VlZE8LfCBSAWYb0Gr1D
+         RcHHTilPEAgt/hM8m/2+xWkUtznatMXl+nnh8snYtRkNcYD3QXSZIxIXmy9l0oGuqlXz
+         WdDA==
+X-Forwarded-Encrypted: i=1; AJvYcCX0OEXSphS0LPm2cZIIBqsuS9e/Flb0R9hUlDrcwe2VJAIZXGrN1niWkqIbmmG3PgzwmHs=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3VCMmhhZwJB+BTsSgn6X4SJrg9vBGSiPoaBZYvFbDrD4Psueq
+	icdfZq24Mu/80u+581/DFDUN+vxJ2zInvd2zPtzlk2OHKpRKzQCKoYn5IUKQSazP0UYgEtzFuUP
+	eHr83UGjtf04aryKQdaqhunbYrPfeRrkJqA==
+X-Gm-Gg: ASbGncuilHYBEM1iV9V40aqOxr3cJAEk9N//OveppRJqm+Kk0domZzJFfcTEXkg5e95
+	rmBx9xRYt/KtVl9egQNyc3Dh6/xPVjZ5D6IuwvUn8JBrmfzc6KLQ4rZQgEolysTtcLMQNwF8OuL
+	irffLgy5LhemP3fvV2kNoeF/9AqeLN1W1fAlQUOJx/6ph544BQDjN+lN2B8/SqxIvcp8ilAv0RA
+	rQ7Y1xr4BteWl7PinTjNxnpQzVHamdsgVecN/GzcfZZBaQ9JlgRh/PMKmmGVo7ZRxEG12xRuA0=
+X-Google-Smtp-Source: AGHT+IH0T706VsPTUgixxrhvtQx4SpZ802Wr9zrOhcqukc1b5CUTZVuEMBv5/BYBFLV8XbbsOxht3cgI62+0yek5Ic8=
+X-Received: by 2002:a92:611:0:b0:433:674b:35ef with SMTP id
+ e9e14a558f8ab-433674b372fmr20485775ab.0.1762555240043; Fri, 07 Nov 2025
+ 14:40:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AGkC0gJjnH2B
-Date: Fri, 07 Nov 2025 16:40:08 -0500
-From: "Julia Evans" <julia@jvns.ca>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Julia Evans" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>, "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <07cca81a-10fd-49aa-b175-17b49e4f1116@app.fastmail.com>
-In-Reply-To: <xmqqseepedue.fsf@gitster.g>
-References: <pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com>
- <pull.1981.v6.git.1762545177204.gitgitgadget@gmail.com>
- <xmqqseepedue.fsf@gitster.g>
-Subject: Re: [PATCH v6] doc: add an explanation of Git's data model
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+References: <pull.1992.git.1762192908.gitgitgadget@gmail.com>
+ <950236f0f812197e260159a688fc6f6fa61046c7.1762192908.git.gitgitgadget@gmail.com>
+ <2983385e-daeb-40c0-a8bc-fb8bd3b744a6@app.fastmail.com>
+In-Reply-To: <2983385e-daeb-40c0-a8bc-fb8bd3b744a6@app.fastmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 7 Nov 2025 14:40:28 -0800
+X-Gm-Features: AWmQ_bkx2X2ql4JWKDUj7KfJmMC_zyQf4-4Hai3m14ZQhNKu0Yz2--rmHa9HZlU
+Message-ID: <CABPp-BGchyC6BB2p7p-6qHvwcu5AV+VCAdTeR247F0VamsJkbQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] t6429: update comment to mention correct tool
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Josh Soref <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-
-On Fri, Nov 7, 2025, at 4:23 PM, Junio C Hamano wrote:
-> "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Fri, Nov 7, 2025 at 6:36=E2=80=AFAM Kristoffer Haugsbakk
+<kristofferhaugsbakk@fastmail.com> wrote:
 >
->>     changes in v6:
->>     
->>      * Make punctuation more consistent (from Patrick's review)
+> On Mon, Nov 3, 2025, at 19:01, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > A comment at the top of t6429 mentions why the test doesn't exercise gi=
+t
+> > rebase or git cherry-pick.  However, it claims that it uses `test-tool
+> > fast-rebase`.  That was true when the comment was written, but commit
+> > f920b0289ba3 (replay: introduce new builtin, 2023-11-24) changed it to
+> > use git replay without updating this comment.
+> >
+> > We could potentially just strike this second comment, since git replay
+> > is a bonified built-in, but perhaps the explanation about why it focuse=
+s
 >
-> Good.
->
->>      * Explain more about when exactly amended commits will get deleted
->>        (when their reflog entry expires), from Junio's review
->
-> Looked good.
->
->>      * Be more explicit that there are only 5 file modes in Git (from
->>        Junio's review)
->
-> I find "These are all of the file modes in Git" hard to read and
-> understand, and more importantly, does not imply that we won't be
-> adding any others strongly enough, than something like "Git uses
-> only the following modes to represent the objects it stores".
->
->>      * Make tag object description clearer (from Junio's review)
+> s/bonified/bona fide/ ?
 
-I wonder if it would help to de-emphasize the octal representation
-of the file modes, and instead give them names since (from a
-data model section Git's file modes are really more like an enum with
-5 values than )
-
-Something like this:
-
-	Git has 5 file modes:
-
-	  - *regular file* (with <<object,object type>> `blob`)
-	  - *executable file* (with type `blob`)
-	  - *symbolic link* (with type `blob`)
-	  - *directory* (with type `tree`)
-	  - *gitlink*, for use with submodules (with type `commit`)
-
-	NOTE: Git normally displays file modes in the same format as Unix file modes
-	(100644, 100755, 120000, 040000, and 160000 respectively), but file modes are
-	only spiritually related to Unix file modes.
-
-> OK.
->
->>      * We had a long discussion about the phrasing of "A branch refers to a
->>        commit ID" but I didn't come up with any ideas for how to improve the
->>        phrasing so I left it as is.
->
-> I gave you something that is clearly an improvement there, though.
-> Just like a tag object records "the ID of the object it references",
-> a branch records "the ID of the commit it references".
-
-To me an "improvement" is something that helps the reader understand how Git's
-data model, and I do not understand in what way this rephrasing helps the
-reader, or how you think the current phrasing might cause confusion for the
-reader.
-
-From my point of view "a branch refers to a commit ID" clearly means the exact
-same thing as "a branch records the ID of the commit it references" and 
-"a branch records the ID of the commit it references" is just a less clear and
-more indirect way to communicate that.
-
-> Another thing we discussed and a better alternative offered during
-> the last round was "base directory", to which Patrick mentioned 
-> "we rather consistently use 'root tree'"
->
->  cf. https://lore.kernel.org/git/aQhcbHJjiI5GtV6Y@pks.im/
-
-I think it would be better to stick with "directory" here, because I've gotten
-several reader comments saying that they do not understand the
-term "tree" when it is used as a synonym for "directory".
-
-Maybe "root directory"?
-
-> Other than a few minor points I pointed out above, and the broken
-> xml id/idref that does not validate, this round looks good to me.
-
-Will fix the broken XML.
+Yep, good catch.  Got it fixed locally; will wait to see if any other
+feedback comes in.
