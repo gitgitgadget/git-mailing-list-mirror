@@ -1,59 +1,59 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C8F13DBA0
-	for <git@vger.kernel.org>; Sat,  8 Nov 2025 19:08:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12213126C03
+	for <git@vger.kernel.org>; Sat,  8 Nov 2025 19:12:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762628930; cv=none; b=oNqGgECuZfrhrueGQoGeb/emVisaCbAQeZOz9Dc8++jZLDez3CE3opcWqQvr5V7fxmcaI2tVLyi2R+OpJDkJrW6Mf9j/JNUZJMMlZoRW2RkLl2gCeid/lS28QgqaFS945ADdHHUnYQ2IK/NjS3xNGnYI6P0sN23Bfl3TGCWWZYs=
+	t=1762629145; cv=none; b=LPlgZ6eiZSyPU8CtJ13bA9dzqkaKCKe4ASRBb4Pzbld4bscnY6NRFv/SUs6vSrrM4+IUssT1lQXv2XeF1G5cGsJ0O/6mVMBlo0vHtRLAs3jST74lF29HDRAr9GJdsi11PO2hQQqu7cuBqbv1aXImizukXThYFV5VLxDUDzs6GwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762628930; c=relaxed/simple;
-	bh=UJJc4pRf3fo7vUzBwaM0v3seoTBJBa6b1+NNv8aRHlk=;
+	s=arc-20240116; t=1762629145; c=relaxed/simple;
+	bh=XW9WveIAkxDdRmOgKoN3Gu2p+pDa3DzGMeCTSCmpZ0k=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=SIa64gO60wjOJsY7vd0nsgv26NUv+KbRZTXO7siNt3Wm/WnB0tXj/aYa8zSNF9pDyeMf28+2Cn4L7h1rc+hzJ0o6ThmxMfv42i64EnmZQtz5sYpvuRWCB9YScEcNsBtiKOyTJEnrgKXDUU0ZSbP/6TtGc37zqf0Fk2a6QagV5dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fvNQF+l3; arc=none smtp.client-ip=209.85.216.44
+	 To:Content-Type; b=YmV4s+wtukkL61X9BWDsRDSZ5VIpXWHpJ3omRz4bpxSL9qkotNpYsT2pT/pNDkWikAds5LbBhzRUQSrzWdbhzaDwfOlaEBOjad9SkZ19LdAOm76hOtQ/TPdCNx3Z8iLTrtw2GXPdX4dELdzcGPZcv8j0MaAdT/s54PNKgf43x3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h2w0SbDK; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fvNQF+l3"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3436a97f092so1115817a91.3
-        for <git@vger.kernel.org>; Sat, 08 Nov 2025 11:08:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h2w0SbDK"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3414de5b27eso1396848a91.0
+        for <git@vger.kernel.org>; Sat, 08 Nov 2025 11:12:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762628927; x=1763233727; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762629143; x=1763233943; darn=vger.kernel.org;
         h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jLauOQwh8/5cRLiypkCq2YN1Mv4qH1OUjqDpZdmoFIg=;
-        b=fvNQF+l3/JDlB/99cnNh8dIgbR0U5LkhX7z2z5oUOxmcanwwijEqKdEABLgkz+5/nW
-         xc8I88Lc9O6HNfnbwQdUAUw6hkxY+WpChEmAeXKWNc83rd9Vn9D8YsLW4UfK7yBLk8RZ
-         vZ2r3WTZ6Pw+ozAUf270nGUdXCRIksAgRw+/XNBCZZzH7LmSTl0Jp1Ciw35NY/f5Pu9Y
-         8L69Ob5pxyeEvItkRhQpRKyR7NsvTmFgxYUNP5yqg4Bt3nK2RF4mLusj9sdH1w2qk73U
-         brE5yIg8dy0PbN5D2HHcSKxANKSGQu913XsHKcaLzmOfUDISKgjNzY81uuISxwxHi1xs
-         vCgA==
+        bh=XW9WveIAkxDdRmOgKoN3Gu2p+pDa3DzGMeCTSCmpZ0k=;
+        b=h2w0SbDKLrTBy8hYW93D3uPcrV+Zlfr541rWifallqjg/zhGFRhiJzNccipUIn4Zf7
+         9gDGtk1oqKklpu1sYyBYWFPKW53wA15N5EU/MKZ4ZH8/M4cZCIVr84CbhZjdOIKflf0b
+         ATEgAGdcbLXEm5oygEymdPoFSw4AbJ0uhIxY7UXEDo//1qwOl+JFUWCnfWAsmk5k8+ZD
+         MZwC1F/VNR1qkcd2+YINjvrIjUR3XCY8MsnHKY9wkp85S1i4paHqSW0F7ozr69Or4nOX
+         hiMWKdDMmoAnXhAJ9wCTRVirgUKBTI0oJLth38HjofDWycV+GgiaKem/h/7tjC2YzepE
+         eoDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762628927; x=1763233727;
+        d=1e100.net; s=20230601; t=1762629143; x=1763233943;
         h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=jLauOQwh8/5cRLiypkCq2YN1Mv4qH1OUjqDpZdmoFIg=;
-        b=fPyLS1heuyHM9yXR3mEUtUF1Mm7bSqlUnaCpgBTM9ZeqR2k+JSVs/EMiSXUCwyGV9t
-         MtgxzPLCd+hxwQcAAwinm1uiqliNdEehHX/jJ0cE1yAT1GQEjmXcUYbHOblCfAeZc0J1
-         x6M3rYJBvdHfXdmerpdPikHzzsJ42KzenSaw6Z7d7QAFvf4II7VfnifJMwihpxf6JoHQ
-         /CKjDHVFrOcshWxf+l1DhblvkUEIVIgQ8dlQ7NWkicHrnoTznnmkuEKdJT0bvI5UeuLF
-         Ihu7a6KSKHUzSr5f4vBPSyZOxIWAZ4/il0cmamXtsU9S1OfCQey2Fx/hGIfktBGs5fbk
-         vm5w==
-X-Gm-Message-State: AOJu0Yxv/9fzAMgHdGBWoCu7n5x5D21pkkXwYmaO/xRHlWhJa/H2Ack3
-	eLI5BLi6T4i/Sh4FThMIjgeE/ExqX6O/q6iPS/QK1PMpdXmUTmL2M8qHm2R82iWchICYOzSAV+9
-	O947JQbbeGUokKP/R/TDCJkAKOyct2SPTnQ9V
-X-Gm-Gg: ASbGncvqmAJu1mwwor+axvXsh9gd2tgHiOdpGNoVPkbfbrsIQ+MaKT0OECGhAz9D4KT
-	IPGC+DeNiKuULQ4j0KwUT+AuMWsqZZWGZdpzMOu85gUR93n2YIQirYOAKC0/ATzk4X5WAUga/b6
-	mLAcMZH5yhA3lGM8+Hwzz/xTiL6Vsa1x0wxrZSgRxd68Lt2tPPM4L/27jOhC+H6vK2lv2TQZ1RC
-	1yxv+c0wIOFsgPBVGD0dieaMRmIZyfNf20jSXSdDLEqVmtybQJtqmevmADymzaItojKpx3bhHWZ
-	Y5vfLeQ=
-X-Google-Smtp-Source: AGHT+IFZ9OtTpDXL5sFOz4uuLIPWUXf/yGIPBpMlBWjS1IJRbofNXuwZm2XwOCp1SjShheWMDVEASbWl/cZ6TgtF9ko=
-X-Received: by 2002:a17:902:e545:b0:26a:8171:dafa with SMTP id
- d9443c01a7336-297e564cef9mr47839675ad.21.1762628927409; Sat, 08 Nov 2025
- 11:08:47 -0800 (PST)
+        bh=XW9WveIAkxDdRmOgKoN3Gu2p+pDa3DzGMeCTSCmpZ0k=;
+        b=SSTh3dHm1Q9qzQVcVk4gHpcC1jNuln+QbGtaHANMG4nVPy8Uz2oPQFQ+6vbnXJgpK0
+         6E8AmTUH9TLg6mT5nTTDx4inzFpX9qTvaGUOEz9TYIzNKCYbDrD5LY7C3VY/ihxXi42M
+         C60QI+N8zjVQ5GXgLAIBq+VEKmkIq371ewQieh1ARohl93rsfc/UdbmO6ZCUS6DVBKS9
+         iwCMi1GaCsMkIk8cjaV4NkbPeRnlpNpbRnfkNfmMEZguRqL/fbI98Y3XV81xi4aJ2UzV
+         Jp2OfToTa4MrpcEUDa90GIwLQhaymcmGBzNJTZPsryUm4Wlwk5IzAjBoiFX+TZ8KsX0j
+         /Ucw==
+X-Gm-Message-State: AOJu0YwGDxCy9qb3y2MhfYqiHxxNjyf812iLLeSsbsLI71tBMfmzLScf
+	ixrgNXnzG8fttQWwriYtENLqTHiQh2yvGnHeiSAIFoqv8k1aVSVySMBKuE1yutzNdNqrjjjOKaj
+	2AqiZjEw767kD4/WN5rtDArjHPxwvKRZoiI7p
+X-Gm-Gg: ASbGncuYws5945EYbcUsdFKmDwOxdI6ZTVFv6vJaws95ufwkk+TcXDExuE03Lg4xRls
+	rhC1p9gS6sZcyWI16hAntYICrBU0DWLOrq7Zre1Xnl59LbFKjgPIjNAdApvlncODLE3FA/2H8YF
+	/2ugWwx0jiNoLZ3ikVyJJfu4A6m7JL3NpV5IMM1MLEl5Rh+Lo/sYwDVe9bfG1BC/2CerJQxEoyb
+	rrkmKe10ijd/vsdSsi81QylEfClZb2EOUEKzxZjZNFnzffXHTWcG49gnv/BQI+FNoSCOG7OusVq
+	JPYIZbc=
+X-Google-Smtp-Source: AGHT+IHWAEL+BC/aanuW/ciRgLtttKL+MWt7D3qGvOGm2scg5R34j2R6PMBpiL6m319fRNlNUkNpD0QmWjrzFezjjWM=
+X-Received: by 2002:a17:90b:3851:b0:341:c964:126c with SMTP id
+ 98e67ed59e1d1-3436cbc8f3dmr3906099a91.34.1762629142999; Sat, 08 Nov 2025
+ 11:12:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,59 +61,39 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <CALnO6CBsj+aMvHJoUQ+LHAtXhcFhQeH8AuHyrX+rumur6MQQog@mail.gmail.com>
-In-Reply-To: <CALnO6CBsj+aMvHJoUQ+LHAtXhcFhQeH8AuHyrX+rumur6MQQog@mail.gmail.com>
+ <CALnO6CBsXEpeCTS=FpcOvXEOw7sNGT8fdb4Z8PBewoW0iRMnXQ@mail.gmail.com>
+In-Reply-To: <CALnO6CBsXEpeCTS=FpcOvXEOw7sNGT8fdb4Z8PBewoW0iRMnXQ@mail.gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 8 Nov 2025 14:08:35 -0500
-X-Gm-Features: AWmQ_blp13igoNp-sOuGvw5omg_DZO9_nUIuSL9id3OhvFmMqq71Rx6eDc-0shE
-Message-ID: <CALnO6CBsXEpeCTS=FpcOvXEOw7sNGT8fdb4Z8PBewoW0iRMnXQ@mail.gmail.com>
+Date: Sat, 8 Nov 2025 14:12:12 -0500
+X-Gm-Features: AWmQ_bm8Ci0VYuNgfIqEPUBTJ41Q3BlFo5gwK46lA8Jf5FRG_Kkx82xGLG12ORY
+Message-ID: <CALnO6CA187833M7SFDTrbSaTOpo5vSt3UGUFEiLGpiJnk_ekmg@mail.gmail.com>
 Subject: Re: diff --cached --no-ext-diff --find-copies-harder --quiet exits
  with wrong status code
 To: Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Nov 8, 2025 at 2:05=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com>=
+On Sat, Nov 8, 2025 at 2:08=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com>=
  wrote:
 >
-> AFAICT, you need all of the mentioned options to trigger the bug.
-> Allowing ext-diff works fine, I don't think it's triggered in
-> non-cached diffs, and I've never seen it without --find-copies-harder.
-> Notably, s/quiet/exit-code works just fine.
+> On Sat, Nov 8, 2025 at 2:05=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.co=
+m> wrote:
+> >
+> > AFAICT, you need all of the mentioned options to trigger the bug.
+> > Allowing ext-diff works fine, I don't think it's triggered in
+> > non-cached diffs, and I've never seen it without --find-copies-harder.
+> > Notably, s/quiet/exit-code works just fine.
 >
-> Here's a repro from git.git:
 >
->     cp git{,1}.c
->     git add git1.c
->     git diff --cached --no-ext-diff --quiet --find-copies-harder &&
-> echo 'this should exit 1!'
->
-> (And of course, ^quiet^exit-code if your shell supports it yields a
-> different outcome)
->
-> Context: my distro applies a patch that allows
-> diff.renames=3Dcopies-harder. In a repo with that turned on,
-> git-prompt.sh stopped showing some staged changes.  Turns out it runs
-> git diff with all these flags (less --find-copies-harder, which is
-> enabled by the config option). I _have_ confirmed this bug exists in
-> unpatched Git, however.
->
-> Some rough debugging notes: when entering diffcore_std (or
-> diffcore_rename_extended's cleanup loop):
-> - for exit-code, diff_queued_diff.nr matches "git ls-files :/ | wc -l"
-> - for quiet, it's just 1 (the first file listed by git ls-files :/, AFAIC=
-T)
-> The only other obvious difference I spotted is that the "quick" flag
-> is turned on for quiet, which makes sense.
+> I think I also spotted a difference in diff_from_contents, but not
+> sure if that's relevant.
 
-Ah, woops. The reason this matters is that, after diff_rename, in the
-correct version the queue is non-empty and has_changes gets set, which
-plays into diff_result_code. In the broken version, the resulting
-queue ends up empty, so has_changes is _reset_ to 0 (despite
-previously being 1?)
+Yeesh. You know how writing for others clarifies thoughts? Well...
 
-I think I also spotted a difference in diff_from_contents, but not
-sure if that's relevant.
-
+I just noticed that diff_setup_done tweaks diff_from_contents based on
+whether external diffs are allowed. Possibly relevant? I haven't been
+able to easily identify a place where all 3 relevant options come
+together, but this would be 2 of them (quiet and ext-diff).
 
 --=20
 D. Ben Knoble
