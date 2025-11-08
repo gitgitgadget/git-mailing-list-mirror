@@ -1,160 +1,151 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BA12FCC01
-	for <git@vger.kernel.org>; Fri,  7 Nov 2025 23:08:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547E215278E
+	for <git@vger.kernel.org>; Sat,  8 Nov 2025 00:35:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762556885; cv=none; b=Zu0QuNwu86GhMLOA74pATD5ctBK5TGY/AiOuYPZ8p5Kb57FlywrsL7TJq8zU5ZCeGBLXjsJzUQd5o0311nnR53RIz1GX4UG2P2uxe/rn5GjL0BgquamxDt+qfHGRNnWMUozNWe+MYaMu9VpZngiG2E1psy+2ofVxepI22l19+JQ=
+	t=1762562103; cv=none; b=IF6b56S8UGlS9OoAGubxT2sKGqbHkVmhsokSjeQhwIYkkiTOx7KiLkVxDTEXM8TFqCHTYKlzjUbseWX+gOsY7pIHIgciP6kyU9DnNOkOTw80Kc07lCGZ4sAfmMQjXI+juQQ4unB8ZmMDH488tMfUeUSKxsQSJaz4uVeLh9aqOGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762556885; c=relaxed/simple;
-	bh=8uVfGfY82KgleNx+5vSQxQRAszgibl9c/iws9UhAff4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AsIo+S/uvmF+70AQ/95FZHcYszmedQJwT1UFRvQmfJ2iy/Xo4Zi1kX6Zn9s6f+6MOQFpSdWuTlZ6d3lvj6sK1GMEbBvWfhpGIFiPNJDC31k5fcOgo+fLPHHhdX3e+JGu1B/jtFxLA/YUiYAVOIADy3m6sn9mWP4B0zAJzaLE5MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SkJthMJk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dixHgchi; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762562103; c=relaxed/simple;
+	bh=rzChbVm2hJrveUBqnmIJyM3dewgFKiPZJmi4sfsFH/8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kTUzkz3WPwW+FZiqC/4L8O8+LKX6Zmht0WuFJi17rkazKBf6aCNS7lbTv0N6rlv1AVIyO9zJ2fNgT1qt4Pmx30J1YWFkhLD8e8P0Kt09L2Ng8KPSk6XXxPdrfeaN0IezMxSe6Rxq775pz0GBctJfqXcgbSmsqzF3Qh2690BT2UE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WSnM20xz; arc=none smtp.client-ip=209.85.166.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SkJthMJk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dixHgchi"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 09408EC0475;
-	Fri,  7 Nov 2025 18:08:02 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 07 Nov 2025 18:08:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762556882; x=1762643282; bh=FditQV54yz
-	vbrPzsARzcUxHQ16MGZNPnJ7YF6vb3d+g=; b=SkJthMJkEbdf4Evci/ztHVD8eI
-	LPd4jsWyUO132XbmuDiiLt4msDi6bs1rEVRCgmn5z6qn4s07pIJ3smlUraJtI9sJ
-	TbAcs06XoQjmbtRtekoeTF5jrZ3UyW0jbFlXeuTiFwwpW056XuNmqHG0PYY6Kvh5
-	i54NO4rq/h65DNhOi5DWN+YKMYk7nCe8BlY06+nhO1+qVe40ghcsrNrMg/pbHj+K
-	OJGc8yDQdObjoHbCX70kttv0swLsMrlW2nZYRa1UwTNNZPfK10FWP1VRSBgSTFlZ
-	Plogu9TVIhkinc1hb5KdcRDfSurPzE+pm7DCXFFaIWVE622w/imEO2BQf4Fg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762556882; x=1762643282; bh=FditQV54yzvbrPzsARzcUxHQ16MGZNPnJ7Y
-	F6vb3d+g=; b=dixHgchifToS9ybDdl+LpmAgnTbwApPIR70l8Zke4yxZ9zZz2Z/
-	GuKJWcuqo6yFOXt9USDGXidmwYeIY3NmQ11vIwzdVNSf9N+0sBOANsIPQiKa5gjN
-	0j6/UdCqZd2A1xYByGNFyxZOTccJr4mpaRayODfCNzXbQfivv2nF9yZ7P54w+KgT
-	ZNodxhr1rXiruSKM6sUUQrtsHQpQkpjmx9l3udvzb8pSLtGIe7uQaKPODCENV9nH
-	oG3HgkEDOerjWJ0QXEFoB/C1flPbVu5XhnlcCNisoqvsJxcoCsRskVsoQQl4Nz1W
-	60RmAkLrSVbL3gjrxDR1JWNSVRdgRpmh3fg==
-X-ME-Sender: <xms:0XsOaT6CCX12SDxSj8EoKiCsAULZSg_Ipjmfpv71WBo86LjnpHG6mw>
-    <xme:0XsOabIsBpyf1a-r9-KEmqPGGpagpERgJ_v6TTF9LdUCH5h61ZolgIdkkhBlUEMer
-    ZhcEsfhFgXo8dDh2xCR8EOScUJN9qPRg2_XkgIHkiUaVp9T8TfiRUI>
-X-ME-Received: <xmr:0XsOacvPJHZUStevL1XKYbIxf3_hs_NqopxWYBhkPtIy_a_R5Fc88kUcjxTtG697D3Sk-rkdV5iNBYsPa66r4hdm6mzYqgq8L-Ub>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduledtleegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjuh
-    hlihgrsehjvhhnshdrtggrpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdr
-    tghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtph
-    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:0XsOaaJJMIiRsNUuyPvC87_yET4gMNLCGxxBWZV6DQOZFKa6wq10Dw>
-    <xmx:0XsOaV-6wwMDuXcdTn8C4Dv8JPdOehO_3ZRkqNNAEA_cvNfnjlqGGQ>
-    <xmx:0XsOaTwUqfd_BBPGNw0kYmHRW639e4LK_RS5-AQq5PuDzb-Jv86jbw>
-    <xmx:0XsOaS7hVX4Y4l_b_XXkA3lJu7zzqR2Bq11E0lQsyHnSHnPcCgJZDw>
-    <xmx:0nsOaX_rxCiIFrT1ghgc3YfkABtd74NvpltdqHtE4Tg7CEKu6aYUc3Ak>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Nov 2025 18:08:01 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "Julia Evans" <gitgitgadget@gmail.com>,  git@vger.kernel.org,
-  "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,  "D. Ben
- Knoble" <ben.knoble@gmail.com>,  "Patrick Steinhardt" <ps@pks.im>
-Subject: Re: [PATCH v6] doc: add an explanation of Git's data model
-In-Reply-To: <07cca81a-10fd-49aa-b175-17b49e4f1116@app.fastmail.com> (Julia
-	Evans's message of "Fri, 07 Nov 2025 16:40:08 -0500")
-References: <pull.1981.v5.git.1761856336360.gitgitgadget@gmail.com>
-	<pull.1981.v6.git.1762545177204.gitgitgadget@gmail.com>
-	<xmqqseepedue.fsf@gitster.g>
-	<07cca81a-10fd-49aa-b175-17b49e4f1116@app.fastmail.com>
-Date: Fri, 07 Nov 2025 15:07:59 -0800
-Message-ID: <xmqqo6pde90w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WSnM20xz"
+Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-94880a46f3fso44238239f.2
+        for <git@vger.kernel.org>; Fri, 07 Nov 2025 16:35:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762562100; x=1763166900; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ThudiFc7PZKCkOM9Q0rjpAuaFe1w2ujUqv+ftHisj+o=;
+        b=WSnM20xzQls7NCTJb9lli3Cqsgh2kBaMwOz2WZPwQQFziCxjt+tbwpCCnlI11tXKfX
+         eBI8HF0aT0cb1CCi0ed/MvuGJWOe4M1WQ6C4Hpox78liNEWm6FZUaWtbQo/b5FKBl4Yu
+         QQqVAQd1z1HI5cowbwV0awvJj0tBn0IddHXFKQ8+szopIzKUTSbaDdH3PuZxv5Ezd+Pv
+         IKP88yOhZ5j4PKgP0rvz3AVex5rTqwMHMAAdRXfxHHu/6UPMWij8GRjqimZvFfh8ffNk
+         JnJkJN7YbK6RgdtfwDukpx992eie/UY7X7eTXL173gk+m1W46hUjUS7xmjMEdwGByFZ7
+         R9lA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762562100; x=1763166900;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ThudiFc7PZKCkOM9Q0rjpAuaFe1w2ujUqv+ftHisj+o=;
+        b=uI0FsGrpM8gD3JOwfnQKcFqp28Wj3zpm3EL/OMlIjvpJQMmfDHwl9EdXZSDYjgn6Zl
+         yTdQHFSchl6yn2CtCIyxbfOaZ7zWZPPUVJKUTqZMVLC7W1oYzD6qz4Xcwo9cDjD3tMDX
+         P99AMZSvQpgk/OwrcOpY0xPd8a+7XbXgZLhbJZZHD39CPtbYlGj+woFJC5jjo4yZUYBt
+         yl0Ey/qaMGp9QHu0VBSxHv3pJDPfSmOYhMw0zVKyYvpW6k8pDALp6eUZa8ZoZqcN+CUQ
+         BHrhSobORTn+GyLtMdP+e6gIsKLIpb7rSUsNdQV97zzAde2aHjZEuMZmQtb969I5zEZV
+         +zNg==
+X-Forwarded-Encrypted: i=1; AJvYcCWMTNltTl0iOBInOrUD7bnlBauB9zcZiYF5LIZuHoWYlYM3vGLfzBMKB8R4257X4VQy6hw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyy+Fm5iiV9qTXcBlvkaQBee3lLZqEb7NkGZvj3j2P66AicVtie
+	ZRGcld1Or4rnopRwx/tRa4WwMoRX1Y4a4xvkkw1wsBATizhRSmNYG43ce9stW83vhM+goR/FNUT
+	zBaPQKGZn2P9alM6BwiMNg20op0X2aFFSdu4u
+X-Gm-Gg: ASbGncvTS5PUI4D4MarvlxA/y0/jDoPaw+Nx5Pw4tVuIRQeL7JMy3FP0zExOfKrCmPb
+	CO5xNk04nUxdhLQKS5pH5LtTO4RxNcBOZ9mzOiWVpopLos21E4gNoZWCe8y4mqpO2JkTfUDK4OZ
+	wLnVKFmYXzNxhHxhcV0w27QDiewwL59vnI01TCxx5+pj0ipv5SRIveQhUWh6HuttSQ7WoruydJV
+	cs2Hjc1EB3gH8tihcf+FFTbqY5BZ6HJwImdlMJu+2QmKai8OtsP7pey8Bbjkpl6b9fclYxsIOrV
+	TjQkWNei0A==
+X-Google-Smtp-Source: AGHT+IFlhXxa/Pq3yrmx3K2CDJxBT3FvHMaas/iVR4X51yx8EFU4NAk1a8/J8O16BUNZoc8SqVr1Te1uODfPrbt0hgE=
+X-Received: by 2002:a05:6e02:2708:b0:433:2844:111e with SMTP id
+ e9e14a558f8ab-43367df3aa2mr21078005ab.14.1762562100250; Fri, 07 Nov 2025
+ 16:35:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20251105061918.3688870-1-christian.couder@gmail.com> <xmqqjz04mtji.fsf@gitster.g>
+In-Reply-To: <xmqqjz04mtji.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 7 Nov 2025 16:34:48 -0800
+X-Gm-Features: AWmQ_bkMSROFE0T7GAKw1vd17k2a63awVUz_i3hY6f6PjOxBptPoOP8wvHLndBc
+Message-ID: <CABPp-BFWem8iWFQn0Sq7JhHigm7rZsa81D6r7zbsQSh3+ZH91Q@mail.gmail.com>
+Subject: Re: [PATCH 0/3] fast-import: add 'strip-if-invalid' mode to --signed-commits=<mode>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, 
+	"brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Julia Evans" <julia@jvns.ca> writes:
-
-> I wonder if it would help to de-emphasize the octal representation
-> of the file modes, and instead give them names since (from a
-> data model section Git's file modes are really more like an enum with
-> 5 values than )
+On Wed, Nov 5, 2025 at 6:40=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> Something like this:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> 	Git has 5 file modes:
+> > The `--signed-commits=3D<mode>` option in `git fast-import` allows user=
+s
+> > to decide what should be done when commits with signatures are
+> > imported.
+> >
+> > For tools like `git filter-repo`, it would be useful to be able to
+> > strip signatures when they are invalid, so let's add a new
+> > 'strip-if-invalid' mode for that purpose.
 >
-> 	  - *regular file* (with <<object,object type>> `blob`)
-> 	  - *executable file* (with type `blob`)
-> 	  - *symbolic link* (with type `blob`)
-> 	  - *directory* (with type `tree`)
-> 	  - *gitlink*, for use with submodules (with type `commit`)
->
-> 	NOTE: Git normally displays file modes in the same format as Unix file modes
-> 	(100644, 100755, 120000, 040000, and 160000 respectively), but file modes are
-> 	only spiritually related to Unix file modes.
+> Sorry, but I do not get it.  What is your definition of a signature
+> being "invalid", and what is your assumptions of how accurate a
+> validity check ought to be?  For example, are you assuming that you
+> have all the necessary public keys, revocation data and accurate
+> clock?  Even if you are not changing a single bit in the import,
+> some of your early commits' signatures do not "validate" and may
+> need to be stripped, and after that happens, wouldn't signatures of
+> all later commits become unusable (i.e, you may be able to verify
+> that the signature on the original commit object may still be valid,
+> but because the commit has to become a child of a rewritten commit,
+> in the resulting history the signature would no longer match)?
 
-Then, I would suggest further deemphasize the "file modes" even
-more.  
+Good questions.  Let me step back and perhaps motivate the change a bit:
 
-    * Git stores/tracks 5 different file types, which are
-      non-executable files, executable files, symbolic links,
-      directories, and gitlinks.
+There's a fairly significant chunk of `git filter-repo` users who also
+have git histories with commit or tag signatures in their history.
+They often want to specify rules for rewriting history which happen to
+only affect "recent" commits.  While they could try to specify commit
+ranges corresponding to "recent" commits, they worry about getting it
+wrong and want to just automatically rewrite everything, expecting
+older commit signatures to be untouched (since the modification rules
+didn't need to modify older commits), and get new commit OIDs starting
+with the first commit that was modified by one of the rewrite rules.
+Unfortunately, when fast-export exports history, it does so without
+signatures, and thus they get every commit rewritten, not just the
+recent history.
 
-    * Git uses one bitpattern each to mark these 5 different kinds
-      of things in tree objects.  These bitpatterns were loosely
-      modelled after UNIX file mode bits.
+Christian's previous series allows us to have fast-export also export
+the signatures, but then we run into the problem of determining
+whether those signatures are still valid and what to do if they
+aren't.  This series attempts to help us determine if they are valid,
+and implements one choice when they aren't (strip), in addition to one
+that the previous series implemented (keep-it-anyway), while leaving
+another (re-sign) for future work.
 
-The first half entirely avoids saying "mode" and that is very
-deliberate.
+So, yeah, I'd presume this mode would have to assume the user had all
+the necessary public keys in order for fast-import to be able to check
+validity.  Perhaps that is a tall order for a small percentage of
+repos out there, but for them, is there any good alternative?
 
-> ... I do not understand in what way this rephrasing helps the
-> reader, or how you think the current phrasing might cause confusion for the
-> reader.
+As far as signature handling goes:
+  * Since fast-export doesn't know what changes filter-repo may make
+to the stream, it can't know whether the signatures will still be
+valid
+  * Since filter-repo doesn't know what history canonicalizations
+fast-export performed (and it performs a few), it can't know whether
+the signatures will still be valid
+  * Therefore, fast-import is the only process in the pipeline that
+can know whether a specified signature remains valid
 
-A branch (or any ref) does *not* *REFERENCE* an ID.  They refer to
-objects by *recording* an ID.  The distinction is not clear with
-your wording.
-
->> Another thing we discussed and a better alternative offered during
->> the last round was "base directory", to which Patrick mentioned 
->> "we rather consistently use 'root tree'"
->>
->>  cf. https://lore.kernel.org/git/aQhcbHJjiI5GtV6Y@pks.im/
->
-> I think it would be better to stick with "directory" here, because I've gotten
-> several reader comments saying that they do not understand the
-> term "tree" when it is used as a synonym for "directory".
->
-> Maybe "root directory"?
-
-I am OK with "root" but that is conditional; only if it is not used
-together with the word "directory".  We are not talking about "root
-directory" where common directories like /usr, /etc, /dev and /tmp
-hang immediately below.  If we use the word "directory", I'd
-strongly prefer to see it with adjective like "top-level" that
-implies that it is something different from "root directory" but is
-relative to the project in question.
-
-Thanks.
+I guess one alternative would be having fast-export include for any
+signed commit, what that signed commit's OID would have been had it
+been unsigned.  That would allow fast-import to check what the commit
+OID would be without the signature, and if it matches, then just keep
+the signature without checking whether it's actually valid.  It'd be a
+change to the fast-export & fast-import format to get such an extra
+piece of data, but perhaps that would be a preferable strategy?  It's
+the only alternative I can think of to what Christian is doing here;
+am I missing others?
