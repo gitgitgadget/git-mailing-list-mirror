@@ -1,118 +1,121 @@
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B931A2566D9
-	for <git@vger.kernel.org>; Sat,  8 Nov 2025 17:11:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F5B4A33
+	for <git@vger.kernel.org>; Sat,  8 Nov 2025 18:20:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762621920; cv=none; b=Q18QEd9MbFNxkP/jiG4ojM3mVd6CPJP9M5JJhmeC984DoLGDOLv+JqT2+YUt+qz2wQCFc8r3rjxh4/D1QlYXbpHcVQpIkNz8fuTcAvEbWQX1FObXSFoq8Y7so/Elzz6PeQbeievS4pC2JV/F8z/wC1QlP1hFoEGVrD68esqIW/Q=
+	t=1762626060; cv=none; b=M+rAHVX20mkcwD+NaZTEtAga0ki/Lj8jzxQeaSTCDAGldDRckwcDh7CDDTNuXiGSHeg5ARb5dfYv54TCbpU0f9h6J8w0e8V7NRJGgFOlfijLTzIdhLKKa6hhND6iYzngA8p3j6tQDQb5JdpTZxDQYC6dVM6TCB7GeqOIybyPKEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762621920; c=relaxed/simple;
-	bh=GSsG8tR75NceTXNlQ7NqhwVUDThtcdr8H15LvkKspyc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CHWaP94ewbSgswOykAhMp5Ndx+gg+9Hbih4J1OPl6ONXCW6s7jI/gdnWCnO9e/1v2gtZ9bfpCJ5Xxg1ExrmgHRpBTMshIy9IhKJB1Nsu8sjjn27FWnWF3D07afix93UDj3e4CzcSIQ9wHASDcAEEo7q7hgMJI+bMxBaVphG5vTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uk0TqtFs; arc=none smtp.client-ip=209.85.166.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762626060; c=relaxed/simple;
+	bh=EniWQiwAsHxM6mk+pNv13ajVLTFWR0kyB+uSbnkgJ8M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c/xzCokmGBJ0L9Pg4au51KTLHoBzgqAacKD3C5AiLgTt2r5WakHIOmmGq8tlU1VB00e/2Wyh7LeGXlX+wuTDIjM5/cOq/39KKflE+LUhDqzFuFlfnF+9Vrb9iHziAzAroxyMqMk23KmIwft8v8puR2KDUyPX/eGe4OJd0mjVFP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schrab.com; spf=pass smtp.mailfrom=schrab.com; dkim=pass (2048-bit key) header.d=schrab.com header.i=@schrab.com header.b=sXmpkd/A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aBJd9UgE; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schrab.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schrab.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uk0TqtFs"
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-93e7d3648a8so67129639f.2
-        for <git@vger.kernel.org>; Sat, 08 Nov 2025 09:11:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762621918; x=1763226718; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PQlQQ20ICe8XpYcaljFOMaVFQHQK/OIZ8lTVDqDq/B8=;
-        b=Uk0TqtFsFdLm+pVN4bGQSdapkBS35Mx1QHBHuqQMb3ktN1pRvs5JpKLXVrEo8f//oY
-         guMkQwp8WT+nnJrtKDQoAQPK0YIsplHNAiDb/NPKe0SJr/k9ewl0WXr57TZmTGqMfnsz
-         mzLslamq94lMNvqN96JZR6xuEcvjeH+9GfEBTa9iGVYeurSB2bNLXVzROxM31BjFHHLH
-         44YowrRKg4o7wqfonM/m01rqmO0z/kNzxbIW6o2eRlDNJVzHriKZndVsw3YtEjUE05QL
-         hSj5pAenpx0ysv/77vYRQfo1OeVzw4LbiFO5xrpUqSOnwjVP6ywCjSR92ZDLhKZMke/c
-         Z6eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762621918; x=1763226718;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=PQlQQ20ICe8XpYcaljFOMaVFQHQK/OIZ8lTVDqDq/B8=;
-        b=ZmRBJsN7pnlAtCrAgWMGiQEZCSTXq+UrtIeyjbtao3guPB92aE5ZyI2cCT3cHqB5S6
-         sGP2iou3fKOwuswWG2KK00FYVW9dYs+xJqaOWY6Dho4abYPx9xIjMLMbaEcVBTKMxi6+
-         4MNL+WIhos+rnSUq9z5SCcV0WABzgTeAHjSe7AAepKJBsTEtvx+fYNn0mjpwRE05n4wx
-         9oWRTYl3SDT3N9eUPqWSL3YokZD3mvBeQwiBcqQUeaBXdaw5k0k3sLBQQvzmQRJ/Sjv9
-         D/n9VKUvyExEkqPM/RxIlxp2MvEs9GAyDaXCiUDVE7vov05b0O5DrNfesBwYhoWJSNz9
-         RXXw==
-X-Gm-Message-State: AOJu0Yw/iMppzg1cZgH1voAnp6xzDcz89U2Pahe3Z96uh1L5Oq2KE8fe
-	GW/R504VE81echiQaTw/YTcD+G2Gur9WNYcaW5sDregnk1rEkjIohf7tJHa4ylA52dZCPLuR7o+
-	KzbJ+HF5WnG1p+CkOkJe2LmwE93naoow=
-X-Gm-Gg: ASbGncvU4L3sNDow4QWGr19PgtO0FRgDObfwwY41bwq5DubugULhYsosoPjn/g4KMOF
-	TU21fmx9/kYzCzSycO0aqZV5A7YTSAhtvaIiuvv49+pQG87SmGonNmFU3ijLBH4n81Vx7pVft/A
-	q/ABwN879BdbnC58Cq59n0ju/DC5yTh7au7ujsUXCAakadACOaueMnyC4LmCZJmCKPlm16QzZn+
-	U8k1lNy27OMdBRNi3UC4Cl2YwIU8Dh90yUtdZfYxDVWjR2GiQvXgY+2/GaEy6rVYJK80YQ2DR0=
-X-Google-Smtp-Source: AGHT+IHNOjKV9XAkPc7FBLKFDil9xyrmryrdUUO7Eb94LYehtSOniadyMPtouEkqEp8k8lggRwUz1MJ4Pxm975Pe8qY=
-X-Received: by 2002:a05:6602:4912:b0:948:81a5:7ac9 with SMTP id
- ca18e2360f4ac-94896050570mr303473339f.18.1762621917807; Sat, 08 Nov 2025
- 09:11:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=schrab.com header.i=@schrab.com header.b="sXmpkd/A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aBJd9UgE"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 405577A0102;
+	Sat,  8 Nov 2025 13:20:54 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Sat, 08 Nov 2025 13:20:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=schrab.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1762626054; x=1762712454; bh=mUra81oAL0
+	EvAldhukTue9XN3g7bh81po2RpSpK3KNQ=; b=sXmpkd/AShIDWeZQ+W/VE5MeLL
+	USmfFCfWMEhprDyzsv8AZBQJ/hGKsBKDR3oUMTM5fTmWdvWRZU7YkAgCSKDO/dKf
+	le2QaDeWoHYxBa1zcQdquw4P1lraQ/RSNNzUKJhKDkr7/kDCepY12JHkY6peS7f/
+	5sLzHTxtWBEu2uik5e8Kpc06ZPym+hSFVal9eO/WC5r1uEdg75b+nqMEjCdafIsV
+	ZG7F6LS8VDB28BYR+wMMesWy5TeRIGoj6JSc6pBBNBJuP87pZUzUDaiDCf9crqos
+	xPvmNYQiIi40aSx01UjYd0LteeVUpJInQ+smNUNWaYq4m15v1UeOOrdvnfPg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762626054; x=1762712454; bh=mUra81oAL0EvAldhukTue9XN3g7bh81po2R
+	pSpK3KNQ=; b=aBJd9UgEGqpFBDBiUwQamDrVL0dqBneL4LGyMsT2stTcTIeMADQ
+	JdGKm9a5ahvK86Sk9wj8s2gUto7cEnSjfiBonUhv4cOu73nBeA/wBIRLbCPsWOxH
+	CeSXa8ttL+i4LkSBaXeSc5MuAq5JllMVha8HrhUfZTHBcml8crGMWJkqo8iT9n8w
+	T4DoFXLvA779waqyBKesZcmJ3P6rte3gBj7GDs6VDDqgTpu3OJq5oTOQJ1DFK+NM
+	gpSv/S0+2CzKNMy2p3sLYQklVhlzLpThv4EH/pjBM9DcypqU6x1h35sOS+BPO+7Y
+	z+TVV8N9mvxcxEXE6LY2DRuvvKgaNxJVjRA==
+X-ME-Sender: <xms:BYoPaQ4WWyM5GCqrQvlfeoNLLBEqyRmtAefkaFS845IuqYwrLD-Msg>
+    <xme:BYoPaaEI8x48crQcjmMwMQxAc1GL523XfYd4w4E2ENG6EcojKjyC73qZlhdF9ntnE
+    5_JN7PUl8lHA6Cgfa4UCUj-noJIUiNYDxASrcnPkAny8mf6cvtm8yA>
+X-ME-Received: <xmr:BYoPabAUIqPv32tCbcV5-ZnvlcTBH0c604BNVkGQEf_gdDWGFg7obwpQhTFiwg5iiA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleefvdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheptegrrhhonhcu
+    ufgthhhrrggsuceorggrrhhonhesshgthhhrrggsrdgtohhmqeenucggtffrrghtthgvrh
+    hnpefhtdefvdeivdfhieehueeuteelveekhedvuedvhfffgefhieevgeekudevgeetueen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrghroh
+    hnsehstghhrhgrsgdrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgepshhmthhp
+    ohhuthdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggsohhrrgdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehrug
+    grmhgriihiohesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
+    nhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoh
+    epjhhrnhhivgguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhm
+X-ME-Proxy: <xmx:BYoPafx00SiDLWKA9JnjzEb9YkHL9ErrUZLVvu7akCr6qPSE7LqPZg>
+    <xmx:BYoPaf565-fNhsaKgpCZESk_sQWV-lDA7pS9u3wdo1z4X_gDyJrpbw>
+    <xmx:BYoPaQxlHFMzwyzOHxHmmOxM4NmsG-WXYzR_URRLlNuhJpwbUjTaZw>
+    <xmx:BYoPaTfpukSiyWmu0wGSV1lZpYilccYtbEAXy8S8cDLLRyZBqYWyog>
+    <xmx:BooPaf8ERX3xFY3y9rZPJ4rKjeO8cL20E5bCneI86RMtpo5dn4jRFpUz>
+Feedback-ID: i1fd14616:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 8 Nov 2025 13:20:52 -0500 (EST)
+Date: Sat, 8 Nov 2025 13:20:50 -0500
+From: Aaron Schrab <aaron@schrab.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v4 4/4] submodule: fix case-folding gitdir filesystem
+ colisions
+Message-ID: <20251108T182050Z.vbNv4y2kizC1@fnord.qqx.org>
+Mail-Followup-To: Adrian Ratiu <adrian.ratiu@collabora.com>,
+	git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20251107150547.3272180-1-adrian.ratiu@collabora.com>
+ <20251107150547.3272180-5-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251030191931.30837-1-siddharthasthana31@gmail.com>
- <20251105191650.89975-1-siddharthasthana31@gmail.com> <CABPp-BE+-EvQhRBQy22kt9+p8Zw2fOS4oR+UBRZAgcxRhaxS9A@mail.gmail.com>
- <0545bc77-8d69-4cf5-8d1c-ba59035eb556@gmail.com>
-In-Reply-To: <0545bc77-8d69-4cf5-8d1c-ba59035eb556@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Sat, 8 Nov 2025 09:11:45 -0800
-X-Gm-Features: AWmQ_bkDLS1GaICVvAjwfWRYWJhBLJQYGJVpnYE-DlPTh0tkXyAlnFZI2-tA__U
-Message-ID: <CABPp-BFXvJQ9fj7zvj3brpcbzWxEXMFWeoVtQxMeNUrcbV9k+w@mail.gmail.com>
-Subject: Re: [PATCH v7 0/3] replay: make atomic ref updates the default
-To: Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, phillip.wood123@gmail.com, 
-	phillip.wood@dunelm.org.uk, gitster@pobox.com, ps@pks.im, 
-	karthik.188@gmail.com, code@khaugsbakk.name, rybak.a.v@gmail.com, 
-	jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com, 
-	johannes.schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20251107150547.3272180-5-adrian.ratiu@collabora.com>
 
-On Sat, Nov 8, 2025 at 5:22=E2=80=AFAM Siddharth Asthana
-<siddharthasthana31@gmail.com> wrote:
-
-> >> -:  ---------- > 3:  b7ebe1f534 replay: add replay.refAction config op=
-tion
-> > There was a third patch in v6, but it doesn't show up in your
-> > range-diff?  Did you specify the range incorrectly by chance when you
-> > generated this?
+At 17:05 +0200 07 Nov 2025, Adrian Ratiu <adrian.ratiu@collabora.com> wrote:
+>Add a new check in validate_submodule_git_dir() to detect and
+>prevent case-folding filesystem colisions. When this new check
+>is triggered, a stricter casefolding aware URI encoding is used
+>to percent-encode uppercase characters, e.g. Foo becomes %46oo.
 >
->
-> The range-diff shows all three patches (1:1, 2:2, 3:3), but the third
-> one appears as a new addition (-: =E2=86=92 3:) because it underwent sign=
-ificant
-> restructuring between v6 and v7. The config-related changes were moved
-> around between commits, making git see it as essentially new rather than
-> modified.
+>By using this check/retry mechanism the uppercase encoding is
+>only applied when necessary, so case-sensitive filesystems are
+>not affected.
 
-No, the range diff does not show all three patches for v6, it only
-shows all three patches for v7.  If you had all three patches shown
-for both versions, and the third had undergone significant
-restructuring, then you would expect to see two lines such as:
-
-3:  6b2a44c72c < -:  -----------  replay: add replay.refAction config optio=
-n
--:  ----------- > 3:  b7ebe1f534 replay: add replay.refAction config option
-
-The first line (missing from your range-diff) would correspond to the
-third patch from v6 being treated as deleted, and the second (present
-in your range-diff) would represent the third patch from v7 being
-considered an addition.  You can verify the first line is missing from
-your range-diff by searching for "3:" in
-https://lore.kernel.org/git/20251105191650.89975-1-siddharthasthana31@gmail=
-.com/
--- you only get one hit instead of the expected two -- which suggests
-you either didn't pass the correct range to range-diff or snipped part
-of the output when pasting to your email.  In this case it doesn't
-matter much, because even if the 3rd patch from v6 was there we'd need
-to go an look at the individual patch due to the restructuring, but it
-was just a little odd so I pointed it out.
+What happens if `Foo` is added first and doesn't conflict with anything, 
+then later a new submodule is added which would naturally get the name 
+`foo` which would conflict and doesn't have any upper case characters to 
+encode to avoid the conflict?
