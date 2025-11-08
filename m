@@ -1,67 +1,66 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0BF2882B4
-	for <git@vger.kernel.org>; Sat,  8 Nov 2025 21:52:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BB528468D
+	for <git@vger.kernel.org>; Sat,  8 Nov 2025 21:52:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762638735; cv=none; b=cb3nIJd2f7nzg9outWxLppwDnL4PgXFw+CSrj5vsd0SPMWP/GIDi7TB5QrOhAMLmgQaQhfpUFdtNuVUrINNaN/DKi9cZ4xz4s267v5cRMyHXR0V8keMtqEGs7lO/O9H20mLY6VehxR7rz44OdE4w3WyiqI+fr4ZIG0B953Uhp8I=
+	t=1762638739; cv=none; b=ln1aaM0Iom0FaW6DtcVz6sLwcm5ebzQQTduACdECwSuHjcwJLOegBoHkHwF2jDVmZ/kwfD5Pvw6gjHK0duZ3B/vXES7AxEuXBgEFuxmqzsdYZbRugxpjWpx+PN6w+lsd6wrZSTe6V0mXl5QJbJ6UAWiVUk1V97b6Fce/j05nSns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762638735; c=relaxed/simple;
-	bh=T9blawi8PFyaaVAOfvnyKcZAaKBr+yPQoRJrJwxyBXg=;
+	s=arc-20240116; t=1762638739; c=relaxed/simple;
+	bh=dLwGukMD6CxFi/59kWJSZB41BIQTKJEW+7nTieQxEnQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lFTu615AWqMdIGjFYBanfhqcKsxE7XnTbRSvqJ/fedlzsJ51Ui2maDU6kMQ77JR61xvQxMBba1jVaJ/nw/oQA3Ws0A4oM9Ujm477nnt2ZQsiBitrwI+qWHvCqOopixXnW/n9GBgeuDpWzTTq13UhiMr4yAqUxSzMLQIgJaFmTVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YYTJhyQK; arc=none smtp.client-ip=209.85.208.49
+	 In-Reply-To:To:Cc; b=OtAkU1izlXQRciD8lsr+72ulrKRYTl0epl7cgMwvTb0YbvCXSS0TQD8Vn3n1fcWmAorffhs3DnKVcuG2Gry56BYNVAsQ8euP2UXz8gjnRvgmjGItDDRiK2AoZiWULyrH9+bwR7QArJiuj/fBa+qNmkghe+uW+wzZia65siaZNHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ieaOLnx+; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YYTJhyQK"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-64088c6b309so3021548a12.0
-        for <git@vger.kernel.org>; Sat, 08 Nov 2025 13:52:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ieaOLnx+"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-640f627d01dso3329563a12.2
+        for <git@vger.kernel.org>; Sat, 08 Nov 2025 13:52:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762638732; x=1763243532; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762638734; x=1763243534; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=xfZEfePFs78UhbIROU2k3WuoQyGuhL1/KKooyNYawtQ=;
-        b=YYTJhyQKe6xEDJuXL2Rtcb6RfkVLHWyuU/12NThJqA4+cceUTsTqNA3/vHYPllPklm
-         HoIL5WfqYv0wcS4cqNEix4WfUjlyE9h5zg4VHMjwpL5TueBhXDeIpECYyKlJoZpDic/J
-         4MfBMgzwy4F/dCsjHA2aHG30IA4SkOFqYFIaNe/lz33EeN377JA+UmJbnf3/GgWtOUCv
-         stcQeQjX1WkGH8XtSkSmlhWfiyuCrRKbvnLn/2QYGQhlH30L8+YwSTjl2SPTkx4c3jke
-         y7zrfZYAL3A0UfZ02ngAL5yPTKX+5Qfv8Bw8gZErHym0L8vps/T93SAinHNzeU0Tya9x
-         E+hA==
+        bh=CmUxAI3NKc3CW1dUsjYofGazEHSkvMj0qJt8WiOXUDo=;
+        b=ieaOLnx+jMjTy4IeU3aUqeOWjYJ0D34VpwowGowRkB8pjxMTSzX/MPgJXCKBw+ro8E
+         qmOVdrGVa+SnUZk/iCBuwFJ3z5fOvLlD7vK9AFs5sr3uS20Fvr3lcNZqKtBLK2m8Ouum
+         6L8SBFpSU7zZbg9o9LXXIhSEG+M1ZqBNb31unov4K6iQtkorAcP2+sCrD3MOI06d0PTc
+         6GNrR9r9BfXrnL0LzsWRouDgHOPmhga8Fa/GFSXD/zBquf38VbqFbzv5sU4dzpUC2jGL
+         ldtxi17/nMemFQ+kqW0gx3cB1fSWa/Tu3e+0RKafZtx2ZzLkNpX1y8WU96vB8KBv/9zC
+         Iq5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762638732; x=1763243532;
+        d=1e100.net; s=20230601; t=1762638734; x=1763243534;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=xfZEfePFs78UhbIROU2k3WuoQyGuhL1/KKooyNYawtQ=;
-        b=gS6uYMtKFeUKMhK0i/qTYwBbpNsOCUL4d3Gf7+8miM0p9uDYrqdozjbtJhheY9e6BD
-         LsKRVZdPGePHbHNnF5e01iGWDxkPnNQVC01i/rS2zNaBw39R5t9ON6Q/gvXczIxc6ZZB
-         z0N37j2upy25nKCqrX4YWd+l3JIEZIuOGUo/UZOba8L/MpWObzaDsoygnEXAfj8YsSiW
-         s5Jt1F7WGEOP8xmz7W7mXGDj6ThWL5Amq3vfetIZXu71HiU1V47A4FjXpa6FY20NgWKE
-         u3hvSyFocHCOp1N/jjcPHpHGavI5tBGCD12/lNHb16ZSRjYorechQtvCNBun5XGWOoWx
-         NW5A==
-X-Gm-Message-State: AOJu0YwRvbGNjr+QdA47n44obZa4aQDenvv0+tnyyrvDkUFaOWNtvaqR
-	pl3l04aZ8WGsLUPn4dAzzpVJFfmx/tS2fT+5r0//+pdC+54ujzNzDOZPUS+a8DhU
-X-Gm-Gg: ASbGncvCIVkqa5d7JEL28IAGquxZ6h9MdXkPLu3TgNdNwYD80txJUwCtYlZlTanJ9zJ
-	EwHcvdrSnm83uVkgK+caWdG6QVgAT2oCEQay9uTL8+C6Z7FcFWnKAAGP9/pYaSz6PhwJMEOJSiN
-	XSKBr+5UlYeVu/spV8862t9t/rAXBphaXDaoFTX8FjVZv0dPz8ygqrmvig0Hm64C2k7/XXUtFBI
-	kHCo7R0Fdja0S77UOkMcq7Npnkmpk8TbGlkF0vPQa5YiUqjJ7DhmaFJPn1ETFTYhGiZ+snp/dDS
-	q7ZJ3LbVfZi6tHVuRKOqNZDjCC7n9tjcbe9tKy5wmTzIcC3HKS1Gpl3MrLY+4LKNKB2FtRC9P9y
-	JheduPJh/qGe+V9YXsxK3ejQKsJ3Dnwr7K6VgAxlUWOhTDD2gY7R6p66s3dNkMniYm+aCs2qDD+
-	KLA54tlJ1PHz+zeMk=
-X-Google-Smtp-Source: AGHT+IGBPJhoD5JikXgXUOJOEAqf13mvsBgNjIwekQq1iUEL6ImbP+ro8X1tj+3eIHVNJrIYKu0Dmg==
-X-Received: by 2002:a05:6402:510e:b0:63b:f22d:9254 with SMTP id 4fb4d7f45d1cf-6415e6edc1cmr2713139a12.23.1762638731935;
-        Sat, 08 Nov 2025 13:52:11 -0800 (PST)
+        bh=CmUxAI3NKc3CW1dUsjYofGazEHSkvMj0qJt8WiOXUDo=;
+        b=RIZm8dvHmc/GavbBmrIn2JFb1/k3mkZhbUS1Qz7Cab5q/hFBJ7a4B0bY6cSKXjcxP/
+         1zAyN/9/AM2ojoaQZ1/5q8XCs/rBfWz5Yg0Oa3zEh0m5UoTrQby7t5R2F/d2tRru5Z9B
+         6U44Ps2oXdXAygxYyiHIWIM2H2L4wv6FPqSBNiNz2dP0Z+al0e74sGr3SC3S71gNjIpA
+         NPKnzYd86jJthLvf2k4RpbFcbGzFbC3zQsWf8nPlAvn1dSBulx0yW0kgpGh6eR4gY5Ee
+         pqPm22dKJ/i8Rpsc53pQ9ylGMmYyHgT3fsy9gSKeEjcqC0OOwo3WNt0Y3J4AOLM5/2TG
+         tmAg==
+X-Gm-Message-State: AOJu0YxJXc8k9xmfxv4vgcojwcVAXTuhB/XbW4QvkFztxSskXtrfN+Q/
+	5u6VhCsPWE/wt5/COzoht80hGdxvO5igVviRkKCO1MSiAOYhjCKw3hTSUE6WRElA
+X-Gm-Gg: ASbGncsg3Igsxcga+LEDWWCAZNtPzK4xBCRsha+LYyOsy+d0xSBQh0R9wMKHVoukbfl
+	nlXlVNoTQ8olrS4MNuSrf4R6fPAoc81PVZyyfmKvgxUCN52fgEPCCCNeOZY/jL63JV9S0Mz5bfh
+	n1SPW1nEwfCRwnTX8Trpx+TKRGENBEVc07eG3x6Xp5GkM3LkEy3qoitFzE+2N0Z0A9JUcl1tzcy
+	ITosD1TEFFyroBaWOuMgVGAUao5y/ZGe96oDoJ59JsZE8Xax0GWPcqRqwQ/vojbMmtfN314yj4D
+	RbSlxhc7CQ54iQ8J6dZGqnkGPcEKC7JMI3OrODItix9ZeGVleZcghnXTpwMsNG1j6R3pQEISJWR
+	A2ZBCDF42OaU5rQ8cjP4bh8RINHvECysLQZSuLtZPnl0GTwkGu5nINO8iHAWXaLxjPYym5fT6Nn
+	ZQ0gie
+X-Google-Smtp-Source: AGHT+IHQCEV5uRuzLwTkA7dxtlmeQqd3kburJ9iugJvwrB8gZN7A566WlsDhlQn6iKjdbhNAWLvj8w==
+X-Received: by 2002:a05:6402:51ca:b0:641:62bb:9c0 with SMTP id 4fb4d7f45d1cf-64162bb0edemr2059515a12.33.1762638734030;
+        Sat, 08 Nov 2025 13:52:14 -0800 (PST)
 Received: from [127.0.0.2] ([2a01:599:102:72e5:c961:8164:6be0:9490])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6415b69c366sm3056371a12.23.2025.11.08.13.52.10
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6415b69c366sm3056371a12.23.2025.11.08.13.52.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Nov 2025 13:52:11 -0800 (PST)
+        Sat, 08 Nov 2025 13:52:13 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Sat, 08 Nov 2025 22:51:56 +0100
-Subject: [PATCH v4 4/5] maintenance: add checking logic in
- `pack_refs_condition()`
+Date: Sat, 08 Nov 2025 22:51:57 +0100
+Subject: [PATCH v4 5/5] maintenance: add 'is-needed' subcommand
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,124 +69,356 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251108-562-add-sub-command-to-check-if-maintenance-is-needed-v4-4-a90f229b6023@gmail.com>
+Message-Id: <20251108-562-add-sub-command-to-check-if-maintenance-is-needed-v4-5-a90f229b6023@gmail.com>
 References: <20251108-562-add-sub-command-to-check-if-maintenance-is-needed-v4-0-a90f229b6023@gmail.com>
 In-Reply-To: <20251108-562-add-sub-command-to-check-if-maintenance-is-needed-v4-0-a90f229b6023@gmail.com>
 To: git@vger.kernel.org
 Cc: jltobler@gmail.com, ps@pks.im, gitster@pobox.com, 
  Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3598; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=T9blawi8PFyaaVAOfvnyKcZAaKBr+yPQoRJrJwxyBXg=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGkPu4GDkKGrzTX/bIPdXhMwSvxYQg3HH3Kzx
- OmINWxd8rTcv4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpD7uBAAoJED7VnySO
- Rox/5hUMAJVebiWhLVDxq7/ZnbgwuLCTl9u5Q4aCuwWStr0HxcIVTEfS9ft3sh92H+Rhk3ENAB8
- QzDH8KXzPkfsqfR7fogoO2hCcwFIOGLi6GOd+fGaEGpai3i0JeEYsOQXcrcnWh4BnGivb1G3j5n
- zS9QNpHMgGfl9S9dkm0Oo0wuabZDNPsCwSPKX4Gl8GhuUVYv39VJklBVumdO5lAdj0IKvOsnqgS
- eT6NCKMmnNNyblF7dB/pi3UXKeyPCj0V/EVEq8SQQmzc2EgDY88hEBJ8BDtYDtx4IXClj5bb6bu
- eN61dc475DZllEYfgAus+u+TGEg631BG3pyJFYa/Eqpl0iTiOnwAJdwBlhCCyaC15Zgw2Y8FBaz
- OJPYltqaDTvzTqaasiru++i96jZKHY2yYvjJpKGmT0CCSZE2VWAkH0MDOXmt4qfonI6l070PIfp
- t8FR2HlYGuUkf/lHWCurtSj0Y/h9lmd5//XHzD6e6kSHwhKqQwOD2ozj/nT8g1pp316KC74Oe+6
- ns=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=14892;
+ i=karthik.188@gmail.com; h=from:subject:message-id;
+ bh=dLwGukMD6CxFi/59kWJSZB41BIQTKJEW+7nTieQxEnQ=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGkPu4GNN7xAGAhWE419sZRLgXVPoxmSD20N8
+ NMu03Ln/8Ni+IkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpD7uBAAoJED7VnySO
+ Rox/ZUYL/0iQL0PRxFO8CWAaesLIZNtJcgz135NrMOVzwl4cHGHUaQ24ftoOtLa/Co3AlUAc6Nh
+ gTU2R+S/nDxpYYFpgs86+e7lNXdWcNArNE+w8UONCwxBY/TcwY/iAjj6wIIi7RbXoiYfT5YyjTJ
+ BotP+wn19fM5qVmqgW68PLlLwvwbSmmmoauiuaTGEdz30ZvMYz3TIdhnZSx0tEiWHc6D2YYSdIN
+ t7zjzcTZfBatsz1jI3Mds+6QUbcp05bSEZqk155iT8yKoyj5H/ijm1nvdBHO4hKoi4fuOtKSX+f
+ AIufac4vDEMQZuZNlpPvh8ywucyRgtTD/Ps9iakhoE/gnx6HT1+LZIV0d+RNaEHx2LDec+1OEka
+ SU+UzwIpzsiQqZtxZwoQSIltPy07p2y4pGIgyOANSZj0j+Mvvp2XRkAACYFjAcb3tsWrExMXL9p
+ 4ola7YZJfMSqeXGYGZesX2u2bEP95RBR/miuhOzL5XiW9JEgg/KJKa82sx6vLhFTl0+Zhn+Zp56
+ 8E=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The 'git-maintenance(1)' command supports an '--auto' flag. Usage of the
-flag ensures to run maintenance tasks only if certain thresholds are
-met. The heuristic is defined on a task level, wherein each task defines
-an 'auto_condition', which states if the task should be run.
+The 'git-maintenance(1)' command provides tooling to run maintenance
+tasks over Git repositories. The 'run' subcommand, as the name suggests,
+runs the maintenance tasks. When used with the '--auto' flag, it uses
+heuristics to determine if the required thresholds are met for running
+said maintenance tasks.
 
-The 'pack-refs' task is hard-coded to return 1 as:
-1. There was never a way to check if the reference backend needs to be
-optimized without actually performing the optimization.
-2. We can pass in the '--auto' flag to 'git-pack-refs(1)' which would
-optimize based on heuristics.
+There is however a lack of insight into these heuristics. Meaning, the
+checks are linked to the execution.
 
-The previous commit added a `refs_optimize_required()` function, which
-can be used to check if a reference backend required optimization. Use
-this within `pack_refs_condition()`.
+Add a new 'is-needed' subcommand to 'git-maintenance(1)' which allows
+users to simply check if it is needed to run maintenance without
+performing it.
 
-This allows us to add a 'git maintenance is-needed' subcommand which can
-notify the user if maintenance is needed without actually performing the
-optimization. Without this change, the reference backend would always
-state that optimization is needed.
+This subcommand can check if it is needed to run maintenance without
+actually running it. Ideally it should be used with the '--auto' flag,
+which would allow users to check if the thresholds required are met. The
+subcommand also supports the '--task' flag which can be used to check
+specific maintenance tasks.
 
-Since we import 'revision.h', we need to remove the definition for
-'SEEN' which is duplicated in the included header.
+While adding the respective tests in 't/t7900-maintenance.sh', remove a
+duplicate of the test: 'worktree-prune task with --auto honors
+maintenance.worktree-prune.auto'.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/gc.c | 30 +++++++++++++++++++++---------
- object.h     |  1 -
- 2 files changed, 21 insertions(+), 10 deletions(-)
+ Documentation/git-maintenance.adoc | 13 ++++++++
+ builtin/gc.c                       | 63 +++++++++++++++++++++++++++++++++++++-
+ t/t7900-maintenance.sh             | 54 ++++++++++++++++++++++----------
+ 3 files changed, 113 insertions(+), 17 deletions(-)
 
+diff --git a/Documentation/git-maintenance.adoc b/Documentation/git-maintenance.adoc
+index 540b5cf68b..bda616f14c 100644
+--- a/Documentation/git-maintenance.adoc
++++ b/Documentation/git-maintenance.adoc
+@@ -12,6 +12,7 @@ SYNOPSIS
+ 'git maintenance' run [<options>]
+ 'git maintenance' start [--scheduler=<scheduler>]
+ 'git maintenance' (stop|register|unregister) [<options>]
++'git maintenance' is-needed [<options>]
+ 
+ 
+ DESCRIPTION
+@@ -84,6 +85,16 @@ The `unregister` subcommand will report an error if the current repository
+ is not already registered. Use the `--force` option to return success even
+ when the current repository is not registered.
+ 
++is-needed::
++    Check whether maintenance needs to be run without actually running it.
++    Exits with a 0 status code if maintenance needs to be run, 1 otherwise.
++    Ideally used with the '--auto' flag.
+++
++If one or more `--task` options are specified, then those tasks are checked
++in that order. Otherwise, the tasks are determined by which
++`maintenance.<task>.enabled` config options are true. By default, only
++`maintenance.gc.enabled` is true.
++
+ TASKS
+ -----
+ 
+@@ -183,6 +194,8 @@ OPTIONS
+ 	in the `gc.auto` config setting, or when the number of pack-files
+ 	exceeds the `gc.autoPackLimit` config setting. Not compatible with
+ 	the `--schedule` option.
++	When combined with the `is-needed` subcommand, check if the required
++	thresholds are met without actually running maintenance.
+ 
+ --schedule::
+ 	When combined with the `run` subcommand, run maintenance tasks
 diff --git a/builtin/gc.c b/builtin/gc.c
-index c6d62c74a7..85e9a38d10 100644
+index 85e9a38d10..928c805f02 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -35,6 +35,7 @@
- #include "path.h"
- #include "reflog.h"
- #include "rerere.h"
-+#include "revision.h"
- #include "blob.h"
- #include "tree.h"
- #include "promisor-remote.h"
-@@ -285,12 +286,26 @@ static void maintenance_run_opts_release(struct maintenance_run_opts *opts)
+@@ -3253,7 +3253,67 @@ static int maintenance_stop(int argc, const char **argv, const char *prefix,
+ 	return update_background_schedule(NULL, 0);
+ }
  
- static int pack_refs_condition(UNUSED struct gc_config *cfg)
- {
--	/*
--	 * The auto-repacking logic for refs is handled by the ref backends and
--	 * exposed via `git pack-refs --auto`. We thus always return truish
--	 * here and let the backend decide for us.
--	 */
--	return 1;
-+	struct string_list included_refs = STRING_LIST_INIT_NODUP;
-+	struct ref_exclusions excludes = REF_EXCLUSIONS_INIT;
-+	struct refs_optimize_opts optimize_opts = {
-+		.exclusions = &excludes,
-+		.includes = &included_refs,
-+		.flags = REFS_OPTIMIZE_PRUNE | REFS_OPTIMIZE_AUTO,
+-static const char * const builtin_maintenance_usage[] = {
++static const char *const builtin_maintenance_is_needed_usage[] = {
++	"git maintenance is-needed [--task=<task>] [--schedule]",
++	NULL
++};
++
++static int maintenance_is_needed(int argc, const char **argv, const char *prefix,
++				 struct repository *repo UNUSED)
++{
++	struct maintenance_run_opts opts = MAINTENANCE_RUN_OPTS_INIT;
++	struct string_list selected_tasks = STRING_LIST_INIT_DUP;
++	struct gc_config cfg = GC_CONFIG_INIT;
++	struct option options[] = {
++		OPT_BOOL(0, "auto", &opts.auto_flag,
++			 N_("run tasks based on the state of the repository")),
++		OPT_CALLBACK_F(0, "task", &selected_tasks, N_("task"),
++			       N_("check a specific task"),
++			       PARSE_OPT_NONEG, task_option_parse),
++		OPT_END()
 +	};
-+	bool required;
++	bool is_needed = false;
 +
-+	/* Check for all refs, similar to 'git refs optimize --all'. */
-+	string_list_append(optimize_opts.includes, "*");
++	argc = parse_options(argc, argv, prefix, options,
++			     builtin_maintenance_is_needed_usage,
++			     PARSE_OPT_STOP_AT_NON_OPTION);
++	if (argc)
++		usage_with_options(builtin_maintenance_is_needed_usage, options);
 +
-+	if (refs_optimize_required(get_main_ref_store(the_repository),
-+				   &optimize_opts, &required))
++	gc_config(&cfg);
++	initialize_task_config(&opts, &selected_tasks);
++
++	if (opts.auto_flag) {
++		for (size_t i = 0; i < opts.tasks_nr; i++) {
++			if (tasks[opts.tasks[i]].auto_condition &&
++			    tasks[opts.tasks[i]].auto_condition(&cfg)) {
++				is_needed = true;
++				break;
++			}
++		}
++	} else {
++		/*
++		 * When not using --auto we always require maintenance right now.
++		 *
++		 * TODO: this certainly is too eager, as some maintenance tasks may
++		 * decide to not do anything because the data structures are already
++		 * fully optimized. We may eventually want to extend the auto
++		 * condition to also cover non-auto runs so that we can detect such
++		 * cases.
++		 */
++		is_needed = true;
++	}
++
++	string_list_clear(&selected_tasks, 0);
++	maintenance_run_opts_release(&opts);
++	gc_config_release(&cfg);
++
++	if (is_needed)
 +		return 0;
++	return 1;
++}
 +
-+	clear_ref_exclusions(&excludes);
-+	string_list_clear(&included_refs, 0);
++static const char *const builtin_maintenance_usage[] = {
+ 	N_("git maintenance <subcommand> [<options>]"),
+ 	NULL,
+ };
+@@ -3270,6 +3330,7 @@ int cmd_maintenance(int argc,
+ 		OPT_SUBCOMMAND("stop", &fn, maintenance_stop),
+ 		OPT_SUBCOMMAND("register", &fn, maintenance_register),
+ 		OPT_SUBCOMMAND("unregister", &fn, maintenance_unregister),
++		OPT_SUBCOMMAND("is-needed", &fn, maintenance_is_needed),
+ 		OPT_END(),
+ 	};
+ 
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index ddd273d8dc..a17e2091c2 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -49,7 +49,9 @@ test_expect_success 'run [--auto|--quiet]' '
+ 		git maintenance run --auto 2>/dev/null &&
+ 	GIT_TRACE2_EVENT="$(pwd)/run-no-quiet.txt" \
+ 		git maintenance run --no-quiet 2>/dev/null &&
++	git maintenance is-needed &&
+ 	test_subcommand git gc --quiet --no-detach --skip-foreground-tasks <run-no-auto.txt &&
++	! git maintenance is-needed --auto &&
+ 	test_subcommand ! git gc --auto --quiet --no-detach --skip-foreground-tasks <run-auto.txt &&
+ 	test_subcommand git gc --no-quiet --no-detach --skip-foreground-tasks <run-no-quiet.txt
+ '
+@@ -180,6 +182,11 @@ test_expect_success 'commit-graph auto condition' '
+ 
+ 	test_commit first &&
+ 
++	! git -c maintenance.commit-graph.auto=0 \
++		maintenance is-needed --auto --task=commit-graph &&
++	git -c maintenance.commit-graph.auto=1 \
++		maintenance is-needed --auto --task=commit-graph &&
 +
-+	return required;
- }
+ 	GIT_TRACE2_EVENT="$(pwd)/cg-zero-means-no.txt" \
+ 		git -c maintenance.commit-graph.auto=0 $COMMAND &&
+ 	GIT_TRACE2_EVENT="$(pwd)/cg-one-satisfied.txt" \
+@@ -290,16 +297,23 @@ test_expect_success 'maintenance.loose-objects.auto' '
+ 		git -c maintenance.loose-objects.auto=1 maintenance \
+ 		run --auto --task=loose-objects 2>/dev/null &&
+ 	test_subcommand ! git prune-packed --quiet <trace-lo1.txt &&
++
+ 	printf data-A | git hash-object -t blob --stdin -w &&
++	! git -c maintenance.loose-objects.auto=2 \
++		maintenance is-needed --auto --task=loose-objects &&
+ 	GIT_TRACE2_EVENT="$(pwd)/trace-loA" \
+ 		git -c maintenance.loose-objects.auto=2 \
+ 		maintenance run --auto --task=loose-objects 2>/dev/null &&
+ 	test_subcommand ! git prune-packed --quiet <trace-loA &&
++
+ 	printf data-B | git hash-object -t blob --stdin -w &&
++	git -c maintenance.loose-objects.auto=2 \
++		maintenance is-needed --auto --task=loose-objects &&
+ 	GIT_TRACE2_EVENT="$(pwd)/trace-loB" \
+ 		git -c maintenance.loose-objects.auto=2 \
+ 		maintenance run --auto --task=loose-objects 2>/dev/null &&
+ 	test_subcommand git prune-packed --quiet <trace-loB &&
++
+ 	GIT_TRACE2_EVENT="$(pwd)/trace-loC" \
+ 		git -c maintenance.loose-objects.auto=2 \
+ 		maintenance run --auto --task=loose-objects 2>/dev/null &&
+@@ -421,10 +435,13 @@ run_incremental_repack_and_verify () {
+ 	test_commit A &&
+ 	git repack -adk &&
+ 	git multi-pack-index write &&
++	! git -c maintenance.incremental-repack.auto=1 \
++		maintenance is-needed --auto --task=incremental-repack &&
+ 	GIT_TRACE2_EVENT="$(pwd)/midx-init.txt" git \
+ 		-c maintenance.incremental-repack.auto=1 \
+ 		maintenance run --auto --task=incremental-repack 2>/dev/null &&
+ 	test_subcommand ! git multi-pack-index write --no-progress <midx-init.txt &&
++
+ 	test_commit B &&
+ 	git pack-objects --revs .git/objects/pack/pack <<-\EOF &&
+ 	HEAD
+@@ -434,11 +451,14 @@ run_incremental_repack_and_verify () {
+ 		-c maintenance.incremental-repack.auto=2 \
+ 		maintenance run --auto --task=incremental-repack 2>/dev/null &&
+ 	test_subcommand ! git multi-pack-index write --no-progress <trace-A &&
++
+ 	test_commit C &&
+ 	git pack-objects --revs .git/objects/pack/pack <<-\EOF &&
+ 	HEAD
+ 	^HEAD~1
+ 	EOF
++	git -c maintenance.incremental-repack.auto=2 \
++		maintenance is-needed --auto --task=incremental-repack &&
+ 	GIT_TRACE2_EVENT=$(pwd)/trace-B git \
+ 		-c maintenance.incremental-repack.auto=2 \
+ 		maintenance run --auto --task=incremental-repack 2>/dev/null &&
+@@ -485,9 +505,15 @@ test_expect_success 'reflog-expire task --auto only packs when exceeding limits'
+ 	git reflog expire --all --expire=now &&
+ 	test_commit reflog-one &&
+ 	test_commit reflog-two &&
++
++	! git -c maintenance.reflog-expire.auto=3 \
++		maintenance is-needed --auto --task=reflog-expire &&
+ 	GIT_TRACE2_EVENT="$(pwd)/reflog-expire-auto.txt" \
+ 		git -c maintenance.reflog-expire.auto=3 maintenance run --auto --task=reflog-expire &&
+ 	test_subcommand ! git reflog expire --all <reflog-expire-auto.txt &&
++
++	git -c maintenance.reflog-expire.auto=2 \
++		maintenance is-needed --auto --task=reflog-expire &&
+ 	GIT_TRACE2_EVENT="$(pwd)/reflog-expire-auto.txt" \
+ 		git -c maintenance.reflog-expire.auto=2 maintenance run --auto --task=reflog-expire &&
+ 	test_subcommand git reflog expire --all <reflog-expire-auto.txt
+@@ -514,6 +540,7 @@ test_expect_success 'worktree-prune task --auto only prunes with prunable worktr
+ 	test_expect_worktree_prune ! git maintenance run --auto --task=worktree-prune &&
+ 	mkdir .git/worktrees &&
+ 	: >.git/worktrees/abc &&
++	git maintenance is-needed --auto --task=worktree-prune &&
+ 	test_expect_worktree_prune git maintenance run --auto --task=worktree-prune
+ '
  
- static int maintenance_task_pack_refs(struct maintenance_run_opts *opts,
-@@ -1090,9 +1105,6 @@ static int maintenance_opt_schedule(const struct option *opt, const char *arg,
- 	return 0;
- }
- 
--/* Remember to update object flag allocation in object.h */
--#define SEEN		(1u<<0)
+@@ -530,22 +557,7 @@ test_expect_success 'worktree-prune task with --auto honors maintenance.worktree
+ 	test_expect_worktree_prune ! git -c maintenance.worktree-prune.auto=0 maintenance run --auto --task=worktree-prune &&
+ 	# A positive value should require at least this many prunable worktrees.
+ 	test_expect_worktree_prune ! git -c maintenance.worktree-prune.auto=4 maintenance run --auto --task=worktree-prune &&
+-	test_expect_worktree_prune git -c maintenance.worktree-prune.auto=3 maintenance run --auto --task=worktree-prune
+-'
 -
- struct cg_auto_data {
- 	int num_not_in_graph;
- 	int limit;
-diff --git a/object.h b/object.h
-index 1499f63d50..832299e763 100644
---- a/object.h
-+++ b/object.h
-@@ -79,7 +79,6 @@ void object_array_init(struct object_array *array);
-  * list-objects-filter.c:                                      21
-  * bloom.c:                                                    2122
-  * builtin/fsck.c:           0--3
-- * builtin/gc.c:             0
-  * builtin/index-pack.c:                                     2021
-  * reflog.c:                           10--12
-  * builtin/show-branch.c:    0-------------------------------------------26
+-test_expect_success 'worktree-prune task with --auto honors maintenance.worktree-prune.auto' '
+-	# A negative value should always prune.
+-	test_expect_worktree_prune git -c maintenance.worktree-prune.auto=-1 maintenance run --auto --task=worktree-prune &&
+-
+-	mkdir .git/worktrees &&
+-	: >.git/worktrees/first &&
+-	: >.git/worktrees/second &&
+-	: >.git/worktrees/third &&
+-
+-	# Zero should never prune.
+-	test_expect_worktree_prune ! git -c maintenance.worktree-prune.auto=0 maintenance run --auto --task=worktree-prune &&
+-	# A positive value should require at least this many prunable worktrees.
+-	test_expect_worktree_prune ! git -c maintenance.worktree-prune.auto=4 maintenance run --auto --task=worktree-prune &&
++	git -c maintenance.worktree-prune.auto=3 maintenance is-needed --auto --task=worktree-prune &&
+ 	test_expect_worktree_prune git -c maintenance.worktree-prune.auto=3 maintenance run --auto --task=worktree-prune
+ '
+ 
+@@ -554,11 +566,13 @@ test_expect_success 'worktree-prune task honors gc.worktreePruneExpire' '
+ 	rm -rf worktree &&
+ 
+ 	rm -f worktree-prune.txt &&
++	! git -c gc.worktreePruneExpire=1.week.ago maintenance is-needed --auto --task=worktree-prune &&
+ 	GIT_TRACE2_EVENT="$(pwd)/worktree-prune.txt" git -c gc.worktreePruneExpire=1.week.ago maintenance run --auto --task=worktree-prune &&
+ 	test_subcommand ! git worktree prune --expire 1.week.ago <worktree-prune.txt &&
+ 	test_path_is_dir .git/worktrees/worktree &&
+ 
+ 	rm -f worktree-prune.txt &&
++	git -c gc.worktreePruneExpire=now maintenance is-needed --auto --task=worktree-prune &&
+ 	GIT_TRACE2_EVENT="$(pwd)/worktree-prune.txt" git -c gc.worktreePruneExpire=now maintenance run --auto --task=worktree-prune &&
+ 	test_subcommand git worktree prune --expire now <worktree-prune.txt &&
+ 	test_path_is_missing .git/worktrees/worktree
+@@ -583,10 +597,13 @@ test_expect_success 'rerere-gc task without --auto always collects garbage' '
+ 
+ test_expect_success 'rerere-gc task with --auto only prunes with prunable entries' '
+ 	test_when_finished "rm -rf .git/rr-cache" &&
++	! git maintenance is-needed --auto --task=rerere-gc &&
+ 	test_expect_rerere_gc ! git maintenance run --auto --task=rerere-gc &&
+ 	mkdir .git/rr-cache &&
++	! git maintenance is-needed --auto --task=rerere-gc &&
+ 	test_expect_rerere_gc ! git maintenance run --auto --task=rerere-gc &&
+ 	: >.git/rr-cache/entry &&
++	git maintenance is-needed --auto --task=rerere-gc &&
+ 	test_expect_rerere_gc git maintenance run --auto --task=rerere-gc
+ '
+ 
+@@ -594,17 +611,22 @@ test_expect_success 'rerere-gc task with --auto honors maintenance.rerere-gc.aut
+ 	test_when_finished "rm -rf .git/rr-cache" &&
+ 
+ 	# A negative value should always prune.
++	git -c maintenance.rerere-gc.auto=-1 maintenance is-needed --auto --task=rerere-gc &&
+ 	test_expect_rerere_gc git -c maintenance.rerere-gc.auto=-1 maintenance run --auto --task=rerere-gc &&
+ 
+ 	# A positive value prunes when there is at least one entry.
++	! git -c maintenance.rerere-gc.auto=9000 maintenance is-needed --auto --task=rerere-gc &&
+ 	test_expect_rerere_gc ! git -c maintenance.rerere-gc.auto=9000 maintenance run --auto --task=rerere-gc &&
+ 	mkdir .git/rr-cache &&
++	! git -c maintenance.rerere-gc.auto=9000 maintenance is-needed --auto --task=rerere-gc &&
+ 	test_expect_rerere_gc ! git -c maintenance.rerere-gc.auto=9000 maintenance run --auto --task=rerere-gc &&
+ 	: >.git/rr-cache/entry-1 &&
++	git -c maintenance.rerere-gc.auto=9000 maintenance is-needed --auto --task=rerere-gc &&
+ 	test_expect_rerere_gc git -c maintenance.rerere-gc.auto=9000 maintenance run --auto --task=rerere-gc &&
+ 
+ 	# Zero should never prune.
+ 	: >.git/rr-cache/entry-1 &&
++	! git -c maintenance.rerere-gc.auto=0 maintenance is-needed --auto --task=rerere-gc &&
+ 	test_expect_rerere_gc ! git -c maintenance.rerere-gc.auto=0 maintenance run --auto --task=rerere-gc
+ '
+ 
 
 -- 
 2.51.0
