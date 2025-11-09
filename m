@@ -1,119 +1,186 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B3254652
-	for <git@vger.kernel.org>; Sun,  9 Nov 2025 04:59:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7BE24677B
+	for <git@vger.kernel.org>; Sun,  9 Nov 2025 10:10:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762664383; cv=none; b=Y3PKqHz5cQhDledrn90G9zxZfZxWJhgGeH+XV16QF7LzGNYPBKdW0xCyqzZm8AM6G8AM2t5jpbfr8lo1JPq6v5hjvnooVG0aofMqXICveMDWPYQAcQClpNn1L1f2x3sT9IIpu7J+ibeyqoB1+wyRo7Xa2CGALyVH53j9ptZoT0M=
+	t=1762683004; cv=none; b=eXacNmbTmU9iAAEluJK7vZA/+8iovbHxolcJroic40hDFneZcxtiRdhmIcpS+MJPCAHtiYX+NjLKAL3tKKWhQcw2bDYoj3CR1wLJnvY3tSHH3aXSk63zHNFE/DRRXYjZNQ0fAbtlJ/lH6qIR3Av/DaYHXygRC4qthsXQiW8ODnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762664383; c=relaxed/simple;
-	bh=8NqmCmG/fH2kO9YjmrFUSP3LkP1ZkBVPIR1H91gw7Yg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kdtZZeiVkQYhVFUpgEpQs09+lzoVWVlr42p5yu1YFIl9jOV1RClzLaMskI/8oxOZPMg5N6ZxCZCPk1WSbYzuWZ/KnYMiHH8fxXljtggqwP33V0ZCGH3fuFmZA2eE2lPoy9nQKHupXEieUQrzeGBo9uI7b6AuJuaZ3yEUj771xI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CONi/9a7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GExesMFy; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762683004; c=relaxed/simple;
+	bh=TsiA7+t9aRDV7hWsbTgtf4bEpay2G9UKtiP0qwU+nrE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NMKTg6Rd+SRG0fzcnSZouQ5YdTPxn3FO7DTU7os9/kK01GF4XKyD0j8n7hL1pjzoM9Uc8P0Ixp8SwhdxZcmlyf2NmGWSjI1nl5r4HcMjkZh5ov33gG+AUxsnwxqIgda3hGk7EFKPCrkrwcGJkBJjANuQ4AFozpMKn1K1l5vxnis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZI3mkLGk; arc=none smtp.client-ip=209.85.217.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CONi/9a7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GExesMFy"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0BD3D1D000F8;
-	Sat,  8 Nov 2025 23:59:40 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Sat, 08 Nov 2025 23:59:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762664378; x=1762750778; bh=LSPMQAP2ur
-	cWUaNEqfhbNlNuRlUNwdexDHHnYWvkG+0=; b=CONi/9a7Q+5NSpVp4AAOAGCgzA
-	FGEouAuiscvI0Ol18yDoOEfT/vqin0rABoDcRZG/lL7sGT2jOBcK5B3dwcNIWqUS
-	BMvt02c0frI5+ImtKVaCu7Qwuag6K1w606UVRsAPkyJlmPj9hqVmO/wrIztEaU6G
-	Wilmv9of5lxwYOJAczd2t21XP43G9IAP0OFxbByluZYjoymfxVof1bRQHFraIx+y
-	VH7cJ82PT6LpUVMmP0CszT4Nh2cJWI9DgGl1E+nPHJIyXTXF8Pg26etbt5EJ2c/+
-	jPdQs8Wuv/wGDWpMdSvW8gF/DKYyAKjsntclQ2wNolU1Fr3IUJgDuTklYeSg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762664378; x=1762750778; bh=LSPMQAP2urcWUaNEqfhbNlNuRlUNwdexDHH
-	nYWvkG+0=; b=GExesMFy5jQY1qkeyi8VAA8U/cI+yOrtt5vb3nSqCU9wS4GnLay
-	tDefbge5DbVsuchn3xDWYlTr8yZuApMrBwlRf4p2gHeDJCx4gsGvFypebVhx5TFp
-	u1u+BWP58esrsnAsiqbsEzP4pTe9kADy5FbT5a4bg7tZ8fhwoN2LrRPViuBL76Uh
-	PbmoJhtzvGBgWUvxJ24+UyOXEQ+wHNJJqXv3yCdpbJuZxL5aA4u/Jtv2UJwDG1LV
-	ZOxqwP2zrGoSgtsLty/90BZhM9kwrsML7UtlW7gJSuKXjDKBKNf6xUMGQmafWRoB
-	TWZG02f/iXgkMfn4yLIUgVWjHMSWRLOFLRA==
-X-ME-Sender: <xms:uh8QaRQV9uEv1k4UGMLQdsN9KekK66DAKBCxHn5POxbDauFV7-VOgA>
-    <xme:uh8QadD19BEVx7SHyIueyLynrwn0qwMn0nfCIkWcjUxl3kiBWvf8WVagXMKLD3M0X
-    i_neQZtbVdFjE78N30ZtHyeZ6F1jPvTwT3Ar3waHtdYZ6aV3gDGTIo>
-X-ME-Received: <xmr:uh8QaZFlKaHYUQ8vrJDwfQcM_fOI1GEe2cJKjH7ZO7r30ucKwc167tj2YP0jJdc3Jknn2dO4kAhEzN27nLtciX30oBXtohxx6bXd>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeghedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhopehgihhtghhithhg
-    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhes
-    fhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:uh8QafDyO748eX-NNjiNRKAVE_kv_jyoBLvdRSMPUI4CktRbGB_cew>
-    <xmx:uh8QaZXkvjhLEhPaT6et3JDXdSZhVCbMZP2_IHisAHYS_TNVnP2F4Q>
-    <xmx:uh8QaTqRTuww8tMvq0IKbdZSqYCSrNMWe2P3W0dUHPohAo7LTzBJ4A>
-    <xmx:uh8QaVRNQNXnt7Esk2FMHeT-SqVjlxpEQJY5hOecViTJdrau-Gcrrw>
-    <xmx:uh8Qaf1Ri3zctTGU2h-PE3DJ7QQEM_u87iqFizGGbzqJ5WdYDj1gsILJ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 8 Nov 2025 23:59:38 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Julia Evans <julia@jvns.ca>,  Julia Evans <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v6] doc: add an explanation of Git's data model
-In-Reply-To: <D50AB3E0-E41C-49CD-9407-AB60331A6A43@gmail.com> (Ben Knoble's
-	message of "Sat, 8 Nov 2025 19:48:56 -0500")
-References: <xmqqo6pde90w.fsf@gitster.g>
-	<D50AB3E0-E41C-49CD-9407-AB60331A6A43@gmail.com>
-Date: Sat, 08 Nov 2025 20:59:36 -0800
-Message-ID: <xmqqa50v4x8n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZI3mkLGk"
+Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-5dbd150efe8so941920137.0
+        for <git@vger.kernel.org>; Sun, 09 Nov 2025 02:10:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762683001; x=1763287801; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=LVJAIrfma5zFbN68SaHkVUv1HBLiEbkAxBALLdn9aZg=;
+        b=ZI3mkLGk3tDA+saWLUquTZwqTwLV87m/1O8fZFCm33m/SQCofzEkxGrsNTc8KV50rw
+         zCmUcXN7aiQOA+xwLhYdyMKsex1y4NRBKl2NwxbErDWJ9oRqmXwwJbVqYgvqsj8st8W3
+         ueZxB2CYbtnQ/YshwJVCDLHUEt7S1js6IlKty3YhDYKD43rjWvmB+cQupIGhGaLNVdfL
+         pX1FonN+s1q64qwlAAlb300/nXBf3bixMXx87dB0fjDNXvw7lpGNiL4jRbR35yi9umMO
+         EjFSV18QkS0eg3qG20ZMaiB+G2Fr/T1KfEZJ6R+0mJ9HpYXBMD+Bvu+kRrhWMpdGpGL5
+         PYUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762683001; x=1763287801;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LVJAIrfma5zFbN68SaHkVUv1HBLiEbkAxBALLdn9aZg=;
+        b=qvFkmQNHb1h+Rhjg3DJJ9GErmGDqCdVsmulyWMdYKyTpqzUQjP4iDHzfB6cQqBlrJa
+         mPh4b9EA3DAsvZyflMq8O0l+2Nz7om0JdNCn42MZV1Z5liRaNOMB+y9weJEUiZh9NNRE
+         3a5e0COdbvg4hZ/Wi6agyQ6QyJouLXfiZSwy4PkoQpYcBjfW5o1wwrN1e8Oko4EV+Bdf
+         sHW/MHUhkQI/5+s7zVjFwYeyfSdLnlafa68PJpQgzkf6GVE6Mim223k2fYWZnzuhwAtM
+         F6Q4Bra4+9Ivba7pZFOYtZyFKq8ScXCdc9jEgQuGpWV77ag3odBvw2vq1vP2M2gWmyY/
+         C2Xg==
+X-Forwarded-Encrypted: i=1; AJvYcCWLPOAUFV/zH4xKGHqUDZbnVgJRY+1Z0YM9qSPfl1mu7zQ+8GKjFhZfmXVMBbH7g6CW3Xg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YylSUopE0UQf9RD51kgzB7GGT+CX9HMUpmo9IacG+GsBzcQwScO
+	HDKkNKgvhZt/xYSfD0qkV47uUNp3WinvHpTeyVFA+fGYpQ9LRnh6JbxEPbvT2oG3km5s/S8OdEn
+	zKjx7AMR9hjJDNVvwk8azXlVojkAwqlA=
+X-Gm-Gg: ASbGncvABUmOsBl4DX/teSOLhleQceS229P+jU+KTiHrihvwg1V90gVOMPDHB6pnEWM
+	nHYKy4r8l9EngCmOfiR3PmYSDM0LBQOuTdhmIdLEq6hjFsPP/6d3nNxPa+ofa+Yip3zbcwYE+KD
+	h8TBViBDVygnlJskXjzBKeYloS5zFPQguiEz5o2Z7MIB8xGIsUmb1yByIbe7f8GnjzWe8lSz2p+
+	W4ki6O/zFB0z+YkcgomNDyRn/k/04a0D072r+tat0ZjnNKmTBm0QchXIzrxlWyjnzgN1Jo=
+X-Google-Smtp-Source: AGHT+IGWAdKJl9SKY2W3xDgJM6P43OKwqpMP51n1BMitEWR7cZWmBaJO+sa5MV/+NeiRqZSkblptHYrC/h1DSjzAWUk=
+X-Received: by 2002:a05:6102:32cd:b0:5d5:f40a:4cf1 with SMTP id
+ ada2fe7eead31-5ddc47d646amr1390446137.24.1762683000802; Sun, 09 Nov 2025
+ 02:10:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAEyHQXWd77_jJachC6FYbWMJ+L=KkKoUqiACQ7z8r-ZwYq8JYw@mail.gmail.com>
+ <e1fede83-bed0-49e9-84a0-f026b9df6039@kdbg.org> <CAEyHQXWd4kN=ehWh0Y7xNnPGk3ofXEc4=PvSYaZM91TFyLtnpg@mail.gmail.com>
+ <CAPx1GvcwAj5k0QEwxS8h=VNBNTgtxAaXGAf1a38Sb18COuSHEA@mail.gmail.com>
+In-Reply-To: <CAPx1GvcwAj5k0QEwxS8h=VNBNTgtxAaXGAf1a38Sb18COuSHEA@mail.gmail.com>
+Reply-To: bhavikdbavishi@gmail.com
+From: Bhavik Bavishi <bhavikdbavishi@gmail.com>
+Date: Sun, 9 Nov 2025 15:39:49 +0530
+X-Gm-Features: AWmQ_bmq396SXoBl0aXLjcgPEX0-750YGaKxMCD-eE23WGHx7sbOLnpwo0KkSeM
+Message-ID: <CAEyHQXXKdVNRKzrTPJ1uVYVkpdMfCbSeXFW2TQJx6GNa4xStPw@mail.gmail.com>
+Subject: Re: [Bug report] git cherry-pick silently ignores error whereas git
+ apply fails for hunk apply
+To: Chris Torek <chris.torek@gmail.com>
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ben Knoble <ben.knoble@gmail.com> writes:
+Thanks for the explanation this helps.
 
-> My only other opinion on the matter is: what does making this
-> distinction clear do to benefit readers of this document?
-
-I care about teaching people not just _what_ but _why_, because with
-vague distinction, many tend to memorize _what_ without
-understanding the reasoning behind it.  "Our object names are
-computed as a hash of the contents in it formatted in a canonical
-way" is "what we do to compute an object name", but the reason
-behind the design is because we want to be able to dedup the same
-thing cheaply, detect two objects that are different cheaply, which
-is "why" in this example and it is equally, if not more, important.
-
-The refs and objects record object names, and that is "what"; the
-reason why they do so is to refer to these objects.  If somebody
-comes up with other ways to uniquely refer to these objects, their
-implementation of git-compatible system does not have to make their
-refs record object names---they can draw a line from a circle to a
-rectangle instead of writing the object name of that rectangle in
-the circle---and their system is still compatible with the Git data
-model at the higher/conceptual level.  IOW, what exactly is done at
-the byte level (like file format) is lower part of the "data model",
-but what these byte level details wants to achieve is the other,
-higher half of the "data model".  A data model documentation should
-teach both levels.
+On Sat, Nov 8, 2025 at 4:28=E2=80=AFPM Chris Torek <chris.torek@gmail.com> =
+wrote:
+>
+> On Fri, Nov 7, 2025 at 12:35=E2=80=AFAM Bhavik Bavishi <bhavikdbavishi@gm=
+ail.com> wrote:
+>
+> ["git apply" fails, "git apply --3way" and "git cherry-pick" succeed, and=
+:]
+>
+> > I've compare the file content of `mango/utils/apple_utils.cc` for `git
+> > apply --3way` and  `git cherry-pick` is same
+>
+> This is all entirely normal.  You're seeing the difference between a
+> "patch" and an actual "three way merge".  The cherry-pick command does a
+> three-way merge using the complete information available to it.  The
+> apply command applies a simple patch, or, with "--3way", searches the
+> patch for auxiliary information that may or may not provide the extra
+> detail needed for doing a three-way merge.
+>
+> To understand this, we need to illustrate the difference between
+> these two ideas.  Let's start with patches.
+>
+> A "patch" says "we expect the file looks something like this, and
+> we would like to make certain changes in these areas".  If the file
+> *does* look "like this" in the indicated areas, it's easy to apply
+> the patch:
+>
+>    --- lines 15 through 19 of file.txt used to be like this
+>    +++ lines 15 through 20 of file.txt should now look like this
+>       we expect the file to
+>       look like this
+>     + and we should add a line
+>       and then the text
+>       goes on as before
+>
+> If file `file.txt` has the desired lines at lines 15--19, and we
+> add the indicated text in the middle, we've "patched" the file to
+> match the new desired result.
+>
+> But what if the file, at lines 15 through 19, reads:
+>
+>       we expect the file to
+>       look like this
+>       and we should add a line
+>       and then the text
+>
+> Well, it sure looks like that patch was already applied.  We
+> can *guess* that it was in fact already applied, or we can search
+> for lines before or after lines 15 through 19 that read the
+> expected way.
+>
+> Patches can add, remove, or (depending on the kind of patch)
+> change lines (or characters within lines, or whatever: the
+> more general form is "symbol by symbol, add/subtract/replace").
+>
+> A *merge*, by contrast, takes two separate sets of patches:
+>
+>  * First, there's a "common base version": a version both you
+>    and they, whoever they were, had that's absolutely 100%]
+>    identical in all respects.
+>
+>  * Second, there's an "ours" version. By comparing the "base"
+>    version to the "ours" version, we find out what *we* changed.
+>
+>  * Last, there's a "theirs" version. By comparing the "base"
+>    version to the "theirs" version, we find out what *they* changed.
+>
+> This time, if we already have the change at lines 15--19 / 15--20, we'll
+> see that they and we have the *same* change.  We can silenly discard
+> their duplicate change!  We don't have to guess whether we have their
+> change, or whether the lines moved around somewhat in the file.
+>
+> This same method handles removals (and if they're in the difference
+> format, "changes", which are just "remove and add" combined into one
+> block).
+>
+> The way "git apply --3way" works is that it looks for a text line in the
+> patch of the form "index <hash1>..<hash2>" before the diff listing
+> (which has only add and remove, in Git's case). The first hash ID in
+> this pair of hash IDs is the Git-specific unique identifier for the
+> original version of the file.  Git then looks in your own Git repository
+> to see if you have that version of the file.  If so, that's the
+> "common base version".
+>
+> If Git can find the base version this way, Git can then apply the patch
+> diff to the *base* version, which produces the "theirs" version,
+> guaranteed, because the change *must* apply to the base.  That ID is
+> *unique*, across the entire universe of every file in existence
+> anywhere, in any Git repository.[footnote] If you have that ID, you have
+> *that version* of *that file*.
+>
+> Now that Git has the base version and the "theirs" version, Git can do
+> its own three-way merge: diff the base vs your version to see what you
+> changed, and diff the base vs their version to see what they changed.
+> This can still have conflicts, but now at least they will always be in
+> the right places.
+>
+> Chris
+>
+> [footnote] This is clearly nonsense, due to the pigeonhole principle.
+> And yet, Git depends on it successfully (modulo carefully engineered
+> hash collisions, currently possible for SHA-1 but not for SHA-256). With
+> some clever mathematics we can show that the chance of failure of any
+> given Git repository is quite small -- far smaller than the chance that
+> your computer will just randomly explode into flames while you're using
+> it, for instance.
