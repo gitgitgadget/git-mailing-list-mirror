@@ -1,143 +1,108 @@
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0604015667D
-	for <git@vger.kernel.org>; Sat,  8 Nov 2025 21:55:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6BC26299
+	for <git@vger.kernel.org>; Sun,  9 Nov 2025 00:49:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762638933; cv=none; b=knU3nAO9OPNZQUn+EvYcsA8ax/cHf+VWGQKYfgEslq46G4lfp0M+oN2in9Duv7Kaawl73I2NkNf1x0CSPyv6XiTB8M6qgkNmvOYf4zUD65kTxmT7MjQffbJEWvkzoUqfBm420+HsoGVpbJo7Idvr5Fr41PgwaTDKshfcSmX2lTQ=
+	t=1762649352; cv=none; b=c+XX/TL2irtlebX1JYZS+Scrl32lOHPKB3rUeOiDD5pXpeW7/aiCVdeao41S2GKbtn51Gdnovi8bD30jpq4X9Ute2+fnhLR5Vrkade/MEvZ6Jd4ElWrZnAqEclZtTvnU0SnQanxhNe9Z7YoXarmvovPcTpo5BHitygC9AVHKl7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762638933; c=relaxed/simple;
-	bh=a5oqxiAdP1C4ZsUPHhUf9d5Kj7/8t4yqcNx9Rkry5JI=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Wo3NX3S7/uQtsgIcsIZeVzfX650AHT1lDOafw72CwHrx+vmepRC5PQakiWOT/czIKrcCbJlKm6wYXYP4VAWHSqKzYIgCFkc8lusLPgD0SBt0wiu4tRlbaNL8zsEMPtZJMrzZpEIBIrizcdxIOz46os1qp7fY1zQwjfxsvzwfqgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lostinrecursion.net; spf=pass smtp.mailfrom=lostinrecursion.net; dkim=pass (2048-bit key) header.d=lostinrecursion.net header.i=@lostinrecursion.net header.b=AqiyYyUa; arc=none smtp.client-ip=209.85.161.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lostinrecursion.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lostinrecursion.net
+	s=arc-20240116; t=1762649352; c=relaxed/simple;
+	bh=jJC2CZhma0fUBLvlcGf8nfitQmhYMLrIZFPG0ETTkEo=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Cc:Date:
+	 Message-Id:References:To; b=ocqxTNADN4TxyUpnID/SXqhROz2maWQ85i0FiKfXzHTzQuixGEvuYFD+lQOroC7ilyAZ7yU1r72stVQHxjcvSohRJ967TEwvKiqqfWPq20CNAlqix/IyXvpRPH/TqcUGfnb1P4P43kinzeEPo5z+CerKrY/lBswapeJaTfvuTtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lK19Rtbf; arc=none smtp.client-ip=74.125.224.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lostinrecursion.net header.i=@lostinrecursion.net header.b="AqiyYyUa"
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-65366485678so915072eaf.2
-        for <git@vger.kernel.org>; Sat, 08 Nov 2025 13:55:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lK19Rtbf"
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-63f97ab5cfcso1489252d50.0
+        for <git@vger.kernel.org>; Sat, 08 Nov 2025 16:49:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lostinrecursion.net; s=google; t=1762638931; x=1763243731; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=vrKkf2g/uN1VvG5Txtc/If5uk+yf7AgtxtWPfYh+4no=;
-        b=AqiyYyUaT7CTlgojIOH6YxPdtrxQDITkVaJXaahrz9b02/We+T9e13OCcTsPfGe1AZ
-         umEgeBH6hspw17C5j1M9RdzgIVBRTyT5SGLARGYs0ITlzZUyvsJPej91C3SAmqX/neas
-         Zxw1JV+ANvpvnl4+rd+DQSaHvnOIL/MelyVWujabVYJ8stpiBsyCqGt8ZTHeJ35Leupe
-         QEyYQrnk6id8nCXa1SgYkPGCW/qzwZ4ntT7git/RUe49uIXjyknFxaLGktogfyXhA6RA
-         0/d59giagYrLt5rY46L/JTv/Y+qA9KNEBlMbLV8S0NC8X3zYpSY6Ai3lXElKtPayfQUl
-         my7g==
+        d=gmail.com; s=20230601; t=1762649349; x=1763254149; darn=vger.kernel.org;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mkyb2GX74bZxb66JUGBY14/rdPh30OnBjNOMy4HRW9Y=;
+        b=lK19Rtbfrz1Mlph2tvAuLdUVfhSt6aYnJR60GtSkgnUC2wrV8E30Rv7WXHBY7oSrrr
+         ntrvnWggS6qb2/2bDU9V1u2ijQVEnYdh27DzXHJD01jBp1sikt+16RkpHcnSbl8Mlbs+
+         oLmRJvnlGJeZ7gQn1oBiZcoEg1dqTUT5kCBIexDensXX4nEOg6e/eZaL9qbiwZB2mEy7
+         LozOOu6iAc/pC710/vsM88a4gOMhXu7017O9AHNyXPaZ/YvUqzv9JaEfw9cTuDu7QCjz
+         eybOBQ5wiylaHu18piqOUASXJ7J5TGt3KDxThrljc1UCFi+gbGi2BU+Odt+BJEGTF4qw
+         Pedg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762638931; x=1763243731;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vrKkf2g/uN1VvG5Txtc/If5uk+yf7AgtxtWPfYh+4no=;
-        b=N8HRCADecBhyyRB26+X+qjcRr+9ARMp0PdS17g/LVax83im57ZEewTEDaBrRmvp+Ot
-         R+AoV1ts0MUBmCDd9NynAVfdTLVtAgvgDhzpXr3gJ2pS1kDR3K3egyO9UeOfGaU2a3jk
-         tdlx93D3l+XVyzgUMf95q/5K7MOrbCjP54CXLWP4G+ghR2LSWYGs+G230LFo1ZxF4ewz
-         38KyHc3OccxSwnZjQM/ISa8f3zfPtOXegNTkHwEyEQyNKD57YF32yufiCurjL9Y/4gdu
-         cZKFfFGUrn+Pmipz7/JBJHh9v8cHF644WnWk/R7puD4Mpf2Sfu04MDUQ05Ips8NgQxI4
-         hZhQ==
-X-Gm-Message-State: AOJu0YwNq7XYOJu5EVSZBgVzm0AKb9XY6VDVfw5Gwg0rsVaGP2sJLr7U
-	G7zD3Q5cENOSXEG3XZ0SZxxRekDlYwa0eWpQ1nUVSnRpL+Zs5yA9m3AYvYexFsl6cCab6nvScoC
-	9Hhzw4Rs/FYETTleeX+kTYYNqvlKgT0zBEFjsmUWoa2F9qZVMfIUbd/H2Iw==
-X-Gm-Gg: ASbGncsLGAJ+NtCrNbqYTr6gG40sNIRg4a8Y1uD46AbQDYZD357ujPGTi6qzg5axEFE
-	94Io6FRy6J2iOYPO45tFYpMv2c6GwhG97R51YI+UdpajjkYqA7Fbp2V/ek/CLl0WwA1QKaeZyKx
-	vypXlHzyaE7jMCur61J1q1JFWp3P14WVrBjsEl8xKEvkvQ74ST//vOR1JB2rpF/TOL3LFzY1Fa/
-	pljyCeOgUoglxwwFyJs8EJ3xg+rVsiNaF1FyoZ/+aIqMhYIfdUo9AAnw0de21Y21VydPLGEDUtc
-	5lYtLQa+4F45pLk5FTu++IonmrHi
-X-Google-Smtp-Source: AGHT+IEl+kCVMA0FGsDxJlIl04g3swqzM0YruA8s05nn/zVSnod83NTwhZ2vFnQHZdOHrVGGwTlVsS+OGl+hv/NATME=
-X-Received: by 2002:a05:6870:8197:b0:343:13e4:9d3 with SMTP id
- 586e51a60fabf-3e7c2879544mr2004368fac.49.1762638930835; Sat, 08 Nov 2025
- 13:55:30 -0800 (PST)
+        d=1e100.net; s=20230601; t=1762649349; x=1763254149;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mkyb2GX74bZxb66JUGBY14/rdPh30OnBjNOMy4HRW9Y=;
+        b=f4VodwKi9wd6BHWqISMBA2UA6w4zcPi/qHZqQc0MW05mToKvHZ1OAzJ5kIK8PBObgJ
+         4bJrZW+VUVI8nPJY9nbwRuqLG+a1e0d6boOHqAUI4fHNQRztxa6rl6aNQmR3orDNBN7f
+         IaBgfe2dNxuHaNCb7HAYYKk9iyU7TOPzsAbVXLYebEhgArstnhp0K+8FHXUfPjwrDhVu
+         FM/C3ngE+ztj2V35TAc1Az1n+sQIQb7YpQ0UX5HE04yemsGhhnDgISs/oEs0qwQt+H8U
+         mxlalkk/uQPxrbznDiYRmpfvPAl5uU46wxsAc/1ez1S/vvofrUqmkGHDPoGjgp1jdott
+         EfBQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVx5PyHIXDLWG/IJ7NsBeUEo3wVYeQAiMJh2567rJ6kD5dXIwb73RlWgj3b3jPUIpPK6QY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+wUub4FmFScRoRAaKY8CMbU4t0vs41P37vLKHkpYA01C1lZ9s
+	qQnvjArh2Vw6Svu5vxsyBG9VlIwATw+nQ2eGJ0sj4NfW8Eby82n8V9fX
+X-Gm-Gg: ASbGncuBfeWR1f/DgPZu+CBxdyk/YSbaiaxdqF/EB4xsll8S8qSrLLj3mAYdfnHKkpq
+	+EynaXBhjfveYF6heHoYWj0lIYGQeZfgeghmis7lSZv3P+9fe7ZlZdNQGLaYLNvLmseabifaD1z
+	H3bIfb2T3DpIApFdpgsKF2W9dHMv9ZZ+ebUDtTgg8kGBkIAePgRct3z2f0EQ+UTvqtJErTrKzvO
+	OmYQAiSKOlgk3JeMHVDOhimj4OGt10suecpYlET1ahAqXJL+e/9jADkj6zG4X9PCe3yyU0JaykT
+	RZI7FUp02BQOKgKQ7nmthZOM7ZNtmJTU8EqT1gs8TlLwLrdQ4iFghaAbpXPLOB+3ZkhSBrgrMnT
+	7sp0b+E4tUCG+ATFr73q6clm/byfGX6JvzX2VL2YqHoQfRJv3ZLEwWHf07tR+4HnLVOOkonUbuq
+	IW8hdhpKtelH4Yw+nw09BDWYQSp6s1EZefnmbXqt9E4kEw
+X-Google-Smtp-Source: AGHT+IHtSiStNFCbux7uuzulniOYdDrrDU7llklp5byhjvirML3QFOUILxkZjfJ1tEOqMln60odayw==
+X-Received: by 2002:a05:690e:1597:20b0:63e:1e80:99cb with SMTP id 956f58d0204a3-640d459d704mr2812506d50.34.1762649348674;
+        Sat, 08 Nov 2025 16:49:08 -0800 (PST)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:c06e:706d:49b2:da56])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-787d6808a58sm10531727b3.1.2025.11.08.16.49.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 08 Nov 2025 16:49:07 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-From: Jono Spiro <jono@lostinrecursion.net>
-Date: Sat, 8 Nov 2025 13:55:20 -0800
-X-Gm-Features: AWmQ_bkk2KEjz_Cl754kykBqYTxCy8wOCqnlLypBcG73L0gdTm0Boz3KlortTzA
-Message-ID: <CAMqCmsYb409G0CuL+4xZit4V4wqOzD8DtNBe9hmRquBm0Xuevg@mail.gmail.com>
-Subject: Git fsmonitor daemon processes spawn detached on macOS 26 Tahoe and
- never terminate
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
-
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-1. Enabled git fsmonitor: git config --global core.fsmonitor true
-2. Used git applications (Xcode, VS Code, GitX, terminal with Starship)
-3. Performed normal git operations (open repository, stage files,
-navigate directories)
-4. Quit applications
-
-What did you expect to happen? (Expected behavior)
-
-fsmonitor--daemon processes should terminate when no longer needed, or
-at minimum when
-parent applications quit. Expected one daemon per active repository or
-so. I am seeing dozens and some users of gitx (which I am a maintainer
-on) are seeing thousands of orphaned git processes pile up after
-upgrading to Tahoe.
-
-What happened instead? (Actual behavior)
-
-fsmonitor--daemon processes spawn detached (not as children of parent
-application) and
-never terminate. They accumulate indefinitely (dozens to hundreds over
-time). All show:
-  git fsmonitor--daemon run --detach --ipc-threads=8
-
-Processes must be manually killed: pkill -f fsmonitor-daemon
-
-What's different between what you expected and what actually happened?
-
-Daemons are spawning detached with no parent-child relationship. They
-never receive
-termination signals when parent applications quit, causing accumulation and git
-index.lock files to remain locked, blocking further git operations.
-
-Anything else you want to add:
-
-- Only occurs on macOS 26.0+ (Tahoe) - not present on earlier macOS versions
-- Affects ALL git builds: /usr/bin/git, Homebrew 2.51.2, Xcode Command
-Line Tools
-- Affects ALL git applications: Xcode, VS Code, GitX, Starship, any git client
-- Side effects: system resource exhaustion, locked repositories
-- Workaround: git config --global core.fsmonitor false
-- Related issue: https://github.com/gitx/gitx/issues/485
-- Apple Feedback: FB20956467
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v6] doc: add an explanation of Git's data model
+From: Ben Knoble <ben.knoble@gmail.com>
+In-Reply-To: <xmqqo6pde90w.fsf@gitster.g>
+Cc: Julia Evans <julia@jvns.ca>, Julia Evans <gitgitgadget@gmail.com>,
+ git@vger.kernel.org,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Patrick Steinhardt <ps@pks.im>
+Date: Sat, 8 Nov 2025 19:48:56 -0500
+Message-Id: <D50AB3E0-E41C-49CD-9407-AB60331A6A43@gmail.com>
+References: <xmqqo6pde90w.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (21F90)
 
 
-[System Info]
-git version:
-git version 2.51.2
-cpu: arm64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-libcurl: 8.7.1
-zlib: 1.2.12
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-format: files
-default-hash: sha1
-uname: Darwin 25.2.0 Darwin Kernel Version 25.2.0: Sat Nov  1 18:04:14
-PDT 2025; root:xnu-12377.60.50.0.2~95/RELEASE_ARM64_T6000 arm64
-compiler info: clang: 17.0.0 (clang-1700.3.19.1)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
+> Le 7 nov. 2025 =C3=A0 18:08, Junio C Hamano <gitster@pobox.com> a =C3=A9cr=
+it :
+>=20
+> =EF=BB=BF"Julia Evans" <julia@jvns.ca> writes:
+>=20
+>> ... I do not understand in what way this rephrasing helps the
+>> reader, or how you think the current phrasing might cause confusion for t=
+he
+>> reader.
+>=20
+> A branch (or any ref) does *not* *REFERENCE* an ID.  They refer to
+> objects by *recording* an ID.  The distinction is not clear with
+> your wording.
 
+I concur with your later email that this is not worth delaying the rest of t=
+he document for.
 
-[Enabled Hooks]
+My only other opinion on the matter is: what does making this distinction cl=
+ear do to benefit readers of this document? I cannot come up with one, and I=
+ suspect Julia cannot either.=20
+
+Clearly you feel strongly about it, though, given the shouty caps and =E2=80=
+=9CI have no more words=E2=80=9D phrasing, which I find convey a tone that i=
+s=E2=80=A6 less than welcoming. Perhaps it=E2=80=99s simply time to move on?=
+ And someone motivated can propose improvements. =20=
