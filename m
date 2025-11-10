@@ -1,127 +1,174 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC89288C20
-	for <git@vger.kernel.org>; Mon, 10 Nov 2025 10:09:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FB130FC19
+	for <git@vger.kernel.org>; Mon, 10 Nov 2025 13:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762769398; cv=none; b=bblyPQD5eXk55pqkoZDXyqXvyIeZzD4+IusZpAm5aNEBSLmP6Fh8YxjSi0ZXml8w/teUjCKuBG3W+cyOCSKQTIPZfwRGtB5IPlgHkkmsrrARwxqWwIuAn+IwooOKEEC3gKkuwl11I81izMBsJ0uZeX3HC5M2kc5BlzVRhTJw3c0=
+	t=1762780278; cv=none; b=b9N66+stgEJ0VqakbcMmEsYU1huj3LIkwQXOKGwDpVP9ChEoQQcCHGiynquqZaGDLqzr/dZoH03RUh87oUmxNdOx+U3Z6aUHfo4TOrbrCDdZF9C167HI3LSO6r2GARfFTu3UVAwztL3AU3j+y/LDKHTsvjwk6zMg6fdEdfq4r7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762769398; c=relaxed/simple;
-	bh=cSzwDxe4O0/5JOxdkwIY4ZCf1R0a52rUI4hD4sZN42w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mha28S8/x+TyNmrPtQ2y/O9UTYvPSuP4Z+XRjoVpxdv8xd1KED7Je8UHgiYj+GiPReTcNOvFxG10WgkdP3knmJX3DOEiMIvoXMzd3ReRtKJGJLkIQkzrXOUVhxfJ3Xb8WCI5/umaDGuK7PXhxsC4jgpJ54BiPj4Z+G+l6A052FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GQfiTbDD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yQrI8t08; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1762780278; c=relaxed/simple;
+	bh=ultWnEg9YZmSuEC1oNajkaMMeh5jx3XhmWvdbPksOYY=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UMsoTIB+y2BgeOHnKamyAQHRyy2PNsAtoz58cSGzv6y6w1njvPpsCZ7yFwOg5lwKfDayKupBm0x5fRT1AxonFpTUB49vKL3i2BBqVLBuS70BRp5yp98cFWxT9I8G4u4buDQtv9a27RZdrITJ5hgUWS5vVDsn5pa+4hiOrnEPm2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cvPCGASi; arc=none smtp.client-ip=209.85.217.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GQfiTbDD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yQrI8t08"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3E36A7A00F4;
-	Mon, 10 Nov 2025 05:09:56 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 10 Nov 2025 05:09:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1762769396; x=1762855796; bh=LF5mkGvZQR
-	XymDPdyeXRToGkgOHQ2pxBaUwQ7jXn0QM=; b=GQfiTbDDlCKFpJbIuUk4V2FLQ5
-	PrRdkpJVU3Hez059c9F37BQiGSMvBqDAfUcFqL6ljIz+MZpKgN8JPmSiXtFeg3kj
-	9hWwpjUMLBz/vn9+pQNfWtqNqEcGgGJNh7RCnkYJZPcyotiueB3H55sq4XAFrkFi
-	sh5MWTPo6pMAb3vQKdvyOj4WIYI/zy8vyQvY/mwXTPk/U4cAEVcVC8n3lCynOikD
-	0sgZm3DO+sAHvX7bmxBofXcxmJzjZRtWyb8UVOF388miqjfjUOQ0BwK+P6JzeI1/
-	swekBJVfELct9JwGeZMd+zL5nQjk6OTfDYvkjr8cxcji/knbBtiUdKLiSQ/g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762769396; x=1762855796; bh=LF5mkGvZQRXymDPdyeXRToGkgOHQ2pxBaUw
-	Q7jXn0QM=; b=yQrI8t08127WaQ9G3GzjnNnl99SxGsfUt52zpW4uQ52ndvGdV+W
-	1UB7YJT9tH3BYsnZIYKR+CrT8GXbEVKpNRy2oL43XdUDU/5I6Yz8VvkjBUeCSdJz
-	nlYEI9NjVKqclrYMVizNxte1DaqxYbW2NholMpPUMkiY+3cYFGunfjeLoHi7M1JO
-	iuuG9jfB9Dwar/S+wDQh3owVQ+82alIkSZ9U+5XCQi7/QX55P11XA1jrYkLgi5/g
-	8W1JdIOBg2CRENwodTJPxJREPQg+eKS1T3PEgaZQFiLT40y7clKoCRBlSMk0fUhG
-	SKpGe/aMeLk5Idh9H2QtVL3DXnJPn+KR66w==
-X-ME-Sender: <xms:87kRaW2Rc8PMrIhAnxadfmV81h39MzYLMzWN0ppPsQd1Og0FVCIcbQ>
-    <xme:87kRafF47Hu95ouSNK5doMLNFu_C3Ikm7m8Bxn44wY2NdGPi2qs5FNTFU9Ix6HJ-b
-    QoeuEEWcXxfnzEEW4oI7CDnNA5aYzNX_BYzAj_sKP4V-sAtvzbgKg>
-X-ME-Received: <xmr:87kRacj6zOhHHDWJWMloBIUbKNT1bcK3-XwSMTDX-bWI1-fra6_o884TwtS_0IDuD5OI40k_2WZ_4SJGu3IjeF626rblbNCNHm1bP1FAVQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleektdefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:87kRaS_A0BAm14I_ulEI1ekiYTI6-PZGucsz0qX_vEQg77exISjPdA>
-    <xmx:87kRabqLpoy_UfSbqjC5psjhI_e492-quecJnZ9phfD-sPB2mxYhmw>
-    <xmx:87kRaZ-Fgj2G1wlhG8U8sjCpuVierw9hPyGNrR4-loHMBNjusEUsnA>
-    <xmx:87kRaXVxyGCbrte8C9nCTzuEHlgKf5cJeJE2ZriQbX8KqNXVTiZRVQ>
-    <xmx:9LkRaSPa1s7qeXxa7p268xzUkXzhi9bNn6s_k8LZdSfIh13HojT9SuQJ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Nov 2025 05:09:55 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0d1835ea (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 10 Nov 2025 10:09:53 +0000 (UTC)
-Date: Mon, 10 Nov 2025 11:09:50 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 00/12] Incomplete lines
-Message-ID: <aRG57pZ7nDfk78du@pks.im>
-References: <20251104020928.582199-1-gitster@pobox.com>
- <20251105213052.1499224-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cvPCGASi"
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-5dbd8bb36fcso2891291137.1
+        for <git@vger.kernel.org>; Mon, 10 Nov 2025 05:11:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762780275; x=1763385075; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=U6zN8wu8Mjqxz09mHC3lTkGNSByynDQJw1XqHYQQtoo=;
+        b=cvPCGASifFFHeTv3kS3wghoGJyKvgFkM7TycBZD+nyUNBvcTXksRDpmtb4N4Ym0r1x
+         jeWvfNNlR3mfnPVyCdI8BsxBtcPFy6gBJtjSfHytbgkEMYp1dKYNGYCO6Z3l7EVvVbYA
+         SNPZh7iqC0uEJheQ2USLqmtfiwse7E9t7A+NrJPNSXEJlCpXUs0cvTBAUN0IiyRZHX1M
+         BJ17dscN8uTpTZVtUFwtyYzzipbiUQ1o84tJl4T8kaSDejy8U49hJaYWRzxDIWXkkn9S
+         RCAK2K8R9+zYfZ7y6A02zR+XAM+BTyo6I2EQxBnJzynSL/0Fj7yLXKHCT+qSTednVx3b
+         0bqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762780275; x=1763385075;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=U6zN8wu8Mjqxz09mHC3lTkGNSByynDQJw1XqHYQQtoo=;
+        b=FdDJjEbdzdRBjT+zA2It5m2g2WR4rUiQLUC+/aAE8sddqL78SJPzmwoSWIFN2fT4rf
+         +qmgipMd8G+w8madPCcN0WtTpgZfHPFxEE0aoH3Z6y5quk2LbXkbQ0WQzs5JuDptcW2j
+         760QNsviq/Tmnj5QSHKY0gkUe3+6qkSIb+QxQ3qB/WJxH4U1baIj7i06iVXIkq5c89GV
+         0DZy25+98BDoMa5UW4FPJtwaALsyGGxE2LQE3rTVTkVOolHuyla7+Pah9LOX69/HeMVM
+         P9XN3tWYYvVs+FR4uJ9tuXaUkQ22gnrPFeBvMVbNZmCGSwZPXaPK2r1S928p40GxdxMi
+         5hfw==
+X-Gm-Message-State: AOJu0Yzm+ZrpPe3NWOWwSB0YIJNWrhhymPscxAAk5SsxiVldAfd2tBrd
+	GuVEpHNnbtHldRvJhCZyRmf0HTDbu4j+jFSrtpXZjVup/WM53zPnMHc0deAWgUxPke4xvWV4dDV
+	xbQKiX+ilyqCe5Q4YMx0ViXEzrxGJs95d7Whw
+X-Gm-Gg: ASbGncsVZsdDEBuR4nv6Z0GJehPdS7IiA1U/zknTJAZIZGNMiC7JJzfBfcnBvBsMMHk
+	iQMKybqayMwtWEp5wV7jHMOXgtqyh8lCqgktgzVD/tvyj7ywMYWr4ajClxTWTvwILoTjTm8cUlD
+	d1XPXChB4/grC3TeA5x0MRYueeQHwRYDHgzY3ornMy4Qqyw3SwtKvZ6dw1jYkmm45DITduxk1L3
+	R5pbmZMIuS5ukPi41uKtn9jpLMbV9ZmkG7XSf4Zumnjh7Qnc6YuQt5VCjlk33EdIq/cNw==
+X-Google-Smtp-Source: AGHT+IE6Ob47CvPdvK1y4ch6ie/R3zXIk5Cd0BfW1X7mzAcQMbzJpbOZX1HOvPR/2V9duesxo65JnQeB7KqSB249xJc=
+X-Received: by 2002:a05:6102:1454:20b0:5dd:c53b:75cc with SMTP id
+ ada2fe7eead31-5ddc53b8489mr2087742137.13.1762780275349; Mon, 10 Nov 2025
+ 05:11:15 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 10 Nov 2025 05:11:14 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 10 Nov 2025 05:11:14 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aRGVhA4eXnAFxvqE@pks.im>
+References: <20251108-fix-tags-not-fetching-v3-0-a12ab6c4daef@gmail.com>
+ <20251108-fix-tags-not-fetching-v3-1-a12ab6c4daef@gmail.com> <aRGVhA4eXnAFxvqE@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251105213052.1499224-1-gitster@pobox.com>
+Date: Mon, 10 Nov 2025 05:11:14 -0800
+X-Gm-Features: AWmQ_bmeEO3r_ZXFORbxYwQ9Tmj1LBNEBIq6F7MSDeN-3f8nV20Svsihi7xkpX0
+Message-ID: <CAOLa=ZQLWF_GBtYXN9F=+=BwqugYOH=Z9OuNV1n3VmnH=rbqpA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] fetch: extract out reference committing logic
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, jltobler@gmail.com, sunshine@sunshineco.com, 
+	gitster@pobox.com
+Content-Type: multipart/mixed; boundary="000000000000213f7e06433d4428"
 
-On Wed, Nov 05, 2025 at 01:30:40PM -0800, Junio C Hamano wrote:
-> One of the common kind of whitespace errors is to lack the final
-> newline at the end of a file, but so far, neither "git diff" or "git
-> apply" did anything about them.
-> 
-> This series introduces "incomplete-line" whitespace error class,
-> that you can add to either the core.whitespace configuration
-> variable, or the whitespace attribute in your .gitattributes files.
-> 
-> The class is disabled by default, so the final step enables it for
-> our project by defining it in the .gitattributes file.
-> 
-> The incomplete line marker that is given for a context line is not
-> considered an error.  The reasoning is that your preimage did have
-> incomplete line, but you did not touch the contents on that
-> incomplete line in your patch, so you left the line intact.  It is
-> not a new breakage you are responsible for.
-> 
-> If the incomplete line marker follows a postimage line, on the other
-> hand, it means that you added a new line at the end of the file that
-> is incomplete *and* that line did not exist in the preimage.  The
-> last line of the preimage may have been incomplete already, but then
-> you updated the contents on that line, so you could have easily
-> fixed the incompleteness of the line while at it.  Either way, you
-> are responsible for the incompleteness of the last ine in the
-> resulting file.
+--000000000000213f7e06433d4428
+Content-Type: text/plain; charset="UTF-8"
 
-I've read through the series and left two comments, but my review
-definitely doesn't count as a "qualified" review. I'm way too oblivious
-of what's happening in the diff subsystem to really be able to point out
-any mistakes. So I hope that somebody more familiar with this code will
-chime in.
+Patrick Steinhardt <ps@pks.im> writes:
 
-That being said, I think that the end goal of this series is quite
-useful and something that I want to have :)
+> On Sat, Nov 08, 2025 at 10:34:43PM +0100, Karthik Nayak wrote:
+>> diff --git a/builtin/fetch.c b/builtin/fetch.c
+>> index c7ff3480fb..49e195199e 100644
+>> --- a/builtin/fetch.c
+>> +++ b/builtin/fetch.c
+>> @@ -1686,6 +1686,42 @@ static void ref_transaction_rejection_handler(const char *refname,
+>>  	*data->retcode = 1;
+>>  }
+>>
+>> +/*
+>> + * Commit the reference transaction. If it isn't an atomic transaction, handle
+>> + * rejected updates as part of using batched updates.
+>> + */
+>> +static int commit_ref_transaction(struct ref_transaction **transaction,
+>> +				  bool is_atomic, const char *remote_name,
+>> +				  struct strbuf *err)
+>> +{
+>> +	int retcode = ref_transaction_commit(*transaction, err);
+>> +	if (retcode) {
+>> +		/*
+>> +		 * Explicitly handle transaction cleanup to avoid
+>> +		 * aborting an already closed transaction.
+>> +		 */
+>> +		ref_transaction_free(*transaction);
+>> +		*transaction = NULL;
+>> +	}
+>> +
+>> +	if (*transaction && !is_atomic) {
+>
+> This condition is somewhat weird, as we know that it won't ever execute
+> if `retcode` is non-zero. So wouldn't the function be way easier to
+> follow if you turned the above conditional into a `goto out`?
+>
 
-Thanks!
+I don't have any arguments here, I basically simply moved the code as is
+and didn't want to make changes to reduce the review load.
 
-Patrick
+> 	static int commit_ref_transaction(struct ref_transaction **transaction,
+> 					  bool is_atomic, const char *remote_name,
+> 					  struct strbuf *err)
+> 	{
+> 		int retcode;
+>
+> 		retcode = ref_transaction_commit(*transaction, err);
+> 		if (retcode)
+> 			goto out;
+>
+> 		if (!is_atomic) {
+> 			struct ref_rejection_data data = {
+> 				.conflict_msg_shown = 0,
+> 				.remote_name = remote_name,
+> 				.retcode = &retcode,
+> 			};
+>
+> 			ref_transaction_for_each_rejected_update(*transaction,
+> 								 ref_transaction_rejection_handler,
+> 								 &data);
+> 		}
+>
+> out:
+> 		ref_transaction_free(*transaction);
+> 		*transaction = NULL;
+> 		return retcode;
+> 	}
+>
+> This feels significantly easier to read to me.
+>
+> Patrick
+
+I do agree here, and since the code is small, I think it is worthwhile
+making this change. Will add in. Thanks
+
+--000000000000213f7e06433d4428
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f3159b3131685b7f_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rUjVIQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNFY1Qy85L3FCYWhOelA4UmR2bWN2QSs5bVZBODJwcQpOayt1UEVOK0RR
+aXBld2cwZmdkNlBBL1QyN2NyVDJmQis1d0piamNOa0hmWFp2aW83bkVmeWdsNGd3YW5FNXViCmlF
+MWF0eFY5RndlYUdRTDJMYU05SnBoQlY3VkNHRVNzUkJwQ1pVeVJnUnN3SVpUeGI5YzY4UW8xY0lZ
+dlEwbVMKQ3lWcVNadnk2aVdWSy9uR3h0Mkh3QzlGUTBvelF5cXR0ZUhhOTQrbmVCOENZakdzSzVo
+TEI5MFVtdXJWZ1RJZwpRZlpxeWdqRzVIUFVJRnFVZzM2YnhMaFk4cDlIaGVXWFVOZ1pzYzNyR29Q
+WGpvUlQ1RFNGOEZmelRIQUYwUjA3CmlFTGxxT09vN1VrUFNTMWM3VCtscEJmTzEvVkQyUWp1aUc0
+U2kvM1gzZ2tIZnliQVlJU0lQY3Y1NmlmWGwyMzEKWHZhWkhWS2VoM3BCT1FDaHpwdFE0bE1PYzlM
+R2Y2Y0hXeGMyZVJoRWNNT25jUm1BczJ2S2lKUE0zTDVicTQwTgpXNE03OVBicEpiV3lqd2ZxRTYw
+bWdvS3J2WTdieXRqcExxUXltei9FbU85aFBmdzhZNy84UU01UFJRbkQzclpRCkgveWRCM016SGp5
+bGpJOEdiNFNRclZJTVhKSGladVRXQzhwVzMzRT0KPVBtK1kKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000213f7e06433d4428--
