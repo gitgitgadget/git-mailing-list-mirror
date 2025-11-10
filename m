@@ -1,85 +1,95 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F983128B7
-	for <git@vger.kernel.org>; Mon, 10 Nov 2025 18:40:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80118318146
+	for <git@vger.kernel.org>; Mon, 10 Nov 2025 19:10:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762800039; cv=none; b=Wd+jxQJcRRfG2rGZJuGT9E/J4ZAvIHTY8s4whXg22KifthRWOZ+Z3k7O5pPTgRQb22FC96G8uZxmA0imr1T1+EoWoIwd5xbBVsRLEqVZMsR1M5AB0N/u+b4bEEfoHHCKCn0KaenOswEosj/zCA0Nth1/Cvj8o539hmIJajuUp0A=
+	t=1762801812; cv=none; b=uTvdQBcrTGzIOxvT7FuLI+yQkU27TQ3vFjENWH3Hz1Fy1lTcVxfrnaFiq1jXYdzEctXJdC1yG5z10Zj0Tvf8VZ7cniQPn+9c4mp6KHGgL/Oo2h8L0L1ejD7PvnIzDqQ/1juzpQAAqaKaKqzNH9ltQuQovHgac62SzrvllG0F2B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762800039; c=relaxed/simple;
-	bh=BOzn1ePOLCqkxzUCQXGVrIyp7iPgjWRef/kaX+iPjpg=;
+	s=arc-20240116; t=1762801812; c=relaxed/simple;
+	bh=VDD0TS8KydbcLrXupK8eF3gNxtyJwdvZASTr6uWRdWk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u6+9E6i/8LqsF4AK9qUBhlTGvnpS+2hc4GzdT/f1mlVXUUlNNcJzy2r4XTszl8IXB9EaswMep9NhM0BJ89xqNtM+G2jTSj9C62h0nX0GFV3nl4HSAHP+KjimcTBjMwfGiKMtQr8aj3rvI2hNabGAQz9xxORZdM2Ad8LHW2lAB6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PhjwhyVq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZktwNfHW; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=mfxAY9//Vb5Y5ftbW7xKk+tPiLQG7d/L4+dZORoc36n2Mn2LkIsPQM6Rzp+JPiHUMWw3Z9KgK6ANH/stvvQbIeJNpZ4iEap4XkZP+XrNNt1aG1MKeBYP0jGPRDLX66RO5x5K05sFv20eXMwGnmiYZBEJfFslgx4PE1f8phvl4Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nszPPCtd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I+mBesiQ; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PhjwhyVq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZktwNfHW"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id C1738EC1ED6;
-	Mon, 10 Nov 2025 13:40:36 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Mon, 10 Nov 2025 13:40:36 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nszPPCtd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I+mBesiQ"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8391C14001DB;
+	Mon, 10 Nov 2025 14:10:09 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 10 Nov 2025 14:10:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762800036; x=1762886436; bh=gAjZ5bffka
-	/mn2icT9lILRE85lxCJu/K+oLfWGghLsU=; b=PhjwhyVqN7uk7qiWrRtr0A/lnV
-	7gvPMrq8QXVmpOmY3HW82zyg5THDuOB8p0JDASZBg0/xfpzGO8fofNIJ9zeh406f
-	XXInjfl5cMlaWmNF46HSIJUyLzaMKBlYwZ+CRCPmlGo8xgVHogWIPalE4yt8juTp
-	t35qe1dx1vTRHOfjywia2QbJbymu715hWN0rPajbe9UtP/4PZw7aq74N0AfQAh3z
-	0j4Y6UIk7g3fHvRQlISxxghd0xTo9kO/WBVnU0RwM/NQ+RCTATxINyrTf8dhUh9l
-	tHA1Jr6nOZPg4uMXQbCYOH1AUhdXIc5d7ACnU0R1aguhjykBaHLm6pz10ieg==
+	:subject:to:to; s=fm2; t=1762801809; x=1762888209; bh=Far/LlZ7jS
+	E7IPQYj/P2c5sdCXt5gRuB+lkWoC1tk0M=; b=nszPPCtd1kyQ48bKD0NvcpQikv
+	2oYocVdBGgzuK3jFs3Wf+aEy5qRoPgQIT+qPUOOMqAKym3XaiowBRrsG35IZWtcU
+	wsYNviiMHXt86p3LeK2LkO9Y4uU8mnsbWQYXpMINe6hOuCt6Peod65XOvv/A21rk
+	fO5z6OvzCGrH9LGt0mbHDBY5oruUVlFAbgIrW59wtgdcyuAJnOamf1ZmLOu/nDQn
+	b4Z2BA0ebdRxfGpSXpvMusxMnwqMC3fztFj3LclJ313f1Ck7X5Y8PpB/oOAKdx0E
+	l3icj15DejXpAM/mONrefFuKBtbq1h9Ho7krzMhevSPHW8z5d+JcXTXnf4gA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762800036; x=1762886436; bh=gAjZ5bffka/mn2icT9lILRE85lxCJu/K+oL
-	fWGghLsU=; b=ZktwNfHW0NafnfUNcDnLDCQhN59UubJQU8gFdKLu2EHPARjfz/7
-	8jjsan/29V67H5LxBgNecNlvn44Vo2JG/Kl8rX/a/Jq8QnR18X7viCm2NAFL1yzo
-	76t37g7bxfHAfud2jo0N/Vn4hcSiafIki1UCuMy7WyuRKopWN/kJhBnnDhCiJcG1
-	5fvTWOZ9FBWvIChobQigFvNuIMxtcZhOtL2NKAiFj4w5CCg7aECWHkz3fW3S9dHc
-	OAYXWr5+zpk4A8H9IwT5vB35Zx8IWfg+MIFKOHNefgjY2DCy84ggqyf6Bc4zEBxV
-	fU4f43wcb0ixoIjdiDR5Jxv2bzWFiC07ONQ==
-X-ME-Sender: <xms:pDESaUU5VGTYIbieFzYrrjLAeEGTHDH978SGuSCRg-sgJLFQOYaDFQ>
-    <xme:pDESafkgG2hIUoFf4YmBhugsqk-NzYVz62J-jIGvM0K8L9ZRlJgpoLy6Ajn-R_tYA
-    OBu2rtRdo5OgUVfpojZ6KF19pll71es3xz0nswlUbyh6L8gImymlcw>
-X-ME-Received: <xmr:pDESadbNonQAeEGsYMjJT-9V_3MCBywVaLHHk0A_6fPqtKLxdNGzuLr-diklXwnNiwth8kjJ64Cfups_IQL2Hm47PQweN6SMlXS1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeltdehucetufdoteggodetrf
+	1762801809; x=1762888209; bh=Far/LlZ7jSE7IPQYj/P2c5sdCXt5gRuB+lk
+	WoC1tk0M=; b=I+mBesiQEHoJWQ8QVqlM4X5DUiNWHkUZyjHki4iQRbrTnaGiEdL
+	tPWH8M/tAPOm3xLRqHto2BS1UyWM4nVW0Bc+M1aEtbq3NGHXQKySvpgEYnxpRtSl
+	5UVog3e6OuaeoDJug2xqu090dxvs2kQPwWdUER6dC62CY4c/7ysCdwkB79uF3GfU
+	EJ4lf6pjaRXkg23ThrKb22u2xCXurp+RTb+pFYqXaR8EFsUZu76xUiMG4tXlxj2I
+	KUDczdDTJtfck/zFc/6Q3UWaXbSzw1tEp3S9yYIz9Vq3XU+aDCtzrmTRHi6zYlA2
+	+en7XYr7JScoqtUO1/Oy9Gi/BwFf+D3UWmA==
+X-ME-Sender: <xms:kTgSaXYX8L6zAQx4FYK3VXIJGby3D0BG9nLHSxKiZ-uOFhSUOwvJ9w>
+    <xme:kTgSaSNsR7Mu4neAFTbRCTqq6H-uqEdKzbdWvG673K_sFmq17iAImhnOzUKqO_hfB
+    hGQUJMrQG2i1-TQjxsQsbmuBaq-sBJHQ-7h594vFnfiX516Yo2Z>
+X-ME-Received: <xmr:kTgSaVW2JVM8xU_oUoLd0m6HpgJehaFsiiq26_woHaDLCOK9hUihWzsHqJ3-_Emq6Q4qEfQDKN6d1R9rH66-D9wZxCMT29MKYLa0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeluddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:pDESaSP2pxyf4zyCd2ejCy2vFWRIWpx1xfoi092ZM0sW7tKobk3I0g>
-    <xmx:pDESaaZ0LAoFaHx8Fr0wq3LEFhhildo2nBk1uw-JaKlIbm1XiycQ4A>
-    <xmx:pDESaY0cWRHYceNUC4crI6yu-pkkVH_iscAZZpI4jzIaqlytmeQPbQ>
-    <xmx:pDESaYfpfpL4WA17yqZRgWB9hdf45yJ4WQL3gQJzYg1eIctRq4yjbQ>
-    <xmx:pDESaY5bC4rVqNqllnq3S9yFOrG9FPOqBtncysNCHjWWZ7OR4zCEStoy>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddvpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggsoh
+    hrrgdrtghomhdprhgtphhtthhopegrrghrohhnsehstghhrhgrsgdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghmihhlhi
+    hshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehruggrmhgriihiohes
+    ghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtph
+    htthhopehjrhhnihgvuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhk
+    shdrihhmpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomh
+X-ME-Proxy: <xmx:kTgSaXI96UdBMRnAy59GeTJNngxTHyNO4Zatss7iQnYLGmQbsfB1Tw>
+    <xmx:kTgSaQosJvM_4uohY055ZOfld5m8msajFL6P17Gvm81petWSWwmSxw>
+    <xmx:kTgSaeyNCEN63_1HiSSlpjV5c4kofpT-Tpg28BhPVvg8cWIE2i9Msw>
+    <xmx:kTgSaUuDT4FTWsi4VvhKUtVM_y3MfvK3nqmXcxSwpBCYYLjn1cKz_A>
+    <xmx:kTgSaaXoUgPheQC73Hv0DEPJVmXtBX-jomfDJjmOVS5WpDz4M1ed3bIa>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Nov 2025 13:40:36 -0500 (EST)
+ 10 Nov 2025 14:10:08 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 12/12] attr: enable incomplete-line whitespace error for
- this project
-In-Reply-To: <e14d2d1f-f147-49dc-897d-87f0fbeaa275@gmail.com> (Phillip Wood's
-	message of "Mon, 10 Nov 2025 14:55:32 +0000")
-References: <20251104020928.582199-1-gitster@pobox.com>
-	<20251104020928.582199-13-gitster@pobox.com>
-	<e14d2d1f-f147-49dc-897d-87f0fbeaa275@gmail.com>
-Date: Mon, 10 Nov 2025 10:40:34 -0800
-Message-ID: <xmqq4ir120kd.fsf@gitster.g>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: Aaron Schrab <aaron@schrab.com>,  git@vger.kernel.org,  Emily Shaffer
+ <emilyshaffer@google.com>,  Rodrigo Damazio Bovendorp
+ <rdamazio@google.com>,  Jeff King <peff@peff.net>,  Jonathan Nieder
+ <jrnieder@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Josh Steadmon
+ <steadmon@google.com>,  Ben Knoble <ben.knoble@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v4 4/4] submodule: fix case-folding gitdir filesystem
+ colisions
+In-Reply-To: <87ecq5ke2m.fsf@gentoo.mail-host-address-is-not-set> (Adrian
+	Ratiu's message of "Mon, 10 Nov 2025 19:11:29 +0200")
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+	<20251107150547.3272180-1-adrian.ratiu@collabora.com>
+	<20251107150547.3272180-5-adrian.ratiu@collabora.com>
+	<20251108T182050Z.vbNv4y2kizC1@fnord.qqx.org>
+	<87ecq5ke2m.fsf@gentoo.mail-host-address-is-not-set>
+Date: Mon, 10 Nov 2025 11:10:07 -0800
+Message-ID: <xmqqwm3xzots.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,28 +99,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
-> On 04/11/2025 02:09, Junio C Hamano wrote:
->> Now "git diff --check" and "git apply --whitespace=warn/fix" learned
->> incomplete line is a whitespace error, enable them for this project
->> to prevent patches to add new incomplete lines to our sources.
->
-> Makes sense
->
->> -*.[ch] whitespace=indent,trail,space diff=cpp
->> -*.sh whitespace=indent,trail,space text eol=lf
->> +*.[ch] whitespace=indent,trail,space,incomplete diff=cpp
->> +*.sh whitespace=indent,trail,space,incomplete text eol=lf
->
-> Do we want to check for incomplete lines in our documentation files as 
-> well?
-> ...
-> This series does not update WS_DEFAULT_RULE to include 
-> WS_INCOMPLETE_LINE so we will not detect incomplete lines unless we set 
-> an attribute.
+> On Sat, 08 Nov 2025, Aaron Schrab <aaron@schrab.com> wrote:
+>> At 17:05 +0200 07 Nov 2025, Adrian Ratiu 
+>> <adrian.ratiu@collabora.com> wrote: 
+>>>Add a new check in validate_submodule_git_dir() to detect and 
+>>>prevent case-folding filesystem colisions. When this new check 
+>>>is triggered, a stricter casefolding aware URI encoding is used 
+>>>to percent-encode uppercase characters, e.g. Foo becomes %46oo. 
+>>>By using this check/retry mechanism the uppercase encoding is 
+>>>only applied when necessary, so case-sensitive filesystems are 
+>>>not affected. 
 
-Yes, that is why I said "to our sources".  The rest is left for
-somebody else to do, hopefully long after this series settles ;-)
+The .gitdir name munging is a local thing, so it makes sense to do
+the casefold mitigation only the filesystem is case folding one,
 
-Thanks.
+Your code seems to compare directory names textually, and downcasing
+the proposed name for some reason, but I am not sure why we need any
+of these complexity.  Wouldn't it be the matter of actually trying
+to mkdir(2) the name presented (either "foo" or "Foo") and see if
+that fails?  If it fails (most likely with EEXIST if case folding is
+getting in the way, but for any reason), the name is unusable and we
+need to "tweak" the name to a usable one at that point by retrying.
+Once we find a usable name, we can remember the fact that we already
+created a directory for it and reuse that empty directory in the
+code where we used to do mkdir(2), no?
+
+> Maybe we could derive a new path automatically (eg foo2 or foo_, 
+> suggestions welcome) and use it if valid. This way, there is no 
+> user intervention.
+>
+> Do you have any preference?
+
+If adding 'foo' and then an attempt to add 'Foo' will automatically
+assign a name that does not conflict with 'foo' to the newly added
+submodule, then the users would expect the same to happen if the
+order to add them are swapped, wouldn't they?
+
+IOW, I do not see why the code wants to treat uppercase and
+lowercase letters any differently, and suspect that it might be the
+source of additional complication.  Also, if there is an existing
+module with a funny path "%46oo", you cannot just encode "Foo" into
+"%46oo" to avoid crashes with 'foo' and be done anyway, so it feels
+like we are inviting more bugs by special casing certain paths (and
+not encoding or checking others).  Don't we have an issue similar to
+"case folding" in macOS wrt UTF-8 canonicalization, too?  An
+identical Unicode string may be canonicalized in two ways, so in a
+presence of a submodule named one way, the other submodule named in
+the other canonicalization, while their names may be with different
+byte sequences, cannot co-exist in the same directory next to each
+other.  "Try to mkdir(2) the new name, and see if it succeeds, and
+if so use the resulting empty directory" approach would cover that
+case with the same mechanism as you need to use for case folding
+filesystems, I would imagine.
+
