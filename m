@@ -1,117 +1,89 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C6A2DC331
-	for <git@vger.kernel.org>; Mon, 10 Nov 2025 17:38:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5B72E613B
+	for <git@vger.kernel.org>; Mon, 10 Nov 2025 17:54:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762796296; cv=none; b=K2xzuOgmueZTir+mxVAyiOM/KgHrRJLxzIoma6pBTa+UjGNlfO04ZVIoQ/ySjrbBQuUHbc/xQ7UXFrNRgahWhJZcHCEZIj7akEMKf5KLGCW1jBJJJG7+7ZHpsZXu3+Q9Ay+4L/gAD7qqQxm7YrdP2DM8Lw0IWtidLMFLFWrnSQ4=
+	t=1762797258; cv=none; b=HGHDKapx3od36OEjVZbOySoMhyJsNJevjtoeCGWwc/QF9ELIhnYjSBn7CDcnvPzpo4qphoy4y1lUx7u/8Zaj1UjS78rYuASlC68mcjIT4GE1ciCR+iDYeunyl75LV0mWrm8Xx6OgjWTH2BZ95IgqmzbWrPKi7qjPpNLpBS/3Gmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762796296; c=relaxed/simple;
-	bh=t4e7LxtzrlA7PR5rGc7aHjyYgYg/iklyl4Nx1nmPH3c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BDmknqp3CXCUr9B3HtuoSmOsaPI+CFFwQO7rhVIUjonYBPnFJJalNQrvdUauZ2Qjb5YXrBIyz6aOtUWbLt/fhwngUi1c9yLZa7WIa7TMiEqtQG43ZfyO1WsccIGjE+XP4fJDjw/LAXwhiCOf1xTa3gg21djAs+6VHpe218YGyZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PLLSjvGm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F9Ye6TXc; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762797258; c=relaxed/simple;
+	bh=c+Ca8MDwmSDWEHADJN85IB8TMmVkDFPVkFTR8yeRSTE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XS70VXOVqubKeFcKrxQVmJiE3gTysy/QgGomf6Q0oEUK+cIkgQ+doCWQopNWuNh6nctq8SQ5onW2VvRrH36WjH3k4/XsF7VvdYg+blgdOJTElTJYcGc8rQzOe1typAQ+GEL7Rg/IMBj7fIvT8nqkwqPA1l9kUrNq2LO1kjUu5n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CSAlHdhT; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PLLSjvGm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F9Ye6TXc"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D82AA14001F5;
-	Mon, 10 Nov 2025 12:38:11 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Mon, 10 Nov 2025 12:38:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762796291; x=1762882691; bh=2V9bcGhLXt
-	AOyncuESnQmw6L4w9wRa8A10VfJhjLc/M=; b=PLLSjvGmNJOiomeI4m00X5aqi0
-	IudHJsVvsDR1xUe/LzZwM/kxrCugNXPib/ThlYP00K3FaS68t/LXmYh4e2MtOdti
-	uvZZBiIsAAY/qWJnLHpD9nTEbGj9gpQhsD1i75aG3l/lP+XaA9plP26nROcqKmup
-	QtazTFoySkNExj7W0sXYqpXECtgj3kctcM3qgP1ms46xBc3WQnNJhR/ED1HMXac1
-	0CaSIc4+/V+yP6jHBo040PCIGvRXvno7Bjr0pTtaooBXfIU2gimOlyE7Jx+50bUI
-	bZGEyxS3rC8s5Df0QG6DeKoiyabd2rE89j57UkKSpGjxU5xwMAG8BGyHAS6Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762796291; x=1762882691; bh=2V9bcGhLXtAOyncuESnQmw6L4w9wRa8A10V
-	fJhjLc/M=; b=F9Ye6TXcu1gy61SDU5iz5iaZdHhWTVFsYZN+4oTgu7Rk6OgfP4N
-	c1Ms/UX6W+uaxw9t3JcIawW/wBcbVr5HweP878yTWMpc/tXKMbFMeaB1l192hV1F
-	XnztrISt8I46KCKZv2YI59sLtkOP12rpWVbp4OdwqMFG/Q0Otns4SG2mR+/j/NPQ
-	VtrSnNkX42sdIqsMI0UldC6xWJe2+oNLzXbSc58xJQmj5KXJgbp9+ULnNR4OLMvu
-	A1fAZ30+hPXcyjGCat1s5JgxfCOiMY4zSBsht7WJXTNryP6Ia2sbv7PA7sA6yJQv
-	igFp1tZtNJwziem+XPA0u33Q3PRk5rMkD2w==
-X-ME-Sender: <xms:AyMSaXWYXqQvgPVzuJWuAcf-OBkhiJXfI2svYdg5JLq6b2LghJNzvQ>
-    <xme:AyMSaTRJjfKbOG-SyYL9voVVT4gUXWS4hzsKSAoJnKC3SXkD6JnlcwVwgkocaRjcQ
-    D3C9SbQgWveBs8TVp0Id1K-d2qpsD6NZ1L_u0L15tYOT1oWRzUt>
-X-ME-Received: <xmr:AyMSadM9oBIN_UsZaGee2N1aWrGj0mxeKlGhpZYVzWf5mrNi8swAdqC8pRN31kGPNYLV9PNHMUCBObTV4z7s3YWfuKvYpt18yGy5>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleekleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtgh
-    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtph
-    htthhopegrughlthgvrhhnrghtihhvvgesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:AyMSaZRUN8Ja-_TFX84c_wQMMWcguM9J0HrQxozISJqrzS_IYf5rnQ>
-    <xmx:AyMSaTjKcR5EK830zLgnHmlbqmg_Ru2hAfjfEzaKywHgTCJW2vkL8g>
-    <xmx:AyMSaa-I8byFml9kiYsKIHCxE2uYFUGx3VXI3CHcfVNYKfo8qhkJDA>
-    <xmx:AyMSaSHjAEWCci-rGel1jGpFqv6Koy3PA0mnLhuy-Fe5gYdIQcuopQ>
-    <xmx:AyMSaaGjYXZdkIQAtBSQIAosEeNzH53rOy2WqAieiEBeWJ4TscPbBu_Z>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Nov 2025 12:38:11 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Jeff King <peff@peff.net>,  ZheNing Hu
- <adlternative@gmail.com>
-Subject: Re: [PATCH] commit: add --committer option
-In-Reply-To: <aRGvVwRcsJA9CD9c@pks.im> (Patrick Steinhardt's message of "Mon,
-	10 Nov 2025 10:24:39 +0100")
-References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
-	<aRGvVwRcsJA9CD9c@pks.im>
-Date: Mon, 10 Nov 2025 09:38:09 -0800
-Message-ID: <xmqq7bvx3i0u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CSAlHdhT"
+Received: (qmail 481611 invoked by uid 109); 10 Nov 2025 17:54:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=c+Ca8MDwmSDWEHADJN85IB8TMmVkDFPVkFTR8yeRSTE=; b=CSAlHdhTwRJm3RPtYd9r/NMTsoG8QTgqyaB5mbSjoryvAopZX5W7lS1XHd28/g70xmbcuEOV+eghGWRLJ2h++ndbjP/cDvvqR5Bpotrmhu1eslYPaZBxkpffz2PnIL2K3O9RcyccdbMVLepAjy/dpnqDxn4qQsxI40tVAiazpp8DVBVzGtTuR7RPnibXbEvqRDJrPdpqvKXjUZJfdDCd5NzoG+doQqovCWfduO3WH7FcQgE3JEMUSY1ppFTjVRl8/65B/yB/htjVJI9hl8f7L3IySfZepoGkaVLWVN3B6A0/h6o7gUOp5TIPbtZcsGw4xOEomDpTiSQ0z3rCuD+sOg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 10 Nov 2025 17:54:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 763497 invoked by uid 111); 10 Nov 2025 17:54:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 10 Nov 2025 12:54:09 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 10 Nov 2025 12:54:08 -0500
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Git <git@vger.kernel.org>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] diff: disable rename detection with --quiet
+Message-ID: <20251110175408.GB76603@coredump.intra.peff.net>
+References: <CALnO6CBsj+aMvHJoUQ+LHAtXhcFhQeH8AuHyrX+rumur6MQQog@mail.gmail.com>
+ <8796cd59-2335-4674-823d-d682ce7b7f8e@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8796cd59-2335-4674-823d-d682ce7b7f8e@web.de>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Sun, Nov 09, 2025 at 05:43:36PM +0100, René Scharfe wrote:
 
-> On Sun, Nov 09, 2025 at 10:22:54AM +0000, ZheNing Hu via GitGitGadget wrote:
->> From: ZheNing Hu <adlternative@gmail.com>
->> 
->> Add --committer option to git-commit, allowing users to override the
->> committer identity similar to how --author works. This provides a more
->> convenient alternative to setting GIT_COMMITTER_* environment variables.
->
-> Yeah, I can see how that's useful.
+> Detecting renames and copies improves diff's output.  This effort is
+> wasted if we don't show any.  Disable detection in that case.
+> 
+> This actually fixes the error code when using the options --cached,
+> --find-copies-harder, --no-ext-diff and --quiet together:
+> run_diff_index() indirectly calls diff-lib.c::show_modified(), which
+> queues even non-modified entries using diff_change() because we need
+> them for copy detection.  diff_change() sets flags.has_changes, though,
+> which causes diff_can_quit_early() to declare we're done after seeing
+> only the very first entry -- way too soon.
+> 
+> Using --cached, --find-copies-harder and --quiet together without
+> --no-ext-diff was not affected even before, as it causes the flag
+> flags.diff_from_contents to be set, which disables the optimization
+> in a different way.
 
-Well, I don't.  Naming somebody other than yourself as the author
-may be something that is needed from time to time by human users,
-but lying about the committer who made commits?  Our tradition is to
-give long rope to let users hang themselves, but we already have the
-environment variable override specifically designed for scripted uses,
-where there may be very legit uses of recording arbitrary committer
-identity that has nothing to do with the identity the current user
-who is running the Git processes usually uses.  I do not think it is
-a "useful" change to make it more it ergonomic to perform certain
-operations that we may not want to encourage.
+This makes sense to me, and I can't think of a reason why you would want
+rename detection on if we're not going to show the results (and likewise
+I can't think of a way that a rename result would affect has_changes).
 
-So I dunno.
+I wonder if we should _also_ take the hunk from v1 that teaches
+can_quit_early() to avoid triggering when copy detection is on. It's
+probably redundant now, but it feels to me like that's the place where
+the correctness check should kick in. And the patch here is just
+optimizing out the unnecessary work, but also happens to align things
+for correctness downstream.
+
+But I dunno. Maybe a check for a condition that we think can never be
+triggered becomes too confusing for later maintenance.
 
 
+You don't say in the commit message when this bug started. I briefly
+wondered if it was caused by the recent diff_from_contents stuff we've
+been discussing. But it's the opposite here (the bug happens when we
+_don't_ set diff_from_contents). And I think it goes all the way back to
+b4194828dc (diff-index --quiet: learn the "stop feeding the backend
+early" logic, 2011-05-31).
+
+-Peff
