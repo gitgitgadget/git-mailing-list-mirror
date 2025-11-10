@@ -1,96 +1,117 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A34C307AC6
-	for <git@vger.kernel.org>; Mon, 10 Nov 2025 23:57:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FA1306491
+	for <git@vger.kernel.org>; Mon, 10 Nov 2025 23:58:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762819030; cv=none; b=dt/WWVqebIMmNxxizkCORPFct+SsTNQC+Tf2BlRvMwYhX74MyDrpUvEGQRoaMYheYyigHKxZmett3meHSBuVuKcqEPr3Q+5JY0Xd23mpXtAnHW6wWDw8eVSSDrFTGRfsxa8YypanLlSy7ajIfys66rAnWePTS5PKGDa/S75Vuuc=
+	t=1762819123; cv=none; b=iMcVqraNDi5SOzGPcuyhNyAFS1asJjCRalvSKbzz79qbhv/TLthM2pXp7LlDaxyVB9I8sEPsXMU1q5pl0Edhs1FaavUKAfukvskfGNVM8zi7RwxsZGJBxtXAkAWPth7qOK3hMq9hK1/GsPgIi7PWUumM5e7i8a/8sUxgWArr2uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762819030; c=relaxed/simple;
-	bh=uShn3BudShvVxhLqOUDmu1GeJHfeUNbrByITEF37w9U=;
+	s=arc-20240116; t=1762819123; c=relaxed/simple;
+	bh=RG2gsLdLqRIL8eWHd8qZNSSIHGqKo0VfNnAXmxYmMJg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Xch7f8NszEPdsk2ai6Yzgg1XrEmz1wA14ekDW7JrP3yoEmDOoa+4ThrefvHzMnlHEmT0hOVV6kO9Icd++znQTLpEZklH4O+q80lnk+6g0q7NP/atOTfJkYlQZecVQFboy4U8qxXkwrKzeQgfonM2RDsH8CIXbhk/HKE/CJkWiRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SZ4DS6B/; arc=none smtp.client-ip=209.85.216.50
+	 To:Cc:Content-Type; b=rThCnG0AKne6e0smHumTio3Vve5AWsdJuaAaB+a890qGbAf+fUAzw1rPgVwo7PcHR+wO1nxErsy8VuCI+CG6kyYx1IdPSigiImK/eqkA4ohZsjkDc0tqqTe4fBxyljE+OHUdMTz24LSCR3SUy5iV/Ydq9JKh72Mqm7R1IRoEJFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P3QzEuDM; arc=none smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SZ4DS6B/"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3436d6ca17bso2721041a91.3
-        for <git@vger.kernel.org>; Mon, 10 Nov 2025 15:57:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P3QzEuDM"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3414de5b27eso2941864a91.0
+        for <git@vger.kernel.org>; Mon, 10 Nov 2025 15:58:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762819024; x=1763423824; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762819121; x=1763423921; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Xa4zWG/70VzVqBojhqO4hUjuCL0xg8GVROfPhtU6r5A=;
-        b=SZ4DS6B/p6B0pQk/8/sLkHAQIpk+M+p24LIj4XINkzWqXhJdmSUN63yliqhpMRq1aK
-         xFCJ1cqMbOtu4YNGuRxQCUdsxrvkrm0dCpW8wd8gR3HkpLx82MsZCICL11dYHRN2X/5F
-         rHREt+X9pU9y6t5pcGM2jEeo5Qc9BnNh63PqoPNskc1lfIgdjsA+qnHl9PjVqaY5F2N3
-         oS4SpaIw4oGojySkwzCyxe7vHZoWDqQ1cvJIB4UfiHxCrx5u9T7xnD9cvyogMnIIGJGo
-         5z88cqOeC0iSDy62s71kltaaNQHUvtvhWNPVze4dML/KDfv/zAet8/73G50MMQvX6BHK
-         iYcQ==
+        bh=zU93X6KVczRIXrRM/N4qCY6R9y4jgJo0mZ0JXsu3bhg=;
+        b=P3QzEuDMJ6A4cVGKClLyWcwM8ayhFZZRt398KY4UJX+VwZkiFXasuCOp1vpqftLfww
+         gxgEU3zQJqnXy9dyde5UuUjwuxEwjLEpayf2RJGyGxOjqzZ8LCzzBVFMeTmNjMroIBrU
+         UVAT4kbh8JQge9Q2lnljtjQki1UfjurUxhvp0OivjS8IVehhw1VRdRiFntrNy/OqhC2E
+         8PfKGgT1a5ZIocgK4RtJLN1ZMnsF4/fsI/SPEMZJCDv6B0j9BcqJRv8as2IR2xJaeARP
+         EB4yJfQY0J4mTohfSZQgZn42HAzK0ced/5Na8CdzBoqtjDFay1NShPvNjnzE4b50G2Sd
+         j/aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762819024; x=1763423824;
+        d=1e100.net; s=20230601; t=1762819121; x=1763423921;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Xa4zWG/70VzVqBojhqO4hUjuCL0xg8GVROfPhtU6r5A=;
-        b=Ny9Szr6RLL7zS2ElRlira1lmsZw/Yxi666zZ6uPE6EYUwFYbRFgcG3mWvYIhNeU5gw
-         8NZOdxMGo/YOcZyxaGk/Ab8IdhXT+GK1ApNU9DoKsAtYtjA73ESK3OBaOmVxbIiRGGIK
-         KQt1G0aoTtm4vQs40Mk9uRpXf33H/IOQTidk+OqSTl2Jq9rdhhKGGCcXvmFo0ayzcWqT
-         CM9cOde974Wm7wM0eWp+8Zsy1psz1PYiD0VZxo5EtyOs3U3abHtckDLwN2D18sAYMITE
-         Va2n9ii39IINsgLaGdDXjUK4nSUo3KmMAHV751uy/818TriGhATbVO18qcwmwJUT9c4a
-         NBxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUtMOviZgq1uE/FatqEwwnGPWQv43k1YMMR/Hu7OYCaH/LP1aJAJ2Tnnb5x0FHNdEOw4as=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTY3ZLSQbTrWWAFTyKzc4HnkAsNYujPjIp2F+deaJCoMNZtMse
-	+GCv7NO4zygeKYIbpwyJej5yNrXqBJozWHieqJoqpPutztI+SCnlHCD55rd59Wv4vfMq4pY1xex
-	GbcANrzqQ+aj1aZg3P4poavMDzO/6HWyj25TE
-X-Gm-Gg: ASbGnctbbxNqEEeMcswhrdyhzvfgkpurpXefuUt1FcgLZSxakHrB7tzhgzqNW7I80IC
-	rzgNvDd6/tiZ7WRy+TgXmhD7eqRujzefQATGZPX0iS4Z6zYKaHlG3eb4Dg8t2g/l79M01y8nQZq
-	O0+COPhS4r4jdxROsMBVSHP25uPyN6z9Uxj4ydlcRmqoA98W21hXQnGMn0DCU1bG0PZhP/6O9xx
-	yWFUwf1OOtoaJ9M7h5VyfhzoRVXYQEWudWAEC8rRciFZpwRE0q5SiUZsRzprdYy7AEzbWl0
-X-Google-Smtp-Source: AGHT+IFkXuglpcqeCB0QNjw6crMNv9Gu0j8VzVS+ZgFGgFpcHp+C2oelwhv/h+M1GlsQ9KMEDcBm9L/85oME6GKR93U=
-X-Received: by 2002:a17:90b:2e85:b0:340:c261:f9db with SMTP id
- 98e67ed59e1d1-3436cb946c8mr12599780a91.10.1762819024461; Mon, 10 Nov 2025
- 15:57:04 -0800 (PST)
+        bh=zU93X6KVczRIXrRM/N4qCY6R9y4jgJo0mZ0JXsu3bhg=;
+        b=qJ7LZ8V9UPb02xAb/ifgEm8YXRmD6qMT+9nIr8KzyM8xuM6mEciTFpCNWn+WX0nthO
+         +JeW7fBVLKaT7peY+VEk3TG3gkK+pjpYwBeeQJhoKxh6PvZ4HeSm0Ts7INIrSsDC+ix3
+         xGdnibFXGk+aJJv29bnrHaVoRGaZd1lWLdg7ETyNWaQdNQ6oqOy1Ox34w9r0aUTqVk6v
+         q3jZh9M/MrMGN7FlER4diPf3XG8wkMzdPqByF51cCYiOJOeeXQcQb9/IiusnFV9Iu5in
+         C698Anx5KvJOC1iYiJD8T9kNyaOJ8WDJt8eLTt7mpo5tRJv1toXH7t1ODfzQzR1/dBSs
+         12Kg==
+X-Gm-Message-State: AOJu0YxiZyddeLwD3VUKuAEMGn6zUy40c9jRMJ31jpN3Hw5A2rFwD4xB
+	z0VNSGeqkOTcC4gdFp05RDA2OV5GlHLGnnMLI8yJYwqRkgEpervn5K5gvHrbuuoMckwpW7ZND27
+	XkU4JfYsHhR9VhJgCtkXLK43JoCDbdCk=
+X-Gm-Gg: ASbGncsC1GlzfLQahC2znscypvKyW48nIMp+8N9EhTBxW+5fq0g3rwS8KvaWl950szq
+	iP8r9zENrn56VUe8Atmn5vxEZufrwjG9dlpSrPMV4D5yU+UREVnFq0f1u4MqkAUT3g3b47Akzje
+	S0HtgSLA3deDy7nrLfTqLFNwlzMu8sqbBdh38w9oWOgx6FMD8vI47HQcilVRgOeX8TqV1VjujLv
+	PCM+cZgDQ9nJsCXo1nOmnsd1ufJQW11G+AQvAm2F80AQig0UhHhyk37jJLrDi5YJJ7VaDH+
+X-Google-Smtp-Source: AGHT+IHiVRn0qQjnyt0MgkrYjuArFAvzc5gWUgIUm2leXUe6IKOez60Tu3hWUIKkU9VBAk0hE5kZaJ18enNuW4xwBkw=
+X-Received: by 2002:a17:90b:4b0b:b0:334:cb89:bde6 with SMTP id
+ 98e67ed59e1d1-3436cb120afmr12802441a91.4.1762819120633; Mon, 10 Nov 2025
+ 15:58:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251104020928.582199-1-gitster@pobox.com> <20251104020928.582199-12-gitster@pobox.com>
- <7aa91693-bece-4fa6-ab14-f914d6fd49bd@gmail.com> <xmqq8qgd20no.fsf@gitster.g>
-In-Reply-To: <xmqq8qgd20no.fsf@gitster.g>
+References: <CALnO6CBsj+aMvHJoUQ+LHAtXhcFhQeH8AuHyrX+rumur6MQQog@mail.gmail.com>
+ <8796cd59-2335-4674-823d-d682ce7b7f8e@web.de> <CALnO6CC+ke1L7T+dO13B0FSjLyJqihKHKZaa-B4dh9guxk7z0Q@mail.gmail.com>
+ <916cf3cc-185f-447d-845d-a65eddee4a36@web.de>
+In-Reply-To: <916cf3cc-185f-447d-845d-a65eddee4a36@web.de>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 10 Nov 2025 18:56:53 -0500
-X-Gm-Features: AWmQ_bkRqZPijT_ld5n5kc7BhnGoaA_eBj8Yswt_04xtC4k36AzJO196RiRLxWY
-Message-ID: <CALnO6CBFmzhDA98N+AvezqSwaDmBsYvq4R4+1iko4c1RkYcwfw@mail.gmail.com>
-Subject: Re: [PATCH 11/12] diff: highlight and error out on incomplete lines
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>
+Date: Mon, 10 Nov 2025 18:58:29 -0500
+X-Gm-Features: AWmQ_blBIbmn67lRGr8dPQqonHFOPseDSzXhyb1hKk2kD-tlhJGV8S6XXkrHN8Y
+Message-ID: <CALnO6CDxz3eKFfJgG5dQF5sUutT_bRrH0itpLtmRj6cW_=WPBA@mail.gmail.com>
+Subject: Re: [PATCH v2] diff: disable rename detection with --quiet
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Git <git@vger.kernel.org>, Phillip Wood <phillip.wood@dunelm.org.uk>, 
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 10, 2025 at 1:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Sun, Nov 9, 2025 at 1:35=E2=80=AFPM Ren=C3=A9 Scharfe <l.s.r@web.de> wro=
+te:
 >
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
-> > On 04/11/2025 02:09, Junio C Hamano wrote:
-> >> +test_expect_success "incomplete line in both pre- and post-image cont=
-ext" '
-> >> +    (echo foo && echo baz | tr -d "\012") >x &&
+> On 11/9/25 6:34 PM, D. Ben Knoble wrote:
+> > On Sun, Nov 9, 2025 at 11:43=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de=
+> wrote:
+> >>
+> >> This actually fixes the error code when using the options --cached,
+> >> --find-copies-harder, --no-ext-diff and --quiet together:
+> >> run_diff_index() indirectly calls diff-lib.c::show_modified(), which
+> >> queues even non-modified entries using diff_change() because we need
+> >> them for copy detection.  diff_change() sets flags.has_changes, though=
+,
+> >> which causes diff_can_quit_early() to declare we're done after seeing
+> >> only the very first entry -- way too soon.
 > >
-> > 'printf "foo\nbaz"' might be clearer and save us forking "tr"
+> > This does describe the behavior I saw, but it seems to me that, if we
+> > have changes, then we ought to be able to quit early for --quiet, no?
+> >
+> > So there's some other knock-on effect that causes quitting early to be
+> > wrong here, and I'm not exactly sure what it is (other than the diff
+> > queues being different sizes when we hit relevant parts of
+> > diffcore_std, though it's the working case that has the larger queue).
+> > So I'm having a hard time tying this paragraph to the actual issue
+> > (mostly due to my complete unfamiliarity with the diffing subsystem).
 >
-> Perhaps.  I find it much harder to read and uglier, though.
+> run_diff_index() calls diff-lib.c::diff_cache() to queue up index
+> entries.  As mentioned above it only queues up the very first one, no
+> matter if it's a change or not.  In Git's repo this would be
+> .cirrus.yml.  That's not the end of it, yet, though.  It then calls
+> diffcore_std(), which calls diffcore_rename() to remove non-changes
+> from the queue and overwrites flags.has_changes based on whether the
+> queue is empty now.
+>
+> Ren=C3=A9
+>
 
-Funny, I find it easier to reason about.
-
-It saves not only the tr fork but the subshell, too.
+Thanks, btw. Still try to absorb this part of the code, but this helps :)
 
 --=20
 D. Ben Knoble
