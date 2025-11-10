@@ -1,131 +1,98 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870E43446C5
-	for <git@vger.kernel.org>; Mon, 10 Nov 2025 19:29:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762802973; cv=pass; b=riOA9ETheX5Gd7oe5B12fN6hotCAHF+xXFovEyx1fsaXEO+hrIaIsbI2sihkNC1knCRaaZyHTozZVlPD6HXAIekM0i83btvcgBOG0rG/kCscWGFHUeOg7RR5jy86EJRqQSJZZbhxKvBMMur+mFGxX5whKaAs/hoAOdpWKsqdINY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762802973; c=relaxed/simple;
-	bh=NWb4urnrHy6zCdIrHUOc0Nav5UeHsG3yZ6q3lSXp+Sk=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=LMJAHIjiavEZMru0jPP+32tq3UMFNf2y3Femb/giq7rHHXQiSV05KUbx5VseSbpyLhE0uqyT0h0isJZa7ek1KotMBjCm9EQbG5P3EhfpclsukczoN/EcD3pMqVAPesgBvQz43+NO0Wxdx5lpnNVIqaME+Vi4ONJafddxNoXBs0Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=UKyYCacX; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D2433F375
+	for <git@vger.kernel.org>; Mon, 10 Nov 2025 20:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762805500; cv=none; b=Hd0S3n9SiZdaY0plDpIolwIF6lRlNyuzvDCwvYiK841es/EQ1VEqJJ8r2djpNv50i8fIjE7W0nUGdJiSAD5c0OjoiCT+U9uAdLJ0w+XixcUj6f//bUdO01OFi5egid3zVs5dHbqOCtSJhSXCb3TQCLIJyZqC4kHtnDu9OshQnKk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762805500; c=relaxed/simple;
+	bh=Gu+TlMXbe64v/Nmi2mwmgJBJz4sogZoD3AKlrmO6cCo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k5tEnyXUk/ukHeL83+Mh8Vlmgx2/AhfupTH4FyeeFEDvbfKEpNFFkTGqwvgsBgYGTW7RTo7jmmIfOKxb8GdrK61iJ4cxKpIkEiVGgdQtXltLjvEB4t/ZMJZzkM9Ufg/tIXawEA7GfW7f0wRAZZU5E4/qWjjv6VCa7RcNUs9XvYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PEqQvZWG; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="UKyYCacX"
-ARC-Seal: i=1; a=rsa-sha256; t=1762802960; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=BWNIX8A0Hx9TC5z1IEf0ZCWBuSWV5XCO0KsKw2a+8WID2paMq1TfbScimDLauTGUt2S4fmbR2EV2l+tqrGVvmDQ67oFh4h8ll3TnpC56dTCEnVjDE/VGrlFj9xvfellnMVa0LW1s1rqdaITk6hJxQzkpo4bAxJwNg51QyxfPURE=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1762802960; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=plrOywCythsLbmW8Egx5kdY4AdYwSwDiQMXHmfSWTSA=; 
-	b=itLYJNKhohVfXeiFJGmhooEodlKwxOmrbeKKlAfhJx2DGNa3QZDahzQxkv6kyrz84UQr/z8CztWr4/4IhL58Ivi1o7eFONoYBVMqmy8wXyuzfZCkjssxO9jOzuWQdnugvZEIZojX1jKwqg2E/3BHTdp9OhMCKOUzyLr4v9v+O1M=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=linux.beauty;
-	spf=pass  smtp.mailfrom=me@linux.beauty;
-	dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762802960;
-	s=zmail; d=linux.beauty; i=me@linux.beauty;
-	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=plrOywCythsLbmW8Egx5kdY4AdYwSwDiQMXHmfSWTSA=;
-	b=UKyYCacXrYb4Ii1L2h7TQQVru9kz/n7EKqfAdAw69Rl5hHQSa77P23xOHf/gOo5s
-	1iwdFRzBR6hiH+zTt8UhrlOTR0dyQP5AwEnjp3v8EvrMbBiq9Aqy0ZpNg4j8sPfL+YK
-	+I/H1M8hC5uRcofn1Agl2Xd7jjYISl9T3CauA3p8=
-Received: from mail.zoho.com by mx.zohomail.com
-	with SMTP id 1762802959168826.9111192134051; Mon, 10 Nov 2025 11:29:19 -0800 (PST)
-Date: Tue, 11 Nov 2025 03:29:19 +0800
-From: Li Chen <me@linux.beauty>
-To: "phillipwood" <phillip.wood@dunelm.org.uk>
-Cc: "Junio C Hamano" <gitster@pobox.com>, "git" <git@vger.kernel.org>,
-	"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Message-ID: <19a6f3e8332.46772ad5543363.4456434926857828677@linux.beauty>
-In-Reply-To: <f5152523-f7ff-4dee-a685-fb0b74cd6a56@gmail.com>
-References: <20251105142944.73061-1-me@linux.beauty>
- <20251105142944.73061-2-me@linux.beauty> <xmqq1pmcmn7s.fsf@gitster.g> <f5152523-f7ff-4dee-a685-fb0b74cd6a56@gmail.com>
-Subject: Re: [PATCH v6 1/4] interpret-trailers: factor out buffer-based
- processing to process_trailers()
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PEqQvZWG"
+Received: (qmail 482504 invoked by uid 109); 10 Nov 2025 20:11:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Gu+TlMXbe64v/Nmi2mwmgJBJz4sogZoD3AKlrmO6cCo=; b=PEqQvZWGq0Ac87bW7tUTiE4eh/Ye/l48cFixG9NPtjRqeGyM4lFuGSEMhahmT6JkKJzcyWZSgRYSO+qV+ra5xttEu/8pd6TWwiUYTDZo0webVtVoA+o3XA0QvWf88vuRTh3vUBQKHjUuh0JmGswIRRiGvmMdKQsYKvApDx9FVKLvBo22c0AHX9qOb+1uq2VMi0j7DMBe41gxWmjNX/AZYbMdjyuduYZ4y3SLtNvZ0foHhZYDK/XI9pQMsawWJK2wJvrtunlq6bXpdg7U/Q4mcb+K6J/FB6+MW4/kHhJyI8AlQgmk1thhs/8m0YBMQNZxLzNpUv8adGrprElXV8sALA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 10 Nov 2025 20:11:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 765257 invoked by uid 111); 10 Nov 2025 20:11:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 10 Nov 2025 15:11:36 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 10 Nov 2025 15:11:36 -0500
+From: Jeff King <peff@peff.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: phillip.wood@dunelm.org.uk,
+	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH] commit: add --committer option
+Message-ID: <20251110201136.GB127132@coredump.intra.peff.net>
+References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
+ <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com>
+ <aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
 
-Hi Phillip,
+On Mon, Nov 10, 2025 at 06:01:57PM +0000, brian m. carlson wrote:
 
+> On 2025-11-10 at 16:50:04, Phillip Wood wrote:
+> > On 09/11/2025 10:22, ZheNing Hu via GitGitGadget wrote:
+> > > From: ZheNing Hu <adlternative@gmail.com>
+> > > 
+> > >      This patch introduces the --committer option to git-commit, providing:
+> > >       1. Consistency with the existing --author option
+> > >       2. A more convenient alternative to environment variables
+> > >       3. Better support for automated workflows and scripts
+> > >       4. Improved user experience when managing multiple identities
+> > 
+> > What's the use case for the same person committing under different
+> > identities? We already have a config mechanism to set different identities
+> > for different repositories but I'm struggling to see why someone would want
+> > to create commits under multiple identities in a single repository. For
+> > scripts it easy enough to set the relevant environment variables if a tool
+> > wants to create commits under its own identity.
+> 
+> Someone who works on the same project under both their personal and
+> corporate identities.  For instance, me working on the Git project.
+> 
+> Some open source projects also require a CLA and you have to use a
+> particular address to match the one that's listed on the CLA.  For
+> example, Google requires an address with a Google account, so in the
+> hypothetical state where I was going to contribute to one of their
+> projects, I'd need to use a different committer identity with my Gmail
+> address.
+> 
+> I've also kept business logs in Git when I had a small business and I
+> might well need to log approving a profit distribution (with my
+> corporate address) and log accepting a profit distribution (with my
+> personal address).  Those would need separate digital signatures from my
+> two different email addresses.
 
- ---- On Tue, 11 Nov 2025 00:27:38 +0800  Phillip Wood <phillip.wood123@gma=
-il.com> wrote ---=20
- > On 05/11/2025 16:57, Junio C Hamano wrote:
- > > Li Chen <me@linux.beauty> writes:
- > >=20
- > >> From: Li Chen <chenl311@chinatelecom.cn>
- > >>
- > >> Extracted trailer processing into a helper that accumulates output in
- > >> a strbuf before writing.
- > >>
- > >> Updated interpret_trailers() to reuse the helper, buffer output, and
- > >> clean up both input and output buffers after writing.
- > >=20
- > > Imperative?
- > >=20
- > >>
- > >> Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
- > >> ---
- > >>   builtin/interpret-trailers.c | 51 ++++++++++++++++++++-------------=
----
- > >>   1 file changed, 29 insertions(+), 22 deletions(-)
- > >>
- > >> diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailer=
-s.c
- > >> index 41b0750e5a..4c90580fff 100644
- > >> --- a/builtin/interpret-trailers.c
- > >> +++ b/builtin/interpret-trailers.c
- > >> @@ -136,32 +136,21 @@ static void read_input_file(struct strbuf *sb, =
-const char *file)
- > >>       strbuf_complete_line(sb);
- > >>   }
- > >>  =20
- > >> -static void interpret_trailers(const struct process_trailer_options =
-*opts,
- > >> -                   struct list_head *new_trailer_head,
- > >> -                   const char *file)
- > >> +static void process_trailers(const struct process_trailer_options *o=
-pts,
- > >> +                 struct list_head *new_trailer_head,
- > >> +                 struct strbuf *sb, struct strbuf *out)
- > >=20
- > > So we gained *out strbuf; in the preimage below I see fwrite(),
- > > fprintf(), etc. to outfile that is either stdout or tempfile, but
- > > presumably the output all will be captured in the strbuf instead,
- > > which makes sense.  It is a bit curious what the new paramater sb
- > > is, but this is a file-scope static helper, so it does not strictly
- > > require documenting.  Having a comment would still be nicer, though,
- > > unlike "struct process_trailer_options" that is very limited
- > > purpose, "strbuf" can be used for any string processing, so a good
- > > variable name like "out" that conveys what it is used for by
- > > implication is good, but "sb", which is obvious abbreviation for
- > > "Str Buf", conveys no useful information.
- >=20
- > This patch is based on my suggestion[1]. I had intended to rename "sb"=
-=20
- > to "in" but forgot to do so before posting that diff. Here's my signoff=
-=20
- > which Li should add before their own
- >=20
- > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Is a "--committer" option the best solution there, though? I'd think
+you'd want to set user.* in the repo-level .git/config (or using a
+dir-specific include) would be less error-prone.
 
-I'm sorry that your signoff is missing; I will add it in the next version.
+That doesn't help for using two identities for the same repo, but in my
+experience it is easier to use two separate repositories for that to
+match the organization of the work (even if you may sometimes fetch
+between them).
 
-Regards,
+I'm not totally opposed to the new flag, and in general I'd defer to
+people who say they find a new feature useful. I'm just having a hard
+time imagining a scenario where it's the best option.
 
-Li=E2=80=8B
-
+-Peff
