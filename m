@@ -1,67 +1,68 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346EE2EA755
-	for <git@vger.kernel.org>; Mon, 10 Nov 2025 14:54:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA473009EC
+	for <git@vger.kernel.org>; Mon, 10 Nov 2025 14:54:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762786468; cv=none; b=BiyJOI4ulW/aommfE2JcW/O+zi1LeZ6ox001xioWC+dTNw2fdHQAh9zt/56EyM+mDp+rWp8JNMa9NrHE+Fx7OG/Dytecj10/nMslqtoErOFGo2BTdEXgAH7JUtUIw0ACR0guIs6f1MfCoejFQTBAWpf26iej34EVlL2DV9dBau4=
+	t=1762786491; cv=none; b=XdGJogBLzHSHGSljV4wEemBAv0uYMEdC9bicBYbuTflnb3YMedzyWbvfcH3Q9m3ImYwI/0XVJVX1ucPM9z59wS+WH03HIJdxO6ZSukqILzr9JiYpW7/2BoDt6ND1wIoiFTVj+XEyGovpsFIcGp7N9XMBGtQe0o0p9f/RfdM/LxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762786468; c=relaxed/simple;
-	bh=DQT6os0Ezq7cY1+JbVsRnlO9HsaohucjBZd0sgYY/PA=;
+	s=arc-20240116; t=1762786491; c=relaxed/simple;
+	bh=B3jiSp7jteNthCVPrAzX0xRzFstw66VTq4fuyXlgbQE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=pCVxZTHFTadGRwBd4GA/FXFfrnr8mMHupaGB7xxuAO5Naj0JVEoAJDUZjX+LBsgxgx2c+RbBp83ysaDUz3NXShWt+lFOEXksSQMNhX5Nrycnt0exhYNzrMAvA7Rt6HZXGpM09tGluAK2T5nJ1NcAfUWaGX1U8AlZJULhSPRxl0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q1vwo6t7; arc=none smtp.client-ip=209.85.128.48
+	 In-Reply-To:Content-Type; b=aTdXMuH9TtTpFFitLqtDqDlXiKd/PN762FohFS34lxUcHkrfT3Z4ZvfZciZw9BjoqMJ0S6oLkwKsvIp5fl5HMYedjDj1elBhQ0+FTfYndcZ43LHQxomg2ShSZufi9erhxZI2iZ8l7yIAq43q5vESZKXN/hZKMqfAy0TURVm58gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IEySzXY4; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q1vwo6t7"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-477775d3728so15172585e9.2
-        for <git@vger.kernel.org>; Mon, 10 Nov 2025 06:54:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IEySzXY4"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-42b3ac40ae4so592517f8f.0
+        for <git@vger.kernel.org>; Mon, 10 Nov 2025 06:54:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762786464; x=1763391264; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762786488; x=1763391288; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:cc:content-language:from
          :references:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qiQ6CP1l/hgorpMfnVGC4nldKmilQWfovSg5NDhA114=;
-        b=Q1vwo6t7WlNnaxbgCzLP7Sf+rbaGu82invK0jwt7/eOmN6/zYASiJ0wudGTXTfqFho
-         QZ3lkXykgpoIM/gzFLSfzdoN/I8A5Xg3NF6yke+1BIEDHmbKlykqmX4v302AXOlLzUVF
-         6laf71GBdCSNCrKUn3CCK1EgEU8K2L3nqcNgCoB5SeCsjDifuggiCZP623O8r6uoj73U
-         UN3yrJNZhOUgLPJXeaQk+tFYh8RNhsp1RItA0aI2n87g/7F5IKNo83ghrTePSjwuEEry
-         aKYGElCqEC6Txee3VFP8PNyFBDqgNE/l6W9U2l5hoaZlDIp63gkSrGlbDe0mWAQNRKzZ
-         R6nw==
+        bh=e4EEtLvm8FtxaQwcVYaKExyk0h8PynY3KWnC1OAgYDI=;
+        b=IEySzXY43vB6NdnIX3ZV7O83IFE/xWCks9/V3pkRs+xMKfbXphZY42C7tWO6GzhLzv
+         O5OVmL3sFKmlc1i8strap9c9Q+ApUVb3ToQLrCcFdWxfgrXxq0PSKKDuxqlMrBeyvRLP
+         zdPaWq+YNU0vt8gx+RAp1on/ORvK8nCt+ySx2h0aw8XPQ5zmRrAQuVFaNz4TqQN301Vy
+         amZ++0J1MR4yq2pxf070WE+O3CPbyGOySiCB3OMrK97PZGIwfuZrpgsOV51jkHwStLF2
+         oZmIaFIbYDzdxHxc3dKoMGCc+0ISbVTrUvg4+txRymOkGCy+9ifH2Cg5fV4hYDN/q7GW
+         0R7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762786464; x=1763391264;
+        d=1e100.net; s=20230601; t=1762786488; x=1763391288;
         h=content-transfer-encoding:in-reply-to:cc:content-language:from
          :references:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qiQ6CP1l/hgorpMfnVGC4nldKmilQWfovSg5NDhA114=;
-        b=RImGyv8tDLtDtPf3mZ+8h4j7vWVhM9eiB4kkopAysCq0pTvMmpMSf4z1KMNSVqIjOv
-         AVsIQWcPEzK/3JRY7iaTY6YFQt9yaapqxSJ7URYkyRdZ/8Eg7uWaPlVdbQIMOmA2ZCXq
-         n2wZeGBbCbH7SoL5KI37zPsLK+MbhxiOcRtQDqHEeexOE2dM5wBarYkHsGmnvSZQwXaG
-         +e2vTQ04jlGBisG9NoOE9vx4bsAVomBtIagwSe6gNNES/wXIdaw3BLtJsB3KJhy6y3Gf
-         /d2hF4jrMP/5oSc/G3A0VQuTQWYIQpkQfu2oB6IUkhCTvz6aER0t1JdrUBOojt/1LdKd
-         0lRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWKoKQ21rOK621ynoO4eGqRfYy1x4ngdxa/BNUaFFD13HSXFKqIRwR5wUAJQtAfWM6qPyo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJvL3C7lrapH/EnpzdZOiOSaSqkyRCUrJWbRlgy6Yj/t7iUi0S
-	ZrRRG7TyiJDxmPlV6sw0AKZ73udmAMJsBRj/kDQ9FHAo7qDEkbA/Mb8A
-X-Gm-Gg: ASbGncsG3IrL7qZY82EFnxJkWqjfUdfsyMZU4qu/TGQKcuB4qo6U0nTNTjsZNd0kAnM
-	/FDHQg09UJbZndWn6SEpKpOmEGN1s9psWFYpVUWKYBE7n7QZlGElGxql3rlJKr1GKpJA1oMdkMD
-	z3lXArAk1o+68b2lzN8AQyORykwo4dx1KrBHQP03LAINwxlB/xXwP/ZXKrjgZFbU08h106miP1w
-	6Yambm+lymtfsrBxtEo2vDG01XDPSRJoEiVPnTNUxHA2J4J6gKUMK6Wi03Bwki9oyMOPWu+mNJ6
-	IaUBfZMIQSjt7MxzA7nEt829Z/GrKEzNaxirRJoxSdM7uamDyKFWA5sB+1bOH/q6s4mOLHON5Fm
-	/atNsVTIcEH+Ipftjal4Z2vHb39Zj3OtH7cY+ighb1msX9/FqGZeoE5LhqCTsFD9gIVjBDI7BZA
-	4/0YAK4eo0VPb44Fdht46PaqWA9dcpHGqpk9UCDYlAyTSuf1jESNjC8sxNikFUISo=
-X-Google-Smtp-Source: AGHT+IHFdU73VJUmlfrRtigHSAEkKsAYvE93nL6Z4wSMUzQICB1CJcZ6fvcVtH/jlIPxrJIAOtnrew==
-X-Received: by 2002:a05:600c:1d1c:b0:471:115e:624b with SMTP id 5b1f17b1804b1-4777323ec6dmr68284155e9.17.1762786464336;
-        Mon, 10 Nov 2025 06:54:24 -0800 (PST)
+        bh=e4EEtLvm8FtxaQwcVYaKExyk0h8PynY3KWnC1OAgYDI=;
+        b=krNyBIckgKL9Y4PVFJlwTUadOVM96L07FTCMz/DVX6BujD9Rq5sGTbuIWpVVIt3Ih+
+         4lVeEmfGcHFSgGYLjoDwCtbBkwynTtrpyL7TF9I4dkWWWdlaDAM++yX4gKIn8wnTQRES
+         KZ/r5S/8tf/6vhCDXDhq2WNfL0k/5yXsmyQ9t9OT3hhYJj5FFwldGBqtrTaSY0NY9EaB
+         j+s4d2viuv13l7tpU9A4QMdUHwT4ASWTkJxTthm3aolZ5v616LJBYjZRY2ZI/z4PWzH2
+         IvlPJvr8Gw7xLQIP5N7MfhTI5NqiXf+pFTMUQn0WLVMQgGfTOTVJvJkNesoUHv65B5et
+         mDLg==
+X-Forwarded-Encrypted: i=1; AJvYcCXKdj6tXXQmsUnVs8LHkpzcIsztRtUJ2CWOOaNz3uI4N+Gzs3x1ActabvfmcLnrui8U32E=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy3jx1vHBc8ysZNxNbQvpYGvwyk1iAcP9DpG2Qnzmw//feXHpCn
+	l+jO8IAO0+jDZzdADzeElJijO58XGRZdDUxMr9PlA5mg0CXaqa6lu4W8
+X-Gm-Gg: ASbGncu4+qGPdJlriqgbpRmZNhpp3VEkOImfi88g7CH8TizU2EbQKiPqeN5F9CpovGB
+	O4XPhapx5gSJhPr3WOiqlyXAoSccYOu1aWMVsedUAD6cMiROEiasq8FCFRjPjpbZmRxKRyJlysi
+	lNY3ZqklQZDPelVBg3MRhM9ATmhOOUrLeEJWJTabD3U/UCCaLzFvt9UBAcG/MvGRSQBsZbsYQE8
+	07dknZ9IXq8Nlc82T+K44KVlr6GKujcFfdpl/vUys7Nj6Af9Y9g+F8nS1K1ejkC+/PxoV+c7XoS
+	eJHlBCi0gqyn+GAPMzP1K2uGguPa0jO2/3Vr5c9pTR9HcDwp5mgbOa1+Nx++E8KfSFsqXHysmyS
+	j9WutJkPgDc5u+mF1IwFJo5d8zAAlsQhO5VopLr5aRyzcS1ehm7MjNYWdqMvjKT/BM0IsojpWPI
+	ZpZbE/OchWclwxIZ0vXFOp62kTynQzfLu1PPJDQFC4LO2fkDN+OqwamwqLAqcWb8acHDqwXfqrZ
+	A==
+X-Google-Smtp-Source: AGHT+IEqwROzDk4ofpggKHOWqinx6LkTPZZGVKqOyIyYJ/N4znizeYZmtHsAUfC5CzYu3vKRqMeKjA==
+X-Received: by 2002:a5d:5f95:0:b0:42b:31a5:f065 with SMTP id ffacd0b85a97d-42b31a5f4c6mr5084579f8f.28.1762786486649;
+        Mon, 10 Nov 2025 06:54:46 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47774d3557csm135787995e9.8.2025.11.10.06.54.23
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b30dd4d86sm14109271f8f.26.2025.11.10.06.54.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Nov 2025 06:54:23 -0800 (PST)
-Message-ID: <c41f3c65-d7ef-4e73-a1e0-03540df0b212@gmail.com>
-Date: Mon, 10 Nov 2025 14:54:23 +0000
+        Mon, 10 Nov 2025 06:54:46 -0800 (PST)
+Message-ID: <0b0181af-e63d-4e5a-9e3c-822f866df88d@gmail.com>
+Date: Mon, 10 Nov 2025 14:54:45 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,90 +71,90 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 04/12] diff: fix incorrect counting of line numbers
+Subject: Re: [PATCH 07/12] diff: update the way rewrite diff handles
+ incomplete lines
 To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <20251104020928.582199-1-gitster@pobox.com>
- <20251104020928.582199-5-gitster@pobox.com>
+ <20251104020928.582199-8-gitster@pobox.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
 Cc: Patrick Steinhardt <ps@pks.im>
-In-Reply-To: <20251104020928.582199-5-gitster@pobox.com>
+In-Reply-To: <20251104020928.582199-8-gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 04/11/2025 02:09, Junio C Hamano wrote:
-> The "\ No newline at the end of the file" can come after any of the
-> "-" (deleted preimage line), " " (unchanged line), or "+" (added
-> postimage line).  Incrementing only the preimage line number upon
-> seeing it does not make any sense.
 > 
-> We can keep track of what the previous line was, and increment
-> lno_in_{pre,post}image variables properly, like this patch does.  I
-> do not think it matters, as these numbers are used only to compare
-> them with blank_at_eof_in_{pre,post}image to issue the warning every
-> time we see an added line, but by definition, after we see "\ No
-> newline at the end of the file" for an added line, we will not see
-> an added line for the file.
+> Revamp the way the complete-rewrite code path feeds the lines to the
+> output layer by treating the last line of the pre/post image when it
+> is an incomplete line specially.
 > 
-> Keeping track of what the last line was (in other words, "is it that
-> the file used to end in an incomplete line?  The file ends in an
-> incomplete line after the change?  Both the file before and after
-> the change ends in an incomplete line that did not change?") will be
-> independently useful.
+> This lets us remove the DIFF_SYMBOL_NO_LF_EOF hack and use the usual
+> DIFF_SYMBOL_CONTEXT_INCOMPLETE code path, which will later learn how
+> to handle whitespace errors.
 
-The "\ No newline at end of file" line is an annotation on the previous 
-line in the diff so why are we incrementing any {pre,post}image line 
-numbers here?
+This is a nice cleanup
+
+> @@ -1786,22 +1777,36 @@ static void emit_rewrite_lines(struct emit_callback *ecbdata,
+>   	const char *endp = NULL;
+>   
+>   	while (0 < size) {
+> -		int len;
+> +		int len, plen;
+> +		char *pdata = NULL;
+>   
+>   		endp = memchr(data, '\n', size);
+>   		len = endp ? (endp - data + 1) : size;
+> +		plen = len;
+> +
+> +		if (!endp) {
+> +			plen = len + 1;
+> +			pdata = xmalloc(plen + 2);
+> +			memcpy(pdata, data, len);
+> +			pdata[len] = '\n';
+> +			pdata[len + 1] = '\0';
+> +		}
+
+I think it would be clearer to refactor this as
+
+  		endp = memchr(data, '\n', size);
+-		len = endp ? (endp - data + 1) : size;
+		if (endp) {
+			len = endp - data + 1;
+			plen = len;
+		} else {
+			len = size;
++			plen = len + 1;
++			pdata = xmalloc(plen + 2);
++			memcpy(pdata, data, len);
++			pdata[len] = '\n';
++			pdata[len + 1] = '\0';
++		}
 
 Thanks
 
 Phillip
-
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->   diff.c | 18 +++++++++++++++++-
->   1 file changed, 17 insertions(+), 1 deletion(-)
-> 
-> diff --git a/diff.c b/diff.c
-> index b9ef8550cc..e73320dfb1 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -601,6 +601,7 @@ struct emit_callback {
->   	int blank_at_eof_in_postimage;
->   	int lno_in_preimage;
->   	int lno_in_postimage;
-> +	int last_line_kind;
->   	const char **label_path;
->   	struct diff_words_data *diff_words;
->   	struct diff_options *opt;
-> @@ -2426,13 +2427,28 @@ static int fn_out_consume(void *priv, char *line, unsigned long len)
->   		break;
->   	case '\\':
->   		/* incomplete line at the end */
-> -		ecbdata->lno_in_preimage++;
-> +		switch (ecbdata->last_line_kind) {
-> +		case '+':
-> +			ecbdata->lno_in_postimage++;
-> +			break;
-> +		case '-':
-> +			ecbdata->lno_in_preimage++;
-> +			break;
-> +		case ' ':
-> +			ecbdata->lno_in_preimage++;
-> +			ecbdata->lno_in_postimage++;
-> +			break;
-> +		default:
-> +			BUG("fn_out_consume: '\\No newline' after unknown line (%c)",
-> +			    ecbdata->last_line_kind);
-> +		}
->   		emit_diff_symbol(o, DIFF_SYMBOL_CONTEXT_INCOMPLETE,
->   				 line, len, 0);
->   		break;
->   	default:
->   		BUG("fn_out_consume: unknown line '%s'", line);
+>   		if (prefix != '+') {
+>   			ecbdata->lno_in_preimage++;
+> -			emit_del_line(ecbdata, data, len);
+> +			emit_del_line(ecbdata, pdata ? pdata : data, plen);
+>   		} else {
+>   			ecbdata->lno_in_postimage++;
+> -			emit_add_line(ecbdata, data, len);
+> +			emit_add_line(ecbdata, pdata ? pdata : data, plen);
+>   		}
+> +		free(pdata);
+>   		size -= len;
+>   		data += len;
 >   	}
-> +	ecbdata->last_line_kind = line[0];
->   	return 0;
+> -	if (!endp)
+> -		emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_NO_LF_EOF, NULL, 0, 0);
+> +	if (!endp) {
+> +		static const char nneof[] = "\\ No newline at end of file\n";
+> +		ecbdata->last_line_kind = prefix;
+> +		emit_incomplete_line(ecbdata, nneof, sizeof(nneof) - 1);
+> +	}
 >   }
 >   
+>   static void emit_rewrite_diff(const char *name_a,
 
