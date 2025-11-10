@@ -1,68 +1,67 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA473009EC
-	for <git@vger.kernel.org>; Mon, 10 Nov 2025 14:54:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1932FC866
+	for <git@vger.kernel.org>; Mon, 10 Nov 2025 14:55:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762786491; cv=none; b=XdGJogBLzHSHGSljV4wEemBAv0uYMEdC9bicBYbuTflnb3YMedzyWbvfcH3Q9m3ImYwI/0XVJVX1ucPM9z59wS+WH03HIJdxO6ZSukqILzr9JiYpW7/2BoDt6ND1wIoiFTVj+XEyGovpsFIcGp7N9XMBGtQe0o0p9f/RfdM/LxI=
+	t=1762786516; cv=none; b=NReRk4QVyhNyBIQzFsi74aFT9CY2FS4AXiv444IXVUeI64lkFoDA7SWtBV68MTZVBhuNxmK1SVTJmlW4r/nIYb0OQearxCRjpq20bFlkA2LYOcfvYXUKJTZtMSvwt5QxoLSR3/gF041W4AwP1EI49Z7KO6hvMzSjnpbzxfv/b54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762786491; c=relaxed/simple;
-	bh=B3jiSp7jteNthCVPrAzX0xRzFstw66VTq4fuyXlgbQE=;
+	s=arc-20240116; t=1762786516; c=relaxed/simple;
+	bh=VeIfvzyKXe8EpRlgIZPyKjptFbI3kcxRlfwz7PrB6T0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=aTdXMuH9TtTpFFitLqtDqDlXiKd/PN762FohFS34lxUcHkrfT3Z4ZvfZciZw9BjoqMJ0S6oLkwKsvIp5fl5HMYedjDj1elBhQ0+FTfYndcZ43LHQxomg2ShSZufi9erhxZI2iZ8l7yIAq43q5vESZKXN/hZKMqfAy0TURVm58gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IEySzXY4; arc=none smtp.client-ip=209.85.221.41
+	 In-Reply-To:Content-Type; b=lvGSMuI4G4TlcITRbMtmYnLL2apIO9dXicgKx5eVK4A5Rllk9Yt2EHiktwGss46DEHuebtQpmlq5LiC7bTxgr2Z9Lw8R1GReQID/V4rd3w5aiDdysGLLp+yxR2Kr1eg1Zn6KEs1h51KdrE5UhNV1w0lkFshWcPtNxpamEQs1NXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P+SKHXPt; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IEySzXY4"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-42b3ac40ae4so592517f8f.0
-        for <git@vger.kernel.org>; Mon, 10 Nov 2025 06:54:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P+SKHXPt"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-429ce7e79f8so2264720f8f.0
+        for <git@vger.kernel.org>; Mon, 10 Nov 2025 06:55:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762786488; x=1763391288; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762786513; x=1763391313; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:cc:content-language:from
          :references:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=e4EEtLvm8FtxaQwcVYaKExyk0h8PynY3KWnC1OAgYDI=;
-        b=IEySzXY43vB6NdnIX3ZV7O83IFE/xWCks9/V3pkRs+xMKfbXphZY42C7tWO6GzhLzv
-         O5OVmL3sFKmlc1i8strap9c9Q+ApUVb3ToQLrCcFdWxfgrXxq0PSKKDuxqlMrBeyvRLP
-         zdPaWq+YNU0vt8gx+RAp1on/ORvK8nCt+ySx2h0aw8XPQ5zmRrAQuVFaNz4TqQN301Vy
-         amZ++0J1MR4yq2pxf070WE+O3CPbyGOySiCB3OMrK97PZGIwfuZrpgsOV51jkHwStLF2
-         oZmIaFIbYDzdxHxc3dKoMGCc+0ISbVTrUvg4+txRymOkGCy+9ifH2Cg5fV4hYDN/q7GW
-         0R7w==
+        bh=Y9z0c9+L1nQOdnEgeXiivKMuoGRlhvIRPfgcL1aiqKE=;
+        b=P+SKHXPtJ2zaxLTzRCmaTrePwcRQAFZ+y1zoTEk++JO89ogTWQpC0qbu3Sa2aHyyv2
+         /XSya46eon/vNrXeAr6C1qB8/qrdEXxAh4XUBrx5t4+UIRBPaFs3OBph2gd2ygS/U6kN
+         N2B3GOl46CcqCVq2cI1oScNjbn046I8iFKayG41e8LU3TOlqGGUtWUzhm2NwwWUYKjx3
+         280kjcyWWa6CryMfP/70McumLE4qKtwIx2kk7dq6H4oIPKW9qj0MKOEDkPDAF+AtzxTB
+         ZBqjvxwtIzaEVsdBpsKy3v87XaQ+3ThVG6W9rhYZQ+FYCe8L31Pos7RvBJwWLUfGgpHc
+         dE2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762786488; x=1763391288;
+        d=1e100.net; s=20230601; t=1762786513; x=1763391313;
         h=content-transfer-encoding:in-reply-to:cc:content-language:from
          :references:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=e4EEtLvm8FtxaQwcVYaKExyk0h8PynY3KWnC1OAgYDI=;
-        b=krNyBIckgKL9Y4PVFJlwTUadOVM96L07FTCMz/DVX6BujD9Rq5sGTbuIWpVVIt3Ih+
-         4lVeEmfGcHFSgGYLjoDwCtbBkwynTtrpyL7TF9I4dkWWWdlaDAM++yX4gKIn8wnTQRES
-         KZ/r5S/8tf/6vhCDXDhq2WNfL0k/5yXsmyQ9t9OT3hhYJj5FFwldGBqtrTaSY0NY9EaB
-         j+s4d2viuv13l7tpU9A4QMdUHwT4ASWTkJxTthm3aolZ5v616LJBYjZRY2ZI/z4PWzH2
-         IvlPJvr8Gw7xLQIP5N7MfhTI5NqiXf+pFTMUQn0WLVMQgGfTOTVJvJkNesoUHv65B5et
-         mDLg==
-X-Forwarded-Encrypted: i=1; AJvYcCXKdj6tXXQmsUnVs8LHkpzcIsztRtUJ2CWOOaNz3uI4N+Gzs3x1ActabvfmcLnrui8U32E=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy3jx1vHBc8ysZNxNbQvpYGvwyk1iAcP9DpG2Qnzmw//feXHpCn
-	l+jO8IAO0+jDZzdADzeElJijO58XGRZdDUxMr9PlA5mg0CXaqa6lu4W8
-X-Gm-Gg: ASbGncu4+qGPdJlriqgbpRmZNhpp3VEkOImfi88g7CH8TizU2EbQKiPqeN5F9CpovGB
-	O4XPhapx5gSJhPr3WOiqlyXAoSccYOu1aWMVsedUAD6cMiROEiasq8FCFRjPjpbZmRxKRyJlysi
-	lNY3ZqklQZDPelVBg3MRhM9ATmhOOUrLeEJWJTabD3U/UCCaLzFvt9UBAcG/MvGRSQBsZbsYQE8
-	07dknZ9IXq8Nlc82T+K44KVlr6GKujcFfdpl/vUys7Nj6Af9Y9g+F8nS1K1ejkC+/PxoV+c7XoS
-	eJHlBCi0gqyn+GAPMzP1K2uGguPa0jO2/3Vr5c9pTR9HcDwp5mgbOa1+Nx++E8KfSFsqXHysmyS
-	j9WutJkPgDc5u+mF1IwFJo5d8zAAlsQhO5VopLr5aRyzcS1ehm7MjNYWdqMvjKT/BM0IsojpWPI
-	ZpZbE/OchWclwxIZ0vXFOp62kTynQzfLu1PPJDQFC4LO2fkDN+OqwamwqLAqcWb8acHDqwXfqrZ
-	A==
-X-Google-Smtp-Source: AGHT+IEqwROzDk4ofpggKHOWqinx6LkTPZZGVKqOyIyYJ/N4znizeYZmtHsAUfC5CzYu3vKRqMeKjA==
-X-Received: by 2002:a5d:5f95:0:b0:42b:31a5:f065 with SMTP id ffacd0b85a97d-42b31a5f4c6mr5084579f8f.28.1762786486649;
-        Mon, 10 Nov 2025 06:54:46 -0800 (PST)
+        bh=Y9z0c9+L1nQOdnEgeXiivKMuoGRlhvIRPfgcL1aiqKE=;
+        b=PQAWBDwOtv4MxMVQsrE7FBXCM5o7ARc09rqOlRy2xtn0By4sz6gkBVCAm+4lTqJ+sA
+         5SBSFeH6u8qXnEhK6qahJ3cxsVnYi1EsSjLSQLO10uvomUt5YEQ9bmCTw/49hmWcksQJ
+         uDVenN5ICuQBwcd66yllZXp7JOJ9tIE8F2wVwkOceP0XmoNGy/JIIfMQbmFbVUU2CkEZ
+         dI6MJ6/qTdduBe6czkZ3q7xXhOgDn+/bzVJnt1FLXT4H7duDvLZi8rUzwpm70wFpqoJf
+         lYvalYK/yp7L4KwYWIrAOhqTYRTipI3CMvpGBEF0vwW4rcXr7V3NIeR7voF7KaFIdQET
+         yKBA==
+X-Forwarded-Encrypted: i=1; AJvYcCXIA+by2qbC/HjUso3XnOFCIlDevg+7UTI2z53aLe+2jy2v3SiQRGp1qhvt11jXXYwPpyg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5Li+mjUr5DMQq1iICz7FtcWwhDPT3R/Fll7r8hd+8QxoHCZuh
+	HpYcOx8z8H8GHuBYctgVYXfYqzVrBbqPs9kYCB3xJtSYXMC/6StU/IPlQUIH8w==
+X-Gm-Gg: ASbGncsEimi/8mgkcQaJMyhCCulaJaO7jQYgA1/Y47bnURk06UyNO4tdrnoO543ewEC
+	5WWPoFFhlsKLL3pK9lDNXB+NaDpgXryrnROCmEm1Z2Mrtu56o4/4dXr8oftSvRysyqnTwiGYrNo
+	ffZNcSwrBgxxD7QIm7h8kchGkigQr5k8y8qqpyCXaYnqcELETBdr/aSDb9ObtIyv/bpYrwvSlF4
+	O1b+7VdawQKndIouDRClCdlqb1b3Op1tDlVpKoeCafo/G8W7zGCKoE3p47ZHjQrxexAMT/gfLQX
+	FkzV9AOKDZ/70j0dIftYHmENWE6gJAh24fQZpoe4m8bdQFFYXNintq14pl1OKgiz6EyUmTiYjCF
+	RbbcE5lgn92YvLeWYKe5ek4LOxcFAAkV4OYvjGf9j6zQFV9zhZSuvHJURBvKAB2dFGjkBnRI0Cn
+	rsHKruGHwJU0i4EjQL/3SAIUq3LEIp4vUDyjDsVt0V2zhiSu2NETFiF/l7rNc5KJ4=
+X-Google-Smtp-Source: AGHT+IF2NkHn9yeDZqYsmEMIhkXLhnkPBC1GQF6q/qvlQaQJ0VKhmEnXjXuK8pyMdcFhv57KdDHwCQ==
+X-Received: by 2002:a05:6000:430d:b0:42b:3878:beef with SMTP id ffacd0b85a97d-42b3878ca88mr4456171f8f.61.1762786512544;
+        Mon, 10 Nov 2025 06:55:12 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b30dd4d86sm14109271f8f.26.2025.11.10.06.54.45
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b29e4b9bdsm18831688f8f.32.2025.11.10.06.55.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Nov 2025 06:54:46 -0800 (PST)
-Message-ID: <0b0181af-e63d-4e5a-9e3c-822f866df88d@gmail.com>
-Date: Mon, 10 Nov 2025 14:54:45 +0000
+        Mon, 10 Nov 2025 06:55:12 -0800 (PST)
+Message-ID: <7aa91693-bece-4fa6-ab14-f914d6fd49bd@gmail.com>
+Date: Mon, 10 Nov 2025 14:55:11 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,90 +70,191 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 07/12] diff: update the way rewrite diff handles
- incomplete lines
+Subject: Re: [PATCH 11/12] diff: highlight and error out on incomplete lines
 To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <20251104020928.582199-1-gitster@pobox.com>
- <20251104020928.582199-8-gitster@pobox.com>
+ <20251104020928.582199-12-gitster@pobox.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
 Cc: Patrick Steinhardt <ps@pks.im>
-In-Reply-To: <20251104020928.582199-8-gitster@pobox.com>
+In-Reply-To: <20251104020928.582199-12-gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 04/11/2025 02:09, Junio C Hamano wrote:
+> Teach "git diff" to highlight "\ No newline at end of file" message
+> as a whitespace error when incomplete-line whitespace error class is
+> in effect.  Thanks to the previous refactoring of complete rewrite
+> code path, we can do this at a single place.
 > 
-> Revamp the way the complete-rewrite code path feeds the lines to the
-> output layer by treating the last line of the pre/post image when it
-> is an incomplete line specially.
-> 
-> This lets us remove the DIFF_SYMBOL_NO_LF_EOF hack and use the usual
-> DIFF_SYMBOL_CONTEXT_INCOMPLETE code path, which will later learn how
-> to handle whitespace errors.
+> Unlike whitespace errors in the payload where we need to annotate in
+> line, possibly using colors, the line that has whitespace problems,
+> we have a dedicated line already that can serve as the error
+> message, so paint it as a whitespace error message.
 
-This is a nice cleanup
+This explains why we don't need to call emit_line_ws_markup() in this case
 
-> @@ -1786,22 +1777,36 @@ static void emit_rewrite_lines(struct emit_callback *ecbdata,
->   	const char *endp = NULL;
+> Also teach "git diff --check" to notice incomplete lines as
+> whitespace errors and report when incomplete-line whitespace error
+> class is in effect.
+
+Nice. The implementation looks good, I've left a few comments on the tests
+> diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+> index 9de7f73f42..138730cbce 100755
+> --- a/t/t4015-diff-whitespace.sh
+> +++ b/t/t4015-diff-whitespace.sh
+> @@ -43,6 +43,49 @@ do
+>   	'
+>   done
 >   
->   	while (0 < size) {
-> -		int len;
-> +		int len, plen;
-> +		char *pdata = NULL;
->   
->   		endp = memchr(data, '\n', size);
->   		len = endp ? (endp - data + 1) : size;
-> +		plen = len;
+> +test_expect_success "incomplete line in both pre- and post-image context" '
+> +	(echo foo && echo baz | tr -d "\012") >x &&
+
+'printf "foo\nbaz"' might be clearer and save us forking "tr"
+
+> +	git add x &&
+> +	(echo bar && echo baz | tr -d "\012") >x &&
+> +	git diff x &&
+> +	git -c core.whitespace=incomplete diff --check x &&
+> +	git diff -R x &&
+> +	git -c core.whitespace=incomplete diff -R --check x
+> +'
 > +
-> +		if (!endp) {
-> +			plen = len + 1;
-> +			pdata = xmalloc(plen + 2);
-> +			memcpy(pdata, data, len);
-> +			pdata[len] = '\n';
-> +			pdata[len + 1] = '\0';
-> +		}
+> +test_expect_success "incomplete lines on both pre- and post-image" '
+> +	# The interpretation taken here is "since you are toucing
 
-I think it would be clearer to refactor this as
+s/toucing/touching/
 
-  		endp = memchr(data, '\n', size);
--		len = endp ? (endp - data + 1) : size;
-		if (endp) {
-			len = endp - data + 1;
-			plen = len;
-		} else {
-			len = size;
-+			plen = len + 1;
-+			pdata = xmalloc(plen + 2);
-+			memcpy(pdata, data, len);
-+			pdata[len] = '\n';
-+			pdata[len + 1] = '\0';
-+		}
+> +	# the line anyway, you would better fix the incomplete line
+> +	# while you are at it."  but this is debatable.
+
+I think it is a reasonable default.
+> +	echo foo | tr -d "\012" >x &&
+> +	git add x &&
+> +	echo bar | tr -d "\012" >x &&
+> +	git diff x &&
+> +	test_must_fail git -c core.whitespace=incomplete diff --check x &&
+
+Do we want to check the error message here?
+
+Looking at the tests below the coverage looks good for "diff --check" 
+and for diff.wsErrorHighlight
 
 Thanks
 
 Phillip
->   		if (prefix != '+') {
->   			ecbdata->lno_in_preimage++;
-> -			emit_del_line(ecbdata, data, len);
-> +			emit_del_line(ecbdata, pdata ? pdata : data, plen);
->   		} else {
->   			ecbdata->lno_in_postimage++;
-> -			emit_add_line(ecbdata, data, len);
-> +			emit_add_line(ecbdata, pdata ? pdata : data, plen);
->   		}
-> +		free(pdata);
->   		size -= len;
->   		data += len;
->   	}
-> -	if (!endp)
-> -		emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_NO_LF_EOF, NULL, 0, 0);
-> +	if (!endp) {
-> +		static const char nneof[] = "\\ No newline at end of file\n";
-> +		ecbdata->last_line_kind = prefix;
-> +		emit_incomplete_line(ecbdata, nneof, sizeof(nneof) - 1);
-> +	}
->   }
+
+> +	git diff -R x &&
+> +	test_must_fail git -c core.whitespace=incomplete diff -R --check x
+> +'
+> +
+> +test_expect_success "fix incomplete line in pre-image" '
+> +	echo foo | tr -d "\012" >x &&
+> +	git add x &&
+> +	echo bar >x &&
+> +	git diff x &&
+> +	git -c core.whitespace=incomplete diff --check x &&
+> +	git diff -R x &&
+> +	test_must_fail git -c core.whitespace=incomplete diff -R --check x
+> +'
+> +
+> +test_expect_success "new incomplete line in post-image" '
+> +	echo foo >x &&
+> +	git add x &&
+> +	echo bar | tr -d "\012" >x &&
+> +	git diff x &&
+> +	test_must_fail git -c core.whitespace=incomplete diff --check x &&
+> +	git diff -R x &&
+> +	git -c core.whitespace=incomplete diff -R --check x
+> +'
+> +
+>   test_expect_success "Ray Lehtiniemi's example" '
+>   	cat <<-\EOF >x &&
+>   	do {
+> @@ -1040,7 +1083,8 @@ test_expect_success 'ws-error-highlight test setup' '
+>   	{
+>   		echo "0. blank-at-eol " &&
+>   		echo "1. still-blank-at-eol " &&
+> -		echo "2. and a new line "
+> +		echo "2. and a new line " &&
+> +		printf "3. and more"
+>   	} >x &&
+>   	new_hash_x=$(git hash-object x) &&
+>   	after=$(git rev-parse --short "$new_hash_x") &&
+> @@ -1050,11 +1094,13 @@ test_expect_success 'ws-error-highlight test setup' '
+>   	<BOLD>index $before..$after 100644<RESET>
+>   	<BOLD>--- a/x<RESET>
+>   	<BOLD>+++ b/x<RESET>
+> -	<CYAN>@@ -1,2 +1,3 @@<RESET>
+> +	<CYAN>@@ -1,2 +1,4 @@<RESET>
+>   	 0. blank-at-eol <RESET>
+>   	<RED>-<RESET><RED>1. blank-at-eol<RESET><BLUE> <RESET>
+>   	<GREEN>+<RESET><GREEN>1. still-blank-at-eol<RESET><BLUE> <RESET>
+>   	<GREEN>+<RESET><GREEN>2. and a new line<RESET><BLUE> <RESET>
+> +	<GREEN>+<RESET><GREEN>3. and more<RESET>
+> +	<BLUE>\ No newline at end of file<RESET>
+>   	EOF
 >   
->   static void emit_rewrite_diff(const char *name_a,
+>   	cat >expect.all <<-EOF &&
+> @@ -1062,11 +1108,13 @@ test_expect_success 'ws-error-highlight test setup' '
+>   	<BOLD>index $before..$after 100644<RESET>
+>   	<BOLD>--- a/x<RESET>
+>   	<BOLD>+++ b/x<RESET>
+> -	<CYAN>@@ -1,2 +1,3 @@<RESET>
+> +	<CYAN>@@ -1,2 +1,4 @@<RESET>
+>   	 <RESET>0. blank-at-eol<RESET><BLUE> <RESET>
+>   	<RED>-<RESET><RED>1. blank-at-eol<RESET><BLUE> <RESET>
+>   	<GREEN>+<RESET><GREEN>1. still-blank-at-eol<RESET><BLUE> <RESET>
+>   	<GREEN>+<RESET><GREEN>2. and a new line<RESET><BLUE> <RESET>
+> +	<GREEN>+<RESET><GREEN>3. and more<RESET>
+> +	<BLUE>\ No newline at end of file<RESET>
+>   	EOF
+>   
+>   	cat >expect.none <<-EOF
+> @@ -1074,16 +1122,19 @@ test_expect_success 'ws-error-highlight test setup' '
+>   	<BOLD>index $before..$after 100644<RESET>
+>   	<BOLD>--- a/x<RESET>
+>   	<BOLD>+++ b/x<RESET>
+> -	<CYAN>@@ -1,2 +1,3 @@<RESET>
+> +	<CYAN>@@ -1,2 +1,4 @@<RESET>
+>   	 0. blank-at-eol <RESET>
+>   	<RED>-1. blank-at-eol <RESET>
+>   	<GREEN>+1. still-blank-at-eol <RESET>
+>   	<GREEN>+2. and a new line <RESET>
+> +	<GREEN>+3. and more<RESET>
+> +	\ No newline at end of file<RESET>
+>   	EOF
+>   
+>   '
+>   
+>   test_expect_success 'test --ws-error-highlight option' '
+> +	git config core.whitespace blank-at-eol,incomplete-line &&
+>   
+>   	git diff --color --ws-error-highlight=default,old >current.raw &&
+>   	test_decode_color <current.raw >current &&
+> @@ -1100,6 +1151,7 @@ test_expect_success 'test --ws-error-highlight option' '
+>   '
+>   
+>   test_expect_success 'test diff.wsErrorHighlight config' '
+> +	git config core.whitespace blank-at-eol,incomplete-line &&
+>   
+>   	git -c diff.wsErrorHighlight=default,old diff --color >current.raw &&
+>   	test_decode_color <current.raw >current &&
+> @@ -1116,6 +1168,7 @@ test_expect_success 'test diff.wsErrorHighlight config' '
+>   '
+>   
+>   test_expect_success 'option overrides diff.wsErrorHighlight' '
+> +	git config core.whitespace blank-at-eol,incomplete-line &&
+>   
+>   	git -c diff.wsErrorHighlight=none \
+>   		diff --color --ws-error-highlight=default,old >current.raw &&
+> @@ -1135,6 +1188,8 @@ test_expect_success 'option overrides diff.wsErrorHighlight' '
+>   '
+>   
+>   test_expect_success 'detect moved code, complete file' '
+> +	git config core.whitespace blank-at-eol &&
+> +
+>   	git reset --hard &&
+>   	cat <<-\EOF >test.c &&
+>   	#include<stdio.h>
 
