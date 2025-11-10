@@ -1,119 +1,131 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B704A34405E
-	for <git@vger.kernel.org>; Mon, 10 Nov 2025 19:29:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762802970; cv=none; b=fJO/Kfg4CCi2fKmgme4r5p1YSGFavFP+RCfWk1VMMVfCQ3C4KECjI2O0i5Kb6SFS7uxc5vMAc/+H75Nri1ALEfMTV8lu2KP8teklOnbQT43YOxwvU9KnE5ZAr2+wHqS1J04+oVsPVwW9/eYSj9lsfFZZBx96++nZmhEfFHHxnoE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762802970; c=relaxed/simple;
-	bh=SKjEV3zOQFuh9LZmgGww6h0RWEi5figXuPIQGhtd9Ms=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Bau6zh2zgAahtxdhey1gCJwuXjktQQi7l1tlrN8hgdE4hKMB4zYg0OBwZCXRWu1r0q5O4CMnldlSX+yQsqcz08FZMgTV8Oy7PCozjjJ+g24n1WEHTlbrL4/66yWOptPMeheWoM/4GkjNMcZ+vs7N7m0Gvyd8vv+4kQF4c+x2GWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ksq36/X2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CzV/TBKF; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870E43446C5
+	for <git@vger.kernel.org>; Mon, 10 Nov 2025 19:29:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762802973; cv=pass; b=riOA9ETheX5Gd7oe5B12fN6hotCAHF+xXFovEyx1fsaXEO+hrIaIsbI2sihkNC1knCRaaZyHTozZVlPD6HXAIekM0i83btvcgBOG0rG/kCscWGFHUeOg7RR5jy86EJRqQSJZZbhxKvBMMur+mFGxX5whKaAs/hoAOdpWKsqdINY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762802973; c=relaxed/simple;
+	bh=NWb4urnrHy6zCdIrHUOc0Nav5UeHsG3yZ6q3lSXp+Sk=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=LMJAHIjiavEZMru0jPP+32tq3UMFNf2y3Femb/giq7rHHXQiSV05KUbx5VseSbpyLhE0uqyT0h0isJZa7ek1KotMBjCm9EQbG5P3EhfpclsukczoN/EcD3pMqVAPesgBvQz43+NO0Wxdx5lpnNVIqaME+Vi4ONJafddxNoXBs0Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=UKyYCacX; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ksq36/X2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CzV/TBKF"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E9E39140020E;
-	Mon, 10 Nov 2025 14:29:27 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 10 Nov 2025 14:29:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762802967; x=1762889367; bh=enC3G9UwaP
-	T1SUEsbHXm8QHw7shkllSpqIKn/IRXaqg=; b=Ksq36/X2V8zajGUZiieYMejUif
-	xK2t32a1L0mQTk+lhzVrnqXprwrgJ2Cu3YlKqgD9ysGpluVeA6KvntChm7+k5Esm
-	oGNqpPQ/oE7z9f1W8ckMwsb8an9Tp9yeJSkQwXJPTCE6bA52fYWfpohiRTnG4x76
-	MoSjtW5R9DilCHoBI3jX0djZYtS0/MF1XYE/WvuZ0423FezNRftBYBRnH2ve8DjB
-	gOexd4N7r2wG3kDEu4dnBRxTDm3JysiqWx9Q3wVfYSFDYHEQBkTso6zciUuGYZsH
-	mdg/HgnlqlroAj9rRetSaHkr3uVP9EQuj66wzuoMlVC5QuoiPv+/yvM4E0BA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762802967; x=1762889367; bh=enC3G9UwaPT1SUEsbHXm8QHw7shkllSpqIK
-	n/IRXaqg=; b=CzV/TBKF4cal9zel0eBsTk9K8vLgzRK3ZGtwpAo6KHr2qejo0Ht
-	688ToqwGxl2Zg/H+2EDkzQ30RBO4liQawB12VeR0+CzpwlCnBQHmifoor2wcMKXv
-	rpgHsk9QCEJvae+psSu02bAVvfrxrQlwP3Xrkfe0jYUFwPgx/xxiyknkVov7572y
-	gb60+6iy0YHYti5ymro4YdCf20uJM1dN+QXJgeD2EMNjNYWo1QVx95yIMzTaZvVy
-	xYeQV074od4c4s1KqBCJbc/qu9toHvF+vmUM09o4AMkxeFkMsNcmQGnG1XTVRqJ4
-	zMHyFlbO5wAG2jmteveTbBDGwAe8FT+NTLw==
-X-ME-Sender: <xms:Fz0SaUSukyRMqjVxg0MIdSpYetHXoGsLPbHCo6OtN7Wo5HCWx4MICg>
-    <xme:Fz0SaUBP8N5aCqzxKvkmY7vt_uEHBFSnlnCUs0lehOBFDq8oT4b1l_68PVyxHufri
-    LBRFCmvaxzHTOXgShYJ-JzVXydkER5O-VWoC1BXI2SnoNeEYcaP>
-X-ME-Received: <xmr:Fz0SaUEayU3KxloKyEqy4e6cIOa18rYPJYCbjkPwL8fMTyBITRC3E69IKpa9R-B-whE6saxK3qCasDKAYyCLTmc8FriDmp4uq2Eo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeludehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtph
-    htthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthht
-    oheprggulhhtvghrnhgrthhivhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Fz0SaeAB0uwSo3mtl-r6097bHhaYvlNVruAwcOjF6V9QpcPa5cNVSA>
-    <xmx:Fz0SacXgTsVBA9-cLBa3jFcffXmcv3xPhea5aihs93wUakWsC3QgJg>
-    <xmx:Fz0SaaoRcD5ffc4Q5K1kkAzUgJ81_pMwrNmZXA9HDssoC9GhZrWCfg>
-    <xmx:Fz0SaQSdKG6PBf54y4Hnq6i0sErcGcYkR2QXdLxNKpvCFn2OQjHdsw>
-    <xmx:Fz0SaeFn1YdZzggC1axOSI_11Nmkclwz6_VbRg8EpW_SCkQR1O2jJtvD>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Nov 2025 14:29:27 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
- <ps@pks.im>,  Phillip Wood <phillip.wood123@gmail.com>,  ZheNing Hu
- <adlternative@gmail.com>
-Subject: Re: [PATCH v2] commit: add --committer option
-In-Reply-To: <xmqqo6p9zo8f.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	10 Nov 2025 11:22:56 -0800")
-References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
-	<pull.1997.v2.git.1762793782815.gitgitgadget@gmail.com>
-	<xmqqo6p9zo8f.fsf@gitster.g>
-Date: Mon, 10 Nov 2025 11:29:25 -0800
-Message-ID: <xmqqjyzxznxm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="UKyYCacX"
+ARC-Seal: i=1; a=rsa-sha256; t=1762802960; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=BWNIX8A0Hx9TC5z1IEf0ZCWBuSWV5XCO0KsKw2a+8WID2paMq1TfbScimDLauTGUt2S4fmbR2EV2l+tqrGVvmDQ67oFh4h8ll3TnpC56dTCEnVjDE/VGrlFj9xvfellnMVa0LW1s1rqdaITk6hJxQzkpo4bAxJwNg51QyxfPURE=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1762802960; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=plrOywCythsLbmW8Egx5kdY4AdYwSwDiQMXHmfSWTSA=; 
+	b=itLYJNKhohVfXeiFJGmhooEodlKwxOmrbeKKlAfhJx2DGNa3QZDahzQxkv6kyrz84UQr/z8CztWr4/4IhL58Ivi1o7eFONoYBVMqmy8wXyuzfZCkjssxO9jOzuWQdnugvZEIZojX1jKwqg2E/3BHTdp9OhMCKOUzyLr4v9v+O1M=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=linux.beauty;
+	spf=pass  smtp.mailfrom=me@linux.beauty;
+	dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762802960;
+	s=zmail; d=linux.beauty; i=me@linux.beauty;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=plrOywCythsLbmW8Egx5kdY4AdYwSwDiQMXHmfSWTSA=;
+	b=UKyYCacXrYb4Ii1L2h7TQQVru9kz/n7EKqfAdAw69Rl5hHQSa77P23xOHf/gOo5s
+	1iwdFRzBR6hiH+zTt8UhrlOTR0dyQP5AwEnjp3v8EvrMbBiq9Aqy0ZpNg4j8sPfL+YK
+	+I/H1M8hC5uRcofn1Agl2Xd7jjYISl9T3CauA3p8=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1762802959168826.9111192134051; Mon, 10 Nov 2025 11:29:19 -0800 (PST)
+Date: Tue, 11 Nov 2025 03:29:19 +0800
+From: Li Chen <me@linux.beauty>
+To: "phillipwood" <phillip.wood@dunelm.org.uk>
+Cc: "Junio C Hamano" <gitster@pobox.com>, "git" <git@vger.kernel.org>,
+	"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Message-ID: <19a6f3e8332.46772ad5543363.4456434926857828677@linux.beauty>
+In-Reply-To: <f5152523-f7ff-4dee-a685-fb0b74cd6a56@gmail.com>
+References: <20251105142944.73061-1-me@linux.beauty>
+ <20251105142944.73061-2-me@linux.beauty> <xmqq1pmcmn7s.fsf@gitster.g> <f5152523-f7ff-4dee-a685-fb0b74cd6a56@gmail.com>
+Subject: Re: [PATCH v6 1/4] interpret-trailers: factor out buffer-based
+ processing to process_trailers()
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Phillip,
 
-> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
->> Co-authored-by: Aone-Agent <aone-agent@alibaba-inc.com>
->
-> What is this second author and how would its presence in the author
-> list interact with your DCO obligation?
->
-> How did you make sure that whatever is in this patch were not copied
-> by the "agent" from somewhere that we cannot copy the code from
-> before deciding to send this patch?  The "cannot copy from" may come
-> in different shapes, from "their code is proprietary" to "their
-> licensing terms are not compatible with GPLv2" to "they welcome us
-> borrowing but we must give credit to them", any of which we should
-> be careful to avoid.
 
-Well, the last one is not something we should *avoid*.  If their
-licensing terms are compatible with ours but they want to be
-credited, then we comply that request and credit them.
+ ---- On Tue, 11 Nov 2025 00:27:38 +0800  Phillip Wood <phillip.wood123@gma=
+il.com> wrote ---=20
+ > On 05/11/2025 16:57, Junio C Hamano wrote:
+ > > Li Chen <me@linux.beauty> writes:
+ > >=20
+ > >> From: Li Chen <chenl311@chinatelecom.cn>
+ > >>
+ > >> Extracted trailer processing into a helper that accumulates output in
+ > >> a strbuf before writing.
+ > >>
+ > >> Updated interpret_trailers() to reuse the helper, buffer output, and
+ > >> clean up both input and output buffers after writing.
+ > >=20
+ > > Imperative?
+ > >=20
+ > >>
+ > >> Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+ > >> ---
+ > >>   builtin/interpret-trailers.c | 51 ++++++++++++++++++++-------------=
+---
+ > >>   1 file changed, 29 insertions(+), 22 deletions(-)
+ > >>
+ > >> diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailer=
+s.c
+ > >> index 41b0750e5a..4c90580fff 100644
+ > >> --- a/builtin/interpret-trailers.c
+ > >> +++ b/builtin/interpret-trailers.c
+ > >> @@ -136,32 +136,21 @@ static void read_input_file(struct strbuf *sb, =
+const char *file)
+ > >>       strbuf_complete_line(sb);
+ > >>   }
+ > >>  =20
+ > >> -static void interpret_trailers(const struct process_trailer_options =
+*opts,
+ > >> -                   struct list_head *new_trailer_head,
+ > >> -                   const char *file)
+ > >> +static void process_trailers(const struct process_trailer_options *o=
+pts,
+ > >> +                 struct list_head *new_trailer_head,
+ > >> +                 struct strbuf *sb, struct strbuf *out)
+ > >=20
+ > > So we gained *out strbuf; in the preimage below I see fwrite(),
+ > > fprintf(), etc. to outfile that is either stdout or tempfile, but
+ > > presumably the output all will be captured in the strbuf instead,
+ > > which makes sense.  It is a bit curious what the new paramater sb
+ > > is, but this is a file-scope static helper, so it does not strictly
+ > > require documenting.  Having a comment would still be nicer, though,
+ > > unlike "struct process_trailer_options" that is very limited
+ > > purpose, "strbuf" can be used for any string processing, so a good
+ > > variable name like "out" that conveys what it is used for by
+ > > implication is good, but "sb", which is obvious abbreviation for
+ > > "Str Buf", conveys no useful information.
+ >=20
+ > This patch is based on my suggestion[1]. I had intended to rename "sb"=
+=20
+ > to "in" but forgot to do so before posting that diff. Here's my signoff=
+=20
+ > which Li should add before their own
+ >=20
+ > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-But I think readers got the idea.
+I'm sorry that your signoff is missing; I will add it in the next version.
 
-Thanks.
+Regards,
+
+Li=E2=80=8B
+
