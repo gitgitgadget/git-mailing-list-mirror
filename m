@@ -1,126 +1,123 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04512E9EAE
-	for <git@vger.kernel.org>; Mon, 10 Nov 2025 17:58:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18723257845
+	for <git@vger.kernel.org>; Mon, 10 Nov 2025 18:02:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762797523; cv=none; b=TyB9OBRCqdKteGOa2GfDOEEvMMHBu7wUd6POm++ssfUsqEkViOtLJfu/lBupV1Ko/CSbCjESEOc35j1adnkJIFoslXloaHZY6O3m2t5WmPUqYih1YodDpe3o7uQQgAzkHvClayQMTuiNiBmwwIH8WOAPTUwBmN6b5OXh3tylmtY=
+	t=1762797727; cv=none; b=Vwv1LPqA8GykT8HBWu33Mr0hqH7ROofRQNGTqrOrga+kdbxjQZLA79sCYyYc1WEJphnXbnWKXnyOKAqIgwOrU5JLhofmN6H4Wy7Oil+A4PGiS1t2D7oGzjLE/C/LYlb7D5aboyAtFD6Ng91EQjND6lSfxInFWa+LlU1GiJqyIlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762797523; c=relaxed/simple;
-	bh=0cbOMADlJVtjFikNPIYv9uUr7VWzlXIETQKfWTnpVeA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LmmsSMviLBQtwiuxNPklbyFqTlLbU897sQ8cOtLLhsdYBq2xvH85u/ptONLxqXg35vLikBxNFvcCh/GtXH1jKEqzqe+WsOYaC/c3Zrrz22Fenp1/oVSY50X4H7zMFwQCJW/UvbfP5UzeSMd/m1+kc44T74QDeY+V0G/PllYVymc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fW0URCjF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rdoFF1PW; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762797727; c=relaxed/simple;
+	bh=bkWYYl8FmOojl2d06qQwISgVDsE1fft2h6oRoyHSKIk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FhTtXa8ODjXuD3VN3+AtbuvC8FuX5iJrlgvOEbKjsm1A52SCT/O+zAqz74XDqiZcFCasm45UTHUx+ypMkghnw4P1iYHexYK+sbBCk5vStaJ9GjzxjaFpQJsqgO0IbWGigZuWnIGWqMi9iLXjL1lnIcMjGjgtA9t4Ilf+JwzTpkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=TgRGFIYg; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fW0URCjF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rdoFF1PW"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id F1C80EC2008;
-	Mon, 10 Nov 2025 12:58:40 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Mon, 10 Nov 2025 12:58:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762797520; x=1762883920; bh=4y348hewyw
-	2G/uc9ZU+HxEYOO/mwUFg6MA+NUOOxjs0=; b=fW0URCjFVtsxI89NP7GWVZO2Og
-	hlgIN4eigvnPru66xrRGAby6jr1cq247bgpJ5phQcwE9Nh4ni+6SU8meUSairK+0
-	DDcObwKOpwnp9LrJHS/EFPf7LAIyHjv5GFKLgaB0HSLSo3j2q7SX4y1vE/pui7iz
-	e0RpwBGxnPMft/RNvEiCOwq/oFausz1EP4SOTLDQRhFuio5FOpuii8DCc59yrBFi
-	kgt/wzhHhF2qQ1PMsYK9gIhdz5z6vmkcFRDp+be7m8JE8hVSEN2B1Vz4KU8jmLJL
-	FVWtwAdrUpRe3MdPhHuY7vsF95U8h42oycRGKxl/fZeqezheGkReEhdsmYuQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762797520; x=1762883920; bh=4y348hewyw2G/uc9ZU+HxEYOO/mwUFg6MA+
-	NUOOxjs0=; b=rdoFF1PWn2hFuiYYuCV2gNRV6JtcIvG+PSxqWEM3/3G5DJ5yV0X
-	FXvZrqHD8ARyAWWTgeQGm6g4CaFrFIU+0HKYQZTF/us+rPfclX3hlwdw0r5OTFrK
-	ognMIiBTROa91Eacb6qHxDGcCR2d/C0wghRhAPdwv+hUT6GKG8QYQrlCpfa+Sa7G
-	gkyzJvIzOpOs1f3aDziuozTb9EEBv5q5pOn5piZiE0VRGRvfTeyIcGP6Ji5f2m/G
-	0vj4R6poxaZfEqsen3ZIuMl2pgOYyWEJLpBrLQitntj6gByDrkyDuknomKJ8ok/Z
-	V6YkO5hieaR5QijxT9fZUq9BLjUSYwrvYMg==
-X-ME-Sender: <xms:0CcSaX8QnmQHO1L04ErGi2PZZFl6OyGdkhszh_MZ6G8QI4ZMOBvvag>
-    <xme:0CcSabIXBeP4f8rw8j-s8UEFq2jeTOEe30MnTd43BJIEGLH4-UZ2lXX_9lYwXmPQx
-    Ul4YVClq5Bwcqn6UWaeWHjUoybqHofbg4wWP2JVN1gtIyZHuiEXvw>
-X-ME-Received: <xmr:0CcSaSYLC6Wlcorgu73WNiSvtgcrCYmHQGgYn2QublLCdvRu2SyzY2phgYj0yc47UYlVmFPg7L4BDMTnsOZwqd5SMj-WUQL9JTjo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleekleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:0CcSadJmilWY_GsaaJPLQRUYPbAzzHmycCFiI3emawQZiFn1Uj8J-g>
-    <xmx:0CcSaQDvRxTxtp2KI5IV-8mhA8kzb0Ah8kYeRZfNq_wRTFJHL8dnXA>
-    <xmx:0CcSaSpE7KFsY28gODyVgo0i2djJSwNlNl6adMeChB-5oNfiq6ue-Q>
-    <xmx:0CcSabjLYeeaC3LJYvEfXYa0N4tvUqTyV1H9fCC0oJvk2AEbRgJdSA>
-    <xmx:0CcSabRGcNNlFryqYw6s2UvwCLWz_ro93SJWrFHOBSsBqxv6cK244sEG>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Nov 2025 12:58:40 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 05/12] diff: refactor output of incomplete line
-In-Reply-To: <aRG5KeoZg1Q1y8DE@pks.im> (Patrick Steinhardt's message of "Mon,
-	10 Nov 2025 11:06:33 +0100")
-References: <20251104020928.582199-1-gitster@pobox.com>
-	<20251105213052.1499224-1-gitster@pobox.com>
-	<20251105213052.1499224-6-gitster@pobox.com> <aRG5KeoZg1Q1y8DE@pks.im>
-Date: Mon, 10 Nov 2025 09:58:39 -0800
-Message-ID: <xmqqtsz122i8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="TgRGFIYg"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1762797718;
+	bh=bkWYYl8FmOojl2d06qQwISgVDsE1fft2h6oRoyHSKIk=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=TgRGFIYglGx3GwM/wAw3i9LyLbkm53rVCUBA1Xt+FjCYIMe31AMK7lZDPw+lqsfiV
+	 +w3sRSawOpOKAWH8TwFAwamuJMI7RupyzclY00yE82BH54Pk/V0r0DXBz8yp99nT8Q
+	 Enddxn1mIp9iV3nOMdfS8JXxMRga0gHBHdUeGATxnN/9K1R2JjHjt4VOQUfcqkMKBa
+	 fUsNdpP5bkxbcObEiRYcqeRtYEFRi18EoeHE5heKRPpvJQNxQsmE7b/ieq7S/VXqZk
+	 a7bcguq2NDOSEZoyziUOerISV8tLSaTnVP4Bp2Mjqo715ab+y3gM39EPyeMqF4uhAM
+	 snHs9tGJFTgmZV+I2h172EyAfAeiDktDbzXvj9abyKd2NDLpt0IwtRAz2mLtG5046k
+	 J7aVSmvM7R0EU6eoy3uPn2ObLn1kZu7KOCDgFTGFpy+xomT9eO7aYtFA1eWVL79F8+
+	 Y7FqGhz//1JlEs7NYOfarmPKvZSS94i0UqA8bqNQtZnfUs5lHQi
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:3de2:5398:b9f2:76d2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8A8C620065;
+	Mon, 10 Nov 2025 18:01:58 +0000 (UTC)
+Date: Mon, 10 Nov 2025 18:01:57 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: phillip.wood@dunelm.org.uk
+Cc: ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH] commit: add --committer option
+Message-ID: <aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	phillip.wood@dunelm.org.uk,
+	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, ZheNing Hu <adlternative@gmail.com>
+References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
+ <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="AnJ81XhPqQ901aBB"
+Content-Disposition: inline
+In-Reply-To: <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Patrick Steinhardt <ps@pks.im> writes:
 
->>  	case DIFF_SYMBOL_CONTEXT_INCOMPLETE:
->> +		set = diff_get_color_opt(o, DIFF_CONTEXT);
->> +		reset = diff_get_color_opt(o, DIFF_RESET);
->> +		emit_line(o, set, reset, line, len);
->> +		break;
->>  	case DIFF_SYMBOL_CONTEXT_MARKER:
->>  		context = diff_get_color_opt(o, DIFF_CONTEXT);
->>  		reset = diff_get_color_opt(o, DIFF_RESET);
->
-> I found it a bit confusing that we use `set`/`reset` here instead of
-> `context`/`reset` as before. It doesn't make any difference as these are
-> local variables anyway, but it might make sense to explain why you chose
-> to use different variables.
+--AnJ81XhPqQ901aBB
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yup, when DIFF_SYMBOL_* stuff was introduced to this codebase, it
-made the code much harder to reason about X-<, and set/reset/context
-are used in this switch() statement in apparently "random" ways; no
-case arm in this switch statement use all three, so there is no need
-to use these three in the first place.
+On 2025-11-10 at 16:50:04, Phillip Wood wrote:
+> On 09/11/2025 10:22, ZheNing Hu via GitGitGadget wrote:
+> > From: ZheNing Hu <adlternative@gmail.com>
+> >=20
+> >      This patch introduces the --committer option to git-commit, provid=
+ing:
+> >       1. Consistency with the existing --author option
+> >       2. A more convenient alternative to environment variables
+> >       3. Better support for automated workflows and scripts
+> >       4. Improved user experience when managing multiple identities
+>=20
+> What's the use case for the same person committing under different
+> identities? We already have a config mechanism to set different identities
+> for different repositories but I'm struggling to see why someone would wa=
+nt
+> to create commits under multiple identities in a single repository. For
+> scripts it easy enough to set the relevant environment variables if a tool
+> wants to create commits under its own identity.
 
-> Honestly, this whole hunk is somewhat confusing in the first place. It
-> doesn't seem to connect with the description in any way, as it's a no-op
-> change and we don't even use the newly introduced function.
+Someone who works on the same project under both their personal and
+corporate identities.  For instance, me working on the Git project.
 
-The hunk in fn_out_consume() is about reacting to "\ No newline",
-and it calls a new helper function created just for it in the middle
-hunk.  The way that new helper function affects the output will be
-updated in later steps, but for now, this hunk simply makes sure
-that the two DIFF_SYMBOL_*s can be treated differently.
+Some open source projects also require a CLA and you have to use a
+particular address to match the one that's listed on the CLA.  For
+example, Google requires an address with a Google account, so in the
+hypothetical state where I was going to contribute to one of their
+projects, I'd need to use a different committer identity with my Gmail
+address.
 
-Perhaps it would become easier to read if this hunk is removed from
-this step and a later step that gives a different behaviour for
-CONTEXT_INCOMPLETE introduce an entirely different code afresh
-(instead of showing how it updates what we copy here from the
-context code the original is abusing)?
+I've also kept business logs in Git when I had a small business and I
+might well need to log approving a profit distribution (with my
+corporate address) and log accepting a profit distribution (with my
+personal address).  Those would need separate digital signatures from my
+two different email addresses.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--AnJ81XhPqQ901aBB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaRIolAAKCRB8DEliiIei
+gebyAQCcNTSFW0Kh4keqHXjDwXX8cMDiUJvKrgQqxd8+ujfM1gEAg+zGPjpBtYOy
+w+TH4rOXTZnCVoTTmle1kXVaRVqKsws=
+=SpNH
+-----END PGP SIGNATURE-----
+
+--AnJ81XhPqQ901aBB--
