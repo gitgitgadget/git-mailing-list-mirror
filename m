@@ -1,253 +1,110 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125F9321F31
-	for <git@vger.kernel.org>; Mon, 10 Nov 2025 19:22:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762802551; cv=pass; b=uOTOVoGNQyN0HCT2JISt/zgsKfiN4OEOjYvll+duQa67+eJdp9wEVEntKF8PK5WLSASUvm+Lc1MS3oV6wHE37MrNEkfsOsWjT3XoWFvsq2nCwRLIpCZgaHkDVtF8dq9fdkfGu4YHy7x/rxrt62LTmHI8dXhfRbRpnCz3qIvAcOc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762802551; c=relaxed/simple;
-	bh=M24q7rhFGYW+F4QYbQ99338LqFHfh8YVgSREogtYq/M=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=HjINvvJscdR6rIlmYyr494Cggle9r9k9voIPWsKRoAj/t6KY+ij152T6s4Jp2XWMcbyV/Y6kP+aV9xX8nLSDn6D4+Hg5WejCpkRRme5+x0BeG7dumvnk/ZODE7fjc7huNWyG7EeZ+geA9zkFQSl5Wye09ueKeMhrqdu8Mm78Mf8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=rNXzjVfs; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C7B280A5B
+	for <git@vger.kernel.org>; Mon, 10 Nov 2025 19:22:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762802581; cv=none; b=h+M4U/aSFgOj11/kankf3lTB8m61zV4VKd8bQpKK5qT9LyFAN/V9qq8l3R8E8UgkmJ0mlYcYTXBGVhKWcbeSnGqmJqfXEUTflWm7YcQukTfMkbPpmLrktw+o+BhNEZ121uEuK7065DwaGF6OVRGt7lcyghRjNO0OCV8YNbetxAk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762802581; c=relaxed/simple;
+	bh=VWGedSSAp1i7DARp7dKo07vIALSguZuuTn8QYYwgDhw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Mug7d2zAaRP7MBo/M1ItTtdnk+c8ByZtzn3zo6nNMt6mkEQuy4Ma+pz3TIoEpHT4S3sT0swevCklzw2tnFRRsVBXS+02LvhJwsD8lWizdruTC/WmQXkBgiqOIJCUf6FDqIsdkxwF4D8aJpueLC2QNgauy2BwDbUKeWLYEHXOy4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BmT2miAp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=naVFlbQr; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="rNXzjVfs"
-ARC-Seal: i=1; a=rsa-sha256; t=1762802538; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=hyMUIiDHJ7FGvcOnkgXKkFmp0u9avGWU2jejOkpylE5Z1RLehbPas0xEmSZ2NJwgeZHEcU97ARCV8NQs237wmZK6eflo1QHPIr7W7LWPuSijQa9X3h7HNHUsPIkFH/7qw3OwT1ws7RYeUKFW/YGPLyGMXcfCQHptOGBIpfR4HkI=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1762802538; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=toK0Uew6nUyOYrKRpsL3AEYFfUhXdtz8fJptCkbqBKo=; 
-	b=nA0mMeb5v9lGrv35S2lOYJOlD8l8+LuPfg8+G+La9qLDRNcw7njhBaEmqKXOlJub0tF/EgWAIYzYfdAnF45KNbayOI2rs6EYT1DXqn3j74vxmxfNZFF9Fo345VjU8f7ymDuWrHGcDc/uxKuYWpHnE9l15kJmTSEB/LBx1VvaFWA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=linux.beauty;
-	spf=pass  smtp.mailfrom=me@linux.beauty;
-	dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762802538;
-	s=zmail; d=linux.beauty; i=me@linux.beauty;
-	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=toK0Uew6nUyOYrKRpsL3AEYFfUhXdtz8fJptCkbqBKo=;
-	b=rNXzjVfsvYo/V4w+wD1kBB+zMEe76DTowjy/ok/8XIncIrR1j0H64qPYMsrkHInR
-	uB7ez8SEZLrh0q2RCWO70K3S23gPKH27nEO1LofxerFYwQwl1qODYCkTnwqQT1ry5Jl
-	eodxjLzzfeAbpwRtFgF+lWTkbYYRN5VQVPrSKkBs=
-Received: from mail.zoho.com by mx.zohomail.com
-	with SMTP id 1762802537247608.5231218059948; Mon, 10 Nov 2025 11:22:17 -0800 (PST)
-Date: Tue, 11 Nov 2025 03:22:17 +0800
-From: Li Chen <me@linux.beauty>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "phillipwood" <phillip.wood@dunelm.org.uk>, "git" <git@vger.kernel.org>,
-	"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Message-ID: <19a6f38130d.beb422c538849.8699301123463603361@linux.beauty>
-In-Reply-To: <xmqq1pmcmn7s.fsf@gitster.g>
-References: <20251105142944.73061-1-me@linux.beauty>
-	<20251105142944.73061-2-me@linux.beauty> <xmqq1pmcmn7s.fsf@gitster.g>
-Subject: Re: [PATCH v6 1/4] interpret-trailers: factor out buffer-based
- processing to process_trailers()
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BmT2miAp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="naVFlbQr"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 343321400199;
+	Mon, 10 Nov 2025 14:22:58 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Mon, 10 Nov 2025 14:22:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1762802578; x=1762888978; bh=03nPt/byqU
+	ecSypUGRAf1Ib/VMWllXe3PZj5sz+XWuA=; b=BmT2miApEziGe1eD2rMg2sBpRs
+	TX3utc8VS7WzCxi8+9mZfZGKJi0FgM5JSppvs5wQsJ/OVcDsGtH4UnNgVldmraZf
+	+oJN7uML0IcHoR9bsGyAsZDza0IL5eEu/iejQNf4V9E0S9eb0Ad2WK07m7TkE4ZP
+	4K7Q51OSTr/JfgO9MhSGs8J756lOUR0zLhufbBZAGsgRhsXy4hKaU9Pr6zGWZuA3
+	ojxgzJeyJeTw5vah9dj5X+aRaryqE3XpMF4ejSRFsznBxJOEp3xht+2K+53miLYt
+	bW04tykCiUQC1lheP0SWpPqsNH0q60jLZO1WIt3LUPgyCH1B3iMasFtvfKjA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762802578; x=1762888978; bh=03nPt/byqUecSypUGRAf1Ib/VMWllXe3PZj
+	5sz+XWuA=; b=naVFlbQr3dNo/65OwxLFnNZpXJngRrpJaFz0530PnO650fnlNwz
+	wH/DxyCcCs0FyViByGMl1AVJmykkocmnvIcsnpycZYoY9fTxvVWeYpLECkasiAxY
+	10mBmDdazZUFtA1l3WQG70eNRFaQ4Vs4lAeRRfQGa6yca4WUZrfYbYFaNiD/fduW
+	VASdHPDbJbyhokJwGWXSX1/14nXNL8esaAZPr15Rn6ZANrdwPI4EYJpDdaAenwcL
+	wovMExdMiPn3+4V0cOiAfDpxRCKCwVmXws3U5KmIdyIJJc00dIF0idPUEOzVfio3
+	cg9jRbKffjHbXbVtSJrbB0w6Yi1n39/KNVg==
+X-ME-Sender: <xms:kTsSadIItNpNoDLj97xiMCd0xdgybi2MBUxq0hoF31OoX-ChTcblHw>
+    <xme:kTsSabZx-hqJsMHqvHv-loZsyjH3yZPryT1Q3EC-iuTuWGWJV8xtRfW2yw7gQ_NwL
+    mNA7zpRZYsStiQOfZIyiZr7g6ig2Ri9dU53ZyVWuaWLrTNFDP8c>
+X-ME-Received: <xmr:kTsSaX_K1xEdQFLe8aS3-QXQupohL6ncX3FqmYmefe9MTxi5LyvHkBR7dYqi7W1GkP2Awn5YXNUcSOKCNUxmbvJ7aTg2LqCq3UP1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeludegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtph
+    htthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthht
+    oheprggulhhtvghrnhgrthhivhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:kTsSaUbAktbKo4SXGGl9SY_K_ZTSNIyveqAoS2x4eaRke8cxWLYK0w>
+    <xmx:kTsSaTOWd3FqCHnTf0Kprju1RrQzKgCUQsdPFB2Cd3IxkuSInzr5FA>
+    <xmx:kTsSaYAlLsTjQD6j3ECQ0Edr2TY7Qy7Ajg5cxwL3ikRbp30MLJarMw>
+    <xmx:kTsSaSJTMQMk5DZYfcCVEWZyRdVQEr7sAlXLi3YSWVc53WuTDaSfMg>
+    <xmx:kjsSafc3VGEjElcGw87jmhkTElaQg1Zr18hExdKyOkvTJzOrOTqfbZqP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 10 Nov 2025 14:22:57 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
+ <ps@pks.im>,  Phillip Wood <phillip.wood123@gmail.com>,  ZheNing Hu
+ <adlternative@gmail.com>
+Subject: Re: [PATCH v2] commit: add --committer option
+In-Reply-To: <pull.1997.v2.git.1762793782815.gitgitgadget@gmail.com> (ZheNing
+	Hu via GitGitGadget's message of "Mon, 10 Nov 2025 16:56:22 +0000")
+References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
+	<pull.1997.v2.git.1762793782815.gitgitgadget@gmail.com>
+Date: Mon, 10 Nov 2025 11:22:56 -0800
+Message-ID: <xmqqo6p9zo8f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
+Content-Type: text/plain
 
-Hi Junio,
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
+> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> Co-authored-by: Aone-Agent <aone-agent@alibaba-inc.com>
 
- ---- On Thu, 06 Nov 2025 00:57:27 +0800  Junio C Hamano <gitster@pobox.com=
-> wrote ---=20
- > Li Chen <me@linux.beauty> writes:
- >=20
- > > From: Li Chen <chenl311@chinatelecom.cn>
- > >
- > > Extracted trailer processing into a helper that accumulates output in
- > > a strbuf before writing.
- > >
- > > Updated interpret_trailers() to reuse the helper, buffer output, and
- > > clean up both input and output buffers after writing.
- >=20
- > Imperative?
- >=20
- > >
- > > Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
- > > ---
- > >  builtin/interpret-trailers.c | 51 ++++++++++++++++++++---------------=
--
- > >  1 file changed, 29 insertions(+), 22 deletions(-)
- > >
- > > diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers=
-.c
- > > index 41b0750e5a..4c90580fff 100644
- > > --- a/builtin/interpret-trailers.c
- > > +++ b/builtin/interpret-trailers.c
- > > @@ -136,32 +136,21 @@ static void read_input_file(struct strbuf *sb, c=
-onst char *file)
- > >      strbuf_complete_line(sb);
- > >  }
- > > =20
- > > -static void interpret_trailers(const struct process_trailer_options *=
-opts,
- > > -                   struct list_head *new_trailer_head,
- > > -                   const char *file)
- > > +static void process_trailers(const struct process_trailer_options *op=
-ts,
- > > +                 struct list_head *new_trailer_head,
- > > +                 struct strbuf *sb, struct strbuf *out)
- >=20
- > So we gained *out strbuf; in the preimage below I see fwrite(),
- > fprintf(), etc. to outfile that is either stdout or tempfile, but
- > presumably the output all will be captured in the strbuf instead,
- > which makes sense.  It is a bit curious what the new paramater sb
- > is, but this is a file-scope static helper, so it does not strictly
- > require documenting.  Having a comment would still be nicer, though,
- > unlike "struct process_trailer_options" that is very limited
- > purpose, "strbuf" can be used for any string processing, so a good
- > variable name like "out" that conveys what it is used for by
- > implication is good, but "sb", which is obvious abbreviation for
- > "Str Buf", conveys no useful information.
+What is this second author and how would its presence in the author
+list interact with your DCO obligation?
 
-Thanks, I would rename the variable in next version.
+How did you make sure that whatever is in this patch were not copied
+by the "agent" from somewhere that we cannot copy the code from
+before deciding to send this patch?  The "cannot copy from" may come
+in different shapes, from "their code is proprietary" to "their
+licensing terms are not compatible with GPLv2" to "they welcome us
+borrowing but we must give credit to them", any of which we should
+be careful to avoid.
 
- >=20
- > >  {
- > >      LIST_HEAD(head);
- > > -    struct strbuf sb =3D STRBUF_INIT;
- > > -    struct strbuf trailer_block_sb =3D STRBUF_INIT;
- >=20
- > We no longer need a separate strbuf only for trailer block; we will
- > see why before we read through this helper function, hopefully.
- >=20
- > >      struct trailer_block *trailer_block;
- > > -    FILE *outfile =3D stdout;
- > > -
- > > -    trailer_config_init();
- > > =20
- > > -    read_input_file(&sb, file);
- > > -
- > > -    if (opts->in_place)
- > > -        outfile =3D create_in_place_tempfile(file);
- >=20
- > OK, so the original code read the input (either "file", or standard
- > input) into a tempfile and prepared the output file stream.
- > Presumably it is now the responsibility of the caller of this new
- > function.  Initializing the trailer configuration is also what the
- > caller of this function is reponsible for, as well.
- >=20
- > So this answers one of the questions I had upon starting to read
- > this function, i.e. "what is sb?"  It holds the input string, which
- > is what?  Something that look like a commit message that has title,
- > body and then a trailer block?  We may want to give the parameter a
- > better name?  I dunno (as this is file-scope static, as long as it
- > is obvious to the local caller, it may be OK, but on the other hand,
- > the caller needs to differenciate two strbuf parameters to the
- > helper function, one used for input and the other output, so if you
- > are calling the latter "out", perhaps you would want to call it
- > "in", or "input", perhaps?)
-
-Yes, in is a better name.
-
- >=20
- > > -    trailer_block =3D parse_trailers(opts, sb.buf, &head);
- > > +    trailer_block =3D parse_trailers(opts, sb->buf, &head);
- >=20
- > So we parse existing trailers from the input strbuf that is supplied
- > by the caller.  The rest of this hunk is rewriting FILE* I/O with
- > strbuf addition.
- >=20
- > > @@ -173,22 +162,40 @@ static void interpret_trailers(const struct proc=
-ess_trailer_options *opts,
- > >      }
- > > =20
- > >      /* Print trailer block. */
- > > -    format_trailers(opts, &head, &trailer_block_sb);
- > > +    format_trailers(opts, &head, out);
- > >      free_trailers(&head);
- > > -    fwrite(trailer_block_sb.buf, 1, trailer_block_sb.len, outfile);
- > > -    strbuf_release(&trailer_block_sb);
- >=20
- > The format_trailers() helper function appends appends to the strbuf
- > that is given to it, so instead of using an extra strbuf (and then
- > appending that to the output), we just pass our output strbuf to it,
- > which is why we no longer need the trailer_block_sb strbuf anymore.
- > Makes sense.
- >=20
- > >      /* Print the lines after the trailer block as is. */
- > >      if (!opts->only_trailers)
- > > -        fwrite(sb.buf + trailer_block_end(trailer_block), 1,
- > > -               sb.len - trailer_block_end(trailer_block), outfile);
- > > +        strbuf_add(out, sb->buf + trailer_block_end(trailer_block),
- > > +               sb->len - trailer_block_end(trailer_block));
- > >      trailer_block_release(trailer_block);
- > > +}
- >=20
- > And again, FILE* I/O is replaced with appending to the output strbuf
- > in the rest of this helper function.  Good.
- >=20
- > > +static void interpret_trailers(const struct process_trailer_options *=
-opts,
- > > +                   struct list_head *new_trailer_head,
- > > +                   const char *file)
- >=20
- > So the original caller of interpret_trailers() now call this outer
- > shell, which has the same name and the same function signature as
- > the original.  Our new process_trailers() helper assumes a handful
- > of preparatory steps are already done by the caller, so what we are
- > going read here will be mostly those preparation, a call to our new
- > helper, and then printing the result to "file" or standard output.
- >=20
- > > +{
- > > +    struct strbuf sb =3D STRBUF_INIT;
- > > +    struct strbuf out =3D STRBUF_INIT;
- > > +    FILE *outfile =3D stdout;
- > > +
- > > +    trailer_config_init();
- > > +
- > > +    read_input_file(&sb, file);
- > > +    if (opts->in_place)
- > > +        outfile =3D create_in_place_tempfile(file);
- >=20
- > And these are exactly the lines we lost from the new helper.
- > Looking good.
- >=20
- > > +    process_trailers(opts, new_trailer_head, &sb, &out);
- >=20
- > And our call.  "out" should have what we wanted to output to
- > outfile, so ...
- >=20
- > > +    fwrite(out.buf, out.len, 1, outfile);
- >=20
- > ... we write it out.  Good.  For a single long string that can never
- > have NUL in it, I'd personally find it more natural to call fputs(),
- > though.  Use of fwrite() makes readers unnecessarily wonder if there
- > is something unusual (like needing to be able to handle NULs in the
- > buffer).
- >=20
- > >      if (opts->in_place)
- > >          if (rename_tempfile(&trailers_tempfile, file))
- > >              die_errno(_("could not rename temporary file to %s"), fil=
-e);
- > >
- > >      strbuf_release(&sb);
- > > +    strbuf_release(&out);
- >=20
- > OK.  We could release out a bit earlier, immediately after fwrite().
- >=20
- > Looking mostly good.
- >=20
- > >  }
- > > =20
- > >  int cmd_interpret_trailers(int argc,
- >=20
-
-Regards,
-
-Li=E2=80=8B
 
