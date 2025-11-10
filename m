@@ -1,136 +1,173 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B280B32C31D
-	for <git@vger.kernel.org>; Mon, 10 Nov 2025 18:28:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762799292; cv=pass; b=hiSTSH7F4sXXOqgZcJYyBFvNlgOT/lUo4gYVyPEZPrkVQartDgGO1ksYVv4dCpR6fDegzz08KWaHe6+vXNuBA0r/r7xzjvNYdv6u5zuqEnudTCdtVyyl0OECp5ZZUxB5qVLn9JUeFUCnrweikINyOQpP2G9QoPP0HtV80Rwk3Rw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762799292; c=relaxed/simple;
-	bh=4soQVp0CikUwL9rYtDemFlvbaMJdDqnz34BCwCBChcM=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE93F32E738
+	for <git@vger.kernel.org>; Mon, 10 Nov 2025 18:29:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762799359; cv=none; b=f7vfnySBgJIN0JW4v287p/Nuo9zw/2a+Y8cj2hH+PMcBTGHjWBXH3he3fqQmw5j5wMGRRk85hx+7i8YVSIfmprj7sq1JcXWOuuO0/8t/NJYt08bv0V743LfWmanb9C9k6szlC2nqn9uk4k0z+PKveIqQggADGmqG12c9lNvtmr8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762799359; c=relaxed/simple;
+	bh=DIM3PdUkYmDT1OYDf1YMarbifgy9uJMC+k1xFDCv3OE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OCzmjLtTitBeuTq3YaKYCxX2Qfi8zLTHDKufQg/jMZysKOmOvx+lH98MESrZoO0aT6vsN//tnNFZPR5L5x9M8Ml9EHRwUp+u+DrJYed3dtb4tq2I006P6SztxCE8QXojp3epTgPA27RuWvzXOVf9cDUnUisNBtGVzxRjNiEGyZM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=FIOa3o+2; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	 MIME-Version:Content-Type; b=gpQBOHXWnI0I+1yox93Jh+2bsUeKNVqit48HImPZEH8QBEjz1F/xrXFEpGV0UO2tZ8jqQx1zALpFDaYGGi5mPRd+AGFE3ZG88KAOe72+1A4CHm+MfCYtI0XsGmN803zX5pm7RPqRIbAF7e8ZpumgVDI6axZovg+Nj+4fKzF5+Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BpJhyW05; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uXPo2s/M; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="FIOa3o+2"
-ARC-Seal: i=1; a=rsa-sha256; t=1762799273; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=miPyPtIXB0U3Mh6syfXjL9rK83I5IsLpWquYeEVVjoFuFoqUv22eCS+cmPRvulMVhbj/bzV9v963o4+3rJrZy0Dr/iOvbrRTsnUfOnCqtrOnE+fN5IFQ/Xb2l50LyVTQpIQwSxU+wPtLey6Yjd/0teRpsQP7tHEQV9ujEtfXj5s=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1762799273; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=S8/7uNb8wBkdkSycqt6N70yvkcl7h2EE+YbgVHQVwkc=; 
-	b=nL9J5+dx0xi1N6kIVlqM5s1ArR3h54+otBZLeZ8WXrG6Pye68/xLRqn827+q/A9ysntjJXjTR9eZC5jI/N3lby13cXXOjOu3JEH9gkTui8/q43ixIdgFIS658gF92ag629lQGoFhrEWhqKwlY//ggPOofig6WScA1Q1s6AU0tS4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1762799273;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=S8/7uNb8wBkdkSycqt6N70yvkcl7h2EE+YbgVHQVwkc=;
-	b=FIOa3o+2gnK8+yrd1KtMsw+QL43a184dBpWuHugeWS0+18AgdcqPbFiwdnJOHxvN
-	5KEHP8TmQPxyPFwIcRG5pq5MgKLMAsXH3MMGbybtQizzBej+e7xGFtTQm2zWqe+AgF3
-	Ou9dqOCeR5mU8L/LggBnKgFYwusOJMxzdxQRVzAw=
-Received: by mx.zohomail.com with SMTPS id 1762799271223191.0009466574253;
-	Mon, 10 Nov 2025 10:27:51 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Aaron Schrab <aaron@schrab.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
- Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio
- C Hamano <gitster@pobox.com>, Jonathan Nieder <jrnieder@gmail.com>,
- Patrick Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, Ben
- Knoble <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v4 4/4] submodule: fix case-folding gitdir filesystem
- colisions
-In-Reply-To: <20251110T173154Z.Hhi6cUjqDOat@fnord.qqx.org>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20251107150547.3272180-1-adrian.ratiu@collabora.com>
- <20251107150547.3272180-5-adrian.ratiu@collabora.com>
- <20251108T182050Z.vbNv4y2kizC1@fnord.qqx.org>
- <87ecq5ke2m.fsf@gentoo.mail-host-address-is-not-set>
- <20251110T173154Z.Hhi6cUjqDOat@fnord.qqx.org>
-Date: Mon, 10 Nov 2025 20:27:45 +0200
-Message-ID: <87bjl9kaji.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BpJhyW05";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uXPo2s/M"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BA5BE14000CF;
+	Mon, 10 Nov 2025 13:29:15 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 10 Nov 2025 13:29:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1762799355; x=1762885755; bh=H+Kt+8MdAV
+	Uc5iFUP0NbAHhQQ+9dhn43EaOFmjcHMtI=; b=BpJhyW05sIe3JtBNusyiIQTg3B
+	M+LNEj5D6j4N96GPkD7wHKNowdi/vM/k20d1rV8KAp/0LKs5qVNTLsV3zGz+ZfMj
+	K+ZFnlZQLt2axKacKR8CyS+vzo1zEfA+LkTvHS9ArOT+VT3DaliMGiLZjERilh0B
+	tyUHdj8aYQlJmEuMHMbo//HOosN8V5lhGVByKnc9UZzfovoHgZiz3NKiH6zphclI
+	3RXbpiLEbU7THhe3xFoJgta7tmOA7o0mMz1ac4eeaxE02RdufxQWaDbJ2jPaDC+M
+	QhQ+qlD3y7BbzowpvFxUatap40dpE5Uz6vSTKE7C9geqKcjDNi+4mVoCJNgQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762799355; x=1762885755; bh=H+Kt+8MdAVUc5iFUP0NbAHhQQ+9dhn43EaO
+	FmjcHMtI=; b=uXPo2s/MxZPYMf6toC5a/c15IV/VQ2oA87myRL3dqhQXp1h1VLW
+	C3zJJEVjq8XJASeUVOuP+frWhP5vdOdqVqW3zFBCliOZe1tUvxV/IEKyuB6nI4mA
+	UPa6SyNDyCttOH+RjkPoP6FFXrhtT0QaESAzAZf0ypHcOm8h1F96SbtNlFs+c3/P
+	PkM6frsCFNkpCzzvgNxZDubRYxJuR7bTewSMFuhSCi6kIa6HE1duIJ6DYm13Xadb
+	pOF+WpDg2+LzR0Z+sHEAQ8D+lKOQc1L/wHLfPmaVWuGiXy0ufXE3lPB/SMum8o6o
+	Ud/auEUGjhY1kYroEJy0ZfIDFb1CIBfJxPg==
+X-ME-Sender: <xms:-y4SaRVkmJ-voC46xB0j58zm-5t0yg4Gedsp-9j4XiaZa06z9FzS0g>
+    <xme:-y4SaYk7WLrsLCHpGvLNBfdgySK9vdXp1HD4I7qfG_YaQ1ZbwUQAFE5Zzt3NATCcw
+    zDIhrroS2ZJOwDIn_-F8btzFSx6ufKixTTbcrNi4Efb2cEQ8uor-g>
+X-ME-Received: <xmr:-y4SaSZ9RLvBiRRz5m0lt0KWaU92AcjOgq70boeAjnjoV5kg6oZNGD0I7I1G62SKpFxd66Ume49ar-qzVnVGsWU2DbweMMkBszw6>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeltdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:-y4SaTN7wXA4IddpPO_H2dkZb4GiO0q-aRzlnj0UwGhMDQu8mifPlA>
+    <xmx:-y4SaXZ8VlHaL2JwdR4aAlp9ro49CGBx0wyLR1sRMjkC74iBsH1dyg>
+    <xmx:-y4SaR1QA7V_ma1BTG-OcOeYl2idXEYdGyxvKk3lIrRPSYK3A_FwfQ>
+    <xmx:-y4Sadc9CpVsbNG07VN07wj2Z5hfQ3O8VYwUKkKflbk-E1SWDrpH_w>
+    <xmx:-y4Sad5Ok-gIud7vlOC3lMKbQebpK2-DRScQJX1or5J7mXXbcbIUE57d>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 10 Nov 2025 13:29:15 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 04/12] diff: fix incorrect counting of line numbers
+In-Reply-To: <c41f3c65-d7ef-4e73-a1e0-03540df0b212@gmail.com> (Phillip Wood's
+	message of "Mon, 10 Nov 2025 14:54:23 +0000")
+References: <20251104020928.582199-1-gitster@pobox.com>
+	<20251104020928.582199-5-gitster@pobox.com>
+	<c41f3c65-d7ef-4e73-a1e0-03540df0b212@gmail.com>
+Date: Mon, 10 Nov 2025 10:29:13 -0800
+Message-ID: <xmqqjyzx213a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
-X-ZohoMailClient: External
+Content-Type: text/plain
 
-On Mon, 10 Nov 2025, Aaron Schrab <aaron@schrab.com> wrote:
-> At 19:11 +0200 10 Nov 2025, Adrian Ratiu 
-> <adrian.ratiu@collabora.com> wrote: 
->>On Sat, 08 Nov 2025, Aaron Schrab <aaron@schrab.com> wrote: 
->>>What happens if `Foo` is added first and doesn't conflict with 
->>>anything,  then later a new submodule is added which would 
->>>naturally  get the name  `foo` which would conflict and doesn't 
->>>have any upper  case characters to  encode to avoid the 
->>>conflict? 
-> 
->>Right now, in v4, in this case the user adding the second `foo` 
->>module  will have to manually set the submodule.foo.gitdir 
->>config to avoid the  conflict, because Foo already uses the 
->>coliding path. 
-> 
-> I think that description minimizes the impact. I'd think that 
-> anyone  with a prior clone (on a case-folding file system) would 
-> need to take  that action after pulling the change that added 
-> the new submodule.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-No, because the extension is disabled by default.
+> On 04/11/2025 02:09, Junio C Hamano wrote:
+>> The "\ No newline at the end of the file" can come after any of the
+>> "-" (deleted preimage line), " " (unchanged line), or "+" (added
+>> postimage line).  Incrementing only the preimage line number upon
+>> seeing it does not make any sense.
+>> 
+>> We can keep track of what the previous line was, and increment
+>> lno_in_{pre,post}image variables properly, like this patch does.  I
+>> do not think it matters, as these numbers are used only to compare
+>> them with blank_at_eof_in_{pre,post}image to issue the warning every
+>> time we see an added line, but by definition, after we see "\ No
+>> newline at the end of the file" for an added line, we will not see
+>> an added line for the file.
+>> 
+>> Keeping track of what the last line was (in other words, "is it that
+>> the file used to end in an incomplete line?  The file ends in an
+>> incomplete line after the change?  Both the file before and after
+>> the change ends in an incomplete line that did not change?") will be
+>> independently useful.
+>
+> The "\ No newline at end of file" line is an annotation on the previous 
+> line in the diff so why are we incrementing any {pre,post}image line 
+> numbers here?
 
-> 
-> If action were needed only when running `git submodule add`, I 
-> think  that would be fine. But requiring that action in all 
-> clones seems a bit  much. Some of those clones may even be 
-> managed with automation making it  even more of a problem to add 
-> that new configuration. 
+No particular reason ;-)  As I said, I do not think these numbers
+are used after these lines are seen.  At least this change makes
+these unused data incremented in a more coherent way than the
+previous one, which unconditionally incremented the number for the
+preimage without even checking which side the "\ No newline" is for.
 
-The extension is opt-in: by default it does nothing. :)
-
-When the extension is enabled, all existing submodules are 
-automatically added to submodule.<name>.gitdir config without user 
-intervention.
-
-Enabling the extension guarantees that config exists for all 
-repositories, unless there is a conflict we cannot solve, like you 
-pointed above, which is typically only for very rare corner-cases 
-(that's the intention).
-
-> 
-> The action may even be required in new clones, unless the 
-> submodule  setup process for new clones sorts entries so that 
-> ones with capital  letters come later. Since some common 
-> collation rules (thinking mainly  of the `C` locale) will put 
-> capital letters first I think that's  unlikely to be the case. 
-
-The more I think about this, the more I'm convinced the second 
-option (see bleow) is the way to go, which is also more in line 
-with Junio's design to try a new path when validation fails and 
-repeat.
-
->>Maybe we could derive a new path automatically (eg foo2 or foo_, 
->>suggestions welcome) and use it if valid. This way, there is no 
->>user  intervention.   Do you have any preference? 
-> 
-> I certainly don't have a *strong* preference. But, I think 
-> `foo2` seems  a bit clearer. Although the implied strategy there 
-> for multiple  conflicting names may be too complex for a 
-> situation that will likely be  exceedingly rare. 
-
-The resolution algorithm is pretty simple:
-1. Create a path candidate.
-2. Validate if it works: if not, go back to step 1.
-
-We can do this any number of times for all the edge cases we can 
-detect.
-
-If foo2 also has a conflict, we can just try something else.
-
-If all else fails, we can even hash the submodule name ;)
+> Thanks
+>
+> Phillip
+>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>   diff.c | 18 +++++++++++++++++-
+>>   1 file changed, 17 insertions(+), 1 deletion(-)
+>> 
+>> diff --git a/diff.c b/diff.c
+>> index b9ef8550cc..e73320dfb1 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -601,6 +601,7 @@ struct emit_callback {
+>>   	int blank_at_eof_in_postimage;
+>>   	int lno_in_preimage;
+>>   	int lno_in_postimage;
+>> +	int last_line_kind;
+>>   	const char **label_path;
+>>   	struct diff_words_data *diff_words;
+>>   	struct diff_options *opt;
+>> @@ -2426,13 +2427,28 @@ static int fn_out_consume(void *priv, char *line, unsigned long len)
+>>   		break;
+>>   	case '\\':
+>>   		/* incomplete line at the end */
+>> -		ecbdata->lno_in_preimage++;
+>> +		switch (ecbdata->last_line_kind) {
+>> +		case '+':
+>> +			ecbdata->lno_in_postimage++;
+>> +			break;
+>> +		case '-':
+>> +			ecbdata->lno_in_preimage++;
+>> +			break;
+>> +		case ' ':
+>> +			ecbdata->lno_in_preimage++;
+>> +			ecbdata->lno_in_postimage++;
+>> +			break;
+>> +		default:
+>> +			BUG("fn_out_consume: '\\No newline' after unknown line (%c)",
+>> +			    ecbdata->last_line_kind);
+>> +		}
+>>   		emit_diff_symbol(o, DIFF_SYMBOL_CONTEXT_INCOMPLETE,
+>>   				 line, len, 0);
+>>   		break;
+>>   	default:
+>>   		BUG("fn_out_consume: unknown line '%s'", line);
+>>   	}
+>> +	ecbdata->last_line_kind = line[0];
+>>   	return 0;
+>>   }
+>>   
