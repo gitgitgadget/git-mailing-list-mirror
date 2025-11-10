@@ -1,53 +1,53 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B391E5B63
-	for <git@vger.kernel.org>; Mon, 10 Nov 2025 10:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98643002D3
+	for <git@vger.kernel.org>; Mon, 10 Nov 2025 10:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762769208; cv=none; b=c1rWoVUMCw6oRCTpZtWwUx8Nuvu0kbzhCO5tkfxgT3djds9td1FQx0LgAbFTFLyv40MbrjZV+/DxJwGu8dSKFc6iHtJfJJmj8aXOlrNBGWfckdJkTg/ocZos3/6F8+Fz1WME1hMJbam/zR9YRxyyuUVxfNGcB06C8Mwv2EwE5Js=
+	t=1762769214; cv=none; b=aKt3+iPLqGFGmIIi2oE67vUn+IAucQuK0STfcCJ9g/OPiDpqyFPR7Yzx9eaTQYc5PP6jUKHl9oSwOmO10/EKZgjdxMqwW0cWcrlKE0eBnbI4viX6cxkZ4GguI3ChTMje6vmuM6b5F7GGBTiFjkd76lEBB8x0RSF/EVam5UHmb/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762769208; c=relaxed/simple;
-	bh=v27jYgt7ctaYc88w+C0Ehil2E3DGfUdSbFNg53g7SjI=;
+	s=arc-20240116; t=1762769214; c=relaxed/simple;
+	bh=dhj+PGn4VdiZt/XZicyIBqDSTWMvD8HWOB/KCXRFjTo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ar/KEexYaZ7AWHW+VZlQ4INpVECjnb66cPvlN91MUHB30mSGATAV0u/RU7tMoL1r7f6UA9vEfP0qp6ELNzslZLP6Ck2YJGTknBp/HOUjE0XY6p/mxzFlfWD3P9rCnEyZGJ70ZnjyoZDwOH3SJvC+iWyVPu1JeKRrkJ4xiUVujwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H2bqv48l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ogzVVZuu; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=TDYnPDv5kDXmmQRRxtWbNGitIa/K9ugsj/fTre7P4yqwllPFzLJok8trLt82b6FzUaB9XVpI7OYi/njuI6PjAVagf6QIdNeWJal8Yq2uTbQAfkvUgLX34vN1mluV4v+HQ5WQg32bIc1Jk7qU8V44HKfensptR+E5eTb/8KI0nf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=edCl5s2L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bzo13a7I; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H2bqv48l";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ogzVVZuu"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id AB1C91D00075;
-	Mon, 10 Nov 2025 05:06:44 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="edCl5s2L";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bzo13a7I"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id E1E011D0003D;
+	Mon, 10 Nov 2025 05:06:50 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Mon, 10 Nov 2025 05:06:44 -0500
+  by phl-compute-04.internal (MEProxy); Mon, 10 Nov 2025 05:06:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1762769204; x=1762855604; bh=p5LZQdaH+B
-	1DjPxV+4VVYLfKZH/Hca2EQaPJ5I/Y7nw=; b=H2bqv48lONvlclQ+JS8a2uKi/7
-	HbOd0ANDzU9HSSU7EfmvZgndt7QJX7ad+FZKpU4WuZNr9QaOCVMP1I1GsAWvyBsh
-	AG2OZ9MSlYSxYDx8jdHB1YYBVTTxrkiuRncFcshbRBvFhLBniQda3dkFeMI/t8ca
-	Q7iQa51i1reVNnM3ZHFPItcChPNnw4ye4/kjaxDU70QKyIRRw2Jlai1rCow1Ll4z
-	lXb5R9bVRJBYNLLjlzEyUh8xbuNeYB9Q5sCouYdpyniCufwAa5vqolM0jUFymvRF
-	2Sxa8MO8YpZlv9gnkfOcISKAmBdItyxJl6lZT8yZLYmeB5PhNNRmOUnwpZwQ==
+	:subject:to:to; s=fm3; t=1762769210; x=1762855610; bh=ztRceRDTwo
+	82SnqodRL2yrWEAyukihiIk7b8rkfuXWg=; b=edCl5s2LyYQIf0B/7plt72+1el
+	NHRCfha4If0rcWP11fz/9gzdtAi1tUM0Cy+t2c3M/ADmPbwcHn3RT8NaEsGw095b
+	2BXc3FC933Xm7m3E6Z4BgjulcdJVI7JfStzOwrWFnMJGBo91zCfa98mmi4bFbmD3
+	LraMstlxCpAUuKY0H3m8vNihNGj4qJridcwxJWzqfDHnTHvuEU/Kptprszd4gi4u
+	Ph5V0+pRRhZL9UalOzvW2DzCBOoEp+XiYot7mSbWEcXSiXx7BZYWUTKT8CvgYxaG
+	LY/T2dAFvIvYS6ZEScmrryXSWbSHalfFqlWG5WMRSC+4uHLudArMD/h/MliA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762769204; x=1762855604; bh=p5LZQdaH+B1DjPxV+4VVYLfKZH/Hca2EQaP
-	J5I/Y7nw=; b=ogzVVZuu/vOgss2Py9vgzxKrSeebCCvGFYI/GvbGmMcvRiSuwIZ
-	S71nn5v/xV5Jyx/f/HA/E3ymuhUc8h1jTU8jqLTaHj/3S570DMgdqfqKaUdeaUME
-	wEHpxCFx2IlDSQof0VJN/twFBcVfoB4qRqbtS7SwO+49Y77yiS/QjsZD5IsNcb1G
-	E/3j9Ud0LZA1OW0pNtGsp00kwaWwKMMqJfOXH2JeCIASI9UzXpEsaPliXRWp46fy
-	uyVbTTQGStba2fPMkLH5ZkljnCJIUQEQlKjkEQ+3U/B5ywvhwNppoCRyOp6Wo85a
-	VEq/OogXZGwRF4/X5VVUm50AuXed/GjNrwQ==
-X-ME-Sender: <xms:NLkRaV-WbLMHhMpoI3b4atyp5R7LnMAVeWIIYW7dudcgyl5nsHCOPg>
-    <xme:NLkRafv_fM456aEq_j9eDH7ddqQIakVwP4_oqjcdqj1tq3jfuO5zzFE3muxKm6FpF
-    VqcRlciuAyRXFT3W1t5TDEKJhPNvLmShyID1OXpBv2zGmECIq-w>
-X-ME-Received: <xmr:NLkRaQp24RL8PwjKqT7NSNAzQGLaW8Xy2gVuYG4wkTZV4UWyzzm0gXc6ev3gvRhC9tXrx8nyUmQvHbM8jYrau3DP2Czs25sEEC90JRy6gA>
+	1762769210; x=1762855610; bh=ztRceRDTwo82SnqodRL2yrWEAyukihiIk7b
+	8rkfuXWg=; b=Bzo13a7ISx/0D6ZmUoLJAjTxscHV1lscuhT1cWvreJnLHM4MJhi
+	4h5eccskIXjAJVz3il67lmb9yvt1kFTEs+KS/bIbpYNv0KUTtQr4iXOpCvFjjkvH
+	r+2jWpxUaJyB3ffJpEXw60Fllp6s9W00TEHOlFEVG5R7QmSAm72LSLyhSamA9Q9c
+	17rBCf0EAYAg334ZRV7G1Q60J3eDia/wNsXuilucFtqh8tBhMx/RCwxPeivKjiwP
+	w9iOPAD7AifAi+nBTdjl36VTpMZHO3kRWm+k0FhQX8EfIo7ewc4xRB/uS5Ue/q2o
+	UuvgXcrzt9gHy3ptw8YLS74pwTyCfn+qWEQ==
+X-ME-Sender: <xms:OrkRaU0SLv2w6B6FnVfc-ydc88FRf50SWSwVWCdPiA5YuBaEBavBPw>
+    <xme:OrkRaVGYnq4J4zQAdCvhqS43xNIlhlp_M1PugC7VnLP4MhKpQK5mGau8DsVHeHxkf
+    qG19RfrHn7Xs5yIDGVmmYT18K-udbQ-D5MHYYeMJPlQpd9-mLueJc8>
+X-ME-Received: <xmr:OrkRaaiWVLM4YZCTcNOTgSI9juNQfQmHOORO1KNTx_rhTUYiB4WhKydArl3S2wgUlcK-NejDW2PSljw5dXWqs2JvxdM1idMwkMP0IRlxBg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleektdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
@@ -55,28 +55,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleektdefucetufdote
     shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
     ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:NLkRaUmHHj8XkCYPfcmSPQObesl6UvoarExr_GvrgPvoIKCxWTgYgA>
-    <xmx:NLkRacytnTwXz-uQEatDqBnIc2aaau86kmSi4XoWup8VcAuFZnLngA>
-    <xmx:NLkRaUkz8DZ5oB2d6fkw2JYsYNwgBkVp5C-BkIwMsNHt8RIbvAwvHA>
-    <xmx:NLkRadceOqNvfbtVKizAWQiYA40PCAkn-QHn5vy3BgHAKH7y-nPnLA>
-    <xmx:NLkRaRVAv7fu7TuPuHdiLibJdmMwSgtBTVwUKYn-WA8fpQ8_n0cAobOg>
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:OrkRaY9eGRXNKurw7WdAOhqgtFGN-ccjvR6zJNJpHwOpj0ASZwXviA>
+    <xmx:OrkRaZo6XN6T_4tVQXKl-5Z8PR5Nb2sctvwsP3eaSObIjzlZ_wbVqQ>
+    <xmx:OrkRaf86e7kDuff4I3DgQWKt_ybagmY4i3uBHGBYFuuC5i7RNLTplg>
+    <xmx:OrkRaVXrIREb1ma98xRxrEjc4DbxrrNq6fRe7fH5dnN49QinQJpR8A>
+    <xmx:OrkRaQNLQ4fXZoxKGFa-3MGux870j-HC8pKxG55Wr-zzm0g8USb7snSC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Nov 2025 05:06:43 -0500 (EST)
+ 10 Nov 2025 05:06:49 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8ae1179e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 10 Nov 2025 10:06:42 +0000 (UTC)
-Date: Mon, 10 Nov 2025 11:06:33 +0100
+	by mail (OpenSMTPD) with ESMTPSA id b73adfdb (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 10 Nov 2025 10:06:49 +0000 (UTC)
+Date: Mon, 10 Nov 2025 11:06:45 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 05/12] diff: refactor output of incomplete line
-Message-ID: <aRG5KeoZg1Q1y8DE@pks.im>
+Subject: Re: [PATCH v2 07/12] diff: update the way rewrite diff handles
+ incomplete lines
+Message-ID: <aRG5NSvzeie_J3x9@pks.im>
 References: <20251104020928.582199-1-gitster@pobox.com>
  <20251105213052.1499224-1-gitster@pobox.com>
- <20251105213052.1499224-6-gitster@pobox.com>
+ <20251105213052.1499224-8-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,42 +86,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251105213052.1499224-6-gitster@pobox.com>
+In-Reply-To: <20251105213052.1499224-8-gitster@pobox.com>
 
-On Wed, Nov 05, 2025 at 01:30:45PM -0800, Junio C Hamano wrote:
-> Create a helper function that reacts to "\ No newline at the end of
-> file" in preparation for unifying the incomplete line handling in
-> the code path that handles xdiff output and the code path that
-> bypasses xdiff and produces complete rewrite patch.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  diff.c | 14 ++++++++++++--
->  1 file changed, 12 insertions(+), 2 deletions(-)
-> 
+On Wed, Nov 05, 2025 at 01:30:47PM -0800, Junio C Hamano wrote:
+> The diff_symbol based output framework uses one DIFF_SYMBOL_* enum
+> value per the kind of output lines of "git diff", which corresponds
+> to one output line from the xdiff machinery used internally.  Most
+> notably, DIFF_SYMBOL_PLUS and DIFF_SYMBOL_MINUS that correspond to
+> "+" and "-" lines are designed to always take a complete line, even
+
+"complete line" as in newline-terminated? I only recognized that this is
+what you meant in the next paragraph, so it might be useful to clarify
+here already what you mean.
+
 > diff --git a/diff.c b/diff.c
-> index e73320dfb1..d388d318e4 100644
+> index 347cd9c6e9..99298720f4 100644
 > --- a/diff.c
 > +++ b/diff.c
-> @@ -1379,6 +1379,10 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
->  		emit_line(o, "", "", line, len);
->  		break;
->  	case DIFF_SYMBOL_CONTEXT_INCOMPLETE:
-> +		set = diff_get_color_opt(o, DIFF_CONTEXT);
-> +		reset = diff_get_color_opt(o, DIFF_RESET);
-> +		emit_line(o, set, reset, line, len);
-> +		break;
->  	case DIFF_SYMBOL_CONTEXT_MARKER:
->  		context = diff_get_color_opt(o, DIFF_CONTEXT);
->  		reset = diff_get_color_opt(o, DIFF_RESET);
+> @@ -1786,22 +1777,36 @@ static void emit_rewrite_lines(struct emit_callback *ecbdata,
+>  	const char *endp = NULL;
+>  
+>  	while (0 < size) {
+> -		int len;
+> +		int len, plen;
+> +		char *pdata = NULL;
+>  
+>  		endp = memchr(data, '\n', size);
+>  		len = endp ? (endp - data + 1) : size;
+> +		plen = len;
+> +
+> +		if (!endp) {
+> +			plen = len + 1;
+> +			pdata = xmalloc(plen + 2);
+> +			memcpy(pdata, data, len);
+> +			pdata[len] = '\n';
+> +			pdata[len + 1] = '\0';
+> +		}
+>  		if (prefix != '+') {
+>  			ecbdata->lno_in_preimage++;
+> -			emit_del_line(ecbdata, data, len);
+> +			emit_del_line(ecbdata, pdata ? pdata : data, plen);
+>  		} else {
+>  			ecbdata->lno_in_postimage++;
+> -			emit_add_line(ecbdata, data, len);
+> +			emit_add_line(ecbdata, pdata ? pdata : data, plen);
+>  		}
+> +		free(pdata);
+>  		size -= len;
+>  		data += len;
+>  	}
+> -	if (!endp)
+> -		emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_NO_LF_EOF, NULL, 0, 0);
+> +	if (!endp) {
+> +		static const char nneof[] = "\\ No newline at end of file\n";
+> +		ecbdata->last_line_kind = prefix;
+> +		emit_incomplete_line(ecbdata, nneof, sizeof(nneof) - 1);
+> +	}
+>  }
 
-I found it a bit confusing that we use `set`/`reset` here instead of
-`context`/`reset` as before. It doesn't make any difference as these are
-local variables anyway, but it might make sense to explain why you chose
-to use different variables.
-
-Honestly, this whole hunk is somewhat confusing in the first place. It
-doesn't seem to connect with the description in any way, as it's a no-op
-change and we don't even use the newly introduced function.
+Okay. I was wondering at first how this would get executed for both
+pre- and postimage if it's not part of the loop anymore. But this is
+mostly showing my complete ignorance for the "diff" subsystem, as we end
+up calling `emit_rewrite_lines()` itself once for each image.
 
 Patrick
