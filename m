@@ -1,54 +1,54 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89D422DFB8
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 20:52:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418F735CBAA
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 21:05:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762894363; cv=none; b=JPyJkxImMUBPWDKWmrt0c5ic24/L0w1C2gxpF4q44pm3uY7wdX2wVEepRnwoE1VQElBzhJ09HiPy/+18xfxUxGJXSQN6YczEG1Q2ysa3hOdsVagFUDrNSRuRsAYBRSp4BTRQEYYzC3HhCQZLdFmcz2KlKWu3hKYd7jg0gEJNCXQ=
+	t=1762895149; cv=none; b=mg90qJCTqcH3jrymILrkuuOUeJNt91MN6X9kMtb3ekb2oTPOrdarV3ar1BiyzoRXV/qtxjvhylD068asiyvbVLqnedotE0dP2dcOFWjcKQtgFyC2yq8poZguzUp8KNV1lrkO0LPexYapUfoJD+zbgOJQoLsMKJlXUNP74lMnkgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762894363; c=relaxed/simple;
-	bh=1im9TiSoOg7iRzoL713ipNQnX+wTDwaZO4P9cvV9a1A=;
+	s=arc-20240116; t=1762895149; c=relaxed/simple;
+	bh=PfyFzZizIXAU+aOqYZLgmgCCjhhAp+ROa0Ls/f0KJaU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=X1MoKCWQAKP8BZQP6qp9Gg574Rpc62MipChe9SYZLhZ+EQpBep6L2iTaAfnCzcLKw45Ec+Pz2Zv2Dd70NGghT1qbWF3aPWrTEm/Ky5tPFVKlZYCZrZdAnQHZ2SrIUzu33LoCHIHJKNIkk3KeqNC8UORwGfYt4FW5LxQSqfNhFhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NYi1vzkL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I+hI0kS4; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=BxHXkZdUqHG/5k9pKCnYt1k95A/kJB5MxaFSEA28xK5jw6q/D0eCduhWcB7yrObQoyvlczSoLI9Qy/GhFGyYNDPpzg5Tc3Q8jbBpo9S6qRgwKkLBwUs5PEzXUsEyMeCgH9DFA4h+Q9cTlGoP3daQ4KMYbpohgQyOgMfJIXnVZ50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=izB3CrcP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EX8kdpU/; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NYi1vzkL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I+hI0kS4"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 954547A0130;
-	Tue, 11 Nov 2025 15:52:40 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="izB3CrcP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EX8kdpU/"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4A4DD7A0100;
+	Tue, 11 Nov 2025 16:05:45 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 11 Nov 2025 15:52:40 -0500
+  by phl-compute-01.internal (MEProxy); Tue, 11 Nov 2025 16:05:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762894360; x=1762980760; bh=ZMuC8Rdj9y
-	NO7J/p1oUSCUkSHiu8AGPusKSyg8yci2c=; b=NYi1vzkLP4e4CO9WxEYpHle5VA
-	NWUoCyXgi3/uS74jNiQymL01BUtwtwMYfR8vil3u/v0+wyafJ1xM47H77F+Zw0Vu
-	kfs3kxolU29B+WCjBmIdWMnw+DGXEnglRkwTEf62cQEg9trz65kZWfOpdzUrnObK
-	27uns5nDgYAx+7eXDxNCKX1xyPl9b4pwBS5/ja+NtCt1gPTHRPtmS3vRbOaVDyQ/
-	l3UYZ4D5WVsv9iMSTga7hARi9+Srh02BTg5w1hAugM/BrYmiUt1vhTPuz+ZgsCp1
-	Ie5LYzzBaFrK8yYm/4e/Gnqh9D3gHvzacYMqaN9GeK40iIrXZsfFt1Pbuz2Q==
+	:subject:to:to; s=fm2; t=1762895145; x=1762981545; bh=TcudRawjLp
+	IvPByRPl4EYRT2zJTcOuLr1mgtSGfMqiM=; b=izB3CrcPTz/5SYpvepkGtIAqVl
+	iVUeGhthMeVSuAf2wnKB5gZvfFvI+wIt235n+rf95G0gDex4zAE+vf7sCwEQsxjg
+	xISwEMrv3VnSZdO8pWy5EVG9QqN/RKFMeZrJW+6NdNdQlaMUf63NSo7qicLIJXGw
+	XqdY8H7nGqVMlZyniPcSV+l7gomBj6CvH2jamuWN9UZz4mYdu+RHUDfeLTtFv+0W
+	6zXNlAjFotinsIXLZuSCn9X3Q3fO1n7Tdv1bXxqkioIJrwR0UmaVHPD52EjgxQcc
+	nASopBSLgO0MNDqNkSLsOYd3lhia4EhV2zBfgIfLGNgi+cmPyPhrOtVCOHBA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762894360; x=1762980760; bh=ZMuC8Rdj9yNO7J/p1oUSCUkSHiu8AGPusKS
-	yg8yci2c=; b=I+hI0kS4m4NYoOhuslthV4jzXAySG2OZq+DFJ9tyATsX8WkcAKX
-	u5xttLSyCLKHq0/Lctqz7N+1LZtf/zw8noz7aDpoQLNyJOowiXAZkYjYHUThrRRr
-	VyzrQ+zdlhWdOAXadt6ksJ8G9emXxMqv4rN7/T4Nk7ZsNtZzmzi3HSnSGK4XRn6F
-	cssJVX7gAOYorEDwiIw5ItO5q73YloqLtspUi++4uQoHNbbHe4LERGyjXrhsJ2I4
-	kf3CHhdyarxgnoWtGcsA5Cf2M4125k56KhpBjNFbDM/jixxSbhroTGbM2q3DNmDY
-	PRSPYJgQdK7ZWy1PqvTwelN26yGbwgcC8sg==
-X-ME-Sender: <xms:GKITabFGwfaEOjROOOYzqp-Moz9Q379iRXabOjtaJWFEoFeTp8LrJQ>
-    <xme:GKITaXYaY-32OmpGRg1uMP4FChSeP0VMAtvYunu-FYh3WuA0ZXyho9BTu4lGnTXw_
-    6vwN3tyWTUFAwmx4uXWe4Zd3WtfvfXz--5AHA10qbIYM7AtP5NgTA>
-X-ME-Received: <xmr:GKITaTUGTWm4hNyzZhbF8tgdcvSOQo8ZxHOtITVO3Wa103pG9kh3h-KatPPGJeQr1ecsobAeUlZvoebgJQT3oJWoe7bihPqfDf3c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddvvddtucetufdoteggodetrf
+	1762895145; x=1762981545; bh=TcudRawjLpIvPByRPl4EYRT2zJTcOuLr1mg
+	tSGfMqiM=; b=EX8kdpU/Yga540c1Sr+zsoiwYFjfgKVCjU7QtVwW06or3yLIU+F
+	izNjSAPrkVbAxru4c2dUxZnhuEtKPfnuMaWWCiBU9P1r/M5UVnDv8sgFBVOqFHGb
+	ZF1KOrHtnnZmK8oZm7B5IyyMaEAGSo2ykNzJx4xKRT7ixHxS+95KrHRUOg98IGVB
+	9jX3BlJYA9gbIJFhhmOyFNrODZlh3KzPR1mjJAiVqJlM7gftBxpS0PCzGiYrI3gJ
+	z2LBJnPC8pLp0kcWzBdCIHv/0fNR5B5BbGU2Z90EqrVwKY4EkhKPz3PITgnde+HE
+	xTDxGb/+Kxax9ocVmiVyqfqb1ElsuCy/tFA==
+X-ME-Sender: <xms:KKUTaZPzHCpFuhWCeg1ulk5TfV-gyJsKQYnyJsmOOmRDGUH7Aq5dTQ>
+    <xme:KKUTabDCFoWDUkYYLx7t03DlIWe0xKA-TRWB7yoS6dM1IZ5uYHtkdQpOMQwo3-4hl
+    PNioMFV_z3SrgcxZD9ImuJOIbhKkO_gjEYXBNlITkKk02BkycauESk>
+X-ME-Received: <xmr:KKUTaefCZ8sodRYPYtxkIieUMaGY3FgceUlY_4QrNRKESXQUtVC6mC5Slyzxra4faw_qkM3zmAIov3mJHvCMHZ2Uew6cbZ_S1mnV>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddvvdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -63,14 +63,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddvvddtucetufdote
     uddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsrdhtohhrvghksehgmh
     grihhlrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdr
     tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:GKITaVlgJC2ONetDRE_mO3yLT4iGTeRyH0deRwXdbafs1dRYk0iZXA>
-    <xmx:GKITaWCKVw8QMMV7x2I2Hk2bFQ8a-UWbc0LVpoixLVFKPleKrmJkEA>
-    <xmx:GKITacgo0N_KamGY124Vh4NCF8l5w4L-wMvimj_n1yoKzw1NwijWDg>
-    <xmx:GKITabxdaNtb4H-Wo2chMLmUKsl4Kw_IaWrgLxgsPoQOYx7QsH5LVw>
-    <xmx:GKITaTlH3MAOwSMsnDl_FfNNsES-LcabAZrPvMfMjdsdKBEXvfkS0Nsk>
+X-ME-Proxy: <xmx:KKUTaSOkJkicZQ2WJLII-Y_vbMmsVMeWCJ0IYSLnj5Duliet4doQHQ>
+    <xmx:KKUTaWLjbUKq9aojGFEDHOwhZY9GYFIWIND_W2VNVXQpt_DMHejxew>
+    <xmx:KKUTaaLaI34tTSKdnrmkBfXM9O5DKcXLAxfY2TOcgXrfTp-DX9p5yA>
+    <xmx:KKUTaY7zzHfZyC0-nlv7f7FcwHyyBdd8vRQlXd5QQc7EHKTkjVBosQ>
+    <xmx:KaUTaYuXlXPzTxfayLCbxrq_XmNWCp7somr9lApaaTiydAXdxxGgWEv1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Nov 2025 15:52:39 -0500 (EST)
+ 11 Nov 2025 16:05:44 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
@@ -85,8 +85,8 @@ In-Reply-To: <e5d084d340e874be52e7c3b056ada15ab5557877.1762890152.git.gitgitgadg
 References: <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
 	<pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com>
 	<e5d084d340e874be52e7c3b056ada15ab5557877.1762890152.git.gitgitgadget@gmail.com>
-Date: Tue, 11 Nov 2025 12:52:38 -0800
-Message-ID: <xmqq7bvwwauh.fsf@gitster.g>
+Date: Tue, 11 Nov 2025 13:05:43 -0800
+Message-ID: <xmqq1pm4wa8o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,76 +98,54 @@ Content-Type: text/plain
 
 "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> +== Character types
+> diff --git a/Documentation/technical/unambiguous-types.adoc b/Documentation/technical/unambiguous-types.adoc
+> new file mode 100644
+> index 0000000000..6bca39209b
+> --- /dev/null
+> +++ b/Documentation/technical/unambiguous-types.adoc
+> @@ -0,0 +1,239 @@
+> += Unambiguous types
 > +
-> +This is where C and Rust don't have a clean one-to-one mapping.
+> +Most of these mappings are obvious, but there are some nuances and gotchas with
+> +Rust FFI (Foreign Function Interface).
 > +
-> +C comparison problem: While the sign of `char` is implementation defined, it's
-> +also signless (neither signed nor unsigned). When building with
-> +`make DEVELOPER=1` it will complain about a "differ in signedness" when `char`
-> +is compared with `uint8_t` or `int8_t`.
+> +This document defines clear, one-to-one mappings between primitive types in C,
+> +Rust (and possible other languages in the future). Its purpose is to eliminate
+> +ambiguity in type widths, signedness, and binary representation across
+> +platforms and languages.
+
+This is a laudable goal.  It does a lot more than "to eliminate
+ambiguity" at least in some sections.  The section on character
+types I already commented on, for example, is full of good points to
+list the concerns that developers need to be aware of and careful
+about.
+
+> +== Enum types
+> +Rust enum types should not be used as FFI types. Rust enum types are more like
+> +C union types than C enum's. For something like:
 > +
-> +Rust's `char` type is an unsigned 32-bit integer that is used to describe
-> +Unicode code points. Even though a C `char` is the same width as `u8`, `char`
-> +should be converted to u8 where it is describing bytes in memory. If a C
-> +`char` is not describing bytes, then it should be converted to a more accurate
-> +unambiguous type. The reason for mentioning Unicode here is because of how &str
-> +is defined in Rust and how to create a &str from &[u8]. Rust assumes that &str
-> +is a correctly encoded utf-8 string, i.e. text in memory. Where as a C `char`
-> +makes no assumption about the bytes that it is representing.
+> +```
+> +#[repr(C, u8)]
+> +enum Fruit {
+> +    Apple,
+> +    Banana,
+> +    Cherry,
+> +}
+> +```
+> +
+> +It's easy enough to make sure the Rust enum matches what C would expect, but a
+> +more complex type like.
+> +
+> +```
+> +enum HashResult {
+> +    SHA1([u8; 20]),
+> +    SHA256([u8; 32]),
+> +}
+> +```
+> +
+> +The Rust compiler has to add a discriminant to the enum to distinguish between
+> +the variants. The width, location, and values for that discriminant is up to
+> +the Rust compiler and is not ABI stable.
 
-Even though you write excuses for bringing up Unicode here, I am
-afraid that most of the above is irrelevant tangent that makes the
-point of this documentation muddier.  Anybody who is involved in
-this effort would at least know that C's char is not about
-representing Unicode codepoints (it is way too narrow for that),
-while Rust's char type exactly is, and I do not see much point in
-making such an apples-and-oranges comparison to spend extra words
-here.
-
-Another thing I found confusing is your mention of &[u8] vs &str.
-Surely, Rust will have trouble if an array of u8 we FFI an array of
-bytes we have on the C side, if the byte sequence were a broken
-UTF-8.  But that would not be fixed if you only rewrote C code to
-use `uint8_t[]` where it originally used `char[]`, would it?  If we
-have on C-side char[] that has iso8859-1 in it, we still would want
-to use uint8_t[] when we smuggle the result of passing it to iconv()
-to translate that into UTF-8 into Rust.  Or we may pass such an
-iso8859-1 encoded string directly as an uint8_t[] byte array to Rust
-and let Rust side run an equivalent of iconv() to obtain char array.
-
-The point is that "your byte sequence has to be valid UTF-8" does
-not fit well in the narrative here.  If we want to move/interface
-the handling of "encoding" header in commit objects with code
-written in Rust, this starts to matter.
-
-So even if it is technically correct, it is another irrelevant
-tangent when we discuss why we want to use uint8_t on the C side to
-help cbindgen/bindgen to map it to u8 on Rust side.
-
-Wouldn't just directly going into
-
-    If a piece of C code uses `char` to represent a byte, it makes
-    it easier to interface with Rust to rewrite it to use uint8_t
-    and let cbindgen/bindgen map it to u8 on the Rust side.
-
-be clearer, would it?  We never deal with a single Unicode codepoint
-or an array of them (we do deal with utf8 encoded array of bytes,
-though) on the C side, and I do not think it is likely to change, so
-there is nothing lost if we did not talk about how `char` in Rust
-behaves at all.
-
-And of course, not talking about `char` in Rust does not mean that
-we need a rule like "if you want to interface with C, never use
-`char` on the Rust side".  `char` may have its uses on Rust side,
-just like `char` may have its uses on C side.
-
-Also I do not quite get your precondition "If a C `char` is not
-describing bytes".  What `char` in C on modern platforms would
-describe something _other_ _than_ bytes?  Even the way things like
-varint use `char` is exactly for accessing individual bytes.  Even
-when it is used as a space-saver in a structure member whose value
-would never exceed 100, i.e., a small integer, we would know and be
-implicitly relying on the fact that the member is a byte-wide.
-
-Thanks.
+Good example, as we already do use this one, if I am not mistaken
+;-)
