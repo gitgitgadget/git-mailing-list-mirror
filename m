@@ -1,241 +1,131 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5823730EC
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 16:55:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D3A28152A
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 18:41:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762880144; cv=none; b=TLieZ6E3jFi8J2O5a68x0EKS4+FBsEqtIvwqAmO6appdoSdxYy/kRpD50bZ8WRyNBNlVTsv29agFMaxar7PXJxY7BX9uJnwH151RY4dm1jGkVTBdw6jfwl2x9FbVrmE/IFm2gF/92Em+T1HYaYb22Wr8u2dTXYAMAoeCv3ABV/8=
+	t=1762886486; cv=none; b=fsSzICzl+bze466mjx+yD5nPIPanflwN5vVI1zHVICB0gvZO27lnE6IvfS+dOtYXXVLbFum0bsKezWd+PMb05gGvCkilBOIgLgP1apuQlJz1IU3A2t0Hjjko6xpGsKeMXITr/jdnPutLcqsU6FlkmlggHC51ELO5upDj+1QJV+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762880144; c=relaxed/simple;
-	bh=UshGKa5jQpTgZZBSFuqyxGcvIP/JcYWNZKWYr/mnK1k=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
-	 In-Reply-To:Content-Type; b=dFtmPTfezH2hT1gzbRQm7f9SgnE4ZlPlef8q+91oErLjnalwdO3+Cs4ZFbfyeFdsfElY9LVHcrjlX9h87Drsjx1wBym0NInhFTbPrkf1+NDS7pKY0uUlAOD7CX9s9iP6UvQatosYW4jZj2DcKvXk4XYgaGrgvooEgSevbFNWkZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EVu+hkH8; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762886486; c=relaxed/simple;
+	bh=RYrvEp99U6+fl4b3Y7BBz54batOfCHW87N36u++ud8c=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mwMeiDqZqFlxritFvnuCppxNxhQkmtEiESqVZGyulBtvVaBb7lLwpl3HPjL7rLptN+1k7NFzQA96gqMb/4T2yxYdgUF3Pfzj34tR52N7SQlPKLbDdYYKoOYfMql3XRILnv0EO2yZ+Oph9VJgkZJYPfNiNTZC0KBf/HJjUnleGsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OX7BEv1m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N98kEenZ; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EVu+hkH8"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-42b32ff5d10so667273f8f.1
-        for <git@vger.kernel.org>; Tue, 11 Nov 2025 08:55:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762880140; x=1763484940; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8eZ08KKH1wKH03qwLL1yFb85i1CMh6qE7vmXWJjJPgc=;
-        b=EVu+hkH8Xav49JGTlfw0+JhIwi9E0Y1od/Pq4dLE35Va7fTVu62f7WSnxJAJV7rdv2
-         htOJZdAgxFE+zt4X2RMKLREpphhLDsKMMyCb/Qtf4JahaQ3N1X6zkWLkEMgyD3tHbIBw
-         /2w/Igc9QrD1uNkIVZfGb/7cVzzRvDcp/nMSRXIB4YuqmEGNXZ3/ztjCtukqmneIhovW
-         c4R2GcbU3Z4mMoQ9M8doBaFHVAVNSFEiLxNr/XZIYS36ROg6S2InUPIO2xy56BawAQIT
-         fxCf7D37hRxfR8roaNK2oL68PVgndM78Pzx3dIJ5BNmv2QzlQNCsdf/fM65xv5ls5YD1
-         XqSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762880140; x=1763484940;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8eZ08KKH1wKH03qwLL1yFb85i1CMh6qE7vmXWJjJPgc=;
-        b=Bm8SrWZshVJUGB/nuCh//DewD1ny7Rx085tjJQ+A6pq7TP45CfbvmZyQVAFRUOLoNS
-         om7tSH02wrmB7M/y8vfdUBvkhU8NhDGbVxHDW77U8GXknkZ3EtgLH++4kRzc9NGYI5CG
-         GZXAUfHJz9u/IesJ81aizZT20UnC4RS1/26OCAMS/x8zR+tKH4cMx8FajgvXNrYGCZeZ
-         wn0RV7985em4LLwYLy1rAUHvI1iXRViUyztlreJqMS1+bIBnAiim59MBTScnBNxBNV7b
-         RV4EoNXJXDxjxnmVRMbU2qYx0COGFRpOrGIjf6LWBeMH03iskKpRa5sseEHvAGWLgTDL
-         3mXQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXrjGZ6Gvb/bs1im++ew/3F+O9w/6uac0Fs27uAZ/gjfsfOtQ+QkyAYq2sXtXTjgpR8f74=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5vYdQnSSt+lQdLze84fDUYfbizhwhIHq7XiWGF5GlTdU7ll9b
-	11s+ROClNTbU1KJ7dXB5Wpt1OqMzTrQPUlhcfZtwPP61NAUVYQxaeMVbtgTYSg==
-X-Gm-Gg: ASbGncvoZFkaPdvxC8NG3EjVwT9Uv7r5qJHTlllvHLuH9wRP0uDrsRPpR0OQsKkvjsy
-	9MetAl9qPBWLbhNUvb4gLjWHm5CY7ZyM7GN4ETteSbtD6A3eIbO+26USj7zz1p13jB24qVfP32+
-	t/fV12RexZ95UPQOW/DSXcXTN6OMjx0Jw5eqZq0WTnfzbes1nPFnvxdyRdvkdfvwHM4lQAJzpoB
-	bQTEzrZtFPErxaL7wtcpbbLtjKenUO9HpqKUnFXNTC+tETqmX060ln5q9uhRtEwJ7STAXh61FFn
-	Ujd4Wq1AIfPoBC7mIuW6Yj4kP6Tf7D+u/xRxXDwpYcTWt8H1jiUHKoj/QmsWzVH20Jv/gZVtUWq
-	kXKUF0JdpxzHmJSxUmH6g7lH7l51ll9ZIQrO3QykWRc6qKfUDdxcC6i0ZpII9qzSHekg+M0JqZE
-	PkqJRXv6LAf5vb2SShIfPCLpnIG5AYk9OV4uatPejKbHaaClFDeHC7RQA3bNBEXSk=
-X-Google-Smtp-Source: AGHT+IHTm4oMBv9lj2Eg0b1G+i+/5wT+3cJNpoTklvS7QS8IyMcEpMPYRplHqjxLCORR6p28yAcoJA==
-X-Received: by 2002:a05:6000:2dc8:b0:429:c6ba:d94c with SMTP id ffacd0b85a97d-42b432b1e35mr4025649f8f.10.1762880139685;
-        Tue, 11 Nov 2025 08:55:39 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b29e4b9bdsm25573033f8f.32.2025.11.11.08.55.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Nov 2025 08:55:39 -0800 (PST)
-Message-ID: <e13be93f-9d10-4baf-b333-d293c5f46fb5@gmail.com>
-Date: Tue, 11 Nov 2025 16:55:38 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OX7BEv1m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N98kEenZ"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 13BA91D00094;
+	Tue, 11 Nov 2025 13:41:22 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 11 Nov 2025 13:41:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1762886481; x=1762972881; bh=8Y4xY1oxj6Nw2YahbkYLkgce0PlBzc2B
+	C0OYelO4j4g=; b=OX7BEv1mjFeQb1C1kK2iUhvf1s/3Ixw/5xan85kinvt4tGtp
+	DeJfPr/ReHw9G6CQO+2LbiA92IxylqCGnTmXiRzYNNSyob6nHyozKy603oJmUHFK
+	6Mh5Yh78UIpuLI20GussjS/Vj5Wuj/TYY5SlVmTSitbSaEuafZEecZYo7CNtIY3X
+	5/PZ7EayN6NbXDdK1e07wg0xeM0mc6bn+f5XqThxrAO6Oh3zUmhL59l+yHuDCeO6
+	LG0iAZHMgBF6dwYhrtNb/3nhc1nG2OAVXEPRVpH7C9xgWEEYLuRcIp8Ebgj6cqsY
+	Y+xtFZw87znBOY21B2ASaorXAd8jzC4EUQZ2Kw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762886481; x=
+	1762972881; bh=8Y4xY1oxj6Nw2YahbkYLkgce0PlBzc2BC0OYelO4j4g=; b=N
+	98kEenZlBSn1h9abUoFI9gNK1wPpjp/xS5ZxwlFQ/N6FeCzwpTCoLXMYRTf3DMFe
+	7puhoX5Yz2ZOuDGoUbzpR8opiBCWPf+eQ0Bi+eFqL6qTdNFqok9+CphRB52zU+LY
+	cdR1ITD8pZYujkY3lcBiavKJouXsBTWjOWaC8e9qQAXStm4sh66XjROXvGWHFIJI
+	Zh/w2zTvIU1KHNsYEeCl11PQ14a+BHqneuSkuJCyC7RKz1h0+yK4vczb9CzNfsCA
+	F2+SxEH3I1PFL3gmVynkQCyilfvVeKLGY7+y+6KCQFjLNlggWntVdukyD0U6n7U6
+	XF9iTBgUV4t1eiNL2Ct9w==
+X-ME-Sender: <xms:UYMTaZtdsT_I38oyIk4yvoI6z93w-DiMfxsi0DhlmFpvrxEeT23SUg>
+    <xme:UYMTaYe8FQZRzvsLaV6ji5_4VwbaV-OAnf8Ef3s-1SQ0f3PjcYUjqtZ6v-6GHOwdu
+    AvljL2oK_ZJKayKvuBatPWyDjCdnRcK2y6Z622D7b5HgHXi4Nvq9g>
+X-ME-Received: <xmr:UYMTaaaFXzFGnrpPt5idoNlNOp_fsYb9AYDE2Sx1el4cBsalXjlnQPiEJrg3IMzC1cIaAuFblGKoxqKdYZ0cY3yuFmwKClXwHEd_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdduleegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
+    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
+    gidrtghomheqnecuggftrfgrthhtvghrnhepledvfedtfedtkeefueevlefgleetieeuff
+    ffkefhgfekveehkefhgfetjefhffegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
+    hpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:UYMTabVUoSia02PabKwG9dT2k1DWG4lqJ338Qau-82KNkSq-ghenTA>
+    <xmx:UYMTacgsbjUpeuB0WrqsiUpiZhF6EgLCxLgTk8S2tV5VZJNAIKLv1w>
+    <xmx:UYMTaZWsHBLerFCCKvIxRelmLQYEgKSX2bhbl40q5rz0y5f4yU5iJA>
+    <xmx:UYMTaTMMNKRyqIKcILkA4akW0ROwIrgviQZagQPCuAh2F8E8iaYOLA>
+    <xmx:UYMTaVFVhJBhhcAgahael5fLX_z7GJ-UPEdRgtRG44vY_AjOnCxdoFwu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Nov 2025 13:41:21 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] .gitattributes: remove misspelled no-op whitespace attribute
+Date: Tue, 11 Nov 2025 10:41:20 -0800
+Message-ID: <xmqqv7jgwgxb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 3/4] trailer: append trailers in-process and drop the
- fork to `interpret-trailers`
-To: Li Chen <me@linux.beauty>, phillipwood <phillip.wood@dunelm.org.uk>,
- git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-References: <20251105142944.73061-1-me@linux.beauty>
- <20251105142944.73061-4-me@linux.beauty>
-Content-Language: en-US
-In-Reply-To: <20251105142944.73061-4-me@linux.beauty>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Li
+Ever since 14f9e128 (Define the project whitespace policy,
+2008-02-10) added the whitespace rules to .gitattributes, we spelled
+the most general rule like so:
 
-On 05/11/2025 14:29, Li Chen wrote:
-> From: Li Chen <chenl311@chinatelecom.cn>
-> 
-> diff --git a/trailer.c b/trailer.c
-> index b735ec8a53..f5838f5699 100644
-> --- a/trailer.c
-> +++ b/trailer.c
-> 
-> @@ -1224,18 +1226,66 @@ void trailer_iterator_release(struct trailer_iterator *iter)
->   	strbuf_release(&iter->key);
->   }
->   
-> -int amend_file_with_trailers(const char *path, const struct strvec *trailer_args)
-> +static int amend_strbuf_with_trailers(struct strbuf *buf,
-> +				      const struct strvec *trailer_args)
+    * whitespace=!indent,trail,space
 
-While reviewing patch 4 I've just realized that this function can never 
-fail so should return "void" rather than "int". I've not quite finished 
-with patch 4 yet, hopefully I'll post a review tomorrow.
+in the top-level .gitattributes file.  The intent of this line was
+described in the commit log message:
 
-Thanks
+     - Unless otherwise specified, indent with SP that could be
+       replaced with HT are not "bad".  But SP before HT in the
+       indent is "bad", and trailing whitespaces are "bad".
 
-Phillip
+It clearly wanted to disable indent-with-non-tab, so !indent is most
+likely a misspelt form of '-indent'.  Because indent-with-non-tab
+has never been enabled by default, by luck this was not causing any
+ill effect.
 
->   {
-> -	struct child_process run_trailer = CHILD_PROCESS_INIT;
-> -
-> -	run_trailer.git_cmd = 1;
-> -	strvec_pushl(&run_trailer.args, "interpret-trailers",
-> -		     "--in-place", "--no-divider",
-> -		     path, NULL);
-> -	strvec_pushv(&run_trailer.args, trailer_args->v);
-> -	return run_command(&run_trailer);
-> +	struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
-> +	LIST_HEAD(new_trailer_head);
-> +	struct strbuf out = STRBUF_INIT;
-> +	size_t i;
-> +
-> +	opts.no_divider = 1;
-> +
-> +	for (i = 0; i < trailer_args->nr; i++) {
-> +		const char *text = trailer_args->v[i];
-> +		struct new_trailer_item *item;
-> +
-> +		if (!*text)
-> +			continue;
-> +		item = xcalloc(1, sizeof(*item));
-> +		INIT_LIST_HEAD(&item->list);
-> +		item->text = text;
-> +		list_add_tail(&item->list, &new_trailer_head);
-> +	}
-> +
-> +	process_trailers(&opts, &new_trailer_head, buf, &out);
-> +
-> +	strbuf_swap(buf, &out);
-> +	strbuf_release(&out);
-> +	while (!list_empty(&new_trailer_head)) {
-> +		struct new_trailer_item *item =
-> +			list_first_entry(&new_trailer_head, struct new_trailer_item, list);
-> +		list_del(&item->list);
-> +		free(item);
-> +	}
-> +	return 0;
->   }
->   
-> +int amend_file_with_trailers(const char *path,
-> +			     const struct strvec *trailer_args)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +
-> +	if (!trailer_args || !trailer_args->nr)
-> +		return 0;
-> +
-> +	if (strbuf_read_file(&buf, path, 0) < 0)
-> +		return error_errno("could not read '%s'", path);
-> +
-> +	if (amend_strbuf_with_trailers(&buf, trailer_args)) {
-> +		strbuf_release(&buf);
-> +		return error("failed to append trailers");
-> +	}
-> +
-> +	if (write_file_buf_gently(path, buf.buf, buf.len)) {
-> +		strbuf_release(&buf);
-> +		return -1;
-> +	}
-> +
-> +	strbuf_release(&buf);
-> +	return 0;
-> + }
-> +
->   void process_trailers(const struct process_trailer_options *opts,
->   		      struct list_head *new_trailer_head,
->   		      struct strbuf *sb, struct strbuf *out)
-> diff --git a/trailer.h b/trailer.h
-> index 44d406b763..daea46ca5d 100644
-> --- a/trailer.h
-> +++ b/trailer.h
-> @@ -196,9 +196,8 @@ int trailer_iterator_advance(struct trailer_iterator *iter);
->   void trailer_iterator_release(struct trailer_iterator *iter);
->   
->   /*
-> - * Augment a file to add trailers to it by running git-interpret-trailers.
-> - * This calls run_command() and its return value is the same (i.e. 0 for
-> - * success, various non-zero for other errors). See run-command.h.
-> + * Augment a file to add trailers to it (similar to 'git interpret-trailers').
-> + * Returns 0 on success or a non-zero error code on failure.
->    */
->   int amend_file_with_trailers(const char *path, const struct strvec *trailer_args);
->   
-> diff --git a/wrapper.c b/wrapper.c
-> index 3d507d4204..1f12dbb2fa 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -688,6 +688,22 @@ void write_file_buf(const char *path, const char *buf, size_t len)
->   		die_errno(_("could not close '%s'"), path);
->   }
->   
-> +int write_file_buf_gently(const char *path, const char *buf, size_t len)
-> +{
-> +	int fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-> +
-> +	if (fd < 0)
-> +		return error_errno(_("could not open '%s'"), path);
-> +	if (write_in_full(fd, buf, len) < 0) {
-> +		int ret = error_errno(_("could not write to '%s'"), path);
-> +		close(fd);
-> +		return ret;
-> +	}
-> +	if (close(fd))
-> +		return error_errno(_("could not close '%s'"), path);
-> +	return 0;
-> +}
-> +
->   void write_file(const char *path, const char *fmt, ...)
->   {
->   	va_list params;
-> diff --git a/wrapper.h b/wrapper.h
-> index 44a8597ac3..e5f867b200 100644
-> --- a/wrapper.h
-> +++ b/wrapper.h
-> @@ -56,6 +56,12 @@ static inline ssize_t write_str_in_full(int fd, const char *str)
->    */
->   void write_file_buf(const char *path, const char *buf, size_t len);
->   
-> +/**
-> + * Like write_file_buf(), but report errors instead of exiting. Returns 0 on
-> + * success or a negative value on error after emitting a message.
-> + */
-> +int write_file_buf_gently(const char *path, const char *buf, size_t len);
-> +
->   /**
->    * Like write_file_buf(), but format the contents into a buffer first.
->    * Additionally, write_file() will append a newline if one is not already
+We could either remove "!indent", or spell it "-indent".  The
+immediate effect would be the same.  It would only start to make a
+difference when/if we enable indent-with-non-tab by default in
+future versions of Git.
+
+Let's take the former option to remove "!indent" from the list.  We
+would feel the effect first-hand ourselves before anybody else if we
+ever decide to change the built-in default whitespace rules, which
+would be hidden from us if we decide to rewrite it to "-indent"
+instead.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * There is another one in git-gui/.gitattributes that probably was
+   copied from here, which may want to get fixed.
+
+ .gitattributes | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.gitattributes b/.gitattributes
+index 158c3d45c4..2a50ebaf2e 100644
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -1,4 +1,4 @@
+-* whitespace=!indent,trail,space
++* whitespace=trail,space
+ *.[ch] whitespace=indent,trail,space diff=cpp
+ *.sh whitespace=indent,trail,space text eol=lf
+ *.perl text eol=lf diff=perl
+-- 
+2.52.0-rc1-455-g30608eb744
 
