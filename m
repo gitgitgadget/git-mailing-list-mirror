@@ -1,189 +1,143 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70BC52C0276
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 19:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AEA1E492A
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 20:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762891145; cv=none; b=ecGx9WVtdBx8IdNKMNSVG80FXU5xJhG9LrQW55v3uycTn9EByXbjNEarNJLJkCX6zXGPjQkTNwKuXjHr+bZcxA/cTLnR63tLXfvK8hPnzExRGrH9l+c0pjouBrFUR4muEzey4IxWlU3cq0tedZg1FBVdvx1AtoSdpWe5Kel2wQA=
+	t=1762892205; cv=none; b=MwdsXuB7OqP2ueZ4wsw6x/ji5SlXz/ZQNE6vfQtnJ1NyejgfNhJOxG4BhRZAUvNn0mIyWZswjLlfetSZ/E2g8xJMS39I/ZJrDugcLp/iyPytKORBX1S15TS1xgVf6+T6/DhKWDCI4+sqe02LhmD/hh7N4uSLysyA9hzHLwr7JGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762891145; c=relaxed/simple;
-	bh=lmibwYKSqD54AmsGvNGngqV+V3otPHcH6bcquFLX2c8=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ew6FHQ8uWSKwcsh3LqJ+irRK2+BNe/TzsI/WT1f8RQPa2bqfcugzUaiKD3fm1Fia88tT145gJBKAetmAZEQ86phyUFJ82UreTUKIi5WBMJ/ZY7r4NDbziEYO8LOvxXCSlEf3QJzbP/b48o1V0svocs3ZJSp1UUhwUqEud6GPImI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MIHGoNQ+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ADWah7vQ; arc=none smtp.client-ip=202.12.124.149
+	s=arc-20240116; t=1762892205; c=relaxed/simple;
+	bh=EoT+RxJ4ZxXYtwdu1py/gEYsNkb9T2G3MI4elepf7S0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mcXcxrGfb+UGNdHuSeh3ham61CLbxOfin7/uLadDclUUUbgfzcYuSSXQxVbAVQcrJxPR3pXdajenIaCUrYKFxHQvgGFD1POgAg9h7Adg+onrsf8qaG/VMP0tIHolSsO1yAegt6kFrYH8Z5mtMVnytk2hsnK3Vr7jPF+E6B4YwEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bDSiaBRr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VJDzy6P9; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MIHGoNQ+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ADWah7vQ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7B14A1D00172;
-	Tue, 11 Nov 2025 14:59:01 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 11 Nov 2025 14:59:01 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bDSiaBRr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VJDzy6P9"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 674261D000B9;
+	Tue, 11 Nov 2025 15:16:42 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 11 Nov 2025 15:16:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1762891141; x=
-	1762977541; bh=COFWVG3ek+VdjreldJ7US97bBSeLTbILveQNroXB/Qk=; b=M
-	IHGoNQ+zFMQY1icHjYuPF+lAUq8NtG9ka04B7w/OhUbPfeJdW5IcUDKqhUDcaL+M
-	mWzPb6qYsjOjvFp/ixVFf7tPIRqT/OOxk+oGDOvczVb7Rr24IJTx/Wp4frSwOTNg
-	5N8Synqaet3hAp/8gk724xV0UFM3v3KPWQIMr+twkQHhEEmcOhUn0f6YcveqBSDt
-	KJIgi1Sf4EY4KMl87S02jyARcEH5KUoHq3Ao7qBisopuN0OHCSA6F0GG+oAxc07W
-	/d6N2KgKtXfFkZ0Q2SHwq3HgTfmtQWDEdva+yA2yU9z7vBIOnzzsrfoSFa2/KOPZ
-	0KwIw9uV/FqOwRlYT9CWA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1762891141; x=1762977541; bh=COFWVG3ek+VdjreldJ7US97bBSeL
-	TbILveQNroXB/Qk=; b=ADWah7vQGdUWrgUM2J0qSZOUDyIARqOPSSXqGgbc+FiI
-	OQbHGtwsQFVNbk1csVwoQKvzrsXuVWfIYhDL4OsoaWPw6lHDp7nWjoQAcqWUJP9f
-	dUpXbXWqPDmrMDJbRPz48Xd2B7pWBbposLU+yLMBxrzrPTtdw7Xy8OQS7n1akPZG
-	yD9sFPQjzWL0E9R2W9ELIF5GMEgGiJAj0/oBwqPWpRvOLWt39dkF9bWf3tshQbHC
-	6y3lavxknvWlwvAq2k6QfECW7+oYTb0ZKv7iwTK0kKvc0lpVWfipECfhepeAD1ny
-	Q4QrH3qc9IC4TjF1sVyio4dfD15D/cCFuzHS0utWEw==
-X-ME-Sender: <xms:hZUTaUzxV27JC64bPYI48Fkrrbfu9UDgeDyxdYAlUsnkB4WVLe3fHg>
-    <xme:hZUTaeSk3zDmA3nugSltCmgyyD3vgqQwrF251o3gK-bobh9fc3u0xlXHw8oyf-Ns_
-    bN_O2MjCPVeOW0bJEx3nZFXVwf6oqpg3B-SI5NpF1gmxGpGKG_DrA>
-X-ME-Received: <xmr:hZUTaT8D16tHnvBgBzfd95OzkKufrWRYYr8CRcCJz9fR6U8GlxRtx-dhQ4GijvsyBqdtzDqgAU5Ci7xkQZEYcCDySjt8QQVa7jr_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddvtdelucetufdoteggodetrf
+	:subject:to:to; s=fm2; t=1762892202; x=1762978602; bh=I9baAgAnQW
+	3SADCoLu/yr7+mUl/xz6Hy//jAnmFcBmc=; b=bDSiaBRrTnqFBEAq/V0PGDEaxH
+	mLCJAk2lhXlekL8DCgtoTtTS43B7Mu7RsU4b0O+ceC/nEuiC893LgD8lTGk7hWSZ
+	xtlzRZn/RX4zq8QEeMWQVoa4Ajo2Hsnfcvs6CS2yAy6T7DOJKzlT5Gk52OxTkOAr
+	swPzuZ4nffC83EFJHMmWXAcVe1Ba4wC/5Yp9zE7B6OceDFiId+338Dy1RQpbM+ER
+	iGZRuIOKHswWFvFrYnrRrgXLrI0K1tcx19CKAAm7RDeXGFdjHgytCCS4x+8hNNwH
+	/IP747lRaY73BsvqKbe54/3hHOQfgssQVlpWDiA5zMv9Indf6o6Pylqg6zKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762892202; x=1762978602; bh=I9baAgAnQW3SADCoLu/yr7+mUl/xz6Hy//j
+	AnmFcBmc=; b=VJDzy6P9U8kdomawgthLdN3tONQUd8ERki87nMZ48QVKzPflIVk
+	ysQkgbilIb8/p1Ha68JtryegqwTvURmmJodqaRHOp85+C9i4UkTBwzxCkTk7ebOe
+	hLBTICFJuwZD++hLpiZNYg+hRDXzqyUwwL1y3chPEQrdn7Jup04AO/svW6YoUSUp
+	ZPjsWP8tXTvmco2MxRIE2jSXrxpjlfS2P2OMvDFfnTp01UHZtEbK/nfrYTCgC1Cr
+	OmIBglz6SlmjEW6el6vza4AaCVwKO/wZr6y41n8XRUILo/4UvkQDTkVmTMqGf9Oq
+	S61yBj7daESv3Mizm+1Wh+8dp9fFvxFs2zA==
+X-ME-Sender: <xms:qZkTabbeUFyYdJ6jvngwjMwr4f3O_zzcyFvDpdbWt9XtU8z-oV1jRw>
+    <xme:qZkTabHF_aj5SPmPAgJp_nyEltf86tI1Yv2rL3LpAplQz0HgjkbcTq7YYTmjAv_6k
+    VffoSukgTJdCRrmWVgDfY_9We5HJ8mOKSzPJMoFJDI8sMe-yMoriQ>
+X-ME-Received: <xmr:qZkTacIGi_h4N1lGnK-Axa6o1XU0HnCy6x9Efm3uweInv_b2lPAFWRPb-WaLmyZHDMEcppTp4SCrT-C78hmSSkWgufUlf9ZK9kk3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddvudefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
-    dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
-    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:hZUTadpEZR93Ah0pyD7yvMvmDkI3uMMEYEi8XFO2dx30t2Njk_zAKQ>
-    <xmx:hZUTaYmquMj1dt3c69aINzP0h-lFsgKMF0XjntQTeDiklBtKlTQCfA>
-    <xmx:hZUTacKduwEmK02d5swx8WdUFJQ6nx5Lnp_E43Rvr4lJNfN5G7NwJQ>
-    <xmx:hZUTaVwqC9Pg1AMcI8kNTV9UaEIUOxR2gS71WUWG_Glhfl2u_U_igg>
-    <xmx:hZUTaYKV23qIzq3HbjLP3DqcoWRNRZBstBLoh9b5BM_u2kGkWUm783WU>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    grughlthgvrhhnrghtihhvvgesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggr
+    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehphhhilh
+    hlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtghhi
+    thhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:qZkTaWOMaYTf0Bxt0fPuY2MxIP15hScsuxTie4mmqPNJs60aO5U-3w>
+    <xmx:qZkTackTMO7_q1PeVwVaPAPurP2Jw8HrHkZyXPba62vqGoNgFutTtw>
+    <xmx:qZkTaa7987XalIjUVCMutyltYXIhGHsGUxjABnlk_LZ8uVL_MZR-og>
+    <xmx:qZkTaQ0VwgK0zQgCEFTFgfIWjWiFMNA8BvYwyzwGXF71FDXw4SKh9Q>
+    <xmx:qpkTaZyJS7TUZK94yI3ipIpiHh9ZsyqY_3PE0mF7CGqy9MwZosWxzOrT>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Nov 2025 14:59:00 -0500 (EST)
+ 11 Nov 2025 15:16:41 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH v1 3/3] Documentation: your checkout directory is "working tree" (part 2)
-Date: Tue, 11 Nov 2025 11:58:53 -0800
-Message-ID: <20251111195853.2511146-4-gitster@pobox.com>
-X-Mailer: git-send-email 2.52.0-rc1-455-g30608eb744
-In-Reply-To: <20251111195853.2511146-1-gitster@pobox.com>
-References: <20251111195853.2511146-1-gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: ZheNing Hu <adlternative@gmail.com>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  phillip.wood@dunelm.org.uk,  ZheNing Hu
+ via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] commit: add --committer option
+In-Reply-To: <20251111191508.GA1907007@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 11 Nov 2025 14:15:08 -0500")
+References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
+	<6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com>
+	<aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
+	<20251110201136.GB127132@coredump.intra.peff.net>
+	<CAOLTT8RweGOmxNK=vKDv8w-8AJM7QUfLBw4WOKeY1EpSVeB6iQ@mail.gmail.com>
+	<20251111191508.GA1907007@coredump.intra.peff.net>
+Date: Tue, 11 Nov 2025 12:16:40 -0800
+Message-ID: <xmqqh5v0wcif.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The same fix as the previous step, which replaced "work tree" with
-"working tree" where appropriate, but this batch addresses the two
-word phrase that are split across lines.
+Jeff King <peff@peff.net> writes:
 
-Since I didn't come up with a clever "grep" pattern to work across
-line boundaries, I used pickaxe to find a block of "word 'work'
-appears near the end of line, possibly followed by a run of
-whitespaces or asterisks, then a newline, and then possibly a run of
-whitespaces or asterisks, then word 'tree'" in the comparison
-between an empty tree and what we have today, like so:
+>> Sometimes it's because I forgot to configure the repository-level git user
+>> config and started development first. Only when I tried to correct the
+>> committer did I feel the pain.
+>
+> OK, this workflow does make sense to me. Fixing up an earlier mistake is
+> inherently a one-off thing, and a command-line option is more ergonomic
+> than using the environment variables.
 
-    $ LF=$'\n' WS="[* "$'\t'"]"
-    $ git diff --pickaxe-regex -S"work$WS*$LF$WS*tree" \
-	4b825dc642cb6 -- ':(glob)Documentation/*.adoc' |
-      grep -A1 -e '^diff --git' -e "work${WS}$"
+Not very much, at least to me.  Fixing up an earlier mistake may be
+one-shot thing but it is to correct multiple commits in one go,
+which would be error prone if you do so with "git commit --option".
+Either "fast-export | fast-import" pipe, or "git rebase" (which this
+patch does not give --committer option, but it already knows how to
+honor existing environment variables) would be used for that, no?
 
-after finishing the previous two steps.
+> Two small thoughts:
+>
+>   - I suspect what you'd usually want there is for the committer and the
+>     author to match. We have --committer-date-is-author-date for rebase,
+>     and conceptually I think something like --committer-is-author would
+>     do what you want here. But obviously it's less flexible, and I don't
+>     know if it's that much easier to use.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-add.adoc       | 2 +-
- Documentation/git-read-tree.adoc | 2 +-
- Documentation/git-rm.adoc        | 4 ++--
- Documentation/git-submodule.adoc | 2 +-
- Documentation/gitcli.adoc        | 2 +-
- 5 files changed, 6 insertions(+), 6 deletions(-)
+I am not sure how the user experience of this would look like.
 
-diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
-index 18e7ed9b79..ced77a4713 100644
---- a/Documentation/git-add.adoc
-+++ b/Documentation/git-add.adoc
-@@ -173,7 +173,7 @@ for `git add --no-all <pathspec>...`, i.e. ignored removed files.
- `--ignore-missing`::
- 	This option can only be used together with `--dry-run`. By using
- 	this option the user can check if any of the given files would
--	be ignored, no matter if they are already present in the work
-+	be ignored, no matter if they are already present in the working
- 	tree or not.
- 
- `--no-warn-embedded-repo`::
-diff --git a/Documentation/git-read-tree.adoc b/Documentation/git-read-tree.adoc
-index 9d60badd74..0110ac9cb8 100644
---- a/Documentation/git-read-tree.adoc
-+++ b/Documentation/git-read-tree.adoc
-@@ -43,7 +43,7 @@ OPTIONS
- 	abort the operation.
- 
- -u::
--	After a successful merge, update the files in the work
-+	After a successful merge, update the files in the working
- 	tree with the result of the merge.
- 
- -i::
-diff --git a/Documentation/git-rm.adoc b/Documentation/git-rm.adoc
-index a7a3068381..dce054ea5d 100644
---- a/Documentation/git-rm.adoc
-+++ b/Documentation/git-rm.adoc
-@@ -152,7 +152,7 @@ git diff --name-only --diff-filter=D -z | xargs -0 git rm --cached
- SUBMODULES
- ----------
- Only submodules using a gitfile (which means they were cloned
--with a Git version 1.7.8 or newer) will be removed from the work
-+with a Git version 1.7.8 or newer) will be removed from the working
- tree, as their repository lives inside the `.git` directory of the
- superproject. If a submodule (or one of those nested inside it)
- still uses a `.git` directory, `git rm` moves the submodules
-@@ -164,7 +164,7 @@ will be staged (unless `--cached` or `-n` are used).
- A submodule is considered up to date when the `HEAD` is the same as
- recorded in the index, no tracked files are modified and no untracked
- files that aren't ignored are present in the submodule's working tree.
--Ignored files are deemed expendable and won't stop a submodule's work
-+Ignored files are deemed expendable and won't stop a submodule's working
- tree from being removed.
- 
- If you only want to remove the local checkout of a submodule from your
-diff --git a/Documentation/git-submodule.adoc b/Documentation/git-submodule.adoc
-index bdba17d166..df682b8b10 100644
---- a/Documentation/git-submodule.adoc
-+++ b/Documentation/git-submodule.adoc
-@@ -123,7 +123,7 @@ See the add subcommand for the definition of default remote.
- 
- deinit [-f|--force] (--all|[--] <path>...)::
- 	Unregister the given submodules, i.e. remove the whole
--	`submodule.$name` section from .git/config together with their work
-+	`submodule.$name` section from .git/config together with their working
- 	tree. Further calls to `git submodule update`, `git submodule foreach`
- 	and `git submodule sync` will skip any unregistered submodules until
- 	they are initialized again, so use this command if you don't want to
-diff --git a/Documentation/gitcli.adoc b/Documentation/gitcli.adoc
-index db88e84aaf..d3df9fed31 100644
---- a/Documentation/gitcli.adoc
-+++ b/Documentation/gitcli.adoc
-@@ -35,7 +35,7 @@ arguments.  Here are the rules:
- 
-  * When an argument can be misunderstood as either a revision or a path,
-    they can be disambiguated by placing `--` between them.
--   E.g. `git diff -- HEAD` is, "I have a file called HEAD in my work
-+   E.g. `git diff -- HEAD` is, "I have a file called HEAD in my working
-    tree.  Please show changes between the version I staged in the index
-    and what I have in the working tree for that file", not "show the difference
-    between the HEAD commit and the working tree as a whole".  You can say
--- 
-2.52.0-rc1-455-g30608eb744
+>   - Because it's easy to make such mistakes, when you override the
+>     author (so that it doesn't match the committer), git-commit prints
+>     an extra "Author:" line in the output to make that more obvious.
+>     Should we do the same with committer when you've overridden it?  We
+>     already do print "Committer:" when the ident was guessed from system
+>     info, but I wonder if it would make sense to print when it was
+>     forced. I dunno. I guess the time you most need the hint is when you
+>     meant to use --committer and --author together, but only used
+>     --author. But I don't know how Git would infer that case (versus the
+>     normal case of you applying someone else's work and crediting them
+>     with --author).
 
+Yup, guessing based on what you did _not_ give is always a hard task
+for any tool ;-).
+
+> I'm not sure if either is a useful direction, but they seemed
+> sufficiently not-dumb for me to at least type them out. ;)
+>
+> -Peff
