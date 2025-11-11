@@ -1,94 +1,133 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B7810942
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 00:12:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7918C137923
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 00:20:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762819977; cv=none; b=lfcSYQAmy69vWgt2w4vP7C3bj5izLdeP7Ow95zc5gey2utFiPahy6P7yNFx92fCMzsNXh4OKbtft/Rln6QNCVhKPH73wSW+NwH/NB3i1lN60QXZfN0qp9Q2HMk5O5bnS9DbpYtwW2Tq8lHx1YYbdVwEetyDA/mj/zYUh92Yemkk=
+	t=1762820424; cv=none; b=EGN+O1SubPITLq+2CLadu/kf4FKDrOouAkHkGT8TH8kLWkU0bwmrh4OwlCG/NZIu0vEQ75VWHvqgjpbmshDO2gOZyBTBaAmMwph40YqXC2WsgILe1AGk2hfWpzvZqqSP6PYPXPXMy3KCsM5+50CIeiyNsO7ZDxe5K/eOdpA4am8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762819977; c=relaxed/simple;
-	bh=c8W+z3gd0gsPd4a6+35xVId/I93EfIz2TgEcXsRjSFc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TMnLZSCCdGdq3P+xaPsjQJs9TUVOI7wgABjaxtCYQxMg90/73A8G2eh4dW/4Mboco0BP99vXMpJGsvgw8JlwI9+fMnwKxayv3qixGiwe49biyjcjOkHlgXVkUzVkQLPGLEQERjspLxIY04RhLT/QuBvyiGVgdBo2zjxmGDVl73Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lUHC+OZo; arc=none smtp.client-ip=209.85.208.169
+	s=arc-20240116; t=1762820424; c=relaxed/simple;
+	bh=kMwqF2XXsGB7OPxd0A7roCXTlUtCkBwcTCcFx6AKuXs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=a+gYqEzWXrrx87nOWB2qmB1pBLlxFAhpCSDDA1Hjk6O9TG7L9LWAe5h6lwVi1Ntlcfg+77DK739dWhNHs7MtEaz19shjdY1Xg6spTp3cw8Cf/DuVMZqWE/zC0gSHxBpCWPeIaazfVC5YTjkCnGmRiqNpAMpvXbZCKRIMqziAkH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F7j5InBB; arc=none smtp.client-ip=74.125.224.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lUHC+OZo"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-37a2d9cf22aso2446961fa.1
-        for <git@vger.kernel.org>; Mon, 10 Nov 2025 16:12:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F7j5InBB"
+Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-640f88b873bso199845d50.3
+        for <git@vger.kernel.org>; Mon, 10 Nov 2025 16:20:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762819974; x=1763424774; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1762820420; x=1763425220; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tX4QKaLHaoDENkx7pDHc9wOV5AwKCeypiC5Oi02ey7Q=;
-        b=lUHC+OZojokVSRKn657DAlbBy8cJn0v1CXPBiQ3RMfYKbWr7Wwzz/xaKe6zWZ4s8gD
-         5FiHd6knywUNdEgqH8iWvl9DE54i3RPy3k3f4ItUFpDb4D2BRHqsQ4GDnQywV7rOQW7d
-         EtFsVdigZ0aWIXSEMiMeMx7mj0EQA0g416/iyS1Wp1cQutAKJULiSgrkCwVY4ggIwQr5
-         NOHMzUfyEPcUaMsY7B6cSfR74MmQ7VeK1hLwSt8di/GcbZPW2iJF61zx7LCavNOklf7i
-         KRk+Hi6P9/vCb71oNzw3YSLoUGN1H6Vzdep1HxiarAifteBXM//B1xfFEowI1q56Pz/l
-         0o6Q==
+        bh=g/egOHAxQeEZopFNL9cgNfraru2so9tREvNRe7TWbRM=;
+        b=F7j5InBBZ6kJVIBCbvrJ3ZharaSLh9lqhtKkrdTl7drTrOwRt0NcYUfHHybqEkXQZm
+         fJJAodrMpOO7HKpD6qV32hOi5kyTsggS6jpwf7Zweweq+pk5V0wkojUFGrmLBc4WGIup
+         upL7DvKWO3taGxMyfBelihCPZMH4X0ml09KKqCEQmOEoYbeHoJd+ihfdL53Rw73Ikhb3
+         qW/7o9f+/mSAsDwsHUgVcBXDenLSz1lblmeEc/3/48YCgjH1VgIyfs8sPf+uextGIK5A
+         0oEDeGra60RkzpT5e6yzcxemLGDeQvS3Se4lQD3PujxsTthqgU8PGcYEhnx/bKdjS0q3
+         38Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762819974; x=1763424774;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=tX4QKaLHaoDENkx7pDHc9wOV5AwKCeypiC5Oi02ey7Q=;
-        b=dyve+mQbHr33OgXQR9n0uWvk8aZa7CKvokU6eEZ8DYIFKPFgns+8lYfTRmp8uv/7lb
-         E91lPBApuR/LX9r38vax6NHFC/ROp7sokJ+ZxMfDCdalDJ7sLkgSaB/dSUCbPnoG9gqe
-         vZgXysOBGjp6KMVejYNT9La9T601nwSolxIec8la+IlxpFO5c31maw8gglHh/J2a8TIe
-         po6ZctDezpEcYMeovDHq0VtXFcVtbQ/2PvJ3r3WEU+aHJFfrWMYPrn7bBcrPicOXYiGe
-         o/6avzGWd1MeMzFJv2HuMjGLst0Corwhm0KuNZkzEAlG5VdbcM/rGIuBw4VQZxcwBGBc
-         a34g==
-X-Gm-Message-State: AOJu0YxKoPCpPnchjwwmnD8iQ9mIIcevFPoqqHrSOk06/Bc/QF9GDy6o
-	txOBZpX9f3jTMHUDV/Zi7Bf1yRuS3AvOObveZOS8AK2hfqouCIxE4v675d32qsHeocI4Vn/D+vz
-	Jaqy5jzQsgufLjxixu0jxhjT3peU7UKw=
-X-Gm-Gg: ASbGncsZxvAvK/og/YF2y/v5hPNvTy/ix5SYhfIfL7ppoCSq/9ZJybZUSobQfZOZUrh
-	DbY+6x3y2rJRgEWAUYmqBv1W9/vh3J1pm3TnDiYgKfvi+HcXhohQxyyg7ncjkUdtxCAeRA3NMt4
-	7WMo9h6GbGlKCuoA5tFvKUCMoDZpCoT/WkMYcySFI03/eZtaIhqzldXzx3s3AMt37tMP7P1mQfw
-	A3tlUI9EVq88rfTbQitmNLgwDGoP/777pkVfd6EegNiC+Uh048jgx1OvVhowQ==
-X-Google-Smtp-Source: AGHT+IGY+UmUMgLC5pntQamS7MGdUW5G9nO0wbXECuUdh19GM5UWiw+7l414FQFIU12ZzNG7QuxoJkcibbUkI+DyLkY=
-X-Received: by 2002:a2e:6a18:0:b0:378:e3a7:5dfa with SMTP id
- 38308e7fff4ca-37a95389c5cmr2415901fa.20.1762819973413; Mon, 10 Nov 2025
- 16:12:53 -0800 (PST)
+        d=1e100.net; s=20230601; t=1762820420; x=1763425220;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g/egOHAxQeEZopFNL9cgNfraru2so9tREvNRe7TWbRM=;
+        b=A75cvyJzGjzJ8ItBv8zKrG9ooM8pKgHdhfHiHMNYHpsZ0k4kV6MvimUqi82+sb0kAD
+         YiYn8Jsk4K9GA98WVEl2g0/6fYeCikyNSZLmZl/ttDF8xm1aPYfWBXVChVZXY8PF9+3n
+         V9scSJa+K28EbWUAPd4px3xP46eAjRTuXGpSoc7M7LFyhzPH9cq7e4m0+C4SiFmrICIF
+         IZNBon4he/cz5OXFV6YXJkgYwI0wGbECX+9XOFkT7oOv8NeOdDC8SI8Whz0hHcuKo7g9
+         EYUF0S31zWSYTLEQFi+27xbBYEYVpHK0PcuOtMdHc6BWauV6gRSMLlFuqJfJkOQ74Coh
+         IVOA==
+X-Gm-Message-State: AOJu0Yx1uMIgnRh68xaSDuJF0cxxI9dCsvYkqbtsA6OKgzZ6Ve5lQQN0
+	odSyCUrXPlgIfUUQE1FD4TvhQlkXTPdt4L7m+kHYwhS2y+b6cADCa3Dn8bulPgZVVL4=
+X-Gm-Gg: ASbGnctq8G9W2hemjGamP3gpCxGqHjFS9VdtLQjC93cLQ458Tgabc/RoSysuqyKSvU0
+	GG/JWNE6U6ypZaPi4zBBDNq6tVt+a0fLPdMFmDlLrNW1BLj+VmJvSVfPXZL/jWw5L8t4nplJBf7
+	g7n4Rk6RNwYhXKabAqqfJI3YPXMvg86ugxBf48FaViqLkHw837kvrZ086khOL3otKIHul/JWVzk
+	dM8whISlu4UESccySSXwgSDKhu5Jqe+jqz94baMFeKj6EMLPW7npxLCvwdR1UM5z3bAD159PbRR
+	L+2K8OsJATkne5QixCUO6ZRG/p7vJM3cEfD2GZ/vHs9C4NA0nD7R+JJdC5YnpETdx0vvRPJGwkq
+	bU236gGsxBcpW8LOs7GABD7y8OYDH5bmgz47QvQX9prS9khc0vkvanWVWcpXOdDyE9CsafbGXSE
+	YNOQjIuJA6/n1tr4c=
+X-Google-Smtp-Source: AGHT+IEqfMqZ0u9lWk9e3eB1ai/QGZZNe3EJiJxAOToxfpgbdHGYaAU9XFZm4FLts1SbfKVrzwPcEQ==
+X-Received: by 2002:a05:690e:42cf:b0:63f:abbe:3964 with SMTP id 956f58d0204a3-640d454395emr7709473d50.13.1762820420017;
+        Mon, 10 Nov 2025 16:20:20 -0800 (PST)
+Received: from localhost.localdomain ([2605:a601:90a8:8b00::a])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-640da6324f5sm2609254d50.27.2025.11.10.16.20.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Nov 2025 16:20:19 -0800 (PST)
+Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	"D. Ben Knoble" <ben.knoble+github@gmail.com>
+Subject: [PATCH v2] perl: also mark git-contacts executable
+Date: Mon, 10 Nov 2025 19:19:57 -0500
+Message-ID: <15f07afcb66a900e5391e6b07e0701ce84236f04.1762820188.git.ben.knoble+github@gmail.com>
+X-Mailer: git-send-email 2.52.0.rc0.71.g03eda12af0.dirty
+In-Reply-To: <7fbb341e8f05fcde3a1543e3bb4e5a3ec1101692.1762280097.git.ben.knoble+github@gmail.com>
+References: <7fbb341e8f05fcde3a1543e3bb4e5a3ec1101692.1762280097.git.ben.knoble+github@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
-In-Reply-To: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Mon, 10 Nov 2025 17:12:41 -0700
-X-Gm-Features: AWmQ_bm6djEeGCc53cg5LEUHEWZhAr4BBeQ1BTs6gjsEbi0eg1yt_q4dWSdHQCs
-Message-ID: <CAH=ZcbB6k8p0wwD1MiN_D-bqKhkqumM9sOvAxLj+pUu43M8NNw@mail.gmail.com>
-Subject: Re: [PATCH 00/14] SHA-1/SHA-256 interoperability, part 2
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sun, Oct 26, 2025 at 6:44=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> This is the second part of the SHA-1/SHA-256 interoperability work.  It
-> introduces our first major use of Rust code to implement a loose object
-> format as well as preparatory work to make that happen, including
-> changing types to more Rust-friendly ones.  Since Rust will be required
-> ...
+When installing git-contacts with Meson via -Dcontrib=contacts, the
+default Perl generation fails to mark it executable. As a result, "git
+contacts" reports "'contacts' is not a git command."
 
-I'm working on a patch series that converts the Cargo crate into a
-Cargo workspace. This means that /src will be moved to /gitcore/src. I
-plan on releasing that patch series after v2.52.0 is released. Using a
-Cargo workspace over a single crate is discussed partially in [1].
-Patrick has decided to let me introduce cbindgen and the Cargo
-workspace conversion [2].
+Unlike generate-script.sh, we aren't testing the basename here; so, glob
+the script name in the case arm to match wherever the input comes from.
 
-[1] Patrick's patch series on cbindgen
-https://lore.kernel.org/git/20251023-b4-pks-rust-cbindgen-v1-0-c19b61b03127=
-@pks.im/
-[2] Patrick discarding his patch series
-https://lore.kernel.org/git/aQ3XOTX0AT_eFc5P@pks.im/
+Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+---
+
+A small typo fix for the commit message, thanks to Patrick.
+
+v1: https://lore.kernel.org/git/7fbb341e8f05fcde3a1543e3bb4e5a3ec1101692.1762280097.git.ben.knoble+github@gmail.com/
+
+ generate-perl.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/generate-perl.sh b/generate-perl.sh
+index 65f122ebfc..796d835932 100755
+--- a/generate-perl.sh
++++ b/generate-perl.sh
+@@ -30,7 +30,7 @@
+     "$INPUT" >"$OUTPUT"
+ 
+ case "$INPUT" in
+-*.perl)
++*.perl|*git-contacts)
+ 	chmod a+x "$OUTPUT";;
+ *)
+ 	;;
+
+Diff-intervalle contre v1 :
+1:  7fbb341e8f ! 1:  15f07afcb6 perl: also mark git-contacts executable
+    @@ Metadata
+      ## Commit message ##
+         perl: also mark git-contacts executable
+     
+    -    When install git-contacts with Meson via -Dcontrib=contacts, the default
+    -    Perl generation fails to mark it executable. As a result, "git contacts"
+    -    reports "'contacts' is not a git command."
+    +    When installing git-contacts with Meson via -Dcontrib=contacts, the
+    +    default Perl generation fails to mark it executable. As a result, "git
+    +    contacts" reports "'contacts' is not a git command."
+     
+         Unlike generate-script.sh, we aren't testing the basename here; so, glob
+         the script name in the case arm to match wherever the input comes from.
+
+base-commit: 7f278e958afbf9b7e0727631b4c26dcfa1c63d6e
+prerequisite-patch-id: 664e4667d11a226a89da52814505a0c8d31b9fba
+-- 
+2.52.0.rc0.71.g03eda12af0.dirty
+
