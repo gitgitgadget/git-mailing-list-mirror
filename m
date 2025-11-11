@@ -1,284 +1,149 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+Received: from mail-yw1-f193.google.com (mail-yw1-f193.google.com [209.85.128.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE1E1B4F2C
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 00:26:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0B57262A
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 01:02:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762820784; cv=none; b=J3XSmnDHf5TGQqIZSFflAy1b2LPkyTXztwnoQOHCs0V+8Oux5xhE00M2YX/VUOzQ+3hF4F3slMsprdq+G2+AqiYKBDB6mh0Mh30V/NXIwbqAlF/h5XJqooGfTSanpEi4srUTSlL18CvNQbQikJd+Ps3RoKZJDE4OWalN+ryEwrM=
+	t=1762822963; cv=none; b=sZCQd1aRGWN1U3sBDe6asORl3oSyUMpBaz+GTrLJ1J+2RaDKfnZc8AX0YqCNq/oLdktLYKFzf905r+bQ+idR+jYtlVTaqzIZTXmNPYJns04aIXM++xPUpM1RiHXzY5tc4hVBOCiQfBlUUAElf63sGM3dAA5+9mMYYLwswi9qM9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762820784; c=relaxed/simple;
-	bh=qQHW1xKLliT3Ofm96fBJX5kYsAhbXUCR9L4XQb0E0Jw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qZAm/kj75qdXVVpScSVnshl23n+tmrDW9KkGISFTKfuVnLKTDz34YkE/ysmplVfOuL1QaHrqmXP8dChSHUptsQ6XWqYecGimAGQ8qNPn9oC+SrFgcFD+N9V91sIlmIO0Pauct1NA0T0eHAu9yT7kF5G6owZyKI9W+xTJW9/oaY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TcTOs/V6; arc=none smtp.client-ip=74.125.224.42
+	s=arc-20240116; t=1762822963; c=relaxed/simple;
+	bh=KBQRwX/JDkgy2wUHCUUSnM9YUktru5H8CNoPzSlu3H4=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=k1rpQ+VuKYo9lYlRQ8zqkU1hKkaAIUmB7Y7K7RF67BpUoNRTF5aUgjCOa++xpMvgOnP+Qf9AS1xFW9od4LO+93cIYauxxRAoBCCi3YJl6KC0UQVenqtDvVW/vlGL9jLoKYf3YTsjApRvuLqApbWxNlZGALDklBZo9k+PF7C/R5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P21NGxyl; arc=none smtp.client-ip=209.85.128.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TcTOs/V6"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-63e393c4a8aso2794782d50.2
-        for <git@vger.kernel.org>; Mon, 10 Nov 2025 16:26:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P21NGxyl"
+Received: by mail-yw1-f193.google.com with SMTP id 00721157ae682-787f586532bso16892877b3.1
+        for <git@vger.kernel.org>; Mon, 10 Nov 2025 17:02:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762820781; x=1763425581; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nAhlsXRQa/bQ720vuifAS3tsgp1iM90FWrooH4TCz2w=;
-        b=TcTOs/V6GzLZ9XiPMgIT+z4Rt/SKixx7nB4C2DuohqlYku/PKN9yRVRLH006iLK+hu
-         K8fik+s29MFC7t0lDkEN2hgbqhnqR+Ev1TduR+tuOFUYCPJuUmHyvXTmzXMjTrtq97uu
-         xJEZs1msDxdpRzxqm6tLpYzKMdhegqTWwcKnNreCi9lfWIFCzu1VR95YdXCtnjhnZJzJ
-         i9G27h89pA+BEMIbGeI2ydQL0+vsI8x2Zw3vBvmF2oJR6mMc/1Awn4LFM+VHk0DSc2Mz
-         hOdh/WJsl/jnDUWJdvVjMDEZ/pZNX0HSLkUUjAQdWDmCVsdVHPQdgwdqjr1X7pixChgZ
-         MAVw==
+        d=gmail.com; s=20230601; t=1762822961; x=1763427761; darn=vger.kernel.org;
+        h=mime-version:content-transfer-encoding:msip_labels:content-language
+         :accept-language:message-id:date:thread-index:thread-topic:subject
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=m5QZU03ODWX/r8g4PqBCIrjMNtbwwYmlOQNPiTFvVxE=;
+        b=P21NGxylrWqHL0UvFP0+ngumOYVQ11dIV16tUfJZ3zJGt/UvHKqjpVSXS/e1OsCa9t
+         w0j0pOLYc+/GuTYhj1h+3ULQjaAANCpwkElQrhc8yVtYzQ2KkHco0fsfgrIKOPsFbNhB
+         s8fQYcmQiDgII286eAgDpwIbhLIDCAh7+0WCOpXaanmHrZgVqv6V4N7XQrgdvrqfLqxX
+         zWwPqHl+N0T9tUF6VzOZNkNaOEqtodoFI9UaWHe/k/HZYNFXvxkCjIXm6z4Dg3SFtV4+
+         VxsHU96kJXFFV267XJMVZH5QTj1tnIjOGBxWrLYkS2HWcUh/6kyUanEw7VC5QZ3ITRrZ
+         pl1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762820781; x=1763425581;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nAhlsXRQa/bQ720vuifAS3tsgp1iM90FWrooH4TCz2w=;
-        b=SgLHWhI4sm2iOPh4rxVotByTl2NIZ/oq7IZtQBsjuncs7o+GtQB+17vA1tB1gG0ADv
-         i1KZdiB6HF+frrjW3RX+POIj77Zx6sfqDV+WV24SCYcSq6M8HS462ZOnTPROxYv0kPZ1
-         SPbgFO9xSR0VLITt7HI3aZgiDs/Q+FloNHT6jn/pHWbAq3ps0RLNr/BGOvXyjcp/aMSQ
-         WQctQ84x8Qg1sZ3pvYapadzwhs3ksJxGfoJR29U/eCvTWEYzGriUo4VAdTCNU4ymb/Tf
-         rCkzxNhXrg2PwJXT5rOuJRbaZCNcfJqdS0+pYe5NBTtWtDu8xW8r6k3psrFW67poRCAt
-         TWyA==
-X-Gm-Message-State: AOJu0YxmMu1mpXD7/uKPLSUOUKNbiHl40gMHljN0BUX6v29haLPyN+32
-	6waNzuGllHHqPP1kvEYV41Og7fZlLhr+sRCWLYNEX1C5jDamC37pJDWwx7AFhuUxk20=
-X-Gm-Gg: ASbGncsdpIVWF04nHXGvz1XUSS1FKku4c6DyOmX99qXosfpwq0Q3MR9qCGLIMaR6V29
-	veN/P2XVj5vOAMap8eqTwnYW5rjl7yi6dcHEFbAZXoPNVDKC0ZlYAzN5lay22QpS6DfPjHUzEXy
-	7iNBgBuz3ZxZQ/R3DWZKH1UcCIDcmC811V5fOULdphT0KwsQ4rMz0BWstMS8cfY2OZp0CHoSm4j
-	lfFK77KlnLHYNuqoZExypTUO2Q1WBdL5HLFdNl7qEtu/f3fabWeDfbvevclYYDScPKirO8l/sQj
-	gbT/ChgkUfaLqzU2IoT3ipMspQAn92UXVuuuPQqbhDxzFP4ZphNjs8Y+AdX6dwMb/ozu/Zkkf6k
-	Fz0jVWXuVFhd8o06D33SResiUq5jv00vyDbVOYsjVHqkbfMd+ggdi56xRkYD/ENkHsdtd8OWNQa
-	GrOH6RemlLHeIEBYY=
-X-Google-Smtp-Source: AGHT+IGqEGUH/s99UttdihZmMeKgl9d8t8+iw5ZlX0zpdyy6eRkGkUcDmNU/vkYVz4vi+Q+hBSosrQ==
-X-Received: by 2002:a05:690e:2404:b0:63f:a7dc:159e with SMTP id 956f58d0204a3-640d45528c8mr6131514d50.29.1762820780982;
-        Mon, 10 Nov 2025 16:26:20 -0800 (PST)
-Received: from localhost.localdomain ([2605:a601:90a8:8b00::a])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-640b5d9350dsm5166858d50.20.2025.11.10.16.26.20
+        d=1e100.net; s=20230601; t=1762822961; x=1763427761;
+        h=mime-version:content-transfer-encoding:msip_labels:content-language
+         :accept-language:message-id:date:thread-index:thread-topic:subject
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m5QZU03ODWX/r8g4PqBCIrjMNtbwwYmlOQNPiTFvVxE=;
+        b=glt3rOk3D81Q2VMcSLRbQ7VIEOoisT0jnyDwua4BBjESoZ5vwJRpvsJIzK7Yxk732b
+         zEJ8QLBtPBEpdSGdjAdhfrYMzKkh5t6nMuY7vx2AsFGMxYO5ce14xHRTFoKJHeWi6/qq
+         iihYqYt79diMDmFFdKrR7a6tyubOQj23V3xarxC1Nl83ARISC5oUEzKA88WYEJJWpYxV
+         0yfrQFBVGgTpHZQF1qNv4aEDhg2uhU5yl+XVCm9vXW1zHf8JuSIXLss+nr/Jq4E4734v
+         mDovribPpKBot9axGdSc6NHRvXON1zKb9lzEDqTG/OfoHVShxRRtNWWoyouxBxsx2gmZ
+         hh7Q==
+X-Gm-Message-State: AOJu0Yyn+wukcBwQm2l2laFQlAzZHQNUDXWbSBqze45kY7gUPx+el2ER
+	k3z79p/jFJaVHscdugpipSaKr9c8iK7qZZMVXSS6ieINhQQWtBqFNJgLwCXzwXak
+X-Gm-Gg: ASbGnct7ixdKVZUOMN8npcJJOtJaWSQdeGLnuJJjwCD6lHVmaSVZt7grrYJuOEEMH7l
+	5x4/XkQJBNXaPvpdXc/hU7rgrBsNGjvi0NX/8Ki0/7bvc9h3aw4KLo+mqyDVGvrq8vXu5RnrfqV
+	jwF9SaXNKUw6k3AuAw8VBp8o49C7pmhvXUYlat6SzsmsmmRldecwTrzHLBUiO/WKqgeQVleRZcM
+	wdwg0ypdjDMKQXnQ7ILgiHT7KGUNa9K7QUN6Xq/45luW4xpCRF2FU4raQElQUujvPZybO5EEw+x
+	4umvD07blIri1roRLMYMmBXcfnvr76jGRIGrQKSjA61zQfvzXnjPvWtsAQle46BsDIX0+ukZjpd
+	NBcOPu0tmsZ/CEvae/yfd0Hz88ARUsl5wruHu2dgbkFMiPOw6SaSuOCy9VG80KtrPOJoNcy4+xB
+	1gX+SBauuu1P+bdU5DhQMXXbdWgocAyL4Ukpq+sqDnqSd2DPBEVWkqqvnwAZHeZZof+bHoThftc
+	EZs14C9xEZdKVQ=
+X-Google-Smtp-Source: AGHT+IHXQQXMiEUXVCizjoyZWN5A03JdZG2+CoADO+nqDAERDunVC6n+WvOMdZPvvUspnVXZ4jqtow==
+X-Received: by 2002:a05:690c:dc1:b0:787:cef1:61c3 with SMTP id 00721157ae682-787d538fc4dmr97760517b3.31.1762822960621;
+        Mon, 10 Nov 2025 17:02:40 -0800 (PST)
+Received: from DS0PR03MB7290.namprd03.prod.outlook.com ([2603:1036:5:36::5])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-787d687e26esm28203397b3.27.2025.11.10.17.02.39
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Nov 2025 16:26:20 -0800 (PST)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	"D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Todd Zullinger <tmz@pobox.com>
-Subject: [PATCH] meson: make GIT_HTML_PATH configurable
-Date: Mon, 10 Nov 2025 19:25:04 -0500
-Message-ID: <d6b86ed23e28c875b48fdc77095ace3f8ff4ee5d.1762820704.git.ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.52.0.rc0.71.g03eda12af0.dirty
-In-Reply-To: <385992f6020703558f0ba75a1be6c4f9dae08b83.1762264709.git.ben.knoble+github@gmail.com>
-References: <385992f6020703558f0ba75a1be6c4f9dae08b83.1762264709.git.ben.knoble+github@gmail.com>
+        Mon, 10 Nov 2025 17:02:40 -0800 (PST)
+From: Ryan Johnson <ryan.johnson.code@gmail.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: gitignore redesign proposal
+Thread-Topic: gitignore redesign proposal
+Thread-Index: AQHcUoI72+h+S5qsykmOqSwLzYwrZA==
+X-MS-Exchange-MessageSentRepresentingType: 1
+Date: Tue, 11 Nov 2025 01:02:39 +0000
+Message-ID:
+	<DS0PR03MB7290A11407D68F7F3623FD9CA3CEA@DS0PR03MB7290.namprd03.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-Exchange-Organization-SCL: -1
+X-MS-TNEF-Correlator:
+X-MS-Exchange-Organization-RecordReviewCfmType: 0
+msip_labels:
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
-Makefile-based builds can configure Git's internal HTML_PATH by defining
-htmldir, which is useful for packagers that put documentation in
-different locations. Gentoo, for example, uses version-suffixed
-directories like ${prefix}/share/doc/git-2.51 and puts the HTML
-documentation in an 'html' subdirectory of the same.
-
-Propagate the same configuration knob to Meson-based builds so that
-"git --html-path" on such systems can be configured to output the
-correct directory.
-
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
-
-Reorder options lexicographically for Patrick ;)
-
-v1: https://lore.kernel.org/git/85992f6020703558f0ba75a1be6c4f9dae08b83.1762264709.git.ben.knoble+github@gmail.com
-
- Documentation/howto/meson.build     |  4 ++--
- Documentation/meson.build           | 12 ++++++------
- Documentation/technical/meson.build |  4 ++--
- contrib/contacts/meson.build        |  2 +-
- contrib/subtree/meson.build         |  2 +-
- meson.build                         |  7 ++++++-
- meson_options.txt                   |  2 ++
- 7 files changed, 20 insertions(+), 13 deletions(-)
-
-diff --git a/Documentation/howto/meson.build b/Documentation/howto/meson.build
-index ece20244af..16b9056f24 100644
---- a/Documentation/howto/meson.build
-+++ b/Documentation/howto/meson.build
-@@ -35,7 +35,7 @@ doc_targets += custom_target(
-   output: 'howto-index.html',
-   depends: documentation_deps,
-   install: true,
--  install_dir: get_option('datadir') / 'doc/git-doc',
-+  install_dir: htmldir,
- )
- 
- foreach howto : howto_sources
-@@ -57,6 +57,6 @@ foreach howto : howto_sources
-     output: fs.stem(howto_stripped.full_path()) + '.html',
-     depends: documentation_deps,
-     install: true,
--    install_dir: get_option('datadir') / 'doc/git-doc/howto',
-+    install_dir: htmldir / 'howto',
-   )
- endforeach
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index 9d24f2da54..c00c9fe7f4 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -412,7 +412,7 @@ foreach manpage, category : manpages
-       input: manpage,
-       output: fs.stem(manpage) + '.html',
-       install: true,
--      install_dir: get_option('datadir') / 'doc/git-doc',
-+      install_dir: htmldir,
-     )
-   endif
- endforeach
-@@ -423,7 +423,7 @@ if get_option('docs').contains('html')
-     output: 'docinfo.html',
-     copy: true,
-     install: true,
--    install_dir: get_option('datadir') / 'doc/git-doc',
-+    install_dir: htmldir,
-   )
- 
-   configure_file(
-@@ -431,11 +431,11 @@ if get_option('docs').contains('html')
-     output: 'docbook-xsl.css',
-     copy: true,
-     install: true,
--    install_dir: get_option('datadir') / 'doc/git-doc',
-+    install_dir: htmldir,
-   )
- 
-   install_symlink('index.html',
--    install_dir: get_option('datadir') / 'doc/git-doc',
-+    install_dir: htmldir,
-     pointing_to: 'git.html',
-   )
- 
-@@ -466,7 +466,7 @@ if get_option('docs').contains('html')
-     input: 'docbook.xsl',
-     output: 'user-manual.html',
-     install: true,
--    install_dir: get_option('datadir') / 'doc/git-doc',
-+    install_dir: htmldir,
-   )
- 
-   articles = [
-@@ -492,7 +492,7 @@ if get_option('docs').contains('html')
-       output: fs.stem(article) + '.html',
-       depends: documentation_deps,
-       install: true,
--      install_dir: get_option('datadir') / 'doc/git-doc',
-+      install_dir: htmldir,
-     )
-   endforeach
- 
-diff --git a/Documentation/technical/meson.build b/Documentation/technical/meson.build
-index be698ef22a..faff3964a9 100644
---- a/Documentation/technical/meson.build
-+++ b/Documentation/technical/meson.build
-@@ -53,7 +53,7 @@ doc_targets += custom_target(
-   output: 'api-index.html',
-   depends: documentation_deps,
-   install: true,
--  install_dir: get_option('datadir') / 'doc/git-doc/technical',
-+  install_dir: htmldir / 'technical',
- )
- 
- foreach article : api_docs + articles
-@@ -63,6 +63,6 @@ foreach article : api_docs + articles
-     output: fs.stem(article) + '.html',
-     depends: documentation_deps,
-     install: true,
--    install_dir: get_option('datadir') / 'doc/git-doc/technical',
-+    install_dir: htmldir / 'technical',
-   )
- endforeach
-diff --git a/contrib/contacts/meson.build b/contrib/contacts/meson.build
-index c8fdb35ed9..4ae6b32a03 100644
---- a/contrib/contacts/meson.build
-+++ b/contrib/contacts/meson.build
-@@ -50,6 +50,6 @@ if get_option('docs').contains('html')
-     input: 'git-contacts.adoc',
-     output: 'git-contacts.html',
-     install: true,
--    install_dir: get_option('datadir') / 'doc/git-doc',
-+    install_dir: htmldir,
-   )
- endif
-diff --git a/contrib/subtree/meson.build b/contrib/subtree/meson.build
-index 46cdbcc30c..161435abeb 100644
---- a/contrib/subtree/meson.build
-+++ b/contrib/subtree/meson.build
-@@ -68,6 +68,6 @@ if get_option('docs').contains('html')
-     input: 'git-subtree.adoc',
-     output: 'git-subtree.html',
-     install: true,
--    install_dir: get_option('datadir') / 'doc/git-doc',
-+    install_dir: htmldir,
-   )
- endif
-diff --git a/meson.build b/meson.build
-index 2b763f7c53..1f95a06edb 100644
---- a/meson.build
-+++ b/meson.build
-@@ -768,13 +768,18 @@ if test_output_directory == ''
-   test_output_directory = meson.project_build_root() / 'test-output'
- endif
- 
-+htmldir = get_option('htmldir')
-+if htmldir == ''
-+  htmldir = get_option('datadir') / 'doc/git-doc'
-+endif
-+
- # These variables are used for building libgit.a.
- libgit_c_args = [
-   '-DBINDIR="' + get_option('bindir') + '"',
-   '-DDEFAULT_GIT_TEMPLATE_DIR="' + get_option('datadir') / 'git-core/templates' + '"',
-   '-DFALLBACK_RUNTIME_PREFIX="' + get_option('prefix') + '"',
-   '-DGIT_HOST_CPU="' + host_machine.cpu_family() + '"',
--  '-DGIT_HTML_PATH="' + get_option('datadir') / 'doc/git-doc"',
-+  '-DGIT_HTML_PATH="' + htmldir + '"',
-   '-DGIT_INFO_PATH="' + get_option('infodir') + '"',
-   '-DGIT_LOCALE_PATH="' + get_option('localedir') + '"',
-   '-DGIT_MAN_PATH="' + get_option('mandir') + '"',
-diff --git a/meson_options.txt b/meson_options.txt
-index 143dee9237..e0be260ae1 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -1,4 +1,6 @@
- # Configuration for Git installation
-+option('htmldir', type: 'string', value: '',
-+  description: 'Directory to install HTML docs to. Defaults to <datadir>/doc/git-doc')
- option('perllibdir', type: 'string', value: '',
-   description: 'Directory to install perl lib to. Defaults to <datadir>/perl5')
- 
-
-Diff-intervalle :
-1:  385992f602 ! 1:  d6b86ed23e meson: make GIT_HTML_PATH configurable
-    @@ meson.build: if test_output_directory == ''
-      ## meson_options.txt ##
-     @@
-      # Configuration for Git installation
-    - option('perllibdir', type: 'string', value: '',
-    -   description: 'Directory to install perl lib to. Defaults to <datadir>/perl5')
-     +option('htmldir', type: 'string', value: '',
-     +  description: 'Directory to install HTML docs to. Defaults to <datadir>/doc/git-doc')
-    + option('perllibdir', type: 'string', value: '',
-    +   description: 'Directory to install perl lib to. Defaults to <datadir>/perl5')
-      
-    - # Configuration for how Git behaves at runtime.
-    - option('default_pager', type: 'string', value: 'less',
-
-base-commit: 7f278e958afbf9b7e0727631b4c26dcfa1c63d6e
--- 
-2.52.0.rc0.71.g03eda12af0.dirty
-
+I have 4 proposed changes to the gitignore feature:=0A=
+=0A=
+1. Integrate a hard-coded .gitignore.local option for quietly ignoring user=
+ files. Automatically ignore this file, or require users to exclude it in t=
+he main .gitignore.=0A=
+=0A=
+2. Change .gitignore to just gitignore. This is because gitignore is not a =
+system configuration file. Users are expected to interact with it. Dot-file=
+s are typically not user-facing files. They are expected to be hidden on Li=
+nux systems, which is inconsistent with the expectation of user interaction=
+. They are entirely avoided on Windows systems for user-facing configuratio=
+n files. When a user sees ".file" on Windows, they know they should be usin=
+g a GUI to edit the config, not hand-hacking. Additionally, dot-files are a=
+mbiguous: they could contain key-value pairs or scripts. The point is, don'=
+t put essential controls in a room labeled "For personnel use only" while e=
+xpecting customers to go touch it to get anything done. gitignore is fundam=
+entally different from the .git folder in intent.=0A=
+=0A=
+3. Implement gitignore.yaml as an alternative to basic gitignore file, for =
+the following reasons:=0A=
+=0A=
+  - Ability to include other YAML ignore files=0A=
+  - Clearer organization=0A=
+=0A=
+4. Every gitignore file should be initialized with a link to the gitignore =
+templates on GitHub.=0A=
+=0A=
+=0A=
+=0A=
+Why YAML?=0A=
+=0A=
+Being able to include other files in a main ignore file is necessary collab=
+orative environments. Teams need two things:=0A=
+=0A=
+1. To be able to include templates that are provided by authoritative sourc=
+es (such as next.js, zig, unity, etc). Veteran coders know to pull template=
+s from this repository: https://github.com/github/gitignore --- a repositor=
+y that is not self-evident in any respect for a beginner software developer=
+. Beginners have to just *magically* happen upon the repository or search f=
+or gitignore templates in a search engine. This intuition is not a guarante=
+e, so every gitignore file should be initialized by git with a link to that=
+ repository to maintain good practice.=0A=
+=0A=
+2. To be able to organize their gitignores hierarchically. At present, peop=
+le just randomly stick items in the file, so it's a visual mess that result=
+s in duplicates being added. Removing a duplicate doesn't guarantee the rem=
+oval of the other in very large gitignore files, which can cause problems.=
+=0A=
+=0A=
+I previously requested an include feature in the existing gitignore parser,=
+ but I saw that people are afraid to implement it by modifying the normal g=
+itignore syntax to accommodate. To deal with this, I recommend implementing=
+ a YAML alternative to the traditional gitignore file. YAML already has a u=
+sable syntax, parser, etc. This extension would exist concurrently to the c=
+urrent gitignore implementation so that it can be adopted gradually.=0A=
+=0A=
+This is a totally reasonable path forward to make gitignore robust for coll=
+aborative development. You have a good idea and a fail-proof way to introdu=
+ce it.=0A=
+=0A=
+Thank you,=0A=
+Ryan Johnson=0A=
