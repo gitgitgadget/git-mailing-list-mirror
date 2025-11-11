@@ -1,93 +1,82 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDC92E62A6
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 21:58:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299B213B7A3
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 22:02:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762898307; cv=none; b=GZcp9DDcF+Nu4pJimVkxy+GUw2iYKX2gaSb90X9vXrL1VkCS4MvIWT7GQuUP5rdsf0Xp+1WNCb/gijpcIZr7SXAHCIEgLD5fOEz9av3WaVqWhsp4OxoqEdmocI3z+0v928hkC/R9zPn74PJgpnmR/ppHL3e3ba7xa5o/Cmj25Eg=
+	t=1762898550; cv=none; b=IoT/aeQp66ujcfNyctLxM9T4ZIxYKoHx9FABE3pkpHB8s86Br+0zbXviG24ofQeE5RQb1fC3iY5VWSDZrS0GNaFfEyayeg5dpsfDYT7VTP1QhV559Gy/9b+PP+kswyVzwH+AnkkI2RH1ACMtKm8ocSgaD7JSa4tM/jb6qtS5ul0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762898307; c=relaxed/simple;
-	bh=r89v9s3uVufhB5watuyd6es/OgsX2qEoTxjGgwm2mAw=;
+	s=arc-20240116; t=1762898550; c=relaxed/simple;
+	bh=Kp4OylC8CnXManP/QHdSl3dGDGblEvhVl5oFyv/izJI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nEp6kgkpZjkDY/73Hk0pVKFUyaqiVw9RTt1G747d9OYzxU+g0JhBhbVjJ6yCtCX01q3qr2bob8Mm0pp4gLJWv4VgRijEP/cOIOGYMfxoA14mWFhhpoAcgslF6xYXJXDGk/X5jViV+lnSthafh7nWe78yx5khGPHnwY1fS8A2C90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I92e9BG7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SRM6ENjW; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=RPH8TtxX/vs0Laby733JI68fpZIHx5CTmZMtpPQ0fInQ1XoMudu6ZDiHECq42uk6a6SqEv9kTo6HrwQ6RNH4ThVVR1nUX+MZ97egnTez4hqbUK6++QAg6q9ggwlz38N0dfMhBaTjihWh09Sn+Qx0tXP64UJf5sDj9Mivve+UTX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ieDbGShe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jVqzM6lF; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I92e9BG7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SRM6ENjW"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 03F127A00EF;
-	Tue, 11 Nov 2025 16:58:23 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Tue, 11 Nov 2025 16:58:24 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ieDbGShe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jVqzM6lF"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 36F381D00143;
+	Tue, 11 Nov 2025 17:02:27 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 11 Nov 2025 17:02:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762898303; x=1762984703; bh=BeUJ9YZD5z
-	l/craBablmgwVL5S3Zo8uCCMZlelXLfQI=; b=I92e9BG7kb8OoiuDCzY/fLYUwR
-	7m+1vFowOqwNhkNsFY3Zrt0yNaeII25SZ3YyUbrJ+bjQrNth0r/zbrYZbx10l81x
-	ay/fEXYEkXaoIFmDcyKlptjuQyNQQUSIhGZdLl0Z/hPqzX6vJslxVg89a87Si2/0
-	HLO50qVjFSE5yQsnbrj8cUAzs1iYvjaiVeLgjxT2AQrHSvUZX0utBd4qb0GSaiCY
-	4g2v8eTy1VBrlaWizgQCQqzfotRmhju9v/X1Uf0N0lLncmgewIV7GJVhboUSfaA7
-	XbtYQjN1+r3+tzsxzpMU1C0mL3dcp5HdueLl3v8H0QZlDg03jbL+i0ioo1gQ==
+	:subject:to:to; s=fm2; t=1762898547; x=1762984947; bh=sCwosqOgMI
+	UDVlp8RJ35zMmwwEfUA6a9buJmZ2ojf30=; b=ieDbGSheEVJa3kBOmdR5Hr3gS/
+	IutEYOF66YjS5vAALBIta/+X0JdBFlE7W3axdQEcshfTnlFm/FEgeBeK4xkKfK3s
+	2NNnin3gOmOi8ELyTrAGvGRHznwpO3MucTDMEtU9APIM+Ihr06kQIpB+xAGW3nOy
+	jYbF20lm0GcNu4/zkNpy5Pgv+wtEEl/k/yKHPBrjsFz/5Wd3/CzM3wygWQw0+nuk
+	CC3lcWJ94dhIimSxp+dSdi3AC+YtSOvqWouMusdru9ifr+DVt40WKPhyk+vUx2Gd
+	AyFZg49BZpjX6N2iamDTXy8PPFU8VW4sTC8ekGWk5dzRFSS/aYxOhaxq7K3g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762898303; x=1762984703; bh=BeUJ9YZD5zl/craBablmgwVL5S3Zo8uCCMZ
-	lelXLfQI=; b=SRM6ENjWAFaNRbaFL1kOp1j80DDQntxcA2XUMYFvupWfQDzb8g7
-	UwDjbPmRZrzYowojsIo3zzVd4dwtcoXXKafQMAeywI0F842sOyGZlXzw6QitIgTF
-	+MeWZZ9RSpqf+Gyscj8Z/umj34B/aZxwzGmslJ4Gl5B1QP9Bm70g+PpijQhx8n99
-	c6po9+ChMEMw59zOccHVyxXLWw/xn3qwiEPmC6WqZLZL+B8kOtZ7dgv9ywhkuFJN
-	Gqy6kw9owH9H42SJQngkIqUZyygIPJQCpu686quZYZCqtfgDFd4cZ1R/sYcM1H8L
-	oRM1d/nmHhzVh/prT1grAe5i+mHeEpVW5eA==
-X-ME-Sender: <xms:frETaZD86FAxxkZOjJT1l6hM16Ocjp24_eJJVN1-I6hulqb_FafgQg>
-    <xme:frETaYNXjAnKiJj1AbWOijgPASXeDXDSTiQrWxEWr8t-v56a2PrVqA8k7j68dYshR
-    kHD54Hc-JkExKGMXjFTuyeS55_tUdgaQjrJZUnIPzsRSODAsoNfNA>
-X-ME-Received: <xmr:frETaSzJ2bUirwLfDGKJXiWHs8Pb19mbpQD-dcBZ_lUp_mml8MSS8HCnJRdw781LucCv0VKlwk9h60Md2ScGfncP6KsEGAGLKUJE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddvfeefucetufdoteggodetrf
+	1762898547; x=1762984947; bh=sCwosqOgMIUDVlp8RJ35zMmwwEfUA6a9buJ
+	mZ2ojf30=; b=jVqzM6lFKYxcb763O9EVtJ+jFpiVsiGaKZ3c6IY/Np/McYm1AF5
+	AMVAQ+q52eGguhJdTkJV0WcvfX002PWZbOe9f/0AUSCW99IUuWBBJIkmmEHg8riw
+	l9T19/AUqOrCqkO94G96BkLubEscmF0BoL3cP4FYiBAzySqf+de2nRhUiKfIvln3
+	LV8H55cDv1DgBSPA9nh4u/d/bleQPkp1Uw7nFtOOcDyFCM6Iy/+9AznYUA0yHbJs
+	EpuVZlGNRctMZuqJ3EB6mlL/1sIndfU9lj8aWoOLwVkGDulr/uY1pfpvr/XhUzmk
+	AmK1+IjN/jdohXzpyta+DpdpZT9jL/Y1W9A==
+X-ME-Sender: <xms:crITaYPsub8P-uSJ7jTeNhXCdGjptbkl3gTB989Q2UNdP8x51WhZsQ>
+    <xme:crITaWZdPQHU0DiAmAJLHoVO73X3JWCcOQXFs8qvkK9xtSrNmvemUM9zSmVZS_CIC
+    XSLfsnwEelcJb56Xg6yoUsByjdYe_3WSzSf6IQAGRLtfYbfb9SoqA>
+X-ME-Received: <xmr:crITacpwkGuE9avzxFcXM1kbj_liU8d8k_kdgDdQFodwjogoPI13Nm-RyzzdaweNLwMuTp1feMeojTpQtFRAk3auyyHN9W5458D_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddvfeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    grughlthgvrhhnrghtihhvvgesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggr
-    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehphhhilh
-    hlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtghhi
-    thhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:frETaYWPVQe9563xJatkPFDpeA3iP5UwhOyweyPQ2KaTmFIrd5Dtnw>
-    <xmx:frETaUP11RYGIVnHBqj1RPZb4hmpbSv2WUs8PXm2mgy8S4HGwO_OWQ>
-    <xmx:frETaaCaoLUj9e36Lb7db0HFVbUtfjBilEDBI455ihVopCyo962vWw>
-    <xmx:frETaRdUWn88Vo07LRkpYVS7244K3lxab4VH5pdaL6RD9Wh6Gq_9gw>
-    <xmx:f7ETaV5MwRuEpF1h96kX6VxT4owHcSkyHvHV9jyBtvW9STn7bVAWL6nA>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
+    phgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:crITaaYF2KB6ZwHOL3X8z5q7TfAiVmzWN2zsmEzpgldf6tZnMr41dQ>
+    <xmx:crITaUQHdyS94NUmRTK7llpfe_72MUoOnE4pOg6Bv4xc7h3U0lE__A>
+    <xmx:crITaR6xdizd__n2VacmRvoO8x4Npsv2dIiKos6T69-j3qDAeIw6EQ>
+    <xmx:crITaZxnJUtriGXWgFBszkzVPFOtxnY8GpquOO0I2Weao_R0-JYVEg>
+    <xmx:c7ITaXIvU0O5ULt9LX4YU8sjd1RV5Tm3DVFgl-ecO3mtjlkwWU_2OPtq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Nov 2025 16:58:22 -0500 (EST)
+ 11 Nov 2025 17:02:26 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: ZheNing Hu <adlternative@gmail.com>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  phillip.wood@dunelm.org.uk,  ZheNing Hu
- via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] commit: add --committer option
-In-Reply-To: <20251111213339.GA4053071@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 11 Nov 2025 16:33:39 -0500")
-References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
-	<6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com>
-	<aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
-	<20251110201136.GB127132@coredump.intra.peff.net>
-	<CAOLTT8RweGOmxNK=vKDv8w-8AJM7QUfLBw4WOKeY1EpSVeB6iQ@mail.gmail.com>
-	<20251111191508.GA1907007@coredump.intra.peff.net>
-	<xmqqh5v0wcif.fsf@gitster.g>
-	<20251111213339.GA4053071@coredump.intra.peff.net>
-Date: Tue, 11 Nov 2025 13:58:21 -0800
-Message-ID: <xmqqwm3wut8i.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] .gitattributes: remove misspelled no-op whitespace
+ attribute
+In-Reply-To: <20251111213910.GB4053071@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 11 Nov 2025 16:39:10 -0500")
+References: <xmqqv7jgwgxb.fsf@gitster.g>
+	<20251111213910.GB4053071@coredump.intra.peff.net>
+Date: Tue, 11 Nov 2025 14:02:25 -0800
+Message-ID: <xmqqseekut1q.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -99,16 +88,29 @@ Content-Type: text/plain
 
 Jeff King <peff@peff.net> writes:
 
-> I just mean being able to do:
+> On Tue, Nov 11, 2025 at 10:41:20AM -0800, Junio C Hamano wrote:
 >
->   git commit --amend --author='Foo Bar <foo@example.com>' --committer-is-author
+>> We could either remove "!indent", or spell it "-indent".  The
+>> immediate effect would be the same.  It would only start to make a
+>> difference when/if we enable indent-with-non-tab by default in
+>> future versions of Git.
+>> 
+>> Let's take the former option to remove "!indent" from the list.  We
+>> would feel the effect first-hand ourselves before anybody else if we
+>> ever decide to change the built-in default whitespace rules, which
+>> would be hidden from us if we decide to rewrite it to "-indent"
+>> instead.
 >
-> instead of:
+> Perfectly explained, and the result makes sense.
 >
->   git commit --amend --author='Foo Bar <foo@example.com>' --committer='Foo Bar <foo@example.com>'
+> I don't know that this patch particularly needed review, but maybe it is
+> nice for you to know that somebody really is out there reading them. ;)
 
-Ah, I see.  Like
+It is mostly a principle thing.  I want to see that every non-merge
+changes authored by me is treated just like patches authored by
+others.
 
-    git -c user.name='Foo Bar' -c user.email=foo@example.com commit --amend
-
-Makes me wonder if we want user.ident that covers them both ;-)
+Another reason for me to send these patches out is so that I have a
+copy of the patch on the lore archive, with message-ID, so that "git
+log --notes=amlog" would work for my changes the same way as anybody
+else's.
