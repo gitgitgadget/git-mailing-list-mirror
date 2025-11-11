@@ -1,77 +1,77 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296122E403
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 00:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295D62BD11
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 00:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762819512; cv=none; b=J6pQUfvMo26B+LqG3C+k8Nvpoi6leqrA1Xm93bTh9YJMfnUeS9xE822MJy+wGMEglKoVtjSvbac+9AUlAdF6xr/rnK2eweLXVNJeu74mF/L0n9fdRjtUw8PTpnE2FvinQpsLDxPNKvdEaYQlFgiLV+C9AoUcF1ThhqNxnlJp3zg=
+	t=1762819513; cv=none; b=kX+UEGEoXXrX2HzAZelcQnyxZgMQ2kNkSha6M8O/kLZRNT+IFGDLZ0u7V+CAJpkHR6pzwG1FXN8QDhegNdiLC/xoDl8gYdybUNFqir8/nfIYEcwaDl2jQRLgRIPq9xG2B7GSSUUY22l+xv+v6PF8QeWg+HawteHap6ga0OsxVdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762819512; c=relaxed/simple;
-	bh=IQTqukOjq0/KScJRQDoTgHYihgSQ41KCL5zIjriTv14=;
+	s=arc-20240116; t=1762819513; c=relaxed/simple;
+	bh=RQIQxXQo+R/pP8QJybUaecB1QutVPFlJfHaxm2VI6Wg=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AX4hiG875+pggCoSoHhqCZJAXs6DbXV8uERMtHeyHYAYoZIEozh+A6KIFPW+OJTJ7PfebtqEimMUNLC4Ol/YZLoCY9KI84rkZLw+7uhu8Gc+HaOuwliIsMuAoUfbZGoCKeq9AL8JP7G+LpI4goxIQqnejp+RSj69EQFr0PIDQ0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OVhPqG8D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T4pRVbQy; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version; b=ozJt9ixU5p4grSMtF3YZYSi1lVwx+qOXPMlgIujxFxrHeZ1T6B2CKwMg025wPIBhppp5gzr71SrV0xpAnn5r/pVvCrwCptddAziRj++wQpHfGyIbFm4TDpTbb3MWDSY2OgC+yNFQ4xegqWJBMNziE98k0iF6kc24CzZ/5rJqRvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hB8TR1RF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a+xG5X7S; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OVhPqG8D";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T4pRVbQy"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5016E1D001A0;
-	Mon, 10 Nov 2025 19:05:10 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 10 Nov 2025 19:05:10 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hB8TR1RF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a+xG5X7S"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9C0351D00195;
+	Mon, 10 Nov 2025 19:05:08 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 10 Nov 2025 19:05:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1762819510; x=
-	1762905910; bh=BnV700GXbXlkk7+Wh4EnqeBlmNqdjkupC0v9ztF52u8=; b=O
-	VhPqG8DcSYqMT+1hnhsI9ookN8/u+nQxCTSlhT8GT9hlv/JDm2AuKyBRNR8g8UtF
-	sIInocN754ugsxKQvNXJNkeeLyF8pKefJ3epkmMV8lQ2DtRDvfMf8ynRggFUAqQ8
-	t35J6HZc0ceB+yFqt1ASiozhDo0mkt1lenH/gDqo4PN+zWYwRhdEj8DTupjd8lQ2
-	hg+zyEtXBYcWsUkm3Mzcma7OmB5wKpTYzQBotFNx2S8UOf69Z+wvg1tssguJcCgO
-	gsFdlUtgaYhFIs1SYRKXAgdj/quWRdJCYWZDDgLm4WWwNmqWnuv91Kr6heo5dHXM
-	20XGwhMUm1QMPVDYtkblg==
+	:reply-to:subject:subject:to:to; s=fm2; t=1762819508; x=
+	1762905908; bh=M/kmjt5C+d0lzJKSmoX5XzRP189/PqQqgVCK5ejXN6U=; b=h
+	B8TR1RFP50xlZnIHp69mLGbKFv8Okfu/G2UX/skqczXHF9r8zOZIDIL4MWc1DrEx
+	+3DOd3H8CXapgn+zm7hDqTFiU8HzVyirCDHGMh51WnaxD6oAZ+dZmeoFrDabDIvn
+	6vPYOaPTkwK4c55i0sEMwf1agNZeDagfc+DVLhWh7cv4pAMCPXGRu2yIWR9eNADD
+	K3yrCX5ZjY2I6SOxdPd9VWJkx8CLBBrc2Uy+DaAfOj0zs2T7x5EvKYkt69HZDwwk
+	mtwrtk9AWzupcDE7KiNsO1SVpkpdr5KAs7D2bHL+c9yITckQlcOkJ5TOfMmu9MPy
+	TcpKztPi7q6V9q2ApDWJQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1762819510; x=1762905910; bh=BnV700GXbXlkk7+Wh4EnqeBlmNqd
-	jkupC0v9ztF52u8=; b=T4pRVbQyp7GxANdbFe03HkqnUXKLEN2llqMr7XqORlkB
-	RTuZHer0WsL7kMQW7ADh5UCS61+vyNAqsJcogjdlvZztU94lfA6rZpUTswSqd+Is
-	LVqoTPrq5ueep+TJ6Htj+pag5I2LHxuYIBlJGH6ddlTvlynSTjC0R0Cd/Q9IwlAw
-	N1CW8tqtlajzhHhdRKET2s4hZQpqLzGpWU9lvmkVGHMBFybssCb7Hc83JCr3wznS
-	LwUwnhD2NAyYokXENOHCLl4GTRZnvP34az/ZDi4FOur2MZ5hJczZT1vxMBcr8plc
-	P1xiWxdPlNEttgVn9b34jbykqFxfFLLZdHJDLoVSBQ==
-X-ME-Sender: <xms:tX0Saa5YAGdSpzrmBqtC20dwyS9_ttf2wnwpBhJ83YQXvcrwdxPS1Q>
-    <xme:tX0SaZ61zafg2iiZ5epipcmw3CDP3Hg7Z9RhIVvC-qhs_3U3Loo0y49SiP9Tyhakc
-    b5rOVDCDud6RCHT_NoW0SRAS0Mf8t9nt7HFzUOLRU86I9M3p6w>
-X-ME-Received: <xmr:tX0SaXE-s-mEGNLzoN3ZGrbmSGp_Pu6y8evm8SDwKE7m4o8zd7H6oV5h7gV1tum65jOOPD-Iu3UT-iSW3AzpQTIoFkVxyr368k-i>
+	fm3; t=1762819508; x=1762905908; bh=M/kmjt5C+d0lzJKSmoX5XzRP189/
+	PqQqgVCK5ejXN6U=; b=a+xG5X7SCFums0Av+HBiBGQb2IEJstdWLa5Py/QlHvOT
+	+kDX7f6nUxFzCyJMTMXbjdqbKH0js4n5tbUXCz61Kr0sfd0mfc0wcugzX7Ow1rG2
+	iHlsB2YexWakexX6DF7EEQIbPWz7Qt8ZrhuW5L/USysiOR9rjzkigta+VU6yDi1c
+	/O5UCxhH6IEOxZOi+w/UYeGVrA7mQnxgwA0uAYE7Y1Y6ERJR1gCIL4V+XdaSGiqr
+	tQGh3McP2As+Nv2MI9Bwv6Me5C9T2UUaXlnNfnu1pModCSQ1gD8k9492qc5iigfJ
+	4Ma1dxFa0eM1suassC/YVJgFQu8Fp8nELmTInKzpCQ==
+X-ME-Sender: <xms:tH0Sabp-Bg7eOJ7caqqqxr3-JZG96t-TK2zyIpdcOxj_hdv4r9Vw_w>
+    <xme:tH0SabqwqsY7tpD2_AwTXcsB_HM4P4JKoluM51LN5qd9IPfB73r6p_jo8liqHoC_h
+    aMl_zv6QE4GaPqdruRrAvv2_2r-Buex47sVNSaNOpZJc2B_jl6M>
+X-ME-Received: <xmr:tH0SaV1RNV1TYB7g45b6oUdvyR5mk5UjkXfZJ7VaYra6t4JbrJjrHk1LaLB_ZDWZvgwR310iuhQaKkU2kx9g0vcc5UjMU8AXvADm>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeljedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
     dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
     sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
-    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepheenucfr
     rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:tX0SaSRlcUFMjOZ6VWlHysm9Z7wC63qe5oalW2YQwggUqeezXEZEuA>
-    <xmx:tn0SaQvmHB2Out0ZUPt51Jo6aFiPTqkrFTGCmIEOee_aplYnHdpH3w>
-    <xmx:tn0SaRzAt5UCUTkEPtKJyFbSZHwsBEAQCbnn1m1UWJTVZHWX6cF7Cw>
-    <xmx:tn0Saa6mOhO5UrV4CAMUKXijg3TQ_JAqL_AI7xGymmvLU6X4C_CDVA>
-    <xmx:tn0SaeRVhfkDbyf9572_-U1NqsXWWE7ev2bkuI00KDQUIsjeqyCm_6yr>
+X-ME-Proxy: <xmx:tH0SaaB7Y2b9DiLUkroHUNx1RnzscczsqDy0kZuCLX3engZPirISgQ>
+    <xmx:tH0Sadfgs5o8455jEuVYSKsZV_E6UP8tyajqR_BI-kjC_xeBGaRRfA>
+    <xmx:tH0SafjQY9BlQ5BuUj9n98kGm7Qpy2ITr-bfl1GLFZDygLlHqdfTOA>
+    <xmx:tH0SaVp8c_gLOgqINaNHygNj2ArH3rir_ffAGySk7DJtUgfb2YPu8w>
+    <xmx:tH0SafBxs0-cWO0QKtnlhtIM9c8GPhzsGjtQ8r_MJQgU0foZ9sJo1518>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Nov 2025 19:05:09 -0500 (EST)
+ 10 Nov 2025 19:05:07 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v3 09/12] whitespace: allocate a few more bits and define WS_INCOMPLETE_LINE
-Date: Mon, 10 Nov 2025 16:04:48 -0800
-Message-ID: <20251111000451.2243195-10-gitster@pobox.com>
+Subject: [PATCH v3 08/12] apply: revamp the parsing of incomplete lines
+Date: Mon, 10 Nov 2025 16:04:47 -0800
+Message-ID: <20251111000451.2243195-9-gitster@pobox.com>
 X-Mailer: git-send-email 2.52.0-rc1-455-g30608eb744
 In-Reply-To: <20251111000451.2243195-1-gitster@pobox.com>
 References: <20251105213052.1499224-1-gitster@pobox.com>
@@ -84,121 +84,148 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Reserve a few more bits in the diff flags word to be used for future
-whitespace rules.  Add WS_INCOMPLETE_LINE without implementing the
-behaviour (yet).
+A patch file represents the incomplete line at the end of the file
+with two lines, one that is the usual "context" with " " as the
+first letter, "added" with "+" as the first letter, or "removed"
+with "-" as the first letter that shows the content of the line,
+plus an extra "\ No newline at the end of file" line that comes
+immediately after it.
+
+Ever since the apply machinery was written, the "git apply"
+machinery parses "\ No newline at the end of file" line
+independently, without even knowing what line the incomplete-ness
+applies to, simply because it does not even remember what the
+previous line was.
+
+This poses a problem if we want to check and warn on an incomplete
+line.  Revamp the code that parses a fragment, to actually drop the
+'\n' at the end of the incoming patch file that terminates a line,
+so that check_whitespace() calls made from the code path actually
+sees an incomplete as incomplete.
+
+Note that the result of this parsing is not directly used by the
+code path that applies the patch.  apply_one_fragment() function
+already checks if each of the patch text it handles is followed by a
+line that begins with a backslash to drop the newline at the end of
+the current line it is looking at.  In a sense, this patch harmonizes
+the behaviour of the parsing side to what is already done in the
+application side.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/config/core.adoc |  2 ++
- diff.c                         | 16 ++++++++--------
- diff.h                         |  6 +++---
- ws.c                           |  6 ++++++
- ws.h                           |  3 ++-
- 5 files changed, 21 insertions(+), 12 deletions(-)
+ apply.c | 70 ++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 49 insertions(+), 21 deletions(-)
 
-diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
-index e2de270c86..682fb595fb 100644
---- a/Documentation/config/core.adoc
-+++ b/Documentation/config/core.adoc
-@@ -626,6 +626,8 @@ core.whitespace::
-   part of the line terminator, i.e. with it, `trailing-space`
-   does not trigger if the character before such a carriage-return
-   is not a whitespace (not enabled by default).
-+* `incomplete-line` treats the last line of a file that is missing the
-+  newline at the end as an error (not enabled by default).
- * `tabwidth=<n>` tells how many character positions a tab occupies; this
-   is relevant for `indent-with-non-tab` and when Git fixes `tab-in-indent`
-   errors. The default tab width is 8. Allowed values are 1 to 63.
-diff --git a/diff.c b/diff.c
-index c3fb3015d6..64cf1f139f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -804,15 +804,15 @@ enum diff_symbol {
- 
- /*
-  * Flags for content lines:
-- * 0..11 are whitespace rules (see ws.h)
-- * 12..14 are WSEH_NEW | WSEH_CONTEXT | WSEH_OLD
-- * 16 is marking if the line is blank at EOF
-- * 17..19 are used for color-moved.
-+ * 0..15 are whitespace rules (see ws.h)
-+ * 16..18 are WSEH_NEW | WSEH_CONTEXT | WSEH_OLD
-+ * 19 is marking if the line is blank at EOF
-+ * 20..22 are used for color-moved.
-  */
--#define DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF	(1<<16)
--#define DIFF_SYMBOL_MOVED_LINE			(1<<17)
--#define DIFF_SYMBOL_MOVED_LINE_ALT		(1<<18)
--#define DIFF_SYMBOL_MOVED_LINE_UNINTERESTING	(1<<19)
-+#define DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF	(1<<19)
-+#define DIFF_SYMBOL_MOVED_LINE			(1<<20)
-+#define DIFF_SYMBOL_MOVED_LINE_ALT		(1<<21)
-+#define DIFF_SYMBOL_MOVED_LINE_UNINTERESTING	(1<<22)
- 
- #define DIFF_SYMBOL_CONTENT_WS_MASK (WSEH_NEW | WSEH_OLD | WSEH_CONTEXT | WS_RULE_MASK)
- 
-diff --git a/diff.h b/diff.h
-index cbd355cf50..422658407d 100644
---- a/diff.h
-+++ b/diff.h
-@@ -331,9 +331,9 @@ struct diff_options {
- 
- 	int ita_invisible_in_index;
- /* white-space error highlighting */
--#define WSEH_NEW        (1<<12)
--#define WSEH_CONTEXT    (1<<13)
--#define WSEH_OLD        (1<<14)
-+#define WSEH_NEW        (1<<16)
-+#define WSEH_CONTEXT    (1<<17)
-+#define WSEH_OLD        (1<<18)
- 	unsigned ws_error_highlight;
- 	const char *prefix;
- 	int prefix_length;
-diff --git a/ws.c b/ws.c
-index 70acee3337..34a7b4fad2 100644
---- a/ws.c
-+++ b/ws.c
-@@ -26,6 +26,7 @@ static struct whitespace_rule {
- 	{ "blank-at-eol", WS_BLANK_AT_EOL, 0 },
- 	{ "blank-at-eof", WS_BLANK_AT_EOF, 0 },
- 	{ "tab-in-indent", WS_TAB_IN_INDENT, 0, 1 },
-+	{ "incomplete-line", WS_INCOMPLETE_LINE, 0, 0 },
- };
- 
- unsigned parse_whitespace_rule(const char *string)
-@@ -139,6 +140,11 @@ char *whitespace_error_string(unsigned ws)
- 			strbuf_addstr(&err, ", ");
- 		strbuf_addstr(&err, "tab in indent");
- 	}
-+	if (ws & WS_INCOMPLETE_LINE) {
-+		if (err.len)
-+			strbuf_addstr(&err, ", ");
-+		strbuf_addstr(&err, "no newline at the end of file");
-+	}
- 	return strbuf_detach(&err, NULL);
+diff --git a/apply.c b/apply.c
+index a2ceb3fb40..2b0f8bdab5 100644
+--- a/apply.c
++++ b/apply.c
+@@ -1670,6 +1670,35 @@ static void check_old_for_crlf(struct patch *patch, const char *line, int len)
  }
  
-diff --git a/ws.h b/ws.h
-index 23708efb73..06d5cb73f8 100644
---- a/ws.h
-+++ b/ws.h
-@@ -15,13 +15,14 @@ struct strbuf;
- #define WS_CR_AT_EOL            (1<<9)
- #define WS_BLANK_AT_EOF         (1<<10)
- #define WS_TAB_IN_INDENT        (1<<11)
-+#define WS_INCOMPLETE_LINE      (1<<12)
  
- #define WS_TRAILING_SPACE       (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
- #define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB|8)
- #define WS_TAB_WIDTH_MASK       ((1<<6)-1)
++/*
++ * Just saw a single line in a fragment.  If it is a part of this hunk
++ * that is a context " ", an added "+", or a removed "-" line, it may
++ * be followed by "\\ No newline..." to signal that the last "\n" on
++ * this line needs to be dropped.  Depending on locale settings when
++ * the patch was produced we don't know what this line would exactly
++ * say. The only thing we do know is that it begins with "\ ".
++ * Checking for 12 is just for sanity check; "\ No newline..." would
++ * be at least that long in any l10n.
++ *
++ * Return 0 if the line we saw is not followed by "\ No newline...",
++ * or length of that line.  The caller will use it to skip over the
++ * "\ No newline..." line.
++ */
++static int adjust_incomplete(const char *line, int len,
++			     unsigned long size)
++{
++	int nextlen;
++
++	if (*line != '\n' && *line != ' ' && *line != '+' && *line != '-')
++		return 0;
++	if (size - len < 12 || memcmp(line + len, "\\ ", 2))
++		return 0;
++	nextlen = linelen(line + len, size - len);
++	if (nextlen < 12)
++		return 0;
++	return nextlen;
++}
++
+ /*
+  * Parse a unified diff. Note that this really needs to parse each
+  * fragment separately, since the only way to know the difference
+@@ -1684,6 +1713,7 @@ static int parse_fragment(struct apply_state *state,
+ {
+ 	int added, deleted;
+ 	int len = linelen(line, size), offset;
++	int skip_len = 0;
+ 	unsigned long oldlines, newlines;
+ 	unsigned long leading, trailing;
  
- /* All WS_* -- when extended, adapt constants defined after diff.c:diff_symbol */
--#define WS_RULE_MASK            ((1<<12)-1)
-+#define WS_RULE_MASK            ((1<<16)-1)
+@@ -1710,6 +1740,22 @@ static int parse_fragment(struct apply_state *state,
+ 		len = linelen(line, size);
+ 		if (!len || line[len-1] != '\n')
+ 			return -1;
++
++		/*
++		 * For an incomplete line, skip_len counts the bytes
++		 * on "\\ No newline..." marker line that comes next
++		 * to the current line.
++		 *
++		 * Reduce "len" to drop the newline at the end of
++		 * line[], but add one to "skip_len", which will be
++		 * added back to "len" for the next iteration, to
++		 * compensate.
++		 */
++		skip_len = adjust_incomplete(line, len, size);
++		if (skip_len) {
++			len--;
++			skip_len++;
++		}
+ 		switch (*line) {
+ 		default:
+ 			return -1;
+@@ -1745,20 +1791,10 @@ static int parse_fragment(struct apply_state *state,
+ 			newlines--;
+ 			trailing = 0;
+ 			break;
+-
+-		/*
+-		 * We allow "\ No newline at end of file". Depending
+-		 * on locale settings when the patch was produced we
+-		 * don't know what this line looks like. The only
+-		 * thing we do know is that it begins with "\ ".
+-		 * Checking for 12 is just for sanity check -- any
+-		 * l10n of "\ No newline..." is at least that long.
+-		 */
+-		case '\\':
+-			if (len < 12 || memcmp(line, "\\ ", 2))
+-				return -1;
+-			break;
+ 		}
++
++		/* eat the "\\ No newline..." as well, if exists */
++		len += skip_len;
+ 	}
+ 	if (oldlines || newlines)
+ 		return -1;
+@@ -1768,14 +1804,6 @@ static int parse_fragment(struct apply_state *state,
+ 	fragment->leading = leading;
+ 	fragment->trailing = trailing;
  
- extern unsigned whitespace_rule_cfg;
- unsigned whitespace_rule(struct index_state *, const char *);
+-	/*
+-	 * If a fragment ends with an incomplete line, we failed to include
+-	 * it in the above loop because we hit oldlines == newlines == 0
+-	 * before seeing it.
+-	 */
+-	if (12 < size && !memcmp(line, "\\ ", 2))
+-		offset += linelen(line, size);
+-
+ 	patch->lines_added += added;
+ 	patch->lines_deleted += deleted;
+ 
 -- 
 2.52.0-rc1-455-g30608eb744
 
