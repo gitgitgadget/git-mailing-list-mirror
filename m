@@ -1,149 +1,208 @@
-Received: from mail-yw1-f193.google.com (mail-yw1-f193.google.com [209.85.128.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0B57262A
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 01:02:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04312E9EAD
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 02:04:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762822963; cv=none; b=sZCQd1aRGWN1U3sBDe6asORl3oSyUMpBaz+GTrLJ1J+2RaDKfnZc8AX0YqCNq/oLdktLYKFzf905r+bQ+idR+jYtlVTaqzIZTXmNPYJns04aIXM++xPUpM1RiHXzY5tc4hVBOCiQfBlUUAElf63sGM3dAA5+9mMYYLwswi9qM9Y=
+	t=1762826696; cv=none; b=GDCqw4D2ut4wX+RVHnIBrr7VL1ElXU8T5lcG9iVLlitnpJXcDpgFTumpn8ZiRwN4ZM7/xsuH26YZ57ApWp5qJIG4NgjGy0O9uxWY5VDl3vxl5KpwojpUUbOOqjuJlWKh14XqE1yu7VqWoq1RwPQ3/6EMLxOwOAwNkWbmo5uK0eI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762822963; c=relaxed/simple;
-	bh=KBQRwX/JDkgy2wUHCUUSnM9YUktru5H8CNoPzSlu3H4=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=k1rpQ+VuKYo9lYlRQ8zqkU1hKkaAIUmB7Y7K7RF67BpUoNRTF5aUgjCOa++xpMvgOnP+Qf9AS1xFW9od4LO+93cIYauxxRAoBCCi3YJl6KC0UQVenqtDvVW/vlGL9jLoKYf3YTsjApRvuLqApbWxNlZGALDklBZo9k+PF7C/R5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P21NGxyl; arc=none smtp.client-ip=209.85.128.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762826696; c=relaxed/simple;
+	bh=8iCud9KYmQVeoRpRlumTpiWPYwY6L1NMolgsq4u/ss4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jH9M/x8Ayf7E4cqgy7eXJVMHIx88WRUBGSUm2VBmruRdz9N2SjAc23OsLB+CiS9z8UN72V9Q0Y743rOQxEjHe18yArhsWZs5z5EW7OTGRQhaMZi+0xTXfzZfz5+RXhaeqaaw+OLshJEOKEPpJKQpP1LNqZ6gWD+LRMeBtSJE81o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=T8mxc4oH; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P21NGxyl"
-Received: by mail-yw1-f193.google.com with SMTP id 00721157ae682-787f586532bso16892877b3.1
-        for <git@vger.kernel.org>; Mon, 10 Nov 2025 17:02:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762822961; x=1763427761; darn=vger.kernel.org;
-        h=mime-version:content-transfer-encoding:msip_labels:content-language
-         :accept-language:message-id:date:thread-index:thread-topic:subject
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=m5QZU03ODWX/r8g4PqBCIrjMNtbwwYmlOQNPiTFvVxE=;
-        b=P21NGxylrWqHL0UvFP0+ngumOYVQ11dIV16tUfJZ3zJGt/UvHKqjpVSXS/e1OsCa9t
-         w0j0pOLYc+/GuTYhj1h+3ULQjaAANCpwkElQrhc8yVtYzQ2KkHco0fsfgrIKOPsFbNhB
-         s8fQYcmQiDgII286eAgDpwIbhLIDCAh7+0WCOpXaanmHrZgVqv6V4N7XQrgdvrqfLqxX
-         zWwPqHl+N0T9tUF6VzOZNkNaOEqtodoFI9UaWHe/k/HZYNFXvxkCjIXm6z4Dg3SFtV4+
-         VxsHU96kJXFFV267XJMVZH5QTj1tnIjOGBxWrLYkS2HWcUh/6kyUanEw7VC5QZ3ITRrZ
-         pl1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762822961; x=1763427761;
-        h=mime-version:content-transfer-encoding:msip_labels:content-language
-         :accept-language:message-id:date:thread-index:thread-topic:subject
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=m5QZU03ODWX/r8g4PqBCIrjMNtbwwYmlOQNPiTFvVxE=;
-        b=glt3rOk3D81Q2VMcSLRbQ7VIEOoisT0jnyDwua4BBjESoZ5vwJRpvsJIzK7Yxk732b
-         zEJ8QLBtPBEpdSGdjAdhfrYMzKkh5t6nMuY7vx2AsFGMxYO5ce14xHRTFoKJHeWi6/qq
-         iihYqYt79diMDmFFdKrR7a6tyubOQj23V3xarxC1Nl83ARISC5oUEzKA88WYEJJWpYxV
-         0yfrQFBVGgTpHZQF1qNv4aEDhg2uhU5yl+XVCm9vXW1zHf8JuSIXLss+nr/Jq4E4734v
-         mDovribPpKBot9axGdSc6NHRvXON1zKb9lzEDqTG/OfoHVShxRRtNWWoyouxBxsx2gmZ
-         hh7Q==
-X-Gm-Message-State: AOJu0Yyn+wukcBwQm2l2laFQlAzZHQNUDXWbSBqze45kY7gUPx+el2ER
-	k3z79p/jFJaVHscdugpipSaKr9c8iK7qZZMVXSS6ieINhQQWtBqFNJgLwCXzwXak
-X-Gm-Gg: ASbGnct7ixdKVZUOMN8npcJJOtJaWSQdeGLnuJJjwCD6lHVmaSVZt7grrYJuOEEMH7l
-	5x4/XkQJBNXaPvpdXc/hU7rgrBsNGjvi0NX/8Ki0/7bvc9h3aw4KLo+mqyDVGvrq8vXu5RnrfqV
-	jwF9SaXNKUw6k3AuAw8VBp8o49C7pmhvXUYlat6SzsmsmmRldecwTrzHLBUiO/WKqgeQVleRZcM
-	wdwg0ypdjDMKQXnQ7ILgiHT7KGUNa9K7QUN6Xq/45luW4xpCRF2FU4raQElQUujvPZybO5EEw+x
-	4umvD07blIri1roRLMYMmBXcfnvr76jGRIGrQKSjA61zQfvzXnjPvWtsAQle46BsDIX0+ukZjpd
-	NBcOPu0tmsZ/CEvae/yfd0Hz88ARUsl5wruHu2dgbkFMiPOw6SaSuOCy9VG80KtrPOJoNcy4+xB
-	1gX+SBauuu1P+bdU5DhQMXXbdWgocAyL4Ukpq+sqDnqSd2DPBEVWkqqvnwAZHeZZof+bHoThftc
-	EZs14C9xEZdKVQ=
-X-Google-Smtp-Source: AGHT+IHXQQXMiEUXVCizjoyZWN5A03JdZG2+CoADO+nqDAERDunVC6n+WvOMdZPvvUspnVXZ4jqtow==
-X-Received: by 2002:a05:690c:dc1:b0:787:cef1:61c3 with SMTP id 00721157ae682-787d538fc4dmr97760517b3.31.1762822960621;
-        Mon, 10 Nov 2025 17:02:40 -0800 (PST)
-Received: from DS0PR03MB7290.namprd03.prod.outlook.com ([2603:1036:5:36::5])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-787d687e26esm28203397b3.27.2025.11.10.17.02.39
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Nov 2025 17:02:40 -0800 (PST)
-From: Ryan Johnson <ryan.johnson.code@gmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: gitignore redesign proposal
-Thread-Topic: gitignore redesign proposal
-Thread-Index: AQHcUoI72+h+S5qsykmOqSwLzYwrZA==
-X-MS-Exchange-MessageSentRepresentingType: 1
-Date: Tue, 11 Nov 2025 01:02:39 +0000
-Message-ID:
-	<DS0PR03MB7290A11407D68F7F3623FD9CA3CEA@DS0PR03MB7290.namprd03.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-Exchange-Organization-SCL: -1
-X-MS-TNEF-Correlator:
-X-MS-Exchange-Organization-RecordReviewCfmType: 0
-msip_labels:
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="T8mxc4oH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1762826692;
+	bh=8iCud9KYmQVeoRpRlumTpiWPYwY6L1NMolgsq4u/ss4=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=T8mxc4oH5xEg39fsDGlO/HCsK1rDfHzMKZut//6py0E9SH3hD8vwJFr5ENBbrBk1b
+	 +7w4f4rQ99CAZRwt0dCefkK/+6HkDCpJuBAf9QXs+pCpWnjCs2b/5lD3zYhJ8UYCXg
+	 g09nRfG7pJMp14Dal+jQAA7C6WTu1h/ANHOI9ou1y70fGFXlS1b0FBP03w91PKEICf
+	 c0UJD6FBkbS3RQeTpSPf3xGa57Y7ElaTLIYlhOgBNKAd0EIeeRuNV5OA7hFL+O6Gqf
+	 CqitwOfR1fRPexLo8HWYIkYLQq5k5j2wM+ujN0+npiH9sNihsCt+Ova9qzfMVdBmQ8
+	 4ItocFrhTK/PZ9XeOPhVBEqXTqw5hMXePobKjxRS21MEx1RpfPRGKT7hOdOe6Qw8fs
+	 1SSkoRC0BTKhrHsV4UXVx7ztpORfiI09v4Sm0SgkWYaF3pa2cSQQNLgQGcyYLQuPP3
+	 8GeslU4mIccglixbgoRTvsn13RUlBGay3zIsIVRCkxFwpjYoexk
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:2884:27a3:f514:5cad])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A750120069;
+	Tue, 11 Nov 2025 02:04:52 +0000 (UTC)
+Date: Tue, 11 Nov 2025 02:04:51 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Ryan Johnson <ryan.johnson.code@gmail.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: gitignore redesign proposal
+Message-ID: <aRKZw1h35ZZLkTXh@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ryan Johnson <ryan.johnson.code@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <DS0PR03MB7290A11407D68F7F3623FD9CA3CEA@DS0PR03MB7290.namprd03.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="YEOXALysGSnuFEXz"
+Content-Disposition: inline
+In-Reply-To: <DS0PR03MB7290A11407D68F7F3623FD9CA3CEA@DS0PR03MB7290.namprd03.prod.outlook.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-I have 4 proposed changes to the gitignore feature:=0A=
-=0A=
-1. Integrate a hard-coded .gitignore.local option for quietly ignoring user=
- files. Automatically ignore this file, or require users to exclude it in t=
-he main .gitignore.=0A=
-=0A=
-2. Change .gitignore to just gitignore. This is because gitignore is not a =
-system configuration file. Users are expected to interact with it. Dot-file=
-s are typically not user-facing files. They are expected to be hidden on Li=
-nux systems, which is inconsistent with the expectation of user interaction=
-. They are entirely avoided on Windows systems for user-facing configuratio=
-n files. When a user sees ".file" on Windows, they know they should be usin=
-g a GUI to edit the config, not hand-hacking. Additionally, dot-files are a=
-mbiguous: they could contain key-value pairs or scripts. The point is, don'=
-t put essential controls in a room labeled "For personnel use only" while e=
-xpecting customers to go touch it to get anything done. gitignore is fundam=
-entally different from the .git folder in intent.=0A=
-=0A=
-3. Implement gitignore.yaml as an alternative to basic gitignore file, for =
-the following reasons:=0A=
-=0A=
-  - Ability to include other YAML ignore files=0A=
-  - Clearer organization=0A=
-=0A=
-4. Every gitignore file should be initialized with a link to the gitignore =
-templates on GitHub.=0A=
-=0A=
-=0A=
-=0A=
-Why YAML?=0A=
-=0A=
-Being able to include other files in a main ignore file is necessary collab=
-orative environments. Teams need two things:=0A=
-=0A=
-1. To be able to include templates that are provided by authoritative sourc=
-es (such as next.js, zig, unity, etc). Veteran coders know to pull template=
-s from this repository: https://github.com/github/gitignore --- a repositor=
-y that is not self-evident in any respect for a beginner software developer=
-. Beginners have to just *magically* happen upon the repository or search f=
-or gitignore templates in a search engine. This intuition is not a guarante=
-e, so every gitignore file should be initialized by git with a link to that=
- repository to maintain good practice.=0A=
-=0A=
-2. To be able to organize their gitignores hierarchically. At present, peop=
-le just randomly stick items in the file, so it's a visual mess that result=
-s in duplicates being added. Removing a duplicate doesn't guarantee the rem=
-oval of the other in very large gitignore files, which can cause problems.=
-=0A=
-=0A=
-I previously requested an include feature in the existing gitignore parser,=
- but I saw that people are afraid to implement it by modifying the normal g=
-itignore syntax to accommodate. To deal with this, I recommend implementing=
- a YAML alternative to the traditional gitignore file. YAML already has a u=
-sable syntax, parser, etc. This extension would exist concurrently to the c=
-urrent gitignore implementation so that it can be adopted gradually.=0A=
-=0A=
-This is a totally reasonable path forward to make gitignore robust for coll=
-aborative development. You have a good idea and a fail-proof way to introdu=
-ce it.=0A=
-=0A=
-Thank you,=0A=
-Ryan Johnson=0A=
+
+--YEOXALysGSnuFEXz
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2025-11-11 at 01:02:39, Ryan Johnson wrote:
+> I have 4 proposed changes to the gitignore feature:
+>=20
+> 1. Integrate a hard-coded .gitignore.local option for quietly ignoring us=
+er files. Automatically ignore this file, or require users to exclude it in=
+ the main .gitignore.
+
+Why is this better than $XDG_CONFIG_HOME/git/ignore, which is global and wo=
+rks
+for all of the user's repositories, or .git/info/exclude, which is per
+repository and not checked in?
+
+The former is the ideal place to put things one wants ignored globally,
+such as Vim swap files or Emacs backup files, and the latter is suitable
+for individual projects.  The former can even be installed by one's
+dotfiles so that one's `git status` output is always tidy with regard to
+one's editor files.
+
+> 2. Change .gitignore to just gitignore. This is because gitignore is
+> not a system configuration file. Users are expected to interact with
+> it. Dot-files are typically not user-facing files. They are expected
+> to be hidden on Linux systems, which is inconsistent with the
+> expectation of user interaction. They are entirely avoided on Windows
+> systems for user-facing configuration files. When a user sees ".file"
+> on Windows, they know they should be using a GUI to edit the config,
+> not hand-hacking. Additionally, dot-files are ambiguous: they could
+> contain key-value pairs or scripts. The point is, don't put essential
+> controls in a room labeled "For personnel use only" while expecting
+> customers to go touch it to get anything done. gitignore is
+> fundamentally different from the .git folder in intent.
+
+Typically, we hide files and directories used by version control systems
+because there are several of them (.git, .gitignore, .gitmodules, and
+=2Egitattributes).
+
+This also helps other tools easily not process VCS-specific files by
+providing an option to skip processing hidden files.
+
+CVS and friends did not use hidden files and it was ugly and unwieldy.
+(In general, we should avoid replicating CVS's mistakes.)
+
+> 4. Every gitignore file should be initialized with a link to the gitignor=
+e templates on GitHub.
+
+We try not to prioritize any particular forge in this project and many
+contributors work on a variety of different forges.  Even though I am
+employed by a major forge[0], I end up using several because various
+projects I would like to participate in are on other forges (even some
+projects that we use at work).
+
+There's no reason that the GitHub templates are intrinsically better
+than any other options and if an objectively better option comes along,
+we would end up providing suboptimal information.
+
+I'll also note that the GitHub templates tend to be very expansive and
+cover a large variety of files.  The Python file, for instance, covers
+Django, Jupyter Notebook, IPython, Redis, SageMath, and a variety of
+other things that most Python projects will never use.  Having a very
+long file with a lot of unused entries worsens performance and makes
+maintenance of the file much more complicated than necessary, especially
+when a project needs custom values as well.
+
+> Why YAML?
+>=20
+> Being able to include other files in a main ignore file is necessary coll=
+aborative environments. Teams need two things:
+>=20
+> 1. To be able to include templates that are provided by authoritative
+> sources (such as next.js, zig, unity, etc). Veteran coders know to
+> pull templates from this repository:
+> https://github.com/github/gitignore --- a repository that is not
+> self-evident in any respect for a beginner software developer.
+> Beginners have to just *magically* happen upon the repository or
+> search for gitignore templates in a search engine. This intuition is
+> not a guarantee, so every gitignore file should be initialized by git
+> with a link to that repository to maintain good practice.
+
+I have over 13 years of professional software development experience and
+even more non-professional, so I think I would qualify as a veteran
+coder.  I don't use those files, either at home or at work.
+
+Instead, when creating a project, I add those files and directories that
+are build or intermediate products to .gitignore as one of my first
+commits and add additional entries along the way.  That way, I know that
+my values are correct for my project.
+
+Note that I almost always have additional custom files that are not
+listed in the templates, so I need to edit the file anyway.  I assume
+that's true for most everyone, but I could be wrong.
+
+> 2. To be able to organize their gitignores hierarchically. At present,
+> people just randomly stick items in the file, so it's a visual mess
+> that results in duplicates being added. Removing a duplicate doesn't
+> guarantee the removal of the other in very large gitignore files,
+> which can cause problems.
+>=20
+> I previously requested an include feature in the existing gitignore
+> parser, but I saw that people are afraid to implement it by modifying
+> the normal gitignore syntax to accommodate. To deal with this, I
+> recommend implementing a YAML alternative to the traditional gitignore
+> file. YAML already has a usable syntax, parser, etc. This extension
+> would exist concurrently to the current gitignore implementation so
+> that it can be adopted gradually.
+
+I agree that YAML is a very popular option.  However, different parsers
+implement different versions, so they work differently.  It also has
+some downsides (`no` is interpreted as false, not "no", which is a
+frequent source of problems for Norway- and Norwegian-related
+information).  Some parsers[1] also don't support parsing byte data encoded
+as base64 (the `!!binary` tag), which we would need because Git does not
+require filenames to be UTF-8.
+
+Other options, such as JSON or TOML, also don't support non-UTF-8 data
+(and JSON doesn't support comments[2]), so those are also out.
+
+[0] My participation in this list, unless stated otherwise, is in my
+personal capacity only and I neither speak for my employer nor do they
+speak for me.
+[1] In my brief few minutes of testing a handful of implementations, I
+found Perl's YAML::Tiny, which also does not accept `!!str`.
+[2] Before you say, "But there's this variant of JSON that _does_
+support comments," that is not standardized and most JSON parsers don't
+accept it, so it is strictly worse than using YAML or TOML in terms of
+compatibility.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--YEOXALysGSnuFEXz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaRKZwgAKCRB8DEliiIei
+gVUwAP0XfAEeYFXJiaacppWoRET315VGp/a6vELFa2BlRUsgUQD/Y8La3aL1RuuX
+2O1CWzYAzRkdd5ATpMb+1f0D1+oCTA0=
+=GFJe
+-----END PGP SIGNATURE-----
+
+--YEOXALysGSnuFEXz--
