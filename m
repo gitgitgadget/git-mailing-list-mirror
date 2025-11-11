@@ -1,107 +1,98 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA2126ED2A
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 19:00:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879A5316918
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 19:15:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762887620; cv=none; b=MDWdVd9eAMfYXR+wR70W4zmiuI0KYph22qAsTBhVIrtDsEpSN/gyx8p+LGzLhr05sK300ZCuVq/0OMYt21oex4Dv7RNlB4ePqfzXQSXSRYCtsk/eqicMDsEjuFeIeGzrs3EYkAspwi94wY+/VPDdO/3Rd5GKApByX/qa7v6gmnc=
+	t=1762888522; cv=none; b=mqgSGOCOrw4z1Jm4HDe8dpS54Tb1CjbmIWJru8bxldqVhKyp+YeWdAugLsCP82NvLAggD//pHZfGgDHtUfeUV0SUy6S9JFfiO/ESG1qFX6SDLqbDQnMl8JJ3cu65AnJwnfO/TyiH0ZMaGpHycEQmEz441U0BjEjYMMOOvbHOBa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762887620; c=relaxed/simple;
-	bh=v1GYdXJrkl+UrBA3Qb31u1pWAmYQwr5cm9fpSiRkVso=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cmgsbiPcB09/qvSdb+s/2PZq+KJMRAPyg7FZ+BonOYwY0BgO6Pg5WuCfDUqaiWeXBmeaRz3efodcVZG3vqHVhSZplRv5RZueQUHD4TG+tA95sv9423NVsF5lBL4pfIQpiBJzLu+rR3orq9PRhduxegblagI9o0EW+aMWhj/svJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FcXPLpvZ; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762888522; c=relaxed/simple;
+	bh=ANgdxBb37Dn7Qk0OwkQZe26NWX37OaGpCUrvRf9Q1cg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C++Hr6NNDZ2jlSdabOrM5xtz8rwXYxvKgz34JP9POW6OIgrZMwCsTA4y6qCmX3VlOUBwntpnnpWLoYspu0CwNUw4zowTgorNCyqvpv4O3KwbghXl2PdHY8Um0WilxqXnQCgBMIEbndo8KTUaKZFvGIbjFRsW7B1U4sXaw8lKbrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=M/pJtC09; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FcXPLpvZ"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-295548467c7so364145ad.2
-        for <git@vger.kernel.org>; Tue, 11 Nov 2025 11:00:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762887612; x=1763492412; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=v1GYdXJrkl+UrBA3Qb31u1pWAmYQwr5cm9fpSiRkVso=;
-        b=FcXPLpvZVzX71unL2DGaFq2Boh2mCPGKM8LmHDx7/v27ZQz0EqxrzRmfKrs3C2P/RK
-         e9u0BJWuWxjFwW2zasXyK4aNjr7P9Hxe+vHsYErOVRvBNXSUJmiBLPURsfxzWfC8Tv7F
-         ylEUMuyzSVgVlG19ARYFBeIx7tpMRruo/TV6ipBu0V8w8FZ5NmA2ydHpAlCMwjufsBD8
-         MyK58ReUSSc6wtZ2RXHXUqgtyZIT8UrW90rWm+fKHNHOJhkdIi6e2K09hlGuDblSzWso
-         fZKSRQgEn9Qn9o7UiCaADdVWk2qNIqLJnYIIHNkzkXfZhltft3NYjTvq2VWitBUT4Au1
-         1EJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762887612; x=1763492412;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=v1GYdXJrkl+UrBA3Qb31u1pWAmYQwr5cm9fpSiRkVso=;
-        b=tJEhbB/sWlMfy/JdCJmDLky5dscGrKZ6qBhQirgzQIqeH1j+0pQzNk1wy3XZjuBezV
-         DKypP15igCYt2P0UZhpI7tZhcGoYpBu8zTDSHRbdCSSuB93AhKKF39w5zQpjGmQA1/Jb
-         ezORJB6Tqf1KsIXDFBp1nZcOhRIId+bTiiZbipiAF/gzA32t68cV2w1Knn1TQiR7NkF3
-         fF9AwmHOWZtJxYQZhJRKBldoUGfrKXvNLS0d5AIn7ey2ITY9ZjZUWqofdPcuTrIxPn/e
-         18Rpef0B/h3v3ZHgFsk6nvbudp1GdeLSrFH4lfbySa1NJavFiTEt4JXhsokuAs0Dcjd3
-         RILA==
-X-Gm-Message-State: AOJu0YxZ/jOILwNOMsJR1ZkZvUg9u7w+OPU1xHBXAXQMofuXNN93TzXt
-	zRp7UOb+hMyyV+29jV+kvpMzsv43ZeNj7f4Cd6H/rLBUg0Mjjsss3IfYkUCbr6kLeHUmzyaeehl
-	FP2EPMPI10iNT3PwnzJkcc3H4kn1rkYc=
-X-Gm-Gg: ASbGncsivr+/3wHndfywA/lja3QGq97MIUYrH3vvWl6vRHmKWWpR4OPUvBdmfrm6n9I
-	DYsY4bl3lLSmN/S2tQryQkeZXeYDUi5MH/dB5wlyxUEwhghyi+vFQrBserSTS5nftljaZfnKEuc
-	QXshnmHYMaFhTLdHmPR0AhBzJo5x5of7m4XYdUPblJhR4fsLBco8BPmHtkTKThlCIm98m8v+vPW
-	kO9Z8JQz0akus4r75bdv8JjmiFdxQunJI35o0Kaq2PndCrNOpvdTQ8qRotTCnqPvYW4eS4g
-X-Google-Smtp-Source: AGHT+IE0WrnenDaxxHvdgR1b5jf1F5GCBfr57Eec1IwI6ccWUVyHFY4j2s+bTxIOrR+wVCSqyCg2oAUJtlasmEl5+eQ=
-X-Received: by 2002:a17:902:e849:b0:295:8db9:305f with SMTP id
- d9443c01a7336-2984eda99acmr4371585ad.34.1762887612058; Tue, 11 Nov 2025
- 11:00:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="M/pJtC09"
+Received: (qmail 489252 invoked by uid 109); 11 Nov 2025 19:15:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ANgdxBb37Dn7Qk0OwkQZe26NWX37OaGpCUrvRf9Q1cg=; b=M/pJtC09BSzaRt/ESFfhCv3zvBVGmkW8oiQmPM/uioTd+RAO78UOTWx/P46amE+zhMt15xPZ9K+ld+WC7CfCQH7RG95PcuP4ZJd+PnE5QZZERAg971xhMfqlJGwNmGfDmhgF9V1Bue7u8t71eZpVlMoAeh1N02DG1ONXv1VMgwwOme5uYw7UdWncHaVIhjGT99FOlnTixx4uGQT28CiN/AwhfF7jPZO1cBa12rux2ZmPaEKRwjeVUjhvnlgm2+6w/STZQcYa9X2GuwstLCQ4Z0lkBcSaN0a/jqiOn170Tr7KyUwKt2Jlt+G0GC/uLqanQgHPL1ZKZOnwM+NEyok9KA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Nov 2025 19:15:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 778823 invoked by uid 111); 11 Nov 2025 19:15:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Nov 2025 14:15:09 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 11 Nov 2025 14:15:08 -0500
+From: Jeff King <peff@peff.net>
+To: ZheNing Hu <adlternative@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	phillip.wood@dunelm.org.uk,
+	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] commit: add --committer option
+Message-ID: <20251111191508.GA1907007@coredump.intra.peff.net>
+References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
+ <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com>
+ <aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
+ <20251110201136.GB127132@coredump.intra.peff.net>
+ <CAOLTT8RweGOmxNK=vKDv8w-8AJM7QUfLBw4WOKeY1EpSVeB6iQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <7fbb341e8f05fcde3a1543e3bb4e5a3ec1101692.1762280097.git.ben.knoble+github@gmail.com>
- <15f07afcb66a900e5391e6b07e0701ce84236f04.1762820188.git.ben.knoble+github@gmail.com>
- <xmqqqzu4wg3u.fsf@gitster.g>
-In-Reply-To: <xmqqqzu4wg3u.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Tue, 11 Nov 2025 14:00:00 -0500
-X-Gm-Features: AWmQ_bmuDAR2PtJloEeOpti-8JjDKogsGTVPax-agGhTd3lLyihcbv77Gi0A-u4
-Message-ID: <CALnO6CA2uLjWg_kwbaEGd+TZP4qQEBMus6HRVbo7Bz9oHdoYxA@mail.gmail.com>
-Subject: Re: [PATCH v2] perl: also mark git-contacts executable
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAOLTT8RweGOmxNK=vKDv8w-8AJM7QUfLBw4WOKeY1EpSVeB6iQ@mail.gmail.com>
 
-On Tue, Nov 11, 2025 at 1:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
->
-> > When installing git-contacts with Meson via -Dcontrib=3Dcontacts, the
-> > default Perl generation fails to mark it executable. As a result, "git
-> > contacts" reports "'contacts' is not a git command."
-> >
-> > Unlike generate-script.sh, we aren't testing the basename here; so, glo=
-b
-> > the script name in the case arm to match wherever the input comes from.
-> >
-> > Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> > ---
-> >
-> > A small typo fix for the commit message, thanks to Patrick.
-> >
-> > v1: https://lore.kernel.org/git/7fbb341e8f05fcde3a1543e3bb4e5a3ec110169=
-2.1762280097.git.ben.knoble+github@gmail.com/
->
-> Together with the html one, these patches match what I have already
-> queued with local tweaks, so I won't replace them (they are in
-> 'next' now).
->
-> Thanks.
+On Tue, Nov 11, 2025 at 09:42:38PM +0800, ZheNing Hu wrote:
 
-Ah, sounds good. That was one of the things I wanted to ask by "shall
-I send v2 or does Junio mind the trivial fix," and I should have been
-more direct.
+> > Is a "--committer" option the best solution there, though? I'd think
+> > you'd want to set user.* in the repo-level .git/config (or using a
+> > dir-specific include) would be less error-prone.
+> >
+> > That doesn't help for using two identities for the same repo, but in my
+> > experience it is easier to use two separate repositories for that to
+> > match the organization of the work (even if you may sometimes fetch
+> > between them).
+> >
+> > I'm not totally opposed to the new flag, and in general I'd defer to
+> > people who say they find a new feature useful. I'm just having a hard
+> > time imagining a scenario where it's the best option.
+> 
+> Sometimes it's because I forgot to configure the repository-level git user
+> config and started development first. Only when I tried to correct the
+> committer did I feel the pain.
 
-Thanks.
+OK, this workflow does make sense to me. Fixing up an earlier mistake is
+inherently a one-off thing, and a command-line option is more ergonomic
+than using the environment variables.
+
+Two small thoughts:
+
+  - I suspect what you'd usually want there is for the committer and the
+    author to match. We have --committer-date-is-author-date for rebase,
+    and conceptually I think something like --committer-is-author would
+    do what you want here. But obviously it's less flexible, and I don't
+    know if it's that much easier to use.
+
+  - Because it's easy to make such mistakes, when you override the
+    author (so that it doesn't match the committer), git-commit prints
+    an extra "Author:" line in the output to make that more obvious.
+    Should we do the same with committer when you've overridden it?  We
+    already do print "Committer:" when the ident was guessed from system
+    info, but I wonder if it would make sense to print when it was
+    forced. I dunno. I guess the time you most need the hint is when you
+    meant to use --committer and --author together, but only used
+    --author. But I don't know how Git would infer that case (versus the
+    normal case of you applying someone else's work and crediting them
+    with --author).
+
+I'm not sure if either is a useful direction, but they seemed
+sufficiently not-dumb for me to at least type them out. ;)
+
+-Peff
