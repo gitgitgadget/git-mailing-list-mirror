@@ -1,60 +1,60 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A0033ADA4
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 13:36:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7812E62D9
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 13:42:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762868206; cv=none; b=sOgVzKzy/KS8I3lUBjH8Fr1wvBqxwSrbLrHyV/NTeeZdMmnwgIYP0e+hmfstZPdOVT8pIMiJlBXHlSJ9SzT7PUv/9nTpaknYCApVUqKhIE142JeP/ym9+wQe5VAiVpr/Q3jJrSFOgSI58jwP/rgxy43OyyocYmsRJDsgcYRtozU=
+	t=1762868574; cv=none; b=XgUE2wcmWbkacUv6Yhwneg2Z1cCJZvA3SM8GXlimbktDyQN2XxH84IlEpBOV7XThKhqou8g9ANJxuPQXQ6fM8iIp1WJTTbk/GN0XTKBR2FFc9ll5Fx+GKK5+9+n7SA25zBA+3JURh2Fu+yDA6scLkBkjaoX+8Q3FGFDmLLF3tDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762868206; c=relaxed/simple;
-	bh=zMmAk9n3oB4i7CMJh44GZojiYAD5vBEgOt+bV0VeGbU=;
+	s=arc-20240116; t=1762868574; c=relaxed/simple;
+	bh=oc5B9VfAORiYQfifoMq2z+nf1n/Iegd7bRzWf1k8l/E=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hmdLx+9KXig0UKS8fBcgi8RqR7IOA4ZVSzS7Lt4sZa668C7a7tzQ7yIkT0myckz1zGV297VDaEt6IQqEhpMIavxnBDzqd3BqYoGRK7n4k2LqNG707OvD7JVhzkQOqsHS0O5UNz97R+mlO560lhdulhbMdlwqXKL4wBOe39/yR4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DWm7SBvC; arc=none smtp.client-ip=209.85.208.46
+	 To:Cc:Content-Type; b=JHpHofSg9QUAK8DYkQdUgAu7Klq/gkwMK27TnI07S6hOU074nJQEVKtgyZ0tYYzq3bpFjPG31x0w8p/TUUuPbUJ63EIDwxZseGkmkcqs8A9gGIccgncXp4e+cJ/z5qkaGiwJSH4/pNqyxuaYZfWdTPmXyuORrWUkJA6hgk7CRVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CQDD4aS3; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DWm7SBvC"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-64198771a9bso3746640a12.2
-        for <git@vger.kernel.org>; Tue, 11 Nov 2025 05:36:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CQDD4aS3"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-afcb7ae6ed0so700625366b.3
+        for <git@vger.kernel.org>; Tue, 11 Nov 2025 05:42:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762868203; x=1763473003; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762868571; x=1763473371; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xpcv5oPQWsz8mSbxycVehRFUlatBatx90hX7yJN3JMI=;
-        b=DWm7SBvCTlaYmnjIm0ZhYu0jBEOIIdg0N8rozS5NWolj8NUXJEVGwT0yYoLtLRPAuz
-         9oEDzwb03snzMrgSwZ4j1ODTw6t38oUR9K1DiEVO7fV0hJ5Xtm1X5XovxqMlp+MZa31C
-         HTXjK5mqg0DO9Ph6LGMTz6bgMHivJ/eNsYr33B1IFneGaZ0Jr/8bUCs8MU2iP4ctXq7o
-         FgmODMCHTpGUYlQvJAJJeOwYiBylMM0aUmwbz50Liil4zIgpsqUsJPPI7OxUdaSrJAu9
-         +LWufWGGVR1DrOdykWpPxiF5mXUjkFJAp01VhlKIK/3STy3F+UAe8CiLWtZSkZmHJBFu
-         POHw==
+        bh=oKtNhxjsmWDzq6CwlgwmbkFZzt5qmsJ0BT7YmL6PHEU=;
+        b=CQDD4aS3L2dIkHYktW2fAYzUG4t+bkXvuf6zMRthh81ybM5FtuntDnAMMVJwmw0TI/
+         Kvwhqh79StuKvXLt2YranU8kdWv6h3o56Nkby0NBlY3JwfjxREDhSxuc+MgRv5dikXVM
+         QXPEsyUxKpvP/w4Lqmby356eRJ11iHYhARbPBpecx96b8VmI8AG6lQWy6A6WWM6WwqAX
+         AKk9AMUVWvBD/YkAuYYiCQKuBLCbjdhoaF4eaHmbKdc4Jy/JzJkbEk/6NsKQV2Tj36u6
+         kOG7w/YsXXHcrupfGzhQxUmqW2gO+VpEiytDsZ/In5d/O7BSK3m3j/8K1J+k4h8mX1Za
+         vxQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762868203; x=1763473003;
+        d=1e100.net; s=20230601; t=1762868571; x=1763473371;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=xpcv5oPQWsz8mSbxycVehRFUlatBatx90hX7yJN3JMI=;
-        b=YIafR0m67+1ZniSE1obDdDdjtlBPcadrGR7YbHwppk85hYmvnv3pV/2RNyshsUhJzb
-         K/c1jU7J5WrJ6UlXEtE0WhJyQ3hnvDaGJDv9rxjqIa+9aDXl1CS/OrIcLIN/nIf49j7T
-         Sc62LBLKnN+PnbNcv59B+jSRQV4ubnSB0KVBtNiJqzHguGWPiIR3+E25Mi20PkyKZKBs
-         qLmwGEM2zFZnA4w5lrzB6pcvJey5c4ynGj0mGLO1dZKsYbDCVBdNfVyeqyIJKKnL2vCr
-         JR7GBc3JMpWyzHXrErxrfRDjtWmOmVYSYfy8V0aBGCdnk6F2qYa3nX29ctxbdQ7tS7Hf
-         K9iQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX2K+NypYspuaN/wSXMrfn13I55lzB3a80+LOl06RhJI5kicaRJm7kbNmRAYqOYxSVQkcU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz4Cm0YmOlorwQ21Zj23xhqZC16xE8LbOP52MSlnMRRWKn9GD95
-	x6L+l9DAY6XCjCjajPzZnaEysuYyIxoX0Xutg8B2Ft3kpwQNmP3BJdz3krg6npTFCa+wQwSK48p
-	I8nVCZ7N9bLRTJhEx3uR1WdXXkHJeXv1kQgD58iw=
-X-Gm-Gg: ASbGnctAqDKQjebRw8gNKkc8iz9DELvXQI+NcweyzKpiPtV3Ae1AS8uIhgznLGMPvNP
-	oZtDFC7+QPcSZ/JcTTnNg+mWKPo7wBsEFQ0p+RXIJBq+19DJOOcxe+aKmKIVQMl5Cu0zb6gVkct
-	Ec28sc+bYYhs9Au7ryEpadtYTtQdnN5lznQNvDg50rZNUdUw5x+Fo3UGIuQsUwyYOYjQtVjLsqX
-	Rr8G6REliB2q1/edd6tGV0pjIYlrXEIsOsgTg80pA7QWA+HSpbpBBeJEUl26g97dzx9Sh2J7J8t
-	7WL4pdvBJY0u
-X-Google-Smtp-Source: AGHT+IHzf9YmWzWQ6fasrZn5RzragRDtHFuHUGNQ9Wxf2zMqXnTugzCJxp4UZZRpW8ty42pgFVjiVySSbmyxz+LCgW0=
-X-Received: by 2002:a05:6402:34c3:b0:643:d1b:41d9 with SMTP id
- 4fb4d7f45d1cf-6430d1b4603mr941182a12.17.1762868202781; Tue, 11 Nov 2025
- 05:36:42 -0800 (PST)
+        bh=oKtNhxjsmWDzq6CwlgwmbkFZzt5qmsJ0BT7YmL6PHEU=;
+        b=iUNFc7uaj4RTF/UaLN/SHptdc4oQ4TGBdcha4d9xnZGVjTSljUpIXxmiTAWO9WEOCv
+         i6OrzvdfKeK/C/I1Bo+KezurdKa+lu4fKoPbRBoR1gpif+DOdDIHHRwzt6n+MfCaOE5o
+         uIfycHvnDIdIhVlq/qg5o2wf5UXshUI2foPtJxcVmWKtRt2jTND0gkisXfBx3yirC5ba
+         0oMXDMXC+xs9C3aXRZ8tmoZABRlEU/NejncnRG+to/mImzkF5/6GEQt68AUT0AElGGdm
+         mxQSRw7AfpyhCAEwKuQLFJyWvGrOQ4SPsdN4hQhHngqo14gaYUChvzcAFCGXGJYo59VG
+         vJTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXppkkp/KRmOJDpn/QNN82RmaiAUrFz57WR6hu257y0fCchPmcKdZ09DMXsi3YrYwQcKSg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzCLaFxh5rHbsajqMCwx3WY3ynCy7Qd14BNEzaq+cBHYFsFmDHb
+	pPmuB9pkDmG/J8aVpBvb3sQytIzJoFI3Unx0/N+Mj4SdLjcQmdzIN6Zp0XTktS8RSc3n/H6ACLN
+	SDbYo5AsP8/iBRYOjYFeRJ/LVidF2LEQ=
+X-Gm-Gg: ASbGncsFpLgT7CEVN4B5xRltS8PLHnEasd7ZuesVr+TmOpv5m39FPM7ctff47EKU/HH
+	LHO8rZQV/Wc6qS6KuzR2v+ETvTiF/uQnynpylGnRwD9KSssncoXYIqekPn6bY+Lzur+RZFpVnHy
+	97VAb0sNPOt/9/yxnUt4/2PNVWy2Qeq5QpSvhQuVE/paIilrqB/pz36jijiNkcEypve7AkMCkhy
+	AYFM6AMp6sHUaBokCFMvvEhGEKgHWf7m8H0e1I6jJbyxRLVL4k47fkG3dmfsI3o9FkNegkou7cJ
+	VZRTz+G4gCiE
+X-Google-Smtp-Source: AGHT+IEKf+yFvqZkBDU+KG6TwnBgzT/BwBr0nMyRgxMB7RgJghHWNbTeqdFgKqIVyZ+CiLURyRySNkxz5RGiTAPrk10=
+X-Received: by 2002:a17:907:7b96:b0:b40:fba8:4491 with SMTP id
+ a640c23a62f3a-b72e0310d6fmr1405077666b.17.1762868570507; Tue, 11 Nov 2025
+ 05:42:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,40 +62,81 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
- <pull.1997.v2.git.1762793782815.gitgitgadget@gmail.com> <xmqqo6p9zo8f.fsf@gitster.g>
-In-Reply-To: <xmqqo6p9zo8f.fsf@gitster.g>
+ <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com> <aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
+ <20251110201136.GB127132@coredump.intra.peff.net>
+In-Reply-To: <20251110201136.GB127132@coredump.intra.peff.net>
 From: ZheNing Hu <adlternative@gmail.com>
-Date: Tue, 11 Nov 2025 21:36:31 +0800
-X-Gm-Features: AWmQ_bnp9id8_pKMBhzAjM9Q9xHRIKIaAerHmZhYg49jZ1K9z1gpJpI7W08RdcA
-Message-ID: <CAOLTT8SDpVfk8XqOJDL1=ASJwLf8EYtCo05NS3M2zZUx9JV6fA@mail.gmail.com>
-Subject: Re: [PATCH v2] commit: add --committer option
-To: Junio C Hamano <gitster@pobox.com>
-Cc: ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood123@gmail.com>
+Date: Tue, 11 Nov 2025 21:42:38 +0800
+X-Gm-Features: AWmQ_bkbE6UsFLKHQAcPdABZ61SWy6mHi3jjTk0h2bYL2JcdacQVtFPDbOjvtTw
+Message-ID: <CAOLTT8RweGOmxNK=vKDv8w-8AJM7QUfLBw4WOKeY1EpSVeB6iQ@mail.gmail.com>
+Subject: Re: [PATCH] commit: add --committer option
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, phillip.wood@dunelm.org.uk, 
+	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2025=E5=B9=B411=E6=9C=8811=E6=
-=97=A5=E5=91=A8=E4=BA=8C 03:22=E5=86=99=E9=81=93=EF=BC=9A
+Jeff King <peff@peff.net> =E4=BA=8E2025=E5=B9=B411=E6=9C=8811=E6=97=A5=E5=
+=91=A8=E4=BA=8C 04:11=E5=86=99=E9=81=93=EF=BC=9A
 >
-> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> On Mon, Nov 10, 2025 at 06:01:57PM +0000, brian m. carlson wrote:
 >
-> > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> > Co-authored-by: Aone-Agent <aone-agent@alibaba-inc.com>
+> > On 2025-11-10 at 16:50:04, Phillip Wood wrote:
+> > > On 09/11/2025 10:22, ZheNing Hu via GitGitGadget wrote:
+> > > > From: ZheNing Hu <adlternative@gmail.com>
+> > > >
+> > > >      This patch introduces the --committer option to git-commit, pr=
+oviding:
+> > > >       1. Consistency with the existing --author option
+> > > >       2. A more convenient alternative to environment variables
+> > > >       3. Better support for automated workflows and scripts
+> > > >       4. Improved user experience when managing multiple identities
+> > >
+> > > What's the use case for the same person committing under different
+> > > identities? We already have a config mechanism to set different ident=
+ities
+> > > for different repositories but I'm struggling to see why someone woul=
+d want
+> > > to create commits under multiple identities in a single repository. F=
+or
+> > > scripts it easy enough to set the relevant environment variables if a=
+ tool
+> > > wants to create commits under its own identity.
+> >
+> > Someone who works on the same project under both their personal and
+> > corporate identities.  For instance, me working on the Git project.
+> >
+> > Some open source projects also require a CLA and you have to use a
+> > particular address to match the one that's listed on the CLA.  For
+> > example, Google requires an address with a Google account, so in the
+> > hypothetical state where I was going to contribute to one of their
+> > projects, I'd need to use a different committer identity with my Gmail
+> > address.
+> >
+> > I've also kept business logs in Git when I had a small business and I
+> > might well need to log approving a profit distribution (with my
+> > corporate address) and log accepting a profit distribution (with my
+> > personal address).  Those would need separate digital signatures from m=
+y
+> > two different email addresses.
 >
-> What is this second author and how would its presence in the author
-> list interact with your DCO obligation?
+> Is a "--committer" option the best solution there, though? I'd think
+> you'd want to set user.* in the repo-level .git/config (or using a
+> dir-specific include) would be less error-prone.
 >
-> How did you make sure that whatever is in this patch were not copied
-> by the "agent" from somewhere that we cannot copy the code from
-> before deciding to send this patch?  The "cannot copy from" may come
-> in different shapes, from "their code is proprietary" to "their
-> licensing terms are not compatible with GPLv2" to "they welcome us
-> borrowing but we must give credit to them", any of which we should
-> be careful to avoid.
+> That doesn't help for using two identities for the same repo, but in my
+> experience it is easier to use two separate repositories for that to
+> match the organization of the work (even if you may sometimes fetch
+> between them).
 >
+> I'm not totally opposed to the new flag, and in general I'd defer to
+> people who say they find a new feature useful. I'm just having a hard
+> time imagining a scenario where it's the best option.
 >
 
-This was automatically added by some code assistance tools.
-I indeed forgot to consider its impact on the open source license.
-I'll remove it right away.
+Sometimes it's because I forgot to configure the repository-level git user
+config and started development first. Only when I tried to correct the
+committer did I feel the pain.
+
+> -Peff
