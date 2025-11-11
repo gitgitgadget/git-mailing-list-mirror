@@ -1,77 +1,77 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C97EEBA
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 00:05:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974C060B8A
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 00:05:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762819514; cv=none; b=N/3h6ig6l8brs2vL8Pe6aeVK0VK5IQ389M4DIUU8PwSIoeJuxCXG/fdr/8u0rOnz4ZYJ3QrsyN3ccYXP1Fbiwin+agOTn3Cwi4T9PQIcPdZLpbsH1C3eYvVGU9Qdxpk58gPnIdcki62i7q2JJwIY4VtUpJJ9y0Wcca2ZSPQy4FM=
+	t=1762819516; cv=none; b=mw4y2fYTUl68cHrHrhPJHCXAJN5eVavV6gebi1wrmKUZCsWXFirzy0wpC5ElbLB0cFygpebX8uV3kPtCE8qcQLaLTWl4EpbMi5ElCOxmngCowoHPoOhkp5H9b5AM03pOJIBdRqHM9ohC0vqu1bglAq4oXz7WIC9mTatdJXb4v/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762819514; c=relaxed/simple;
-	bh=xVuErZxsTVxaj9qxQmrAA8yJEc9b6qVO8Iaj+qsGhus=;
+	s=arc-20240116; t=1762819516; c=relaxed/simple;
+	bh=A9mkqpXF5DjAFgaZTODzzA+duBiHq+kuUBvHqDwmSEk=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPwc8oW46r4IRLnI8UczOKaSwZ1ByNJjVRxhxnZCaSoc3sBKp4L0N3PIupMPHTZ0wqRdNSZ2ZRIrqBAy41enHjpI9V6NbBIG9fpoBdOeCaBAZct1NcZw8Rvtx75BUE0SjSSBl/CGAu4AWKiQchJERWg8YRnAD0eIfO5nf/RkJz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bTiw+mVA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MZPOWPMU; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version; b=pzdmUr3mDIpqlst88ErfCbj7q1T3SBY5j1xl4LFHVD+IFpVYqNwoffKydvb7wZ50l+U0TKPOk4PWb3NAiNbwIAhYxOSMcL6G1jyL7r7UCAFxLMPtuJ5YNuWC0zfiiQBu175kO/LHFWFPQ/ZMnFHrsUtWCpTAGKk0hPmaft2VVIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dSNZAvJ7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cMXInCCg; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bTiw+mVA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MZPOWPMU"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0C5761D0012F;
-	Mon, 10 Nov 2025 19:05:12 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Mon, 10 Nov 2025 19:05:12 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dSNZAvJ7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cMXInCCg"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B958D7A019F;
+	Mon, 10 Nov 2025 19:05:13 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 10 Nov 2025 19:05:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1762819511; x=
-	1762905911; bh=7r8KcoXJtVZCe8ABSxlGngDoT6FpVZc5JZ5ATJ0XW7Q=; b=b
-	Tiw+mVALWDSRdNH/z/tnd5VdFdvzC+2X7HAlt5nnRN9ymmpsGjGoZ3Jhq++vtKql
-	/WUdFaHIDuj92Qlaja8gbjO+SEkVpjIRvTLfY76M+cLIMpXT1wYGkuX2ChY24cs9
-	AyvNI3+1cICUTpDg3zuI/I05k2OqFISffGR901b05lToRAs7gOXob7Jr2yDgoQ9u
-	dnLy2deK3x7TLyvYJgA8rtBcvJvVlfPEbV1jCCE76QiqAT8kh0BLv9MWO4wQZKeJ
-	Q2iaFeg5kWpVqfTAVMGgY2Ldv16qmWRyLaDNhrl3H1yIoQQP5B4WyOdLrrslwIRo
-	z6JPrRsCgFTSZ6nRVIi6Q==
+	:reply-to:subject:subject:to:to; s=fm2; t=1762819513; x=
+	1762905913; bh=7zbDaCBYpruCTDtJmB1HUfX1skPnRgD+W+pWt0EJBbg=; b=d
+	SNZAvJ7aOaZ48QNA/Ufzqlfl9lKEjfELBsmuYfu7emIgXPVoLq0Mag/9OWce2iVE
+	EcUwWDRbz37GF+Nc9+mSdjv45rw3FNg8TY59yxm/rMaDgA1ewCBGssJwgkBcg1x7
+	MNZBL6JtUivxFTw5KjBeAj3WphN0MNGLrzs3SAEmmu6tArQ9xPOZzLfwShh3Tt8W
+	nZNaKrq6HdyBui2eaq89HlYBcBQ5xwWMXTF8vzI9gjgL0cIHdnNRsAabbJeQh2Nm
+	A7dsExgGKXCKI3wiLlOqqUXdwR8vjKQgBOALaWPLEG2bWsFdT8LefellbEz/zpKJ
+	2r76/b2mRftzwFp8/UywA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1762819511; x=1762905911; bh=7r8KcoXJtVZCe8ABSxlGngDoT6Fp
-	VZc5JZ5ATJ0XW7Q=; b=MZPOWPMUyeC4KmIQyJYjjMd80Nd/1AaHOi9Z7eAlqROH
-	cpThxtUAXB3MAD2psIDO+njDkkffofhOFKD0rpGATGOFYi32H2mcF6nFFdJhhUGU
-	Z0fj2aaZxKw98eFRa8xdLruxrroFMJX35XFXxo7SYkQ2oBLxfM3BIKH7BQr8dpfd
-	G0xvO6OpJrfrT9UkB9xj5KUHyacXRJVjsZZGpgnbuF+AM5IJgnM26+a+S9/fP9nt
-	ETq0VkYSXw3O0FLHRmcthZflyokZZ97QCtyqyV8FFSXuhngU1kd8XWifJ6OvYtvw
-	qxmjbkCo5xHVHmWaQia2c/LR7JYbfBYgmCi1UtuNJQ==
-X-ME-Sender: <xms:t30SaWnPtN5haJr8rSrr3jbLjVsDOu4SalCTWpyrGOPtBNPDBAZV3g>
-    <xme:t30SaT1FtGAiIArmuH3HSCcP5W_hyJB5E3krsqXgwN57ATH_xim0rPVenhPXReuKt
-    1E9TuySIanqlppayJVCNH1n3SPu21TIFhhjl6zvBFF7MpOjvM7Z0g>
-X-ME-Received: <xmr:t30SaSQ_exFe3aBFfdQRvAu9Ki7m5m0tmjEUOoAJMxVmvTFCZGjeW4Tl8nRyU7ktxi_A5OHHFOIOCot0Vg0oiwmsl-pqJ7odUlQT>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeljeduucetufdoteggodetrf
+	fm3; t=1762819513; x=1762905913; bh=7zbDaCBYpruCTDtJmB1HUfX1skPn
+	RgD+W+pWt0EJBbg=; b=cMXInCCgAwv43M5qdGtWJRMp0b2NbRJBXCKc6QunpvwF
+	T72rrHhyqfBO7xNHzs53ah/kzp+BIoiquKSCOBz7QojRE/L5sfUQSsbHdFhuNdNn
+	C6q9K3gT48WscLWF1ZNplucxJx+8iWMijCL2reMbhBi+bkatinzKQXZ7aaEjQqdc
+	d7E5IeJ6GIfuh2Z5+sa2RwMkhN3dOFicqkTAzkc24ZglUGoJrkr0Ij81g3Eya6S5
+	axpHTYoJtobsKnQRPgS6n7KiVDRhAWJV3AWYzQOGXLiQB2CDAthTMQAe3v7bbU8J
+	IKsPUxiLftX8cboECSw4kZNrUezB8/nseuSp/lpQKA==
+X-ME-Sender: <xms:uX0SaQDfJKysXxRYnXDXhbsSe_UOUlywzn4nvlr9lkV_Z-Gc6Z1oGw>
+    <xme:uX0SaYiSoNgvU1aLnnB9_ASbeUZq7ZeaWZXtEqyM54INMxF4ZFtVuFarIptbYqM2v
+    3wD37NFBbj_roAJnHnSa2fPqhimdfks3bGsHzJmaUMZYjQBRsve>
+X-ME-Received: <xmr:uX0SaROKrbmZFfnc3QMAfIAiIgQtuZDQp1jof5hkeE7B5XRy7AD3drwRbxy9m93fdyq3n91rD1O7MCc_qT262RFjeze4zPxht4WM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeljedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
     dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
     sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
-    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepfeenucfr
+    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepheenucfr
     rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:t30SaVuDPsF4cYIWETQpm6fzn888Xu6-AP4XxhLO9mVZM0Cw_F9hUA>
-    <xmx:t30SaXYtTF2IjP_FwGg8Ex7G-tRq0C8P2GyatVSUfCTugN_qN2YkGQ>
-    <xmx:t30SaatKpwTKtVWoETOtFDWkTvSldHRHvGjgMuvxeIReRSmWVyuWFQ>
-    <xmx:t30SaZEfiUM0tmusYLwqPtEFXEUqKylmk5qCyvsjnRiUxe-DJoUPGw>
-    <xmx:t30SaR_G2t1Koo1uwoK07LwgWNqhIeEZ2h-aAwgcohY9PIiAe-3lLOPX>
+X-ME-Proxy: <xmx:uX0SaR4lT-T8SoZqFqRk_oIgPBDDl-cD1S77J2Avg0GBYqKq-LdLIQ>
+    <xmx:uX0SaX0_enZwZQNVFKccAj1exsMLO2SstIUbjRP05c1t7Gh_AQ9DDw>
+    <xmx:uX0SaaZB69FFjiSeRIa4KhAUWeJpOhABMKRCvaDdVRYzKztXWrLHSw>
+    <xmx:uX0SaXDKwhKeCz3Ow8ApybBsc_5ZZ8D9VeesCop6J-nKxCEJt9utxQ>
+    <xmx:uX0SaTZtVblfcH39VP9zQQ09p4B6CTZbJT0oqvAh_mWg2M8CJzaZ8X9P>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Nov 2025 19:05:11 -0500 (EST)
+ 10 Nov 2025 19:05:13 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v3 10/12] apply: check and fix incomplete lines
-Date: Mon, 10 Nov 2025 16:04:49 -0800
-Message-ID: <20251111000451.2243195-11-gitster@pobox.com>
+Subject: [PATCH v3 11/12] diff: highlight and error out on incomplete lines
+Date: Mon, 10 Nov 2025 16:04:50 -0800
+Message-ID: <20251111000451.2243195-12-gitster@pobox.com>
 X-Mailer: git-send-email 2.52.0-rc1-455-g30608eb744
 In-Reply-To: <20251111000451.2243195-1-gitster@pobox.com>
 References: <20251105213052.1499224-1-gitster@pobox.com>
@@ -84,289 +84,246 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The final line of a file that lacks the terminating newline at its
-end is called an incomplete line.  In general they are frowned upon
-for many reasons (imagine concatenating two files with "cat A B" and
-what happens when A ends in an incomplete line, for example), and
-text-oriented tools often mishandle such a line.
+Teach "git diff" to highlight "\ No newline at end of file" message
+as a whitespace error when incomplete-line whitespace error class is
+in effect.  Thanks to the previous refactoring of complete rewrite
+code path, we can do this at a single place.
 
-Implement checks in "git apply" for incomplete lines, which is off
-by default for backward compatibility's sake, so that "git apply
---whitespace={fix,warn,error}" can notice, warn against, and fix
-them.
+Unlike whitespace errors in the payload where we need to annotate in
+line, possibly using colors, the line that has whitespace problems,
+we have a dedicated line already that can serve as the error
+message, so paint it as a whitespace error message.
 
-As one of the new test shows, if you modify contents on an
-incomplete line in the original and leave the resulting line
-incomplete, it is still considered a whitespace error, the reasoning
-being that "you'd better fix it while at it if you are making a
-change on an incomplete line anyway", which may controversial.
+Also teach "git diff --check" to notice incomplete lines as
+whitespace errors and report when incomplete-line whitespace error
+class is in effect.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- apply.c                  |  13 ++-
- t/t4124-apply-ws-rule.sh | 187 +++++++++++++++++++++++++++++++++++++++
- ws.c                     |  14 +++
- 3 files changed, 213 insertions(+), 1 deletion(-)
+ diff.c                     | 29 +++++++++++++++--
+ t/t4015-diff-whitespace.sh | 67 +++++++++++++++++++++++++++++++++++---
+ 2 files changed, 90 insertions(+), 6 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index 2b0f8bdab5..c9fb45247d 100644
---- a/apply.c
-+++ b/apply.c
-@@ -1640,6 +1640,14 @@ static void record_ws_error(struct apply_state *state,
- 	    state->squelch_whitespace_errors < state->whitespace_error)
- 		return;
+diff --git a/diff.c b/diff.c
+index 64cf1f139f..e12931c5e7 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1370,7 +1370,11 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 		emit_line(o, "", "", line, len);
+ 		break;
+ 	case DIFF_SYMBOL_CONTEXT_INCOMPLETE:
+-		set = diff_get_color_opt(o, DIFF_CONTEXT);
++		if ((flags & WS_INCOMPLETE_LINE) &&
++		    (flags & o->ws_error_highlight))
++			set = diff_get_color_opt(o, DIFF_WHITESPACE);
++		else
++			set = diff_get_color_opt(o, DIFF_CONTEXT);
+ 		reset = diff_get_color_opt(o, DIFF_RESET);
+ 		emit_line(o, set, reset, line, len);
+ 		break;
+@@ -1666,8 +1670,14 @@ static void emit_context_line(struct emit_callback *ecbdata,
+ static void emit_incomplete_line_marker(struct emit_callback *ecbdata,
+ 					const char *line, int len)
+ {
++	int last_line_kind = ecbdata->last_line_kind;
++	unsigned flags = (last_line_kind == '+'
++			  ? WSEH_NEW
++			  : last_line_kind == '-'
++			  ? WSEH_OLD
++			  : WSEH_CONTEXT) | ecbdata->ws_rule;
+ 	emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_CONTEXT_INCOMPLETE,
+-			 line, len, 0);
++			 line, len, flags);
+ }
  
-+	/*
-+	 * line[len] for an incomplete line points at the "\n" at the end
-+	 * of patch input line, so "%.*s" would drop the last letter on line;
-+	 * compensate for it.
-+	 */
-+	if (result & WS_INCOMPLETE_LINE)
-+		len++;
-+
- 	err = whitespace_error_string(result);
- 	if (state->apply_verbosity > verbosity_silent)
- 		fprintf(stderr, "%s:%d: %s.\n%.*s\n",
-@@ -1794,7 +1802,10 @@ static int parse_fragment(struct apply_state *state,
- 		}
+ static void emit_hunk_header(struct emit_callback *ecbdata,
+@@ -3259,6 +3269,7 @@ struct checkdiff_t {
+ 	struct diff_options *o;
+ 	unsigned ws_rule;
+ 	unsigned status;
++	int last_line_kind;
+ };
  
- 		/* eat the "\\ No newline..." as well, if exists */
--		len += skip_len;
-+		if (skip_len) {
-+			len += skip_len;
-+			state->linenr++;
+ static int is_conflict_marker(const char *line, int marker_size, unsigned long len)
+@@ -3297,6 +3308,7 @@ static void checkdiff_consume_hunk(void *priv,
+ static int checkdiff_consume(void *priv, char *line, unsigned long len)
+ {
+ 	struct checkdiff_t *data = priv;
++	int last_line_kind;
+ 	int marker_size = data->conflict_marker_size;
+ 	const char *ws = diff_get_color(data->o->use_color, DIFF_WHITESPACE);
+ 	const char *reset = diff_get_color(data->o->use_color, DIFF_RESET);
+@@ -3307,6 +3319,8 @@ static int checkdiff_consume(void *priv, char *line, unsigned long len)
+ 	assert(data->o);
+ 	line_prefix = diff_line_prefix(data->o);
+ 
++	last_line_kind = data->last_line_kind;
++	data->last_line_kind = line[0];
+ 	if (line[0] == '+') {
+ 		unsigned bad;
+ 		data->lineno++;
+@@ -3329,6 +3343,17 @@ static int checkdiff_consume(void *priv, char *line, unsigned long len)
+ 			      data->o->file, set, reset, ws);
+ 	} else if (line[0] == ' ') {
+ 		data->lineno++;
++	} else if (line[0] == '\\') {
++		/* no newline at the end of the line */
++		if ((data->ws_rule & WS_INCOMPLETE_LINE) &&
++		    (last_line_kind == '+')) {
++			unsigned bad = WS_INCOMPLETE_LINE;
++			data->status |= bad;
++			err = whitespace_error_string(bad);
++			fprintf(data->o->file, "%s%s:%d: %s.\n",
++				line_prefix, data->filename, data->lineno, err);
++			free(err);
 +		}
  	}
- 	if (oldlines || newlines)
- 		return -1;
-diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
-index 485c7d2d12..115a0f8579 100755
---- a/t/t4124-apply-ws-rule.sh
-+++ b/t/t4124-apply-ws-rule.sh
-@@ -556,4 +556,191 @@ test_expect_success 'whitespace check skipped for excluded paths' '
- 	git apply --include=used --stat --whitespace=error <patch
+ 	return 0;
+ }
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 9de7f73f42..3c8eb02e4f 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -43,6 +43,53 @@ do
+ 	'
+ done
+ 
++test_expect_success "incomplete line in both pre- and post-image context" '
++	(echo foo && echo baz | tr -d "\012") >x &&
++	git add x &&
++	(echo bar && echo baz | tr -d "\012") >x &&
++	git diff x &&
++	git -c core.whitespace=incomplete diff --check x &&
++	git diff -R x &&
++	git -c core.whitespace=incomplete diff -R --check x
++'
++
++test_expect_success "incomplete lines on both pre- and post-image" '
++	# The interpretation taken here is "since you are touching
++	# the line anyway, you would better fix the incomplete line
++	# while you are at it."  but this is debatable.
++	echo foo | tr -d "\012" >x &&
++	git add x &&
++	echo bar | tr -d "\012" >x &&
++	git diff x &&
++	test_must_fail git -c core.whitespace=incomplete diff --check x >error &&
++	test_grep "no newline at the end of file" error &&
++	git diff -R x &&
++	test_must_fail git -c core.whitespace=incomplete diff -R --check x >error &&
++	test_grep "no newline at the end of file" error
++'
++
++test_expect_success "fix incomplete line in pre-image" '
++	echo foo | tr -d "\012" >x &&
++	git add x &&
++	echo bar >x &&
++	git diff x &&
++	git -c core.whitespace=incomplete diff --check x &&
++	git diff -R x &&
++	test_must_fail git -c core.whitespace=incomplete diff -R --check x >error &&
++	test_grep "no newline at the end of file" error
++'
++
++test_expect_success "new incomplete line in post-image" '
++	echo foo >x &&
++	git add x &&
++	echo bar | tr -d "\012" >x &&
++	git diff x &&
++	test_must_fail git -c core.whitespace=incomplete diff --check x >error &&
++	test_grep "no newline at the end of file" error &&
++	git diff -R x &&
++	git -c core.whitespace=incomplete diff -R --check x
++'
++
+ test_expect_success "Ray Lehtiniemi's example" '
+ 	cat <<-\EOF >x &&
+ 	do {
+@@ -1040,7 +1087,8 @@ test_expect_success 'ws-error-highlight test setup' '
+ 	{
+ 		echo "0. blank-at-eol " &&
+ 		echo "1. still-blank-at-eol " &&
+-		echo "2. and a new line "
++		echo "2. and a new line " &&
++		printf "3. and more"
+ 	} >x &&
+ 	new_hash_x=$(git hash-object x) &&
+ 	after=$(git rev-parse --short "$new_hash_x") &&
+@@ -1050,11 +1098,13 @@ test_expect_success 'ws-error-highlight test setup' '
+ 	<BOLD>index $before..$after 100644<RESET>
+ 	<BOLD>--- a/x<RESET>
+ 	<BOLD>+++ b/x<RESET>
+-	<CYAN>@@ -1,2 +1,3 @@<RESET>
++	<CYAN>@@ -1,2 +1,4 @@<RESET>
+ 	 0. blank-at-eol <RESET>
+ 	<RED>-<RESET><RED>1. blank-at-eol<RESET><BLUE> <RESET>
+ 	<GREEN>+<RESET><GREEN>1. still-blank-at-eol<RESET><BLUE> <RESET>
+ 	<GREEN>+<RESET><GREEN>2. and a new line<RESET><BLUE> <RESET>
++	<GREEN>+<RESET><GREEN>3. and more<RESET>
++	<BLUE>\ No newline at end of file<RESET>
+ 	EOF
+ 
+ 	cat >expect.all <<-EOF &&
+@@ -1062,11 +1112,13 @@ test_expect_success 'ws-error-highlight test setup' '
+ 	<BOLD>index $before..$after 100644<RESET>
+ 	<BOLD>--- a/x<RESET>
+ 	<BOLD>+++ b/x<RESET>
+-	<CYAN>@@ -1,2 +1,3 @@<RESET>
++	<CYAN>@@ -1,2 +1,4 @@<RESET>
+ 	 <RESET>0. blank-at-eol<RESET><BLUE> <RESET>
+ 	<RED>-<RESET><RED>1. blank-at-eol<RESET><BLUE> <RESET>
+ 	<GREEN>+<RESET><GREEN>1. still-blank-at-eol<RESET><BLUE> <RESET>
+ 	<GREEN>+<RESET><GREEN>2. and a new line<RESET><BLUE> <RESET>
++	<GREEN>+<RESET><GREEN>3. and more<RESET>
++	<BLUE>\ No newline at end of file<RESET>
+ 	EOF
+ 
+ 	cat >expect.none <<-EOF
+@@ -1074,16 +1126,19 @@ test_expect_success 'ws-error-highlight test setup' '
+ 	<BOLD>index $before..$after 100644<RESET>
+ 	<BOLD>--- a/x<RESET>
+ 	<BOLD>+++ b/x<RESET>
+-	<CYAN>@@ -1,2 +1,3 @@<RESET>
++	<CYAN>@@ -1,2 +1,4 @@<RESET>
+ 	 0. blank-at-eol <RESET>
+ 	<RED>-1. blank-at-eol <RESET>
+ 	<GREEN>+1. still-blank-at-eol <RESET>
+ 	<GREEN>+2. and a new line <RESET>
++	<GREEN>+3. and more<RESET>
++	\ No newline at end of file<RESET>
+ 	EOF
+ 
  '
  
-+test_expect_success 'check incomplete lines (setup)' '
-+	rm -f .gitattributes &&
-+	git config core.whitespace incomplete-line
-+'
-+
-+test_expect_success 'incomplete context line (not an error)' '
-+	(test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
-+	(test_write_lines 1 2 3 0 5 && printf 6) >sample2-i &&
-+	cat sample-i >target &&
-+	git add target &&
-+	cat sample2-i >target &&
-+	git diff-files -p target >patch &&
-+
-+	cat sample-i >target &&
-+	git apply --whitespace=error <patch &&
-+	test_cmp sample2-i target &&
-+
-+	cat sample-i >target &&
-+	git apply --whitespace=error --check <patch 2>error &&
-+	test_cmp sample-i target &&
-+	test_must_be_empty error &&
-+
-+	cat sample2-i >target &&
-+	git apply --whitespace=error -R <patch &&
-+	test_cmp sample-i target &&
-+
-+	cat sample2-i >target &&
-+	git apply -R --whitespace=error --check <patch 2>error &&
-+	test_cmp sample2-i target &&
-+	test_must_be_empty error
-+'
-+
-+test_expect_success 'last line made incomplete (error)' '
-+	test_write_lines 1 2 3 4 5 6 >sample &&
-+	(test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
-+	cat sample >target &&
-+	git add target &&
-+	cat sample-i >target &&
-+	git diff-files -p target >patch &&
-+
-+	cat sample >target &&
-+	test_must_fail git apply --whitespace=error <patch 2>error &&
-+	test_grep "no newline" error &&
-+
-+	cat sample >target &&
-+	test_must_fail git apply --whitespace=error --check <patch 2>actual &&
-+	test_cmp sample target &&
-+	cat >expect <<-\EOF &&
-+	<stdin>:10: no newline at the end of file.
-+	6
-+	error: 1 line adds whitespace errors.
-+	EOF
-+	test_cmp expect actual &&
-+
-+	cat sample-i >target &&
-+	git apply --whitespace=error -R <patch &&
-+	test_cmp sample target &&
-+
-+	cat sample-i >target &&
-+	git apply --whitespace=error --check -R <patch 2>error &&
-+	test_cmp sample-i target &&
-+	test_must_be_empty error &&
-+
-+	cat sample >target &&
-+	git apply --whitespace=fix <patch &&
-+	test_cmp sample target
-+'
-+
-+test_expect_success 'incomplete line removed at the end (not an error)' '
-+	(test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
-+	test_write_lines 1 2 3 4 5 6 >sample &&
-+	cat sample-i >target &&
-+	git add target &&
-+	cat sample >target &&
-+	git diff-files -p target >patch &&
-+
-+	cat sample-i >target &&
-+	git apply --whitespace=error <patch &&
-+	test_cmp sample target &&
-+
-+	cat sample-i >target &&
-+	git apply --whitespace=error --check <patch 2>error &&
-+	test_cmp sample-i target &&
-+	test_must_be_empty error &&
-+
-+	cat sample >target &&
-+	test_must_fail git apply --whitespace=error -R <patch 2>error &&
-+	test_grep "no newline" error &&
-+
-+	cat sample >target &&
-+	test_must_fail git apply --whitespace=error --check -R <patch 2>actual &&
-+	test_cmp sample target &&
-+	cat >expect <<-\EOF &&
-+	<stdin>:9: no newline at the end of file.
-+	6
-+	error: 1 line adds whitespace errors.
-+	EOF
-+	test_cmp expect actual &&
-+
-+	cat sample >target &&
-+	git apply --whitespace=fix -R <patch &&
-+	test_cmp sample target
-+'
-+
-+test_expect_success 'incomplete line corrected at the end (not an error)' '
-+	(test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
-+	test_write_lines 1 2 3 4 5 7 >sample3 &&
-+	cat sample-i >target &&
-+	git add target &&
-+	cat sample3 >target &&
-+	git diff-files -p target >patch &&
-+
-+	cat sample-i >target &&
-+	git apply --whitespace=error <patch &&
-+	test_cmp sample3 target &&
-+
-+	cat sample-i >target &&
-+	git apply --whitespace=error --check <patch 2>error &&
-+	test_cmp sample-i target &&
-+	test_must_be_empty error &&
-+
-+	cat sample3 >target &&
-+	test_must_fail git apply --whitespace=error -R <patch 2>error &&
-+	test_grep "no newline" error &&
-+
-+	cat sample3 >target &&
-+	test_must_fail git apply --whitespace=error -R --check <patch 2>actual &&
-+	test_cmp sample3 target &&
-+	cat >expect <<-\EOF &&
-+	<stdin>:9: no newline at the end of file.
-+	6
-+	error: 1 line adds whitespace errors.
-+	EOF
-+	test_cmp expect actual &&
-+
-+	cat sample3 >target &&
-+	git apply --whitespace=fix -R <patch &&
-+	test_cmp sample target
-+'
-+
-+test_expect_success 'incomplete line modified at the end (error)' '
-+	(test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
-+	(test_write_lines 1 2 3 4 5 && printf 7) >sample3-i &&
-+	test_write_lines 1 2 3 4 5 6 >sample &&
-+	test_write_lines 1 2 3 4 5 7 >sample3 &&
-+	cat sample-i >target &&
-+	git add target &&
-+	cat sample3-i >target &&
-+	git diff-files -p target >patch &&
-+
-+	cat sample-i >target &&
-+	test_must_fail git apply --whitespace=error <patch 2>error &&
-+	test_grep "no newline" error &&
-+
-+	cat sample-i >target &&
-+	test_must_fail git apply --whitespace=error --check <patch 2>actual &&
-+	test_cmp sample-i target &&
-+	cat >expect <<-\EOF &&
-+	<stdin>:11: no newline at the end of file.
-+	7
-+	error: 1 line adds whitespace errors.
-+	EOF
-+	test_cmp expect actual &&
-+
-+	cat sample3-i >target &&
-+	test_must_fail git apply --whitespace=error -R <patch 2>error &&
-+	test_grep "no newline" error &&
-+
-+	cat sample3-i >target &&
-+	test_must_fail git apply --whitespace=error --check -R <patch 2>actual &&
-+	test_cmp sample3-i target &&
-+	cat >expect <<-\EOF &&
-+	<stdin>:9: no newline at the end of file.
-+	6
-+	error: 1 line adds whitespace errors.
-+	EOF
-+	test_cmp expect actual &&
-+
-+	cat sample-i >target &&
-+	git apply --whitespace=fix <patch &&
-+	test_cmp sample3 target &&
-+
-+	cat sample3-i >target &&
-+	git apply --whitespace=fix -R <patch &&
-+	test_cmp sample target
-+'
-+
- test_done
-diff --git a/ws.c b/ws.c
-index 34a7b4fad2..6cc2466c0c 100644
---- a/ws.c
-+++ b/ws.c
-@@ -186,6 +186,9 @@ static unsigned ws_check_emit_1(const char *line, int len, unsigned ws_rule,
- 	if (trailing_whitespace == -1)
- 		trailing_whitespace = len;
+ test_expect_success 'test --ws-error-highlight option' '
++	git config core.whitespace blank-at-eol,incomplete-line &&
  
-+	if (!trailing_newline && (ws_rule & WS_INCOMPLETE_LINE))
-+		result |= WS_INCOMPLETE_LINE;
-+
- 	/* Check indentation */
- 	for (i = 0; i < trailing_whitespace; i++) {
- 		if (line[i] == ' ')
-@@ -297,6 +300,17 @@ void ws_fix_copy(struct strbuf *dst, const char *src, int len, unsigned ws_rule,
- 	int last_space_in_indent = -1;
- 	int need_fix_leading_space = 0;
+ 	git diff --color --ws-error-highlight=default,old >current.raw &&
+ 	test_decode_color <current.raw >current &&
+@@ -1100,6 +1155,7 @@ test_expect_success 'test --ws-error-highlight option' '
+ '
  
-+	/*
-+	 * Remembering that we need to add '\n' at the end
-+	 * is sufficient to fix an incomplete line.
-+	 */
-+	if (ws_rule & WS_INCOMPLETE_LINE) {
-+		if (0 < len && src[len - 1] != '\n') {
-+			fixed = 1;
-+			add_nl_to_tail = 1;
-+		}
-+	}
+ test_expect_success 'test diff.wsErrorHighlight config' '
++	git config core.whitespace blank-at-eol,incomplete-line &&
+ 
+ 	git -c diff.wsErrorHighlight=default,old diff --color >current.raw &&
+ 	test_decode_color <current.raw >current &&
+@@ -1116,6 +1172,7 @@ test_expect_success 'test diff.wsErrorHighlight config' '
+ '
+ 
+ test_expect_success 'option overrides diff.wsErrorHighlight' '
++	git config core.whitespace blank-at-eol,incomplete-line &&
+ 
+ 	git -c diff.wsErrorHighlight=none \
+ 		diff --color --ws-error-highlight=default,old >current.raw &&
+@@ -1135,6 +1192,8 @@ test_expect_success 'option overrides diff.wsErrorHighlight' '
+ '
+ 
+ test_expect_success 'detect moved code, complete file' '
++	git config core.whitespace blank-at-eol &&
 +
- 	/*
- 	 * Strip trailing whitespace
- 	 */
+ 	git reset --hard &&
+ 	cat <<-\EOF >test.c &&
+ 	#include<stdio.h>
 -- 
 2.52.0-rc1-455-g30608eb744
 
