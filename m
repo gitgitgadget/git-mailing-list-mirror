@@ -1,188 +1,133 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F419732B9AA
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 19:42:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CB63A5E92
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 19:58:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762890168; cv=none; b=lX8rp8hvF6GvRUxcOStSX/Mce5BppEBaoFRicV3naDDaXScu4p4qL2Gazdn6+ZXuyoRF+3uKPkIykbSs7qM0M0nV7jkvfFIPzByPm+pEY0UH7AovYkmVuFsrOwmlaZFkDHhvH3/mvUD2FKt2XclHVQERCxgJYMDvf1uVY6B2TzY=
+	t=1762891139; cv=none; b=ozDbgJYLsLsm+PiLGcycw3Y9/D/KBSV4+XB/Q5c3lUfsC1Evgzs5rgxbXS6GkZM5ResJDm7o69A0ksh9Y1DoTB42Ctxm0yTGbvf/j/zKOuCXqd34khm1hqW4m4eWrVI/52VBg2fvIHIVrJDVtu/F09RaGwTNQeAsvdBmXppahq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762890168; c=relaxed/simple;
-	bh=igD3hAxGie9YL+jKOBBWZMT22QZa44cT77PLes3EIPU=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=VLXDrYLbs8p6u6EiTVuYu4HSl8OCcuIiqxAnWbyBJLOx/ThA21F1M5DN/nPpeNJIlrEWn1z7heac9xFeWjxaiJEboWgqY70xT9nObuUpoMO94gZfREPtBN+vIJtEHXf8hUWOEMt56KLwO+z+KMIPVpjaRyM7WWbq3XwQC0MmYaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZuUDIPuU; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762891139; c=relaxed/simple;
+	bh=nn928TvCCv/9ZEfMBSYpWm8o3UhkQrr4hvGvQ5TYVvI=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=T6FXw0gPY+JF8MPs4YTyjn8rIH3aOghH7U5Effv4GjY/T38tyVHdyFM9pFcy5RBbmSiEfzIQXCEID0Naj0mwPbwXqBkkhnw+SHYPXPdNQxSHFiHQiDvBLLWV1n74V6u4vMQwjPxkOOrK9hNoSr6LWLDz0jBR447CSLOUxxkJhys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ExXMbHhL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dBAAmqs8; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZuUDIPuU"
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-882475d8851so766096d6.2
-        for <git@vger.kernel.org>; Tue, 11 Nov 2025 11:42:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762890166; x=1763494966; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6pAtM5xfeydKbpMgA4il9zMudvZmNqj0FuhX+2OXGek=;
-        b=ZuUDIPuUmPuJbEbTUz/IT001hUrkSrqf0N5UVlP7j/sR4JUiITT/35Bz96q9D5Zn9n
-         JkReI2dvkRiQONxQBuF1dcaCFi8aQaL1mkc2Z8PWofY0Vz+jlXmFpy8fdJBJoN5NXlBF
-         KKxsFUAhZXRgDCKbj1r9Q8v5Iqjp+s67UBl8RqLc0q8alcvWzncfHnvYmpoVZEFPMjQ1
-         erj3ERScPb/AdTjUGSKi05mKjQmiO+fVbgwwVQKVCO/HVzYP30wWXlFNh00BtpKdtbEl
-         OqT53KhWOiKdlwxxdlGnAXxXmgSRNIwpKXeWwUwCU3kCGv2CeDwQEoQv64dkglklysvJ
-         AsPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762890166; x=1763494966;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=6pAtM5xfeydKbpMgA4il9zMudvZmNqj0FuhX+2OXGek=;
-        b=hcWJ90k+N1rukd5YeVmFIf/nW59v4hMCQWJRgCClSvBGYKyNxjV0H/i23clit3DW3C
-         4uWPN+lvbOzh6a3jsNcJIF8BiL1gptEGh84C1rYi8C/KxkawdBNOitLCtlXmj8Rr4otK
-         0AESmNRZLMP2dn/lyomH7QYGNy6JDNI6jbwzJyLF33Z1K6bvSmJU0u8p2L1geLHqZDVP
-         DMQ8WD4YLCN+SWYfxJVfKW3oPilUxLCH8LQercaPDC+2Z+zT2AN/7E9qwKNfyMqstR7g
-         8zbZwwSzNXMNI55o47WJP59FZKef39sSDQtXMrPmItp8CAbxix3xOfz4VeVP/YK+9xcp
-         Uv0A==
-X-Gm-Message-State: AOJu0Yz4AEFhSf7gCdtVUc7hX8Q8mQXSduGCjSzyop1VwSRdpugyMhop
-	q9KRtieU/+joOCasKZjL3lEMdLlj60mH6YrCICI/6Y7ifH44H+InZHqLSISE+g==
-X-Gm-Gg: ASbGncsXGt2+Fe2n4qhnAKtyX+fubkjUXKnLNpWUNJhRHmH6bGtfVsp4KDpCYLQaNiT
-	xOnDWHZTMPj3HpjDN+uZ/y13DmODIVNo8zcv/TQPEHN7bbKuX+55EB6qu4lyjis/ojYj3ioWsPv
-	TwJPMQ/Oi8WmLs0DUG4gZP1Vat4LUZ4b4annqgomnKvBiVloS8GMHbhWXCC4+PG0zumNK3SMPy9
-	7MrO4Ix0xICCH3LAZeptW4Qg6hlL+x0Px/bIJGIdhFLHJ1IYSjeSFyppIpwHrK3kxgHHnvwkD4M
-	ou5fRFJSCiUeMr92qgmcJ/ExexAGKkSxFAFDCRZFa883AEoNVp0wRXrJdok/thMLqaTPjxZvQj7
-	wzopigJqLgJiIFqoGK3wj1orq+mD53DNHyfEr98ku1NrV4id+fV/8HYKET5YTVok3kI7lUS/e0d
-	toz3U=
-X-Google-Smtp-Source: AGHT+IGC5JF0pV27cdkzd/BWs220WioOcyA9LnTx/ta/+oR0P0BL2zUFoK4E7tg0yubEDhfJsqzNgg==
-X-Received: by 2002:ad4:5745:0:b0:880:4ac3:fbde with SMTP id 6a1803df08f44-88271a1ac9dmr9344266d6.46.1762890165639;
-        Tue, 11 Nov 2025 11:42:45 -0800 (PST)
-Received: from [127.0.0.1] ([172.208.127.36])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8823892a0f9sm78860596d6.11.2025.11.11.11.42.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Nov 2025 11:42:45 -0800 (PST)
-Message-Id: <75c26fe16049122f35b4fffb15f15429ae55f8e7.1762890152.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com>
-References: <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
-	<pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com>
-From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 11 Nov 2025 19:42:32 +0000
-Subject: [PATCH v3 10/10] xdiff: rename rindex -> reference_index
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ExXMbHhL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dBAAmqs8"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 26A397A010D;
+	Tue, 11 Nov 2025 14:58:56 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Tue, 11 Nov 2025 14:58:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm2; t=1762891136; x=1762977536; bh=Nudct1Ew5dsBIgGAbtcdv
+	SM4Xid7+136ZzJf8GGQrlU=; b=ExXMbHhLjC7xuQLmhT08GCgGnFAln0LuEd2gE
+	dMuToK56YOSPdU7zGbivPd494v2RC5KHGJ2ayIWc33ZqFIH/W3dn7oxjIT+YhEbu
+	R6Y20+5eUp4Kx/lCzrZjtsw7EX7wRi43Z1zjjPUK+53dq/mXg06JVyKrqoS0qI4f
+	DvydD8uTkgPKsuc4dDCjV84GnDmBimazWL/yIxNO6+unoRy1Tgu1md+YlCxaWfyS
+	HmyoGeznvUSh8WguC3lxJ3NDfmRQ53vkLFT5NkPcMFgOQawfjrUWtHuZf9T92peG
+	/o2o3CC5p1xFpJ+1rNYdzBN/R6ucw5TF53fSGXf0sG4/eMPkg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762891136; x=1762977536; bh=Nudct1Ew5dsBIgGAbtcdvSM4Xid7+136ZzJ
+	f8GGQrlU=; b=dBAAmqs81t02Ob9zsAtH/mGOE6VnilLdiLao5YsmBhf8S2R8Gal
+	IFoZcE0CxmoZaIGAae8mtzMCAF3NpMS108PU4g/G0I+YOPFuAJuVUXwZCAlTT2Kg
+	o/LKki11f2PGuDocrPHb1yhFrAOSs8unUg86ogif73NJmbSytiI7cQgXJdmfvqeU
+	6bZXS2BVNk3lee5+G1J5p409EJ9n+riX0dX7GarfejiSyhuUTpNhYffVcMZ+SDL8
+	avsvqBusYgEr2HZPQ/7kA5W34gIccC1I3tRZsXL9ahne3Hbtwz2QtYrxRQHy3lIG
+	Z0S8R14r99dIC8duOu3ETX3Um8+ymfaD3WA==
+X-ME-Sender: <xms:f5UTabA1Kh3Cg7k8NswgCD7X0tekZyvXyeHnDC9FcjBEGVQX_FuXBA>
+    <xme:f5UTaXibCE6uNNTh_bLnHXYzJWiQxy-0vwQcJM1vZFnuxzkGMby68JN5B8RIASMSH
+    MvyvGzDWqBD5yil0TMuzEYfAQmTb2XFFDvEJgdPmLZdw47ZvMbGOQ>
+X-ME-Received: <xmr:f5UTaUP4QIyWRe7lrvtBBPaqU6NxSSuSOuT4hBm7rZT9ZsAo3PgF8KkWGNeBefaRmdI0ejiFykGwEenM8Cxes8NgiWAyPndYDLMr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddvtdelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtredttd
+    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
+    gidrtghomheqnecuggftrfgrthhtvghrnhepfeelveduffeltdejgfdvueevgefgveelud
+    ehtddujeetgeffieeljeeuieethffhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
+    hpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:f5UTaY4vVDYNNbiF3MBqffSzhOoBhhIylpvdoUcwylhPKcxUWOnB_A>
+    <xmx:f5UTaS1RQKltdJFyWSPNRsxdbVnfq4NzbVMZy3oWkT9dQj7YuwQMqQ>
+    <xmx:f5UTaZbpZFKZiuvvVj2HE39Hix53AFsIxOG66ktB7-K7gp87oFNYgQ>
+    <xmx:f5UTaaDrsASMFkmvsOadW5My8z3kY72cNmWRxTPuXYhxdk3CE6ugXQ>
+    <xmx:f5UTaebbuzhuWkHXSBzr8k0ALHWeb-Lf5Oo1ieQ2rNz3dvxIpryu02yF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Nov 2025 14:58:55 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH v1 0/3] War on "work tree"
+Date: Tue, 11 Nov 2025 11:58:50 -0800
+Message-ID: <20251111195853.2511146-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.52.0-rc1-455-g30608eb744
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Chris Torek <chris.torek@gmail.com>,
-    Ezekiel Newren <ezekielnewren@gmail.com>,
-    Ezekiel Newren <ezekielnewren@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Ezekiel Newren <ezekielnewren@gmail.com>
+There are "working tree", which is explained as
 
-The classic diff adds only the lines that it's going to consider,
-during the diff, to an array. A mapping between the compacted
-array, and the lines of the file that they reference, is
-facilitated by this array.
+	The tree of actual checked out files.  The working tree normally
+	contains the contents of the <<def_HEAD,HEAD>> commit's tree,
+	plus any local changes that you have made but not yet committed.
 
-Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
----
- xdiff/xdiffi.c   |  6 +++---
- xdiff/xprepare.c | 10 +++++-----
- xdiff/xtypes.h   |  2 +-
- 3 files changed, 9 insertions(+), 9 deletions(-)
+and "worktree", which is explained as
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 759193fe5d..8eb664be3e 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -24,7 +24,7 @@
- 
- static size_t get_hash(xdfile_t *xdf, long index)
- {
--	return xdf->recs[xdf->rindex[index]].minimal_perfect_hash;
-+	return xdf->recs[xdf->reference_index[index]].minimal_perfect_hash;
- }
- 
- #define XDL_MAX_COST_MIN 256
-@@ -278,10 +278,10 @@ int xdl_recs_cmp(xdfile_t *xdf1, long off1, long lim1,
- 	 */
- 	if (off1 == lim1) {
- 		for (; off2 < lim2; off2++)
--			xdf2->changed[xdf2->rindex[off2]] = true;
-+			xdf2->changed[xdf2->reference_index[off2]] = true;
- 	} else if (off2 == lim2) {
- 		for (; off1 < lim1; off1++)
--			xdf1->changed[xdf1->rindex[off1]] = true;
-+			xdf1->changed[xdf1->reference_index[off1]] = true;
- 	} else {
- 		xdpsplit_t spl;
- 		spl.i1 = spl.i2 = 0;
-diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index 39fd79d9d4..34c82e4f8e 100644
---- a/xdiff/xprepare.c
-+++ b/xdiff/xprepare.c
-@@ -128,7 +128,7 @@ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
- 
- static void xdl_free_ctx(xdfile_t *xdf)
- {
--	xdl_free(xdf->rindex);
-+	xdl_free(xdf->reference_index);
- 	xdl_free(xdf->changed - 1);
- 	xdl_free(xdf->recs);
- }
-@@ -141,7 +141,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 	uint8_t const *blk, *cur, *top, *prev;
- 	xrecord_t *crec;
- 
--	xdf->rindex = NULL;
-+	xdf->reference_index = NULL;
- 	xdf->changed = NULL;
- 	xdf->recs = NULL;
- 
-@@ -169,7 +169,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 
- 	if ((XDF_DIFF_ALG(xpp->flags) != XDF_PATIENCE_DIFF) &&
- 	    (XDF_DIFF_ALG(xpp->flags) != XDF_HISTOGRAM_DIFF)) {
--		if (!XDL_ALLOC_ARRAY(xdf->rindex, xdf->nrec + 1))
-+		if (!XDL_ALLOC_ARRAY(xdf->reference_index, xdf->nrec + 1))
- 			goto abort;
- 	}
- 
-@@ -312,7 +312,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
- 	     i <= xdf1->dend; i++, recs++) {
- 		if (action1[i] == KEEP ||
- 		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xdf1->dstart, xdf1->dend))) {
--			xdf1->rindex[xdf1->nreff++] = i;
-+			xdf1->reference_index[xdf1->nreff++] = i;
- 			/* changed[i] remains false, i.e. keep */
- 		} else
- 			xdf1->changed[i] = true;
-@@ -324,7 +324,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
- 	     i <= xdf2->dend; i++, recs++) {
- 		if (action2[i] == KEEP ||
- 		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xdf2->dstart, xdf2->dend))) {
--			xdf2->rindex[xdf2->nreff++] = i;
-+			xdf2->reference_index[xdf2->nreff++] = i;
- 			/* changed[i] remains false, i.e. keep */
- 		} else
- 			xdf2->changed[i] = true;
-diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-index 3bcc0920e0..5accbec284 100644
---- a/xdiff/xtypes.h
-+++ b/xdiff/xtypes.h
-@@ -49,7 +49,7 @@ typedef struct s_xdfile {
- 	xrecord_t *recs;
- 	size_t nrec;
- 	bool *changed;
--	size_t *rindex;
-+	size_t *reference_index;
- 	size_t nreff;
- 	ptrdiff_t dstart, dend;
- } xdfile_t;
+	A repository can have zero (i.e. bare repository) or one or
+	more worktrees attached to it. One "worktree" consists of a
+	"working tree" and repository metadata, most of which are
+	shared among other worktrees of a single repository, and
+	some of which are maintained separately per worktree
+	(e.g. the index, HEAD and pseudorefs like MERGE_HEAD,
+	per-worktree refs and per-worktree configuration file).
+
+in the glossary, but there are many documentation pages that talk
+about "work tree".  Most of them were written before the worktree
+mechanism was invented (i.e., back when contrib/workdir was the only
+hacky mechanism to attach more than one directories to the same
+repository) and they use "work tree" (two words) to mean what we
+call "working tree" these days.
+
+This patch series updates our documentation to use either "working
+tree" or "worktree" as appropriate.
+
+Junio C Hamano (3):
+  notes doc: call NOTES_MERGE_WORKTREE a "worktree", not "work tree"
+  Documentation: your checkout directory is "working tree" (part 1)
+  Documentation: your checkout directory is "working tree" (part 2)
+
+ Documentation/diff-format.adoc     |  2 +-
+ Documentation/diff-options.adoc    |  2 +-
+ Documentation/git-add.adoc         |  4 ++--
+ Documentation/git-grep.adoc        |  2 +-
+ Documentation/git-hash-object.adoc |  2 +-
+ Documentation/git-notes.adoc       |  4 ++--
+ Documentation/git-read-tree.adoc   | 16 ++++++++--------
+ Documentation/git-rev-parse.adoc   |  4 ++--
+ Documentation/git-rm.adoc          |  8 ++++----
+ Documentation/git-stash.adoc       |  2 +-
+ Documentation/git-status.adoc      | 14 +++++++-------
+ Documentation/git-submodule.adoc   |  4 ++--
+ Documentation/gitattributes.adoc   | 16 ++++++++--------
+ Documentation/gitcli.adoc          | 12 ++++++------
+ Documentation/gitmodules.adoc      |  2 +-
+ Documentation/user-manual.adoc     |  8 ++++----
+ 16 files changed, 51 insertions(+), 51 deletions(-)
+
 -- 
-gitgitgadget
+2.52.0-rc1-455-g30608eb744
+
