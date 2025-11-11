@@ -1,131 +1,137 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D3A28152A
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 18:41:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6542853F7
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 18:52:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762886486; cv=none; b=fsSzICzl+bze466mjx+yD5nPIPanflwN5vVI1zHVICB0gvZO27lnE6IvfS+dOtYXXVLbFum0bsKezWd+PMb05gGvCkilBOIgLgP1apuQlJz1IU3A2t0Hjjko6xpGsKeMXITr/jdnPutLcqsU6FlkmlggHC51ELO5upDj+1QJV+U=
+	t=1762887162; cv=none; b=NViU6b6CHee7TweVd4kKJucd81gRSfY/jf1hV48do+k4h5k44rzskJ6G1RdwD2KYoGf4pPAbOWCaz2N41z4irEjS9f/U2LwbX88kVH9+jfjGuloxx+WmQOnZ+rwVsstuVvNogIQ6U8TwfSngqZSnZMqBsDtQUHBbjpoj8AIIgdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762886486; c=relaxed/simple;
-	bh=RYrvEp99U6+fl4b3Y7BBz54batOfCHW87N36u++ud8c=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mwMeiDqZqFlxritFvnuCppxNxhQkmtEiESqVZGyulBtvVaBb7lLwpl3HPjL7rLptN+1k7NFzQA96gqMb/4T2yxYdgUF3Pfzj34tR52N7SQlPKLbDdYYKoOYfMql3XRILnv0EO2yZ+Oph9VJgkZJYPfNiNTZC0KBf/HJjUnleGsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OX7BEv1m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N98kEenZ; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762887162; c=relaxed/simple;
+	bh=bqBWCtx2YtgnFQ2oaFAvMFTlPEVdB+mJObqa974YrLU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=h1fbGS1Qug9WmIpI0GogskKmGVAL3dvWY0kAm4qzjCafo/aWTGcQWW+nTeTnH5NgYWq/CX4dMVEpSSF2//DJRCrJo141k3rnWZYVVcMry8ayRWC1OvvA+JaD5bpt1ldTz/ShdyZDoR984s3NmQu46Q0oOeBoG/Fd7MA+9mWPVFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JHobPN61; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OX7BEv1m";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N98kEenZ"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 13BA91D00094;
-	Tue, 11 Nov 2025 13:41:22 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 11 Nov 2025 13:41:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1762886481; x=1762972881; bh=8Y4xY1oxj6Nw2YahbkYLkgce0PlBzc2B
-	C0OYelO4j4g=; b=OX7BEv1mjFeQb1C1kK2iUhvf1s/3Ixw/5xan85kinvt4tGtp
-	DeJfPr/ReHw9G6CQO+2LbiA92IxylqCGnTmXiRzYNNSyob6nHyozKy603oJmUHFK
-	6Mh5Yh78UIpuLI20GussjS/Vj5Wuj/TYY5SlVmTSitbSaEuafZEecZYo7CNtIY3X
-	5/PZ7EayN6NbXDdK1e07wg0xeM0mc6bn+f5XqThxrAO6Oh3zUmhL59l+yHuDCeO6
-	LG0iAZHMgBF6dwYhrtNb/3nhc1nG2OAVXEPRVpH7C9xgWEEYLuRcIp8Ebgj6cqsY
-	Y+xtFZw87znBOY21B2ASaorXAd8jzC4EUQZ2Kw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762886481; x=
-	1762972881; bh=8Y4xY1oxj6Nw2YahbkYLkgce0PlBzc2BC0OYelO4j4g=; b=N
-	98kEenZlBSn1h9abUoFI9gNK1wPpjp/xS5ZxwlFQ/N6FeCzwpTCoLXMYRTf3DMFe
-	7puhoX5Yz2ZOuDGoUbzpR8opiBCWPf+eQ0Bi+eFqL6qTdNFqok9+CphRB52zU+LY
-	cdR1ITD8pZYujkY3lcBiavKJouXsBTWjOWaC8e9qQAXStm4sh66XjROXvGWHFIJI
-	Zh/w2zTvIU1KHNsYEeCl11PQ14a+BHqneuSkuJCyC7RKz1h0+yK4vczb9CzNfsCA
-	F2+SxEH3I1PFL3gmVynkQCyilfvVeKLGY7+y+6KCQFjLNlggWntVdukyD0U6n7U6
-	XF9iTBgUV4t1eiNL2Ct9w==
-X-ME-Sender: <xms:UYMTaZtdsT_I38oyIk4yvoI6z93w-DiMfxsi0DhlmFpvrxEeT23SUg>
-    <xme:UYMTaYe8FQZRzvsLaV6ji5_4VwbaV-OAnf8Ef3s-1SQ0f3PjcYUjqtZ6v-6GHOwdu
-    AvljL2oK_ZJKayKvuBatPWyDjCdnRcK2y6Z622D7b5HgHXi4Nvq9g>
-X-ME-Received: <xmr:UYMTaaaFXzFGnrpPt5idoNlNOp_fsYb9AYDE2Sx1el4cBsalXjlnQPiEJrg3IMzC1cIaAuFblGKoxqKdYZ0cY3yuFmwKClXwHEd_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdduleegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
-    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
-    gidrtghomheqnecuggftrfgrthhtvghrnhepledvfedtfedtkeefueevlefgleetieeuff
-    ffkefhgfekveehkefhgfetjefhffegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
-    hpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:UYMTabVUoSia02PabKwG9dT2k1DWG4lqJ338Qau-82KNkSq-ghenTA>
-    <xmx:UYMTacgsbjUpeuB0WrqsiUpiZhF6EgLCxLgTk8S2tV5VZJNAIKLv1w>
-    <xmx:UYMTaZWsHBLerFCCKvIxRelmLQYEgKSX2bhbl40q5rz0y5f4yU5iJA>
-    <xmx:UYMTaTMMNKRyqIKcILkA4akW0ROwIrgviQZagQPCuAh2F8E8iaYOLA>
-    <xmx:UYMTaVFVhJBhhcAgahael5fLX_z7GJ-UPEdRgtRG44vY_AjOnCxdoFwu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Nov 2025 13:41:21 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] .gitattributes: remove misspelled no-op whitespace attribute
-Date: Tue, 11 Nov 2025 10:41:20 -0800
-Message-ID: <xmqqv7jgwgxb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JHobPN61"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3437af844afso76174a91.0
+        for <git@vger.kernel.org>; Tue, 11 Nov 2025 10:52:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762887160; x=1763491960; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TmP8/CNDdQcIpve3bRLL5upRt5Yj+KphLlWkAzDktGQ=;
+        b=JHobPN61CwWB5tfxPXvz8L5skKMLARSOdmp3QeZ0v18K6qj/XKphzzqumcwYeETOhv
+         OBv/qn8/Ne6NMrXnfS3w2oGnb/rAFE/2YjWx3gPAtNSXH7aiNCNUu+gdHds9n07gheD8
+         /qTw2QqVrM7vailnvBNmAkQS3SwS+NUPb6tOlAld4a5o5cSB849kWV6V3Nb5AedwP4Dr
+         R/M0wkxsyyRIObvbnkihjXNM5J0T+WJ7uf/vpPmp0Qz/vWWmRgpB6CLr1e+6Heof+Txl
+         sfy6M/gRgE30L3+2V8vcKY+8NsWzko5Y6ijXN/hGFC1NIDJ8c1Mwk2f3p6R8UQxDL0HM
+         mXgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762887160; x=1763491960;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=TmP8/CNDdQcIpve3bRLL5upRt5Yj+KphLlWkAzDktGQ=;
+        b=Lc7ivnnZMKmQ7+SPgmNmKSXtr4Fp/LhCxcRDfxJQuKhm/L6qZvNbRNLy2P2VAzvGYf
+         H5d3imf4wEgdK3HWSmDmX1RGBZCE22QIiJWd+cIdIxlQ9epUOjwatdxnkzymE0Xa+yaX
+         pNWzjaoIesDOKy+Z8jI1CB6sidTm2/053hDd0RqV+giyd/iOQMv9xTkOJQAiXo3n19R6
+         FM95bdFBrAo1YyZ1hXTa2xlfWvyChlJzI6Tk0+QHR25woCnhug3GeSbYFb03rdoAeuVj
+         jF+JTOuMALIuAZ63Z/1S3jgleaniAeV+MCAbQP8C89mJWAFSQtgp1GvhVN5825PAGVty
+         j82g==
+X-Gm-Message-State: AOJu0YyWIduq0DLzKy5GVE2Fq5Ym36jMr8hb9gNDwLjTZg9Gk6g+nAhj
+	ayK4GyxbQt1MJnWsq2IFhiKcS3WJZbPSt5fvvxn+/33U2RN6iKy0BJFqSk74kuZYMAjpN5Ho/s0
+	2DtPVbkAQmz2xmPpZraDGU4FOzw72Cco=
+X-Gm-Gg: ASbGnct7HXmnG8+/+PEjwnfnQDByStFpHM4JhJfaFD6O0MuiR34zd9cctaM6WblT8HT
+	w+pZfei3kpbkUYH1/Ih9Gxqkkl4p+osm7eG3s/2Z0l6i5D1IQg0uDUxep2vBiI7aLRS6yHWo4z3
+	RU9Cpf4XOL1TL8zxFGnCNyuwWHGgYCpgD2Ej+TpaSB3dcvj5p/1u29NTgXr+WZsb+BMBRlkse+u
+	46n9UwZCxo5subWvqW2y9Va+f5FGrI22WNfw1SP+3/k8Keo0y9ZhnevvmcDqHGS/2y+ipmVfGxW
+	jJ2TYz4=
+X-Google-Smtp-Source: AGHT+IFrb5kdXh92xAqe0rsIiz7VqWrLDOjh4sjlipj3u90ghM6Bp1Wcw/68OPnRH1yH/WCLLpzhvihAo1DH//HX1ss=
+X-Received: by 2002:a17:90b:51cd:b0:33b:cbb2:31ed with SMTP id
+ 98e67ed59e1d1-343ddcbbe8dmr537938a91.0.1762887159927; Tue, 11 Nov 2025
+ 10:52:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <385992f6020703558f0ba75a1be6c4f9dae08b83.1762264709.git.ben.knoble+github@gmail.com>
+ <d6b86ed23e28c875b48fdc77095ace3f8ff4ee5d.1762820704.git.ben.knoble+github@gmail.com>
+ <CAOLa=ZTViq=OYoMQNdvi3rV+iUucGZ4RN0c7X_Q0PEugaEqqJQ@mail.gmail.com>
+In-Reply-To: <CAOLa=ZTViq=OYoMQNdvi3rV+iUucGZ4RN0c7X_Q0PEugaEqqJQ@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Date: Tue, 11 Nov 2025 13:52:27 -0500
+X-Gm-Features: AWmQ_bl8NImH6x-CVC--BveRBZ0f98SCf1KYdf5H7ba8_QTNZvBOSlnwav_4aNo
+Message-ID: <CALnO6CDwnSYr5bpSFNBTixa0dnJ3yDSy=fCRN19Aj4Ms=_mvPA@mail.gmail.com>
+Subject: Re: [PATCH] meson: make GIT_HTML_PATH configurable
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	Todd Zullinger <tmz@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ever since 14f9e128 (Define the project whitespace policy,
-2008-02-10) added the whitespace rules to .gitattributes, we spelled
-the most general rule like so:
+On Tue, Nov 11, 2025 at 8:43=E2=80=AFAM Karthik Nayak <karthik.188@gmail.co=
+m> wrote:
+>
+> "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
+>
+> [snip]
+>
+> > diff --git a/meson.build b/meson.build
+> > index 2b763f7c53..1f95a06edb 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -768,13 +768,18 @@ if test_output_directory =3D=3D ''
+> >    test_output_directory =3D meson.project_build_root() / 'test-output'
+> >  endif
+> >
+> > +htmldir =3D get_option('htmldir')
+> > +if htmldir =3D=3D ''
+> > +  htmldir =3D get_option('datadir') / 'doc/git-doc'
+> > +endif
+> > +
+> >  # These variables are used for building libgit.a.
+> >  libgit_c_args =3D [
+> >    '-DBINDIR=3D"' + get_option('bindir') + '"',
+> >    '-DDEFAULT_GIT_TEMPLATE_DIR=3D"' + get_option('datadir') / 'git-core=
+/templates' + '"',
+> >    '-DFALLBACK_RUNTIME_PREFIX=3D"' + get_option('prefix') + '"',
+> >    '-DGIT_HOST_CPU=3D"' + host_machine.cpu_family() + '"',
+> > -  '-DGIT_HTML_PATH=3D"' + get_option('datadir') / 'doc/git-doc"',
+> > +  '-DGIT_HTML_PATH=3D"' + htmldir + '"',
+> >    '-DGIT_INFO_PATH=3D"' + get_option('infodir') + '"',
+> >    '-DGIT_LOCALE_PATH=3D"' + get_option('localedir') + '"',
+> >    '-DGIT_MAN_PATH=3D"' + get_option('mandir') + '"',
+> > diff --git a/meson_options.txt b/meson_options.txt
+> > index 143dee9237..e0be260ae1 100644
+> > --- a/meson_options.txt
+> > +++ b/meson_options.txt
+> > @@ -1,4 +1,6 @@
+> >  # Configuration for Git installation
+> > +option('htmldir', type: 'string', value: '',
+> > +  description: 'Directory to install HTML docs to. Defaults to <datadi=
+r>/doc/git-doc')
+> >  option('perllibdir', type: 'string', value: '',
+> >    description: 'Directory to install perl lib to. Defaults to <datadir=
+>/perl5')
+>
+> I guess meson doesn't allow recursive dependency for build options? I
+> was hoping we could do `value: get_option('datadir') / 'doc/git-doc'`
+> and remove the custom block which checks for empty value above.
 
-    * whitespace=!indent,trail,space
+The documentation [1] did not suggest that "default" could be
+evaluated as an expression here, and I copied the pattern from
+perllibdir [2]. If there's an alternative, I'm all ears.
 
-in the top-level .gitattributes file.  The intent of this line was
-described in the commit log message:
+[1]: https://mesonbuild.com/Build-options.html
+[2]: https://github.com/git/git/blob/4badef0c3503dc29059d678abba7fac0f042bc=
+84/meson.build#L1972-L1975
 
-     - Unless otherwise specified, indent with SP that could be
-       replaced with HT are not "bad".  But SP before HT in the
-       indent is "bad", and trailing whitespaces are "bad".
+> Anyways the patch looks good.
 
-It clearly wanted to disable indent-with-non-tab, so !indent is most
-likely a misspelt form of '-indent'.  Because indent-with-non-tab
-has never been enabled by default, by luck this was not causing any
-ill effect.
-
-We could either remove "!indent", or spell it "-indent".  The
-immediate effect would be the same.  It would only start to make a
-difference when/if we enable indent-with-non-tab by default in
-future versions of Git.
-
-Let's take the former option to remove "!indent" from the list.  We
-would feel the effect first-hand ourselves before anybody else if we
-ever decide to change the built-in default whitespace rules, which
-would be hidden from us if we decide to rewrite it to "-indent"
-instead.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * There is another one in git-gui/.gitattributes that probably was
-   copied from here, which may want to get fixed.
-
- .gitattributes | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/.gitattributes b/.gitattributes
-index 158c3d45c4..2a50ebaf2e 100644
---- a/.gitattributes
-+++ b/.gitattributes
-@@ -1,4 +1,4 @@
--* whitespace=!indent,trail,space
-+* whitespace=trail,space
- *.[ch] whitespace=indent,trail,space diff=cpp
- *.sh whitespace=indent,trail,space text eol=lf
- *.perl text eol=lf diff=perl
--- 
-2.52.0-rc1-455-g30608eb744
-
+Thanks!
