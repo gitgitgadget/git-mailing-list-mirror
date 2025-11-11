@@ -1,77 +1,77 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295D62BD11
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 00:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C97EEBA
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 00:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762819513; cv=none; b=kX+UEGEoXXrX2HzAZelcQnyxZgMQ2kNkSha6M8O/kLZRNT+IFGDLZ0u7V+CAJpkHR6pzwG1FXN8QDhegNdiLC/xoDl8gYdybUNFqir8/nfIYEcwaDl2jQRLgRIPq9xG2B7GSSUUY22l+xv+v6PF8QeWg+HawteHap6ga0OsxVdg=
+	t=1762819514; cv=none; b=N/3h6ig6l8brs2vL8Pe6aeVK0VK5IQ389M4DIUU8PwSIoeJuxCXG/fdr/8u0rOnz4ZYJ3QrsyN3ccYXP1Fbiwin+agOTn3Cwi4T9PQIcPdZLpbsH1C3eYvVGU9Qdxpk58gPnIdcki62i7q2JJwIY4VtUpJJ9y0Wcca2ZSPQy4FM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762819513; c=relaxed/simple;
-	bh=RQIQxXQo+R/pP8QJybUaecB1QutVPFlJfHaxm2VI6Wg=;
+	s=arc-20240116; t=1762819514; c=relaxed/simple;
+	bh=xVuErZxsTVxaj9qxQmrAA8yJEc9b6qVO8Iaj+qsGhus=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ozJt9ixU5p4grSMtF3YZYSi1lVwx+qOXPMlgIujxFxrHeZ1T6B2CKwMg025wPIBhppp5gzr71SrV0xpAnn5r/pVvCrwCptddAziRj++wQpHfGyIbFm4TDpTbb3MWDSY2OgC+yNFQ4xegqWJBMNziE98k0iF6kc24CzZ/5rJqRvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hB8TR1RF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a+xG5X7S; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version; b=HPwc8oW46r4IRLnI8UczOKaSwZ1ByNJjVRxhxnZCaSoc3sBKp4L0N3PIupMPHTZ0wqRdNSZ2ZRIrqBAy41enHjpI9V6NbBIG9fpoBdOeCaBAZct1NcZw8Rvtx75BUE0SjSSBl/CGAu4AWKiQchJERWg8YRnAD0eIfO5nf/RkJz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bTiw+mVA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MZPOWPMU; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hB8TR1RF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a+xG5X7S"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9C0351D00195;
-	Mon, 10 Nov 2025 19:05:08 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bTiw+mVA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MZPOWPMU"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0C5761D0012F;
+	Mon, 10 Nov 2025 19:05:12 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 10 Nov 2025 19:05:08 -0500
+  by phl-compute-04.internal (MEProxy); Mon, 10 Nov 2025 19:05:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1762819508; x=
-	1762905908; bh=M/kmjt5C+d0lzJKSmoX5XzRP189/PqQqgVCK5ejXN6U=; b=h
-	B8TR1RFP50xlZnIHp69mLGbKFv8Okfu/G2UX/skqczXHF9r8zOZIDIL4MWc1DrEx
-	+3DOd3H8CXapgn+zm7hDqTFiU8HzVyirCDHGMh51WnaxD6oAZ+dZmeoFrDabDIvn
-	6vPYOaPTkwK4c55i0sEMwf1agNZeDagfc+DVLhWh7cv4pAMCPXGRu2yIWR9eNADD
-	K3yrCX5ZjY2I6SOxdPd9VWJkx8CLBBrc2Uy+DaAfOj0zs2T7x5EvKYkt69HZDwwk
-	mtwrtk9AWzupcDE7KiNsO1SVpkpdr5KAs7D2bHL+c9yITckQlcOkJ5TOfMmu9MPy
-	TcpKztPi7q6V9q2ApDWJQ==
+	:reply-to:subject:subject:to:to; s=fm2; t=1762819511; x=
+	1762905911; bh=7r8KcoXJtVZCe8ABSxlGngDoT6FpVZc5JZ5ATJ0XW7Q=; b=b
+	Tiw+mVALWDSRdNH/z/tnd5VdFdvzC+2X7HAlt5nnRN9ymmpsGjGoZ3Jhq++vtKql
+	/WUdFaHIDuj92Qlaja8gbjO+SEkVpjIRvTLfY76M+cLIMpXT1wYGkuX2ChY24cs9
+	AyvNI3+1cICUTpDg3zuI/I05k2OqFISffGR901b05lToRAs7gOXob7Jr2yDgoQ9u
+	dnLy2deK3x7TLyvYJgA8rtBcvJvVlfPEbV1jCCE76QiqAT8kh0BLv9MWO4wQZKeJ
+	Q2iaFeg5kWpVqfTAVMGgY2Ldv16qmWRyLaDNhrl3H1yIoQQP5B4WyOdLrrslwIRo
+	z6JPrRsCgFTSZ6nRVIi6Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1762819508; x=1762905908; bh=M/kmjt5C+d0lzJKSmoX5XzRP189/
-	PqQqgVCK5ejXN6U=; b=a+xG5X7SCFums0Av+HBiBGQb2IEJstdWLa5Py/QlHvOT
-	+kDX7f6nUxFzCyJMTMXbjdqbKH0js4n5tbUXCz61Kr0sfd0mfc0wcugzX7Ow1rG2
-	iHlsB2YexWakexX6DF7EEQIbPWz7Qt8ZrhuW5L/USysiOR9rjzkigta+VU6yDi1c
-	/O5UCxhH6IEOxZOi+w/UYeGVrA7mQnxgwA0uAYE7Y1Y6ERJR1gCIL4V+XdaSGiqr
-	tQGh3McP2As+Nv2MI9Bwv6Me5C9T2UUaXlnNfnu1pModCSQ1gD8k9492qc5iigfJ
-	4Ma1dxFa0eM1suassC/YVJgFQu8Fp8nELmTInKzpCQ==
-X-ME-Sender: <xms:tH0Sabp-Bg7eOJ7caqqqxr3-JZG96t-TK2zyIpdcOxj_hdv4r9Vw_w>
-    <xme:tH0SabqwqsY7tpD2_AwTXcsB_HM4P4JKoluM51LN5qd9IPfB73r6p_jo8liqHoC_h
-    aMl_zv6QE4GaPqdruRrAvv2_2r-Buex47sVNSaNOpZJc2B_jl6M>
-X-ME-Received: <xmr:tH0SaV1RNV1TYB7g45b6oUdvyR5mk5UjkXfZJ7VaYra6t4JbrJjrHk1LaLB_ZDWZvgwR310iuhQaKkU2kx9g0vcc5UjMU8AXvADm>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeljedtucetufdoteggodetrf
+	fm3; t=1762819511; x=1762905911; bh=7r8KcoXJtVZCe8ABSxlGngDoT6Fp
+	VZc5JZ5ATJ0XW7Q=; b=MZPOWPMUyeC4KmIQyJYjjMd80Nd/1AaHOi9Z7eAlqROH
+	cpThxtUAXB3MAD2psIDO+njDkkffofhOFKD0rpGATGOFYi32H2mcF6nFFdJhhUGU
+	Z0fj2aaZxKw98eFRa8xdLruxrroFMJX35XFXxo7SYkQ2oBLxfM3BIKH7BQr8dpfd
+	G0xvO6OpJrfrT9UkB9xj5KUHyacXRJVjsZZGpgnbuF+AM5IJgnM26+a+S9/fP9nt
+	ETq0VkYSXw3O0FLHRmcthZflyokZZ97QCtyqyV8FFSXuhngU1kd8XWifJ6OvYtvw
+	qxmjbkCo5xHVHmWaQia2c/LR7JYbfBYgmCi1UtuNJQ==
+X-ME-Sender: <xms:t30SaWnPtN5haJr8rSrr3jbLjVsDOu4SalCTWpyrGOPtBNPDBAZV3g>
+    <xme:t30SaT1FtGAiIArmuH3HSCcP5W_hyJB5E3krsqXgwN57ATH_xim0rPVenhPXReuKt
+    1E9TuySIanqlppayJVCNH1n3SPu21TIFhhjl6zvBFF7MpOjvM7Z0g>
+X-ME-Received: <xmr:t30SaSQ_exFe3aBFfdQRvAu9Ki7m5m0tmjEUOoAJMxVmvTFCZGjeW4Tl8nRyU7ktxi_A5OHHFOIOCot0Vg0oiwmsl-pqJ7odUlQT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduleeljeduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
     dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
     sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
-    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepheenucfr
+    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepfeenucfr
     rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:tH0SaaB7Y2b9DiLUkroHUNx1RnzscczsqDy0kZuCLX3engZPirISgQ>
-    <xmx:tH0Sadfgs5o8455jEuVYSKsZV_E6UP8tyajqR_BI-kjC_xeBGaRRfA>
-    <xmx:tH0SafjQY9BlQ5BuUj9n98kGm7Qpy2ITr-bfl1GLFZDygLlHqdfTOA>
-    <xmx:tH0SaVp8c_gLOgqINaNHygNj2ArH3rir_ffAGySk7DJtUgfb2YPu8w>
-    <xmx:tH0SafBxs0-cWO0QKtnlhtIM9c8GPhzsGjtQ8r_MJQgU0foZ9sJo1518>
+X-ME-Proxy: <xmx:t30SaVuDPsF4cYIWETQpm6fzn888Xu6-AP4XxhLO9mVZM0Cw_F9hUA>
+    <xmx:t30SaXYtTF2IjP_FwGg8Ex7G-tRq0C8P2GyatVSUfCTugN_qN2YkGQ>
+    <xmx:t30SaatKpwTKtVWoETOtFDWkTvSldHRHvGjgMuvxeIReRSmWVyuWFQ>
+    <xmx:t30SaZEfiUM0tmusYLwqPtEFXEUqKylmk5qCyvsjnRiUxe-DJoUPGw>
+    <xmx:t30SaR_G2t1Koo1uwoK07LwgWNqhIeEZ2h-aAwgcohY9PIiAe-3lLOPX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Nov 2025 19:05:07 -0500 (EST)
+ 10 Nov 2025 19:05:11 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v3 08/12] apply: revamp the parsing of incomplete lines
-Date: Mon, 10 Nov 2025 16:04:47 -0800
-Message-ID: <20251111000451.2243195-9-gitster@pobox.com>
+Subject: [PATCH v3 10/12] apply: check and fix incomplete lines
+Date: Mon, 10 Nov 2025 16:04:49 -0800
+Message-ID: <20251111000451.2243195-11-gitster@pobox.com>
 X-Mailer: git-send-email 2.52.0-rc1-455-g30608eb744
 In-Reply-To: <20251111000451.2243195-1-gitster@pobox.com>
 References: <20251105213052.1499224-1-gitster@pobox.com>
@@ -84,148 +84,289 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A patch file represents the incomplete line at the end of the file
-with two lines, one that is the usual "context" with " " as the
-first letter, "added" with "+" as the first letter, or "removed"
-with "-" as the first letter that shows the content of the line,
-plus an extra "\ No newline at the end of file" line that comes
-immediately after it.
+The final line of a file that lacks the terminating newline at its
+end is called an incomplete line.  In general they are frowned upon
+for many reasons (imagine concatenating two files with "cat A B" and
+what happens when A ends in an incomplete line, for example), and
+text-oriented tools often mishandle such a line.
 
-Ever since the apply machinery was written, the "git apply"
-machinery parses "\ No newline at the end of file" line
-independently, without even knowing what line the incomplete-ness
-applies to, simply because it does not even remember what the
-previous line was.
+Implement checks in "git apply" for incomplete lines, which is off
+by default for backward compatibility's sake, so that "git apply
+--whitespace={fix,warn,error}" can notice, warn against, and fix
+them.
 
-This poses a problem if we want to check and warn on an incomplete
-line.  Revamp the code that parses a fragment, to actually drop the
-'\n' at the end of the incoming patch file that terminates a line,
-so that check_whitespace() calls made from the code path actually
-sees an incomplete as incomplete.
-
-Note that the result of this parsing is not directly used by the
-code path that applies the patch.  apply_one_fragment() function
-already checks if each of the patch text it handles is followed by a
-line that begins with a backslash to drop the newline at the end of
-the current line it is looking at.  In a sense, this patch harmonizes
-the behaviour of the parsing side to what is already done in the
-application side.
+As one of the new test shows, if you modify contents on an
+incomplete line in the original and leave the resulting line
+incomplete, it is still considered a whitespace error, the reasoning
+being that "you'd better fix it while at it if you are making a
+change on an incomplete line anyway", which may controversial.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- apply.c | 70 ++++++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 49 insertions(+), 21 deletions(-)
+ apply.c                  |  13 ++-
+ t/t4124-apply-ws-rule.sh | 187 +++++++++++++++++++++++++++++++++++++++
+ ws.c                     |  14 +++
+ 3 files changed, 213 insertions(+), 1 deletion(-)
 
 diff --git a/apply.c b/apply.c
-index a2ceb3fb40..2b0f8bdab5 100644
+index 2b0f8bdab5..c9fb45247d 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -1670,6 +1670,35 @@ static void check_old_for_crlf(struct patch *patch, const char *line, int len)
- }
+@@ -1640,6 +1640,14 @@ static void record_ws_error(struct apply_state *state,
+ 	    state->squelch_whitespace_errors < state->whitespace_error)
+ 		return;
  
- 
-+/*
-+ * Just saw a single line in a fragment.  If it is a part of this hunk
-+ * that is a context " ", an added "+", or a removed "-" line, it may
-+ * be followed by "\\ No newline..." to signal that the last "\n" on
-+ * this line needs to be dropped.  Depending on locale settings when
-+ * the patch was produced we don't know what this line would exactly
-+ * say. The only thing we do know is that it begins with "\ ".
-+ * Checking for 12 is just for sanity check; "\ No newline..." would
-+ * be at least that long in any l10n.
-+ *
-+ * Return 0 if the line we saw is not followed by "\ No newline...",
-+ * or length of that line.  The caller will use it to skip over the
-+ * "\ No newline..." line.
-+ */
-+static int adjust_incomplete(const char *line, int len,
-+			     unsigned long size)
-+{
-+	int nextlen;
++	/*
++	 * line[len] for an incomplete line points at the "\n" at the end
++	 * of patch input line, so "%.*s" would drop the last letter on line;
++	 * compensate for it.
++	 */
++	if (result & WS_INCOMPLETE_LINE)
++		len++;
 +
-+	if (*line != '\n' && *line != ' ' && *line != '+' && *line != '-')
-+		return 0;
-+	if (size - len < 12 || memcmp(line + len, "\\ ", 2))
-+		return 0;
-+	nextlen = linelen(line + len, size - len);
-+	if (nextlen < 12)
-+		return 0;
-+	return nextlen;
-+}
-+
- /*
-  * Parse a unified diff. Note that this really needs to parse each
-  * fragment separately, since the only way to know the difference
-@@ -1684,6 +1713,7 @@ static int parse_fragment(struct apply_state *state,
- {
- 	int added, deleted;
- 	int len = linelen(line, size), offset;
-+	int skip_len = 0;
- 	unsigned long oldlines, newlines;
- 	unsigned long leading, trailing;
- 
-@@ -1710,6 +1740,22 @@ static int parse_fragment(struct apply_state *state,
- 		len = linelen(line, size);
- 		if (!len || line[len-1] != '\n')
- 			return -1;
-+
-+		/*
-+		 * For an incomplete line, skip_len counts the bytes
-+		 * on "\\ No newline..." marker line that comes next
-+		 * to the current line.
-+		 *
-+		 * Reduce "len" to drop the newline at the end of
-+		 * line[], but add one to "skip_len", which will be
-+		 * added back to "len" for the next iteration, to
-+		 * compensate.
-+		 */
-+		skip_len = adjust_incomplete(line, len, size);
-+		if (skip_len) {
-+			len--;
-+			skip_len++;
-+		}
- 		switch (*line) {
- 		default:
- 			return -1;
-@@ -1745,20 +1791,10 @@ static int parse_fragment(struct apply_state *state,
- 			newlines--;
- 			trailing = 0;
- 			break;
--
--		/*
--		 * We allow "\ No newline at end of file". Depending
--		 * on locale settings when the patch was produced we
--		 * don't know what this line looks like. The only
--		 * thing we do know is that it begins with "\ ".
--		 * Checking for 12 is just for sanity check -- any
--		 * l10n of "\ No newline..." is at least that long.
--		 */
--		case '\\':
--			if (len < 12 || memcmp(line, "\\ ", 2))
--				return -1;
--			break;
+ 	err = whitespace_error_string(result);
+ 	if (state->apply_verbosity > verbosity_silent)
+ 		fprintf(stderr, "%s:%d: %s.\n%.*s\n",
+@@ -1794,7 +1802,10 @@ static int parse_fragment(struct apply_state *state,
  		}
-+
-+		/* eat the "\\ No newline..." as well, if exists */
-+		len += skip_len;
+ 
+ 		/* eat the "\\ No newline..." as well, if exists */
+-		len += skip_len;
++		if (skip_len) {
++			len += skip_len;
++			state->linenr++;
++		}
  	}
  	if (oldlines || newlines)
  		return -1;
-@@ -1768,14 +1804,6 @@ static int parse_fragment(struct apply_state *state,
- 	fragment->leading = leading;
- 	fragment->trailing = trailing;
+diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
+index 485c7d2d12..115a0f8579 100755
+--- a/t/t4124-apply-ws-rule.sh
++++ b/t/t4124-apply-ws-rule.sh
+@@ -556,4 +556,191 @@ test_expect_success 'whitespace check skipped for excluded paths' '
+ 	git apply --include=used --stat --whitespace=error <patch
+ '
  
--	/*
--	 * If a fragment ends with an incomplete line, we failed to include
--	 * it in the above loop because we hit oldlines == newlines == 0
--	 * before seeing it.
--	 */
--	if (12 < size && !memcmp(line, "\\ ", 2))
--		offset += linelen(line, size);
--
- 	patch->lines_added += added;
- 	patch->lines_deleted += deleted;
++test_expect_success 'check incomplete lines (setup)' '
++	rm -f .gitattributes &&
++	git config core.whitespace incomplete-line
++'
++
++test_expect_success 'incomplete context line (not an error)' '
++	(test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
++	(test_write_lines 1 2 3 0 5 && printf 6) >sample2-i &&
++	cat sample-i >target &&
++	git add target &&
++	cat sample2-i >target &&
++	git diff-files -p target >patch &&
++
++	cat sample-i >target &&
++	git apply --whitespace=error <patch &&
++	test_cmp sample2-i target &&
++
++	cat sample-i >target &&
++	git apply --whitespace=error --check <patch 2>error &&
++	test_cmp sample-i target &&
++	test_must_be_empty error &&
++
++	cat sample2-i >target &&
++	git apply --whitespace=error -R <patch &&
++	test_cmp sample-i target &&
++
++	cat sample2-i >target &&
++	git apply -R --whitespace=error --check <patch 2>error &&
++	test_cmp sample2-i target &&
++	test_must_be_empty error
++'
++
++test_expect_success 'last line made incomplete (error)' '
++	test_write_lines 1 2 3 4 5 6 >sample &&
++	(test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
++	cat sample >target &&
++	git add target &&
++	cat sample-i >target &&
++	git diff-files -p target >patch &&
++
++	cat sample >target &&
++	test_must_fail git apply --whitespace=error <patch 2>error &&
++	test_grep "no newline" error &&
++
++	cat sample >target &&
++	test_must_fail git apply --whitespace=error --check <patch 2>actual &&
++	test_cmp sample target &&
++	cat >expect <<-\EOF &&
++	<stdin>:10: no newline at the end of file.
++	6
++	error: 1 line adds whitespace errors.
++	EOF
++	test_cmp expect actual &&
++
++	cat sample-i >target &&
++	git apply --whitespace=error -R <patch &&
++	test_cmp sample target &&
++
++	cat sample-i >target &&
++	git apply --whitespace=error --check -R <patch 2>error &&
++	test_cmp sample-i target &&
++	test_must_be_empty error &&
++
++	cat sample >target &&
++	git apply --whitespace=fix <patch &&
++	test_cmp sample target
++'
++
++test_expect_success 'incomplete line removed at the end (not an error)' '
++	(test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
++	test_write_lines 1 2 3 4 5 6 >sample &&
++	cat sample-i >target &&
++	git add target &&
++	cat sample >target &&
++	git diff-files -p target >patch &&
++
++	cat sample-i >target &&
++	git apply --whitespace=error <patch &&
++	test_cmp sample target &&
++
++	cat sample-i >target &&
++	git apply --whitespace=error --check <patch 2>error &&
++	test_cmp sample-i target &&
++	test_must_be_empty error &&
++
++	cat sample >target &&
++	test_must_fail git apply --whitespace=error -R <patch 2>error &&
++	test_grep "no newline" error &&
++
++	cat sample >target &&
++	test_must_fail git apply --whitespace=error --check -R <patch 2>actual &&
++	test_cmp sample target &&
++	cat >expect <<-\EOF &&
++	<stdin>:9: no newline at the end of file.
++	6
++	error: 1 line adds whitespace errors.
++	EOF
++	test_cmp expect actual &&
++
++	cat sample >target &&
++	git apply --whitespace=fix -R <patch &&
++	test_cmp sample target
++'
++
++test_expect_success 'incomplete line corrected at the end (not an error)' '
++	(test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
++	test_write_lines 1 2 3 4 5 7 >sample3 &&
++	cat sample-i >target &&
++	git add target &&
++	cat sample3 >target &&
++	git diff-files -p target >patch &&
++
++	cat sample-i >target &&
++	git apply --whitespace=error <patch &&
++	test_cmp sample3 target &&
++
++	cat sample-i >target &&
++	git apply --whitespace=error --check <patch 2>error &&
++	test_cmp sample-i target &&
++	test_must_be_empty error &&
++
++	cat sample3 >target &&
++	test_must_fail git apply --whitespace=error -R <patch 2>error &&
++	test_grep "no newline" error &&
++
++	cat sample3 >target &&
++	test_must_fail git apply --whitespace=error -R --check <patch 2>actual &&
++	test_cmp sample3 target &&
++	cat >expect <<-\EOF &&
++	<stdin>:9: no newline at the end of file.
++	6
++	error: 1 line adds whitespace errors.
++	EOF
++	test_cmp expect actual &&
++
++	cat sample3 >target &&
++	git apply --whitespace=fix -R <patch &&
++	test_cmp sample target
++'
++
++test_expect_success 'incomplete line modified at the end (error)' '
++	(test_write_lines 1 2 3 4 5 && printf 6) >sample-i &&
++	(test_write_lines 1 2 3 4 5 && printf 7) >sample3-i &&
++	test_write_lines 1 2 3 4 5 6 >sample &&
++	test_write_lines 1 2 3 4 5 7 >sample3 &&
++	cat sample-i >target &&
++	git add target &&
++	cat sample3-i >target &&
++	git diff-files -p target >patch &&
++
++	cat sample-i >target &&
++	test_must_fail git apply --whitespace=error <patch 2>error &&
++	test_grep "no newline" error &&
++
++	cat sample-i >target &&
++	test_must_fail git apply --whitespace=error --check <patch 2>actual &&
++	test_cmp sample-i target &&
++	cat >expect <<-\EOF &&
++	<stdin>:11: no newline at the end of file.
++	7
++	error: 1 line adds whitespace errors.
++	EOF
++	test_cmp expect actual &&
++
++	cat sample3-i >target &&
++	test_must_fail git apply --whitespace=error -R <patch 2>error &&
++	test_grep "no newline" error &&
++
++	cat sample3-i >target &&
++	test_must_fail git apply --whitespace=error --check -R <patch 2>actual &&
++	test_cmp sample3-i target &&
++	cat >expect <<-\EOF &&
++	<stdin>:9: no newline at the end of file.
++	6
++	error: 1 line adds whitespace errors.
++	EOF
++	test_cmp expect actual &&
++
++	cat sample-i >target &&
++	git apply --whitespace=fix <patch &&
++	test_cmp sample3 target &&
++
++	cat sample3-i >target &&
++	git apply --whitespace=fix -R <patch &&
++	test_cmp sample target
++'
++
+ test_done
+diff --git a/ws.c b/ws.c
+index 34a7b4fad2..6cc2466c0c 100644
+--- a/ws.c
++++ b/ws.c
+@@ -186,6 +186,9 @@ static unsigned ws_check_emit_1(const char *line, int len, unsigned ws_rule,
+ 	if (trailing_whitespace == -1)
+ 		trailing_whitespace = len;
  
++	if (!trailing_newline && (ws_rule & WS_INCOMPLETE_LINE))
++		result |= WS_INCOMPLETE_LINE;
++
+ 	/* Check indentation */
+ 	for (i = 0; i < trailing_whitespace; i++) {
+ 		if (line[i] == ' ')
+@@ -297,6 +300,17 @@ void ws_fix_copy(struct strbuf *dst, const char *src, int len, unsigned ws_rule,
+ 	int last_space_in_indent = -1;
+ 	int need_fix_leading_space = 0;
+ 
++	/*
++	 * Remembering that we need to add '\n' at the end
++	 * is sufficient to fix an incomplete line.
++	 */
++	if (ws_rule & WS_INCOMPLETE_LINE) {
++		if (0 < len && src[len - 1] != '\n') {
++			fixed = 1;
++			add_nl_to_tail = 1;
++		}
++	}
++
+ 	/*
+ 	 * Strip trailing whitespace
+ 	 */
 -- 
 2.52.0-rc1-455-g30608eb744
 
