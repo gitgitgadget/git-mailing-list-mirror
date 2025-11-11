@@ -1,166 +1,137 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DACC17555
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 06:54:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F7520C00C
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 10:13:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762844094; cv=none; b=FhhqOSVFERfO9o6+poS8YNWQp1oWtk+NMsDaVTJfoBYmskp9hXe7Qy5f7LbZ6EMGpq/nbtWldP7anFo4RGA82CYnyvJZFj5FCmKUNz0cAa83hqkquo1ivfT5r0co2L6VjkYUgcoVCnhHXmTtKMWubLZlVCTuysCU9foMINI3hY0=
+	t=1762855989; cv=none; b=dzahGwiXwbC6hn619M2xO5/5XeSL7rovMP//Mel/fHw0pHMGrSnl08Fj+y/o+XiaFJcTgzJycwrL8NCI/4Hvo5ZfRfHm1sUnCDBQPLHGWIWtJDyUM5R9TQPAlBKSPYl2Bj0U8ztPR7QoDTWiMe97X1/LL/gFghO2+4Tod3Zg4Fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762844094; c=relaxed/simple;
-	bh=EM61IeWx82Qnuzdyzzgxs0EPnA8q9TijcBfCfUIPJeY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XXuI7ewusQEK3/6vKMveFvChYQkttY9X2TjPlXg/QbUFmQscblNjllO3u4HIfMxNk40SHYHm2S7zCeO9n2wNfnKHx+w67hymNDehPthL3UGDjO+eutv4rLFELFEaPXx5Mj3Yu1dTIyziYGOsHQkzocCvMMYdV7HZCCTEmbjmcH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nXmICWwx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mwly+3Ce; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1762855989; c=relaxed/simple;
+	bh=DkYjsibuTSPDZ37TU474qB3mo3Py96H4lpaTeNlgohI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=po0Nul6HW8UQkz1Yx8fXtwupBzsgbcVQRcmBS1ygDtgRokAdViLGwVo6ktmrnc1xmGh4C88j9dYoCd1tHO08/I2lRf4723m3wGT5FzPC9Z2qyNyLOTnIPN/OiH0c7KLvDblo0dlBSI2kG81v1tPnHOCTCUwCHAdbJ14wAOLLgto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nqSHJIbp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0PzVMMG6; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nXmICWwx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mwly+3Ce"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 30A40EC0183;
-	Tue, 11 Nov 2025 01:54:50 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 11 Nov 2025 01:54:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nqSHJIbp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0PzVMMG6"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 74EE8EC01E9;
+	Tue, 11 Nov 2025 05:13:05 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Tue, 11 Nov 2025 05:13:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1762844090; x=1762930490; bh=4R1l0lOXL3
-	1tiKzY6aalQ6U/+h346AhoO36/A3cLCMc=; b=nXmICWwxQcHhH32hExZnbNOQbu
-	wGThPoOMxvE7S5N6VLYMck2mT4sd7MS6nneoRiJgdg1ONVno8tziLKrR+7z4niOP
-	hEUt6B020l0TTP3hKK4FapsLilN4eEFvL+hPUKr/zUpqUaU/9iHsLob6DY/+lWnp
-	yLTNKm71Goq4LepDQ4i5A9VWS++Y8Nfezvmr91KjaboVt+jSM0DR44IVEShAdPQT
-	21VZwPmgf7ACODi9bawtrwLMKyeQ5civFJEm1HfGFN7VzD81nB121fjdZCaPQFgG
-	Gh3rfkSv4sJo2na3AoDt0LxfaZqqT1RNWIY4Tz9PILjrHdDqkW0pU5d7CsKQ==
+	:subject:to:to; s=fm2; t=1762855985; x=1762942385; bh=MCDpT+hjTG
+	ardaX9vZNEvTwNfElhUSHbMaY49f51EVE=; b=nqSHJIbpHZKMzpbxpdpr88mAKA
+	nD8NfTx1FxtcJ8Dkd4Mcr1dUxm/9/i8w6lVy5gIBoNdIDjsSkQTVbQlB/+k09gG3
+	IpMy+OfoI6IcI9ddJTZUskIOTA+7/zqMmA4LwmFf06rID4cBgDY/AzWd67IViI8F
+	lzPM/VPYqAO/4NKXjapuoYaVsmFXwCGC5aLE+WBIpqI+6P8sYGrTy5CLp1yunQEi
+	HUsugwqhSgMDtWskoFetikgyA0bjwS+5RoGYgplJUTEE0iB+8JSy7TiVh1t9vvRR
+	TA3HwCuHqik5c8qDNvjUt80b0pU3Z2GnQkafDA90lWEsbT7Ta0tEQPZabVCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762844090; x=1762930490; bh=4R1l0lOXL31tiKzY6aalQ6U/+h346AhoO36
-	/A3cLCMc=; b=mwly+3CeuMesb2L/kKQbfrdNKSW3UmNxeYsre167Jz7d08D7uaC
-	l0OYFdELDnoZfeVP+1hHjBT9GH4dZB8ypGXn7RTu58gTLJ16YTMXvEh7hb6nhjZq
-	6yarfE44xQ0Y302/6p+Tw6k1wiCrw0Qv9SVlzASNkCdrW3ZwWqSHT2jVlgmLPin4
-	+/s8BpTVWgodGwf9yVAwcT0RvqzJZKW+ZHm5jVJGCSW4Oa4rzEYu29q7DdbHsICc
-	k1pRlyBlca/lbakCI9JMWubtYhjrcEoqoh9lW1lCiT6DQnH2kBhL7bfwsexcpbS2
-	KIS4Q4fZMcFLd0mT8NlKphvY6DpTNrOMvxg==
-X-ME-Sender: <xms:ud0SadHM1wy6jblYtlMeOtHboOIFJ1RUv5HVHA96Z1saAdlHIkCT7A>
-    <xme:ud0SaTBpQfez7d6F955aR8lE0DgZQv8cySvotKiGuDo2jUBt1rsaRm5CnW876KcID
-    u0yJG5Yty_PYz-9b3K93wwul2w4GWhzlHX_l4DosV2WoisgWlnG>
-X-ME-Received: <xmr:ud0SadW9T-s1vqIWpC4POa2PwGHFNyfWV3W4kIiUTpzYtVAp8WbyLBed7aWTySYjYWmumDAVtL0YimVM2tpryJnLzMjJtjiSqfgc32iFYg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddtheefucetufdoteggodetrf
+	1762855985; x=1762942385; bh=MCDpT+hjTGardaX9vZNEvTwNfElhUSHbMaY
+	49f51EVE=; b=0PzVMMG6XYZQl3OzIn9mXJDb6H3xAIX7RBlK2lW9oyTCTtlwwA1
+	5Lr3qigeJOFu1WQJyFkaTJ9jNBJiCweMSh44H406N923mBHvjCFi5vq8NyZKE5T7
+	YLocKcSYhJedRxjgzbJ2Nd/Ex0JwYDC/6pP7zn3Beb1c6ihsa9Ra2a1K+sC4NfYs
+	tLEL+ffc0VhdthN4wTc5aNyczgeUaVtFzBPGxrDuAvsZtm7QPYyocSGxKK6nJydQ
+	XOG6oZ9siJCVopdo9r6rq2gTQbVIxu6p3hOGxcGmNNqKUlI8IfX+xUyRI/ynzSRh
+	b0AC0rF9zXegu5jKNJ1Q2hQmZxwWk2j/maA==
+X-ME-Sender: <xms:MAwTacytbZVqT1vK_VwZBtBhrF8-Shx6hbl2h70dNcJcvPDqLA8Tew>
+    <xme:MAwTaShMtkj_I6lLHlArM4GTm5U5U0KqL-CBzrx9Ul0lPJ7Rvf6krJfypzXfVINih
+    Jz-YlDJOteWH28rp8TiK7HrU99l42_YMqBdMn4lpHl_xUp4eAJScSg>
+X-ME-Received: <xmr:MAwTaQk5Lo5XUsb2EcGAKJzcjyRKQN28aUmd0CoEbnlHcRjcpxIpeN-muV3LKyxiX_-pUS4egHP_1WCQY5PLi5oaWIDKaVd9dUgw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddtledvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    oheprggulhhtvghrnhgrthhivhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfh
-    hfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
-    htvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehphhhilh
-    hlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukh
-X-ME-Proxy: <xmx:ud0SaXqRKt6FgV8Il7RwVHTFNBI3Jrs3Z2SS8tMYX5Vw4eqtLm8RXA>
-    <xmx:ud0SaZToJTPofuPOJwtEXLwZpdBjUzzhYJG3OP9tn5lhqSAT47EmYQ>
-    <xmx:ud0SaR368SRF1Qs5hhZ7c3H0Gx181gSww6FdwGLMKQ2NDKmV1okFAw>
-    <xmx:ud0SaVBKBm5ZZ2oT5o1TgR3BYXpSgcQKuq677vclRoGdvIE8Dck70w>
-    <xmx:ut0SaQe-KCScC1QvT-ufcUtJ7FHpuByar3rrq21IktETW6N2OxOxlihr>
-Feedback-ID: i197146af:Fastmail
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
+    gsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhg
+    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhes
+    fhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:MQwTaQjN5wGpS238fRTkfJNZ0K2EUy7hCqflvwe1LdmxqCDXPGszmg>
+    <xmx:MQwTac1Q_Ew-AP2XQhl043ld5wnzo4fh5CT1I_IlfIkDw-XZNgrzQQ>
+    <xmx:MQwTaRL1Tw0R79RDXzxnuYyT7SAwZ6u-Zyrp65YKuae5-FUhbJtPsQ>
+    <xmx:MQwTaUzgq31p4AbKqtUkKxu9wUQChRCGFgKf5h36tPF77FIsLeVzKQ>
+    <xmx:MQwTadXz5uyctZ7oEhHu8RYfWK90ZsXrg8QGM_dAXTG7OpNgWNMIdVzV>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Nov 2025 01:54:48 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3020d8e3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 11 Nov 2025 06:54:45 +0000 (UTC)
-Date: Tue, 11 Nov 2025 07:54:42 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	phillip.wood@dunelm.org.uk,
-	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH] commit: add --committer option
-Message-ID: <aRLdsu-MUgPPdIgX@pks.im>
-References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
- <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com>
- <aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
- <20251110201136.GB127132@coredump.intra.peff.net>
+ 11 Nov 2025 05:13:04 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  "Julia Evans"
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "Kristoffer Haugsbakk"
+ <kristofferhaugsbakk@fastmail.com>,  "Patrick Steinhardt" <ps@pks.im>
+Subject: Re: [PATCH v6] doc: add an explanation of Git's data model
+In-Reply-To: <150f3442-93a6-4469-9c25-5bca24accc80@app.fastmail.com> (Julia
+	Evans's message of "Mon, 10 Nov 2025 10:56:03 -0500")
+References: <xmqqo6pde90w.fsf@gitster.g>
+	<D50AB3E0-E41C-49CD-9407-AB60331A6A43@gmail.com>
+	<xmqqa50v4x8n.fsf@gitster.g>
+	<150f3442-93a6-4469-9c25-5bca24accc80@app.fastmail.com>
+Date: Tue, 11 Nov 2025 02:13:03 -0800
+Message-ID: <xmqqfrakyj0w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251110201136.GB127132@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On Mon, Nov 10, 2025 at 03:11:36PM -0500, Jeff King wrote:
-> On Mon, Nov 10, 2025 at 06:01:57PM +0000, brian m. carlson wrote:
-> 
-> > On 2025-11-10 at 16:50:04, Phillip Wood wrote:
-> > > On 09/11/2025 10:22, ZheNing Hu via GitGitGadget wrote:
-> > > > From: ZheNing Hu <adlternative@gmail.com>
-> > > > 
-> > > >      This patch introduces the --committer option to git-commit, providing:
-> > > >       1. Consistency with the existing --author option
-> > > >       2. A more convenient alternative to environment variables
-> > > >       3. Better support for automated workflows and scripts
-> > > >       4. Improved user experience when managing multiple identities
-> > > 
-> > > What's the use case for the same person committing under different
-> > > identities? We already have a config mechanism to set different identities
-> > > for different repositories but I'm struggling to see why someone would want
-> > > to create commits under multiple identities in a single repository. For
-> > > scripts it easy enough to set the relevant environment variables if a tool
-> > > wants to create commits under its own identity.
-> > 
-> > Someone who works on the same project under both their personal and
-> > corporate identities.  For instance, me working on the Git project.
-> > 
-> > Some open source projects also require a CLA and you have to use a
-> > particular address to match the one that's listed on the CLA.  For
-> > example, Google requires an address with a Google account, so in the
-> > hypothetical state where I was going to contribute to one of their
-> > projects, I'd need to use a different committer identity with my Gmail
-> > address.
-> > 
-> > I've also kept business logs in Git when I had a small business and I
-> > might well need to log approving a profit distribution (with my
-> > corporate address) and log accepting a profit distribution (with my
-> > personal address).  Those would need separate digital signatures from my
-> > two different email addresses.
-> 
-> Is a "--committer" option the best solution there, though? I'd think
-> you'd want to set user.* in the repo-level .git/config (or using a
-> dir-specific include) would be less error-prone.
-> 
-> That doesn't help for using two identities for the same repo, but in my
-> experience it is easier to use two separate repositories for that to
-> match the organization of the work (even if you may sometimes fetch
-> between them).
-> 
-> I'm not totally opposed to the new flag, and in general I'd defer to
-> people who say they find a new feature useful. I'm just having a hard
-> time imagining a scenario where it's the best option.
+"Julia Evans" <julia@jvns.ca> writes:
 
-The reason why I find it useful is mostly scripted uses. Sure, you can
-already set environment variables there. But from my experience,
-environment variables tend to be a significantly worse API compared to
-command line options:
+> Like you noticed in the tag object section, I think saying that the tag
+> object "refers to an object" works well in that context, but in the context
+> of explaining what a branch is it makes the text more confusing.
 
-  - They are harder to discover in the manual page.
+Sorry, but I do not understand your objection, as I cannot see what
+confusion it would bring in in saying "a ref refers to an object"
+(or "a branch refers to a commit object").  A ref refers to an
+object, just like a tag field in a tag object or a tree-entry in a
+tree object refer to another object.  They do so by recording the
+name of the object they refer to.  So what's so confusing if we said
+that straight?
 
-  - You don't have any "guarantees" that Git actually interprets them,
-    as there won't be an error if you mistype the name.
+Are you saying that the noun "reference" (or "ref") is a sufficient
+clue to readers that their objective is to "refer to" something, so
+"refers to" is a redundant thing to say?
 
-  - Cause and effect may be detached with environment variables, but
-    with command line options that's never the case.
+Maybe its just me, but I find it a quite roundabout thing to say
+that a ref refers to an object name (or "ID" if you like), simply
+because name or ID *is* a way to refer to the thing that is assigned
+that name, so you are making a ref to refer to something ("name")
+that refers to what it ("ref") originally wanted to refer to
+("object").
 
-So I myself would prefer using "--committer" over its accompanying
-environment variable any point in time when I have a scripted use case
-for it.
+That is what I find the most strange in the construction "A branch
+refers to ID" at the conceptual level.  I am much less unhappy with
+"A branch records an ID", but stopping at that may make readers ask
+the obvious question "what goal does that design aim to achieve?"
+(whose answer is of course "to refer to the object that is assigned
+that ID").
 
-Patrick
+"A branch refers to a commit object by recording its object name",
+"A branch records the ID of a commit it refers to", "A branch
+records the ID of the commit at the tip of its history".  Any of the
+phrasing that does not make "ID" the object/target of the verb
+"refer to" would work to avoid that strange construction.
+
+By the way, Ben used a word "unwelcome", but the words that are more
+appropriate to describe my reaction were "frustrated" (for not being
+able to explain what I know to be true clearly to make others
+understand) and "disappointed".
