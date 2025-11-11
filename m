@@ -1,139 +1,80 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0B435CBA1
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 22:23:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB9F35CBA1
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 22:23:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762899804; cv=none; b=id3KK4lvcvsuTf8Drs6+GJG6nOr8SjM20L2zhNoK1sKBCXGBTAU0kYvAzKyDpa/5aeHZufz3kON5TsnSv1BW8Dbs96ZqTkrro4yz1wWQrXjhhEf1+7+Bj5EwD5DFI1mkkrcq/TiYcMCpiuflL0k+xwqcZZK+L4sjNa1aTd12/K8=
+	t=1762899819; cv=none; b=o+Uh+T8ou+Da8sor/OLuHsUJdpEQWKzpd+4bAHDSmx8ziloXDpy+le5KbJaVsD4QTNqI5jklxpztFhqm2SN+pRm7xF1oOKaeDDG16I2KkjKw3aQt+qs48YXSL3J44AAe2dg3s+uzwzHHQ1i1mPOZhILq7KK5RXTmy22W+rsKQ0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762899804; c=relaxed/simple;
-	bh=yp55CMPVeen2Y+VdorymhjRECaZi7OEEPj7Mqcq11YE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kG2efjEAx7x9ns/3NDiIvoWW1yDFuRHO1tgovTAORXwHE6Yb9oZ3kNFCmoKCtElEhUX8uI7YMbLDnxS12dnnlt2ShNAG9Yg+B1cJwsxlOBXuwKVSsL7t9OIB7GslRpXQB1VxIdA/6rXjReKQEqR2iTF7K1zy8zSQ09zGPtUy5eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=l4+R0PrL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zDcMeReB; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762899819; c=relaxed/simple;
+	bh=l5YjwVqHQOAayIjXP6WNN6NbjOsnH7vASLReiUjMTzE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nojuhiNhso6maHugVLFUB16PDUlpdvwt3myHSlRSiXQdhCnKtNugqruh8taKIHN9BtFXEQVBKCW0Uzt2antFN931YtVsjnkx7iMRKG1W1OOqfqxaug34YivU8g52B3tAd7QnnEqDdkXf8Fqtc9dAQ3JVuxtMBeIPVu/2CcWrKE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=LwjpQUbB; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="l4+R0PrL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zDcMeReB"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0BE6A1D0016F;
-	Tue, 11 Nov 2025 17:23:21 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 11 Nov 2025 17:23:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762899800; x=1762986200; bh=tuAVVtkTsy
-	xhicqpXTqSlollp4/z/mFttgaN9+bRDUc=; b=l4+R0PrLlkZQSuns2uEod9Fd3b
-	MvDNvRkaBnAJ3SpyMKSz/BEvq18zFwGdfj+wqL/m6YXM/vyacmQy8GobLjDJ4Ti5
-	a/5I6FNkHDFWKWlzuKLRfwdOA+UEMWkXziaM/dezcfrhCcijuGSW5VmQZADVM28Y
-	7RaYO7uN78zLwC3fUYsYQA4XYOahH1PkJ3xVBW+B+Zi3FldrwLSNNHG6swRa3V/J
-	c6AG42iuzFBIRMExPCvGN/Rxk2ZpVwJwinF8plqd+qnQzbDz3E7Dh8CImx4toiZi
-	Y1fpyqBCswyKeqnBb2gKjAYOQvg8qGpH/whBz5XBohSSY0RzzMZukM4uSZYQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762899800; x=1762986200; bh=tuAVVtkTsyxhicqpXTqSlollp4/z/mFttga
-	N9+bRDUc=; b=zDcMeReBhpcA7Y2+uA9Nz+Q2sJz4gXoGwR48I4ObiMSDDGNVRvu
-	CiQ6AjskrRWqxvQn+HBP217UKq20p6ziIsUl3OqUfPm0B4pDBcAzs7prv+ObsmgV
-	iBFMaxWT1SqZTMuqyQdxY8X4y3eOZyG59Lm4oAvvHbULKFo3ft2nXSupRVubUtP6
-	xLbNhapwqGqWZB3HP4htPbQOizkZDieqGOam1oRLMdQs9c6twleVGgY4IJ/lJmdA
-	m+2q9flroQSIiWUD9x5Duz3DoLUBIHE1mALiUo/GoZoeR3Hmj+Sm1MBYbIEtr5sY
-	K4f14/e2JMAv0PSamfQZrX5R6NLxe13XBTA==
-X-ME-Sender: <xms:WLcTaYiMuK3-vOOInIm2jD6prdG8H5YaG8T5hrN4vumD01QFQTMgeg>
-    <xme:WLcTad_DwtYD2Eo94bAFc6U9XGBhJOTf0NBWnXapx2zB3AZNfTMHvB0-SlX4Sf0k5
-    oUZDnWzPtjoY3vf6lEUluxm_aYn_H8JTGTPcEsVBSo78HU6kTp4Tg>
-X-ME-Received: <xmr:WLcTabvdZNXJC30HGWLKr-LVZBTJDZhxUVbXlLbrLjvn3C5bw8GerOlya-PRsqmnCJOFJI5kg_TZP2tVgcARDPSj6Xb7emYSo97f>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddvfeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
-    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohgu
-    uddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsrdhtohhrvghksehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:WLcTaRr5yjVwuuBa4lGz19ytOQefIEikskXcGQEjm65_U-1Gl7jEdA>
-    <xmx:WLcTafpp6VNaFXJOb7zxTexGYa5z3V5N6tGzzdHaiiu2kgRfuSx_9g>
-    <xmx:WLcTaQYM1HChBPoiypa11WVS4Wn-nlqzQhfgvbmsrF1m10lqaOAlSw>
-    <xmx:WLcTad9iUgkFxtJcbDx_LDSrwMiUBnUyEiVKYUVurMxCkEbRGjgAkw>
-    <xmx:WLcTaYQiB0UTOBmSEvWQRUGJ4CIkHG2fMW-2Pfs8RzixrSd9XeJbPcoZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Nov 2025 17:23:20 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt <ps@pks.im>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Chris Torek
- <chris.torek@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v3 02/10] xdiff: use ptrdiff_t for dstart/dend
-In-Reply-To: <52e3f589b1ce25085921453eea14b9c9d7c8f362.1762890152.git.gitgitgadget@gmail.com>
-	(Ezekiel Newren via GitGitGadget's message of "Tue, 11 Nov 2025
-	19:42:24 +0000")
-References: <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
-	<pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com>
-	<52e3f589b1ce25085921453eea14b9c9d7c8f362.1762890152.git.gitgitgadget@gmail.com>
-Date: Tue, 11 Nov 2025 14:23:19 -0800
-Message-ID: <xmqqms4sus2w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="LwjpQUbB"
+Received: (qmail 490042 invoked by uid 109); 11 Nov 2025 22:23:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=l5YjwVqHQOAayIjXP6WNN6NbjOsnH7vASLReiUjMTzE=; b=LwjpQUbBuhStPY6enhCAECiohvJi124Prpnj1sn0qzCUmDX7/DUc7HbdpGN5JAnUT4q4R0zq7JMMntlKNWHPFyrxss8JVWT4jZq0y2ku9dEkypXR7j+QCiX6YdOO5+LngrAwKgwOZh3j99jZisr1GZ4dbpgsS5cmsrJYrzlvAwrPudjw2ATZ0kEYabI5BJDRc6GLBtlGR3kLFnMLHPC+3bDNyeIpLwrKNjNIjgy6bfoN1nHb9puMMbQad08TlfoNzJblRBtSxk4fh4uxAgt1nKZ5+DPOuBFvAeR4DQx4Cx+fyRr0llWHxEisxzSfqnBeB9QOwoTMA5dEqnxJwQC6pA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Nov 2025 22:23:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 780823 invoked by uid 111); 11 Nov 2025 22:23:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Nov 2025 17:23:35 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 11 Nov 2025 17:23:35 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: ZheNing Hu <adlternative@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	phillip.wood@dunelm.org.uk,
+	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH] commit: add --committer option
+Message-ID: <20251111222335.GA4054883@coredump.intra.peff.net>
+References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
+ <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com>
+ <aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
+ <20251110201136.GB127132@coredump.intra.peff.net>
+ <CAOLTT8RweGOmxNK=vKDv8w-8AJM7QUfLBw4WOKeY1EpSVeB6iQ@mail.gmail.com>
+ <20251111191508.GA1907007@coredump.intra.peff.net>
+ <xmqqh5v0wcif.fsf@gitster.g>
+ <20251111213339.GA4053071@coredump.intra.peff.net>
+ <xmqqwm3wut8i.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqwm3wut8i.fsf@gitster.g>
 
-"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Nov 11, 2025 at 01:58:21PM -0800, Junio C Hamano wrote:
 
-> From: Ezekiel Newren <ezekielnewren@gmail.com>
->
-> ptrdiff_t is appropriate for dstart and dend because they both describe
-> positive or negative offsets relative to a pointer.
+> Jeff King <peff@peff.net> writes:
+> 
+> > I just mean being able to do:
+> >
+> >   git commit --amend --author='Foo Bar <foo@example.com>' --committer-is-author
+> >
+> > instead of:
+> >
+> >   git commit --amend --author='Foo Bar <foo@example.com>' --committer='Foo Bar <foo@example.com>'
+> 
+> Ah, I see.  Like
+> 
+>     git -c user.name='Foo Bar' -c user.email=foo@example.com commit --amend
+> 
+> Makes me wonder if we want user.ident that covers them both ;-)
 
-Makes sense.
+Hmm, I hadn't thought to use "-c" config for this. That makes me
+question the utility of --committer a little bit. ;) I guess it is
+slightly more convenient than "-c" in that it will trigger the
+find_author_by_nickname() magic.
 
-> A future patch will move these fields to a different struct. Moving
-> them to the end of xdfile_t now, means the field order of xdfile_t will
-> be disturbed less.
-
-If these members will be gone from this struct, it wouldn't make any
-difference in the end.  I am not sure what you mean by "disturbed
-less".  Right now there is a gap between changed and nrec members,
-and at some later point, these two members may be adjacent with each
-other.  I do not think it would make that much difference if they
-become adjacent after this step [02/10], after step [10/10], or in a
-separate series (xdiff-cleanup-3?).
-
-> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-> ---
->  xdiff/xtypes.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-> index f145abba3e..7c8c057bca 100644
-> --- a/xdiff/xtypes.h
-> +++ b/xdiff/xtypes.h
-> @@ -47,10 +47,10 @@ typedef struct s_xrecord {
->  typedef struct s_xdfile {
->  	xrecord_t *recs;
->  	long nrec;
-> -	long dstart, dend;
->  	bool *changed;
->  	long *rindex;
->  	long nreff;
-> +	ptrdiff_t dstart, dend;
->  } xdfile_t;
->  
->  typedef struct s_xdfenv {
+-Peff
