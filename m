@@ -1,208 +1,166 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04312E9EAD
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 02:04:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DACC17555
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 06:54:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762826696; cv=none; b=GDCqw4D2ut4wX+RVHnIBrr7VL1ElXU8T5lcG9iVLlitnpJXcDpgFTumpn8ZiRwN4ZM7/xsuH26YZ57ApWp5qJIG4NgjGy0O9uxWY5VDl3vxl5KpwojpUUbOOqjuJlWKh14XqE1yu7VqWoq1RwPQ3/6EMLxOwOAwNkWbmo5uK0eI=
+	t=1762844094; cv=none; b=FhhqOSVFERfO9o6+poS8YNWQp1oWtk+NMsDaVTJfoBYmskp9hXe7Qy5f7LbZ6EMGpq/nbtWldP7anFo4RGA82CYnyvJZFj5FCmKUNz0cAa83hqkquo1ivfT5r0co2L6VjkYUgcoVCnhHXmTtKMWubLZlVCTuysCU9foMINI3hY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762826696; c=relaxed/simple;
-	bh=8iCud9KYmQVeoRpRlumTpiWPYwY6L1NMolgsq4u/ss4=;
+	s=arc-20240116; t=1762844094; c=relaxed/simple;
+	bh=EM61IeWx82Qnuzdyzzgxs0EPnA8q9TijcBfCfUIPJeY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jH9M/x8Ayf7E4cqgy7eXJVMHIx88WRUBGSUm2VBmruRdz9N2SjAc23OsLB+CiS9z8UN72V9Q0Y743rOQxEjHe18yArhsWZs5z5EW7OTGRQhaMZi+0xTXfzZfz5+RXhaeqaaw+OLshJEOKEPpJKQpP1LNqZ6gWD+LRMeBtSJE81o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=T8mxc4oH; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=XXuI7ewusQEK3/6vKMveFvChYQkttY9X2TjPlXg/QbUFmQscblNjllO3u4HIfMxNk40SHYHm2S7zCeO9n2wNfnKHx+w67hymNDehPthL3UGDjO+eutv4rLFELFEaPXx5Mj3Yu1dTIyziYGOsHQkzocCvMMYdV7HZCCTEmbjmcH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nXmICWwx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mwly+3Ce; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="T8mxc4oH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1762826692;
-	bh=8iCud9KYmQVeoRpRlumTpiWPYwY6L1NMolgsq4u/ss4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=T8mxc4oH5xEg39fsDGlO/HCsK1rDfHzMKZut//6py0E9SH3hD8vwJFr5ENBbrBk1b
-	 +7w4f4rQ99CAZRwt0dCefkK/+6HkDCpJuBAf9QXs+pCpWnjCs2b/5lD3zYhJ8UYCXg
-	 g09nRfG7pJMp14Dal+jQAA7C6WTu1h/ANHOI9ou1y70fGFXlS1b0FBP03w91PKEICf
-	 c0UJD6FBkbS3RQeTpSPf3xGa57Y7ElaTLIYlhOgBNKAd0EIeeRuNV5OA7hFL+O6Gqf
-	 CqitwOfR1fRPexLo8HWYIkYLQq5k5j2wM+ujN0+npiH9sNihsCt+Ova9qzfMVdBmQ8
-	 4ItocFrhTK/PZ9XeOPhVBEqXTqw5hMXePobKjxRS21MEx1RpfPRGKT7hOdOe6Qw8fs
-	 1SSkoRC0BTKhrHsV4UXVx7ztpORfiI09v4Sm0SgkWYaF3pa2cSQQNLgQGcyYLQuPP3
-	 8GeslU4mIccglixbgoRTvsn13RUlBGay3zIsIVRCkxFwpjYoexk
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:2884:27a3:f514:5cad])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A750120069;
-	Tue, 11 Nov 2025 02:04:52 +0000 (UTC)
-Date: Tue, 11 Nov 2025 02:04:51 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Ryan Johnson <ryan.johnson.code@gmail.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: gitignore redesign proposal
-Message-ID: <aRKZw1h35ZZLkTXh@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ryan Johnson <ryan.johnson.code@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <DS0PR03MB7290A11407D68F7F3623FD9CA3CEA@DS0PR03MB7290.namprd03.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nXmICWwx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mwly+3Ce"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 30A40EC0183;
+	Tue, 11 Nov 2025 01:54:50 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Tue, 11 Nov 2025 01:54:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1762844090; x=1762930490; bh=4R1l0lOXL3
+	1tiKzY6aalQ6U/+h346AhoO36/A3cLCMc=; b=nXmICWwxQcHhH32hExZnbNOQbu
+	wGThPoOMxvE7S5N6VLYMck2mT4sd7MS6nneoRiJgdg1ONVno8tziLKrR+7z4niOP
+	hEUt6B020l0TTP3hKK4FapsLilN4eEFvL+hPUKr/zUpqUaU/9iHsLob6DY/+lWnp
+	yLTNKm71Goq4LepDQ4i5A9VWS++Y8Nfezvmr91KjaboVt+jSM0DR44IVEShAdPQT
+	21VZwPmgf7ACODi9bawtrwLMKyeQ5civFJEm1HfGFN7VzD81nB121fjdZCaPQFgG
+	Gh3rfkSv4sJo2na3AoDt0LxfaZqqT1RNWIY4Tz9PILjrHdDqkW0pU5d7CsKQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762844090; x=1762930490; bh=4R1l0lOXL31tiKzY6aalQ6U/+h346AhoO36
+	/A3cLCMc=; b=mwly+3CeuMesb2L/kKQbfrdNKSW3UmNxeYsre167Jz7d08D7uaC
+	l0OYFdELDnoZfeVP+1hHjBT9GH4dZB8ypGXn7RTu58gTLJ16YTMXvEh7hb6nhjZq
+	6yarfE44xQ0Y302/6p+Tw6k1wiCrw0Qv9SVlzASNkCdrW3ZwWqSHT2jVlgmLPin4
+	+/s8BpTVWgodGwf9yVAwcT0RvqzJZKW+ZHm5jVJGCSW4Oa4rzEYu29q7DdbHsICc
+	k1pRlyBlca/lbakCI9JMWubtYhjrcEoqoh9lW1lCiT6DQnH2kBhL7bfwsexcpbS2
+	KIS4Q4fZMcFLd0mT8NlKphvY6DpTNrOMvxg==
+X-ME-Sender: <xms:ud0SadHM1wy6jblYtlMeOtHboOIFJ1RUv5HVHA96Z1saAdlHIkCT7A>
+    <xme:ud0SaTBpQfez7d6F955aR8lE0DgZQv8cySvotKiGuDo2jUBt1rsaRm5CnW876KcID
+    u0yJG5Yty_PYz-9b3K93wwul2w4GWhzlHX_l4DosV2WoisgWlnG>
+X-ME-Received: <xmr:ud0SadW9T-s1vqIWpC4POa2PwGHFNyfWV3W4kIiUTpzYtVAp8WbyLBed7aWTySYjYWmumDAVtL0YimVM2tpryJnLzMjJtjiSqfgc32iFYg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddtheefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    oheprggulhhtvghrnhgrthhivhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfh
+    hfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
+    htvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehphhhilh
+    hlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukh
+X-ME-Proxy: <xmx:ud0SaXqRKt6FgV8Il7RwVHTFNBI3Jrs3Z2SS8tMYX5Vw4eqtLm8RXA>
+    <xmx:ud0SaZToJTPofuPOJwtEXLwZpdBjUzzhYJG3OP9tn5lhqSAT47EmYQ>
+    <xmx:ud0SaR368SRF1Qs5hhZ7c3H0Gx181gSww6FdwGLMKQ2NDKmV1okFAw>
+    <xmx:ud0SaVBKBm5ZZ2oT5o1TgR3BYXpSgcQKuq677vclRoGdvIE8Dck70w>
+    <xmx:ut0SaQe-KCScC1QvT-ufcUtJ7FHpuByar3rrq21IktETW6N2OxOxlihr>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Nov 2025 01:54:48 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3020d8e3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 11 Nov 2025 06:54:45 +0000 (UTC)
+Date: Tue, 11 Nov 2025 07:54:42 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	phillip.wood@dunelm.org.uk,
+	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH] commit: add --committer option
+Message-ID: <aRLdsu-MUgPPdIgX@pks.im>
+References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
+ <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com>
+ <aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
+ <20251110201136.GB127132@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YEOXALysGSnuFEXz"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DS0PR03MB7290A11407D68F7F3623FD9CA3CEA@DS0PR03MB7290.namprd03.prod.outlook.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+In-Reply-To: <20251110201136.GB127132@coredump.intra.peff.net>
 
+On Mon, Nov 10, 2025 at 03:11:36PM -0500, Jeff King wrote:
+> On Mon, Nov 10, 2025 at 06:01:57PM +0000, brian m. carlson wrote:
+> 
+> > On 2025-11-10 at 16:50:04, Phillip Wood wrote:
+> > > On 09/11/2025 10:22, ZheNing Hu via GitGitGadget wrote:
+> > > > From: ZheNing Hu <adlternative@gmail.com>
+> > > > 
+> > > >      This patch introduces the --committer option to git-commit, providing:
+> > > >       1. Consistency with the existing --author option
+> > > >       2. A more convenient alternative to environment variables
+> > > >       3. Better support for automated workflows and scripts
+> > > >       4. Improved user experience when managing multiple identities
+> > > 
+> > > What's the use case for the same person committing under different
+> > > identities? We already have a config mechanism to set different identities
+> > > for different repositories but I'm struggling to see why someone would want
+> > > to create commits under multiple identities in a single repository. For
+> > > scripts it easy enough to set the relevant environment variables if a tool
+> > > wants to create commits under its own identity.
+> > 
+> > Someone who works on the same project under both their personal and
+> > corporate identities.  For instance, me working on the Git project.
+> > 
+> > Some open source projects also require a CLA and you have to use a
+> > particular address to match the one that's listed on the CLA.  For
+> > example, Google requires an address with a Google account, so in the
+> > hypothetical state where I was going to contribute to one of their
+> > projects, I'd need to use a different committer identity with my Gmail
+> > address.
+> > 
+> > I've also kept business logs in Git when I had a small business and I
+> > might well need to log approving a profit distribution (with my
+> > corporate address) and log accepting a profit distribution (with my
+> > personal address).  Those would need separate digital signatures from my
+> > two different email addresses.
+> 
+> Is a "--committer" option the best solution there, though? I'd think
+> you'd want to set user.* in the repo-level .git/config (or using a
+> dir-specific include) would be less error-prone.
+> 
+> That doesn't help for using two identities for the same repo, but in my
+> experience it is easier to use two separate repositories for that to
+> match the organization of the work (even if you may sometimes fetch
+> between them).
+> 
+> I'm not totally opposed to the new flag, and in general I'd defer to
+> people who say they find a new feature useful. I'm just having a hard
+> time imagining a scenario where it's the best option.
 
---YEOXALysGSnuFEXz
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The reason why I find it useful is mostly scripted uses. Sure, you can
+already set environment variables there. But from my experience,
+environment variables tend to be a significantly worse API compared to
+command line options:
 
-On 2025-11-11 at 01:02:39, Ryan Johnson wrote:
-> I have 4 proposed changes to the gitignore feature:
->=20
-> 1. Integrate a hard-coded .gitignore.local option for quietly ignoring us=
-er files. Automatically ignore this file, or require users to exclude it in=
- the main .gitignore.
+  - They are harder to discover in the manual page.
 
-Why is this better than $XDG_CONFIG_HOME/git/ignore, which is global and wo=
-rks
-for all of the user's repositories, or .git/info/exclude, which is per
-repository and not checked in?
+  - You don't have any "guarantees" that Git actually interprets them,
+    as there won't be an error if you mistype the name.
 
-The former is the ideal place to put things one wants ignored globally,
-such as Vim swap files or Emacs backup files, and the latter is suitable
-for individual projects.  The former can even be installed by one's
-dotfiles so that one's `git status` output is always tidy with regard to
-one's editor files.
+  - Cause and effect may be detached with environment variables, but
+    with command line options that's never the case.
 
-> 2. Change .gitignore to just gitignore. This is because gitignore is
-> not a system configuration file. Users are expected to interact with
-> it. Dot-files are typically not user-facing files. They are expected
-> to be hidden on Linux systems, which is inconsistent with the
-> expectation of user interaction. They are entirely avoided on Windows
-> systems for user-facing configuration files. When a user sees ".file"
-> on Windows, they know they should be using a GUI to edit the config,
-> not hand-hacking. Additionally, dot-files are ambiguous: they could
-> contain key-value pairs or scripts. The point is, don't put essential
-> controls in a room labeled "For personnel use only" while expecting
-> customers to go touch it to get anything done. gitignore is
-> fundamentally different from the .git folder in intent.
+So I myself would prefer using "--committer" over its accompanying
+environment variable any point in time when I have a scripted use case
+for it.
 
-Typically, we hide files and directories used by version control systems
-because there are several of them (.git, .gitignore, .gitmodules, and
-=2Egitattributes).
-
-This also helps other tools easily not process VCS-specific files by
-providing an option to skip processing hidden files.
-
-CVS and friends did not use hidden files and it was ugly and unwieldy.
-(In general, we should avoid replicating CVS's mistakes.)
-
-> 4. Every gitignore file should be initialized with a link to the gitignor=
-e templates on GitHub.
-
-We try not to prioritize any particular forge in this project and many
-contributors work on a variety of different forges.  Even though I am
-employed by a major forge[0], I end up using several because various
-projects I would like to participate in are on other forges (even some
-projects that we use at work).
-
-There's no reason that the GitHub templates are intrinsically better
-than any other options and if an objectively better option comes along,
-we would end up providing suboptimal information.
-
-I'll also note that the GitHub templates tend to be very expansive and
-cover a large variety of files.  The Python file, for instance, covers
-Django, Jupyter Notebook, IPython, Redis, SageMath, and a variety of
-other things that most Python projects will never use.  Having a very
-long file with a lot of unused entries worsens performance and makes
-maintenance of the file much more complicated than necessary, especially
-when a project needs custom values as well.
-
-> Why YAML?
->=20
-> Being able to include other files in a main ignore file is necessary coll=
-aborative environments. Teams need two things:
->=20
-> 1. To be able to include templates that are provided by authoritative
-> sources (such as next.js, zig, unity, etc). Veteran coders know to
-> pull templates from this repository:
-> https://github.com/github/gitignore --- a repository that is not
-> self-evident in any respect for a beginner software developer.
-> Beginners have to just *magically* happen upon the repository or
-> search for gitignore templates in a search engine. This intuition is
-> not a guarantee, so every gitignore file should be initialized by git
-> with a link to that repository to maintain good practice.
-
-I have over 13 years of professional software development experience and
-even more non-professional, so I think I would qualify as a veteran
-coder.  I don't use those files, either at home or at work.
-
-Instead, when creating a project, I add those files and directories that
-are build or intermediate products to .gitignore as one of my first
-commits and add additional entries along the way.  That way, I know that
-my values are correct for my project.
-
-Note that I almost always have additional custom files that are not
-listed in the templates, so I need to edit the file anyway.  I assume
-that's true for most everyone, but I could be wrong.
-
-> 2. To be able to organize their gitignores hierarchically. At present,
-> people just randomly stick items in the file, so it's a visual mess
-> that results in duplicates being added. Removing a duplicate doesn't
-> guarantee the removal of the other in very large gitignore files,
-> which can cause problems.
->=20
-> I previously requested an include feature in the existing gitignore
-> parser, but I saw that people are afraid to implement it by modifying
-> the normal gitignore syntax to accommodate. To deal with this, I
-> recommend implementing a YAML alternative to the traditional gitignore
-> file. YAML already has a usable syntax, parser, etc. This extension
-> would exist concurrently to the current gitignore implementation so
-> that it can be adopted gradually.
-
-I agree that YAML is a very popular option.  However, different parsers
-implement different versions, so they work differently.  It also has
-some downsides (`no` is interpreted as false, not "no", which is a
-frequent source of problems for Norway- and Norwegian-related
-information).  Some parsers[1] also don't support parsing byte data encoded
-as base64 (the `!!binary` tag), which we would need because Git does not
-require filenames to be UTF-8.
-
-Other options, such as JSON or TOML, also don't support non-UTF-8 data
-(and JSON doesn't support comments[2]), so those are also out.
-
-[0] My participation in this list, unless stated otherwise, is in my
-personal capacity only and I neither speak for my employer nor do they
-speak for me.
-[1] In my brief few minutes of testing a handful of implementations, I
-found Perl's YAML::Tiny, which also does not accept `!!str`.
-[2] Before you say, "But there's this variant of JSON that _does_
-support comments," that is not standardized and most JSON parsers don't
-accept it, so it is strictly worse than using YAML or TOML in terms of
-compatibility.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---YEOXALysGSnuFEXz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaRKZwgAKCRB8DEliiIei
-gVUwAP0XfAEeYFXJiaacppWoRET315VGp/a6vELFa2BlRUsgUQD/Y8La3aL1RuuX
-2O1CWzYAzRkdd5ATpMb+1f0D1+oCTA0=
-=GFJe
------END PGP SIGNATURE-----
-
---YEOXALysGSnuFEXz--
+Patrick
