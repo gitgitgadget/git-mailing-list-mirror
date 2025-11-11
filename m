@@ -1,54 +1,54 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2225A2D6E5B
-	for <git@vger.kernel.org>; Tue, 11 Nov 2025 23:21:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433972F361F
+	for <git@vger.kernel.org>; Tue, 11 Nov 2025 23:40:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762903304; cv=none; b=c7CsTVFMPm9Y+16vm07mPNaQ63JXXGQ2rwJqTifzYSpXw6bp9aJpa6ELDNa49OvpareLSBzWKu0sbQoGyGqT1ecMS0Juix1cJdDQMTUk0eXbSQ54MX4HKg4re89subn4noCT+6LNyIDLC4wVgH82MCmVl0PYz3kVHM+195+zmmI=
+	t=1762904416; cv=none; b=EMGAxVKtjr/7D0dhS8pIEC/10bROI2pcmbcAffPhX1v8s0tI/NW055K8tKlMsBzLi6ZIYXFGUporI6d1jY08DmJ1XZldqvrA5/Z34Is5nVE+dcO6D1K4UOQkGP1jv9eh5b7IzpOBhZMEKZ39P9Uljj74JwzrX714h2o/HBcB1bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762903304; c=relaxed/simple;
-	bh=MSX/nR8VKkZQH+gIvwC1pvvAHmz9sfNUbbK7wXv6S+M=;
+	s=arc-20240116; t=1762904416; c=relaxed/simple;
+	bh=Tc6pTVS4CBAZcIpQNzHmv2V7YPiuvzzWuKyqrJD4GsA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BZrD5OS/nlLLCJ4oPB7uGnsntHAvsKzEz37NRhrofrf2/ycegy1X6RW0F/qW0XMcDa2CM5DomFQZlwVy/EFq2h1Jt01nrzxFCEaAHb9uEg9UOnt1Xyu9eLAZwJUGjx4G9/JX3s0Nj19+zt/fCHHydREqoKke0JB74KjJOSLGOYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PA9VrARa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gBmI8XEE; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=r9/4HgonogqoBu1sVdCxCJnLeltSXBhTWQ5S23ODx7KQHJduAZY7m7Z7ZuoqBKKoAYVuGVqrO1FUjlkkiqUMJPpkNZzGBbfEL44CGOCnfq+dgXvn4m/jm+iwCAVtzMg8Bh9raDXgDl+07tq+4cSkZ3G1Ryi8jdeHYOU3WAYFQSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Bo4l6tPM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JywVw8OA; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PA9VrARa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gBmI8XEE"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1D9B81D0012F;
-	Tue, 11 Nov 2025 18:21:41 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Bo4l6tPM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JywVw8OA"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3ADA97A0054;
+	Tue, 11 Nov 2025 18:40:13 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Tue, 11 Nov 2025 18:21:41 -0500
+  by phl-compute-01.internal (MEProxy); Tue, 11 Nov 2025 18:40:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762903300; x=1762989700; bh=H4d+K07W+I
-	tq6CO+EMr4Ofx1o431+pUTe/qJVdEHSM4=; b=PA9VrARawxybxJ9As5dryCp8MJ
-	EzQLPh7Q5HUYTKXEcnW06WqOqFzqDkoUGz8LPfL2437DpjoFeQ7mR1CVvZIolD6Y
-	ELQjfC+Nnh9We2q+pbEMvsUc5uDzZN87Cddh5f5Ix8uhArpHSRUB4Da6BgWVvGsE
-	CKRuXVESU3FmAdhI7fu8htURr3ItIU8VHCORj2yRp70//j6nNIYHaZPcy6x9OwLB
-	zQRIUlnJ15LjJcmHQ3L0WEKdtXcE1tGMlpRtmkFiI7tyJqqgxTzY+XP7Qfr1dJD0
-	UJsmT74lAoUpFF9UaKHwGihhqw8Ryc+Kg4BFIR2V/Fcsi+hqcs3BT9miOMSA==
+	:subject:to:to; s=fm2; t=1762904413; x=1762990813; bh=DaWxGeUpzq
+	kI/DgtsP+0t1lzc1pQasnH2A+jJrgMRf8=; b=Bo4l6tPMbue3PllfuRVJREvgUJ
+	NFsFsFe07emzOeEsK13+e7K6rYS7UYdJmYZJHkvemfuQQAd3IuVGlVmJuCzp5axM
+	9pZMl6Xl5fxYGe0iMG7Lk01chP1NEFFSXdzIMgdwJdbJ4RHmVXP0Tg7a6HS0Aug2
+	dBRo5AjW+5N540Qg1dOXJv1W6xskw75Q/z6V4Y1Ok8R9RSubuk79njWcRtaMzN5X
+	KpE0vK0iV8D55BHLFZ8+cURfXvtfbIyFoSm5ZEJA4B0SfPwzr4U1DhNuKmOYvaWq
+	DRMdoMtoDwEstjRYDBEwbowRiGMYYTuAPyDPjHyQnSb4hWsKuTZf7tEvlowA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762903300; x=1762989700; bh=H4d+K07W+Itq6CO+EMr4Ofx1o431+pUTe/q
-	JVdEHSM4=; b=gBmI8XEE3PA14N2hquiJ2oSONlAx7C4sOqFEnqXwfJxbp/LSO8A
-	mnr8kDfD0s9+HVOVbsQD8AvodxA0VzqDBZbJRp2XpU1vAJdbxplUbmnA0jST9+yM
-	S7m+mkyHfUWQN9ef2akNvMGGaYBmoqw3toN5BN2SEtqtMzkOKWlI4/XgYi1CAEEg
-	QDsf5KCa63IxY2OCQYdWip32KGV9gvnKLPlV+XCFsb044LCBaYeutdI/0UEPyP4v
-	xbzfXozFR+ITY0zJpKiJJLIuzpDCQa5xsE+L5G0tpeAYg2So6Wu0l97EAIpLQ0Ab
-	QHeYWduoHW35lN8QzquUbYIYIQ2hVKOBVqg==
-X-ME-Sender: <xms:BMUTaVVEL0vo_woBLRzYqeWSwyvNwq1pI3JTRw_igA-ep7Cmxm0qIA>
-    <xme:BMUTaUpxSb3GSWxp_ooDvxYBZgHdIS7-yaCQV1tg1Nm15qH7XKP4OKuwhnBuP4gI8
-    pn2L56q_Hy9u8C6YvrqPKMDDYJTv6BjWOA1_uwG9HmETliStjU>
-X-ME-Received: <xmr:BMUTaXl20sNtAoO5M12jM263QcP2Bq3e1X5JDtVi2dSkaGXa6XuZm3kyj8P1KvaOp2vJrtn18m4wVxfk5hCMja1-5KmsJS08_ovg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddvgeelucetufdoteggodetrf
+	1762904413; x=1762990813; bh=DaWxGeUpzqkI/DgtsP+0t1lzc1pQasnH2A+
+	jJrgMRf8=; b=JywVw8OAVSHUWH8ncFp29SRqbZrfnkw34zts/Cjm9LLhzgP4Mzf
+	8JKB3Quo40r9UljIEaGlWnxlUrAhGKJnjGvVd3rI3QiVUvsTqNRG1KpKw6S8XWQx
+	ogwK+FrewO4MVjqctL0C+qJdBV0Zo42eL60eHE/bHJB+zAxx/YAWgILD0DrnHT3K
+	Ngn+untVjr23cqNkqgKGgOTKiShxkZsMaxn9sGL6B+SnjhYCNHwKr1/eJAqemt50
+	PahLPCaAXx4SvmrZocC3N3koDbhIFXq2vFA7nVBKvQmDWuOn9Esl5QYndsSJeik8
+	27wqleSlT5U0SLZXQCckCO6OAder6P1G6Sw==
+X-ME-Sender: <xms:XMkTae3dL7hEcTgYmLISTrlDJmUn-9wQJf0yGSAnw0nfCGwxZGRLeQ>
+    <xme:XMkTaQJnqRgGIBhBP0DVjkm14n1CE8-Lg1MGICBPvbnIax25gCfOrHMui1-azLeYI
+    RsaVcJ8uRw3TjtaLi7CHmsssG-S4Gr7YPbHyDkrM_N8cCdP2HBKh2I>
+X-ME-Received: <xmr:XMkTadFlEfilmFJCXJC9C3w0W9WcgjiBLZA3wwhj26AOmaO_lQ1DJfJT3BlYsIgqsROmvR6qKEe7pFqw92RmyFCh-HQIE_f5Viw2>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddvheefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -63,30 +63,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtddvgeelucetufdote
     uddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsrdhtohhrvghksehgmh
     grihhlrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdr
     tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:BMUTaU1FghE7P1G7_1A7KMfF59Nvid4R-AdcJ17LUcXpn-Te2GDpug>
-    <xmx:BMUTaUQ-9U99uSZp2mbPWWhoqG0XIsSqAwDbVBRMAll9791eTnTcPA>
-    <xmx:BMUTadyYxKCHdTeVxo_pyUt2xyE9f9-HQpTznLPKIcpxQBr9yY2tlg>
-    <xmx:BMUTaUAOnkrGB9eFaR_XaiJb74piHUpBr-9lzXGd6zA7X_AIzfGF7g>
-    <xmx:BMUTabbDcjj7fmVdRcCU5c5aQxJVJZMfuV6H1B75GOO0CIEUB1oGs5Kp>
+X-ME-Proxy: <xmx:XMkTacU9d9C-P0dLXbNCLQhox0kLSiPAFp7UfjsEbatolKfxk2l_Og>
+    <xmx:XMkTaVzZHtSrlSTPxnU3GwOs8XWl7ghG6WoLE1SbGUhSc77iGLSGbQ>
+    <xmx:XMkTaRQy8xFo66MLrjYV98caWbF40vcU88jRHsBo5XGIpr2uNEM3kA>
+    <xmx:XMkTaRibvSia8c8zEKxK_nV0Ex80ksnxF-QVSUoEE9sOx8kJ3UbigA>
+    <xmx:XckTaZVPRUd98-mOCOOQzwVhwcE-fdmEhsRbnOZQV-05w_mVo7Vs0Ob_>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Nov 2025 18:21:40 -0500 (EST)
+ 11 Nov 2025 18:40:12 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
  <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt <ps@pks.im>,
   Phillip Wood <phillip.wood123@gmail.com>,  Chris Torek
  <chris.torek@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v3 06/10] xdiff: split xrecord_t.ha into line_hash and
- minimal_perfect_hash
-In-Reply-To: <3834ea8f9becc9d6e1b407679e8a95dc6c9d56de.1762890152.git.gitgitgadget@gmail.com>
-	(Ezekiel Newren via GitGitGadget's message of "Tue, 11 Nov 2025
-	19:42:28 +0000")
+Subject: Re: [PATCH v3 00/10] Xdiff cleanup part2
+In-Reply-To: <pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com> (Ezekiel
+	Newren via GitGitGadget's message of "Tue, 11 Nov 2025 19:42:22
+	+0000")
 References: <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
 	<pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com>
-	<3834ea8f9becc9d6e1b407679e8a95dc6c9d56de.1762890152.git.gitgitgadget@gmail.com>
-Date: Tue, 11 Nov 2025 15:21:39 -0800
-Message-ID: <xmqqwm3wtat8.fsf@gitster.g>
+Date: Tue, 11 Nov 2025 15:40:11 -0800
+Message-ID: <xmqqqzu4t9yc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,43 +96,32 @@ Content-Type: text/plain
 
 "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> To make this clearer, the old ha field has been split:
->   * line_hash: a straightforward hash of a line, independent of any
->     external context. Its type is uint64_t, as it comes from a fixed
->     width hash function.
->   * minimal_perfect_hash: Not a new concept, but now a separate
->     field. It comes from the classifier's general-purpose hash table,
->     which assigns each line a unique and minimal hash across the two
->     files. A size_t is used here because it's meant to be used to
->     index an array. This also this avoids ` as usize` casts on the Rust
->     side when using it to index a slice.
+> The primary goal of this patch series is to convert every field's type in
+> xrecord_t and xdfile_t to be unambiguous, in preparation to make it more
+> Rust FFI friendly. Additionally the ha field in xrecord_t is split into
+> line_hash and minimal_perfect hash.
 
-How much extra memory pressure does this change cause?  In a single
-instance of xrecord_t, we used to have a single ulong plus a pointer
-and a size_t; now we replaced the single ulong with two 8-byte words,
-so 33% more memory per record, which is not so huge a deal?
+After having read the series to its end, I am left with this feeling
+that it does only half the things that it needs to do.  It does all
+what the above paragraph claims it does, sure, in that the relevant
+data structures now use not "long" but "size_t", not "char" but
+"uint8_t", etc., and I do find the resulting data structures sensibly
+described.
 
->  static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t *rec) {
-> -	long hi;
-> +	size_t hi;
->  	xdlclass_t *rcrec;
->  
-> -	hi = (long) XDL_HASHLONG(rec->ha, cf->hbits);
-> +	hi = XDL_HASHLONG(rec->line_hash, cf->hbits);
+But for the code to be truly consistent between the data structures
+and the operations that work on them, types of on-stack variables
+and function parameters would need to be updated to match these
+struct members.  As we convert one structure member at a time, casts
+may need to be sprinkled for assignments to these variables and
+passing these struct members as parameters to functions (which I
+commented on one of these patche) to keep the blast radius of the
+changes in each step manageable, but I would have expected that
+functions that used to take, say, an "int", would be updated to take
+"size_t" if the value coming to the parameter is from these struct
+members.
 
-Very nice that we can lose these random-looking casts.
+Perhaps that would be the theme for "Xdiff cleanup part 3" series
+that we will eventually see after the dust settles from this round?
 
-> diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-> index 88b1fe4649..742b81bf3b 100644
-> --- a/xdiff/xtypes.h
-> +++ b/xdiff/xtypes.h
-> @@ -41,7 +41,8 @@ typedef struct s_chastore {
->  typedef struct s_xrecord {
->  	uint8_t const *ptr;
->  	size_t size;
-> -	unsigned long ha;
-> +	uint64_t line_hash;
-> +	size_t minimal_perfect_hash;
->  } xrecord_t;
->  
->  typedef struct s_xdfile {
+Thanks.
+
