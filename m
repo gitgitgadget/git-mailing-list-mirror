@@ -1,59 +1,58 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C252270ED2
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 07:23:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D602277C9E
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 07:25:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762932182; cv=none; b=EWT6cyOBqse2V5CzAYqXl7nDsJTCc2Zxmgi84QmZE6uAW3D6YICQ/cZf2TqbZMAYW4UGi03rXzhCSEBTPcmr2y2h1G8HhgrojmY/z9AQ2Lk2Azq+u9NlwyDxhnXyptJX1Gejb2R1brs7g3uxTtML5FfnupwTLO11/sQl0yj9bUg=
+	t=1762932335; cv=none; b=XpCStWlHT7EWNQHov4dbxZkvQnYEUv5Tva3r4eekswTOpm+x50ieC/7ztioEj4qNtVaFq/qpL6OHATe3RWi5vUTIFPYrQyXw10pVDzLDUqoqC9LAMwIqC8gCfIx/vGBWDe42jyjfNVbSRzfLh51z8H1qS/cx3QHuTF5NvKlhCc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762932182; c=relaxed/simple;
-	bh=pqtfnArxWcdXkRtyM+/EmffyYGGmQKlevAbcmdvxyRA=;
+	s=arc-20240116; t=1762932335; c=relaxed/simple;
+	bh=LE1xd9N46b2I3yh938Lx4JVszFTJlU3XSdZ7abDQvJg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a3tB+s32Q4gq//irBwXj77wu0bAfaljMtz7/TnOugRAiWaQ0M6kU+55iiCmqvwaCX6c+mVxU3oZdrKBdCi0J8a97JqEzjTKmKkKfhIgL0a73Hfl6bwka7MGb4UPbShqbMkP0wZjy2vIPoMZKZfZr4vDp9L/O+leZrPbMfpyCYxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gx6GnK6w; arc=none smtp.client-ip=209.85.208.41
+	 To:Cc:Content-Type; b=iKKOgyG0VD9GmPNeil0oDMkZfAkVAGQSk8cW4HuUty1985yQjFs3JubX5wLyRe5gTm1R+9O485Px1L+XhOukIatrRsSWAqmxJZD35FnHy/g3M5QMq4pu/2bCG2dkEKmSbRP27OPCBx8kGyu40eHcky3nnVrje++J5Slm5RhdodA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T7J6tuTJ; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gx6GnK6w"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6419b7b4b80so659013a12.2
-        for <git@vger.kernel.org>; Tue, 11 Nov 2025 23:23:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T7J6tuTJ"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b3e9d633b78so78805866b.1
+        for <git@vger.kernel.org>; Tue, 11 Nov 2025 23:25:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762932179; x=1763536979; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762932332; x=1763537132; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/X3Z7txrCvG0uHXhJVhJeCltLUFxAcYsarIfJCMhFzU=;
-        b=Gx6GnK6w2Szm+0qu+37KoK40JSoTk5uqGR37QDarQ9bVXRp2MIxpeeKBJKFP4+ovFz
-         kmApJrO6bfVKwdOE8lDDV17GCgtzTAgMQAUvOCliHre7EUvL7F9JpSegDVO2HUEn7drq
-         KUVwx2nsPfAjv5EknS8WPCTmABPhGHhhMUUan8sz3y24qU1GUEjglgfg7kym1NDTKhEC
-         8mqiDoXh2/7Bo50yRAPZjSf4L7uokEyDk6usvWRPd7DMvrUyrP2XRsUEAVCxx1r3okK8
-         6F6iNK7/cjcLpmeu9frseHvYy6eedZQXfJGjgosUNsxsC3AVMfsBms0N8sOGSgA7oEhz
-         xajA==
+        bh=e9a7dXq8ZXEzbSdMVYlU7EHdBQUxrDdZgQLf8Q4ezBc=;
+        b=T7J6tuTJrF0qgDPHktlh0QTRHAcxm3wtWR84lkRctR986JjbRQBoRO+O2m7PXlFuKF
+         59snJYpQOgCLAvnkcN2fPDvjSgLYlIqqWrrsN2bv2fOhscC2oZBFdlceasoSLrxuV/xa
+         B3/XUK13Xu/JiR5bafFlMLKjxbZ82bl4OJ4eO+6EIANf7eueEfrnWpnARCRJ1tICZH9b
+         yhhoteMsvugYuBB5cEV429Fdq970VZVPz6x7J2NfEbwN9P6t7zKNZpqytUId95ysQlPH
+         hILC78gMCbylb83fYOHgRWIXtcZ7DUUhGei9D2ROGVUzOwPyPJaMPGCyfZcGyhwUobGc
+         slVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762932179; x=1763536979;
+        d=1e100.net; s=20230601; t=1762932332; x=1763537132;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/X3Z7txrCvG0uHXhJVhJeCltLUFxAcYsarIfJCMhFzU=;
-        b=sm36DxEUBK5mzRXZScTjYYcyUI04QMIVRYkwHc0oeaMDQLXa9CuC4QPVtOLpe9TTI7
-         mpvM1D0KWsqb1aK3ODpdrtvcbvD31iGVT6IbLIgPfYW3kSU9GC42ixAn/HEvRcev86Ma
-         jzc+Ew2SWO7T944lsvkeY6cVprsJd6osYu3Xo3XXEleRtfGBeLlq0fH7LMalY2TMIAHz
-         HwJJERlqAxkHguUY3NpEknx6y4bU/SfjLOEtuVHmJtkbvbFfCoRKMaFzuF1f/q9FbCkK
-         LhkLeELTinB8EKJ09MXuIAn9YnEuxUKUEGVhpwe3fvgnfS90ESfaLapWdN095XoL71n5
-         70Ug==
-X-Forwarded-Encrypted: i=1; AJvYcCUoS+aDI/McIuYDvJSGrcXNeHbU+LWxUrbuc7lKSYxC3OM0g5/j/qmnKsO/AZq/81TzOGc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXrTTJbOWKR1Maj69f35FDMysYFWlgGVV0yRnMjAFIoYDydAU8
-	xq6DP3ByNuDlR75ikyddPCGKdzq8vM9XC9mdRENZfiybW0Z4XI0OaYRhEElnvfJgbGMPcS6mPqZ
-	2/IDObRKTtQiHkoC+BhYPOwvG0F4fS+4=
-X-Gm-Gg: ASbGnctmje6KT1bn8398WSJAN8orPek7VmrnfJ1ceuGd56Ck6dCHB8nIv9Re6NskLd8
-	SV/mroa4zMaJJSsGAca0LJyDKndtUogRRjTcydH24Vd6nB4xJkrvU++ine5uj8Ld+ukNTQ6dwDb
-	Cd4QOSY+ErwbKuDZ2JdJki9fiaYJ+uxcqanaUzVNN2/SwNjrF8cQzF/tlje2929R2MVjtSz5Bp1
-	ABbriuqpNeby48+651Aa+njZGmgL+fgwMwZKUwL9u4PT7Wywzl6ODwU30xY
-X-Google-Smtp-Source: AGHT+IEjUbFOEdBVniEjULwIKcEtsYS0B1keKaQX5kkDTuufw5dCl26DiiCYv+2ia4TlyWsmiCcYqvoc9PSkeP08Jow=
-X-Received: by 2002:a05:6402:5194:b0:643:c8b:8d30 with SMTP id
- 4fb4d7f45d1cf-6431a55e3e9mr1491837a12.30.1762932178471; Tue, 11 Nov 2025
- 23:22:58 -0800 (PST)
+        bh=e9a7dXq8ZXEzbSdMVYlU7EHdBQUxrDdZgQLf8Q4ezBc=;
+        b=bhMcSuWkVsLcbcvVzOSmrtBZbP43NzzOTqGbdnf8Qz+oeyT1TLVupCl/iBjmLJvEdL
+         TJyYG4n3mYdkZry3Ld9BiI4xZ3qU2tqAJPS3ShrvxAVCb0m8PyzLZbOQH/1je9OqC6xf
+         SVT+pmcR0aSo63RNaFfihNA/u1m2L6pU5cjE+Fe2DQCbSRMf50twRs4W+r+DeufdYXrk
+         fi53+KBVTIbboU64XrwyJcoRHP9a55tgITWohB5tWwQvtru7zV3YA5Dd5luwi0y/NELL
+         6VLm7SOxNpQg6HR4vi4zQAoj9mbLG8ot9ORFzL4ebHiXXJcisk3r5x0f/xh7r05+fRcy
+         VJ/Q==
+X-Gm-Message-State: AOJu0YyI0BQdRFGQpgaZcU8/dK7PqTRg9j3YQh6tCnAp5UmVKlejGNZn
+	+vi9nEMunfO8IoH00JLBYymh5Antqsa8ph2LtBsUsO9bIOGjJyhizKfOt91EsFO44vNCXZKKPe3
+	8ULgIxzf0DdKkV5hVF75udtUH0Pfp740=
+X-Gm-Gg: ASbGncthIrV4fKFiV9+qF3+KObA6Ell7Hh0CxElW5J8i+FdKmP5U6QlA0ZRkul72X1h
+	8qvx6l4y/gptoVWw4T+JUP7YGxAd2VZgm+0J4bKRn91SctXKBOaIXJNinM9IDPL5bNTT3kbJ+Ab
+	zB8BRN1ErR4UWHm5/u589RO0JoHy5WNRKUQ8M0AjINn4mcGGmQ5bf7TxEPsEqESK8kfCCf1Urr4
+	YjRX5kiwKik+kgV8qVQwb351dLFNSZ/QDo5FKufOFbxnQK6oJT6N80mfOKh
+X-Google-Smtp-Source: AGHT+IHDl55Wse22LpX0HlfP28j81RZppmaB4HPPI2xLPpvlPfd8n44C1rLOap0O3JFxmbDvHPOUDacqbD0p5FknkqA=
+X-Received: by 2002:a17:907:6d0b:b0:b70:b161:b9a8 with SMTP id
+ a640c23a62f3a-b731d1498femr673128466b.2.1762932332240; Tue, 11 Nov 2025
+ 23:25:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,89 +60,41 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20251105061918.3688870-1-christian.couder@gmail.com>
- <xmqqjz04mtji.fsf@gitster.g> <CABPp-BFWem8iWFQn0Sq7JhHigm7rZsa81D6r7zbsQSh3+ZH91Q@mail.gmail.com>
-In-Reply-To: <CABPp-BFWem8iWFQn0Sq7JhHigm7rZsa81D6r7zbsQSh3+ZH91Q@mail.gmail.com>
+ <20251105061918.3688870-4-christian.couder@gmail.com> <xmqqjz00e5ns.fsf@gitster.g>
+In-Reply-To: <xmqqjz00e5ns.fsf@gitster.g>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 12 Nov 2025 08:22:46 +0100
-X-Gm-Features: AWmQ_blw-ZN29Sh_hzEDS_uFTd_5r6gxq6qqqC6Siz5oYWEoOjfmqAxa6q6-bns
-Message-ID: <CAP8UFD10yqwmdDEbkq19ANtgxfG93_Mcw7tK50Ouyu-G7MwGWQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] fast-import: add 'strip-if-invalid' mode to --signed-commits=<mode>
-To: Elijah Newren <newren@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+Date: Wed, 12 Nov 2025 08:25:20 +0100
+X-Gm-Features: AWmQ_bmdOSrahXGrfNh49RuQiCUwxcq3dRhJ1PvTors2eozv83YM5j-aZfifkDI
+Message-ID: <CAP8UFD3G6kn-n1_rXJgcZf1djUE4Ner5xd1YaNr5tz5h8d_Ypw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] fast-import: add 'strip-if-invalid' mode to --signed-commits=<mode>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
 	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Nov 8, 2025 at 1:35=E2=80=AFAM Elijah Newren <newren@gmail.com> wro=
-te:
-
-> Good questions.  Let me step back and perhaps motivate the change a bit:
+On Sat, Nov 8, 2025 at 7:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> There's a fairly significant chunk of `git filter-repo` users who also
-> have git histories with commit or tag signatures in their history.
-> They often want to specify rules for rewriting history which happen to
-> only affect "recent" commits.  While they could try to specify commit
-> ranges corresponding to "recent" commits, they worry about getting it
-> wrong and want to just automatically rewrite everything, expecting
-> older commit signatures to be untouched (since the modification rules
-> didn't need to modify older commits), and get new commit OIDs starting
-> with the first commit that was modified by one of the rewrite rules.
-> Unfortunately, when fast-export exports history, it does so without
-> signatures, and thus they get every commit rewritten, not just the
-> recent history.
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> Christian's previous series allows us to have fast-export also export
-> the signatures, but then we run into the problem of determining
-> whether those signatures are still valid and what to do if they
-> aren't.  This series attempts to help us determine if they are valid,
-> and implements one choice when they aren't (strip), in addition to one
-> that the previous series implemented (keep-it-anyway), while leaving
-> another (re-sign) for future work.
-
-Thanks for a great description of the context motivating this series.
-
-> So, yeah, I'd presume this mode would have to assume the user had all
-> the necessary public keys in order for fast-import to be able to check
-> validity.  Perhaps that is a tall order for a small percentage of
-> repos out there, but for them, is there any good alternative?
+> >  t/t9305-fast-import-signatures.sh  | 118 ++++++++++++++++++++++++++++-
+> >  6 files changed, 226 insertions(+), 28 deletions(-)
 >
-> As far as signature handling goes:
->   * Since fast-export doesn't know what changes filter-repo may make
-> to the stream, it can't know whether the signatures will still be
-> valid
->   * Since filter-repo doesn't know what history canonicalizations
-> fast-export performed (and it performs a few), it can't know whether
-> the signatures will still be valid
->   * Therefore, fast-import is the only process in the pipeline that
-> can know whether a specified signature remains valid
+> Unfortunately all these tests that assume that explicit-sha256
+> repository as a subdirectory exists would fail when the topic is
+> merged to 'seen' and the tree is built without the optional Rust
+> support.  This is because brian's f6581e23 (repository: require Rust
+> support for interoperability, 2025-10-27) changes a couple of tests
+> to require RUST prerequisite.  One of them is what creates the
+> explicit-sha256 repository.
+>
+> I do not think this topic to preserve or strip GPG signatures
+> particularly cares about the dual hash interoperability, so can you
+> rearrange the tests in this series to avoid crashing with the other
+> topic?
 
-I agree with this analysis.
+I will do that in the v2 I hope I can send soon.
 
-> I guess one alternative would be having fast-export include for any
-> signed commit, what that signed commit's OID would have been had it
-> been unsigned.  That would allow fast-import to check what the commit
-> OID would be without the signature, and if it matches, then just keep
-> the signature without checking whether it's actually valid.  It'd be a
-> change to the fast-export & fast-import format to get such an extra
-> piece of data, but perhaps that would be a preferable strategy?
-
-It would be a different strategy. Perhaps useful for some people, but
-I think it could have drawbacks.
-
-For example since signatures are not checked at export time, it's
-possible that some invalid signatures at export time would still be
-imported back. Also what if the signature becomes invalid between
-export and import times because for example some keys are revoked?
-
-If invalid signatures can actually be imported, then a name like
-'strip-if-invalid' could be deceptive, so such a strategy should
-probably have a different name.
-
-> It's
-> the only alternative I can think of to what Christian is doing here;
-> am I missing others?
-
-I think what I am implementing is what most people would expect. So I
-think it's worth implementing even if in some cases another strategy
-might be better.
+Thanks for telling me about this issue.
