@@ -1,161 +1,154 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5882DCC03
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 06:57:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8CC28506F
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 07:01:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762930643; cv=none; b=aklwAkRTzzjljsxfKXwxUkLnZHhuRoaR4TjUo3akAw2yjzpX3erUnp1X0I1jUL4Du/dySTo7o2OZ5kR4J/C6AMxb2Se9R1T4aK1GMynAEs5dctueffwR7kXkfGN604qNd1Y7ILd960yX9I20mBI71hi0yTLI+qQ2dD4zA6PAwm4=
+	t=1762930886; cv=none; b=DgKxwBcRGtQjyK72w/9Ih+GF8mkEmb5yydKnKJf0XvypLe9Ra6L79UPjokMc/KoovfJ9lm9MTPJxn9Ngl1lScVkoPA502xpCtGKWZKtbSc+mK2Q0i0TGADbfGcqPVnKyHyBuYt/dBffCCcpuPgZird7pIp2BecjMkYcbNWwEHd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762930643; c=relaxed/simple;
-	bh=XYF66bOZ7/M+oP3wuSx2TgNSjmZbx/u5kt0KCT6/Zlg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c9cmd6tHf848TFVMvNzwjz2helJHVTf+6gp3yGR/EQMuD6Mub972yAaTkp3vJjYJh9TTyCsotfFYtMYAtCSsECH9ETbqJ3B7ed7eNs2T/2q3MvkZJsUFvvBlgZyj27SboiWF0K8o8tBnUc0YyRMp0/S+qlvDDJLVoe3YQKKF2Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JK+WiJnC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vnz1o+A5; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1762930886; c=relaxed/simple;
+	bh=kcpw6NCqcUHz3W++8lLvGABSwZY+6gVQNX9AIGtUbxU=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=FvCdyZhuQOvPwdROT6z388b8cIBIoXbt6ue7c6DPniqBeCUJ56uGVcs/uNqD9lHlETox8Xk2BKYYSxqvTStwFqzF7CkWV6EBpe6c17GPURR74pUuLorZW4pqIpxRKR+7O+yXyzteMQfd04tNZP7BQHtrf7oVMnpbCcsJ6aSahTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IxEqT+Zo; arc=none smtp.client-ip=209.85.160.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JK+WiJnC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vnz1o+A5"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 455317A01FB;
-	Wed, 12 Nov 2025 01:57:20 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 12 Nov 2025 01:57:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1762930640; x=1763017040; bh=ehfktf9NB3
-	rjzQKtRZJXcTHSGzGT0NIp/XFAXIq+i/0=; b=JK+WiJnCxPKCKZIXb2aAPXw/cv
-	+4yCod3rWis8RN6CkJLOLiECwsX8i1+HbmkNZQCdM0wTgOLhtXhYMEKdrgZAuAYW
-	MuivvF8LJfRhEqNU+WEmgs0+gnclIug3Kslk2GhqHUCzmE/aUpU9jNP20gozaZzr
-	DHnLgYIhhS9okm+tdWpdzXakGV3Y85HtaX/QOoNyqql2G0Pzw4VBfEFrxQ1MqoHl
-	/GLVuu3gbFu7SMgV8SxllMt3TkLqPadp5XaANUPRkOIm4vXQMLE2xy+DQ/SG1ZGf
-	a0YKc9+V1lyflticskun4HOt/YO5Og2vs9c16bQAHfkz4Lg+rlb2BlXE7WJA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762930640; x=1763017040; bh=ehfktf9NB3rjzQKtRZJXcTHSGzGT0NIp/XF
-	AXIq+i/0=; b=Vnz1o+A5EXlEY88hJ82E5wnH+VxuKphZsJrtLS4jwibZ9B9SEcU
-	3Ku9dSg5+6zSqK0Y+N0zp8ki2z5we5k0mJ6RJ6SGp7yqOFHB9gna6F9ub6FupsXk
-	fFUbOFHD2mLyYDQ5CNzMAXGsXzyNUAoESv2bwabVcJfY8hcVUNcoS3dBiCFjheKi
-	UJvv4n1Hza9W4+AD3GtIdIcPdENyMF6fUlJ0eAdYiBlllPdn19lu/w4Ys+5RK42T
-	Tv+L0X27fAjOEhfy9uZThO5aBowT9fxG4YuB3o5Ip+nMUE5GKO/Na/q+iBYvcNDt
-	fGmS2fnfNlQOSnpU0x2GZSTVawbXgOwe21Q==
-X-ME-Sender: <xms:zy8Uabo0Y9qUDNB6nsvrxDL55G3H_Xm7Gf3XYQa9FJyw8JLKqQ9sQw>
-    <xme:zy8UadGG5ra5V36yA2B1-Lbz1ZmajRVUH3g4l03qnjeLDk1u4zrCPmeGwIebPT1Vj
-    RBw2-jXW5Qt5m9P5T5u776kBRvSChgDeWWuCdTw1TMiUH8o4y1TrA>
-X-ME-Received: <xmr:zy8UaVk1cbhhqFvVfkUZE4KcysTeZpAeLIJol_yrDRN6LWLcqFYvmJ9TUkJd3BfEeufH0pGVHpY02HWUzzBtyZPqW7MMBCTzxG1IboGtDCs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdefgedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepsggvnhhsthgrvhesmhhighhgohdrihhopdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:zy8UaYkw-IIfR7gvggtdDHV3vKgoreGy0jyFvionJ3RTfs8X3YKhsw>
-    <xmx:zy8Uaes79bV5PoPZRWyDHbOIpuLALj1fiX03OreMXLfOHXpnOISziQ>
-    <xmx:zy8UaTkmdd769_1cWrlame9qt-nKI_1HXAMh3_Uq1jvuiBbq_6V8Yg>
-    <xmx:zy8UaRuGlxAzgsfjDinHH7jUsK5PiqsAHUOZhq-gOZeVhNnkZBPNlw>
-    <xmx:0C8UaRxQFeryhkSWyoOGCAKzi22wZPtI0rFYPH0L9rHWwJfPfoLtwNQM>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Nov 2025 01:57:19 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bcc0e679 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 12 Nov 2025 06:57:17 +0000 (UTC)
-Date: Wed, 12 Nov 2025 07:57:14 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Ben Stav <benstav@miggo.io>
-Subject: Re: [PATCH] attr: avoid recursion when expanding attribute macros
-Message-ID: <aRQvyvMq61syGT7_@pks.im>
-References: <20251111223647.GA4055973@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IxEqT+Zo"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-4ed861eb98cso6022921cf.3
+        for <git@vger.kernel.org>; Tue, 11 Nov 2025 23:01:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762930883; x=1763535683; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=t3ue5hVSc5IWhRVAM03wMlBFwZwBEte60Jx6NSu3fOg=;
+        b=IxEqT+ZoqoYjqllWgh0EGNyX5tB+NZ5Ngi5baJolQ3mF2NhknwzpRWBwjLKsGWH/E8
+         PvxzLU+4QxnuO7bJsdnjo5Tg9Ks1MkwCUIiEaxcHFPELBPFB4tGRniSn/QORglWXgcnW
+         CcbK83GJhhHli4fQY96UALOa/TilKUAPrKrsLyD38Hc0gc0fmr2qY5S3njjz3zQ/BIcE
+         vxzfgU+G7gbFXFkxHEYMPvsiPeEG+9k+tLDECJsIP/Jm9lw57YL1vqOsDHebCBufgWGp
+         AWRjo6kR+Yvv170Rs694hF/ba3isUUqTwo89E7cxgs2trC/Mk58utkUf6COcevqrq9Xb
+         tKOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762930883; x=1763535683;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t3ue5hVSc5IWhRVAM03wMlBFwZwBEte60Jx6NSu3fOg=;
+        b=JX2HVt8XMO3v/Kd+JpKRpcUF1SPDYJizZsS9ckhEyoeWBua3+fqVLLFDVFdYzTTSq8
+         sq6tD07iziyQSa2T6k5UER9u3eej5NtLyvdViHiSurIeSXTrAwMxwpuXojugqtndO3WC
+         oECoXrQPF2vAM1z4magi5td6xGgrHBKV38QoAVfyerMgVR4A9TOVW33PqsHZed0Q5vUF
+         z66/ulJcorFgRvQdDLrS6NVStJ04tKQK5+hPfrQS5S5oq6IFOy4EEp5KvBF83AiUF70t
+         VaRs2NxD6kxpszhCXpepFTUOFsFS54RL99jFZHVzU5TwT2RsdOFoVELdmtlHDaWn3//5
+         RqPw==
+X-Gm-Message-State: AOJu0YwSrqCeojjfmlAcrzZlRvwQ4PMKx33xRn0Vb8SP0Ztl7X4V/0ZF
+	vYKgt4WWYhfXUnrW4aQnvLf+CjeKV86MQFe2sFS3LvhnYzY/oFwH4c2nv3cPIw==
+X-Gm-Gg: ASbGncscw+Hv335XHEKVI7BomQzxG9p5UeQFPF2c6Wtw0IRbksyh+XJHK3IeOZfmKEN
+	nH0/+irxWbCKFmnQMo8O765ADdiyqPXYKa4j9yRbhFLr0zwzjxf644Nc/3plRnFuKaAxRJjUf+3
+	n6DQYEb2skLjowbbHFFqJKBFraeZCoJ7b2zgs1gMtfsF7DdbFjggVH1gO4N+wInjaYdrtLwMrtJ
+	S2l9exLX9Hxz1fHJ9CPRyPn8EWxOs0CwdQ9VBduXG+kYIbiPBT2ZfFUFEQs5bHIwjkBzHkJYxlZ
+	tioC4m8HmzH21qe6hj1PV1wm8ur10xOIV15l0tiJpMUhUTmlUChWmkWas3YQGx5s/5oe7Fh1wxD
+	PKGNnM6rN199T582/CqCcRuy2jqTuamEguxWFrlbWJitG4Iztdv0XhzQOSduTrcscp13uCmqUIM
+	dcCw==
+X-Google-Smtp-Source: AGHT+IFnGn+TH6D5ED1cj+k2c/PzMmZzMH6BX7ZMQr9BHksF4/qDGcO8zReAgNfJoNERxnD70AQQnQ==
+X-Received: by 2002:a05:622a:14e:b0:4ed:b4d2:bb10 with SMTP id d75a77b69052e-4eddbd9b07emr20664541cf.55.1762930882644;
+        Tue, 11 Nov 2025 23:01:22 -0800 (PST)
+Received: from [127.0.0.1] ([172.174.165.6])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88238988d8esm85527456d6.20.2025.11.11.23.01.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Nov 2025 23:01:22 -0800 (PST)
+Message-Id: <pull.1998.git.1762930881599.gitgitgadget@gmail.com>
+From: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 12 Nov 2025 07:01:21 +0000
+Subject: [PATCH] Revert "osxkeychain: state to skip unnecessary store
+ operations"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251111223647.GA4055973@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Koji Nakamaru <koji.nakamaru@gree.net>,
+    Koji Nakamaru <koji.nakamaru@gree.net>
 
-On Tue, Nov 11, 2025 at 05:36:47PM -0500, Jeff King wrote:
-> Given a set of attribute macros like:
-> 
->    [attr]a1 a2
->    [attr]a2 a3
->    ...
->    [attr]a300000 -text
->    file a1
-> 
-> expanding the attributes for "file" requires expanding "a1" to "a2",
-> "a2" to "a3", and so on until hitting a non-macro expansion ("-text", in
-> this case). We implement this via recursion: fill_one() calls
-> macroexpand_one(), which then recurses back to fill_one(). As a result,
-> very deep macro chains like the one above can run out of stack space and
-> cause us to segfault.
-> 
-> The required stack space is fairly small; I needed on the order of
-> 200,000 entries to get a segfault on Linux. So it's unlikely anybody
-> would hit this accidentally, leaving only malicious inputs. There you
-> can easily construct a repo which will segfault on clone (we look at
-> attributes during the checkout step, but you'd see the same trying to do
-> other operations, like diff in a bare repo). It's mostly harmless, since
-> anybody constructing such a repo is only preventing victims from cloning
-> their evil garbage, but it could be a nuisance for hosting sites.
-> 
-> One option to prevent this is to limit the depth of recursion we'll
-> allow. This is conceptually easy to implement, but it raises other
-> questions: what should the limit be, and do we need a configuration knob
-> for it?
+From: Koji Nakamaru <koji.nakamaru@gree.net>
 
-That's fair, and as you demonstrate it's easy enough to turn recursion
-into iteration. But it doesn't really solve the main problem: given
-malicious input we'd now still crash eventually, even though we
-ourselves control how exactly we crash. The main difference is that with
-iteration it'll both:
+This reverts commit e1ab45b2dab51f94db9548666dfd7af626d2aa7e.
 
-  - take longer for us to crash
+That commit was trying to skip to store a credential returned by
+"git-credential-osxkeychain get" by setting
+"state[]=osxkeychain:seen=1". However, this state[] is kept even if a
+credential returned by "git-credential-osxkeychain get" is invalid and
+another subsequent helper's "get" returns a valid credential. Another
+subsequent helper (such as [1]) may expect git-credential-osxkeychain to
+store the valid credential so that "store" cannot be skipped by just
+checking "state[]=osxkeychain:seen=1".
 
-  - require way more memory along the way
+In order to solve this issue, the state[] mechanism can be refined or
+"osxkeychain:seen" can encode the whole information of the last
+"get". For now, let's revert the change.
 
-So the evil garbage would continue to be a nuisance for users who want
-to clone such a repository, but now it's going to be more of a nuisance
-for hosting sites given that it could lead to out-of-memory situations.
+[1]: https://github.com/hickford/git-credential-oauth
 
-I guess the reasoning here is that for this to become a real problem the
-".gitattributes" file would need to be excessively huge. We're probably
-talking about many millions or even billions of attributes before this
-could cause an OOM situation. And such a file would be large enough to
-bust the typical limits that the likes of GitHub and GitLab have in
-place, so Git hosters already protect themselves against this crafted
-input, even if only indirectly so.
+Reported-by: Petter Sælen <petter@saelen.eu>
+Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
+---
+    Revert "osxkeychain: state to skip unnecessary store operations"
 
-The other angle is of course the wasted compute that an adversary can
-cause. But I don't really mind that too much: there's enough benign
-operations that require a bunch of compute, so I don't really see a
-reason why one would need to craft a "compute waster" with malicious
-input.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1998%2FKojiNakamaru%2Frevert%2Fe1ab45b2dab51f94db9548666dfd7af626d2aa7e-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1998/KojiNakamaru/revert/e1ab45b2dab51f94db9548666dfd7af626d2aa7e-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1998
 
-So personally I would've probably leaned into the direction of enforcing
-a hard limit. I don't see a reason why anybody would need more than a
-couple of recursions, it culls both compute and memory growth, and it
-allows us to have a proper error message in case the limit is busted.
-Furthermore, we can demonstrate right now that it wasn't possible to
-have unlimited recursion anyway, which makes it easier to put a new
-limit into place.
+ .../osxkeychain/git-credential-osxkeychain.c          | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-But following my above reasoning I think it's okay to turn this into
-iteration, as well, though, but I'd like to hear whether my train of
-thought matches yours.
+diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+index 611c9798b3..1f49ab8548 100644
+--- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
++++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+@@ -12,7 +12,6 @@ static CFStringRef username;
+ static CFDataRef password;
+ static CFDataRef password_expiry_utc;
+ static CFDataRef oauth_refresh_token;
+-static int state_seen;
+ 
+ static void clear_credential(void)
+ {
+@@ -172,9 +171,6 @@ static OSStatus find_internet_password(void)
+ 
+ 	CFRelease(item);
+ 
+-	write_item("capability[]", "state", strlen("state"));
+-	write_item("state[]", "osxkeychain:seen=1", strlen("osxkeychain:seen=1"));
+-
+ out:
+ 	CFRelease(attrs);
+ 
+@@ -288,9 +284,6 @@ static OSStatus add_internet_password(void)
+ 	CFDictionaryRef attrs;
+ 	OSStatus result;
+ 
+-	if (state_seen)
+-		return errSecSuccess;
+-
+ 	/* Only store complete credentials */
+ 	if (!protocol || !host || !username || !password)
+ 		return -1;
+@@ -402,10 +395,6 @@ static void read_credential(void)
+ 			oauth_refresh_token = CFDataCreate(kCFAllocatorDefault,
+ 							   (UInt8 *)v,
+ 							   strlen(v));
+-		else if (!strcmp(buf, "state[]")) {
+-			if (!strcmp(v, "osxkeychain:seen=1"))
+-				state_seen = 1;
+-		}
+ 		/*
+ 		 * Ignore other lines; we don't know what they mean, but
+ 		 * this future-proofs us when later versions of git do
 
-Thanks!
-
-Patrick
+base-commit: 4badef0c3503dc29059d678abba7fac0f042bc84
+-- 
+gitgitgadget
