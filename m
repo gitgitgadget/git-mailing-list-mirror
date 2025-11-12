@@ -1,90 +1,79 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157FF2D662F
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 18:56:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723AD3C465
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 19:13:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762973786; cv=none; b=aoCwA4iyo2HV71W0u9dQVh5xPtsy80pe70Twzlp0PXQmICaFBhl81igbilxLdFr9rE3+7RjiR9J0R/X+fnioACynt++pXwn70oBcEOkKx/w6APy0iWGAfGP6psB9ISGJWbfjWQnlROaUvYFM2LaS4k4Eh4lGCqB3awsPoNTp0QY=
+	t=1762974828; cv=none; b=h0UfNwB6pTSFJbA1te2UXT4Bq0Zfxt+EI1NfYbTKcO6h7d0zXZ+wBfikQJpC6bYC/fbPrh5mvmRdH+cSS4skfiG3+vsMB9T3x+suwQ4MnngILLZJD9gb88fUELC2F/ocU7IoUszfWNNo5UJuJh5Qf6daDEcOpdVhutuSDF8iXOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762973786; c=relaxed/simple;
-	bh=4HQQgjTnolah8WlFyiFnn39kycJ22t9w3bBnm9nujVU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=InyhBWIfLGYHfYeGLay/hhi31YUfahTNQZCZDvSCPXdRqk/jrFkBcVGbzYduyxZEcyurL12AKBG5HSV6g1PNIbsVY6tCq2YBTkIcaG7WYcyTxayYh1KMopV5B1uFVBlkbggpUzxGR+evGHIZ7qCSGdrqK0k9kLQ+yQhQfVdChmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JKmizkAB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qLBAFBwm; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762974828; c=relaxed/simple;
+	bh=B+phqC6OF63JWq4xvc8g8NDT/mp8pEZcnx+NhPZ5G5I=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=FZLBqqjSp0P1wBFYOGbnatzpnRYLlgUPoYQcWLkjFQeIa/4YOc/Q534d3GeNM+yjymYIDIF5hLpVRs1PE7DIun5gO4i16vNMyfQk4s6QzXonPi55vx9+BaHNajDOTeN9vzZNo4Hfh++ZOK7OxHW+In5TRAUyxDc4KH6ZrpC5bYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X6miW0mJ; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JKmizkAB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qLBAFBwm"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id EF67B1D00133;
-	Wed, 12 Nov 2025 13:56:21 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Wed, 12 Nov 2025 13:56:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762973781; x=1763060181; bh=XqAu5GuwvG
-	NLSntfYkE+Y3fSpP87Qv8Zndk0A/gqBs0=; b=JKmizkABMdrrbbBdmu9UYTwN1Y
-	ta2h8Jy/nByAYM/IKgUqfBFRVc4mZXmxdm9FKrzGmpgRkvjrdhSPKk12qGgdAv9A
-	hUeWKsOI41+7Br3WxWSFSdXpiZnHdFKI7dfdb9581pDU8Z9YZWji4FBoi+FQNJNm
-	c9DvWnxvAhgV721pxpu6FYjiHN4EZT6pDbf3F0YcTrNqjv0jwFuBaxY32EcHAvqA
-	jFgX0IBl3jOqXIS2meyl/O2Hc9hLIah8y+T9yNFx201JgFBv6mid0veonqPCFZT6
-	R9RXA8fr4wwkV5oC95NxVzuxit013mtnufdyjw0dutOCZWfxvK6U2cNdtcww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762973781; x=1763060181; bh=XqAu5GuwvGNLSntfYkE+Y3fSpP87Qv8Zndk
-	0A/gqBs0=; b=qLBAFBwmskaUnaZyWrfLp4Uxd+ABNBjmYIkbUeSfIRISBBbibCb
-	f9GZAsNwgza6J8/nQadKdDloiLY5yucCVsBBrFnoaoOIxIzp4Zdc8EFM67078tPw
-	B7bLJbgL1iBIOlqE5gtZzhPrv9fUMw8AX7CeWZG0V5SLvWItQ5VczjOdSHZfVgdY
-	jL+mRBYjaVqz/LMhjEnfpnCYCdu3Jx/Ka/7RwlnDqZGfUTB1+4Omo2bwRR3POdZW
-	6Ik0te7oqeFWaTkukWFC4pJMzv3huglHqtqmS/oon++o89VBLXUeF2lmoL/Xv5ST
-	QuaCpqIiop5G/VdpdZLXOTJ10B3ZsHZs9AA==
-X-ME-Sender: <xms:VdgUaRRhMUa69_lwlSt7aCnqn8VF2Lxyf2r57XLjUYnwe2gizebXJQ>
-    <xme:VdgUaZ1IF6X7DaaYvtGT7ePqisO5GIS6AfYVJCn4hZxsQ1Oj3IlVMv4uQttF6XYSC
-    Quc0jRigOvQHV7k_4JHQvLcCE16eLUdY47-6_vB8So4dzpWppwL>
-X-ME-Received: <xmr:VdgUadC2b-AePGYIKE2Old3eX3SrN139xu_jT295Fu36LAyOZaHSQNCPItaeoVGvzXZEzdF8dj18YM6qQBwuufGY3cXi5h4gI5aA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdegkeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtph
-    htthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
-    htoheprggulhhtvghrnhgrthhivhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:VdgUaVjUeEoAkq8WtjwOCSh53FNwobPG8LLNyTVEenFkfWJXsVh71w>
-    <xmx:VdgUafMHmH0C2lICO1zmn8ICczHVkEWnPgHHsP3LDMqjg2_HTxs4Dw>
-    <xmx:VdgUaV-ym_-SZH1EFipK_MnO1YcHGmscRaBPlKtdoowlM_iY5u3qOQ>
-    <xmx:VdgUaQed4wv_q7kLbzHoFpsG8aK_bVVApdJZW6B9IVfL8DctB_1qbg>
-    <xmx:VdgUaZUjfiw932vEI1F3IVEaGlbZQO4XscmGhewH-ty_GHkAzUVmD6xp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Nov 2025 13:56:20 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
- <ps@pks.im>,  Phillip Wood <phillip.wood123@gmail.com>,  "brian m.
- carlson" <sandals@crustytoothpaste.net>,  ZheNing Hu
- <adlternative@gmail.com>
-Subject: Re: [PATCH v3] commit: add --committer option
-In-Reply-To: <pull.1997.v3.git.1762966535495.gitgitgadget@gmail.com> (ZheNing
-	Hu via GitGitGadget's message of "Wed, 12 Nov 2025 16:55:35 +0000")
-References: <pull.1997.v2.git.1762793782815.gitgitgadget@gmail.com>
-	<pull.1997.v3.git.1762966535495.gitgitgadget@gmail.com>
-Date: Wed, 12 Nov 2025 10:56:19 -0800
-Message-ID: <xmqqfrajqdv0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X6miW0mJ"
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-594476f218fso893304e87.1
+        for <git@vger.kernel.org>; Wed, 12 Nov 2025 11:13:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762974824; x=1763579624; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Le8DLrUN6MGSUwEzlgN9R6HVaUlJla0W334TqIFMHW4=;
+        b=X6miW0mJXpEBby+q9X5bBAd2zMLygKj/XFvTyjR8EUah61YJBwhwwPWOkYrN9FZ1d0
+         DUVoSA6FkV4UrXSHUUtWqQMg1qCHlbrAabGULr2ie5TfF5FO80XSW9llUeA2qca2Y0Zi
+         OOo2IGFsW2Pumm542/4wHF1EsyMXLBHqO0tCqc9Wg5SvJ1zgOPs128ybf+6R9z+ZXHSR
+         kWdEWHC1QcEQTeoMIs9zC/M2zR3LkCbhsI18VDrXU/EuKRdvAWDHyQtDfaqvsu5BPuwU
+         jzMwvc70FBoPyvdnsxAIX1S+YpIemkApvm9tkle/NhWFsy3hXQjmHk3zpgvtKWq3BXED
+         mb3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762974824; x=1763579624;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Le8DLrUN6MGSUwEzlgN9R6HVaUlJla0W334TqIFMHW4=;
+        b=iqww9foFE5uuQPzMjmcX4y+7kXi4WtN5PgQzvlPMqKoetophIrHfQUGzA4KNjmhlA1
+         c5q5TSZYfSowiAIi9g1cAM+xzI5/+JHg0CHHFIYw74b/wiJ7DBa7DdB9D9X2U2CCUU2h
+         T8b5Hl0IgCPh4MSyFIfEHUgizpLDvE5QfAa1Uw9WMZsPjWroXUHGyiYTbiqkuRSHQBI+
+         Bsqx0Rbfb0uHqbzZ5Et5ZcFiwaM1Yuq/b2Gs+jpnjVY4TicZJb8hJcc4Lu4U/DooWFWE
+         eahtBjg+6pUxeb9UjN1RElqBLVSZABtRa+OKxDj2aySJze2LYDZmdS5eTMXhMFk0ljVf
+         x80Q==
+X-Gm-Message-State: AOJu0YwUGd8t99Uf1V79I58uZ+NtIoYjF0jdILOIt6dbJtybgcyc2NVD
+	4UTAkGp203wopQSVAqVyG9UWrFxryKl4c4l3bgUnqLUSiC7EJnYW8n4r
+X-Gm-Gg: ASbGnct5Y9G5SVE/Xs2W28OX47pvFjQYamAdG5IUUd8hMJy2rEJavMecTT631mRGALV
+	JPQHBoJgu1W2MudHULNO89Oo1MwQVcai43g3yiB0gZBZkkQHTr76hwF+amRdF1l2QiqSI8SDrdl
+	BE6LfoFU+tlrAaVuUYgA7cwqGk72JUzjdOYt5Xh2/Xb29I/FQL+wQMIJnfGxKUS55PldHGuUWCJ
+	ROyaroKE1joW4wxBrawBnJZaK8FbmFgEe+qUS7HPxAylvA1DMsjyJfcfM0+Mu/UoSG0s5pltooj
+	ClyN4gp99KjXB9Ttm4j6tXGLrXtfrtTNlmYGBVeAaS2z2QU23OE1qB1AVQ+FZxpElqlFj2MPO4o
+	t/k41ICqS62QUUgedXl5tQ+6Vy0l7ak8E2ekD0wCf2hDosxw8LyNWk/OTen0EULJFj72Mwo01XT
+	ZlCOo=
+X-Google-Smtp-Source: AGHT+IGLJ6gR9DU4Hr7bmzWFM3ntQqFOddiCesntm2Dk2PPWg+HbSTWvaEoyy1Y/TxfZkxZY50BqQw==
+X-Received: by 2002:a05:6512:114e:b0:594:49ed:3cf1 with SMTP id 2adb3069b0e04-59576e02b22mr1775633e87.10.1762974824173;
+        Wed, 12 Nov 2025 11:13:44 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5944a5a0b7esm6077606e87.109.2025.11.12.11.13.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Nov 2025 11:13:43 -0800 (PST)
+From: Sergey Organov <sorganov@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Junio C
+ Hamano <gitster@pobox.com>,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
+ <jn.avila@free.fr>,  Martin
+ von Zweigbergk <martinvonz@gmail.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Elijah Newren <newren@gmail.com>,
+  Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v6 00/11] Introduce git-history(1) command for easy
+ history editing
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+	<20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
+Date: Wed, 12 Nov 2025 22:13:42 +0300
+In-Reply-To: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
+	(Patrick Steinhardt's message of "Mon, 27 Oct 2025 12:33:48 +0100")
+Message-ID: <87tsyzm5cp.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,93 +82,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Patrick,
 
-> +`--committer=<committer>`::
-> +	Override the committer for the commit. Specify an explicit committer using the
+Patrick Steinhardt <ps@pks.im> writes:
 
-Isn't "set" or "use" more appropirate verb to use here?
+> Hi,
+>
+> over recent months I've been playing around with Jujutsu quite
+> frequently. While I still prefer using Git, there's been a couple
+> features in it that I really like and that I'd like to have in Git, as
+> well.
 
-We already take the committer identity from multiple plases, like
-user.{name,email}, or GIT_COMMITTER_{NAME,EMAIL} configuration, and
-with the patch we also take it from a command line option, with the
-usual precedence order (i.e., command line trumps environment which
-trumps configuration).
+[disclaimer: I didn't follow all the discussions closely enough, so
+excuse me if these things below have been already addressed]
 
-> -static void determine_author_info(struct strbuf *author_ident)
-> +static void determine_identity(struct strbuf *ident_str, int is_author)
+Are you aware of 'git revise', I wonder?
 
-"is_author" does not sound grammatical for this case; if you are
-giving an ident of an unknown kind to this function and supplying
-another parameter to let it know which kind, "is_author" may make
-sense, but not here.
+https://github.com/mystor/git-revise
 
-As you will convert it into WANT_{AUTHOR,COMMITTER}_IDENT before
-using anyway, why not let the caller use the "enum want_ident" to
-tell this function what to do?
+In particular, its 
 
->  {
->  	char *name, *email, *date;
-> -	struct ident_split author;
-> -
-> -	name = xstrdup_or_null(getenv("GIT_AUTHOR_NAME"));
-> -	email = xstrdup_or_null(getenv("GIT_AUTHOR_EMAIL"));
-> -	date = xstrdup_or_null(getenv("GIT_AUTHOR_DATE"));
-> -
-> -	if (author_message) {
-> -		struct ident_split ident;
-> +	struct ident_split ident;
-> +	const char *env_name = is_author ? "GIT_AUTHOR_NAME" : "GIT_COMMITTER_NAME";
-> +	const char *env_email = is_author ? "GIT_AUTHOR_EMAIL" : "GIT_COMMITTER_EMAIL";
-> +	const char *env_date = is_author ? "GIT_AUTHOR_DATE" : "GIT_COMMITTER_DATE";
-> +	const char *force_ident = is_author ? force_author : force_committer;
-> +	const char *param_name = is_author ? "--author" : "--committer";
-> +	int ident_flag = is_author ? WANT_AUTHOR_IDENT : WANT_COMMITTER_IDENT;
-> +
-> +	name = xstrdup_or_null(getenv(env_name));
-> +	email = xstrdup_or_null(getenv(env_email));
-> +	date = xstrdup_or_null(getenv(env_date));
-> +
-> +	if (is_author && author_message) {
-> +		struct ident_split msg_ident;
->  		size_t len;
->  		const char *a;
->  
->  		a = find_commit_header(author_message_buffer, "author", &len);
->  		if (!a)
->  			die(_("commit '%s' lacks author header"), author_message);
-> -		if (split_ident_line(&ident, a, len) < 0)
-> +		if (split_ident_line(&msg_ident, a, len) < 0)
->  			die(_("commit '%s' has malformed author line"), author_message);
->  
-> -		set_ident_var(&name, xmemdupz(ident.name_begin, ident.name_end - ident.name_begin));
-> -		set_ident_var(&email, xmemdupz(ident.mail_begin, ident.mail_end - ident.mail_begin));
-> +		set_ident_var(&name, xmemdupz(msg_ident.name_begin, msg_ident.name_end - msg_ident.name_begin));
-> +		set_ident_var(&email, xmemdupz(msg_ident.mail_begin, msg_ident.mail_end - msg_ident.mail_begin));
->  
-> -		if (ident.date_begin) {
-> +		if (msg_ident.date_begin) {
->  			struct strbuf date_buf = STRBUF_INIT;
->  			strbuf_addch(&date_buf, '@');
-> -			strbuf_add(&date_buf, ident.date_begin, ident.date_end - ident.date_begin);
-> +			strbuf_add(&date_buf, msg_ident.date_begin, msg_ident.date_end - msg_ident.date_begin);
->  			strbuf_addch(&date_buf, ' ');
-> -			strbuf_add(&date_buf, ident.tz_begin, ident.tz_end - ident.tz_begin);
-> +			strbuf_add(&date_buf, msg_ident.tz_begin, msg_ident.tz_end - msg_ident.tz_begin);
->  			set_ident_var(&date, strbuf_detach(&date_buf, NULL));
->  		}
->  	}
+ git revise --interactive --edit
 
-The helper tries to be generic between both kinds of ident, but we
-still need conditional that says "this part of the function is only
-when we are looking for author", which is rather unsatisfactory.
+feature helps a lot in massive editing of commit messages. It creates
+single file with all the commit messages (similar to todo list), and
+then applies all the changes you make to the file as it revises
+particular commits. Very handy.
 
-Also why do we need this much patch noise, only because you renamed
-one variable?  I wonder if it would make it cleaner to move the body
-of this if() {} statement into a separate helper function, leaving
-only
+It'd be nice to have something like this in the mainstream Git.
 
-	if (whose_ident == WANT_AUTHOR_IDENT)
-		set_author_from_message(&name, &email, &date);
+BTW, it has commit split feature as well, though I didn't use it myself.
 
-or something simple here?
+Thanks,
+-- Sergey Organov
