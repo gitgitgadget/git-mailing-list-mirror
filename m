@@ -1,149 +1,108 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42DF23ED6A
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 22:49:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A702F3638
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 23:37:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762987757; cv=none; b=F8yFfJifPV0qiy0B+EhnsAf47oHnFcYqd30HCPegfaW4I08bpebKYvYRTQRol7gKeIiP2BGEn9y3Qe0C7KUZrAytGeVtQBfopyoRQlwiRZheQlQCzkX/tfafKRGuY5Tm4cD5WpqCOp+XlqTnuS6S69nibM8aPx22bUx12YVQjOk=
+	t=1762990674; cv=none; b=JrlcrgKyX8uhfBAYX2G2B+cfG9JjyOsR+nA0xYueSXyOw0LuZVRh2GJX5oqNODnBL8tn/rmZBub5n10axuDCYpg2r7JtjMug1j0yr8Z4IEHMT8AvP+W3WRMguGC1iNQAiuNt9BPxoQ8dWudgZwRUQai92MbyKLefhE3U4Km9hRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762987757; c=relaxed/simple;
-	bh=a9M4zSryWgwz6cQq03GTtc/UbOzPIunVTeWaM9pt0V4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LnTBdJycPNzlawaO+bYtxq4yIgYMdb/PyiQPJTQDa8P0K7vWbMPo93CdG33VizLvX3HWZcwGhuZ4KgAcR7BMtylqpDfJMrSl/z1+62sJ24GzK1sRmDkxbICwwFSBuy9kUrtQOjDNT7zPVV/bQGPE680X25nAKgVWhUkqtt3CFes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XxEfvpia; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vvXbSPDO; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762990674; c=relaxed/simple;
+	bh=lYb7e/pubjqUf1Ds23clNEDlFAtAt3oTyD0mn4xyJzY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KcGVtz1HGK6iznk9Vz88NaEp4N4wENsyB317PqWRGW9G2l5xh9Xvb9u1bblp0FMAkVh1OaZg+aigO/NwKAUmKdPhmdxBpW9lin13V7CM4nszMmVFTZERCeZQXFui7LacfG4/p0hPLXFh2EXoW8QyMA789B5NOt84B3rpdtrLBUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Hm59YUsy; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XxEfvpia";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vvXbSPDO"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 027FC1D000D0;
-	Wed, 12 Nov 2025 17:49:14 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 12 Nov 2025 17:49:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1762987754; x=1763074154; bh=JhynwDO739
-	7tbdhdjiFMhqpAoAVnerEyAhfUJpQqooU=; b=XxEfvpiavJwoRq8Ul8OSWftoUz
-	DFoiNIk7HpcXymlMCLfqFu2rupw3ZcTLci/Nu+DfiB+mXRbCX8qId8NhLGVUg75S
-	v1/L5ob28WdAIBYRA9uAJs/YLnbeSA0VynQktXCDLCbcHpQ4mdsCCCIYNOH4ha7e
-	oA1ftq3cbPtriI5+u5OEcvjSJtuTOFDClF5YKFhOtE6ON1tHeDD9SA+MZuKeVcY2
-	Fq+t81N/DlugvW/a/ygG6KWGT/6qwTNBJNew/GNrclLjl5A2mQIKt4r5wG43cGEh
-	Ucu0GrjKnik3lpd7c/9+cvofsuGfBL5jCgMpj0/SKapCMQc6N73z8mbLYZcQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1762987754; x=1763074154; bh=JhynwDO7397tbdhdjiFMhqpAoAVnerEyAhf
-	UJpQqooU=; b=vvXbSPDOZ/qLkQZDx2yATZxKxF6DvjdzaRkA2GwmE5LpdFFwEoa
-	N7laBOSFpyXiZoR6uy5Rs1yFVJq7XUMiVtTqfFQLpwfi/2Sy1QCxKrqnxETTEmRw
-	DjvqSKvb0BdwB5OhM42PP7unva9fRDVqohWSoDXn+HIKFLbrMNJEhGs1jb+H6r82
-	u6lPiZ3DSz9+Yos0lyX6+wPeJG2enhPe4VP5Mwo2BFAXHjEMu+FwAxQyPxTo/+jh
-	bWpqYDaNXDhlk0sq3yLUpXoM7Y/dXK+95Ivy2s0a2mcX9ZrCi0NBoDXZfTb88qBk
-	8iIM1Dd7TexgsaR0URlgnc5GF4adlTup+og==
-X-ME-Sender: <xms:6g4VaVINbaO2S_KPHpihj0m5xinQG80pT3ntWqfv3OS7wDzEs7UuOQ>
-    <xme:6g4VaTZczPFNkCZCVrI6z7jqHfhYEiY6PMbBgm3eqTNGcK494A5x34yevXhLzXN_A
-    h49kg1snHO90dCXTrLvLXA-3eazIvLFyO3qolVLmqlcKX_wFOCcGQ>
-X-ME-Received: <xmr:6g4Vaf-i508ds1sKE53W8Q3KqTurZ3b0E0mS3ZQAkphSudPXzhd8q3Qb7gwMyLxkc7sajWkT9Z5LgQRUfRGgPBtJdF0Vfeu77RJd>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdehfeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
-    gsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhg
-    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhes
-    fhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:6g4Vacbu1BWCcisTheGVyFZR4DuGA1qUPwbFQ_3DrOhQgdPStzgn_Q>
-    <xmx:6g4VabNibLTqTe2bBaVk6QUG0PWIPnrucBCBOqgt5ngigynKFlDaWQ>
-    <xmx:6g4VaQA4JLwqQJEN5PPlGpMAJ6SeMeib7A7u9Z7_jpSqdng7UDSHig>
-    <xmx:6g4VaaIzlrmM6UlehGZk77Vgt0kZavghPaci-Nv5R2PVoYciPRLmlA>
-    <xmx:6g4VaUPs5KImmmr0mzfUQSI0NGFHb76C1zbj5iYtWkPhEljg2wX8bwRu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Nov 2025 17:49:13 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julia Evans" <julia@jvns.ca>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  "Julia Evans"
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "Kristoffer Haugsbakk"
- <kristofferhaugsbakk@fastmail.com>,  "Patrick Steinhardt" <ps@pks.im>
-Subject: Re: [PATCH v6] doc: add an explanation of Git's data model
-In-Reply-To: <xmqqa50rqcy1.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	12 Nov 2025 11:16:06 -0800")
-References: <xmqqo6pde90w.fsf@gitster.g>
-	<D50AB3E0-E41C-49CD-9407-AB60331A6A43@gmail.com>
-	<xmqqa50v4x8n.fsf@gitster.g>
-	<150f3442-93a6-4469-9c25-5bca24accc80@app.fastmail.com>
-	<xmqqfrakyj0w.fsf@gitster.g>
-	<2474339d-67bc-4a68-9f26-fe7edd172ec4@app.fastmail.com>
-	<xmqqa50rqcy1.fsf@gitster.g>
-Date: Wed, 12 Nov 2025 14:49:12 -0800
-Message-ID: <xmqqo6p6q32v.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Hm59YUsy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1762990665;
+	bh=lYb7e/pubjqUf1Ds23clNEDlFAtAt3oTyD0mn4xyJzY=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=Hm59YUsySl/yqkZsH2DPh3XOJ1AyMqPIIQDZvnOmJ6zP2Phot6CkzHoh2T1C7k7mf
+	 F5gPtk/M2ydrWygON+IxBO+YOf+qvUXA8H7LoylbmkltA1R5eaBazg/O3o0bKui4NJ
+	 QBZn7Y1S5opyYUKUi2o3J/edW2sdblTHMzkwwn272hr1VSvNcDzbdai42kbFbde8p/
+	 VXZo332ZiSO4XbR835pYehX33Ftwm8XGGtgDcUhgbQPPPgPbceADO+HuKTGMYVULUc
+	 Fo9MxizOljMm/dnCoSBNERzVfAoejjtRsqVXULZE8xcocsfDIcQFq72SAZ5dJ0JV0Q
+	 LMLHuxc4hJO12E5BN1inNZLeSC2fPsyP4/SH4ZfCF/zeUUyTSuOfsXYFWx7cSXYSbj
+	 3MG6JUV3VxRuCdAMbLKkzTc3MrkE3+p6oZmGkQL7xiD7NK0GwRuytjiJ1ZyvhkMqy1
+	 D+4IhLYwKWc+STosBPKnldX8FiJNCLKOn3hOBPQtU0gVIDn8yNt
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:b668:e49e:abfe:cbc7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0610820065;
+	Wed, 12 Nov 2025 23:37:45 +0000 (UTC)
+Date: Wed, 12 Nov 2025 23:37:43 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Martin Wilck <mwilck@suse.com>, git@vger.kernel.org,
+	Adrian Schroeter <adrian@suse.com>
+Subject: Re: git fails to checkout SHA1 submodule in SHA256 repo with
+ --depth=1
+Message-ID: <aRUaR6IfH9imrF5A@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, Martin Wilck <mwilck@suse.com>,
+	git@vger.kernel.org, Adrian Schroeter <adrian@suse.com>
+References: <c94a929df63f79e49eeae0cd67c1f59f859e3d62.camel@suse.com>
+ <xmqq7bvvtdoe.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="VMM4ai6Yy0OztlEl"
+Content-Disposition: inline
+In-Reply-To: <xmqq7bvvtdoe.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> If we do not hesitate using a new word and introduce "label", "a
-> branch works as a label for a commit object" may probably work,
-> probably.
+--VMM4ai6Yy0OztlEl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Another thing.
+On 2025-11-12 at 16:32:01, Junio C Hamano wrote:
+> Martin Wilck <mwilck@suse.com> writes:
+>=20
+> >> Subject: Re: git fails to checkout SHA1 submodule in SHA256 repo with =
+--depth=3D1
+>=20
+> I think it is not supposed to work to mix repositories like this,
+> regardless of any other option like --depth.  I think brian gave a
+> response to that effect in a thread in the past few months.
+>=20
+>     ... goes and looks ...
+>=20
+> https://lore.kernel.org/git/aJ5gOPQ9oologqj-@fruit.crustytoothpaste.net/
+> https://lore.kernel.org/git/aKPJNNWMW9gtueEK@fruit.crustytoothpaste.net/
 
-Do we want to limit the definition of "branch" very narrowly, i.e.,
-"subset of refs whose refname begins with refs/heads/"?  
+Yes, that isn't going to work and it never will unless we add some
+extension mechanism for that purpose.  The repository in question is
+corrupt.
 
-Or do we want to give a description at a bit higher conceptual
-level, something like:
+I've just written a patch to check for this case and produce an error in
+git add, which I will send shortly.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-  A branch is a mechanism to help you grow one line of history (in
-  the sea/cloud of commits) by (1) keeping track of the commit it
-  currently is at (by recording its ID in the ref used to implement
-  the branch), (2) allowing you easily record a new commit you
-  create while you are on it as a child of the current commit (by
-  allowing the symbolic ref "HEAD" to point the ref used to
-  implement the branch), (3) keeping the description of the theme of
-  the particular line of history being developed there (by using
-  "branch.<name>.description" configuration variable for the branch)
-  which is incorporated when the branch gets merged to an
-  integration branch, and (4) keeping track of how the branch has
-  grown over time (in the reflog for the ref used to implement the
-  branch).
+--VMM4ai6Yy0OztlEl
+Content-Type: application/pgp-signature; name="signature.asc"
 
-We can limit ourselves to view a "branch" as a narrow subset of a
-ref that can point at a single commit in the dag of commits, and it
-can be updated at any time to point another different commit that
-has no relation to the previous commit.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
 
-Once we stop limiting ourselves and explain the purpose of using a
-"branch", "it can be updated to point any random commit" stops being
-entirely true.  While the "git branch -f" command can be used to do
-so, doing so all the time would go against what makes a branch a
-branch, i.e. to keep track of the process of growing the history,
-and it is expected that it would be a lot more common for the commit
-pointed at by the branch ref to move by growing the history with
-"git commit", refining the history with "git rebase", etc.  But that
-can only follow if readers understand the branch as more than "just
-a ref whose name begins with refs/heads/".
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaRUaRwAKCRB8DEliiIei
+gcT0AP9WMod5QbTx1Eb5kxYfrXnmH8a5P/b9KnInhkN+cpitjgEAszzAXGJNlCb3
+Wo5O4gpDjqlnpetXbvEY5E0jXcD2Rws=
+=gTIA
+-----END PGP SIGNATURE-----
 
-I am not sure what level the data model description you are writing
-should be at.  The current description seems to concentrate too
-narrowly on "a branch is a specialization of a ref" aspect, and
-while it is not incorrect as a description of a building block of a
-tool set to implement a workflow, it might be too limiting to form
-a proper mental model.  I dunno.
-
+--VMM4ai6Yy0OztlEl--
