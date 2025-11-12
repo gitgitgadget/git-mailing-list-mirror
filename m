@@ -1,77 +1,77 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9E62F5316
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 22:03:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918D42F5A0C
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 22:03:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762984995; cv=none; b=o4IXQn9ftMneyvpzmu6hZb3e/vhwb468Bz/wBCfOqXHTipVoHxCFVsIymN8A/nazYDwG2xuqDt10YsqPDRZ9W/yDbiLZazokTtzfKskOazM2UlJoU9XUhLAG5/SwbSXvqUimS7JGsrngO/ghFMcW5JI2HUvNgldeBcADC878yxA=
+	t=1762984998; cv=none; b=rtPAiVUqwpTH48OCbFiiRMAekTlYWi9bdSapTSfyXZ2fiGsRrqKng4sDUZDRApGuKhXYdkFdTo/IYv2zAxPCKU0FiUL76EWOWWF9AQ+quHKEqv6oxhtcu0H5Dt39jvjr9XviO4n9WkE6JiPxqfZe5Vh0SaC9Y6vYDSf6hwHgRNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762984995; c=relaxed/simple;
-	bh=u+EKJAzaWP9mMFJxS7RAvYQ+y1l1iAXmITEj88XfioI=;
+	s=arc-20240116; t=1762984998; c=relaxed/simple;
+	bh=YbcJCbojCjWhp+qUPDN4XsarDR+WOAY8Mwcvw/2GauU=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WqZdJi2fQy6Ku2fH+52zVotx9T4jusyBfT8YfLFQv5bmc1Mu/E1pM/jiU6ru/AkCzmYFhTamwjKpS6POS89m5ELnPWscy/Ox9idDiZ6cVK7N4GE2kX1v4zww+Si1QP63mYHufhfM21C6SHK6OkpA8OjGJbME83uDMxtjT/BqViM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MTxnfERh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BKI8mtlB; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version; b=oqFkrgbUWtvQoQ6Z3i/yVdjQdu42jTsRV/xu2K5FhH/ZEJcu6wy7MRe9KPIlBqyidur8yZlnIY4nf5DgvjP6rCz1yjRA3cXyJbyKeW2x2iMTZABsicMqptCAZIlvHQ9QbZ2MndJ/qM4OBus7rlgY/5++znAwI4YUN9gaAiMT3J8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SkDJ2PwT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jjIbO0t4; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MTxnfERh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BKI8mtlB"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8954A1D000D0;
-	Wed, 12 Nov 2025 17:03:12 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SkDJ2PwT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jjIbO0t4"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0D7BE7A00AF;
+	Wed, 12 Nov 2025 17:03:16 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 12 Nov 2025 17:03:12 -0500
+  by phl-compute-09.internal (MEProxy); Wed, 12 Nov 2025 17:03:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1762984992; x=
-	1763071392; bh=w5WQ16YQ1IjSutundxi30zSY74WalbM3vZH/vWl689E=; b=M
-	TxnfERhnc2z+OwMFSUo4XFIUEPWtq0+YZ/qGdQVcyzn31k4DiP4fDYrKpqVpjnPB
-	YBm7Mcte+GbuY54YQCbssuX//qwOJX2VMXxFN+jtkR/xyyO0NQain0OQmp+zEKKk
-	7Ls7T0+Hnbto+3TLXYqlkgox5iX2dy2rpJgADD7YiltsOsTMk5I3h0sL8KJjGJe0
-	7WvRvGirfUdKHpK5O2GHKHvecAdHI6wwKt6CFZKvIs2zrWolgcNcKnFDnH0byrrA
-	MvnDEqV7bfPWt0wYg6EyhiTYa4V15f5KfwLcQd6Du5115exme0QEPEgXfB69RgJo
-	V7G0fTaPe+LLHKm8s4Zuw==
+	:reply-to:subject:subject:to:to; s=fm2; t=1762984995; x=
+	1763071395; bh=9wnu2YEbRxSw2myXnB63sCuxlvED5MqV/2aNlsdVh3Y=; b=S
+	kDJ2PwTeOPO24iDYfajLLwmSsHPKwkIWb2bwb5uR4WPOt5FlLq2Vs5j2dLwV78Ma
+	hFh/lSqAVCPnro88BGkevK1ie+HGjL0V5tQTtNQCt8tl6W9TIUNj4WjB4icFfTSc
+	H1L2T3BhnGiICDkMmkjDYzctWksVSQFgkdILLFoILy/CsTvs1SL0hdon9AbbOZ5y
+	gKM4XHGiF5SUn4aYwhiMcEodMM/fFFbkH1JdUrklW6NZjzivmYVFxc9WvMg+xQHz
+	j8cURQg40EBHA7CZNhkKCKFnSy1Ij+UolIQ1qgLHtNjmzl1EUqDh4b/78QR+qP6Z
+	RHdeXMnoz0qSqQk/kXLNw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1762984992; x=1763071392; bh=w5WQ16YQ1IjSutundxi30zSY74Wa
-	lbM3vZH/vWl689E=; b=BKI8mtlBq0khB2qhUQ8PsQSH+/pWmk0JfJKaOs/DLS3e
-	//xqa4QkJ1qF6Rjj2+Q3m9PIdSeGTnMrORnRDxnRz17OEWkfYTikqWf97igoLL+U
-	OWS+u/xZZ1Wk2BpEmtCiCGCbrzD0d3kbRaS9S9gkCX2pQuktZXVZZ/cohjXkagfC
-	GMR79fyLp9ZejI6CqVL+Z4er/BM/uWxtBJabULo8VR/lDkkhL8EOXoZOiKhwHWpF
-	+sjAomql8Or/fii89yLyp4EwQD66QVDB1gjQ8GiMh0bnU+Kko2h4qgabx4uQZxlx
-	4jV/noLnPg4YvqwFikiko4vW42UT67j+Mz1dhSd4aQ==
-X-ME-Sender: <xms:IAQVaa0CdSdM7XSza0jRZmHM_53-diU20YuOPSsGYVedNPS9x_Yoyw>
-    <xme:IAQVaTExSUOQLGuHWKL4wYuTxlaYXCoWylWFeGGhg4_Wis5Q6mmXzc9asjUmQxG6P
-    h99_97yrVmuh900DAjSyFurCEhMe10rdMnK1_oRQ9klI8LgcX0Hvw>
-X-ME-Received: <xmr:IAQVaQju0HP4bAkbtgrXZsVTBErJHFzAcHEDUQj0G_XNtJBwy6IuE3WKG2JBMAed9QWZ8bDwv-pkOm6lDsiF8gnApgeYFIQjXh1n>
+	fm3; t=1762984995; x=1763071395; bh=9wnu2YEbRxSw2myXnB63sCuxlvED
+	5MqV/2aNlsdVh3Y=; b=jjIbO0t4sWsus3UxZtgGizz/J5wSmBmuv7kTjKqBB69/
+	y3uPmlGtBYlHO0DdMra9A0a/wrDeJP0nXsVnHBOMlrfiq2b23bgf5r1zILEIjvIE
+	AWE45lR8n7UQBpazl8oqxBruF7pWLRJr8vkxBQowI5Pjs86qlYkJf0cGjilXjSf5
+	yrwl61H7SjDginHbXOUA9PgKySNyyu+oBdaS5ZRKWg2aWQjZi2gTz1Q09+ClC9gE
+	z9NkSyKeGfn9W3taRh9itr1NHGpbFuZOVCxVateiZMgt7OpLc1XvImkJS4rXUnzY
+	5PjvFbzmFM2Dhb7YBPdeoq5vY6tgutwvEeoOhYpDMg==
+X-ME-Sender: <xms:IwQVabwITz4CTXBV52H4visB518zxbj4qzlxe4qPtKiNuOhGZ2Y0IA>
+    <xme:IwQVaZQ_Y3cyPMlZPcx5lSW8IBy2kucIRYbUc28o1tuEl1BG_3xsLcFbiHcM1Onb0
+    L42ItW14dV3yaP4zuv7-dRwClOxIVpa29gyTMcQ2n2xJyw31G6W>
+X-ME-Received: <xmr:IwQVaS8AGimIjkzORBqRP5f53WaSJWBdKrM-Bwyv8MEqyC_wW9Mvi7Qu5KaBHCzBOn8Ch-Dvb9fG_6P23JTtb-egv6VwCFVbWZ2w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdehvddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
     dttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
     sghogidrtghomheqnecuggftrfgrthhtvghrnhepleevieefieeuffeugefhveeugefgfe
-    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgepheenucfr
+    evvdefleevuedvfedvudefkeehtdeftdegnecuvehluhhsthgvrhfuihiivgeptdenucfr
     rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:IAQVaW_SCo2tprww4t0tQrNwdRhjtUpEDbAAuZL0DjTRWuTvrQY-pA>
-    <xmx:IAQVafrQxfC2M0Wt5uu3KyT29_GMV9u37NcHN70-vrL9efz_f7qBEg>
-    <xmx:IAQVad-BCk63pjUHJ11Nai2ftwWrBeC0jR6NkI1RVmSfsQtTW9rqiA>
-    <xmx:IAQVabVYUKIVNGZ7lZsSZxlkRVUQZYeW2RFmoXaX98whwPM6ExNRjg>
-    <xmx:IAQVaWPrqahVamujoxWG_IaIE7QjZ7gyXbtQrWdtfmawffOULyRtVIqF>
+X-ME-Proxy: <xmx:IwQVaQqXavG4kGlSs-sYs3fNxkCNjTX36ZlLlz99csph2OkkwoL5AQ>
+    <xmx:IwQVafnIE2FoPtKGx3X_Dg047uHEYv5juzUn6MDx38WkegCnznNCKQ>
+    <xmx:IwQVaXIzIO3d8IcOsfVcNjAHw0ISOHP0ULjAF5T0dfaLdYRyc4VEIw>
+    <xmx:IwQVaUwGmwmByXE_RstOgfBE_bDlgYnp8eoFroQ56l0NvtubOUhcwQ>
+    <xmx:IwQVafIk46asIWTrV8m42rSJiLGflPXcjOFn53YXBQexOO0EUiup03KV>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Nov 2025 17:03:11 -0500 (EST)
+ 12 Nov 2025 17:03:15 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v4 07/12] diff: update the way rewrite diff handles incomplete lines
-Date: Wed, 12 Nov 2025 14:02:53 -0800
-Message-ID: <20251112220258.1009253-8-gitster@pobox.com>
+Subject: [PATCH v4 09/12] whitespace: allocate a few more bits and define WS_INCOMPLETE_LINE
+Date: Wed, 12 Nov 2025 14:02:55 -0800
+Message-ID: <20251112220258.1009253-10-gitster@pobox.com>
 X-Mailer: git-send-email 2.52.0-rc2-441-g030905368a
 In-Reply-To: <20251112220258.1009253-1-gitster@pobox.com>
 References: <20251111000451.2243195-1-gitster@pobox.com>
@@ -84,116 +84,121 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The diff_symbol based output framework uses one DIFF_SYMBOL_* enum
-value per the kind of output lines of "git diff", which corresponds
-to one output line from the xdiff machinery used internally.  Most
-notably, DIFF_SYMBOL_PLUS and DIFF_SYMBOL_MINUS that correspond to
-"+" and "-" lines are designed to always take a complete line, even
-if the output from xdiff machinery may produce "\ No newline at the
-end of file" immediately after them.
-
-But this is not true in the rewrite-diff codepath, which completely
-bypasses the xdiff machinery.  Since the code path feeds the bytes
-directly from the payload to the output routines, the output layer
-has to deal with an incomplete line with DIFF_SYMBOL_PLUS and
-DIFF_SYMBOL_MINUS, which never would see an incomplete line in the
-normal code paths.  This lack of final newline is compensated by an
-ugly hack for a fabricated DIFF_SYMBOL_NO_LF_EOF token to inject an
-extra newline to the output to simulate output coming from the xdiff
-machinery.
-
-Revamp the way the complete-rewrite code path feeds the lines to the
-output layer by treating the last line of the pre/post image when it
-is an incomplete line specially.
-
-This lets us remove the DIFF_SYMBOL_NO_LF_EOF hack and use the usual
-DIFF_SYMBOL_CONTEXT_INCOMPLETE code path, which will later learn how
-to handle whitespace errors.
+Reserve a few more bits in the diff flags word to be used for future
+whitespace rules.  Add WS_INCOMPLETE_LINE without implementing the
+behaviour (yet).
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c | 37 ++++++++++++++++++++++---------------
- 1 file changed, 22 insertions(+), 15 deletions(-)
+ Documentation/config/core.adoc |  2 ++
+ diff.c                         | 16 ++++++++--------
+ diff.h                         |  6 +++---
+ ws.c                           |  6 ++++++
+ ws.h                           |  3 ++-
+ 5 files changed, 21 insertions(+), 12 deletions(-)
 
+diff --git a/Documentation/config/core.adoc b/Documentation/config/core.adoc
+index e2de270c86..682fb595fb 100644
+--- a/Documentation/config/core.adoc
++++ b/Documentation/config/core.adoc
+@@ -626,6 +626,8 @@ core.whitespace::
+   part of the line terminator, i.e. with it, `trailing-space`
+   does not trigger if the character before such a carriage-return
+   is not a whitespace (not enabled by default).
++* `incomplete-line` treats the last line of a file that is missing the
++  newline at the end as an error (not enabled by default).
+ * `tabwidth=<n>` tells how many character positions a tab occupies; this
+   is relevant for `indent-with-non-tab` and when Git fixes `tab-in-indent`
+   errors. The default tab width is 8. Allowed values are 1 to 63.
 diff --git a/diff.c b/diff.c
-index 44b86544b7..5c606409bb 100644
+index 5c606409bb..1b27b15f84 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -797,7 +797,6 @@ enum diff_symbol {
- 	DIFF_SYMBOL_CONTEXT_INCOMPLETE,
- 	DIFF_SYMBOL_PLUS,
- 	DIFF_SYMBOL_MINUS,
--	DIFF_SYMBOL_NO_LF_EOF,
- 	DIFF_SYMBOL_CONTEXT_FRAGINFO,
- 	DIFF_SYMBOL_CONTEXT_MARKER,
- 	DIFF_SYMBOL_SEPARATOR
-@@ -1352,7 +1351,6 @@ static void emit_line_ws_markup(struct diff_options *o,
- static void emit_diff_symbol_from_struct(struct diff_options *o,
- 					 struct emitted_diff_symbol *eds)
- {
--	static const char *nneof = " No newline at end of file\n";
- 	const char *context, *reset, *set, *set_sign, *meta, *fraginfo;
+@@ -804,15 +804,15 @@ enum diff_symbol {
  
- 	enum diff_symbol s = eds->s;
-@@ -1361,13 +1359,6 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
- 	unsigned flags = eds->flags;
+ /*
+  * Flags for content lines:
+- * 0..11 are whitespace rules (see ws.h)
+- * 12..14 are WSEH_NEW | WSEH_CONTEXT | WSEH_OLD
+- * 16 is marking if the line is blank at EOF
+- * 17..19 are used for color-moved.
++ * 0..15 are whitespace rules (see ws.h)
++ * 16..18 are WSEH_NEW | WSEH_CONTEXT | WSEH_OLD
++ * 19 is marking if the line is blank at EOF
++ * 20..22 are used for color-moved.
+  */
+-#define DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF	(1<<16)
+-#define DIFF_SYMBOL_MOVED_LINE			(1<<17)
+-#define DIFF_SYMBOL_MOVED_LINE_ALT		(1<<18)
+-#define DIFF_SYMBOL_MOVED_LINE_UNINTERESTING	(1<<19)
++#define DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF	(1<<19)
++#define DIFF_SYMBOL_MOVED_LINE			(1<<20)
++#define DIFF_SYMBOL_MOVED_LINE_ALT		(1<<21)
++#define DIFF_SYMBOL_MOVED_LINE_UNINTERESTING	(1<<22)
  
- 	switch (s) {
--	case DIFF_SYMBOL_NO_LF_EOF:
--		context = diff_get_color_opt(o, DIFF_CONTEXT);
--		reset = diff_get_color_opt(o, DIFF_RESET);
--		putc('\n', o->file);
--		emit_line_0(o, context, NULL, 0, reset, '\\',
--			    nneof, strlen(nneof));
--		break;
- 	case DIFF_SYMBOL_SUBMODULE_HEADER:
- 	case DIFF_SYMBOL_SUBMODULE_ERROR:
- 	case DIFF_SYMBOL_SUBMODULE_PIPETHROUGH:
-@@ -1786,22 +1777,38 @@ static void emit_rewrite_lines(struct emit_callback *ecbdata,
- 	const char *endp = NULL;
+ #define DIFF_SYMBOL_CONTENT_WS_MASK (WSEH_NEW | WSEH_OLD | WSEH_CONTEXT | WS_RULE_MASK)
  
- 	while (0 < size) {
--		int len;
-+		int len, plen;
-+		char *pdata = NULL;
+diff --git a/diff.h b/diff.h
+index cbd355cf50..422658407d 100644
+--- a/diff.h
++++ b/diff.h
+@@ -331,9 +331,9 @@ struct diff_options {
  
- 		endp = memchr(data, '\n', size);
--		len = endp ? (endp - data + 1) : size;
-+
-+		if (endp) {
-+			len = endp - data + 1;
-+			plen = len;
-+		} else {
-+			len = size;
-+			plen = len + 1;
-+			pdata = xmalloc(plen + 2);
-+			memcpy(pdata, data, len);
-+			pdata[len] = '\n';
-+			pdata[len + 1] = '\0';
-+		}
- 		if (prefix != '+') {
- 			ecbdata->lno_in_preimage++;
--			emit_del_line(ecbdata, data, len);
-+			emit_del_line(ecbdata, pdata ? pdata : data, plen);
- 		} else {
- 			ecbdata->lno_in_postimage++;
--			emit_add_line(ecbdata, data, len);
-+			emit_add_line(ecbdata, pdata ? pdata : data, plen);
- 		}
-+		free(pdata);
- 		size -= len;
- 		data += len;
+ 	int ita_invisible_in_index;
+ /* white-space error highlighting */
+-#define WSEH_NEW        (1<<12)
+-#define WSEH_CONTEXT    (1<<13)
+-#define WSEH_OLD        (1<<14)
++#define WSEH_NEW        (1<<16)
++#define WSEH_CONTEXT    (1<<17)
++#define WSEH_OLD        (1<<18)
+ 	unsigned ws_error_highlight;
+ 	const char *prefix;
+ 	int prefix_length;
+diff --git a/ws.c b/ws.c
+index 70acee3337..34a7b4fad2 100644
+--- a/ws.c
++++ b/ws.c
+@@ -26,6 +26,7 @@ static struct whitespace_rule {
+ 	{ "blank-at-eol", WS_BLANK_AT_EOL, 0 },
+ 	{ "blank-at-eof", WS_BLANK_AT_EOF, 0 },
+ 	{ "tab-in-indent", WS_TAB_IN_INDENT, 0, 1 },
++	{ "incomplete-line", WS_INCOMPLETE_LINE, 0, 0 },
+ };
+ 
+ unsigned parse_whitespace_rule(const char *string)
+@@ -139,6 +140,11 @@ char *whitespace_error_string(unsigned ws)
+ 			strbuf_addstr(&err, ", ");
+ 		strbuf_addstr(&err, "tab in indent");
  	}
--	if (!endp)
--		emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_NO_LF_EOF, NULL, 0, 0);
-+	if (!endp) {
-+		static const char nneof[] = "\\ No newline at end of file\n";
-+		ecbdata->last_line_kind = prefix;
-+		emit_incomplete_line_marker(ecbdata, nneof, sizeof(nneof) - 1);
++	if (ws & WS_INCOMPLETE_LINE) {
++		if (err.len)
++			strbuf_addstr(&err, ", ");
++		strbuf_addstr(&err, "no newline at the end of file");
 +	}
+ 	return strbuf_detach(&err, NULL);
  }
  
- static void emit_rewrite_diff(const char *name_a,
+diff --git a/ws.h b/ws.h
+index 23708efb73..06d5cb73f8 100644
+--- a/ws.h
++++ b/ws.h
+@@ -15,13 +15,14 @@ struct strbuf;
+ #define WS_CR_AT_EOL            (1<<9)
+ #define WS_BLANK_AT_EOF         (1<<10)
+ #define WS_TAB_IN_INDENT        (1<<11)
++#define WS_INCOMPLETE_LINE      (1<<12)
+ 
+ #define WS_TRAILING_SPACE       (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
+ #define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB|8)
+ #define WS_TAB_WIDTH_MASK       ((1<<6)-1)
+ 
+ /* All WS_* -- when extended, adapt constants defined after diff.c:diff_symbol */
+-#define WS_RULE_MASK            ((1<<12)-1)
++#define WS_RULE_MASK            ((1<<16)-1)
+ 
+ extern unsigned whitespace_rule_cfg;
+ unsigned whitespace_rule(struct index_state *, const char *);
 -- 
 2.52.0-rc2-441-g030905368a
 
