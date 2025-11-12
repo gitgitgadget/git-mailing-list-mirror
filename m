@@ -1,232 +1,149 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012009.outbound.protection.outlook.com [52.101.48.9])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FB9262FDD
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 22:37:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.9
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762987081; cv=fail; b=Mqar9yztu6IgfiJsRAYHBL8os+eu30BIQykscr/q8rie8XFZCMcafJfB6+lReLFfCPj6oFMfJu28+SodNAebJ8LeTeooP0lkVxlK4R+MP/rl8XPUHJaYfz/Xo1VJd740HrdqPqw7SDf0hFWJHkO3vVmjK3IWVUc/86sJ1HMaxX0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762987081; c=relaxed/simple;
-	bh=tAnSLljOFzywbaWK12lE71UePdzuW27q+0rrtvNIYnU=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ebPiePBDNITwROgIVRoaxD0JMBrzBT8UqIejoQaZHOTNa2BHoKegIvEFHnr3+0Ars8equwKjueRzND7d/BLOl0Ol2Tz3eOb8AMFl4z85cuDgY9MnmyXXZHWpHUMb6RZSYWSbUFNCFF2sOcH+dZ8hYxxied4sUNAONDuZiVqHIjk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=L/9eI6kP; arc=fail smtp.client-ip=52.101.48.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42DF23ED6A
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 22:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762987757; cv=none; b=F8yFfJifPV0qiy0B+EhnsAf47oHnFcYqd30HCPegfaW4I08bpebKYvYRTQRol7gKeIiP2BGEn9y3Qe0C7KUZrAytGeVtQBfopyoRQlwiRZheQlQCzkX/tfafKRGuY5Tm4cD5WpqCOp+XlqTnuS6S69nibM8aPx22bUx12YVQjOk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762987757; c=relaxed/simple;
+	bh=a9M4zSryWgwz6cQq03GTtc/UbOzPIunVTeWaM9pt0V4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LnTBdJycPNzlawaO+bYtxq4yIgYMdb/PyiQPJTQDa8P0K7vWbMPo93CdG33VizLvX3HWZcwGhuZ4KgAcR7BMtylqpDfJMrSl/z1+62sJ24GzK1sRmDkxbICwwFSBuy9kUrtQOjDNT7zPVV/bQGPE680X25nAKgVWhUkqtt3CFes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XxEfvpia; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vvXbSPDO; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="L/9eI6kP"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZSmFgCt5X6LfbvVfKkKZjR1EhPU74Y5p0Z/2wbOkxO9xPWMkaUDracMKaYbbN6+4SzLzJkv+nqT6XV9FQopK5pccDg9hpUzwfdqE3Iszx7/3IK9RfaAxYqLclH6zv3o4yFNGp1onxCHNGcGEpv3sHkejNHyEb01GJiHIZuyDUv7y0P3ZBxqdZ+Ifp2GONI66HH/c0AQ8gLECm/+LM6ch7XIb/T7KDuYkjSvRNKZVzkLpWOH/30WJ8DLBaSw4zyur4qbJxj65fI7rrQEWg22c+2jRDi5y3yuMNFszVoSoJeUZAMH0s/+XmR4VU6jTVenzCrrhBFfe6jHbIjqLtHTfcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jD0n3xTP6/fswNKtt4Th/LAMbW8eiVejtNTcIU12HKY=;
- b=b+9d+hGJfwMD8gAaRPcK2ZQzRGapP5oDY8JRuIhZmpssQZt2xnfUoSioJWW0NJqi07oMhe34Q4Ofup4WokbSOm1tBMwKw+gIU+xBa52NkILbwQR95tBjHzTvcoT5BD5t5ab1SyPSj+FljrWIu8RLvWk9jKk1VlxZ1PWXTOk+S+hohh+hV8MsSQYzV7HtmPBC/NOi0loqbV8daA8Qp1FJVzOmZMEJ/B3LVYqtfiirCPN5cWDLEyRA+iOnzwpNosJK2tZkSRw//uYCHuDKJIEsojvYorqE0u2up0I3BVT1MFubrfLeigQM/vYwDkspv5pycnFWesFCPUFx3TM2uhOcFg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jD0n3xTP6/fswNKtt4Th/LAMbW8eiVejtNTcIU12HKY=;
- b=L/9eI6kPE1gvFLu9AlzmPBEPs4cnUprfKgUT8PpUceIpbtnl/Sao5/c7SMwPFGlWCGSgD3zxiQpRxZBwweReWjF27vprFTk0PhPNnIKTIBHvDD1gWEJqmo0goxdu6VjenZ/8lyG9P5ouj5yHBgfUsROfXJ/WiBhzKsMwwquvNcWenZnaaz9r2ZGQRX8mi5DkmmA+p0b7qpwJ8IOwdVe7+uxLpKV1oR7lOGfzEGUVJJwJ2Xcwp5si3PmNh5jPYqRIc8Yf77xp4qwZtHSsiGWPYEHw/dwjr+n8+qHKh4MrinrtCDFvIk2UyMFhJm5RkF0fysZ6JxcG/2j4KVkD457Z4Q==
-Received: from PH7PR02CA0008.namprd02.prod.outlook.com (2603:10b6:510:33d::27)
- by SA0PR12MB4398.namprd12.prod.outlook.com (2603:10b6:806:9f::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.16; Wed, 12 Nov
- 2025 22:37:54 +0000
-Received: from CY4PEPF0000EE32.namprd05.prod.outlook.com
- (2603:10b6:510:33d:cafe::f2) by PH7PR02CA0008.outlook.office365.com
- (2603:10b6:510:33d::27) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9320.16 via Frontend Transport; Wed,
- 12 Nov 2025 22:37:52 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- CY4PEPF0000EE32.mail.protection.outlook.com (10.167.242.38) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9320.13 via Frontend Transport; Wed, 12 Nov 2025 22:37:54 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 12 Nov
- 2025 14:37:42 -0800
-Received: from drhqmail201.nvidia.com (10.126.190.180) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Wed, 12 Nov 2025 14:37:41 -0800
-Received: from treble.plattner.fun (10.127.8.9) by mail.nvidia.com
- (10.126.190.180) with Microsoft SMTP Server id 15.2.2562.20 via Frontend
- Transport; Wed, 12 Nov 2025 14:37:41 -0800
-From: Aaron Plattner <aplattner@nvidia.com>
-To: <git@vger.kernel.org>
-CC: Aaron Plattner <aplattner@nvidia.com>, Rahul Rameshbabu
-	<rrameshbabu@nvidia.com>
-Subject: [PATCH] remote-curl: Use auth for probe_rpc() requests too
-Date: Wed, 12 Nov 2025 14:37:18 -0800
-Message-ID: <20251112223722.376330-1-aplattner@nvidia.com>
-X-Mailer: git-send-email 2.51.2
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XxEfvpia";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vvXbSPDO"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 027FC1D000D0;
+	Wed, 12 Nov 2025 17:49:14 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Wed, 12 Nov 2025 17:49:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1762987754; x=1763074154; bh=JhynwDO739
+	7tbdhdjiFMhqpAoAVnerEyAhfUJpQqooU=; b=XxEfvpiavJwoRq8Ul8OSWftoUz
+	DFoiNIk7HpcXymlMCLfqFu2rupw3ZcTLci/Nu+DfiB+mXRbCX8qId8NhLGVUg75S
+	v1/L5ob28WdAIBYRA9uAJs/YLnbeSA0VynQktXCDLCbcHpQ4mdsCCCIYNOH4ha7e
+	oA1ftq3cbPtriI5+u5OEcvjSJtuTOFDClF5YKFhOtE6ON1tHeDD9SA+MZuKeVcY2
+	Fq+t81N/DlugvW/a/ygG6KWGT/6qwTNBJNew/GNrclLjl5A2mQIKt4r5wG43cGEh
+	Ucu0GrjKnik3lpd7c/9+cvofsuGfBL5jCgMpj0/SKapCMQc6N73z8mbLYZcQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762987754; x=1763074154; bh=JhynwDO7397tbdhdjiFMhqpAoAVnerEyAhf
+	UJpQqooU=; b=vvXbSPDOZ/qLkQZDx2yATZxKxF6DvjdzaRkA2GwmE5LpdFFwEoa
+	N7laBOSFpyXiZoR6uy5Rs1yFVJq7XUMiVtTqfFQLpwfi/2Sy1QCxKrqnxETTEmRw
+	DjvqSKvb0BdwB5OhM42PP7unva9fRDVqohWSoDXn+HIKFLbrMNJEhGs1jb+H6r82
+	u6lPiZ3DSz9+Yos0lyX6+wPeJG2enhPe4VP5Mwo2BFAXHjEMu+FwAxQyPxTo/+jh
+	bWpqYDaNXDhlk0sq3yLUpXoM7Y/dXK+95Ivy2s0a2mcX9ZrCi0NBoDXZfTb88qBk
+	8iIM1Dd7TexgsaR0URlgnc5GF4adlTup+og==
+X-ME-Sender: <xms:6g4VaVINbaO2S_KPHpihj0m5xinQG80pT3ntWqfv3OS7wDzEs7UuOQ>
+    <xme:6g4VaTZczPFNkCZCVrI6z7jqHfhYEiY6PMbBgm3eqTNGcK494A5x34yevXhLzXN_A
+    h49kg1snHO90dCXTrLvLXA-3eazIvLFyO3qolVLmqlcKX_wFOCcGQ>
+X-ME-Received: <xmr:6g4Vaf-i508ds1sKE53W8Q3KqTurZ3b0E0mS3ZQAkphSudPXzhd8q3Qb7gwMyLxkc7sajWkT9Z5LgQRUfRGgPBtJdF0Vfeu77RJd>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdehfeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
+    gsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhg
+    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhes
+    fhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:6g4Vacbu1BWCcisTheGVyFZR4DuGA1qUPwbFQ_3DrOhQgdPStzgn_Q>
+    <xmx:6g4VabNibLTqTe2bBaVk6QUG0PWIPnrucBCBOqgt5ngigynKFlDaWQ>
+    <xmx:6g4VaQA4JLwqQJEN5PPlGpMAJ6SeMeib7A7u9Z7_jpSqdng7UDSHig>
+    <xmx:6g4VaaIzlrmM6UlehGZk77Vgt0kZavghPaci-Nv5R2PVoYciPRLmlA>
+    <xmx:6g4VaUPs5KImmmr0mzfUQSI0NGFHb76C1zbj5iYtWkPhEljg2wX8bwRu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Nov 2025 17:49:13 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  "Julia Evans"
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "Kristoffer Haugsbakk"
+ <kristofferhaugsbakk@fastmail.com>,  "Patrick Steinhardt" <ps@pks.im>
+Subject: Re: [PATCH v6] doc: add an explanation of Git's data model
+In-Reply-To: <xmqqa50rqcy1.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	12 Nov 2025 11:16:06 -0800")
+References: <xmqqo6pde90w.fsf@gitster.g>
+	<D50AB3E0-E41C-49CD-9407-AB60331A6A43@gmail.com>
+	<xmqqa50v4x8n.fsf@gitster.g>
+	<150f3442-93a6-4469-9c25-5bca24accc80@app.fastmail.com>
+	<xmqqfrakyj0w.fsf@gitster.g>
+	<2474339d-67bc-4a68-9f26-fe7edd172ec4@app.fastmail.com>
+	<xmqqa50rqcy1.fsf@gitster.g>
+Date: Wed, 12 Nov 2025 14:49:12 -0800
+Message-ID: <xmqqo6p6q32v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE32:EE_|SA0PR12MB4398:EE_
-X-MS-Office365-Filtering-Correlation-Id: ad60bca7-05c2-4888-4668-08de223c1ef2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|1800799024|376014|36860700013|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?GXdLDVi0qQhnG2cNBQsPs/HjaVj/zBOELmC8VhUR1VDzWIOu/t9n3/foMufu?=
- =?us-ascii?Q?2zqVtkY5P7StBzWLBSFzMH9WiRJvXYHPgcZL6CNfGOgjPR8YZEyQV9ZEvdLY?=
- =?us-ascii?Q?gKPQ5zgRafahqBmrDo3hu+C793QY+rOcDWjvWDWbRkC6r3IAxChof5eF5wQr?=
- =?us-ascii?Q?EMEiSvRRpD5GKBE4aAwzaLLAE9vpzdel6EkaVgJn495OcEEUKwSDsX1w7Amb?=
- =?us-ascii?Q?rBm0r/YenL+4QE9KxGrAWMQ8ebxx6nIJYbXy3OBq3TdcNURvG5P21nG+KcQY?=
- =?us-ascii?Q?ZYAspiM2Bpig2YBhkjind4p9nbskC0y3HdpJWT9T0gQd7Whv2gdtSx/RywzW?=
- =?us-ascii?Q?dCLbhc61Dh1fLJdiYzsnBnx4KcMa5ryfR8K2TrdhcWwMSich+2kN6upzrhZx?=
- =?us-ascii?Q?7U9RICfd32o7DIjgyEjCKdVyh/jlIkyeGpabBKfV0XZjs3ECROdNl4D40NsR?=
- =?us-ascii?Q?5L3EK+Veo/aCEY+/7gxKSxF0+pD2SFpSbIiaMgAk2Zb+AwmVEXC+ZtBT/7ir?=
- =?us-ascii?Q?Tx6MOxlvwyOM/gbBG09vTFvv/Q7bxc0vvi1P5hkFI0KRc3hUy9AzaDzOmja2?=
- =?us-ascii?Q?HgE0o0CUsZsoOX9vPkO5uA9B9rFkhgeG9lx97TxMDRIaPFyxoNm02O8r9Iiz?=
- =?us-ascii?Q?rIaQ8hPF1FCfL37rm21gP5EQErCU8zzlL/NU5nZVAa28KiYINM7ppSBtyT0L?=
- =?us-ascii?Q?LvPxL7pz33Qt/Jlzk4PurOXaZmgn4yn+uJ2/2aR1r3e/UqwfSrAP9/D6gHBJ?=
- =?us-ascii?Q?dFbI9ZB+kli1jH5sBOSfCYxwzZE/8vkz//xg6S2MWTYBZbtQwIbn7CV7DLP3?=
- =?us-ascii?Q?t2Ly3/Ksu4uMutZReVDZvC23iia/qzq0qLZrUXgx2NaK4OTG9EKY+L5x6WtD?=
- =?us-ascii?Q?pd+zNYyxzdBwoLrXXVrfFEnJW3vgc4QDd0f3frn/SonvUnAmfdtpAt7NuQxj?=
- =?us-ascii?Q?snSGNJoPtqtBsjQQ+V1sMFVa/ETuva5jqIZ4LL3YRZ5IRvS7SJ26UiORmiNg?=
- =?us-ascii?Q?I5JL5+wqypTIN1qlfc2kUhVmos+uPFVIa0815i8gohJ+zgULKUl4mlWw28Iz?=
- =?us-ascii?Q?5z4ZMx9oM49JWHqv0qHsyOQUVQo5vzCnnZbwJrWGDqN9CT89dCgDlbuuA/Oe?=
- =?us-ascii?Q?eC13+WTaKHS4FoubfI1RGHISt89WwgXVCwGX5uaUW+cZMU7F8ghQKwUqVlLk?=
- =?us-ascii?Q?QFD3aBTAKySyRbBVWCrHjDvyuu03MaVd/cHYk3KyoOOTs88QBc6v3Eza/TML?=
- =?us-ascii?Q?kX4+XnQhmoNjaRXGuc0yBghFRyqUEnauv5XshwF8V00eteDGqkKLK8ElzDSG?=
- =?us-ascii?Q?YAOAg1Bv0K7Pwv/pLY/ZunWU77aB4iYDuWjiUpsEuYyWpe3W6Xx6x8QmJw3l?=
- =?us-ascii?Q?fPY1beoozEN6hxzEnzvm6OJN0gYGaEe4ssv4QpW2R72ddNS4nHD3bpekXXnH?=
- =?us-ascii?Q?B3gGpXw3oPRsYosjA5kVUGae3+kahdOjkLc2+fGA1RsTPQhGoJEGrEWcyuzD?=
- =?us-ascii?Q?qi5SMRaoIfJMvW37O6AbzOei3M+2ZL0F1YuiKxsTBWt4ak9zsJ/jQSWJnZfm?=
- =?us-ascii?Q?H5afYYsBc4WdqRCeUn8=3D?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(376014)(36860700013)(13003099007);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2025 22:37:54.4737
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ad60bca7-05c2-4888-4668-08de223c1ef2
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CY4PEPF0000EE32.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4398
 
-If a large request requires post_rpc() to call probe_rpc(), the latter
-does not use the authorization credentials used for other requests. If
-this fails with an HTTP 401 error and http_auth.multistage isn't set,
-then the whole request just fails.
+Junio C Hamano <gitster@pobox.com> writes:
 
-For example, using git-credential-msal [1], the following attempt to clone a
-large repository fails partway through because the initial request to download
-the commit history and promisor packs succeeds, but the
-subsequent request to download the blobs needed to construct the working
-tree fails with a 401 error and the checkout fails.
+> If we do not hesitate using a new word and introduce "label", "a
+> branch works as a label for a commit object" may probably work,
+> probably.
 
-(lines removed for brevity)
+Another thing.
 
-  git clone --filter=blob:none https://secure-server.example/repo
-  11:03:26.855369 git.c:502               trace: built-in: git clone --filter=blob:none https://secure-server.example/repo
-  Cloning into 'sw'...
-  warning: templates not found in /home/aaron/share/git-core/templates
-  11:03:26.857169 run-command.c:673       trace: run_command: git remote-https origin https://secure-server.example/repo
-  11:03:27.012104 http.c:849              => Send header: GET repo/info/refs?service=git-upload-pack HTTP/1.1
-  11:03:27.049243 http.c:849              <= Recv header: HTTP/1.1 401 Unauthorized
-  11:03:27.049270 http.c:849              <= Recv header: WWW-Authenticate: Bearer error="invalid_request", error_description="No bearer token found in the request", msal-tenant-id="<tenant>", msal-client-id="<client>"
-  11:03:27.053786 run-command.c:673       trace: run_command: 'git credential-msal get'
-  11:03:27.952830 http.c:849              => Send header: GET repo/info/refs?service=git-upload-pack HTTP/1.1
-  11:03:27.952849 http.c:849              => Send header: Authorization: Bearer <redacted>
-  11:03:27.995419 http.c:849              <= Recv header: HTTP/1.1 200 OK
-  11:03:28.230039 http.c:890              == Info: Reusing existing https: connection with host secure-server.example
-  11:03:28.230208 http.c:849              => Send header: POST repo/git-upload-pack HTTP/1.1
-  11:03:28.230216 http.c:849              => Send header: Content-Type: application/x-git-upload-pack-request
-  11:03:28.230221 http.c:849              => Send header: Authorization: Bearer <redacted>
-  11:03:28.269085 http.c:849              <= Recv header: HTTP/1.1 200 OK
-  11:03:28.684163 http.c:890              == Info: Reusing existing https: connection with host secure-server.example
-  11:03:28.684379 http.c:849              => Send header: POST repo/git-upload-pack HTTP/1.1
-  11:03:28.684391 http.c:849              => Send header: Accept: application/x-git-upload-pack-result
-  11:03:28.684393 http.c:849              => Send header: Authorization: Bearer <redacted>
-  11:03:28.869546 run-command.c:673       trace: run_command: git index-pack --stdin --fix-thin '--keep=fetch-pack 43856 on dgx-spark' --promisor
-  11:06:39.861237 run-command.c:673       trace: run_command: git -c fetch.negotiationAlgorithm=noop fetch origin --no-tags --no-write-fetch-head --recurse-submodules=no --filter=blob:none --stdin
-  11:06:39.865981 run-command.c:673       trace: run_command: git remote-https origin https://secure-server.example/repo
-  11:06:39.868039 run-command.c:673       trace: run_command: git-remote-https origin https://secure-server.example/repo
-  11:07:30.412575 http.c:849              => Send header: GET repo/info/refs?service=git-upload-pack HTTP/1.1
-  11:07:30.456285 http.c:849              <= Recv header: HTTP/1.1 401 Unauthorized
-  11:07:30.456318 http.c:849              <= Recv header: WWW-Authenticate: Bearer error="invalid_request", error_description="No bearer token found in the request", msal-tenant-id="<tenant>", msal-client-id="<client>"
-  11:07:30.456439 run-command.c:673       trace: run_command: 'git credential-cache get'
-  11:07:30.461266 http.c:849              => Send header: GET repo/info/refs?service=git-upload-pack HTTP/1.1
-  11:07:30.461282 http.c:849              => Send header: Authorization: Bearer <redacted>
-  11:07:30.501628 http.c:849              <= Recv header: HTTP/1.1 200 OK
-  11:07:34.725262 http.c:849              => Send header: POST repo/git-upload-pack HTTP/1.1
-  11:07:34.725279 http.c:849              => Send header: Content-Type: application/x-git-upload-pack-request
-  11:07:34.761407 http.c:849              <= Recv header: HTTP/1.1 401 Unauthorized
-  11:07:34.761443 http.c:890              == Info: Bearer authentication problem, ignoring.
-  11:07:34.761453 http.c:849              <= Recv header: WWW-Authenticate: Bearer error="invalid_request", error_description="No bearer token found in the request", msal-tenant-id="<tenant>", msal-client-id="<client>"
-  11:07:34.761509 http.c:890              == Info: The requested URL returned error: 401
-  11:07:34.761530 http.c:890              == Info: closing connection #0
-  11:07:34.761913 run-command.c:673       trace: run_command: 'git credential-cache erase'
-  11:07:34.761927 run-command.c:765       trace: start_command: /bin/sh -c 'git credential-cache erase' 'git credential-cache erase'
-  11:07:34.768069 git.c:502               trace: built-in: git credential-cache erase
-  11:07:34.768690 run-command.c:673       trace: run_command: 'git credential-msal erase'
-  11:07:34.768713 run-command.c:765       trace: start_command: /bin/sh -c 'git credential-msal erase' 'git credential-msal erase'
-  11:07:34.772742 git.c:808               trace: exec: git-credential-msal erase
-  11:07:34.772783 run-command.c:673       trace: run_command: git-credential-msal erase
-  11:07:34.772819 run-command.c:765       trace: start_command: /usr/bin/git-credential-msal erase
-  error: RPC failed; HTTP 401 curl 22 The requested URL returned error: 401
-  fatal: unable to write request to remote: Broken pipe
-  fatal: could not fetch c4fff0229c9be06ecf576356a4d39a8a755b8d81 from promisor remote
-  warning: Clone succeeded, but checkout failed.
-  You can inspect what was checked out with 'git status'
-  and retry with 'git restore --source=HEAD :/'
+Do we want to limit the definition of "branch" very narrowly, i.e.,
+"subset of refs whose refname begins with refs/heads/"?  
 
-Fix the immediate problem by including the authorization headers in the
-probe_rpc() request as well.
+Or do we want to give a description at a bit higher conceptual
+level, something like:
 
-Signed-off-by: Aaron Plattner <aplattner@nvidia.com>
-Link: [1] https://github.com/Binary-Eater/git-credential-msal
----
-If http_auth.multistage were set in this scenario, then probe_rpc() would have
-returned HTTP_REAUTH and this would have probably worked by generating a new
-Bearer token. And we might need to use HTTP_REAUTH to handle the case where the
-token expires between the initial request and this one, but I don't think
-tackling that in this patch makes sense since the original Bearer token was
-still valid and git just didn't try using it. And setting multistage (the
-'continue' parameter in git-credential(1)) doesn't make sense for Bearer tokens
-since the token comes from an external agent.
+  A branch is a mechanism to help you grow one line of history (in
+  the sea/cloud of commits) by (1) keeping track of the commit it
+  currently is at (by recording its ID in the ref used to implement
+  the branch), (2) allowing you easily record a new commit you
+  create while you are on it as a child of the current commit (by
+  allowing the symbolic ref "HEAD" to point the ref used to
+  implement the branch), (3) keeping the description of the theme of
+  the particular line of history being developed there (by using
+  "branch.<name>.description" configuration variable for the branch)
+  which is incorporated when the branch gets merged to an
+  integration branch, and (4) keeping track of how the branch has
+  grown over time (in the reflog for the ref used to implement the
+  branch).
 
- remote-curl.c | 2 ++
- 1 file changed, 2 insertions(+)
+We can limit ourselves to view a "branch" as a narrow subset of a
+ref that can point at a single commit in the dag of commits, and it
+can be updated at any time to point another different commit that
+has no relation to the previous commit.
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 69f919454a..1d0ae72521 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -877,6 +877,8 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
- 	headers = curl_slist_append(headers, rpc->hdr_content_type);
- 	headers = curl_slist_append(headers, rpc->hdr_accept);
- 
-+	headers = http_append_auth_header(&http_auth, headers);
-+
- 	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0L);
- 	curl_easy_setopt(slot->curl, CURLOPT_POST, 1L);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
--- 
-2.51.2
+Once we stop limiting ourselves and explain the purpose of using a
+"branch", "it can be updated to point any random commit" stops being
+entirely true.  While the "git branch -f" command can be used to do
+so, doing so all the time would go against what makes a branch a
+branch, i.e. to keep track of the process of growing the history,
+and it is expected that it would be a lot more common for the commit
+pointed at by the branch ref to move by growing the history with
+"git commit", refining the history with "git rebase", etc.  But that
+can only follow if readers understand the branch as more than "just
+a ref whose name begins with refs/heads/".
+
+I am not sure what level the data model description you are writing
+should be at.  The current description seems to concentrate too
+narrowly on "a branch is a specialization of a ref" aspect, and
+while it is not incorrect as a description of a building block of a
+tool set to implement a workflow, it might be too limiting to form
+a proper mental model.  I dunno.
 
