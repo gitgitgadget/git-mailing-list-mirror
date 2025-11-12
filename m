@@ -1,79 +1,92 @@
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723AD3C465
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 19:13:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D0522688C
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 19:16:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762974828; cv=none; b=h0UfNwB6pTSFJbA1te2UXT4Bq0Zfxt+EI1NfYbTKcO6h7d0zXZ+wBfikQJpC6bYC/fbPrh5mvmRdH+cSS4skfiG3+vsMB9T3x+suwQ4MnngILLZJD9gb88fUELC2F/ocU7IoUszfWNNo5UJuJh5Qf6daDEcOpdVhutuSDF8iXOY=
+	t=1762974971; cv=none; b=ky0tQ1qGknvDhoty6AMdf3d+MKU/9B6jPoPm71yEHiflkMZpRXqULe4kAbZMvJYgLi9MbNLiJSyi0r+DPAZP/N7OJbW9tSG2CN1UBcEVSB3R4UA91TVQwgO1kc8zHJ2ZCE92jGED4IMLnKq/O4dwptOeDhTmalA3J8fEbq4kLfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762974828; c=relaxed/simple;
-	bh=B+phqC6OF63JWq4xvc8g8NDT/mp8pEZcnx+NhPZ5G5I=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=FZLBqqjSp0P1wBFYOGbnatzpnRYLlgUPoYQcWLkjFQeIa/4YOc/Q534d3GeNM+yjymYIDIF5hLpVRs1PE7DIun5gO4i16vNMyfQk4s6QzXonPi55vx9+BaHNajDOTeN9vzZNo4Hfh++ZOK7OxHW+In5TRAUyxDc4KH6ZrpC5bYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X6miW0mJ; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762974971; c=relaxed/simple;
+	bh=GvCS+y2uEWtUKYO5+7rttgZShHEFteuREny+QTsZXWU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bgtqECWvO06XidVgyzr4iUu2W+mX/uaoqlyMf1DBui556xMhZf+7J3dk/BXkVE3cyONYe+Ql4zJTTqlm57PfdUHfnRmvACmJlHrUg2UuT+l2Gk3tRw8jlF0fLl6HdvnFDy6TU7vrc81hHArzQo/HP93L5KeQ8b/7dNhs0p75h7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E3eaM6Ie; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mlVCIxch; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X6miW0mJ"
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-594476f218fso893304e87.1
-        for <git@vger.kernel.org>; Wed, 12 Nov 2025 11:13:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762974824; x=1763579624; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Le8DLrUN6MGSUwEzlgN9R6HVaUlJla0W334TqIFMHW4=;
-        b=X6miW0mJXpEBby+q9X5bBAd2zMLygKj/XFvTyjR8EUah61YJBwhwwPWOkYrN9FZ1d0
-         DUVoSA6FkV4UrXSHUUtWqQMg1qCHlbrAabGULr2ie5TfF5FO80XSW9llUeA2qca2Y0Zi
-         OOo2IGFsW2Pumm542/4wHF1EsyMXLBHqO0tCqc9Wg5SvJ1zgOPs128ybf+6R9z+ZXHSR
-         kWdEWHC1QcEQTeoMIs9zC/M2zR3LkCbhsI18VDrXU/EuKRdvAWDHyQtDfaqvsu5BPuwU
-         jzMwvc70FBoPyvdnsxAIX1S+YpIemkApvm9tkle/NhWFsy3hXQjmHk3zpgvtKWq3BXED
-         mb3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762974824; x=1763579624;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Le8DLrUN6MGSUwEzlgN9R6HVaUlJla0W334TqIFMHW4=;
-        b=iqww9foFE5uuQPzMjmcX4y+7kXi4WtN5PgQzvlPMqKoetophIrHfQUGzA4KNjmhlA1
-         c5q5TSZYfSowiAIi9g1cAM+xzI5/+JHg0CHHFIYw74b/wiJ7DBa7DdB9D9X2U2CCUU2h
-         T8b5Hl0IgCPh4MSyFIfEHUgizpLDvE5QfAa1Uw9WMZsPjWroXUHGyiYTbiqkuRSHQBI+
-         Bsqx0Rbfb0uHqbzZ5Et5ZcFiwaM1Yuq/b2Gs+jpnjVY4TicZJb8hJcc4Lu4U/DooWFWE
-         eahtBjg+6pUxeb9UjN1RElqBLVSZABtRa+OKxDj2aySJze2LYDZmdS5eTMXhMFk0ljVf
-         x80Q==
-X-Gm-Message-State: AOJu0YwUGd8t99Uf1V79I58uZ+NtIoYjF0jdILOIt6dbJtybgcyc2NVD
-	4UTAkGp203wopQSVAqVyG9UWrFxryKl4c4l3bgUnqLUSiC7EJnYW8n4r
-X-Gm-Gg: ASbGnct5Y9G5SVE/Xs2W28OX47pvFjQYamAdG5IUUd8hMJy2rEJavMecTT631mRGALV
-	JPQHBoJgu1W2MudHULNO89Oo1MwQVcai43g3yiB0gZBZkkQHTr76hwF+amRdF1l2QiqSI8SDrdl
-	BE6LfoFU+tlrAaVuUYgA7cwqGk72JUzjdOYt5Xh2/Xb29I/FQL+wQMIJnfGxKUS55PldHGuUWCJ
-	ROyaroKE1joW4wxBrawBnJZaK8FbmFgEe+qUS7HPxAylvA1DMsjyJfcfM0+Mu/UoSG0s5pltooj
-	ClyN4gp99KjXB9Ttm4j6tXGLrXtfrtTNlmYGBVeAaS2z2QU23OE1qB1AVQ+FZxpElqlFj2MPO4o
-	t/k41ICqS62QUUgedXl5tQ+6Vy0l7ak8E2ekD0wCf2hDosxw8LyNWk/OTen0EULJFj72Mwo01XT
-	ZlCOo=
-X-Google-Smtp-Source: AGHT+IGLJ6gR9DU4Hr7bmzWFM3ntQqFOddiCesntm2Dk2PPWg+HbSTWvaEoyy1Y/TxfZkxZY50BqQw==
-X-Received: by 2002:a05:6512:114e:b0:594:49ed:3cf1 with SMTP id 2adb3069b0e04-59576e02b22mr1775633e87.10.1762974824173;
-        Wed, 12 Nov 2025 11:13:44 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5944a5a0b7esm6077606e87.109.2025.11.12.11.13.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Nov 2025 11:13:43 -0800 (PST)
-From: Sergey Organov <sorganov@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Junio C
- Hamano <gitster@pobox.com>,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
- <jn.avila@free.fr>,  Martin
- von Zweigbergk <martinvonz@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Elijah Newren <newren@gmail.com>,
-  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v6 00/11] Introduce git-history(1) command for easy
- history editing
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
-	<20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
-Date: Wed, 12 Nov 2025 22:13:42 +0300
-In-Reply-To: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
-	(Patrick Steinhardt's message of "Mon, 27 Oct 2025 12:33:48 +0100")
-Message-ID: <87tsyzm5cp.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E3eaM6Ie";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mlVCIxch"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0059F1D00189;
+	Wed, 12 Nov 2025 14:16:07 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 12 Nov 2025 14:16:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1762974967; x=1763061367; bh=q4GY5rkmrz
+	6rf7V0faXepn2uNegt4AjCuJWMmJXPqZU=; b=E3eaM6IelbHrC1B4yQU/jrCIyG
+	mOaDoHFJ11sT8c7a2jrqKjnq2GlqyPZSZqaJG1mmbDLGbWPlggFtHJ+t6zsjwdex
+	9EDoPmKt+GVy3b0zGeyQgKmxdfK2MO/ozKvQBzK9iLgmZtCp2GOksSVv9OAEp8Pt
+	liwYVKjSmLsdOZj+p8bj/yZme1+6inX9F8Dk4Sw20JeskaDmcTbOD7siTu+ZN/si
+	zd9T8mN3uBulLSJckWvwTP9QbfpgdgqrvdpadV6udZyQFQbB/eJetyCZvp3Uw5je
+	m6sWeHzfEu3SceqXwoYS9Dlld9gL7jW2Xa5y5Igth4inkGFCZWM3k+9iKnMw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762974967; x=1763061367; bh=q4GY5rkmrz6rf7V0faXepn2uNegt4AjCuJW
+	MmJXPqZU=; b=mlVCIxchaFgKcs8AyZCr49jJP43VFGo9/84Z1i056YZIev4fk6t
+	HNcZO5vbcW/593gvzv/pkfq/k+Zkz+eD2GT4uUKTKCsz7s+CjxrhLUEPFnR2QFaM
+	1VsxzcJPChGlwPweHjehsrmflGUd5Rsgv7t5+D7p7LNGquGtXiSPT0rfm6YTH7c1
+	f4YBZ9UX8W8TYMtMkGAwGl2/H5kVdBjnpvjHX5Vwf4rsUNuxGlwBvNlzEiXhoMq2
+	QWhr5aDorSrPRJDkj6CnHnErvRyevNQiy9X/xBzwySKOFk1VzalIzx0jM1ENPPTw
+	naiUp2cs2Y0MNAxHianRwZpza3SFqcOZ1ZA==
+X-ME-Sender: <xms:99wUaXBSSLWQ1ealAji9PesAZxyoUsHrvSDOMadFZ_pBSgeCiuApCg>
+    <xme:99wUafy96UdNH1v90rTRb_uO5NhGrUFFMsz_KbRiaV3-IMyBxaGmagft1HuGp0sTJ
+    va1nakLbhrri0fh0Yie6lBG84jlymMnYPntXeUAQtGurrvAENyi9zY>
+X-ME-Received: <xmr:99wUaU0oyjYqFCRXBK7mYFdNTftQEKCyjkOyjRqT9tjlXvTp-sIGi12bVnAAQnrtAw9LuuSsE8hpNwS4l59YEtuuxTzoTsswYNei>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdegkeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
+    gsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhg
+    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhes
+    fhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:99wUafzE82-9AitJS4-78F9G1xuEBzAWMSunWWYb1lf9Ky_nHe7SmQ>
+    <xmx:99wUabEbyhUdvohxxOwp2WxSgjUoCNmETw50TNrnUSebD_YMJeVcIg>
+    <xmx:99wUaSYwaDOm1W13OEMUgTVbMcieYpRieOlNYpVj0ka0DsUeoREoXw>
+    <xmx:99wUadD_gEmFHXZ8L31z-qxhQwK7AN5kyfy5Az7gFC3AEX3NiNv5pQ>
+    <xmx:99wUaelP3L2QjHE1Ng45VWQIGJv7BzhBiaRj6_wPihlBzofXDxlMivGX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Nov 2025 14:16:07 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  "Julia Evans"
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "Kristoffer Haugsbakk"
+ <kristofferhaugsbakk@fastmail.com>,  "Patrick Steinhardt" <ps@pks.im>
+Subject: Re: [PATCH v6] doc: add an explanation of Git's data model
+In-Reply-To: <2474339d-67bc-4a68-9f26-fe7edd172ec4@app.fastmail.com> (Julia
+	Evans's message of "Tue, 11 Nov 2025 10:24:38 -0500")
+References: <xmqqo6pde90w.fsf@gitster.g>
+	<D50AB3E0-E41C-49CD-9407-AB60331A6A43@gmail.com>
+	<xmqqa50v4x8n.fsf@gitster.g>
+	<150f3442-93a6-4469-9c25-5bca24accc80@app.fastmail.com>
+	<xmqqfrakyj0w.fsf@gitster.g>
+	<2474339d-67bc-4a68-9f26-fe7edd172ec4@app.fastmail.com>
+Date: Wed, 12 Nov 2025 11:16:06 -0800
+Message-ID: <xmqqa50rqcy1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,36 +95,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Hi Patrick,
+"Julia Evans" <julia@jvns.ca> writes:
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> Hi,
+>> Maybe its just me, but I find it a quite roundabout thing to say
+>> that a ref refers to an object name (or "ID" if you like), simply
+>> because name or ID *is* a way to refer to the thing that is assigned
+>> that name, so you are making a ref to refer to something ("name")
+>> that refers to what it ("ref") originally wanted to refer to
+>> ("object").
+> ...
+> One idea I just had is "a branch is a label for a commit ID", which
+> I think avoids the issue with "name" from earlier.
 >
-> over recent months I've been playing around with Jujutsu quite
-> frequently. While I still prefer using Git, there's been a couple
-> features in it that I really like and that I'd like to have in Git, as
-> well.
+>> That is what I find the most strange in the construction "A branch
+>> refers to ID" at the conceptual level.  I am much less unhappy with
+>> "A branch records an ID", but stopping at that may make readers ask
+>> the obvious question "what goal does that design aim to achieve?"
+>> (whose answer is of course "to refer to the object that is assigned
+>> that ID").
+>>
+>> "A branch refers to a commit object by recording its object name",
+>> "A branch records the ID of a commit it refers to", "A branch
+>> records the ID of the commit at the tip of its history".  Any of the
+>> phrasing that does not make "ID" the object/target of the verb
+>> "refer to" would work to avoid that strange construction.
 
-[disclaimer: I didn't follow all the discussions closely enough, so
-excuse me if these things below have been already addressed]
+Sorry, but I am having a hard time to come up with something that I
+can give to help somebody who rejects "record", saying that it is a
+new verb, and in the same message introduces "label" as a better
+alternative, as we haven't seen "label" used in this context,
+either.
 
-Are you aware of 'git revise', I wonder?
+Besides, a label, a name, or an ID are all that are used to refer to
+something (in this context, "a commit object"), so I find the newly
+proposed one just as roundabout as "a branch refers to ID" in the
+same way.  The use of *ID* is a low-level implementation detail to
+make the ref work as a label for, or make the ref refer to, an
+object, so "is a label for ID" is just as bad as "refers to ID".
 
-https://github.com/mystor/git-revise
+If we do not hesitate using a new word and introduce "label", "a
+branch works as a label for a commit object" may probably work,
+probably.
 
-In particular, its 
-
- git revise --interactive --edit
-
-feature helps a lot in massive editing of commit messages. It creates
-single file with all the commit messages (similar to todo list), and
-then applies all the changes you make to the file as it revises
-particular commits. Very handy.
-
-It'd be nice to have something like this in the mainstream Git.
-
-BTW, it has commit split feature as well, though I didn't use it myself.
-
-Thanks,
--- Sergey Organov
+Thanks.
