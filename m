@@ -1,100 +1,81 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D602277C9E
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 07:25:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E78214A60F
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 07:55:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762932335; cv=none; b=XpCStWlHT7EWNQHov4dbxZkvQnYEUv5Tva3r4eekswTOpm+x50ieC/7ztioEj4qNtVaFq/qpL6OHATe3RWi5vUTIFPYrQyXw10pVDzLDUqoqC9LAMwIqC8gCfIx/vGBWDe42jyjfNVbSRzfLh51z8H1qS/cx3QHuTF5NvKlhCc8=
+	t=1762934126; cv=none; b=pVgvr2pT8fCoftwB0hoYpMriEIpDyEYm6gJfjMGcAZ740p70KKlI0lsdUKiz7MjTXEU0ZtWKeS5b+5XLRcnwGqbKh0N9srlAm7V9mUGVFGjQ/JHY9zTY+7ocTzwBCFoXO1B/Nt65kAvpDoMYASFlBAIZE4+Rk4jTfjc9v0zFqYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762932335; c=relaxed/simple;
-	bh=LE1xd9N46b2I3yh938Lx4JVszFTJlU3XSdZ7abDQvJg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iKKOgyG0VD9GmPNeil0oDMkZfAkVAGQSk8cW4HuUty1985yQjFs3JubX5wLyRe5gTm1R+9O485Px1L+XhOukIatrRsSWAqmxJZD35FnHy/g3M5QMq4pu/2bCG2dkEKmSbRP27OPCBx8kGyu40eHcky3nnVrje++J5Slm5RhdodA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T7J6tuTJ; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762934126; c=relaxed/simple;
+	bh=8+AgjjdyvK8N0karYi1VQlXWqgPsChvdmpMWUmMkmr0=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Jp+lpMPbTHhWuZ1EogWEajrhZ/wKJHa8bQXsZWHPw3cATZKtnAjNP6iqnaIIIwHt4zJ+mh797AGViubskLw6kJxTWaZhakpthhAvE5mmKljf3n/NJCBD0h0hHJGHub7Vqp7N87+8AH0pZTBuZs572gNqhGNg4HeymOQL1DrALQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=coDW3OUO; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T7J6tuTJ"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b3e9d633b78so78805866b.1
-        for <git@vger.kernel.org>; Tue, 11 Nov 2025 23:25:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762932332; x=1763537132; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e9a7dXq8ZXEzbSdMVYlU7EHdBQUxrDdZgQLf8Q4ezBc=;
-        b=T7J6tuTJrF0qgDPHktlh0QTRHAcxm3wtWR84lkRctR986JjbRQBoRO+O2m7PXlFuKF
-         59snJYpQOgCLAvnkcN2fPDvjSgLYlIqqWrrsN2bv2fOhscC2oZBFdlceasoSLrxuV/xa
-         B3/XUK13Xu/JiR5bafFlMLKjxbZ82bl4OJ4eO+6EIANf7eueEfrnWpnARCRJ1tICZH9b
-         yhhoteMsvugYuBB5cEV429Fdq970VZVPz6x7J2NfEbwN9P6t7zKNZpqytUId95ysQlPH
-         hILC78gMCbylb83fYOHgRWIXtcZ7DUUhGei9D2ROGVUzOwPyPJaMPGCyfZcGyhwUobGc
-         slVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762932332; x=1763537132;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=e9a7dXq8ZXEzbSdMVYlU7EHdBQUxrDdZgQLf8Q4ezBc=;
-        b=bhMcSuWkVsLcbcvVzOSmrtBZbP43NzzOTqGbdnf8Qz+oeyT1TLVupCl/iBjmLJvEdL
-         TJyYG4n3mYdkZry3Ld9BiI4xZ3qU2tqAJPS3ShrvxAVCb0m8PyzLZbOQH/1je9OqC6xf
-         SVT+pmcR0aSo63RNaFfihNA/u1m2L6pU5cjE+Fe2DQCbSRMf50twRs4W+r+DeufdYXrk
-         fi53+KBVTIbboU64XrwyJcoRHP9a55tgITWohB5tWwQvtru7zV3YA5Dd5luwi0y/NELL
-         6VLm7SOxNpQg6HR4vi4zQAoj9mbLG8ot9ORFzL4ebHiXXJcisk3r5x0f/xh7r05+fRcy
-         VJ/Q==
-X-Gm-Message-State: AOJu0YyI0BQdRFGQpgaZcU8/dK7PqTRg9j3YQh6tCnAp5UmVKlejGNZn
-	+vi9nEMunfO8IoH00JLBYymh5Antqsa8ph2LtBsUsO9bIOGjJyhizKfOt91EsFO44vNCXZKKPe3
-	8ULgIxzf0DdKkV5hVF75udtUH0Pfp740=
-X-Gm-Gg: ASbGncthIrV4fKFiV9+qF3+KObA6Ell7Hh0CxElW5J8i+FdKmP5U6QlA0ZRkul72X1h
-	8qvx6l4y/gptoVWw4T+JUP7YGxAd2VZgm+0J4bKRn91SctXKBOaIXJNinM9IDPL5bNTT3kbJ+Ab
-	zB8BRN1ErR4UWHm5/u589RO0JoHy5WNRKUQ8M0AjINn4mcGGmQ5bf7TxEPsEqESK8kfCCf1Urr4
-	YjRX5kiwKik+kgV8qVQwb351dLFNSZ/QDo5FKufOFbxnQK6oJT6N80mfOKh
-X-Google-Smtp-Source: AGHT+IHDl55Wse22LpX0HlfP28j81RZppmaB4HPPI2xLPpvlPfd8n44C1rLOap0O3JFxmbDvHPOUDacqbD0p5FknkqA=
-X-Received: by 2002:a17:907:6d0b:b0:b70:b161:b9a8 with SMTP id
- a640c23a62f3a-b731d1498femr673128466b.2.1762932332240; Tue, 11 Nov 2025
- 23:25:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="coDW3OUO"
+Received: (qmail 495302 invoked by uid 109); 12 Nov 2025 07:55:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=8+AgjjdyvK8N0karYi1VQlXWqgPsChvdmpMWUmMkmr0=; b=coDW3OUOJirPRdDwAAzGImLH7wXKrBPRKu8BYkNOJNybfKqFSOpzK26/7M8uTxIJ1sNcMVVNlnlDuGnjN4LGpTTg3Jty6ctFHiT+9yOGRlYN/1cNYd19a1FeKKA/bwrZ0TX1GWPgLaZlZQFiOuPUuyftGyj8BrJpSq4stMJvKtr7dZsji1NF+BZDSmu9zGSplkVbfSzY/yphEYdVJTKjVU4iGQMtaDe84/J1Z/2MrPCIoUGmPawfQmCHh7AOOWBxPqY+T1NGLEMYg3AJxSYplYhJ0Yv8731UygTH5NLDl89FSCUUZUfiQXUv8FUIuqYN7czNXNlNyKXUC/feIn6SHA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 Nov 2025 07:55:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 786264 invoked by uid 111); 12 Nov 2025 07:55:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 Nov 2025 02:55:23 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 12 Nov 2025 02:55:22 -0500
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: correctmost <cmlists@sent.com>, Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH 0/9] asan bonanza
+Message-ID: <20251112075522.GA978866@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251105061918.3688870-1-christian.couder@gmail.com>
- <20251105061918.3688870-4-christian.couder@gmail.com> <xmqqjz00e5ns.fsf@gitster.g>
-In-Reply-To: <xmqqjz00e5ns.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 12 Nov 2025 08:25:20 +0100
-X-Gm-Features: AWmQ_bmdOSrahXGrfNh49RuQiCUwxcq3dRhJ1PvTors2eozv83YM5j-aZfifkDI
-Message-ID: <CAP8UFD3G6kn-n1_rXJgcZf1djUE4Ner5xd1YaNr5tz5h8d_Ypw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] fast-import: add 'strip-if-invalid' mode to --signed-commits=<mode>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
-	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-On Sat, Nov 8, 2025 at 7:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> >  t/t9305-fast-import-signatures.sh  | 118 ++++++++++++++++++++++++++++-
-> >  6 files changed, 226 insertions(+), 28 deletions(-)
->
-> Unfortunately all these tests that assume that explicit-sha256
-> repository as a subdirectory exists would fail when the topic is
-> merged to 'seen' and the tree is built without the optional Rust
-> support.  This is because brian's f6581e23 (repository: require Rust
-> support for interoperability, 2025-10-27) changes a couple of tests
-> to require RUST prerequisite.  One of them is what creates the
-> explicit-sha256 repository.
->
-> I do not think this topic to preserve or strip GPG signatures
-> particularly cares about the dual hash interoperability, so can you
-> rearrange the tests in this series to avoid crashing with the other
-> topic?
+This series fixes a handful of issues that ASan finds in our test suite
+if we tweak a few options to let it look deeper.
 
-I will do that in the v2 I hope I can send soon.
+The cache-tree one was reported to the security list. It's a real bug,
+but I don't think is an interesting vulnerability (it's a benign read
+off the end of an mmap'd file that is local and not generally under
+attacker control).
 
-Thanks for telling me about this issue.
+The bitmap bug is also a real bug in new code that I think is not well
+exercised yet (+cc Taylor for that one).
+
+The fsck changes are for false positives in ASan, but I think it is
+reasonable for it to complain about this sketchy code. ;) I hope the
+result is nicer to read and reason about, but whether it is worth the
+churn may be debatable.
+
+Along the way we can turn a few knobs that will potentially help us find
+more problems down the road (but ordered so that "make SANITIZE=address"
+passes at each step of the series).
+
+  [1/9]: compat/mmap: mark unused argument in git_munmap()
+  [2/9]: pack-bitmap: handle name-hash lookups in incremental bitmaps
+  [3/9]: Makefile: turn on NO_MMAP when building with ASan
+  [4/9]: cache-tree: avoid strtol() on non-string buffer
+  [5/9]: fsck: assert newline presence in fsck_ident()
+  [6/9]: fsck: avoid strcspn() in fsck_ident()
+  [7/9]: fsck: remove redundant date timestamp check
+  [8/9]: fsck: avoid parse_timestamp() on buffer that isn't NUL-terminated
+  [9/9]: t: enable ASan's strict_string_checks option
+
+ Makefile      |  1 +
+ cache-tree.c  | 45 ++++++++++++++++++++++----------
+ compat/mmap.c |  2 +-
+ fsck.c        | 71 ++++++++++++++++++++++++++++++++++++---------------
+ pack-bitmap.c | 27 +++++++++++++++++---
+ t/test-lib.sh |  1 +
+ 6 files changed, 107 insertions(+), 40 deletions(-)
+
+-Peff
