@@ -1,205 +1,145 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E324733F8B9
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 16:11:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCCD3385BE
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 16:13:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762963908; cv=none; b=AnEsXXEtwX5PYOPxPAWO0H0M5Xn+4moepLLXPKU5+ufpO7Tr94SlmpB+TzpuhVMQKwIM4QqrzRBEpFaMxsYZLVR1JBBZ4Dp2fxqrXyd7clxAiXvwYVMjXDqTbrwR1NoAPPodZARdj0+SB9GQFCkQGIviFx/YKFj/H0GOq8jVGbo=
+	t=1762964023; cv=none; b=fOXNcc2kuF4oCjk+eW2gN3v0RiNsYcA7LQdTigi4X1J4HCi/6VQpZB4rlUkFRCWBEkAh16PqKyEOGr7TsRzqWKvNpvzt68firItwrCylZq51lRy9pecS8AwdcgwWIbb6EyHpuLOr+rPjo63lWHeFQVcD5NoF71if9zkbhR5wdvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762963908; c=relaxed/simple;
-	bh=uU+tMqlFbaszAy6mjmYYimnVFy8iLbtVr0Zs4YyiVn4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZGKYxU7aP4Q577YTGIJxkP72yExU38wug+JEAhD7e5XinSPnWNa9UxYY4hyVFxFcXm3CnfgmykW2qBDawjR/vikk5dFDFn3ZRCN3I0wPkCK5ni627jvj8fYhYUrzQSEzDKOxmdZcySbD4kUHELnKNO5Vy8oRN6YkXCVpeyW9EPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WcCCeIjR; arc=none smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762964023; c=relaxed/simple;
+	bh=Vva0wx2zTyBn/QJbh8R2qLVxKt79+ItY3/JB7bam3BU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AJIPQJg/diPiO4AhJKlysQx8xrLlzWY6LogLlnbQC8ocD4WNe4QEjhHPsh60bx48WP9mwAZL2zTU0lMK3CVUu5Se+ApeviuD/EeI7yKe/d4wGDbOOW7dZDGJePqo1SmxLJeeLXS2NnuQHykLKXKzawhJ85mnQwBviGPVeD0FxH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PGKSSCe7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BiSHnHdm; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WcCCeIjR"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b727f330dd2so166591366b.2
-        for <git@vger.kernel.org>; Wed, 12 Nov 2025 08:11:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762963905; x=1763568705; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8cssP3PHGU3c1KRfXjHDlQ+qKNtk70OobE73Cj8bU6w=;
-        b=WcCCeIjRenZ1vivaIBvHbD2kMdUVCH+u58TRsWlf/GBqGZhVykp8cPybw7FqiBjXom
-         pVkyO+yM/PK7vIHOmlQ+WqfWY0NYuVz7qYJFO+4R1es+meSrNBv/UzvgtDH4abxRUrX8
-         qL3YYy+DkrJ8hfBXEEUSpe7d9Xdgu2yeYHf668RZ43qXmWRWwFKju9SZGeCainNn78op
-         xOrrXEd5Ovl/BYcxwQ1h2DSEwTJEq3aAGndAB2oJqiKVceWsFetJijbippLVtvqy3ACu
-         cs3Kc1cOpTSKIx0wUoK/1qDqQySk8nBdsEq4vNDPHOeUMSWDRfXp/uTc0CPfXWYTcFOM
-         28lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762963905; x=1763568705;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8cssP3PHGU3c1KRfXjHDlQ+qKNtk70OobE73Cj8bU6w=;
-        b=l/gPTDdAbjTg2O1ehqnSDzdn6JlwM1GHV3GyQVdo4wSd3VTe085bMqzjfvt6Jv76Rd
-         qUh/1WsEQsuw/VgRkQWiHyiFLCuq/LuBZORrnxdDmlQ1L44tlMNz/cdsAujPZXB2BxnX
-         wou6dmmySnRLdiOEFSsitnvssZxx6HbCOs6nfn+L2LmDemMPHHpcVLwqFF/svUeQBw+O
-         OadaxK3lfkFdjdUTIzImnPfnFY/6YgN6N7oj0LHI8fTEZm+wGkjBmFV77ogZU2PIVSKW
-         qyJsxJsBypcOkcQmx51BXNIOM8RHVQ2TicnsyEpvUtwP5+rvua83fp+wWmlLeton7sHL
-         IIFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWfl2Ln0Nerw0275LfUgmxTRVM8ADiYjN5Us4QiVEYM1PNq9PGCsBowQLYD61cCfSoRyaI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzE3m4hI97Y8HcAC5/d72iOh7wKHx229hUIbnm9M3dla3UXf9FZ
-	jfdzEfPnDQRMLzrKvMbmKW2FmUIClPHL6okv4RbG/0e6JnATgN734VJIFvbZXTE1x8Ulx+Zv+rs
-	KFbOkLEq7qHnEA5s3N5lR37uJZiQJEXM=
-X-Gm-Gg: ASbGncvUodhRkmfcxkl54cGkRXQaJz6F+hviVNfNWyZODqnAieHzU3dHBgCnxIuKfd8
-	gm10qWg+nxtOsZXRX0RE1AtPczdI+e0iaCvsiYV+2GCCFBL9dniEtH7pxYE55FCDeHpM8VxjTON
-	Obze8NdSHUtFpsxKMyCGNzCE/ufsWB3VGRyTWQKP9ZPhEiKw7Gsm8PHmRnsIhNSu7ZDoD9XveaO
-	rOLKcVorHPk/hR3V/P99CX9jb+fu0TFO9nKyN6hlTIXnwldXTFBwtUhSXpPRe8j4BNqBiJZ8ljd
-	qk07cKeSzee8Gsz0Nc+dMks=
-X-Google-Smtp-Source: AGHT+IFKHA00ZG3TMEB7kF9J2SebquPDjJJIyxcx9cduCwHnqGkbYOuWbXOTHEdhUggZelcKUSHMbNjKzwq1cuVUFYs=
-X-Received: by 2002:a17:907:9506:b0:b73:44ee:eb24 with SMTP id
- a640c23a62f3a-b7344eeeb9dmr30681066b.43.1762963904898; Wed, 12 Nov 2025
- 08:11:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PGKSSCe7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BiSHnHdm"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 222621D000B0;
+	Wed, 12 Nov 2025 11:13:40 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 12 Nov 2025 11:13:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1762964019; x=1763050419; bh=ncPfq7BXyv
+	QJSEJIkAat/eA3YKlJaJ2+nqK7nuTHhNA=; b=PGKSSCe7UANfSb6jg8Wa4eP+71
+	7oRVGjbWqrVIHpnoYnsxJNiIASm7kuFQIVEbFn2xY6ndV7yyLsEXFZVtkh6JZseM
+	V6tvKz3yOhzgwJOufNYTLCb18wpEafYbWuvDdMKrRGvz4nf/cKhJOIoFyukW+1at
+	YY9aeMSIHVp72W50QIRUHv9eJc7jxSQUxcKSu4kkiHG2IhRPZF4A0KFag7MrGFLp
+	xVrAKv7bqd6l7jN6pxXDXHdarCsMbGQjQNjnV+V99KDzb/qYokPoYSoQT4lBic4D
+	wsM4On4sxx7pCxgf7DQXUpnuYtUHWpjfJYpgSP7taOSHQfma8kcmHLopPxXw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762964019; x=1763050419; bh=ncPfq7BXyvQJSEJIkAat/eA3YKlJaJ2+nqK
+	7nuTHhNA=; b=BiSHnHdmXiIeibQ2MHm44v5ky4w8ZZGpQ3fCWlqYeqVSWM8R4ng
+	KJtuy9vs3s3c6CxolXYO+eMaij/KZqG3WIczQDQ2hTcmZk3eSpBmfz+vcDCy43t6
+	hwJs81rqURhmPr0L+Zlj7Aw/tAVB2bZhDoa2Quz0pBgiB69Irn1VoJWALwOXpvSH
+	R33mF7VmX3zXFNhBhggfqArqS4bikpLcSiEm9+168QHfB8OBGgOjE7YPkjhRJzeg
+	qOPK9JOfAjghu8uVSPVIcocjL0Lq5UmVDit8ZzEhAXBB6erhU6c2gzJepqAh7PbF
+	Ts9DKI1aoabVXCZKL/7WzkUIaoZFw0kaF1w==
+X-ME-Sender: <xms:M7IUaeXxagRGvZL4W9bjUtTZRIk2Ttp4kTNiWyMBy-A7tj80nMy62g>
+    <xme:M7IUaRl9J-8EzB4VxLEVPwZTtYmm83wmoPuZTIZ2as0G5ICsowZcGUzsLyytkacpV
+    JP14GE94I7vh4-LYfLOTV9479yC_9skp4Qf4Gw6zwmRckJfdatF1w>
+X-ME-Received: <xmr:M7IUaXbHKr09cN0PgSJGKjBmq5mJmiXu-XbjHrhZjHehdvlecTl8eEq18D-cacVKC08ku0hQnp453krSczXBC_LwRlI0ySwxxCMm>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdeghedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtoh
+    honhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:M7IUaUP_UggpuMawlgY0il4s3eyCxIlT-YcV-8Rd69b28Qek6bgHTA>
+    <xmx:M7IUaUYXsjWD4WdJgExDuEfBWwstvpXnQViMXc_eaxrB8R5Z4vodRA>
+    <xmx:M7IUaa0a21SXGyN8y0HHVEHsiLRhX5W9D1rIN7Fn9RZohKQhm16N6A>
+    <xmx:M7IUaSfdqCBWxCZ7zu6xmvCGBsDtBmnupuFExfzo6Sa4Pyv5XMBi_Q>
+    <xmx:M7IUac8GcLUZGauuGQ68Gg-3TXeh6QaeePmZJWLoEJn99wQVS2VaR_Cy>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Nov 2025 11:13:38 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>
+Subject: Re: What's cooking in git.git (Nov 2025, #03; Fri, 7)
+In-Reply-To: <87jyzvwgs0.fsf@iotcl.com> (Toon Claes's message of "Wed, 12 Nov
+	2025 13:56:47 +0100")
+References: <xmqq8qghfz8x.fsf@gitster.g> <87jyzvwgs0.fsf@iotcl.com>
+Date: Wed, 12 Nov 2025 08:13:37 -0800
+Message-ID: <xmqqecq3tej2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
- <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com> <aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
- <20251110201136.GB127132@coredump.intra.peff.net> <aRLdsu-MUgPPdIgX@pks.im> <f7a9bf6d-d723-437f-badd-517fbf47d945@gmail.com>
-In-Reply-To: <f7a9bf6d-d723-437f-badd-517fbf47d945@gmail.com>
-From: ZheNing Hu <adlternative@gmail.com>
-Date: Thu, 13 Nov 2025 00:11:33 +0800
-X-Gm-Features: AWmQ_bndjAFlDUbC0IK8SZcoy5-niwL_CAr3kDpTvbBhXEjS-Noj6wW3EeOuiuE
-Message-ID: <CAOLTT8Q_ajnCdnbLSJM_VQLpsHQPNBr_qh6L-X4KFyRxaXcJdg@mail.gmail.com>
-Subject: Re: [PATCH] commit: add --committer option
-To: phillip.wood@dunelm.org.uk
-Cc: Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, 
-	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> =E4=BA=8E2025=E5=B9=B411=E6=9C=881=
-1=E6=97=A5=E5=91=A8=E4=BA=8C 22:53=E5=86=99=E9=81=93=EF=BC=9A
+Toon Claes <toon@iotcl.com> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> On 11/11/2025 06:54, Patrick Steinhardt wrote:
-> > On Mon, Nov 10, 2025 at 03:11:36PM -0500, Jeff King wrote:
-> >> On Mon, Nov 10, 2025 at 06:01:57PM +0000, brian m. carlson wrote:
-> >>
-> >>> On 2025-11-10 at 16:50:04, Phillip Wood wrote:
-> >>>> On 09/11/2025 10:22, ZheNing Hu via GitGitGadget wrote:
-> >>>>> From: ZheNing Hu <adlternative@gmail.com>
-> >>>>>
-> >>>>>       This patch introduces the --committer option to git-commit, p=
-roviding:
-> >>>>>        1. Consistency with the existing --author option
-> >>>>>        2. A more convenient alternative to environment variables
-> >>>>>        3. Better support for automated workflows and scripts
-> >>>>>        4. Improved user experience when managing multiple identitie=
-s
-> >>>>
-> >>>> What's the use case for the same person committing under different
-> >>>> identities? We already have a config mechanism to set different iden=
-tities
-> >>>> for different repositories but I'm struggling to see why someone wou=
-ld want
-> >>>> to create commits under multiple identities in a single repository. =
-For
-> >>>> scripts it easy enough to set the relevant environment variables if =
-a tool
-> >>>> wants to create commits under its own identity.
-> >>>
-> >>> Someone who works on the same project under both their personal and
-> >>> corporate identities.  For instance, me working on the Git project.
-> >>>
-> >>> Some open source projects also require a CLA and you have to use a
-> >>> particular address to match the one that's listed on the CLA.  For
-> >>> example, Google requires an address with a Google account, so in the
-> >>> hypothetical state where I was going to contribute to one of their
-> >>> projects, I'd need to use a different committer identity with my Gmai=
-l
-> >>> address.
-> >>>
-> >>> I've also kept business logs in Git when I had a small business and I
-> >>> might well need to log approving a profit distribution (with my
-> >>> corporate address) and log accepting a profit distribution (with my
-> >>> personal address).  Those would need separate digital signatures from=
- my
-> >>> two different email addresses.
-> >>
-> >> Is a "--committer" option the best solution there, though? I'd think
-> >> you'd want to set user.* in the repo-level .git/config (or using a
-> >> dir-specific include) would be less error-prone.
-> >>
-> >> That doesn't help for using two identities for the same repo, but in m=
-y
-> >> experience it is easier to use two separate repositories for that to
-> >> match the organization of the work (even if you may sometimes fetch
-> >> between them).
-> >>
-> >> I'm not totally opposed to the new flag, and in general I'd defer to
-> >> people who say they find a new feature useful. I'm just having a hard
-> >> time imagining a scenario where it's the best option.
+>> * tc/last-modified-active-paths-optimization (2025-10-23) 1 commit
+>>   (merged to 'next' on 2025-11-03 at 9ab444edfb)
+>>  + last-modified: implement faster algorithm
+>>
+>>  "git last-modified" was optimized by narrowing the set of paths to
+>>  follow as it dug deeper in the history.
+>>
+>>  Will cook in 'next'.
+>>  source: <20251023-b4-toon-last-modified-faster-v3-1-40a4ddbbadec@iotcl.com>
 >
-> Yes, it strikes me as very inconvenient to have to specify "--committer"
-> each time. I'd have though you'd either want to (i) set up an alias in
-> which case you can start your alias with "-c user.name=3D..." or
-> "!GIT_COMMITTER_NAME=3D...", or (ii) set GIT_COMMITTER_NAME in your shell=
-.
+> Do you plan to include these changes in the upcoming v2.52 release? I
+> would like to argue to include them.
 
-Since modifying the committer is a low-frequency operation, there's
-no real need to specifically configure an alias for it.
+I plan to exclude, especially if it was not merged to 'next' before
+2025-10-30, which is one calendar week before -rc1, to give the
+topic the usual cooking period.
 
-> > The reason why I find it useful is mostly scripted uses. Sure, you can
-> > already set environment variables there. But from my experience,
-> > environment variables tend to be a significantly worse API compared to
-> > command line options:
-> >
-> >    - They are harder to discover in the manual page.
+> Maybe it wasn't very clear how I phrased it in the v4 cover letter[1],
+> but without this patch, some results are wrong:
+
+Indeed it was unclear.  With respect to the output, the only thing I
+recalled was (I just went back to the thread)
+
+    One thing to note though, the results might be outputted in a different
+    order than before. This is not considerd to be an issue because nowhere
+    is documented the order is guaranteed.
+
+and the patch came with a single test that gives a much later than
+before in check_last_modified output, which does not clearly
+demonstrate how the old results were wrong and the new results
+correct them.
+
+>> As an added benefit, results are more consistent now. For example
+>> implementation in 'master' gives:
+>> 
+>>     $ git log --max-count=1 --format=%H -- pkt-line.h
+>>     15df15fe07ef66b51302bb77e393f3c5502629de
+>> 
+>>     $ git last-modified -- pkt-line.h
+>>     15df15fe07ef66b51302bb77e393f3c5502629de	pkt-line.h
+>> 
+>>     $ git last-modified | grep pkt-line.h
+>>     5b49c1af03e600c286f63d9d9c9fb01403230b9f	pkt-line.h
+>> 
+>> With the changes in this patch the results of git-last-modified(1)
+>> always match those of `git log --max-count=1`.
 >
-> They're documented in the COMMIT INFORMATION section of the "git commit"
-> man page, admittedly that comes after the options and examples but
-> overriding the committer is a fairly niche requirement.
+> So this patch speeds up git-last-modified(1), but it also fixes some
+> buggy results. That's why I consider this a bug fix and worthy to make
+> it into the upcoming release. (which is by the way also the first
+> release that includes this subcommand)
 >
-
-Although it's niche or infrequent, when configuration errors do occur,
-the current fix process is quite painful for users. Previously, countless
-users have gone through great trouble seeking solutions because they
-didn't know how to resolve incorrect user.name and email configurations,
-which prevented them from pushing code to the company's servers.
-
-This may also suggest that Git lacks simpler ways to fix their identity.
-In fact, many users end up needing to use more complex tools like git
-filter-repo to attempt fixing their commits, whereas git commit --committer
-and --author could become a relatively simple and memorable fix method.
-
-> >    - You don't have any "guarantees" that Git actually interprets them,
-> >      as there won't be an error if you mistype the name.
->
-> Playing devil's advocate even if you use "--committer" you still need to
-> check the result to make sure there were no typo's in the committer info
-> just as you would if you were setting GIT_COMMITTER_NAME.
->
-
-GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL are split
-into two parts. Sometimes I even forget whether GIT_COMMITTER_EMAIL
-should be "<email.example.com>" or "email.example.com", whereas
---author or --committer provides a more compact and memorable
-"user <email.example.com>" pair.
-
-> >    - Cause and effect may be detached with environment variables, but
-> >      with command line options that's never the case.
-> >
-> > So I myself would prefer using "--committer" over its accompanying
-> > environment variable any point in time when I have a scripted use case
-> > for it.
->
-> I'm wary of cluttering the UI of one of our core porcelain command with
-> options for use with scripting.
->
-> Thanks
->
-> Phillip
-
-Thanks
-
-ZheNing Hu
+> [1]: https://lore.kernel.org/git/20251103154726.26592-1-toon@iotcl.com/
