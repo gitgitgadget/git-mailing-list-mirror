@@ -1,527 +1,582 @@
-Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4659B315794
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 16:55:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81B1199939
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 17:16:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762966540; cv=none; b=FaZ1Xx5PUnxAfGsY54+dDJPoyueg7ED1H0dl6axAQTvbGAl2nRo1Q9JrW1bcbHnpU2gtW/zm0rRRYNAqEWXQrmTkefdTzBMXrlQ521Vb/BGQgH+8LxNUf3caBksAhxTKeq/E18ZaWVW5PY3TE0EbgjcIBpHTXsleDWtS/Jzg/Nc=
+	t=1762967786; cv=none; b=HeaU23mwIAcYEuNKB+l+CC+hXy4ZcCL0ENa5F9IttAVinugu3ylpgUeCzeM/HFKXP9VRk9A3pm9PcwiaOFgwVE5EmkJqHeWmDKNpd7+pseEZn8/Kk6L2S8DLjVPFQPtJXbE0CZCZME76I2wRrti60CWQx9S6vCnIgPJlKimqdQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762966540; c=relaxed/simple;
-	bh=jmK3rP6/LmvPu43sn61oN3vAbf4ZXXVefuP7vLoKih8=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rAVCPYlpVvjvIW6K3C81UjZTH9tii4KSPY0+az8aeQfJ7NF692C5PioWGeHdpr+GFxXdgqns83dNis6oknbRImSkY2PJu3MWENx278bPiE7R9easblr2gVy9dtmGtOheLEzmtu7BPe2rKAb30ZkE3xo0bRXfBcxD+wzBdA1w8DE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GSJJnjDY; arc=none smtp.client-ip=209.85.166.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1762967786; c=relaxed/simple;
+	bh=aD8rCgRZEPIxKN9UTmToEi074OdyMj6wvx6VFUYUnj8=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ikuPisPrTIWG8bxSSgrGI5XMMnnTEkSzZW+e1HcY+qmryjjHI8ASAtkpxOcuRelf9CQYXgtL0aq147Q13lDVgDJfZjosQs54VgIe+KoOnFdQ64YN0L/uNi/PEg+dyZC+I8PFSbUCNABR9JiYAaTSv58JT0+k40j59LTp27i0ysg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hPMTyhpo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q8ngNePJ; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GSJJnjDY"
-Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-4336f8e97c3so10498795ab.3
-        for <git@vger.kernel.org>; Wed, 12 Nov 2025 08:55:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762966537; x=1763571337; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PrJ4wmqHR4BAD9BMi6k8BV6oPGStXLtH8LZNSMVmhKY=;
-        b=GSJJnjDYpqNr1ze0cZX3Px2T5Tra6My4gPDwcPrUiQ3sJVQlITPhC5jeNndHj/JuM9
-         L/I1O1f2V+k/m82q+sqMlp5c9VTzrzxZbjlBLlrD1cMY8vfXqazNPs+jdadtD4RBEoC9
-         oI6AydpZ5vZ4TvyN5uPj33hw8f7XPpmhqYnhCu7v76j7zNh1h/BtZ6Vc2Y6upMXHicqV
-         UwAy2wjm8FVIzJJI5VihHpu3bYjfaSoj6FkJQuwioYxo04dq1pk8i4/k5tiuYwDVi058
-         tnvAedKsuuEcY4sFvSHXqJ+eq53GozJVAM34Lru655XMKyqwuaJKOpNQomxrdtI/jCpg
-         jTzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762966537; x=1763571337;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=PrJ4wmqHR4BAD9BMi6k8BV6oPGStXLtH8LZNSMVmhKY=;
-        b=jTwTkEGY9qnV+alHBHGt77JMb/xRFjsXQDNrJQObZXfBrvFVdVef8/xQD5dH/YEQhM
-         MVnMURMQ1yriJNEH5DANXSUsvOwHKmhQxFRWGCGJnZbrT+10lQX9tKyzV1sYt8sJ4zwk
-         jeSU2saPa2CDv2H1uyMzmuLZ3HHXa+uKV2HLedIf5iIHBekSA6fF8/1WGWM6ZEAvKlKd
-         s2cyU07eoONIZhErmHhpEeCRNdSCdADwNgFjq7VL7Te7KwI+qIBkqkNJXuW5ccqdce8+
-         CfF9DbcGDx9FxHbvBEgWecstDr9Po+dPhXE/0OY6w8YSXRAvQ805xGJg0zVmaUL5x+1J
-         lTXw==
-X-Gm-Message-State: AOJu0YxPBOB3dyN/oLkglEkfpn1+r9aCJMyZNM/PBNWX/1nB6DOlIdHt
-	s5jAVOXxziO87CH7oH8QmnDF0XpREdRRjjCT+Pan5+B6D9Tsa/LWOZl/oHZpzQ==
-X-Gm-Gg: ASbGncskmiqPpFyO82IPhrVLGLc0YiBIII4e1K6H6o3SJTNQA0CkG8WxcCVUpbw007J
-	0+Xcwu+INhLgihwH+B6ZmU/SL+swXiGOgTlI86Dm0Bl875avyRKVUW+4xFyXcx+AfGPvoGVHeaV
-	25q4dkHib45j5STvjnRNFbstDt0b+yj3IhowaEMliT3tIv/uqlqZdhoDf2SOQlRekbmgT3whaee
-	BU2jQfzmDfslvkWTRpNOj/0Us/KaDmK0JcXZ9/ClRMfgpt4nGUpzULkRVwjlOqr/706qABZ1hBw
-	6QMV/pX6v5qvolMy+lp1L7y/icrLI5UPSKKgt/Bz7/mwe65B8OU5qHaEV3eDmFriMKn52A5b91K
-	dKmQRfSJ+kDcRkQsU2wvwnD8ePD/3lI3Brt1IounSbFoDI4kWAq+8REJPkg07HWJPbg+gDtfFEQ
-	7Rtfk0OEVd1kkenw==
-X-Google-Smtp-Source: AGHT+IH8eUlntPLHg+DLfuDfv7+hK8DRlt0W8x2N4EfnoIi1lnjvdmMCXeCnWyHJxVK7E4thkVrPbw==
-X-Received: by 2002:a05:6e02:2783:b0:433:6c43:27fa with SMTP id e9e14a558f8ab-43473d1f656mr47158535ab.9.1762966536665;
-        Wed, 12 Nov 2025 08:55:36 -0800 (PST)
-Received: from [127.0.0.1] ([52.173.219.151])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-43473326e42sm12205255ab.16.2025.11.12.08.55.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Nov 2025 08:55:36 -0800 (PST)
-Message-Id: <pull.1997.v3.git.1762966535495.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1997.v2.git.1762793782815.gitgitgadget@gmail.com>
-References: <pull.1997.v2.git.1762793782815.gitgitgadget@gmail.com>
-From: "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 12 Nov 2025 16:55:35 +0000
-Subject: [PATCH v3] commit: add --committer option
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hPMTyhpo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q8ngNePJ"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1CA971D000E3;
+	Wed, 12 Nov 2025 12:16:21 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 12 Nov 2025 12:16:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1762967780; x=1763054180; bh=moyk2sjYa723BpRDHSWZIVJc2AS2ZHEv
+	IuFCXhCSXDY=; b=hPMTyhpoDLgmW3cM36K6b0oEiHThbAQgflUZ2TsxaSn+z4A7
+	Ul7xWDiqppeABhjPnGDLgHTaljJodXPCFIniAGUUiIkURpoPAhlzJsqxgwabMIIm
+	lnBz6qDCNMOA8zGgOi5BcYb2wiSJJ0GCSJZS66/98NNCznX3BXWv1D5lm2gVCtVY
+	fYxeFxouAq5e7/EkUGBD/86IboMnbM/kioGOptcFXJqokfq39hpsyxxdt8ZZ5FBE
+	K+H+MMJf/VbxQDT087Dwj5Z+p6WT4B78XYZs84jIL7CCA5Uj7RzZfRn+8ENWoEm7
+	ca/5SNGqi8biYVQlD5Wyyp+LMxqenedfVmAnXA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762967780; x=
+	1763054180; bh=moyk2sjYa723BpRDHSWZIVJc2AS2ZHEvIuFCXhCSXDY=; b=Q
+	8ngNePJCQ0L6a1hREmm1Kja2s8HWxTBD1+0tzZzOeBo/wxLbhUHYbs0NHyXkMziV
+	XQ3HJX0cIGECHUloMYvtF6+yXUxUaWin17EuKYj0N1pAwpl6jbYLq2oSWpKT/oHc
+	3RVq9VA0e7FF2vXl7AeA0kyp1XVLI5yM8znEI0Q6uPX3cVN95C7Jx/IC2cRHoHpb
+	/al7lVTSJ+UPr2jFvEPz7G3VyJOy5qK9TjT+uDrnSF3pxbYsqlWEchDAc8d0fzD1
+	WlT3sAouWD1VDhMnp96pHdAWXJ/4nmY+AiizADbIn4N2mv97NdgIHN2CfP9fAsd+
+	Nb9zwUeZ0mh8902X+Ot9g==
+X-ME-Sender: <xms:5MAUab3102xVho_A_A48XHDnzukChOujFf_DOE44C1GMjOLk-AN_mA>
+    <xme:5MAUaRhnFeelE2dHFEcyGlQWhivsCDJmmshuDOz0RSF7ZnjtJLQv4KsnXLwRpJbVl
+    AX5PO6PVu5nqgPJKtMWJ0HpGTKsxbTHPidUr6rLesgUjf5iJXdVwaU>
+X-ME-Received: <xmr:5MAUaZR9Wq1l8soEjY80rsEDPo_UaQpdajzRoTSb1ugCm4wSqBsogbvgbegLu56GPFW9z_nmMTb-sNc6TW0yxKpmnNAYna5Gg32q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdegieegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
+    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
+    gidrtghomheqnecuggftrfgrthhtvghrnheptddtvdffleejvefhjeeigfelffefjefgfe
+    egjeelheekffegiedvkedvkeeiledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdp
+    ohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtohhmpdhgihhthhhusgdrtghomhdpgh
+    hithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+    lhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfe
+    dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehlfihnsehlfihnrdhnvghtpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:5MAUaajzlCHjhyU29UcUswo8Du3TPYAj1eJx2BHKuOmZ2CFMg0sgOQ>
+    <xmx:5MAUaR4qltjhpOZ77UzIt9pZrvnVUWjkr7g0kumvdFAaq90CgGXAnA>
+    <xmx:5MAUafBjAASqMos7fB5Ul7zMQ3xTMt-Jz-EpZqJRjxJncvEKLgPpCw>
+    <xmx:5MAUaQY3B70D6TGfVDMfmJYdJ4pRyhmBztf6xIjnvXivljDv5H5rMA>
+    <xmx:5MAUaRNKrBonh_lNVcsPY1lIhqZeGy_9IEXR_SWX_CBVYWRqfd41PFZA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Nov 2025 12:16:20 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: What's cooking in git.git (Nov 2025, #04; Wed, 12)
+X-master-at: 621415c8b5371a4734315232a780dd8282f6fe4f
+X-next-at: 7b8f6cc65fe471fcb24062876ba07252c1a0696d
+Date: Wed, 12 Nov 2025 09:16:19 -0800
+Message-ID: <xmqq5xbfrx24.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-    Jeff King <peff@peff.net>,
-    Patrick Steinhardt <ps@pks.im>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    "brian m. carlson" <sandals@crustytoothpaste.net>,
-    ZheNing Hu <adlternative@gmail.com>,
-    ZheNing Hu <adlternative@gmail.com>
+Content-Type: text/plain
 
-From: ZheNing Hu <adlternative@gmail.com>
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
 
-Add --committer option to git-commit, allowing users to override the
-committer identity similar to how --author works. This provides a more
-convenient alternative to setting GIT_COMMITTER_* environment variables.
+Git 2.52-rc2 has been tagged.  Hopefully we can have a reasonably
+solid Git 2.52 soon.  Until then let's concentrate on finding and
+fixing regressions introduced during this cycle, if any.
 
-Like --author, the --committer option supports two formats:
-- Explicit identity: --committer="Name <email@example.com>"
-- Pattern search: --committer="pattern" searches commit history for a
-  matching committer and reuses that identity
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-To share code with the existing --author option, this patch refactors:
+With maint, master, next, seen, todo:
 
-1. find_author_by_nickname() into find_identity_by_nickname() which
-   handles both author and committer searches through an is_author
-   parameter.
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
 
-2. determine_author_info() into determine_identity() which handles
-   identity parsing and setting for both author and committer through
-   an is_author parameter.
+With all the integration branches and topics broken out:
 
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
-    commit: add --committer option
-    
-    Currently, when users need to override the committer identity in
-    git-commit, they have to set GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL
-    environment variables, which can be cumbersome in scripting scenarios or
-    when frequently switching committer identities.
-    
-    While git-commit already provides the --author option to conveniently
-    override the author identity, there's no equivalent --committer option
-    for the committer identity. This asymmetry creates an inconsistent user
-    experience.
-    
-    This patch introduces the --committer option to git-commit, providing:
-    
-     1. Consistency with the existing --author option
-     2. A more convenient alternative to environment variables
-     3. Better support for automated workflows and scripts
-     4. Improved user experience when managing multiple identities
-    
-    The implementation follows the same pattern as the --author option,
-    accepting the format "Name " and properly validating the input.
+	https://github.com/gitster/git/
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1997%2Fadlternative%2Fzh%2Fimplement-committer-option-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1997/adlternative/zh/implement-committer-option-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1997
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
 
-Range-diff vs v2:
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
 
- 1:  58e9e5c9d7 ! 1:  acf724fad5 commit: add --committer option
-     @@ Commit message
-             an is_author parameter.
-      
-          Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-     -    Co-authored-by: Aone-Agent <aone-agent@alibaba-inc.com>
-      
-       ## Documentation/git-commit.adoc ##
-      @@ Documentation/git-commit.adoc: git commit [-a | --interactive | --patch] [-s] [-v] [-u[<mode>]] [--amend]
+Release tarballs are available at:
+
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[Graduated to 'master']
+
+* dk/make-git-contacts-executable (2025-11-04) 1 commit
+  (merged to 'next' on 2025-11-07 at 30608eb744)
+ + perl: also mark git-contacts executable
+
+ Building "git contacts" script (in contrib/) left the resulting
+ file unexecutable, which has been corrected.
+
+ Will cook in 'next'.
+ source: <7fbb341e8f05fcde3a1543e3bb4e5a3ec1101692.1762280097.git.ben.knoble+github@gmail.com>
 
 
- Documentation/git-commit.adoc |   9 ++-
- builtin/commit.c              | 121 +++++++++++++++++++++++++---------
- t/t7509-commit-authorship.sh  |  84 ++++++++++++++++++++++-
- 3 files changed, 180 insertions(+), 34 deletions(-)
+* dk/meson-html-dir (2025-11-04) 1 commit
+  (merged to 'next' on 2025-11-07 at b30cf1f060)
+ + meson: make GIT_HTML_PATH configurable
 
-diff --git a/Documentation/git-commit.adoc b/Documentation/git-commit.adoc
-index 54c207ad45..ed4c54ae81 100644
---- a/Documentation/git-commit.adoc
-+++ b/Documentation/git-commit.adoc
-@@ -12,7 +12,7 @@ git commit [-a | --interactive | --patch] [-s] [-v] [-u[<mode>]] [--amend]
- 	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]
- 	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
- 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
--	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
-+	   [--committer=<committer>] [--date=<date>] [--cleanup=<mode>] [--[no-]status]
- 	   [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]
- 	   [(--trailer <token>[(=|:)<value>])...] [-S[<keyid>]]
- 	   [--] [<pathspec>...]
-@@ -178,6 +178,13 @@ See linkgit:git-rebase[1] for details.
- 	commit by that author (i.e. `git rev-list --all -i --author=<author>`);
- 	the commit author is then copied from the first such commit found.
- 
-+`--committer=<committer>`::
-+	Override the committer for the commit. Specify an explicit committer using the
-+	standard `C O Mitter <committer@example.com>` format. Otherwise _<committer>_
-+	is assumed to be a pattern and is used to search for an existing
-+	commit by that committer (i.e. `git rev-list --all -i --committer=<committer>`);
-+	the commit committer is then copied from the first such commit found.
-+
- `--date=<date>`::
- 	Override the author date used in the commit.
- 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 0243f17d53..3b249dd878 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -49,7 +49,7 @@ static const char * const builtin_commit_usage[] = {
- 	   "           [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]\n"
- 	   "           [-F <file> | -m <msg>] [--reset-author] [--allow-empty]\n"
- 	   "           [--allow-empty-message] [--no-verify] [-e] [--author=<author>]\n"
--	   "           [--date=<date>] [--cleanup=<mode>] [--[no-]status]\n"
-+	   "           [--committer=<committer>] [--date=<date>] [--cleanup=<mode>] [--[no-]status]\n"
- 	   "           [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]\n"
- 	   "           [(--trailer <token>[(=|:)<value>])...] [-S[<keyid>]]\n"
- 	   "           [--] [<pathspec>...]"),
-@@ -112,6 +112,7 @@ static enum {
- } commit_style;
- 
- static const char *force_author;
-+static const char *force_committer;
- static char *logfile;
- static char *template_file;
- /*
-@@ -630,46 +631,61 @@ static void set_ident_var(char **buf, char *val)
- 	*buf = val;
- }
- 
--static void determine_author_info(struct strbuf *author_ident)
-+static void determine_identity(struct strbuf *ident_str, int is_author)
- {
- 	char *name, *email, *date;
--	struct ident_split author;
--
--	name = xstrdup_or_null(getenv("GIT_AUTHOR_NAME"));
--	email = xstrdup_or_null(getenv("GIT_AUTHOR_EMAIL"));
--	date = xstrdup_or_null(getenv("GIT_AUTHOR_DATE"));
--
--	if (author_message) {
--		struct ident_split ident;
-+	struct ident_split ident;
-+	const char *env_name = is_author ? "GIT_AUTHOR_NAME" : "GIT_COMMITTER_NAME";
-+	const char *env_email = is_author ? "GIT_AUTHOR_EMAIL" : "GIT_COMMITTER_EMAIL";
-+	const char *env_date = is_author ? "GIT_AUTHOR_DATE" : "GIT_COMMITTER_DATE";
-+	const char *force_ident = is_author ? force_author : force_committer;
-+	const char *param_name = is_author ? "--author" : "--committer";
-+	int ident_flag = is_author ? WANT_AUTHOR_IDENT : WANT_COMMITTER_IDENT;
-+
-+	name = xstrdup_or_null(getenv(env_name));
-+	email = xstrdup_or_null(getenv(env_email));
-+	date = xstrdup_or_null(getenv(env_date));
-+
-+	if (is_author && author_message) {
-+		struct ident_split msg_ident;
- 		size_t len;
- 		const char *a;
- 
- 		a = find_commit_header(author_message_buffer, "author", &len);
- 		if (!a)
- 			die(_("commit '%s' lacks author header"), author_message);
--		if (split_ident_line(&ident, a, len) < 0)
-+		if (split_ident_line(&msg_ident, a, len) < 0)
- 			die(_("commit '%s' has malformed author line"), author_message);
- 
--		set_ident_var(&name, xmemdupz(ident.name_begin, ident.name_end - ident.name_begin));
--		set_ident_var(&email, xmemdupz(ident.mail_begin, ident.mail_end - ident.mail_begin));
-+		set_ident_var(&name, xmemdupz(msg_ident.name_begin, msg_ident.name_end - msg_ident.name_begin));
-+		set_ident_var(&email, xmemdupz(msg_ident.mail_begin, msg_ident.mail_end - msg_ident.mail_begin));
- 
--		if (ident.date_begin) {
-+		if (msg_ident.date_begin) {
- 			struct strbuf date_buf = STRBUF_INIT;
- 			strbuf_addch(&date_buf, '@');
--			strbuf_add(&date_buf, ident.date_begin, ident.date_end - ident.date_begin);
-+			strbuf_add(&date_buf, msg_ident.date_begin, msg_ident.date_end - msg_ident.date_begin);
- 			strbuf_addch(&date_buf, ' ');
--			strbuf_add(&date_buf, ident.tz_begin, ident.tz_end - ident.tz_begin);
-+			strbuf_add(&date_buf, msg_ident.tz_begin, msg_ident.tz_end - msg_ident.tz_begin);
- 			set_ident_var(&date, strbuf_detach(&date_buf, NULL));
- 		}
- 	}
- 
--	if (force_author) {
--		struct ident_split ident;
-+	if (force_ident) {
-+		struct ident_split force_ident_split;
-+
-+		if (split_ident_line(&force_ident_split, force_ident, strlen(force_ident)) < 0)
-+			die(_("malformed %s parameter"), param_name);
-+		set_ident_var(&name, xmemdupz(force_ident_split.name_begin, force_ident_split.name_end - force_ident_split.name_begin));
-+		set_ident_var(&email, xmemdupz(force_ident_split.mail_begin, force_ident_split.mail_end - force_ident_split.mail_begin));
- 
--		if (split_ident_line(&ident, force_author, strlen(force_author)) < 0)
--			die(_("malformed --author parameter"));
--		set_ident_var(&name, xmemdupz(ident.name_begin, ident.name_end - ident.name_begin));
--		set_ident_var(&email, xmemdupz(ident.mail_begin, ident.mail_end - ident.mail_begin));
-+		if (!is_author && force_ident_split.date_begin) {
-+			struct strbuf date_buf = STRBUF_INIT;
-+			strbuf_addch(&date_buf, '@');
-+			strbuf_add(&date_buf, force_ident_split.date_begin, force_ident_split.date_end - force_ident_split.date_begin);
-+			strbuf_addch(&date_buf, ' ');
-+			strbuf_add(&date_buf, force_ident_split.tz_begin, force_ident_split.tz_end - force_ident_split.tz_begin);
-+			set_ident_var(&date, strbuf_detach(&date_buf, NULL));
-+		}
- 	}
- 
- 	if (force_date) {
-@@ -679,17 +695,35 @@ static void determine_author_info(struct strbuf *author_ident)
- 		set_ident_var(&date, strbuf_detach(&date_buf, NULL));
- 	}
- 
--	strbuf_addstr(author_ident, fmt_ident(name, email, WANT_AUTHOR_IDENT, date,
-+	strbuf_addstr(ident_str, fmt_ident(name, email, ident_flag, date,
- 				IDENT_STRICT));
--	assert_split_ident(&author, author_ident);
--	export_one("GIT_AUTHOR_NAME", author.name_begin, author.name_end, 0);
--	export_one("GIT_AUTHOR_EMAIL", author.mail_begin, author.mail_end, 0);
--	export_one("GIT_AUTHOR_DATE", author.date_begin, author.tz_end, '@');
-+	assert_split_ident(&ident, ident_str);
-+
-+	if (is_author) {
-+		export_one("GIT_AUTHOR_NAME", ident.name_begin, ident.name_end, 0);
-+		export_one("GIT_AUTHOR_EMAIL", ident.mail_begin, ident.mail_end, 0);
-+		export_one("GIT_AUTHOR_DATE", ident.date_begin, ident.tz_end, '@');
-+	} else {
-+		export_one("GIT_COMMITTER_NAME", ident.name_begin, ident.name_end, 0);
-+		export_one("GIT_COMMITTER_EMAIL", ident.mail_begin, ident.mail_end, 0);
-+		export_one("GIT_COMMITTER_DATE", ident.date_begin, ident.tz_end, '@');
-+	}
-+
- 	free(name);
- 	free(email);
- 	free(date);
- }
- 
-+static void determine_author_info(struct strbuf *author_ident)
-+{
-+	determine_identity(author_ident, 1);
-+}
-+
-+static void determine_committer_info(struct strbuf *committer_ident)
-+{
-+	determine_identity(committer_ident, 0);
-+}
-+
- static int author_date_is_interesting(void)
- {
- 	return author_message || force_date;
-@@ -1137,16 +1171,18 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	return 1;
- }
- 
--static const char *find_author_by_nickname(const char *name)
-+static const char *find_identity_by_nickname(const char *name, int is_author)
- {
- 	struct rev_info revs;
- 	struct commit *commit;
- 	struct strbuf buf = STRBUF_INIT;
- 	const char *av[20];
- 	int ac = 0;
-+	const char *field = is_author ? "author" : "committer";
-+	const char *format = is_author ? "%aN <%aE>" : "%cN <%cE>";
- 
- 	repo_init_revisions(the_repository, &revs, NULL);
--	strbuf_addf(&buf, "--author=%s", name);
-+	strbuf_addf(&buf, "--%s=%s", field, name);
- 	av[++ac] = "--all";
- 	av[++ac] = "-i";
- 	av[++ac] = buf.buf;
-@@ -1164,11 +1200,22 @@ static const char *find_author_by_nickname(const char *name)
- 		ctx.date_mode.type = DATE_NORMAL;
- 		strbuf_release(&buf);
- 		repo_format_commit_message(the_repository, commit,
--					   "%aN <%aE>", &buf, &ctx);
-+					   format, &buf, &ctx);
- 		release_revisions(&revs);
- 		return strbuf_detach(&buf, NULL);
- 	}
--	die(_("--author '%s' is not 'Name <email>' and matches no existing author"), name);
-+	die(_("--%s '%s' is not 'Name <email>' and matches no existing %s"),
-+	    field, name, field);
-+}
-+
-+static const char *find_author_by_nickname(const char *name)
-+{
-+	return find_identity_by_nickname(name, 1);
-+}
-+
-+static const char *find_committer_by_nickname(const char *name)
-+{
-+	return find_identity_by_nickname(name, 0);
- }
- 
- static void handle_ignored_arg(struct wt_status *s)
-@@ -1321,6 +1368,9 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	if (force_author && renew_authorship)
- 		die(_("options '%s' and '%s' cannot be used together"), "--reset-author", "--author");
- 
-+	if (force_committer && !strchr(force_committer, '>'))
-+		force_committer = find_committer_by_nickname(force_committer);
-+
- 	if (logfile || have_option_m || use_message)
- 		use_editor = 0;
- 
-@@ -1709,6 +1759,7 @@ int cmd_commit(int argc,
- 		OPT_FILENAME('F', "file", &logfile, N_("read message from file")),
- 		OPT_STRING(0, "author", &force_author, N_("author"), N_("override author for commit")),
- 		OPT_STRING(0, "date", &force_date, N_("date"), N_("override date for commit")),
-+		OPT_STRING(0, "committer", &force_committer, N_("committer"), N_("override committer for commit")),
- 		OPT_CALLBACK('m', "message", &message, N_("message"), N_("commit message"), opt_parse_m),
- 		OPT_STRING('c', "reedit-message", &edit_message, N_("commit"), N_("reuse and edit message from specified commit")),
- 		OPT_STRING('C', "reuse-message", &use_message, N_("commit"), N_("reuse message from specified commit")),
-@@ -1785,6 +1836,7 @@ int cmd_commit(int argc,
- 
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf author_ident = STRBUF_INIT;
-+	struct strbuf committer_ident = STRBUF_INIT;
- 	const char *index_file, *reflog_msg;
- 	struct object_id oid;
- 	struct commit_list *parents = NULL;
-@@ -1930,8 +1982,12 @@ int cmd_commit(int argc,
- 		append_merge_tag_headers(parents, &tail);
- 	}
- 
-+	if (force_committer)
-+		determine_committer_info(&committer_ident);
-+
- 	if (commit_tree_extended(sb.buf, sb.len, &the_repository->index->cache_tree->oid,
--				 parents, &oid, author_ident.buf, NULL,
-+				 parents, &oid, author_ident.buf,
-+				 force_committer ? committer_ident.buf : NULL,
- 				 sign_commit, extra)) {
- 		rollback_index_files();
- 		die(_("failed to write commit object"));
-@@ -1980,6 +2036,7 @@ cleanup:
- 	free_commit_extra_headers(extra);
- 	free_commit_list(parents);
- 	strbuf_release(&author_ident);
-+	strbuf_release(&committer_ident);
- 	strbuf_release(&err);
- 	strbuf_release(&sb);
- 	free(logfile);
-diff --git a/t/t7509-commit-authorship.sh b/t/t7509-commit-authorship.sh
-index 8e373b566b..7e163e02d1 100755
---- a/t/t7509-commit-authorship.sh
-+++ b/t/t7509-commit-authorship.sh
-@@ -12,13 +12,20 @@ author_header () {
- 	sed -n -e '/^$/q' -e '/^author /p'
- }
- 
-+committer_header () {
-+	git cat-file commit "$1" |
-+	sed -n -e '/^$/q' -e '/^committer /p'
-+}
-+
- message_body () {
- 	git cat-file commit "$1" |
- 	sed -e '1,/^$/d'
- }
- 
- test_expect_success '-C option copies authorship and message' '
--	test_commit --author Frigate\ \<flying@over.world\> \
-+	test_env GIT_COMMITTER_NAME="Frigate" \
-+		GIT_COMMITTER_EMAIL="flying@over.world" \
-+		test_commit --author Frigate\ \<flying@over.world\> \
- 		"Initial Commit" foo Initial Initial &&
- 	echo "Test 1" >>foo &&
- 	test_tick &&
-@@ -171,4 +178,79 @@ test_expect_success '--reset-author with CHERRY_PICK_HEAD' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--committer option overrides committer' '
-+	git checkout Initial &&
-+	echo "Test --committer" >>foo &&
-+	test_tick &&
-+	git commit -a -m "test committer" --committer="Custom Committer <custom@committer.example>" &&
-+	committer_header HEAD >actual &&
-+	grep "Custom Committer <custom@committer.example>" actual
-+'
-+
-+test_expect_success '--committer with pattern search' '
-+	echo "Test committer pattern" >>foo &&
-+	test_tick &&
-+	git commit -a -m "test committer pattern" --committer="Frigate" &&
-+	committer_header HEAD >actual &&
-+	grep "Frigate <flying@over.world>" actual
-+'
-+
-+test_expect_success '--committer malformed parameter' '
-+	echo "Test malformed" >>foo &&
-+	test_tick &&
-+	test_must_fail git commit -a -m "test malformed" --committer="malformed committer"
-+'
-+
-+test_expect_success '--committer with --amend option' '
-+	git checkout -f Initial &&
-+	echo "Test committer with amend" >>foo &&
-+	test_tick &&
-+	git commit -a -m "initial commit for amend test" &&
-+	echo "Modified for amend" >>foo &&
-+	test_tick &&
-+	git commit -a --amend --no-edit \
-+		--author="Test Author <test@author.example>" \
-+		--committer="Test Committer <test@committer.example>" &&
-+	author_header HEAD >actual_author &&
-+	grep "Test Author <test@author.example>" actual_author &&
-+	committer_header HEAD >actual_committer &&
-+	grep "Test Committer <test@committer.example>" actual_committer
-+'
-+
-+test_expect_success 'GIT_COMMITTER_* environment variables' '
-+	git checkout -f Initial &&
-+	echo "Test env vars" >>foo &&
-+	test_tick &&
-+	test_env GIT_COMMITTER_NAME="Env Committer" \
-+		GIT_COMMITTER_EMAIL="env@test.example" \
-+		git commit -a -m "test committer env vars" &&
-+	committer_header HEAD >actual &&
-+	grep "Env Committer <env@test.example>" actual
-+'
-+
-+test_expect_success '--committer overrides GIT_COMMITTER_* environment variables' '
-+	echo "Test override" >>foo &&
-+	test_tick &&
-+	test_env GIT_COMMITTER_NAME="Env Committer" \
-+		GIT_COMMITTER_EMAIL="env@test.example" \
-+		git commit -a -m "test override" \
-+		--committer="Override Committer <override@test.example>" &&
-+	committer_header HEAD >actual &&
-+	grep "Override Committer <override@test.example>" actual
-+'
-+
-+test_expect_success '--date with --committer changes both author and committer dates' '
-+	git checkout -f Initial &&
-+	echo "Test date override" >>foo &&
-+	test_tick &&
-+	git commit -a -m "test date" \
-+		--author="Date Author <date@author.example>" \
-+		--committer="Date Committer <date@committer.example>" \
-+		--date="2024-06-15 10:30:00 +0800" &&
-+	git log -1 --format="%ai" >author_date &&
-+	git log -1 --format="%ci" >committer_date &&
-+	grep "2024-06-15 10:30:00 +0800" author_date &&
-+	grep "2024-06-15 10:30:00 +0800" committer_date
-+'
-+
- test_done
+ The build procedure based on meson learned to allow builders to
+ specify the directory to install HTML documents.
 
-base-commit: 4badef0c3503dc29059d678abba7fac0f042bc84
--- 
-gitgitgadget
+ Will cook in 'next'.
+ source: <385992f6020703558f0ba75a1be6c4f9dae08b83.1762264709.git.ben.knoble+github@gmail.com>
+
+
+* tu/credential-wincred-makefile-update (2025-11-05) 1 commit
+  (merged to 'next' on 2025-11-07 at ed74befe91)
+ + wincred: align Makefile with other Makefiles in contrib
+
+ Build procedure for Wincred credential helper has been updated.
+
+ Will cook in 'next'.
+ source: <3869ec21-e20d-cf9b-5913-6389c372a5f0@mailbox.tu-dresden.de>
+
+--------------------------------------------------
+[New Topics]
+
+* rs/diff-quiet-no-rename (2025-11-09) 1 commit
+ - diff: disable rename detection with --quiet
+
+ As "git diff --quiet" only cares about the existence of any
+ changes, disable rename/copy detection to skip more expensive
+ processing whose result will be discarded anyway.
+
+ Will merge to 'next'.
+ source: <8796cd59-2335-4674-823d-d682ce7b7f8e@web.de>
+
+
+* jc/gitattributes-whitespace-no-indent-fix (2025-11-11) 1 commit
+ - .gitattributes: remove misspelled no-op whitespace attribute
+
+ Ever since we added whitespace rules for this project, we misspelt
+ an entry, which has been corrected.
+
+ Will merge to 'next'.
+ source: <xmqqv7jgwgxb.fsf@gitster.g>
+
+
+* kn/fix-fetch-backfill-tag-with-batched-ref-updates (2025-11-11) 2 commits
+ . fetch: fix non-conflicting tags not being committed
+ . fetch: extract out reference committing logic
+
+ Expecting a reroll.
+ cf. <CAOLa=ZQAQ1dtstD+uqh=vzV+w5q2uWsnZkzqucHuj_W_VL931A@mail.gmail.com>
+ source: <20251111-fix-tags-not-fetching-v4-0-185d836ec62a@gmail.com>
+
+--------------------------------------------------
+[Cooking]
+
+* lc/rebase-trailer (2025-11-05) 4 commits
+ - rebase: support --trailer
+ - trailer: append trailers in-process and drop the fork to `interpret-trailers`
+ - trailer: move process_trailers to trailer.h
+ - interpret-trailers: factor out buffer-based processing to process_trailers()
+
+ Refactor code paths to run "interpret-trailers" from "git
+ commit/tag" and use it in "git rebase".
+
+ Comments?
+ source: <20251105142944.73061-1-me@linux.beauty>
+
+
+* ps/ref-peeled-tags-fixes (2025-11-06) 2 commits
+  (merged to 'next' on 2025-11-11 at 3549877a16)
+ + object: fix performance regression when peeling tags
+ + Merge branch 'ps/ref-peeled-tags' into ps/ref-peeled-tags-fixes
+ (this branch uses ps/ref-peeled-tags.)
+
+ Another fix-up to "peeled-tags" topic.
+
+ Will cook in 'next'.
+ source: <20251106-b4-pks-peel-object-performance-regression-v1-1-a386147750b0@pks.im>
+
+
+* en/ort-rename-another-fix (2025-11-03) 3 commits
+ - merge-ort: fix failing merges in special corner case
+ - merge-ort: remove debugging crud
+ - t6429: update comment to mention correct tool
+
+ Yet another corner case fix around renames in the "ort" merge
+ strategy.
+
+ Will merge to 'next'?
+ source: <pull.1992.git.1762192908.gitgitgadget@gmail.com>
+
+
+* kn/maintenance-is-needed (2025-11-08) 7 commits
+ - maintenance: add 'is-needed' subcommand
+ - maintenance: add checking logic in `pack_refs_condition()`
+ - refs: add a `optimize_required` field to `struct ref_storage_be`
+ - reftable/stack: add function to check if optimization is required
+ - reftable/stack: return stack segments directly
+ - Merge branch 'kn/refs-optim-cleanup' into kn/maintenance-is-needed
+ - Merge branch 'ps/ref-peeled-tags' into kn/maintenance-is-needed
+ (this branch uses kn/refs-optim-cleanup and ps/ref-peeled-tags.)
+
+ "git maintenance" command learned "is-needed" subcommand to tell if
+ it is necessary to perform various maintenance tasks.
+
+ Will merge to 'next'.
+ source: <20251108-562-add-sub-command-to-check-if-maintenance-is-needed-v4-0-a90f229b6023@gmail.com>
+
+
+* qj/doc-http-bad-want-response (2025-11-05) 1 commit
+ - doc: clarify server behavior for invalid 'want' lines in HTTP protocol
+
+ Doc update.
+
+ Will merge to 'next'?
+ source: <20251105143849.1192-1-qjessa662@gmail.com>
+
+
+* jc/exclude-with-gitignore (2025-11-04) 1 commit
+ - dir.c: do not be fooled by :(exclude) pathspec elements
+
+ "git add ':(exclude)foo.o'" is clearly a request not to add 'foo.o',
+ but the command complained about listing an ignored path foo.o on
+ the command line, which has been corrected.
+
+ Comments?
+ source: <xmqqtsz9o3cn.fsf@gitster.g>
+
+
+* cc/fast-import-strip-if-invalid (2025-11-04) 3 commits
+ . fast-import: add 'strip-if-invalid' mode to --signed-commits=<mode>
+ . commit: refactor verify_commit_buffer()
+ . fast-import: refactor finalize_commit_buffer()
+
+ "git fast-import" learns "--strip-if-invalid" option to drop
+ invalid cryptographic signature from objects.
+
+ Expecting a reroll.  Its test does not work well with existing tests
+ cf. <xmqqjz00e5ns.fsf@gitster.g>
+ source: <20251105061918.3688870-1-christian.couder@gmail.com>
+
+
+* jc/whitespace-incomplete-line (2025-11-10) 12 commits
+ - attr: enable incomplete-line whitespace error for this project
+ - diff: highlight and error out on incomplete lines
+ - apply: check and fix incomplete lines
+ - whitespace: allocate a few more bits and define WS_INCOMPLETE_LINE
+ - apply: revamp the parsing of incomplete lines
+ - diff: update the way rewrite diff handles incomplete lines
+ - diff: call emit_callback ecbdata everywhere
+ - diff: refactor output of incomplete line
+ - diff: keep track of the type of the last line seen
+ - diff: correct suppress_blank_empty hack
+ - diff: emit_line_ws_markup() if/else style fix
+ - whitespace: correct bit assignment comments
+
+ Both "git apply" and "git diff" learn a new whitespace error class,
+ "incomplete-line".
+
+ Comments?
+ source: <20251111000451.2243195-1-gitster@pobox.com>
+
+
+* tc/last-modified-active-paths-optimization (2025-10-23) 1 commit
+  (merged to 'next' on 2025-11-03 at 9ab444edfb)
+ + last-modified: implement faster algorithm
+
+ "git last-modified" was optimized by narrowing the set of paths to
+ follow as it dug deeper in the history.
+
+ Will cook in 'next'.
+ source: <20251023-b4-toon-last-modified-faster-v3-1-40a4ddbbadec@iotcl.com>
+
+
+* ps/object-source-loose (2025-11-02) 13 commits
+ - object-file: refactor writing objects via a stream
+ - object-file: rename `write_object_file()`
+ - object-file: refactor freshening of objects
+ - object-file: rename `has_loose_object()`
+ - object-file: read objects via the loose object source
+ - object-file: move loose object map into loose source
+ - object-file: hide internals when we need to reprepare loose sources
+ - object-file: move loose object cache into loose source
+ - object-file: introduce `struct odb_source_loose`
+ - object-file: move `fetch_if_missing`
+ - odb: adjust naming to free object sources
+ - odb: introduce `odb_source_new()`
+ - odb: fix subtle logic to check whether an alternate is usable
+
+ A part of code paths that deals with loose objects has been cleaned
+ up.
+
+ Will merge to 'next'?
+ source: <20251103-b4-pks-odb-loose-backend-v3-0-6a61ea977393@pks.im>
+
+
+* bc/sha1-256-interop-02 (2025-10-29) 15 commits
+ - SQUASH??? downgrade build.rs syntax
+ - object-file-convert: always make sure object ID algo is valid
+ - rust: add a small wrapper around the hashfile code
+ - rust: add a new binary loose object map format
+ - rust: add functionality to hash an object
+ - rust: add a build.rs script for tests
+ - hash: expose hash context functions to Rust
+ - write-or-die: add an fsync component for the loose object map
+ - csum-file: define hashwrite's count as a uint32_t
+ - hash: add a function to look up hash algo structs
+ - rust: add a hash algorithm abstraction
+ - rust: add a ObjectID struct
+ - hash: use uint32_t for object_id algorithm
+ - conversion: don't crash when no destination algo
+ - repository: require Rust support for interoperability
+
+ The code to maintain mapping between object names in multiple hash
+ functions is being added, written in Rust.
+
+ Expecting a reroll.
+ source: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+
+
+* ad/blame-diff-algorithm (2025-11-06) 2 commits
+ - blame: make diff algorithm configurable
+ - xdiff: add 'minimal' to XDF_DIFF_ALGORITHM_MASK
+
+ "git blame" learns "--diff-algorithm=<algo>" option.
+
+ Will merge to 'next'?
+ source: <pull.2075.v5.git.git.1762468914.gitgitgadget@gmail.com>
+
+
+* ps/packed-git-in-object-store (2025-10-30) 9 commits
+  (merged to 'next' on 2025-11-03 at 1eb3440abd)
+ + packfile: track packs via the MRU list exclusively
+ + packfile: always add packfiles to MRU when adding a pack
+ + packfile: move list of packs into the packfile store
+ + builtin/pack-objects: simplify logic to find kept or nonlocal objects
+ + packfile: fix approximation of object counts
+ + http: refactor subsystem to use `packfile_list`s
+ + packfile: move the MRU list into the packfile store
+ + packfile: use a `strmap` to store packs by name
+ + Merge branch 'ps/remove-packfile-store-get-packs' into ps/packed-git-in-object-store
+
+ The list of packfiles used in a running Git process is moved from
+ the packed_git structure into the packfile store.
+
+ Will cook in 'next'.
+ source: <20251030-pks-packfiles-store-drop-list-v2-0-84654f080cc0@pks.im>
+
+
+* kn/refs-optim-cleanup (2025-10-20) 4 commits
+  (merged to 'next' on 2025-11-04 at dbab18969a)
+ + t/pack-refs-tests: move the 'test_done' to callees
+ + refs: rename 'pack_refs_opts' to 'refs_optimize_opts'
+ + refs: move to using the '.optimize' functions
+ + Merge branch 'ps/ref-peeled-tags' into kn/refs-optim-cleanup
+ (this branch is used by kn/maintenance-is-needed; uses ps/ref-peeled-tags.)
+
+ Code clean-up.
+
+ Will cook in 'next'.
+ source: <20251020-refs-code-cleanup-v2-0-f5349ed0f6a5@gmail.com>
+
+
+* lo/repo-info-all (2025-10-26) 2 commits
+ - repo: add --all to git-repo-info
+ - repo: factor out field printing to dedicated function
+
+ "git repo info" learned "--all" option.
+
+ Expecting a (hopefully small and final) reroll.
+ cf. <xmqqpla43wcp.fsf@gitster.g> <aQRaRuBtt_r7SamL@pks.im>
+ source: <20251026225409.46647-1-lucasseikioshiro@gmail.com>
+
+
+* en/xdiff-cleanup-2 (2025-11-11) 10 commits
+ - xdiff: rename rindex -> reference_index
+ - xdiff: change rindex from long to size_t in xdfile_t
+ - xdiff: make xdfile_t.nreff a size_t instead of long
+ - xdiff: make xdfile_t.nrec a size_t instead of long
+ - xdiff: split xrecord_t.ha into line_hash and minimal_perfect_hash
+ - xdiff: use unambiguous types in xdl_hash_record()
+ - xdiff: use size_t for xrecord_t.size
+ - xdiff: make xrecord_t.ptr a uint8_t instead of char
+ - xdiff: use ptrdiff_t for dstart/dend
+ - doc: define unambiguous type mappings across C and Rust
+
+ Code clean-up.
+
+ Comments?
+ source: <pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com>
+
+
+* ar/run-command-hook (2025-10-17) 10 commits
+ - receive-pack: convert receive hooks to hook API
+ - receive-pack: convert update hooks to new API
+ - hooks: allow callers to capture output
+ - run-command: allow capturing of collated output
+ - reference-transaction: use hook API instead of run-command
+ - hook: allow overriding the ungroup option
+ - transport: convert pre-push to hook API
+ - hook: convert 'post-rewrite' hook in sequencer.c to hook API
+ - hook: provide stdin via callback
+ - run-command: add stdin callback for parallelization
+
+ Use hook API to replace ad-hoc invocation of hook scripts with the
+ run_command() API.
+
+ Comments?
+ source: <20251017141544.1538542-1-adrian.ratiu@collabora.com>
+
+
+* je/doc-reset (2025-10-17) 4 commits
+ - doc: git-reset: clarify `git reset <pathspec>`
+ - doc: git-reset: clarify `git reset [mode]`
+ - doc: git-reset: clarify intro
+ - doc: git-reset: reorder the forms
+
+ Documentation updates.
+
+ Expecting a reroll.
+ cf. <8099e7ef-2673-407e-8cca-e6b566b99549@app.fastmail.com>
+ source: <pull.1991.git.1760731558.gitgitgadget@gmail.com>
+
+
+* ps/ref-peeled-tags (2025-11-04) 18 commits
+  (merged to 'next' on 2025-11-04 at 3818774c94)
+ + t7004: do not chdir around in the main process
+ + ref-filter: fix stale parsed objects
+ + ref-filter: parse objects on demand
+ + ref-filter: detect broken tags when dereferencing them
+ + refs: don't store peeled object IDs for invalid tags
+ + object: add flag to `peel_object()` to verify object type
+ + refs: drop infrastructure to peel via iterators
+ + refs: drop `current_ref_iter` hack
+ + builtin/show-ref: convert to use `reference_get_peeled_oid()`
+ + ref-filter: propagate peeled object ID
+ + upload-pack: convert to use `reference_get_peeled_oid()`
+ + refs: expose peeled object ID via the iterator
+ + refs: refactor reference status flags
+ + refs: fully reset `struct ref_iterator::ref` on iteration
+ + refs: introduce `.ref` field for the base iterator
+ + refs: introduce wrapper struct for `each_ref_fn`
+ + Merge branch 'jt/repo-structure' into ps/ref-peeled-tags
+ + Merge branch 'tb/incremental-midx-part-3.1' into ps/ref-peeled-tags
+ (this branch is used by kn/maintenance-is-needed, kn/refs-optim-cleanup and ps/ref-peeled-tags-fixes.)
+
+ Some ref backend storage can hold not just the object name of an
+ annotated tag, but the object name of the object the tag points at.
+ The code to handle this information has been streamlined.
+
+ Will cook in 'next'.
+ source: <20251023-b4-pks-ref-filter-skip-parsing-objects-v4-0-2be68ce82c9a@pks.im>
+
+
+* je/doc-data-model (2025-11-07) 1 commit
+ - doc: add an explanation of Git's data model
+
+ Add a new manual that describes the data model.
+
+ Expecting a (hopefully small and final) reroll.
+ cf. <xmqqh5v448fr.fsf@gitster.g>
+ source: <pull.1981.v6.git.1762545177204.gitgitgadget@gmail.com>
+
+
+* ps/history (2025-10-27) 12 commits
+ - builtin/history: implement "split" subcommand
+ - cache-tree: allow writing in-memory index as tree
+ - add-patch: add support for in-memory index patching
+ - add-patch: remove dependency on "add-interactive" subsystem
+ - add-patch: split out `struct interactive_options`
+ - add-patch: split out header from "add-interactive.h"
+ - builtin/history: implement "reword" subcommand
+ - builtin: add new "history" command
+ - replay: stop using `the_repository`
+ - replay: extract logic to pick commits
+ - wt-status: provide function to expose status for trees
+ - Merge branch 'sa/replay-atomic-ref-updates' into ps/history
+ (this branch uses sa/replay-atomic-ref-updates.)
+
+ "git history" history rewriting UI.
+
+ Comments?
+ source: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
+
+
+* ms/doc-worktree-side-by-side (2025-10-10) 2 commits
+ - doc: git-worktree: Add side by side branch checkout example
+ - doc: git-worktree: Link to examples
+
+ Document "git worktree add" and use of out-of-tree worktrees with
+ examples.
+
+ Expecting a reroll.
+ cf. <CAPig+cSNesf0UwS4=Bxe-Qn+G9y3YYPyOK+7y3q8QJk+o7jaVg@mail.gmail.com>
+ source: <a203b35538847f3c9358a5ae26fb4ebea5734cfc.1759420102.git.msuchanek@suse.de>
+
+
+* sa/replay-atomic-ref-updates (2025-11-05) 3 commits
+ - replay: add replay.refAction config option
+ - replay: make atomic ref updates the default behavior
+ - replay: use die_for_incompatible_opt2() for option validation
+ (this branch is used by ps/history.)
+
+ "git replay" (experimental) learned to perform ref updates itself
+ in a transaction by default, instead of emitting where each refs
+ should point at and leaving the actual update to another command.
+
+ Will merge to 'next'?
+ source: <20251105191650.89975-1-siddharthasthana31@gmail.com>
+
+
+* ar/submodule-gitdir-tweak (2025-11-07) 4 commits
+ - submodule: fix case-folding gitdir filesystem colisions
+ - submodule: add extension to encode gitdir paths
+ - builtin/credential-store: move is_rfc3986_unreserved to url.[ch]
+ - submodule--helper: use submodule_name_to_gitdir in add_submodule
+
+ Avoid local submodule repository directory paths overlapping with
+ each other by encoding submodule names before using them as path
+ components.
+
+ Comments?
+ source: <20251107150547.3272180-1-adrian.ratiu@collabora.com>
+
+--------------------------------------------------
+[Discarded]
+
+* ps/rust-cbindgen (2025-10-24) 6 commits
+ . rust: generate bindings via cbindgen
+ . meson: rename Rust library target
+ . ci: use Debian instead of deprecated i386/ubuntu
+ . gitlab-ci: backfill missing Linux jobs
+ . gitlab-ci: reorder Linux job matrix to match GitHub's order
+ . Merge branch 'ps/ci-rust' into ps/rust-cbindgen
+
+ Introduce cbindgen in the build framework to help interfacing with
+ Rust.
+
+ Retracted.
+ cf. <aQ3XOTX0AT_eFc5P@pks.im>
+ source: <20251024-b4-pks-rust-cbindgen-v2-0-4b4bd4f18490@pks.im>
