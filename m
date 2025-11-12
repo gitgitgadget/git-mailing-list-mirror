@@ -1,73 +1,88 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176DBA55
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 20:06:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC072C08BD
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 20:26:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762978011; cv=none; b=T9KxDG4nomGF+YkHhRRmxzuoPhqZVbOr+CnZwbhmcTRV6N8lDTddpw2DnH9c5eYZoIQcgTmkNNA88j+mPio9lyEAsytWWGqjLMX/sQ1eEJnTW0MphTdMHMEuk0CpRY8yMA09dNAbBT1YcWZY38nigXrnEEteTZ6tFnD/RgzAEH8=
+	t=1762979192; cv=none; b=ob0jZZt+sOWH4twpZqWtNDoniY5slzpTXo9LGRU3sugjaI27H9UsA8DVuNw1j/5Z+PJMvRM2hTyl6e2dZ9IqrMw0gWDZjl0wqMoBIfCWIW3cdEwDVaYlAzNkZw3GTgiBF2wUSaih0W7zb1WYSDs/iSPrT+ePMunJ78M4Wl2dTFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762978011; c=relaxed/simple;
-	bh=2c1eUxnWCoPWGr9RUzsLSzk7j89Gc9TBnUWqwuCvuEY=;
+	s=arc-20240116; t=1762979192; c=relaxed/simple;
+	bh=RkDQuxfy4ssIwPHo7gxQeToPDQmtTBRhdhZPIRLPIM0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tQ5t4y6P9JppEXzMM3ti4+G9E9kgs5cRMxyYwkaItr4IqB7QkVp2eXk075s8yF1EeTy7RIsjk+GzkUwfWbd9NQ9sWGfdt2PQ1h5a7HiDPQiKbL6GDpQ0ZRNmSqsdy32PTl+86wjzgAu+cpeqLfFRQncXBafxqNN83ZD8SIxP5bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GuLi430a; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version:Content-Type; b=bx/oUTvJvcJd3yuP+7X58xNb8YZB3bXvhO6aPLC0RY44Oo7OaqJyVl/h5PmIEiPPNaq2bAUcoQBLy6nXNzAsw+V0RGqgSHNCzPzlpLAY2s45xyQWGNrd0xpNf3cSpxNLkAH8caHKQUBI6jB2s7SNnW1O1EIRCnEtq0Pi2ONl2cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OixxusxB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=awf/hPzV; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GuLi430a"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-7a9c64dfa6eso7980b3a.3
-        for <git@vger.kernel.org>; Wed, 12 Nov 2025 12:06:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762978009; x=1763582809; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sU8ycZJJKLrSmHITtae1SUOHnce7AxetLm1QB1jCaEo=;
-        b=GuLi430arkuEAOi9sF7hUJw1QwShyNYl8Yu3OgsMdXW+aM7/oz23p/yYhITSWLENM0
-         1Y/wW9xi2md2f3yapgC+00tSuvx4jASEUu79MmNvC0ECuWZ1bwkyZDr/eaqBY0jb6A/L
-         GcnOBbHNY9pKx2RauDSEtAvJCi7+JPb+IneujiqFjxwEzoX0BrOwrlbPWJPd0PV1H4kS
-         XmS6VnlCe5r2YX4bNQ7cKtH3SVrmldF+i4PTmhuW6cHUJWoYwjqJyjAc7j0eDtYUOX5P
-         L1h4XVsJo3QCOwDLkfEkALpGSKLMKI77YswYP258jcSSA2Ab7X/BNzX0lheiQfvHY2i7
-         HzIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762978009; x=1763582809;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=sU8ycZJJKLrSmHITtae1SUOHnce7AxetLm1QB1jCaEo=;
-        b=VpPXeKndNFGQaSGADrSRgnKFykXpi0qOuI0cxDGw44YUP/es6676m86g+t9IXesC1S
-         1zNRpDdBKvpm/YFsniZ6bWb3BE33Lz0G6SE1psV3BlALvSt2lC0fyV/3/L3Rw9ocOKl5
-         4UpV5XTBKcsJg8+a75apm5kSN+krr1apj0OcJ5DqqYbK6d0WmVn7lZ2usV6pKAoC0wX0
-         kSjbutx+fXnrSrB7D4wIoEthNXXRYDvjsjfvQh6LKiuQclacccV8c3ZdItcPcETrxblc
-         obUgc76mLIZ5KgwmsMaLitCqtS/8Xsfyrzarx+4z4wF/buz42ragvar7BfWg+D26y1Mz
-         kGdw==
-X-Gm-Message-State: AOJu0YyKrDouPerd0vtUYxarvZrJsMD8TO4ze2LXeVGLumaqp0okiF+B
-	hwsKK2ps1+sGBIpB6tG5F7d3Tsbt8IMR072tzsfgFuZWISq4s+3F4kl+
-X-Gm-Gg: ASbGncv7hLsaAeG8lYDwgGwzZuL+56BNcz72eb6lydJCNH63ePcS+a43Uh8cGqbd6PA
-	6pk0gFRtw5OLsrSG04VYaE58yscpH2JTPIjHQCbHbeKiVMboZDB+lyqP/cSXsnfVaLKwaHxO5Xv
-	0r2hF7bNdB2alAhObIbpKfb5Zy3WLjIylAboCK8JWkv26YzC5EHXJ4gtjfU/bbUjV+eDHoxevEY
-	BaOrVB4er0//GqL9dCBE03S0vptVnFyYwjbTHwJjmrEeaQqLreKOkkebrlGTSxeAGTKtDXff4RB
-	g5ICUCfuO9VS6Glpru0R+R3P9nkpct8kdMQ8yPBj1ipaEeiJAzJin8KvPereqGeK8jzHD35a2DY
-	kHk8L6oC/ti91ozvz3LTzEgchLYPCY1g9eNvWI6wE7QUmVr/pL7WUBXcQzA==
-X-Google-Smtp-Source: AGHT+IHapmBBtIe3nF4sB9I0OzOjbR0WyLpw9ht/FfVfIe8cl5TSCPR5hFWZokGO8UCasXI3YksZLg==
-X-Received: by 2002:a05:6a00:228c:b0:7ad:11c9:d643 with SMTP id d2e1a72fcca58-7b7a4aed242mr4974792b3a.21.1762978009294;
-        Wed, 12 Nov 2025 12:06:49 -0800 (PST)
-Received: from fedora ([2601:646:8081:3770::43bc])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b0c6951633sm19894299b3a.0.2025.11.12.12.06.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Nov 2025 12:06:48 -0800 (PST)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,  correctmost <cmlists@sent.com>,  Taylor Blau
- <me@ttaylorr.com>
-Subject: Re: [PATCH 3/9] Makefile: turn on NO_MMAP when building with ASan
-In-Reply-To: <20251112103158.GA983233@coredump.intra.peff.net>
-References: <20251112075522.GA978866@coredump.intra.peff.net>
-	<20251112080215.GC979063@coredump.intra.peff.net>
-	<87y0obis17.fsf@gmail.com>
-	<20251112103158.GA983233@coredump.intra.peff.net>
-Date: Wed, 12 Nov 2025 12:06:47 -0800
-Message-ID: <87qzu32ey0.fsf@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OixxusxB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="awf/hPzV"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 712C91D00135;
+	Wed, 12 Nov 2025 15:26:28 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 12 Nov 2025 15:26:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1762979188; x=1763065588; bh=m9TEGeuycu
+	A+cXzKABBe/v1UGtfUk/J4zcH6mUNL+48=; b=OixxusxB+mF7geTx2lW/mM3pmX
+	O8p1AsdthtAwqIaeMqMn58/Sjr61XTGm3Dk16oy1JnEf83/Pftl0rPBVA61377Gd
+	vgaal4+wRdFQMLR2Ql4ZDJ28UlGPfPyilDyp0/imASTGdSvMFaZVPRaKJ8QgNxrX
+	QhR0/88qC0sYmfb0kwlV/i7RlQUrDTRQ4c9qNOa3TPZY4O2NX+SPCmko+5Eir8J6
+	2N3YzOnrvmKrQQ7vUWTqBGueCrZJG6HWAtQVB+VRuxH++7AQiXu3LXVsVWIO4vt3
+	IS4Sw5TXb3wDKZWU7e7S+tvCyw7T3FkiEKoszLaIEF6fTnATg1Is+fJZ8OgA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1762979188; x=1763065588; bh=m9TEGeuycuA+cXzKABBe/v1UGtfUk/J4zcH
+	6mUNL+48=; b=awf/hPzVqM5yoycYRnk83CAzv/0eev1x60QRoPn4byl72ABTS4c
+	6IIKd7+1yJV80V7NYT5EAFldR0+HQq3YDNWF4xDWTkoAo3g1HZ89njmtHx6iDClk
+	MGoR8k09KtXxiniGNMxOM3/PsmzhlvlIGE9zbgfU7eYRo319eKDvZou0inNsa/En
+	QkMAY+26wDPspWjjMsWUi4xGK/z1xzhGdPHOplPNRSlMjT9QA+mLfIAPhvizVWrz
+	i/Sl2QbCKLE8DoIxJEDFxsMKq6Fl1hglNYnvRBi4vgqAJRicXu9b89T5kFijWMgP
+	DO9ObhZ6Ekob9qyBMNKpOYkZ8tDkigvcBJQ==
+X-ME-Sender: <xms:dO0UaVj56kh2ypmj56czWvd0kZNnGNICJosrewnpU8OztD_yo3g2LA>
+    <xme:dO0UacQ-_1PJK2YlXWGQ1PwnzX7lJhf6VauW3-7hXSXFNm8sZAU1Mc-6m2epbvPT2
+    pu5HSSgVxDZa4GAnNbRJd_8Y3DwFD1IFssXhFri8abFKg3D9T0SBA>
+X-ME-Received: <xmr:dO0UaXWtBdb2XBFXWEw478_1gD-FNmfYGFl8NGiD-IQU2t_e1J-5sSzoN66YFZWSl-BIeIohUVWLdybbBEQ40a8tvMf9SuhKnxxU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdehtdefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
+    gtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehp
+    shesphhkshdrihhmpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:dO0UaQRnzSZIjV2hCnbQIpQYi1QkLJVvoed33vCLGX9m2cUnkP8VTQ>
+    <xmx:dO0UaRlJZ8fEBuWsDeOKcqHri6ZHYWRaULzSo9EVeUDu2FPg0Jd37A>
+    <xmx:dO0UaW71_xXDIChXTkZz60tn-Pgf_lz7UhVwcgE8158F-b09lST3KQ>
+    <xmx:dO0UaXivvm2XMmVnhTAlGvFwXjSdEGytVizqU2H2OzqEtC7W0hxr3w>
+    <xmx:dO0UaeAUKHgQy6s0-nsCucbD9NVVWuU1qwlWXl4Jmf71wTvzxA4VLGbL>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Nov 2025 15:26:27 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  "D. Ben Knoble"
+ <ben.knoble@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  Julia Evans
+ <julia@jvns.ca>
+Subject: Re: [PATCH v7] doc: add an explanation of Git's data model
+In-Reply-To: <pull.1981.v7.git.1762977200244.gitgitgadget@gmail.com> (Julia
+	Evans via GitGitGadget's message of "Wed, 12 Nov 2025 19:53:20 +0000")
+References: <pull.1981.v6.git.1762545177204.gitgitgadget@gmail.com>
+	<pull.1981.v7.git.1762977200244.gitgitgadget@gmail.com>
+Date: Wed, 12 Nov 2025 12:26:26 -0800
+Message-ID: <xmqqy0obov4d.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,172 +92,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+"Julia Evans via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Wed, Nov 12, 2025 at 12:17:24AM -0800, Collin Funk wrote:
->
->> I see that an interceptor was added in 2023 [1]. Maybe your compiler is
->> older than that?
->
-> No, I'm using gcc 15.2.0 (from Debian unstable).
->
-> But I'm not sure if the linked code does anything useful for us.
->
-> One, it's not clear to me if it is even kicking in or not. It only does
-> anything if the region is "sanitizer managed", according to the details
-> at https://reviews.llvm.org/D154659. I'm not sure what that means
-> exactly, because I'm fuzzy on how the shadow map works.
->
-> But even when it does do something, it seems to round up to the nearest
-> page size. But we really want to know if we go even one byte over the
-> requested length, because if we touch the 1235th byte of a 1234-byte
-> buffer (which is going to be a NUL because of mmap rounding up the
-> pages), then there's probably another test case somewhere where we
-> access the 4097th byte of a 4096-byte buffer (which is going to
-> segfault).
+> +2. The *file type*, which must be one of these five types:
+> +  - *regular file*
+> +  - *executable file*
+> +  - *symbolic link*
+> +  - *directory*
+> +  - *gitlink* (for use with submodules)
+> +3. The <<object-id,*object ID*>> with the contents of the file, directory,
+> +   or gitlink.
+> ++
+> +For example, this is how a tree containing one directory (`src`) and one file
+> +(`README.md`) is stored:
+> ++
+> +----
+> +100644 blob 8728a858d9d21a8c78488c8b4e70e531b659141f README.md
+> +040000 tree 89b1d2e0495f66d6929f4ff76ff1bb07fc41947d src
+> +----
+> +
+> +NOTE: In the output above, Git displays the file type of each tree entry
+> +using a format that's loosely modelled on Unix file modes (`100644` is
+> +"regular file", `100755` is "executable file", `120000` is "symbolic
+> +link", `040000` is "directory", and `160000` is "gitlink"). It also
+> +displays the object's type: `blob` for files and symlinks, `tree` for
+> +directories, and `commit` for gitlinks.
 
-The glibc docs say that the length is rounded up to the nearest page
-size [1]:
-
-    Thus, addresses for mapping must be page-aligned, and length values
-    will be rounded up.
-
-This wording in POSIX makes me think that all systems will round up to
-the nearest page size [2]:
-
-    Thus, while the parameter len need not meet a size or alignment
-    constraint, the system shall include, in any mapping operation, any
-    partial page specified by the address range starting at pa and
-    continuing for len bytes.
-
->>       char *ptr = mmap (NULL, getpagesize (), PROT_READ | PROT_WRITE,
->>     		    MAP_ANONYMOUS, -1, 0);
->>       if (ptr == NULL)
->>         abort ();
->
-> I think you want to check for MAP_FAILED here, not NULL. And I think we
-> always get that, because MAP_ANONYMOUS needs to be OR-ed into MAP_SHARED
-> or MAP_PRIVATE. So here:
->
->>     $ gcc -fsanitize=address main.c && ./a.out 2>&1 | grep ^SUMMARY:
->>     SUMMARY: AddressSanitizer: SEGV (/home/collin/a.out+0x400554) (BuildId: 1b7a82189bfffb3f73d420e138b9859add25901a) in main
->>     $ clang -fsanitize=address main.c && ./a.out 2>&1 | grep ^SUMMARY:
->>     SUMMARY: AddressSanitizer: SEGV (/home/collin/a.out+0x4e9ee6) (BuildId: aca1d168eacebaa239082d8a45ab74c8470f4b31) in main
->
-> I don't think this is ASan finding a problem. It is just telling us that
-> we segfaulted for other reasons. And the fault here is because the
-> broken mmap() invocation returned MAP_FAILED, and we tried to access
-> that garbage pointer.
->
->>       ptr[getpagesize () + 1] = 'a';
->
-> This is also making a map that is a multiple of the page size, and then
-> touching a byte that's on the next page. That's the easy-ish case that
-> we can often already find, even without ASan (though it depends on what
-> comes after the mapped memory; it might be a valid page).
-
-Oops. I clearly don't use mmap much. :)
-
-> A more interesting test for Git is to actually map a file, like:
->
->   $ cat main.c
->   #include <unistd.h>
->   #include <fcntl.h>
->   #include <sys/mman.h>
->   #include <sys/stat.h>
->   #include <stdio.h>
->   static void die(const char *msg)
->   {
->   	perror(msg);
->   	exit(1);
->   }
->   int main (int argc, const char **argv)
->   {
->   	struct stat st;
->   	int fd;
->   	char *ptr;
->   
->   	fd = open(argv[1], O_RDONLY);
->   	if (fd < 0)
->   		die("open");
->   	if (fstat(fd, &st) < 0)
->   		die("fstat");
->   	ptr = mmap (NULL, st.st_size, PROT_READ, MAP_SHARED, fd, 0);
->   	if (ptr == MAP_FAILED)
->   		die("mmap");
->   	printf("last byte: %d\n", ptr[st.st_size-1]);
->   	printf("one byte after: %d\n", ptr[st.st_size]);
->   	return 0;
->   }
->   $ yes | head -c 4096 >big
->   $ yes | head -c 372 >small
->
-> And ASan does often detect the problem for the "big" page-sized file,
-> but not consistently! If I do:
->
->   gcc -fsanitize=address main.c
->   while ./a.out big; do echo ok; done
->
-> I may get output like:
->
->   last byte: 10
->   one byte after: 127
->   ok
->   last byte: 10
->   one byte after: 0
->   ok
->   last byte: 10
->   one byte after: 0
->   ok
->   last byte: 10
->   =================================================================
->   ==988617==ERROR: AddressSanitizer: unknown-crash on address 0x7efd40b9f000 at pc 0x564fe77b64eb bp 0x7ffff49e8160 sp 0x7ffff49e8158
->   READ of size 1 at 0x7efd40b9f000 thread T0
->       #0 0x564fe77b64ea in main (/home/peff/a.out+0x14ea) (BuildId: 8db121bb5c048cb336f8be729e8cefebd6f059a3)
->       #1 0x7efd41233ca7 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
->       #2 0x7efd41233d64 in __libc_start_main_impl ../csu/libc-start.c:360
->       #3 0x564fe77b6150 in _start (/home/peff/a.out+0x1150) (BuildId: 8db121bb5c048cb336f8be729e8cefebd6f059a3)
->   
->   Address 0x7efd40b9f000 is a wild pointer inside of access range of size 0x000000000001.
->
-> So it worked three times without ASan noticing the problem (producing
-> two different outputs), and then ASan finally crashed. But it didn't
-> give us the usual information we get for a malloc overflow. It's just an
-> "unknown crash" from a "wild pointer". So I'm not sure if it's even
-> finding these through its own poisoning, and not just catching an
-> unlucky segfault.
->
-> If we switch to the small file, then ASan never reports anything! The OS
-> gives us a page-sized chunk, so we consistently read a "0" in from the
-> byte after our requested size.
->
-> If we swap out the mmap for:
->
->   ptr = malloc(st.st_size);
->   read(fd, ptr, st.st_size);
->
-> (which is roughly what our NO_MMAP wrapper is doing behind the scenes),
-> then ASan does catch it consistently, even for the "small" file:
->
->   $ ./a.out small
->   =================================================================
->   ==1008630==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c7d11fe01b4 at pc 0x55cf89b1b4c8 bp 0x7fff471b84e0 sp 0x7fff471b84d8
->   READ of size 1 at 0x7c7d11fe01b4 thread T0
->       #0 0x55cf89b1b4c7 in main (/home/peff/a.out+0x14c7) (BuildId: 2cebfcd0a00064eaaed750af010fcecdae2f5666)
->       #1 0x7f4d12e33ca7 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
->       #2 0x7f4d12e33d64 in __libc_start_main_impl ../csu/libc-start.c:360
->       #3 0x55cf89b1b150 in _start (/home/peff/a.out+0x1150) (BuildId: 2cebfcd0a00064eaaed750af010fcecdae2f5666)
->   
->   0x7c7d11fe01b4 is located 0 bytes after 372-byte region [0x7c7d11fe0040,0x7c7d11fe01b4)
->   allocated by thread T0 here:
->       #0 0x7f4d1311a0ab in malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:67
->       #1 0x55cf89b1b3a0 in main (/home/peff/a.out+0x13a0) (BuildId: 2cebfcd0a00064eaaed750af010fcecdae2f5666)
->       #2 0x7f4d12e33ca7 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
-
-Cool, thanks for the actual working example. Your patch makes perfect
-sense now.
-
-Collin
-
-[1] https://www.gnu.org/software/libc/manual/html_node/Memory_002dmapped-I_002fO.html
-[2] https://pubs.opengroup.org/onlinepubs/9799919799/functions/mmap.html
+As a description of the data model, moving the exact bit assignment
+to a side note like the above hunk (relative to the previous
+iteration) does make the body text less cluttered, which I think is
+a welcome change.
