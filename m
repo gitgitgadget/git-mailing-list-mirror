@@ -1,195 +1,110 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7866E2D130C
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 16:47:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187CD2D130C
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 16:48:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762966032; cv=none; b=jWwDWvs2auT1AM9ggiYkc4VvDmG+dfayavNvJSbKRsexymQR3kg4/WJHVsfCr6+REvcu26kZkKTNIU4bi9mRzGlmOY3ZzBQxYda0O0OPlLRIwHWmUMjwQ6Id78v30SIA98Q0ekp1xdDRooG4LCS/R7z1LWd9+tOAO3x8Q7kyNBY=
+	t=1762966128; cv=none; b=ZLh8+moCZSxcMQPl8y2IHOsEAp6FLTJH25T24sR/VeW6Ae2/d6yeYCVPTWHUKjuHQPS23OcB2iEzASaP1Foed5mobg82YDpVrlAAfYY+aoESnFjBVfRUghLF5RnJnrVaWr0XnfAxIlwIkmyZB1OFPcz1yDfioygQkrvCFNpy5qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762966032; c=relaxed/simple;
-	bh=I22zijUktEpCP/NpAiraTgVzWl1aajqrMRakoo2A4OY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qwN2TXI8w2XM5rGjsZkaFLInsa0Kk0nspRxYOtR3ObgVgh7+TZDUdZyJVguxtw9/WeqZumxXHMxRF0nBOdIb5lRg72zJV5cnR9kg+l38h7JPAgwMVc0YDW7rHZykWyL8FhFgeVBgtKkpvl5wfP8CAtLHtRtbSbXFySFtswBsTsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V4Czz8r0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JvQYc38n; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762966128; c=relaxed/simple;
+	bh=YHXEiJKqmfz8OTk6rMY68KsnU4UPOzuajkg3afBSxik=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fv6MOFGobi6NoCGGbc46xlxHKgXoF+kR5D0/97KeTaTNtiLwNbkFuubC2G9eMctQU7xgEN6SWBPvHqCbY/dCeOcx/HC6AyK1XNl57Txk/ADk1tLtrRWhL0GEOwX95W1n44SHnuUl7rK/pZRUNkeA+hxv9ZHSp47JgHZbKw5u0dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vsw+zWvk; arc=none smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V4Czz8r0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JvQYc38n"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 517B81D000F9;
-	Wed, 12 Nov 2025 11:47:09 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 12 Nov 2025 11:47:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1762966028;
-	 x=1763052428; bh=lF3Ij/y/wUlTQOd5yicrL+sULTXiiMLicXXNLq2x9hI=; b=
-	V4Czz8r0Gf8GUSs4Hu0mEUo7DMwr/meLxEocV4/Bim/SXoYCzkpdudU1Q7NuDMxf
-	yavDvLjc72wWGSGlXCIeBmRLcGg80JHoQUKvebw+KzA8hQQaMhynL/0sm73RRFx4
-	y7lzefjT1vuu7MWbN5/jyk/XkjtpvZk61IpZWQwbFmhUHXnNmeKkWXZAR/nQiR+a
-	mepJDng53ib341haPe/uJXtcBiwa/R+nwgETH9iSR1yy64DUmtX+pwZMa/rUDBpd
-	Rd6syGDsal8ineXWmJ09YVUS9a9q7tvFCG+pXda0y0NUkeccx1kjngY0LH0t0fcx
-	VH/+9KsiyQ7JvY10XHo6FQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762966028; x=
-	1763052428; bh=lF3Ij/y/wUlTQOd5yicrL+sULTXiiMLicXXNLq2x9hI=; b=J
-	vQYc38n8/G1e0/aqRY1+Q3ogzWKF2O+X5AeJ/ae5rDUTF3s7qMIJsZoUAamEHj9P
-	yEbgjzbolsGulv5q6v3K1SJ3ieymhwsh7zmwPyjSiJRePpxU6VbliveRX5J2oMHb
-	Ru400SV5BgAwitBhxS0eZWwPHnKY9+u41lUypNXbsA67Rx+lhsHLAmcBYd/tYEun
-	FiZNYcewSWCnPmwdsLi1gYBd/hNp3lYT90dg2TMAfp5TBjTUYx+FiIPH3X9EBvKo
-	5jI2V7T4XJ5wU6GzNBUcW7beEXUh5uV6CgToUMOixxlpwafK68Id1gnPprnq44AP
-	EefX3W35EaAGDs855Rg6A==
-X-ME-Sender: <xms:C7oUacU22Gyr98FozQel3melNUMm4unL-YePG5LtRyfiXUePGfpBbQ>
-    <xme:C7oUaXkQD1BDd5l1QyBWNGpK0FFU3Zvi4xNo1WSJ3mGeZR1JL_8auyGeb41eAMEgr
-    OcDoiY_ww5G3tgtwopfMq8PxDgF9PCe-dQygKwEEP7mpawlNhGF_g>
-X-ME-Received: <xmr:C7oUaVbHrCpyBEAVBAU5ZefDJH26PnfFdckedAiaAD4LsT37YpGSWlhUumUYYMFj9pGopdfHMiaNqgSszSoipRdMsQuUmtQYqL1X>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdegheelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeeggefhudefkeegueeigfejhfejvdejvedtheeguedukefgieelfeeuteej
-    ieeuleenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkohhjihdrnhgrkhgrmhgrrhhuse
-    hgrhgvvgdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:C7oUaaMxEJfV91znrSyWMD_zrQyX1SNJuZREhHlB7n5JS6G7iKxtPg>
-    <xmx:C7oUaSbKAqih8dYg38IjKoPKL2D5O3BSedsVPyV6Nh4rYlbS2hbfXA>
-    <xmx:C7oUaQ2EbKgBaqYn4lGAtv2OhaYsoF2AXrKn9J0xuxV7XybCPFmKAA>
-    <xmx:C7oUaQf7vr4eZlnoqhvG_WMLHjPqhQXuHFmO7isFDvO6GZYPFkRNRQ>
-    <xmx:DLoUaQySRPQ8G69GzLfU8oFBgonsDb8OP2X-QDLzc4-YmjbVKHqNIXDg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Nov 2025 11:47:07 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Koji Nakamaru <koji.nakamaru@gree.net>
-Subject: Re: [PATCH] Revert "osxkeychain: state to skip unnecessary store
- operations"
-In-Reply-To: <pull.1998.git.1762930881599.gitgitgadget@gmail.com> (Koji
-	Nakamaru via GitGitGadget's message of "Wed, 12 Nov 2025 07:01:21
-	+0000")
-References: <pull.1998.git.1762930881599.gitgitgadget@gmail.com>
-Date: Wed, 12 Nov 2025 08:47:06 -0800
-Message-ID: <xmqqv7jfryet.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vsw+zWvk"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b6ceb3b68eeso673671a12.2
+        for <git@vger.kernel.org>; Wed, 12 Nov 2025 08:48:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762966126; x=1763570926; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5xU8q7MblhALQM2wuKXIsIYbhbzL1nkTBIs5pMUdK+s=;
+        b=Vsw+zWvklHcBucERXBAus5+EraCenBgpxy3Uo3afnx5imMQn1/DbGJC4Pwk1GgoLZX
+         2HXDdSpIitPnrUsqtTBRaK/zGNVowbH1L+21yxkFte+5u7Xgg4mB/nu5xcHnbepvDu71
+         LD4ipe5z8xOC/NV0+/KMFk4PzJfPrdcG66scaylGX2CNl/N6TDyIJxak0OONHtMmrm1m
+         d1NhKaBBrWYdPJuQrvfP5RqATdrcdX9tlQc+qyysMih6CTtxNcVc54EfOlx/3mD82JZC
+         hUwKQWB6550vFOkxLTjBTRefiafFL9L9ntgwWMU+Hr3ds/RWPZb0rtiBCbdIcgXU8UGB
+         wrqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762966126; x=1763570926;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=5xU8q7MblhALQM2wuKXIsIYbhbzL1nkTBIs5pMUdK+s=;
+        b=D8cg2B0Hy6lzh4/UmhIhGxEbGW9MB3CqQtdsGpmq0nKAGScgd3rVHZWvVuYhIpZOPs
+         6LBHrCjKeymPdHQuwp4Rl++Or0Zj6Xwr+wxCoaJ0gC/qWLe2JV11XRf+YbVNqMk5wmiL
+         HI0bs9GaUM408wRegStgJtg/1LcxODJnw+XvYFBi0ZWBpAcEcDTDv8NJERE2Nt0eOGeu
+         doozaGsJcEc7zWgG6IncqXo0HIy/22ulDAwQPN8ZVIsrvW09SodEqEU/CKqZLMZAlHVj
+         mV24nM4+kT/21fihoP0dqPVWTBWNSnz2l/6i3R1jWWzmhJt7xUUkH+W+0gJ+3/8t/JJe
+         eRrA==
+X-Forwarded-Encrypted: i=1; AJvYcCV9h/46643X6Lw1Btml0lQdEi1s3FQuEvd/2r6hcJL4pZjE2mMpeNnVjaJ8cIKB/aOzSLk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxb1SdySDvgZAunKrYdV4XVY7zthW3iAQEZr37GPjATNgb2kSam
+	Sgb4ydJSGUCmhi70tgzPJiZlNc4qDblxm4n5ksuE2vhvww93QQYvB5Wq8yiwPYXO/os+jk2e6ai
+	pS4dvQwYQAx1xK5G/O7TwNP1sro54Vap6okJATzCU+m0B
+X-Gm-Gg: ASbGncvqP1PhgDVdc/a7U18ieJSZXArqqjPHW1pL0g/RPxR0ICoI+ns4S1Gt68kA4OP
+	9p/sw5LLxaBkr/dXCI5g/H01QjALfGQkLl8oKcrhvTAWWV6HoiSF5YW6S0KUiNHNE8P6fYooF11
+	uhmCWESi2wtL/nPcD0f/iLnhPzNZyEKwa+CSOplaEVaf8S0Cy00aOgOUkDxeqoVBV5udSf6Gcz8
+	vo0FqF/Enqy3y/iA62gLVY1re7LubAX9URjOL12pFBXYsO7g0cPOowBd0he73QLVdFLVNqx4C4n
+	N7m8gsUzC51U0VbZnkGhrUA=
+X-Google-Smtp-Source: AGHT+IHGYHEJKVbdNXxLf5mE23x9aVqgJZ0utOxnHQYnwz8IEa55HmSVoVjBllepvrqX4MpOQdTL9arhRqrzShYd8y8=
+X-Received: by 2002:a17:903:283:b0:298:2239:afc5 with SMTP id
+ d9443c01a7336-2984ede4dedmr52454525ad.61.1762966126369; Wed, 12 Nov 2025
+ 08:48:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
+ <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com> <aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
+ <20251110201136.GB127132@coredump.intra.peff.net> <CAOLTT8RweGOmxNK=vKDv8w-8AJM7QUfLBw4WOKeY1EpSVeB6iQ@mail.gmail.com>
+ <20251111191508.GA1907007@coredump.intra.peff.net> <xmqqh5v0wcif.fsf@gitster.g>
+ <20251111213339.GA4053071@coredump.intra.peff.net> <xmqqwm3wut8i.fsf@gitster.g>
+In-Reply-To: <xmqqwm3wut8i.fsf@gitster.g>
+From: ZheNing Hu <adlternative@gmail.com>
+Date: Thu, 13 Nov 2025 00:48:32 +0800
+X-Gm-Features: AWmQ_bkq5LDFTmxFGuOtAog4Kvnxmjb0LFragYGX3E4TJnL52ZaXh4JNZMMHeEg
+Message-ID: <CAOLTT8QH_+4R4cqQf91giPxOE9H67bWZfcjA7sTeMbn5p1PnSg@mail.gmail.com>
+Subject: Re: [PATCH] commit: add --committer option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	phillip.wood@dunelm.org.uk, 
+	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Koji Nakamaru <koji.nakamaru@gree.net>
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2025=E5=B9=B411=E6=9C=8812=E6=
+=97=A5=E5=91=A8=E4=B8=89 05:58=E5=86=99=E9=81=93=EF=BC=9A
 >
-> This reverts commit e1ab45b2dab51f94db9548666dfd7af626d2aa7e.
-
-OK.  Let's make a mental note that e1ab45b2 (osxkeychain: state to
-skip unnecessary store operations, 2024-05-15) appeared in v2.46 or
-so.
-
-> That commit was trying to skip to store a credential returned by
-> "git-credential-osxkeychain get" by setting
-> "state[]=osxkeychain:seen=1". However, this state[] is kept even if a
-> credential returned by "git-credential-osxkeychain get" is invalid and
-> another subsequent helper's "get" returns a valid credential. Another
-> subsequent helper (such as [1]) may expect git-credential-osxkeychain to
-> store the valid credential so that "store" cannot be skipped by just
-> checking "state[]=osxkeychain:seen=1".
+> Jeff King <peff@peff.net> writes:
 >
-> In order to solve this issue, the state[] mechanism can be refined or
-> "osxkeychain:seen" can encode the whole information of the last
-> "get". For now, let's revert the change.
-
-Is anybody actively working on the proper solution?
-
-In a patch series that replaces the old commit with a more proper
-solution, it could be a reasonable layout of the series to make the
-first patch a revert like this patch to give the proper solution a
-clean slate to work from, but this looks different.
-
-If the problem you are trying to solve here were a regression that
-happened after Git 2.51 was released, a revert is totally warranted
-at this point in time, even during the pre-release freeze period.
-
-But it does not even look like a recent regression.  Wouldn't
-reverting this change at this point give existing users who are
-accustomed to the current behaviour another regression, essentially
-robbing Peter to pay Paul?  In such a case, I do not think "let's
-revert now and then hopefully a proper solution can come later" is a
-good approach.
-
-Thanks.
-
-> [1]: https://github.com/hickford/git-credential-oauth
+> > I just mean being able to do:
+> >
+> >   git commit --amend --author=3D'Foo Bar <foo@example.com>' --committer=
+-is-author
+> >
+> > instead of:
+> >
+> >   git commit --amend --author=3D'Foo Bar <foo@example.com>' --committer=
+=3D'Foo Bar <foo@example.com>'
 >
-> Reported-by: Petter Sælen <petter@saelen.eu>
-> Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
-> ---
->     Revert "osxkeychain: state to skip unnecessary store operations"
+> Ah, I see.  Like
 >
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1998%2FKojiNakamaru%2Frevert%2Fe1ab45b2dab51f94db9548666dfd7af626d2aa7e-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1998/KojiNakamaru/revert/e1ab45b2dab51f94db9548666dfd7af626d2aa7e-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1998
+>     git -c user.name=3D'Foo Bar' -c user.email=3Dfoo@example.com commit -=
+-amend
 >
->  .../osxkeychain/git-credential-osxkeychain.c          | 11 -----------
->  1 file changed, 11 deletions(-)
->
-> diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> index 611c9798b3..1f49ab8548 100644
-> --- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> +++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-> @@ -12,7 +12,6 @@ static CFStringRef username;
->  static CFDataRef password;
->  static CFDataRef password_expiry_utc;
->  static CFDataRef oauth_refresh_token;
-> -static int state_seen;
->  
->  static void clear_credential(void)
->  {
-> @@ -172,9 +171,6 @@ static OSStatus find_internet_password(void)
->  
->  	CFRelease(item);
->  
-> -	write_item("capability[]", "state", strlen("state"));
-> -	write_item("state[]", "osxkeychain:seen=1", strlen("osxkeychain:seen=1"));
-> -
->  out:
->  	CFRelease(attrs);
->  
-> @@ -288,9 +284,6 @@ static OSStatus add_internet_password(void)
->  	CFDictionaryRef attrs;
->  	OSStatus result;
->  
-> -	if (state_seen)
-> -		return errSecSuccess;
-> -
->  	/* Only store complete credentials */
->  	if (!protocol || !host || !username || !password)
->  		return -1;
-> @@ -402,10 +395,6 @@ static void read_credential(void)
->  			oauth_refresh_token = CFDataCreate(kCFAllocatorDefault,
->  							   (UInt8 *)v,
->  							   strlen(v));
-> -		else if (!strcmp(buf, "state[]")) {
-> -			if (!strcmp(v, "osxkeychain:seen=1"))
-> -				state_seen = 1;
-> -		}
->  		/*
->  		 * Ignore other lines; we don't know what they mean, but
->  		 * this future-proofs us when later versions of git do
->
-> base-commit: 4badef0c3503dc29059d678abba7fac0f042bc84
+
+You still need:
+
+git -c user.name =3D'Foo Bar' -c user.email=3Dfoo@example.com commit
+--amend --author
+
+It's hard to remember and not symmetric enough.
+
+> Makes me wonder if we want user.ident that covers them both ;-)
