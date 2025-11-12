@@ -1,127 +1,120 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C82E313E21
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 16:51:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29FAC34252D
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 16:52:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762966297; cv=none; b=f7VuNr9BJCYHwIROGBwWxlTp4+ninpYrOLNFao3vPBWb8EuKRR4E5hL5Arub05/sgB6DdZhMaeu3YWySyZBHAoL5cDapN1GVkl1gHI+6r7cGO3sksYcKQolU6aXNGvmTj0G0iO9zs35CaDwKU69XKBLfkXvuWKOMFMh7Wzr5YbU=
+	t=1762966335; cv=none; b=Fbag0eX21ERaqtQI6dY0BeGU36XXMwugTa69NdkrcAMQ8uer4134erJBdzkpl5c14hZB2CJ8mNxCo8iIVJl9vROXr/+FYz7PcGxytJQ9eHnbtz5oEuNrokylZlapeG5ZoWxI+yK8l+AxBny54lCaaYUTvi2BOVZnIwFJz6mfFek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762966297; c=relaxed/simple;
-	bh=R/Dwf1yZzQOsRgGaz0/JdwdyDHt1JVUBX78YkNovlNg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sjH6CPhBmVNTkqb+eUofPmAdEIyLBTIogWProq9/gtEQGjPWL4K70EqRzTfT+eyBKSRqJGMdMW9srV2KQcOeQ0PB4tUQwb37XmFgug6qKLCQ87P+JafAModQ7JnsV7ZWom0kUN+cuvkV30eqPtMK8VjGCO+sufJTG9JMwjaN0h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mrCIAed9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TlO8q5jK; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1762966335; c=relaxed/simple;
+	bh=pzjKjXiwFsqTFZweTR3EfeFeEhqhRxIybuDZ1yBUyWU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Fq3Ue3tCE1TaAGVwvYFP2lQ432OUot5KOXnPPN27FsHMWYatl+HNmybSoKj/dPH2wiJj7Qbocl0r6pGBUSVdm8+eulwxntKaUm5jH3FFUev5HBqnaQ4+3ybynMfMe5deERZqULWYrDtWMSEl7URiJKMKxpJFLvRFk58/gSXe5fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MYPM8DuF; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mrCIAed9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TlO8q5jK"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 53B497A00A1;
-	Wed, 12 Nov 2025 11:51:34 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 12 Nov 2025 11:51:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1762966294;
-	 x=1763052694; bh=POSChanV77U7g34LCVz1W/TmilX9wLjfV8Lpsdj8tNc=; b=
-	mrCIAed95pcIMqZbUB73G9d52wKZb6XI8OlL+9Q8fs1Kzl5NKYx6xhrjEchYHSxY
-	3m+0wD/yQmvd4sEs2Nj6BGdB4s2j2Y3sJL0QBSB6RiEGlulz4mfKNPdNwKnE8vPj
-	fd1We2QvEX7LTIECiB9sOhZo8moHgerN+pj6QVqqO9htakIvR7hQVKUchApx3koo
-	Nb2j4GgozF0681r5lgYqdiNU6hD1DXYs6Zmoy179SasVHVG9rSuJyqk+LYYJy+1N
-	B8hDvRijN3i87eLX23cv6H8Tib+LIIaNiO2HjsJIARTF759C9eFnHPq/sBfZojyr
-	+xwfgiBEELxo1h3R8HIZ0Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1762966294; x=
-	1763052694; bh=POSChanV77U7g34LCVz1W/TmilX9wLjfV8Lpsdj8tNc=; b=T
-	lO8q5jKU/T3eedYAN1P41r2cv2Su1Moksc6RXoXbotIaD4s+M7ziPKksypKuwftI
-	qeXPq51B/9qiKSacYx6QZwYLgN18Kkwb8N3QLO5Q20f+jyNPFnQNN9TP8im8dNQA
-	6/4939+JK4SpPRMrrgpZm9NetL3NRnNPG584NKozE91DmQ6WILn2/uQI5W/UXuDI
-	hzgMqSVtxgXD8PBrz+wvLf5jl0ZNY7OxzUHO55dMQjW0S5YJDxFRpqd4JLY9JmDN
-	8FjTF/CE16j0Nyx3qQyGkNBCwqGxWD8dRjA1Uwo/xx0c74/FDTcyipqLwnrcdomY
-	s2ecBLHwwcQ+YmxBBxQOQ==
-X-ME-Sender: <xms:FbsUacWugXRtPbfIanTxpiW7eDjoOQu74_XAeVs1QyajEYGpZk-YgQ>
-    <xme:FbsUaTJIjET8NW7fWPiYkQdsFACF0HG8FRf85Hnpo00ZbNowA4LgU5SEgcxrL5ZaH
-    n3ENB9iBgtYZK8eSp5WRGhKudbdoorvkM5TMMAzcOb9W4KR0FwGsw>
-X-ME-Received: <xmr:FbsUaUB-zakRZIYkDlpYZsbMFVbca3y-K1tEsuTIFQ1kNRzqED7tRB4YHqIr9L7oUYxTlGzpbwb-Z5NwQwfiu3wQY3NyjqgrwDeQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdegiedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilh
-    drtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgr
-    nhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepjh
-    hohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheptghh
-    rhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:FbsUabf2eNySe54gdZtp3bZoGfcjQvuAIXiQBVz-1jHLn6AVFSQmaQ>
-    <xmx:FbsUab2lXTHD_s72XNrCqugdkBSbdlKtWUKwRexGSja5lnDmRpaUFQ>
-    <xmx:FbsUaagVpen5nKmDWayZ7SInbJkfa3CCko0FEBgC2bwh0cSVCLrOkQ>
-    <xmx:FbsUackkpjxRe09ZNaiWCvkC6ce1dk56HYRaI27wGFYeQaj0EHL6-w>
-    <xmx:FrsUaXHIgO-kwlw_sDopl9s8qKc0UrJ850ycxz0kpm7E41zYntQ2m5Ax>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Nov 2025 11:51:33 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
- <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/3] fast-import: add 'strip-if-invalid' mode to
- --signed-commits=<mode>
-In-Reply-To: <CAP8UFD3G6kn-n1_rXJgcZf1djUE4Ner5xd1YaNr5tz5h8d_Ypw@mail.gmail.com>
-	(Christian Couder's message of "Wed, 12 Nov 2025 08:25:20 +0100")
-References: <20251105061918.3688870-1-christian.couder@gmail.com>
-	<20251105061918.3688870-4-christian.couder@gmail.com>
-	<xmqqjz00e5ns.fsf@gitster.g>
-	<CAP8UFD3G6kn-n1_rXJgcZf1djUE4Ner5xd1YaNr5tz5h8d_Ypw@mail.gmail.com>
-Date: Wed, 12 Nov 2025 08:51:32 -0800
-Message-ID: <xmqqms4rry7f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MYPM8DuF"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-297e264528aso9806115ad.2
+        for <git@vger.kernel.org>; Wed, 12 Nov 2025 08:52:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762966332; x=1763571132; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QYfuOLeaQi7NlgchXqXG0aPm/fV+H0Aj8ZA95UbKtvM=;
+        b=MYPM8DuFQhxoJWjUb8FtttrGP0/es1wSpYsRvW3y5GQ5KtcgPPNw5hqOLW24Nd25mt
+         GH02MeFECKp3NLVaPx/Qv5xurG4NJ/E8JZZkPr7WE8GX/Kf2X6Vy0GvqpGJP/GBhCMc8
+         aaGeHOUvB9W3KmxP5dxlcQBuxi/7YcKOKS7+VQAoM0C9isj2vN2cVxT11LzsdpxtNu0B
+         evT73yZQQchNI6nYSzQchDCX0A7qWRpjJmCS00W07xqAP8t20jrgF9tImzAGVpXQ77VZ
+         HejftFcix59w5et8OMNrgsLzc43UG39czSpWA8flqkVbwfiuxrqgx+nTobQyuhI63VEy
+         nWDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762966332; x=1763571132;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=QYfuOLeaQi7NlgchXqXG0aPm/fV+H0Aj8ZA95UbKtvM=;
+        b=ZzR4i1mJX8oecpmmbE2TeN13rhfwxEicMYyCqdipNYxbEmkROGJvAH49kteblg634A
+         aCFXlwYzbZmhb/4deMwW6utFGuD4u7KxbbQ30VJh14jvZbBUp2NjJUSqFl4lV9LN7GKV
+         JyieElzFzMmsitQ1wTYKolsxbfyMPDadX8nAilj2uc8PgD1gT/lzFmK/48RfkXA/TZwV
+         akYVDdt9ykE+Enw1U7eV7Twrl2zjbBITcm9bJHguiLNi8FlrP6eYVpMwvF9wnC2i+jEc
+         ufogL0L+1uTXnZVs72r+xtzYplQYAZqKAkpjAjweg+3pO6jxAhPuHeMk+CNSPGH//N3E
+         jpzg==
+X-Forwarded-Encrypted: i=1; AJvYcCVCjUVRzEq3Lwx8AJcEUgual1Eig1ZbRtoT2cdldxUn/fU9wABOHYQo+LTQYKN1ky3c920=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzui3r4MPmfuHDHwNKTDeUVHyhDcSc9J/PcuGTwM2gwc53g8Ys4
+	jDmTFeZAr6Jc9jtF++Ev78+IXTYmY4V/RAVBy21oC9pJ9m7IFEdsuAE3w8ldgyfVO+Ua8QLL2Q+
+	S8Z/b2gPaQKNs0JqRFYIQAW1evbVNtNE=
+X-Gm-Gg: ASbGncv7WiuUQ/oD3fHlihjBg0KTzA3Ny3kYw6wO7CFeIRJdaP3LNQI8ZqFf9Rc3Pzd
+	GCjZ10bM+UrPc1dPOJFRN7lSC2SIstpxYNKE2fx5AP/vXLkc4XCvhtD9iSsa5UhN4MMC1iLTDKK
+	lBm3pr4ItajFS07Yzt9x266ViPE4YJNxuhglh8MESIc96IZWeUbPKca38IS/DS22m02egSHj3Lq
+	BEAQBt2x6SS+pwniuWMAfmBMX11FlxACIYH6gBSevwdfLjHtQz0zJBFwYYXRWe8C3GxxXiq/fLJ
+	qhVq3vD6fkeR
+X-Google-Smtp-Source: AGHT+IE8WRDY2niM8eevWh3B5ogQKBqxUxzgpBshzdf/ixe9+6gDyWXLjJZf5/834hvWvmNy6YrvLYk7pq5tBjc4GaA=
+X-Received: by 2002:a17:902:ec89:b0:297:d764:9874 with SMTP id
+ d9443c01a7336-2984ed46fe0mr47112845ad.21.1762966332277; Wed, 12 Nov 2025
+ 08:52:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
+ <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com> <aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
+ <20251110201136.GB127132@coredump.intra.peff.net> <CAOLTT8RweGOmxNK=vKDv8w-8AJM7QUfLBw4WOKeY1EpSVeB6iQ@mail.gmail.com>
+ <20251111191508.GA1907007@coredump.intra.peff.net> <xmqqh5v0wcif.fsf@gitster.g>
+ <20251111213339.GA4053071@coredump.intra.peff.net> <xmqqwm3wut8i.fsf@gitster.g>
+ <20251111222335.GA4054883@coredump.intra.peff.net>
+In-Reply-To: <20251111222335.GA4054883@coredump.intra.peff.net>
+From: ZheNing Hu <adlternative@gmail.com>
+Date: Thu, 13 Nov 2025 00:51:58 +0800
+X-Gm-Features: AWmQ_bmOm9dnuVP7n5DLcFvprSwgAfhx7Bf8jEsTUqy-uZiJwkZZajhTpMSPxsI
+Message-ID: <CAOLTT8RyH7nJzzeva6Kjn+mvCjGF3mCSLTLcUH-yeEH0+3LL0Q@mail.gmail.com>
+Subject: Re: [PATCH] commit: add --committer option
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	phillip.wood@dunelm.org.uk, 
+	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
-
-> On Sat, Nov 8, 2025 at 7:32 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Christian Couder <christian.couder@gmail.com> writes:
->>
->> >  t/t9305-fast-import-signatures.sh  | 118 ++++++++++++++++++++++++++++-
->> >  6 files changed, 226 insertions(+), 28 deletions(-)
->>
->> Unfortunately all these tests that assume that explicit-sha256
->> repository as a subdirectory exists would fail when the topic is
->> merged to 'seen' and the tree is built without the optional Rust
->> support.  This is because brian's f6581e23 (repository: require Rust
->> support for interoperability, 2025-10-27) changes a couple of tests
->> to require RUST prerequisite.  One of them is what creates the
->> explicit-sha256 repository.
->>
->> I do not think this topic to preserve or strip GPG signatures
->> particularly cares about the dual hash interoperability, so can you
->> rearrange the tests in this series to avoid crashing with the other
->> topic?
+Jeff King <peff@peff.net> =E4=BA=8E2025=E5=B9=B411=E6=9C=8812=E6=97=A5=E5=
+=91=A8=E4=B8=89 06:23=E5=86=99=E9=81=93=EF=BC=9A
 >
-> I will do that in the v2 I hope I can send soon.
+> On Tue, Nov 11, 2025 at 01:58:21PM -0800, Junio C Hamano wrote:
+>
+> > Jeff King <peff@peff.net> writes:
+> >
+> > > I just mean being able to do:
+> > >
+> > >   git commit --amend --author=3D'Foo Bar <foo@example.com>' --committ=
+er-is-author
+> > >
+> > > instead of:
+> > >
+> > >   git commit --amend --author=3D'Foo Bar <foo@example.com>' --committ=
+er=3D'Foo Bar <foo@example.com>'
+> >
+> > Ah, I see.  Like
+> >
+> >     git -c user.name=3D'Foo Bar' -c user.email=3Dfoo@example.com commit=
+ --amend
+> >
+> > Makes me wonder if we want user.ident that covers them both ;-)
+>
+> Hmm, I hadn't thought to use "-c" config for this. That makes me
+> question the utility of --committer a little bit. ;) I guess it is
+> slightly more convenient than "-c" in that it will trigger the
+> find_author_by_nickname() magic.
+>
 
-Thanks.
+The advantages of --committer over -c user.name -c user.email:
+
+1. It's symmetric with --author
+2. A single option is sufficient
+3. As you mentioned, it can search for the committer in commit
+history (although that wasn't my original intention)
+
+> -Peff
