@@ -1,54 +1,54 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121132F1FCF
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 22:03:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A61E2F3638
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 22:03:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762984991; cv=none; b=lJiCueksi03gWUiwzYmNyUUH9HuEI6OVF+MXoYoxMBZa6cqiysSybAvHmLoZF+ndjlUzOIZ95unyjFcfzJk9mF0HrlvCKfm1Vnenbzc9R5P4nA4USJcfYU313Qmw997a2beJvqpeeDX4WID+Ym4fuoqDOpur3DK3Pgqh8fF2Wa8=
+	t=1762984992; cv=none; b=Ph2QGn2UQ8B5CK3gobGwNr86PgN5ujxujjEBD4Pxn4SI4TtCbFRSTF62R91gZsf5wx+Qv9m7gPLjpuCHM4RnV9uXRH4UFPpSjAutDOeV5X+fYoJx7CbOnt0WylD1d8F3fu/wgjbhZZYpVjX7HBUk07Rjvuz6ky1yCb69cUt0jvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762984991; c=relaxed/simple;
-	bh=8+Fv4QNYTqXpGT1T+6a+T0tURDViSCcNY9GrZF+fRpM=;
+	s=arc-20240116; t=1762984992; c=relaxed/simple;
+	bh=KvUprD3+aYERue3ST7U8rpZVbWnGEpLm8NNO/f8DBOg=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PTxvOGKwP1uT0xq9svg44Ji1rAIfKxVc4VhtRxT4p7yVGsGtvHXo64dneHa8ijXUnek/biw8ejPU/YjTwWFg1mESyGRNURYfZZ8PknqBjHwYdBf0YU0xXotoX7vLFNQ0/QtKE6spOfaSVwzIoI3Cq66G10tGZHI06fidiUFod38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KuGahWkM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PBV8msYr; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version; b=QS7lRU79nqsvQLoKOW5Bj5zZrDJsufspH5AjyaV/UNJ7nMglIDZicH4pKfn4sAF9c0vxP/ZVIw3osd8gqsw7ECn7lA3CCrGBGeZfnM6EHhwYQun99ER0hLabeth9XCN+n5Lo29TEpHhJgV2M6pfO9+YN3NI325YjSIWV9vCLO1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G6tVG2k2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W/fH5QTt; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KuGahWkM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PBV8msYr"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G6tVG2k2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W/fH5QTt"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2C5C51D000D0;
-	Wed, 12 Nov 2025 17:03:09 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 12 Nov 2025 17:03:09 -0500
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D06FF7A0026;
+	Wed, 12 Nov 2025 17:03:10 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 12 Nov 2025 17:03:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1762984989; x=
-	1763071389; bh=BPZ6PoW5PpcBLLBd8FTZZ40aHxGImeEiSUbnDFQy8nQ=; b=K
-	uGahWkMrb1cdwOe1jT7lfApqQV0k4VeKmaSkuZbOJ+fZDkXYAjA/lShswUkQzwej
-	DHxExDwJCILLcz4PM/ZlyQ3y30YnVdoI5PkLVquKQSc0vOwvZ7nQ6b/JJ2FEHxx5
-	bPc8PJHTPlSGianU8UENSlHUu+M12rdjt6RYmBNBo39is82VsBfUKCF047IkN8t0
-	Bk4f/ySxdy5Cx2yaUzaadddXCuDvVNTdb7TiLfp5PMKxASK00gIpTWwLVtzXzERp
-	8laAH1fNFSdxBBrokVaWPbKYj1FyjUM/qDJe1fvsfAZvVIOqnvmfgdYcbPtaVXhq
-	rUWa0EDAsiCFirS7n0fOg==
+	:reply-to:subject:subject:to:to; s=fm2; t=1762984990; x=
+	1763071390; bh=f5/mWa4PKZMSZh7nOxh8GkquCIF5xpA2T9s09c+iNFk=; b=G
+	6tVG2k2ANcpMMW3WD8xhkywOgUukV9F/zMjyy+rcZnHmTlOXbc/wENf5FAH7N0Uq
+	GHwmPIyzwTK6tHuyt6KPLfI8SafzTUvRKEo95Z8XHbya9+fwoJwvavLKbBHoc7vM
+	Y9CWJUNYgm+S/Fhu+x0RvD/GdOblG0nn+7hPQr7RsgbrfpacJzf3uyX3NfN8Gxoe
+	PWYdY2NWYeGkbqFzGSR6PlJZa/sudAaQXhX8o9BJCD0owuh6ZZhUhRyUNFqbiCWy
+	gV4cLDd1+wgBi5BdcZCUcJF0yXOrFcg+R64O0HwHQmR5KYc1XmJq0I45mFtkbpDU
+	vMojw7EFWHKpixkiUu8hA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1762984989; x=1763071389; bh=BPZ6PoW5PpcBLLBd8FTZZ40aHxGI
-	meEiSUbnDFQy8nQ=; b=PBV8msYrT9xJd86W93f9dwBTmshzHpj/sz+IDLuBquph
-	+L9YyHVdvI8SEpHnb+ljGhMUfJI50fjjV/szThpPiLfRwk51zMbG0uW7F4233Aj4
-	9OP/gYy0pSpGZ1/ASFp13PX74jSRM50kMIk906MCAQQia2TPFBYjRne+fvcB7wgo
-	ht5oGyIr4xODuU9oj8kGB0ST9xeiANS2VVHaq0T33ufsDgfP5wDsE5tluzDYGHzi
-	GRXCoRlr9myuhhG+h0F6o7oDTeD2zICkW3cwPZzmH30XamcBaXhzZudRSF7N7AMM
-	qfFNLYBnZ3cuU5gquifq6gtqKsqNbXoj/FheOP1s/Q==
-X-ME-Sender: <xms:HAQVaWdZdWR1BD2JlqWyebaPtFAH4jG66BZd0B18C-EQr5vMg0FpYQ>
-    <xme:HAQVaWM60cnFuJuiWCHtIZIyJFvDiI8MIip9ISXjbk_xttqY_k8HMVQ2PTCBNd-KF
-    whiS0jYjCXsEPpkouuYuUMCDJ7Y8fabgMIgU4GK8hnj2Wv6-vU4Ag>
-X-ME-Received: <xmr:HAQVaVLEF8qQOXizoux-3jXeRZ1hyNYhPHq4ZktnmBdf-Iu6EJ3tp-E_Roni0ewV6Zn0CP3BlIy2D3jvWuDh6i1iwkBgaKsxN3P8>
+	fm3; t=1762984990; x=1763071390; bh=f5/mWa4PKZMSZh7nOxh8GkquCIF5
+	xpA2T9s09c+iNFk=; b=W/fH5QTtp85Y6zjYKlpwK2wZydmCqlGVkfgffI+EZqQr
+	nxy6qXwR60i5sacYRVGgVMj3FOrxI04SPON1FHOrCj4VzluOdoL2GHTfk3Ym12wJ
+	Ga6iGOf6255Yzgw9iBcptv4DlHZ9xJTUl3ajSOcNL2Gq7i18oIaJ8O9aAk2CuQay
+	gWd0NTnV8CxRPgI+pUfBLosCYpk8SZoKhwG8S+roZycQCCdTdtBWfxSMT1pf2ysI
+	pwG+T8G5HVkMItBZY7jmxSGVQzBGiKm4iv3x5xdNSOgYssetU/1Ns+AaiGYR5g9/
+	aqbCePGhygPj/C2MvAa/ADklSe9KlLDdBNXsOpPW4w==
+X-ME-Sender: <xms:HgQVaU3WKrnYZFKCD2BV5FHVyZyMWqwu4W6zi_I6sIq8-0AE4Ry7eg>
+    <xme:HgQVaVEMVoGiVygybFf_CsjAEXbCJlLW_Jl1qTq0NKPymeQUDIHoncs0zqZAJ1mg9
+    fp78uGH0-_cPZvIK_jX4yshqdwTJd7-uGPWhsg8-qTAC5hcYDWEmA>
+X-ME-Received: <xmr:HgQVaaj6qC18Vd7cOno5LtOt9JE9cvB59WaQBO5cDZsxICcgbt_Xtwty-vquRZQO6PKpRR4gzUM_4-viWY29y6ZllsSRoKYH9oSL>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdehvddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekredtre
@@ -59,19 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdehvddvucetufdote
     hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:HAQVafGL8qV76KnUwFVxPOOJ1CzbEZ8f9DCA9JOcaAlTBX25nH3yBA>
-    <xmx:HAQVaVSZ8nt5thrmm9jyZlYF3W-ECViRFG8BQ85PgRd1dHTSxUMeDA>
-    <xmx:HAQVaTGsFIvHI7HMN2HD43Xvr_HigsjIwQr78f5-fW4AafGYQc6WrA>
-    <xmx:HAQVaZ8JQuEESLeC-tNRC4igGhvJHRAISRv87wKfSEMBA7Y7chVYPw>
-    <xmx:HQQVaR0nznpuEFSLHsDRxOeyFp-rTpI-OqyguI8h12Tv1yNwQi561ed0>
+X-ME-Proxy: <xmx:HgQVaY_y3yxYIk__PFJHScnccU6IRchOjBYtR6oClV8TiCDFam321A>
+    <xmx:HgQVaZo-4daT1d86gxWy4Ii80YL-RXE7mMJvbyxi-41ujD4b3kHlTw>
+    <xmx:HgQVaf_utbsNgeSR8hOZMG9ANnFzcpM2rmDTjb3UxgqkgMMGB_N7OQ>
+    <xmx:HgQVaVWP2LHjU0MP9qUG6mhE3PindwXYX3VY6NlhYHvza-JwIPzpQg>
+    <xmx:HgQVaQMP8nS9W_QSMj1EZre1oE7WNkTWl5uP4MkUXjOPf-KjSUKox4aG>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Nov 2025 17:03:08 -0500 (EST)
+ 12 Nov 2025 17:03:10 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v4 05/12] diff: refactor output of incomplete line
-Date: Wed, 12 Nov 2025 14:02:51 -0800
-Message-ID: <20251112220258.1009253-6-gitster@pobox.com>
+Subject: [PATCH v4 06/12] diff: call emit_callback ecbdata everywhere
+Date: Wed, 12 Nov 2025 14:02:52 -0800
+Message-ID: <20251112220258.1009253-7-gitster@pobox.com>
 X-Mailer: git-send-email 2.52.0-rc2-441-g030905368a
 In-Reply-To: <20251112220258.1009253-1-gitster@pobox.com>
 References: <20251111000451.2243195-1-gitster@pobox.com>
@@ -84,60 +84,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Create a helper function that reacts to "\ No newline at the end of
-file" in preparation for unifying the incomplete line handling in
-the code path that handles xdiff output and the code path that
-bypasses xdiff and produces a complete-rewrite patch.
-
-Currently the output from the DIFF_SYMBOL_CONTEXT_INCOMPLETE case
-still (ab)uses the same code as what is used for context lines, but
-that would change in a later step where we introduce support to treat
-an incomplete line as a whitespace error.
+Everybody else, except for emit_rewrite_lines(), calls the
+emit_callback data ecbdata.  Make sure we call the same thing by
+the same name for consistency.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ diff.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index ff8fc91f88..7ee8620429 100644
+index 7ee8620429..44b86544b7 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -1379,6 +1379,10 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
- 		emit_line(o, "", "", line, len);
- 		break;
- 	case DIFF_SYMBOL_CONTEXT_INCOMPLETE:
-+		set = diff_get_color_opt(o, DIFF_CONTEXT);
-+		reset = diff_get_color_opt(o, DIFF_RESET);
-+		emit_line(o, set, reset, line, len);
-+		break;
- 	case DIFF_SYMBOL_CONTEXT_MARKER:
- 		context = diff_get_color_opt(o, DIFF_CONTEXT);
- 		reset = diff_get_color_opt(o, DIFF_RESET);
-@@ -1668,6 +1672,13 @@ static void emit_context_line(struct emit_callback *ecbdata,
- 	emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_CONTEXT, line, len, flags);
+@@ -1780,7 +1780,7 @@ static void add_line_count(struct strbuf *out, int count)
+ 	}
  }
  
-+static void emit_incomplete_line_marker(struct emit_callback *ecbdata,
-+					const char *line, int len)
-+{
-+	emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_CONTEXT_INCOMPLETE,
-+			 line, len, 0);
-+}
-+
- static void emit_hunk_header(struct emit_callback *ecbdata,
- 			     const char *line, int len)
+-static void emit_rewrite_lines(struct emit_callback *ecb,
++static void emit_rewrite_lines(struct emit_callback *ecbdata,
+ 			       int prefix, const char *data, int size)
  {
-@@ -2437,8 +2448,7 @@ static int fn_out_consume(void *priv, char *line, unsigned long len)
- 			    ecbdata->last_line_kind);
+ 	const char *endp = NULL;
+@@ -1791,17 +1791,17 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
+ 		endp = memchr(data, '\n', size);
+ 		len = endp ? (endp - data + 1) : size;
+ 		if (prefix != '+') {
+-			ecb->lno_in_preimage++;
+-			emit_del_line(ecb, data, len);
++			ecbdata->lno_in_preimage++;
++			emit_del_line(ecbdata, data, len);
+ 		} else {
+-			ecb->lno_in_postimage++;
+-			emit_add_line(ecb, data, len);
++			ecbdata->lno_in_postimage++;
++			emit_add_line(ecbdata, data, len);
  		}
- 		ecbdata->lno_in_preimage++;
--		emit_diff_symbol(o, DIFF_SYMBOL_CONTEXT_INCOMPLETE,
--				 line, len, 0);
-+		emit_incomplete_line_marker(ecbdata, line, len);
- 		break;
- 	default:
- 		BUG("fn_out_consume: unknown line '%s'", line);
+ 		size -= len;
+ 		data += len;
+ 	}
+ 	if (!endp)
+-		emit_diff_symbol(ecb->opt, DIFF_SYMBOL_NO_LF_EOF, NULL, 0, 0);
++		emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_NO_LF_EOF, NULL, 0, 0);
+ }
+ 
+ static void emit_rewrite_diff(const char *name_a,
 -- 
 2.52.0-rc2-441-g030905368a
 
