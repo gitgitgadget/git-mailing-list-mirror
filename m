@@ -1,60 +1,60 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC98C33BBB5
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 16:41:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3EB25D527
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 16:46:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762965714; cv=none; b=L9zBtB8Qu4eletW46Mq67Dl67EsM1dhgRXl/QS8t8UgEVF1o9FGrtCHvyZks2fAcePyjtYD5Q7SqnFKkypJR2vrjjap9YLx1OG3+nEMl7s2oBem8q1rXR0Ws3ETTzYEIWY4/qWzenscCxLi5qdu/sbWHd2SOCvZ0QzMqi9NtuwA=
+	t=1762965986; cv=none; b=aN3t4MvAl6iNV5mgsIwyFiUnmI/uagPFr3stEbilzeNbCKJwQj5bnZY4IA4lVa+9UHrFU3n2tlc7xo912pP5UBSd1HFiey4SXtgu+IEZrQILVPrYJ0YuRx2QmvoDo91V73fnz+7H03l4eMTZ0caXRPJIgy76JwkwbgZVCRbSWEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762965714; c=relaxed/simple;
-	bh=upZ06nSKdmxWD06962s1gCOjmD9IfiJr26EWD2vVXEg=;
+	s=arc-20240116; t=1762965986; c=relaxed/simple;
+	bh=cYaKUg8O2kFdRjnZ1yLUhPOJLbuuorpWVwFsvvcO4yg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Jwqtn04Upkfq1dAm0CI24sLIUZv/gSOL0BAZaVPZ7oA/CFaz2CCDMKTryAcVQbKexr8RJXH+B17uSMKjBeKWj0hRFO+s5uHNKEeEalwidBpW4Dgyuf7mm7pponu/9RvElXOWo4+LEpzFP9WYh12YSMRMn7peFmaljSTa9Tyv+NQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=it/KZDu9; arc=none smtp.client-ip=209.85.214.175
+	 To:Cc:Content-Type; b=Firf2FZmoaCQWtJ1xY0PBN9UkQoIx1cpfu4csvwn8fUHtgHUlOhpcuv7XMpU/J1dv04Yxsbh6/cQKVvbDB0Osp+bXpjOOaHeX5mFu1xTXoHH++uqTW/ykAPVJLzzUn5SdbAT1jlT/01cmuAqGYyB8PYwwcOsdO8WhEazGv1LI8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nmOrJ5og; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="it/KZDu9"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-297f35be2ffso12239765ad.2
-        for <git@vger.kernel.org>; Wed, 12 Nov 2025 08:41:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nmOrJ5og"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-297ef378069so9932595ad.3
+        for <git@vger.kernel.org>; Wed, 12 Nov 2025 08:46:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762965712; x=1763570512; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1762965984; x=1763570784; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=twkCPI5g+J0h/U/xN+RdEEgL0vuSI9qG1dJH1QEknUI=;
-        b=it/KZDu9Vj8VahAz74zi4VcIO/eU/SLL/1eGoDuRTHcB3LZc9r1pLTFYkhay/HjZZO
-         6rVZ+gxT595af9N+Z2enD6dANsMyU64k0MukDDUJ3TInTrH9g+DFmCoo2rODo05oBtYA
-         8D8iMqd1h18SDUFiYbRbJ4bIVD47OLMagkczgYLUbptr/t+K24kIvAprYT5cOqsqwcrj
-         f4VwzB69upDfZ89XvQu1c5zqWBSuYbPj0qgZt544pfxYn4ItygnSogCAbtq8kGg4KF4T
-         gEtVdSCrDSAzHvjUwc1tM89tIWsWrHuT4iAj5n83Vhj7dzyX8Z8LRkRhK+mFvf4DAHBa
-         vE9Q==
+        bh=domCEMMkSd9+exwqizvcwBe+PhzQ7cA3L3oNbOR7HZc=;
+        b=nmOrJ5ogzydttXl2kF5OchPA5Jj1Gtt97BGVpL/mOKpseAUDK1K+ZPbrQLNyWp8zSl
+         oTmLmVEcYEX/2IHZY4TOPMZickWmfc/YhPuZyxR+v2jfd3Swc4UHneVIaSiVP7dCQoqh
+         9hZjH/wAeituBaKObPeCiCXTqgEWuDmNUKzaiJcovCdKZV0xSzistGU8aYeEIL7ZGNJn
+         pY2cb0SYfjEOH1faDq961za1aKS9EGJvlcMs+tTVGw1xwhdfVE1Z+VU3wsuY/rYN6n2n
+         1ob4Io7QqRjLmozbDvY4G5tQ1tePDP9fDatOAeZronrrcuFQtM9OX2fnfjsr5kC8+spv
+         IeGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762965712; x=1763570512;
+        d=1e100.net; s=20230601; t=1762965984; x=1763570784;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=twkCPI5g+J0h/U/xN+RdEEgL0vuSI9qG1dJH1QEknUI=;
-        b=ojXRvg09allprAiDI3ivkNfd6lLPEl2VC844iwbThxIkhawbtB1lwCpfUHuvmWaxbG
-         TMzub3lh/LxRVS3/LsQ3v9K3UtQJaNbdTWtAn+gnsVCOoZGsBO72JZ7m2Vuc9zd3UwkJ
-         o1+QLeG0cnDkJO+PTrruzzMBfzgb1gMJw/HIeb9r/OMVfpy+H/LLfTp/YOIHpLi3DMbx
-         vCo7qeEQ+G6garNGTssFZjCO7lV3lwWttVEc7Bu1whoznQoDdS6iGNQYDgaSjYH9U4Ta
-         VyB4Ptn1CsYMA0YVFxDdU8DX8bzBisAz/sKrBV/ayYBkLfoTgYUJnFIBYGZZB29hu3K7
-         RtdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUHkEKpMBxJx4wABV2WilYJPuf/cKTqAlPGBVPDPBHM5L1nSWO/1wzgusH1B5X6NowLdH0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwlN2eka85Zpbidxl+QQLpE+JAu2LqA5si82IcK3+RBMWUqqjlm
-	YSatjh6NWOb69a2zmsh519wbPpp+m3g7x8YZ5Rhk8ShgiMwN7SK4TH0A7Hg0If+qUGkccIuKXKd
-	RppEgU6NuDgN2Tkn4keGTO2db/2EHsSIctKv0iGob0bMx
-X-Gm-Gg: ASbGncvoCTUSzXqrdF+JSGJJ8TcU9FWZLTjIDRbT0eXecGkZlUleskuwKSflySaO7YF
-	GZpj7gDGgNT/Fj+yE0LPZw0OQTHzHGlfEfF3G/BZwVuR1Ar8drfiL5was1O+wFK384FNDUM/qPH
-	jSk0+hU13QYRxA2coTrz3rgcvHNoWY0ks0+awE0sYgBubwHE20hKRbcZJwApw1ZvUjvMJgxx5v0
-	FWY+zl7EwFvmAMDKcmfPVZS7J0WDukso7YWSIEEASTr2deWmGoD7S2zV7JUfbhJEA8nqjfhvyLm
-	W0/27Wmf3/JX
-X-Google-Smtp-Source: AGHT+IFeB2Pcx6BE1B642kIztUlJYulwx8LSm3huXkFO/ZhlNP0hmeeUOUs+9297lZ+qlhCCrOhx0UHPndOZTbUsEqg=
-X-Received: by 2002:a17:902:fc87:b0:293:e5f:85b7 with SMTP id
- d9443c01a7336-2984ed34013mr53484555ad.11.1762965711930; Wed, 12 Nov 2025
- 08:41:51 -0800 (PST)
+        bh=domCEMMkSd9+exwqizvcwBe+PhzQ7cA3L3oNbOR7HZc=;
+        b=g3yIrLGiohtomBheP5EA52VXUQsbuKXnNgalra2hu0si3awm1rQcGSThBkLgw/nq57
+         wfrtDh0Z6ZXdUtoRJrFxVyxT5MyLVIV799ic28Q53pvkDBFFUM1niNO2eJNK+v9oAYtt
+         tj6FpjzOkms+UNAw65huxMDZ7BL4NSpGo14c1xeYT6sP9rbaV8FliYGmHoTuHuEDqpVW
+         4JGsE/iIgObKakGZa7PvgUoZU8ghF19ofVOgECEwM+/nbnek1c0JTJ33lhOV3ld3wXXq
+         75PsZsTeKmhwTXkq/c/W9wYhaxtXdwbw/mSahWq9GVEQCi1MToHpv2XcfpLVCnYEHRUF
+         XxHg==
+X-Forwarded-Encrypted: i=1; AJvYcCU5kwwZyvcCkRqPFIUvkK40zx2r4r94EE5QSX3ik1biYooxIKidYbJNc2MtHc0YD15Y6Dc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzQJfuv2gt5J+FZz7/Sd+W6b33m0pWpTsEjhOOrtqR1UapzDvEa
+	xlvqIl18bNCQGJOUfY9rWNd/Pn8oi5JbIIu2H7MuSnUnruLY7pqE2Yx3SnGH8/lXTrZ9gL9M4qy
+	sRlpAvDAW5/tEJnq7TujqSkuxav+vvIc6EqaWPhCHmXBX
+X-Gm-Gg: ASbGncuAllhKZL9nROy4f0/DlRza+fwDU7iFDwIfbQjcu2wkl7iwWBzkdsTn9bEKQCg
+	iMRjh3HPvEe4nCtcelnDxQXhas/Unr7T9dQvtVOLHFVivdDMZoJGpTFsQqGR7rtmdrmEflowaBv
+	fUC/sHzf5EfZbSriKhuQXF1gka+BkHtjDU5eBDoKzkeivKTFERY8FTLvzdOfrJ+QpLbiW8yhCYC
+	fWt0/9+MjaqI4oRWKEDWmtGlX3v7BiDAulyhlpoZznmqNMtOhR/P/U/M0LthISh32Ttwiz9aFTl
+	dD9ahVTbr83i
+X-Google-Smtp-Source: AGHT+IGuGcYT2edpxUjaZ6PPkKHAXJ8fDstc8CM4a9Y/0YIdehAsl+bJW+FuvbKkMxMnhLYbiSb/RNyYQbeE8e7tCZo=
+X-Received: by 2002:a17:902:ef43:b0:295:223b:cdee with SMTP id
+ d9443c01a7336-2984ed9245cmr46825905ad.14.1762965984044; Wed, 12 Nov 2025
+ 08:46:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,78 +65,82 @@ References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
  <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com> <aRIoleD6nP-kA4Xn@fruit.crustytoothpaste.net>
  <20251110201136.GB127132@coredump.intra.peff.net> <CAOLTT8RweGOmxNK=vKDv8w-8AJM7QUfLBw4WOKeY1EpSVeB6iQ@mail.gmail.com>
  <20251111191508.GA1907007@coredump.intra.peff.net> <xmqqh5v0wcif.fsf@gitster.g>
-In-Reply-To: <xmqqh5v0wcif.fsf@gitster.g>
+ <20251111213339.GA4053071@coredump.intra.peff.net>
+In-Reply-To: <20251111213339.GA4053071@coredump.intra.peff.net>
 From: ZheNing Hu <adlternative@gmail.com>
-Date: Thu, 13 Nov 2025 00:41:37 +0800
-X-Gm-Features: AWmQ_bliSns5G1KhMJBt9-rb9yFjiDG9eHGq_TLVetRdUEqaoSPQDUvLkyF1Ow8
-Message-ID: <CAOLTT8TYuiLRADQyZ3k0Mi_uGESiGRdNB0qH=EFJPYknJJKTag@mail.gmail.com>
+Date: Thu, 13 Nov 2025 00:46:10 +0800
+X-Gm-Features: AWmQ_bkAVA5zT44cXLyzMdeICgl7ToBdTqowbjfYMLECjz7jgNp_oLUHA8TQpaQ
+Message-ID: <CAOLTT8SZXooypwP27BFXaQdETTPFqOVxGtNtO6j=p7WgaBeLgQ@mail.gmail.com>
 Subject: Re: [PATCH] commit: add --committer option
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
 	phillip.wood@dunelm.org.uk, 
 	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2025=E5=B9=B411=E6=9C=8812=E6=
-=97=A5=E5=91=A8=E4=B8=89 04:16=E5=86=99=E9=81=93=EF=BC=9A
+Jeff King <peff@peff.net> =E4=BA=8E2025=E5=B9=B411=E6=9C=8812=E6=97=A5=E5=
+=91=A8=E4=B8=89 05:33=E5=86=99=E9=81=93=EF=BC=9A
 >
-> Jeff King <peff@peff.net> writes:
+> On Tue, Nov 11, 2025 at 12:16:40PM -0800, Junio C Hamano wrote:
 >
-> >> Sometimes it's because I forgot to configure the repository-level git =
-user
-> >> config and started development first. Only when I tried to correct the
-> >> committer did I feel the pain.
+> > Jeff King <peff@peff.net> writes:
 > >
-> > OK, this workflow does make sense to me. Fixing up an earlier mistake i=
-s
-> > inherently a one-off thing, and a command-line option is more ergonomic
-> > than using the environment variables.
+> > >> Sometimes it's because I forgot to configure the repository-level gi=
+t user
+> > >> config and started development first. Only when I tried to correct t=
+he
+> > >> committer did I feel the pain.
+> > >
+> > > OK, this workflow does make sense to me. Fixing up an earlier mistake=
+ is
+> > > inherently a one-off thing, and a command-line option is more ergonom=
+ic
+> > > than using the environment variables.
+> >
+> > Not very much, at least to me.  Fixing up an earlier mistake may be
+> > one-shot thing but it is to correct multiple commits in one go,
+> > which would be error prone if you do so with "git commit --option".
+> > Either "fast-export | fast-import" pipe, or "git rebase" (which this
+> > patch does not give --committer option, but it already knows how to
+> > honor existing environment variables) would be used for that, no?
 >
-> Not very much, at least to me.  Fixing up an earlier mistake may be
-> one-shot thing but it is to correct multiple commits in one go,
-> which would be error prone if you do so with "git commit --option".
-> Either "fast-export | fast-import" pipe, or "git rebase" (which this
-> patch does not give --committer option, but it already knows how to
-> honor existing environment variables) would be used for that, no?
+> I usually lean on "commit --amend" for this, coupled with rebase if
+> there are multiple commits. So I've used:
+>
+>   git rebase -x "git commit --no-edit --amend --author=3D..."
+>
+> or similar when fixing up incorrect application of somebody else's
+> patches (e.g., if I ended up using "git apply" and tweaking the commit
+> message myself, rather than using "git am").
+>
+> > > Two small thoughts:
+> > >
+> > >   - I suspect what you'd usually want there is for the committer and =
+the
+> > >     author to match. We have --committer-date-is-author-date for reba=
+se,
+> > >     and conceptually I think something like --committer-is-author wou=
+ld
+> > >     do what you want here. But obviously it's less flexible, and I do=
+n't
+> > >     know if it's that much easier to use.
+> >
+> > I am not sure how the user experience of this would look like.
+>
+> I just mean being able to do:
+>
+>   git commit --amend --author=3D'Foo Bar <foo@example.com>' --committer-i=
+s-author
+>
+> instead of:
+>
+>   git commit --amend --author=3D'Foo Bar <foo@example.com>' --committer=
+=3D'Foo Bar <foo@example.com>'
 >
 
-Ha, perhaps this should be left to git rebase --committer --author
-in the future. GIT_AUTHOR_* and GIT_COMMITTER_* are indeed
-a bit cumbersome to use.
+If I wanted an elegant parameter myself, it would definitely be
+`git commit --amend --user=3D'Foo Bar <foo@example.com>'`, instead of `-A -=
+B-is-A`
 
-> > Two small thoughts:
-> >
-> >   - I suspect what you'd usually want there is for the committer and th=
-e
-> >     author to match. We have --committer-date-is-author-date for rebase=
-,
-> >     and conceptually I think something like --committer-is-author would
-> >     do what you want here. But obviously it's less flexible, and I don'=
-t
-> >     know if it's that much easier to use.
->
-> I am not sure how the user experience of this would look like.
->
-> >   - Because it's easy to make such mistakes, when you override the
-> >     author (so that it doesn't match the committer), git-commit prints
-> >     an extra "Author:" line in the output to make that more obvious.
-> >     Should we do the same with committer when you've overridden it?  We
-> >     already do print "Committer:" when the ident was guessed from syste=
-m
-> >     info, but I wonder if it would make sense to print when it was
-> >     forced. I dunno. I guess the time you most need the hint is when yo=
-u
-> >     meant to use --committer and --author together, but only used
-> >     --author. But I don't know how Git would infer that case (versus th=
-e
-> >     normal case of you applying someone else's work and crediting them
-> >     with --author).
->
-> Yup, guessing based on what you did _not_ give is always a hard task
-> for any tool ;-).
->
-> > I'm not sure if either is a useful direction, but they seemed
-> > sufficiently not-dumb for me to at least type them out. ;)
-> >
-> > -Peff
+> -Peff
