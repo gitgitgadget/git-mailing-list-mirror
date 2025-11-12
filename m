@@ -1,36 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E78214A60F
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 07:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCA02550BA
+	for <git@vger.kernel.org>; Wed, 12 Nov 2025 07:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762934126; cv=none; b=pVgvr2pT8fCoftwB0hoYpMriEIpDyEYm6gJfjMGcAZ740p70KKlI0lsdUKiz7MjTXEU0ZtWKeS5b+5XLRcnwGqbKh0N9srlAm7V9mUGVFGjQ/JHY9zTY+7ocTzwBCFoXO1B/Nt65kAvpDoMYASFlBAIZE4+Rk4jTfjc9v0zFqYA=
+	t=1762934215; cv=none; b=dGduoC7f2ekh4XmrGjgEeE+dm+cE+86RthCUg+Ck/WbeWz8yYJuyRJi9f2wKfZKUEFXNml8mBFd2X/ZvBCy84CEOVGrUJV0W9RiRCqCCSYp6s/dRSeboYaOiau02ElZgjGldFhFbdM3W5Tf+Ff+8Fb1IM44Yr47IgUJP47maJw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762934126; c=relaxed/simple;
-	bh=8+AgjjdyvK8N0karYi1VQlXWqgPsChvdmpMWUmMkmr0=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Jp+lpMPbTHhWuZ1EogWEajrhZ/wKJHa8bQXsZWHPw3cATZKtnAjNP6iqnaIIIwHt4zJ+mh797AGViubskLw6kJxTWaZhakpthhAvE5mmKljf3n/NJCBD0h0hHJGHub7Vqp7N87+8AH0pZTBuZs572gNqhGNg4HeymOQL1DrALQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=coDW3OUO; arc=none smtp.client-ip=104.130.231.41
+	s=arc-20240116; t=1762934215; c=relaxed/simple;
+	bh=6wFAJVZqXq2zuKUDASzkbK1mSHdKRKpqU5Q6fyDncK8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cu8VnDOaxFMl9VMREybS1zveYRM7vhmQDtrT4RhrNVwWr6QJ+EKE7Cjsrsb69rpBUCJIH3qkVIvet8Ly0tKzRJvwK+VCgTn6GpAZBZiFzmY1P5F8GNSIncsPCjTUEhoJa+dUYpoUZqdDKswINtrScuzo+OZMVlL37OP0ylxsCgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dASW7ptu; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="coDW3OUO"
-Received: (qmail 495302 invoked by uid 109); 12 Nov 2025 07:55:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=8+AgjjdyvK8N0karYi1VQlXWqgPsChvdmpMWUmMkmr0=; b=coDW3OUOJirPRdDwAAzGImLH7wXKrBPRKu8BYkNOJNybfKqFSOpzK26/7M8uTxIJ1sNcMVVNlnlDuGnjN4LGpTTg3Jty6ctFHiT+9yOGRlYN/1cNYd19a1FeKKA/bwrZ0TX1GWPgLaZlZQFiOuPUuyftGyj8BrJpSq4stMJvKtr7dZsji1NF+BZDSmu9zGSplkVbfSzY/yphEYdVJTKjVU4iGQMtaDe84/J1Z/2MrPCIoUGmPawfQmCHh7AOOWBxPqY+T1NGLEMYg3AJxSYplYhJ0Yv8731UygTH5NLDl89FSCUUZUfiQXUv8FUIuqYN7czNXNlNyKXUC/feIn6SHA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dASW7ptu"
+Received: (qmail 495318 invoked by uid 109); 12 Nov 2025 07:56:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6wFAJVZqXq2zuKUDASzkbK1mSHdKRKpqU5Q6fyDncK8=; b=dASW7ptuKnIWdteezkX6C9y6YRRWtCvACh5mvX8J92vpSParHfeU1lgrQP95cYAKJ09pQpiVzzWzdE2+z5qU8uA+zlFbfhYD7hTTkJAFXlXD9Aw/J28fPNqT05lKTNjgbosnC5dToRrlSIXzQhYmuGkGCNOOxzMaV7Ot353t3EyWKxDJQcaQHEindAPHYHn2APf+gChHYPdE1Lpb/HQWxtz+mZvOllwvcr9JlrjRdAkT+XTFsxH0DRTwmN5NJnq4HgdVSLkofrNZNcSGJjkAtzuF0y3/VVhxcfMFP4GpSxjdaWnkXbukw+Am+VA8Jv+p0wCHZiy/SY6p6DFLeIiKwQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 Nov 2025 07:55:23 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 Nov 2025 07:56:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 786264 invoked by uid 111); 12 Nov 2025 07:55:23 -0000
+Received: (qmail 786279 invoked by uid 111); 12 Nov 2025 07:56:52 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 Nov 2025 02:55:23 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 Nov 2025 02:56:52 -0500
 Authentication-Results: peff.net; auth=none
-Date: Wed, 12 Nov 2025 02:55:22 -0500
+Date: Wed, 12 Nov 2025 02:56:52 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: correctmost <cmlists@sent.com>, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 0/9] asan bonanza
-Message-ID: <20251112075522.GA978866@coredump.intra.peff.net>
+Subject: [PATCH 1/9] compat/mmap: mark unused argument in git_munmap()
+Message-ID: <20251112075652.GA979063@coredump.intra.peff.net>
+References: <20251112075522.GA978866@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,43 +40,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20251112075522.GA978866@coredump.intra.peff.net>
 
-This series fixes a handful of issues that ASan finds in our test suite
-if we tweak a few options to let it look deeper.
+Our mmap compat code emulates mapping by using malloc/free. Our
+git_munmap() must take a "length" parameter to match the interface of
+munmap(), but we don't use it (it is up to the allocator to know how big
+the block is in free()).
 
-The cache-tree one was reported to the security list. It's a real bug,
-but I don't think is an interesting vulnerability (it's a benign read
-off the end of an mmap'd file that is local and not generally under
-attacker control).
+Let's mark it as UNUSED to avoid complaints from -Wunused-parameter.
+Otherwise you cannot build with "make DEVELOPER=1 NO_MMAP=1".
 
-The bitmap bug is also a real bug in new code that I think is not well
-exercised yet (+cc Taylor for that one).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This made me wonder if nobody is using NO_MMAP at all. But it may just
+be that platforms which need it are not using -Werror in the first
+place.
 
-The fsck changes are for false positives in ASan, but I think it is
-reasonable for it to complain about this sketchy code. ;) I hope the
-result is nicer to read and reason about, but whether it is worth the
-churn may be debatable.
+ compat/mmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Along the way we can turn a few knobs that will potentially help us find
-more problems down the road (but ordered so that "make SANITIZE=address"
-passes at each step of the series).
+diff --git a/compat/mmap.c b/compat/mmap.c
+index 2fe1c7732e..1a118711f7 100644
+--- a/compat/mmap.c
++++ b/compat/mmap.c
+@@ -38,7 +38,7 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
+ 	return start;
+ }
+ 
+-int git_munmap(void *start, size_t length)
++int git_munmap(void *start, size_t length UNUSED)
+ {
+ 	free(start);
+ 	return 0;
+-- 
+2.52.0.rc1.260.g3e4993586f
 
-  [1/9]: compat/mmap: mark unused argument in git_munmap()
-  [2/9]: pack-bitmap: handle name-hash lookups in incremental bitmaps
-  [3/9]: Makefile: turn on NO_MMAP when building with ASan
-  [4/9]: cache-tree: avoid strtol() on non-string buffer
-  [5/9]: fsck: assert newline presence in fsck_ident()
-  [6/9]: fsck: avoid strcspn() in fsck_ident()
-  [7/9]: fsck: remove redundant date timestamp check
-  [8/9]: fsck: avoid parse_timestamp() on buffer that isn't NUL-terminated
-  [9/9]: t: enable ASan's strict_string_checks option
-
- Makefile      |  1 +
- cache-tree.c  | 45 ++++++++++++++++++++++----------
- compat/mmap.c |  2 +-
- fsck.c        | 71 ++++++++++++++++++++++++++++++++++++---------------
- pack-bitmap.c | 27 +++++++++++++++++---
- t/test-lib.sh |  1 +
- 6 files changed, 107 insertions(+), 40 deletions(-)
-
--Peff
