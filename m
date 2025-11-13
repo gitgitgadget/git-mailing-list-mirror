@@ -1,104 +1,129 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B792F99A5
-	for <git@vger.kernel.org>; Thu, 13 Nov 2025 20:34:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2374F2F99A5
+	for <git@vger.kernel.org>; Thu, 13 Nov 2025 20:35:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763066090; cv=none; b=ZMT9ALVXQqvkaUk+n9YqqtSZtTeQ1H1iq2KSmSQ0tNvbRtUT/5LGpKPX6Lo3zwE85zOFRNuLPdN36hrLkNDzFsj9rF4U48Sn9u7YR5BpJbDV8IF5F/lP9cl6Z79Uqk2vJw33e/daomq1zUsHJFykD3Fz0SgN8GGAYf1aM+eCpT4=
+	t=1763066144; cv=none; b=syclH1h19Ud989PfH41ds2PZlP0OVzm5nbTW5QqNnvYFj8gjzGrDe3/sSqNABfjC9RMDT7fjegp7gzxTik43jO3NCFcqT+tErhAv8GvPDP1+00Q3OEDl8BxKM06J1C/bGHKewCVYZNWe5qqVt8Z9fp7nc3iR/U45yxyfWL5pyLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763066090; c=relaxed/simple;
-	bh=xdWaLfbGvAx+xxEAhpDj4p8XTk4Wjjdd2WzcyU1FHVk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rgz3p213iIBl9udXQ7NSTwalSz7wmcKnKwkSksNTtN5YtHFw753XW5NKyuXJo/6vzyNPxApPpXU5ZAKxUNIrrElev0S07a6q9wNyB+6J1DZ6qallVG+A2R8beb9oKCdMdXvBD1a9nXZjLVr9r5itinm1kO7vhjXxufGmkJ+AbXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UCPbqMjG; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763066144; c=relaxed/simple;
+	bh=yS6Mv807vw6ecdH978KU4H1LRGXwx0ifC6CgxAwfcvM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KP3XJ6Ji1MJwE3dZf3kDzGAduHGZQ5XZyJpvCzDFuwrhAO/BR9n9FZ4EIV4oHIuiiO7VZu8YOMJVlTEPgg8vIzaMHrfcUyT48GY0j9g2NFgPDfZCpQH/n3Vz/HrtorszWbS42mahxm4angwqHTlybhR2+TrJMvjR4jFD1vcWCj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LIqRPvHg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nRBav5t+; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UCPbqMjG"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-594476f218fso981120e87.1
-        for <git@vger.kernel.org>; Thu, 13 Nov 2025 12:34:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763066087; x=1763670887; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xdWaLfbGvAx+xxEAhpDj4p8XTk4Wjjdd2WzcyU1FHVk=;
-        b=UCPbqMjGNv/B3gMBxpP3xTtJWabiXOVZmEoQPVooWvogVYY6Q+nHMOQll6CksGsjLf
-         mYKqgwKeG98TBzw5kY0FUYmApEvPtEocTnk7qxMAqmdX+8MU7UXm8wlr6aR+D37vxOIf
-         5gvX7P9TrKe9BrYayn/cpLS8ahQYTZGRxfCiCNrgNj1swsnzC1MBQIZMvjGmda8Xhqs9
-         eeRPIhb2xvWspY09AwnRC+bv9CWmgEnmJ1XZm78ASuxLWbmBIVtCVH3SuN6kZw5so6I2
-         PRU+58MpkEH16Mz/0RXwq/WygA/2zzYGMgoIeYzOnIOCMzDJATsV+YwFqjCks+uq+lCA
-         0nvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763066087; x=1763670887;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=xdWaLfbGvAx+xxEAhpDj4p8XTk4Wjjdd2WzcyU1FHVk=;
-        b=CxnoXoR7YSKSwMAtTIeym7nOn1W/tPYbROdT+y7PeQmaXi960m710TDUArQR30tImp
-         qgYdTrHkKMvjBAyjJXuGPk4lSZwWlcsMGSqqR/HOGKLGwwhbVtllXh99AEtxigqvXplH
-         tUTBQp/ERX0RLI3s4VySOI1nMHsdGOEqbDJ6JoGukLK+hq3yHlf5HXuh4B05Rwv2LmR7
-         YlJsRlgqpH+BN+uWub0bayYLylJvuH0XaOo1j4JZAXt9sHAlkbQXc6SXiFRxmoccAWxa
-         QL6tQvWwh7bX+HH76S+yXWvqArSdZvU5W60Giqp62SY6JWnud2VVDm4PUafJ6+808GDP
-         ohow==
-X-Forwarded-Encrypted: i=1; AJvYcCW033dvp4rUJSY5yQmwabN/Xhb/A1ObpVXwj6vNlI4k3OgVAe28BSQKm6Gfm92BRGU1RBk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyW1Q9fOMMvjC7UdWo+5H62fIPKZEobVtngiYoybBYvwyF8xjQp
-	KPS4FF+a1Q7rXjjwwWGseTry+PfBJURB/xrujwnYDvRXm4x0pE1be4LtX9bMFdk/mavaM9oZfZX
-	M6LtglMOCBFU79FAioSUJukcvtP26vaE=
-X-Gm-Gg: ASbGnct8Gw3pvxlwCLRvyUII/PuSBjhRUxadHusUGfMu4t6wz7yn8w1CWAndJhFe/Eu
-	7DPoi5VKH/CE2hjB9PJjkKGg6cWApV5GAS/VYUztb7YbFVXe3CVBQXkxKvxxi5D2FAuWqltykpO
-	Nw8L7ecJ9doSjBiAiEjEad/8rGyE4ufbKaXRMURiFmyBvXCm0Lii5zvNppRI1GvmIZApBKy8ad+
-	C+tbREsOmzow7K+VysoH2kDJYlTo79a+imrvcz0lir5ihayCYRrH1gpTrakZV6ALH8AxeK+
-X-Google-Smtp-Source: AGHT+IG7Y6j67GnzSY6njzYGpevReR+TmN36hHj4mqJ+s8WRi+0TCi2C4y8U2Fy/ALGJ9p3S4HYpzPBKIaNWFg5n9HM=
-X-Received: by 2002:a05:6512:1327:b0:595:7b24:d353 with SMTP id
- 2adb3069b0e04-59584195bacmr226507e87.2.1763066086989; Thu, 13 Nov 2025
- 12:34:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LIqRPvHg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nRBav5t+"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 40A50140015E;
+	Thu, 13 Nov 2025 15:35:42 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 13 Nov 2025 15:35:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1763066142; x=1763152542; bh=yRXnia5FmP
+	NewhxX72uAyzPhbUC57KUSdrZWrWvok1U=; b=LIqRPvHgoIHCNmP+OnMp5a1cp0
+	TSos1nzkdzFaM82DwYTzMLWXxsbGLGC7lioL4syGFhqAMp8ox9T91bsVFEkJR1KT
+	34Z6oQ520YxnBtheHxerCLpuvWDmfv6e8bmyRHd9G55X6LZsg6Il8UlqhC1Elxk6
+	wff3Zvz2wvyMP862tVQq74oLvyAvq8fd+b7xZbrJ0VT+yQDUBq1uEd1+0C2iS1IB
+	20YfDfpl3tG3vL+mPScwRHQyG+BEvU4eWncfJrgNNMUGMaW1mHSPjnhyZCnktH+L
+	ToYqJQ30ZMk+6oQchiflFrfUcqxv+DjOdk4b1LE51/Dj8HVSHDVuh5ntU6RA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1763066142; x=1763152542; bh=yRXnia5FmPNewhxX72uAyzPhbUC57KUSdrZ
+	WrWvok1U=; b=nRBav5t+2Cj/3/uzy17tElf6Ah4UFgnwg9PMpj/V+DK9SPnp8g8
+	JvhaaB78Vx55wfhP6UIRYlOutOorteiXiDaeLIJGbtfFiKWpkoJmTBH6P0xTVsOQ
+	GtJEObj6mTz/F8Vi3Zkk2VJKNwsCpeTcK98Sb985M49SyrzdWr8Nx6j68FWnvNln
+	P8+JM/tU7pzfiilIP0UhCvXvn6tRXz9covhLxWYl3Jg//aIuIKuixx94+Dr2lgTg
+	OkWVp24qII86H+nIk7mfftyUR53x67YlH5FmlBex/qS+JUUkAfyWmSUZtHnFkyso
+	5GC965dFptmTkDTmqIUH0uJeOergfRkeVaw==
+X-ME-Sender: <xms:HUEWaey0YxL175SpbJbDGgBdoG7UNdADOHJre4RA9kVDA6PmGY9WIA>
+    <xme:HUEWaRTRvj0IoixwNCIi80AF0c--p4hIIvY88ckNI_U983I-3Ck8rQEZQsfgbt4vJ
+    Op-BwKpCxnne08xnwZagYxD-Va-5UWImXygFmLlfblHJ71iV3-z>
+X-ME-Received: <xmr:HUEWaVULcT60eCED060SAQLa8s-5Sacf4LcEootxPatEZWy3jY1umcJZoZFxfhQhNJ63pguy6XzUtEtgNHZRszo0ZJzWVe9N6sGI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdejleduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehkohhjihdrnhgrkhgrmhgrrhhusehgrhgvvgdrnhgvthdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:HUEWaTY_zCc6y836jTuUAge_vWnORWMnOcLxWb88yDe-rCTWfpStNA>
+    <xmx:HUEWab2jyjn2uKokeLnyQcxtEppmfpwLU-IvaHC3SsKbdVH2iYGT5A>
+    <xmx:HUEWaVjTNdFv-FHC3MdBecjUROqaPlub7Qz9PPaCufQhgpcfYrh4Tw>
+    <xmx:HUEWafYf1xzMN_uyGbNwKWP-CsKFSYyb2e3_2hCJ_sRRGrTmVi1IxQ>
+    <xmx:HkEWaSsfMAudDNGxtvIptaT0Knak2Vxh_JwjcMtSi7KstVDoi6hoKGa8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Nov 2025 15:35:41 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Koji Nakamaru <koji.nakamaru@gree.net>
+Subject: Re: [PATCH] osxkeychain: avoid incorrectly skipping store operation
+In-Reply-To: <xmqqo6p5llsw.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	13 Nov 2025 12:28:15 -0800")
+References: <pull.1999.git.1763047599254.gitgitgadget@gmail.com>
+	<xmqqo6p5llsw.fsf@gitster.g>
+Date: Thu, 13 Nov 2025 12:35:40 -0800
+Message-ID: <xmqqecq1llgj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqo6pde90w.fsf@gitster.g> <D50AB3E0-E41C-49CD-9407-AB60331A6A43@gmail.com>
- <xmqqa50v4x8n.fsf@gitster.g> <150f3442-93a6-4469-9c25-5bca24accc80@app.fastmail.com>
- <xmqqfrakyj0w.fsf@gitster.g> <2474339d-67bc-4a68-9f26-fe7edd172ec4@app.fastmail.com>
- <xmqqa50rqcy1.fsf@gitster.g> <xmqqo6p6q32v.fsf@gitster.g> <2265ecb5-b0ba-4a28-904f-186ef5318562@app.fastmail.com>
- <160ef4a8-8e9c-4034-9607-2f268fdbf29d@app.fastmail.com>
-In-Reply-To: <160ef4a8-8e9c-4034-9607-2f268fdbf29d@app.fastmail.com>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Thu, 13 Nov 2025 12:34:35 -0800
-X-Gm-Features: AWmQ_blQVIVtgQwLZA83nQ7IwUxkJXZy--cFK5bOu1nWqsgWPLXQMJnJL7Y9WGA
-Message-ID: <CAPx1Gvcf5=nBg9=AakfF=2tXVakBfddt7vTj+Wy9-497OcjviQ@mail.gmail.com>
-Subject: Re: [PATCH v6] doc: add an explanation of Git's data model
-To: Julia Evans <julia@jvns.ca>
-Cc: Junio C Hamano <gitster@pobox.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
-	Julia Evans <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Nov 13, 2025 at 12:19=E2=80=AFPM Julia Evans <julia@jvns.ca> wrote:
-> To immediately contradict myself a bit: after sending this I thought to
-> look through Mark Dominus's great blog posts about Git to see if
-> he has anything to say about this, and I came across this article:
-> https://blog.plover.com/prog/git/branches.html, called "I wish people
-> would stop insisting that Git branches are nothing but refs".
+Junio C Hamano <gitster@pobox.com> writes:
+
+> "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> It reminded me that of course in Git the word "branch" often is used
-> to mean "a sequence of commits" ...
+>> +/*
+>> + * NOTE: We could use functions in strbuf.h and/or wrapper.h, but those
+>> + * introduce significant dependencies. Therefore, we define simplified
+>> + * versions here to keep this code self-contained.
+>> + */
+>
+> Sorry, but I do not quite understand this comment.  The program is
+> shipped as a part of Git, and using these functions and linking with
+> libgit.a may pull strbuf.o and some other *.o files out of libgit.a
+> to link with git-credential-osxkeychain.o to produce the executable,
+> but how can that be "significant dependencies"?  For anybody who is
+> building git-credential-osxkeychain, the necessary sources come for
+> free.
+>
+> It is not like we are forcing git-credential-osxkeychain to link
+> with a shared object libgit.so and making git-credential-osxkeychain
+> depend on it, or anything like that, which may require consumers of
+> binary distribution of git-credential-osxkeychain to also install
+> another package that has libgit.so in it (which is likely to be the
+> "git" package).  Even if it were the case (which is not), what good
+> would it be to have git-credential-osxkeychain on your system
+> without having git on the same system?
 
-Yes, this is the crux of the issue: The word "branch" is ambiguous.
+The rest of the patch, excluding the poor-man's reimplementation of
+helper functions, looked like they match what the proposed log
+message described.
 
-In Git, the *branch name* is the `refs/heads/whatever` name, and
-we also have remote-tracking branch names under `refs/remotes/`.
-The *branch*, however, is some ill-defined set of commits starting
-from the specific commit identified by a branch name *or* any other
-unique identifier, and then working backwards for some unspecified
-number of steps with unspecified constraints.
+It seems that credential material like username and password are
+included in plaintext as part of the state[], but is this a safe
+thing to do?  The keychain will give out the credential material in
+a way the requestor with sufficient priviledges can read, and this
+state[] is stored in the same place, so I am guessing that this is
+not adding any extra security concerns, but I just wanted to make
+sure you've considered any security implications.
 
-Sometimes the bare term "branch" means one or another of
-these various things, and sometimes it's meant to encompass
-all of them...
-
-Chris
+Thanks.
