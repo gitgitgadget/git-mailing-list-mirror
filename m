@@ -1,138 +1,124 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9D2326940
-	for <git@vger.kernel.org>; Thu, 13 Nov 2025 22:57:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD4A2E06EA
+	for <git@vger.kernel.org>; Thu, 13 Nov 2025 23:11:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763074645; cv=none; b=C+nJmfDHAiZJJTmMjLaIZFA2dEinzJrIUYgaueAKPzFZY8J6BcPF7w1IR+wtsyQnAPmMVsmGrC6rlDzGlKEw5Ly5iBRMjFy7N+WM/BQwaXZYxcwxjyRVi+s223YhayqqLHr6X0fsWbeC7XZ2H71GE1ZPs7JXTTUR1La4SVCB4LA=
+	t=1763075489; cv=none; b=W0oGNyfpXdSF/SkDIlxQxmnrquzHodBgpOnZD9PLHC34qMbpoabDUOezvwjoeBEYF4g1mLNKvJCNVdWFB+/phvP3fr2DLG1sBeU3NZjU9agqeo61331nqCi78llJIglcxMUncZbs4lE3/qxMm3c1aWhKnIO/eqTcr/WnMDUv9T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763074645; c=relaxed/simple;
-	bh=4RYxz1gRCYL+TuNNrDR0+slevvvv2H1jWcgPMldQzZ4=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=FtBDnANM3fUQD6As2dUmAcDSasYF2HtsAA8tHNbFboqK6xt52X47RbP8GbXj3IxoBEiizQ4t7aKxBSANDHWeHFHwouqGQ/dzyv1xC28oJmq0XbansRrq9Q8Vu3vtc6W074GvMp+RN2ujGnJM7QczJB7Txe7lDUcyiaiW47k/Df0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b=SKR0kzdy; dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b=SKR0kzdy; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1763075489; c=relaxed/simple;
+	bh=Em0o4ZjCZAuZkdMA1hoXM1g9f//23QME9METNwss2fI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=freSAd1KIVA852ho7F53j3Ch3faeWoTJMc1ZiEqauP14iy84dLEMk+udq4sh8WXyl6dCaYVAKFwRFq/avNxDOz8DUBmCdkv1rNJJNMymykG6z34mThOmA6VLUCmRWzyxEpSqxAx/u6ctaHnKTFVlnEObsOiNyo+COv6+FL7SsGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YxU4XgFq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EFfomo/7; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="SKR0kzdy";
-	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="SKR0kzdy"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 3763C1F38A;
-	Thu, 13 Nov 2025 22:57:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
-	t=1763074640; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4RYxz1gRCYL+TuNNrDR0+slevvvv2H1jWcgPMldQzZ4=;
-	b=SKR0kzdy381woeb8i7n94yg1hryvsDMkFx0RgTXPac/F8n+xCTwyLe0XLJOIn0dWdVx+Wb
-	6v41MUOGFkVvhpzMY09zSEtJR2VKmjIgVyZZON27ZckSmb9c1OaFEVrJQAG5QIBfV+JcjK
-	wP9XH2TIxDWqdJgOo3DkFf1fSxh4h9Y=
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.com header.s=susede1 header.b=SKR0kzdy
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
-	t=1763074640; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4RYxz1gRCYL+TuNNrDR0+slevvvv2H1jWcgPMldQzZ4=;
-	b=SKR0kzdy381woeb8i7n94yg1hryvsDMkFx0RgTXPac/F8n+xCTwyLe0XLJOIn0dWdVx+Wb
-	6v41MUOGFkVvhpzMY09zSEtJR2VKmjIgVyZZON27ZckSmb9c1OaFEVrJQAG5QIBfV+JcjK
-	wP9XH2TIxDWqdJgOo3DkFf1fSxh4h9Y=
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 10A813EA61;
-	Thu, 13 Nov 2025 22:57:20 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 1y2lAlBiFmknCAAAD6G6ig
-	(envelope-from <mwilck@suse.com>); Thu, 13 Nov 2025 22:57:20 +0000
-Message-ID: <1cf41aad10ab0d32cbb7334cd59144c35629c9b5.camel@suse.com>
-Subject: Re: git fails to checkout SHA1 submodule in SHA256 repo with
- --depth=1
-From: Martin Wilck <mwilck@suse.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Junio C Hamano	
- <gitster@pobox.com>, git@vger.kernel.org, Adrian Schroeter <adrian@suse.com>
-Date: Thu, 13 Nov 2025 23:57:19 +0100
-In-Reply-To: <aRZhAEpm8PbBQcIM@fruit.crustytoothpaste.net>
-References: <c94a929df63f79e49eeae0cd67c1f59f859e3d62.camel@suse.com>
-	 <xmqq7bvvtdoe.fsf@gitster.g> <aRUaR6IfH9imrF5A@fruit.crustytoothpaste.net>
-	 <a1c0440a6eef8f306f53793b2f96636945d4ced4.camel@suse.com>
-	 <aRZhAEpm8PbBQcIM@fruit.crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.1 
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YxU4XgFq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EFfomo/7"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5E64214000D0;
+	Thu, 13 Nov 2025 18:11:26 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 13 Nov 2025 18:11:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1763075486; x=1763161886; bh=i8xtNlrkKt
+	4jBa4qnL2QcdParwgU6UrA1ciwR886Nak=; b=YxU4XgFqxT1eZGX9TgPLIO1YKx
+	58n9v6092TpCv1gnyCnPSQjJxMTMAjWD7eGbHozm28CkfTWzEkPLnUC2VerP92ZJ
+	CAh+rCP0GHoFIYcTt/omiG0bTyfmcdq8a5CphOIuk/SW0XYuB9Y8bKrLRFLZBM5s
+	PCZMeAsbUxWeT0Oe+rNvmtFu5QVg9FJgRvcJmQ2mtXqbGwOPWui658jwuC0v1lIY
+	2y8NEN8X4OaMF1oleIHvRobr1XURZfRHR6ukL2v9RXJ1nVMZWya0E8yxwNQ6pIKw
+	hXQD3jjJL3u/G7TKEX2H6au2VPaHLjxHOE3UNNOCSpfMShNGQxd6AFR4z5sw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1763075486; x=1763161886; bh=i8xtNlrkKt4jBa4qnL2QcdParwgU6UrA1ci
+	wR886Nak=; b=EFfomo/7GNCg/kZN+zpIYNUMEyfnzDSd1t9zJU/vHwcbI9rhMMb
+	LD0Y3lP7iUK0iBhfYSvJGsTnO8VbPaN5Y7gt4hg6gAoZ2P61W7A2jcVOvo7jymkd
+	PtJCpDV/4TfDgx/qGNrKWcViFpIpO2huJUxqx4Qte3tSGARfTzaiXPFu4M2sb2s2
+	IMPD4j2a4phcJox7sNiUrTCoVP00RFTEKPMwiaAvYrUAQVJ721y6DyJEoEeWHziG
+	lvTddMy141yyxf3NPh6byEHDIXDjJgmj9tOKRCdskv2CDb54qm0MTt7M3KUysCq/
+	jUrELjQ6MwJWAOlPlhp1gmYDzcF99w4jhtQ==
+X-ME-Sender: <xms:nmUWaUIABYI3PrwzSEZQjHUeLvfHLiqNmGNfxsuyOhF5fEY1-0rMSg>
+    <xme:nmUWaWZsAlLmREN1VsfFJUB-gTSWgLQjV-hOlPc42MnHv30-RU9CWFLtn7QYoKUkR
+    A0cWAhjMd6UG098bkMlX1icvI-xMQ_3xtgoPAA5qK6At9xUFdSY>
+X-ME-Received: <xmr:nmUWaW-nt2XYQHoCDjOC5uQtU2IsTaffxx6P3gzcReZv0CGvDyPoOp43Ebh1T5WUl7JcXT80MLUv5fvnJHMXnc9-EBUlyjtbO06D>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdekvddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhulhhirgesjhhvnhhsrdgtrgdprhgtphhtthhope
+    gsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhg
+    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhes
+    fhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:nmUWaXZyo3o2QR_QXAaAGF6FBcktU4d6kkrIpd4do3kQbAU5ydnwpg>
+    <xmx:nmUWaaOU6jDNiwhbjvim7rKEUI3tOXocgNlENOjgsZsfs0w48W-wgQ>
+    <xmx:nmUWaTAb_UdnqX0h1cQN8IzKcsRjqltcGTdPjZJYyWQ369cN1RKGdA>
+    <xmx:nmUWaRIPTDEPLjDlfN6NyV4JSE5hBAjgKaiuGzhRz50CMmGQ594hBg>
+    <xmx:nmUWaXOrV-Du3cy1xQy5emEA50gFwiVkgTgBNrVYULgP_okTei-7VYk_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Nov 2025 18:11:25 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Julia Evans" <julia@jvns.ca>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  "Julia Evans"
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "Kristoffer Haugsbakk"
+ <kristofferhaugsbakk@fastmail.com>,  "Patrick Steinhardt" <ps@pks.im>
+Subject: Re: [PATCH v6] doc: add an explanation of Git's data model
+In-Reply-To: <160ef4a8-8e9c-4034-9607-2f268fdbf29d@app.fastmail.com> (Julia
+	Evans's message of "Thu, 13 Nov 2025 15:18:25 -0500")
+References: <xmqqo6pde90w.fsf@gitster.g>
+	<D50AB3E0-E41C-49CD-9407-AB60331A6A43@gmail.com>
+	<xmqqa50v4x8n.fsf@gitster.g>
+	<150f3442-93a6-4469-9c25-5bca24accc80@app.fastmail.com>
+	<xmqqfrakyj0w.fsf@gitster.g>
+	<2474339d-67bc-4a68-9f26-fe7edd172ec4@app.fastmail.com>
+	<xmqqa50rqcy1.fsf@gitster.g> <xmqqo6p6q32v.fsf@gitster.g>
+	<2265ecb5-b0ba-4a28-904f-186ef5318562@app.fastmail.com>
+	<160ef4a8-8e9c-4034-9607-2f268fdbf29d@app.fastmail.com>
+Date: Thu, 13 Nov 2025 15:11:24 -0800
+Message-ID: <xmqqwm3tjzoj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Rspamd-Queue-Id: 3763C1F38A
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.com:s=susede1];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_THREE(0.00)[4];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:mid,suse.com:dkim];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
-	DKIM_TRACE(0.00)[suse.com:+]
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spam-Score: -4.51
-X-Spam-Level: 
+Content-Type: text/plain
 
-On Thu, 2025-11-13 at 22:51 +0000, brian m. carlson wrote:
-> On 2025-11-13 at 10:15:30, Martin Wilck wrote:
-> >=20
-> > I get it that the concept is flawed and unsupported. Up to now,
-> > that
-> > wasn't obvious to me.
->=20
-> It wasn't obvious to a lot of people because the assumption is only
-> documented in the transition plan.=C2=A0 Mixed algorithm submodules are
-> something we should have thought about earlier on, but we didn't.
->=20
-> The original transition plan was to have full interoperability
-> support
-> early on, in which case this wouldn't have been a problem, but for
-> technical reasons it ended up being much easier to have SHA-256-only
-> repositories, so we finished that first.=C2=A0 I then lost interest in th=
-e
-> project for many years (having kind of burnt out on the work) and,
-> with
-> the exception of one set of patches that were sent in, nobody else
-> picked it up either.=C2=A0 So this ideally would have been implemented
-> sooner
-> under the original plan, but it wasn't.=C2=A0 This is one of the pitfalls
-> of
-> open source projects, as we all know.
+"Julia Evans" <julia@jvns.ca> writes:
+
+>> So I'd prefer to keep editorializing about what a branch "means"
+>> to a minimum.
 >
-> [...]
+> To immediately contradict myself a bit: after sending this I thought to
+> look through Mark Dominus's great blog posts about Git to see if
+> he has anything to say about this ...
+> The idea there is to talk about how a branch might be _conceptually_
+> "a line of development", but that Git doesn't have anything in its data
+> model to track what the "base" of the line of development is, so any
+> time you want Git to think of a branch as "these 2 commits" you need to
+> give it a way to determine the base.
 
-Thank you for the detailed response, and good luck finding some support
-for this very important project.
+Yup, that is why you need to walk a fine line between what is hard
+and mechanical "bits in the system" data model, and the conceptual
+goal human users build using the bits as building blocks.
 
-Martin
+Aside from that "branch" description, the rest of the document has
+been polished well enough that we are quickly approaching the point
+of diminishing returns, I would think.  Should we declare victory
+and mark the topic for 'next' by now?
 
+Thanks.
