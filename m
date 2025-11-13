@@ -1,176 +1,163 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB902D2390
-	for <git@vger.kernel.org>; Wed, 12 Nov 2025 23:54:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15701D5ADE
+	for <git@vger.kernel.org>; Thu, 13 Nov 2025 02:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762991683; cv=none; b=PRyiklv56D/StkLbA0R8bg0ZxZImxxzzBVOOB8cyGXWTYw1spIdZPoKm5AqieFjkFKgiCO6/WviFkDYkKNgWcBcOL83M3LSja5HwfMIMpA7jRBubr30x7nGWlCzRYevemCCtOMH9uZ5+ZJoyC1RVnC4MdyKb3/+xxNlhmM6sEqU=
+	t=1763002508; cv=none; b=M9KlIJgTTMQPeZvKcvLSdmp2SPMHYkjWkUe4gp6htbSIrAYM+4fDKLMomk5h6pHu3bCt0799TXhqNmkvEVdqySivkWDz+CvsqTS8NwwpTmoxI2tfn8yGF8uQbqwVFqXEjO1Pbv0jgYFhMvpNxUzRSD5aBLSD89Z0QRYHDz9noCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762991683; c=relaxed/simple;
-	bh=uQrVGpEJ3Jgry9es/2izwvOmp1tVGvg6yd0zMYvte50=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbP3v78vMJTBF9G/a1J92AdD08Hp41vMzFYYCBe2PUUu28BpQekx9uDnlsTEZcEt7+vK6LhZfckq9gEO7vVFkzIY3py8xiYcgd4ivV/Ishv2jTkQIUaRQvoDDk/S4ZzQr31WJ+nFGZoOAclQqDPD0DAlJWW6USCbXo92AxhN/FM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=IY3bC0pc; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1763002508; c=relaxed/simple;
+	bh=O/2lABz6HBpfVc9uwpBEQM5NYriUH9zeejzfCGFkp5Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dr8dynrUXvT8pHrC6Vw+25ddUL3Mlqp+FpRHP1KKYABPVR6S8BBtXTps9E4rI5YqCUmG8F+kgJdslGwringi+2oUr7m7VqFcDMH297lp7SOa0D8zBGxlgiAT3fMO7PxD13QgF/Cz/KaM1Czazt5XJz+kTLQjCmOikAJz7V/WEf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=BJPIRv8v; arc=none smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="IY3bC0pc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1762991679;
-	bh=uQrVGpEJ3Jgry9es/2izwvOmp1tVGvg6yd0zMYvte50=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=IY3bC0pcwforwvt3+urWSqekXOen6hLgfzNuz0RgtbMyWvsgkMVSSRqxXFF+tYEl3
-	 YW0RxmwN3CiwOCSNdL+qWYRhMEau4vaRIB7cvoR2XrKEv+WXcIcWfKLwxa//cG3wQZ
-	 ublF/YiASTcctOWXn/IPed33USiJLK16kC7Qz04kmLCUqMx9DUG6GdzpKHqIwRIyUt
-	 AgUZEYNw9ZNkn7szFoe/FfZIT94w7F9aKiB54ZYWW44PRYEHkkIYHcwWZzeDeBBISZ
-	 DO/1rq0uE2B4oqfxK2JDgB11anXrHisrbiBli7icOk5ryfyz1m1jfV/o87D588Od13
-	 YhUpwELX3rBIMmMcFoBXfpNUAuvrlWtxUdfenhu4ApR+nq6oC+qFKCc4gMb8Kow4mQ
-	 bEWRPDKhC8bc42SXakJafk4tpucSXKvGmCFMOZHV+EpQa+iMwkbWMKjixT8ikdhHp3
-	 2d2qoZXyzrLUrSwkkI12g7mrvsLaYJzkCqHW9Qh9es9i8Fhx73q
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:b668:e49e:abfe:cbc7])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id DA48E20065;
-	Wed, 12 Nov 2025 23:54:39 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Martin Wilck <mwilck@suse.com>,
-	Adrian Schroeter <adrian@suse.com>
-Subject: [PATCH] object-file: disallow adding submodules of different hash algo
-Date: Wed, 12 Nov 2025 23:54:34 +0000
-Message-ID: <20251112235434.1499699-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
-In-Reply-To: <c94a929df63f79e49eeae0cd67c1f59f859e3d62.camel@suse.com>
-References: <c94a929df63f79e49eeae0cd67c1f59f859e3d62.camel@suse.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="BJPIRv8v"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-71d71bcab6fso3472367b3.0
+        for <git@vger.kernel.org>; Wed, 12 Nov 2025 18:55:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1763002505; x=1763607305; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=J8t7YxX41b4vObprGHSfgrEvJOv9XsjP/nNYX9ORcsU=;
+        b=BJPIRv8v3JEYgkKpz7cOKgEzwE4oqaUVPXFc5ZTKXVUB72dC3rlP3Jqs2ROVLXwCOL
+         H8jEOVV3jQ75UmE9OhwybahLIWDqYneAV3hZ4y+dwmQ5Ek7gDcbXrI0bYdiWeOqo5Pru
+         momAxMrMIVFKwFC4UXrGSuIKx6046mAU++NsIlAjPckl1010/5+qp6hsthwhPexam1LW
+         eCJUoT86n2+gJw/fBqdXDoHaehfRxFzKsIWijP20dhFJQM15fYJkS+tAu57nOvtnWvUi
+         oamB2DX3nWwvlrkPd/JywuIlySoQAMf0aDBCOGDrgIvfcmxdblBop6uPolGKYkCyVfAk
+         TfWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763002505; x=1763607305;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=J8t7YxX41b4vObprGHSfgrEvJOv9XsjP/nNYX9ORcsU=;
+        b=RyEhjI87mDa86Qj8i4/tGMR0LQc5So7C56cvY2+aZMqtBG8FczQT8z8XJe5NhZWy65
+         eshUnzWv6DEVbTuQ/tVpY7i5/a/7PaZl77gkuiKPq5RB8AOHaxHw13RNMo/oEZoYcZtB
+         6MNqSJwycoppaARWa1BMNjuwArjjgnZdv+TxGlZ9HdKo26H7GuDrJ9qgf9NuFfIyurdy
+         t9BDPoOOeHuf+ElusyQhq+WG3krvdHZQk9qpqxl/UOBkAMt/86EbRzGd7i2BgOyEjoJG
+         F1YI8nqkXP4SCsZmlR+7YLZgNG5x48tYWUZnNcJsI6qp4Av1dZdXgSGgmfktwheJU9LQ
+         QX4g==
+X-Gm-Message-State: AOJu0YxdqXhs0h+4uE7yhDnqdonDC1OMrn7q6hmd6Gy7TIXZCP0p7Fm7
+	G+kWx1iy0yH3cRGqAPqpQmKFq5EK+Pa1rhbZq4P1mDjj7LDR1FQlcsXRaEdpH+41MpA=
+X-Gm-Gg: ASbGncvTMeE+WLx1wSOvfUnGfPrxawA3BlvxKOhFJ4qrS3QzlXXLghzV8m+gnTSHrYI
+	oH/Jq05pduLWHES80hDgs0fCcJMxxWMhNRg7IFP8fhLjN2tedAAeqdVF6UUCdabPrYVMuxgVsQK
+	v0GQ7DynufN3ipoorB06sR4QJAazCL30H9KkZsnybqdaxTsyOKFVAkGx8slMJZWi96ylbCMhpTQ
+	9rHQfYv88wgUW6ZOSItOb7NLCAHsbLgSrx1y2BHPndpnRN9/h2n8x7N2NkPKuHo51PVI5jZH8cG
+	0ZmKfT5lthhHzud/sm/vby2yO9HaP5iWSPqiDC+NS2TwVOkfmgHnvnhjgrUrQumHv9k+X/SVf2F
+	yGyb1cXhxnJJP2UJkFs0u6bokONk8FA/20PoF/cjQ3ML1ZZawkIMurBxyHvr8tnTM6ho11/x8IT
+	b8RfotESZCs2+3p+HUFJVYdI6WCzLaBuyHWELMwo3CAzJmCc4=
+X-Google-Smtp-Source: AGHT+IFMsgy8N6UCQ9qRlxhYkI6RjTLQQwU/ntaAm4rDXGVg9S1cndQJzkGVYTCcPffxrOXR6+ADjQ==
+X-Received: by 2002:a05:690e:2582:b0:63f:7d36:ac28 with SMTP id 956f58d0204a3-64101b80eeemr4128855d50.59.1763002504561;
+        Wed, 12 Nov 2025 18:55:04 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-6410eaf02b7sm271867d50.26.2025.11.12.18.55.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Nov 2025 18:55:04 -0800 (PST)
+Date: Wed, 12 Nov 2025 21:55:03 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, correctmost <cmlists@sent.com>
+Subject: Re: [PATCH 2/9] pack-bitmap: handle name-hash lookups in incremental
+ bitmaps
+Message-ID: <aRVIh9R8Pnuk+yS0@nand.local>
+References: <20251112075522.GA978866@coredump.intra.peff.net>
+ <20251112080151.GB979063@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251112080151.GB979063@coredump.intra.peff.net>
 
-The design of the hash algorithm transition plan is that objects stored
-must be entirely in one algorithm since we lack any way to indicate a
-mix of algorithms.  This also includes submodules, but we have
-traditionally not enforced this, which leads to various problems when
-trying to clone or check out the the submodule from the remote.
+On Wed, Nov 12, 2025 at 03:01:51AM -0500, Jeff King wrote:
+> As always with the midx and bitmap code, I am left unsure of which
+> ordering it is correct to use (pseudo-pack order, or lexical oid order,
+> or how each splits across incremental files). I _think_ this is right
+> because it's matching the ordering that is already used for a single
+> midx. But clearly this area is under-tested, since even when we did not
+> go off the end of the array we were probably passing back junk
+> name-hashes (either from the .bitmap file's trailing checksum, or
+> zero-padding at the end of the mapped page).
 
-Since this cannot work in the general case, restrict adding a submodule
-of a different algorithm to the index.  Add tests for git add and git
-submodule add that these are rejected.
+Yeah, this is the right order. "index_pos" is a good hint that this is
+in lexical order. bitmap_writer_finish() has some oid_pos() lookups that
+use index directly without sorting, so bitmap_writer_finish() expects
+this array in lexical order.
 
-Note that we cannot check this in git fsck because the malformed
-submodule is stored in the tree as an object ID which is either
-truncated (when a SHA-256 submodule is added to a SHA-1 repository) or
-padded with zeros (when a SHA-1 submodule is added to a SHA-256
-repository).  We cannot detect even the latter case because someone
-could have an actual submodule that actually ends in 24 zeros, which
-would be a false positive.
+Commit c528e17966 (pack-bitmap: write multi-pack bitmaps, 2021-08-31)
+has a comment in (what is now) midx-write.c explaining this assumption
+in bitmap_writer_finish(), but it should probably be documented
+explicitly in pack-bitmap.h.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- object-file.c              |  6 +++++-
- t/t3700-add.sh             | 27 +++++++++++++++++++++++++++
- t/t7400-submodule-basic.sh | 27 +++++++++++++++++++++++++++
- 3 files changed, 59 insertions(+), 1 deletion(-)
+> So it might be worth adding more tests here, but I know this incremental
+> bitmap code is a big work in progress. So I contented myself with the
+> reproduction above, and anything else can go onto the incremental todo
+> pile. :)
 
-diff --git a/object-file.c b/object-file.c
-index 4675c8ed6b..8c43c52ed0 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1661,7 +1661,11 @@ int index_path(struct index_state *istate, struct object_id *oid,
- 		strbuf_release(&sb);
- 		break;
- 	case S_IFDIR:
--		return repo_resolve_gitlink_ref(istate->repo, path, "HEAD", oid);
-+		if (repo_resolve_gitlink_ref(istate->repo, path, "HEAD", oid))
-+			return -1;
-+		if (&hash_algos[oid->algo] != istate->repo->hash_algo)
-+			return error(_("cannot add a submodule of a different hash algorithm"));
-+		break;
- 	default:
- 		return error(_("%s: unsupported file type"), path);
- 	}
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index df580a5806..b075eb9b11 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -541,6 +541,33 @@ test_expect_success 'all statuses changed in folder if . is given' '
- 	)
- '
- 
-+test_expect_success 'cannot add a submodule of a different algorithm' '
-+	git init --object-format=sha256 sha256 &&
-+	(
-+		cd sha256 &&
-+		test_commit abc &&
-+		git init --object-format=sha1 submodule &&
-+		(
-+			cd submodule &&
-+			test_commit def
-+		) &&
-+		test_must_fail git add submodule &&
-+		test $(git ls-files --stage | grep ^160000 | wc -l) -eq 0
-+	) &&
-+	git init --object-format=sha1 sha1 &&
-+	(
-+		cd sha1 &&
-+		test_commit abc &&
-+		git init --object-format=sha256 submodule &&
-+		(
-+			cd submodule &&
-+			test_commit def
-+		) &&
-+		test_must_fail git add submodule &&
-+		test $(git ls-files --stage | grep ^160000 | wc -l) -eq 0
-+	)
-+'
-+
- test_expect_success CASE_INSENSITIVE_FS 'path is case-insensitive' '
- 	path="$(pwd)/BLUB" &&
- 	touch "$path" &&
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index fd3e7e355e..b190182d62 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -407,6 +407,33 @@ test_expect_success 'submodule add in subdirectory with relative path should fai
- 	test_grep toplevel output.err
- '
- 
-+test_expect_success 'submodule add of a different algorithm fails' '
-+	git init --object-format=sha256 sha256 &&
-+	(
-+		cd sha256 &&
-+		test_commit abc &&
-+		git init --object-format=sha1 submodule &&
-+		(
-+			cd submodule &&
-+			test_commit def
-+		) &&
-+		test_must_fail git submodule add "$submodurl" submodule &&
-+		test $(git ls-files --stage | grep ^160000 | wc -l) -eq 0
-+	) &&
-+	git init --object-format=sha1 sha1 &&
-+	(
-+		cd sha1 &&
-+		test_commit abc &&
-+		git init --object-format=sha256 submodule &&
-+		(
-+			cd submodule &&
-+			test_commit def
-+		) &&
-+		test_must_fail git submodule add "$submodurl" submodule &&
-+		test $(git ls-files --stage | grep ^160000 | wc -l) -eq 0
-+	)
-+'
-+
- test_expect_success 'setup - add an example entry to .gitmodules' '
- 	git config --file=.gitmodules submodule.example.url git://example.com/init.git
- '
+Yeah, I agree. The only hash-cache test that I could think of is from
+t5326, which tests that we can propagate existing name-hash values from
+a pack bitmap in to a MIDX one. We probably need an equivalent for when
+writing an incremental MIDX/bitmap too. #leftoverbits
+
+>  pack-bitmap.c | 27 +++++++++++++++++++++++----
+>  1 file changed, 23 insertions(+), 4 deletions(-)
+>
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 291e1a9cf4..710b86a451 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -213,6 +213,26 @@ static uint32_t bitmap_num_objects(struct bitmap_index *index)
+>  	return index->pack->num_objects;
+>  }
+>
+> +static uint32_t bitmap_name_hash(struct bitmap_index *index, uint32_t pos)
+> +{
+> +	if (bitmap_is_midx(index)) {
+> +		while (index && pos < index->midx->num_objects_in_base)
+> +			index = index->base;
+
+Looks good. It's too bad that we have to reimplement something very
+similar to midx_for_object(), but I agree with what you wrote in the
+patch message and this faithfully captures that. It might be worth doing
+something like:
+
+    while (index && pos < index->midx->num_objects_in_base) {
+        ASSERT(bitmap_is_midx(index));
+        index = index->base;
+    }
+
+, which should never trigger, but is a good sanity check. Definitely not
+worth re-rolling IMHO.
+
+> +
+> +		if (!index)
+> +			BUG("NULL base bitmap for object position: %"PRIu32, pos);
+> +
+> +		pos -= index->midx->num_objects_in_base;
+> +		if (pos >= index->midx->num_objects)
+> +			BUG("out-of-bounds midx bitmap object at %"PRIu32, pos);
+
+midx_for_object() spells this portion slightly differently, but what you
+have here is still good.
+
+> +	}
+> +
+> +	if (!index->hashes)
+> +		return 0;
+> +
+> +	return get_be32(index->hashes + pos);
+
+We *could* double check that that offset is within bounds of
+index->map_size, and I think that is ultimately worth doing at some
+point. But I think that stopping where you did makes sense, since it
+does the minimal thing to fix this bug.
+
+Thanks,
+Taylor
