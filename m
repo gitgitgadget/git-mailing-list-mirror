@@ -1,71 +1,73 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15701D5ADE
-	for <git@vger.kernel.org>; Thu, 13 Nov 2025 02:55:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706B8C141
+	for <git@vger.kernel.org>; Thu, 13 Nov 2025 03:09:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763002508; cv=none; b=M9KlIJgTTMQPeZvKcvLSdmp2SPMHYkjWkUe4gp6htbSIrAYM+4fDKLMomk5h6pHu3bCt0799TXhqNmkvEVdqySivkWDz+CvsqTS8NwwpTmoxI2tfn8yGF8uQbqwVFqXEjO1Pbv0jgYFhMvpNxUzRSD5aBLSD89Z0QRYHDz9noCU=
+	t=1763003367; cv=none; b=SFKco4Oi9HsnOglDioNunwkeJTpiJltzuTgVULFgjBveWH28f29bPwZOY6XYfEKM3tzu4hACaufLgzaNoYzia5Uh58SHlKg2yDzHTyMjJ9U15IQsVCfQtoW4VQG/elkLsbZagkursy4Z6Ubm9ytkZ8JzocQccpoWNHTAh+LAzxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763002508; c=relaxed/simple;
-	bh=O/2lABz6HBpfVc9uwpBEQM5NYriUH9zeejzfCGFkp5Y=;
+	s=arc-20240116; t=1763003367; c=relaxed/simple;
+	bh=CvIC7Hnio6pFnnFC1UkZLF7UYtMSQdXkiflBVIbf8Ik=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dr8dynrUXvT8pHrC6Vw+25ddUL3Mlqp+FpRHP1KKYABPVR6S8BBtXTps9E4rI5YqCUmG8F+kgJdslGwringi+2oUr7m7VqFcDMH297lp7SOa0D8zBGxlgiAT3fMO7PxD13QgF/Cz/KaM1Czazt5XJz+kTLQjCmOikAJz7V/WEf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=BJPIRv8v; arc=none smtp.client-ip=209.85.128.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=ts/zuDOYpKU7Eex6z4vvgV8chnoRHMUvKUzbzOnW7Rg0nVk4eyjAkHz2LWMFVxLI7GRYQvIiF843LALJxkKMaCgXk2MiPtB+h+eiEuIWMJpjxu9a7YhUfiYoC3WpUsNmkBN3WtPbXP7OzHv1OriBLHuKggi9or2h4T1x/0BZyQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=kqcuyInw; arc=none smtp.client-ip=209.85.128.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="BJPIRv8v"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-71d71bcab6fso3472367b3.0
-        for <git@vger.kernel.org>; Wed, 12 Nov 2025 18:55:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="kqcuyInw"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-787eb2d8663so4978837b3.0
+        for <git@vger.kernel.org>; Wed, 12 Nov 2025 19:09:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1763002505; x=1763607305; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1763003364; x=1763608164; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=J8t7YxX41b4vObprGHSfgrEvJOv9XsjP/nNYX9ORcsU=;
-        b=BJPIRv8v3JEYgkKpz7cOKgEzwE4oqaUVPXFc5ZTKXVUB72dC3rlP3Jqs2ROVLXwCOL
-         H8jEOVV3jQ75UmE9OhwybahLIWDqYneAV3hZ4y+dwmQ5Ek7gDcbXrI0bYdiWeOqo5Pru
-         momAxMrMIVFKwFC4UXrGSuIKx6046mAU++NsIlAjPckl1010/5+qp6hsthwhPexam1LW
-         eCJUoT86n2+gJw/fBqdXDoHaehfRxFzKsIWijP20dhFJQM15fYJkS+tAu57nOvtnWvUi
-         oamB2DX3nWwvlrkPd/JywuIlySoQAMf0aDBCOGDrgIvfcmxdblBop6uPolGKYkCyVfAk
-         TfWg==
+        bh=62icsTqmIyhH/MgwMRPCIdh+2JT/ICw0128OmMDAP8o=;
+        b=kqcuyInwqFtJXNVhUEs6VM6vZ21X+SnxxJx7/mJvvtqVW8M5GnTePfcSPC4+8vlW2n
+         MWoacxGP7iCCmXu6dqbFaArcEP6AlaZWWTiWruD0DQPIgMiGFJu3P299bvuKik7GaSNk
+         +OCGtiHbPedneJrzpcxg6T3M6q9S7kZSHc9CN23qfLI/+oiPW2md/aItqLdL2YFhkfhj
+         etbX3+qHsxsuoVCJn3T2nrxZTxi8mNgBXlCCJqPzTx0hIG7pm4r++DWEsf+YEzKlnlvv
+         SOISoIlhSPwx7rOi83IMxzR24LraI+l+Pimn8PIvBzODWLKuf9WXCbBQl6tiIQpLJUTa
+         AZJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763002505; x=1763607305;
+        d=1e100.net; s=20230601; t=1763003364; x=1763608164;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=J8t7YxX41b4vObprGHSfgrEvJOv9XsjP/nNYX9ORcsU=;
-        b=RyEhjI87mDa86Qj8i4/tGMR0LQc5So7C56cvY2+aZMqtBG8FczQT8z8XJe5NhZWy65
-         eshUnzWv6DEVbTuQ/tVpY7i5/a/7PaZl77gkuiKPq5RB8AOHaxHw13RNMo/oEZoYcZtB
-         6MNqSJwycoppaARWa1BMNjuwArjjgnZdv+TxGlZ9HdKo26H7GuDrJ9qgf9NuFfIyurdy
-         t9BDPoOOeHuf+ElusyQhq+WG3krvdHZQk9qpqxl/UOBkAMt/86EbRzGd7i2BgOyEjoJG
-         F1YI8nqkXP4SCsZmlR+7YLZgNG5x48tYWUZnNcJsI6qp4Av1dZdXgSGgmfktwheJU9LQ
-         QX4g==
-X-Gm-Message-State: AOJu0YxdqXhs0h+4uE7yhDnqdonDC1OMrn7q6hmd6Gy7TIXZCP0p7Fm7
-	G+kWx1iy0yH3cRGqAPqpQmKFq5EK+Pa1rhbZq4P1mDjj7LDR1FQlcsXRaEdpH+41MpA=
-X-Gm-Gg: ASbGncvTMeE+WLx1wSOvfUnGfPrxawA3BlvxKOhFJ4qrS3QzlXXLghzV8m+gnTSHrYI
-	oH/Jq05pduLWHES80hDgs0fCcJMxxWMhNRg7IFP8fhLjN2tedAAeqdVF6UUCdabPrYVMuxgVsQK
-	v0GQ7DynufN3ipoorB06sR4QJAazCL30H9KkZsnybqdaxTsyOKFVAkGx8slMJZWi96ylbCMhpTQ
-	9rHQfYv88wgUW6ZOSItOb7NLCAHsbLgSrx1y2BHPndpnRN9/h2n8x7N2NkPKuHo51PVI5jZH8cG
-	0ZmKfT5lthhHzud/sm/vby2yO9HaP5iWSPqiDC+NS2TwVOkfmgHnvnhjgrUrQumHv9k+X/SVf2F
-	yGyb1cXhxnJJP2UJkFs0u6bokONk8FA/20PoF/cjQ3ML1ZZawkIMurBxyHvr8tnTM6ho11/x8IT
-	b8RfotESZCs2+3p+HUFJVYdI6WCzLaBuyHWELMwo3CAzJmCc4=
-X-Google-Smtp-Source: AGHT+IFMsgy8N6UCQ9qRlxhYkI6RjTLQQwU/ntaAm4rDXGVg9S1cndQJzkGVYTCcPffxrOXR6+ADjQ==
-X-Received: by 2002:a05:690e:2582:b0:63f:7d36:ac28 with SMTP id 956f58d0204a3-64101b80eeemr4128855d50.59.1763002504561;
-        Wed, 12 Nov 2025 18:55:04 -0800 (PST)
+        bh=62icsTqmIyhH/MgwMRPCIdh+2JT/ICw0128OmMDAP8o=;
+        b=hanCZUcCUTrXrGwViKNxoyT9Lm/VtuJjw036Wo3YOyvqUZpbt8EAzg5RWr4yWtsHqk
+         d+juo9oJ0DNeItWoZcFMYgQysQH4RuSqrBa7y9bd5spq5iaC9LaqigRXazIoPQ5EdSwj
+         pPwm8btqj16v0zXywA28CfP7POTEIRzgmTDtOooy/96FlK6FBOnOtm8TtWX/oEth3g5I
+         VDJKQDE++jswCGcpSbzKezWhj3mQwYSk4YrFjdgwi1UJU1hCuKPmPLTM0lgPdE3VJI3O
+         qb68c32Gxi+MF1Mx1Tkh08pd5wUTGdEt8JWPUowazUhLqLlpJo9k+iOWOwtOeD/Kb33H
+         3msQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWmpAMf+0XpgGEkjtO3ve+CprKYtl8BZgU+wRL4TRxH3VgPeGBTyhHvErOieBs3cD8MZGI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwA59gPzuoW5g75U3RkBtpQdZJPfGpSAdxBDit0fdKu6UXENLNr
+	EO/I08S2mcPGos6QVsjxEgTYQPaWUsepQiKwbASJJGOyPWui3UFh5j+Gqu+ojg3J26Q=
+X-Gm-Gg: ASbGncvWTtcH90b6ukkV4cS74Dhp2zfJX7CmKO7L6DiOab+HFkOS0hdpNbNwFWt+B+v
+	cxQv1XdlY01u/XY0NPYq4Ml6Jb0d4iaE1MbqrT3Ylf3BW+oDLwr1HUCC7w9d62uO7fjpH3dP/eB
+	H0K0UhwchloNBx7jUjinCGA+4PkoSNtHcOTnk4tYX0meSJlXYI05gcQleKi2rCrEmS/m8q5VHg4
+	jwZmpaxA95MTWKVe7LuPuGG9jw0G7dx+sOr9O3V1Ynj5t2K+I0fy5Y0VAEzYMfeypaKyJCFXWeK
+	WumMf8rospGeUWcu4eRms7JHl4I05DJqZXMlvlaWwgHydqU3p0kz4JSSgJqmrY0wZuVadeojJMz
+	So4Lxu4NQav3JmI8bt5kp6V/jOE7Rtx1hufDQ1rQHLSaVlGPCutELuvxhg6+kky6ZV31kgcHwqx
+	e0Uewg7EODSsm5R/rEX8HLlPwBWwX+G2VBsWzV5tG8SIZaH8wrxGbEBw+zEQ==
+X-Google-Smtp-Source: AGHT+IFww8O8g84JyNSyHSaHJbGINPY0KpkuBOf6rwj9y5tY0AE7uxUJynVjalTLJF854bX00dUdkw==
+X-Received: by 2002:a05:690c:6a86:b0:787:f18e:b308 with SMTP id 00721157ae682-7882061cec7mr14027907b3.21.1763003364363;
+        Wed, 12 Nov 2025 19:09:24 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-6410eaf02b7sm271867d50.26.2025.11.12.18.55.04
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78822150ec3sm2721607b3.48.2025.11.12.19.09.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Nov 2025 18:55:04 -0800 (PST)
-Date: Wed, 12 Nov 2025 21:55:03 -0500
+        Wed, 12 Nov 2025 19:09:24 -0800 (PST)
+Date: Wed, 12 Nov 2025 22:09:22 -0500
 From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, correctmost <cmlists@sent.com>
-Subject: Re: [PATCH 2/9] pack-bitmap: handle name-hash lookups in incremental
- bitmaps
-Message-ID: <aRVIh9R8Pnuk+yS0@nand.local>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	correctmost <cmlists@sent.com>
+Subject: Re: [PATCH 4/9] cache-tree: avoid strtol() on non-string buffer
+Message-ID: <aRVL4iptEeLm/+cs@nand.local>
 References: <20251112075522.GA978866@coredump.intra.peff.net>
- <20251112080151.GB979063@coredump.intra.peff.net>
+ <20251112080537.GD979063@coredump.intra.peff.net>
+ <aRRuzrmbJBW8q4Dd@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,90 +76,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251112080151.GB979063@coredump.intra.peff.net>
+In-Reply-To: <aRRuzrmbJBW8q4Dd@pks.im>
 
-On Wed, Nov 12, 2025 at 03:01:51AM -0500, Jeff King wrote:
-> As always with the midx and bitmap code, I am left unsure of which
-> ordering it is correct to use (pseudo-pack order, or lexical oid order,
-> or how each splits across incremental files). I _think_ this is right
-> because it's matching the ordering that is already used for a single
-> midx. But clearly this area is under-tested, since even when we did not
-> go off the end of the array we were probably passing back junk
-> name-hashes (either from the .bitmap file's trailing checksum, or
-> zero-padding at the end of the mapped page).
-
-Yeah, this is the right order. "index_pos" is a good hint that this is
-in lexical order. bitmap_writer_finish() has some oid_pos() lookups that
-use index directly without sorting, so bitmap_writer_finish() expects
-this array in lexical order.
-
-Commit c528e17966 (pack-bitmap: write multi-pack bitmaps, 2021-08-31)
-has a comment in (what is now) midx-write.c explaining this assumption
-in bitmap_writer_finish(), but it should probably be documented
-explicitly in pack-bitmap.h.
-
-> So it might be worth adding more tests here, but I know this incremental
-> bitmap code is a big work in progress. So I contented myself with the
-> reproduction above, and anything else can go onto the incremental todo
-> pile. :)
-
-Yeah, I agree. The only hash-cache test that I could think of is from
-t5326, which tests that we can propagate existing name-hash values from
-a pack bitmap in to a MIDX one. We probably need an equivalent for when
-writing an incremental MIDX/bitmap too. #leftoverbits
-
->  pack-bitmap.c | 27 +++++++++++++++++++++++----
->  1 file changed, 23 insertions(+), 4 deletions(-)
+On Wed, Nov 12, 2025 at 12:26:06PM +0100, Patrick Steinhardt wrote:
+> Hm. I'm not a huge fan of not having any error handling at all. It just
+> feels way too fragile for my taste:
 >
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index 291e1a9cf4..710b86a451 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -213,6 +213,26 @@ static uint32_t bitmap_num_objects(struct bitmap_index *index)
->  	return index->pack->num_objects;
->  }
+>   - As you mention we don't detect overflows, as we would detect them at
+>     a later point in time when trying to access index entries at invalid
+>     offsets. But if the input is crafted in a way that the overflow ends
+>     up with a reasonable index entry we might just as well _not_ detect
+>     that an overflow has happened and end up using the wrong index
+>     entry.
 >
-> +static uint32_t bitmap_name_hash(struct bitmap_index *index, uint32_t pos)
-> +{
-> +	if (bitmap_is_midx(index)) {
-> +		while (index && pos < index->midx->num_objects_in_base)
-> +			index = index->base;
+>   - We don't verify that we even have a number in the first place. We'd
+>     simply return "0" in that case and not advance the pointer. This is
+>     fine though as we verify that the returned size is non-zero, so we'd
+>     detect this case.
+>
+> I'd much rather prefer to have an interface similar to `git_parse_int()`
+> and related functions, which are way easier to use compared to the likes
+> of `stroi()`.
 
-Looks good. It's too bad that we have to reimplement something very
-similar to midx_for_object(), but I agree with what you wrote in the
-patch message and this faithfully captures that. It might be worth doing
-something like:
+Those git_parse_XYZ() functions all end up calling either
+git_parse_signed() or git_parse_unsigned() under the hood, which bolts
+on our k/m/g suffixes, which we probably don't want here when parsing an
+on-disk format.
 
-    while (index && pos < index->midx->num_objects_in_base) {
-        ASSERT(bitmap_is_midx(index));
-        index = index->base;
-    }
-
-, which should never trigger, but is a good sanity check. Definitely not
-worth re-rolling IMHO.
-
-> +
-> +		if (!index)
-> +			BUG("NULL base bitmap for object position: %"PRIu32, pos);
-> +
-> +		pos -= index->midx->num_objects_in_base;
-> +		if (pos >= index->midx->num_objects)
-> +			BUG("out-of-bounds midx bitmap object at %"PRIu32, pos);
-
-midx_for_object() spells this portion slightly differently, but what you
-have here is still good.
-
-> +	}
-> +
-> +	if (!index->hashes)
-> +		return 0;
-> +
-> +	return get_be32(index->hashes + pos);
-
-We *could* double check that that offset is within bounds of
-index->map_size, and I think that is ultimately worth doing at some
-point. But I think that stopping where you did makes sense, since it
-does the minimal thing to fix this bug.
+I don't have a strong opinion here, though I tend to agree with
+Patrick's thinking above (with the exception of the suffix thing that I
+pointed to earlier).
 
 Thanks,
 Taylor
