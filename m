@@ -1,129 +1,170 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D53932ED5F
-	for <git@vger.kernel.org>; Thu, 13 Nov 2025 08:17:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E3A2E0B5C
+	for <git@vger.kernel.org>; Thu, 13 Nov 2025 10:15:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763021840; cv=none; b=N5FuyETnnzKC2uECCW/eewabE5k8p6zn4IXr1/wBdSp6kq82KOvKKQeh7eA1RBchRchWTMKk8eBMaDY+v4PnCfEkUcbx5cm+pJsvnkXij+2t31HD24ac9lP+vZlxudX5QRDlo42h+xNArKgW77O+TeMaYdyNvWlEivuI/GHCD10=
+	t=1763028936; cv=none; b=fQuJlHQTSxDwIver0zJXb2iQ0SjBVK51shuPji6thMcL9FI72C+ReOL7lAfTmOJKVCwH2URAZjGwLAPcrZ/rdSmGRAP9uaEXfwcM7SrKmVt58EXTEocBnbngdSZSMrmH9tz5ckeYlSqCyKLE17hPeHtccYVDP33WDJJpimDTJ+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763021840; c=relaxed/simple;
-	bh=HpSEJFGFqg5uSvZIn1My8AGMcTErQjEs3pRIwGGYxUc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iVMZ7sxOkGBUjPnrgyXIp899Z0afmZdp4Otf/Dn3/5HJss+mb2o9PKwd7gSdP9UApvFoCdHKpqVWlY7Q1cEw1d7ClHg8FboJLEQw2mFsxOnsxBkcl1yG8vtqk1n3lRr+il5kOSNjlOtu+mTE4pgDd3GTUslpUeGjllc/KSnwWuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b=EumueJbl; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
+	s=arc-20240116; t=1763028936; c=relaxed/simple;
+	bh=2id2PWnhGwly3cUYzk3TNY6aazjkB4QlBtwDdckHG8c=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=bcakQs2qOBovEJwTeKsIYrhDjqfn0UAcuF+yDoP1Dq91EK37BefpzcueszQ9z6VOaIg2gNZVXji2gVZywmTsyRS4RCII8OwZjse8WspTMX+ZrGMJiZ+H56SnSDS+7lZrptSZrjx3IE/3OQlLuGEVQeIYKbVLql9y2rCSUszZb/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b=akG7TvSF; dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b=ju1spTO2; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b="EumueJbl"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-297e982506fso5653695ad.2
-        for <git@vger.kernel.org>; Thu, 13 Nov 2025 00:17:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gree.net; s=google; t=1763021838; x=1763626638; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fnu2rHgR9ZNxjNwmpoTxJKBAQfV6sxQAINMMlPqHoPE=;
-        b=EumueJbl8a7Q1vVFQknv0H/XPlWwZYUWF/3Z4xiwImTW1DPZ7eECjvVgODc6VJVkcW
-         TtQTWlppR6zgNO3YHNM9UL3FuBygCf9uVpbQWtBvFCmENp4oX66yXA2jwFMxTLUr8O3C
-         q/olnRVB4cMMFmX30Sx8LAanPIxYZFVldpEDXiPqNFpsEr6G/BjSaeKs8PH11Zeo9t6R
-         Y3+W+8qDp0ACEwWMSTwCOSvkspmEeWDohrObb52CWgG5DiVMIPPBcnpykUecUU1x3cag
-         0Zit+nuUk0ZnURmXhqYRzcNscElETfaQ84mPBdwTflMUDxfcROA+TcUgN9LPbgh9VhBg
-         ihFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763021838; x=1763626638;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=fnu2rHgR9ZNxjNwmpoTxJKBAQfV6sxQAINMMlPqHoPE=;
-        b=MzmSJ1hrVENVQXNd4fFcPeIwwwJdLrWTYgsNvaUqFVv1K6OCsuC8jsuCi0fiGVmc7D
-         kRwTxmB39b2HuA3qRsAT1eKcNKncIPoFFsQys7QXmyNj+Wy7F1bR7NeLrQ0J0ly+5SUW
-         ZvWMaeMg9qsCZjpPiHlLBL4kT4qXJVeM/YfoXW8nqRpbyM+cJfk44n1X2q5Mldw66QEV
-         2KhJAMDThD2HoFC663yviUO0M62MVj+A6DpZqOtbpzTU0k4dYlep8XoTkUFRO43gkZeA
-         bHU1J5Ctw7NsGuILGMxKRR+5zb+yci11pRKvpPCB9aW/vDzpOfTn94lkRq6hJMKZNMZd
-         hA8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWtg0pXwahb9l+1kGdNv7oTAy+cA8Mz4cM9Nv5f1i9SUDeUkrKkuCWT3b7INCpLCQgWLdY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YygjKpN5qNL1D1MVZUXqnnlYVz81wlQ9wY9e7CrDnTo0Cpg1v4I
-	v9GuzRdPS2vk1Z/dxU4mYADKXIBUJGlu6wIFebro/vimVkxSAM0P/Gr9KtLS+NCOJfgdljKduQM
-	tvRg7z5GRwLlfR+R+ITV6ApPVx1+Op9/9DXbDbNLoJmiV1ZhQ6RjNYVkDxjnf7JhjOYl6BQw9QN
-	0/JGS61gxxFPw5DqDuNmdfvxmwukMLsZ4WEJGpVFDgdgfqrtWrLGBz1h1GyC3GIojS8QNbPaY3D
-	7PhuRq8R2s4aaa526wOkEPz+xsh3xJt44TvV+J+fyTfSeMYj2lL7Z6Hdv5XLXV5ruH2qA+Pv3lI
-	25lfSViOnu0je78=
-X-Gm-Gg: ASbGncuB95nWL0sDp1RuJLGFGPcdQSLoLtYFa8pU58pHoQk6ghbODlkXqXHrMUZnYNl
-	CzdjzB/APtnPAd5symo1ozeCwhsfRCL1sqlS5/c0qYDlruiAAypSTeEP+dcK5FC7VxGsGD7OTc4
-	2ZD4MuFFq9+1ktds/3LFd6TdsznIFDdG7xvjfBHuoUDp9I2Bsb2/bfjIbY/zHN23kYr6ZWleCub
-	QVjdWRqK0PvcvioN66OBhxZ54tXy7rrastd0a6EGjH47hRrZ+TMvAcHJ5DLAw==
-X-Google-Smtp-Source: AGHT+IF4BqPA/FmnB5eyGOm6YXOqGPFrt9a3LMPPBt6z7b1v5/CMlutS48uOFZ1dJ2yQfsJ5YeabdzJ0uMMHmGwEtT8=
-X-Received: by 2002:a17:903:1248:b0:297:e1e1:beb1 with SMTP id
- d9443c01a7336-2984ed92f2amr88419885ad.16.1763021837515; Thu, 13 Nov 2025
- 00:17:17 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="akG7TvSF";
+	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="ju1spTO2"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 6A3C51F388;
+	Thu, 13 Nov 2025 10:15:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1763028932; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2id2PWnhGwly3cUYzk3TNY6aazjkB4QlBtwDdckHG8c=;
+	b=akG7TvSFlwAKO3tq8OkgK/b8p2KG0d++1dRCJGDxNAT4LMjOVwJ8E2ri1oUv8adVRqp6PS
+	p8Lr8wNmhgcndksA/Psclp48RLh9Q+b+k7DScNWczu00+L/KoN8oUbC6ZUYS77HwLF8Uih
+	Lqw5ggi/oH8BXwMilaXGJK5gbVG3jSE=
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.com header.s=susede1 header.b=ju1spTO2
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1763028931; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2id2PWnhGwly3cUYzk3TNY6aazjkB4QlBtwDdckHG8c=;
+	b=ju1spTO2p+A2EFNlrH/lB/1rDTLuzXX9rvXhT2cqa1p2hQ6KrGTuxVyuDeOZcb41WZWlZl
+	xaFzaATsDvMpkeBG/Rzwqpi7wyjL7tP5oqdL5V5KAiW+WXNgjVj5DcTmikFdPC+gLLIbnP
+	2UV3Zw9wbUdDS70kccrIH/IA4S6gJO0=
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4B9BC3EA61;
+	Thu, 13 Nov 2025 10:15:31 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id mFdSEcOvFWnBIgAAD6G6ig
+	(envelope-from <mwilck@suse.com>); Thu, 13 Nov 2025 10:15:31 +0000
+Message-ID: <a1c0440a6eef8f306f53793b2f96636945d4ced4.camel@suse.com>
+Subject: Re: git fails to checkout SHA1 submodule in SHA256 repo with
+ --depth=1
+From: Martin Wilck <mwilck@suse.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Junio C Hamano	
+ <gitster@pobox.com>, git@vger.kernel.org, Adrian Schroeter <adrian@suse.com>
+Date: Thu, 13 Nov 2025 11:15:30 +0100
+In-Reply-To: <aRUaR6IfH9imrF5A@fruit.crustytoothpaste.net>
+References: <c94a929df63f79e49eeae0cd67c1f59f859e3d62.camel@suse.com>
+	 <xmqq7bvvtdoe.fsf@gitster.g> <aRUaR6IfH9imrF5A@fruit.crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.1 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1998.git.1762930881599.gitgitgadget@gmail.com> <xmqqv7jfryet.fsf@gitster.g>
-In-Reply-To: <xmqqv7jfryet.fsf@gitster.g>
-From: Koji Nakamaru <koji.nakamaru@gree.net>
-Date: Thu, 13 Nov 2025 17:17:06 +0900
-X-Gm-Features: AWmQ_bndFvI2xMJ8vCRjT1DIthW54KbXQFM6_hLI_MfYkcKiQUF23maSBWDVav4
-Message-ID: <CAOTNsDwmMb2P9J9=GDJwyYRihdKQHixcX=GkdL8j6uNL=L6smQ@mail.gmail.com>
-Subject: Re: [PATCH] Revert "osxkeychain: state to skip unnecessary store operations"
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Spam-Level: 
+X-Spam-Flag: NO
+X-Rspamd-Queue-Id: 6A3C51F388
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ARC_NA(0.00)[];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	MIME_TRACE(0.00)[0:+];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	RCPT_COUNT_THREE(0.00)[4];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[opensuse.org:url,suse.com:dkim,suse.com:mid,suse.com:email];
+	DKIM_SIGNED(0.00)[suse.com:s=susede1];
+	DKIM_TRACE(0.00)[suse.com:+]
+X-Spam-Score: -4.51
 
-On Thu, Nov 13, 2025 at 1:47=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Koji Nakamaru <koji.nakamaru@gree.net>
-> >
-> > This reverts commit e1ab45b2dab51f94db9548666dfd7af626d2aa7e.
->
-> OK.  Let's make a mental note that e1ab45b2 (osxkeychain: state to
-> skip unnecessary store operations, 2024-05-15) appeared in v2.46 or
-> so.
+On Wed, 2025-11-12 at 23:37 +0000, brian m. carlson wrote:
+> On 2025-11-12 at 16:32:01, Junio C Hamano wrote:
+> > Martin Wilck <mwilck@suse.com> writes:
+> >=20
+> > > > Subject: Re: git fails to checkout SHA1 submodule in SHA256
+> > > > repo with --depth=3D1
+> >=20
+> > I think it is not supposed to work to mix repositories like this,
+> > regardless of any other option like --depth.=C2=A0 I think brian gave a
+> > response to that effect in a thread in the past few months.
+> >=20
+> > =C2=A0=C2=A0=C2=A0 ... goes and looks ...
+> >=20
+> > https://lore.kernel.org/git/aJ5gOPQ9oologqj-@fruit.crustytoothpaste.net=
+/
+> > https://lore.kernel.org/git/aKPJNNWMW9gtueEK@fruit.crustytoothpaste.net=
+/
+>=20
+> Yes, that isn't going to work and it never will unless we add some
+> extension mechanism for that purpose.=C2=A0 The repository in question is
+> corrupt.
 
-I see.
+Ok, thanks for the clarification.
 
-> > That commit was trying to skip to store a credential returned by
-> > "git-credential-osxkeychain get" by setting
-> > "state[]=3Dosxkeychain:seen=3D1". However, this state[] is kept even if=
- a
-> > credential returned by "git-credential-osxkeychain get" is invalid and
-> > another subsequent helper's "get" returns a valid credential. Another
-> > subsequent helper (such as [1]) may expect git-credential-osxkeychain t=
-o
-> > store the valid credential so that "store" cannot be skipped by just
-> > checking "state[]=3Dosxkeychain:seen=3D1".
-> >
-> > In order to solve this issue, the state[] mechanism can be refined or
-> > "osxkeychain:seen" can encode the whole information of the last
-> > "get". For now, let's revert the change.
->
-> Is anybody actively working on the proper solution?
->
-> In a patch series that replaces the old commit with a more proper
-> solution, it could be a reasonable layout of the series to make the
-> first patch a revert like this patch to give the proper solution a
-> clean slate to work from, but this looks different.
->
-> If the problem you are trying to solve here were a regression that
-> happened after Git 2.51 was released, a revert is totally warranted
-> at this point in time, even during the pre-release freeze period.
->
-> But it does not even look like a recent regression.  Wouldn't
-> reverting this change at this point give existing users who are
-> accustomed to the current behaviour another regression, essentially
-> robbing Peter to pay Paul?  In such a case, I do not think "let's
-> revert now and then hopefully a proper solution can come later" is a
-> good approach.
+Let me just explain the use case: The distribution ((open)SUSE) has
+switched to git for version control of its packages. We have chosen
+SHA256, because we'll need to support the distribution for many years
+to come, much longer than SHA1 is going to be considered good enough.
 
-I see. I'll work on the following approach and submit another patch.
+We can store the source code of the package e.g. in the form of
+tarballs (and we do). But it's convenient and efficient, and thus
+tempting for developers, to simply link to an existing repository
+hosting the sources, using a submodule. And upstream repos still use
+SHA1. This is what lead us to experiment with this sort of mixed
+repository.
 
-> > "osxkeychain:seen" can encode the whole information of the last
-> > "get".
+I get it that the concept is flawed and unsupported. Up to now, that
+wasn't obvious to me.
+
+So what we can do now is either keep storing tarballs, or wait until
+there's a full solution for migration between / interoperability of
+different hash algorithms, and until the source code repos we're
+interested in have been fully migrated to SHA256. In some special
+cases, where (open)SUSE owns the source repositories, we may be able to
+simply migrate to a SHA256 forge. We can also invent a "poor man's
+submodule" mechanism to link to sources on some external repository
+from ours [1].
+
+Do you see any other approach that I'm overlooking?
+
+Another question: If I, in the current repo [2], create a commit on top
+removing the submodule and replacing it by a tarball, would the
+repository remain broken, as it would still have the deprecated
+SHA256/SHA1 combination in the history? Should I expect errors if run
+e.g. "git rebase" or "git bisect" in a repository like this? IOW, do I
+need to rewrite the history of this repo, eliminating all instances of
+such mixed-hash submodules, to be on the safe side?
+
+Thanks,
+Martin
+
+[1] Such a thing exists already, but to me it feels less clean and
+elegant than using native git functionality.
+[2] https://src.opensuse.org/mwilck/multipath-tools
