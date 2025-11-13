@@ -1,358 +1,180 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFABA342514
-	for <git@vger.kernel.org>; Thu, 13 Nov 2025 18:10:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50279314D05
+	for <git@vger.kernel.org>; Thu, 13 Nov 2025 19:50:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763057443; cv=none; b=dr4GBScJKmOfXBbKgE+5W5aixG96CqPm1lp2vdR3q5rJB74k8MUh4OXHBCHztDupdvIq/8d0cSOx212Vw8ER2T4clUQAtiYDkkCdK1NuFzhwer9E3furDJz3g6eiPgWtD9DziWStoBTKpONqyxBDNGSNcgi2ZAuhPpAS9TrR7XM=
+	t=1763063438; cv=none; b=BUQmmrFb1QDdMNBpoo4skuT0ssAvpSdZjFwcHfa1N13GAaEXWoxHmZ2LlGmP57o3XUG/LaSg6sF6FwGyr44p3khur1et1Op/r/DFxq/mBrpBsWdAPbr+LJtF/zFaxRD7igXL6458T+9FA08YAvjsKUViIQmYq91yrOKbtyqbEEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763057443; c=relaxed/simple;
-	bh=ze+Z827cimlbFCuHNGBZwHERFzfMjXTizKFw6JmdQPM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=c0RJ0va/YVNdV6JApCbJhpepI3X4Ig/NHWz/J0vymXgxys/lKjDMRoaMj7cvf9gdMuqaWkhCVMKojvMEM7KiYHQIy4JVLfbi8xPca6QIo8WIUvqtMCN/bxtySGAHp+IQyE1VISvoPBmSvqvZWCGM6xkojJdsbnQwyu/zndDttws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hlEJ7xs+; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763063438; c=relaxed/simple;
+	bh=jWLZtEq6MBRYl9whnDmLgTCy1eTpoYfzb3mIw6lCCuk=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=fGSfV6iAqynzY0hlqmOS03T5Ak1QqT+R00TcMy7n+bWu+CRpBeFpqpaxIBaBWQQFwaH68TrBlmPm+YMa9lgdAE4yxTNBBvFX5n12z4y4gOoKNHWKh9sKtndDvfJqH2I+j5r04OL+w0jiMHnawBbM0wI9lpjtdTY+hj+BBlIDmxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca; spf=pass smtp.mailfrom=jvns.ca; dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b=o4bxB2Dt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O7drlqVN; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=jvns.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jvns.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hlEJ7xs+"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-298144fb9bcso11700875ad.0
-        for <git@vger.kernel.org>; Thu, 13 Nov 2025 10:10:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763057441; x=1763662241; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eC99j2jDQmGlkCFBwkELLZJDlZ5KD+zKkDxZ/3BIbPM=;
-        b=hlEJ7xs+DN+jkwUPD7peUX1tmu51suYn65XKdFCyYjDCnyqVTtm9rgN0wfs0YTvPKE
-         ynbk5vPk3xBlzHdwM2xljkSEhdLodtapCE+mtp1aKegWjlh9wO9MVBtMgoqH36FRs+nA
-         8ULff4waLLOe7B/8vmBQS19XIsMBJytIfUEaQinPwtZiwJkqsbyzxQPjjwTt7BD5yXTj
-         kDPNflTktRXPIal7hzO54FM0ACCck+3NTY8GxWwluj1ddc4G571s9bSc81NDJQHQkmD+
-         6nTWyHqkd/TEjp0uY/JrmaXBv/r1WMHqkwV8wRvaOCthcZvzfbsNRJgEvh882hpOUa3L
-         7Hkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763057441; x=1763662241;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=eC99j2jDQmGlkCFBwkELLZJDlZ5KD+zKkDxZ/3BIbPM=;
-        b=Iqnj92UzxNE4Wx9+stZfyabUNiCV13db+NN+qGg7SuXluCDq+mqjcSNe7ZA9DHEdB6
-         zmrzo31AZkW/dNncyeRNNiqEA5vQ5gqa+5eRnj0aZhogx8+bXy3hkc0+P0BgwkSLuthq
-         pZwAnPBKA9ytxeRaP8ze/rsVwWUQaO8z/ZblzxEM/QQIvfVb9abuFqutw5Vw7ClYopPQ
-         mJf83TlmdkYAeITIKbmnbCT7NU+0VTNWIcz0vnRH9/ibCLdV9Tf/5CzKUkjSN34cghDJ
-         +V89/FOVcNAwIWppsrdKiYodc5/trUUnN2S6oNp7MlE59loPeNdV2KtSxRJFeJOKwUA/
-         imkQ==
-X-Gm-Message-State: AOJu0YyW/1ZOdhRA+4gTeyEnrjp2YL1jyPi6K9YeuIbkSB1g5AU7Mscu
-	Y1Tik/G9uEw+nGZDCJJOQNjIJUVLMajrVmF4zFQEI1H3n49jLV7GBBekDfEC1GFF
-X-Gm-Gg: ASbGncu5VwVelipq3AZreEvFQUmg4/gSX/PgQMQQfFD6sGTse0bLjdu80GI09OkbGmK
-	pWYQgLMgG0jkE4rgz7Q6emeSxn5gLjp0o6/A67CixMLE4stUsfarAKWiFaVKwUsOW4+E0nmhOTv
-	G2PHaBUJL6X+SM3rZM0ZtWD8oj+jt5SkO4NNFHyx9bBzQeDvu5eQRedIXYVFTzT5CQglnx0dBEn
-	dfCoToA8fn65nrtNESijlLSqmgCNYRljR3NHBy1QgH6BxBWiagYv/vj8FG5e6fUx6DR41pIu5YO
-	UqB/R3W5WcRVW6SNVsqmWmYLBpfeIhBjqF0HhIGQkn2Wfl3VzLmVE6JXUPpdBMgIWO0UxCR4fnn
-	+B+RekHnQlx5reGfNKHNAzIXoIdvlGzIUMvJKBKtxyipoIL7nGLDEQLcAzL+l9QSOEOleOxtPr2
-	77mQ==
-X-Google-Smtp-Source: AGHT+IG7xMYLa0aKU0Up2WZY5PJSmXGsdWKZXzV8xFGS7EsRk8WIWw6rlrp7r7oPzLql2o3vr+O+5A==
-X-Received: by 2002:a17:903:b0d:b0:297:e231:f410 with SMTP id d9443c01a7336-2984ed457e7mr93668115ad.13.1763057440687;
-        Thu, 13 Nov 2025 10:10:40 -0800 (PST)
-Received: from [127.0.0.1] ([104.209.7.211])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2985c2c16a1sm31676115ad.95.2025.11.13.10.10.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Nov 2025 10:10:40 -0800 (PST)
-Message-Id: <ee84190cd899a3954095bf7263744704bfa4fa85.1763057433.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1987.v2.git.1763057433.gitgitgadget@gmail.com>
-References: <pull.1987.git.1760818039.gitgitgadget@gmail.com>
-	<pull.1987.v2.git.1763057433.gitgitgadget@gmail.com>
-From: "Claus Schneider(Eficode) via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 13 Nov 2025 18:10:33 +0000
-Subject: [PATCH v2 5/5] Documentation: add --include_ignored_submodules +
- ignore=all config
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=jvns.ca header.i=@jvns.ca header.b="o4bxB2Dt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O7drlqVN"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 49EA57A01B7;
+	Thu, 13 Nov 2025 14:50:35 -0500 (EST)
+Received: from phl-imap-15 ([10.202.2.104])
+  by phl-compute-05.internal (MEProxy); Thu, 13 Nov 2025 14:50:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvns.ca; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1763063435;
+	 x=1763149835; bh=t+V8NtCtzB1t0VuLt2HlT2EtGbFvaATlGbxPMkFN7bI=; b=
+	o4bxB2DtXzpP7cbUsunkScKgOYMxya3CfdgxeFNPv4+yxBpdbzPKDbSGzMgmWgTz
+	oWMMckaqZ6G/Q11UyXaWEb3M2/Fk2hhZZ+5rUKJmk9BERE9adou5W0urphhzu7bD
+	PvfbOGu+X1hXRtq7BGwwL0OSf3cH5IJnVopS/pefGhBsC3Ze8Tkn+gV+hz3jdKJd
+	5uk3SAQVNoB1JTxGczyjrW9OzwG6IpMt5sH/qFOhwx+crgLlPjuTRCcaddb11Ucn
+	jfS4KNhiVv2UiF/q33cRhIEX4wo/7KjoyxAlbpDmQVtRfGbOyMiebmmJ0Yu+/cNJ
+	P0MINBCU7K2K1rWtyF1Rag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763063435; x=
+	1763149835; bh=t+V8NtCtzB1t0VuLt2HlT2EtGbFvaATlGbxPMkFN7bI=; b=O
+	7drlqVNnlqXjIstFdEmKuqURvIVOyyQOJ08tpsvXLGiH8sLBl+pawN+EVXC+MPao
+	7oHdh713AKHq5mhlBGNjBLMwBdNv4Cu0MiYC1QgGLU6JixeUgJlMDTOtIta2FWdI
+	AcJIBaq+Ktw1dEGdVqLG8T5cx1ooB1u1mJlZp59DS3LgnnyuLwd73RDqMwwb0O82
+	3wMHT8g/pJqEV1JxJFShL/pfDZ7TJqmMGtx8rmiLtfmIqjC69hDkDE1QF3G2LmxC
+	3tMMhMLg/lq84TsWOi4vxEDpYxGRDzr14GPfNbyN1FPMr0rFDLee8SMZ2yDQR9Wu
+	HlHiPJbyj4dSLYyROTUYQ==
+X-ME-Sender: <xms:ijYWaXuzVrxsFrOHpY1crJ0rd-YhLwtILMBlyCF16NNjWVZol5nA0w>
+    <xme:ijYWaTTBHRGbx0SxNYNsIaSROBI-_4XhYwGomPcY5HTknBwcWQEfUyIWB06TU0TRt
+    AcmNQbiht80GQL3KBNs5jKGZA0GzGS0zNMmu0977HE388CfbkrJGgf5>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdejkedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedflfhulhhi
+    rgcugfhvrghnshdfuceojhhulhhirgesjhhvnhhsrdgtrgeqnecuggftrfgrthhtvghrnh
+    epfeeiieeggedtfeekjefgvdetjeffhfevuedutdetvdejgfegveffhfelgedvvddunecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhulhhirg
+    esjhhvnhhsrdgtrgdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
+    gtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepph
+    hssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ijYWaRY2qf8L-lpbsVvlH2jui8d3dv6veNwWsCQ0qwTvDSahVt_MPA>
+    <xmx:ijYWaRs72bVLR_K1df20u1JWAhhccyiwq2GIONhU9Dg7GqkhACHNPA>
+    <xmx:ijYWabM78uVcxgyvrKW1KrzIC7jTAPLilXvbYr54kKajzltpje1jzQ>
+    <xmx:ijYWaQ5c-lsyuJQzmKC91URYIBbmIBxigDm0Yb6eGC-9oSbHHkeRfQ>
+    <xmx:izYWaSi_kJDCAVDPg2FsFq32jyMHLbhU3NEWit_SoV267JroL5pRdtIJ>
+Feedback-ID: i2aa947c3:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id C4368780070; Thu, 13 Nov 2025 14:50:34 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Brandon Williams <bmwill@google.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Claus Schneider <claus.schneider@eficode.com>,
-    Claus Schneider <claus.schneider@eficode.com>,
-    "Claus Schneider(Eficode)" <claus.schneider@eficode.com>
+X-ThreadId: AGkC0gJjnH2B
+Date: Thu, 13 Nov 2025 14:50:13 -0500
+From: "Julia Evans" <julia@jvns.ca>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Julia Evans" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
+ "Patrick Steinhardt" <ps@pks.im>
+Message-Id: <2265ecb5-b0ba-4a28-904f-186ef5318562@app.fastmail.com>
+In-Reply-To: <xmqqo6p6q32v.fsf@gitster.g>
+References: <xmqqo6pde90w.fsf@gitster.g>
+ <D50AB3E0-E41C-49CD-9407-AB60331A6A43@gmail.com> <xmqqa50v4x8n.fsf@gitster.g>
+ <150f3442-93a6-4469-9c25-5bca24accc80@app.fastmail.com>
+ <xmqqfrakyj0w.fsf@gitster.g>
+ <2474339d-67bc-4a68-9f26-fe7edd172ec4@app.fastmail.com>
+ <xmqqa50rqcy1.fsf@gitster.g> <xmqqo6p6q32v.fsf@gitster.g>
+Subject: Re: [PATCH v6] doc: add an explanation of Git's data model
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: "Claus Schneider(Eficode)" <claus.schneider@eficode.com>
 
-- git-add.adoc: Add new documentation for --include_ignored_submodules
-  option to supress ignore=all and new submodule functionality of not
-  adding a ignore=all submodule by default.
-- gitmodules.adoc and config/submodule.adoc: The submodule config
-  ignore=all now need --include_ignored_submodules in order to update
-  the index.
 
-Signed-off-by: Claus Schneider(Eficode) <claus.schneider@eficode.com>
----
- .devcontainer/Dockerfile            | 70 ++++++++++++++++++++++++++
- .devcontainer/Dockerfile.standalone | 76 +++++++++++++++++++++++++++++
- .devcontainer/devcontainer.json     | 25 ++++++++++
- Documentation/config/submodule.adoc | 13 ++---
- Documentation/git-add.adoc          |  5 ++
- Documentation/gitmodules.adoc       |  5 +-
- 6 files changed, 187 insertions(+), 7 deletions(-)
- create mode 100644 .devcontainer/Dockerfile
- create mode 100644 .devcontainer/Dockerfile.standalone
- create mode 100644 .devcontainer/devcontainer.json
+On Wed, Nov 12, 2025, at 5:49 PM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> If we do not hesitate using a new word and introduce "label", "a
+>> branch works as a label for a commit object" may probably work,
+>> probably.
+>
+> Another thing.
+>
+> Do we want to limit the definition of "branch" very narrowly, i.e.,
+> "subset of refs whose refname begins with refs/heads/"? =20
+>
+> Or do we want to give a description at a bit higher conceptual
+> level, something like:
+>
+>   A branch is a mechanism to help you grow one line of history (in
+>   the sea/cloud of commits) by (1) keeping track of the commit it
+>   currently is at (by recording its ID in the ref used to implement
+>   the branch), (2) allowing you easily record a new commit you
+>   create while you are on it as a child of the current commit (by
+>   allowing the symbolic ref "HEAD" to point the ref used to
+>   implement the branch), (3) keeping the description of the theme of
+>   the particular line of history being developed there (by using
+>   "branch.<name>.description" configuration variable for the branch)
+>   which is incorporated when the branch gets merged to an
+>   integration branch, and (4) keeping track of how the branch has
+>   grown over time (in the reflog for the ref used to implement the
+>   branch).
+>
+> We can limit ourselves to view a "branch" as a narrow subset of a
+> ref that can point at a single commit in the dag of commits, and it
+> can be updated at any time to point another different commit that
+> has no relation to the previous commit.
 
-diff --git a/.devcontainer/Dockerfile b/.devcontainer/Dockerfile
-new file mode 100644
-index 0000000000..680ca5f3ad
---- /dev/null
-+++ b/.devcontainer/Dockerfile
-@@ -0,0 +1,70 @@
-+FROM ubuntu:latest
-+
-+ARG USER_ID
-+ARG GROUP_ID
-+
-+ENV DEBIAN_FRONTEND=noninteractive
-+ENV TZ=Europe/Copenhagen
-+
-+RUN apt-get update \
-+    && \
-+    apt-get install -y \
-+        sudo \
-+        build-essential \
-+        libcurl4-gnutls-dev \
-+        libexpat1-dev \
-+        gettext \
-+        libz-dev \
-+        libssl-dev \
-+        asciidoc \
-+        xmlto \
-+        docbook-xsl \
-+        \
-+        tzdata \
-+        git \
-+        coccinelle \
-+    && \
-+    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime \
-+    && \
-+    dpkg-reconfigure --frontend noninteractive tzdata
-+
-+RUN  apt-get update && apt-get install -y autoconf
-+
-+RUN addgroup -gid 1001 gituser
-+RUN adduser --disabled-password -u 1001 -gid 1001 gituser
-+RUN usermod -aG sudo gituser
-+RUN echo 'gituser ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/010-gituser
-+RUN chmod 0440 /etc/sudoers.d/010-gituser
-+
-+USER 1001
-+
-+#WORKDIR /home/gituser/git-src/
-+
-+#RUN  make configure
-+#RUN ./configure --prefix=${HOME}/.local/
-+
-+#RUN make -j$(nproc) gitweb || make gitweb 
-+#RUN make install-gitweb
-+
-+#RUN make -j$(nproc) || make
-+#RUN make -j$(nproc) gitweb || make gitweb 
-+#RUN make install-gitweb
-+#RUN make -j$(nproc) NO_PERL=YesPlease install || make NO_PERL=YesPlease install
-+#RUN make install
-+
-+
-+RUN mkdir -p  ${HOME}/.local/
-+#RUN ls -la ${HOME}/.local/bin
-+#ENV PATH="/home/gituser/.local/bin:${PATH}"
-+#RUN ls -l $HOME/.local/bin
-+#RUN echo $PATH $HOME 
-+
-+#RUN git --version
-+#RUN which git 
-+
-+RUN git config --global user.email "gituser@example.com"
-+RUN git config --global user.name "Git User"
-+
-+#WORKDIR /home/gituser/git-test/
-+
-+#CMD [ "git" ]
-diff --git a/.devcontainer/Dockerfile.standalone b/.devcontainer/Dockerfile.standalone
-new file mode 100644
-index 0000000000..39bda42c0e
---- /dev/null
-+++ b/.devcontainer/Dockerfile.standalone
-@@ -0,0 +1,76 @@
-+FROM ubuntu:latest
-+
-+ARG USER_ID
-+ARG GROUP_ID
-+
-+ENV DEBIAN_FRONTEND=noninteractive
-+ENV TZ=Europe/Copenhagen
-+
-+RUN apt-get update \
-+    && \
-+    apt-get install -y \
-+        build-essential \
-+        libcurl4-gnutls-dev \
-+        libexpat1-dev \
-+        gettext \
-+        libz-dev \
-+        libssl-dev \
-+        asciidoc \
-+        xmlto \
-+        docbook-xsl \
-+        \
-+        tzdata \
-+        \
-+        nano \
-+        vim \
-+    && \
-+    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime \
-+    && \
-+    dpkg-reconfigure --frontend noninteractive tzdata
-+
-+RUN  apt-get update && apt-get install -y autoconf
-+
-+RUN addgroup -gid ${GROUP_ID} gituser
-+RUN adduser --disabled-password -u ${USER_ID} -gid ${GROUP_ID} gituser
-+
-+
-+COPY --chown=${USER_ID}:${GROUP_ID} ./git /home/gituser/git-src/
-+
-+USER ${USER_ID}
-+
-+WORKDIR /home/gituser/git-src/
-+
-+RUN  make configure
-+RUN ./configure --prefix=${HOME}/.local/
-+
-+#RUN make -j$(nproc) gitweb || make gitweb 
-+#RUN make install-gitweb
-+
-+#RUN make -j$(nproc) || make
-+#RUN make -j$(nproc) gitweb || make gitweb 
-+#RUN make install-gitweb
-+RUN make -j$(nproc) NO_PERL=YesPlease install || make NO_PERL=YesPlease install
-+RUN make install
-+
-+WORKDIR /home/gituser/git-src/t
-+RUN ./t2206-add-submodule-ignored.sh -v
-+
-+RUN ls -la ${HOME}/.local/
-+RUN ls -la ${HOME}/.local/bin
-+ENV PATH="/home/gituser/.local/bin:${PATH}"
-+RUN ls -l $HOME/.local/bin
-+RUN echo $PATH $HOME 
-+
-+RUN git --version
-+RUN which git 
-+
-+RUN git config --global user.email "gituser@example.com"
-+RUN git config --global user.name "Git User"
-+
-+WORKDIR /home/gituser/git-src/t
-+RUN pwd && ls -la 
-+RUN ./t2206-add-submodule-ignored.sh -v
-+
-+WORKDIR /home/gituser/git-test/
-+
-+CMD [ "git" ]
-diff --git a/.devcontainer/devcontainer.json b/.devcontainer/devcontainer.json
-new file mode 100644
-index 0000000000..2bc13902d8
---- /dev/null
-+++ b/.devcontainer/devcontainer.json
-@@ -0,0 +1,25 @@
-+{
-+  "name": "Git Dev Container",
-+  "build": {
-+    "dockerfile": "Dockerfile",
-+    "context": "",
-+    "args": {
-+      "user_id": "1001",
-+      "group_id": "1001"
-+    }
-+  },
-+  "customizations": {
-+    "vscode": {
-+      "settings": {
-+        "terminal.integrated.shell.linux": "/bin/bash"
-+      }
-+    }
-+  },
-+  "remoteUser": "gituser",
-+  "features": {},
-+  "mounts": [
-+    "source=${localWorkspaceFolder}/,target=/home/gitusers/git-src,type=bind,consistency=cached",
-+    "source=${localWorkspaceFolder}/,target=/home/gitusers/git-test,type=bind,consistency=cached"
-+  ],
-+  "postCreateCommand": "echo"
-+}
-diff --git a/Documentation/config/submodule.adoc b/Documentation/config/submodule.adoc
-index 0672d99117..0753adbab5 100644
---- a/Documentation/config/submodule.adoc
-+++ b/Documentation/config/submodule.adoc
-@@ -32,15 +32,16 @@ submodule.<name>.fetchRecurseSubmodules::
- 
- submodule.<name>.ignore::
- 	Defines under what circumstances "git status" and the diff family show
--	a submodule as modified. When set to "all", it will never be considered
--	modified (but it will nonetheless show up in the output of status and
--	commit when it has been staged), "dirty" will ignore all changes
--	to the submodule's work tree and
-+	a submodule as modified.
-+	Set to "all" will never considered the submodule modified. It can
-+	nevertheless be staged using the option --include_ignored_submodules and
-+	it will then show up in the output of status.
-+	Set to "dirty" will ignore all changes to the submodule's work tree and
- 	takes only differences between the HEAD of the submodule and the commit
- 	recorded in the superproject into account. "untracked" will additionally
- 	let submodules with modified tracked files in their work tree show up.
--	Using "none" (the default when this option is not set) also shows
--	submodules that have untracked files in their work tree as changed.
-+	Set to "none"(default) It is also shows submodules that have untracked
-+	files in their work tree as changed.
- 	This setting overrides any setting made in .gitmodules for this submodule,
- 	both settings can be overridden on the command line by using the
- 	"--ignore-submodules" option. The 'git submodule' commands are not
-diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
-index b7a735824d..ab72fad651 100644
---- a/Documentation/git-add.adoc
-+++ b/Documentation/git-add.adoc
-@@ -79,6 +79,11 @@ in linkgit:gitglossary[7].
- `--force`::
- 	Allow adding otherwise ignored files.
- 
-+`--include_ignored_submodules`::
-+	The option is also used when `submodule.<name>.ignore=all`
-+	is set, but you want to stage an update of the submodule. The
-+	`path` to the submodule must be explicitly specified.
-+
- `--sparse`::
- 	Allow updating index entries outside of the sparse-checkout cone.
- 	Normally, `git add` refuses to update index entries whose paths do
-diff --git a/Documentation/gitmodules.adoc b/Documentation/gitmodules.adoc
-index d9bec8b187..ea1fd377e6 100644
---- a/Documentation/gitmodules.adoc
-+++ b/Documentation/gitmodules.adoc
-@@ -70,7 +70,10 @@ submodule.<name>.ignore::
- --
- 	all;; The submodule will never be considered modified (but will
- 	    nonetheless show up in the output of status and commit when it has
--	    been staged).
-+	    been staged). Add `(new commits)` can be overruled using the
-+	    `git add --include_ignored_submodules <submodule.path>` 
-+		The setting affects `status`, `update-index`, `diff` and `log`(due 
-+		to underlaying `diff`).
- 
- 	dirty;; All changes to the submodule's work tree will be ignored, only
- 	    committed differences between the `HEAD` of the submodule and its
--- 
-gitgitgadget
+=EF=BB=BF=EF=BB=BF=EF=BB=BFI think talking too much about the intentions=
+ behind branches runs
+the risk of getting into a discussion from Git workflows which IMO
+is definitely out of scope for this document. For example "which is
+incorporated when the branch gets merged to an integration branch" is
+talking about a specific Git workflow.
+
+From my point of view as a Git user one of Git's biggest strengths is its
+flexibility; because branches _can_ be moved to point at a different
+commit at any time in various ways (via `git reset --hard`, `git rebase`=
+, or
+`git commit --amend`), there's a lot of flexibility in how someone can
+choose to use Git, including never using branches at all.=20
+(the flexibility is also one of the things that makes Git hard of course=
+ :) )
+
+So I'd prefer to keep editorializing about what a branch "means"
+to a minimum.
+
+Right now we have this, which tries to explain a very small amount
+about how branches are used that should apply to almost
+all Git workflows:
+
+"Even though branches and tags both refer to a commit ID, Git treats
+them very differently. Branches are expected to change over time: when
+you make a commit, Git will update your current branch to point to the
+new commit. "
+
+> Once we stop limiting ourselves and explain the purpose of using a
+> "branch", "it can be updated to point any random commit" stops being
+> entirely true.  While the "git branch -f" command can be used to do
+> so, doing so all the time would go against what makes a branch a
+> branch, i.e. to keep track of the process of growing the history,
+> and it is expected that it would be a lot more common for the commit
+> pointed at by the branch ref to move by growing the history with
+> "git commit", refining the history with "git rebase", etc.  But that
+> can only follow if readers understand the branch as more than "just
+> a ref whose name begins with refs/heads/".
+>
+> I am not sure what level the data model description you are writing
+> should be at.  The current description seems to concentrate too
+> narrowly on "a branch is a specialization of a ref" aspect, and
+> while it is not incorrect as a description of a building block of a
+> tool set to implement a workflow, it might be too limiting to form
+> a proper mental model.  I dunno.
