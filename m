@@ -1,160 +1,138 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA642D7D47
-	for <git@vger.kernel.org>; Thu, 13 Nov 2025 22:51:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9D2326940
+	for <git@vger.kernel.org>; Thu, 13 Nov 2025 22:57:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763074310; cv=none; b=esbfPv7oDXNFTMi68vc+GSR7Bzf5j6ydGWzaCifrbKu2CGFq9sdV9GDo62HLE/4zqSnOsopR5UxU3Bt90CV9HTS+Y88QnDoLEXfjuFP+0fTrwnAi6K/CaYj5CpciQnZUcqhTkNWZapnOuzfa4DDr2+LX32rj3cdeA196wPHN7U8=
+	t=1763074645; cv=none; b=C+nJmfDHAiZJJTmMjLaIZFA2dEinzJrIUYgaueAKPzFZY8J6BcPF7w1IR+wtsyQnAPmMVsmGrC6rlDzGlKEw5Ly5iBRMjFy7N+WM/BQwaXZYxcwxjyRVi+s223YhayqqLHr6X0fsWbeC7XZ2H71GE1ZPs7JXTTUR1La4SVCB4LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763074310; c=relaxed/simple;
-	bh=rigrE7QMOj6KL7wpzoO6I5aJxAg8cYJ6HfKqr6lmrC8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G4/FTow+rHX6pydB/UiFixxxI8g9mDODt3+0jKxSycp5TvP+71TdWR5exsUgIDCDG/Uavi7gaJvK3MWLYaexR1R3ggv/OXgaHkd+4E6GYmqGqzJGVJL5ign/vbSLpCZTYF/9HU4dU0HXzVrpEMKfOHVyAqbbmznO/BiSXIDe9kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Q8iAtmfA; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1763074645; c=relaxed/simple;
+	bh=4RYxz1gRCYL+TuNNrDR0+slevvvv2H1jWcgPMldQzZ4=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=FtBDnANM3fUQD6As2dUmAcDSasYF2HtsAA8tHNbFboqK6xt52X47RbP8GbXj3IxoBEiizQ4t7aKxBSANDHWeHFHwouqGQ/dzyv1xC28oJmq0XbansRrq9Q8Vu3vtc6W074GvMp+RN2ujGnJM7QczJB7Txe7lDUcyiaiW47k/Df0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b=SKR0kzdy; dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b=SKR0kzdy; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Q8iAtmfA"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1763074306;
-	bh=rigrE7QMOj6KL7wpzoO6I5aJxAg8cYJ6HfKqr6lmrC8=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=Q8iAtmfAlW+bV4+KoPU36AGbnTktzmzEB17CdHjUffX884fD5ngjyaTN+8D1yjoJY
-	 m8O0YpELWrlGRXHbxBqylqH0aloLfh8ksAKMbedc3cexCCRADM1j5zGu2zPs3+TmEe
-	 P5tQuuiBdKB6us+//51zFN1Oo0To1b/MdrinSMq/N5+e0hSgjgNrJm0XyWPRXbEJdq
-	 S+j3SpW8yT826g/Nyxmn5xwXduFDd90tThSkrbzgIc2GfbC3o657KDiAzY/6E4NtEo
-	 +/VT5uRv57jMXWCv2cbgCScn395geT0tMsFfTfNJa3DBZxmXzSz+5m1qPSm7vOkb3c
-	 rknWxHticUwhSKBKxaBpHu+Y18cjXBxhZ5ecXsj6hky1CrIXmKzhpnnvIJ6eXZtaCe
-	 d3o2jT9h/G7rVUQLG2lBHHKTd6q/M2x6g2N6F+MM2bJCYMN+KZanR6hnGEmYh9tpqG
-	 zCGRaYbrjyKQm2RFu+neDNfsWrENA3wImX7YVfsmfl11qxv1vvQ
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:663d:867d:4eb4:3b8a])
+	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="SKR0kzdy";
+	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="SKR0kzdy"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3451420065;
-	Thu, 13 Nov 2025 22:51:46 +0000 (UTC)
-Date: Thu, 13 Nov 2025 22:51:44 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Martin Wilck <mwilck@suse.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Adrian Schroeter <adrian@suse.com>
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 3763C1F38A;
+	Thu, 13 Nov 2025 22:57:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1763074640; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4RYxz1gRCYL+TuNNrDR0+slevvvv2H1jWcgPMldQzZ4=;
+	b=SKR0kzdy381woeb8i7n94yg1hryvsDMkFx0RgTXPac/F8n+xCTwyLe0XLJOIn0dWdVx+Wb
+	6v41MUOGFkVvhpzMY09zSEtJR2VKmjIgVyZZON27ZckSmb9c1OaFEVrJQAG5QIBfV+JcjK
+	wP9XH2TIxDWqdJgOo3DkFf1fSxh4h9Y=
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.com header.s=susede1 header.b=SKR0kzdy
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1763074640; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4RYxz1gRCYL+TuNNrDR0+slevvvv2H1jWcgPMldQzZ4=;
+	b=SKR0kzdy381woeb8i7n94yg1hryvsDMkFx0RgTXPac/F8n+xCTwyLe0XLJOIn0dWdVx+Wb
+	6v41MUOGFkVvhpzMY09zSEtJR2VKmjIgVyZZON27ZckSmb9c1OaFEVrJQAG5QIBfV+JcjK
+	wP9XH2TIxDWqdJgOo3DkFf1fSxh4h9Y=
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 10A813EA61;
+	Thu, 13 Nov 2025 22:57:20 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 1y2lAlBiFmknCAAAD6G6ig
+	(envelope-from <mwilck@suse.com>); Thu, 13 Nov 2025 22:57:20 +0000
+Message-ID: <1cf41aad10ab0d32cbb7334cd59144c35629c9b5.camel@suse.com>
 Subject: Re: git fails to checkout SHA1 submodule in SHA256 repo with
  --depth=1
-Message-ID: <aRZhAEpm8PbBQcIM@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Martin Wilck <mwilck@suse.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Adrian Schroeter <adrian@suse.com>
+From: Martin Wilck <mwilck@suse.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Junio C Hamano	
+ <gitster@pobox.com>, git@vger.kernel.org, Adrian Schroeter <adrian@suse.com>
+Date: Thu, 13 Nov 2025 23:57:19 +0100
+In-Reply-To: <aRZhAEpm8PbBQcIM@fruit.crustytoothpaste.net>
 References: <c94a929df63f79e49eeae0cd67c1f59f859e3d62.camel@suse.com>
- <xmqq7bvvtdoe.fsf@gitster.g>
- <aRUaR6IfH9imrF5A@fruit.crustytoothpaste.net>
- <a1c0440a6eef8f306f53793b2f96636945d4ced4.camel@suse.com>
+	 <xmqq7bvvtdoe.fsf@gitster.g> <aRUaR6IfH9imrF5A@fruit.crustytoothpaste.net>
+	 <a1c0440a6eef8f306f53793b2f96636945d4ced4.camel@suse.com>
+	 <aRZhAEpm8PbBQcIM@fruit.crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.1 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oUMpju1eH9K05gJP"
-Content-Disposition: inline
-In-Reply-To: <a1c0440a6eef8f306f53793b2f96636945d4ced4.camel@suse.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Rspamd-Queue-Id: 3763C1F38A
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.com:s=susede1];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_THREE(0.00)[4];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:mid,suse.com:dkim];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+	DKIM_TRACE(0.00)[suse.com:+]
+X-Rspamd-Action: no action
+X-Spam-Flag: NO
+X-Spam-Score: -4.51
+X-Spam-Level: 
 
-
---oUMpju1eH9K05gJP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2025-11-13 at 10:15:30, Martin Wilck wrote:
-> Let me just explain the use case: The distribution ((open)SUSE) has
-> switched to git for version control of its packages. We have chosen
-> SHA256, because we'll need to support the distribution for many years
-> to come, much longer than SHA1 is going to be considered good enough.
+On Thu, 2025-11-13 at 22:51 +0000, brian m. carlson wrote:
+> On 2025-11-13 at 10:15:30, Martin Wilck wrote:
+> >=20
+> > I get it that the concept is flawed and unsupported. Up to now,
+> > that
+> > wasn't obvious to me.
 >=20
-> We can store the source code of the package e.g. in the form of
-> tarballs (and we do). But it's convenient and efficient, and thus
-> tempting for developers, to simply link to an existing repository
-> hosting the sources, using a submodule. And upstream repos still use
-> SHA1. This is what lead us to experiment with this sort of mixed
-> repository.
+> It wasn't obvious to a lot of people because the assumption is only
+> documented in the transition plan.=C2=A0 Mixed algorithm submodules are
+> something we should have thought about earlier on, but we didn't.
 >=20
-> I get it that the concept is flawed and unsupported. Up to now, that
-> wasn't obvious to me.
+> The original transition plan was to have full interoperability
+> support
+> early on, in which case this wouldn't have been a problem, but for
+> technical reasons it ended up being much easier to have SHA-256-only
+> repositories, so we finished that first.=C2=A0 I then lost interest in th=
+e
+> project for many years (having kind of burnt out on the work) and,
+> with
+> the exception of one set of patches that were sent in, nobody else
+> picked it up either.=C2=A0 So this ideally would have been implemented
+> sooner
+> under the original plan, but it wasn't.=C2=A0 This is one of the pitfalls
+> of
+> open source projects, as we all know.
+>
+> [...]
 
-It wasn't obvious to a lot of people because the assumption is only
-documented in the transition plan.  Mixed algorithm submodules are
-something we should have thought about earlier on, but we didn't.
+Thank you for the detailed response, and good luck finding some support
+for this very important project.
 
-The original transition plan was to have full interoperability support
-early on, in which case this wouldn't have been a problem, but for
-technical reasons it ended up being much easier to have SHA-256-only
-repositories, so we finished that first.  I then lost interest in the
-project for many years (having kind of burnt out on the work) and, with
-the exception of one set of patches that were sent in, nobody else
-picked it up either.  So this ideally would have been implemented sooner
-under the original plan, but it wasn't.  This is one of the pitfalls of
-open source projects, as we all know.
+Martin
 
-> So what we can do now is either keep storing tarballs, or wait until
-> there's a full solution for migration between / interoperability of
-> different hash algorithms, and until the source code repos we're
-> interested in have been fully migrated to SHA256. In some special
-> cases, where (open)SUSE owns the source repositories, we may be able to
-> simply migrate to a SHA256 forge. We can also invent a "poor man's
-> submodule" mechanism to link to sources on some external repository
-> from ours [1].
-
-There is work underway for SHA-1/SHA-256 interoperability.  However, it
-is a thing I'm working on primarily in my free time (although also a
-little at work) and nobody else has stepped up to contribute, so it will
-take some time to complete and is not expected to be included in Git
-3.0 without additional assistance.
-
-To be clear, the existing interoperability code does work for
-repositories without submodules and you may find it on the
-`sha256-interop` branch at https://github.com/bk2204/git.git, but it
-isn't production ready.  I might use it myself, but I would not
-recommend others do so in its current state.
-
-For right now, I would say that you should keep storing tarballs.
-
-> Another question: If I, in the current repo [2], create a commit on top
-> removing the submodule and replacing it by a tarball, would the
-> repository remain broken, as it would still have the deprecated
-> SHA256/SHA1 combination in the history? Should I expect errors if run
-> e.g. "git rebase" or "git bisect" in a repository like this? IOW, do I
-> need to rewrite the history of this repo, eliminating all instances of
-> such mixed-hash submodules, to be on the safe side?
-
-If the mismatched submodule remains in the history, then it will be
-broken, so you'll almost certainly want to rewrite the history.
-
-When the interoperability work is done and fully functional, a
-repository in this situation will not work at all with dual algorithms.
-The reason for that is that the SHA-256 main repository will try to use
-the submodule value as a SHA-256 submodule (using the incorrect padded
-SHA-1 value as a SHA-256 value) and it won't be able to create the
-appropriate SHA-1/SHA-256 mapping since that object ID doesn't really
-exist in the submodule.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---oUMpju1eH9K05gJP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaRZhAAAKCRB8DEliiIei
-gVP4AQD9c+WB9zzK2rM7/J2qqHpb+OYVX8Bq81YkZC6EVpmG0gEAmkzn/sVMW81A
-YcFNco3yeL+zshMhyJs5ogf9fA4Fjg0=
-=chb1
------END PGP SIGNATURE-----
-
---oUMpju1eH9K05gJP--
