@@ -1,71 +1,71 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198EF1A9F93
-	for <git@vger.kernel.org>; Thu, 13 Nov 2025 18:10:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F8C34DCFE
+	for <git@vger.kernel.org>; Thu, 13 Nov 2025 18:10:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763057438; cv=none; b=KG+XAPimxTzirZN3Y9Kio2sXXzMRcT9PSV0Rndn7zVbPllUhhx2vj7iNjFGidY6n9lEdFJcEudC59rPdGbMm+vyLQ8FbDhZcwO/I2On/wHD8CeYuJOqCyfM+5HmdfiuTeEuNTPCbs+QtI90zOI+3iLNkYn+7SckEaLycib9YTEg=
+	t=1763057439; cv=none; b=mXZa90Sx/eXdWMrEr2tHo5uUvcZ/L4VGFrudBM6W957n3NlYw2PcVPeMd3H1px0tm2c3s2x1yoW6RNW1nWB65ERK5DypZaUOnTPXnzehtIHaaouAEJIecoH/QoUolsC7i3Wkz2d8HYuy1TL/K3nQy2nHvd4nXYH3oebZ8x9REug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763057438; c=relaxed/simple;
-	bh=uSIi/+RuYChaDruMaa3vlYIGlr8ZjnXssjmN9TPcQ2Y=;
+	s=arc-20240116; t=1763057439; c=relaxed/simple;
+	bh=y+VtKNOdXTO7yx6jU8bZzx36C2kFuaoctGa2DHfnOOA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=mQGQWRmivGT5u5nOZIXg4IB/dmplJV9lYsOIKdwDP7xfGbUjD05X4V6TrugiMNqZPOGynrIS078AJ9ZgAFc164cRnTmdAMM8hG1DwzqWkXmYP7d+pDCy0KZtMNvfhx1xzVbCL7YJi9dm61Vev9Vmb7Ro2dldzQX9126ERkMfUUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EG1kOgsU; arc=none smtp.client-ip=209.85.210.177
+	 MIME-Version:To:Cc; b=LtwOBKTy0Ztoy7PtDz21SgZIWBGuu877b/iyQrAXtLduXZLUP22qwLPYourqEF8SuZ+WfSctda4YxuvZXzaTWMXAtMM+4kkznKN0N51SqzZVJmLAbgzG40WxetqWujunJAuTIV9ZcA2HjSIm3aEgqV72ae8Amvp59Q2oD0Bwd58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RHeeluze; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EG1kOgsU"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-7b7828bf7bcso1053132b3a.2
-        for <git@vger.kernel.org>; Thu, 13 Nov 2025 10:10:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RHeeluze"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-29516a36affso11328825ad.3
+        for <git@vger.kernel.org>; Thu, 13 Nov 2025 10:10:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763057436; x=1763662236; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1763057437; x=1763662237; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CCo6UP7ys4G9gfSw7fEynrjEwQtjCbf7RiaRizRsSts=;
-        b=EG1kOgsUiVM9WmdCWvHkMBVEUSna5AmBLlW3u/sQlqDWAqv7rYKPya0q/Cf4Zz4T98
-         ik4R7cJMKwG6EI5dlWcGOIfFHjWjaq8eCUcNAseOyPCoQyXV2XYlwHdBNfYzqBciGgdN
-         f6NXe3QSlbJk2+WCDNaV3OlAWNE6TJ+BfInDkuqHn3qxhHwFsH1XZE/VLiHr8L9ZsiAZ
-         1/TE+Km8nxMBjUo/WlW1H489G8lKv1bz0kXDVUK80AOkE0WLTEHLRMBxHh+4/go8WN+s
-         9ronaLDXKStonJkdsr7MLxAhIfiwelgpmPGbYideIh9diXDmKzjCDHayYWy3p3H6CzZi
-         5DcA==
+        bh=MhXvnMeH2Q3tsOeLXeu47PCr8ZvZ/ZV/l4wDIKPGvKo=;
+        b=RHeeluzeiUVoocnC9YD3eD8eQX/+W6sx8CcSANwH5adTJNpFGIYFuRx0OB8N8KfiGw
+         BU3zXcek9KxNFy14uqlU/xsTGdY+8O6wpicUVpDNDhUa9gvLJXYj7ZQuTFe+t73V6pqW
+         vW/kWHfjOtQGD5ryG4kge213yWwZCHyw1iOBo1NZFC1pL/lXyM1DDHuR61TPk+BpVun+
+         TvgZmF/UKofN9EuxRdtlUnK4LppNEzSiv/7iGJ+/KMjwfunaYB9IdjpY1nPw9UXRxMy1
+         RSGiReKuy+FhghZ8SChWqXEcRtdihaMVpegkGZ5vE/CnwJ37hPEwoY0CNN4/pa/OakRG
+         vqzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763057436; x=1763662236;
+        d=1e100.net; s=20230601; t=1763057437; x=1763662237;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=CCo6UP7ys4G9gfSw7fEynrjEwQtjCbf7RiaRizRsSts=;
-        b=c53H7FXG48w3qWgtUUEZrH5ynWLndF7/6uIEmpzUmFR/0HmY0GRx5leS61JHAm7mK2
-         EFJ4ZgVLoS385dAnWFy11h0tXt1Gt9kc4HS3rmAETPYACQsLGYm5rWh6rWsxpcc64H+c
-         +whynlL51y24LLBIzVXf2yKpad4Q3VFeOnZVjR8P0q4ZmXNnVVHdiQJVJ1YMprUpZhBB
-         Y1MSkl1xfO6CQ6GV9XvgUYtXbziczOFJzYJS4NZ2gzLOEOti4H2/+ejAszZnCfhpIImT
-         H/IUba5iqxOSbQbLmxe2ANYI8egK38EGEdGjU4UQbJwGWA5kKUklEycAAs4/zoCR0iaE
-         JPIQ==
-X-Gm-Message-State: AOJu0Yzz4iya9kZ8faojQJsNcV+7usLD+e/d4N+CN02g2I17OCKHuKj+
-	8NYcfZP2LLFkNY1evWV1kWntn75x/Tq/2Cj6+7UQl0CFtbF3zZAtGZA4ZCsKbg==
-X-Gm-Gg: ASbGncuyHFAlmOgN1HggLZcN0zGeNOoi/6eBNmVOjX1t/zEQt+Q4hkS9YJPOBO9t3AM
-	mUTD6kQspfv6vhLFQDyTuZXbQbCpvuyORzjwi/IPqDHPWrw1mKGvKIQO/rfqGJRi//UxS9GWNno
-	dd6anMyh7VwYkpLghDNN7LXomlP0OD5XHBVtpVk87f+lky0KQ26Welvt6+7mHetXV7srQNPYhWy
-	998ru/swFFIxWJo1S/iaSTkiGNjbirPoLueiPGqj5z8wMS2jRG12MYy43mWt5DJRidWelQGnyNS
-	/DxJsGIndRP6/KZ/OoqpUEvhmjrLKHWufymjvu9bdSIfOTo48G/cegMFeK/8xMHM3Jiq6fC/tG5
-	ERnTBmnlPMx/7cqhgjaBqcYu1GcD3/yZ9QUeEj+iH8IMRV2478R4kWv6lJIWuNzMAa7DxL3pJtU
-	PUOw==
-X-Google-Smtp-Source: AGHT+IEobHWE54yxuBDEdbn2GvYelvwMhGPD+/bonUB/icegpqG7sHHBx6Uqhj/inIVqU4nLULYyhA==
-X-Received: by 2002:a05:6a20:9155:b0:34f:c83b:b3ea with SMTP id adf61e73a8af0-35ba027de04mr587656637.18.1763057435888;
-        Thu, 13 Nov 2025 10:10:35 -0800 (PST)
+        bh=MhXvnMeH2Q3tsOeLXeu47PCr8ZvZ/ZV/l4wDIKPGvKo=;
+        b=jZtFSjuQ7sJC+KD35NzVtez9gpXxzF7G+Eahv6XVACVXsV5im5SkbQ66xvLQXK4VhW
+         hrWLw4RuiVmWp4Y1zpB3AqYlNETpbdqCuhqZXHmAFaxc5BoqH2cf017NvhhmPuOG2A08
+         KR3TqKmh8Mnxj4wP4GyXEamocIWYgl+uALqKg3DlCmauJOKeB20/E20Kin8OJ6MtLiPi
+         2U2MkYusZl/uZ3SAw+W7PpKZKjla/aEIzIe2kvJOR1zKsmtpfgsqsL/4EpJ9W225GVjI
+         6apbDhqNIxv0b17hhgEhAhoKdFII8BUdiDoAhXRLlhyk5Ilm0GsjEPggN4oWnGk769hC
+         /dHA==
+X-Gm-Message-State: AOJu0YytkGSwOemlMdgsD4aE0coGqLgebcYdZ1pCbx8MESHMd9hft81v
+	EshGozS8MhiYKbF5WQck1gpjAchytnyICPwyCzZJN/uN8I0ErZNAz/0CSaFwwg==
+X-Gm-Gg: ASbGncsAY/M6e9m/43AwhajxzfGYdC12LGCTl2a4NoKF4UI/Ag3fSX26hTLp0uy/uY6
+	oKv31HjL6I1EWOUs5s+sR6SDmtR6nmCBbgm2FH4Wwdg3MiNfT1uUg6Z+A8+/YcPyUhYTzGcGiiI
+	Ul9fwtHOnOfTYxfb0eoG/POuOG0DRE4kzKUJgvDdqvR1CrCZ0Cgt0Ylll8DsVQw7l9ScWc47uqV
+	SqFukuFm8NCxiPySf4OoJyfm6FSYJJgzMpiOmeLuPfdO3udo0UJB/P6DvGCF+rZM8w/6u/Jesl8
+	11gD1AroACcHWzck2FW84B0WUpCiyKE0vz/fTlXKjcpZyc89iV9dzfojE964ocJaeB43D5fuBpu
+	XxWZ2Mz+vE7EVD3YOLRYULgXsHDaHFBLn3DKDquPeXmHlhH91BLU4LbFjf/+dFK8CT3msaiAaOi
+	Xs8A==
+X-Google-Smtp-Source: AGHT+IHgvzvSF2J5lHJW00cHwMzPtMmtdBGnqF9OPbRCaL6pv8k54q+nd8ar8kGq4mS0Mm3ZfhQXDQ==
+X-Received: by 2002:a17:903:b0d:b0:294:ccc6:ccfd with SMTP id d9443c01a7336-2984ed41a1cmr84255245ad.24.1763057437139;
+        Thu, 13 Nov 2025 10:10:37 -0800 (PST)
 Received: from [127.0.0.1] ([104.209.7.211])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-bc36db21e76sm2809411a12.7.2025.11.13.10.10.35
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2985c2b0d91sm31651885ad.63.2025.11.13.10.10.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Nov 2025 10:10:35 -0800 (PST)
-Message-Id: <5796009122c6ab573a2961db598bbd33727a6ac0.1763057433.git.gitgitgadget@gmail.com>
+        Thu, 13 Nov 2025 10:10:36 -0800 (PST)
+Message-Id: <9ec79b9a116a1dda9fe7bd10d16c1faf77f778ed.1763057433.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1987.v2.git.1763057433.gitgitgadget@gmail.com>
 References: <pull.1987.git.1760818039.gitgitgadget@gmail.com>
 	<pull.1987.v2.git.1763057433.gitgitgadget@gmail.com>
 From: "Claus Schneider(Eficode) via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 13 Nov 2025 18:10:29 +0000
-Subject: [PATCH v2 1/5] read-cache: update add_files_to_cache take param
- include_ignored_submodules
+Date: Thu, 13 Nov 2025 18:10:30 +0000
+Subject: [PATCH v2 2/5] read-cache: add/read-cache respect submodule
+ ignore=all
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,173 +86,69 @@ Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
 
 From: "Claus Schneider(Eficode)" <claus.schneider@eficode.com>
 
-The include_ignored_submodules parameter is added to the function
-add_files_to_cache for usage of explicit updating the index for the updated
-submodule using the explicit patchspec to the submodule.
+Submodules configured with ignore=all are now skipped during add operations
+unless overridden by --include-ignored-submodules and the submodule path is
+explicitly specified.
+
+A message is printed (like ignored files) guiding the user to use the
+--include-ignored-submodules flag if the user has explicitely want to update
+the submodule reference.
+
+The reason for the change is support submodule branch tracking or
+similar and git status state nothing and git add should not add either.
+The workflow is more logic and similar to regular ignored files even
+the submodule is already tracked.
+
+The change opens up a lot of possibilities for submodules to be used
+more freely and simular to the repo tool. A submodule can be added for many
+more reason and loosely coupled dependencies to the super repo which often
+gives the friction of handle the explicit commits and updates without
+the need for tracking the submodule sha1 by sha1.
 
 Signed-off-by: Claus Schneider(Eficode) <claus.schneider@eficode.com>
 ---
- builtin/add.c      |  4 +++-
- builtin/checkout.c |  2 +-
- builtin/commit.c   |  2 +-
- read-cache-ll.h    |  2 +-
- read-cache.c       | 51 ++++++++++++++++++++++++++++++++++++++++++++--
- 5 files changed, 55 insertions(+), 6 deletions(-)
+ read-cache.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 0235854f80..6d11382f33 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -233,6 +233,7 @@ N_("The following paths are ignored by one of your .gitignore files:\n");
- static int verbose, show_only, ignored_too, refresh_only;
- static int ignore_add_errors, intent_to_add, ignore_missing;
- static int warn_on_embedded_repo = 1;
-+static int include_ignored_submodules;
- 
- #define ADDREMOVE_DEFAULT 1
- static int addremove = ADDREMOVE_DEFAULT;
-@@ -271,6 +272,7 @@ static struct option builtin_add_options[] = {
- 	OPT_BOOL( 0 , "ignore-errors", &ignore_add_errors, N_("just skip files which cannot be added because of errors")),
- 	OPT_BOOL( 0 , "ignore-missing", &ignore_missing, N_("check if - even missing - files are ignored in dry run")),
- 	OPT_BOOL(0, "sparse", &include_sparse, N_("allow updating entries outside of the sparse-checkout cone")),
-+    OPT_BOOL(0, "include-ignored-submodules", &include_ignored_submodules, N_("add submodules even if they has configuration ignore=all")),
- 	OPT_STRING(0, "chmod", &chmod_arg, "(+|-)x",
- 		   N_("override the executable bit of the listed files")),
- 	OPT_HIDDEN_BOOL(0, "warn-embedded-repo", &warn_on_embedded_repo,
-@@ -582,7 +584,7 @@ int cmd_add(int argc,
- 	else
- 		exit_status |= add_files_to_cache(repo, prefix,
- 						  &pathspec, ps_matched,
--						  include_sparse, flags);
-+						  include_sparse, flags, include_ignored_submodules);
- 
- 	if (take_worktree_changes && !add_renormalize && !ignore_add_errors &&
- 	    report_path_error(ps_matched, &pathspec))
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f9453473fe..b2a404051d 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -899,7 +899,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 			 */
- 
- 			add_files_to_cache(the_repository, NULL, NULL, NULL, 0,
--					   0);
-+					   0, 0 );
- 			init_ui_merge_options(&o, the_repository);
- 			o.verbosity = 0;
- 			work = write_in_core_index_as_tree(the_repository);
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b5b9608813..5bf7ae5fc1 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -455,7 +455,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
- 		repo_hold_locked_index(the_repository, &index_lock,
- 				       LOCK_DIE_ON_ERROR);
- 		add_files_to_cache(the_repository, also ? prefix : NULL,
--				   &pathspec, ps_matched, 0, 0);
-+				   &pathspec, ps_matched, 0, 0, 0 );
- 		if (!all && report_path_error(ps_matched, &pathspec))
- 			exit(128);
- 
-diff --git a/read-cache-ll.h b/read-cache-ll.h
-index 71b49d9af4..2c8b4b21b1 100644
---- a/read-cache-ll.h
-+++ b/read-cache-ll.h
-@@ -481,7 +481,7 @@ int cmp_cache_name_compare(const void *a_, const void *b_);
- 
- int add_files_to_cache(struct repository *repo, const char *prefix,
- 		       const struct pathspec *pathspec, char *ps_matched,
--		       int include_sparse, int flags);
-+		       int include_sparse, int flags, int ignored_too );
- 
- void overlay_tree_on_index(struct index_state *istate,
- 			   const char *tree_name, const char *prefix);
 diff --git a/read-cache.c b/read-cache.c
-index 06ad74db22..32f32bdb4c 100644
+index 32f32bdb4c..7b6d1b2914 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -3880,9 +3880,12 @@ void overlay_tree_on_index(struct index_state *istate,
+@@ -48,6 +48,8 @@
+ #include "csum-file.h"
+ #include "promisor-remote.h"
+ #include "hook.h"
++#include "submodule.h"
++#include "submodule-config.h"
  
- struct update_callback_data {
- 	struct index_state *index;
-+	struct repository *repo;
-+	struct pathspec *pathspec;
- 	int include_sparse;
- 	int flags;
- 	int add_errors;
-+	int include_ignored_submodules;
- };
+ /* Mask for the name length in ce_flags in the on-disk index */
  
- static int fix_unmerged_status(struct diff_filepair *p,
-@@ -3924,7 +3927,48 @@ static void update_callback(struct diff_queue_struct *q,
- 		default:
- 			die(_("unexpected diff status %c"), p->status);
- 		case DIFF_STATUS_MODIFIED:
--		case DIFF_STATUS_TYPE_CHANGED:
-+		case DIFF_STATUS_TYPE_CHANGED: {
-+			struct stat st;
-+			if (!lstat(path, &st) && S_ISDIR(st.st_mode)) { // only consider submodule if it is a directory
-+				const struct submodule *sub = submodule_from_path(data->repo, null_oid(the_hash_algo), path);
-+				if (sub && sub->name && sub->ignore && !strcmp(sub->ignore, "all")) {
-+					int pathspec_matches = 0;
-+					char *norm_pathspec = NULL;
-+					int ps_i;
-+					trace_printf("ignore=all %s\n", path);
-+					trace_printf("pathspec %s\n",
-+							(data->pathspec && data->pathspec->nr) ? "has pathspec" : "no pathspec");
-+					/* Safely scan all pathspec items (q->nr may exceed pathspec->nr). */
-+					if (data->pathspec) {
-+						for (ps_i = 0; ps_i < data->pathspec->nr; ps_i++) {
-+							const char *m = data->pathspec->items[ps_i].match;
-+							if (!m)
-+								continue;
-+							norm_pathspec = xstrdup(m);
-+							strip_dir_trailing_slashes(norm_pathspec);
-+							if (!strcmp(path, norm_pathspec)) {
-+								pathspec_matches = 1;
-+								FREE_AND_NULL(norm_pathspec);
-+								break;
-+							}
-+							FREE_AND_NULL(norm_pathspec);
-+						}
-+					}
-+					if (pathspec_matches) {
-+						if (data->include_ignored_submodules && data->include_ignored_submodules > 0) {
-+							trace_printf("Add ignored=all submodule due to --include_ignored_submodules: %s\n", path);
-+						} else {
-+							printf(_("Skipping submodule due to ignore=all: %s"), path);
-+							printf(_("Use --include_ignored_submodules, if you really want to add them.") );
-+							continue;
-+						}
-+					} else {
-+						/* No explicit pathspec match -> skip silently (or with trace). */
-+						trace_printf("pathspec does not match %s\n", path);
-+						continue;
-+					}
-+				}
-+			}
- 			if (add_file_to_index(data->index, path, data->flags)) {
- 				if (!(data->flags & ADD_CACHE_IGNORE_ERRORS))
- 					die(_("updating files failed"));
-@@ -3945,7 +3989,7 @@ static void update_callback(struct diff_queue_struct *q,
- 
- int add_files_to_cache(struct repository *repo, const char *prefix,
- 		       const struct pathspec *pathspec, char *ps_matched,
--		       int include_sparse, int flags)
-+		       int include_sparse, int flags, int include_ignored_submodules )
- {
- 	struct update_callback_data data;
- 	struct rev_info rev;
-@@ -3954,6 +3998,9 @@ int add_files_to_cache(struct repository *repo, const char *prefix,
- 	data.index = repo->index;
- 	data.include_sparse = include_sparse;
- 	data.flags = flags;
-+	data.repo = repo;
-+	data.include_ignored_submodules = include_ignored_submodules;
-+	data.pathspec = (struct pathspec *)pathspec;
- 
- 	repo_init_revisions(repo, &rev, prefix);
- 	setup_revisions(0, NULL, &rev, NULL);
+@@ -3956,7 +3958,7 @@ static void update_callback(struct diff_queue_struct *q,
+ 					}
+ 					if (pathspec_matches) {
+ 						if (data->include_ignored_submodules && data->include_ignored_submodules > 0) {
+-							trace_printf("Add ignored=all submodule due to --include_ignored_submodules: %s\n", path);
++							trace_printf("Add submodule due to --include_ignored_submodules: %s\n", path);
+ 						} else {
+ 							printf(_("Skipping submodule due to ignore=all: %s"), path);
+ 							printf(_("Use --include_ignored_submodules, if you really want to add them.") );
+@@ -3964,7 +3966,7 @@ static void update_callback(struct diff_queue_struct *q,
+ 						}
+ 					} else {
+ 						/* No explicit pathspec match -> skip silently (or with trace). */
+-						trace_printf("pathspec does not match %s\n", path);
++						trace_printf("Pathspec to submodule does not match explicitly: %s\n", path);
+ 						continue;
+ 					}
+ 				}
+@@ -3975,6 +3977,7 @@ static void update_callback(struct diff_queue_struct *q,
+ 				data->add_errors++;
+ 			}
+ 			break;
++		}
+ 		case DIFF_STATUS_DELETED:
+ 			if (data->flags & ADD_CACHE_IGNORE_REMOVAL)
+ 				break;
 -- 
 gitgitgadget
 
