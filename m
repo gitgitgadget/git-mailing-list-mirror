@@ -1,352 +1,203 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E75342CAD
-	for <git@vger.kernel.org>; Thu, 13 Nov 2025 15:26:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E006730AAB3
+	for <git@vger.kernel.org>; Thu, 13 Nov 2025 16:29:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763047604; cv=none; b=YdFxosBF7VFDEQ0vgZOLRl4oi0Qc4VpCUYlO2HC73lFyz5bGHHZAl9OPUBM7PMGm1nWyUChIIyT6Ce1I/6xMtyecVO1IGycV/IvAof9WCiNI7eiZjBXfc2hLyD9cyBShXeHl5htGF1qnZr1Aof9EZ0ZRE+a0FW0A0I24UbBQTf8=
+	t=1763051346; cv=none; b=YBULEa+ptU7Zc8sjg2pOofTKHVBjEwnGF426cNdoVyitUOhk5WQdnoQ1qGOdNR/41V4Nkd/NmAck3MHNWB3yU1JMlqz1TGgyoxmjK0XEulHsHGIoxk94T/LGFIvY1c4aYSOykIR+diF+yafGNa9mhhFawSHj2f2ImHLSoWmcXVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763047604; c=relaxed/simple;
-	bh=VLZjJt/ylcDqkdllMl3PSA2d3cVBnWJ7nhgHhtDLvh8=;
-	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=E4G3cbCyU1pl/H2pG6r1SQS1mbTDN1tC88hEjMM+kV5m2Tq22STI50QLsLZcU/hN1HAb/rRZI1jW/oUVhD01yIQwLfSXk0qfH6TT6JcJci3ORW5cimVjigKMIO12qFPxLlUySsLM067JvHuVx/+RuzmZF7SHLaCLyxNcJmNj5RY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bE7JM8B6; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763051346; c=relaxed/simple;
+	bh=puHk/W654vnPCkN1nMZTjXGvIpq0iObt5bbDSKEwqu8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=o6TPLFlyPYgOX3cjr9lnzJvgI3SeTNXFUru2XJ8KIisNevyc0kSxyOE4bCjV5t/0G37iPK/4R6IbAsRFI8a5a4qxutdx//yl/CjjLmMUXgcZIsruFbXPALrvksodFxY95ZvPKSx+HqBzdusmj+Pu+9MqIBw2tuomcVg5b0Q2Wtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UCU9Zenf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=apsndEHT; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bE7JM8B6"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-297f35be2ffso13727535ad.2
-        for <git@vger.kernel.org>; Thu, 13 Nov 2025 07:26:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763047601; x=1763652401; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=v9aZRKrhKMkZbhq3KRVa81PWOcGa0shSWcWaUJ1GV4I=;
-        b=bE7JM8B6uSCy3QlBCPTJs9nBD3x9ih7BoWHoncoilzmJ+4mSs6orP9Y+jeCRVL37W9
-         XGfevywMB/zI3o1M1zt6hXxaS1A6HB0fu4eaFYH9vPmub0Fzu0Q3nzoSPJXAudH1FZsE
-         jas54y7Y/IgKZrtLedCHv6CpOiMeRaXEDYtcIso9dd/VxOtm7P4fhpPgw9qFjFj0h9Ud
-         YMGLDoyHnJ0baYw9gsEsvIsU8zVdqEJHG7MNlvoemvitBVJpuTgepVlqOfby9NN/I5Es
-         qkhD5Ew54cHcgjO3txoFU8wMV8+kpCzRabXAad4yl0GGrPnNJfGPgO16PQIhgwjmV56X
-         Xljg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763047601; x=1763652401;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=v9aZRKrhKMkZbhq3KRVa81PWOcGa0shSWcWaUJ1GV4I=;
-        b=n6Z2OEObZuBNbpC5oSTjH6am+oHUtOknoR5fuD2JgCzQ71xWMWvRbFkYgpDghBVrfK
-         AMa4oq6uhdkhNLsu0/nJktZYf/uUToEhyI5XwyXFhpiS2qU+afZwCyX5rmb4CTO9w7QZ
-         4gpvZ75Ij6HDsJdRCV8WfWqufqldv6CY/54D2dUM+bcvy4w50Ylg2CAZR33qcUxjX5n/
-         jTriktsFpRWyUgaGG9PSRAWg7jGcg4tnBnjjXfjfxGe80xdX5qsV0iQ+qxrfC2UEaYfN
-         9CQWf4ZZmTLv/WF7NU6DJ9saSBlGOEQnX9KbjQZoXAxv9CMNL2Kj2G4/CuO5E4ROioM/
-         SpRQ==
-X-Gm-Message-State: AOJu0YwLrXHXUi3miI//6LeofLcZbKMDqcazKT2oqtPRPAVAaTXQ/2sd
-	2Zfyd9MMJ8G028/0Gc4HSbkS+P2yzf9NvUL2uQ193o3iJmxQ4B1URSPH767Ddw==
-X-Gm-Gg: ASbGncvzA5juEFdNpVG4jm0uIe/m/k8U1ugKtuo5yp6/UiYAyrBbgNgVmfMljvlM48U
-	VZlrnz27etC17V2RLSLGw2+YmLEs+7+uQusku8dFTncrutYlrpLqGjet0/I9Cg9k7gVwopbv1+A
-	/d/4IqR49JIuH96wAa0TFdjSUpHDBJHzfSQIhP3p2G+P3HzRb/BCQS6A4SGyCfiNisUNYDWswOs
-	ePRRjFFPWvxvsboMUkkFjjbLhyvjkEnMSc31UZIEab40zJckAcgXDGjmrSH8psaDiHSPqGd5rC5
-	0pwaDjGVahv012lT/Gm8H3JB4EjVC8+fcCBySZSkt5p3Wew8o7R4Gu7Rcg87e3oHaOjEslbxAU+
-	KTzw+OVN1AsDOtNWpVREywafnXDQtPuc+aeX+BeHekAkhadvjSNX8dE/H+n51QiN8v8uJp3oQmA
-	m+8sIHZR7fI/p7/Q==
-X-Google-Smtp-Source: AGHT+IGXs36Ev+1QYODpNmeC0vBR49rNxolQEZ/gj2fiMZ1slylmcOZnchA2633KjvrZJY0VNFncAQ==
-X-Received: by 2002:a17:903:1a43:b0:295:9db1:ff2b with SMTP id d9443c01a7336-2984ee03543mr84726585ad.57.1763047601089;
-        Thu, 13 Nov 2025 07:26:41 -0800 (PST)
-Received: from [127.0.0.1] ([172.182.209.50])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2985c2bed4fsm29463365ad.75.2025.11.13.07.26.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Nov 2025 07:26:40 -0800 (PST)
-Message-Id: <pull.1999.git.1763047599254.gitgitgadget@gmail.com>
-From: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 13 Nov 2025 15:26:39 +0000
-Subject: [PATCH] osxkeychain: avoid incorrectly skipping store operation
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UCU9Zenf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="apsndEHT"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DD0657A01B5;
+	Thu, 13 Nov 2025 11:29:02 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Thu, 13 Nov 2025 11:29:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1763051342; x=1763137742; bh=z1uD6MuARG
+	2O33UCqsWzPW7FnNQYq3zd1RKPEv6REfk=; b=UCU9ZenfgqnA+7m96vW42Q/t0c
+	p/EPWn4Z1mnXoj8txrEdRhgYf+hFGBR5V083mvHYeS31YOiRywO4NQdOBqp3Bfar
+	zXHJ9NR4zyYTNvT80HJ3QqAywUJ4/HJwziCeXSzkOrqu8sDG86IKgnpkHYQJwxhh
+	Qbu0FTWAnOTzL5toXF2xXmmY36bUhTaqm9rTGYDdY7EI8eKxQuhdJ+mOJn4XZQIj
+	6MRJisHxk+6CEFkuyACEhInLr/IaYsxlM5kRc67AqCtiWWSZ7GMC+t4vQlTMxKfx
+	Z09Y9kiLMMKEn5F5E3lMCZ7YdQjvOkSHq6uaC5m5qljIISSLF+GAOHPvItJg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1763051342; x=1763137742; bh=z1uD6MuARG2O33UCqsWzPW7FnNQYq3zd1RK
+	PEv6REfk=; b=apsndEHTZZFvtZZzhT6GS8q6T+OQe7VVKWVjnPHQNJPzWqrkgDe
+	cvCuGL3Y4jBIYSE+DnP00+3g78rv1ty0bTXJfboOxITlw8Q+jnFuZnccfhbODexp
+	12Cul95Y3pr/zBHFUzq79cFfpFEZB8WRAGE5dwN4YUJj129c5cH6xOLupy4lnJTL
+	0GIrg5SSRuqaAoOhe6JGsxoptLLwg1BccuaQp2M56jtZLyzwHFO4vnhJn6UHZEJy
+	hPnaToUM70Ke1kfVf5g7X1aDjwL27s8N2tZr7a6qC6ENbC7WxnL3yJ8HmyZ+21n6
+	VcxtZBUemGGCyzBNVryDkDKCvEtNA+j5J6Q==
+X-ME-Sender: <xms:TgcWaVAyNEbRIcOE0DLEZHcIDidoZoLnnbPhK33iHCsip3gQPBmp6w>
+    <xme:TgcWaXONnoKj9LeVoM3q9i5C_zkk6VoDZMBfPmIGX9WJ-41uJBY5Qe_kGTM7W6As8
+    giQmJgK6y_3yq_0p7R4Jifm5x_lOJEdB-Ye8LtnwTzq_Knn9vA-q8k>
+X-ME-Received: <xmr:TgcWaabmXnmhBh_KTU0G7woOzL9kkunpRHqS-IvxYwI5_LmtR3b6658HMfGzSbD1uKQk1c6gFqMZWWxOD1yJ-u0fDMbcbsK3L4v4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdejgedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhifihhltghkse
+    hsuhhsvgdrtghomhdprhgtphhtthhopegrughrihgrnhesshhushgvrdgtohhmpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:TgcWaWvIlmkw1YxwiVbZQIDlqdaaKRJsVa-vf12H8wwZgCK1sEoWXw>
+    <xmx:TgcWacNGXWB4vJpSdWon9fud-IpSXZm6Iub0YOeZ0RJWaEeC1oNmug>
+    <xmx:TgcWad5xProxT5hRT7EJnTwNDCFHcotKYQZHRmcmCWmKmh8ZrHxNZw>
+    <xmx:TgcWaSRmlPHKUvMcwnsXj1DMBiHuhrIDqP7F_oqyOwQFzlxyBLjLyA>
+    <xmx:TgcWaUoZD4k94KN4KIFlpkauN9jmkZXHdoBc-kqdsOvpKq_XYXHLqHRP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Nov 2025 11:29:02 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
+  Martin Wilck <mwilck@suse.com>,  Adrian Schroeter <adrian@suse.com>
+Subject: Re: [PATCH] object-file: disallow adding submodules of different
+ hash algo
+In-Reply-To: <20251113035614.GA1758009@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 12 Nov 2025 22:56:14 -0500")
+References: <c94a929df63f79e49eeae0cd67c1f59f859e3d62.camel@suse.com>
+	<20251112235434.1499699-1-sandals@crustytoothpaste.net>
+	<20251113032619.GA1739649@coredump.intra.peff.net>
+	<20251113035614.GA1758009@coredump.intra.peff.net>
+Date: Thu, 13 Nov 2025 08:29:00 -0800
+Message-ID: <xmqqjyztq4kz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: Koji Nakamaru <koji.nakamaru@gree.net>,
-    Koji Nakamaru <koji.nakamaru@gree.net>
+Content-Type: text/plain
 
-From: Koji Nakamaru <koji.nakamaru@gree.net>
+Jeff King <peff@peff.net> writes:
 
-git-credential-osxkeychain skips storing a credential if its "get"
-action sets "state[]=osxkeychain:seen=1". This behavior was introduced
-in e1ab45b2 (osxkeychain: state to skip unnecessary store operations,
-2024-05-15), which appeared in v2.46.
+> So this is what I'd propose on top of your patch. I can hold onto it for
+> later if we don't want to muddy up what you're trying to do.
 
-However, this state[] persists even if a credential returned by
-"git-credential-osxkeychain get" is invalid and a subsequent helper's
-"get" operation returns a valid credential. Another subsequent helper
-(such as [1]) may expect git-credential-osxkeychain to store the valid
-credential, but the "store" operation is incorrectly skipped because it
-only checks "state[]=osxkeychain:seen=1".
+I do agree with both of the above.  The patch below makes perfect
+sense to me, and it is more about the quality of implementation of
+this codepath in general, than the primary theme of Brian's changes,
+so there is no strong reason they have to come in a single series.
 
-To solve this issue, "state[]=osxkeychain:seen" needs to contain enough
-information to identify whether the current "store" input matches the
-output from the previous "get" operation (and not a credential from
-another helper).
-
-Set "state[]=osxkeychain:seen" to a value encoding the credential output
-by "get", and compare it with a value encoding the credential input by
-"store".
-
-[1]: https://github.com/hickford/git-credential-oauth
-
-Reported-by: Petter Sælen <petter@saelen.eu>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
----
-    osxkeychain: avoid incorrectly skipping store operation
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1999%2FKojiNakamaru%2Ffix%2Fosxkeychain-state-seen-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1999/KojiNakamaru/fix/osxkeychain-state-seen-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1999
-
- .../osxkeychain/git-credential-osxkeychain.c  | 158 +++++++++++++++++-
- 1 file changed, 151 insertions(+), 7 deletions(-)
-
-diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-index 611c9798b3..c973e844a5 100644
---- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-+++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-@@ -12,7 +12,7 @@ static CFStringRef username;
- static CFDataRef password;
- static CFDataRef password_expiry_utc;
- static CFDataRef oauth_refresh_token;
--static int state_seen;
-+static char *state_seen;
- 
- static void clear_credential(void)
- {
-@@ -61,6 +61,12 @@ static void die(const char *err, ...)
- 	exit(1);
- }
- 
-+/*
-+ * NOTE: We could use functions in strbuf.h and/or wrapper.h, but those
-+ * introduce significant dependencies. Therefore, we define simplified
-+ * versions here to keep this code self-contained.
-+ */
-+
- static void *xmalloc(size_t len)
- {
- 	void *ret = malloc(len);
-@@ -69,6 +75,30 @@ static void *xmalloc(size_t len)
- 	return ret;
- }
- 
-+static void *xcalloc(size_t count, size_t size)
-+{
-+	void *ret = calloc(count, size);
-+	if (!ret)
-+		die("Out of memory");
-+	return ret;
-+}
-+
-+static void *xrealloc(void *ptr, size_t size)
-+{
-+	void *ret = realloc(ptr, size);
-+	if (!ret)
-+		die("Out of memory");
-+	return ret;
-+}
-+
-+static char *xstrdup(const char *str)
-+{
-+	char *ret = strdup(str);
-+	if (!ret)
-+		die("Out of memory");
-+	return ret;
-+}
-+
- static CFDictionaryRef create_dictionary(CFAllocatorRef allocator, ...)
- {
- 	va_list args;
-@@ -112,6 +142,98 @@ static void write_item(const char *what, const char *buf, size_t len)
- 	putchar('\n');
- }
- 
-+struct sb {
-+	char *buf;
-+	int size;
-+};
-+
-+static void sb_init(struct sb *sb)
-+{
-+	sb->size = 1024;
-+	sb->buf = xcalloc(sb->size, 1);
-+}
-+
-+static void sb_release(struct sb *sb)
-+{
-+	if (sb->buf) {
-+		free(sb->buf);
-+		sb->buf = NULL;
-+		sb->size = 0;
-+	}
-+}
-+
-+static void sb_add(struct sb *sb, const char *s, int n)
-+{
-+	int len = strlen(sb->buf);
-+	int size = sb->size;
-+	if (size < len + n + 1) {
-+		sb->size = len + n + 1;
-+		sb->buf = xrealloc(sb->buf, sb->size);
-+	}
-+	strncat(sb->buf, s, n);
-+	sb->buf[len + n] = '\0';
-+}
-+
-+static void write_item_sb(struct sb *sb, const char *what, const char *buf, int n)
-+{
-+	char s[32];
-+
-+	sprintf(s, "__%s=", what);
-+	sb_add(sb, s, strlen(s));
-+	sb_add(sb, buf, n);
-+}
-+
-+static void write_item_sb_cfstring(struct sb *sb, const char *what, CFStringRef ref)
-+{
-+	char *buf;
-+	int len;
-+
-+	if (!ref)
-+		return;
-+	len = CFStringGetMaximumSizeForEncoding(CFStringGetLength(ref), ENCODING) + 1;
-+	buf = xmalloc(len);
-+	if (CFStringGetCString(ref, buf, len, ENCODING))
-+		write_item_sb(sb, what, buf, strlen(buf));
-+	free(buf);
-+}
-+
-+static void write_item_sb_cfnumber(struct sb *sb, const char *what, CFNumberRef ref)
-+{
-+	short n;
-+	char buf[32];
-+
-+	if (!ref)
-+		return;
-+	if (!CFNumberGetValue(ref, kCFNumberShortType, &n))
-+		return;
-+	sprintf(buf, "%d", n);
-+	write_item_sb(sb, what, buf, strlen(buf));
-+}
-+
-+static void write_item_sb_cfdata(struct sb *sb, const char *what, CFDataRef ref)
-+{
-+	char *buf;
-+	int len;
-+
-+	if (!ref)
-+		return;
-+	buf = (char *)CFDataGetBytePtr(ref);
-+	if (!buf || strlen(buf) == 0)
-+		return;
-+	len = CFDataGetLength(ref);
-+	write_item_sb(sb, what, buf, len);
-+}
-+
-+static void encode_state_seen(struct sb *sb)
-+{
-+	sb_add(sb, "osxkeychain:seen=", strlen("osxkeychain:seen="));
-+	write_item_sb_cfstring(sb, "host", host);
-+	write_item_sb_cfnumber(sb, "port", port);
-+	write_item_sb_cfstring(sb, "path", path);
-+	write_item_sb_cfstring(sb, "username", username);
-+	write_item_sb_cfdata(sb, "password", password);
-+}
-+
- static void find_username_in_item(CFDictionaryRef item)
- {
- 	CFStringRef account_ref;
-@@ -124,6 +246,7 @@ static void find_username_in_item(CFDictionaryRef item)
- 		write_item("username", "", 0);
- 		return;
- 	}
-+	username = CFStringCreateCopy(kCFAllocatorDefault, account_ref);
- 
- 	username_buf = (char *)CFStringGetCStringPtr(account_ref, ENCODING);
- 	if (username_buf)
-@@ -163,6 +286,7 @@ static OSStatus find_internet_password(void)
- 	}
- 
- 	data = CFDictionaryGetValue(item, kSecValueData);
-+	password = CFDataCreateCopy(kCFAllocatorDefault, data);
- 
- 	write_item("password",
- 		   (const char *)CFDataGetBytePtr(data),
-@@ -173,7 +297,14 @@ static OSStatus find_internet_password(void)
- 	CFRelease(item);
- 
- 	write_item("capability[]", "state", strlen("state"));
--	write_item("state[]", "osxkeychain:seen=1", strlen("osxkeychain:seen=1"));
-+	{
-+		struct sb sb;
-+
-+		sb_init(&sb);
-+		encode_state_seen(&sb);
-+		write_item("state[]", sb.buf, strlen(sb.buf));
-+		sb_release(&sb);
-+	}
- 
- out:
- 	CFRelease(attrs);
-@@ -288,13 +419,22 @@ static OSStatus add_internet_password(void)
- 	CFDictionaryRef attrs;
- 	OSStatus result;
- 
--	if (state_seen)
--		return errSecSuccess;
--
- 	/* Only store complete credentials */
- 	if (!protocol || !host || !username || !password)
- 		return -1;
- 
-+	if (state_seen) {
-+		struct sb sb;
-+
-+		sb_init(&sb);
-+		encode_state_seen(&sb);
-+		if (!strcmp(state_seen, sb.buf)) {
-+			sb_release(&sb);
-+			return errSecSuccess;
-+		}
-+		sb_release(&sb);
-+	}
-+
- 	data = CFDataCreateMutableCopy(kCFAllocatorDefault, 0, password);
- 	if (password_expiry_utc) {
- 		CFDataAppendBytes(data,
-@@ -403,8 +543,9 @@ static void read_credential(void)
- 							   (UInt8 *)v,
- 							   strlen(v));
- 		else if (!strcmp(buf, "state[]")) {
--			if (!strcmp(v, "osxkeychain:seen=1"))
--				state_seen = 1;
-+			int len = strlen("osxkeychain:seen=");
-+			if (!strncmp(v, "osxkeychain:seen=", len))
-+				state_seen = xstrdup(v);
- 		}
- 		/*
- 		 * Ignore other lines; we don't know what they mean, but
-@@ -443,5 +584,8 @@ int main(int argc, const char **argv)
- 
- 	clear_credential();
- 
-+	if (state_seen)
-+		free(state_seen);
-+
- 	return 0;
- }
-
-base-commit: 4badef0c3503dc29059d678abba7fac0f042bc84
--- 
-gitgitgadget
+> -- >8 --
+> Subject: [PATCH] read-cache: drop submodule check from add_to_cache()
+>
+> In add_to_cache(), we treat any directories as submodules, and complain
+> if we can't resolve their HEAD. This call to resolve_gitlink_ref() was
+> added by f937bc2f86 (add: error appropriately on repository with no
+> commits, 2019-04-09), with the goal of improving the error message for
+> empty repositories.
+>
+> But we already resolve the submodule HEAD in index_path(), which is
+> where we find the actual oid we're going to use. Resolving it again here
+> introduces some downsides:
+>
+>   1. It's more work, since we have to open up the submodule repository's
+>      files twice.
+>
+>   2. There are call paths that get to index_path() without going through
+>      add_to_cache(). For instance, we'd want a similar informative
+>      message if "git diff empty" finds that it can't resolve the
+>      submodule's HEAD. (In theory we can also get there through
+>      update-index, but AFAICT it refuses to consider directories as
+>      submodules at all, and just complains about them).
+>
+>   3. The resolution in index_path() catches more errors that we don't
+>      handle here. In particular, it will validate that the object format
+>      for the submodule matches that of the superproject. This isn't a
+>      bug, since our call in add_to_cache() throws away the oid it gets
+>      without looking at it. But it certainly caused confusion for me
+>      when looking at where the object-format check should go.
+>
+> So instead of resolving the submodule HEAD in add_to_cache(), let's just
+> teach the call in index_path() to actually produce an error message
+> (which it already does for other cases). That's probably what f937bc2f86
+> should have done in the first place, and it gives us a single point of
+> resolution when adding a submodule to the index.
+>
+> The resulting output is slightly more verbose, as we propagate the error
+> up the call stack, but I think that's OK (and again, matches many other
+> errors we get when indexing fails).
+>
+> I've left the text of the error message as-is, though it is perhaps
+> overly specific.  There are many reasons that resolving the submodule
+> HEAD might fail, though outside of corruption or system errors it is
+> probably most likely that the submodule HEAD is simply on an unborn
+> branch.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  object-file.c  | 2 +-
+>  read-cache.c   | 3 ---
+>  t/t3700-add.sh | 1 +
+>  3 files changed, 2 insertions(+), 4 deletions(-)
+>
+> diff --git a/object-file.c b/object-file.c
+> index 8c43c52ed0..a7438b6205 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1662,7 +1662,7 @@ int index_path(struct index_state *istate, struct object_id *oid,
+>  		break;
+>  	case S_IFDIR:
+>  		if (repo_resolve_gitlink_ref(istate->repo, path, "HEAD", oid))
+> -			return -1;
+> +			return error(_("'%s' does not have a commit checked out"), path);
+>  		if (&hash_algos[oid->algo] != istate->repo->hash_algo)
+>  			return error(_("cannot add a submodule of a different hash algorithm"));
+>  		break;
+> diff --git a/read-cache.c b/read-cache.c
+> index 032480d0c7..990d4ead0d 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -706,7 +706,6 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+>  	int add_option = (ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE|
+>  			  (intent_only ? ADD_CACHE_NEW_ONLY : 0));
+>  	unsigned hash_flags = pretend ? 0 : INDEX_WRITE_OBJECT;
+> -	struct object_id oid;
+>  
+>  	if (flags & ADD_CACHE_RENORMALIZE)
+>  		hash_flags |= INDEX_RENORMALIZE;
+> @@ -716,8 +715,6 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+>  
+>  	namelen = strlen(path);
+>  	if (S_ISDIR(st_mode)) {
+> -		if (repo_resolve_gitlink_ref(the_repository, path, "HEAD", &oid) < 0)
+> -			return error(_("'%s' does not have a commit checked out"), path);
+>  		while (namelen && path[namelen-1] == '/')
+>  			namelen--;
+>  	}
+> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+> index b075eb9b11..d8cc0e4c66 100755
+> --- a/t/t3700-add.sh
+> +++ b/t/t3700-add.sh
+> @@ -388,6 +388,7 @@ test_expect_success 'error on a repository with no commits' '
+>  	test_must_fail git add empty >actual 2>&1 &&
+>  	cat >expect <<-EOF &&
+>  	error: '"'empty/'"' does not have a commit checked out
+> +	error: unable to index file '"'empty/'"'
+>  	fatal: adding files failed
+>  	EOF
+>  	test_cmp expect actual
