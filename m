@@ -1,238 +1,352 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0EB15ADB4
-	for <git@vger.kernel.org>; Thu, 13 Nov 2025 13:38:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E75342CAD
+	for <git@vger.kernel.org>; Thu, 13 Nov 2025 15:26:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763041124; cv=none; b=clAjU7izCGBHl5P5K/o+UnY7/dxl2nlhAALVyQIHmzkhyJ0RcQpAmFHE7KmYfP+TgweTlhtH3yU5BxZV4MuB3rJTzQ/3HZxhIsfoq3JHi2qhvlmS7dBGfWQZI+LDbyBs9UZ2DCp1RbSJzCLVBappI+f/loynQBhl5S2UNQs9CPs=
+	t=1763047604; cv=none; b=YdFxosBF7VFDEQ0vgZOLRl4oi0Qc4VpCUYlO2HC73lFyz5bGHHZAl9OPUBM7PMGm1nWyUChIIyT6Ce1I/6xMtyecVO1IGycV/IvAof9WCiNI7eiZjBXfc2hLyD9cyBShXeHl5htGF1qnZr1Aof9EZ0ZRE+a0FW0A0I24UbBQTf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763041124; c=relaxed/simple;
-	bh=09akiBnei32FEYQDsKgTn9MmSjv60e977ylGl7e/tBk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gck51fwG/uS/HKQ1W/+XdjnufOpJCdUcOASosYtmaz7rgWnZMLJTyEhVnfmREDS+vKtxWjKRee/LG2523yrun39HztQgHzGTwFRCIM9wtfq0v4q1XRMqgm38Lji8/wXNZH64luQV5F5r0zI2tiqodNOxXSCzYtOpu/+OAV312ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PTgyrzs/; arc=none smtp.client-ip=209.85.128.49
+	s=arc-20240116; t=1763047604; c=relaxed/simple;
+	bh=VLZjJt/ylcDqkdllMl3PSA2d3cVBnWJ7nhgHhtDLvh8=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=E4G3cbCyU1pl/H2pG6r1SQS1mbTDN1tC88hEjMM+kV5m2Tq22STI50QLsLZcU/hN1HAb/rRZI1jW/oUVhD01yIQwLfSXk0qfH6TT6JcJci3ORW5cimVjigKMIO12qFPxLlUySsLM067JvHuVx/+RuzmZF7SHLaCLyxNcJmNj5RY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bE7JM8B6; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PTgyrzs/"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-47777000dadso6181545e9.1
-        for <git@vger.kernel.org>; Thu, 13 Nov 2025 05:38:42 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bE7JM8B6"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-297f35be2ffso13727535ad.2
+        for <git@vger.kernel.org>; Thu, 13 Nov 2025 07:26:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763041121; x=1763645921; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wRJ08zug2IVyXyi3SHh0NYoJJtVsKrVBJrMySSOPhW0=;
-        b=PTgyrzs/t+ic9XwJSBXB4TO5cmO2BsnzULmYpJVPOTS0p9wB3O+m12+NJQxHH3fXgr
-         Co16SLkj8cO1a5uiNF7/yNhVb47gx2RiJEj1WWbasZE44bkmJsRFyc4jLNc05Xh8q134
-         gLJsODkAtXCsXS47W7KMd3jozmPLsk7AsQHIoGBT4U0oTCdreIKEK5oETCtoAcgdj2i8
-         GtkhK0dY64lXcDa3zFGVcWtnWPf13JgZnH6dMMD5oamZODTuo5yn5v+GmSzOUsWrKSqZ
-         LkiyQdql4UvuyGwm+O71dw3rpEN92SSnwN16OOcHX5ZTrLTTGkWlKqwAM2vJ1ISECxWJ
-         w0Bw==
+        d=gmail.com; s=20230601; t=1763047601; x=1763652401; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=v9aZRKrhKMkZbhq3KRVa81PWOcGa0shSWcWaUJ1GV4I=;
+        b=bE7JM8B6uSCy3QlBCPTJs9nBD3x9ih7BoWHoncoilzmJ+4mSs6orP9Y+jeCRVL37W9
+         XGfevywMB/zI3o1M1zt6hXxaS1A6HB0fu4eaFYH9vPmub0Fzu0Q3nzoSPJXAudH1FZsE
+         jas54y7Y/IgKZrtLedCHv6CpOiMeRaXEDYtcIso9dd/VxOtm7P4fhpPgw9qFjFj0h9Ud
+         YMGLDoyHnJ0baYw9gsEsvIsU8zVdqEJHG7MNlvoemvitBVJpuTgepVlqOfby9NN/I5Es
+         qkhD5Ew54cHcgjO3txoFU8wMV8+kpCzRabXAad4yl0GGrPnNJfGPgO16PQIhgwjmV56X
+         Xljg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763041121; x=1763645921;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wRJ08zug2IVyXyi3SHh0NYoJJtVsKrVBJrMySSOPhW0=;
-        b=JV2cAuJG/kEHqcPrvyHNFj1UdH4o29YhK9mnzyr1gCiOvBeF9rE7XLyGN3p6wmtRdh
-         zStHhyRyR91ZhJQOg1hvlmd+4nI+seLMBmxQ17eeJvVi5PnkTp4w0rU8WknjJNsLmKj5
-         ig2jaCOLVPsNzqMFF8Tmp+GFkCMho4uSr8N+SC0e723GOPE/lVU5S69Ar5dx6fh8kQ2R
-         avKto1Uhgys7LgxV8kPilhN7fHZZQTm5WCoK/1mPnbVBQOyJXuoEyv7o8asXtljcZJdt
-         fTrnzKaMU0at5RV+2nq/D7EcofDTWzJwYxnPbZ0ZymXGbiq0EqwaMpYDedAeCzhI1k7w
-         xkaQ==
-X-Gm-Message-State: AOJu0Yzh/bSTSsZKuCc8wHGINYJ2dv5UbXXGwjUSBJ/5L0gTHGIZ+B1q
-	7sVZI5bXSJT5G2os/4K8oOdcc6xVVHcsiLqhWNkfPtSF1aOoFD4/10gK
-X-Gm-Gg: ASbGncs8zw7z6Tt5NTcWVhYct2RpTZqSjUG5jE5Nh2pUPxYhBoYtSdfq20E1V/JJZsL
-	t/mqJawMeKU4OJstwjugEzv2ayrZlHPpJ+KyaYl8YP85be6/dtgCE5cDGY7K8iG0lZLS9m6Mrzm
-	87Tis02uCYRLwMwcu1vCZ4hDEXFUAAVlmt98u/CSrMLj+wmwv2W+gkandwOZYJ/Wuyd+To5+2NO
-	LquLB3mn90MaeUgAmWdjranQQ03d+ZNBxIY3C0x3B4zOUgWhMmw9JqQAlEjJf9iX00BeQJatSo1
-	QnQHjyQKEZG8scs9a7XgwzSimccasNy+dP4DYOY1dU2wDhkHlYKkEKM072GlgyZouNnjynJO2sf
-	2YQ+/6ZE8TyyT1yZwM+A34QIBjjcxnGIotXNrv78kFewpVx6LUo/us27exCq+SNYsaBfk0fOBoI
-	Ym
-X-Google-Smtp-Source: AGHT+IEw93SYcZ5qeJtOed6OckLdh/lGlS3MeSfVO4WDAreJTukMu1VYt6osTC4XgnL7zVgOT4gt2w==
-X-Received: by 2002:a05:6000:2509:b0:42b:3e20:f1b2 with SMTP id ffacd0b85a97d-42b4bb8b8fcmr5165749f8f.4.1763041121163;
-        Thu, 13 Nov 2025 05:38:41 -0800 (PST)
-Received: from [127.0.0.2] ([82.163.201.2])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b53f19aa0sm3861166f8f.37.2025.11.13.05.38.40
+        d=1e100.net; s=20230601; t=1763047601; x=1763652401;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=v9aZRKrhKMkZbhq3KRVa81PWOcGa0shSWcWaUJ1GV4I=;
+        b=n6Z2OEObZuBNbpC5oSTjH6am+oHUtOknoR5fuD2JgCzQ71xWMWvRbFkYgpDghBVrfK
+         AMa4oq6uhdkhNLsu0/nJktZYf/uUToEhyI5XwyXFhpiS2qU+afZwCyX5rmb4CTO9w7QZ
+         4gpvZ75Ij6HDsJdRCV8WfWqufqldv6CY/54D2dUM+bcvy4w50Ylg2CAZR33qcUxjX5n/
+         jTriktsFpRWyUgaGG9PSRAWg7jGcg4tnBnjjXfjfxGe80xdX5qsV0iQ+qxrfC2UEaYfN
+         9CQWf4ZZmTLv/WF7NU6DJ9saSBlGOEQnX9KbjQZoXAxv9CMNL2Kj2G4/CuO5E4ROioM/
+         SpRQ==
+X-Gm-Message-State: AOJu0YwLrXHXUi3miI//6LeofLcZbKMDqcazKT2oqtPRPAVAaTXQ/2sd
+	2Zfyd9MMJ8G028/0Gc4HSbkS+P2yzf9NvUL2uQ193o3iJmxQ4B1URSPH767Ddw==
+X-Gm-Gg: ASbGncvzA5juEFdNpVG4jm0uIe/m/k8U1ugKtuo5yp6/UiYAyrBbgNgVmfMljvlM48U
+	VZlrnz27etC17V2RLSLGw2+YmLEs+7+uQusku8dFTncrutYlrpLqGjet0/I9Cg9k7gVwopbv1+A
+	/d/4IqR49JIuH96wAa0TFdjSUpHDBJHzfSQIhP3p2G+P3HzRb/BCQS6A4SGyCfiNisUNYDWswOs
+	ePRRjFFPWvxvsboMUkkFjjbLhyvjkEnMSc31UZIEab40zJckAcgXDGjmrSH8psaDiHSPqGd5rC5
+	0pwaDjGVahv012lT/Gm8H3JB4EjVC8+fcCBySZSkt5p3Wew8o7R4Gu7Rcg87e3oHaOjEslbxAU+
+	KTzw+OVN1AsDOtNWpVREywafnXDQtPuc+aeX+BeHekAkhadvjSNX8dE/H+n51QiN8v8uJp3oQmA
+	m+8sIHZR7fI/p7/Q==
+X-Google-Smtp-Source: AGHT+IGXs36Ev+1QYODpNmeC0vBR49rNxolQEZ/gj2fiMZ1slylmcOZnchA2633KjvrZJY0VNFncAQ==
+X-Received: by 2002:a17:903:1a43:b0:295:9db1:ff2b with SMTP id d9443c01a7336-2984ee03543mr84726585ad.57.1763047601089;
+        Thu, 13 Nov 2025 07:26:41 -0800 (PST)
+Received: from [127.0.0.1] ([172.182.209.50])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2985c2bed4fsm29463365ad.75.2025.11.13.07.26.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Nov 2025 05:38:40 -0800 (PST)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Thu, 13 Nov 2025 14:38:37 +0100
-Subject: [PATCH v5 2/2] fetch: fix non-conflicting tags not being committed
+        Thu, 13 Nov 2025 07:26:40 -0800 (PST)
+Message-Id: <pull.1999.git.1763047599254.gitgitgadget@gmail.com>
+From: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 13 Nov 2025 15:26:39 +0000
+Subject: [PATCH] osxkeychain: avoid incorrectly skipping store operation
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251113-fix-tags-not-fetching-v5-2-371ea7ec638d@gmail.com>
-References: <20251113-fix-tags-not-fetching-v5-0-371ea7ec638d@gmail.com>
-In-Reply-To: <20251113-fix-tags-not-fetching-v5-0-371ea7ec638d@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
 To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, jltobler@gmail.com, ps@pks.im, 
- gitster@pobox.com, David Bohman <debohman@gmail.com>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4724; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=09akiBnei32FEYQDsKgTn9MmSjv60e977ylGl7e/tBk=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGkV312bPQwjScQC/cg4afuQMF5IvC/2EZBwi
- tAvE2W7CV0pbIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpFd9dAAoJED7VnySO
- Rox/S8kMAJznCSgZ2qd8pNRB/osR7++rM41dx2M6cfCkkeKHThgqYKa7V28rg7F8vntASB0uP1E
- vzogWUoFlBFfj1JEwsoEiLPByO3CCC1l4A3vgrNLlnijzl9TazXoi25IeWu8RvZeBHpzTOt9C/L
- rKOJKKtiFb6ZADmN0wtKDoSq/16x6UhMFXztdv2BQ4lqsHsh2y2lXaqfPApkt9YSAE+mRw7nZD3
- j+xHK36Ion5RuzWraI4JgbmDXeWGR3FvUVXrjG3oJXgZpli93Qj3403omn2t9HBMcfZmvX1eVHS
- NG5hfXrxayc0EkW8efW5SvS9+cBkJpW1e2ytnm3A5bhGjIemdf6lbEJnrbRcdX9hYqZWteNnI1t
- RJSAtR07logoyDikinCYQeyuYk1tC8aKxQFSIJUM8hnkeZHL40Sj6VQiDiJUlSoJRkO+K3GR3u3
- 5xrno6pbvhd+eeDmxW/oWl5lFYupsFNJ+ntsgl6ndW0F0niilSy+NI8YGo4NdFJ2d+1990HUrk6
- kI=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Cc: Koji Nakamaru <koji.nakamaru@gree.net>,
+    Koji Nakamaru <koji.nakamaru@gree.net>
 
-The commit 0e358de64a (fetch: use batched reference updates, 2025-05-19)
-updated the 'git-fetch(1)' command to use batched updates. This batches
-updates to gain performance improvements. When fetching references, each
-update is added to the transaction. Finally, when committing, individual
-updates are allowed to fail with reason, while the transaction itself
-succeeds.
+From: Koji Nakamaru <koji.nakamaru@gree.net>
 
-One scenario which was missed here, was fetching tags. When fetching
-conflicting tags, the `fetch_and_consume_refs()` function returns '1',
-which skipped committing the transaction and directly jumped to the
-cleanup section. This mean that no updates were applied. This also
-extends to backfilling tags which is done when fetching specific
-refspecs which contains tags in their history.
+git-credential-osxkeychain skips storing a credential if its "get"
+action sets "state[]=osxkeychain:seen=1". This behavior was introduced
+in e1ab45b2 (osxkeychain: state to skip unnecessary store operations,
+2024-05-15), which appeared in v2.46.
 
-Fix this by committing the transaction when we have an error code and
-not using an atomic transaction. This ensures other references are
-applied even when some updates fail.
+However, this state[] persists even if a credential returned by
+"git-credential-osxkeychain get" is invalid and a subsequent helper's
+"get" operation returns a valid credential. Another subsequent helper
+(such as [1]) may expect git-credential-osxkeychain to store the valid
+credential, but the "store" operation is incorrectly skipped because it
+only checks "state[]=osxkeychain:seen=1".
 
-The cleanup section is reached with `retcode` set in several scenarios:
+To solve this issue, "state[]=osxkeychain:seen" needs to contain enough
+information to identify whether the current "store" input matches the
+output from the previous "get" operation (and not a credential from
+another helper).
 
-   - `truncate_fetch_head()`, `open_fetch_head()` and `prune_refs()` set
-     `retcode` before the transaction is created, so no commit is
-     attempted.
+Set "state[]=osxkeychain:seen" to a value encoding the credential output
+by "get", and compare it with a value encoding the credential input by
+"store".
 
-   - `fetch_and_consume_refs()` and `backfill_tags()` are the primary
-     cases this fix targets, both setting a positive `retcode` to
-     trigger the committing of the transaction.
+[1]: https://github.com/hickford/git-credential-oauth
 
-This simplifies error handling and ensures future modifications to
-`do_fetch()` don't need special handling for batched updates.
-
-Add tests to check for this regression. While here, add a missing
-cleanup from previous test.
-
-Reported-by: David Bohman <debohman@gmail.com>
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+Reported-by: Petter Sælen <petter@saelen.eu>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
 ---
- builtin/fetch.c  |  8 ++++++++
- t/t5510-fetch.sh | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 70 insertions(+)
+    osxkeychain: avoid incorrectly skipping store operation
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index f90179040b..b19fa8e966 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1957,6 +1957,14 @@ static int do_fetch(struct transport *transport,
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1999%2FKojiNakamaru%2Ffix%2Fosxkeychain-state-seen-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1999/KojiNakamaru/fix/osxkeychain-state-seen-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1999
+
+ .../osxkeychain/git-credential-osxkeychain.c  | 158 +++++++++++++++++-
+ 1 file changed, 151 insertions(+), 7 deletions(-)
+
+diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+index 611c9798b3..c973e844a5 100644
+--- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
++++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+@@ -12,7 +12,7 @@ static CFStringRef username;
+ static CFDataRef password;
+ static CFDataRef password_expiry_utc;
+ static CFDataRef oauth_refresh_token;
+-static int state_seen;
++static char *state_seen;
+ 
+ static void clear_credential(void)
+ {
+@@ -61,6 +61,12 @@ static void die(const char *err, ...)
+ 	exit(1);
+ }
+ 
++/*
++ * NOTE: We could use functions in strbuf.h and/or wrapper.h, but those
++ * introduce significant dependencies. Therefore, we define simplified
++ * versions here to keep this code self-contained.
++ */
++
+ static void *xmalloc(size_t len)
+ {
+ 	void *ret = malloc(len);
+@@ -69,6 +75,30 @@ static void *xmalloc(size_t len)
+ 	return ret;
+ }
+ 
++static void *xcalloc(size_t count, size_t size)
++{
++	void *ret = calloc(count, size);
++	if (!ret)
++		die("Out of memory");
++	return ret;
++}
++
++static void *xrealloc(void *ptr, size_t size)
++{
++	void *ret = realloc(ptr, size);
++	if (!ret)
++		die("Out of memory");
++	return ret;
++}
++
++static char *xstrdup(const char *str)
++{
++	char *ret = strdup(str);
++	if (!ret)
++		die("Out of memory");
++	return ret;
++}
++
+ static CFDictionaryRef create_dictionary(CFAllocatorRef allocator, ...)
+ {
+ 	va_list args;
+@@ -112,6 +142,98 @@ static void write_item(const char *what, const char *buf, size_t len)
+ 	putchar('\n');
+ }
+ 
++struct sb {
++	char *buf;
++	int size;
++};
++
++static void sb_init(struct sb *sb)
++{
++	sb->size = 1024;
++	sb->buf = xcalloc(sb->size, 1);
++}
++
++static void sb_release(struct sb *sb)
++{
++	if (sb->buf) {
++		free(sb->buf);
++		sb->buf = NULL;
++		sb->size = 0;
++	}
++}
++
++static void sb_add(struct sb *sb, const char *s, int n)
++{
++	int len = strlen(sb->buf);
++	int size = sb->size;
++	if (size < len + n + 1) {
++		sb->size = len + n + 1;
++		sb->buf = xrealloc(sb->buf, sb->size);
++	}
++	strncat(sb->buf, s, n);
++	sb->buf[len + n] = '\0';
++}
++
++static void write_item_sb(struct sb *sb, const char *what, const char *buf, int n)
++{
++	char s[32];
++
++	sprintf(s, "__%s=", what);
++	sb_add(sb, s, strlen(s));
++	sb_add(sb, buf, n);
++}
++
++static void write_item_sb_cfstring(struct sb *sb, const char *what, CFStringRef ref)
++{
++	char *buf;
++	int len;
++
++	if (!ref)
++		return;
++	len = CFStringGetMaximumSizeForEncoding(CFStringGetLength(ref), ENCODING) + 1;
++	buf = xmalloc(len);
++	if (CFStringGetCString(ref, buf, len, ENCODING))
++		write_item_sb(sb, what, buf, strlen(buf));
++	free(buf);
++}
++
++static void write_item_sb_cfnumber(struct sb *sb, const char *what, CFNumberRef ref)
++{
++	short n;
++	char buf[32];
++
++	if (!ref)
++		return;
++	if (!CFNumberGetValue(ref, kCFNumberShortType, &n))
++		return;
++	sprintf(buf, "%d", n);
++	write_item_sb(sb, what, buf, strlen(buf));
++}
++
++static void write_item_sb_cfdata(struct sb *sb, const char *what, CFDataRef ref)
++{
++	char *buf;
++	int len;
++
++	if (!ref)
++		return;
++	buf = (char *)CFDataGetBytePtr(ref);
++	if (!buf || strlen(buf) == 0)
++		return;
++	len = CFDataGetLength(ref);
++	write_item_sb(sb, what, buf, len);
++}
++
++static void encode_state_seen(struct sb *sb)
++{
++	sb_add(sb, "osxkeychain:seen=", strlen("osxkeychain:seen="));
++	write_item_sb_cfstring(sb, "host", host);
++	write_item_sb_cfnumber(sb, "port", port);
++	write_item_sb_cfstring(sb, "path", path);
++	write_item_sb_cfstring(sb, "username", username);
++	write_item_sb_cfdata(sb, "password", password);
++}
++
+ static void find_username_in_item(CFDictionaryRef item)
+ {
+ 	CFStringRef account_ref;
+@@ -124,6 +246,7 @@ static void find_username_in_item(CFDictionaryRef item)
+ 		write_item("username", "", 0);
+ 		return;
+ 	}
++	username = CFStringCreateCopy(kCFAllocatorDefault, account_ref);
+ 
+ 	username_buf = (char *)CFStringGetCStringPtr(account_ref, ENCODING);
+ 	if (username_buf)
+@@ -163,6 +286,7 @@ static OSStatus find_internet_password(void)
  	}
  
- cleanup:
-+	/*
-+	 * When using batched updates, we want to commit the non-rejected
-+	 * updates and also handle the rejections.
-+	 */
-+	if (retcode && !atomic_fetch && transaction)
-+		commit_ref_transaction(&transaction, false,
-+				       transport->remote->name, &err);
-+
- 	if (retcode) {
- 		if (err.len) {
- 			error("%s", err.buf);
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index b7059cccaa..4b113d7c27 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -1552,6 +1552,7 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'D/F conflict on case insensiti
- '
+ 	data = CFDictionaryGetValue(item, kSecValueData);
++	password = CFDataCreateCopy(kCFAllocatorDefault, data);
  
- test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with lock' '
-+	test_when_finished rm -rf base repo &&
- 	(
- 		git init --ref-format=reftable base &&
- 		cd base &&
-@@ -1577,6 +1578,67 @@ test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with loc
- 	)
- '
+ 	write_item("password",
+ 		   (const char *)CFDataGetBytePtr(data),
+@@ -173,7 +297,14 @@ static OSStatus find_internet_password(void)
+ 	CFRelease(item);
  
-+test_expect_success 'fetch --tags fetches existing tags' '
-+	test_when_finished rm -rf base repo &&
+ 	write_item("capability[]", "state", strlen("state"));
+-	write_item("state[]", "osxkeychain:seen=1", strlen("osxkeychain:seen=1"));
++	{
++		struct sb sb;
 +
-+	git init base &&
-+	git -C base commit --allow-empty -m "empty-commit" &&
-+
-+	git clone --bare base repo &&
-+
-+	git -C base tag tag-1 &&
-+	git -C repo for-each-ref >out &&
-+	test_grep ! "tag-1" out &&
-+	git -C repo fetch --tags &&
-+	git -C repo for-each-ref >out &&
-+	test_grep "tag-1" out
-+'
-+
-+test_expect_success 'fetch --tags fetches non-conflicting tags' '
-+	test_when_finished rm -rf base repo &&
-+
-+	git init base &&
-+	git -C base commit --allow-empty -m "empty-commit" &&
-+	git -C base tag tag-1 &&
-+
-+	git clone --bare base repo &&
-+
-+	git -C base tag tag-2 &&
-+	git -C repo for-each-ref >out &&
-+	test_grep ! "tag-2" out &&
-+
-+	git -C base commit --allow-empty -m "second empty-commit" &&
-+	git -C base tag -f tag-1 &&
-+
-+	test_must_fail git -C repo fetch --tags 2>out &&
-+	test_grep "tag-1  (would clobber existing tag)" out &&
-+	git -C repo for-each-ref >out &&
-+	test_grep "tag-2" out
-+'
-+
-+test_expect_success "backfill tags when providing a refspec" '
-+	test_when_finished rm -rf source target &&
-+
-+	git init source &&
-+	git -C source commit --allow-empty --message common &&
-+	git clone file://"$(pwd)"/source target &&
-+	(
-+	    cd source &&
-+	    test_commit history &&
-+	    test_commit fetch-me
-+	) &&
-+
-+	# The "history" tag is backfilled eventhough we requested
-+	# to only fetch HEAD
-+	git -C target fetch origin HEAD:branch &&
-+	git -C target tag -l >actual &&
-+	cat >expect <<-\EOF &&
-+	fetch-me
-+	history
-+	EOF
-+	test_cmp expect actual
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
++		sb_init(&sb);
++		encode_state_seen(&sb);
++		write_item("state[]", sb.buf, strlen(sb.buf));
++		sb_release(&sb);
++	}
  
+ out:
+ 	CFRelease(attrs);
+@@ -288,13 +419,22 @@ static OSStatus add_internet_password(void)
+ 	CFDictionaryRef attrs;
+ 	OSStatus result;
+ 
+-	if (state_seen)
+-		return errSecSuccess;
+-
+ 	/* Only store complete credentials */
+ 	if (!protocol || !host || !username || !password)
+ 		return -1;
+ 
++	if (state_seen) {
++		struct sb sb;
++
++		sb_init(&sb);
++		encode_state_seen(&sb);
++		if (!strcmp(state_seen, sb.buf)) {
++			sb_release(&sb);
++			return errSecSuccess;
++		}
++		sb_release(&sb);
++	}
++
+ 	data = CFDataCreateMutableCopy(kCFAllocatorDefault, 0, password);
+ 	if (password_expiry_utc) {
+ 		CFDataAppendBytes(data,
+@@ -403,8 +543,9 @@ static void read_credential(void)
+ 							   (UInt8 *)v,
+ 							   strlen(v));
+ 		else if (!strcmp(buf, "state[]")) {
+-			if (!strcmp(v, "osxkeychain:seen=1"))
+-				state_seen = 1;
++			int len = strlen("osxkeychain:seen=");
++			if (!strncmp(v, "osxkeychain:seen=", len))
++				state_seen = xstrdup(v);
+ 		}
+ 		/*
+ 		 * Ignore other lines; we don't know what they mean, but
+@@ -443,5 +584,8 @@ int main(int argc, const char **argv)
+ 
+ 	clear_credential();
+ 
++	if (state_seen)
++		free(state_seen);
++
+ 	return 0;
+ }
 
+base-commit: 4badef0c3503dc29059d678abba7fac0f042bc84
 -- 
-2.51.0
-
+gitgitgadget
