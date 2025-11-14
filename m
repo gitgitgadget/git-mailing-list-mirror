@@ -1,147 +1,89 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55242DEA74
-	for <git@vger.kernel.org>; Fri, 14 Nov 2025 20:00:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF032F9C23
+	for <git@vger.kernel.org>; Fri, 14 Nov 2025 20:00:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763150428; cv=none; b=gJzYB+ha/V4oUDmLqpe8EfimPycMw189wj6LtJjconCXUYhVcMsVPvl/NDuQog4XQYZPeWeR81zlrBosJJB1M4pVqOgOjvLV35sHUFYNhtp7Z6ZG5OqHR14FlSm/CceFXedCQrVNNhEt/8XBCU+qGggYngOwimToYXwfu2uh7sY=
+	t=1763150443; cv=none; b=L0CI4bOAZaqEMoDuCWo6dVZIsQBj3TktOEafnsky5ib0h+OZdPaVblbYdGgaHJqpm1egWzPAwm7+l9BwsJR32H4nqf5tmJ8WA9VyVzsTIOJerb3U6g/ht6C2GY1vsr5pVelX3w4N5TnWvO4+BO2lXbv5sdKYTtYfylMPVQWWGTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763150428; c=relaxed/simple;
-	bh=WJLjCzrZUSSlRFwpZfqyvFlM2obN+Qyku8TuzfGjG7c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fIpkPgkRhQu6wEeFnzPkpWb4x4mln9KB3YSBHKiZj50+K11ZyuIQlE++WJzaQEBftjh2tPut0PNukjtJLJL2Fb5AzN6j1xJ6t7BxrW+MWuQp/2qdtTaR4gqusOSM2V+EWA4g7HLvTfp/piUDQk48+wdTNwhQa/HnxgVv9LoDQ4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=T/ipR1pI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TbhGNFTk; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763150443; c=relaxed/simple;
+	bh=NRSWrf6qNN7B9+YjOXpzFB797qId1aesU5TJDhiHKxU=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=nez9Hxp2DAVTMAS9pKn3acAxyKufeGNwY4VOpB9onjivp3QdOVfmP7Uq4+5fTcbeUVMfslaqwJwEysCDa6dzDxDR3xzu1LxYALG/Ze1Q4+LKT4z9Nfvbka/sVcDi6QpVO4M+pWmbUMafvKAVOIdMp2xrZ+0BaSCP8U6kWqAIHVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dr8U7lip; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="T/ipR1pI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TbhGNFTk"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id C0111EC01A6;
-	Fri, 14 Nov 2025 15:00:24 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Fri, 14 Nov 2025 15:00:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1763150424;
-	 x=1763236824; bh=jI6XC2QUzq+04RJ2XU2UI/7ieQ/0uJiZIP3fiASCH74=; b=
-	T/ipR1pI9t+2s3AKQWunSPZ6ct4z3YelZQPnmld0cMeLPPby8AI+LnuNzF3eYv2x
-	zV3WfHkBjg8lw35gyOD5pW/tUOCLvfjMcwQvLC3/I6D6uCFb28gwFim4L3Pw1EVJ
-	Q/KPsdy7+eCxGddGtAzLnejEPi4OEVx7ndjIuBFAh14qdDaiAudmpuvdi+1LwcgT
-	+ueOFywsekUaRBEybIWcV18LecuNBysTG5CwuNACcIE1wZb3Z78SPs2iGod8jQK0
-	ODsVtCjQbMOLi4S7106ZPBCU3S7QpZMInUDVD6KTpN2ZsKKJ8b2Ox9KnPlwg6iDz
-	I6XWFnGOdqMHvTSU13hxew==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763150424; x=
-	1763236824; bh=jI6XC2QUzq+04RJ2XU2UI/7ieQ/0uJiZIP3fiASCH74=; b=T
-	bhGNFTkvUtCMU1GdRJC9IS2VXE/VtHtJoX0b+VEj4tfi0ae74G63Jy6Zw+c+WJUR
-	PcT34Ed12V8hHcKvGE/fNaLupCajmQeA08mYxAwhkvzJVFSm/Gxk+KRMs7fgfx39
-	hUpWWpTo0yypLdGw2TPscZH9cbxBymAbcnuhNsnRImDsKIy0K44hMa1x6LjLlsx0
-	aoqGlaqe6cRCAqpIaZm1+OAjItkV2tEFhz3adAaVHxACzBoMbOQVEyS894H8ssdQ
-	76vDjLh+Z2LrwwCQ7v+PWYtFQKYbFc+D8mFd0T7LbX9Ip4BycSxU7OrgAS4stH9W
-	x4lO0R9XFcVTSWMS/lqaQ==
-X-ME-Sender: <xms:V4oXaR_5QG6Yqye9O6EYsv4v57xBh1DHc-z0MbKCphYCpjQUXcul4g>
-    <xme:V4oXadS7oTKB1v5v7bhfOHMIdsFL9_Xvw8dW6G2D9vlxU1EUQIf839NOicSRUTdUU
-    RNckVYPZlf293bDZeSmBy3UEK4fuicEGzOvdWuGhKky5oedSIo3>
-X-ME-Received: <xmr:V4oXaep7uPd8s5vQfsdFr7sRrayf2P2iSjwPqqXQkW9XRTaMui9GMFx_cfUfVaPf4e0mOGZVaQdmPFUFRPE2HIXxDiNfU2FCJyBq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvuddtjedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduiedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepfihorhhlughhvghllhhordhnvghtsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegrshhhse
-    hkrghmsggrnhgrrhhirgdrohhrghdprhgtphhtthhopehmihhkvghlrdhfohhrtggruggr
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhgrlhhfrdhthhhivghlohifsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthht
-    ohepsggrghgrshguohhtmhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepughjmhdttd
-    hnsehmrghilhdrrhhu
-X-ME-Proxy: <xmx:V4oXaSNeTBQhxLsX0LDVX6M34n_X92u-ytSDIOxolgHmJgpEPb_j-g>
-    <xmx:V4oXacwOrXc_KmSxn4VuzIQNHgHHJMfLBYlLBUOPocTfVdiWi3vaLA>
-    <xmx:V4oXaezSkNsr2OQ14IlGUHTyMcuesLA9T2G5OI0f1uxxdK3m1U_IcQ>
-    <xmx:V4oXaVLytSnR64aOe7g8CKsDZ97Tcmvr-rWJUh29wfZhdpAC_TVAPw>
-    <xmx:WIoXaVc0mZvkt2ohTwCD2upSCP1mZVnqq-OiG_sYu3BxcNJgUOYvfEr->
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Nov 2025 15:00:22 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-Cc: Git List <git@vger.kernel.org>,
-  Justin Tobler <jltobler@gmail.com>,
-  Alexander Shopov <ash@kambanaria.org>,
-  Mikel Forcada <mikel.forcada@gmail.com>,
-  Ralf Thielow <ralf.thielow@gmail.com>,
-  =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-  Bagas Sanjaya <bagasdotme@gmail.com>,
-  Dimitriy Ryazantcev <DJm00n@mail.ru>,
-  Peter Krefting <peter@softwolves.pp.se>,
-  Emir SARI <bitigchi@me.com>,
-  Arkadii Yakovets <ark@cho.red>,
-  =?utf-8?B?VsWpIFRp4bq/biBIxrBuZw==?= <newcomerminecraft@gmail.com>,
-  Teng Long <dyroneteng@gmail.com>,
-  Yi-Jyun Pan <pan93412@gmail.com>
-Subject: Re: [PATCH 2/2] builtin/repo: fix table alignment for UTF-8 characters
-In-Reply-To: <a50bcde6446fbd87b4fb04b28c579a915457813a.1763098804.git.worldhello.net@gmail.com>
-	(Jiang Xin's message of "Fri, 14 Nov 2025 00:52:45 -0500")
-References: <cover.1763098804.git.worldhello.net@gmail.com>
-	<a50bcde6446fbd87b4fb04b28c579a915457813a.1763098804.git.worldhello.net@gmail.com>
-Date: Fri, 14 Nov 2025 12:00:21 -0800
-Message-ID: <xmqqa50oiduy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dr8U7lip"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-47775fb6cb4so17331855e9.0
+        for <git@vger.kernel.org>; Fri, 14 Nov 2025 12:00:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763150440; x=1763755240; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:to:content-language:from:reply-to
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m4ZvbkglsEwePHQfr1X2JjCrrdE2qEDpjylsIFWxfqc=;
+        b=Dr8U7lippuXLI7B4NZZH90o0yv9DF4xz4uEn1lgbSL0E10Uqb29CpG+Yc2Bpf68WVE
+         ycRDFKE5HrTmZEUxEUgZzD2+RrJIc4REvA9FgWEgoWQPeO9lBsydSFX2qRa2GHBy4jhr
+         Re5RjqRbCkErQCrlMdpuI0nhzGVxhA9I4UtGaYE/12ZTTOgd/+T7XLR+tZCNQNKOqYwk
+         eQhLUadtb3uHrxEv+E3b3eqGXr5MRLrlgU8SaQaRTIFroRzgMZkbgXor6kVK+D8u9nBu
+         +PQs8uDhQk3xfds9wdfDkDkeic7VUZdPQJM9r1srC7FE/6bcppTFQh33ZGRuypY74AEp
+         ApVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763150440; x=1763755240;
+        h=content-transfer-encoding:subject:to:content-language:from:reply-to
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=m4ZvbkglsEwePHQfr1X2JjCrrdE2qEDpjylsIFWxfqc=;
+        b=C+1LwLge10N1Wj/DGX3KxckcVH9pGf31v+95c6F5AatOaL8j9vu/AC9RJCf0zUfVa1
+         NVIQDd0R5Gv59bHuT7yaqTiM42C+mr/Sf0zW3DRZLsKNpPVr2dnFIt8NV48mLjysBSFM
+         33Ffn7VATF3fBoWaJMk3JTS9ikGyN/kWlad039uW98oUPDSb6WNsq3H5OBH6fIuJT5Us
+         aK6BtiMk02HaNTSb+/6zthoqXF3SEVkdAJvdlHL4Ug4HjOV1LNgbaniMYWNE9S8nULEt
+         qRRndnbCFFLUaVpHzTJ2Cuf1AzykoYOVcCm3ujyuvwyIgOnToBgxE7yZaTaIoQ8QgFam
+         N96w==
+X-Gm-Message-State: AOJu0Yw7jDJP/esrP4jeQbl5RD3ZDgN5/gZCMSc2MwB6WNSfnUXpCOZH
+	GxCHDTYxQHq2HvpSGCzGXQFEqLkhczFn0tnlBsBnloYhbnc6MBQZcLW1TUpLkA==
+X-Gm-Gg: ASbGncu06pErXoWOQ9/JXONyn/DFW2yvH7uy8wflpXOvC4yMxWkh6SPoPqDNMLE+Nju
+	HMwbErYjm+JakVH0NT62W5E7weXlXW3eY9q6+M9ZIgRTFyb4v5pQY7e1BJZnaAZwwyoARbiyp/s
+	Kj1GXA3VgCK5qu/M5EOl23KhZCaQe6jMSJV1l9P4f+Y81LbI+SDFGp0oUbG5UmXYB0KP33vbVee
+	2JxCd2BwXrbWGjx0AZulYCHogJIzE6bUnaYniZDIP2t6CScF8td7SW6gq+HmuX08RE83bjXMYG0
+	2UzyqhoO4bBkDo8KLeeDB0C3OmNjDT2Qp+4whubyjpk/1hT6kiXlH0r9JCsOCtoDBZCvZ52EMH7
+	wA+MyNftf0EqhYmMjS/YmAJzs5D8+JU5ME7msNGn3DlkG+LHl9IdVVv624DRmf1NMTAP+xPTNN2
+	IKtrV+Vz8sIuI+yplu9mojQNfArhxVXQOg93n9fxP8bwsfO7+vO2EKocW3336Ij9Q=
+X-Google-Smtp-Source: AGHT+IEkGqhDTkgeqkmcoVMm8k5K0iLKPCDXTPLmHrSh1Gsl9f4Kb305XZbk15XxPr0CWLnz8x8zGw==
+X-Received: by 2002:a05:600c:6289:b0:46e:37fc:def0 with SMTP id 5b1f17b1804b1-4778fe62100mr40390025e9.9.1763150439829;
+        Fri, 14 Nov 2025 12:00:39 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4779524d4basm23162645e9.1.2025.11.14.12.00.38
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Nov 2025 12:00:39 -0800 (PST)
+Message-ID: <ddefb36d-f023-45c1-b518-a9f70dba0696@gmail.com>
+Date: Fri, 14 Nov 2025 20:00:36 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+To: Git Mailing List <git@vger.kernel.org>
+Subject: CI Failures
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+I'm seeing all the Ubuntu based jobs fail. Judging by the error messages 
+at [1] it appears that their version of sudo no longer supports 
+"--preserve-env" which breaks all of our scripts. Does anyone know how 
+to make sure we install the C version of sudo rather than the rust 
+version? Failing that I guess we could switch to using "runuser"
 
-Not about the contents of the patch, but how was the list of
-addresses on CC produced?  Do they all have enough stakes in the
-code being updated that they do not mind getting spammed like this?
+Thanks
 
-Also, you had a non-address "Gemini <noreply@developers.google.com>",
-which forced me and anybody who will respond to the patch edit Cc
-address list (or suffer bounces).  Please don't.
+Phillip
 
-> The output table from "git repo structure" is misaligned when displaying
-> UTF-8 characters (e.g., non-ASCII glyphs). E.g.:
->
->     | 仓库结构   | 值  |
->     | -------------- | ---- |
->     | * 引用       |      |
->     |   * 计数     |   67 |
->     |     * 分支   |    6 |
->     |     * 标签   |   30 |
->     |     * 远程   |   19 |
->     |     * 其它   |   12 |
->     |                |      |
->     | * 可达对象 |      |
->     |   * 计数     | 2217 |
->     |     * 提交   |  279 |
->     |     * 树      |  740 |
->     |     * 数据对象 | 1168 |
->     |     * 标签   |   30 |
-
-As there is a concrete reproduction sample from a specific tool, ...
-
->  builtin/repo.c | 22 ++++++++++++++++++----
->  1 file changed, 18 insertions(+), 4 deletions(-)
-
-... it is a good idea to protect the change with a new test or two
-to make sure the expected alignment in the output.
-
-Thanks.
+[1] 
+https://github.com/phillipwood/git/actions/runs/19371231059/job/55427466699
