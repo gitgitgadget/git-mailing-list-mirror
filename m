@@ -1,658 +1,355 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1315C30F923
-	for <git@vger.kernel.org>; Fri, 14 Nov 2025 22:26:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6E62222C4
+	for <git@vger.kernel.org>; Fri, 14 Nov 2025 22:37:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763159173; cv=none; b=BFIiUDao3ZhOY5Iw6tR+tX4Dvm4t43Y0kwPs1Z+ZUUffVjECuJJqjcoZ4fDDjxNb7HP/cKY4OCqpjmsRUEfssMyYVnnIHf76RM0aupWFUcwndc5hSJj3s97cwvlNafGUEpGNwo+3yt8wsWLF46Li4PzH/HStRuhtq6BnL1RwEm4=
+	t=1763159822; cv=none; b=C/HHkw+YmVMradMgjyZFVSqH/B6Q7Iyx3tnpK99eoKjHfogNfRA6DHNWOYpRcw48KLJQyB2frpCtiVTYAbzr3LXfLrj3TLYhGscxaM7YNitlwK1AzqnxuebgUDZsEDQJtlKPezoh4Ha0im97ACf4HwxxOkgx7LfN5l2O0V7RIfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763159173; c=relaxed/simple;
-	bh=u4F9rxgLbBkqBy/MVRJA1Z59YTEZRKRpKjMltZT2VBg=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=SZo33h5kll+MoyCjLawCsyHGuEAMAiCaSOR9aJJvTsOa46i+BG29l0yAmewGDHZt2w0N5VGOYCqdXSuA2RLyT/QimPfUhJENV0xiHdS+pb8atgUkgOZCU4bFr7Cta5SGOaf//1GOb5ZJvel66YDAzl9LD3Tpett2XSuF06+p/T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hfVTtC3i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gXRnU5lK; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763159822; c=relaxed/simple;
+	bh=8d6784ABlxITksOO4EcNajovCFT/bgoPQ8CRV9qCkbw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=H9fiV4xIE57Z0RXAS4Ky3n7LHfutFyLUvji//D8xpmCEXegXRT+lIpJpf0ZrniW7tOpsC49XVrBGh4q3JUD/4tJNo5xh2pCNnLFpeoPn6xpvWt07gnYbsy9PVQpJD1CAn9YTV0eLwXJfrQq0vcL0aSX7/rv8rtdR6fPD3Yn7Jug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WFgicq2N; arc=none smtp.client-ip=209.85.215.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hfVTtC3i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gXRnU5lK"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1B1AFEC0098;
-	Fri, 14 Nov 2025 17:26:09 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 14 Nov 2025 17:26:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1763159169; x=1763245569; bh=9+UibngMu5+hHnAN4Y8YXmEfjoZ8JOPH
-	BYGzEpuzKCI=; b=hfVTtC3iptgfq4aMXFi+/CQRxorzOl9YKVC68UhcOWZYDviE
-	sEVdD7Pb81Qor/3UjJip+ONBYZ37QozYzWEPMzNXOSAqGU/WDNAwm4qS4W8wsgo3
-	OhAjWQLUa9wjbTRvi5gvCYL1UlF5iXVwX6wkuhsuq0Wt5ak1mpUoPpF/ejE9R7o7
-	SBjWc0Vs/bjugzNBTejnFHGTpfp2qH9ydbDCDtgOrgqYKl7iJnMXshs0DyNfAgbl
-	pSKNJp4WxAY+asR3rZrLk3QjR2AZnwWhfIQgZxNiq9ZUaedgyZdHNYrI9VNxw+2P
-	564BWNBzvwi89+GoCBfnvdKuyfYUJseSIrhk1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763159169; x=
-	1763245569; bh=9+UibngMu5+hHnAN4Y8YXmEfjoZ8JOPHBYGzEpuzKCI=; b=g
-	XRnU5lKsQayzcoQXmwZqjCtpzgQkWrIVR3UgruYBbsVQjJqv1zQu5FSxGZzqgZ7Q
-	te8DYZve/p+W2mlL3l4sQRyb/W3RAV0sYqHnsPTm8Sk4AWLtR9fwLC6EJe6mH3UQ
-	Wrkk6B3UYN3oJzI+XEC5Kx+bOqoGUjBLukgMrDl2pZu7Gq6hkx9pmutcdIbIe3bI
-	uoe5dGKmEiZnGlS20egyj83Q5ZRKk/GKX80a9HoswPSmNdqpXuke+mCDcXOvuEG3
-	1i/n2KlGZsFDd+hpioEORgozd5zucRxWOzhJVLyTWnFu/Q39NWEnMgjCcfE4NkaK
-	7v2Rjhn6tMfYmxYkdfU+A==
-X-ME-Sender: <xms:gKwXaUBxB8DqyeByJ-AUUsGx5GvE7FpX7G9T7MJqumoIF9rlUZHiQQ>
-    <xme:gKwXad-vvAthRHn8smrUm2aUAV88sJFT2amuWyQDKNbYKUgS1PAp1fMYd_crBS7KO
-    a_08nulMoV-gSRWIuylV-zCg1X4ESWPC-cChIaewTgHHWrmNKoLiA>
-X-ME-Received: <xmr:gKwXaU9Eaz1T9d8tBREVYIE8-JoWBzLpg0dqsICyne4z5FYHvdHQBdva-pXS2qtVFcPICBr1AGwahaw-h9nFSy7DAIBneIXd_PZa>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvuddutdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
-    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
-    gidrtghomheqnecuggftrfgrthhtvghrnheptddtvdffleejvefhjeeigfelffefjefgfe
-    egjeelheekffegiedvkedvkeeiledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdp
-    ohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtohhmpdhgihhthhhusgdrtghomhdpgh
-    hithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfe
-    dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehlfihnsehlfihnrdhnvghtpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:gKwXaUeTqekDKbU6ms-KKTlwEepRZz0zjKcvzUoPSp3U_ry-VvIecQ>
-    <xmx:gKwXadH6WpnoG-QZPdWVTpkIsoDDpgEqcaiXaVGpK6QQjX-QPCTOiw>
-    <xmx:gKwXaScSUoq-MA76LgMqGxPaS_iMVCH2lbl5uR5CbgVs1k13FKmD0Q>
-    <xmx:gKwXaXHOB534tZfp8rUf2fEOW84dWrjDt2fXZuGhGG4z20eCd8vsEQ>
-    <xmx:gawXaUxCMreAl7TOWGUqRMicpkZy5_o-YhP0OKJ4CBTTUA_NrxuoHK4D>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Nov 2025 17:26:08 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Nov 2025, #04; Fri, 14)
-X-master-at: fd372d9b1a69a01a676398882bbe3840bf51fe72
-X-next-at: 230fcf2819a6e6e5372cd128168db10ebbe23885
-Date: Fri, 14 Nov 2025 14:26:07 -0800
-Message-ID: <xmqqcy5kgsjk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WFgicq2N"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-ba599137cf8so1611861a12.0
+        for <git@vger.kernel.org>; Fri, 14 Nov 2025 14:37:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763159819; x=1763764619; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1jI/8vdUtfybf/uqDwho4vbA7JXUTbGKIVE8RuGag2A=;
+        b=WFgicq2NLua6YMoPxG3gb/uhE5c8zPGeSo7XUY1zVXAFOdYAy6iturnwpznfzHRIcB
+         pW6J5rJ6Qh31LUeUO8M+e7HwnA3+m0DkMcXaUjlUa4BDQ9QjBaYpfAZDxpjth4fFxBVb
+         ylQ0gL0fOJJgcVwQ1kR6u8kqg6j6hhNcmH/bk2tWFdKILUQXH2FyYTIaqkMpLML9rx59
+         FK5ld056RaNw4Su6mgEKvLHbFuqscnUIRuloL6cCX7GpXQwMaaxiUhmvPVVgO4FrS3aQ
+         fMuDYCSYKas+mvhFrmNXm+6RgilW5LP5qgMSdrXhwatg6PJtn1HTJBwK69JTEi2Culap
+         FZdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763159819; x=1763764619;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=1jI/8vdUtfybf/uqDwho4vbA7JXUTbGKIVE8RuGag2A=;
+        b=iiQDA9zxVrK1Hd94MgkbnU+suQlweEekxB9flQE0/Hu6vr3aZDk/7a9bUKqPt7V38J
+         a68dhYeg/TxbyezmFh8wszIG/NGM4O/lY8l+zcSiOwvUnZ0uqVwTJN3VAw6IS94Y/odH
+         mR4KyPjMOJlr62o1UPyn9kTRYhkJx3KRkSiTDxttkqikxxjoDNjr1QTlpNcb7EDzs6b9
+         R1rZ77FsseeojaO1zIkVQT6q/rGsk/BcW4gJLjlBzXGRpoNHY89I8jRV/UQtkjQ4T6iu
+         +70KsbNv4bx2hXU+iOPi+nD+Y3O1TkjUFhbjs2O3d0vcR4vBULJXQx5X58Z7ZjjY5oMo
+         doBw==
+X-Gm-Message-State: AOJu0Yxsq069Bws2c7YLPiBiz5Q31dkrJBy/s0jeT18/ul9epNCw1CP4
+	b4A9GStR35hXWZq4jZNy6Eh8ctZmzWLARReThQjcXtFp1EFWWYp7YVcbiFueyYAr
+X-Gm-Gg: ASbGnctp8N2dehYmhAJYJh9TgYy+z1pY004iNQliTTZiKO/bym73toPBaMqIk6ZGCas
+	JLpGhbmlI4OSxboEjrx680YzIMM7eaGS1wa+v/lvmDz3gfWKsZAt5Psl0GmVMtyZYcRZt4Jyc8J
+	ogR3//JvcORGNkjIXVCKjgFM9U6BrblcaXbgPMCFnriJMWsYFTsXFtGpguOywje3ReWxJD1T8Zc
+	GZZUlp8yUx0mULueKDbU1YfPtRm46i3K285gzi8xcaU2FGtTGtlvbybXL1x3jEtBFTSFpV0qVfR
+	2yehecU8vLdWEQR+fHKHHpjVHnDQ4rFQfPbHwfz4mvYGjAmfMIr6T3ObzE1HClz6G3mqQuM+PzP
+	CpecdCSdZqMbpqXipLK1acVR+S/LOoiOVvqCgO94nrQC8Nw29XokW1PLPk70ncR55WBxx0myqkd
+	2QpQ==
+X-Google-Smtp-Source: AGHT+IGc+32UoRpc4Z0eAHf5kTPMMn1gze7HLGPP0geIParXoXerYdx93edreDhL9iCK/OgbRQTo6g==
+X-Received: by 2002:a05:701b:250a:b0:119:e569:f872 with SMTP id a92af1059eb24-11b41201afcmr1361773c88.15.1763159819172;
+        Fri, 14 Nov 2025 14:36:59 -0800 (PST)
+Received: from [127.0.0.1] ([20.169.73.145])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11b060885d8sm13902326c88.2.2025.11.14.14.36.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Nov 2025 14:36:58 -0800 (PST)
+Message-Id: <af732beb6904d8b9b7801ecc2487dabdea05a571.1763159816.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2070.v4.git.git.1763159816.gitgitgadget@gmail.com>
+References: <pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com>
+	<pull.2070.v4.git.git.1763159816.gitgitgadget@gmail.com>
+From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 14 Nov 2025 22:36:47 +0000
+Subject: [PATCH v4 01/10] doc: define unambiguous type mappings across C and
+ Rust
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Chris Torek <chris.torek@gmail.com>,
+    Ezekiel Newren <ezekielnewren@gmail.com>,
+    Ezekiel Newren <ezekielnewren@gmail.com>
+
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+
+Document other nuances when crossing the FFI boundary. Other language
+mappings may be added in the future.
+
+Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+---
+ Documentation/Makefile                        |   1 +
+ Documentation/technical/meson.build           |   1 +
+ .../technical/unambiguous-types.adoc          | 224 ++++++++++++++++++
+ 3 files changed, 226 insertions(+)
+ create mode 100644 Documentation/technical/unambiguous-types.adoc
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 04e9e10b27..bc1adb2d9d 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -142,6 +142,7 @@ TECH_DOCS += technical/shallow
+ TECH_DOCS += technical/sparse-checkout
+ TECH_DOCS += technical/sparse-index
+ TECH_DOCS += technical/trivial-merge
++TECH_DOCS += technical/unambiguous-types
+ TECH_DOCS += technical/unit-tests
+ SP_ARTICLES += $(TECH_DOCS)
+ SP_ARTICLES += technical/api-index
+diff --git a/Documentation/technical/meson.build b/Documentation/technical/meson.build
+index be698ef22a..89a6e26821 100644
+--- a/Documentation/technical/meson.build
++++ b/Documentation/technical/meson.build
+@@ -32,6 +32,7 @@ articles = [
+   'sparse-checkout.adoc',
+   'sparse-index.adoc',
+   'trivial-merge.adoc',
++  'unambiguous-types.adoc',
+   'unit-tests.adoc',
+ ]
+ 
+diff --git a/Documentation/technical/unambiguous-types.adoc b/Documentation/technical/unambiguous-types.adoc
+new file mode 100644
+index 0000000000..9a42c72890
+--- /dev/null
++++ b/Documentation/technical/unambiguous-types.adoc
+@@ -0,0 +1,224 @@
++= Unambiguous types
++
++Most of these mappings are obvious, but there are some nuances and gotchas with
++Rust FFI (Foreign Function Interface).
++
++This document defines clear, one-to-one mappings between primitive types in C,
++Rust (and possible other languages in the future). Its purpose is to eliminate
++ambiguity in type widths, signedness, and binary representation across
++platforms and languages.
++
++For Git, the only header required to use these unambiguous types in C is
++`git-compat-util.h`.
++
++== Boolean types
++[cols="1,1", options="header"]
++|===
++| C Type | Rust Type
++| bool^1^       | bool
++|===
++
++== Integer types
++
++In C, `<stdint.h>` (or an equivalent) must be included.
++
++[cols="1,1", options="header"]
++|===
++| C Type | Rust Type
++| uint8_t    | u8
++| uint16_t   | u16
++| uint32_t   | u32
++| uint64_t   | u64
++
++| int8_t     | i8
++| int16_t    | i16
++| int32_t    | i32
++| int64_t    | i64
++|===
++
++== Floating-point types
++
++Rust requires IEEE-754 semantics.
++In C, that is typically true, but not guaranteed by the standard.
++
++[cols="1,1", options="header"]
++|===
++| C Type | Rust Type
++| float^2^      | f32
++| double^2^     | f64
++|===
++
++== Size types
++
++These types represent pointer-sized integers and are typically defined in
++`<stddef.h>` or an equivalent header.
++
++Size types should be used any time pointer arithmetic is performed e.g.
++indexing an array, describing the number of elements in memory, etc...
++
++[cols="1,1", options="header"]
++|===
++| C Type | Rust Type
++| size_t^3^     | usize
++| ptrdiff_t^3^  | isize
++|===
++
++== Character types
++
++This is where C and Rust don't have a clean one-to-one mapping.
++
++A C `char` and a Rust `u8` share the same bit width, so any C struct containing
++a `char` will have the same size as the corresponding Rust struct using `u8`.
++In that sense, such structs are safe to pass over the FFI boundary, because
++their fields will be laid out identically. However, beyond bit width, C `char`
++has additional semantics and platform-dependent behavior that can cause
++problems, as discussed below.
++
++C comparison problem: While the sign of `char` is implementation defined, it's
++also signless (neither signed nor unsigned). When building with
++`make DEVELOPER=1` it will complain about a "differ in signedness" when `char`
++is compared with `uint8_t` or `int8_t`.
++
++Note: Rust's `char` type is an unsigned 32-bit integer that is used to describe
++Unicode code points.
++
++=== Notes
++^1^ This is only true if stdbool.h (or equivalent) is used. +
++^2^ C does not enforce IEEE-754 compatibility, but Rust expects it. If the
++platform/arch for C does not follow IEEE-754 then this equivalence does not
++hold. Also, it's assumed that `float` is 32 bits and `double` is 64, but
++there may be a strange platform/arch where even this isn't true. +
++^3^ C also defines uintptr_t, ssize_t and intptr_t, but these types are
++discouraged for FFI purposes. For functions like `read()` and `write()` ssize_t
++should be cast to a different, and unambiguous, type before being passed over
++the FFI boundary. +
++
++== Problems with std::ffi::c_* types in Rust
++TL;DR: In practice, Rust's `c_*` types aren't guaranteed to match C types for
++all possible C compilers, platforms, or architectures, because Rust only
++ensures correctness of C types on officially supported targets. These
++definitions have changed over time to match more targets which means that the
++c_* definitions will differ based on which Rust version Git chooses to use.
++
++Current list of safe, Rust side, FFI types in Git: +
++
++* `c_void`
++* `CStr`
++* `CString`
++
++Even then, they should be used sparingly, and only where the semantics match
++exactly.
++
++The std::os::raw::c_* directly inherits the problems of core::ffi, which
++changes over time and seems to make a best guess at the correct definition for
++a given platform/target. This probably isn't a problem for all other platforms
++that Rust supports currently, but can anyone say that Rust got it right for all
++C compilers of all platforms/targets?
++
++To give an example: c_long is defined in
++footnote:[https://doc.rust-lang.org/1.63.0/src/core/ffi/mod.rs.html#175-189[c_long in 1.63.0]]
++footnote:[https://doc.rust-lang.org/1.89.0/src/core/ffi/primitives.rs.html#135-151[c_long in 1.89.0]]
++
++=== Rust version 1.63.0
++
++```
++mod c_long_definition {
++    cfg_if! {
++        if #[cfg(all(target_pointer_width = "64", not(windows)))] {
++            pub type c_long = i64;
++            pub type NonZero_c_long = crate::num::NonZeroI64;
++            pub type c_ulong = u64;
++            pub type NonZero_c_ulong = crate::num::NonZeroU64;
++        } else {
++            // The minimal size of `long` in the C standard is 32 bits
++            pub type c_long = i32;
++            pub type NonZero_c_long = crate::num::NonZeroI32;
++            pub type c_ulong = u32;
++            pub type NonZero_c_ulong = crate::num::NonZeroU32;
++        }
++    }
++}
++```
++
++=== Rust version 1.89.0
++
++```
++mod c_long_definition {
++    crate::cfg_select! {
++        any(
++            all(target_pointer_width = "64", not(windows)),
++            // wasm32 Linux ABI uses 64-bit long
++            all(target_arch = "wasm32", target_os = "linux")
++        ) => {
++            pub(super) type c_long = i64;
++            pub(super) type c_ulong = u64;
++        }
++        _ => {
++            // The minimal size of `long` in the C standard is 32 bits
++            pub(super) type c_long = i32;
++            pub(super) type c_ulong = u32;
++        }
++    }
++}
++```
++
++Even for the cases where C types are correctly mapped to Rust types via
++std::ffi::c_* there are still problems. Let's take c_char for example. On some
++platforms it's u8 on others it's i8.
++
++=== Subtraction underflow in debug mode
++
++The following code will panic in debug on platforms that define c_char as u8,
++but won't if it's an i8.
++
++```
++let mut x: std::ffi::c_char = 0;
++x -= 1;
++```
++
++=== Inconsistent shift behavior
++
++`x` will be 0xC0 for platforms that use i8, but will be 0x40 where it's u8.
++
++```
++let mut x: std::ffi::c_char = 0x80;
++x >>= 1;
++```
++
++=== Equality fails to compile on some platforms
++
++The following will not compile on platforms that define c_char as i8, but will
++if it's u8. You can cast x e.g. `assert_eq!(x as u8, b'a');`, but then you get
++a warning on platforms that use u8 and a clean compilation where i8 is used.
++
++```
++let mut x: std::ffi::c_char = 0x61;
++assert_eq!(x, b'a');
++```
++
++== Enum types
++Rust enum types should not be used as FFI types. Rust enum types are more like
++C union types than C enum's. For something like:
++
++```
++#[repr(C, u8)]
++enum Fruit {
++    Apple,
++    Banana,
++    Cherry,
++}
++```
++
++It's easy enough to make sure the Rust enum matches what C would expect, but a
++more complex type like.
++
++```
++enum HashResult {
++    SHA1([u8; 20]),
++    SHA256([u8; 32]),
++}
++```
++
++The Rust compiler has to add a discriminant to the enum to distinguish between
++the variants. The width, location, and values for that discriminant is up to
++the Rust compiler and is not ABI stable.
+-- 
+gitgitgadget
 
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* dk/make-git-contacts-executable (2025-11-04) 1 commit
-  (merged to 'next' on 2025-11-07 at 30608eb744)
- + perl: also mark git-contacts executable
-
- Building "git contacts" script (in contrib/) left the resulting
- file unexecutable, which has been corrected.
- source: <7fbb341e8f05fcde3a1543e3bb4e5a3ec1101692.1762280097.git.ben.knoble+github@gmail.com>
-
-
-* dk/meson-html-dir (2025-11-04) 1 commit
-  (merged to 'next' on 2025-11-07 at b30cf1f060)
- + meson: make GIT_HTML_PATH configurable
-
- The build procedure based on meson learned to allow builders to
- specify the directory to install HTML documents.
- source: <385992f6020703558f0ba75a1be6c4f9dae08b83.1762264709.git.ben.knoble+github@gmail.com>
-
-
-* tc/last-modified-active-paths-optimization (2025-10-23) 1 commit
-  (merged to 'next' on 2025-11-03 at 9ab444edfb)
- + last-modified: implement faster algorithm
-
- "git last-modified" was optimized by narrowing the set of paths to
- follow as it dug deeper in the history.
- source: <20251023-b4-toon-last-modified-faster-v3-1-40a4ddbbadec@iotcl.com>
-
-
-* tu/credential-wincred-makefile-update (2025-11-05) 1 commit
-  (merged to 'next' on 2025-11-07 at ed74befe91)
- + wincred: align Makefile with other Makefiles in contrib
-
- Build procedure for Wincred credential helper has been updated.
- source: <3869ec21-e20d-cf9b-5913-6389c372a5f0@mailbox.tu-dresden.de>
-
---------------------------------------------------
-[New Topics]
-
-* rs/diff-quiet-no-rename (2025-11-09) 1 commit
-  (merged to 'next' on 2025-11-14 at 2d94808185)
- + diff: disable rename detection with --quiet
-
- As "git diff --quiet" only cares about the existence of any
- changes, disable rename/copy detection to skip more expensive
- processing whose result will be discarded anyway.
-
- Will cook in 'next'.
- source: <8796cd59-2335-4674-823d-d682ce7b7f8e@web.de>
-
-
-* jc/gitattributes-whitespace-no-indent-fix (2025-11-11) 1 commit
-  (merged to 'next' on 2025-11-14 at 230fcf2819)
- + .gitattributes: remove misspelled no-op whitespace attribute
-
- Ever since we added whitespace rules for this project, we misspelt
- an entry, which has been corrected.
-
- Will cook in 'next'.
- source: <xmqqv7jgwgxb.fsf@gitster.g>
-
-
-* kn/fix-fetch-backfill-tag-with-batched-ref-updates (2025-11-13) 2 commits
- - fetch: fix non-conflicting tags not being committed
- - fetch: extract out reference committing logic
-
- "git fetch" that involves fetching tags, when a tag being fetched
- needs to overwrite existing one, failed to fetch other tags, which
- has been corrected.
-
- Will merge to 'next'?
- source: <20251113-fix-tags-not-fetching-v5-0-371ea7ec638d@gmail.com>
-
-
-* jk/asan-bonanza (2025-11-12) 10 commits
- - amend! Makefile: turn on NO_MMAP when building with ASan
- - t: enable ASan's strict_string_checks option
- - fsck: avoid parse_timestamp() on buffer that isn't NUL-terminated
- - fsck: remove redundant date timestamp check
- - fsck: avoid strcspn() in fsck_ident()
- - fsck: assert newline presence in fsck_ident()
- - cache-tree: avoid strtol() on non-string buffer
- - Makefile: turn on NO_MMAP when building with ASan
- - pack-bitmap: handle name-hash lookups in incremental bitmaps
- - compat/mmap: mark unused argument in git_munmap()
-
- Various issues detected by Asan have been corrected.
-
- Expecting a reroll?
- cf. <aRbToFLhzewwBaSv@pks.im>
- source: <20251112075522.GA978866@coredump.intra.peff.net>
-
-
-* jk/attr-macroexpand-wo-recursion (2025-11-11) 1 commit
- - attr: avoid recursion when expanding attribute macros
-
- The code to expand attribute macros has been rewritten to avoid
- recursion to avoid running out of stack space in an uncontrolled
- way.
-
- Will merge to 'next'?
- source: <20251111223647.GA4055973@coredump.intra.peff.net>
-
-
-* bc/submodule-force-same-hash (2025-11-12) 1 commit
- - object-file: disallow adding submodules of different hash algo
-
- Adding a repository that uses a different hash function is a no-no,
- but "git submodule add" did nt prevent it, which has been corrected.
-
- Will merge to 'next'?
- source: <20251112235434.1499699-1-sandals@crustytoothpaste.net>
-
-
-* jc/ci-drop-p4-macosx (2025-11-14) 1 commit
- - CI: drop Perforce tests from macOSX jobs
-
- Drop P4 tests on macOSX platform on GitHub Actions CI.
-
- Comments?
- source: <xmqqqzu0gxq2.fsf_-_@gitster.g>
-
-
-* jx/repo-struct-utf8width-fix (2025-11-13) 2 commits
- - builtin/repo: fix table alignment for UTF-8 characters
- - t/unit-tests: add UTF-8 width tests for CJK chars
-
- The "git repo structure" subcommand tried to align its output but
- mixed up byte count and display column width, which has been
- corrected.
-
- Comments?
- source: <cover.1763098804.git.worldhello.net@gmail.com>
-
-
-* kh/doc-commit-extra-references (2025-11-14) 1 commit
- - doc: commit: link to git-status(1) on all format options
-
- Doc update.
-
- Will merge to 'next'?
- source: <c4349a03724.1763129061.git.code@khaugsbakk.name>
-
-
-* kn/osxkeychain-idempotent-store-fix (2025-11-13) 1 commit
- - osxkeychain: avoid incorrectly skipping store operation
-
- An earlier check added to osx keychain credential helper to avoid
- storing the credential itself supplied was overeager and rejected
- credential material supplied by other helper backends that it would
- have wanted to store, which has been corrected.
-
- Will merge to 'next'?
- source: <pull.1999.v2.git.1763100270949.gitgitgadget@gmail.com>
-
---------------------------------------------------
-[Cooking]
-
-* lc/rebase-trailer (2025-11-05) 4 commits
- - rebase: support --trailer
- - trailer: append trailers in-process and drop the fork to `interpret-trailers`
- - trailer: move process_trailers to trailer.h
- - interpret-trailers: factor out buffer-based processing to process_trailers()
-
- Refactor code paths to run "interpret-trailers" from "git
- commit/tag" and use it in "git rebase".
-
- Comments?
- source: <20251105142944.73061-1-me@linux.beauty>
-
-
-* ps/ref-peeled-tags-fixes (2025-11-06) 2 commits
-  (merged to 'next' on 2025-11-11 at 3549877a16)
- + object: fix performance regression when peeling tags
- + Merge branch 'ps/ref-peeled-tags' into ps/ref-peeled-tags-fixes
- (this branch uses ps/ref-peeled-tags.)
-
- Another fix-up to "peeled-tags" topic.
-
- Will cook in 'next'.
- source: <20251106-b4-pks-peel-object-performance-regression-v1-1-a386147750b0@pks.im>
-
-
-* en/ort-rename-another-fix (2025-11-03) 3 commits
- - merge-ort: fix failing merges in special corner case
- - merge-ort: remove debugging crud
- - t6429: update comment to mention correct tool
-
- Yet another corner case fix around renames in the "ort" merge
- strategy.
-
- Will merge to 'next'?
- source: <pull.1992.git.1762192908.gitgitgadget@gmail.com>
-
-
-* kn/maintenance-is-needed (2025-11-08) 7 commits
-  (merged to 'next' on 2025-11-14 at ed70525e16)
- + maintenance: add 'is-needed' subcommand
- + maintenance: add checking logic in `pack_refs_condition()`
- + refs: add a `optimize_required` field to `struct ref_storage_be`
- + reftable/stack: add function to check if optimization is required
- + reftable/stack: return stack segments directly
- + Merge branch 'kn/refs-optim-cleanup' into kn/maintenance-is-needed
- + Merge branch 'ps/ref-peeled-tags' into kn/maintenance-is-needed
- (this branch uses kn/refs-optim-cleanup and ps/ref-peeled-tags.)
-
- "git maintenance" command learned "is-needed" subcommand to tell if
- it is necessary to perform various maintenance tasks.
-
- Will cook in 'next'.
- source: <20251108-562-add-sub-command-to-check-if-maintenance-is-needed-v4-0-a90f229b6023@gmail.com>
-
-
-* qj/doc-http-bad-want-response (2025-11-05) 1 commit
- - doc: clarify server behavior for invalid 'want' lines in HTTP protocol
-
- Doc update.
-
- Will merge to 'next'?
- source: <20251105143849.1192-1-qjessa662@gmail.com>
-
-
-* jc/exclude-with-gitignore (2025-11-04) 1 commit
- - dir.c: do not be fooled by :(exclude) pathspec elements
-
- "git add ':(exclude)foo.o'" is clearly a request not to add 'foo.o',
- but the command complained about listing an ignored path foo.o on
- the command line, which has been corrected.
-
- Comments?
- source: <xmqqtsz9o3cn.fsf@gitster.g>
-
-
-* cc/fast-import-strip-if-invalid (2025-11-04) 3 commits
- . fast-import: add 'strip-if-invalid' mode to --signed-commits=<mode>
- . commit: refactor verify_commit_buffer()
- . fast-import: refactor finalize_commit_buffer()
-
- "git fast-import" learns "--strip-if-invalid" option to drop
- invalid cryptographic signature from objects.
-
- Expecting a reroll.  Its test does not work well with existing tests
- cf. <xmqqjz00e5ns.fsf@gitster.g>
- source: <20251105061918.3688870-1-christian.couder@gmail.com>
-
-
-* jc/whitespace-incomplete-line (2025-11-12) 12 commits
- - attr: enable incomplete-line whitespace error for this project
- - diff: highlight and error out on incomplete lines
- - apply: check and fix incomplete lines
- - whitespace: allocate a few more bits and define WS_INCOMPLETE_LINE
- - apply: revamp the parsing of incomplete lines
- - diff: update the way rewrite diff handles incomplete lines
- - diff: call emit_callback ecbdata everywhere
- - diff: refactor output of incomplete line
- - diff: keep track of the type of the last line seen
- - diff: correct suppress_blank_empty hack
- - diff: emit_line_ws_markup() if/else style fix
- - whitespace: correct bit assignment comments
-
- Both "git apply" and "git diff" learn a new whitespace error class,
- "incomplete-line".
-
- Comments?
- source: <20251112220258.1009253-1-gitster@pobox.com>
-
-
-* ps/object-source-loose (2025-11-02) 13 commits
- - object-file: refactor writing objects via a stream
- - object-file: rename `write_object_file()`
- - object-file: refactor freshening of objects
- - object-file: rename `has_loose_object()`
- - object-file: read objects via the loose object source
- - object-file: move loose object map into loose source
- - object-file: hide internals when we need to reprepare loose sources
- - object-file: move loose object cache into loose source
- - object-file: introduce `struct odb_source_loose`
- - object-file: move `fetch_if_missing`
- - odb: adjust naming to free object sources
- - odb: introduce `odb_source_new()`
- - odb: fix subtle logic to check whether an alternate is usable
-
- A part of code paths that deals with loose objects has been cleaned
- up.
-
- Will merge to 'next'?
- source: <20251103-b4-pks-odb-loose-backend-v3-0-6a61ea977393@pks.im>
-
-
-* bc/sha1-256-interop-02 (2025-11-14) 16 commits
- - SQUASH??? cargo clippy
- - SQUASH??? downgrade build.rs syntax
- - object-file-convert: always make sure object ID algo is valid
- - rust: add a small wrapper around the hashfile code
- - rust: add a new binary loose object map format
- - rust: add functionality to hash an object
- - rust: add a build.rs script for tests
- - hash: expose hash context functions to Rust
- - write-or-die: add an fsync component for the loose object map
- - csum-file: define hashwrite's count as a uint32_t
- - hash: add a function to look up hash algo structs
- - rust: add a hash algorithm abstraction
- - rust: add a ObjectID struct
- - hash: use uint32_t for object_id algorithm
- - conversion: don't crash when no destination algo
- - repository: require Rust support for interoperability
-
- The code to maintain mapping between object names in multiple hash
- functions is being added, written in Rust.
-
- Expecting a reroll.
- source: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
-
-
-* ad/blame-diff-algorithm (2025-11-06) 2 commits
- - blame: make diff algorithm configurable
- - xdiff: add 'minimal' to XDF_DIFF_ALGORITHM_MASK
-
- "git blame" learns "--diff-algorithm=<algo>" option.
-
- Will merge to 'next'?
- source: <pull.2075.v5.git.git.1762468914.gitgitgadget@gmail.com>
-
-
-* ps/packed-git-in-object-store (2025-10-30) 9 commits
-  (merged to 'next' on 2025-11-03 at 1eb3440abd)
- + packfile: track packs via the MRU list exclusively
- + packfile: always add packfiles to MRU when adding a pack
- + packfile: move list of packs into the packfile store
- + builtin/pack-objects: simplify logic to find kept or nonlocal objects
- + packfile: fix approximation of object counts
- + http: refactor subsystem to use `packfile_list`s
- + packfile: move the MRU list into the packfile store
- + packfile: use a `strmap` to store packs by name
- + Merge branch 'ps/remove-packfile-store-get-packs' into ps/packed-git-in-object-store
-
- The list of packfiles used in a running Git process is moved from
- the packed_git structure into the packfile store.
-
- Will cook in 'next'.
- source: <20251030-pks-packfiles-store-drop-list-v2-0-84654f080cc0@pks.im>
-
-
-* kn/refs-optim-cleanup (2025-10-20) 4 commits
-  (merged to 'next' on 2025-11-04 at dbab18969a)
- + t/pack-refs-tests: move the 'test_done' to callees
- + refs: rename 'pack_refs_opts' to 'refs_optimize_opts'
- + refs: move to using the '.optimize' functions
- + Merge branch 'ps/ref-peeled-tags' into kn/refs-optim-cleanup
- (this branch is used by kn/maintenance-is-needed; uses ps/ref-peeled-tags.)
-
- Code clean-up.
-
- Will cook in 'next'.
- source: <20251020-refs-code-cleanup-v2-0-f5349ed0f6a5@gmail.com>
-
-
-* lo/repo-info-all (2025-10-26) 2 commits
- - repo: add --all to git-repo-info
- - repo: factor out field printing to dedicated function
-
- "git repo info" learned "--all" option.
-
- Expecting a (hopefully small and final) reroll.
- cf. <xmqqpla43wcp.fsf@gitster.g> <aQRaRuBtt_r7SamL@pks.im>
- source: <20251026225409.46647-1-lucasseikioshiro@gmail.com>
-
-
-* en/xdiff-cleanup-2 (2025-11-11) 10 commits
- - xdiff: rename rindex -> reference_index
- - xdiff: change rindex from long to size_t in xdfile_t
- - xdiff: make xdfile_t.nreff a size_t instead of long
- - xdiff: make xdfile_t.nrec a size_t instead of long
- - xdiff: split xrecord_t.ha into line_hash and minimal_perfect_hash
- - xdiff: use unambiguous types in xdl_hash_record()
- - xdiff: use size_t for xrecord_t.size
- - xdiff: make xrecord_t.ptr a uint8_t instead of char
- - xdiff: use ptrdiff_t for dstart/dend
- - doc: define unambiguous type mappings across C and Rust
-
- Code clean-up.
-
- Comments?
- source: <pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com>
-
-
-* ar/run-command-hook (2025-10-17) 10 commits
- - receive-pack: convert receive hooks to hook API
- - receive-pack: convert update hooks to new API
- - hooks: allow callers to capture output
- - run-command: allow capturing of collated output
- - reference-transaction: use hook API instead of run-command
- - hook: allow overriding the ungroup option
- - transport: convert pre-push to hook API
- - hook: convert 'post-rewrite' hook in sequencer.c to hook API
- - hook: provide stdin via callback
- - run-command: add stdin callback for parallelization
-
- Use hook API to replace ad-hoc invocation of hook scripts with the
- run_command() API.
-
- Comments?
- source: <20251017141544.1538542-1-adrian.ratiu@collabora.com>
-
-
-* je/doc-reset (2025-10-17) 4 commits
- - doc: git-reset: clarify `git reset <pathspec>`
- - doc: git-reset: clarify `git reset [mode]`
- - doc: git-reset: clarify intro
- - doc: git-reset: reorder the forms
-
- Documentation updates.
-
- Expecting a reroll.
- cf. <8099e7ef-2673-407e-8cca-e6b566b99549@app.fastmail.com>
- source: <pull.1991.git.1760731558.gitgitgadget@gmail.com>
-
-
-* ps/ref-peeled-tags (2025-11-04) 18 commits
-  (merged to 'next' on 2025-11-04 at 3818774c94)
- + t7004: do not chdir around in the main process
- + ref-filter: fix stale parsed objects
- + ref-filter: parse objects on demand
- + ref-filter: detect broken tags when dereferencing them
- + refs: don't store peeled object IDs for invalid tags
- + object: add flag to `peel_object()` to verify object type
- + refs: drop infrastructure to peel via iterators
- + refs: drop `current_ref_iter` hack
- + builtin/show-ref: convert to use `reference_get_peeled_oid()`
- + ref-filter: propagate peeled object ID
- + upload-pack: convert to use `reference_get_peeled_oid()`
- + refs: expose peeled object ID via the iterator
- + refs: refactor reference status flags
- + refs: fully reset `struct ref_iterator::ref` on iteration
- + refs: introduce `.ref` field for the base iterator
- + refs: introduce wrapper struct for `each_ref_fn`
- + Merge branch 'jt/repo-structure' into ps/ref-peeled-tags
- + Merge branch 'tb/incremental-midx-part-3.1' into ps/ref-peeled-tags
- (this branch is used by kn/maintenance-is-needed, kn/refs-optim-cleanup and ps/ref-peeled-tags-fixes.)
-
- Some ref backend storage can hold not just the object name of an
- annotated tag, but the object name of the object the tag points at.
- The code to handle this information has been streamlined.
-
- Will cook in 'next'.
- source: <20251023-b4-pks-ref-filter-skip-parsing-objects-v4-0-2be68ce82c9a@pks.im>
-
-
-* je/doc-data-model (2025-11-12) 1 commit
- - doc: add an explanation of Git's data model
-
- Add a new manual that describes the data model.
-
- Will merge to 'next'?
- source: <pull.1981.v7.git.1762977200244.gitgitgadget@gmail.com>
-
-
-* ps/history (2025-10-27) 12 commits
- - builtin/history: implement "split" subcommand
- - cache-tree: allow writing in-memory index as tree
- - add-patch: add support for in-memory index patching
- - add-patch: remove dependency on "add-interactive" subsystem
- - add-patch: split out `struct interactive_options`
- - add-patch: split out header from "add-interactive.h"
- - builtin/history: implement "reword" subcommand
- - builtin: add new "history" command
- - replay: stop using `the_repository`
- - replay: extract logic to pick commits
- - wt-status: provide function to expose status for trees
- - Merge branch 'sa/replay-atomic-ref-updates' into ps/history
- (this branch uses sa/replay-atomic-ref-updates.)
-
- "git history" history rewriting UI.
-
- Comments?
- source: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
-
-
-* ms/doc-worktree-side-by-side (2025-10-10) 2 commits
- - doc: git-worktree: Add side by side branch checkout example
- - doc: git-worktree: Link to examples
-
- Document "git worktree add" and use of out-of-tree worktrees with
- examples.
-
- Expecting a reroll.
- cf. <CAPig+cSNesf0UwS4=Bxe-Qn+G9y3YYPyOK+7y3q8QJk+o7jaVg@mail.gmail.com>
- source: <a203b35538847f3c9358a5ae26fb4ebea5734cfc.1759420102.git.msuchanek@suse.de>
-
-
-* sa/replay-atomic-ref-updates (2025-11-05) 3 commits
- - replay: add replay.refAction config option
- - replay: make atomic ref updates the default behavior
- - replay: use die_for_incompatible_opt2() for option validation
- (this branch is used by ps/history.)
-
- "git replay" (experimental) learned to perform ref updates itself
- in a transaction by default, instead of emitting where each refs
- should point at and leaving the actual update to another command.
-
- Will merge to 'next'?
- source: <20251105191650.89975-1-siddharthasthana31@gmail.com>
-
-
-* ar/submodule-gitdir-tweak (2025-11-07) 4 commits
- - submodule: fix case-folding gitdir filesystem colisions
- - submodule: add extension to encode gitdir paths
- - builtin/credential-store: move is_rfc3986_unreserved to url.[ch]
- - submodule--helper: use submodule_name_to_gitdir in add_submodule
-
- Avoid local submodule repository directory paths overlapping with
- each other by encoding submodule names before using them as path
- components.
-
- Comments?
- source: <20251107150547.3272180-1-adrian.ratiu@collabora.com>
-
---------------------------------------------------
-[Discarded]
-
-* ps/rust-cbindgen (2025-10-24) 6 commits
- . rust: generate bindings via cbindgen
- . meson: rename Rust library target
- . ci: use Debian instead of deprecated i386/ubuntu
- . gitlab-ci: backfill missing Linux jobs
- . gitlab-ci: reorder Linux job matrix to match GitHub's order
- . Merge branch 'ps/ci-rust' into ps/rust-cbindgen
-
- Introduce cbindgen in the build framework to help interfacing with
- Rust.
-
- Retracted.
- cf. <aQ3XOTX0AT_eFc5P@pks.im>
- source: <20251024-b4-pks-rust-cbindgen-v2-0-4b4bd4f18490@pks.im>
