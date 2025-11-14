@@ -1,109 +1,184 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D2929AB15
-	for <git@vger.kernel.org>; Fri, 14 Nov 2025 17:25:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7283446D7
+	for <git@vger.kernel.org>; Fri, 14 Nov 2025 17:50:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763141120; cv=none; b=K43HXQJUAQJK59R27oTEd8BP8Ur82Z704hpormDqKga8VnFLqmTZ+YV9y23cKJgwacSGA8anl1mRkGAaVgAeasi+WxxcFBD8F4sZ+Kk92kHPjDoPrSuzTh/plufRW1vhPOeqzM6AucKxTs+SNYvszWggWiu+Y4DJPlCJtI7WdDI=
+	t=1763142639; cv=none; b=PhlJIeeyLNeCjpPcPb6KOXipHcFYzpJE42xhD67/LIdZ+K4HnWi+6UXCs+IJmiQPIi7uVK4e5eAkHcab05lefMOKjWehUD8E58nwKlNUXVc/l7tWLyVtdPsVq5v/Uv/FWnL8pi05zYsYigkIYoAENmddpscV3bU8x0SvTvwtSqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763141120; c=relaxed/simple;
-	bh=n2h/K6eRHX4ZpPdemRVr5+JBoRoqKf3Qlr6j4gt0YY4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=slnlaTx2q3NYgGuI/iWQ+Ncua/cs9h/KYqwBlWW4WFvti+mORG17r4eJlyXZ7o+34N4sw0mXU1widIhrGmasDY5jfmQoV1LZJUELBVGx/vgeGZf4Wfvj1Az+TC2UX6gdsq9xD0o0vfUIOchZhywFvxFoCbi2nGQR35i3FI+19wM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WopmGcbE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WUCTC+kv; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763142639; c=relaxed/simple;
+	bh=ged6xsWV4XAzLPbwbRSywxDUWnC9/D/jkp4PQQJ754A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eOhfOzp7yY78VL8uV3eyToWkvzzE/ASXbLZUiu9F0PnIiqXui7QCIjhCiFmq/VbC2zE/CNIbZA9qDuv9G74NNzfu3edvdsnMM0BNE+5T/Rk8BHkrhJWCTIuBzGB1rb/8XRswWzA2dpgfPhctPGqTy/4ksjamNDMUEpr28qTDWUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d6x3YCju; arc=none smtp.client-ip=209.85.210.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WopmGcbE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WUCTC+kv"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9D2191D00163;
-	Fri, 14 Nov 2025 12:25:16 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 14 Nov 2025 12:25:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763141116; x=1763227516; bh=/gZk8dYeQJ
-	NeaW1g0CFUFnxzvzhPrbLtgzczz9DyPEc=; b=WopmGcbEDumW2MitpmztfQW23v
-	Hb5Y3C7/tYBKQx/56WzfpfbUzBtkSZkQdgEPq+aDbHUZGKtcWWmXW1O6mG/xM7wK
-	aAXOQfTglEWUBc/XIShikYoDVs5fHjzN9hd1//rhCsq9v/RI+LzfUXmAq1/sPcKA
-	LE0Ywuvm7jLWAra6MjJy2f71edSkPbFA8ba6sPitDBpL0sKUnQrav9PlmeblZg4r
-	c1AJ9pP+RBY6OyeX0MBd8C2iwKSREl8mg94eSi7mC2rcM+WVTS/fnB3EgbOTRQf4
-	+O1q/2KjfHaJJZDvLO+jz4nfaKM8QeW7FXj3/TpjeJRJZTFGPK4Aob2KRsrg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763141116; x=1763227516; bh=/gZk8dYeQJNeaW1g0CFUFnxzvzhPrbLtgzc
-	zz9DyPEc=; b=WUCTC+kvfOKnqaCEiNsWTlBndkZAa6uWrY+bLek++67hGhnNCcc
-	z5WG1KwSNHoyNK8XuL/x0NjP2tiOTzNf0/48tm53CQDqOaE3Gt+xaabOaHk6WY7Y
-	CBZq9IGvItBKNK9DqKvfGRJJv3+2Qo6Y7NrXOTij2Bn8M67LPElD7F9JUYYTkrYk
-	EEqOmvGw+bEwNvM37qh+7WRB29jqAjlOVhYSmnz9O1dkNUUdtSiMkLcSbmdDrcqY
-	+ICjMH11WuZy+CMcB2sxg9E/yvahf8dSE3ekOz/8dk1Xi/hfPY9jxBpybJLzar+Q
-	baLSVn+yzfRYZOTxB3KdIqhoB3sGWLDHMFw==
-X-ME-Sender: <xms:_GUXaYC0falSlhwz9JjT2Gi64DpqPrpoa25iie8iGcAtOY9KwOhs5g>
-    <xme:_GUXaRbB3Zt3R9TaWUjDHZwIg-wjWhWWfxkVGeefwrB71Z2fNmId4GKU5Fu7ZwgiH
-    UhO89Paa9LiSXhgQWYjfDzV9NJVIG862iqEse8T8PMwKuIVsQp8aA>
-X-ME-Received: <xmr:_GUXaT6NP1CMOPmEBf0k73-xwMYCCk-NhZOJxXo9kvYBIwwTm3yRa3LMSw8UMPt7hirdDRZg5Z2xCBNxx2SQXNAri924MORLnEW_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvuddtgedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghfkgffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpefhieeflefgfeeuudejleegtdfhieeivdffteevfeeivdevhffghefhhedt
-    hfejvdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsh
-    grnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:_GUXaaYBvsKsgRqPntFabe5iuxp-nHavPOym2mPcXUK1Ac4zko77yQ>
-    <xmx:_GUXaaiUf05PkwmUNLSrXJCWRR6WNAQ26kkxgxBKaoXkbgR77DscEw>
-    <xmx:_GUXaT-VvcqkVLDK9rtj0Ix1o41Vo5RIdy4ZzNicNts0tfcOpqoqRg>
-    <xmx:_GUXadptHDX_V4nYzTsZhmwakzC624WUFRjYJJYVisoIPGnGN1hWXw>
-    <xmx:_GUXaYp7z3VAFFbmdzZ5UUGq-wEVQ3NjtWgP9U8KuaQHwa1lZTBIvmiR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Nov 2025 12:25:15 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,  Ezekiel Newren
- <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 00/14] SHA-1/SHA-256 interoperability, part 2
-In-Reply-To: <20251027004404.2152927-1-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Mon, 27 Oct 2025 00:43:50 +0000")
-References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
-Importance: high
-Date: Fri, 14 Nov 2025 09:25:14 -0800
-Message-ID: <xmqq7bvsjzlx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d6x3YCju"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7c6da5e3353so1768606a34.3
+        for <git@vger.kernel.org>; Fri, 14 Nov 2025 09:50:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763142636; x=1763747436; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=58MqYTunZkNzGpn4qdNNACBxYN7GU7l4uoD65lj6+W0=;
+        b=d6x3YCju8zVtagXpbHjFIV625S+7ibLmbgbjXsyt8Z0bvaHGDX36RYQDJJxMgjmdoR
+         2ufozqK6BJAmRTtC9XMGOo5/77lk+rDHj8b+SWzQUkZE7k/ETLu9Vm6hTCPRnJj2xGeF
+         P+BDGtmObqURCUlYBQxFigctDGbWCYhlgg2r+SV9FeVPFTrHRPRA9riHRL+3rhLKv0xJ
+         jrcnJbc0Jqmx2AZkJZuKIRs+ybALAsGOTScUXkppLA7vezwjL8gM9HTLSCydE6JInEjb
+         HbzFH4tdufEQ0MsmUhMCVvkAz1OzwmirZkk1FaX4M5VPxiBmMdvhnVYCoy1Cp5hcN0G1
+         4Lag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763142636; x=1763747436;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=58MqYTunZkNzGpn4qdNNACBxYN7GU7l4uoD65lj6+W0=;
+        b=THaXik5iIgfia7sugd4g+wK81tHKimeQnB/p5bwvLRGo6vQjPrx9SnKgycfEYQAcyc
+         BKJWogvq3vZ6Z1MW2H+KAxCWsuwKWfLYfLhzvvhGmF6K37kYbYxP/FWdsTj5rtUYjwIU
+         yjvWncLJtrCT7iWaUl8wl5E9P+B2WTi3aBcg82MojP5Ta14PBE7c2Ex9/8CMwDIZ5A+u
+         8EBDoo+SdTd1ctzeAxzZecm2d/x21eZIFszc0ErERMWRco3NKKF9+y29FFuCXuMFalVx
+         PM2iNVGAHki7ZK7lQdizYp3o31lETpz0smh0Xa/FcBWTkh2GQCqUbjmgYfTErLiQEEVN
+         i7xw==
+X-Forwarded-Encrypted: i=1; AJvYcCXoaoH/Pps5VUql3U/zpRgCelrCV3VK+gOJ8eNCgIdFMyq5Q8L/efHfjoRG0M9zXAXcZKg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxnLydzPGilm1v8a1gXoMONqCe/FEUduJt1jqbvakLcxoG0SBcQ
+	evHnaqCLd1SCFjFZaIJrmXuIhz1QAFsV2ED49DjMVxQGl7CVod17Pn7K
+X-Gm-Gg: ASbGncsV32v0dYYm+MPa2p9oaihP+9EiNGScTuMZU6RvCMS2buflyx9F4lIlLDgZ3ZB
+	+8cdGpk9XltK7keAebj8B580IHDlahVZVQdcyKTWyDi3L5f4qfmAzWXo3jH0gDA+okBFoYlQu+u
+	cF3Tzmqc44+AgaA5O0bpxn+ZGoTrxRLoQSHF2MQTl3WWf/NGXRnseQuFXkGzmXcC4J8c6gkIYD3
+	LyMDBcX2AKZ7C6kI7nQYFbjQXas9ZR7W0HMeMR0f1YkGRxC3bBk7JaUoLE1XwyILM7tPx9xF3zA
+	BeXaHgXsGz8n4DojaKMXXJgezkw7HWwgnq0JSMANRse60cWD9NGdLekmejilBrwXgqeOwH8xgQX
+	oKAJxXk0qw/SOAR32y4/plaVJ8Y81+jY39c/45v8mHlUEJ0QyC/vrnMECYdMuNJzX/PHR6D49Ns
+	zV1+NKvd++6rwfehs=
+X-Google-Smtp-Source: AGHT+IHhfn01h288qdkBRN8ePS6mjkA16tuBfFHmy6zsKKAuN6Okx/Ct42+uRb4OEg2syXSA7tNEhw==
+X-Received: by 2002:a05:6830:25d6:b0:7c6:ca92:3617 with SMTP id 46e09a7af769-7c744430d68mr2784846a34.9.1763142636429;
+        Fri, 14 Nov 2025 09:50:36 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7c73a3bddbasm2812485a34.27.2025.11.14.09.50.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Nov 2025 09:50:36 -0800 (PST)
+Date: Fri, 14 Nov 2025 11:50:32 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Jiang Xin <worldhello.net@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>, 
+	Alexander Shopov <ash@kambanaria.org>, Mikel Forcada <mikel.forcada@gmail.com>, 
+	Ralf Thielow <ralf.thielow@gmail.com>, =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>, 
+	Bagas Sanjaya <bagasdotme@gmail.com>, Dimitriy Ryazantcev <DJm00n@mail.ru>, 
+	Peter Krefting <peter@softwolves.pp.se>, Emir SARI <bitigchi@me.com>, Arkadii Yakovets <ark@cho.red>, 
+	=?utf-8?B?VsWpIFRp4bq/biBIxrBuZw==?= <newcomerminecraft@gmail.com>, Teng Long <dyroneteng@gmail.com>, 
+	Yi-Jyun Pan <pan93412@gmail.com>, Gemini <noreply@developers.google.com>
+Subject: Re: [PATCH 2/2] builtin/repo: fix table alignment for UTF-8
+ characters
+Message-ID: <wgxzx47nsro3h6ju3t2aatrygkr5g7i2dbl26fj53qh4f7jdxw@d233r7jflrke>
+References: <cover.1763098804.git.worldhello.net@gmail.com>
+ <a50bcde6446fbd87b4fb04b28c579a915457813a.1763098804.git.worldhello.net@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a50bcde6446fbd87b4fb04b28c579a915457813a.1763098804.git.worldhello.net@gmail.com>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On 25/11/14 12:52AM, Jiang Xin wrote:
+> The output table from "git repo structure" is misaligned when displaying
+> UTF-8 characters (e.g., non-ASCII glyphs). E.g.:
+> 
+>     | 仓库结构   | 值  |
+>     | -------------- | ---- |
+>     | * 引用       |      |
+>     |   * 计数     |   67 |
+>     |     * 分支   |    6 |
+>     |     * 标签   |   30 |
+>     |     * 远程   |   19 |
+>     |     * 其它   |   12 |
+>     |                |      |
+>     | * 可达对象 |      |
+>     |   * 计数     | 2217 |
+>     |     * 提交   |  279 |
+>     |     * 树      |  740 |
+>     |     * 数据对象 | 1168 |
+>     |     * 标签   |   30 |
+> 
+> The previous implementation used simple width formatting with printf()
+> which didn't properly handle multi-byte UTF-8 characters, causing
+> misaligned table columns when displaying repository structure
+> information.
 
-> The new Rust files have adopted an approach that is slightly different
-> from some of our other files and placed a license notice at the top.
-> This is required because of DCO part (a): "I have the right to submit it
-> under the open source license indicated in the file".  It also avoids
-> ambiguity if the file is copied into a separate location (such as an LLM
-> training corpus).
+Thanks for finding this issue and submitting a fix! I failed to consider
+the fact that the printf() format specifier width would be counting
+bytes. This causes the overall line width to fall short in some
+scenarios with multi-byte UTF-8 characters.
 
-You may be aware of them already, but just in case, I was looking at
-CI breakages and noticed that "cargo clippy" warnings added in
-4b44c464 (ci: check for common Rust mistakes via Clippy, 2025-10-15)
+> This change modifies the stats_table_print_structure function to use
+> strbuf_utf8_align() instead of basic printf width specifiers. This
+> ensures proper column alignment regardless of the character encoding of
+> the content being displayed.
 
-   https://github.com/git/git/actions/runs/19346329259/job/55347554528#step:5:73
+Makes sense.
 
-mostly seem to come from steps 12 and 13 of this series.
+> Co-developed-by: Gemini <noreply@developers.google.com>
+> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+> ---
+>  builtin/repo.c | 22 ++++++++++++++++++----
+>  1 file changed, 18 insertions(+), 4 deletions(-)
+> 
+> diff --git a/builtin/repo.c b/builtin/repo.c
+> index 9d4749f79b..d0b4a060b1 100644
+> --- a/builtin/repo.c
+> +++ b/builtin/repo.c
+> @@ -292,14 +292,21 @@ static void stats_table_print_structure(const struct stats_table *table)
+>  	int name_col_width = utf8_strwidth(name_col_title);
+>  	int value_col_width = utf8_strwidth(value_col_title);
+>  	struct string_list_item *item;
+> +	struct strbuf buf = STRBUF_INIT;
+>  
+>  	if (table->name_col_width > name_col_width)
+>  		name_col_width = table->name_col_width;
+>  	if (table->value_col_width > value_col_width)
+>  		value_col_width = table->value_col_width;
+>  
+> -	printf("| %-*s | %-*s |\n", name_col_width, name_col_title,
+> -	       value_col_width, value_col_title);
+> +	strbuf_addstr(&buf, "| ");
+> +	strbuf_utf8_align(&buf, ALIGN_LEFT, name_col_width, name_col_title);
+> +	strbuf_addstr(&buf, " | ");
+> +	strbuf_utf8_align(&buf, ALIGN_LEFT, value_col_width, value_col_title);
+> +	strbuf_addstr(&buf, " |");
+> +	printf("%s\n", buf.buf);
 
-Thanks.
+Ok, using strbuf_utf8_align() compensates the line width when using
+multi-byte UTF-8 characters to ensure the correct length. Looks good.
+
+> +	strbuf_reset(&buf);
+
+Do we need to reset the buffer here? In the following loop we reset it
+at the start of each iteration.
+
+> +
+>  	printf("| ");
+>  	for (int i = 0; i < name_col_width; i++)
+>  		putchar('-');
+> @@ -317,9 +324,16 @@ static void stats_table_print_structure(const struct stats_table *table)
+>  			value = entry->value;
+>  		}
+>  
+> -		printf("| %-*s | %*s |\n", name_col_width, item->string,
+> -		       value_col_width, value);
+> +		strbuf_reset(&buf);
+> +		strbuf_addstr(&buf, "| ");
+> +		strbuf_utf8_align(&buf, ALIGN_LEFT, name_col_width, item->string);
+> +		strbuf_addstr(&buf, " | ");
+> +		strbuf_utf8_align(&buf, ALIGN_RIGHT, value_col_width, value);
+> +		strbuf_addstr(&buf, " |");
+> +		printf("%s\n", buf.buf);
+
+Here we do the same thing for the values column. Looks good to me.
+
+Thanks,
+-Justin
