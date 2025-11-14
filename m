@@ -1,79 +1,100 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7283446D7
-	for <git@vger.kernel.org>; Fri, 14 Nov 2025 17:50:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208C62F39AF
+	for <git@vger.kernel.org>; Fri, 14 Nov 2025 19:22:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763142639; cv=none; b=PhlJIeeyLNeCjpPcPb6KOXipHcFYzpJE42xhD67/LIdZ+K4HnWi+6UXCs+IJmiQPIi7uVK4e5eAkHcab05lefMOKjWehUD8E58nwKlNUXVc/l7tWLyVtdPsVq5v/Uv/FWnL8pi05zYsYigkIYoAENmddpscV3bU8x0SvTvwtSqA=
+	t=1763148185; cv=none; b=K/Aqee9TjR4fczVKpvLU/foZips3b/mwfWpK1fOUCeEUbLdbfqzArvqP7FB6IKeoq1zhpOEwivKMNllW7zCLU1SXXmIXjxo493jY96ezXQ8VZ4T2SASe11Xfq5pV5c9I3K2+axXKev+w15W04RVtSm+V5Ut4kANW4r7ak2AG7LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763142639; c=relaxed/simple;
-	bh=ged6xsWV4XAzLPbwbRSywxDUWnC9/D/jkp4PQQJ754A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eOhfOzp7yY78VL8uV3eyToWkvzzE/ASXbLZUiu9F0PnIiqXui7QCIjhCiFmq/VbC2zE/CNIbZA9qDuv9G74NNzfu3edvdsnMM0BNE+5T/Rk8BHkrhJWCTIuBzGB1rb/8XRswWzA2dpgfPhctPGqTy/4ksjamNDMUEpr28qTDWUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d6x3YCju; arc=none smtp.client-ip=209.85.210.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763148185; c=relaxed/simple;
+	bh=gQ16gUNYjZerxec5754WH4orT4iQgU6pONVpUcr+E2U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=d/3JUzE69dMDIYxNF8E3dD/aPmfSo4VJOqy2tg9xge03K/Yb8Leuv1/kXewfjPIp29T0wdGVJ/fsFdt/oGtpBbdWEvzGAPfOYEY0TSWLUhwc7tZcXf2gRnlixYz1IDeYQeyF4+GEa99oQQqJo0QCWhV+nA0k2lZjhiIFeSQ2GMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RLcWXgz9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b2NYDn2+; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d6x3YCju"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7c6da5e3353so1768606a34.3
-        for <git@vger.kernel.org>; Fri, 14 Nov 2025 09:50:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763142636; x=1763747436; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=58MqYTunZkNzGpn4qdNNACBxYN7GU7l4uoD65lj6+W0=;
-        b=d6x3YCju8zVtagXpbHjFIV625S+7ibLmbgbjXsyt8Z0bvaHGDX36RYQDJJxMgjmdoR
-         2ufozqK6BJAmRTtC9XMGOo5/77lk+rDHj8b+SWzQUkZE7k/ETLu9Vm6hTCPRnJj2xGeF
-         P+BDGtmObqURCUlYBQxFigctDGbWCYhlgg2r+SV9FeVPFTrHRPRA9riHRL+3rhLKv0xJ
-         jrcnJbc0Jqmx2AZkJZuKIRs+ybALAsGOTScUXkppLA7vezwjL8gM9HTLSCydE6JInEjb
-         HbzFH4tdufEQ0MsmUhMCVvkAz1OzwmirZkk1FaX4M5VPxiBmMdvhnVYCoy1Cp5hcN0G1
-         4Lag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763142636; x=1763747436;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=58MqYTunZkNzGpn4qdNNACBxYN7GU7l4uoD65lj6+W0=;
-        b=THaXik5iIgfia7sugd4g+wK81tHKimeQnB/p5bwvLRGo6vQjPrx9SnKgycfEYQAcyc
-         BKJWogvq3vZ6Z1MW2H+KAxCWsuwKWfLYfLhzvvhGmF6K37kYbYxP/FWdsTj5rtUYjwIU
-         yjvWncLJtrCT7iWaUl8wl5E9P+B2WTi3aBcg82MojP5Ta14PBE7c2Ex9/8CMwDIZ5A+u
-         8EBDoo+SdTd1ctzeAxzZecm2d/x21eZIFszc0ErERMWRco3NKKF9+y29FFuCXuMFalVx
-         PM2iNVGAHki7ZK7lQdizYp3o31lETpz0smh0Xa/FcBWTkh2GQCqUbjmgYfTErLiQEEVN
-         i7xw==
-X-Forwarded-Encrypted: i=1; AJvYcCXoaoH/Pps5VUql3U/zpRgCelrCV3VK+gOJ8eNCgIdFMyq5Q8L/efHfjoRG0M9zXAXcZKg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxnLydzPGilm1v8a1gXoMONqCe/FEUduJt1jqbvakLcxoG0SBcQ
-	evHnaqCLd1SCFjFZaIJrmXuIhz1QAFsV2ED49DjMVxQGl7CVod17Pn7K
-X-Gm-Gg: ASbGncsV32v0dYYm+MPa2p9oaihP+9EiNGScTuMZU6RvCMS2buflyx9F4lIlLDgZ3ZB
-	+8cdGpk9XltK7keAebj8B580IHDlahVZVQdcyKTWyDi3L5f4qfmAzWXo3jH0gDA+okBFoYlQu+u
-	cF3Tzmqc44+AgaA5O0bpxn+ZGoTrxRLoQSHF2MQTl3WWf/NGXRnseQuFXkGzmXcC4J8c6gkIYD3
-	LyMDBcX2AKZ7C6kI7nQYFbjQXas9ZR7W0HMeMR0f1YkGRxC3bBk7JaUoLE1XwyILM7tPx9xF3zA
-	BeXaHgXsGz8n4DojaKMXXJgezkw7HWwgnq0JSMANRse60cWD9NGdLekmejilBrwXgqeOwH8xgQX
-	oKAJxXk0qw/SOAR32y4/plaVJ8Y81+jY39c/45v8mHlUEJ0QyC/vrnMECYdMuNJzX/PHR6D49Ns
-	zV1+NKvd++6rwfehs=
-X-Google-Smtp-Source: AGHT+IHhfn01h288qdkBRN8ePS6mjkA16tuBfFHmy6zsKKAuN6Okx/Ct42+uRb4OEg2syXSA7tNEhw==
-X-Received: by 2002:a05:6830:25d6:b0:7c6:ca92:3617 with SMTP id 46e09a7af769-7c744430d68mr2784846a34.9.1763142636429;
-        Fri, 14 Nov 2025 09:50:36 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7c73a3bddbasm2812485a34.27.2025.11.14.09.50.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Nov 2025 09:50:36 -0800 (PST)
-Date: Fri, 14 Nov 2025 11:50:32 -0600
-From: Justin Tobler <jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RLcWXgz9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b2NYDn2+"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 394261400085;
+	Fri, 14 Nov 2025 14:22:58 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 14 Nov 2025 14:22:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1763148178;
+	 x=1763234578; bh=JferhuNREwt7Stc1JX9hSy+67l62dc05u8MytTnQtho=; b=
+	RLcWXgz9OQPQ+SeeJp5lnZTiYc+gMrIiEJAOxLqGmYgmDuqRUEyqG24LyjtENHlP
+	BAT6DV3q3eAWnZRLhAUHn6MzQikZua5TEeejBnKgvGxUB46s1j4QI9KFZBt55LBy
+	EPZcqSV9rN2F9tIso8dtG1o/CyUtmCOVpuHSdq84JicTBLHe5CJHu7M1gB1Pr+YE
+	GmLXEFE+joIUB8f2ObJ8Q2ygFqJXfryQPennkyOYoiRpGPYM4kungQtXOumjLJLr
+	/1PNmimP3pMHpE2i67u8LbxHr9P85kmzceOoDxXg/+4Ds1RaafIgY4jeJ5f8sQgX
+	5zqjsirQbUOERYaodPcvhA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763148178; x=
+	1763234578; bh=JferhuNREwt7Stc1JX9hSy+67l62dc05u8MytTnQtho=; b=b
+	2NYDn2+ruZzqNu0Ln5yAVxpLv+BqGwb50pTorOCTfW7SsgQZLXSUFucmJP4q8H2D
+	DlEdbDU2omeRBT2MhNsTsF3xJ0jPDATSSuFD/OwfgjZemFCdix54dZ7eWsAaNbYo
+	7vT2ggwqgG8kCeP3IyB85pzyUt/j/wKjkG4Q62zypZF0gfL1aCoxgYjb9/ZPruDh
+	CXhUxlyb/5HPE6wdTSZJckR8HLb6gB5t9kdFG50NA6zrzpmncBhc98Bs6pWQW+gT
+	uMevOXAZBxm7PD3k485bIeeYM6OUvJ8Bxrz9G7+VSWvxWYiCCwvYwwXHyv1cHGcn
+	+bYvpoD4/pcJmPdlaGHLQ==
+X-ME-Sender: <xms:kIEXaVyHthZx0DBDznyALZnijwsuODUWd7sPdRp2PemDSjsLpKwhXQ>
+    <xme:kIEXaeqVigtu3hRWyU7OclGPLKszyI7k9EgA_udHTbRJCYJ9heSUsxfEdjhGTMmoR
+    vt603VGyGpN7SPrgpx9o1E_54ZeWLiK66iqv6M17VBVXUqptViipw>
+X-ME-Received: <xmr:kIEXaX1OaVzFKr5ZkyYqBzR53U8ZkRnjybg53NPS6iFD_txKhrWKEsc8m4eHyXlbZbfnXHQTvrZ1YGpT8sPXPJBogsVkgu3cBdhi>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvuddtieehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedujedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepfihorhhlughhvghllhhordhnvghtsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgr
+    shhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthho
+    pegrshhhsehkrghmsggrnhgrrhhirgdrohhrghdprhgtphhtthhopehmihhkvghlrdhfoh
+    hrtggruggrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhgrlhhfrdhthhhivghlohif
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpd
+    hrtghpthhtohepsggrghgrshguohhtmhgvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:kIEXaXA3z_KWv-CfIhnQscJWB5Fjs7RWqvi-BC7xGaBdf5lvJkOTMw>
+    <xmx:kIEXaYNA9qcTI2z7X37Iy_WvIWCBjhV90a_enDL6q2QLpr-YX2eQZg>
+    <xmx:kIEXabTzFILd4JIURx2d_fEjoaF5KwtFQAu78HQ1Zzxcvriv1_dxCg>
+    <xmx:kIEXaQ4exbH_ytzJLE2AiyRBPwuFxDRB98ZroGIiXDTFraeaKOuQ9A>
+    <xmx:koEXadhy447IXAIIE8ku4-oDvlmTa8FeL9cGPo9p7il6S0oGUCx3fXc4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 14 Nov 2025 14:22:56 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
 To: Jiang Xin <worldhello.net@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>, 
-	Alexander Shopov <ash@kambanaria.org>, Mikel Forcada <mikel.forcada@gmail.com>, 
-	Ralf Thielow <ralf.thielow@gmail.com>, =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>, 
-	Bagas Sanjaya <bagasdotme@gmail.com>, Dimitriy Ryazantcev <DJm00n@mail.ru>, 
-	Peter Krefting <peter@softwolves.pp.se>, Emir SARI <bitigchi@me.com>, Arkadii Yakovets <ark@cho.red>, 
-	=?utf-8?B?VsWpIFRp4bq/biBIxrBuZw==?= <newcomerminecraft@gmail.com>, Teng Long <dyroneteng@gmail.com>, 
-	Yi-Jyun Pan <pan93412@gmail.com>, Gemini <noreply@developers.google.com>
-Subject: Re: [PATCH 2/2] builtin/repo: fix table alignment for UTF-8
- characters
-Message-ID: <wgxzx47nsro3h6ju3t2aatrygkr5g7i2dbl26fj53qh4f7jdxw@d233r7jflrke>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Git List
+ <git@vger.kernel.org>,  Justin Tobler <jltobler@gmail.com>,  Alexander
+ Shopov <ash@kambanaria.org>,  Mikel Forcada <mikel.forcada@gmail.com>,
+  Ralf Thielow <ralf.thielow@gmail.com>,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
+ <jn.avila@free.fr>,  Bagas Sanjaya <bagasdotme@gmail.com>,  Dimitriy
+ Ryazantcev <DJm00n@mail.ru>,  Peter Krefting <peter@softwolves.pp.se>,
+  Emir SARI <bitigchi@me.com>,  Arkadii Yakovets <ark@cho.red>,
+  =?utf-8?B?VsWpIFRp4bq/biBIxrBuZw==?= <newcomerminecraft@gmail.com>,  Teng
+ Long <dyroneteng@gmail.com>,
+  Yi-Jyun Pan <pan93412@gmail.com>
+Subject: Re: [PATCH 0/2] Fix misaligned output of git repo structure
+In-Reply-To: <CANYiYbGyGKy=S6a3NJFyrv-bOZos+BXdR=nPXDT3W_dGxeiNPA@mail.gmail.com>
+	(Jiang Xin's message of "Fri, 14 Nov 2025 17:52:34 +0800")
 References: <cover.1763098804.git.worldhello.net@gmail.com>
- <a50bcde6446fbd87b4fb04b28c579a915457813a.1763098804.git.worldhello.net@gmail.com>
+	<8cb5d668-783f-4400-89b4-35054a6cbea0@app.fastmail.com>
+	<CANYiYbGyGKy=S6a3NJFyrv-bOZos+BXdR=nPXDT3W_dGxeiNPA@mail.gmail.com>
+Date: Fri, 14 Nov 2025 11:22:54 -0800
+Message-ID: <xmqqecq0ifld.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,104 +102,83 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a50bcde6446fbd87b4fb04b28c579a915457813a.1763098804.git.worldhello.net@gmail.com>
 
-On 25/11/14 12:52AM, Jiang Xin wrote:
-> The output table from "git repo structure" is misaligned when displaying
-> UTF-8 characters (e.g., non-ASCII glyphs). E.g.:
-> 
->     | 仓库结构   | 值  |
->     | -------------- | ---- |
->     | * 引用       |      |
->     |   * 计数     |   67 |
->     |     * 分支   |    6 |
->     |     * 标签   |   30 |
->     |     * 远程   |   19 |
->     |     * 其它   |   12 |
->     |                |      |
->     | * 可达对象 |      |
->     |   * 计数     | 2217 |
->     |     * 提交   |  279 |
->     |     * 树      |  740 |
->     |     * 数据对象 | 1168 |
->     |     * 标签   |   30 |
-> 
-> The previous implementation used simple width formatting with printf()
-> which didn't properly handle multi-byte UTF-8 characters, causing
-> misaligned table columns when displaying repository structure
-> information.
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-Thanks for finding this issue and submitting a fix! I failed to consider
-the fact that the printf() format specifier width would be counting
-bytes. This causes the overall line width to fall short in some
-scenarios with multi-byte UTF-8 characters.
+>> Is `Co-developed-by` supposed to have a different meaning than the more
+>> common `Co-authored-by`?
+>
+> This is a very good question.
+>
+> **Background**
+>
+> At Alibaba Cloud, our development team uses a variety of AI coding tools,
+> including Cursor, Claude Code, Gemini-CLI, Lingma, and Qoder, etc. To
+> measure adoption—specifically, how many developers are using AI coding
+> tools and how much code is AI-generated—we needed a unified tracking
+> mechanism compatible with all these tools. I chose to implement a git
+> commit-msg hook that automatically detects the AI coding tool responsible
+> for a commit based on environment variables at commit time.
 
-> This change modifies the stats_table_print_structure function to use
-> strbuf_utf8_align() instead of basic printf width specifiers. This
-> ensures proper column alignment regardless of the character encoding of
-> the content being displayed.
+In other words, addition of this is solely to help corporations like
+Alibaba to measure which AI tools are used (and what correlation
+there are between success rate of the patches and the tools that
+generated them, etc..
 
-Makes sense.
+What is in it for us?  What benefit are we getting in exchange for
+tolerating these additional trailer lines in our log messages?
 
-> Co-developed-by: Gemini <noreply@developers.google.com>
-> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-> ---
->  builtin/repo.c | 22 ++++++++++++++++++----
->  1 file changed, 18 insertions(+), 4 deletions(-)
-> 
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index 9d4749f79b..d0b4a060b1 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -292,14 +292,21 @@ static void stats_table_print_structure(const struct stats_table *table)
->  	int name_col_width = utf8_strwidth(name_col_title);
->  	int value_col_width = utf8_strwidth(value_col_title);
->  	struct string_list_item *item;
-> +	struct strbuf buf = STRBUF_INIT;
->  
->  	if (table->name_col_width > name_col_width)
->  		name_col_width = table->name_col_width;
->  	if (table->value_col_width > value_col_width)
->  		value_col_width = table->value_col_width;
->  
-> -	printf("| %-*s | %-*s |\n", name_col_width, name_col_title,
-> -	       value_col_width, value_col_title);
-> +	strbuf_addstr(&buf, "| ");
-> +	strbuf_utf8_align(&buf, ALIGN_LEFT, name_col_width, name_col_title);
-> +	strbuf_addstr(&buf, " | ");
-> +	strbuf_utf8_align(&buf, ALIGN_LEFT, value_col_width, value_col_title);
-> +	strbuf_addstr(&buf, " |");
-> +	printf("%s\n", buf.buf);
+A few random thoughts about generated contents:
 
-Ok, using strbuf_utf8_align() compensates the line width when using
-multi-byte UTF-8 characters to ensure the correct length. Looks good.
+ * Disclosing the tools that were used during the development of a
+   patch is a good practice in principle, but this is not limited to
+   use of AI tools.  We have fixes for issues found with existing
+   Coccinelle checks, sanitizers, static checkers, and it is the
+   usual practice for the patches that fix them to disclose how the
+   author discovered the issue.  When making mechanical replacement
+   changes en masse, it is the usual practice for the patches to
+   describe what scripts were used to make the changes in them.  But
+   we do not dedicate a trailer line for such a disclosure, and
+   there is no reason why AI tools has to be treated specially here.
+   Instead of "Co-developed-by" that only tells what tool was used,
+   why not disclose what prompts (again, somehow AI tools are
+   treated specially here, too---we call the input to these tools
+   "scripts" when the changes were made with sed or perl or
+   coccinelle) were used?
 
-> +	strbuf_reset(&buf);
+ * Whether some or all contents in a submitted patch were generated
+   by tools, it does not change the obligation of the person who
+   submits the patch.  They need to make sure that the changes are
+   reviewable, its goal and implementation are described in the
+   proposed log message appropriately, the updated code does what
+   the proposed log message claims to do.  They need to make sure
+   that they have the right to contribute the patch under DCO, and
+   sign off their patch accordingly.
 
-Do we need to reset the buffer here? In the following loop we reset it
-at the start of each iteration.
+ * What is made more difficult for a submitter with AI tools is that
+   it is often not obvious to the human developer how much of the
+   tools' generated output is parroting what the tools saw during
+   their training session, and what the licensing terms of these
+   training materials are.  Even if a hypothetical AI tool were
+   trained only with BSD licensed material, the output from such a
+   tool is likely to hold you under certain obligations like
+   including the original copyright notice, but without the tool
+   disclosing to you the human developer, you do not even know whose
+   copyright notice to include.
 
-> +
->  	printf("| ");
->  	for (int i = 0; i < name_col_width; i++)
->  		putchar('-');
-> @@ -317,9 +324,16 @@ static void stats_table_print_structure(const struct stats_table *table)
->  			value = entry->value;
->  		}
->  
-> -		printf("| %-*s | %*s |\n", name_col_width, item->string,
-> -		       value_col_width, value);
-> +		strbuf_reset(&buf);
-> +		strbuf_addstr(&buf, "| ");
-> +		strbuf_utf8_align(&buf, ALIGN_LEFT, name_col_width, item->string);
-> +		strbuf_addstr(&buf, " | ");
-> +		strbuf_utf8_align(&buf, ALIGN_RIGHT, value_col_width, value);
-> +		strbuf_addstr(&buf, " |");
-> +		printf("%s\n", buf.buf);
-
-Here we do the same thing for the values column. Looks good to me.
-
-Thanks,
--Justin
+ * Worse yet, the above difficulty is only for the submitter of such
+   a patch, not the project that, trusting what the sign-off of the
+   submitter certifies, reviews and accepts such a patch.  It does
+   not make any difference if the original submitter copied and
+   pasted proprietary code of their employer in the patch, or
+   included code that AI tools "borrowed" from elsewhere without
+   following proper procedure to honor the licensing terms.  In
+   either case, the project may have accepted what was stolen
+   without knowing, and it is very likely that the submitter but not
+   the project is primarily held liable.  In a sense, the project
+   would be better off if the patch does not say it was generated
+   with AI tools---if the project does not know, it cannot possibly
+   held liable for it, even though the project will have to waste
+   engineering resources to rewrite or remove the remnant from such
+   a faulty contribution.
