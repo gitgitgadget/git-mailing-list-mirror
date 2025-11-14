@@ -1,102 +1,168 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11C831A041
-	for <git@vger.kernel.org>; Fri, 14 Nov 2025 20:11:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343772561AE
+	for <git@vger.kernel.org>; Fri, 14 Nov 2025 20:17:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763151080; cv=none; b=hg/yF9oh2vF66JBxExvOFW1Bv8kEZ2+I/d/qMKwU5DPj9AYOdxgsVAhobww+hLwtbfThYygxsNheAT45XY8nVZqU+FsRg9IUPaf1GAAqJ/ERyNq/040PJ6TqOB/NLOTlEEUZ68koMlX5XGBWI3j2n6YelByNKxIxZQKbWP49ULI=
+	t=1763151457; cv=none; b=uVyCx5jNYXt8HxH1u9V88vtXKFfnI2PWpUruEMj7mVkXBPNnn70/JoRm/2NIx3kcy97CZUGsgarXG3euBAATLhbEb5XSQ6ZXE+MWabYuZUOi8dcEg1eyz0X+powYuWbulyDXiFbdlTHeGcPwQKySYDwyM6kUmM1L8pJ3ohLFgYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763151080; c=relaxed/simple;
-	bh=wZ0OO0UEy5ptVmWFshoHc9q6rmq2dkvLuD8qZTBKBQE=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=tqi2pwENsisCuCmiW0R7QMQSU8CBmlgJ0UEbMSvMKyb8jMZfr05dWBqLpiigtyS7sTjhFduJmMSz/8r3xq/SuP7CeJLHXtQk8wAs7EGAfEoMPmxOHuIZ87dcZBosPmq6XUHdqKSxA7Zjhl9wXexbhdEGC2DClMG1IUkMbbr24Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GULDiOiR; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763151457; c=relaxed/simple;
+	bh=/4h/TXxPG2jENzlEVGk3UiozkWW6dMk0XeAY5LEUMvk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cqyelOs1hQ8+sMohi5+f98Lk0cWMpjwXqnMHguteCfhsWyPvYAE8ZHLSly5D4y8yQJJ71FkmtH+AuKbxISWTA5jnXBYZBA+W2lULI4jZAYkr5y65TjaKBXfg0N+7DvcMoABZ10377LxM56aIcducBNzOlM7Yb8x6skD4cq4hPPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Tw+dC9dX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oth0rXLT; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GULDiOiR"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-47758595eecso13286585e9.0
-        for <git@vger.kernel.org>; Fri, 14 Nov 2025 12:11:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763151077; x=1763755877; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cKWHWmDhS2FEeSsJUwCaj2VKz6H8R24HJCJ5iDC9Wvk=;
-        b=GULDiOiR8/1KXS0IANd7VIdWHysJhei7E/qDnEe6bH1pcdXpGIy7J/D7cbcAXysWK5
-         wbuCSqeBAOLxCXMI/qhY/wQGRzdHKQzjtmwzK2BeImbZmbURN/eQHaJPCnWfqA0mpiE/
-         ptAIRtPz7z0xrRkkUpXNDa0YrtZBAve0rGm77Bd/a2CZhd1HHP7ShRbmEyJ+macpglbz
-         5sYcvLiKbptI40dIcKBzk8YE97wzeL9LiPrbzOqkerVGQf9pH/ozljfQQ5Gk+JgIsBXG
-         DuT9oyS57Jd6hgtjToYrNqpPORwii1pFakAlh4R7xbh9ADGJ/voCfkAH9s6EsIUK2ZOp
-         jT1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763151077; x=1763755877;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cKWHWmDhS2FEeSsJUwCaj2VKz6H8R24HJCJ5iDC9Wvk=;
-        b=X3mJlff+UpY+SFkocD6drO9ipOKmGofKtGgnn4MRrcknLxhDyVKXa6R0mu8wrm68TC
-         04KSELhxpKolM+Mn7GiympKH6ZDIqOx/YK1V/0+xJ+p1DSQFQ7jE889snmfz6HoOuVx2
-         41DL2O3Gryu4hXvBS+VPNO7fp7K4mvSz2cL+tFxvVMKYAM3sDqwmWBSH76JGPUC0hO4T
-         +wX6LE4n1UZQcif1u2zU/Yxv/fmPd6kCjpG53jnG9AM4KWe7ch2D8M7bJbMz7wMUT5Nm
-         ZkfeelaArSWRBNsz57lrGDGkHQFfwtUSnYA0hor0/h5uxeyjWqVJXPkPgvcnWn83Ao0/
-         ejCw==
-X-Gm-Message-State: AOJu0Ywxgy77Ammn6V73sRTx7rtre1Ps50br+rUS9tMFUcsoCeJp+ZQ2
-	LNug7JyvcZDc8828hiHeLo61Vz5w+dvZzQMhqeZRXVIgsjXlA0dbGsnui7FDPw==
-X-Gm-Gg: ASbGnctwOOTJa2p/gftMogC96manbMJBiusK4BpThQpxxAmHVxp0GBQrDS3bfxkICgw
-	xj6EYP7EvzSOkBDvuhSXBvgqljvRGd44STfirXz///cx3O1zJLJTtlutfrrZxt8okTRFNqS3oZ5
-	1RRAbFSc757DUAAhRRF0K/GSrqJygPQfhGYSMb7L8ud2ZigBlr62VAoKTokiYSc9743mRjL9VHy
-	9yBls8iWqvJ741Gv2MRCWAiENsRJgv9NvrHXNNvjOe2o6vVf/Q5dwOkAXiPLBwUKirrr0luPqtr
-	fGCFmvTUs3OKJPa1eWOd0UpVreCAbbxCcx6TEpnz/rE2RY9GFWSlKrPunS8pdL48lrD63ehvgFX
-	duTa46R7/p4B6LqSDfRONUwsUrHtZ77OLejC59chlKGS3jAQhzmDwNwfSM6gaQ8NdSq3AitKeIC
-	Bt/psUdJMMBJ8HnfEfZ40EMjQaMzhudxAIQCrbg1BZFvybsGGUW/j6pmE1bYorcb8o2Vt9cSLtI
-	g==
-X-Google-Smtp-Source: AGHT+IEZ3Rgs27xw4W4IxOOuhGixrCDM1fDLQI8GWF7ObKpcn3OgFsJKVbnjPICinQI8mGn4GOtA7Q==
-X-Received: by 2002:a05:600c:46ca:b0:471:14af:c715 with SMTP id 5b1f17b1804b1-4778fe4f06dmr45242185e9.3.1763151076746;
-        Fri, 14 Nov 2025 12:11:16 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4778bcf75b8sm54766965e9.1.2025.11.14.12.11.16
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Nov 2025 12:11:16 -0800 (PST)
-Message-ID: <b1775e1a-4f6c-4116-9587-69526d379b42@gmail.com>
-Date: Fri, 14 Nov 2025 20:11:13 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Tw+dC9dX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oth0rXLT"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4249CEC005A;
+	Fri, 14 Nov 2025 15:17:34 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 14 Nov 2025 15:17:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1763151454;
+	 x=1763237854; bh=qOmNlpoZUn/FAWmoZAP663gWqq94iT8YEXlNOdAzU0w=; b=
+	Tw+dC9dXW1Jp0rhpkK/zNnfxvabWvW0+vRfChBugI3svS0DvNjNko9q/WTgI3zcI
+	/NVLWVCmILZgsLKRuHAmQzrCtk5FA4sWzbfD60aQjzj/6GN8aCErjsLtUEP+GbLF
+	bHC8CHb7Tl2wtuhijqBmv5nHqE+cUy/IWwbzybRNE+VTxVJ+BxdKpjfZODHy53/d
+	6nEwjLnXiuJCXUL0T34rXtPosbdoojNXu0zxNEmQbSHCM5IYcqHSXFhyXyveNC7H
+	AOkHASWPqem/ZCrc2iTzV2dArUKm9nFiB/m0tVm8fTH5zVXEgVRDOQOC2wmJdzhl
+	+3ZevJnwd25vsW99Ypg41g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763151454; x=
+	1763237854; bh=qOmNlpoZUn/FAWmoZAP663gWqq94iT8YEXlNOdAzU0w=; b=O
+	th0rXLTwVBgSfodO4xsSBMMvhGDxEHYBU4Sitb0p2wlR/MPpi2hXUIac4MsJYwH8
+	3sIEjm0hgJ9UhC7PWM2gdlvTY6IsvvAuE8I7Vvz0RwD3FLJDzuDH0LG/COOy8sp0
+	52Hx29zz/wIUnt7TgBOS4kyp6ot3cmr98mzuy9/ld0UE9D+dsh35g7/xTzTlExh3
+	ltq2Wseuevvk35pky2z7MuW0fbjp7GmE6hDvmoZil2Wd1NRcy+RQ8Q3TlsaMQr1F
+	JATlyfSX76SX78xedAGdZ4vc8IwALwcJSieAHy5N6cqHCeQbMXdL7T+6HkY2lFkw
+	EzYFN2YMQ1fBcuoCZjdaQ==
+X-ME-Sender: <xms:XY4XaX8XadXWFNu5fM-TVvKcZbcj8TJWy4BplZdIaFLtenf9kyLCaA>
+    <xme:XY4XabTqgGreSUB8_AxsuzGIcXGaKN6sSbE9j5xKZcvxTlznAowoNBbbryRNuJMmo
+    gA1_kVMYIAPDzGhlTxtcgBWrcQA5We1WOSX3qETIB9RznizSVYDsw>
+X-ME-Received: <xmr:XY4XaUqxXLw8H7iz-Zj00FiAHlt6jTr7re1PsTJ_JEG1ujzWkyGRjWF93h0q6BQ3P-sh7Q-Z-zYZzFJnoo9XFxKpJEHqhg5NxkSE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvuddtjeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduiedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepfihorhhlughhvghllhhordhnvghtsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegrshhhse
+    hkrghmsggrnhgrrhhirgdrohhrghdprhgtphhtthhopehmihhkvghlrdhfohhrtggruggr
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhgrlhhfrdhthhhivghlohifsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthht
+    ohepsggrghgrshguohhtmhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepughjmhdttd
+    hnsehmrghilhdrrhhu
+X-ME-Proxy: <xmx:XY4XaQNYq8oIw6GHh0J5BdyFsoF9AT-BAb3Ucu3CTWX-CfdDh3GQrw>
+    <xmx:XY4XaSyzHA1rSBFWffKmlOkRaADJsMmWOzwFcxPyve_VhOlxecpiJA>
+    <xmx:XY4XacwPSJIRFBrzUeMh39qcv-Rguprx5wwmYH6ZkpnxYmCLxBccgw>
+    <xmx:XY4XabId7PREmS2qoiVr5pNqhx4tVJimK4AVaKf_C-KuMw8SIKwdxw>
+    <xmx:Xo4XaTu4AlE-Tk8sY91nEQGD6-ZpCg32uwa2_pGxPPubo-nOp-coOYCa>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 14 Nov 2025 15:17:33 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jiang Xin <worldhello.net@gmail.com>
+Cc: Git List <git@vger.kernel.org>,  
+    Justin Tobler <jltobler@gmail.com>,  
+    Alexander Shopov <ash@kambanaria.org>,  
+    Mikel Forcada <mikel.forcada@gmail.com>,  
+    Ralf Thielow <ralf.thielow@gmail.com>,  
+    =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,  
+    Bagas Sanjaya <bagasdotme@gmail.com>,  
+    Dimitriy Ryazantcev <DJm00n@mail.ru>,  
+    Peter Krefting <peter@softwolves.pp.se>,  
+    Emir SARI <bitigchi@me.com>,  
+    Arkadii Yakovets <ark@cho.red>,  
+    =?utf-8?B?VsWpIFRp4bq/biBIxrBuZw==?= <newcomerminecraft@gmail.com>,  
+    Teng Long <dyroneteng@gmail.com>,  
+    Yi-Jyun Pan <pan93412@gmail.com>
+Subject: Re: [PATCH 1/2] t/unit-tests: add UTF-8 width tests for CJK chars
+In-Reply-To: <04ab347ff80e16d49524246a8923cc86cc7355be.1763098804.git.worldhello.net@gmail.com>
+	(Jiang Xin's message of "Fri, 14 Nov 2025 00:52:44 -0500")
+References: <cover.1763098804.git.worldhello.net@gmail.com>
+	<04ab347ff80e16d49524246a8923cc86cc7355be.1763098804.git.worldhello.net@gmail.com>
+Date: Fri, 14 Nov 2025 12:17:31 -0800
+Message-ID: <xmqqzf8ogyhw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: CI Failures
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-References: <ddefb36d-f023-45c1-b518-a9f70dba0696@gmail.com>
-Content-Language: en-US
-In-Reply-To: <ddefb36d-f023-45c1-b518-a9f70dba0696@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 14/11/2025 20:00, Phillip Wood wrote:
-> I'm seeing all the Ubuntu based jobs fail. Judging by the error messages 
-> at [1] it appears that their version of sudo no longer supports "-- 
-> preserve-env" which breaks all of our scripts. Does anyone know how to 
-> make sure we install the C version of sudo rather than the rust version? 
-> Failing that I guess we could switch to using "runuser"
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-Sorry for the noise, I see this was fixed last month, I had accidentally 
-rebased onto a stale branch.
+[jc: the same question about the choice of Cc addresses applies]
 
-Thanks
+> This commit adds a new test suite (u-utf8-width.c) to test the UTF-8
+> width functions in Git, particularly focusing on multi-byte characters
+> from East Asian languages like Chinese, Japanese, and Korean that
+> typically require 2 display columns per character.
+>
+> The test suite includes:
+> - Tests for utf8_strnwidth with Chinese strings
+> - Tests for utf8_strwidth with Chinese strings
+> - Tests for Japanese and Korean characters
+> - Edge case tests with invalid UTF-8 sequences
+> - Proper test function naming following the Clar framework convention
+>
+> Also updated the build configuration in Makefile and meson.build to
+> include the new test suite in the build process.
 
-Phillip
-> Thanks
-> 
-> Phillip
-> 
-> [1] https://github.com/phillipwood/git/actions/runs/19371231059/ 
-> job/55427466699
+The usual way to compose a log message of this project is to
 
+ - Give an observation on how the current system works in the
+   present tense (so no need to say "Currently X is Y", or
+   "Previously X was Y" to describe the state before your change;
+   just "X is Y" is enough), and discuss what you perceive as a
+   problem in it.
+
+ - Propose a solution (optional---often, problem description
+   trivially leads to an obvious solution in reader's minds).
+
+ - Give commands to somebody editing the codebase to "make it so",
+   instead of saying "This commit does X".
+
+in this order.
+
+> +	/* Test length limiting */
+> +	str = "你好世界";
+> +	cl_assert_equal_i(2, utf8_strnwidth(str, 3, 0));  /* Only first char "你"(2 columns) within 3 bytes */
+> +	cl_assert_equal_i(4, utf8_strnwidth(str, 6, 0));  /* First two chars "你好"(4 columns) in 6 bytes */
+
+We also should test utf8_strwidth() on the same string here.
+
+> +/*
+> + * Test edge cases with partial UTF-8 sequences
+> + */
+
+All tests before these make sense, but I am not sure if we want to
+hold utf8_strnwidth() to the requirement that it will tolerate "len"
+to end in the middle of a single character, as such a requirement by
+itself does not do application any good.
+
+A caller may have "你好世界" in str, learn that the first 4 bytes
+would only need two display columns to show (i.e., 3-byte "你" plus
+a single garbage byte, that would make UTF-8 encoded "好" if the
+remaining two bytes were included), and may want to learn how to
+show only enough to fill the two display columns.  But there is not
+enough information given back by utf8_strnwidth() for such a caller
+to figure out that it needs to feed only the first three bytes (not
+four) of str to printf() to do so.
