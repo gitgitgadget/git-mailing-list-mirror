@@ -1,70 +1,71 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD3030DEB8
-	for <git@vger.kernel.org>; Fri, 14 Nov 2025 22:37:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159FC30EF69
+	for <git@vger.kernel.org>; Fri, 14 Nov 2025 22:37:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763159830; cv=none; b=dGy5o32/l6i9j3PRPLi1JG593X9HXHQVJRmzOyUmSpFnbNsAZiOhAij0zr+Zyoud54zcdivi91CZDzliLJiBSYm5d6DUR6jJY8kwjvNkQC5724o5BftqWjLdvSG5v6PsvefnwR/seULet3osbvBmG690DUewOC6UD5fRfKh3cZM=
+	t=1763159830; cv=none; b=HBuSMN5JeRLrAJMlwk46glgRwWZ7w2NPai9Ym5Zkq6mz+3sz9I5hQ+29Dz+4VPBTyJXD4VpuCzStRjbHSkNGCJyRFBbOkFpp82VjHbD24S5KjYSnElL4+0Nv4URHvH8rEaRMRGkvmJT/dHB2bVY2cwQrAMmO3sKCPDwLo0znhc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1763159830; c=relaxed/simple;
-	bh=obbRItOHy+dqUKHhn/pjOPkT0yc+uJURLubporsYHxQ=;
+	bh=/mAkyI8y2ARzuFCWwaBJYajFEQOWPqimSRWXxGbjJ5s=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=C+bbfyGAqQVSHYyZb3a2hYXaDOAirIrGCXfhghlBG5xW5RYRuFikL7WDEpaW4Vs9VJS74VWiRnvw4lPwCsdXgbURvcp14Dyph1zU8+2pnnXY2CqqZ+8saWcTrPCKp0mE1lHkILRKMyKZJnC2nl+IYgAoUNUkhJbs5XP7mBamiMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FaEXNAus; arc=none smtp.client-ip=209.85.214.171
+	 MIME-Version:To:Cc; b=kiwzwIrYsEI5tndmfOABvHmcJ+/NSUMCbS9R/l+daVfj1O9V6apMQ1dzAaRcvRVdyvTTerR7xPGn1xyDlYrCe6BPPDon1OIsyEFWumo8z1s6sBuznABV/3bEPJ45M89HJwNl19uA59eKzlfKZ2HRIct0EVxOUIZl2WqTZobIDNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cWupNZ7+; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FaEXNAus"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2958db8ae4fso24207705ad.2
-        for <git@vger.kernel.org>; Fri, 14 Nov 2025 14:37:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cWupNZ7+"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-297ef378069so24801515ad.3
+        for <git@vger.kernel.org>; Fri, 14 Nov 2025 14:37:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763159827; x=1763764627; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1763159826; x=1763764626; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Rp9Xh1gMJS3Dh0GgXgzCzbt+5ug6UqWd591pGPrRuwQ=;
-        b=FaEXNAusQF2soC5qxLOsHgCIdkjHTg+U3lMHL7QWVAxyKiqH+iFmqhosV3oAfiFzD0
-         8U6FVm+nMFxB2NVINoAZyVCaFM9L1ovuVBMI6QkyPL5j7TpdFFPkyJ2JFUfDGdUSx5Ws
-         AeH+vqdnn9h8T5xPXDbKBOm5hRnlJwS01d49q4wIMx18Xh2x1hEDyop0dlrlLOgwpmuI
-         oCuF5KNynogncjWhr/hnUtMnayRGmBD/6hQxErxqaz27Br/Ez2sqRjTG9o20gAwb/cmP
-         Xztxwy73g0cKhUpZd5RlKCBCCQ++Mt3nzqTeJ+l+EsexaXVO2ZsW1nCVXWX22sVpY0b2
-         qkJw==
+        bh=jRW4Ere/AZV97n3QZiDVTw544UCf3is3U6LREpXvme4=;
+        b=cWupNZ7+TfJSfQ5M0FpCiebCYR1MX41y05eKLxVdNQcOJn1z+3WLdhiXRkeMqLV9wI
+         g6lZoIHdNjaHhuUTy109XpUVkLg2iTbmLXBHNUnoL4VfWBbrZPAoY55Im/2z24Oy8Ic+
+         cCNsE3lClXR9qWb/VOHtN008vZVRdRmlTPIudGVgXsgdH3WeD00kizjfvLEZpvkudNv1
+         AubLF7Gi/ZfaQ8L+0ZKPewzhDTdAu3ojPAByXkP98X84m1XkSKlvt9GKDKD/m+Ff6F4Y
+         TIAelWAC5JOBXX8VmUyBOUrWLokqQT+ZrwKd8hooYO6TPgO2Lm+MJ/n9UuCpvY06j1IP
+         eM0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763159827; x=1763764627;
+        d=1e100.net; s=20230601; t=1763159826; x=1763764626;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Rp9Xh1gMJS3Dh0GgXgzCzbt+5ug6UqWd591pGPrRuwQ=;
-        b=PnUkHolOP1hosp3H7O18h6sPyVpxoAmhGbwaHi2EV8yc5iBuOYtOxGYrqxz/DupqlX
-         v/DYE+AoSe7YY8/L8jMzBOZfi+GrOE6XzC2s5Q1h1ngO5C16ALxPRnBBZe8vIgQ9zAmy
-         ew0mCwKvBYpIPwLDhM61aecOqwAA32HBVjyvR5xsHBkaetx3QneXjPnhHg8b6ywTcHaX
-         kWU5R3vCPVspRD+7czbsYLe/CfOngdUmX7dXtttiKQEMHbleBrtcm4I+fWf2NEpaSveF
-         rNX0Nx0xWna0dfA32tqhoyf7cjQRbt6eVyKMZAWo2ziTJ36JBsFPpDDjKgCgd6nmLcsL
-         0ExA==
-X-Gm-Message-State: AOJu0YyjFP7UVc4NK5O7PA86upNcf5pO5wMBXMu/KDU5pQT9BEV+dZ9Y
-	iCFCGckasawxC6a3T5x/JY5v1nUPZoy7Dj8jwOnJPk5dlz0Zre8LsKEFtZXknS5n
-X-Gm-Gg: ASbGncs7IZ3qPL3Gg5GPAJZqXQ2pryPBnnr3WMgmzyX6aaESxI0HHKBCvCJZFsoAN0c
-	h4e3SNxnmdnwji0Tb313IQQDkrLCe9rtGNIzNRZiHQTNfxgvhM55+Fc5U/2ExpSfc0V2i6/Sfrl
-	VF7RfKIYE8karpKR1ohc2fxIfWNSvFiUJ5CskzFyRWjXwtE65JU+U1kD8rNL+57QBWRzaNSLvvI
-	bB6oIw1FINXEgrmJWhgmAlJVVq7BPzF+rFZCU1LIz4JBrg6LR7qRJHDxA5TaOD8Clbq7zdRaPcd
-	JrzstloH2dNdV/4+WVwliY9RPD8t1VhdzKOv7VsfWeWtB8nn3VtKR/fBB5jfXfsfDrdQK7hEA20
-	4rGUt7+tp+EtONnmSNgyCqyTTqWqKzbYkUAYQon8UbJGZ+P+xryMiHz2KuuDtOpK0peiVKbrVCr
-	SPRA==
-X-Google-Smtp-Source: AGHT+IHH5HUwAfHurDsVlNwuczdixeCNzDl34D8o6uYqY7cKwIe2e7imfhZQwlLnT3B8wJPSPCs6lQ==
-X-Received: by 2002:a05:7022:69a5:b0:11a:2e9c:1130 with SMTP id a92af1059eb24-11b40e8ad62mr1888436c88.7.1763159827041;
-        Fri, 14 Nov 2025 14:37:07 -0800 (PST)
+        bh=jRW4Ere/AZV97n3QZiDVTw544UCf3is3U6LREpXvme4=;
+        b=CUHNjBnNEZHardG5oJjFR3Y9/nZF2rNluhooDYdP4CUMDeyDck72Xj/xtma/+fzq5T
+         5ayfNEU4cOTCR428jvxA5w8LOBBH4me1jJpwNrT9fXWjn4qqbT5oTwrY8jFele2rha0R
+         vITnNDHbb0PmI2Fh5tcHcrNYlZas1eEjFklSqTPcbS9x3HyBQVCDPvXnlvSK91oOnyhK
+         gcwEQWDn9zawsqusoP3axGLb5Z4/xDzUZPUT/jhVH9a3VOfDhjB3/9+O+Ee+Ep86U2hS
+         0WuLpJn2O2nyWfGAIOQYQnUpUL11XuJWvSdlsR3/agGzzn/WPcPEA802UHpZkPI+ap7w
+         XxJQ==
+X-Gm-Message-State: AOJu0YxSZFfufswExeMQCIUvX338wR9opBRoPhe88VOzxK+l5DtrNsnD
+	kon2j1ptKCpRAQ4GyF7nQv766x7tHEoOevKu2Jcx+3MTb5kuYGjNwiUXEWWMXMZl
+X-Gm-Gg: ASbGncvJYXPrYIRvFZ5Q2ZrnDkUpfWsFUK6kBbcs/9JVc5XFniCut8SDoB7+h8p+MYn
+	B2nE2mRKBf4ovquhhWp5IB2+DUmFoIND7OOvMYJ5CmJkSYDI1YqXU1aG63TBPjGe819a0hJcPhf
+	LOQAQsitO0f+6QW/TxnoflG9fH25Au4xcCRkqt5Me3MsPtwzWDT2XXT+7Mqw0GpU3cW+T+qB1xt
+	avNa8tSDuWpfw/fQaASS4/FTTvMe1AuPhMzX82XIyvF/0AcVn+V3NzKx2pzFaA/Wd8vpyNGOByO
+	HeyUq1GQN0gP5GbDryrYnhts2n3yWs9qLTrWUQp5MMRYrUb0UA5nuiCQ5F4LCOOBqCNuwqmcmuF
+	sHBIoPpobETdIgqNZSCvGjMu7Np+VrJuuLHN4xWsGQ/8bdFhONgqf5EhZkaNUGFHutAZpmhqNJQ
+	SQvA==
+X-Google-Smtp-Source: AGHT+IG0u8XRIuHhKWwNDCM2kta03GFob9GzWbZwc24Mju8r8qy9f5qyNZy4TxM/pZv90WSRKGwN1w==
+X-Received: by 2002:a05:701b:2803:b0:119:e55a:9c03 with SMTP id a92af1059eb24-11b411fede8mr1035233c88.31.1763159825812;
+        Fri, 14 Nov 2025 14:37:05 -0800 (PST)
 Received: from [127.0.0.1] ([20.169.73.145])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2a49db7a753sm13435302eec.6.2025.11.14.14.37.06
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2a49d695821sm16864134eec.0.2025.11.14.14.37.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Nov 2025 14:37:06 -0800 (PST)
-Message-Id: <f7a3731d941481fee8cb953c9dd792be500ee96a.1763159816.git.gitgitgadget@gmail.com>
+        Fri, 14 Nov 2025 14:37:05 -0800 (PST)
+Message-Id: <f044274bd586aa389dc4142e9d3cfa0544800a34.1763159816.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2070.v4.git.git.1763159816.gitgitgadget@gmail.com>
 References: <pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com>
 	<pull.2070.v4.git.git.1763159816.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 14 Nov 2025 22:36:53 +0000
-Subject: [PATCH v4 07/10] xdiff: make xdfile_t.nrec a size_t instead of long
+Date: Fri, 14 Nov 2025 22:36:52 +0000
+Subject: [PATCH v4 06/10] xdiff: split xrecord_t.ha into line_hash and
+ minimal_perfect_hash
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,250 +85,211 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 
 From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-size_t is used because nrec describes the number of elements for both
-recs, and for 'changed' + 2.
+The ha field is serving two different purposes, which makes the code
+harder to read. At first glance, it looks like many places assume
+there could never be hash collisions between lines of the two input
+files. In reality, line_hash is used together with xdl_recmatch() to
+ensure correct comparisons of lines, even when collisions occur.
+
+To make this clearer, the old ha field has been split:
+  * line_hash: a straightforward hash of a line, independent of any
+    external context. Its type is uint64_t, as it comes from a fixed
+    width hash function.
+  * minimal_perfect_hash: Not a new concept, but now a separate
+    field. It comes from the classifier's general-purpose hash table,
+    which assigns each line a unique and minimal hash across the two
+    files. A size_t is used here because it's meant to be used to
+    index an array. This also avoids ` as usize` casts on the Rust
+    side when using it to index a slice.
 
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- xdiff/xdiffi.c    |  8 ++++----
- xdiff/xemit.c     | 20 ++++++++++----------
- xdiff/xmerge.c    |  8 ++++----
- xdiff/xpatience.c |  2 +-
- xdiff/xprepare.c  | 12 ++++++------
- xdiff/xtypes.h    |  2 +-
- 6 files changed, 26 insertions(+), 26 deletions(-)
+ xdiff/xdiffi.c     |  6 +++---
+ xdiff/xhistogram.c |  4 ++--
+ xdiff/xpatience.c  | 10 +++++-----
+ xdiff/xprepare.c   | 18 +++++++++---------
+ xdiff/xtypes.h     |  3 ++-
+ 5 files changed, 21 insertions(+), 20 deletions(-)
 
 diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 436c34697d..759193fe5d 100644
+index edd05466df..436c34697d 100644
 --- a/xdiff/xdiffi.c
 +++ b/xdiff/xdiffi.c
-@@ -483,7 +483,7 @@ static void measure_split(const xdfile_t *xdf, long split,
+@@ -22,9 +22,9 @@
+ 
+ #include "xinclude.h"
+ 
+-static unsigned long get_hash(xdfile_t *xdf, long index)
++static size_t get_hash(xdfile_t *xdf, long index)
  {
- 	long i;
- 
--	if (split >= xdf->nrec) {
-+	if (split >= (long)xdf->nrec) {
- 		m->end_of_file = 1;
- 		m->indent = -1;
- 	} else {
-@@ -506,7 +506,7 @@ static void measure_split(const xdfile_t *xdf, long split,
- 
- 	m->post_blank = 0;
- 	m->post_indent = -1;
--	for (i = split + 1; i < xdf->nrec; i++) {
-+	for (i = split + 1; i < (long)xdf->nrec; i++) {
- 		m->post_indent = get_indent(&xdf->recs[i]);
- 		if (m->post_indent != -1)
- 			break;
-@@ -717,7 +717,7 @@ static void group_init(xdfile_t *xdf, struct xdlgroup *g)
-  */
- static inline int group_next(xdfile_t *xdf, struct xdlgroup *g)
- {
--	if (g->end == xdf->nrec)
-+	if (g->end == (long)xdf->nrec)
- 		return -1;
- 
- 	g->start = g->end + 1;
-@@ -750,7 +750,7 @@ static inline int group_previous(xdfile_t *xdf, struct xdlgroup *g)
-  */
- static int group_slide_down(xdfile_t *xdf, struct xdlgroup *g)
- {
--	if (g->end < xdf->nrec &&
-+	if (g->end < (long)xdf->nrec &&
- 	    recs_match(&xdf->recs[g->start], &xdf->recs[g->end])) {
- 		xdf->changed[g->start++] = false;
- 		xdf->changed[g->end++] = true;
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index 2f8007753c..04f7e9193b 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -137,7 +137,7 @@ static long get_func_line(xdfenv_t *xe, xdemitconf_t const *xecfg,
- 	buf = func_line ? func_line->buf : dummy;
- 	size = func_line ? sizeof(func_line->buf) : sizeof(dummy);
- 
--	for (l = start; l != limit && 0 <= l && l < xe->xdf1.nrec; l += step) {
-+	for (l = start; l != limit && 0 <= l && l < (long)xe->xdf1.nrec; l += step) {
- 		long len = match_func_rec(&xe->xdf1, xecfg, l, buf, size);
- 		if (len >= 0) {
- 			if (func_line)
-@@ -179,14 +179,14 @@ pre_context_calculation:
- 			long fs1, i1 = xch->i1;
- 
- 			/* Appended chunk? */
--			if (i1 >= xe->xdf1.nrec) {
-+			if (i1 >= (long)xe->xdf1.nrec) {
- 				long i2 = xch->i2;
- 
- 				/*
- 				 * We don't need additional context if
- 				 * a whole function was added.
- 				 */
--				while (i2 < xe->xdf2.nrec) {
-+				while (i2 < (long)xe->xdf2.nrec) {
- 					if (is_func_rec(&xe->xdf2, xecfg, i2))
- 						goto post_context_calculation;
- 					i2++;
-@@ -196,7 +196,7 @@ pre_context_calculation:
- 				 * Otherwise get more context from the
- 				 * pre-image.
- 				 */
--				i1 = xe->xdf1.nrec - 1;
-+				i1 = (long)xe->xdf1.nrec - 1;
- 			}
- 
- 			fs1 = get_func_line(xe, xecfg, NULL, i1, -1);
-@@ -228,8 +228,8 @@ pre_context_calculation:
- 
-  post_context_calculation:
- 		lctx = xecfg->ctxlen;
--		lctx = XDL_MIN(lctx, xe->xdf1.nrec - (xche->i1 + xche->chg1));
--		lctx = XDL_MIN(lctx, xe->xdf2.nrec - (xche->i2 + xche->chg2));
-+		lctx = XDL_MIN(lctx, (long)xe->xdf1.nrec - (xche->i1 + xche->chg1));
-+		lctx = XDL_MIN(lctx, (long)xe->xdf2.nrec - (xche->i2 + xche->chg2));
- 
- 		e1 = xche->i1 + xche->chg1 + lctx;
- 		e2 = xche->i2 + xche->chg2 + lctx;
-@@ -237,13 +237,13 @@ pre_context_calculation:
- 		if (xecfg->flags & XDL_EMIT_FUNCCONTEXT) {
- 			long fe1 = get_func_line(xe, xecfg, NULL,
- 						 xche->i1 + xche->chg1,
--						 xe->xdf1.nrec);
-+						 (long)xe->xdf1.nrec);
- 			while (fe1 > 0 && is_empty_rec(&xe->xdf1, fe1 - 1))
- 				fe1--;
- 			if (fe1 < 0)
--				fe1 = xe->xdf1.nrec;
-+				fe1 = (long)xe->xdf1.nrec;
- 			if (fe1 > e1) {
--				e2 = XDL_MIN(e2 + (fe1 - e1), xe->xdf2.nrec);
-+				e2 = XDL_MIN(e2 + (fe1 - e1), (long)xe->xdf2.nrec);
- 				e1 = fe1;
- 			}
- 
-@@ -254,7 +254,7 @@ pre_context_calculation:
- 			 */
- 			if (xche->next) {
- 				long l = XDL_MIN(xche->next->i1,
--						 xe->xdf1.nrec - 1);
-+						 (long)xe->xdf1.nrec - 1);
- 				if (l - xecfg->ctxlen <= e1 ||
- 				    get_func_line(xe, xecfg, NULL, l, e1) < 0) {
- 					xche = xche->next;
-diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index 0dd4558a32..29dad98c49 100644
---- a/xdiff/xmerge.c
-+++ b/xdiff/xmerge.c
-@@ -158,7 +158,7 @@ static int is_eol_crlf(xdfile_t *file, int i)
- {
- 	size_t size;
- 
--	if (i < file->nrec - 1)
-+	if (i < (long)file->nrec - 1)
- 		/* All lines before the last *must* end in LF */
- 		return (size = file->recs[i].size) > 1 &&
- 			file->recs[i].ptr[size - 2] == '\r';
-@@ -317,7 +317,7 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
- 			continue;
- 		i = m->i1 + m->chg1;
- 	}
--	size += xdl_recs_copy(xe1, i, xe1->xdf2.nrec - i, 0, 0,
-+	size += xdl_recs_copy(xe1, i, (int)xe1->xdf2.nrec - i, 0, 0,
- 			      dest ? dest + size : NULL);
- 	return size;
+-	return xdf->recs[xdf->rindex[index]].ha;
++	return xdf->recs[xdf->rindex[index]].minimal_perfect_hash;
  }
-@@ -622,7 +622,7 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
- 			changes = c;
- 		i0 = xscr1->i1;
- 		i1 = xscr1->i2;
--		i2 = xscr1->i1 + xe2->xdf2.nrec - xe2->xdf1.nrec;
-+		i2 = xscr1->i1 + (long)xe2->xdf2.nrec - (long)xe2->xdf1.nrec;
- 		chg0 = xscr1->chg1;
- 		chg1 = xscr1->chg2;
- 		chg2 = xscr1->chg1;
-@@ -637,7 +637,7 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
- 		if (!changes)
- 			changes = c;
- 		i0 = xscr2->i1;
--		i1 = xscr2->i1 + xe1->xdf2.nrec - xe1->xdf1.nrec;
-+		i1 = xscr2->i1 + (long)xe1->xdf2.nrec - (long)xe1->xdf1.nrec;
- 		i2 = xscr2->i2;
- 		chg0 = xscr2->chg1;
- 		chg1 = xscr2->chg1;
+ 
+ #define XDL_MAX_COST_MIN 256
+@@ -385,7 +385,7 @@ static xdchange_t *xdl_add_change(xdchange_t *xscr, long i1, long i2, long chg1,
+ 
+ static int recs_match(xrecord_t *rec1, xrecord_t *rec2)
+ {
+-	return (rec1->ha == rec2->ha);
++	return rec1->minimal_perfect_hash == rec2->minimal_perfect_hash;
+ }
+ 
+ /*
+diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
+index 6dc450b1fe..5ae1282c27 100644
+--- a/xdiff/xhistogram.c
++++ b/xdiff/xhistogram.c
+@@ -90,7 +90,7 @@ struct region {
+ 
+ static int cmp_recs(xrecord_t *r1, xrecord_t *r2)
+ {
+-	return r1->ha == r2->ha;
++	return r1->minimal_perfect_hash == r2->minimal_perfect_hash;
+ 
+ }
+ 
+@@ -98,7 +98,7 @@ static int cmp_recs(xrecord_t *r1, xrecord_t *r2)
+ 	(cmp_recs(REC(i->env, s1, l1), REC(i->env, s2, l2)))
+ 
+ #define TABLE_HASH(index, side, line) \
+-	XDL_HASHLONG((REC(index->env, side, line))->ha, index->table_bits)
++	XDL_HASHLONG((REC(index->env, side, line))->minimal_perfect_hash, index->table_bits)
+ 
+ static int scanA(struct histindex *index, int line1, int count1)
+ {
 diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
-index cc53266f3b..a0b31eb5d8 100644
+index bb61354f22..cc53266f3b 100644
 --- a/xdiff/xpatience.c
 +++ b/xdiff/xpatience.c
-@@ -370,5 +370,5 @@ static int patience_diff(xpparam_t const *xpp, xdfenv_t *env,
+@@ -48,7 +48,7 @@
+ struct hashmap {
+ 	int nr, alloc;
+ 	struct entry {
+-		unsigned long hash;
++		size_t minimal_perfect_hash;
+ 		/*
+ 		 * 0 = unused entry, 1 = first line, 2 = second, etc.
+ 		 * line2 is NON_UNIQUE if the line is not unique
+@@ -101,10 +101,10 @@ static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
+ 	 * So we multiply ha by 2 in the hope that the hashing was
+ 	 * "unique enough".
+ 	 */
+-	int index = (int)((record->ha << 1) % map->alloc);
++	int index = (int)((record->minimal_perfect_hash << 1) % map->alloc);
  
- int xdl_do_patience_diff(xpparam_t const *xpp, xdfenv_t *env)
+ 	while (map->entries[index].line1) {
+-		if (map->entries[index].hash != record->ha) {
++		if (map->entries[index].minimal_perfect_hash != record->minimal_perfect_hash) {
+ 			if (++index >= map->alloc)
+ 				index = 0;
+ 			continue;
+@@ -120,7 +120,7 @@ static void insert_record(xpparam_t const *xpp, int line, struct hashmap *map,
+ 	if (pass == 2)
+ 		return;
+ 	map->entries[index].line1 = line;
+-	map->entries[index].hash = record->ha;
++	map->entries[index].minimal_perfect_hash = record->minimal_perfect_hash;
+ 	map->entries[index].anchor = is_anchor(xpp, (const char *)map->env->xdf1.recs[line - 1].ptr);
+ 	if (!map->first)
+ 		map->first = map->entries + index;
+@@ -248,7 +248,7 @@ static int match(struct hashmap *map, int line1, int line2)
  {
--	return patience_diff(xpp, env, 1, env->xdf1.nrec, 1, env->xdf2.nrec);
-+	return patience_diff(xpp, env, 1, (int)env->xdf1.nrec, 1, (int)env->xdf2.nrec);
+ 	xrecord_t *record1 = &map->env->xdf1.recs[line1 - 1];
+ 	xrecord_t *record2 = &map->env->xdf2.recs[line2 - 1];
+-	return record1->ha == record2->ha;
++	return record1->minimal_perfect_hash == record2->minimal_perfect_hash;
  }
+ 
+ static int patience_diff(xpparam_t const *xpp, xdfenv_t *env,
 diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index bea0992b5e..705ddd1ae0 100644
+index 85e56021da..bea0992b5e 100644
 --- a/xdiff/xprepare.c
 +++ b/xdiff/xprepare.c
-@@ -153,7 +153,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 		for (top = blk + bsize; cur < top; ) {
- 			prev = cur;
- 			hav = xdl_hash_record(&cur, top, xpp->flags);
--			if (XDL_ALLOC_GROW(xdf->recs, xdf->nrec + 1, narec))
-+			if (XDL_ALLOC_GROW(xdf->recs, (long)xdf->nrec + 1, narec))
- 				goto abort;
- 			crec = &xdf->recs[xdf->nrec++];
- 			crec->ptr = prev;
-@@ -287,7 +287,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
- 	/*
- 	 * Initialize temporary arrays with DISCARD, KEEP, or INVESTIGATE.
- 	 */
--	if ((mlim = xdl_bogosqrt(xdf1->nrec)) > XDL_MAX_EQLIMIT)
-+	if ((mlim = xdl_bogosqrt((long)xdf1->nrec)) > XDL_MAX_EQLIMIT)
- 		mlim = XDL_MAX_EQLIMIT;
- 	for (i = xdf1->dstart, recs = &xdf1->recs[xdf1->dstart]; i <= xdf1->dend; i++, recs++) {
- 		rcrec = cf->rcrecs[recs->minimal_perfect_hash];
-@@ -295,7 +295,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
- 		action1[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
- 	}
+@@ -93,12 +93,12 @@ static void xdl_free_classifier(xdlclassifier_t *cf) {
  
--	if ((mlim = xdl_bogosqrt(xdf2->nrec)) > XDL_MAX_EQLIMIT)
-+	if ((mlim = xdl_bogosqrt((long)xdf2->nrec)) > XDL_MAX_EQLIMIT)
- 		mlim = XDL_MAX_EQLIMIT;
- 	for (i = xdf2->dstart, recs = &xdf2->recs[xdf2->dstart]; i <= xdf2->dend; i++, recs++) {
- 		rcrec = cf->rcrecs[recs->minimal_perfect_hash];
-@@ -348,7 +348,7 @@ static int xdl_trim_ends(xdfile_t *xdf1, xdfile_t *xdf2) {
  
- 	recs1 = xdf1->recs;
- 	recs2 = xdf2->recs;
--	for (i = 0, lim = XDL_MIN(xdf1->nrec, xdf2->nrec); i < lim;
-+	for (i = 0, lim = (long)XDL_MIN(xdf1->nrec, xdf2->nrec); i < lim;
- 	     i++, recs1++, recs2++)
- 		if (recs1->minimal_perfect_hash != recs2->minimal_perfect_hash)
+ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t *rec) {
+-	long hi;
++	size_t hi;
+ 	xdlclass_t *rcrec;
+ 
+-	hi = (long) XDL_HASHLONG(rec->ha, cf->hbits);
++	hi = XDL_HASHLONG(rec->line_hash, cf->hbits);
+ 	for (rcrec = cf->rchash[hi]; rcrec; rcrec = rcrec->next)
+-		if (rcrec->rec.ha == rec->ha &&
++		if (rcrec->rec.line_hash == rec->line_hash &&
+ 				xdl_recmatch((const char *)rcrec->rec.ptr, (long)rcrec->rec.size,
+ 					(const char *)rec->ptr, (long)rec->size, cf->flags))
  			break;
-@@ -361,8 +361,8 @@ static int xdl_trim_ends(xdfile_t *xdf1, xdfile_t *xdf2) {
- 		if (recs1->minimal_perfect_hash != recs2->minimal_perfect_hash)
- 			break;
+@@ -120,7 +120,7 @@ static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf, xrecord_t
  
--	xdf1->dend = xdf1->nrec - i - 1;
--	xdf2->dend = xdf2->nrec - i - 1;
-+	xdf1->dend = (long)xdf1->nrec - i - 1;
-+	xdf2->dend = (long)xdf2->nrec - i - 1;
+ 	(pass == 1) ? rcrec->len1++ : rcrec->len2++;
+ 
+-	rec->ha = (unsigned long) rcrec->idx;
++	rec->minimal_perfect_hash = (size_t)rcrec->idx;
  
  	return 0;
  }
+@@ -158,7 +158,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
+ 			crec = &xdf->recs[xdf->nrec++];
+ 			crec->ptr = prev;
+ 			crec->size = cur - prev;
+-			crec->ha = hav;
++			crec->line_hash = hav;
+ 			if (xdl_classify_record(pass, cf, crec) < 0)
+ 				goto abort;
+ 		}
+@@ -290,7 +290,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+ 	if ((mlim = xdl_bogosqrt(xdf1->nrec)) > XDL_MAX_EQLIMIT)
+ 		mlim = XDL_MAX_EQLIMIT;
+ 	for (i = xdf1->dstart, recs = &xdf1->recs[xdf1->dstart]; i <= xdf1->dend; i++, recs++) {
+-		rcrec = cf->rcrecs[recs->ha];
++		rcrec = cf->rcrecs[recs->minimal_perfect_hash];
+ 		nm = rcrec ? rcrec->len2 : 0;
+ 		action1[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
+ 	}
+@@ -298,7 +298,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+ 	if ((mlim = xdl_bogosqrt(xdf2->nrec)) > XDL_MAX_EQLIMIT)
+ 		mlim = XDL_MAX_EQLIMIT;
+ 	for (i = xdf2->dstart, recs = &xdf2->recs[xdf2->dstart]; i <= xdf2->dend; i++, recs++) {
+-		rcrec = cf->rcrecs[recs->ha];
++		rcrec = cf->rcrecs[recs->minimal_perfect_hash];
+ 		nm = rcrec ? rcrec->len1 : 0;
+ 		action2[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
+ 	}
+@@ -350,7 +350,7 @@ static int xdl_trim_ends(xdfile_t *xdf1, xdfile_t *xdf2) {
+ 	recs2 = xdf2->recs;
+ 	for (i = 0, lim = XDL_MIN(xdf1->nrec, xdf2->nrec); i < lim;
+ 	     i++, recs1++, recs2++)
+-		if (recs1->ha != recs2->ha)
++		if (recs1->minimal_perfect_hash != recs2->minimal_perfect_hash)
+ 			break;
+ 
+ 	xdf1->dstart = xdf2->dstart = i;
+@@ -358,7 +358,7 @@ static int xdl_trim_ends(xdfile_t *xdf1, xdfile_t *xdf2) {
+ 	recs1 = xdf1->recs + xdf1->nrec - 1;
+ 	recs2 = xdf2->recs + xdf2->nrec - 1;
+ 	for (lim -= i, i = 0; i < lim; i++, recs1--, recs2--)
+-		if (recs1->ha != recs2->ha)
++		if (recs1->minimal_perfect_hash != recs2->minimal_perfect_hash)
+ 			break;
+ 
+ 	xdf1->dend = xdf1->nrec - i - 1;
 diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-index d4e9cd2e76..4c4d9bd147 100644
+index 354349b523..d4e9cd2e76 100644
 --- a/xdiff/xtypes.h
 +++ b/xdiff/xtypes.h
-@@ -47,7 +47,7 @@ typedef struct s_xrecord {
+@@ -41,7 +41,8 @@ typedef struct s_chastore {
+ typedef struct s_xrecord {
+ 	uint8_t const *ptr;
+ 	size_t size;
+-	unsigned long ha;
++	uint64_t line_hash;
++	size_t minimal_perfect_hash;
+ } xrecord_t;
  
  typedef struct s_xdfile {
- 	xrecord_t *recs;
--	long nrec;
-+	size_t nrec;
- 	ptrdiff_t dstart, dend;
- 	bool *changed;
- 	long *rindex;
 -- 
 gitgitgadget
 
