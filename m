@@ -1,120 +1,174 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522FA1E7C08
-	for <git@vger.kernel.org>; Fri, 14 Nov 2025 07:00:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CA8224B14
+	for <git@vger.kernel.org>; Fri, 14 Nov 2025 07:16:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763103659; cv=none; b=iXM5X3q5J9bvlKWKFEGj7DqzQKqnaoxPYO3JD9cgZqIj6zyOsx6gkbfv8fDmTlU9X8hv8aYzgcUdv7TPFVbiVA5aCAYj4Grn703T76z6BiaGoaEEAgdZnN49lp80L7p3wx164BYelIYJEVmDWgIxmJLWjh9C9jWXegzSZkvqfcY=
+	t=1763104617; cv=none; b=nQPhntBdTax5SDOVhUQEpy+FBFJW1RZDaVOhrcP/+3ppLK8W5FwRTayYoq2KpqRa6brF5k0yB5dWywYxQfNLRaXWCbPsHaHKwmIdkVBMInyNCcDPp+iSmFRSjqwqeXt/iobmhNy4Dckpbwwv7xWQdvWE15KY8ubos2L+jZXDYxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763103659; c=relaxed/simple;
-	bh=/+ZTeRnT48ho6hWzf7w5ho8eJS/B0O8EtrWWOxJJRRs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rGIbBun+w6oQKAfBW5aBv5xYztzRlLDYrRQJsGcjv8L4g0UwOvBQcF57CRHLlto0/Yns8dSlG6TLMJAJrqOKYHlwcUz+4RhE+gReNVbcZXwm6hVAYLZZDJra5AzndDUMwSraariEgC7HAYmqIMBcMZGxfWRHCpK8d3KeyBoxkVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SKGyCoiI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DPg3jaxR; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1763104617; c=relaxed/simple;
+	bh=f84XmffWV238gb4yPPJEJ7L5EuOAT+4VMJ0B42H2AaU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LuXxnF5XmNxSMbMWE+dXEfLAZC3YAmQ9P/LXIj/qyk6buHLhgO+hWj4oVerA2UNVO7i4fd2dOmRO6lGndHjr/PelSFeQRnZ7WZM854Nc2WIaPKnMJQUaoWMF6P2Z/YQxS+K/lYaO+3njqihv2O9yCpLkRVzqwN5Q5Yrr4Y7ysY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b=BCtwimSo; arc=none smtp.client-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SKGyCoiI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DPg3jaxR"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2E61B14001FC;
-	Fri, 14 Nov 2025 02:00:55 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Fri, 14 Nov 2025 02:00:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1763103655; x=1763190055; bh=UiVty1ZmF/
-	gpFIB9/PIHQ1Kgniu/o1K1LGd1LL+xn2g=; b=SKGyCoiIOmIlfDIg83xRXwGdhR
-	Waj6GplumtzsUZbVlAv6J/7wlyZ3d8AOtPgVJZVNrhRXLVvsQbOmx2ch+yOZQPE9
-	dCsOGzvVMSrrHoo645ZKznlY0BuwmCaEi97RXdpmKBySqCVqazl2qgvJ/ptC1WA/
-	wdxTYXhTRJBwXZzaQh9FdRNQwgWM9/02yFj8KGHa+mP7v/dE0JUkr5F0MP8ZxRdY
-	bxYY5Jo2PkN6oE007jGpzBNOlafbgwYbe6B/lHKCYHQ0UkZ27ktb1uLRbYN3lMIc
-	ZYPzpP3hyKMMOy1iY8JOs7dsopmdj6R8o05gwIWz6FIxAknE9WAqGiIk9XTw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763103655; x=1763190055; bh=UiVty1ZmF/gpFIB9/PIHQ1Kgniu/o1K1LGd
-	1LL+xn2g=; b=DPg3jaxRY9WopUR5C6lZ3yjeGf6AHDhsc4kNhsuOfeIOGruVs8b
-	8uYobwkOc9DhSyDfmL17XBd0Y4zQnMr2CokMMKx+TOP97MwZENw9LEI+uzN5xhik
-	0s45FLGZNW94QHy6YsTNzBmtX106dBH5mfa/2IGgtGEHEn/uss2wnRlFk8dkAOiq
-	OAkVs9XxGrrel3wTGDGsLYvcVKxtYk16GaUrmhK9dZh6nEQu/nN/punGC7j1GUWe
-	kh1FEQhbk87XaVZBNe+JndW+AtHF+7yz2ojSjxYZn6tXOBLzkxQZ/leImXnKhYRe
-	2bA6Hmx+CnVP3RiRsWupW5rc5W3hg0pNUFw==
-X-ME-Sender: <xms:ptMWaS4waYYnNVkML76G8H-pDM2uPH95ywheijtDPOQ6mLVGK1jcww>
-    <xme:ptMWaSy-pyUDCbqxjptAIMX59L5f4X8v1yFXfuAHOESCgih9kkIQlXvXkLrAeRrgj
-    4caChtp1DRuQXFi5vWDw5mmJMVacWifvCXe_qaegWf4kM_TxPDCoWg>
-X-ME-Received: <xmr:ptMWaZwT6tgYmpbAcCxcEq_KrzQBrqKhrXUOc2oexieHuBoT-0TV_yY3RvStZJH-3sygOySrTEQJzv2o9mkdQ8-55ijhTyRInsObKW5qog>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvtdeludeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdortd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeejtddtgeffkedujeejgeduhefghedtgfdtie
-    duleeulefgueetheeludegueeuveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtgho
-    mhdprhgtphhtthhopegtmhhlihhsthhssehsvghnthdrtghomh
-X-ME-Proxy: <xmx:ptMWaayruYooLFEVToqeLINaJqRAduEwzWOrOGP9yE98YOANZz8Nfg>
-    <xmx:ptMWaTZd8ICcRa17IrmvKsHRdApU8Ck9UV8mLjlCWJF78TYOGUYv3Q>
-    <xmx:ptMWabWN2p9jdb55th8wLpEG2LGqmK0vrQEo8zwyfpe2xVKZ9WvV1A>
-    <xmx:ptMWaRg8dFrfo0uwEyHTxGLM9F759r1Gtq2TUXk3TRdLINZ5WTTtfA>
-    <xmx:p9MWaeDcFn96M5yA6_R4dgDKKzEqqClG05fm1ZmIw6KTUuuiDmZzgJTY>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Nov 2025 02:00:53 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3357ea1a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 14 Nov 2025 07:00:52 +0000 (UTC)
-Date: Fri, 14 Nov 2025 08:00:48 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	correctmost <cmlists@sent.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 3/9] Makefile: turn on NO_MMAP when building with ASan
-Message-ID: <aRbToFLhzewwBaSv@pks.im>
-References: <20251112075522.GA978866@coredump.intra.peff.net>
- <20251112080215.GC979063@coredump.intra.peff.net>
- <aRRu1cxpIzd60AoU@pks.im>
- <xmqqfrahq4j8.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b="BCtwimSo"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-b98983baeacso669825a12.1
+        for <git@vger.kernel.org>; Thu, 13 Nov 2025 23:16:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gree.net; s=google; t=1763104615; x=1763709415; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fMH0h6QdrESZPlv74dAPoPteKjzVnDjb+0uDSaxH8Dw=;
+        b=BCtwimSokVFF68BNUSKP4RIv/iVqYkCmh+gW7H2l7MOWFEd0aNEj+A3GUBhc678ZuM
+         rcXHwvioMXXacq3E98eV2ZpUnH2dw4pDHedk0VCjb3nirXuWMgSfRcMZpCiiuMMIwXF6
+         fXuKC/FMLifTpXie9n1mCuyrlUa1C+56pMsTkb1VqluIYDn25BNEywiQZb/kvV+JP/w9
+         nEMgF6/oobW5EdgU9oZW8QQMr8DJMFnykRAsmI8pgnAXTcJZauxHaMbTfokxEs2l79cM
+         HyOKZSY57WDqrTYN2ebjly79j/9SOZ9y5ZycLpSemV/ULdbv/XQ5Cay7HzSd3UXeLSKG
+         loCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763104615; x=1763709415;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=fMH0h6QdrESZPlv74dAPoPteKjzVnDjb+0uDSaxH8Dw=;
+        b=lwmw+GPvXGqhIB3aFYARtbJGXRReluoXt0401GfxGMfRUYNEazcDcLJ4uuwPRUHIu/
+         EzLsyh18snRHxQCT1D7rBriAuG+M75FQ5jtbF5K6dBbKozcNI72EvCTHG1o7s1RbIdQw
+         dYJrqLrZXG9a5SURyMZI8/TirZgUmNank325bPUx1/g6H+rLaY3Q6PrcF4JUafoskyPZ
+         qW0V7VCAbpEBg0YMGXuSXTHwtxKefHRnyQfCJOSDytzFbqYpDKvsX3omfkm4hzRnMxpS
+         yG95jwHp84og3MjGPXUyUgI04/gR17sjM32GuQFsjUs5YtpSZdE4FgX7VVhR73f4O+/n
+         DZ3g==
+X-Gm-Message-State: AOJu0Yyir0KMbUDWLd+zGg4rUVeyhdEguVGqLtSZSOIqv654T9kYMK8i
+	cef7F1ooO+4RAYA30EjKZwwtDI7V1xTORyL7jOqL8IAFX785RQkA5n11X170qbXtLzZfIshfNNW
+	biXFnW+1NydYd1GNcU16Lf/PR7aOSIwDvBLozjKwj+sDMRLKXsTlQB1Mz/MRvP9zvIe+Y6UYQNl
+	A4qAHOg8EBWgHthVd1caMng17iEF++aVNOb80OOap6CzXF0RCLxlyX3u2EJxm4E8JkW9b1sB5J1
+	dJFhDYrvfsMpOYsabd1xmF6xNrEmgzvN1BKBts4HaBzUlTULOD/AaQOqxK6K7PjXvBPj5hp01gH
+	Jyh4l6ww1rprprVlV4e+1sfVN/TvEOY=
+X-Gm-Gg: ASbGncsQMxYQVDo9ag8kpxt2riN68SjFAMQOWSA4DuaeoifQ4E1lLUMXd30HV6ZYSzx
+	/TJjO1B37jh4sWq1uN6B97x+PvnMD5y/gKUHN+ITNvoHmdEfpKytO+DJuPfduvkQ2kCks3vrjj9
+	xUWFXC6LGHSOWtZwyp/UBiTwqAifviXtT9dpwEbXmeOKqmg3inixxwzotV/lBlE4LVXc+DNf4Vz
+	lFZTFNlyQhj8ev1x4fEl3LUg0zCaAHi5mUHZuKy3cIE6kJQC9XBm6ijPxUXphXsxEpR1wbJ
+X-Google-Smtp-Source: AGHT+IHjqK86Ef9uTF9WIzv2XDgtY5IYFYuru2gFcElDxzWQGkaiMYMxFBwNiAYCE7gY+vc5/PT165AuswjCngQH+EQ=
+X-Received: by 2002:a05:7301:4b11:b0:2a4:3593:ddf3 with SMTP id
+ 5a478bee46e88-2a4abd90a1dmr663147eec.32.1763104614604; Thu, 13 Nov 2025
+ 23:16:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqfrahq4j8.fsf@gitster.g>
+References: <CAMqCmsYb409G0CuL+4xZit4V4wqOzD8DtNBe9hmRquBm0Xuevg@mail.gmail.com>
+In-Reply-To: <CAMqCmsYb409G0CuL+4xZit4V4wqOzD8DtNBe9hmRquBm0Xuevg@mail.gmail.com>
+From: Koji Nakamaru <koji.nakamaru@gree.net>
+Date: Fri, 14 Nov 2025 16:16:43 +0900
+X-Gm-Features: AWmQ_bknPEAkk8L6Ri6KB76_JjThP3n3Rr4lbbm21ZRutit7Nq_IXtl8i-KNOfg
+Message-ID: <CAOTNsDy7Zf6XnjkND3-rXEDXEDWpi6fF4-KhCydBaEqk7OWU6Q@mail.gmail.com>
+Subject: Re: Git fsmonitor daemon processes spawn detached on macOS 26 Tahoe
+ and never terminate
+To: Jono Spiro <jono@lostinrecursion.net>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 13, 2025 at 08:30:03AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > On Wed, Nov 12, 2025 at 03:02:15AM -0500, Jeff King wrote:
-> >> diff --git a/Makefile b/Makefile
-> >> index 7e0f77e298..0f44268405 100644
-> >> --- a/Makefile
-> >> +++ b/Makefile
-> >> @@ -1587,6 +1587,7 @@ SANITIZE_LEAK = YesCompiledWithIt
-> >>  endif
-> >>  ifneq ($(filter address,$(SANITIZERS)),)
-> >>  NO_REGEX = NeededForASAN
-> >> +NO_MMAP = NeededForASAN
-> >>  SANITIZE_ADDRESS = YesCompiledWithIt
-> >>  endif
-> >>  endif
-> >
-> > Let's also apply this to Meson. Thanks!
-> >
-> > Patrick
-> 
-> Do you two want me to squash this into the Makefile patch?
+On Sun, Nov 9, 2025 at 6:55=E2=80=AFAM Jono Spiro <jono@lostinrecursion.net=
+> wrote:
+>
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>
+> 1. Enabled git fsmonitor: git config --global core.fsmonitor true
+> 2. Used git applications (Xcode, VS Code, GitX, terminal with Starship)
+> 3. Performed normal git operations (open repository, stage files,
+> navigate directories)
+> 4. Quit applications
+>
+> What did you expect to happen? (Expected behavior)
+>
+> fsmonitor--daemon processes should terminate when no longer needed, or
+> at minimum when
+> parent applications quit. Expected one daemon per active repository or
+> so. I am seeing dozens and some users of gitx (which I am a maintainer
+> on) are seeing thousands of orphaned git processes pile up after
+> upgrading to Tahoe.
+>
+> What happened instead? (Actual behavior)
+>
+> fsmonitor--daemon processes spawn detached (not as children of parent
+> application) and
+> never terminate. They accumulate indefinitely (dozens to hundreds over
+> time). All show:
+>   git fsmonitor--daemon run --detach --ipc-threads=3D8
+>
+> Processes must be manually killed: pkill -f fsmonitor-daemon
+>
+> What's different between what you expected and what actually happened?
+>
+> Daemons are spawning detached with no parent-child relationship. They
+> never receive
+> termination signals when parent applications quit, causing accumulation a=
+nd git
+> index.lock files to remain locked, blocking further git operations.
+>
+> Anything else you want to add:
+>
+> - Only occurs on macOS 26.0+ (Tahoe) - not present on earlier macOS versi=
+ons
+> - Affects ALL git builds: /usr/bin/git, Homebrew 2.51.2, Xcode Command
+> Line Tools
 
-I feel like there's going to be a revised version of this series anyway,
-so that's probably not necessary. Thanks!
+The "git fsmonitor--daemon --detach --ipc-threads=3D8" command runs in the
+background and doesn't terminate when its parent process, such as
+VSCode, terminates. This behavior is observed even on macOS Sequoia
+15.7.2 (my environment) and previous macOS versions. You can stop it by
+the "git fsmonitor--daemon stop" command or using pkill (as you
+mentioned).
 
-Patrick
+Setting "git config --global core.fsmonitor true" quickly leads to many
+fsmonitor processes, so I avoid using it. Instead, I enable fsmonitor
+only for specific large repositories.
+
+> - Affects ALL git applications: Xcode, VS Code, GitX, Starship, any git c=
+lient
+> - Side effects: system resource exhaustion, locked repositories
+> - Workaround: git config --global core.fsmonitor false
+> - Related issue: https://github.com/gitx/gitx/issues/485
+> - Apple Feedback: FB20956467
+>
+> Please review the rest of the bug report below.
+> You can delete any lines you don't wish to share.
+>
+>
+> [System Info]
+> git version:
+> git version 2.51.2
+> cpu: arm64
+> no commit associated with this build
+> sizeof-long: 8
+> sizeof-size_t: 8
+> shell-path: /bin/sh
+> feature: fsmonitor--daemon
+> libcurl: 8.7.1
+> zlib: 1.2.12
+> SHA-1: SHA1_DC
+> SHA-256: SHA256_BLK
+> default-ref-format: files
+> default-hash: sha1
+> uname: Darwin 25.2.0 Darwin Kernel Version 25.2.0: Sat Nov  1 18:04:14
+> PDT 2025; root:xnu-12377.60.50.0.2~95/RELEASE_ARM64_T6000 arm64
+> compiler info: clang: 17.0.0 (clang-1700.3.19.1)
+> libc info: no libc information available
+> $SHELL (typically, interactive shell): /bin/zsh
+>
+>
+> [Enabled Hooks]
+>
+
+--
+Koji Nakamaru
