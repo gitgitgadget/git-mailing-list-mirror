@@ -1,123 +1,118 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C59125CC6C
-	for <git@vger.kernel.org>; Fri, 14 Nov 2025 03:37:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA4A132117
+	for <git@vger.kernel.org>; Fri, 14 Nov 2025 05:41:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763091435; cv=none; b=VCCntpzrLwdcd//Ww7p+YakEXimrrLBNEqb34Ba1vtjtJDpwPP2vrPbztNAa5egYzgummZzn1V2VjEp+plIQPWMKnoalxnUpupF6FYUrgNlI6CjNTmYu/cEiJJBKo3N6tNoeN1PLqDlzrJjZporNYbwEmh0SFT7wc9nqrc6nYBg=
+	t=1763098890; cv=none; b=Oydn5PTD8dYHg+Uwre41YxYSqPON0/VD8veFYPjjvDO+jFMTA+wlcDRnNR2jVLTPjkSA2o4dFPZ2ArR1TVRKvw7MpiUpo5nW5hvUcYLy1G5yioi8+29cmuaWPj3uaKoqXpWIbOkVV4fhMtMHBxGoPxOgN4K35669bWJ219xEwAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763091435; c=relaxed/simple;
-	bh=Hb0SAOO3Nm8ExQZeM+KgAw0UG65pTwS1c/Mg25C7MiQ=;
+	s=arc-20240116; t=1763098890; c=relaxed/simple;
+	bh=MaWYXCbLsHg72FWES9PVLgDgvyhIKQyOo2cBI70Nh9s=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=hZpjx6lflDimqMl9oV+Pq73soytbUwefEPTKFBZedLNYHlp2Qi/ZbvkbhV+7UVWVjlLsNbi/UxuGvP11cL4dKrZhhx3uIUiMLSYKayZJlZHAIsnA7P+uJHF96oKcUhgC2iB9se3JIOMMucgtrFnPk5reFOyxg2lAWndLjAhnQwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b=1fB3k01z; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
+	 To:Cc:Content-Type; b=O7fRqt0vqqu9VNSRL+cZx57yi1DCMY1/Q8d6q/6qcCyFEZNlYpb0phJ4uij/UR5Vtbevavy5jObVSkpm6DR86lLr5QmLvbu0+7Zqx0VHqb/l56SySehBQXWCH+y3E3qQn3b1Iwk/8mIQVKOT9MeMDiSIT836YVZYJzss6quOwHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j+FxmCzU; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b="1fB3k01z"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-343f52d15efso1073823a91.3
-        for <git@vger.kernel.org>; Thu, 13 Nov 2025 19:37:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j+FxmCzU"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-37a2dced861so24835551fa.1
+        for <git@vger.kernel.org>; Thu, 13 Nov 2025 21:41:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gree.net; s=google; t=1763091433; x=1763696233; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=gmail.com; s=20230601; t=1763098886; x=1763703686; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BjrYlh8+2IzNQ1TPcPm0EqQpToeQXqfGj+ik8eN+cig=;
-        b=1fB3k01zttel3OflI47CDj8889VG9Rv+S20Sr07wRzBqXeccVsuxHqIGYnQ/+2O6LW
-         yZBXdGl+kOKIaXlIyGCGEo/TR89gqDodq1qrA6rbTkmfXvo8j8Ik0X8G0+9AZZ7nAC+N
-         z2jpicTnoGd1UGLVsEk47q7PmV3P22QFTy1lEzfYeAd5Jhee2AxN/a4Ru+TReFnogX7f
-         QVBzeafS9B+MH5tKtHNmZboJe4Njks5fCaBxym14RGl1YegxSP05TmpIKkmGv6xpDUEF
-         /AfhRUiFyglMNZ8mpacBbSXVmCfHyCPPnNWBKZjlhy5jltoYRxbDrjAi5ysM6D4t62aR
-         g4oA==
+        bh=xpuvbjQmQmnusfaRD8hs32g3H6Dq2vN29h2dt2tvYDk=;
+        b=j+FxmCzU+WY/iImCg9BvlrSANZwdMkqOwDtp3mtf1A3uyvTNCzAB6+MGXEkQFhqmWr
+         TgD5L69dZxFF6kU0OjHMTMatEvR98iKq3ulR46Q/vSxg27WapKDP/Jftqn9WimI9OVQG
+         cuHmpbAdR41dCMCaB3uRjMVr3jiIakNv/sqG8aMyeXyvthLin4B0FDjpIkdG+zNTPgMP
+         yal4MH4Yorvns9HdDRRYgSGV5HiAwMaHGU6YRF2SMRsJVWb7S1uKl6sU/4SgpZ1tmzWo
+         uz5AWiDKHb8W9O77g5OdXhCiKzijGjgOzFAxbb7QX6sW+AVe1/Zg6nvn0BgM2ahmYvei
+         rW6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763091433; x=1763696233;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1763098886; x=1763703686;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=BjrYlh8+2IzNQ1TPcPm0EqQpToeQXqfGj+ik8eN+cig=;
-        b=Fr46+Bo71l5HkcHFbpwLX4b27u3o7vH2uKWYdMfzM1xc5ruJR4zyqJrR38ZXjRw6p5
-         X81d2S+2/GIRFbgEJPbueok2jWNoCmrM35h8fvMXl4MHAPWvf1h2nFucLszRRYtDJnkS
-         +EhefJqT3x1SDbLjPv+sRBuRavuhlYnh1IKDF/B3z1nIZg84h4NHwXebpbt1LS39AUgK
-         Fle+83/JeMxQRmjU4+AyOsVFnNBiH96/zfMoHZoHy3bYunRV9D0LCdc+OWkUaAPH7gLI
-         eDr0Yid6SzaOa5yEQDsS87jz0rZrYbBvI8aysp34AgyIosVhYJTmGboM4uINqwgGhPvQ
-         21BA==
-X-Forwarded-Encrypted: i=1; AJvYcCVzovGd1qVNSD5lZPaeZOML5fAbSQD/dl74mHqGrN2DRKatBJx9W1v9nqgE6fTQnBnxgjw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRyy9zeJdd7zmPVNgfUE6pBRO8Yr7Cl2nSQxshkH2g5o/UvJcf
-	sGyvtk/d+tm+oS9eyT8kfT93LeXaWnmeH4XjsP/KHLZo4TUDhP80DSfv3kIVDF0Ody5ExiT8Es4
-	QX79YL6IzfOKO/M3i3isXvHi8prRa6t7erS7Ph0iBWE2uRK+qH/Bc5J9d/IFyVDGzhJeA+kyhHd
-	S8HXE2hgqueQOTI3DwkxK+nvaZR/Yapv6piOO1YVUtFvqL4Y+HqZVAwop0C36D9AteKStRhZIP2
-	6CrT0DKNq+9ZmV7qerchzyd9TRU9OWXz0E1ltf/pmkAAz8B2Vr1N7yC3jLZPU8sPWX0XU+tIHf5
-	tXBAuoRmZFXO5tfFqBVUodB78O7z4Qg=
-X-Gm-Gg: ASbGnctqRw1Y1CTNJcfk7CUBqGue8I7uqLykEV0M5ObesBookemzx+xCPqsr3t0Vq7D
-	Ap4nEaVdw8yqX6mC5/o5qZxrwq68vJMcLNVXvuCoBJseoiMef5Z6LL0oTAVyzUFrPj9p4wbAAql
-	dJ5R6s/GpnmL6AV/WksTuMbgfel+D2L8JeyJMQnezgg1N1Sm775Pn5vktJBSLjmzw10kkRKifil
-	EZZw5LIyd0OwFvz8vaCLPk+BY0Gf/k7kby6tpEbaEnOl5SFbZvURuXJXUdhrYIA2qPaAsCQUfdo
-	qWJxgO4=
-X-Google-Smtp-Source: AGHT+IE/3phXNfhhraq2X87U/PGNOujz8x9t0Zydts5pYz7SVGgwtJP+yaxkBfLTlfhQT3ZrQny+yJO9vPq4SH+raUI=
-X-Received: by 2002:a05:7300:a905:b0:2a4:3593:466a with SMTP id
- 5a478bee46e88-2a4abaf402fmr776702eec.6.1763091432484; Thu, 13 Nov 2025
- 19:37:12 -0800 (PST)
+        bh=xpuvbjQmQmnusfaRD8hs32g3H6Dq2vN29h2dt2tvYDk=;
+        b=ahduSyc1RoiWPd1Ps2ubi/LQ0S5bCXuAsjHfvDF41HGtb6AwoMrht54mFc794/tt4z
+         6mq3ctXpS48F2kRxx410QqUb0fBPhvGTnIlZGvhHd0GgymAN0d4FJ2r9rgpr9L2zAcSz
+         u0rEXgAN7U7c0bk4Nf61cJT9Ef48l4+BTn1N5jxkuTXkokW8Aeh/rkdho6ndvEpSG2ZY
+         8EGHPM0AVpsd0l3jD45eIYXklI4IMkFOh+J9/O5MfAxP/q8wUXWDOZ07BNsTcm405atp
+         REwMsNaNYOeBKXKiKMJfDnHk7bht5r9sgkQrfzIlbCqyGgnNimSKeftIJTCsogLqUrh+
+         abXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXi05Q9Nt658XXkIzEIHEwgUEyrH67EKV9IjLiFIRtOH5czrgxivTPxL0cxPwVZE+bSHdg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyuupkHLTqQC4YkoUYh/5Tb5yb4lDIgLYjdvtvS4TRE6NnKQzG8
+	dDX/7fISjRD63L0c/2P8T8V2zc0Tg3i1wrMb/3XJEIkTeBtrSUvU1m7MfHSSseMvQeq+8/HvM/X
+	vcN5JUEhNgH9FNAS8Lwr0jfH9HfeiL4o=
+X-Gm-Gg: ASbGncuqlZUC8i7RIANKwUG319dVxZLDu1eoaERvGSAgwopweIMV9jEDxzKuTdxOgdr
+	3AH4ZS3XoM/8iLwJnd7Yj+ueOn55gnEG9MPNN1nEjc1Qc8MXMHeiBFjs/ANRLPuipC2vgZnPFIy
+	nupoxKTexmaL8BsuvLdTxfrlSco5nPfu0j4KRa3q/JYUOsGSgGMPFolyguwvuz9ymZbKhMJWSFe
+	IzmnYlq5fblhrmL87zM3TMMcxKcY8i4EYnOuETf8okDCD1HwTe9SaLjA9vzY0/EbsR3RaUl
+X-Google-Smtp-Source: AGHT+IFGx56b1LpjmV101Vo/WqwrPfGjdTmKvPzzPAyjebKkrYWXA4bzv0BVshgK876TlYT5SmbkzRFq0dfmgaXuLxg=
+X-Received: by 2002:a05:651c:4115:b0:37a:323b:2670 with SMTP id
+ 38308e7fff4ca-37baaff0379mr4711381fa.24.1763098886146; Thu, 13 Nov 2025
+ 21:41:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1998.git.1762930881599.gitgitgadget@gmail.com> <aRZqLp__WdA4hbuD@fruit.crustytoothpaste.net>
-In-Reply-To: <aRZqLp__WdA4hbuD@fruit.crustytoothpaste.net>
-From: Koji Nakamaru <koji.nakamaru@gree.net>
-Date: Fri, 14 Nov 2025 12:37:00 +0900
-X-Gm-Features: AWmQ_bnPUXfSdo56Xt4mlrv_gm4tCzYT4NHkSA3TXCNhAz50L_bjGCEQAShYp5A
-Message-ID: <CAOTNsDx77ni29S1tGNi-3Nhb=XpT2x72gg4PesxGXfZO0Ke5qw@mail.gmail.com>
-Subject: Re: [PATCH] Revert "osxkeychain: state to skip unnecessary store operations"
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Koji Nakamaru <koji.nakamaru@gree.net>
+References: <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
+ <pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com> <3834ea8f9becc9d6e1b407679e8a95dc6c9d56de.1762890152.git.gitgitgadget@gmail.com>
+ <xmqqwm3wtat8.fsf@gitster.g>
+In-Reply-To: <xmqqwm3wtat8.fsf@gitster.g>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Thu, 13 Nov 2025 22:41:15 -0700
+X-Gm-Features: AWmQ_blXeG14xfAS1qazgqHiFvLYLZ1Ve61xFVEp0IaiSvQDDo0XNBXaezv-o8M
+Message-ID: <CAH=ZcbCJ4MXnHpspuT+KkeR6LRTQrzh-7v5ep9S8WPRjdteR8g@mail.gmail.com>
+Subject: Re: [PATCH v3 06/10] xdiff: split xrecord_t.ha into line_hash and minimal_perfect_hash
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Chris Torek <chris.torek@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Nov 14, 2025 at 8:30=E2=80=AFAM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+On Tue, Nov 11, 2025 at 4:21=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> On 2025-11-12 at 07:01:21, Koji Nakamaru via GitGitGadget wrote:
-> > From: Koji Nakamaru <koji.nakamaru@gree.net>
+> "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > To make this clearer, the old ha field has been split:
+> >   * line_hash: a straightforward hash of a line, independent of any
+> >     external context. Its type is uint64_t, as it comes from a fixed
+> >     width hash function.
+> >   * minimal_perfect_hash: Not a new concept, but now a separate
+> >     field. It comes from the classifier's general-purpose hash table,
+> >     which assigns each line a unique and minimal hash across the two
+> >     files. A size_t is used here because it's meant to be used to
+> >     index an array. This also this avoids ` as usize` casts on the Rust
+> >     side when using it to index a slice.
+>
+> How much extra memory pressure does this change cause?  In a single
+> instance of xrecord_t, we used to have a single ulong plus a pointer
+> and a size_t; now we replaced the single ulong with two 8-byte words,
+> so 33% more memory per record, which is not so huge a deal?
+
+This was asked and answered earlier in this patch series [1].
+
+> >  static int xdl_classify_record(unsigned int pass, xdlclassifier_t *cf,=
+ xrecord_t *rec) {
+> > -     long hi;
+> > +     size_t hi;
+> >       xdlclass_t *rcrec;
 > >
-> > This reverts commit e1ab45b2dab51f94db9548666dfd7af626d2aa7e.
-> >
-> > That commit was trying to skip to store a credential returned by
-> > "git-credential-osxkeychain get" by setting
-> > "state[]=3Dosxkeychain:seen=3D1". However, this state[] is kept even if=
- a
-> > credential returned by "git-credential-osxkeychain get" is invalid and
-> > another subsequent helper's "get" returns a valid credential. Another
-> > subsequent helper (such as [1]) may expect git-credential-osxkeychain t=
-o
-> > store the valid credential so that "store" cannot be skipped by just
-> > checking "state[]=3Dosxkeychain:seen=3D1".
+> > -     hi =3D (long) XDL_HASHLONG(rec->ha, cf->hbits);
+> > +     hi =3D XDL_HASHLONG(rec->line_hash, cf->hbits);
 >
-> I believe the intended approach here is that if we do a get and the
-> credential is invalid, we return the same state[] header to erase, but
-> we should not send it to subsequent gets for a new credential.  However,
-> we do need to send it to subsequent gets (which will not have an
-> intervening erase) if this is a multistage request because otherwise
-> multistage requests will not be able to keep state, which NTLM and
-> Kerberos require.  Does that make sense?
->
-> My guess is that the problem here is that we reuse the credential
-> structure without resetting it somewhere in the HTTP code rather than a
-> problem in this particular helper.  That is probably my fault, but in my
-> defence I would not say that the structure of the HTTP code is very easy
-> to follow.
+> Very nice that we can lose these random-looking casts.
 
-Thanks for the explanation. I misunderstood how state[] was intended to
-work. The current behavior seems rather natural now that I understand
-it. It might be useful if we could optionally specify that it be
-discarded under predefined conditions. Also, as you and others
-previously discussed in [1], this topic is delicate and interesting.
+This was Phillip's suggestion [2]. Thanks Phillip.
 
-[1]: https://lore.kernel.org/git/20240510200114.GC1954863@coredump.intra.pe=
-ff.net/
-
---
-Koji Nakamaru
+[1] https://lore.kernel.org/git/CAH=3DZcbD7FeRHtYvN_4=3DqHApB-AwK18=3DKRU2S=
+GWNg8ADkrFM-Fw@mail.gmail.com/
+[2] https://lore.kernel.org/git/a66fb440-058e-4cd8-8971-9c320c0387e8@gmail.=
+com/
