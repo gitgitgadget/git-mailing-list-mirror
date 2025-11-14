@@ -1,114 +1,102 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806F12D9780
-	for <git@vger.kernel.org>; Fri, 14 Nov 2025 20:06:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11C831A041
+	for <git@vger.kernel.org>; Fri, 14 Nov 2025 20:11:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763150773; cv=none; b=G88R+JsiLOGBE3SQR6eg4a24WE1hXV+3QKItSA6/z5II1Y+hPbcA69F/mUkIr+c0p5aPaKklasEjYdk+LU9nsqZMA+rY+R0Mi72aPh5lgHmxuHXMhZqD0C4em3sB0zs5dXzJozUnTXXLiIAVSrsa1uRYQvP4nfIHViWG9PcrZZ4=
+	t=1763151080; cv=none; b=hg/yF9oh2vF66JBxExvOFW1Bv8kEZ2+I/d/qMKwU5DPj9AYOdxgsVAhobww+hLwtbfThYygxsNheAT45XY8nVZqU+FsRg9IUPaf1GAAqJ/ERyNq/040PJ6TqOB/NLOTlEEUZ68koMlX5XGBWI3j2n6YelByNKxIxZQKbWP49ULI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763150773; c=relaxed/simple;
-	bh=SfaPPR89NIgUsjRr9fX9XkXi5TvTmpqkVLIEtP3nEGM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jwdWRxzq5YNCnskOzOfKujxDBxy96juA+JfNe++UPDKO55W6di5amshJDr+6a/BvqklHHwe4v3sPz3+J7Xa8x4aIxWubsXUbZV5M7i9HublulOz7BY+ssGTJEMNqsbeJ6l2eZ4iNGuikmnN4gwk9mUFl+rMhIp0ywdv0oOLtRHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fIjtLeC8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zkfzq+Yo; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763151080; c=relaxed/simple;
+	bh=wZ0OO0UEy5ptVmWFshoHc9q6rmq2dkvLuD8qZTBKBQE=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=tqi2pwENsisCuCmiW0R7QMQSU8CBmlgJ0UEbMSvMKyb8jMZfr05dWBqLpiigtyS7sTjhFduJmMSz/8r3xq/SuP7CeJLHXtQk8wAs7EGAfEoMPmxOHuIZ87dcZBosPmq6XUHdqKSxA7Zjhl9wXexbhdEGC2DClMG1IUkMbbr24Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GULDiOiR; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fIjtLeC8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zkfzq+Yo"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6F1D7EC0198;
-	Fri, 14 Nov 2025 15:06:09 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 14 Nov 2025 15:06:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763150769; x=1763237169; bh=0I2xzZIdf2
-	QmNW2turiwGHLFp7CbA8sD6RRAakc82mE=; b=fIjtLeC80Ja0sIkJsMwSy89U6B
-	WU4XkRXlbpYZHZQKAsQx+vgma/2RSH5rBM+HoAgfJAl4tjaXA7TGc0GbbvYvXhxq
-	PEGrcO1YyICOidCVE/B5Db0+RwR9VitgImEDBUNWRSHxZs0svvR6g5eeCuximl2P
-	7gy5lY2OfFvJ9lzFtYRH+ERu9roIuIZwsH1ePko6gDRSKUB1U1LSoDLdVKYYJEj6
-	7wKDP7M/iQmYCumXWXK6DWGiUVOg0X1UlIu3ME6Vm3UDr+URULqAG6ePdYm214Er
-	welpouAN8Y9+gx/XD4HSyJT7S97qacNvx4H13A6T9dD7TOpgOHDma6a3drew==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763150769; x=1763237169; bh=0I2xzZIdf2QmNW2turiwGHLFp7CbA8sD6RR
-	Aakc82mE=; b=zkfzq+YozXHM7CPnDxRUyt0kFb1+Yvdy+2URhZaiemPQ+i+Cj22
-	tdF7cfwKcwVtQnGDDgJRMLqwuxnrUkLYqHBc1hTMNkA8Q5G2U3MM475N/22YMUaP
-	xrwDtIKH5MfgBhFMiNZe6QCxokqHLjI47Nhair/h0RIeChPQEQa9JlvhWpSAU2/c
-	AIBQqoyiqde6xpMFHUM4jZ5yNKxMo9I3pgm4yJ1MbM+iZYuFOBM2GajP/AleIwCi
-	VYlFU9bvJGP6frhOgXqwht2nIoBYkSkB+zDpIhi6Dx6iyNxzAG166bgBqiEqEvU+
-	l97eySU+2wGRZFryndIqen8GJA8PE9Y34ww==
-X-ME-Sender: <xms:sIsXaUohg7SUWhbB7VyMGzqZuoFpPf4TgqJWFgzSbysTc2XS_bwL5w>
-    <xme:sIsXaZujXhaA-sd8ohzwSR5Uu6Z8MGf_toD4UynuEzCD7EF93c4SEPfQxiJEe0pOH
-    SV8v42c3EozBHDcIip8PyTTT6lobNeUoqIQQd7f--u94WTexO1ewA>
-X-ME-Received: <xmr:sIsXafaouV0qrei-yYdYPPci5a9tfblU6zzZn-IxdnDilAGbaBnT3tjnGmH1ujfnr1MYghGvS4UrcQaqLcjbfvRIE908oOUdZjHJ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvuddtjeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegvii
-    gvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihht
-    ghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
-    sehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpth
-    htohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthho
-    pegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:sYsXaYYSi0FpSydiwnTbZzxDdQ_PqdoITvoY-3gfZ03GuhwiFTFnuQ>
-    <xmx:sYsXaYnVoUpSvuvmvHswUBXPUFa6JXhLkNkEJ63AFHBpEFi6PjolMA>
-    <xmx:sYsXaT3_xLVioFHC-ZYGjYxfdL7wDUtUAE_TyfQarZ2tgIeUM7OJCw>
-    <xmx:sYsXaY3LMBf_O6z0syET9EuuSWZ5ICuBVQQI8_zXTAcfavuLCSyrmQ>
-    <xmx:sYsXaUrE2E9HUP7bJ31l2mi7dDrmDX7YKX53jR3RL3BYsCXgGMRpB2Jp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Nov 2025 15:06:08 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ezekiel Newren <ezekielnewren@gmail.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt <ps@pks.im>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Chris Torek
- <chris.torek@gmail.com>
-Subject: Re: [PATCH v3 06/10] xdiff: split xrecord_t.ha into line_hash and
- minimal_perfect_hash
-In-Reply-To: <CAH=ZcbCJ4MXnHpspuT+KkeR6LRTQrzh-7v5ep9S8WPRjdteR8g@mail.gmail.com>
-	(Ezekiel Newren's message of "Thu, 13 Nov 2025 22:41:15 -0700")
-References: <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
-	<pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com>
-	<3834ea8f9becc9d6e1b407679e8a95dc6c9d56de.1762890152.git.gitgitgadget@gmail.com>
-	<xmqqwm3wtat8.fsf@gitster.g>
-	<CAH=ZcbCJ4MXnHpspuT+KkeR6LRTQrzh-7v5ep9S8WPRjdteR8g@mail.gmail.com>
-Date: Fri, 14 Nov 2025 12:06:07 -0800
-Message-ID: <xmqq346gidlc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GULDiOiR"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-47758595eecso13286585e9.0
+        for <git@vger.kernel.org>; Fri, 14 Nov 2025 12:11:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763151077; x=1763755877; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:from:subject:reply-to:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cKWHWmDhS2FEeSsJUwCaj2VKz6H8R24HJCJ5iDC9Wvk=;
+        b=GULDiOiR8/1KXS0IANd7VIdWHysJhei7E/qDnEe6bH1pcdXpGIy7J/D7cbcAXysWK5
+         wbuCSqeBAOLxCXMI/qhY/wQGRzdHKQzjtmwzK2BeImbZmbURN/eQHaJPCnWfqA0mpiE/
+         ptAIRtPz7z0xrRkkUpXNDa0YrtZBAve0rGm77Bd/a2CZhd1HHP7ShRbmEyJ+macpglbz
+         5sYcvLiKbptI40dIcKBzk8YE97wzeL9LiPrbzOqkerVGQf9pH/ozljfQQ5Gk+JgIsBXG
+         DuT9oyS57Jd6hgtjToYrNqpPORwii1pFakAlh4R7xbh9ADGJ/voCfkAH9s6EsIUK2ZOp
+         jT1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763151077; x=1763755877;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:from:subject:reply-to:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cKWHWmDhS2FEeSsJUwCaj2VKz6H8R24HJCJ5iDC9Wvk=;
+        b=X3mJlff+UpY+SFkocD6drO9ipOKmGofKtGgnn4MRrcknLxhDyVKXa6R0mu8wrm68TC
+         04KSELhxpKolM+Mn7GiympKH6ZDIqOx/YK1V/0+xJ+p1DSQFQ7jE889snmfz6HoOuVx2
+         41DL2O3Gryu4hXvBS+VPNO7fp7K4mvSz2cL+tFxvVMKYAM3sDqwmWBSH76JGPUC0hO4T
+         +wX6LE4n1UZQcif1u2zU/Yxv/fmPd6kCjpG53jnG9AM4KWe7ch2D8M7bJbMz7wMUT5Nm
+         ZkfeelaArSWRBNsz57lrGDGkHQFfwtUSnYA0hor0/h5uxeyjWqVJXPkPgvcnWn83Ao0/
+         ejCw==
+X-Gm-Message-State: AOJu0Ywxgy77Ammn6V73sRTx7rtre1Ps50br+rUS9tMFUcsoCeJp+ZQ2
+	LNug7JyvcZDc8828hiHeLo61Vz5w+dvZzQMhqeZRXVIgsjXlA0dbGsnui7FDPw==
+X-Gm-Gg: ASbGnctwOOTJa2p/gftMogC96manbMJBiusK4BpThQpxxAmHVxp0GBQrDS3bfxkICgw
+	xj6EYP7EvzSOkBDvuhSXBvgqljvRGd44STfirXz///cx3O1zJLJTtlutfrrZxt8okTRFNqS3oZ5
+	1RRAbFSc757DUAAhRRF0K/GSrqJygPQfhGYSMb7L8ud2ZigBlr62VAoKTokiYSc9743mRjL9VHy
+	9yBls8iWqvJ741Gv2MRCWAiENsRJgv9NvrHXNNvjOe2o6vVf/Q5dwOkAXiPLBwUKirrr0luPqtr
+	fGCFmvTUs3OKJPa1eWOd0UpVreCAbbxCcx6TEpnz/rE2RY9GFWSlKrPunS8pdL48lrD63ehvgFX
+	duTa46R7/p4B6LqSDfRONUwsUrHtZ77OLejC59chlKGS3jAQhzmDwNwfSM6gaQ8NdSq3AitKeIC
+	Bt/psUdJMMBJ8HnfEfZ40EMjQaMzhudxAIQCrbg1BZFvybsGGUW/j6pmE1bYorcb8o2Vt9cSLtI
+	g==
+X-Google-Smtp-Source: AGHT+IEZ3Rgs27xw4W4IxOOuhGixrCDM1fDLQI8GWF7ObKpcn3OgFsJKVbnjPICinQI8mGn4GOtA7Q==
+X-Received: by 2002:a05:600c:46ca:b0:471:14af:c715 with SMTP id 5b1f17b1804b1-4778fe4f06dmr45242185e9.3.1763151076746;
+        Fri, 14 Nov 2025 12:11:16 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4778bcf75b8sm54766965e9.1.2025.11.14.12.11.16
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Nov 2025 12:11:16 -0800 (PST)
+Message-ID: <b1775e1a-4f6c-4116-9587-69526d379b42@gmail.com>
+Date: Fri, 14 Nov 2025 20:11:13 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: CI Failures
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+References: <ddefb36d-f023-45c1-b518-a9f70dba0696@gmail.com>
+Content-Language: en-US
+In-Reply-To: <ddefb36d-f023-45c1-b518-a9f70dba0696@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Ezekiel Newren <ezekielnewren@gmail.com> writes:
+On 14/11/2025 20:00, Phillip Wood wrote:
+> I'm seeing all the Ubuntu based jobs fail. Judging by the error messages 
+> at [1] it appears that their version of sudo no longer supports "-- 
+> preserve-env" which breaks all of our scripts. Does anyone know how to 
+> make sure we install the C version of sudo rather than the rust version? 
+> Failing that I guess we could switch to using "runuser"
 
->> How much extra memory pressure does this change cause?  In a single
->> instance of xrecord_t, we used to have a single ulong plus a pointer
->> and a size_t; now we replaced the single ulong with two 8-byte words,
->> so 33% more memory per record, which is not so huge a deal?
->
-> This was asked and answered earlier in this patch series [1].
+Sorry for the noise, I see this was fixed last month, I had accidentally 
+rebased onto a stale branch.
 
-In short, this step does bloat, but the memory usage will shrink
-when the members are moved elsewhere in future patches?
+Thanks
 
-> [1] https://lore.kernel.org/git/CAH=ZcbD7FeRHtYvN_4=qHApB-AwK18=KRU2SGWNg8ADkrFM-Fw@mail.gmail.com/
+Phillip
+> Thanks
+> 
+> Phillip
+> 
+> [1] https://github.com/phillipwood/git/actions/runs/19371231059/ 
+> job/55427466699
+
