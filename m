@@ -1,124 +1,142 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366F6BE49
-	for <git@vger.kernel.org>; Fri, 14 Nov 2025 05:52:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E14F25BF14
+	for <git@vger.kernel.org>; Fri, 14 Nov 2025 05:52:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763099541; cv=none; b=lI+BhhiVbL/vphL4qkZKprulY9wHDRNzqFnfIMlJqd157ySI3BpaZnRBxl5Fg6DI7zDBw3ThriEd7CY/nQnwafc+4uDErialCzgQznIl0HsPXgBh/KaUK4i0lcDrNujxwdgAQtOnZYI693zn/nhfxdRVqeCzlA6diZ69GJl/tFI=
+	t=1763099575; cv=none; b=Hqy8WIRTGvMk2Um6hG/NIEM7MUlIYTfnyqFz3YLwqDWJRbGHCDbC3ti9kaCpAvhV8EJG4qTy1fRZbMnf/it3N42qOIdf8Uft+RZ7nSVoTya3zT5ZNSvkKHUyxgxC/hY+ajbidHQkmEhYbAWAZ42s3QScfjCaCSpL1/rxRy5PPqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763099541; c=relaxed/simple;
-	bh=PKLu3NkcrB8lJhBWDOnYRapdHR94s5vS5AW9QOGW47o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TRq+ZHKGYCXUFEZUm0k9iNInO/ANVGd8qAAG4ChwacfiEnbDMNpROqkf1Wp6QVuV+ZzP5qwV38zfOOfg22XOxo1QfCDjE5QOrn5QBXH3UYlY4LQKZ02OCVQL7xF5C4aLr+EgOPkLH+W0wCNLP1DSltjKkR4f5LZSfWmkhRUvt0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=evWSqK2e; arc=none smtp.client-ip=209.85.208.170
+	s=arc-20240116; t=1763099575; c=relaxed/simple;
+	bh=VHHnAYr6t1eqcd8r5otMPObwutNSTGI+m9VQTkbDeU0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZIwCfwgUN2cSovFv7r/6fcvKiDxhd4VVtUBKNUwyDurLtn51VWA4hRkyZNR4anddLIjCCKt9ADoWxtu4WR6/e8dVgxvCxcgxe+eo7NXjzKGOimkB/4DffxRB8MKJifAAGLmTu0jQ/d05NPxt//AjwUh7V0Dy63lqspMwAFFGDV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cr+VF4c3; arc=none smtp.client-ip=74.125.224.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="evWSqK2e"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-37a5bc6b491so12640661fa.0
-        for <git@vger.kernel.org>; Thu, 13 Nov 2025 21:52:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cr+VF4c3"
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-63e16fbdd50so1470739d50.2
+        for <git@vger.kernel.org>; Thu, 13 Nov 2025 21:52:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763099537; x=1763704337; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=01wJzQ6k3eOeFQZsVoUQXs9Cf785hsSXEJQSIHm2Bso=;
-        b=evWSqK2eh6DJPANoL1Km5X0/FMNQX2LnLMOOFpgXLO/PrDWG7WCMENgxT1w5lvwPmw
-         Ct7koim8ShBEviBbpi/LyDQKk0MdaS8dcnl8eyEld3KeSTaL6Mf18UPBH24TAAoGhSzG
-         ArvS4i5r9E+e1hbZG6dk4wgNg4hUgeQMmEQQaLhdS/kkUSUkwywN6fTz3wg+CEp1AsBg
-         4tZIHfmW6LAnfoN55guUeZoj72DOQpk1p8E44PsdwhvZO9k1ExdicxowG6XZc4e0f1jA
-         dcYIS9FbSywSuc5TVJsYUFHAIlibEQhEPrB++7LG3cJgZGC/653x9xmp67H4mP5VAoH+
-         vaBA==
+        d=gmail.com; s=20230601; t=1763099573; x=1763704373; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QFWjjwYd9UCJ0z32tr2Uv21RdRNIPVtpqweXC9wKNBQ=;
+        b=Cr+VF4c3eujCExdsIlwUoZshje+uYs2vBHTvlf2kfgyqhB6k0gIsa2+6YzjYeWh/F4
+         pyArlgJc1uB+qG602x3u6dCcnbZ12qpaSmYeIGawi+doqoSA33tYL48ys/HM0nuOjs4h
+         oaHQ4TKyh8fnqTUhKZJW36GDDdatmY+uWOMpqq0L4Ds2RYhXCMsNHXuzAImRdeJC/40X
+         CPD8JIOAm2/8MsiPe+7E/bxwBIjbqFfIOJ1K3KgKeNdASHMtBzaTtgP8DqQneV+xu6b4
+         bbU6pX2U4H+bETzRggvy4HTQEpAu9EUoXH7UtGBM/t2wIm2I+C+1sgtqe7ZwsmhjZV9G
+         LLyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763099537; x=1763704337;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=01wJzQ6k3eOeFQZsVoUQXs9Cf785hsSXEJQSIHm2Bso=;
-        b=xOPzsDAVXwiXuLLvOfmedCJwTu1qjkHWIBX+gf6OruAZaohU+1eFBOl1PZGowHqYXh
-         Ymn0iR/ctOG053QtGhV5XAsi8oIBMMoFIHy0dEtDG99+cSfqx2nET7hISjyvfUsoIxz+
-         utvvqpBqqGrUtjxf9YBW9CzWG/sbfO9CgR1uaPSR5LebVZXOr16zkKxxikPOWEckugVE
-         OfN6/KXK7bqy2ygHBbukq+faWJPZdQqFgTABoNY4UhuAd+ldt97Fiz2qB3Vwge4hz5n2
-         qiiA6zSKWBAzgVC57z+PEerTw5zj/kcM7967nmvqq5ZQEfeqj13t0gIiXMuvXUHHouqD
-         3zeg==
-X-Forwarded-Encrypted: i=1; AJvYcCX++qkt11Zq0gwAgxOmz6PtMMmipRPqDjfblIJz06KFIWJ4uHN26x8bzE/xbrc1jxiSk7Q=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yws/OuPznqvIfC8rAwokrtgZZ38u2qqqD+z4UDPdJ7Bjnv58G3Y
-	6u2Ms8yCE5CES6tebdJkmTgDU+b7NWzlKTScBYGO9H/dcVa+jcaxW4V1nzQg3G7RpJaEJmQJYv3
-	u8++31eTeA4Kn6EeJK3TsXt5t4TvAeyQ=
-X-Gm-Gg: ASbGnctE8ysaCz8+NBmF/Dzg2anSRxmdFSAzlLGyTsBkrFk/8/hk+27bJBsjdWARH6d
-	9dTveb18CWcZX2GBua8N0MO9At7zjrw+YAt0vEKuS7o2eLCWL8GccSflTgUh0i6mox4HQZYY1tB
-	1d2wF1puEVdG/MLxm2ft+QqgLS2yayQW8yTghvnsrpxssdtZF9/hLlDYTsne7hXR1XZZQCrEYpa
-	vawgVej8abW5/mowxMYT54HPGTAuUmVQmZRIOudj99y5GjnBZ9DPcjNw1djSDR7N8CIfaLvDAxl
-	gEfneiM=
-X-Google-Smtp-Source: AGHT+IGduu7XwFAPvVB4FOPXl66uXI0DNYQA7vGPdVsLDEPDDe5ysWsEQ0ICuSiGDTv8Y3LI1vtK4xRfHM9fFGhtEsU=
-X-Received: by 2002:a05:651c:4196:b0:37a:600e:ca24 with SMTP id
- 38308e7fff4ca-37babb7fc82mr2980301fa.13.1763099537179; Thu, 13 Nov 2025
- 21:52:17 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763099573; x=1763704373;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QFWjjwYd9UCJ0z32tr2Uv21RdRNIPVtpqweXC9wKNBQ=;
+        b=DSbHCETFcmsUIh4d1oU+PTMeR/zER7LwPvl5VFqyxfMJlEBt/YhjhbHmkhVKlrbeoK
+         0Z6WduUCDQIqdhVqCupsDEXYBUM2ZX8jqg3BGtvJCjN/2lTVYSfIe9xK19CZm6zyEiqG
+         kBrHwFSMn1MmXzZdlGyaX2ikGU2K5sVtsfEUBog5EVkC3AEr+IiVckICKyYdbfhaVN6W
+         /BE8vv0RQM+/Im/obpn3QoeNfobpU+05Ry8uesb26ImY4ChvKkpJaSIeSsoxbOX7JVDZ
+         yFeeLllAoIgCgmSNXZh5H4i0AYPHHglk6Z2ZeUos0tr/GgoHXo7jze/dNRSwD2nGoc2W
+         vbPg==
+X-Forwarded-Encrypted: i=1; AJvYcCU61SKswlto5MlTOUKwEa7uxYM/p7Z4EncYvDYVvKQ6ldjZCK91gpKTZUNVjwAfP/toeRI=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy/hNl3jYVgJ3FO8+feT4dxJYCX/d/I02hudpK0sMjZficU3kcc
+	jHtAJBjrBefTBZAktE7QpjGlLAXPBYmyN6KGLUbAfQ8DFoWiOucfjais
+X-Gm-Gg: ASbGncshs9lPXovfBt/VyH4q/Ft7A/vCjOxwzi29jp1O1eBUtc8tHzYrCX5XJotF8SN
+	SwmUIjE48MKz/d4TnWqfgvLgT7qXTb6NIZTC74ktko24m4760ItR+cXcBT0MWPhdRNW6AJIIVpD
+	GgCGGoUeaW1hOPuT4P2bvkdWvGwdx88gPWlRMLz6a1GNr3KlJb5ZPnUlFhZIjIDt9iRv+5trfA3
+	ZswpE9XXLrCA/loVNbNlZlJ8L3JAR4N2hGT0BNrlRPPEtqgBlCX9WOQvRmm8dBbVRtPGzodgwzC
+	TryxAupjpIFBdvuTWAsMpMGVaDnUib9akEq5MsSNpgesJ7haZVbADaR30Cp5Ysb50pQPSKMnswR
+	bC4lWPvB/+ecRBGow3wYgoWHvVlmb7VE9zio5Q4Lok9megnR7MYlRytMcR4A5TPBiIwfbsGlxgz
+	/Mrj8EPdQSqk1OPJfNh3UVJyc+HXlhuv5Yts7GDltlWf7v/fFVUhMYm/WzRCLQ6w==
+X-Google-Smtp-Source: AGHT+IHk5MKKTG0gUgZmTUSKWmVyCZQWr6en52IfrY2eDBzN1+OcU+QWh/i9nmbVh7GkvgPYwImWPA==
+X-Received: by 2002:a53:c055:0:20b0:63f:abf6:1cc with SMTP id 956f58d0204a3-641e74a35f5mr1348605d50.13.1763099573205;
+        Thu, 13 Nov 2025 21:52:53 -0800 (PST)
+Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6410ea037besm1411408d50.9.2025.11.13.21.52.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Nov 2025 21:52:52 -0800 (PST)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	Justin Tobler <jltobler@gmail.com>
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Mikel Forcada <mikel.forcada@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Emir SARI <bitigchi@me.com>,
+	Arkadii Yakovets <ark@cho.red>,
+	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>,
+	Yi-Jyun Pan <pan93412@gmail.com>
+Subject: [PATCH 0/2] Fix misaligned output of git repo structure
+Date: Fri, 14 Nov 2025 00:52:43 -0500
+Message-ID: <cover.1763098804.git.worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.51.0.rc2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
- <pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com> <xmqqqzu4t9yc.fsf@gitster.g>
-In-Reply-To: <xmqqqzu4t9yc.fsf@gitster.g>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Thu, 13 Nov 2025 22:52:06 -0700
-X-Gm-Features: AWmQ_bkmGZMtlPWkXx25OjqRqLl-9PLzHrAownYVpjJK840gfssI8AVuuRzMB8k
-Message-ID: <CAH=ZcbAQ5fCUuL3cpETQmGNXsPE_5UMf4CqVgjj0vvmXmU7-Vg@mail.gmail.com>
-Subject: Re: [PATCH v3 00/10] Xdiff cleanup part2
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Chris Torek <chris.torek@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Nov 11, 2025 at 4:40=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > The primary goal of this patch series is to convert every field's type =
-in
-> > xrecord_t and xdfile_t to be unambiguous, in preparation to make it mor=
-e
-> > Rust FFI friendly. Additionally the ha field in xrecord_t is split into
-> > line_hash and minimal_perfect hash.
->
-> After having read the series to its end, I am left with this feeling
-> that it does only half the things that it needs to do.  It does all
-> what the above paragraph claims it does, sure, in that the relevant
-> data structures now use not "long" but "size_t", not "char" but
-> "uint8_t", etc., and I do find the resulting data structures sensibly
-> described.
+While localizing Git 2.52.0, I noticed that the output table from git
+repo structure becomes misaligned when displaying UTF-8 characters. For
+example:
 
-This patch series is already 10 commits long, and it's been a
-challenge to chunk cleanups of Xdiff because its code is so tangled.
-I'm hoping that future maintenance of Xdiff (after my xdiff cleanup
-series is complete) will be much easier.
+    | 仓库结构   | 值  |
+    | -------------- | ---- |
+    | * 引用       |      |
+    |   * 计数     |   67 |
+    |     * 分支   |    6 |
+    |     * 标签   |   30 |
+    |     * 远程   |   19 |
+    |     * 其它   |   12 |
+    |                |      |
+    | * 可达对象 |      |
+    |   * 计数     | 2217 |
+    |     * 提交   |  279 |
+    |     * 树      |  740 |
+    |     * 数据对象 | 1168 |
+    |     * 标签   |   30 |
 
-> But for the code to be truly consistent between the data structures
-> and the operations that work on them, types of on-stack variables
-> and function parameters would need to be updated to match these
-> struct members.  As we convert one structure member at a time, casts
-> may need to be sprinkled for assignments to these variables and
-> passing these struct members as parameters to functions (which I
-> commented on one of these patches) to keep the blast radius of the
-> changes in each step manageable, but I would have expected that
-> functions that used to take, say, an "int", would be updated to take
-> "size_t" if the value coming to the parameter is from these struct
-> members.
+The previous implementation used simple width formatting with printf()
+which didn't properly handle multi-byte UTF-8 characters, causing
+misaligned table columns when displaying repository structure
+information.
 
-I had to draw the line somewhere, and I plan on making more changes to
-delete more idiosyncrasies in Xdiff.
+This change modifies the stats_table_print_structure function to use
+strbuf_utf8_align() instead of basic printf width specifiers. This
+ensures proper column alignment regardless of the character encoding of
+the content being displayed.
 
-> Perhaps that would be the theme for "Xdiff cleanup part 3" series
-> that we will eventually see after the dust settles from this round?
+BTW, I used two AI coding tools (Claude Code and Gemini-CLI) to generate
+the commits, and added the "Co-developed-by" trailers in the commit
+messages by using one of my opensource project:
 
-Not just part 3, but the entire xdiff cleanup series will be about
-correcting types among many other code cleanups. This patch series
-alone is unsatisfactory, but it is only 1 of many patch series to
-come.
+ - https://github.com/ai-coding-workshop/commit-msg
+
+
+## Changes
+
+Jiang Xin (2):
+  t/unit-tests: add UTF-8 width tests for CJK chars
+  builtin/repo: fix table alignment for UTF-8 characters
+
+ Makefile                    |  1 +
+ builtin/repo.c              | 22 ++++++++--
+ t/meson.build               |  1 +
+ t/unit-tests/u-utf8-width.c | 85 +++++++++++++++++++++++++++++++++++++
+ 4 files changed, 105 insertions(+), 4 deletions(-)
+ create mode 100644 t/unit-tests/u-utf8-width.c
+
+-- 
+2.52.0.rc2.5.g4c20a63325.dirty
+
