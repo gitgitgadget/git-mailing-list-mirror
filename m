@@ -1,112 +1,135 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B6E32B9B5
-	for <git@vger.kernel.org>; Thu, 13 Nov 2025 23:30:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C562AE89
+	for <git@vger.kernel.org>; Fri, 14 Nov 2025 03:23:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763076658; cv=none; b=nhn+XAcbzYCO1fTgn+pvI/fTPq7cGsV7kWVo5Qej85vkeBiBfSdzzBvObMbP6+2N1hHkp7ZggQVNeQmli9TQoIgfu1pfujWisq6I7eYklluq+UFXEIXBHgCSOcXYy6sEhLHnjaU0dLjO5bVWwo8ELCV0lYPM+SQciK8jJqVdlcQ=
+	t=1763090606; cv=none; b=bbJVmiSVx/JNm9cjEpwVont2wtIbXahjoSm5EkVomlu8EZXrt/+9XxHeV0OSTeO7ANriYUY6eNzIW0yfzQ9mEhJwF+ELvigsxVTJQxoFU4Sgkx412OU/hAW8lOqE4zyGAaVtIhRGplSdyHRag6JBVs0/P7ErlXyk3bYO0YYn2gE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763076658; c=relaxed/simple;
-	bh=NQ5Bv3Ikc/D/mgg3dign3rbztxKxerSWsv2DR9W3z/Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sSG+u0C1vT/LA0TOSDstZ1zh7HxEAL9LWZFDsdq0nJF59D0Z+WUJxYx0mG1jgEO0loI2JXtU3nbXjpMA31EKCSRVuYgvxRAclhPOFtXz9Jt5nLOsncAuyqtX1SMED7KPm5Q9/pkIdZxV2j9x/s+i/Q3PgEe45g/hi+FxAjts9ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=GSLg+cz2; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1763090606; c=relaxed/simple;
+	bh=qBIJstP2Pq6rga7HCLD+fFVtTUhEGPi9hq9GsBouXPc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=brPfGSLkTsSeiKviYvCd3Mi5lLQirRXttg08CYK+zZKYDrK4ThDiO1w4fhlDQ8MtHGsV6F2AEeo//gQuIcHQ/dVFpzq9Hcx0u9PO3HGRIDlOCFzOd/wYPcDP2R1H/2/5bZsq+lU4Uarf9s5Vp7ZSW0ZHyPMFKrb1kxI2AvdxXJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b=kGqr0woI; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="GSLg+cz2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1763076655;
-	bh=NQ5Bv3Ikc/D/mgg3dign3rbztxKxerSWsv2DR9W3z/Q=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=GSLg+cz2vS4KiJTP0oT3g2lIhhrQEIEBXBrMjD8TTlj1gsHHyC1IYzD5kE+IYb3Ew
-	 h9NCwiiMmSTe3LXu5mfV7YgD15pNh//8rRceAVI4ppUspNesv2kHheGmBKl/yLdIeg
-	 n3PqgeUop0xE7dvbjd8+wkAcKvcVf4ubyp3IkIAF77OZAQsx6O8aXgxRl3ikSXgIXx
-	 WDpSBRFLeqenmQUc0wycsdymFoyWrwGf0uY4kAv1oNBKhHYXezSxHVY+O55GhRqiiw
-	 Cf0RTPRwjbgOau9xsQjyqsfBjYO8R7EBkAXcoTdPT4Odq8WerBB+BML33VQDHCGepC
-	 tKhiwK93a7H4GagfEgyqn3OiFzPwG+1/hggGnapkAPYRx7JfktAL/u4QYRp0UlvkqT
-	 s5NItLp4ZlV6YXBrv3bEm2LXydrlr7JaZBr6GDsoOe66sdNWC8IqwaPmrtWIT0kgiq
-	 jR25hISrrgEpzGAZH8HggDWuyM/I2V8Tb2dTNkKPgdAq1uFLGhc
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:663d:867d:4eb4:3b8a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7ED6220065;
-	Thu, 13 Nov 2025 23:30:55 +0000 (UTC)
-Date: Thu, 13 Nov 2025 23:30:54 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Koji Nakamaru <koji.nakamaru@gree.net>
-Subject: Re: [PATCH] Revert "osxkeychain: state to skip unnecessary store
- operations"
-Message-ID: <aRZqLp__WdA4hbuD@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Koji Nakamaru <koji.nakamaru@gree.net>
-References: <pull.1998.git.1762930881599.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b="kGqr0woI"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7b9215e55e6so1020410b3a.2
+        for <git@vger.kernel.org>; Thu, 13 Nov 2025 19:23:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gree.net; s=google; t=1763090604; x=1763695404; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GTIk5GpF7IgpG9V/ybT3udyeitXV287Fj8IxEn+/iSw=;
+        b=kGqr0woIUzxJybijKlqn3RqlpayLCev+7BLwQjT8Wpg6kxM/B5OMXIUjhD4FQZ3Txw
+         C2nWjwENnOHIn8tzotDQljMbQyh7LA6dBtvszhwcugD1cXRzOEyAjRaPbjBSFuzKngCw
+         keP2F3/jnndSbUWKczrYwn9TtzJPx2323rXCLNpvcjsgX1q42errdkcVX+93OKqfB+E8
+         Zr4yr4QLe7r5Dw9GUfjbRgykV7jGkyrnaVgC6iF7eFfBwnEXvmioMidMEKY6WuezY7XZ
+         FR8KD+NK116O1kvSrY6PY9gKFfsUoxkXTW//MJ0ICNDH/Uf3pWw8bVyLKrlL1d5Sua7C
+         jZKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763090604; x=1763695404;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=GTIk5GpF7IgpG9V/ybT3udyeitXV287Fj8IxEn+/iSw=;
+        b=LufxIJZ4HN4RD4/9jO2v9tEVrkAfxE+0QMc7EvM19Z6+RzsjrlGCvpMgFRYPZY8Khh
+         meUBVpQPdG5S0JTvJHbHh7e3hKsf2fb0MF7SxfYLmIBDL4Ei7IsCn73BKY0AZy+f0RdD
+         2P/YgbZpjPV7JugEF+qG3DHcknYXQkNvSh1FzsZy3n7bOjw7UsNfhHmQ7Onr7j523lTr
+         /WUGwPEAuDn0K8NpnZO9HSfZswbRH+roPFsmcPw+uNCZV8EqpjtEz2Js7udTYgy+CfYb
+         zPiH5mVNK6ISq6s31/1NhDjLnZNdJySHMxKoIHbp9vClhlswieuDdLPsywXPnB0qnOCW
+         +uFw==
+X-Forwarded-Encrypted: i=1; AJvYcCXTkD7CEs1O5Ia7f1Wq+B2PiCrYCxfLwAvha7hMwVj8pfLBT7/enp00l+WPsxlVzh0i1gY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwEp/P5ExTsqoCv903Q7T4Hk5FgUpGuubzmH8HQ6rpr6qdSS83J
+	MQ9gSYTygCteI2ISavevDVMGEFxszx/V/N4qGREwEFVjY6Q6nj0seC0JJSw8Ovh1Ou7HwRhfKZb
+	9rb/VsPUE5I12FypsbVC9cWo/HQVv+PAwIJQPB+zXVNFkhXy/sEArSLF/300qO5P878e5AFwf8U
+	LCUkMxcAvmiBs3bzseSNUj0niiRJnGpjHdvYRRnMraI+glvlmWcX5x2CYY1bO7LT4CwyvsYqu1K
+	uPKXaGH4OcMhGbqRWLdsy1ZFxGwr9kEUZqtIGD0KBY/gpE36vk5EaZwQZQiOAxLyU08HJLcf/Ay
+	gMezyErkjCzusBo=
+X-Gm-Gg: ASbGncv8ZPU5yWiulVguJPLzMsTuGD2CYzDF5lOSm4TH9ClM54SYWeJQZ8QpTzMkdG/
+	QmzDPyl//wZhuxwWmpnyuczWpsuEwjjLJpWEuLN6sdvxZv0U3xzfNgQ/FJ8gzLtsOObu98a5wA1
+	WwalKK7W0MI4vnAAIhTwKd/ClNrNkZFz8WGN81aj/ctZsGEXFdKqW7fsrv0BgBp5h6s0BrpELp0
+	zhmeqjgSMiIEF81FuFlyLdjjwRq6aa8doK2Z+ioGGCr/pnNq6dm+UnO4V3Y+Q==
+X-Google-Smtp-Source: AGHT+IG8y/9fyeIq2/6+f0f7ISeK2ESVsq8TJyacvSUvMJAZnNjzVA0RYPrB5ZTp84ybohe4xk4L+RoCmOSvPTsgRek=
+X-Received: by 2002:a05:7300:a98f:b0:2a4:809d:9a8b with SMTP id
+ 5a478bee46e88-2a4abb2752dmr686228eec.20.1763090603372; Thu, 13 Nov 2025
+ 19:23:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Tz8LvVKg1VqToCdJ"
-Content-Disposition: inline
-In-Reply-To: <pull.1998.git.1762930881599.gitgitgadget@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---Tz8LvVKg1VqToCdJ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <pull.1999.git.1763047599254.gitgitgadget@gmail.com>
+ <xmqqo6p5llsw.fsf@gitster.g> <xmqqecq1llgj.fsf@gitster.g>
+In-Reply-To: <xmqqecq1llgj.fsf@gitster.g>
+From: Koji Nakamaru <koji.nakamaru@gree.net>
+Date: Fri, 14 Nov 2025 12:23:12 +0900
+X-Gm-Features: AWmQ_bmXjGdVvH9k9uUEgTyD0Xp0KuuTwW-xI4MNTUDQ_7ipeLdr0B4R4KbeImg
+Message-ID: <CAOTNsDwSUCqrGW1A4LvGYCseFZ6=XZ16C0OS85s27SyzrrfYPw@mail.gmail.com>
+Subject: Re: [PATCH] osxkeychain: avoid incorrectly skipping store operation
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-11-12 at 07:01:21, Koji Nakamaru via GitGitGadget wrote:
-> From: Koji Nakamaru <koji.nakamaru@gree.net>
->=20
-> This reverts commit e1ab45b2dab51f94db9548666dfd7af626d2aa7e.
->=20
-> That commit was trying to skip to store a credential returned by
-> "git-credential-osxkeychain get" by setting
-> "state[]=3Dosxkeychain:seen=3D1". However, this state[] is kept even if a
-> credential returned by "git-credential-osxkeychain get" is invalid and
-> another subsequent helper's "get" returns a valid credential. Another
-> subsequent helper (such as [1]) may expect git-credential-osxkeychain to
-> store the valid credential so that "store" cannot be skipped by just
-> checking "state[]=3Dosxkeychain:seen=3D1".
+On Fri, Nov 14, 2025 at 5:35=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> >> +/*
+> >> + * NOTE: We could use functions in strbuf.h and/or wrapper.h, but tho=
+se
+> >> + * introduce significant dependencies. Therefore, we define simplifie=
+d
+> >> + * versions here to keep this code self-contained.
+> >> + */
+> >
+> > Sorry, but I do not quite understand this comment.  The program is
+> > shipped as a part of Git, and using these functions and linking with
+> > libgit.a may pull strbuf.o and some other *.o files out of libgit.a
+> > to link with git-credential-osxkeychain.o to produce the executable,
+> > but how can that be "significant dependencies"?  For anybody who is
+> > building git-credential-osxkeychain, the necessary sources come for
+> > free.
+> >
+> > It is not like we are forcing git-credential-osxkeychain to link
+> > with a shared object libgit.so and making git-credential-osxkeychain
+> > depend on it, or anything like that, which may require consumers of
+> > binary distribution of git-credential-osxkeychain to also install
+> > another package that has libgit.so in it (which is likely to be the
+> > "git" package).  Even if it were the case (which is not), what good
+> > would it be to have git-credential-osxkeychain on your system
+> > without having git on the same system?
 
-I believe the intended approach here is that if we do a get and the
-credential is invalid, we return the same state[] header to erase, but
-we should not send it to subsequent gets for a new credential.  However,
-we do need to send it to subsequent gets (which will not have an
-intervening erase) if this is a multistage request because otherwise
-multistage requests will not be able to keep state, which NTLM and
-Kerberos require.  Does that make sense?
+I see your point. I was following the current implementation's approach
+(it has its own xmalloc() and die()) and thought the comment would be
+appropriate if we continued that approach. I will refactor the code to
+use libgit instead.
 
-My guess is that the problem here is that we reuse the credential
-structure without resetting it somewhere in the HTTP code rather than a
-problem in this particular helper.  That is probably my fault, but in my
-defence I would not say that the structure of the HTTP code is very easy
-to follow.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+> The rest of the patch, excluding the poor-man's reimplementation of
+> helper functions, looked like they match what the proposed log
+> message described.
+>
+> It seems that credential material like username and password are
+> included in plaintext as part of the state[], but is this a safe
+> thing to do?  The keychain will give out the credential material in
+> a way the requestor with sufficient priviledges can read, and this
+> state[] is stored in the same place, so I am guessing that this is
+> not adding any extra security concerns, but I just wanted to make
+> sure you've considered any security implications.
 
---Tz8LvVKg1VqToCdJ
-Content-Type: application/pgp-signature; name="signature.asc"
+Yes, that was considered. The credential helper protocol already
+passes credentials in plaintext between helpers via the "store"
+operation. Since the data in state[] is handled in the same
+manner, it doesn't introduce an additional security risk beyond
+what the existing protocol already entails.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaRZqLQAKCRB8DEliiIei
-gamdAP9rCsEFFZZLTZGSEoiI8WKlLDSxG6u4bQgaTQaZ7MM16AEA+gLMW0ugIkT8
-OJykgJ77Br97KJcW3IEjbVO5QXcRowU=
-=msC8
------END PGP SIGNATURE-----
-
---Tz8LvVKg1VqToCdJ--
+--
+Koji Nakamaru
