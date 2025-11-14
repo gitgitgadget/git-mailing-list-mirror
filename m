@@ -1,267 +1,740 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CB42DC34D
-	for <git@vger.kernel.org>; Fri, 14 Nov 2025 06:02:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F5D2DCC05
+	for <git@vger.kernel.org>; Fri, 14 Nov 2025 06:04:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763100152; cv=none; b=gbEPzrEVmNqet6+P4NK4sxR5jJudsJAfMAgxdAgk9+A9lbPyQoK5uVdUKfU4VmAqjCKiQZWL7ukT1c1Yfh1hnJCT8rkDzRnoF0HfYZaXb0Vr8Joi7e9BNVczAZZzPQxx68fNm3aymyhcLcQBTz4F79fD9AbAx9Ico5RM77BzjOk=
+	t=1763100277; cv=none; b=BgylvTRDCSiwgo/GgKN/h2BwXDRs2RepRNBQvs0nY8qf6q6SULcNsCJXfurctbtm8wOOjnBIjmJBhWWNlTyy8oHj6EuTidNG1A2WR8qc4rR4pLVQT7yTt1crgTKAKPXTaOxkohprXCUsBV0qCQeIz0t8x4Yf9FTktTs4xobkX3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763100152; c=relaxed/simple;
-	bh=F0oOZ5IwBR+dMbJgAHv7T1plj28ICk/tHSvHZmTYT4o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lPBDMJMZOeZguhxe+hPpltZ8Vd1MiN+yKR4OCfxEc4nG3PHtY2sDT9u0tvYtLQniZVRBXaPKbf0qXYF30bgWn9q6DFVyb5GHLwX2frUwZS3uqPy34GLDzUGdZ3FKXtMGH9/kfVPrGGIQ0I3/qmvJgtXAhPeesXbwPUJ6sxVd/ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=crOSMYT9; arc=none smtp.client-ip=209.85.208.169
+	s=arc-20240116; t=1763100277; c=relaxed/simple;
+	bh=eSak1n3dNVyB+ydQT6I3Etoz617ZqqRQAMfN+TElSek=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=JkWen32qyxlrOrd3FsFMDfDt8/mpqh3kpr9cViGP55Ztb5m4IfEZoeFgcXaZeR4mXPQpE6guXy/AiasjHFEoJpi7pjEx7Z9J1faiWIbkx2tYcDs5s5hA9yNbzLuYp5KoRSLxDY01OaLwdkfNfkVm3lVacuU70yjTuV2Ffub8eP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DKMI5ml4; arc=none smtp.client-ip=209.85.219.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="crOSMYT9"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-37a4e329a90so13126151fa.0
-        for <git@vger.kernel.org>; Thu, 13 Nov 2025 22:02:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DKMI5ml4"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-882390f7952so16289196d6.3
+        for <git@vger.kernel.org>; Thu, 13 Nov 2025 22:04:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763100148; x=1763704948; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1763100273; x=1763705073; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Lod9J170nljnNgvNW6pTADvvlcTu8UWnDcbnpjIs3mQ=;
-        b=crOSMYT9sPaEKRpvHGzKMWays5oAIsZZQiR8pKi/I4WgbZC5goBXSzfsvK39pXEKFs
-         dEQB77xnS5l8vdcGZmqMSjaZIqXUR9qK15juB7bfgaTp5Eqo7c+pwDqNpZhSUx9OYwi0
-         ZvvQ3+7BmJKJ8i8alVRze/t3kIPfTIW/b8gBTrCggdQ88FR60wViQ/EmBGTmtNtAp1T1
-         /ySspZQ36Y/bqDZPStgfW93igPks0J4c9a/aAzL/sSEkDylMfJhvF2ohOXX32Umw3Jcd
-         vcyLK5u7H3FvCsZBKKkhhTZb7IjkXxwjCChApEYdM7xk5WRPC7ua0/y4siec46S525NB
-         b0MA==
+        bh=+Iu7ZDA+Kg+H0OpTkDYEBZICnymPLi7Z3w8HphGT52c=;
+        b=DKMI5ml4+4AbwMcZ2bxaOHtWNYPWIpbWhv5JUKWkgUAtEvQOlVDNpaW7mhCrPlxjb/
+         TXjIbyn0Z1ydZDjKFg6RqKkU2TrMyusLRhVXR3Zhg9Ik4PV8egrEMyhqsHyCp9axLy3t
+         MvhH1uI5keLSj1BS1pVSsLT0MI05roIPdAprDFLdU+pZSg/dAZEkPUm4ol5JxomkXRr+
+         KTJO/y6lY1GRETi2sm0uMmDW3/X1ocNuf88rDTL9dQDw8TF10la0vsK4AZvpulIyHLxW
+         oI8/3sQujM9jcFzLXqgrb5eQGyyMp76YWcVzqer/5vYr8qM0F0+GJvwQD6QHqKSSvkp1
+         x3Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763100148; x=1763704948;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1763100273; x=1763705073;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Lod9J170nljnNgvNW6pTADvvlcTu8UWnDcbnpjIs3mQ=;
-        b=cQanFTm1/+pxu20m+64CRTidRws8t2ionTpszUh+0q7S30cH8A0vq/HlgRBUeSNVh4
-         MHlWousU2uYSSvlFP99I55SO3U6Lp/bxcKLI2TVFn2NHUTWkJWHJHCo5PyKGYcId4sSe
-         rISvmrizGTTbnv90C0VeONztd2hDqDEHl+Wbc3KZsFusJI95gUDuXvDw5BomY/6wN6rg
-         SApwlzVXawMiDbLMS4WqEUcPva1h3Avn84ldY39OeL+G3V7C+5i7K3hbyf03hE9Dpox5
-         DUQ49Xav+7z6qob5/KPejzXkx+is03y5SUZqlZJM82Ttm2IS6O0PSNL6/gKoE0pp0QzH
-         zFcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXQUCJ05iJ9CgLpx/QXfZQf17ndmNJTG9xd5vtab8FGfs+UbxsyUrCjqzNG410JSPTdBZw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyT0sMqQLa4jqAFDZ4TCadUPmEVUqezNF9dU9DARKqJY6fYfZsh
-	BUzuwd+JQt2gwodG7+bxOnwA7/x2SNXagMWH6lndrjJDnS1s7rT6Np0a6vN4wT/RVkRII4ZVndZ
-	C5czwH0Vrl+gudGXD3hZRllwTdAewa6s=
-X-Gm-Gg: ASbGncsgYJraVENFUpRNdPtt65kEOCXUYV/OSHl3cHvwUIrwiN2RFU36kMXLAN4Qzxm
-	mODBn+88Ccv+Hoag8e50f343MlXI6Kb0NIH0pcKMW/TlXEOYVA6HUF3gc4pI6/bYJ3SZkRiTXVf
-	1ddZeCp/uPE2ssTHFIgJKMZeaHQAtCnBNsfSd5hdxX6s4tetwjWN8kUJM5g7bq4b5GOI05CEtyv
-	aObZ1UfDfgHxG3wsI1rhOoCTc8VH8ovylEg3FREXrtuy8h0DNZLpmUdXbJ3d7HHuixr9HZDn+0+
-	eiQ4vDSBm5cy7jpTkg==
-X-Google-Smtp-Source: AGHT+IHmyAw82SX845jr+JN/u9Ro0o46Sq0s400Y8o9LIvzciE9bL3argrh/EHM6DONuuxS/noxl5c1hp4e7yKbmOqs=
-X-Received: by 2002:a05:651c:439a:10b0:37b:965e:c149 with SMTP id
- 38308e7fff4ca-37babbdc080mr3291371fa.24.1763100148026; Thu, 13 Nov 2025
- 22:02:28 -0800 (PST)
+        bh=+Iu7ZDA+Kg+H0OpTkDYEBZICnymPLi7Z3w8HphGT52c=;
+        b=ZFhBFWG7qJEuPACvkHOFLcHzRYUX1jU857nbFA9hb2pyuqWYu6Im+RFoxI2NivuPS9
+         xDnE1lnP5rgAqLLWOUhGwBkF5gS18c6XgmDxeMn87E3GTOohh8az756Jg4Caj5XfKKnK
+         jZE4cxKyFDVGRgFI/nzaHmG70q3kdeC17BnfIilNY6YLqqpPyhZhrETkeDr7Wy1I08Ld
+         JPMyZ5mGuR4kUX/PAGf1dSHmIkDlaFA1plaYpZGGCdjJxZiu0+bqNglgdE+/27EP8Gdx
+         BTmIr1cyCd0PCfF0rVOwuICqulf8x5In503mq6fg1IAf6deZpdttP/dElXDRF8wLCAkw
+         KOeg==
+X-Gm-Message-State: AOJu0Yx3yRYTqXqWSwyoqbIMoycCE6Ggeu2m9ON1Iv+JC/1B+AkzCIFQ
+	HPp3kIzUYqDsBTjUGttf+pkkQ+yH89yn9X3jN76HIH9OAYR6Kf766j/z3P6Rsg==
+X-Gm-Gg: ASbGnctFYFSuy6XGNu8uqe9EJraIOBLRW0Ikj8QpKhTZNa/nBhOPiUordFDkFXALLod
+	kshOpNndzAGXSUzOg8Ui1WB3n9NZDYsMbhOFCLnhLRKcKbIguaqVWh1nftrFvT7RPrsbd0O0QXR
+	yO+5be/0nhI/UNWJIcIgLopjZyQ+oJKtrWwHZICX4XQ9xu8SDGD8NH8fmCraTmG/8fCTiG7h9VA
+	QEuzodSK0FUOVcqsdFkEEjTQemsghKuFJNz83K1sSe56G3T7pvgTBArjNffyWMsRtnzEbqWvJbj
+	/u3OrwYOz0yU7XFui7Lf+awQIRkQX6cgI1zGnW/mGGVmcKQ17c4L05FG64urrxzdbsjEHvmj88h
+	5cCiGQJbOVno6AMdMtFmuy03sZbXqYp5hErfX8q11Mbk9F1vjWbUARm2XPj9riE3OrM4Dkmzrek
+	RNO1Sq
+X-Google-Smtp-Source: AGHT+IFoP1hNDCo0UJNYUHprE+EkAwc2z3yksieq8Os7dRk6HIgQk93krUpZKmLZfOI4jQK7fxbpXA==
+X-Received: by 2002:a05:6214:230f:b0:882:4c0f:9607 with SMTP id 6a1803df08f44-882925ff803mr23658356d6.21.1763100273271;
+        Thu, 13 Nov 2025 22:04:33 -0800 (PST)
+Received: from [127.0.0.1] ([172.178.118.194])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8828656ba3dsm25519536d6.45.2025.11.13.22.04.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Nov 2025 22:04:32 -0800 (PST)
+Message-Id: <pull.1999.v2.git.1763100270949.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1999.git.1763047599254.gitgitgadget@gmail.com>
+References: <pull.1999.git.1763047599254.gitgitgadget@gmail.com>
+From: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 14 Nov 2025 06:04:30 +0000
+Subject: [PATCH v2] osxkeychain: avoid incorrectly skipping store operation
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2070.v2.git.git.1761776388.gitgitgadget@gmail.com>
- <pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com> <da2b80ea0be3470cbfe04ff4d39727e6d5921a9a.1762890152.git.gitgitgadget@gmail.com>
- <xmqq346kupzm.fsf@gitster.g>
-In-Reply-To: <xmqq346kupzm.fsf@gitster.g>
-From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Thu, 13 Nov 2025 23:02:16 -0700
-X-Gm-Features: AWmQ_bk-kHPdHmCiODhYCXhG0v5n4m7YBbbDZcV5v3MT6e08GqgyZt4m-ZtE1z4
-Message-ID: <CAH=ZcbBNSNqU3i4DSruVixvYzCEs_MxLCvX6D5W7FsXRqpvALw@mail.gmail.com>
-Subject: Re: [PATCH v3 04/10] xdiff: use size_t for xrecord_t.size
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Chris Torek <chris.torek@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+    "brian m. carlson" <sandals@crustytoothpaste.net>,
+    Jeff King <peff@peff.net>,
+    Koji Nakamaru <koji.nakamaru@gree.net>,
+    Koji Nakamaru <koji.nakamaru@gree.net>
 
-On Tue, Nov 11, 2025 at 4:08=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Ezekiel Newren <ezekielnewren@gmail.com>
-> >
-> > size_t is the appropriate type because size is describing the number of
-> > elements, bytes in this case, in memory.
-> >
-> > Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-> > ---
-> >  xdiff/xdiffi.c   |  7 +++----
-> >  xdiff/xemit.c    |  8 ++++----
-> >  xdiff/xmerge.c   | 16 ++++++++--------
-> >  xdiff/xprepare.c |  6 +++---
-> >  xdiff/xtypes.h   |  2 +-
-> >  5 files changed, 19 insertions(+), 20 deletions(-)
->
-> This step looks mostly OK but it is messy in some places.
->
-> > diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-> > index ead930088a..2f8007753c 100644
-> > --- a/xdiff/xemit.c
-> > +++ b/xdiff/xemit.c
-> > @@ -27,7 +27,7 @@ static int xdl_emit_record(xdfile_t *xdf, long ri, ch=
-ar const *pre, xdemitcb_t *
-> >  {
-> >       xrecord_t *rec =3D &xdf->recs[ri];
-> >
-> > -     if (xdl_emit_diffrec((char const *)rec->ptr, rec->size, pre, strl=
-en(pre), ecb) < 0)
-> > +     if (xdl_emit_diffrec((char const *)rec->ptr, (long)rec->size, pre=
-, strlen(pre), ecb) < 0)
->
-> On platforms where long is narrower than size_t, we'd tentatively
-> leave things broken until we update xdl_emit_diffrec() to take
-> size_t, as it would become too noisy to change it in the same patch,
-> I guess?
->
-> > @@ -113,8 +113,8 @@ static long match_func_rec(xdfile_t *xdf, xdemitcon=
-f_t const *xecfg, long ri,
-> >       xrecord_t *rec =3D &xdf->recs[ri];
-> >
-> >       if (!xecfg->find_func)
-> > -             return def_ff((const char *)rec->ptr, rec->size, buf, sz)=
-;
-> > -     return xecfg->find_func((const char *)rec->ptr, rec->size, buf, s=
-z, xecfg->find_func_priv);
-> > +             return def_ff((const char *)rec->ptr, (long)rec->size, bu=
-f, sz);
-> > +     return xecfg->find_func((const char *)rec->ptr, (long)rec->size, =
-buf, sz, xecfg->find_func_priv);
->
-> Ditto.
->
-> > diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-> > index 75cb3e76a2..0dd4558a32 100644
-> > --- a/xdiff/xmerge.c
-> > +++ b/xdiff/xmerge.c
-> > @@ -101,8 +101,8 @@ static int xdl_merge_cmp_lines(xdfenv_t *xe1, int i=
-1, xdfenv_t *xe2, int i2,
-> >       xrecord_t *rec2 =3D xe2->xdf2.recs + i2;
-> >
-> >       for (i =3D 0; i < line_count; i++) {
-> > -             int result =3D xdl_recmatch((const char *)rec1[i].ptr, re=
-c1[i].size,
-> > -                     (const char *)rec2[i].ptr, rec2[i].size, flags);
-> > +             int result =3D xdl_recmatch((const char *)rec1[i].ptr, (l=
-ong)rec1[i].size,
-> > +                     (const char *)rec2[i].ptr, (long)rec2[i].size, fl=
-ags);
->
-> Ditto.
->
-> > @@ -119,11 +119,11 @@ static int xdl_recs_copy_0(int use_orig, xdfenv_t=
- *xe, int i, int count, int nee
-> >       if (count < 1)
-> >               return 0;
-> >
-> > -     for (i =3D 0; i < count; size +=3D recs[i++].size)
-> > +     for (i =3D 0; i < count; size +=3D (int)recs[i++].size)
-> >               if (dest)
-> >                       memcpy(dest + size, recs[i].ptr, recs[i].size);
-> >       if (add_nl) {
-> > -             i =3D recs[count - 1].size;
-> > +             i =3D (int)recs[count - 1].size;
-> >               if (i =3D=3D 0 || recs[count - 1].ptr[i - 1] !=3D '\n') {
-> >                       if (needs_cr) {
-> >                               if (dest)
->
-> This is messier than I expected.  Before the precontext of this
-> hunk, "i" and "count" are both incoming parameters of type "int", so
-> the same "what if size_t is wider?" puzzlement applies here.  At
-> least, the reason why "i" and "count" is "int" is not because they
-> want to be able to express negative values, so it shouldn't involve
-> too much hassle if we later want to change them to size_t to lose
-> these casts.
->
-> > @@ -324,8 +324,8 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, con=
-st char *name1,
-> >
-> >  static int recmatch(xrecord_t *rec1, xrecord_t *rec2, unsigned long fl=
-ags)
-> >  {
-> > -     return xdl_recmatch((const char *)rec1->ptr, rec1->size,
-> > -                         (const char *)rec2->ptr, rec2->size, flags);
-> > +     return xdl_recmatch((const char *)rec1->ptr, (long)rec1->size,
-> > +                         (const char *)rec2->ptr, (long)rec2->size, fl=
-ags);
-> >  }
->
-> Same "long may not be wide enough, in which case we'd need further
-> fixes" applies here.
->
-> > @@ -441,7 +441,7 @@ static int lines_contain_alnum(xdfenv_t *xe, int i,=
- int chg)
-> >  {
-> >       for (; chg; chg--, i++)
-> >               if (line_contains_alnum((const char *)xe->xdf2.recs[i].pt=
-r,
-> > -                             xe->xdf2.recs[i].size))
-> > +                             (long)xe->xdf2.recs[i].size))
-> >                       return 1;
-> >       return 0;
-> >  }
->
-> Ditto.
->
-> > diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-> > index 4c56467076..b3219aed3e 100644
-> > --- a/xdiff/xprepare.c
-> > +++ b/xdiff/xprepare.c
-> > @@ -99,8 +99,8 @@ static int xdl_classify_record(unsigned int pass, xdl=
-classifier_t *cf, xrecord_t
-> >       hi =3D (long) XDL_HASHLONG(rec->ha, cf->hbits);
-> >       for (rcrec =3D cf->rchash[hi]; rcrec; rcrec =3D rcrec->next)
-> >               if (rcrec->rec.ha =3D=3D rec->ha &&
-> > -                             xdl_recmatch((const char *)rcrec->rec.ptr=
-, rcrec->rec.size,
-> > -                                     (const char *)rec->ptr, rec->size=
-, cf->flags))
-> > +                             xdl_recmatch((const char *)rcrec->rec.ptr=
-, (long)rcrec->rec.size,
-> > +                                     (const char *)rec->ptr, (long)rec=
-->size, cf->flags))
->
-> Ditto.
+From: Koji Nakamaru <koji.nakamaru@gree.net>
 
-mmbuffer_t holds all of the bytes of the file in memory, so the number
-of lines referenced in mmbuffer_t has to be less than or equal to
-that, which makes the point about long vs size_t moot for this patch
-series. Maybe int vs size_t is a different story, but there are many
-other places that use `int` that limit the number of lines in a file
-that aren't touched at all in this patch series. I will update these
-types, but in a future patch series because they cause a refactor
-avalanche in many places.
+git-credential-osxkeychain skips storing a credential if its "get"
+action sets "state[]=osxkeychain:seen=1". This behavior was introduced
+in e1ab45b2 (osxkeychain: state to skip unnecessary store operations,
+2024-05-15), which appeared in v2.46.
 
-I don't like the current state that Xdiff is in either. That's why I
-intend to keep going with my xdiff cleanup series.
+However, this state[] persists even if a credential returned by
+"git-credential-osxkeychain get" is invalid and a subsequent helper's
+"get" operation returns a valid credential. Another subsequent helper
+(such as [1]) may expect git-credential-osxkeychain to store the valid
+credential, but the "store" operation is incorrectly skipped because it
+only checks "state[]=osxkeychain:seen=1".
 
-> > @@ -157,7 +157,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfil=
-e_t *mf, long narec, xpparam_
-> >                               goto abort;
-> >                       crec =3D &xdf->recs[xdf->nrec++];
-> >                       crec->ptr =3D (uint8_t const *)prev;
-> > -                     crec->size =3D (long) (cur - prev);
-> > +                     crec->size =3D cur - prev;
->
-> Yay!
->
-> > diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-> > index b1c520a378..88b1fe4649 100644
-> > --- a/xdiff/xtypes.h
-> > +++ b/xdiff/xtypes.h
-> > @@ -40,7 +40,7 @@ typedef struct s_chastore {
-> >
-> >  typedef struct s_xrecord {
-> >       uint8_t const *ptr;
-> > -     long size;
-> > +     size_t size;
->
-> Yay, too!
->
-> >       unsigned long ha;
-> >  } xrecord_t;
+To solve this issue, "state[]=osxkeychain:seen" needs to contain enough
+information to identify whether the current "store" input matches the
+output from the previous "get" operation (and not a credential from
+another helper).
 
-I agree. It's nice to see some clean code in this patch series.
+Set "state[]=osxkeychain:seen" to a value encoding the credential output
+by "get", and compare it with a value encoding the credential input by
+"store".
+
+[1]: https://github.com/hickford/git-credential-oauth
+
+Reported-by: Petter Sælen <petter@saelen.eu>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
+Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
+---
+    osxkeychain: avoid incorrectly skipping store operation
+    
+    Changes since v1:
+    
+     * Use functions provided by wrapper.h and strbuf.h instead of
+       self-defined ones.
+     * Adjust Makefile and meson.build to use these functions.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1999%2FKojiNakamaru%2Ffix%2Fosxkeychain-state-seen-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1999/KojiNakamaru/fix/osxkeychain-state-seen-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1999
+
+Range-diff vs v1:
+
+ 1:  b14045b4de ! 1:  dd36d290ff osxkeychain: avoid incorrectly skipping store operation
+     @@ Commit message
+      
+          Reported-by: Petter Sælen <petter@saelen.eu>
+          Helped-by: Junio C Hamano <gitster@pobox.com>
+     +    Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
+          Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
+      
+     + ## contrib/credential/osxkeychain/Makefile ##
+     +@@
+     + # The default target of this Makefile is...
+     + all:: git-credential-osxkeychain
+     + 
+     ++include ../../../config.mak.uname
+     + -include ../../../config.mak.autogen
+     + -include ../../../config.mak
+     + 
+     ++ifdef ZLIB_NG
+     ++	BASIC_CFLAGS += -DHAVE_ZLIB_NG
+     ++        ifdef ZLIB_NG_PATH
+     ++		BASIC_CFLAGS += -I$(ZLIB_NG_PATH)/include
+     ++		EXTLIBS += $(call libpath_template,$(ZLIB_NG_PATH)/$(lib))
+     ++        endif
+     ++	EXTLIBS += -lz-ng
+     ++else
+     ++        ifdef ZLIB_PATH
+     ++		BASIC_CFLAGS += -I$(ZLIB_PATH)/include
+     ++		EXTLIBS += $(call libpath_template,$(ZLIB_PATH)/$(lib))
+     ++        endif
+     ++	EXTLIBS += -lz
+     ++endif
+     ++ifndef NO_ICONV
+     ++        ifdef NEEDS_LIBICONV
+     ++                ifdef ICONVDIR
+     ++			BASIC_CFLAGS += -I$(ICONVDIR)/include
+     ++			ICONV_LINK = $(call libpath_template,$(ICONVDIR)/$(lib))
+     ++                else
+     ++			ICONV_LINK =
+     ++                endif
+     ++                ifdef NEEDS_LIBINTL_BEFORE_LIBICONV
+     ++			ICONV_LINK += -lintl
+     ++                endif
+     ++		EXTLIBS += $(ICONV_LINK) -liconv
+     ++        endif
+     ++endif
+     ++ifndef LIBC_CONTAINS_LIBINTL
+     ++	EXTLIBS += -lintl
+     ++endif
+     ++
+     + prefix ?= /usr/local
+     + gitexecdir ?= $(prefix)/libexec/git-core
+     + 
+     + CC ?= gcc
+     +-CFLAGS ?= -g -O2 -Wall
+     ++CFLAGS ?= -g -O2 -Wall -I../../.. $(BASIC_CFLAGS)
+     ++LDFLAGS ?= $(BASIC_LDFLAGS) $(EXTLIBS)
+     + INSTALL ?= install
+     + RM ?= rm -f
+     + 
+     + %.o: %.c
+     + 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
+     + 
+     +-git-credential-osxkeychain: git-credential-osxkeychain.o
+     ++git-credential-osxkeychain: git-credential-osxkeychain.o ../../../libgit.a
+     + 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) \
+     + 		-framework Security -framework CoreFoundation
+     + 
+     +@@ contrib/credential/osxkeychain/Makefile: install: git-credential-osxkeychain
+     + 	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
+     + 	$(INSTALL) -m 755 $< $(DESTDIR)$(gitexecdir)
+     + 
+     ++../../../libgit.a:
+     ++	cd ../../..; make libgit.a
+     ++
+     + clean:
+     + 	$(RM) git-credential-osxkeychain git-credential-osxkeychain.o
+     + 
+     +
+       ## contrib/credential/osxkeychain/git-credential-osxkeychain.c ##
+     +@@
+     + #include <string.h>
+     + #include <stdlib.h>
+     + #include <Security/Security.h>
+     ++#include "git-compat-util.h"
+     ++#include "strbuf.h"
+     ++#include "wrapper.h"
+     + 
+     + #define ENCODING kCFStringEncodingUTF8
+     + static CFStringRef protocol; /* Stores constant strings - not memory managed */
+      @@ contrib/credential/osxkeychain/git-credential-osxkeychain.c: static CFStringRef username;
+       static CFDataRef password;
+       static CFDataRef password_expiry_utc;
+     @@ contrib/credential/osxkeychain/git-credential-osxkeychain.c: static CFStringRef
+       
+       static void clear_credential(void)
+       {
+     -@@ contrib/credential/osxkeychain/git-credential-osxkeychain.c: static void die(const char *err, ...)
+     - 	exit(1);
+     - }
+     +@@ contrib/credential/osxkeychain/git-credential-osxkeychain.c: static void clear_credential(void)
+       
+     -+/*
+     -+ * NOTE: We could use functions in strbuf.h and/or wrapper.h, but those
+     -+ * introduce significant dependencies. Therefore, we define simplified
+     -+ * versions here to keep this code self-contained.
+     -+ */
+     -+
+     - static void *xmalloc(size_t len)
+     - {
+     - 	void *ret = malloc(len);
+     -@@ contrib/credential/osxkeychain/git-credential-osxkeychain.c: static void *xmalloc(size_t len)
+     - 	return ret;
+     - }
+     + #define STRING_WITH_LENGTH(s) s, sizeof(s) - 1
+       
+     -+static void *xcalloc(size_t count, size_t size)
+     -+{
+     -+	void *ret = calloc(count, size);
+     -+	if (!ret)
+     -+		die("Out of memory");
+     -+	return ret;
+     -+}
+     -+
+     -+static void *xrealloc(void *ptr, size_t size)
+     -+{
+     -+	void *ret = realloc(ptr, size);
+     -+	if (!ret)
+     -+		die("Out of memory");
+     -+	return ret;
+     -+}
+     -+
+     -+static char *xstrdup(const char *str)
+     -+{
+     -+	char *ret = strdup(str);
+     -+	if (!ret)
+     -+		die("Out of memory");
+     -+	return ret;
+     -+}
+     -+
+     +-__attribute__((format (printf, 1, 2), __noreturn__))
+     +-static void die(const char *err, ...)
+     +-{
+     +-	char msg[4096];
+     +-	va_list params;
+     +-	va_start(params, err);
+     +-	vsnprintf(msg, sizeof(msg), err, params);
+     +-	fprintf(stderr, "%s\n", msg);
+     +-	va_end(params);
+     +-	clear_credential();
+     +-	exit(1);
+     +-}
+     +-
+     +-static void *xmalloc(size_t len)
+     +-{
+     +-	void *ret = malloc(len);
+     +-	if (!ret)
+     +-		die("Out of memory");
+     +-	return ret;
+     +-}
+     +-
+       static CFDictionaryRef create_dictionary(CFAllocatorRef allocator, ...)
+       {
+       	va_list args;
+     @@ contrib/credential/osxkeychain/git-credential-osxkeychain.c: static void write_i
+       	putchar('\n');
+       }
+       
+     -+struct sb {
+     -+	char *buf;
+     -+	int size;
+     -+};
+     -+
+     -+static void sb_init(struct sb *sb)
+     -+{
+     -+	sb->size = 1024;
+     -+	sb->buf = xcalloc(sb->size, 1);
+     -+}
+     -+
+     -+static void sb_release(struct sb *sb)
+     -+{
+     -+	if (sb->buf) {
+     -+		free(sb->buf);
+     -+		sb->buf = NULL;
+     -+		sb->size = 0;
+     -+	}
+     -+}
+     -+
+     -+static void sb_add(struct sb *sb, const char *s, int n)
+     -+{
+     -+	int len = strlen(sb->buf);
+     -+	int size = sb->size;
+     -+	if (size < len + n + 1) {
+     -+		sb->size = len + n + 1;
+     -+		sb->buf = xrealloc(sb->buf, sb->size);
+     -+	}
+     -+	strncat(sb->buf, s, n);
+     -+	sb->buf[len + n] = '\0';
+     -+}
+     -+
+     -+static void write_item_sb(struct sb *sb, const char *what, const char *buf, int n)
+     ++static void write_item_strbuf(struct strbuf *sb, const char *what, const char *buf, int n)
+      +{
+      +	char s[32];
+      +
+     -+	sprintf(s, "__%s=", what);
+     -+	sb_add(sb, s, strlen(s));
+     -+	sb_add(sb, buf, n);
+     ++	xsnprintf(s, sizeof(s), "__%s=", what);
+     ++	strbuf_add(sb, s, strlen(s));
+     ++	strbuf_add(sb, buf, n);
+      +}
+      +
+     -+static void write_item_sb_cfstring(struct sb *sb, const char *what, CFStringRef ref)
+     ++static void write_item_strbuf_cfstring(struct strbuf *sb, const char *what, CFStringRef ref)
+      +{
+      +	char *buf;
+      +	int len;
+     @@ contrib/credential/osxkeychain/git-credential-osxkeychain.c: static void write_i
+      +	len = CFStringGetMaximumSizeForEncoding(CFStringGetLength(ref), ENCODING) + 1;
+      +	buf = xmalloc(len);
+      +	if (CFStringGetCString(ref, buf, len, ENCODING))
+     -+		write_item_sb(sb, what, buf, strlen(buf));
+     ++		write_item_strbuf(sb, what, buf, strlen(buf));
+      +	free(buf);
+      +}
+      +
+     -+static void write_item_sb_cfnumber(struct sb *sb, const char *what, CFNumberRef ref)
+     ++static void write_item_strbuf_cfnumber(struct strbuf *sb, const char *what, CFNumberRef ref)
+      +{
+      +	short n;
+      +	char buf[32];
+     @@ contrib/credential/osxkeychain/git-credential-osxkeychain.c: static void write_i
+      +		return;
+      +	if (!CFNumberGetValue(ref, kCFNumberShortType, &n))
+      +		return;
+     -+	sprintf(buf, "%d", n);
+     -+	write_item_sb(sb, what, buf, strlen(buf));
+     ++	xsnprintf(buf, sizeof(buf), "%d", n);
+     ++	write_item_strbuf(sb, what, buf, strlen(buf));
+      +}
+      +
+     -+static void write_item_sb_cfdata(struct sb *sb, const char *what, CFDataRef ref)
+     ++static void write_item_strbuf_cfdata(struct strbuf *sb, const char *what, CFDataRef ref)
+      +{
+      +	char *buf;
+      +	int len;
+     @@ contrib/credential/osxkeychain/git-credential-osxkeychain.c: static void write_i
+      +	if (!buf || strlen(buf) == 0)
+      +		return;
+      +	len = CFDataGetLength(ref);
+     -+	write_item_sb(sb, what, buf, len);
+     ++	write_item_strbuf(sb, what, buf, len);
+      +}
+      +
+     -+static void encode_state_seen(struct sb *sb)
+     ++static void encode_state_seen(struct strbuf *sb)
+      +{
+     -+	sb_add(sb, "osxkeychain:seen=", strlen("osxkeychain:seen="));
+     -+	write_item_sb_cfstring(sb, "host", host);
+     -+	write_item_sb_cfnumber(sb, "port", port);
+     -+	write_item_sb_cfstring(sb, "path", path);
+     -+	write_item_sb_cfstring(sb, "username", username);
+     -+	write_item_sb_cfdata(sb, "password", password);
+     ++	strbuf_add(sb, "osxkeychain:seen=", strlen("osxkeychain:seen="));
+     ++	write_item_strbuf_cfstring(sb, "host", host);
+     ++	write_item_strbuf_cfnumber(sb, "port", port);
+     ++	write_item_strbuf_cfstring(sb, "path", path);
+     ++	write_item_strbuf_cfstring(sb, "username", username);
+     ++	write_item_strbuf_cfdata(sb, "password", password);
+      +}
+      +
+       static void find_username_in_item(CFDictionaryRef item)
+     @@ contrib/credential/osxkeychain/git-credential-osxkeychain.c: static OSStatus fin
+       	write_item("capability[]", "state", strlen("state"));
+      -	write_item("state[]", "osxkeychain:seen=1", strlen("osxkeychain:seen=1"));
+      +	{
+     -+		struct sb sb;
+     ++		struct strbuf sb;
+      +
+     -+		sb_init(&sb);
+     ++		strbuf_init(&sb, 1024);
+      +		encode_state_seen(&sb);
+      +		write_item("state[]", sb.buf, strlen(sb.buf));
+     -+		sb_release(&sb);
+     ++		strbuf_release(&sb);
+      +	}
+       
+       out:
+     @@ contrib/credential/osxkeychain/git-credential-osxkeychain.c: static OSStatus add
+       		return -1;
+       
+      +	if (state_seen) {
+     -+		struct sb sb;
+     ++		struct strbuf sb;
+      +
+     -+		sb_init(&sb);
+     ++		strbuf_init(&sb, 1024);
+      +		encode_state_seen(&sb);
+      +		if (!strcmp(state_seen, sb.buf)) {
+     -+			sb_release(&sb);
+     ++			strbuf_release(&sb);
+      +			return errSecSuccess;
+      +		}
+     -+		sb_release(&sb);
+     ++		strbuf_release(&sb);
+      +	}
+      +
+       	data = CFDataCreateMutableCopy(kCFAllocatorDefault, 0, password);
+     @@ contrib/credential/osxkeychain/git-credential-osxkeychain.c: int main(int argc,
+      +
+       	return 0;
+       }
+     +
+     + ## contrib/credential/osxkeychain/meson.build ##
+     +@@
+     + executable('git-credential-osxkeychain',
+     +   sources: 'git-credential-osxkeychain.c',
+     +   dependencies: [
+     ++    libgit,
+     +     dependency('CoreFoundation'),
+     +     dependency('Security'),
+     +   ],
+
+
+ contrib/credential/osxkeychain/Makefile       |  41 +++++-
+ .../osxkeychain/git-credential-osxkeychain.c  | 120 ++++++++++++++----
+ contrib/credential/osxkeychain/meson.build    |   1 +
+ 3 files changed, 132 insertions(+), 30 deletions(-)
+
+diff --git a/contrib/credential/osxkeychain/Makefile b/contrib/credential/osxkeychain/Makefile
+index 9680717abe..c68445b82d 100644
+--- a/contrib/credential/osxkeychain/Makefile
++++ b/contrib/credential/osxkeychain/Makefile
+@@ -1,21 +1,55 @@
+ # The default target of this Makefile is...
+ all:: git-credential-osxkeychain
+ 
++include ../../../config.mak.uname
+ -include ../../../config.mak.autogen
+ -include ../../../config.mak
+ 
++ifdef ZLIB_NG
++	BASIC_CFLAGS += -DHAVE_ZLIB_NG
++        ifdef ZLIB_NG_PATH
++		BASIC_CFLAGS += -I$(ZLIB_NG_PATH)/include
++		EXTLIBS += $(call libpath_template,$(ZLIB_NG_PATH)/$(lib))
++        endif
++	EXTLIBS += -lz-ng
++else
++        ifdef ZLIB_PATH
++		BASIC_CFLAGS += -I$(ZLIB_PATH)/include
++		EXTLIBS += $(call libpath_template,$(ZLIB_PATH)/$(lib))
++        endif
++	EXTLIBS += -lz
++endif
++ifndef NO_ICONV
++        ifdef NEEDS_LIBICONV
++                ifdef ICONVDIR
++			BASIC_CFLAGS += -I$(ICONVDIR)/include
++			ICONV_LINK = $(call libpath_template,$(ICONVDIR)/$(lib))
++                else
++			ICONV_LINK =
++                endif
++                ifdef NEEDS_LIBINTL_BEFORE_LIBICONV
++			ICONV_LINK += -lintl
++                endif
++		EXTLIBS += $(ICONV_LINK) -liconv
++        endif
++endif
++ifndef LIBC_CONTAINS_LIBINTL
++	EXTLIBS += -lintl
++endif
++
+ prefix ?= /usr/local
+ gitexecdir ?= $(prefix)/libexec/git-core
+ 
+ CC ?= gcc
+-CFLAGS ?= -g -O2 -Wall
++CFLAGS ?= -g -O2 -Wall -I../../.. $(BASIC_CFLAGS)
++LDFLAGS ?= $(BASIC_LDFLAGS) $(EXTLIBS)
+ INSTALL ?= install
+ RM ?= rm -f
+ 
+ %.o: %.c
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
+ 
+-git-credential-osxkeychain: git-credential-osxkeychain.o
++git-credential-osxkeychain: git-credential-osxkeychain.o ../../../libgit.a
+ 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) \
+ 		-framework Security -framework CoreFoundation
+ 
+@@ -23,6 +57,9 @@ install: git-credential-osxkeychain
+ 	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
+ 	$(INSTALL) -m 755 $< $(DESTDIR)$(gitexecdir)
+ 
++../../../libgit.a:
++	cd ../../..; make libgit.a
++
+ clean:
+ 	$(RM) git-credential-osxkeychain git-credential-osxkeychain.o
+ 
+diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+index 611c9798b3..b180267034 100644
+--- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
++++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+@@ -2,6 +2,9 @@
+ #include <string.h>
+ #include <stdlib.h>
+ #include <Security/Security.h>
++#include "git-compat-util.h"
++#include "strbuf.h"
++#include "wrapper.h"
+ 
+ #define ENCODING kCFStringEncodingUTF8
+ static CFStringRef protocol; /* Stores constant strings - not memory managed */
+@@ -12,7 +15,7 @@ static CFStringRef username;
+ static CFDataRef password;
+ static CFDataRef password_expiry_utc;
+ static CFDataRef oauth_refresh_token;
+-static int state_seen;
++static char *state_seen;
+ 
+ static void clear_credential(void)
+ {
+@@ -48,27 +51,6 @@ static void clear_credential(void)
+ 
+ #define STRING_WITH_LENGTH(s) s, sizeof(s) - 1
+ 
+-__attribute__((format (printf, 1, 2), __noreturn__))
+-static void die(const char *err, ...)
+-{
+-	char msg[4096];
+-	va_list params;
+-	va_start(params, err);
+-	vsnprintf(msg, sizeof(msg), err, params);
+-	fprintf(stderr, "%s\n", msg);
+-	va_end(params);
+-	clear_credential();
+-	exit(1);
+-}
+-
+-static void *xmalloc(size_t len)
+-{
+-	void *ret = malloc(len);
+-	if (!ret)
+-		die("Out of memory");
+-	return ret;
+-}
+-
+ static CFDictionaryRef create_dictionary(CFAllocatorRef allocator, ...)
+ {
+ 	va_list args;
+@@ -112,6 +94,66 @@ static void write_item(const char *what, const char *buf, size_t len)
+ 	putchar('\n');
+ }
+ 
++static void write_item_strbuf(struct strbuf *sb, const char *what, const char *buf, int n)
++{
++	char s[32];
++
++	xsnprintf(s, sizeof(s), "__%s=", what);
++	strbuf_add(sb, s, strlen(s));
++	strbuf_add(sb, buf, n);
++}
++
++static void write_item_strbuf_cfstring(struct strbuf *sb, const char *what, CFStringRef ref)
++{
++	char *buf;
++	int len;
++
++	if (!ref)
++		return;
++	len = CFStringGetMaximumSizeForEncoding(CFStringGetLength(ref), ENCODING) + 1;
++	buf = xmalloc(len);
++	if (CFStringGetCString(ref, buf, len, ENCODING))
++		write_item_strbuf(sb, what, buf, strlen(buf));
++	free(buf);
++}
++
++static void write_item_strbuf_cfnumber(struct strbuf *sb, const char *what, CFNumberRef ref)
++{
++	short n;
++	char buf[32];
++
++	if (!ref)
++		return;
++	if (!CFNumberGetValue(ref, kCFNumberShortType, &n))
++		return;
++	xsnprintf(buf, sizeof(buf), "%d", n);
++	write_item_strbuf(sb, what, buf, strlen(buf));
++}
++
++static void write_item_strbuf_cfdata(struct strbuf *sb, const char *what, CFDataRef ref)
++{
++	char *buf;
++	int len;
++
++	if (!ref)
++		return;
++	buf = (char *)CFDataGetBytePtr(ref);
++	if (!buf || strlen(buf) == 0)
++		return;
++	len = CFDataGetLength(ref);
++	write_item_strbuf(sb, what, buf, len);
++}
++
++static void encode_state_seen(struct strbuf *sb)
++{
++	strbuf_add(sb, "osxkeychain:seen=", strlen("osxkeychain:seen="));
++	write_item_strbuf_cfstring(sb, "host", host);
++	write_item_strbuf_cfnumber(sb, "port", port);
++	write_item_strbuf_cfstring(sb, "path", path);
++	write_item_strbuf_cfstring(sb, "username", username);
++	write_item_strbuf_cfdata(sb, "password", password);
++}
++
+ static void find_username_in_item(CFDictionaryRef item)
+ {
+ 	CFStringRef account_ref;
+@@ -124,6 +166,7 @@ static void find_username_in_item(CFDictionaryRef item)
+ 		write_item("username", "", 0);
+ 		return;
+ 	}
++	username = CFStringCreateCopy(kCFAllocatorDefault, account_ref);
+ 
+ 	username_buf = (char *)CFStringGetCStringPtr(account_ref, ENCODING);
+ 	if (username_buf)
+@@ -163,6 +206,7 @@ static OSStatus find_internet_password(void)
+ 	}
+ 
+ 	data = CFDictionaryGetValue(item, kSecValueData);
++	password = CFDataCreateCopy(kCFAllocatorDefault, data);
+ 
+ 	write_item("password",
+ 		   (const char *)CFDataGetBytePtr(data),
+@@ -173,7 +217,14 @@ static OSStatus find_internet_password(void)
+ 	CFRelease(item);
+ 
+ 	write_item("capability[]", "state", strlen("state"));
+-	write_item("state[]", "osxkeychain:seen=1", strlen("osxkeychain:seen=1"));
++	{
++		struct strbuf sb;
++
++		strbuf_init(&sb, 1024);
++		encode_state_seen(&sb);
++		write_item("state[]", sb.buf, strlen(sb.buf));
++		strbuf_release(&sb);
++	}
+ 
+ out:
+ 	CFRelease(attrs);
+@@ -288,13 +339,22 @@ static OSStatus add_internet_password(void)
+ 	CFDictionaryRef attrs;
+ 	OSStatus result;
+ 
+-	if (state_seen)
+-		return errSecSuccess;
+-
+ 	/* Only store complete credentials */
+ 	if (!protocol || !host || !username || !password)
+ 		return -1;
+ 
++	if (state_seen) {
++		struct strbuf sb;
++
++		strbuf_init(&sb, 1024);
++		encode_state_seen(&sb);
++		if (!strcmp(state_seen, sb.buf)) {
++			strbuf_release(&sb);
++			return errSecSuccess;
++		}
++		strbuf_release(&sb);
++	}
++
+ 	data = CFDataCreateMutableCopy(kCFAllocatorDefault, 0, password);
+ 	if (password_expiry_utc) {
+ 		CFDataAppendBytes(data,
+@@ -403,8 +463,9 @@ static void read_credential(void)
+ 							   (UInt8 *)v,
+ 							   strlen(v));
+ 		else if (!strcmp(buf, "state[]")) {
+-			if (!strcmp(v, "osxkeychain:seen=1"))
+-				state_seen = 1;
++			int len = strlen("osxkeychain:seen=");
++			if (!strncmp(v, "osxkeychain:seen=", len))
++				state_seen = xstrdup(v);
+ 		}
+ 		/*
+ 		 * Ignore other lines; we don't know what they mean, but
+@@ -443,5 +504,8 @@ int main(int argc, const char **argv)
+ 
+ 	clear_credential();
+ 
++	if (state_seen)
++		free(state_seen);
++
+ 	return 0;
+ }
+diff --git a/contrib/credential/osxkeychain/meson.build b/contrib/credential/osxkeychain/meson.build
+index 3c7677f736..ec91d0c14b 100644
+--- a/contrib/credential/osxkeychain/meson.build
++++ b/contrib/credential/osxkeychain/meson.build
+@@ -1,6 +1,7 @@
+ executable('git-credential-osxkeychain',
+   sources: 'git-credential-osxkeychain.c',
+   dependencies: [
++    libgit,
+     dependency('CoreFoundation'),
+     dependency('Security'),
+   ],
+
+base-commit: fd372d9b1a69a01a676398882bbe3840bf51fe72
+-- 
+gitgitgadget
