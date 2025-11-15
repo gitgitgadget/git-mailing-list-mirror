@@ -1,176 +1,205 @@
-Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D661A9F84
-	for <git@vger.kernel.org>; Sat, 15 Nov 2025 22:16:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2CF1DE4E1
+	for <git@vger.kernel.org>; Sat, 15 Nov 2025 23:33:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763244993; cv=none; b=C90R1u6Dd2/cKERhqK2Osr4FHcVdOzmzMnLAfJ8Tllpm+FTqFfwYyDXIykJ2nIIA2R4MxLsV/MvzqCo4Mj3++lEl6DX3RqFucOaEOtEjDJnbhYTQ6mAujJZnB8CPvXF0b4FAZF4Be/snyzgPF4sY1PD492VmgeMyyb5NdyZVL2U=
+	t=1763249616; cv=none; b=W8StMuxZXyvxFoHuV0VrxrHCxE6khOa9BYArHofb+LL+dZatCYlzkm8nikfy3+chExcH6gObnXCK9Gs4TCOrSON12qJevu/9DnW77dkBSZIuAy9Lago0qhRwPaFR5FeZfEhNCu7D2VcXX0nGFpnMjkIjOdYFKQPGV4EUFGuKf2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763244993; c=relaxed/simple;
-	bh=kEIQUjeJXYkqNkiwDB0kVR3piIaYe9SSkkviiBkjTWk=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lbsGStyFzO1ctYnpOa3lh4Jp2vJXawG76x4/fOHXkUt6LvQWs5URN0fGk22jKx8irw203zMP+b9y1kqE6SiNuwnGOUr3e+KZXQlr3zz6Gr5mAo5ieyeSYh+9vWppX05JL+o8OSlLvaP0aYAcolBr9/pUIdt1++yNqHysdJ+M0TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DhZQcN5Y; arc=none smtp.client-ip=209.85.222.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763249616; c=relaxed/simple;
+	bh=yTlDp15ZkfTklttvBgR41ZCDna/kQwFLvuIRshn6obk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dkLmv8ogXNo9ywm10RR9Oy/pr5wxHjY6iLwyAS9uiwtRY9pULQEeQseF0u5GpJDYTXezcYP71b8lc+D0iW0XMDK3+8cf8i91OuqIufrBqH5vPZnrLtz/2Y1KNvd+831lVNAHnNx3qQpQU5IQPcTNbYKwTyj9uKHXb/ls0smcQo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sympoiesis.com; spf=pass smtp.mailfrom=zeta-soft.com; dkim=pass (2048-bit key) header.d=zeta-soft-com.20230601.gappssmtp.com header.i=@zeta-soft-com.20230601.gappssmtp.com header.b=cG9YBbYU; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sympoiesis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zeta-soft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DhZQcN5Y"
-Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-9372634aca2so929062241.2
-        for <git@vger.kernel.org>; Sat, 15 Nov 2025 14:16:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=zeta-soft-com.20230601.gappssmtp.com header.i=@zeta-soft-com.20230601.gappssmtp.com header.b="cG9YBbYU"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-b73669bdcd2so364867166b.2
+        for <git@vger.kernel.org>; Sat, 15 Nov 2025 15:33:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763244991; x=1763849791; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=s7sq4plfQyQEW5lecHzkNyX6O5pDYU/LvJLhNFQoESg=;
-        b=DhZQcN5Y7M4Si/Ng4b5jfEDgvLHo/tM/c3PW9ClXZYZTLI/nBk6cXeTjEvkY/dyCm1
-         Zwrd0EBnl4AtIXhdmW/ijYxGbGfqJ59ryhhk6VUEHFKTi4uIwG0Rmuwwlz7g2aKCRCZz
-         naVEbF3VBqPwD71qj5XqnEXJtsXIjrptarqrd2QhQgX6H/aVBK7oPB5AvycUPzHHRUij
-         f+rwuP/TuWSSuTjJ7+0KW26meb2maz6EAKcZjmOQa/7ikSd2mLGJAxMrjsHGYgk+YdcZ
-         vpG22Hi9VA+53Vv8KPOSX/LrkJZ2uHAYwt4bgbeEQ/ZBOqvcAqXKCiPFtMoccVaXEoMC
-         4n5g==
+        d=zeta-soft-com.20230601.gappssmtp.com; s=20230601; t=1763249612; x=1763854412; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Cn0P261hgL8IIgIE6kGpHxIWMWOugXiAOzW7f6dx0DQ=;
+        b=cG9YBbYUaU+mHLaWraKxRWb9D4oOzwuDlWE7jrq86accYq/8uBpzkp1wSUl88FGZnH
+         tTcc3Sc7tRuOEp9NQ59r+x550Sa+J9Nf/XrPd6A8pnalGWniOcR80/LDlGFcp+04ZPra
+         04TZouWijef1OFx1Y5WAMNfZxxWwa6c6Y0RM94wnIk3N+dTmd2i8HHBIWHhGOsc6oj8i
+         tRbKBhC+cAbOSp8bPxnmu2pKF0wc4/eOtz7uuRUdwWgjzgP9y8j3enmTO/ZYxZQWA4rm
+         IK07MqhPrFgQrGDCCXog4NRoizmevjpoz6qW5mep6xO5aCeCQG0O6a3tKFo7YBSnT9hT
+         O8jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763244991; x=1763849791;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=s7sq4plfQyQEW5lecHzkNyX6O5pDYU/LvJLhNFQoESg=;
-        b=BR3OgVWX7E07wlbKz4Z5yvGyAtUltFMrefz5pI+MlbO72kRGn94idZdl4eosspGno3
-         qCde2BTKMFzAcyhuuF7yRv6CGZkjk4DpKnjMYZvfT34wREA2m2XE2150VxtokxTOQYHM
-         YHioyvO1x5aGzUNFo5fuvDd/NpUu+FE0YB2ATB+g0VMDFJ9lmaDexuMm+7nJwJneMQX7
-         jvTxTpXfm2UvpQ4qvKd6XfD5N9h2I+8NN2qs+nBErVT4zoK+UB7SL1ZrQLgZKrC8Ipjc
-         F3dgUmjdrvuOMtzLxzEs5rDVUbnjafE3SjULddy5oPdGw8cMzwnY4BFKcEtDfdraf4y5
-         6xbw==
-X-Gm-Message-State: AOJu0YyNJMwUx4a6EhCgbPG4SbQBcBa2kpkOMEBGplaCk8UruwtoY/sw
-	3cA4PA1PmiyIwrOb4nTtbgeK0xM7VHUe6dYKLdhJX3+mX/6jzb1sjKAD7jmFX+K/51FVFoyODlp
-	tf4qI2NYE4mZ/H2q0m1HvSjIBx8zGML8=
-X-Gm-Gg: ASbGncvTeGBtdpyGd89VzUkIyIxmadO3ikmqPOQW+ZkZenFMtaFrZobvh6VyOa+dnZR
-	tCUfp+5ub0t4cyDgcWCv1Cbl60tPnUeGeVJTvGqr4v6IYCJs1U1UY9WBwIGzygVG4k7VkVU5TNy
-	MPEdQaOU55mh5Sl7+rlJ8kqaoypDM9BsUysSMnASSRHsZBVhgoICacH3lPrzhmIoGfe2hVbvnHH
-	DZUAEV606fn+boao4l1Z+k71jJtesJdSPUnarQ+nTGYrbbIoQ2aNQBZ3uo9KXCK5+kViVsON8jp
-	WbK5DyXsplPA1z4q0S2gSm+bkg==
-X-Google-Smtp-Source: AGHT+IFoomCdsSESiDYfc3Zub38Zo4Z8b7viJD9gfYfv/ed9qg6nx3eHUWSZfZodm9mgT+Bh2WuOLz7vffy5O0/GAIc=
-X-Received: by 2002:a05:6102:424b:b0:5db:f710:497e with SMTP id
- ada2fe7eead31-5dfc5b70395mr2639841137.21.1763244990842; Sat, 15 Nov 2025
- 14:16:30 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 15 Nov 2025 22:16:28 +0000
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 15 Nov 2025 22:16:28 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq7bvtlj8v.fsf@gitster.g>
-References: <20251113-fix-tags-not-fetching-v5-0-371ea7ec638d@gmail.com>
- <20251113-fix-tags-not-fetching-v5-2-371ea7ec638d@gmail.com> <xmqq7bvtlj8v.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1763249612; x=1763854412;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Cn0P261hgL8IIgIE6kGpHxIWMWOugXiAOzW7f6dx0DQ=;
+        b=hmU/sgNGEyMENGgC2/DkTlguddI1C1c779QMRHnIm30Dhyn86hqB+UtzSDWEb71AeO
+         8YQLcXUyN7jET2QNo/c7EDkcF2l4MG5vfnOIs6n7QpwMA+XB4CTQ1J4zI3eEV5PqIg1G
+         yDQcxqG3x6glzO2CPfgLPM6UMZty2rS3F71FFvBR0xzROaUs3rXyNJ68z++LB0kL4Ykq
+         k0UcdRqmzx4rtIa8rwb+9ekX0Cz+6nVSMFair5bJSf44Vj9ZXrneJRYRCJM7bEPYoZr8
+         STFqJZqaVNyV0Zq1azmucICCKkBrphoXtgDWYtG6U6hgbrJmSDYJZuYrmjRwiVw/XoMj
+         b15A==
+X-Forwarded-Encrypted: i=1; AJvYcCXdYjnppggX4JQukTCyPqrNb8ROwWr2wqI67Q8CinzT3Vcwr6Wn7n8FqaS0wG8xP2e4qGA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7rIv6b1nrFkm0pY7KjWIsVN2YsSVAPD08JOtKt/eMZbQdtqHs
+	imWW62YarSa+7icrLaNRkwvbB6me7iXOGO70JrW32QyNFXzbnZJ0jcZfA0QB6hCTMz1Vm0tBPpV
+	zaWeTgMZE+94m6fewwmZji1j/7ChbRKIoa9J/NecxSA==
+X-Gm-Gg: ASbGnctaFzoszG2R5btl8+d6oSpkTmYqd9pXSYNILWsSuQhsc55XB8OQ4BBbS3ZstEp
+	dj20oSj/a3KtZg+MQuSIozGly1BJp9tcFIgoQ9jGatDPsooj2AKCT6pEw8lubl50eD2vszC7sPV
+	goKwXxvUSz2Bd2XdkF2tBWZQDLLZ+SjNwHsfWI5w4/KOWqAOHNMvb2nP+p37ogL4cAQiITFeAAp
+	mfKNu0w9PZW3k8XQ4YlAytdvMYVTk16eMzDONsu981FHrC9YoQWC0Qw1H0pLYl7Fp0=
+X-Google-Smtp-Source: AGHT+IHlB3k5jcamtC/KaSupG/qeIDstpvo9a2i/ArGEo6lDRnvXSEofDGG2Pu6ojnqEmZ4DGewP10IA6JCMYQHOCcc=
+X-Received: by 2002:a17:906:b74e:b0:b73:7bef:dab9 with SMTP id
+ a640c23a62f3a-b737befdb8bmr293567866b.39.1763249611839; Sat, 15 Nov 2025
+ 15:33:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 15 Nov 2025 22:16:28 +0000
-X-Gm-Features: AWmQ_bk-N6nEtLt3lPehOabgQXmD4JCv9w2CsrUf1zgWv8tuT4tw0KjcP2-XWpE
-Message-ID: <CAOLa=ZT9wv8B7EKXJQvwR07bUT7Jx0nJSwGGyUZ8+GN3-xdRag@mail.gmail.com>
-Subject: Re: [PATCH v5 2/2] fetch: fix non-conflicting tags not being committed
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, ps@pks.im, 
-	David Bohman <debohman@gmail.com>
-Content-Type: multipart/mixed; boundary="00000000000054e1c40643a97795"
-
---00000000000054e1c40643a97795
+References: <pull.2000.git.1763201865025.gitgitgadget@gmail.com> <773d3233-c890-4df9-8f7e-32ff8a48651e@kdbg.org>
+In-Reply-To: <773d3233-c890-4df9-8f7e-32ff8a48651e@kdbg.org>
+From: "Scott L. Burson" <Scott@sympoiesis.com>
+Date: Sat, 15 Nov 2025 15:32:54 -0800
+X-Gm-Features: AWmQ_bkCzRZ8WDNB21dHj6ZSlmW3b55V6Cc0FU4Kye9RyKotto2jwfHUi-GdVOs
+Message-ID: <CAF5LJ4D4q2S2VFhvEgVOe1Ar0e6cu=H3e_o_98VwHN7wYHh+DQ@mail.gmail.com>
+Subject: Re: [PATCH] diff: "lisp" userdiff_driver
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Junio C Hamano <gitster@pobox.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Jaydeep P Das <jaydeepjd.8914@gmail.com>, Atharva Raykar <raykar.ath@gmail.com>, git@vger.kernel.org, 
+	"Scott L. Burson via GitGitGadget" <gitgitgadget@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Karthik Nayak <karthik.188@gmail.com> writes:
+On Sat, Nov 15, 2025 at 9:06=E2=80=AFAM Johannes Sixt <j6t@kdbg.org> wrote:
 >
->> The cleanup section is reached with `retcode` set in several scenarios:
->>
->>    - `truncate_fetch_head()`, `open_fetch_head()` and `prune_refs()` set
->>      `retcode` before the transaction is created, so no commit is
->>      attempted.
->>
->>    - `fetch_and_consume_refs()` and `backfill_tags()` are the primary
->>      cases this fix targets, both setting a positive `retcode` to
->>      trigger the committing of the transaction.
->>
->> This simplifies error handling and ensures future modifications to
->> `do_fetch()` don't need special handling for batched updates.
+> [Cc the author of the Scheme driver]
 >
-> This may be sufficient to clean out the hanging transaction that the
-> original code forgot to commit, but in scenarios where this change
-> makes a difference, i.e., where the code does "goto cleanup" before
-> it calls commit_ref_transaction() in the main flow of the code,
-> there are things that are not performed that we may still want to
-> perform.  Namely, we do not
+> Am 15.11.25 um 11:17 schrieb Scott L. Burson via GitGitGadget:
+> > From: "Scott L. Burson" <Scott@sympoiesis.com>
 >
->  - call commit_fetch_head()
+> Please
+> add a lot more details why the Scheme driver is unsuitable for Lisp and
+> why a new driver is needed.
+
+Here is text I propose for the commit message:
+
+----
+Common Lisp has top-level forms 'defun' and 'deftype' that are not
+matched by the current Scheme pattern.  Also, it is more common when
+defining user macros intended as top-level forms to prefix their names
+with "def" instead of "define"; such forms are also not matched.  And
+some such forms don't even begin with "def".
+
+On the other hand, it is an established formatting convention in the
+Lisp community that only top-level forms start at the left margin.  So
+matching any unindented line starting with an open parenthesis is an
+acceptable heuristic; false positives will be rare.
+
+However, there are also cases where notionally top-level forms are
+grouped together within some containing form.  At least in the Common
+Lisp community, it is conventional to indent these by two spaces, or
+sometimes one.  But matching just an open parenthesis indented by two
+spaces would be too broad; so the pattern added by this commit
+requires an indented form to start with "(def".  It is believed that
+this strikes a good balance between potential false positives and
+false negatives.
+----
+
+I discussed the pattern with some other experienced Common Lisp
+developers on a mailing list, and this is what I settled on after
+incorporating their feedback.
+
+> It is customary to mark changes to the drivers in the subject line with
+> "userdiff:". Have a look at `git log userdiff.c`. It would be
+> appreciated to stay away from nerdy tokens like "userdiff_driver" when
+> the change can be summarized in plain English language.
+
+Will do.
+
+> >
+> > Signed-off-by: Scott L. Burson <Scott@sympoiesis.com>
+> > ---
+> >     diff: "lisp" userdiff_driver
+> >
+> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2000%=
+2Fslburson%2Flisp-userdiff_driver-v1
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2000/slb=
+urson/lisp-userdiff_driver-v1
+> > Pull-Request: https://github.com/gitgitgadget/git/pull/2000
+> >
+> >  userdiff.c | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> >
+> > diff --git a/userdiff.c b/userdiff.c
+> > index fe710a68bf..e127b4a1f1 100644
+> > --- a/userdiff.c
+> > +++ b/userdiff.c
+> > @@ -249,6 +249,14 @@ PATTERNS("kotlin",
+> >        "|[.][0-9][0-9_]*([Ee][-+]?[0-9]+)?[fFlLuU]?"
+> >        /* unary and binary operators */
+> >        "|[-+*/<>%&^|=3D!]=3D=3D?|--|\\+\\+|<<=3D|>>=3D|&&|\\|\\||->|\\.=
+\\*|!!|[?:.][.:]"),
+> > +PATTERNS("lisp",
+> > +      /* Either an unindented left paren, or a slightly indented line
+> > +       * starting with "(def" */
+> > +      "^((\\(|:space:{1,2}\\(def).*)$",
 >
->  - run set_upstream processing
+> Compared to the Scheme driver, this regular expression is
 >
->  - honor do_set_head flag that was left for remote that does not
->    have followremotehead=never
+> - more restrictive because it does not permit arbitrary indentation;
 >
-> but don't we want to do some of them at least?
+> - less restrictive because it permits everything that begins with "(def".
 >
+> What would happen if this regular expression were added to the Scheme
+> driver? Would it pick up additional and unwanted hunk headers is typical
+> Scheme code?
 
-Thanks for bringing this up. I would think we should do all of these,
-but not if the '--atomic' flag is used. If the '--atomic' flag is used,
-we shouldn't do anything else and simply skip to the end.
+That is a good question.  I don't think so, but I don't work in Scheme.
+I see that you have CC'ed Atharva Raykar; let's see whether he would
+have any objection.
 
-> If it turns out that we want to do all of them, I also wonder if the
-> resulting code would become easier to follow if we lose the call to
-> commit_ref_transaction() in the main code flow, do the above three
-> points before committing the ref transaction, and then after the
-> cleanup label, make a call to commit_ref_transaction() if we have an
-> open transaction and we are not atomic (regardless of the value of
-> retcode at that point).  That call may yield another retcode that
-> the existing error reporting at the end of this function may have to
-> react to.
+I would point out that Scheme is a dialect of Lisp, not the other way
+around.  (Lisp is unusual in being a family of languages, rather than a
+single language.)  And having a separate "lisp" driver might aid
+discoverability.
+
+But I understand: Scheme got their driver in first, and you have to fight
+against the tendency of the driver list to grow unboundedly.
+
+Ooh, that reminds me: if we do decide to add a "lisp" driver, I'll also nee=
+d
+to add it to 'Documentation/gitattributes.adoc'.
+
+> The string literal for hunk headers can contain "\n"
+
+Noted.
+
+> > +      /* Common Lisp symbol syntax allows arbitrary strings between ve=
+rtical bars */
+> > +      "\\|([^\\\\]|\\\\\\\\|\\\\\\|)*\\|"
 >
+> The Scheme driver has an similar description of this word token, but it
+> has only half as many backslashes. Is the difference necessary? Isn't
+> actually one or the other incorrect? (I did not try to understand what
+> this version here does.)
 
-The issue is with '--atomic' again. I could think of this small change
-over this topic, which passes the fetch tests.
+It's not important, but technically, Common Lisp allows an escaped
+backslash between vertical bars, but the R7RS formal grammar does not.
+However, I just tried Chicken Scheme, which claims to be at least
+partially R7RS compliant, and it does accept the escaped backslash.  I
+am left to conclude that Scheme implementors think that the omission
+of the escaped backslash from the R7RS formal grammar is an oversight
+(I think so too).
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b19fa8e966..df11f59f56 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1890,7 +1890,7 @@ static int do_fetch(struct transport *transport,
+Of course, no one would actually write a symbol name with an escaped
+backslash in it unless they were submitting to an obfuscated Lisp
+contest.  So we are really being pedantic here.  Still, may as well allow
+it.
 
- 	retcode = commit_ref_transaction(&transaction, atomic_fetch,
- 					 transport->remote->name, &err);
--	if (retcode)
-+	if (retcode && atomic_fetch)
- 		goto cleanup;
+Atharva, any comments?
 
- 	commit_fetch_head(&fetch_head);
-
-I do wonder if we can cleanup this code, it is a bit messy right now.
-
-That said, we could either append this change as a new commit with some
-additional tests and re-roll the series or send it as a separate commit
-based on this series. I'd prefer the latter so that we have the fix for
-fetching tags merged sooner, but happy to do either.
-
-[snip]
-
---00000000000054e1c40643a97795
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 539fd42fcbe95b80_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1rWSs3Z1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meU5mQy9vQ1FKaGVuZFhxOUt6ckI0eU45VVN0K0lBZwpYZWtpTzRhK21n
-Z2x6Y0hkcmU4VzFteE9nS2tuTjlxeFV5T0szNkM0V3F3MmVIbGR1T2JqbmczeUZYN0k1QnduCnd0
-ZTRvKzF3Nmg4V1poZFFvTWVyS0RWd2lBK1RiTjRmTC83OFNFYlUvdnRsaDVYRHhsWFpxbWd4ZmJL
-NkMwZkoKU2J3Z3dqTGlZMTVpR3BLNHlNMk5Jd2ZTcFkxYWxzSVhKTnFUK01TbjBXdGE3Q2x2enFR
-QnhodXRWejlPR1czRwpUeXZYd2w0dmdTZmdYSHVzaUZvNlNQY1R5Wll5emNEOEhSYUpyZ0ROdXE1
-Yitja21vK1ZYMlgzSVIwTWFPY2VqCjZycTU5WGZQNG5GajJVQ1llVnEyOWNRMll4a2QrRjRicDhL
-bVFCM0RaVVZNbytNbkUvWDFaS0JmZlIrTGcxSHMKK2NJdzg3LzZUYk1idWpyVDl6akJZd2Eyc05a
-aUVaeGpQSUFoSi9XSUlJVnNxYnVmOEU3UVdNZTBWV3NtR1E4QgpiK2RmMGZmUkFYR1JiQmIwRjJl
-QmtuZ1pUVGZkMkk4T29KK3lDSVFuczU5RlExRFFXNHQwQnJkTFBpUXBPc2lzCm42QnlNWlFaZHpu
-K0Z4eWFyQUFlTTJlVHREUkdXdGRCc0lIZDkvaz0KPU1ES3QKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000054e1c40643a97795--
+-- Scott
