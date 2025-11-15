@@ -1,134 +1,119 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B18C7261B
-	for <git@vger.kernel.org>; Sat, 15 Nov 2025 08:26:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F011494D9
+	for <git@vger.kernel.org>; Sat, 15 Nov 2025 10:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763195173; cv=none; b=UP5ds3Bd/fTPanXE5VcPVge4WhIX1zjrvKJHOajmLkGvzOWrGGM959PjKsfb5eTp2QBs/qaNjWNwesw7OnhfBtDxJntIsG7PlZE1WnY6dtcSvbZUT/xpKzF/wx++9lELPHAiNlXzY2IATzHBXh43qFgMcpQPvj2ZsJ2SGyl73IY=
+	t=1763201869; cv=none; b=nI3K+o6+vXQeqcMF6JATEOIGiuWrlEVyxuwPOgspCHF0EhSg49DPQgqCc2COYzr3WufKz0E4Gxv+YpisllGeSk15m+QkxS6o3uAF/4lH/3XnXPx+d/9ibW3UHw5YaA5LlSPf4c4sFTwHArmMbQs5/XEAlxamm2Vh1WeHb1VdAL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763195173; c=relaxed/simple;
-	bh=y5UaZ0/QlaF3mLQ/VeT6lnntBpZEsUxCB3tCYqVpePs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZiCEA6D4Z7BIgO9KCbL5KB+6g+FZ9qgmMe80mv281+UHpKDlHo43euPnhfSQCo+1o7wc3iukIrlyw0rOTpXMyUjjg8iKhewL09SpthE2Wr5fu0g5CWueho0UqN6TAeS6Ok4uVMdZaF2PVZYqqazJv1NdXe3Ewe35f1UlV0q2usU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V0NU0iep; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hslvEiXB; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763201869; c=relaxed/simple;
+	bh=PGBxT2SUoZaD32ZI4oyOLqE1NEfRZOHR01ZpYxMjsUg=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=QGQADhjc3aFCySCHlNVajHa8HAqWVjYV5fqfn0o7IycCrdHjTgXTPPZ9JMAxSwP8eM/ZOdp/lb4WATIvZWwdEP0M6gQLnXVAh94cYiVU+NIrEogThQMKikSZBJHfLF0yI0KfiXxvHp2P36VDRvNJaf2BvN90Buo0ndZhkLnWROI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kg8zARlb; arc=none smtp.client-ip=209.85.222.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V0NU0iep";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hslvEiXB"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 36F55EC00C5;
-	Sat, 15 Nov 2025 03:26:10 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sat, 15 Nov 2025 03:26:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763195170; x=1763281570; bh=4UTzf0eqtO
-	+PGMaHzrO4TJjBKTYwP6kfFL9+207xNco=; b=V0NU0iep8Yh0duxBYlSQ41pBLR
-	GlCC9zCEZ+bgmqGCpwQ24zRUNWVsfLNJ47rauIFdvEUPUPdK1CpSt/X1I/Wx+4ar
-	1V0R5Mlhyeilkol+nPEz+nlHeNiEeOBWrJP66xrR96MiZkmJs+EIQKxZdB2gV6Ry
-	lIzy/5KvSUrApZg+A0QEHjvW3XxkosWsGesTX4Yujcow9U5TPdLgIQWPtN4vnOBN
-	e6nYN79VPVpj17ooe+Rfg7V7fyNBy8DH6LHETYXX23OOYurhCFEiclIzc/iWZiAb
-	4of5lQZqABJwFY8DHXQzOJttj+2e01PuRnDdn20TyD1fBwoIRCaGvqQM9+wA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763195170; x=1763281570; bh=4UTzf0eqtO+PGMaHzrO4TJjBKTYwP6kfFL9
-	+207xNco=; b=hslvEiXBgUHgv1JrvCCyAiI/g69wDUQFCsTiSwHPzjcjv6wXpey
-	5t0CVUIEcVyaqaOepGKI31OpuO1y/j416zXBY/I0AVPo7Kl5YOXQS8BLN/BF5zwX
-	SOvpjWxTfjv7V5IetI5sK26wW4D8Y+Cwsplxtv3a3+iplQkA9HwrvIjNOQZBtPBw
-	liTodxsvdFRKUmAxew96aQ6ZKvERNL8tizEdRVRPbkvXpsB6LBiehGlu5aoV8cWQ
-	ZP+yoKSbTMf2GuFtm/qIaxEauzL3OUsxurO3V5mgM7cSD86XiSy3LjqxUHZnhH5T
-	0it1iQ+dVKwSkTfA9aHZ9ojoGX6CfYMUJuw==
-X-ME-Sender: <xms:IDkYaRszmU8CNe4-uAQABoWDRnzj4CwGN1HED9x9keDlrTIEizzfjg>
-    <xme:IDkYaZj_cZ1fZJws0E0GcQqiE-_ewosqvcBOlRKOU1KVqGeU0gI6goxYoTLgxetK7
-    UV2LzbhA5eUWsF2o4RxAtnfC8Sxs2aOr9RrwDRBvKmYxMK7rScvwbY>
-X-ME-Received: <xmr:IDkYaa8h2XijeRFV5OaVyzDaPljGgmK2gD2PMdlVkZ9USLS_jVwJatRAHqNYbBXwgJvYh63vys4AW1ADiX7jcFP2a7T084FDpc_R>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvuddvvddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepjeejleehjefgheeghfeuveduudfgtdetjedvffethfdvteegteefkeeigfet
-    hfdunecuffhomhgrihhnpeigughifhhfihdrtgifnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
-    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhr
-    tghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtph
-    htthhopegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohepvgii
-    vghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:IDkYaUuv88xVEArZiM3PAKu9wIKlI_pwm_hRiHWTTc4dQe3QCTUNcw>
-    <xmx:ITkYaWqTof6yYFxvvLZu0WEl5hH4MMInyaT6JfWIHkqnFkWzGgP3bg>
-    <xmx:ITkYaQr-rEeJ8OWWOPRMHa5SMORiRtXHS1MQgYtqV-ibVEuqsx_S5w>
-    <xmx:ITkYadZ24FDQXNQWuVbNGoky7D9EUxrsKGtYGQc2u8HAaAWzVlFelg>
-    <xmx:IjkYaUPmbC2y2xY8I-iH7ZPOcfA_Z2R6TSPPz7MyyEoQPaWvbWzpTkEY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 15 Nov 2025 03:26:08 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt <ps@pks.im>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Chris Torek
- <chris.torek@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH v4 03/10] xdiff: make xrecord_t.ptr a uint8_t instead of
- char
-In-Reply-To: <042fbb11d03606879503846e86fac65e6e74d02a.1763159816.git.gitgitgadget@gmail.com>
-	(Ezekiel Newren via GitGitGadget's message of "Fri, 14 Nov 2025
-	22:36:49 +0000")
-References: <pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com>
-	<pull.2070.v4.git.git.1763159816.gitgitgadget@gmail.com>
-	<042fbb11d03606879503846e86fac65e6e74d02a.1763159816.git.gitgitgadget@gmail.com>
-Date: Sat, 15 Nov 2025 00:26:07 -0800
-Message-ID: <xmqqy0o7g0rk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kg8zARlb"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8b28f983333so287772985a.3
+        for <git@vger.kernel.org>; Sat, 15 Nov 2025 02:17:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763201866; x=1763806666; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DNuDMGuS7dnMTdviD+o3bAwClU4NTzRTE5790R5s+qc=;
+        b=kg8zARlbxi7V/x7Ay8esqBDDl6HPcknpagjmGeqhKG8YjfDbOxMjE68/NoAtce3sva
+         HAWQ2usl5HoTxbmkiY8utg+fU2ztFpOUHDe/05WMIqPbx8zNxAxtjcXXzcryaLH5r4tI
+         mkFJ8qtVEZfbxDJ4Pnlu9oRpXGyUun2ZUc8YBvN1KHngePDZnUk72E9VbRbofp3Wvtxd
+         MBrqSrprBvln6lGiOeVWkYLQ8PT83lvCzU41LeLvJydqfJUiOxJUbCmDdXfeGYGjwXCf
+         s6SovSQXgHi/3UAIXzbfBaeEejilBWBh3WXOJ9cBNr9QAjqIOsQ/9VNCG6xHikOy7j9L
+         823Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763201866; x=1763806666;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DNuDMGuS7dnMTdviD+o3bAwClU4NTzRTE5790R5s+qc=;
+        b=ZpqvqwY7vXQNNaZ9TdlOh0jg8b1D4yb84ffuPUqc5qnmB5dyqiuF+BebMrpQIv2fqw
+         X9kecnfkJ0S3aCLxPqav4foCXoNbrrWaj6IRrZ5c2Y7dADUF7v4/D/CID1vGJp0egy+d
+         MP+EK0/eUQfNTJtt2wbmJXl0Lua7CJzqXq6UVtcc4wBYzrc3viZCq9+VcD1zCfYZ4wv2
+         dfYz+ZoyuVFojM6v9vz7dmvwK9AH67tNlh5vFx9Y/lngpVTH81xHhEki0RdjXtmx0d5B
+         N4UQBFLRN1GJ6p3+b/w/bscxHRE7F9uyj8jJRS7e13GjqKSCLDO+q6GFgqlpnz/6sBBw
+         XF0g==
+X-Gm-Message-State: AOJu0YxsbYp2ZVmUstq0lBT4hydHE4tgwi5+OBuaCTNZ3bv+vl2/kJua
+	z4dPjmMc5CpleuYzafIZqeuWeuzeJksbeG20nMApBs4EaoepACfHulX24CytXQ==
+X-Gm-Gg: ASbGncsXdhdX5eT0F/zr+6X2/tpRA7KC9GDleJk7sduVlN+/wGNVoYNid9tHdwfYLLW
+	kFei+71HB6naJqKim3BQc4vsY+l41v2PyWGPFURV2uJjtspQBdD1Wqb+shLQGu/QQltNB0EiMnR
+	Xso4DMX+3iLIayrdJYsd3kDxtY6vH9yxzeJxcgUrjOfz8yIyEitQOWfw5ZcYDEglJt55bKXJ3qw
+	gqn8hHixvmMJklYOzu/NrztkoYcVtbHBrJLOTcMYgECUUfBAImdYz0uAok+T65yBRb0zzhUESVy
+	svHQyUJRPRcaIRxdcpC9RWrq3UlqUKKT5ow9QENVaz38M+F+HU3ALJzTaKCRrg0Mh1TsZphzjgt
+	t5MEp4rDd3IKqhD0F9Y3jcL/KeN0McWhS26J/xcQH/TG4GQ7ovQ7YBR9LwZCriRo86tpUdR69eH
+	4w30iFu0l0f90=
+X-Google-Smtp-Source: AGHT+IFhVlli/IMxJLDF4g6mfyyODWsNjajLrvXmXQSxpHzfdAw22VELRE0JBfLzRgmczxCgmhdbww==
+X-Received: by 2002:a05:6214:29ca:b0:880:5edf:d135 with SMTP id 6a1803df08f44-882926d7c2amr91480536d6.53.1763201866106;
+        Sat, 15 Nov 2025 02:17:46 -0800 (PST)
+Received: from [127.0.0.1] ([20.109.39.49])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88286532f4esm50370846d6.37.2025.11.15.02.17.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 15 Nov 2025 02:17:45 -0800 (PST)
+Message-Id: <pull.2000.git.1763201865025.gitgitgadget@gmail.com>
+From: "Scott L. Burson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 15 Nov 2025 10:17:45 +0000
+Subject: [PATCH] diff: "lisp" userdiff_driver
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+    Johannes Sixt <j6t@kdbg.org>,
+    =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
+    Jaydeep P Das <jaydeepjd.8914@gmail.com>,
+    "Scott L. Burson" <Scott@sympoiesis.com>,
+    "Scott L. Burson" <Scott@sympoiesis.com>
 
-"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: "Scott L. Burson" <Scott@sympoiesis.com>
 
-> In order to avoid a refactor avalanche, many uses of this field were
-> cast to char* or similar. One exception is in get_indent() where the
-> local variable `char c` was changed to `uint8_t c`.
+The "scheme" driver doesn't quite work for Common Lisp.  This driver
+is very generic and should work for almost any dialect of Lisp,
+including Common Lisp.
 
-I actually think keeping "char c" as in the original is a lot more
-logical for that particular case, as the existing use of that local
-variable are _all_ about C's 'char', and not about a very short
-unsigned integer.  The variable is compared with C's character
-constants like ' ' (whitespace) and '\t' (horizontal tab), or is
-given to XDL_ISSPACE() macro, which is also about C's character.
+Signed-off-by: Scott L. Burson <Scott@sympoiesis.com>
+---
+    diff: "lisp" userdiff_driver
 
-But because it is so minor a thing, I do not think that it deserves
-a reroll on its own.  Just in case if there are other things that
-need to change and the series needs a reroll, here is the only
-change required for this.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2000%2Fslburson%2Flisp-userdiff_driver-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2000/slburson/lisp-userdiff_driver-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2000
 
+ userdiff.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
- xdiff/xdiffi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+diff --git a/userdiff.c b/userdiff.c
+index fe710a68bf..e127b4a1f1 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -249,6 +249,14 @@ PATTERNS("kotlin",
+ 	 "|[.][0-9][0-9_]*([Ee][-+]?[0-9]+)?[fFlLuU]?"
+ 	 /* unary and binary operators */
+ 	 "|[-+*/<>%&^|=!]==?|--|\\+\\+|<<=|>>=|&&|\\|\\||->|\\.\\*|!!|[?:.][.:]"),
++PATTERNS("lisp",
++	 /* Either an unindented left paren, or a slightly indented line
++	  * starting with "(def" */
++	 "^((\\(|:space:{1,2}\\(def).*)$",
++	 /* Common Lisp symbol syntax allows arbitrary strings between vertical bars */
++	 "\\|([^\\\\]|\\\\\\\\|\\\\\\|)*\\|"
++	 /* All other words are delimited by spaces or parentheses/brackets/braces */
++	 "|([^][(){} \t])+"),
+ PATTERNS("markdown",
+ 	 "^ {0,3}#{1,6}[ \t].*",
+ 	 /* -- */
 
-diff --git c/xdiff/xdiffi.c w/xdiff/xdiffi.c
-index 8eb664be3e..4376f943db 100644
---- c/xdiff/xdiffi.c
-+++ w/xdiff/xdiffi.c
-@@ -406,7 +406,7 @@ static int get_indent(xrecord_t *rec)
- 	int ret = 0;
- 
- 	for (size_t i = 0; i < rec->size; i++) {
--		uint8_t c = rec->ptr[i];
-+		char c = (char) rec->ptr[i];
- 
- 		if (!XDL_ISSPACE(c))
- 			return ret;
+base-commit: fd372d9b1a69a01a676398882bbe3840bf51fe72
+-- 
+gitgitgadget
