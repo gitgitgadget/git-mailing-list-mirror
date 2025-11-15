@@ -1,85 +1,95 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C49C41760
-	for <git@vger.kernel.org>; Sat, 15 Nov 2025 16:36:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860972FE56B
+	for <git@vger.kernel.org>; Sat, 15 Nov 2025 16:42:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763224590; cv=none; b=rr/7uImwON7/z+930TxiwjzuXJzWmj0kGKJCNMi0OkkdToEZvCCj2zKQyRpjIcv+AAlru239SA/Y4y+Di8EBVJUfF1cx8dpFAp2Mp8uAWIs+rK6Swl9qS05g9lpXQ5N/7j3Y+jG9oH8nnN6lGIDRR/nV76fzsFcZ0hMWaE7kLYM=
+	t=1763224940; cv=none; b=to5Awh/YJQz6kfK9hyeIXynWnJOP69ncLqcu+0WH067LnMp6UqTiGDQJeUt0BNYfHp5hpNVE66qHtCtlolEcKEwHhC3FKFeCymFa5SeLT/6zTBKW1T9C1h/powrSXRUMWahGNrShgAKhGTAGqjbqwTL2u4fNQnlycbs5KfvdevA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763224590; c=relaxed/simple;
-	bh=ndaJrqajtO8+DoxsAIZ46/9tnKrMxquoB0JD7IsO0TE=;
+	s=arc-20240116; t=1763224940; c=relaxed/simple;
+	bh=FXOqaVAaRgV/O7zwzUeLAyTL8rA85VeyOhwQ5X/IDB8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IRjb7Rgs4wexIFTcBKVEY5Mu9ORtJmEvg1XL7hD7fK8K3S139m4G14TZSDViwwsl/OG0UqmEeB+pIdLsfu/Dlo2qmcGbTFLqBUGHKUk4aiRkrD45bE/tz4ozhqQrdIvzpFpm/IFP+6xfxt+uFZDZJkl2ISVRTPpCl6+zYhlyJzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VtldzkAG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eefydtki; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=DAmJdA/TbUwIIBllAiqEaKPxxDGXO9dpM4FBFw8YNfG/PjuKxydAAFqS1obWjR1UO4xElT+KK33A0Y7iRTyOdndGHoDKKhIyjrhIKuRVW32PWMQ9YnioV6VWhKtfv/pq44TxNCPEcuHMx2w1roRBqfPWSrWaYdq6AjOV6OD3d+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C1m/t/qZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q3Y07HYe; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VtldzkAG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eefydtki"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 631147A00A4;
-	Sat, 15 Nov 2025 11:36:27 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C1m/t/qZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q3Y07HYe"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 690921D0014A;
+	Sat, 15 Nov 2025 11:42:17 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sat, 15 Nov 2025 11:36:27 -0500
+  by phl-compute-05.internal (MEProxy); Sat, 15 Nov 2025 11:42:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763224587; x=1763310987; bh=tLYnVzL9ea
-	VHHn417wQcUwnOCifiFadUsx/BoiUx6Mg=; b=VtldzkAGRgo6ZBVqlOKtU4W1qd
-	o+c2cZy3dx3sEVmlXKeExPwtff2yb8P6z00SxvGK22bQLqAD7QNlJ0FodItTkK2W
-	tOd7CaEHxuKzLwEbStpLfMpzmmeQqrtrW7j/uoFnZH/fL/P9Gq0gaFDjB8aYDqr0
-	0HbeWzr6w3U+mYw3bgWmuXEN5sfuTySCHVi2UsErYubsUF3zWkSefoPio1e+KTxU
-	TNgEeFOgFEwO3qLbNMdT714PpBY220XZMdq5rDnW7+oUA3lL0+YhOqNU8TfAbr6A
-	8CPJ7jpuddFhwrmOJqSeljM3n3c+sIYGodH5xD33lXak2WLb8HvK9kXtnruw==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1763224937;
+	 x=1763311337; bh=Ws1nGrG3wI3Nlsw7hvGTf/v2qzJlSuLqBT+zk+lkRsE=; b=
+	C1m/t/qZW5umCGVQ3bdfjypiAQ2Qdqv11DuwUrjvFsXS4aktaVsc6t+gMs84JPLi
+	uUfHqQyjEyR6GgIioYKIpCnWJvTdVQwoZ5lK/voQ0XWKnsjZW5acVyvfEVjLD/NY
+	Bw1quPJ5+E+xmj2cRfqrlr6ZsQc+p5+7TSdMcSeUf6J5KinU23NT6Wgb43Bb1Tkj
+	+4ZRcCIgXcHBHsxwThBOlqitkkg5angpA6bm+iztZpab1gEWLf4hfEa3zO94aiB2
+	kj5bdY57CvIEqdGXBPVn+QSQc/TukNzTmM8AKxDth2aWmNDS+gvI6QLrSMdCXHiA
+	POUBi1iMeVJgagE0txp76Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763224587; x=1763310987; bh=tLYnVzL9eaVHHn417wQcUwnOCifiFadUsx/
-	BoiUx6Mg=; b=eefydtki4jGWVkO+1IctGnwIf6VZWgX1ke1oI0FdaA7sgEaIoOk
-	P3TKXi/+49zHaBZDMPuzt6EhRF4/Nt2E9Gria/p39mgTqF3rPXIFdvapv+F9Ay06
-	94RgFseBEer+AeD3I3jhxvglI5fY7NNnU8G/tJUycnI5IcU0PFFR+bGfJWa9kjHs
-	VaUaZREPe6TAKi1Cr1eIcIeE4Fb4SvaV7+86D1/Yjc9gMnMWWslOas1eA2E0ZtQ1
-	imqIQwP963D+fvUBZ5nfrsSIn0ErBj+9W2Y3A7Ijhxwpycv137b+9uexLZZ7aLCB
-	7YlTsxffM7twakl3d+FBrm9vS+2A2D+sjyQ==
-X-ME-Sender: <xms:C6wYabhvOeDahgrgtjwu3wuGeOzi0jC6dUdWKJEKPbOYXIxKI5sxng>
-    <xme:C6wYaSnvXQ5KOJvdnH1nJSg0YKlt3RNrrcUAaWI8D_qe7VVZY9o5VbtFmaG1HTrWR
-    -BZCyuZ36WIot33iEhOEjlGq6tbadsPT9gTYEtTQf3bhWkoN8KYV2s>
-X-ME-Received: <xmr:C6wYaXq4yWM842X61gOXQDVH21CFIIgTS7qoB_0tKpjqncXevNbrNvPzdUObYOGd6surokLDz_KqoIBU5H1fa9ay3kLuJXz14ewW>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudefvddtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763224937; x=
+	1763311337; bh=Ws1nGrG3wI3Nlsw7hvGTf/v2qzJlSuLqBT+zk+lkRsE=; b=Q
+	3Y07HYeaz7Ji9RG6xvWvdXLigQmOoGGg89qOCbxXszWEAZQ5a42oMWp9ymVWp5CY
+	G95CfDYbX9VMS2LGpCjGgjIQDDiMgzpKWH7o4B6CIfg82bo2HsgwAX9wMUtHlQCd
+	/UGS0HvwcQ73F4djhRU7IY3slt7RGOVpJMSfI4fyHP91nia7PBUogXo/Zu6BirZ4
+	cUkS0k4XKFPhGUMD91l4UTxFQj8yDQMIbtV1yOfwVleH7vzMpthHvmQ5hGDe4upi
+	yNA9X4Mmj7MCKFIdIMayFCycb8rCvc7dHEDgxlk8HdaUfTXKEMOaIdZbk0zFv1nz
+	ptXLTSL1Qt9U1ZuiJapQw==
+X-ME-Sender: <xms:aK0YaepGVPDRpn73jHpkuX8YLH3DwJHn61hiTzfnsfndQg2RFQ8XiQ>
+    <xme:aK0YaftuxYdeq2N3l-xEnaEezmCf61tykURTHpdVeKc12IEzzSter9jtfQww1_e3G
+    96kIYnlZ9UeROfNqIThuoOAz1vS8tYGdcY10VE1IKhaG0ntVELU7Q>
+X-ME-Received: <xmr:aK0Yad2aR4akBVdTjjGDAoVBSvVf8kedqOmGZe3zS-xJ-yq9Eo_v4mH-8B1UuJS1UOlXpeXrGLdo7uV53bVs9hL4AMLCwlD_5LhN>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudefvdduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepfihorhhlughhvghllhhordhnvghtsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:C6wYabFdWkIKSf_hH30Sw-tPe4Z_hHP-WpLLKjJyDGDePQ8z88W0gw>
-    <xmx:C6wYaTw4aZw9oid2QUwp4kQTLR34zzOHLJOqRahScynXbLc5nk4hbQ>
-    <xmx:C6wYaQrtjYg8UWuSVZnPfYHcn31mJQ7GwvADNHhjkqOQc0eCTaSzkQ>
-    <xmx:C6wYadjPyfPsvnM3V8Q55YkeQ2Z0zDI_NlpatmbuCJQGOF58T1x0Wg>
-    <xmx:C6wYacSCjBVKuzDVSmOGimjMWonK9oOYwfinXMTZkL_K8OLPN7xmSzj7>
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrd
+    hplhhushdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhs
+    thhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishdrthhorhgvkhesghhmrghilhdrtg
+    homhdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:aK0YaaH1XcQCHWnVMX8vkqwIBeSGmwyuz4omsxQ0UEQ1hVH7j-h6Pg>
+    <xmx:aK0YaYuk3KinXn0lSco-k7uMyiNg9Ds-VmeZIWd6BZCqv6tN25lrAQ>
+    <xmx:aK0YadoBXR4KY78VoKO3K4XyXTQtisow9MY8fmHBN7DLKQw5dr4fsg>
+    <xmx:aK0YafVntsfz1smP4XUjk4eF_9vrNe5B7Dgqawa3qZlPiE-ZjYTs_A>
+    <xmx:aa0YaSg491DwaXqMv0Qs_yo6lQw82EoBuRy17IgxpDd9Ru27IBKiIxpy>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 15 Nov 2025 11:36:26 -0500 (EST)
+ 15 Nov 2025 11:42:16 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-Cc: Git List <git@vger.kernel.org>,  Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 2/2] builtin/repo: fix table alignment for UTF-8 characters
-In-Reply-To: <CANYiYbEFN9BHtNh1PQ9C3gDJasq1PaKnkcH-Nq=FddUCAcMGqg@mail.gmail.com>
-	(Jiang Xin's message of "Sat, 15 Nov 2025 20:54:16 +0800")
-References: <cover.1763098804.git.worldhello.net@gmail.com>
-	<a50bcde6446fbd87b4fb04b28c579a915457813a.1763098804.git.worldhello.net@gmail.com>
-	<xmqqa50oiduy.fsf@gitster.g>
-	<CANYiYbEFN9BHtNh1PQ9C3gDJasq1PaKnkcH-Nq=FddUCAcMGqg@mail.gmail.com>
-Date: Sat, 15 Nov 2025 08:36:24 -0800
-Message-ID: <xmqqtsyvfe2f.fsf@gitster.g>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Ben Knoble <ben.knoble@gmail.com>,  Ezekiel Newren via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt <ps@pks.im>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Chris Torek
+ <chris.torek@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v4 01/10] doc: define unambiguous type mappings across C
+ and Rust
+In-Reply-To: <a30ad114-61c2-4eed-a24e-033b3b9d6d0c@ramsayjones.plus.com>
+	(Ramsay Jones's message of "Sat, 15 Nov 2025 14:55:07 +0000")
+References: <23b7fd8a-2b50-4da3-bc8a-3727ee99654f@ramsayjones.plus.com>
+	<5A740EE4-D545-4828-8D38-E0E5E9F87A3E@gmail.com>
+	<a30ad114-61c2-4eed-a24e-033b3b9d6d0c@ramsayjones.plus.com>
+Date: Sat, 15 Nov 2025 08:42:15 -0800
+Message-ID: <xmqqpl9jfdso.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,20 +97,32 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
->> >  builtin/repo.c | 22 ++++++++++++++++++----
->> >  1 file changed, 18 insertions(+), 4 deletions(-)
->>
->> ... it is a good idea to protect the change with a new test or two
->> to make sure the expected alignment in the output.
+>> This was discussed briefly in replies to v2’s 2/10, where
+>> Ezekiel said that DEVELOPER=1 warned about sign issues whether
+>> char was compared to int or unsigned. [From mobile I cannot
+>> reliably paste the message ID or link and preserve a plain-text
+>> email, apologies for the oblique reference.]
 >
-> Will add test cases for strbuf_utf8_align(), a function newly
-> introduced in builtin/repo.c.
+> Err... sorry, but I don't see how this comment relates to my
+> email. puzzled! ;)
 
-Unit tests are nice to make sure that building blocks like this
-helper function works as expected.  To ensure that the application
-uses the building blocks correctly, you'd also need end-to-end test,
-getting output out of the tool ("repo struct"?) and checking it.
+Me neither, but I suspect it may mostly use of non-word "signless"
+that is the issue.  It is understandable for the -Wsign-compare
+warning (especially given that it very often complains about
+perfectly good pieces of code) to complain when you compare a "char"
+with a signed integer, saying "on a platform where 'char' is
+unsigned, you would be comparing signed and unsigned values with
+this expression", and at the same time complain when you compare a
+"char" with an unsigned integer, saying "on a platform where 'char'
+is signed...".
+
+I'd say it shows more about how garbage -Wsign-compare is than about
+how 'char' is ambiguous and should be avoided, but others may have
+different opinions.
+
+
