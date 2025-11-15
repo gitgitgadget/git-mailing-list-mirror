@@ -1,53 +1,53 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29970307AE9
-	for <git@vger.kernel.org>; Sat, 15 Nov 2025 19:57:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1B721D3E2
+	for <git@vger.kernel.org>; Sat, 15 Nov 2025 20:03:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763236641; cv=none; b=qlQ0EGGcW1YJiN8XFrzExnM1zAfaXlIvo1Kw6OXth0FuXLkmxVFxiX9jR1OW+0Xq7IrrGhrvHBxowLgRb5vp31ZkRAaYMfV5XHyagn/PRDxYXSKS6WeCnXWlpWDrQ7sONoEkTAj3EZx1mTW+VgiTiTjG+Tyx4S26ADJJmeFmBT4=
+	t=1763237042; cv=none; b=EUhj+oBHFnlFRrEjU3SczKhWD+wgv4zoKMucKN+UhuKp3wcj9Ti4owTyknvP3mE5huH65SIiT58O5SBCPY8smXLkWpFc7TraOn3x1quDse0iBcWpFPwLrsUOJLCGuzAYek05vxwZwJUkljIzoLAg39E1tYyaNwWVHX5dK7lVlzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763236641; c=relaxed/simple;
-	bh=h/x1CkxS66F5Z9dapoAeUqu4ML9Wblh5pwPUOhIOtk4=;
+	s=arc-20240116; t=1763237042; c=relaxed/simple;
+	bh=3uad0Wq4fc+nYMZh1+Wo4vhsWlH8nxcWXsl41gbZxos=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eP6kR83aL2IuRA93LIaeiH2LqzLkMDcn76R70yf2dRxyzqeHXnC/TIK4Xp2MjNtlfcJyTpYYdQ3J9FWViaO6xCjW3uLn5GB6JocHdKy46BoyrjI9LK/5Go+juT7p1Ttm/ReWgHz/g+UhI3dqkrDtCgP2+PcKU7Rq1YQQRSDMgPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BazfwMNS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=u2wA9Ufs; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=tdUu2lhs3EblOcLUtON3KF+OP1a/s/E09ae+rGPTMDwR2lfBBLHhbgGhiSZ12YcZVOZy57XUnnpnAEk1bOxlf9eKXGYM1L+BBrhzqRAFcUgBcmyzBmqq/os8OTEs5UNceBplWUzeE/cILZIw9xZrPi1fSJiWkh08zPk9ovIxg+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HLusMSAs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=278LRnun; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BazfwMNS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="u2wA9Ufs"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 129BB1D00155;
-	Sat, 15 Nov 2025 14:57:19 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HLusMSAs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="278LRnun"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 670067A013B;
+	Sat, 15 Nov 2025 15:03:57 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Sat, 15 Nov 2025 14:57:19 -0500
+  by phl-compute-10.internal (MEProxy); Sat, 15 Nov 2025 15:03:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763236638; x=1763323038; bh=uumH9/35Lg
-	9DyROA200ZIjfAqRcnBosqB4Qd9zPlL7o=; b=BazfwMNStXEJAvkAnpqa2VAso2
-	VEmKO45P1zXNvTYzuWEj0c/T4vfwyu2Wo5AYeBb4XvY5EDtC4EXw6s/ZefCqTBnn
-	IW3SMjCL7eLa9NTjEerOIphpHXwQz4V8YFcFu2WU7yPRv9oTouk26W7UlZf3z1Ke
-	dN5GxBzMu5tHoX9zHzZMQthQlqEFWQkTXEzN9C1XX/4gqBfoWL1qw461rIwioFPs
-	87DGhD0RDgW96fEtpG9Ixg0wT3O6pTEE4IDy1sLNefsWF8reOlK+BraOkcK52vjb
-	61fNeuOlLuwYTPLOMlaCX6sGLpdMz4INvuiZzhww5kLUh+3cOEb4mir/9IZQ==
+	:subject:to:to; s=fm2; t=1763237037; x=1763323437; bh=m7BwvI24wp
+	cHdVDxtVd3aRKCcKCeTfQduIUiYla6eEE=; b=HLusMSAsRu6LJfQVcVKtLQkRmD
+	8ClcveXRkwufZDz9lJO/P6kK5b3f6xbkpN/lMjIJR8fREGDbUB1RQZgMe+seGWen
+	soOHp+DtjK/wMm4KEVq60wcgjVYrE8mEIWBxyHWBQ2XdRvwRXfZyJotwEbFYyl+H
+	B7qlzuo8zL6Fr5frTSpprDO2wjQx0e3V+B3wVE9bDASf7WLqn/1Zs77c/Ucu82+2
+	6opO9BSw1u1WIafQ+EDE6PTiQxXqn29gQng0ylWQuyDNElFkUEcz0/K0D6JHY0Sp
+	cf9gv80A00cRTI4F6XSY2GAEVWlGIvIdbYpZupD8Tt/eTA+bijCEN4m7izhw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763236638; x=1763323038; bh=uumH9/35Lg9DyROA200ZIjfAqRcnBosqB4Q
-	d9zPlL7o=; b=u2wA9UfsTrwWEKmRYrW/qaOx7GFRW0kc0SOlCXiPXIntlrOPKS/
-	tojUGQyGDJqBx99lfmETd0mqNp0ZygALtq6zGW65JjudNo5TjhJahMh7IVPRDfmk
-	5W5hiw/ETXKKiaaLSwca2Zc8Qo4UJt7AtJ7rymXPjgoEyMeB4nHKab4a6OX0M/53
-	aCyNuHMR5pK0Dr2xjsocoJUXnqQxQdDvpmN0eqxbywlsf/Tjm5ZiccSS38WEHA9p
-	628B79GZwaGlDHqPTz/2F1g2fAgMm13ivWpzdYD09cgtRAWdduuuVN8S4KI3bpv9
-	p8VTWS3kvCEJRYLRateoORPee9rAn0c+MYQ==
-X-ME-Sender: <xms:HtsYaZ0DW1v0fzwY5PVUgULt2nR6b3DkO_fa6REkh6X5DheDHggbLQ>
-    <xme:HtsYaTzZLB3R2_ds7vn46ebva6sBpOeDSrRW3n-5KiezhpJl9M7SeQmcz_xJB6Zzj
-    -3A2JbUxK-dGuMigSoAuVaURl96UdglF8rAPfiDYPaYUQJrjwBG>
-X-ME-Received: <xmr:HtsYaTvBV0s4Qjf9mxY69D6CP60DDKDJIkvWtMatOSOanP0NHJZo3GzKD_-Yrb6LdILO48IiaYVgI3B8AJsovhKI4mTIjjJB8f0X>
+	1763237037; x=1763323437; bh=m7BwvI24wpcHdVDxtVd3aRKCcKCeTfQduIU
+	iYla6eEE=; b=278LRnunmR5rbulmNzofvaFy5ZnmL2HKkT4yVYKa8xLCDTzmAVG
+	fw58KrT05zGlG8E5lxGDaNQaEDAaufjYcPQLwCAuMCZHpK+OvzV1ocotVhYli8BH
+	qcu4fOq6XliJ82Cf4NHq7WWpAu7gTeMzQW1g8RG3paBGhCJ/6n8UrOMiYNHXOZFV
+	ralyJC2HHbse6wg80rjpC4MP82onlB4N8GsnZ1ylM59dGZ6NQMPz1dURtF3ZpAo+
+	Slb7m+1CSJBqepb5zf9UI1hPnAd1s9V/9K4jehQb2JeVO4UEMNU2Gk7I4zWJUpPI
+	EJxKoQ36SPLRpW7wqUp+XZwV8FrFRU7HYVw==
+X-ME-Sender: <xms:rNwYaXaAhcG8UtAo8rXKNfD9jZ6n0cLlf3vwaw0UYAOzc5--gNDqaw>
+    <xme:rNwYaZe3fkjxIoUdeaDPyqKdmM4lHPvYs-LfXKcjjhnGLGq00JS5bNU4v6Z_bObBx
+    afKdSYOH0avR6VVoTnSKL3oVxsIs8OhBEpZdoJ8PCnuNl3ry8vDkA>
+X-ME-Received: <xmr:rNwYaUmtN0SxNtBbGOA2wHKh8QQRpYUm16BH_ypkporFAUM1DfqIjFg8-Zn73sajY-CQzGSqs9avkruF9K7sCCIvix5-9j3HFP6Y>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudefiedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -55,33 +55,41 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudefiedtucetufdote
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
-    hsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhifihhltghkse
-    hsuhhsvgdrtghomhdprhgtphhtthhopegrughrihgrnhesshhushgvrdgtohhmpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:HtsYady3SRwKcAPO_gFpjuMIZC_QkkaZZaCmCi2Ey_zVfORJH-LWuA>
-    <xmx:HtsYaeC_2POQ86Ux5SzF-V2rX-FDOh-o7ab0DBPvHcXmvMkFHie1Sg>
-    <xmx:HtsYaTcRXUESIp-DJp-pxpb4-ZVUWuyokLRTGLYZ1HrM2uTvISdpEQ>
-    <xmx:HtsYaQk11BD7Md_zoXMyR43isOQkHvkCadI2cwbDe6IBcIebORUp9A>
-    <xmx:HtsYaQQ-cI_nMu6jq2Oh4EwmaDFBsIbnv4BbSUM_II4aaXkKpmYsb8oo>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
+    dprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhm
+    pdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishht
+    ohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhope
+    hpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhm
+    rghilhdrtghomhdprhgtphhtthhopegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:rNwYaZ3VsvdYbNFFwxKd1ZcUWcLkit1-wPr8a2ujcHV5PsQ10nAGdQ>
+    <xmx:rNwYaddqjMljwGNcN_QRHrIhCy5vdxUasN_85QpEASU9dYyYfG9KLg>
+    <xmx:rNwYaTa4bKtMtz5Rh4TlILJMRo0zH8J6XR04CNeA90uQg_gwe8HK1A>
+    <xmx:rNwYaSG1DdoQae0ADzk5eAhckiqR-aBa41dVa5RNKP6r2gFeRvJAIg>
+    <xmx:rdwYaS6K4dnZMBbbdTDiQTggtWBl_yb57GQ5XqsFvE4ct4GFRxnsfhrJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 15 Nov 2025 14:57:18 -0500 (EST)
+ 15 Nov 2025 15:03:56 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Jeff King <peff@peff.net>,  Martin Wilck
- <mwilck@suse.com>,  Adrian Schroeter <adrian@suse.com>
-Subject: Re: [PATCH v2 2/2] read-cache: drop submodule check from
- add_to_cache()
-In-Reply-To: <20251115005818.2271557-2-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Sat, 15 Nov 2025 00:58:18 +0000")
-References: <20251112235434.1499699-1-sandals@crustytoothpaste.net>
-	<20251115005818.2271557-1-sandals@crustytoothpaste.net>
-	<20251115005818.2271557-2-sandals@crustytoothpaste.net>
-Date: Sat, 15 Nov 2025 11:57:17 -0800
-Message-ID: <xmqqseefdq76.fsf@gitster.g>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,  Ezekiel Newren via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Kristoffer
+ Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt
+ <ps@pks.im>,  Phillip Wood <phillip.wood123@gmail.com>,  Chris Torek
+ <chris.torek@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v4 01/10] doc: define unambiguous type mappings across C
+ and Rust
+In-Reply-To: <CALnO6CA-6waRpkqzLxR+f2yzwfhmf_jvbtEZC7FAFN9NLkqkXg@mail.gmail.com>
+	(D. Ben Knoble's message of "Sat, 15 Nov 2025 11:59:08 -0500")
+References: <23b7fd8a-2b50-4da3-bc8a-3727ee99654f@ramsayjones.plus.com>
+	<5A740EE4-D545-4828-8D38-E0E5E9F87A3E@gmail.com>
+	<a30ad114-61c2-4eed-a24e-033b3b9d6d0c@ramsayjones.plus.com>
+	<xmqqpl9jfdso.fsf@gitster.g>
+	<CALnO6CA-6waRpkqzLxR+f2yzwfhmf_jvbtEZC7FAFN9NLkqkXg@mail.gmail.com>
+Date: Sat, 15 Nov 2025 12:03:55 -0800
+Message-ID: <xmqqo6p3dpw4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,65 +99,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-> From: Jeff King <peff@peff.net>
+>> Me neither, but I suspect it may mostly use of non-word "signless"
+>> that is the issue.
+> ...
+> Agreed, and I suspect this is roughly the implementation.
 >
-> In add_to_cache(), we treat any directories as submodules, and complain
-> if we can't resolve their HEAD. This call to resolve_gitlink_ref() was
-> added by f937bc2f86 (add: error appropriately on repository with no
-> commits, 2019-04-09), with the goal of improving the error message for
-> empty repositories.
->
-> But we already resolve the submodule HEAD in index_path(), which is
-> where we find the actual oid we're going to use. Resolving it again here
-> introduces some downsides:
->
->   1. It's more work, since we have to open up the submodule repository's
->      files twice.
->
->   2. There are call paths that get to index_path() without going through
->      add_to_cache(). For instance, we'd want a similar informative
->      message if "git diff empty" finds that it can't resolve the
->      submodule's HEAD. (In theory we can also get there through
->      update-index, but AFAICT it refuses to consider directories as
->      submodules at all, and just complains about them).
->
->   3. The resolution in index_path() catches more errors that we don't
->      handle here. In particular, it will validate that the object format
->      for the submodule matches that of the superproject. This isn't a
->      bug, since our call in add_to_cache() throws away the oid it gets
->      without looking at it. But it certainly caused confusion for me
->      when looking at where the object-format check should go.
->
-> So instead of resolving the submodule HEAD in add_to_cache(), let's just
-> teach the call in index_path() to actually produce an error message
-> (which it already does for other cases). That's probably what f937bc2f86
-> should have done in the first place, and it gives us a single point of
-> resolution when adding a submodule to the index.
->
-> The resulting output is slightly more verbose, as we propagate the error
-> up the call stack, but I think that's OK (and again, matches many other
-> errors we get when indexing fails).
->
-> I've left the text of the error message as-is, though it is perhaps
-> overly specific.  There are many reasons that resolving the submodule
-> HEAD might fail, though outside of corruption or system errors it is
-> probably most likely that the submodule HEAD is simply on an unborn
-> branch.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
+> My point was that Ezekiel seemed to justify (?) the use of "signless"
+> by pointing to those warnings (I personally am on the fence for how to
+> treat the combination of facts, but it seems useful to consider that
+> char is not easily comparable with integers of various signedness).
 
-A tangent.
-
-You can (!) place your own sign-off after Peff's, as you would want
-to certify
-
-c. The contribution was provided directly to me by some other
-   person who certified (a), (b) or (c) and I have not modified
-   it.
-
-of the DCO, but it seems that it is optional (which I did not know
-about---the explanation in SubmittingPatches stops at "Indeed you
-are encouraged to do so" without making it a requirement).
+Agreed.  I think your point matches my suspicion that the use of the
+non-word "signless" was what Ramsay reacted.  The 'char' with the
+implementation defined signedness is making -Wsign-compare even more
+quirky than it already is.
