@@ -1,65 +1,69 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB43E301007
-	for <git@vger.kernel.org>; Sat, 15 Nov 2025 18:54:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5EB3064BD
+	for <git@vger.kernel.org>; Sat, 15 Nov 2025 18:54:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763232867; cv=none; b=YDj80VGTo7yWMzFkNgnAiXDGLDreVxtoqEgyajFkX5eT6OegXBLKZfmJIJJl75BXh5DS6KyyTsmZ317FcwfjJPDiD0s+leiP1pxrOzkKhsToFHpt4FeMTCWmlu/uS14LLVwzXhB6TbnlK76e9Ok0oIamYIUU36Bc8eUfqCAejLk=
+	t=1763232868; cv=none; b=matUq82O5tYyuTtlPaBSWcNXpnDlN2CJvv5oG5a6+W7GZPK86vSPvlECF1skaixMO2FQkyuKlsvOgYmvm2LLQx0Oc/dI8BN7KHygDHVsUxnkp2GVMndu6xauO/OXhwVVPSJXwikDFLxl4KGp/COwjWnXvCJPNf1d4Y4SDMLXJoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763232867; c=relaxed/simple;
-	bh=e8Urgt5lFVUcsikXQuW/xZES43Xz6Qr64AcovVbCoTY=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=gTxvxyiG3BUOXO05d8X18HgowM+feGh5Y6RvAEW0BuUQRWuCCB9kx/KObBgOcVtY1+IfuNbcZz7AbyJStqJo9Im/QOt8LQxoDnBXP07nPXfVMVPZXjq/0deMwF1xtfPqMbI+Ln7jvGsm1g9kp0kngkkhzdzlvaMtZb6xR2WL4YE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bkb3jXBl; arc=none smtp.client-ip=209.85.210.180
+	s=arc-20240116; t=1763232868; c=relaxed/simple;
+	bh=n8dIKEUoSY0EVPSDhwhR5G5oeMNUfWLqnQ5R+pqv1Zg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=kb/hBi6lpq2h/wfS4hRI83X82+1L8tso0BNmbROYo0NN/l1PEMBafRVjaZzCxZXbHtPXLnNDnnmGySt4Zbzk5oja+Vytl6qWpxVenzCIs1H1MhRvOcal2bQVfGN1AEq2AZflPQI2fc5LQjLj1zo2FHS91tkaC7IXiNaY43QaDr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UprnJHL1; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bkb3jXBl"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-7b9387df58cso4031383b3a.3
-        for <git@vger.kernel.org>; Sat, 15 Nov 2025 10:54:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UprnJHL1"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-295548467c7so35682835ad.2
+        for <git@vger.kernel.org>; Sat, 15 Nov 2025 10:54:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763232865; x=1763837665; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1763232866; x=1763837666; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GBz6zt5Mb2o65VQcQ4EMhpBJnfQNXHTCt53Gsc5AfLU=;
-        b=bkb3jXBlgcVOgzym28h+DIviai127LKaXKhNTZe+EY8bHj/JC0gtQpQMyRoGuksMfX
-         ThQ9Tno17YKtCEY4tsZAaBSZd9Bm+TfFyT8V8PNbGZDUtIWIsnG8lrePhX1mgzHFAG8x
-         ICqsDaQBa3hfYrwcMIrYuq1hFDXNZqz2I5LGf+DFHPAAGNh80SWkiOXKAV4GPcTN2+XR
-         PYmjlfKIyVsN/iyTHlFrWZNswGxXBA8hfepte1d2s6obMI3kmxTpdcfQTs0Xd+hZvOgc
-         rbNphP0bSc+udkdTICIjUomUhfP68UNhuL5lhR84wb6BjIRXQfBE/sgQfYsbJ6vllaaH
-         n/CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763232865; x=1763837665;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GBz6zt5Mb2o65VQcQ4EMhpBJnfQNXHTCt53Gsc5AfLU=;
-        b=HJYAifVU0czXl+M6Bz+Bmpd1JyEqFhW5XSNQFlKtsILJYKFDQR04+f94HYB4pc+Emy
-         pQpDG6fc/PvVEScrZSd/jT/OQuTpvcdemC7F/Y4axFDlYKNSTTTYchO3jN1cFcgx1lb1
-         dPldNkfgdbsyp2elxP7Bb9QhViFfm6gN7E7sluHuNt37xL1Z3E9Bwtctpd0Ki9yZw3dI
-         oow8F0HQLnvGIsNf7bZKm/CHkR7omD5YjVxQ69jpeCM6jmTGte5g/FyI8bFjed9ThXpZ
-         0xqYP+y3bqdSm2ArgnVaztKXrmtefzjgUoKKZsXZqvNLsnVy13BaFgKIusFpiUSfUQbA
-         1aug==
-X-Gm-Message-State: AOJu0YzK/ceiAXnOeoGmN4ppnSiTVz4BstQBNGLZ5vCELg0CvkQ+gkLc
-	u+1+ij7nDZv/jrz1hb2cp+FPNXWSL/Iw2VLPueEVohFeM6dh5ovQr36J9xKhEA==
-X-Gm-Gg: ASbGncu9w2oidUkWsRozep8X3QCnFn6zVUBWDLJifu+I26/jEM95z1KmOIMHiFbCNTI
-	qBlTZvnVviY+HgravJvTBGPkISZmyWcc1BmC4JTVYLNhe07YPbkUxm+ysEQml4j5vjys3iCIZYH
-	g0rzEfdiztwi2palX2iqWwmXsaJiaJ8wCsth4RFxTwwSXc0rBIP+C8VPExXIa5fl4EwPIIfZS7y
-	aW2lF4NpKa0oDI3TH9fdha8ZSP3RsxyMPS7qy/8lqJWdIyBP+YjTuNi5jmqOpnK5Xmp95a4MxQ+
-	Rkz191DQqg/AHRTWJRMn3h9UG9IebYl+9lelD9/3wQjqp1OOWCR9Gv+kHrzBMN4bAAPOlqOgU9j
-	LmbGBpoIukGoe+OuDQ1iPmG6GM5NQXa7oDPqDsgGWK4tKg7Mc/fnEM4mMdEgcPKMibXNEJz5wC/
-	jMDw==
-X-Google-Smtp-Source: AGHT+IHj1izKmRB60xaN1HeTEU+5C+180k6A/Ogb95OgbSd/Cn7L9BF7hZ2u5FLsGnsl2tF51MtajQ==
-X-Received: by 2002:a05:701b:2914:b0:11b:c1ab:bdd4 with SMTP id a92af1059eb24-11bc1abbf96mr305798c88.38.1763232864670;
-        Sat, 15 Nov 2025 10:54:24 -0800 (PST)
+        bh=dx6ngw9LSL980fpYaKGOo/1v73rG/do+gqSrcjQOIH8=;
+        b=UprnJHL10CacYmv3SJbgBTChvVWE9VWLptodygLnqPE4/aq6q8AFhp6XmXRdypBzCb
+         +OcpmfB2xEpT2mY42yerHu2k+QQoqKA2ndV2Fjx57WIwV5nP7yNOHROgSVz/cwj8mMIQ
+         uYkk51k7rxtpcD+10jC2Q0pro5zQN/wCwKiQRfkElISjeuHziC78ils/1d8zs97yUb+1
+         dSUxxRyKHxWle/jzrN7EeuGCdQmerFg8jVQIVAOWZSUPzm5CvisKuLwOBL26g96KqIb7
+         +qvDW5lfw5qhMZILRtVrHxaAkbiqLcLTAT73Tlah7DsqjE1qO/M75yUhAFYU+Esv7YjN
+         ofaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763232866; x=1763837666;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=dx6ngw9LSL980fpYaKGOo/1v73rG/do+gqSrcjQOIH8=;
+        b=d5DUN7fvtFdhQSA7zLaRW68BphSbUqwy+/fWjLRtlGKQ4GJ0/8VixBtMs0sAvVjxZp
+         sECisEBQxkDgzopDMGWU92JlxLoQLOfHqmCv9xvtidEXk/M31in41OBSwUd6pJdQRGYe
+         AcpiUJJb+NMeUjy3jKIFYNkJNbDTpA+uN3chUbYsb+cRCSw4gn0ApH1zPooEB9jQkFNP
+         5Ig2pX3HMEFk6TbEgJRljU11fBakbtxGCem9vFB5q8OPcgWBcUI9x3UbPtemB0siI0zt
+         7A1MBKJIfjlR8hYOfw1s1yaAMzjNccuPwLU/O2WtXEgyRkuT+y+R9gi5VasQpwnjh0Co
+         3bNg==
+X-Gm-Message-State: AOJu0YyuOOVMouwSYRl3b4/M4F5craHbSCsKK7MKkbHWDC2mLEXKsYMa
+	GWcXZSTjEBZO297k4hR/IEvBuDQQZt+barqJH5wGLMjnbgS2qefWfFRvvDJF3qTe
+X-Gm-Gg: ASbGncv3uueqLyeUP5sayUnoFkmb5ROlLXafBFU2Bg0eEm9LgMFzpoqDi92X8ccLa/K
+	sNZQElycfUWWxspgcqKkPOcjruh7gPZmKLv99XsTd2DjV2bOtjxJyXZMutsZgA+dnpDAGX+tHOH
+	+Ihh8vKrPCa1s+dWAq1IdSV6XbynL85gHS1K9nm8DA0Bzv8YWwi2W7H91BXNzZYnAq3kTa8otFp
+	T9x24pLKFlkjEATg42tISNvdtWw6pmm1xg46gFvjblGij2llf0haAgwD6dZvVlov6mXgWXXV3k8
+	s3xhcgqtcfXdJXYC6dCvRpoMCaP2nxHHsWYCeWWlbBovIFdXU37seSsAGr/DEQChfS9AgjRDgf6
+	CSl5ILPrKjWZbxiOpbIDmPq5tSDmhirCpDMacxZ4xOPEVv8dxpSHyKh14PKQMg7U7RAETquFfY1
+	DzoQ==
+X-Google-Smtp-Source: AGHT+IHgktJDMJUwGNHcmOCda8SZpqKt2n/qLIczLwlWGysQ9n29f9ogw73MACmbtbTWGj9+cTAXUg==
+X-Received: by 2002:a05:7300:ae1c:b0:2a4:3593:9698 with SMTP id 5a478bee46e88-2a4abb330b7mr2910843eec.21.1763232865912;
+        Sat, 15 Nov 2025 10:54:25 -0800 (PST)
 Received: from [127.0.0.1] ([68.220.58.240])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11b060885d8sm24188661c88.2.2025.11.15.10.54.23
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2a49db4a36asm19200551eec.5.2025.11.15.10.54.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Nov 2025 10:54:24 -0800 (PST)
-Message-Id: <pull.2101.git.git.1763232863.gitgitgadget@gmail.com>
+        Sat, 15 Nov 2025 10:54:25 -0800 (PST)
+Message-Id: <2ebccd3096ba8f36f9ab166b674353890191d8bc.1763232863.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2101.git.git.1763232863.gitgitgadget@gmail.com>
+References: <pull.2101.git.git.1763232863.gitgitgadget@gmail.com>
 From: "Kiril Ivanov via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 15 Nov 2025 18:54:20 +0000
-Subject: [PATCH 0/3] git-prompt: add quiet upstream indicator option
+Date: Sat, 15 Nov 2025 18:54:21 +0000
+Subject: [PATCH 1/3] t9903: shorten setup using test_commit
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,40 +74,58 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Kiril Ivanov <ivanovkirilg@gmail.com>
+Cc: Kiril Ivanov <ivanovkirilg@gmail.com>,
+    Kiril Ivanov <ivanovkirilg@gmail.com>
 
-This patch series allows a cleaner git-prompt when the upstream indicator is
-not actionable.
+From: Kiril Ivanov <ivanovkirilg@gmail.com>
 
-In particular, the '=' to the upstream can be redundant noise if the user is
-always on a remote-tracking branch and only needs to be aware of any
-divergence.
+Signed-off-by: Kiril Ivanov <ivanovkirilg@gmail.com>
+---
+ t/t9903-bash-prompt.sh | 27 +++++++++++----------------
+ 1 file changed, 11 insertions(+), 16 deletions(-)
 
-Since SHOWUPSTREAM already supports various options, I propose a new 'quiet'
-option to limit it to actionable output (omit '=')
-
- * Default: branch =
- * Verbose: branch|u=
- * Verbose name: branch|u= remote/branch
- * Quiet: branch
- * Verbose quiet: branch|u
- * Verbose quiet name: branch|u remote/branch
-
-Ahead/behind output is unaffected (default <> or verbose +N-M).
-
-Kiril Ivanov (3):
-  t9903: shorten setup using test_commit
-  t9903: add upstream indicator tests
-  git-prompt: add quiet upstream indicator option
-
- contrib/completion/git-prompt.sh | 14 ++++--
- t/t9903-bash-prompt.sh           | 86 ++++++++++++++++++++++++++------
- 2 files changed, 80 insertions(+), 20 deletions(-)
-
-
-base-commit: fd372d9b1a69a01a676398882bbe3840bf51fe72
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2101%2Fivanovkirilg%2Fquiet-option-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2101/ivanovkirilg/quiet-option-v1
-Pull-Request: https://github.com/git/git/pull/2101
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 637a6f13a6..7628bc10fe 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -18,26 +18,21 @@ c_green='\001\e[32m\002'
+ c_lblue='\001\e[1;34m\002'
+ c_clear='\001\e[0m\002'
+ 
++# (main)                     (b1)
++# initial (t1) - second-b1 - third-b1 (t2)
++#             \
++#              second-b2 - another-b2 - yet-another-b2
++#                                       (b2)
+ test_expect_success 'setup for prompt tests' '
+ 	git init otherrepo &&
+-	echo 1 >file &&
+-	git add file &&
+-	test_tick &&
+-	git commit -m initial &&
+-	git tag -a -m msg1 t1 &&
++	test_commit --annotate initial file contents1 t1 &&
+ 	git checkout -b b1 &&
+-	echo 2 >file &&
+-	git commit -m "second b1" file &&
+-	echo 3 >file &&
+-	git commit -m "third b1" file &&
+-	git tag -a -m msg2 t2 &&
++	test_commit --no-tag second-b1 file &&
++	test_commit --annotate third-b1 file contents2 t2 &&
+ 	git checkout -b b2 main &&
+-	echo 0 >file &&
+-	git commit -m "second b2" file &&
+-	echo 00 >file &&
+-	git commit -m "another b2" file &&
+-	echo 000 >file &&
+-	git commit -m "yet another b2" file &&
++	test_commit --no-tag second-b2 file &&
++	test_commit --no-tag another-b2 file &&
++	test_commit --no-tag yet-another-b2 file &&
+ 	mkdir ignored_dir &&
+ 	echo "ignored_dir/" >>.gitignore &&
+ 	git checkout main
 -- 
 gitgitgadget
+
