@@ -1,121 +1,138 @@
-Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF86212564
-	for <git@vger.kernel.org>; Sat, 15 Nov 2025 12:26:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496FB1388
+	for <git@vger.kernel.org>; Sat, 15 Nov 2025 12:33:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763209565; cv=none; b=KsP9Rcaok/Su0XvWFhdon90IbzmVLQU74z3EDrzx5EeZjvM/rlvZcJaIDyiCnjK2WW3kD+MhdOTI0VgGLVzhuYiiSw3ykSRljrlCQL8bLEEb8xfD5elmxOjsAW0DY3/9fxtOg+j8sVha188ozaSA3X1X7775ur5ZEgYmgUgTBD4=
+	t=1763210030; cv=none; b=lIH1n8eH2R6dYENUigRJ3hnt17fs7MDUVNhJocI994Cd8zp/nmJTJK5NYllmk7u113kWCeFP4t1Ih37SkNpH8wSaCX2mFWXCb843SZ4PWw1fHk5+4QZZ4/mNOhA9haPe0eJg4i8miqyZCeayljrdls1VTVj5cZQSyUIPcTrbO14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763209565; c=relaxed/simple;
-	bh=smu5AaiS+BE3ioWxe2kCjiUF86UOp//6ISPpj0SrNXg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MYiIoBrkD98bu+1fOQJ98/jELtPH4qzLLY7njXQiagej1sn96WQmDzU1HbOz5moza0Ny3IMLWTRShA4sKGkxfGviwkv3WlCvPyORwWxgPDalTATwtTOE7zjUXoV2YGg6JFLNDWjW1foY6cr2ETR7NdqOGG5pUo4ajJGSyOBVTWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NCi0Ov7t; arc=none smtp.client-ip=74.125.224.54
+	s=arc-20240116; t=1763210030; c=relaxed/simple;
+	bh=yN/YQbkhKku2QQVgSPwhs85pOtQlsfQc6wWjzzbuPnA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=iIDWq3FuCi7mQxru4MVCAAHQ7E5pC8p6AO3M95sy9HdPxPOvmvBhK9LNLftom2V29MCQ/Vav3iuUhU37EWvP9+40MMXt4YvmkggWsYK+LRAqKYzd1b42XvldORlBi2MkOyxw0HVxoQ8vT/0h4bRO9P/hNk9DK/1YROFiwBDR5O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lMpkVf7e; arc=none smtp.client-ip=209.85.222.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NCi0Ov7t"
-Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-63fc6d9fde5so2547244d50.3
-        for <git@vger.kernel.org>; Sat, 15 Nov 2025 04:26:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lMpkVf7e"
+Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-937268fe284so1511746241.0
+        for <git@vger.kernel.org>; Sat, 15 Nov 2025 04:33:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763209563; x=1763814363; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MyCncDNuIxIH3545ACWUvvj8mQuAl5sS16ORfy73MMc=;
-        b=NCi0Ov7tyPh3zTlBP/HzSxPeS2/zvypTi0Xk/tiPiNFMpJtfXDSIiu4o7zRfRjc93u
-         B1JU2Fzc+oTt3cg/rGFNM3ZF6K/pyghn7WWh9yPmB45u8o+9d4ljxR/EiF67IxNAZMCB
-         48OTN8+Yl2y/kZzsyGgysm5ohi46RU0rZzsMkoLndpZmC6HjcCz4p4wNKr6dG3ueRh4N
-         vsYFjli85f/jJuAqhbAWGFN0JO75YNmeG4tHj0xopob5oFGij1pU6EzVjUALu8iFDbNu
-         Lfyyy+RqzJd6pPk+6DlocNy3K60XJFeQ6u6TskQvXrohj29ZnFPEXyY6XgqmF6Y4xOv5
-         erRw==
+        d=gmail.com; s=20230601; t=1763210028; x=1763814828; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Hy0vJVzjeKSP69jbKNFClFyXAeTpzpwZZRl/5ywQMgo=;
+        b=lMpkVf7ecn4I7kDmUDGmERY0sG2ju9TUpXGRcgppc9osJWWje/q686jvDjHwh7jpMI
+         mD5nz8vG509RayirDIzSoYJfRivdf7zLGV/NhUqvydqtvJwkatISRGXL5ed0iNn/uDFn
+         mBg6Cz9xd1GgVM3VTGBp3AYx116ZGMOLKcE7oFK4kO5DG28Ua9IgZXQBI/h7ZT2aE5w+
+         pxWfhZ+w95pR0Lyxwe3oceFjD5ZybDQb98URBk//MFblYENptgmYN/0zv/mmihy3uGbu
+         Pw0F2dSXfCOnE1GpTJX1pc4vZGJg471gZM7Fc56o9MN/peSb+93H5ixx4S607gNMCWVd
+         N2TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763209563; x=1763814363;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=MyCncDNuIxIH3545ACWUvvj8mQuAl5sS16ORfy73MMc=;
-        b=HgMNrF+KtYlXAIcyR5RLKZqgzKVxLFyvVqGAtIRhJRU1ha6k3XzBFESPUniKFzBUwW
-         58lMQsPK+Kzd9ShUTTudhTuUHAZHkT0N8MS+3m7wdFZ2O8s3Rg1t9gXFzDApIRiJBF2R
-         Cz2KxRhq7NPe+D6jRvA3UZW862kczPUp68BWqvleb17m7bOs0t9BjLmEUnE97XHhAIMu
-         9wdc0JnHlkYD64iaZiua7+VSvIqrFjjhS5Go5brlzJUMKHBHUbsZPycQy4RKwonlrQbd
-         z8bsgXCiEAlAFh21Szs/2l6F5wB6FVwbdqehmaPWxKLga2H5YiPFQgzZ9vycBXvgSbHr
-         o7Ww==
-X-Gm-Message-State: AOJu0YypzxiC5xIl/0jXD10ZxTmO6KrFfUB+CKP8Qy//9bJ08k/twSS2
-	6Izq0Olk9lPr5p9n6YL2v2z1lQ/UKgiXgXJ2HtR9LxKP6I8wl5lrR0DVYTla//1re/xzgvO9wew
-	QpWL23/mWtjuVM4zySJ2YTZihaWXGM7w=
-X-Gm-Gg: ASbGncv3czRTTrxrh0GIqxdND9LcHz2lGOhIcdSAdiw/06+huiPvejywre8N8wk4seM
-	GEBJBU0nUvh9mCEq46nwZBMOK6P0v/1v+erYw/MKYo2U/pCD6oNBSIpbf1LfVOm66d9SZmUZcO2
-	JjVKH+uNynmVSQqXo14zgQAV+97XkJpDk0eZSJyyqJ9uO3trPjk685JO/vmXmlj4b1wvmaX7peb
-	VRhXRt2Aau8kE0q4J0H+C/HnvEA74mvRNJfm7xRxlCWIAcdb6WqVXrJ6ag/SYaa+Pk39/8d
-X-Google-Smtp-Source: AGHT+IH7kzKl99XczCE1J5abwXf95g2vOhtODZiQ//IUOAkmdRwxXFerY0jHLCGgWsIZ3LhLGHvN4mrh8rysD940lb8=
-X-Received: by 2002:a53:b10a:0:b0:640:d038:faef with SMTP id
- 956f58d0204a3-641e74ab9f2mr4706962d50.9.1763209562626; Sat, 15 Nov 2025
- 04:26:02 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763210028; x=1763814828;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hy0vJVzjeKSP69jbKNFClFyXAeTpzpwZZRl/5ywQMgo=;
+        b=dQJl+wkSe/Kz+DQmdXuSx4jIQhiN3rCa9EaptD1RMxxFUIK3jOwQ9vf4xspQz52cE3
+         mfYaYd7uPcYaZge+QtRFElBT/duZHz/HDKPMUhdKzy3y7x/3060R52QHiLK31a/AYVX0
+         pYUkzJopmr/5G8t+v7p0KX3d3NTRTIJ+kxGE3paZLNnnrTY9H5VG8vTGUIAyzcz3hUhS
+         BmjtaT/OOeIb2denz5LKDAVTKDosvSZNzyXrw+x4sRO5nT3MSYvgftMPmG+lPjz3PTlV
+         UNV9pJJ+DQADsdN4HvVQK6d603caDny1mk6s8Tzk8fMUZGznGbhgGKELamkb5C2g98jB
+         DkYg==
+X-Gm-Message-State: AOJu0Yy+oS6kegXfXBV/puXgVBtZxexRUixPMMDrnBjBE6oadHXprNaU
+	+FutZf0ZNBgZA3/Tl+ltb8PMGqK5FrVHHRtwW8H+H72kytrm8/UNCfCw7kVpYfjq5Qqf3xQYl9r
+	jeUyIQ6FXxL6wqlUVJKC1HzjYNocEiOxqu6l+
+X-Gm-Gg: ASbGncuBh7zoEjywAN5TdOSRrSswq7ALuzqQIrX4HfISgxD1Tawz41Wk+9Iw4jjtDAx
+	Bm4TtmErK6sfiawnggRRpvbRccvkKFebHaWmKCWZTF498a82CnAv+gsazqniOkEN7Iela8bBsDo
+	sGGtN24rNyAgHaND7wpYdcuIuG493y3/6czf9E7QlVnGtMd3M15d7UMbcCr51sMKXwyGD6j0MBV
+	cqTql3KhBFuJ4Og+gBzg3fJviO6pZy0bSrl0MCxTeYpYgSAz6mXj+OO/16meCUddbMUOEY=
+X-Google-Smtp-Source: AGHT+IFc1co8+nbqmEOXbRu3P/GM2HiS1GDsS4HOF37BK3mdyGtGQ9meioGB+eTEtxCA9QbVCGFi7R0stM780WGbqdw=
+X-Received: by 2002:a05:6102:cd1:b0:520:dbc0:6ac4 with SMTP id
+ ada2fe7eead31-5dfc5503207mr2587301137.2.1763210028078; Sat, 15 Nov 2025
+ 04:33:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1763098804.git.worldhello.net@gmail.com>
- <8cb5d668-783f-4400-89b4-35054a6cbea0@app.fastmail.com> <CANYiYbGyGKy=S6a3NJFyrv-bOZos+BXdR=nPXDT3W_dGxeiNPA@mail.gmail.com>
- <xmqqecq0ifld.fsf@gitster.g>
-In-Reply-To: <xmqqecq0ifld.fsf@gitster.g>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Sat, 15 Nov 2025 20:25:51 +0800
-X-Gm-Features: AWmQ_blWqkEeDN2DXJULyWE2AZ4Dy-jgsBjyzR-kiTY2NLEjtx5BJGRj9N9oSAA
-Message-ID: <CANYiYbGqLyZ9zvhR73z91yo2Yk-tT1LVcP--uEdaKL1hHJOEHA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Fix misaligned output of git repo structure
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>, Justin Tobler <jltobler@gmail.com>
+From: BhaaL <bhaalsen@gmail.com>
+Date: Sat, 15 Nov 2025 13:33:36 +0100
+X-Gm-Features: AWmQ_bn-q19ZtiDHsn3o6OV9siRgW_F0moEKz8o5XqAfDtmQIs8Bpcb0zT1QOTY
+Message-ID: <CAJESqkrv9RmimXn+6SUhRhih3qEsp_MQk0+BH2FZsFX-_uD1oA@mail.gmail.com>
+Subject: Ref list fails to load in gitk when stale tracking reference exists
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, Nov 15, 2025 at 3:22=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Jiang Xin <worldhello.net@gmail.com> writes:
->
-> >> Is `Co-developed-by` supposed to have a different meaning than the mor=
-e
-> >> common `Co-authored-by`?
-> >
-> > This is a very good question.
-> >
-> > **Background**
-> >
-> > At Alibaba Cloud, our development team uses a variety of AI coding tool=
-s,
-> > including Cursor, Claude Code, Gemini-CLI, Lingma, and Qoder, etc. To
-> > measure adoption=E2=80=94specifically, how many developers are using AI=
- coding
-> > tools and how much code is AI-generated=E2=80=94we needed a unified tra=
-cking
-> > mechanism compatible with all these tools. I chose to implement a git
-> > commit-msg hook that automatically detects the AI coding tool responsib=
-le
-> > for a commit based on environment variables at commit time.
->
-> In other words, addition of this is solely to help corporations like
-> Alibaba to measure which AI tools are used (and what correlation
-> there are between success rate of the patches and the tools that
-> generated them, etc..
->
-> What is in it for us?  What benefit are we getting in exchange for
-> tolerating these additional trailer lines in our log messages?
->
-> A few random thoughts about generated contents:
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Regardless of whether the trailer used in commits to identify AI
-coding tools was leaked intentionally or unintentionally, the
-following insights are extremely valuable=E2=80=94thank you!
+What did you do before the bug happened? (Steps to reproduce your issue)
+Open gitk and use F2 to list refs while remote-merged branch is in view
+that still exists locally (and has a tracking reference in .git/config).
 
-I=E2=80=99ll add the appropriate configuration to disable the commit-msg
-hook=E2=80=99s automatic modification of commit messages for git.git
-repositories, and I=E2=80=99ll review any AI-generated code more carefully,
-if present.
+What did you expect to happen? (Expected behavior)
+The list of refs opens, so I can see reachable tags.
 
---
-Jiang Xin
+What happened instead? (Actual behavior)
+An error pops up, dismissing it leaves the list of refs empty.
+
+What's different between what you expected and what actually happened?
+This error message:
+---------
+can't read "headids(remotes/origin/testing)": no such element in array
+can't read "headids(remotes/origin/testing)": no such element in array
+    while executing
+"commitinview $headids($upstreamofref($n)) $curview"
+    (procedure "refill_reflist" line 16)
+    invoked from within
+"refill_reflist"
+    (procedure "showrefs" line 44)
+    invoked from within
+"showrefs"
+    (command bound to event)
+---------
+
+remotes/origin/testing is a branch that existed upstream, but was
+since merged and deleted.
+The local one still exists (pending deletion/cleanup), but has a
+tracking reference
+in .git/config:
+---------
+[branch "testing"]
+    remote = origin
+    rebase = true
+    merge = refs/heads/testing
+---------
+
+Anything else you want to add:
+This wasn't the case with an earlier version of Git on a decommissioned machine.
+git version 2.42.0.windows.2 is known good (but 2 years old).
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.51.0.windows.1
+cpu: x86_64
+built from commit: 4d21a77b98af5cf479d8b6f863c2aa94257cd4e1
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: D:/git-sdk-64-build-installers/usr/bin/sh
+feature: fsmonitor--daemon
+libcurl: 8.15.0
+OpenSSL: OpenSSL 3.2.4 11 Feb 2025
+zlib: 1.3.1
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+uname: Windows 10.0 26100
+compiler info: gnuc: 15.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.exe
+
+
+[Enabled Hooks]
