@@ -1,69 +1,69 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5EB3064BD
-	for <git@vger.kernel.org>; Sat, 15 Nov 2025 18:54:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844A13093AE
+	for <git@vger.kernel.org>; Sat, 15 Nov 2025 18:54:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763232868; cv=none; b=matUq82O5tYyuTtlPaBSWcNXpnDlN2CJvv5oG5a6+W7GZPK86vSPvlECF1skaixMO2FQkyuKlsvOgYmvm2LLQx0Oc/dI8BN7KHygDHVsUxnkp2GVMndu6xauO/OXhwVVPSJXwikDFLxl4KGp/COwjWnXvCJPNf1d4Y4SDMLXJoM=
+	t=1763232870; cv=none; b=u5ghPHo+3ozijCr/qYNOxKhO+D+sNnoC9eqYClBO/XG59+N1vEe7Bm4qYW15vHKgtAcw3ngNSCU8nRoEPjJhgvMCfuIVOsbYaqyJLbk5EIbv0mPmaSTHIGtsdCAuv06FJzDJr4B2Y8uFnFmI6DExZfCdvWXt/qnzpOyyUBXZzDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763232868; c=relaxed/simple;
-	bh=n8dIKEUoSY0EVPSDhwhR5G5oeMNUfWLqnQ5R+pqv1Zg=;
+	s=arc-20240116; t=1763232870; c=relaxed/simple;
+	bh=UB2P3bxW4CsPPSbqJmkOWPSeIl8bULd/t3a+WZYhIyY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=kb/hBi6lpq2h/wfS4hRI83X82+1L8tso0BNmbROYo0NN/l1PEMBafRVjaZzCxZXbHtPXLnNDnnmGySt4Zbzk5oja+Vytl6qWpxVenzCIs1H1MhRvOcal2bQVfGN1AEq2AZflPQI2fc5LQjLj1zo2FHS91tkaC7IXiNaY43QaDr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UprnJHL1; arc=none smtp.client-ip=209.85.214.176
+	 MIME-Version:To:Cc; b=faO+aNM4ROeEgVOeJLY/2jxqqcufjJZA4SknrxntfjVEc8HntPybJTGjurm8uIJJuNnf+qv6HRNzR/m2UxDKDKNoRWYLDQhVdGr0OHrxh/uK+bI5Y8qsE2xyh8P3f37yZf/cDOUr3+/mwQ/DcnDDX9HHTGMyMGPPJSwfF92DYNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CGXmAV48; arc=none smtp.client-ip=209.85.210.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UprnJHL1"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-295548467c7so35682835ad.2
-        for <git@vger.kernel.org>; Sat, 15 Nov 2025 10:54:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CGXmAV48"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-7aa9be9f03aso2620264b3a.2
+        for <git@vger.kernel.org>; Sat, 15 Nov 2025 10:54:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763232866; x=1763837666; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1763232867; x=1763837667; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dx6ngw9LSL980fpYaKGOo/1v73rG/do+gqSrcjQOIH8=;
-        b=UprnJHL10CacYmv3SJbgBTChvVWE9VWLptodygLnqPE4/aq6q8AFhp6XmXRdypBzCb
-         +OcpmfB2xEpT2mY42yerHu2k+QQoqKA2ndV2Fjx57WIwV5nP7yNOHROgSVz/cwj8mMIQ
-         uYkk51k7rxtpcD+10jC2Q0pro5zQN/wCwKiQRfkElISjeuHziC78ils/1d8zs97yUb+1
-         dSUxxRyKHxWle/jzrN7EeuGCdQmerFg8jVQIVAOWZSUPzm5CvisKuLwOBL26g96KqIb7
-         +qvDW5lfw5qhMZILRtVrHxaAkbiqLcLTAT73Tlah7DsqjE1qO/M75yUhAFYU+Esv7YjN
-         ofaQ==
+        bh=HJGR0n27A+0uihjuFmc1mjqUhXALXA9EYVrq36+d9VQ=;
+        b=CGXmAV48RdSMXdcYf5kleohSNIA0u8E58gAX6DSPNknSWYBGUAjx9ItEYRLnhn6gwk
+         6u+jEOs1BhqXhzolkuSvzjFTEY5Ib0GuAz4XBtMOqXU+zccKveTtEKhGioj4cYenl6Pt
+         FPP/RTKuhSgRSpvVvmu5pBzpnmnCFzJYJwvPoZ5mOl59uNLX0DayRfHDt+WQfIrHhbvi
+         ZsFUhDQ+YiT+jQgLd1WBh6US71MtzVAsiLiiASelXHOLkTZGZk5Tg5SzDRwXoCl7d08T
+         Ag3u08Nn0KTZwIdDIVLfVVmtcfCqv2NfHD48HFV2B9cnThoNK6AhC1VY0lRJ/DscqJSw
+         ZSJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763232866; x=1763837666;
+        d=1e100.net; s=20230601; t=1763232867; x=1763837667;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=dx6ngw9LSL980fpYaKGOo/1v73rG/do+gqSrcjQOIH8=;
-        b=d5DUN7fvtFdhQSA7zLaRW68BphSbUqwy+/fWjLRtlGKQ4GJ0/8VixBtMs0sAvVjxZp
-         sECisEBQxkDgzopDMGWU92JlxLoQLOfHqmCv9xvtidEXk/M31in41OBSwUd6pJdQRGYe
-         AcpiUJJb+NMeUjy3jKIFYNkJNbDTpA+uN3chUbYsb+cRCSw4gn0ApH1zPooEB9jQkFNP
-         5Ig2pX3HMEFk6TbEgJRljU11fBakbtxGCem9vFB5q8OPcgWBcUI9x3UbPtemB0siI0zt
-         7A1MBKJIfjlR8hYOfw1s1yaAMzjNccuPwLU/O2WtXEgyRkuT+y+R9gi5VasQpwnjh0Co
-         3bNg==
-X-Gm-Message-State: AOJu0YyuOOVMouwSYRl3b4/M4F5craHbSCsKK7MKkbHWDC2mLEXKsYMa
-	GWcXZSTjEBZO297k4hR/IEvBuDQQZt+barqJH5wGLMjnbgS2qefWfFRvvDJF3qTe
-X-Gm-Gg: ASbGncv3uueqLyeUP5sayUnoFkmb5ROlLXafBFU2Bg0eEm9LgMFzpoqDi92X8ccLa/K
-	sNZQElycfUWWxspgcqKkPOcjruh7gPZmKLv99XsTd2DjV2bOtjxJyXZMutsZgA+dnpDAGX+tHOH
-	+Ihh8vKrPCa1s+dWAq1IdSV6XbynL85gHS1K9nm8DA0Bzv8YWwi2W7H91BXNzZYnAq3kTa8otFp
-	T9x24pLKFlkjEATg42tISNvdtWw6pmm1xg46gFvjblGij2llf0haAgwD6dZvVlov6mXgWXXV3k8
-	s3xhcgqtcfXdJXYC6dCvRpoMCaP2nxHHsWYCeWWlbBovIFdXU37seSsAGr/DEQChfS9AgjRDgf6
-	CSl5ILPrKjWZbxiOpbIDmPq5tSDmhirCpDMacxZ4xOPEVv8dxpSHyKh14PKQMg7U7RAETquFfY1
-	DzoQ==
-X-Google-Smtp-Source: AGHT+IHgktJDMJUwGNHcmOCda8SZpqKt2n/qLIczLwlWGysQ9n29f9ogw73MACmbtbTWGj9+cTAXUg==
-X-Received: by 2002:a05:7300:ae1c:b0:2a4:3593:9698 with SMTP id 5a478bee46e88-2a4abb330b7mr2910843eec.21.1763232865912;
-        Sat, 15 Nov 2025 10:54:25 -0800 (PST)
+        bh=HJGR0n27A+0uihjuFmc1mjqUhXALXA9EYVrq36+d9VQ=;
+        b=cL6GsnU4FRVkiNvRtFbT8NMsiBt6OqqAI8ByinFe/9GUiE0lw0K7kdYpJjoyjSIkYm
+         /xT/PYfF/JvCHu5C4gyWlwqUkzNj3nMP8zSyBILJpxhMqsT9eshsgcQ9NGkcz4MfF1UU
+         65slTWzUjQac2fk/kBgTbyo/Zjc+2iyQTmYdNj4eTVP/dyCCjOgZuS9oqDDbSPEs8gfq
+         ebRySYl+afdoS0csXGKW9siymQlNGBPDSlNfIArwTBrUQsRgZLK8V0fq4jILVmr2Uyuq
+         U4Kn4BN9nwrMOnwhyiqkWpCyJFl5wxQHCz23J9z4uX7Jnu86hlq5mrDk8A/mdOKkeQdN
+         802Q==
+X-Gm-Message-State: AOJu0YwLe0WKOiWyHRsU3aungOA2yxkYjSwaiYgUHLFrPu9iZzRBAptK
+	YFUpWO/op7/5yJKsSzJb7v3AeDJrZYECw2wlwWYZC2fnam07LcBRL+9No2rk2+iL
+X-Gm-Gg: ASbGncuc1+ErBeBe3FwO+o12psQoQtfzCwzxnjYYdPAdUbjm4VhUPwtuLfoiwKlkpVQ
+	nd/Mle8A5dNbc2+conYi1PxQRMlK7SPwoCDwIbG0FDsjBKGFvNk8V73ODDR21L9FBwiZnAN0j8E
+	J7kBV32mg3+ANaeaX5FF8MUKH9VjH+8UxsxjEBCIGGBMNIW0zyZWXNXLk+cPS8/Dp6XlmR/aWZk
+	0AD2ueC6H0tyEVVJ9Pu5Hkgs8IT+T4qXygj+FKibB6sl8Ppbjp6Y8I7rspSOiuJ8+0n59Gp34Bq
+	11cvrfxVd2f86kNHCRr6u7qGAxNmz3yd0OxcqKK9oeQE2YVCNWFs9hgfNPzp7pJ7No951tiLa7f
+	Ecqc/uQ+EeeueUWTuJcdP3IeD4+JAo6x5sfpLTzNH+4c7oSaDuyRUPnnJ3lyghuwTnZx6BbikJh
+	pSH+X87HS+pCMD
+X-Google-Smtp-Source: AGHT+IExkiYd3vjFswzBqLjBT8jlpUIXEndc6Aoic29dvlZ3zFAfk8ggMSS6YlmVY3WazV8rHs9RbA==
+X-Received: by 2002:a05:7022:3f88:b0:119:e56b:91f4 with SMTP id a92af1059eb24-11b41310049mr2383067c88.37.1763232867271;
+        Sat, 15 Nov 2025 10:54:27 -0800 (PST)
 Received: from [127.0.0.1] ([68.220.58.240])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2a49db4a36asm19200551eec.5.2025.11.15.10.54.25
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11b0608860fsm20605900c88.5.2025.11.15.10.54.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Nov 2025 10:54:25 -0800 (PST)
-Message-Id: <2ebccd3096ba8f36f9ab166b674353890191d8bc.1763232863.git.gitgitgadget@gmail.com>
+        Sat, 15 Nov 2025 10:54:26 -0800 (PST)
+Message-Id: <af5861933fe4f2f4aa4c81e080a035ce5cd45c34.1763232863.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2101.git.git.1763232863.gitgitgadget@gmail.com>
 References: <pull.2101.git.git.1763232863.gitgitgadget@gmail.com>
 From: "Kiril Ivanov via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 15 Nov 2025 18:54:21 +0000
-Subject: [PATCH 1/3] t9903: shorten setup using test_commit
+Date: Sat, 15 Nov 2025 18:54:22 +0000
+Subject: [PATCH 2/3] t9903: add upstream indicator tests
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,53 +79,100 @@ Cc: Kiril Ivanov <ivanovkirilg@gmail.com>,
 
 From: Kiril Ivanov <ivanovkirilg@gmail.com>
 
+The upstream indicator currently has no test coverage.
+
+Since GIT_PS1_SHOWUPSTREAM supports various options, make these tests
+parameterized with a matrix for expected results (ahead/behind/etc).
+
 Signed-off-by: Kiril Ivanov <ivanovkirilg@gmail.com>
 ---
- t/t9903-bash-prompt.sh | 27 +++++++++++----------------
- 1 file changed, 11 insertions(+), 16 deletions(-)
+ t/t9903-bash-prompt.sh | 59 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
 diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index 637a6f13a6..7628bc10fe 100755
+index 7628bc10fe..3997012d1c 100755
 --- a/t/t9903-bash-prompt.sh
 +++ b/t/t9903-bash-prompt.sh
-@@ -18,26 +18,21 @@ c_green='\001\e[32m\002'
- c_lblue='\001\e[1;34m\002'
- c_clear='\001\e[0m\002'
- 
-+# (main)                     (b1)
-+# initial (t1) - second-b1 - third-b1 (t2)
-+#             \
-+#              second-b2 - another-b2 - yet-another-b2
-+#                                       (b2)
+@@ -25,6 +25,8 @@ c_clear='\001\e[0m\002'
+ #                                       (b2)
  test_expect_success 'setup for prompt tests' '
  	git init otherrepo &&
--	echo 1 >file &&
--	git add file &&
--	test_tick &&
--	git commit -m initial &&
--	git tag -a -m msg1 t1 &&
-+	test_commit --annotate initial file contents1 t1 &&
++	git init --bare origin.git &&
++	git remote add origin origin.git &&
+ 	test_commit --annotate initial file contents1 t1 &&
  	git checkout -b b1 &&
--	echo 2 >file &&
--	git commit -m "second b1" file &&
--	echo 3 >file &&
--	git commit -m "third b1" file &&
--	git tag -a -m msg2 t2 &&
-+	test_commit --no-tag second-b1 file &&
-+	test_commit --annotate third-b1 file contents2 t2 &&
- 	git checkout -b b2 main &&
--	echo 0 >file &&
--	git commit -m "second b2" file &&
--	echo 00 >file &&
--	git commit -m "another b2" file &&
--	echo 000 >file &&
--	git commit -m "yet another b2" file &&
-+	test_commit --no-tag second-b2 file &&
-+	test_commit --no-tag another-b2 file &&
-+	test_commit --no-tag yet-another-b2 file &&
+ 	test_commit --no-tag second-b1 file &&
+@@ -35,6 +37,7 @@ test_expect_success 'setup for prompt tests' '
+ 	test_commit --no-tag yet-another-b2 file &&
  	mkdir ignored_dir &&
  	echo "ignored_dir/" >>.gitignore &&
++	git push --set-upstream origin main b1 b2 &&
  	git checkout main
+ '
+ 
+@@ -515,6 +518,62 @@ test_expect_success 'prompt - untracked files status indicator - not shown insid
+ 	test_cmp expected "$actual"
+ '
+ 
++################################################################
++# Show Upstream
++options=(          short  verbose   'verbose name'    )
++expected_equal=(   ' ='   '|u='     '|u= origin/main' )
++expected_ahead=(   ' >'   '|u+1'    '|u+1 origin/main')
++expected_behind=(  ' <'   '|u-1'    '|u-1 origin/b1'  )
++expected_diverged=(' <>'  '|u+1-1'  '|u+1-1 origin/b1')
++
++for i in ${!options[@]}
++do
++	option=${options[$i]}
++
++	test_expect_success "prompt - upstream status indicator - $option - equal" '
++		printf " (main${expected_equal[$i]})" >expected &&
++		GIT_PS1_SHOWUPSTREAM=$option &&
++		test_when_finished "sane_unset GIT_PS1_SHOWUPSTREAM" &&
++		__git_ps1 >"$actual" &&
++		test_cmp expected "$actual"
++	'
++
++	test_expect_success "prompt - upstream status indicator - $option - ahead" '
++		printf " (main${expected_ahead[$i]})" >expected &&
++		GIT_PS1_SHOWUPSTREAM=$option &&
++		test_when_finished "sane_unset GIT_PS1_SHOWUPSTREAM" &&
++		test_commit --no-tag ahead &&
++		test_when_finished "git reset HEAD^" &&
++		__git_ps1 >"$actual" &&
++		test_cmp expected "$actual"
++	'
++
++	test_expect_success "prompt - upstream status indicator - $option - behind" '
++		printf " (b1${expected_behind[$i]})" >expected &&
++		GIT_PS1_SHOWUPSTREAM=$option &&
++		test_when_finished "sane_unset GIT_PS1_SHOWUPSTREAM" &&
++		git checkout b1 &&
++		test_when_finished "git checkout main" &&
++		git reset HEAD^ &&
++		test_when_finished "git reset @{u}" &&
++		__git_ps1 >"$actual" &&
++		test_cmp expected "$actual"
++	'
++
++	test_expect_success "prompt - upstream status indicator - $option - diverged" '
++		printf " (b1${expected_diverged[$i]})" >expected &&
++		GIT_PS1_SHOWUPSTREAM=$option &&
++		test_when_finished "sane_unset GIT_PS1_SHOWUPSTREAM" &&
++		git checkout b1 &&
++		test_when_finished "git checkout main" &&
++		git reset HEAD^ &&
++		test_when_finished "git reset @{u}" &&
++		test_commit --no-tag ahead &&
++		__git_ps1 >"$actual" &&
++		test_cmp expected "$actual"
++	'
++done
++
+ test_expect_success 'prompt - format string starting with dash' '
+ 	printf -- "-main" >expected &&
+ 	__git_ps1 "-%s" >"$actual" &&
 -- 
 gitgitgadget
 
