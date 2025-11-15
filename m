@@ -1,151 +1,116 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374353594F
-	for <git@vger.kernel.org>; Sat, 15 Nov 2025 03:41:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D752581
+	for <git@vger.kernel.org>; Sat, 15 Nov 2025 05:29:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763178110; cv=none; b=HwSJRdO5RYkD+ArRhfktzjXVrtZrgFDmWWEr1M6p6EdbSgGYuxLCk4qvCM5VH3liR3XVXix+TrLLFcFu4Rh4NLpZHBZSlm6C97bSORFLnIGA4aQqPLI5j0pJzKDU+sJ7rmHvJJWv5Km2BSp1HxXznGNyUE2jsuM8cjhxFlkCIMQ=
+	t=1763184573; cv=none; b=pmb8whteAJDxIveKHc+O2iYZP4RoMV/qxHpAtLS40svmCh04lVpjPeI9aXrKfUYaP+5I3tUd4kxHEcVNw/HYDBcAF5bMe/AUHF7uZwHhlL5h0rG36Fr2cafK24mqHHXiTfUR2i0IOUOmEAzgt8xs+bYLNzgumBuu0TK0/IpXt+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763178110; c=relaxed/simple;
-	bh=uvBX3vBv3gWINpMc62wJ0deRGFpxnBjlqrJe8lgIItE=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=acabUpNhxVZYZkQ4SoXBoWFopjrs984HeZSRoRiNMxOqjE/gr8KonrGObbMdzQ4qBdCtwyCgDLIfQZgPSFd18sNmSKcgVPkIiKGSZXsNJtB9lHRuI92IJQrWjXCYHo1v4DQqErH8+GA5CIFfjsWRAL5bDIz39e5TkMiF1/YYIJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lP9dXggk; arc=none smtp.client-ip=209.85.160.177
+	s=arc-20240116; t=1763184573; c=relaxed/simple;
+	bh=llz6b6jVLCd5xo9CagYzEOZONTt1jXj0yUJn50Uhcos=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SAbYUWyFxHBsg/tvy4bKkDO0nlAx3BKYgWiDRO8gQAZpQvQdSKYJkAOu2O3JdP+0Ypx3kGGVh8o4++3ql+5pFIISn/IhBvdAkY0hkvVe+F1V1+HW2sS6MU2Zf+Fup1EcW4y4V8w7BYytcyhAdo2tNAoGA+IaJNg8BGNFOEI+l40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PK7y+V4t; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lP9dXggk"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4ed66b5abf7so40824151cf.1
-        for <git@vger.kernel.org>; Fri, 14 Nov 2025 19:41:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PK7y+V4t"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-64080ccf749so3763545a12.2
+        for <git@vger.kernel.org>; Fri, 14 Nov 2025 21:29:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763178107; x=1763782907; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=n8ncK1CNve2/SrIv9FioyCzvtwqEkJiwSnWE7RPTcrM=;
-        b=lP9dXggka/UmJ+o3yeoxXPqxpcXnJdwG7AkLfuI/U4aN/R59KPo5IO5BS/nPoa9LvY
-         qv7iFv44l6MYQYByylHT279XzlnA478ZsaxL2n6QYNlvAmyHv9qFTNRC9YNpSKQxwsGY
-         IceA+3Ts8llKbMIILDRlOmVdSKCuycWg7oczCKR1I6py10elmsZzE1911EiXEDz0QfVX
-         uuAD8EYCy5lxCp01wY+nzLSOzth5GL0214T2ChLIAu36wSCfb9+k8vsFa27i9ZfsCf+n
-         TCAp7nV9ypOektFxJvKIfh14VCxkSRd8C0ZQbIdnEhOzTCHPYudnnia0tYkgR/Ex/lSz
-         wDuQ==
+        d=gmail.com; s=20230601; t=1763184570; x=1763789370; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ol57Xi6UpPrWCaX837j3QPpLpn5QTLVlsikxGzb1GkA=;
+        b=PK7y+V4tYQGHBCNVE4uZXVJmvY+zXqAUfKjt8+Zn0nnfDJOlzTjV9G687mQidSQQLY
+         jQnEAhoBXIXIrW17fXV+yYjqTpXwysSEqoDHwii1JQ/QI2RSCohUS8e+YWvKxohuzGSo
+         FiFxhGs69Tfoaom235nER3oQLpT/1+vUnPEp7zP10gejzYws4jt42hZOr9vINwFnfusA
+         P0SBlDZy45d7PWgpn+la0Q5PJmUmrmG/Bl03C655PkrXAP4r4I1evTgjUcEl9JIx6wNW
+         tBJXIqkchX3O0XZ+aXWQRS/AYmTabjpRbKnQcHxiFEbSegVkvuX146opvz1Xo1UDb0qr
+         9c/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763178107; x=1763782907;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=n8ncK1CNve2/SrIv9FioyCzvtwqEkJiwSnWE7RPTcrM=;
-        b=WBjRg0lVQAFFao+xxEclZcXJ7+iQf2bxWIw6iah7pPkmi5PTg/+yygDcrYd+/AmxvX
-         rjxRRiFoBUGIxqkGAbxVCRsyPh8wkQ2CRHtSzjl33LBPffzigHwsUNzRom/iL6BPP6ik
-         Effgk2BgoRzJlZUJxz0CbUflSfa7GGQb5tTFI9fhQDm+hK2nLmICqSNPEvsOaAp2Cl7d
-         Db1r47fnKI81TP5Ur0IxgISXaEfagu4A39CWpmad2YCRPIzfAD3MFptB5rlc2qod6MB5
-         0WAPfbKOFNlIs1Nywlr0LDoyO6GVXZ7DoMxU+uQrYok5ENJBF2N7QkAp+tOTMvbRsaaC
-         UZTA==
-X-Forwarded-Encrypted: i=1; AJvYcCVcIZjY4VUd/m07DAzHRdn1oaFOLlz16ErbMKTCof9yf1QJSCWKwgItRRqEYPnokNfmcdg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzqPVxryPc0vtKNu+k4L8sLeINDI9o4CY38Lh1CHzrLmeifjx1J
-	SLk1V+VDPFJLZyRumRtw+1tI5Arkp9mTmxU1mImliAxIFVlaS82xQ53Q
-X-Gm-Gg: ASbGncsNvSrDNWmFWHPJuKtR2lMsSmHPT+7OD+QYdiSkcMDsRKFbzES0CvcLoW9kF1m
-	kRo/Da19Y4vh4xXJ1DZVRD1PGHW/qOZt88iqSh/tctu60nGi4jFCWIXvFTQ9/9GAIzrvLacmkWF
-	HhP3KeM5B1nZeUfapcZ8XrH8mXxag7qsG/BCdTMEzKAEkEiM5ttW8kTqh1opJAp+68WVjTNU+St
-	h0x6lFzKMNASkLe5rAzwthBhTbRmh9ST3UhsrY99fR/aIvJE40Vawsbg9gXEghRUJmGkfvaU9jk
-	3wTyg8ecb6I9LPvnfsp3YgdguwY4hbklB46lTcXaKltp5Ij2phGqDCDWu5Jqge3XqKCSlVjnrXu
-	pa2FPRhS+DDwrUgDJPmf5K/+pxcxGQPEuAe9p6VmJSR126zE6rgU9467c7PtUa3pdd+nX1n1PX/
-	Qq9d7N51BFiqmzt/bun2w13aTsmg0Y
-X-Google-Smtp-Source: AGHT+IEVII4NpS6BmDg13Tbb2GbNIvobYBDEnTrrg16tzVVx/t5GuRKDp3Ek/RauXmGhV04WxxYF+Q==
-X-Received: by 2002:a05:622a:1818:b0:4b7:ad20:9393 with SMTP id d75a77b69052e-4edf206c3d3mr82080341cf.4.1763178107362;
-        Fri, 14 Nov 2025 19:41:47 -0800 (PST)
-Received: from smtpclient.apple ([2603:6081:3b00:54da:7c25:b965:6793:5546])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ede86b3020sm42214191cf.6.2025.11.14.19.41.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Nov 2025 19:41:47 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        d=1e100.net; s=20230601; t=1763184570; x=1763789370;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ol57Xi6UpPrWCaX837j3QPpLpn5QTLVlsikxGzb1GkA=;
+        b=bcwbuUh+DPn5GeznUSJ7SWvROJEryfzM6cbyW8AynnYzmS9AxndY2uvTK8F/3utSIA
+         jly0AA+KbVJQgnOhoQAKHYoHEepXmZTi6Ly5W+cR4ssXzgQBALUaeU62p++Z0H08fQ/i
+         TGeNpjPf6zSqmRFbBRQOtfS1keXreZD5NkVzbUNTndBeHR6s5sNKqzXIBnzihOyscZJI
+         c58v4WZeUQ9ZfESaJl3KOX/GC7Tb6qKFF84tSSxO15Um4f1w4pVN5pSZO76TAbdQuxBo
+         zqi+6YjzFmw1nDzw+DnPkRc7XmsNcydHPGissjZrgW1sf26778BSpc6Ypeqt896MUqOD
+         smBA==
+X-Forwarded-Encrypted: i=1; AJvYcCXp5App3GWG+LFlSsf9k2TCJz5SZtjUKbA0sOQol/6GVSk9/0fkMt5uDIjCWYmCrsgu4KY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz2S9gip74n8wsJLofYBBCWH1kJ+i8j4sRv9LPDZgkw3hzf4uXc
+	K4aliGW/eapOufcUkq3BSqnL2DdZTyqhz4jPPftk1k3j+/Gavy9M/YHFeek7qefNHlwXYfeXsud
+	uyPgnGgYQ31XxjGN3Pwqb4t6FuKWpeD5MZW2s1L3LWPVU
+X-Gm-Gg: ASbGncspdzm404+yMeIJqCA8XsIufSvV3J5FAdHBXaEC4jZYCwidb6z1GnhhbPfHnaQ
+	AOeawm3cAlxCWkMMoMizcOX6fB4hmlZPSpfL+a4Xxf+6wXBficNxMRLQ5R8DaL3kC7gvGcZvmWO
+	Nm6FkZnuouMEGEQ2JzdMohBuqL4YpmOO7AC2Xv7hRICQCUchkMZXlkEhO5tIBkLlezakEREhGgf
+	teHKlBBejpplux25EVVrYHlzgH7N0eiRgiXyigWW78CosiWQv0Jdc95BjxaitpyxHsIYJkjDtLL
+	FyjUC+H5NUsquw8J/8D9dLc=
+X-Google-Smtp-Source: AGHT+IEc0U+hDBYwlks4PgI0EvGQQ+3dECbsj1FvlcIi+xYCUR3sc98b2O4oAsZMCQBBWvvbiOKf2dV2vgiQKS6FIr0=
+X-Received: by 2002:a05:6402:24c5:b0:640:93b2:fd1e with SMTP id
+ 4fb4d7f45d1cf-64350e8f2acmr4405794a12.17.1763184569981; Fri, 14 Nov 2025
+ 21:29:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v4 01/10] doc: define unambiguous type mappings across C and Rust
-Date: Fri, 14 Nov 2025 22:41:36 -0500
-Message-Id: <5A740EE4-D545-4828-8D38-E0E5E9F87A3E@gmail.com>
-References: <23b7fd8a-2b50-4da3-bc8a-3727ee99654f@ramsayjones.plus.com>
-Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood123@gmail.com>,
- Chris Torek <chris.torek@gmail.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>
-In-Reply-To: <23b7fd8a-2b50-4da3-bc8a-3727ee99654f@ramsayjones.plus.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
+ <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com> <CAOLTT8TPrNTCjHwJfdeei+t8+7AxGC-dvbq-4oHJ=qNn_c+-jQ@mail.gmail.com>
+ <7d99f00c-3602-4b28-8efd-4780cad41ca8@gmail.com> <CAOLTT8TLEsSAcfUomoActrUSzje5mQNE7EweXh8WtY3sOfzfkg@mail.gmail.com>
+ <xmqqqzu3qi43.fsf@gitster.g>
+In-Reply-To: <xmqqqzu3qi43.fsf@gitster.g>
+From: ZheNing Hu <adlternative@gmail.com>
+Date: Sat, 15 Nov 2025 13:29:18 +0800
+X-Gm-Features: AWmQ_bl61Kar5shaxy1RmHYnFNAgb1ROnP9OiN0AP_PvhOlJIcsEmwrSkxmtGpI
+Message-ID: <CAOLTT8RSN-72gVXDS-zrr=7wW4HU=CL6acyDx_UXnvo4c5MaRA@mail.gmail.com>
+Subject: Re: [PATCH] commit: add --committer option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: phillip.wood@dunelm.org.uk, 
+	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2025=E5=B9=B411=E6=9C=8813=E6=
+=97=A5=E5=91=A8=E5=9B=9B 01:24=E5=86=99=E9=81=93=EF=BC=9A
+>
+> ZheNing Hu <adlternative@gmail.com> writes:
+>
+> >> I'm afraid I don't quite follow. If you are amending existing commits =
+to
+> >> fix them up after you have corrected your configuration then they will
+> >> have the correct committer automatically when you run "git commit
+> >> --amend --author=3D..." to correct the author. If you are committing
+> >> before you have realized that user.{name,email} are misconfigured then=
+ I
+> >> don't see how "--committer" helps because you have not yet realized
+> >> anything is wrong.
+> >>
+> >
+> > You're right that after realizing the misconfiguration and correcting t=
+he
+> > repository's user.name and user.email, running `git commit --amend` wil=
+l
+> >  fix the committer information, but the author remains unchanged. Users
+> > then need an additional `git commit --amend --author=3D...` to fix the =
+author,
+> > which does work but requires an extra step.
+>
+> Isn't it more like "You need to run with --author to correct the
+> authorship by amending the commit *anyway*, but while doing so, the
+> committer information will automatically be corrected"?  As I said
+> earlier in a separate message, the author and the committer are not
+> symmetric, so having "--author" does make sense in the above picture,
+> while "--committer", as Phillip points out, much less.
+>
 
-> Le 14 nov. 2025 =C3=A0 22:09, Ramsay Jones <ramsay@ramsayjones.plus.com> a=
- =C3=A9crit :
->=20
-> =EF=BB=BF
->=20
->> On 14/11/2025 10:36 pm, Ezekiel Newren via GitGitGadget wrote:
->> From: Ezekiel Newren <ezekielnewren@gmail.com>
->>=20
->> Document other nuances when crossing the FFI boundary. Other language
->> mappings may be added in the future.
->>=20
->> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
->> ---
->> Documentation/Makefile                        |   1 +
->> Documentation/technical/meson.build           |   1 +
->> .../technical/unambiguous-types.adoc          | 224 ++++++++++++++++++
->> 3 files changed, 226 insertions(+)
->> create mode 100644 Documentation/technical/unambiguous-types.adoc
->>=20
-> [snip]
->=20
->> +=3D=3D Character types
->> +
->> +This is where C and Rust don't have a clean one-to-one mapping.
->> +
->> +A C `char` and a Rust `u8` share the same bit width, so any C struct con=
-taining
->> +a `char` will have the same size as the corresponding Rust struct using `=
-u8`.
->> +In that sense, such structs are safe to pass over the FFI boundary, beca=
-use
->> +their fields will be laid out identically. However, beyond bit width, C `=
-char`
->> +has additional semantics and platform-dependent behavior that can cause
->> +problems, as discussed below.
->> +
->> +C comparison problem: While the sign of `char` is implementation defined=
-, it's
->> +also signless (neither signed nor unsigned). When building with
->=20
-> Hmm, this sets my teeth on edge. The C char type is not 'signless' (whatev=
-er that is
-> supposed to mean), it's 'sign-ness' is implementation-defined behaviour. T=
-his means
-> that it is 'unspecified behavior where each implementation documents how t=
-he choice
-> is made'. In particular, it has to document:
->=20
->  "Which of signed char or unsigned char has the same range, representation=
-, and
->   behavior as "plain" char (6.2.5, 6.3.1.1)."
->=20
-> (it is still a distinct type, however). Note that some compilers even allo=
-w you to
-> specify which you want for a given compilation! (see gcc options -f[un]sig=
-ned-char
-> and their inverse 'no' options!)
->=20
->=20
-> ATB,
-> Ramsay Jones
-
-This was discussed briefly in replies to v2=E2=80=99s 2/10, where Ezekiel sa=
-id that DEVELOPER=3D1 warned about sign issues whether char was compared to i=
-nt or unsigned. [=46rom mobile I cannot reliably paste the message ID or lin=
-k and preserve a plain-text email, apologies for the oblique reference.]=
+Well, I admit that perhaps the design philosophy of author/committer is
+inconsistent (which has caused too much trouble), but for users, a consiste=
+nt
+parameter interface is easier to understand and use.
