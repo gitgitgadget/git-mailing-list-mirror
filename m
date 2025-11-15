@@ -1,116 +1,207 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D752581
-	for <git@vger.kernel.org>; Sat, 15 Nov 2025 05:29:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E702772D
+	for <git@vger.kernel.org>; Sat, 15 Nov 2025 06:33:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763184573; cv=none; b=pmb8whteAJDxIveKHc+O2iYZP4RoMV/qxHpAtLS40svmCh04lVpjPeI9aXrKfUYaP+5I3tUd4kxHEcVNw/HYDBcAF5bMe/AUHF7uZwHhlL5h0rG36Fr2cafK24mqHHXiTfUR2i0IOUOmEAzgt8xs+bYLNzgumBuu0TK0/IpXt+0=
+	t=1763188423; cv=none; b=f6//sRKD/A7vQp4e95SAFGvqwwOr9lzkeXf4xTGp2MdfGhQwY1Bz0YRxCI834WJIL9FE+6qh+hoAhZNDOxEWSRXo4C2QILgZUl+TcAjqQF6/D4omZjb45S7gOJvIEDIFhN0jVgO1DZ0xpmjifx9nhcnogaOt2m9zUL73XlnzjXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763184573; c=relaxed/simple;
-	bh=llz6b6jVLCd5xo9CagYzEOZONTt1jXj0yUJn50Uhcos=;
+	s=arc-20240116; t=1763188423; c=relaxed/simple;
+	bh=MYrMe0I0hpriEkZVWcqiRk2d4bVjhH3dkngDWTsCHO4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SAbYUWyFxHBsg/tvy4bKkDO0nlAx3BKYgWiDRO8gQAZpQvQdSKYJkAOu2O3JdP+0Ypx3kGGVh8o4++3ql+5pFIISn/IhBvdAkY0hkvVe+F1V1+HW2sS6MU2Zf+Fup1EcW4y4V8w7BYytcyhAdo2tNAoGA+IaJNg8BGNFOEI+l40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PK7y+V4t; arc=none smtp.client-ip=209.85.208.53
+	 To:Cc:Content-Type; b=Q9iXcU+1oyA5bBIY9goqksNh0BApf4YPesM6WvEpAljk9pkMfQSeLRqwcgTBpYZjBjEesS9bCzlik8T2MtXaAAYicwK4Anisw1UV/jWPjArYLCOeiMMmw5015a5S66KUeLhuWGq6XDsrDTMra/gNLKV312s9K8uCGLOvo86aMcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VNZOuIP9; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PK7y+V4t"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-64080ccf749so3763545a12.2
-        for <git@vger.kernel.org>; Fri, 14 Nov 2025 21:29:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VNZOuIP9"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-b7355f6ef12so429100466b.3
+        for <git@vger.kernel.org>; Fri, 14 Nov 2025 22:33:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763184570; x=1763789370; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1763188420; x=1763793220; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ol57Xi6UpPrWCaX837j3QPpLpn5QTLVlsikxGzb1GkA=;
-        b=PK7y+V4tYQGHBCNVE4uZXVJmvY+zXqAUfKjt8+Zn0nnfDJOlzTjV9G687mQidSQQLY
-         jQnEAhoBXIXIrW17fXV+yYjqTpXwysSEqoDHwii1JQ/QI2RSCohUS8e+YWvKxohuzGSo
-         FiFxhGs69Tfoaom235nER3oQLpT/1+vUnPEp7zP10gejzYws4jt42hZOr9vINwFnfusA
-         P0SBlDZy45d7PWgpn+la0Q5PJmUmrmG/Bl03C655PkrXAP4r4I1evTgjUcEl9JIx6wNW
-         tBJXIqkchX3O0XZ+aXWQRS/AYmTabjpRbKnQcHxiFEbSegVkvuX146opvz1Xo1UDb0qr
-         9c/w==
+        bh=xfJwRO/a29mbMYZt/xEzeUyz2hhfKwRG8gIqwatcfYU=;
+        b=VNZOuIP9Tk3NKkaOcnY8hLGhdrQxkPJYctrhG4zwNR/+D6APV02UWCXTuLr5mI/Lo8
+         zIlWqFiX+rpfcBfvovxwVWf191V8YKqimVvoHZfhy83qHJeWdrWHLdKwCEfbO5s2XLeY
+         Ic5p/U+e8GvkohRwfKhlL6IgEhjuoHrsxN8thl8ykmnTolYEhJ5FDz/axgleZcrdkJMs
+         k7zfXZAQoRmzNXGDNLf0bvkKxzjAJqpGaMGHAdBHpkRtyWtGGqR29ho+UrfJgG6ZYAt1
+         PycIHSlp6HYYeWNu07kScI4nAiOZw1kxkNLPfZEY9fVthgiqo+4NEQtuXGDowA+brYFQ
+         j5Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763184570; x=1763789370;
+        d=1e100.net; s=20230601; t=1763188420; x=1763793220;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ol57Xi6UpPrWCaX837j3QPpLpn5QTLVlsikxGzb1GkA=;
-        b=bcwbuUh+DPn5GeznUSJ7SWvROJEryfzM6cbyW8AynnYzmS9AxndY2uvTK8F/3utSIA
-         jly0AA+KbVJQgnOhoQAKHYoHEepXmZTi6Ly5W+cR4ssXzgQBALUaeU62p++Z0H08fQ/i
-         TGeNpjPf6zSqmRFbBRQOtfS1keXreZD5NkVzbUNTndBeHR6s5sNKqzXIBnzihOyscZJI
-         c58v4WZeUQ9ZfESaJl3KOX/GC7Tb6qKFF84tSSxO15Um4f1w4pVN5pSZO76TAbdQuxBo
-         zqi+6YjzFmw1nDzw+DnPkRc7XmsNcydHPGissjZrgW1sf26778BSpc6Ypeqt896MUqOD
-         smBA==
-X-Forwarded-Encrypted: i=1; AJvYcCXp5App3GWG+LFlSsf9k2TCJz5SZtjUKbA0sOQol/6GVSk9/0fkMt5uDIjCWYmCrsgu4KY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2S9gip74n8wsJLofYBBCWH1kJ+i8j4sRv9LPDZgkw3hzf4uXc
-	K4aliGW/eapOufcUkq3BSqnL2DdZTyqhz4jPPftk1k3j+/Gavy9M/YHFeek7qefNHlwXYfeXsud
-	uyPgnGgYQ31XxjGN3Pwqb4t6FuKWpeD5MZW2s1L3LWPVU
-X-Gm-Gg: ASbGncspdzm404+yMeIJqCA8XsIufSvV3J5FAdHBXaEC4jZYCwidb6z1GnhhbPfHnaQ
-	AOeawm3cAlxCWkMMoMizcOX6fB4hmlZPSpfL+a4Xxf+6wXBficNxMRLQ5R8DaL3kC7gvGcZvmWO
-	Nm6FkZnuouMEGEQ2JzdMohBuqL4YpmOO7AC2Xv7hRICQCUchkMZXlkEhO5tIBkLlezakEREhGgf
-	teHKlBBejpplux25EVVrYHlzgH7N0eiRgiXyigWW78CosiWQv0Jdc95BjxaitpyxHsIYJkjDtLL
-	FyjUC+H5NUsquw8J/8D9dLc=
-X-Google-Smtp-Source: AGHT+IEc0U+hDBYwlks4PgI0EvGQQ+3dECbsj1FvlcIi+xYCUR3sc98b2O4oAsZMCQBBWvvbiOKf2dV2vgiQKS6FIr0=
-X-Received: by 2002:a05:6402:24c5:b0:640:93b2:fd1e with SMTP id
- 4fb4d7f45d1cf-64350e8f2acmr4405794a12.17.1763184569981; Fri, 14 Nov 2025
- 21:29:29 -0800 (PST)
+        bh=xfJwRO/a29mbMYZt/xEzeUyz2hhfKwRG8gIqwatcfYU=;
+        b=mz4UvmfF4/7dO6GhzOvWLG/SfW2jJpMbav/IML9k9NUfTosRCsyoVrbNMwBX3NvSpD
+         LBoZWTCMg9Wz3i81G3qCcMFiK0rSIyaByTjXF9A7b9M02B2EqDIteo63iHLjTCCVNWvb
+         kPZjwiX7Y5I+Opqkbr376DlnK9yQSSfd0aHnYTXAEs/iPCEPxVQjxfdZ8bmu4Cx9k5wA
+         8yGTzulAGyn6YluSqhJjt0mXLuhwm3SQP7lCSdZoYS+iJr+0/h6R2xdh7ghmAK4I/wQK
+         4QZYlV/QvbPMl81FSELKggP1v6y6R8XGbf0hlU39sMSo+gwnwT9kNzuVwp80Ih0UeDWS
+         BqMA==
+X-Forwarded-Encrypted: i=1; AJvYcCVbbnwksLKO2z1YnxgUo/c3n/9BOLb4h0DXRmyTBCy5dQqJ1G2MwWuVlWS7egum1SdxNyw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzquI68a1ZjFgqqCESJKI4XDL13jU0MsBEVqMopvd2zqnuzMOl8
+	osQ/tABG29+NhP4KZul5UvunHWVRWo1HbgCPvDGNfP35kxLdZnQ/XUqGmjrbg+qQBnKjoWI2zYw
+	/iRTStQdF9VpfI2SzQe4edxrTEd78qSo=
+X-Gm-Gg: ASbGnctoWnLi8f/xN39TwkxHW0nsM0Vak+mmCsZKURYBb8fAFnDsPSktKzQCr364dGq
+	FoWV+04XkDUFLwUdKlC4XheFEAbrFtDsvnKCFhW3KuxwA4IWQL9CNGpbvBDAYR5YB0VTTXbHz7S
+	Q8HZrkYCcIOxfhwYfXXP1kOF4k6wZjWH3a93i9zVIQA6OhgGqT/4uC0DRUJ3xxZVYQ7fwMEdvtS
+	mIAu+hcc6WYgAofowxSprlJTrT1K6w1ylH/0FcTsdYeSYe1wHIL9NEVS3CCXohpF3hM5Glyz0GL
+	Eus/dCRBPIcNlxWNtY6STJrF2XNfNNou+Q==
+X-Google-Smtp-Source: AGHT+IFCXb3nuZf+J/HuLvdszcVM8kdfvZzb6kqZJIQM7MPxxRUSiZvRmsGhMBiK5ZUt5xkDuVttCCISfanwRL6ZCUY=
+X-Received: by 2002:a17:907:26c5:b0:b72:ddfd:bca7 with SMTP id
+ a640c23a62f3a-b7367b8db06mr517932066b.35.1763188419657; Fri, 14 Nov 2025
+ 22:33:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
- <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com> <CAOLTT8TPrNTCjHwJfdeei+t8+7AxGC-dvbq-4oHJ=qNn_c+-jQ@mail.gmail.com>
- <7d99f00c-3602-4b28-8efd-4780cad41ca8@gmail.com> <CAOLTT8TLEsSAcfUomoActrUSzje5mQNE7EweXh8WtY3sOfzfkg@mail.gmail.com>
- <xmqqqzu3qi43.fsf@gitster.g>
-In-Reply-To: <xmqqqzu3qi43.fsf@gitster.g>
+References: <pull.1997.v2.git.1762793782815.gitgitgadget@gmail.com>
+ <pull.1997.v3.git.1762966535495.gitgitgadget@gmail.com> <xmqqfrajqdv0.fsf@gitster.g>
+In-Reply-To: <xmqqfrajqdv0.fsf@gitster.g>
 From: ZheNing Hu <adlternative@gmail.com>
-Date: Sat, 15 Nov 2025 13:29:18 +0800
-X-Gm-Features: AWmQ_bl61Kar5shaxy1RmHYnFNAgb1ROnP9OiN0AP_PvhOlJIcsEmwrSkxmtGpI
-Message-ID: <CAOLTT8RSN-72gVXDS-zrr=7wW4HU=CL6acyDx_UXnvo4c5MaRA@mail.gmail.com>
-Subject: Re: [PATCH] commit: add --committer option
+Date: Sat, 15 Nov 2025 14:33:28 +0800
+X-Gm-Features: AWmQ_bngmmBBQz81nZvR_fy0TJUXqbafLgxHLFLouj6Mp6yuciCnCy7zx5C_SSU
+Message-ID: <CAOLTT8SfLGnov2ZT5s7fz+DiN0fW-VFjFDVzv0J5GuwevMX2Kw@mail.gmail.com>
+Subject: Re: [PATCH v3] commit: add --committer option
 To: Junio C Hamano <gitster@pobox.com>
-Cc: phillip.wood@dunelm.org.uk, 
-	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>
+Cc: ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood123@gmail.com>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Junio C Hamano <gitster@pobox.com> =E4=BA=8E2025=E5=B9=B411=E6=9C=8813=E6=
-=97=A5=E5=91=A8=E5=9B=9B 01:24=E5=86=99=E9=81=93=EF=BC=9A
+=97=A5=E5=91=A8=E5=9B=9B 02:56=E5=86=99=E9=81=93=EF=BC=9A
 >
-> ZheNing Hu <adlternative@gmail.com> writes:
+> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> >> I'm afraid I don't quite follow. If you are amending existing commits =
-to
-> >> fix them up after you have corrected your configuration then they will
-> >> have the correct committer automatically when you run "git commit
-> >> --amend --author=3D..." to correct the author. If you are committing
-> >> before you have realized that user.{name,email} are misconfigured then=
- I
-> >> don't see how "--committer" helps because you have not yet realized
-> >> anything is wrong.
-> >>
-> >
-> > You're right that after realizing the misconfiguration and correcting t=
-he
-> > repository's user.name and user.email, running `git commit --amend` wil=
-l
-> >  fix the committer information, but the author remains unchanged. Users
-> > then need an additional `git commit --amend --author=3D...` to fix the =
-author,
-> > which does work but requires an extra step.
+> > +`--committer=3D<committer>`::
+> > +     Override the committer for the commit. Specify an explicit commit=
+ter using the
 >
-> Isn't it more like "You need to run with --author to correct the
-> authorship by amending the commit *anyway*, but while doing so, the
-> committer information will automatically be corrected"?  As I said
-> earlier in a separate message, the author and the committer are not
-> symmetric, so having "--author" does make sense in the above picture,
-> while "--committer", as Phillip points out, much less.
+> Isn't "set" or "use" more appropirate verb to use here?
+>
+> We already take the committer identity from multiple plases, like
+> user.{name,email}, or GIT_COMMITTER_{NAME,EMAIL} configuration, and
+> with the patch we also take it from a command line option, with the
+> usual precedence order (i.e., command line trumps environment which
+> trumps configuration).
 >
 
-Well, I admit that perhaps the design philosophy of author/committer is
-inconsistent (which has caused too much trouble), but for users, a consiste=
-nt
-parameter interface is easier to understand and use.
+Since both `--author=3D<author>` and `--date=3D<date>` use the
+"Override the *" phrasing,  `--committer` uses "Override the" just
+to maintain consistency, though changing it to "Set the" would
+also be acceptable.
+
+> > -static void determine_author_info(struct strbuf *author_ident)
+> > +static void determine_identity(struct strbuf *ident_str, int is_author=
+)
+>
+> "is_author" does not sound grammatical for this case; if you are
+> giving an ident of an unknown kind to this function and supplying
+> another parameter to let it know which kind, "is_author" may make
+> sense, but not here.
+>
+> As you will convert it into WANT_{AUTHOR,COMMITTER}_IDENT before
+> using anyway, why not let the caller use the "enum want_ident" to
+> tell this function what to do?
+>
+
+Ok, will change.
+
+> >  {
+> >       char *name, *email, *date;
+> > -     struct ident_split author;
+> > -
+> > -     name =3D xstrdup_or_null(getenv("GIT_AUTHOR_NAME"));
+> > -     email =3D xstrdup_or_null(getenv("GIT_AUTHOR_EMAIL"));
+> > -     date =3D xstrdup_or_null(getenv("GIT_AUTHOR_DATE"));
+> > -
+> > -     if (author_message) {
+> > -             struct ident_split ident;
+> > +     struct ident_split ident;
+> > +     const char *env_name =3D is_author ? "GIT_AUTHOR_NAME" : "GIT_COM=
+MITTER_NAME";
+> > +     const char *env_email =3D is_author ? "GIT_AUTHOR_EMAIL" : "GIT_C=
+OMMITTER_EMAIL";
+> > +     const char *env_date =3D is_author ? "GIT_AUTHOR_DATE" : "GIT_COM=
+MITTER_DATE";
+> > +     const char *force_ident =3D is_author ? force_author : force_comm=
+itter;
+> > +     const char *param_name =3D is_author ? "--author" : "--committer"=
+;
+> > +     int ident_flag =3D is_author ? WANT_AUTHOR_IDENT : WANT_COMMITTER=
+_IDENT;
+> > +
+> > +     name =3D xstrdup_or_null(getenv(env_name));
+> > +     email =3D xstrdup_or_null(getenv(env_email));
+> > +     date =3D xstrdup_or_null(getenv(env_date));
+> > +
+> > +     if (is_author && author_message) {
+> > +             struct ident_split msg_ident;
+> >               size_t len;
+> >               const char *a;
+> >
+> >               a =3D find_commit_header(author_message_buffer, "author",=
+ &len);
+> >               if (!a)
+> >                       die(_("commit '%s' lacks author header"), author_=
+message);
+> > -             if (split_ident_line(&ident, a, len) < 0)
+> > +             if (split_ident_line(&msg_ident, a, len) < 0)
+> >                       die(_("commit '%s' has malformed author line"), a=
+uthor_message);
+> >
+> > -             set_ident_var(&name, xmemdupz(ident.name_begin, ident.nam=
+e_end - ident.name_begin));
+> > -             set_ident_var(&email, xmemdupz(ident.mail_begin, ident.ma=
+il_end - ident.mail_begin));
+> > +             set_ident_var(&name, xmemdupz(msg_ident.name_begin, msg_i=
+dent.name_end - msg_ident.name_begin));
+> > +             set_ident_var(&email, xmemdupz(msg_ident.mail_begin, msg_=
+ident.mail_end - msg_ident.mail_begin));
+> >
+> > -             if (ident.date_begin) {
+> > +             if (msg_ident.date_begin) {
+> >                       struct strbuf date_buf =3D STRBUF_INIT;
+> >                       strbuf_addch(&date_buf, '@');
+> > -                     strbuf_add(&date_buf, ident.date_begin, ident.dat=
+e_end - ident.date_begin);
+> > +                     strbuf_add(&date_buf, msg_ident.date_begin, msg_i=
+dent.date_end - msg_ident.date_begin);
+> >                       strbuf_addch(&date_buf, ' ');
+> > -                     strbuf_add(&date_buf, ident.tz_begin, ident.tz_en=
+d - ident.tz_begin);
+> > +                     strbuf_add(&date_buf, msg_ident.tz_begin, msg_ide=
+nt.tz_end - msg_ident.tz_begin);
+> >                       set_ident_var(&date, strbuf_detach(&date_buf, NUL=
+L));
+> >               }
+> >       }
+>
+> The helper tries to be generic between both kinds of ident, but we
+> still need conditional that says "this part of the function is only
+> when we are looking for author", which is rather unsatisfactory.
+>
+
+Indeed, some specific logic should be moved to
+determine_author_info()/determine_committer_info().
+
+> Also why do we need this much patch noise, only because you renamed
+> one variable?  I wonder if it would make it cleaner to move the body
+> of this if() {} statement into a separate helper function, leaving
+> only
+>
+>         if (whose_ident =3D=3D WANT_AUTHOR_IDENT)
+>                 set_author_from_message(&name, &email, &date);
+>
+
+Ok.
+
+> or something simple here?
