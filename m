@@ -1,59 +1,58 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9586218EAB
-	for <git@vger.kernel.org>; Sat, 15 Nov 2025 12:42:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F2728695
+	for <git@vger.kernel.org>; Sat, 15 Nov 2025 12:54:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763210523; cv=none; b=n+EReD3Jb1uj/LOkLKK83gqVR7o/BqxlV5z89a94fc4UF+rq/wq4Ep/ewH2AfGD/zmKrwsLddnqLsgLrzATOedEpfofWzdx2PdnKcERCvAIPySGBVchJYWNU5yE6xu2Ji7xkgarfPjF7++DVaiyzlotZ9Ihz3/sqJZVSPyQ6FyU=
+	t=1763211270; cv=none; b=iA6HHe85uduvDDJ2E/Bur2zf+L1BgE05IMvD3XHv5ekBnJnTAXJm0UAPtInhxgNyC+mEO4TShjFloj06qaLKh4VHtoCO7DGRHuumZxIl8JP7s0+C/N51hSDGuFE+uaDMzLk0G3EJi+4+nSsPH4QeJXjFEN7SBrsoK18gcYFbNgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763210523; c=relaxed/simple;
-	bh=SYYs2RZ6JoK3U/d2nE3ML1rTLrBU6d6ymV8ahIR42So=;
+	s=arc-20240116; t=1763211270; c=relaxed/simple;
+	bh=nQ0rQ7KkNCDjUXvsOygCWnPkbjYlN4F9ojQm2bv3lOU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oyoMby6d/jB/tQKDl/aFibnAh5PDQ+vdvSJ/p9qGXES4Rd/AlWFRIRzlf7Y1aUoCQwYSaWpTigtW5bktDjcGMFzmjHlf9XjeK1oF1R7rvhDooT6NAnHyc/5SiHEbry9jdKaCsdyFw5bkY4m6fN0EAAAXsdVjKfvQbRj32En53Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Si0aKZHM; arc=none smtp.client-ip=74.125.224.53
+	 To:Cc:Content-Type; b=Xh3o7sU9xKpvOEFoEoaPrPmHvb3YSsxhErywlPgTZeeoUWTjyMTh9PCN/hy2rDgvQRG/xk84OtoDXpqk1IDCACWoRjO8XXh5D6OlXRx5IHVFeRjPWiAqLvKuLbtJyBG7oMP7TyCJNZm2639Men5VBpv9TEY40ak6SqlrywrSgX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dH9+Q+Ug; arc=none smtp.client-ip=74.125.224.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Si0aKZHM"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-640f2c9ccbdso2529278d50.1
-        for <git@vger.kernel.org>; Sat, 15 Nov 2025 04:42:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dH9+Q+Ug"
+Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-640c9c85255so3017886d50.3
+        for <git@vger.kernel.org>; Sat, 15 Nov 2025 04:54:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763210520; x=1763815320; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1763211268; x=1763816068; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7YOZxHDtEcOnJqN6JHItzcyVuL9OjoQkGqJuro1fBR0=;
-        b=Si0aKZHM9jCFRvbzGJOe2eJ0ODpFuXG2CyamoeIDKygLtDzlBxM/B2BofMUu7LKloY
-         xeq/T8K8Tj/2fhUiadn2smeHXzypueZNQEZ7cvRGM7Obxqel6zsWMb+04kjjDL94Insy
-         adbO+72nOQ1yjNWzmAlG3QsVPkK33QO/kJDRwc7a+BVov9bKGDOUb5BVtFpJ127bsaJ8
-         FWclG7RbwSVwvKLboI9z6Duuca81KNCEfhbfxzUVxKSpQbbwjaNzdz/GQwIu0rhZoMjQ
-         Gwk+QGB3WrhYOfmUIVPc4Hk5GEbEYhg1TVM1fu9eq6DfsvvhbnfdAOshpWku5MU2/Lkj
-         636Q==
+        bh=qL4DiPAwnHtcs+yXQUB2Y0DBCsgWUqEicbSMFSrr2dU=;
+        b=dH9+Q+Ug90WxBF7JNjtMdiLKmm+AcGLyAyyH5dwGcjWTbquNX+VrsNJ5cnY0oM7/0p
+         jm3NxSPAkbi4aGYCBV2Hl/ZXmJ0sURrz6xiQkaDCQUdJfJU+q9t/S+rC7OIedUupRhgu
+         INo25bp1ERcxdyEVhrCmTUn3pmB0bCVO5fspk59kAIxL69ozlHvqGAYK3EwY61mY7HNj
+         TyUCmkpatefnJ6lJucA1zCEpuRO0JmqfSQ963CdTqghxJIlWkwJJt2SPXaxllamZj/V5
+         CVaPmCMb6U5D9xiamTYxxYzbVf1trYLA3+CAStSA8qKX65O6d4OLmcZjf1AHwPh60N8+
+         mmpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763210520; x=1763815320;
+        d=1e100.net; s=20230601; t=1763211268; x=1763816068;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=7YOZxHDtEcOnJqN6JHItzcyVuL9OjoQkGqJuro1fBR0=;
-        b=JIRjvRlDWJ+VU3oDXRZzximckrPfDntZguJO4cv4bzce5Gh3K/+BLh6P+YZmRoxMqk
-         JwMcwr1BzLNvL+s0K5DvXvxx5KefOp8Jx1kckLP+23KrslPwTosKYkxVdt/WORnDYf7I
-         7fE/XQi53BJpmGAIo2/i1DZKkG5cEuQA5DuW+LXPdxNHZqS+B1nfRFweCEly9KnhsXi+
-         MPlZCx6vvjPknOt1xBZ30DMMgtreYHNBu2jtzoY3pJ7QML0W6MDB6F3Gwt5Cus4CquHx
-         UKAdgt0B2FHY3v9+3pLPrzLHqAIq0FS/bUAiurkp4FbbWCNeNodBfqCsS4R6gjb/7x+T
-         9Qpw==
-X-Forwarded-Encrypted: i=1; AJvYcCUDqnlRn5nOLoNdT+IhkuVzYpQGshPCQsKWW9ZSnx3/tS7FosFRibFDlGw5uAFPz1cVP6Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzdvwK1xIHoVfPqQWQysLgn2GlossIMLn8WGEfxtyCmkbXeZP3f
-	IxkTGLkMQ+p49DL7MIypxdXfeyouT4Qn9eHIWads+NY4uoS8m8q2Iqda2xZDt58vJuHTUubeKlV
-	yUTKFQd3V7p1+So98b7OtmbKTzGOSRHM=
-X-Gm-Gg: ASbGnctFuGp74XUXNkr20o/kHcAYjzA7PBIh1ScpciWsQOsiykn3TS386dBVfU/T3UP
-	GPQcxgCDG8gKxOV0rzx8+Wi601GELvDQp9mvmUt8MuH2Q+455UPLcacqnGqP86j31DeOq1Yjoz4
-	P9Z6sbcd+xDLDBA//OhQ+3DCpWRVICl3b1tgGBamijMOeF/DAw2jC+YDfoj7GEgZsiaGqW/hz8E
-	5ai/+Zk/EHZxLdIFPQsVA87iPKHAcK2dT/efBae4kw89FqUwP5GdCVzwpS7mg==
-X-Google-Smtp-Source: AGHT+IErOxX7gE27Tdc7DbJ1sOFkLM+J4s/oMYHQAuuWNHvX/TRnYCR9plAtfVTsC00EMI5NGV/UUGgAufYqk2yNyBI=
-X-Received: by 2002:a53:d007:0:b0:641:f5bc:68cc with SMTP id
- 956f58d0204a3-641f5bc6e2fmr1596286d50.73.1763210520445; Sat, 15 Nov 2025
- 04:42:00 -0800 (PST)
+        bh=qL4DiPAwnHtcs+yXQUB2Y0DBCsgWUqEicbSMFSrr2dU=;
+        b=Nr4nM8AyNV3cK+/UBiSMXYN2AOBiywGp5RlVI/SdDYuabInmrK7ldj7ZNXG1eh5iSw
+         9kNdfEGzfulxOMD2EGRNkFOyBWOE+u72FJydQ5May2ZthFQFBn+k/afE2uiOMlprcXqR
+         oYj02Y99lGhfLPq8voI3QgRkq6UHLw9L+mZ8OCoSHiYV3SyQIm04GF24+ruWHAg+oLTw
+         4re+7+/sEW7vFwE/Tg/g4lkyZ+WoAftD/WCiCdcCb2MBzk+ZnpvA/tNIqO+I70Q36b27
+         p13yRG6lBDFOPWr3cKBmgDSBrxW2TcVXnZYSxmtuRlCNqZJ/RwxAExgRYGgYEKDGmxJ5
+         NqCQ==
+X-Gm-Message-State: AOJu0YxR2vB/aGJl8UOb3evpj7cl/TcpXRb8jlPW0GMEEzpiZPzxJ/Bv
+	TniEdVlWKuTzlTj9gdCRRB+DyEx5WjSPVGE6uvLJbD1pFdUIx/bjxkYz/v/bL6lhe7MicjRALs4
+	VqOcsYK4c4HWBy/YFSrXmgUp4Wa0ILX8=
+X-Gm-Gg: ASbGncuStmQyIySaXON05QPNl6b5IzYg4Ig1VMEfk2glBS+8WRFxjlqcKaHtfy4oy8H
+	Yjap+LPEsVbHZoJv9PWjKhuZDAkOwYs0XsPtFa72GaEVdl8RjbOANEm152z5ukrHpO4S9KlVYrH
+	kTBYo36Z2UPAAI24c0fac7FVfWR9zJy0EmZgyokNipGesVUHR9s6nS8oUtRTKGf4rCslWWjzxfZ
+	/8Gcy76QEOOFptNOdugcHxdkY9A7t/TBRO6lv5y38KhmYLcF6SizSdxOPmvTLE0Uiv5hPGp
+X-Google-Smtp-Source: AGHT+IFZNpBaAte6Q99ttnda4C+eJkfqgp7yICp83Q9GJ9GcwhDZLC8o9pcWdy60qNRa5r9SlGGp2WzbzypuvLLU3Pg=
+X-Received: by 2002:a05:690e:2553:b0:63f:a7dc:159e with SMTP id
+ 956f58d0204a3-641e7501e1emr3688801d50.29.1763211267910; Sat, 15 Nov 2025
+ 04:54:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,29 +61,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <cover.1763098804.git.worldhello.net@gmail.com>
  <a50bcde6446fbd87b4fb04b28c579a915457813a.1763098804.git.worldhello.net@gmail.com>
- <wgxzx47nsro3h6ju3t2aatrygkr5g7i2dbl26fj53qh4f7jdxw@d233r7jflrke>
-In-Reply-To: <wgxzx47nsro3h6ju3t2aatrygkr5g7i2dbl26fj53qh4f7jdxw@d233r7jflrke>
+ <xmqqa50oiduy.fsf@gitster.g>
+In-Reply-To: <xmqqa50oiduy.fsf@gitster.g>
 From: Jiang Xin <worldhello.net@gmail.com>
-Date: Sat, 15 Nov 2025 20:41:49 +0800
-X-Gm-Features: AWmQ_bnJ0QF8Ji8TBl-JgMGur0iHFxwDZlMBHUn3wNwwCdsDmrVjNk44JFdcHwk
-Message-ID: <CANYiYbFjShuKULNeyQBKmAb07gwEt5PZp8S_62v9E=eVWGr9-w@mail.gmail.com>
+Date: Sat, 15 Nov 2025 20:54:16 +0800
+X-Gm-Features: AWmQ_bl2hk2DuXxgi7KtzOAOobLZ7pZNWRnm1qbU8VOCMM_k7TAS9Rv4RLHmkS0
+Message-ID: <CANYiYbEFN9BHtNh1PQ9C3gDJasq1PaKnkcH-Nq=FddUCAcMGqg@mail.gmail.com>
 Subject: Re: [PATCH 2/2] builtin/repo: fix table alignment for UTF-8 characters
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, Justin Tobler <jltobler@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Nov 15, 2025 at 1:50=E2=80=AFAM Justin Tobler <jltobler@gmail.com> =
+On Sat, Nov 15, 2025 at 4:00=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
 wrote:
-> Ok, using strbuf_utf8_align() compensates the line width when using
-> multi-byte UTF-8 characters to ensure the correct length. Looks good.
 >
-> > +     strbuf_reset(&buf);
+> Jiang Xin <worldhello.net@gmail.com> writes:
 >
-> Do we need to reset the buffer here? In the following loop we reset it
-> at the start of each iteration.
+> Not about the contents of the patch, but how was the list of
+> addresses on CC produced?  Do they all have enough stakes in the
+> code being updated that they do not mind getting spammed like this?
 
-Will remove this line in next reroll.
+I=E2=80=99m cc=E2=80=99ing this patch series to all Git l10n team leads to =
+inform them
+that the issue has been identified and will be fixed.
 
---
-Jiang Xin
+> Also, you had a non-address "Gemini <noreply@developers.google.com>",
+> which forced me and anybody who will respond to the patch edit Cc
+> address list (or suffer bounces).  Please don't.
+
+Will remove this trailer.
+
+> >     |     * =E6=8F=90=E4=BA=A4   |  279 |
+> >     |     * =E6=A0=91      |  740 |
+> >     |     * =E6=95=B0=E6=8D=AE=E5=AF=B9=E8=B1=A1 | 1168 |
+> >     |     * =E6=A0=87=E7=AD=BE   |   30 |
+>
+> As there is a concrete reproduction sample from a specific tool, ...
+
+This output of the `git repo structure` command is based on the
+Chinese translation for Git 2.52. The next reroll will retain only the
+table header, which is sufficient to demonstrate the issue.
+
+>
+> >  builtin/repo.c | 22 ++++++++++++++++++----
+> >  1 file changed, 18 insertions(+), 4 deletions(-)
+>
+> ... it is a good idea to protect the change with a new test or two
+> to make sure the expected alignment in the output.
+
+Will add test cases for strbuf_utf8_align(), a function newly
+introduced in builtin/repo.c.
