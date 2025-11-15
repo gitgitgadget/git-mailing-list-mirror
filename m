@@ -1,207 +1,134 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E702772D
-	for <git@vger.kernel.org>; Sat, 15 Nov 2025 06:33:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B18C7261B
+	for <git@vger.kernel.org>; Sat, 15 Nov 2025 08:26:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763188423; cv=none; b=f6//sRKD/A7vQp4e95SAFGvqwwOr9lzkeXf4xTGp2MdfGhQwY1Bz0YRxCI834WJIL9FE+6qh+hoAhZNDOxEWSRXo4C2QILgZUl+TcAjqQF6/D4omZjb45S7gOJvIEDIFhN0jVgO1DZ0xpmjifx9nhcnogaOt2m9zUL73XlnzjXs=
+	t=1763195173; cv=none; b=UP5ds3Bd/fTPanXE5VcPVge4WhIX1zjrvKJHOajmLkGvzOWrGGM959PjKsfb5eTp2QBs/qaNjWNwesw7OnhfBtDxJntIsG7PlZE1WnY6dtcSvbZUT/xpKzF/wx++9lELPHAiNlXzY2IATzHBXh43qFgMcpQPvj2ZsJ2SGyl73IY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763188423; c=relaxed/simple;
-	bh=MYrMe0I0hpriEkZVWcqiRk2d4bVjhH3dkngDWTsCHO4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Q9iXcU+1oyA5bBIY9goqksNh0BApf4YPesM6WvEpAljk9pkMfQSeLRqwcgTBpYZjBjEesS9bCzlik8T2MtXaAAYicwK4Anisw1UV/jWPjArYLCOeiMMmw5015a5S66KUeLhuWGq6XDsrDTMra/gNLKV312s9K8uCGLOvo86aMcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VNZOuIP9; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763195173; c=relaxed/simple;
+	bh=y5UaZ0/QlaF3mLQ/VeT6lnntBpZEsUxCB3tCYqVpePs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZiCEA6D4Z7BIgO9KCbL5KB+6g+FZ9qgmMe80mv281+UHpKDlHo43euPnhfSQCo+1o7wc3iukIrlyw0rOTpXMyUjjg8iKhewL09SpthE2Wr5fu0g5CWueho0UqN6TAeS6Ok4uVMdZaF2PVZYqqazJv1NdXe3Ewe35f1UlV0q2usU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V0NU0iep; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hslvEiXB; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VNZOuIP9"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-b7355f6ef12so429100466b.3
-        for <git@vger.kernel.org>; Fri, 14 Nov 2025 22:33:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763188420; x=1763793220; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xfJwRO/a29mbMYZt/xEzeUyz2hhfKwRG8gIqwatcfYU=;
-        b=VNZOuIP9Tk3NKkaOcnY8hLGhdrQxkPJYctrhG4zwNR/+D6APV02UWCXTuLr5mI/Lo8
-         zIlWqFiX+rpfcBfvovxwVWf191V8YKqimVvoHZfhy83qHJeWdrWHLdKwCEfbO5s2XLeY
-         Ic5p/U+e8GvkohRwfKhlL6IgEhjuoHrsxN8thl8ykmnTolYEhJ5FDz/axgleZcrdkJMs
-         k7zfXZAQoRmzNXGDNLf0bvkKxzjAJqpGaMGHAdBHpkRtyWtGGqR29ho+UrfJgG6ZYAt1
-         PycIHSlp6HYYeWNu07kScI4nAiOZw1kxkNLPfZEY9fVthgiqo+4NEQtuXGDowA+brYFQ
-         j5Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763188420; x=1763793220;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=xfJwRO/a29mbMYZt/xEzeUyz2hhfKwRG8gIqwatcfYU=;
-        b=mz4UvmfF4/7dO6GhzOvWLG/SfW2jJpMbav/IML9k9NUfTosRCsyoVrbNMwBX3NvSpD
-         LBoZWTCMg9Wz3i81G3qCcMFiK0rSIyaByTjXF9A7b9M02B2EqDIteo63iHLjTCCVNWvb
-         kPZjwiX7Y5I+Opqkbr376DlnK9yQSSfd0aHnYTXAEs/iPCEPxVQjxfdZ8bmu4Cx9k5wA
-         8yGTzulAGyn6YluSqhJjt0mXLuhwm3SQP7lCSdZoYS+iJr+0/h6R2xdh7ghmAK4I/wQK
-         4QZYlV/QvbPMl81FSELKggP1v6y6R8XGbf0hlU39sMSo+gwnwT9kNzuVwp80Ih0UeDWS
-         BqMA==
-X-Forwarded-Encrypted: i=1; AJvYcCVbbnwksLKO2z1YnxgUo/c3n/9BOLb4h0DXRmyTBCy5dQqJ1G2MwWuVlWS7egum1SdxNyw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzquI68a1ZjFgqqCESJKI4XDL13jU0MsBEVqMopvd2zqnuzMOl8
-	osQ/tABG29+NhP4KZul5UvunHWVRWo1HbgCPvDGNfP35kxLdZnQ/XUqGmjrbg+qQBnKjoWI2zYw
-	/iRTStQdF9VpfI2SzQe4edxrTEd78qSo=
-X-Gm-Gg: ASbGnctoWnLi8f/xN39TwkxHW0nsM0Vak+mmCsZKURYBb8fAFnDsPSktKzQCr364dGq
-	FoWV+04XkDUFLwUdKlC4XheFEAbrFtDsvnKCFhW3KuxwA4IWQL9CNGpbvBDAYR5YB0VTTXbHz7S
-	Q8HZrkYCcIOxfhwYfXXP1kOF4k6wZjWH3a93i9zVIQA6OhgGqT/4uC0DRUJ3xxZVYQ7fwMEdvtS
-	mIAu+hcc6WYgAofowxSprlJTrT1K6w1ylH/0FcTsdYeSYe1wHIL9NEVS3CCXohpF3hM5Glyz0GL
-	Eus/dCRBPIcNlxWNtY6STJrF2XNfNNou+Q==
-X-Google-Smtp-Source: AGHT+IFCXb3nuZf+J/HuLvdszcVM8kdfvZzb6kqZJIQM7MPxxRUSiZvRmsGhMBiK5ZUt5xkDuVttCCISfanwRL6ZCUY=
-X-Received: by 2002:a17:907:26c5:b0:b72:ddfd:bca7 with SMTP id
- a640c23a62f3a-b7367b8db06mr517932066b.35.1763188419657; Fri, 14 Nov 2025
- 22:33:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V0NU0iep";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hslvEiXB"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 36F55EC00C5;
+	Sat, 15 Nov 2025 03:26:10 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Sat, 15 Nov 2025 03:26:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1763195170; x=1763281570; bh=4UTzf0eqtO
+	+PGMaHzrO4TJjBKTYwP6kfFL9+207xNco=; b=V0NU0iep8Yh0duxBYlSQ41pBLR
+	GlCC9zCEZ+bgmqGCpwQ24zRUNWVsfLNJ47rauIFdvEUPUPdK1CpSt/X1I/Wx+4ar
+	1V0R5Mlhyeilkol+nPEz+nlHeNiEeOBWrJP66xrR96MiZkmJs+EIQKxZdB2gV6Ry
+	lIzy/5KvSUrApZg+A0QEHjvW3XxkosWsGesTX4Yujcow9U5TPdLgIQWPtN4vnOBN
+	e6nYN79VPVpj17ooe+Rfg7V7fyNBy8DH6LHETYXX23OOYurhCFEiclIzc/iWZiAb
+	4of5lQZqABJwFY8DHXQzOJttj+2e01PuRnDdn20TyD1fBwoIRCaGvqQM9+wA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1763195170; x=1763281570; bh=4UTzf0eqtO+PGMaHzrO4TJjBKTYwP6kfFL9
+	+207xNco=; b=hslvEiXBgUHgv1JrvCCyAiI/g69wDUQFCsTiSwHPzjcjv6wXpey
+	5t0CVUIEcVyaqaOepGKI31OpuO1y/j416zXBY/I0AVPo7Kl5YOXQS8BLN/BF5zwX
+	SOvpjWxTfjv7V5IetI5sK26wW4D8Y+Cwsplxtv3a3+iplQkA9HwrvIjNOQZBtPBw
+	liTodxsvdFRKUmAxew96aQ6ZKvERNL8tizEdRVRPbkvXpsB6LBiehGlu5aoV8cWQ
+	ZP+yoKSbTMf2GuFtm/qIaxEauzL3OUsxurO3V5mgM7cSD86XiSy3LjqxUHZnhH5T
+	0it1iQ+dVKwSkTfA9aHZ9ojoGX6CfYMUJuw==
+X-ME-Sender: <xms:IDkYaRszmU8CNe4-uAQABoWDRnzj4CwGN1HED9x9keDlrTIEizzfjg>
+    <xme:IDkYaZj_cZ1fZJws0E0GcQqiE-_ewosqvcBOlRKOU1KVqGeU0gI6goxYoTLgxetK7
+    UV2LzbhA5eUWsF2o4RxAtnfC8Sxs2aOr9RrwDRBvKmYxMK7rScvwbY>
+X-ME-Received: <xmr:IDkYaa8h2XijeRFV5OaVyzDaPljGgmK2gD2PMdlVkZ9USLS_jVwJatRAHqNYbBXwgJvYh63vys4AW1ADiX7jcFP2a7T084FDpc_R>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvuddvvddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepjeejleehjefgheeghfeuveduudfgtdetjedvffethfdvteegteefkeeigfet
+    hfdunecuffhomhgrihhnpeigughifhhfihdrtgifnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhr
+    tghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtph
+    htthhopegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthhtohepvgii
+    vghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:IDkYaUuv88xVEArZiM3PAKu9wIKlI_pwm_hRiHWTTc4dQe3QCTUNcw>
+    <xmx:ITkYaWqTof6yYFxvvLZu0WEl5hH4MMInyaT6JfWIHkqnFkWzGgP3bg>
+    <xmx:ITkYaQr-rEeJ8OWWOPRMHa5SMORiRtXHS1MQgYtqV-ibVEuqsx_S5w>
+    <xmx:ITkYadZ24FDQXNQWuVbNGoky7D9EUxrsKGtYGQc2u8HAaAWzVlFelg>
+    <xmx:IjkYaUPmbC2y2xY8I-iH7ZPOcfA_Z2R6TSPPz7MyyEoQPaWvbWzpTkEY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 15 Nov 2025 03:26:08 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt <ps@pks.im>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Chris Torek
+ <chris.torek@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v4 03/10] xdiff: make xrecord_t.ptr a uint8_t instead of
+ char
+In-Reply-To: <042fbb11d03606879503846e86fac65e6e74d02a.1763159816.git.gitgitgadget@gmail.com>
+	(Ezekiel Newren via GitGitGadget's message of "Fri, 14 Nov 2025
+	22:36:49 +0000")
+References: <pull.2070.v3.git.git.1762890152.gitgitgadget@gmail.com>
+	<pull.2070.v4.git.git.1763159816.gitgitgadget@gmail.com>
+	<042fbb11d03606879503846e86fac65e6e74d02a.1763159816.git.gitgitgadget@gmail.com>
+Date: Sat, 15 Nov 2025 00:26:07 -0800
+Message-ID: <xmqqy0o7g0rk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1997.v2.git.1762793782815.gitgitgadget@gmail.com>
- <pull.1997.v3.git.1762966535495.gitgitgadget@gmail.com> <xmqqfrajqdv0.fsf@gitster.g>
-In-Reply-To: <xmqqfrajqdv0.fsf@gitster.g>
-From: ZheNing Hu <adlternative@gmail.com>
-Date: Sat, 15 Nov 2025 14:33:28 +0800
-X-Gm-Features: AWmQ_bngmmBBQz81nZvR_fy0TJUXqbafLgxHLFLouj6Mp6yuciCnCy7zx5C_SSU
-Message-ID: <CAOLTT8SfLGnov2ZT5s7fz+DiN0fW-VFjFDVzv0J5GuwevMX2Kw@mail.gmail.com>
-Subject: Re: [PATCH v3] commit: add --committer option
-To: Junio C Hamano <gitster@pobox.com>
-Cc: ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood123@gmail.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2025=E5=B9=B411=E6=9C=8813=E6=
-=97=A5=E5=91=A8=E5=9B=9B 02:56=E5=86=99=E9=81=93=EF=BC=9A
->
-> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > +`--committer=3D<committer>`::
-> > +     Override the committer for the commit. Specify an explicit commit=
-ter using the
->
-> Isn't "set" or "use" more appropirate verb to use here?
->
-> We already take the committer identity from multiple plases, like
-> user.{name,email}, or GIT_COMMITTER_{NAME,EMAIL} configuration, and
-> with the patch we also take it from a command line option, with the
-> usual precedence order (i.e., command line trumps environment which
-> trumps configuration).
->
+"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Since both `--author=3D<author>` and `--date=3D<date>` use the
-"Override the *" phrasing,  `--committer` uses "Override the" just
-to maintain consistency, though changing it to "Set the" would
-also be acceptable.
+> In order to avoid a refactor avalanche, many uses of this field were
+> cast to char* or similar. One exception is in get_indent() where the
+> local variable `char c` was changed to `uint8_t c`.
 
-> > -static void determine_author_info(struct strbuf *author_ident)
-> > +static void determine_identity(struct strbuf *ident_str, int is_author=
-)
->
-> "is_author" does not sound grammatical for this case; if you are
-> giving an ident of an unknown kind to this function and supplying
-> another parameter to let it know which kind, "is_author" may make
-> sense, but not here.
->
-> As you will convert it into WANT_{AUTHOR,COMMITTER}_IDENT before
-> using anyway, why not let the caller use the "enum want_ident" to
-> tell this function what to do?
->
+I actually think keeping "char c" as in the original is a lot more
+logical for that particular case, as the existing use of that local
+variable are _all_ about C's 'char', and not about a very short
+unsigned integer.  The variable is compared with C's character
+constants like ' ' (whitespace) and '\t' (horizontal tab), or is
+given to XDL_ISSPACE() macro, which is also about C's character.
 
-Ok, will change.
+But because it is so minor a thing, I do not think that it deserves
+a reroll on its own.  Just in case if there are other things that
+need to change and the series needs a reroll, here is the only
+change required for this.
 
-> >  {
-> >       char *name, *email, *date;
-> > -     struct ident_split author;
-> > -
-> > -     name =3D xstrdup_or_null(getenv("GIT_AUTHOR_NAME"));
-> > -     email =3D xstrdup_or_null(getenv("GIT_AUTHOR_EMAIL"));
-> > -     date =3D xstrdup_or_null(getenv("GIT_AUTHOR_DATE"));
-> > -
-> > -     if (author_message) {
-> > -             struct ident_split ident;
-> > +     struct ident_split ident;
-> > +     const char *env_name =3D is_author ? "GIT_AUTHOR_NAME" : "GIT_COM=
-MITTER_NAME";
-> > +     const char *env_email =3D is_author ? "GIT_AUTHOR_EMAIL" : "GIT_C=
-OMMITTER_EMAIL";
-> > +     const char *env_date =3D is_author ? "GIT_AUTHOR_DATE" : "GIT_COM=
-MITTER_DATE";
-> > +     const char *force_ident =3D is_author ? force_author : force_comm=
-itter;
-> > +     const char *param_name =3D is_author ? "--author" : "--committer"=
-;
-> > +     int ident_flag =3D is_author ? WANT_AUTHOR_IDENT : WANT_COMMITTER=
-_IDENT;
-> > +
-> > +     name =3D xstrdup_or_null(getenv(env_name));
-> > +     email =3D xstrdup_or_null(getenv(env_email));
-> > +     date =3D xstrdup_or_null(getenv(env_date));
-> > +
-> > +     if (is_author && author_message) {
-> > +             struct ident_split msg_ident;
-> >               size_t len;
-> >               const char *a;
-> >
-> >               a =3D find_commit_header(author_message_buffer, "author",=
- &len);
-> >               if (!a)
-> >                       die(_("commit '%s' lacks author header"), author_=
-message);
-> > -             if (split_ident_line(&ident, a, len) < 0)
-> > +             if (split_ident_line(&msg_ident, a, len) < 0)
-> >                       die(_("commit '%s' has malformed author line"), a=
-uthor_message);
-> >
-> > -             set_ident_var(&name, xmemdupz(ident.name_begin, ident.nam=
-e_end - ident.name_begin));
-> > -             set_ident_var(&email, xmemdupz(ident.mail_begin, ident.ma=
-il_end - ident.mail_begin));
-> > +             set_ident_var(&name, xmemdupz(msg_ident.name_begin, msg_i=
-dent.name_end - msg_ident.name_begin));
-> > +             set_ident_var(&email, xmemdupz(msg_ident.mail_begin, msg_=
-ident.mail_end - msg_ident.mail_begin));
-> >
-> > -             if (ident.date_begin) {
-> > +             if (msg_ident.date_begin) {
-> >                       struct strbuf date_buf =3D STRBUF_INIT;
-> >                       strbuf_addch(&date_buf, '@');
-> > -                     strbuf_add(&date_buf, ident.date_begin, ident.dat=
-e_end - ident.date_begin);
-> > +                     strbuf_add(&date_buf, msg_ident.date_begin, msg_i=
-dent.date_end - msg_ident.date_begin);
-> >                       strbuf_addch(&date_buf, ' ');
-> > -                     strbuf_add(&date_buf, ident.tz_begin, ident.tz_en=
-d - ident.tz_begin);
-> > +                     strbuf_add(&date_buf, msg_ident.tz_begin, msg_ide=
-nt.tz_end - msg_ident.tz_begin);
-> >                       set_ident_var(&date, strbuf_detach(&date_buf, NUL=
-L));
-> >               }
-> >       }
->
-> The helper tries to be generic between both kinds of ident, but we
-> still need conditional that says "this part of the function is only
-> when we are looking for author", which is rather unsatisfactory.
->
 
-Indeed, some specific logic should be moved to
-determine_author_info()/determine_committer_info().
+ xdiff/xdiffi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Also why do we need this much patch noise, only because you renamed
-> one variable?  I wonder if it would make it cleaner to move the body
-> of this if() {} statement into a separate helper function, leaving
-> only
->
->         if (whose_ident =3D=3D WANT_AUTHOR_IDENT)
->                 set_author_from_message(&name, &email, &date);
->
-
-Ok.
-
-> or something simple here?
+diff --git c/xdiff/xdiffi.c w/xdiff/xdiffi.c
+index 8eb664be3e..4376f943db 100644
+--- c/xdiff/xdiffi.c
++++ w/xdiff/xdiffi.c
+@@ -406,7 +406,7 @@ static int get_indent(xrecord_t *rec)
+ 	int ret = 0;
+ 
+ 	for (size_t i = 0; i < rec->size; i++) {
+-		uint8_t c = rec->ptr[i];
++		char c = (char) rec->ptr[i];
+ 
+ 		if (!XDL_ISSPACE(c))
+ 			return ret;
