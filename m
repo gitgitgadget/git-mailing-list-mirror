@@ -1,182 +1,179 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9A3645
-	for <git@vger.kernel.org>; Sun, 16 Nov 2025 07:03:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02EF29CE1
+	for <git@vger.kernel.org>; Sun, 16 Nov 2025 10:02:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763276583; cv=none; b=MNgyQ/G18QYiokQxytKE7A0qv0TIJHEMsJeKquDts91JsDMkbSosgQCGrU0QfwfbOsQ61n7S98XYMer/uNuSOjsHejyltE5iWEQEoh/sIfdsKGrCMtMNX2QDX6SmWgLB2NqAii0L9Rzkg70Z/FLyPBeKDYWymrKrHDDElLe1Zwc=
+	t=1763287337; cv=none; b=BlxmOONBOyrgKjB+KhiCH9MEILloy0qcrV93sVtezhaISQNXgXjYqSVH5Y339baJ1Ul0jT6KxG7coJNyZPAGv6jEl/GJyEGS20/ZDzBaQdU8O4Yax+Cx4cTbMK67J72aiqL0BAK2XR7sGVNlujXNTFOnOZ8L9yW+Qzq5532XBIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763276583; c=relaxed/simple;
-	bh=zMIIBQDRKa1NydroKH1c40tzq+1qlaSHaaa8PXizPrE=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WUljMVzsBTN1yBq+jB0UBoh2jItBF+uPSr0BgMqLThdcbWwWsD7/4gr1WxQ2VtVkv3/jfAjmVt8Jy0uXwxCuXDs39sEk5cEicSbKc3nTQnKIz/JR7x6p61MDlUC4rJGDxYANLlgg03oD98BcZVgQspNQrwzqAnXM1q69X9NGILw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Os9lKZMH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DMCy14EM; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763287337; c=relaxed/simple;
+	bh=22Obtn2R9PguflClGLmHnRMogMBNygMUbqdrlq8qG7s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=eOdbyz5Nlg0gKhEge/w8AZLWmMu588ITfhWynrMMMpMJLJ6pVQ58Xe6jqJXWx/LYQZYzS4GyI1mUdxltPYNwoTkUKBhbx4z4MRoL6NEFw8xKXB6bEZnc8UuGs2k1LzUWsOSJAOxsZOcBiS3Qb7GMzHAn/DLHTUlR+8Zljo2W0No=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mqxDmPNz; arc=none smtp.client-ip=74.125.224.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Os9lKZMH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DMCy14EM"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6342D1400094;
-	Sun, 16 Nov 2025 02:02:59 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Sun, 16 Nov 2025 02:02:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1763276579; x=1763362979; bh=OPUtcjSczmebVKFWSKwTcRGYsREm4Z2L
-	nk2g702QyhI=; b=Os9lKZMHg0bbHTIf+KnyNIchxMkCE0PdchpL5QVm6VIjuGNU
-	NQHMUzYVO/20EPh5V0ewdrNARSAig70V8OFgYl8DcDrO1sh8VozC1semOCwEaPzS
-	OD1rJQHeoQESazQ///zU1zBdWi9JiMfwG63cHbP+OaI3sx4Hu7ctgIfraIPGdeEY
-	QNqOwR8HDvlUPxY3ZK8ptM/6fPIImE8cUJBoo0uOT4FOjcRskfyOvHRaxR0P1oct
-	Gygn7f1Tz05/E/0pU9gmnzegAErzGHJAyQt6wUzKUFt69wK5GSC+yHyIbX8ihLDn
-	UBH4JC9VEvc79wvU+5sTPupPEd2VqgdiQaDS2A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763276579; x=
-	1763362979; bh=OPUtcjSczmebVKFWSKwTcRGYsREm4Z2Lnk2g702QyhI=; b=D
-	MCy14EM0LOncuTgr9Zt//v55GzU5rlOxE8zS+Hs3Y+R73R+bv9UuBU/P09CVIS/u
-	0BCQSQNaYzGT1jZUjRPBGZOuO41FAR9C+9VypsjIF+YWtljS8zwVZaUwpMwsqRAZ
-	RT4BRcheD9MQc30ibMVMCvEUNKWcC55uKhc1UI8gATqwo34aRkXBFlaH+I6c4xLx
-	cbW2SkedxyutcxhBkg3ybkY7ecaCn84e2KdtFBIwhXWZQt9/9/IMz+aTGlxGb0fU
-	e3ILdquss86FWwMKeWPEyYDK44I2iKZv5yXs3TgkM/18lTnCrI5AaMTyAsG0pbmd
-	3AkHEKxf7I/z1N26KeEdA==
-X-ME-Sender: <xms:I3cZaWVh1FtBbCHJtuP1U16JBUY1MFaniJTjCPJg7GdJkDgz5I0Edw>
-    <xme:I3cZaaAt3PlvOQawEELtT3KI_Yj2fsIxfY9DnFWnbrnyyzDqmsPli5JWnFv4t7Tl0
-    M00yBy-zkNyZ92au8vSeI57BS2fB3zVRk1I66-3SZudR4piIxp2AA>
-X-ME-Received: <xmr:I3cZaXw1uzemyExhsQ4ztrHq7dNPLiTW8Y9EM-y16Cfvuj4efrmVEsKGGOLX74j4lXZeWcT49aSAf2viA_QyswtVnvHlUSn2eHOx>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudegleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvufffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfj
-    rghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrh
-    hnpeelvdeftdeftdekfeeuveelgfelteeiueffffekhffgkeevheekhffgteejhfffgeen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:I3cZaXCx3aud31yoyX-m7TLxBjFFRi8JCP8SdZ6cNPJJzzC4VFUTtg>
-    <xmx:I3cZaUaocHiZJ-njQBsxPtXzFf8jIO5Gv8fzYirmw6uiYKNlHjm-pg>
-    <xmx:I3cZafgKQF5Wzuq-MxZBRAyz5cCenU4KIu2lPD_wxppc_L6hfFHvrw>
-    <xmx:I3cZaW6FkkW45yHSFgkOkl_d7XCo80d9J0LXVIc00GzRAXHG3YkI5A>
-    <xmx:I3cZaeAfTzaY5K7bvM_-gir96nkeEoobEEbtN7JX-pdxHonIJ0KgIevP>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 16 Nov 2025 02:02:58 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org,
-    K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Subject: [PATCH] submodule add: sanity check existing .gitmodules
-Date: Sat, 15 Nov 2025 23:02:57 -0800
-Message-ID: <xmqqv7jacvdq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mqxDmPNz"
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-640d8b78608so2402677d50.1
+        for <git@vger.kernel.org>; Sun, 16 Nov 2025 02:02:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763287335; x=1763892135; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1buxgO5bKizRBxXCNUlntwvOiduy7xTVTReY0BAQsRE=;
+        b=mqxDmPNz5OzxTY7f/T33FhS7lQl9zQV1AVeMnZaeilFp8M86w4GUPpN8/vzI109tj2
+         pdRjsAFoy4daf2Ry1xEPWNxqqPfvMLP78drgb5x3bYl1FG9v1quYHnfXcJyfcGiOIUH6
+         Jv4ilndf1Ny1a4S90nMWz7qKPP+q2t6OVUBjI+p7OjlST8/CJW/wIbLqjD+9581YNHzu
+         HBJddErB6iaxDR6iOhmJQnZAGoiCcmS+Hf2C3OnBSVEgGwqwyfW4dfM8gcV8/z829aRH
+         WAA3FkicbrePWKJqUcKps8HX2zCdlNj7fZxcq0/v3BzIRuI7QGwqaavMRUdQg/SreEyq
+         0pHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763287335; x=1763892135;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1buxgO5bKizRBxXCNUlntwvOiduy7xTVTReY0BAQsRE=;
+        b=oTnM7n46UdOT1KKYw2+HsGMqzdNCAt2a0OPdJFGAWaLZr2TD0Y7XkK/YZeE3rANFyd
+         QYV2BFTpJ/IJlI8tWUJ11zPgyNC387sCtsZlppfHygE2tzeWYVhugk+wsQLI1XjLQHmZ
+         t+dUMfsCrGVeI/73G5wLJDg5nD+n3S/r8wrUmeoeJtpzO4NKRa/WlOh9K3NoC2d7u99k
+         MhDyHybjStDtrrp0GC2J+smAJnB9BAMYjR3uWoiehZOf2SyGbcMlOOoxDCn26Yg6rW9E
+         PG4wMPLlpXfe6kHaLleHWQ2kjf9OmZumyGBQbjNoxPwvDFKr852I1EunKBWbNL3VO6dc
+         cN7w==
+X-Forwarded-Encrypted: i=1; AJvYcCVxcVrfSF0W27V00lMtgdzzRQGo7WK8pEzD5U0ePTTuucD4Xb2cSm2up/86HIdhGBWHDWM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzHIRrkdzMlVgipTZW1fkVo0MzIwdRSNc3Mv34suEqXSBA8/p14
+	3OnS+lEGaGY5Of59pRv7XfpvTd9g4WTPDSJH6vX1IlwIJwG+XC3yoRqE
+X-Gm-Gg: ASbGncuTfpNM2AQXKkOdlsb9GReh0GTNOKqfhwyeIdc5Svt6xbycPTlUqKdrBZp2ilv
+	aexEpLu0S436n3Ed/LE18CnrWFkTvIM8OXMYqllx6Q9vRFujuCcdHP5qBS3OWm5b/Qul8vsbYwM
+	jtg0sIPGRWlRoM7XNvqCqszrzKlabbIOt+5EmesV3lQsTGvgYBAYK8E8vxG5/W7ANSqP6brScAo
+	St0O6Zhk8hXzbXKDYSGTK9OE8atSxxHbyOr4xpfa8K8NIDaIPpj+hAIOTXMr2SI6C6TKML0b2WW
+	FVyiUqysJcJeBtabBRp+DOJwcoCAN8Q29wWKIF8wY0IycWqqF5bUUcwXkVCrcAcg0HWfW3KD+gp
+	/Xc5gNe4QwZ33FEsqGy5XgyI4+4Bpq1uXM1Ua5dwUTOmTXGo8ohgmPFZHQ2hb+i/De8jziof/BJ
+	dIdWOFzpif7q8IFSAIpxKoZLTB+GYToEFDIHxts02RSalK3vJfOh2hkXDHWSgpH/Sndg3o0wlW
+X-Google-Smtp-Source: AGHT+IEoHd2YqFBKjc6LTd+iddFCR23y/rYnUBFFTv3thxRLPLXrqk6LwnQ3BqTlyLH/wcKCZlAoQg==
+X-Received: by 2002:a05:690e:d41:b0:641:f5bc:6943 with SMTP id 956f58d0204a3-641f5bc6ec5mr3801549d50.71.1763287334597;
+        Sun, 16 Nov 2025 02:02:14 -0800 (PST)
+Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6410eabb558sm3571829d50.15.2025.11.16.02.02.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Nov 2025 02:02:14 -0800 (PST)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Git l10n discussion group <git-l10n@googlegroups.com>
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Mikel Forcada <mikel.forcada@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Emir SARI <bitigchi@me.com>,
+	Arkadii Yakovets <ark@cho.red>,
+	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>,
+	Yi-Jyun Pan <pan93412@gmail.com>
+Subject: [GIT PULL] l10n updates for 2.52.0
+Date: Sun, 16 Nov 2025 05:02:06 -0500
+Message-ID: <20251116100210.844040-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.51.0.rc2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-"git submodule add" tries to find if a submodule with the same name
-already exists at a different path, by looking up an entry in the
-.gitmodules file.  If the entry in the file is incomplete, e.g.,
-when the submodule.<name>.something variable is defined but there is
-no definition of submodule.<name>.path variable, it accessing the
-missing .path member of the submodule structure and triggers a
-segfault.
+Hi Junio,
 
-A brief audit was done to make sure that the code does not assume
-members other than those that are absolutely certain to exist: a
-submodule obtained by submodule_from_name() should have .name
-member, while a submodule obtained by submodule_from_path() should
-also have .path as well as .name member, and we cannot assume
-anything else.  Luckily, the module_add() codepath was the only
-problematic one.  It is fairly recent code that comes from 1fa06ced
-(submodule: prevent overwriting .gitmodules on path reuse,
-2025-07-24).
+Please pull the following l10n updates for Git 2.52.0.
 
-A helper used by update_submodule() seems to assume that its call to
-submodule_from_path() always yields a submodule object without a
-failure, which seems to rely on the caller's making sure it is the
-case.  Leave an assert() with a NEEDSWORK comment there for future
-developers to make sure the assumption actually holds.
+The following changes since commit fd372d9b1a69a01a676398882bbe3840bf51fe72:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/submodule--helper.c | 12 ++++++++++--
- t/t7400-submodule-basic.sh  | 19 +++++++++++++++++++
- 2 files changed, 29 insertions(+), 2 deletions(-)
+  RelNotes: fix typo in release notes for 2.52.0 (2025-11-13 09:34:53 -0800)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 07a1935cbe..1a1043cdab 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1913,6 +1913,13 @@ static int determine_submodule_update_strategy(struct repository *r,
- 	const char *val;
- 	int ret;
- 
-+	/*
-+	 * NEEDSWORK: audit and ensure that update_submodule() has right
-+	 * to assume that submodule_from_path() above will always succeed.
-+	 */
-+	if (!sub)
-+		BUG("update_submodule assumes a submodule exists at path (%s)",
-+		    path);
- 	key = xstrfmt("submodule.%s.update", sub->name);
- 
- 	if (update) {
-@@ -3537,14 +3544,15 @@ static int module_add(int argc, const char **argv, const char *prefix,
- 		}
- 	}
- 
--	if(!add_data.sm_name)
-+	if (!add_data.sm_name)
- 		add_data.sm_name = add_data.sm_path;
- 
- 	existing = submodule_from_name(the_repository,
- 					null_oid(the_hash_algo),
- 					add_data.sm_name);
- 
--	if (existing && strcmp(existing->path, add_data.sm_path)) {
-+	if (existing && existing->path &&
-+	    strcmp(existing->path, add_data.sm_path)) {
- 		if (!force) {
- 			die(_("submodule name '%s' already used for path '%s'"),
- 			    add_data.sm_name, existing->path);
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index fd3e7e355e..9ade97e432 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -48,6 +48,25 @@ test_expect_success 'submodule deinit works on empty repository' '
- 	git submodule deinit --all
- '
- 
-+test_expect_success 'submodule add with incomplete .gitmodules' '
-+	test_when_finished "rm -f expect actual" &&
-+	test_when_finished "git config remove-section submodule.one" &&
-+	test_when_finished "git rm -f one .gitmodules" &&
-+	git init one &&
-+	git -C one commit --allow-empty -m one-initial &&
-+	git config -f .gitmodules submodule.one.ignore all &&
-+
-+	git submodule add ./one &&
-+
-+	for var in ignore path url
-+	do
-+		git config -f .gitmodules --get "submodule.one.$var" ||
-+		return 1
-+	done >actual &&
-+	test_write_lines all one ./one >expect &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'setup - initial commit' '
- 	>t &&
- 	git add t &&
--- 
-2.52.0-rc2-455-g230fcf2819
+are available in the Git repository at:
 
+  git@github.com:git-l10n/git-po.git tags/l10n-2.52.0-v1
+
+for you to fetch changes up to ad892a61d6dd73211aafbc72e177ffa31e4cbec3:
+
+  l10n: zh_CN: updated translation for 2.52 (2025-11-16 17:27:10 +0800)
+
+----------------------------------------------------------------
+l10n-2.52.0-v1
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE37vMEzKDqYvVxs51k24VDd1FMtUFAmkZmdgACgkQk24VDd1F
+MtUSmQ/8DB8gG0gNDhqI3C824auF3Wa6fJFl8UBiM9uJ2QwphKtkJHSeekBnQ4FW
+18UmN7VkuRPMcMKXYRUS6SSzHebT9Atxmmsm2NuUb8fqq5Oe3v87Shv07On3+b7l
+GtSG9pkbjQeiR14Us+9G3pFm9IJ5Uh8gojZiXwZNKEzBCiae4sgxJ0YGKKpKDYao
+lGb1T/gibYA16uVMXceKEH009RN0CKL64LyY9wmNtIoVzSjOFCOiisSyD5gbG/NB
+pDZzZg7eODHSNseNaLO25tlAqKiFkNvjVOfwBNVm1ubV1zNQR0zonWKm6I3f3dyE
+lCw7swVWBoME0U4EsQdePuhccRyFNYG0RjPk/KNsygLYgLXhAIvXRRY+B/AHbyjj
+gDaFCQLywHpq/cL007fYaCaEWNPiLgb+w7/kHu/qf5cEV7kucT7BQ07X8AsnGXlk
+T5fjw/ZP7JpP6CCsL4xUfx+W8zM0+V0Yp/GdyblIxePhhDEYD8X28WRADRKuae/r
+dWgASTDOuojsJ8F2pmKUVfaXKT8aenBSsSaS9wxAeYZ8qmAA9BBwmhSXqBfm2VgZ
+xWEtbG5i4r6PiXy8uqpLBnl7nUie5EuDblv7Fs3WCLj0tLF7DWw9SNkmm3oipDXq
+iNChQeDFYX9rT0a0lLDJoWmhk8+TGdUdOfF7OgQAv47q0skP+Hg=
+=xW7s
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+Aindriú Mac Giolla Eoin (1):
+      l10n: ga.po: Update Irish translation for Git 2.52
+
+Alexander Shopov (1):
+      l10n: bg.po: Updated Bulgarian translation (6065t)
+
+Arkadii Yakovets (1):
+      l10n: uk: add 2.52 translation
+
+Bagas Sanjaya (1):
+      l10n: po-id for 2.52
+
+Emir SARI (1):
+      l10n: tr: Update Turkish translations
+
+Jean-Noël Avila (1):
+      l10n: fr: version 2.52
+
+Jiang Xin (8):
+      Merge branch 'master' of github.com:nafmo/git-l10n-sv
+      Merge branch 'l10n-ga-2.52' of github.com:aindriu80/git-po
+      Merge branch 'fr_v2.52' of github.com:jnavila/git
+      Merge branch 'master' of github.com:alshopov/git-po
+      Merge branch 'po-id' of github.com:bagasme/git-po
+      Merge branch 'l10n/zh-TW/git-2-52' of github.com:l10n-tw/git-po
+      Merge branch 'vi-2.52' of github.com:Nekosha/git-po
+      Merge branch '2.52-uk' of github.com:arkid15r/git-ukrainian-l10n
+
+Peter Krefting (1):
+      l10n: sv.po: Update Swedish translation
+
+Teng Long (1):
+      l10n: zh_CN: updated translation for 2.52
+
+Vũ Tiến Hưng (1):
+      l10n: Updated translation for vi-2.52
+
+Yi-Jyun Pan (1):
+      l10n: zh_TW.po: update Git 2.52 translation
+
+ po/bg.po    | 1419 ++++++++--
+ po/fr.po    | 1446 ++++++++--
+ po/ga.po    | 8803 ++++++++++++++---------------------------------------------
+ po/id.po    | 1709 ++++++++++--
+ po/sv.po    | 1418 ++++++++--
+ po/tr.po    | 1400 ++++++++--
+ po/uk.po    | 1424 ++++++++--
+ po/vi.po    | 1384 ++++++++--
+ po/zh_CN.po | 1728 +++++++++---
+ po/zh_TW.po | 1987 +++++++++++---
+ 10 files changed, 13521 insertions(+), 9197 deletions(-)
+
+--
+Jiang Xin
