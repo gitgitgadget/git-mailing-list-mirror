@@ -1,162 +1,110 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31856226165
-	for <git@vger.kernel.org>; Sun, 16 Nov 2025 15:23:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B07825333F
+	for <git@vger.kernel.org>; Sun, 16 Nov 2025 16:51:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763306628; cv=none; b=nuUAX3xtnpazr+I2UJIT2sA1r/ipkQaelKp0HdoK2CDHL/jKEo6hg018FJeXCkWLUYYfutA5rA5oenvyho5TvyUKW+RTYWgWxniXc++GGUJ4Zh74DkZoNso45k9ZSYvwAvOqqGS76p2PJBFwd1G/uH0tY1OW65z8oWEFSo8slsg=
+	t=1763311902; cv=none; b=EpcEmdole7b6d1Y0UAJTeZroS1RVLJADZpiu9tcqMgjezQlBV717oXse+L/pj5BEuVxKwxAmjg2HdcTEyg9oN6WfeVfnzQZPgMRulLWffjGuGgryx8dW9IGFiXCGl1RjDzIqqDgf6uk979eJEqhrOH9edtE041vohoZS2wMIuFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763306628; c=relaxed/simple;
-	bh=LtkBOEA5GgE0Df+IN44N1PVauhnH0X2NISuXjhdsb2Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TVtqoSO2T1VI58iu0EuYOam0kDTt6EcayRfaV1ZaYVvgnxTFAfvXeW6JkNxPbikvBUxbRRIVqOioe3JDQuMAoBZnSOFgGbni/JfycV+Uen8DbEdHgZjusosH0t+XSOwISFfa8+b2CrC+ci0c0NGqO3IsgeawtEQkQV6uMqRReCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b=NL3OEcyS; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
+	s=arc-20240116; t=1763311902; c=relaxed/simple;
+	bh=ZXuYC4XFxIk0GjrSVzF18YRMv+2qUGk89LxLmJGNcC8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ru08/ob0mjAjmc6jG4jzidpVRrdyUI7KxTV+Yae8EkJ5H1ybNu/bB8Jq3myt6vILCHWrA87S1etRce9rM/qV9vLOKGC+nq5QTKI3WweQxyV8qoDRZa6SirPCtVTJ0jx632opFuvBW59pQRiCy4x9iuaWqvoizcoJKmrefTkmWI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iwUKY9AE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S8Cjb4Zx; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b="NL3OEcyS"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b4755f37c3eso2401687a12.3
-        for <git@vger.kernel.org>; Sun, 16 Nov 2025 07:23:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gree.net; s=google; t=1763306626; x=1763911426; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3tep4hV/UqOSz+DZvjlmQtiHVMwC/P8UVwWKKEvCbiM=;
-        b=NL3OEcySNvrkMLJ/7TfJHldqvsmAQFCxTYBR+V0O9W9AKPw2mQwkqXPVsJP9WvxU1j
-         srPNuPLVPT+NMDd3MFAmQ0xm8KQD6CQtB3vuOTEuL1vqWfbYn8Z6p1tZN0LrRTh14D63
-         0DgygDOtfnBcFCP/UmI5eZCT5vHnaEGO6X2ZEiEjKxzTwV1nQ1KXqVnQu35T/90jl1l9
-         SsDgnDWQVycnBRZnffzulegyCvKY4iEZ3TR/mJFIawW+JyaOZZe0DcM697Y10JqDl4OL
-         lnnTHZLVurm/jymRZ3jVfQQ9jziOnAX0MOXD2KWI1z58I9DqaAkpQMKIpPB0eX/4e1lj
-         jidQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763306626; x=1763911426;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=3tep4hV/UqOSz+DZvjlmQtiHVMwC/P8UVwWKKEvCbiM=;
-        b=ebtW+kRPzTY8gdeM/oNWaoi/MMvMVL5AlFoPvtjXymy2sJ4YPaXmh5qhIsMICBfyfp
-         uUQc3MAN6g0UHJy5n9HVFIRmtm6ynz0XUGUo2gBQEhcmwjtQzRe3IRlpbP9dVVhevZBy
-         hbGzL3sPeKjA3bh1ue0t9zBhz0IMPhpw5Apdd9DdXpAMyF4yy8QCaI1Ipw1QqjmfyMGU
-         mT4lfE4XgamZ8jaYLM0aIhmcfHdghELvm81pBrpIOLujMGwb95K05IKEmzUVEl4F8FIi
-         cGcy8kAynXSsO6FMWohgbof1cnruZi0NAkHroFmSRR6Wb9fh0HDkrAIrGWRNp9QkjdEZ
-         e10A==
-X-Gm-Message-State: AOJu0Yy4YpuDo/HZ59YsDl+6FWu+jfYe6iTuEDDPeDX0BGs1LJgvVmcI
-	s7WUH+namDXLbRj6WEMG+SAM8wIylT5wbSiPb27jlXnURFqOIhVsG23FYXOK5jCAIWbBy6tHcTW
-	wzfAFnNthLlECn9I9ViUrmgyt1DUYQvoRaMuM/l+FHD2xbi7i0gPsD4v6KtnnmI+nCGPfqKXjk6
-	TxpU196unE43anOT2KxrJvEVQFzoEVb+bQakX5dohI0tNTpjsOBydh8kQ1HaqRHBoiJci/V+Qzs
-	0cvXZHb28ZY/x5Hndo6G6BtDDRpKX/8K/ed5H52NxDl6f2XzqqFxTv5WWYS8H8N6O01iexZl5hu
-	xs+PKGK2IJ6zdoI=
-X-Gm-Gg: ASbGncuh1GA82+BuW9vlVxJyvIaWmu/xbP8PajBf97akp+Qlm9rp00xVQPDasBIZAOs
-	hOTtu7aWezHobUtKM4LwKpHBTExEqKERJy2ZqlCxS+Cf8YOv7oeRz+rOkltYyLnE9sGLAc7FgEd
-	RjXtzTyvMtnxk94KFJ5ppZM0LSpGmG5FFmba+LhgrPqKQqt0sTLnOcsAqjjqA3SQ8SkQHAJYWVa
-	SyAuDKiPKYLuPNx9JZzsBvKhQ0BSaUz8981GJeIgjlESEzUNd2XnpRcUZ4l5g==
-X-Google-Smtp-Source: AGHT+IEjApGdDvyQN/E8TN3vF3pTm/cOG5nUaE3DEGNAokZtFhx/tLygsjTvhfH7dfSx3FRZSPpvnb6vmOucIJRvpPM=
-X-Received: by 2002:a05:7300:6b0b:b0:2a4:65b5:9868 with SMTP id
- 5a478bee46e88-2a4abd7a07amr3517218eec.38.1763306626036; Sun, 16 Nov 2025
- 07:23:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iwUKY9AE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S8Cjb4Zx"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id A45C51D00117;
+	Sun, 16 Nov 2025 11:51:37 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Sun, 16 Nov 2025 11:51:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1763311897; x=1763398297; bh=roA+jb/VQx
+	d+9wGTp9Nc/VWCbl46hrudvL8CiUJFJEw=; b=iwUKY9AEohIuCCB6FKLX6KY5vJ
+	0CrhM6BizQ8a9R55Y0YO5rne1Z0Z4BMy9e6jPpwtU8hFB3vZ4aIfO8CE9NRrEeth
+	xiJa6vNK7biWVINQmUjC0KUYFO6EqyleYmqp0dGl1wbhDbqUeoxBxapnrsrqioey
+	Q6V7F1lMSdQbOLsJ8iiI84ogIszbtwHySzkZh3Ir0eINmT7e0Ham5B+bNqwrizWl
+	arjoCPJCBoZEmdjtBijlHKmZmHgulpzKKk0a5+d2XK/ez0gnHrseH4c34pvywOAF
+	zxKTba0VEbJIi20oXWkTq7hXDrU5iU9J2BpgXCqh0Ahq4wWUesL5VF8Y1KwQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1763311897; x=1763398297; bh=roA+jb/VQxd+9wGTp9Nc/VWCbl46hrudvL8
+	CiUJFJEw=; b=S8Cjb4ZxtTM/tuklp06h7CfZeoGmZUT7wlc5cFrWRJ60SxV9hA2
+	7ZV/VcZfMxgVzYQ7Q4e431YpAZks+RIUSKuIiPhMA0F+FcDRcSDpCX3rISErHTbi
+	5iusU7gyIlof2+NpdDQv3JiY0xg+inUgspLbehd1+6lQ56Qnn7isieoBZmq/tdWf
+	mjlAUdgNYw+nzj3E8HTqxwejrHS4LGt/wnGEGU/C1qoCxqhU8SMlxEGj07egNg3u
+	mDCRS1IoOYDnMnEVR9GEdpsEZCnjFi9ezKx13TtxNQlX/yCyNuw6Zhi1jYkUVGY7
+	wyQIGTcUQefkYdqdSL84ESmNYpUjmXxdIQQ==
+X-ME-Sender: <xms:GQEaaRl8YPubRK5ygxgeOCwrrIB5C1ea548YeOcnPmrnIEfsvoKWuw>
+    <xme:GQEaaT0Nzi_Eyge-lcIlTs2lequj_KsDxXjJsobZyWBpfFe5Uzsax4woMF9lBlOtE
+    3jq1KNREjsi3onNQ_d8c7Sl-oqQ4M9ykgAXDGxxAtLf27SOe5cRk2E>
+X-ME-Received: <xmr:GQEaacp-xgKHQbys-ajV5oZqKp1F7KcGGcDjhjavmf0z_DZD1QO7GgTA8d9DdWHPV2oAyuN2jT32kTuVZNwvJKYuROPicz_J25xk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudeiudduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepfihorhhlughhvghllhhordhnvghtsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:GQEaaQeGxWs6r-JLcTGFvWcZj26mWtwKgGyE0ciDKdvGEb26ljfdYQ>
+    <xmx:GQEaabqQOad_cAEh5A28CSepNhuSH8_3iTb_-HNs4VorS_UUNJQGpA>
+    <xmx:GQEaaREJmPHfB6XQK8cNlIVGGVXBvBJ8obGN-kDKsurY8hnehRZFJw>
+    <xmx:GQEaabs1eBcQMSyIbr87Dy-w6N5mTa4xnr2gLtRKUr0B29rNT7yt8Q>
+    <xmx:GQEaaYJF5hU6hI8uRIaGt7o_JSGeL-ghSPsr0KHhShWWcpyh73JONbkx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 16 Nov 2025 11:51:36 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jiang Xin <worldhello.net@gmail.com>
+Cc: Git List <git@vger.kernel.org>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH 2/2] builtin/repo: fix table alignment for UTF-8 characters
+In-Reply-To: <CANYiYbFcap=c8xDy-=ZyaY3U4-jU9OEe18LPgTEAHi2wx2M0VQ@mail.gmail.com>
+	(Jiang Xin's message of "Sun, 16 Nov 2025 21:32:52 +0800")
+References: <cover.1763098804.git.worldhello.net@gmail.com>
+	<a50bcde6446fbd87b4fb04b28c579a915457813a.1763098804.git.worldhello.net@gmail.com>
+	<xmqqa50oiduy.fsf@gitster.g>
+	<CANYiYbEFN9BHtNh1PQ9C3gDJasq1PaKnkcH-Nq=FddUCAcMGqg@mail.gmail.com>
+	<xmqqtsyvfe2f.fsf@gitster.g>
+	<CANYiYbFcap=c8xDy-=ZyaY3U4-jU9OEe18LPgTEAHi2wx2M0VQ@mail.gmail.com>
+Date: Sun, 16 Nov 2025 08:51:35 -0800
+Message-ID: <xmqqqztxdip4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <ddefb36d-f023-45c1-b518-a9f70dba0696@gmail.com>
- <b1775e1a-4f6c-4116-9587-69526d379b42@gmail.com> <xmqqv7jcgy8y.fsf@gitster.g> <xmqqqzu0gxq2.fsf_-_@gitster.g>
-In-Reply-To: <xmqqqzu0gxq2.fsf_-_@gitster.g>
-From: Koji Nakamaru <koji.nakamaru@gree.net>
-Date: Mon, 17 Nov 2025 00:23:34 +0900
-X-Gm-Features: AWmQ_bm9Y6MFYMlhWoXYaPNWgroYBVrOBs884JUm3aJSwf-JGDh2n2c5R35BW9g
-Message-ID: <CAOTNsDwS2er+31iFt4EnhW_ZupPG+Uree_qobBVj9v1q1+0vPA@mail.gmail.com>
-Subject: Re: CI Failures (osx with p4)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sat, Nov 15, 2025 at 5:34=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Speaking of CI failures, I think we are seeing unusually high rate
-> of failures from random osx jobs failing to successfully run t98xx
-> series.  Is p4 on macOSX still a thing?  As macOSX tests tend to
-> take very long to complete compared to other jobs, I am tempted to
-> suggest dropping p4 tests from there.
->
-> Opinions?
->
-> ----- >8 -----
-> Subject: [PATCH] CI: drop Perforce tests from macOSX jobs
->
-> It seems that we seem to be getting unusually higher rate of
-> failures from random macOSX jobs failing to run t98xx series, even
-> though we haven't changed Perforce interaction part of our codebase
-> for quite some time, and the failures seem to be limited to macOSX
-> jobs and no other platforms.
->
-> Most importantly, nobody from the macOSX community seems to have
-> raised an issue here, reporting any failures.
->
-> Perhaps we should stop testing the combination of P4 and macOSX to
-> save cycles, electricity, and my sanity ;-)
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  ci/install-dependencies.sh | 4 ----
->  1 file changed, 4 deletions(-)
->
-> diff --git c/ci/install-dependencies.sh w/ci/install-dependencies.sh
-> index 50628ee2dd..3f718dad41 100755
-> --- c/ci/install-dependencies.sh
-> +++ w/ci/install-dependencies.sh
-> @@ -109,10 +109,6 @@ macos-*)
->         brew link --force gettext
->
->         mkdir -p "$CUSTOM_PATH"
-> -       wget -q "$P4WHENCE/bin.macosx1015x86_64/helix-core-server.tgz" &&
-> -       tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
-> -       sudo xattr -d com.apple.quarantine "$CUSTOM_PATH/p4" "$CUSTOM_PAT=
-H/p4d" 2>/dev/null || true
-> -       rm helix-core-server.tgz
->
->         case "$jobname" in
->         osx-meson)
->
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-The cause might be that the macos-14 and later images are for arm64 [1],
-but install-dependencies.sh still downloads the x86_64 Perforce
-commands. This leads to Rosetta translation overhead. The arm64 Perforce
-commands can be downloaded with the following modification. I confirmed
-that this modified version runs without any error [2].
+> t1901 already includes test cases to safeguard the output of the
+> "git repo structure" command.  I could add a new test case to
+> validate the output when localized in Chinese (as shown below),
+> but such a test would be inherently unstable, because it risks
+> breaking at the end of every release cycle whenever translations
+> change.
 
-[1]: https://github.com/actions/runner-images?tab=3Dreadme-ov-file#availabl=
-e-images
-[2]: https://github.com/KojiNakamaru/git/actions/runs/19407172619
+I haven't considered the i18n aspect.  We already compare program
+output with expected output, so a change in a message has to be
+updated together with the test that covers the code path, but po/
+updates tend to come too late for test updates, so the problem is
+much more serious.
 
---
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 50628ee2dd..16ee593d30 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -7,7 +7,7 @@
-
- begin_group "Install dependencies"
-
--P4WHENCE=3Dhttps://cdist2.perforce.com/perforce/r23.2
-+P4WHENCE=3Dhttps://cdist2.perforce.com/perforce/r24.2
- LFSWHENCE=3Dhttps://github.com/github/git-lfs/releases/download/v$LINUX_GI=
-T_LFS_VERSION
- JGITWHENCE=3Dhttps://repo1.maven.org/maven2/org/eclipse/jgit/org.eclipse.j=
-git.pgm/6.8.0.202311291450-r/org.eclipse.jgit.pgm-6.8.0.202311291450-r.sh
- CARGO_MSRV_VERSION=3D0.18.4
-@@ -109,7 +109,7 @@ macos-*)
-  brew link --force gettext
-
-  mkdir -p "$CUSTOM_PATH"
-- wget -q "$P4WHENCE/bin.macosx1015x86_64/helix-core-server.tgz" &&
-+ wget -q "$P4WHENCE/bin.macosx12arm64/helix-core-server.tgz" &&
-  tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
-  sudo xattr -d com.apple.quarantine "$CUSTOM_PATH/p4"
-"$CUSTOM_PATH/p4d" 2>/dev/null || true
-  rm helix-core-server.tgz
+OK.  Let's omit this feature from end-to-end testing at least for
+now.  Thanks.
