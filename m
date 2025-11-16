@@ -1,114 +1,109 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1883C1DE2D8
-	for <git@vger.kernel.org>; Sun, 16 Nov 2025 23:10:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979281BDCF
+	for <git@vger.kernel.org>; Sun, 16 Nov 2025 23:25:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763334632; cv=none; b=uvPizUtzxZ1/aJat7Ymw7R6mXm0+6rqQi7ogsX35iXS0b2e4Kh3p3xXL65z5uPmNYhjYwnMeYmfCyST2I6pnmkn9qib/aFavenSnoad7ZIXbnYE2Azh/lc6vhRuEuws4Xcrk2DwSKL0MdMJUWtwWsgdp8huFNjuwDoozIr9m1Ns=
+	t=1763335524; cv=none; b=tHM/YfXHCARQIdA+9XtzV5vQwcSrzMRR63WWKxCR3EV+NWyVjS09OQlgfIx6sAPdTbRcPal3wQvWcrf3zJtntKIMmMr42ihlg23KrjpxJoQbRbiQxeqJez4fKtYO1HzmHfdJ9QeefJdekV24nrxtPstZAXGlq0YoUwgYTo9x/WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763334632; c=relaxed/simple;
-	bh=ZW/ItP52T7PEY4apXYJnRCJ8Cn2xAc97E0nr9l3UIoU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=In9DurAZiNubxVhKjUjBnYjDkQ1Ce2LuV5xI8E7gtFEp/9Y63Lzddptx4E9KDKvFDxSNCqoC5vSTFCg5be3+imQauoPgPvqlZeVrMdP9Q+6f2VHke33lQ4is06c3E71iIwZoUlIVYpJCHWDp03rwyyQsP8D6bMF4INIM01OHVFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VbLcg3TL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=viemeKWK; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763335524; c=relaxed/simple;
+	bh=VCS6hiWqNZoaXAF9FjlGkviGPId277i7B7vHjVR6H+w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=M88CEAnLxqq90K+GkiJFCanMiJHw/iN2j1Qz/d8Z+uK3XikeNfbx2gj24LknY6/plcDyKL+05JlLeP7iBQ4VqcfpWdoFbVUfEfy+afOLPb74lI8ZrFKPSC1kU63OcCQkH8pzqzv1u3PZ69z4lJWnxCYnIWjh8dzm28+Ey/pRL9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b=K8kT5nLI; arc=none smtp.client-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VbLcg3TL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="viemeKWK"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 18D4AEC0183;
-	Sun, 16 Nov 2025 18:10:30 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Sun, 16 Nov 2025 18:10:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1763334630; x=1763421030; bh=tmAHcoSUhlqyNolar+TZ7cM85bWUINHN
-	JVBo4D3mWjk=; b=VbLcg3TLOwiEZmxGpTxrD+yjfBA091RkZCTLys+3X2oho09j
-	Dt+oER54gw8CDZ8iwxXzJ3zQXU6wTtVKC9Jpi7a5AkVJWjxyqaDew4MmW5Rm641z
-	DLjtLh1VMf525mEXuH3dZa/BPBn0mkDJAEOvxMYIrYhekGn28L69t9F7DRzDr811
-	oRWoo/3QUDiQhW9v77PYixl2lmzMkTUIE5QZZP4ylDTOrXUMZHC0rFttwR6czw9A
-	gx6ycyPEH5NDjVx0ImLCYUQ1U6CP1Z5/2qWJg+2EvNXNzWGaiRDyMkLGZJzexp4q
-	vRhMAmXdBrUt9xFglbhqid6NFCXveIONggDLZg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763334630; x=
-	1763421030; bh=tmAHcoSUhlqyNolar+TZ7cM85bWUINHNJVBo4D3mWjk=; b=v
-	iemeKWKc7HtiQh6zivU7xuCmFqUNIUbH69sA74iF9EQwGHAuSu5SE20VNrB/5ADa
-	wKAX45A29sXaGgt8mZWxnt4OGhiRxUTIdjr6BNYjm2sKnZwO+zSLTFB/2mPYcSD3
-	8/zwfxBwOYKvNha4Klb5Nqh8ermCWybG/QQGGUeCBMIM5kGNe/AAxkl+N+ewoKq2
-	5u41ACON5BYH76SRlfF8dfRxOf3qK5d2A1eiX+qTxjiDZnsVQD367OBX5GBSSrx3
-	AqlB0GRMMh4PP+TFBnwcyt9XxNUTCkXPHBSw/PGGBCyP2a1qlgpTraKyYSAd7ZvI
-	902E4Dzg9QsS+wX3qj/9Q==
-X-ME-Sender: <xms:5VkaaROnXCDjQ3W0SRpb1ZwgyyFNYR1QrA4RWdAo_t_VmmvMYmUlaA>
-    <xme:5VkaabYs5DZcG4b239id35DixcAUFRNQrjKpbxyUk1ut1XI8mDgeypZtoiBhH8o1U
-    1PBK7nj_L3fVerFHHQT4Ji43e7e9Itm3T-RJg2mvHb49vbdsWARTQ>
-X-ME-Received: <xmr:5VkaadqVmJ9t2ZxaYnPhTxKWc3QyB3JR5LaiSKe7QfmFnCONaqhF9skbU6DpgkDmfze1Ug3TRvYguuxOfLTxpdtVtLCtaIagmIOy>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudeikeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefufffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepjefhgfefvdekfedthfejgeffieevieeifeegueeihfejleeufeffjeetkeffffej
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehkohhjihdrnhgrkhgrmhgrrhhusehgrhgvvgdrnhgvthdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:5VkaaXYtXCSzOUY85tK3S_i78pFEhv9k2jUTsldJnLJVPCPdpz9qvw>
-    <xmx:5VkaadTaQPNBFiW4sKJW9IxhNoKYkv5KVh3JUoiewFVtIj0UWYO-FA>
-    <xmx:5VkaaW4lOXX4AyTa4io66x36HDz1P9y9F1MRaCYsGWb2P3K3UWgoLA>
-    <xmx:5VkaaazNMJT8tG06O3uz7CfI2kvyya1O2IszUvjRKLg4CPHagbMEMw>
-    <xmx:5lkaaRFY2XrSCHO2PbSX1AauBxqK6osb-GxSQbYtsOtMqhWqExZEWb07>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 16 Nov 2025 18:10:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-Cc: Koji Nakamaru <koji.nakamaru@gree.net>
-Subject: [PATCH] Use Perforce arm64 binary on macOS CI jobs
-Date: Sun, 16 Nov 2025 15:10:28 -0800
-Message-ID: <xmqqy0o5bml7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gree.net header.i=@gree.net header.b="K8kT5nLI"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-7a9c64dfa8aso2979504b3a.3
+        for <git@vger.kernel.org>; Sun, 16 Nov 2025 15:25:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gree.net; s=google; t=1763335522; x=1763940322; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dik6zAMGZKR7QRkh9IfOcVkPY1LHlIZUZj/NbUkmG/k=;
+        b=K8kT5nLIaVwLwi0H4mOmL3zkp0z8N67Aeas26OWjFjZ0UjjL6fiuwC+kOX42lqV7S6
+         25Pg1xU+6sVOfcMvF4X2kOeZxU2GX+UOgv8/6ysrb51GrtuOovXtLFKYD2fR3YuWB3K0
+         MXMZju0UamUPgVxStHaLGT81oVYUHC1uPIq5fi7ykm8V16onXJVKuiXKCSx4J+0PPkEn
+         /RfI711sBk8oRrl2Ce2CFwFLQ56qwdy5t0ThaAgUiWqC39MQzlha9f4JoV5RYpOe0NpT
+         h+2zNoS7HIVH8s5LCbR8dPx9Dke2gaEcixPoET3k1BBXN6r62xGLhFOMJRpmAxd2gn7N
+         raVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763335522; x=1763940322;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=dik6zAMGZKR7QRkh9IfOcVkPY1LHlIZUZj/NbUkmG/k=;
+        b=aLXvNhX67lDd7gVnuYkCjFBMsuMl4my+R5ZexwCycVMSFzFQNwphOgZY+y8XbYdnwM
+         1CWOkrULE0EVwrlsm7cz5ALpMmn5jjsd7BRNXtq5KFJtJ+uAiZ9WVJkHvWBW/knpU/JV
+         nvNjZVC664Ud29GIDp6+S8VCOCaHQvFfD/UwaaEpwp580NyMQgfusOlzz6wqtq/1xsqB
+         9WvuNW5r86g7AvgycfNjo1RDEVyik7iOMha6x+BEja6/F5h2zTstVwk2CSO3+gGu+xgy
+         jRd1CUc6v2hgtMR3oZ3sDXEibG7KLcbB4yvWrVFawqd6Xct3RRnd09C/or9Mlh2WEAx3
+         ZYWQ==
+X-Gm-Message-State: AOJu0YytxMlPDlaJjIXiMALpnQrD3yPucio6vkKviKSIBqUaPsFNT7sw
+	VPYgoIr24xt8Y6EvWCb/PnN5g8ZobQlCwuz+Ge7zd63Y5whbbforrYtIiy2APKCzxRoLeuYQYEB
+	5f3JIglFp/DMOg4zxi9vV9R2qrvSh9gI1adrsG0nFF1HjtmRmJEnjAqk9M2QAkR5vnw00IAIkTh
+	kkej9KbO6QbdHvirNjBJwM3UD85R7tld7MHmH1zGs/CDiIPuIK+5R0Y6Qb2UDfeRhgDi9IIC6dX
+	peWSQSYR4wtUB30pqqYigO6PHzC2Gwph8XdUx3r9pLh0tWVxO6siVFZzNMnjMntAQuNfxLHpjiH
+	4oelutg6Yee9ciw=
+X-Gm-Gg: ASbGncsYWL2Tda5sjHhQ4Cv7pRKR/b1xMbNowZpz2Bp9EVbFS4UIu7tYeMQnH+RO49z
+	c+v9MFYSbr0neuTL34eQ7utkgq/vdqnC0+1rL15vhAhyT8S1hboLVWd+bjUTb6js8iyHeaesnn1
+	GS4NaOebiOHGyvKCtkmzrQAqRO3h11kNnK26D0HH1d/IVUO9znRTQHJVoBPlddkAHWEzizkh2Yr
+	F2FxUwmhAI3AEu+H5f4NmUTlySTneQnxjCS1uybuFg81Q6Y8hLb7KnMCqRpxmMmHPC4o8SIB/Qj
+	ns20ZOU=
+X-Google-Smtp-Source: AGHT+IFDenLDeXsgYvZI8ozVpUskYpWjY52ltbhxA2gbi8fP5SViqUe6qoRuGNx/uyMw0BCHyStQJB5cjXdLrV3uuHc=
+X-Received: by 2002:a05:7022:43aa:b0:119:e55a:9be4 with SMTP id
+ a92af1059eb24-11b40b30ecamr6226769c88.0.1763335521604; Sun, 16 Nov 2025
+ 15:25:21 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <ddefb36d-f023-45c1-b518-a9f70dba0696@gmail.com>
+ <b1775e1a-4f6c-4116-9587-69526d379b42@gmail.com> <xmqqv7jcgy8y.fsf@gitster.g>
+ <xmqqqzu0gxq2.fsf_-_@gitster.g> <CAOTNsDwS2er+31iFt4EnhW_ZupPG+Uree_qobBVj9v1q1+0vPA@mail.gmail.com>
+ <xmqqh5utdhfv.fsf@gitster.g>
+In-Reply-To: <xmqqh5utdhfv.fsf@gitster.g>
+From: Koji Nakamaru <koji.nakamaru@gree.net>
+Date: Mon, 17 Nov 2025 08:25:10 +0900
+X-Gm-Features: AWmQ_bkNy72Ij79OlumU4IjUeWjG4D5FF6OfMKPmRJVlU-LcJWrai_6ngYjsg4k
+Message-ID: <CAOTNsDzqXZVMhW+kuWG_ZnxSc0U-g01AXkG7EbP8HXzR16LO7Q@mail.gmail.com>
+Subject: Re: CI Failures (osx with p4)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The previous step replaced deprecated macos-13 image with macos-14
-image on GitHub Actions CI.  While x86-64 binaries can work there,
-because macos-14 images are arm64 based (we could replace it with
-macos-14-large that is x86-64), it makes more sense to use arm64
-binary there.  Without this change, we have been getting unusually
-higher rate of failures from random macOS CI jobs railing to run
-t98xx series of tests.
+On Mon, Nov 17, 2025 at 2:18=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> > --
+> > diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> > index 50628ee2dd..16ee593d30 100755
+> > --- a/ci/install-dependencies.sh
+> > +++ b/ci/install-dependencies.sh
+> > @@ -7,7 +7,7 @@
+> >
+> >  begin_group "Install dependencies"
+> >
+> > -P4WHENCE=3Dhttps://cdist2.perforce.com/perforce/r23.2
+> > +P4WHENCE=3Dhttps://cdist2.perforce.com/perforce/r24.2
+>
+> Just being curious, other than "because it is newer than r23.2", was
+> there a particular reason why r24.2 was picked?  It is not the
+> latest that has arm64 macos (r25.1 also has bin.macosx12arm64
+> subdirectory at the above distribution site), and r23.2 also has
+> bin.macosx12arm64 subdirectory, too, which makes the above update
+> curious if it comes without explanation, given that this would also
+> affect Ubuntu that slurps bin.linux26x86_64 from there.
 
-Helped-by: Koji Nakamaru <koji.nakamaru@gree.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- cf. <CAOTNsDwS2er+31iFt4EnhW_ZupPG+Uree_qobBVj9v1q1+0vPA@mail.gmail.com>
+When I first looked in r23.2 in the browser, somehow I could not find
+bin.macosx12arm64, so I looked for another version that included
+it. It now exists in r23.2 as you mentioned, and I totally agree that
+it is better to keep using r23.2. I confirmed r23.2 runs without any
+error [1].
 
- ci/install-dependencies.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 6668c4df84..51ffa7c1ec 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -103,7 +103,7 @@ macos-*)
- 	brew link --force gettext
- 
- 	mkdir -p "$CUSTOM_PATH"
--	wget -q "$P4WHENCE/bin.macosx1015x86_64/helix-core-server.tgz" &&
-+	wget -q "$P4WHENCE/bin.macosx12arm64/helix-core-server.tgz" &&
- 	tar -xf helix-core-server.tgz -C "$CUSTOM_PATH" p4 p4d &&
- 	sudo xattr -d com.apple.quarantine "$CUSTOM_PATH/p4" "$CUSTOM_PATH/p4d" 2>/dev/null || true
- 	rm helix-core-server.tgz
--- 
-2.52.0-rc2-475-g51926caeaa
+[1]: https://github.com/KojiNakamaru/git/actions/runs/19413263298
