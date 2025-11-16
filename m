@@ -1,180 +1,117 @@
-Received: from mail.kocurkovo.cz (mail.kocurkovo.cz [37.205.10.100])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F80029CE1
-	for <git@vger.kernel.org>; Sun, 16 Nov 2025 22:21:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.205.10.100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C92270EC3
+	for <git@vger.kernel.org>; Sun, 16 Nov 2025 22:58:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763331668; cv=none; b=bhCnIlcttkZt1V/jh4ZA8J5Vl13aPG11mOO4fX9iJgrxDdquDCFb4Y3lqfyAxXQfwIL5l6PcgEflttj+4UDKMnYPzQOhyXtVkPAQX+We8YfdBszdCazfqLPZgNWQSFF29dgfIIkq6mpcqcBarEWEX+j1IRBPO9+ArwHz4Y9TALI=
+	t=1763333915; cv=none; b=VJEG6a3W7ftEV6rkWA/MALdLKtSqRtMTW4KTIjVKYYTtz6feEDIGeT9+49sW7f9tYE0nlXQOaQftuiwqkrGq7ssmFceaJCozy2P+pFDF0M5Xh/tMQ7iKHgPfYC9knkhYE3Z3eYdJXKqje5O9SrYNY0bo6wDmAc9qSiu6Pg8sUAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763331668; c=relaxed/simple;
-	bh=5yr7hvrNHzrTNjg52a+0KLPWc4iRmNKmeZauo6bnsEs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NoB8P6JLc0lk/wrLB5D7rhHW/yq+kj1R+gWWnP55pS8hfIeVDSpzooVWiCrf+rgvnj0rP0BsxyxQpaMx/P+6CfUjtjjdI6DqQyPF15SHGcqY+6hts9ABd5iTzQ/KOZnMCHn+LKTp6O3sPbF3nmMXuJdFQPFjPdTPvLYxi7mjhmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kocurkovo.cz; spf=pass smtp.mailfrom=kocurkovo.cz; dkim=pass (2048-bit key) header.d=kocurkovo.cz header.i=@kocurkovo.cz header.b=K8jv3kFB; arc=none smtp.client-ip=37.205.10.100
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kocurkovo.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kocurkovo.cz
+	s=arc-20240116; t=1763333915; c=relaxed/simple;
+	bh=cWEQZhT0Qsa4xmVWM4MxJ6cIUkpVNsI0Rh1ExoQ9/Eg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZI0fpRxRJ4qioKTgxPedv55FiPoDmpeTwWXCkaKdf/gk7cWk26n0mswN5/cjtpUROqoU/vb4o5lz5w7zQqkJpt1stduFtX6RTK4lciCSqStSth8BPeooxEYoc4kZbSQ3UpcC08hOhmoAyhsbENiNTakcMCSexxzPs/dTiLBSizQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=icosUgeN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oeFCU+sQ; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kocurkovo.cz header.i=@kocurkovo.cz header.b="K8jv3kFB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kocurkovo.cz; s=mail;
-	t=1763331163; bh=5yr7hvrNHzrTNjg52a+0KLPWc4iRmNKmeZauo6bnsEs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=K8jv3kFBhHf7zp3Cez/tobQmTc1uRfnCnO+tlS7h+uXj/sRN/DykQGPiUL8OValMc
-	 G37RZXkdaL4OB62hrddjoWXT44/KR3OzUsBbbtbVQc5icuqr3cRsp9l81YP/VW3Lmg
-	 zv/tzGSfPDsJ+IVOMQZLAWXGbRYlb8/GuyZFiRs2C9UBPOdi+FmSWGpUi61i6vbOBv
-	 ZUgpxH0hwmdyJEA4j/W92oblIzECGLx2jAqI3vCoikumN5+Xz/9LQmCCPdNJSnthrK
-	 aOIY3BYHPiPZOFMZKqoMo1kxECFuWbWNfloBqqAmWRePnUHWF9L8/kDOS6GgG9JK3p
-	 L0CYFcSaAB4wQ==
-Received: by mail.kocurkovo.cz (Postfix, from userid 1000)
-	id 1D56F17B4; Sun, 16 Nov 2025 23:12:43 +0100 (CET)
-Date: Sun, 16 Nov 2025 23:12:43 +0100
-From: Matej Dujava <mdujava@kocurkovo.cz>
-To: ZheNing Hu <adlternative@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] commit: add --committer option
-Message-ID: <aRpMW-g_rt4jStnu@kocurkovo.cz>
-Mail-Followup-To: Matej Dujava <mdujava@kocurkovo.cz>,
-	ZheNing Hu <adlternative@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
- <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com>
- <CAOLTT8TPrNTCjHwJfdeei+t8+7AxGC-dvbq-4oHJ=qNn_c+-jQ@mail.gmail.com>
- <7d99f00c-3602-4b28-8efd-4780cad41ca8@gmail.com>
- <CAOLTT8TLEsSAcfUomoActrUSzje5mQNE7EweXh8WtY3sOfzfkg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="icosUgeN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oeFCU+sQ"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7B5DE14000CE;
+	Sun, 16 Nov 2025 17:58:31 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Sun, 16 Nov 2025 17:58:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1763333911; x=1763420311; bh=eMG3SBkqdU
+	Zubd96MCfjGUB7GQycPR7fkY2TseLiQN4=; b=icosUgeN+F4Gt8/B8TuptNSj5H
+	E4Q17F1QijQCFZTcQ+M3ZuGslSn/lVuQn+PgK89hGP106JJTHr2ylVZZVNOK18QT
+	wT1m5qRvVpmBlMNITV7b0PrHXq9hui1xrdXZiD6guN8HzdMFmnpLIHQ/rW/3X80g
+	VdSVAtaigjn48zic1mQJCdu8lLexpOK2Y7Bv0/37YOgWEjd7sTVAi+W+NXD6ycbV
+	lSyk1muZaVPdw2/9cw1/z/vnfB0D+8E65auorvePoRv1TJ+7rlRiEA/SdQkCVPX0
+	8pJSNIp44x59GNvWL438qbIZpYY/7m+I1kNv920p8kWP5rlnsYj7D5YV4Yug==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1763333911; x=1763420311; bh=eMG3SBkqdUZubd96MCfjGUB7GQycPR7fkY2
+	TseLiQN4=; b=oeFCU+sQOA8JAP6DN8Mst69EPnopcGJhRFRoBrZER4vl4OSR8zI
+	KhNkKszzwfqyG6A1SgBEnbZQhDr38t4HACX1zTs5Jd/2bRtmoLVVqCPW2vu8UwUv
+	gHX1sPrtkr6ZWpoGU4MlxQzTU01Xyu6KQx9u5ZH3iF3dR/jDWzTKSjxpCBKL4Rob
+	XwxfnPMRZR7nwPEufS6LIXDs66wownHpd3PS8hICCQjKThYsFDxCbac7ZU62W2Zs
+	R9c3PiOwkCvyJa5GZUZOYWYRDn41qK3S8Sfod3m7U9doOX52abhH9ex339JSKhkm
+	LTXxOEJKnXoJ+H5v4ZgeDhH16rtgAxqf8uA==
+X-ME-Sender: <xms:FVcaaYp-SwMZY_1ybh166FoMs355OxYDPFxyMYSbNFsCdm0CbYjGow>
+    <xme:FVcaaWOsnuQX_4zEjckh_bmFZhcZ41riH2CCKaG9H5eu3QE35nURS1lp5ePuoGrUB
+    GLL6HUtIWHkhQZBhgaPVfsqYS70OY-E-YE9zRB7o0SLJN7InpXyHQ>
+X-ME-Received: <xmr:FVcaac1iX8YF6EHwQFpaAuNeQfRm7IUgSt4Pmxc0CbJ2__i0XyOsmQqNTx8RHQuXDz3Pv4bwF0M9aGLlpXXpVgqg5--ooVDAp1mu>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudeikeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudeipdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopeifohhrlhguhhgvlhhlohdrnhgvthesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtqdhluddtnhesghhoohhglhgvghhrohhuphhsrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopegrshhhsehkrghmsggrnhgrrhhirgdrohhrghdprhgtphhtthhopehmihhkvghlrdhf
+    ohhrtggruggrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhgrlhhfrdhthhhivghloh
+    ifsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhr
+    pdhrtghpthhtohepsggrghgrshguohhtmhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epughjmhdttdhnsehmrghilhdrrhhu
+X-ME-Proxy: <xmx:FVcaacqeELg3CKEsC9UAWPAMcDCTpA9FgFBabDZXJtribusgo49xmg>
+    <xmx:FVcaaeefRvCAiMmfdgk79_0yGv-dU-OaXeGXFW9vY9hpCroobNAnKw>
+    <xmx:FVcaaWvdNVxwqm3app7Lee4w2hbHDGyclX3OsL7dgGzXkV6YfHMR9A>
+    <xmx:FVcaaWWEfQa91aSSeeuIhlf2krK1Q9DMrmR2KtmGAoWgDoGXAvhubg>
+    <xmx:F1caaW1QzN1sDDunvw8BhtcJIKOnjjvcJ3JF7kb9dc5fQkWIfq0Dolxs>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 16 Nov 2025 17:58:29 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jiang Xin <worldhello.net@gmail.com>
+Cc: Git l10n discussion group <git-l10n@googlegroups.com>,  Git List
+ <git@vger.kernel.org>,  Alexander Shopov <ash@kambanaria.org>,  Mikel
+ Forcada <mikel.forcada@gmail.com>,  Ralf Thielow <ralf.thielow@gmail.com>,
+  =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,  Bagas Sanjaya
+ <bagasdotme@gmail.com>,  Dimitriy Ryazantcev <DJm00n@mail.ru>,  Peter
+ Krefting <peter@softwolves.pp.se>,  Emir SARI <bitigchi@me.com>,  Arkadii
+ Yakovets <ark@cho.red>,  =?utf-8?B?VsWpIFRp4bq/biBIxrBuZw==?=
+ <newcomerminecraft@gmail.com>,  Teng
+ Long <dyroneteng@gmail.com>,  Yi-Jyun Pan <pan93412@gmail.com>
+Subject: Re: [GIT PULL] l10n updates for 2.52.0
+In-Reply-To: <20251116100210.844040-1-worldhello.net@gmail.com> (Jiang Xin's
+	message of "Sun, 16 Nov 2025 05:02:06 -0500")
+References: <20251116100210.844040-1-worldhello.net@gmail.com>
+Date: Sun, 16 Nov 2025 14:58:28 -0800
+Message-ID: <xmqqcy5hd1pn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAOLTT8TLEsSAcfUomoActrUSzje5mQNE7EweXh8WtY3sOfzfkg@mail.gmail.com>
+Content-Type: text/plain
 
-On Wed, Nov 12, 2025 at 11:58:02PM +0800, ZheNing Hu wrote:
->Phillip Wood <phillip.wood123@gmail.com> 于2025年11月11日周二 22:38写道：
->>
->> On 11/11/2025 13:01, ZheNing Hu wrote:
->> > Phillip Wood <phillip.wood123@gmail.com> 于2025年11月11日周二 00:50写道：
->> >> On 09/11/2025 10:22, ZheNing Hu via GitGitGadget wrote:
->> >>> From: ZheNing Hu <adlternative@gmail.com>
->> >>>
->> >>>
->> >>>       This patch introduces the --committer option to git-commit, providing:
->> >>>
->> >>>        1. Consistency with the existing --author option
->> >>>        2. A more convenient alternative to environment variables
->> >>>        3. Better support for automated workflows and scripts
->> >>>        4. Improved user experience when managing multiple identities
->> >>
->> >> What's the use case for the same person committing under different
->> >> identities? We already have a config mechanism to set different
->> >> identities for different repositories but I'm struggling to see why
->> >> someone would want to create commits under multiple identities in a
->> >> single repository. For scripts it easy enough to set the relevant
->> >> environment variables if a tool wants to create commits under its own
->> >> identity.
->> >>
->> >
->> > I frequently need to distinguish between different user.name and user.email
->> > configurations on our company's internal GitHub.
->> >
->> > The current problems are:
->> >
->> > When I misconfigure (which happens occasionally), git commit --author only fixes
->> > the author part, I still need to additionally set GIT_COMMITTER_NAME and
->> > GIT_COMMITTER_EMAIL environment variables to fix the committer information
->> > These environment variables are painful to use, requiring manual setup
->> > every time
->>
->> I'm afraid I don't quite follow. If you are amending existing commits to
->> fix them up after you have corrected your configuration then they will
->> have the correct committer automatically when you run "git commit
->> --amend --author=..." to correct the author. If you are committing
->> before you have realized that user.{name,email} are misconfigured then I
->> don't see how "--committer" helps because you have not yet realized
->> anything is wrong.
->>
+Jiang Xin <worldhello.net@gmail.com> writes:
+
+> Please pull the following l10n updates for Git 2.52.0.
 >
-
-Hi
-
-I use includeIf pattern in a config to separate identities
-
-~/.gitconfig:
-```
-  [includeIf "gitdir:~/.local/src/personal/"]
-      path ~/.gitconfig-personal
-  [includeIf "gitdir:~/.local/src/companyA/"]
-      path ~/.gitconfig-companyA
-  [includeIf "gitdir:~/.local/src/companyB/"]
-      path ~/.gitconfig-companyB
-```
-
-then each
-~/.gitconfig-IDENTITY:
-```
-  [user]
-      name = ...
-      email = ...
-      signingkey = ...
-```
-
->You're right that after realizing the misconfiguration and correcting the
->repository's user.name and user.email, running `git commit --amend` will
-> fix the committer information, but the author remains unchanged. Users
->then need an additional `git commit --amend --author=...` to fix the author,
->which does work but requires an extra step.
-
-For just one commit, after you fix identity (update .git/config or move
-project so includeIf uses correct config) then `git commit --amend
---reset-author` should get right identity for both commiter and author.
-
+> The following changes since commit fd372d9b1a69a01a676398882bbe3840bf51fe72:
 >
->I see your point that this becomes more cumbersome when dealing with
->multiple commits. In such cases, users currently need to use something like:
+>   RelNotes: fix typo in release notes for 2.52.0 (2025-11-13 09:34:53 -0800)
 >
->```
->GIT_AUTHOR_NAME="..." GIT_AUTHOR_EMAIL="..." \
->GIT_COMMITTER_NAME="..." GIT_COMMITTER_EMAIL="..." \
->git rebase -f <target>
->```
+> are available in the Git repository at:
+>
+>   git@github.com:git-l10n/git-po.git tags/l10n-2.52.0-v1
+>
+> for you to fetch changes up to ad892a61d6dd73211aafbc72e177ffa31e4cbec3:
+>
+>   l10n: zh_CN: updated translation for 2.52 (2025-11-16 17:27:10 +0800)
 
-In my test ^ (using 2.51.2) did not set specified AUTHOR identity, but
-using:
-
-   git rebase <target> -fx "git commit --amend --no-edit --reset-author"
-
-is close to rewriting commits with new identity, but this will change
-both dates (committer, author). 
-
-If --reset-author is not used but either GIT_AUTHOR_* are exported or
---author '...' is used in a -x arg, then author date is kept untouched.
-
->
->This is indeed tedious and error-prone, especially when you want
->to quickly fix and push commits to the platform.
->
->`git commit --amend --author --committer` or a new `git rebase
->--author --committer`
->would provide a more user-friendly workflow for correcting identity
->information after misconfiguration, eliminating the need to manually
->set multiple
->environment variables or run multiple commands.
->
->> Thanks
->>
->> Phillip
->>
->
->Thanks
->
->ZheNing Hu
->
-
---
-Thanks,
-Matej
+Thanks; pulled.
