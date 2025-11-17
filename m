@@ -1,87 +1,87 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DF333993
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 01:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6949374BE1
+	for <git@vger.kernel.org>; Mon, 17 Nov 2025 01:13:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763341628; cv=none; b=O62bS0stnZQCNC7NiurHrPkxQXTZgkUughfM5Mswch2+gQ29XqVxqdWQ+pGVrbz+nRMOUPczauvPKPqq+PNP6kH+6IasVBIpqIASPYlbGfhFiMYbR0jQOeQujgG45PTO70bgQAPDey9AeJaRHbW8XN0258mu2wBLXa147uIHAAk=
+	t=1763341983; cv=none; b=jKrFSUI0XZ62c/9AriTYQovgyiPt0D56onnWx7D3eOU8qx18pZrd7Za1aYHE/AINa9mIlS8fehu9jHAfnIYkRY9PVX4FIQe2f/KSCpcjX/pyzkOx1gyLO3VyUrbsOi1+4Tis19Y9d1t/2V5+enarLDzpfvX5r8fFTBBmcehM0Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763341628; c=relaxed/simple;
-	bh=X39zdcvTSawsXYFDj2gC7E7Unby24j527C+f/kx6xRs=;
+	s=arc-20240116; t=1763341983; c=relaxed/simple;
+	bh=aY0mRR0RlQ0gAVkplKzoWBqRGLnelVZl8/Sv4jkzCIA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=A/DrYu6sjkcHhih5OExHnBDvPo0lvLqb/9Tc7pbgf9ZQM2pFurEp684F0tISb86H5PH8TtnQZi60KNQJ7rullSmDD2VDA1o4CwcdrBJdlog5FQNUMdgN69qVFTtP8LoBdY2fnUAsNPdGSd82HqEBDW3DAX5V5Ju1tYsrTaRA+9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WRdab/32; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e+qDRZYh; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=SkM64X1Ml32xSeeQDONAxEtaQiA/1UySPhG0n6icY/pOoJJzgBbAauSsMNyUKDzQLKH2/SV+aRxXpDZs9emDN6EYVgrdsOAH5gV31mtvwUUxdrnNQsJMpEOJxb1X+ntf77c37rIH7lQW4fNNzr1ww/W7bCCYsQpkbvrF5092SpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ITI1mk1p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q9xPWYbM; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WRdab/32";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e+qDRZYh"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 07DDA7A0125;
-	Sun, 16 Nov 2025 20:07:05 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Sun, 16 Nov 2025 20:07:05 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ITI1mk1p";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q9xPWYbM"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6B5107A009A;
+	Sun, 16 Nov 2025 20:12:59 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Sun, 16 Nov 2025 20:12:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1763341624;
-	 x=1763428024; bh=eCZGehxgpE3qnPJwy+PYENOHfkdfZQTctIGXwULeJ24=; b=
-	WRdab/32yayD1hRneJ01tGZTD1XsaxPaPHxwapb1pr3WzUU89tLbTLDhyU8/qjYq
-	U6IJpgIFgGb87D2cIZg7hMSQA/Hy2B4gSqptobDDeFfnUKArQncF8QeYoBUKb7Wl
-	wohp2ZCrVTEGRwdIsZmDKIfPW+GQ1m5x8zy12AD996dly3i8i+TMAu8BXZMPImrO
-	wQ2BfQGY5ia1Li7hi/0GYSXjHUmgUZFWj1qiBiqYv96xHsG7qfov+mZxq1PPHuD6
-	FbiiBQCqrZegljSDXzMVzkjOj0BT2HV8sT0+MyT0O+tZ57HibOklXk2Pbu/fWLdI
-	lZFRiVXINacgBfJohWWCbw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1763341979; x=1763428379; bh=SyKZQ/iWSl
+	oVrsXAWfi6lHryjPxBtUonVHqeNqMpIC8=; b=ITI1mk1pBfRj+PMRx1thRx1aAF
+	NKBz8ll0Dw/IG+3/z8l9gHbugIw4hi8uSXklWvVHOwY7+BWI/WSIgyKPB4LCfUVH
+	ZeO7KjlOOqkP0oSeategm3wAgAbxgQ7If/71usT2vFKU24prTQ2oNaXY1YcZL06Z
+	f7hRRqrCSGUt/+YpTy/wIiY99SKrxr4eHVNSnDP3WvW9liIGnTLB9/t2WoGVEyDH
+	tEp8rd6dfT+CGdBaYtGS+y016kh7i/EeCSvPtv0CQvnDxsQ0i/G+9CgD9Z6c0/hW
+	CzJnx/QUCYqKg0A8IZN8/n0v0VVKIM6cTxVxcBExByST3XRSposv9yDFmYaA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763341624; x=
-	1763428024; bh=eCZGehxgpE3qnPJwy+PYENOHfkdfZQTctIGXwULeJ24=; b=e
-	+qDRZYh0hhm7NZYV884kwG3BWP9giVMechVm0RHqmvQVc+LaPwZ4Q2aQLDjZHHGp
-	Jxomk+tKhD+ASUs2nAdftdhUQtX0o/R8vfN4ObautzdwNoEnELJw931J1eKJFXI+
-	Y3Ej3lni9zuuV0QHwiL4LxS09YgUC665OhjWvjxeoTRCcImwErbPgZ8SZIOSaKkC
-	o5PE9JoDozAS6HNo1OiZAGSQw5K9/kb5O92QXwkd8mzAEeP9jeWIcTBFv9XfVhXh
-	ToBEb/OzTocEWTLtyBC6JmasR2N2YH4qXfZ5YfYyzf9Y+zAuqdPK5JGvCMaKi/9d
-	cTX1/w97sO2dOPumUh7XA==
-X-ME-Sender: <xms:OHUaaeERQjaW8ll1DGQrv4hRq2qj9dCxjDZMTsW2Em4FSCOiQIC0-A>
-    <xme:OHUaaWOpyipegb88EvFErbE-NGKcEBNvE6tzyRuWljBNOfyalKMwQOq7I3VqdXHYr
-    hTvtGu3zBVdP3JvcYIdnjoBkSKyXhvTgPK0v4hWn4q3sR4zigE29Q>
-X-ME-Received: <xmr:OHUaaQekz_AhlXolZIGL58NFxBm-g-4AnY8zNNwIEXWuk4mPa2dKMCzGpwaqBx1UP3j8Fv9N_KHs7qpPfRrJRdOcCU_ITJw0miZk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudejuddtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1763341979; x=1763428379; bh=SyKZQ/iWSloVrsXAWfi6lHryjPxBtUonVHq
+	eNqMpIC8=; b=Q9xPWYbMT9QuFDyTtMZDHF/8ggqlULlTDxaFcs720EIacS5Ss/m
+	fn+cRqSHyioa5SDF6RDsE5epd6tEDc+hzCSpw7mvwPVR+d5mRUfyjMITfpwsQFzr
+	4HlYYrlDjlWBLq3P0PyVH5bPThCQU79l/k9/fL1gdfbud2fbmfPEeVBLlR5bl4Vo
+	i76tOddabjFqA50iNdlyD4qjIoDUM0cuYWQV/zw8YJEOlQ7SjjaYLmaB552E8tgP
+	U1vN1thlrykSskX61BQOXcL1qGgEOE0SKfLjDcsHmF2IXX3Q4T8pA62zgeenlLhp
+	JZblhmNtTxKV+OQIxYT9A09tnaBTwt3ALyg==
+X-ME-Sender: <xms:m3YaaTiSC0o1kkZpNVJE1C1iezypT8QeWir6OAtJPKK9epyRuKA_Rg>
+    <xme:m3YaaTvTXD_vo3wMHxYRsdUZvPLw11u_1Y-MuVg5MShbEPUUsakb227xr_1GmnRpv
+    v-j2Z0niovH8rvVJ2HyxAyG5Fr8X38dTm_hLdR1JUCKfhbPnXwreA>
+X-ME-Received: <xmr:m3Yaac5MdI0H7wTFDVVnb31wznmxnKkzvqpOPjIM_4GMgSZjiUZ48ejvsFpL7YchFBbwhd8w1v9we0so9Fl0W781kK1E7YTUgQfN>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudejudduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
-    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
-    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
-    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
-    gspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhs
-    thhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhh
-    rghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:OHUaaTtL3ON4CEa1vi-wstJJ5JDJKkKyYjclqSEcCHe4G3KJMa9LHA>
-    <xmx:OHUaaRnH3KlwbFl9z-U9Ljk9gcura-R0gO1Zd0rLRW-2MiY7A-PDVw>
-    <xmx:OHUaaVyV6erI0MD7nxHc4XXv_aHqIzFj1W8PqNDig6zoj3BICf9bQw>
-    <xmx:OHUaaTOIrrD6MbQvcR-myyZ531mRSWagj9Bca4TRgjJRkdv-HJ7KcQ>
-    <xmx:OHUaaWWSIQOSfucu2YCDDae-GEYk3QEA9vA1UjElTnyA0fmFQ1sfn6B1>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopegrnhhtohhnihhnseguvghlphgvuhgthhdrvghupdhrtghp
+    thhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:m3YaaXM3Ww23s_miDZxNkh_9d4GYSomYoiJF_QWGobqcXNnG-7LALA>
+    <xmx:m3YaaSu9IeJS2K37ijI-fS_u4KzcWiq-VFmtuTkoWlBZm3iYWA75Vg>
+    <xmx:m3YaaSZMJtXynEfhw_t9wGaE1VdpqD-Vt31zkBg8_pRVJ8YzavfLDw>
+    <xmx:m3YaacwGyV53EGXIbAqUWeRwhfaWSyjIKiL6GZIP7amFJJs_XE5-4g>
+    <xmx:m3YaackZQx9ToH55ZdBaxuZYMafwcOcOypVuOr4bv3h32fSzIqLG71IA>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 16 Nov 2025 20:07:04 -0500 (EST)
+ 16 Nov 2025 20:12:58 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,
-  Kristoffer Haugsbakk <code@khaugsbakk.name>,
-  Jeff King <peff@peff.net>
-Subject: Re: [PATCH] doc: commit: link to git-status(1) on all format options
-In-Reply-To: <c4349a03724.1763129061.git.code@khaugsbakk.name>
-	(kristofferhaugsbakk@fastmail.com's message of "Fri, 14 Nov 2025
-	15:04:47 +0100")
-References: <c4349a03724.1763129061.git.code@khaugsbakk.name>
-Date: Sun, 16 Nov 2025 17:07:03 -0800
-Message-ID: <xmqqa50lbh6w.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>,  Antonin Delpeuch
+ <antonin@delpeuch.eu>
+Cc: Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v5 0/2] blame: make diff algorithm configurable
+In-Reply-To: <08a6c461-e162-4eee-a42d-1da8f05a0606@gmail.com> (Phillip Wood's
+	message of "Fri, 7 Nov 2025 15:49:56 +0000")
+References: <pull.2075.v4.git.git.1762034252.gitgitgadget@gmail.com>
+	<pull.2075.v5.git.git.1762468914.gitgitgadget@gmail.com>
+	<08a6c461-e162-4eee-a42d-1da8f05a0606@gmail.com>
+Date: Sun, 16 Nov 2025 17:12:57 -0800
+Message-ID: <xmqq5xb9bgx2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,85 +89,33 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-kristofferhaugsbakk@fastmail.com writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> Excellent, the range-diff below looks good. Thanks for working on this
 >
-> `--branch` and `--long` refer to git-status(1) options but they don’t tell us
-> what `short-format` and `long-format` are, respectively. And `--null`
-> mentions “status” but does not link to the command.
+> Phillip
 >
-> Refer to git-config(1) on `--branch` like `--short` does.
->
-> `long-format` is the git-status(1) output. So we can just say that
-> directly.
->
-> Replace “status” with a `linkgit` on `--null`.
->
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
+>> Antonin Delpeuch (2):
+>>    xdiff: add 'minimal' to XDF_DIFF_ALGORITHM_MASK
+>>    blame: make diff algorithm configurable
+>> 
+>>   Documentation/diff-algorithm-option.adoc |  20 +++
+>>   Documentation/diff-options.adoc          |  21 +--
+>>   Documentation/git-blame.adoc             |   2 +
+>>   builtin/blame.c                          |  52 +++++-
+>>   diff.c                                   |   2 -
+>>   merge-ort.c                              |   2 -
+>>   t/meson.build                            |   1 +
+>>   t/t8015-blame-diff-algorithm.sh          | 203 +++++++++++++++++++++++
+>>   xdiff/xdiff.h                            |   2 +-
+>>   9 files changed, 279 insertions(+), 26 deletions(-)
+>>   create mode 100644 Documentation/diff-algorithm-option.adoc
+>>   create mode 100755 t/t8015-blame-diff-algorithm.sh
 
-This got no raction so far, but given that "commit --dry-run" and
-"status" share quite a lot of the internals, referring from one to
-the other often makes sense.
-
-Will mark for 'next'.
+OK, we haven't seen any activities since we saw this comment.  Are
+we ready to mark the topic for 'next', or are you waiting for the
+end of feature freeze to make a (hopefully small and fanal) reroll?
 
 Thanks.
-
->
-> Notes (series):
->     § Cc
->     
->     Cc Peff based on:
->     
->     • f3f47a1e (status: add --long output format option, 2012-10-18) did not
->       • Did not link to git-config(1)
->     link to git-config(1) even though the previous
->     • 7c9f7038 (commit: support alternate status formats, 2009-09-05)
->       • This older commit did
->     
->     I was going to mention these when I was only changing `--long` but the
->     scope expanded to the other two options.
->
->  Documentation/git-commit.adoc | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/git-commit.adoc b/Documentation/git-commit.adoc
-> index ae988a883b5..30121b3c861 100644
-> --- a/Documentation/git-commit.adoc
-> +++ b/Documentation/git-commit.adoc
-> @@ -144,24 +144,26 @@ See linkgit:git-rebase[1] for details.
->  `--short`::
->  	When doing a dry-run, give the output in the short-format. See
->  	linkgit:git-status[1] for details. Implies `--dry-run`.
->  
->  `--branch`::
-> -	Show the branch and tracking info even in short-format.
-> +	Show the branch and tracking info even in short-format. See
-> +	linkgit:git-status[1] for details.
->  
->  `--porcelain`::
->  	When doing a dry-run, give the output in a porcelain-ready
->  	format. See linkgit:git-status[1] for details. Implies
->  	`--dry-run`.
->  
->  `--long`::
-> -	When doing a dry-run, give the output in the long-format.
-> -	Implies `--dry-run`.
-> +	When doing a dry-run, give the output in the long-format. This
-> +	is the default output of linkgit:git-status[1]. Implies
-> +	`--dry-run`.
->  
->  `-z`::
->  `--null`::
-> -	When showing `short` or `porcelain` status output, print the
-> +	When showing `short` or `porcelain` linkgit:git-status[1] output, print the
->  	filename verbatim and terminate the entries with _NUL_, instead of _LF_.
->  	If no format is given, implies the `--porcelain` output format.
->  	Without the `-z` option, filenames with "unusual" characters are
->  	quoted as explained for the configuration variable `core.quotePath`
->  	(see linkgit:git-config[1]).
