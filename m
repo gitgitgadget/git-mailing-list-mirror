@@ -1,65 +1,65 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38E234B662
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 20:40:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9E138DF9
+	for <git@vger.kernel.org>; Mon, 17 Nov 2025 20:46:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763412020; cv=none; b=G7TTU3MsATKhBl52rwJy7VYd6HFSZLXSMQACxuTESi3XoZgu94RsrOgmlZ36oQd4u46TxRnKL93Cwj1kesVs8NSxtinZ3GJdVrW+GTOW4avhm54tvs1baERDk5r2PGR/2q7NvGrWKuCcw8IA8EV0h1tpJcxm6AWZh54NKj9YJAE=
+	t=1763412378; cv=none; b=RKD51t17Kk0YTg/EgpTk5Yo6oTiGRAHaQWdm5EVvCHF0nrQs9lTwN5/0V6Qi1XxH5ah1f6SVryt/+XgHehPMucBYExueOc1WNrz0riUENhnNCQWvSEC4KDSPadrwEbpYYcoaAnvhu/bG6Gyla3ArAZ6IqJ1ym1MKCPJ/cRP6JpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763412020; c=relaxed/simple;
-	bh=gJyGJwh4p1T7YIHVd9sLcmNd/wDOV3t5rUPyPUg9/y8=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=gfGayb8QEE7HuzlPcPeLul5i6EhFJNXWNe6ikBtKQWNLWQKgzXWSaNQpxBI8e1Kx0J8E8EeJfEV2qz1OmzKaBs2DOdmYfZb2mzuEGdlM5s9wNnK1DEW3FVKGTh79xBJGWHMg+MTLy4x4GdAvI/LFmya/s083Zy7BX8GT/TnQtz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NMFemRPQ; arc=none smtp.client-ip=209.85.210.172
+	s=arc-20240116; t=1763412378; c=relaxed/simple;
+	bh=kzkTy8MzVAFsl3zVdIQd934tGbxqra7QK00IAKJDjrM=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=YdPboaHjx5hoWBCFTncW7TDmRlukEVnbFuPUq2Vwk4tPoL3uet6Dzpo0m4rRHXWBK1w79F30FSYWRJ6lVZgmlUeso+N/4lvO0UgV/Jngcuwgh59oTQii2jr+wsgtk/uCfbC9C/ifCil8QMPyZ5qrnBlFpX4GOnw2Z2c2hC9Sfvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oub9oECa; arc=none smtp.client-ip=209.85.210.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NMFemRPQ"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-7bc0cd6a13aso2800658b3a.0
-        for <git@vger.kernel.org>; Mon, 17 Nov 2025 12:40:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oub9oECa"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-7b8eff36e3bso682682b3a.2
+        for <git@vger.kernel.org>; Mon, 17 Nov 2025 12:46:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763412010; x=1764016810; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1763412376; x=1764017176; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=zmpoqYFY6T+OS+5vWmTvxcu1e6Z0nQEuEeP5vjC3gio=;
-        b=NMFemRPQVZuNjInFNjXvQ3KoqyD1t8dfZheFNp/andFzdXwlhp0MAsxqxaVWT924b1
-         9H4/hWN9OKJB87J+lxmBGhoiOocr/aB+0IuaiaI7t/2FM7ftRZl+Qoe5RkUnAmu0Jp6k
-         QvhlhHR/t9EpcjfiAWtFvpyYegyFNcOggJv+MW7bkEcLa61Pp7C2OCMuDst17uUdCeLs
-         KGiDlsj/sYrKj8cm+fBpt66xZOny/xP5E/05d+iZN/e9ZGCWL20oeAIBkXf2ayvkcHEf
-         2AMs69ZC71l50O3quOvBpKjoOzQLXI6ABdpctxYXvnXMtCueH6qIt4YpqMXAuWD9yHiF
-         zngQ==
+        bh=dVotKB2ig50QKhsZzjUqie7tNjV0OhN5OlO6ILaAU0k=;
+        b=Oub9oECaMr17sEyMu2+kPT1aI8djESG6hAjfYurUrrzUJlj8erpFZoasfyKwIV6rW+
+         +dtVz3vLR5TtdK5KWHtItphoe+4+65HaGCYaTXHpf89Cz7xC06jgxx4YRrz+xctZX5Np
+         8K37S6tiQiTMu/421xevM5/dE7uZ7RIKvkndbBjfCb6iGhMbr3pGTeHZa4zDK4YpIpZ5
+         NDlv6D0Rpz5j9BNBbNUFBehichm4xSSMc2h5VJq9toV774tik05tsywzvzM4M/4g4Zdk
+         C8btU+vhxrGQrLfArjXFjlu5zkgKTvlbP0oIfFfvKh7ca2+fKHOZe3KO5beg6Z++N6l8
+         PEhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763412010; x=1764016810;
+        d=1e100.net; s=20230601; t=1763412376; x=1764017176;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zmpoqYFY6T+OS+5vWmTvxcu1e6Z0nQEuEeP5vjC3gio=;
-        b=kiMTfoVr1jQYP8DB75CywNTen/xODgwAUAb6qFWJgKSb/MD2oCLMAGd7cOGS/nSPpl
-         R+ngbrCAprRcSPe17f0LbUXnyGkfWjFvBEqWVhvpY2j3Zz8rmq/B1QLDCaiY4mgnr2Bm
-         dU6z29v8heal56+3yViZ1WzZCqSz/LX8zk2lrrYRUwdm8Chb587nBWq/SF4RYdcsVwqJ
-         30JKO8lSPEpovvvd65+z5iVBaTpR3Do31RCmAkNsVlKyn3MeaLA0qSJp/bH4rrdLbv7a
-         n0OOhRy2Zt1VySiazvR72sMfP/tTGs8j9nxhMicyhLsNYi4ZqI1tcdHdaGqgVLrsDhDy
-         P2Uw==
-X-Gm-Message-State: AOJu0YxFvcLOrO1Sh28MPx6B/v2jW0RSdW8WDtmNqWeyhy3nRDocfOq6
-	eURigNesvGzm/+5G/5Ui4sgTt/1+s/Ngkeq/V2foC1IE40Q6kCIDWamgZtnkWg==
-X-Gm-Gg: ASbGnctpsYcA61W4nHC8Efiy0bQ8cO+yUUv770jnVZXFoQ7RtMQGfQfJb3FRl2RNM1/
-	3GqqEtos2kkMPqzuC9IcnBb/31KmPkeJ/99+dUB98Cl79QyqdBR8OpeA1KpjpQ10U+s6KZ+6ol0
-	MrT0DSJMG4lU4qcv90FudvBaP640CtxYyK/22XwG0dbVZFXTX5l7zCio/4KBPJ5QeLZY4ilQyGU
-	7EUBsOmcyJO6hsu6zwATdMWtj86NzWmDcDyVCdouj8+TysBrcTWs/qo1CuMt0OepsCD4N2fUFhM
-	ZvPpPUn1R5g+OAglzhskS+MOjhZMjvFXwGUUtcRERvGIZwDCl8PE+eB/ajL1Yy5Bsn5zvxYNsGi
-	p6i+DQ6aZ62Q3weRuqcRsyjI1/aWo1o9YYUinqqi/GKlcljIog2ljgSMOyY02XpL2oeeEI4H8m/
-	Ap19RMABthWDXtfVycDxQGvZuY
-X-Google-Smtp-Source: AGHT+IGsEPF7eF5pINdb4aDnXZjsvpFTMitlqDWjSvxQ7iBoXr+Jqbhh5Q8oYibcnvP8WuOFFN2P9w==
-X-Received: by 2002:a05:7022:43a9:b0:11b:f271:835a with SMTP id a92af1059eb24-11c74885b6dmr390091c88.3.1763412010247;
-        Mon, 17 Nov 2025 12:40:10 -0800 (PST)
-Received: from [127.0.0.1] ([128.24.163.102])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11b06088625sm52854182c88.8.2025.11.17.12.40.09
+        bh=dVotKB2ig50QKhsZzjUqie7tNjV0OhN5OlO6ILaAU0k=;
+        b=qqQhES7RXVIwrQ6CKofGUUNI6DXw2BLrXlOuYFX9itw9thAilTDjTEfbJeYCNOId/F
+         TDLW1wSmJ0psKB6Ml1D8Rq8GIJcFMAGfmmWXcqQ5Kk20wrKzFwDBDZQvN4LTCMai5TTN
+         xjJONNjXEbw4jtfxudc2J4Yqzooc0PM5+nTK4o4EJGXtyarlxwckvaiKbCHsUDDrmPIM
+         uKTsPOfkErdekpqb8IwBh0GpFwDJs7llx40zO5TFbSaHuFIzcDXm4nKgkIiNuULx2O0v
+         KybHkbU9apQL9VoPmGR4DiiUyZHb+IJJSGEnpqmw0cK3N0l7J+JoX0qBQxEii7mrJZTk
+         vX8w==
+X-Gm-Message-State: AOJu0YwrLDVApGyauX/9AduVSPWfny7v7o9O6aqVYGmS7kxDExYF7ckD
+	TH5vEj9QklJJ5Uqmm3IF+INQIOAyaYpGvVFSJbl9cmdzaf8CyFCILtUqWtw7/A==
+X-Gm-Gg: ASbGnctT9ynurq0IQwYPjRaPpEsVJIHLnvvOTHZYxQj8M7MW+pRtp6r1YjQPtF1MdVq
+	GFif6etYIWAzFd1sY8Wvx5VrhBHUW+0Cr8emgOJsd2J1SZXQ5jveV5VKC3nFbiDj26wV/8WTtBo
+	41aZC8gk809LTiqSUwQpQH7g7TOiEFF+PL4dSFLVo2S97NvkyveTB6fzldrD9RIjzVjGhsfT6K/
+	Mkk3q6uqt1Leu0uTfOE1/Uoc2ad+34D1EPAq3HsG108D3YIj16pEkyB2+N0vQys/vqPDw45Wn2S
+	9DjBRk64BwlKYl/qTPaec+82xiKKIQ5rgeyGtmDzC/wGe/IU0XVERuxsiqTHxejqoFOhNy/Cfa1
+	iESRqxCjLj6OhjwKU+Ssottia3MGKXLhFq1tgFGbMM2GZ3hbkHAluI46E8AJSWgSlDKa4mVix6g
+	7u2Q==
+X-Google-Smtp-Source: AGHT+IFs1MfoQpwMFEYIR8NQVa3wV4fZ/wW9Flcw6SkxfGz7tJJtDk8VtYDw8xksxl8IODOnKWA0zA==
+X-Received: by 2002:a05:6a00:1251:b0:7a9:8770:ce5a with SMTP id d2e1a72fcca58-7ba3b1b0d6emr14937943b3a.20.1763412376178;
+        Mon, 17 Nov 2025 12:46:16 -0800 (PST)
+Received: from [127.0.0.1] ([20.168.118.82])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7b9250d32e8sm14261529b3a.24.2025.11.17.12.46.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Nov 2025 12:40:09 -0800 (PST)
-Message-Id: <pull.2006.git.1763412008722.gitgitgadget@gmail.com>
+        Mon, 17 Nov 2025 12:46:15 -0800 (PST)
+Message-Id: <pull.2007.git.1763412374866.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 17 Nov 2025 20:40:08 +0000
-Subject: [PATCH] cmake: stop trying to build the reftable and xdiff libraries
+Date: Mon, 17 Nov 2025 20:46:14 +0000
+Subject: [PATCH] mingw: avoid the comma operator
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,83 +75,114 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the `en/make-libgit-a` topic branch, more precisely in the commits
-f3b4c89d59f1 (make: delete REFTABLE_LIB, add reftable to LIB_OBJS,
-2025-10-02) and cf680cdb9543 (make: delete XDIFF_LIB, add xdiff to
-LIB_OBJS, 2025-10-02), the strategy to build three static libraries was
-rethought, and instead only one static library is now built.
+The pattern `return errno = ..., -1;` is observed several times in
+`compat/mingw.c`. It has served us well over the years, but now clang
+starts complaining:
 
-This is good.
+  compat/mingw.c:723:24: error: possible misuse of comma operator here [-Werror,-Wcomma]
+    723 |                 return errno = ENOSYS, -1;
+        |                                      ^
 
-However, the CMake definition was not changed accordingly, and now
-CMake-based builds fail thusly:
+See for example this failing workflow run:
+https://github.com/git-for-windows/git-sdk-arm64/actions/runs/15457893907/job/43513458823#step:8:201
 
-  [...]
-  Generating hook-list.h
-  CMake Error at CMakeLists.txt:122 (string):
-    string sub-command REPLACE requires at least four arguments.
-  Call Stack (most recent call first):
-    CMakeLists.txt:711 (parse_makefile_for_sources)
-
-  CMake Error at CMakeLists.txt:122 (string):
-    string sub-command REPLACE requires at least four arguments.
-  Call Stack (most recent call first):
-    CMakeLists.txt:717 (parse_makefile_for_sources)
-
-  -- Configuring incomplete, errors occurred!
-
-Fix that by removing the parts that expect the reftable and xdiff
-objects to be defined separately in the Makefile, still.
+Let's appease clang (and also reduce the use of the no longer common
+comma operator).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
-    cmake: stop trying to build the reftable and xdiff libraries
+    mingw: avoid the comma operator
     
-    This was needed to be able to pass the CI builds of Git for Windows
-    v2.52. With all the Windows build problems observed in the win+Meson job
-    in seen lately, it might become unsustainable to also keep taking care
-    of the CMake definition. But then, the same might be said about the
-    Windows part of the Meson build definition.
+    I wonder how many more times I will deal with the comma operator...
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2006%2Fdscho%2Fadjust-cmake-to-xdiff-and-reftable-merge-into-libgit-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2006/dscho/adjust-cmake-to-xdiff-and-reftable-merge-into-libgit-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2006
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2007%2Fdscho%2Fmingw-avoid-the-comma-operator-5660--v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2007/dscho/mingw-avoid-the-comma-operator-5660--v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2007
 
- contrib/buildsystems/CMakeLists.txt | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
+ compat/mingw.c | 48 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 28 insertions(+), 20 deletions(-)
 
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index edb0fc04ad..479163ab5c 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -679,18 +679,6 @@ list(APPEND libgit_SOURCES "${CMAKE_BINARY_DIR}/version-def.h")
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 736a07a028..90ba5cea9d 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -491,8 +491,10 @@ static int mingw_open_append(wchar_t const *wfilename, int oflags, ...)
+ 	DWORD create = (oflags & O_CREAT) ? OPEN_ALWAYS : OPEN_EXISTING;
  
- add_library(libgit ${libgit_SOURCES} ${compat_SOURCES})
+ 	/* only these flags are supported */
+-	if ((oflags & ~O_CREAT) != (O_WRONLY | O_APPEND))
+-		return errno = ENOSYS, -1;
++	if ((oflags & ~O_CREAT) != (O_WRONLY | O_APPEND)) {
++		errno = ENOSYS;
++		return -1;
++	}
  
--#libxdiff
--parse_makefile_for_sources(libxdiff_SOURCES ${CMAKE_SOURCE_DIR}/Makefile "XDIFF_OBJS")
--
--list(TRANSFORM libxdiff_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
--add_library(xdiff STATIC ${libxdiff_SOURCES})
--
--#reftable
--parse_makefile_for_sources(reftable_SOURCES ${CMAKE_SOURCE_DIR}/Makefile "REFTABLE_OBJS")
--
--list(TRANSFORM reftable_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
--add_library(reftable STATIC ${reftable_SOURCES})
--
- if(WIN32)
- 	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.rc
- 			COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/GIT-VERSION-GEN"
-@@ -720,7 +708,7 @@ endif()
- #link all required libraries to common-main
- add_library(common-main OBJECT ${CMAKE_SOURCE_DIR}/common-main.c)
+ 	/*
+ 	 * FILE_SHARE_WRITE is required to permit child processes
+@@ -2450,12 +2452,14 @@ static int start_timer_thread(void)
+ 	timer_event = CreateEvent(NULL, FALSE, FALSE, NULL);
+ 	if (timer_event) {
+ 		timer_thread = (HANDLE) _beginthreadex(NULL, 0, ticktack, NULL, 0, NULL);
+-		if (!timer_thread )
+-			return errno = ENOMEM,
+-				error("cannot start timer thread");
+-	} else
+-		return errno = ENOMEM,
+-			error("cannot allocate resources for timer");
++		if (!timer_thread ) {
++			errno = ENOMEM;
++			return error("cannot start timer thread");
++		}
++	} else {
++		errno = ENOMEM;
++		return error("cannot allocate resources for timer");
++	}
+ 	return 0;
+ }
  
--target_link_libraries(common-main libgit xdiff reftable ${ZLIB_LIBRARIES})
-+target_link_libraries(common-main libgit ${ZLIB_LIBRARIES})
- if(Intl_FOUND)
- 	target_link_libraries(common-main ${Intl_LIBRARIES})
- endif()
+@@ -2488,13 +2492,15 @@ int setitimer(int type UNUSED, struct itimerval *in, struct itimerval *out)
+ 	static const struct timeval zero;
+ 	static int atexit_done;
+ 
+-	if (out)
+-		return errno = EINVAL,
+-			error("setitimer param 3 != NULL not implemented");
++	if (out) {
++		errno = EINVAL;
++		return error("setitimer param 3 != NULL not implemented");
++	}
+ 	if (!is_timeval_eq(&in->it_interval, &zero) &&
+-	    !is_timeval_eq(&in->it_interval, &in->it_value))
+-		return errno = EINVAL,
+-			error("setitimer: it_interval must be zero or eq it_value");
++	    !is_timeval_eq(&in->it_interval, &in->it_value)) {
++		errno = EINVAL;
++		return error("setitimer: it_interval must be zero or eq it_value");
++	}
+ 
+ 	if (timer_thread)
+ 		stop_timer_thread();
+@@ -2516,12 +2522,14 @@ int sigaction(int sig, struct sigaction *in, struct sigaction *out)
+ {
+ 	if (sig == SIGCHLD)
+ 		return -1;
+-	else if (sig != SIGALRM)
+-		return errno = EINVAL,
+-			error("sigaction only implemented for SIGALRM");
+-	if (out)
+-		return errno = EINVAL,
+-			error("sigaction: param 3 != NULL not implemented");
++	else if (sig != SIGALRM) {
++		errno = EINVAL;
++		return error("sigaction only implemented for SIGALRM");
++	}
++	if (out) {
++		errno = EINVAL;
++		return error("sigaction: param 3 != NULL not implemented");
++	}
+ 
+ 	timer_fn = in->sa_handler;
+ 	return 0;
 
 base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
 -- 
