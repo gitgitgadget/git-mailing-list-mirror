@@ -1,165 +1,110 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4002B325715
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 22:04:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F209320CCD
+	for <git@vger.kernel.org>; Mon, 17 Nov 2025 22:09:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763417088; cv=none; b=T3lcegAwmzOX8HB1Ncp5yechzxBIDceR7CBcE9uhSxL9PtBeMyBypkRrgRKt/SnxYi8xPKtOpLjhsZdLsgDGUvZ1iqbUetxEitKDwOSMf98ktD/aEu8I0W/q1+Onq5mgXSNXWCEr7b4cd0IR1AZMKIb1kV4QbpomwaoCfrqIPy0=
+	t=1763417402; cv=none; b=YT7Uy+Q11InbJVks3MY/3fGLYnUbKd/X37nTdxRAHNXu8LBz4N9Cq7W5Nqe668I1lEZSXlRBpWbfx7OjZCR0lYoSdkjHKxwgOJo5ZXVBiH0+lmbq79jSJlmUAa4sjxSIFHeJbnxR77qHtx1Mnrq6yt/8gg75yP+qtoFo5+k8ixc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763417088; c=relaxed/simple;
-	bh=8+i/VbqSBlk6lBWdqTm5xdAK1AaoGqy7A5lv2x7KikY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NsVwaO6esOZorb3Nc7zBhRVPZ07xW9P4H62+Mn6XT/8OjH3YtsAYy+e/VUadSWhm8RRvb6xAaR5sz9jsKi4yiFdPd1JacFGX5YKh+JC1LGAwBbnwA6109JFgb/1/rmdpdUpzWxTIniRE7aRFaZnlmxr/1aqKO1o5HvxmKR4vFbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Zd7IisC+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jTw35fHG; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763417402; c=relaxed/simple;
+	bh=1NobgbKwI0oKTWPwNjup4hHEdW9aJk/09dn42v+Xm3Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Dp2lPIejR79x8Aow3tYzjtv9enbIyIOzb8slb0fHVcnD+dE02YUP8/ITcBS0M1Gp5fmHr2Z8KfKQrug/FV4PRf4baRHGgT34StY+t+s2PklRh2N6rk6py2up6o3pp39QwYWvQV9+hdE4EhrHgNkKIrxlsVv0YvDHTrq5a7gsHqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=rHetfLju; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zd7IisC+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jTw35fHG"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5743EEC01C2;
-	Mon, 17 Nov 2025 17:04:45 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 17 Nov 2025 17:04:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763417085; x=1763503485; bh=0QXwaJZVb+
-	1U4FOhgq1LaZPmg8CErGlhbywk1X2hDcg=; b=Zd7IisC+fT04a59HF7bs8wXaAt
-	OLLoXpbc199XgGXDnT6OMVNNNFkId3ftPUHZHArHy3xnp4W78QNECXdk9cpweL4l
-	ugy3d2L/ezE1U+ht8w318WchfmRrcR5A7ScuAKdZEHjFQqdbZn2Jv1TednF5bxbk
-	Fu6iAYL0puXOsqOY/Xt4cWdfSSRmN/iMEo99qyzeg+IPgvJRdEi9qnLBW85LPXSI
-	mBG0rfOKbUslqDKiHOdSzCRo8KrfrYKbj5jPxjz6Z3MZmQ/5WLdiJb4FO6aA9eUd
-	ugETr4j5tkqEz1xmyIPb2gxiQKP2ZV7g3AHXJX1vkYtXMSbqlGSE9zeCZnZQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763417085; x=1763503485; bh=0QXwaJZVb+1U4FOhgq1LaZPmg8CErGlhbyw
-	k1X2hDcg=; b=jTw35fHGLzWfTtzOst5bf/Z3xyvvnuSqXQr/vyCBXq8V4XR80gi
-	VwpLJzSCQ8yn/QQRxGljPX+GA2FiLLH/kmwEk5evmzRNMzAD6w/FP2ZMcnRgCJQ8
-	F7MydAkdguB2Xxg3/K+WAaVbwLyMYKIROmcaWS5qnEiQKv51vnbV12MK3ifZRcEY
-	+/hqOCTiZg7fLhPqCn3uC36FTZbVJboPUGSKfscWrw8pbC9wV35Wpyu2YAQRIgCr
-	xdc1BIGDMNnRBJShqF+Mjodjc4WVjnF6dGkdb5EECw3kRPlxUuvt/vBtHTxAZZ9I
-	Yyfkbe0+bFA30CPmDo0qgYzg8yZofwXgcUw==
-X-ME-Sender: <xms:_ZsbafO9suuCRocG1uaoB1vVUgKNHwfrYiIanBAqOhzlAnl83xao7g>
-    <xme:_ZsbaQ_z9SqCq7pSjx6JCZhDXkSK9G1wnJCQO4_vFY0n5u9LvwbnAsuz524-f982O
-    yb8hzFm_aUEdyktBnwbrfs5HGkxiEpkiPOhehNEBNcJiBJAOXsneA>
-X-ME-Received: <xmr:_ZsbaTQF1sTVLyRS-7_1-qoM9sEK_z3gz8V43cWTCBeWKxoarhI69hwJg3Ieu_LYK6kUQMiGS0H7eKi9GEVBzQgvkYNO6_1uz94P>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudelieduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:_ZsbaSn93NTaAoYkazZsh02Spq9LdMMwiP14_CAaUE7WDmW7bRdstA>
-    <xmx:_ZsbaTTWl8oXV2F14-sC5gaeuLlXjPLrfR7s3amiq6AUks9HYVDs7Q>
-    <xmx:_ZsbaQM6n4vWcgiE6aQ7IVtGt_U-uX4f7blSzD5NmfBXjSezkZlCWA>
-    <xmx:_ZsbacV4mR1c661PtB278Q8yTx1H1YoRBPDPoymtQK64pB1YpxSz8A>
-    <xmx:_ZsbaQrCul-JenIwrQsV_M18VK0674vk-oKZz1ZOdPPUyFMnqbFgRG7l>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Nov 2025 17:04:44 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] make strip: include `scalar`
-In-Reply-To: <pull.2004.git.1763409086322.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Mon, 17 Nov 2025 19:51:26
-	+0000")
-References: <pull.2004.git.1763409086322.gitgitgadget@gmail.com>
-Date: Mon, 17 Nov 2025 14:04:43 -0800
-Message-ID: <xmqq7bvoiadg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="rHetfLju"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1763417391;
+	bh=1NobgbKwI0oKTWPwNjup4hHEdW9aJk/09dn42v+Xm3Y=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=rHetfLju4ypfHumGv/M0P9Ff6ccIrQv7RUaFO3ymi8CQww8Gqdlxh9YfGIr/3jQtP
+	 IjGp0K3f6A0E6qQkznQBH8SrS71bQhWBlfmWSnKjqGJjhTu6e0tusSuIdhL3YY23MV
+	 u1Wx0ldytzBVBKIZRLlFVR1EoXV9EpMC86xHQ2KAto5Od5t9nWl04My+S7KBQ1Fyen
+	 M4FOARZe2Peg916Q/mMZ9JagoFekLdSLKtWjPpQ6a8cPvjruH4PvIPxIKMyqfOO11Z
+	 kxH2oWeSmOQsuNdNW4XxJ+K7LtboMFHhhkpyLRGmjZWiyJA6N0aQ7SMVT90uKjfnRu
+	 GIJJhnISG0I1zrBunZQV6/6z8Be7l1QpN7DlSML8tC9lX8OnT0xc2jt8vmGjfIr21c
+	 kagXC48p2Sjn3QlDr65brQwf2Cfh/k+O5Cip08sjjLWHwkrOrA4EGUWTLHg9ol3c0x
+	 cIK5OYIT0qGaa9wkPIK5ZaQF9qZ8AIpLsNLMZyOFkzZQ67GNEJg
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:b6c6:bf88:c872:dae4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id D02C520065;
+	Mon, 17 Nov 2025 22:09:51 +0000 (UTC)
+Date: Mon, 17 Nov 2025 22:09:50 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 00/14] SHA-1/SHA-256 interoperability, part 2
+Message-ID: <aRudLpkRdRtCAoi3@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+ <xmqq7bvsjzlx.fsf@gitster.g>
+ <xmqqpl9h9mgo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="/9inmGPxZr76Oo/O"
+Content-Disposition: inline
+In-Reply-To: <xmqqpl9h9mgo.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> When Scalar was made a canonical part of Git in 7b5c93c6c68 (scalar:
-> include in standard Git build & installation, 2022-09-02), it was added
-> to all relevant Makefile targets except for the `strip` target.
->
-> Let's correct that.
+--/9inmGPxZr76Oo/O
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The motivation makes perfect sense.
+On 2025-11-17 at 06:56:07, Junio C Hamano wrote:
+> In addition to "cargo clippy" I reported earlier (and attempted to
+> fix) in a separate message, we have been seeing constant failure of
+> "win+Meson build" job at GitHub Actions CI.
+>=20
+>   https://github.com/git/git/actions/runs/19414557042/job/55540901761#ste=
+p:6:848
+>=20
+> I attempted to build tonight's 'seen' without this topic and it
+> seemed to stop.
+>=20
+>   https://github.com/git/git/actions/runs/19418361570/job/55551045554
+>=20
+> This topic may need a bit of help from those who are clueful with
+> Rust and Windows.
 
-> diff --git a/Makefile b/Makefile
-> index 7e0f77e298..62f7f7bf56 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2565,7 +2565,7 @@ please_set_SHELL_PATH_to_a_more_modern_shell:
->  
->  shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
->  
-> -strip: $(PROGRAMS) git$X
-> +strip: $(PROGRAMS) git$X scalar$X
->  	$(STRIP) $(STRIP_OPTS) $^
+I think that has been failing with Rust since well before my code came
+in.  It has failed for me for a long time (well over a month), so I have
+just ignored it.
 
-I wonder why the original names git$X here explicitly, instead of
-using say $(OTHER_PROGRAMS) that covers both of these.  I know that
-the undocumented INCLUDE_DLLS_IN_ARTIFACTS knob uses OTHER_PROGRAMS
-by throwing in non-programs like DLLs to it, so that artifacts-tar
-target would include them, but perhaps instead of working around the
-misdesign of that target, wouldn't it be better to correct its use
-of OTHER_PROGRAMS and use it here instead?
+I'm going to send v2 shortly, but we can squash in changes and do a v3
+if there is something actually broken in this series.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-The change (including the "strip scalar, too!" part) should look
-like this, I think.
+--/9inmGPxZr76Oo/O
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Also do we need a matching change to CMake and meson?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
 
- Makefile | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaRudLQAKCRB8DEliiIei
+gbzWAP9Kb5Vrmn6gCttvOxCiMqtIxXBjwymYgTzGIHm7z9RtEwD8DSrbHM48yGnw
+aMgZqVf7ok74NgxrCc97lKNuXnrtcQY=
+=4O4Q
+-----END PGP SIGNATURE-----
 
-diff --git c/Makefile w/Makefile
-index 70d1543b6b..a63a4adbc7 100644
---- c/Makefile
-+++ w/Makefile
-@@ -682,6 +682,7 @@ LIB_OBJS =
- LIBGIT_PUB_OBJS =
- SCALAR_OBJS =
- OBJECTS =
-+OTHER_ARTIFACTS =
- OTHER_PROGRAMS =
- PROGRAM_OBJS =
- PROGRAMS =
-@@ -2499,7 +2500,7 @@ please_set_SHELL_PATH_to_a_more_modern_shell:
- 
- shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
- 
--strip: $(PROGRAMS) git$X
-+strip: $(PROGRAMS) $(OTHER_PROGRAMS)
- 	$(STRIP) $(STRIP_OPTS) $^
- 
- ### Target-specific flags and dependencies
-@@ -3697,10 +3698,11 @@ rpm::
- .PHONY: rpm
- 
- ifneq ($(INCLUDE_DLLS_IN_ARTIFACTS),)
--OTHER_PROGRAMS += $(shell echo *.dll t/helper/*.dll t/unit-tests/bin/*.dll)
-+OTHER_ARTIFACTS += $(shell echo *.dll t/helper/*.dll t/unit-tests/bin/*.dll)
- endif
- 
- artifacts-tar:: $(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRAMS) \
-+		$(OTHER_ARTIFACTS) \
- 		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(test_bindir_programs) \
- 		$(UNIT_TEST_PROGS) $(CLAR_TEST_PROG) $(MOFILES)
- 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) \
-
+--/9inmGPxZr76Oo/O--
