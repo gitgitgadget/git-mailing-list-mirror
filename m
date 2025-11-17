@@ -1,116 +1,154 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A5F337BB2
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 15:22:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763392961; cv=pass; b=tQr71nbwWuEouh3rNmUNmnPDLB+OCn4wQUDfwUEFyZTGFPlv3xgAaVaLHk2zcafsoQZtrnxI518bCfecV2i8IW89vaH4g2P0RjH4uBCcBmQ4wbdk9soIzEC4AOmmFLxpG1eQoktoa3QQY81MqfaBDx8EIgixag2B3zRTF3Nb0UI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763392961; c=relaxed/simple;
-	bh=aHg7pS7FqvV5EyWaXHJMbBquyIbJwxeDkSNY5ZpwSfA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=J9H9K9WkjXsjBePIAYT+Pn+Ogqh5oW6ukIfeDM/6zAeHN3UHRo/eaUgXdjFJF0kuO5RWkq5AKz7ZlwGQ/gGpZP1z2YkkBqEesx74+HsT6uBcaoG/W1/bNiNjfkwUmGo9IBIWzlqbcbS1R4KrZTqGZdKvUCqSVGKcS1qFyrq7Tgk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=S04U7I71; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC6E26FDBF
+	for <git@vger.kernel.org>; Mon, 17 Nov 2025 15:38:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763393922; cv=none; b=GV2yAQqSIEIhs8WPTmzEUltorQNf0DBXG0nAhvVaWc4taElzFbDtadqsNL3nL2s+y5IKKikdEl/hRTfu7rt7UYpkmmdAYkzJ+VQ/F3UzQjVZQerB84YRSUPASm64nfDWi/IJHDNCvT23iKA27lELPW9FOddey3NjLj8IOOdKW6Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763393922; c=relaxed/simple;
+	bh=e5aZiSQi+HWGnNy5K7wFQwywRFArFHabC7QFFIPzDDg=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=c/E+6dPgLqj6jve7orTN4dmLcSQ14QPlDcR5B2rgPYBWLc8F0BtdC7QIs9zfS81+k206eaRF3bxrXBcy7/fd2MBSz0nfB9P2n3flcwO0cpBzT7t34Z13tavqXX4rMXPzN8/uMXMx/GeqHOTuPNZNJnYxBi71YnjQ+ITIjVQlmho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JPZ7KLhd; arc=none smtp.client-ip=209.85.221.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="S04U7I71"
-ARC-Seal: i=1; a=rsa-sha256; t=1763392941; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=YvIro7q1jQlI9NcKGupXfrSqxX8WEECGQhU3PZKg473y3hWqQuaurUdliL5CUIceSDvL40GkCFPlwkbZtPL1UcPiBbDb5WF68BZcnrn3/zRogmuD4B+4G+2XOFBdhPq09XXwLY7ym5w0apzwv/wTKvze6SObKvudJZlZOorpK78=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1763392941; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=Nt/Pe8HK+EdGRg1I6Fzn5tWaDHgSkoYna/YNHKGJhSY=; 
-	b=lv+nxglE0U52Cd7nBdSAwHKYT1286LlLLCkJuKeXw8jvM2DA8Q4jyGcMcHyxDezQChkRh4aPK83Ik7zUaA3dUPjcTWANfxTdYBUgoU8S/TCP9UhhfvxXPuXOiDezmUJT9nfnK2od2W3ReiU93cr1PDQmuCnh0dQiZNQHKUUYszU=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1763392941;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=Nt/Pe8HK+EdGRg1I6Fzn5tWaDHgSkoYna/YNHKGJhSY=;
-	b=S04U7I71dPPHeTh2dBEchxGv8uvnx7g64NJ+wWSho6zvgdQagebSgNYJz/0PPu88
-	t3tysojt5Yc3r8NT8jz5dRp+weIK9zjWIRyweD/SNJey8RTx7axg3341aAc8znpU89e
-	geo39+DoPO4bcrEGWffl1Lc50L0YThl/maBOcWrA=
-Received: by mx.zohomail.com with SMTPS id 1763392940104949.2299884219357;
-	Mon, 17 Nov 2025 07:22:20 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
- Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio
- C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan
- Nieder <jrnieder@gmail.com>, Patrick Steinhardt <ps@pks.im>, Ben Knoble
- <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v4 0/4] Encode submodule gitdir names to avoid conflicts
-In-Reply-To: <6m72swbxcm2gi2wtvgc4yxid3o64qbuckzzguzg3mzd6rmrvx5@i55v6c2nq5e4>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20251107150547.3272180-1-adrian.ratiu@collabora.com>
- <6m72swbxcm2gi2wtvgc4yxid3o64qbuckzzguzg3mzd6rmrvx5@i55v6c2nq5e4>
-Date: Mon, 17 Nov 2025 17:22:14 +0200
-Message-ID: <87cy5gbs61.fsf@gentoo.mail-host-address-is-not-set>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JPZ7KLhd"
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-559a4d6b511so463316e0c.0
+        for <git@vger.kernel.org>; Mon, 17 Nov 2025 07:38:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763393919; x=1763998719; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=K+X3qbtgaLLK2EwzC5lH7HDQ7AzidY4nQ6pn2/9DDRc=;
+        b=JPZ7KLhdOBUA/Zgy3+eAqM1kwMczPjD2GrO6MvoScFfnWPEgRNx52IJV0j6LZWS8EV
+         XL5gSkku37iaMoPV6RTTfiT178WU5JnmzvMAPpQIzhWS65QzQFGgjk+Qxv7uh6MeThsu
+         KoULHNtpn6MR1o9n8GpGmlqkrAPusQxOuHeqBWv5G04IPHCzQcnw9cpOt4ppqB1ZhYwa
+         M6gO/mwdChyAkUMnGriwx60V1rN7qmsYK0cxi03xB1G5sFvSTlJi07iefVp3/xL2C/xO
+         ntKh58LCPhR68rwz18bv36hu2dvzKYjIuBH44mczTaYpIE40Jj8AyUH6NJMwWOZ5J/+7
+         k19A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763393919; x=1763998719;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=K+X3qbtgaLLK2EwzC5lH7HDQ7AzidY4nQ6pn2/9DDRc=;
+        b=I6JuIjOEDh4Q4ZY4RsWAAeDrqUfxwUIFqWQymdSS8k29/EIKzWMvsPqBx1DAbF/1QR
+         w+6LCetxvrgzhHzs3TyOL3qUnNKHKzikvFp1W069idU5ZPPANvns+J22dDmQ2g4oeVUR
+         DRi44H41rBVZhO4NSxUKcE+adCEIx4QneKpKNCFyxRdvj2tRZdQADgmkBTam1KK5Zdgl
+         Fw47ykQLUoCQNwM/7Q7KM2/NOjw/2AZM6gzDac/BOvJczUcm/4xFyXZENusdVFkBvdYa
+         E0CFu1qRrKKIqBWp/ntcOw9ZxXo3jhRv/hTQDcgeptEe0k+JQ6o0gmwdg32E63ch9M6l
+         /6sg==
+X-Gm-Message-State: AOJu0YwFeLfsrSbc4knE+Lqf4zxS15KFnDGQz4bxUxRhq+aqkHOz54IS
+	Ij67gqj0nn3pJxyWDxIVV4Be8YpiIsPDD6FqacDSIYjQZwHg8GatzA+mFsVLgjwIgsGr2A1HsFI
+	F/qvS5QEyR2B0OdawZ7kNhHnB8YiFVVY=
+X-Gm-Gg: ASbGncvtn8+jO7p5rD7rYJAVPPaZ2nX5nhIYW7Ef8pZ7VFdS1B6NrpCLLip0NloPNLa
+	z9YMAAt5DjMKPn7hp0MUc8j1Fp+msLNqyWuFORzm239st46dtkmsBz+IMWWeGsFiySdqEyoqJqw
+	COpBeLH6PI9A/ZROeZtR4gpxzoEbov2NRxQOjTK3drcgXtWUrK0BuOEiqLJDYnRitR8a/iMExo6
+	pY6Tnli6aoiEyfrsQjnwjJ+KFvrdsRHnwWkl5SIG5/4jUKx/6Hapu5FfzuNKdKE2z/pUWSb
+X-Google-Smtp-Source: AGHT+IGPw0eon5/71Y6Tpfq5L5EtSAir5GuwQrOugGtyBf03nGAsx2074NHD4Nz8sHH8gXaprVseAcivgIBXDerMwx0=
+X-Received: by 2002:a05:6102:f07:b0:5de:62f:65b3 with SMTP id
+ ada2fe7eead31-5dfc5b9271cmr4160758137.39.1763393918953; Mon, 17 Nov 2025
+ 07:38:38 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 17 Nov 2025 07:38:37 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 17 Nov 2025 07:38:37 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqtsytbk5w.fsf@gitster.g>
+References: <20251113-fix-tags-not-fetching-v5-0-371ea7ec638d@gmail.com>
+ <20251113-fix-tags-not-fetching-v5-2-371ea7ec638d@gmail.com>
+ <xmqq7bvtlj8v.fsf@gitster.g> <CAOLa=ZT9wv8B7EKXJQvwR07bUT7Jx0nJSwGGyUZ8+GN3-xdRag@mail.gmail.com>
+ <xmqqtsytbk5w.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
-X-ZohoMailClient: External
+Date: Mon, 17 Nov 2025 07:38:37 -0800
+X-Gm-Features: AWmQ_bnEVzw8ObLB_PXB2hoOK7xjl8dwQrwJBeMugU9ATEw2IxQyoT9B6jgFcN8
+Message-ID: <CAOLa=ZRn5=oK8+T-mt_nuWVDnVvLUMj6OkAMkD_ZTppnYKBJgg@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] fetch: fix non-conflicting tags not being committed
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, ps@pks.im, 
+	David Bohman <debohman@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000238be00643cc2430"
 
-Hi Josh and thanks for testing & the feedback.
+--000000000000238be00643cc2430
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 14 Nov 2025, Josh Steadmon <steadmon@google.com> wrote:
-> The switch to using an extension may complicate our migration a 
-> bit.  Background for the list: Google has been using an early 
-> version of this submodule encoding scheme for years. We have a 
-> lot of users' repositories with this encoding scheme in place on 
-> disk, but with no corresponding extensions.submoduleEncoding 
-> config. 
-> 
-> I've done some limited testing; the good news is that it looks 
-> like using this series with pre-encoded submodules still works, 
-> regardless of the value of extensions.submoduleEncoding. It 
-> would be nice to add some tests in V5 that we can create some 
-> submodules with the extension enabled, and then disable it later 
-> and still work with the encoded submodules (and then maybe 
-> enable it once again). 
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yes, I'd expect forward-migration (enabling the extension) to be 
-very smooth. I will add some tests for backwards migration 
-(disabling the extension) as well in v5.
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>>> perform.  Namely, we do not
+>>>
+>>>  - call commit_fetch_head()
+>>>
+>>>  - run set_upstream processing
+>>>
+>>>  - honor do_set_head flag that was left for remote that does not
+>>>    have followremotehead=never
+>>>
+>>> but don't we want to do some of them at least?
+>>>
+>>
+>> Thanks for bringing this up. I would think we should do all of these,
+>> but not if the '--atomic' flag is used. If the '--atomic' flag is used,
+>> we shouldn't do anything else and simply skip to the end.
+>
+> True.
+>
+> So when not "--atomic", the code with these two patches will still
+> misbehave, but it is not a regression these two patches causes.
+> Failing to do any of the above three when "--atomic" is not in
+> effect is a part of original regression in the previous cycle caused
+> by the "batched ref updates".  These two patches are trying to
+> address the regression, but these three points are not covered.  Am
+> I reading the situation correctly?
 
-> 
-> The first difficulty I see is that there's not a good way to 
-> automatically migrate existing repos to the new extension; we'll 
-> have to ask users to manually set configs on each of their 
-> repos. While we are able to distribute default Git configs for 
-> our users, `core.repositoryFormatValue` and `extensions.*` are 
-> obviously special cases that can't be applied from 
-> non-repo-local configs. I don't know what could be changed in 
-> this series to avoid the issue, so I guess I'll instead just ask 
-> the list for ideas for automating this migration. One idea is to 
-> carry a tiny downstream patch to force-enable 
-> `extensions.submoduleEncoding` regardless of the local config, 
-> but maybe someone else has a better idea.
+Yes you're.
 
-I propose to use a build-time configuration option to force-enable 
-/ set the config automatically for these types of situations.
+>
+>> That said, we could either append this change as a new commit with some
+>> additional tests and re-roll the series or send it as a separate commit
+>> based on this series. I'd prefer the latter so that we have the fix for
+>> fetching tags merged sooner, but happy to do either.
+>
+> Either is fine, as this won't make Git 2.52, it seems.  It is OK as
+> it is not a new regression, but it still is a recent one, and would
+> be nice if we have something concrete to address it soon after 2.52.
+>
+> Thanks.
 
-This way you just add a flag to your builds and don't need to 
-carry downstream patches, though it could also be solved with 
-one-liner downstream patch. :)
- 
-> 
-> A second issue is that we'd like to be able to set 
-> submoduleEncoding for new repositories, without requiring 
-> passing a config on the command line. Perhaps we could add 
-> another config option analogous to `init.defaultObjectFormat` 
-> that we can set in our locally-distributed config. 
+Ah well, I have something locally already. So will include it in this
+series and push a new version with the once I see greens on the CI [1].
 
-This will also be solved by the build-time config option I 
-proposed above.
+Thanks,
+Karthik
 
-I plan to send v5 soon and I'll include these changes, if nobody 
-objects, along with everything else I've got ready.
+[1]: https://gitlab.com/gitlab-org/git/-/merge_requests/444
+
+--000000000000238be00643cc2430
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 240ba7a45055c15b_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rYlFYc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOEV4Qy93TXJLdDBxazR6SW0zc014RUtiRkNqcmN3SQpwdVdWWEsrT2NQ
+N1RuT3dvMUJTUHhFMVllaCs5NUl2QjdQZ3ozWjdma2dyR3ppeFVMZStqNENnQ2g2R1ZsOXR0CjFN
+Z3I0TWNEL2kvajBMbk1wL0QzM0w2V3hSdTBEL244VzBTczI1MGlDcXRJb2Q4V0c2LzBLRDU3TUFK
+M2w2bTMKZUJyQjF1S3V5bFdjamx6aDEvbVBuU0hEcVVXelp4OFo4azNITytNMnh6SUJjVTdaQnJt
+VnlRamxSTXdyTDk5bgp0Nko1ME1FYVY5N2JTdnVJNjVRbzEyZnFXNUlaeUwwV3YrVTQ1aTNqemhm
+d1hxb1hwT1h6L1RsKzJhS2tOWUYvCi9pY2tiaDRKVURUcnNXZFJ4Z2VPRnlvc0EwL1NvWHgvTTl1
+c1M0Z09RK3BhK3IrbzJHOFpHSFlibDBRZW1kZFUKUmFSek1FSGlTU2NzbkhyY2c0M0hFSEdaeHJv
+ZkFrNTBwMTEvZ0NBY3RSVEU3RzJ0bS9yamcxUDBWZkM4TDZOeApXdmNEY0VmTzMvN3pyM0tzVW0w
+TlplajRwVVlNZThqNHZqdWJQVFdNZjgzazdjWWlrMitSME1kazRsRm9sLzBRCmNTR0pYZUQ1NzlW
+UG1VSGdQZGZoVUVVOUp5dzJNa2U5UTBjcUs2QT0KPTl5Mm0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000238be00643cc2430--
