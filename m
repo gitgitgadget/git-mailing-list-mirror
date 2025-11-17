@@ -1,60 +1,60 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC821E1A33
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 15:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905B61F5437
+	for <git@vger.kernel.org>; Mon, 17 Nov 2025 15:15:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763391982; cv=none; b=BkfQ8bVp+3HQRUvCaySK/WoMxI5P+6FjdUW7c6xdXbF43Dt7s/VE+V/iD1mQ90vHt9XyXJJwBnYJ8I1xZ5tJUdYUhk+6pvgEo/6nqK13Fh2vVWrchgsB4wYymmBN3hp7CD7TqePhARqjpRBmqutzJa5Y+Tr8/73AteJHBfRdZks=
+	t=1763392550; cv=none; b=YCOnr9imwMtQ+3RyLOfgFF87U/CFDL7u+XUK8pTghQtQF/9946N4GTeeTfLpWWOy8MPx3UGN4Gps+RFS3oI+PHrRvHhSCaIPQP6sVhuBlxrJGpx9oL17rOGo29YQM26GYFhXBvdSBCZDDJqIeGsVd9M0+6j3eC/vSh7MJv/PJ6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763391982; c=relaxed/simple;
-	bh=w1Hsn3GVJm1iAO21/48CGxM5HFWlrVglv6kWFvCnx6Y=;
+	s=arc-20240116; t=1763392550; c=relaxed/simple;
+	bh=2phLoXFHDaV5gX4T0QIoNcb+ytJBu2Tjxbr1AAZBBnE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BmCzErleMoHtyi80od2eXQw7sVUQsSDedzXVoeu2itK4ZRSdkZ18vMaR8p+ZoKyX0hrHqwOl9zlPdbfN2HPk+/z6Hw5h3+ytdhCnvuPsEgYl+nJtjVb2tz2PTUIFT7aNg3qYIiAp6JVojVVTm51W9WSM1xCWVIC8BUtIqlmgJ8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d/DUlqRV; arc=none smtp.client-ip=209.85.208.49
+	 To:Content-Type; b=DSyHufr2KA15NHEJWjAQFmhrDMWzp8vGFvnIz+LhEwQ8mfwUN2Trb7hLL54fiA3LSjNOPWN/yK33XxuBgj9u03yK2veP8AcGZqxjOiLaIHXw6TJrjknNDZkTJhxP33dzih1Vmht6YwWTtRv9kB9opaRhNHOgl/p+BNfM3tYkiMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c5LWTLvL; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d/DUlqRV"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-640a503fbe8so7583666a12.1
-        for <git@vger.kernel.org>; Mon, 17 Nov 2025 07:06:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c5LWTLvL"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b73669bdcd2so558528166b.2
+        for <git@vger.kernel.org>; Mon, 17 Nov 2025 07:15:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763391979; x=1763996779; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=gmail.com; s=20230601; t=1763392547; x=1763997347; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nMiucvO4xm6L69I9lHhs8WBG9itejB/rK9IhbzhlZ8I=;
-        b=d/DUlqRVxkrdQDuZgL3YLIEX97Ng2Rc231p10kuRnOBqfexDh9upPV3HIIJNSCeBPY
-         tPMM+GnFOCG5++MZaUanOwjQpCUlzxKuRZBZLDVkSwHA+V3pwajy9oVukRSp1kgDqxkE
-         xltBySVlpBp1ulDltUK9B43qWt6Vs8m44ZfNDEUUTOAUXoGq/aIb49gcHj7Ifz5SxNpd
-         HTbVZuyfLP+DWHFJYKPaWDj+lx/az5GPmoiFYrVhHd1+y5M02NnBxhCYb9Wu9akXhDMh
-         P+2322BnKDwvlbkmlQUEkpYFh4Cz8lhS74VRcUop466ACeDm3B9swqUxbrGGungvR9wk
-         dsLg==
+        bh=Y4DylljI4wiGlt5fuwbJ2qUAcc4ovYgfu58F+I85OTI=;
+        b=c5LWTLvLQs/eBat13haMIfFHmxvsvi2QGPRrjOrt+T27KgNwp+w9Wy0NACc2QYVpTA
+         bJHdDRHRLzZPK0FbcUchJBjKs1GR+G1jHKTHgYWTx6PsiJpDudO+qH0Jebixp8V/Nhes
+         QJfF5SkWliW0/RkcV/QyvOyKUWO95cQfq4kdqyOeFILmb0j9HorPBIY6uj9k5tCOmc+f
+         uwvItqftwoAXyrME77xaDx1Z52Z4uZrUNT1EXavwYNPs4xWnpFxX20c09XEE/PUB9V3m
+         9j4QmtyYTygZWQ27pOuP4zZPQZnjxAYumv9g4vY/zxIW+QkJU91Ax3fBy+Hs/BqFGz1x
+         Ritw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763391979; x=1763996779;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1763392547; x=1763997347;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=nMiucvO4xm6L69I9lHhs8WBG9itejB/rK9IhbzhlZ8I=;
-        b=NXECJ0n7gk9bcvxb5Gi9JooqRYWn7d95wGwdbKjUn3le5V1bYoHTtYJcolwj+u/RCc
-         fYqLncB5MilFnlq3eBtByzgkN23/qbrAJMTuzxeU5fgZ2dY+Fbh1uh7bYCkNGnF5DQzI
-         bR+K46ehhPfh/Vfe5JwCb3ynh7r7GU9B7+Sxe/MQXYK0FONVC8rTkjCkCWgnLTS5Sjov
-         WFA4RxA+6nSeqKqNb9AxezxMATc9sTJjpKqDjKsq7gYgAue2To+6/tLFiQp0yBo+poln
-         u8UttKCqnlVnk4+asv/eO9GJCPcKbddAe7B/9aabOyEItEK74tErh3fGvJYBcngK4mGV
-         3Cug==
-X-Forwarded-Encrypted: i=1; AJvYcCUQ2vVNwg8DOaKLihE8IqqOxTEnd9eTnW3mRo3EJpCLZpmYQQb8lP1TJd1MOi4s9U725v4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyrDpk9NJbtYXGMxeFdj+OLzcBinf+HEsMDfkEGpyHjUNtsWah9
-	dwuZNCkdyydLOnkpXGZR4H+MVZrAcP5VKZlH9AEcjNL9ld7cRXjrNbw7mw9MmiWns6v/nOPzxAd
-	kBlXjeUNx12/ZZFYZQXJdUwO4O0WSN2g=
-X-Gm-Gg: ASbGncvSbggn2SBivTZnJ+XvKqYwRynBzhnNw9jKUOXRZz5Fx2Tufms1hW6FmndjzO6
-	oKpEdchdKBv1UmUeTfNC0hYB2eCQRQkF1nfqIv/rL3BqGGrDqtAv0dfJviyZa+yMoxgCIRpPPQA
-	kMP5Zqy2iqhKZolkCbVIK7IUnX87pMLwPWq7+BNVr2T7Rr5nqpeMAUZq1cPSgKBnr/M9Z6XqAMO
-	bPSSXB015eUOKHF5u+49bpPHDzcZhR0SQxMbC5L1YX4s8Utoypqd/dzD3gUMlIY3DiVCjajCjZ5
-	zKSpZC1B86c+fRw4K9UnVxw=
-X-Google-Smtp-Source: AGHT+IFbBxviSAOmuZyNjQiCmrCE64d4FDg4ZKFEusZidoIpwfQt+et8H2ONM1BbmIy5u0Rk9+BobJ5MnJWHz/LmORE=
-X-Received: by 2002:a05:6402:35d2:b0:640:be87:a858 with SMTP id
- 4fb4d7f45d1cf-64350e9eb3cmr12342945a12.27.1763391978684; Mon, 17 Nov 2025
- 07:06:18 -0800 (PST)
+        bh=Y4DylljI4wiGlt5fuwbJ2qUAcc4ovYgfu58F+I85OTI=;
+        b=IgR8l+LfK6rYR4qIzRfm8nH9uIEe6LZ92WXkukHhRFphEtsgl5ujPof7hxK/x/7kfR
+         SeCabBRDo0ImE+viefbAcQppuL4w1SMrh/I4Y0MiKBAiSffz8vvmaaAndBcXvF0p2i0m
+         LW+72mmzJcsPPw1gguyVC0KqRywDBBIF/Mn/a7179pV9kNwyWgVjZqJzm2oAhXe9cddO
+         RjFE1bBslUZl++to34Pyx1agFpWrTwHdm4i9JUMiPprxIvyeEn0CyBhSz+9RbrNc+Wl9
+         GpxEqXugCRIkY3QAHxcODNHcYjY7oB2gg50uv3zmuQdvM/KSkgCMJxCTBmASTuVVp/PU
+         l7OQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVdBjPw/lutH0fA+3eULPQmVb+k88eUn+kNic8RKzrRTWJ8+rInq0/6vXGmTYRBMHWhfCA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5YTz6pS1lxK/BdBkWCfBWaVhnGp0W776dJr1Mu6DP+2bFLD6y
+	Sn1dm/4HYaZP1SQQzEsMWGaNXoS+OB2+fhuzAFb5Rv2N5WOz7rkVIiOQ6UnC1PpYjh9visD8mJJ
+	MPRyRRj66D4Pj7h5h1fU+sjaGQPt0998=
+X-Gm-Gg: ASbGncsrldjXVrF2l59/es07UTvTPCw+zaWAnXjgtVyEwPF68P+q0ZpPfjeZrzWJVRo
+	5VMauJCDmj0v6QQUF8td1KzkJlmXiHxz5zND8Gyc2EFzdZiXwEqwgYm5IfrvAQQDO7aH/npVtur
+	5SkIor3QpFhqAroli+kkjBBO1YsBP2GnBr/GBT2jojLR3jjTs1j0wCvXGLzS/V6XsirCnI/2d+y
+	uSoTJOZ2SMUBAZLgj2kopT0qZ1omNQcW+rFBdsl3FFzV/NNZcR1lJnz1/KHx7PesEoTwM+/etih
+	Gp6k+q9iAkvvNzrXy2HZwSw=
+X-Google-Smtp-Source: AGHT+IGQcdJczgnFMwD7hyKjb1KqYm0EDUEQDOVL0FV326uW6TJZC8Jc/6hGzOr7inX7SNneJ/W4et6tZfFRuS8R2pE=
+X-Received: by 2002:a17:906:3e0d:b0:b73:7d96:5c97 with SMTP id
+ a640c23a62f3a-b737d966533mr708106666b.34.1763392546637; Mon, 17 Nov 2025
+ 07:15:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -64,69 +64,170 @@ MIME-Version: 1.0
 References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
  <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com> <CAOLTT8TPrNTCjHwJfdeei+t8+7AxGC-dvbq-4oHJ=qNn_c+-jQ@mail.gmail.com>
  <7d99f00c-3602-4b28-8efd-4780cad41ca8@gmail.com> <CAOLTT8TLEsSAcfUomoActrUSzje5mQNE7EweXh8WtY3sOfzfkg@mail.gmail.com>
- <xmqqqzu3qi43.fsf@gitster.g> <CAOLTT8RSN-72gVXDS-zrr=7wW4HU=CL6acyDx_UXnvo4c5MaRA@mail.gmail.com>
- <xmqqfraeeqgw.fsf@gitster.g>
-In-Reply-To: <xmqqfraeeqgw.fsf@gitster.g>
+ <aRpMW-g_rt4jStnu@kocurkovo.cz>
+In-Reply-To: <aRpMW-g_rt4jStnu@kocurkovo.cz>
 From: ZheNing Hu <adlternative@gmail.com>
-Date: Mon, 17 Nov 2025 23:06:07 +0800
-X-Gm-Features: AWmQ_bkRiN4UFeakujLn76jIJpCzxn3qayyOwuUs1DPk-Yl5SSmVVuPV_wSPpAU
-Message-ID: <CAOLTT8SEwipDtthO2T0CkE5-rCJdq9oDjTKcBEH2YxzpjAM9jQ@mail.gmail.com>
+Date: Mon, 17 Nov 2025 23:15:34 +0800
+X-Gm-Features: AWmQ_bl9RG1nvfMis6IqAt6ElzakH1KsnN1J0O9nw9PJxhrO_s0WU5vsp6RcAeE
+Message-ID: <CAOLTT8SOSV48PA-4F3QuHTJQNB_O=Ne8G8JmRTg_uvBypjFeJw@mail.gmail.com>
 Subject: Re: [PATCH] commit: add --committer option
-To: Junio C Hamano <gitster@pobox.com>
-Cc: phillip.wood@dunelm.org.uk, 
-	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Matej Dujava <mdujava@kocurkovo.cz>, ZheNing Hu <adlternative@gmail.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2025=E5=B9=B411=E6=9C=8816=E6=
-=97=A5=E5=91=A8=E6=97=A5 09:06=E5=86=99=E9=81=93=EF=BC=9A
+Matej Dujava <mdujava@kocurkovo.cz> =E4=BA=8E2025=E5=B9=B411=E6=9C=8817=E6=
+=97=A5=E5=91=A8=E4=B8=80 06:12=E5=86=99=E9=81=93=EF=BC=9A
 >
-> ZheNing Hu <adlternative@gmail.com> writes:
->
-> >> Isn't it more like "You need to run with --author to correct the
-> >> authorship by amending the commit *anyway*, but while doing so, the
-> >> committer information will automatically be corrected"?  As I said
-> >> earlier in a separate message, the author and the committer are not
-> >> symmetric, so having "--author" does make sense in the above picture,
-> >> while "--committer", as Phillip points out, much less.
+> On Wed, Nov 12, 2025 at 11:58:02PM +0800, ZheNing Hu wrote:
+> >Phillip Wood <phillip.wood123@gmail.com> =E4=BA=8E2025=E5=B9=B411=E6=9C=
+=8811=E6=97=A5=E5=91=A8=E4=BA=8C 22:38=E5=86=99=E9=81=93=EF=BC=9A
+> >>
+> >> On 11/11/2025 13:01, ZheNing Hu wrote:
+> >> > Phillip Wood <phillip.wood123@gmail.com> =E4=BA=8E2025=E5=B9=B411=E6=
+=9C=8811=E6=97=A5=E5=91=A8=E4=BA=8C 00:50=E5=86=99=E9=81=93=EF=BC=9A
+> >> >> On 09/11/2025 10:22, ZheNing Hu via GitGitGadget wrote:
+> >> >>> From: ZheNing Hu <adlternative@gmail.com>
+> >> >>>
+> >> >>>
+> >> >>>       This patch introduces the --committer option to git-commit, =
+providing:
+> >> >>>
+> >> >>>        1. Consistency with the existing --author option
+> >> >>>        2. A more convenient alternative to environment variables
+> >> >>>        3. Better support for automated workflows and scripts
+> >> >>>        4. Improved user experience when managing multiple identiti=
+es
+> >> >>
+> >> >> What's the use case for the same person committing under different
+> >> >> identities? We already have a config mechanism to set different
+> >> >> identities for different repositories but I'm struggling to see why
+> >> >> someone would want to create commits under multiple identities in a
+> >> >> single repository. For scripts it easy enough to set the relevant
+> >> >> environment variables if a tool wants to create commits under its o=
+wn
+> >> >> identity.
+> >> >>
+> >> >
+> >> > I frequently need to distinguish between different user.name and use=
+r.email
+> >> > configurations on our company's internal GitHub.
+> >> >
+> >> > The current problems are:
+> >> >
+> >> > When I misconfigure (which happens occasionally), git commit --autho=
+r only fixes
+> >> > the author part, I still need to additionally set GIT_COMMITTER_NAME=
+ and
+> >> > GIT_COMMITTER_EMAIL environment variables to fix the committer infor=
+mation
+> >> > These environment variables are painful to use, requiring manual set=
+up
+> >> > every time
+> >>
+> >> I'm afraid I don't quite follow. If you are amending existing commits =
+to
+> >> fix them up after you have corrected your configuration then they will
+> >> have the correct committer automatically when you run "git commit
+> >> --amend --author=3D..." to correct the author. If you are committing
+> >> before you have realized that user.{name,email} are misconfigured then=
+ I
+> >> don't see how "--committer" helps because you have not yet realized
+> >> anything is wrong.
 > >>
 > >
-> > Well, I admit that perhaps the design philosophy of author/committer is
-> > inconsistent (which has caused too much trouble), but for users, a cons=
-istent
-> > parameter interface is easier to understand and use.
 >
-> I do not think it is about design philosophy at all, though.
+> Hi
 >
-> The distinction comes from the difference between what "author" and
-> "committer" fields record.  The committer records the identity of
-> the person who was at the keyboard when the commit object was
-> created.  The author records the identity of the person who wrote
-> the change that the committer is turning into a commit.  There is no
-> symmetry between them, hence there is no inconsistency here.
+> I use includeIf pattern in a config to separate identities
 >
-
-I understand the difference between committer and author,
-but some regular Git users don't really pay much attention to the
-distinction between the two. For these users, being able to quickly
-and easily correct user information is sufficient =E2=80=94 it's just that =
-some
-previous solutions were a bit complicated.
-
-> And it also comes from the actual human user behaviour.
+> ~/.gitconfig:
+> ```
+>   [includeIf "gitdir:~/.local/src/personal/"]
+>       path ~/.gitconfig-personal
+>   [includeIf "gitdir:~/.local/src/companyA/"]
+>       path ~/.gitconfig-companyA
+>   [includeIf "gitdir:~/.local/src/companyB/"]
+>       path ~/.gitconfig-companyB
+> ```
 >
-> Many authors can pass their patches to a smaller number of
-> committers who make them into part of the official project history,
-> so when a commit is made, there is much stronger need to tweak who
-> the author is for the commit than to tweak who the committer is.  On
-> the other hand, it is rare (if ever done) for multiple committers to
-> share a single shell terminal session and take turns to make commit,
-> where you would need to be able to say "this invocations of 'git
-> commit' command is done by person X, who is different from the one
-> who made the previous commit in this same shell session".
+> then each
+> ~/.gitconfig-IDENTITY:
+> ```
+>   [user]
+>       name =3D ...
+>       email =3D ...
+>       signingkey =3D ...
+> ```
 >
 
-Yes, I believe users in this case are very rare. As I mentioned before,
-I just want to help those users who want to fix things after misconfigurati=
-on,
-making the fix a bit simpler.
+This does indeed appear to be a very good standard,
+but unfortunately many users in the past and possibly
+even in the future may not be aware of such a good practice.
+
+> >You're right that after realizing the misconfiguration and correcting th=
+e
+> >repository's user.name and user.email, running `git commit --amend` will
+> > fix the committer information, but the author remains unchanged. Users
+> >then need an additional `git commit --amend --author=3D...` to fix the a=
+uthor,
+> >which does work but requires an extra step.
+>
+> For just one commit, after you fix identity (update .git/config or move
+> project so includeIf uses correct config) then `git commit --amend
+> --reset-author` should get right identity for both commiter and author.
+>
+
+Ok...
+
+> >
+> >I see your point that this becomes more cumbersome when dealing with
+> >multiple commits. In such cases, users currently need to use something l=
+ike:
+> >
+> >```
+> >GIT_AUTHOR_NAME=3D"..." GIT_AUTHOR_EMAIL=3D"..." \
+> >GIT_COMMITTER_NAME=3D"..." GIT_COMMITTER_EMAIL=3D"..." \
+> >git rebase -f <target>
+> >```
+>
+> In my test ^ (using 2.51.2) did not set specified AUTHOR identity, but
+> using:
+>
+>    git rebase <target> -fx "git commit --amend --no-edit --reset-author"
+>
+> is close to rewriting commits with new identity, but this will change
+> both dates (committer, author).
+>
+> If --reset-author is not used but either GIT_AUTHOR_* are exported or
+> --author '...' is used in a -x arg, then author date is kept untouched.
+>
+
+This does look like a good approach indeed, and it should
+pretty much meet the user's requirements.
+
+> >
+> >This is indeed tedious and error-prone, especially when you want
+> >to quickly fix and push commits to the platform.
+> >
+> >`git commit --amend --author --committer` or a new `git rebase
+> >--author --committer`
+> >would provide a more user-friendly workflow for correcting identity
+> >information after misconfiguration, eliminating the need to manually
+> >set multiple
+> >environment variables or run multiple commands.
+> >
+> >> Thanks
+> >>
+> >> Phillip
+> >>
+> >
+> >Thanks
+> >
+> >ZheNing Hu
+> >
+>
+> --
+> Thanks,
+> Matej
