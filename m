@@ -1,102 +1,115 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EED630100B
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 19:54:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60015314A6E
+	for <git@vger.kernel.org>; Mon, 17 Nov 2025 20:39:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763409268; cv=none; b=tfCi4K8l9jYQx1991U+5210fF5/Q/m1KK40IBcsXL90FxljAqa9ad2R3Q9HIFjk8HU3zhQv6++Jga3HxHyaUv1gFiqPVrx2oHBns13T/BNk1PZuQvzXQng7FtSdOreGe89UcYhZ2cQvmox+tZ8USyvHfrSdAws4Ff78bJjKW2X8=
+	t=1763411988; cv=none; b=CZ6U+P7K3BflhcqgwW8aS0GksMfqmFFkb+WgF59oGAEPpdRQYEbgOnH7kk4qnV9aS2hyzsb1I/9butl/03Z9Q8xfw4d9el45V5VlE9otYGIfGvyLVE1Kq7SEKueN9sV3YHNQ7S0ezegHpNjwCuoehbAiwGlcwbq3YmU0D4YK/Ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763409268; c=relaxed/simple;
-	bh=9XcEDsBxEX3haW4o1LM54AMPcFRvtaC6mCH8ukkebLs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ea2n/LugQFe8XMGJAw1BMBhHGsOvJRoyNNZjCJIy8D3GqvtBb2o0gO4WTb+RiSTdrE8O3CL8drjwnkfB5Lpj6XYy6HSGOaKsGclAlCJI9bTbDA1Q24gBy56Z4a1GvmyYiKNJLX//DD4hqkiMZ35OpyX5EhA/QNsY0wrlZFnH+K4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gv0i5cp2; arc=none smtp.client-ip=209.85.166.43
+	s=arc-20240116; t=1763411988; c=relaxed/simple;
+	bh=I2w+f3gyk9nQTaerNLIpAAvH3IRVzRP5k83SeTm6bxU=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=l3pwPF+P9Y/8vypVBn3DSpr4uZLlLUzqGiZSIXl6ljbP/BMbda+l7lQdLmH9CJZ52r3YBhbX7Hlty9W0v07cZ0N3c+WzVWzTOLegDXPXoe4l2bTov3+p//TbE4RPiqdK7P8npFvEFh10d3NIqvIGLrdelrxwqbS2WXH5OH8f4o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ELmg60Aa; arc=none smtp.client-ip=209.85.160.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gv0i5cp2"
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-948fb1f6c44so95943139f.2
-        for <git@vger.kernel.org>; Mon, 17 Nov 2025 11:54:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ELmg60Aa"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4ee14ba3d9cso19188421cf.1
+        for <git@vger.kernel.org>; Mon, 17 Nov 2025 12:39:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763409265; x=1764014065; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CM/P08srGPKYohAXzNwijf/WDaB6dS+TtEv5eX36eVs=;
-        b=Gv0i5cp2jrXX4sRL6Ued7adXQqukpccboIGVEhb3U0WsKC3qlxfLrjcPfiBvGNrWzT
-         g/71J4rwBMYgj9AOJ6hGEJ1/8KHqqFTs+9v7yx69+re9jz9F2yAsU0cSZpDVDO7acRFu
-         apu65v/a/mb9Y9m/hjIugXEdDFR5l3jNfH+hxY2dUQggFZYOBwuaqUXrCqi6k9EsLcm3
-         WWRGzHk9Sg4F2iXWx+whY9DmGLHwvfBwDWyC8kUEYprtCe8SERZTOWPSIj7oAW0zvLAZ
-         oFO5OQF7jNSazUMNPkD7c18K87hIsN2P3J6YVaGwpj8XzwwTAriluoURszPMLLh6xSZz
-         z2tQ==
+        d=gmail.com; s=20230601; t=1763411986; x=1764016786; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=joXTCSDJNeleS53imDVnbgj+oJ1hXPSntL8EnodZGXs=;
+        b=ELmg60AaXIezLOTzehazCxlbWhdwpFnBCLaGbkP9ucGPl2yDnXlmLNmKkxl6iZX6eK
+         VOSdqarhh6NfG+sUPlVD5nVv9eXqFGMXKai2sshNU9pSFRVDqAG2pp+F65HrKwX6PGVk
+         Lu4b3a0G6DtbZdmPPvFqHmokQTwKk1KFMcBUYvYb/cJFkb07qtl5UugQkGySdacwKRa4
+         KEk/DGS5dvZfzGTKrgp1aX5Cu13dM5+cbrXQtHPMqfLXr4Ixj/8vmy89W1NqVpfgGUrN
+         JGLM8D5uF5pnQoaHAiW1+rD3uPqgzmjt3PN4LT8RxbtSgMeq+m2kp+SgljYfbYdugSrY
+         3lRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763409265; x=1764014065;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=CM/P08srGPKYohAXzNwijf/WDaB6dS+TtEv5eX36eVs=;
-        b=tZ9jVB+W513EhBVwhTMoJrPZZ75AE+1ntD35Lwr8RHPoiwRpYf5ajztmLM8e5vYS17
-         7ZBQ4ekJY0XvxJWvjSdHamZlCNI52ikdKOEtgGT9oEaNVUmqHlAcajS8kWumd8sxS8Z/
-         d0/AgV4jZAkWwcBlQ3D1cyEMYCBeUUAjBc77msvcohjmpiywt7wDV7bUupQsHR+SNebm
-         q7GdRL9XQuo8SOqN7gulQ5tJl6F+PjyCbmW8XcmUym0EUxtTT9cUHTesePnTpTswD34D
-         BdFQ3KHg9mFXfX7Kunpqulc29iP8jETK161HjwjbdgM8FkGtCYVz6tq/0ZjHuFZABtdv
-         wTrA==
-X-Forwarded-Encrypted: i=1; AJvYcCUgFmQCIt5PfhTxacoWxCuaKUkZkdcAaJZrV6acw8It4SjZRG0dkpSBEC02w2tvwIoZKZQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw4/nPPD7noZqCAfpTJiS+DQGOv+5I0CXfPt5L9odmgA0jGE2+f
-	T1kExriLi1fRV+Q/4ZmezauJH05Lo2jchD2ZSXLBMPcE7cgPGnS1uLCN0PAaF8vXfYXIpveWnHu
-	bVT6VJz5Cm3feitC0Zp6uB8IcijgYjzo=
-X-Gm-Gg: ASbGncsw0i4DXzSqaG0du/9NdHvlJzx+elHBSOKOPMispnJ+kbLA7fDi/yX+iOp/9b/
-	rWBhzL1GM0RghTRvFarac/9mz/99eb2qeksq+Vzyi93mVui3vW4HS7YCLYd6FyWlCg+UPo5yw0C
-	uv5vMiyGLo8Gsovmurz8ENofD6TT9IXA/UmGT2lgdLcTYuhwBcMt/wQZe4OtpstiSMrkqeRev++
-	8ux9+Yd11YLhAPL1YBbv7t5lmKq8MFpCqdfUwkafRLgsgzFTqBb7rvrznM4ZTK2x9ECBs+jic7c
-	eMCgpn0EoNruFcDIh8Y/qRv+pd2BbGX1GbNqvT8=
-X-Google-Smtp-Source: AGHT+IH87btLjF1qnWUfsXCGJesxE5yYlBkgILL5iojjYuP03IZ7eCsndqAnyaWjuoGqdZuZOHoF3OWJb+7xncuuBAY=
-X-Received: by 2002:a05:6638:35a7:b0:5b7:ba93:6821 with SMTP id
- 8926c6da1cb9f-5b7c9d8e23cmr10185907173.9.1763409265104; Mon, 17 Nov 2025
- 11:54:25 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763411986; x=1764016786;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=joXTCSDJNeleS53imDVnbgj+oJ1hXPSntL8EnodZGXs=;
+        b=ksZ4uNfaPov2lQKJxXrE7qiPeSfnzaym1WiLuE775gUzRKo7S1B1wUZZ436VXQyQSo
+         qogkzVOsmecTWLy7yjoTLiyCchrIO0QQLxHI3uNg/CAkFmfbIfV2m4rLJHzJ4wAqw3St
+         9mInLmGQTm41bc3LP3D1R9wRx3AoXCEeXkpzvGou/JtLND8WAsoeo7oaTBWHEi56k7rR
+         y20lV/+naWz5AabCt2SA+Rm4aSzry/EBeByWn/geERQg6ldjxMDxRubXlRyHzKEhPtKN
+         d+u0su53Uyb0rlCicWX5voJk3lJ9cbFgQ0/N9sbZpae7JJV5SIKOXllKX5IeOT0Loa7v
+         bkaA==
+X-Gm-Message-State: AOJu0YwTY2T3dM7DQki2esnT0vjHeAco0xW92tcJQAdobG2QqkNX5EAm
+	yJumvbp5TaHagxvS06P0VBBbJ17psZxUJRDdzK8h76fG6gT+zrQGJ5gvVC8lyNYw
+X-Gm-Gg: ASbGnct1fjPgcNye0/Fou2Ci/JuAc5aMhORemzCrq32RizhlL5Jbg+kWgdF6tIasXJN
+	y2hu3Jnbu5nmxgFrIrMXLSvgY1qSsScqyTfjELfy7UbCITq6x99v4+KvKW4RDnp+dzXoGMFEgIh
+	A1/qqT35jwpr062VPhaybORWga3sIxVzMaAeBo0xuGdw+Urm0pKOgbDiYMet148PUbnYRFvjCSu
+	2J7xy0TITffE/HMDRy5ztHvHv4kbf3loceZ2BXHRGgen1YXGJMzB1gWWjNG5nIKfYrnhn2qlbG9
+	1xbJ+Dp0FUlPAfqzLlnvZAVZho/kL9mBAfrE5Cvlc0AHc5lD/M6N7/+nNxUAeyJzvSbpB9RWbzr
+	TGDOIfeeuPxb5X2v1peQ0lv1xmVvj+LZE25cRtwicArjK+6ZCCS1hvGUjJLUY8s0SbGMQMR+sAx
+	H9ZQ==
+X-Google-Smtp-Source: AGHT+IFHccprCSRYQ525GrFlCObGumcpDVIO9wg6rbFfbpmCipCKe2hPT3c2Q9Bw6CY6M48guwy65g==
+X-Received: by 2002:a05:622a:1ba0:b0:4ee:197a:e809 with SMTP id d75a77b69052e-4ee197aeaf1mr83395171cf.75.1763411985753;
+        Mon, 17 Nov 2025 12:39:45 -0800 (PST)
+Received: from [127.0.0.1] ([40.76.181.214])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ede86b38besm91014851cf.8.2025.11.17.12.39.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Nov 2025 12:39:45 -0800 (PST)
+Message-Id: <pull.2005.git.1763411984773.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 17 Nov 2025 20:39:44 +0000
+Subject: [PATCH] wincred: avoid memory corruption
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1992.git.1762192908.gitgitgadget@gmail.com>
- <950236f0f812197e260159a688fc6f6fa61046c7.1762192908.git.gitgitgadget@gmail.com>
- <2983385e-daeb-40c0-a8bc-fb8bd3b744a6@app.fastmail.com> <CABPp-BGchyC6BB2p7p-6qHvwcu5AV+VCAdTeR247F0VamsJkbQ@mail.gmail.com>
- <xmqqfradbhgi.fsf@gitster.g>
-In-Reply-To: <xmqqfradbhgi.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 17 Nov 2025 11:54:13 -0800
-X-Gm-Features: AWmQ_bnQ9lkPGSsw1365-jS13QEXILIQng3MG5twoo_Iy0k16M5OrHC_hXfCFfA
-Message-ID: <CABPp-BGhU7KfRo9pS-PzRQea3YpU4qxG9iuJzxmWK=mvdhZrsw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] t6429: update comment to mention correct tool
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Josh Soref <gitgitgadget@gmail.com>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    David Macek <david.macek.0@gmail.com>
 
-On Sun, Nov 16, 2025 at 5:01=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> >> > We could potentially just strike this second comment, since git repl=
-ay
-> >> > is a bonified built-in, but perhaps the explanation about why it foc=
-uses
-> >>
-> >> s/bonified/bona fide/ ?
-> >
-> > Yep, good catch.  Got it fixed locally; will wait to see if any other
-> > feedback comes in.
->
-> And nothing seems to have happened since then.  I can amend the typo
-> away if you want after the release before starting to merge topics
-> down to 'next' again.
+From: David Macek <david.macek.0@gmail.com>
 
-If it's easier for you to amend locally, that's great, but if it's
-easier for you to have me send a re-rolled series, I've got it all
-queued up and ready to go -- it's just this one typofix.  Sorry for
-not getting it sent out a little sooner.
+`wcsncpy_s()` wants to write the terminating null character so we need
+to allocate one more space for it in the target memory block.
+
+This should fix crashes when trying to read passwords.  When this
+happened, the password/token wouldn't print out and Git would therefore
+ask for a new password every time.
+
+Signed-off-by: David Macek <david.macek.0@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    wincred: Avoid memory corruption
+    
+    This patch wants to be upstreamed...
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2005%2Fdscho%2Fwincred-Avoid-memory-corruption-5856--v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2005/dscho/wincred-Avoid-memory-corruption-5856--v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2005
+
+ contrib/credential/wincred/git-credential-wincred.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
+index 5683846b4b..73c2b9b72a 100644
+--- a/contrib/credential/wincred/git-credential-wincred.c
++++ b/contrib/credential/wincred/git-credential-wincred.c
+@@ -165,7 +165,7 @@ static void get_credential(void)
+ 			write_item("username", creds[i]->UserName,
+ 				creds[i]->UserName ? wcslen(creds[i]->UserName) : 0);
+ 			if (creds[i]->CredentialBlobSize > 0) {
+-				secret = xmalloc(creds[i]->CredentialBlobSize);
++				secret = xmalloc(creds[i]->CredentialBlobSize + sizeof(WCHAR));
+ 				wcsncpy_s(secret, creds[i]->CredentialBlobSize, (LPCWSTR)creds[i]->CredentialBlob, creds[i]->CredentialBlobSize / sizeof(WCHAR));
+ 				line = wcstok_s(secret, L"\r\n", &remaining_lines);
+ 				write_item("password", line, line ? wcslen(line) : 0);
+
+base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
+-- 
+gitgitgadget
