@@ -1,239 +1,132 @@
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazolkn19010021.outbound.protection.outlook.com [52.103.33.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA17B31B81D
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 15:03:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.33.21
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763391817; cv=fail; b=or4iK4gZ8DUaeYHUMH+mgHlJSSoGGmGGYoBZUujjV1oFoEYu8Mj5HRXCTrdAemZqPixuD1DSH3ACqyX7Sc9rU/PDHbq03NoIq5PGZUWxFoxlMmbAnIkVYZ/O+wZ8Pc89ajuznHXi+0OfhwzIzjnmFrvkVbYrTXhKyJux2tk7nNc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763391817; c=relaxed/simple;
-	bh=1ZNwJZqBUR8egRd4HtcLKaxMMMKvjwM1c8Q4dRJvZzg=;
-	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=DrHiF42lM1gO9ZdDTnCXKdt7R07guuR3A/veoFHy442lUpuBvnKRV8wg7EKITU7kviLmreYRAdFfqx+MZuT9z9SwNp08tluWNy24eTyBjUSiALhO1xAdZZT4qyaao66/Idee1sOw2FP016p4l4Kw2J0pfCuwOtwpWk2ESRCV3xs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=nKoWV4P2; arc=fail smtp.client-ip=52.103.33.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC821E1A33
+	for <git@vger.kernel.org>; Mon, 17 Nov 2025 15:06:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763391982; cv=none; b=BkfQ8bVp+3HQRUvCaySK/WoMxI5P+6FjdUW7c6xdXbF43Dt7s/VE+V/iD1mQ90vHt9XyXJJwBnYJ8I1xZ5tJUdYUhk+6pvgEo/6nqK13Fh2vVWrchgsB4wYymmBN3hp7CD7TqePhARqjpRBmqutzJa5Y+Tr8/73AteJHBfRdZks=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763391982; c=relaxed/simple;
+	bh=w1Hsn3GVJm1iAO21/48CGxM5HFWlrVglv6kWFvCnx6Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BmCzErleMoHtyi80od2eXQw7sVUQsSDedzXVoeu2itK4ZRSdkZ18vMaR8p+ZoKyX0hrHqwOl9zlPdbfN2HPk+/z6Hw5h3+ytdhCnvuPsEgYl+nJtjVb2tz2PTUIFT7aNg3qYIiAp6JVojVVTm51W9WSM1xCWVIC8BUtIqlmgJ8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d/DUlqRV; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="nKoWV4P2"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vL0Bs3fCro5QqxQMivrAdJz/Peh1q8FmumlbPEx0+g4K/xm8fuxJ0K5ev76AsWseWpD4OrPd0abRRoK1e3/KebuwblUEf9bUVDtQxqjVTel4KlGzsO2aeqfLk/bnci6UujZT/so5Ek3b2F022HPYv8m4GrsZBqR0ets82kVx6V1Bh8IW/Nf/PuGRw1+zsQ9D6OE3b+4Oklksg3EGHw6vv8Lth3CfCjKqxwD2XZQ/NLuACVQ6k2ddmYAva1JG63wGty4NhoADqv6z8sJu553GZBjSZIyHXqn+/c59vPw6uTaIDpq97k1yk5JLthEwhuZqHye2fjg+mln/jcssXEebOg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1ZNwJZqBUR8egRd4HtcLKaxMMMKvjwM1c8Q4dRJvZzg=;
- b=efCBRfoBqIMHv2iIu8gXaXol0zIOT8ceBjcDv1+aIB/FAxDPXWaZYRFldRi40e6FqVXp137+Gjn3gzUyDM4Jz9CJPp7IeLKBgnFgKuRWPnBuR1fxO1RyRU5BTsS/obc9svkn4tQoY/YjWFfsqv86Exz6bK/N/UIAOwPjymHBWrCWh8mtR2PYRuZU+kUlHMixigNvBuyZ9rbTiqh8hgRaQCPeW9q8snayXJq0A0FLAPSDsfjtkvY2G12Kf78tQpif6mto0V9ZwuKRMnt7RtoX8aCwXytN1KEYxLnGC+9e6O4u/LBt3MU1c7rsc83SO20HrCFvPopf2/CSQyG7XrRo7A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1ZNwJZqBUR8egRd4HtcLKaxMMMKvjwM1c8Q4dRJvZzg=;
- b=nKoWV4P2uyZJ1eRBwfwkwd23VfHr9bDNmF1WnkUff9bR1OP3Dejknl1g3pRTS0GSXIonaRcsDM1oSXzNvB6TEf0buh7whu9QYmEvYjaafWwlSZLb7lT1yE5gltImI8ioXiVs85PHXCyw2gRX4HqT2hlokrDcxvd/AMe6Cys8dgtHfW1ppDCDnWtF0yGsMvRlxO4/zsYF0cAea9MVUidEBsv7V5HdyJX8xWFIlJdnUlnIyG67oaffaNki/zCNZXjdH0RY8y+90Kd2zc6nL5HTiUcxmSlfftKXunrLBC0OwsH3BmWLhlsOpp1aNyCUl28fjj9o8NHuP4B9Ie4E3u2cOQ==
-Received: from AM0PR02MB4450.eurprd02.prod.outlook.com (2603:10a6:208:f4::27)
- by GV2PR02MB11346.eurprd02.prod.outlook.com (2603:10a6:150:2a3::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9298.12; Mon, 17 Nov
- 2025 15:03:33 +0000
-Received: from AM0PR02MB4450.eurprd02.prod.outlook.com
- ([fe80::3b82:1ad3:b24a:7baf]) by AM0PR02MB4450.eurprd02.prod.outlook.com
- ([fe80::3b82:1ad3:b24a:7baf%5]) with mapi id 15.20.9320.021; Mon, 17 Nov 2025
- 15:03:33 +0000
-From: Skybuck Flying <skybuck2000@hotmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC] Adding a native, opt-in versioning system to Git (distinct
- from tags and branch names)
-Thread-Topic: [RFC] Adding a native, opt-in versioning system to Git (distinct
- from tags and branch names)
-Thread-Index: AQHcV8S3ldW4ZJAz1Uu0pvK/B7r5trT22/wDgAACFW+AABiBYw==
-Date: Mon, 17 Nov 2025 15:03:33 +0000
-Message-ID:
- <AM0PR02MB4450F4F28A68E9D70952BA48B3C9A@AM0PR02MB4450.eurprd02.prod.outlook.com>
-References:
- <AM0PR02MB4450D1D8A6B6BB9B8AEC5BD7B3C9A@AM0PR02MB4450.eurprd02.prod.outlook.com>
- <AM0PR02MB4450024F0F7380A5DE6B2006B3C9A@AM0PR02MB4450.eurprd02.prod.outlook.com>
- <AM0PR02MB44504C65BDF6C7D4B70652ECB3C9A@AM0PR02MB4450.eurprd02.prod.outlook.com>
-In-Reply-To:
- <AM0PR02MB44504C65BDF6C7D4B70652ECB3C9A@AM0PR02MB4450.eurprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM0PR02MB4450:EE_|GV2PR02MB11346:EE_
-x-ms-office365-filtering-correlation-id: c12e401e-4882-431b-d2dc-08de25ea79e0
-x-ms-exchange-slblob-mailprops:
- /OoUGmN/RpVAjouTXUgUPX+o0ch3BuGwUJ7xN9IumPABmTb/2tuANen6IdejoCq3fcTICGUx+j5BWkX2lzpVIjvnogep/OWybgGTQys6DuFPpyQZ6Ney2m91Qwky13QV0zLC+bzvmgNYnTEiaRHvQgVT/D5YobD6tOmGjZIUZmPuQWTtISgDEB/5NrhthhgJMAKtuRXJqXUfQTpKzN+dPCJK6rU9PJIuajLltsBLp+jO6UYulFRUpfBI7mcAkdgOv5oZWxouCw0VcvSbS3QyGmCXG2VhXBad2yrUEb3i6EJbEDzmtAGfqSjHqFaDPxegyYFP8uySwABJ0JhNoqXTAUqOHffcXnu6GAsKRYu5m3sEuiIz5Q3jInFdzSkLALKSTTDrK8ehKBBNfn3W3H/UooN4EaZPACmXnFk0vGH9q8sZB//H7+ITw512FJgYtQHi+cc79tCWmzqqCC40svNJ0wfMIO2evFzZGhftKosmWdVy42yuBplJquteD1ijWqUP1WPYIj+V+pEBWfwMi+bhP7G5tAPIp27eHfi1AJuxE2vSm3ct3jIxUALZhuatQ2ip8T0Bu6WKDcOPfsDbNeUzwOeLVqCQ9RBKwq5PDUWIyaWI0ly+0ONwPg1yO56n4+yftXX1ZHQ5mGvGX6r88OasuKbv6Umr5DgpZEu2K3hhmlUFSL9smGuPf3RiySj3/XdiWc8IfY6GbCZuH1Li7msVxYPlP2r6QxnW5l6yBWPfdV24uHCYfJPbZDYldHtzs5IS
-x-microsoft-antispam:
- BCL:0;ARA:14566002|41001999006|31061999003|51005399006|8060799015|8062599012|19110799012|15080799012|461199028|15030799006|12121999013|40105399003|440099028|3412199025|102099032|26104999006;
-x-microsoft-antispam-message-info:
- =?utf-8?B?QWNZL0x3RXAvNUNFc0JzVUJodlZCVVpOTG1Ba2VIeWlEQ1dPclczVzRNT0Iw?=
- =?utf-8?B?U3dXdFd0NnpkNUMxd1ZRR3pkWjBzWS9GTFI2QVJMc0QrcXZZQ0pQS0RrWnNq?=
- =?utf-8?B?WHdIdElPQnMyK1paVnE5elBIUGxkNU1oSkgyajQzbE5WTkxGV2VRS3NWOWJH?=
- =?utf-8?B?dTY2QlF6bTQ3eHJHQ01BTWIxdVA4aDJmSndXTUZJZW9SY0twcGJIdGhxdmt0?=
- =?utf-8?B?d0Z3MmhCVm0xMkQ2blNxQi9TZWhnYnk0SzhqVER6RURqYmFST1IySHNEcktV?=
- =?utf-8?B?QzNvMENZRXRUUDY5RlBqQThxR1QwWTdkcTY0ZU9tWHFSd1Jtd2R3Y0kxSDZL?=
- =?utf-8?B?M3J1MnZ6Snh2Uk1LZkxQVXQzSk9GZmR0Z2dQamRGNURRRXRpZEwvRHNQSWFm?=
- =?utf-8?B?OHVqY01OSWJBRk9pSVdBTmhDcExBQWpBc285THB3VzNkVFl4NEtVc1AyaXVk?=
- =?utf-8?B?SElMZGtMNzVuMStOU25YSzFrMHZ5U2dLbDgyeEFwUHZneG9QU2pKdkpqbWUr?=
- =?utf-8?B?endnTk5EdHhlT0k0WTdVZDNyanlUTlpNMWp0MFhGdnhXRHhQaTY4ZVczRXZu?=
- =?utf-8?B?SkhRa3l2azI1REdYNTB0SHJ6TGVWUGdZVFl1UlJOcEkzYXZKWHZHZUtrY0do?=
- =?utf-8?B?YXMyM09UM1RiNDFkazRnT3NhbnNPcDNzYVRTVUk3UFVOZlB1RVJZTnl0bStC?=
- =?utf-8?B?RWZmZHBPR1VBdThTTzlyZFZ6bnM3UkpyMVNaSWcyT044SnRCNlVhU2duanJy?=
- =?utf-8?B?L0czMHVVd2VjcFQvWXNEQzBYeGs1YmRjVWpzRkRxNVYxMEh4UVA2Z0FIQzdL?=
- =?utf-8?B?UTByajl2Nlc1M3dnWFJYa2lrQWs5bThoNVJ0dkNDL0pGWHNEbGpGYisvS0ZM?=
- =?utf-8?B?R0UrNVJDNnE0VmdweGtIOTF1Qy9sVFo5R083QVBvTEpXaXBQY3FVTHdGZDMr?=
- =?utf-8?B?WEZjY2tycmJ1YVBuSUdZUFRzN1RobE82bVBTUkplNkFlQzhoNCtob2dnU3kr?=
- =?utf-8?B?ZTdtVnBVMVgvcUQ0R2wrVXdoK1dMc2Y1K3UxdzRacTh2REpDcUdQNjZFMFF2?=
- =?utf-8?B?cGNLU1VvUDViQ3FhTVBwWjdRMkJxc08xUUxvdE9obWJKRjFxLzZQVDJiUGcr?=
- =?utf-8?B?WWhPKzlHR0s0OUc4S1VveDJtRmN6MGVUdWlCVjZEakRXbWdBb0dkN1dFRWZR?=
- =?utf-8?B?bzlmVk9Uc2U1SE1pc0ZtbmtrQjVNMU1vRE5uSnVNRklEalZ5TlBrTUJGWUxt?=
- =?utf-8?B?dy8raEJqY0Ixa0lLNmlhcy9sdUZUczF3Y1kzS1FubFpQTXhOazJGWTNMczBM?=
- =?utf-8?B?SWJaLzltNy9FdkN1Z0hFVERwZ3NOdG9lNTJHNHo2Y0YwczFTTjcwKzRrQmNw?=
- =?utf-8?B?VmZLTEhBZnp3ajZ3aUV3dGk5VnBleUJERmVudERDT1JiM29ZVTJxOW9IVEo2?=
- =?utf-8?B?QitMN2syc3JVOHREL2tpVDlLVnZxVFdLUTV4cVl0Rmozbys5QnM2NFY5dXFQ?=
- =?utf-8?B?VUh5YWNKL09Mb0NwVkQ1SFFBRkx5Q1B2bjU2dnhlMGJRbHNqQUx3dS90Z3hN?=
- =?utf-8?B?MmFvVXVvN2tsYlJvNFo2RWZCYS96c0NaZytrTjBSeUdDeUxJNTJYVlpHYlM4?=
- =?utf-8?B?Tjhoc0VVUktwSmhtSS9uMXY4dGpGRTNOam10YTlvM2tlTlM5NmNSVERkNXMr?=
- =?utf-8?B?b2JJRmkvNTVrazhFWlFOcHhtVTI2QkV2SWttRE9pQks2em9mTFRMOVhMTE11?=
- =?utf-8?Q?X4O/xH+QlzJzy0n0KuP3+cbjAno3XhvqT287UZx?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?RHZOUmh3cGhDS25NUmpydFAyNjk5TkxYVXg5c2lpUFRnb3Zia0lIOUVtZi9t?=
- =?utf-8?B?dlRHWEw5cytQcDkrTVRXUnpDb2lZU09heVNWdERIb3F0aHRzWDA4R3V0dFhQ?=
- =?utf-8?B?dE9oeG1HdmFiSnBtZnc5VWoxNmtFNTlZRzQ5NlBJSjFmbUdOenJJVCt1ZVJJ?=
- =?utf-8?B?SVd2OGNGMmFUR1AzNUo5R1BOMDhmQkVUdmF4bkVRMi9aS3Z0dTdnOFF0aFhj?=
- =?utf-8?B?dlpwVi9TMmMxanM4Ym1yd043NTVPTkhMYjA5djBDTFRqSGRZMXZ3SGhvTCtS?=
- =?utf-8?B?K21VTmFQUzg1MFp3N2UxRXRhN1VlenFGY1ZYK01RNHZrMWEyMnJGNlF2YjJD?=
- =?utf-8?B?dFp3MnI0MUNwd2hrUXdpMGk1a1FhVG95STljV2Y2dnN2TjdDS2kvKzRnVHlj?=
- =?utf-8?B?WjhFeGhRUTFBQll4T0o5MG1wOGhlN0t0cVluaWFjVEthLzRCU3NqbDQ1Njlx?=
- =?utf-8?B?citSa1dKY1Zoa1YvTGJDT3RCNFVvZWMyVVc4Rjl1TkNnMC9YSVM5bEVBSXdl?=
- =?utf-8?B?bWxuYTJPVGxaUzRVL1hUelF4bkZQRU9zT1RLYjFlZEVJUlloejUvdk1BLzFw?=
- =?utf-8?B?M1lsK3lEVGplYlBpSkw1NXU4SUVCTk5UUkI2SThFWjBIa3Z6ZHBxdGxCdVBP?=
- =?utf-8?B?aU1oV0RBc0ZQaUgySU5VaklFT1Bzd25RVXNVQVhuNFRsVVdCWFF1YUJwWFlK?=
- =?utf-8?B?cnNHaW11UVRhbjVVQWlrTlBxNHNzU0ZVN2JSVnI0REd3ZG42bnplcVJONHJt?=
- =?utf-8?B?V0xaTC9XQTR4NWtVazR4UEJiUWxPVkdYRDE0TmQyRlhnVk01NmdYd0VLcW1T?=
- =?utf-8?B?RHpUNVVnZ2MzazdKRUI3a3phKzFrNUw1RVRxaEtFei9VbVhiWUtTNjU5aG9L?=
- =?utf-8?B?L2hFS1RYaVBpZkovei9keDFOS3MvRDlPbXRJZ3ZrQUVrVUF2YjFJSUdYQ3l3?=
- =?utf-8?B?c2gvY2pvbmdzU0RqcXlOOTlPQTZwakd2QVpXQWxDWVhPWVNoSHkvWVNQY2VJ?=
- =?utf-8?B?OGRTbWlEYlVZMjJNZ05pUjFjM2xJWHg2eDEyUUk0VkFmMzhPQmlHbWVLcnBC?=
- =?utf-8?B?Y1R4SG5lZ1UzZGtkeUJ5OXF0UUYzblpaL2FiRGpFU3lnQVhtRGFFV3BDeEpa?=
- =?utf-8?B?Wi9XNWVsWUMzSU9XWUJBSjMyRjVmQlBwSVNXRklPN21ZK1VZQkw4UERMbXc4?=
- =?utf-8?B?ekNDRWNmNm1LMldnQzg4M09EVXVzUG9FODdSclFCcXhPdERNQUxDVzNsdmQ0?=
- =?utf-8?B?U01mdSt1bTF6ZFVLTWYza1ZPeXVRMW9ua2xUWlFnbngwT0FWMkFhTWhzeVhB?=
- =?utf-8?B?bEh2VEM4cmZwdjdRaERaTCtrOGljbHRnM2lRVFdaeHJPNEovdjZ5c0ZMQmxM?=
- =?utf-8?B?QnJqUDJLVWh6UTVrVkhqUEVMWk0zU0EyZTJkWEc0UldMTUdFR1F5ZXZlVUE5?=
- =?utf-8?B?MTRBQTl6SEZmK3BqT0JjSkN0TDVwd1BBTnJveEwzOXM1Unoreis0K0pad1Rt?=
- =?utf-8?B?VUxtcUFsbVQ2anpXYktTZ3RDZjU1QVlvRzFGT1d2RjNycE9NK1RBMzM1ZXNl?=
- =?utf-8?B?ZkljeW1sOUxPTjhMYVkwTmFKenVtalZwMDMwWFVLYkEwV3JEdXB0Zi95cHJW?=
- =?utf-8?B?Wm8xRkRSSlNpMTN6M1BXYzJ2S2x6b3pZSXpWTUFpR0k0WHhPUFBNbWlOdElM?=
- =?utf-8?B?d0dkMGxnSFlnNVIrZE9SclloQmoyWS9qZWtiYXVxZ1hFb095Y1l3TjE2Rmdw?=
- =?utf-8?Q?v2d2IGixULKH8k5Hd8=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d/DUlqRV"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-640a503fbe8so7583666a12.1
+        for <git@vger.kernel.org>; Mon, 17 Nov 2025 07:06:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763391979; x=1763996779; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nMiucvO4xm6L69I9lHhs8WBG9itejB/rK9IhbzhlZ8I=;
+        b=d/DUlqRVxkrdQDuZgL3YLIEX97Ng2Rc231p10kuRnOBqfexDh9upPV3HIIJNSCeBPY
+         tPMM+GnFOCG5++MZaUanOwjQpCUlzxKuRZBZLDVkSwHA+V3pwajy9oVukRSp1kgDqxkE
+         xltBySVlpBp1ulDltUK9B43qWt6Vs8m44ZfNDEUUTOAUXoGq/aIb49gcHj7Ifz5SxNpd
+         HTbVZuyfLP+DWHFJYKPaWDj+lx/az5GPmoiFYrVhHd1+y5M02NnBxhCYb9Wu9akXhDMh
+         P+2322BnKDwvlbkmlQUEkpYFh4Cz8lhS74VRcUop466ACeDm3B9swqUxbrGGungvR9wk
+         dsLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763391979; x=1763996779;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=nMiucvO4xm6L69I9lHhs8WBG9itejB/rK9IhbzhlZ8I=;
+        b=NXECJ0n7gk9bcvxb5Gi9JooqRYWn7d95wGwdbKjUn3le5V1bYoHTtYJcolwj+u/RCc
+         fYqLncB5MilFnlq3eBtByzgkN23/qbrAJMTuzxeU5fgZ2dY+Fbh1uh7bYCkNGnF5DQzI
+         bR+K46ehhPfh/Vfe5JwCb3ynh7r7GU9B7+Sxe/MQXYK0FONVC8rTkjCkCWgnLTS5Sjov
+         WFA4RxA+6nSeqKqNb9AxezxMATc9sTJjpKqDjKsq7gYgAue2To+6/tLFiQp0yBo+poln
+         u8UttKCqnlVnk4+asv/eO9GJCPcKbddAe7B/9aabOyEItEK74tErh3fGvJYBcngK4mGV
+         3Cug==
+X-Forwarded-Encrypted: i=1; AJvYcCUQ2vVNwg8DOaKLihE8IqqOxTEnd9eTnW3mRo3EJpCLZpmYQQb8lP1TJd1MOi4s9U725v4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyrDpk9NJbtYXGMxeFdj+OLzcBinf+HEsMDfkEGpyHjUNtsWah9
+	dwuZNCkdyydLOnkpXGZR4H+MVZrAcP5VKZlH9AEcjNL9ld7cRXjrNbw7mw9MmiWns6v/nOPzxAd
+	kBlXjeUNx12/ZZFYZQXJdUwO4O0WSN2g=
+X-Gm-Gg: ASbGncvSbggn2SBivTZnJ+XvKqYwRynBzhnNw9jKUOXRZz5Fx2Tufms1hW6FmndjzO6
+	oKpEdchdKBv1UmUeTfNC0hYB2eCQRQkF1nfqIv/rL3BqGGrDqtAv0dfJviyZa+yMoxgCIRpPPQA
+	kMP5Zqy2iqhKZolkCbVIK7IUnX87pMLwPWq7+BNVr2T7Rr5nqpeMAUZq1cPSgKBnr/M9Z6XqAMO
+	bPSSXB015eUOKHF5u+49bpPHDzcZhR0SQxMbC5L1YX4s8Utoypqd/dzD3gUMlIY3DiVCjajCjZ5
+	zKSpZC1B86c+fRw4K9UnVxw=
+X-Google-Smtp-Source: AGHT+IFbBxviSAOmuZyNjQiCmrCE64d4FDg4ZKFEusZidoIpwfQt+et8H2ONM1BbmIy5u0Rk9+BobJ5MnJWHz/LmORE=
+X-Received: by 2002:a05:6402:35d2:b0:640:be87:a858 with SMTP id
+ 4fb4d7f45d1cf-64350e9eb3cmr12342945a12.27.1763391978684; Mon, 17 Nov 2025
+ 07:06:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-8534-20-msonline-outlook-5faa0.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM0PR02MB4450.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: c12e401e-4882-431b-d2dc-08de25ea79e0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Nov 2025 15:03:33.0301
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR02MB11346
+References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
+ <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com> <CAOLTT8TPrNTCjHwJfdeei+t8+7AxGC-dvbq-4oHJ=qNn_c+-jQ@mail.gmail.com>
+ <7d99f00c-3602-4b28-8efd-4780cad41ca8@gmail.com> <CAOLTT8TLEsSAcfUomoActrUSzje5mQNE7EweXh8WtY3sOfzfkg@mail.gmail.com>
+ <xmqqqzu3qi43.fsf@gitster.g> <CAOLTT8RSN-72gVXDS-zrr=7wW4HU=CL6acyDx_UXnvo4c5MaRA@mail.gmail.com>
+ <xmqqfraeeqgw.fsf@gitster.g>
+In-Reply-To: <xmqqfraeeqgw.fsf@gitster.g>
+From: ZheNing Hu <adlternative@gmail.com>
+Date: Mon, 17 Nov 2025 23:06:07 +0800
+X-Gm-Features: AWmQ_bkRiN4UFeakujLn76jIJpCzxn3qayyOwuUs1DPk-Yl5SSmVVuPV_wSPpAU
+Message-ID: <CAOLTT8SEwipDtthO2T0CkE5-rCJdq9oDjTKcBEH2YxzpjAM9jQ@mail.gmail.com>
+Subject: Re: [PATCH] commit: add --committer option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: phillip.wood@dunelm.org.uk, 
+	ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-RGlzY3Vzc2luZyBob3cgdG8gaW1wbGVtZW50IHRoaXMgd2l0aCBleHRlcm5hbCB0b29scyBmb3Ig
-Z2l0IHdpdGggR29vZ2xlIGdlbWluaSAyLjUgYWk6CgpUaGUgcHJvbXB0OgoKIgpJIHdhbnQgZXZl
-cnkgY29tbWl0IG9uIHRoZSBtYXN0ZXIgYW5kIHN1YiBicmFuY2hlcyB0byBoYXZlIHRoZWlyIG93
-biB2ZXJzaW9uIG51bWJlci4KUGx1cyBhdXRob3Igd2hvIGNyZWF0ZWQgdGhlIGNvbW1pdCwgZXhh
-bXBsZSBmb3IgbWFzdGVyIGJyYW5jaCBmb3IgYXV0aG9yIFNreWJ1Y2s6CkZvciBleGFtcGxlOgpD
-b21taXQxOgp2ZXJzaW9uLTAuMDEtU2t5YnVjay1NYXN0ZXIKQ29tbWl0MjoKdmVyc2lvbi0wLjAy
-LVNreWJ1Y2stTWFzdGVyClN1YkJyYW5jaCBmb3IgU2t5YnVjayBGZWF0dXJlIEE6CnZlcnNpb24t
-MC4wMi1Ta3lidWNrLU1hc3Rlci1zdWItdmVyc2lvbi0wLjAxLVNreWJ1Y2stRmVhdHVyZS1BCklz
-IGl0IHBvc3NpYmxlIHRvIGltcGxlbWVudCB0aGlzIHdpdGggZXh0ZXJuYWwgdG9vbHMgZm9yIGdp
-dCwgb3Igc2hvdWxkIHRoZSBnaXQgc291cmNlIGNvZGUgaXRzZWxmIGJlIG1vZGlmaWVkID8KIgoK
-VGhlIGFpIGFuc3dlci9yZXN1bHQgc28gZmFyOgoKIgpUaGlzIHZlcnNpb25pbmcgc2NoZW1lIGlz
-ICoqcG9zc2libGUgdG8gaW1wbGVtZW50KiogdXNpbmcgKipleHRlcm5hbCB0b29scyBhbmQgR2l0
-IGhvb2tzKiosIHdpdGhvdXQgbmVlZGluZyB0byBtb2RpZnkgdGhlIEdpdCBzb3VyY2UgY29kZSBp
-dHNlbGYuIE1vZGlmeWluZyB0aGUgR2l0IHNvdXJjZSBjb2RlIGlzIHVubmVjZXNzYXJpbHkgY29t
-cGxleCBhbmQgbm90IHRoZSBzdGFuZGFyZCB3YXkgdG8gZW5mb3JjZSBjdXN0b20gcmVwb3NpdG9y
-eSBydWxlcy4KCi0tLQoKIyMg8J+boO+4jyBSZWNvbW1lbmRlZCBJbXBsZW1lbnRhdGlvbiBBcHBy
-b2FjaAoKVGhlIG1vc3QgcHJhY3RpY2FsIHdheSB0byBlbmZvcmNlIGFuZCBnZW5lcmF0ZSB0aGlz
-IGNvbXBsZXggdmVyc2lvbiBzdHJpbmcgZm9yIGV2ZXJ5IGNvbW1pdCBpcyBieSB1c2luZyAqKkdp
-dCBob29rcyoqIGNvbWJpbmVkIHdpdGggYSBzaW1wbGUgKipzY3JpcHRpbmcgbGFuZ3VhZ2UqKiAo
-bGlrZSBQeXRob24sIEJhc2gsIG9yIFBvd2VyU2hlbGwpLgoKIyMjIDEuIFZlcnNpb24gVHJhY2tp
-bmcgTWVjaGFuaXNtCgpZb3UnbGwgbmVlZCBhIG1lY2hhbmlzbSB0byB0cmFjayB0aGUgbmV4dCB2
-ZXJzaW9uIG51bWJlciBmb3IgdGhlIG1hc3RlciBicmFuY2ggKGUuZy4sIGAwLjAxYCwgYDAuMDJg
-KSBhbmQgdGhlIHN1Yi1icmFuY2ggKGUuZy4sIGAwLjAxYCwgYDAuMDJgKS4KCiogKipTaW1wbGVz
-dCBNZXRob2QgKFJlY29tbWVuZGVkKToqKiBTdG9yZSB0aGUgbmV4dCB2ZXJzaW9uIG51bWJlciBp
-biBhIHNpbXBsZSAqKnRleHQgZmlsZSoqIChlLmcuLCBgbWFzdGVyX3ZlcnNpb24udHh0YCkgYXQg
-dGhlIHJvb3Qgb2YgdGhlIHJlcG9zaXRvcnkuIFRoaXMgZmlsZSB3b3VsZCBiZSB1cGRhdGVkIGFu
-ZCBjb21taXR0ZWQgKndpdGgqIHRoZSBjaGFuZ2VzLCBlbnN1cmluZyB0aGUgdmVyc2lvbiBoaXN0
-b3J5IGlzIGFsc28gdHJhY2tlZCB3aXRoaW4gdGhlIHJlcG9zaXRvcnkgaXRzZWxmLgoqICoqQWx0
-ZXJuYXRpdmU6KiogVXNlIEdpdCdzICoqdGFnZ2luZyoqIGZ1bmN0aW9uYWxpdHkgdG8gZmluZCB0
-aGUgbGF0ZXN0IHZlcnNpb24gbnVtYmVyLCBidXQgdGhpcyBpcyBtb3JlIGNvbXBsZXggdG8gcGFy
-c2UgYW5kIG1hbmFnZSwgZXNwZWNpYWxseSBmb3IgdGhlIHN1Yi1icmFuY2ggbnVtYmVycy4KCiMj
-IyAyLiBHaXQgSG9vayBFbmZvcmNlbWVudAoKVGhlIGxvZ2ljIGZvciBnZW5lcmF0aW5nIGFuZCBh
-cHBseWluZyB0aGUgdmVyc2lvbiBzdHJpbmcgc2hvdWxkIGJlIHBsYWNlZCBpbiB0aGUgKipgcHJl
-cGFyZS1jb21taXQtbXNnYCoqIEdpdCBob29rLgoKKiAqKmBwcmVwYXJlLWNvbW1pdC1tc2dgIEhv
-b2s6KiogVGhpcyBob29rIHJ1bnMgcmlnaHQgYmVmb3JlIHRoZSBlZGl0b3Igb3BlbnMgKG9yIGJl
-Zm9yZSB0aGUgbWVzc2FnZSBpcyBmaW5hbGl6ZWQgaWYgdXNpbmcgYC1tYCBvciBvdGhlciBvcHRp
-b25zKS4gSXQgcmVjZWl2ZXMgdGhlIHBhdGggdG8gdGhlIGZpbGUgY29udGFpbmluZyB0aGUgY29t
-bWl0IG1lc3NhZ2UuCgojIyMgMy4gU2NyaXB0IExvZ2ljIChDb25jZXB0dWFsKQoKVGhlIHNjcmlw
-dCBpbnNpZGUgdGhlIGhvb2sgd291bGQgcGVyZm9ybSB0aGUgZm9sbG93aW5nIHN0ZXBzOgoKMS4g
-wqAqKkRldGVybWluZSBCcmFuY2ggVHlwZToqKiBDaGVjayB0aGUgY3VycmVudCBicmFuY2ggbmFt
-ZSAoZS5nLiwgYGdpdCByZXYtcGFyc2UgLS1hYmJyZXYtcmVmIEhFQURgKS4KMi4gwqAqKklkZW50
-aWZ5IEF1dGhvcjoqKiBHZXQgdGhlIGNvbW1pdHRlcidzIG5hbWUgKGUuZy4sIGBnaXQgY29uZmln
-IHVzZXIubmFtZWApLgozLiDCoCoqQ2FsY3VsYXRlIE1hc3RlciBWZXJzaW9uIChgdmVyc2lvbi1Y
-LlhYYCk6KioKwqAgwqAgKiBSZWFkIHRoZSBjdXJyZW50IHZlcnNpb24gZnJvbSBgbWFzdGVyX3Zl
-cnNpb24udHh0YC4KwqAgwqAgKiBJbmNyZW1lbnQgdGhlIHZlcnNpb24gKGUuZy4sIGAwLjAxYCAk
-XHJpZ2h0YXJyb3ckIGAwLjAyYCkuCjQuIMKgKipDb25zdHJ1Y3QgQmFzZSBTdHJpbmcgKGZvciBh
-bnkgYnJhbmNoKToqKgrCoCDCoCAqIGB2ZXJzaW9uLVguWFgtU2t5YnVjay1NYXN0ZXJgCjUuIMKg
-KipDYWxjdWxhdGUgU3ViLVZlcnNpb24gKElmIG9uIGEgU3ViLUJyYW5jaCk6KioKwqAgwqAgKiBJ
-ZiB0aGUgY3VycmVudCBicmFuY2ggaXMgKipub3QqKiBgbWFzdGVyYCwgeW91IG5lZWQgdG8gY2Fs
-Y3VsYXRlIHRoZSBzdWItdmVyc2lvbi4gVGhpcyBpcyB0aGUgdHJpY2t5IHBhcnQuIFlvdSB3b3Vs
-ZCBuZWVkIGEgc2VwYXJhdGUgdHJhY2tlciAob3IgYSBzcGVjaWZpYyBzdHJhdGVneSkgdG8gZmlu
-ZCBob3cgbWFueSBjb21taXRzIGhhdmUgYmVlbiBtYWRlIG9uIHRoZSBzdWItYnJhbmNoIHNpbmNl
-IGl0IGZvcmtlZCBmcm9tIHRoZSBtYXN0ZXIgYnJhbmNoLgrCoCDCoCAqIEEgc2ltcGxlIGFwcHJv
-YWNoIHdvdWxkIGJlIHRvIG1haW50YWluIGEgc3ViLWJyYW5jaC1zcGVjaWZpYyB2ZXJzaW9uIGZp
-bGUgKGUuZy4sIGBzdWJfYnJhbmNoX0FfdmVyc2lvbi50eHRgKS4KNi4gwqAqKkNvbnN0cnVjdCBG
-aW5hbCBWZXJzaW9uIFN0cmluZzoqKgrCoCDCoCAqICoqTWFzdGVyOioqIEFwcGVuZCB0aGUgY2Fs
-Y3VsYXRlZCBzdHJpbmcgdG8gdGhlIGJlZ2lubmluZyBvZiB0aGUgY29tbWl0IG1lc3NhZ2UuCsKg
-IMKgICogKipTdWItQnJhbmNoOioqIEFwcGVuZCB0aGUgZnVsbCBzdHJpbmc6IGB2ZXJzaW9uLVgu
-WFgtU2t5YnVjay1NYXN0ZXItc3ViLXZlcnNpb24tWS5ZWS1Ta3lidWNrLUZlYXR1cmUtQWAKNy4g
-wqAqKlVwZGF0ZSBWZXJzaW9uIEZpbGVzOioqIEluY3JlbWVudCBhbmQgc3RhZ2UgdGhlIHJlbGV2
-YW50IHZlcnNpb24gdHJhY2tpbmcgZmlsZShzKSAoYGdpdCBhZGQgbWFzdGVyX3ZlcnNpb24udHh0
-YCkuIFRoaXMgZW5zdXJlcyB0aGUgbmV4dCBjb21taXQgdXNlcyB0aGUgY29ycmVjdCwgaW5jcmVt
-ZW50ZWQgdmVyc2lvbi4KCiMjIOKaoO+4jyBJbXBvcnRhbnQgQ29uc2lkZXJhdGlvbnMKCiMjIyBB
-LiBBdXRob3IgTmFtZQoKVGhlIGF1dGhvcidzIG5hbWUgaW4geW91ciBleGFtcGxlIChgU2t5YnVj
-a2ApIGlzIHN0YXRpYy4gR2l0IGNhbiBlYXNpbHkgZ2V0IHRoZSAqKmFjdHVhbCBjb21taXR0ZXIn
-cyBuYW1lKiogdXNpbmcgYGdpdCBjb25maWcgdXNlci5uYW1lYCwgd2hpY2ggd291bGQgbWFrZSB0
-aGUgc3lzdGVtIHVuaXZlcnNhbCBmb3IgYWxsIGRldmVsb3BlcnMuCgojIyMgQi4gU3ViLUJyYW5j
-aCBDb21wbGV4aXR5CgpZb3VyIHN1Yi1icmFuY2ggZXhhbXBsZSBpcyB0aGUgaGFyZGVzdCBwYXJ0
-OiBgdmVyc2lvbi0wLjAyLVNreWJ1Y2stTWFzdGVyLXN1Yi12ZXJzaW9uLTAuMDEtU2t5YnVjay1G
-ZWF0dXJlLUFgLgoKKiBgdmVyc2lvbi0wLjAyLVNreWJ1Y2stTWFzdGVyYDogVGhpcyBudW1iZXIg
-bXVzdCByZXByZXNlbnQgdGhlICoqbmV4dCB2ZXJzaW9uIG51bWJlciB0aGUgbWFzdGVyIGJyYW5j
-aCAqd291bGQgaGF2ZSBoYWQqKiogaWYgdGhpcyBjb21taXQgd2FzIG1hZGUgb24gbWFzdGVyLiBU
-aGlzIHJlcXVpcmVzIGNoZWNraW5nIHRoZSBgbWFzdGVyX3ZlcnNpb24udHh0YCBmaWxlIGFzIGl0
-IGV4aXN0cyBvbiB0aGUgKiptYXN0ZXIgYnJhbmNoKiogYXQgdGhlIHRpbWUgdGhlIHN1Yi1icmFu
-Y2ggd2FzIGNyZWF0ZWQsIG9yIG1vcmUgc2ltcGx5LCBjaGVja2luZyB0aGUgbnVtYmVyIG9uIHRo
-ZSBwYXJlbnQgY29tbWl0J3MgdmVyc2lvbi4KKiBgc3ViLXZlcnNpb24tMC4wMWA6IFRoaXMgbmVl
-ZHMgYSBjb3VudGVyIHNwZWNpZmljYWxseSBmb3IgdGhlIHN1Yi1icmFuY2gncyBjb21taXRzLgoK
-VGhpcyBkZWdyZWUgb2YgY29tcGxleGl0eSBpcyB3aHkgbW9zdCB2ZXJzaW9uaW5nIHRvb2xzIChs
-aWtlICoqR2l0RmxvdyoqIG9yICoqU2VtYW50aWMgVmVyc2lvbmluZyoqKSByZWx5IG9uICoqdGFn
-cyoqIGFwcGxpZWQgdG8gc3BlY2lmaWMsIGltcG9ydGFudCBjb21taXRzIChsaWtlIHJlbGVhc2Vz
-KSwgcmF0aGVyIHRoYW4gYSB1bmlxdWUgdmVyc2lvbiBudW1iZXIgZm9yICpldmVyeSogc2luZ2xl
-IGNvbW1pdC4KCldoaWxlIHRlY2huaWNhbGx5IHBvc3NpYmxlLCBiZSBwcmVwYXJlZCBmb3IgdGhp
-cyB0byBiZSBhICoqdGltZS1jb25zdW1pbmcgc2NyaXB0KiogdG8gbWFpbnRhaW4gYW5kIHRyb3Vi
-bGVzaG9vdC4KIgoKSSB3YW50IHRvIHJ1biB0aGlzIGJ5IHlvdSBndXlzL3RoZSBDIHByb2dyYW1t
-ZXJzLCBtYXliZSB5b3UgY2FuIHNlZSBhIGJldHRlciB3YXkgdG8gZG8gdGhpcyB0aGFuIHRoaXMg
-QUkvYm90ID8/PwoKQnllIGZvciBub3csCiAgU2t5YnVjayBGbHlpbmcu
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2025=E5=B9=B411=E6=9C=8816=E6=
+=97=A5=E5=91=A8=E6=97=A5 09:06=E5=86=99=E9=81=93=EF=BC=9A
+>
+> ZheNing Hu <adlternative@gmail.com> writes:
+>
+> >> Isn't it more like "You need to run with --author to correct the
+> >> authorship by amending the commit *anyway*, but while doing so, the
+> >> committer information will automatically be corrected"?  As I said
+> >> earlier in a separate message, the author and the committer are not
+> >> symmetric, so having "--author" does make sense in the above picture,
+> >> while "--committer", as Phillip points out, much less.
+> >>
+> >
+> > Well, I admit that perhaps the design philosophy of author/committer is
+> > inconsistent (which has caused too much trouble), but for users, a cons=
+istent
+> > parameter interface is easier to understand and use.
+>
+> I do not think it is about design philosophy at all, though.
+>
+> The distinction comes from the difference between what "author" and
+> "committer" fields record.  The committer records the identity of
+> the person who was at the keyboard when the commit object was
+> created.  The author records the identity of the person who wrote
+> the change that the committer is turning into a commit.  There is no
+> symmetry between them, hence there is no inconsistency here.
+>
+
+I understand the difference between committer and author,
+but some regular Git users don't really pay much attention to the
+distinction between the two. For these users, being able to quickly
+and easily correct user information is sufficient =E2=80=94 it's just that =
+some
+previous solutions were a bit complicated.
+
+> And it also comes from the actual human user behaviour.
+>
+> Many authors can pass their patches to a smaller number of
+> committers who make them into part of the official project history,
+> so when a commit is made, there is much stronger need to tweak who
+> the author is for the commit than to tweak who the committer is.  On
+> the other hand, it is rare (if ever done) for multiple committers to
+> share a single shell terminal session and take turns to make commit,
+> where you would need to be able to say "this invocations of 'git
+> commit' command is done by person X, who is different from the one
+> who made the previous commit in this same shell session".
+>
+
+Yes, I believe users in this case are very rare. As I mentioned before,
+I just want to help those users who want to fix things after misconfigurati=
+on,
+making the fix a bit simpler.
