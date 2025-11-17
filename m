@@ -1,120 +1,211 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5274531618B
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 06:56:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7E730DEBB
+	for <git@vger.kernel.org>; Mon, 17 Nov 2025 08:04:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763362573; cv=none; b=sMrXB8J372A+BxYEvaI+TXMPMoWqCirx3CebtKlWqPGX4c5Uh1z7Pg+yb7zBUBa5QGj/+CpUm0SfoGDUm2vwy2fydZoxmG6sIUqgi+q4BPdOrzA4sAJBkZND9kUSdAEuI9ajVrJqDwoyN5lsWdGgcd6BF+cjhhJUsZKNpRcOh0g=
+	t=1763366677; cv=none; b=cTvXwStTOquPYZfMzaYOjGDX4raT9AS8jtMr49hS+eyu8rZT3WWsoFzQFSlbjmlnuin1EqO0pPS1xH+AGZa31eeN5Jibrthmgk4hXq+2Wm3AWuwJnpvmX5Cj41JllyeNI9j+zypnIsrsYi/PBGXNiehVup9F95zx3sy6INQpbrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763362573; c=relaxed/simple;
-	bh=PSPOUtJI6mh29gYPfJlrQYJHvIEECpQBDCbE1kucnO8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fAa2PXcu38NvrWxnxWb6FHw4C8gvhZUbywQsj0fZYRbHlFd8+lmcHr/TN0K9G9yEzfDw4rd1UbkrS3HNOMD34adHQOC1FORx2m+xFZ/Up5+56f7f2mzR7RLLFpd/MUKEjpbIrs8tYS8i0AiMAZGfchurzcTdBi1dgfrjUW3rBM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YszEt66W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vZ0bFjWl; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763366677; c=relaxed/simple;
+	bh=fFweqr5SwohRUIeCz5iYVK/AmJ1fZjgto8nBs3EAX84=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=hcXPZ9lD1Pal/yweD3JSRfHpb6Df0+9jsfmfmjxMdV0AqLC//nIf8GluzqKN3sCm3O6laDh4lkk5M7qRITp2MPpRi+9An+JoZ4U2DmyKRVZCuTS841pUlSqNI1Tmge2BijDoVAaUHINymMOqBdtbQvnj7aRLaKIqqhq6zJLzrmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UkKi/dia; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YszEt66W";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vZ0bFjWl"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5C476EC01D5;
-	Mon, 17 Nov 2025 01:56:09 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Mon, 17 Nov 2025 01:56:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763362569; x=1763448969; bh=te3KQGSaJQ
-	//cClum7cylEot/CTyeYYWRkj9ZSDxtRo=; b=YszEt66W1LINejZjX9NZL/WRCW
-	FAe4RHkb1POI2Gn2OiRlzGNtAG3bbj+vSoJkW8i0pUQZlQ7ktU9lYZdiYbDq0tjG
-	t+uS19oFj1z521MMg5TqE6fCODNl9C79ZlRg/Qu358t2TSrOmNEQsZS+shw3YC2u
-	Lg1ojyj7OOnM30Sn2Q+fnwDSG+KXD/VdiwxCwNxrQ2WUUJJC1PYK1ZFujc2Ho4Uc
-	Be/0VMQt0IkgS7e/sqT4dVRdkwNNXGGuCjPMJCcid0pp7qxBbO2UZECXDSflma/i
-	VDyE0n6GauIEkfU27h6cJymtDmVZyapHw6eech5cBxZqczt8bJqU5aaaT1+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763362569; x=1763448969; bh=te3KQGSaJQ//cClum7cylEot/CTyeYYWRkj
-	9ZSDxtRo=; b=vZ0bFjWl+MD3mQuecxItufnsA7RnjGL5Fn16CM3ymp1e6SiLWIa
-	exLvuiuNTs3OkCZbQAiPoyPS+KqM8nQuoBFegi94z2upl8JO4Wgl6z4MnuTxB+kX
-	4ebv5p3ALx53plo4xCvAiLFa2/IuUwYp3tW+NV0MVI9YAV6jj9jtBgx4dgJQtTyA
-	HVBRcgdYdc4mFB/h3QLJK7xPEBJ7IiiLzFs+ZgdDRmstEc/XJUQks2JVtknCsyyn
-	IFzA8/n8aS4flVbaj5bnTgYFUQCcDiycgSCmixN5mWWh4P+I7KV+j4y5wV3lWgP2
-	+mgxRZYAG+dsZNNek8/ZRUs7h9gm8LTrACQ==
-X-ME-Sender: <xms:CMcaaYosClBWnE1HqMK0SBvtFR4MsMJJHyiDYRKqQ05tD8jzUA4coA>
-    <xme:CMcaaVjZvQ6K1kJEuQ2qUAMjBQF7q8uwe6nxF7UED-9Afc6gmfjH8Gs1-XS74LWzH
-    WZTqd1NGVhjMXimcA3qvNjZlyE5yanwrumIA4z-f2woualPdgu26Q>
-X-ME-Received: <xmr:CMcaaVgtTSieSHO-qO5G1zrVxtNnZlY44k3sV7pdaTCrIFDqIWfcLIzm6u_pJHblQq8KZWfkq8nvl88WthGTGvtVw6O9GW2Ifq0f>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudejjeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrg
-    hnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:CMcaabiIWiLjJQnL-CVQibZIGawGWHgNL07idh7r_K9iMKikXfTNtA>
-    <xmx:CccaaVJDF8bQKtMT029sUImWQ6x-yjvdXnt3E22VrlKvUezZRYNFtw>
-    <xmx:CccaaaGv9219I0dEAdUpn5eNAxfsa1x1cTOvpYmWQwkqZJ9pyB00bw>
-    <xmx:CccaaZS15TaZQua2MLJMeZHIdu2i3YG8LLD5AEU4DHeM-1nFK6L4Wg>
-    <xmx:CccaaS3dpEZeAvER2l3L7lewrth6qLL0hWbHn2gPrMJmCrnnZxbc6DL0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Nov 2025 01:56:08 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,  Ezekiel Newren
- <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 00/14] SHA-1/SHA-256 interoperability, part 2
-In-Reply-To: <xmqq7bvsjzlx.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	14 Nov 2025 09:25:14 -0800")
-References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
-	<xmqq7bvsjzlx.fsf@gitster.g>
-Date: Sun, 16 Nov 2025 22:56:07 -0800
-Message-ID: <xmqqpl9h9mgo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UkKi/dia"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-bc09b3d3b06so2232644a12.2
+        for <git@vger.kernel.org>; Mon, 17 Nov 2025 00:04:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763366674; x=1763971474; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=s2QesKUgKPfnkbAQZhwQI5a/Ukgf2Zi5Z+zJRBmqfLM=;
+        b=UkKi/diaJjsgZUc2HuLl6C+ndiC8hq6nwUwEBoNVKtoEvlPYP+4waLfUW6Ixm4FRA/
+         SgpEp6Mj9DZy0dTPjo6+EreDeMgVHCjTfkTzh9052qMg8jP8rvYQAhl8ADEzq+AFHv2W
+         bAriO+ItNyI1jdDp5Us9QQNs0L+IbPzt/38bx95fEfKH79wDRVPcgfdUjt130fqpdL/v
+         Uvb1Ul53RJx5YSQ0XkFkmnzrimquSd0Ef5YGA0uf52MHGq7P7TjzFVPfPTlPGkJyzSB6
+         TiCG79K4L7dlcDmYUJlsmYn36z3sf4ogQ/ehBAcWHA501AgTF9CjPNX6NsVXd5XLrdzZ
+         uHXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763366674; x=1763971474;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=s2QesKUgKPfnkbAQZhwQI5a/Ukgf2Zi5Z+zJRBmqfLM=;
+        b=JeyjhD6hX2kni4RlYIqV+qyVB4arIRU1//evEldECNTiSdPaHqmy3TMoVRptuvStpC
+         +6URVJwZcHoDTMiH+1lT2AvK/bunjVHnD3y+FYuc6Scy1+XA/Yh7le00WEAJvN45l8Mo
+         EaBmTDHq4KYmeAcDG+YM49aumehtQ2RiRaD1w0k+IDJ6QflEp1HZX1R18cxmSnw246yq
+         8n0PY2M4KFzME0ZwGSli+pLXfFUG3vu6ryO4iJxPGvf5f984DjWMxNpqgRxiNoiUr6Jp
+         4KsrIpmPmZbu4uo5BPIi8e4RDgOaNbyFFjAZTEjKU/CUprnjRfbhgFFdqRt6vHIMBr4Y
+         JXuQ==
+X-Gm-Message-State: AOJu0YxlBP7rkjjv++wSwWZ78At2MccplihYjdMhC/Gf1kWrhV6CdEr8
+	wkoWZlQRVRWimdHOcOuO2tcd0DsMFvGNqvwq0c9lqe85ZwGt2P6e3/VkeB+lFw==
+X-Gm-Gg: ASbGncvdlihmjHH8kqnEcJBg4Q/3Cf2m5A1xk54itK8LdsMAcivOpkQZM2nNCVnxeYb
+	SPXOzSpxLHNUuU+wlrLeExckR7Z4wmdJ/KZSoueYiC+s+81icOQUHtr6EHvmEPk05GmFfA2K6D4
+	V4T1mjo3xUpOm+9P3t4q6hjq410X1k9yNMd8arkcPMxtHpGj88j7SvnuG6IMjQ6FrvVs+sLSk+J
+	p23yOrC2H4w5rw03vGsG5r0KoPhPr3h39+UMzuFVhdojArNB4DnhZo+u06n6CPty8DD8yKHD6dZ
+	PB9uL1q52jnzb2+dVZdbbR82y/0YGUZEnIyNoG6GUll1+FQRyxmjxIPCK/n1b4/uRBmXviOU5zS
+	KCMtAcAijWlTg3oO65nBWqai8zJ2Wb1verne1oQ6wTsOcBp6xg4t9U+0rvwk6de9GVGNFWr9h44
+	mNjg==
+X-Google-Smtp-Source: AGHT+IGyAtW4lDw4z+v9eHMGf2McBnn/cwXp3hDWrX/Af9VFHGt6ccKsSVbyCqvV8Tw/7zDFDtO3Jw==
+X-Received: by 2002:a05:7022:2583:b0:119:e55a:9c00 with SMTP id a92af1059eb24-11b411fd521mr4629666c88.28.1763366674107;
+        Mon, 17 Nov 2025 00:04:34 -0800 (PST)
+Received: from [127.0.0.1] ([52.161.74.197])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11b0608861asm30866182c88.9.2025.11.17.00.04.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Nov 2025 00:04:33 -0800 (PST)
+Message-Id: <pull.2075.v6.git.git.1763366672.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2075.v5.git.git.1762468914.gitgitgadget@gmail.com>
+References: <pull.2075.v5.git.git.1762468914.gitgitgadget@gmail.com>
+From: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 17 Nov 2025 08:04:30 +0000
+Subject: [PATCH v6 0/2] blame: make diff algorithm configurable
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Antonin Delpeuch <antonin@delpeuch.eu>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Changes since v5:
 
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
->> The new Rust files have adopted an approach that is slightly different
->> from some of our other files and placed a license notice at the top.
->> This is required because of DCO part (a): "I have the right to submit it
->> under the open source license indicated in the file".  It also avoids
->> ambiguity if the file is copied into a separate location (such as an LLM
->> training corpus).
->
-> You may be aware of them already, but just in case, I was looking at
-> CI breakages ...
+ * add back /* clear out previous settings */ comments
+ * remove whitespace in bash output redirection
 
-In addition to "cargo clippy" I reported earlier (and attempted to
-fix) in a separate message, we have been seeing constant failure of
-"win+Meson build" job at GitHub Actions CI.
+Antonin Delpeuch (2):
+  xdiff: add 'minimal' to XDF_DIFF_ALGORITHM_MASK
+  blame: make diff algorithm configurable
 
-  https://github.com/git/git/actions/runs/19414557042/job/55540901761#step:6:848
+ Documentation/diff-algorithm-option.adoc |  20 +++
+ Documentation/diff-options.adoc          |  21 +--
+ Documentation/git-blame.adoc             |   2 +
+ builtin/blame.c                          |  52 +++++-
+ diff.c                                   |   1 -
+ merge-ort.c                              |   1 -
+ t/meson.build                            |   1 +
+ t/t8015-blame-diff-algorithm.sh          | 203 +++++++++++++++++++++++
+ xdiff/xdiff.h                            |   2 +-
+ 9 files changed, 279 insertions(+), 24 deletions(-)
+ create mode 100644 Documentation/diff-algorithm-option.adoc
+ create mode 100755 t/t8015-blame-diff-algorithm.sh
 
-I attempted to build tonight's 'seen' without this topic and it
-seemed to stop.
 
-  https://github.com/git/git/actions/runs/19418361570/job/55551045554
+base-commit: 4253630c6f07a4bdcc9aa62a50e26a4d466219d1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2075%2Fwetneb%2Fblame_respects_diff_algorithm-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2075/wetneb/blame_respects_diff_algorithm-v6
+Pull-Request: https://github.com/git/git/pull/2075
 
-This topic may need a bit of help from those who are clueful with
-Rust and Windows.
+Range-diff vs v5:
 
-Thanks.
+ 1:  e81a5d2bd2 ! 1:  4846715436 xdiff: add 'minimal' to XDF_DIFF_ALGORITHM_MASK
+     @@ Commit message
+      
+       ## diff.c ##
+      @@ diff.c: static int set_diff_algorithm(struct diff_options *opts,
+     - 	if (value < 0)
+       		return -1;
+       
+     --	/* clear out previous settings */
+     + 	/* clear out previous settings */
+      -	DIFF_XDL_CLR(opts, NEED_MINIMAL);
+       	opts->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
+       	opts->xdl_opts |= value;
+     @@ diff.c: static int set_diff_algorithm(struct diff_options *opts,
+      
+       ## merge-ort.c ##
+      @@ merge-ort.c: int parse_merge_opt(struct merge_options *opt, const char *s)
+     - 		long value = parse_algorithm_value(arg);
+       		if (value < 0)
+       			return -1;
+     --		/* clear out previous settings */
+     + 		/* clear out previous settings */
+      -		DIFF_XDL_CLR(opt, NEED_MINIMAL);
+       		opt->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
+       		opt->xdl_opts |= value;
+ 2:  60015bbada ! 2:  c477b87cc6 blame: make diff algorithm configurable
+     @@ t/t8015-blame-diff-algorithm.sh (new)
+      +	Commit_1 }
+      +	EOF
+      +
+     -+	git blame file.c > output &&
+     -+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
+     -+	sed -e "s/ *$//g" without_varying_parts > actual &&
+     ++	git blame file.c >output &&
+     ++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output >without_varying_parts &&
+     ++	sed -e "s/ *$//g" without_varying_parts >actual &&
+      +	test_cmp expected actual
+      +'
+      +
+     @@ t/t8015-blame-diff-algorithm.sh (new)
+      +	Commit_2 }
+      +	EOF
+      +
+     -+	git blame file.c --diff-algorithm histogram > output &&
+     -+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
+     -+	sed -e "s/ *$//g" without_varying_parts > actual &&
+     ++	git blame file.c --diff-algorithm histogram >output &&
+     ++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output >without_varying_parts &&
+     ++	sed -e "s/ *$//g" without_varying_parts >actual &&
+      +	test_cmp expected actual
+      +'
+      +
+     @@ t/t8015-blame-diff-algorithm.sh (new)
+      +	Commit_2 }
+      +	EOF
+      +
+     -+	git -c diff.algorithm=histogram blame file.c > output &&
+     ++	git -c diff.algorithm=histogram blame file.c >output &&
+      +	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" \
+     -+	    -e "s/ *$//g" output > actual &&
+     ++	    -e "s/ *$//g" output >actual &&
+      +	test_cmp expected actual
+      +'
+      +
+     @@ t/t8015-blame-diff-algorithm.sh (new)
+      +	Commit_2 }
+      +	EOF
+      +
+     -+	git -c diff.algorithm=myers blame file.c --diff-algorithm histogram > output &&
+     ++	git -c diff.algorithm=myers blame file.c --diff-algorithm histogram >output &&
+      +	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" \
+     -+	    -e "s/ *$//g" output > actual &&
+     ++	    -e "s/ *$//g" output >actual &&
+      +	test_cmp expected actual
+      +'
+      +
+     @@ t/t8015-blame-diff-algorithm.sh (new)
+      +	Commit_2 G
+      +	EOF
+      +
+     -+	git blame file.txt --minimal > output &&
+     -+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > actual &&
+     ++	git blame file.txt --minimal >output &&
+     ++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output >actual &&
+      +	test_cmp expected actual
+      +'
+      +
+     @@ t/t8015-blame-diff-algorithm.sh (new)
+      +	Commit_2 G
+      +	EOF
+      +
+     -+	git blame file.txt --minimal --diff-algorithm myers > output &&
+     -+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > actual &&
+     ++	git blame file.txt --minimal --diff-algorithm myers >output &&
+     ++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output >actual &&
+      +	test_cmp expected actual
+      +'
+      +
+
+-- 
+gitgitgadget
