@@ -1,79 +1,147 @@
-Received: from sender3-pp-f112.zoho.com (sender3-pp-f112.zoho.com [136.143.184.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB432C0F72
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 16:51:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.184.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763398288; cv=pass; b=M+bP3zTLf8fV6MBUTRknTsmWbXmvGRP8ihI34+ZbN8wU7riVdgK8nGajjrtPKqTB4VVgztVDdqy35+Hzgk+Vi4WZu75WjrOZsU05WzDCxAsqdBKrJmEqsSw1U+UawHXvGKCCr1evczFMANrxavAC/daMbFDhcZJiX/Kheh4HhyY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763398288; c=relaxed/simple;
-	bh=LBgBE4KhQFif0VAiQVD1gd+r70UNTDCuHIDL/CG4qbY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lB1DHtvuCzHdqrBbkX6gUflVmKO0mS8omoUnVpsEhQTUebSbMYXe/B9YDVkpHxXuynhVHuZntOKgc7ie8xD1YldSMPfleoesAluYqTSf+8sKlGlW4cjSHOZxdj1KHmxigvMrcT89fVOoi+uU1R5t06pDn5ybX5Zo4fZbFkdRxWI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=PUUKbs+F; arc=pass smtp.client-ip=136.143.184.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2D330F532
+	for <git@vger.kernel.org>; Mon, 17 Nov 2025 17:04:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763399069; cv=none; b=K+oG6r1p5VNctpq2wwlBqD7FyueEMnep7GIvp2qlKBhL/ojKbhci4NAR9C1vNINI16uFt4tZF/ez2+S1xpT32/7eS3PM+KMRR0Qhb2XOo9m3wfcJbdxZu5lnhLrCafAh9tpn13eUeVFqrNB7DMAwyGxeZzxqOfrvfGF/tv9iQLg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763399069; c=relaxed/simple;
+	bh=D0CylemlDHjRPWNKeNGPSe11yTcspeWv+01h+tUT83k=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=sMbQsYz8WFZsORuGg2A0tVz6Zbftw+nDPoKyW4GZRB5zZvWV14yoXPDbyq6EFtVMuulcIe8nuL1kATpMmc9k2iHDJbigswQPwIlNLooJwI5UK7p0o1/a9mE3rZ+ce/twvvMslsfeJa9Y9H6/iDhnvIryx0TdAdke1dfnhUDN8Ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KVtyMKP7; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="PUUKbs+F"
-ARC-Seal: i=1; a=rsa-sha256; t=1763398275; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=EBXAN5O6AYdyFux5C5mgupkhVaFoDeL1rCbNtDVBsPOtDL0Qx/UOEz3Pdq1dedxAFcA57Ef6l/8wS+GIFVAOpIA0NCWyHgShDmeLnIOM5/oB8yUdH5NAMFrTaDuhCHFQT6AO89OG07VGXC2I7AMgvnZ80w2S6WR4vazlKTBXwtk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1763398275; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=WntBgA6qKieGL3pjD65O86ISUf8JTVnD3y2db5w8c4o=; 
-	b=no68jB//r7Sc/dQUxHUZP8qxcuWP2VkLIZoJptKW1oPdkbCwap6wNstwk5SILtYpwy+J3m5Iqsit0E+p0l569fBNlsLZSmOLCtDzkkyKWf7fmpwsui8NCrlzh9wzLTXTuj9Xk/vgQNgDCJTJX38qdp1ctdU7E6/LGEV2QKWXJUc=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1763398275;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=WntBgA6qKieGL3pjD65O86ISUf8JTVnD3y2db5w8c4o=;
-	b=PUUKbs+FCCcmzVAsK+XALKz8RUPJhl5+wQ9X/u0SDgHRdnWx5QUGD8vZ4qv15LMx
-	11tkRJmniB5hJiSEpDpDmrzkAKfye/fywu5fYEe6NSYJcTfEen7nGCuq/AIXGDPi+rU
-	qqmmcIyJSBzq/st7es5Zn015iBq0CMC697FoSeOQ=
-Received: by mx.zohomail.com with SMTPS id 1763398272006872.8580795328539;
-	Mon, 17 Nov 2025 08:51:12 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
- Damazio Bovendorp <rdamazio@google.com>, Patrick Steinhardt <ps@pks.im>,
- Josh Steadmon <steadmon@google.com>, Ben Knoble <ben.knoble@gmail.com>,
- Phillip Wood <phillip.wood123@gmail.com>, =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?=
- =?utf-8?B?w7A=?= Bjarmason
- <avarab@gmail.com>
-Subject: Re: [PATCH v2 10/10] receive-pack: convert receive hooks to hook API
-In-Reply-To: <xmqq346ff56h.fsf@gitster.g>
-References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
- <20251017141544.1538542-1-adrian.ratiu@collabora.com>
- <20251017141544.1538542-11-adrian.ratiu@collabora.com>
- <xmqq346ff56h.fsf@gitster.g>
-Date: Mon, 17 Nov 2025 18:51:06 +0200
-Message-ID: <87a50kbo1x.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KVtyMKP7"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4ee2014c228so9564061cf.2
+        for <git@vger.kernel.org>; Mon, 17 Nov 2025 09:04:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763399066; x=1764003866; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=xHOUnVSarUYBmDA0w5rw5NoQ3bAcAfE8iATGO2weZhE=;
+        b=KVtyMKP73aRT1LELIZbFfF03p34PDaaNyq1/25YoW/yGEwPeUXDtafrdD3K2LveWgL
+         7F5HIwARabA6e7PCjagVL7pPYAXB4Kq5dVbwgJ482r0Z2x5UwoAdnCPAYFFtcdBsP1wV
+         sLACvZoBAu0JmkQXbmJvGaMduh2KcCjLKAyaHAAm2ZAaI44DNDs259lukB+gWEHPFgOM
+         oE1aixY918fsE0sS3Prb3tpDWv5wftRqG/WREHQbhS1JLrvrjTW9IBDJ7D8eECDSQPQO
+         qxV/IgyYuUDowW6h3Ae4/8kAFwU0fCBKlve4FPveRJWjezSeBjFk6XDfNi9eIfUB0Sj1
+         2qpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763399066; x=1764003866;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xHOUnVSarUYBmDA0w5rw5NoQ3bAcAfE8iATGO2weZhE=;
+        b=PxpMM4f+o2wjQ3aq5fgHWOlHWntpzv/0yiIufhIESPQ6mlMDsCcYxUqJ1MqjeT/R03
+         OxOfq9LSxaFXdN2Yf/TEn+ntV01PHhBKSXoHrLyUwq18PAatsp/YHS9zTXc4y8v2fl6Z
+         jWuMqrLwkIFbcMKIhoi/DNxG5I6KJQLs1d8mTfEB8QZX3TD5pQVwjiZSf6DOxBUnsiR7
+         eMqw/BTiEJIwqXCP6E7g7mkSBmfaWxwU1MnLTCD+6IdJ10k13byHLmbAIf4UZJSawSwj
+         PCvexJxlJDtiIDeMjg6cALiPFZ3WtwbA+ECm2PkK996PVQzoGuQzCTeuJKLNqi658qHu
+         um0Q==
+X-Gm-Message-State: AOJu0YxPJ7m/13KR8PUsQa61ruxZansdNdtQ7OPinRZmSURL3rlLC8GO
+	x6w1fMpTWPR8rHdY8S5iY704RSURNxWkeCcJ9Z9zrc0ckoJzEDkUP9TeLC4djf0C
+X-Gm-Gg: ASbGncudLZVM+pppqszX1W8nQSGtxjyoA1EhHT1cWKvOOVh/FuIYBfbBBoCTkys4FCM
+	eNMABmtuDgExhRWLxt0jMdcN/woUQcqKTDILSeQCHyWcMFQ+Yu4weBvicd2xvW2h8lNH9HRLIdV
+	NTzP0tImkbbE176PGWEfXmKixAJsHbFhRM7Ou7Zv9Usv7bybYMJKAoMdw+3z48pAY7e1ahfA2Dm
+	BR4aRkI9Q71nOHWMG4ZiZu5bVFNkVd4nZRnd7fn3miEYlWw4X0qzHVMskCC8MjuxyugsCwQXnM9
+	Ps/2KWLFLpFqZb2NUuqr6H0mz1eI81vVm0irfBzxMNNKigLH7Ly8P9G2yxERdVFQGtfNJrv4kPA
+	tfPfYmKQ+iXhM6AVME6H5rKYZGT4Sq2hwDMNRFvAb05OyZoZrgNxFfjdG8ZZ+PVfj93lWBoux+S
+	6zu4TNxuPxJd4h
+X-Google-Smtp-Source: AGHT+IEySxt9seFxRvySyXsBUVCMDBju+4vhDqszpv6KOkaDSSjrrmu0mtAsXKnOYktUkPZsXsP6sg==
+X-Received: by 2002:a05:622a:54e:b0:4ed:5f45:42c0 with SMTP id d75a77b69052e-4edf214845cmr170218211cf.62.1763399066114;
+        Mon, 17 Nov 2025 09:04:26 -0800 (PST)
+Received: from [127.0.0.1] ([20.109.87.117])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88286577cbesm96708786d6.46.2025.11.17.09.04.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Nov 2025 09:04:25 -0800 (PST)
+Message-Id: <pull.2003.git.1763399064983.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 17 Nov 2025 17:04:24 +0000
+Subject: [PATCH] ci(dockerized): do show the result of failing tests again
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
-X-ZohoMailClient: External
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Sat, 15 Nov 2025, Junio C Hamano <gitster@pobox.com> wrote:
-> Adrian Ratiu <adrian.ratiu@collabora.com> writes: 
-> 
->> +static int feed_receive_hook(int hook_stdin_fd, struct 
->> receive_hook_feed_state *state, int lines_batch_size) 
-> 
-> Overly long line and cannot read.  Can you stick to 80-column 
-> lines? 
-> 
-> In any case, the reason I am responding to this message is not 
-> about coding styles, but it seems to be the one whose leak is 
-> holding the CI job from passing at the tip of 'seen'. 
->
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Hi Junio and thanks for these; will address and send a refresh 
-with the rest of feedback in v3 very soon.
+The quality of tests/test suites does not show as much when there are no
+breakages as in the amount of time required after bugs trigger test
+failures before the bugs can be identified, analyzed and resolved.
+
+As such, it is an unfortunate side effect of 2a21098b98a (github: adapt
+containerized jobs to be rootless, 2025-01-10) that the output of failed
+test cases, which was shown before that change directly in the build
+logs, is now no longer shown at all.
+
+The reason is a side effect of trying to run the build and the tests
+with permissions other than the `root` user, but without providing the
+prerequisite permissions to signal what tests failed and whose output
+hence needs to be included in the logs.
+
+The way this signaling works is for the workflow to write into
+special-purpose files whose path is specific to the current workflow
+step and which can be accessed via the `$GITHUB_ENV` environment
+variable, which differs between workflow steps. It is this file that is
+missing write permission for the `builder` user that was introduced in
+above-mentioned commit.
+
+The solution is simple: make the file world-writable.
+
+Technically, this write permission should be removed after the step has
+completed, if proper security practices were to be upheld, but since
+nothing uses that file again, it does not matter, and the fix is more
+succinct this way.
+
+This commit is best viewed with `--color-words`.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    ci(dockerized): do show the result of failing tests again
+    
+    It has become quite hard to debug CI failures when they happen in one of
+    the Dockerized jobs, as the actual test failures are now hidden. This
+    was most likely an oversight when 2a21098b98a (github: adapt
+    containerized jobs to be rootless, 2025-01-10) was merged in 2bf3c7fab19
+    (Merge branch 'ps/ci-misc-updates', 2025-02-06), v2.49.0-rc0~55, and I
+    had reported this as a regression in
+    https://lore.kernel.org/git/e45b9487-b3ae-ed85-fd07-c92cfbf47cbb@gmx.de/.
+    Seeing no movement on my report, and having the pressure of
+    newly-failing tests during the v2.52.0-rc0 rebase of Git for Windows, I
+    was kind of forced into fixing this in Git for Windows. Here I upstream
+    the fix.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2003%2Fdscho%2Ffix-failure-reporting-in-dockerized-ci-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2003/dscho/fix-failure-reporting-in-dockerized-ci-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2003
+
+ .github/workflows/main.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 816d5a34c4..ca7cc2984f 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -433,7 +433,7 @@ jobs:
+     - run: ci/install-dependencies.sh
+     - run: useradd builder --create-home
+     - run: chown -R builder .
+-    - run: sudo --preserve-env --set-home --user=builder ci/run-build-and-tests.sh
++    - run: chmod o+w $GITHUB_ENV && sudo --preserve-env --set-home --user=builder ci/run-build-and-tests.sh
+     - name: print test failures
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+       run: sudo --preserve-env --set-home --user=builder ci/print-test-failures.sh
+
+base-commit: 621415c8b5371a4734315232a780dd8282f6fe4f
+-- 
+gitgitgadget
