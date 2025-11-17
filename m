@@ -1,161 +1,235 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8814731A07B
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 09:20:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF693222587
+	for <git@vger.kernel.org>; Mon, 17 Nov 2025 11:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763371257; cv=none; b=Eo7daYGxQHhtvDk0sCZlejBVD3bSncoJSZo0ba3L/pDYJRekOuo5ofgu/o07x5Bo28LdfmGdhvIyMm7+9MBGSuNZfXfdrAEm/eKWI6poZKRDS3uUulLPCeUnH4a9gZF90NIAAOusX4L+kEJBaCMAQINFJ7IBUYCp8hb49bBwqf0=
+	t=1763379950; cv=none; b=Fac/IrUyEidak0zVYH/1MMLINbDroMx/AL/33OZj018svZm4ZxRz6andKj8jXA8idV3G6Z3OwI58lNlM0rKJ3xYkGwUI4C4fKrZb7ARZ4pKFiLKRBCKOgIPmOWlFbo3VTZ40HGF3nMiRyNC3cHk5pEMKnVJEjdRFMBkytil8fwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763371257; c=relaxed/simple;
-	bh=rv8HbGeSkx3J2TfgSzSBRSG+bvF4oKjn2bxuujvwZBk=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=q7WRErOcWWTUzMOgrbmPTZyOlABZuLk7Kl/5fDVcl9f4cA+SIgHil0my1/7LC43mcS9aRtbZsTmQAIZBpS8Z7MtY/5q7cv73jOd7los3VJk8ebQF8qoLLh+FqQJ4g8t4shT/u+eJk9dA97Cm+PbbX6lR6u99VcXsmcGeRKiYhok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=Q+bp8Cqm; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1763379950; c=relaxed/simple;
+	bh=4u8qIdBf0y4p1eG9ZjYz530L1ztjddzWer1QP7xdypY=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=LyvEDY/2XErXvLpygYkqIl06Z/C7qFmFAMJTNun4l6thN0dUvIrOOr3xyoKdi6Nn5XP6XAp1GKRFpMe076m4sb1JHV3qwWO8sm20uJlcJcUlriI114DuUmCWhYvTcC754f0cUcq792H/FJA/+M3t5HHF1QA0Y7DXaw2cDYQquzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=Xp0jFNqr; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="Q+bp8Cqm"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4779d47be12so11146315e9.2
-        for <git@vger.kernel.org>; Mon, 17 Nov 2025 01:20:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1763371253; x=1763976053; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=I5eNGcWDdnLjgHLqM8xw7yEap2GGOv+l5bbeuuYqoXo=;
-        b=Q+bp8CqmEcaUqXp2/oTSxo5Pw2f861D5EMLo1qNX5Rrz901vRHROo2EH6gv3FCtrRJ
-         472K0Nb8CmrV4hQURMd1XKj/npL2m0PMjeK/cXBYL9Ns5w3b0wMvbknVAa1yx8gZqyCe
-         8wmVbjsLLGW70f02E0aKfwUK+j3TuFfG/FfpMuHOZNKXrCdarmQbw9pYMeW5TuXv2o9a
-         4KpEwKE4MTjgd6+Iqm8fbNBls4/wmIqHA4GGq7IkV6l/fpNBax61aQaj7o9olDkyqxge
-         Ta7KK5FeWQlMb3FSGmUpw63nwWg5HRSiFN79QnVds9bqC+8nqDVmVjWUjUlfcWlX8nq5
-         zr5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763371253; x=1763976053;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=I5eNGcWDdnLjgHLqM8xw7yEap2GGOv+l5bbeuuYqoXo=;
-        b=eq1HbuTRQpDkus1xzBDExaOWrS1suI5uuV+3Zs70Zsq+lwCXY8xq6ykk75TDUH4Mjv
-         TiAH2cUHj9DHjgMTuvWGPDmAp27Csp3plnrt2i9n2Su15+OdtaW7IbxHXq9WAogbJUD3
-         2eGbqps6/+Ijf6SjkCE0bfjFNVF5EmTgeED+1O8GnwaKo/KMsBch+LCU1IXQZ6Vpm3EM
-         DZvItBL2k/ZZUbukEPwmoOczYkdwK16hFtTbue5U30T8A5qmtdrvcab2tsE4LSCMxrp7
-         l1iHavpCZOVLATMG+LGVNxQI6o39PfncF8dMVVp+DL9f86W4lLSFrxcPfVZHmaL7YDBg
-         NhHg==
-X-Gm-Message-State: AOJu0YwqGCi74Oam38gYtRulZZHqhEuDG162Km9CEbRY328TaaBLbqV9
-	tbus/OQbKineFU8Bqmc/Ur0cb4atjuIkIKSLTeeKpj9hWLBJsnR1gtEHFYGgJp/G95Po+7NNlEu
-	fOU6r
-X-Gm-Gg: ASbGncvg6Mkxl6WMNDdVqziHMuIvHQ1MKyJMcRG+8shlehs06zYeaLBYpQqGjjnurpb
-	omg7Ao+Ng87jSj0Ye7bRfIOeMEwkwb2fjPDa9WNaJe1tkjiPqZCBbViaO/gb9TgaFrqcd61UuB7
-	HAJ9WzVB6A0XwA0ctzlYGWKrqD5y1CJcN4GTEIANRDnygPt0T5elYfkq02z0DSmkZ16+pqOWBUp
-	omvkfhvGPz3ko4q/LC921kl//TzdKu1H5lCTEnTcqCKTJdoESHe6OeBq0GoGRgCuoVMVmgMCqfn
-	zajAfHRiik071dpFqmH0DWa/BE1gQW7yVi4NNMTJMtZTXdK7Duv+Tmd5HcsVoFVs/Fjxhypv2gh
-	Nbk9ps0vfj+yejUbdl/fbR9qlLD/t1PdKsj3m4tP60rs9nNrUvmabZ2xGW/7cAZQcjG6vwDKpBK
-	fc3dWeedVqvyj/x1Nw7Y2UDXk65GwzPH4D3dnTLnI/XQfklCcrunLBMRNBXxUza0A=
-X-Google-Smtp-Source: AGHT+IGeeul5UInDpPVINmkO/d6iAIkcEXXAxbo/1tMSvhK67B0ssS/HBpq26DOG9UqugREkoUxkXw==
-X-Received: by 2002:a05:600c:4703:b0:477:7b16:5f78 with SMTP id 5b1f17b1804b1-4778feb2569mr101927765e9.37.1763371252899;
-        Mon, 17 Nov 2025 01:20:52 -0800 (PST)
-Received: from localhost (p200300f65f0267084b5b83b709547c98.dip0.t-ipconnect.de. [2003:f6:5f02:6708:4b5b:83b7:954:7c98])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4778bcfa2e9sm108025145e9.12.2025.11.17.01.20.52
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Nov 2025 01:20:52 -0800 (PST)
-Date: Mon, 17 Nov 2025 10:20:51 +0100
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: git@vger.kernel.org
-Subject: `git submodule update --single-branch` tracks HEAD instead of branch
- from .gitmodules
-Message-ID: <xmkf25oq2vka2kipfqfybngkqffbljqygmtrtiujgsrao7g2wq@k56wxix4oism>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="Xp0jFNqr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1763379946; x=1763984746;
+	i=johannes.schindelin@gmx.de;
+	bh=l8jJs4eumJxVmZLk40sBljRHJzpgPToM4bd/Fq1rEDg=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=Xp0jFNqreBU6F3H2j2sHd6PJZ2co5hJSFX0N3JYk5e4zl1Vf2k5rc/ABn7EVUCTr
+	 forNF/eKZPZYwuSB0E8WPBA/CQKHeZ9sq19KxOoqDocU8lxeSUGO6555rr6ScRcOO
+	 fsE2vf68PvxOFVBrO41dzd4h5Ack3HYBcsW5K2TokD+wOHdC5mjyFgtAbE1UXV+fd
+	 4rabHo8Uns+kUMv+u6HmXvyW0yMqrths8EC/vIUw1CJa5Xzg/BJJcbiXO+5f4we4G
+	 3Fhul1ZMonz23CG0FAL2Jifipj0smgormsEe3x9aJ8kzaEV/20Yza5DdudT5oQQVB
+	 NrR5WwebUpHG4jIs5A==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.212.224]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mn2aN-1w3PMk41BP-00otx1; Mon, 17
+ Nov 2025 12:45:46 +0100
+Date: Mon, 17 Nov 2025 12:45:44 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+cc: git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH] l10n: bump actions/setup-go from 5 to 6
+In-Reply-To: <pull.1975.git.1758623999720.gitgitgadget@gmail.com>
+Message-ID: <cb24b29c-1fa4-8f01-88ed-c6f02a1bd990@gmx.de>
+References: <pull.1975.git.1758623999720.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="krczbyzehoefmdtn"
-Content-Disposition: inline
+Content-Type: multipart/mixed; boundary="8323328-1555176784-1763379946=:14379"
+X-Provags-ID: V03:K1:9Ai+DYGzDz1RjrRYhzBCeDX9s0YHHSc3o1OKc97f/+PCKoJAAc0
+ VyB35bomXKiHXwbhdm+deeIH1B+YmqgooZDSg2/e6MDBm3wiZI/ihgUyCLdKOSWjY8EF/56
+ J0e5lod4ApUSu4B23U/ItFOCYFt5RIF6bRkV9gep6qKAbSsMY25Gwzyw/78wF+D+XxOxdEJ
+ Qf0mYNRhcMrYsmT2zgPzg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:VhDWZg3ppcA=;A18OmkVlFHy3RX6mVjRRDULPQVp
+ 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
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---krczbyzehoefmdtn
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
+--8323328-1555176784-1763379946=:14379
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Subject: `git submodule update --single-branch` tracks HEAD instead of branch
- from .gitmodules
-MIME-Version: 1.0
 
-Hello,
+Hi Jiang (or do you prefer to be addressed as Xin?),
 
-for a project I'm using several submodules, showing my issue with just
-one of them
+gentle ping? I think that your missing review is blocking this.
 
-	$ git ls-tree @:layers | grep poky
-	160000 commit b33a8abe77081a2bdda0d89c61736473b2f9bb8b	poky
+Thanks!
+Johannes
 
-	$ cat .gitmodules=20
-	...
-	[submodule "yocto_poky"]
-		path =3D layers/poky
-		url =3D https://git.yoctoproject.org/git/poky
-		branch =3D scarthgap
+On Tue, 23 Sep 2025, Johannes Schindelin via GitGitGadget wrote:
 
-	$ git submodule update --init --checkout --recursive --single-branch
-	...
-	Cloning into '/home/uwe/work/sri/poet-server/layers/poky'...
-	remote: Enumerating objects: 8775, done.
-	remote: Counting objects: 100% (3119/3119), done.
-	remote: Compressing objects: 100% (158/158), done.
-	remote: Total 8775 (delta 2974), reused 2961 (delta 2961), pack-reused 565=
-6 (from 1)
-	Receiving objects: 100% (8775/8775), 3.24 MiB | 15.45 MiB/s, done.
-	Resolving deltas: 100% (6158/6158), completed with 391 local objects.
-	From https://git.yoctoproject.org/git/poky
-	 * branch                      b33a8abe77081a2bdda0d89c61736473b2f9bb8b ->=
- FETCH_HEAD
+> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+>=20
+> [Originally opened at https://github.com/git-for-windows/git/pull/5811]
+>=20
+> Bumps [actions/setup-go](https://github.com/actions/setup-go)
+> from 5 to 6.
+> - [Release notes](https://github.com/actions/setup-go/releases)
+> - [Commits](https://github.com/actions/setup-go/compare/v5...v6)
+>=20
+> ---
+>     l10n: bump actions/setup-go from 5 to 6
+>    =20
+>     (Originally opened at https://github.com/git-for-windows/git/pull/58=
+11,
+>     then at https://github.com/git-l10n/git-po/pull/870)
+>    =20
+>     Bumps actions/setup-go [https://github.com/actions/setup-go] from 5 =
+to
+>     6.
+>    =20
+>      * Release notes [https://github.com/actions/setup-go/releases]
+>      * Commits [https://github.com/actions/setup-go/compare/v5...v6]
+>    =20
+>    =20
+>     What's Changed in actions/setup-go@v6
+>     =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>    =20
+>    =20
+>     Breaking Changes
+>     =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>    =20
+>      * Improve toolchain handling to ensure more reliable and consistent
+>        toolchain selection and management by=C2=A0@matthewhughes934
+>        [https://github.com/matthewhughes934]=C2=A0in=C2=A0#460
+>        [https://github.com/actions/setup-go/pull/460]
+>      * Upgrade Nodejs runtime from node20=C2=A0to node 24 by=C2=A0@salma=
+nmkc
+>        [https://github.com/salmanmkc]=C2=A0in=C2=A0#624
+>        [https://github.com/actions/setup-go/pull/624]
+>    =20
+>     Make sure your runner is on version v2.327.1 or later to ensure
+>     compatibility with this release.=C2=A0See Release Notes
+>     [https://github.com/actions/runner/releases/tag/v2.327.1]
+>=20
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1975%2=
+Fdscho%2Fdependabot%2Fgithub_actions%2Factions%2Fsetup-go-6-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1975/dsch=
+o/dependabot/github_actions/actions/setup-go-6-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1975
+>=20
+> updated-dependencies:
+> - dependency-name: actions/setup-go
+>   dependency-version: '6'
+>   dependency-type: direct:production
+>   update-type: version-update:semver-major
+> ...
+>=20
+>   Original-author: dependabot[bot] <49699333+dependabot[bot]@users.norep=
+ly.github.com>
+>=20
+> Signed-off-by: dependabot[bot] <support@github.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  .github/workflows/l10n.yml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/.github/workflows/l10n.yml b/.github/workflows/l10n.yml
+> index e2c3dbdcb5..95e55134bd 100644
+> --- a/.github/workflows/l10n.yml
+> +++ b/.github/workflows/l10n.yml
+> @@ -63,7 +63,7 @@ jobs:
+>              origin \
+>              ${{ github.ref }} \
+>              $args
+> -      - uses: actions/setup-go@v5
+> +      - uses: actions/setup-go@v6
+>          with:
+>            go-version: '>=3D1.16'
+>            cache: false
+>=20
+> base-commit: 79ee0dce2a61b7552f9b5c73f0cf2d974a20a029
+> --=20
+> gitgitgadget
+>=20
+>=20
 
-so far so good. But:
-
-	$ cd layers/poky/
-	layers/poky$ git remote show origin
-	* remote origin
-	  Fetch URL: https://git.yoctoproject.org/git/poky
-	  Push  URL: https://git.yoctoproject.org/git/poky
-	  HEAD branch: master
-	  Remote branch:
-	    master tracked
-	  Local branch configured for 'git pull':
-	    master merges with remote master
-	  Local ref configured for 'git push':
-	    master pushes to master (up to date)
-
-So in this submodule master is tracked, while I think it would be much
-more sensible to track the scarthgap branch. The further consequence is
-that
-
-	$ git submodule update --remote layers/poky/
-	fatal: Unable to find refs/remotes/origin/scarthgap revision in submodule =
-path 'layers/poky'
-
-This happens for both git version 2.47.3 (which I typically use,
-provided by Debian), but also on current git master
-(2.52.0.rc2.22.gc93f1a0fa3eb).
-
-Best regards
-Uwe
-
---krczbyzehoefmdtn
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmka6PAACgkQj4D7WH0S
-/k7kNwgAi/EgjioGrBg589zeNJxg5JXz+rosinDnl9T0DefgRbabXC3g/II/d2Kl
-ER094R3riud2IeDPLd+XybitvDk3zGjzA5W+oinfpQ5v5UyIFROg0uYY95ELZ6PK
-TzyszzaMsIScmOtpZo1cp93ZeQZJAumO7uh0/59X3uKY+l/vxwq8skqB0+K5u6MH
-aCOOLQa+fercsmEJzTMW9h1NXkicySjIMgSjJVVrftZ90KGFbTO6TLIvyrqoyDl7
-3KhzB+/9U1TZCJXBbm/l0AYJ2yZh+YhwTGosZwf8oIlUJ5gn3CurGXZ4AWpvlXXd
-umHXp9d3IwTQ9Wc+QsDHoF3GP51hzw==
-=OY0W
------END PGP SIGNATURE-----
-
---krczbyzehoefmdtn--
+--8323328-1555176784-1763379946=:14379--
