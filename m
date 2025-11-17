@@ -1,49 +1,49 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7422134D3BB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9845B34D4CA
 	for <git@vger.kernel.org>; Mon, 17 Nov 2025 22:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763417791; cv=none; b=nQIIHh1J6mJ2bLwOPtMMmTGRMJa1yprcqu2g5MKMsMdVyvqR/KTkpEXMP7nJTuhfhqpry6vIcqNrChyu4n9GE1yKVYLaH/BSPeX4eLIdpx/jb3jlYrAD5237MKivnwrbs6vtjPD42QG4/ZygEwDbNtK4IwpL9zn39PNF+sMfWbo=
+	t=1763417791; cv=none; b=C2NPTKh2VVuE9Ptxgg3PXGN/5N63Xu0cXTs5paU+bFgxegyfgNnm/fiYgO8OL4FB3Hrl0W8kJRCXR7STMHUe4Raymt0oKMjwov/0KQEdYfDIhP7ggTknsIKzqDBwM0b62tIAdNHj4VotQmCt9xlndcqKSMFiCcZBl6qS64XLjpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1763417791; c=relaxed/simple;
-	bh=0K/KtYkggrj3nC/p+zNmBJJsTMctGstVIhYAqhIVZ+U=;
+	bh=0jwQFvIpqu5hyFCjFAjnYKfsaOvS3EdnwwRPmFDFQCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KS4yyI2d4sitly8Uyymcr0vpliKNnYEEEC0BdI1UfbUEMC+fl5OLLo15ZbmJgZmP6CJ7eTDfODs6j6v+VGdRRC/3jPz+4o+JVUBmhAiDf7BfM8j+spcWwKeU0qkSdFgCyFxcLW8CKJihsgC6Dv/wUqIPoLG1Gm4qHYrYVaZcPoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=BzHpXNWl; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=lj47kHSm3rgP5UfvicdMpHkxuaDye0MNeR0VsglzkV+tn42DdHWMam+uJSagoNcRW7Op0QfUS/L+tn6m0hz75QsoVDuP+XGIzjT+ZYMSRpbQdNCSPHRBgXHOPYkbAnNXzHLLBBa/QP1bwzxezFmYxuPv1ats6p655ZBzxKCAf+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=AbCbJhQH; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="BzHpXNWl"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="AbCbJhQH"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1763417786;
-	bh=0K/KtYkggrj3nC/p+zNmBJJsTMctGstVIhYAqhIVZ+U=;
+	bh=0jwQFvIpqu5hyFCjFAjnYKfsaOvS3EdnwwRPmFDFQCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=BzHpXNWlpFs1+hTcRgk8FrDVurndyUNh7+FLgIMxlZnRPZf7p9LS7pNvY6JVAI49q
-	 dNjZBVUybfNxp69VPUyfXJTABUor8zKgKpeG9W/lqGx/BZXzRDeXKwz5nASpl6Dxkn
-	 pgiP+8vgykyaYm7lQxLBdhWfmJhQNxSpsTTPTYoeRJfa+Z2lEfDiJcseMU5BIozKcb
-	 OTlD42EtN0ZDYTJQbV5qtSByL1hfuHwsbbx7+yOXnDPAUmcWnNt0SUyDmHbNlE4xtZ
-	 zlnzACWGgwhROOd7JGAomb2VPHwg56bXq+BuR1Qrho6xHe0CaGU5DdT8Dn4MS6fm21
-	 2TlTZJWUN6Nh2Op9OCN8Sgbf63/6TN+JUqF+epSnaTR7rZYgx0PQvSGV5OePL+VS2E
-	 njvZ0+0vALtzVRspivD4/dvFHtHGgr5id1bEgvF5qi6ewHKw6MJ26gh03AplQb8AIT
-	 x/KKd6dBTInYkjsZkSC+yZumvF+OaNWm3OJy3fjMzVFMw29X1kw
+	b=AbCbJhQHsPXPIEV/wC/tZp52rFpM/jsORsfZA/aZXcFiRbTtNH4iJZWQLNcLHQJh+
+	 9bH2Wsv+Rrf4/LzcCj4tPdReGSD35a5xmxZPVt5NWwyZISbTIwl2ga5tDSu2auGCQ8
+	 FuNo2YfqqVEeuqNkABDvmxVzWOKKuADN2ScjFe5P/lCnMrBqeqBCjT96yHZDPMUGNw
+	 t9g+lvK+yiqNB6j6iM97TKky9TZx7YImp1FusN18vKmkDrPiF9oh0RX9LPEUd1GC7j
+	 9posS90jmeX2kCxWVgnruQNCXaa9m0Mbu2luRoR26j21LsZCRX7jHHenMgdKSNTCqX
+	 NyAClMXhWQUwNHvgFWOthaainK5B/vDNThjkdBVYvf7O1lHUU5Ra+IiQ8QzrlTJpT4
+	 GwSaCfrZDWaTT/nc7xEAXVpdwMTMPIVvs476CDVi3/KOtK4Xk2ciWiTdhOuBrR0DHZ
+	 uGY+cePj36z3+xJ226x6k8ZgXpVbKuKRduNMmMo3D5A7Zjn7DQM
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:b6c6:bf88:c872:dae4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 282EE2552D;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3798225535;
 	Mon, 17 Nov 2025 22:16:26 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: [PATCH v2 06/15] hash: add a function to look up hash algo structs
-Date: Mon, 17 Nov 2025 22:16:12 +0000
-Message-ID: <20251117221621.2863243-7-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 08/15] csum-file: define hashwrite's count as a uint32_t
+Date: Mon, 17 Nov 2025 22:16:14 +0000
+Message-ID: <20251117221621.2863243-9-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae8
 In-Reply-To: <20251117221621.2863243-1-sandals@crustytoothpaste.net>
 References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
@@ -56,78 +56,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In C, it's easy for us to look up a hash algorithm structure by its
-offset by simply indexing the hash_algos array.  However, in Rust, we
-sometimes need a pointer to pass to a C function, but we have our own
-hash algorithm abstraction.
-
-To get one from the other, let's provide a simple function that looks up
-the C structure from the offset and expose it in Rust.
+We want to call this code from Rust and ensure that the types are the
+same for compatibility, which is easiest to do if the type is a fixed
+size.  Since unsigned int is 32 bits on all the platforms we care about,
+define it as a uint32_t instead.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- hash.c      |  7 +++++++
- hash.h      |  1 +
- src/hash.rs | 14 ++++++++++++++
- 3 files changed, 22 insertions(+)
+ csum-file.c | 2 +-
+ csum-file.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hash.c b/hash.c
-index 81b4f87027..97fd473607 100644
---- a/hash.c
-+++ b/hash.c
-@@ -241,6 +241,13 @@ const char *empty_tree_oid_hex(const struct git_hash_algo *algop)
- 	return oid_to_hex_r(buf, algop->empty_tree);
+diff --git a/csum-file.c b/csum-file.c
+index 6e21e3cac8..3d3047c776 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -110,7 +110,7 @@ void discard_hashfile(struct hashfile *f)
+ 	free_hashfile(f);
  }
  
-+const struct git_hash_algo *hash_algo_ptr_by_number(uint32_t algo)
-+{
-+	if (algo >= GIT_HASH_NALGOS)
-+		return NULL;
-+	return &hash_algos[algo];
-+}
-+
- uint32_t hash_algo_by_name(const char *name)
+-void hashwrite(struct hashfile *f, const void *buf, unsigned int count)
++void hashwrite(struct hashfile *f, const void *buf, uint32_t count)
  {
- 	if (!name)
-diff --git a/hash.h b/hash.h
-index 99c9c2a0a8..709d7585a5 100644
---- a/hash.h
-+++ b/hash.h
-@@ -340,6 +340,7 @@ static inline void git_hash_final_oid(struct object_id *oid, struct git_hash_ctx
- 	ctx->algop->final_oid_fn(oid, ctx);
- }
- 
-+const struct git_hash_algo *hash_algo_ptr_by_number(uint32_t algo);
- /*
-  * Return a GIT_HASH_* constant based on the name.  Returns GIT_HASH_UNKNOWN if
-  * the name doesn't match a known algorithm.
-diff --git a/src/hash.rs b/src/hash.rs
-index 0ec0ab0490..70bb8095e8 100644
---- a/src/hash.rs
-+++ b/src/hash.rs
-@@ -12,6 +12,7 @@
- 
- use std::error::Error;
- use std::fmt::{self, Debug, Display};
-+use std::os::raw::c_void;
- 
- pub const GIT_MAX_RAWSZ: usize = 32;
- 
-@@ -177,4 +178,17 @@ impl HashAlgorithm {
-             HashAlgorithm::SHA256 => &Self::SHA256_NULL_OID,
-         }
-     }
-+
-+    /// A pointer to the C `struct git_hash_algo` for interoperability with C.
-+    pub fn hash_algo_ptr(self) -> *const c_void {
-+        unsafe { c::hash_algo_ptr_by_number(self as u32) }
-+    }
-+}
-+
-+pub mod c {
-+    use std::os::raw::c_void;
-+
-+    extern "C" {
-+        pub fn hash_algo_ptr_by_number(n: u32) -> *const c_void;
-+    }
- }
+ 	while (count) {
+ 		unsigned left = f->buffer_len - f->offset;
+diff --git a/csum-file.h b/csum-file.h
+index 07ae11024a..ecce9d27b0 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -63,7 +63,7 @@ void free_hashfile(struct hashfile *f);
+  */
+ int finalize_hashfile(struct hashfile *, unsigned char *, enum fsync_component, unsigned int);
+ void discard_hashfile(struct hashfile *);
+-void hashwrite(struct hashfile *, const void *, unsigned int);
++void hashwrite(struct hashfile *, const void *, uint32_t);
+ void hashflush(struct hashfile *f);
+ void crc32_begin(struct hashfile *);
+ uint32_t crc32_end(struct hashfile *);
