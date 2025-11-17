@@ -1,67 +1,68 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FCE6241CB6
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 14:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AD733343C
+	for <git@vger.kernel.org>; Mon, 17 Nov 2025 14:27:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763388798; cv=none; b=rib/6Y1jexkZA6Q9jkSELJmlq8oQnO2PWkZ7enFaMbLRcKbCYi2cNwpgnj/XUJaXnbI9IWDGan5dWNgLBMN5CtsgHMUxJ6YgRaiJvD8KhVqrIdflsssyRRGtJYhU5xrtCjMWI9B2lTtavrzS8Zol3ahgRTFBAtxf5yOLcPrFBfA=
+	t=1763389639; cv=none; b=VRWEz1jEbJujpMW/dz/3dyJ3kS+RxB9y3gHOC90TYvzvg+FfT0jAg99Zy7WjPsdg03tUTLdonv53CBX+xWF7dRTvIwNJ5/0JzewpRmhNKPCZoBGnWEX/f+KikVpAPWHaLyzkdHJhRrgD0YZV8o7TSieJWqd8MnKMfwbZgzhie8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763388798; c=relaxed/simple;
-	bh=nz46AzrDIA0u0aHJM/QVaHClKbElw7bxe0EBsyEk1OY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=NEOYqNeR71e16MLvN/sX1ZVifNyqzf9Ti0OZaT6lFVHQ5L8o/YAhh/veiUnB7V75JlugNlmLWwgwm2AFmG990mrwrefigoihSjU8H6EZ1Z9I2BDUmG+WOWzZLQ97pBvLhNdLzN02GF2TWKDR9Evgo4DFpzaS5Ozy/G+MoxUQOYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cHMF7KQ9; arc=none smtp.client-ip=209.85.221.54
+	s=arc-20240116; t=1763389639; c=relaxed/simple;
+	bh=wgZRkRycGQCTmthnIuQ+sAurGiK+XBp8PGZ9jgnfea0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
+	 In-Reply-To:Content-Type; b=LCZF1+h9xzl+WQWDQgeY9iCYNeTMXg8tM3oOJzEVBuLJHvyVqiSshlZYsJh771g9x/dSA8k2N2lGYug6lH74578G/HOq0snifeKP7HxW2GEK2pnyNZHA/ylKWWcmselxG89i4AO9H7JhQuY4rmzO4nZnWFF03UR+koVwEuc9NOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H+VPGoK2; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cHMF7KQ9"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-429c4c65485so3668300f8f.0
-        for <git@vger.kernel.org>; Mon, 17 Nov 2025 06:13:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H+VPGoK2"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-475ca9237c2so24030525e9.3
+        for <git@vger.kernel.org>; Mon, 17 Nov 2025 06:27:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763388794; x=1763993594; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1763389636; x=1763994436; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0dOk2BOzieHLannSFVk4oPQzTuhouavl78qD64mwsxk=;
-        b=cHMF7KQ9Z/MRlkwuEfJH2dvVJ06qNlHw2hEcDOKkzj9Cucj6iebrgoMdO3XQTTmAvJ
-         jjpMeG5bLFOCFsLryzbvYolCww/MNRrqgLBl3jzRd5ltoltoaqRMXAaNxVcu7dDmTI9c
-         V7SO45CiUlaECDn0mHI1dLlWtOF4QluZRskm3ev7mA+VLGN5r3sCWQG55U9yMvIbasHB
-         yHiJQgexG/MDOTdpA087dP9sSolLdh8C2OADBE+VXTNaVI0Ybo64x4xejZeRJ8FxqRtw
-         FIRUFilxn4FYX7dQLpQAVPPkyXKxmpbVqMNPd9FrRRzfjXf14uoAZvb7Xo40hj3XN/Or
-         lUWw==
+        bh=hr+G4zi6YuQiLfz1lNBaNwVQk/2sw6Ae36yCy3erTqg=;
+        b=H+VPGoK2LgX9NJcbssZgJx4jRBaPEY+VI32Nv08RTwYxbw2LaUExK0ud4epAOhWb+1
+         DK3MowFlx3yzQgHzxuy7MjL+wpSLEsC6Rx5uu/ThLBT6JBC3Ycj8XhZJePj7AxBNPQMr
+         8Prcswp1T6RR9KTyQb6PNFmrW7EZJRS+Bb1eglhqLUupQFesIT9CaIJlCgffF3k3ngUy
+         UZr+8ZjBXgGDXi18kgwzrt98xUaIJ1x/K9bUDB7LUzBPxAWrr4YPltpxQgEyNPu88VbG
+         ypsuXDis1QlFwQE9e5KTc0koZcuDl8cakBFkDHcDuZmD1Q9V/0015Zlp47MDl8YF2MbM
+         eL7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763388794; x=1763993594;
+        d=1e100.net; s=20230601; t=1763389636; x=1763994436;
         h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0dOk2BOzieHLannSFVk4oPQzTuhouavl78qD64mwsxk=;
-        b=gZYEYDKEH0/Fp9/w+m1X1wQEFtDsGalzPKvyN4B7BOP5SfVqEg71euy0vfmldLhB2s
-         hXW5RuefnxhECmPD8Py/U6ozfsWMkT57m00aVtL2VfD37Wqw4yXSn9JxCSsr8yQo+0Ls
-         gHtB2OPtzxcvEP8zlOueKTxx0L1iohanLFvVAEC+Hb8MCmYQYx8VNlGSBA7ybLkse/P3
-         1cVXfjztdEh4ZTLKlnQvKIMxY31YYw78kmKy8XPEgtIpNynkJ+hh5CxHfs8dQ0paBvCg
-         dS1Ln0JtzQfnIpUDmBIE/pttFv4EMKBtqf7ZgpLtgM5bsOEjYR2CzICaG9mKFLUFYYd9
-         Bi0g==
-X-Forwarded-Encrypted: i=1; AJvYcCXwjmuGU1hXQQfFHVsYJStBbnrzCasegxPDGYW0fwmygjLUbxnMi7aI75Bg2Zq2nMgopcg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YymotUXmkZURdt3Pv7dTOBFA6PGkMdXXlpdw/UPSRc2jLJriKEe
-	o/GXhsIo//EOaH16aQBW0jPMdfcy8RutTF1iLfx/YpE4ogF3MLi5S1jV
-X-Gm-Gg: ASbGnct4M84BHY9qTemDFEXnrkpvOMPP7OBLKsJWyrlcdnLpoaiLgckEhHjVWSev8H8
-	J++rpYeEQArOy7YKJO96U+QWvYvMSgV0+4QHKWieZJhuOsfoweE1utfhinuEs4sU9gfRErHJbzw
-	zKCTl6FnZQvPu5NduEaE1GxfBzgZkX6IqovKom7QfL6/kOFPGIWycwCb65/6KrktqeWPVX8mHhg
-	o4UrllaMcRrkpCTUwdx2KmTnRttcdo6Jj1arM/c9YNLQZHp3bRD4VVmDEPsjb0jYuJMvsci9br7
-	hb5+9P7oOZ4Kzg05344sx6DJwu3rhMVFc4OZQRQiaZr184W7AqIr3DcHfERmtSl9MkoPaMthnvZ
-	AEM/4wqcv8eQ4IBFvC7En7rWNjHX3UfMsmMOdmhlAxYcSRbSUZ+6p3I9GueYyB3FEbQzNA5vNfK
-	dHxYWfJGAn6I14bm9TJoaSww6eRhQLAA+0zIq+ClVTBs2jxPPUejU461OfSU8n0Cg=
-X-Google-Smtp-Source: AGHT+IF+SDbF59f8X9QuRq0NoZy6Bhdyo6+Chs7p925l/MzLIqthluxsK/TKoMC2+a/LcOKXZfoVTQ==
-X-Received: by 2002:a05:6000:1846:b0:42b:396e:27fd with SMTP id ffacd0b85a97d-42b59371fa3mr10877889f8f.38.1763388793591;
-        Mon, 17 Nov 2025 06:13:13 -0800 (PST)
+        bh=hr+G4zi6YuQiLfz1lNBaNwVQk/2sw6Ae36yCy3erTqg=;
+        b=d/zdE/duB7VFy0NxiRwGurFPaeWOjSEiyFfyVLc9IiORIlrNQ4dO08yP4xcN8B17DO
+         GufIRRUp5C7dy2erm2v6Yd1ODNzeAaoKOznQdiwFqeX2iKuVaWTZmkU6tVKSuMvPmD1X
+         5vRQzE8kR4JSelB6DGL7yTi6bxz9n/rwAL/6CvPdrxRHVP9OrprLifPHvaefWMY5QPiy
+         oMvRsKyZ2BGJvqlBkAuCJDDnWAQfKcvMA9F6cCRkMJeQSmw7E5Zv6vGPDuJ/VEZ8mNrC
+         iKaVJO7fW+qyJe5AdB3TZNZ36C7YsBem+X6syEASCGB2HF6x0CIoQEXJmztN6wyL9HUo
+         wfFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUc6vAoLU9g+bdAeA3wgl6VFrBmPR/p30mghdO0uorDtkEIIile8UJgXbNbKhsaGOQH5oQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YykDCceEDe9g/yWAywG8Yk1CwhVqyhXfOSVluJZrQjlK9I3R2Us
+	POeEVfwyOpuGEwQFDYR4zPhHlMnJspX6vfsPX4veVb/vcZoWzWVfT6Gt
+X-Gm-Gg: ASbGncsfMxjOQ5m/Mm7d23cf1Pz95PI23mkldOWgTGLrNHR33v9gPhbOAzLet4K5nzm
+	6YRJB1sIuT2HjYRfhSbvTUk8rubok+pF9BaLQ7nXgK6HUI946Sa88WmXrNVQHJmBP5oLAYcPzBC
+	CU4U7lm5ZirF4Y6O7Oew8nNe0p1wf+u67mRiqOw7YZxV7qbmKnIUAii4vF9TOdq9QStajlGrxoc
+	iNyDDh2cw23m74KE68dxexAE4QEJZsCJsdmS26S3ZpwsYlFFlQSJ6WqTRmEEBNHD0tqcatQoIzP
+	QK69ReFyAqZGsPuYr56M6vNsJ/jFqjsTZqVc/p0eWFLJidtO+aocQhHCBi3kCtilYBptR3ln/mv
+	hfeMhJjXBiALi35N9LgNfZttlXXgBJa3fACWxyiLzwsA9rrkH2hTatkda8Ry4sSFhYpcCT3+hx3
+	TrsofJajQuNuvuKbZ/o08gbrq6nq+I+ylrczEhurPaITkHzNGdgzTSv3tOWOeq+xjaDqy2v4uIm
+	SwfNS5CTxvV
+X-Google-Smtp-Source: AGHT+IFL7jMyU4g5kTCCqY8uigvraEy9+S2jFbA92Q/c6mfUHgmIyb0r4l/cDXOt9n4BKL7zGX7XSg==
+X-Received: by 2002:a05:600c:4753:b0:477:333a:f71f with SMTP id 5b1f17b1804b1-4778fe60658mr122332285e9.17.1763389635277;
+        Mon, 17 Nov 2025 06:27:15 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b53e85cc0sm27233603f8f.17.2025.11.17.06.13.12
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477952823d3sm166773345e9.11.2025.11.17.06.27.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Nov 2025 06:13:12 -0800 (PST)
-Message-ID: <fd03f2a5-bf9e-453f-97d1-d5a66bc87470@gmail.com>
-Date: Mon, 17 Nov 2025 14:13:12 +0000
+        Mon, 17 Nov 2025 06:27:14 -0800 (PST)
+Message-ID: <10ad6161-8d9d-4e07-ab62-105adac2220d@gmail.com>
+Date: Mon, 17 Nov 2025 14:27:13 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,153 +72,105 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 0/2] blame: make diff algorithm configurable
-To: Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Antonin Delpeuch <antonin@delpeuch.eu>
-References: <pull.2075.v5.git.git.1762468914.gitgitgadget@gmail.com>
- <pull.2075.v6.git.git.1763366672.gitgitgadget@gmail.com>
+Subject: Re: [PATCH] commit: add --committer option
+To: Matej Dujava <mdujava@kocurkovo.cz>, ZheNing Hu <adlternative@gmail.com>,
+ git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Jeff King <peff@peff.net>
+References: <pull.1997.git.1762683774166.gitgitgadget@gmail.com>
+ <6be20c41-15a0-4732-bd12-4927a59a9f59@gmail.com>
+ <CAOLTT8TPrNTCjHwJfdeei+t8+7AxGC-dvbq-4oHJ=qNn_c+-jQ@mail.gmail.com>
+ <7d99f00c-3602-4b28-8efd-4780cad41ca8@gmail.com>
+ <CAOLTT8TLEsSAcfUomoActrUSzje5mQNE7EweXh8WtY3sOfzfkg@mail.gmail.com>
+ <aRpMW-g_rt4jStnu@kocurkovo.cz>
 Content-Language: en-US
-In-Reply-To: <pull.2075.v6.git.git.1763366672.gitgitgadget@gmail.com>
+In-Reply-To: <aRpMW-g_rt4jStnu@kocurkovo.cz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Antonin
-
-On 17/11/2025 08:04, Antonin Delpeuch via GitGitGadget wrote:
-> Changes since v5:
+On 16/11/2025 22:12, Matej Dujava wrote:
+> On Wed, Nov 12, 2025 at 11:58:02PM +0800, ZheNing Hu wrote:
+>> Phillip Wood <phillip.wood123@gmail.com> 于2025年11月11日周二 22:38写道：
 > 
->   * add back /* clear out previous settings */ comments
->   * remove whitespace in bash output redirection
+> I use includeIf pattern in a config to separate identities
+> 
+> ~/.gitconfig:
+> ```
+>   [includeIf "gitdir:~/.local/src/personal/"]
+>       path ~/.gitconfig-personal
+>   [includeIf "gitdir:~/.local/src/companyA/"]
+>       path ~/.gitconfig-companyA
+>   [includeIf "gitdir:~/.local/src/companyB/"]
+>       path ~/.gitconfig-companyB
+> ```
+> 
+> then each
+> ~/.gitconfig-IDENTITY:
+> ```
+>   [user]
+>       name = ...
+>       email = ...
+>       signingkey = ...
+> ```
 
-Thanks for re-rolling, the range-diff below looks good. Being able to 
-configure the diff algorithm for "git blame" is a nice addition, thanks 
-for working on it.
+I think that's a common pattern, so long as one can arrange the 
+directory structure so that the repositories for each identity are under 
+a different sub-directory it works well.
+
+>> You're right that after realizing the misconfiguration and correcting the
+>> repository's user.name and user.email, running `git commit --amend` will
+>> fix the committer information, but the author remains unchanged. Users
+>> then need an additional `git commit --amend --author=...` to fix the 
+>> author,
+>> which does work but requires an extra step.
+> 
+> For just one commit, after you fix identity (update .git/config or move
+> project so includeIf uses correct config) then `git commit --amend
+> --reset-author` should get right identity for both commiter and author.
+
+As you note below it also resets the author date which might to be 
+desirable.
+>> I see your point that this becomes more cumbersome when dealing with
+>> multiple commits. In such cases, users currently need to use something 
+>> like:
+>>
+>> ```
+>> GIT_AUTHOR_NAME="..." GIT_AUTHOR_EMAIL="..." \
+>> GIT_COMMITTER_NAME="..." GIT_COMMITTER_EMAIL="..." \
+>> git rebase -f <target>
+>> ```
+> 
+> In my test ^ (using 2.51.2) did not set specified AUTHOR identity
+
+Indeed, rebase sets GIT_AUTHOR_{NAME,EMAIL,DATE} when running "git 
+commit" to preserve the authorship of the commit being picked so any 
+value that is set in the environment when running "git rebase" is ignored.
+
+> but using:
+> 
+>    git rebase <target> -fx "git commit --amend --no-edit --reset-author"
+> 
+> is close to rewriting commits with new identity, but this will change
+> both dates (committer, author).
+> If --reset-author is not used but either GIT_AUTHOR_* are exported or
+> --author '...' is used in a -x arg, then author date is kept untouched.
+
+Yes "git rebase -x 'git commit --author=... --amend --no-edit'" is 
+probably the easiest way to reset the author and committer.
+>>
+>> This is indeed tedious and error-prone, especially when you want
+>> to quickly fix and push commits to the platform.
+>>
+>> `git commit --amend --author --committer` or a new `git rebase
+>> --author --committer`
+>> would provide a more user-friendly workflow for correcting identity
+>> information after misconfiguration, eliminating the need to manually
+>> set multiple
+>> environment variables or run multiple commands.
+
+I'm still not sure why we need a "--committer" option when the committer 
+identity is taken from the corrected config anyway.
+
+Thanks
 
 Phillip
-
-> Antonin Delpeuch (2):
->    xdiff: add 'minimal' to XDF_DIFF_ALGORITHM_MASK
->    blame: make diff algorithm configurable
-> 
->   Documentation/diff-algorithm-option.adoc |  20 +++
->   Documentation/diff-options.adoc          |  21 +--
->   Documentation/git-blame.adoc             |   2 +
->   builtin/blame.c                          |  52 +++++-
->   diff.c                                   |   1 -
->   merge-ort.c                              |   1 -
->   t/meson.build                            |   1 +
->   t/t8015-blame-diff-algorithm.sh          | 203 +++++++++++++++++++++++
->   xdiff/xdiff.h                            |   2 +-
->   9 files changed, 279 insertions(+), 24 deletions(-)
->   create mode 100644 Documentation/diff-algorithm-option.adoc
->   create mode 100755 t/t8015-blame-diff-algorithm.sh
-> 
-> 
-> base-commit: 4253630c6f07a4bdcc9aa62a50e26a4d466219d1
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2075%2Fwetneb%2Fblame_respects_diff_algorithm-v6
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2075/wetneb/blame_respects_diff_algorithm-v6
-> Pull-Request: https://github.com/git/git/pull/2075
-> 
-> Range-diff vs v5:
-> 
->   1:  e81a5d2bd2 ! 1:  4846715436 xdiff: add 'minimal' to XDF_DIFF_ALGORITHM_MASK
->       @@ Commit message
->        
->         ## diff.c ##
->        @@ diff.c: static int set_diff_algorithm(struct diff_options *opts,
->       - 	if (value < 0)
->         		return -1;
->         
->       --	/* clear out previous settings */
->       + 	/* clear out previous settings */
->        -	DIFF_XDL_CLR(opts, NEED_MINIMAL);
->         	opts->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
->         	opts->xdl_opts |= value;
->       @@ diff.c: static int set_diff_algorithm(struct diff_options *opts,
->        
->         ## merge-ort.c ##
->        @@ merge-ort.c: int parse_merge_opt(struct merge_options *opt, const char *s)
->       - 		long value = parse_algorithm_value(arg);
->         		if (value < 0)
->         			return -1;
->       --		/* clear out previous settings */
->       + 		/* clear out previous settings */
->        -		DIFF_XDL_CLR(opt, NEED_MINIMAL);
->         		opt->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
->         		opt->xdl_opts |= value;
->   2:  60015bbada ! 2:  c477b87cc6 blame: make diff algorithm configurable
->       @@ t/t8015-blame-diff-algorithm.sh (new)
->        +	Commit_1 }
->        +	EOF
->        +
->       -+	git blame file.c > output &&
->       -+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
->       -+	sed -e "s/ *$//g" without_varying_parts > actual &&
->       ++	git blame file.c >output &&
->       ++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output >without_varying_parts &&
->       ++	sed -e "s/ *$//g" without_varying_parts >actual &&
->        +	test_cmp expected actual
->        +'
->        +
->       @@ t/t8015-blame-diff-algorithm.sh (new)
->        +	Commit_2 }
->        +	EOF
->        +
->       -+	git blame file.c --diff-algorithm histogram > output &&
->       -+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > without_varying_parts &&
->       -+	sed -e "s/ *$//g" without_varying_parts > actual &&
->       ++	git blame file.c --diff-algorithm histogram >output &&
->       ++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output >without_varying_parts &&
->       ++	sed -e "s/ *$//g" without_varying_parts >actual &&
->        +	test_cmp expected actual
->        +'
->        +
->       @@ t/t8015-blame-diff-algorithm.sh (new)
->        +	Commit_2 }
->        +	EOF
->        +
->       -+	git -c diff.algorithm=histogram blame file.c > output &&
->       ++	git -c diff.algorithm=histogram blame file.c >output &&
->        +	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" \
->       -+	    -e "s/ *$//g" output > actual &&
->       ++	    -e "s/ *$//g" output >actual &&
->        +	test_cmp expected actual
->        +'
->        +
->       @@ t/t8015-blame-diff-algorithm.sh (new)
->        +	Commit_2 }
->        +	EOF
->        +
->       -+	git -c diff.algorithm=myers blame file.c --diff-algorithm histogram > output &&
->       ++	git -c diff.algorithm=myers blame file.c --diff-algorithm histogram >output &&
->        +	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" \
->       -+	    -e "s/ *$//g" output > actual &&
->       ++	    -e "s/ *$//g" output >actual &&
->        +	test_cmp expected actual
->        +'
->        +
->       @@ t/t8015-blame-diff-algorithm.sh (new)
->        +	Commit_2 G
->        +	EOF
->        +
->       -+	git blame file.txt --minimal > output &&
->       -+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > actual &&
->       ++	git blame file.txt --minimal >output &&
->       ++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output >actual &&
->        +	test_cmp expected actual
->        +'
->        +
->       @@ t/t8015-blame-diff-algorithm.sh (new)
->        +	Commit_2 G
->        +	EOF
->        +
->       -+	git blame file.txt --minimal --diff-algorithm myers > output &&
->       -+	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output > actual &&
->       ++	git blame file.txt --minimal --diff-algorithm myers >output &&
->       ++	sed -e "s/^[^ ]* (\([^ ]*\) [^)]*)/\1/g" output >actual &&
->        +	test_cmp expected actual
->        +'
->        +
-> 
 
