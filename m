@@ -1,218 +1,215 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazolkn19011038.outbound.protection.outlook.com [52.103.39.38])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F1C331A7E
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 13:27:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.39.38
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763386049; cv=fail; b=O3FMqDq92W9Ivdj53gmfG6cfMsywfheO/brcDUa0QD0nAS85gXU2MjZG5OOs97mejh83DxfriWP8GKjsgKpqduVJJi1bRf1zjX+y+4y0DsltLr3mzn1etkJOctQPUz5u8cuzhhqehWh2KyohpIJL9/32wBOTGyW5hA1ZLn6MU3w=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763386049; c=relaxed/simple;
-	bh=Zyq4c6Ih6TD7RB/TUMGNpeJLBvz42QVX6daXJU1wEl4=;
-	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=q3VChCHGnofoYWFEHqcLz+elHCecvk2zFb8LcMZEDhfVzIfUep6ujGQjaU/R+fmy7kQIFRMA71gFPsfP+mItwfVt27hYpWXicjT//1jiJFZdF3mAGkeZ/L3cdKq2gL5+T56XSQmp9uhhmX35zIhdELFwBhGjUzStXyehRpx79Wo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=FPEIqEJJ; arc=fail smtp.client-ip=52.103.39.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029E52673AF
+	for <git@vger.kernel.org>; Mon, 17 Nov 2025 13:29:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763386186; cv=none; b=l3QBjKvd8BlqGpFFpZZKGshWzI7RT4tPJagQKIAB2CbEd+Hu+BR9Hev5WINv+mtCn3nh3jkmxsHsM8nTSzsrJJBp/2i5S66HffIHV6CRNtkQOwR/crSlasmZJE4efgxkLxLlPfDJ01F0rJ+sgC/Z8Bie3yOSuCEdATN+ighI79I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763386186; c=relaxed/simple;
+	bh=XZi0WZAODhP9SOm/AjJXHJ2wnQAVAGxlMbwApGIowiM=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=t+K5SNSe9mswefEW9KIioHLRJ5AvXQRhSOm0MuP6bGxztWVxwmvjUhNQzF1eP25AXo1Zzat5oM3ICynb2VdoeiLfOZA05QD5OGD9H0E7MkHp5x2mfg4mkVE1fkFIY0HA+0hZOyPwBgbMKrXDmwiRR3mRi0o/2YaZJrCslxkgCMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=DICiAlQ8; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="FPEIqEJJ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=D4iLsApYbdE5UQ7ITvFzMNNy1g3nI5Q/XU3YeKlg+0r/pEFSS6S2mol+bEarx2SLqL+Sf2Zf/EkViKFafSD3OCGvwALXLAXsAGzmu2bLIsCZ7H6psv4VMp2KCXOb8u7jBcdvdxCeg5eoz0WkCTgaVY7pLeYv/hrYp/LHebIIVo8aXSXWmT/5tmCgPJt5I9Y/qVe8ihjhmYUHAUAIEl6aNoD9FyZ4c2Q079/OdTMBPaURkXtw5kzGaYHe2yppoELR28kiHgQNE8gjSg6haOothNSmgzpjvpobDRyNq0+A9CHs8l37zRJFYCOG5W1E+rPaIuS0aXmOsCvkHmgy0JfI9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Zyq4c6Ih6TD7RB/TUMGNpeJLBvz42QVX6daXJU1wEl4=;
- b=Z0vERJoILj0Cj3AU+j0rRRpQvSClzCeJWwm89ajoCEXGU2B15sVktiEdSWsaiQjSZb3T5r8gxKbqMFyUyR44Z6QHtn3diwaJu+dnpTIAlx8CeqI2yb9/ezhaOSlOm81g1et9fSMWXCmn4eDOQ8Bzgo5NLA8ft20bHKZVxM6gEYIoUHi0cJyfO2CSAU5qM4wFnVu5gIR1CQxg4wUad8uLpvqFwZ4nZ/LaOx+LYrYsRP0D/lZz0dbNnGZz6VzsYNgC+ydpeGauXX4Xi7NdfyIZbuH7m+mJskWdbFvZ15Ac6DycMdqc9Y232T0wPi5AMJynrdGQNe/UY7ySZa6cfapSJw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Zyq4c6Ih6TD7RB/TUMGNpeJLBvz42QVX6daXJU1wEl4=;
- b=FPEIqEJJ7wqVXOzYLAnfSvPjr1up14y5tXxD4ntds2n7rRj+g5HqYu/FajeKncqWLLAIblH72HrPiJkXayxA3FBj2LZNnpd/Rq2M8Ta8bltCisCKgKALnk+lUf/LX7sglVecsXPFKsmbnr48ZcfNoVJv4WjQcRerymD7Gf2nVY3jK+yrz4tIGrfcAYgHVZzm+W44tS5+zx0qxrXYMEkb3+Np9rECKImwe8LczNbkSgiZ+X3nGHtMbKM9Jb/Z9ADdFyY6CKULU+LN5vjSVmkFjHFsn57FQ71y6LN74H5GI7oy6//A6r4NNxRLjVVbuf+c0nZoxPifkuA5N2/Jt049qA==
-Received: from AM0PR02MB4450.eurprd02.prod.outlook.com (2603:10a6:208:f4::27)
- by GV2PR02MB11420.eurprd02.prod.outlook.com (2603:10a6:150:2a1::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.22; Mon, 17 Nov
- 2025 13:27:24 +0000
-Received: from AM0PR02MB4450.eurprd02.prod.outlook.com
- ([fe80::3b82:1ad3:b24a:7baf]) by AM0PR02MB4450.eurprd02.prod.outlook.com
- ([fe80::3b82:1ad3:b24a:7baf%5]) with mapi id 15.20.9320.021; Mon, 17 Nov 2025
- 13:27:24 +0000
-From: Skybuck Flying <skybuck2000@hotmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC] Adding a native, opt-in versioning system to Git (distinct
- from tags and branch names)
-Thread-Topic: [RFC] Adding a native, opt-in versioning system to Git (distinct
- from tags and branch names)
-Thread-Index: AQHcV8S3ldW4ZJAz1Uu0pvK/B7r5trT22/wD
-Date: Mon, 17 Nov 2025 13:27:24 +0000
-Message-ID:
- <AM0PR02MB4450024F0F7380A5DE6B2006B3C9A@AM0PR02MB4450.eurprd02.prod.outlook.com>
-References:
- <AM0PR02MB4450D1D8A6B6BB9B8AEC5BD7B3C9A@AM0PR02MB4450.eurprd02.prod.outlook.com>
-In-Reply-To:
- <AM0PR02MB4450D1D8A6B6BB9B8AEC5BD7B3C9A@AM0PR02MB4450.eurprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM0PR02MB4450:EE_|GV2PR02MB11420:EE_
-x-ms-office365-filtering-correlation-id: fe379d62-e1d8-4a7b-4724-08de25dd0bb0
-x-microsoft-antispam:
- BCL:0;ARA:14566002|41001999006|19110799012|8062599012|8060799015|31061999003|13031999003|461199028|12121999013|15080799012|51005399006|15030799006|3412199025|440099028|40105399003|26104999006|102099032|56899033;
-x-microsoft-antispam-message-info:
- =?Windows-1252?Q?e0NCrfSA4cgRpKTu3DBnhOsS92cE21k7RvdnxV9UYTGldG5IhEs3C3mc?=
- =?Windows-1252?Q?4H/5cCIGnbjLyBaAw6vIPkAmMsRtFhSVcu+U+8f5+tRbzEUw1jghgDEz?=
- =?Windows-1252?Q?bis/JVOdtXRYp5ZQf/3CIagfycJ4Hf2qIrMyfW2nkU4hPNXC1+a6/ohV?=
- =?Windows-1252?Q?NYv/bYr/WzkkNBL0MRbFF95/5na0A8aeK1JzwoK5ss0RV6Sc7geE754H?=
- =?Windows-1252?Q?xI5thn7GiJr7H9zcO8l20gES6m/1LtTVYBgRKVrNVL9RvTbo24fTfMXR?=
- =?Windows-1252?Q?0L2TQjlEOt2SCc5XV6i6iYe4bx+5pYg72Gv/4UJp4OMW5k6Eeuvl93YW?=
- =?Windows-1252?Q?ZI152nnLAnU9Xf+vv+GWJ/x+bLLNowOpyJHf1oL/yym2whj/h6CiV13X?=
- =?Windows-1252?Q?tzzYWfZr1Tq5cO78gfHexqksjIqXUW+sTUx/M+Wsey9oxj6J+fmdhyvZ?=
- =?Windows-1252?Q?SFdJonf7V65+4okhgUT2Gxso1mHaDrfs1jQZbI4JVWybEI2y8/s2H2fH?=
- =?Windows-1252?Q?whI0WkHLIJSyWipf/4FhsPbPseQjwDWSxwkwfR++ilmbF9pEmaro2q9V?=
- =?Windows-1252?Q?sQhFpSnGysYYNH2+IEQgEzDbNTP2gDmioPi/E53oTXLRZoEGDtwrZcRQ?=
- =?Windows-1252?Q?HR6MjdBRl46BdxDLIJdPQf/hRnkjNbm2q7oHSpPlCMOU0PH+69DzLrI9?=
- =?Windows-1252?Q?iEuM0qSYB52gv4rK5cvSl/imxhM3fLRemHoeGocNYqquJnhdNeZTpHEk?=
- =?Windows-1252?Q?KFroQm6YtvSGVBnjn3LQiMbV9c4uBxg9Pm0Y3TimgN+qTi3FLF6xNmk9?=
- =?Windows-1252?Q?2UghL7K30WY8k4H+9crdlY63FUTK/qR9RdD6zPJrW5wOVyTMMsSkUcKd?=
- =?Windows-1252?Q?8T6z3SVIDyD1PHcxR2+GcJiC4DSMc1AUrFiyyjrHNyCMkxAvlHWIP8k3?=
- =?Windows-1252?Q?AhHu+EfSyN6UElLeXzkQ4kqupfe4001xW3KNV5oelZw9Lk9lySaCtvFQ?=
- =?Windows-1252?Q?uwZynNU8w8hoBSlwRuwmgr1PXgOV2tLXvYnZt//Wm1E2EZxBJ52MwKAz?=
- =?Windows-1252?Q?gWPLM1tX0y/anwiL4i42/t5gmpSCzzNuREDR9zVz+hoaItqykI06mi18?=
- =?Windows-1252?Q?xL0cG3GbwB2e9GIMXrWSQT5eotof66zFMIxMbKBpYfWpbzFJuFum7e16?=
- =?Windows-1252?Q?sOzc0FfRVMJL/DsF2+rBcPXb5NUE7y1ekPVX2gUG2G8Uk6ptgv9H4h2H?=
- =?Windows-1252?Q?682m16zC/hzHLG5Gxj2YkkpEZySmFjsi1mbmZi7xK+w/HQo9jwqonK0X?=
- =?Windows-1252?Q?n0orVoyS9GOIVxvY9LGDs+zRWhPLG5CcSj7dtdnUxxgh3uilgAETLcv8?=
- =?Windows-1252?Q?swkYfC74RuDXl+OTtIVixGgosRv/o0kqqsv2Q6rq83mkTgExZWnUVMXY?=
- =?Windows-1252?Q?s37zDYuIasBZDIqfcKBdrw=3D=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?Windows-1252?Q?Vu1bqPvG0pDphPPcI9rnALfmfX3kw/MAuoBTqXTO3BVjWMAHtrHNA0fj?=
- =?Windows-1252?Q?rlTBJa2zGGPhunh01pI5XnEefTyexNMTXqODLGGcTP6K071Mzreh0Vp8?=
- =?Windows-1252?Q?i/jxsEdwEpjU6E870x4HSaiphYOYH8ABHxIkd91mZB4NeYWvnyQ9z9oY?=
- =?Windows-1252?Q?JuTh+NbMWkawsse0RRT+dsuqBK5sQmfqlDxpd/do0Cuk4dLPwkbP8HUN?=
- =?Windows-1252?Q?GbjB+7gcq+YJLw9MAIaTdyfJASr+F1dQj8Qez+U10HnUu1SVrotJgxhu?=
- =?Windows-1252?Q?7o3hPDzHStaawg5T8OVNTMFojuTJ1Fw1lhdoAP1dOKqvXkJ4R9TKo2fd?=
- =?Windows-1252?Q?sk2WBn6nyRRch6HfIH/gIrt8cTD+zkOXIA1PZxHnYxryMIOTVB+AaP5f?=
- =?Windows-1252?Q?Bprewqy/71jVR44XVkypgY+p1uD3gHfSfXd9KBv405kqOuKUK5dcRDZC?=
- =?Windows-1252?Q?6vbIPCkhrH5og83prKWaXKeBSBAh+TGVdY+bkidboHw0P4SJI7gFF0eK?=
- =?Windows-1252?Q?ITceYLZJfP4hXCGpIHFjQakTUmZcdDXwXkj+2ODsZiP48u76k0XX+vxW?=
- =?Windows-1252?Q?KF6h5nUDkE0gFJdr61VG3A4Ed3mgJKNLlSNB/AcnojEnoLFvq+PoCJsS?=
- =?Windows-1252?Q?D81ro57lPwlLesONgkgQo8D6uezSNOAYDtOR1EncY0z4sbvb/GXGu10+?=
- =?Windows-1252?Q?JGDnkXQ51q/hZe8NIjRPBbC3YVwYvWvOXOCTMd8tTuaIMK7XvwjpIWJs?=
- =?Windows-1252?Q?suchiudUMB9mBP1pbtpfXJZJJb/21vgzxo95kqHTOfGMXawCNkZ3No6f?=
- =?Windows-1252?Q?5780YULSYEbFds4w1tpnlCPNAudf7lOUpXiz6nn8Z3qV17cXUpFL/O9c?=
- =?Windows-1252?Q?48FX0wp5/wA9xV5WoVbhmM4YZq1gpCXBC9Lwcah2Yyse0FbnWC4Ee3NC?=
- =?Windows-1252?Q?WB5moMfPYHvAAnw3BV9fP/innCTPDJJWzL/27ocLnpvmr2dy3UJyElQ8?=
- =?Windows-1252?Q?EHBE5MVwLCwWMVr2qaYOl8ZuHj32nyOiwsp/GqCa0FYtgDG6jv1WWMq3?=
- =?Windows-1252?Q?pJQZc27COtZ4ISlKr4HvCzzpvrMkwAjJoQ1gVt1bBmy0Se8B22iNkmCM?=
- =?Windows-1252?Q?DtrbeJK+KetHA9MNpgX8+4WjiPFZDuXdRWDlNv+USRf8wOIf7umXyxb0?=
- =?Windows-1252?Q?IgDbljLiAJD00Oiz6RW7JyX7fPk9I3t9FGVuUIkHTy4/VFmtNV7E20QI?=
- =?Windows-1252?Q?OE2dw14S+lBrBgT6O1lopWs9TXsgG+QGKio0UJYAIT2LXnWFYCewPvhq?=
- =?Windows-1252?Q?Bl0a9LwZ8SuZFWY46/WjJtLcTgaKgDD9pzo9t9kFYz+mK4gMdnGi/a98?=
- =?Windows-1252?Q?lRUnUne9rHJmEodPTvM65kZ4RcNVi2EyARE=3D?=
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="DICiAlQ8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1763386175; x=1763990975;
+	i=johannes.schindelin@gmx.de;
+	bh=TSJvMxuUa1bSnirZOt0yBy8Fi49j2B0Lb6sMcGmtF+s=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=DICiAlQ8l7ogCAPmgNadnONfo/CTYzaucTysIYZriVqMspdff/flMFy2XI3g4m7b
+	 dvPLwFJ+t1GWO1kgqhTrtqRq/+Hd9EL/wattlVgKGD2J73veZtrNuJ/1Y8/hZn76K
+	 SBuztxDw2UJvmpjrEo4s/eUi2RlpTxCeqtO7NqQUhTqRI1MoVDCNoPxWXJYnS27t/
+	 b1YCEmpNh42yPf7mg2xxhYYM9FQ3/+iw5P4bDTjhzaUBO31/80E0RZSPbfqmnEAFS
+	 K1s7IUHuTx9AH7cQaQ1i5U9rcOhfJjkgges4IKaq4MvEsanfUROEqIDqjzNXt8nFh
+	 Zxikzc6MOg/wJ58a1Q==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.212.224]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MZktZ-1vhJWa2UGl-00OYmt; Mon, 17
+ Nov 2025 14:29:35 +0100
+Date: Mon, 17 Nov 2025 14:29:33 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Delilah Ashley Wu via GitGitGadget <gitgitgadget@gmail.com>
+cc: git@vger.kernel.org, Delilah Ashley Wu <delilahwu@microsoft.com>, 
+    Derrick Stolee <stolee@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
+    Delilah Ashley Wu <delilahwu@linux.microsoft.com>
+Subject: Re: [PATCH/RFC 0/4] config: read both home and xdg files for
+ --global
+In-Reply-To: <pull.1938.git.1760058849.gitgitgadget@gmail.com>
+Message-ID: <8e2b868d-8753-bbcd-840c-8eaefaa7cbd1@gmx.de>
+References: <pull.1938.git.1760058849.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-8534-20-msonline-outlook-5faa0.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM0PR02MB4450.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: fe379d62-e1d8-4a7b-4724-08de25dd0bb0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Nov 2025 13:27:24.7040
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR02MB11420
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ccoxx7wIGDFhvzMPxjr0Y9CHGld/dxVraUDnxehPmQCYiNuULe4
+ +rHiYV3TqUWqgiAfZ1jpcobPCoiWbI/MGS86NS32dSk0+mMn2J1Pm7Ff5fIY63ebZ4Mpj/t
+ cUer9j1u1ZKn5SAWJ2kdu9cMv/BpOt1rf1yA1WFM7h71u5et43Scq5pKrjjNPV7pPIlF9/l
+ HFFL6Y9/Qt8yGT9Q08ppw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:DJ1Nr14xDcs=;j8LUSZ+JOiBLSQ6UjXL5dS3HR+M
+ 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
+Content-Transfer-Encoding: quoted-printable
 
-Further ideas/enhancements:=0A=
-=0A=
-Subject: [RFC] Extending Git: Native Versioning, Enhanced Accountability, a=
-nd Repository Health Primitives=0A=
-=0A=
-Dear Git developers and contributors,=0A=
-=0A=
-This proposal extends the concept of a first-class, opt-in versioning mecha=
-nism=A0(as previously discussed) to address two related architectural conce=
-rns frequently raised by larger development teams and security-conscious en=
-vironments: Accountability=A0and Repository Redundancy.=0A=
-________________________________________=0A=
-1. Core Feature: Native Versioning (Recap & Enhancement)=0A=
-Git is a content-addressable history tracker, but it lacks a standardized, =
-machine-readable version primitive independent of tags and SHA-1 hashes.=0A=
-Proposed Feature:=0A=
-Introduce an opt-in versioning subsystem=A0that allows every commit to carr=
-y an explicit version identifier. This version should be treated as mutable=
- metadata=A0that survives operations like rebase unless explicitly changed.=
-=0A=
-Enhanced Version Structure (Addressing Accountability):=0A=
-To maximize clarity, auditing, and trust, especially in projects with many =
-contributors or automated commits (AI/bots), the versioning format should e=
-xplicitly support encoding the commit author or base ref. This moves beyond=
- basic SemVer to the more information-rich structure discussed in Text 1:=
-=0A=
-$$\text{Version Identifier} \approx \langle \text{Base Version}\rangle \tex=
-t{-} \langle \text{Author/Branch Identifier}\rangle \text{-} \langle \text{=
-Sub-Version}\rangle$$=0A=
-Example format (custom): 0.0004-SKYBUCK-MASTER-0.001-SUB-FEATURE=0A=
-Rationale:=A0Provides instant clarity on the lineage and authorship of the =
-base commit, which is crucial for auditing and accountability=97addressing =
-the security concerns around dependencies and supply-chain attacks.=0A=
-Storage Direction:=0A=
-Continue exploring adding a Version:=A0header to the commit object, allowin=
-g the version to travel with the commit object itself.=0A=
-________________________________________=0A=
-2. Feature: Repository Redundancy and Health=0A=
-Git's current design relies on local copies for redundancy. A single-bit er=
-ror in a repository's object database (for a clone that is not regularly re=
--fetched) can render the local copy unusable, requiring manual re-cloning o=
-r repair.=0A=
-Proposed Feature:=0A=
-Introduce a primitive mechanism for internal repository health and redundan=
-cy tracking. This would focus on protecting the Git repository structure it=
-self, not just the checked-out source code (which worktrees address).=0A=
-Initial Idea (Addressing Redundancy):=0A=
-Repo Pointer/Reference:=A0Introduce an optional, well-known, trackable refe=
-rence (e.g., refs/repo/latest) that points to a verified, redundant copy=A0=
-of the repository (or the most recent successful backup/mirror).=0A=
-Self-Verification Command:=A0A new command, git verify-integrity --redundan=
-cy, could check the integrity of the current=A0repo and compare it against =
-the health status of the repo referenced by the pointer.=0A=
-Rationale:=A0This would standardize the process of managing redundant repos=
-itory copies, making recovery from corruption easier and more automated tha=
-n relying on manual, ad-hoc copying.=0A=
-________________________________________=0A=
-3. Feature: Improved Branch Visualization Metadata=0A=
-While external tools handle visualization, Git's structure can be enhanced =
-to support a clearer timeline view, addressing the issue where history is h=
-ard to follow, and commits can appear non-chronologically.=0A=
-Proposed Metadata Enhancement:=0A=
-If the native versioning system is adopted, visualization tools should prio=
-ritize the sequential version number=A0as the primary ordering key, falling=
- back to chronological commit date only when versions are identical. This w=
-ould help counteract the common visualization problem where older commits c=
-an appear above newer ones due to branch/merge complexity, allowing users t=
-o "Respect the flow of time"=A0as defined by the deliberate version progres=
-sion.=0A=
-________________________________________=0A=
-Conclusion=0A=
-This expanded proposal seeks to enhance Git's capabilities by standardizing=
- versioning (using an accountability-focused structure) and introducing pri=
-mitives for redundancy checking, leveraging the new version data to also im=
-prove visualization. The features remain completely opt-in=A0and do not aff=
-ect existing workflows.=0A=
-=0A=
-Best regards,=0A=
-Skybuck Flying=0A=
-November 17, 2025=
+Hi,
+
+On Fri, 10 Oct 2025, Delilah Ashley Wu via GitGitGadget wrote:
+
+> As reported in [1]: `$HOME/.gitconfig` and `$XDG_CONFIG_HOME/git/config`=
+ are
+> both valid global config locations, but `git config list --global` only
+> includes the former in its output.
+>=20
+> Suppose we have this config in `$HOME/.gitconfig`:
+>=20
+> [home]
+>     config =3D true
+>=20
+>=20
+> And this config in `$XDG_CONFIG_HOME/git/config`:
+>=20
+> [xdg]
+>     config =3D true
+>=20
+>=20
+> Then, to reproduce the issue that `--global` only shows the home config:
+>=20
+> $ git config list --global --show-scope --show-origin
+> global  file:/Users/delilah/.gitconfig    home.config=3Dtrue
+>=20
+>=20
+> Git correctly applies the XDG config in its effective configuration, but=
+ it
+> doesn't show up when `--global` is specified. We can confirm this by
+> checking the output without the `--global` flag:
+>=20
+> $ git config list --show-scope --show-origin
+> global  file:/Users/delilah/.config/git/config    xdg.config=3Dtrue
+> global  file:/Users/delilah/.gitconfig            home.config=3Dtrue
+>=20
+>=20
+> The expected behaviour is both configs should be shown when `--global` i=
+s
+> specified, so we'd expect its output to look the same as above. This was
+> confirmed in [2], which quoted the `git config` documentation:
+>=20
+> > OPTIONS
+> >     --global::
+> >         For writing options: write to global `~/.gitconfig` file
+> >         rather than the repository `.git/config`, write to
+> >         `$XDG_CONFIG_HOME/git/config` file if this file exists and the
+> >         `~/.gitconfig` file doesn't.
+> >
+> >         For reading options: read only from global `~/.gitconfig` and =
+from
+> >         `$XDG_CONFIG_HOME/git/config` rather than from all available f=
+iles.
+>=20
+>=20
+> The first patch fixes forward slash normalisation on Windows paths. The
+> second patch introduces tests and regression checks. The third and fourt=
+h
+> patches implement the fix to include both config files when `--global` i=
+s
+> specified. Johannes has kindly pre-reviewed this patch series via GitHub=
+ on
+> GitGitGadget #1938 [3]. You'll notice some force-pushes after the review=
+,
+> but I only changed commit messages.
+>=20
+> [1]:
+> https://lore.kernel.org/git/CAFA9we-QLQRzJdGMMCPatmfrk1oHeiUu9msMRXXk1ML=
+E5HRxBQ@mail.gmail.com/
+> [2]: https://lore.kernel.org/git/xmqqmt5lezi3.fsf@gitster.g/
+> [3]: https://github.com/gitgitgadget/git/pull/1938/
+>=20
+> Thank you all for your time!
+
+For the record, my "Reviewed-by:" still stands, if lack of reviews should
+be the reason why this patch series has not even entered the `seen`
+branch.
+
+Ciao,
+Johannes
