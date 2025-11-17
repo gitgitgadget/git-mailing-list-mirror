@@ -1,84 +1,87 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7890D2D24A7
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 18:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA18335577
+	for <git@vger.kernel.org>; Mon, 17 Nov 2025 18:48:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763404104; cv=none; b=l3xJzQuS8J6hi6/SW4+dVQRDPqTpUGatb3liwE4NyjRPqrXiYBF37rsOODnRNgDxQHDW6lVUPky9kwnsVWBvM7pMbxOaDcH24v1NHNAuzuSb7pPLRt2GwAVCjEWftEW414da5uufaTK4m/mIe1B07W1ym073gN7crvcdMoj/4gw=
+	t=1763405320; cv=none; b=dmrijae6mGgmgJRgnC9YXPPL0EMKWEGAaKDkMwG7GH/LdKZHjy91WKwHJKD4BJxIMFY6LHWo3rbtlnUa2bqD31CSOo1yGO32cAsqmegW1b3lsOSK2GbW3bRHkOBJbSFdL6Z9vHL0fS3GhG9b4B8tsIMSLQNsQNYJ7NPXqOfpYUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763404104; c=relaxed/simple;
-	bh=6ywzK5aT9GJvfNVfIMDp7iswD1S/tjQfqr4Dg5KkonY=;
+	s=arc-20240116; t=1763405320; c=relaxed/simple;
+	bh=yUxPBCO0nRUTZM02H2ktRWdYABmUA39QGdlUb0q857E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SLm1anWNiHevLqKNfVgJhopq74XXADczGlTlvHmi0RvOGT+ugX/Ttui4HPZVLEWezLRpJ0pQlzIvnBDIu8s8PNirTTPgfH/KGvjq31Ewto9rlEiSgv5Q3UlKMTo1sgcVOqW7I57xH6r762tQ6s28rQ1JepNHLHRj+PMToZeyg24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eQt0R8oh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fLGAdkhP; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=En29PU4bpPTOkIpD61CaOBkwD1QUzDfcxF168ZYw3ldx/qQ74z1eB4Qj+1yFc61Ms4JOMqaVtPgxrSVmePPXI5kpbZzHgB8zywkj0eDA16WJoSb3BDV0AMy3mb3hJoOvgSd6TYv7CiBBTJoRmmQhcYkliZcxDuXTyR4cUgldAXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jMi1Lh6G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pco3L0ZI; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eQt0R8oh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fLGAdkhP"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 98F11EC01B1;
-	Mon, 17 Nov 2025 13:28:18 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 17 Nov 2025 13:28:18 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jMi1Lh6G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pco3L0ZI"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2F21514001DF;
+	Mon, 17 Nov 2025 13:48:36 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 17 Nov 2025 13:48:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763404098; x=1763490498; bh=m2LkOwXbOO
-	6dpxI6+CvNyGZ3to8td4CtZSVf545dCRM=; b=eQt0R8ohe8BPAvpQGjDiUpjzh5
-	ImgMIGCD6mcuWR77JCkFz5GZbowo+QwImCDD1BHBHeilZLQXDzImIx3+NZEybstN
-	1YvVL4ZEKYOiaf/Ta6mURLxTYnA3Dm/hSONSg4+iQ4Oedr0EVSC4BopITHGwBbzO
-	KUPOC5fWxdBSmN2Uq6AjkV2iJyhB6tAy9UfPPY502Dtp0wMal0Qb4xBH7fp+UB+s
-	/voS8U5YuxxpbQzPXC/ARwOZXm+qID9roJudh9JtSLivHHZKleMpN7Ok9uUdBELq
-	BG8awLsNOp2rjRTBgBhFvhtNj8lBJow3vSgKYybzLSNWm2bz8jMzqNL7R7Cg==
+	:subject:to:to; s=fm2; t=1763405316; x=1763491716; bh=CfnO8Uhesf
+	JumNApDoc2Ho4+s0fFXApENfRjGbr7B20=; b=jMi1Lh6GNXIY+TgSooSRZmzpSd
+	n0U+Yyxl83xoMI6fMUoI2nr2iPk969VQJuwSg/cIAFk7/uubm6aWbq1RjrCxVytn
+	byxqSHbU5O+CqBstokF9quHBD8bwJWfGrzx4VBBep9rqSKc9GoD1cFBBsO+Xar2s
+	U9m4Klv86dfMDhit+LkCFjdkrBdltGvHEp2ZITnZnSo3kOYMZfw3JJbiCJtxkLh2
+	5P1w/iDIcNYdZwff/r2t7yVDGiMCyU3FkpA0Wn8ZzdwfgeUBwyBgTtTnpV5x8tbn
+	ermbfQd6Gd0bJQa3hn1P79xYJLAFFj+UB/iV4jhPJQVn1YDuoueaLQGTp8nQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763404098; x=1763490498; bh=m2LkOwXbOO6dpxI6+CvNyGZ3to8td4CtZSV
-	f545dCRM=; b=fLGAdkhP8knhJXxZBOb+WXkNKQ7tEA5WLXCTkd/G4+H+J4LVKQ0
-	AIfMo8GdZXmmqdHWX3nojkfvDVdfDY0DCT5sZdQJpXnw3D5U8ga8lMuUH8OGYruI
-	ky33NcCaH1I/UeeL2ZzKRJXpjx3QOH6up6pUiMVz8PuWKBC3UXxY12rfEE+vBrdB
-	atqLbMeZrVl7Aj4wbn06Ouuv9DQ7UrNURK2UGs7Bgo99ttJO2wGTZig1W86r40Mu
-	ktEvOYHsiCKcBoaHZajq/iSI95PGyN3DVXEdHxu58m45SCFrqINJfSO2j3gp2p9N
-	IcME2m3aRqNpnCCnLuzAiy33dQQXAOFwcyA==
-X-ME-Sender: <xms:QmkbaWNs-yTDWPLip4vGPc_6CtEIOwuJJVx8xwEGlSKKzp19mBUGlg>
-    <xme:Qmkbab_Y4MoEvqqEn8oMhlohu99eZhnqACWArez_CTkGMh5PPCmhnYfRvvgEX9XPj
-    MHXK_4UJ1TAdPp2FlYTQ9FR6fYze6p2ukbA1Y0hyo2ViekVkv8Yvw>
-X-ME-Received: <xmr:QmkbaSTxdUSqZrHhm9g60BsiD3U6C7kXELl7dcfu3HeCOtu1tuaY1HpWgE00LpDWG2Pa3688rkcZxwb57OqMUON1jso27nFschbz>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudeludekucetufdoteggodetrf
+	1763405316; x=1763491716; bh=CfnO8UhesfJumNApDoc2Ho4+s0fFXApENfR
+	jGbr7B20=; b=pco3L0ZIGmHK+XMYybdseFpw9NwGM00MCG6/r5LCU6G8gRfy2eX
+	9+aZBuIzD6BQTjL4YNVQuqCOFEMnae0/zafO+yqbykLpM4gitTjdeZHWeO5HoCK9
+	f7LKdyE3EIguAhvovtZJAhiEPOE9ieVx/6jGnR0+FSFPZtfDVWiqs6223HB8yLdW
+	jd2tL9rJUncrZH+1tjJieYyLF9WvxTgc9Gwdg/SOsT0ngKPjnDaS7MJwNFpEeLdL
+	i8shvhFUjFIkTyMofcP6+Aa5kt5W+2AafbNySnJgwTsCOsfOjfgHhpXJ4O0kpQRB
+	VuAQn7ciZGoluKG2zADStxZ7y6nQcJTjl5g==
+X-ME-Sender: <xms:A24babc47g2fmI0PL96lVayW7Rf3eCA7p0TK1YBDYX0m7n4GaOBP1Q>
+    <xme:A24baU7Rh-dANJ13MFzTL9wQ3y8RCreCBEoTUEqTsJ1v3G2hNc456Aez3OWJFdt-r
+    rhDwRfelrLT-cC4n8yewRqf6VBxIfcRc9thVc998w4ozXJTHTFkGw>
+X-ME-Received: <xmr:A24baeWMi3vcHWsPu2nKS3RJiKrnutuFrjUR1MFkmdeJC1kYrXz8kqhfuzn0ZhiT0bD3l5jhrL3gmKfkYaKUeKtC7Lu8WAyfr7dF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudelvddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnug
-    gvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:QmkbaVkSLns3XApOag9MRte2-bEv4Td2-q9pUtwaHNL1REYOgplNEA>
-    <xmx:QmkbaaT7ZpxkiJiw7yCI3-zjoWlpOKw1gx5KZ1LsTW7RzGVrxE2Gug>
-    <xmx:QmkbabPKtJ_DlqGZ3NkXraJ1dtwGXbFx7X1D0K_posUCSy7ZIYwT4A>
-    <xmx:QmkbabUzBg2t_eUCCRhh3eh8oveON3UrGaIIdLURezFxy2dvXLBNWw>
-    <xmx:QmkbafrVTIJpcZ7qiWEc4Q3kwHTqfEQp5Jk7HD1kKOiDRgavjnv5s9Od>
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtoh
+    epphhssehpkhhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:A24baT4rCliob9pgLb7NktUcO-SB6UMfgK3paRVFMGF5TTf4R_VxuA>
+    <xmx:A24baZrsy6YRA6wLV0nKhvlHuNCiHcXWGIA9vk8RIbsy_nZgtuQ7tg>
+    <xmx:A24baWk4jnQGgkUciGMsxnvGW4J6_ltXLNmZBnTFAP0S37qI8c7u4Q>
+    <xmx:A24baVPREIQK3dUx0qXrmYiMXGcdYZh1YF2m-7JFSZm3hySCg_IyYg>
+    <xmx:BG4baciCseJQpLXbAKjjZN4JbGlCVIZKloqjw8OnJEdbzkj5x0gouc-0>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Nov 2025 13:28:18 -0500 (EST)
+ 17 Nov 2025 13:48:35 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci(dockerized): do show the result of failing tests again
-In-Reply-To: <pull.2003.git.1763399064983.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Mon, 17 Nov 2025 17:04:24
-	+0000")
-References: <pull.2003.git.1763399064983.gitgitgadget@gmail.com>
-Date: Mon, 17 Nov 2025 10:28:17 -0800
-Message-ID: <xmqqpl9gike6.fsf@gitster.g>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org,  sunshine@sunshineco.com,  ps@pks.im,
+  karthik.188@gmail.com
+Subject: Re: [PATCH v4 1/2] repo: factor out field printing to dedicated
+ function
+In-Reply-To: <20251117151844.14802-2-lucasseikioshiro@gmail.com> (Lucas Seiki
+	Oshiro's message of "Mon, 17 Nov 2025 12:02:51 -0300")
+References: <20250915223618.13093-1-lucasseikioshiro@gmail.com>
+	<20251117151844.14802-1-lucasseikioshiro@gmail.com>
+	<20251117151844.14802-2-lucasseikioshiro@gmail.com>
+Date: Mon, 17 Nov 2025 10:48:34 -0800
+Message-ID: <xmqqldk4ijgd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,68 +91,83 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> The quality of tests/test suites does not show as much when there are no
-> breakages as in the amount of time required after bugs trigger test
-> failures before the bugs can be identified, analyzed and resolved.
->
-> As such, it is an unfortunate side effect of 2a21098b98a (github: adapt
-> containerized jobs to be rootless, 2025-01-10) that the output of failed
-> test cases, which was shown before that change directly in the build
-> logs, is now no longer shown at all.
->
-> The reason is a side effect of trying to run the build and the tests
-> with permissions other than the `root` user, but without providing the
-> prerequisite permissions to signal what tests failed and whose output
-> hence needs to be included in the logs.
->
-> The way this signaling works is for the workflow to write into
-> special-purpose files whose path is specific to the current workflow
-> step and which can be accessed via the `$GITHUB_ENV` environment
-> variable, which differs between workflow steps. It is this file that is
-> missing write permission for the `builder` user that was introduced in
-> above-mentioned commit.
->
-> The solution is simple: make the file world-writable.
+> Move the field printing in git-repo-info to a new function called
+> `print_field`, allowing it to be called by functions other than
+> `print_fields`.
 
-I expected to see a+w not o+w from this statement; as long as it
-works I have no strong objections, but if I saw o+w without the
-above explanation I would probably have wondered who are in the
-group that we do not want this file touched by.
+Missing:
 
-> Technically, this write permission should be removed after the step has
-> completed, if proper security practices were to be upheld, but since
-> nothing uses that file again, it does not matter, and the fix is more
-> succinct this way.
->
-> This commit is best viewed with `--color-words`.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+    Also change its use of quote_c_style() helper to output directly to
+    the standard output stream, instead of taking a result in a strbuf
+    and then printing it outselves.
+
+The patch text looks great.
+
+> Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 > ---
-
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2003%2Fdscho%2Ffix-failure-reporting-in-dockerized-ci-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2003/dscho/fix-failure-reporting-in-dockerized-ci-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2003
+>  builtin/repo.c | 34 ++++++++++++++++++----------------
+>  1 file changed, 18 insertions(+), 16 deletions(-)
 >
->  .github/workflows/main.yml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index 816d5a34c4..ca7cc2984f 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -433,7 +433,7 @@ jobs:
->      - run: ci/install-dependencies.sh
->      - run: useradd builder --create-home
->      - run: chown -R builder .
-> -    - run: sudo --preserve-env --set-home --user=builder ci/run-build-and-tests.sh
-> +    - run: chmod o+w $GITHUB_ENV && sudo --preserve-env --set-home --user=builder ci/run-build-and-tests.sh
->      - name: print test failures
->        if: failure() && env.FAILED_TEST_ARTIFACTS != ''
->        run: sudo --preserve-env --set-home --user=builder ci/print-test-failures.sh
-
-Thanks.  Will apply.
+> diff --git a/builtin/repo.c b/builtin/repo.c
+> index 9d4749f79b..f9fb418494 100644
+> --- a/builtin/repo.c
+> +++ b/builtin/repo.c
+> @@ -85,13 +85,29 @@ static get_value_fn *get_value_fn_for_key(const char *key)
+>  	return found ? found->get_value : NULL;
+>  }
+>  
+> +static void print_field(enum output_format format, const char *key,
+> +			const char *value)
+> +{
+> +	switch (format) {
+> +	case FORMAT_KEYVALUE:
+> +		printf("%s=", key);
+> +		quote_c_style(value, NULL, stdout, 0);
+> +		putchar('\n');
+> +		break;
+> +	case FORMAT_NUL_TERMINATED:
+> +		printf("%s\n%s%c", key, value, '\0');
+> +		break;
+> +	default:
+> +		BUG("not a valid output format: %d", format);
+> +	}
+> +}
+> +
+>  static int print_fields(int argc, const char **argv,
+>  			struct repository *repo,
+>  			enum output_format format)
+>  {
+>  	int ret = 0;
+>  	struct strbuf valbuf = STRBUF_INIT;
+> -	struct strbuf quotbuf = STRBUF_INIT;
+>  
+>  	for (int i = 0; i < argc; i++) {
+>  		get_value_fn *get_value;
+> @@ -105,25 +121,11 @@ static int print_fields(int argc, const char **argv,
+>  		}
+>  
+>  		strbuf_reset(&valbuf);
+> -		strbuf_reset(&quotbuf);
+> -
+>  		get_value(repo, &valbuf);
+> -
+> -		switch (format) {
+> -		case FORMAT_KEYVALUE:
+> -			quote_c_style(valbuf.buf, &quotbuf, NULL, 0);
+> -			printf("%s=%s\n", key, quotbuf.buf);
+> -			break;
+> -		case FORMAT_NUL_TERMINATED:
+> -			printf("%s\n%s%c", key, valbuf.buf, '\0');
+> -			break;
+> -		default:
+> -			BUG("not a valid output format: %d", format);
+> -		}
+> +		print_field(format, key, valbuf.buf);
+>  	}
+>  
+>  	strbuf_release(&valbuf);
+> -	strbuf_release(&quotbuf);
+>  	return ret;
+>  }
