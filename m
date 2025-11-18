@@ -1,86 +1,89 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAF1208D0
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 00:13:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFEE526ED37
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 00:28:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763424826; cv=none; b=lRG1oMeStak/kSxWDlRI1SFItWWbuy6pZ+6QaujU6oA3BNW6MHE1ZQhvEOHHvmDAp6bRtbaegiIUFsHyTy/zuue/mNKJBTdix1tpBJsVCR+/ZxiCxvfzalRBVD0JqcxlSt2I+U1iWb0b1mjJjwDNCwY2aWe2X5aHr9QgQ3cH3G8=
+	t=1763425720; cv=none; b=eGE8vAK+CPkgajaU88dOjfcbAsyoWblVMQ7Mx1qnQf18V1FCuLnogPaZlEIy20t1oD+2+c2zCvrJnGp9WDaVCYUsZCTF0Qh9PwoLNnPe7+U1391s6dAtYQY9ngAcF1hBfb7g34pcra6PQjnUDKyZX5qDkFF+/DXEYX+vfonltXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763424826; c=relaxed/simple;
-	bh=8szR0hA/D6RpRDmQPtLJlsCxAo8/0UeLUozshM1XqD8=;
+	s=arc-20240116; t=1763425720; c=relaxed/simple;
+	bh=LpVkxaWWK7N5iPzV96ToOiocnEHVUy9QPFr/9em2KKU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AoB5YLnf9Jh38YWpM3PJNhcf7sdQVl4Ja2Z1REQfi6LyGzBQWOpz4SZeFKaSX2ChPwxUZarw3N5lshtv8bSCF74h7rq/SOItLyuvK0BgXxqbPz1WYRmy+sSl5mC4nOzbzniOKZ4Uy2+C2EHBs9TZz5dIdTCT+/1fVkLEfrrKt8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Z7sFALje; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R+PjHvdC; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=bvdXxm1c73z2maXN6ouWNY+m0VfLnPTx94XSrBA+nnUTn2/cXgDpWBWJJHYOYURENMKlP+xZjOj+IvP7/6mXQ4h9/5JNqM/BJfNK82uZvhYQJVsTS67wHVxXYeybxRv1BZNpJV52caK6TzDbQcG48NrhSBMFOdatndqEby1OXMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ctpIYqDm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JWvNbxVL; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z7sFALje";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R+PjHvdC"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id A0FC81D000D0;
-	Mon, 17 Nov 2025 19:13:42 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ctpIYqDm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JWvNbxVL"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 972647A01E2;
+	Mon, 17 Nov 2025 19:28:37 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Mon, 17 Nov 2025 19:13:42 -0500
+  by phl-compute-10.internal (MEProxy); Mon, 17 Nov 2025 19:28:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763424822; x=1763511222; bh=Z5knoMUkfe
-	tGGOJrRPbz5a1NYmdJ1F+S8ngtZaY8qLc=; b=Z7sFALjeGoyvp3la/yd2rX6ciI
-	T1Yr8C/paphVEU7FHz1yQoRtxDP8WCAPpRRR0hO/lh5/w+5LGbKPuVXQg7d9Ju81
-	zbSoAN2oR5rOMgDbkbiZMf8jclXdR1BzC311d8ehwRINui+cLwCWbiK3GORorTbV
-	Q1bimVUEK/X84LL8hhYaCi0qbqgM18s5ZyxfVglsLLBK9nUB7VfJ5WKqeengUGtd
-	hOCV8+0LMiQ0uxbvE7zGEOl83GJixLVDojluhTp6ssJ24pzexnSgTk1VM371mClK
-	1YqKYVzG7zUNIW5LUn5cagLDC7owmMRINy8sXjrdApH0olzwog5utsjGeu0A==
+	:subject:to:to; s=fm2; t=1763425716; x=1763512116; bh=ki7HL3xweo
+	nlM8UcR42R2WwhjM0TEl048dJE4oh8K4U=; b=ctpIYqDmVv99SSL+U7PNnvt5jj
+	KB8uOGY2Y+r7897ltV3QfLUA6ElG/g9M4ABpa/J/KFoFbtmS1oZW5/GE/o7RxmZj
+	TvHTOhNJkkC3HKUDekT/6SzMEbFx2ZRb4WGOJFXwZjDVvZLlpw/akzl9NSnAxkHy
+	sVWFdBGaW6kNIQtPWCf9vAgX1ODczKgxPwK4afy6E1vohzE9HYId2cBg0Z2Ruz/G
+	Xs9mHBOPOtJ+JkwGJCgWIpH4+fAwk5LwdXj+OAVst4u+ISiNpgJOFAwLj13lNqIC
+	k0U9hmoYwj5ewo31VCGGnJ0IFEJsTy9nYCkK6OLLLeHm/WbEC7NfKurNrw9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763424822; x=1763511222; bh=Z5knoMUkfetGGOJrRPbz5a1NYmdJ1F+S8ng
-	tZaY8qLc=; b=R+PjHvdCYAVJWnDWU0s7u2mX4sN287FFV8Y9LvxAecB+JI5AL6A
-	sIDlB9R3Nyc3IgtFkyMEyO1C2ok2Gil5pqzgffUm48VuziyIKRYHX3iQYk+Ip0AK
-	/0Qe04SG8BkB/nskWuAMh2WUj7K50cEcrLKItmfLCcMs/2bWWi5DE0r6Q9u3BVKe
-	Br8rrbyq99I3xPoGruaHPYW00bw/CA7nK0jLjdmCc+WQwm9czNRCrcrpZff4zY2V
-	yxWSWSO6ItUbwwpT8aDtcr/XtCUeo3hkOO2QBlRuK0CYYjBEflkPI5+/WZzWMWGo
-	1oY5mhiilmraVnGZNRhqMis+NiFxWzRgngA==
-X-ME-Sender: <xms:NrobaWfE6Au4xgJ1r9gKLFc6kjXJuCgOSPpdCNOBUFggasUFbtmdYQ>
-    <xme:NrobaXEQsa52HeT9pQTO_pmu4diWS6ZXxkd_QqCcBYI0qZuBQ5zXbrgrYPcK4KzOP
-    hIPxggmiqZo1djgiW442wuyCqo4lGGcrs-N9ea3f8KobOdrJPnluA>
-X-ME-Received: <xmr:Nrobaf0YaD9JNkuiHFoCMxzpP75pCzPZBbVYAS_GwoxV7jV6S0DhS8Ld91_a70LUmDokFcCCu_25_oY3WK6IdKMFuzN_Ul3ICV2i>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudelkeejucetufdoteggodetrf
+	1763425716; x=1763512116; bh=ki7HL3xweonlM8UcR42R2WwhjM0TEl048dJ
+	E4oh8K4U=; b=JWvNbxVLeMs+hug3OxbTzbrgkchdF+TJBNRISkJVrI1T6KO9F7s
+	uZeh7aiLKdu+K1GeLBH6B8/yr6jZX00vRky80fDnfbQKeCzRGD1K1cl62Q1Bu2sX
+	hCxvyAAhxC/QI4KLaI1TySOjGq/ongxlYovNgYww9ItoDC1ZsWMYezjee2mB/5E8
+	JzS0ILacf9DPXpRctKBpIcoPhDTDqkL54rSCgsNRnPwuILlCyr+KBAmuOmlf92yw
+	845wU+lFZBkjLtXAzDvWQMb7fwOIUcTL8ZAQ/uQiGQHVgZ1PnMMjHtabKd7HN7oP
+	9DCwo+Wi7DhWxlSR74qeBobzM4PwXPsXJXQ==
+X-ME-Sender: <xms:tL0baYfSivfA6rLStRms_ejlqFQ0ADodFFeYt4Z6AIdn2n68zesxuA>
+    <xme:tL0baUMLnrqmQLTth7jBB0h287piXWdPRTz8vEwmYH4jFt-KngGOGX25lCg2AjOg4
+    0d-pNoZnMeOxJdgGEocDlbKhuWFOx_bEOUt7M_C3_D6NUPbHTxa0N4>
+X-ME-Received: <xmr:tL0baQKMaxeG6ruCa_DGxCq0VG5W3WUTzf-qgmo-r0MAVqYOlw1WTADrlcTNSoPOqgjSFV4u0TUKyg24DptDgarGsI21TMftLn0z>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudelledtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrg
-    hnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghp
+    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
+    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
+    hmgidruggvpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    guvghlihhlrghhfihusehmihgtrhhoshhofhhtrdgtohhmpdhrtghpthhtohepshhtohhl
+    vggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
+    hopeguvghlihhlrghhfihusehlihhnuhigrdhmihgtrhhoshhofhhtrdgtohhmpdhrtghp
     thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Nrobafkbo3oK8aej4sgu_xtEEWSLPGv9ncFBUVY4P3nwkD9-ZrwMag>
-    <xmx:Nrobaf9bNq_Z6ktXpV94xXIzdqXtVFxZwF5KGfTLDAhWRAm6gWKyNA>
-    <xmx:NrobaUqf3GVf4z2qiYwhvbU5n0ZtzwgURnKuPJdL88dLYs9oYr5JLw>
-    <xmx:NrobaYmWffBEdE6LMZ-bsE9P-6kr2hHoG0IhSWA_-MqI_unEyjfC0w>
-    <xmx:NrobaQUTqW52dvbR3njHNQFbLtDovGRrVx1dfSLNjzTWx_m90vBUdr-r>
+X-ME-Proxy: <xmx:tL0bacJmJEerDwhup5sCfaom9NNYJ8jFw3MplwlZJjGdUnOrcaPVFw>
+    <xmx:tL0baS5dbXgbJajW1sbyf3HBLNJdnM5OX5BTZ6pfO9QF6M7UHs12og>
+    <xmx:tL0baefgY4WnCiyTMyTwAVQ_oLg9OBAb80u6Du-rckr8DcVwPwLDJA>
+    <xmx:tL0baVEhqLUpwjtCPooSzadthd_AoB5TOB1lW_9FtT4Bz8RokPd2Sg>
+    <xmx:tL0baRYyC8OVNI5JJk-BjslfKBUoHcasU2RGWBIKqfB7vJDV8vlac3xO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Nov 2025 19:13:41 -0500 (EST)
+ 17 Nov 2025 19:28:35 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Ezekiel Newren
- <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 00/14] SHA-1/SHA-256 interoperability, part 2
-In-Reply-To: <aRudLpkRdRtCAoi3@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Mon, 17 Nov 2025 22:09:50 +0000")
-References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
-	<xmqq7bvsjzlx.fsf@gitster.g> <xmqqpl9h9mgo.fsf@gitster.g>
-	<aRudLpkRdRtCAoi3@fruit.crustytoothpaste.net>
-Date: Mon, 17 Nov 2025 16:13:40 -0800
-Message-ID: <xmqq4iqsgpu3.fsf@gitster.g>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Delilah Ashley Wu via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Delilah Ashley Wu <delilahwu@microsoft.com>,
+  Derrick Stolee <stolee@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
+  Delilah Ashley Wu <delilahwu@linux.microsoft.com>
+Subject: Re: [PATCH/RFC 0/4] config: read both home and xdg files for --global
+In-Reply-To: <8e2b868d-8753-bbcd-840c-8eaefaa7cbd1@gmx.de> (Johannes
+	Schindelin's message of "Mon, 17 Nov 2025 14:29:33 +0100 (CET)")
+References: <pull.1938.git.1760058849.gitgitgadget@gmail.com>
+	<8e2b868d-8753-bbcd-840c-8eaefaa7cbd1@gmx.de>
+Date: Mon, 17 Nov 2025 16:28:34 -0800
+Message-ID: <xmqqtsysfakt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,47 +93,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On 2025-11-17 at 06:56:07, Junio C Hamano wrote:
->> In addition to "cargo clippy" I reported earlier (and attempted to
->> fix) in a separate message, we have been seeing constant failure of
->> "win+Meson build" job at GitHub Actions CI.
->> 
->>   https://github.com/git/git/actions/runs/19414557042/job/55540901761#step:6:848
->> 
->> I attempted to build tonight's 'seen' without this topic and it
->> seemed to stop.
->> 
->>   https://github.com/git/git/actions/runs/19418361570/job/55551045554
->> 
->> This topic may need a bit of help from those who are clueful with
->> Rust and Windows.
->
-> I think that has been failing with Rust since well before my code came
-> in.  It has failed for me for a long time (well over a month), so I have
-> just ignored it.
->
-> I'm going to send v2 shortly, but we can squash in changes and do a v3
-> if there is something actually broken in this series.
+> For the record, my "Reviewed-by:" still stands, if lack of reviews should
+> be the reason why this patch series has not even entered the `seen`
+> branch.
 
-Thanks.
+Thanks for pinging.
 
-    $ git log --oneline --first-parent -4 seen
-    3f252ac9fe Merge branch 'ar/run-command-hook' into seen
-    672cb7c62e ### CI
-    3af201233b Merge branch 'bc/sha1-256-interop-02' into seen
-    950efaac03 Merge branch 'cc/fast-import-strip-if-invalid' into seen
+"Why is it not in 'next'" is a legitimate question.  I think that is
+because the topic has no discussion on the list in the thread.
 
-It seems that 672cb7c62e (which is an empty commit on top of the
-merge of v2 of this series) fails win+Meson
+"Why is it in 'seen'" is a question with no answer.  As I often say,
+'seen' is merely what I happened to have seen and found it promising
+but is not ready for 'next', and people should not read anything
+more into it.
 
-  https://github.com/git/git/actions/runs/19447841443/job/55646336507#step:6:689
+I didn't look at it primarily because nobody, not even one on a
+handful of experienced contributors whose opinions are well regarded
+in the community on the CC: list, responded to the thread at all.
+Before the message I am responding to, that is ;-)
 
-but 950efaac03 (which is the merge before v2 of this series is
-merged to 'seen') is happy with it.
-
-  https://github.com/git/git/actions/runs/19448271167/job/55647611566
-
-These two runs roughly corresponds to the with=bad/without=good pair
-in the message you are reponding to, but with the v1 of this series.
+I wanted to see how well people receive the motivation behind the
+proposed change, as I vaguely recalled that not using both at the
+same time was deliberate to help those who migrate from historical
+location to XDG layout, but did not have time and energy to do the
+digging myself to become knowledgeable again to give any comment
+worth reading.
