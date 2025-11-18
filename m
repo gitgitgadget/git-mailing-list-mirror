@@ -1,177 +1,218 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BEE3587A1
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 16:07:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADF0377E88
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 17:02:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763482076; cv=none; b=aXrcoV2rNZQWTXwREt+RGkBw3fxaPyqQgdznVXsLOHHMw2/5vU6W6Tze9lHAyMvNO5lQGNol8z3BhlHqn6Omw00kBlL/dnJvFRrwpzMv75TufPjr1/BpyRjJsbNeJrfpliOClmAeZwqfFhB+NCtel0yQ89QAaOKSMdwnP7dytts=
+	t=1763485362; cv=none; b=u6W5DP8BhHea7+9zQn5Na11hacNZ1kZXMWerlSQEL6BKp9NcBj3xWQF9Romoytx5tQcgNfDV7fmbjIX9dB4pDceL0sFDXkfw4h2wpx+6xCOLYYr4BU6TQL47baIWL8mkFIyWf1+ORU1e7bIt3Z2NxAudURlwIShsKMQ3usr/kYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763482076; c=relaxed/simple;
-	bh=Fba8nhcQwZQMMXqbLrNUqupHWDmBGzgRuTE/zVBNyVg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C4Uj582Xzurh0m1W/Vk0QkzAuqyZAAlL8Jqg9kLFTF7janPRfo6hwFT5zguW8/RaekcQXP7UIGzJ+1FL9QRFJkOYQcbBkBUvR9+kRssBoxy2EHYskoxqCjtw8ytjDYDF3WS7C2lLYCfNf6ug+VfE1zZxOM4ADi6fSeDod1hyGZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mgg2cbQM; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763485362; c=relaxed/simple;
+	bh=MhTXVwQbEOmdgTZ9QsTNAMps3SH0MISwUJ04Mq/+E8o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Om34eFfogZvlx968Ugfkofo6i2d/+Kw+TD8bPpsF02ykPHZTTYVp705+CH7GchR9DO0FeJkzhTHm/vtyank1glrwJMvD/3lYt6ast257o5uCLkZLO2Myv1lWu0K/oD43N4u51JFUivbDq4A7L4V+sNB2u7XiY3qdGa37X8uKwxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Pu3BmQX1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fZaDE60A; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mgg2cbQM"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-47796a837c7so21966015e9.0
-        for <git@vger.kernel.org>; Tue, 18 Nov 2025 08:07:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763482072; x=1764086872; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=uXqmxN8EImGwRvWqRdbcmv8cHqKr9jea096wUfMjprc=;
-        b=Mgg2cbQMiDj7eWQZyeERN3ncmXoIH7snXqcLtsL9l3FRSRnVVLzoeuYuHssyjobpN3
-         VOl4sB/U6ch/y7RLbpXkFjV/+p27Vn/Lhs7Zv3mYU8Q+YAmTmm+UWJ/NLq/kKDPCICg5
-         NHY6K3uh6vxPIM17SOXSWCJJ7am1FSPakY4m1YSCFI9Azqo4x/2SDPfUBEZM8FoVFQ0K
-         nMR462W/wy5Bamir+2Mdf/Svneuul1Zuyz3CsPVUQZVN7aYfG7/kcLiT3KNBw7Ul8SUl
-         6TuL58PwayKtsOJOZ/10Yv3c/T+xHgZn3R4raELuxkoo3qMwRUoqJUPtjbx7sMvai1W6
-         YkBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763482072; x=1764086872;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uXqmxN8EImGwRvWqRdbcmv8cHqKr9jea096wUfMjprc=;
-        b=Y7ZjL275C0owORxdiTqk+25rIwz8f9mIIYG3qoe8mx0Ql1j3nksnjLwpO4byEMOfoP
-         96h617JSzigecCnnl9UIc7yoHrKYM+votqGSbSTvB/2staYQHXCM4pZS2UEgBugOpm/i
-         0UUboXdlIqiVUkBX2U/vjJ0/DV1kAK11TLeMSJ5M/nbpOdI3rMaXpsGRg+2hHJQ7/Za/
-         0HDXpvp5s/e5vo5ICJg9FIfXvvHiW4kVCLbdhUtbwASZY7SLgWqCDFtipbYZ6/KnyL2e
-         mp2SKzrcuk1jl6KD+iCL94+rTTsENN/R4HIS3gPYE2iuHHa4YMSZbAPwofacVZA1Uw8n
-         wdkw==
-X-Gm-Message-State: AOJu0YwAraWRLkjr/b12iDKCOCtD52GgN1ZYpvDDeaUXLDtI/TySIHzA
-	HlYba4NG9qKEjQyZNkdU9t0J+e6TwhVl4a/7G41hsej4Yyr4DGqbxqJAnHK5mg==
-X-Gm-Gg: ASbGncu6mCjumJzfagIg14NyZfXULA99Gn13WdEsLTMohBuIRKTNYk4rXsgyto730uu
-	FNCooTVmwfjvrkOjKLVhRqt2SgdZvrbLUVlsSBLVcLMMe2iulv6wmWOZdMq4rN/MdY+FGMrkkZV
-	idsl6jqxoP2GY/To4PTcKMinNNN1woEfjNIh3oNgW4aMgzLsTFNlgCAjrDjET3m92x529rE7KqI
-	NykLd8hiR9p/FlPFCXr/jr2kgfgp9tDejfFjiglO8PxcWch3wMT3S+ZC+ErzdOmkenpVXMwF7MT
-	wdLdVdd0uxc5kDdDEsLclMVgnCRYT1V2oBNJBmpa2xpDMLnyL8z9dJctrk9nQOibex4omC1wlPT
-	28ShUBTpM6JEmR0o6y1AnbArWJ8VvSfIIoAOjHS0CI6ffcvjnGJsIsP4hpugoXS55u3ypaKkTmy
-	995mgozsGmim7LtA==
-X-Google-Smtp-Source: AGHT+IE2+vq8WFtwzSGGPA12hmXooNXU1ZTYfoATYjA4luvB3BH5JOCzUSAWV0TPDf4aa5JGP9oz2w==
-X-Received: by 2002:a05:600c:c4a2:b0:456:1a69:94fa with SMTP id 5b1f17b1804b1-4778fe6a3e1mr126650705e9.13.1763482072010;
-        Tue, 18 Nov 2025 08:07:52 -0800 (PST)
-Received: from berwick ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477a97412e3sm20850665e9.5.2025.11.18.08.07.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Nov 2025 08:07:51 -0800 (PST)
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 2/2] worktree list: quote paths
-Date: Tue, 18 Nov 2025 16:07:33 +0000
-Message-ID: <b42d0f668b4a5ba0ec00fed1377cad5488f62197.1763482051.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.52.0.345.g9c3c96ee5a7
-In-Reply-To: <cover.1763482051.git.phillip.wood@dunelm.org.uk>
-References: <cover.1763482051.git.phillip.wood@dunelm.org.uk>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Pu3BmQX1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fZaDE60A"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id E7B56EC0171;
+	Tue, 18 Nov 2025 12:02:38 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Tue, 18 Nov 2025 12:02:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1763485358; x=1763571758; bh=tpf6aH3h7E
+	+tqdyBFPbyj6ySABGFykwDIf/zYJHXLSc=; b=Pu3BmQX1vXQEpaoKC9ElL5CliV
+	vMtpCuzjaUb2qkpGn1g/y2uxsRwipNfrbxkyGdK61ksqpHDOm/mo6yl2D+f/igKd
+	sM2SiJPBsQ0h+8vxQgjzOwxZhMNm7Kso7NjpwbbSQB38jn53H9a3NuEXDu9NcVWw
+	wbqLjjDZQ4MNUtDD9K+MVrOeR1WJM0E0922dBqC+S2k6+r0FHhjPn4o3ofGZg+r8
+	mPgqWB4mAJXUzI8M6PEm7rK/6DhTDzo+lxUs0iwSjPPLHw+hbdGr6CsXokogmP1c
+	bb3vECff8Gp3zSvyZ8Uy9+0ZrBjYPypsCM54cNH4lIP1cVW5BXC5Pp6KbZKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1763485358; x=1763571758; bh=tpf6aH3h7E+tqdyBFPbyj6ySABGFykwDIf/
+	zYJHXLSc=; b=fZaDE60A1+i7tzOd1kskX5eVaZeYwO8hJghUygYh1QRgNEhxfwr
+	bane7GZBp/T/x4K0E4fiM1gdGYs0faAi+PL/j09oakYcJPvzQ0loj38XYhl0wzNC
+	IWOpWmz1mvcXHXQAyiQrBjnPZQVDRr3b2K1ZLfUF/t0bpqjm/2aIkwiduZDG3QIb
+	5OWivil7rZlndIShG7BAsRs5Nri3Fs1ChvgvvwW6FQ+6FjjEsDCF9m2lSVCAQQfr
+	4mM1/KEbHspkOcCkKzcK4frYkBzuTfIofOyEh/3L2m7Nc+gYV0zSC6Ukb/V05xSz
+	Za2kXcDD6ED750SK8l1My53NwQzYpWWsueg==
+X-ME-Sender: <xms:rqYcaY90TpVabfTN_-t8W68oeel_48qQsjwQt0j13LU3p2u9YRltZw>
+    <xme:rqYcaXvbIugcQEs2fJQgwiX3cfMjbBSgbJipaPEsAFCVGmiKnVGoXeU9Z01RzgxpR
+    tab8yuhKwseRBYm2haroQqIY-zmoUwLsLT0t0hhIPc2qMyb3iC6ug>
+X-ME-Received: <xmr:rqYcaTADVpVKFptlmOURwdkSFNr-mUIo845sv6kZYv8RklaspwBC1LIvAeZL_HGMbkY7y160e904PKUqd8Jvkaamk95QW7z8EcCg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvddukeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehgfhhunhhnihdvfeegsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:rqYcaXWJ3EWrWirx2LfUzAJlluKMLEi_8Nc5wsaNPllMEc8X9xD-4Q>
+    <xmx:rqYcaZDagr1S1yo6Mn7ikrgG24cfGM-WvEYvZoUVpJL3Nh6XwLhbIg>
+    <xmx:rqYcaS-9auzW_fmLRSDi6gnWT5kG80LeKieL7GnIGHc-nrpRDg1hWw>
+    <xmx:rqYcaYHaqUC6et8fgPB392yL3ee8AaXiWWUKvG7wvH6luuFnbQNRGA>
+    <xmx:rqYcaWgFO1UshP-D0cA9oqUuEnhpsg_9wRqIELTgx5b-f7Wh6B3Qa6rd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 18 Nov 2025 12:02:38 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "AZero13 via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  AZero13 <gfunni234@gmail.com>
+Subject: Re: [PATCH v2] win32: remove handling for impossible cases in
+ win32_pthread_join
+In-Reply-To: <pull.2102.v2.git.git.1763480720264.gitgitgadget@gmail.com>
+	(AZero's message of "Tue, 18 Nov 2025 15:45:20 +0000")
+References: <pull.2102.git.git.1763427606138.gitgitgadget@gmail.com>
+	<pull.2102.v2.git.git.1763480720264.gitgitgadget@gmail.com>
+Date: Tue, 18 Nov 2025 09:02:36 -0800
+Message-ID: <xmqq4iqrff4j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+"AZero13 via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-If a worktree path contains newlines or other control characters
-it messes up the output of "git worktree list". Fix this by using
-quote_path() to display the worktree path. The output of "git worktree
-list" is designed for human consumption, scripts should be using the
-"--porcelain" option so this change should not break them.
+> From: Greg Funni <gfunni234@gmail.com>
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- builtin/worktree.c       | 10 ++++++++--
- t/t2402-worktree-list.sh | 15 ++++++++++++++-
- 2 files changed, 22 insertions(+), 3 deletions(-)
+Looking much better, but there still are some puzzlement left.
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 0643a22ee58..303cc3b2d64 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -980,6 +980,7 @@ static void show_worktree_porcelain(struct worktree *wt, int line_terminator)
- }
- 
- struct worktree_display {
-+	char *path;
- 	int width;
- };
- 
-@@ -989,7 +990,7 @@ static void show_worktree(struct worktree *wt, struct worktree_display *display,
- 	struct strbuf sb = STRBUF_INIT;
- 	const char *reason;
- 
--	strbuf_addf(&sb, "%s%*s", wt->path, 1 + path_maxwidth - display->width, "");
-+	strbuf_addf(&sb, "%s%*s", display->path, 1 + path_maxwidth - display->width, "");
- 	if (wt->is_bare)
- 		strbuf_addstr(&sb, "(bare)");
- 	else {
-@@ -1028,11 +1029,14 @@ static void measure_widths(struct worktree **wt, int *abbrev,
- {
- 	int i, display_alloc = 0;
- 	struct worktree_display *display = NULL;
-+	struct strbuf buf = STRBUF_INIT;
- 
- 	for (i = 0; wt[i]; i++) {
- 		int sha1_len;
- 		ALLOC_GROW(display, i + 1, display_alloc);
--		display[i].width = utf8_strwidth(wt[i]->path);
-+		quote_path(wt[i]->path, NULL, &buf, 0);
-+		display[i].width = utf8_strwidth(buf.buf);
-+		display[i].path = strbuf_detach(&buf, NULL);
- 
- 		if (display[i].width > *maxwidth)
- 			*maxwidth = display[i].width;
-@@ -1104,6 +1108,8 @@ static int list(int ac, const char **av, const char *prefix,
- 				show_worktree(worktrees[i],
- 					      &display[i], path_maxwidth, abbrev);
- 		}
-+		for (i = 0; display && worktrees[i]; i++)
-+			free(display[i].path);
- 		free(display);
- 		free_worktrees(worktrees);
- 	}
-diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
-index a494df6d612..e0c6abd2f58 100755
---- a/t/t2402-worktree-list.sh
-+++ b/t/t2402-worktree-list.sh
-@@ -29,7 +29,8 @@ test_expect_success 'rev-parse --git-path objects linked worktree' '
- 	test_cmp expect actual
- '
- 
--test_expect_success '"list" all worktrees from main' '
-+test_expect_success '"list" all worktrees from main core.quotepath=false' '
-+	test_config core.quotepath false &&
- 	echo "$(git rev-parse --show-toplevel)      $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
- 	test_when_finished "rm -rf áááá out actual expect && git worktree prune" &&
- 	git worktree add --detach áááá main &&
-@@ -38,7 +39,19 @@ test_expect_success '"list" all worktrees from main' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '"list" all worktrees from main core.quotepath=true' '
-+	test_config core.quotepath true &&
-+	echo "$(git rev-parse --show-toplevel)            $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
-+	test_when_finished "rm -rf á out actual expect && git worktree prune" &&
-+	git worktree add --detach á main &&
-+	echo "\"$(git -C á rev-parse --show-toplevel)\" $(git rev-parse --short HEAD) (detached HEAD)" |
-+		sed s/á/\\\\303\\\\241/g >>expect &&
-+	git worktree list >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '"list" all worktrees from linked' '
-+	test_config core.quotepath false &&
- 	echo "$(git rev-parse --show-toplevel)      $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
- 	test_when_finished "rm -rf áááá out actual expect && git worktree prune" &&
- 	git worktree add --detach áááá main &&
--- 
-2.52.0.345.g9c3c96ee5a7
+> WAIT_FAILED is the only real possible error here.
+>
+> WAIT_TIMEOUT would not be returned as the INFINITE
+> is given to the call.
 
+OK.
+
+> WAIT_ABANDONED would be returned if the handle
+> pointed to a mutex object that was not released
+> by the thread that owned the mutex object before
+> the owning thread terminated.
+
+... and we know the handle we are passing to WaitForSingleObject()
+is a Thread, not a Mutex, so this error condition is irrelevant?
+
+OK.
+
+> WAIT_IO_COMPLETION would not be returned because
+> we pass FALSE so the wait is not alertable.
+
+FALSE where?  Ah, this can be done with WaitForSingleObjectEx, but
+WaitForSingleObject() is what we call here, so WAIT_IO_COMPLETION
+won't be returned with or without FALSE.  Is there a reason why you
+want to change the code to call Ex variant (the manual page tells us
+to use it _if_ we want to enter an alertable wait state, and I am
+assuming that we are not interested in doing so)?
+
+In any case, among the four possible return values from
+WaitForSingleObject(), we know WAIT_ABANDONED and WAIT_TIMEOUT will
+not be relevant for this code path.
+
+Because WAIT_OBJECT_0 is the cryptic synonym for "Success!" for this
+call, WAIT_FAILED is indeed the only possible error here, just like
+you said at the beginning.
+
+I think it is easier to understand for mere-mortal readers like me,
+who are not familiar with Win32 API, if we explained this change
+more like:
+
+  Subject: [PATCH] win32: simplify win32_pthread_join() error handling
+
+  Among the four possible result WaitForSingleObject() can return,
+  WAIT_TIMEOUT and WAIT_ABANDONED are not relevant in this code
+  path, because we do not ask for the call to time-out, and we do
+  not pass a mutex object to the call (we are passing a thread
+  object).
+
+  Simplify the code to
+
+  - return an error without closing the handle if the call failed
+    (i.e., returns WAIT_FAILED that is not zero);
+
+  - otherwise, WAIT_OBJECT_0 (which is 0) is returned to signal a
+    success.  Do exactly what the original code did in this case.
+
+What do you think?
+
+> Signed-off-by: Greg Funni <gfunni234@gmail.com>
+>  compat/win32/pthread.c | 20 +++++++-------------
+>  1 file changed, 7 insertions(+), 13 deletions(-)
+
+
+> diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
+> index 58980a529c..54c43b4146 100644
+> --- a/compat/win32/pthread.c
+> +++ b/compat/win32/pthread.c
+> @@ -37,20 +37,14 @@ int pthread_create(pthread_t *thread, const void *attr UNUSED,
+>  
+>  int win32_pthread_join(pthread_t *thread, void **value_ptr)
+>  {
+> -	DWORD result = WaitForSingleObject(thread->handle, INFINITE);
+> -	switch (result) {
+> -	case WAIT_OBJECT_0:
+> -		if (value_ptr)
+> -			*value_ptr = thread->arg;
+> -		CloseHandle(thread->handle);
+> -		return 0;
+> -	case WAIT_ABANDONED:
+> -		CloseHandle(thread->handle);
+> -		return EINVAL;
+> -	default:
+
+And the above is what the patch simplifies away, which is great.
+
+> -		/* the wait failed, so do not detach */
+
+I think this comment is worth keeping (I am assuming "do not detach"
+refers to the fact that CloseHandle(thread->handle) is not called in
+the error case).
+
+> +	if (WaitForSingleObjectEx(thread->handle, INFINITE, FALSE) == WAIT_FAILED)
+>  		return err_win_to_posix(GetLastError());
+
+The change is based on out belief that WAIT_FAILED is the only
+possible error from this call.  Even if our belief turns out to be
+wrong, we would want to take the error code path, wouldn't we?  IOW,
+I think the above should be more like
+
+	if (WaitForSingleObject(thread->handle, INFINITE))
+		/* the wait failed; do not detach */
+		return err_win_to_posix(GetLastError());
+
+i.e., if we get an error, report the error to the caller, regardless
+of what kind of an error it is, even though we expect it to be a
+WAIT_FAILED.  And the case this if() condition does not catch is a
+successful wait (i.e., WAIT_OBJECT_0), which is handled ...
+
+> +	if (value_ptr)
+> +		*value_ptr = thread->arg;
+> +
+> +	CloseHandle(thread->handle);
+> +	return 0;
+
+... exactly as before.
+
+>  }
+>  
+>  pthread_t pthread_self(void)
+>
+> base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
+
+Looking good.  Thanks.
