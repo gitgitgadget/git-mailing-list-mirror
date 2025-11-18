@@ -1,37 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052E8309DAF
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 09:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E098E3081D0
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 09:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763457136; cv=none; b=ANbBefZIpFiLjVS6M1AkGoXe1ALTMDT4rxWMvAf09pK63EVKrK0IJ2eAObN8gYcloyzNpv1eAMRHIxQiCYX/IDCZr5QOTav4DNPJsZ9WS8P0GawNC+zgGhZW9Qiu6cLgzAXQVxnrJ/OyMnJuIoc87lYoYFWdwohoDFBfpRY4joU=
+	t=1763457141; cv=none; b=dLg2mFBTYXAZRbAieXOzM5P7p+K9XPmYPMoT/au/uuytOj8gyb347gK82nRyV0zcKUU/lej6fwXyGxn3mW8LKSbxey+LC9d7yBMQY1SXPadNQlmZxxbbZPV8e9hR56SW/CFRrYRQhPQPHnrYP/5HHeLM2BsEuDBjEQviG/mu4vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763457136; c=relaxed/simple;
-	bh=B8Y1b7wDJlEjbvcxsSWx0VnVKg2y4s6o/vuUMP2JIg8=;
+	s=arc-20240116; t=1763457141; c=relaxed/simple;
+	bh=LEVVfI/ekeBCsKsUB3IEkTCH6XDpfLTS7wvvHtll/R4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KnNyVEhHqR0n0krfRE8VS9erDeA3V7LJOyk7jtsboJrQS2nQK/C2EEU6q/eUcHZZzPzcxzzWjguPtXAfHGgs0RklneLLVDfRnp6UVPnEvqAkHdcl6577tQOsxZzJz3arhF3u8cn7CZZXXMnIZlT6NQmnaLfjSIxOpIpigMK1vGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=APPF6778; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=E0/UiKTAA/wOWYQNiagdRFmj/bwZqi17bTWdW190JkZbvkreZMlBZzqZKOTpAQJfd9TUOOJXkLt4qWTeT497ctKtmg+roLJsMUBngaXVU5bFJw/9obwKrSaeE6TjrPOPU8xfnys5P777iGwOwSDyH3rc7QaI+zDkI94M6ISm4nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NuacEd1t; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="APPF6778"
-Received: (qmail 19766 invoked by uid 109); 18 Nov 2025 09:12:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=B8Y1b7wDJlEjbvcxsSWx0VnVKg2y4s6o/vuUMP2JIg8=; b=APPF6778ZkrMsCHGk6toe1+HmUTXpknkwH2YaP6vFi/xOsRPl+zudDMGOtfC9QAMRvUU2uzcv1U+I+jlHBaVNH6bzHK+uN6HAwAjZkCsR3rEyiflgT/kSQDyZ/FabL0gyXt89z/YeuRlpvfrWB3Tt9lEVSzz5y3eAZrA+MFbV4Lk/B8xWBdB9t4s/dp3SO9HsH0MQ+qCdi6yX2szgEF3VC3y4lxny0almQiu+29ffxQD7AkcEyItRJcfnFfe4B9/6ynka4YBof38bV7nyy8tn8qolgtZOMR5gVpLs/P3/W3dfp/SyqB2z8LD8/c/Dp3H7/Rw3X6hib06WYx5ArAQ0w==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NuacEd1t"
+Received: (qmail 19778 invoked by uid 109); 18 Nov 2025 09:12:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=LEVVfI/ekeBCsKsUB3IEkTCH6XDpfLTS7wvvHtll/R4=; b=NuacEd1tuptvBCWRvPQSasL9/LAG5lc63qaCUKQiLYWMmaMKLeQEun03Z+VJx21jRcQz6Ror6Dw9PmInelTE8cyhEpDSQ0tC4aUfdKwOCh+ANyapHJCOTeDJXB1E8PbSs2rjXXQXfI9bcSYTvgUFfIVjWqMoCseoCbNqlTk3ck7rD1GRmoy38Nhnp4FBvVozXJxLgH2GPoW1x3HEzmQDlSKR2s35Yb3a1Nt0yWdvAbHzDC6ROBs1Mg2hOYX8bH2TUX+dthNHO4MoyvttOHo22oa0evwtrDBWq6wHCN5G/bEUg2RAQUj7jxQ2REmJHr58u6AuMWT5iwf88QMpJrkZFg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Nov 2025 09:12:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Nov 2025 09:12:18 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27390 invoked by uid 111); 18 Nov 2025 09:12:18 -0000
+Received: (qmail 27397 invoked by uid 111); 18 Nov 2025 09:12:23 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Nov 2025 04:12:18 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Nov 2025 04:12:23 -0500
 Authentication-Results: peff.net; auth=none
-Date: Tue, 18 Nov 2025 04:12:13 -0500
+Date: Tue, 18 Nov 2025 04:12:18 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, correctmost <cmlists@sent.com>,
 	Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v2 3/9] Makefile: turn on NO_MMAP when building with ASan
-Message-ID: <20251118091213.GC529192@coredump.intra.peff.net>
+Subject: [PATCH v2 4/9] cache-tree: avoid strtol() on non-string buffer
+Message-ID: <20251118091218.GD529192@coredump.intra.peff.net>
 References: <20251118091127.GA4175601@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -43,73 +43,168 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20251118091127.GA4175601@coredump.intra.peff.net>
 
-Git often uses mmap() to access on-disk files. This leaves a blind spot
-in our SANITIZE=address builds, since ASan does not seem to handle mmap
-at all. Nor does the OS notice most out-of-bounds access, since it tends
-to round up to the nearest page size (so depending on how big the map
-is, you might have to overrun it by up to 4095 bytes to trigger a
-segfault).
+A cache-tree extension entry in the index looks like this:
 
-The previous commit demonstrates a memory bug that we missed. We could
-have made a new test where the out-of-bounds access was much larger, or
-where the mapped file ended closer to a page boundary. But the point of
-running the test suite with sanitizers is to catch these problems
-without having to construct specific tests.
+  <name> NUL <entry_nr> SPACE <subtree_nr> NEWLINE <binary_oid>
 
-Let's enable NO_MMAP for our ASan builds by default, which should give
-us better coverage. This does increase the memory usage of Git, since
-we're copying from the filesystem into heap. But the repositories in the
-test suite tend to be small, so the overhead isn't really noticeable
-(and ASan already has quite a performance penalty).
+where the "_nr" items are human-readable base-10 ASCII. We parse them
+with strtol(), even though we do not have a NUL-terminated string (we'd
+generally have an mmap() of the on-disk index file). For a well-formed
+entry, this is not a problem; strtol() will stop when it sees the
+newline. But there are two problems:
 
-There are a few other known bugs that this patch will help flush out.
-However, they aren't directly triggered in the test suite (yet). So
-it's safe to turn this on now without breaking the test suite, which
-will help us add new tests to demonstrate those other bugs as we fix
-them.
+  1. A corrupted entry could omit the newline, causing us to read
+     further. You'd mostly get stopped by seeing non-digits in the oid
+     field (and if it is likewise truncated, there will still be 20 or
+     more bytes of the index checksum). So it's possible, though
+     unlikely, to read off the end of the mmap'd buffer. Of course a
+     malicious index file can fake the oid and the index checksum to all
+     (ASCII) 0's.
 
+     This is further complicated by the fact that mmap'd buffers tend to
+     be zero-padded up to the page boundary. So to run off the end, the
+     index size also has to be a multiple of the page size. This is also
+     unlikely, though you can construct a malicious index file that
+     matches this.
+
+     The security implications aren't too interesting. The index file is
+     a local file anyway (so you can't attack somebody by cloning, but
+     only if you convince them to operate in a .git directory you made,
+     at which point attacking .git/config is much easier). And it's just
+     a read overflow via strtol(), which is unlikely to buy you much
+     beyond a crash.
+
+  2. ASan has a strict_string_checks option, which tells it to make sure
+     that options to string functions (like strtol) have some eventual
+     NUL, without regard to what the function would actually do (like
+     stopping at a newline here). This option sometimes has false
+     positives, but it can point to sketchy areas (like this one) where
+     the input we use doesn't exhibit a problem, but different input
+     _could_ cause us to misbehave.
+
+Let's fix it by just parsing the values ourselves with a helper function
+that is careful not to go past the end of the buffer. There are a few
+behavior changes here that should not matter:
+
+  - We do not consider overflow, as strtol() would. But nor did the
+    original code. However, we don't trust the value we get from the
+    on-disk file, and if it says to read 2^30 entries, we would notice
+    that we do not have that many and bail before reading off the end of
+    the buffer.
+
+  - Our helper does not skip past extra leading whitespace as strtol()
+    would, but according to gitformat-index(5) there should not be any.
+
+  - The original quit parsing at a newline or a NUL byte, but now we
+    insist on a newline (which is what the documentation says, and what
+    Git has always produced).
+
+Since we are providing our own helper function, we can tweak the
+interface a bit to make our lives easier. The original code does not use
+strtol's "end" pointer to find the end of the parsed data, but rather
+uses a separate loop to advance our "buf" pointer to the trailing
+newline. We can instead provide a helper that advances "buf" as it
+parses, letting us read strictly left-to-right through the buffer.
+
+I didn't add a new test here. It's surprisingly difficult to construct
+an index of exactly the right size due to the way we pad entries. But it
+is easy to trigger the problem in existing tests when using ASan's
+strict string checking, coupled with a recent change to use NO_MMAP with
+ASan builds. So:
+
+  make SANITIZE=address
+  cd t
+  ASAN_OPTIONS=strict_string_checks=1 ./t0090-cache-tree.sh
+
+triggers it reliably. Technically it is not deterministic because there
+is ~8% chance (it's 1-(255/256)^20, or ^32 for sha256) that the trailing
+checksum hash has a NUL byte in it. But we compute enough cache-trees in
+the course of that script that we are very likely to hit the problem in
+one of them.
+
+We can look at making strict_string_checks the default for ASan builds,
+but there are some other cases we'd want to fix first.
+
+Reported-by: correctmost <cmlists@sent.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Makefile    | 1 +
- meson.build | 8 +++++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ cache-tree.c | 50 +++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 37 insertions(+), 13 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 7e0f77e298..0f44268405 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1587,6 +1587,7 @@ SANITIZE_LEAK = YesCompiledWithIt
- endif
- ifneq ($(filter address,$(SANITIZERS)),)
- NO_REGEX = NeededForASAN
-+NO_MMAP = NeededForASAN
- SANITIZE_ADDRESS = YesCompiledWithIt
- endif
- endif
-diff --git a/meson.build b/meson.build
-index 1f95a06edb..f1b3615659 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1411,12 +1411,18 @@ if host_machine.system() == 'windows'
-   libgit_c_args += '-DUSE_WIN32_MMAP'
- else
-   checkfuncs += {
--    'mmap' : ['mmap.c'],
-     # provided by compat/mingw.c.
-     'unsetenv' : ['unsetenv.c'],
-     # provided by compat/mingw.c.
-     'getpagesize' : [],
-   }
-+
-+  if get_option('b_sanitize').contains('address')
-+    libgit_c_args += '-DNO_MMAP'
-+    libgit_sources += 'compat/mmap.c'
-+  else
-+    checkfuncs += { 'mmap': ['mmap.c'] }
-+  endif
- endif
+diff --git a/cache-tree.c b/cache-tree.c
+index 2aba47060e..2d8947b518 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -548,12 +548,41 @@ void cache_tree_write(struct strbuf *sb, struct cache_tree *root)
+ 	trace2_region_leave("cache_tree", "write", the_repository);
+ }
  
- foreach func, impls : checkfuncs
++static int parse_int(const char **ptr, unsigned long *len_p, int *out)
++{
++	const char *s = *ptr;
++	unsigned long len = *len_p;
++	int ret = 0;
++	int sign = 1;
++
++	while (len && *s == '-') {
++		sign *= -1;
++		s++;
++		len--;
++	}
++
++	while (len) {
++		if (!isdigit(*s))
++			break;
++		ret *= 10;
++		ret += *s - '0';
++		s++;
++		len--;
++	}
++
++	if (s == *ptr)
++		return -1;
++
++	*ptr = s;
++	*len_p = len;
++	*out = sign * ret;
++	return 0;
++}
++
+ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ {
+ 	const char *buf = *buffer;
+ 	unsigned long size = *size_p;
+-	const char *cp;
+-	char *ep;
+ 	struct cache_tree *it;
+ 	int i, subtree_nr;
+ 	const unsigned rawsz = the_hash_algo->rawsz;
+@@ -569,19 +598,14 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ 	buf++; size--;
+ 	it = cache_tree();
+ 
+-	cp = buf;
+-	it->entry_count = strtol(cp, &ep, 10);
+-	if (cp == ep)
++	if (parse_int(&buf, &size, &it->entry_count) < 0)
+ 		goto free_return;
+-	cp = ep;
+-	subtree_nr = strtol(cp, &ep, 10);
+-	if (cp == ep)
++	if (!size || *buf != ' ')
+ 		goto free_return;
+-	while (size && *buf && *buf != '\n') {
+-		size--;
+-		buf++;
+-	}
+-	if (!size)
++	buf++; size--;
++	if (parse_int(&buf, &size, &subtree_nr) < 0)
++		goto free_return;
++	if (!size || *buf != '\n')
+ 		goto free_return;
+ 	buf++; size--;
+ 	if (0 <= it->entry_count) {
 -- 
 2.52.0.278.gadc6434dc3
 
