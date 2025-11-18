@@ -1,143 +1,136 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AC528C00C
-	for <git@vger.kernel.org>; Mon, 17 Nov 2025 23:23:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAF1208D0
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 00:13:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763421840; cv=none; b=SbTZuVID2PVrlc0jc8FPavHirEsURFsaukzkhq4wpee+XR7j3E/G8+Phf0KlMqVPx5XEzUnP9uzYwbEKsQGYegAEmIRiCvP97aOqDwflTnlu32KtVOkTVTfJPQLClHagOXblXevWuOnJM1d0K27mfuzlX6E69nJiDL7VaNvnYO0=
+	t=1763424826; cv=none; b=lRG1oMeStak/kSxWDlRI1SFItWWbuy6pZ+6QaujU6oA3BNW6MHE1ZQhvEOHHvmDAp6bRtbaegiIUFsHyTy/zuue/mNKJBTdix1tpBJsVCR+/ZxiCxvfzalRBVD0JqcxlSt2I+U1iWb0b1mjJjwDNCwY2aWe2X5aHr9QgQ3cH3G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763421840; c=relaxed/simple;
-	bh=5ou2tv0uhF52lke79iBtfwEnflsmek9fxoTHQweqhik=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qjXOWe0RrAmK7SiMZYjZ7oNTk/nC4YxNjd1iuLpaZXpYrBg6q6IdMCWYdepiQmNiHMQHDj4YU2+jUYt7+qFWz37mpeTUO2Ex75VicqPcXjwBUMPdaHhF2+4gTX49wCDA22FX5TRBTwsgd61IfP05pHAAT+eRmiSibLO7IxS7/60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sympoiesis.com; spf=pass smtp.mailfrom=zeta-soft.com; dkim=pass (2048-bit key) header.d=zeta-soft-com.20230601.gappssmtp.com header.i=@zeta-soft-com.20230601.gappssmtp.com header.b=tKVwvDxI; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sympoiesis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zeta-soft.com
+	s=arc-20240116; t=1763424826; c=relaxed/simple;
+	bh=8szR0hA/D6RpRDmQPtLJlsCxAo8/0UeLUozshM1XqD8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AoB5YLnf9Jh38YWpM3PJNhcf7sdQVl4Ja2Z1REQfi6LyGzBQWOpz4SZeFKaSX2ChPwxUZarw3N5lshtv8bSCF74h7rq/SOItLyuvK0BgXxqbPz1WYRmy+sSl5mC4nOzbzniOKZ4Uy2+C2EHBs9TZz5dIdTCT+/1fVkLEfrrKt8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Z7sFALje; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R+PjHvdC; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zeta-soft-com.20230601.gappssmtp.com header.i=@zeta-soft-com.20230601.gappssmtp.com header.b="tKVwvDxI"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b739ef3f739so256388866b.1
-        for <git@vger.kernel.org>; Mon, 17 Nov 2025 15:23:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=zeta-soft-com.20230601.gappssmtp.com; s=20230601; t=1763421836; x=1764026636; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bJYiEE4vVmQcbiOy+uYzHYweIIFZ+DYVrhp44IBj1xM=;
-        b=tKVwvDxISMwKrWU3Lr5p1AgBIf3/xTl0rAo6v6mddMMe7tndF+dhRwvpDENKeb0wkj
-         0loKkQmqO7nlqlo3dccgnGNpHUtaohljzOq23ZyaMnX+8E3iSHpG/ZbIfi/c/8m+gDuK
-         fQTyp1zgWeSYxjjsG82knRHHVFCGS9hPqWpsSXuUXHyPNbJwI4hCeq6J153E52Hp7GUS
-         IXfZyoFFBKN+KDv+az04OF1X+C7LJVdfLUbKDXZUiZ9JOZZgVH/byCwYjVnf/t6x4aGU
-         sQRCsYuCF+5Aiyo/jtJoxahrao8wN8ZP4CPRKTVKRQ4NLh/uh9JiPtTFIKA48R69jS5a
-         WuZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763421836; x=1764026636;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=bJYiEE4vVmQcbiOy+uYzHYweIIFZ+DYVrhp44IBj1xM=;
-        b=vDwYctJ8tVLMKYoft6/opc4QHCwHXWwlPObCTmvrChe0h07tdR+8PSyVKOXmfGFHoR
-         HcBFAHtsNFsKi4uV/WwQWak/x7IDWu6+8DH6CimjmtJUfnlQvzRAUDBqX+hTNEPL+IrT
-         lOdK6vG2jE3vGm+5OlpzPgnDAoYb6RhREzmS4lNoNIM6zJK4MOx5fc9zW6nDGo49jYoG
-         MW3qGhaV1cTbXyeRzuxxdo2ukNl9XiMeoFos8gIzb+1ypWd9Dr4v3k/yUHYW5DSURIm5
-         glV6SKMAc0Y6PtrOED5Y7WTt/K4BfX9BTorrti4aNM+z8ljPS9lWZw583he7aNlM4wg4
-         jYWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV+V4eNymfD0YNhkrrRvLWgIl04bdOwj6BHRJUowgJkmDY8EjHPV2FGl0WvyyZ096Naxcg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzNxM74I68bt2aszyYzZ25tNXTtixDbEPyG/pm/Bk/W6VQnpz68
-	OvqS9ba9wveXX05rphB6jQE+rTJDCM7PWOVPoARtDJVQ/QP54v08mZ/p0BEwm7WdwFhjL7juo3F
-	obZn2Msa82nZolyNm9RAOKiqhw0UnDRxa+jqMQw3uzQ==
-X-Gm-Gg: ASbGncv8fQWIaMVmggDqGyKAxd0HfgrLFSxNlQJjMuFR9TmfV0arfL+VetMELoSlv5B
-	/98BIzKkEq/Zz1isaRPnLDvju1istxnWR/2g49MFfaTm83m0MhbVJ9UdvtiWLiQyCmYdAt5Cp6T
-	xmT5OC6Bw2HE1uR8gZne7101QhApJCksfkOM+OeTznZcnJ/tFfcfXSNLl/zXBoAmyPYSqv8f3Yv
-	jeARNZc7iaFPjYFjf36lBtsDOe+WMOS2RFnTmaoJhOWFg7HEJxv0jqy
-X-Google-Smtp-Source: AGHT+IFnOK+E2wwDEH+okrY7eiLVrivQSyaHD+SCzUm8d1Qq2YLOECWCS57283aZtk4ufBlgdV0l0r1Wu3NSOoDXlfE=
-X-Received: by 2002:a17:906:4fc9:b0:b73:8669:37bd with SMTP id
- a640c23a62f3a-b7386693873mr956734166b.23.1763421836104; Mon, 17 Nov 2025
- 15:23:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z7sFALje";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R+PjHvdC"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id A0FC81D000D0;
+	Mon, 17 Nov 2025 19:13:42 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Mon, 17 Nov 2025 19:13:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1763424822; x=1763511222; bh=Z5knoMUkfe
+	tGGOJrRPbz5a1NYmdJ1F+S8ngtZaY8qLc=; b=Z7sFALjeGoyvp3la/yd2rX6ciI
+	T1Yr8C/paphVEU7FHz1yQoRtxDP8WCAPpRRR0hO/lh5/w+5LGbKPuVXQg7d9Ju81
+	zbSoAN2oR5rOMgDbkbiZMf8jclXdR1BzC311d8ehwRINui+cLwCWbiK3GORorTbV
+	Q1bimVUEK/X84LL8hhYaCi0qbqgM18s5ZyxfVglsLLBK9nUB7VfJ5WKqeengUGtd
+	hOCV8+0LMiQ0uxbvE7zGEOl83GJixLVDojluhTp6ssJ24pzexnSgTk1VM371mClK
+	1YqKYVzG7zUNIW5LUn5cagLDC7owmMRINy8sXjrdApH0olzwog5utsjGeu0A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1763424822; x=1763511222; bh=Z5knoMUkfetGGOJrRPbz5a1NYmdJ1F+S8ng
+	tZaY8qLc=; b=R+PjHvdCYAVJWnDWU0s7u2mX4sN287FFV8Y9LvxAecB+JI5AL6A
+	sIDlB9R3Nyc3IgtFkyMEyO1C2ok2Gil5pqzgffUm48VuziyIKRYHX3iQYk+Ip0AK
+	/0Qe04SG8BkB/nskWuAMh2WUj7K50cEcrLKItmfLCcMs/2bWWi5DE0r6Q9u3BVKe
+	Br8rrbyq99I3xPoGruaHPYW00bw/CA7nK0jLjdmCc+WQwm9czNRCrcrpZff4zY2V
+	yxWSWSO6ItUbwwpT8aDtcr/XtCUeo3hkOO2QBlRuK0CYYjBEflkPI5+/WZzWMWGo
+	1oY5mhiilmraVnGZNRhqMis+NiFxWzRgngA==
+X-ME-Sender: <xms:NrobaWfE6Au4xgJ1r9gKLFc6kjXJuCgOSPpdCNOBUFggasUFbtmdYQ>
+    <xme:NrobaXEQsa52HeT9pQTO_pmu4diWS6ZXxkd_QqCcBYI0qZuBQ5zXbrgrYPcK4KzOP
+    hIPxggmiqZo1djgiW442wuyCqo4lGGcrs-N9ea3f8KobOdrJPnluA>
+X-ME-Received: <xmr:Nrobaf0YaD9JNkuiHFoCMxzpP75pCzPZBbVYAS_GwoxV7jV6S0DhS8Ld91_a70LUmDokFcCCu_25_oY3WK6IdKMFuzN_Ul3ICV2i>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvudelkeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrg
+    hnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Nrobafkbo3oK8aej4sgu_xtEEWSLPGv9ncFBUVY4P3nwkD9-ZrwMag>
+    <xmx:Nrobaf9bNq_Z6ktXpV94xXIzdqXtVFxZwF5KGfTLDAhWRAm6gWKyNA>
+    <xmx:NrobaUqf3GVf4z2qiYwhvbU5n0ZtzwgURnKuPJdL88dLYs9oYr5JLw>
+    <xmx:NrobaYmWffBEdE6LMZ-bsE9P-6kr2hHoG0IhSWA_-MqI_unEyjfC0w>
+    <xmx:NrobaQUTqW52dvbR3njHNQFbLtDovGRrVx1dfSLNjzTWx_m90vBUdr-r>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 17 Nov 2025 19:13:41 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Ezekiel Newren
+ <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 00/14] SHA-1/SHA-256 interoperability, part 2
+In-Reply-To: <aRudLpkRdRtCAoi3@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Mon, 17 Nov 2025 22:09:50 +0000")
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+	<xmqq7bvsjzlx.fsf@gitster.g> <xmqqpl9h9mgo.fsf@gitster.g>
+	<aRudLpkRdRtCAoi3@fruit.crustytoothpaste.net>
+Date: Mon, 17 Nov 2025 16:13:40 -0800
+Message-ID: <xmqq4iqsgpu3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2000.git.1763201865025.gitgitgadget@gmail.com>
- <773d3233-c890-4df9-8f7e-32ff8a48651e@kdbg.org> <xmqqbjl2ee8t.fsf@gitster.g>
-In-Reply-To: <xmqqbjl2ee8t.fsf@gitster.g>
-From: "Scott L. Burson" <Scott@sympoiesis.com>
-Date: Mon, 17 Nov 2025 15:23:19 -0800
-X-Gm-Features: AWmQ_bnPphVWyqBMKpCweWjkbhPAhu6r34X9XIDs3kXPBkvnIece97p4PLQu-_E
-Message-ID: <CAF5LJ4CMtEaJgDYRHXvCTUm9Pjpv2GAsMQN9D-DL-Ric3ADMXQ@mail.gmail.com>
-Subject: Re: [PATCH] diff: "lisp" userdiff_driver
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Sixt <j6t@kdbg.org>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Jaydeep P Das <jaydeepjd.8914@gmail.com>, Atharva Raykar <raykar.ath@gmail.com>, git@vger.kernel.org, 
-	"Scott L. Burson via GitGitGadget" <gitgitgadget@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sat, Nov 15, 2025 at 9:30=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+> On 2025-11-17 at 06:56:07, Junio C Hamano wrote:
+>> In addition to "cargo clippy" I reported earlier (and attempted to
+>> fix) in a separate message, we have been seeing constant failure of
+>> "win+Meson build" job at GitHub Actions CI.
+>> 
+>>   https://github.com/git/git/actions/runs/19414557042/job/55540901761#step:6:848
+>> 
+>> I attempted to build tonight's 'seen' without this topic and it
+>> seemed to stop.
+>> 
+>>   https://github.com/git/git/actions/runs/19418361570/job/55551045554
+>> 
+>> This topic may need a bit of help from those who are clueful with
+>> Rust and Windows.
 >
-> Johannes Sixt <j6t@kdbg.org> writes:
+> I think that has been failing with Rust since well before my code came
+> in.  It has failed for me for a long time (well over a month), so I have
+> just ignored it.
 >
-> >> +     /* Either an unindented left paren, or a slightly indented line
-> >> +      * starting with "(def" */
-> >> +     "^((\\(|:space:{1,2}\\(def).*)$",
-> >
-> > Compared to the Scheme driver, this regular expression is
-> >
-> > - more restrictive because it does not permit arbitrary indentation;
-> >
-> > - less restrictive because it permits everything that begins with "(def=
-".
-> >
-> > What would happen if this regular expression were added to the Scheme
-> > driver? Would it pick up additional and unwanted hunk headers is typica=
-l
-> > Scheme code?
+> I'm going to send v2 shortly, but we can squash in changes and do a v3
+> if there is something actually broken in this series.
 
-Hmm, we haven't heard from Atharva.  I'll try asking around in the
-Scheme community.
+Thanks.
 
-The regex I proposed has a bug.  The use of the Posix character class
-is incorrect, because that class includes tabs.  I will replace it
-with a literal space.  Also, many Lisps, including Common Lisp in its
-default configuration, are case-insensitive, and at least in the
-1970s, it wasn't completely unheard-of to write Lisp code in
-uppercase; I'll change the entry to use 'IPATTERN'.
+    $ git log --oneline --first-parent -4 seen
+    3f252ac9fe Merge branch 'ar/run-command-hook' into seen
+    672cb7c62e ### CI
+    3af201233b Merge branch 'bc/sha1-256-interop-02' into seen
+    950efaac03 Merge branch 'cc/fast-import-strip-if-invalid' into seen
 
-> As we generally assume that the file being edited is syntactically
-> sound, even if one lisp variant understands "(deffoo" and others do
-> not, it should be generally fine for the pattern to say something
-> like "at the beginning of the line, optionally following a few
-> spaces, four-letter sequence '(def' is likely to be the beginning of
-> a function definition", as long as there is some convention that
-> user defined functions and macros, unless they are to behave
-> similarly to "(defun", would not be named so confusingly to start
-> with d-e-f.
+It seems that 672cb7c62e (which is an empty commit on top of the
+merge of v2 of this series) fails win+Meson
 
-Agreed, but this is not the most important point.  The greater
-potential for false positives comes from the rule (in my proposal)
-that a left parenthesis in column 0 is taken as indicating a top-level
-definition, without even looking at the following characters.
-Although Lisp dialects certainly vary, I have not seen one in which
-standard indentation practice does not indent internal expressions;
-certainly, Lisp mode in Emacs indents them.  And, I think the rule
-really does need to be that broad, because top-level forms don't
-always begin with "def"; indeed, one can put any executable expression
-at top level in a source file to perform load-time initializations.
+  https://github.com/git/git/actions/runs/19447841443/job/55646336507#step:6:689
 
-It's only when there is some indentation that I think the regex needs
-to require a word beginning with "def".
+but 950efaac03 (which is the merge before v2 of this series is
+merged to 'seen') is happy with it.
 
-> It would be nice if a single set of rules can cover what existing
-> scheme patterns cover, Emacs lisp, and Common lisp.
+  https://github.com/git/git/actions/runs/19448271167/job/55647611566
 
-Agreed.  I do think it would be a little better for non-Scheme users
-if the single driver were named "lisp" instead of "scheme".  Renaming
-the driver out from under the Scheme community, though, seems like it
-would be unfriendly, even after a deprecation period.
-
-One solution would be to add an aliasing mechanism to the
-driver table.  Perhaps there would be other use cases for it.  If you
-would consider a patch along these lines, I can code it up.
+These two runs roughly corresponds to the with=bad/without=good pair
+in the message you are reponding to, but with the v1 of this series.
