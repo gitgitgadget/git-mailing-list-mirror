@@ -1,118 +1,137 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11B2267B92
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 18:17:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D502DCC17
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 18:30:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763489852; cv=none; b=CBWxbJDn+jmccH+BOdd/7p65W6NFkhstaR1um9YQ06ltjezPTuibNlBwtiZ6xOR80E8YMa0wd9w6eNpnYzdrHDE7RxvFCL6cMfi6CZeFC8cz9yt9QTEZ2IB/q6Saulm/NRYGllTciTEWH2wksHYU/aHM1E5q1m7DdUDwwnNoC6U=
+	t=1763490609; cv=none; b=SkB4xjkXYHghGRM5llXZciCSxNdDZZRqFt1KMpt/QZW0cF5Y3UzmEymNfiYcPgCB5FDwPlUoLEz21U8fF5qFZgy1iODiAkeitTs5upZ2jck1kO+6dhdT/JqWprP7yxucejpY5NGpQRcttTISmAO/cCJru4CMcO0DD/+prptmvcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763489852; c=relaxed/simple;
-	bh=4d75l8kNE1JPU4p8cLh4n3iURtKags/JRAF1EasVoNk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mldhLTFMqKAmh7kk9fMbYxmHJuDWCGCtwDuiBhtfEUGV1ko3Zq4ge1qyc1o84tLj9zD7Mezcn2FhYtQJ3SFGoeIArskLCb1fU1/I8Wmdjy2PsnMzmDpLo/J2oiXeVRyTde1BdthxJJy1ev9VbPRAgRB6+uXbYya+UY9vKtS3yO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AmQ1VV/1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QmGmJ4Q2; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763490609; c=relaxed/simple;
+	bh=43DULxbwwYAKGwqk73tCt7PiX5pYIxNtY6X5hpttt6w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Is3yfeGjV+yhT4KYx44ixN2WWRzfrZRDWy0VWSq0AnzQubc7XSce/EEoRv1KZ66V4uAv5B3A2kNVuyEnGRbvc0tP1E/ydN0JEMpOU5AzLjk4E/MJuOTIUDiSLZtrY6x4C0abuTFg/wyCH0CqI3Mgc7d+FzewIBox9slkZ+EF0NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ftCUf5x6; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AmQ1VV/1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QmGmJ4Q2"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id B9F0FEC04E8;
-	Tue, 18 Nov 2025 13:17:29 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 18 Nov 2025 13:17:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763489849; x=1763576249; bh=KKDEw9r1hP
-	DnnMf3g5lZrcbyypUqMMoXR+KUp5hdTX8=; b=AmQ1VV/1mq0vVpxwPhAuQpodUw
-	5Dj6bAJYBPoybsdJ6PJyemf4sbJlmE2EVuvT+0OMmEWzQMQ/aGENbwqzhD15eJks
-	lf0ZahB72zzTWl1AOlxFBU5XL/3m9w5Nvm6juUorLNXRwie3ctMcCWOzUWRQkkie
-	WcUvHd5TfiJcp6IxA9Jc578wR1/pXF6TQgSTfz1H3+4imgU5hnd0Y1Fw0nBYhHBV
-	uCd9QzliysSxbVFqhhUh/CGbx2pikkIsLiMZ9O4AoPg1KftO3mfw9GqRdM5rlbNG
-	EC5NjnoZ3KWo+pKxwvtquXbCWsKaJfSfAswLe5emn5Ww5KqRe37PEWoIS2zQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763489849; x=1763576249; bh=KKDEw9r1hPDnnMf3g5lZrcbyypUqMMoXR+K
-	Up5hdTX8=; b=QmGmJ4Q2mI08ck6QqntCPTIHART9Ri9POZiMPt8BRhY+3roW44K
-	6Y0DYGGv2YVKj5ebMU4PcQRgT9jfjgayS5aJcLbMftChBy9WG7hHVg6Gn7qW/dAL
-	h6FAXOQvSpBovk4kjAVOvtPyeP/TX6eu3G0fFK+CrwzrGXm+DoVS6V8FcALYZQSO
-	9Fc/ZLgnCmv9F5GNjGOV9eD16cRL/IsCzQxT7WCtO6BEgmNLpEJCfQdQq9EKT4e7
-	An2i/sca7EwkwpvXnwICgeMgIZjeWe38N58T3d8xYqZfZYr7CLM62M8UcEwyGCfx
-	gtCAEZBeT4UYFW/joJ8Ov2eVN1gqE56IOnQ==
-X-ME-Sender: <xms:ObgcaSniHwLnTA0UjqMBg2Obkp-0R-2278nhZN2nydohfpTXmn6UMQ>
-    <xme:ObgcaQ3ivvtFP8FmA7lfIyyo1qTPzPlGuoFjJSKYkdbYvf8Fs_EC_MDoKFjk1TJk3
-    n3OyeacjHM9VE1fSnoQNTkMekvCJFWIEzeS4cc2edeiU1EzuV53>
-X-ME-Received: <xmr:ObgcaVr7Q8ecyN3ZyG1NBeWZL0NWlhYAsay9fEz7hK-Gz1OKWjOj-fUkqDXTDbB_a3fs7B0eRp06oUbjZZNT6shLCgLnd_dxqI3i>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvddvtddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehgfhhunhhnihdvfeegsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:ObgcaVfv3IcJiXIuTgxvDcydneiVweZmh9DygU6W2Yxi5F_lhKJYSA>
-    <xmx:ObgcacpHjxvp5LmTNL2cvBvdjsvURbAUG7LTRE8dP3MzuWesXzx4iA>
-    <xmx:ObgcaeFaTx-KE_Zio0Of58LS2MHkACrZoYb0zu9NjynyWOLrltBPnA>
-    <xmx:ObgcaUvrxg18NiAQlLEGGsykXp6dEzPrpXicSDLFQ9YX1dFKoSupiQ>
-    <xmx:ObgcaRIW19gIjx_b-3kT2d5v3Eq-dl59EXA2UEgvCd6QnYzY_uig6HS1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Nov 2025 13:17:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "AZero13 via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  AZero13 <gfunni234@gmail.com>
-Subject: Re: [PATCH v2] win32: pthread_cond_wait should return a value
-In-Reply-To: <pull.2103.v2.git.git.1763480546981.gitgitgadget@gmail.com>
-	(AZero's message of "Tue, 18 Nov 2025 15:42:26 +0000")
-References: <pull.2103.git.git.1763427599300.gitgitgadget@gmail.com>
-	<pull.2103.v2.git.git.1763480546981.gitgitgadget@gmail.com>
-Date: Tue, 18 Nov 2025 10:17:27 -0800
-Message-ID: <xmqqms4jdx3c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ftCUf5x6"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b737c6c13e1so615029966b.3
+        for <git@vger.kernel.org>; Tue, 18 Nov 2025 10:30:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763490604; x=1764095404; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Z7T5v5N5NQ2Sx3O5mcT4P+cLePaUpB1NmqaoT7ZF4wU=;
+        b=ftCUf5x6IYMw+f9F/Dv4hzaZ+f8ysDZSmFMnOuFOrXwn5iIxgqqL1nzjUOK20bKtg5
+         LkoikGL3guk/N+TwLCDhCl8ojvYeav57RzIZPApeZWgwggT+p3rS8JV8iS8NdShIfZj9
+         J5gYcpQsAlTqhmqU86lO+lxVzDPE3gcfv3RZqeYrenZ4SW7ipyvBSmBSvH6qADNkaDKI
+         Gx660O5OxxEEocScYLTIUZbGiIUUHtO6U1gTFs1CfnzhM69CxJ3hZXQj+Qlo+j3NXsYa
+         MUII+JRt6Hk1o6hdCfic99TQ3/O9rE8UU6su2C4OEDhFO8BwsJCUACnkE8RoYExmyFbD
+         jnHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763490604; x=1764095404;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Z7T5v5N5NQ2Sx3O5mcT4P+cLePaUpB1NmqaoT7ZF4wU=;
+        b=DYYSsarS2aXcjiDNMyNN42zt5Umh8z/PW5h04btqf6bd6ab6mnPqkrRcuLWUqMhuYU
+         itXZ3jtE74kMPFdXRvjTtuAoSipRN3O9U83yKRMKIKsXzBKLPFjoxbzwq8yxGq8yEgCU
+         0RiPH2ArKozmBSSZITy7tikbwjDsLRczdCJQhFEScPHp5KfQgWVgJpL8KJcL40yIR+dg
+         0/kFzcrUP2WCQ71+y1nYOeLpaklCei3cp/DD86risxi/FNbROxd0esvSurZ9HRZJM9+E
+         5milxT10rhpC26G2ME52jxy2W3u6zGuyYjZVLHH+0hJLaDp40kToSUfdDrF5cCgCOLGm
+         lIfw==
+X-Gm-Message-State: AOJu0YyVE8Vvxt1qWsKEGyelchX1F9/42/fP7sZiLkITbBaZ4pAXZMSY
+	d3d8Idthfa9o+HDW2MVP4sphZ+jR/RY9ARWclGmwzm4UC89upd2A3vuNcYxDa4ctO0/j7hnlW23
+	A+fUXSbuGpsVgk405zyxReZnI4hwSX6s=
+X-Gm-Gg: ASbGncusQ4UYahmELmOw8CKlHyZKktiw9mMIA+wbfWaoyZ8wRliru0LNOdF7mMRIZmf
+	jl1J7tKnJ0l7+jTvYAZ6JExAXnpkyXkym5f0i89eEBKN7Byf7ROZnxRJAFgNmSQeIkMf67iTRMA
+	VbBUN0Bb25YxtNTcYur3GKHXPPbUZ5c1yQFCr0FEJ0sPB6EXTHBNXkw1jOQaFtMdkf0dHxaI3mQ
+	CRkbl/PdxnM2a03vLiakA4CE4RspOuey1Xfh/MQQBQ9KZ+MVVLHXwre46i/RMWDsIil24qAO1zx
+	AcdOMA==
+X-Google-Smtp-Source: AGHT+IGlJmN5anGzPM9/fReeEq35p8HoU/b2yBYhfcl/tMaAwD6lj0XbeU6N3XTHf59ubM1cPsK3yN8aU7EjpI60izo=
+X-Received: by 2002:a17:907:84b:b0:b6d:5a24:f124 with SMTP id
+ a640c23a62f3a-b7367870782mr2061388766b.22.1763490604209; Tue, 18 Nov 2025
+ 10:30:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20251105061918.3688870-1-christian.couder@gmail.com>
+ <20251117043450.322644-1-christian.couder@gmail.com> <CABPp-BHY4SLmWY=V5aHJ6igN0GWeg6V1MoWDwszPe2O38wqBhw@mail.gmail.com>
+In-Reply-To: <CABPp-BHY4SLmWY=V5aHJ6igN0GWeg6V1MoWDwszPe2O38wqBhw@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 18 Nov 2025 19:29:51 +0100
+X-Gm-Features: AWmQ_bkG1l86hAT6PrVzFMy9vn0tf_Oay003jeLWG0wbS3jF3Lcj7sn4CP488Xc
+Message-ID: <CAP8UFD03YK47nONVRV_wqOEanC8Oth1iRzsFv=eFhbFs6Q5mPA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] fast-import: add 'strip-if-invalid' mode to --signed-commits=<mode>
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"AZero13 via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> Subject: Re: [PATCH v2] win32: pthread_cond_wait should return a value
-
-Is this mistitled?  The patch text talks about cond_init(), not cond_wait(),
-which is the theme for the other patch around SleepConditionVariableCS().
-
-> From: Greg Funni <gfunni234@gmail.com>
+On Mon, Nov 17, 2025 at 8:52=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
+ote:
 >
-> This value is not checked, but it must return to match POSIX
+> On Sun, Nov 16, 2025 at 8:35=E2=80=AFPM Christian Couder
+> <christian.couder@gmail.com> wrote:
+> > There are no code changes in this v2, only commit message,
+> > documentation and test changes:
+> >
+> > * Rebased on current 'master'. This avoids the need to mark some
+> >   strings for translation as a recent series doing that has been
+> >   recently merged to 'master'.
+> >
+> > * In patch 3/3, improved the commit message to better justify the new
+> >   feature using some sentences from Elijah.
+> >
+> > * In patch 3/3, removed tests with dual signatures. This avoids a
+> >   conflict with a separate series from brian carlson that adds a
+> >   "RUST" prereq that is then needed to run tests with dual signatures.
 >
-> Signed-off-by: Greg Funni <gfunni234@gmail.com>
-> ---
-> ...
-> diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
-> index e2b5c4f64c..000604cdf6 100644
-> --- a/compat/win32/pthread.h
-> +++ b/compat/win32/pthread.h
-> @@ -34,7 +34,7 @@ typedef int pthread_mutexattr_t;
->  
->  #define pthread_cond_t CONDITION_VARIABLE
->  
-> -#define pthread_cond_init(a,b) InitializeConditionVariable((a))
-> +#define pthread_cond_init(a,b) return_0((InitializeConditionVariable((a)), 0))
->  #define pthread_cond_destroy(a) do {} while (0)
->  #define pthread_cond_wait(a,b) return_0(SleepConditionVariableCS((a), (b), INFINITE))
->  #define pthread_cond_signal WakeConditionVariable
+> I'm a bit surprised; from
+> https://lore.kernel.org/git/xmqqms4rry7f.fsf@gitster.g/, I thought you
+> were going to rearrange the tests to avoid the conflict, not delete
+> them.  Are no tests of this new functionality needed?
+
+There are still 5 new tests left in patch 3/3 that are testing the new
+'strip-if-invalid' functionality after I removed the 2 tests that are
+related to dual signatures.
+
+In "t/t9305-fast-import-signatures.sh", dual signatures are already
+tested to work with `git fast-import --signed-commits=3D<mode>` by the
+tests that brian's f6581e23 (repository: require Rust support for
+interoperability, 2025-10-27) modifies.
+
+f6581e23 not only adds the RUST prereq to these tests, but it also
+introduces the RUST prereq itself in "t/test-lib.sh" with:
+
++test_lazy_prereq RUST '
++       test "$(build_option rust)" =3D enabled
++'
+
+So it's much simpler to just remove the 2 new dual signature tests
+that will need the RUST prereq when f6581e23 is merged. We can still
+add back these 2 new tests after f6581e23 is merged if we think it's
+worth it.
+
+To avoid the conflict I could introduce the RUST prereq itself in
+"t/test-lib.sh" with the same code that f6581e23 uses, but then how do
+I justify it? What happens if f6581e23 is not actually merged?
+
+It seems to me that if we really want the 2 new dual signature tests
+in this series, we would have to wait until f6581e23 is merged or
+discarded.
+
+> > * In patch 3/3, improved documentation of the new option to say that
+> >   validation behaves as the validation performed by `git
+> >   verify-commit`.
 >
-> base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
+> Looking over the range diff, the other changes look good.
+
+Thanks for your review.
