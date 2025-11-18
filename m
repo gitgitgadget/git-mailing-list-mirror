@@ -1,37 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E098E3081D0
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 09:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F87D281358
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 09:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763457141; cv=none; b=dLg2mFBTYXAZRbAieXOzM5P7p+K9XPmYPMoT/au/uuytOj8gyb347gK82nRyV0zcKUU/lej6fwXyGxn3mW8LKSbxey+LC9d7yBMQY1SXPadNQlmZxxbbZPV8e9hR56SW/CFRrYRQhPQPHnrYP/5HHeLM2BsEuDBjEQviG/mu4vE=
+	t=1763457144; cv=none; b=VvH7mnxbBJTBqOFE2Z5v3ItcFz1NvsHixEtaAtC3BSnsZA+CIM1xCagnliFIVmqpzXc0pwZnhX4rRLX5II7YnG9lu7BO24bnD7ayCt3V/rBUHBhONYqGeRTvEGx9+u4n0drwgGhqQ3Oqq2elYBVS4vxcTE8mAIPgnD7ZdfPKQXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763457141; c=relaxed/simple;
-	bh=LEVVfI/ekeBCsKsUB3IEkTCH6XDpfLTS7wvvHtll/R4=;
+	s=arc-20240116; t=1763457144; c=relaxed/simple;
+	bh=f2Jl1mjJSW7jvOHSoye24rJOsYGbUfOD5xIPsF+SfzM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E0/UiKTAA/wOWYQNiagdRFmj/bwZqi17bTWdW190JkZbvkreZMlBZzqZKOTpAQJfd9TUOOJXkLt4qWTeT497ctKtmg+roLJsMUBngaXVU5bFJw/9obwKrSaeE6TjrPOPU8xfnys5P777iGwOwSDyH3rc7QaI+zDkI94M6ISm4nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NuacEd1t; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZX0WZ8GKhbE1TtMrTs2XQGtVthBUJRSXLBrA6Uo9jPmRrxNUMVf73+Y72/Q3P8aHZiszD23QKpjQDNSprUdlseGtZgpC7ZE7kBFoaLJX33EmNRWuiWH8YGx49cAg/hu20pC4GY3UFfbUIapqALAhZX+sbt2WmQ+wATgFznMzcHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XIwTbnsw; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NuacEd1t"
-Received: (qmail 19778 invoked by uid 109); 18 Nov 2025 09:12:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=LEVVfI/ekeBCsKsUB3IEkTCH6XDpfLTS7wvvHtll/R4=; b=NuacEd1tuptvBCWRvPQSasL9/LAG5lc63qaCUKQiLYWMmaMKLeQEun03Z+VJx21jRcQz6Ror6Dw9PmInelTE8cyhEpDSQ0tC4aUfdKwOCh+ANyapHJCOTeDJXB1E8PbSs2rjXXQXfI9bcSYTvgUFfIVjWqMoCseoCbNqlTk3ck7rD1GRmoy38Nhnp4FBvVozXJxLgH2GPoW1x3HEzmQDlSKR2s35Yb3a1Nt0yWdvAbHzDC6ROBs1Mg2hOYX8bH2TUX+dthNHO4MoyvttOHo22oa0evwtrDBWq6wHCN5G/bEUg2RAQUj7jxQ2REmJHr58u6AuMWT5iwf88QMpJrkZFg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XIwTbnsw"
+Received: (qmail 19792 invoked by uid 109); 18 Nov 2025 09:12:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=f2Jl1mjJSW7jvOHSoye24rJOsYGbUfOD5xIPsF+SfzM=; b=XIwTbnswMitjERCGiSBn7uRM6dmM7RS5s7SxsfAYSRjawZf3zyPpNavpXoeDJrKx4QsVhFmRe8vWnxXqQa75W2W1XXAX2pjJEw5rjOVuSkdOnjepvci+kRtk2LaZ+bzGRauH20QVpnBEoBADxmL7nCm8yXaEX0kVLL7x5AdebAyzyZhR8f1NUyGhs88Ib0Vu0i1bWieMoeOuQd1XYej4C8KL8thvTopn+BJ4KHQVQTtcUxtucEaIAV3blTyMtemBWjamb9sQ5kS4Di1AONY+A2mnjEgnlt69iKFoPwsh99GBcvJIcfhK8sivFJ9/hUBJBLRBHg3hN86+3mmuuRai8w==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Nov 2025 09:12:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Nov 2025 09:12:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27397 invoked by uid 111); 18 Nov 2025 09:12:23 -0000
+Received: (qmail 27403 invoked by uid 111); 18 Nov 2025 09:12:25 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Nov 2025 04:12:23 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Nov 2025 04:12:25 -0500
 Authentication-Results: peff.net; auth=none
-Date: Tue, 18 Nov 2025 04:12:18 -0500
+Date: Tue, 18 Nov 2025 04:12:20 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, correctmost <cmlists@sent.com>,
 	Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v2 4/9] cache-tree: avoid strtol() on non-string buffer
-Message-ID: <20251118091218.GD529192@coredump.intra.peff.net>
+Subject: [PATCH v2 5/9] fsck: assert newline presence in fsck_ident()
+Message-ID: <20251118091220.GE529192@coredump.intra.peff.net>
 References: <20251118091127.GA4175601@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -43,168 +43,89 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20251118091127.GA4175601@coredump.intra.peff.net>
 
-A cache-tree extension entry in the index looks like this:
+The fsck code purports to handle buffers that are not NUL-terminated,
+but fsck_ident() uses some string functions. This works OK in practice,
+as explained in 8e4309038f (fsck: do not assume NUL-termination of
+buffers, 2023-01-19). Before calling fsck_ident() we'll have called
+verify_headers(), which makes sure we have at least a trailing newline.
+And none of our string-like functions will walk past that newline.
 
-  <name> NUL <entry_nr> SPACE <subtree_nr> NEWLINE <binary_oid>
+However, that makes this code at the top of fsck_ident() very confusing:
 
-where the "_nr" items are human-readable base-10 ASCII. We parse them
-with strtol(), even though we do not have a NUL-terminated string (we'd
-generally have an mmap() of the on-disk index file). For a well-formed
-entry, this is not a problem; strtol() will stop when it sees the
-newline. But there are two problems:
+    *ident = strchrnul(*ident, '\n');
+    if (**ident == '\n')
+            (*ident)++;
 
-  1. A corrupted entry could omit the newline, causing us to read
-     further. You'd mostly get stopped by seeing non-digits in the oid
-     field (and if it is likewise truncated, there will still be 20 or
-     more bytes of the index checksum). So it's possible, though
-     unlikely, to read off the end of the mmap'd buffer. Of course a
-     malicious index file can fake the oid and the index checksum to all
-     (ASCII) 0's.
+We should always see that newline, or our memory safety assumptions have
+been violated! Further, using strchrnul() is weird, since the whole
+point is that if the newline is not there, we don't necessarily have a
+NUL at all, and might read off the end of the buffer.
 
-     This is further complicated by the fact that mmap'd buffers tend to
-     be zero-padded up to the page boundary. So to run off the end, the
-     index size also has to be a multiple of the page size. This is also
-     unlikely, though you can construct a malicious index file that
-     matches this.
+So let's have callers pass in the boundary of our buffer, which lets us
+safely find the newline with memchr(). And if it is not there, this is a
+BUG(), because it means our caller did not validate the input with
+verify_headers() as it was supposed to (and we are better off bailing
+rather than having memory-safety problems).
 
-     The security implications aren't too interesting. The index file is
-     a local file anyway (so you can't attack somebody by cloning, but
-     only if you convince them to operate in a .git directory you made,
-     at which point attacking .git/config is much easier). And it's just
-     a read overflow via strtol(), which is unlikely to buy you much
-     beyond a crash.
-
-  2. ASan has a strict_string_checks option, which tells it to make sure
-     that options to string functions (like strtol) have some eventual
-     NUL, without regard to what the function would actually do (like
-     stopping at a newline here). This option sometimes has false
-     positives, but it can point to sketchy areas (like this one) where
-     the input we use doesn't exhibit a problem, but different input
-     _could_ cause us to misbehave.
-
-Let's fix it by just parsing the values ourselves with a helper function
-that is careful not to go past the end of the buffer. There are a few
-behavior changes here that should not matter:
-
-  - We do not consider overflow, as strtol() would. But nor did the
-    original code. However, we don't trust the value we get from the
-    on-disk file, and if it says to read 2^30 entries, we would notice
-    that we do not have that many and bail before reading off the end of
-    the buffer.
-
-  - Our helper does not skip past extra leading whitespace as strtol()
-    would, but according to gitformat-index(5) there should not be any.
-
-  - The original quit parsing at a newline or a NUL byte, but now we
-    insist on a newline (which is what the documentation says, and what
-    Git has always produced).
-
-Since we are providing our own helper function, we can tweak the
-interface a bit to make our lives easier. The original code does not use
-strtol's "end" pointer to find the end of the parsed data, but rather
-uses a separate loop to advance our "buf" pointer to the trailing
-newline. We can instead provide a helper that advances "buf" as it
-parses, letting us read strictly left-to-right through the buffer.
-
-I didn't add a new test here. It's surprisingly difficult to construct
-an index of exactly the right size due to the way we pad entries. But it
-is easy to trigger the problem in existing tests when using ASan's
-strict string checking, coupled with a recent change to use NO_MMAP with
-ASan builds. So:
-
-  make SANITIZE=address
-  cd t
-  ASAN_OPTIONS=strict_string_checks=1 ./t0090-cache-tree.sh
-
-triggers it reliably. Technically it is not deterministic because there
-is ~8% chance (it's 1-(255/256)^20, or ^32 for sha256) that the trailing
-checksum hash has a NUL byte in it. But we compute enough cache-trees in
-the course of that script that we are very likely to hit the problem in
-one of them.
-
-We can look at making strict_string_checks the default for ASan builds,
-but there are some other cases we'd want to fix first.
-
-Reported-by: correctmost <cmlists@sent.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- cache-tree.c | 50 +++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 37 insertions(+), 13 deletions(-)
+ fsck.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 2aba47060e..2d8947b518 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -548,12 +548,41 @@ void cache_tree_write(struct strbuf *sb, struct cache_tree *root)
- 	trace2_region_leave("cache_tree", "write", the_repository);
+diff --git a/fsck.c b/fsck.c
+index 341e100d24..8991f04943 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -860,16 +860,18 @@ static int verify_headers(const void *data, unsigned long size,
+ 		FSCK_MSG_UNTERMINATED_HEADER, "unterminated header");
  }
  
-+static int parse_int(const char **ptr, unsigned long *len_p, int *out)
-+{
-+	const char *s = *ptr;
-+	unsigned long len = *len_p;
-+	int ret = 0;
-+	int sign = 1;
-+
-+	while (len && *s == '-') {
-+		sign *= -1;
-+		s++;
-+		len--;
-+	}
-+
-+	while (len) {
-+		if (!isdigit(*s))
-+			break;
-+		ret *= 10;
-+		ret += *s - '0';
-+		s++;
-+		len--;
-+	}
-+
-+	if (s == *ptr)
-+		return -1;
-+
-+	*ptr = s;
-+	*len_p = len;
-+	*out = sign * ret;
-+	return 0;
-+}
-+
- static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+-static int fsck_ident(const char **ident,
++static int fsck_ident(const char **ident, const char *ident_end,
+ 		      const struct object_id *oid, enum object_type type,
+ 		      struct fsck_options *options)
  {
- 	const char *buf = *buffer;
- 	unsigned long size = *size_p;
--	const char *cp;
--	char *ep;
- 	struct cache_tree *it;
- 	int i, subtree_nr;
- 	const unsigned rawsz = the_hash_algo->rawsz;
-@@ -569,19 +598,14 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
- 	buf++; size--;
- 	it = cache_tree();
+ 	const char *p = *ident;
++	const char *nl;
+ 	char *end;
  
--	cp = buf;
--	it->entry_count = strtol(cp, &ep, 10);
--	if (cp == ep)
-+	if (parse_int(&buf, &size, &it->entry_count) < 0)
- 		goto free_return;
--	cp = ep;
--	subtree_nr = strtol(cp, &ep, 10);
--	if (cp == ep)
-+	if (!size || *buf != ' ')
- 		goto free_return;
--	while (size && *buf && *buf != '\n') {
--		size--;
--		buf++;
--	}
--	if (!size)
-+	buf++; size--;
-+	if (parse_int(&buf, &size, &subtree_nr) < 0)
-+		goto free_return;
-+	if (!size || *buf != '\n')
- 		goto free_return;
- 	buf++; size--;
- 	if (0 <= it->entry_count) {
+-	*ident = strchrnul(*ident, '\n');
+-	if (**ident == '\n')
+-		(*ident)++;
++	nl = memchr(p, '\n', ident_end - p);
++	if (!nl)
++		BUG("verify_headers() should have made sure we have a newline");
++	*ident = nl + 1;
+ 
+ 	if (*p == '<')
+ 		return report(options, oid, type, FSCK_MSG_MISSING_NAME_BEFORE_EMAIL, "invalid author/committer line - missing space before email");
+@@ -958,7 +960,7 @@ static int fsck_commit(const struct object_id *oid,
+ 	author_count = 0;
+ 	while (buffer < buffer_end && skip_prefix(buffer, "author ", &buffer)) {
+ 		author_count++;
+-		err = fsck_ident(&buffer, oid, OBJ_COMMIT, options);
++		err = fsck_ident(&buffer, buffer_end, oid, OBJ_COMMIT, options);
+ 		if (err)
+ 			return err;
+ 	}
+@@ -970,7 +972,7 @@ static int fsck_commit(const struct object_id *oid,
+ 		return err;
+ 	if (buffer >= buffer_end || !skip_prefix(buffer, "committer ", &buffer))
+ 		return report(options, oid, OBJ_COMMIT, FSCK_MSG_MISSING_COMMITTER, "invalid format - expected 'committer' line");
+-	err = fsck_ident(&buffer, oid, OBJ_COMMIT, options);
++	err = fsck_ident(&buffer, buffer_end, oid, OBJ_COMMIT, options);
+ 	if (err)
+ 		return err;
+ 	if (memchr(buffer_begin, '\0', size)) {
+@@ -1065,7 +1067,7 @@ int fsck_tag_standalone(const struct object_id *oid, const char *buffer,
+ 			goto done;
+ 	}
+ 	else
+-		ret = fsck_ident(&buffer, oid, OBJ_TAG, options);
++		ret = fsck_ident(&buffer, buffer_end, oid, OBJ_TAG, options);
+ 
+ 	if (buffer < buffer_end && (skip_prefix(buffer, "gpgsig ", &buffer) || skip_prefix(buffer, "gpgsig-sha256 ", &buffer))) {
+ 		eol = memchr(buffer, '\n', buffer_end - buffer);
 -- 
 2.52.0.278.gadc6434dc3
 
