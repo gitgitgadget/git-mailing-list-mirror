@@ -1,149 +1,98 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B1D36655B
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 15:47:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6126284665
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 16:07:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763480859; cv=none; b=iJFFYXFNe/L5D+FIBphut7rI9xSssxJKOwNZ6LiqrQf+irnMmwuYox90dPxKMWLMvNsdywE5pB4npdwNzNf5kkg1Or54IwxcLhUN8PYvX2lqjDv+z+DbuUCiJ+Fu39aF0Mz4VpR3hLVE03vg7PizXtu0h9p8awXP7AU0gTnXy6k=
+	t=1763482073; cv=none; b=H6RKi/O4iy9QhIY8YPzu5XMhHAPS5aPOFzqtgYy9WdDiDzra4qnRqrxlC4ydXYNCGm+YPwM2JOuHb3JM8JSgM9ueelg3zELrGqaIehsXdny0ei3sJuPhIQV2XVTWgeo+EH0nMwKGmr8HcL5ArUPdn19ghlgNS8QZIIu1ZNwBqs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763480859; c=relaxed/simple;
-	bh=sAwoUYKuN9oOYKkwQhlEXiYbtfhVwhAWUmIVqojB+EI=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=nnRscWcqw9DuwZ28WcJWKaRgfABn1NYL1OEZMi6jmdxcXQdXfTAd9iW/xlPBIcmAKY9o11yWYaV7zV3Q53mMHF8MOzNSz/Hnk+FT7lYzVSj8UU93Lkjs4Xsu20UVy0uB/7VkFTTcDHOaj36dXn7QD03r7+U5A6Wjjkrl5TdxSPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fLfRL43X; arc=none smtp.client-ip=209.85.222.179
+	s=arc-20240116; t=1763482073; c=relaxed/simple;
+	bh=nNEU6lHkLYfBjI5XgcONh1kEgWXXgi/pqesdU5YLntw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=m+B9Cp60ctVwDNK1BmxHNDVLEmi19LMy1iHdJ/rUqpGRsD6oaZBWlwxMs/X2TJG6gsnz8BWoRFjP5wuBIJQA+dVSNooHmd2i+QYbugHJH12U+MpG//hVwDfXYhIiV1JPwpKZBPr0ZrY8oIjz4DI4dqeSLSS26j54+thPAR31Lvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RbcM08tL; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fLfRL43X"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8b2d7c38352so345423285a.0
-        for <git@vger.kernel.org>; Tue, 18 Nov 2025 07:47:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RbcM08tL"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-47790b080e4so23593075e9.3
+        for <git@vger.kernel.org>; Tue, 18 Nov 2025 08:07:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763480856; x=1764085656; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9E0MqbqV+QttaJ8XzXoFcmsbNXmIwqyi1/XUDHUkwOE=;
-        b=fLfRL43XhpZZ2fQki57W5BxHaD2DIcSWYkBoJgLtp1HMwW3NTDNI9w/6DYJsjkgHbe
-         VcNMX40nXSZOtzqbO3PkNcc/frCs8R8b/jrux62g+PUD05KXmwEvokwZhrsFD6yuEJ37
-         5ME8yY+g8FGK4Pf1sWXL/Na3Ba36jf9Y4oBBkyGhZg0/Rk+Q0MIldShPGAXgdkmTfCWs
-         YDHa1RkHGQWwM1KUi29iInV/oC+Ovblx4ewtNrDBZmgUmVG03GHkePMhpX9aam7noHz7
-         s2k+rVDqmhTLitH3klsFfrSo/bbZVzgcffuSPYy9dp435XV0VerkIj0CA3Vo6bVHuRWA
-         zr3A==
+        d=gmail.com; s=20230601; t=1763482070; x=1764086870; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EgCjbdjCFz57ijjOQhrOQp3hvwKFjGZEHXicSG9FyMY=;
+        b=RbcM08tLZlOe/kF9UOrGzrMauMml4OcVaSdQdFMeyYfCxbV6Q12XAvOGsGYsDg5kRo
+         NLKPOp8mVuGf7NtbK/AVk7PWQYtufwb68XyvdyBngXDhuYyiT3MmQQ2/BVPoIs1BQ4+g
+         vJZyGSHo7iCcO/GibQxIRU+sDxjdFRPSMdpOIWkJ9roacsgx14YkFiDCgqYxYTbdK6su
+         RV2Zx099dFm07JcsJWGDZZOY+8li0q3ZEdNlnJTqKenke//lPgD/bdSn0oR9mhAfe6lL
+         4QJLFI7rFtbUWh1uEEcmJObwt8FNRkw3qCy0r5PqCCgdt6ojwGtPuWuST/H8kKZLVHSV
+         bPSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763480856; x=1764085656;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=9E0MqbqV+QttaJ8XzXoFcmsbNXmIwqyi1/XUDHUkwOE=;
-        b=Vs6NLDsa+PuT2mpfPesluvgbJrnnrRCkjl1CN6k1qBLmDvmVymSFEyhbeFLPkooS7o
-         sLHymdy9BI8hO9n/Wyi9KBjsJgjHyS62Ytc87IOFZxkNE46U2bC/ndEznhmdgXW5cFV5
-         0qzZsGVuvSaRcxVr/YtmAyO/xZnnY1fi9QFYO4TLPDbiS3JUYjncEsfKKWg2QPaM3v6N
-         xnzfMhbfyu8nHoVBdTCYJerE31Thbzu0Q8D9yAv7nlP0IrfesTsLCflVd7aNHDyvTQqn
-         0T6QP6DsvlEHv7BJs0gqOqPdXl1mTf3U4qqUBG8sQ/IhfDtN4cOWbdOrNwdkZEaugR1m
-         iI/Q==
-X-Gm-Message-State: AOJu0YxTw4smXBYG1Ygh82D1VhONKmEZP7JLG2EQvzr4twIqIRwUaO7L
-	VvmRkNGF/rs7elKPjSyrMxleh+kajvTI224mUW5Ldy3uLCy98oJOmq2CP8Y4Dw==
-X-Gm-Gg: ASbGncvV31FMoQg5fakVYyjAscMQIs/BwOZ0i6CR4op7nde0RGSUkMFwlVL+O66m7tY
-	ocYaZ/Soa96YML9shDMoTzDKxgyBi7VD6Kw4vPVBXaYjWOUWpP783COVTVCB8Vx6B4aSIuI3AM6
-	IxLb7YBQi73fnVmjpJpHbfSB6pFGonr3J8dNnH+xA+uOlQeqQ7ga889kaPKO+Srq1EoXFgBTc1W
-	TvjJeVe25n8OtmiMtjvuMzqhHuMDJaajHGGQ6SoG3fRtPs8ElgfvyyAHajrSmJxdKjuRuylBliz
-	dxEnRdHTS4Dbbp+Y/ZqHHzA0p/yGvFVetu2omDjAH5I55cWYdkrv2FwqNfvy1qJANtqd0WraAnW
-	D5T0mKdgvj6YvvyYgv1tMhHz8DaEfaMgBBTD/C3ViCPDZ+eoYLDyma2PHyVDkPuDj/zh7V6PZ0r
-	M7G+aMpyQPe9QukOI=
-X-Google-Smtp-Source: AGHT+IGkKAdLqBjAuwZrHwfMkT5XP+T0VawRu0vKzxO9KXxYtxVivQyo2VV+MJiLxaGvNTbeXcLsTg==
-X-Received: by 2002:a05:620a:2688:b0:828:804a:47f2 with SMTP id af79cd13be357-8b300ea7d3amr457584985a.9.1763480855915;
-        Tue, 18 Nov 2025 07:47:35 -0800 (PST)
-Received: from [127.0.0.1] ([145.132.101.187])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b2aeeb1487sm1219085885a.19.2025.11.18.07.47.34
+        d=1e100.net; s=20230601; t=1763482070; x=1764086870;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=EgCjbdjCFz57ijjOQhrOQp3hvwKFjGZEHXicSG9FyMY=;
+        b=Ex7FRDzyCfv8OwhBik2v0vP95LPK29fJcmwoD0Q+gxHfq/+mSB4qjVo25bx3sxwc1c
+         IFG+pQw78Z3tCo2G6Nfzcz0wOs+pAuZd2dDsAvrmOb0vX4HPff6gmw3U6iujF8cKSwaM
+         MKoevKCFcmD9SNixlt+ja7RsXT4OjsjD/jygmtjiycuk+N3FWzQj1/e4xGbUJ/4rAO+I
+         6cs8YPPAjEeVbFLWlz8MU5DyY1RsJ8PM9lSmK3llJBdVVUYUqR9K/ZoOTAu0W9QGnCQN
+         lr1V5ylK6mDKDPctzFZsbWrRvvKQktT/iYbFQoHVo7xLEE8tEtneG8fLcFHgX8/XmtZ7
+         0thQ==
+X-Gm-Message-State: AOJu0YyKC4StUbVFB7WREOOATwWFs0VAstKKCNuAANh6PEbYvBBRp1QN
+	CaKCTnvpgru5tth2lFDkWBhfFNTKVJk/dLucvQuYLYEH2v7vvJz0xOQTwRgNkA==
+X-Gm-Gg: ASbGncsQHzIwC79U5lLUZVCtPhHALV6y4OgGiFb9axr/mB03P0jbu4hwktbDttfT7R1
+	rLXbCeRRwblcBGcGbeYSVFT8eMchnvWSP+otGopxmrorzRMqJQHBs4ec8BL5IjWLBklGp58J8S8
+	RvgrchlzQm4RcNJUgtXgJrMGSdGNoPqep/vgHgqaKBHkq0RdQQ+NMAUWQynEF6KqtQXKpkNS3xe
+	H0OnqOD96Ku5JcSBI2++QcESjtX0xQ+M88o3Ge/7iY8PFGJRRvvRS+wIg3yTm7JikDtdDThG0+4
+	rC2IKMCXhZDbtGquMSe+9O5Aj30xBC7PNknaUZ0qZXenjA+JderLQ41OMi8euX2nQZMqG/B8w27
+	kAhND49tycPEQSK7iOf1ML8Hu9TZqsEXS6KTC4XnL3yujuDLJS/Bl3/zSpv1SAEPmPQWEFBUReD
+	freUbjldywuyY9/Qr8ffxqWF5N
+X-Google-Smtp-Source: AGHT+IHmvDnY7JSGeBJVPMYAkqvHGQ8m3w/2w37j++4nirFiCLdiv65R34JXWsDs9p5gQynJ0q3nTg==
+X-Received: by 2002:a05:600c:35c1:b0:477:54f9:6ac2 with SMTP id 5b1f17b1804b1-4778fe1170fmr196589265e9.0.1763482069791;
+        Tue, 18 Nov 2025 08:07:49 -0800 (PST)
+Received: from berwick ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477a97412e3sm20850665e9.5.2025.11.18.08.07.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Nov 2025 07:47:34 -0800 (PST)
-Message-Id: <pull.2102.v3.git.git.1763480854213.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2102.v2.git.git.1763480720264.gitgitgadget@gmail.com>
-References: <pull.2102.v2.git.git.1763480720264.gitgitgadget@gmail.com>
-From: "AZero13 via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 18 Nov 2025 15:47:34 +0000
-Subject: [PATCH v3] win32: remove handling for impossible cases in
- win32_pthread_join
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 18 Nov 2025 08:07:49 -0800 (PST)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 0/2] worktree list: fix column alignment
+Date: Tue, 18 Nov 2025 16:07:31 +0000
+Message-ID: <cover.1763482051.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.52.0.345.g9c3c96ee5a7
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: AZero13 <gfunni234@gmail.com>,
-    Greg Funni <gfunni234@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Greg Funni <gfunni234@gmail.com>
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-WAIT_FAILED is the only real possible error here.
+If a worktree path contains a multibyte character we end up with
+excess padding between the columns in the output of "git worktree
+list". This series fixes that and quotes the path to avoid control
+characters messing up the output as well.
 
-WAIT_TIMEOUT would not be returned as the INFINITE
-is given to the call.
-
-WAIT_ABANDONED would be returned if the handle
-pointed to a mutex object that was not released
-by the thread that owned the mutex object before
-the owning thread terminated.
-
-WAIT_IO_COMPLETION would not be returned because
-we pass FALSE so the wait is not alertable.
-
-Signed-off-by: Greg Funni <gfunni234@gmail.com>
----
-    win32: remove handling for impossible cases in win32_pthread_join
-    
-    WAIT_FAILED is the only real possible error here.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2102%2FAZero13%2Fpatch-1-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2102/AZero13/patch-1-v3
-Pull-Request: https://github.com/git/git/pull/2102
-
-Range-diff vs v2:
-
- 1:  e0d6b15093 = 1:  20f943570f win32: remove handling for impossible cases in win32_pthread_join
+Base-Commit: fd372d9b1a69a01a676398882bbe3840bf51fe72
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fworktree-list-spacing%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/fd372d9b1...b42d0f668
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/worktree-list-spacing/v1
 
 
- compat/win32/pthread.c | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+Phillip Wood (2):
+  worktree list: fix column spacing
+  worktree list: quote paths
 
-diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
-index 58980a529c..54c43b4146 100644
---- a/compat/win32/pthread.c
-+++ b/compat/win32/pthread.c
-@@ -37,20 +37,14 @@ int pthread_create(pthread_t *thread, const void *attr UNUSED,
- 
- int win32_pthread_join(pthread_t *thread, void **value_ptr)
- {
--	DWORD result = WaitForSingleObject(thread->handle, INFINITE);
--	switch (result) {
--	case WAIT_OBJECT_0:
--		if (value_ptr)
--			*value_ptr = thread->arg;
--		CloseHandle(thread->handle);
--		return 0;
--	case WAIT_ABANDONED:
--		CloseHandle(thread->handle);
--		return EINVAL;
--	default:
--		/* the wait failed, so do not detach */
-+	if (WaitForSingleObjectEx(thread->handle, INFINITE, FALSE) == WAIT_FAILED)
- 		return err_win_to_posix(GetLastError());
--	}
-+
-+	if (value_ptr)
-+		*value_ptr = thread->arg;
-+
-+	CloseHandle(thread->handle);
-+	return 0;
- }
- 
- pthread_t pthread_self(void)
+ builtin/worktree.c       | 41 ++++++++++++++++++++++++++++------------
+ t/t2402-worktree-list.sh | 37 +++++++++++++++++++++++-------------
+ 2 files changed, 53 insertions(+), 25 deletions(-)
 
-base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
 -- 
-gitgitgadget
+2.52.0.345.g9c3c96ee5a7
+
