@@ -1,99 +1,166 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213E81E5714
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 12:21:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D903195EF
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 14:30:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763468487; cv=none; b=p8xsltVf4NxDBg/ZdqTzOpmvr3Cb58IKdL7BqyCuSRTB/sPZfI8UgkWpiML5l4EVdpqs8yceu3aHLPyMWlKqaUBqeivvuyFbPng9tMlu9QItWmv3U6PzL4UMaFAogZ0g0OKPOjRjCF2mFgmF38qykxyTLSocBrfgQCV5+oYEaEY=
+	t=1763476238; cv=none; b=ZOsuRCAcSzWBQW1/73BvG/wGZuFFc0EEXTaC/9OPTLvLRnoXjmf6qsaKBaWi5axncMuCYzNVkvxZwg5X4aAd7B/+oKVtsQ9rCzpIvza3yYM8sco1dL8+afGDbD/jIG17WCepLmUKWG/+PeXRVBC4eRWvkwQlvgeTgV6ChKYep8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763468487; c=relaxed/simple;
-	bh=9AYvyYsHH+lxmAIVdqn8Tb8chYQwZA27lvmobS1lrcU=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=DVsPXE7tB+Er7dXOPEMWe3uvD1du+TCB9uqEj614mvHqPcWhrOmXr/XB2uW9EESJFhJYgpeIp7BxdvKdsxLnord1hOYCEARTMgUkwnhyT6w5if6Wpudg3HdAYqE0BjMWpu3RoWt27Cdu+k/JrhYeVspPJxXpzvBoakLipvTulzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=cXYSeMF0; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1763476238; c=relaxed/simple;
+	bh=6VjGobYGF9Y3JfHuSY7cqyoBSbbjvj1YuIkTzYHRZ2Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TicUxZsoKCt5f3AULEWTH96Y5joxGPw+3ASPx4A0MpHfgBXFXgJj0HQthwXhLkd49zwKBktvCRIedWIyidcV1jpV9xgubeff+ttNQytAgzpV01ERpGHU8bpMQbi0rS41arvBUdmgZWO6fC/ly6u1BByeR6ZNKdLTnle7dAGQr2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j50XEeNL; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="cXYSeMF0"
-Received: (qmail 21501 invoked by uid 109); 18 Nov 2025 12:21:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:subject:message-id:mime-version:content-type; s=20240930; bh=9AYvyYsHH+lxmAIVdqn8Tb8chYQwZA27lvmobS1lrcU=; b=cXYSeMF05KbT23zou8JcAxsA2m3VFK4xOMI3BJBguWcxJYpqD4amtZryageVzG2SdM7Z1aGFdb8nzL7gEfvEPfDiwls8MBzVHcyohL+x2o1s4yadFnnBKKmhE4aD91rk98GIfjjyfWqOGFx2gNF0ucEMQ/sjSesMQNMzI1kX8HO5+FtTUB3Z5cnwD/ZW+d50qhQqdyY6Ir0AH5YqJroqdt5Tiulwlz4udjr0ImwuO3XMT2/561Howuw7JQtnI7UMD8DXNM+O5ENgeAB7g4qM7pElsSTuMu1Z0j4MHHtOIZj/j2iYMyVeDdoWaxH5WImADrtrNMmtyLc6OjCmRTmVDw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Nov 2025 12:21:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29720 invoked by uid 111); 18 Nov 2025 12:21:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Nov 2025 07:21:24 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 18 Nov 2025 07:21:24 -0500
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Subject: [PATCH] test-mktemp: plug memory and descriptor leaks
-Message-ID: <20251118122124.GA1117960@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j50XEeNL"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-477563e28a3so38500165e9.1
+        for <git@vger.kernel.org>; Tue, 18 Nov 2025 06:30:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763476234; x=1764081034; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=WZve/GmOLokaL2Hk6XyegsySTX4Z7MNzOz6Fx0Y9ub8=;
+        b=j50XEeNLm1vwxcc7i1r8cNO0fJAvI8CJn7ETCnwkeFdLwwcsgYRAKZA+YRNn6lcV6s
+         /vVOj2SDDCa47wrZ3KmNIE+OsGNTwzSBosFNFsfY4GrdrWrws2ECcxoeZ7QPlzLJXa8/
+         2FMm3DSTxV8Y2LhIY41RauRXKfrEWmuboqF7S1Ov18UqXcVZ34sZH+XczK61Y4Jc0GZT
+         IzDXuM+6uSH/ESQbwXBkXyW+XgU0kR1Wlfi1UXYWhBE8tzs/uwVPa4+eEoafHCaN+BLO
+         U4Z1bR5Wq+LH7xeUsbAegeDT7QVlxIcc/hIlSiIWAIVwv+SYyNdRJeZ8yNNhccdkmO7K
+         vKVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763476234; x=1764081034;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WZve/GmOLokaL2Hk6XyegsySTX4Z7MNzOz6Fx0Y9ub8=;
+        b=hbrr0ADNGksz0vN5r1DiUwkV2mStar6SBVPZHMXnKKzagKLJT/Dl+MOMo5LpBazLOo
+         2vAuxnXgLr/ueXxhYpHI0ptCjOaUPuhmwYRed5DaqhnXgib91AsPA04FasjslrgBoOkL
+         HjbpAnOx9/o1kWvqFBLf64ehM2DrE03sM9VyiSq3iYexkgXD1YuJyDFplPjopMOc4P0S
+         Y6h6LMlggjW4aNBWV7QU72Ad0T9jiX2lqedzWVDndf4kEouO1zIge7MUehhzj9FpdcnO
+         xbW/hHSI3O0xJtT5BJ+QI9Ont3Xjp+8sK+6dEff9Cw8vCMVd15ZNv9nOxH+TuXhrlJW6
+         gGMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUKWPcO+0hGAg2BXPqSJuuyrYFsjKe9YlCnhm+mUVc7FTEUNcBH6GCf5o8aG3QvuXYhcTQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6wByB06T+GPSpwTVj9PzBAiPfWM4Avn+ok3oRKYCtOZjIlGj0
+	SgivIKUi2U6CFFF2Xm8PFdYo4OE+y1h1BG8TqaUwCMlzJCGRhGZnk+cEMu0TPw==
+X-Gm-Gg: ASbGncu2z+D2eWqJ2bPE2PYiJPcH4jLh3uPQeesFe4M1nAazArAhpJ5+OrB+PWgCe5l
+	zwMcW2r4bdh8jtpHyPqAknNwc2xKoHF6btqQddNPPTslUgq0LQWrShFoA63oA6FzaXymvlWXqLN
+	WDVSy5SfH3X+nsyckM2dHkHzAPtpBygmcm+x28OdbMqgK/D4TIh4t065r8QI39mVQcVSCktLkZr
+	0GeAv6gH4FCh2Bn0wzsO5AN8GjCaFHdHKjYvbJa6vxTZoOTFz6RlJ2Oa0KKIpY8VMg4mwX0RJTj
+	fNH+c/86qV/WC9nYQ9jtrR+cBupsZhENnvhkf1S3hep2upnROKl+hYFC0H9DqtPzP2lPCGBL2vT
+	jx6U4FCR6CRr6kO1OLnwyjZajuPGKfuD/S61NApbk82vjeU+GEetEtehFMlDCypaMwKxAkhQCF5
+	jmKFKKesGI2Lz2TleLZo7zX/JZusuvcxohlVoJzuqRuad24Pmy3xoorYF8gb1zWLa38N/gkImI/
+	w==
+X-Google-Smtp-Source: AGHT+IGnBKst99LUpx2ufXr5Zsay77ChyUp/Ogp5VOYw5jYxIg7c/scg+LRqDs76UeZfkR5L4Qo9Ow==
+X-Received: by 2002:a05:600c:6908:b0:477:7588:c8cc with SMTP id 5b1f17b1804b1-477af01997amr8346405e9.7.1763476234277;
+        Tue, 18 Nov 2025 06:30:34 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b53f0b62dsm32560364f8f.24.2025.11.18.06.30.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Nov 2025 06:30:33 -0800 (PST)
+Message-ID: <ca6d99cc-d05c-49fb-ab3c-d7668077d32b@gmail.com>
+Date: Tue, 18 Nov 2025 14:30:32 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 4/9] cache-tree: avoid strtol() on non-string buffer
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, correctmost <cmlists@sent.com>,
+ Taylor Blau <me@ttaylorr.com>
+References: <20251118091127.GA4175601@coredump.intra.peff.net>
+ <20251118091218.GD529192@coredump.intra.peff.net>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20251118091218.GD529192@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-We test xmkstemp() in our helper by just calling:
+Hi Peff
 
-  xmkstemp(xstrdup(argv[1]));
+On 18/11/2025 09:12, Jeff King wrote:
+> Let's fix it by just parsing the values ourselves with a helper function
+> that is careful not to go past the end of the buffer. There are a few
+> behavior changes here that should not matter:
+> 
+>    - We do not consider overflow, as strtol() would. But nor did the
+>      original code. However, we don't trust the value we get from the
+>      on-disk file, and if it says to read 2^30 entries, we would notice
+>      that we do not have that many and bail before reading off the end of
+>      the buffer.
+> 
+>    - Our helper does not skip past extra leading whitespace as strtol()
+>      would, but according to gitformat-index(5) there should not be any.
+> 
+>    - The original quit parsing at a newline or a NUL byte, but now we
+>      insist on a newline (which is what the documentation says, and what
+>      Git has always produced).
 
-This leaks both the copied string as well as the descriptor returned by
-the function. In practice this isn't a big deal, since we immediately
-exit the program, but:
+I think that sounds reasonable, I've left a couple of comments below.
 
-  1. LSan will complain about the memory leak. The only reason we did
-     not notice this in our leak-checking builds is that both of the
-     callers in the test suite (both in t0070) pass a broken template
-     (and expect failure). So the function calls die() before we can
-     actually leak.
+> +static int parse_int(const char **ptr, unsigned long *len_p, int *out)
+> +{
+> +	const char *s = *ptr;
+> +	unsigned long len = *len_p;
+> +	int ret = 0;
 
-     But it's an accident waiting to happen if anybody adds a call which
-     succeeds.
+This is signed which means that any overflow is undefined. While the 
+existing code does not check for overflow I think it is well defined in 
+the presence of overflow. It also means parsing INT_MIN is undefined as 
+we parse the value as unsigned and then multiply by -1 if we saw a 
+leading '-'. We shouldn't see any negative values apart from "-1" but 
+given we're changing this code to be more robust in handling malformed 
+input it would be nice if parsing INT_MIN was well defined.
 
-  2. Coverity complains about the descriptor leak. There's a long list
-     of uninteresting or false positives in Coverity's results, but
-     since we're here we might as well fix it, too.
+> +	int sign = 1;
+> +
+> +	while (len && *s == '-') {
+> +		sign *= -1;
+> +		s++;
+> +		len--;
+> +	}
 
-I didn't bother adding a new test that triggers the leak. It's not even
-in real production code, but just in the test-helper itself.
+This accepts any number of '-' signs but I believe strtol() only accepts 
+a single sign (the standard says "optionally preceded by a plus or minus 
+sign") so this is a change in behavior from the existing code. I'm not 
+sure we really need to be that accommodating here.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I think the rewrite of xmkstemp() triggered Coverity to consider this a
-"new" problem, even though it has been there for years. So not urgent,
-but this is mostly just trying not to waste the brain cycles I spent
-analyzing. :)
+> +	while (len) {
+> +		if (!isdigit(*s))
+> +			break;
+> +		ret *= 10;
+> +		ret += *s - '0';
+> +		s++;
+> +		len--;
+> +	}
+> +
+> +	if (s == *ptr)
+> +		return -1;
 
- t/helper/test-mktemp.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+This accepts "-" as a valid input, as we're tightening up our parsing it 
+would be nice to require a digit after any '-' sign.
 
-diff --git a/t/helper/test-mktemp.c b/t/helper/test-mktemp.c
-index 2290688940..da195640a9 100644
---- a/t/helper/test-mktemp.c
-+++ b/t/helper/test-mktemp.c
-@@ -6,10 +6,16 @@
- 
- int cmd__mktemp(int argc, const char **argv)
- {
-+	char *template;
-+	int fd;
-+
- 	if (argc != 2)
- 		usage("Expected 1 parameter defining the temporary file template");
-+	template = xstrdup(argv[1]);
- 
--	xmkstemp(xstrdup(argv[1]));
-+	fd = xmkstemp(template);
- 
-+	close(fd);
-+	free(template);
- 	return 0;
- }
--- 
-2.52.0.292.gf04cec7acc
+ > [...]> +	buf++; size--;
+> +	if (parse_int(&buf, &size, &subtree_nr) < 0)
+> +		goto free_return;
+
+This isn't a new problem but if subtree_nr is negative we end up trying 
+to allocate a huge chunk of memory. If that somehow succeeds we then end 
+up calling die("cache-tree: internal error"). The existing code looks 
+safe but it would be nice to die() a bit earlier if subtree_nr is negative.
+
+Thanks
+
+Phillip
+  > +	if (!size || *buf != '\n')
+>   		goto free_return;
+>   	buf++; size--;
+>   	if (0 <= it->entry_count) {
+
