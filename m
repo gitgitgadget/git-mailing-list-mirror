@@ -1,65 +1,65 @@
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115B92FABF5
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 00:59:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66012F7445
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 01:00:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763427597; cv=none; b=om8Zw6zykkm3NnfYm2fcT7OXzDFT0jUTordqQdcCu9GYPOU2FfOx+3Dlju3PpGjKfRkOD2la/mhLt31lLThEbx4sJ0OI/8ADOUaVJ3qFwfizoPvRFsbMHVCqlMJTUfVieGKS51WFpeM2DHIRQEAr9VQQWhUu33AP0wA3xGCk2cg=
+	t=1763427604; cv=none; b=O8VH/ccFutX4e0PT+3NJMTrGxA5AqVmhTeHo0C5yJME508tv3cGZ2+NX6L0lma/2HpBEEsQe4MQfNfnuEyivOiQ4pL8EAXeGRJcdbNohCqmc7P1hCFOve2x9Oj4Xz5g8CwS3DjF84hkJ5ayzYg8cEk4O0/zYIun7uRtbPzOHbSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763427597; c=relaxed/simple;
-	bh=B/YrhnZRihyCQ9LBFtydMsCxGxTaNQG4tr/BDJ5i7sE=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Iq6ToZDtfgV/Hlz+b/Kns+zyJe0yhjKa9MXyXN0qhqJYdJGcZ0xa+STWZEngtcY4YqxF84q9W2p9QSfBBLRc9bb4YFBxcBMyc7IUpttO1nY1jFDvOIUt0ydrt5sOGq4fsWW6FYzrhKaa1ByDc1o+WBNmymPEs22wXc/9LpAnnmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cpxmk8JX; arc=none smtp.client-ip=209.85.166.177
+	s=arc-20240116; t=1763427604; c=relaxed/simple;
+	bh=ZyDcfshb6WUxjx37Xjw5NY9OAktTwefq88xWgul8/Ag=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=FagCDS4L7RHAq922hWMgoCGVlxr4cv8BQIvXSKW3GCIAFkp8ir8JqE9Y165W0PeXC8WK921YCNrHM277P+IKfR6Quljyj3LpQDWvvxUgh5tIEzTMdaS5yP7lepDhSwJ1c4fGU+/eXsePrF/lwRjbDMz0ZH4MRFIpoE6RltJdgQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QugUOu71; arc=none smtp.client-ip=209.85.160.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cpxmk8JX"
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-43379251ff9so26673635ab.1
-        for <git@vger.kernel.org>; Mon, 17 Nov 2025 16:59:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QugUOu71"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4b109c6b9fcso41434511cf.3
+        for <git@vger.kernel.org>; Mon, 17 Nov 2025 17:00:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763427594; x=1764032394; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1763427600; x=1764032400; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=cYCQej9/us+rkMYw1S3NjXzyNVXQGv7neflCeXUlKFA=;
-        b=Cpxmk8JX5mHcw6ufNIcS2LMWR2/6TeFQYEUsBIp8MSHlXS4KVR1so2SzotNKTLUeY8
-         gZMbLpHxbtESxGOfD4XUnWTRLb6Nu+S0fgoVylsW6APZMZBA/Bw1udJMZ2DQQl2DEBEt
-         WAHXhNM7XBs8dfKwIlVDvwA8kOsDsHeUMKzEUmc81sp4aM5a2qrcIKwZCJ2jNzXjkOGD
-         RtTK/c+Pji+WMhmBu2+X//osPf17zdTcmU5NwdwN3HfUnEamw9GJNAbF5r5/NNAV3WUi
-         hP1PYPs2XETFlvwNvy24nwNhOqUNkXtjrkjuCUwDasIs0fiuJ57tmlZYuiy3BhzSrlLG
-         Zwmg==
+        bh=9pnnRJW+U0qakLP4wDo5V8u7swjEdnqsJ0xP+9G1DUE=;
+        b=QugUOu71RRCFoTNvlh0IWoXE1lbttoGyCaXE8WmWJiSgGSxNHUoQSt5gW5qWZydKJ0
+         uoFVVB8s+GksjCzu8QI22vjC0UXDCh7lDUoNd11axcdLQu5O1QpLlWdb4AbyZVufhUQv
+         PHbRjfW7JIJORlkX9rbcaVR2XlVhI/4RfuxD5p7TtWz/D+EfsEJNM3OIsmMV+2Lg/chS
+         bfJ5Dt98jz5ZoJgF6NYIyURKFOVS2wFrQewXzzvszOk263EM4j3COSUrY/qWiPU9idV3
+         Q/yDx7vbAb1rmxg0V/JeIiiKYXCTducWma6xVJJjlPKDUPxmQuWVwkAg9Ce/dZdIyBEx
+         2rLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763427594; x=1764032394;
+        d=1e100.net; s=20230601; t=1763427600; x=1764032400;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cYCQej9/us+rkMYw1S3NjXzyNVXQGv7neflCeXUlKFA=;
-        b=F9g/KYfmKm46oWH19683EK2avg7aPi/RLcFzguNWzsOwKFxSEba+OnoROWmcQI3OOx
-         Y/vPZ8aOv61tIvXu50+WuvcDQ+SX1QZnObdbfejsQ+FKdFyVqaBetsVqAQZbOQUOxCAq
-         c3KuApNAaDn+XDN6uLXK3dePPYwEIVjlvUEHRfj5+csdBDTDxUvPQ68LS4EZqmCITuS9
-         jCDJ9oetIsjYqIPgXFHWTAeVj4dGrIXo9YMGEYPuegx7VnOan0gg64fJk9+BxUTU/Old
-         JZlk/JTAM6fGo8QOF3EHxvMQqgZ1koMJjQXr9SYgD6LD/MYZ97QYx6AKFDJDdrj0w4XA
-         9T3w==
-X-Gm-Message-State: AOJu0YwTPcGHR10tnDTMA6jiE62cOtxrWzYOsI8hV2jURyO6ufAGbevD
-	NpWQTpzUmX8/asEScVKLUKxRggY44UJXbxlvlmpIwsum9eMKxM/8giQWST0i4w==
-X-Gm-Gg: ASbGncuLoVOfP9nJFxR/ZxfIMTzYfhSz3DbLNCoJtitXVt2bQ+KnbiwqQWi7mWAp/qP
-	1U9w9F8m1F30AYjsmOTZ1mjxBrMOxeG7AwtmQDHa+tq5KrdldCpUKby34s4BEo+VZpaiMlN3Xob
-	ErTssaOr0HUsAgwqAmoy9985nMn3XHpfzNmkY252Mg24CyUUJw6akWSu78F3wCRdrtcr/ch1/29
-	uROkmHIzBKOhFERIQNMP1j4G8S0uBVNkLkJMOgvT4CUwzUKN2QvmXN7FWTJaXmzSiNImomiS4TQ
-	Hcj9fd/f2neGD+7dJk2OnllwoifDGkRplLQ3ZXPncZkAY/vdIpDupqt51lc9eux7EizVY3OJS76
-	ffS4ifbkuwb8TIJxpahpTSgi7dQzVEuyCR73TQyJSnCSK/E/JqXj8f++UF4omrJY/3bQX3AyCMl
-	srDTkSNQOaN69vHA==
-X-Google-Smtp-Source: AGHT+IHgxLN68aDzbEZhHqJLdv0WCdQJIoVES6crLMj5cBYZ86wjtCBMg8EuEs8gqJZbPGeeaDD2DQ==
-X-Received: by 2002:a05:6e02:1f0c:b0:433:43fb:37dd with SMTP id e9e14a558f8ab-43592dc0509mr18242735ab.5.1763427594625;
-        Mon, 17 Nov 2025 16:59:54 -0800 (PST)
-Received: from [127.0.0.1] ([135.232.200.32])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-434838c45b2sm78355035ab.16.2025.11.17.16.59.52
+        bh=9pnnRJW+U0qakLP4wDo5V8u7swjEdnqsJ0xP+9G1DUE=;
+        b=jR3XoPeyXyOKjWjNfa1be9IEatUSBkkBYcj7GtJGSK7Kh+PBLpi91avHCrtIV69Uf8
+         Jc99OR1Po5DAjYE9sOE5yoEdI/kJ9bWma4xVfCLbHyfBIc0uwyCqaQSV/zP87XN35NA4
+         oxQ+AHKR/m7OwuXNmmloYG0SlkNwr0KV6vkoPKgcQe/p0caRetJVJTSKdYqcFATYM8Hx
+         pMMPFI2Mg35mW9GhgFUnhohDSzqzXxXmOcD+kzAuiK3vVRR10x0S3VvaewD+vtUiCCB1
+         fuS8XmgeTIlozOIIo3lVN67XW3PvF5d+OM8dqv6d5GCsU0QsIv3gpgNm22ouM3td9nWx
+         BDdA==
+X-Gm-Message-State: AOJu0YyZ/qqDrVl37w7kCH9+vgVsWQYZwqX12zA28mS/788YgkQ4ST0t
+	jg671zGs3eLJtF+6AvJeRWjT9cOvzP404KA+M4bEGsDuwgo7zdKq7AvKvrWBzNlg
+X-Gm-Gg: ASbGncuh0aZUZ7M5wWHzozumBFrPQ3Kr9fCeQ/Ttgb51TpKNGpPfLppnxgvZHdLA30g
+	Xe7DfEMnxw0ct3rBZk2aeKhnytG66rQlb0SJ2RIvnS06vb5Wz6D7T32TI0TZEZQ2SbpSlCh37fh
+	ueRLx/Rmc+ZGTqobIdQXmzV/JcjfTeoviNKVp3jXLW6KvhkX7Tvlg1894pyVlSEz8yPxk4fuiDR
+	dw6j1hJTC/bfIbkdLGVeR7pfjSFpPDKJuAlop26sP9LI5w0axSHD9qQUxFANT0svG2stULkaFm4
+	uKYCU4R6fqRnOd7X1zYgw1Chd9CnFg9tBkx2q6vf7WSwQI/yquzuXDzZC05ifC52zop8HlnuuR+
+	iOGEIeKGCIJ7u1MAE8lh7b9rAqc8xKj01311VD6phLZ91ySOdl3nqtPmQjs9dZmuZyuXxUKkS4q
+	zeQq/uOZNUZg==
+X-Google-Smtp-Source: AGHT+IFan6GMdVa4ZvCkPOayl5pPTT6/K8TPy+Hi7zmm7VI1uTV3R7VS4xwxR3NubtdkHLfJWOJsCg==
+X-Received: by 2002:a05:622a:50a:b0:4ee:1b36:b5b4 with SMTP id d75a77b69052e-4ee1b36b8bamr75290151cf.15.1763427600082;
+        Mon, 17 Nov 2025 17:00:00 -0800 (PST)
+Received: from [127.0.0.1] ([4.246.135.5])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ede87e6db1sm92644611cf.20.2025.11.17.16.59.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Nov 2025 16:59:53 -0800 (PST)
-Message-Id: <pull.2104.git.git.1763427591884.gitgitgadget@gmail.com>
+        Mon, 17 Nov 2025 16:59:59 -0800 (PST)
+Message-Id: <pull.2103.git.git.1763427599300.gitgitgadget@gmail.com>
 From: "AZero13 via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 18 Nov 2025 00:59:51 +0000
-Subject: [PATCH] win32: return error if SleepConditionVariableCS fails
+Date: Tue, 18 Nov 2025 00:59:59 +0000
+Subject: [PATCH] win32: pthread_cond_wait should return a value
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,58 +75,34 @@ Cc: AZero13 <gfunni234@gmail.com>,
 
 From: AZero13 <gfunni234@gmail.com>
 
-If it fails, return an error.
+This value is not checked, but it must return to match POSIX
 
 Signed-off-by: Greg Funni <gfunni234@gmail.com>
 ---
-    win32: return error if SleepConditionVariableCS fails
+    win32: pthread_cond_wait should return a value
     
-    If it fails, return an error.
+    This value is not checked, but it must return to match POSIX
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2104%2FAZero13%2Fsleep-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2104/AZero13/sleep-v1
-Pull-Request: https://github.com/git/git/pull/2104
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2103%2FAZero13%2Fpthread-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2103/AZero13/pthread-v1
+Pull-Request: https://github.com/git/git/pull/2103
 
- compat/win32/pthread.c | 7 +++++++
- compat/win32/pthread.h | 3 ++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ compat/win32/pthread.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
-index 58980a529c..7e93146963 100644
---- a/compat/win32/pthread.c
-+++ b/compat/win32/pthread.c
-@@ -59,3 +59,10 @@ pthread_t pthread_self(void)
- 	t.tid = GetCurrentThreadId();
- 	return t;
- }
-+
-+int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex)
-+{
-+	if (SleepConditionVariableCS(cond, mutex, INFINITE) == 0)
-+		return err_win_to_posix(GetLastError());
-+	return 0;
-+}
 diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
-index e2b5c4f64c..859e1d9021 100644
+index e2b5c4f64c..000604cdf6 100644
 --- a/compat/win32/pthread.h
 +++ b/compat/win32/pthread.h
-@@ -36,7 +36,6 @@ typedef int pthread_mutexattr_t;
+@@ -34,7 +34,7 @@ typedef int pthread_mutexattr_t;
  
- #define pthread_cond_init(a,b) InitializeConditionVariable((a))
+ #define pthread_cond_t CONDITION_VARIABLE
+ 
+-#define pthread_cond_init(a,b) InitializeConditionVariable((a))
++#define pthread_cond_init(a,b) return_0((InitializeConditionVariable((a)), 0))
  #define pthread_cond_destroy(a) do {} while (0)
--#define pthread_cond_wait(a,b) return_0(SleepConditionVariableCS((a), (b), INFINITE))
+ #define pthread_cond_wait(a,b) return_0(SleepConditionVariableCS((a), (b), INFINITE))
  #define pthread_cond_signal WakeConditionVariable
- #define pthread_cond_broadcast WakeAllConditionVariable
- 
-@@ -64,6 +63,8 @@ int win32_pthread_join(pthread_t *thread, void **value_ptr);
- #define pthread_equal(t1, t2) ((t1).tid == (t2).tid)
- pthread_t pthread_self(void);
- 
-+int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex);
-+
- static inline void NORETURN pthread_exit(void *ret)
- {
- 	_endthreadex((unsigned)(uintptr_t)ret);
 
 base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
 -- 
