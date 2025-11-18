@@ -1,39 +1,88 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B88268C42
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 09:57:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA104299A94
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 09:59:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763459838; cv=none; b=YuyAKWFVrAdZVj+EYWa+2Gn1tinE/NDiFXTRLVZrxigvCkR/AAFLarfzXVAIEpXzp5GSo3uKyaonL4cyi6y+kxXOtJb8d2pBQNxr/qW+f/neQBSsSOuaSGW7qNTbW7hzRi7iRfqnDH/cozSqQTDxiQL+Y+Y0gxlc7gSJx94Ycwk=
+	t=1763459955; cv=none; b=r3SE8Dk6+Eub9jOEY6362gwHtTNBEfdreJ4N1Vl4l4JisykLnwIZkyFMBsx6JaDpYJPTYRbz/Sx1g6GhsgewXe0PiPVgxhLydYuIdjzTN6hJq4UQQZFRhGJNSlFOPevryBzwSch1mK8F037i2Akp9VcgJPJEwRcj61Io/Ulh1oE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763459838; c=relaxed/simple;
-	bh=KM6tzCwbKEctiWt9rhFcZp2XQbgR/b8uGYqkjg7QZ7A=;
+	s=arc-20240116; t=1763459955; c=relaxed/simple;
+	bh=AMjImCpgKYNRLfaXCUQTR+J6Mim7tqi7UwnU7ElaBaM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g19HdgitSgqs478aBsOPnvfGNIga4lpKLTH5v0tR1rSnmFAkKWJ3upfOI+y2TfTcsD12svJYLA3c4LB15Cre2/Q4peyihHfbOcsC1o72DitjoUyuK1WZUrA4dIu1teQyeg77VUgXfmuiDIEuQRD3OMoRnwpMDFMG5CWhoTMMgIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=byLSHNxN; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=pRhLX04TsDWlPnUAuozfMIUTKNkYVNlnWExKKxR6pj5G/Dw/irwYonE8c2X7vU/kROqBmU/SKhoSWYvKugav0gQiZa55sRzahSmqR0Y+B0/ue8YqzxhMuS+tGgick1ZBZdU8wqPEl7bM6WI4hK9B8618I62KnKIdNDjCLsV0508=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JWFHnydc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JwG3FrEI; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="byLSHNxN"
-Received: (qmail 20307 invoked by uid 109); 18 Nov 2025 09:57:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=KM6tzCwbKEctiWt9rhFcZp2XQbgR/b8uGYqkjg7QZ7A=; b=byLSHNxNoDLLoteGUtB8laci2jQimJV+OTIz3HZJSYFkkifQUpp3hKAuQDb3xqhxuPfMQErXbTs72jUa6kDJ5h+Epi2JGeRX8NTFbq4wTwtwoxAKHiani19nM+szLUiFOf6wuVUgJoFebB7mkGcqkm2zdmApOnE3RCMGH0+HMPj4MY5mUx6BWRwxuq5CCpEiRrols6PjxOGtL721AfRQgOxHGCtVNHgd5YzRpxrj4TK8eieIgLT48dX8+X1AE6F+fpEGmr0MrdCcxnhC63CjzGtVDljxRp7Jt0ro+mYnocFnPKNSPnLtOJuw7hCmRtYKTMmMpH2ga4V87ersDu4hiA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 18 Nov 2025 09:57:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27928 invoked by uid 111); 18 Nov 2025 09:57:19 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 18 Nov 2025 04:57:19 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 18 Nov 2025 04:57:14 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Koji Nakamaru <koji.nakamaru@gree.net>
-Subject: Re: [PATCH] osxkeychain: avoid incorrectly skipping store operation
-Message-ID: <20251118095714.GD530545@coredump.intra.peff.net>
-References: <pull.1999.git.1763047599254.gitgitgadget@gmail.com>
- <xmqqo6p5llsw.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JWFHnydc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JwG3FrEI"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C3F0A7A010C;
+	Tue, 18 Nov 2025 04:59:11 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Tue, 18 Nov 2025 04:59:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1763459951;
+	 x=1763546351; bh=MlSS8gYITG8hO7pwkbjqKRC2VZQZVUFYd1xmR5tXJBY=; b=
+	JWFHnydcueiQkgR1PzTrvoCk6mqutV3p8UB2LFSd50QiMF2G06Og7h0kcQygcleY
+	CQ/2OL1A97mJcHkHrpZXp7BQnR5VSXsmFPayUCfM+mVjORSscsgEsUZT535qgzE2
+	ATVXGA2js3o0KuIcWbiCryYd1pp0lq8Xr0tXlJiQ0Cy+6o2RDmAdsJN36NSEMQ5H
+	L1mpS2Wd6Wi77i/BLNMKXqA44OIYMqqxoz34dDcgDj36p4/3LVYlKEO5tIwjSo7n
+	4IlOpl4Lv6A+ZEKiaQycWj9JosYHPJKlWJfV4cSuXkeW1MeD+xQwiqJWT57snRTx
+	dDUeF3vqsGp+AHaqp4Dtwg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763459951; x=
+	1763546351; bh=MlSS8gYITG8hO7pwkbjqKRC2VZQZVUFYd1xmR5tXJBY=; b=J
+	wG3FrEIhXj7rm2D2BIYIqD7SQdtkBzmDYIjYC5PeXFRHNCSkfKElIX2DLI+SK2+n
+	VOENvZUZz7XW60AMVGJ70L/9LvYgKEk/Sf4yi17QJxr0uxpe8q40o5xbTQRlmhCp
+	UfHIJpwbi9QUjmCMZH94E8UPLKRxKXUMMvFf3cI6Gd0OHB0i4zngR6IUsBASDPYb
+	qvNDarcfSLF0QYDagyEkWpfw2XkC50MiSM/8EpiPP29LBr9xRwdGh65oqSJBW+U9
+	GCaDEa1qv+/OQOQbP3OSchBa/HSMvgWbKCIA9xnhxwCPSZJFFhaUe7vcXL94xknk
+	+4qOdChMXbarHNOiVfdvw==
+X-ME-Sender: <xms:b0McaUlsSul_UOJASk25Fk5iUYzAELHG1Bq-walZk7AqnajLWsLk2A>
+    <xme:b0McaRq_ZSzGWOimsP2uBVOZOrHT8DsjxWJXmlJgZvAYgnmV2lxVY7smmfqt6G9jt
+    dOhIHcOh4_oHDp43uTKqKM0Mmv6Ml5uLhOJn5S2MVEdGaUP-j-ir-o>
+X-ME-Received: <xmr:b0McadHvPLbKloHiFzIPNxZhrBTlZ8iR1pHwhp1L-tLhL3_Oez58Xtu6nfC3pwRBLkQCVVSzvPuD-YTmSz64xPXvtNxnBFHVvMlCS5dD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvddutdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpedvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilh
+    hlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:b0McadwvqviU_SaPmGZCHgcBVk9uWxPaBgxceOCKA9IJQ8XCglU8kg>
+    <xmx:b0McaSocMTagpZSFsGGECkTfBJlxLj4SIL87oGB2KgFAgWrf4VqLuQ>
+    <xmx:b0McaXigG7B_N1swt9jtU2MGpUlodH2LMiYrwmCVxvSyA3L6eyV06A>
+    <xmx:b0Mcafi1oW-otDbhBPRciDlonOOIh7bzkTL4iBiDHfL8tWkcG8X-nA>
+    <xmx:b0McafC_lhTGP_SN57RpYMbRGIpiPh6tHVYEhLLi9mudAbQ7H-6yb5vq>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 18 Nov 2025 04:59:10 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id cb5b7a69 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 18 Nov 2025 09:59:08 +0000 (UTC)
+Date: Tue, 18 Nov 2025 10:58:58 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: phillip.wood@dunelm.org.uk
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2025, #04; Fri, 14)
+Message-ID: <aRxDYkeAi8T-HH8M@pks.im>
+References: <xmqqcy5kgsjk.fsf@gitster.g>
+ <CALnO6CDCzNbYFC4BGmqC5bhou5rtie7K5OhR_cP1CXJfChim=A@mail.gmail.com>
+ <a407a793-9636-42ea-afe8-1283b1e220b7@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,50 +91,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqo6p5llsw.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a407a793-9636-42ea-afe8-1283b1e220b7@gmail.com>
 
-On Thu, Nov 13, 2025 at 12:28:15PM -0800, Junio C Hamano wrote:
-
-> "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Nov 17, 2025 at 04:31:00PM +0000, Phillip Wood wrote:
+> On 15/11/2025 16:51, D. Ben Knoble wrote:
+> > On Fri, Nov 14, 2025 at 5:27 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > > 
+> > > * ps/history (2025-10-27) 12 commits
+> > >   - builtin/history: implement "split" subcommand
+> > >   - cache-tree: allow writing in-memory index as tree
+> > >   - add-patch: add support for in-memory index patching
+> > >   - add-patch: remove dependency on "add-interactive" subsystem
+> > >   - add-patch: split out `struct interactive_options`
+> > >   - add-patch: split out header from "add-interactive.h"
+> > >   - builtin/history: implement "reword" subcommand
+> > >   - builtin: add new "history" command
+> > >   - replay: stop using `the_repository`
+> > >   - replay: extract logic to pick commits
+> > >   - wt-status: provide function to expose status for trees
+> > >   - Merge branch 'sa/replay-atomic-ref-updates' into ps/history
+> > >   (this branch uses sa/replay-atomic-ref-updates.)
+> > > 
+> > >   "git history" history rewriting UI.
+> > > 
+> > >   Comments?
+> > >   source: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
+> > 
+> > But otherwise I generally am in favor of the idea and find it useful.
 > 
-> > +/*
-> > + * NOTE: We could use functions in strbuf.h and/or wrapper.h, but those
-> > + * introduce significant dependencies. Therefore, we define simplified
-> > + * versions here to keep this code self-contained.
-> > + */
-> 
-> Sorry, but I do not quite understand this comment.  The program is
-> shipped as a part of Git, and using these functions and linking with
-> libgit.a may pull strbuf.o and some other *.o files out of libgit.a
-> to link with git-credential-osxkeychain.o to produce the executable,
-> but how can that be "significant dependencies"?  For anybody who is
-> building git-credential-osxkeychain, the necessary sources come for
-> free.
+> I agree with this and I'm pleased it is reusing some of the internals of
+> "git replay" now. I've just reviewed the first half, I'll try and do the
+> rest sometime this week.
 
-Back when we added the contrib/credential helpers, I tried to avoid
-linking with Git for two reasons:
+Perfect, thanks! I won't be able to address the feedback this or next
+week, but will do it once I'm back in office.
 
-  1. The idea was that these _could_ be independent projects, and we
-     would not be on the hook for writing or maintaining everyone's pet
-     platform helper. So even though they are in our tree, the hope was
-     that they'd be simple enough to be totally independent programs
-     (and would not even have to be written in C). And avoiding any
-     dependencies kept us honest there.
-
-     It may be that the cost of not being able to re-use our usual code
-     is too high for the philosophical benefit, though.
-
-  2. If stuff in contrib/ depends on code in libgit.a, then changes in
-     the latter can break them. And I don't think we have a great flow
-     for detecting such breakage. Maybe one of the CI jobs builds
-     osxkeychain now? I'm not even sure.
-
-     The xmalloc and strbuf interfaces are pretty stable, so it may be
-     that the right rule is "you can depend on libgit.a, but only
-     lightly".
-
-Mostly just offering my two cents (and a little backstory). I'm not
-terribly opposed to loosening the rule, but we may expect some breakage
-via (2) from time to time.
-
--Peff
+Patrick
