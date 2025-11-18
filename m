@@ -1,142 +1,149 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E842EA46B
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 19:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C602DFA40
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 20:16:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763495553; cv=none; b=i+sx73YjrglgDy9diB/dEZq4miQzclr/+FK4TrFJwdukZB7b/lFWZvQJ/srgzTf+sIIaLonqiMS1ZemY68ADq3tqFx8bjKDctShMHH1xG+wicGoiAJ1dh5RJrgqJjGHl4CvUcGlFYROulm7Bk2v8xPjz219ibW+ZYpjuWoGd8zY=
+	t=1763496985; cv=none; b=Ho9x59O6MxtgjJVAzMuyf/mqqC6fSisV7PJExDR6kI2IZj2UDfiaWppBaZBRnZEIJ3LkCCcZm393B06h2NoVy5gKb7DzQodJHlJ0UM2GwympobO+7tCoUh5jhm68gqL8T8D/g1iyNIm9blm1c9EgWEwflwb3OQMTAkTBwjAsXys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763495553; c=relaxed/simple;
-	bh=pJCvSmZvbEQy5M7opgZG8gDr7mEDV4KGWca1mvjiumk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=YrDedojf35FoPVMlJPaNxGt6yBWLlawj1I2/1BD8YDfQR8AXqQhUa+FM79y3kg6NAns+WvcP04ZZjn6YqhT2GsucaT64+nx+H/jZPr4l8rmESuqxr+9SGZiRVr22kTUNonzgzEQloP+8vM7DeIeT6M4BpfKr3J011MYO5af3h9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GE5XKzjx; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1763496985; c=relaxed/simple;
+	bh=GvVtnM7VZwn44AhzwPdKs89ccWvVwyYTEjPiatGHQCY=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=O3Sz8uc0IRAju8I0jLzwSOn6YlrduoIoBS4HD6erkTn4GPe0IRXQuNs+EWsSE9r7/edCdjjUyqttrd7EX7Aaxq7VHHT/0RjiORNZ0NbmWjBdBRaDgq7LSAzlrkMte17ypS8gvZKr10lsevp/8VcVu+y7fFg8bgzgWh0toZob3F8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E2MCejVc; arc=none smtp.client-ip=209.85.210.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GE5XKzjx"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4779a4fc95aso1028885e9.1
-        for <git@vger.kernel.org>; Tue, 18 Nov 2025 11:52:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E2MCejVc"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-7a435a3fc57so5686055b3a.1
+        for <git@vger.kernel.org>; Tue, 18 Nov 2025 12:16:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763495550; x=1764100350; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=R6WYnefDiDjz35+ImZwATWmaLlkyKaVktXWg8wQ7JeQ=;
-        b=GE5XKzjx2uoxH5gWJnf+ApRaCFAizlqYL5tqzQ1CwsnetCbVc/JAB3zCYYNeTpr2qM
-         Wv8IrINGAIZpRUWWLSETfkYXNWcNspgeiw0XMuC+KsplzuaL2e6kvI7PxEicNgGhr+aW
-         d6xaJN0Uj82lq5SGmOptx0B5+nPUbEXBjpk9AoaULhdE5BI0hwRt3jyVq23Vo1uhv4yz
-         MLoBlq9qrwxM9zN0zjU63JEp/PnYHC5YXsejEtVHHA4t74aqvGX+147mqP5OOcq2613N
-         eE37EIpvS5f6oquswAsyaUUng4BdmTCJOnOYOvdWWURhtoUH32pUo7O8+jg85R05Angb
-         kLtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763495550; x=1764100350;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1763496983; x=1764101783; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=R6WYnefDiDjz35+ImZwATWmaLlkyKaVktXWg8wQ7JeQ=;
-        b=NaleuLI/uDZeQE7Ny8Vkd1ZhHvWyJgZrVXUDM3hrljMWdBsK4k8mvO8poJkknwveff
-         Is/Ta26cgpzIHJAeiwcvZVNh3zAba7xltXlVLXKJ8j7ubodN0jY9dZ6eg389lP4bSUC0
-         VEv6mx+sZ8btGZBexzeSgHjoYdIXYVTPHXKZWgEnGzGYsc7FdIJGRt4O+v+sactofTDp
-         ZLnfHboOCswlK4xspcGqB05tOBieefLhyGSWOqHh0QpL1Q7QLq0W8qd5TL/hvOybtNi5
-         39VZA/wgfaVpR05OZD1HIX9yzjDAdl1QrUpW3orAL3CqwQa1ALtsH+tX5WDaow1+Yg5N
-         mIcw==
-X-Forwarded-Encrypted: i=1; AJvYcCXJCRcqACiUndT/PQtATcu+XzCo53fD3fqOr/osO4jA8heiGNOirjbjwDjamxSuE/gaRuQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8pkZHnHheXIBLT0pJ+97AuPpfXsTyhgyU8FWkJTzvhNQj5ZSe
-	70LNHdrkuMK/YxqFtVh7pPhfqtrh4x0CyWmqd7gKwMtngNyrcB9U3b9N
-X-Gm-Gg: ASbGncsc/5MDdXK2Ewfo8YKA5Q8s5e/2qOvZmR9Au0C/Gpbu08NRkLaBHkCEuUkNiJS
-	SQXCEWulUxV5pR9ODkTORcKUtRptAyr63ppw/X1BLzD5P3l3aqF5J8G3vfyOLts803Gr1eu7wA0
-	nvbsVGDuf+mLMTAg+We22vOm6yUgLgTbutCuK+2+vXzYsw2gnz2E3lX4Tidi0E2mPE5LNsKOOyQ
-	1I5QKIlFEEyTOn+HC05s2S6/RivNYo5L+yY11UR+154n1fawv4iSnEWguapGjQ3pGAn7abWBgw4
-	eIDUNwkhyZjhPDrJf3yONAmA6sNYWlOhSv+8ReiiTQF+8u/jV1fu+SVzvyqrDmSbvIrRHuxy17L
-	kOune4DojYwo9YIXBVYAubiiTmiYNNkBCW0+jHVUoR0g3m5gXHwl/PCZhuAT49CHUE63w9mM/ZJ
-	hDeLox6SRE0ZiIy2jrdBrhUju/wHkOVbQXbVHsHokV6GLE/I4N/5KExEQnEmoQMIG6Haf82qKS7
-	ixFOQ+CK9Wd
-X-Google-Smtp-Source: AGHT+IF8tUyLMzTC+cALC4xSY8vGDxJC51L+fHztnXnZ724ZxXxQqxVCC47PjHOzLS6hAUdD+ilgEw==
-X-Received: by 2002:a05:6000:2c11:b0:42b:47ef:1d7a with SMTP id ffacd0b85a97d-42cb1b99553mr87005f8f.20.1763495550199;
-        Tue, 18 Nov 2025 11:52:30 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42b53dea1c9sm34033614f8f.0.2025.11.18.11.52.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Nov 2025 11:52:29 -0800 (PST)
-Message-ID: <cf524772-f919-4286-a9db-eb26b87b5cc6@gmail.com>
-Date: Tue, 18 Nov 2025 19:52:26 +0000
+        bh=Ngw+gsOavGO8yvC0PWFtWJXeXf7kqR34bXnNUcvM+rY=;
+        b=E2MCejVcbv+1Fwhq13p4TuQzdHYFu7N1GtNhjvAOZ6XbF/8zPcHXoepw8Hc/s3DaA/
+         5a0CZvwTEiEgAiwiRic/OIVJBelqiDGSSQflzWRyJSQDTzk/EdGoge39AXcwLkJhKfqI
+         JGdAZAKb6BRXzVJa5gqW0NdaH/KGXgCgaqPDUEIoeGI7Ji5lPv8U1Bpd/s9tkh2lh6Ep
+         9+TNz7bwVJcrCmvlt9DVB8weLeb/78EUFwA8TA2VJz1CKBOka4tzh96XxY+BDrxOyOCY
+         yp8s2bq/4OhM3V20vphpsGYOzurYG9GrfeF0RQqdazsXd25QDcaHBGsF1/GGCDmUfKvw
+         tLmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763496983; x=1764101783;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ngw+gsOavGO8yvC0PWFtWJXeXf7kqR34bXnNUcvM+rY=;
+        b=k8rx6AOau9Em8SbGtWiLS9sxcXD0JnZxmOAz2HrPQ5Ld/kJIp/DWXW9nk7LuO0A8tA
+         BRhvPeNdjL/PWzw6kgH63mjRwMXIiArtlm1oabSEntoKatxh3VaULGQOhH2QTzWhJVh/
+         /xjw/dLtJpOUolU4LD/sZysZY1H9ffRkmE9gEKZ950+9OV7iMpCFw7yQus8bBL4vztXm
+         7XXYSj+66SosocDIJ5CJBT07h4HpGFa2YYQQ0Zc4exkWZ8zS+OMOjUFRYLDnLh+Xrk+3
+         n+eB1f3844IDehpmjqP+1hgLiCEiEV0aVkJ6hyv/OyQJxWrm+6Tb7jL4FwIC8ZrcCFRw
+         GKIA==
+X-Gm-Message-State: AOJu0YzxCj4sDaUXdqnXEbY2aMgycBLi4nRLGnLB+5Z3lKb6i+hLeUrt
+	b/sbHllinONohbaz94RZev135kBOXq9meVkSxONPmVqYc5Er+kwqoFWo
+X-Gm-Gg: ASbGncsa6Lbc5hlWDLf/El6ji0NE0+aqw/yKcgx0wIW+kx4Yr7dhfplydaplzLNqTWb
+	IazINSkjJQ0cqvwdhyFNmSnoV+yn9KEvmFjcnR9fhA/VmSFtNHeClRuwys/56GNwwywtz8PjKr3
+	H6yAlwZXQAwFqih+v+1YPOd3QeRbQyg9EfXKc7nhipfsmfI/lo0l16FJUM1+UksCVS7QvPFV5FJ
+	MjWpFrQQQ8Cji7SKzUjPVkPnWsq2lQ+Qv/Pwb4pqxEyCdkiCEJVunkZ7ihCAPtQQvPQ21FoIxnn
+	TOAXcrxfc92rPYbpXBC768ukjL2WTzh2k4akuy40JoKZGh4iOS91IK+q1EmyrFQS/NfMBi9CbBW
+	DxHFMQnhAWcjZFgAh1aPT15pQfpJIcNcecZTHUncYBjQlgyZgGRuyh5pPq16/V0pfzYlM8OtemF
+	Aro8KMd4EJFAUKMw93CLQ2XdN0o5kXJrAZf7i/ZlgYO2gHGgVV319/oNBEvJGm2OvPSlFCFVWX+
+	Ly/yQkqQw==
+X-Google-Smtp-Source: AGHT+IGGoLHXx/viXaFrw3GulCL4BKTVS7fvbOOqq2EJxWDU4Wyym9jxFLoFkqFi0HYDKOocI9uPug==
+X-Received: by 2002:a05:7022:986:b0:119:e569:fba6 with SMTP id a92af1059eb24-11c8d9723c2mr77011c88.21.1763496983193;
+        Tue, 18 Nov 2025 12:16:23 -0800 (PST)
+Received: from smtpclient.apple (gwmind.semfio.usp.br. [143.107.127.12])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11b06088625sm65095530c88.8.2025.11.18.12.16.21
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 18 Nov 2025 12:16:22 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Interactive rebase bug involving merge commits
-To: Bailey Muckel <bmuckel@32bjfunds.com>,
- "git@vger.kernel.org" <git@vger.kernel.org>
-References: <LV8PR17MB74355C21BF9542254EE8E82BADD6A@LV8PR17MB7435.namprd17.prod.outlook.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <LV8PR17MB74355C21BF9542254EE8E82BADD6A@LV8PR17MB7435.namprd17.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.200.81.1.6\))
+Subject: Re: [PATCH v4 2/2] repo: add --all to git-repo-info
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <xmqqh5usiizp.fsf@gitster.g>
+Date: Tue, 18 Nov 2025 17:16:09 -0300
+Cc: git@vger.kernel.org,
+ sunshine@sunshineco.com,
+ ps@pks.im,
+ karthik.188@gmail.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <DA3814BC-D6A5-4EF1-9A2B-9687D1B6C26A@gmail.com>
+References: <20250915223618.13093-1-lucasseikioshiro@gmail.com>
+ <20251117151844.14802-1-lucasseikioshiro@gmail.com>
+ <20251117151844.14802-3-lucasseikioshiro@gmail.com>
+ <xmqqh5usiizp.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3864.200.81.1.6)
 
-Hi Bailey
 
-On 18/11/2025 19:15, Bailey Muckel wrote:
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> I ran `git rebase -i --rebase-merges {commit hash}`, then changed the
-> command for one of my merge commits from "merge -C ..." to "drop ..."
-> expecting it to remove the merge commit entirely
-> What happened instead? (Actual behavior)
-> It output the statement "BUG: sequencer.c:2695: unexpected todo_command"
+>> + for (unsigned long i = 0; i < ARRAY_SIZE(repo_info_fields); i++) {
+>> 
+> I am not sure if "unsigned long i" is the type you want here.  I do
+> not mind, and actually I prefer, a simple platform natural "int i"
+> for something simple like this [*], but I know other people prefer to
+> use "size_t" to work with ARRAY_SIZE() these days.
 
-Thanks for reporting this. This bug was recently fixed by commit 
-4d491ade8f6 (rebase -i: permit 'drop' of a merge commit, 2025-08-06) 
-which is included in git 2.51.1 or later.
+Yeah, I also thought it an unsigned long feels out of place, but I
+was only following ARRAY_SIZE. Actually, I was trying to avoid a
+warning. In this case we have very few `repo_info_field`s and any
+int type would work here...
 
-Thanks
+I'll replace it by size_t, then.
 
-Phillip
-> and remained in an interactive rebase state until I ran "git rebase --abort"
-> What's different between what you expected and what actually happened?
-> I expected it to act the way it would if I deleted the entire merge
-> commit line: remove the merge and keep both branches of the merge
-> otherwise the same
-> Anything else you want to add:
+>    Side note: The reason they insist using size_t here is that
+>        "-Wsign-compare" makes the compiler complain.  But I would
+>        say that it only shows what a misguided feature
+>        -Wsign-compare warning is, especially given that the
+>        compiler perfectly well knows how big repo_info_fields[]
+>        array is and the iteration cannot do any harm if done with a
+>        signed integer smaller than size_t
+
+Perhaps if ARRAY_SIZE(repo_info_fields) is bigger than the maximum
+limit of the integer type, which would overflow and this for would
+loop forever. But, obviously this wouldn't happen here.
+
+> This would work, but the symmetry between a list of keys vs the
+> "--all" option is lost.
 > 
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
+> I'd rather see something like the following after a #leftoverbits
+> clean-up commit:
 > 
+> if (all_keys && argc)
+> die(_("--all and <key> cannot be used together"));
 > 
-> [System Info]
-> git version:
-> git version 2.49.0.windows.1
-> cpu: x86_64
-> built from commit: cca1f38702730b35f52c29efd62864b85e85ddcc
-> sizeof-long: 4
-> sizeof-size_t: 8
-> shell-path: D:/git-sdk-64-build-installers/usr/bin/sh
-> feature: fsmonitor--daemon
-> libcurl: 8.12.1
-> OpenSSL: OpenSSL 3.2.4 11 Feb 2025
-> zlib: 1.3.1
-> uname: Windows 10.0 19045
-> compiler info: gnuc: 14.2
-> libc info: no libc information available
-> $SHELL (typically, interactive shell): <unset>
-> 
-> 
-> [Enabled Hooks]
-> 
-> 
-> Thank you,
-> 
-> Bailey Muckel (he/him)
-> Data Engineer
-> Building Service 32BJ Health Fund
-> 23 West 18th Street, 8th Floor | New York, NY 10011-4676
-> Email: bmuckel@32bjfunds.com
->   
-> 
+> if (all_keys)
+> return print_all_fields(repo, format);
+> else
+> return print_fields(argc, argv, repo, format);
+
+I'll change it in v5.
+
+> Again, this would work for now, but maybe "git repo info --keys"
+> that emits these would be easier to manage.  This can be left to
+> #leftoverbits of course.
+
+I can't see a use for it other than these tests. What about writing
+a helper inside t/helpers for that?
+
+> But then we have seem to have seen too many #leftoverbits material,
+> you might want to handle some or all of them in this series in a
+> reroll?  I am starting to become undecided.
+
+I agree with all of them, but I think they were too much for this
+series... I also think that after git-repo-structure being added to
+repo.c I think that it deserves a patchset only for refactoring.
+
+But I'll send a v5 containing the changes directly related to this
+series.
+
+Thanks again. I'll send a v5 soon.
 
