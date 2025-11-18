@@ -1,70 +1,70 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F65030F93A
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 16:07:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BEE3587A1
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 16:07:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763482075; cv=none; b=YFjUO5K6lv0qTPRkN9VJaaEFl/9NJcsjFcclSbqaU5ImND2nP6cUiqNuJQAP+JB+XbDoNEhlL9jYOSlh+ofCnQRk9E9m1PpgKiQ+uVNZ5V3kDBMyjXsj8Ihas94dUBHgzjgjSRfV3NvhTooDrlwvvLMCnVYEJsZY/MPYsZPyhUA=
+	t=1763482076; cv=none; b=aXrcoV2rNZQWTXwREt+RGkBw3fxaPyqQgdznVXsLOHHMw2/5vU6W6Tze9lHAyMvNO5lQGNol8z3BhlHqn6Omw00kBlL/dnJvFRrwpzMv75TufPjr1/BpyRjJsbNeJrfpliOClmAeZwqfFhB+NCtel0yQ89QAaOKSMdwnP7dytts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763482075; c=relaxed/simple;
-	bh=TaFuIl1tKeyxBx/rNa8Bima9VNephL6a/zrQOs3xIPA=;
+	s=arc-20240116; t=1763482076; c=relaxed/simple;
+	bh=Fba8nhcQwZQMMXqbLrNUqupHWDmBGzgRuTE/zVBNyVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ox6WfwtRscdklS3UVmKaA8D8y+Yfw/XPimPEmWD2CUbJm9F2fekW10zV29t21puWbYv3WBZYfRNa4kDB9BgEf12iufpIQ25aM3E/SgU6JVRjjI1AsfmrexjhogC3zsXGxL5O4cWKNnnqHMxtXvO3TxinH1D7/QJQNyLJTrsrJAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z2cRL/1W; arc=none smtp.client-ip=209.85.128.47
+	 MIME-Version:Content-Type; b=C4Uj582Xzurh0m1W/Vk0QkzAuqyZAAlL8Jqg9kLFTF7janPRfo6hwFT5zguW8/RaekcQXP7UIGzJ+1FL9QRFJkOYQcbBkBUvR9+kRssBoxy2EHYskoxqCjtw8ytjDYDF3WS7C2lLYCfNf6ug+VfE1zZxOM4ADi6fSeDod1hyGZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mgg2cbQM; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z2cRL/1W"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-477a219dbcaso22205485e9.3
-        for <git@vger.kernel.org>; Tue, 18 Nov 2025 08:07:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mgg2cbQM"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-47796a837c7so21966015e9.0
+        for <git@vger.kernel.org>; Tue, 18 Nov 2025 08:07:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763482071; x=1764086871; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1763482072; x=1764086872; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=nzaffOVHws66ufM4Y2fm5k7LpmxehYw+WbrbBh+TC9c=;
-        b=Z2cRL/1WmT3nzV7bgSq3+9Z0+DibTB4HPfzbLgTML5aAAE+n4P0n/Iknst6bqgan1x
-         KVP0UKsqA7no7rcxqUWbeCpWn19JJ2flByLSL2ry7OqddAIC4lCB4SASw9AH0X+SWGyv
-         A8WkPtPOUL2Boho6SNSn97/cgjvOET9SiSRA4AJCzHQIjBboS0ugNzYRFK9ODnd7+5SG
-         RKq/IBd+r0lqv/rPEvRdxzwqazLARmJlyZSri3DqPnJgDybDhFWLcantSOopTSs4+3xe
-         cGVrJbHKyMDcm7MzqT7SP+k7eE+re5pwCEvNnSGIt+H2xcy2Gz5xYCpBLIhH+PyRDTgN
-         YDyw==
+        bh=uXqmxN8EImGwRvWqRdbcmv8cHqKr9jea096wUfMjprc=;
+        b=Mgg2cbQMiDj7eWQZyeERN3ncmXoIH7snXqcLtsL9l3FRSRnVVLzoeuYuHssyjobpN3
+         VOl4sB/U6ch/y7RLbpXkFjV/+p27Vn/Lhs7Zv3mYU8Q+YAmTmm+UWJ/NLq/kKDPCICg5
+         NHY6K3uh6vxPIM17SOXSWCJJ7am1FSPakY4m1YSCFI9Azqo4x/2SDPfUBEZM8FoVFQ0K
+         nMR462W/wy5Bamir+2Mdf/Svneuul1Zuyz3CsPVUQZVN7aYfG7/kcLiT3KNBw7Ul8SUl
+         6TuL58PwayKtsOJOZ/10Yv3c/T+xHgZn3R4raELuxkoo3qMwRUoqJUPtjbx7sMvai1W6
+         YkBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763482071; x=1764086871;
+        d=1e100.net; s=20230601; t=1763482072; x=1764086872;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nzaffOVHws66ufM4Y2fm5k7LpmxehYw+WbrbBh+TC9c=;
-        b=MCgZt25yqKBBhkkiRos0M9Hdny19IpUE6svK2TKTV61mQZzSK4QjVq0Ids0+xdEFYe
-         BUJMuCALNnFqZzLH3njwKALwtRDOeyzYYxMlrVzMijxgGBKmSP17XSM9gLwzh8b4zW/x
-         wGMGgqYg3w8lG/WLYVfhahlSv9JvJ0P0eZTpWbuTHajLbjFEPQ4sG1w/Plto/EEtSvhw
-         bcoJ1+9J8dLbc0PIvxKtp38P46vje4hoPyXA3qMIFqEI6/3CpdU65ErmsxcXiebi52FO
-         z7shQFdwHPnlibXLiYlRWWMCh5O/wDH8Rp32742RyY8tLhzOI600jt36J5BHvd4VdLWr
-         +T/Q==
-X-Gm-Message-State: AOJu0YzNtEXoMTtD6WZawcrAAn229OIPoxQI2SirChRURXfj74W874Cv
-	1aqho86uYP+Z6mDOr4tfpXgIhc4AUgPphBE26LyhfE0rkSdGVzwe3D/d7yOrsg==
-X-Gm-Gg: ASbGncvEFafYrR7PtQfOQ8uLJWE8NqZ37rmLum7kn34EeqiOJzfKyPbbZTxhcaJhrYU
-	1pplQJp3OIFrSTLPQbn9YH6KC6CPHRr4IzMu5urY8m5beFnYCOZB1fv9x92UkupBKVGre1ZCKiX
-	P1qYBV0ZhhLqdQHs+2piLR29JvT8bVWMGdQ6M/wrVk/vEpD36VVhKvikn/eqlEZtulMw0DloZsR
-	9k3IXq56AmnBTCCFY54C7zYZWwgQ/nOSk+/qRz43UD816ftsKb3Hf+BCzSRFuFD6ZR88NN6+MlL
-	wvemPVmB/VQWLMQNyxKIh7QIccyfGzvT2V+wsGZ01NGC+ndGo7MpiYK7dwSWsKK/zHX7EkIfzg/
-	aKmUQJRGWxnLdB7gaNAxeHMmK8mf4t7TQVfy/O2qeIS1DC3/Hz6neC4MMh6UZf2/DDV/oI8xife
-	kYEQ2WbJUBVoAobRAe49wwn+V+
-X-Google-Smtp-Source: AGHT+IHM2NosW+RLiHYgZY/DCkGEQaO38KAk2KKJFNpF1+IHGOkTy218Wf1Dxx9VVG36vsxVIF0P+w==
-X-Received: by 2002:a05:600c:a05:b0:475:da1a:5418 with SMTP id 5b1f17b1804b1-4778fe55465mr144724725e9.1.1763482071074;
-        Tue, 18 Nov 2025 08:07:51 -0800 (PST)
+        bh=uXqmxN8EImGwRvWqRdbcmv8cHqKr9jea096wUfMjprc=;
+        b=Y7ZjL275C0owORxdiTqk+25rIwz8f9mIIYG3qoe8mx0Ql1j3nksnjLwpO4byEMOfoP
+         96h617JSzigecCnnl9UIc7yoHrKYM+votqGSbSTvB/2staYQHXCM4pZS2UEgBugOpm/i
+         0UUboXdlIqiVUkBX2U/vjJ0/DV1kAK11TLeMSJ5M/nbpOdI3rMaXpsGRg+2hHJQ7/Za/
+         0HDXpvp5s/e5vo5ICJg9FIfXvvHiW4kVCLbdhUtbwASZY7SLgWqCDFtipbYZ6/KnyL2e
+         mp2SKzrcuk1jl6KD+iCL94+rTTsENN/R4HIS3gPYE2iuHHa4YMSZbAPwofacVZA1Uw8n
+         wdkw==
+X-Gm-Message-State: AOJu0YwAraWRLkjr/b12iDKCOCtD52GgN1ZYpvDDeaUXLDtI/TySIHzA
+	HlYba4NG9qKEjQyZNkdU9t0J+e6TwhVl4a/7G41hsej4Yyr4DGqbxqJAnHK5mg==
+X-Gm-Gg: ASbGncu6mCjumJzfagIg14NyZfXULA99Gn13WdEsLTMohBuIRKTNYk4rXsgyto730uu
+	FNCooTVmwfjvrkOjKLVhRqt2SgdZvrbLUVlsSBLVcLMMe2iulv6wmWOZdMq4rN/MdY+FGMrkkZV
+	idsl6jqxoP2GY/To4PTcKMinNNN1woEfjNIh3oNgW4aMgzLsTFNlgCAjrDjET3m92x529rE7KqI
+	NykLd8hiR9p/FlPFCXr/jr2kgfgp9tDejfFjiglO8PxcWch3wMT3S+ZC+ErzdOmkenpVXMwF7MT
+	wdLdVdd0uxc5kDdDEsLclMVgnCRYT1V2oBNJBmpa2xpDMLnyL8z9dJctrk9nQOibex4omC1wlPT
+	28ShUBTpM6JEmR0o6y1AnbArWJ8VvSfIIoAOjHS0CI6ffcvjnGJsIsP4hpugoXS55u3ypaKkTmy
+	995mgozsGmim7LtA==
+X-Google-Smtp-Source: AGHT+IE2+vq8WFtwzSGGPA12hmXooNXU1ZTYfoATYjA4luvB3BH5JOCzUSAWV0TPDf4aa5JGP9oz2w==
+X-Received: by 2002:a05:600c:c4a2:b0:456:1a69:94fa with SMTP id 5b1f17b1804b1-4778fe6a3e1mr126650705e9.13.1763482072010;
+        Tue, 18 Nov 2025 08:07:52 -0800 (PST)
 Received: from berwick ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477a97412e3sm20850665e9.5.2025.11.18.08.07.49
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-477a97412e3sm20850665e9.5.2025.11.18.08.07.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Nov 2025 08:07:50 -0800 (PST)
+        Tue, 18 Nov 2025 08:07:51 -0800 (PST)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 1/2] worktree list: fix column spacing
-Date: Tue, 18 Nov 2025 16:07:32 +0000
-Message-ID: <9417c73b3c4b89ed7c4cb823f3f68e994a968021.1763482051.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH 2/2] worktree list: quote paths
+Date: Tue, 18 Nov 2025 16:07:33 +0000
+Message-ID: <b42d0f668b4a5ba0ec00fed1377cad5488f62197.1763482051.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.52.0.345.g9c3c96ee5a7
 In-Reply-To: <cover.1763482051.git.phillip.wood@dunelm.org.uk>
 References: <cover.1763482051.git.phillip.wood@dunelm.org.uk>
@@ -80,156 +80,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-The output of "git worktree list" displays a table containing the
-worktree path, HEAD OID and branch name for each worktree. The code
-aligns the columns by measuring the visual width of the worktree path
-when it is printed. Unfortunately it fails to use the visual width
-when calculating the width of the column so, if any of the paths
-contain a multibyte character, we can end up with excess padding
-between columns. The simplest fix would be to replace strlen() with
-utf8_strwidth() in measure_widths(). However that leaves us measuring
-the visual width twice and the byte length once. By caching the visual
-width and printing the padding separately to the worktree path, we only
-need to calculate the visual width once and do not need the byte length
-at all. The visual widths are stored in an arrays of structs rather
-than an array of ints as the next commit will add more struct members.
-
-Even if there are no multibyte characters in any of the paths we still
-print an extra space between the path and the object id as the field
-width is calculated as one plus the length of the path and we print an
-explicit space as well. This is fixed by not printing the extra space.
-
-The tests are updated to include multibyte characters in one of the
-worktree paths and to check the spacing of the columns.
+If a worktree path contains newlines or other control characters
+it messes up the output of "git worktree list". Fix this by using
+quote_path() to display the worktree path. The output of "git worktree
+list" is designed for human consumption, scripts should be using the
+"--porcelain" option so this change should not break them.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/worktree.c       | 35 +++++++++++++++++++++++------------
- t/t2402-worktree-list.sh | 22 ++++++++++------------
- 2 files changed, 33 insertions(+), 24 deletions(-)
+ builtin/worktree.c       | 10 ++++++++--
+ t/t2402-worktree-list.sh | 15 ++++++++++++++-
+ 2 files changed, 22 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 812774a5ca9..0643a22ee58 100644
+index 0643a22ee58..303cc3b2d64 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -979,14 +979,17 @@ static void show_worktree_porcelain(struct worktree *wt, int line_terminator)
- 	fputc(line_terminator, stdout);
+@@ -980,6 +980,7 @@ static void show_worktree_porcelain(struct worktree *wt, int line_terminator)
  }
  
--static void show_worktree(struct worktree *wt, int path_maxlen, int abbrev_len)
-+struct worktree_display {
-+	int width;
-+};
-+
-+static void show_worktree(struct worktree *wt, struct worktree_display *display,
-+			  int path_maxwidth, int abbrev_len)
- {
+ struct worktree_display {
++	char *path;
+ 	int width;
+ };
+ 
+@@ -989,7 +990,7 @@ static void show_worktree(struct worktree *wt, struct worktree_display *display,
  	struct strbuf sb = STRBUF_INIT;
--	int cur_path_len = strlen(wt->path);
--	int path_adj = cur_path_len - utf8_strwidth(wt->path);
  	const char *reason;
  
--	strbuf_addf(&sb, "%-*s ", 1 + path_maxlen + path_adj, wt->path);
-+	strbuf_addf(&sb, "%s%*s", wt->path, 1 + path_maxwidth - display->width, "");
+-	strbuf_addf(&sb, "%s%*s", wt->path, 1 + path_maxwidth - display->width, "");
++	strbuf_addf(&sb, "%s%*s", display->path, 1 + path_maxwidth - display->width, "");
  	if (wt->is_bare)
  		strbuf_addstr(&sb, "(bare)");
  	else {
-@@ -1020,20 +1023,24 @@ static void show_worktree(struct worktree *wt, int path_maxlen, int abbrev_len)
- 	strbuf_release(&sb);
- }
- 
--static void measure_widths(struct worktree **wt, int *abbrev, int *maxlen)
-+static void measure_widths(struct worktree **wt, int *abbrev,
-+			   struct worktree_display **d, int *maxwidth)
+@@ -1028,11 +1029,14 @@ static void measure_widths(struct worktree **wt, int *abbrev,
  {
--	int i;
-+	int i, display_alloc = 0;
-+	struct worktree_display *display = NULL;
+ 	int i, display_alloc = 0;
+ 	struct worktree_display *display = NULL;
++	struct strbuf buf = STRBUF_INIT;
  
  	for (i = 0; wt[i]; i++) {
  		int sha1_len;
--		int path_len = strlen(wt[i]->path);
-+		ALLOC_GROW(display, i + 1, display_alloc);
-+		display[i].width = utf8_strwidth(wt[i]->path);
+ 		ALLOC_GROW(display, i + 1, display_alloc);
+-		display[i].width = utf8_strwidth(wt[i]->path);
++		quote_path(wt[i]->path, NULL, &buf, 0);
++		display[i].width = utf8_strwidth(buf.buf);
++		display[i].path = strbuf_detach(&buf, NULL);
  
--		if (path_len > *maxlen)
--			*maxlen = path_len;
-+		if (display[i].width > *maxwidth)
-+			*maxwidth = display[i].width;
- 		sha1_len = strlen(repo_find_unique_abbrev(the_repository, &wt[i]->head_oid, *abbrev));
- 		if (sha1_len > *abbrev)
- 			*abbrev = sha1_len;
- 	}
-+	*d = display;
- }
- 
- static int pathcmp(const void *a_, const void *b_)
-@@ -1079,21 +1086,25 @@ static int list(int ac, const char **av, const char *prefix,
- 		die(_("the option '%s' requires '%s'"), "-z", "--porcelain");
- 	else {
- 		struct worktree **worktrees = get_worktrees();
--		int path_maxlen = 0, abbrev = DEFAULT_ABBREV, i;
-+		int path_maxwidth = 0, abbrev = DEFAULT_ABBREV, i;
-+		struct worktree_display *display = NULL;
- 
- 		/* sort worktrees by path but keep main worktree at top */
- 		pathsort(worktrees + 1);
- 
- 		if (!porcelain)
--			measure_widths(worktrees, &abbrev, &path_maxlen);
-+			measure_widths(worktrees, &abbrev,
-+				       &display, &path_maxwidth);
- 
- 		for (i = 0; worktrees[i]; i++) {
- 			if (porcelain)
- 				show_worktree_porcelain(worktrees[i],
- 							line_terminator);
- 			else
--				show_worktree(worktrees[i], path_maxlen, abbrev);
-+				show_worktree(worktrees[i],
-+					      &display[i], path_maxwidth, abbrev);
+ 		if (display[i].width > *maxwidth)
+ 			*maxwidth = display[i].width;
+@@ -1104,6 +1108,8 @@ static int list(int ac, const char **av, const char *prefix,
+ 				show_worktree(worktrees[i],
+ 					      &display[i], path_maxwidth, abbrev);
  		}
-+		free(display);
++		for (i = 0; display && worktrees[i]; i++)
++			free(display[i].path);
+ 		free(display);
  		free_worktrees(worktrees);
  	}
- 	return 0;
 diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
-index 8ef1cad7f29..a494df6d612 100755
+index a494df6d612..e0c6abd2f58 100755
 --- a/t/t2402-worktree-list.sh
 +++ b/t/t2402-worktree-list.sh
-@@ -30,22 +30,20 @@ test_expect_success 'rev-parse --git-path objects linked worktree' '
+@@ -29,7 +29,8 @@ test_expect_success 'rev-parse --git-path objects linked worktree' '
+ 	test_cmp expect actual
  '
  
- test_expect_success '"list" all worktrees from main' '
--	echo "$(git rev-parse --show-toplevel) $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
--	test_when_finished "rm -rf here out actual expect && git worktree prune" &&
--	git worktree add --detach here main &&
--	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git worktree list >out &&
--	sed "s/  */ /g" <out >actual &&
-+	echo "$(git rev-parse --show-toplevel)      $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
-+	test_when_finished "rm -rf áááá out actual expect && git worktree prune" &&
-+	git worktree add --detach áááá main &&
-+	echo "$(git -C áááá rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
+-test_expect_success '"list" all worktrees from main' '
++test_expect_success '"list" all worktrees from main core.quotepath=false' '
++	test_config core.quotepath false &&
+ 	echo "$(git rev-parse --show-toplevel)      $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
+ 	test_when_finished "rm -rf áááá out actual expect && git worktree prune" &&
+ 	git worktree add --detach áááá main &&
+@@ -38,7 +39,19 @@ test_expect_success '"list" all worktrees from main' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '"list" all worktrees from main core.quotepath=true' '
++	test_config core.quotepath true &&
++	echo "$(git rev-parse --show-toplevel)            $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
++	test_when_finished "rm -rf á out actual expect && git worktree prune" &&
++	git worktree add --detach á main &&
++	echo "\"$(git -C á rev-parse --show-toplevel)\" $(git rev-parse --short HEAD) (detached HEAD)" |
++		sed s/á/\\\\303\\\\241/g >>expect &&
 +	git worktree list >actual &&
- 	test_cmp expect actual
- '
- 
++	test_cmp expect actual
++'
++
  test_expect_success '"list" all worktrees from linked' '
--	echo "$(git rev-parse --show-toplevel) $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
--	test_when_finished "rm -rf here out actual expect && git worktree prune" &&
--	git worktree add --detach here main &&
--	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git -C here worktree list >out &&
--	sed "s/  */ /g" <out >actual &&
-+	echo "$(git rev-parse --show-toplevel)      $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
-+	test_when_finished "rm -rf áááá out actual expect && git worktree prune" &&
-+	git worktree add --detach áááá main &&
-+	echo "$(git -C áááá rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
-+	git -C áááá worktree list >actual &&
- 	test_cmp expect actual
- '
- 
++	test_config core.quotepath false &&
+ 	echo "$(git rev-parse --show-toplevel)      $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
+ 	test_when_finished "rm -rf áááá out actual expect && git worktree prune" &&
+ 	git worktree add --detach áááá main &&
 -- 
 2.52.0.345.g9c3c96ee5a7
 
