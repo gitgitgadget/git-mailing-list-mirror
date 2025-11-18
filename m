@@ -1,87 +1,92 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9061A0B15
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 23:08:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4323A1A0B15
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 23:11:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763507316; cv=none; b=TJUH06pBbleqYxPYHonDNPNZ5sFtff/zHVTdxtEdNy2m0JStiINUlf/TE1XfiVDxAAzaV9T5Bmi4WzbLFufHXm6BhXOg6OwxtFAyjAAgM0W9Zxhf/RpmT4qj6twDIcUzixKS7yP9gztwn6iKfQhM7eWWbXJHoZt36F4wSws6CRo=
+	t=1763507509; cv=none; b=NxoQ8u5On5a/5sIaO7lr24652NB6JIxD6x3ClnLZ5opcKsgEnQC2+4tQ4J2YUYz8+JtwqXGooZemKOBJd1Opeo7DSFcHehL5wZjAQqivUC7kiXarlIr+YMpvVCeUNehD+dkOAv4vi6bOVXCgIYb81BrfjPw9vIokVrOX0WbaetE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763507316; c=relaxed/simple;
-	bh=2PZIiJ7brSziQ2j+YaTubgT35GKx7AIZxaL8Gn5uZVY=;
+	s=arc-20240116; t=1763507509; c=relaxed/simple;
+	bh=UgpzsbjMwHGK3nY98PZ/CDZcjBbkNS/yFb2ldmppBDk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BPQgtFZq5u4LN0cLyw9Hk0r9J5gD+iaXa33cpe8emhfHjxpMzh4g+P+CAocpII7fsf2mDuqCj3T3/RWR5Fk142sZHeR7xb71bXVC5/08pOoYPcBMZ4HYXFDTBNa2r7j/hWzK6nRO0mwjQWf2TzgOSgs2O1LVZZWgWXUJvW9Evk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nZUSztsj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=w/7nAcnc; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=I4rWDPX9yWaNq2lwuh9EVAg27HIM9QeiN2GCu90vtxmv/lvPCLkWvnS6A/vu2srUPHOu2HHVcGqGPi2JIum3pUod7RDXq5munDcL5LOoqCyMP3mAB98ix/nq37QVqtOJmggNpDU1AQhsBIJDqcqOX3IeDFzIYEMNfkCT8PDYAKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C7HIBy8k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=u3B6M/Un; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nZUSztsj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="w/7nAcnc"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 76FD4EC04E5;
-	Tue, 18 Nov 2025 18:08:33 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C7HIBy8k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="u3B6M/Un"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 355AC14000D1;
+	Tue, 18 Nov 2025 18:11:42 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 18 Nov 2025 18:08:33 -0500
+  by phl-compute-02.internal (MEProxy); Tue, 18 Nov 2025 18:11:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1763507313;
-	 x=1763593713; bh=NuZUdX7F1vNO13bNZOKYEr3iZXOlcAR5udUbcMf2+lk=; b=
-	nZUSztsjNF83GqjPcJFEH+onX9H2lffbB6aU5b+w6cIX+2hPatKW6YBSrVtp6/Ev
-	sepzoonpqDLF4y4nl2jVGhnx/S0Me5dGYP9N2//8tyrtJY31Jht/1okFoQ5SJzKz
-	aOGds1NRyMrFAQilT1y+Jz/wA5clJVlpyit8OCvtktXnIhu7v0sR7hVcudxU/yuG
-	tGbu/TQxMuZjHVN8pwBC+/vEcqQCBxeji2i3Kc7qP5MbVtbzBdvLMlAxCDHJi9+T
-	BfmF4WgJiRXpGSQMTuIQlS/7NRjyw4oVa5KNQYVAjZE1D5+heIMf5vGda1DRsgVL
-	VJ6aNpWUPgC57cSq1zSfRA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1763507502; x=1763593902; bh=Vz8uaAuETL
+	tQH3Fk41/sozipuEL301ZJUT/d/FQFyQM=; b=C7HIBy8kOS0sa996cKOle+CvYp
+	LBE9l/5r0+cYYjmUHL6iTRR0IqIjaDqN5rTaiOhbUmzV/wiunod7ZnKRAXGfHoNU
+	UiCHTqA+M4f0ylqUzZC4eee9076TqJv8pscTeIoWQuQjLznmlr/YEiYVcEmFharX
+	VnM6AiJdRrMtxobARlmxiX2p/Pq8+PTGpOxt1w54/YlZ2qaCzBHd0wyaltCxk91R
+	GRXMQ2/wnC1UVeHaSwz1p9xbBJmXXegNfC+eNYq5UWh3tlkwh4koKzFkUUBwW7FY
+	U8DbykvO9UmXXUWTbm7Qx+R0cNSimQGIidpLLqNc/prJDy0m1syD/263aMIg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763507313; x=
-	1763593713; bh=NuZUdX7F1vNO13bNZOKYEr3iZXOlcAR5udUbcMf2+lk=; b=w
-	/7nAcncm3FTCqHMdyuXJqNn8GHS16pQnFbAyZQjzW93H31GVwHUh2iZJDJNRcpZ0
-	7T3/ZEYGyTNX928A84yeYyXqbjdHXSOq0aw1CXhgaQzzHt9BWZfhliAzkn41ml/F
-	gOE+wj2kRFC5J00l1pLkb+y3yQu1AF5SMA5rWV8doWeAqIMXJ337U6e0W9WmnXjd
-	QEJ4/4e5o2Gh5y43euVNBBaBZ3lK6NxauC6GDTSdsuyLT/eMfUtFYl7U+NhrOl3Y
-	lUDe7+bX/vuRBB1ZmEVGrKocyGJHsPzIgAhiEHAlrc4nH3y6gkZmmYoMCaaD/tRS
-	ThmisOjEKxXXw0MN28/qA==
-X-ME-Sender: <xms:cfwcaahB4M176aapzDQMMGTczg5rMB6gaDzM5DuDmco95TJB6MlfNw>
-    <xme:cfwcaSClh71tYlipj6T3D5MWd_XernrlEnrSs8VVyObShAdAYmSnCZD075VxTW8CH
-    lUX8j4uoXurL970pTqiPwu5195Ljtc8LpXrtuRRUlV2Hw15MXf_>
-X-ME-Received: <xmr:cfwcaXEchvgf91vT9zDQ4blJk8_Hztuk1Ee-r_mutkbvRQsx3TEw5fToq7A5W1Dxrfj-vnymllqDC10Y7ueAAN5fH9wWtH3Qsafs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvddviedtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1763507502; x=1763593902; bh=Vz8uaAuETLtQH3Fk41/sozipuEL301ZJUT/
+	d/FQFyQM=; b=u3B6M/Uno+5a3KBNXhDYd/Lbn+AEqWmvtf763Vc1b3indCANGKE
+	7ZKGuCuWX2N4GN6mKLZxknGw4wZu4ZuyG5Z9b9SkRZeTDZWtUieiQL2/wJSEFGCA
+	HH2cvPJx2hTWYSohZehNre2Kdlamb/5AH2r0HuqJPQWSLDs/TbKspP4RsR8BvlDV
+	0WsZ7Bbxgfxtn3F/ZDEtQoOujPVz2IDmT8BHZkMpIW2XF5ynEfTqUrQgp2z1Xr/1
+	Q9GK7Eqqp4V0qtnHudqy6SfU+uwzRz84sSw8tp03Mrii0qhqAjagaA8fM4iPc1Nv
+	qy7yBRsvglLUt6iAIoaOoPC0n2tYAYLVEIw==
+X-ME-Sender: <xms:Lf0cabSHF3fbmmz9PkwuYeJSifUqPTKPv_tLkbJrWMLfGb7drEWKUQ>
+    <xme:Lf0caaJX_mb-qPg9Xp5S3JlbnOHR6g2IeqmAGSboHUgtYSAd-6x6wBAEgTBOPbx5z
+    dQkqwwe7fSa_y7SEbbYBvVMHTlQMIbGm9DEtPdvL42Vh-NZSGHNBv8>
+X-ME-Received: <xmr:Lf0caYJTYXt95SRi8uvLGGRsallVEyCvZ7E2A58fnrR3Na3fvTQXfiofUHWUnc3Hnp0Oxidre-UmEeJB3t3bp--wgfPxREtNmzQv>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvddvieduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
-    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
-    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
-    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
-    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhdrshdr
-    rhesfigvsgdruggvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:cfwcaSKw813N7IG0JbH4E_Z-sQr_CvfY5f8C1w-AHAxpmBU5YHbqcA>
-    <xmx:cfwcaTnAmXki82hVoCuvqeo08e_C_BcUwjkHBX65NaKz9MTZeiVy9w>
-    <xmx:cfwcaSRcTNrlhqtzXtux-rDmO5S2gmb-nz6uHW1Op3zptHNrPLJpSw>
-    <xmx:cfwcadKmZj7ma4RrGG5BlSU55Dm7LT6Of8kqxMbHja-l2WId7Mz3rg>
-    <xmx:cfwcabZADAevIhYiA1gMQTTl4uq9nkiZ4PwhXU8-itkmQ-0yJ9VsZT6M>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
+    hrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlihhprdifohho
+    ugduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishdrthhorhgvkhesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdr
+    phhluhhsrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:Lf0caVjDD0VZiQWIKmyRAjAYQK0FGYD6cNOpVOk88HkGnI03Ct5_JA>
+    <xmx:Lf0caSNNybhe_4WSTFvpG0ObHKc_loRI_ndduBKh1xnQOVLZi7YTjQ>
+    <xmx:Lf0caQoMwohNi-3jeFMM0odXUx_V2J9Uug-7JHpT1fNawOrU4kqeDA>
+    <xmx:Lf0caU6iILkA0avrVyYDxVxGMA3J2ueoVYeJSrq6Ui7YYHY5-dFgrA>
+    <xmx:Lv0caUMvMPtAi47FtlgDmmYhPF79TmHgymBwq5hGhWLXCGRmtcOVbpEu>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Nov 2025 18:08:32 -0500 (EST)
+ 18 Nov 2025 18:11:41 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Jeff King <peff@peff.net>,  Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] wrapper: simplify xmkstemp()
-In-Reply-To: <3b1cb53a-6427-4626-a768-1961e25514f8@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Tue, 18 Nov 2025 23:29:38 +0100")
-References: <058c5722-30f5-4bc5-90f5-24e4c6f3ff8f@web.de>
-	<xmqqbjl0iax6.fsf@gitster.g>
-	<20251118094621.GB530545@coredump.intra.peff.net>
-	<3b1cb53a-6427-4626-a768-1961e25514f8@web.de>
-Date: Tue, 18 Nov 2025 15:08:31 -0800
-Message-ID: <xmqqqztvc51s.fsf@gitster.g>
+To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt <ps@pks.im>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Chris Torek
+ <chris.torek@gmail.com>,  Ramsay Jones <ramsay@ramsayjones.plus.com>,  Ben
+ Knoble <ben.knoble@gmail.com>,  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v5 00/10] Xdiff cleanup part2
+In-Reply-To: <pull.2070.v5.git.git.1763505262.gitgitgadget@gmail.com> (Ezekiel
+	Newren via GitGitGadget's message of "Tue, 18 Nov 2025 22:34:12
+	+0000")
+References: <pull.2070.v4.git.git.1763159816.gitgitgadget@gmail.com>
+	<pull.2070.v5.git.git.1763505262.gitgitgadget@gmail.com>
+Date: Tue, 18 Nov 2025 15:11:40 -0800
+Message-ID: <xmqqms4jc4wj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,98 +94,46 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-René Scharfe <l.s.r@web.de> writes:
+"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On 11/18/25 10:46 AM, Jeff King wrote:
->> 
->> I also wondered if we ever use mkstemp() at all after this patch. If
->> not, we might want to declare it off-limits. Not because it is evil, but
->> because our own implementation is more predictable (and we can drop the
->> compat wrappers for mingw). It looks like there is one more call in
->> entry.c's open_output_fd(), but arguably that should be calling
->> xmkstemp() or git_mkstemp_mode(). But that's out of scope for this patch
->> (I just thought I might nerd-snipe René into looking at it).
-> Thought about it before, but couldn't bring myself to ban mkstemp(3).
-> Its only faults are lack of features (mode setting and suffix support)
-> and not being available on Windows, but apart from that it does its
-> job as advertised.  Which means ... it doesn't cut it for us.  Hmm.
-
-When somebody asks:
-
-    On this and that platforms, mkstemp() is natively available.
-    Why are we using git_mkstemp_mode() instead?
-
-after seeing this patch, I am tempted to say "Why not?"  Are there
-legitimate answers to my "What not?"
-
- - the platform native one could be more performant?
- - the platform native one could be more secure?
- - using the platform native one, we can lose out custom code?
-
-None of the ones I can come up with offhand sound very legitimate.
-
-One upside might be that doing so would make the behaviour more
-predictable, in that even on a platform with native mkstemp(), we
-would use the same implementation as what we use on Windows.  But
-I do not know how much upside it is in practice, either.
-
-> --- >8 ---
-> Subject: [PATCH] stop using mkstemp(3)
+> Changes in v5:
 >
-> mkstemp(3) works fine if you don't need custom permissions, a specific
-> filename suffix or to run it on Windows.  For those cases we have a
-> custom implementation around git_mkstemps_mode().  Use it for the base
-> case as well, for consistency across platforms.
+>  * Remove the non-word 'signless', and rephrase that paragraph in
+>    unambiguous-types.adoc
+>  * Cast to char in xdiffi.c:get_indent() rather than changing the local
+>    variable to uint8_t
+> ...
 >
-> Suggested-by: Jeff King <peff@peff.net>
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
->  compat/mingw-posix.h | 1 -
->  compat/mingw.c       | 5 -----
->  git-compat-util.h    | 2 ++
->  3 files changed, 2 insertions(+), 6 deletions(-)
+> Ezekiel Newren (10):
+>   doc: define unambiguous type mappings across C and Rust
+>   xdiff: use ptrdiff_t for dstart/dend
+>   xdiff: make xrecord_t.ptr a uint8_t instead of char
+>   xdiff: use size_t for xrecord_t.size
+>   xdiff: use unambiguous types in xdl_hash_record()
+>   xdiff: split xrecord_t.ha into line_hash and minimal_perfect_hash
+>   xdiff: make xdfile_t.nrec a size_t instead of long
+>   xdiff: make xdfile_t.nreff a size_t instead of long
+>   xdiff: change rindex from long to size_t in xdfile_t
+>   xdiff: rename rindex -> reference_index
 >
-> diff --git a/compat/mingw-posix.h b/compat/mingw-posix.h
-> index 631a208684..57915119c6 100644
-> --- a/compat/mingw-posix.h
-> +++ b/compat/mingw-posix.h
-> @@ -185,7 +185,6 @@ char *mingw_locate_in_PATH(const char *cmd);
->  
->  int pipe(int filedes[2]);
->  unsigned int sleep (unsigned int seconds);
-> -int mkstemp(char *template);
->  int gettimeofday(struct timeval *tv, void *tz);
->  #ifndef __MINGW64_VERSION_MAJOR
->  struct tm *gmtime_r(const time_t *timep, struct tm *result);
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 736a07a028..dc3da7c6d5 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -1174,11 +1174,6 @@ char *mingw_mktemp(char *template)
->  	return template;
->  }
->  
-> -int mkstemp(char *template)
-> -{
-> -	return git_mkstemp_mode(template, 0600);
-> -}
-> -
->  int gettimeofday(struct timeval *tv, void *tz UNUSED)
->  {
->  	FILETIME ft;
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 398e0fac4f..0e6bd266cc 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -446,6 +446,8 @@ static inline int git_has_dir_sep(const char *path)
->  
->  #include "wrapper.h"
->  
-> +#define mkstemp(template) git_mkstemp_mode((template), 0600)
-> +
->  /* General helper functions */
->  NORETURN void usage(const char *err);
->  NORETURN void usagef(const char *err, ...) __attribute__((format (printf, 1, 2)));
+>  Documentation/Makefile                        |   1 +
+>  Documentation/technical/meson.build           |   1 +
+>  .../technical/unambiguous-types.adoc          | 224 ++++++++++++++++++
+>  xdiff-interface.c                             |   2 +-
+>  xdiff/xdiffi.c                                |  29 ++-
+>  xdiff/xemit.c                                 |  28 +--
+>  xdiff/xhistogram.c                            |   4 +-
+>  xdiff/xmerge.c                                |  30 +--
+>  xdiff/xpatience.c                             |  14 +-
+>  xdiff/xprepare.c                              |  60 ++---
+>  xdiff/xtypes.h                                |  15 +-
+>  xdiff/xutils.c                                |  32 +--
+>  xdiff/xutils.h                                |   6 +-
+>  13 files changed, 336 insertions(+), 110 deletions(-)
+>  create mode 100644 Documentation/technical/unambiguous-types.adoc
+
+This round looks good to me.  Shall we mark it for 'next'?
+
+Thanks.
