@@ -1,238 +1,157 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FDF34FF7A
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 11:28:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66345248880
+	for <git@vger.kernel.org>; Tue, 18 Nov 2025 12:01:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763465292; cv=none; b=nVCt2jsJJRA35FCM3Ox5vv4jvhQVoQdablUGd0NKBl5cJ0JIeJwbj95sENSRHjgE+0RCu6owFI/0iIRBCrmuFmciUU4umfP8cLTav1IsXam4zsJ4boboxyrs4ZFGqkQrsk7qTdF2yC45Mji8N4QvR2ELKq+ssX8Pqvqq6SBXyyc=
+	t=1763467285; cv=none; b=YD6icS19phG7PC3UES/cdzie2pdKTYds2kQvIS9+Be/0IwBtD+NUvFznoysv/nvDqlJXBkFZrsTu6wa0+KnDV0I08+eXJjC8US4GimCWj0kDN3o3LN4r3obSaSV/c29gO15R1uZz2GL4BGAur1Wwlc2BqaV+OmeQmVcjLVBu3/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763465292; c=relaxed/simple;
-	bh=2k7HhaIYOOs3BXh12x4/laVna60CmztFvFCcmQaKggU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LJxdyb7H0vzXQHWp5XVEuGY4JiQKDkrPkEYkgc/W+Nd5x1u8m4s83woZV6sJH4YOD4tlU/1F/k545Q69iTEd7OuFmaMzR1XULrfH9mIuas2wXAEC7UyqpkWsRSxOyfrrjtPkG6uxjCHc/SVX0X27D9cdf8UxPbketjFsfomgdAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TSMCGdC7; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763467285; c=relaxed/simple;
+	bh=dPYgwIhgFAuvTbvnwhQ25UDp/bSK3q5apGGMWm2hS7o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bgH7J78oICyoTcEYzmNhR0KJCN1sllYlDt1uIeBjXSbGm4MRpdkDGHTQ1dLoTl0RO2otO1NuGxyfT3giXDR1bbf6qcZ793ZDlg2apP6SqcIoCt/qgc2Ohs1cXjLuC890jIBC3gonvsjodWwKJSo1xqdlSRKyo3YEnqG7PHBo99E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=RvGvGPJS; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=wsii/JPe; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=RvGvGPJS; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=wsii/JPe; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TSMCGdC7"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b737cd03d46so439870266b.0
-        for <git@vger.kernel.org>; Tue, 18 Nov 2025 03:28:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763465284; x=1764070084; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UnaAKwk7x7oDqcRXpULbV9nX0QVS5pHyYgmJtTViigs=;
-        b=TSMCGdC7353Zm3mRFQNHMkPjxzleo4CjHyw3ZEpbTyP+zt7hBOWgkQNLKcx19BPgTO
-         Ga7UfwJ53Jo8aooZwxVrASWlOWIjsehIwn37W5q/biDjlTTb9xKXVNo4ECrZvZ+EEOmz
-         LDDUFXFqNnmByFJVRXYbUkcj8htvRzSu7misk5UpAky/XOe3q3lh3AqbL5gcLvTOQubN
-         efL48Hly0eFhm10Qcrb9gd8a5smnzJF7WxY1CEzz3o/EP233bw1832yWfKBfhoHkHa0A
-         yxOpxonvi2IMFmwOeNPXZPy8JrhzpOgcn/xUVBhBzHlVB/mmR4EcfAUuRjP1R22WI5SP
-         nnxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763465284; x=1764070084;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=UnaAKwk7x7oDqcRXpULbV9nX0QVS5pHyYgmJtTViigs=;
-        b=LQf2cts53+oCn5lc61ZPtjTefndodwUtk1o/pLU+8PHFRdAO2SV8iNZWBUhwJIDv/i
-         WWCjFF9fZ7u+xkRBSWvPmUuavTdMDl6cg1qIDAAyiUgFYILzr3VND09hXI1SYGLz3cuE
-         /MEfFWb6cmJbZ78/EnGEUo8SVyL7mChMpnZ9yNijIMmTqMoMO2Rc0o6dEKIh3oGi6UAf
-         aEAlJrBfV9+aop0HzDW9wguCdc9GlT7fmydXx8/QuHVXssP0rk2qjtD5Z9zOWLbYBJC5
-         qcAybTH09QsjJYbmNB5YItHzzmDHK25lC2Wk7PtxIndjOMh7imbGquW6LC8kl2z38+nO
-         wBBA==
-X-Gm-Message-State: AOJu0YxDx8uQXmyS1HeeujM0+f9jA9D5sTmR9o5m3rb+XZjv0F4ROJeY
-	vTC/dQxbjpu16Nh55MTG28vuxzj6OnV3CgGOcLLi5HS/9h1wS1DH5ReZ
-X-Gm-Gg: ASbGncuRYz3fDvWNhCm4ym2F6UH0R2OILSVhdeP7AjuVrK6qv77478Yvhwl0ui0iQlZ
-	XUPTNzkwPV4MKIUNsCk/mgwSwtA8l0E2IhK+Edg181M6nqHXxlNJoksxR6Lx0NE8NSKefPMUOZh
-	kHFueRA7zp5eu9x/NIsdBLc9WwQ29v+h97zDC8cTFA4PKabJnBzf+XwFvRnGkWykG/jQPzPhc8S
-	bzK7guac4TayP+yxC3T4FyjeRt+wMvtcMU7KLOW0IPfs1AOIzxZHaQGRCtjCS/7myQZAUiEyxlE
-	LrVm4B77Hc1QrqWMzc279Xb6vrk6Xw9+IfDo+KgZCknIU8lB07GqNFYXrpjPDX+Gn9WKBeZFy90
-	cR5fE6t8uQBodcDR4M7ZYaee1sbpbQuaX2OHTe13WiaU3BUacZ1kb653BX/ZZq/429EF/Kvef7Y
-	IsJr/M9TuVw0Pp7Bg=
-X-Google-Smtp-Source: AGHT+IHkfP6HWagC3KYta7D3CxSkUr632WJa4m1iPzXjrY9zGlg3XWxjgIURd/nqTvWCCWav1Hsszg==
-X-Received: by 2002:a17:907:97c3:b0:b73:4fbb:37a2 with SMTP id a640c23a62f3a-b736787e089mr2089833366b.5.1763465284287;
-        Tue, 18 Nov 2025 03:28:04 -0800 (PST)
-Received: from [127.0.0.2] ([2a01:599:118:b28a:3b78:ce56:def6:5cf8])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b73718fec4csm1005451066b.39.2025.11.18.03.28.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Nov 2025 03:28:03 -0800 (PST)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Tue, 18 Nov 2025 12:27:56 +0100
-Subject: [PATCH v6 2/3] fetch: fix non-conflicting tags not being committed
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="RvGvGPJS";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="wsii/JPe";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="RvGvGPJS";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="wsii/JPe"
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 0ED7F1FE26;
+	Tue, 18 Nov 2025 12:01:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1763467276; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Giwwy2s2LD5PruFfgYUjDvXL8Sxuq5MWK5JNV2MrZnw=;
+	b=RvGvGPJSyy52qaGhTfYDB314hUWlyHe3XnWp+1m5emH4jjqQ0dtEk3loFmA1W5UlH3Z8PW
+	MF2AetDt6NC3JyhT2z20DWX89eDn/HzXvwjBDUMh4hOJgFzQQ6kIsRdZwz4rtgc45vqlxT
+	hdyus82UiGAbh4uTPfEuqDYiEQAE6Qc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1763467276;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Giwwy2s2LD5PruFfgYUjDvXL8Sxuq5MWK5JNV2MrZnw=;
+	b=wsii/JPe9HcBDL5V+DZCLAv9H5pTvOKFOpYE4F3UkpMDr+SX1VSfGLEzgml7S1JKCvvol4
+	BsLBVKyjktpXiXCw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1763467276; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Giwwy2s2LD5PruFfgYUjDvXL8Sxuq5MWK5JNV2MrZnw=;
+	b=RvGvGPJSyy52qaGhTfYDB314hUWlyHe3XnWp+1m5emH4jjqQ0dtEk3loFmA1W5UlH3Z8PW
+	MF2AetDt6NC3JyhT2z20DWX89eDn/HzXvwjBDUMh4hOJgFzQQ6kIsRdZwz4rtgc45vqlxT
+	hdyus82UiGAbh4uTPfEuqDYiEQAE6Qc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1763467276;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Giwwy2s2LD5PruFfgYUjDvXL8Sxuq5MWK5JNV2MrZnw=;
+	b=wsii/JPe9HcBDL5V+DZCLAv9H5pTvOKFOpYE4F3UkpMDr+SX1VSfGLEzgml7S1JKCvvol4
+	BsLBVKyjktpXiXCw==
+Date: Tue, 18 Nov 2025 13:01:15 +0100
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org,
+	=?iso-8859-1?Q?Jean-No=EBl?= AVILA <avila.jn@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sergey Organov <sorganov@gmail.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Jason Cho <jason11choca@proton.me>,
+	"Jakub T. Jankiewicz" <jcubic@jcubic.pl>
+Subject: Re: [PATCH v2 2/2] doc: git-worktree: Add side by side branch
+ checkout example
+Message-ID: <aRxgC7TAopqsrZen@kitsune.suse.cz>
+References: <a203b35538847f3c9358a5ae26fb4ebea5734cfc.1759420102.git.msuchanek@suse.de>
+ <0e11e6fb394ffa3a1286deea5a8ede5ba3e4bdf4.1760115862.git.msuchanek@suse.de>
+ <CAPig+cSNesf0UwS4=Bxe-Qn+G9y3YYPyOK+7y3q8QJk+o7jaVg@mail.gmail.com>
+ <aPtRzTwVgVfqjaZT@kitsune.suse.cz>
+ <CAPig+cQoL_=WdNpcO_9mTLDRRDHCOC1-nYMwUyfaev3BZyzaow@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251118-fix-tags-not-fetching-v6-2-2a2f15fc137e@gmail.com>
-References: <20251118-fix-tags-not-fetching-v6-0-2a2f15fc137e@gmail.com>
-In-Reply-To: <20251118-fix-tags-not-fetching-v6-0-2a2f15fc137e@gmail.com>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, jltobler@gmail.com, ps@pks.im, 
- gitster@pobox.com, David Bohman <debohman@gmail.com>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4724; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=2k7HhaIYOOs3BXh12x4/laVna60CmztFvFCcmQaKggU=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGkcWD3Zbx0iq9UdNHO4eB69SKzT9/f510rA/
- Sf4kmYGgXkgp4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpHFg9AAoJED7VnySO
- Rox/s5EMAJsaQYtwzaFXxnXR8Qew0+OrV/Ic2A/YFkcSTCaryBM3N9ZIJkyOklbYtWSiLJAJz3b
- JOnk85iJJH0mubxkCf4XD71Spp6D3QxrkoVYMamfZPWfUB0Getr579hIksRxr6Xaxd0yXgFy4hb
- e20i3EICMA/FPbG56MczdVEuiwqPz4wIA75QvNteLJb5SVn+c8PEswg1YlAaLpiOK4uEq6Tu9b8
- cIpq5a9AX+/NdnkdIUyWWYxuCJWRCDtTJg4002gffsRyU9woxPMU/Owls7wEORC2JiRDeXm/Ka9
- GWRz+QiwWRfpqmACcOgVgW4FJ37H8gxnsBgz6F4OGL4X6VkZPZbdl2ZvaIGJgRaFdQGAgxd5Aw1
- iaTxUJiJwTi2OXDlL8cNUeZZdstTcLPyq3wTtjNtE2wlrL7K1w4iXn8pBBr/n4D6yvF+M2Xln5V
- WfYaI0zu2d5WnnsXS3QvQnBrTlSy+RfO9B20dxF4+VDSBGphRpxde4euhwPrxJztAQQrZnrpjN5
- 2g=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cQoL_=WdNpcO_9mTLDRRDHCOC1-nYMwUyfaev3BZyzaow@mail.gmail.com>
+X-Spamd-Result: default: False [-2.80 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	TAGGED_RCPT(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	MISSING_XM_UA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RCVD_COUNT_ZERO(0.00)[0];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	TO_DN_SOME(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,pobox.com,proton.me,jcubic.pl];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	FROM_EQ_ENVFROM(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
+X-Spam-Flag: NO
+X-Spam-Score: -2.80
+X-Spam-Level: 
 
-The commit 0e358de64a (fetch: use batched reference updates, 2025-05-19)
-updated the 'git-fetch(1)' command to use batched updates. This batches
-updates to gain performance improvements. When fetching references, each
-update is added to the transaction. Finally, when committing, individual
-updates are allowed to fail with reason, while the transaction itself
-succeeds.
+On Fri, Oct 24, 2025 at 12:57:42PM -0400, Eric Sunshine wrote:
+> On Fri, Oct 24, 2025 at 6:15 AM Michal Suchánek <msuchanek@suse.de> wrote:
+> > On Sat, Oct 11, 2025 at 01:17:47AM -0400, Eric Sunshine wrote:
+> > > Third, the example seems overly complicated, especially with its use
+> > > of `--git-dir`, which feels less discoverable (at least to me) than,
+> > > say `-C`. What I have in mind is an example more like this:
+> > >
+> > >     $ git clone --bare <repository-url> myproj.git
+> > >     $ git -C myproj.git worktree add feature-a
+> > >     $ git -C myproj.git worktree add feature-b
+> > >
+> > > That should be more than sufficient to get people up and running with
+> > > associating worktrees to a bare repository.
+> >
+> > That creates a mess. First part is not creating the directory to contain
+> > the worktrees related to the repository. Second is creating the
+> > worktrees inside the bare repository, contrary to any reasonabe usage
+> > advice.
+> 
+> Sorry, I mistyped that. What I meant was:
+> 
+>     $ git -C myproj.git worktree add ../feature-a
+> 
+> which makes the worktrees siblings of the bare repository.
 
-One scenario which was missed here, was fetching tags. When fetching
-conflicting tags, the `fetch_and_consume_refs()` function returns '1',
-which skipped committing the transaction and directly jumped to the
-cleanup section. This mean that no updates were applied. This also
-extends to backfilling tags which is done when fetching specific
-refspecs which contains tags in their history.
+and requires the mental gymnastics of adjusting the paths passed to the
+command based on -C argument. Does not sound like a good example how to
+use the command.
 
-Fix this by committing the transaction when we have an error code and
-not using an atomic transaction. This ensures other references are
-applied even when some updates fail.
+> As for first creating a directory to contain the repository and the
+> worktrees, I purposely omitted that step in the example since I
+> assume/hope that we don't need to hand-hold the user to that extent.
 
-The cleanup section is reached with `retcode` set in several scenarios:
+Its much easier to reove superluous parts from the example than adding
+patrs that were omitted.
 
-   - `truncate_fetch_head()`, `open_fetch_head()` and `prune_refs()` set
-     `retcode` before the transaction is created, so no commit is
-     attempted.
+Thanks
 
-   - `fetch_and_consume_refs()` and `backfill_tags()` are the primary
-     cases this fix targets, both setting a positive `retcode` to
-     trigger the committing of the transaction.
-
-This simplifies error handling and ensures future modifications to
-`do_fetch()` don't need special handling for batched updates.
-
-Add tests to check for this regression. While here, add a missing
-cleanup from previous test.
-
-Reported-by: David Bohman <debohman@gmail.com>
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- builtin/fetch.c  |  8 ++++++++
- t/t5510-fetch.sh | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 70 insertions(+)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index f90179040b..b19fa8e966 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1957,6 +1957,14 @@ static int do_fetch(struct transport *transport,
- 	}
- 
- cleanup:
-+	/*
-+	 * When using batched updates, we want to commit the non-rejected
-+	 * updates and also handle the rejections.
-+	 */
-+	if (retcode && !atomic_fetch && transaction)
-+		commit_ref_transaction(&transaction, false,
-+				       transport->remote->name, &err);
-+
- 	if (retcode) {
- 		if (err.len) {
- 			error("%s", err.buf);
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index b7059cccaa..4b113d7c27 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -1552,6 +1552,7 @@ test_expect_success CASE_INSENSITIVE_FS,REFFILES 'D/F conflict on case insensiti
- '
- 
- test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with lock' '
-+	test_when_finished rm -rf base repo &&
- 	(
- 		git init --ref-format=reftable base &&
- 		cd base &&
-@@ -1577,6 +1578,67 @@ test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with loc
- 	)
- '
- 
-+test_expect_success 'fetch --tags fetches existing tags' '
-+	test_when_finished rm -rf base repo &&
-+
-+	git init base &&
-+	git -C base commit --allow-empty -m "empty-commit" &&
-+
-+	git clone --bare base repo &&
-+
-+	git -C base tag tag-1 &&
-+	git -C repo for-each-ref >out &&
-+	test_grep ! "tag-1" out &&
-+	git -C repo fetch --tags &&
-+	git -C repo for-each-ref >out &&
-+	test_grep "tag-1" out
-+'
-+
-+test_expect_success 'fetch --tags fetches non-conflicting tags' '
-+	test_when_finished rm -rf base repo &&
-+
-+	git init base &&
-+	git -C base commit --allow-empty -m "empty-commit" &&
-+	git -C base tag tag-1 &&
-+
-+	git clone --bare base repo &&
-+
-+	git -C base tag tag-2 &&
-+	git -C repo for-each-ref >out &&
-+	test_grep ! "tag-2" out &&
-+
-+	git -C base commit --allow-empty -m "second empty-commit" &&
-+	git -C base tag -f tag-1 &&
-+
-+	test_must_fail git -C repo fetch --tags 2>out &&
-+	test_grep "tag-1  (would clobber existing tag)" out &&
-+	git -C repo for-each-ref >out &&
-+	test_grep "tag-2" out
-+'
-+
-+test_expect_success "backfill tags when providing a refspec" '
-+	test_when_finished rm -rf source target &&
-+
-+	git init source &&
-+	git -C source commit --allow-empty --message common &&
-+	git clone file://"$(pwd)"/source target &&
-+	(
-+	    cd source &&
-+	    test_commit history &&
-+	    test_commit fetch-me
-+	) &&
-+
-+	# The "history" tag is backfilled eventhough we requested
-+	# to only fetch HEAD
-+	git -C target fetch origin HEAD:branch &&
-+	git -C target tag -l >actual &&
-+	cat >expect <<-\EOF &&
-+	fetch-me
-+	history
-+	EOF
-+	test_cmp expect actual
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
-
--- 
-2.51.2
-
+Michal
