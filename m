@@ -1,175 +1,126 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142DC2F7477
-	for <git@vger.kernel.org>; Tue, 18 Nov 2025 23:49:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C723B24A051
+	for <git@vger.kernel.org>; Wed, 19 Nov 2025 04:15:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763509803; cv=none; b=jtSiyjSVsacPBATAX3jCe8Dg+iJLXjSBq4IQQDG3OMRX4PsjoXDmwNsVdHzKXJUwpHBAe1ytIY7eIC/52YSyihGBzmV7Md+6IZ5Hneld9NL6i6T8S6WsoACjOABl40bSf/h7rWr8wZyVYnW1MgkPjy/GMbTyphLMCRGoSMPjDQY=
+	t=1763525703; cv=none; b=o++igmU/n7g3m/QkQvar6Brg12eYXghBeWTy+WnkibmHzmDOGxgzHZwXL2BWR45I/e5zYVzgHsQUkGmph45LsZs6nddn9t4UbCYIvrDTkKVPopV+e2/5LRimHNGeT1GOTF+KWgEMtbc1LgPtUeuQJwHA2JrMSLNvxpEzaGVoBTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763509803; c=relaxed/simple;
-	bh=M7yTU5IGt62locgWIBpCfDD4rKs311Di/h7HZi2+MWw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XZpiQ4M2YY06xGzfYzx1pG0RPgKKLiHxFLnP+VvWD8Vfd108BMHOoMLAQGceQ2vVN3bHyx5SjkYwMEohCqMxRAWVkr8tEKWPTc5KxCPwzCbI7pXuihPDfedjXdYTIju5nta+gpUfVQzLrZeeL+cNqoiqj+uoTKkqnfw3piwoTMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=UH9ZCex5; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1763525703; c=relaxed/simple;
+	bh=qQB72Ze0vK+W85w/x7adrV+Epgo4MBJ3c1MJI6pmXIg=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=UN3llJzUnQAESLdL7MH+IUzd+bpKg/1uj0+j9XGeTSZIh2z1jmfT2J9yfcwfKM4THLT46Fs5uZaCSRE7XJhRjrA0zRp3JnItwUFj5SR0t+ydXjnNSnWBPk++svMEK+lCHmGbePVVEhK/2o6jWyJLeNB/gQEhvPZx3hCg3bQNnBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DcI/8eKq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XvKmK6P2; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="UH9ZCex5"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id LVPLvt5evEAJ1LVPNvdmn5; Tue, 18 Nov 2025 23:46:49 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1763509609; bh=x2MeqQa07uvs9Mm4fp/3SasD16TJUwmeo3cUanJPj5E=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=UH9ZCex5rvcR8oLRWgY41PS3CSb1Yi2NqS82tC2xlPfxMSLD+f3ul93p2pkhV9OiZ
-	 joICc6qQym8/tbVCZMLjWc6s9eOPmKnbo4c0JM0tBSynVm/6ryf3O+4tBmKI89JL7k
-	 eMRWorSUn9X0BxGjdIrsZiYx5YXDUCQRSIHAxP6ymghc8+D09NeFx5/J2ZQLL21Ups
-	 GecRtv3rIWulHHBtDV7Zhm96XaCMr2S2qkrbROuy4U3ciDvwtLIiMibBCiuC+jhLUs
-	 evpAW6SawbBnB5W58GnzAd4jaIUIJLBZVzi+a5N/9YFJ0rXls/0FKLsfcTNWgZxFhI
-	 dCGTCxHS5EEkQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=NOl2+F6g c=1 sm=1 tr=0 ts=691d0569
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=1StWMtfbPirchfnQ7w8A:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <9c7a7d09-2cc0-40f7-b37a-befef5339d76@ramsayjones.plus.com>
-Date: Tue, 18 Nov 2025 23:46:47 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DcI/8eKq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XvKmK6P2"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8C2B214001DE;
+	Tue, 18 Nov 2025 23:14:59 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 18 Nov 2025 23:14:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1763525699; x=1763612099; bh=qQB72Ze0vK
+	+W85w/x7adrV+Epgo4MBJ3c1MJI6pmXIg=; b=DcI/8eKq42+WqtBAgi0a6IH7OQ
+	+TUBTEbeeO10ecgBpn+Z9P5luUI1MlfeY5ZkdHZCq8FJno/Q8pI9EmY0G5/lDJ4U
+	7mifMCrRW2lfDh/wzVntb9LKl2CAPXNdO2DdHtQfXlU0FqQ1YjauewudQ6gM/zgv
+	FCZaseFULJjw3iV6ym3pY28DeTb5rGazbp7jIm0DIluiDAd+h15T1IrbegtevcPM
+	o3a+yckn8tQofH3zcDpY35hnQYxlr/BzTtiFoxlTxeh62H07uE7/y8VA2yNfDxER
+	C8lDxjedSbLq7OcHGWZKZucW4avNbCIZ7zhdvfH+Nfhji+QanUN+SqxhNXiQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1763525699; x=1763612099; bh=qQB72Ze0vK+W85w/x7adrV+Epgo4MBJ3c1M
+	JI6pmXIg=; b=XvKmK6P25OgybzG1f+UeesxEpk09vFRJYutjKvC7FJhb2M6Zedg
+	vvIR3nLXKlw57Kxw2eTFCo3+UFi4vZY3qsXkwsmqG2p3qz6Nko4sNUmd+uQ35c96
+	0R+q1KVIhRpPMsC2qPy51UXUOSpnEU99Aid13ws0o1EkTPkByaxl2wPT0gC7iG6h
+	0wNqUPUbqtI8yq86pu8BZuXy2BK4h0NuAREaRkwkAd0jg42NXWTmPUPSDI3g1HES
+	hHf1KCey+B2wI45Rryo6xYWVUgB52MWhKnRDQl8bJPXfsr7XU5VvFUPnGjRQ4PvU
+	OAQe4iEFnalgYN2E9/Pcb8HMoraU0A6dWxA==
+X-ME-Sender: <xms:Q0QdaVXKzjBgoEJHuPjDXZ0DQQFB9GdpaX4Ah8eA7K3q3TKCOzgeVg>
+    <xme:Q0QdaYqFpf5uAJoxvmbDlFPfmYT4oD04T0n4SOl0SrLQBRRnYY5aWKS9dO04hzD7U
+    AvAZBMJjYBxF88Ap5QRImDno1hXPF4wMDE-KSFydPHOQkVDjOkHdg>
+X-ME-Received: <xmr:Q0QdacCvyUXQIkowN8qNbXVtOIyw3mJcjx369aKVmQZDJ1_TAjSzFP2pc90>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdefvddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefufhffjgfkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepteevteehgfevhfdthfduhfetgeefjeekhfelleetueevuedttddthfdvieej
+    teelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrph
+    hluhhsrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
+    rhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllhhiphdrfihooh
+    guuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsrdhtohhrvghksehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:Q0QdaUjMyEgxjQJrsVFbT3288vqLzOWVGhAHSybVoowqmbOJltkaIg>
+    <xmx:Q0QdaaYTKLs4sHmS-nmgjH8Y2LDq7K7NFFV_pHT5snNzCLAoUYY-3Q>
+    <xmx:Q0QdaVmSMYX1h7b8X3xvGMkh9cUt_CXobQ819mOx6EKiMK6Yt7vVJg>
+    <xmx:Q0QdaQgIHuG7g6HXJecF4ji-gENpPDX2_rfbHEDUsQsxXuET1ffjOQ>
+    <xmx:Q0QdaVtVxcQRLBHZUnp4tK9rLU9BslMJ0uUTzkZ0OJEOvsRzaHkWYk4v>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 18 Nov 2025 23:14:58 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt <ps@pks.im>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Chris Torek
+ <chris.torek@gmail.com>,  Ben Knoble <ben.knoble@gmail.com>,  Ezekiel
+ Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH v5 01/10] doc: define unambiguous type mappings across C
+ and Rust
+References: <pull.2070.v4.git.git.1763159816.gitgitgadget@gmail.com>
+	<pull.2070.v5.git.git.1763505262.gitgitgadget@gmail.com>
+	<8b56bf117289ca3be25533a36da1ea0c178ccfca.1763505262.git.gitgitgadget@gmail.com>
+	<9c7a7d09-2cc0-40f7-b37a-befef5339d76@ramsayjones.plus.com>
+Date: Tue, 18 Nov 2025 20:14:51 -0800
+In-Reply-To: <9c7a7d09-2cc0-40f7-b37a-befef5339d76@ramsayjones.plus.com>
+	(Ramsay Jones's message of "Tue, 18 Nov 2025 23:46:47 +0000")
+Message-ID: <87h5uqk69w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/10] doc: define unambiguous type mappings across C
- and Rust
-To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood123@gmail.com>,
- Chris Torek <chris.torek@gmail.com>, Ben Knoble <ben.knoble@gmail.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>
-References: <pull.2070.v4.git.git.1763159816.gitgitgadget@gmail.com>
- <pull.2070.v5.git.git.1763505262.gitgitgadget@gmail.com>
- <8b56bf117289ca3be25533a36da1ea0c178ccfca.1763505262.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <8b56bf117289ca3be25533a36da1ea0c178ccfca.1763505262.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfGAGHwj8+K9jWmy/5Hib2DJuN/3dcOaRkHFVj0BHJrOn067rZ2fGA/quwaEPg3QzAjEF8yLfTX2SJSReNiYPXikmofJlDYM0PZcfaUrZDj8g1dxu+GJg
- D00KbCh5fyBiKO2CluDF1Q1qTMovjtOESqxBDaceq7cgg9+F+MqyDzlefArj41GFTxUZfy0+ds3woV0VvySd3TArbBr1qsNrvcE=
+Content-Type: text/plain
 
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
+>> +== Character types
+>> +
+>> +This is where C and Rust don't have a clean one-to-one mapping.
+>> +
+>> +A C `char` and a Rust `u8` share the same bit width, so any C struct containing
+>> +a `char` will have the same size as the corresponding Rust struct using `u8`.
+>> +In that sense, such structs are safe to pass over the FFI boundary, because
+>> +their fields will be laid out identically. However, beyond bit width, C `char`
+>> +has additional semantics and platform-dependent behavior that can cause
+>> +problems, as discussed below.
+>> +
+>> +The C language leaves the signedness of `char` implementation defined. Because
+>> +our developer build enables -Wsign-compare, comparison of a value of `char`
+>> +type with either signed or unsigned integers may trigger warnings from the
+>> +compiler.
+>
+> Yep, much better. Thanks!
+>
+> ATB,
+> Ramsay Jones
 
-On 18/11/2025 10:34 pm, Ezekiel Newren via GitGitGadget wrote:
-> From: Ezekiel Newren <ezekielnewren@gmail.com>
-> 
-> Document other nuances when crossing the FFI boundary. Other language
-> mappings may be added in the future.
-> 
-> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-> ---
->  Documentation/Makefile                        |   1 +
->  Documentation/technical/meson.build           |   1 +
->  .../technical/unambiguous-types.adoc          | 224 ++++++++++++++++++
->  3 files changed, 226 insertions(+)
->  create mode 100644 Documentation/technical/unambiguous-types.adoc
-> 
-[snip]
-
-> diff --git a/Documentation/technical/unambiguous-types.adoc b/Documentation/technical/unambiguous-types.adoc
-> new file mode 100644
-> index 0000000000..9a4990847c
-> --- /dev/null
-> +++ b/Documentation/technical/unambiguous-types.adoc
-> @@ -0,0 +1,224 @@
-> += Unambiguous types
-> +
-> +Most of these mappings are obvious, but there are some nuances and gotchas with
-> +Rust FFI (Foreign Function Interface).
-> +
-> +This document defines clear, one-to-one mappings between primitive types in C,
-> +Rust (and possible other languages in the future). Its purpose is to eliminate
-> +ambiguity in type widths, signedness, and binary representation across
-> +platforms and languages.
-> +
-> +For Git, the only header required to use these unambiguous types in C is
-> +`git-compat-util.h`.
-> +
-> +== Boolean types
-> +[cols="1,1", options="header"]
-> +|===
-> +| C Type | Rust Type
-> +| bool^1^       | bool
-> +|===
-> +
-> +== Integer types
-> +
-> +In C, `<stdint.h>` (or an equivalent) must be included.
-> +
-> +[cols="1,1", options="header"]
-> +|===
-> +| C Type | Rust Type
-> +| uint8_t    | u8
-> +| uint16_t   | u16
-> +| uint32_t   | u32
-> +| uint64_t   | u64
-> +
-> +| int8_t     | i8
-> +| int16_t    | i16
-> +| int32_t    | i32
-> +| int64_t    | i64
-> +|===
-> +
-> +== Floating-point types
-> +
-> +Rust requires IEEE-754 semantics.
-> +In C, that is typically true, but not guaranteed by the standard.
-> +
-> +[cols="1,1", options="header"]
-> +|===
-> +| C Type | Rust Type
-> +| float^2^      | f32
-> +| double^2^     | f64
-> +|===
-> +
-> +== Size types
-> +
-> +These types represent pointer-sized integers and are typically defined in
-> +`<stddef.h>` or an equivalent header.
-> +
-> +Size types should be used any time pointer arithmetic is performed e.g.
-> +indexing an array, describing the number of elements in memory, etc...
-> +
-> +[cols="1,1", options="header"]
-> +|===
-> +| C Type | Rust Type
-> +| size_t^3^     | usize
-> +| ptrdiff_t^3^  | isize
-> +|===
-> +
-> +== Character types
-> +
-> +This is where C and Rust don't have a clean one-to-one mapping.
-> +
-> +A C `char` and a Rust `u8` share the same bit width, so any C struct containing
-> +a `char` will have the same size as the corresponding Rust struct using `u8`.
-> +In that sense, such structs are safe to pass over the FFI boundary, because
-> +their fields will be laid out identically. However, beyond bit width, C `char`
-> +has additional semantics and platform-dependent behavior that can cause
-> +problems, as discussed below.
-> +
-> +The C language leaves the signedness of `char` implementation defined. Because
-> +our developer build enables -Wsign-compare, comparison of a value of `char`
-> +type with either signed or unsigned integers may trigger warnings from the
-> +compiler.
-
-Yep, much better. Thanks!
-
-ATB,
-Ramsay Jones
-
-
+Indeed.
+Thanks, both.
