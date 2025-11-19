@@ -1,153 +1,150 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD0530F92E
-	for <git@vger.kernel.org>; Wed, 19 Nov 2025 08:14:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA5432C30A
+	for <git@vger.kernel.org>; Wed, 19 Nov 2025 08:59:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763540043; cv=none; b=oJMHl6o6pvjFcV4inLyoBojlMoLNuYQdv0RBeJpmjikzJ+Y7ynpj2Q6waudX3hUjJB1p5KTcrW+Rt2O5WUyNhmOTsHX+nBOjtI960SekR3wh31roYdlUyD2bUgXPdSq7Uv7UAXxQi7/8VxlC0PlBioNT2a6Bja7lVofNXzY3Ck8=
+	t=1763542778; cv=none; b=SK5Xv1VjIBhGiFXfsJzxQBiRhtAhl7M/8246kbAfNxAM5DSVql4B1kQTWhiRkhJJyft4eAemRtnluKCPTr6VgIHTZwfWNvw0TJmvtn8oRO2GEaD9dDpM+rtGjkegc31jKCXmPE2D/+DyWeB+HTz236SxJistI31D+y02QuUnH4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763540043; c=relaxed/simple;
-	bh=UvfPs/J6x5cBQj+pu2ajd8gWi0QW8zudwTCxGwxUmIs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YzKfVEyzIug1yCVz9RAOxs6i5lhoCKz15iMBes1/DUAfL/JMXScPXDSTf36H25jut5ik1PoUnY7BOkTkOwzgsyu9ezad5tBNwOJ2EuEFH+Nqm7XkF45UqNwJiGbBygmtsMPipDIIS0OmQtOm8a9t/UY9JRAJWaLoGw490M9nn5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=cfbKPIeN; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=thLroBkP; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=cfbKPIeN; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=thLroBkP; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1763542778; c=relaxed/simple;
+	bh=lr6gej49qGKlZJLtdegY46EaUc8ElTpF4oQbPdKembU=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Zbh/s20aBt+v4IR7DyVJLIvU0XnZQFoK4hgoP8UOAauQF0WClcgtHZ2jst5xdZ+kY+dme/KkJB1aGFtuwp4T8JLXvyKc5uUZPWDvl6g+hjxuiifNHtfFFjgchD3vtT8ExZU+3toUmhZ+2wYGvhwo4DVFybisgpG/yfjsJD5cnho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b0DrJ+4N; arc=none smtp.client-ip=209.85.217.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="cfbKPIeN";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="thLroBkP";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="cfbKPIeN";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="thLroBkP"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 58720211D3;
-	Wed, 19 Nov 2025 08:13:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1763540034; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bZcy1ZkLvWXc5KCv/XBWaav57jyoxYWe2//E8puS1WM=;
-	b=cfbKPIeNnZIs9NN+pJ1ngJatU0hNF2GssbAKPbf7PmTOZa0Z4pI4aTc4LFTOMfBrpbaWKc
-	Od52PAnQOFkKcGHbxzIxmF9iNTufC6/dFK5HRXDhaNpC+4UfVE1lJ0/BYdcJnppJGfm/eM
-	fHmSqqLCdHLJYuGL6w77LeShGauGyzA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1763540034;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bZcy1ZkLvWXc5KCv/XBWaav57jyoxYWe2//E8puS1WM=;
-	b=thLroBkP9hF+UOZGYiLY5MJ+3gonSVS2M5EGDXvKDk6dsklvsHbhKiaj/OlDyyNroev+O/
-	afnludTT7HzSHcCQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1763540034; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bZcy1ZkLvWXc5KCv/XBWaav57jyoxYWe2//E8puS1WM=;
-	b=cfbKPIeNnZIs9NN+pJ1ngJatU0hNF2GssbAKPbf7PmTOZa0Z4pI4aTc4LFTOMfBrpbaWKc
-	Od52PAnQOFkKcGHbxzIxmF9iNTufC6/dFK5HRXDhaNpC+4UfVE1lJ0/BYdcJnppJGfm/eM
-	fHmSqqLCdHLJYuGL6w77LeShGauGyzA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1763540034;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bZcy1ZkLvWXc5KCv/XBWaav57jyoxYWe2//E8puS1WM=;
-	b=thLroBkP9hF+UOZGYiLY5MJ+3gonSVS2M5EGDXvKDk6dsklvsHbhKiaj/OlDyyNroev+O/
-	afnludTT7HzSHcCQ==
-Date: Wed, 19 Nov 2025 09:13:53 +0100
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jason Cho <jason11choca@proton.me>,
-	"Jakub T. Jankiewicz" <jcubic@jcubic.pl>, git@vger.kernel.org
-Subject: Re: What is the reason behind not hiding git worktrees from git?
-Message-ID: <aR18QQ03-Wg26oNJ@kitsune.suse.cz>
-References: <20250927152824.3132af88@jcubic>
- <xmqq4isn96s7.fsf@gitster.g>
- <aNglDzeOT5_4ZbdV@kitsune.suse.cz>
- <KUIfhZpMUwujq7A0Qdiri2OEhWabUXUVVpHZb7o0A-iqAC_46qQd5acUqN9TlkFMGe2t-aY4IXFQCjs6gKsawBCGSazI3QDPigdI7KrRf_A=@proton.me>
- <GY1ni5SFkgBgVIHm9HoO9dtLuLWbUPCv5mjcsy5VGi09PyRLV_gv3MMw2zsinKpi5Aon9J-LESzTUuwMOUNLRRLqyXM7ON-98WTzhH7RIYY=@proton.me>
- <aNuxUqDMNcZZs68n@kitsune.suse.cz>
- <xmqqzfac3pts.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b0DrJ+4N"
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-5e18598b9b1so1656274137.0
+        for <git@vger.kernel.org>; Wed, 19 Nov 2025 00:59:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763542775; x=1764147575; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uAaNb2yWz2YpS6Pvma8WxDc9rvktVv49/TmyvQvIhts=;
+        b=b0DrJ+4N1SDFm82la/I5+mxrlrwDukCSBTIrnaFGwcEr96sy98+MT7hiI6Kd6EAyaU
+         3S/0Z63F2NqGuoCbM3cvYUUdhgn2ea2ubmyj4g1KeEH5CZM4PNE8ZIpImCSrbI5gMA6n
+         cfoueSro+xeGiwBdY31bOLqcoHD9EO1CDJFDNoqtSPqYva8NUvOBepthintZuJJgEDeC
+         VYpUGbQg9MMBpZm8ah7EudNAT/+JnVKqX4VV/uJnfq1vnoK49zaOF37CVboOZeKRWm5P
+         ITHhSHGCiCWxHvhSiy8pkuczkBgfPrD2ISB6SQnhvyU8glQOzMhAGN757Sql/6+KdUUU
+         LdZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763542775; x=1764147575;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uAaNb2yWz2YpS6Pvma8WxDc9rvktVv49/TmyvQvIhts=;
+        b=XCWAF9VVdFiQNZBX+jkyirfQH9/PeBFXtSu/pSMyWwj35q2Ex7gwHFeJhYtGI7+csI
+         Au4FiJ+j/4i/Cg1Vol7FUa1tuAponewwPdQxN5WfWnHbelj5bG93o5VJYXcy5wa9EFDM
+         vjdxE1U8kXYIV7rJ/CZ9USDa1s3o+FI3Wp5Us/22eID4pzpqedPvpn1A9C8B19yy/6Bq
+         D4FLGbAMYvBMYiw3wUvbCF8UGRUzXzemAxtGwnZm9uFlH/p4T1J14ed/g4mTZJOVn7+D
+         w599a73FlpfDxbpf9ZmeK1+pzEjrdzxl49hxOlkOTNbET0eCCWXPP0/1+aC/AqEKdWmY
+         UGpA==
+X-Gm-Message-State: AOJu0Yy1nhwWYp7UF2GMBWYP0hRIqi9+adtB8sy03qe/+dWphChfHFch
+	hOFew7yqSWbGIha1wJGQX9vkkBen/10jRCZ4537xHWCP3BlnNBEQ/aOXJoPY8iJxZNf3olzL8N+
+	BE8nF1cLxP9uCCzHNjXU5J54uU2oHHIk=
+X-Gm-Gg: ASbGnct/9A3ILsyb0d6c+U7IpI2iilodpOC8kOozvo6qSOwfksQ3d36EMIHWn7okg9i
+	MqY05k9YTVFGYdxCERnO+VfTcaoAyOxm+NmQFB7q1PKNOH85SYQ3qik5uD9Gjhamzzz5dfIuabW
+	3yqBF6YBHhI6nPavTyZMfuG2F9NZElbobmSqOD663xuLnYqcDsuk9EioMOhsYDUHlbdPtdf3fo2
+	TTewAQplAXEgoeYB7Ozzf4SYMtEjGEsH9ZEVWwkGi84RA5o4aVmItM7tclXdkiZUeufmj5AfRpZ
+	mY5cvCIJ/ghum2LoA7pOWH5D6VA=
+X-Google-Smtp-Source: AGHT+IGZbPzV76X6xufK8hpMQTaQiodEbzfYbBhN5EmgdwGAE6Oo/56K5inU+oRZNGnT6UczgrgtwWC1e67cAN0Ftrs=
+X-Received: by 2002:a05:6102:cd0:b0:5df:b4ef:3ada with SMTP id
+ ada2fe7eead31-5dfc5bcd55dmr7683550137.36.1763542775453; Wed, 19 Nov 2025
+ 00:59:35 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 19 Nov 2025 00:59:34 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 19 Nov 2025 00:59:34 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqv7j7dxqy.fsf@gitster.g>
+References: <20251118-fix-tags-not-fetching-v6-0-2a2f15fc137e@gmail.com>
+ <20251118-fix-tags-not-fetching-v6-3-2a2f15fc137e@gmail.com> <xmqqv7j7dxqy.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqzfac3pts.fsf@gitster.g>
-X-Spamd-Result: default: False [-3.28 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	SUBJECT_ENDS_QUESTION(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.18)[-0.909];
-	MIME_GOOD(-0.10)[text/plain];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_ZERO(0.00)[0];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCPT_COUNT_THREE(0.00)[4]
-X-Spam-Flag: NO
-X-Spam-Score: -3.28
-X-Spam-Level: 
+Date: Wed, 19 Nov 2025 00:59:34 -0800
+X-Gm-Features: AWmQ_bmHr8kEn11jrHgDffxyuV9XNprm6kH9znRpOrTiYywPSwc_DpRSnAkRmIc
+Message-ID: <CAOLa=ZQW56JVxa+tahrhk00eOmY2d8b1Lch_XFk4tNkummVPeg@mail.gmail.com>
+Subject: Re: [PATCH v6 3/3] fetch: fix failed batched updates skipping operations
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, ps@pks.im
+Content-Type: multipart/mixed; boundary="000000000000ad7d860643eecc1e"
 
-On Tue, Sep 30, 2025 at 08:47:11AM -0700, Junio C Hamano wrote:
-> Michal Suchánek <msuchanek@suse.de> writes:
-> 
-> > On Sat, Sep 27, 2025 at 09:26:54PM +0000, Jason Cho wrote:
-> >> I think the best practice is to not add a work tre within the master work tree.
-> >
-> > And is that best practice documented somewhere?
-> 
-> I do not think it is documented anywhere.
-> 
-> In fact, I do not think the inventors of the worktree feature ever
-> expected this end-user expectation that checking out multiple
-> worktrees of the repository *INSIDE* a repository's checkout would
-> be any useful without confusing users.
-> 
-> IOW, omission of the documentation is by an assumptionk that nobody
-> would imagine doing in any other way.  
-> 
-> We can and should fix it retroactively, if the lack of documentation
-> is not guiding our users in the right direction.  Any takers?
-> 
-> > IIRC there are some VCSs for which it is common practice to keep
-> > checkouts of multiple branches side by side in the repository directory.
-> 
-> I can understand "side-by-side" but not "in".  Next to the primary
-> workree (aka "initial clone") would be more common.
-> 
-> > IIRC the repository directory itself is not a checkout in this case.
-> > Anyway, there is no obvious reason for anyone not familiar with git
-> > internals to not do this.
-> 
-> Meaning anybody not familiar with the tool would do any random thing
-> outside of the usage pattern that the users of the tool have been
-> establishing over the years?  I can certainly understand that.  But
-> then, creating a set of worktrees, one per branch, next to the
-> primary worktree that checks out the 'main' branch, would also equally
-> be a likely layout, I would imagine.
+--000000000000ad7d860643eecc1e
+Content-Type: text/plain; charset="UTF-8"
 
-And that's what the existing example shows.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> Fix a regression introduced with batched updates in 0e358de64a (fetch:
+>> use batched reference updates, 2025-05-19) when fetching references. In
+>> the `do_fetch()` function, we jump to cleanup if committing the
+>> transaction fails, regardless of whether using batched or atomic
+>> updates. This skips three subsequent operations:
+>>
+>>   - Update 'FETCH_HEAD' as part of `commit_fetch_head()`.
+>>
+>>   - Add upstream tracking information via `set_upstream()`.
+>>
+>>   - Setting remote 'HEAD' values when `do_set_head` is true.
+>>
+>> For atomic updates, this is expected behavior. For batched updates,
+>> we want to continue with these operations even if some refs fail to
+>> update.
+>>
+>> Skipping `commit_fetch_head()` isn't actually a regression because
+>> 'FETCH_HEAD' is already updated via `append_fetch_head()` when not
+>> using '--atomic'. However, we add a test to validate this behavior.
+>>
+>> Skipping the other two operations (upstream tracking and remote HEAD)
+>> is a regression. Fix this by only jumping to cleanup when using
+>> '--atomic', allowing batched updates to continue with post-fetch
+>> operations. Add tests to prevent future regressions.
+>
+> Other than the usual "unless you care about timestamps, do not use
+> 'touch' only to create a file" applies, but other than that the
+> added tests look quite sensible.
+>
 
-Michal
+Oops, will change that.
+
+> About the second new test piece, it is a bit surprising that we
+> didn't have test for --set-upstream on successful fetch.  It does
+> not need REFFILES prerequisite, does it?
+
+I was surprised too, that we don't have a test covering that flag.
+You're right it doesn't. The test for the conflict does, but the happy
+path doesn't. Will change.
+
+>
+> Thanks.
+>
+
+Thanks for the review.
+
+--000000000000ad7d860643eecc1e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e669d22a549b1966_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rZGh2UVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNE9JQy80MFJ3NXlRTDBmK01Ka0Rjb2R0Wk5PWXQrbQpFVVV0RHE2dGcr
+RDJWeWpYTms0YlAvY3V1RDNIWE0zMjFNQ2hwUTZla3UvMmdGVCtEM3FrSEgwaHBSMmhZMlBnCjNM
+ajE4blpJYXNQWmFMOWRlakRvc0laczYwdnpMQkNlMHJJczRyVEZVVlJ4dDg4TlA3VEFRMEdBbE5q
+MlNoTHMKT1I1dW1MbUVaRFlud016WmZCM3RjZUYwaTZWZUtDbXlPY1lkcndKbm42WmVXQkZOaWxh
+RFByWnNKRy9mMWhEYwpSZ3BUZnh4Zkg5S2MvdEtKN3haVDZNZ3pFNGF0S1BzNXlCckg4Vjc5T2hs
+dW1UWkRYa3docTFuNytHNG44TXliCnVjRFdObEVvYmtwRXU0T1hKMEZDRjdIc21hVVpDU3Rud2Vy
+bXExZFFXOUNzMGk1VGZpUHp0K1ZkelB3NjNoS3YKUDQyWHFHbmx6Smx2NTVQTzdZK1VWOTJQYzNP
+R1BQdTJuVUpubktxZmQ1OEhSUXNDNnJWMFNwclJvNTdmTkZOcApLQzVOaUFuSEQvY1dxNi92RWhv
+VjR2UWwvQ1RLMGVHVks2NGxZUDJxZGxvcFlENVo1bzEybllGTjR6L0I1WURzCmpwZ3NOSkhkWDJW
+UHpzTit2YW5ydURZdVRpVTNDaFZkdHNGSks4Zz0KPUk4dlQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000ad7d860643eecc1e--
