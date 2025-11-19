@@ -1,55 +1,55 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7351C2EA480
-	for <git@vger.kernel.org>; Wed, 19 Nov 2025 07:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8FF2EFD81
+	for <git@vger.kernel.org>; Wed, 19 Nov 2025 07:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763538474; cv=none; b=YAKsfNmFHYrpDSEmP67ABApNQeYDDJ8PVRNjoBRdB3mP2AYEiEnXMfKsK+oyYLwGPdxYl9/EML0wckZy0N5xbAOAnrnmAzwg4XjpMdtnULH/XR5HAeBtWYruzRdvx5zDq5KyunMIOYObEUje8vk7BGLvTVCl1YaK2uqYPArrkRg=
+	t=1763538476; cv=none; b=mRl2l6TLLwEdfA+vDshKDnX/6AFTeYTD9B58q1c5SV5kpweMHaE9ezXUk+TFvCDvWqYZ/MND66pkqFywhBMMVehbUgi9wbpb0H3gKnM0y0WnGnYMUJiOLWeAP+Cu7XqDyXQjfOn5XqxOY5J+qOMC5VbveH4CQZc3952zvTEcTTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763538474; c=relaxed/simple;
-	bh=bnMBxBxac2spkuNjqxWShhb2Kc4t2jNcuP+sLGk5tKo=;
+	s=arc-20240116; t=1763538476; c=relaxed/simple;
+	bh=YPkLxZ+8O+END01oPPA2DHg6/CoSu4IJE186WKE9izo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ER3M1U3UHpGQI+hrRgrQY8GIozjr0vhmpWqT6n89S6UUEaP1n1TAowl/AKiz6AhxyyyBHzsNzV+yDado56BPErPPQja6fkYXP0N9yce4cWCdIiDQfNaoBuMA44u/UQ1P1MXt0lSHz7IoSkeYsYrdj+CVA/nEVFwm/fmYa5yMIq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SDmJflAM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PZJbrgJB; arc=none smtp.client-ip=103.168.172.158
+	 In-Reply-To:To:Cc; b=JjqdPWDT7tPldglbfibatigz6bmWXB5GKFwIvTWsXEqYGlMSq7jQCL9AGSRBBD3ZOZzzaTQqrcCG+eqBcEsSYMKK3A0Je8XL01b3kOMxgwdqnO+moWIwE+fx/YN9l+zpXnNn7M+XEpZxtVEeSNJtTtt/lZ5v4i+1qNwwJcWX+uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hTRg25hS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qe0+7fx6; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SDmJflAM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PZJbrgJB"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 913F51400202
-	for <git@vger.kernel.org>; Wed, 19 Nov 2025 02:47:50 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hTRg25hS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qe0+7fx6"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4325A14001FA
+	for <git@vger.kernel.org>; Wed, 19 Nov 2025 02:47:54 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 19 Nov 2025 02:47:50 -0500
+  by phl-compute-05.internal (MEProxy); Wed, 19 Nov 2025 02:47:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1763538470;
-	 x=1763624870; bh=YANvimV5XgV06CSBLQ4zMJ4sDzvOiKDiygLLyi3/kWI=; b=
-	SDmJflAMhnoX8h5tbRgCRjbKtV9CAWQHUwtuxLEVodKcyns22jxjdwv1HiWlbCAu
-	keBQJmb80Nao6mFZyEd2DuEHiMyP+LIVIAR3um062XMXRciz8xKytQQXvDceC28D
-	FPAC5pLl5aRGx/x0OzRlHiQedOUVrBiRlrCCsJgPMNY9UH6REntWIGLL8TZFXnTZ
-	YfL9TI+OfvlvEj4MnkVwAR3BVukBG91gS/j8hMhZ0+282wdbat5AsmTROCF9JD1p
-	6KByMuOpu56ZX1+XdOdn0DDBq8LAb2nkYIulpipqzuNo8YfkxyH3/DWjZDqI82lR
-	sYTTjHgklhyPO1myOk9eiw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1763538474;
+	 x=1763624874; bh=AmlHAboTHaQQIrN/1xPj+zRy6W7ESqYLWEqFC3uOd0I=; b=
+	hTRg25hSERyGf31vzkjgbcPQYovptl/34NiFAl1tx5ulpHqpUVuMHHcPlPmCOS0B
+	CX8Kzb/F8HQ9xmjdYCNfmh0yy8SufS+IKDQCSiHdFTDpk48rp6BzNi16gERdLgaW
+	EBI8tRYu2sPOkOSWA6vTW68PAmkBxFipV3FmSjCWwSX/icxGC+qNL1Z5KWBAteGs
+	ijuPBkVeHDM6TVxb7zVrDn/bXl1o81aTdXb37aUTVcbu4Yer61VwTM9wvwb5HqmV
+	E+TckCC5O3pKNXDnFri/ERAo5txAnXLrwUyRP3dKWQJ/+hGR+pY1MX3IJOJ2Da8Q
+	xmnVkJl/Y4KnVb7l4xMOEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763538470; x=
-	1763624870; bh=YANvimV5XgV06CSBLQ4zMJ4sDzvOiKDiygLLyi3/kWI=; b=P
-	ZJbrgJBpXIb6sxuoQlNHAq7S5zCcVwoh5DK3dmVSpxID+nTSyD19AD+uns9DD2PX
-	3KbdprrKeqKiJsCc96dMNoE4QximWlD0nFGexG5KW214dScdUQXXxT/+WWWzsZDf
-	FMbqzP5GYeecs7ke+YhBZv8f9DRbL6pdrr2I8TDaO8HyfyplDKmCvZf0FcQkYqU3
-	ldnrjPVmToHCcCYe+zZVbyxx1Hy7yZDM6Mu2IeppY+dhX9y7mJB3Vh0I02367S8r
-	09jhEenLqN4s0e4eOy69pgx4khpyXXvs8ApCJC1TQiAM6wgatoTMu2vmY45f7znB
-	iTSRzXbuEoH0fXZu5VPAw==
-X-ME-Sender: <xms:JnYdaU4ea50W8bImm3aSm9gl7OGQ89ObX9OTy0OagxkW9Ea88IxKkQ>
-    <xme:JnYdac0PXn4XLUcSRhBU3-8CQJRP0c95cTUJkuYoa3PZ-ZkCfmJIWcTGDIQBUaPIX
-    MOaOYS_oImXE6Gk_2V58bd8f0psDs9ZWt_DBmCoTaLx7_H3zSKPJQ>
-X-ME-Received: <xmr:JnYdaZFTXSNcYnZDx3HI8_TudsnjUrG90-kbwbiC9Xs8OM5TuwLTzPFOL2YtPqggCYW1MJiqgCojkENwztna-KH_WGOtOFcBiqM3RVwBqw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763538474; x=
+	1763624874; bh=AmlHAboTHaQQIrN/1xPj+zRy6W7ESqYLWEqFC3uOd0I=; b=Q
+	e0+7fx6h5vIjv1MNQLiIc/pHrlrDGUTReoDBoHlVW6ysKyf1PKKk2USvWQYb3zx7
+	OKlFpbgLmW6VQxYsqtp4hLRda1+KtUKcXOwlwiofAGUXdwBr3onRrROSXcr3T1HI
+	kjOB5KrvoXEKDnnt0/j46KQh5S/AEvoZ8DlE2ETkj1ARH4Xig80LcIs+3HppbCoo
+	+/b8VZTmoxYgM+yZ+MzLFE4A7uyMjbAC97r12kV4NwWFMKoc798OQxW5eSQTMQ70
+	Db3+HszCEBhRBXj/8ld7WZzpABKWoeIERHfGV3aQJTt7XVFGAkX4y4oz4xsSpRvF
+	GwkA9LNv30fdUgKOSJsPg==
+X-ME-Sender: <xms:KnYdaTXcwrdPWvAElHsSycv4bbie8zbdS-VGeDRbnx-n6BH429urPw>
+    <xme:KnYdaSh1S-33SiDnbqsAb2AJxLDR5p4ch6jr5bAdbtaprWTLBWkGpL7joDHOrmmmh
+    HQpgAJifSYk15gP3lSW3EI39ZUvWDl3r8cBgVl9nxdR1CxWZ3Mnzw>
+X-ME-Received: <xmr:KnYdaVA9ZQFuBD0XCpkq-yQ_lBVDFXV4ITAeCtThVXlM9PK6Lw14O7BexUjdj1HFneBECLyvRf2xxTimGAuLKZg6eYHAr_0gNVpvLneMAQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdefieegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
@@ -59,21 +59,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdefieegucetufdote
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
     houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
     ohhrgh
-X-ME-Proxy: <xmx:JnYdaeRb8hf-0ukd4HGfY7m77eyrH99WBz2VnxkMoprwfueXIF-ycg>
-    <xmx:JnYdaYDtFAC19cgjmmBFGZcXaKQla3yXQZREotFXvOn6JawgVgh8Nw>
-    <xmx:JnYdaW0M9YmfqnB-9CSUAPSP7h49kUEuLCkKYQTyx_emzoY11QD6zA>
-    <xmx:JnYdaeVB---O5GAPda_lF40DCUdAftvMVCPGW7tRBbCKk64xCNNQkA>
-    <xmx:JnYdaVZshX41hWIrhy3F4t9otKG8X4xNFTndIal6CLTK-HZbUbN74a6m>
+X-ME-Proxy: <xmx:KnYdaTd8ZtsypWG3mKPVRwnnB-R9-bCADoiFUONWSh0Llj-6OyM0MA>
+    <xmx:KnYdaddCFVTsf_keEcFFtY6l5GOnQy4AZkFCw1HJ1zyjxOZpnTybYg>
+    <xmx:KnYdaXiM-biVRILymJCtGcA82zERHO4NP1m2yfJewYEDEPUtBn8oHw>
+    <xmx:KnYdaZSoE5QOcHHLx0OrD0WxKi4yzSfvLNP84v1eX2w0I8WCeD-jmQ>
+    <xmx:KnYdaWlH3szIIBRBHc8DdD8syCuA6EMK_3mLuUr0vElloLLD3nQ4gpxT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 19 Nov 2025 02:47:50 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 19 Nov 2025 02:47:53 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f4db5d36 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 7171eb90 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 19 Nov 2025 07:47:49 +0000 (UTC)
+	Wed, 19 Nov 2025 07:47:52 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 19 Nov 2025 08:47:07 +0100
-Subject: [PATCH 07/18] streaming: create structure for loose object streams
+Date: Wed, 19 Nov 2025 08:47:08 +0100
+Subject: [PATCH 08/18] streaming: create structure for packed object
+ streams
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251119-b4-pks-odb-read-stream-v1-7-adacf03c2ccf@pks.im>
+Message-Id: <20251119-b4-pks-odb-read-stream-v1-8-adacf03c2ccf@pks.im>
 References: <20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im>
 In-Reply-To: <20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im>
 To: git@vger.kernel.org
@@ -91,85 +92,81 @@ X-Mailer: b4 0.14.3
 
 As explained in a preceding commit, we want to get rid of the union of
 stream-type specific data in `struct odb_read_stream`. Create a new
-structure for loose object streams to move towards this design.
+structure for packed object streams to move towards this design.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- streaming.c | 85 ++++++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 44 insertions(+), 41 deletions(-)
+ streaming.c | 75 ++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 40 insertions(+), 35 deletions(-)
 
 diff --git a/streaming.c b/streaming.c
-index 9018b10b23..190628c767 100644
+index 190628c767..435ead1066 100644
 --- a/streaming.c
 +++ b/streaming.c
-@@ -39,14 +39,6 @@ struct odb_read_stream {
+@@ -39,11 +39,6 @@ struct odb_read_stream {
  	enum { z_unused, z_used, z_done, z_error } z_state;
  
  	union {
 -		struct {
--			void *mapped;
--			unsigned long mapsize;
--			char hdr[32];
--			int hdr_avail;
--			int hdr_used;
--		} loose;
+-			struct packed_git *pack;
+-			off_t pos;
+-		} in_pack;
 -
- 		struct {
- 			struct packed_git *pack;
- 			off_t pos;
-@@ -165,11 +157,21 @@ static struct odb_read_stream *attach_stream_filter(struct odb_read_stream *st,
+ 		struct filtered_istream filtered;
+ 	} u;
+ };
+@@ -287,16 +282,23 @@ static int open_istream_loose(struct odb_read_stream **out,
   *
   *****************************************************************/
  
--static ssize_t read_istream_loose(struct odb_read_stream *st, char *buf, size_t sz)
-+struct odb_loose_read_stream {
+-static ssize_t read_istream_pack_non_delta(struct odb_read_stream *st, char *buf,
++struct odb_packed_read_stream {
 +	struct odb_read_stream base;
-+	void *mapped;
-+	unsigned long mapsize;
-+	char hdr[32];
-+	int hdr_avail;
-+	int hdr_used;
++	struct packed_git *pack;
++	off_t pos;
 +};
 +
-+static ssize_t read_istream_loose(struct odb_read_stream *_st, char *buf, size_t sz)
++static ssize_t read_istream_pack_non_delta(struct odb_read_stream *_st, char *buf,
+ 					   size_t sz)
  {
-+	struct odb_loose_read_stream *st = (struct odb_loose_read_stream *)_st;
++	struct odb_packed_read_stream *st = (struct odb_packed_read_stream *)_st;
  	size_t total_read = 0;
  
 -	switch (st->z_state) {
 +	switch (st->base.z_state) {
+ 	case z_unused:
+-		memset(&st->z, 0, sizeof(st->z));
+-		git_inflate_init(&st->z);
+-		st->z_state = z_used;
++		memset(&st->base.z, 0, sizeof(st->base.z));
++		git_inflate_init(&st->base.z);
++		st->base.z_state = z_used;
+ 		break;
  	case z_done:
  		return 0;
- 	case z_error:
-@@ -178,42 +180,43 @@ static ssize_t read_istream_loose(struct odb_read_stream *st, char *buf, size_t
- 		break;
- 	}
+@@ -311,21 +313,21 @@ static ssize_t read_istream_pack_non_delta(struct odb_read_stream *st, char *buf
+ 		struct pack_window *window = NULL;
+ 		unsigned char *mapped;
  
--	if (st->u.loose.hdr_used < st->u.loose.hdr_avail) {
--		size_t to_copy = st->u.loose.hdr_avail - st->u.loose.hdr_used;
-+	if (st->hdr_used < st->hdr_avail) {
-+		size_t to_copy = st->hdr_avail - st->hdr_used;
- 		if (sz < to_copy)
- 			to_copy = sz;
--		memcpy(buf, st->u.loose.hdr + st->u.loose.hdr_used, to_copy);
--		st->u.loose.hdr_used += to_copy;
-+		memcpy(buf, st->hdr + st->hdr_used, to_copy);
-+		st->hdr_used += to_copy;
- 		total_read += to_copy;
- 	}
- 
- 	while (total_read < sz) {
- 		int status;
+-		mapped = use_pack(st->u.in_pack.pack, &window,
+-				  st->u.in_pack.pos, &st->z.avail_in);
++		mapped = use_pack(st->pack, &window,
++				  st->pos, &st->base.z.avail_in);
  
 -		st->z.next_out = (unsigned char *)buf + total_read;
 -		st->z.avail_out = sz - total_read;
+-		st->z.next_in = mapped;
 -		status = git_inflate(&st->z, Z_FINISH);
 +		st->base.z.next_out = (unsigned char *)buf + total_read;
 +		st->base.z.avail_out = sz - total_read;
++		st->base.z.next_in = mapped;
 +		status = git_inflate(&st->base.z, Z_FINISH);
  
+-		st->u.in_pack.pos += st->z.next_in - mapped;
 -		total_read = st->z.next_out - (unsigned char *)buf;
++		st->pos += st->base.z.next_in - mapped;
 +		total_read = st->base.z.next_out - (unsigned char *)buf;
+ 		unuse_pack(&window);
  
  		if (status == Z_STREAM_END) {
 -			git_inflate_end(&st->z);
@@ -178,7 +175,11 @@ index 9018b10b23..190628c767 100644
 +			st->base.z_state = z_done;
  			break;
  		}
- 		if (status != Z_OK && (status != Z_BUF_ERROR || total_read < sz)) {
+ 
+@@ -338,17 +340,18 @@ static ssize_t read_istream_pack_non_delta(struct odb_read_stream *st, char *buf
+ 		 * or truncated), then use_pack() catches that and will die().
+ 		 */
+ 		if (status != Z_OK && status != Z_BUF_ERROR) {
 -			git_inflate_end(&st->z);
 -			st->z_state = z_error;
 +			git_inflate_end(&st->base.z);
@@ -189,76 +190,61 @@ index 9018b10b23..190628c767 100644
  	return total_read;
  }
  
--static int close_istream_loose(struct odb_read_stream *st)
-+static int close_istream_loose(struct odb_read_stream *_st)
+-static int close_istream_pack_non_delta(struct odb_read_stream *st)
++static int close_istream_pack_non_delta(struct odb_read_stream *_st)
  {
 -	close_deflated_stream(st);
--	munmap(st->u.loose.mapped, st->u.loose.mapsize);
-+	struct odb_loose_read_stream *st = (struct odb_loose_read_stream *)_st;
++	struct odb_packed_read_stream *st = (struct odb_packed_read_stream *)_st;
 +	close_deflated_stream(&st->base);
-+	munmap(st->mapped, st->mapsize);
  	return 0;
  }
  
-@@ -222,7 +225,7 @@ static int open_istream_loose(struct odb_read_stream **out,
- 			      const struct object_id *oid)
+@@ -358,19 +361,17 @@ static int open_istream_pack_non_delta(struct odb_read_stream **out,
+ 				       struct packed_git *pack,
+ 				       off_t offset)
  {
- 	struct object_info oi = OBJECT_INFO_INIT;
--	struct odb_read_stream *st;
-+	struct odb_loose_read_stream *st;
- 	struct odb_source *source;
- 	unsigned long mapsize;
- 	void *mapped;
-@@ -244,8 +247,8 @@ static int open_istream_loose(struct odb_read_stream **out,
- 	 */
- 	CALLOC_ARRAY(st, 1);
+-	struct odb_read_stream stream = {
+-		.close = close_istream_pack_non_delta,
+-		.read = read_istream_pack_non_delta,
+-	};
++	struct odb_packed_read_stream *stream;
+ 	struct pack_window *window;
+ 	enum object_type in_pack_type;
++	size_t size;
  
--	switch (unpack_loose_header(&st->z, mapped, mapsize, st->u.loose.hdr,
--				    sizeof(st->u.loose.hdr))) {
-+	switch (unpack_loose_header(&st->base.z, mapped, mapsize, st->hdr,
-+				    sizeof(st->hdr))) {
- 	case ULHR_OK:
+ 	window = NULL;
+ 
+ 	in_pack_type = unpack_object_header(pack,
+ 					    &window,
+ 					    &offset,
+-					    &stream.size);
++					    &size);
+ 	unuse_pack(&window);
+ 	switch (in_pack_type) {
+ 	default:
+@@ -381,13 +382,17 @@ static int open_istream_pack_non_delta(struct odb_read_stream **out,
+ 	case OBJ_TAG:
  		break;
- 	case ULHR_BAD:
-@@ -253,26 +256,26 @@ static int open_istream_loose(struct odb_read_stream **out,
- 		goto error;
  	}
+-	stream.type = in_pack_type;
+-	stream.z_state = z_unused;
+-	stream.u.in_pack.pack = pack;
+-	stream.u.in_pack.pos = offset;
  
--	oi.sizep = &st->size;
--	oi.typep = &st->type;
-+	oi.sizep = &st->base.size;
-+	oi.typep = &st->base.type;
- 
--	if (parse_loose_header(st->u.loose.hdr, &oi) < 0 || st->type < 0)
-+	if (parse_loose_header(st->hdr, &oi) < 0 || st->base.type < 0)
- 		goto error;
- 
--	st->u.loose.mapped = mapped;
--	st->u.loose.mapsize = mapsize;
--	st->u.loose.hdr_used = strlen(st->u.loose.hdr) + 1;
--	st->u.loose.hdr_avail = st->z.total_out;
--	st->z_state = z_used;
--	st->close = close_istream_loose;
--	st->read = read_istream_loose;
-+	st->mapped = mapped;
-+	st->mapsize = mapsize;
-+	st->hdr_used = strlen(st->hdr) + 1;
-+	st->hdr_avail = st->base.z.total_out;
-+	st->base.z_state = z_used;
-+	st->base.close = close_istream_loose;
-+	st->base.read = read_istream_loose;
- 
--	*out = st;
-+	*out = &st->base;
+-	CALLOC_ARRAY(*out, 1);
+-	**out = stream;
++	CALLOC_ARRAY(stream, 1);
++	stream->base.close = close_istream_pack_non_delta;
++	stream->base.read = read_istream_pack_non_delta;
++	stream->base.type = in_pack_type;
++	stream->base.size = size;
++	stream->base.z_state = z_unused;
++	stream->pack = pack;
++	stream->pos = offset;
++
++	*out = &stream->base;
  
  	return 0;
- error:
--	git_inflate_end(&st->z);
--	munmap(st->u.loose.mapped, st->u.loose.mapsize);
-+	git_inflate_end(&st->base.z);
-+	munmap(st->mapped, st->mapsize);
- 	free(st);
- 	return -1;
  }
 
 -- 
