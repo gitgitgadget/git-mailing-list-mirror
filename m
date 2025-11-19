@@ -1,67 +1,65 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50446304982
-	for <git@vger.kernel.org>; Wed, 19 Nov 2025 21:46:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294CE2D063E
+	for <git@vger.kernel.org>; Wed, 19 Nov 2025 21:48:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763588805; cv=none; b=bBGp7PkvuFRNLPHfvUTqsRXU7kVoNtqr9bdn/kQf3PWYaTkgv+GFGs4JrQd0mC+dVmN403LnUsbQq5CLRhxmxJZh2LZvPYkOFsvv+0dAB6WCNVhtMcPzO5Z+I3E8GGhLdciTA6gwL2lRvLKHRaAw3enXT3zPP8lfaZTZL+V2528=
+	t=1763588939; cv=none; b=XnPWBoFbm1DberMhHv5+cxJ/GjCDuMiwxHRWFiFvIf58rSfAoC2FDahySmlqf2leDKy6K7/q0QvYvUI1tr+eHPJnirXKObb3VTCR+TKTWl1FBF8m7YvrWNTUJoTq7oZGWiwJw3uwJRDoerrRLcMfFzWSvrlTOy9IhVCVDp68ZdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763588805; c=relaxed/simple;
-	bh=R6eDKFidhEYQJKnljw6y5DG8lJW+X1caLs1zFkbXjkY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=W7ueI9fMiwYP+3Iwgmkh+eE/Z87MskpasiPWSjrgd4KT0mqhlUr/D7Cm3R1b+RdCMPpqKWEL1Q4lAKo2mBukfcQHc1uQusjSUyiNcGfAzyAX2STMCWelrof/JTx7fa8iBvTgGRAsgmMOHqPGHMftft2VeblyHAVeKbiBYhUE/uA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VjWqiJCW; arc=none smtp.client-ip=209.85.218.46
+	s=arc-20240116; t=1763588939; c=relaxed/simple;
+	bh=qkJoezRnT3DruMFvNYJPolqs0lfLZQjZetT2cu0KHsw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pfWfCxFjWW0unFT8aCcpJgkq+Cy3vuk06UCdo1vtXo4OcYVHWQDSoqGBK4WRm1zEo7yIhKj6BhvDV+xMk/ev784r6w6+8RBVttYJ6bHiI5MHUG8v8nGqKfX+T/ZMdmfD1fQVSd16sdJQX2f6JjfOUf4A+iV3fwMpYd6AlPEKBAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mhjeKK1D; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VjWqiJCW"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b739b3fc2a0so33853466b.3
-        for <git@vger.kernel.org>; Wed, 19 Nov 2025 13:46:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mhjeKK1D"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-640c1fda178so289858a12.1
+        for <git@vger.kernel.org>; Wed, 19 Nov 2025 13:48:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763588802; x=1764193602; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8HOd9VEzz/Nx3BYszmWfGeOJ77DkBVwJzjHhXkITMe4=;
-        b=VjWqiJCWyt98WWLVFm9yBXkKVRawQOfwgGxNYSb3LHSlZxxC1iTN3gnrlNRR23GAI3
-         EjtFR/dGIA3qBlcbqy6zB68TEqeNwugonLvD16Rxwp2IaZFUbK4yLL80H/Ly1lGH3ZZ8
-         iB3p14DzGmh2MO9qgcl9uKEKwrueE8bxbWYaUuxXxplkLOjuxsRf47/uEsHdOjUkgLpU
-         ChTs2EwZMUP+SzfcCQx7gWfN9Ud6GhtrvbDDZOMdgvxMUvG09UHi5cGpy1tI8E5NMHmq
-         FpeldpLZq1yxpzVN3LEeMIQ+xfa19vboFfG96XOin8O7L5jdU0Yvg/7NwWulecsMnuQE
-         yNTg==
+        d=gmail.com; s=20230601; t=1763588936; x=1764193736; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=khVKi6YtuucTd1JVVMUEJn+bMagdVPbzAbEP9K9fRtU=;
+        b=mhjeKK1DWDGpQi2zir9li8u59EeZD2y853LDLDtMygHqKs0An1xxGvnqgE5319eWvT
+         F5YRjvk4sdFKJ+xheUte1CEPk2Z1HezIm7Ht5xRJbgZMOem2js2exydAfTY1DuJEXemI
+         cZy/OEZcB9xW3qMsCKrJ9W3F4fi2Iua6eePKg1OFN/QNnuTE/MhoYB10Km9t8XbesLO8
+         3yGit/UjGe6PsuHg1lyf5hWSHAmPwt5v71hQrXkM3Y/Dfsc3+/npindWSiPlPM3jQLPL
+         nQg7mtau/GqXFW30WJgH1YqJ+NAmnd8cibeCZnrPExhHRadX5KbaR9hLEhVPm25Ue8Fk
+         jDfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763588802; x=1764193602;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=8HOd9VEzz/Nx3BYszmWfGeOJ77DkBVwJzjHhXkITMe4=;
-        b=DeMBJIKcQRV7Yj1BEj2eeGNUtd5zlgTd9tZ25Hcmo7ewG+86QFarpFyy7gDEHcrGHh
-         Ea8iNjvPpAJ8u2dilVJl3kO8I4uICdFTPqInGJ21DmjaVbEz0bP16qJu220lK9D2Leb6
-         mOJVIJ1cPjA5ICiRS/t/k3e55s/PK0qzHyXapP5cxaRZ3m+GMb9mEIEKiNaUVEZj0T+a
-         j4+BWiYzEvNlnSRmkk0uT/PQODNYk+x01jgIOXxsi/HbirW55p1W2HePrDvvgXvRRnpE
-         QO7WLJhsmWoXnMy5fVzW0aCZL7SCdAKRJkK7kb0LqkuN/84XGaY+A5tHoQQ8sYwuTrt0
-         opJQ==
-X-Gm-Message-State: AOJu0YyBF2WjOr9ClallTCL2Hws+Mlee/DM/+oEArZuEWzqKck+uHClx
-	G3Tpu6i//k3K+rS0ji84mi5vVN00wk58iB/XryoLmM3T/GK6+rPOQw4TfuL1jg==
-X-Gm-Gg: ASbGncv5MgbdcV+KhjdqZuZVQJt5+jwJwrfLLL2jYuTUNu89Mz4kdTVNUhrO4IsRqW1
-	fqGNES4xhGBUexj9U3EuJSmFCJIYgsWJJVAKoFkE8qq/k5WnQU54jGTnX3KF8iVKIHlBCUb/iON
-	hnmUmWry/anh2qWp01k9M/z0a90/EA/ANA1djOWDy9OXtkDlL7ytXA30MyjIXD0RvfbBTKcA2pP
-	RESGqGxXRrnO9LT8DuQb73vSEzUByJI4k51+3A+UNbSJs7SdBnteAtl5A3zeT+Bq6cfdNKf+UWW
-	lEzQS+QvSVhJmWS5iNaHlTFclTc0Pd5QkTG7DlQ8jcejuX+x5vVQQGvrIsHyAbZe/31dv0lkoIe
-	rkAVa8Hq7i1MOQAbZGu0Ruwd/lVXZiY5NczRRaoBeEKo2NSDOjHsb+prFhm/Yb5Xqr7/Vr1KBOp
-	b6XXKNDuOs7qzfTC4=
-X-Google-Smtp-Source: AGHT+IEd2T5/Deg3+9MesH8shD7z214NSmglSWaFPui9RdEo0oz4CfJWqqNBrly7jGc+elFYFGQj9g==
-X-Received: by 2002:a17:906:c14a:b0:b0e:d477:4972 with SMTP id a640c23a62f3a-b7654e4198emr75043666b.25.1763588801457;
-        Wed, 19 Nov 2025 13:46:41 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763588936; x=1764193736;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=khVKi6YtuucTd1JVVMUEJn+bMagdVPbzAbEP9K9fRtU=;
+        b=w6obT7UttnbpEDqtpdVc9hGM/cBQ6L3PIeWmmctN5At3bFlYOBGbgCvajuJPDNphJN
+         CSpMUiBX4BYzoQJGSoabkS/p1+i28tJhOiSktoKRGoSZam84FqWbnH14FFYUd0uomaFY
+         JDIJTnIN9ZeKzaP7nYcu46/Q20cIhVK+V9Qxdud3HgN/l4GAtg+k7/5ORDVCPOaszQEw
+         RWUtWDcfe93X/4nHVVYUqJKCnndXaGCoG3gxVwCvCJioV0/x3AUraPj7g1sJgIZGNjdh
+         BR1VfextU3HZdcUr89nQxTgGXIkEpn+m4j9mgW7wrLTbGXiBI6TU7CQz78gmLwzgCRZF
+         x1Tw==
+X-Gm-Message-State: AOJu0Yz8P18UaUAIw9lP65GJZjcLaVBcCoT1UQ8Omxh7kOrBGtBesITz
+	iq3eulDWQHb7IOQ1TBZ5LhPYRYgkuH9LQ/AnfZwAru+V/92rUNPrfOb5q13hzw==
+X-Gm-Gg: ASbGncuK6Cmxuq42vxIYCNNWBK6akpnofCRDEWpi/yyugqmauYuyQLNkm2VKIYD99+r
+	7GiNOPazapFXkZmRUqfsP/WYP3+cLlRD3PuorNGh6i9rpXBPtcjD/J42IuDjkX135NKVJpsxoqA
+	F1YuSBrIf5hJaKd8M6TQeq6tEVufz27BAhV+iulWT+mUbh6e04tC9F4LTDAge/jGr0606sj+9Ze
+	lvzCIlSrnDdUnIq2Z8L39biep0PzyfeYFqHaNYF39TW57fkGbBs1/IO+JUp6ps2qYMGfziHuNmY
+	LgGCXzGKf29/FwyZVNNb3agqJdTH2rLzdeLFwxIBEDN9w5SBzsH/Ihw1FzSUXIpnAPqw0DP0/KL
+	3NcNsreXmc4wSHQ9elkYzkX7pnxHgQj9PHsgLVjVtRkskATY6YP8kz221XsWztW20eVjtDyIswD
+	ZixBQY+NX27MASKUv9nt4wqcFCeQ==
+X-Google-Smtp-Source: AGHT+IGz9BfzMXdDyn96QzmYcF2gC3hKe2Y2Gb8EJGAipm0WTi5CQ8t/aDNfSMmo+lcUjDGZhHhIbw==
+X-Received: by 2002:a05:6402:50cf:b0:639:d9f4:165e with SMTP id 4fb4d7f45d1cf-64536450d3bmr742736a12.29.1763588936259;
+        Wed, 19 Nov 2025 13:48:56 -0800 (PST)
 Received: from [127.0.0.2] ([2a01:599:119:a01c:1871:c4bb:6fef:656d])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b7654d73430sm40760866b.24.2025.11.19.13.46.40
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6453642d307sm528090a12.19.2025.11.19.13.48.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Nov 2025 13:46:41 -0800 (PST)
+        Wed, 19 Nov 2025 13:48:55 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 19 Nov 2025 22:46:34 +0100
-Subject: [PATCH v7 3/3] fetch: fix failed batched updates skipping
- operations
+Subject: [PATCH 0/2] refs: allow setting the reference directory
+Date: Wed, 19 Nov 2025 22:48:51 +0100
+Message-Id: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,176 +68,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251119-fix-tags-not-fetching-v7-3-0c8f9fb1f287@gmail.com>
-References: <20251119-fix-tags-not-fetching-v7-0-0c8f9fb1f287@gmail.com>
-In-Reply-To: <20251119-fix-tags-not-fetching-v7-0-0c8f9fb1f287@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAEM7HmkC/x2MQQqEMBAEvyJz3oEkEhS/suwhmI4OSpSJLIL4d
+ 4PHoqi6qEAFhYbmIsVfimy5gv00NM4hT2CJlckZ5601npfMYT2gORxgReIoyi1859CP0SBRTfc
+ q5Hy33999P8XYBhNmAAAA
+X-Change-ID: 20251105-kn-alternate-ref-dir-3e572e8cd0ef
 To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, jltobler@gmail.com, ps@pks.im, 
- gitster@pobox.com
+Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4596; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=R6eDKFidhEYQJKnljw6y5DG8lJW+X1caLs1zFkbXjkY=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGkeOrzr2hmrVjWlchWiS1SPO0g9UcXljUbIP
- vAbz+7GMSJWiYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpHjq8AAoJED7VnySO
- Rox/u/MMAIrK3qGKy807huybOKS7CdQrET/9Vqdl6loXEbUAQ9YdYpDv18UDr30DyT75FpxlkUD
- GXS8wN72/2UKjkVPvtvEPC0ixEF+jm80/CiIw8z3+/oL/mraphxOnz780bznBy+p1zt3MJo81hg
- 3TCqFbD2cazWMwJ1Mz8V15pQCLItWys7tW5TcEC9EoWrw3DEV4/KHLuPMhnEeKwR4+bYfe6WdfQ
- RhZMHDgxKqLb7zykwb47a6PR7k1eTXDjHkaLy/wKfg+Yk4riOsVrYgOYc2MOoNqLDtsBc7rDKPa
- 0UbGORXeYgrMq0bzr/gnegNZBmkfC/5nf7VLRtE3nIHRGlS7pEF9UZBGr/H/7jCMI0NYkIjoLeQ
- /H95sOpR+cwiPkISkXp8BKtvih9Wdvhg7kE4sJFQrNjPB3kVSYh/E23rJgRQ5qVvHfCzmLlQpTs
- lgpW1QXwhMmxJu09+0aV5hChbswFQkO9tJ+2+PWhOWGG+ayS3xc0Y4U4Yvmiw+dMZ4SqsBzuTC3
- rE=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1945; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=qkJoezRnT3DruMFvNYJPolqs0lfLZQjZetT2cu0KHsw=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGkeO0ZGzhskr96Oyv9rtk8/dqu6fo/SgG7K4
+ wavNXqiSu5JIokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpHjtGAAoJED7VnySO
+ Rox/e+sL/jdRqOdXEcUrhklp/t0KmFgvCzZlZ5HGGTu4YKEmy4GTGwBG/56JEvQZTbKp6Bbjdpk
+ uiro50FO8/xktye95ps2QHyEOhxY29HBnxeA6a7dEml/VqolXFCO3EiyT86LETEXEwGZchaWu3d
+ r2EMBUECTfFkznMsPcqQb756sIklUyRNialgrIep7VRmgGsqGvPlFMJNA7HEuv6H1gIfaUXuEPD
+ 6PwGy1SbKmUhuhLzqd6Jzh7VHS9Bo9PQyurG/p8LhmDVBeVJYcF0eIYnS62IFoMim5ExcpDKe2W
+ wRxtMuJMoyUICMnQvovQM/+trzj9W/46aVgyr7aRPPHGGrZonT1rcGuNVwuz+UBilVpa8ouTPVu
+ asb4C8QfAGpefdTl1RQhBcJHPy0Kg0L+0mHOrUkGV22XIeD155tmB2xYGs3Ial+Ld6KSPeTvxkA
+ cldLf2sXDqfqM2a4mDuNDGCgAygiz/YLBOiGJYBMQiGWn+X4vum7t/wRLzJ6UjCyRynGfEGj294
+ qw=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Fix a regression introduced with batched updates in 0e358de64a (fetch:
-use batched reference updates, 2025-05-19) when fetching references. In
-the `do_fetch()` function, we jump to cleanup if committing the
-transaction fails, regardless of whether using batched or atomic
-updates. This skips three subsequent operations:
+While Git allows users to select different reference backends, unlike
+with objects, there is no flexibility in selecting the reference
+directory. Currently, the reference format is obtained from the config
+of the repository and the reference directory is set to the $GIT_DIR.
 
-  - Update 'FETCH_HEAD' as part of `commit_fetch_head()`.
+This patch series adds a new ENV variable 'GIT_REF_URI' which takes the
+reference backend and path in a URI form:
 
-  - Add upstream tracking information via `set_upstream()`.
+    <reference_backend>://<path>
 
-  - Setting remote 'HEAD' values when `do_set_head` is true.
+For e.g. 'reftable:///foo' or 'files://$GIT_DIR/ref_migration.0xBsa0'.
 
-For atomic updates, this is expected behavior. For batched updates,
-we want to continue with these operations even if some refs fail to
-update.
+One use case for this is migration between different backends. On the
+server side, migrating from the files backend to the newly introduced
+reftable backend can be achieved by running 'git refs migrate'. However,
+for large repositories with millions of references, this migration can
+take from seconds to minutes.
 
-Skipping `commit_fetch_head()` isn't actually a regression because
-'FETCH_HEAD' is already updated via `append_fetch_head()` when not
-using '--atomic'. However, we add a test to validate this behavior.
+We could make the migration non-blocking by running the migration in the
+background and capturing and replaying updates to both backends. This
+would require Git to support writing references to different reference
+backends and paths.
 
-Skipping the other two operations (upstream tracking and remote HEAD)
-is a regression. Fix this by only jumping to cleanup when using
-'--atomic', allowing batched updates to continue with post-fetch
-operations. Add tests to prevent future regressions.
+The first commit adds the required changes to create a 'ref_store' for a
+given path. The second commit parses the URI if available when creating
+the main ref store.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
+This is based on top of 9a2fb147f2 (Git 2.52, 2025-11-17).
+
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/fetch.c  |  6 +++-
- t/t5510-fetch.sh | 87 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 92 insertions(+), 1 deletion(-)
+ Documentation/git.adoc |   8 ++++
+ environment.h          |   1 +
+ refs.c                 |  64 +++++++++++++++++++++++++++--
+ t/meson.build          |   1 +
+ t/t1423-ref-backend.sh | 109 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 180 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b19fa8e966..74bf67349d 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1890,7 +1890,11 @@ static int do_fetch(struct transport *transport,
- 
- 	retcode = commit_ref_transaction(&transaction, atomic_fetch,
- 					 transport->remote->name, &err);
--	if (retcode)
-+	/*
-+	 * With '--atomic', bail out if the transaction fails. Without '--atomic',
-+	 * continue to fetch head and perform other post-fetch operations.
-+	 */
-+	if (retcode && atomic_fetch)
- 		goto cleanup;
- 
- 	commit_fetch_head(&fetch_head);
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 4b113d7c27..cd55958bdc 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -1639,6 +1639,93 @@ test_expect_success "backfill tags when providing a refspec" '
- 	test_cmp expect actual
- '
- 
-+test_expect_success REFFILES "FETCH_HEAD is updated even if ref updates fail" '
-+	test_when_finished rm -rf base repo &&
-+
-+	git init base &&
-+	(
-+		cd base &&
-+		test_commit "updated" &&
-+
-+		git update-ref refs/heads/foo @ &&
-+		git update-ref refs/heads/branch @
-+	) &&
-+
-+	git init --bare repo &&
-+	(
-+		cd repo &&
-+		! test -f FETCH_HEAD &&
-+		git remote add origin ../base &&
-+		>refs/heads/foo.lock &&
-+		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
-+		test_grep "error: fetching ref refs/heads/foo failed: reference already exists" err &&
-+		test -f FETCH_HEAD
-+	)
-+'
-+
-+test_expect_success "upstream tracking info is added with --set-upstream" '
-+	test_when_finished rm -rf base repo &&
-+
-+	git init --initial-branch=main base &&
-+	test_commit -C base "updated" &&
-+
-+	git init --bare --initial-branch=main repo &&
-+	(
-+		cd repo &&
-+		git remote add origin ../base &&
-+		git fetch origin --set-upstream main &&
-+		git config get branch.main.remote >actual &&
-+		echo "origin" >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success REFFILES "upstream tracking info is added even with conflicts" '
-+	test_when_finished rm -rf base repo &&
-+
-+	git init --initial-branch=main base &&
-+	test_commit -C base "updated" &&
-+
-+	git init --bare --initial-branch=main repo &&
-+	(
-+		cd repo &&
-+		git remote add origin ../base &&
-+		test_must_fail git config get branch.main.remote &&
-+
-+		mkdir -p refs/remotes/origin &&
-+		>refs/remotes/origin/main.lock &&
-+		test_must_fail git fetch origin --set-upstream main &&
-+		git config get branch.main.remote >actual &&
-+		echo "origin" >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success REFFILES "HEAD is updated even with conflicts" '
-+	test_when_finished rm -rf base repo &&
-+
-+	git init base &&
-+	(
-+		cd base &&
-+		test_commit "updated" &&
-+
-+		git update-ref refs/heads/foo @ &&
-+		git update-ref refs/heads/branch @
-+	) &&
-+
-+	git init --bare repo &&
-+	(
-+		cd repo &&
-+		git remote add origin ../base &&
-+
-+		! test -f refs/remotes/origin/HEAD &&
-+		mkdir -p refs/remotes/origin &&
-+		>refs/remotes/origin/branch.lock &&
-+		test_must_fail git fetch origin &&
-+		test -f refs/remotes/origin/HEAD
-+	)
-+'
-+
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
+Karthik Nayak (2):
+      refs: support obtaining ref_store for given dir
+      refs: add GIT_REF_URI to specify reference backend and directory
 
--- 
-2.51.2
+
+
+base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
+change-id: 20251105-kn-alternate-ref-dir-3e572e8cd0ef
+
+Thanks
+- Karthik
 
