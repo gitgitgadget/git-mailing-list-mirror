@@ -1,79 +1,81 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822741E0083
-	for <git@vger.kernel.org>; Wed, 19 Nov 2025 07:48:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C975320CAC
+	for <git@vger.kernel.org>; Wed, 19 Nov 2025 07:48:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763538483; cv=none; b=EE73P/8JELNvdKLa4xhFPg+EInz6TzjBjUWDq/xXkRMkwGINEAzSuYRQgEggT8YFwMofBKsTgLxZ3/zkvf1Ic3uLm4D5YCXFYvdtKq5Ug7Q/MfcxZ2Vp2F3iGWj7aQ7DVaU3qvaREEyzE3+2x0HsFqntibZXZBjZtOBqm90+HuE=
+	t=1763538486; cv=none; b=RPlkIr7sv6FHi8p1aQ6q4p/XGbs0S5ZA7H3wvlH66UdAUS3FEzPghIzKZRoLlR7jCtZaS1nQJCZRRAuc5uNbDIGTZIOZDVie7ePtnD0ZGWOSquFU/4d0DI64VtIM+jAX4sTL9iTip/r9FaobDTVjCmImvUtVrlmnA417hmFbzuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763538483; c=relaxed/simple;
-	bh=35WOrkqWFL5zjegHDK6DNqKjQEY2sBfWevu47z7DBp4=;
+	s=arc-20240116; t=1763538486; c=relaxed/simple;
+	bh=SHF0wfIyklVvznfIXELy8LWZy/h1FyzHGAMcqdvB1ZQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Bvwc9BnpupoALfxnGZRL7fynKpnOiSRBwk3Sf5sEcSico9mVp42JJIBqmSSX9OWQtZexAKn08MO9KCUEByuEY0WEbK/4W4UzUEHJogASYbfp/aFNA0wVVeWsva7tBbj/FrkIkUXLSNi/RrmBYNT8tVM+p+0JrKYVKJxYTInUfA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QCOc7wz9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=glcSS8jz; arc=none smtp.client-ip=103.168.172.158
+	 In-Reply-To:To:Cc; b=Ut8WBIU2ydT92tcqT5CDb/W8XGTlZCxGbrWmFAAeI3tVX1o3/4mDA6ux8nvvSpQoD8gf20ntr3lY5C6qEFd/lf7816De34GpCR5aOUOrkP+qUdBmmM9Ewshdqdf7I+5miBhWkG9NhsSzmOzJFY+wQPV/zFNfp4Xxd67kRLkfRY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QVMkSZsm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q+HEiGri; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QCOc7wz9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="glcSS8jz"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9FAAA1400204
-	for <git@vger.kernel.org>; Wed, 19 Nov 2025 02:48:00 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QVMkSZsm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q+HEiGri"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 57F60EC00B4
+	for <git@vger.kernel.org>; Wed, 19 Nov 2025 02:48:04 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Wed, 19 Nov 2025 02:48:00 -0500
+  by phl-compute-07.internal (MEProxy); Wed, 19 Nov 2025 02:48:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1763538480;
-	 x=1763624880; bh=8jTwA/BOPOTnY0cRiKEhFZy9qKE3nycOXiP2+6TklAY=; b=
-	QCOc7wz9T+BHzhwHpfwU6kIDd4dNevFq8g47GvCkFkQpEp7BQspEAyIQsfBLn02h
-	Uky7XKVwiWl+LC9BQ6uEFQcxCGovHLCYCj4Nrd3HFH9aE/BGklpMMjKidpdq2Lhz
-	1A5eLLKjIlhLVmgLNgrHEsVGvPpaz5C69nnDGlbViKOEFXh38pXLPLbEm2on69tg
-	vZK9y7YvVbffMzNSD7dTu/5w5fXGz8X0YXoGc/iVL32zhB+0VPK7oRaDJfxV/7NE
-	0BjYJILIsyEFOunD1h9wHXscBZvx+OoVTxaTfuOnRRL39yjlpFbJMoe0RLCNgSc1
-	WQ0QMtQJrWfUb83+L3pi/A==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1763538484;
+	 x=1763624884; bh=YaNVK81oVVSrP19fkknmibSIoO0s5e0E1qzMC5r1Yfc=; b=
+	QVMkSZsmG+uew+nQlM0tfJxmaZF+iOtdFmqQS/e7ept2WVruNP4/RpAyAkHF+ppU
+	uvRGxLAtJ3PRrQRbitlROyOrYyNSHQc6oSmBssnlSvoQ1UGLvRTO97IKXGoSnybY
+	YuvcZPZGWCaWsPr2IAu5WN3Fml0eXB+t5TN6q7NbTVU7BahfG3sZW35pfKtw/xGJ
+	ATs3rF8y50k5OmjSyh4sxUk3ISX6s093nM9reZAhEFEr97Y5GyIOVKtnKoNXf5PS
+	g8isVHO6yER+9SH9dpWmn9rQgPvRxX5XPFtMyrTQuYxdXp4IEBwBChsvVvu9SXDa
+	YG+hrGZ6NyxFLyN6TQHGHw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763538480; x=
-	1763624880; bh=8jTwA/BOPOTnY0cRiKEhFZy9qKE3nycOXiP2+6TklAY=; b=g
-	lcSS8jzTqkYHIBnGC30+JkEjX+iz6iTIO2BBFAlhhKvPJVQufgrduZAbZfn9HgyA
-	l5a5DCSuRzH+68GVCC51+xa/WvFENJuHRCo0Dg54NQRuEt/gYXq2+D8/hsPVcv58
-	VT9G38Auws9WH3m1rtvcAl74tv84hKZ8nfdcX4bwXFgJb6cAvdL/0/oo9yBIbTOO
-	aOPP7wiKIDssdpFweF1QRKrOItNLcgjHCXDwPER2loYrxm76EJkn8xiZ4k/u8Cx5
-	h5mNSBMmgTeMsbBaeIfRO0f2E2b3vTAmPDa37Ane3e1BnuAvA0tvP6L0GVtcYHVf
-	BRQmbeIxvRRGuFA6vSfbQ==
-X-ME-Sender: <xms:MHYdacCL0x0xoOpLIgWloY35KMIZUA69frErD0LbL2wGEw9zT3L41Q>
-    <xme:MHYdaVcVQb7S9pnDIfmf-ep_jA1j-NQGZ4Yr76LdMTwS3d7TgPhfOHtKUcH_Uy9Ig
-    VRXr4BheR9eFpeVinJbiCkC4jY-4HLpUrUi_wjazDL4v4fJYjwp>
-X-ME-Received: <xmr:MHYdaVOrOBW7MmXFlPR0HVvL9n7kecRXBLhG93iqjxE0qeqO3ZyzPiG2Vq7JcyiomJxlYc4ZoJINyml8X0IQJ5B6ApkDnJ8c3A6WwjVUpA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763538484; x=
+	1763624884; bh=YaNVK81oVVSrP19fkknmibSIoO0s5e0E1qzMC5r1Yfc=; b=Q
+	+HEiGrimvEg/MnKHGm/DtshKOK4QKWWlN2ETPc0n3WqIDq/XLjZlMXJFUNP6gxLe
+	zIY3WLwqOasbYjU2XLdRkkJtoTkQvEBL+EfAYwFpKsSZ/VNUAB+wEfCeOkUICEEc
+	Qrq/urJIuNulsteHUmA+iBmENuXH+fn2QecDSKNayl/L2dTOQqM8W5hbSG8klOKE
+	IFk4/WYYZpEEbJC4LT3F5MpbNcttCM8jvX2JSmfM9O8jBFtbaHeFHa8d8BLo7JjN
+	v1t64VLIxMqRqzi0G3PeEEkA5t0KdwBESe0FdxgJyNPKN3E9UTrdoj3WvPzeJjLv
+	TLR/K/8UFWulUP2GJx3Mw==
+X-ME-Sender: <xms:NHYdabfEDIvdrRjvNrMtKnZatTSuz0DUHXQ5GVuuqVFZt-nYrN2NUg>
+    <xme:NHYdaYJAgF6xCdc5yNOGpe4mrCbMCBbw9MF_SeLiyYGyNJgmP72lowu5dvPiX9c7K
+    EtyScliIvFl8Kr-hGqSCc8LHULB13HMQxjfy7wyZpcGJDnh8sj3RmA>
+X-ME-Received: <xmr:NHYdaaKuiia11gSWVOaat6rGKD_6DpaK9Uvomet6O_n8VCRqxNVarQA9BsEsLhGnIpYKdIWRgg8R5OfC6nqD9jFCa_o7iYM6e2Q4c7RNZQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdefieegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
-    dtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeule
-    etkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrgh
-X-ME-Proxy: <xmx:MHYdaX4FB0YZxWr_gGskwNj3XTSosIVTa1ckQVxk3LGk2Fa3ahxnqA>
-    <xmx:MHYdaRKAORWqqNbvm7P9MypOJ2ZGT3ZbdDzT1skl-DICptvDJpF1yw>
-    <xmx:MHYdaZegziBdwW6g3i4CwKjB7xLSbICFS7TCI6MCVpYrvxxFbN_pxQ>
-    <xmx:MHYdaccTdaij6Q4aym0IyZL-nySHSzKpKLdNKSJnjyeU0q0JUfT1gA>
-    <xmx:MHYdaXCw3_TQp4OIgmAP-a7Mj_EyursBFkOi8_RvbAZUTkMT3iS4MrGz>
+    rghilhhouhhtmecufedttdenucgovfgvgihtqfhnlhihqddqteefjeefqddtgeculdehtd
+    dmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefr
+    rghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrg
+    htthgvrhhnpeekieevveegieevieeuveefheffgeeuheetheegffffkeeijedtueefleff
+    vdevleenucffohhmrghinhepphgrtghkvggurdhishenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphht
+    thhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:NHYdaSFov-NhVMTmiInHrwqWRViK3fSNHrhZTanUStGhKtDcReOlPw>
+    <xmx:NHYdaXnxnS04OX2AzpHCHkFhyZl6bZCjgoSeY2g6hlG25zdNX_CUuw>
+    <xmx:NHYdaXJzaZ6uQ_AEwCxDuZQx-5X1JD1Wr9Err4KmgPyzzFRCYbJ8ug>
+    <xmx:NHYdaQadtYjNDqMN58MdI312mFYiGfZ1gnKyNc3Qb1Cmi6Fy4mWxEA>
+    <xmx:NHYdadMBUkPMuxb2HDwZqAvqs4Ow_zpCgKGDlI04HjZ7oUzp0lcfpE-C>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 19 Nov 2025 02:48:00 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 19 Nov 2025 02:48:03 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f02d74ad (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 4bde4306 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 19 Nov 2025 07:47:59 +0000 (UTC)
+	Wed, 19 Nov 2025 07:48:03 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 19 Nov 2025 08:47:10 +0100
-Subject: [PATCH 10/18] streaming: move zlib stream into backends
+Date: Wed, 19 Nov 2025 08:47:11 +0100
+Subject: [PATCH 11/18] packfile: introduce function to read object info
+ from a store
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,248 +84,217 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251119-b4-pks-odb-read-stream-v1-10-adacf03c2ccf@pks.im>
+Message-Id: <20251119-b4-pks-odb-read-stream-v1-11-adacf03c2ccf@pks.im>
 References: <20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im>
 In-Reply-To: <20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.3
 
-While all backend-specific data is now contained in a backend-specific
-structure, we still share the zlib stream across the loose and packed
-objects.
+Extract the logic to read object info for a packed object from
+`do_oid_object_into_extended()` into a standalone function that operates
+on the packfile store. This function will be used in a subsequent
+commit.
 
-Refactor the code and move it into the specific structures so that we
-fully detangle the different backends from one another.
+Note that this change allows us to make `find_pack_entry()` an internal
+implementation detail. As a consequence though we have to move around
+`packfile_store_freshen_object()` so that it is defined after that
+function.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- streaming.c | 104 ++++++++++++++++++++++++++++++------------------------------
- 1 file changed, 52 insertions(+), 52 deletions(-)
+ odb.c      | 29 ++++---------------------
+ packfile.c | 71 +++++++++++++++++++++++++++++++++++++++++++++++---------------
+ packfile.h | 12 ++++++++++-
+ 3 files changed, 69 insertions(+), 43 deletions(-)
 
-diff --git a/streaming.c b/streaming.c
-index 8210b21b53..572be98248 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -25,23 +25,8 @@ struct odb_read_stream {
+diff --git a/odb.c b/odb.c
+index 3ec21ef24e..f4cbee4b04 100644
+--- a/odb.c
++++ b/odb.c
+@@ -666,8 +666,6 @@ static int do_oid_object_info_extended(struct object_database *odb,
+ {
+ 	static struct object_info blank_oi = OBJECT_INFO_INIT;
+ 	const struct cached_object *co;
+-	struct pack_entry e;
+-	int rtype;
+ 	const struct object_id *real = oid;
+ 	int already_retried = 0;
  
- 	enum object_type type;
- 	unsigned long size; /* inflated size of full object */
--	git_zstream z;
--	enum { z_unused, z_used, z_done, z_error } z_state;
- };
+@@ -702,8 +700,8 @@ static int do_oid_object_info_extended(struct object_database *odb,
+ 	while (1) {
+ 		struct odb_source *source;
  
--/*****************************************************************
-- *
-- * Common helpers
-- *
-- *****************************************************************/
+-		if (find_pack_entry(odb->repo, real, &e))
+-			break;
++		if (!packfile_store_read_object_info(odb->packfiles, real, oi, flags))
++			return 0;
+ 
+ 		/* Most likely it's a loose object. */
+ 		for (source = odb->sources; source; source = source->next)
+@@ -713,8 +711,8 @@ static int do_oid_object_info_extended(struct object_database *odb,
+ 		/* Not a loose object; someone else may have just packed it. */
+ 		if (!(flags & OBJECT_INFO_QUICK)) {
+ 			odb_reprepare(odb->repo->objects);
+-			if (find_pack_entry(odb->repo, real, &e))
+-				break;
++			if (!packfile_store_read_object_info(odb->packfiles, real, oi, flags))
++				return 0;
+ 		}
+ 
+ 		/*
+@@ -747,25 +745,6 @@ static int do_oid_object_info_extended(struct object_database *odb,
+ 		}
+ 		return -1;
+ 	}
 -
--static void close_deflated_stream(struct odb_read_stream *st)
+-	if (oi == &blank_oi)
+-		/*
+-		 * We know that the caller doesn't actually need the
+-		 * information below, so return early.
+-		 */
+-		return 0;
+-	rtype = packed_object_info(odb->repo, e.p, e.offset, oi);
+-	if (rtype < 0) {
+-		mark_bad_packed_object(e.p, real);
+-		return do_oid_object_info_extended(odb, real, oi, 0);
+-	} else if (oi->whence == OI_PACKED) {
+-		oi->u.packed.offset = e.offset;
+-		oi->u.packed.pack = e.p;
+-		oi->u.packed.is_delta = (rtype == OBJ_REF_DELTA ||
+-					 rtype == OBJ_OFS_DELTA);
+-	}
+-
+-	return 0;
+ }
+ 
+ static int oid_object_info_convert(struct repository *r,
+diff --git a/packfile.c b/packfile.c
+index 40f733dd23..b4bc40d895 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -819,22 +819,6 @@ struct packed_git *packfile_store_load_pack(struct packfile_store *store,
+ 	return p;
+ }
+ 
+-int packfile_store_freshen_object(struct packfile_store *store,
+-				  const struct object_id *oid)
 -{
--	if (st->z_state == z_used)
--		git_inflate_end(&st->z);
+-	struct pack_entry e;
+-	if (!find_pack_entry(store->odb->repo, oid, &e))
+-		return 0;
+-	if (e.p->is_cruft)
+-		return 0;
+-	if (e.p->freshened)
+-		return 1;
+-	if (utime(e.p->pack_name, NULL))
+-		return 0;
+-	e.p->freshened = 1;
+-	return 1;
 -}
 -
--
- /*****************************************************************
-  *
-  * Filtered stream
-@@ -150,6 +135,12 @@ static struct odb_read_stream *attach_stream_filter(struct odb_read_stream *st,
+ void (*report_garbage)(unsigned seen_bits, const char *path);
  
- struct odb_loose_read_stream {
- 	struct odb_read_stream base;
-+	git_zstream z;
-+	enum {
-+		ODB_LOOSE_READ_STREAM_INUSE,
-+		ODB_LOOSE_READ_STREAM_DONE,
-+		ODB_LOOSE_READ_STREAM_ERROR,
-+	} z_state;
- 	void *mapped;
- 	unsigned long mapsize;
- 	char hdr[32];
-@@ -162,10 +153,10 @@ static ssize_t read_istream_loose(struct odb_read_stream *_st, char *buf, size_t
- 	struct odb_loose_read_stream *st = (struct odb_loose_read_stream *)_st;
- 	size_t total_read = 0;
- 
--	switch (st->base.z_state) {
--	case z_done:
-+	switch (st->z_state) {
-+	case ODB_LOOSE_READ_STREAM_DONE:
- 		return 0;
--	case z_error:
-+	case ODB_LOOSE_READ_STREAM_ERROR:
- 		return -1;
- 	default:
- 		break;
-@@ -183,20 +174,20 @@ static ssize_t read_istream_loose(struct odb_read_stream *_st, char *buf, size_t
- 	while (total_read < sz) {
- 		int status;
- 
--		st->base.z.next_out = (unsigned char *)buf + total_read;
--		st->base.z.avail_out = sz - total_read;
--		status = git_inflate(&st->base.z, Z_FINISH);
-+		st->z.next_out = (unsigned char *)buf + total_read;
-+		st->z.avail_out = sz - total_read;
-+		status = git_inflate(&st->z, Z_FINISH);
- 
--		total_read = st->base.z.next_out - (unsigned char *)buf;
-+		total_read = st->z.next_out - (unsigned char *)buf;
- 
- 		if (status == Z_STREAM_END) {
--			git_inflate_end(&st->base.z);
--			st->base.z_state = z_done;
-+			git_inflate_end(&st->z);
-+			st->z_state = ODB_LOOSE_READ_STREAM_DONE;
- 			break;
- 		}
- 		if (status != Z_OK && (status != Z_BUF_ERROR || total_read < sz)) {
--			git_inflate_end(&st->base.z);
--			st->base.z_state = z_error;
-+			git_inflate_end(&st->z);
-+			st->z_state = ODB_LOOSE_READ_STREAM_ERROR;
- 			return -1;
- 		}
- 	}
-@@ -206,7 +197,8 @@ static ssize_t read_istream_loose(struct odb_read_stream *_st, char *buf, size_t
- static int close_istream_loose(struct odb_read_stream *_st)
- {
- 	struct odb_loose_read_stream *st = (struct odb_loose_read_stream *)_st;
--	close_deflated_stream(&st->base);
-+	if (st->z_state == ODB_LOOSE_READ_STREAM_INUSE)
-+		git_inflate_end(&st->z);
- 	munmap(st->mapped, st->mapsize);
- 	return 0;
+ static void report_helper(const struct string_list *list,
+@@ -2064,7 +2048,9 @@ static int fill_pack_entry(const struct object_id *oid,
+ 	return 1;
  }
-@@ -238,7 +230,7 @@ static int open_istream_loose(struct odb_read_stream **out,
- 	 */
- 	CALLOC_ARRAY(st, 1);
  
--	switch (unpack_loose_header(&st->base.z, mapped, mapsize, st->hdr,
-+	switch (unpack_loose_header(&st->z, mapped, mapsize, st->hdr,
- 				    sizeof(st->hdr))) {
- 	case ULHR_OK:
- 		break;
-@@ -256,8 +248,8 @@ static int open_istream_loose(struct odb_read_stream **out,
- 	st->mapped = mapped;
- 	st->mapsize = mapsize;
- 	st->hdr_used = strlen(st->hdr) + 1;
--	st->hdr_avail = st->base.z.total_out;
--	st->base.z_state = z_used;
-+	st->hdr_avail = st->z.total_out;
-+	st->z_state = ODB_LOOSE_READ_STREAM_INUSE;
- 	st->base.close = close_istream_loose;
- 	st->base.read = read_istream_loose;
- 
-@@ -265,7 +257,7 @@ static int open_istream_loose(struct odb_read_stream **out,
- 
- 	return 0;
- error:
--	git_inflate_end(&st->base.z);
-+	git_inflate_end(&st->z);
- 	munmap(st->mapped, st->mapsize);
- 	free(st);
- 	return -1;
-@@ -281,6 +273,13 @@ static int open_istream_loose(struct odb_read_stream **out,
- struct odb_packed_read_stream {
- 	struct odb_read_stream base;
- 	struct packed_git *pack;
-+	git_zstream z;
-+	enum {
-+		ODB_PACKED_READ_STREAM_UNINITIALIZED,
-+		ODB_PACKED_READ_STREAM_INUSE,
-+		ODB_PACKED_READ_STREAM_DONE,
-+		ODB_PACKED_READ_STREAM_ERROR,
-+	} z_state;
- 	off_t pos;
- };
- 
-@@ -290,17 +289,17 @@ static ssize_t read_istream_pack_non_delta(struct odb_read_stream *_st, char *bu
- 	struct odb_packed_read_stream *st = (struct odb_packed_read_stream *)_st;
- 	size_t total_read = 0;
- 
--	switch (st->base.z_state) {
--	case z_unused:
--		memset(&st->base.z, 0, sizeof(st->base.z));
--		git_inflate_init(&st->base.z);
--		st->base.z_state = z_used;
-+	switch (st->z_state) {
-+	case ODB_PACKED_READ_STREAM_UNINITIALIZED:
-+		memset(&st->z, 0, sizeof(st->z));
-+		git_inflate_init(&st->z);
-+		st->z_state = ODB_PACKED_READ_STREAM_INUSE;
- 		break;
--	case z_done:
-+	case ODB_PACKED_READ_STREAM_DONE:
- 		return 0;
--	case z_error:
-+	case ODB_PACKED_READ_STREAM_ERROR:
- 		return -1;
--	case z_used:
-+	case ODB_PACKED_READ_STREAM_INUSE:
- 		break;
- 	}
- 
-@@ -310,20 +309,20 @@ static ssize_t read_istream_pack_non_delta(struct odb_read_stream *_st, char *bu
- 		unsigned char *mapped;
- 
- 		mapped = use_pack(st->pack, &window,
--				  st->pos, &st->base.z.avail_in);
-+				  st->pos, &st->z.avail_in);
- 
--		st->base.z.next_out = (unsigned char *)buf + total_read;
--		st->base.z.avail_out = sz - total_read;
--		st->base.z.next_in = mapped;
--		status = git_inflate(&st->base.z, Z_FINISH);
-+		st->z.next_out = (unsigned char *)buf + total_read;
-+		st->z.avail_out = sz - total_read;
-+		st->z.next_in = mapped;
-+		status = git_inflate(&st->z, Z_FINISH);
- 
--		st->pos += st->base.z.next_in - mapped;
--		total_read = st->base.z.next_out - (unsigned char *)buf;
-+		st->pos += st->z.next_in - mapped;
-+		total_read = st->z.next_out - (unsigned char *)buf;
- 		unuse_pack(&window);
- 
- 		if (status == Z_STREAM_END) {
--			git_inflate_end(&st->base.z);
--			st->base.z_state = z_done;
-+			git_inflate_end(&st->z);
-+			st->z_state = ODB_PACKED_READ_STREAM_DONE;
- 			break;
- 		}
- 
-@@ -336,8 +335,8 @@ static ssize_t read_istream_pack_non_delta(struct odb_read_stream *_st, char *bu
- 		 * or truncated), then use_pack() catches that and will die().
- 		 */
- 		if (status != Z_OK && status != Z_BUF_ERROR) {
--			git_inflate_end(&st->base.z);
--			st->base.z_state = z_error;
-+			git_inflate_end(&st->z);
-+			st->z_state = ODB_PACKED_READ_STREAM_ERROR;
- 			return -1;
- 		}
- 	}
-@@ -347,7 +346,8 @@ static ssize_t read_istream_pack_non_delta(struct odb_read_stream *_st, char *bu
- static int close_istream_pack_non_delta(struct odb_read_stream *_st)
+-int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e)
++static int find_pack_entry(struct repository *r,
++			   const struct object_id *oid,
++			   struct pack_entry *e)
  {
- 	struct odb_packed_read_stream *st = (struct odb_packed_read_stream *)_st;
--	close_deflated_stream(&st->base);
-+	if (st->z_state == ODB_PACKED_READ_STREAM_INUSE)
-+		git_inflate_end(&st->z);
+ 	struct list_head *pos;
+ 
+@@ -2087,6 +2073,57 @@ int find_pack_entry(struct repository *r, const struct object_id *oid, struct pa
  	return 0;
  }
  
-@@ -384,7 +384,7 @@ static int open_istream_pack_non_delta(struct odb_read_stream **out,
- 	stream->base.read = read_istream_pack_non_delta;
- 	stream->base.type = in_pack_type;
- 	stream->base.size = size;
--	stream->base.z_state = z_unused;
-+	stream->z_state = ODB_PACKED_READ_STREAM_UNINITIALIZED;
- 	stream->pack = pack;
- 	stream->pos = offset;
++int packfile_store_freshen_object(struct packfile_store *store,
++				  const struct object_id *oid)
++{
++	struct pack_entry e;
++	if (!find_pack_entry(store->odb->repo, oid, &e))
++		return 0;
++	if (e.p->is_cruft)
++		return 0;
++	if (e.p->freshened)
++		return 1;
++	if (utime(e.p->pack_name, NULL))
++		return 0;
++	e.p->freshened = 1;
++	return 1;
++}
++
++int packfile_store_read_object_info(struct packfile_store *store,
++				    const struct object_id *oid,
++				    struct object_info *oi,
++				    unsigned flags UNUSED)
++{
++	static struct object_info blank_oi = OBJECT_INFO_INIT;
++	struct pack_entry e;
++	int rtype;
++
++	if (!find_pack_entry(store->odb->repo, oid, &e))
++		return 1;
++
++	/*
++	 * We know that the caller doesn't actually need the
++	 * information below, so return early.
++	 */
++	if (oi == &blank_oi)
++		return 0;
++
++	rtype = packed_object_info(store->odb->repo, e.p, e.offset, oi);
++	if (rtype < 0) {
++		mark_bad_packed_object(e.p, oid);
++		return -1;
++	}
++
++	if (oi->whence == OI_PACKED) {
++		oi->u.packed.offset = e.offset;
++		oi->u.packed.pack = e.p;
++		oi->u.packed.is_delta = (rtype == OBJ_REF_DELTA ||
++					 rtype == OBJ_OFS_DELTA);
++	}
++
++	return 0;
++}
++
+ static void maybe_invalidate_kept_pack_cache(struct repository *r,
+ 					     unsigned flags)
+ {
+diff --git a/packfile.h b/packfile.h
+index 58fcc88e20..0a98bddd81 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -144,6 +144,17 @@ void packfile_store_add_pack(struct packfile_store *store,
+ #define repo_for_each_pack(repo, p) \
+ 	for (p = packfile_store_get_packs(repo->objects->packfiles); p; p = p->next)
  
++/*
++ * Try to read the object identified by its ID from the object store and
++ * populate the object info with its data. Returns 1 in case the object was
++ * not found, 0 if it was and read successfully, and a negative error code in
++ * case the object was corrupted.
++ */
++int packfile_store_read_object_info(struct packfile_store *store,
++				    const struct object_id *oid,
++				    struct object_info *oi,
++				    unsigned flags);
++
+ /*
+  * Get all packs managed by the given store, including packfiles that are
+  * referenced by multi-pack indices.
+@@ -357,7 +368,6 @@ const struct packed_git *has_packed_and_bad(struct repository *, const struct ob
+  * Iff a pack file in the given repository contains the object named by sha1,
+  * return true and store its location to e.
+  */
+-int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e);
+ int find_kept_pack_entry(struct repository *r, const struct object_id *oid, unsigned flags, struct pack_entry *e);
+ 
+ int has_object_pack(struct repository *r, const struct object_id *oid);
 
 -- 
 2.52.0.rc2.482.gaa765fefd0.dirty
