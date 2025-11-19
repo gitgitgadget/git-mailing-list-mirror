@@ -1,814 +1,233 @@
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C497B301719
-	for <git@vger.kernel.org>; Wed, 19 Nov 2025 21:40:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEFF21E0BA
+	for <git@vger.kernel.org>; Wed, 19 Nov 2025 21:46:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763588416; cv=none; b=iRpiFe+6XZBJKIFm6JCjO+3OtpwCLOxSvDdqek9CvBhkeCjuXszwWO8O2z3007zuOgWNLNiDMm3AsTK3uXZtjsUrCJftDs723E6KRU4cd7Y9dS3rG26Ijr1Wx9yBIBmt0vGlMnukKI71M/0szrlpi4OdQitre1KNZb9npWEhLDE=
+	t=1763588801; cv=none; b=ApacRTbFUKHuMWoHuPdcAxca/Ovy1EhQAOlmjuTpwu78FEEXcdz+UR5z5n8kx5MrOea6yEsOfGyi5amkLF+M2A0DIav04H6+oAxOOnnJ+yoc6qrwsHr3AX1d9AHBsJbtNC2+5rG1OV5fD67ertYwY6xzY38gVma8oODBVBeyXUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763588416; c=relaxed/simple;
-	bh=yHk7esnlOiyGcVsaWfk6slMUUkZ83/UJpIuygO0bfss=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=iGugHI9YE5bH045hcaQRKuClEGKexvwsHYT0j8DIDiG4MLR2Bs6pHxUl/MIjyktWpAgpgsoA1fw6rnVInclEx+o0h4Gcftc3937eVXoMuRcocvu1kYG2qXZWtkls9A1z7J2Id6mIVXhtGIoE0/DzCOtrmiWEnNyBLD7wSFeFdwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BAvE1D79; arc=none smtp.client-ip=209.85.166.48
+	s=arc-20240116; t=1763588801; c=relaxed/simple;
+	bh=U5ZluR2TRwGc/eU6lyAtjnra3BqujkEcLZE9QmCssZk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=g34YBHPnCpJQo1fdIjjs4d2p53b2Om+0yVpHiw8HcG1TwMYwgV4PMjqlJa+NhZnGzSvllkg4OZHWPvdtmMb5KCunTc+QtpcBO3/4yOZFRAcxKWTO9JCDYntVxVcTbrbacJjwrt8yyBV6Pe4B5ctgWbmbGwcXPnLkd86V9+EiyOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jhkXKoac; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BAvE1D79"
-Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-94903ea3766so7670939f.3
-        for <git@vger.kernel.org>; Wed, 19 Nov 2025 13:40:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jhkXKoac"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6419e6dab7fso211313a12.2
+        for <git@vger.kernel.org>; Wed, 19 Nov 2025 13:46:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763588412; x=1764193212; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8ZnIAxY5XokAolJdwes/7BNirghr4YCkMPzDQZTwcVk=;
-        b=BAvE1D79UX+u+wLOvWXaHEVJohAd+sHRTEVLlCwSEuxsnrJmU9ID0g8W42nGp5qAIN
-         6AVg5RcPlboCki+rhvLoDNOmE6CnuR+QRFstxbNHnCGa7OdGhZmvchFlpu++vZOlnQ6v
-         APED10LDjLbV6S+R+domCEh141Sz/U+k8FjyWBIjQ/mQjpwbiWk93eUJi0/bLdo7Ktjv
-         Y4/P6WpGonLuv9jzLXKa7PXBHWtC6QGFhC8HDO4kFUry1ioYLHyx/388VlwPEbeaAh3a
-         kFx0A/mDanDSjyf1WXHoKJpJ/ioPK0ZKT0LHp/+ttm7HuAUQ9wRhCPSgyDITv3gj2yVr
-         6TMA==
+        d=gmail.com; s=20230601; t=1763588798; x=1764193598; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bjn3rn4BSZxBWwjpU+sIj2B36b88tT4zYBjHTSTosHk=;
+        b=jhkXKoacg7eqfFu7oVtufuZW5OvUjcL44k5f99B+KbVSniuUMQqVNkN6bPW3bwouby
+         9LLneD2GEdHGKFVITKhnsrpIDXt/lSulE8L2ZZiZlauQVlIU40RKUI0ARuxM51hSgDcx
+         qRq3vZBsbpxuh5w/RBShKhKUmnv4d+MaGC0FVenpgD9B2HGdOkFDlJzHCgiozJCjsCd1
+         1R/hDeg4AhmoPHHMlzDv1PcitaQmqQ8P5Q33DBPX2djiVse8pqhmghF6Fwv177q+QWht
+         b2kA7fT2KFZzUQghzGoVFHa2QEXBciaFfXNDuGAe9QFbBTwTe4ysBXj4+HswKDrKN68j
+         HLJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763588412; x=1764193212;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8ZnIAxY5XokAolJdwes/7BNirghr4YCkMPzDQZTwcVk=;
-        b=w8xks6Q2vnzzTqrpBvXESCe6H8UhkcBMcEFhAsoxwcRIQ4dYgVGKmHlRladf6ZqlP8
-         6xoJ2qyOxiWlsA0tZKWUlaWiUnQ7UC5UpxyJCQKbmx3U2rhFvMUFiktumLNjr5WDylFG
-         5Z25e6Fkq4W/B+JJfYmHtFhZtNWPjdV9TquvLb7ZrDtFUKt+QhZPMgQoAvVz+aAHaaZI
-         3SmVrxCvxRhCf7k0Mtc7tdOQ9aV8JlxpIdXndflL4klBy/KL4y/av3U1+kuYMgDyL7Xx
-         /MDKwXB3/AhdpEj7WA/XylCR0n4+t1PMT249YXjeWeNrVOqGI6m0KwgRqzaocA7r9wZi
-         TQMA==
-X-Gm-Message-State: AOJu0YxGQ5TKdakb3iieQ0jDzHP6VEwQSS4bsqs5KXkAr7yugSd0YEIE
-	OCfTFob4AHZtX8UqNshn3xb+Z63JSirR04gk5x5D7GvFNH2D4vybkKW/x2+neQ==
-X-Gm-Gg: ASbGncv7VkCQ7hWCrRD+di8AfDgKHIddNo9avycZpJRLJyzHh578cP+C/3eGvRz5Qn7
-	/Ocq19k1B2nbJgWTb1s6RuCzYhFC4F7gYVXjJ6aE0JeoMoAttBSxY84AbUOWT8S1s4oSfGMzafF
-	cKHViKjFnAzrK33KE3DxNDc3sbG00stO11Mwfbnu73tr253TL2KdU2HH+waHhtEw0zzD9+w2Tq8
-	okwA/9BLKJHmeN4ZEGWhIhcmXjyuwf8zcV3QchYUIgcrXdsjYqzBluG9zfMkM7D3OTcWdG7ZX8O
-	3elmUyvYkHhg1r8oiWu2Vv+0PivdqHWUYvomLUXIJ4xU9JaQXvXKxWegpNBait6pAgsdJmQf9Ht
-	7LYuEyYnwqcGxiBKRb3rWJmBfBDP2vgjInILW/mmQu822b4NYLhopVaM0EwwYCb3H2zEFQeo5o7
-	Lm8OC2VcEbr1GL
-X-Google-Smtp-Source: AGHT+IGWiJYutL1Z2QapYSwW0EevFr2c/fJKsSV5x2kOKe9FGoCpR0tavfpWtxehwPUgga1usZRsXw==
-X-Received: by 2002:a05:6638:6f07:b0:551:45bc:e4e6 with SMTP id 8926c6da1cb9f-5b954047d36mr692304173.7.1763588411868;
-        Wed, 19 Nov 2025 13:40:11 -0800 (PST)
-Received: from [127.0.0.1] ([64.236.134.50])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5b954b212basm170738173.36.2025.11.19.13.40.10
+        d=1e100.net; s=20230601; t=1763588798; x=1764193598;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bjn3rn4BSZxBWwjpU+sIj2B36b88tT4zYBjHTSTosHk=;
+        b=Rn82j6KIzEN6DNyNOYY8at4v2N9xC+gzzfHILwWWJFkcOsUOxbDCKsjIDn0HVlX0ol
+         vGa0VJhjZXXYwTwQ7iFy2khvvylqmJviLOBrGbZt1rN5hXd0V/vkDbrq5XzkuN8e42LB
+         CHVVSK/jMxl5LDG8kcu0bwz/XDIBMlHD0/BGAJFzqPXMRt/NvFDxYtZsbr11Sr4KyMEA
+         MxdqTWtGG9I4WTZ8QUuE4gXIkugqLDTNkA3ouS0LkjG4ZaAR6GrCuR1HDmXlK6yoMhHm
+         IUZf81P1zShiKcRObJXIX3+vCcSI8J0BLLoxMg7suv1N+EdkLk83rs83ewVgHXCS3tkI
+         eK6A==
+X-Gm-Message-State: AOJu0YxF/O1Rsa5go+QINiR7m6xYYAuWhdTBAgIpvZ+m5LuOReWsbjmX
+	RSsxAmzqf8e/90praUv0+K2PkbKtG8bkYnWgKI82BGktMuZP5F+YI8eG
+X-Gm-Gg: ASbGncsQ3wuzX5AIW18boyMvLrSQm6aZzWbvA9nOHG/QSmABzzzFkRYXfJRP3BtnSfo
+	Bc+u38Ak3Oq4Zqb9xD4X9Nf7VBf1OoAz3KHnDDTjnKChZ59pSBL2ah5ABIP+c4li7XIhcUYf0Es
+	ldrq3puGbwg+bf0FgvvqQJOyrTHjxgYeFGEZ9LCqarTe69F5rT4yGEqnV6wZrb/RWbE4Pw4VYVl
+	6ez/silbJ+TOMvUXgS5z8SMXC4qk6GYH8djbXO1IZPB4MkOC5joMfkUo5G97eyYErFp8kyt0isy
+	YHVrZRDSDh8afAweV6W6xYmSIy7EqBge2da3yDJobxkvsX2wN0fKYO9DuUkGdQZYFH7tkJgx9OU
+	/dO9IAej0pPvqtxPkDfsa8PYzrXQJRNwcTW0OUcuKH+5vyvJICC74V3IXpDr5xrNWbAq7/oSok+
+	qqb3tb3hUJy+bLqz+kDrfA4Xj4WQ==
+X-Google-Smtp-Source: AGHT+IHazEjNnTtla3wFxrm7+OrxUfZK6Nprz7zzY1IMYODgJXqmnvqwJ/Qp9x2Q7KSorRF4oGPigA==
+X-Received: by 2002:a17:906:478b:b0:b73:9792:918b with SMTP id a640c23a62f3a-b7654e6e0e7mr71632566b.27.1763588798141;
+        Wed, 19 Nov 2025 13:46:38 -0800 (PST)
+Received: from [127.0.0.2] ([2a01:599:119:a01c:1871:c4bb:6fef:656d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b7654d73430sm40760866b.24.2025.11.19.13.46.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Nov 2025 13:40:11 -0800 (PST)
-Message-Id: <e5526eaf58ce37507a3e9a9265476720399ad42e.1763588404.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2002.git.1763588404.gitgitgadget@gmail.com>
-References: <pull.2002.git.1763588404.gitgitgadget@gmail.com>
-From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 19 Nov 2025 21:40:04 +0000
-Subject: [PATCH 3/3] doc: convert git push to synopsis style
+        Wed, 19 Nov 2025 13:46:37 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v7 0/3] fetch: fix non-conflicting tags not being committed
+Date: Wed, 19 Nov 2025 22:46:31 +0100
+Message-Id: <20251119-fix-tags-not-fetching-v7-0-0c8f9fb1f287@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALc6HmkC/4XQwW7DIAwG4FepOI8JAwG0095j6sEhJkFakylE0
+ aoq7z63JxQJ7fhb+LPNQxRaMxXxcXmIlfZc8jJz8G8XESecR5J54Cy00h2AMjLlX7nhWOS8bDL
+ RFqc8j1IlcBrQejtYwb0/K/HDl/t15Tzlsi3r/TVmh2f1P3EHCZKciUi9iwDmc7xh/n6Py008x
+ V3XimspmhUHKva2V+RjOCumVkJLMVJJBI28iR2Q0lmxlQLQUiwrELohGEfRaTwrXa00/6VjxXg
+ g9IyYMJwVVyvNixwrGnWCLkUwnmrlOI4/3yGjFBgCAAA=
+X-Change-ID: 20251103-fix-tags-not-fetching-0f1621a474d4
+In-Reply-To: <20251103-fix-tags-not-fetching-v1-1-e63caeb6c113@gmail.com>
+References: <20251103-fix-tags-not-fetching-v1-1-e63caeb6c113@gmail.com>
 To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Cc: Karthik Nayak <karthik.188@gmail.com>, jltobler@gmail.com, ps@pks.im, 
+ gitster@pobox.com, David Bohman <debohman@gmail.com>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6191; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=U5ZluR2TRwGc/eU6lyAtjnra3BqujkEcLZE9QmCssZk=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGkeOrtR/54fM9dObkU7oDrwZRgiAVQC7pQo3
+ 8vOx2NywaKdeIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJpHjq7AAoJED7VnySO
+ Rox/+1wL/2CRjOW5ry/TVk9LCRHJ/9b6W42NWqPOKHh3+NFNVLJ+d/fQVoP5stoFbYt57AGVDlR
+ k0sPQx+M68KQuZdefH29lkSQbyGdrIY3QzZ2RJQrYfSRbVaKiYlrUT9zzzsV/e0DinlGwAUQr3v
+ fHMEFFCWhrDLNgSZ8DUK7b7HOnVg9cAqXoe9phv/EGEwwmSbIigWIQG+QJgXiu+6smcQTQNYA8o
+ 9FaGSMkC4QU27S9J5ORTi1SwPi+ik6S6RZ10LtIjQhN8Y1ubbbh2tHDMC6rsS+wJsHPM/79LJvy
+ sbe5pW0RQkV02/F8B1InRj/DxGSl4V9xuK0vRE5ME67lXK4JCoy1tuuTwiZPMyrJ4aV/EZrCx/D
+ T53alLm1og3h5y+AouL7f0iNVOsh12ViUBI1T8AtSh6Aw/GRxqcKtmA6X9RYiF0kUd22aRFOj9G
+ ZBD/opLyTOSAiWnO6ekzU9b3kwym9Fhy03Moij0NkpzLt7x2l0l6y9GXhtC4FHIh4mFz9/erQs5
+ NY=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+This fixes the bug reported by David Bohman [1].
 
-- Switch the synopsis to a synopsis block which will automatically
-  format placeholders in italics and keywords in monospace
-- Use _<placeholder>_ instead of <placeholder> in the description
-- Use `backticks` for keywords and more complex option
-descriptions. The new rendering engine will apply synopsis rules to
-these spans.
+The 'git-fetch(1)' uses batched updates to perform reference updates
+when not using 'atomic' transactions. One scenario which was missed
+here, was fetching tags. When fetching conflicting tags, the
+`fetch_and_consume_refs()` function returns '1', which skipped
+committing the transaction and directly jumped to the cleanup section.
+This mean that no updates were applied. This also extends to backfilling
+tags.
 
-Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+The first commit, extracts out common code for committing a reference
+transaction and handling rejected updates. The second commit ensures
+any failures would also commit pending updates.
+
+The third commit fixes another regression around failing to do
+post-fetch operations when ref updates fail with batched updates.
+
+[1]: id:CAB9xhmPcHnB2+i6WeA3doAinv7RAeGs04+n0fHLGToJq=UKUNw@mail.gmail.com
+
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/config/push.adoc | 113 +++++++-------
- Documentation/git-push.adoc    | 267 ++++++++++++++++++---------------
- 2 files changed, 201 insertions(+), 179 deletions(-)
+Changes in v7:
+- Don't use 'touch' to create new files.
+- Drop the REFFILES requirement for the happy path test of 'git fetch
+  --set-upstream'.
+- Link to v6: https://patch.msgid.link/20251118-fix-tags-not-fetching-v6-0-2a2f15fc137e@gmail.com
 
-diff --git a/Documentation/config/push.adoc b/Documentation/config/push.adoc
-index 0acbbea18a..d9112b2260 100644
---- a/Documentation/config/push.adoc
-+++ b/Documentation/config/push.adoc
-@@ -1,15 +1,15 @@
--push.autoSetupRemote::
--	If set to "true" assume `--set-upstream` on default push when no
-+`push.autoSetupRemote`::
-+	If set to `true` assume `--set-upstream` on default push when no
- 	upstream tracking exists for the current branch; this option
--	takes effect with push.default options 'simple', 'upstream',
--	and 'current'. It is useful if by default you want new branches
-+	takes effect with `push.default` options `simple`, `upstream`,
-+	and `current`. It is useful if by default you want new branches
- 	to be pushed to the default remote (like the behavior of
--	'push.default=current') and you also want the upstream tracking
-+	`push.default=current`) and you also want the upstream tracking
- 	to be set. Workflows most likely to benefit from this option are
--	'simple' central workflows where all branches are expected to
-+	`simple` central workflows where all branches are expected to
- 	have the same name on the remote.
- 
--push.default::
-+`push.default`::
- 	Defines the action `git push` should take if no refspec is
- 	given (whether from the command-line, config, or elsewhere).
- 	Different values are well-suited for
-@@ -18,24 +18,28 @@ push.default::
- 	`upstream` is probably what you want.  Possible values are:
- +
- --
--
--* `nothing` - do not push anything (error out) unless a refspec is
--  given. This is primarily meant for people who want to
--  avoid mistakes by always being explicit.
--
--* `current` - push the current branch to update a branch with the same
--  name on the receiving end.  Works in both central and non-central
--  workflows.
--
--* `upstream` - push the current branch back to the branch whose
--  changes are usually integrated into the current branch (which is
--  called `@{upstream}`).  This mode only makes sense if you are
--  pushing to the same repository you would normally pull from
--  (i.e. central workflow).
--
--* `tracking` - This is a deprecated synonym for `upstream`.
--
--* `simple` - push the current branch with the same name on the remote.
-+`nothing`;;
-+do not push anything (error out) unless a refspec is
-+given. This is primarily meant for people who want to
-+avoid mistakes by always being explicit.
-+
-+`current`;;
-+push the current branch to update a branch with the same
-+name on the receiving end.  Works in both central and non-central
-+workflows.
-+
-+`upstream`;;
-+push the current branch back to the branch whose
-+changes are usually integrated into the current branch (which is
-+called `@{upstream}`).  This mode only makes sense if you are
-+pushing to the same repository you would normally pull from
-+(i.e. central workflow).
-+
-+`tracking`;;
-+this is a deprecated synonym for `upstream`.
-+
-+`simple`;;
-+push the current branch with the same name on the remote.
- +
- If you are working on a centralized workflow (pushing to the same repository you
- pull from, which is typically `origin`), then you need to configure an upstream
-@@ -44,16 +48,17 @@ branch with the same name.
- This mode is the default since Git 2.0, and is the safest option suited for
- beginners.
- 
--* `matching` - push all branches having the same name on both ends.
--  This makes the repository you are pushing to remember the set of
--  branches that will be pushed out (e.g. if you always push 'maint'
--  and 'master' there and no other branches, the repository you push
--  to will have these two branches, and your local 'maint' and
--  'master' will be pushed there).
-+`matching`;;
-+push all branches having the same name on both ends.
-+This makes the repository you are pushing to remember the set of
-+branches that will be pushed out (e.g. if you always push `maint`
-+and `master` there and no other branches, the repository you push
-+to will have these two branches, and your local `maint` and
-+`master` will be pushed there).
- +
- To use this mode effectively, you have to make sure _all_ the
- branches you would push out are ready to be pushed out before
--running 'git push', as the whole point of this mode is to allow you
-+running `git push`, as the whole point of this mode is to allow you
- to push all of the branches in one go.  If you usually finish work
- on only one branch and push out the result, while other branches are
- unfinished, this mode is not for you.  Also this mode is not
-@@ -66,24 +71,24 @@ new default).
- 
- --
- 
--push.followTags::
-+`push.followTags`::
- 	If set to true, enable `--follow-tags` option by default.  You
- 	may override this configuration at time of push by specifying
- 	`--no-follow-tags`.
- 
--push.gpgSign::
--	May be set to a boolean value, or the string 'if-asked'. A true
-+`push.gpgSign`::
-+	May be set to a boolean value, or the string `if-asked`. A true
- 	value causes all pushes to be GPG signed, as if `--signed` is
--	passed to linkgit:git-push[1]. The string 'if-asked' causes
-+	passed to linkgit:git-push[1]. The string `if-asked` causes
- 	pushes to be signed if the server supports it, as if
--	`--signed=if-asked` is passed to 'git push'. A false value may
-+	`--signed=if-asked` is passed to `git push`. A false value may
- 	override a value from a lower-priority config file. An explicit
- 	command-line flag always overrides this config option.
- 
--push.pushOption::
-+`push.pushOption`::
- 	When no `--push-option=<option>` argument is given from the
--	command line, `git push` behaves as if each <value> of
--	this variable is given as `--push-option=<value>`.
-+	command line, `git push` behaves as if each _<option>_ of
-+	this variable is given as `--push-option=<option>`.
- +
- This is a multi-valued variable, and an empty value can be used in a
- higher priority configuration file (e.g. `.git/config` in a
-@@ -109,26 +114,26 @@ This will result in only b (a and c are cleared).
- 
- ----
- 
--push.recurseSubmodules::
--	May be "check", "on-demand", "only", or "no", with the same behavior
--	as that of "push --recurse-submodules".
--	If not set, 'no' is used by default, unless 'submodule.recurse' is
--	set (in which case a 'true' value means 'on-demand').
-+`push.recurseSubmodules`::
-+	May be `check`, `on-demand`, `only`, or `no`, with the same behavior
-+	as that of `push --recurse-submodules`.
-+	If not set, `no` is used by default, unless `submodule.recurse` is
-+	set (in which case a `true` value means `on-demand`).
- 
--push.useForceIfIncludes::
--	If set to "true", it is equivalent to specifying
-+`push.useForceIfIncludes`::
-+	If set to `true`, it is equivalent to specifying
- 	`--force-if-includes` as an option to linkgit:git-push[1]
- 	in the command line. Adding `--no-force-if-includes` at the
- 	time of push overrides this configuration setting.
- 
--push.negotiate::
--	If set to "true", attempt to reduce the size of the packfile
-+`push.negotiate`::
-+	If set to `true`, attempt to reduce the size of the packfile
- 	sent by rounds of negotiation in which the client and the
--	server attempt to find commits in common. If "false", Git will
-+	server attempt to find commits in common. If `false`, Git will
- 	rely solely on the server's ref advertisement to find commits
- 	in common.
- 
--push.useBitmaps::
--	If set to "false", disable use of bitmaps for "git push" even if
--	`pack.useBitmaps` is "true", without preventing other git operations
--	from using bitmaps. Default is true.
-+`push.useBitmaps`::
-+	If set to `false`, disable use of bitmaps for `git push` even if
-+	`pack.useBitmaps` is `true`, without preventing other git operations
-+	from using bitmaps. Default is `true`.
-diff --git a/Documentation/git-push.adoc b/Documentation/git-push.adoc
-index 864b0d0467..e5ba3a6742 100644
---- a/Documentation/git-push.adoc
-+++ b/Documentation/git-push.adoc
-@@ -8,13 +8,13 @@ git-push - Update remote refs along with associated objects
- 
- SYNOPSIS
- --------
--[verse]
--'git push' [--all | --branches | --mirror | --tags] [--follow-tags] [--atomic] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
--	   [--repo=<repository>] [-f | --force] [-d | --delete] [--prune] [-q | --quiet] [-v | --verbose]
--	   [-u | --set-upstream] [-o <string> | --push-option=<string>]
--	   [--[no-]signed|--signed=(true|false|if-asked)]
--	   [--force-with-lease[=<refname>[:<expect>]] [--force-if-includes]]
--	   [--no-verify] [<repository> [<refspec>...]]
-+[synopsis]
-+git push [--all | --branches | --mirror | --tags] [--follow-tags] [--atomic] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
-+	 [--repo=<repository>] [-f | --force] [-d | --delete] [--prune] [-q | --quiet] [-v | --verbose]
-+	 [-u | --set-upstream] [-o <string> | --push-option=<string>]
-+	 [--[no-]signed | --signed=(true|false|if-asked)]
-+	 [--force-with-lease[=<refname>[:<expect>]] [--force-if-includes]]
-+	 [--no-verify] [<repository> [<refspec>...]]
- 
- DESCRIPTION
- -----------
-@@ -35,7 +35,7 @@ To decide which branches, tags, or other refs to push, Git uses
- 
- 1. The `<refspec>` argument(s) (for example `main` in `git push origin main`)
-    or the `--all`, `--mirror`, or `--tags` options
--2. The `remote.*.push` configuration for the repository being pushed to
-+2. The `remote.<name>.push` configuration for the repository being pushed to
- 3. The `push.default` configuration. The default is `push.default=simple`,
-    which will push to a branch with the same name as the current branch.
-    See the <<CONFIGURATION,CONFIGURATION>> section below for more on `push.default`.
-@@ -49,25 +49,25 @@ You can make interesting things happen to a repository
- every time you push into it, by setting up 'hooks' there.  See
- documentation for linkgit:git-receive-pack[1].
- 
--
--OPTIONS[[OPTIONS]]
--------------------
--<repository>::
-+[[OPTIONS]]
-+OPTIONS
-+-------
-+_<repository>_::
- 	The "remote" repository that is the destination of a push
- 	operation.  This parameter can be either a URL
- 	(see the section <<URLS,GIT URLS>> below) or the name
- 	of a remote (see the section <<REMOTES,REMOTES>> below).
- 
--<refspec>...::
-+`<refspec>...`::
- 	Specify what destination ref to update with what source object.
- +
--The format for a refspec is [+]<src>[:<dst>], for example `main`,
-+The format for a refspec is `[+]<src>[:<dst>]`, for example `main`,
- `main:other`, or `HEAD^:refs/heads/main`.
- +
--The `<src>` is often the name of the local branch to push, but it can be
-+The _<src>_ is often the name of the local branch to push, but it can be
- any arbitrary "SHA-1 expression" (see linkgit:gitrevisions[7]).
- +
--The `<dst>` determines what ref to update on the remote side. It must be the
-+The _<dst>_ determines what ref to update on the remote side. It must be the
- name of a branch, tag, or other ref, not an arbitrary expression.
- +
- The `+` is optional and does the same thing as `--force`.
-@@ -78,23 +78,23 @@ and destination, or with a shorter form (for example `main` or
- `main:other`). Here are the rules for how refspecs are expanded,
- as well as various other special refspec forms:
- +
-- *  `<src>` without a `:<dst>` means to update the same ref as the
--    `<src>`, unless the `remote.<repository>.push` configuration specifies a
--    different <dst>. For example, if `main` is a branch, then the refspec
-+ *  _<src>_ without a `:<dst>` means to update the same ref as the
-+    _<src>_, unless the `remote.<repository>.push` configuration specifies a
-+    different _<dst>_. For example, if `main` is a branch, then the refspec
-     `main` expands to `main:refs/heads/main`.
-- *  If `<dst>` unambiguously refers to a ref on the <repository> remote,
-+ *  If _<dst>_ unambiguously refers to a ref on the <repository> remote,
-     then expand it to that ref. For example, if `v1.0` is a tag on the
-     remote, then `HEAD:v1.0` expands to `HEAD:refs/tags/v1.0`.
-- *  If `<src>` resolves to a ref starting with `refs/heads/` or `refs/tags/`,
-+ *  If _<src>_ resolves to a ref starting with `refs/heads/` or `refs/tags/`,
-     then prepend that to <dst>. For example, if `main` is a branch, then
-     `main:other` expands to `main:refs/heads/other`
-  *  The special refspec `:` (or `+:` to allow non-fast-forward updates)
-     directs Git to push "matching" branches: for every branch that exists on
-     the local side, the remote side is updated if a branch of the same name
-     already exists on the remote side.
-- *  <src> may contain a * to indicate a simple pattern match.
-+ *  _<src>_ may contain a `*` to indicate a simple pattern match.
-     This works like a glob that matches any ref matching the pattern.
--    There must be only one * in both the `<src>` and `<dst>`.
-+    There must be only one `*` in both the `<src>` and `<dst>`.
-     It will map refs to the destination by replacing the * with the
-     contents matched from the source. For example, `refs/heads/*:refs/heads/*`
-     will push all branches.
-@@ -102,11 +102,11 @@ as well as various other special refspec forms:
-     This specifies refs to exclude. A ref will be considered to
-     match if it matches at least one positive refspec, and does not
-     match any negative refspec. Negative refspecs can be pattern refspecs.
--    They must only contain a `<src>`.
-+    They must only contain a _<src>_.
-     Fully spelled out hex object names are also not supported.
-     For example, `git push origin 'refs/heads/*' '^refs/heads/dev-*'`
-     will push all branches except for those starting with `dev-`
-- *  If `<src>` is empty, it deletes the `<dst>` ref from the remote
-+ *  If _<src>_ is empty, it deletes the _<dst>_ ref from the remote
-     repository. For example, `git push origin :dev` will
-     delete the `dev` branch.
-  *  `tag <tag>` expands to `refs/tags/<tag>:refs/tags/<tag>`.
-@@ -121,12 +121,12 @@ as well as various other special refspec forms:
- 
- Not all updates are allowed: see PUSH RULES below for the details.
- 
----all::
----branches::
-+`--all`::
-+`--branches`::
- 	Push all branches (i.e. refs under `refs/heads/`); cannot be
- 	used with other <refspec>.
- 
----prune::
-+`--prune`::
- 	Remove remote branches that don't have a local counterpart. For example
- 	a remote branch `tmp` will be removed if a local branch with the same
- 	name doesn't exist any more. This also respects refspecs, e.g.
-@@ -134,7 +134,7 @@ Not all updates are allowed: see PUSH RULES below for the details.
- 	make sure that remote `refs/tmp/foo` will be removed if `refs/heads/foo`
- 	doesn't exist.
- 
----mirror::
-+`--mirror`::
- 	Instead of naming each ref to push, specifies that all
- 	refs under `refs/` (which includes but is not
- 	limited to `refs/heads/`, `refs/remotes/`, and `refs/tags/`)
-@@ -145,26 +145,26 @@ Not all updates are allowed: see PUSH RULES below for the details.
- 	if the configuration option `remote.<remote>.mirror` is
- 	set.
- 
---n::
----dry-run::
-+`-n`::
-+`--dry-run`::
- 	Do everything except actually send the updates.
- 
----porcelain::
-+`--porcelain`::
- 	Produce machine-readable output.  The output status line for each ref
- 	will be tab-separated and sent to stdout instead of stderr.  The full
- 	symbolic names of the refs will be given.
- 
---d::
----delete::
-+`-d`::
-+`--delete`::
- 	All listed refs are deleted from the remote repository. This is
- 	the same as prefixing all refs with a colon.
- 
----tags::
-+`--tags`::
- 	All refs under `refs/tags` are pushed, in
- 	addition to refspecs explicitly listed on the command
- 	line.
- 
----follow-tags::
-+`--follow-tags`::
- 	Push all the refs that would be pushed without this option,
- 	and also push annotated tags in `refs/tags` that are missing
- 	from the remote but are pointing at commit-ish that are
-@@ -172,29 +172,34 @@ Not all updates are allowed: see PUSH RULES below for the details.
- 	with configuration variable `push.followTags`.  For more
- 	information, see `push.followTags` in linkgit:git-config[1].
- 
----signed::
----no-signed::
----signed=(true|false|if-asked)::
-+`--signed`::
-+`--no-signed`::
-+`--signed=(true|false|if-asked)`::
- 	GPG-sign the push request to update refs on the receiving
- 	side, to allow it to be checked by the hooks and/or be
--	logged.  If `false` or `--no-signed`, no signing will be
--	attempted.  If `true` or `--signed`, the push will fail if the
--	server does not support signed pushes.  If set to `if-asked`,
--	sign if and only if the server supports signed pushes.  The push
--	will also fail if the actual call to `gpg --sign` fails.  See
--	linkgit:git-receive-pack[1] for the details on the receiving end.
--
----atomic::
----no-atomic::
-+	logged. Possible values are:
-+`false`;;
-+`--no-signed`;;
-+no signing will be attempted.
-+`true`;;
-+`--signed`;;
-+the push will fail if the server does not support signed pushes.
-+`if-asked`;;
-+sign if and only if the server supports signed pushes.  The push
-+will also fail if the actual call to `gpg --sign` fails.  See
-+linkgit:git-receive-pack[1] for the details on the receiving end.
-+
-+`--atomic`::
-+`--no-atomic`::
- 	Use an atomic transaction on the remote side if available.
- 	Either all refs are updated, or on error, no refs are updated.
- 	If the server does not support atomic pushes the push will fail.
- 
---o <option>::
----push-option=<option>::
-+`-o <option>`::
-+`--push-option=<option>`::
- 	Transmit the given string to the server, which passes them to
- 	the pre-receive as well as the post-receive hook. The given string
--	must not contain a NUL or LF character.
-+	must not contain a _NUL_ or _LF_ character.
- 	When multiple `--push-option=<option>` are given, they are
- 	all sent to the other side in the order listed on the
- 	command line.
-@@ -202,22 +207,22 @@ Not all updates are allowed: see PUSH RULES below for the details.
- 	line, the values of configuration variable `push.pushOption`
- 	are used instead.
- 
----receive-pack=<git-receive-pack>::
----exec=<git-receive-pack>::
-+`--receive-pack=<git-receive-pack>`::
-+`--exec=<git-receive-pack>`::
- 	Path to the 'git-receive-pack' program on the remote
- 	end.  Sometimes useful when pushing to a remote
- 	repository over ssh, and you do not have the program in
--	a directory on the default $PATH.
-+	a directory on the default `$PATH`.
- 
----force-with-lease::
----no-force-with-lease::
----force-with-lease=<refname>::
----force-with-lease=<refname>:<expect>::
--	Usually, "git push" refuses to update a remote ref that is
-+`--force-with-lease`::
-+`--no-force-with-lease`::
-+`--force-with-lease=<refname>`::
-+`--force-with-lease=<refname>:<expect>`::
-+	Usually, `git push` refuses to update a remote ref that is
- 	not an ancestor of the local ref used to overwrite it.
- +
- This option overrides this restriction if the current value of the
--remote ref is the expected value.  "git push" fails otherwise.
-+remote ref is the expected value.  `git push` fails otherwise.
- +
- Imagine that you have to rebase what you have already published.
- You will have to bypass the "must fast-forward" rule in order to
-@@ -239,16 +244,16 @@ current value to be the same as the remote-tracking branch we have
- for them.
- +
- `--force-with-lease=<refname>`, without specifying the expected value, will
--protect the named ref (alone), if it is going to be updated, by
-+protect _<refname>_ (alone), if it is going to be updated, by
- requiring its current value to be the same as the remote-tracking
- branch we have for it.
- +
--`--force-with-lease=<refname>:<expect>` will protect the named ref (alone),
-+`--force-with-lease=<refname>:<expect>` will protect _<refname>_ (alone),
- if it is going to be updated, by requiring its current value to be
--the same as the specified value `<expect>` (which is allowed to be
-+the same as the specified value _<expect>_ (which is allowed to be
- different from the remote-tracking branch we have for the refname,
- or we do not even have to have such a remote-tracking branch when
--this form is used).  If `<expect>` is the empty string, then the named ref
-+this form is used).  If _<expect>_ is the empty string, then the named ref
- must not already exist.
- +
- Note that all forms other than `--force-with-lease=<refname>:<expect>`
-@@ -256,7 +261,7 @@ that specifies the expected current value of the ref explicitly are
- still experimental and their semantics may change as we gain experience
- with this feature.
- +
--"--no-force-with-lease" will cancel all the previous --force-with-lease on the
-+`--no-force-with-lease` will cancel all the previous `--force-with-lease` on the
- command line.
- +
- A general note on safety: supplying this option without an expected
-@@ -276,23 +281,29 @@ If your editor or some other system is running `git fetch` in the
- background for you a way to mitigate this is to simply set up another
- remote:
- +
--	git remote add origin-push $(git config remote.origin.url)
--	git fetch origin-push
-+----
-+git remote add origin-push $(git config remote.origin.url)
-+git fetch origin-push
-+----
- +
- Now when the background process runs `git fetch origin` the references
- on `origin-push` won't be updated, and thus commands like:
- +
--	git push --force-with-lease origin-push
-+----
-+git push --force-with-lease origin-push
-+----
- +
- Will fail unless you manually run `git fetch origin-push`. This method
- is of course entirely defeated by something that runs `git fetch
- --all`, in that case you'd need to either disable it or do something
- more tedious like:
- +
--	git fetch              # update 'master' from remote
--	git tag base master    # mark our base point
--	git rebase -i master   # rewrite some commits
--	git push --force-with-lease=master:base master:master
-+----
-+git fetch              # update 'master' from remote
-+git tag base master    # mark our base point
-+git rebase -i master   # rewrite some commits
-+git push --force-with-lease=master:base master:master
-+----
- +
- I.e. create a `base` tag for versions of the upstream code that you've
- seen and are willing to overwrite, then rewrite history, and finally
-@@ -308,26 +319,26 @@ verify if updates from the remote-tracking refs that may have been
- implicitly updated in the background are integrated locally before
- allowing a forced update.
- 
---f::
----force::
-+`-f`::
-+`--force`::
- 	Usually, `git push` will refuse to update a branch that is not an
- 	ancestor of the commit being pushed.
- +
- This flag disables that check, the other safety checks in PUSH RULES
--below, and the checks in --force-with-lease. It can cause the remote
-+below, and the checks in `--force-with-lease`. It can cause the remote
- repository to lose commits; use it with care.
- +
- Note that `--force` applies to all the refs that are pushed, hence
- using it with `push.default` set to `matching` or with multiple push
--destinations configured with `remote.*.push` may overwrite refs
-+destinations configured with `remote.<name>.push` may overwrite refs
- other than the current branch (including local refs that are
- strictly behind their remote counterpart).  To force a push to only
- one branch, use a `+` in front of the refspec to push (e.g `git push
- origin +master` to force a push to the `master` branch). See the
- `<refspec>...` section above for details.
- 
----force-if-includes::
----no-force-if-includes::
-+`--force-if-includes`::
-+`--no-force-if-includes`::
- 	Force an update only if the tip of the remote-tracking ref
- 	has been integrated locally.
- +
-@@ -343,72 +354,78 @@ a "no-op".
- +
- Specifying `--no-force-if-includes` disables this behavior.
- 
----repo=<repository>::
--	This option is equivalent to the <repository> argument. If both
-+`--repo=<repository>`::
-+	This option is equivalent to the _<repository>_ argument. If both
- 	are specified, the command-line argument takes precedence.
- 
---u::
----set-upstream::
-+`-u`::
-+`--set-upstream`::
- 	For every branch that is up to date or successfully pushed, add
- 	upstream (tracking) reference, used by argument-less
- 	linkgit:git-pull[1] and other commands. For more information,
- 	see `branch.<name>.merge` in linkgit:git-config[1].
- 
----thin::
----no-thin::
-+`--thin`::
-+`--no-thin`::
- 	These options are passed to linkgit:git-send-pack[1]. A thin transfer
- 	significantly reduces the amount of sent data when the sender and
- 	receiver share many of the same objects in common. The default is
- 	`--thin`.
- 
---q::
----quiet::
-+`-q`::
-+`--quiet`::
- 	Suppress all output, including the listing of updated refs,
- 	unless an error occurs. Progress is not reported to the standard
- 	error stream.
- 
---v::
----verbose::
-+`-v`::
-+`--verbose`::
- 	Run verbosely.
- 
----progress::
-+`--progress`::
- 	Progress status is reported on the standard error stream
--	by default when it is attached to a terminal, unless -q
-+	by default when it is attached to a terminal, unless `-q`
- 	is specified. This flag forces progress status even if the
- 	standard error stream is not directed to a terminal.
- 
----no-recurse-submodules::
----recurse-submodules=check|on-demand|only|no::
-+`--no-recurse-submodules`::
-+`--recurse-submodules=(check|on-demand|only|no)`::
- 	May be used to make sure all submodule commits used by the
- 	revisions to be pushed are available on a remote-tracking branch.
--	If 'check' is used Git will verify that all submodule commits that
-+	Possible values are:
-+`check`;;
-+        Git will verify that all submodule commits that
- 	changed in the revisions to be pushed are available on at least one
- 	remote of the submodule. If any commits are missing the push will
--	be aborted and exit with non-zero status. If 'on-demand' is used
-+	be aborted and exit with non-zero status.
-+`on-demand`;;
- 	all submodules that changed in the revisions to be pushed will be
--	pushed. If on-demand was not able to push all necessary revisions it will
--	also be aborted and exit with non-zero status. If 'only' is used all
--	submodules will be pushed while the superproject is left
--	unpushed. A value of 'no' or using `--no-recurse-submodules` can be used
--	to override the push.recurseSubmodules configuration variable when no
--	submodule recursion is required.
--+
--When using 'on-demand' or 'only', if a submodule has a
--"push.recurseSubmodules={on-demand,only}" or "submodule.recurse" configuration,
--further recursion will occur. In this case, "only" is treated as "on-demand".
--
----verify::
----no-verify::
-+	pushed. If `on-demand` was not able to push all necessary revisions it will
-+	also be aborted and exit with non-zero status.
-+`only`;;
-+	all submodules will be pushed while the superproject is left
-+	unpushed.
-+`no`;;
-+	override the `push.recurseSubmodules` configuration variable when no
-+	submodule recursion is required. Similar to using `--no-recurse-submodules`.
-+
-++
-+When using `on-demand` or `only`, if a submodule has a
-+`push.recurseSubmodules=(on-demand|only)` or `submodule.recurse` configuration,
-+further recursion will occur. In this case, `only` is treated as `on-demand`.
-+
-+`--verify`::
-+`--no-verify`::
- 	Toggle the pre-push hook (see linkgit:githooks[5]).  The
--	default is --verify, giving the hook a chance to prevent the
--	push.  With --no-verify, the hook is bypassed completely.
-+	default is `--verify`, giving the hook a chance to prevent the
-+	push.  With `--no-verify`, the hook is bypassed completely.
- 
---4::
----ipv4::
-+`-4`::
-+`--ipv4`::
- 	Use IPv4 addresses only, ignoring IPv6 addresses.
- 
---6::
----ipv6::
-+`-6`::
-+`--ipv6`::
- 	Use IPv6 addresses only, ignoring IPv4 addresses.
- 
- include::urls-remotes.adoc[]
-@@ -427,16 +444,16 @@ representing the status of a single ref. Each line is of the form:
-  <flag> <summary> <from> -> <to> (<reason>)
- -------------------------------
- 
--If --porcelain is used, then each line of the output is of the form:
-+If `--porcelain` is used, then each line of the output is of the form:
- 
- -------------------------------
-  <flag> \t <from>:<to> \t <summary> (<reason>)
- -------------------------------
- 
--The status of up-to-date refs is shown only if --porcelain or --verbose
-+The status of up-to-date refs is shown only if `--porcelain` or `--verbose`
- option is used.
- 
--flag::
-+_<flag>_::
- 	A single character indicating the status of the ref:
- (space);; for a successfully pushed fast-forward;
- `+`;; for a successful forced update;
-@@ -445,7 +462,7 @@ flag::
- `!`;; for a ref that was rejected or failed to push; and
- `=`;; for a ref that was up to date and did not need pushing.
- 
--summary::
-+_<summary>_::
- 	For a successfully pushed ref, the summary shows the old and new
- 	values of the ref in a form suitable for using as an argument to
- 	`git log` (this is `<old>..<new>` in most cases, and
-@@ -586,7 +603,7 @@ Updating A with the resulting merge commit will fast-forward and your
- push will be accepted.
- 
- Alternatively, you can rebase your change between X and B on top of A,
--with "git pull --rebase", and push the result back.  The rebase will
-+with `git pull --rebase`, and push the result back.  The rebase will
- create a new commit D that builds the change between X and B on top of
- A.
- 
-@@ -604,12 +621,12 @@ accepted.
- There is another common situation where you may encounter non-fast-forward
- rejection when you try to push, and it is possible even when you are
- pushing into a repository nobody else pushes into. After you push commit
--A yourself (in the first picture in this section), replace it with "git
--commit --amend" to produce commit B, and you try to push it out, because
-+A yourself (in the first picture in this section), replace it with `git
-+commit --amend` to produce commit B, and you try to push it out, because
- forgot that you have pushed A out already. In such a case, and only if
- you are certain that nobody in the meantime fetched your earlier commit A
--(and started building on top of it), you can run "git push --force" to
--overwrite it. In other words, "git push --force" is a method reserved for
-+(and started building on top of it), you can run `git push --force` to
-+overwrite it. In other words, `git push --force` is a method reserved for
- a case where you do mean to lose history.
- 
- 
-@@ -627,18 +644,18 @@ EXAMPLES
- 	variable) if it has the same name as the current branch, and
- 	errors out without pushing otherwise.
- +
--The default behavior of this command when no <refspec> is given can be
-+The default behavior of this command when no _<refspec>_ is given can be
- configured by setting the `push` option of the remote, or the `push.default`
- configuration variable.
- +
- For example, to default to pushing only the current branch to `origin`
--use `git config remote.origin.push HEAD`.  Any valid <refspec> (like
-+use `git config remote.origin.push HEAD`.  Any valid _<refspec>_ (like
- the ones in the examples below) can be configured as the default for
- `git push origin`.
- 
- `git push origin :`::
- 	Push "matching" branches to `origin`. See
--	<refspec> in the <<OPTIONS,OPTIONS>> section above for a
-+	_<refspec>_ in the <<OPTIONS,OPTIONS>> section above for a
- 	description of "matching" branches.
- 
- `git push origin master`::
--- 
-gitgitgadget
+Changes in v6:
+- This version adds a new commit which handles another regression where
+  if reference updates fail when using batched updates, we skip doing
+  the post-fetch operations. Namely:
+    - Updating 'FETCH_HEAD' via `commit_fetch_head()`
+    - Adding upstream tracking information via `set_upstream()`
+    - Setting remote 'HEAD' values when `do_set_head` is true
+- Link to v5: https://patch.msgid.link/20251113-fix-tags-not-fetching-v5-0-371ea7ec638d@gmail.com
+
+Changes in v5:
+- In the previous version, I assumed that the `prune_refs()` function
+  also triggers committing of batched updates. However this was
+  incorrect as the transaction for batched updates, is only created
+  after the call to `prune_refs()`. This makes sense, since we want to
+  isolate deletions from the rest of the ref updates, to avoid
+  conflicts. I've amended the commit message accordingly.
+- I noticed I missed cleanup of the repos created in the test, which
+  I've now done.
+- Link to v4: https://patch.msgid.link/20251111-fix-tags-not-fetching-v4-0-185d836ec62a@gmail.com
+
+Changes in v4:
+- Cleanup the code in the first commit to make it simpler to read.
+- In the second commit, we were specifically checking for `retcode > 0`
+  for committing the transaction. This is a bit confusing since that
+  begs the questions why not `retcode < 0`. There is no real reason
+  there, so I've change the code to simple do `if (retcode && ...)`.
+  I've also added more information about the flows which would commit
+  the transaction in the commit message.
+- Link to v3: https://patch.msgid.link/20251108-fix-tags-not-fetching-v3-0-a12ab6c4daef@gmail.com
+
+Changes in v3:
+- Split the patch into two commits. One for extracting out existing code
+  into a new commit and the other to perform the fix.
+- Add back error handling when commit via the normal flow.
+- Instead of calling the commit function at every failure, make it part
+  of the cleanup code.
+- Link to v2: https://patch.msgid.link/20251106-fix-tags-not-fetching-v2-1-610cb4b0e7c8@gmail.com
+
+Changes in v2:
+- Add a comment to explain the purpose of `commit_ref_transaction()` and
+  how it works.
+- Also extend the same logic towards backfilling tags. While I was able
+  to add a test for the happy path, I couldn't figure out how to test
+  when `backfill_tags()` tags would fail.
+  Tangentially, this flow seems to only be triggered when using the now
+  deprecated 'branches/' remote format.
+- Remove unneeded subshells from the tests.
+- Link to v1: https://patch.msgid.link/20251103-fix-tags-not-fetching-v1-1-e63caeb6c113@gmail.com
+
+---
+ builtin/fetch.c  |  71 ++++++++++++++++----------
+ t/t5510-fetch.sh | 149 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 194 insertions(+), 26 deletions(-)
+
+Karthik Nayak (3):
+      fetch: extract out reference committing logic
+      fetch: fix non-conflicting tags not being committed
+      fetch: fix failed batched updates skipping operations
+
+Range-diff versus v6:
+
+1:  e16f0034a7 = 1:  c5b451d0a0 fetch: extract out reference committing logic
+2:  5145e93e99 = 2:  59e97f54af fetch: fix non-conflicting tags not being committed
+3:  8fb6ef3079 ! 3:  1bf509a96f fetch: fix failed batched updates skipping operations
+    @@ t/t5510-fetch.sh: test_expect_success "backfill tags when providing a refspec" '
+     +		cd repo &&
+     +		! test -f FETCH_HEAD &&
+     +		git remote add origin ../base &&
+    -+		touch refs/heads/foo.lock &&
+    ++		>refs/heads/foo.lock &&
+     +		test_must_fail git fetch -f origin "refs/heads/*:refs/heads/*" 2>err &&
+     +		test_grep "error: fetching ref refs/heads/foo failed: reference already exists" err &&
+     +		test -f FETCH_HEAD
+     +	)
+     +'
+     +
+    -+test_expect_success REFFILES "upstream tracking info is added with --set-upstream" '
+    ++test_expect_success "upstream tracking info is added with --set-upstream" '
+     +	test_when_finished rm -rf base repo &&
+     +
+     +	git init --initial-branch=main base &&
+    @@ t/t5510-fetch.sh: test_expect_success "backfill tags when providing a refspec" '
+     +		test_must_fail git config get branch.main.remote &&
+     +
+     +		mkdir -p refs/remotes/origin &&
+    -+		touch refs/remotes/origin/main.lock &&
+    ++		>refs/remotes/origin/main.lock &&
+     +		test_must_fail git fetch origin --set-upstream main &&
+     +		git config get branch.main.remote >actual &&
+     +		echo "origin" >expect &&
+    @@ t/t5510-fetch.sh: test_expect_success "backfill tags when providing a refspec" '
+     +
+     +		! test -f refs/remotes/origin/HEAD &&
+     +		mkdir -p refs/remotes/origin &&
+    -+		touch refs/remotes/origin/branch.lock &&
+    ++		>refs/remotes/origin/branch.lock &&
+     +		test_must_fail git fetch origin &&
+     +		test -f refs/remotes/origin/HEAD
+     +	)
+
+
+base-commit: a99f379adf116d53eb11957af5bab5214915f91d
+change-id: 20251103-fix-tags-not-fetching-0f1621a474d4
+
+Thanks
+- Karthik
+
