@@ -1,145 +1,101 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4813625C6EE
-	for <git@vger.kernel.org>; Wed, 19 Nov 2025 21:27:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3DA372AAA
+	for <git@vger.kernel.org>; Wed, 19 Nov 2025 21:40:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763587676; cv=none; b=nEXsxrNqNUP7AEF2feMgpoc1dr8XnvbLZNwwGbDIJsoyyqhYWcxGlwmZagi6k88l5ra2IfrXX546ssebhv99zaVa/zOKj3Enf4u8a7Hmlnh5M9KZ4H6uk8QFuW2fg3BoJ9IratfjSgyae/nDYUPuXHAD/Lirv0jcDpnPSU80Zb8=
+	t=1763588410; cv=none; b=ut+63AhVKUtsI+iCFEvuwuQxyNHLW3PqPWD65okPagRohaoVO5ztG729ngzqM2lEOKu/vu8JI4ZQqM3RgtEGhSSZ3Z5pjPSGvSCgdKHC0sTgo4bjkIdAQRF7edrfmPwKvwGaOYdVCtkKoPGogcJ13ZMdxRU7J/M+fPfYLS8wd04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763587676; c=relaxed/simple;
-	bh=pW9aueJTdVJl4ngEr4NAyW2z92L/je64MrFZxxvVslM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=c+25uyaLWVAqQrhTBhWDYYZw2ur+XP6pqxM56POH5YaP0Uj2EK8s/HhPPpgOu3vYNcnXxCnxU2LhDKRxGSA6VowKMXIRgtrZRdQx4+kh843ixa3gKHJpnhYDSJCDxjDME2l6REhNPVvMfzOa2Vjl+zlLrEOsANGlEPbB6vBO41M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CGOhERa3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wc0WAoYN; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763588410; c=relaxed/simple;
+	bh=WV+4nu9aRqO7gIQ5PP9ZN0JGSjaNLlW8NN24NmICYwI=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=oHtyb4//HqIAcjNwftO938pBoDpbmfRX6ZCMiKv/nP8W9NpGRFQl8TLrcBFcA/jCPELDo1z81Ua8OnFq8z/evJdiCWg466Ui2mHc0KMs/NsQojT5i1JXhBtw2nvyYe8EctD9O9yr4NqIV6SIQBEVX57ltEDrdVRnkXxptpcHdtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MSEn6+VD; arc=none smtp.client-ip=209.85.166.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CGOhERa3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wc0WAoYN"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 521DEEC01BF;
-	Wed, 19 Nov 2025 16:27:53 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 19 Nov 2025 16:27:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763587673; x=1763674073; bh=q+imsgGugi
-	pFSfJc5CuAVsrVPCc6QxTTEdQ5JGuVIv0=; b=CGOhERa3PPBFmvU8ycayJA9GH1
-	b0C0/uzmBhbaSyI3eJUQxb0efkswU++3CV6JyCBcL1sgC+ciQRB5v/IC6SLh60GN
-	Ej248eH2CxAMu5vpW1oQKWGc93NWV+kmr+w+s7KH/3sdccNS/1VyvGGdTVW3kRwH
-	siLurjpid+LpKw4Ai8loPol/irIhL2IGBFRHj67r6MQqZaQ6mggclQpfJ2c+z4qL
-	EE9FfRdn0UhWg+dUP5oi/AOeo+3Teo97Zbjm8qj6PwIfAualobsXybkzqc2N6T+X
-	E2HJ/qf/QV0SB4aBCSKNWJ+OZLrrQS61tvNKxiSK1rX2M2qpy2NZgVr1F5fg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763587673; x=1763674073; bh=q+imsgGugipFSfJc5CuAVsrVPCc6QxTTEdQ
-	5JGuVIv0=; b=wc0WAoYNB385iy12F84M0VptLiweC1mzpjKCAxU6eDgPxsc6+lF
-	dTheyk0DaBtl8Fg7i5VZ9X4IM8dgUnQw6iTGcE+te+9pvBuCqOWiB0zMslZxhUUQ
-	mfIefqWcVb7QaiM4jiRJg7Inhkio8fquHtQr2si2xj9edpMcjQqtb7CWHA/kPzA8
-	yH2Lq3B+ykW61OV1h/xMViihqSl4GqMHuZC2Nz0fLTJsHRtaKy9WmuiCyiISYK5M
-	H3sZ+Q/NmMgwkqC1TZKQgwwR9OlK81jWAeQ0ZlF7nV5cb5XjOhp7psUs4FfurKQv
-	CLJE3tyOyXSTiv9e7NG+rxYPSTZgXbbCTyA==
-X-ME-Sender: <xms:WTYeaaPOb0lLGdEndkMK2aRU2wijVtAWFuZztL6691YEWoSPDCK5TA>
-    <xme:WTYeaQZlV0KhJWYS_koJw6DZiV92ma8WPIvN5bBompL9NWA1_4piamprJ1owOPQma
-    NxyvsrZrWcapTX92Sf6ShEdR2731gsQEB07BN90wYG4mPd9lTupUw>
-X-ME-Received: <xmr:WTYeaepv_01FD16Jxe80QVtU0zwodv-Uo_8D4GadqHZOthoEkmoaKLilQwpe3Cjs4hXgMmXMxAF9D4KFUABeNFW2qGXwT9UJEyiK>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdehvdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:WTYeaUZm0bTJjm8uuzXA-EcrEXOUy12zwZaBpiAdGiYIjA8VSyedCQ>
-    <xmx:WTYeaWTr9IUVCzBLXcwsvYrbXqH6O-RRehZEsqjCMQcAU7uJN0W2Pw>
-    <xmx:WTYeab6ShdeIcs9J7zdswfk35Majmm7ZQGLSgenT6vjMg6PYHcymUg>
-    <xmx:WTYeabw4sT6fphOv_i8q6HF4EVHuI96HsBHGoqdcgrZhFxqyPLZmhA>
-    <xmx:WTYeaQjOtyhlT8Hi3TE-E_9CmPBSRHCYc6aCwZZxJDabi7AdELQuPlrB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Nov 2025 16:27:52 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 07/13] builtin/index-pack: fix deferred fsck outside repos
-In-Reply-To: <20251119-b4-pks-odb-creation-v1-7-2b2ed2612cb6@pks.im> (Patrick
-	Steinhardt's message of "Wed, 19 Nov 2025 08:50:55 +0100")
-References: <20251119-b4-pks-odb-creation-v1-0-2b2ed2612cb6@pks.im>
-	<20251119-b4-pks-odb-creation-v1-7-2b2ed2612cb6@pks.im>
-Date: Wed, 19 Nov 2025 13:27:51 -0800
-Message-ID: <xmqq1pltbtm0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MSEn6+VD"
+Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-949325df6c8so8925539f.1
+        for <git@vger.kernel.org>; Wed, 19 Nov 2025 13:40:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763588408; x=1764193208; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=+I78rjbAIRYSbzymPK1Bld73l7Q/F8yuk8034Ln+18A=;
+        b=MSEn6+VDuuVw1vSAb6gfAK3g1OY0f6HN1jYkj3RL+VFcuf0Fjn3QLytqsW29XMxGGU
+         7X/qMaHI7qYAkFfF6g33+wpLTEpmtoWHlB4VtDbzcsk6sxeCbwsQaPOsOA+ZE1VXitoZ
+         pimpPTLlHnz5Lp/mFpnv2RNQ9xuXIOpUH5Belngg+MlVJKzsbTgU5OzvJf5sPksgpi20
+         VbVaKyuetTeSASbjW8u8PiDtXpl7a+KxQwIn0Sj7X/qyrbC06+NevbqkvsOvDypsEYJr
+         HuH447RYYRwZO+6kaA2q2YDJtXkKD5SIXWMQP3cTFfh/TaE8SMRXqLM88gmkbDBbP3ID
+         z+6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763588408; x=1764193208;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+I78rjbAIRYSbzymPK1Bld73l7Q/F8yuk8034Ln+18A=;
+        b=KK2TGLhayQyjy0dcfllqEoMqWhb03jMjArn1loIypkllxLC25QGdm+G9PSS4GU1xOd
+         3SJ+StT92BjgvZjbQ6MzFEpGMrrSRUsYLR1R3KQqeOKYMzviAGXhGGoxUtjzUtGLggD7
+         r5laariCS43s5qphbHXqGQcgUoMb+CBXy+XeIAPb2GFy/VfhU/ru8+taFgAhXI5e5n+u
+         038oHxzPpoDmE67PqYI9Bb1HbqNH0hYFjIoOG7miSdfK4P4+eB0xv3/UMS4GFAovKoNe
+         RVbYLw5z8Qq9NP9MIW3WCrNZU4ErElVyz/PO0e9uS1earmrAwo1aYG0qTLlHBhZ5fuvS
+         /epw==
+X-Gm-Message-State: AOJu0YxoqxfRkbY6vd0DDa5abIJ/ONaaMvGu2e/YslamfsEIrFDwe5se
+	+9IqJJ8eoX3P9q59l9A1KIohlARKSBJVuod+Ym8liehZnG7NaZTKkdJaQhGkcA==
+X-Gm-Gg: ASbGncvJsVIDgvalyDMun4Bsjtuy6amP/6lPITc7df4THhZl0r3Vq1jK6jJ+Jr2eNHI
+	BOTv3KQJbtehLrhzSvrF4g9S+Jm5FeWdNjZUah10MEmvVS6hsC0AOSxDbaQs6huYxHMsnbRfwQt
+	Lr04fxszBwKSV9YvhRW1OXFofcELnOKteblKL+wODX1iPSGWmpv+gg4qGjTC/sun0RrKkB1LiZf
+	Jbf8T1fJKKReLKHV/6pXDcE7AIATmxYp7xMXAdlKAKsuaF20f7Noxlc57SOzUKQt7BE7LyC1Vcj
+	PeIsCkIflVdwGio7VKmj5npPM1M61S558o+ndhZmJ8yfnXbYf6ZxnJu6GGj3BbH35RbMj+soiLB
+	IvWn9nI3iegVufsPCEE9FRkeb/8x3A+5/I9N9zX7Flw92kmXo5LtYvEvNNm2W8R08PPsW3C3htW
+	koBJ/BnROB3j2we+nqtv0E/kk=
+X-Google-Smtp-Source: AGHT+IGcyAH22Q/n3XV2D9wK74rNfTJvCWZpDdqjS6brKqQOdXwW/D84Jzj+FzOAFvTdyZVQacgXzQ==
+X-Received: by 2002:a05:6602:3c2:b0:948:28cf:3f9c with SMTP id ca18e2360f4ac-94938aee644mr62634439f.14.1763588407993;
+        Wed, 19 Nov 2025 13:40:07 -0800 (PST)
+Received: from [127.0.0.1] ([64.236.134.50])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-949386d8f05sm19300439f.19.2025.11.19.13.40.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Nov 2025 13:40:06 -0800 (PST)
+Message-Id: <pull.2002.git.1763588404.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 19 Nov 2025 21:40:01 +0000
+Subject: [PATCH 0/3] doc: convert fetch pull push to synopsis style
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
 
-Patrick Steinhardt <ps@pks.im> writes:
+This is the continuity of the conversion to the synopsis style with a few
+additional formatting changes.
 
-> There's another option though: instead of skipping the final object
-> checks, we can die if there are any queued object checks. With this
-> change we now die exactly if and only if we would have previously
-> segfaulted. Like this we ensure that objects that _may_ fail the
-> consistency checks won't be silently skipped, and at the same time we
-> give users a much better error message.
+Jean-Noël Avila (3):
+  doc: convert git fetch to synopsis style
+  doc: convert git pull to synopsis style
+  doc: convert git push to synopsis style
 
-A packfile stream may not have the blob objects these tree entries
-refer to, in which case index-pack cannot work outside a repository,
-but I think that is fine.
+ Documentation/config/fetch.adoc     |  60 +++----
+ Documentation/config/push.adoc      | 113 ++++++------
+ Documentation/fetch-options.adoc    | 211 +++++++++++-----------
+ Documentation/git-fetch.adoc        |  48 ++---
+ Documentation/git-pull.adoc         |  61 ++++---
+ Documentation/git-push.adoc         | 267 +++++++++++++++-------------
+ Documentation/merge-options.adoc    |   2 +-
+ Documentation/pull-fetch-param.adoc |  52 +++---
+ Documentation/urls-remotes.adoc     |  18 +-
+ builtin/fetch.c                     |   2 +-
+ 10 files changed, 428 insertions(+), 406 deletions(-)
 
-> @@ -2110,8 +2110,23 @@ int cmd_index_pack(int argc,
->  	else
->  		close(input_fd);
->  
-> -	if (do_fsck_object && fsck_finish(&fsck_options))
-> -		die(_("fsck error in pack objects"));
-> +	if (do_fsck_object) {
-> +		/*
-> +		 * We cannot perform queued consistency checks when running
-> +		 * outside of a repository because those require us to read
-> +		 * from the object database, which is uninitialized.
-> +		 *
-> +		 * TODO: we may eventually set up an in-memory object database,
-> +		 * which would allow us to perform these queued checks.
-> +		 */
-> +		if (!startup_info->have_repository &&
-> +		    fsck_has_queued_checks(&fsck_options))
-> +			die(_("cannot perform queued object checks outside "
-> +			      "of a repository"));
-> +
-> +		if (fsck_finish(&fsck_options))
-> +			die(_("fsck error in pack objects"));
-> +	}
 
-OK.
-
-> +bool fsck_has_queued_checks(struct fsck_options *options)
-> +{
-> +	return !oidset_equal(&options->gitmodules_found, &options->gitmodules_done) ||
-> +	       !oidset_equal(&options->gitattributes_found, &options->gitattributes_done);
-> +}
-
-So, if we see a tree entry for these special blobs (and remember
-them in the _found oid set) before we see the blobs, fsck_blob()
-would notice that it is looking at the blob that is in these _found
-set, and throw it in _done set while checking the blob in-core.
-
-A packfile we generate has trees before blobs, so a self contained
-pack stream should still be validatable outside a repository with
-this code, but other people's reimplementations of Git may produce
-a packfile that has a blob before a tree that refers to the blob.
-In other words, we can validate a self contained pack stream outside
-repository on a best-effort basis.  And that is perfectly fine.
-
+base-commit: fd372d9b1a69a01a676398882bbe3840bf51fe72
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2002%2Fjnavila%2Fdoc_git_fetch-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2002/jnavila/doc_git_fetch-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2002
+-- 
+gitgitgadget
