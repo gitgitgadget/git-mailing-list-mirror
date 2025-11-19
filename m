@@ -1,387 +1,226 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE6A36E561
-	for <git@vger.kernel.org>; Wed, 19 Nov 2025 15:58:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D2336E573
+	for <git@vger.kernel.org>; Wed, 19 Nov 2025 16:10:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763567934; cv=none; b=HCsSGZ3hBF78++4QWYSCR/4kGS3I+fr/XvplPoZ5NwxYJzw7+3+lFrTdaDtQ26JXeu6LwjKxD2y330DdyhJgYvHIRg0o+Jz/rOZQjs+R08sDcIUTp8F7PvbDcLMxtHScbQOVDUG82xlbEN3zGxpUZaxmwzzgCJihgFnG7K9NDqY=
+	t=1763568646; cv=none; b=RqObvctHKeP4IP3YOVwUPtjvhlk0kzD35vSU0f8x8swHIn+oaOWsJOqZtlV17Txuo6ms4ceH8J9wMxEEmAwp4zLv6HzjRtrpE6UTxKTnoHKAsnJB2rjUJoZlUDMjFkd04mM0tz68nCnix3ZOFV0OcvjPEUxhxA7yAVpCKRjZ1vQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763567934; c=relaxed/simple;
-	bh=DTbTFwsIqqeOBjkw66ut83Z6XsuAKY5CqlSxw/S39sU=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WVX4r/XFBy8CLvUwib6sQOxtrg6PPLcrV9WDxESQ0QHEe0J8KEP7CTk26VUDvhxVeHvB7hujTLCCE5uS5ukb6k2JyAGJ4seb0y3PBoS6Drtu58BoB0z5TDqcem09/58uUfnnbcsdlWxSApgkR6+9oIFxSMPo3iannto5fQ4EXk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 5AJFoco61821036
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 19 Nov 2025 15:50:39 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: <git@vger.kernel.org>
-Subject: [BUG] Test Failure 2.52.0, t8020.16,19
-Date: Wed, 19 Nov 2025 10:50:33 -0500
-Organization: Nexbridge Inc.
-Message-ID: <003901dc596c$40bfbd80$c23f3880$@nexbridge.com>
+	s=arc-20240116; t=1763568646; c=relaxed/simple;
+	bh=rklLhpZZyATjN0HZRsdYYVrwqpA4lwvKF8cGlcmwmkw=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=aLKTNFatSg5JAOTbPHeGmIa0Ba03seZSXfNwShaBozxvsagI/Gkxom41bBj5C9hhHEKspGONp8msiNx00xRKpFxRFKJzgzK8egpreOyWzS3N4tiUXvNtxlRqDCL4FY+EogAUdTeb5ZuMhjsXCaW3ScL8OZeBZiQOdUcKC2N+KcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MA0Txwdy; arc=none smtp.client-ip=209.85.221.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MA0Txwdy"
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-55ae07cf627so1949703e0c.1
+        for <git@vger.kernel.org>; Wed, 19 Nov 2025 08:10:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763568643; x=1764173443; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tzytI9iMDa/U/U69a7mBEjF7HFls02XmtvktHe4+ivI=;
+        b=MA0Txwdy/DnFc9aIl0pyvoBBGiLmUTR+dPftPSGxe6zQBosVsPi3LFxgPNQWMPPbIb
+         RVhB/p36dNhfRrLU+R6wY9O0BEyZKt9x++B7hYFIA1TwL5MlmgTzejmMol+pyoEmxLvm
+         SdX7pLhCtbOgJ+/m4TBkfRdybAD8Hj0CQ+zpyZddPZifGbgOHeWGCuGFml8cKOeZu7xn
+         8nPf3ogIoggEUQuGvkzOxqbqopvQ5iBnBkQDhCe2RW201hMQ3KqXyQ8dUvkR4iGdEYgw
+         cGFjpHrV0Me5ZvXdA5oyN7TMumYdg4ek+etkBxnjgaZ74o8xaGzM/JcoTQKdSXTgZVV5
+         suYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763568643; x=1764173443;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tzytI9iMDa/U/U69a7mBEjF7HFls02XmtvktHe4+ivI=;
+        b=j2obn8zesb7sMFMbnk2PHkbnGDo/pR9HrGEn83cBUnL7xAH8GieFT9gn4pki7z4hVq
+         JCwDTMRW8cwznL42h2oNswOZLvOWYh/WDPDAuOYAvvjJX7yd7MOTPNYkeraxq6mYGG1a
+         ZNk6puvh49UOVVD+Fp3daYqXmBMlUGG6moqf0OoedoAhwgj2s/8bPsu1oGgFFuInoMcK
+         FgefRm/NyeRruGtpergt+ybOx0lYNdVmiiUGpEG8Mh0OnpyH5jv4V/ZfxiodNkZeoE+v
+         mdINMtsJY45meO4/wNHwI9v1eNWCoyZs264mZVMTdoI/DopHT1qf9LRkP5eyr5S59wnK
+         PeyQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV+Z/bqU4AmS2ocUA0d0wnV0dE1ZkdCcmz69Yu2qwy1ZxBx+jOPqjr6XktYdJBIj2qofy8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywl8gepLa+6pdbWVLwsnMkRF3M4IKYnqU3EkIl/0ty3i9iw/AT9
+	Rl+5FimwyLP1cbkYWxodQPMbA3/qBjM43F5vmCu4z4H/EgzSRfUNZ5UMZwUGSnp5y3J73tItluq
+	Lw2z62WCp6mL8JVXBcQ+hAnxrg30BfjeF3Q==
+X-Gm-Gg: ASbGncvpw5Ya2i08iR27JZYsf94PgiV/JziQD56gU56jJgZRpZs9IJtyZXXAhBHFTZn
+	EdV7AO72Gwb1hlBMG/Fa4ZeJGeqo/ew/mE2SWyx/tFwXTdUkkqUSLz44OCiRD/IujOrSuQC75Lg
+	Z7JGgx6++ZCPg2nGMlZ+64v4S2u3Pq/aBKJDVoo1EcJknueTmNScSSgm4rn5d93FEeO++Y+oW6I
+	JBrwJ0Ap72OzLRDz/x78NZru7CQSyn9VI0d6grXGdfs75s0lFQQ2klZZwlvJPY2u812Dg==
+X-Google-Smtp-Source: AGHT+IErZiAvCz1u+PE3Mj9wXRGUjnk0y/Ctj4HLhjbsbb6RAMLBiEBDDj7b1NYNs+PCUr0tTnKmdvmp/KvDxy/W/50=
+X-Received: by 2002:a05:6122:d89:b0:559:8089:9445 with SMTP id
+ 71dfb90a1353d-55b1beda7e1mr6786205e0c.12.1763568643134; Wed, 19 Nov 2025
+ 08:10:43 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 19 Nov 2025 16:10:41 +0000
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 19 Nov 2025 16:10:41 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20251119-b4-pks-odb-read-stream-v1-12-adacf03c2ccf@pks.im>
+References: <20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im> <20251119-b4-pks-odb-read-stream-v1-12-adacf03c2ccf@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AdxZa79aSNmRsmecRrO9TMkXRK2Bhw==
-X-Antivirus: Norton (VPS 251119-2, 11/19/2025), Outbound message
-X-Antivirus-Status: Clean
+Date: Wed, 19 Nov 2025 16:10:41 +0000
+X-Gm-Features: AWmQ_blGr8a8epAoeIysM3pBdkKTq_Vtt7lqP8Ff0pr__MvQF2z80Enn1DhIy9k
+Message-ID: <CAOLa=ZRwnsYeHDpdL+uvnw0YMTbG1Gx2SKsq+0hTWMto+QZ+Lg@mail.gmail.com>
+Subject: Re: [PATCH 12/18] streaming: rely on object sources to create object stream
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000082f6f60643f4d2f4"
 
-The following two failures appeared on NonStop for the actual release. I did
-not see them in -rc0 or after (doesn't mean they didn't happen after rc0).
-To my eyes, this looks like a real issue not just on NonStop. It is 100%
-reproducible and is not transient. The build is with OpenSSL 3.4, but that
-should not matter.
+--00000000000082f6f60643f4d2f4
+Content-Type: text/plain; charset="UTF-8"
 
-expecting success of 8020.16 'cross merge boundaries in blaming':
-        git checkout HEAD^0 &&
-        git rm -rf . &&
-        test_commit m1 &&
-        git checkout HEAD^ &&
-        git rm -rf . &&
-        test_commit m2 &&
-        git merge m1 &&
-        check_last_modified <<-\EOF
-        m2 m2.t
-        m1 m1.t
-        EOF
+Patrick Steinhardt <ps@pks.im> writes:
 
-++ git checkout 'HEAD^0'
-Note: switching to 'HEAD^0'.
+> When creating an object stream we first look up the object info and, if
+> it's present, we call into the respective backend that contains the
+> object to create a new stream for it.
+>
+> This has the consequence that, for loose object source, we basically
+> iterate through the object sources twice: we first discover that the
+> file exists as a loose object in the first place by iterating through
+> all sources. And, once we have discovered it, we again walk through all
+> sources to try and map the object. The same issue will eventually also
+> surface once the packfile store becomes per-object-source.
+>
+> Furthermore, it feels rather pointless to first look up the object only
+> to then try and read it.
+>
+> Refactor the logic to be centered around sources instead. Instead of
+> first reading the object, we immediately ask the source to create the
+> object stream for us. If the object exists we get stream, otherwise
+> we'll try the next source.
+>
+> Like this we only have to iterate through sources once. But even more
+> importantly, this change also helps us to make the whole logic
+> pluggable. The object read stream subsystem does not need to be aware of
+> the different source backends anymore, but eventually it'll only have to
+> call the source's callback function.
+>
+> Note that at the current poin in time we aren't full there yet:
+>
 
-You are in 'detached HEAD' state. You can look around, make experimental
-changes and commit them, and you can discard any commits you make in this
-state without impacting any branches by switching back to a branch.
+s/poin/point
+s/full/fully
 
-If you want to create a new branch to retain commits you create, you may
-do so (now or later) by using -c with the switch command. Example:
+>   - The packfile store still sits on the object database level and is
+>     thus agnostic of the sources.
+>
+>   - We still have to call into both the packfile store and the loose
+>     object source.
+>
+> But both of these issues will soon be addressed.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  streaming.c | 65 +++++++++++++++++++++++--------------------------------------
+>  1 file changed, 24 insertions(+), 41 deletions(-)
+>
+> diff --git a/streaming.c b/streaming.c
+> index 572be98248..bebb434cd1 100644
+> --- a/streaming.c
+> +++ b/streaming.c
+> @@ -204,21 +204,15 @@ static int close_istream_loose(struct odb_read_stream *_st)
+>  }
+>
+>  static int open_istream_loose(struct odb_read_stream **out,
+> -			      struct repository *r,
+> +			      struct odb_source *source,
+>  			      const struct object_id *oid)
+>  {
+>  	struct object_info oi = OBJECT_INFO_INIT;
+>  	struct odb_loose_read_stream *st;
+> -	struct odb_source *source;
+>  	unsigned long mapsize;
+>  	void *mapped;
+>
+> -	odb_prepare_alternates(r->objects);
+> -	for (source = r->objects->sources; source; source = source->next) {
+> -		mapped = odb_source_loose_map_object(source, oid, &mapsize);
+> -		if (mapped)
+> -			break;
+> -	}
+> +	mapped = odb_source_loose_map_object(source, oid, &mapsize);
+>  	if (!mapped)
+>  		return -1;
+>
 
-  git switch -c <new-branch-name>
+So instead of going over the sources, we simply check for the given
+source. Nice.
 
-Or undo this operation with:
+[snip]
 
-  git switch -
+> @@ -462,30 +460,15 @@ static int istream_source(struct odb_read_stream **out,
+>  			  struct repository *r,
+>  			  const struct object_id *oid)
+>  {
+> -	unsigned long size;
+> -	int status;
+> -	struct object_info oi = OBJECT_INFO_INIT;
+> -
+> -	oi.sizep = &size;
+> -	status = odb_read_object_info_extended(r->objects, oid, &oi, 0);
+> -	if (status < 0)
+> -		return status;
+> +	struct odb_source *source;
+>
+> -	switch (oi.whence) {
+> -	case OI_LOOSE:
+> -		if (open_istream_loose(out, r, oid) < 0)
+> -			break;
+> -		return 0;
+> -	case OI_PACKED:
+> -		if (oi.u.packed.is_delta ||
+> -		    repo_settings_get_big_file_threshold(the_repository) >= size ||
+> -		    open_istream_pack_non_delta(out, r, oid, oi.u.packed.pack,
+> -						oi.u.packed.offset) < 0)
+> -			break;
+> +	if (!open_istream_pack_non_delta(out, r->objects, oid))
+>  		return 0;
+> -	default:
+> -		break;
+> -	}
+> +
+> +	odb_prepare_alternates(r->objects);
+> +	for (source = r->objects->sources; source; source = source->next)
+> +		if (!open_istream_loose(out, source, oid))
+> +			return 0;
+>
 
-Turn off this advice by setting config variable advice.detachedHead to false
+This seem to be the crux of it, where earlier we depended on
+`odb_read_object_info_extended()` to tell us which backend to rely on
+and then we re-fetched from that backed, now we simply go over the
+different sources and try to get the object stream. Makes sense.
 
-HEAD is now at 08525b6 remove a
-++ git rm -rf .
-rm 'file'
-++ test_commit m1
-++ local notick=
-++ local echo=echo
-++ local append=
-++ local author=
-++ local signoff=
-++ local indir=
-++ local tag=light
-++ test 1 '!=' 0
-++ case "$1" in
-++ break
-++ indir=
-++ local file=m1.t
-++ test -n ''
-++ echo m1
-++ git add -- m1.t
-++ test -z ''
-++ test_tick
-++ test -z set
-++ test_tick=1112912173
-++ GIT_COMMITTER_DATE='1112912173 -0700'
-++ GIT_AUTHOR_DATE='1112912173 -0700'
-++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-++ git commit -m m1
-[detached HEAD 53e7187] m1
- Author: A U Thor <author@example.com>
- 2 files changed, 1 insertion(+), 1 deletion(-)
- delete mode 100644 file
- create mode 100644 m1.t
-++ case "$tag" in
-++ git tag m1
-++ git checkout 'HEAD^'
-Previous HEAD position was 53e7187 m1
-HEAD is now at 08525b6 remove a
-++ git rm -rf .
-rm 'file'
-++ test_commit m2
-++ local notick=
-++ local echo=echo
-++ local append=
-++ local author=
-++ local signoff=
-++ local indir=
-++ local tag=light
-++ test 1 '!=' 0
-++ case "$1" in
-++ break
-++ indir=
-++ local file=m2.t
-++ test -n ''
-++ echo m2
-++ git add -- m2.t
-++ test -z ''
-++ test_tick
-++ test -z set
-++ test_tick=1112912233
-++ GIT_COMMITTER_DATE='1112912233 -0700'
-++ GIT_AUTHOR_DATE='1112912233 -0700'
-++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-++ git commit -m m2
-[detached HEAD 9b81a41] m2
- Author: A U Thor <author@example.com>
- 2 files changed, 1 insertion(+), 1 deletion(-)
- delete mode 100644 file
- create mode 100644 m2.t
-++ case "$tag" in
-++ git tag m2
-++ git merge m1
-Merge made by the 'ort' strategy.
- m1.t | 1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 m1.t
-++ check_last_modified
-++ local indir=
-++ test 0 '!=' 0
-++ cat
-++ git last-modified
-++ git name-rev --annotate-stdin --name-only --tags
-++ tr '\t' ' '
-++ test_cmp expect actual
-++ test 2 -ne 2
-++ eval 'diff -u' '"$@"'
-+++ diff -u expect actual
---- expect      2025-11-19 15:43:34 +0000
-+++ actual      2025-11-19 15:43:34 +0000
-@@ -1,2 +1,2 @@
-+ac29b6e974b49803f1c6ec5a705d1bf7dbfa7d2f m1.t
- m2 m2.t
--m1 m1.t
-error: last command exited with $?=1
-not ok 16 - cross merge boundaries in blaming
+>  	return open_istream_incore(out, r, oid);
+>  }
+>
+> --
+> 2.52.0.rc2.482.gaa765fefd0.dirty
 
+--00000000000082f6f60643f4d2f4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 93c99c0be8228cff_0.1
 
-
-expecting success of 8020.19 'last-modified merge undoes changes':
-        git checkout HEAD^0 &&
-        git rm -rf . &&
-        test_commit b1 file A &&
-        test_commit b2 file B &&
-        test_commit b3 file C &&
-        test_commit b4 file D &&
-        git checkout b2 &&
-        test_commit b5 file2 2 &&
-        git checkout b4 &&
-        git merge --no-commit --no-ff b5 &&
-        git checkout b2 -- file &&
-        git merge --continue &&
-        check_last_modified <<-\EOF
-        b5 file2
-        b2 file
-        EOF
-
-++ git checkout 'HEAD^0'
-HEAD is now at 7b0602a Merge tag 'a4' into HEAD
-++ git rm -rf .
-rm 'file'
-++ test_commit b1 file A
-++ local notick=
-++ local echo=echo
-++ local append=
-++ local author=
-++ local signoff=
-++ local indir=
-++ local tag=light
-++ test 3 '!=' 0
-++ case "$1" in
-++ break
-++ indir=
-++ local file=file
-++ test -n ''
-++ echo A
-++ git add -- file
-++ test -z ''
-++ test_tick
-++ test -z set
-++ test_tick=1112912713
-++ GIT_COMMITTER_DATE='1112912713 -0700'
-++ GIT_AUTHOR_DATE='1112912713 -0700'
-++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-++ git commit -m b1
-[detached HEAD c48d0f6] b1
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 1 deletion(-)
-++ case "$tag" in
-++ git tag b1
-++ test_commit b2 file B
-++ local notick=
-++ local echo=echo
-++ local append=
-++ local author=
-++ local signoff=
-++ local indir=
-++ local tag=light
-++ test 3 '!=' 0
-++ case "$1" in
-++ break
-++ indir=
-++ local file=file
-++ test -n ''
-++ echo B
-++ git add -- file
-++ test -z ''
-++ test_tick
-++ test -z set
-++ test_tick=1112912773
-++ GIT_COMMITTER_DATE='1112912773 -0700'
-++ GIT_AUTHOR_DATE='1112912773 -0700'
-++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-++ git commit -m b2
-[detached HEAD ee27b37] b2
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 1 deletion(-)
-++ case "$tag" in
-++ git tag b2
-++ test_commit b3 file C
-++ local notick=
-++ local echo=echo
-++ local append=
-++ local author=
-++ local signoff=
-++ local indir=
-++ local tag=light
-++ test 3 '!=' 0
-++ case "$1" in
-++ break
-++ indir=
-++ local file=file
-++ test -n ''
-++ echo C
-++ git add -- file
-++ test -z ''
-++ test_tick
-++ test -z set
-++ test_tick=1112912833
-++ GIT_COMMITTER_DATE='1112912833 -0700'
-++ GIT_AUTHOR_DATE='1112912833 -0700'
-++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-++ git commit -m b3
-[detached HEAD c90ce7d] b3
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 1 deletion(-)
-++ case "$tag" in
-++ git tag b3
-++ test_commit b4 file D
-++ local notick=
-++ local echo=echo
-++ local append=
-++ local author=
-++ local signoff=
-++ local indir=
-++ local tag=light
-++ test 3 '!=' 0
-++ case "$1" in
-++ break
-++ indir=
-++ local file=file
-++ test -n ''
-++ echo D
-++ git add -- file
-++ test -z ''
-++ test_tick
-++ test -z set
-++ test_tick=1112912893
-++ GIT_COMMITTER_DATE='1112912893 -0700'
-++ GIT_AUTHOR_DATE='1112912893 -0700'
-++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-++ git commit -m b4
-[detached HEAD 317a439] b4
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+), 1 deletion(-)
-++ case "$tag" in
-++ git tag b4
-++ git checkout b2
-Previous HEAD position was 317a439 b4
-HEAD is now at ee27b37 b2
-++ test_commit b5 file2 2
-++ local notick=
-++ local echo=echo
-++ local append=
-++ local author=
-++ local signoff=
-++ local indir=
-++ local tag=light
-++ test 3 '!=' 0
-++ case "$1" in
-++ break
-++ indir=
-++ local file=file2
-++ test -n ''
-++ echo 2
-++ git add -- file2
-++ test -z ''
-++ test_tick
-++ test -z set
-++ test_tick=1112912953
-++ GIT_COMMITTER_DATE='1112912953 -0700'
-++ GIT_AUTHOR_DATE='1112912953 -0700'
-++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-++ git commit -m b5
-[detached HEAD 5526d49] b5
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+)
- create mode 100644 file2
-++ case "$tag" in
-++ git tag b5
-++ git checkout b4
-Previous HEAD position was 5526d49 b5
-HEAD is now at 317a439 b4
-++ git merge --no-commit --no-ff b5
-Automatic merge went well; stopped before committing as requested
-++ git checkout b2 -- file
-++ git merge --continue
-[detached HEAD da1857e] Merge tag 'b5' into HEAD
- Author: A U Thor <author@example.com>
-++ check_last_modified
-++ local indir=
-++ test 0 '!=' 0
-++ cat
-++ git last-modified
-++ git name-rev --annotate-stdin --name-only --tags
-++ tr '\t' ' '
-++ test_cmp expect actual
-++ test 2 -ne 2
-++ eval 'diff -u' '"$@"'
-+++ diff -u expect actual
---- expect      2025-11-19 15:43:57 +0000
-+++ actual      2025-11-19 15:43:57 +0000
-@@ -1,2 +1,2 @@
--b5 file2
--b2 file
-+da1857e0652b6f264c0038d684ddecddc273e506 file2
-+da1857e0652b6f264c0038d684ddecddc273e506 file
-error: last command exited with $?=1
-not ok 19 - last-modified merge undoes changes
-
-
---
-Brief whoami: NonStop&UNIX developer since approximately
-UNIX(421664400)
-NonStop(211288444200000000)
--- In real life, I talk too much.
-
-
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rZDYvOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL3hxQy85bFlxQU4vbDllNnJNUmFrdjJqS25jNlNzQQpaRDZMejVoOER6
+dUxCSld3eXREbzlvWEJ1b3JJSjFHemxkY1pzV0d3Mnh5QXg1cnV5dFc1dlkzVm9Dd0ppekpCCi9U
+VmlXYlZNWnY5aVArTkpuVFFXcmxLWEpkZm4wclI3a0IrT0VDTDV1REVUVnpVWFhBZjN2VnB0Sy9p
+WEI1R2wKSkpkYUsxYVVMNGpYM0NRK2xJZjNEUnd0Y0dOWHJrTmVkODlrY0lCRTRwNTRzaUxzMFRT
+Slk1OXluNmdwUVhLdwprdXlYbTZXWkxSODc2b1RwVTliZFIvWlMrcDRYcTdQTkI4UzBUU1llOU5B
+eHdzRVlMYlBnOGp3MFNINWhKZGFrClRQQ0kzZENPM1QzajhpWlJ6U09FMDgwTGFRcUU0M3V1ZHlL
+WE8rUXhBRVV2RmZSRStwaVhIOUd5NTI0UmkyL0YKUUxBbEhINW9YTldlTGpYUGswWlRVSnBVSFl2
+b0pQaFM2T3ZUSmd4dTJxSVBDOHJJbnhqaGNsNlB6S3I2SEVqcgpBbzhLeC8vYkFhM3FEYzVmQWhk
+ekovODFpRlFCYzU5S3dHamJOQXU4YVhuak1DMUhqb2NESFZQRitoWFRxRVBlCi9XT3dEajZTSjVN
+ZUpnM3FjUVVFYWVHZXFXNUJjdDdrRmNkS0RxZz0KPTZvQUoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000082f6f60643f4d2f4--
