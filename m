@@ -1,141 +1,113 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9700A3002D0
-	for <git@vger.kernel.org>; Wed, 19 Nov 2025 18:39:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A71E3081A5
+	for <git@vger.kernel.org>; Wed, 19 Nov 2025 18:49:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763577582; cv=none; b=TG0yE0GVXZD6ve8We4YJfZJnZ1YJEc/Kigij32H4UuiHHeCeVVqO20VfqBiZ+ZYC5K4nbAEP8dCkIoeGS+wgAoBg8bMu3cl+9U86pr/W3MyiMnMJzmaoRQ7LSuPs0e0wL1CDUJ2w1IYT8DdMTl4aqETZSNW1k+jXdwLH6yZlNXM=
+	t=1763578176; cv=none; b=M5v8RYC/3luVKzy2g3ypV1a97gmoZ02Vy66xn/nUpIGIk8GyeimI0SNevvfw7NkuYCQbvo7hCBNaBwX1wtsKEGmhgebDiat/urkh2lrG95/s/juDmNHr7qO+/y2GW7kGnn+tRjzUpLrwkQYHNXA6nmLoSuGRZE9nqwus2CL5qaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763577582; c=relaxed/simple;
-	bh=1ux+xSBSlv/xiADt8MtIG2LdaEypUKwbopRe9WvTu48=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Nwt/gLf1Um5xvTYjEfioG2tb+lcZtcyJrPlldM06UDXQ6ESIpSQs9kLglG/1XD4BHgYD20TXeEeroS9AK8G+cwTiNOQSG5opB71ogCdlNg1l+4y3xPliokJiZdiow+w5nMh9hVnjI2UnW/ZFezvVJ7DIG1UUtJFo37EAsfq6yj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gccvFY0I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tjgqSTgg; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763578176; c=relaxed/simple;
+	bh=yBWIv6nVk/jTj5Ruzdn/+eg8h2Q2TVYan2xhDlKzZoo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XAgInj3QsMqULDGyHeEYGNUXobRhjqFrfMyAuTpCSG8iX1XUnM8tUf4RYn+E6JGj/FTzAOeSaM9HytMPT/41+S/pP49Yla8Y3aSvXdGHR6lRSaTaCCCeb0P8vColLzldAS8El8kyVYgUiOdEmXGFZ46ArX+bVmaerGna6ohOpYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JEraPjC/; arc=none smtp.client-ip=209.85.160.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gccvFY0I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tjgqSTgg"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 43233EC072F;
-	Wed, 19 Nov 2025 13:39:33 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 19 Nov 2025 13:39:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763577573; x=1763663973; bh=fEqdSVnUsa
-	E81IPPljEvuO+4CAE2eiV5riDR/QAXV9w=; b=gccvFY0IjgRXMQ+ROSj/FdUktW
-	E5IirSsuWxz4wkn4kE38/thvv7mFYAaQThkSzbnawXMqUJIihpi/fEQdUcdiWyaM
-	9rktifufp3uU3I4UUUKv7WPjd42WZEIJfsVesUfKwhoUoFEnPS4iSTdqafneM6t8
-	jRMz/whnscnOv67TzO39kfbUVzJmWMVY++9RORQ4BDYNlRb0w0vveaH6yQW4OP32
-	My9QrH96jtcTRWVgq50oa5xZQ3DuaiGzazbm+wN95jLHVTzkJGICGJiEybLoWHdc
-	8MKPcXOuOOQ3cvDZwOi/6jTJfh0rO2BiBJtXtlslZX+HrqOebF9gtN20HPJg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763577573; x=1763663973; bh=fEqdSVnUsaE81IPPljEvuO+4CAE2eiV5riD
-	R/QAXV9w=; b=tjgqSTggt+aVM11yR8HyBQVi+HfmIDUADhSd4o22JBRIG7dcTfR
-	IFzfc3yM9tXeLJzi0G5RoF4FdCCoelYBC6ucXC62boESnvJePlqVr/2JGN7Uk2XL
-	MVCPcd3P74dodVy1x0JNb+L73vCj6b2uyUc8SXDVGP2M1Di5MNyVKavGQa91JCro
-	0h8PRBfbr2sXtByy3Xo+6LSXvJA5/AcBHDNrrGFF8x+xpAP2kNOSuBL5srl8U5MF
-	Ak+BRPpoxQ1Qcber/k/JPCvA4RKVECpDXr7h91BdiH6PjqqOVw5dAdDkBaiqiZQ5
-	qxTRaVOUxv1zgpGzE0AXVglpPDiSQPRnTOA==
-X-ME-Sender: <xms:5Q4eaU4tJNp6wZi8sF-0pHNrcnRHAwQEajTDsZm6v_tNSx43ncWTCA>
-    <xme:5Q4eaf577D4mqQCwZt9q11sgd5OObG8uid3Z8UBoDjKQdKZan3MiXg6JbKkMVhJ75
-    avvXh8OwCeZ2DrOF91xQq69Z_tPfIVh81XuvhTU2hQhCeLRUu1gsg>
-X-ME-Received: <xmr:5Q4eaaGNffzeKuF7P1Vmk5-xJnwAJGWZjIruRTBGUITinKY12YRbjHUOP5cBizGoLP5xtFLyVTQRCCJq3rAhNeXdjFfSC36pxdcy>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdegleehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    peguvghlihhlrghhfihusehmihgtrhhoshhofhhtrdgtohhmpdhrtghpthhtohepshhtoh
-    hlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhn
-    uggvlhhinhesghhmgidruggvpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
-    hopeguvghlihhlrghhfihusehlihhnuhigrdhmihgtrhhoshhofhhtrdgtohhmpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:5Q4eaXXx112rNo6IPAqnllp8DpkB3otJHFbZQUzHyNeFxlu-A7ID1g>
-    <xmx:5Q4eaWU9gIhYpWbYrPlzfrljiNo4_MBIrhPvJP9aOuExwSm23IVgXw>
-    <xmx:5Q4eaVLCkre4XZZGPNvH5ivH5dC6r7eIIFhAXL4fDUybcfNT_shV3Q>
-    <xmx:5Q4eaeA9yMrpdhrsnyIws2sn4orphBkObDSCFxREFDPnHa1DikW9lg>
-    <xmx:5Q4eaeXKt2D3QeevZkQ3dlPRsEsL_anMPShTAm9_qxHvl4ldzGgg1Ooo>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Nov 2025 13:39:32 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Delilah Ashley Wu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Delilah Ashley Wu <delilahwu@microsoft.com>,
-  Derrick Stolee <stolee@gmail.com>,  Johannes Schindelin
- <johannes.schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,  Delilah
- Ashley Wu <delilahwu@linux.microsoft.com>
-Subject: Re: [PATCH/RFC 3/4] config: read global scope via config_sequence
-In-Reply-To: <9d8af4e6164002b8096fc03fa8189a670133bc77.1760058849.git.gitgitgadget@gmail.com>
-	(Delilah Ashley Wu via GitGitGadget's message of "Fri, 10 Oct 2025
-	01:14:08 +0000")
-References: <pull.1938.git.1760058849.gitgitgadget@gmail.com>
-	<9d8af4e6164002b8096fc03fa8189a670133bc77.1760058849.git.gitgitgadget@gmail.com>
-Date: Wed, 19 Nov 2025 10:39:31 -0800
-Message-ID: <xmqqms4hc1ek.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JEraPjC/"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-3eae4e590a4so1709130fac.1
+        for <git@vger.kernel.org>; Wed, 19 Nov 2025 10:49:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763578166; x=1764182966; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=MLBI+TV1xSPgveA3/5rE1OGwyhzUyoGQP0rN3jUv4Ak=;
+        b=JEraPjC/vZHSC+3RPJIN049Ybdg+xSvZVseV+wtNFVmAKE3ZoZ5IE9Dv2asFbUah31
+         BlxjtZqUSw/Ibx3gQrl3Kfts4nWm9Zds90BSFojIaHGMsD4kzh20eiDJ5YChie7BAK2j
+         qEH/+AWe3MewjgysONTzi9bD2KZcX/EN7nNUfD5sSpavc5faPDsB1KSc4qoXLGG/5Tiw
+         r4B8LJ+9g4oDisCwTipmVnDg0AyUhcSG1b5hgwWkKS0z8FYFrv36UBnGXmKeP1PqnXkG
+         EQAehtBU4Bq7iacziuAmVP5xw5T0DRnMaIqkJC15lfWdKzyul3UfmI0mxsFnxLJ2vb30
+         sp2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763578166; x=1764182966;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MLBI+TV1xSPgveA3/5rE1OGwyhzUyoGQP0rN3jUv4Ak=;
+        b=iMLe830FYqhCENRvYFbrPB/Im7yt4XuZ+4eU1OuSM3/t66PiAlAEd1TpWeUlmN8msU
+         GFmf14KuE78TB8dJWsflHcwVqCGJ8WT0QjYfCmz5BaDHWdvSK2R/R94tMLxdfLBbelxH
+         PdydmigKXfI3hIQEZKtzOEigBdqmGPZ/cFHwW6YJUGs5eGx11BH5wVTA6bD7XWMrrNJT
+         Vav6bbwgZPatIEZcL5dgHkqFM/s7xJ/5YKnEZeDMpiI2AYhQBOu4/R81wzyZG/j4o7VH
+         PIdRRvGjo7YZbiMB96klteLM9xHtnoln94xG4963glj5Gh0+jhefbkwupLJJSrZa+PUD
+         zSqA==
+X-Gm-Message-State: AOJu0Yz+EAwCXEiveJyoaWLQxSIoxALKtM74cfXNEtjjg/Xg2mZqQVdv
+	U7H3g2Y6nXot3mSagGOMEkpixOhhzkSL90TUI5yZIn4YnRvYLU/gKn823rSvmg==
+X-Gm-Gg: ASbGnctvqU+/FDDXbEu99gWjfRLc6YepgSUZo0MlFldAkFrgYypaTnkiiPlTLvDsN1M
+	ZKvdTN7UyTdsgXuIQTt1KC7NghPzueHuJBWNWuhaU5mkqg9hmfa2w7mtOC3q+ttKBpXnASOiK7X
+	9pQDgovjCuGtdWNjUNoRuRatT1s219R7LX4y17RGyGKKXHky2/Qy5uJ6N1oxXeJwVUp4d82Hje3
+	kkmR56e7bbX+VbhdHyTMy/nJKu9TcZ9h/hxeUqcYRzT+blDNO+Z+rCkm56zWKXqaMNXtPmyMobX
+	Jwu/58c4LFgSq5+9mTUSa4VGrd+ErBVRRAyiAnG6Gbwi6jDUIa9Wv4A39Y6UThL8pZXW8BA+WjE
+	/bX4kuhQVzWVen2BK+TPu/xV8mHbMNh4AtR6QiZuRtGrSePdQceHsbj5Pc7bPbPKESzWZs0STZX
+	2J8e1FRMm9j1wiCas=
+X-Google-Smtp-Source: AGHT+IHTpmDrQvD/pqTnzzX2pfwxGxhtxzo2yMMN7PI199xG2t0zzLrLP87kSkFjoCl/xrGaRBkcjQ==
+X-Received: by 2002:a05:6871:3308:b0:3d3:4338:bba5 with SMTP id 586e51a60fabf-3ec9a400d78mr256587fac.2.1763578165926;
+        Wed, 19 Nov 2025 10:49:25 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3ec9dce7853sm51383fac.20.2025.11.19.10.49.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Nov 2025 10:49:25 -0800 (PST)
+Date: Wed, 19 Nov 2025 12:49:22 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/18] streaming: rename `git_istream` into
+ `odb_read_stream`
+Message-ID: <2nd7qcj7jrrwc4fyhfsovs3ptrwmrdxxcap4sqadujtwwua5ha@bpbjlbnbcpiw>
+References: <20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im>
+ <20251119-b4-pks-odb-read-stream-v1-1-adacf03c2ccf@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251119-b4-pks-odb-read-stream-v1-1-adacf03c2ccf@pks.im>
 
-"Delilah Ashley Wu via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On 25/11/19 08:47AM, Patrick Steinhardt wrote:
+> In the following patches we are about to make the `git_istream` more
+> generic so that it becomes fully controlled by the specific object
+> source that wants to create it. As part of these refactorings we'll
+> fully move the structure into the object database subsystem.
 
-> From: Delilah Ashley Wu <delilahwu@microsoft.com>
->
-> The output of `git config list --global` should include both the home
-> (`$HOME/.gitconfig`) and XDG (`$XDG_CONFIG_HOME/git/config`) configs,
-> but it only reads from the former.
+Ok, so looking at the current implementation of `git_istream`, it does
+appear to be already defined in a somewhat generic manner as it supports
+reading loose/packed objects. What sources are supported are all
+centrally defined in "streaming.c" though. It sounds like we eventually
+want each source to fully control this interface without having to go
+through "streaming.c" to setup each source stream type which makes
+sense.
 
-", but" -> "to match the information given by the command without
---global, but".
+> Prepare for this change by renaming the structure from `git_istream`
+> to `odb_read_stream`. This mirrors the `odb_write_stream` structure that
+> we already have.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> diff --git a/streaming.h b/streaming.h
+> index bd27f59e57..acf4c84338 100644
+> --- a/streaming.h
+> +++ b/streaming.h
+> @@ -7,14 +7,14 @@
+>  #include "object.h"
+>  
+>  /* opaque */
+> -struct git_istream;
+> +struct odb_read_stream;
 
-> This patch introduces a regression. If both global config files are
-> unreadable, then `git config list --global` should exit non-zero. This
-> is no longer the case, so mark the corresponding test as a "TODO known
-> breakage" and address the issue in the next patch, config: keep bailing
-> on unreadable global files.
+The name change here makes sense. While we are here, it might be nice to
+leave a comment annotating it's purpose in a bit more detail.
 
-That is rather unfortunate, as we do try hard to avoid deliberate
-regressions in our history.  The reason why this step cannot be done
-without first introducing a regression is...?
-
-If the reason is "it would make a single patch too big", perhaps we
-can do it in two steps, one preliminary "git_config_sequence() learns
-an extra barf-if-no-input parameter that causes it to return error if
-no files in the specified sequence exists" step, followed by this
-change that starts using git_config_sequence() to handle "--global",
-which uses that new flag to ensure that there won't be a regression?
-
->  	if (opts->use_global_config) {
-> +		/*
-> +		 * Since global config is sourced from more than one location,
-> +		 * use `config.c#do_git_config_sequence()` with `opts->options`
-> +		 * to read it. However, writing global config should point to a
-> +		 * single destination, set in `opts->source.file`.
-> +		 */
-> +		opts->options.ignore_repo = 1;
-> +		opts->options.ignore_cmdline= 1;
-> +		opts->options.ignore_worktree = 1;
-> +		opts->options.ignore_system = 1;
-> +		opts->source.scope = CONFIG_SCOPE_GLOBAL;
-
-Very nicely done.
-
-Thanks.
+-Justin
