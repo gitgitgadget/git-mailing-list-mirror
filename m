@@ -1,54 +1,54 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCFD30EF7D
-	for <git@vger.kernel.org>; Wed, 19 Nov 2025 17:47:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C126431280D
+	for <git@vger.kernel.org>; Wed, 19 Nov 2025 18:29:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763574453; cv=none; b=L/VYhJSYwMWCxzyy0sbFnfiN+c8t6uo+WHdkgZsC4T1iNDaYBR/DzhiqEhKgXhRNqUK9C939MFUTjsaNpu7sWImHus4cykz6dibQVGd0TbIZ8Pl2LwzDr82FFPGg94WjvNolaDwBPzSTyRuPX4vBOvUIb7r9xvQIPkKD8lPmhFU=
+	t=1763576989; cv=none; b=VZKeWN64FFOCInLNsDXumUlICVdM+KDJSR9e4T45Tobro6eHj/6oiZrryj3Hl1yv7+pjqO7QSiPCoxuY2BdnfNda6Oj8rTPTkiUIPK9v5fAssGYROExrBasMBK82DrXLh0TDcpSsHExTIfVDRuByb1IbPWpJu/24/CsyY4Z4KaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763574453; c=relaxed/simple;
-	bh=oWPR6ZCNI7cwwASJd4goOFDQ1nXHc3ZTl7Z0M7x5tac=;
+	s=arc-20240116; t=1763576989; c=relaxed/simple;
+	bh=G/ubSEWGI6nzRRQaN3WB6kU8+5vfDduVQV949b9OqZM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u7rFfsHaYksyg6oc0wjh3fNScLPLPKJQSYVFxqSf3pKHxLT4+juwcc4gqaP72YVIwpkNnM4h0LuQ/75RzciCDkDIEVvun0F58Tx2J/cCzyjOCtm0fGG0J3FeJKuPW5U3rUyVHu890laL2/k/rEV8OKSOrcltDO9045ExpmDmJ5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FtjfEb9I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yMc4m1Pb; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=KYKhESkCS6MgaSHWJQC9FaxjwfRxkDKPRaM8kjZ39aK9WOlTHlmnHQUbISYhsNpRkNV+pXrfbjXSSjgQzjynsBsRz1eulaKhah1wveaU6zkSnbQrYpJ20QB9Wmx8EXUDlFet38NzZ8akjNG1QnQgVeimwEpPxgzZb/ZcCyMbx9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RhO8OSkR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BbWoiETN; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FtjfEb9I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yMc4m1Pb"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AD2507A00EF;
-	Wed, 19 Nov 2025 12:47:26 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 19 Nov 2025 12:47:26 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RhO8OSkR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BbWoiETN"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id A6227EC0693;
+	Wed, 19 Nov 2025 13:29:40 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 19 Nov 2025 13:29:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763574446; x=1763660846; bh=PgIvlw/fKW
-	/KVcyDhhDKgR0s5bxnfmlCNQfZ/Hr9cRs=; b=FtjfEb9I0EzjNwR/3d4wOrx+9T
-	wYz1FkS04MSDrIXT2TlhElmRM5z2TH0XZoavvoTdNYapAF5DxaBvcyl1z673yTAu
-	Uq0/HoWAgRo/hoM2e+tyrGTUF1GabmPYRKjvQ8o7nnOtOBWYTPasDkhOKc7t+xHr
-	b7PfP10+zg82IWM5wZnVOvLTO1yq/I7KnKMWqAQi4J/WxUnth5uGQO0aQ2VNtfMU
-	lmM4vA8OTQ7qMeU/1l/4jWn4qJFDwzv/+5/g26vRM1qBd/wfYHgmC4AksnCGMijJ
-	tzg0u/yDqSnYnWQCx7u6r5y2jlS9bcnbHWGQome8mSMlD0obTC1euXMAkXAw==
+	:subject:to:to; s=fm2; t=1763576980; x=1763663380; bh=OH+EEH1n9/
+	PNUwfbupkuAY0H2l0RXb1Te8mxZB0uWYQ=; b=RhO8OSkRToECYEXTH4drpuNabd
+	k/L3qcEf1uzMAPtbqTTNZTGZYjxXwvJFud4t0Uw7Gae/R/ooF6C6AxpBrb3K2KyL
+	/wEH44ZSPO5RSyhdDRZSlQxgdicd12GSERS7s9BCgc2bcMMoOtDWPgVc+WrgxjVb
+	AoGsf1rA7j8oEYMSZMWqmCv9NGGq3XQ35Tmaho1WIQzjOhY+qSHNk78TSBJ5vPvr
+	P5cwMIhbhPjkn/7mxDw4x4btLGft8EjorEEGYZyDGe/oGpnrBfa6rzObcRlmzq1W
+	kIA9Bi9VNznw2OVTslssHOS5ugmUiSGgZCh6lKtQ1P4NxfJ8EHFasfg3Su5Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763574446; x=1763660846; bh=PgIvlw/fKW/KVcyDhhDKgR0s5bxnfmlCNQf
-	Z/Hr9cRs=; b=yMc4m1PbS0s9sN982gQaMy7NhA3rW/f3mzLjJt1zJ95VETd9qyV
-	xJ4OBT9Q8eFBymE98yWBTHMazHhF6LgcjTqbl9kZzzM2U3fHsZSF0lMW+nUAlk6k
-	kxA1+DfLp54j8cCABGmi+UtaRJutzbCMXH5vy4CtJs1yUGsE/6nVzT4176Lv8RU3
-	rN/JwgPQ2dQ6CWA3sk86C4Hy7WPv+FlPHq4L8GPD4TSsBKWrgp3bY7YjkEPGEcyT
-	iT68DKqGfwkhPCjkjj2xP23R670GdsHiyuT8RDjCIbHg2OZADYgrAWJQgSGbaU0y
-	WCgv4st+PWM+b3zUa+j3PODg/lbf2YG64tw==
-X-ME-Sender: <xms:rgIeabK8_NosvHG3NswwNEZcC-q_Z25N4thK4rEdqE30LFzcMRXRpA>
-    <xme:rgIeabJB9H-JQynuq0KUXsD5AJWg2PC028XW3QwC1aggwewZGxiSdFJfLyI1NfS5v
-    _zAVSw8AXZBHcrE223RYzApdXnjKUMkw2AgwA8ysed-WdjavPlnGg>
-X-ME-Received: <xmr:rgIeaV414VyQPMAdACpr11C6fjAmAndGNVnV0FuHATFTVAm9-hrayxiwHhfQOxTChxK4nA8DwkgGNr650fte-hbV01dr4SzeeNr3>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdegkeegucetufdoteggodetrf
+	1763576980; x=1763663380; bh=OH+EEH1n9/PNUwfbupkuAY0H2l0RXb1Te8m
+	xZB0uWYQ=; b=BbWoiETNcKO/5X412yy7ooErQtU61QRHce3Rh0W+SAjAqteLhKU
+	YkzV/m893SRi8LJofUYwePtvALpvk22TAYcsAUJXGfJ9EcFp/GK+uHcANeQRLyT5
+	Gf7mU0yA8mbGNFnyn+8bxSJu5jDD0YJJOLXUFmsSBtp0emgJXWrd9bc2lXBp4wCY
+	ePX+Ziq1y5b5V4VTkx+Pt5gIxVZIwjovm/FLISr9AxGhWbNsDcgWvjUwkyTJ+Pns
+	Gpml0ieDVz7zdNg3Mw0sD+7Bj+18WOgJPT0TSreTDqFYPB61Z3S/ADLD9Zracj7M
+	9FDMXl7JHlHbsPTH8Jpuax/dHdLB9Js9pHw==
+X-ME-Sender: <xms:lAweaYQQrs9BCZUcGpurJF0_KojOk6vREm1_J06TGUjKJXMDcPrVAQ>
+    <xme:lAweafy9jPYFUI-4iM1X2UAvRQEG56jwih24Pi4QUZHgFqzPsClIU3Ep-JYrbBeDq
+    Ncda4iAjcVdYLmbUAAykL90K6OjOi-zqpvfMQAJcodciqCKlbByQhw>
+X-ME-Received: <xmr:lAweacfaK0GRMKRJ5keQDXLjsBKi_vJQqBKwoWGO-0kQG0RCczRYUAN1QrZ8DrfWJEhfLf-mXgsAOxetbttqWfOBtjOSaaiocrAW>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdegledvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -63,28 +63,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdegkeegucetufdote
     uggvlhhinhesghhmgidruggvpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
     hopeguvghlihhlrghhfihusehlihhnuhigrdhmihgtrhhoshhofhhtrdgtohhmpdhrtghp
     thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:rgIeaVcNMsv5uYaao_zBf7BhrKm78UEnuGRNEGOQkYNTaU4i_JCzhQ>
-    <xmx:rgIeaQGtncG5ZJ80I_BxVMfZNGzSOTuwQ929juxo2b5RXBtvhoYS5w>
-    <xmx:rgIeaeRECoLD49eQGYZDtRzBf8EepJOMlcGt7lu_8-e-cAyQoCuqbg>
-    <xmx:rgIeaeZc9FNub7ssdxwH6rxCuwCnXre95A0X5KOz1hTx0Frm43QMxQ>
-    <xmx:rgIeaZJ0TFigS7H5zPcgZ1EiDA-teJjhebWdxl2fRp370ochmPowYxiv>
+X-ME-Proxy: <xmx:lAweaaPuZkhFpECFvo9JAmn_Hs2LPNMXY8VfDbf-U0sTbNZoxjZW5Q>
+    <xmx:lAweaftdQSndxNbmRdI38xVNqYcfDVoqqITGO_ftVbhM43wRizhXoQ>
+    <xmx:lAweaTBmXMsQ-8mjPQ5m-g2aa4C0_mQeIONr-qWHSQ_0CKQXASimAA>
+    <xmx:lAweaWZ3hPU9wfEwwmxc68KR3XiEoX3Co5iW2UHTNZboBcOKxkDWiQ>
+    <xmx:lAweaevig_BS45HnEo281L8GErSXRcvqELw9Ntd-kTt8BkDI8d1Yww-m>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Nov 2025 12:47:25 -0500 (EST)
+ 19 Nov 2025 13:29:39 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Delilah Ashley Wu via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Delilah Ashley Wu <delilahwu@microsoft.com>,
   Derrick Stolee <stolee@gmail.com>,  Johannes Schindelin
  <johannes.schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,  Delilah
  Ashley Wu <delilahwu@linux.microsoft.com>
-Subject: Re: [PATCH/RFC 1/4] cleanup_path: force forward slashes on Windows
-In-Reply-To: <c8df6a042b9e971f392b2fd2d09a9c3c655dbceb.1760058849.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH/RFC 2/4] config: test home and xdg files in `list --global`
+In-Reply-To: <d2167a81d31defddbcdda06726b004e44a192f8d.1760058849.git.gitgitgadget@gmail.com>
 	(Delilah Ashley Wu via GitGitGadget's message of "Fri, 10 Oct 2025
-	01:14:06 +0000")
+	01:14:07 +0000")
 References: <pull.1938.git.1760058849.gitgitgadget@gmail.com>
-	<c8df6a042b9e971f392b2fd2d09a9c3c655dbceb.1760058849.git.gitgitgadget@gmail.com>
-Date: Wed, 19 Nov 2025 09:47:24 -0800
-Message-ID: <xmqq7bvldidv.fsf@gitster.g>
+	<d2167a81d31defddbcdda06726b004e44a192f8d.1760058849.git.gitgitgadget@gmail.com>
+Date: Wed, 19 Nov 2025 10:29:38 -0800
+Message-ID: <xmqqsee9c1v1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,48 +97,204 @@ Content-Type: text/plain
 "Delilah Ashley Wu via GitGitGadget" <gitgitgadget@gmail.com>
 writes:
 
-> All existing callers of
-> `cleanup_path()` pass `char *` anyways, so this change is compatible.
+> From: Delilah Ashley Wu <delilahwu@microsoft.com>
+>
+> The `git config list --global` output includes `$HOME/.gitconfig` (home
+> config), but ignores `$XDG_CONFIG_HOME/git/config` (XDG config). It
+> should include both files.
 
-Not just compatible ;-).  If there is a caller that wants
-cleanup_path() not to munge what it passes, this change will
-introduce a bug for them.  Have you made sure that none of these
-callers mind that backslashes are converted into forward slashes?
+Please be gentle to future readers of "git log" and help them with a
+bit more explanation on the "should" here.  E.g., 
 
-> The next patch, config: test home and xdg files in `list --global`, will
-> assert that the XDG config path uses forward slashes.
+    should include both files, to be consistent with the output from
+    `git config list` (not limited to `--global`) that lists entries
+    from both files (in addition to system-wide and repository-specific
+    entries, of course).
 
-The path to the leaf-level blobs is always slash separated in the
-index, a tree object sorts an entry that points at a subtree as if
-its path component has terminating slash, etc., and only when these
-paths are externalized, they are converted to filesystem dependent
-hierarchy separator (by system call like creat(2) even on platforms
-like Windows whose filesystem uses backslashes as the pathname
-separator).  Canonicalizing end-user supplied path early at a
-central place does make sense.
+or something.
 
-> -static const char *cleanup_path(const char *path)
-> +static char *cleanup_path(char *path)
->  {
->  	/* Clean it up */
-> -	if (skip_prefix(path, "./", &path)) {
-> +	if (skip_prefix(path, "./", (const char **)&path))
->  		while (*path == '/')
->  			path++;
-> -	}
+> Modify tests to check the following and expect a failure:
+>   - `git config list --global` should include contents from both the
+>      home and XDG config locations (assuming they are readable), not
+>      just the former.
+>
+>   - `--show-origin` should print correct paths to both config files,
+>     assuming they exist.
 
-Hmph, the need for cast is a bit annoying, but more importantly, why
-don't we have to worry about leading ".\\\\" instead of ".////"?
-Shouldn't we be stripping backslashes the same way on Windows?
+Testing these two combinations is a good thing, but "expect a
+failure"?  There doesn't seem to be any test that is marked as
+"test_expect_failure" in this patch.  Confused?
 
-> +#ifdef GIT_WINDOWS_NATIVE
-> +	convert_slashes(path);
-> +#endif
+    Side note: we generally do not want test_expect_failure tests in
+    one patch, followed by a code fix with changes to tests that
+    flip s/test_expect_failure/test_expect_success/' in another
+    patch, though.  The reason is primarily that such a two-patch
+    series makes it harder to review the step that has the fix, by
+    hiding the body of the test whose earlier failure gets fixed by
+    the code change.
 
-In other words, why do it here, not _before_ the loop that says "If
-the path begins with dot (i.e. the thing is relative to the current
-directory) followed by a directory separator, remove it together
-with any extra directory separators that come immediately after it"?
+> Also, add tests to ensure subsequent patches do not introduce
+> regressions to `git config list`. Specifically, check that:
+>   - The home config should take precedence over the XDG config.
+>
+>   - Without `--global`, it should not bail on unreadable/non-existent
+>     global config files.
+>
+>   - With `--global`, it should bail when both `$HOME/.gitconfig` and
+>     `$XDG_CONFIG_HOME/git/config` are unreadable. It should not bail if
+>     at least one of them is readable.
 
->  	return path;
->  }
+Good.
+
+> The next patch, config: read global scope via config_sequence, will
+> implement a fix to include both config files when `--global` is
+> specified.
+>
+> Reported-by: Jade Lovelace <lists@jade.fyi>
+> Helped-by: Derrick Stolee <stolee@gmail.com>
+> Signed-off-by: Delilah Ashley Wu <delilahwu@microsoft.com>
+> Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  t/t1300-config.sh    | 65 ++++++++++++++++++++++++++++++++++++++++++++
+>  t/t1306-xdg-files.sh |  5 ++--
+>  2 files changed, 68 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> index f856821839..5fa0111bd9 100755
+> --- a/t/t1300-config.sh
+> +++ b/t/t1300-config.sh
+> @@ -2367,6 +2367,71 @@ test_expect_success '--show-scope with --default' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'list with nonexistent global config' '
+> +	rm -rf "$HOME"/.gitconfig "$HOME"/.config/git/config &&
+> +	git config ${mode_prefix}list --show-scope
+> +'
+
+Do we expect an empty output, or are we happy as long as "git
+config" does not segfault, even if it spews anything?  I guess that
+at this late point in the test we have per-repository or system-wide
+configuration files with something in them to test, so there would
+be some output but we do not care?  If that is the case, not
+checking the output, like this patch does, is the right thing.
+
+> +test_expect_success 'list --global with nonexistent global config' '
+> +	rm -rf "$HOME"/.gitconfig "$HOME"/.config/git/config &&
+> +	test_must_fail git config ${mode_prefix}list --global --show-scope
+> +'
+
+OK.  Do we require --show-scope to fail this, or do we fail with and
+without --show-scope as long as --global is in effect?  If the latter,
+test both ...
+
+	rm -f "$HOME/.gitconfig" "$HOME/.config/git/config" &&
+	test_must_fail git config ${mode_prefix}list --global &&
+	test_must_fail git config ${mode_prefix}list --global --show-scope
+
+... like this, perhaps?  Also, don't overuse '-r' with 'rm' (applies
+other tests in this patch) when you know what you are removing
+should not be a directory.
+
+> +test_expect_success 'list --global with only home' '
+> +	rm -rf "$HOME"/.config/git/config &&
+
+Lose "r" from "-rf" or lose "/config".
+
+> +	test_when_finished rm -f \"\$HOME\"/.gitconfig &&
+> +	cat >"$HOME"/.gitconfig <<-EOF &&
+> +	[home]
+> +		config = true
+> +	EOF
+> +
+> +	cat >expect <<-EOF &&
+> +	global	home.config=true
+> +	EOF
+> +	git config ${mode_prefix}list --global --show-scope >output &&
+> +	test_cmp expect output
+> +'
+
+OK.
+
+> +test_expect_success 'list --global with only xdg' '
+> +	rm -f "$HOME"/.gitconfig &&
+> +
+> +	test_when_finished rm -rf \"\$HOME\"/.config/git &&
+> +	mkdir -p "$HOME"/.config/git &&
+> +	cat >"$HOME"/.config/git/config <<-EOF &&
+> +	[xdg]
+> +		config = true
+> +	EOF
+> +
+> +	cat >expect <<-EOF &&
+> +	global	xdg.config=true
+> +	EOF
+> +	git config ${mode_prefix}list --global --show-scope >output &&
+> +	test_cmp expect output
+> +'
+
+OK.
+
+> +test_expect_success 'list --global with both home and xdg' '
+> +	test_when_finished rm -f \"\$HOME\"/.gitconfig &&
+> +	cat >"$HOME"/.gitconfig <<-EOF &&
+> +	[home]
+> +		config = true
+> +	EOF
+> +
+> +	test_when_finished rm -rf \"\$HOME\"/.config/git &&
+> +	mkdir -p "$HOME"/.config/git &&
+> +	cat >"$HOME"/.config/git/config <<-EOF &&
+> +	[xdg]
+> +		config = true
+> +	EOF
+> +
+> +	cat >expect <<-EOF &&
+> +	global	file:$HOME/.config/git/config	xdg.config=true
+> +	global	file:$HOME/.gitconfig	home.config=true
+> +	EOF
+> +	git config ${mode_prefix}list --global --show-scope --show-origin >output &&
+> +	! test_cmp expect output
+> +'
+
+Do not write a test this way.  If you want to document an existing
+and unfixed breakage, instead of saying "we do want to see what is
+in this expect file, but we know output does not unfortunately match
+it", which is how the above test expresses it, start the whole thing
+with "test_expect_failure" (instead of "test_expect_success"), and
+have the body of the test express what you really want to see.  I.e.
+the last steps should say
+
+	git config ${mode_prefix}list --global --show-scope --show-origin >actual &&
+	test_cmp expect actual
+
+But an earier side note applies.  If "git config list --global" gets
+corrected, this test will see update to turn "! test_cmp" into
+"test_cmp" (or "test_expect_success" to "test_expect_failure"), and
+such a patch that comes with the code fix will not show what is
+being tested and forcing the reviewer to go back to the previous
+step to see what the change is really about.  A test that
+demonstrates and protects the behaviour corrected by the code change
+is best added in the same patch as the code change.
+
+> diff --git a/t/t1306-xdg-files.sh b/t/t1306-xdg-files.sh
+> index 40d3c42618..0318755799 100755
+> --- a/t/t1306-xdg-files.sh
+> +++ b/t/t1306-xdg-files.sh
+> @@ -68,9 +68,10 @@ test_expect_success 'read with --list: xdg file exists and ~/.gitconfig exists'
+>  	>.gitconfig &&
+>  	echo "[user]" >.gitconfig &&
+>  	echo "	name = read_gitconfig" >>.gitconfig &&
+> -	echo user.name=read_gitconfig >expected &&
+> +	echo user.name=read_config >expected &&
+> +	echo user.name=read_gitconfig >>expected &&
+>  	git config --global --list >actual &&
+> -	test_cmp expected actual
+> +	! test_cmp expected actual
+>  '
+
+I cannot quite tell from only half the test, but I suspect that this
+shares exactly the same problem with the last one in the other file
+I commented above?
+
+Thanks.
