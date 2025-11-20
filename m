@@ -1,100 +1,114 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E572DBF78
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 22:27:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B87713AD26
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 22:40:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763677672; cv=none; b=Ry26Mh+R9SCxEdjCjGY/MPT55XotIFO+7ZRU0smf3MM8chbn33s9zvU9ALxLsl6uN4eyVrEZSlDtA5kIN8MVrfPAECNNJlYF3y75gaVPqtpPjxixK1ymO9WYG65Y0bK4iI0d7PdQjAmEEe9X9oA2ZATl7WUj9nYt/mCXk4Mivdw=
+	t=1763678458; cv=none; b=X8jM5gRRaosc054RQoo43BTCuozqSgdaeZrW6DlwMbRQiKlWFxxK8/BX9gn/9XDdNbbv0g9V/V0i+XxIU6ciDO/U8P7yUEYpeCkAw8FNpSMHMkMe4jJfJQ0neciTsu1cjV2hDmicUytwrd0If/9W3tsCjYIB3vUcNkY8tl3cUNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763677672; c=relaxed/simple;
-	bh=mWOaUrwzKcVVAOZwZrSGDidSIuPyKg/FiuQvuFR4Hdk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YeGIM8BC9PX07+7XEG9jcuESwd1zhH1dxj9cl0spd4y3ONytXszSwE20Dw0ugpOUj9WGaUBuCnGwDdviNeGx5Xehav4IYNn+B7zfJTb8TQCqz4mU/xFEvQWyAWyluVjE5p+QtD4VNo0F0PsZkyNzDILVCa4DaGJrFINl9o4mFhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ROpilIBs; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1763678458; c=relaxed/simple;
+	bh=y63Ym7vyqgg0BjTQT3PpqEO3GOAagtTUt6vlZg0qrPc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hdhX+W3aRy+XCE+PKdxWeQQs7gVNP2mF4R6mP195fZsAAYqNizZofkthx5DpTOWqoROO0UpaAZLGBx9lUWio85szVfMfnSlFC7ndSXJ8jGMFnp4p8mOADEoqpKYHneYE4nm5AxmwEUHYHekq0o+r7/ULTOMvB1HLYMrtVwKI8/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UdtHNkVb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WPu/0Q+r; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ROpilIBs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1763677668;
-	bh=mWOaUrwzKcVVAOZwZrSGDidSIuPyKg/FiuQvuFR4Hdk=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=ROpilIBsMdq6wDjT7zqIZhQEicEVla5IsZb5F228pGzx8j7JZkPRSVr0vwURD6cy6
-	 +kn6LwVQXM1WgofKJb6vQMKRjbkl+xQRq/oyzz1jIdecuM4mnx6v6VUx8iHwxwMw+o
-	 ojp9weuAnivSLiXYTsqVbCUpyg4vg4PoCK2jxOuEmxXNTTtPSu2InWV0aUB8SaF1pf
-	 5SdCZCpbZ9sAcUK6taV1J4f9vXyoZArpLlKuOvEuFvSwF3jG7GkSA9N8xzUqezwAud
-	 6U83T7gbOyIRn6HFmcCRyk37J517+Hd9WiWCv1ovkbDAXbbEpLijmXcpEHsKGtiTq0
-	 /YgEMrA3KBaMwJu6MRZ0OHsaDWWjUKb4LQwRXLRE6qHKT3IcZqeUOFQ/oBilg3YTaB
-	 gGyof2gsCVM/sC7mX+iicXq+3fn3qK3xB3x+n+YBfFnYJP1vC9bptU8anmWqPNKgFn
-	 vYOVkqfkkEh+m0PvauPgWCsUq8f5ShAPvCPFGdD+8cb8ZJydM0h
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ae5c:878c:d4d7:64f5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5CD6820065;
-	Thu, 20 Nov 2025 22:27:48 +0000 (UTC)
-Date: Thu, 20 Nov 2025 22:27:47 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] config: mark otherise unused function as file-scope
- static
-Message-ID: <aR-V45lWv6kYSe5b@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqtsyo7b4y.fsf@gitster.g>
- <e67ee4f6-9516-4561-b9f4-06e9049ff2ba@ramsayjones.plus.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UdtHNkVb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WPu/0Q+r"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 49FB0140035D;
+	Thu, 20 Nov 2025 17:40:55 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Thu, 20 Nov 2025 17:40:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1763678455; x=1763764855; bh=BxmVzNfgiN
+	vu4lX8s5LX6gJ54LD9f/cbWSSZLUw9voU=; b=UdtHNkVbNAdPeLjc/l36KZTlRD
+	3xnOKfNa3xorh8LoUUx/alzFfFTlguvF4L6dTJdp4AWwAZ9umPnXd7ANNVgj3Xup
+	dJvZR6IW0IwXbx8WTGerWAN6dJJrWUZDASSKv7dYL3wxHTCd+XB7lEYxSo4T0bSh
+	LIlLN7yC5h94+eWKAcBpsvnECPa/UNXSWaLTwxWnGW7v8byfvIYAhf7G9usafFb3
+	RORxc/O1rHDDvoPtilwUuepLlqN4D8lqndarvLIq/75a84WePss9kYMvjUX93qzM
+	bCUfaY+8x1PSIw3h/sicPJ+zY+Da5WnLB9xkTEQ1ff4JD4ImGPM/+ho1JNOg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1763678455; x=1763764855; bh=BxmVzNfgiNvu4lX8s5LX6gJ54LD9f/cbWSS
+	ZLUw9voU=; b=WPu/0Q+ruiu6MKADmmEmARxBhJ9tSuecozHUgWJyMrcsaraF59H
+	NfrphhwQT698iIcVmo2x9Ta62Kx8k8s5a3OM9q8eD7kuWSknz8/xyC2W6GxA8Mx0
+	B6Kry+VO37YAptZZ9Qb7d1LBJcgBRFoLvNKl4ZvndUrvrMJp2HujiLH4xRWUq+4l
+	dr9YGB/ZHiAjDah2wyuz7CuyVO4hmxRSmIJky1+6danoCvJlJnNe7JVA8ynzMxgt
+	6E34dJ21BtvzHvPeydvjSFJzYlyVhOGCUtBE2MZeGb/dOH5ZyeCOdDxRO+QNpG5l
+	YGFR3f+Th++uZr1asfAiXXc5ya0W2k+VwSw==
+X-ME-Sender: <xms:9pgfae4ruuBgeSHaSt2h4S2pDwt5pSzqjBAuakLAAUnCyTS15PU-hA>
+    <xme:9pgfaexuUfG6NazGpDFHH5anLnF7n4b-9KwyqYF6iU3GhH48ZuXMTbqNUvkqjRj0A
+    DbXb9rRHQz9stjaRxSKMzX8w_8Gm5ZDV1u9Qj7sgoiDEkFyv5blHKM>
+X-ME-Received: <xmr:9pgfaVzV9nWgFawYvmDG9m8z1IfMJTjYWulVPnDCV5oPH4xl_1mvsNBvTkoLxpoNvCdCgqpQAAmkQRUQxtkwXrZRYOikExeAAi48>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdekfedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
+    vghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjhhhtggrrhhltdekudegsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:9pgfaWyqOvxGOCQsF-5d2Dig77u3UM8H1C0_Nga3vlo_McgZYmLQOg>
+    <xmx:9pgfafZUvRJvsN5F3c_aZJKkp3ZDIbcLJlVr-R6hBpOyUf5MC7U32w>
+    <xmx:9pgfaXWKtr9EpcfTxRAAbdYkqBXpLiH_-MmMIfuTBx4dPlovaqn1hQ>
+    <xmx:9pgfadhZMxFrYR9MypGtfLehimowaIXUn3Pw_88SdHDTDPhKIyF7dg>
+    <xmx:95gfafTkLoM4mgqF1q6fxPXIGsHY_YYOHxGDqwSa4cq1LcN-9CXGdrjl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 20 Nov 2025 17:40:54 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Han Jiang
+ <jhcarl0814@gmail.com>
+Subject: Re: [PATCH] config: really pretend missing :(optional) value is not
+ there
+In-Reply-To: <CALnO6CC0HU60F47yoE45ei7_K2_MeLRS7fihMPn+f8top7Jr7w@mail.gmail.com>
+	(D. Ben Knoble's message of "Thu, 20 Nov 2025 17:15:46 -0500")
+References: <xmqqms4g7b1h.fsf@gitster.g>
+	<CALnO6CC0HU60F47yoE45ei7_K2_MeLRS7fihMPn+f8top7Jr7w@mail.gmail.com>
+Date: Thu, 20 Nov 2025 14:40:53 -0800
+Message-ID: <xmqqy0o05nuy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4ZbUYgTr8DAUC9ON"
-Content-Disposition: inline
-In-Reply-To: <e67ee4f6-9516-4561-b9f4-06e9049ff2ba@ramsayjones.plus.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
---4ZbUYgTr8DAUC9ON
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>>  config.c                   |  1 +
+>>  t/t1311-config-optional.sh | 36 ++++++++++++++++++++++++++++++
+>>  3 files changed, 73 insertions(+), 9 deletions(-)
+>
+> This needs a tweak to Meson, probably in t/meson.build, for the new
+> test script. Otherwise Meson-based packages (like Gentoo) won't build.
 
-On 2025-11-20 at 21:15:57, Ramsay Jones wrote:
->   $ diff nsc ssc
->   0a1,2
->   > add-interactive.o	- clear_add_i_state
->   > add-interactive.o	- init_add_i_state
->   38a41,44
->   > hash.o	- git_hash_alloc
->   > hash.o	- git_hash_free
->   > hash.o	- git_hash_init
->   > hash.o	- hash_algo_ptr_by_number
+Yup.
 
-These are called from Rust code so they must be public.  They may not be
-used elsewhere in your branch if you have not compiled with Rust,
-though.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---4ZbUYgTr8DAUC9ON
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaR+V4gAKCRB8DEliiIei
-gV54AQC46Zu3d6CW0Gz79Mz7HM/J4XLAak7t1j9Ru6HSsUMiGQD/eTWhMJsyPaUH
-3ScdsT+4mk35rvOGZXnFAC6pno3ipwI=
-=KrMN
------END PGP SIGNATURE-----
-
---4ZbUYgTr8DAUC9ON--
+diff --git a/t/meson.build b/t/meson.build
+index bbeba1a8d5..137c0caea0 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -182,6 +182,7 @@ integration_tests = [
+   't1308-config-set.sh',
+   't1309-early-config.sh',
+   't1310-config-default.sh',
++  't1311-config-optional.sh',
+   't1350-config-hooks-path.sh',
+   't1400-update-ref.sh',
+   't1401-symbolic-ref.sh',
