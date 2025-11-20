@@ -1,94 +1,147 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3495018A956
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 23:02:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028F818A956
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 23:03:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763679731; cv=none; b=l+wPA8CBeb3XgyiHYm3d1szBPgVZkoe7qO+yABsT1B2vZ6e+jNeScBmwbhE59GrUW5P0lFjR3bYFVCIDIS5ypeRBUspCU8xQzhip2Ve/ATwbbJZbagoC8uwPgboLQU9a2A8Yiqp6/T2ae3bR1X7+xtF8drmWm1COkeJAX47ERpY=
+	t=1763679784; cv=none; b=WTLx3JbP9zc1OJmlOcQ68YRm545zEq9LcVdzpPAdIJHBA2jBNbm72zhIj9wgmmkEgCdkjM6Yg6rYFV58HjSjRhrTEmYSj6QuaoNsx5Nl/b6SQYmAlAShaGq6aQb4ev77uZen7xranqXfp2yUwd6xYlbP+7aqvoqEUpeq8Vsm2Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763679731; c=relaxed/simple;
-	bh=s3TrPqcP/J8FW+XjtHr78ZwaZT6/FUDSHYiz5cxW29o=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=K+s1aJhCznN4JJM6x6yksG+qX4vFXdBSLpPz+qiILrkS9UU4r5DGuBNPdZ20y7pN+ZZ98Qmy9dTrQHcM/nhH1E5yrByrbdQrWCKe3wCk8NZR0lPuR8fqAT3BgZNI82DK3yEzjqa7cXN8OvLSCujGkSItPHFn5EoUcQcjX09QUYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=lVpTX1Pv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=igwYLhAx; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1763679784; c=relaxed/simple;
+	bh=kG41j0vFNwzn4GtyGl4jkeXpdvuQIZOa9OKGoZi0EMs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oB0SQXfjkD32ngs1UsjlOLhU+BJFhh+py1aLPzKoPiSTx9BpO1dknh+kh/3vRFMxnteL7QNoxK4t2T5m7PgHWnm9L62uod7fIFWbvIzpHsDEq8pUGniiWRh8BR9CEZzLTMNxqILebO8r0XAV0ptaMPQ1t6jAzyXqiyh+093snws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=dVfXY4Kb; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="lVpTX1Pv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="igwYLhAx"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3FB95140021D;
-	Thu, 20 Nov 2025 18:02:04 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Thu, 20 Nov 2025 18:02:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1763679724;
-	 x=1763766124; bh=kxjzqURSm3Q04u7JxvsYojE22Cw3I8b4DwScEEKU+kU=; b=
-	lVpTX1PvbIIRE0IDngWM5V3y9u9jccpGSCwS8HNStImqBcah08tyIGcaqBjLLsRy
-	+V/R29NjYnR5+3oAGfiRuvUSZW0ug5nKnXwqYkToOTnQ4jGGu08vnFsAigwRJ/99
-	epSY/Tcp+k8VtvF6V76hZh+ti894Nw1MU9zhhcoxw0pWedfPMG+kfKD4DJiqr9rx
-	niCYDm2S2bHn+IEdRdJd1QYTA53Fwjk8e1GuJnjxoQJsyi8OCoQSWs5r0wKMSamD
-	6O6Ky3rtLATe+eQLLsQM+M7efdEu9xaODr5Ej4Qn3GEoSzEcE/B2jNJn8tUUpwCn
-	f96xqQuw7L4PaONEwUiJVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1763679724; x=1763766124; bh=k
-	xjzqURSm3Q04u7JxvsYojE22Cw3I8b4DwScEEKU+kU=; b=igwYLhAxtxXP17QSt
-	Zq9gjCGcbhxaumFPZJ3R+JjXdEiJeLtGr66ktHUt3OECILKmE1FJU2lj/8Ttqgpi
-	d9TRqGxjvwBLOoPBl//fDaiC06GVv1h+baQv2V5CixE/Roly8JNIyN/t6X1jmgwr
-	khZ/Qi8xgwe2VMTASktOQMjGdnic5cviixpyQYyARMpZzGTwgeVDe5Kd5Zxus43F
-	Ubz1ovU2mbW6TpfrDEt9/7n7qqI0SFW/J9DF17Q8aqQLC5IixVE+9DI3W32pK7kV
-	UuA8V3COpyQB1cAsv5WT2eUuha9fTf71m1KbbLA670NOU7v4C6fsVFT57fYfSMhR
-	pPEZQ==
-X-ME-Sender: <xms:7J0faVe-oRiPfq36RuXdw0Jtcssr3ork6O8KNlzBsiSTfSx_kqn8u94>
-    <xme:7J0faeAIo5MH3LMagKDIek9wAC_L4B4DkSqs59nLD3YUsbEc5qcuqxvJtV9thXnQA
-    d18AMfYCRsUpTXDSQZzognZDqjxnTA_nAoTMXgVk1iR__xOsMtmGC0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdekfeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkfgjfhfutgfgsehtjeertd
-    ertddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
-    ftrfgrthhtvghrnhepvdeigedtgfetgefhffetteeludevheetfeekffehheefieehudek
-    veelveffhfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
-    pdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrgh
-X-ME-Proxy: <xmx:7J0faUJpRF_0xE82DUAOr60LFQcFjPWn7nV-WxJOw-iQJArWVYPnWQ>
-    <xmx:7J0faSFmZHOtHDH7Olgc3WTG1FCZZoMj7dQsrX1f6PMLEYTKbH-Hmw>
-    <xmx:7J0facSfswMdq3kUfl3p9RHhRh4FkBqOSMw2VI5-eFdVhSQBSKe6jw>
-    <xmx:7J0faeEJTdPwCikd-T6fY6AijI1IsROt4FMOL7imt-WFZ1i1KScxJQ>
-    <xmx:7J0faTyln7DzWD1k4mE3aMlYDuyqze2SlMjuQbl7I8gyPYz7nLOmURrP>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id E9D431EA0068; Thu, 20 Nov 2025 18:02:03 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="dVfXY4Kb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1763679780;
+	bh=kG41j0vFNwzn4GtyGl4jkeXpdvuQIZOa9OKGoZi0EMs=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=dVfXY4KbFiFJyyNJ+E3GuQhgWPlx873ZIrhXadnn2GorK/u0wFwQeYH2MzZFUA9yx
+	 ywCJ7O4jFXt6GFrGQJYmDXlZ9PC1jFLIJ3AGvRqjeUwmh1/nEHuAmDzzEwxJz+4ObV
+	 +7BD7U7wOcGgm6tUskSsfhXsWjtxMxbv043Wbk6+82+BVMZ3hOtXxFHZIyn7rVTMbp
+	 S3TMFcqBP/c8wvrkgFT+kYybgzp44ABToTS6acnpXoZUM8FIWThLwbLCSg1VcKW6Zi
+	 x9JAOyccpypTKLA2vH7aJsm7+yg4t2kVWlZhI0Ef9tlwSsqNvqklYG2o/7PFyhzkGP
+	 0ok5vfVPSUXB+Hf3HcD/fXZGGa+qxmJqm6BV2fdi9My2i/bR6rgMu/59gX2cN7aYQv
+	 uPUikFTJ8i2pT1e30OY4pLBfheWVcoOsigfOQFK+b8h08ky5si+KhDEa7NDWGudPSW
+	 HgPTVVKoyV/GA5Xn2kbNnaCsA30JgKn6GEYDaBPuoHEWBmE4qyr
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ae5c:878c:d4d7:64f5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id AD22F20065;
+	Thu, 20 Nov 2025 23:03:00 +0000 (UTC)
+Date: Thu, 20 Nov 2025 23:02:58 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Ezekiel Newren <ezekielnewren@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 00/14] SHA-1/SHA-256 interoperability, part 2
+Message-ID: <aR-eIooTkjbktsf-@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+ <xmqq7bvsjzlx.fsf@gitster.g>
+ <xmqqpl9h9mgo.fsf@gitster.g>
+ <aRudLpkRdRtCAoi3@fruit.crustytoothpaste.net>
+ <xmqq4iqsgpu3.fsf@gitster.g>
+ <aR5M65HDuGlTsR77@fruit.crustytoothpaste.net>
+ <CAH=ZcbAmAqWMYXhYT3bX_Q8cEkV0ZcjEtM65YS7DXPJbs-L3Wg@mail.gmail.com>
+ <CAH=ZcbDER4OysywLZpCc=-GQ+rweSfVAQ-xj0gNd1rF4-=cPWg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AKeNkJE0zsuV
-Date: Fri, 21 Nov 2025 00:01:43 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Message-Id: <df6a2498-a03c-4392-8091-50220db5f108@app.fastmail.com>
-In-Reply-To: <xmqqtsyo7b4y.fsf@gitster.g>
-References: <xmqqtsyo7b4y.fsf@gitster.g>
-Subject: Re: [PATCH] config: mark otherise unused function as file-scope static
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="l1aJF+L7JDaarQhx"
+Content-Disposition: inline
+In-Reply-To: <CAH=ZcbDER4OysywLZpCc=-GQ+rweSfVAQ-xj0gNd1rF4-=cPWg@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-> config: mark otherise unused function as file-scope static
 
-s/otherise/otherwise/
+--l1aJF+L7JDaarQhx
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Kristoffer Haugsbakk
+On 2025-11-20 at 19:52:23, Ezekiel Newren wrote:
+> Checkout my retrospective review [1]. Basically if windows + msvc ->
+> <crate>.lib else lib<crate>.a, but it was coded as just if windows ->
+> ...
+>=20
+> In the github ci these are the only windows combos that are tested.
+> "win build" is windows + gnu + Makefile
+> "win+Meson build" windows + msvc + Meson
+
+So I don't think that fixes the build[0] with this patch:
+
+-- %< --
+=46rom 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+=46rom: "brian m. carlson" <sandals@crustytoothpaste.net>
+Date: Thu, 20 Nov 2025 22:52:37 +0000
+Subject: [PATCH] WIP: try fixing CI
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ Makefile           | 2 +-
+ src/cargo-meson.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index b05709c5e9..8bdb05e535 100644
+--- a/Makefile
++++ b/Makefile
+@@ -934,7 +934,7 @@ else
+ RUST_TARGET_DIR =3D target/release
+ endif
+=20
+-ifeq ($(uname_S),Windows)
++ifdef MSVC
+ RUST_LIB =3D $(RUST_TARGET_DIR)/gitcore.lib
+ else
+ RUST_LIB =3D $(RUST_TARGET_DIR)/libgitcore.a
+diff --git a/src/cargo-meson.sh b/src/cargo-meson.sh
+index 3998db0435..80c10b22cf 100755
+--- a/src/cargo-meson.sh
++++ b/src/cargo-meson.sh
+@@ -27,7 +27,7 @@ then
+ fi
+=20
+ case "$(cargo -vV | sed -s 's/^host: \(.*\)$/\1/')" in
+-	*-windows-*)
++	*-windows-msvc*)
+ 		LIBNAME=3Dgitcore.lib;;
+ 	*)
+ 		LIBNAME=3Dlibgitcore.a;;
+--=20
+2.51.0.338.gd7d06c2dae8
+-- %< --
+
+[0] https://github.com/bk2204/git/actions/runs/19553883891/job/55991786359
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--l1aJF+L7JDaarQhx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaR+eIQAKCRB8DEliiIei
+gQUPAQCbuU/Z4tn1VWFXJhsRNlcUOll3B7ptRnvpFZ6CsfBQzAEAhHrwR/E1jv8m
+Q0fHLdcwzp5JRfI/tfcc9k4s5O7BPw4=
+=/7S4
+-----END PGP SIGNATURE-----
+
+--l1aJF+L7JDaarQhx--
