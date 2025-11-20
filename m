@@ -1,142 +1,131 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5D9221271
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 21:16:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B0230DEA9
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 21:24:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763673371; cv=none; b=qUL+z8MNJG9uaxbq8+cELDvQuf44Rd2FPu8BGzMR1MfU/N5KkTCQzEqUYAzx/usoGfu+17/Qlki8f0oB7huS1beYoMlvanWopEkx9pHcWUfaaIg7V3FMPp5Cysujtq+cMbUjDhzj2fh17sDadykgYUmcltxcTuxuXXYKJ385fdo=
+	t=1763673859; cv=none; b=Llgzk5RydmE9yJWcgSLsqFHOeoMvSR43LoABXATfzUwyMMRi8RBN6fjSSXKoPbgLwyuRaxo1erpIYOvCoS0IajTBwV2PNM7iCPsDnyUyol1bE4fkPaEqDsx1YZHu1ySRVS3pg88NiOPDV2vhwDn1eH3jgMpfFYH9K9aUsw3w5nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763673371; c=relaxed/simple;
-	bh=huGNj6NJjXMVnv8gAx5svb2pZINQQWmyUpwG6x+lNbk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=TzgvhDs6TF59JXIr8jDR/qQ2YQPd7IpHGUVAITpy0BU1yCkE9JLVwlz3f6PJAgr10fVxqCUmLHgP1zDOEJtg8Xh1Pcj9YK2ba45q/sRdub6lsyJuDIRrAX0m/+ES98s/BwUTHLLI4Fq2EZ0f2HvmOMmabQ8Z9JU0l8xSJXAhJTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=J/eAJojn; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1763673859; c=relaxed/simple;
+	bh=/WASewN6nZ3pg7OhSNv83L7t7dXXmxFapjQqB4QJaZk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TRoHJ8BUgCtM4pXqcR8s1mg75Dzr5M63ZzZzAPZGi7JIAw8UwWyaKr4fLqO4Tfrdj0F1vfugd//DpcOtqDmp71X7bDmRKeE1OYLvEdTRAicmQHBn3AZgxYIKkVqU/NMI5mAeB6uQnSyFXQDa4eq92asq336VF7ZyiO0+9ng1Joc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hJXd2fOZ; arc=none smtp.client-ip=209.85.167.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="J/eAJojn"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id MC0TvuzihEAJ1MC0Vvej76; Thu, 20 Nov 2025 21:15:59 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1763673359; bh=sA6Fi0E7tbSdlacxUSpOfQ+QBpD5hcMRsgKEybhHSt4=;
-	h=Date:Subject:To:References:From:In-Reply-To;
-	b=J/eAJojnpjf/w26QYaHDRh3OK7Blc+INzT6jYENYxoHKFjj63/5n2ejRtJNp2wDgj
-	 KcG+8MggJjSzyHixWSVsEkFSq+IxRK4dX3imQbcszFVCwT12CbJ+343WeS6gqGUFrE
-	 duHFclhurd0hDUO1OA4uGg38BjKPelaeejl7NTI1dE/bMSCdqapLIsyeg872CA5bW3
-	 htSzjI4+OnTOjLpidPJZsAKIKpGkTH2gmV0BABUS8qzpQLEwJprhdPI8mx/10LbMT/
-	 0OavJ41tA9PvaYLvOHH35UkpkekG7c0VHPRIb6qudEwPWBn5LsHBIzFXiy8vSqEc2I
-	 TQ5eENlW7PSrw==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=NOl2+F6g c=1 sm=1 tr=0 ts=691f850f
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=-WYQMsXXwuiOJqZiOigA:9 a=QEXdDO2ut3YA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <e67ee4f6-9516-4561-b9f4-06e9049ff2ba@ramsayjones.plus.com>
-Date: Thu, 20 Nov 2025 21:15:57 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hJXd2fOZ"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-450b2715b6cso608694b6e.0
+        for <git@vger.kernel.org>; Thu, 20 Nov 2025 13:24:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763673856; x=1764278656; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SOt6LEHwtEud9XQGha8DonAJFCqEYT/Ojw6TV51po6k=;
+        b=hJXd2fOZzdAqwG6L3Ikjcfzoc+3TlhNXjZllzQ3VwH9ihxtcQ+o5ZeLS/NfEYbJ934
+         YjqY294PTK7NgXcD7dqnBHPl2R+ZvPAx8z4uHemWhUtWm6VSbQLgZ+wc+2FUwFzRnIj9
+         ZICfbtwU6Z5M2GWm2SzbqNM7CIQg+14f7WCnqYJll30Vwu4xBH43o0CqTYIiPfzpu7uV
+         +3Lq0BNa3vCsBeguF3UuBF6abEKEO9uzrz6hOs5hR4v8ie6HPpoIBkziABlxXqdfYkOx
+         KlRIzh72PPwJrEuD7l2/c3HnxWMVAe89Ss1ge88pLYmXfGtIll/5HuzG95sdRwtx3qJ8
+         TuZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763673856; x=1764278656;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=SOt6LEHwtEud9XQGha8DonAJFCqEYT/Ojw6TV51po6k=;
+        b=qikmytylAmUBloihIbyJ6LKmNZJ0qWmVyZACwePahCEyMCHEEayAE8jG5eM9/au6CR
+         YSpeDf/nVpglmK8MfKYZfW5Ol5GAEpHN4kNcuMHgz4UKTNGczuAz+/de+Yh+vlbMkbC0
+         zkymlN2muypRGDNTDqoniFmvjmBwrUfX408IYPFlnG/AIpeb8eFckVPGkywqk1qQ7JqT
+         csv1t+l8MVwmfiqzo9Y83HWJMI8XtFcm5sU4ODwC0ZLt3M7eLgMYxqSY6oz9b0D4B8Ge
+         lVabOL1d7uo7Yz3xKX4HDNk0fYCTotlEjfgR5fz4KWSa2j45Zmd5ReK9JVOEfIvv8vj+
+         HSqw==
+X-Gm-Message-State: AOJu0YxfKQmke2k0UpoSWxw5owBg1M4TwBhYe+bGXQgCrtRu1IRDb+SY
+	cEEuFk0yGYb9eZ6Q5Y4NB+B8sdsuKh7oUq3J0/+IxiPh2Ag3QT/C5c9Ne3nbAxwPk5e5bM3QQ/B
+	dZSYJd/VzinlbHz+97xr4k/3yTFzq2b5iJg==
+X-Gm-Gg: ASbGncuIVHMZo8TLeYSjGL15YkbOghfzXrQh8zsm7zEwKBcJ3TuFFh7yFQE5gNIBTDK
+	csak0lH+GH0f43Z7kOAI2LI9y7pi+KmQvE5cbfuKAgsbxriIycRduCzBwNDt696sgCOvJJfy+C3
+	gcc8wmdZLIkvUoqMuMuIGRr4iLXi1rhoZKKjsqy6p0ykYMjEcANcNvrUz40lZgY5YQiRbCF24hX
+	rQYrKm75waHws9ApgiAb2KqQMtbdLsaLmkul8cD9YdW3vNNVuU2avY8P5hyVunBudLml0XsUUUr
+	AsvCjGgqC6Pp2hSJZAe1rvKP4w==
+X-Google-Smtp-Source: AGHT+IEx4mJKsFyr5hkJbypXU/rzLqSMHhWcqx30uG9G2y//7RCVf35eaLfLCcEDJJ7PhHR7toHPtHxfFno232bDbyY=
+X-Received: by 2002:a05:6808:c292:b0:43f:6d5a:9cfa with SMTP id
+ 5614622812f47-45112a9215emr43832b6e.23.1763673856443; Thu, 20 Nov 2025
+ 13:24:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] config: mark otherise unused function as file-scope
- static
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqtsyo7b4y.fsf@gitster.g>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <xmqqtsyo7b4y.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfIYTa/07Po8QxDsVjiB7KyL+eTY8jDEdnQxlyCrQ5s9o05LZm+VnWVSVTkEFlE9tkR8EYRk33iDAV4+ZkI67WnlTiXT7ogjvl5o96SWN9jcepBMifjt0
- 5sskkUZzNZQqYXxESgg8WewMuaFaGVcKT2838VXfr8tQVs30L1gwzDKnsSKZbQf5v3P1scur7BM+Ly+x8wbSk7EcLd3tKOzvE30=
+References: <CAL4-wQrgD3nnW2BfNf6e9d7tDANE60dYBRRP_0FW3Z-LvQrZmg@mail.gmail.com>
+ <0e971281-d1c4-4030-9297-f5e2c0765431@app.fastmail.com>
+In-Reply-To: <0e971281-d1c4-4030-9297-f5e2c0765431@app.fastmail.com>
+From: Martin Guy <martinwguy@gmail.com>
+Date: Thu, 20 Nov 2025 22:24:03 +0100
+X-Gm-Features: AWmQ_bnRpeAQz_7XaaReGVFhHzlyNcBNWEwHPIVxfSWY3-aj4l2nejd0DzQ6ASk
+Message-ID: <CAL4-wQpeYc8-FfcZGWcs6KmR-oswTs3Kjcc7xAb34cFX7s0c-A@mail.gmail.com>
+Subject: Re: Feature request: git cp
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Thanks, but that only seems to affect "git log" retroactively, whereas
+I'm interested in it being part of the history so that "git blame"
+knows about it. At present, the blame for a line would end at the time
+of the split (when the file appears to have been created ex novo)
+though I suppose people would end up at that break and could then
+switch to tracking the old file instead.
 
+Maybe I'm expecting too much of git, with all the truly wonderful
+things it does already, but the idea seems to fit into the current
+scheme of things as seen from the outside (I don't know how the "git
+mv" line-based trackback works).
 
-On 20/11/2025 7:32 pm, Junio C Hamano wrote:
-> git_configset_get_pathname() is only used once inside config.c; we do
-> not have to expose it as a public function.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->  * Not related to anything in particular, but something I noticed
->    while I was in the vicinity.
-> 
->  config.c | 2 +-
->  config.h | 1 -
->  2 files changed, 1 insertion(+), 2 deletions(-)
-> 
+    M
 
-Similarly, not related to anything, but ...
-
-I have been meaning (for years and years) to look at all of the symbols
-that my 'static-check.pl' script produces to see if any of them can be
-treated similarly. Note that there are a few ('sc' for master branch,
-'nsc' for next branch and 'ssc' for seen branch):
-
-  $ wc -l sc nsc ssc
-    102 sc
-    102 nsc
-    120 ssc
-    324 total
-  $ 
-
-The symbols from config.o:
-
-  $ grep config.o sc
-  config.o	- git_config_from_parameters
-  config.o	- git_configset_get_bool_or_int
-  config.o	- git_configset_get_int
-  config.o	- git_configset_get_maybe_bool
-  config.o	- git_configset_get_pathname
-  config.o	- git_configset_get_string
-  config.o	- git_configset_get_ulong
-  config.o	- git_die_config_linenr
-  config.o	- repo_config_copy_section_in_file
-  config.o	- repo_config_get_bool_or_int
-  config.o	- repo_config_set_multivar_in_file
-  $ 
-
-Note that the 'seen' branch add quite a few new symbols:
-
-  $ diff nsc ssc
-  0a1,2
-  > add-interactive.o	- clear_add_i_state
-  > add-interactive.o	- init_add_i_state
-  38a41,44
-  > hash.o	- git_hash_alloc
-  > hash.o	- git_hash_free
-  > hash.o	- git_hash_init
-  > hash.o	- hash_algo_ptr_by_number
-  52a59
-  > packfile.o	- mark_bad_packed_object
-  54d60
-  < packfile.o	- packfile_store_close
-  84a91
-  > setup.o	- check_repository_format
-  85a93
-  > setup.o	- setup_git_env
-  99a108,117
-  > trailer.o	- blank_line_before_trailer_block
-  > trailer.o	- format_trailers
-  > trailer.o	- free_trailers
-  > trailer.o	- parse_trailers
-  > trailer.o	- parse_trailers_from_command_line_args
-  > trailer.o	- parse_trailers_from_config
-  > trailer.o	- process_trailers_lists
-  > trailer.o	- trailer_block_end
-  > trailer.o	- trailer_block_release
-  > trailer.o	- trailer_block_start
-  $ 
- 
-
-ATB,
-Ramsay Jones
-
- 
+On Thu, 20 Nov 2025 at 16:17, Kristoffer Haugsbakk
+<kristofferhaugsbakk@fastmail.com> wrote:
+>
+> On Thu, Nov 20, 2025, at 15:56, Martin Guy wrote:
+> > I am splitting a large source file into three smaller ones (mp3.c into
+> > mad.c, lame.c and twolame.c)
+> > and would like the history to track the relevant lines in each file,
+> > like "git mv" does,
+> > but I only seem able to do this with one file by "git mv"ing it and
+> > copying that to the other
+> > as a new file.
+> >
+> > So what I'd like is "git cp" that is like "git mv" but where blame for
+> > both the resulting files
+> > goes back the original one, if that's possible and unless there's a
+> > way to achieve the same
+> > effect that I haven't figured out.
+> >
+> > A fairly rare thing to wish to do, but may be useful in this case.
+>
+> Copies and file moves are detected dynamically when you use things like
+> `git log`.
+>
+> Try `git log --stat --find-copies-harder`.  I get this output after copyi=
+ng a file three times.
+>
+>      README.md =3D> rm1.md | 0
+>      README.md =3D> rm2.md | 0
+>      README.md =3D> rm3.md | 0
+>      3 files changed, 0 insertions(+), 0 deletions(-)
+>
+> I get this output when I change one of the lines in the same commit on on=
+e of the files.
+>
+>      README.md =3D> rm1.md | 2 +-
+>      README.md =3D> rm2.md | 0
+>      README.md =3D> rm3.md | 0
+>      3 files changed, 1 insertion(+), 1 deletion(-)
+>
+> This is the first time I=E2=80=99ve tried this option so I don=E2=80=99t =
+know
+> more about it.
