@@ -1,46 +1,60 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F9836D4F8
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 18:06:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBE3354AC4
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 18:18:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763661971; cv=none; b=lfuxZwjEEDIF/xJVMwOiBiUjt/Glxyx3jwaRsb+g6LFAOqn5ZGrlmwlHvvab4tfcqPu9fN0wB6krFWgZ2G+Kk0NPs2MxGVRu+Wj74rnxUMHTA1OdgRC+SsaRUxfAzbfjyMPZ+pgQljibrOlVSGd0KqbhljcMAgK9uLmdZd5g4i0=
+	t=1763662743; cv=none; b=EUYW/v7VbkKVTABYJ0EEIX4NXtZzij2hR8d5IPqNxIk+ZZw+tP5PY20wPQX7dalV5GLqr8axkpVZjr5O80RLnLPL8o5yjf+nIDjCvjY3q2aML8BDyFIIbvMPQ+D7I0fMwRQlKRBf4lT3lkNY4Zbn+2bjNA2Kg5p/TZKAzAP+y3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763661971; c=relaxed/simple;
-	bh=kQhoiH3MyLrOOYY7pfQE44C75oE4sf7gIU7ArLnjRVY=;
+	s=arc-20240116; t=1763662743; c=relaxed/simple;
+	bh=iooTa0BOgZQ2MEfaKyV8F4Rofp0V91JyUzjvv2CJf6s=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iCF3aekLW4A+bqvBs+Rh1u061IMt/CCNTkoHIx6o+7K/+SDRf1XEO8p8ct744DlA8LrVNCDIxROyYPtuq/iZrGiSfnTK9YgZtt1abIdAO5BeCr0vdipZhasduYEbVkNov31kF8vkq2Zo4BfRKbQCjn+vauuv6FOGtE52xbKdP44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	 To:Cc:Content-Type; b=AMve1MbxxF3VKWq7ET77HrGFeSf8jj7AzckyLuRsjIg2wo9S5YgwovS1WeFUg7IaoQ/J/udvC3EXupDotsnZFHKhAnNatlILhwCjDoo4/d0GlETIt92TBHha2maL3qWKOOf9m9zF4SljVfSMTxomZHTldmS2k3egXng05vh08uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C2zGSTPa; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8b30d1b467eso19761785a.1
-        for <git@vger.kernel.org>; Thu, 20 Nov 2025 10:06:07 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C2zGSTPa"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2984dfae043so11686505ad.0
+        for <git@vger.kernel.org>; Thu, 20 Nov 2025 10:18:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763662733; x=1764267533; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1BrywyG1hOy7kAv+f091SDz9V2pzLBp1xF0S6DsH1Q4=;
+        b=C2zGSTPajyYnyhQSCgBGuGCLAbJY3cNY8DEfB5Cga6QXzgxOcr/VoPXAXnoekpeqT7
+         Tc8uVnUuLSbDXEMt8WjOYoWYSa+OXVjiSzaEW55UGOfB6ggbfjtR5E9PJDZMrBlvlk9m
+         0Ay8UxoxSxGDF0VJtKWFeyjnK6YA5RM4L3aQ20lM3OdCfV6BO7hmCrk5zf1HKkSz698H
+         WDDvTvQHemrHTXYjuwfHArlfb8h59kW2MbmI0k+5QGczkuui5mi/8GLqzrTVtXT68COX
+         ROlT9qQ61GXJlYt+dzoisUc4EAepkCq/fvxThQ7jcItYjKjR7ZQdo8NzN3dXSjgl74eP
+         2s9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763661966; x=1764266766;
+        d=1e100.net; s=20230601; t=1763662733; x=1764267533;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=JTQENiCO3KxXQyHg5Pvt/cjdSrYUzH0BwssOJW1SfCA=;
-        b=V01TVUjncQFy1zOqApQoew9EakMQ0r4VWqFLTRIj5LpXaSi+c3HzNUaiJ7EcOl5WWO
-         cyieG2sreGdiTF/f6eWmR0taPkCfChP1HR2YjI2M+u3cUoKTFglDJ4OcSyEqlr7N0HjX
-         YgoO2G5ckeixQgwVYQCI6tgipRs3Nsp26+BQ/SjSvjJn7zrRU78C2im96JCNLkERITlw
-         JeV67G6J1RR3RrsOjeegaMwdgP7p5J6TBwi2VQ+I+8LTGCncFsDnEj59aiObTiARUKKh
-         S3pgS9xlWbNFlLTf35U9j0421eZzvbprLfT9bZ5JvVBYV1NNQzafhMw7pGD8nHQjEgb4
-         elaA==
-X-Forwarded-Encrypted: i=1; AJvYcCWlbS1RWo2+5RFugdAYH0Mk6ZOn91E6HVWHuq8RpH58Mg9LQOYyotTisnuT3O7g07HB2R8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzAmOypND5SeVTIWgzq63+cYo0M8zYaAkgJZZ65ZAC2gEJmZ3hu
-	FnFFZ2VzyAWhs6RllFfWFP+jtCbDjQINSlGnaBl2GaqVZiuhrNhh84USz1Nbi7MUTS6IRPok/85
-	qkn7YAGQBMspKsIbXuYvDaoSWNbrMtxU=
-X-Gm-Gg: ASbGncsl7fNbjoQR4ICo0iyh0eUh4oOztLuVvRIElA/hX6XYok26jmX+WxUJwpAiG41
-	4ltYhC6B6wcQzMc7lqQ50WVi0bTIDPO1m5xvyItdrclug4mR7LUzCR05Jq2imy8UZXOyakcnGCf
-	PkPfT5xk1VOHdnqtYHJ9fkMihHWqYHQhfn/M4Jbc5Fjd895vnxen8THByVubGwIhcjQwjKOcNPu
-	NaB4eVshQMoeC8bdZJSKZjVcKI/Dwz9c7lmNm/u0efdFHJalvBhrxnlSKntoTVw89dwRRxrVK31
-	2aUqXoz9kW1ogaNB3TY9tm8dw0w=
-X-Google-Smtp-Source: AGHT+IEKsnmmupES18xyTwPPv6W5Qt70K6olg8C/BpML4mntKI3fQK5bC696MMPq8qVy7P1XvxR9S2evuk7UVZWhEA8=
-X-Received: by 2002:a05:6214:c8a:b0:87c:2360:d41f with SMTP id
- 6a1803df08f44-884717d5d1bmr31114796d6.3.1763661966092; Thu, 20 Nov 2025
- 10:06:06 -0800 (PST)
+        bh=1BrywyG1hOy7kAv+f091SDz9V2pzLBp1xF0S6DsH1Q4=;
+        b=cCL6AOyQ9elSzw/NyzRc4CuBWEXdYMbqVt35I+JBumzo7JcmVQw23dCRd21c/IZGNH
+         oEl5RIFmFaxBDeVxQGtDJ23kuYM+prwA5N5S+yAG2iS9CrLEGfe21cbjTAK6H3GCwDwJ
+         7VzY5UmBO+6w9GaJHCATaTR+iHFHpIOcu6YBoYTdBuaY2cFjpu5qOGnHiYmOfViTCSZ9
+         ntSI8vbjBpOaQBHs1ECScKB3k4C0W463WnfmJw/HqFDyi6RRNcmd4RiZgrEmSifd5nEL
+         QmAjVhpF0DCtORCEspN3sVQ6zHEeshBUDNCaTa3Dgxh16fEmtJZV5FZG9ygwzA5mH5qW
+         SaDw==
+X-Forwarded-Encrypted: i=1; AJvYcCVPdKv76VESBOGHa5JvZIeTgtm0qkynZSnGwtb9t5qxBsuQXMR2bsB4x7yD1sD4vX/Zuqw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywl6kmWOsQQ7ya8nXxXTwnNE84BHUH0WSmvwkxYJUgLOoR9S5Qw
+	yU+Vp89ro6qyqkv8iijLewU8Np80gWEiy+zfMqPnSdT2S+/39D+QofRTWCuUxHyYLS3XTR46ckr
+	p2D1c77EZx93/bj5Wt/aRNOYkY8yzyIuxPEjh5nU=
+X-Gm-Gg: ASbGncsjyv3CVeUn3hWOAkVRMkO6gGWjltdgDOvOYQpTAKgQaARsR0Ij5dc0vg6iiF+
+	CCabmwuTi+IKSkU2QCew23wWxiY1HBf7UbqSoQ74r4fNEK8nfxIh7sTgtDObx56+jEcjkO5I2jm
+	Cy/B/DVrR9oxoo5J5frGBFnGDsL02lgkBe1XmGZ+AbxENa9ibt+6YQF57Ai0UvWZl2jRfd2L+N6
+	nwQgvGGS3UiHroU+6Wr0xGK40MjgfcDG9I1ytz2yzvYi3eeFCN3NHSvacLjwVXpLFV88gWUYPVt
+	u7A8EJior32DClG/HGYSQylEExQhrA==
+X-Google-Smtp-Source: AGHT+IHHh/FqaRfEcKyEDKXDiRJco5H7vXR/iNX2CkM6e6ACbdWqqWKnWJwE0cUWLTmNgQcl3ZyoI6UaMuE76ztW0uM=
+X-Received: by 2002:a17:90b:2243:b0:341:c964:125b with SMTP id
+ 98e67ed59e1d1-34727c4bea3mr4168090a91.31.1763662732896; Thu, 20 Nov 2025
+ 10:18:52 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -49,35 +63,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.2101.git.git.1763232863.gitgitgadget@gmail.com>
  <39b17bc64ff0d2e4162437ab745845c055315037.1763232863.git.gitgitgadget@gmail.com>
- <CALnO6CBzE-+51LfgjpEv665oG6kZG9_4YZTv8qgqtNrhh+a-Bw@mail.gmail.com>
-In-Reply-To: <CALnO6CBzE-+51LfgjpEv665oG6kZG9_4YZTv8qgqtNrhh+a-Bw@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 20 Nov 2025 13:05:55 -0500
-X-Gm-Features: AWmQ_blh-A8ZHWFqJap-83QRmzhbUHFo4gTh5zL4OV1AZTPPRbN1dYG6lO0pKgM
-Message-ID: <CAPig+cTpDdTceBSYoVRBS7wKoSxURMeTA7TruiAmjgTX4B=m5w@mail.gmail.com>
+ <CALnO6CBzE-+51LfgjpEv665oG6kZG9_4YZTv8qgqtNrhh+a-Bw@mail.gmail.com> <CAPig+cTpDdTceBSYoVRBS7wKoSxURMeTA7TruiAmjgTX4B=m5w@mail.gmail.com>
+In-Reply-To: <CAPig+cTpDdTceBSYoVRBS7wKoSxURMeTA7TruiAmjgTX4B=m5w@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 20 Nov 2025 13:18:40 -0500
+X-Gm-Features: AWmQ_bnDuWyiB30mdIR49tP35ge_f12lTKxgCJXnH-N3YjNT-KVDo0zsNytD--M
+Message-ID: <CALnO6CDin=zO5EBU2fC7xj6N9ZtAw0ge=GC=TRtE=2dM65+UxQ@mail.gmail.com>
 Subject: Re: [PATCH 3/3] git-prompt: add quiet upstream indicator option
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
 Cc: Kiril Ivanov via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
 	Kiril Ivanov <ivanovkirilg@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 20, 2025 at 11:10=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.co=
-m> wrote:
-> On Sat, Nov 15, 2025 at 1:55=E2=80=AFPM Kiril Ivanov via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
-prompt.sh
-> > @@ -275,6 +279,8 @@ __git_ps1_show_upstream ()
-> >                 "0      0") # equal to upstream
-> > +                       [ "$quiet" ] &&
-> > +                       upstream=3D"|u" ||
-> >                         upstream=3D"|u=3D" ;;
-> >                 "0      "*) # ahead of upstream
-> >                         upstream=3D"|u+${count#0  }" ;;
+On Thu, Nov 20, 2025 at 1:06=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.=
+com> wrote:
 >
-> Our coding style also prefers "test" to "[".
+> On Thu, Nov 20, 2025 at 11:10=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.=
+com> wrote:
+> > On Sat, Nov 15, 2025 at 1:55=E2=80=AFPM Kiril Ivanov via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> > > diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/gi=
+t-prompt.sh
+> > > @@ -275,6 +279,8 @@ __git_ps1_show_upstream ()
+> > >                 "0      0") # equal to upstream
+> > > +                       [ "$quiet" ] &&
+> > > +                       upstream=3D"|u" ||
+> > >                         upstream=3D"|u=3D" ;;
+> > >                 "0      "*) # ahead of upstream
+> > >                         upstream=3D"|u+${count#0  }" ;;
+> >
+> > Our coding style also prefers "test" to "[".
+>
+> In this bash-specific script, the normal project coding style is
+> relaxed and `[` is used regularly, far more so than `test`, so use of
+> `[` here is appropriate and consistent with surrounding code.
 
-In this bash-specific script, the normal project coding style is
-relaxed and `[` is used regularly, far more so than `test`, so use of
-`[` here is appropriate and consistent with surrounding code.
+Good to know, thanks! That'll teach me to respond without looking at
+surrounding context ;)
+
+--=20
+D. Ben Knoble
