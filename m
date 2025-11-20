@@ -1,214 +1,181 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404223FFD
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 19:45:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EE415A86D
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 19:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763667940; cv=none; b=Xod8pIsNxTj6JHrI1CaVHh0CAo2lL4OymxGs2Ug8eOEdbg/8+9Z6CX0bp5GHd2TN0alrtXHv6Lwt5e0u9vsXaEeUnpgDYF0PsHbNxLz6JG7vJpzyeVHX90quC35wHi6cmP6ukbyVndF7FnUqr5P3Jw8Lozkq9n3viFfPxOjRWMk=
+	t=1763667949; cv=none; b=FKZuqi9wIEYAwoGIFjwK0lDH8oQc8dnm9utVVDL+td2aAv5N/ao+yVHRJfRzfREUzrEtJ5JjGtbu1Z89mQTH1RrUC5KJNkf6EsoAxXs7hwe1okl+pKXdEILxLwA+F0l7AX+BAgp2T9B9sJHAn7ZQeyfH7KSAOpOhCXuewIP8Src=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763667940; c=relaxed/simple;
-	bh=KyHb7EmriFEsUAuZEaCo+MJ1eY9vsG/t2TpvFZrq+/U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hAnuh89XUmRbFLLqj1V5ZepBIZNdvbGDiEpiGMEopwGaZ/f3ll2JiUJ5fVtVZvfLCq+qEkRwdchGBV8pSGQuO1rR2OjNcFdyjd4Xq5U73Wrnh+HqhJjoEHKkWZU8bsLi1Gkwj/D6xL3QpFNCk/qrwJYI41jYn4JCul5TNxn15cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=P8t+LvKb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jN6yfK1w; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763667949; c=relaxed/simple;
+	bh=2KnZf3SAhjqm3J1A5Z0xXhClTBPIXss5QVx8flw4958=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Cvgey/zSNdt9dhAux7V+hSGtrfyCclTpSpSuxPxj+y5ibdWR4t9aFpRoNDWA/77oo4Z8NISkJmM1861Yzbb2Y7rvZe/Pa//kZh+3YzQ912AMLHy4E8VNNPfLtcZoI+DVttZTTsM+75vk9JmQ5YSNzX1b2JPSsOpnY5wJ2UJjULc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lNa+sWlq; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="P8t+LvKb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jN6yfK1w"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 544A8EC03A2;
-	Thu, 20 Nov 2025 14:45:37 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 20 Nov 2025 14:45:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763667937; x=1763754337; bh=yupyBnAa5f
-	D8ZPIs9zTQkr+heuam6XTqZA5buff4iRM=; b=P8t+LvKbpk2L38q0JZZTO6jOEX
-	1EtmELW0pSrc4pNAD2KnfnJyfzKQV5bjb++6ZyJtf05MgBxD8EZi028KljriDtEn
-	709zv58pieTHjV8F7QtVr3DHicfUsiat+jLGsJjEGgzSu16/COBLL/DS+iV7RN7I
-	DnCbOlE/hRT+D5Aa2cqZUILsP4AAkUKtcxgfMQCHHumSyfL9Gh/Q4sn+QWUP0f7V
-	2nWgIwh4ESAAsfMpVQCawLd592kMUtQBatsJPxKuYIvNLeOhLNP1gSwTjVKo9MsC
-	5CGYkglgtOSZ0dM6zaVDNVhRIf1ch+Ujcol+CX7rPX3ioRwuKlxLf5hF7GpA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763667937; x=1763754337; bh=yupyBnAa5fD8ZPIs9zTQkr+heuam6XTqZA5
-	buff4iRM=; b=jN6yfK1wenffurKai3maGEjjm+wi47sGQe/Cdb5hypWwtA8ooft
-	V7+gQ1vnhz0lMMFtXmQM+KOVo73cYeXRnJvbQ6NIxZmGzpZvg0Cggx68nSac47Rw
-	ZBiMs0TcerDAz8bmkAddC+0vxWoO9tgIVaPMK0UgoJPlxTY4JBOk99F9ZPN6M7xH
-	Kt8fus1EQYcLDVYnu1JxNabyCFe3zoMKQv85ZcpAUaZeSX1URMRlLcRkH3NPoQA8
-	+SLdeyY4kDI1zFk9Y3lqI7VuEBDTtnI1wSoAN92FGsn84hgjqRIBcW7FGNfbkPj/
-	4w33YCRtb4zDu0+9dpFXiveKelJMLGjVUxg==
-X-ME-Sender: <xms:4W8fadb30uaV8mO3AGfNkO3lBSDvIlFPgT_I9w8IuAqrPN1pcQcq6Q>
-    <xme:4W8fabaK9EJMkzu2vaUoakdMQI9UteqVs2NMXOOdZQBE0a81EZHsRznr8KowewMxI
-    FHz_NrPxq14n3X2KWWlCBzlLcS9IFmn7UoNyMbJ8CCCNnXKNX1YHw>
-X-ME-Received: <xmr:4W8faU-hcFh4BcUvt7Eov43M9jv6v09zYO6eYl9ebJgVM9xVXX2vVItaQq_uBKs-FBX_3zc2vw3ZuzVs2av9oKj3YWhUfijv7eee>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdejleehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-    dprhgtphhtthhopehjhhgtrghrlhdtkedugeesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:4W8faai21egO2b8M2oC75XE8wVYEZoFsKHzTzAMHFXX2CqIJ6DTw-Q>
-    <xmx:4W8faUfrOuXYg5kkTTmMWLl0kgNBKPdPF9h95ogqRcy8d_1JTHPa4A>
-    <xmx:4W8faRpFgk892iXGktHYpBGeCSaCRAOwsLYaDE1EascLI8fbn5y8hQ>
-    <xmx:4W8faZDbb6y4QSMnQIVanC8ITGTX29kwbaWJ0aguK33C1diKfCzWvA>
-    <xmx:4W8faS50p8-msfwwJcQFO7bFEaE2L7izP2hPNr_5yCBJcnK4H7l0ojmf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Nov 2025 14:45:36 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,  Han Jiang <jhcarl0814@gmail.com>
-Subject: [PATCH] config: really treat missing optional path as not configured
-In-Reply-To: <xmqqms4g7b1h.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	20 Nov 2025 11:34:50 -0800")
-References: <xmqqms4g7b1h.fsf@gitster.g>
-Date: Thu, 20 Nov 2025 11:45:35 -0800
-Message-ID: <xmqqikf47ajk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lNa+sWlq"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-37ba781a6c3so10523531fa.0
+        for <git@vger.kernel.org>; Thu, 20 Nov 2025 11:45:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763667946; x=1764272746; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dTo8UB6gK1aWIFBnLz4nbjnLAby+P/li/Oqkn2DLNWI=;
+        b=lNa+sWlq0znyTfocnTLYJcE/Gy9tOlzT3u0kKM2bk1eSTyRf3c6d/wr8j+5cC8qiTN
+         dxiIvilWF9zMMVcCvps6+jsa74sR3VtriOxd70R80BR5T0ta7502w5DIIlu4iGmYP/De
+         JWFkYSJ/Pzws/0CQD6Hu7ygkBQrvAdSwsl4PCICtoz2SZxYwtvTZ+Yq1YqyTDrRdmIB5
+         yMgmVmQyBYV+EoBN+vuKBPFFdA4DfLdHSjI5aEWTlsyJ1V7a7HBjNxpQxikOrL7/cuyP
+         WuByBTSc6JoDpLwtfFsNxZiNnHK8Jx2BMAamrXPC+VdvB2VAcz3OiGuY07q8sFZVfycw
+         pZnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763667946; x=1764272746;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=dTo8UB6gK1aWIFBnLz4nbjnLAby+P/li/Oqkn2DLNWI=;
+        b=b04lfWhCy0G/c6KFC843Sjgldbi6Juq3Pn4KrWxzOcE/f5K2LAXpEKKMyA4WInsIoF
+         BycSCLLx7W9Gl3YN9ndHHnOdOkbbt7JUhtUb8kHAUz7MXVgXbg1RgGwbqDodbaA2lpXy
+         9t2+05urFj/uVqD9hp0/uPHVfA5GMgsMp+4BIfDqqGxbu4yFx+CFKKo2LL40Wxwi8bks
+         jN7CRiSxvGGwD3OENcpdMB4yXbGwF2lGCb8t6p505HNwqgO5tq/Z/fdQLX/ziBnSG+xS
+         0ORhKs/uR0gC8UBzE2ilKl8VSlz/5tV+UB3Dgy/oEFl9qV5UlCH3J1NonYEWSclbiCuD
+         fOag==
+X-Gm-Message-State: AOJu0YyDLQ1zfyiZlQNDTHXn47UdCD+hoFMdmW/H4KyFEUPFyxaFlXrj
+	quEdx5iC/wPlRMmKwZtk3tuzXIrDOfFnkpV1o3P75UIEeyhYXS0Sc1RriAiVYw/zewESBLp0fvH
+	28Ntw8n0owpvq8dMFySL87Z3x7yfRzeI=
+X-Gm-Gg: ASbGnctq4NAUJB5U/sZCE4qF1ZSon3hP5aEdiCiKyxhTaQ/Fe+mHdRchNbMHXprfh2i
+	WfhFqf3WjSMv4OfjvESe72a0k2SH5xQDQvd4/RYRxe80I0ICM+ETwi5eBl/RHiSiBN0XMqa2Git
+	5fSNdpk6Qs/Hv82oXEiIDiD8EkXxQA1W8LSW0J3c9hrglgEiw2FEpQMXYAYM9k8O1uEZ5wd9ZmW
+	FgUvzcnxxa3xAkenz5hvwZ60/Dp9nf9TOnI/tUdQhJuMCB5uJqF39BlGZFYlhf+ZIhMM/3H
+X-Google-Smtp-Source: AGHT+IFfx1GNSqNWVmE9q68q9EPwd5BChX+ICu5IfBNW2V8/uXXTvBGosM6Nvhdzmbn3SUfma+9jGGW+KpJj6ODN3Ek=
+X-Received: by 2002:a2e:8a98:0:b0:37b:991a:544b with SMTP id
+ 38308e7fff4ca-37cc67aa94amr10430611fa.34.1763667945465; Thu, 20 Nov 2025
+ 11:45:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20251015-b4-pks-ci-rust-v3-0-13810af33bd5@pks.im> <20251015-b4-pks-ci-rust-v3-6-13810af33bd5@pks.im>
+In-Reply-To: <20251015-b4-pks-ci-rust-v3-6-13810af33bd5@pks.im>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Thu, 20 Nov 2025 12:45:34 -0700
+X-Gm-Features: AWmQ_bnzk3-PsRBQYvGayuvlxmSjCRj8mvSo_o4jMC8QDnzdq_AP2Z08zPBzQMs
+Message-ID: <CAH=ZcbB8cRgCTp-Q_CxJ4VFNY1+w+C20zgx9bMre4-hNmPrD7g@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] rust: support for Windows
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Karthik Nayak <karthik.188@gmail.com>, Eric Sunshine <ericsunshine@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, Chris Torek <chris.torek@gmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-These callers expect that git_config_pathname() that returns 0 is a
-signal that the variable they passed has a string they need to act
-on.  But with the introduction of ":(optional)path" earlier, that is
-no longer the case.  If the path specified by the configuration
-variable is missing, their variable will get a NULL in it, and they
-need to act on it (often, just refraining from copying it elsewhere).
+This is a retrospective review. I completely missed this patch series,
+and only noticed its existence after it was merged into master. The
+core problem is that these changes assume that windows builds only
+ever use the MSVC compiler, but that's not true.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/blame.c        |  3 ++-
- builtin/receive-pack.c |  5 +++--
- fetch-pack.c           |  5 +++--
- fsck.c                 | 12 +++++++-----
- gpg-interface.c        | 10 +++++++++-
- setup.c                |  2 +-
- 6 files changed, 25 insertions(+), 12 deletions(-)
+On Wed, Oct 15, 2025 at 12:04=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
+te:
+>
+> The initial patch series that introduced Rust into the core of Git only
+> cared about macOS and Linux. This specifically leaves out Windows, which
+> indeed fails to build right now due to two issues:
+>
+>   - The Rust runtime requires `GetUserProfileDirectoryW()`, but we don't
+>     link against "userenv.dll".
+>
+>   - The path of the Rust library built on Windows is different than on
+>     most other systems systems.
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 2703820258..c39c1d3149 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -739,7 +739,8 @@ static int git_blame_config(const char *var, const char *value,
- 		ret = git_config_pathname(&str, var, value);
- 		if (ret)
- 			return ret;
--		string_list_insert(&ignore_revs_file_list, str);
-+		if (str)
-+			string_list_insert(&ignore_revs_file_list, str);
- 		free(str);
- 		return 0;
- 	}
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index c9288a9c7e..c6e8e8346e 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -177,8 +177,9 @@ static int receive_pack_config(const char *var, const char *value,
- 
- 		if (git_config_pathname(&path, var, value))
- 			return -1;
--		strbuf_addf(&fsck_msg_types, "%cskiplist=%s",
--			fsck_msg_types.len ? ',' : '=', path);
-+		if (path)
-+			strbuf_addf(&fsck_msg_types, "%cskiplist=%s",
-+				    fsck_msg_types.len ? ',' : '=', path);
- 		free(path);
- 		return 0;
- 	}
-diff --git a/fetch-pack.c b/fetch-pack.c
-index fe7a84bf2f..7162fd3ba2 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1873,8 +1873,9 @@ int fetch_pack_fsck_config(const char *var, const char *value,
- 
- 		if (git_config_pathname(&path, var, value))
- 			return -1;
--		strbuf_addf(msg_types, "%cskiplist=%s",
--			msg_types->len ? ',' : '=', path);
-+		if (path)
-+			strbuf_addf(msg_types, "%cskiplist=%s",
-+				    msg_types->len ? ',' : '=', path);
- 		free(path);
- 		return 0;
- 	}
-diff --git a/fsck.c b/fsck.c
-index 341e100d24..cf6f7f3a61 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -1369,14 +1369,16 @@ int git_fsck_config(const char *var, const char *value,
- 
- 	if (strcmp(var, "fsck.skiplist") == 0) {
- 		char *path;
--		struct strbuf sb = STRBUF_INIT;
- 
- 		if (git_config_pathname(&path, var, value))
- 			return -1;
--		strbuf_addf(&sb, "skiplist=%s", path);
--		free(path);
--		fsck_set_msg_types(options, sb.buf);
--		strbuf_release(&sb);
-+		if (path) {
-+			struct strbuf sb = STRBUF_INIT;
-+			strbuf_addf(&sb, "skiplist=%s", path);
-+			free(path);
-+			fsck_set_msg_types(options, sb.buf);
-+			strbuf_release(&sb);
-+		}
- 		return 0;
- 	}
- 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index f680ed38c0..3e73513694 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -794,8 +794,16 @@ static int git_gpg_config(const char *var, const char *value,
- 		fmtname = "ssh";
- 
- 	if (fmtname) {
-+		char *program;
-+		int status;
-+
- 		fmt = get_format_by_name(fmtname);
--		return git_config_pathname((char **) &fmt->program, var, value);
-+		status = git_config_pathname(&program, var, value);
-+		if (status)
-+			return status;
-+		if (program)
-+			fmt->program = program;
-+		return status;
- 	}
- 
- 	return 0;
-diff --git a/setup.c b/setup.c
-index 7086741e6c..cf47441b7b 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1248,7 +1248,7 @@ static int safe_directory_cb(const char *key, const char *value,
- 	} else {
- 		char *allowed = NULL;
- 
--		if (!git_config_pathname(&allowed, key, value)) {
-+		if (!git_config_pathname(&allowed, key, value) && allowed) {
- 			char *normalized = NULL;
- 
- 			/*
--- 
-2.52.0-101-g4c43c53c49
+That is true, but the build systems also need to check if the C
+compiler is gnu or msvc. Also you used the word "systems" twice.
 
+> diff --git a/Makefile b/Makefile
+> index 7ea149598d..366fd173e7 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -929,10 +929,17 @@ TEST_SHELL_PATH =3D $(SHELL_PATH)
+>  LIB_FILE =3D libgit.a
+>  XDIFF_LIB =3D xdiff/lib.a
+>  REFTABLE_LIB =3D reftable/libreftable.a
+> +
+>  ifdef DEBUG
+> -RUST_LIB =3D target/debug/libgitcore.a
+> +RUST_TARGET_DIR =3D target/debug
+>  else
+> -RUST_LIB =3D target/release/libgitcore.a
+> +RUST_TARGET_DIR =3D target/release
+> +endif
+> +
+> +ifeq ($(uname_S),Windows)
+> +RUST_LIB =3D $(RUST_TARGET_DIR)/gitcore.lib
+> +else
+> +RUST_LIB =3D $(RUST_TARGET_DIR)/libgitcore.a
+>  endif
+>
+>  # xdiff and reftable libs may in turn depend on what is in libgit.a
+> @@ -1538,6 +1545,9 @@ ALL_LDFLAGS =3D $(LDFLAGS) $(LDFLAGS_APPEND)
+>  ifdef WITH_RUST
+>  BASIC_CFLAGS +=3D -DWITH_RUST
+>  GITLIBS +=3D $(RUST_LIB)
+> +ifeq ($(uname_S),Windows)
+> +EXTLIBS +=3D -luserenv
+> +endif
+>  endif
+>  ifdef SANITIZE
+
+This is not fully correct for Makefile. If Windows AND using MSVC ->
+gitcore.lib. However this bug doesn't show up because github ci
+doesn't test the windows+msvc+makefile combo.
+
+> diff --git a/meson.build b/meson.build
+> index ec55d6a5fd..a9c865b2af 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1707,6 +1707,10 @@ rust_option =3D get_option('rust').disable_auto_if=
+(not cargo.found())
+>  if rust_option.allowed()
+>    subdir('src')
+>    libgit_c_args +=3D '-DWITH_RUST'
+> +
+> +  if host_machine.system() =3D=3D 'windows'
+> +    libgit_dependencies +=3D compiler.find_library('userenv')
+> +  endif
+>  else
+>    libgit_sources +=3D [
+>      'varint.c',
+
+Same issue as above, but it doesn't show up because the github ci
+doesn't test the windows+gnu+meson combo.
+
+> diff --git a/src/cargo-meson.sh b/src/cargo-meson.sh
+> index 99400986d9..3998db0435 100755
+> --- a/src/cargo-meson.sh
+> +++ b/src/cargo-meson.sh
+> @@ -26,7 +26,14 @@ then
+>         exit $RET
+>  fi
+>
+> -if ! cmp "$BUILD_DIR/$BUILD_TYPE/libgitcore.a" "$BUILD_DIR/libgitcore.a"=
+ >/dev/null 2>&1
+> +case "$(cargo -vV | sed -s 's/^host: \(.*\)$/\1/')" in
+> +       *-windows-*)
+> +               LIBNAME=3Dgitcore.lib;;
+> +       *)
+> +               LIBNAME=3Dlibgitcore.a;;
+> +esac
+> +
+> +if ! cmp "$BUILD_DIR/$BUILD_TYPE/$LIBNAME" "$BUILD_DIR/libgitcore.a" >/d=
+ev/null 2>&1
+>  then
+> -       cp "$BUILD_DIR/$BUILD_TYPE/libgitcore.a" "$BUILD_DIR/libgitcore.a=
+"
+> +       cp "$BUILD_DIR/$BUILD_TYPE/$LIBNAME" "$BUILD_DIR/libgitcore.a"
+>  fi
+
+Same issue again. This needs to test for windows AND msvc.
