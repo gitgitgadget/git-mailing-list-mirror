@@ -1,100 +1,91 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDA3310620
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 08:23:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDE683128CF
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 10:00:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763627012; cv=none; b=Z7slz12sHwYSOC9cpKymYzEqIq2yJziQHsMPjkcnNclvYYcbaKAtcm1TbjAz6ZTxz2LpN/HbKw03SG7G93RolJiv3RO3bqrrRtPXLBhX3+52WnwiYznzUCsTUtpjetrGU4K9qvMEJnI1qJvpYGsfV6P0FFyGhKUMYNr8EAxGpxA=
+	t=1763632860; cv=none; b=BXS62TvpZW+TDXgDUnseTw3OzOpvEpokrTAajaWcxiqyvpQes+IpRfBGAP8jwvfptuFmkGWu2AWaLkW7mXFqFiGHFi5RFYV1mQFshQZw4QCftA+MYGaRwIl2SWkawm2VDwcwf8xkVrXYYsRztw0NFZE19V8eemhF7wznBo4ZEHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763627012; c=relaxed/simple;
-	bh=DLD+sVBrfoyCcDRv80Oj0FZRO8JLOCdCki1qIs+KeFs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Le+WBUfpuf1Ltj5jagFCuMkfXHAVyRqGBovfK+QSrTEWmgsvE5a1LFYNqIJ9gagGMpXgRDLtmvO2hpek+sVh5e/w7q+JAB6tgK2igxgHm+EY2OtzyWFqPdlDrmL112Nv5H+QLUPXMpVpznW4jN5iXswF1lHYj+/w7oGiPKLBwn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JuzrozjY; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1763632860; c=relaxed/simple;
+	bh=yYiMSM0enL9YBnrep/F71mbMIMAEKMDZH9BiZa2R7Xg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=HDl6oV/g94L0g9lMvFPGg6HGnrG7ciFuHzxRIyI9cAWMln5d26bsF87xYxeMXD0qUK5wJoE9qPRjJ/seTWv64YAbAiiJVcEZ4ef0scnS6jEthA8cWbomwwJBwYnZ5MSlY1186+cq1mCPuemHssqA7GL0osbxmVz0ia5apXrP/qA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=Rjpvo0fu; arc=none smtp.client-ip=212.27.42.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JuzrozjY"
-Received: (qmail 41748 invoked by uid 109); 20 Nov 2025 08:23:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=DLD+sVBrfoyCcDRv80Oj0FZRO8JLOCdCki1qIs+KeFs=; b=JuzrozjYqrGIrMj2Z1RvO6/ZDNxl3TyKhrLV5zgiDG1b8eFy9opV4K6r3yvIXQD3Gk0XJ/jTj2Q/dT+DNtepauGqYKIUbWnd73gkz90P0l5Z4+BTlgux0kuy1Z3d2RcnHRvEgmhyMjITN2hKj8aud0aKvor+H26sr4wQzKvKq2TeOBHFlNmtXAAYyoH13UPx03+GyMOcaySwpbTVM1RYN8aJ+ITGaRzqIc3RJzBuNu5F9yGrWwh5tZM6GOKZAH5A7z7LfgaWnwrr20mLipB+uUmmLdrnVATwErIGsaoZk2XhkC0GYxjsZYlG3G0AP0fh29c+WtXPT3K1e2ftU4t3Qg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 20 Nov 2025 08:23:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 62543 invoked by uid 111); 20 Nov 2025 08:23:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 Nov 2025 03:23:33 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 20 Nov 2025 03:23:28 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] wrapper: simplify xmkstemp()
-Message-ID: <20251120082328.GD1283645@coredump.intra.peff.net>
-References: <058c5722-30f5-4bc5-90f5-24e4c6f3ff8f@web.de>
- <xmqqbjl0iax6.fsf@gitster.g>
- <20251118094621.GB530545@coredump.intra.peff.net>
- <3b1cb53a-6427-4626-a768-1961e25514f8@web.de>
- <xmqqqztvc51s.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="Rjpvo0fu"
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 83853DF9BC2
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 11:00:47 +0100 (CET)
+Received: from [192.168.3.154] (unknown [92.173.128.58])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 3E14260136;
+	Thu, 20 Nov 2025 11:00:39 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1763632840;
+	bh=yYiMSM0enL9YBnrep/F71mbMIMAEKMDZH9BiZa2R7Xg=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=Rjpvo0fue6rkz6ZS4OtsPuAFoybaC4cj5pwfAMm7SuRfNQCIDDATBI5lNxyXzKFsw
+	 eRpw4c6jJxDscUhh2mNZW26wFx/zkFZ+NDi86dPLSTU7PhP9xQ56/C4c3ZsZcSIQCa
+	 g3PwHThvvkCAoUHJkm8KWUEy8H8ENkvAjKvDWqG9zv0/RQ8sjk8J2tmKmOEXy/rjyF
+	 pDM7kgrSZVq4nD8JdQidhQ+SUlPtXJB4SArgTgxRBRdhPGYsqkdjjAgRL8/8STuihh
+	 eKTZNx6ZR6a6bWEkpvSPvBk2KtECnT7t+MYRZYiIwCpBs1ACle34hVC/+yZIwZKdqy
+	 rOLEvELQpWPng==
+Message-ID: <46f9d35e-60f2-488c-a0b4-89855f27cc66@free.fr>
+Date: Thu, 20 Nov 2025 11:00:38 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqqztvc51s.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] refs: add GIT_REF_URI to specify reference backend
+ and directory
+To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+References: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
+ <20251119-kn-alternate-ref-dir-v1-2-4cf4a94c8bed@gmail.com>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Language: fr
+In-Reply-To: <20251119-kn-alternate-ref-dir-v1-2-4cf4a94c8bed@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 18, 2025 at 03:08:31PM -0800, Junio C Hamano wrote:
-
-> When somebody asks:
+On 19/11/2025 at 22:48, Karthik Nayak wrote:
+> ---
+>  Documentation/git.adoc |   8 ++++
+>  environment.h          |   1 +
+>  refs.c                 |  53 +++++++++++++++++++++++-
+>  t/meson.build          |   1 +
+>  t/t1423-ref-backend.sh | 109 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  5 files changed, 171 insertions(+), 1 deletion(-)
 > 
->     On this and that platforms, mkstemp() is natively available.
->     Why are we using git_mkstemp_mode() instead?
-> 
-> after seeing this patch, I am tempted to say "Why not?"  Are there
-> legitimate answers to my "What not?"
-> 
->  - the platform native one could be more performant?
->  - the platform native one could be more secure?
->  - using the platform native one, we can lose out custom code?
-> 
-> None of the ones I can come up with offhand sound very legitimate.
-> 
-> One upside might be that doing so would make the behaviour more
-> predictable, in that even on a platform with native mkstemp(), we
-> would use the same implementation as what we use on Windows.  But
-> I do not know how much upside it is in practice, either.
+> diff --git a/Documentation/git.adoc b/Documentation/git.adoc
+> index ce099e78b8..a1d1078f42 100644
+> --- a/Documentation/git.adoc
+> +++ b/Documentation/git.adoc
+> @@ -584,6 +584,14 @@ double-quotes and respecting backslash escapes. E.g., the value
+>  	repositories will be set to this value. The default is "files".
+>  	See `--ref-format` in linkgit:git-init[1].
+>  
+> +`GIT_REF_URI`::
+> +    Specify which reference backend and path to be used, if not specified the
+> +    backend is inferred from the configuration and $GIT_DIR is used as the
+> +    path.
 
-I think predictability cuts both ways. The system mkstemp() will behave
-more like it does on the rest of that platform, but maybe less like Git
-on other platforms. Using Git's implementation will be consistent across
-platforms, but maybe inconsistent with the rest of the current platform.
+Please use backquotes for environment variables: `$GIT_DIR`
 
-I think the "consistent with the rest of the current platform" ship may
-have already sailed, though. We already use our custom git_mkstemp_mode() on
-every platform for most tempfiles. And now even those few xmkstemp()
-calls will do so (after René's first patch).
+> ++
+> +Expects the format '<ref_backend>://<path>', where the 'backend' specifies the
+> +reference backend and the 'path' specifies the directory used by the backend.
 
-My suggestion was mostly: if we are going to use custom code at all,
-then let's at least do so always, and not ever use the system mkstemp().
+Constant strings and keywords are back-quoted too but placeholders are
+underscored:
 
-> > diff --git a/git-compat-util.h b/git-compat-util.h
-> > index 398e0fac4f..0e6bd266cc 100644
-> > --- a/git-compat-util.h
-> > +++ b/git-compat-util.h
-> > @@ -446,6 +446,8 @@ static inline int git_has_dir_sep(const char *path)
-> >  
-> >  #include "wrapper.h"
-> >  
-> > +#define mkstemp(template) git_mkstemp_mode((template), 0600)
+Expects the format `<ref_backend>://<path>`, where the _<ref_backend>_
+specifies the reference backend and the _<path>_ specifies the directory
+used by the backend.
 
-So this patch implements what I was thinking, though I probably would
-have made it more explicit: add mkstemp() to the banned list (not
-because it's evil but because it's unportable) and force callers to use
-git_mkstemp_mode() explicitly.
+I'm only focusing on documentation.
 
--Peff
+Thanks
