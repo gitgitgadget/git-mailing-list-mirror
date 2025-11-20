@@ -1,117 +1,106 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6EB314A7E
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 22:06:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA43182B7
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 22:11:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763676380; cv=none; b=POc/xb1tCEEr9o5svWKyBk8I/unHUjk80a6SOMWN8mkz/eq0LGxp66eMd5+OjvhJzqsex+FGg+wct+vCKqhcIH1MxU9gVG86CdW15CQQiXf0A3c+QQJcz9iH1AMEgtUmkZ+wXeaPr44CmUkKkntvj/ywf6dz3NUc1mgnhooLsoI=
+	t=1763676662; cv=none; b=nyy63J+OOP9ERQB4daleSyxAWgza50Iq+rq8aFhUCLb01VB8vbure0GF4ODzCN4CEig9QPbVsG79E44Clke6ChCmdpkG2utZZTGRiX1GTZh88pzqAnm3oCysHcZkgU1XiAjRg0DVjlQvLjy03gwlwlOWMwuqif8GAcjn0a3g8Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763676380; c=relaxed/simple;
-	bh=SviY6wnK+cBu0KfK2S2gujjxUk+FYSRA4g0MF6A7Ai0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mMrtNCbD6OrcS43BoDQWPchD8UXO+NNL5K6jnJCOQDlTiNj5oDqcrkJumL+pNkVLD1mT4bB/+UHnLiA7N3f+murd/a7edTrlVxmvxrY6ItrjhkudQN9W1urOGq924gGSZlvEomzi1e2WN4YxP1w2C8/dCtIjb//EfuAswSWQtfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V6EoX4LH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jZmpwFSG; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763676662; c=relaxed/simple;
+	bh=8CNwor6/77PPKbu3tS0ZoCyZT2BiEe6etTxcNiRomN0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=He+ieHZj9R7IsA23UljBuVArWqaNRBMrM2z11YK+N0pLInw0Qnca6BJmi12zf15w2yL1bGLBZhu1BZg9ptCAQm7D+at7JBgJEPolKAb6FUBmahkl+OnjXeAow/SeWqKbT/U2BFWGk6tNShvf6JMJXslLzC4N3YMUojEr21sE3hE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IAQpD6r4; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V6EoX4LH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jZmpwFSG"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6AE0214002A9;
-	Thu, 20 Nov 2025 17:06:17 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Thu, 20 Nov 2025 17:06:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763676377; x=1763762777; bh=Y8VDpfPOha
-	k8XSMK4TDDws5zWgcYiwhCtl0o44qjxG4=; b=V6EoX4LHkETiY1CVVFTLQoX7pP
-	DhhqMELusBEt5dbCwzTJoFNg8y8aaliaxtWk2eYMPyLwnW4ptOMtn9+kXmjZ73T6
-	uwSYK/Tz/vYmldoQOXBH+vRNeKAA4G9gYNai280JI6oGjmENsMqB2nQSd7h13Ke7
-	XhCo/ur3RVVt+9CMa0f9ewJk/SFM7IKY58PvyTV0IO+SuNjXRurizY4XE/ESX4dA
-	H1w+1k/tDX7wdcMdHvYicy2SMd3t1kwP9ywwgt7pBqG8UhMPaF4y1b4Nh4Bs1JOM
-	o+al+ehgF3GOmirjdX97Zyu9tStPVUBCYxfEdRaZZ4jZ0ezBevSdl0BY77ag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763676377; x=1763762777; bh=Y8VDpfPOhak8XSMK4TDDws5zWgcYiwhCtl0
-	o44qjxG4=; b=jZmpwFSGi5FubPvhI2IjIPLINZLUIs6ThK2K2tf/DKLjcrIsrJx
-	+Ta3Bkxvhus39Dps8XLxwO5sBirqQvr2dWVnEgGAecGA3t2/MqXRC37JSnEFl6Tu
-	ng71J90jgIkq/MyMEEYZsyY7SobVsGIWyNxIkYv9fZUcE0x8m1lFIo1MLAPv+oJU
-	4KUNdrATlg7Sb2GCAGO1e0zI2Yinb5LL5RcsTUgfL4qsz3ZFKku06izXDPq7jF7g
-	dBs+SwKDxjIG20IA1M7ofSz1mG2eVAPxyV3UdUWS0caNjRvgPaTM6iaTikWR57/a
-	SPvEeXHNEVxDld2jytR492ZSbupGf9amR+A==
-X-ME-Sender: <xms:2ZAfaXn4pUEuZ3LbvLGikUPrPrAJp7pjXoEf4AwbgWES1N55dTP_rQ>
-    <xme:2ZAfaSR5RcBRJN9Li2qGjGB_xf456P1-CHSd7nWRGyn1TZbPgHDQfe16z5lpYZz1e
-    mUQTSG78ylBWP1woWeE915gODad3nvlP6SrURyz_znur4cAM7Bx-HU>
-X-ME-Received: <xmr:2ZAfabD0GGJBITsB_5jksILcRxLE7cY9AbWa8N6J17oUGsvuz5_8JIp4jvkLyFxoMjABtn7y7OMGSMOaPIzVqiUTsiirtrGWe4EJ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdekvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:2ZAfaZTSgEtEA2GC5TDCrePp9QzbQKUXuTmjqQuZn28oZsECIBk76A>
-    <xmx:2ZAfaZoc3MV_GRt4E6RPeiD1GDQNkUvfXqcTlCd4LW_OjnWfeTJmiQ>
-    <xmx:2ZAfabwK9PT3UUDKheLAjvV-RO96BY4qw54i0HYRvhzUqRS9fN_P6g>
-    <xmx:2ZAfaeKDsOjb4kU9E-PHFFMmpssd-TF60sYXMlESePCVZU_rN3ZsEQ>
-    <xmx:2ZAfaSZJCIMbmoLGBP4S6l_jaoJKwvYPoTqswEdWGI2nr7GN3nLHO1nv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Nov 2025 17:06:16 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 12/13] odb: handle changing a repository's commondir
-In-Reply-To: <20251119-b4-pks-odb-creation-v1-12-2b2ed2612cb6@pks.im> (Patrick
-	Steinhardt's message of "Wed, 19 Nov 2025 08:51:00 +0100")
-References: <20251119-b4-pks-odb-creation-v1-0-2b2ed2612cb6@pks.im>
-	<20251119-b4-pks-odb-creation-v1-12-2b2ed2612cb6@pks.im>
-Date: Thu, 20 Nov 2025 14:06:15 -0800
-Message-ID: <xmqq34687414.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IAQpD6r4"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-29586626fbeso16526785ad.0
+        for <git@vger.kernel.org>; Thu, 20 Nov 2025 14:11:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763676659; x=1764281459; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=anYERnCbTxcGtyVs2DucGvKHo7Ykh/8TCj89JHgeJKs=;
+        b=IAQpD6r42469QQReaNBBDvmDquIXrHNqCQJlxsdgm4Smk+ivznBTVu8+v/aHBx1Tvl
+         miL2VMpOt0/W7Un5xFpXhOEPrQXDEirieOTV11jv6aE3Zx8pR0s6zEO4BkPQmDR7NiFK
+         GpMZA66agqW3QGWp+5fj+wnv690UfhXcbpIYyNOOlo2hslH/1yidB51YeRA4di60e+x2
+         ge8Y6O7QA0mDdf+cfFgEUy/C3L2m1SljVqqrspegfWiJuCyoH0sbgXr0PIaxG7bQuTa0
+         eyhThJLOP42u0GQma+L6eKOJW8FOtCkBi8Twl1+5REsNY6r3u+itQ0P6u1cXoTSoUreD
+         hXrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763676659; x=1764281459;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=anYERnCbTxcGtyVs2DucGvKHo7Ykh/8TCj89JHgeJKs=;
+        b=QBMfXCL9mOSrmzs8Gxz5mBLG0WYZazfEPS25ca5xqs1RfleQWaxB7a4wrwsLVdlwO5
+         D+zfByR88ksWvUDXe4qghv5pNHKupJa6BwGWMeh0wMIZo8VAaIroUmbT5l8Lf3VgKWbm
+         zV6vFrsgd7C8pckQUMcOwBUOKIFDRjPSWrtyLfUyClMMhJEW55+gnM//25otVR24yUSR
+         ADKl18sofDUncIOefM9r2ou/lgCB/2CcTt2xoEfDjUEy4gyXngT1SW0+krNwDhfld7uf
+         yCBRxsOnAE4pOgxGkyMZU5ikyZLqbnN9Ga5Z/QXCn2+MEQkbkQhahFjysySbayvO9eVX
+         so/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXEE7dlQpzNt7xIcB8jKIBgwXFnAgUdaXI73KZpCRLzeINGr4AyI3FI5VNiO4Aa/CVZbck=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcdXDZpTcrXQL3Wl4PhVSpDhtOLKHTqhchH6QWu2RgRPuyuaoa
+	PwQO4UqTKcjPFSsVmTAlNRGG/Iy10I4ejDwIAEpm5+s+8VsRDOydfhp5HXWvtVsdYa8rx5FbYPm
+	gutZAQUTD1ca6yKnetL4cI8VlqcCKKDn1f4wDzX9cHw==
+X-Gm-Gg: ASbGnctR9w1DqBGTY+cTlxD7vDKr8kj5cesJwyVrp2l+g5PQj2dtPjuGaTQzqSiCuEQ
+	a8UZWUKM2u2yKLUVzrW4C4s4llDGSPXwoGnatBaBSn91y4msDAcMnPq76+JvHujRqcLh/lxQjwE
+	fqtEddv/nhW6ClhUeiFZYrehtYjtq6xHzNqh+9gQHl1vT14XvA4bchL/ypz0KWayQX7JOda9cf2
+	OKEb1PXDaRRp8UHf04mM3Y8lI2RME3GOEhL448KUWD1i05yyd6lR5u1i/tLR/ddMJU/8K4JnODB
+	HO6saLo=
+X-Google-Smtp-Source: AGHT+IHNFLNIgJa1Zx3f14/LGRF+qJchFeo8WQiiDqZ2OTMA4YDD29wNO+aNsR/KiAyOsRMRINzShpB2vLduAr/qKTM=
+X-Received: by 2002:a17:903:90b:b0:298:2af7:8d26 with SMTP id
+ d9443c01a7336-29b6bf83cb4mr2147525ad.54.1763676659437; Thu, 20 Nov 2025
+ 14:10:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAL4-wQrgD3nnW2BfNf6e9d7tDANE60dYBRRP_0FW3Z-LvQrZmg@mail.gmail.com>
+ <0e971281-d1c4-4030-9297-f5e2c0765431@app.fastmail.com> <CAL4-wQpeYc8-FfcZGWcs6KmR-oswTs3Kjcc7xAb34cFX7s0c-A@mail.gmail.com>
+In-Reply-To: <CAL4-wQpeYc8-FfcZGWcs6KmR-oswTs3Kjcc7xAb34cFX7s0c-A@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 20 Nov 2025 17:10:48 -0500
+X-Gm-Features: AWmQ_blixeEtjphMFg1KI_GeQOwaK0WHGRWyOavwJf-_1t3vHo3hdYnALSQyKbM
+Message-ID: <CALnO6CDpBpRdbpXy26v5ug5n5opqzn-Uos+Qr=jx9mA-5wR9Ag@mail.gmail.com>
+Subject: Re: Feature request: git cp
+To: Martin Guy <martinwguy@gmail.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Nov 20, 2025 at 4:24=E2=80=AFPM Martin Guy <martinwguy@gmail.com> w=
+rote:
+>
+> Thanks, but that only seems to affect "git log" retroactively, whereas
+> I'm interested in it being part of the history so that "git blame"
+> knows about it. At present, the blame for a line would end at the time
+> of the split (when the file appears to have been created ex novo)
+> though I suppose people would end up at that break and could then
+> switch to tracking the old file instead.
+>
+> Maybe I'm expecting too much of git, with all the truly wonderful
+> things it does already, but the idea seems to fit into the current
+> scheme of things as seen from the outside (I don't know how the "git
+> mv" line-based trackback works).
+>
+>     M
+>
 
-> -static void set_git_dir_1(const char *path)
-> +static void setup_git_env_internal(const char *git_dir,
-> +				   bool skip_initializing_odb)
-> +{
+Please avoid top-posting ;)
 
-Hopefully we won't gain too many callers of this function, and ...
+"git mv" doesn't track the movement; Git reconstructs it post-hoc. See
+[1]; while the tone obviously leaves a lot to be desired, the
+technical rationale has stuck.
 
-> +static void set_git_dir_1(const char *path, bool skip_initializing_odb)
->  {
+[1]: https://lore.kernel.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.os=
+dl.org/
 
-... this function, as ...
 
-> -	set_git_dir_1(path);
-> +	set_git_dir_1(path, true);
-> ...
-> -	set_git_dir_1(path);
-> +	set_git_dir_1(path, false);
-
-... it is almost impossible to tell from the call site which one is
-for initializing the ODB (hint: "true" does initialize the ODB, oh,
-no it is the other way around, or is it correct?  now everybody is
-confused).
-
-We could do "enum { INIT_DB, NO_INIT_DB }" instead of bool and the
-calling sites would become self-describing, but as long as we won't
-have too many calling sites, the current code should be OK.
-
+--=20
+D. Ben Knoble
