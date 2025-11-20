@@ -1,129 +1,114 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DC0364E9D
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 15:17:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA29C340A47
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 16:02:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763651878; cv=none; b=c/jeWWsNbdid5HRkGuPGYWvg/E+jU6RudVhw/iLtUyoYgwFjfTTTP4G4xRDBqfhiJXHnG/jJEgsNYzljCuAM5KNW9vhRuZA1SsglHc4J9psQ6P5MRqL8EVNp5YTPig+OthK0zw6NtiYAX48AUqCbbzX8O32nl3h7qp4zXfe1aA8=
+	t=1763654532; cv=none; b=kSz0McfAV09bxh+O5MoEMNrB437Q91jJtanLAAKrpJBnY6v+8Ccco8+S2OeLA9gqvi7foi2vyxrcyKCz1VYg99A/sTJStlmxHiJVH83T4CCFHnvqlppOIjxQX7CVJS4ghsmExlqN77AQcuwxS6wEKI7MtDaP9SblLjcrX/i97nM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763651878; c=relaxed/simple;
-	bh=gWXGC9dXPeejvI/w8ANcTiIDjbdPKNlWWkobI1nFIzg=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=tJZHwNq4gcRG8r7yndxDgcjLfLAgW6SaD2RzG2UhLnZQQ/17ruqnQpBNYnfIXhVzPcC+WSLlHeqGkqgfhzaW/LYpgf9Zpf/D9VsMCuOd2f36xhotAhu+ChoAbayaZYjzZl2edYGM9Kcipgtewqpls+tdaPneT4ySvHJpkGZ1L1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=AGdfmWdh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0/IyCCsf; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1763654532; c=relaxed/simple;
+	bh=Dea3ph/GGnOkSHQby7i+wqbE4hZNz4KowL3oVrfVqLs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Qncd+fLbQurAUSMjJFDTvySmf/zXFy7NVebnVs54JK5+vZs+4PQve3dFlhfsuPr5WCfppUK8CDQOldt1liFkKlgqXXI6lTDCR2ATIS+pUkyeRBozDB5R+0PUHV+3CcerD/jpMLDV23frdjFG421AAZM4l4AMvf/Q0tsko3E08h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KcMd7Ouq; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="AGdfmWdh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0/IyCCsf"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 97C111D00161;
-	Thu, 20 Nov 2025 10:17:54 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Thu, 20 Nov 2025 10:17:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1763651874;
-	 x=1763738274; bh=vayJDX3nMgmCyBe6doRcs5awIdkOwBacRHqhcuyW++A=; b=
-	AGdfmWdhjLI+a/6rEKn2spbYMMKsaA17UouFq4pUdmYrT01WQjyJ6Rz5tebW2VaD
-	FsfCGGz+ZZ2VYvs21aEWac8Yx5Vv7SGnI5oQWkQFA2QMVwrUEGQkCEdMbCa4mO+F
-	PfRDZYTyRfjm1jMMg+t35sqUhZr9KaY6kr8BWaSw/susUY8Ld1z4eXEX12Loeojz
-	iqg1W0uOoHWOKNK9hKMt07jiFiuxO0VtWPM5dJfgqu0FH88+VnqRtQmm1IIap3Fp
-	WmLXwiwTzEDyLhc1GkWUxxQAztWk07rDR1ofDiixKxQxcRX7nSL5ByAAcsLirF9i
-	F4MLC6XZkcgfit4BFR4njQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1763651874; x=1763738274; bh=v
-	ayJDX3nMgmCyBe6doRcs5awIdkOwBacRHqhcuyW++A=; b=0/IyCCsf+BARQNPHz
-	mfO8r+QXDqBuigrU2OBuFkCJHBkvxkgcfG+V512XJ+Ih5uS47DrwpDbMrrUu3LTI
-	7FQEB+VKqYvZNsAWXloYph9AsgzY3cGzRp5ouZ7RN49u7olTtQ/8vYgSjTIUX7Kk
-	mElA48nV6sI8TKxyn0VH3qyaGqPclAEBpXRaehia8rOgA6zJ+M1mxjDvMbyhQ19t
-	+Qo6241+qrmFcnN7Z91+3GMnnwJgz11Yv3Rz7f2EswRyCXBQiTnW5lhVHbnYO0tb
-	AaMh46g3kWEn6NTs8DfwATr6nkSJ9cunRj5SETXJ2aNmH73NxaVPJTuMYCjr4hXF
-	WPp1w==
-X-ME-Sender: <xms:IjEfaf0bzhHTm96zaIVGiJnkbTonWV9UnqoUTYbYp47ZX4Sapg9NAyA>
-    <xme:IjEfaY4MstDIQ75BHd6wxirjFTxMfqgUgv83_CetHmvba87p8IjSqdFjlu3ca32XP
-    RACDusj1KBqW9pTWppgnAuiUfWdrE7X2RabuJrC2VNybBlcL5QZmw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdejgedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtgfffteetudel
-    hfefkeehtefggeefjeevieekfeefieekkefhveeiledtkefgueenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrrhhtihhnfihguhihsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:IjEfaWh8e6vaIqcdvImH93tR4ikQwPguxNeHP0CZlevW1C_HPomPVA>
-    <xmx:IjEfaU-xE_1jvaW61k0RSZrbkzosCU_3-1co09ZANEd7h7DzGA-l2g>
-    <xmx:IjEfaVr2SVMaUUImv4bMPpn0VmGEN521wvr0_ihucwIwe3iStwVxgA>
-    <xmx:IjEfab-rYq4KfEGkjh8L8eA3ujvqAQusGZN110vfdJjp1mf_95au1g>
-    <xmx:IjEfaVrKkayqM57gscrhBZw0bJhzM6C7YyGaQiJeVOGggnS8CbbfPVk4>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 2DB091EA0066; Thu, 20 Nov 2025 10:17:54 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KcMd7Ouq"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-343ff854297so1501357a91.1
+        for <git@vger.kernel.org>; Thu, 20 Nov 2025 08:02:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763654530; x=1764259330; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+YHK7i6OG33zKi9/ZAjli5oCNcHowEl4pxkzepyYbV8=;
+        b=KcMd7OuqEKjVJ6NoNFbeqMf1l2+nad5ocPoh4xX4eiiIdhEg5B2i0djtNwzghPyaVD
+         sOj44Gav3qg+dofIwDxRF20aRbr9pq8tZkxJBottDaDxKVgJQ23PgBOakWV9vxTfGPCp
+         kUGVpD4ZWnECQYwrlHPD+57rdgxYG2SYe1y2BU8ZJci79O3eLYhqbDZe2MUvB/2K2b6z
+         1i1pvSUt45lTO8Jm/2Ig8wNmAXhP+Yi85EQxVBnM0esUf769DAydCr90XzutKbiR7G0A
+         LOfAdFmt4oKtiNKal7Tg/Cu7nbf+iVtgSwancWPRDy2F4F/MfZZRW3cI6JzVksnwch9p
+         InoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763654530; x=1764259330;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=+YHK7i6OG33zKi9/ZAjli5oCNcHowEl4pxkzepyYbV8=;
+        b=N2xOw9DDobrFksmzAdkxOLHHcQ9/G/P9V0inQ0Ams7kV+lJ3Mb7oRGqKJ77+NrxE8O
+         fbk0jJZiPulWewxkcfAGJj6bWt4UH2Ff/O+2knN3on3J9gULkx0VNHOvyKjKqI6w64Ro
+         RTyCfg0Cx0SCUE0nG8hROngJiNyhKQZZxOgA+mKZQt82232XYnwIYUjI/zlTzd+HEWbJ
+         vOKJoQBI6aC8aCUSwbMv6c9LB7Ai4Gs6jfLsZNGwIYYybQc4VibfmMfJrIpzJRRZIS9J
+         8gmTj2CBuS6UdkHU9aOm9PUQO7ByZ6+85z5VBm0SjkSih32py15VQIukIzu1mbpqnTFn
+         3ocw==
+X-Gm-Message-State: AOJu0YwN/Y+xyqiuJvLxUCwaYaoskMuZJdvr3xPzM65jGk+VECFKcCtQ
+	QrAi+OLbtwsvDbdx08SZwSgomfaF7oEVhvoOrojaVSxB7IlY56ua9zFjYC9e3aMTPBSDOQtkxt7
+	fQHSBsd+Rlk/h9jqafWMec95HdgvJMhrJrfAQ
+X-Gm-Gg: ASbGncvS+2FHlFsZDvYhzT6XLgFFs59961+WB4R9Qvn+NdmOpMEz0YhYxxI7G+KPol5
+	3PTlhN2K953huKCqQpax/DEM1jC8GQgXklZhgo9DQvUdo7ZzyXt70BlQQe2rUnhpbLPXPTwnAEP
+	qyEgTZKJuWT56hGgOtUieYRpnqeiyaIau4ojgYIdmPrxkWFDuSvOwuht7WlhOFoS2y+9nfmVOV5
+	3VHm14LBxbeqYD0FTo5k7ffKylnYrNcAesboNjEsIM+KNkMel1Re3SyEqdH6sxxDLpSFkSzu5Dl
+	Cn5ZQlJ0FdGixylKdw==
+X-Google-Smtp-Source: AGHT+IE7sh20YW9ioub5dloqeVdaCVFWcWe46yOofXOTeuHocIw/Asp3LlSPHMnl/vxRA9aOwPVPW4LL0kiSvUWu/xY=
+X-Received: by 2002:a17:90b:4f88:b0:340:b06f:712e with SMTP id
+ 98e67ed59e1d1-34727c395b1mr4402308a91.19.1763654529616; Thu, 20 Nov 2025
+ 08:02:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AuwXIgXhQxCw
-Date: Thu, 20 Nov 2025 16:17:33 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Martin Guy" <martinwguy@gmail.com>, git@vger.kernel.org
-Message-Id: <0e971281-d1c4-4030-9297-f5e2c0765431@app.fastmail.com>
-In-Reply-To: 
- <CAL4-wQrgD3nnW2BfNf6e9d7tDANE60dYBRRP_0FW3Z-LvQrZmg@mail.gmail.com>
-References: 
- <CAL4-wQrgD3nnW2BfNf6e9d7tDANE60dYBRRP_0FW3Z-LvQrZmg@mail.gmail.com>
-Subject: Re: Feature request: git cp
-Content-Type: text/plain; charset=utf-8
+References: <pull.2101.git.git.1763232863.gitgitgadget@gmail.com> <39b17bc64ff0d2e4162437ab745845c055315037.1763232863.git.gitgitgadget@gmail.com>
+In-Reply-To: <39b17bc64ff0d2e4162437ab745845c055315037.1763232863.git.gitgitgadget@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 20 Nov 2025 11:01:57 -0500
+X-Gm-Features: AWmQ_blxF-vtuRruZUDppuGb10pze_dqw5Jgdi8X6HcimTSEHhP_8Aj8gJ3mLKY
+Message-ID: <CALnO6CBzE-+51LfgjpEv665oG6kZG9_4YZTv8qgqtNrhh+a-Bw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] git-prompt: add quiet upstream indicator option
+To: Kiril Ivanov via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Kiril Ivanov <ivanovkirilg@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 20, 2025, at 15:56, Martin Guy wrote:
-> I am splitting a large source file into three smaller ones (mp3.c into
-> mad.c, lame.c and twolame.c)
-> and would like the history to track the relevant lines in each file,
-> like "git mv" does,
-> but I only seem able to do this with one file by "git mv"ing it and
-> copying that to the other
-> as a new file.
->
-> So what I'd like is "git cp" that is like "git mv" but where blame for
-> both the resulting files
-> goes back the original one, if that's possible and unless there's a
-> way to achieve the same
-> effect that I haven't figured out.
->
-> A fairly rare thing to wish to do, but may be useful in this case.
+On Sat, Nov 15, 2025 at 1:55=E2=80=AFPM Kiril Ivanov via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-pr=
+ompt.sh
+> index 6186c474ba..be23c522da 100644
+> --- a/contrib/completion/git-prompt.sh
+> +++ b/contrib/completion/git-prompt.sh
+> @@ -262,6 +264,8 @@ __git_ps1_show_upstream ()
+>                 "") # no upstream
+>                         p=3D"" ;;
+>                 "0      0") # equal to upstream
+> +                       [ "$quiet" ] &&
+> +                       p=3D"" ||
+>                         p=3D"=3D" ;;
+>                 "0      "*) # ahead of upstream
+>                         p=3D">" ;;
+> @@ -275,6 +279,8 @@ __git_ps1_show_upstream ()
+>                 "") # no upstream
+>                         upstream=3D"" ;;
+>                 "0      0") # equal to upstream
+> +                       [ "$quiet" ] &&
+> +                       upstream=3D"|u" ||
+>                         upstream=3D"|u=3D" ;;
+>                 "0      "*) # ahead of upstream
+>                         upstream=3D"|u+${count#0  }" ;;
 
-Copies and file moves are detected dynamically when you use things like
-`git log`.
+I generally advise avoiding "X && Y || Z" as a replacement for "if X;
+then Y; else Z; fi" because if X succeeds and Y fails, Z runs in the
+former but not the latter.
 
-Try `git log --stat --find-copies-harder`.  I get this output after copy=
-ing a file three times.
+Here, Y is an infallible (?) assignment, so we should not have any
+issues. OTOH, such subtleties may teach novice readers the wrong
+lesson ("oh, handy shortcut!" vs "I see how this works in restricted
+cases"). Using "if" is a bit more invasive wrt to the patch, but would
+be clearer to me.
 
-     README.md =3D> rm1.md | 0
-     README.md =3D> rm2.md | 0
-     README.md =3D> rm3.md | 0
-     3 files changed, 0 insertions(+), 0 deletions(-)
+Our coding style also prefers "test" to "[".
 
-I get this output when I change one of the lines in the same commit on o=
-ne of the files.
-
-     README.md =3D> rm1.md | 2 +-
-     README.md =3D> rm2.md | 0
-     README.md =3D> rm3.md | 0
-     3 files changed, 1 insertion(+), 1 deletion(-)
-
-This is the first time I=E2=80=99ve tried this option so I don=E2=80=99t=
- know
-more about it.
+--=20
+D. Ben Knoble
