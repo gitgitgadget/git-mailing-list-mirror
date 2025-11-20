@@ -1,171 +1,117 @@
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5701E13AD26
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 22:02:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6EB314A7E
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 22:06:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763676162; cv=none; b=tBGIwWZ0Ce03q9Gg9RsBnllSsTj9eqrM0HzewV/qY7iuzPpt+5BVqBytSY5UnaPerLomJ91rAwhAVZdP9M+5IPXHOW5XNSnIuUx2YKy9SroWv+z0FrzRuu+k0mTXh1691UGoIYu3btVo0ZHvoux+6rSM12OzvlGcKLJvbTU69Mw=
+	t=1763676380; cv=none; b=POc/xb1tCEEr9o5svWKyBk8I/unHUjk80a6SOMWN8mkz/eq0LGxp66eMd5+OjvhJzqsex+FGg+wct+vCKqhcIH1MxU9gVG86CdW15CQQiXf0A3c+QQJcz9iH1AMEgtUmkZ+wXeaPr44CmUkKkntvj/ywf6dz3NUc1mgnhooLsoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763676162; c=relaxed/simple;
-	bh=bRSQ7AbtwON/4lswVaH5eR0ZS+aSH4xiqi5h3B2oKnw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tcEJYp4cMw3nDjCdaXnqVBXlgkAYxZPti0zIDVoX3N6NZ0gpWkKk3mSAMjX/yHErSs7gAEVm5gCv0vnKnJ9TvgNiAmxrQWorSEQVh3+8QpZdJXnUdMJpPC+KrD86j+56m2UOZMkG59zywIip4IFE7+C/qdVX97jhKYcrPeyYBUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bL2LuKr/; arc=none smtp.client-ip=209.85.166.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763676380; c=relaxed/simple;
+	bh=SviY6wnK+cBu0KfK2S2gujjxUk+FYSRA4g0MF6A7Ai0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mMrtNCbD6OrcS43BoDQWPchD8UXO+NNL5K6jnJCOQDlTiNj5oDqcrkJumL+pNkVLD1mT4bB/+UHnLiA7N3f+murd/a7edTrlVxmvxrY6ItrjhkudQN9W1urOGq924gGSZlvEomzi1e2WN4YxP1w2C8/dCtIjb//EfuAswSWQtfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V6EoX4LH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jZmpwFSG; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bL2LuKr/"
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-4330ef18d8aso6111505ab.0
-        for <git@vger.kernel.org>; Thu, 20 Nov 2025 14:02:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763676160; x=1764280960; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EWeenXz/Hk/5xr2BPM7AagOHyBtGQMil/gCIIpNfz64=;
-        b=bL2LuKr/k3odh9gpVLWKzIa3H716FKVFeYzhZIy979DSUX3eEBGzQhO2Lia5Y8nv5w
-         +d0p71szZTg3vkelQJTkFeTAr5T/uulzgD4+6IGnr62hVoSX7v7SS/Wu2JDWSiXvEdUm
-         MLMs04Fo4h4hmmvkbRTf/kVXsOu4nnkG/j1T/f/L2vB2n4ziBNllsKK7Q6xWm6uqZjWJ
-         dRBQ0rojgLYCbMgybw/k0PeyIMBlHeClNBFfa1hR9cVSeQfmvsjX2e32Q7+C8TJJkZgm
-         LIhMaYXwD7rGFGAxTjyXaVdoih9MIm3uyTKO8J/py9KxfP15roeNMGe/8v4yVolRDiYX
-         XnDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763676160; x=1764280960;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=EWeenXz/Hk/5xr2BPM7AagOHyBtGQMil/gCIIpNfz64=;
-        b=c7eAze6+0XsGta0HBsrLOWud8+KGKgxlMXvFOLAxHjt8r1QZxA2660G1hrziF+Kd63
-         U31IMU3FeSo1KtlIgOkiQUYxyY/5mIz1MZBo2ljvDf4WdPYTyDcxJVQ/6OXd50TyzEKk
-         CSiRyvRsD+gQWd2MonWNFXYIF1MN1PHuxZQUb2LYf+q96MxFrO9xMtgw1+lxCnsRvSsq
-         deSd41LntOwEpRTeg7zlrR2xzN28rKc/TTQ0PrLThb3LqHG7irkpjPedWcZ35fwD4BWk
-         YvHCp4zHZv1hmSt2Qf7oJ/MzVv1F2vx3Y56DF082Z8Xw5DiDqdpiqF7Lsqdf/SiK5oDF
-         5zcw==
-X-Forwarded-Encrypted: i=1; AJvYcCW0PbRVbk0IjoznblA1bcnHaiUFOPJessE68tYdZzkLi6C1NecPkUQl7uGbq6qW3kERqYo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMf3iKZryn/wULOwZ4QmDwBzxjSdF//ZDaqFxttlzeu4hlrxIE
-	q1hxdDfEsYSfyzO4hSDwBh0om1wpOpDkki5HKYAOR59cnfs7vTGu/5T6jUOuiwQIR/C3PCP5HmW
-	0kgqcSZEj/L6ZCAu0PE1Rb4dp5+a2n8E=
-X-Gm-Gg: ASbGnctGCwYaj1oKqZx66XcXYYTp9e8HabU9kPdPHD0VLS5ucM7IA11yTKdmY4qeayU
-	zVQmYGzG69vQEXUI3gsEISari2s7CqxSJDIleF9W4MTIEZwiLg0p1/JSBfZnPDUGp7nmQlMCGAD
-	lpSObF88qcg6uPBj5uJlZ3yH+1lYJ3/zXs+FAzmmLPZe3wz2njWhGCpGl0jTV961X97m7x/RpRo
-	dprH8wy+lIAXsrwIl4odGqcTtzs8CXoDXNRfHtMbtdfN3lkz1wxKNK+XaU3koGQGv2TP23NJS2e
-	mX4VQCnfmnWmdHvih3EZaQYHAfbbRTwKMUw3Gz0=
-X-Google-Smtp-Source: AGHT+IHFY5rPcH0Cst83uV8IGEMWL9/TndMWsuuIbkQWOdareaP7o8SNYuKLy0wHZ3HygHHC76M43G0LvxYW4SlAdAA=
-X-Received: by 2002:a05:6e02:152b:b0:433:23f0:1ebf with SMTP id
- e9e14a558f8ab-435b8c181eamr2435385ab.9.1763676160246; Thu, 20 Nov 2025
- 14:02:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V6EoX4LH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jZmpwFSG"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6AE0214002A9;
+	Thu, 20 Nov 2025 17:06:17 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Thu, 20 Nov 2025 17:06:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1763676377; x=1763762777; bh=Y8VDpfPOha
+	k8XSMK4TDDws5zWgcYiwhCtl0o44qjxG4=; b=V6EoX4LHkETiY1CVVFTLQoX7pP
+	DhhqMELusBEt5dbCwzTJoFNg8y8aaliaxtWk2eYMPyLwnW4ptOMtn9+kXmjZ73T6
+	uwSYK/Tz/vYmldoQOXBH+vRNeKAA4G9gYNai280JI6oGjmENsMqB2nQSd7h13Ke7
+	XhCo/ur3RVVt+9CMa0f9ewJk/SFM7IKY58PvyTV0IO+SuNjXRurizY4XE/ESX4dA
+	H1w+1k/tDX7wdcMdHvYicy2SMd3t1kwP9ywwgt7pBqG8UhMPaF4y1b4Nh4Bs1JOM
+	o+al+ehgF3GOmirjdX97Zyu9tStPVUBCYxfEdRaZZ4jZ0ezBevSdl0BY77ag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1763676377; x=1763762777; bh=Y8VDpfPOhak8XSMK4TDDws5zWgcYiwhCtl0
+	o44qjxG4=; b=jZmpwFSGi5FubPvhI2IjIPLINZLUIs6ThK2K2tf/DKLjcrIsrJx
+	+Ta3Bkxvhus39Dps8XLxwO5sBirqQvr2dWVnEgGAecGA3t2/MqXRC37JSnEFl6Tu
+	ng71J90jgIkq/MyMEEYZsyY7SobVsGIWyNxIkYv9fZUcE0x8m1lFIo1MLAPv+oJU
+	4KUNdrATlg7Sb2GCAGO1e0zI2Yinb5LL5RcsTUgfL4qsz3ZFKku06izXDPq7jF7g
+	dBs+SwKDxjIG20IA1M7ofSz1mG2eVAPxyV3UdUWS0caNjRvgPaTM6iaTikWR57/a
+	SPvEeXHNEVxDld2jytR492ZSbupGf9amR+A==
+X-ME-Sender: <xms:2ZAfaXn4pUEuZ3LbvLGikUPrPrAJp7pjXoEf4AwbgWES1N55dTP_rQ>
+    <xme:2ZAfaSR5RcBRJN9Li2qGjGB_xf456P1-CHSd7nWRGyn1TZbPgHDQfe16z5lpYZz1e
+    mUQTSG78ylBWP1woWeE915gODad3nvlP6SrURyz_znur4cAM7Bx-HU>
+X-ME-Received: <xmr:2ZAfabD0GGJBITsB_5jksILcRxLE7cY9AbWa8N6J17oUGsvuz5_8JIp4jvkLyFxoMjABtn7y7OMGSMOaPIzVqiUTsiirtrGWe4EJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdekvdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:2ZAfaZTSgEtEA2GC5TDCrePp9QzbQKUXuTmjqQuZn28oZsECIBk76A>
+    <xmx:2ZAfaZoc3MV_GRt4E6RPeiD1GDQNkUvfXqcTlCd4LW_OjnWfeTJmiQ>
+    <xmx:2ZAfabwK9PT3UUDKheLAjvV-RO96BY4qw54i0HYRvhzUqRS9fN_P6g>
+    <xmx:2ZAfaeKDsOjb4kU9E-PHFFMmpssd-TF60sYXMlESePCVZU_rN3ZsEQ>
+    <xmx:2ZAfaSZJCIMbmoLGBP4S6l_jaoJKwvYPoTqswEdWGI2nr7GN3nLHO1nv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 20 Nov 2025 17:06:16 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 12/13] odb: handle changing a repository's commondir
+In-Reply-To: <20251119-b4-pks-odb-creation-v1-12-2b2ed2612cb6@pks.im> (Patrick
+	Steinhardt's message of "Wed, 19 Nov 2025 08:51:00 +0100")
+References: <20251119-b4-pks-odb-creation-v1-0-2b2ed2612cb6@pks.im>
+	<20251119-b4-pks-odb-creation-v1-12-2b2ed2612cb6@pks.im>
+Date: Thu, 20 Nov 2025 14:06:15 -0800
+Message-ID: <xmqq34687414.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
- <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
- <CABPp-BGLrVv=maEqhs=j9MmST-F=K=XN6gGqmd9Hox5QRDMiHg@mail.gmail.com>
- <xmqqbjkw78jj.fsf@gitster.g> <CABPp-BG+2+vanKAS-cwAD2XZxwx=PPcu5OG58ys+8O7rfZEhug@mail.gmail.com>
- <xmqq7bvk77lr.fsf@gitster.g>
-In-Reply-To: <xmqq7bvk77lr.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 20 Nov 2025 14:02:27 -0800
-X-Gm-Features: AWmQ_bmkf8hewmWJE9KtUBd0kW2cvCPZv1gR24330xHFoEPgz1_ketHap30Z368
-Message-ID: <CABPp-BEyMFiRdHoseTaYG9rUFO6Ta=dBG88CGRb3CfNf8aSAkg@mail.gmail.com>
-Subject: Re: [PATCH v6 00/11] Introduce git-history(1) command for easy
- history editing
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>, 
-	Sergey Organov <sorganov@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
-	Martin von Zweigbergk <martinvonz@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Karthik Nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Nov 20, 2025 at 12:49=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Thu, Nov 20, 2025 at 12:28=E2=80=AFPM Junio C Hamano <gitster@pobox.=
-com> wrote:
-> >>
-> >> Elijah Newren <newren@gmail.com> writes:
-> >>
-> >> >> This patch series is a starting point for such a command. I've
-> >> >> significantly slimmed it down from the first couple revisions now
-> >> >> following the discussions at the Contributor's Summit yesterday. Th=
-is
-> >> >> was my intent anyway, as I already mentioned on the last iteration.
-> >> >
-> >> > Sorry for taking so long to review the series now that it's based on
-> >> > replay.  Thanks for working on this!
-> >>
-> >> With your comments and Phillip's, it seems that we are very close to
-> >> a good stopping point.  Let me mark the topic as expecting a
-> >> hopefully small and final reroll before getting ready for 'next'.
-> >>
-> >> Thanks, all.
-> >
-> > I'm a little unsure if it'll be small or just one reroll.  Some of the
-> > changes for patches 5 & 9 might be big (but straightforward), there's
-> > also a couple design related questions (single branch, HEAD-centric)
-> > that might bring up bigger usability issues to address (if a commit
-> > being edited is part of multiple branches, do we just rewrite all of
-> > them by default, or error out unless the user specifies how they want
-> > it handled)?, and a potential gotcha on patch 11 (how can you preserve
-> > the index and working tree if the user edits the patch while splitting
-> > a commit?) that may require rethinking or restricting that feature.
->
-> Perhaps.  But I thought the existing patches limited its initial
-> scope small and manageable that by operating only on a single strand
-> of pearls, with an intention to extend to cover more cases later.  I
-> was hoping that we can start small and simple, initially limiting it
-> to single branch, etc., in other areas that require design
-> decisions.
+Patrick Steinhardt <ps@pks.im> writes:
 
-So, you are referring to the single branch, HEAD-centric piece of the
-feedback.  The funny thing there is that operating on a more limited
-case, without checking and verifying that you are indeed in the more
-limited case (and erroring out if not), risks painting us into a
-corner or providing some really buggy behavior when we aren't actually
-in that case.  To me, it opens a can of worms and makes the problem
-scope bigger instead of smaller.  Funnily enough, the single branch
-thing is also the one piece of this that I think could be solved by a
-fairly small change in the reroll (and I pointed out how in the
-comments), so the limited view really didn't buy anything here IMO.
+> -static void set_git_dir_1(const char *path)
+> +static void setup_git_env_internal(const char *git_dir,
+> +				   bool skip_initializing_odb)
+> +{
 
-The other problems are independent of whether you try to limit the
-scope initially in such a manner:
+Hopefully we won't gain too many callers of this function, and ...
 
-Are the testcases and the code requiring something for the feature
-(ensuring the index and worktree are preserved) doing something that
-is incompatible with the capabilities given to the user (allowing them
-to edit the patch while splitting, so that they stage stuff that
-wasn't part of the original commit)?  Or...is it assumed that the
-split commits always "sum" to the changes in the original commit,
-meaning the "other" patch immediately undoes those extra changes?
-(Perhaps it's the latter, which I didn't think of until now, so maybe
-we are closer to a solution than I realized.  In fact, re-reading the
-code that looks like it does do that and I just missed it.  But,
-perhaps having users edit the patch when splitting commits is a
-special case that should be called out in the docs, since that might
-surprise users who try it?)
+> +static void set_git_dir_1(const char *path, bool skip_initializing_odb)
+>  {
 
-I'm also worried about extended header handling for the edited
-(reworded or split) commits.  That seems to have been overlooked in
-this series, despite the fact that in early versions extended headers
-were explicitly called out for the remainder of the commits being
-replayed/rebased, so it seems interesting that they weren't considered
-for the commits explicitly being edited.
+... this function, as ...
 
-And I'm a bit surprised that the original commit message for a split
-commit is automatically associated with the second commit; if I had
-been forced to choose, I would have assumed it should be associated
-with the first.
+> -	set_git_dir_1(path);
+> +	set_git_dir_1(path, true);
+> ...
+> -	set_git_dir_1(path);
+> +	set_git_dir_1(path, false);
 
-Granted, I think good progress is being made and perhaps the changes
-needed for the rest aren't that huge (and maybe there's more pieces
-I'm not quite understanding yet similar to the
-two-split-patches-always-summing-to-the-original), I was just a little
-surprised that my comments are summarized by "expecting a small and
-final reroll".  :-)
+... it is almost impossible to tell from the call site which one is
+for initializing the ODB (hint: "true" does initialize the ODB, oh,
+no it is the other way around, or is it correct?  now everybody is
+confused).
+
+We could do "enum { INIT_DB, NO_INIT_DB }" instead of bool and the
+calling sites would become self-describing, but as long as we won't
+have too many calling sites, the current code should be OK.
+
