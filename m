@@ -1,114 +1,96 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B87713AD26
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 22:40:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBCD1C3C08
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 22:50:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763678458; cv=none; b=X8jM5gRRaosc054RQoo43BTCuozqSgdaeZrW6DlwMbRQiKlWFxxK8/BX9gn/9XDdNbbv0g9V/V0i+XxIU6ciDO/U8P7yUEYpeCkAw8FNpSMHMkMe4jJfJQ0neciTsu1cjV2hDmicUytwrd0If/9W3tsCjYIB3vUcNkY8tl3cUNE=
+	t=1763679025; cv=none; b=fEx+bNEbmk7bk1bTS2QiAKIzzdC8Tveb+6q4GjZlFdcfyM+RZXfCGHr+eYqkiHgAjJBO0uBQf6AxKY6rfCn4sUBWJ2MCFTJv04LT6FTOgs8ewhHLyDBlv/u+yGIF65+qbmg1ixQ3CcATXb1dOX3jqYS8Yn+rz9vyDxHotsIGizY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763678458; c=relaxed/simple;
-	bh=y63Ym7vyqgg0BjTQT3PpqEO3GOAagtTUt6vlZg0qrPc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hdhX+W3aRy+XCE+PKdxWeQQs7gVNP2mF4R6mP195fZsAAYqNizZofkthx5DpTOWqoROO0UpaAZLGBx9lUWio85szVfMfnSlFC7ndSXJ8jGMFnp4p8mOADEoqpKYHneYE4nm5AxmwEUHYHekq0o+r7/ULTOMvB1HLYMrtVwKI8/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UdtHNkVb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WPu/0Q+r; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763679025; c=relaxed/simple;
+	bh=cNSr01dXOI4C+5VqdDRxKv+Cded0a80cpLTMYniIVA4=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=ZdglWv54PVgcxAqKBOhik2+AgSzJ3ECFB9KnvOb201eYoFAoMKcdSvjALj2U/Hwot5Odcg+kXoIe1v1SW8/ZLZNKZBNjfIcWL+ucpHEt7OXQQN/p3M1ZC/ih2dzMdpKY8jwmZm9+NgHFVPZmrGrO1DoMROL+WP5NMxpN0ITabNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N0YjvlXl; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UdtHNkVb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WPu/0Q+r"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 49FB0140035D;
-	Thu, 20 Nov 2025 17:40:55 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Thu, 20 Nov 2025 17:40:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763678455; x=1763764855; bh=BxmVzNfgiN
-	vu4lX8s5LX6gJ54LD9f/cbWSSZLUw9voU=; b=UdtHNkVbNAdPeLjc/l36KZTlRD
-	3xnOKfNa3xorh8LoUUx/alzFfFTlguvF4L6dTJdp4AWwAZ9umPnXd7ANNVgj3Xup
-	dJvZR6IW0IwXbx8WTGerWAN6dJJrWUZDASSKv7dYL3wxHTCd+XB7lEYxSo4T0bSh
-	LIlLN7yC5h94+eWKAcBpsvnECPa/UNXSWaLTwxWnGW7v8byfvIYAhf7G9usafFb3
-	RORxc/O1rHDDvoPtilwUuepLlqN4D8lqndarvLIq/75a84WePss9kYMvjUX93qzM
-	bCUfaY+8x1PSIw3h/sicPJ+zY+Da5WnLB9xkTEQ1ff4JD4ImGPM/+ho1JNOg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763678455; x=1763764855; bh=BxmVzNfgiNvu4lX8s5LX6gJ54LD9f/cbWSS
-	ZLUw9voU=; b=WPu/0Q+ruiu6MKADmmEmARxBhJ9tSuecozHUgWJyMrcsaraF59H
-	NfrphhwQT698iIcVmo2x9Ta62Kx8k8s5a3OM9q8eD7kuWSknz8/xyC2W6GxA8Mx0
-	B6Kry+VO37YAptZZ9Qb7d1LBJcgBRFoLvNKl4ZvndUrvrMJp2HujiLH4xRWUq+4l
-	dr9YGB/ZHiAjDah2wyuz7CuyVO4hmxRSmIJky1+6danoCvJlJnNe7JVA8ynzMxgt
-	6E34dJ21BtvzHvPeydvjSFJzYlyVhOGCUtBE2MZeGb/dOH5ZyeCOdDxRO+QNpG5l
-	YGFR3f+Th++uZr1asfAiXXc5ya0W2k+VwSw==
-X-ME-Sender: <xms:9pgfae4ruuBgeSHaSt2h4S2pDwt5pSzqjBAuakLAAUnCyTS15PU-hA>
-    <xme:9pgfaexuUfG6NazGpDFHH5anLnF7n4b-9KwyqYF6iU3GhH48ZuXMTbqNUvkqjRj0A
-    DbXb9rRHQz9stjaRxSKMzX8w_8Gm5ZDV1u9Qj7sgoiDEkFyv5blHKM>
-X-ME-Received: <xmr:9pgfaVzV9nWgFawYvmDG9m8z1IfMJTjYWulVPnDCV5oPH4xl_1mvsNBvTkoLxpoNvCdCgqpQAAmkQRUQxtkwXrZRYOikExeAAi48>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdekfedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
-    vghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjhhhtggrrhhltdekudegsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:9pgfaWyqOvxGOCQsF-5d2Dig77u3UM8H1C0_Nga3vlo_McgZYmLQOg>
-    <xmx:9pgfafZUvRJvsN5F3c_aZJKkp3ZDIbcLJlVr-R6hBpOyUf5MC7U32w>
-    <xmx:9pgfaXWKtr9EpcfTxRAAbdYkqBXpLiH_-MmMIfuTBx4dPlovaqn1hQ>
-    <xmx:9pgfadhZMxFrYR9MypGtfLehimowaIXUn3Pw_88SdHDTDPhKIyF7dg>
-    <xmx:95gfafTkLoM4mgqF1q6fxPXIGsHY_YYOHxGDqwSa4cq1LcN-9CXGdrjl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Nov 2025 17:40:54 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Han Jiang
- <jhcarl0814@gmail.com>
-Subject: Re: [PATCH] config: really pretend missing :(optional) value is not
- there
-In-Reply-To: <CALnO6CC0HU60F47yoE45ei7_K2_MeLRS7fihMPn+f8top7Jr7w@mail.gmail.com>
-	(D. Ben Knoble's message of "Thu, 20 Nov 2025 17:15:46 -0500")
-References: <xmqqms4g7b1h.fsf@gitster.g>
-	<CALnO6CC0HU60F47yoE45ei7_K2_MeLRS7fihMPn+f8top7Jr7w@mail.gmail.com>
-Date: Thu, 20 Nov 2025 14:40:53 -0800
-Message-ID: <xmqqy0o05nuy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N0YjvlXl"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-7baf61be569so1638022b3a.3
+        for <git@vger.kernel.org>; Thu, 20 Nov 2025 14:50:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763679023; x=1764283823; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cNSr01dXOI4C+5VqdDRxKv+Cded0a80cpLTMYniIVA4=;
+        b=N0YjvlXlwE0rJRJ+n6RINJbTiANXHtxFu+s3lpKmoz89vaiAqPnKBKPCwDu5OUmpyB
+         NW+tIiAj2PciSnG1Ju/EUx7AxTbeLBiBiFBx9xwQxUOLb6yA8i9uKWaZAjnuM79vXkpe
+         qHwFAYXtdzB7DQc/cOViQSRs4zLdeI2q4HR5q0gzhsb6cUtqDnt/opiL7hnjm0ziPt+E
+         /qcFc1Lwya+Dc2ipjCjN8vd4kNYrsrMUMvVoV8U+rh5+yjUhE1K5oTb06UumTyCKy/8z
+         SpzTRKHqx4rHk7/8lnTaov9vYihNo+HI81FE6ZnUpWJfh3Lg2iyPFb/cBJ1c5RCvf4yr
+         Brzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763679023; x=1764283823;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cNSr01dXOI4C+5VqdDRxKv+Cded0a80cpLTMYniIVA4=;
+        b=ji8kVshUBMVWiJdbbRdFaRFSoQJLbl4jXDvB6Zklh+dFb94lLrhRfojaZwvzSYr+TX
+         SAKRwiOGsCdEFrDW3h9dYEJJtb3K7PY6l3IL4NVom4s8i8de2ubanBW0iGjhPXP6mxWZ
+         K7CXWkloYvz1vmXH8zCEpqjhzEIeyLjsCKmy8zGfMHI1wrkwNsS+VSh7IFJJCujVf4L/
+         456ZQsBjq5palEGwkacQtON7aB22m0SRDe7WcNk9QJZXgQc+hA/DFDq166UqXrsPo4Pf
+         pIGt3tTbuYAkRCEzraBa66ks3NXj2tJbIcemA8l3HVmHtsvrIFtK7b8ZMBsKp37H01c+
+         v4Gg==
+X-Gm-Message-State: AOJu0YwdyfumZYu0d5mNz6mwFXBlqLoXdxiMAne1AcOOVRSA+nXlbaxR
+	4+krhzUf38niMOPbptNFQBlZAsIJ8xbNXrvF8zNrZZi6SS+nuio/i3LI
+X-Gm-Gg: ASbGncvFiUjaWfOm5y9E5x2zjc5oMJeQpoIbxOR3E2UeFNe2U0LusQTsozR6WdAZQpA
+	UHwqUl2k8hQ4jVgxmT0kOsJv0hKfHNPmIYDZpuSAnqpw66a3txiiy32dtJxPYje63C4xXs+8R5f
+	JqcmfvBaCwopxvvDKZPxmx3E2uffpxtFJDe6FiYdL4LoQ22IQN2RjbOkJxipRjmi5AUVH/mAfWH
+	Ql+4unqn4rnk/TDDFZ9bJekaAwuooRDQxyEQ+/d9NKBtl5JPGxZqfGwYHGWUuF7plH7bg73ctwN
+	JimPKFKwwMTQlfB7oODuWbxBnKvVEAaTbBJaApMwccoTaGz1eOCORmYjFNL19AJx7Rhv5T38IQB
+	3OLLZsh4VKlggLvNiOAfazCe26FfRB0+BrQAxbehqyrD3mIC7OIJXGPvzG2OE8DIQlqezkN1OgQ
+	rrBrnE+4/sDNwgGpVj86OjLMQ3yls1kKGxdgMnfvWx1h0hANqg7r0=
+X-Google-Smtp-Source: AGHT+IFnI6HeEmrECvc+jBNZOvRn3hjYtqvkFNxVDyLWrpy+HVAxPqR6b5cTYfz8fznyRmSv13XeFw==
+X-Received: by 2002:a05:701a:ca0c:b0:119:e569:f273 with SMTP id a92af1059eb24-11c9d8538d5mr40899c88.28.1763679023498;
+        Thu, 20 Nov 2025 14:50:23 -0800 (PST)
+Received: from smtpclient.apple ([177.103.85.82])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11c93e3e945sm14778933c88.6.2025.11.20.14.50.21
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 20 Nov 2025 14:50:23 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.200.81.1.6\))
+Subject: Re: [PATCH v4 2/2] repo: add --all to git-repo-info
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <xmqq8qg3do99.fsf@gitster.g>
+Date: Thu, 20 Nov 2025 19:50:09 -0300
+Cc: git@vger.kernel.org,
+ sunshine@sunshineco.com,
+ ps@pks.im,
+ karthik.188@gmail.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <5F1F88D3-7EDD-4576-B692-4632E0086E8F@gmail.com>
+References: <20250915223618.13093-1-lucasseikioshiro@gmail.com>
+ <20251117151844.14802-1-lucasseikioshiro@gmail.com>
+ <20251117151844.14802-3-lucasseikioshiro@gmail.com>
+ <xmqqh5usiizp.fsf@gitster.g> <DA3814BC-D6A5-4EF1-9A2B-9687D1B6C26A@gmail.com>
+ <xmqq8qg3do99.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3864.200.81.1.6)
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
->>  config.c                   |  1 +
->>  t/t1311-config-optional.sh | 36 ++++++++++++++++++++++++++++++
->>  3 files changed, 73 insertions(+), 9 deletions(-)
->
-> This needs a tweak to Meson, probably in t/meson.build, for the new
-> test script. Otherwise Meson-based packages (like Gentoo) won't build.
+> If you use "git repo info" only occasionally, wouldn't "git repo
+> info --keys", if supported, be a useful way to get a more focused
+> help than "git repo --help" where you have to scan the entire
+> document and try to find the list of keys that are supported from
+> there?
 
-Yup.
-
-diff --git a/t/meson.build b/t/meson.build
-index bbeba1a8d5..137c0caea0 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -182,6 +182,7 @@ integration_tests = [
-   't1308-config-set.sh',
-   't1309-early-config.sh',
-   't1310-config-default.sh',
-+  't1311-config-optional.sh',
-   't1350-config-hooks-path.sh',
-   't1400-update-ref.sh',
-   't1401-symbolic-ref.sh',
+Hmmm, ok, makes sense. After sending the previous message,
+I also thought about it being used for shell completions by
+fish or zsh, for example.
