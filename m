@@ -1,181 +1,132 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EE415A86D
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 19:45:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF52E3019A3
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 19:52:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763667949; cv=none; b=FKZuqi9wIEYAwoGIFjwK0lDH8oQc8dnm9utVVDL+td2aAv5N/ao+yVHRJfRzfREUzrEtJ5JjGtbu1Z89mQTH1RrUC5KJNkf6EsoAxXs7hwe1okl+pKXdEILxLwA+F0l7AX+BAgp2T9B9sJHAn7ZQeyfH7KSAOpOhCXuewIP8Src=
+	t=1763668360; cv=none; b=rJkaCxHzGjMiB3dNgEhYf1HwVwgLCVbBfUjQUw0XVB8UlXQRHUCBSXGFWPLE17Ij36tb/b2ZkHxhD75O0OQMKKBQQqP0jmSSd+j9YgxoPCflOoMGdO3DlSKJnpmc/i4moZK2xMg3B/vpnYxHwW31WslbwtagxftN4viHYsP9n40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763667949; c=relaxed/simple;
-	bh=2KnZf3SAhjqm3J1A5Z0xXhClTBPIXss5QVx8flw4958=;
+	s=arc-20240116; t=1763668360; c=relaxed/simple;
+	bh=N9Pc8szqIYS1MtfXjtG6BFgUei+V1E7hsPW51O7QhqA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Cvgey/zSNdt9dhAux7V+hSGtrfyCclTpSpSuxPxj+y5ibdWR4t9aFpRoNDWA/77oo4Z8NISkJmM1861Yzbb2Y7rvZe/Pa//kZh+3YzQ912AMLHy4E8VNNPfLtcZoI+DVttZTTsM+75vk9JmQ5YSNzX1b2JPSsOpnY5wJ2UJjULc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lNa+sWlq; arc=none smtp.client-ip=209.85.208.178
+	 To:Content-Type; b=d6F3AGF9CIr4rfcBDusPYb0Is/X8D37NbMJ7rAaY5WdRGh3Wt8EXRlkAaW1KP3pPMNlQvR2NXuM/yL6ugQtufQu+jWKqMSaxbGgkhYBfOSJmC5iinP2I5UE9WlI6kfVmJpdR4ETM3sLdmT11xts0SxIMK3ZH5q1E1ddxftHeyT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MHoFcs14; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lNa+sWlq"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-37ba781a6c3so10523531fa.0
-        for <git@vger.kernel.org>; Thu, 20 Nov 2025 11:45:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MHoFcs14"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-37a2dced861so21438641fa.1
+        for <git@vger.kernel.org>; Thu, 20 Nov 2025 11:52:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763667946; x=1764272746; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=gmail.com; s=20230601; t=1763668356; x=1764273156; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dTo8UB6gK1aWIFBnLz4nbjnLAby+P/li/Oqkn2DLNWI=;
-        b=lNa+sWlq0znyTfocnTLYJcE/Gy9tOlzT3u0kKM2bk1eSTyRf3c6d/wr8j+5cC8qiTN
-         dxiIvilWF9zMMVcCvps6+jsa74sR3VtriOxd70R80BR5T0ta7502w5DIIlu4iGmYP/De
-         JWFkYSJ/Pzws/0CQD6Hu7ygkBQrvAdSwsl4PCICtoz2SZxYwtvTZ+Yq1YqyTDrRdmIB5
-         yMgmVmQyBYV+EoBN+vuKBPFFdA4DfLdHSjI5aEWTlsyJ1V7a7HBjNxpQxikOrL7/cuyP
-         WuByBTSc6JoDpLwtfFsNxZiNnHK8Jx2BMAamrXPC+VdvB2VAcz3OiGuY07q8sFZVfycw
-         pZnw==
+        bh=b8y3uHONVnG8Mz1Tt+STk0k4SiN94aEWuhpAKdolyY0=;
+        b=MHoFcs144Z8tGLuK/HjQY1kRjQ4+P4RcECp+qjb9IqfMJWw53jZcYZKu4+0lFmyPw5
+         prqecxLCTpHP9TM3kyQBmVltDbOR4Y8yLkGh0YU7AM44nkeKN4mwn8e4xhRTA3lRdH0O
+         atrKzdCnF+OfCZJ8uL4MwITWvB75wfi5ljVSK7Br1t4qe8u9guwwbcCvPx7sbTmag/Oo
+         DlpenKFI7V8Ge3EgmusvDmzVRT2jbnKk8cL3IzXte+khnS0LYz3zx8b94vRZuKF3pNiI
+         uv7x1Xlo3i6Ua9qamqtjXYDMTFgosR4e3dBZl1thDCNGLtrKw9bqS7PwaCeNyJrx5b2L
+         WI2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763667946; x=1764272746;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1763668356; x=1764273156;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=dTo8UB6gK1aWIFBnLz4nbjnLAby+P/li/Oqkn2DLNWI=;
-        b=b04lfWhCy0G/c6KFC843Sjgldbi6Juq3Pn4KrWxzOcE/f5K2LAXpEKKMyA4WInsIoF
-         BycSCLLx7W9Gl3YN9ndHHnOdOkbbt7JUhtUb8kHAUz7MXVgXbg1RgGwbqDodbaA2lpXy
-         9t2+05urFj/uVqD9hp0/uPHVfA5GMgsMp+4BIfDqqGxbu4yFx+CFKKo2LL40Wxwi8bks
-         jN7CRiSxvGGwD3OENcpdMB4yXbGwF2lGCb8t6p505HNwqgO5tq/Z/fdQLX/ziBnSG+xS
-         0ORhKs/uR0gC8UBzE2ilKl8VSlz/5tV+UB3Dgy/oEFl9qV5UlCH3J1NonYEWSclbiCuD
-         fOag==
-X-Gm-Message-State: AOJu0YyDLQ1zfyiZlQNDTHXn47UdCD+hoFMdmW/H4KyFEUPFyxaFlXrj
-	quEdx5iC/wPlRMmKwZtk3tuzXIrDOfFnkpV1o3P75UIEeyhYXS0Sc1RriAiVYw/zewESBLp0fvH
-	28Ntw8n0owpvq8dMFySL87Z3x7yfRzeI=
-X-Gm-Gg: ASbGnctq4NAUJB5U/sZCE4qF1ZSon3hP5aEdiCiKyxhTaQ/Fe+mHdRchNbMHXprfh2i
-	WfhFqf3WjSMv4OfjvESe72a0k2SH5xQDQvd4/RYRxe80I0ICM+ETwi5eBl/RHiSiBN0XMqa2Git
-	5fSNdpk6Qs/Hv82oXEiIDiD8EkXxQA1W8LSW0J3c9hrglgEiw2FEpQMXYAYM9k8O1uEZ5wd9ZmW
-	FgUvzcnxxa3xAkenz5hvwZ60/Dp9nf9TOnI/tUdQhJuMCB5uJqF39BlGZFYlhf+ZIhMM/3H
-X-Google-Smtp-Source: AGHT+IFfx1GNSqNWVmE9q68q9EPwd5BChX+ICu5IfBNW2V8/uXXTvBGosM6Nvhdzmbn3SUfma+9jGGW+KpJj6ODN3Ek=
-X-Received: by 2002:a2e:8a98:0:b0:37b:991a:544b with SMTP id
- 38308e7fff4ca-37cc67aa94amr10430611fa.34.1763667945465; Thu, 20 Nov 2025
- 11:45:45 -0800 (PST)
+        bh=b8y3uHONVnG8Mz1Tt+STk0k4SiN94aEWuhpAKdolyY0=;
+        b=v7myxNqo8QRQr9y3gjkkBn7GLFxrF+fZgnRvX54q7f3bqcvw5/DxIXQAFQYm5tgInm
+         JOygVP7NzADaSt5APm7PUij28pniDJ7sr0eoWISbmY7UyDNrIOm5vOFxcsfxuN4TtBKR
+         7Rj2eTd+PdKXSX5tR9FsbgnWjoqo+R1vCD80cVSI4SjAO6S0JrEyu6pdiYiDQq7FGSZN
+         LMBomwnB2Ntj2+m/i2UTjcGYABe/kHH5ogTogS4t45+NVaERgYniGtNJzRhX11NGumtU
+         bg82Kf8dHtaphTInFe7n3J3WyP87c1dPH03DLNnkYRkCgBufu5wuClaY0a62Jjd73nSE
+         IFtQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV1KBa7k4HJuQ2wFgb8iwp3e+lPwEah7DUE/LOGy+DlqSnRqPpR6ytmV6OGfftu36ynoKE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMaex0lrVvAK23V4G6jTTMcj6CUwQbNdtjqvzH0KHvxQc4jztf
+	NCE5ZF1yESFnie2JPTDQFTh1qCin8oCtPhE3Ae0V018iGqwsZ2Uv/cuARW/YOsDDczii0iTL2x7
+	YVi7cyYlHn4IRFq2BBTjzu1C+GIVkj8o=
+X-Gm-Gg: ASbGncv7llMHMUnwK4eDCTu2WnrtngTq61kI0yWsjWqdYTOm1bP5kpIs7aJk757dH6k
+	DhY2Ra/9YzWF3LVsBAPEfMi4AJHpg9w/wVm/ggc552i5/r/hfYgZ8d9HHBt+M9mNneokJp3o5pQ
+	kIESNoWc2czf0MABl9CgE3cLmZW7pV7MIQdigg1bTklyCFjiO5D/hkJ9gidNpogUTUsUbfK7Bnk
+	2BiPXASgwbTlj5yTSespUQ+vlErTHyUkF0ZkVQGukKMOTUnpYyXSNGMjThRjVl9aGmNtnWo
+X-Google-Smtp-Source: AGHT+IGcxNE/9sc8taxqyWg+7y8IgGarwKfkbtbrJZmBe6Y4cqJbZXrq7GfOObaTPzoBhUwrfzn0jkQN1AEB3fmrfoM=
+X-Received: by 2002:a05:651c:b1e:b0:37b:a4f1:e4d1 with SMTP id
+ 38308e7fff4ca-37cc82c0799mr10110571fa.9.1763668355556; Thu, 20 Nov 2025
+ 11:52:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251015-b4-pks-ci-rust-v3-0-13810af33bd5@pks.im> <20251015-b4-pks-ci-rust-v3-6-13810af33bd5@pks.im>
-In-Reply-To: <20251015-b4-pks-ci-rust-v3-6-13810af33bd5@pks.im>
+References: <20251027004404.2152927-1-sandals@crustytoothpaste.net>
+ <xmqq7bvsjzlx.fsf@gitster.g> <xmqqpl9h9mgo.fsf@gitster.g> <aRudLpkRdRtCAoi3@fruit.crustytoothpaste.net>
+ <xmqq4iqsgpu3.fsf@gitster.g> <aR5M65HDuGlTsR77@fruit.crustytoothpaste.net> <CAH=ZcbAmAqWMYXhYT3bX_Q8cEkV0ZcjEtM65YS7DXPJbs-L3Wg@mail.gmail.com>
+In-Reply-To: <CAH=ZcbAmAqWMYXhYT3bX_Q8cEkV0ZcjEtM65YS7DXPJbs-L3Wg@mail.gmail.com>
 From: Ezekiel Newren <ezekielnewren@gmail.com>
-Date: Thu, 20 Nov 2025 12:45:34 -0700
-X-Gm-Features: AWmQ_bnzk3-PsRBQYvGayuvlxmSjCRj8mvSo_o4jMC8QDnzdq_AP2Z08zPBzQMs
-Message-ID: <CAH=ZcbB8cRgCTp-Q_CxJ4VFNY1+w+C20zgx9bMre4-hNmPrD7g@mail.gmail.com>
-Subject: Re: [PATCH v3 6/6] rust: support for Windows
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Karthik Nayak <karthik.188@gmail.com>, Eric Sunshine <ericsunshine@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Chris Torek <chris.torek@gmail.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date: Thu, 20 Nov 2025 12:52:23 -0700
+X-Gm-Features: AWmQ_bnv4n4gyCTtChzCEeQAjgifFnkSlXxB_Olrrok6iFC9AnsUoV3EC5dsWFk
+Message-ID: <CAH=ZcbDER4OysywLZpCc=-GQ+rweSfVAQ-xj0gNd1rF4-=cPWg@mail.gmail.com>
+Subject: Re: [PATCH 00/14] SHA-1/SHA-256 interoperability, part 2
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Ezekiel Newren <ezekielnewren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-This is a retrospective review. I completely missed this patch series,
-and only noticed its existence after it was merged into master. The
-core problem is that these changes assume that windows builds only
-ever use the MSVC compiler, but that's not true.
-
-On Wed, Oct 15, 2025 at 12:04=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
-te:
+On Wed, Nov 19, 2025 at 4:37=E2=80=AFPM Ezekiel Newren <ezekielnewren@gmail=
+.com> wrote:
 >
-> The initial patch series that introduced Rust into the core of Git only
-> cared about macOS and Linux. This specifically leaves out Windows, which
-> indeed fails to build right now due to two issues:
+> On Wed, Nov 19, 2025 at 4:04=E2=80=AFPM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> >
+> > On 2025-11-18 at 00:13:40, Junio C Hamano wrote:
+> > > Thanks.
+> > >
+> > >     $ git log --oneline --first-parent -4 seen
+> > >     3f252ac9fe Merge branch 'ar/run-command-hook' into seen
+> > >     672cb7c62e ### CI
+> > >     3af201233b Merge branch 'bc/sha1-256-interop-02' into seen
+> > >     950efaac03 Merge branch 'cc/fast-import-strip-if-invalid' into se=
+en
+> > >
+> > > It seems that 672cb7c62e (which is an empty commit on top of the
+> > > merge of v2 of this series) fails win+Meson
+> > >
+> > >   https://github.com/git/git/actions/runs/19447841443/job/55646336507=
+#step:6:689
+> > >
+> > > but 950efaac03 (which is the merge before v2 of this series is
+> > > merged to 'seen') is happy with it.
+> > >
+> > >   https://github.com/git/git/actions/runs/19448271167/job/55647611566
+> > >
+> > > These two runs roughly corresponds to the with=3Dbad/without=3Dgood p=
+air
+> > > in the message you are reponding to, but with the v1 of this series.
+> >
+> > Yes, I think we'll need someone familiar with Windows to take a look at
+> > that.  The message doesn't indicate anything obvious and I don't have
+> > any Windows systems available to investigate.
+> >
+> > My guess is that it's something to do with the build.rs file, but I'm
+> > not certain.
 >
->   - The Rust runtime requires `GetUserProfileDirectoryW()`, but we don't
->     link against "userenv.dll".
+> This was a known issue, that I pointed out, before Patrick's
+> "Introduce Rust" series was merged in [1].
 >
->   - The path of the Rust library built on Windows is different than on
->     most other systems systems.
+> [1] https://lore.kernel.org/git/CAH=3DZcbBjL09Mk3AXBSgmZGvmFtU3Roc2P5rbQs=
+Z-U5DBHYSs7w@mail.gmail.com/
 
-That is true, but the build systems also need to check if the C
-compiler is gnu or msvc. Also you used the word "systems" twice.
 
-> diff --git a/Makefile b/Makefile
-> index 7ea149598d..366fd173e7 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -929,10 +929,17 @@ TEST_SHELL_PATH =3D $(SHELL_PATH)
->  LIB_FILE =3D libgit.a
->  XDIFF_LIB =3D xdiff/lib.a
->  REFTABLE_LIB =3D reftable/libreftable.a
-> +
->  ifdef DEBUG
-> -RUST_LIB =3D target/debug/libgitcore.a
-> +RUST_TARGET_DIR =3D target/debug
->  else
-> -RUST_LIB =3D target/release/libgitcore.a
-> +RUST_TARGET_DIR =3D target/release
-> +endif
-> +
-> +ifeq ($(uname_S),Windows)
-> +RUST_LIB =3D $(RUST_TARGET_DIR)/gitcore.lib
-> +else
-> +RUST_LIB =3D $(RUST_TARGET_DIR)/libgitcore.a
->  endif
->
->  # xdiff and reftable libs may in turn depend on what is in libgit.a
-> @@ -1538,6 +1545,9 @@ ALL_LDFLAGS =3D $(LDFLAGS) $(LDFLAGS_APPEND)
->  ifdef WITH_RUST
->  BASIC_CFLAGS +=3D -DWITH_RUST
->  GITLIBS +=3D $(RUST_LIB)
-> +ifeq ($(uname_S),Windows)
-> +EXTLIBS +=3D -luserenv
-> +endif
->  endif
->  ifdef SANITIZE
+Checkout my retrospective review [1]. Basically if windows + msvc ->
+<crate>.lib else lib<crate>.a, but it was coded as just if windows ->
+...
 
-This is not fully correct for Makefile. If Windows AND using MSVC ->
-gitcore.lib. However this bug doesn't show up because github ci
-doesn't test the windows+msvc+makefile combo.
+In the github ci these are the only windows combos that are tested.
+"win build" is windows + gnu + Makefile
+"win+Meson build" windows + msvc + Meson
 
-> diff --git a/meson.build b/meson.build
-> index ec55d6a5fd..a9c865b2af 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1707,6 +1707,10 @@ rust_option =3D get_option('rust').disable_auto_if=
-(not cargo.found())
->  if rust_option.allowed()
->    subdir('src')
->    libgit_c_args +=3D '-DWITH_RUST'
-> +
-> +  if host_machine.system() =3D=3D 'windows'
-> +    libgit_dependencies +=3D compiler.find_library('userenv')
-> +  endif
->  else
->    libgit_sources +=3D [
->      'varint.c',
-
-Same issue as above, but it doesn't show up because the github ci
-doesn't test the windows+gnu+meson combo.
-
-> diff --git a/src/cargo-meson.sh b/src/cargo-meson.sh
-> index 99400986d9..3998db0435 100755
-> --- a/src/cargo-meson.sh
-> +++ b/src/cargo-meson.sh
-> @@ -26,7 +26,14 @@ then
->         exit $RET
->  fi
->
-> -if ! cmp "$BUILD_DIR/$BUILD_TYPE/libgitcore.a" "$BUILD_DIR/libgitcore.a"=
- >/dev/null 2>&1
-> +case "$(cargo -vV | sed -s 's/^host: \(.*\)$/\1/')" in
-> +       *-windows-*)
-> +               LIBNAME=3Dgitcore.lib;;
-> +       *)
-> +               LIBNAME=3Dlibgitcore.a;;
-> +esac
-> +
-> +if ! cmp "$BUILD_DIR/$BUILD_TYPE/$LIBNAME" "$BUILD_DIR/libgitcore.a" >/d=
-ev/null 2>&1
->  then
-> -       cp "$BUILD_DIR/$BUILD_TYPE/libgitcore.a" "$BUILD_DIR/libgitcore.a=
-"
-> +       cp "$BUILD_DIR/$BUILD_TYPE/$LIBNAME" "$BUILD_DIR/libgitcore.a"
->  fi
-
-Same issue again. This needs to test for windows AND msvc.
+[1] ci windows problems
+https://lore.kernel.org/git/CAH=3DZcbB8cRgCTp-Q_CxJ4VFNY1+w+C20zgx9bMre4-hN=
+mPrD7g@mail.gmail.com/
