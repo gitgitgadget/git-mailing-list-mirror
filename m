@@ -1,105 +1,84 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892C229E10B
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 14:39:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E13E18C008
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 14:57:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763649596; cv=none; b=Vso9EvP+wC8PJneYAor6Y+LvJ5+GUQySBaTn8BaYqvuXAJWI1CJ90nhG+l3MJ+oQjzUdI8WY11qGrBGz4Tkui86o7SLn+cl84udQPdQFTA2lAO8B7Bx469h5ANQ5jXyhZotmJYXfYv5CoC5kYUIaHSNLNlasQl6dTdCgOkzOG3c=
+	t=1763650622; cv=none; b=gycUkFXXkHqmKNd5y0m65KMaIu9iLeCZjqsw+XnsgD1446pRax+dLtJF9QlJfciWCYRnsh3M2sdDiEVBeQXLmR1AKg/k93acAELq/d23HxcC05ZvMqbvQEENjHMiv/MFya4PIKoFppL8xd3zb4D5ATJg31kSpogWjbaRmWekDqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763649596; c=relaxed/simple;
-	bh=V6pfIa7fDlcsIO5ep8UdFKUrNY9MSfG8aTXEo6jJ3hA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YedqSUQVZ8/rQ3zNreSwLAd2hibTV5eJkAXLNy03IUwpeqAGzMIiBjNIGFhBqKIXXRvjrV72YD/pV6DdKcXwk3j1ck4SWpbbSV1Mtlnz/1tenRoew7TLTlUEzOMBCtANQ0AfQLrSALmacfqE8sQ7oTI2m0rjsroiCbXrPGnuoa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EfR4Zggi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vmTvKciK; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1763650622; c=relaxed/simple;
+	bh=S6HvUnb8sg+P9P0slHnc5kwE3gaa3gWKA625Ya4Gi8o=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=XKqdE0rRWzAiLCDpQN9+bcDFwKw/m/evBn1AyTxOofF58eXLTv7OVHWAmldmtK0PWCfQQZ7gYhh/Ghsyv1uPEXMgclfhlV1tZSRqJ2Jj0/5gPqQiFox7sUAstADZnYFgol5engp313H8ZcFg2/k5EVmoUb8Mv3vRNUp/+9wVIBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EfribluC; arc=none smtp.client-ip=209.85.210.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EfR4Zggi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vmTvKciK"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id B5C03EC037B;
-	Thu, 20 Nov 2025 09:39:52 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 20 Nov 2025 09:39:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763649592; x=1763735992; bh=IFVmwnD7Xi
-	KIrmZXlUaQw4EmDpzPWDVEJTyhEV95S5A=; b=EfR4Zggi+IeczJUoZDvO2SSTxO
-	SY8Vo8+4ETnOQ6J+zQobxuKYjIe1BF+Yp6IfvZtZnMHVtQM4n07+qTABpvhlbg9P
-	zcNKnBif3jIh6cZFtw+yLpbNj1i856qjoytO6mbrmQ7OAIe/Juqtj3haqOeUouv2
-	IlYZIAqfrCIFGQxtvqTLi0ytoAqAU28E1xmmo2+/X3B3DaowZHAYbh0jee8Beq3M
-	HWCMeop+1JGQVTGEfR5NumFcuAp9Uyua05AhYdpmQDdG3fp07Ua2aB0Q6yDzGZ2G
-	DibOBenQzVSf/IRcBHtDJ2d9SlE1nWRmMRg0KWCpEm+7xpa7LyKbrAetw5Hw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763649592; x=1763735992; bh=IFVmwnD7XiKIrmZXlUaQw4EmDpzPWDVEJTy
-	hEV95S5A=; b=vmTvKciKMTbxXPzUNEETL4rJsNqW5dDKVJ5xe6hTcuZ57HSi20O
-	Fu9Iu1IOSH4m4d+Qnc6LXwcTBjFPYMFLdehJJKq52P/CV9Pj3AYDVptBbpiea++f
-	FIMYzFPIcZyMeZQUDrGSFiammr5I+fY4m3Cc1U6IT7EEMcnbAHl6tLtxVaeJQ2jp
-	2E7e1AmPHvPsPfSFAVTrwvyJ7SmOVFs/3y9c0vdNcZ0QfWwCpCXreZXpXfBsUk35
-	o1RoF/bIrkPjRpAEzge4vQxNuIltj7pajwJw/33x+TkpPjJX9qggUAvN8lANX/xZ
-	YX164RwGV/qvhqM3lJI5R4oY24FEZBymhng==
-X-ME-Sender: <xms:OCgfaV_SbY3qVWT7q6mIjgQJDwinKqcgbR_kXZclwW8pmLchKwvwtA>
-    <xme:OCgfaQuthpc9PJxVi6-qG75mcxKq-ALVCBqpkAEaun5g8gg0J8ZDwXfPmWodF4JLy
-    4kpHGkkQrX7O4PGIlJT_TzHz0_wO-Yt2WUj1Zr0baNcr8IGO_PjMg>
-X-ME-Received: <xmr:OCgfaYCd3QGs-HYz1joCKQw1KLf57uBRnvOgVe8wfBE_Af8D4IGsCRqCPUx1OHjO01Vqs6FRnnHqzTtVbkPsrxJDjPw6xsuerQLN>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdejfeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
-    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:OCgfaYUd_fH9VxWXT0SB7-Z0LbKHqXUfvq1cHBB94qaqXJnOCi6GsA>
-    <xmx:OCgfaWBFKKtBKKAB5hl0gvUs-CpsIONXpUKwDYiySNQq4EJqmkHo0Q>
-    <xmx:OCgfab8XkJGCA1eT7SVaoJqX3mYa78lOKINzCk0yc0PRR1hQcr9mwg>
-    <xmx:OCgfadHJrn1oHwisvm8aOrqsvitRzxIYjDtgMvoRTx7NY6tIsPeOww>
-    <xmx:OCgfad8AxoDokRmKX6qvk22NZYAWEBgIxokaKjToOVaecSvOyhdxTKup>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Nov 2025 09:39:52 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Git List
- <git@vger.kernel.org>
-Subject: Re: [PATCH] wrapper: simplify xmkstemp()
-In-Reply-To: <20251120082328.GD1283645@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 20 Nov 2025 03:23:28 -0500")
-References: <058c5722-30f5-4bc5-90f5-24e4c6f3ff8f@web.de>
-	<xmqqbjl0iax6.fsf@gitster.g>
-	<20251118094621.GB530545@coredump.intra.peff.net>
-	<3b1cb53a-6427-4626-a768-1961e25514f8@web.de>
-	<xmqqqztvc51s.fsf@gitster.g>
-	<20251120082328.GD1283645@coredump.intra.peff.net>
-Date: Thu, 20 Nov 2025 06:39:50 -0800
-Message-ID: <xmqqbjkwahu1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EfribluC"
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-7c730af8d69so600318a34.1
+        for <git@vger.kernel.org>; Thu, 20 Nov 2025 06:57:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763650620; x=1764255420; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=V4tlXUjUB6dTRWNKj0FOmloBMdV0pbRMvxl8Vq0wtsQ=;
+        b=EfribluC810zCXvITa1Il3t14PJjNafc5wG7mO9d3gDyMjII/PzLfZVNIOzpyfB0PQ
+         Qt2jlkXDUXm4Jx8NqlL5j3PZzMthmB1u4Qu69S/hlDSk2KBV7s7dF6xg2mn4087P22N2
+         lEpkMLGTjLuJbT5m1gAOHIGVUbe5EoAwJwV/mbBexRTD4E9ZG9F1V3S7XDrLChqLqOL1
+         LDDtv/N614bXGtf4qN5PVD9ixAHR6aIa3CMc9gEl14eTgS6W3/u2nQYwQQMdvQ5hd/Q8
+         gLdaXrbCGJ6Hjg0wmQMT8lM3ea8aTaJgg+PoYmk52H76pspLJt3+QpNJeRluN0NA5v7g
+         wE3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763650620; x=1764255420;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=V4tlXUjUB6dTRWNKj0FOmloBMdV0pbRMvxl8Vq0wtsQ=;
+        b=qXhfnZxtR/aAHL10YyvGwxRqalO6L2OVUkrxyAmD5GEj/q8EtQ7GNdSXOsQSNMptQm
+         lvtFj24s18wLNTxckU5K+2lahvvc28f9+ffmQMSTVlKHk8AgbUsRlPh9SLVEaSs0tRx6
+         dxGSeyjeKWxEWsNuFLQ4xztiMaixYcEI7a/nQQ0It74uiHWfQKz55PKgvuTLJclv4Jhz
+         qyLtXqnlbGwZpLnW20UWPuGiYavBw4ChE4C5hXwYXCp+1LQPDhRASHxT1SP+yGw/5wAm
+         JiWeVyID+JPn6J9idis/Kld32gMKU/ulKkZh5ycysBA91omIBTAgUjJGpbRGVzUiKo7c
+         eaMA==
+X-Gm-Message-State: AOJu0YzGzVn0cOtiNnjkPcmFUjgs/8TQuRlI+wZqOSdHP47rmbQFW5SZ
+	sYdQW4z7BiZAXD0UXJ0P4OGswApomB21hFLDgjWzGzArixT+g/9eCg//JbCW2MO3qPaDxEuMuqj
+	2M/zpWJ0nysFgxNtqnm9ivLkt+7pqQqeNcQ==
+X-Gm-Gg: ASbGnctHs2/wt6rku78rhU8yd+VvG1JdHu9I0yrKefXT5MGtSEurVBb9t/PZBJTK07W
+	sNOWVPXUQrTsnh2PBDIliorB6Sp3elF9DnXcVx2WFtoGZw2kv9M348YAjmd4PdlOZuvbJefepuE
+	naKMaiH/ZI5CuZeccjmwAnUO8myJxYQWMnIJa8gG1bQ8hZy6di0ZIpxvGsaOWciXVM7yFiwXqho
+	k/mMflJmWVq8kPeftNLw0iPt4LCRhfUr6OYTpcqYDxjGcd1Ch92rcIv3h7YnpbGqiplgZ00z/5G
+	dTYVSL++5vuhkdYsP8h73Uw=
+X-Google-Smtp-Source: AGHT+IEFYWxL3iZAIxwI+14MajF+vRGlBRq0O33temQEs4iIx2HxwN1XWN/XkQGmqG6az5sQQWXrIh/uKk4qxBa7PWg=
+X-Received: by 2002:a05:6830:3808:b0:7c6:e92f:41e1 with SMTP id
+ 46e09a7af769-7c78d263c05mr2452222a34.14.1763650620032; Thu, 20 Nov 2025
+ 06:57:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Martin Guy <martinwguy@gmail.com>
+Date: Thu, 20 Nov 2025 15:56:47 +0100
+X-Gm-Features: AWmQ_bm18AnssDJA8zXEjluAQfGC2izlJ3fXc1rqfyRu97toB1jb52gNLS-9AlE
+Message-ID: <CAL4-wQrgD3nnW2BfNf6e9d7tDANE60dYBRRP_0FW3Z-LvQrZmg@mail.gmail.com>
+Subject: Feature request: git cp
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Jeff King <peff@peff.net> writes:
+I am splitting a large source file into three smaller ones (mp3.c into
+mad.c, lame.c and twolame.c)
+and would like the history to track the relevant lines in each file,
+like "git mv" does,
+but I only seem able to do this with one file by "git mv"ing it and
+copying that to the other
+as a new file.
 
->> > +#define mkstemp(template) git_mkstemp_mode((template), 0600)
->
-> So this patch implements what I was thinking, though I probably would
-> have made it more explicit: add mkstemp() to the banned list (not
-> because it's evil but because it's unportable) and force callers to use
-> git_mkstemp_mode() explicitly.
+So what I'd like is "git cp" that is like "git mv" but where blame for
+both the resulting files
+goes back the original one, if that's possible and unless there's a
+way to achieve the same
+effect that I haven't figured out.
 
-Because only a very small number (one?)  of callers call mkstemp()
-in the current code, the above is probably a good thing to do.
+A fairly rare thing to wish to do, but may be useful in this case.
 
+    M
