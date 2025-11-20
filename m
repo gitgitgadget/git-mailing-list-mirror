@@ -1,122 +1,100 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5BE1FD4
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 22:15:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E572DBF78
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 22:27:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763676959; cv=none; b=gFwNbVSLtWkKnkp0lDhjQ7DDaGdNYlZ+aKaxg5n0dnGHRiTsUuXG8yDXhUyPFrsMKzMS23BCJ3IEIG0zYwKtvGHDWktNgH/Z3/STGTYzAonbCZfrnch5MV0rMiS4o5+8MR5/u6SOC4+4nbP2XKVUm5my6iwJjdi3H5UjhuJvdxI=
+	t=1763677672; cv=none; b=Ry26Mh+R9SCxEdjCjGY/MPT55XotIFO+7ZRU0smf3MM8chbn33s9zvU9ALxLsl6uN4eyVrEZSlDtA5kIN8MVrfPAECNNJlYF3y75gaVPqtpPjxixK1ymO9WYG65Y0bK4iI0d7PdQjAmEEe9X9oA2ZATl7WUj9nYt/mCXk4Mivdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763676959; c=relaxed/simple;
-	bh=pzSQTonne8dVVoYTtXWtlEcPIK98psmWLs08aL7xYLk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bzeBMCqxIB/u8yOXo8Jxbs0t6UA7+OUKhlX6Ez4rrf+jTw4fzRPGJ37IUJxEdqELZYMs99eXV5Ibkfu7mlFiZ8uq56ulIKYlq8cO+7VBmFa8LcOCQjQvwMB6jaM3HjJI4usurdIkyICs4UgT+DnVpykcdrulJeQpv4KUvr0gGTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MZ7hqEQj; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763677672; c=relaxed/simple;
+	bh=mWOaUrwzKcVVAOZwZrSGDidSIuPyKg/FiuQvuFR4Hdk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YeGIM8BC9PX07+7XEG9jcuESwd1zhH1dxj9cl0spd4y3ONytXszSwE20Dw0ugpOUj9WGaUBuCnGwDdviNeGx5Xehav4IYNn+B7zfJTb8TQCqz4mU/xFEvQWyAWyluVjE5p+QtD4VNo0F0PsZkyNzDILVCa4DaGJrFINl9o4mFhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ROpilIBs; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MZ7hqEQj"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-343f35d0f99so1135461a91.0
-        for <git@vger.kernel.org>; Thu, 20 Nov 2025 14:15:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763676957; x=1764281757; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IlTWhUGbb3mYQveMgyFw5ofkxSkImVK1ZUb/PMjRKec=;
-        b=MZ7hqEQjPWofBiAojInvaNDqv3A932lU6FiJujXKFUovDTnkgkXN4J5xn0sPfwbzne
-         twUT7nwKxuV9gTuOZGgtsoKyWHBCsSKbKIwydSl7APmXaDMdTFXPthlIiTOYhzDuyWgz
-         kK5FFyJbeJmdb3f0zufxrWE2uyASXMygkjlu2VZcu2Bl7qm9/E161bPSHxElgeqs11YI
-         F6qdhPp3dhrnpTTsAgZJp0YPoEq0YXY9uVufGYLeA9L6+AtlDh/UIl3OJc5xgvA88d+F
-         OMDv/pKxOVqXgoaXPk50n97/I3uUnyhcEpZtZAD9cD2DAf24yXDVRsb7Cb1do7IpDygm
-         TKtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763676957; x=1764281757;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=IlTWhUGbb3mYQveMgyFw5ofkxSkImVK1ZUb/PMjRKec=;
-        b=FRHGYbC9Ael8Eid0tk5HpQls+l96W4JKEAE24LfLAOZbkwgvL/3F52+EPMkhxXetYC
-         QxMfUvPYHwAW0iLQvrBfrOt+OJZS0NLEMAOfWP2ewFDrcgfTA2UPugxHHPRjPAbuTtgR
-         hHs6PwVUPUDrYlqAAVYqFJ6NSbPVr2EzA37piaGPfgiTjGwae5b/QX6wP4oRl+ZCKx4b
-         tLmRBz54AvAKdkIEndlEkBkj3S1NEF8Q9Q01XCaVyBQ07Lx9BfNJv0koVBHtbtC/Bqbu
-         k9J3y5L+kfYB5LjIKvKQ5LncPvM8+xPLjICC2MGFzo4XMSHFxsQOyceKvUplJpAiLd/6
-         6hOQ==
-X-Gm-Message-State: AOJu0YyQWCp+9+wawyXkf90doxY6pX/+vG+VnOy30Hz7G9ouli7UoWab
-	HFm/7fkAijgoX++XHcJecpVXcDjV4TnpuClPUHcvejrOQL2sizafXP5eTgCL7KCGO/6sijUD7eu
-	vksuw5syQNIF5dewl+9fGpblFCZ7ihL4=
-X-Gm-Gg: ASbGncvQE1cKyGfxQdAXP1bUV904KYABtLV3TDoQgQpHA5ApOma4L8dHClkltMnUrEi
-	5vpvWXhqBOIiLwL9LMrQ+7dhQnGHKk8Gzt3+RziekofX2rExnWQcglyCk8j97h1FJGgeZrEmHFh
-	CnKVMJdDlusyQM5Ah5tmLjszkefjgLmaPaEfEiJwRm2qo+nnEUa3aV8TnMkFrl1CS0//NdheNjI
-	o6QA2L1o2bBT/PlGOHbEKvKRzcEn/igdHtds6/sPyXxzzQVejOIoW9Xfy3QdQXpB97R6iqOClCb
-	ZBGbpWlRk4PCjD7NUg==
-X-Google-Smtp-Source: AGHT+IF9VB1n3FHmTAZ2d28koGX6782GU4iDDf8VZ5eJtDmNUD3nFSCD9LBXa2j/2vbT2yAaKv48rRE9MiFR3Ie2HDQ=
-X-Received: by 2002:a17:90b:35cc:b0:341:194:5e7d with SMTP id
- 98e67ed59e1d1-34733f19c00mr27022a91.24.1763676957385; Thu, 20 Nov 2025
- 14:15:57 -0800 (PST)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ROpilIBs"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1763677668;
+	bh=mWOaUrwzKcVVAOZwZrSGDidSIuPyKg/FiuQvuFR4Hdk=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=ROpilIBsMdq6wDjT7zqIZhQEicEVla5IsZb5F228pGzx8j7JZkPRSVr0vwURD6cy6
+	 +kn6LwVQXM1WgofKJb6vQMKRjbkl+xQRq/oyzz1jIdecuM4mnx6v6VUx8iHwxwMw+o
+	 ojp9weuAnivSLiXYTsqVbCUpyg4vg4PoCK2jxOuEmxXNTTtPSu2InWV0aUB8SaF1pf
+	 5SdCZCpbZ9sAcUK6taV1J4f9vXyoZArpLlKuOvEuFvSwF3jG7GkSA9N8xzUqezwAud
+	 6U83T7gbOyIRn6HFmcCRyk37J517+Hd9WiWCv1ovkbDAXbbEpLijmXcpEHsKGtiTq0
+	 /YgEMrA3KBaMwJu6MRZ0OHsaDWWjUKb4LQwRXLRE6qHKT3IcZqeUOFQ/oBilg3YTaB
+	 gGyof2gsCVM/sC7mX+iicXq+3fn3qK3xB3x+n+YBfFnYJP1vC9bptU8anmWqPNKgFn
+	 vYOVkqfkkEh+m0PvauPgWCsUq8f5ShAPvCPFGdD+8cb8ZJydM0h
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ae5c:878c:d4d7:64f5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5CD6820065;
+	Thu, 20 Nov 2025 22:27:48 +0000 (UTC)
+Date: Thu, 20 Nov 2025 22:27:47 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] config: mark otherise unused function as file-scope
+ static
+Message-ID: <aR-V45lWv6kYSe5b@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqtsyo7b4y.fsf@gitster.g>
+ <e67ee4f6-9516-4561-b9f4-06e9049ff2ba@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqms4g7b1h.fsf@gitster.g>
-In-Reply-To: <xmqqms4g7b1h.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 20 Nov 2025 17:15:46 -0500
-X-Gm-Features: AWmQ_blp8W4ftqheXczJvfvXBJVaPXTLam7eQFTgm9dH_dckMckySi_n0SBnXww
-Message-ID: <CALnO6CC0HU60F47yoE45ei7_K2_MeLRS7fihMPn+f8top7Jr7w@mail.gmail.com>
-Subject: Re: [PATCH] config: really pretend missing :(optional) value is not there
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Han Jiang <jhcarl0814@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="4ZbUYgTr8DAUC9ON"
+Content-Disposition: inline
+In-Reply-To: <e67ee4f6-9516-4561-b9f4-06e9049ff2ba@ramsayjones.plus.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--4ZbUYgTr8DAUC9ON
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 20, 2025 at 2:35=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Earlier we added support for a value spelled as ":(optional)path"
-> for configuration variables whose values are of type "path", with
-> the documented semantics "if the path is missing, behave as if such
-> a variable definition is not even there."
->
-> This has worked OK for code paths that reads configuration files and
-> stores the configured value as a string, where NULL in such a string
-> is treated as if the setting is not there, left as the default.
->
-> However, there are other code paths that do not _ignore_ such NULL
-> values and misbehave.  "git config get --path" is one of them.
->
-> When git_config_pathname() helper function finds that the value of
-> the variable is an optional path *and* the path is missing, it
-> leaves the destination pointer intact (which usually is left to
-> NULL) and returns 0 to signal a success.  format_config() helper
-> however assumed that the destination pointer always gets a string,
-> which no longer is the case, and segfaulted.
->
-> Make sure that git_config_pathname() clears the destination pointer
-> in such a case, and teach format_config() to react to the condition
-> by returning 1 (which is different from 0 that is a normal success
-> and negative that is an error) to its callers.  Adjust the callers
-> to react to this new return value that tells them to pretend as if
-> they did not even see this partcular <key, value> pair.
->
-> Reported-by: Han Jiang <jhcarl0814@gmail.com>
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->
->  * This is only about "git config get --path".  Another patch for
->    the rest of the callers of git_config_pathname() will follow in a
->    separate message.
->
->  builtin/config.c           | 45 ++++++++++++++++++++++++++++++--------
->  config.c                   |  1 +
->  t/t1311-config-optional.sh | 36 ++++++++++++++++++++++++++++++
->  3 files changed, 73 insertions(+), 9 deletions(-)
+On 2025-11-20 at 21:15:57, Ramsay Jones wrote:
+>   $ diff nsc ssc
+>   0a1,2
+>   > add-interactive.o	- clear_add_i_state
+>   > add-interactive.o	- init_add_i_state
+>   38a41,44
+>   > hash.o	- git_hash_alloc
+>   > hash.o	- git_hash_free
+>   > hash.o	- git_hash_init
+>   > hash.o	- hash_algo_ptr_by_number
 
-This needs a tweak to Meson, probably in t/meson.build, for the new
-test script. Otherwise Meson-based packages (like Gentoo) won't build.
-
+These are called from Rust code so they must be public.  They may not be
+used elsewhere in your branch if you have not compiled with Rust,
+though.
 --=20
-D. Ben Knoble
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--4ZbUYgTr8DAUC9ON
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaR+V4gAKCRB8DEliiIei
+gV54AQC46Zu3d6CW0Gz79Mz7HM/J4XLAak7t1j9Ru6HSsUMiGQD/eTWhMJsyPaUH
+3ScdsT+4mk35rvOGZXnFAC6pno3ipwI=
+=KrMN
+-----END PGP SIGNATURE-----
+
+--4ZbUYgTr8DAUC9ON--
