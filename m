@@ -1,106 +1,97 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBE3354AC4
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 18:18:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4167C25B1DA
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 19:05:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763662743; cv=none; b=EUYW/v7VbkKVTABYJ0EEIX4NXtZzij2hR8d5IPqNxIk+ZZw+tP5PY20wPQX7dalV5GLqr8axkpVZjr5O80RLnLPL8o5yjf+nIDjCvjY3q2aML8BDyFIIbvMPQ+D7I0fMwRQlKRBf4lT3lkNY4Zbn+2bjNA2Kg5p/TZKAzAP+y3o=
+	t=1763665532; cv=none; b=TXlnAJy++9uoMH97cf/KMvLonRhFXvuvwprZ/xzSlskJD2BbaDM3vazKOEI2DYt1CpwQ9j8mm1jLKEEW0P7so6NgC9rFFErakWv6Y8szZhVznMffd5NnxkcKcRuxio67dWnCntA9qnfSZ7X6nkRkGTLW+RHoaO8NbmtEf7XOQ7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763662743; c=relaxed/simple;
-	bh=iooTa0BOgZQ2MEfaKyV8F4Rofp0V91JyUzjvv2CJf6s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AMve1MbxxF3VKWq7ET77HrGFeSf8jj7AzckyLuRsjIg2wo9S5YgwovS1WeFUg7IaoQ/J/udvC3EXupDotsnZFHKhAnNatlILhwCjDoo4/d0GlETIt92TBHha2maL3qWKOOf9m9zF4SljVfSMTxomZHTldmS2k3egXng05vh08uA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C2zGSTPa; arc=none smtp.client-ip=209.85.214.179
+	s=arc-20240116; t=1763665532; c=relaxed/simple;
+	bh=Xl3EoqySXh7XJKZ8Lr/iLEpj//mEKSD+zLDogPvmGpE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YmDdZF1dqu4HhYWJT46f6mF0Nfp27/JRjYcngB0UTlNj6FbbMkfyhxDhg6ERz8f96GA4LXc2IxvvywYa3CH5Tlo8zd+M46bvrj8KEwOGUL7rngA//ZIRwcIcscMOEhCxOjYFYf8BQ5pa1K3mUkeqm368h51d/PFOOkqy8F0jUJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=inPXEIFU; arc=none smtp.client-ip=209.85.160.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C2zGSTPa"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2984dfae043so11686505ad.0
-        for <git@vger.kernel.org>; Thu, 20 Nov 2025 10:18:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="inPXEIFU"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-3ec3cdcda4eso741995fac.1
+        for <git@vger.kernel.org>; Thu, 20 Nov 2025 11:05:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763662733; x=1764267533; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1BrywyG1hOy7kAv+f091SDz9V2pzLBp1xF0S6DsH1Q4=;
-        b=C2zGSTPajyYnyhQSCgBGuGCLAbJY3cNY8DEfB5Cga6QXzgxOcr/VoPXAXnoekpeqT7
-         Tc8uVnUuLSbDXEMt8WjOYoWYSa+OXVjiSzaEW55UGOfB6ggbfjtR5E9PJDZMrBlvlk9m
-         0Ay8UxoxSxGDF0VJtKWFeyjnK6YA5RM4L3aQ20lM3OdCfV6BO7hmCrk5zf1HKkSz698H
-         WDDvTvQHemrHTXYjuwfHArlfb8h59kW2MbmI0k+5QGczkuui5mi/8GLqzrTVtXT68COX
-         ROlT9qQ61GXJlYt+dzoisUc4EAepkCq/fvxThQ7jcItYjKjR7ZQdo8NzN3dXSjgl74eP
-         2s9Q==
+        d=gmail.com; s=20230601; t=1763665530; x=1764270330; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Xl3EoqySXh7XJKZ8Lr/iLEpj//mEKSD+zLDogPvmGpE=;
+        b=inPXEIFUOlniwHtfGoLMriW6AZygPpTPtXAqic4cB7JVliCXU9nwsd6krzdeZDgpRT
+         lZVmVd/gU2wviMU+YO5E8D7lKQdmd8YlK7yECDRegDseSA/6gF/LRgMg1VqDLCZzSj5Y
+         GJwQBGLObQD3T8qECsBa3Fo99ub4NKiKnE8/ex7C9v4d3C+soTAoUUfqHqJOhxPcsLdB
+         oMepDxUyYCzRLIuMaChJ8Q2kw9/JNBf22Csr8SQHSaA2o1RoEEX1oepbY1+a7MVAZhEm
+         NY1pOQHO4knPRbTFmsJAKOu8XEZcTUPPAXKfRmWXiw1gtdaZBmZx1aMt2B9UJHOQ/HC6
+         asyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763662733; x=1764267533;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=1BrywyG1hOy7kAv+f091SDz9V2pzLBp1xF0S6DsH1Q4=;
-        b=cCL6AOyQ9elSzw/NyzRc4CuBWEXdYMbqVt35I+JBumzo7JcmVQw23dCRd21c/IZGNH
-         oEl5RIFmFaxBDeVxQGtDJ23kuYM+prwA5N5S+yAG2iS9CrLEGfe21cbjTAK6H3GCwDwJ
-         7VzY5UmBO+6w9GaJHCATaTR+iHFHpIOcu6YBoYTdBuaY2cFjpu5qOGnHiYmOfViTCSZ9
-         ntSI8vbjBpOaQBHs1ECScKB3k4C0W463WnfmJw/HqFDyi6RRNcmd4RiZgrEmSifd5nEL
-         QmAjVhpF0DCtORCEspN3sVQ6zHEeshBUDNCaTa3Dgxh16fEmtJZV5FZG9ygwzA5mH5qW
-         SaDw==
-X-Forwarded-Encrypted: i=1; AJvYcCVPdKv76VESBOGHa5JvZIeTgtm0qkynZSnGwtb9t5qxBsuQXMR2bsB4x7yD1sD4vX/Zuqw=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywl6kmWOsQQ7ya8nXxXTwnNE84BHUH0WSmvwkxYJUgLOoR9S5Qw
-	yU+Vp89ro6qyqkv8iijLewU8Np80gWEiy+zfMqPnSdT2S+/39D+QofRTWCuUxHyYLS3XTR46ckr
-	p2D1c77EZx93/bj5Wt/aRNOYkY8yzyIuxPEjh5nU=
-X-Gm-Gg: ASbGncsjyv3CVeUn3hWOAkVRMkO6gGWjltdgDOvOYQpTAKgQaARsR0Ij5dc0vg6iiF+
-	CCabmwuTi+IKSkU2QCew23wWxiY1HBf7UbqSoQ74r4fNEK8nfxIh7sTgtDObx56+jEcjkO5I2jm
-	Cy/B/DVrR9oxoo5J5frGBFnGDsL02lgkBe1XmGZ+AbxENa9ibt+6YQF57Ai0UvWZl2jRfd2L+N6
-	nwQgvGGS3UiHroU+6Wr0xGK40MjgfcDG9I1ytz2yzvYi3eeFCN3NHSvacLjwVXpLFV88gWUYPVt
-	u7A8EJior32DClG/HGYSQylEExQhrA==
-X-Google-Smtp-Source: AGHT+IHHh/FqaRfEcKyEDKXDiRJco5H7vXR/iNX2CkM6e6ACbdWqqWKnWJwE0cUWLTmNgQcl3ZyoI6UaMuE76ztW0uM=
-X-Received: by 2002:a17:90b:2243:b0:341:c964:125b with SMTP id
- 98e67ed59e1d1-34727c4bea3mr4168090a91.31.1763662732896; Thu, 20 Nov 2025
- 10:18:52 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763665530; x=1764270330;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Xl3EoqySXh7XJKZ8Lr/iLEpj//mEKSD+zLDogPvmGpE=;
+        b=miEiiUg/WagsxTTyAdIt80puWfsTyzOEPJJSRpMnG+YnW/NGcDY0y2u/D+mAx7yXKF
+         ZN8GktUZ0UtkOiXjkNSier8mjTNfqWAcDK1VqJ8B7uO78pauZLw9IQqLfssaP5M9RieH
+         bERujUPP2sPeCsPSg48IRQp455ekf+WIEVrDz9hOpnraTqhCtTvm+AEO3HGzPY86D2PM
+         DeJuUK4J0EAwCzHZxAjoRGkjZQFmGbzr43w0OQkcS15SVJ/CJ3D+PmFfbbHbw/5WSBxh
+         Yb2gXwQPLRiU10JieVZqUZahiyN8XcqVgBI/vysey06nLvLz8zucMOnFj5KSubme36TC
+         sllg==
+X-Gm-Message-State: AOJu0Yzho/uNgrJrO621+2coKi0Wa2WTdnM1aaMsEXndtaIwGjEIGrLz
+	7o9Mc0NRAmgqpkznR9t4OTlRyVtGEvPpjL3/S/73FycAmyvxDRbT2du4
+X-Gm-Gg: ASbGncvpE5mzX/g+k6RaP24Pi+wKWT+eYUHnDegCTpiaCEaw6kVK+TXjeJ/gxqAzU0B
+	q2TLH2jr7fRmgS8ZbS7yvB1cMCHLmQ1J2gHzfIBBO5iRx20CzX2JgZLVWIUAJeneg55GX2U/s2I
+	VbKaKoVKbe2ggAradBZ1RoiiM/1s9O5dvPUx+YHui1RT82MTxv7RppuuJfcr1Yvvs318flGEfTt
+	HQptd84Wp98PBIHL/qXxAmIGzyO5KGG7x43OVNa38x1P3ZswvD8pki8pJjm6h6jsVNIWfba4/WR
+	W/SjwvIhTOxCs5k+z4Q5ewq6yK0p1sq7nJWFldCfqugaLhAjVovELPbHqhRXKFs03kqBQa84Zw0
+	T/Myu1KNTERmYTvU0JwJaMPbU4l4FanAOlZXEOUx2oFA7FVaCMFerW9svl5cHDK9A8tYREvU/7i
+	yf8VCR
+X-Google-Smtp-Source: AGHT+IHRBiRUDc/J1uhEwUqmhglk3sLbhpK4ccmKgH7zSRsnATW8sNNF3Ivhd37swS4sN3qo8pqf5A==
+X-Received: by 2002:a05:6871:2b99:b0:3e7:e20a:39fb with SMTP id 586e51a60fabf-3ec9a459857mr1954404fac.11.1763665530002;
+        Thu, 20 Nov 2025 11:05:30 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3ec9dce7853sm1538753fac.20.2025.11.20.11.05.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Nov 2025 11:05:29 -0800 (PST)
+Date: Thu, 20 Nov 2025 13:05:26 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] refs: support obtaining ref_store for given dir
+Message-ID: <pyt5nc2v25oarqmuxld4nrknmsomjnyooj25ffjetcue5zq7xi@vglcil42as5a>
+References: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
+ <20251119-kn-alternate-ref-dir-v1-1-4cf4a94c8bed@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2101.git.git.1763232863.gitgitgadget@gmail.com>
- <39b17bc64ff0d2e4162437ab745845c055315037.1763232863.git.gitgitgadget@gmail.com>
- <CALnO6CBzE-+51LfgjpEv665oG6kZG9_4YZTv8qgqtNrhh+a-Bw@mail.gmail.com> <CAPig+cTpDdTceBSYoVRBS7wKoSxURMeTA7TruiAmjgTX4B=m5w@mail.gmail.com>
-In-Reply-To: <CAPig+cTpDdTceBSYoVRBS7wKoSxURMeTA7TruiAmjgTX4B=m5w@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 20 Nov 2025 13:18:40 -0500
-X-Gm-Features: AWmQ_bnDuWyiB30mdIR49tP35ge_f12lTKxgCJXnH-N3YjNT-KVDo0zsNytD--M
-Message-ID: <CALnO6CDin=zO5EBU2fC7xj6N9ZtAw0ge=GC=TRtE=2dM65+UxQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] git-prompt: add quiet upstream indicator option
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Kiril Ivanov via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kiril Ivanov <ivanovkirilg@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251119-kn-alternate-ref-dir-v1-1-4cf4a94c8bed@gmail.com>
 
-On Thu, Nov 20, 2025 at 1:06=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.=
-com> wrote:
->
-> On Thu, Nov 20, 2025 at 11:10=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.=
-com> wrote:
-> > On Sat, Nov 15, 2025 at 1:55=E2=80=AFPM Kiril Ivanov via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> > > diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/gi=
-t-prompt.sh
-> > > @@ -275,6 +279,8 @@ __git_ps1_show_upstream ()
-> > >                 "0      0") # equal to upstream
-> > > +                       [ "$quiet" ] &&
-> > > +                       upstream=3D"|u" ||
-> > >                         upstream=3D"|u=3D" ;;
-> > >                 "0      "*) # ahead of upstream
-> > >                         upstream=3D"|u+${count#0  }" ;;
-> >
-> > Our coding style also prefers "test" to "[".
->
-> In this bash-specific script, the normal project coding style is
-> relaxed and `[` is used regularly, far more so than `test`, so use of
-> `[` here is appropriate and consistent with surrounding code.
+On 25/11/19 10:48PM, Karthik Nayak wrote:
+> The refs subsystem uses the `get_main_ref_store()` to obtain the main
+> ref_store for a given repository. In the upcoming patches we also want
+> to create a ref_store for any given reference directory, which may exist
+> in arbitrary paths. To support such behavior, extract out the core logic
+> for creating out the ref_store from `get_main_ref_store()` into a new
+> function `get_ref_store_for_dir()` which can provide the ref_store for a
+> given (repository, directory, reference format) combination.
 
-Good to know, thanks! That'll teach me to respond without looking at
-surrounding context ;)
+So when we refer to the "reference directory" in this case, we are not
+refering to the "refs/" or "reftable/" directories directly, but one
+level above that which is typically just the gitdir itself. This seems a
+bit awkward at first, but makes sense since, for the files backend,
+there may be symbolic references such as HEAD that exist outside of
+"refs/" which must be considered. It might be helpful to clarify this in
+the commit message.
 
---=20
-D. Ben Knoble
+Otherwise this patch looks good.
+
+-Justin
