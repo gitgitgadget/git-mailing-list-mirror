@@ -1,39 +1,48 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335F423496F
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 07:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3251B26E161
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 08:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763625029; cv=none; b=pY2u72Lzn36qdO/4pjo2QJwiivWeDTxPD0+ygZVjnjqZ+y/eDebGaiuHB3MyHjKyp/yhRc/iXW6ozdcdUOgUWyP0LYrwfCR7b9pdjXSHfpRhjee4qeX9btEBMfJtcuunkMjcj926cm/xgISEck1PYUtRm+O2svDWsy6rvzf6lGc=
+	t=1763625929; cv=none; b=RVL8ntM0BEXcDAPztpcpC6DXA5KG6m8zjZ4PyJ2EgfkMeK3P5wjc9pV85djk55BZo/PE7KvdPe3cCd7EWBwbVYfHq2tdFD+F7DBVtIm+jgjF30BRdapKCffFnwDSHtzyTkHZWkfdbop+Th5r6WCI3uX+Qer8rUopwMnZmPW87FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763625029; c=relaxed/simple;
-	bh=YZJprEiy5sIYhuGYM+mAGqDijGvllmilLNzTah1lZho=;
+	s=arc-20240116; t=1763625929; c=relaxed/simple;
+	bh=+CTksfJ4142eeh9PpRFRdeqjhqXAfslsSo90fyKQfuY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OEpJqoFBmczSMVOwW4m42kMOiVY0HkG9siEAjEruL1+pZINQZ5T0HDCkq4Jqa4URipy9tEAcMfE/ssApfxQZrug3HpDuM+p6eS2yFZap2j71fP8j9c1Lh2l1uRic8Je+mLULanSfrfXAimczfQ9b4mjUnzUy4HCgSgZNKpa7e1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=I0hsXNYB; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=fS66cBtNty8qe6I1SaalBgA8U7xbObbV4bslV4BXQzb3o3SPyFdptoIotFkhCw9Iu8nmYIeNGWMFQsIcAXWnFUQUA2Vhm70vvm/bSeyj0YCy+Vdq6+6d+FG9lARcBKlOPEYgfT0V1vEdUYGYXA2W/SF0dAgT4AZ9Qyk938cu+Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HeNfZg23; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="I0hsXNYB"
-Received: (qmail 41440 invoked by uid 109); 20 Nov 2025 07:50:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=YZJprEiy5sIYhuGYM+mAGqDijGvllmilLNzTah1lZho=; b=I0hsXNYBu+O9HsC1Cv2WCnw2TsuwDGiObgVsW9CdAWmH1thuL8JegGad1767Eruwhm1tVPXTjlSbF4Zh7qZRVtN+r6U62eEEUtPT+583Mg1jOzchzv1egOJ5S61dgf92UbLF6oNzIYt10wXBp6SVA9Te1SicAeuQfg5JvUPqt4m428vbCAeAxGGYVLN/r/FzaU2kIK0G8i6KxGl2Mvqw7HhKOH8OMDG2OBK0xrhQkjT8QscuJFdnp0Jj59zhyttBSy3j0C9Fy5mCsSNImKQkMq0H7LP92AiTUFlLbaLxdcKPm51xHmuhdmwbgzM2CU82AJet1NfjsaQ8dbICu1FIFA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HeNfZg23"
+Received: (qmail 41585 invoked by uid 109); 20 Nov 2025 08:05:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=+CTksfJ4142eeh9PpRFRdeqjhqXAfslsSo90fyKQfuY=; b=HeNfZg23HH88kSabkFzp+7c5ZV3YmRRv5cetVsfDi6Spu52CnlkNadFK43xlrHy6ztxo9sqS72vW7uIRR622X9+6nlR8H37NWgzjJK/2MHNWWmnKRODtKPuUa8Gvf0B8bvQcdhBM1UZYoFjIarjH16GIMCk/D3bAXSUHNLxcbzlJ8byYAdHuJrvVhCxP6GGYZEDr6jKLhoeKXZ8PM6rMRwrwoMN5PnLhW1twtw2WBZS4GD9E3OZeQdNwunNFUk368dkpex+hfC0Ag2C4Q122z1bfgjp+HTFr11QpCQBy2kexr8ZNJj/uQs3wacTwkmX0uq+wI73de2Uc6PxqW/VpCw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 20 Nov 2025 07:50:19 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 20 Nov 2025 08:05:26 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 62061 invoked by uid 111); 20 Nov 2025 07:50:23 -0000
+Received: (qmail 62251 invoked by uid 111); 20 Nov 2025 08:05:30 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 Nov 2025 02:50:23 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 20 Nov 2025 03:05:30 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 20 Nov 2025 02:50:19 -0500
+Date: Thu, 20 Nov 2025 03:05:25 -0500
 From: Jeff King <peff@peff.net>
-To: Han Jiang <jhcarl0814@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: `git config get --type=path` results in segmentation fault on
- value starting with `:(optional)`
-Message-ID: <20251120075019.GA1283645@coredump.intra.peff.net>
-References: <CANrWfmQUuGKWPc6JCzeCaa9t98ag_Lyk0G_Prtd8YmqP-TiRpg@mail.gmail.com>
+To: 'Ben Boeckel' <ben.boeckel@kitware.com>
+Cc: rsbecker@nexbridge.com, 'Junio C Hamano' <gitster@pobox.com>,
+	git@vger.kernel.org
+Subject: Re: [BUG] `git describe` doesn't traverse the graph in topological
+ order
+Message-ID: <20251120080525.GB1283645@coredump.intra.peff.net>
+References: <02d701d9ed6f$abcb4b00$0361e100$@nexbridge.com>
+ <ZQ3GAJ/AHsM9e9a6@farprobe>
+ <02e701d9ed78$436b3c60$ca41b520$@nexbridge.com>
+ <xmqqediq2j0g.fsf@gitster.g>
+ <032d01d9ed80$5e569670$1b03c350$@nexbridge.com>
+ <ZQ3ggxA7KOysXrba@farprobe>
+ <033201d9ed85$991c6af0$cb5540d0$@nexbridge.com>
+ <ZQ3leoLhljc+P5wP@farprobe>
+ <033c01d9ed8a$c6916f30$53b44d90$@nexbridge.com>
+ <aR6BlHflRVLN8_XO@rotor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,135 +51,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CANrWfmQUuGKWPc6JCzeCaa9t98ag_Lyk0G_Prtd8YmqP-TiRpg@mail.gmail.com>
+In-Reply-To: <aR6BlHflRVLN8_XO@rotor>
 
-On Thu, Nov 20, 2025 at 07:46:42PM +1300, Han Jiang wrote:
+On Wed, Nov 19, 2025 at 09:48:52PM -0500, 'Ben Boeckel' wrote:
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> git -c 'section.key-path=/nonexistent' config get --show-origin
-> --show-scope --all --type=path 'section.key-path'
-> git -c 'section.key-path=:(optional)/nonexistent' config get
-> --show-origin --show-scope --all --type=path 'section.key-path'
-> 
-> What did you expect to happen? (Expected behavior)
-> 
-> 1st command outputs "command command line:   C:/Program Files/Git/nonexistent";
-> 2nd command outputs nothing, $?=1;
-> 
-> What happened instead? (Actual behavior)
-> 
-> 1st command outputs "command command line:   C:/Program Files/Git/nonexistent";
-> 2nd command outputs "Segmentation fault", $?=139;
+> So I finally found some time to go back to this. The actual fix is
+> actually rather easy (patch attached). However, as guessed at previously
+> in the thread, the performance is in the tank without an up-to-date
+> commit graph ("instant" with it versus "minutes" without). On the other
+> hand, it is *accurate*. It does fix one expect-fail test case already in
+> the test suite (also included in the patch).
 
-The issue is that git_config_pathname(), when it sees the ":(optional)"
-marker, may return success (0) to the caller without actually setting
-the "dest" parameter. So if we are lucky, we get a NULL and segfault,
-but we may get any random data from the uninitialized pointer. Here's
-another caller which exhibits similar problems:
+Minutes? Yikes. Let's look...
 
-  $ git -c blame.ignorerevsfile=':(optional)foo' blame
-  double free or corruption (out)
-  Aborted                    git -c blame.ignorerevsfile=':(optional)foo' blame
+> +/*
+> + * Topological comparison: always return parents before children.
+> + * This is reverse topological order: children before parents.
+> + */
+> +static int compare_commits_topo(const void *a_, const void *b_, void *_unused_ UNUSED)
+> +{
+> +	struct commit *a = (struct commit *)a_;
+> +	struct commit *b = (struct commit *)b_;
+> +	if (repo_is_descendant_of(the_repository, a, &(struct commit_list){ b, NULL }))
+> +		return -1; // a is descendant, so comes before b
+> +	if (repo_is_descendant_of(the_repository, b, &(struct commit_list){ a, NULL }))
+> +		return 1; // b is descendant, so comes before a
+> +	// fallback: order by hash for determinism
+> +	return oidcmp(&a->object.oid, &b->object.oid);
+> +}
 
-This is all due to 749d6d166d (config: values of pathname type can be
-prefixed with :(optional), 2025-09-28), which changed the contract for
-git_config_pathname(). Before that patch, if the function returned 0,
-then "dest" was guaranteed to point to a string. Now the caller must:
+Ah. So you are doing two full traversals for each comparison. That is
+going to be expensive. You would do much better to walk all of history
+one time, marking the generation number (distance to root) of each
+commit, and then comparing generations here (if A has a lower generation
+than B, then you know that B cannot be an ancestor of A). Or if we have
+commit graphs, just use the generation numbers they already contain. ;)
 
-  - set the dest parameter to some known value like NULL before the call
+We do all of this already for the "--topo-order" option of the revision
+traversal machinery. If we have commit graphs, it can output in
+topographical order in a streaming way (see init_topo_walk() in
+revision.c). If not, then we collect all of the commits up front and
+call sort_in_topological_order().
 
-  - after seeing success, check whether dest points to a string (if they
-    want to know whether we actually got a path).
-
-This more or less[*] does the right thing when the dest points to a
-static global, and we call it from a config callback. In that case the
-destination is initialized to NULL, and anybody who looks at the
-variables assumes that NULL means "it was never set at all". And that's
-the case for commit.template, which is what the test from 749d6d166d
-covers.
-
-But many other callers are broken. E.g., blame.ignorerevsfile does this:
-
-          if (!strcmp(var, "blame.ignorerevsfile")) {
-                  char *str;
-                  int ret;
-  
-                  ret = git_config_pathname(&str, var, value);
-                  if (ret)
-                          return ret;
-                  string_list_insert(&ignore_revs_file_list, str);
-                  free(str);
-                  return 0;
-          }
-
-which tries to insert (and then free!) uninitialized bytes from "str".
-Likewise git-config does:
-
-                  } else if (opts->type == TYPE_PATH) {
-                          char *v;
-                          if (git_config_pathname(&v, key_, value_) < 0)
-                                  return -1;
-                          strbuf_addstr(buf, v);
-                          free((char *)v);
-		  }[...]
-
-Those (and some others) all need to be updated to the new semantics.
-Something like this would fix the blame one:
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 2703820258..15d719aec3 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -733,13 +733,14 @@ static int git_blame_config(const char *var, const char *value,
- 		return 0;
- 	}
- 	if (!strcmp(var, "blame.ignorerevsfile")) {
--		char *str;
-+		char *str = NULL;
- 		int ret;
- 
- 		ret = git_config_pathname(&str, var, value);
- 		if (ret)
- 			return ret;
--		string_list_insert(&ignore_revs_file_list, str);
-+		if (str)
-+			string_list_insert(&ignore_revs_file_list, str);
- 		free(str);
- 		return 0;
- 	}
-
-I am tempted to say that git_config_pathname() should set the dest to
-NULL itself in this case, but it is really only half the battle (callers
-still need to check for NULL before looking at the value).
-
-I am not sure about the git-config one, though. What should it print for
-an optional path that is not there? The empty string? Is it an error?
-
-I put a [*] above on "more or less does the right thing" because there's
-another corner case, even for callers like commit.template. What should
-this:
-
-  [commit]
-  template = :(optional)does-exist
-  template = :(optional)does-not-exist
-
-With the current code, we will ignore the second config entry entirely,
-and the result will point to "does-exist". But that feels surprising to
-me. I'd expect the "optional" marker to set the value unconditionally,
-but with an annotation that the entry does not need to exist. And that's
-something only the caller can interpret (for commit.template, it means
-setting it back to NULL, but for blame.ignorerevsfile, it means skipping
-the string list insertion when it's not there).
-
-I kind of wonder if git_config_pathname() ought to be returning more
-data to the caller, like:
-
-  struct config_pathname {
-	char *path; /* never NULL */
-	unsigned missing : 1;
-  };
-
-That would change the interface of git_config_pathname(), but that would
-also force us to make the appropriate changes in each caller.
+Sadly, git-describe does not seem to use the traversal machinery, so it
+is not as easy as just setting revs.topo_order. Either we have to adapt
+to using the regular traversal code, or those same concepts need to be
+applied to its custom traversal.
 
 -Peff
