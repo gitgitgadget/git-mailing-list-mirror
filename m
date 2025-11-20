@@ -1,80 +1,126 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0188E2E1F05
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 23:18:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1567619E97A
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 23:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763680687; cv=none; b=KYKcnUtL89gaPwzJl5HZS5M+3JKSZb0nFwq+sAMetknQYRJmwGN6MrPO8VZNmmvV4ng0vMnFz7nm+QzJ9h6NNyBgOf5WBwWVMb9MnaDzscWrmqqqx+Tkzu5ct+q2d5oHVe/Lf6teMpkibNI+m8cve8HUu14eblRwgdKziFNa+g0=
+	t=1763681961; cv=none; b=iB6yPExFLitdRXDXla8VH0b66Jixd86Prt47+8G3oP3sk/RGjFWkU1ILSFb5uxNvJiti/QpXXBS1WP2gV+bSk1LyMxcLJqN59xqdJlpY/w2wNWFpMZJq2qolM8A55jCcS0lpRJYc65Cvv2eQYl2iVjWYHAJxVQ7pE3lyFVeP/KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763680687; c=relaxed/simple;
-	bh=49Sys2U4jViphzErNtZcmg3IYGQU+YIOu7Ks1Vgj6VM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gs2Ul74UX6C0h8E6tPSVwKWP6orsMi1GzGZ+zG0RQkGjOSy9rDWmWQhg4bdoOrW9RwpykAFt96dLy3C25tom2giRhE96La5s9keCCDO2Y+rL/ElpXaBVjumXO7vSK13jIp+3DL5CSZJSipLGPVZKcuNshDtJKGk54I8IDJj/SC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ehvycK0l; arc=none smtp.client-ip=209.85.161.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763681961; c=relaxed/simple;
+	bh=divaF9ycuvhqqj0LmVi96O9V7JfBgg812YB5U/DltfA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=oGa+I4ZtFHYt16JHQn3tzL8OEf4rnhSrYtXwjV9Uxh+4W25IWwmgyZqWI+MrV8ha/68rirWc/h5L2C8ADRPX6dxGrgWq2G3GGCpOpGxgkK98k553gKyIyUjVKOdK9xUtfqK/XJL601ICc4AQL5PAFWjTwjOHDR4M0cVvhIA35DE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ucsc.edu; spf=pass smtp.mailfrom=ucsc.edu; dkim=pass (2048-bit key) header.d=ucsc.edu header.i=@ucsc.edu header.b=hX8nJczo; arc=none smtp.client-ip=209.85.160.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ucsc.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ucsc.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ehvycK0l"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-656b4881f55so630323eaf.2
-        for <git@vger.kernel.org>; Thu, 20 Nov 2025 15:18:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ucsc.edu header.i=@ucsc.edu header.b="hX8nJczo"
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4eda26a04bfso13931941cf.2
+        for <git@vger.kernel.org>; Thu, 20 Nov 2025 15:39:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763680685; x=1764285485; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fA9cF4LXvFB0SJqXC01BfZsU+v8EQmA3c57HN2Z+NAU=;
-        b=ehvycK0lvavnA5/xigF+5Fm3HPgMXnpJR1BX/+alxA9DB+GvmdZIyFJAz1Rc5luuk1
-         doEqcN7egbaDmwjg1d32iaQPHW50GRR/jI1C/dkRYBgCq+kid4XSX9fplKfiEGanuqOH
-         v59XklKmHHtWKHWt3O1uioierESJaJmsmhVYfhZo1860r+MrFoLoh+eB3ThWVAe9eb6j
-         tfijv5Tpsk+6zVXHCU0rg9My2/u9q4jU7ZdQsANnT0MZlVlyfXWWIHYh/QikM49wM4yU
-         a36OcuSZBhoOFYcV+nt1EumMCvxUWLuJCT9cBUELS0GmI3VzfDUMO5Uz9reH4gDRxTKU
-         CH6A==
+        d=ucsc.edu; s=ucsc-google-2018; t=1763681958; x=1764286758; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=zvz9S9vnrWQ8kll/fYshVBVhy7B+TEkdQISgXBHHUpM=;
+        b=hX8nJczooJHV1+PtWk3MxEOOrXku3TIayKX91h9jkG6PikoePni0zrMUw7a5tfbJDd
+         IuSIFhDnhYauQp/1r4ucrqpNDmu45Q37rA16yD/xuoDJOz04HEXhJJyrTf8N4JbUnc5s
+         keR6YwMNAUvGfy/bJ8wJaQn7uHvSSDIB1JcFoqu57ZweCWYHLOKol/zwKwm+jZuEHmqJ
+         V7TeUsgOgKSbOu4sMZnbyeRmgxUPB89ipXlaq69NzFw0kGeO+2mgcFTctccZ5C2TOdMx
+         Ex6xaZsZ7GFkKAKNdu+s7EcXvMHsizNdqLz0ql3f/HxlslHqAohdSV+mJ844Pm0JC2UD
+         zdVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763680685; x=1764285485;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fA9cF4LXvFB0SJqXC01BfZsU+v8EQmA3c57HN2Z+NAU=;
-        b=KZBcmIdf8OowMAbMK2C9C37v0w6WpFCZK3WAkNWfSGBqk8GBDtig2otYQsQqcK0Hk/
-         aS5GS29Fx/E+q73Xn/aIqJ/ysRrFNMzC4FgX2xMMUSUnt+DVBb4+sEM5oRz0KC7vhmVp
-         GBIyaZz7F2CKAd9keYdfUf4rWLYKAXCMwbcOwDQL0Sifs9TNp9I9gOS0mco+xbY2ZIVo
-         2+011fs8IJkVUmqzR2o4ZNlpPTLuk6pwo6opOkssxbifXzGVrkt62WzsuvbZDm7EbeFN
-         x4PJGqR1jSDpFywKN0FwenVnd64WcWmD6zZvRA9DsJcIj+k7cpyoF3rNnJdJC1xaiqwJ
-         I6wg==
-X-Forwarded-Encrypted: i=1; AJvYcCU+zgA9VMhigAOupimHcSqGxW2gb73yxCr1iUzQfOpSE8qw2i3MikHRu6XQYQ0s8mjdotA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzn9uCZJipPu5Fsw77IRphss+0F3EmxJfhLuT7QfxHlqXc+RrEQ
-	hU41Ym67OUSoNq4crwZZpyIN16UpgYOts9wlWhJyf931BlbupAyzOEqcaXf9Sb6GeDnyu1hjO4c
-	QWYFqbEy68OBWwyGDDWJ8w372v0WWsRI=
-X-Gm-Gg: ASbGncvFaGJjI1tM8tgGhFfhdj2GN4zoS0nAMC9HiIvS1W6UwhUAY9O/2HTI1BHN5Ex
-	v0NJx3Qn1KGOxqP7NhCNiZDG1yFB0aW93uhivXDVbA7UEpnQqF8y2neLpt2nhlZRmEe50UnesiF
-	2hpbp1AwSezYxaI/Z0rGQP69wsksgeWa1FmWLO3uzPMKYyOalsWHbxAdlhnfFsFz4P5/SJ7gZc6
-	itKTG36HoS9ins3KLL0MXtpY03ikNXOIvCEJEBGptwinzQGb3085yOXz1RQCRqjs6DsFVd8BFU1
-	9+3oItH/JQgYol1vceV7wPwCKA==
-X-Google-Smtp-Source: AGHT+IGeV1mQwywzkFQRZbiuC/Wj9pPC7yCMCdJM7/U50z49LTVkmfMXurTS+VpEnwYMwHdtg9ZUNtb7oi/FhGeVbO4=
-X-Received: by 2002:a05:6820:150a:b0:657:6905:56f5 with SMTP id
- 006d021491bc7-6579085ab05mr260101eaf.0.1763680684947; Thu, 20 Nov 2025
- 15:18:04 -0800 (PST)
+        d=1e100.net; s=20230601; t=1763681958; x=1764286758;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zvz9S9vnrWQ8kll/fYshVBVhy7B+TEkdQISgXBHHUpM=;
+        b=fqyUij8BqgF/kwyreU7arOVhEFCXu7FRDuM8xDnhQ3UUhNTZQbkcCRSaAcADkqHoQn
+         wKMYv3B5bXQkiEN2PrG1vUhniaBlSdc4lfrrf1Wd+rH7GB8sSUPCKFhezmPLRgv8vbSv
+         LCMdpVeVdh2vuPGdMSr2yt4hrR7jZXyrlbWtC+UTfASJAaJWr+mKniprzmtRu2vaRLKI
+         qra+HVHyQad97BUO1phQgLXvsbDCRGKVVL5c/6YuIGKD2Xij9XNT7mSroVD0fFXcMdkY
+         lf06h2BIkBA/vgxJvIfDW2zmUKaLbFhs2v9cd28WFeQef1s4X5PF/J0B/oxYuhpjTIP1
+         dExw==
+X-Gm-Message-State: AOJu0YzFMN09fs5204bUO1bLAnu92U5uuA12xGrxjNSIf5lz5Fvw7A6t
+	d/xaQCmnG1+29xEDnn5OI85RZaup6vLfXwN91Dj3KMNUCk0aIyVg9oO+dz66SOSTuhiRz8f3OBT
+	vTi7dVD/JGz2eJufpbn5+AyRF70AXotx/4Tv3tviIwFOAUTrxrH4WckI=
+X-Gm-Gg: ASbGncvm7lQYu8K7X7Tv1FomBsttAvbBols8hTT4Bm/CjlaSgLL74O+RhtEjYlSQ7wc
+	NHsXC86Ch9ldQOjJ2w3n0lCpWIHlDTJJacLAy9rz7OcDOXdv8dttULTW3/V0dWrEpUcQi2sGwGK
+	Dc8pqqSYA7qo439KmATJowitBshfxxLp4v1rq7W1QMcgLiBfBbTmYR3tMHC2sFcN3baAXMsUL1c
+	chR69S6h3cETP96GlpmLfJqeeQYukFGokesfrZuIKbWeVZRi95EaY6XlIH3cpriGVagLlDXlRuY
+	SnbeXshcrN8w6SW2sWPot5avcfoGLM9qwse5dJ6KMPZp4SqMd3znF5inuLwMHEvd4k/Sa487zLP
+	U9Sk5Qle7xJgKWw==
+X-Google-Smtp-Source: AGHT+IEsJq34WhzmALN++9Yhgcya0koZVcL4Vc18IjTCClkIy+LLojeZjuY+Omlv2RFlNBf3GhlLNBidrB/hCbgPb2k=
+X-Received: by 2002:a05:622a:83ce:b0:4ee:1c81:b1d5 with SMTP id
+ d75a77b69052e-4ee5891161fmr4769281cf.46.1763681957637; Thu, 20 Nov 2025
+ 15:39:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAL4-wQrgD3nnW2BfNf6e9d7tDANE60dYBRRP_0FW3Z-LvQrZmg@mail.gmail.com>
- <6F4B3935-7F2F-43C9-8E5E-12E2FB3331BD@gmail.com>
-In-Reply-To: <6F4B3935-7F2F-43C9-8E5E-12E2FB3331BD@gmail.com>
-From: Martin Guy <martinwguy@gmail.com>
-Date: Fri, 21 Nov 2025 00:17:51 +0100
-X-Gm-Features: AWmQ_bnfOTFwRTZhnwP5565W4JZx2xH5gWVllSrlNjx4y4gijOPQgUdZ4qMi1VU
-Message-ID: <CAL4-wQqH2=68MJ7o0aU9hJ2bgYY1G=xWvgEjpVz9QvTPWMgSsw@mail.gmail.com>
-Subject: Re: Feature request: git cp
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, git@vger.kernel.org
+From: Paul Wintz <pwintz@ucsc.edu>
+Date: Thu, 20 Nov 2025 15:39:01 -0800
+X-Gm-Features: AWmQ_bkRb6LZWJfZiEOgswvy38Y4AIXvrhbD9aSNxWOdUBB9ESbJPct5J2MqMP4
+Message-ID: <CADBJ995pDG9R8EJnK5nwWKPWAf-XF5P5KTY+bAx71EhdMvvO6A@mail.gmail.com>
+Subject: [bug report] erroneous suggestion for "--add" option in `git config
+ set` error message
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-Many thanks. So it should notice anyway! Wow.
+It seems that there is an erroneous suggestion in a `git config set`
+error message when setting a value that already has multiple values.
+The error message says to use the `--add` option, but this option does
+not seem to exist. The `--append` option should be suggested instead.
 
-Blessings
+Steps to reproduce:
 
-   M
+1. Create a configuration with multiple values:
+
+    git config set --global test.test 'hello'
+    git config set --global --append test.test 'hi'
+
+2. Try to set the value of `test.test`:
+
+    git config set --global test.test 'hi'
+
+An error message is shown:
+
+    warning: test.test has multiple values
+    error: cannot overwrite multiple values with a single value
+           Use a regexp, --add or --replace-all to change test.test.
+
+3. Following the direction to use `--add` produces an error:
+
+    > git config set --add test.test "aloha"
+    error: unknown option `add'
+
+The error message should say `--append` instead of `--add`.
+
+[System Info]
+git version:
+git version 2.48.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 8.12.1
+zlib: 1.3.1
+uname: Linux 6.14.0-35-generic #35-Ubuntu SMP PREEMPT_DYNAMIC Sat Oct
+11 10:06:31 UTC 2025 x86_64
+compiler info: gnuc: 14.2
+libc info: glibc: 2.41
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+post-checkout
+post-commit
+post-merge
+pre-push
+
+--
+Paul Wintz, PhD
+UCSC Hybrid Systems Laboratory
+Hartnell College, Adjunct Faculty
+PaulWintz.com
