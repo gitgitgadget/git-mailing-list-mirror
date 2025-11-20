@@ -1,106 +1,122 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA43182B7
-	for <git@vger.kernel.org>; Thu, 20 Nov 2025 22:11:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5BE1FD4
+	for <git@vger.kernel.org>; Thu, 20 Nov 2025 22:15:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763676662; cv=none; b=nyy63J+OOP9ERQB4daleSyxAWgza50Iq+rq8aFhUCLb01VB8vbure0GF4ODzCN4CEig9QPbVsG79E44Clke6ChCmdpkG2utZZTGRiX1GTZh88pzqAnm3oCysHcZkgU1XiAjRg0DVjlQvLjy03gwlwlOWMwuqif8GAcjn0a3g8Q4=
+	t=1763676959; cv=none; b=gFwNbVSLtWkKnkp0lDhjQ7DDaGdNYlZ+aKaxg5n0dnGHRiTsUuXG8yDXhUyPFrsMKzMS23BCJ3IEIG0zYwKtvGHDWktNgH/Z3/STGTYzAonbCZfrnch5MV0rMiS4o5+8MR5/u6SOC4+4nbP2XKVUm5my6iwJjdi3H5UjhuJvdxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763676662; c=relaxed/simple;
-	bh=8CNwor6/77PPKbu3tS0ZoCyZT2BiEe6etTxcNiRomN0=;
+	s=arc-20240116; t=1763676959; c=relaxed/simple;
+	bh=pzSQTonne8dVVoYTtXWtlEcPIK98psmWLs08aL7xYLk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=He+ieHZj9R7IsA23UljBuVArWqaNRBMrM2z11YK+N0pLInw0Qnca6BJmi12zf15w2yL1bGLBZhu1BZg9ptCAQm7D+at7JBgJEPolKAb6FUBmahkl+OnjXeAow/SeWqKbT/U2BFWGk6tNShvf6JMJXslLzC4N3YMUojEr21sE3hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IAQpD6r4; arc=none smtp.client-ip=209.85.214.171
+	 To:Cc:Content-Type; b=bzeBMCqxIB/u8yOXo8Jxbs0t6UA7+OUKhlX6Ez4rrf+jTw4fzRPGJ37IUJxEdqELZYMs99eXV5Ibkfu7mlFiZ8uq56ulIKYlq8cO+7VBmFa8LcOCQjQvwMB6jaM3HjJI4usurdIkyICs4UgT+DnVpykcdrulJeQpv4KUvr0gGTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MZ7hqEQj; arc=none smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IAQpD6r4"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-29586626fbeso16526785ad.0
-        for <git@vger.kernel.org>; Thu, 20 Nov 2025 14:11:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MZ7hqEQj"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-343f35d0f99so1135461a91.0
+        for <git@vger.kernel.org>; Thu, 20 Nov 2025 14:15:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763676659; x=1764281459; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1763676957; x=1764281757; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=anYERnCbTxcGtyVs2DucGvKHo7Ykh/8TCj89JHgeJKs=;
-        b=IAQpD6r42469QQReaNBBDvmDquIXrHNqCQJlxsdgm4Smk+ivznBTVu8+v/aHBx1Tvl
-         miL2VMpOt0/W7Un5xFpXhOEPrQXDEirieOTV11jv6aE3Zx8pR0s6zEO4BkPQmDR7NiFK
-         GpMZA66agqW3QGWp+5fj+wnv690UfhXcbpIYyNOOlo2hslH/1yidB51YeRA4di60e+x2
-         ge8Y6O7QA0mDdf+cfFgEUy/C3L2m1SljVqqrspegfWiJuCyoH0sbgXr0PIaxG7bQuTa0
-         eyhThJLOP42u0GQma+L6eKOJW8FOtCkBi8Twl1+5REsNY6r3u+itQ0P6u1cXoTSoUreD
-         hXrA==
+        bh=IlTWhUGbb3mYQveMgyFw5ofkxSkImVK1ZUb/PMjRKec=;
+        b=MZ7hqEQjPWofBiAojInvaNDqv3A932lU6FiJujXKFUovDTnkgkXN4J5xn0sPfwbzne
+         twUT7nwKxuV9gTuOZGgtsoKyWHBCsSKbKIwydSl7APmXaDMdTFXPthlIiTOYhzDuyWgz
+         kK5FFyJbeJmdb3f0zufxrWE2uyASXMygkjlu2VZcu2Bl7qm9/E161bPSHxElgeqs11YI
+         F6qdhPp3dhrnpTTsAgZJp0YPoEq0YXY9uVufGYLeA9L6+AtlDh/UIl3OJc5xgvA88d+F
+         OMDv/pKxOVqXgoaXPk50n97/I3uUnyhcEpZtZAD9cD2DAf24yXDVRsb7Cb1do7IpDygm
+         TKtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763676659; x=1764281459;
+        d=1e100.net; s=20230601; t=1763676957; x=1764281757;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=anYERnCbTxcGtyVs2DucGvKHo7Ykh/8TCj89JHgeJKs=;
-        b=QBMfXCL9mOSrmzs8Gxz5mBLG0WYZazfEPS25ca5xqs1RfleQWaxB7a4wrwsLVdlwO5
-         D+zfByR88ksWvUDXe4qghv5pNHKupJa6BwGWMeh0wMIZo8VAaIroUmbT5l8Lf3VgKWbm
-         zV6vFrsgd7C8pckQUMcOwBUOKIFDRjPSWrtyLfUyClMMhJEW55+gnM//25otVR24yUSR
-         ADKl18sofDUncIOefM9r2ou/lgCB/2CcTt2xoEfDjUEy4gyXngT1SW0+krNwDhfld7uf
-         yCBRxsOnAE4pOgxGkyMZU5ikyZLqbnN9Ga5Z/QXCn2+MEQkbkQhahFjysySbayvO9eVX
-         so/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXEE7dlQpzNt7xIcB8jKIBgwXFnAgUdaXI73KZpCRLzeINGr4AyI3FI5VNiO4Aa/CVZbck=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxcdXDZpTcrXQL3Wl4PhVSpDhtOLKHTqhchH6QWu2RgRPuyuaoa
-	PwQO4UqTKcjPFSsVmTAlNRGG/Iy10I4ejDwIAEpm5+s+8VsRDOydfhp5HXWvtVsdYa8rx5FbYPm
-	gutZAQUTD1ca6yKnetL4cI8VlqcCKKDn1f4wDzX9cHw==
-X-Gm-Gg: ASbGnctR9w1DqBGTY+cTlxD7vDKr8kj5cesJwyVrp2l+g5PQj2dtPjuGaTQzqSiCuEQ
-	a8UZWUKM2u2yKLUVzrW4C4s4llDGSPXwoGnatBaBSn91y4msDAcMnPq76+JvHujRqcLh/lxQjwE
-	fqtEddv/nhW6ClhUeiFZYrehtYjtq6xHzNqh+9gQHl1vT14XvA4bchL/ypz0KWayQX7JOda9cf2
-	OKEb1PXDaRRp8UHf04mM3Y8lI2RME3GOEhL448KUWD1i05yyd6lR5u1i/tLR/ddMJU/8K4JnODB
-	HO6saLo=
-X-Google-Smtp-Source: AGHT+IHNFLNIgJa1Zx3f14/LGRF+qJchFeo8WQiiDqZ2OTMA4YDD29wNO+aNsR/KiAyOsRMRINzShpB2vLduAr/qKTM=
-X-Received: by 2002:a17:903:90b:b0:298:2af7:8d26 with SMTP id
- d9443c01a7336-29b6bf83cb4mr2147525ad.54.1763676659437; Thu, 20 Nov 2025
- 14:10:59 -0800 (PST)
+        bh=IlTWhUGbb3mYQveMgyFw5ofkxSkImVK1ZUb/PMjRKec=;
+        b=FRHGYbC9Ael8Eid0tk5HpQls+l96W4JKEAE24LfLAOZbkwgvL/3F52+EPMkhxXetYC
+         QxMfUvPYHwAW0iLQvrBfrOt+OJZS0NLEMAOfWP2ewFDrcgfTA2UPugxHHPRjPAbuTtgR
+         hHs6PwVUPUDrYlqAAVYqFJ6NSbPVr2EzA37piaGPfgiTjGwae5b/QX6wP4oRl+ZCKx4b
+         tLmRBz54AvAKdkIEndlEkBkj3S1NEF8Q9Q01XCaVyBQ07Lx9BfNJv0koVBHtbtC/Bqbu
+         k9J3y5L+kfYB5LjIKvKQ5LncPvM8+xPLjICC2MGFzo4XMSHFxsQOyceKvUplJpAiLd/6
+         6hOQ==
+X-Gm-Message-State: AOJu0YyQWCp+9+wawyXkf90doxY6pX/+vG+VnOy30Hz7G9ouli7UoWab
+	HFm/7fkAijgoX++XHcJecpVXcDjV4TnpuClPUHcvejrOQL2sizafXP5eTgCL7KCGO/6sijUD7eu
+	vksuw5syQNIF5dewl+9fGpblFCZ7ihL4=
+X-Gm-Gg: ASbGncvQE1cKyGfxQdAXP1bUV904KYABtLV3TDoQgQpHA5ApOma4L8dHClkltMnUrEi
+	5vpvWXhqBOIiLwL9LMrQ+7dhQnGHKk8Gzt3+RziekofX2rExnWQcglyCk8j97h1FJGgeZrEmHFh
+	CnKVMJdDlusyQM5Ah5tmLjszkefjgLmaPaEfEiJwRm2qo+nnEUa3aV8TnMkFrl1CS0//NdheNjI
+	o6QA2L1o2bBT/PlGOHbEKvKRzcEn/igdHtds6/sPyXxzzQVejOIoW9Xfy3QdQXpB97R6iqOClCb
+	ZBGbpWlRk4PCjD7NUg==
+X-Google-Smtp-Source: AGHT+IF9VB1n3FHmTAZ2d28koGX6782GU4iDDf8VZ5eJtDmNUD3nFSCD9LBXa2j/2vbT2yAaKv48rRE9MiFR3Ie2HDQ=
+X-Received: by 2002:a17:90b:35cc:b0:341:194:5e7d with SMTP id
+ 98e67ed59e1d1-34733f19c00mr27022a91.24.1763676957385; Thu, 20 Nov 2025
+ 14:15:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAL4-wQrgD3nnW2BfNf6e9d7tDANE60dYBRRP_0FW3Z-LvQrZmg@mail.gmail.com>
- <0e971281-d1c4-4030-9297-f5e2c0765431@app.fastmail.com> <CAL4-wQpeYc8-FfcZGWcs6KmR-oswTs3Kjcc7xAb34cFX7s0c-A@mail.gmail.com>
-In-Reply-To: <CAL4-wQpeYc8-FfcZGWcs6KmR-oswTs3Kjcc7xAb34cFX7s0c-A@mail.gmail.com>
+References: <xmqqms4g7b1h.fsf@gitster.g>
+In-Reply-To: <xmqqms4g7b1h.fsf@gitster.g>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 20 Nov 2025 17:10:48 -0500
-X-Gm-Features: AWmQ_blixeEtjphMFg1KI_GeQOwaK0WHGRWyOavwJf-_1t3vHo3hdYnALSQyKbM
-Message-ID: <CALnO6CDpBpRdbpXy26v5ug5n5opqzn-Uos+Qr=jx9mA-5wR9Ag@mail.gmail.com>
-Subject: Re: Feature request: git cp
-To: Martin Guy <martinwguy@gmail.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, git@vger.kernel.org
+Date: Thu, 20 Nov 2025 17:15:46 -0500
+X-Gm-Features: AWmQ_blp8W4ftqheXczJvfvXBJVaPXTLam7eQFTgm9dH_dckMckySi_n0SBnXww
+Message-ID: <CALnO6CC0HU60F47yoE45ei7_K2_MeLRS7fihMPn+f8top7Jr7w@mail.gmail.com>
+Subject: Re: [PATCH] config: really pretend missing :(optional) value is not there
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Han Jiang <jhcarl0814@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 20, 2025 at 4:24=E2=80=AFPM Martin Guy <martinwguy@gmail.com> w=
-rote:
+On Thu, Nov 20, 2025 at 2:35=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Thanks, but that only seems to affect "git log" retroactively, whereas
-> I'm interested in it being part of the history so that "git blame"
-> knows about it. At present, the blame for a line would end at the time
-> of the split (when the file appears to have been created ex novo)
-> though I suppose people would end up at that break and could then
-> switch to tracking the old file instead.
+> Earlier we added support for a value spelled as ":(optional)path"
+> for configuration variables whose values are of type "path", with
+> the documented semantics "if the path is missing, behave as if such
+> a variable definition is not even there."
 >
-> Maybe I'm expecting too much of git, with all the truly wonderful
-> things it does already, but the idea seems to fit into the current
-> scheme of things as seen from the outside (I don't know how the "git
-> mv" line-based trackback works).
+> This has worked OK for code paths that reads configuration files and
+> stores the configured value as a string, where NULL in such a string
+> is treated as if the setting is not there, left as the default.
 >
->     M
+> However, there are other code paths that do not _ignore_ such NULL
+> values and misbehave.  "git config get --path" is one of them.
 >
+> When git_config_pathname() helper function finds that the value of
+> the variable is an optional path *and* the path is missing, it
+> leaves the destination pointer intact (which usually is left to
+> NULL) and returns 0 to signal a success.  format_config() helper
+> however assumed that the destination pointer always gets a string,
+> which no longer is the case, and segfaulted.
+>
+> Make sure that git_config_pathname() clears the destination pointer
+> in such a case, and teach format_config() to react to the condition
+> by returning 1 (which is different from 0 that is a normal success
+> and negative that is an error) to its callers.  Adjust the callers
+> to react to this new return value that tells them to pretend as if
+> they did not even see this partcular <key, value> pair.
+>
+> Reported-by: Han Jiang <jhcarl0814@gmail.com>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * This is only about "git config get --path".  Another patch for
+>    the rest of the callers of git_config_pathname() will follow in a
+>    separate message.
+>
+>  builtin/config.c           | 45 ++++++++++++++++++++++++++++++--------
+>  config.c                   |  1 +
+>  t/t1311-config-optional.sh | 36 ++++++++++++++++++++++++++++++
+>  3 files changed, 73 insertions(+), 9 deletions(-)
 
-Please avoid top-posting ;)
-
-"git mv" doesn't track the movement; Git reconstructs it post-hoc. See
-[1]; while the tone obviously leaves a lot to be desired, the
-technical rationale has stuck.
-
-[1]: https://lore.kernel.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.os=
-dl.org/
-
+This needs a tweak to Meson, probably in t/meson.build, for the new
+test script. Otherwise Meson-based packages (like Gentoo) won't build.
 
 --=20
 D. Ben Knoble
