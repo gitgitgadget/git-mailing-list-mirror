@@ -1,87 +1,84 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8312DEA89
-	for <git@vger.kernel.org>; Fri, 21 Nov 2025 16:28:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09BC129B766
+	for <git@vger.kernel.org>; Fri, 21 Nov 2025 18:08:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763742504; cv=none; b=idoGm6Z2vTNct49VtLSAsIiLiDxxQaCvvZYKnarS+Kjo0omQfSSF8FfWnkWtkojnRTZxFnByTqdLfWm9lAWyB7GzdZ2DFlsvyVTLViX9IEDy5iJATZlCrhiilTchQIHLhg9ZmqHV2x7nET0v/bAFqwwxeJSosIsnl2Ru+qtatFk=
+	t=1763748507; cv=none; b=F0c+PGxHFj0I1k1fIhnwBgXKpy6TZNRY78xrTj0qlZwgxqoXsTtIgnEu5/gNkVgQLdNuGToMU5bx3Hy0mU5tpMD6KqjjmqbwlxpTKNAJpwjqaCaFmJm8sRSaM6/ReWvwQTQnUaA2ylKEGtsOJ0sytQ3iYDkuRfIY4HSv0DVJ4nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763742504; c=relaxed/simple;
-	bh=VwgcoSgyNGmCH8NyB0UFy1Y0huhBIp5Aef/vJlSyCrI=;
+	s=arc-20240116; t=1763748507; c=relaxed/simple;
+	bh=ToaFFkT5ZrIN9fpNE2PSp89rnek8IzC7EjQvQDGn11g=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ox/bw8FcijWd/4EbALH4HMrXrdvmwpTEEYYmlAYzCg2y/16A0SL+UrN3VQ+NRsO00FAIsqjEHzsNSgwObE77q0K8KYrSiwu9si7C+n80jLkapHi74aEzr9oVWK4PLYLB6L+SJJiPnFCOxEG5Hjrmnrz1WvRh8RxssbfEw/W5mbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VBBAW+K1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HcMFMh1p; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=VzijDT1BC0lFZm3i6oZBaQK4kYrVL/9RYpchRKW3khvqKKHQRHaV6vstQuATwRHWMbjDTHyazSWBcFQrpjoHUdlytMqlXldf5+zrqETvCGWwLunRiCAGsgOm0RoVWSDSFMJsvj+7eUzbCzm+DYj3+76L8lM42zybfAAOZy5HvBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BxNGE6fP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RNZmWdFo; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VBBAW+K1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HcMFMh1p"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BxNGE6fP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RNZmWdFo"
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1EF36EC00A9;
-	Fri, 21 Nov 2025 11:28:21 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 21 Nov 2025 11:28:21 -0500
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1CD867A016B;
+	Fri, 21 Nov 2025 13:08:24 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Fri, 21 Nov 2025 13:08:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763742501; x=1763828901; bh=IOOSDYW0A7
-	DbcBVN4jV/X/bq80NoEBwxUOh4xxEnloc=; b=VBBAW+K1UX2anjj7ZyEwnxyUc9
-	MWurUVtfF5UDiCgKlIzmT0RfFCmWH1rl5rs7/FK2EEkXuRioGCYY1+sHzonlvSOR
-	3ceU5GMuJcFXa/s/3/K14ysn1l2s5JFi51SEBrBHZ6TfEtWzwROJj4o+8VA9RAuR
-	tyTOwHQAOwq/B5Z8ODQ5oMZ9RnlCvzoTGY4wUYIOC+3m2cEZNuFnPOY+kEvLMSeO
-	eSyFx0rSfvdCeHlG4hPxVlPcM2HoGRdrEa3OE0UVfPwZzyY03hz9rlXwCvlNMPEh
-	ln+5svETPEpwuP84hk7amre0Lm3bigMQ0eeOd5h4drh19IRXcSZQ/MSPcx6Q==
+	:subject:to:to; s=fm2; t=1763748503; x=1763834903; bh=vZittnviMT
+	eO5EpvETNQ0psEWCF9Xn+nEqAGJbTNlJQ=; b=BxNGE6fPPJNphI2qFEyyxbVHlG
+	aIS1VhW0gb+rzrV64o6wDwcQ/jfa4v2wbHtojlwXKeuDFF+geHOGGO1mWYunTSXW
+	/BKGwm/PUIj/yL8c63t4xAEPjr4sLprhwCXqorG+ov+kYyKc1YeSgW7/W5+rZQxv
+	hh0IxdIBAnnvVshhM1p4nJzGsS2BJjzCj19sEokiq1MT6LGe8KuIkPh4ART+FwAP
+	9ZTmZTYDg4aUBJj3isVkYHoyz8qB0xfGltWS/8T5kPbVBqV6O7iEwCv16sFMYA1T
+	pOwkkGVn4ap23lkgR2sEiNlBWwFoofLhTqVJ73qkFZsopUFqRybKnHsOYxDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763742501; x=1763828901; bh=IOOSDYW0A7DbcBVN4jV/X/bq80NoEBwxUOh
-	4xxEnloc=; b=HcMFMh1pby8kLFsJjtfDk161RcVW/DUgur/2JCN18V5j1OFgS07
-	kRAFIc0FcJrEJOsv7z22LcG7VqGlg7n5qNsZS1HPBiWCa0BOqZWK39XUbJ7VkgNN
-	iytwahizB5fwpR1guMDU971D48L4QM7h0p0Kt8h8+px//eySzCBVCB5EgnHe6gUo
-	D6T61bx+3JzrYBeIn6HMAdkkaL7qQgscLIjCDm+QbC5pmqxgXr4jSqppzXsFd6Oj
-	eZhMLNuG0q/kvZFkqdrKTCgmX+cZCDZ2o98f3xiW/7KLR2RQhWbuPv73dFMEOKN8
-	pEIQrrRQzXfROgN399MnY+6rHU9zduY/aMQ==
-X-ME-Sender: <xms:JJMgaRq5_hBQUyOitYEoHxYr2k-Bb5SjnCX0uSsjfM8MgG0m7zzwfg>
-    <xme:JJMgaars6Kk-rR-s5j_HiJwWoDPo7mUDwzmsYqnrxywWR6cM01vVVg7qxMqiLrNDr
-    DluMk57nWsXC_kEPmeToA9pkwkhYsNf6miEWZXkIgokPR6tG5E->
-X-ME-Received: <xmr:JJMgaTOOb6NZhRSMzDUmsS50jI0lBAxiLt4e54v5iUC1JZ7CAGNb6X3tlIpuDCAxb6mrA8BuxREuhy5yDQicoBMexJhT_rFMz2wV>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfedtgeegucetufdoteggodetrf
+	1763748503; x=1763834903; bh=vZittnviMTeO5EpvETNQ0psEWCF9Xn+nEqA
+	GJbTNlJQ=; b=RNZmWdFomUK/eJemo6t2OwmdQtR1i8R2thz/8h/7BFClYTkNgRN
+	Tnr22zo4gHLHuJClSXRtmyfTZ94YtopfDmdgY4fzUeZfi/pSAGyz7mDHIXPJAaTr
+	BOlXDCjFW+iWVnOqKC8iz/v6XZZKttu+PUTKmZPchlquzGptcEdPWj4zXkp8yup5
+	8FIHb5JhL2cvukuSNJfOk8ZrtyCh4J4136bygRuVxJOIKsdtfkOrvWczNLFXqoAf
+	Fwi8/3a4p7/EjNz5uQ9utWqY3gUSYn6ptpCAem+kA0/ui7yseO551z/O/S7AVmkp
+	WB4l9Nx0kehWl5CTcrzZPh20reJ7auHJhtw==
+X-ME-Sender: <xms:l6ogaUh4LL6MrohWIw4fdOS5XuHY-rAkxv4eFKWsulbRXD5P4fIzwA>
+    <xme:l6ogaT7NjForeeVZpnkKxi7LrgiRTt_pB2zla4SZfEJk3gUbY5xmljUv3GfcvNMqr
+    nbQlMqrER9kxU-tsHLhn0menSw5c9Gh4OEilwrxd5HS4k0F0TOU>
+X-ME-Received: <xmr:l6ogaUaqk6obetYTOMsRr3kL1P3wR88rVRtueLkAjoh6DcP4fdca5Xed6bBhLYHKIzr_b5poGkQqiT4rIAlDrVYGYP8bOfHqCBqo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfedtieegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrsh
-    gsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhopehkrhhishhtohhf
-    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:JJMgabxrZfopCLT69zsQ0MZoBAghVL1Hl44IHgbWVhiWIMdRlpLiRQ>
-    <xmx:JJMgacv8isL6EWPx4-A1WO9WkpAZq77WjMOYENOLzZr4EU0V9uEKdQ>
-    <xmx:JJMgaU5SBhhPCnFqIM__qYEoCTYLZP49rME8a9bfykhk43bm9ioZvw>
-    <xmx:JJMgabQydvQkM_7GmXJd0X0Jq3SAHkcNizkNEA8b6gvImSfMwM9UPg>
-    <xmx:JZMgaRxIhFypU0zDzlGWz7oQom6J0mVhEFkSTycrKQ_l_GRL6L8N7zpF>
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkees
+    ghhmrghilhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:l6ogaQ6OA36m0K41rtpwLh7ET7soH7F4KAKP1QmhzcVtNh2j63v_rg>
+    <xmx:l6ogafDMISeQavpqC9Y60ehbfC2YeuIEFXdCciS9PZ0pNfGBmCRAcA>
+    <xmx:l6ogaec7wBglx852izjdoHjpnUYwVW1-5dtftDmC6xL3c433rvG-gg>
+    <xmx:l6ogaWJT2CDUMqr0JsgNmlqDMyEml_f-2l81ty8h7sjzop80XS_E0A>
+    <xmx:l6ogacLNDNkSwlzhPwbVXDl4aY5pc1SYycm1WtdKRkREybNd43EZtYQb>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Nov 2025 11:28:20 -0500 (EST)
+ 21 Nov 2025 13:08:23 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: <rsbecker@nexbridge.com>
-Cc: "'Kristoffer Haugsbakk'" <kristofferhaugsbakk@fastmail.com>,
-  <git@vger.kernel.org>
-Subject: Re: [BUG] Test Failure 2.52.0, t8020.16,19
-In-Reply-To: <014801dc5ae9$543c73c0$fcb55b40$@nexbridge.com>
-	(rsbecker@nexbridge.com's message of "Fri, 21 Nov 2025 08:18:24
-	-0500")
-References: <003901dc596c$40bfbd80$c23f3880$@nexbridge.com>
-	<94d81164-5af5-471e-a403-f2d544796d18@app.fastmail.com>
-	<014801dc5ae9$543c73c0$fcb55b40$@nexbridge.com>
-Date: Fri, 21 Nov 2025 08:28:19 -0800
-Message-ID: <xmqqy0nz4afw.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Justin
+ Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 02/19] streaming: drop the `open()` callback function
+In-Reply-To: <20251121-b4-pks-odb-read-stream-v2-2-ca8534963150@pks.im>
+	(Patrick Steinhardt's message of "Fri, 21 Nov 2025 08:40:47 +0100")
+References: <20251121-b4-pks-odb-read-stream-v2-0-ca8534963150@pks.im>
+	<20251121-b4-pks-odb-read-stream-v2-2-ca8534963150@pks.im>
+Date: Fri, 21 Nov 2025 10:08:22 -0800
+Message-ID: <xmqqqztr45t5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,43 +88,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-<rsbecker@nexbridge.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->>> expecting success of 8020.16 'cross merge boundaries in blaming':
->>>         git checkout HEAD^0 &&
->>>         git rm -rf . &&
->>>         test_commit m1 &&
->>>         git checkout HEAD^ &&
->>>         git rm -rf . &&
->>>         test_commit m2 &&
->>>         git merge m1 &&
->>>         check_last_modified <<-\EOF
->>>         m2 m2.t
->>>         m1 m1.t
->>>         EOF
->>>[snip]
->>
->>Also reported here https://lore.kernel.org/git/4dc4c8cd-c0cc-4784-8fcf-
->>defa3a051087@mit.edu/
+> When creating a read stream we first populate the structure with the
+> open callback function and then subsequently call the function. This
+> layout is somewhat weird though:
 >
-> .... The concern is, is this a defect in the test code
-> or underlying
-> git merge code, and if the latter, how big an impact. If we hold off, how
-> long will it
-> take for a fix (approximately). I do not know the merge code, so... 
+>   - The structure needs to be allocated and partially populated with the
+>     open function before we can properly initialize it.
 
-But is this really about "merge"?
+It is unclear what are left for delayed initialization from this
+description.
 
-The test is about how the "last-modified" command behaves given
-histories of various shapes prepared with the sequence of commands
-that comes before the "check_last_modified" line.
+>   - We never use the `open()` callback after having opened it initially.
 
-You can probably take a snapshot of the resulting repository
-immediately after "git merge m1" from a test with both problematic
-version and older version and compare the two repositories, and I an
-reasonably certain that you wouldn't see any differences (no, I am
-not saying they should be bit-for-bit identical, but the set of
-objects and topology should be the same).  Bisection by others
-pointing at a commit that changed how "last-modified" computes its
-result should be a strong enough hint as well that the problem is
-unlikely with "merge".
+I was not sure what this means in v1 and it still is not clear to
+me.  Naively the above reads as if it is somehow desirable if we can
+call open() after we have already called it on an object.  The flow
+being a caller (e.g., stream_blob_to_fd()) first ask open_istream(),
+which calls the open method after figuring out which backend knows
+about the object and how to open a stream on it, I am not sure what
+you want your second and subsequent uses of the open() calklbacks
+do.  Puzzled.
+
+> Instead, drop the callback entirely and refactor `istream_source()` so
+> that we open the streams immediately. This unblocks a subsequent step,
+> where we'll also start to allocate the structure in the source-specific
+> logic.
+
+Because I do not think these open methods specific to each storage
+mechanism cascades into each other, open-coding the logic to
+dispatch into these open() methods in istream_source() itself,
+instead of setting the method there and then have the caller call
+it, is a perfectly fine simplification, I think.
+
+> @@ -478,19 +477,14 @@ struct odb_read_stream *open_istream(struct repository *r,
+>  {
+>  	struct odb_read_stream *st = xmalloc(sizeof(*st));
+>  	const struct object_id *real = lookup_replace_object(r, oid);
+> -	int ret = istream_source(st, r, real, type);
+> +	int ret;
+>  
+> +	ret = istream_source(st, r, real, type);
+>  	if (ret) {
+>  		free(st);
+>  		return NULL;
+>  	}
+
+A patch noise?
+
