@@ -1,56 +1,56 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CA933A036
-	for <git@vger.kernel.org>; Fri, 21 Nov 2025 07:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC741337BBA
+	for <git@vger.kernel.org>; Fri, 21 Nov 2025 07:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763710905; cv=none; b=mmjgoBNWF5ccZ61FQI7sSDHwBzPtZ8VCbWK56maLE12skx4aubwedcuZa0GqXkDaT/qiPf6Ak+6nki1HY805TZVm2ntN+ta0vby6nPlSV0PLR80d4cWlyizfCdM9wjKiaZ2FxjKDDkxmoYPPbqLcNxirOZKa7NFZtjREKkwBRDo=
+	t=1763710909; cv=none; b=hyd4KrA2+3M3zurf672rA3krGY/wpxWmnkU9XSBX7kzbDUT+QJxcrfIKTkgBMGBHIEK3DJDqRpylXXYrIoo0MGbUkzRDTviF+aJbgimCPXzQpuNWJV7JkT/7twigFF+hc450pE5CLiMNgKCqN41PNhHKn4wL2h6aW2zd8FTv1aU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763710905; c=relaxed/simple;
-	bh=SHF0wfIyklVvznfIXELy8LWZy/h1FyzHGAMcqdvB1ZQ=;
+	s=arc-20240116; t=1763710909; c=relaxed/simple;
+	bh=WZ0yIJh4kQ421u3pNcFYXctxiN8dU7603zCIRj3JW4s=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aEkv00eGZ4gsXJTli7QZOTLyUMlNAsMrR4Z/4wZKq3WukwHYy8bb+p8J/lxDH9egovABVRWnIfn+hO0wsm9WKBAXBbCEbQPkEsEpvZw8DPlAYEu5s7uq8mB8jb/J5K0LUkEawXQsl9wb1NAAetqYrq10rmcVNAglbFAU7FNeKgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bpkEFkMa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nijr4YhC; arc=none smtp.client-ip=202.12.124.144
+	 In-Reply-To:To:Cc; b=HjEVD9F6hJUUrOkQk0PrWqx/I+rTbImlXo20DtvRGwjEV83IPPLZZdPmDeREI6ti+/gUjgzURBsVkICsBCwvlKO13QIm+DCKPimccH7aQLcHIhI61eezFRsxls2fArCkXOhjvO6oL/0fXJosMQndpBf6ySK9OpJxYDEf7I3MdJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MZBaagp6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m1nZ3ghI; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bpkEFkMa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nijr4YhC"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 939C51D00176;
-	Fri, 21 Nov 2025 02:41:42 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MZBaagp6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m1nZ3ghI"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id D7F3E1D00176;
+	Fri, 21 Nov 2025 02:41:46 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Fri, 21 Nov 2025 02:41:42 -0500
+  by phl-compute-01.internal (MEProxy); Fri, 21 Nov 2025 02:41:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1763710902;
-	 x=1763797302; bh=YaNVK81oVVSrP19fkknmibSIoO0s5e0E1qzMC5r1Yfc=; b=
-	bpkEFkMah9tkbfaWzD3ydSHdvaFtMZdmTJjoGz7pfTD3Ezv2Fv6qeSMSH1R7/p38
-	x5M7ZLKi4baDOmHz2bppAwHU0LXb/mKmxHGmyY1gDu1MkA/Y8WW191LnZYDIiSZA
-	IVW0Rrbw4Gl/RV9l78IiydCCktF0i07o66BNRSmXqVCq7taY0pPP6YNVQQU5yvN7
-	HMc9qdAwcm7OMhJpPaf42xITIh13f7atkt2CxmBujKjkzeholkc1e7goWNJ/1SA4
-	YBvGX3+EqnfxT48lACAY0nthSKCRFDyxLkRIAjwr510m26seLPcVk0FJ4AgH0UHm
-	OQu0GExoHz9oB8jTBncDQw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1763710906;
+	 x=1763797306; bh=uoo9cHrUo5pKXJ8ud/54OLRa+SFx7iKNVC1BNtgGtFw=; b=
+	MZBaagp6try4gsN1aIJVnFZ4b1Uvmy5BIgvF//3fXbRC/Vzsm39JbzRelgf31F0P
+	ZCZiFkfODvpOjJdKIdZ4LUN+yS0CcxQRU4G5NmrSzI6P4Z8Farg6jYZj/if6E+ZN
+	/HS0GKQ0Gc7Lye0zlcVWErOCnnTmzBOVP2XJJI+bQLQ84hTHDrcnuAc26FYZYgFw
+	GhiM6jvZQy3ArD0F1FK0VBdjavUTPGQKCFBZAUwMcdF+bsD6KhzwSmYpi8SaInUk
+	8b7/8udvcTS3bEY5G5+o6RWyCYne1WEpwq2HcbPK79FshCC063bThAp03h1hTS/O
+	k3V+N/vlr8j9qDFPU8nhHQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763710902; x=
-	1763797302; bh=YaNVK81oVVSrP19fkknmibSIoO0s5e0E1qzMC5r1Yfc=; b=N
-	ijr4YhCj1dMz37mUY3U4Zz9BpoTZKyC9qmCJ9NM2jn5HUuEH8EmNZsbbWHCEwezP
-	o70C92/t0hUZd9PMjse+XVedweLEhhz2Q74I+8KAcaHYgnd8+gYEe8VO3753EZcd
-	8k3noMIlMMN658uVpmdOSLnBuFUQ6Kwg5Qy8UyT4R7nrIQTTL3cqpeMmb9iHrjaL
-	6lfhlCVidvrCGOorp8bKlJAiC2aqqA4RPaKiGJhc+UT5a28i/w8lEmuNJrY3h09X
-	qoUaiM65PPQvHn0iESI3DmhP3PiIaJt8MvhUbiL8fBb7bwtIXX3vkuna1J4+b3yl
-	nrnVU/saraen57JJ6fGwQ==
-X-ME-Sender: <xms:thcgaeZRogMzluLNgmXh2XK32AVrCDO_JAF4ZVhS8DueBssalwwPKQ>
-    <xme:thcgaY16iwc5owJI7lABby1aYGvx-eVAO7wO1zKj0tUWyNZij5Kl7CWPyQ34gVMtn
-    dWvPnIXXunWuNtz-yZYbHMWZM6oyAlvutIT3Ao1s-6DRTgQS_IY_jY>
-X-ME-Received: <xmr:thcgaWXk9_ojOHxZShOU-68u_zAfkQlZu0ZyHnB2CPcqMPU76d7nc6X2q2qs_CZF5L_fKXXRbU8XtmkeAgNTJCdUt5taEGMKvhxzW50RPkOV>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdelfeelucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763710906; x=
+	1763797306; bh=uoo9cHrUo5pKXJ8ud/54OLRa+SFx7iKNVC1BNtgGtFw=; b=m
+	1nZ3ghI1Su16fYCZZBZMUV7h8/a6P7MkwvKQq4It+Hfz034OJ6TekwDCSM/bQQIH
+	Hw+3fHeYv4lu3UimxlXM+JhrjPejBZuBeCG1X28PX07XVgklCSo39k9UIWOiBJZV
+	93Rwflk6KLbyTc/yh4T9a+5dRBdz+Ea7EXwefd8y8pdwcM50bzbJpKSxGjaZUM+q
+	qRYC9TJWmWXwZXG7ky74ZSacl+Q1Tln052CrV0vPgYPpDov+uv2Eg78dVTNqOvs/
+	Xwo8xqRpebjn/HSaWqojlmR9Nhln6dVPB/LGvVnaRrUraIoGPLroSoN0lxoHFZUd
+	I+xIPa1TFJy5Hpxm8vWog==
+X-ME-Sender: <xms:uhcgaRw_xsDWlA7l1cOg-32tQRksna7_uOUWeUJ20hmz9YM7EkAqdg>
+    <xme:uhcgaYv-vVicYQ9J_hDz07_ouukIBBCW6BJL46X9zgLPJK7ndCuGi6wVlCAwGalUb
+    3t7KXE9acVv2IDavwyW7DrLndKA4p9dEmYxwQ1qbVa9N2XQKYyK9g>
+X-ME-Received: <xmr:uhcgaYtLOOJb6C8qvhnUdheGKId4l2Gm0nG3md0ETHiNKyqszcAuih8XAaYW_a0aq8M4pbXx0evvimN37ib7-Ps9U1zZ7tgcqoUQApghNXq6>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdelfeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdelfeelucetufdote
     hnpeekieevveegieevieeuveefheffgeeuheetheegffffkeeijedtueefleffvdevleen
     ucffohhmrghinhepphgrtghkvggurdhishenucevlhhushhtvghrufhiiigvpedtnecurf
     grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeef
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:thcgaaWApZ6KZsrmKERDPDMgsuTKePY_GCPw6j2c3RQn6ccMcWMs8w>
-    <xmx:thcgadd_iVZqj1ketR3F9qdDYOwaKiQXdppyiCKhp69Q-2uQZEjwtw>
-    <xmx:thcgabUZLLhwyZs5SYfQTx7c4TqGpvSBm8FelhTo12QFw2JD-FCPHA>
-    <xmx:thcgaeeZjiCbo1vRmtNuVfT_Zbl_VGEmivnZS-jxqhSWVMcrpnoV4Q>
-    <xmx:thcgaaRzW7TAb4-w_pM55N1RCTR0UeG3gh9HFPg2EeEcgOfcbcMGug6E>
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:uhcgadOPxfyNY8u-KS-GaZ8bY719B_KeKxhsI_wpOzMA9bgoHBjqCg>
+    <xmx:uhcgaW1KOxpfXYVG6YDDlxCB40aojdKi3UZGNx9WjaLZl4Tiha9CLw>
+    <xmx:uhcgaZMfKp01QcmNEjvbrr_4rwXRKYGUSKnKvnhlhAGXYPizirbVQQ>
+    <xmx:uhcgaW2NpMZrR58IQ6IYldwDdJNbLX7EvbsKgslsxW32tXIu1nEUog>
+    <xmx:uhcgaYKHBRWt2VoXWiO3wsyrEAdIw8NbQOKkcTxOwjxrphmY9H6zfrY5>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Nov 2025 02:41:41 -0500 (EST)
+ 21 Nov 2025 02:41:45 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a063ab59 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 21 Nov 2025 07:41:41 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9c887a43 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 21 Nov 2025 07:41:45 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 21 Nov 2025 08:40:56 +0100
-Subject: [PATCH v2 11/19] packfile: introduce function to read object info
- from a store
+Date: Fri, 21 Nov 2025 08:40:57 +0100
+Subject: [PATCH v2 12/19] streaming: rely on object sources to create
+ object stream
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251121-b4-pks-odb-read-stream-v2-11-ca8534963150@pks.im>
+Message-Id: <20251121-b4-pks-odb-read-stream-v2-12-ca8534963150@pks.im>
 References: <20251121-b4-pks-odb-read-stream-v2-0-ca8534963150@pks.im>
 In-Reply-To: <20251121-b4-pks-odb-read-stream-v2-0-ca8534963150@pks.im>
 To: git@vger.kernel.org
@@ -92,210 +92,158 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.3
 
-Extract the logic to read object info for a packed object from
-`do_oid_object_into_extended()` into a standalone function that operates
-on the packfile store. This function will be used in a subsequent
-commit.
+When creating an object stream we first look up the object info and, if
+it's present, we call into the respective backend that contains the
+object to create a new stream for it.
 
-Note that this change allows us to make `find_pack_entry()` an internal
-implementation detail. As a consequence though we have to move around
-`packfile_store_freshen_object()` so that it is defined after that
-function.
+This has the consequence that, for loose object source, we basically
+iterate through the object sources twice: we first discover that the
+file exists as a loose object in the first place by iterating through
+all sources. And, once we have discovered it, we again walk through all
+sources to try and map the object. The same issue will eventually also
+surface once the packfile store becomes per-object-source.
+
+Furthermore, it feels rather pointless to first look up the object only
+to then try and read it.
+
+Refactor the logic to be centered around sources instead. Instead of
+first reading the object, we immediately ask the source to create the
+object stream for us. If the object exists we get stream, otherwise
+we'll try the next source.
+
+Like this we only have to iterate through sources once. But even more
+importantly, this change also helps us to make the whole logic
+pluggable. The object read stream subsystem does not need to be aware of
+the different source backends anymore, but eventually it'll only have to
+call the source's callback function.
+
+Note that at the current point in time we aren't fully there yet:
+
+  - The packfile store still sits on the object database level and is
+    thus agnostic of the sources.
+
+  - We still have to call into both the packfile store and the loose
+    object source.
+
+But both of these issues will soon be addressed.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb.c      | 29 ++++---------------------
- packfile.c | 71 +++++++++++++++++++++++++++++++++++++++++++++++---------------
- packfile.h | 12 ++++++++++-
- 3 files changed, 69 insertions(+), 43 deletions(-)
+ streaming.c | 65 +++++++++++++++++++++++--------------------------------------
+ 1 file changed, 24 insertions(+), 41 deletions(-)
 
-diff --git a/odb.c b/odb.c
-index 3ec21ef24e..f4cbee4b04 100644
---- a/odb.c
-+++ b/odb.c
-@@ -666,8 +666,6 @@ static int do_oid_object_info_extended(struct object_database *odb,
+diff --git a/streaming.c b/streaming.c
+index 93fe72182a..fc7d88e313 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -204,21 +204,15 @@ static int close_istream_loose(struct odb_read_stream *_st)
+ }
+ 
+ static int open_istream_loose(struct odb_read_stream **out,
+-			      struct repository *r,
++			      struct odb_source *source,
+ 			      const struct object_id *oid)
  {
- 	static struct object_info blank_oi = OBJECT_INFO_INIT;
- 	const struct cached_object *co;
--	struct pack_entry e;
--	int rtype;
- 	const struct object_id *real = oid;
- 	int already_retried = 0;
+ 	struct object_info oi = OBJECT_INFO_INIT;
+ 	struct odb_loose_read_stream *st;
+-	struct odb_source *source;
+ 	unsigned long mapsize;
+ 	void *mapped;
  
-@@ -702,8 +700,8 @@ static int do_oid_object_info_extended(struct object_database *odb,
- 	while (1) {
- 		struct odb_source *source;
- 
--		if (find_pack_entry(odb->repo, real, &e))
+-	odb_prepare_alternates(r->objects);
+-	for (source = r->objects->sources; source; source = source->next) {
+-		mapped = odb_source_loose_map_object(source, oid, &mapsize);
+-		if (mapped)
 -			break;
-+		if (!packfile_store_read_object_info(odb->packfiles, real, oi, flags))
+-	}
++	mapped = odb_source_loose_map_object(source, oid, &mapsize);
+ 	if (!mapped)
+ 		return -1;
+ 
+@@ -352,21 +346,25 @@ static int close_istream_pack_non_delta(struct odb_read_stream *_st)
+ }
+ 
+ static int open_istream_pack_non_delta(struct odb_read_stream **out,
+-				       struct repository *r UNUSED,
+-				       const struct object_id *oid UNUSED,
+-				       struct packed_git *pack,
+-				       off_t offset)
++				       struct object_database *odb,
++				       const struct object_id *oid)
+ {
+ 	struct odb_packed_read_stream *stream;
+-	struct pack_window *window;
++	struct pack_window *window = NULL;
++	struct object_info oi = OBJECT_INFO_INIT;
+ 	enum object_type in_pack_type;
+-	size_t size;
++	unsigned long size;
+ 
+-	window = NULL;
++	oi.sizep = &size;
++
++	if (packfile_store_read_object_info(odb->packfiles, oid, &oi, 0) ||
++	    oi.u.packed.is_delta ||
++	    repo_settings_get_big_file_threshold(the_repository) >= size)
++		return -1;
+ 
+-	in_pack_type = unpack_object_header(pack,
++	in_pack_type = unpack_object_header(oi.u.packed.pack,
+ 					    &window,
+-					    &offset,
++					    &oi.u.packed.offset,
+ 					    &size);
+ 	unuse_pack(&window);
+ 	switch (in_pack_type) {
+@@ -385,8 +383,8 @@ static int open_istream_pack_non_delta(struct odb_read_stream **out,
+ 	stream->base.type = in_pack_type;
+ 	stream->base.size = size;
+ 	stream->z_state = ODB_PACKED_READ_STREAM_UNINITIALIZED;
+-	stream->pack = pack;
+-	stream->pos = offset;
++	stream->pack = oi.u.packed.pack;
++	stream->pos = oi.u.packed.offset;
+ 
+ 	*out = &stream->base;
+ 
+@@ -463,30 +461,15 @@ static int istream_source(struct odb_read_stream **out,
+ 			  struct repository *r,
+ 			  const struct object_id *oid)
+ {
+-	unsigned long size;
+-	int status;
+-	struct object_info oi = OBJECT_INFO_INIT;
+-
+-	oi.sizep = &size;
+-	status = odb_read_object_info_extended(r->objects, oid, &oi, 0);
+-	if (status < 0)
+-		return status;
++	struct odb_source *source;
+ 
+-	switch (oi.whence) {
+-	case OI_LOOSE:
+-		if (open_istream_loose(out, r, oid) < 0)
+-			break;
+-		return 0;
+-	case OI_PACKED:
+-		if (oi.u.packed.is_delta ||
+-		    repo_settings_get_big_file_threshold(the_repository) >= size ||
+-		    open_istream_pack_non_delta(out, r, oid, oi.u.packed.pack,
+-						oi.u.packed.offset) < 0)
+-			break;
++	if (!open_istream_pack_non_delta(out, r->objects, oid))
+ 		return 0;
+-	default:
+-		break;
+-	}
++
++	odb_prepare_alternates(r->objects);
++	for (source = r->objects->sources; source; source = source->next)
++		if (!open_istream_loose(out, source, oid))
 +			return 0;
  
- 		/* Most likely it's a loose object. */
- 		for (source = odb->sources; source; source = source->next)
-@@ -713,8 +711,8 @@ static int do_oid_object_info_extended(struct object_database *odb,
- 		/* Not a loose object; someone else may have just packed it. */
- 		if (!(flags & OBJECT_INFO_QUICK)) {
- 			odb_reprepare(odb->repo->objects);
--			if (find_pack_entry(odb->repo, real, &e))
--				break;
-+			if (!packfile_store_read_object_info(odb->packfiles, real, oi, flags))
-+				return 0;
- 		}
- 
- 		/*
-@@ -747,25 +745,6 @@ static int do_oid_object_info_extended(struct object_database *odb,
- 		}
- 		return -1;
- 	}
--
--	if (oi == &blank_oi)
--		/*
--		 * We know that the caller doesn't actually need the
--		 * information below, so return early.
--		 */
--		return 0;
--	rtype = packed_object_info(odb->repo, e.p, e.offset, oi);
--	if (rtype < 0) {
--		mark_bad_packed_object(e.p, real);
--		return do_oid_object_info_extended(odb, real, oi, 0);
--	} else if (oi->whence == OI_PACKED) {
--		oi->u.packed.offset = e.offset;
--		oi->u.packed.pack = e.p;
--		oi->u.packed.is_delta = (rtype == OBJ_REF_DELTA ||
--					 rtype == OBJ_OFS_DELTA);
--	}
--
--	return 0;
+ 	return open_istream_incore(out, r, oid);
  }
- 
- static int oid_object_info_convert(struct repository *r,
-diff --git a/packfile.c b/packfile.c
-index 40f733dd23..b4bc40d895 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -819,22 +819,6 @@ struct packed_git *packfile_store_load_pack(struct packfile_store *store,
- 	return p;
- }
- 
--int packfile_store_freshen_object(struct packfile_store *store,
--				  const struct object_id *oid)
--{
--	struct pack_entry e;
--	if (!find_pack_entry(store->odb->repo, oid, &e))
--		return 0;
--	if (e.p->is_cruft)
--		return 0;
--	if (e.p->freshened)
--		return 1;
--	if (utime(e.p->pack_name, NULL))
--		return 0;
--	e.p->freshened = 1;
--	return 1;
--}
--
- void (*report_garbage)(unsigned seen_bits, const char *path);
- 
- static void report_helper(const struct string_list *list,
-@@ -2064,7 +2048,9 @@ static int fill_pack_entry(const struct object_id *oid,
- 	return 1;
- }
- 
--int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e)
-+static int find_pack_entry(struct repository *r,
-+			   const struct object_id *oid,
-+			   struct pack_entry *e)
- {
- 	struct list_head *pos;
- 
-@@ -2087,6 +2073,57 @@ int find_pack_entry(struct repository *r, const struct object_id *oid, struct pa
- 	return 0;
- }
- 
-+int packfile_store_freshen_object(struct packfile_store *store,
-+				  const struct object_id *oid)
-+{
-+	struct pack_entry e;
-+	if (!find_pack_entry(store->odb->repo, oid, &e))
-+		return 0;
-+	if (e.p->is_cruft)
-+		return 0;
-+	if (e.p->freshened)
-+		return 1;
-+	if (utime(e.p->pack_name, NULL))
-+		return 0;
-+	e.p->freshened = 1;
-+	return 1;
-+}
-+
-+int packfile_store_read_object_info(struct packfile_store *store,
-+				    const struct object_id *oid,
-+				    struct object_info *oi,
-+				    unsigned flags UNUSED)
-+{
-+	static struct object_info blank_oi = OBJECT_INFO_INIT;
-+	struct pack_entry e;
-+	int rtype;
-+
-+	if (!find_pack_entry(store->odb->repo, oid, &e))
-+		return 1;
-+
-+	/*
-+	 * We know that the caller doesn't actually need the
-+	 * information below, so return early.
-+	 */
-+	if (oi == &blank_oi)
-+		return 0;
-+
-+	rtype = packed_object_info(store->odb->repo, e.p, e.offset, oi);
-+	if (rtype < 0) {
-+		mark_bad_packed_object(e.p, oid);
-+		return -1;
-+	}
-+
-+	if (oi->whence == OI_PACKED) {
-+		oi->u.packed.offset = e.offset;
-+		oi->u.packed.pack = e.p;
-+		oi->u.packed.is_delta = (rtype == OBJ_REF_DELTA ||
-+					 rtype == OBJ_OFS_DELTA);
-+	}
-+
-+	return 0;
-+}
-+
- static void maybe_invalidate_kept_pack_cache(struct repository *r,
- 					     unsigned flags)
- {
-diff --git a/packfile.h b/packfile.h
-index 58fcc88e20..0a98bddd81 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -144,6 +144,17 @@ void packfile_store_add_pack(struct packfile_store *store,
- #define repo_for_each_pack(repo, p) \
- 	for (p = packfile_store_get_packs(repo->objects->packfiles); p; p = p->next)
- 
-+/*
-+ * Try to read the object identified by its ID from the object store and
-+ * populate the object info with its data. Returns 1 in case the object was
-+ * not found, 0 if it was and read successfully, and a negative error code in
-+ * case the object was corrupted.
-+ */
-+int packfile_store_read_object_info(struct packfile_store *store,
-+				    const struct object_id *oid,
-+				    struct object_info *oi,
-+				    unsigned flags);
-+
- /*
-  * Get all packs managed by the given store, including packfiles that are
-  * referenced by multi-pack indices.
-@@ -357,7 +368,6 @@ const struct packed_git *has_packed_and_bad(struct repository *, const struct ob
-  * Iff a pack file in the given repository contains the object named by sha1,
-  * return true and store its location to e.
-  */
--int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e);
- int find_kept_pack_entry(struct repository *r, const struct object_id *oid, unsigned flags, struct pack_entry *e);
- 
- int has_object_pack(struct repository *r, const struct object_id *oid);
 
 -- 
 2.52.0.rc2.482.gaa765fefd0.dirty
