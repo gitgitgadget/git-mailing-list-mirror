@@ -1,82 +1,81 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D231732ED4F
-	for <git@vger.kernel.org>; Fri, 21 Nov 2025 07:41:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FE52F3601
+	for <git@vger.kernel.org>; Fri, 21 Nov 2025 07:41:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763710867; cv=none; b=D6l7nfGmCu5vnFe4Q7LXWd+f3f50aK3tI7SQ4tNxS9DTCbMgQp0dypNgosnbam2r2JUJCGJ9PLXT+mLR1gczJAxmCSq7IuzdUhUfUeyVBHJjUKVPa4vR3/TD75m5OzzvRbxJkGNPc+rMmeDbFRy1raSZq3/NCdoi5Vdu9OcRyqo=
+	t=1763710869; cv=none; b=oIdMYtOQOmVgF+funkAbdrR8w2WB+SI0rlgN3rWWN41xhl9Pr+IeBuJDHrOP6GIhSoOtIuVKThA9axe/at3BxibR7uat/zYlKXE2ZtDrjv7/GkKhFmsP+s7wHaMsdjeRPCm4QIyIYfQLf7P5FXkBOSqpYgUC80X6wlfaJVXsbuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763710867; c=relaxed/simple;
-	bh=EqoCekkMJHW062A6BsQKDZnBm0foYVKKXu9ei6ZpfAo=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=dEztdiVE+hjWIZJ9MuxJmwQ0553OgCrJvkMMsMVvdAn2C4yqockV5L8lIThlZ1PW7+Yq8N0LF1dCRaVH+f/OObukw/yD4+uh7A37bT1qiE3WnY+mLYIE3nLaF/62/ctxlNaorEK9FgFuOlJ6d/bRjvpXg3FxzfnAdjPmn0LiM0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AE6nJ/nQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KE0yLt/9; arc=none smtp.client-ip=202.12.124.152
+	s=arc-20240116; t=1763710869; c=relaxed/simple;
+	bh=btb42P3kHIXabFxoOSEXLKkAJxvS54tT91LTtAM0/eo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=p1hlV3g+x+lsYIpWi1mc1T9NOBZXz7ui2+eepIChtO1ZxA76mazraYtBYrplEgXFG3Zf8AwLkPgebqtt2wG7yCUK3qDm8xfQ7PpAFRMXo6shKiFs97qX6cdIW7+vX/ItExTUEvBzfeu0CRhJp5dNNVXgdxosSYgs1rKg+Sa5zck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jtbygAuk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YcJ9nTLK; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AE6nJ/nQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KE0yLt/9"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9AE6F7A0295;
-	Fri, 21 Nov 2025 02:41:02 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jtbygAuk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YcJ9nTLK"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 03D681D001A3;
+	Fri, 21 Nov 2025 02:41:04 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Fri, 21 Nov 2025 02:41:02 -0500
+  by phl-compute-05.internal (MEProxy); Fri, 21 Nov 2025 02:41:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1763710862;
-	 x=1763797262; bh=tjrZVvjnjmWkAG+XeSyKAwD0BNixqpvZMZZWw1c1ReE=; b=
-	AE6nJ/nQOvIsBxtCzqyKKs0RS8fK3f20qe5ZwtgLV7aCcmsKPH4LirJ4cgTe0s8d
-	KcfU6ciCxPzb2CC1Fw8fUfUNPHE9zSLWS8bfwqUGFdTDdEe0iUYqpbrL8PMYsv1E
-	JiUaLIq7mM0wm2FckXt3GZYZZSfVCWnRnvX3n59+KTozZWlSn0isb0xdp3cakh/M
-	kqWrZNnu+8ZjCEZ2Y6EKLZk5DDydtJnIrXQZjyFLoihAEnTbMnqMfB7jg99IzXEi
-	YkqUpjN01yrHSYvCGQ/GSrhNwaX8nsH9IjRXW1qbEga+FJ+Bq72cqp+C8lekFEjc
-	dGLpdP7o8RRy2uP3tV44GA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1763710864;
+	 x=1763797264; bh=gyWKqIQh/wGdlzd4q+swOQ9IKfoVwpymQm44k+SnCas=; b=
+	jtbygAukU64UGF+oBrd8JN1T43hD5N9m7ag6Ea4zeER7J8+bRwcliGmDIKbqbNLh
+	OxRwolPT/R4C5f+GeVuh803Mxe8q58r62T0TH4oLf3T4Dt0CWyvEnGpXNICFxPRC
+	uXNKmWW35BhnKKHum9YpxHoBnYt0IZ6ry+QZ2iyGUthqWqLV1hQxFuKo6EcxxLJF
+	8dPLlTQfZYYVF7R/CKuJ9flAjTouChuoNDblHShNzDWJh1vSpiokNhJEcZN/7psN
+	99G/lJDsOyTGlKFpvudKsY7YEchOFHE+7oweN4+Q+bu0xxNNTx+e6ystwMeOXctd
+	tglje1LO1leMtTPufnOfiQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763710862; x=
-	1763797262; bh=tjrZVvjnjmWkAG+XeSyKAwD0BNixqpvZMZZWw1c1ReE=; b=K
-	E0yLt/9wxAsc8fQFNqlbsug/Fd/bH9jqfyuDY4sxdR2cl7xZzpkVEEeUhkOFqvzm
-	EIbif8XOtfs+og38yinE+gofSXN/ueiEVDyrkBarn6llngqYZKJOZxNYNlPZ4x1R
-	HVUBmfNZYxCUfeBQmG9pjBapg1bpbhd1cSZ+fJJXYYxDf4Eq/MRTDaPqpXo6DP7a
-	ND0uV+L73pnY62Lt8qn26Vpc62eA+TEY5Wzl7r48/tr1NK2KMOf3HGpAqxoC2/FN
-	7i6BV3onuKAT1381yKTcOsj8ETqL3kk98eGZ7fF1t8kEB3CenFWDFvw2vroyjVLV
-	odcgeolDsxKw3I8hZPu1g==
-X-ME-Sender: <xms:jhcgaS1SVQfbCiEEP41lNjholQsyFahvgliRuErbQ5LW4ujzuGQJoA>
-    <xme:jhcgachidkCoiOTNRrs5ZaW6RTxWr0jZsNNC8ant2ajLcFuzTpb-SfsUjsNhevkxr
-    CWzqU0viyTqFcJ0BeNzwKeAYTozy0S7t2rdrkQeLwMPvhqM4HBjMQ>
-X-ME-Received: <xmr:jhcgaYTHBYRarVgp8sX3X6zE3PlXIO9z60Q4R5gjsSXya900WolG4SgndiL354oF6meWLPflj02-HYfLQOvAWgvosNt05KBbVHKBxpllh-5t>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdelfeelucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763710864; x=
+	1763797264; bh=gyWKqIQh/wGdlzd4q+swOQ9IKfoVwpymQm44k+SnCas=; b=Y
+	cJ9nTLKzu+bq6s3AfPI3PkHJAWWdJVTZOflpjZw7Gn2L0U3JGRz21Iy69O2pxj4/
+	yIzKJWCSpiiTCE3yvmgaifAz0d28jB/toDBO7XEmyW3q1E8rff+CswsC5N4JbdPz
+	+Q6JgokRv/Ez1JdXTfd/GhTashWnJL+baW67n1VXEGakXERyhE2PwvMVQuDTypwG
+	sq5BdnbO0VmngqRA51OcW4Tog7h/MV4cSSv1BDpPBdsGvVVvCoaIvCfCnM2iUrno
+	l/6boz7ZJmQU9D+NgtDZvVU95u5/Ri7PL2XtRxd3yhQrG9FcIZ00DVuKoCVOTdFX
+	pQgsAuue42QL4fk6Bnzmw==
+X-ME-Sender: <xms:kBcgaZ2D85xcDxq__UeUIxuyy185y74JAMm7F9DBbG7Gbgi8ii475g>
+    <xme:kBcgaXgPfMjTzrtD7o40-qdt8R8cOR2T5ycW35H9Aa0lbZaUOPtW1IWhluPnzmERj
+    6TWJjfWOpgIzEnQuKFybE0UE6IUxM4AVMPm7jVt5ILZY2jKcAUca0U>
+X-ME-Received: <xmr:kBcgaXRu1lnaEORKXZ9n9PzO4XnTWfY76WONaaksiTfDkaz6pWi2KJXep4UXBEICKUIBs48udvYxNGErulg4MZ9d4tAYBJqhYOhfSZeVIvs2>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdelfeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedtheefhfegffevgeegtdfhheeuvden
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
-    fedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:jhcgadgOMbZETtl91vE7M3rdpyDWd9586ZApdPbu42p4tnQPrzY8kw>
-    <xmx:jhcgaY7dug-j4YChCwCRdnTW7yUU4LoStGitEu7nTFbdpT1Bwq2BvA>
-    <xmx:jhcgaaBqFwPYrbbpQZbETSP_W5IlOd4e7hL-LmipezlYsoOTFlIwxw>
-    <xmx:jhcgafYvF9RYK6cwazDUzsp0ttq-VM1WrgRj1u9KsjKGrb8qTUGDZg>
-    <xmx:jhcgaY8nIdvgX3QqWLvskgsrtBn2VJiWOUpQgOqQWpkDhP6i5e_5vMgy>
+    hnpeeukefffeegfedvfffgiefffeelhfekvdfhvdelieeilefhgeeihfegteehledtuden
+    ucffohhmrghinhepihhntghorhgvrdhrvggrugenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthho
+    peefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeekse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:kBcgaQjDQzvANrGG4Bdo55QuZmoau7i81H2_llktJLmbU1BZmmsfgw>
+    <xmx:kBcgaf611EL3CyvOrgbuPOH9QfWGsBDGGjOFymUes8AVn05FIwuNaw>
+    <xmx:kBcgaVAyzaRCZ36o1KKWNC6BWhsAAFOQ4wvtvLDDSuwzFAnJh0czfQ>
+    <xmx:kBcgaeZVJbYc7e3j0l6Er0RkQDrHRQOmWWWGgM5xkqmHwHycfx0bfw>
+    <xmx:kBcgaT8fXpSsggshMv6wKUi27rv-gYXGVoEMHXfITmnGZjRAsK--TTzC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Nov 2025 02:41:01 -0500 (EST)
+ 21 Nov 2025 02:41:03 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7a97df42 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 21 Nov 2025 07:40:59 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 8f56d9ec (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 21 Nov 2025 07:41:03 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 00/19] Refactor object read streams to work via object
- sources
-Date: Fri, 21 Nov 2025 08:40:45 +0100
-Message-Id: <20251121-b4-pks-odb-read-stream-v2-0-ca8534963150@pks.im>
+Date: Fri, 21 Nov 2025 08:40:46 +0100
+Subject: [PATCH v2 01/19] streaming: rename `git_istream` into
+ `odb_read_stream`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,194 +84,345 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAH0XIGkC/3WNQQrCMBBFr1Jm7UgSK1FXvYd0kSYTO0ibkpSgl
- NzdWNy6Gt7n/zcbJIpMCW7NBpEyJw5zBXVowI5mfhCyqwxKqLOUQuPQ4vJMGNyAkYzDtNYzoSa
- jvSBhLr6FOl4ieX7t4ntfeeS0hvje/2T5TX9Kef2nzBIFGmesFyerrPVdbR15gr6U8gGL7Vtcu
- QAAAA==
-X-Change-ID: 20251107-b4-pks-odb-read-stream-7ea7f0e0a8f4
-In-Reply-To: <20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im>
-References: <20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im>
+Message-Id: <20251121-b4-pks-odb-read-stream-v2-1-ca8534963150@pks.im>
+References: <20251121-b4-pks-odb-read-stream-v2-0-ca8534963150@pks.im>
+In-Reply-To: <20251121-b4-pks-odb-read-stream-v2-0-ca8534963150@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, 
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.3
 
-Hi,
+In the following patches we are about to make the `git_istream` more
+generic so that it becomes fully controlled by the specific object
+source that wants to create it. As part of these refactorings we'll
+fully move the structure into the object database subsystem.
 
-the `git_istream` data structure can be used to read objects from the
-object database in a streaming fashion. This is used for example to read
-large files that one doesn't want to load into memory in full.
+Prepare for this change by renaming the structure from `git_istream`
+to `odb_read_stream`. This mirrors the `odb_write_stream` structure that
+we already have.
 
-In the current architecture, all the logic to handle these streams is
-fully self-contained in "streaming.c". It contains the logic to set up
-streams for loose, packed, in-memory and filtered objects. This doesn't
-really play all that well with pluggable object databases, as it should
-be the responsibility of the object database source itself to handle the
-logic.
-
-This patch series thus revamps our object read streams: instead of being
-entirely contained in "streaming.c", the format-specific streams are now
-created by the ODB sources. This allows each source itself to decide
-whether and, if so, how to make objects streamable.
-
-This overall requires quite a bit of refactoring, but I think that the
-end result is an easier-to-understand infrastructure that is an
-improvement even without pluggable object databases.
-
-This series is built on top of v2.52.0 with ps/object-source-loose at
-3e5e360888 (object-file: refactor writing objects via a stream,
-2025-11-03) merged into it.
-
-Changes in v2:
-  - Some commit message improvements.
-  - Drop the `type` and `size` out pointers in
-    `odb_read_object_stream()` in an additional commit.
-  - Improve a "hidden" variable declaration by moving it onto its own
-    line.
-  - Link to v1: https://lore.kernel.org/r/20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (19):
-      streaming: rename `git_istream` into `odb_read_stream`
-      streaming: drop the `open()` callback function
-      streaming: propagate final object type via the stream
-      streaming: explicitly pass packfile info when streaming a packed object
-      streaming: allocate stream inside the backend-specific logic
-      streaming: create structure for in-core object streams
-      streaming: create structure for loose object streams
-      streaming: create structure for packed object streams
-      streaming: create structure for filtered object streams
-      streaming: move zlib stream into backends
-      packfile: introduce function to read object info from a store
-      streaming: rely on object sources to create object stream
-      streaming: get rid of `the_repository`
-      streaming: make the `odb_read_stream` definition public
-      streaming: move logic to read loose objects streams into backend
-      streaming: move logic to read packed objects streams into backend
-      streaming: refactor interface to be object-database-centric
-      streaming: move into object database subsystem
-      streaming: drop redundant type and size pointers
+ archive-tar.c          |  2 +-
+ archive-zip.c          |  2 +-
+ builtin/index-pack.c   |  2 +-
+ builtin/pack-objects.c |  4 ++--
+ object-file.c          |  2 +-
+ streaming.c            | 62 +++++++++++++++++++++++++-------------------------
+ streaming.h            | 12 +++++-----
+ 7 files changed, 43 insertions(+), 43 deletions(-)
 
- Makefile               |   2 +-
- archive-tar.c          |  12 +-
- archive-zip.c          |  17 +-
- builtin/cat-file.c     |   4 +-
- builtin/fsck.c         |   5 +-
- builtin/index-pack.c   |  15 +-
- builtin/log.c          |   6 +-
- builtin/pack-objects.c |  24 ++-
- entry.c                |   4 +-
- meson.build            |   2 +-
- object-file.c          | 183 ++++++++++++++--
- object-file.h          |  42 +---
- odb.c                  |  29 +--
- odb/streaming.c        | 294 ++++++++++++++++++++++++++
- odb/streaming.h        |  67 ++++++
- packfile.c             | 199 ++++++++++++++++--
- packfile.h             |  17 +-
- parallel-checkout.c    |   5 +-
- streaming.c            | 561 -------------------------------------------------
- streaming.h            |  21 --
- 20 files changed, 780 insertions(+), 729 deletions(-)
+diff --git a/archive-tar.c b/archive-tar.c
+index 73b63ddc41..dc1eda09e0 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -129,7 +129,7 @@ static void write_trailer(void)
+  */
+ static int stream_blocked(struct repository *r, const struct object_id *oid)
+ {
+-	struct git_istream *st;
++	struct odb_read_stream *st;
+ 	enum object_type type;
+ 	unsigned long sz;
+ 	char buf[BLOCKSIZE];
+diff --git a/archive-zip.c b/archive-zip.c
+index bea5bdd43d..40a9c93ff9 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -309,7 +309,7 @@ static int write_zip_entry(struct archiver_args *args,
+ 	enum zip_method method;
+ 	unsigned char *out;
+ 	void *deflated = NULL;
+-	struct git_istream *stream = NULL;
++	struct odb_read_stream *stream = NULL;
+ 	unsigned long flags = 0;
+ 	int is_binary = -1;
+ 	const char *path_without_prefix = path + args->baselen;
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 2b78ba7fe4..5f90f12f92 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -762,7 +762,7 @@ static void find_ref_delta_children(const struct object_id *oid,
+ 
+ struct compare_data {
+ 	struct object_entry *entry;
+-	struct git_istream *st;
++	struct odb_read_stream *st;
+ 	unsigned char *buf;
+ 	unsigned long buf_size;
+ };
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 69e80b1443..c693d948e1 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -404,7 +404,7 @@ static unsigned long do_compress(void **pptr, unsigned long size)
+ 	return stream.total_out;
+ }
+ 
+-static unsigned long write_large_blob_data(struct git_istream *st, struct hashfile *f,
++static unsigned long write_large_blob_data(struct odb_read_stream *st, struct hashfile *f,
+ 					   const struct object_id *oid)
+ {
+ 	git_zstream stream;
+@@ -513,7 +513,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
+ 	unsigned hdrlen;
+ 	enum object_type type;
+ 	void *buf;
+-	struct git_istream *st = NULL;
++	struct odb_read_stream *st = NULL;
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+ 
+ 	if (!usable_delta) {
+diff --git a/object-file.c b/object-file.c
+index 811c569ed3..b62b21a452 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -134,7 +134,7 @@ int stream_object_signature(struct repository *r, const struct object_id *oid)
+ 	struct object_id real_oid;
+ 	unsigned long size;
+ 	enum object_type obj_type;
+-	struct git_istream *st;
++	struct odb_read_stream *st;
+ 	struct git_hash_ctx c;
+ 	char hdr[MAX_HEADER_LEN];
+ 	int hdrlen;
+diff --git a/streaming.c b/streaming.c
+index 00ad649ae3..1fb4b7c1c0 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -14,17 +14,17 @@
+ #include "replace-object.h"
+ #include "packfile.h"
+ 
+-typedef int (*open_istream_fn)(struct git_istream *,
++typedef int (*open_istream_fn)(struct odb_read_stream *,
+ 			       struct repository *,
+ 			       const struct object_id *,
+ 			       enum object_type *);
+-typedef int (*close_istream_fn)(struct git_istream *);
+-typedef ssize_t (*read_istream_fn)(struct git_istream *, char *, size_t);
++typedef int (*close_istream_fn)(struct odb_read_stream *);
++typedef ssize_t (*read_istream_fn)(struct odb_read_stream *, char *, size_t);
+ 
+ #define FILTER_BUFFER (1024*16)
+ 
+ struct filtered_istream {
+-	struct git_istream *upstream;
++	struct odb_read_stream *upstream;
+ 	struct stream_filter *filter;
+ 	char ibuf[FILTER_BUFFER];
+ 	char obuf[FILTER_BUFFER];
+@@ -33,7 +33,7 @@ struct filtered_istream {
+ 	int input_finished;
+ };
+ 
+-struct git_istream {
++struct odb_read_stream {
+ 	open_istream_fn open;
+ 	close_istream_fn close;
+ 	read_istream_fn read;
+@@ -71,7 +71,7 @@ struct git_istream {
+  *
+  *****************************************************************/
+ 
+-static void close_deflated_stream(struct git_istream *st)
++static void close_deflated_stream(struct odb_read_stream *st)
+ {
+ 	if (st->z_state == z_used)
+ 		git_inflate_end(&st->z);
+@@ -84,13 +84,13 @@ static void close_deflated_stream(struct git_istream *st)
+  *
+  *****************************************************************/
+ 
+-static int close_istream_filtered(struct git_istream *st)
++static int close_istream_filtered(struct odb_read_stream *st)
+ {
+ 	free_stream_filter(st->u.filtered.filter);
+ 	return close_istream(st->u.filtered.upstream);
+ }
+ 
+-static ssize_t read_istream_filtered(struct git_istream *st, char *buf,
++static ssize_t read_istream_filtered(struct odb_read_stream *st, char *buf,
+ 				     size_t sz)
+ {
+ 	struct filtered_istream *fs = &(st->u.filtered);
+@@ -150,10 +150,10 @@ static ssize_t read_istream_filtered(struct git_istream *st, char *buf,
+ 	return filled;
+ }
+ 
+-static struct git_istream *attach_stream_filter(struct git_istream *st,
+-						struct stream_filter *filter)
++static struct odb_read_stream *attach_stream_filter(struct odb_read_stream *st,
++						    struct stream_filter *filter)
+ {
+-	struct git_istream *ifs = xmalloc(sizeof(*ifs));
++	struct odb_read_stream *ifs = xmalloc(sizeof(*ifs));
+ 	struct filtered_istream *fs = &(ifs->u.filtered);
+ 
+ 	ifs->close = close_istream_filtered;
+@@ -173,7 +173,7 @@ static struct git_istream *attach_stream_filter(struct git_istream *st,
+  *
+  *****************************************************************/
+ 
+-static ssize_t read_istream_loose(struct git_istream *st, char *buf, size_t sz)
++static ssize_t read_istream_loose(struct odb_read_stream *st, char *buf, size_t sz)
+ {
+ 	size_t total_read = 0;
+ 
+@@ -218,14 +218,14 @@ static ssize_t read_istream_loose(struct git_istream *st, char *buf, size_t sz)
+ 	return total_read;
+ }
+ 
+-static int close_istream_loose(struct git_istream *st)
++static int close_istream_loose(struct odb_read_stream *st)
+ {
+ 	close_deflated_stream(st);
+ 	munmap(st->u.loose.mapped, st->u.loose.mapsize);
+ 	return 0;
+ }
+ 
+-static int open_istream_loose(struct git_istream *st, struct repository *r,
++static int open_istream_loose(struct odb_read_stream *st, struct repository *r,
+ 			      const struct object_id *oid,
+ 			      enum object_type *type)
+ {
+@@ -277,7 +277,7 @@ static int open_istream_loose(struct git_istream *st, struct repository *r,
+  *
+  *****************************************************************/
+ 
+-static ssize_t read_istream_pack_non_delta(struct git_istream *st, char *buf,
++static ssize_t read_istream_pack_non_delta(struct odb_read_stream *st, char *buf,
+ 					   size_t sz)
+ {
+ 	size_t total_read = 0;
+@@ -336,13 +336,13 @@ static ssize_t read_istream_pack_non_delta(struct git_istream *st, char *buf,
+ 	return total_read;
+ }
+ 
+-static int close_istream_pack_non_delta(struct git_istream *st)
++static int close_istream_pack_non_delta(struct odb_read_stream *st)
+ {
+ 	close_deflated_stream(st);
+ 	return 0;
+ }
+ 
+-static int open_istream_pack_non_delta(struct git_istream *st,
++static int open_istream_pack_non_delta(struct odb_read_stream *st,
+ 				       struct repository *r UNUSED,
+ 				       const struct object_id *oid UNUSED,
+ 				       enum object_type *type UNUSED)
+@@ -380,13 +380,13 @@ static int open_istream_pack_non_delta(struct git_istream *st,
+  *
+  *****************************************************************/
+ 
+-static int close_istream_incore(struct git_istream *st)
++static int close_istream_incore(struct odb_read_stream *st)
+ {
+ 	free(st->u.incore.buf);
+ 	return 0;
+ }
+ 
+-static ssize_t read_istream_incore(struct git_istream *st, char *buf, size_t sz)
++static ssize_t read_istream_incore(struct odb_read_stream *st, char *buf, size_t sz)
+ {
+ 	size_t read_size = sz;
+ 	size_t remainder = st->size - st->u.incore.read_ptr;
+@@ -400,7 +400,7 @@ static ssize_t read_istream_incore(struct git_istream *st, char *buf, size_t sz)
+ 	return read_size;
+ }
+ 
+-static int open_istream_incore(struct git_istream *st, struct repository *r,
++static int open_istream_incore(struct odb_read_stream *st, struct repository *r,
+ 			       const struct object_id *oid, enum object_type *type)
+ {
+ 	struct object_info oi = OBJECT_INFO_INIT;
+@@ -420,7 +420,7 @@ static int open_istream_incore(struct git_istream *st, struct repository *r,
+  * static helpers variables and functions for users of streaming interface
+  *****************************************************************************/
+ 
+-static int istream_source(struct git_istream *st,
++static int istream_source(struct odb_read_stream *st,
+ 			  struct repository *r,
+ 			  const struct object_id *oid,
+ 			  enum object_type *type)
+@@ -458,25 +458,25 @@ static int istream_source(struct git_istream *st,
+  * Users of streaming interface
+  ****************************************************************/
+ 
+-int close_istream(struct git_istream *st)
++int close_istream(struct odb_read_stream *st)
+ {
+ 	int r = st->close(st);
+ 	free(st);
+ 	return r;
+ }
+ 
+-ssize_t read_istream(struct git_istream *st, void *buf, size_t sz)
++ssize_t read_istream(struct odb_read_stream *st, void *buf, size_t sz)
+ {
+ 	return st->read(st, buf, sz);
+ }
+ 
+-struct git_istream *open_istream(struct repository *r,
+-				 const struct object_id *oid,
+-				 enum object_type *type,
+-				 unsigned long *size,
+-				 struct stream_filter *filter)
++struct odb_read_stream *open_istream(struct repository *r,
++				     const struct object_id *oid,
++				     enum object_type *type,
++				     unsigned long *size,
++				     struct stream_filter *filter)
+ {
+-	struct git_istream *st = xmalloc(sizeof(*st));
++	struct odb_read_stream *st = xmalloc(sizeof(*st));
+ 	const struct object_id *real = lookup_replace_object(r, oid);
+ 	int ret = istream_source(st, r, real, type);
+ 
+@@ -493,7 +493,7 @@ struct git_istream *open_istream(struct repository *r,
+ 	}
+ 	if (filter) {
+ 		/* Add "&& !is_null_stream_filter(filter)" for performance */
+-		struct git_istream *nst = attach_stream_filter(st, filter);
++		struct odb_read_stream *nst = attach_stream_filter(st, filter);
+ 		if (!nst) {
+ 			close_istream(st);
+ 			return NULL;
+@@ -508,7 +508,7 @@ struct git_istream *open_istream(struct repository *r,
+ int stream_blob_to_fd(int fd, const struct object_id *oid, struct stream_filter *filter,
+ 		      int can_seek)
+ {
+-	struct git_istream *st;
++	struct odb_read_stream *st;
+ 	enum object_type type;
+ 	unsigned long sz;
+ 	ssize_t kept = 0;
+diff --git a/streaming.h b/streaming.h
+index bd27f59e57..f5ff5d7ac9 100644
+--- a/streaming.h
++++ b/streaming.h
+@@ -7,14 +7,14 @@
+ #include "object.h"
+ 
+ /* opaque */
+-struct git_istream;
++struct odb_read_stream;
+ struct stream_filter;
+ 
+-struct git_istream *open_istream(struct repository *, const struct object_id *,
+-				 enum object_type *, unsigned long *,
+-				 struct stream_filter *);
+-int close_istream(struct git_istream *);
+-ssize_t read_istream(struct git_istream *, void *, size_t);
++struct odb_read_stream *open_istream(struct repository *, const struct object_id *,
++				     enum object_type *, unsigned long *,
++				     struct stream_filter *);
++int close_istream(struct odb_read_stream *);
++ssize_t read_istream(struct odb_read_stream *, void *, size_t);
+ 
+ int stream_blob_to_fd(int fd, const struct object_id *, struct stream_filter *, int can_seek);
+ 
 
-Range-diff versus v1:
-
- 1:  89ec27ae18 !  1:  a6534585dd streaming: rename `git_istream` into `odb_read_stream`
-    @@ streaming.h
-     -int close_istream(struct git_istream *);
-     -ssize_t read_istream(struct git_istream *, void *, size_t);
-     +struct odb_read_stream *open_istream(struct repository *, const struct object_id *,
-    -+				       enum object_type *, unsigned long *,
-    -+				       struct stream_filter *);
-    ++				     enum object_type *, unsigned long *,
-    ++				     struct stream_filter *);
-     +int close_istream(struct odb_read_stream *);
-     +ssize_t read_istream(struct odb_read_stream *, void *, size_t);
-      
- 2:  b4d37fd4f2 !  2:  23a8704740 streaming: drop the `open()` callback function
-    @@ Commit message
-         structure in the source itself.
-     
-         We could of course work around that and have the loose object source
-    -    create the structure and populate it's `open()` callback, only. But
-    +    create the structure and populate its `open()` callback, only. But
-         this doesn't really buy us anything due to the second bullet point
-         above.
-     
- 3:  b8bae59f58 =  3:  badcc5d72b streaming: propagate final object type via the stream
- 4:  583ed2c4f3 =  4:  09f9d2e3f2 streaming: explicitly pass packfile info when streaming a packed object
- 5:  af1a5a312a !  5:  40728b509c streaming: allocate stream inside the backend-specific logic
-    @@ Commit message
-         This works, but it's awkward in the context of pluggable object
-         databases. Each backend will need its own member in that union, and as
-         the structure itself is completely opaque (it's only defined in
-    -    "streamgin.c") it also has the consequence that we must have the logic
-    +    "streaming.c") it also has the consequence that we must have the logic
-         that is specific to backends in "streaming.c".
-     
-         Ideally though, the infrastructure would be reversed: we have a generic
- 6:  5c5c291bba !  6:  7d74c31e3d streaming: create structure for in-core object streams
-    @@ streaming.c: static int open_istream_incore(struct odb_read_stream **out,
-     -	struct odb_read_stream stream = {
-     -		.close = close_istream_incore,
-     -		.read = read_istream_incore,
-    --	};
-     +	struct odb_incore_read_stream stream = {
-     +		.base.close = close_istream_incore,
-     +		.base.read = read_istream_incore,
-    -+	}, *st;
-    + 	};
-    ++	struct odb_incore_read_stream *st;
-      	int ret;
-      
-     -	oi.typep = &stream.type;
- 7:  58d214e576 =  7:  dd3440bff2 streaming: create structure for loose object streams
- 8:  7b3d095e06 =  8:  6de8cc7c9f streaming: create structure for packed object streams
- 9:  3bca3dfab5 =  9:  e00aa2b198 streaming: create structure for filtered object streams
-10:  329549b6c7 = 10:  f37441494d streaming: move zlib stream into backends
-11:  9d47d12cbf = 11:  8c62cfac57 packfile: introduce function to read object info from a store
-12:  3a5ad53484 ! 12:  82f186e8b4 streaming: rely on object sources to create object stream
-    @@ Commit message
-         the different source backends anymore, but eventually it'll only have to
-         call the source's callback function.
-     
-    -    Note that at the current poin in time we aren't full there yet:
-    +    Note that at the current point in time we aren't fully there yet:
-     
-           - The packfile store still sits on the object database level and is
-             thus agnostic of the sources.
-13:  2fa2f53ac0 = 13:  a5c1b3c717 streaming: get rid of `the_repository`
-14:  49e6fb06e8 ! 14:  5fdd600a0c streaming: make the `odb_read_stream` definition public
-    @@ streaming.h
-     +};
-     +
-      struct odb_read_stream *open_istream(struct repository *, const struct object_id *,
-    - 				       enum object_type *, unsigned long *,
-    - 				       struct stream_filter *);
-    + 				     enum object_type *, unsigned long *,
-    + 				     struct stream_filter *);
-15:  3a944f3a31 = 15:  460cab31c9 streaming: move logic to read loose objects streams into backend
-16:  60b08e3dc5 = 16:  293578ab35 streaming: move logic to read packed objects streams into backend
-17:  68ef7721b0 ! 17:  e6a242f1b8 streaming: refactor interface to be object-database-centric
-    @@ streaming.h: struct odb_read_stream {
-      };
-      
-     -struct odb_read_stream *open_istream(struct repository *, const struct object_id *,
-    --				       enum object_type *, unsigned long *,
-    --				       struct stream_filter *);
-    +-				     enum object_type *, unsigned long *,
-    +-				     struct stream_filter *);
-     -int close_istream(struct odb_read_stream *);
-     -ssize_t read_istream(struct odb_read_stream *, void *, size_t);
-     +/*
-18:  8afda7d038 = 18:  95e7c2aa9b streaming: move into object database subsystem
- -:  ---------- > 19:  c8b2112d00 streaming: drop redundant type and size pointers
-
----
-base-commit: 899e578b5b7c020aec806bd694adf2563f62843c
-change-id: 20251107-b4-pks-odb-read-stream-7ea7f0e0a8f4
+-- 
+2.52.0.rc2.482.gaa765fefd0.dirty
 
