@@ -1,84 +1,83 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B692566F7
-	for <git@vger.kernel.org>; Fri, 21 Nov 2025 06:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4345832F757
+	for <git@vger.kernel.org>; Fri, 21 Nov 2025 06:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763706719; cv=none; b=Cvuk2X2NZIe8gjPqPxBaammF33Zlqh9/zae3i5OJ0giorrs3uClTADUVIn77q+ZLPnttKCMLLE5fXNXU6y2rnyajSnilaxCMlrFhu1WizowxK3rfylrgvw9OPdQldyBjenptaX6NuY6qJuUeOnkRAXYsSm7x4+52xY2Rb5ODGLs=
+	t=1763706729; cv=none; b=KMx/NGSgQl/GaP9W7WMqylbVoYgDEMx/iEiJsOn8P4VrIcaUJHIoB+weNY7qYU3QASZAZN2UTkZi6haQTSYeq7rl9wOKEiDWA5EVJTfg0ebTWoA+GMHrqZcniuck/wd/EtOf217f/a8gkw2EpCS0Iy2NgaXNWrMOqy+duWVculk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763706719; c=relaxed/simple;
-	bh=3ZMCHdrA+dEHxM8+p/sadVmsNtSNM0wKeuh0n+K0NbQ=;
+	s=arc-20240116; t=1763706729; c=relaxed/simple;
+	bh=ACJ77+BW6g+TluzEvWU+O6oyParewmvPxQWRRasa1PU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e2mniHR+RdvmmqVAXYUMeMi8WnZmRF70mT8/jy7EUXj3d7PZW2f551tPp34wSUUffN/svL35A10wvqJ5U6cYZHK62zkAJyiDU8slF6yHvrYYa+fbC/QTpisbG/PtokHDx6iHusVXo51cIAiT5MO6AVuKYKF/747WsiwxDUdH4QU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EKDZnDGC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yfaB190T; arc=none smtp.client-ip=202.12.124.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=D3HCEL+/hd/+FAN53bx3lAn7SbMCbsU4ExpU29ZeP903ZYjXwmmZHPNcl7WAZIUggP3eXYi0BPfXo5K/wqDzTj6r0ffw7LsZIO11hrdjLHuItGASs7OIwhsshb2X4VItJtw6NMhSJgvenIGc8ofPd2TSEOqR0NqLex9SEqftkUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ni5ahpiE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IynrC6oJ; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EKDZnDGC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yfaB190T"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2AEDD1D00218;
-	Fri, 21 Nov 2025 01:31:55 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ni5ahpiE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IynrC6oJ"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5B3951D0021C;
+	Fri, 21 Nov 2025 01:32:05 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Fri, 21 Nov 2025 01:31:55 -0500
+  by phl-compute-05.internal (MEProxy); Fri, 21 Nov 2025 01:32:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1763706715; x=1763793115; bh=Xy1M7JIuX1
-	JN3M28pzecavY7w5gRqJoHcMVfcY2CExE=; b=EKDZnDGCACH/4GUmULC4dXyA60
-	T+7VrN43YxAdUeSc6e9Z1Ap4ZWtpTwj8L5+O0L7nOnjkBEqJmGIxIAzqoQOgqEUQ
-	owovOv82Sp4bicj0U86vaJU3SdNT5+MuFBxH4BtW7oL6SB6guacrXpd3vD6FVPa1
-	NvkQ41WqlAVSuz6CtmWXkwXrKZqRyAw3Eix5rXyoLKq9DSBJhILp2o0IAM3x2phZ
-	KsvJMUZDlMAftCdZ6KnOD8Urv7pWtFjpkaCBkC0kYz6enircnvhWVes8yJxThGOP
-	nEovoPkNM2PWtmQ7oGO+UN2N7nJpzG31TueGa0YcU0bRApsQpOznvfiNcQyw==
+	:subject:to:to; s=fm3; t=1763706725; x=1763793125; bh=47yXKRKfpe
+	rn4a4aAap2+qTskiuam5UVpeL23owUk+M=; b=ni5ahpiEugNxctwz7jyu9Ft1my
+	ckHaJTDhZ7wxSvVYq+2r4aro0MDnEPgPOLft3itCTZ24WhWk499oMfTESMcdUNdh
+	D+jt1tBUQIaFWaWLHLUBLoqeOB7ALMvSi2eu/cFHnPgT6sMgIwiJ2HKvzLhY9B+L
+	+sEoo5F2P6U9jWR+dJoFAeCvvCiproQCu6NkSYXzoINyg+4jNSet0Waegx+x4wgN
+	mCm5r+MQpU3sOhI1QZobE0L58KRDeNCvy/3MxbXiFP+KVUecA7cNVbFLs5kQDdiD
+	yMFUM3WrKaVL1XB9JqSOAnkGuUyuftG4PcIV8zgLGlTGZggINKjrh/9aeECw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763706715; x=1763793115; bh=Xy1M7JIuX1JN3M28pzecavY7w5gRqJoHcMV
-	fcY2CExE=; b=yfaB190TZ1FLJNO3WrXkxjPXeCoDLCMZG/m4eHfAET/ZM1zYzLH
-	ddd2eByd3sYQo9r87XO8R6ruLb3yRzAgoG28Aqr7AeXj+vKsTlRMXoiFJgEABz5q
-	RQ9OBOtjUdZwxc2fHKdZu/Y4jGXBf7E0a2TyfBsXdKdjg3Ex7XPobDFD5sVNziAD
-	1t0vd+cNjb060v1VzvJucAj4cQN6q2VSYug96hjT4L+DuaZMhXLtN23J/p/QRdrf
-	kKVbGCIJB8MOB3VBf+j9qbpvlQ9+LgK5P0vr32u2wXcCKaQR/39TQeQLmoUEYJSp
-	3NFU5BkR5nIPzuwFJaI8ugQ+atKioIvrnYQ==
-X-ME-Sender: <xms:WgcgaUffMyZC0v9t2NDYfJJCL-3LPioMR0p1pcs7vDxdsZ4zl-lyZw>
-    <xme:WgcgacN6tx5GgeaaLMnPU27h7lXN_Ba07hS4e-5pqooabu4Pu3fNYmM8WO4DqsglB
-    Yoh4cLgNZgD0CoRloc0VmHI_VxvJuH5_z4PgNTuFVfHicd89eAxwdM>
-X-ME-Received: <xmr:WgcgaTJtd2ZDmXKL5x2yxW2qYhSIeK2lfzA7gSSq0eJEgfVJINlj_UQ6YZ4KyERgLE8VCa2U1J2zmSiY9p8kKpSRrr9JIMRlKp4uzSD8iaw5>
+	1763706725; x=1763793125; bh=47yXKRKfpern4a4aAap2+qTskiuam5UVpeL
+	23owUk+M=; b=IynrC6oJfmvTXis3DbDZz2Krg+KzZZsN/gndLXRcJFPByUVys1l
+	f/dgDXUi36VNRL9shJIDCV+aOuroKa2wioVilL4FNbIkD4XQx0B7sphi5tTox669
+	MKZ4vrRF0O/No54ycDwzJHTWu8G6PpD7tFvZFnsfmJAFAFRNtmnfYeAhTaoxC+Ev
+	ANMV6zAhJAtsoKD6eXfbUcP6BSh8l3EA35ovplaEIn6ORD8eBfmEgL8IIziLXddT
+	kFVnlKzqIr3wHf63XajNHzZ5m/UItIl1WXHJDAkkE+DuFwdmNd9v3SLB5R3XrTZW
+	FCkYSZNFG9PSFDGSwV2qxiypr2inZsvnIXQ==
+X-ME-Sender: <xms:ZQcgae8IuwVFkqEhA7oHvcIaiGJ98plP13cn-02QpYd33y9_Qn_rWA>
+    <xme:ZQcgaUsnkdGKdNu-rVPPVOG6I6EllnafPBl2boFoAqSEiK56S7EOK3Hy9rPEQfFjc
+    utrGR2BwF5R3ioqUKF-nr2mM-QGqHhJL39M5lnhhiNW694ThX7w1Q>
+X-ME-Received: <xmr:ZQcgaRoTiBvwZQR5dLAqvRLkTfd0wS_3MLXuRTD6XYW8yqnXdT58Ed66gtE3ABKUCI7uKWlcfZzdl6BbvARGNTurVJOS8EaNiUmKvmujo1Q9>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdelvdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    epjedttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslh
-    gvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:WgcgaVGz5hq43-3gwom-V5wMkVgjeNBNXDgFUCRFmAsVgspibNN6_g>
-    <xmx:WgcgaTSdxy8jHK2cUOddgwRcg7K7b4AG5ihI-4cwfcdON7FL_79csQ>
-    <xmx:WgcgaZGSwlA80ZimgufiUqaOQ2WkYMDg25ekikui8peaxhW42BuYHA>
-    <xmx:WgcgaX9gx-nKAzZECY0ZO_32Pmiw_pbMn32ucp8NsMOOBeg0lng7Yw>
-    <xmx:WwcgabM2AUfLy5z1EsQ4c4p4wrb3yjEroFKlfmT69rQ6qcR4zCfrvjXz>
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ZQcgaRnH60notjEnp3k3Bcl-PA2kzbz5OEdQEXwZeKtnNn7kYb3N-g>
+    <xmx:ZQcgaVy5FnGfloW824MXzX7wbDy7qTC9cU8PwXxw7jF-gUbDH_zrtA>
+    <xmx:ZQcgaZl_ndf2P6gy3OrLHTZifglZKovvbmGDCrEOWlx-wZuuBsU8Vw>
+    <xmx:ZQcgaed8U3lDTEd8NBuloLFWavQ8QVlcxh9qBAG9kpj0tWdgvFM-RA>
+    <xmx:ZQcgadu6jLaJ-z5yHBAb3GQTgrTblNr-JXUFV5js8E7fVSOrw5HS9b-->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Nov 2025 01:31:54 -0500 (EST)
+ 21 Nov 2025 01:32:04 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 094417fc (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 21 Nov 2025 06:31:52 +0000 (UTC)
-Date: Fri, 21 Nov 2025 07:31:49 +0100
+	by mail (OpenSMTPD) with ESMTPSA id bc919f28 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 21 Nov 2025 06:32:03 +0000 (UTC)
+Date: Fri, 21 Nov 2025 07:32:00 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/18] streaming: rename `git_istream` into
- `odb_read_stream`
-Message-ID: <aSAHVZCR7U1Di-LP@pks.im>
+Subject: Re: [PATCH 02/18] streaming: drop the `open()` callback function
+Message-ID: <aSAHYNBCMwYsFMYM@pks.im>
 References: <20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im>
- <20251119-b4-pks-odb-read-stream-v1-1-adacf03c2ccf@pks.im>
- <2nd7qcj7jrrwc4fyhfsovs3ptrwmrdxxcap4sqadujtwwua5ha@bpbjlbnbcpiw>
+ <20251119-b4-pks-odb-read-stream-v1-2-adacf03c2ccf@pks.im>
+ <g74hupkwedtclb3gxomhxj6w4rqqzn3tsostdriauvn3gu2cw2@wxgwulitxbtq>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,24 +86,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2nd7qcj7jrrwc4fyhfsovs3ptrwmrdxxcap4sqadujtwwua5ha@bpbjlbnbcpiw>
+In-Reply-To: <g74hupkwedtclb3gxomhxj6w4rqqzn3tsostdriauvn3gu2cw2@wxgwulitxbtq>
 
-On Wed, Nov 19, 2025 at 12:49:22PM -0600, Justin Tobler wrote:
+On Wed, Nov 19, 2025 at 01:01:03PM -0600, Justin Tobler wrote:
 > On 25/11/19 08:47AM, Patrick Steinhardt wrote:
-> > diff --git a/streaming.h b/streaming.h
-> > index bd27f59e57..acf4c84338 100644
-> > --- a/streaming.h
-> > +++ b/streaming.h
-> > @@ -7,14 +7,14 @@
-> >  #include "object.h"
-> >  
-> >  /* opaque */
-> > -struct git_istream;
-> > +struct odb_read_stream;
+> > Instead, drop the callback entirely and refactor `istream_source()` so
+> > that we open the streams immediately. This unblocks a subsequent step,
+> > where we'll also start to allocate the structure in the source-specific
+> > logic.
 > 
-> The name change here makes sense. While we are here, it might be nice to
-> leave a comment annotating it's purpose in a bit more detail.
+> Out of curiousity, is there any reason we would ever want to delay
+> opening the source read stream? If not, then I agree it makes more sense
+> to just open the stream at time of its initialization.
 
-I do this in a subsequent commit, so I won't add this comment here.
+I could not find any reason -- it's not used anywhere in our tree, and I
+couldn't think about why one would want this, either.
 
 Patrick
