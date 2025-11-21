@@ -1,80 +1,80 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11013385BE
-	for <git@vger.kernel.org>; Fri, 21 Nov 2025 07:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A693385BE
+	for <git@vger.kernel.org>; Fri, 21 Nov 2025 07:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763710920; cv=none; b=P7BuiabxlLHuy03ez5lWfCxuiOeAYHZqyFzVjy140i0Coivxrp09ubWlXGEsmUE1TRV20mhYviXUoUHAgADU/6u0gftwozKHYubeEk56hkv7a5lqzIOWwUjCniZtRNcGFMqBm2O0CFHYWUF6zTL0/yxvY/c0BTRcfc1eUNK4JF4=
+	t=1763710924; cv=none; b=qm3XJOm/7cNhvG7viDPM4EM1Rkc2EA6mCuCNXTZpIOkzRYJbWamQ68v9sLSCKVROezX8JBRD+okzJ5MR3iuYeyj6DCCJ/jkHZyRHL3PggQ0/LyUssto0p0+g7N0oT/U15qkyfgkR9lJpCvPs/JshG7yg0pjhkQMQackFG5WVQ8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763710920; c=relaxed/simple;
-	bh=3QdvO2UyKoJT7xM0GN4yt2v4CYCiB2tQnEqygHLP7Qs=;
+	s=arc-20240116; t=1763710924; c=relaxed/simple;
+	bh=T9kYzF4MInnXHdu6+G4/jK70yJp2sIJyJ1OjlpReg0c=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=u3aF75ritZHo2LWnz60ryc5MxOvLwODMcnl+cfsgWI8epUkrAPp/71hs/tuSUS6arLu0aLYKc9ydCyMa+fb2taEP5WrRZzzxdfqnwPLMOjFl80u0Twxti8ckNG8uQLEETPi5oSYq3v2PKAQ1A+0GWp/WeB2V7RetQsth3kpx+E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H9q6E73r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DRoBLxgm; arc=none smtp.client-ip=202.12.124.144
+	 In-Reply-To:To:Cc; b=W9/PPTiaTPrzRUKvQYNqnhriwko1uu7JlLWXXAAwX0aN49jOWr/SB/k7ktqCkkOUizrUKhLHSUC+ypE/u6kyFPj0swRZI/QkL5btjC2R1OPyq8OD9ezwywabEjXAj9ir/C9JAAyXPWqakJW2wrCWo4MZ2qIwgdWJ7LxOznZ2eko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DPcMmtYf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xiPnSjqE; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H9q6E73r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DRoBLxgm"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1FE631D0015F;
-	Fri, 21 Nov 2025 02:41:58 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DPcMmtYf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xiPnSjqE"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 701C61D0015F;
+	Fri, 21 Nov 2025 02:42:02 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Fri, 21 Nov 2025 02:41:58 -0500
+  by phl-compute-03.internal (MEProxy); Fri, 21 Nov 2025 02:42:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1763710917;
-	 x=1763797317; bh=2DzCRtj3TdHudv73zc8hWqFDu2BEi97/uwBWzzzI7oY=; b=
-	H9q6E73r0cIddzU4eOdAtgojfA1LbVnGj9MU5D4zZrlVXtHaDislYSbI3EDqGzzm
-	rYOgOQ2nNY+1xxSGKfXu/MqOvrMnU9x7cE7WLNH9G8rnIOXmgDycQPl3wXr77kib
-	u3W+po6GsEj9RJt7IBKjJdHdiIZmgLtJ447c1FZhpiTYyxOdYXbKjToPkmY1XPBj
-	vOmCNYeOXzSWH3qkEWPyHhxlYjREuGmyRq83FPASCsVXcG83ZXIGq2x3I/aINyT6
-	n7Dl1VvqRd4CJl5T3fhTldI8CaQl6GJv4VHYnosaylAw4jMkDfftXW1VTAQqMl17
-	d9vnCWrrWS2+tg/VVtS51g==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1763710922;
+	 x=1763797322; bh=RtRyuChDK1+yuM/dyvpAibZiN9DdihrpzbDZ6V8hXf4=; b=
+	DPcMmtYfnYNJJdaOzo10oFIG3NEimPw/XZhfckg9YZlmsiWwVrtcPnMX6t7vdpZr
+	1Ec8b4F3gBpHFaFeIW/tmNCZRFARCgyi1wlE08WX7ySCVVd6o8QTjZJ1LVcLH933
+	ECs7Ix4XRGhqdwG33uQfyj3sZfVnhW+xzEaZ+yt5FcKfcT3g0Y8UBaVCOgk4hq6h
+	orw/TuIkXXJ5gpMOM056D3NAP8R+TEVtqV1/X2z11I0HinHOaakJLhjlerM7McaN
+	fwMokCE+mMPngk9RabuYc7lJNnn0m3CHt3SZQbkD8K2VTZ5Lzu5SGGSseocXt60D
+	TyUaknYHTbPKmX6gaxeXpw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763710917; x=
-	1763797317; bh=2DzCRtj3TdHudv73zc8hWqFDu2BEi97/uwBWzzzI7oY=; b=D
-	RoBLxgm5N20gQ2zfB79/He/80IgcC4TtkJ7u+uyQcc7s8oG8LdqPNV4vy/qHrxek
-	8wD2xnNdR4EnFwxS1RdO2PI/3zTec+Cm13E3TOxEoVsCqhzO9Yy5C/RMWS5cyB1p
-	BpMw8HOse7LGF9rTJ79/TaekWRdBMlJoLC9QSMPyS479K9UUudoOQI1hKqir1hqh
-	Fcam4EwoXE0K8MLd3gx2G02YPfmt27IAJ55VcJXWv/lTS2R3+QKqv8Ds1slvEwh7
-	wx8Fwwkz/5DoMZbqVNfsiohPmSblTg6x8Htois+lXBKvTEZmWO+f9RhMZFfqYaQS
-	rKMQiRF1V1GOlsVfn8OrA==
-X-ME-Sender: <xms:xRcgaSeI2q2nhfE57Ejhq5LsmgOrb1noVwO4moMtzK93zxrpU5-vig>
-    <xme:xRcgaTr6JGS72Fb9oinrL1xfKNDUSZ-hZgZeeZ1EjXf1HONGIHa2oBYV0TgVqey3y
-    LIoEaRUUZ-Sq2J2M5wDRJht6fHtRTAhtVJicDiw7p9lN2aVYrafsg>
-X-ME-Received: <xmr:xRcgaQ6vhAqT8hMwobUINqGmuz7ADLqOg-AfvsiRWI-yVYfDUWALIlbkSWAAjgN56zz1jepx1W8Ndb0-AQMF3HV43lR77dti8x4aSG28oXvt>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763710922; x=
+	1763797322; bh=RtRyuChDK1+yuM/dyvpAibZiN9DdihrpzbDZ6V8hXf4=; b=x
+	iPnSjqEqTyO8OgU/yWbmqzTBheN0uwJ0ZVM41Gs6D0+/APAqgEEz5nv4gDaMYELI
+	24TC4kZT69hdDautvQxmrrDfuppfnyK1IbD/IzHOGcVf053idkc2nSnaZMoBbMS/
+	oaoeeB66EThB2qta+DVsgiwy3ruT6iAhf7yc+WpmkmMYds9pAvu13MzdeLxv993M
+	HvasAwXV3UxReGPQRIzlazpL+rZHorZOsVkVYZjY73wnNjmiHVfuOSH9+JNOpb9n
+	ks1YQgQmwLLXniTkrJBtEGGmCsWbh9DF9rAs1WTl1mLZa/vuolLY3JZhTcwv/AKz
+	bPDpfBpO4/pnIGduBPL+Q==
+X-ME-Sender: <xms:yhcgac6AENM_pzRKVdS4c9I6-RqfrjnmPcSvWonGkqdt7d2cJWYWUQ>
+    <xme:yhcgaVXjecU28n2imYawyhNV0ZQWn1EzhyJpyS_GbR8sT9AOiGaWd9jOHGULsHfDU
+    cBjNwD-JK2WYkluM3mL1u6hFNk8rkH77OE_Y4dysFMc6g9DWxVU>
+X-ME-Received: <xmr:yhcgaY0x_hO7kY27zxWhglYA2mF_DX13Rd_ZxnBYN0tjcnkzfFs2XnlnDCxuaMSXMx7dBLR5K5olHrXvz3NysLOpQnw6ub9_rBcjP0ZZipWa>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdelfeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhih
-    hkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrgh
-X-ME-Proxy: <xmx:xRcgaZqgdx3-PbabbBD_nIZ7jW031oDtAa2gM0TmCXJvyfpHGlrWkA>
-    <xmx:xRcgaSg5kwqv8C91ITvqYuLWuOlqe--0y-KoCKubKMvt38MTeWQB1A>
-    <xmx:xRcgaTLHejFgQqZTZHooNcaPOkB4HyrawuWMpKKBy8VTJL9UyqgvpQ>
-    <xmx:xRcgaSDGKMwHbCx2iJiiDHzyuTLRkmWRz7LP9KhUxBy6C4eU8P0GpQ>
-    <xmx:xRcgaSFmWDJcnuR0B1s0HeybOpRXoBXh_eGBqZ6dr7FFT6epUW_y0-rd>
+    hnpeekieevveegieevieeuveefheffgeeuheetheegffffkeeijedtueefleffvdevleen
+    ucffohhmrghinhepphgrtghkvggurdhishenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeef
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilh
+    drtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:yhcgaa1KhsBE_NAA7mf36NKDeWlkojAWX_l3WU2fJSJG-TnXTM1KUQ>
+    <xmx:yhcgaT-1IuijKaXlh-ZydBgHNus1Zp6zEm2Vr5B9BUtwczupn8PwUg>
+    <xmx:yhcgaf1GQ8gNhFB5vuZ-W0djJIqiONW_DNoGkwmQ37b-KNzpTFKWqA>
+    <xmx:yhcgaY-Re_vzjRiCoE_uXSedLz8lqxAp2ctXfyxxalVKKG8Ur-aLEA>
+    <xmx:yhcgaewode-E_xrOmDirjtw7nRUoAQJJokXnrSpnwhbtf0W4vReaSoMh>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Nov 2025 02:41:56 -0500 (EST)
+ 21 Nov 2025 02:42:01 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b9f6939c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 21 Nov 2025 07:41:56 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 0d7699ba (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 21 Nov 2025 07:42:00 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 21 Nov 2025 08:41:00 +0100
-Subject: [PATCH v2 15/19] streaming: move logic to read loose objects
+Date: Fri, 21 Nov 2025 08:41:01 +0100
+Subject: [PATCH v2 16/19] streaming: move logic to read packed objects
  streams into backend
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251121-b4-pks-odb-read-stream-v2-15-ca8534963150@pks.im>
+Message-Id: <20251121-b4-pks-odb-read-stream-v2-16-ca8534963150@pks.im>
 References: <20251121-b4-pks-odb-read-stream-v2-0-ca8534963150@pks.im>
 In-Reply-To: <20251121-b4-pks-odb-read-stream-v2-0-ca8534963150@pks.im>
 To: git@vger.kernel.org
@@ -92,435 +92,336 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.3
 
-Move the logic to read loose object streams into the respective
-subsystem. This allows us to make a couple of function declarations
-private.
+Move the logic to read packed object streams into the respective
+subsystem.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- object-file.c | 167 ++++++++++++++++++++++++++++++++++++++++++++++++++++++----
- object-file.h |  42 ++-------------
- streaming.c   | 133 +---------------------------------------------
- 3 files changed, 164 insertions(+), 178 deletions(-)
+ packfile.c  | 128 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ packfile.h  |   5 +++
+ streaming.c | 136 +-----------------------------------------------------------
+ 3 files changed, 134 insertions(+), 135 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index b62b21a452..8c67847fea 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -234,9 +234,9 @@ static void *map_fd(int fd, const char *path, unsigned long *size)
- 	return map;
- }
- 
--void *odb_source_loose_map_object(struct odb_source *source,
--				  const struct object_id *oid,
--				  unsigned long *size)
-+static void *odb_source_loose_map_object(struct odb_source *source,
-+					 const struct object_id *oid,
-+					 unsigned long *size)
- {
- 	const char *p;
- 	int fd = open_loose_object(source->loose, oid, &p);
-@@ -246,11 +246,29 @@ void *odb_source_loose_map_object(struct odb_source *source,
- 	return map_fd(fd, p, size);
- }
- 
--enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
--						    unsigned char *map,
--						    unsigned long mapsize,
--						    void *buffer,
--						    unsigned long bufsiz)
-+enum unpack_loose_header_result {
-+	ULHR_OK,
-+	ULHR_BAD,
-+	ULHR_TOO_LONG,
-+};
-+
-+/**
-+ * unpack_loose_header() initializes the data stream needed to unpack
-+ * a loose object header.
-+ *
-+ * Returns:
-+ *
-+ * - ULHR_OK on success
-+ * - ULHR_BAD on error
-+ * - ULHR_TOO_LONG if the header was too long
-+ *
-+ * It will only parse up to MAX_HEADER_LEN bytes.
-+ */
-+static enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
-+							   unsigned char *map,
-+							   unsigned long mapsize,
-+							   void *buffer,
-+							   unsigned long bufsiz)
- {
- 	int status;
- 
-@@ -329,11 +347,18 @@ static void *unpack_loose_rest(git_zstream *stream,
- }
- 
- /*
-+ * parse_loose_header() parses the starting "<type> <len>\0" of an
-+ * object. If it doesn't follow that format -1 is returned. To check
-+ * the validity of the <type> populate the "typep" in the "struct
-+ * object_info". It will be OBJ_BAD if the object type is unknown. The
-+ * parsed <len> can be retrieved via "oi->sizep", and from there
-+ * passed to unpack_loose_rest().
-+ *
-  * We used to just use "sscanf()", but that's actually way
-  * too permissive for what we want to check. So do an anal
-  * object header parse by hand.
-  */
--int parse_loose_header(const char *hdr, struct object_info *oi)
-+static int parse_loose_header(const char *hdr, struct object_info *oi)
- {
- 	const char *type_buf = hdr;
- 	size_t size;
-@@ -1976,3 +2001,127 @@ void odb_source_loose_free(struct odb_source_loose *loose)
- 	loose_object_map_clear(&loose->map);
- 	free(loose);
+diff --git a/packfile.c b/packfile.c
+index b4bc40d895..ad56ce0b90 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -20,6 +20,7 @@
+ #include "tree.h"
+ #include "object-file.h"
+ #include "odb.h"
++#include "streaming.h"
+ #include "midx.h"
+ #include "commit-graph.h"
+ #include "pack-revindex.h"
+@@ -2406,3 +2407,130 @@ void packfile_store_close(struct packfile_store *store)
+ 		close_pack(p);
+ 	}
  }
 +
-+struct odb_loose_read_stream {
++struct odb_packed_read_stream {
 +	struct odb_read_stream base;
++	struct packed_git *pack;
 +	git_zstream z;
 +	enum {
-+		ODB_LOOSE_READ_STREAM_INUSE,
-+		ODB_LOOSE_READ_STREAM_DONE,
-+		ODB_LOOSE_READ_STREAM_ERROR,
++		ODB_PACKED_READ_STREAM_UNINITIALIZED,
++		ODB_PACKED_READ_STREAM_INUSE,
++		ODB_PACKED_READ_STREAM_DONE,
++		ODB_PACKED_READ_STREAM_ERROR,
 +	} z_state;
-+	void *mapped;
-+	unsigned long mapsize;
-+	char hdr[32];
-+	int hdr_avail;
-+	int hdr_used;
++	off_t pos;
 +};
 +
-+static ssize_t read_istream_loose(struct odb_read_stream *_st, char *buf, size_t sz)
++static ssize_t read_istream_pack_non_delta(struct odb_read_stream *_st, char *buf,
++					   size_t sz)
 +{
-+	struct odb_loose_read_stream *st = (struct odb_loose_read_stream *)_st;
++	struct odb_packed_read_stream *st = (struct odb_packed_read_stream *)_st;
 +	size_t total_read = 0;
 +
 +	switch (st->z_state) {
-+	case ODB_LOOSE_READ_STREAM_DONE:
-+		return 0;
-+	case ODB_LOOSE_READ_STREAM_ERROR:
-+		return -1;
-+	default:
++	case ODB_PACKED_READ_STREAM_UNINITIALIZED:
++		memset(&st->z, 0, sizeof(st->z));
++		git_inflate_init(&st->z);
++		st->z_state = ODB_PACKED_READ_STREAM_INUSE;
 +		break;
-+	}
-+
-+	if (st->hdr_used < st->hdr_avail) {
-+		size_t to_copy = st->hdr_avail - st->hdr_used;
-+		if (sz < to_copy)
-+			to_copy = sz;
-+		memcpy(buf, st->hdr + st->hdr_used, to_copy);
-+		st->hdr_used += to_copy;
-+		total_read += to_copy;
++	case ODB_PACKED_READ_STREAM_DONE:
++		return 0;
++	case ODB_PACKED_READ_STREAM_ERROR:
++		return -1;
++	case ODB_PACKED_READ_STREAM_INUSE:
++		break;
 +	}
 +
 +	while (total_read < sz) {
 +		int status;
++		struct pack_window *window = NULL;
++		unsigned char *mapped;
++
++		mapped = use_pack(st->pack, &window,
++				  st->pos, &st->z.avail_in);
 +
 +		st->z.next_out = (unsigned char *)buf + total_read;
 +		st->z.avail_out = sz - total_read;
++		st->z.next_in = mapped;
 +		status = git_inflate(&st->z, Z_FINISH);
 +
++		st->pos += st->z.next_in - mapped;
 +		total_read = st->z.next_out - (unsigned char *)buf;
++		unuse_pack(&window);
 +
 +		if (status == Z_STREAM_END) {
 +			git_inflate_end(&st->z);
-+			st->z_state = ODB_LOOSE_READ_STREAM_DONE;
++			st->z_state = ODB_PACKED_READ_STREAM_DONE;
 +			break;
 +		}
-+		if (status != Z_OK && (status != Z_BUF_ERROR || total_read < sz)) {
++
++		/*
++		 * Unlike the loose object case, we do not have to worry here
++		 * about running out of input bytes and spinning infinitely. If
++		 * we get Z_BUF_ERROR due to too few input bytes, then we'll
++		 * replenish them in the next use_pack() call when we loop. If
++		 * we truly hit the end of the pack (i.e., because it's corrupt
++		 * or truncated), then use_pack() catches that and will die().
++		 */
++		if (status != Z_OK && status != Z_BUF_ERROR) {
 +			git_inflate_end(&st->z);
-+			st->z_state = ODB_LOOSE_READ_STREAM_ERROR;
++			st->z_state = ODB_PACKED_READ_STREAM_ERROR;
 +			return -1;
 +		}
 +	}
 +	return total_read;
 +}
 +
-+static int close_istream_loose(struct odb_read_stream *_st)
++static int close_istream_pack_non_delta(struct odb_read_stream *_st)
 +{
-+	struct odb_loose_read_stream *st = (struct odb_loose_read_stream *)_st;
-+	if (st->z_state == ODB_LOOSE_READ_STREAM_INUSE)
++	struct odb_packed_read_stream *st = (struct odb_packed_read_stream *)_st;
++	if (st->z_state == ODB_PACKED_READ_STREAM_INUSE)
 +		git_inflate_end(&st->z);
-+	munmap(st->mapped, st->mapsize);
 +	return 0;
 +}
 +
-+int odb_source_loose_read_object_stream(struct odb_read_stream **out,
-+					struct odb_source *source,
-+					const struct object_id *oid)
++int packfile_store_read_object_stream(struct odb_read_stream **out,
++				      struct packfile_store *store,
++				      const struct object_id *oid)
 +{
++	struct odb_packed_read_stream *stream;
++	struct pack_window *window = NULL;
 +	struct object_info oi = OBJECT_INFO_INIT;
-+	struct odb_loose_read_stream *st;
-+	unsigned long mapsize;
-+	void *mapped;
++	enum object_type in_pack_type;
++	unsigned long size;
 +
-+	mapped = odb_source_loose_map_object(source, oid, &mapsize);
-+	if (!mapped)
++	oi.sizep = &size;
++
++	if (packfile_store_read_object_info(store, oid, &oi, 0) ||
++	    oi.u.packed.is_delta ||
++	    repo_settings_get_big_file_threshold(store->odb->repo) >= size)
 +		return -1;
 +
-+	/*
-+	 * Note: we must allocate this structure early even though we may still
-+	 * fail. This is because we need to initialize the zlib stream, and it
-+	 * is not possible to copy the stream around after the fact because it
-+	 * has self-referencing pointers.
-+	 */
-+	CALLOC_ARRAY(st, 1);
-+
-+	switch (unpack_loose_header(&st->z, mapped, mapsize, st->hdr,
-+				    sizeof(st->hdr))) {
-+	case ULHR_OK:
++	in_pack_type = unpack_object_header(oi.u.packed.pack,
++					    &window,
++					    &oi.u.packed.offset,
++					    &size);
++	unuse_pack(&window);
++	switch (in_pack_type) {
++	default:
++		return -1; /* we do not do deltas for now */
++	case OBJ_COMMIT:
++	case OBJ_TREE:
++	case OBJ_BLOB:
++	case OBJ_TAG:
 +		break;
-+	case ULHR_BAD:
-+	case ULHR_TOO_LONG:
-+		goto error;
 +	}
 +
-+	oi.sizep = &st->base.size;
-+	oi.typep = &st->base.type;
++	CALLOC_ARRAY(stream, 1);
++	stream->base.close = close_istream_pack_non_delta;
++	stream->base.read = read_istream_pack_non_delta;
++	stream->base.type = in_pack_type;
++	stream->base.size = size;
++	stream->z_state = ODB_PACKED_READ_STREAM_UNINITIALIZED;
++	stream->pack = oi.u.packed.pack;
++	stream->pos = oi.u.packed.offset;
 +
-+	if (parse_loose_header(st->hdr, &oi) < 0 || st->base.type < 0)
-+		goto error;
-+
-+	st->mapped = mapped;
-+	st->mapsize = mapsize;
-+	st->hdr_used = strlen(st->hdr) + 1;
-+	st->hdr_avail = st->z.total_out;
-+	st->z_state = ODB_LOOSE_READ_STREAM_INUSE;
-+	st->base.close = close_istream_loose;
-+	st->base.read = read_istream_loose;
-+
-+	*out = &st->base;
++	*out = &stream->base;
 +
 +	return 0;
-+error:
-+	git_inflate_end(&st->z);
-+	munmap(st->mapped, st->mapsize);
-+	free(st);
-+	return -1;
 +}
-diff --git a/object-file.h b/object-file.h
-index eeffa67bbd..1229d5f675 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -16,6 +16,8 @@ enum {
- int index_fd(struct index_state *istate, struct object_id *oid, int fd, struct stat *st, enum object_type type, const char *path, unsigned flags);
- int index_path(struct index_state *istate, struct object_id *oid, const char *path, struct stat *st, unsigned flags);
+diff --git a/packfile.h b/packfile.h
+index 0a98bddd81..3fcc5ae6e0 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -8,6 +8,7 @@
  
-+struct object_info;
+ /* in odb.h */
+ struct object_info;
 +struct odb_read_stream;
- struct odb_source;
  
- struct odb_source_loose {
-@@ -47,9 +49,9 @@ int odb_source_loose_read_object_info(struct odb_source *source,
- 				      const struct object_id *oid,
- 				      struct object_info *oi, int flags);
+ struct packed_git {
+ 	struct hashmap_entry packmap_ent;
+@@ -144,6 +145,10 @@ void packfile_store_add_pack(struct packfile_store *store,
+ #define repo_for_each_pack(repo, p) \
+ 	for (p = packfile_store_get_packs(repo->objects->packfiles); p; p = p->next)
  
--void *odb_source_loose_map_object(struct odb_source *source,
--				  const struct object_id *oid,
--				  unsigned long *size);
-+int odb_source_loose_read_object_stream(struct odb_read_stream **out,
-+					struct odb_source *source,
-+					const struct object_id *oid);
- 
++int packfile_store_read_object_stream(struct odb_read_stream **out,
++				      struct packfile_store *store,
++				      const struct object_id *oid);
++
  /*
-  * Return true iff an object database source has a loose object
-@@ -143,40 +145,6 @@ int for_each_loose_object(struct object_database *odb,
- int format_object_header(char *str, size_t size, enum object_type type,
- 			 size_t objsize);
- 
--/**
-- * unpack_loose_header() initializes the data stream needed to unpack
-- * a loose object header.
-- *
-- * Returns:
-- *
-- * - ULHR_OK on success
-- * - ULHR_BAD on error
-- * - ULHR_TOO_LONG if the header was too long
-- *
-- * It will only parse up to MAX_HEADER_LEN bytes.
-- */
--enum unpack_loose_header_result {
--	ULHR_OK,
--	ULHR_BAD,
--	ULHR_TOO_LONG,
--};
--enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
--						    unsigned char *map,
--						    unsigned long mapsize,
--						    void *buffer,
--						    unsigned long bufsiz);
--
--/**
-- * parse_loose_header() parses the starting "<type> <len>\0" of an
-- * object. If it doesn't follow that format -1 is returned. To check
-- * the validity of the <type> populate the "typep" in the "struct
-- * object_info". It will be OBJ_BAD if the object type is unknown. The
-- * parsed <len> can be retrieved via "oi->sizep", and from there
-- * passed to unpack_loose_rest().
-- */
--struct object_info;
--int parse_loose_header(const char *hdr, struct object_info *oi);
--
- int force_object_loose(struct odb_source *source,
- 		       const struct object_id *oid, time_t mtime);
- 
+  * Try to read the object identified by its ID from the object store and
+  * populate the object info with its data. Returns 1 in case the object was
 diff --git a/streaming.c b/streaming.c
-index 586c20eac6..cc67d56cd4 100644
+index cc67d56cd4..3d80ddd757 100644
 --- a/streaming.c
 +++ b/streaming.c
-@@ -114,137 +114,6 @@ static struct odb_read_stream *attach_stream_filter(struct odb_read_stream *st,
+@@ -114,140 +114,6 @@ static struct odb_read_stream *attach_stream_filter(struct odb_read_stream *st,
  	return &fs->base;
  }
  
 -/*****************************************************************
 - *
-- * Loose object stream
+- * Non-delta packed object stream
 - *
 - *****************************************************************/
 -
--struct odb_loose_read_stream {
+-struct odb_packed_read_stream {
 -	struct odb_read_stream base;
+-	struct packed_git *pack;
 -	git_zstream z;
 -	enum {
--		ODB_LOOSE_READ_STREAM_INUSE,
--		ODB_LOOSE_READ_STREAM_DONE,
--		ODB_LOOSE_READ_STREAM_ERROR,
+-		ODB_PACKED_READ_STREAM_UNINITIALIZED,
+-		ODB_PACKED_READ_STREAM_INUSE,
+-		ODB_PACKED_READ_STREAM_DONE,
+-		ODB_PACKED_READ_STREAM_ERROR,
 -	} z_state;
--	void *mapped;
--	unsigned long mapsize;
--	char hdr[32];
--	int hdr_avail;
--	int hdr_used;
+-	off_t pos;
 -};
 -
--static ssize_t read_istream_loose(struct odb_read_stream *_st, char *buf, size_t sz)
+-static ssize_t read_istream_pack_non_delta(struct odb_read_stream *_st, char *buf,
+-					   size_t sz)
 -{
--	struct odb_loose_read_stream *st = (struct odb_loose_read_stream *)_st;
+-	struct odb_packed_read_stream *st = (struct odb_packed_read_stream *)_st;
 -	size_t total_read = 0;
 -
 -	switch (st->z_state) {
--	case ODB_LOOSE_READ_STREAM_DONE:
--		return 0;
--	case ODB_LOOSE_READ_STREAM_ERROR:
--		return -1;
--	default:
+-	case ODB_PACKED_READ_STREAM_UNINITIALIZED:
+-		memset(&st->z, 0, sizeof(st->z));
+-		git_inflate_init(&st->z);
+-		st->z_state = ODB_PACKED_READ_STREAM_INUSE;
 -		break;
--	}
--
--	if (st->hdr_used < st->hdr_avail) {
--		size_t to_copy = st->hdr_avail - st->hdr_used;
--		if (sz < to_copy)
--			to_copy = sz;
--		memcpy(buf, st->hdr + st->hdr_used, to_copy);
--		st->hdr_used += to_copy;
--		total_read += to_copy;
+-	case ODB_PACKED_READ_STREAM_DONE:
+-		return 0;
+-	case ODB_PACKED_READ_STREAM_ERROR:
+-		return -1;
+-	case ODB_PACKED_READ_STREAM_INUSE:
+-		break;
 -	}
 -
 -	while (total_read < sz) {
 -		int status;
+-		struct pack_window *window = NULL;
+-		unsigned char *mapped;
+-
+-		mapped = use_pack(st->pack, &window,
+-				  st->pos, &st->z.avail_in);
 -
 -		st->z.next_out = (unsigned char *)buf + total_read;
 -		st->z.avail_out = sz - total_read;
+-		st->z.next_in = mapped;
 -		status = git_inflate(&st->z, Z_FINISH);
 -
+-		st->pos += st->z.next_in - mapped;
 -		total_read = st->z.next_out - (unsigned char *)buf;
+-		unuse_pack(&window);
 -
 -		if (status == Z_STREAM_END) {
 -			git_inflate_end(&st->z);
--			st->z_state = ODB_LOOSE_READ_STREAM_DONE;
+-			st->z_state = ODB_PACKED_READ_STREAM_DONE;
 -			break;
 -		}
--		if (status != Z_OK && (status != Z_BUF_ERROR || total_read < sz)) {
+-
+-		/*
+-		 * Unlike the loose object case, we do not have to worry here
+-		 * about running out of input bytes and spinning infinitely. If
+-		 * we get Z_BUF_ERROR due to too few input bytes, then we'll
+-		 * replenish them in the next use_pack() call when we loop. If
+-		 * we truly hit the end of the pack (i.e., because it's corrupt
+-		 * or truncated), then use_pack() catches that and will die().
+-		 */
+-		if (status != Z_OK && status != Z_BUF_ERROR) {
 -			git_inflate_end(&st->z);
--			st->z_state = ODB_LOOSE_READ_STREAM_ERROR;
+-			st->z_state = ODB_PACKED_READ_STREAM_ERROR;
 -			return -1;
 -		}
 -	}
 -	return total_read;
 -}
 -
--static int close_istream_loose(struct odb_read_stream *_st)
+-static int close_istream_pack_non_delta(struct odb_read_stream *_st)
 -{
--	struct odb_loose_read_stream *st = (struct odb_loose_read_stream *)_st;
--	if (st->z_state == ODB_LOOSE_READ_STREAM_INUSE)
+-	struct odb_packed_read_stream *st = (struct odb_packed_read_stream *)_st;
+-	if (st->z_state == ODB_PACKED_READ_STREAM_INUSE)
 -		git_inflate_end(&st->z);
--	munmap(st->mapped, st->mapsize);
 -	return 0;
 -}
 -
--static int open_istream_loose(struct odb_read_stream **out,
--			      struct odb_source *source,
--			      const struct object_id *oid)
+-static int open_istream_pack_non_delta(struct odb_read_stream **out,
+-				       struct object_database *odb,
+-				       const struct object_id *oid)
 -{
+-	struct odb_packed_read_stream *stream;
+-	struct pack_window *window = NULL;
 -	struct object_info oi = OBJECT_INFO_INIT;
--	struct odb_loose_read_stream *st;
--	unsigned long mapsize;
--	void *mapped;
+-	enum object_type in_pack_type;
+-	unsigned long size;
 -
--	mapped = odb_source_loose_map_object(source, oid, &mapsize);
--	if (!mapped)
+-	oi.sizep = &size;
+-
+-	if (packfile_store_read_object_info(odb->packfiles, oid, &oi, 0) ||
+-	    oi.u.packed.is_delta ||
+-	    repo_settings_get_big_file_threshold(odb->repo) >= size)
 -		return -1;
 -
--	/*
--	 * Note: we must allocate this structure early even though we may still
--	 * fail. This is because we need to initialize the zlib stream, and it
--	 * is not possible to copy the stream around after the fact because it
--	 * has self-referencing pointers.
--	 */
--	CALLOC_ARRAY(st, 1);
--
--	switch (unpack_loose_header(&st->z, mapped, mapsize, st->hdr,
--				    sizeof(st->hdr))) {
--	case ULHR_OK:
+-	in_pack_type = unpack_object_header(oi.u.packed.pack,
+-					    &window,
+-					    &oi.u.packed.offset,
+-					    &size);
+-	unuse_pack(&window);
+-	switch (in_pack_type) {
+-	default:
+-		return -1; /* we do not do deltas for now */
+-	case OBJ_COMMIT:
+-	case OBJ_TREE:
+-	case OBJ_BLOB:
+-	case OBJ_TAG:
 -		break;
--	case ULHR_BAD:
--	case ULHR_TOO_LONG:
--		goto error;
 -	}
 -
--	oi.sizep = &st->base.size;
--	oi.typep = &st->base.type;
+-	CALLOC_ARRAY(stream, 1);
+-	stream->base.close = close_istream_pack_non_delta;
+-	stream->base.read = read_istream_pack_non_delta;
+-	stream->base.type = in_pack_type;
+-	stream->base.size = size;
+-	stream->z_state = ODB_PACKED_READ_STREAM_UNINITIALIZED;
+-	stream->pack = oi.u.packed.pack;
+-	stream->pos = oi.u.packed.offset;
 -
--	if (parse_loose_header(st->hdr, &oi) < 0 || st->base.type < 0)
--		goto error;
--
--	st->mapped = mapped;
--	st->mapsize = mapsize;
--	st->hdr_used = strlen(st->hdr) + 1;
--	st->hdr_avail = st->z.total_out;
--	st->z_state = ODB_LOOSE_READ_STREAM_INUSE;
--	st->base.close = close_istream_loose;
--	st->base.read = read_istream_loose;
--
--	*out = &st->base;
+-	*out = &stream->base;
 -
 -	return 0;
--error:
--	git_inflate_end(&st->z);
--	munmap(st->mapped, st->mapsize);
--	free(st);
--	return -1;
 -}
 -
 -
  /*****************************************************************
   *
-  * Non-delta packed object stream
-@@ -455,7 +324,7 @@ static int istream_source(struct odb_read_stream **out,
+  * In-core stream
+@@ -319,7 +185,7 @@ static int istream_source(struct odb_read_stream **out,
+ {
+ 	struct odb_source *source;
+ 
+-	if (!open_istream_pack_non_delta(out, r->objects, oid))
++	if (!packfile_store_read_object_stream(out, r->objects->packfiles, oid))
+ 		return 0;
  
  	odb_prepare_alternates(r->objects);
- 	for (source = r->objects->sources; source; source = source->next)
--		if (!open_istream_loose(out, source, oid))
-+		if (!odb_source_loose_read_object_stream(out, source, oid))
- 			return 0;
- 
- 	return open_istream_incore(out, r, oid);
 
 -- 
 2.52.0.rc2.482.gaa765fefd0.dirty
