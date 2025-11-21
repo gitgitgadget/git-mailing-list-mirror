@@ -1,84 +1,84 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934EF32FA1D
-	for <git@vger.kernel.org>; Fri, 21 Nov 2025 06:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B230D32F757
+	for <git@vger.kernel.org>; Fri, 21 Nov 2025 06:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763706773; cv=none; b=CzgfjH0m9CmxXWZrxQ/Pi+Os/Dhy1LmQqq4RQjGVzeeVwcVEjabgtWsOGvnqLjJOEWwqjg4jo6DwLPrBff2nwBVqP65jsOezVVxKzKoHlw94OK5qKQfLyI24DET52JbgprD3+4XIapFmkcuGfecniuwTGwnbx7q1+CEjDAx276M=
+	t=1763706780; cv=none; b=i1EhNWmUh6ehP+Z47AahZWxMi6P1+35vCzLeHpKgkMzsWbEBpxDO60fTHJjqvs7WlJETBc90camWrGyKH4NTInBbq5adR6IbQ/9qkJuy9ymPzUzdxMsWYJjYZdzTYSxtTVweEbx1qVH5z3d0PZlrN2PPDytSJ52ErmQdMseVd0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763706773; c=relaxed/simple;
-	bh=xOdc+HsvKqhvruwAIFKwePYmsrjNt+nKHwAKzte537w=;
+	s=arc-20240116; t=1763706780; c=relaxed/simple;
+	bh=PM3WEARvgTMuaEYvRpdOfbOc9nzXr7Hk8MQoNHNrJmw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g8Yyohug4NKeTBtJ5dzhFbYXRmB4d/m/F8PAO/twObQtsUcCFz5crEA2i/tpP97BvLLz7WFL/PR7LGO5kJQE1jx2tVyqMinyUCwSEmPi7TtN9DEyqRg89o8uuUz7QUtFVlz4t/kUYyi58YnswT/gEhsJ3OiKkKaurpgn1gE84+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f29IoghW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lmczp66d; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=ewxcqFGPZrVhCA5u34wDO+RrwsSrBvchbCq0dqnZb+jF2+lBkXfOUosG9bxGCDf8oOa9fuUHT7f1t2LXIc0iI86O/W367g9xyZZxBsyN2O8U3EH/nKHk+GSkarUDD4gE8fWg9uivqWMI5zr0CWZ0igOIw34mr89YBwRykIuAFWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AKMqtXo0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YC7dzQHj; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f29IoghW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lmczp66d"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B50567A01C1;
-	Fri, 21 Nov 2025 01:32:50 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AKMqtXo0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YC7dzQHj"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D50687A01D3;
+	Fri, 21 Nov 2025 01:32:57 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 21 Nov 2025 01:32:50 -0500
+  by phl-compute-02.internal (MEProxy); Fri, 21 Nov 2025 01:32:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1763706770; x=1763793170; bh=o2J09VXpgc
-	e2Fx0ZH5izSWYFfr9tq6lS2s+dh47nqSA=; b=f29IoghWCnZyxCeQLA7Bv2mOOF
-	hNhg38h7VYbVnsTXURzfWrZqaifap3euOAQp8Mp50IlHneGnawUWiC2mrRj+mZWS
-	myuVPktqyyco/hIGDVdP7gfKxVhpywSeKP0H5x5+SK4BotsrvxSdB3NwBclH1Y1T
-	cfhiW8kpO/32w9eb1sJY8KEYPJuO8QELlt9kfPcIeq6T+UYglO1EBbwSkBVLu+a5
-	pkAzFyq+ntJmromkPc55YseW3lqiOm3mAXoDsiq+iDOUceS7eD9d2kK80hUNGwTv
-	QM6ZJ8M0w6/xQySTyPhHbseNGSseX6aeawjBpkROfTxQ0y8i+E2q2usyWk7Q==
+	:subject:to:to; s=fm3; t=1763706777; x=1763793177; bh=2ElI4jNEPE
+	BntPPyrq6Z9GsCXS2x6lVxSE5y+S61RHA=; b=AKMqtXo0c0zL3vmHOQm+LqA5rz
+	uWXQ2uvj/EWi0SUAGx6G1GO/Fnf05DSi3Vz4rm8QsI0cEhl7KRN2Wp2fN5db3u33
+	67jVDLYOFvcJqByMaEMWFFqcmZ6NzTQAh1yFk9hTdm2+gX+Ypd953FKf1o2Vr4hT
+	FlULqr1IsC5F/g0FWP8NoDqW59WVFbewuoSo968A4tXXyU69aEmujeBTtE1v2Nsw
+	/0rAfIzlW5o6q0E7yjHJ3LhZ94MxS1nzzTUhH3RCf4S5d9x6SJ6KrFlGlsscUJdh
+	dRI5WnXPwwH1yxB14TUCZm3Y89iJ9KIXO13p6ycbMoM5fLIlc0aJqPl3WGJA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763706770; x=1763793170; bh=o2J09VXpgce2Fx0ZH5izSWYFfr9tq6lS2s+
-	dh47nqSA=; b=Lmczp66dHVLr6hu+7LsNTYKehoxMvh3oL19BBk84XoaxiU5gAGE
-	Z2Hnj96l8Sb6MEDgE0GNsNK4LTS9Xzmn9E8DFWH0PZHirbA22Qoakiv7b2UElm3e
-	OlVeyx8MmncEKb1UZmgNyzqPVIc+sb1iNguv0e2hpzP3wriXpHgUZ1uIlFcrPfxg
-	LOBJUg7XtZKVbGqLVOu1ntHe+9MMTYCJ2qaFQXsMKLm2Alq4MPPd5PVJ4p+hkQEO
-	dWkETeEZruBUADX+aER8wHFwie7R/nftbFU8LcVtSmMpNvucjEJkqOiplLPtTCEq
-	hFtVUw04D3sH7CP+ARcFOPfoRH0Z8V20UHg==
-X-ME-Sender: <xms:kgcgaV0oDj3bd9YBn_LYgI6_SAEjlvzla6MogE1Znv3PpO8D7W7DJg>
-    <xme:kgcgaSFdmmudvG2YGfFD5dSLXp6JT62Pp3nuKOR-VY0P_xIE3F0Wh_Jpsd8SdIx2A
-    PIObaCjx5IQFWIU_tHln3hsEiRy26KyHyBdG6EScdhC2AixtByJ5w>
-X-ME-Received: <xmr:kgcgaThDGi1Lc7kLi_yWqbIuyzGh4z0iUWkM4xfMaMD8L0fRTMUb8mQCrh5VsbXUuLs-WqbM794u-0sY7l3q5032GUmXkAE91JoRlaiuWgQo>
+	1763706777; x=1763793177; bh=2ElI4jNEPEBntPPyrq6Z9GsCXS2x6lVxSE5
+	y+S61RHA=; b=YC7dzQHjmjeL+eZqIf+JU33TO5HtMQned7AQF8nguRzpHAH+tiB
+	2dVyIEmi+FsQt2s3KqsnUKtOGUgDFa3Eu24UiS+UZs+hZUoTwjMS4l/LgySlT68I
+	sca5eOA6mk1Hifv5XYXKWOqrcfy5fACJJF0EBSYADMaPAedDBHnl/F1BzVhGSewR
+	Iq5vvOsZPbWrQ1YAcEe4y2MSBUPFOX6bpou46ueZj+RdxhZy1/x7sH5uhr9B0s9z
+	1V9ooELVU9nxSKbOy6FeK5avB71nGOWf+S7U7Uj3CAihcqKe3yvZYL17D+FoFJtd
+	dpmk/rLP49W6RxpfhY6ylga/pa85KHQiW3w==
+X-ME-Sender: <xms:mQcgaYNUjXHBPEXCPkVfr3uRDQQHa_R4Rn0J3NryjZY_U7vMQ_68ow>
+    <xme:mQcgaU9Ncq5LJlRM1VzzRTl0TWiVeRy6WElkz4a9nN2w0JO-kMOa6fa-pkyX5dbss
+    dHSegPAjdj0JH1Apa5yl67CYsmHrXOz6osoh5KIGwTwslYiWevrcQ>
+X-ME-Received: <xmr:mQcgac7aPPPxFn7LTtMMVQgnB2FbF-cyUzLs5hVI0hpLHsyS4yjGw21W7WH5Fu5tGtTLI1im3zzU1Ra76eOnc3WDk07hHxOTIp6r26BxnsGy>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvvdelvdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:kgcgad83DXytlbDvKNUw3cIix3ZJsYp7VYx8UZmXILeDvgs0Arldww>
-    <xmx:kgcgaaqhLX-2m4WIeTrDGn3BRX92ZVK8XObYup3ddLPxVMRTFcn7cw>
-    <xmx:kgcgac98_DcSB5q3PM1TrsqyNs6OhhofIVfeUXaq1FKZM2kFvMOguQ>
-    <xmx:kgcgaeXQCxuVMi91QW79NesP0HUeG5WrMXYQpWC8mX8LtdA1GdbyCg>
-    <xmx:kgcgaQUU7Dn1yQDf7lBy6vgM1nMQjKVlUBsYs2x3BAUTnbof_bif8doD>
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhih
+    hkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:mQcgab2GQL-TXjdG7H5nnICiDkmAcv4MLbhU_KvcPRt-jNrejH5IPg>
+    <xmx:mQcgaTCqiW05o66o_4WQJvoZbaf9SjiCYCfpeDvjsrwE3uHwwNj9Mw>
+    <xmx:mQcgad2BXHRVLcDfbu7mwP65GTS0wTgYDwEJ0wS38NSvS3VA8bOX6g>
+    <xmx:mQcgaduLYOG4CNgz2he8qc19zyGA91ubVENKjlyVZh_Qu0lSjN0D1Q>
+    <xmx:mQcgaa-fHlAEZghYYDQNoyfmONqseiqTkEZriXHh68_8_Eg6genjap27>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Nov 2025 01:32:49 -0500 (EST)
+ 21 Nov 2025 01:32:56 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8e477806 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 21 Nov 2025 06:32:49 +0000 (UTC)
-Date: Fri, 21 Nov 2025 07:32:45 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 280195b3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 21 Nov 2025 06:32:56 +0000 (UTC)
+Date: Fri, 21 Nov 2025 07:32:53 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 05/18] streaming: allocate stream inside the
- backend-specific logic
-Message-ID: <aSAHjQKO7R1TvPgj@pks.im>
+Subject: Re: [PATCH 06/18] streaming: create structure for in-core object
+ streams
+Message-ID: <aSAHlQtQuupprYw9@pks.im>
 References: <20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im>
- <20251119-b4-pks-odb-read-stream-v1-5-adacf03c2ccf@pks.im>
- <CAOLa=ZTF+xzhZv2yXp8L_URk8cjscycheD=Xgdxd=eRGtvpt2A@mail.gmail.com>
+ <20251119-b4-pks-odb-read-stream-v1-6-adacf03c2ccf@pks.im>
+ <CAOLa=ZRwk2DPCG-kWs-g7qtjBbXc9QuZgumxA3y54JsJjGpM=g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,66 +87,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTF+xzhZv2yXp8L_URk8cjscycheD=Xgdxd=eRGtvpt2A@mail.gmail.com>
+In-Reply-To: <CAOLa=ZRwk2DPCG-kWs-g7qtjBbXc9QuZgumxA3y54JsJjGpM=g@mail.gmail.com>
 
-On Wed, Nov 19, 2025 at 02:11:40AM -0800, Karthik Nayak wrote:
+On Wed, Nov 19, 2025 at 10:14:28AM +0000, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-> > that is specific to backends in "streaming.c".
-> >
-> > Ideally though, the infrastructure would be reversed: we have a generic
-> > `struct odb_read_stream` and some helper functions in "streaming.c",
-> > whereas the backend-specific logic sits in the backend's subsystem
-> > itself.
-> >
-> 
-> Will this also mean that we move the backend specific functions like
-> `open_istream_loose()` away from 'streaming.c'? Let's read on.
-
-Yup, exactly.
-
-> > This can be realized by using a design that is similar to how we handle
-> > reference databases: instead of having a union of members, we instead
-> > have backend-specific structures with a `struct odb_read_stream base`
-> > as its first member. The backends would thus hand out the pointer to the
-> > base, but internally they know to cast back to the backend-specific
-> > type.
-> >
-> 
-> Right.
-> 
-> > This means though that we need to allocate different structures
-> > depending on the backend. To prepare for this, move allocation of the
-> > structure into the backend-specific functions that open a new stream.
-> > Subsequent commits will then create those new backend-specific structs.
-> >
-> 
-> Who's in charge of free'ing these structs? I see that `close_istream()`
-> calls the assigned `close()` function. So this could be handled on the
-> backend level. But it also does `free(st)`.
-
-Yeah, this'll be changed later: the `close()` callback will then only
-close and release the backend-specific data. `odb_read_stream_close()`
-is then responsible for freeing the stream itself.
-
-> > @@ -338,12 +354,16 @@ static int close_istream_pack_non_delta(struct odb_read_stream *st)
-> >  	return 0;
-> >  }
-> >
-> > -static int open_istream_pack_non_delta(struct odb_read_stream *st,
-> > +static int open_istream_pack_non_delta(struct odb_read_stream **out,
-> >  				       struct repository *r UNUSED,
-> >  				       const struct object_id *oid UNUSED,
-> >  				       struct packed_git *pack,
-> >  				       off_t offset)
+> > @@ -426,22 +429,24 @@ static int open_istream_incore(struct odb_read_stream **out,
+> >  			       const struct object_id *oid)
 > >  {
-> > +	struct odb_read_stream stream = {
-> > +		.close = close_istream_pack_non_delta,
-> > +		.read = read_istream_pack_non_delta,
-> > +	};
+> >  	struct object_info oi = OBJECT_INFO_INIT;
+> > -	struct odb_read_stream stream = {
+> > -		.close = close_istream_incore,
+> > -		.read = read_istream_incore,
+> > -	};
+> > +	struct odb_incore_read_stream stream = {
+> > +		.base.close = close_istream_incore,
+> > +		.base.read = read_istream_incore,
+> > +	}, *st;
 > 
-> So this is now statically defined. Won't this cause an issue?
+> Nit: Almost missed this `*st`. I wonder if its more readable as a
+> separate line:
+> 
+>   struct odb_incore_read_stream *st;
+> 
+> All good otherwise.
 
-No, it doesn't, as we eventually copy the local stream weh ave here into
-the allocated `out` pointer.
+Fair, will adapt.
 
 Patrick
