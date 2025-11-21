@@ -1,99 +1,85 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DAC19DF4D
-	for <git@vger.kernel.org>; Fri, 21 Nov 2025 16:01:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108082BEFFF
+	for <git@vger.kernel.org>; Fri, 21 Nov 2025 16:07:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763740910; cv=none; b=faD93kluxR0OEo2bIDjccdCuO44sQGwJpx210aqKvtkbxEBRo3jqjm3ZhvxLrxCCcVDSoDHqJvmyA5Z3O8kpaKHFMvaU8Sv14NzOY7pB+pHJNMFoFG9pkztTYLYtbEQh2jTEyk5e0It8gqVAF+z1XQVw+3eBKQWTmUFHRs+MPf4=
+	t=1763741254; cv=none; b=dh+KE1vrRf5MjaWDFiTC6uRI3b5CAwzwaxuA+0R7oE+ShQntUxibxu8D9W95k/Sx68SNoJau0mTIPU1OV4plkORNGCUP8d8S8/0ayPqJpwjYSDz1VFMc3kJuvKO69wIgDhEKarksEYLy7REYwS+hK/fk8HjEOQUpJegWG+JLUW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763740910; c=relaxed/simple;
-	bh=3moqTn48BkhfzSbzliqOKgWEHq9spB6209mXVcLpjK8=;
+	s=arc-20240116; t=1763741254; c=relaxed/simple;
+	bh=9TGeZ/mbT/IuAhJ3c1duH6BUtXB8IH1lv0SI4SKUUho=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=htDi5nu0zrdJCqtSIhgGrR5O7SxFmDkddhkesO8FgwF+LBENcmjgBHWgbOLwuEHpuBGQ5ZBVC4WOfvXv+6XikupzqGisMo/xgUVcgRFI5rvIgWy+bXMalfJbyW1VZH3lgbSCXimUeq+HZxyhWIJowr7V5EcQAaU3S1bT6xm31Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EQjZYjPJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dp5CSZmD; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=d8zjMWBc7djKiiPgN5B4SNCZLxtk1bcEVRGDV8usQ0oIBje/9FofOH6R8UZbQFIwgLT1hZdcH8FR6zGzeZG2evGQkF88KH/nec6hC0v0GqWXZjJOfXRiKhlOv3eBGybxHnl+Ch9uS3Q7CX6PrclM9BAlW9p+48OxVgJhndME7/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WbxrKjXO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hy9mpI8F; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EQjZYjPJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dp5CSZmD"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C0EBB14000D1;
-	Fri, 21 Nov 2025 11:01:47 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WbxrKjXO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hy9mpI8F"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 41CD8EC017B;
+	Fri, 21 Nov 2025 11:07:32 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 21 Nov 2025 11:01:47 -0500
+  by phl-compute-07.internal (MEProxy); Fri, 21 Nov 2025 11:07:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763740907; x=1763827307; bh=ujOJxEbP9c
-	69hCPjiTqaLTqqLxA9KDN8CKqhK0oNzlk=; b=EQjZYjPJqIwt/hC6NXIvTuybGt
-	WAp5PQ1H+xry3BW9pxGt+JOnxCX6AyM12yLJDVmYu60J5X+/J379YtLmx81uGk70
-	aep6YdKgURT0GJ3vfP7eqidJLFQqst/sGExLabeSaHCU7RoP0fTqt4lYGySh6wc+
-	bBE1G/fvfOHc/6TJz4JukZrzJ3mpL/8oJ2KNeShKqKg7h0SVaEYEZJAjjAFo0zlF
-	BJQ1MapPivKt+ZAv9pCodwpcdB6VBFP1LNGdeCZMLDFngg1BUfWiQxbkjBMtDSsI
-	0CXtwMGoVnM3Ung/4ZoB2jEm53LtbABlSN4C09W757EVKn+DJGJMI1dThlFw==
+	:subject:to:to; s=fm2; t=1763741252; x=1763827652; bh=BXRPxhhQpA
+	1H40pxbqzoc3BoNVHYw3obPzoMhLFMcfU=; b=WbxrKjXO0sXTWUWB8UfPKtBa7n
+	PqKLoP2+QNeDAyZMiKHpRqydt1ZdjoVpUvlpLbMKQ6cHP0jJNxH3eQQLtHvVZ8Jk
+	p40xEYSm2MG3yfVYvrk9flRXMuSe3Gzrmixp7Elml/kpnneO82szym9l0/0n2yOf
+	rUCzUbm0OEp+UWNM2uaVX+e9NaKJSzPKYLlcLIL4hNtDJTADxDdIq1fHRfjNOt1n
+	V/NVNLMyUTkOtOrtZwgSrNr80Xc2Udxe2HaGCJa/FgmXMlweDISq5zwpj3PiE0BR
+	eYQ3xUIJf5YvF4HCkE9h8BedyTFOMhhx4qdlGH65IslnaO/bOuXhT8m511+w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763740907; x=1763827307; bh=ujOJxEbP9c69hCPjiTqaLTqqLxA9KDN8CKq
-	hK0oNzlk=; b=dp5CSZmDGEyX2O+wLWcmENuyMjWcALozTz7rlrchpQ6o1WlZeiB
-	g6dAYBvVaqsD22pxfIZlBcX+Lke51w6lrELX3Ev/z0oKC2AKVONC0H+6fCt9RUeI
-	siyt1p3UVnI3RNdAEEFjOjN7IuDlzKZsWhuGm/MsES2gssxWXbFNkm9VPBSE7EEC
-	zMomooDQTEUvCn/QcZABP3m7HRX2SyG4KcLybYQJW7eeTgbl4hPwNEnd3aUhuQZq
-	2keHUBaxFpqP8NzzgufRcMwoGy2j9ZQvSW6EpLs89x33ZUDuzYBPeBXwrLPenBIn
-	aGeFk1x0hvteXWJ5YORvTyRBtMA35tdKWtw==
-X-ME-Sender: <xms:64wgaSdhtpqPhlCnuQ4r_0NfKk0-sUpnacb64roDmVxbdr7Yb4imsg>
-    <xme:64wgaUZ4Vt8QNSII-x7oHT6FLSiQZ-qczGir2pubx2axMt2rSAcogpVSizJZ8S_nW
-    XILJz9755JaQKBBYj4f6EPp0yPzH38fpbwDPAFzjY_RDG7LgKpB>
-X-ME-Received: <xmr:64wgafHb4uWJM74PJU2OSE9ShpEl-AkRA_pL_uu-jaFOZ6GqeT22wSRPqIOJN0kpm2oi659H39rxjJTvtEJcoypKCAtHs2QKb8nT>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfedtfeelucetufdoteggodetrf
+	1763741252; x=1763827652; bh=BXRPxhhQpA1H40pxbqzoc3BoNVHYw3obPzo
+	MhLFMcfU=; b=hy9mpI8FOlRS3s2BPcspocA7iwyzPQXUjuBQbEOUHpFuGeoNH04
+	6zTtsk1WlW3jQ12egmfvmM1BGcisa1vn0SD4uarxdomVlSjWLPJsGi/sFPqbcDyS
+	krvH/Z+YvMNlm8MAO3pX8R6bqZUkvU02yibrJBoH/nimqz6VcAlvdAbrD73CVNZX
+	7U9Jq6lq4FDMFHbHG1cgObA45yJAJ74T1NYEmFn67eMNPgT0E1dM2XbUcPJm/pTX
+	Xkfjv6O+X7mo8lJ7E8BM0U+qNBqbrg1MR7djhjqg7cCneOuf5yDLCYsMK7R4Qlz9
+	x/9VWSTLOyETj7sQYUnukM/5fYX2Z+pdvIQ==
+X-ME-Sender: <xms:Q44gadQd67CgWM6NTj5hAyELaOzVWPeJQtE4Qn8QHuOZSzQYA8CIZg>
+    <xme:Q44gadzrhkvTcNaWas_66yrZMjsYuV89h9SfxP8JZja49twq_2n6g9G79V9_CrI72
+    nsDAjBk9k_4tQlvJLhbTdnc9vht-EXrHPx4SVKLfOWiJFeR2MjIFQ>
+X-ME-Received: <xmr:Q44gaX0iFAW2jdMXuWemezYwIUzJ0EkhAEFGfdFw6z97qYBUxZKaB9XDczcnhYlJ25GkOz3ok3tWb7hzx2M4adMAOE_iwCuZiKJl>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfedtgedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepshhorhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvh
-    hilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepmhgrrhhtihhnvhhonhiisehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
-    htmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:64wgaamx1tUI9ouSWjNJy3Q_lglssAGV2ZOL7CwciL0SwchMMYo0jw>
-    <xmx:64wgaae-IT2zjzbpRhLM6i2Yml4mVzaXAPNjC-eIYBRpVrLxNEcEyA>
-    <xmx:64wgaQEKgeN1uJczDE31jfjyl1SR0n7C6GQmIKJ2FcOQ70lflEC9Vw>
-    <xmx:64wgaYhDpbP8CxcTxfrQayIfclOdpDKUm0yJWJ6Tt5lB2mmXdUivEQ>
-    <xmx:64wgaXFOvcJ5nC1-kwNdVtPPY3viLuwYJKadmWwhrrhhyHpEeOz3-N7K>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:Q44gaT4L60qO6bcZAEclx8TZwF3e6dXM4_8Ih1JXjvc-LbNgJfMJKg>
+    <xmx:Q44gaSWzluBOQ32g1gx9jmIoY11xkQT7IWYZ_RA2iXMhfZdOFj2aTw>
+    <xmx:Q44gaaDSz49qc2KIJPIjiQEbY3MmCxGdnu91DaJ2l0AEARKEo-IqJQ>
+    <xmx:Q44gaZ6BI2ZGT18OtshIsovepY5itdKCDbpwq3OS4wKxCfOk8IiKxw>
+    <xmx:RI4gae2aIVVEd1tzk4MTDvuKGE91HLGzokEWU1lzcLvw8XS0aUF2UiQH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Nov 2025 11:01:46 -0500 (EST)
+ 21 Nov 2025 11:07:31 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Elijah Newren <newren@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
-  git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Sergey
- Organov <sorganov@gmail.com>,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
- <jn.avila@free.fr>,  Martin
- von Zweigbergk <martinvonz@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v6 00/11] Introduce git-history(1) command for easy
- history editing
-In-Reply-To: <3fb47b15-ed43-4137-95f8-cee97ab5e44c@gmail.com> (Phillip Wood's
-	message of "Fri, 21 Nov 2025 14:31:38 +0000")
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
-	<20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
-	<CABPp-BGLrVv=maEqhs=j9MmST-F=K=XN6gGqmd9Hox5QRDMiHg@mail.gmail.com>
-	<xmqqbjkw78jj.fsf@gitster.g>
-	<CABPp-BG+2+vanKAS-cwAD2XZxwx=PPcu5OG58ys+8O7rfZEhug@mail.gmail.com>
-	<xmqq7bvk77lr.fsf@gitster.g>
-	<CABPp-BEyMFiRdHoseTaYG9rUFO6Ta=dBG88CGRb3CfNf8aSAkg@mail.gmail.com>
-	<3fb47b15-ed43-4137-95f8-cee97ab5e44c@gmail.com>
-Date: Fri, 21 Nov 2025 08:01:45 -0800
-Message-ID: <xmqq7bvj5q8m.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 2/2] refs: add GIT_REF_URI to specify reference backend
+ and directory
+In-Reply-To: <87pl9b5wos.fsf@iotcl.com> (Toon Claes's message of "Fri, 21 Nov
+	2025 14:42:27 +0100")
+References: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
+	<20251119-kn-alternate-ref-dir-v1-2-4cf4a94c8bed@gmail.com>
+	<87pl9b5wos.fsf@iotcl.com>
+Date: Fri, 21 Nov 2025 08:07:30 -0800
+Message-ID: <xmqq34675pz1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -103,32 +89,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Toon Claes <toon@iotcl.com> writes:
 
->> Granted, I think good progress is being made and perhaps the changes
->> needed for the rest aren't that huge (and maybe there's more pieces
->> I'm not quite understanding yet similar to the
->> two-split-patches-always-summing-to-the-original), I was just a little
->> surprised that my comments are summarized by "expecting a small and
->> final reroll".  :-)
+>>     <ref_backend>://<path>
+>
+> I like this idea. This would allow us in the future to also do something
+> like:
+>
+>     reftable+nfs://10.11.12.13/ref-dir
 
-It was because I didn't think (and I still do not think) your
-comments are something for the immediate future, for a tool that
-wants to present its minimum-serviceable experimental version to
-users so that the users can experiment, extend it more and fix its
-behaviour incrementally.  I may have been probably wrong, but I was
-getting an impression from the reviews that it is getting to there,
-not the feature-perfect version that needs only maintenance from now
-on, but a minimum-serviceable one.
+I actually thought from Karthik's definition that what you are
+trying to say is spelled more like this:
 
-We could instead of collect all the I want moon and I want cheeze
-comments and iterate until the tool has all of them before it hits
-'next', but I do not think it is often what we do to a new feature.
+    reftable://nfs://10.11.12.13/ref-dir
 
-> Yes I'm not expecting any new functionality but I am expecting a bit 
-> more than tiny cleanup.
-
-OK.  Then we'd need a non-trivial amount of work before we get
-there.
-
-Thanks.
+IOW, the underlying URI to "reach the resource" is in the <path>
+part (i.e., "nfs://<addr>/<directory>").  And I found it somewhat a
+strange syntax, because the "to reach the resource, visit this" URI
+may not necessarily look like <path>, and I also wondered if
+spelling it like <ref_backend>:<URI-for-resource> is more
+appropriate.
