@@ -1,41 +1,41 @@
 Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03371D5CE0
-	for <git@vger.kernel.org>; Sat, 22 Nov 2025 13:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76811D6193
+	for <git@vger.kernel.org>; Sat, 22 Nov 2025 13:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763817916; cv=none; b=K7/SYDQ+zUZ6oc/xxUK4ipjIQ70dDB1C/OdLGNLN0ybLnmkI2VZQfBbCYsSSY3A8zwulNgh9KFUG2tDjIeSHTCYxwcEWDN/tyuXL1J9EaVM9BEZAk6DvjyOWcwo0uTjPlbNQurWssb8HKtu6g5w6e2c44I1l+1pyPhS22XTYmDk=
+	t=1763818200; cv=none; b=DmT0vcqRcWF7iHtiOqKbFxOQPWEai2dllegmZ7+dHoMjYsSA4NT0StBsgAj7AhWqHwGQOwJZBCi+HSg1U4ZKU7K9p+wgXmrr2Oniu+XEVoBJeKOOVEI1Q6U9nH/KC6AaDTQhLWOYYXH/b+Y+e4qzr+4aecYlAKiPFxL30JhsNTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763817916; c=relaxed/simple;
-	bh=+QCHCHut3gQuoXL5Z15R+w8EjaS9XDIykDzHdHd47Yg=;
+	s=arc-20240116; t=1763818200; c=relaxed/simple;
+	bh=q0UaSEGDu61wcVSidBgdRMXGtuZB8Mx+nHnB7WcVyL4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ladp8Wso2nhOxkjJX4ki3iR8E23gxH1HHqoBcKjSl65jM/u2YxBHJLpdBviCF5tuXefmOdI56ouVu87cY64LiKHahukdnlgZAm033UhGwCOzrwOhQe+6gmod4rbGs3sIVewv9vQ0hvFcCBKF14vI0On5gyzqpXYhnIgtGT3jb94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=RXIeRCR5; arc=none smtp.client-ip=212.227.17.11
+	 In-Reply-To:Content-Type; b=sOhG6c4zbIQLWf+KYwleUiN72ueZAIw4LDmyNGT65H9dLetEIQ3ZbyXlRV9oF3/qVg2EMVe8od7rdv6Sa2ft7K5vWcZZRAb+dBpMOoQ0UQ815wud43l2GMI1ASz8++22KKx2CLVmQrfIZOtkgxacIfpRq5pykbYj5kiErVz2Vt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=ctFV9xcM; arc=none smtp.client-ip=212.227.17.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="RXIeRCR5"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="ctFV9xcM"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1763817899; x=1764422699; i=l.s.r@web.de;
-	bh=eX9JA8tPAjgFrBQu5DS3we+eSMeZ8Cx2Hm2miHbNST8=;
+	s=s29768273; t=1763818190; x=1764422990; i=l.s.r@web.de;
+	bh=weqAE1TRZjRpQJZcJ2U49aVt57JZYkgWCPD/jmMQrs8=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
 	 References:From:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding:cc:content-transfer-encoding:
 	 content-type:date:from:message-id:mime-version:reply-to:subject:
 	 to;
-	b=RXIeRCR5/VQIDK4+z4dZYll5N031u4sYiAD6L1jVXsi198wnK8rGXTpxNfEF2q0G
-	 VsEN5ql/oUTCKwpJgMf5ttdRfOxwzgCg8ZyLYLscvOph+4Wdrk8I6CkM/os9vqahd
-	 GYtVefmwPk42h6XRqBFhxzOQKsw11AYMpewNEjju1oRvxL4vtJkd+MWvIYklyu9QX
-	 nqFtNEGxaoDZUtljOaOl1AjrnC/EYGMEv4ldHp558NotAtZ8BKAt1bCuphiNDZFjN
-	 /D27mWk4DFbCWChsPcDWeI5Smn1MUs6aMkzsdACbAfCYDKMb8fk64HOOEz7h1lhnw
-	 b+SSY7Mt8Z/1HvfBHg==
+	b=ctFV9xcMmny4zXXLsrIW1tqgiYQC4IBWi17nAXHVuo5mk3hPkt71FSzPzT1lei4p
+	 gvnMEWxs5GHqpFavE9J7iwy3y4/7pUGNOZJykC3LZs0BDmjCuU5DnlESdh2pDYAbK
+	 +nqAkM1LxCuvUBAtwKnaPP1mQc9Ip0tGrfkByzqv/DS5KuPObLz/kMSpzAgZ29CRb
+	 c2tqu5zQiCETgh7yFfUxTJC0fWyBRS4Q6gFdYK2vZLj6fI98Mhr6L8akg9LNsPWxL
+	 Tt72Z0NMzWZ+k8qRJKmluwhrYtRpMhiJez9Tha3tcY05WkksLlarEorp3u5/7q/zu
+	 LFo45DKEuQKOFmMdOg==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.2.31] ([91.47.146.25]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MMGyK-1vg7i91K8E-00MHI5; Sat, 22
- Nov 2025 14:24:59 +0100
-Message-ID: <fd7023d3-c9a8-4828-b1a2-ac5a1459cbda@web.de>
-Date: Sat, 22 Nov 2025 14:24:58 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MHEbq-1vILiY1lZ2-00AqQK; Sat, 22
+ Nov 2025 14:29:50 +0100
+Message-ID: <18a0a729-d77c-4f4d-9581-b102bd66816c@web.de>
+Date: Sat, 22 Nov 2025 14:29:49 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,311 +44,113 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] wrapper: simplify xmkstemp()
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc: Git List <git@vger.kernel.org>
 References: <058c5722-30f5-4bc5-90f5-24e4c6f3ff8f@web.de>
  <xmqqbjl0iax6.fsf@gitster.g>
  <20251118094621.GB530545@coredump.intra.peff.net>
  <3b1cb53a-6427-4626-a768-1961e25514f8@web.de> <xmqqqztvc51s.fsf@gitster.g>
+ <20251120082328.GD1283645@coredump.intra.peff.net>
+ <xmqqbjkwahu1.fsf@gitster.g>
 Content-Language: en-US
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqqztvc51s.fsf@gitster.g>
+In-Reply-To: <xmqqbjkwahu1.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:neQbqaSLudSEcyoRsn2s5KmLqOzXOjxfuBCK1MGAzcFpaxddrvn
- J32kbIkY9GYMUk4GPUUxBIscZRn2Nvnnwvtg7XdMJXLh5w6qng0hOSAYuKmu1NGY8/rCygZ
- rBALFkCOe60hIZCr5hq9fhlCcHuTPWHWnlhcmD9kcZD42c0N2zbMDubmbae8gDu/jCf0S+B
- +vVpyjbUp4kOUgjCeMp2g==
+X-Provags-ID: V03:K1:0H3B8KPAUMXb5Tg+PVT1oC9UIvxddPU/4WezKn0kmNAABTbFCkV
+ /mViS+86MijwKwPnf6JXulESjcrsuopejaaQRnqE8n5/sHZjDgP1eE1HTSknj7BERi/5Huh
+ 4DXTNs4Ebq5Y88u2KWm3eCN/VLO/VSgyCDiXVirpy54TH80gCPuAxZnpm6Aw12n92TlAvFy
+ FSmdz/QovtE6+xUsK6G0w==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:pJTRFWN7v0o=;iwtjUJMKm6iusBkPuHbCwW9cW6r
- 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
- cdd6NLvM55hrnCyix+BQCXxX94crXZWzoGDhQJ
+UI-OutboundReport: notjunk:1;M01:P0:GYt+Hv+u3vE=;EVAbRLWQ59tO7G0StPhejVQo6gM
+ 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
+ pb8hngqXQGl0iFwSN0J2yCJ4ig=
 
-On 11/19/25 12:08 AM, Junio C Hamano wrote:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On 11/20/25 3:39 PM, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 >=20
-> When somebody asks:
+>>>> +#define mkstemp(template) git_mkstemp_mode((template), 0600)
+>>
+>> So this patch implements what I was thinking, though I probably would
+>> have made it more explicit: add mkstemp() to the banned list (not
+>> because it's evil but because it's unportable) and force callers to use
+>> git_mkstemp_mode() explicitly.
 >=20
->     On this and that platforms, mkstemp() is natively available.
->     Why are we using git_mkstemp_mode() instead?
->=20
-> after seeing this patch, I am tempted to say "Why not?"  Are there
-> legitimate answers to my "What not?"
+> Because only a very small number (one?)  of callers call mkstemp()
+> in the current code, the above is probably a good thing to do.
 
-My reluctance to let go of mkstemp(3) is seeping through.  I like that
-function.  Let's see if I can get over it.
-
->  - the platform native one could be more performant?
-
-Good question.  A platform could use non-portable tricks like using a
-particularly cheap source of randomness or a system call that creates a
-file with the next available name matching a prefix.  As there any that
-do, though?  We can find out by measuring, patch below.
-
-On macOS 26.1 I get:
-
-$ hyperfine -w3 -C 'rm /tmp/tmp_*' -L fn mkstemp,git_mkstemp_mode "t/helpe=
-r/test-tool mktemp -n 1000 -f {fn} /tmp/tmp_XXXXXX"
-Benchmark 1: t/helper/test-tool mktemp -n 1000 -f mkstemp /tmp/tmp_XXXXXX
-  Time (mean =C2=B1 =CF=83):      56.7 ms =C2=B1   0.4 ms    [User: 3.7 ms=
-, System: 52.5 ms]
-  Range (min =E2=80=A6 max):    56.0 ms =E2=80=A6  57.3 ms    23 runs
-
-Benchmark 2: t/helper/test-tool mktemp -n 1000 -f git_mkstemp_mode /tmp/tm=
-p_XXXXXX
-  Time (mean =C2=B1 =CF=83):      54.2 ms =C2=B1   0.4 ms    [User: 3.1 ms=
-, System: 50.7 ms]
-  Range (min =E2=80=A6 max):    53.7 ms =E2=80=A6  54.9 ms    24 runs
-
-Summary
-  t/helper/test-tool mktemp -n 1000 -f git_mkstemp_mode /tmp/tmp_XXXXXX ra=
-n
-    1.05 =C2=B1 0.01 times faster than t/helper/test-tool mktemp -n 1000 -=
-f mkstemp /tmp/tmp_XXXXXX
-
-Weird.  How can mkstemp(3) burn measurably more system cycles?
-
->  - the platform native one could be more secure?
-
-It could if it works deterministically, or uses a better source of
-randomness, or our code contains an exploitable flaw.
-
->  - using the platform native one, we can lose out custom code?
-
-Not much unless we're willing to give up performance on those platforms
-for the cases where we want to set the file mode.  There is mkstemps(3)
-for allowing a suffix and mkostemps(3) for also allowing to set open(2)
-flags, but I couldn't find an equivalent of git_mkstemp_mode().
-
-A replacement could look like this:
-
-int git_mkstemp_mode(char *pattern, int mode)
-{
-	int fd =3D mkstemp(pattern);
-	if (fd >=3D 0 && mode !=3D 0600)
-		fchmod(fd, mode);
-	return fd;
-}
-
-That's basically what happens if we give the test helper a non-default
-mode value.  Unsurprisingly the extra fchmod(2) call has a significant
-cost:
-
-$ hyperfine -w3 -C 'rm /tmp/tmp_*' -L fn mkstemp,git_mkstemp_mode "t/helpe=
-r/test-tool mktemp -n 1000 -m 0700 -f {fn} /tmp/tmp_XXXXXX"
-Benchmark 1: t/helper/test-tool mktemp -n 1000 -m 0700 -f mkstemp /tmp/tmp=
-_XXXXXX
-  Time (mean =C2=B1 =CF=83):      67.2 ms =C2=B1   0.4 ms    [User: 3.9 ms=
-, System: 62.9 ms]
-  Range (min =E2=80=A6 max):    66.6 ms =E2=80=A6  68.1 ms    22 runs
-
-Benchmark 2: t/helper/test-tool mktemp -n 1000 -m 0700 -f git_mkstemp_mode=
- /tmp/tmp_XXXXXX
-  Time (mean =C2=B1 =CF=83):      54.3 ms =C2=B1   0.7 ms    [User: 3.1 ms=
-, System: 50.6 ms]
-  Range (min =E2=80=A6 max):    53.5 ms =E2=80=A6  57.1 ms    24 runs
-
-Summary
-  t/helper/test-tool mktemp -n 1000 -m 0700 -f git_mkstemp_mode /tmp/tmp_X=
-XXXXX ran
-    1.24 =C2=B1 0.02 times faster than t/helper/test-tool mktemp -n 1000 -=
-m 0700 -f mkstemp /tmp/tmp_XXXXXX
-
-If we keep the mode-setting variant anyway, the rest is just a bunch of
-trivial wrappers that cannot possibly add a performance problem and are
-easy to check for security issues.
-
-> One upside might be that doing so would make the behaviour more
-> predictable, in that even on a platform with native mkstemp(), we
-> would use the same implementation as what we use on Windows.  But
-> I do not know how much upside it is in practice, either.
-
-Using a single implementation everywhere is easier to code, test and
-maintain.  A flaw in it would have a bigger blast radius, though.
-
-Can we depend on git_mkstemps_mode() and co.?  We already do.  Can
-we depend on them in cases where we don't need a suffix and mode
-0600 suffixes?  I don't see why we can't.
+True, banning mkstemp(3) instead of overriding it would simplify the
+code by removing one layer of indirection, and the hassle of no longer
+being able to use that standard function would be low.
 
 Ren=C3=A9
-
-
-=2D-- >8 ---
-Subject: [PATCH] test-mktemp: allow testing mkstemp(3) and git_mkstemp_mod=
-e()
-
-Allow testing two more functions for creating temporary files by using
-parseopt to provide options for selecting them.
-
-Allow specifying custom file permissions to exercise git_mkstemp_mode()
-fully.
-
-Also add an option for calling the selected function a number of times,
-which allows for easier performance tests.
-
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- t/helper/test-mktemp.c | 73 ++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 70 insertions(+), 3 deletions(-)
-
-diff --git a/t/helper/test-mktemp.c b/t/helper/test-mktemp.c
-index 2290688940..9b8bc95683 100644
-=2D-- a/t/helper/test-mktemp.c
-+++ b/t/helper/test-mktemp.c
-@@ -3,13 +3,80 @@
-  */
- #include "test-tool.h"
- #include "git-compat-util.h"
-+#include "parse-options.h"
-+#include "strbuf.h"
-+
-+static char const * const test_mktemp_usage[] =3D {
-+	N_("test-tool mktemp [options] <template>"),
-+	NULL
-+};
-+
-+static int test_xmkstemp(char *template, int mode)
-+{
-+	int fd =3D xmkstemp(template);
-+	if (mode !=3D 0600)
-+		fchmod(fd, mode);
-+	return fd;
-+}
-+
-+static int test_mkstemp(char *template, int mode)
-+{
-+	int fd =3D mkstemp(template);
-+	if (fd < -1)
-+		die_errno(_("unable to create temporary file '%s'"), template);
-+	if (mode !=3D 0600)
-+		fchmod(fd, mode);
-+	return fd;
-+}
-+
-+static int test_git_mkstemp_mode(char *template, int mode)
-+{
-+	int fd =3D git_mkstemp_mode(template, mode);
-+	if (fd < -1)
-+		die_errno(_("unable to create temporary file '%s'"), template);
-+	return fd;
-+}
-=20
- int cmd__mktemp(int argc, const char **argv)
- {
--	if (argc !=3D 2)
--		usage("Expected 1 parameter defining the temporary file template");
-+	struct strbuf template =3D STRBUF_INIT;
-+	const char *function_name =3D "xmkstemp";
-+	int mode =3D 0600;
-+	int count =3D 1;
-+	struct option options[] =3D {
-+		OPT_STRING_F('f', "function", &function_name, "name",
-+			     N_("select the function to call"),
-+			     PARSE_OPT_NONEG),
-+		OPT_INTEGER('m', "mode", &mode,
-+			    N_("specify file permission bits")),
-+		OPT_INTEGER('n', "count", &count,
-+			    N_("specify the number of files")),
-+		OPT_END()
-+	};
-+	int (*fn)(char *, int);
-+
-+	argc =3D parse_options(argc, argv, NULL, options,
-+			     test_mktemp_usage, 0);
-+
-+	if (argc !=3D 1)
-+		usage_with_options(test_mktemp_usage, options);
-+
-+	if (!strcmp(function_name, "xmkstemp"))
-+		fn =3D test_xmkstemp;
-+	else if (!strcmp(function_name, "mkstemp"))
-+		fn =3D test_mkstemp;
-+	else if (!strcmp(function_name, "git_mkstemp_mode"))
-+		fn =3D test_git_mkstemp_mode;
-+	else
-+		die(_("unsupported function: %s"), function_name);
-+
-+	for (int i =3D 0; i < count; i++) {
-+		strbuf_reset(&template);
-+		strbuf_addstr(&template, argv[0]);
-+		close(fn(template.buf, mode));
-+	}
-=20
--	xmkstemp(xstrdup(argv[1]));
-+	strbuf_release(&template);
-=20
- 	return 0;
- }
-=2D-=20
-2.52.0
 
