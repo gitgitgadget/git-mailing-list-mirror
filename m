@@ -1,88 +1,90 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3814C15E8B
-	for <git@vger.kernel.org>; Sun, 23 Nov 2025 06:19:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DC11DF75A
+	for <git@vger.kernel.org>; Sun, 23 Nov 2025 07:09:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763878767; cv=none; b=mcRjm5wF9qVb3rbW/cxjesYFUjq5a0VJwvPTbTKJHZzWAzTJXMt9GMy7EU8hVzSigxhi84N2wuiwmrItudoJHMyG4ADweg7p0ILuRBH7hxn9w3MguzD248k1zduQ7f5PBgP6Nsk7U66023rJPuP6BxHBt6DbkX1Lkda5F6iIE7Q=
+	t=1763881768; cv=none; b=jUILblwSQ7D1R8RTaOo+65Ci8wujWHGAdkR2Y9v2RL2fyAIyag08mFQjx2OYEX0XHJ6Nw/ohJ5i0zca5NbWhl7qtLcrmJIcWOk80rJgOBZz+svBW/7KUhwYl2oRGSCBjSSysbUKLhvOBCAWFLtXz91EI+wbpmvIi1NZ0AfHRELc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763878767; c=relaxed/simple;
-	bh=8aKlNG1kQ/dY7SHU4lbHCzFytQoVKEmJ4cvmVGh79tQ=;
+	s=arc-20240116; t=1763881768; c=relaxed/simple;
+	bh=h4Oo/3lnPb1dJHgCTpGriEifsVVvB0lkBrSYADm3u6E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L/EwN66c0TZX8qWmB4P3PC73UgtpQNjnqt+o8CxRVB1XAC64zJcd1/fU/BBsb/ffqHSn2U60suob6eWMBvYfLwls0sXuF9/8r2eM5G3au10vzfi653eunPzJqqH0IcGxGK7g1dSh0qA2Z5a493faAXR2KKc3FLcFnP2Zjt08ToQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RUjrIP9g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=swodPZuB; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=SBnev6AA/MPuw7y8nCKLDa1HKXp8eZlmfw01F3PFx4cU4xx2rAT1b4dZ2g3WyDIbM3QVTmJxYOYRJURTEi6WVjONLKHJ/9Jhu+OIi06XpSCo58KBlDXHctHVmI8R2fS1Cr9+tcUV1pRwhWrE3QwI0KgUrVVyN2/n+BO4LVYKVQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QaJsFyQd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xfTO1DJH; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RUjrIP9g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="swodPZuB"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3941B7A0186;
-	Sun, 23 Nov 2025 01:19:24 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Sun, 23 Nov 2025 01:19:24 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QaJsFyQd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xfTO1DJH"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id E8D9F1D00106;
+	Sun, 23 Nov 2025 02:09:24 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Sun, 23 Nov 2025 02:09:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1763878764; x=1763965164; bh=tXVrvOCMC9
-	LzsX5aBcq6vY7rY6x6pJmiBW/hURmcDLM=; b=RUjrIP9gMBHTLGIi3JQIm6A48o
-	p64tNDee7ktSYtQdxyiiYjgN7Kl9XF2tq0+AT38QzP61Onw0r1pFR3mdUb+0+yq9
-	hBMlbTkF48U9QW8m/R8euT5qFCvOooFg457nF2HX9VAomFRST2JHh/V69KXRvNAv
-	9hREFDsDIJiNkAsDEOItigs/gwZrdSAqLuqBVHaemISs7pZyY8TPzaydxqUAjDt0
-	QvhH9eDYYAqDaNz151Tx2Z5VK+IXogmHZvsmPJ42r3AjZiAoPqVaSJeqxY81NbdH
-	K1MVW+K2A51RIoiA5TpBjl0T1Z7FF65MePC2Blnn+Sj3lRK1CZ5uCj6b3nyQ==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1763881764;
+	 x=1763968164; bh=9DXXUgmdtxivfhUKLMky7QXBk3skxW4K+KWYQzjTzNA=; b=
+	QaJsFyQdwUoz6KpggpdMiRnzm7XUfzV+8rmRTewI2pfsoQch2hcwxwIHWYeo/9PH
+	rVIk0lSXJnKki0MkAGyhtO6FJZF2s6HqT3l++luNZqcWLVhC1gaKYPSM2LGgqvO9
+	X2UEC+OJQyQFJQHXuEvEtU7OHRr0hzkG80hZELPVG/zDM3gOYQC4haCTfO6TWgLC
+	btV/wmFtKTfiLOe+sRs7E+7I07lINwf1pU6TryAVYIOlfX/kZeBKDKNXiNd44rX0
+	6bTFGKC0ql++3blCXRbs3zO8PjVkxRdMOQc5bux+CNgxqqOU1yLUNZoc6Ut4pXbl
+	sLMOoO53pTFMfD+HV7v29g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1763878764; x=1763965164; bh=tXVrvOCMC9LzsX5aBcq6vY7rY6x6pJmiBW/
-	hURmcDLM=; b=swodPZuBE3hqieAP5a1osn+gcah9wZOt8sQKvlWj6wBz327+ODI
-	/qL4HlwbOyEraCK6wHJy05Q5FJULMLk4pUsuP7Y64N6t0OpoKE4zmo+wrG7NNMYV
-	S0OqycFOCU5qZbyXBd05yKuXCTnQuXByemspl04RUWiFiu+hfB2CcNZi6IcJwvWI
-	oGF7C8BHwmA1miO+VJDSlL2LtoU/R0Hz8zHsqRUJ8drEo6tbBYrZn9KUhyqKgWOp
-	0hSp3hQothglREikamTmUK49Pgj+7i+zmsCAKJTPFJKw6bhPsJ6Lep35MFB9RAUQ
-	Sjak2pa9yh/MMeoaFwcIwTmLm3y7VE2pcTA==
-X-ME-Sender: <xms:a6ciaUl_-c-vM2ZDxpFCMoVC6hL-n5IkaN1CpOCvmQ8_1j3WZFCPwQ>
-    <xme:a6ciaWHMsFlXYiRQWYj37Oc_J_BVtAnQIklmoYdXOcS3FFel1EcTSiIsMUcTuaTDK
-    HbTYp_182LeQBvroSlT-FLrjvPS2CpVoqBa6XRSY8ngDhC5WvCUrg>
-X-ME-Received: <xmr:a6ciaU4HlnqFYDXr2CpS1GbZtBs3UQ6XxzskJrBzf0gN2cSU7fUCMdP3MsA4_EZ1Y7ChUmD4vcl6WpBoYMTLNTc_oL67oB6Y29VL>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeegleekucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763881764; x=
+	1763968164; bh=9DXXUgmdtxivfhUKLMky7QXBk3skxW4K+KWYQzjTzNA=; b=x
+	fTO1DJH8QM9RxIpXmszJr57pVYfy6fQshpGjnP7dbLkcVPvF6CAOlIxRZ67t8xYH
+	HyVbGl//OxIKnuM/AtbTkuTK57llb3KsS1lN4OT43NAkNdqEdhslCb6KpI3g6t8p
+	bDxIF/XdEdIrlKdqi3Oun3byqMjjkLsrBu84reK7U6zfxY4jSDpB2DkR6phPd6uH
+	LULe2mWDZoVYeb5iTOfLbkBbeHtASAwgMipfN+ZWk/f0MhL/9VM+ietPIlPrmIZn
+	Leh3uKl4rrSCd8XycuseYT69xBtngtXNFLVE5kbbVkC5I5ZTWa6UXlr8LxrjUr9X
+	s6cej7KnIb8XFtebDVH9Q==
+X-ME-Sender: <xms:JLMiaU8OQ5qU0Ap5hFflWEiEwfakNVSIAHt4eIP-Fj2_rb71aRtp_g>
+    <xme:JLMiaWCBKYSkFci5v4W9dNFV3STvT4n-82blmoTmkw_Y1Sv9q57yL3XWj3yoKMxDx
+    YjYTLyujvt2pRkDJ1gdbgc8hkiC0KliO5IYmP8DlThL8uNeAdHP>
+X-ME-Received: <xmr:JLMiaRQl3noTuG5iFPC2XdiItOBpxdmZYAC4UscQBZSwkhQvQdnFClqaZejuq1sRKe_AyfI9kdZv82UMirFloWVOPa-bMfs8Wl_y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeehtdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
-    drtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtoheptghmlhhishhtshesshgvnhhtrdgtohhmpdhrtghpthhtohepmhgvseht
-    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:a6ciaWmeCOv0oaKrcZvfYZULgOGch0K56pDAPbLKHA83Xn4qsk4lZw>
-    <xmx:a6ciaRqdfi-5-3-BIGOBWLku9mnYRz25r2KFMXrX93PwRK5xf2f8LA>
-    <xmx:a6ciadufU6yMctruHR2Rk5YuQ62yIGe1p-SCA9SsgfCwDNBB2DzOxQ>
-    <xmx:a6ciaeEt-DydcwDAkEaDNkdaYhIG9xTfNA5x2_EsS1ewRBZlQThErQ>
-    <xmx:bKciacGUODFlsFTcwvtf3GniEPP1M6XYiYCiKAk_7KT3QbXeAJWUnZQd>
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhope
+    hpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:JLMiaVvghfsvDrAWonS1OLe0Tqhbq7zK6V7R5MyfppEqsaVpJq_vqg>
+    <xmx:JLMiaV2_fiuouM1nyKM5NNCZHKY5HxUEKZ2OGYbSH35whYBpNHkJPw>
+    <xmx:JLMiaeUMb3NpUnMoaVdFJ9jbjBXEM45GcQhpXqB4PPjVoUNriBfKeA>
+    <xmx:JLMiaYIXPlA-ig08p4Wqf8PEwFu4TvChJ3GrqVu9xUtKyeuph2YXIg>
+    <xmx:JLMiafoZK2_utxdc4ef75IhUHOWDXk5hlNZJmmSx_GiwZ28V_peDrnE->
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 23 Nov 2025 01:19:23 -0500 (EST)
+ 23 Nov 2025 02:09:23 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Patrick Steinhardt
- <ps@pks.im>,  correctmost <cmlists@sent.com>,  Taylor Blau
- <me@ttaylorr.com>
-Subject: Re: [PATCH v2 4/9] cache-tree: avoid strtol() on non-string buffer
-In-Reply-To: <ca6d99cc-d05c-49fb-ab3c-d7668077d32b@gmail.com> (Phillip Wood's
-	message of "Tue, 18 Nov 2025 14:30:32 +0000")
-References: <20251118091127.GA4175601@coredump.intra.peff.net>
-	<20251118091218.GD529192@coredump.intra.peff.net>
-	<ca6d99cc-d05c-49fb-ab3c-d7668077d32b@gmail.com>
-Date: Sat, 22 Nov 2025 22:19:22 -0800
-Message-ID: <xmqqtsylz2xh.fsf@gitster.g>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Jeff King <peff@peff.net>,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Git
+ <git@vger.kernel.org>,  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2] diff: disable rename detection with --quiet
+In-Reply-To: <8cc12ef2-1d2c-4924-b130-bd740a975ce0@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Sat, 22 Nov 2025 22:44:59 +0100")
+References: <CALnO6CBsj+aMvHJoUQ+LHAtXhcFhQeH8AuHyrX+rumur6MQQog@mail.gmail.com>
+	<8796cd59-2335-4674-823d-d682ce7b7f8e@web.de>
+	<20251110175408.GB76603@coredump.intra.peff.net>
+	<8cc12ef2-1d2c-4924-b130-bd740a975ce0@web.de>
+Date: Sat, 22 Nov 2025 23:09:22 -0800
+Message-ID: <xmqqpl99z0m5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,92 +92,34 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+René Scharfe <l.s.r@web.de> writes:
 
->> +	while (len && *s == '-') {
->> +		sign *= -1;
->> +		s++;
->> +		len--;
->> +	}
+> --- >8 ---
+> Subject: [PATCH] diff-index: don't queue unchanged filepairs with diff_change()
 >
-> This accepts any number of '-' signs but I believe strtol() only accepts 
-> a single sign (the standard says "optionally preceded by a plus or minus 
-> sign") so this is a change in behavior from the existing code. I'm not 
-> sure we really need to be that accommodating here.
-
-That is true, but at the same time I do not think we really need to
-make it more strict with extra code.
-
->> +	while (len) {
->> +		if (!isdigit(*s))
->> +			break;
->> +		ret *= 10;
->> +		ret += *s - '0';
->> +		s++;
->> +		len--;
->> +	}
->> +
->> +	if (s == *ptr)
->> +		return -1;
+> diff_cache() queues unchanged filepairs if the flag find_copies_harder
+> is set, and uses diff_change() for that.  This function does a few
+> things that are unnecessary for unchanged filepairs and always sets the
+> diff_flag has_changes, which is simply misleading in this case.
 >
-> This accepts "-" as a valid input, as we're tightening up our parsing it 
-> would be nice to require a digit after any '-' sign.
+> Add a new streamlined function for queuing unchanged filepairs and
+> use it in show_modified(), which is called by diff_cache() via
+> oneway_diff() and do_oneway_diff().  It allocates only one half of each
+> filepair, ...
 
-Ditto.
+It's a misleading thing to say.  It allocates a full filepair, but
+because a filespec is reference counted, it can reuse the same
+filespec to hold both preimage and postimage, halving the memory
+requirement without leading to double freeing.  And having a
+separete helper do so would make it almost trivial to avoid setting
+the has_changes bit.
 
+Cleverly done.
 
+Thanks.
 
-We could try to be more careful, but it quickly became messy when I
-tried.  Here is an unfinished attempt of mine.
-
-
-static int parse_int(const char **ptr, unsigned long *len_p, int *out)
-{
-	const char *s = *ptr;
-	unsigned long len = *len_p;
-	unsigned val = 0;
-	bool negate = false;
-	int saw_digits = 0;
-
-	while (len && isspace(*s)) {
-		len--;
-		s++;
-	}
-	if (!len)
-		return -1;
-	switch (*s) {
-	case '-':
-		negate = true;
-		/* fallthru */
-	case '+':
-		s++;
-		len--;
-		break;
-	default:
-		break;
-	}
-
-	while (len) {
-		unsigned next;
-		if (!isdigit(*s))
-			break;
-		next = val * 10 + *s - '0';
-		if (next < val)
-			return -1;
-		val = next;
-		s++;
-		len--;
-		saw_digits = 1;
-	}
-	if (!saw_digits ||
-	    (!negate && INT_MAX <= val) || 
-	    (negate && INT_MAX < val))
-		return -1;
-
-	*ptr = s;
-	*len_p = len;
-	*out = negate ? (0 - val) : val;
-	return 0;
-}
+> ... which has a measurable effect if there are a lot of them, like
+> in the Linux repo:
