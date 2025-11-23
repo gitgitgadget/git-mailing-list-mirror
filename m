@@ -1,81 +1,80 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA09256C83
-	for <git@vger.kernel.org>; Sun, 23 Nov 2025 19:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532A023D7EB
+	for <git@vger.kernel.org>; Sun, 23 Nov 2025 19:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763924446; cv=none; b=dZvlp7Kx/RATKKjVQcM+a/YEg39f3Cw4NpToVmo6B2F7g8YDD9EHD36SgrYDhasGoXVCGAd2ueX8tDaBC0JAOTHZnTB4tC6lN2/ozRncyfqXNX78E3pRBL4noc1YKVyfUVYLIh5clz/nO8YzCdzY8bdqo1mCnM+DkoI9RMaRePY=
+	t=1763924448; cv=none; b=pJYv7SlOSTPeUnWeEEt7oWDX8Iz1eJd6lDhiZuDiK6Bak4QyxKbdXoGiiX7eG24ueAFxGnnyUlKWI4is6UD6CinKMk66OZtqXmGlwATfai93bwWL+Fc6mp4yEtHpRFRjZBCrUixbqSycazrP2M9Ncuss9ZmUa5PV8uGeAhoPEmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763924446; c=relaxed/simple;
-	bh=aRTipVeB+1EWEYwrnPlAFnEXSQ4mBQuTrgTflemiH80=;
+	s=arc-20240116; t=1763924448; c=relaxed/simple;
+	bh=StQ2gcJizs7vwsf0H97j0+7a9CJJIAEpT0Kb8nPrp9Y=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BPzmJqdT3JZlQh4XAJdCn/XcVoLygm+jYmiqhkUgL4+IuiDqIpLzhcThUs2B268TG8tL93RMOnHpFnVn8r9syloK93kucdI9TUH8DswVFk1kq7WvtUj/1WkBmgzYo+tg8qt9/wLmn1Fbj6GLFvS/zen5h5NruL2YeGdqSZD0eEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hgn9L7fo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YRtePKcO; arc=none smtp.client-ip=202.12.124.157
+	 In-Reply-To:To:Cc; b=C6Akb8S9crn9lkuzcglCi4frz4NqPEUJt/PyFhVTHpfhPrdCA6Dvj4HBOa77+qST6dMUuR8jcO1TYUfh76Egtw/w6OfkyB0LDR5kWNgoC8PABnMeYgKnKNot0PzaeKtvct/Fc6y97ivpt2cpFidKh8/WLg1C7DwX3ty5ndYKeeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=h1blqNa0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bBCbGYp2; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hgn9L7fo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YRtePKcO"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 19B297A00A4;
-	Sun, 23 Nov 2025 14:00:42 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="h1blqNa0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bBCbGYp2"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 996B57A00FE;
+	Sun, 23 Nov 2025 14:00:45 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Sun, 23 Nov 2025 14:00:42 -0500
+  by phl-compute-03.internal (MEProxy); Sun, 23 Nov 2025 14:00:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1763924441;
-	 x=1764010841; bh=a0DmxkHpqoYTv2nhBZM0AdqqLp2/qE2gnIhEsd0eW30=; b=
-	hgn9L7foNLyHsiXEH+tee+xHcOaSqTTfb6Zhk/RJl6mSlUhpuWUeVixMcIQIIUuJ
-	9BP1QxMe8r3ZmQeP5MKnY5jqpFTWOpayyswFhGCCy6dBpZFtDsQ2O1JJNaaAIkE+
-	A7mj8CCzcIecnZ2nP9YSBIYc8XQGwpgtigllyYxbczqfa97VYTDk5qRf0Hq1s1O9
-	FEjaWN7PhjcWJ2Kd5H3pyfldub7k5N0o2qw4yoIM7oAJ3kHy0vX5VCPdbCUEe7TY
-	Ev5HV+7hvRwnODioCJ+eMLSIPhJJuvPYcNIz1MbiKpargiaNqsQeErjIyBMU34di
-	TNQQ7tuY9Z/HMk8wHr0soA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1763924445;
+	 x=1764010845; bh=BVa3+fBfOBPr5UNalmYRe1vuLzL6eGFBj84jz2I69go=; b=
+	h1blqNa0Bh4tURnhSk7zqvqP2wDl2jKTybHdNN1jBnYdIbyyx7jIQ9oJnOK1NnDy
+	aHCuoRIDyfQvMfTJoEo3b+LPpy9X7RPwjOOdOTN1hA37uVB5D9edHdGnqO/7k+M0
+	FeZ2c4UxTdX8wGXRVEAa7dBezIJw+cTjxDGrotXs+o+TC0KAmS2nS++2V1DH4pMc
+	p+zaGjvD6PVc/NZL2uGLHGECzmCdLis2vqKfKhFb754JTD28WOliVPxAAutbxg3i
+	kifHh0iHjs7+SM137GNetqypYy4+SlK7F+bxLgijggrQn3+kEc6TxBuADyue4EyV
+	X+6lpTQOb7fzVpdfU6WtTA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763924441; x=
-	1764010841; bh=a0DmxkHpqoYTv2nhBZM0AdqqLp2/qE2gnIhEsd0eW30=; b=Y
-	RtePKcOp+m8ACqWjutK74HuD3U3+jEc0gIAMZAVOmQ18zr4lRd51HHeL84L4Ayai
-	HE7GKKnzBFAO6mwlHke4+CX5MmL/2DPaHfAK19k8Yl50Wemqczcd+KvEEj6Cs7xF
-	/YV046t4bRfzdjtL+yOEGi5P+eu2DyriXYEnCj6YSNV7DJdbsbBwoemBGfvwlhh5
-	QDXDswztECHprNJvnzpCpeu5sMaiWsqJ7B2feXCn2KIcHqU0npcsU+fnqlKnTjZ0
-	YGazbRYqrIBF8DvTnoZ6f59OaBI4GmYoFikPhQSMUxMq4A/zDedniw8FzKR5O12X
-	6hREJ7kKleWkdV6Uhajkw==
-X-ME-Sender: <xms:2VkjaUr7CzPZCazeo96J-56S-M4-xuGNOtHi8dMiLwy2TwsE8XNNVA>
-    <xme:2VkjaRo7Rbe4heiOgZMPzMSfZDAz0iI9DvZN8f3dJHoh5mpw3NWBCNjs2PAjBFmnw
-    GrN1cQbBGMOca4G85VvfnshSwwECU9KlPsLZ19f0O9AQFJ-ikoPBQ>
-X-ME-Received: <xmr:2VkjaeOTdbET3R6hUGZkz7JFOOoi2PGBNxJ3sgchYLtbwWRQDxtOWCI_e_oAZFJEJdZ5btOJoiSdj89VMbUu1EB-3vGA8xwk1KhRHsrvk6IHmg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeeihedtucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763924445; x=
+	1764010845; bh=BVa3+fBfOBPr5UNalmYRe1vuLzL6eGFBj84jz2I69go=; b=b
+	BCbGYp2Bjp4e/H6arDnzlCZEkHAKf1FZJVi9JVcyeZ8solGpxlTdhM5aBpRm569K
+	buMss5lPG5VzGp98cZoApaecW3KFVGxh3mE7EVxUlFlpff4VOsLQIFCpwFIRK860
+	HS5NzJvtc1B/atmtH78TvVbrbxU+NOAmLibqwUNJ6fv7U88u6AJaq/ziWQ2W8mED
+	S+ZnLWWtdwslFRXNxn7escE4/I1t38I5Lv7j8YmKcNlOWXwKkQ2pprzGigy4OsaC
+	6510vFZrbzMS3Kgdv8898EGOkUagfc4a8w4hpYspoAnIGmztpo6fDQDWe65hNVdW
+	Y6o6TFsWkPIYx1RK0Ox5A==
+X-ME-Sender: <xms:3VkjaZz-XecI36KDxL8WW7Vv1eJF4KvCl4sB1XoTB9mqDTm-DQFQBQ>
+    <xme:3VkjaQRRxFjwUbOfzQAOGLsGIqTUBf5O0sZ41Gbtf7-c9DPDDhZxOEJNcV_vkeZav
+    T5fnUBJAHLhrLVoltUNpiSaHGTSg-vvwjvR254njUzrWKIWB-bqRA>
+X-ME-Received: <xmr:3VkjaYUk-sGKB-xnWAu292vQSE79Tuz6vHvGiFM2PK34TLphOesUKmdb-HfD4vSx809G0LGJQokS760tjrvWOogOIL4z-Q2fTP4W-NY3zMKoTg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeeiheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:2Vkjaaz3UTpbJQMnpIyKet77vs9939yLKbIupOE0EUsZMdtn-dk49A>
-    <xmx:2VkjafsxPKE-a8nltgKY7hFf33jiLQEPPMJezo1NYG9uLr9rwG900A>
-    <xmx:2Vkjab4Xg8d0sRZSS9UbJarIaXd9NNJ4NzXVmhTOoseMqwITeAcnwA>
-    <xmx:2VkjaWTjOOme_e02cqbYWcR9kLs4NmUHekB-AzV4h8CPhCeZttZaVA>
-    <xmx:2VkjadtToHdyZS5TcD1HRd5MmD0i84pCOjgkFaVjcMYhqqKdop6E0qTA>
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:3VkjaaYYDS7CBc5dQZwDrPbrR50nHBub4jxcKBpe9x4sPqhR0_2Mjw>
+    <xmx:3VkjaW3YAbr994T6tdVDEC5Szr3hoITUVLOAUmSflj1BGbxbZLNhaA>
+    <xmx:3VkjaUhiTTTIW2Msw255UUPMKzluY2sU7EABM0hhTWubEG9B1QA25A>
+    <xmx:3VkjaSacil3xX8nTAGx3a-RK-wyD2pVAmraGduQNRJHa6bxFmol86Q>
+    <xmx:3Vkjaf1CYate7RqXv-cOL7zj5IvVtP3YZd9_IGzdv_7KR9bjzove-3yb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 23 Nov 2025 14:00:40 -0500 (EST)
+ 23 Nov 2025 14:00:44 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e892b1e8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Sun, 23 Nov 2025 19:00:40 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id cc7d9637 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Sun, 23 Nov 2025 19:00:44 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Sun, 23 Nov 2025 19:59:42 +0100
-Subject: [PATCH v3 17/19] streaming: refactor interface to be
- object-database-centric
+Date: Sun, 23 Nov 2025 19:59:43 +0100
+Subject: [PATCH v3 18/19] streaming: move into object database subsystem
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251123-b4-pks-odb-read-stream-v3-17-1a129182822b@pks.im>
+Message-Id: <20251123-b4-pks-odb-read-stream-v3-18-1a129182822b@pks.im>
 References: <20251123-b4-pks-odb-read-stream-v3-0-1a129182822b@pks.im>
 In-Reply-To: <20251123-b4-pks-odb-read-stream-v3-0-1a129182822b@pks.im>
 To: git@vger.kernel.org
@@ -92,401 +91,280 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.3
 
-Refactor the streaming interface to be centered around object databases
-instead of centered around the repository. Rename the functions
-accordingly.
+The "streaming" terminology is somewhat generic, so it may not be
+immediately obvious that "streaming.{c,h}" is specific to the object
+database. Rectify this by moving it into the "odb/" directory so that it
+can be immediately attributed to the object subsystem.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- archive-tar.c          |  6 +++---
- archive-zip.c          | 12 ++++++------
- builtin/index-pack.c   |  8 ++++----
- builtin/pack-objects.c | 14 +++++++-------
- object-file.c          |  8 ++++----
- streaming.c            | 44 ++++++++++++++++++++++----------------------
- streaming.h            | 30 +++++++++++++++++++++++++-----
- 7 files changed, 71 insertions(+), 51 deletions(-)
+ Makefile                       | 2 +-
+ archive-tar.c                  | 2 +-
+ archive-zip.c                  | 2 +-
+ builtin/cat-file.c             | 2 +-
+ builtin/fsck.c                 | 2 +-
+ builtin/index-pack.c           | 2 +-
+ builtin/log.c                  | 2 +-
+ builtin/pack-objects.c         | 2 +-
+ entry.c                        | 2 +-
+ meson.build                    | 2 +-
+ object-file.c                  | 2 +-
+ streaming.c => odb/streaming.c | 2 +-
+ streaming.h => odb/streaming.h | 0
+ packfile.c                     | 2 +-
+ parallel-checkout.c            | 2 +-
+ 15 files changed, 14 insertions(+), 14 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index 7e0f77e298..6d8dcc4622 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1201,6 +1201,7 @@ LIB_OBJS += object-file.o
+ LIB_OBJS += object-name.o
+ LIB_OBJS += object.o
+ LIB_OBJS += odb.o
++LIB_OBJS += odb/streaming.o
+ LIB_OBJS += oid-array.o
+ LIB_OBJS += oidmap.o
+ LIB_OBJS += oidset.o
+@@ -1294,7 +1295,6 @@ LIB_OBJS += split-index.o
+ LIB_OBJS += stable-qsort.o
+ LIB_OBJS += statinfo.o
+ LIB_OBJS += strbuf.o
+-LIB_OBJS += streaming.o
+ LIB_OBJS += string-list.o
+ LIB_OBJS += strmap.o
+ LIB_OBJS += strvec.o
 diff --git a/archive-tar.c b/archive-tar.c
-index dc1eda09e0..4d87b28504 100644
+index 4d87b28504..494b9f0667 100644
 --- a/archive-tar.c
 +++ b/archive-tar.c
-@@ -135,16 +135,16 @@ static int stream_blocked(struct repository *r, const struct object_id *oid)
- 	char buf[BLOCKSIZE];
- 	ssize_t readlen;
+@@ -12,8 +12,8 @@
+ #include "tar.h"
+ #include "archive.h"
+ #include "odb.h"
++#include "odb/streaming.h"
+ #include "strbuf.h"
+-#include "streaming.h"
+ #include "run-command.h"
+ #include "write-or-die.h"
  
--	st = open_istream(r, oid, &type, &sz, NULL);
-+	st = odb_read_stream_open(r->objects, oid, &type, &sz, NULL);
- 	if (!st)
- 		return error(_("cannot stream blob %s"), oid_to_hex(oid));
- 	for (;;) {
--		readlen = read_istream(st, buf, sizeof(buf));
-+		readlen = odb_read_stream_read(st, buf, sizeof(buf));
- 		if (readlen <= 0)
- 			break;
- 		do_write_blocked(buf, readlen);
- 	}
--	close_istream(st);
-+	odb_read_stream_close(st);
- 	if (!readlen)
- 		finish_record();
- 	return readlen;
 diff --git a/archive-zip.c b/archive-zip.c
-index 40a9c93ff9..c44684aebc 100644
+index c44684aebc..a0bdc2fe3b 100644
 --- a/archive-zip.c
 +++ b/archive-zip.c
-@@ -348,8 +348,8 @@ static int write_zip_entry(struct archiver_args *args,
- 
- 		if (!buffer) {
- 			enum object_type type;
--			stream = open_istream(args->repo, oid, &type, &size,
--					      NULL);
-+			stream = odb_read_stream_open(args->repo->objects, oid,
-+						      &type, &size, NULL);
- 			if (!stream)
- 				return error(_("cannot stream blob %s"),
- 					     oid_to_hex(oid));
-@@ -429,7 +429,7 @@ static int write_zip_entry(struct archiver_args *args,
- 		ssize_t readlen;
- 
- 		for (;;) {
--			readlen = read_istream(stream, buf, sizeof(buf));
-+			readlen = odb_read_stream_read(stream, buf, sizeof(buf));
- 			if (readlen <= 0)
- 				break;
- 			crc = crc32(crc, buf, readlen);
-@@ -439,7 +439,7 @@ static int write_zip_entry(struct archiver_args *args,
- 							    buf, readlen);
- 			write_or_die(1, buf, readlen);
- 		}
--		close_istream(stream);
-+		odb_read_stream_close(stream);
- 		if (readlen)
- 			return readlen;
- 
-@@ -462,7 +462,7 @@ static int write_zip_entry(struct archiver_args *args,
- 		zstream.avail_out = sizeof(compressed);
- 
- 		for (;;) {
--			readlen = read_istream(stream, buf, sizeof(buf));
-+			readlen = odb_read_stream_read(stream, buf, sizeof(buf));
- 			if (readlen <= 0)
- 				break;
- 			crc = crc32(crc, buf, readlen);
-@@ -486,7 +486,7 @@ static int write_zip_entry(struct archiver_args *args,
- 			}
- 
- 		}
--		close_istream(stream);
-+		odb_read_stream_close(stream);
- 		if (readlen)
- 			return readlen;
- 
+@@ -10,9 +10,9 @@
+ #include "gettext.h"
+ #include "git-zlib.h"
+ #include "hex.h"
+-#include "streaming.h"
+ #include "utf8.h"
+ #include "odb.h"
++#include "odb/streaming.h"
+ #include "strbuf.h"
+ #include "userdiff.h"
+ #include "write-or-die.h"
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 120d626d66..505ddaa12f 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -18,13 +18,13 @@
+ #include "list-objects-filter-options.h"
+ #include "parse-options.h"
+ #include "userdiff.h"
+-#include "streaming.h"
+ #include "oid-array.h"
+ #include "packfile.h"
+ #include "pack-bitmap.h"
+ #include "object-file.h"
+ #include "object-name.h"
+ #include "odb.h"
++#include "odb/streaming.h"
+ #include "replace-object.h"
+ #include "promisor-remote.h"
+ #include "mailmap.h"
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 1a348d43c2..c7d2eea287 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -13,11 +13,11 @@
+ #include "fsck.h"
+ #include "parse-options.h"
+ #include "progress.h"
+-#include "streaming.h"
+ #include "packfile.h"
+ #include "object-file.h"
+ #include "object-name.h"
+ #include "odb.h"
++#include "odb/streaming.h"
+ #include "path.h"
+ #include "read-cache-ll.h"
+ #include "replace-object.h"
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 5f90f12f92..fb76ef0f4c 100644
+index fb76ef0f4c..581023495f 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -779,7 +779,7 @@ static int compare_objects(const unsigned char *buf, unsigned long size,
- 	}
- 
- 	while (size) {
--		ssize_t len = read_istream(data->st, data->buf, size);
-+		ssize_t len = odb_read_stream_read(data->st, data->buf, size);
- 		if (len == 0)
- 			die(_("SHA1 COLLISION FOUND WITH %s !"),
- 			    oid_to_hex(&data->entry->idx.oid));
-@@ -807,15 +807,15 @@ static int check_collison(struct object_entry *entry)
- 
- 	memset(&data, 0, sizeof(data));
- 	data.entry = entry;
--	data.st = open_istream(the_repository, &entry->idx.oid, &type, &size,
--			       NULL);
-+	data.st = odb_read_stream_open(the_repository->objects, &entry->idx.oid,
-+				       &type, &size, NULL);
- 	if (!data.st)
- 		return -1;
- 	if (size != entry->size || type != entry->type)
- 		die(_("SHA1 COLLISION FOUND WITH %s !"),
- 		    oid_to_hex(&entry->idx.oid));
- 	unpack_data(entry, compare_objects, &data);
--	close_istream(data.st);
-+	odb_read_stream_close(data.st);
- 	free(data.buf);
- 	return 0;
- }
+@@ -16,12 +16,12 @@
+ #include "progress.h"
+ #include "fsck.h"
+ #include "strbuf.h"
+-#include "streaming.h"
+ #include "thread-utils.h"
+ #include "packfile.h"
+ #include "pack-revindex.h"
+ #include "object-file.h"
+ #include "odb.h"
++#include "odb/streaming.h"
+ #include "oid-array.h"
+ #include "oidset.h"
+ #include "path.h"
+diff --git a/builtin/log.c b/builtin/log.c
+index e7b83a6e00..d4cf9c59c8 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -16,6 +16,7 @@
+ #include "refs.h"
+ #include "object-name.h"
+ #include "odb.h"
++#include "odb/streaming.h"
+ #include "pager.h"
+ #include "color.h"
+ #include "commit.h"
+@@ -35,7 +36,6 @@
+ #include "parse-options.h"
+ #include "line-log.h"
+ #include "branch.h"
+-#include "streaming.h"
+ #include "version.h"
+ #include "mailmap.h"
+ #include "progress.h"
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index c693d948e1..1353c2384c 100644
+index 1353c2384c..f109e26786 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -417,7 +417,7 @@ static unsigned long write_large_blob_data(struct odb_read_stream *st, struct ha
- 	for (;;) {
- 		ssize_t readlen;
- 		int zret = Z_OK;
--		readlen = read_istream(st, ibuf, sizeof(ibuf));
-+		readlen = odb_read_stream_read(st, ibuf, sizeof(ibuf));
- 		if (readlen == -1)
- 			die(_("unable to read %s"), oid_to_hex(oid));
+@@ -22,7 +22,6 @@
+ #include "pack-objects.h"
+ #include "progress.h"
+ #include "refs.h"
+-#include "streaming.h"
+ #include "thread-utils.h"
+ #include "pack-bitmap.h"
+ #include "delta-islands.h"
+@@ -33,6 +32,7 @@
+ #include "packfile.h"
+ #include "object-file.h"
+ #include "odb.h"
++#include "odb/streaming.h"
+ #include "replace-object.h"
+ #include "dir.h"
+ #include "midx.h"
+diff --git a/entry.c b/entry.c
+index 38dfe670f7..7817aee362 100644
+--- a/entry.c
++++ b/entry.c
+@@ -2,13 +2,13 @@
  
-@@ -520,8 +520,8 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 		if (oe_type(entry) == OBJ_BLOB &&
- 		    oe_size_greater_than(&to_pack, entry,
- 					 repo_settings_get_big_file_threshold(the_repository)) &&
--		    (st = open_istream(the_repository, &entry->idx.oid, &type,
--				       &size, NULL)) != NULL)
-+		    (st = odb_read_stream_open(the_repository->objects, &entry->idx.oid,
-+					       &type, &size, NULL)) != NULL)
- 			buf = NULL;
- 		else {
- 			buf = odb_read_object(the_repository->objects,
-@@ -577,7 +577,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 			dheader[--pos] = 128 | (--ofs & 127);
- 		if (limit && hdrlen + sizeof(dheader) - pos + datalen + hashsz >= limit) {
- 			if (st)
--				close_istream(st);
-+				odb_read_stream_close(st);
- 			free(buf);
- 			return 0;
- 		}
-@@ -591,7 +591,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 		 */
- 		if (limit && hdrlen + hashsz + datalen + hashsz >= limit) {
- 			if (st)
--				close_istream(st);
-+				odb_read_stream_close(st);
- 			free(buf);
- 			return 0;
- 		}
-@@ -601,7 +601,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 	} else {
- 		if (limit && hdrlen + datalen + hashsz >= limit) {
- 			if (st)
--				close_istream(st);
-+				odb_read_stream_close(st);
- 			free(buf);
- 			return 0;
- 		}
-@@ -609,7 +609,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 	}
- 	if (st) {
- 		datalen = write_large_blob_data(st, f, &entry->idx.oid);
--		close_istream(st);
-+		odb_read_stream_close(st);
- 	} else {
- 		hashwrite(f, buf, datalen);
- 		free(buf);
+ #include "git-compat-util.h"
+ #include "odb.h"
++#include "odb/streaming.h"
+ #include "dir.h"
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
+ #include "name-hash.h"
+ #include "sparse-index.h"
+-#include "streaming.h"
+ #include "submodule.h"
+ #include "symlinks.h"
+ #include "progress.h"
+diff --git a/meson.build b/meson.build
+index 1f95a06edb..fc82929b37 100644
+--- a/meson.build
++++ b/meson.build
+@@ -397,6 +397,7 @@ libgit_sources = [
+   'object-name.c',
+   'object.c',
+   'odb.c',
++  'odb/streaming.c',
+   'oid-array.c',
+   'oidmap.c',
+   'oidset.c',
+@@ -490,7 +491,6 @@ libgit_sources = [
+   'stable-qsort.c',
+   'statinfo.c',
+   'strbuf.c',
+-  'streaming.c',
+   'string-list.c',
+   'strmap.c',
+   'strvec.c',
 diff --git a/object-file.c b/object-file.c
-index 8c67847fea..9ba40a848c 100644
+index 9ba40a848c..9601fdb12d 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -139,7 +139,7 @@ int stream_object_signature(struct repository *r, const struct object_id *oid)
- 	char hdr[MAX_HEADER_LEN];
- 	int hdrlen;
+@@ -20,13 +20,13 @@
+ #include "object-file-convert.h"
+ #include "object-file.h"
+ #include "odb.h"
++#include "odb/streaming.h"
+ #include "oidtree.h"
+ #include "pack.h"
+ #include "packfile.h"
+ #include "path.h"
+ #include "read-cache-ll.h"
+ #include "setup.h"
+-#include "streaming.h"
+ #include "tempfile.h"
+ #include "tmp-objdir.h"
  
--	st = open_istream(r, oid, &obj_type, &size, NULL);
-+	st = odb_read_stream_open(r->objects, oid, &obj_type, &size, NULL);
- 	if (!st)
- 		return -1;
- 
-@@ -151,10 +151,10 @@ int stream_object_signature(struct repository *r, const struct object_id *oid)
- 	git_hash_update(&c, hdr, hdrlen);
- 	for (;;) {
- 		char buf[1024 * 16];
--		ssize_t readlen = read_istream(st, buf, sizeof(buf));
-+		ssize_t readlen = odb_read_stream_read(st, buf, sizeof(buf));
- 
- 		if (readlen < 0) {
--			close_istream(st);
-+			odb_read_stream_close(st);
- 			return -1;
- 		}
- 		if (!readlen)
-@@ -162,7 +162,7 @@ int stream_object_signature(struct repository *r, const struct object_id *oid)
- 		git_hash_update(&c, buf, readlen);
- 	}
- 	git_hash_final_oid(&real_oid, &c);
--	close_istream(st);
-+	odb_read_stream_close(st);
- 	return !oideq(oid, &real_oid) ? -1 : 0;
- }
- 
-diff --git a/streaming.c b/streaming.c
-index 3140728a70..06993a751c 100644
+diff --git a/streaming.c b/odb/streaming.c
+similarity index 99%
+rename from streaming.c
+rename to odb/streaming.c
+index 06993a751c..7ef58adaa2 100644
 --- a/streaming.c
-+++ b/streaming.c
-@@ -35,7 +35,7 @@ static int close_istream_filtered(struct odb_read_stream *_fs)
- {
- 	struct odb_filtered_read_stream *fs = (struct odb_filtered_read_stream *)_fs;
- 	free_stream_filter(fs->filter);
--	return close_istream(fs->upstream);
-+	return odb_read_stream_close(fs->upstream);
- }
++++ b/odb/streaming.c
+@@ -5,10 +5,10 @@
+ #include "git-compat-util.h"
+ #include "convert.h"
+ #include "environment.h"
+-#include "streaming.h"
+ #include "repository.h"
+ #include "object-file.h"
+ #include "odb.h"
++#include "odb/streaming.h"
+ #include "replace-object.h"
+ #include "packfile.h"
  
- static ssize_t read_istream_filtered(struct odb_read_stream *_fs, char *buf,
-@@ -87,7 +87,7 @@ static ssize_t read_istream_filtered(struct odb_read_stream *_fs, char *buf,
- 
- 		/* refill the input from the upstream */
- 		if (!fs->input_finished) {
--			fs->i_end = read_istream(fs->upstream, fs->ibuf, FILTER_BUFFER);
-+			fs->i_end = odb_read_stream_read(fs->upstream, fs->ibuf, FILTER_BUFFER);
- 			if (fs->i_end < 0)
- 				return -1;
- 			if (fs->i_end)
-@@ -149,7 +149,7 @@ static ssize_t read_istream_incore(struct odb_read_stream *_st, char *buf, size_
- }
- 
- static int open_istream_incore(struct odb_read_stream **out,
--			       struct repository *r,
-+			       struct object_database *odb,
- 			       const struct object_id *oid)
- {
- 	struct object_info oi = OBJECT_INFO_INIT;
-@@ -163,7 +163,7 @@ static int open_istream_incore(struct odb_read_stream **out,
- 	oi.typep = &stream.base.type;
- 	oi.sizep = &stream.base.size;
- 	oi.contentp = (void **)&stream.buf;
--	ret = odb_read_object_info_extended(r->objects, oid, &oi,
-+	ret = odb_read_object_info_extended(odb, oid, &oi,
- 					    OBJECT_INFO_DIE_IF_CORRUPT);
- 	if (ret)
- 		return ret;
-@@ -180,47 +180,47 @@ static int open_istream_incore(struct odb_read_stream **out,
-  *****************************************************************************/
- 
- static int istream_source(struct odb_read_stream **out,
--			  struct repository *r,
-+			  struct object_database *odb,
- 			  const struct object_id *oid)
- {
- 	struct odb_source *source;
- 
--	if (!packfile_store_read_object_stream(out, r->objects->packfiles, oid))
-+	if (!packfile_store_read_object_stream(out, odb->packfiles, oid))
- 		return 0;
- 
--	odb_prepare_alternates(r->objects);
--	for (source = r->objects->sources; source; source = source->next)
-+	odb_prepare_alternates(odb);
-+	for (source = odb->sources; source; source = source->next)
- 		if (!odb_source_loose_read_object_stream(out, source, oid))
- 			return 0;
- 
--	return open_istream_incore(out, r, oid);
-+	return open_istream_incore(out, odb, oid);
- }
- 
- /****************************************************************
-  * Users of streaming interface
-  ****************************************************************/
- 
--int close_istream(struct odb_read_stream *st)
-+int odb_read_stream_close(struct odb_read_stream *st)
- {
- 	int r = st->close(st);
- 	free(st);
- 	return r;
- }
- 
--ssize_t read_istream(struct odb_read_stream *st, void *buf, size_t sz)
-+ssize_t odb_read_stream_read(struct odb_read_stream *st, void *buf, size_t sz)
- {
- 	return st->read(st, buf, sz);
- }
- 
--struct odb_read_stream *open_istream(struct repository *r,
--				     const struct object_id *oid,
--				     enum object_type *type,
--				     unsigned long *size,
--				     struct stream_filter *filter)
-+struct odb_read_stream *odb_read_stream_open(struct object_database *odb,
-+					     const struct object_id *oid,
-+					     enum object_type *type,
-+					     unsigned long *size,
-+					     struct stream_filter *filter)
- {
- 	struct odb_read_stream *st;
--	const struct object_id *real = lookup_replace_object(r, oid);
--	int ret = istream_source(&st, r, real);
-+	const struct object_id *real = lookup_replace_object(odb->repo, oid);
-+	int ret = istream_source(&st, odb, real);
- 
- 	if (ret)
- 		return NULL;
-@@ -229,7 +229,7 @@ struct odb_read_stream *open_istream(struct repository *r,
- 		/* Add "&& !is_null_stream_filter(filter)" for performance */
- 		struct odb_read_stream *nst = attach_stream_filter(st, filter);
- 		if (!nst) {
--			close_istream(st);
-+			odb_read_stream_close(st);
- 			return NULL;
- 		}
- 		st = nst;
-@@ -252,7 +252,7 @@ int odb_stream_blob_to_fd(struct object_database *odb,
- 	ssize_t kept = 0;
- 	int result = -1;
- 
--	st = open_istream(odb->repo, oid, &type, &sz, filter);
-+	st = odb_read_stream_open(odb, oid, &type, &sz, filter);
- 	if (!st) {
- 		if (filter)
- 			free_stream_filter(filter);
-@@ -263,7 +263,7 @@ int odb_stream_blob_to_fd(struct object_database *odb,
- 	for (;;) {
- 		char buf[1024 * 16];
- 		ssize_t wrote, holeto;
--		ssize_t readlen = read_istream(st, buf, sizeof(buf));
-+		ssize_t readlen = odb_read_stream_read(st, buf, sizeof(buf));
- 
- 		if (readlen < 0)
- 			goto close_and_exit;
-@@ -294,6 +294,6 @@ int odb_stream_blob_to_fd(struct object_database *odb,
- 	result = 0;
- 
-  close_and_exit:
--	close_istream(st);
-+	odb_read_stream_close(st);
- 	return result;
- }
-diff --git a/streaming.h b/streaming.h
-index acfdef1598..7cb55213b7 100644
---- a/streaming.h
-+++ b/streaming.h
-@@ -24,11 +24,31 @@ struct odb_read_stream {
- 	unsigned long size; /* inflated size of full object */
- };
- 
--struct odb_read_stream *open_istream(struct repository *, const struct object_id *,
--				     enum object_type *, unsigned long *,
--				     struct stream_filter *);
--int close_istream(struct odb_read_stream *);
--ssize_t read_istream(struct odb_read_stream *, void *, size_t);
-+/*
-+ * Create a new object stream for the given object database. Populates the type
-+ * and size pointers with the object's info. An optional filter can be used to
-+ * transform the object's content.
-+ *
-+ * Returns the stream on success, a `NULL` pointer otherwise.
-+ */
-+struct odb_read_stream *odb_read_stream_open(struct object_database *odb,
-+					     const struct object_id *oid,
-+					     enum object_type *type,
-+					     unsigned long *size,
-+					     struct stream_filter *filter);
-+
-+/*
-+ * Close the given read stream and release all resources associated with it.
-+ * Returns 0 on success, a negative error code otherwise.
-+ */
-+int odb_read_stream_close(struct odb_read_stream *stream);
-+
-+/*
-+ * Read data from the stream into the buffer. Returns 0 on EOF and the number
-+ * of bytes read on success. Returns a negative error code in case reading from
-+ * the stream fails.
-+ */
-+ssize_t odb_read_stream_read(struct odb_read_stream *stream, void *buf, size_t len);
- 
- /*
-  * Look up the object by its ID and write the full contents to the file
+diff --git a/streaming.h b/odb/streaming.h
+similarity index 100%
+rename from streaming.h
+rename to odb/streaming.h
+diff --git a/packfile.c b/packfile.c
+index ad56ce0b90..7a16aaa90d 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -20,7 +20,7 @@
+ #include "tree.h"
+ #include "object-file.h"
+ #include "odb.h"
+-#include "streaming.h"
++#include "odb/streaming.h"
+ #include "midx.h"
+ #include "commit-graph.h"
+ #include "pack-revindex.h"
+diff --git a/parallel-checkout.c b/parallel-checkout.c
+index 1cb6701b92..0bf4bd6d4a 100644
+--- a/parallel-checkout.c
++++ b/parallel-checkout.c
+@@ -13,7 +13,7 @@
+ #include "read-cache-ll.h"
+ #include "run-command.h"
+ #include "sigchain.h"
+-#include "streaming.h"
++#include "odb/streaming.h"
+ #include "symlinks.h"
+ #include "thread-utils.h"
+ #include "trace2.h"
 
 -- 
 2.52.0.rc2.482.gaa765fefd0.dirty
