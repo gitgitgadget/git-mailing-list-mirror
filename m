@@ -1,83 +1,82 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7EE15ECD7
-	for <git@vger.kernel.org>; Sun, 23 Nov 2025 18:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3ABC15ECD7
+	for <git@vger.kernel.org>; Sun, 23 Nov 2025 18:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763924390; cv=none; b=R4/Oik9ZCSdjySJ8ZGYT8vjHBZT/ZHav362G0A1sOsxs+HR66ZfOtifT3S3FtjKl/WfUY1vFCS/X5RTHAuZd2zXNT3AepIscRKACBOpGyZn6UqCBn01TMqTatMzF1zcDuc4DaNA1wQUKUeHIQeBwWiy8IAIVrqnRtxXeQQObjHU=
+	t=1763924393; cv=none; b=kVj5bfcGfWxKp70IgfMCkbdGYqWE1k9x6qRM7X+rX+JB1FW8OTjBVU1yU7ajDhwiyGwK8vj2G0ZtBZo3DhvckHLvsztTQUbHui9u/gBd5U7hU3GvlN9+V7AKUomls2O513XIa3uG7qe+gdP+L1hdn9oW//FLlfRlBPJgw4EEr7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763924390; c=relaxed/simple;
-	bh=5jEu+5sYcSTv+KSluezzl3+TmDzw7Ak2mzU2Nt/MbUE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=VLt3Cdj+QtiWQ9cXz0zexin1RH09iR+Tl3Iik30h1gOFoz9b286/Au88QEybDWD3g1tjzG+MvIB2hGvrs2CQE8hz3QVcfRDM0LdE0O99TIKK462A3cxnJzFnbu/iDHg8prOZ2D0aV9yuGmeGJAwodYsPt2sNyePZjB8DLioWtPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=npWHoK80; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ABmOR7ml; arc=none smtp.client-ip=202.12.124.157
+	s=arc-20240116; t=1763924393; c=relaxed/simple;
+	bh=btb42P3kHIXabFxoOSEXLKkAJxvS54tT91LTtAM0/eo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=DpNx2Cd2BLgBifvAEBJeNkVolMBXEAlZFy52AIpDRr8m1OH+BX468Tm5XoOZ8bokt5ThKS775pqKBqxCCu4NjF/dQprbYSvDl2MB7Edw1jBLVRp25tQxjq63odrJrTaDnQKqCwc5a99VDO8A8XcZCf+yCddvKURg8R6rn0pPYR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PHYJqfdI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WP6L1Ex7; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="npWHoK80";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ABmOR7ml"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PHYJqfdI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WP6L1Ex7"
 Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A16C47A00BC;
-	Sun, 23 Nov 2025 13:59:46 -0500 (EST)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3267F7A0091;
+	Sun, 23 Nov 2025 13:59:50 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Sun, 23 Nov 2025 13:59:46 -0500
+  by phl-compute-11.internal (MEProxy); Sun, 23 Nov 2025 13:59:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1763924386;
-	 x=1764010786; bh=wRCXpk5VE0d1AgugQaguCGV+6sVDSMXgRX2u4y8QxoU=; b=
-	npWHoK80v+pVVTll5rIOFgh7QcmC1A7IqBrwBjdt5T50qXmuQxtVZl0xZC9VshsA
-	okbcHauw/XCU797POdsxmJxL7MnNiU0AsYLiHrjczxOn+DHRt+r96ihi5lednUaX
-	hxGDgJ3+2V/BAJearcwZ2xSNNc+eRHrAg7Vnmtqq03sQQ5pIHBjnWghkTQaUEdei
-	BE9rxliiKrBarAFPyF/w2UehcBFGdj/w5bAkm2gifs8xaBmlKXWBoNJmbm+8MvN5
-	ocVn5txjo5IgV49O6GzOwZ1/XcFmwwe0/c6DhIiMEB3rTNPG9nyFtqz+/6myxkXS
-	HmTj/6ctmA9508OBpQ4zKg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1763924390;
+	 x=1764010790; bh=gyWKqIQh/wGdlzd4q+swOQ9IKfoVwpymQm44k+SnCas=; b=
+	PHYJqfdIBe6efYAZO4IbuK6L3UJ+dACsteeW+FxGZ6/XyUVXYaLg0hR+dV2dk1tc
+	FKWXtR/PaZqZYTxiHMK4e6vcarEHi361SYIEpUbkx3bI8KmBTJ+iBr0O5DxzMPAU
+	P/r1DXRqFiNBtFX3479Y7FE9MaxdPfSHl9eR2OO0VUbWP7edO3170zbUAv15g5sS
+	hrj3C+IHapVTkWTKZT+tnCeFT8YDwPUXCN6C2fREcCUFzHQDU4UNf/jizSnFpMkU
+	U2jRr+eVpE56F1rf64cVaTuhAd8VDfyuJW8I/N9aqRla6KBJtzHmEUJVhky4AovD
+	hWlabbEJsgqy5nxoEMMTyw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763924386; x=
-	1764010786; bh=wRCXpk5VE0d1AgugQaguCGV+6sVDSMXgRX2u4y8QxoU=; b=A
-	BmOR7mlLtepoadn8T/l/jLEQMpb22PadsFKUFliOMxn2uBwCsLNs4UkvrHsWL1Zq
-	thfIxiHaCz+57certF7XpE1Ee/+8ZqagD9cJdgiiLCvg8D0zZvBVGioSlpKJVWR/
-	ZMuikhE7ANs2Xu+CqVTl5Jnw8ZosGWkbwl1KQ+9Vj3alhz1zd5P8isi1ydLK7Ogl
-	5qDScFd0tJgb1DmJmAG3yyVMkXFTfsVU0+7eWFoT5if0g8bXJbq8PLJa4uDOVI2d
-	Jp5vzoXgDBqfO8jYJLIE2Ig8QCUbi2XLAssRVhf4Q4XH58oMxXBvAgug6W6XBmmG
-	G2/3100BOEXpGBERmmpgQ==
-X-ME-Sender: <xms:olkjaeJ002QSilDbjCEBFnKNNrsr9_UFrg-OkOM8WzjAPd9tYFoRww>
-    <xme:olkjadKQkgj2DZaobM_N5vxTwgCGpbOfkllE1boRtZYUIOv44igiCwMV2CbVbFBO5
-    1EGzvr1k6y4A-u_YUKyv_tFz1U1N3xGRqbMtBIaucOh3c7GUgBD>
-X-ME-Received: <xmr:olkjaTtjBmD_lSVvdHuKy7qlkMnWc4OMHgVANdNY_n0BacVehXHNxthRd-hrgMkw0YbPYZ96KTrtrL9QFH-cFKnZfrsFHqRYEaq88l9jNvix7g>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763924390; x=
+	1764010790; bh=gyWKqIQh/wGdlzd4q+swOQ9IKfoVwpymQm44k+SnCas=; b=W
+	P6L1Ex7XCJwXo2JSaUpDPvoO+1k7/tV3jMGybd3b7os49l5nonsFJ2q5eKImVfV4
+	+rHUFqshYcXlksIdVxPR2pGahNRQ4qXoLsDHSC/bXYhPZXzUr+oIh+nxhscZoHSb
+	9ajQM5NHe5ff6NSg2U4frVHLCMRNxV/CtSbqiVqHyIz8M8JlaCIaw3kTEOybpwh6
+	C+VlkZw4uCCY/lrlssTXzKXF5CXWmRzqTjx7lObyBZC+IAmfF97w/P3qe2KkcpTr
+	P/gYCXKegxoCsD1aqCYtjrxzuQLB6mUzIC8smrpwVUkepjDxUJYHwSYzn8XJivze
+	Kh83uW41GonqxViGnZ7iw==
+X-ME-Sender: <xms:pVkjaUD6zXUfqpnYReQC7c8-jJFyZNsNUkLEvhxTpRMPMfm-E9xcFg>
+    <xme:pVkjadjNt83IfTX83hlS6efU2FSwHkQKPs-vgPzH_Vku-WDG6t6rEwDT25XQVsST8
+    3mzG7Wc9ypV2vnSypK8Q-B1Ea_fgfmceQ8TaqfMuvGY1wJzmd_K>
+X-ME-Received: <xmr:pVkjacnCPDsgBg-eRkf0E02QzitgP_2aBXvQr-2EFuPvXhq4eFm5nuP1pK_FuK5DAMWGqSbcX2CxzNsm0zQrG0j9LrPZI82ZnMULLRB-atZztA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeeiheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffufffkgggtgfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
+    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeiheeugfevteffveduvdefteekieekgfevleeftdevffdtudeigfehhfelgeegveen
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhinhgtohhrvgdrrhgvrggunecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:olkjaSRQYx1K4SWXjDjARMW8mHmWszpG72AHGDmjEX0jiK4f55p1bg>
-    <xmx:olkjaROtuoOsNvpwfjcNObcTJ59jkUx8p7XRlNOMil9AKzFMPwh4nw>
-    <xmx:olkjafYQFSR4RcbPggvB4Z2HSBDVTDVxlSoPWavMK8KFwBUJUggTZw>
-    <xmx:olkjaTxQ6MgHgj4y50UqQwyiRqSS--toVhFxk3ZJr0JOSmfMKwR4wQ>
-    <xmx:olkjaTPBNJ9QWpcQMhkRhAbknQHF6TJWxwxjIqz6L-B7sPvHFV1KVfzv>
+    hnpeeukefffeegfedvfffgiefffeelhfekvdfhvdelieeilefhgeeihfegteehledtuden
+    ucffohhmrghinhepihhntghorhgvrdhrvggrugenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthho
+    peegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:pVkjaZqTS4gVrnh2hOSMjvy_oFB0dkze1ijMiQQ_1SjLDlRJkO4zCg>
+    <xmx:pVkjaVFqAzqarw0-5kjjrEOlfhBhSpGgfCVz2YNw-H43D6kzk69LMA>
+    <xmx:pVkjaVxYO1TFcK6z3y77S_oJ68kXlnPyGvLrUujBV7OggsBm8cWH_w>
+    <xmx:pVkjaapaYvNOUPpl_BVlvhHoHC-RPbTRnpR0_PSdALU3ZQxGPsB_Cw>
+    <xmx:plkjaUHe-sXApZjI6jMo9gLtIukHzefwIzjJFQ6mszmLfaZnvQz0Z3QN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 23 Nov 2025 13:59:45 -0500 (EST)
+ 23 Nov 2025 13:59:48 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8e1ab668 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Sun, 23 Nov 2025 18:59:45 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 592f2762 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Sun, 23 Nov 2025 18:59:48 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 00/19] Refactor object read streams to work via object
- sources
-Date: Sun, 23 Nov 2025 19:59:25 +0100
-Message-Id: <20251123-b4-pks-odb-read-stream-v3-0-1a129182822b@pks.im>
+Date: Sun, 23 Nov 2025 19:59:26 +0100
+Subject: [PATCH v3 01/19] streaming: rename `git_istream` into
+ `odb_read_stream`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,500 +85,345 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAI1ZI2kC/3XNywrCMBAF0F8pWTuSSVr7WPkf4iJNJjZIHyQlK
- KX/blpE3HQ13OHOmYUF8o4Ca7KFeYouuHFIQZ4ypjs1PAicSZkJLgpEXkKbw/QMMJoWPCkDYU6
- jh5JUaTlxVdmcpePJk3WvHb7dU+5cmEf/3v9E3LZfEusjMiJwUEZpy6UWWttrap1dzzYvij9D4
- KEhkqFVVci8vkgs+M9Y1/UDApBHp/0AAAA=
-X-Change-ID: 20251107-b4-pks-odb-read-stream-7ea7f0e0a8f4
-In-Reply-To: <20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im>
-References: <20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im>
+Message-Id: <20251123-b4-pks-odb-read-stream-v3-1-1a129182822b@pks.im>
+References: <20251123-b4-pks-odb-read-stream-v3-0-1a129182822b@pks.im>
+In-Reply-To: <20251123-b4-pks-odb-read-stream-v3-0-1a129182822b@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, 
  Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.3
 
-Hi,
+In the following patches we are about to make the `git_istream` more
+generic so that it becomes fully controlled by the specific object
+source that wants to create it. As part of these refactorings we'll
+fully move the structure into the object database subsystem.
 
-the `git_istream` data structure can be used to read objects from the
-object database in a streaming fashion. This is used for example to read
-large files that one doesn't want to load into memory in full.
+Prepare for this change by renaming the structure from `git_istream`
+to `odb_read_stream`. This mirrors the `odb_write_stream` structure that
+we already have.
 
-In the current architecture, all the logic to handle these streams is
-fully self-contained in "streaming.c". It contains the logic to set up
-streams for loose, packed, in-memory and filtered objects. This doesn't
-really play all that well with pluggable object databases, as it should
-be the responsibility of the object database source itself to handle the
-logic.
-
-This patch series thus revamps our object read streams: instead of being
-entirely contained in "streaming.c", the format-specific streams are now
-created by the ODB sources. This allows each source itself to decide
-whether and, if so, how to make objects streamable.
-
-This overall requires quite a bit of refactoring, but I think that the
-end result is an easier-to-understand infrastructure that is an
-improvement even without pluggable object databases.
-
-This series is built on top of v2.52.0 with ps/object-source-loose at
-3e5e360888 (object-file: refactor writing objects via a stream,
-2025-11-03) merged into it.
-
-Changes in v3:
-  - Clarify why we want to get rid of the `open()` callback.
-  - Explain change in semantics now that we iterate through sources
-    first to create the read stream.
-  - Fix "opaque" comment applying to the correct structure.
-  - Rename `odb_read_object_stream()` to `odb_read_stream_open()`.
-  - Link to v2: https://lore.kernel.org/r/20251121-b4-pks-odb-read-stream-v2-0-ca8534963150@pks.im
-
-Changes in v2:
-  - Some commit message improvements.
-  - Drop the `type` and `size` out pointers in
-    `odb_read_object_stream()` in an additional commit.
-  - Improve a "hidden" variable declaration by moving it onto its own
-    line.
-  - Link to v1: https://lore.kernel.org/r/20251119-b4-pks-odb-read-stream-v1-0-adacf03c2ccf@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (19):
-      streaming: rename `git_istream` into `odb_read_stream`
-      streaming: drop the `open()` callback function
-      streaming: propagate final object type via the stream
-      streaming: explicitly pass packfile info when streaming a packed object
-      streaming: allocate stream inside the backend-specific logic
-      streaming: create structure for in-core object streams
-      streaming: create structure for loose object streams
-      streaming: create structure for packed object streams
-      streaming: create structure for filtered object streams
-      streaming: move zlib stream into backends
-      packfile: introduce function to read object info from a store
-      streaming: rely on object sources to create object stream
-      streaming: get rid of `the_repository`
-      streaming: make the `odb_read_stream` definition public
-      streaming: move logic to read loose objects streams into backend
-      streaming: move logic to read packed objects streams into backend
-      streaming: refactor interface to be object-database-centric
-      streaming: move into object database subsystem
-      streaming: drop redundant type and size pointers
+ archive-tar.c          |  2 +-
+ archive-zip.c          |  2 +-
+ builtin/index-pack.c   |  2 +-
+ builtin/pack-objects.c |  4 ++--
+ object-file.c          |  2 +-
+ streaming.c            | 62 +++++++++++++++++++++++++-------------------------
+ streaming.h            | 12 +++++-----
+ 7 files changed, 43 insertions(+), 43 deletions(-)
 
- Makefile               |   2 +-
- archive-tar.c          |  12 +-
- archive-zip.c          |  17 +-
- builtin/cat-file.c     |   4 +-
- builtin/fsck.c         |   5 +-
- builtin/index-pack.c   |  15 +-
- builtin/log.c          |   6 +-
- builtin/pack-objects.c |  24 ++-
- entry.c                |   4 +-
- meson.build            |   2 +-
- object-file.c          | 183 ++++++++++++++--
- object-file.h          |  42 +---
- odb.c                  |  29 +--
- odb/streaming.c        | 293 ++++++++++++++++++++++++++
- odb/streaming.h        |  67 ++++++
- packfile.c             | 199 ++++++++++++++++--
- packfile.h             |  17 +-
- parallel-checkout.c    |   5 +-
- streaming.c            | 561 -------------------------------------------------
- streaming.h            |  21 --
- 20 files changed, 779 insertions(+), 729 deletions(-)
+diff --git a/archive-tar.c b/archive-tar.c
+index 73b63ddc41..dc1eda09e0 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -129,7 +129,7 @@ static void write_trailer(void)
+  */
+ static int stream_blocked(struct repository *r, const struct object_id *oid)
+ {
+-	struct git_istream *st;
++	struct odb_read_stream *st;
+ 	enum object_type type;
+ 	unsigned long sz;
+ 	char buf[BLOCKSIZE];
+diff --git a/archive-zip.c b/archive-zip.c
+index bea5bdd43d..40a9c93ff9 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -309,7 +309,7 @@ static int write_zip_entry(struct archiver_args *args,
+ 	enum zip_method method;
+ 	unsigned char *out;
+ 	void *deflated = NULL;
+-	struct git_istream *stream = NULL;
++	struct odb_read_stream *stream = NULL;
+ 	unsigned long flags = 0;
+ 	int is_binary = -1;
+ 	const char *path_without_prefix = path + args->baselen;
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 2b78ba7fe4..5f90f12f92 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -762,7 +762,7 @@ static void find_ref_delta_children(const struct object_id *oid,
+ 
+ struct compare_data {
+ 	struct object_entry *entry;
+-	struct git_istream *st;
++	struct odb_read_stream *st;
+ 	unsigned char *buf;
+ 	unsigned long buf_size;
+ };
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 69e80b1443..c693d948e1 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -404,7 +404,7 @@ static unsigned long do_compress(void **pptr, unsigned long size)
+ 	return stream.total_out;
+ }
+ 
+-static unsigned long write_large_blob_data(struct git_istream *st, struct hashfile *f,
++static unsigned long write_large_blob_data(struct odb_read_stream *st, struct hashfile *f,
+ 					   const struct object_id *oid)
+ {
+ 	git_zstream stream;
+@@ -513,7 +513,7 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
+ 	unsigned hdrlen;
+ 	enum object_type type;
+ 	void *buf;
+-	struct git_istream *st = NULL;
++	struct odb_read_stream *st = NULL;
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+ 
+ 	if (!usable_delta) {
+diff --git a/object-file.c b/object-file.c
+index 811c569ed3..b62b21a452 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -134,7 +134,7 @@ int stream_object_signature(struct repository *r, const struct object_id *oid)
+ 	struct object_id real_oid;
+ 	unsigned long size;
+ 	enum object_type obj_type;
+-	struct git_istream *st;
++	struct odb_read_stream *st;
+ 	struct git_hash_ctx c;
+ 	char hdr[MAX_HEADER_LEN];
+ 	int hdrlen;
+diff --git a/streaming.c b/streaming.c
+index 00ad649ae3..1fb4b7c1c0 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -14,17 +14,17 @@
+ #include "replace-object.h"
+ #include "packfile.h"
+ 
+-typedef int (*open_istream_fn)(struct git_istream *,
++typedef int (*open_istream_fn)(struct odb_read_stream *,
+ 			       struct repository *,
+ 			       const struct object_id *,
+ 			       enum object_type *);
+-typedef int (*close_istream_fn)(struct git_istream *);
+-typedef ssize_t (*read_istream_fn)(struct git_istream *, char *, size_t);
++typedef int (*close_istream_fn)(struct odb_read_stream *);
++typedef ssize_t (*read_istream_fn)(struct odb_read_stream *, char *, size_t);
+ 
+ #define FILTER_BUFFER (1024*16)
+ 
+ struct filtered_istream {
+-	struct git_istream *upstream;
++	struct odb_read_stream *upstream;
+ 	struct stream_filter *filter;
+ 	char ibuf[FILTER_BUFFER];
+ 	char obuf[FILTER_BUFFER];
+@@ -33,7 +33,7 @@ struct filtered_istream {
+ 	int input_finished;
+ };
+ 
+-struct git_istream {
++struct odb_read_stream {
+ 	open_istream_fn open;
+ 	close_istream_fn close;
+ 	read_istream_fn read;
+@@ -71,7 +71,7 @@ struct git_istream {
+  *
+  *****************************************************************/
+ 
+-static void close_deflated_stream(struct git_istream *st)
++static void close_deflated_stream(struct odb_read_stream *st)
+ {
+ 	if (st->z_state == z_used)
+ 		git_inflate_end(&st->z);
+@@ -84,13 +84,13 @@ static void close_deflated_stream(struct git_istream *st)
+  *
+  *****************************************************************/
+ 
+-static int close_istream_filtered(struct git_istream *st)
++static int close_istream_filtered(struct odb_read_stream *st)
+ {
+ 	free_stream_filter(st->u.filtered.filter);
+ 	return close_istream(st->u.filtered.upstream);
+ }
+ 
+-static ssize_t read_istream_filtered(struct git_istream *st, char *buf,
++static ssize_t read_istream_filtered(struct odb_read_stream *st, char *buf,
+ 				     size_t sz)
+ {
+ 	struct filtered_istream *fs = &(st->u.filtered);
+@@ -150,10 +150,10 @@ static ssize_t read_istream_filtered(struct git_istream *st, char *buf,
+ 	return filled;
+ }
+ 
+-static struct git_istream *attach_stream_filter(struct git_istream *st,
+-						struct stream_filter *filter)
++static struct odb_read_stream *attach_stream_filter(struct odb_read_stream *st,
++						    struct stream_filter *filter)
+ {
+-	struct git_istream *ifs = xmalloc(sizeof(*ifs));
++	struct odb_read_stream *ifs = xmalloc(sizeof(*ifs));
+ 	struct filtered_istream *fs = &(ifs->u.filtered);
+ 
+ 	ifs->close = close_istream_filtered;
+@@ -173,7 +173,7 @@ static struct git_istream *attach_stream_filter(struct git_istream *st,
+  *
+  *****************************************************************/
+ 
+-static ssize_t read_istream_loose(struct git_istream *st, char *buf, size_t sz)
++static ssize_t read_istream_loose(struct odb_read_stream *st, char *buf, size_t sz)
+ {
+ 	size_t total_read = 0;
+ 
+@@ -218,14 +218,14 @@ static ssize_t read_istream_loose(struct git_istream *st, char *buf, size_t sz)
+ 	return total_read;
+ }
+ 
+-static int close_istream_loose(struct git_istream *st)
++static int close_istream_loose(struct odb_read_stream *st)
+ {
+ 	close_deflated_stream(st);
+ 	munmap(st->u.loose.mapped, st->u.loose.mapsize);
+ 	return 0;
+ }
+ 
+-static int open_istream_loose(struct git_istream *st, struct repository *r,
++static int open_istream_loose(struct odb_read_stream *st, struct repository *r,
+ 			      const struct object_id *oid,
+ 			      enum object_type *type)
+ {
+@@ -277,7 +277,7 @@ static int open_istream_loose(struct git_istream *st, struct repository *r,
+  *
+  *****************************************************************/
+ 
+-static ssize_t read_istream_pack_non_delta(struct git_istream *st, char *buf,
++static ssize_t read_istream_pack_non_delta(struct odb_read_stream *st, char *buf,
+ 					   size_t sz)
+ {
+ 	size_t total_read = 0;
+@@ -336,13 +336,13 @@ static ssize_t read_istream_pack_non_delta(struct git_istream *st, char *buf,
+ 	return total_read;
+ }
+ 
+-static int close_istream_pack_non_delta(struct git_istream *st)
++static int close_istream_pack_non_delta(struct odb_read_stream *st)
+ {
+ 	close_deflated_stream(st);
+ 	return 0;
+ }
+ 
+-static int open_istream_pack_non_delta(struct git_istream *st,
++static int open_istream_pack_non_delta(struct odb_read_stream *st,
+ 				       struct repository *r UNUSED,
+ 				       const struct object_id *oid UNUSED,
+ 				       enum object_type *type UNUSED)
+@@ -380,13 +380,13 @@ static int open_istream_pack_non_delta(struct git_istream *st,
+  *
+  *****************************************************************/
+ 
+-static int close_istream_incore(struct git_istream *st)
++static int close_istream_incore(struct odb_read_stream *st)
+ {
+ 	free(st->u.incore.buf);
+ 	return 0;
+ }
+ 
+-static ssize_t read_istream_incore(struct git_istream *st, char *buf, size_t sz)
++static ssize_t read_istream_incore(struct odb_read_stream *st, char *buf, size_t sz)
+ {
+ 	size_t read_size = sz;
+ 	size_t remainder = st->size - st->u.incore.read_ptr;
+@@ -400,7 +400,7 @@ static ssize_t read_istream_incore(struct git_istream *st, char *buf, size_t sz)
+ 	return read_size;
+ }
+ 
+-static int open_istream_incore(struct git_istream *st, struct repository *r,
++static int open_istream_incore(struct odb_read_stream *st, struct repository *r,
+ 			       const struct object_id *oid, enum object_type *type)
+ {
+ 	struct object_info oi = OBJECT_INFO_INIT;
+@@ -420,7 +420,7 @@ static int open_istream_incore(struct git_istream *st, struct repository *r,
+  * static helpers variables and functions for users of streaming interface
+  *****************************************************************************/
+ 
+-static int istream_source(struct git_istream *st,
++static int istream_source(struct odb_read_stream *st,
+ 			  struct repository *r,
+ 			  const struct object_id *oid,
+ 			  enum object_type *type)
+@@ -458,25 +458,25 @@ static int istream_source(struct git_istream *st,
+  * Users of streaming interface
+  ****************************************************************/
+ 
+-int close_istream(struct git_istream *st)
++int close_istream(struct odb_read_stream *st)
+ {
+ 	int r = st->close(st);
+ 	free(st);
+ 	return r;
+ }
+ 
+-ssize_t read_istream(struct git_istream *st, void *buf, size_t sz)
++ssize_t read_istream(struct odb_read_stream *st, void *buf, size_t sz)
+ {
+ 	return st->read(st, buf, sz);
+ }
+ 
+-struct git_istream *open_istream(struct repository *r,
+-				 const struct object_id *oid,
+-				 enum object_type *type,
+-				 unsigned long *size,
+-				 struct stream_filter *filter)
++struct odb_read_stream *open_istream(struct repository *r,
++				     const struct object_id *oid,
++				     enum object_type *type,
++				     unsigned long *size,
++				     struct stream_filter *filter)
+ {
+-	struct git_istream *st = xmalloc(sizeof(*st));
++	struct odb_read_stream *st = xmalloc(sizeof(*st));
+ 	const struct object_id *real = lookup_replace_object(r, oid);
+ 	int ret = istream_source(st, r, real, type);
+ 
+@@ -493,7 +493,7 @@ struct git_istream *open_istream(struct repository *r,
+ 	}
+ 	if (filter) {
+ 		/* Add "&& !is_null_stream_filter(filter)" for performance */
+-		struct git_istream *nst = attach_stream_filter(st, filter);
++		struct odb_read_stream *nst = attach_stream_filter(st, filter);
+ 		if (!nst) {
+ 			close_istream(st);
+ 			return NULL;
+@@ -508,7 +508,7 @@ struct git_istream *open_istream(struct repository *r,
+ int stream_blob_to_fd(int fd, const struct object_id *oid, struct stream_filter *filter,
+ 		      int can_seek)
+ {
+-	struct git_istream *st;
++	struct odb_read_stream *st;
+ 	enum object_type type;
+ 	unsigned long sz;
+ 	ssize_t kept = 0;
+diff --git a/streaming.h b/streaming.h
+index bd27f59e57..f5ff5d7ac9 100644
+--- a/streaming.h
++++ b/streaming.h
+@@ -7,14 +7,14 @@
+ #include "object.h"
+ 
+ /* opaque */
+-struct git_istream;
++struct odb_read_stream;
+ struct stream_filter;
+ 
+-struct git_istream *open_istream(struct repository *, const struct object_id *,
+-				 enum object_type *, unsigned long *,
+-				 struct stream_filter *);
+-int close_istream(struct git_istream *);
+-ssize_t read_istream(struct git_istream *, void *, size_t);
++struct odb_read_stream *open_istream(struct repository *, const struct object_id *,
++				     enum object_type *, unsigned long *,
++				     struct stream_filter *);
++int close_istream(struct odb_read_stream *);
++ssize_t read_istream(struct odb_read_stream *, void *, size_t);
+ 
+ int stream_blob_to_fd(int fd, const struct object_id *, struct stream_filter *, int can_seek);
+ 
 
-Range-diff versus v2:
-
- 1:  9862db07e9 =  1:  5e1b90ccf0 streaming: rename `git_istream` into `odb_read_stream`
- 2:  42a9684d52 !  2:  c55a13abb6 streaming: drop the `open()` callback function
-    @@ Commit message
-           - The structure needs to be allocated and partially populated with the
-             open function before we can properly initialize it.
-     
-    -      - We never use the `open()` callback after having opened it initially.
-    +      - We only ever call the `open()` callback function right after having
-    +        populated the `struct odb_read_stream::open` member, and it's never
-    +        called thereafter again. So it is somewhat pointless to store the
-    +        callback in the first place.
-     
-         Especially the first point creates a problem for us. In subsequent
-         commits we'll want to fully move construction of the read source into
-    @@ streaming.c: static int istream_source(struct odb_read_stream *st,
-      
-      /****************************************************************
-     @@ streaming.c: struct odb_read_stream *open_istream(struct repository *r,
-    - {
-    - 	struct odb_read_stream *st = xmalloc(sizeof(*st));
-    - 	const struct object_id *real = lookup_replace_object(r, oid);
-    --	int ret = istream_source(st, r, real, type);
-    -+	int ret;
-    - 
-    -+	ret = istream_source(st, r, real, type);
-    - 	if (ret) {
-    - 		free(st);
-      		return NULL;
-      	}
-      
- 3:  c00bef7a2d !  3:  c588ab7a66 streaming: propagate final object type via the stream
-    @@ streaming.c: static int istream_source(struct odb_read_stream *st,
-      
-      /****************************************************************
-     @@ streaming.c: struct odb_read_stream *open_istream(struct repository *r,
-    + {
-    + 	struct odb_read_stream *st = xmalloc(sizeof(*st));
-      	const struct object_id *real = lookup_replace_object(r, oid);
-    - 	int ret;
-    +-	int ret = istream_source(st, r, real, type);
-    ++	int ret = istream_source(st, r, real);
-      
-    --	ret = istream_source(st, r, real, type);
-    -+	ret = istream_source(st, r, real);
-      	if (ret) {
-      		free(st);
-    - 		return NULL;
-     @@ streaming.c: struct odb_read_stream *open_istream(struct repository *r,
-      	}
-      
- 4:  3d5f3ce9d2 =  4:  5b3671c699 streaming: explicitly pass packfile info when streaming a packed object
- 5:  0bd824d570 !  5:  440b858905 streaming: allocate stream inside the backend-specific logic
-    @@ streaming.c: static ssize_t read_istream_incore(struct odb_read_stream *st, char
-      			       const struct object_id *oid)
-      {
-      	struct object_info oi = OBJECT_INFO_INIT;
-    +-
-    +-	st->u.incore.read_ptr = 0;
-    +-	st->close = close_istream_incore;
-    +-	st->read = read_istream_incore;
-    +-
-    +-	oi.typep = &st->type;
-    +-	oi.sizep = &st->size;
-    +-	oi.contentp = (void **)&st->u.incore.buf;
-    +-	return odb_read_object_info_extended(r->objects, oid, &oi,
-    +-					     OBJECT_INFO_DIE_IF_CORRUPT);
-     +	struct odb_read_stream stream = {
-     +		.close = close_istream_incore,
-     +		.read = read_istream_incore,
-     +	};
-     +	int ret;
-    - 
-    --	st->u.incore.read_ptr = 0;
-    --	st->close = close_istream_incore;
-    --	st->read = read_istream_incore;
-    ++
-     +	oi.typep = &stream.type;
-     +	oi.sizep = &stream.size;
-     +	oi.contentp = (void **)&stream.u.incore.buf;
-    @@ streaming.c: static ssize_t read_istream_incore(struct odb_read_stream *st, char
-     +					    OBJECT_INFO_DIE_IF_CORRUPT);
-     +	if (ret)
-     +		return ret;
-    - 
-    --	oi.typep = &st->type;
-    --	oi.sizep = &st->size;
-    --	oi.contentp = (void **)&st->u.incore.buf;
-    --	return odb_read_object_info_extended(r->objects, oid, &oi,
-    --					     OBJECT_INFO_DIE_IF_CORRUPT);
-    ++
-     +	CALLOC_ARRAY(*out, 1);
-     +	**out = stream;
-     +	return 0;
-    @@ streaming.c: struct odb_read_stream *open_istream(struct repository *r,
-     -	struct odb_read_stream *st = xmalloc(sizeof(*st));
-     +	struct odb_read_stream *st;
-      	const struct object_id *real = lookup_replace_object(r, oid);
-    - 	int ret;
-    +-	int ret = istream_source(st, r, real);
-    ++	int ret = istream_source(&st, r, real);
-      
-    --	ret = istream_source(st, r, real);
-     -	if (ret) {
-     -		free(st);
-    -+	ret = istream_source(&st, r, real);
-     +	if (ret)
-      		return NULL;
-     -	}
- 6:  468f17442a =  6:  9107044e1a streaming: create structure for in-core object streams
- 7:  42f75b6d1f =  7:  9d2fd8212f streaming: create structure for loose object streams
- 8:  63b3dbe842 =  8:  82b994a6ca streaming: create structure for packed object streams
- 9:  e192352dc3 =  9:  96c07c0e5f streaming: create structure for filtered object streams
-10:  dd718680f6 = 10:  ccb8abf077 streaming: move zlib stream into backends
-11:  466ccbe059 = 11:  07ef79d591 packfile: introduce function to read object info from a store
-12:  ba7bddecb1 ! 12:  741414fef9 streaming: rely on object sources to create object stream
-    @@ Commit message
-     
-         But both of these issues will soon be addressed.
-     
-    +    This refactoring results in a slight change to semantics: previously, it
-    +    was `odb_read_object_info_extended()` that picked the source for us, and
-    +    it would have favored packed (non-deltified) objects over loose objects.
-    +    And while we still favor packed over loose objects for a single source
-    +    with the new logic, we'll now favor a loose object from an earlier
-    +    source over a packed object from a later source.
-    +
-    +    Ultimately this shouldn't matter though: the stream doesn't indicate to
-    +    the caller which source it is from and whether it was created from a
-    +    packed or loose object, so such details are opaque to the caller. And
-    +    other than that we should be able to assume that two objects with the
-    +    same object ID should refer to the same content, so the streamed data
-    +    would be the same, too.
-    +
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-      ## streaming.c ##
-13:  723910c871 ! 13:  39134f2260 streaming: get rid of `the_repository`
-    @@ streaming.c: int stream_blob_to_fd(int fd, const struct object_id *oid, struct s
-     
-      ## streaming.h ##
-     @@
-    + 
-      #include "object.h"
-      
-    - /* opaque */
-     +struct object_database;
-    + /* opaque */
-      struct odb_read_stream;
-      struct stream_filter;
-    - 
-     @@ streaming.h: struct odb_read_stream *open_istream(struct repository *, const struct object_id
-      int close_istream(struct odb_read_stream *);
-      ssize_t read_istream(struct odb_read_stream *, void *, size_t);
-14:  023015855f ! 14:  12b6ff9b93 streaming: make the `odb_read_stream` definition public
-    @@ streaming.c
-     
-      ## streaming.h ##
-     @@
-    - 
-      #include "object.h"
-      
-    --/* opaque */
-      struct object_database;
-    +-/* opaque */
-      struct odb_read_stream;
-      struct stream_filter;
-      
-15:  9439f09f8b = 15:  af51d9959f streaming: move logic to read loose objects streams into backend
-16:  e7f8c8038d = 16:  5bc76e022d streaming: move logic to read packed objects streams into backend
-17:  b8933fb980 ! 17:  1dcd53f244 streaming: refactor interface to be object-database-centric
-    @@ archive-tar.c: static int stream_blocked(struct repository *r, const struct obje
-      	ssize_t readlen;
-      
-     -	st = open_istream(r, oid, &type, &sz, NULL);
-    -+	st = odb_read_object_stream(r->objects, oid, &type, &sz, NULL);
-    ++	st = odb_read_stream_open(r->objects, oid, &type, &sz, NULL);
-      	if (!st)
-      		return error(_("cannot stream blob %s"), oid_to_hex(oid));
-      	for (;;) {
-    @@ archive-zip.c: static int write_zip_entry(struct archiver_args *args,
-      			enum object_type type;
-     -			stream = open_istream(args->repo, oid, &type, &size,
-     -					      NULL);
-    -+			stream = odb_read_object_stream(args->repo->objects, oid,
-    -+							&type, &size, NULL);
-    ++			stream = odb_read_stream_open(args->repo->objects, oid,
-    ++						      &type, &size, NULL);
-      			if (!stream)
-      				return error(_("cannot stream blob %s"),
-      					     oid_to_hex(oid));
-    @@ builtin/index-pack.c: static int check_collison(struct object_entry *entry)
-      	data.entry = entry;
-     -	data.st = open_istream(the_repository, &entry->idx.oid, &type, &size,
-     -			       NULL);
-    -+	data.st = odb_read_object_stream(the_repository->objects, &entry->idx.oid,
-    -+					 &type, &size, NULL);
-    ++	data.st = odb_read_stream_open(the_repository->objects, &entry->idx.oid,
-    ++				       &type, &size, NULL);
-      	if (!data.st)
-      		return -1;
-      	if (size != entry->size || type != entry->type)
-    @@ builtin/pack-objects.c: static unsigned long write_no_reuse_object(struct hashfi
-      					 repo_settings_get_big_file_threshold(the_repository)) &&
-     -		    (st = open_istream(the_repository, &entry->idx.oid, &type,
-     -				       &size, NULL)) != NULL)
-    -+		    (st = odb_read_object_stream(the_repository->objects, &entry->idx.oid,
-    -+						 &type, &size, NULL)) != NULL)
-    ++		    (st = odb_read_stream_open(the_repository->objects, &entry->idx.oid,
-    ++					       &type, &size, NULL)) != NULL)
-      			buf = NULL;
-      		else {
-      			buf = odb_read_object(the_repository->objects,
-    @@ object-file.c: int stream_object_signature(struct repository *r, const struct ob
-      	int hdrlen;
-      
-     -	st = open_istream(r, oid, &obj_type, &size, NULL);
-    -+	st = odb_read_object_stream(r->objects, oid, &obj_type, &size, NULL);
-    ++	st = odb_read_stream_open(r->objects, oid, &obj_type, &size, NULL);
-      	if (!st)
-      		return -1;
-      
-    @@ streaming.c: static int open_istream_incore(struct odb_read_stream **out,
-     -				     enum object_type *type,
-     -				     unsigned long *size,
-     -				     struct stream_filter *filter)
-    -+struct odb_read_stream *odb_read_object_stream(struct object_database *odb,
-    -+					       const struct object_id *oid,
-    -+					       enum object_type *type,
-    -+					       unsigned long *size,
-    -+					       struct stream_filter *filter)
-    ++struct odb_read_stream *odb_read_stream_open(struct object_database *odb,
-    ++					     const struct object_id *oid,
-    ++					     enum object_type *type,
-    ++					     unsigned long *size,
-    ++					     struct stream_filter *filter)
-      {
-      	struct odb_read_stream *st;
-     -	const struct object_id *real = lookup_replace_object(r, oid);
-    +-	int ret = istream_source(&st, r, real);
-     +	const struct object_id *real = lookup_replace_object(odb->repo, oid);
-    - 	int ret;
-    ++	int ret = istream_source(&st, odb, real);
-      
-    --	ret = istream_source(&st, r, real);
-    -+	ret = istream_source(&st, odb, real);
-      	if (ret)
-      		return NULL;
-    - 
-     @@ streaming.c: struct odb_read_stream *open_istream(struct repository *r,
-      		/* Add "&& !is_null_stream_filter(filter)" for performance */
-      		struct odb_read_stream *nst = attach_stream_filter(st, filter);
-    @@ streaming.c: int odb_stream_blob_to_fd(struct object_database *odb,
-      	int result = -1;
-      
-     -	st = open_istream(odb->repo, oid, &type, &sz, filter);
-    -+	st = odb_read_object_stream(odb, oid, &type, &sz, filter);
-    ++	st = odb_read_stream_open(odb, oid, &type, &sz, filter);
-      	if (!st) {
-      		if (filter)
-      			free_stream_filter(filter);
-    @@ streaming.h: struct odb_read_stream {
-     + *
-     + * Returns the stream on success, a `NULL` pointer otherwise.
-     + */
-    -+struct odb_read_stream *odb_read_object_stream(struct object_database *odb,
-    -+					       const struct object_id *oid,
-    -+					       enum object_type *type,
-    -+					       unsigned long *size,
-    -+					       struct stream_filter *filter);
-    ++struct odb_read_stream *odb_read_stream_open(struct object_database *odb,
-    ++					     const struct object_id *oid,
-    ++					     enum object_type *type,
-    ++					     unsigned long *size,
-    ++					     struct stream_filter *filter);
-     +
-     +/*
-     + * Close the given read stream and release all resources associated with it.
-18:  9fc79d10fd = 18:  e8c4e1931c streaming: move into object database subsystem
-19:  aab61d5697 ! 19:  f8e31ef59f streaming: drop redundant type and size pointers
-    @@ archive-tar.c: static void write_trailer(void)
-      	char buf[BLOCKSIZE];
-      	ssize_t readlen;
-      
-    --	st = odb_read_object_stream(r->objects, oid, &type, &sz, NULL);
-    -+	st = odb_read_object_stream(r->objects, oid, NULL);
-    +-	st = odb_read_stream_open(r->objects, oid, &type, &sz, NULL);
-    ++	st = odb_read_stream_open(r->objects, oid, NULL);
-      	if (!st)
-      		return error(_("cannot stream blob %s"), oid_to_hex(oid));
-      	for (;;) {
-    @@ archive-zip.c: static int write_zip_entry(struct archiver_args *args,
-      
-      		if (!buffer) {
-     -			enum object_type type;
-    --			stream = odb_read_object_stream(args->repo->objects, oid,
-    --							&type, &size, NULL);
-    -+			stream = odb_read_object_stream(args->repo->objects, oid, NULL);
-    +-			stream = odb_read_stream_open(args->repo->objects, oid,
-    +-						      &type, &size, NULL);
-    ++			stream = odb_read_stream_open(args->repo->objects, oid, NULL);
-      			if (!stream)
-      				return error(_("cannot stream blob %s"),
-      					     oid_to_hex(oid));
-    @@ builtin/index-pack.c: static int check_collison(struct object_entry *entry)
-      
-      	memset(&data, 0, sizeof(data));
-      	data.entry = entry;
-    --	data.st = odb_read_object_stream(the_repository->objects, &entry->idx.oid,
-    --					 &type, &size, NULL);
-    -+	data.st = odb_read_object_stream(the_repository->objects, &entry->idx.oid, NULL);
-    +-	data.st = odb_read_stream_open(the_repository->objects, &entry->idx.oid,
-    +-				       &type, &size, NULL);
-    ++	data.st = odb_read_stream_open(the_repository->objects, &entry->idx.oid, NULL);
-      	if (!data.st)
-      		return -1;
-     -	if (size != entry->size || type != entry->type)
-    @@ builtin/pack-objects.c
-     @@ builtin/pack-objects.c: static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
-      		    oe_size_greater_than(&to_pack, entry,
-      					 repo_settings_get_big_file_threshold(the_repository)) &&
-    - 		    (st = odb_read_object_stream(the_repository->objects, &entry->idx.oid,
-    --						 &type, &size, NULL)) != NULL)
-    -+						 NULL)) != NULL) {
-    + 		    (st = odb_read_stream_open(the_repository->objects, &entry->idx.oid,
-    +-					       &type, &size, NULL)) != NULL)
-    ++					       NULL)) != NULL) {
-      			buf = NULL;
-     -		else {
-     +			type = st->type;
-    @@ object-file.c: int check_object_signature(struct repository *r, const struct obj
-      	char hdr[MAX_HEADER_LEN];
-      	int hdrlen;
-      
-    --	st = odb_read_object_stream(r->objects, oid, &obj_type, &size, NULL);
-    -+	st = odb_read_object_stream(r->objects, oid, NULL);
-    +-	st = odb_read_stream_open(r->objects, oid, &obj_type, &size, NULL);
-    ++	st = odb_read_stream_open(r->objects, oid, NULL);
-      	if (!st)
-      		return -1;
-      
-    @@ object-file.c: int check_object_signature(struct repository *r, const struct obj
-      ## odb/streaming.c ##
-     @@ odb/streaming.c: ssize_t odb_read_stream_read(struct odb_read_stream *st, void *buf, size_t sz)
-      
-    - struct odb_read_stream *odb_read_object_stream(struct object_database *odb,
-    - 					       const struct object_id *oid,
-    --					       enum object_type *type,
-    --					       unsigned long *size,
-    - 					       struct stream_filter *filter)
-    + struct odb_read_stream *odb_read_stream_open(struct object_database *odb,
-    + 					     const struct object_id *oid,
-    +-					     enum object_type *type,
-    +-					     unsigned long *size,
-    + 					     struct stream_filter *filter)
-      {
-      	struct odb_read_stream *st;
-    -@@ odb/streaming.c: struct odb_read_stream *odb_read_object_stream(struct object_database *odb,
-    +@@ odb/streaming.c: struct odb_read_stream *odb_read_stream_open(struct object_database *odb,
-      		st = nst;
-      	}
-      
-    @@ odb/streaming.c: int odb_stream_blob_to_fd(struct object_database *odb,
-      	ssize_t kept = 0;
-      	int result = -1;
-      
-    --	st = odb_read_object_stream(odb, oid, &type, &sz, filter);
-    -+	st = odb_read_object_stream(odb, oid, filter);
-    +-	st = odb_read_stream_open(odb, oid, &type, &sz, filter);
-    ++	st = odb_read_stream_open(odb, oid, filter);
-      	if (!st) {
-      		if (filter)
-      			free_stream_filter(filter);
-    @@ odb/streaming.h: struct odb_read_stream {
-       *
-       * Returns the stream on success, a `NULL` pointer otherwise.
-       */
-    - struct odb_read_stream *odb_read_object_stream(struct object_database *odb,
-    - 					       const struct object_id *oid,
-    --					       enum object_type *type,
-    --					       unsigned long *size,
-    - 					       struct stream_filter *filter);
-    + struct odb_read_stream *odb_read_stream_open(struct object_database *odb,
-    + 					     const struct object_id *oid,
-    +-					     enum object_type *type,
-    +-					     unsigned long *size,
-    + 					     struct stream_filter *filter);
-      
-      /*
-
----
-base-commit: 899e578b5b7c020aec806bd694adf2563f62843c
-change-id: 20251107-b4-pks-odb-read-stream-7ea7f0e0a8f4
+-- 
+2.52.0.rc2.482.gaa765fefd0.dirty
 
