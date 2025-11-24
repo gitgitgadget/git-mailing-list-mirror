@@ -1,122 +1,130 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42628315764
-	for <git@vger.kernel.org>; Mon, 24 Nov 2025 18:26:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1574431987D
+	for <git@vger.kernel.org>; Mon, 24 Nov 2025 18:40:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764008793; cv=none; b=o8gCCNS4RjTnqNEgzHVw9wSMxHKveh+IgA/aFFoVKXlEg4eic8sRpuRW/iyFfC10sgV6xLePOxC33sGWU0zs0Zyw1KFOaTe4vyAwBteu25ktuqzw5l+g5uaJHb8KspYfCpgDKefyrLdxV94VIm0GBbd+GGPdJvyMLCmxgI6qq6c=
+	t=1764009652; cv=none; b=pKFz/y6Rm2fuKPdZJXBWi40swV52E57DguTi6PsQS8T8Z6fuwH74OCVzQflStAtIU+EN13UlL6IhYKuYSHBHCfGlmu2z5JqqjSgrYp92+xu2SX5yQDrH0l8f60OIPXXfr3k9BddMvh/22yrTQl2Mozlc5Leh3PPVAf2LzZD6U7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764008793; c=relaxed/simple;
-	bh=gcGcS42q20DE1exg6RRLxsyXC5Py9xOBErDXjOcSujE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TQoqMX2OBDC51iuU1Qp+ZxCS2q0nsML9DSFTArDOiFF19D9Q+RUbzXvN/MRXvF/nmjKfK8zHcT61a9jWKGIh2WxzQ8CAJ3D2QDpHQ+qVUXXlQroK0SFxBJ2dkUXH5CoeKRtYzfvP4LLWwC7r0Rs2p0uY+4rWfXznlPagv9bZhVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AE6r4bwf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gNdebv8f; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1764009652; c=relaxed/simple;
+	bh=D+cAmwyQkyyCuHM/P9VuxavzKh7SmDLxHo5vYfqJ38M=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=ZmDvfxn9YJuU58XwJ1auSIB4Pev1wqRsBvz/JfcjcDXBsERkwa3WtIFNM+9W4pJ04Pk/oT6XixDVSg3f8qDq+dOj2H4dQwxo7NSImltU0q6t3WXXMJvwpscFgcK+Bf4TrbAjW8U67qDaScD20yuxGop73Q8lyjlV7AXuXrwsAsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HQdhnOPz; arc=none smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AE6r4bwf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gNdebv8f"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 72017EC0077;
-	Mon, 24 Nov 2025 13:26:30 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Mon, 24 Nov 2025 13:26:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1764008790;
-	 x=1764095190; bh=j8CzsKo1j9Sn+geAgot+2c/nJaMZwQUiPvW/MgXDaHM=; b=
-	AE6r4bwfh76MzYwhk5yUIhuNsVHZuc0ICZ0j3pZDj200ohfdF7LDVqVSNzDp++XX
-	ufm0m9yC3E2ZsA2peU8CmW0ch8pZ88zMdOkwJILHp1TSKamR9xTJZWxjnsLumE2o
-	eTV5vBzIiQRro8Hb0WLAidgfXXc/Ei5x8hueQHoLtRLGwih9I1ZTs7Zag+xZwo7P
-	z40i6EAtkjhRlNSuqs80+GotwIRXAr1lz0DsbUWRm/5goM0moCFgAbhg4BAxIKsa
-	S0lJlnF8huWz4sd+TgB+ZISHEt1xR1wOBv+oPYVDRAug2Z30Jwp1y0yZBhAOV02i
-	lGAx0nQervIvRYVz9+kA8A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1764008790; x=
-	1764095190; bh=j8CzsKo1j9Sn+geAgot+2c/nJaMZwQUiPvW/MgXDaHM=; b=g
-	Ndebv8fcYyIg9nUge5ENZpc+OdK7g6s6mrBpHoIQVJ8tmQ134DJ0NUep1ZwodAL+
-	Ls5Gx9AN+hohxTJuWLb1fumvwzuBj91gOBOlnoOm9N4hRk3r5vk8EkI6UoRX4aHX
-	lGZ/2/G47nkZqZYY4zIM9kGQOlbSB+cnjZngURi0YHz/n9erKccyZ5wyzXhFQaHz
-	JmhV7mfJ/TWjfFYXUSqlJmNjLUUXAJudup9LGDQeNlt0WHH32TlzqIxH57ejbVY5
-	Z1pSR0oH8hOHCnFDDCBGMZVbKan90/Q/qFkUvHM9nHOz0d9KIIip3h7zgv2mVIuJ
-	BA45cTcSWQ38hId8q+BUw==
-X-ME-Sender: <xms:VqMkadLa1-iLNKVgIKKELhS8nDqkMfGPHA2k04liuKqgBizXsutEtA>
-    <xme:VqMkacbflhwJl1frh2DohtWsqlN8pzDA2t93tcKhbkO00zA1P3q2ur5PASzWrT_bJ
-    UWiuOw6-RItwxsRJpVLBwGrLGJQ77fH_99L3BtcUVYxo3e9eJCESg>
-X-ME-Received: <xmr:VqMkafKum6CJfsS7vqY06ke3vzHS7mlWjSiV4Qt0srGS31M1hZaY6QdY9swEbFtCBlPpO0vsTEwUZIHrOFtCmIgNS2rBYKn_DXtm>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeelfeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:VqMkaaBk8M4CA446srzuwk88mlnzckYjV4KdovMFz9hTvlkhf73CDQ>
-    <xmx:VqMkaUoZ1KSytXMYdLd495jyVPnWED5rUorSCYJwNRs6zGKkDegeBA>
-    <xmx:VqMkaVhKEqfJNwfxpdmtSmFuWZatiPkrPB4-NYo8SFJaOQL2BVlQlw>
-    <xmx:VqMkaRB448284zU9Wgz1vvtGZDh0pCtjE4SmCpPqWmVeUU11x6tlzA>
-    <xmx:VqMkadCHMLMd0RJE6dt8asEA5nXWjf20day5S_k33AnvwjZfimFXNdeN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Nov 2025 13:26:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2025, #07; Sun, 23)
-In-Reply-To: <CALnO6CDm2K0Bn43gjXTvYqJ8gbX+8eZK1YPn1gwuThizK6d5VQ@mail.gmail.com>
-	(D. Ben Knoble's message of "Mon, 24 Nov 2025 10:46:07 -0500")
-References: <xmqq5xb0yqj9.fsf@gitster.g>
-	<CALnO6CDm2K0Bn43gjXTvYqJ8gbX+8eZK1YPn1gwuThizK6d5VQ@mail.gmail.com>
-Date: Mon, 24 Nov 2025 10:26:28 -0800
-Message-ID: <xmqqtsyjxp63.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HQdhnOPz"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-bc29d64b39dso2829842a12.3
+        for <git@vger.kernel.org>; Mon, 24 Nov 2025 10:40:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764009650; x=1764614450; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=D+cAmwyQkyyCuHM/P9VuxavzKh7SmDLxHo5vYfqJ38M=;
+        b=HQdhnOPzAGtWa7ZNxEwoVNBoMnftJNIlhxwV1L8IYaTIh70S7OpUCkovUoIX9pbFI6
+         X+YSdI748aVeN3RyqDtd81MbXN8+RglyMtJomC2wcDAyMGDahLxSqRf/Ro5xqYH3/Qfx
+         2OlA6MNr2Cd636UbLD14HhNLM4gsBm1FlSufrqG39tXYSjuR1XyJL3M7ET2Bg4yUtT3A
+         trnbQzJe3IJe/Xx9g0BlcPI9Ryj/r+SgQ3ybVOV9USywv+c5WNnhZ0OzIGZRCxRwnBi6
+         v6maW4PJBfQQcL6hOZ1dKgvRmJ1jD8xuZjOUOhaUcw0TYUrcZrX/j+ZNkuWjtDFI29Xj
+         Yzsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764009650; x=1764614450;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=D+cAmwyQkyyCuHM/P9VuxavzKh7SmDLxHo5vYfqJ38M=;
+        b=aq53fnuclt+TGCyTGG6UHM4CqSWQgsQWDiqorE8z69ULLlbnUnMwHeziuVniPMQMVo
+         1DWYFhQLnDVAez6PmwfTIbMnRHFAcAy4KxuewiMBo63wv01i7HN0rL5gccCxisPXaQEU
+         aUBjLRDf6pXbOLlIYOgAT/RKqnXT9bqSmtBtI2/ls+nJM6cmYp5XAz/M3kKpj2x0s8Ux
+         /0KpyT0kInZqlTsPnRIt+43iUbY3NWy7zJ9ZzWm58Un0kUfge9+H4mdvpxeDpv339xrW
+         toykDiC1GNvBE3hORynB4dWzHlw9SHAEYLjmu4WNEDYO+DyLj4wUTntVfyIp8VpCdwVz
+         uFgw==
+X-Forwarded-Encrypted: i=1; AJvYcCUSuC1/OLrJVRegL7XU045OCwVO21fmkoAWdfslX/BKaHqF9TXLeS5Dn2m5OtmVkaN4Flo=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7WavtEiNbOKankfmnc7E7qZCeAxWP4UkuIpDvolj5kbknM+bb
+	9yZjx6fBJvhgifGPErEHUapL5CHcCDV2YmtzGTt4RUiPB4ha0VOmT+fK
+X-Gm-Gg: ASbGnct1fpDZ2QTyGGWsdnUvUfG95HGeKuQvC8btKUYqXqxy4Qsqu47A0H/brNGfB/R
+	vfYpJZN3IsTSHUjGKZgFc5lFNxEohNUfAbGENMcWFrwjjR5BDfk+T41EOFSq+uGodByDwhF224G
+	gqNhWDfxC6jCMR2NdSeJ9rh2H/DSX81/EDaMkDPjvRiRq57IsY9ZMq9gp7XBKeJCpshMTYwkysG
+	EeC6NzH5yNOinW8KkCfr79BpCDglj7/IdJfXQ6n/ujttiUWgDxiLooD3BpgbrnFtLSA6Ra7oWOH
+	fNhCKN0VWW+z84mUwokB/uxGNx+303TGBpHvjrjspJMF2yGG4OPe9OVqQveYEy7Gg4qsDwgLvZ4
+	vE7bjTFw1Vs9zO4QxPad/h/FsSNIFrWZrJA2tKtvZS+/pPmHi1ADYhRUw1CulPBlYyxQmYBpUOq
+	aWQ0Ty6gUe+S8GpeNRv3OOOyGPMZCmVtmzE2HY+LtHd5+U
+X-Google-Smtp-Source: AGHT+IEKanRVccmEGeY7V7MvJ8d8UTRK3oYDLEEG+vXFKy0qFwDUxX+rzFcmpDOrty/tbZOwWDOo2Q==
+X-Received: by 2002:a05:7300:3c1e:b0:2a4:3593:ddf0 with SMTP id 5a478bee46e88-2a719fbd09bmr7694101eec.29.1764009650212;
+        Mon, 24 Nov 2025 10:40:50 -0800 (PST)
+Received: from localhost (c-73-71-230-225.hsd1.ca.comcast.net. [73.71.230.225])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2a6fc5b122dsm54067520eec.5.2025.11.24.10.40.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Nov 2025 10:40:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 24 Nov 2025 10:40:49 -0800
+Message-Id: <DEH58DEF5MGO.2CFIKCM2CAQY2@gmail.com>
+Cc: "Kache Hit" <kache.hit@gmail.com>, <git@vger.kernel.org>
+Subject: Re: Filter smudge for secret restoration: no disk access?
+From: "Kache Hit" <kache.hit@gmail.com>
+To: "Chris Torek" <chris.torek@gmail.com>, "Johannes Sixt" <j6t@kdbg.org>
+X-Mailer: aerc 0.21.0
+References: <DEGR5XSM0EVG.27IMOKOK1O98Y@gmail.com>
+ <9aa7cfdb-fc50-4ceb-936c-2ed441c462a3@kdbg.org>
+ <CAPx1GvcXkXMpWgOyMWdfHXGEDJQY4wJrJV0p7LHBMeQFPMDHnQ@mail.gmail.com>
+In-Reply-To: <CAPx1GvcXkXMpWgOyMWdfHXGEDJQY4wJrJV0p7LHBMeQFPMDHnQ@mail.gmail.com>
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
-
-> On Sun, Nov 23, 2025 at 11:59 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Mon Nov 24, 2025 at 1:01 AM PST, Johannes Sixt wrote:
+> A smudge filter must read its stdin and write the result to stdout. The
+> presence of %f in the configuration does not change this.
 >
->> --------------------------------------------------
->> [New Topics]
->>
->> * jc/optional-path (2025-11-20) 3 commits
->>  - config: really treat missing optional path as not configured
->>  - config: really pretend missing :(optional) value is not there
->>  - config: mark otherwise unused function as file-scope static
->>
->>  "git config get --path" segfaulted on an ":(optional)path" that
->>  does not exist, which has been corrected.
->>
->>  Will merge to 'next'?
->>  source: <xmqqikf47ajk.fsf@gitster.g>
+> The filter can inspect the file name it receives via the %f token (note:
+> the *name* of the file, not the file itself) to draw additional hints
+> how to process the data, but it still has to read stdin and write to stdo=
+ut.
+
+Yes, I underststand. I'm asking why it's necessary that smudge not read
+from disk, even as it properly satisfies that stdin/stdout operation, as
+in my Python implementation of `smudge()`
+
+On Mon Nov 24, 2025 at 1:49 AM PST, Chris Torek wrote:
+> For sanity purposes, if no other reasons, it might be wise to store a
+> "file with secrets" under a file with a name such that it is **never**
+> controlled by Git (i.e., always listed in a .gitignore or equivalent,
+> or outside the working tree entirely), and to store instead, in Git, a
+> "template file with secrets that are replaced". That way, the secrets
+> either exist on disk (and are secret because Git is blind to them), or
+> do not exist at all (and are therefore secret to Git). The template
+> file controls the template and nothing else; the secret-data file has
+> both secrets and, perhaps, data that are extracted from the
+> Git-controlled file as well.
 >
-> Any interest in also marking this for 2.52.1? It's unlikely to be used
-> much yet, but since the segfault affects several invocations (git
-> blame, etc.) it will be irritating to folks who try the recently
-> released version.
+> In this manner, a "to-be-smudged" file named foo.template might
+> control some external-to-Git manipulation of an invisible-to-Gt file
+> named foo.secret, and no clean filter would be required at all, though
+> one could inspect and strip secrets accidentally copied into a
+> foo.template.
 
-Yes, this is a clear regression-fix material.  The branch you are
-commenting on is designed to be merge-able anywhere the original
-topic that had the segfault can be (or has been) merged, by building
-directly on top of ccfcaf39 (parseopt: values of pathname type can
-be prefixed with :(optional), 2025-09-28), which was the tip of the
-original topic.
+I'm familiar with this practice, e.g. committing an `.env.template`
+which is used to create an `.env` file with secrets within.
 
+However, this is my dotfiles repo that includes `~/.config`. There are
+config files that store credentials right next to configuration, managed
+by software that I don't control.
 
+Although I could still apply that pattern by ignoring `foo.yml` and
+committing a redacted `foo.template.yml`, I'd have to manually upstream
+changes back to the template as the config file changes.
+
+Another use case is to ignore changes to a specific line without losing
+the working copy. Some software saves a volatile "last_updated_at" or
+"last_opened" field into config that doesn't need to be committed. This
+could also be useful for https://stackoverflow.com/questions/16244969
+and https://stackoverflow.com/questions/61091219
+
+- Kache
