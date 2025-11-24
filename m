@@ -1,88 +1,42 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B79223F431
-	for <git@vger.kernel.org>; Mon, 24 Nov 2025 21:19:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F522F747D
+	for <git@vger.kernel.org>; Mon, 24 Nov 2025 22:30:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764019167; cv=none; b=QdIFhL91P47jBXgvea6xUkI+bW/2czS/PxUzoB1bj/3e1YEqswRP+1v+GEVKbT8iw+gu23NUbdYd/bDtg7Lm5CFATNGApg82ajq6ioquTK4kebax9ajpgSwE+l9N4leZF/ram8GJxnfBSVYK/atrdDbN28LSEPpQoQtonaR54Ec=
+	t=1764023433; cv=none; b=HsNaR5KGhfHjO8aSSVnKWbhE2b7Dx78aR1oPvcm8ZcqQWONr7+q4AsZQq4haYxcl3ukW/zj7bJ1LXbKaM6KihZQ+yG+XS4gkw8mEk5QNtncxNIe3ZDRg9tZ7af3HE8RoGk9pGWYtYiF1SsshzcMbRgOljVR55HnelpyhvtP7Ja8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764019167; c=relaxed/simple;
-	bh=Ccru+xKk9tbqUq/4dwxyZQpG0DSwcwltn7q3OIBLCWs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cvl+wAlB3jTOPvZDj8I8ybyldpXDLeC0Xgio/uFW3EWpvvtwaDS1oMCMlYNxTV5IXQK67Ua4nVLDqg5rifZzbo9EEcdS58jLLyoLY97qxf487wKL0WQeNU30Iw27uAax0ydSrdN01anxVz+pHbTh7o53G5bSTxb7s5erZSvrP5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gmoIShU1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IMpZ7rWf; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1764023433; c=relaxed/simple;
+	bh=Wm7o296pXVEfAJtvJh67X5COKx7rvdu/cR6sHuoQFFA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VDGGIdfrFv4EJzQHbYinHRZvTkR2quiyYW1qDO9HeaCPCtYTbloWWCjJeo4Ip1D1dIU3F77r0paCcLjHgHLLBkTPbwfJCO5uNB5D0jVOPSR2AuEhBQb7clmmO/1M5FQgjJX3NodK1kQoMFKUptT1C9TycD9UAI6++h/giiP6gkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=TIj0ZPq8; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gmoIShU1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IMpZ7rWf"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4BEB5EC03DE;
-	Mon, 24 Nov 2025 16:19:24 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 24 Nov 2025 16:19:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1764019164;
-	 x=1764105564; bh=ELpczhfMw5rUvz0qa6vdsajSSXKEXHdbZFe7ZfCsDKM=; b=
-	gmoIShU1lF+Rit7KUwPSUlrlNlQ8JiBKtyAoahgFGX/kd34P+ZZNMKmtJ8iboq1x
-	xEa+hGi0mniMw1h0J6W1u5t4bsrKELf3l1DEKg2nxhfXY1KBCh9Rq/nRjGMsRpe7
-	JqxWJhnpIKXHAJ5PlS98kVrzoHuzXFTM53Ymspj4qkuX6aDmLTxnW0Of58P90Plp
-	0dOVt04GKa0Ax7V6xL4OK7z2qADLeLkLofrpEvCMrt5KXbZPDnxW1P1BXF+5MdLP
-	fc0JwDeDcBY5uYyRU3MbHAc6nafVgU4+lSKsbz/588geTsikqmzCHKByD3StP8R4
-	3W8J1+9u9YUFN1evgR2wAA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1764019164; x=
-	1764105564; bh=ELpczhfMw5rUvz0qa6vdsajSSXKEXHdbZFe7ZfCsDKM=; b=I
-	MpZ7rWfAbN9EDofRDiNbXnjaDSuQotZVrdcDNoojm7eDbV88myPwk/GoTUUPAkJF
-	GV8+M6yaOIjvkRGtV7Uf/iFOzoa/gyNJB6U9LPU49ut6b+pbS9UT2thCd58WRHdt
-	ytrqXlv8AGhpTZ9P11pk34/66j2uOQ+LYN/QKiMGlGMha2vx7MO+eGLGNze9AfE6
-	4Wkxuhg8C0hVPd++DP925eS/fUP/FHFqXOsnVyeE8Tjk9p6IU+Xj4eYAa/ElYY+Y
-	ZpcqvhyfwPnFwTuDEdt54Qexl4xGFR4xrFt+nkp9/YhPt2eonS345mwVuL49JSrO
-	76KQE7aqJt5STYjzuIfqw==
-X-ME-Sender: <xms:28skafXuiy6AOb2G6UqfL2oZcL4TCWoRdQMaLJT0afu_pt05pYGMmQ>
-    <xme:28skabQdkkELE8egVH6bYlzgLpe2AEnKyBADmETaEA54yW0AfcqVHUl7U5p2y-dZI
-    ZIkb3f51Pw6aX2PCznvqNyren2umIDvuYPOxE5zuC6vGLf2FRIosQ>
-X-ME-Received: <xmr:28skaVO4mfQjXlrXgfZTJvmkkXToS2G1CcTlCF6ryO4aZMBPIb3FsqC_c7Kbk_AMGDsdXPk5D30cRaKw4ok8MEuuxWSm47WTNrEM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeelieeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
-    dprhgtphhtthhopehrrghnrdgrrhhighhurhdoghhithesshgrmhhsrghrrgdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepph
-    gvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehrrggrrdhlkhhmlhesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:3MskaRR9fwvYHzg7Y5f4OvpKe9CwuPmX7aBnTYiQSyGfKgm97F_K-Q>
-    <xmx:3MskabgIjny0mEM_ay7M2V8i8ZjN1V90q_oS096sYZ6nESBc_wJj7g>
-    <xmx:3MskaS8lH82vo9MgK52FkaWhTCCZeCTe6wbaf_gF_uGrc9Pw83sZOQ>
-    <xmx:3MskaaGFB2kmZmQBoseEPv-WtW76hIGX4bs0adP5KALMTOuHAeyAuQ>
-    <xmx:3MskaY4c9qshK44ozn7M46w9jkkDBZJ-WnA-1iN59bONwIPKkTBrO-zN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Nov 2025 16:19:23 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Ran Ari-Gur <ran.arigur+git@samsara.com>,  git@vger.kernel.org,  Jeff
- King <peff@peff.net>,  "raa.lkml@gmail.com" <raa.lkml@gmail.com>
-Subject: Re: [BUG] `git clone '-c KEY=VALUE'` no longer works
-In-Reply-To: <CALnO6CBJppT3ELyu54rJvP+uqcMomJS9Nr_JTgfssn8iqG7MWA@mail.gmail.com>
-	(D. Ben Knoble's message of "Mon, 24 Nov 2025 11:20:05 -0500")
-References: <CAN1UxBvk_GJjLWd0XexRxp8FFhYozGCNcodai0eqnjrhjKEh7Q@mail.gmail.com>
-	<CALnO6CBJppT3ELyu54rJvP+uqcMomJS9Nr_JTgfssn8iqG7MWA@mail.gmail.com>
-Date: Mon, 24 Nov 2025 13:19:22 -0800
-Message-ID: <xmqq8qfvw2lh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="TIj0ZPq8"
+Received: (qmail 91954 invoked by uid 109); 24 Nov 2025 22:30:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Wm7o296pXVEfAJtvJh67X5COKx7rvdu/cR6sHuoQFFA=; b=TIj0ZPq8zaDG+XN/1m1MAWibfMU+6A4qgzG9EcO985dPN8nETcU1iwp0xj6GGoDfXs9yYe+QwAdz7cb+DprGjbUnDdGdeYyd6qDzeWrCBKv6rTJnogTaFNwIgo+rYzaQBnmtAFQXbNOfSRoPOAtnQVtiQvi4/ibm0HHrJ0DTmgb6UNYbA0Zje9OOBWCbGKdnlvEyPKUw6dGHp/bOba1WKPBQf0U/sxHrvI9kYMuzn//JuUNWK+AcVLX89lveo8wIV/aIo29gnEyM0sa6fni2gvcuG7G5fUqRL9c0E3+RN9uCCUKVZnS9mszdJKoTWb88l59pnuMKTk1lg7UzHA98SA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Nov 2025 22:30:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 155875 invoked by uid 111); 24 Nov 2025 22:30:25 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Nov 2025 17:30:25 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 24 Nov 2025 17:30:23 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>, correctmost <cmlists@sent.com>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 4/9] cache-tree: avoid strtol() on non-string buffer
+Message-ID: <20251124223023.GA2051672@coredump.intra.peff.net>
+References: <20251118091127.GA4175601@coredump.intra.peff.net>
+ <20251118091218.GD529192@coredump.intra.peff.net>
+ <ca6d99cc-d05c-49fb-ab3c-d7668077d32b@gmail.com>
+ <xmqqtsylz2xh.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,62 +44,32 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqqtsylz2xh.fsf@gitster.g>
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+On Sat, Nov 22, 2025 at 10:19:22PM -0800, Junio C Hamano wrote:
 
-> On Mon, Nov 24, 2025 at 12:23 AM Ran Ari-Gur <ran.arigur+git@samsara.com> wrote:
->>
->> Hi,
->>
->> There's a small regression in Git v2.52.0; it used to be that a command of the
->> form
->>
->>     git clone '-c KEY=VALUE' ...
->>
->> or
->>
->>     git clone '--config= KEY=VALUE' ...
->>
->> would trim whitespace around KEY, making the command equivalent to this:
->>
->>     git clone --config=KEY=VALUE ...
+> We could try to be more careful, but it quickly became messy when I
+> tried.  Here is an unfinished attempt of mine.
 
-Hmph, as documented in "git help clone",
+So yeah, I was hoping to avoid jumping into this rabbit hole of
+messiness and just do the bare minimum to give us memory safety. But it
+seems nobody is quite happy with the result. :(
 
-    `-c` `<key>=<value>`::
-    `--config` `<key>=<value>`::
-            Set a configuration variable in the newly-created repository;
-            this takes effect immediately after the repository is
-            initialized, but before the remote history is fetched or any
-            files checked out.  The _<key>_ is in the same format as expected by
-            linkgit:git-config[1] (e.g., `core.eol=true`).
+Looking over what you wrote below, it seems pretty reasonable to me.
+What do you consider unfinished in it? I'm wondering if we should swap
+it into what my patch is doing (or do it on top if you prefer).
 
-I do not offhand know if the option really used to behave as the
-original report described, but if
+Another option is to scrap this approach entirely, and copy up until the
+trailing newline into a separate buffer, NUL-terminate it, and parse
+from that buffer. That feels a little dirty to me, but I suspect it is
+pretty performant in practice, and it pushes all of the complexity back
+onto strtol().
 
-	git clone '-c KEY=VALUE'
-	git clone '--config KEY=VALUE'
+Another variant of that is: parse up to the trailing newline, making
+sure it's there, and then leave the rest of the code as-is. We know that
+strtol() will do the right thing in that case, but it does mean we
+cannot use ASan's strict_string_checks (it would still yield a false
+positive, because it does not know we've checked for the newline).
 
-does not complain-and-barf in the first place, I think that is a
-bug.  The above option description clearly asks the user to give the
-dashed option (either "-c" or "--config") and "<key>=<value>" as two
-separate arguments on the command line.
-
-Interestingly, unlike other long options described nearby, we do not
-seem to even list "--config=K=V" form, and that is a documentation
-bug---other options like "server-option" is described to use "="
-after it before its value, and to parse the "--config K=V", the code
-uses the same mechanism.
-
-Also, if the user writes
-
-	git clone -c ' KEY=VALUE'
-	git clone --config ' KEY=VALUE'
-
-and we behaved as if it were "KEY=VALUE", that is another bug.  As
-documented, "key" is in the format as expected by "git config", and
-we never allowed leading or trailing whitespaces around the key
-names.
-
-So I dunno.
+-Peff
