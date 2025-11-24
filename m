@@ -1,138 +1,98 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740EE1459F6
-	for <git@vger.kernel.org>; Mon, 24 Nov 2025 15:46:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0093F1459F6
+	for <git@vger.kernel.org>; Mon, 24 Nov 2025 15:46:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763999176; cv=none; b=F5/PQq5w6Y3phrifOXxMYJ0SE6UVsfPrs4R31EpcVofVRimh2bo0abS+IvYb544UEujD9LVmBe1YqBJ5Xiq2X4k5LbbVvMoQimJ1M9V3RJtdJcrQ7kF15EAh3BDOl1MTYwvpI/mK2pQK2Paqo3e1gC5hrvdaSFUsnIUhEJvJKbg=
+	t=1763999182; cv=none; b=Aff0UQriONItEbhQ792bJ0CCS935XQogsHR1kPeGolKyWZJgH1GWhbVIHEG3FsvOrcancEb4kRnxB8eb4ILHNfH4xPVatkIfeUlNmy9HOgF1L41YbatsaDOrh1W6TRVIrSa4e+7n+qJsdqvZqSfh+fyf5wBDm70l7RwcJWHfDFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763999176; c=relaxed/simple;
-	bh=zfmU/Q06aJFpAmqWd72EAS2DSpvt3VtQe6kwSKwMREQ=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=n9bqKROwfDqt/I4m5Gx04/1bl62zC51M7NcbnRktLVZtKEI1Cp7cNxLD25leLlKBfroN9SLdtvlPfCLyW8h2USP9FI0r6dROxzl8VEQ8eL1bZ1pmZLxtJYrDpkxWbXVEtZRNk/oAcLgy6KflVC21xuT2oZWNwa+IRLfP1Ul2CvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=oWM4xjkX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ysbcjezk; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1763999182; c=relaxed/simple;
+	bh=9nGtKVg86f0+WpiNNRWOZQ05aKNPLNxyO88N8B8QfIg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OaVBRfDGKP47C2mFMaPOJDuzn5LXlpPs2nwOz9qwLi6lEWtt7QZJu9mUP3V7BW+kW4TvUM+7PkHkwf7ZemyHT4UXac7jUpZhJbptk1RbtKu1DVo4Pk9J+Y8l6nGNpdS4iyrg9F0EMoZUa1stK//hD0fCeGXfibRgYYSODVpLqK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YzAN1/+C; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="oWM4xjkX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ysbcjezk"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 823A6140006C;
-	Mon, 24 Nov 2025 10:46:10 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Mon, 24 Nov 2025 10:46:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1763999170;
-	 x=1764085570; bh=u9v00RNGs9F2Pe8Ij2+YDtMYW8iIaua9jSFzLt7AIAY=; b=
-	oWM4xjkX9qou/1sPzArP8Y2W6+isQuq/lQGv1uYRPX0c2Qx5fVCWG0d63WFHCI62
-	feISlMjeCViarlkW09YB9R362jU/gd8JtOwvoaKvAIB1YUxDzrS0K3I5oxAuKeEE
-	nRuwhIvS0XWxEfg1zml2917mg3c3M8BQ2DL9rZ1LKkNAUMvWWZzkwhZY28it6Xs3
-	PDMH7rdqUN9tdnDUW7vgPTniX3vvL17KVWGmA87oYn6gVfLPKl4NjcwfgoeUfNI7
-	q5SwG4tYhfxkjxPcgSYGeed/D5ecmXFJ0JBp2cRmtexigCBm91g3iupgCJs9qLdF
-	etTfVZ/aQo8+yI9wEsvonQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1763999170; x=1764085570; bh=u
-	9v00RNGs9F2Pe8Ij2+YDtMYW8iIaua9jSFzLt7AIAY=; b=ysbcjezkDWSWGxTX5
-	EtGXz8GSIfeT5eXHqavl0zDhJhmeyL8lXqYKFeVM4cn3uxPwHP/NxLV5RZaK7tlw
-	bBUqsK1TPkP4ELd5BLcyZ76h0VDZoOfEcbHHVzoXjxaYe58/lFG9zug3voJHXaI7
-	WfxG/CvfeBjbQkhM8/Vk+IF7P8u8tGLZE+dLfIeBVp0mLGYi+tt4LvnL81xPw0mo
-	D6xwFSxvuOoacLQ+liUyiV2uPPRcROp0nusxPQrMoNwuKI1piF/xsqYyRmkiDb9a
-	mBqPO3YIPzgN7ielBO1ycvOISs/yvS2oo/H+OWug69/3MREc1YBe5JRaB+2QPOQk
-	jhTsQ==
-X-ME-Sender: <xms:wX0kaY94D7LbASKMz6AmyTgfzXfiTLDTzDoff8nBXi9cMPe4ciatL_g>
-    <xme:wX0kabiiSbit3KaFw55WuhJ9pn-6SgB66E0A1sET9BNv5anl2_NSC0-9EpRkHEFZL
-    deolvrOwiHAvFYbAmrMl7GrC5mjVr3mPFnxj9r8-T13Kj4U2UYbTg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeekleelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeffieeftefgheek
-    geeitedujefgveehvdevieelfeeiiedttedtgfduhfejiefggfenucffohhmrghinhepkh
-    gvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
-    gtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhope
-    hmvgeslhhinhhugidrsggvrghuthihpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:wX0kaVE2GAc1r7mqyok0Srt8-kQKcGWSrHECmqgtcHQnkwfuWwUjAg>
-    <xmx:wX0kaVw0XmXDWd9SUf06CsDC1w2U5i-OHe_QsXE7Nuqdpn-sJdBSAA>
-    <xmx:wX0kaaoG4mDEicTuLjjrY2oRJBziF8bijWfLzfJ9ddejhWcJQLnX-Q>
-    <xmx:wX0kafh4Hv4reC9FUMfVbwaPfHc8Tg2KosPZcGkbVUTmUEBxtWxO1A>
-    <xmx:wn0kaVfpuvOYhcx5oKyT3DI-BdBkFGFElre41Tw_TCltDCfY6IOaiYbC>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id CC93E1EA0066; Mon, 24 Nov 2025 10:46:09 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YzAN1/+C"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-343f52d15efso4066083a91.3
+        for <git@vger.kernel.org>; Mon, 24 Nov 2025 07:46:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763999180; x=1764603980; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=c8YgZqhVZrPPS7Lmk0XMMEnJl6pu1wJdaOIO0jIIQxo=;
+        b=YzAN1/+CFK/T6e5cfA0qSwD7t/im0T1fa/V0pM4GbnhKOfVSdzAd5djzBc/MsaS9/p
+         cdL/9PYQPC07Xhnagsh3Xrak8SakoBfHckc3lJ03V3zlNYt0cf2DRNHamxquetJw3nrE
+         ladz4a/dddnqabqXniXkp8te9TJJAPhw1JvfkB3qek/DGhq6V00wln9kYEa6ROHIp3k7
+         3UGonEFulO5rNe/zL+0X+STuQtv2hztojnNOP9v2l6qPFrmAYf2f1XLdAgDWc1SPdyXR
+         Mbe3rbF7LUgxuB4WVBEsYMM/QDxVJ8BEH8KCQwFfw6u6ZqYIGNYnXv4RK6CtIdsyucQ7
+         uBQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763999180; x=1764603980;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=c8YgZqhVZrPPS7Lmk0XMMEnJl6pu1wJdaOIO0jIIQxo=;
+        b=GhEA05xGMsXbE68hWtYCBGGAnDnPrXdfJ32XDrEGsfEyzpunawzocSe0RssC9jbmpD
+         00kZWKcI2vkAncOVO++8HFHV7lMv52v0SCwPnwxU+3czmtzt4ttkqoKPbuW5+/8XzNab
+         T7l2X4vMVj9QWcCFGaX9wRGKLhAIAoBLedprJ8rf5fEnxB5DV604PfdzWVykWSg4dbLV
+         5CWm5mC4ylH30BV+nKuNt/cbpO+UgMfSrmewWlRiG8+QMpOAT2UzEdYdEHbGPo0I+0uE
+         pOkhRmdMPzL+PLbO+2GNx5fSTS3ChuEzTCMg8HQU2aS8xggbxI9N4tjmGAprZUg1bS+C
+         JN0g==
+X-Gm-Message-State: AOJu0Yz/c+87cWggRFYHkxIyAvXGi9jToMzEELgUo/Vj93z1VnuM8RNL
+	StCglYpONGZgcBHuHFonTEe1oAP7TKATVFghmwjhHArgqXW66xoxwyn0zRy0BhaZi+ELPzTgKz6
+	WPJrqx8erLGqI88VRsja252nAKyUI/so=
+X-Gm-Gg: ASbGncuYaOri/T/4uXHYpL2JaezfBYpdrWERPcTBoGFoYt76y3v7lrPdUCaGvOJ8S4H
+	DLqUBjTkOkQWf7ux58PofZMpqlbHSuvzJktbyPNhXD54XKKdO6exkg0JPjFbkgtrYMVL+XiHDyO
+	p2p/QhbjpQuwB6aDWFv+uvkBFmA+ON2fr3SgMOa9Ccxeo7a+YqIY6bgMcPRIa0fqmP7TcXBVLg0
+	qbtcIb3eVCKM52323ghPgQJeH7NbJaGG79rPFgxtlzochTfmeeIFXhNGeio6gLgbrbvF8X9MuDk
+	UhfVqb00MULcGxJ4qg==
+X-Google-Smtp-Source: AGHT+IElZKGccX4vz2+Tx06cooE2fwxgNIb04JDMUq8xK0ikW1Xln9OGAhgyZP5qbAUg8ETalWDWxNNYqKzaDc4pdGw=
+X-Received: by 2002:a17:90b:2f83:b0:343:7714:4caa with SMTP id
+ 98e67ed59e1d1-34733e43514mr10248849a91.3.1763999180161; Mon, 24 Nov 2025
+ 07:46:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A3A6gSAalujs
-Date: Mon, 24 Nov 2025 16:45:49 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Li Chen" <me@linux.beauty>, "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- git <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>
-Message-Id: <cb5a792f-c763-4fbf-bfcc-52f66c895c9e@app.fastmail.com>
-In-Reply-To: <20251105142944.73061-5-me@linux.beauty>
-References: <20251105142944.73061-1-me@linux.beauty>
- <20251105142944.73061-5-me@linux.beauty>
-Subject: Re: [PATCH v6 4/4] rebase: support --trailer
-Content-Type: text/plain; charset=utf-8
+References: <xmqq5xb0yqj9.fsf@gitster.g>
+In-Reply-To: <xmqq5xb0yqj9.fsf@gitster.g>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 24 Nov 2025 10:46:07 -0500
+X-Gm-Features: AWmQ_bld9xJpQdbMd17gH1FaTu_FndsRVPSgys20S3PhbCp1k47zxXS87N-cGKk
+Message-ID: <CALnO6CDm2K0Bn43gjXTvYqJ8gbX+8eZK1YPn1gwuThizK6d5VQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2025, #07; Sun, 23)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 5, 2025, at 15:29, Li Chen wrote:
-> From: Li Chen <chenl311@chinatelecom.cn>
->
-> Implement a new `--trailer <text>` option for `git rebase`
-> (support merge backend only now), which appends arbitrary
-> trailer lines to each rebased commit message.
->
-> Reject it if the user passes an option that requires the
-> apply backend (git am) since it lacks message=E2=80=91filter/trailer
-> hook. otherwise we can just use the merge backend.
->
-> Automatically set REBASE_FORCE when any trailer is supplied.
->
-> And reject invalid input before user edits the interactive file.
->
-> Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
->[snip]
-> diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.=
-adoc
-> index 005caf6164..4d2fe4be6e 100644
-> --- a/Documentation/git-rebase.adoc
-> +++ b/Documentation/git-rebase.adoc
-> @@ -487,9 +487,16 @@ See also INCOMPATIBLE OPTIONS below.
->  	Add a `Signed-off-by` trailer to all the rebased commits. Note
->  	that if `--interactive` is given then only commits marked to be
->  	picked, edited or reworded will have the trailer added.
-> -+
-> +
->  See also INCOMPATIBLE OPTIONS below.
->
+On Sun, Nov 23, 2025 at 11:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 
-Same problem as I commented on in https://lore.kernel.org/git/cbe93380-e=
-145-4ebd-a213-928b8c3ba085@app.fastmail.com/
+> --------------------------------------------------
+> [New Topics]
+>
+> * jc/optional-path (2025-11-20) 3 commits
+>  - config: really treat missing optional path as not configured
+>  - config: really pretend missing :(optional) value is not there
+>  - config: mark otherwise unused function as file-scope static
+>
+>  "git config get --path" segfaulted on an ":(optional)path" that
+>  does not exist, which has been corrected.
+>
+>  Will merge to 'next'?
+>  source: <xmqqikf47ajk.fsf@gitster.g>
 
-The `See also INCOMPATIBLE OPTIONS below.` is not indented to the same
-level as `--signoff`, where it belongs.
+Any interest in also marking this for 2.52.1? It's unlikely to be used
+much yet, but since the segfault affects several invocations (git
+blame, etc.) it will be irritating to folks who try the recently
+released version.
 
-> +--trailer=3D<trailer>::
-> +       Append the given trailer line(s) to every rebased commit
-> +       message, processed via linkgit:git-interpret-trailers[1].
-> +       When this option is present *rebase automatically implies*
-> +       `--force-rebase` so that fast=E2=80=91forwarded commits are al=
-so
-> +       rewritten.
-> +
->[snip]
+--=20
+D. Ben Knoble
