@@ -1,41 +1,41 @@
 Received: from sender3-pp-f112.zoho.com (sender3-pp-f112.zoho.com [136.143.184.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865A122FDFF
-	for <git@vger.kernel.org>; Mon, 24 Nov 2025 17:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76ED1188596
+	for <git@vger.kernel.org>; Mon, 24 Nov 2025 17:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.184.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764004885; cv=pass; b=M5T2tykLoJHJ3huoZ6Q2xjfwV437y0uaDai0xSsCRkJ1/zmLWCuZI2ba7xX/UtVm/6+NW9Z0KT2X65uPglFAv5KgGejFX0k9FD0icNhW0kyuBeUUhI9b2nIcHJ0QdAz2fh/ZjmCNBhubxacW7GRc8mMBcbktpykR37NTnElF0Zs=
+	t=1764004886; cv=pass; b=Q9nV8oG3r1QHjlUyBAog49XE+czW2qrpJDonA3r0A448MErzzCU5fswkhxdMzTTYoHxJjxkdU7RzWSWJVKDXviC1vFugau3/tkIWAuSrM9Ed+w4HdB4ns2UmhBemdw/KcOfzwhu/GVTpF7x5lxY+dWyLBvzhZ4N8w7KTrvuR0WM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764004885; c=relaxed/simple;
-	bh=LLzhIr+0+dt2dEmRc0jyvE/U53zD4Q2pCpjhg8f/kUs=;
+	s=arc-20240116; t=1764004886; c=relaxed/simple;
+	bh=G0e46SQSBQ5KFXdHM69X4BIqWM6jC/X7TX8cGvMqPco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tfNs+qDHGf/NPZwIwmMZGMBAiFfudZnTg32SC8EGbenXI2VFWVM+94HIRfJVbTJr9y3pa7ULMyzVFB5HiZsc5MZJPPx232DbZK87q7iOdQO5jj4n+uPQ82vlt97kYymaADryRgLdfvhEBIPK7hF+JsGt7x+sOnx1/QTNKwClt1U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=gnUOTlN2; arc=pass smtp.client-ip=136.143.184.112
+	 MIME-Version:Content-Type; b=arIuoUo6f6YEuPYTdy7hqw0K0v2kn8cqM8mSDWyDes8HM8nG1m8N5/lp/ZCbViA1AIXdT9xcJ8wlWgRuCW62FMVBO5r8snTtbYpvIEeXNORZg252fh9crpS0wzZBItLUA4hzwPh9bbCDhr07bdh00S8pQPCiVH2peHN2HEP5KRQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=f+5KUkA7; arc=pass smtp.client-ip=136.143.184.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="gnUOTlN2"
-ARC-Seal: i=1; a=rsa-sha256; t=1764004871; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="f+5KUkA7"
+ARC-Seal: i=1; a=rsa-sha256; t=1764004873; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=lnwyT+w1tX+ichkt34cMbH3KH+L/uD45sd2AjcXoqTpP5HUx+v9OpNunEEehnFT7M5SQvCxoCx352nfb2kq59Hq0oMwiZFWJDGVE8TOPZcpiBj+vubWNOQYIENbwNIjM6oMdf+SrPU1sLUljHQLkSNTDVU2ZR2pgPNmC/8Zbybk=
+	b=bJQ42uguWbCEfS5QdYwyCtLjUB281ye76jaeZADHG1dEE9HcS0+IcKjEWpoDLzlgEE3D971z1Z8yBh/kB/rHVdXL0Qn+znAi7SYFJG9Iaodc18JoT7ZaJ1PWQCtNMXygNnAKh1g1eGsE0AB07MTwPa12n1l6Yv1fh8HU3IYVfVw=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1764004871; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=/hdbiauxu15aWGqdo6NzTp14axULH5qiL4GPbkhPq0U=; 
-	b=cgRxpf0gkuxGqKHgp6LI5T8BbB2bs4U0Pijm0FA1Oe/lkkNjDQFMwhPqWFWX2PMclgwa3d9K8SInZFpsBcR853+HfkbF+mqFEhz4r7vHFz4FmxD7+FnfjxghEdOzLV9UssUf7eyS0RP8iAAJ6ZTRmiDcMw/uv+7uqQdGVhPl8JU=
+	t=1764004873; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=q1nYpF5j5lZQbNP56b4QUg/DQddHdiwdmwGV0S/OAVM=; 
+	b=P4EsI8fgxA4g9lnbJ92LoK+xdUP3HpZU6wVFm4/8p3lCw+G2CPRte4Wyyug/fFFGu4k+gk6vQv+B+plouHdKYZ85vixlLIGYdWI0xD3/NEw9WSZ1JUm1s/7m8B6RJsbwEhzfbakFArz0nh9vVx5AZ/Nwy69oh/QKqr6/kj558ns=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764004871;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764004873;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=/hdbiauxu15aWGqdo6NzTp14axULH5qiL4GPbkhPq0U=;
-	b=gnUOTlN29YfdBmtbzOD0FliV2ntMjbwT0E8fYKw+wHKayeqyD9LubRnujLGw0QAP
-	Lh5pMjMDQDkiMNzlk7SAa7USiHlBeLc8b9yAjTq5EZ2Yp/xZXuzerVqm6yjOcLhj7Vs
-	SMZSktK2nZ84PH5gnuoT4WdTZkPlRJDxhOfCHoeY=
-Received: by mx.zohomail.com with SMTPS id 1764004868812846.1129373414335;
-	Mon, 24 Nov 2025 09:21:08 -0800 (PST)
+	bh=q1nYpF5j5lZQbNP56b4QUg/DQddHdiwdmwGV0S/OAVM=;
+	b=f+5KUkA7MgEVDUL+t/D9ZXHkxhOwRAR4Q5tAVX7r/zGYuAffD93TxHdug9HZzzQJ
+	SoToTlVZ2vKjNoHIZHUpWo6WAn/8J6enHJI/chyK1v1sxjZXYkiL8eRcET+BSWfTkR9
+	lOmxpu1yWF7rLgzHHrs+lcq29+DcypgAid+ygcLE=
+Received: by mx.zohomail.com with SMTPS id 1764004872192845.5624331511258;
+	Mon, 24 Nov 2025 09:21:12 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -46,11 +46,12 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v3 04/10] transport: convert pre-push to hook API
-Date: Mon, 24 Nov 2025 19:20:37 +0200
-Message-ID: <20251124172043.1650014-5-adrian.ratiu@collabora.com>
+	Adrian Ratiu <adrian.ratiu@collabora.com>,
+	Emily Shaffer <nasamuffin@google.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
+Subject: [PATCH v3 05/10] reference-transaction: use hook API instead of run-command
+Date: Mon, 24 Nov 2025 19:20:38 +0200
+Message-ID: <20251124172043.1650014-6-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251124172043.1650014-1-adrian.ratiu@collabora.com>
 References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
@@ -65,140 +66,150 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-From: Emily Shaffer <emilyshaffer@google.com>
+Convert the reference-transaction hook to the new hook API,
+so it doesn't need to set up a struct child_process, call
+find_hook or toggle the pipe signals.
 
-Move the pre-push hook from custom run-command invocations to
-the new hook API which doesn't require a custom child_process
-structure and signal toggling.
+The stdin feed callback is processing one ref update per
+call. I haven't noticed any performance degradation due
+to this, however we can batch as many we want in each call,
+to ensure a good pipe throughtput (i.e. the child does not
+wait after stdin).
 
+Helped-by: Emily Shaffer <nasamuffin@google.com>
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- transport.c | 95 ++++++++++++++++++++++++++++-------------------------
- 1 file changed, 51 insertions(+), 44 deletions(-)
+ refs.c | 101 ++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 53 insertions(+), 48 deletions(-)
 
-diff --git a/transport.c b/transport.c
-index c7f06a7382..b7a6d21d22 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1316,65 +1316,72 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
- 	die(_("Aborting."));
+diff --git a/refs.c b/refs.c
+index 5583f6e09d..2b699cb44e 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2422,68 +2422,73 @@ static int ref_update_reject_duplicates(struct string_list *refnames,
+ 	return 0;
  }
  
--static int run_pre_push_hook(struct transport *transport,
--			     struct ref *remote_refs)
--{
--	int ret = 0, x;
--	struct ref *r;
--	struct child_process proc = CHILD_PROCESS_INIT;
-+struct feed_pre_push_hook_data {
- 	struct strbuf buf;
--	const char *hook_path = find_hook(the_repository, "pre-push");
-+	const struct ref *refs;
+-static int run_transaction_hook(struct ref_transaction *transaction,
+-				const char *state)
++struct transaction_feed_cb_data {
++	size_t index;
++	struct strbuf buf;
 +};
- 
--	if (!hook_path)
--		return 0;
-+static int pre_push_hook_feed_stdin(int hook_stdin_fd, void *pp_cb, void *pp_task_cb UNUSED)
-+{
++
++static int transaction_hook_feed_stdin(int hook_stdin_fd, void *pp_cb, void *pp_task_cb UNUSED)
+ {
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	struct strbuf buf = STRBUF_INIT;
+-	const char *hook;
+-	int ret = 0;
 +	struct hook_cb_data *hook_cb = pp_cb;
-+	struct feed_pre_push_hook_data *data = hook_cb->options->feed_pipe_cb_data;
-+	const struct ref *r = data->refs;
-+	int ret = 0;
++	struct run_hooks_opt *opt = hook_cb->options;
++	struct ref_transaction *transaction = opt->feed_pipe_ctx;
++	struct transaction_feed_cb_data *feed_cb_data = opt->feed_pipe_cb_data;
++	struct strbuf *buf = &feed_cb_data->buf;
++	struct ref_update *update;
++	size_t i = feed_cb_data->index++;
++	int ret;
  
--	strvec_push(&proc.args, hook_path);
--	strvec_push(&proc.args, transport->remote->name);
--	strvec_push(&proc.args, transport->url);
-+	if (!r)
-+		return 1; /* no more refs */
+-	hook = find_hook(transaction->ref_store->repo, "reference-transaction");
+-	if (!hook)
+-		return ret;
++	if (i >= transaction->nr)
++		return 1; /* No more refs to process */
  
+-	strvec_pushl(&proc.args, hook, state, NULL);
 -	proc.in = -1;
--	proc.trace2_hook_name = "pre-push";
-+	data->refs = r->next;
+-	proc.stdout_to_stderr = 1;
+-	proc.trace2_hook_name = "reference-transaction";
++	update = transaction->updates[i];
  
--	if (start_command(&proc)) {
--		finish_command(&proc);
--		return -1;
-+	switch (r->status) {
-+	case REF_STATUS_REJECT_ALREADY_EXISTS:
-+	case REF_STATUS_REJECT_FETCH_FIRST:
-+	case REF_STATUS_REJECT_NEEDS_FORCE:
-+	case REF_STATUS_REJECT_NODELETE:
-+	case REF_STATUS_REJECT_NONFASTFORWARD:
-+	case REF_STATUS_REJECT_REMOTE_UPDATED:
-+	case REF_STATUS_REJECT_SHALLOW:
-+	case REF_STATUS_REJECT_STALE:
-+	case REF_STATUS_UPTODATE:
-+		return 0; /* skip refs which won't be pushed */
-+	default:
-+		break;
- 	}
- 
--	sigchain_push(SIGPIPE, SIG_IGN);
-+	if (!r->peer_ref)
+-	ret = start_command(&proc);
+-	if (ret)
+-		return ret;
++	if (update->flags & REF_LOG_ONLY)
 +		return 0;
  
--	strbuf_init(&buf, 256);
-+	strbuf_reset(&data->buf);
-+	strbuf_addf(&data->buf, "%s %s %s %s\n",
-+		    r->peer_ref->name, oid_to_hex(&r->new_oid),
-+		    r->name, oid_to_hex(&r->old_oid));
+-	sigchain_push(SIGPIPE, SIG_IGN);
++	strbuf_reset(buf);
  
--	for (r = remote_refs; r; r = r->next) {
--		if (!r->peer_ref) continue;
--		if (r->status == REF_STATUS_REJECT_NONFASTFORWARD) continue;
--		if (r->status == REF_STATUS_REJECT_STALE) continue;
--		if (r->status == REF_STATUS_REJECT_REMOTE_UPDATED) continue;
--		if (r->status == REF_STATUS_UPTODATE) continue;
-+	ret = write_in_full(hook_stdin_fd, data->buf.buf, data->buf.len);
-+	if (ret < 0 && errno != EPIPE)
-+		return ret; /* We do not mind if a hook does not read all refs. */
+-	for (size_t i = 0; i < transaction->nr; i++) {
+-		struct ref_update *update = transaction->updates[i];
++	if (!(update->flags & REF_HAVE_OLD))
++		strbuf_addf(buf, "%s ", oid_to_hex(null_oid(the_hash_algo)));
++	else if (update->old_target)
++		strbuf_addf(buf, "ref:%s ", update->old_target);
++	else
++		strbuf_addf(buf, "%s ", oid_to_hex(&update->old_oid));
+ 
+-		if (update->flags & REF_LOG_ONLY)
+-			continue;
++	if (!(update->flags & REF_HAVE_NEW))
++		strbuf_addf(buf, "%s ", oid_to_hex(null_oid(the_hash_algo)));
++	else if (update->new_target)
++		strbuf_addf(buf, "ref:%s ", update->new_target);
++	else
++		strbuf_addf(buf, "%s ", oid_to_hex(&update->new_oid));
  
 -		strbuf_reset(&buf);
--		strbuf_addf( &buf, "%s %s %s %s\n",
--			 r->peer_ref->name, oid_to_hex(&r->new_oid),
--			 r->name, oid_to_hex(&r->old_oid));
-+	return 0;
++	strbuf_addf(buf, "%s\n", update->refname);
+ 
+-		if (!(update->flags & REF_HAVE_OLD))
+-			strbuf_addf(&buf, "%s ", oid_to_hex(null_oid(the_hash_algo)));
+-		else if (update->old_target)
+-			strbuf_addf(&buf, "ref:%s ", update->old_target);
+-		else
+-			strbuf_addf(&buf, "%s ", oid_to_hex(&update->old_oid));
++	ret = write_in_full(hook_stdin_fd, buf->buf, buf->len);
++	if (ret < 0 && errno != EPIPE)
++		return ret;
+ 
+-		if (!(update->flags & REF_HAVE_NEW))
+-			strbuf_addf(&buf, "%s ", oid_to_hex(null_oid(the_hash_algo)));
+-		else if (update->new_target)
+-			strbuf_addf(&buf, "ref:%s ", update->new_target);
+-		else
+-			strbuf_addf(&buf, "%s ", oid_to_hex(&update->new_oid));
++	return 0; /* no more input to feed */
 +}
++
++static int run_transaction_hook(struct ref_transaction *transaction,
++				const char *state)
++{
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct transaction_feed_cb_data feed_ctx = { 0 };
++	int ret = 0;
+ 
+-		strbuf_addf(&buf, "%s\n", update->refname);
++	strvec_push(&opt.args, state);
  
 -		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
--			/* We do not mind if a hook does not read all refs. */
--			if (errno != EPIPE)
+-			if (errno != EPIPE) {
+-				/* Don't leak errno outside this API */
+-				errno = 0;
 -				ret = -1;
+-			}
 -			break;
 -		}
 -	}
-+static int run_pre_push_hook(struct transport *transport,
-+			     struct ref *remote_refs)
-+{
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-+	struct feed_pre_push_hook_data data;
-+	int ret = 0;
-+
-+	strvec_push(&opt.args, transport->remote->name);
-+	strvec_push(&opt.args, transport->url);
++	opt.feed_pipe = transaction_hook_feed_stdin;
++	opt.feed_pipe_ctx = transaction;
++	opt.feed_pipe_cb_data = &feed_ctx;
  
--	strbuf_release(&buf);
-+	strbuf_init(&data.buf, 0);
-+	data.refs = remote_refs;
- 
--	x = close(proc.in);
--	if (!ret)
--		ret = x;
-+	opt.feed_pipe = pre_push_hook_feed_stdin;
-+	opt.feed_pipe_cb_data = &data;
- 
+-	close(proc.in);
 -	sigchain_pop(SIGPIPE);
-+	ret = run_hooks_opt(the_repository, "pre-push", &opt);
+-	strbuf_release(&buf);
++	strbuf_init(&feed_ctx.buf, 0);
++
++	ret = run_hooks_opt(transaction->ref_store->repo, "reference-transaction", &opt);
  
--	x = finish_command(&proc);
--	if (!ret)
--		ret = x;
-+	strbuf_release(&data.buf);
- 
+-	ret |= finish_command(&proc);
++	strbuf_release(&feed_ctx.buf);
  	return ret;
  }
+ 
 -- 
 2.51.0
 
