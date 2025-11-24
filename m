@@ -1,249 +1,136 @@
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CF7222586
-	for <git@vger.kernel.org>; Mon, 24 Nov 2025 13:23:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2AA1F9F7A
+	for <git@vger.kernel.org>; Mon, 24 Nov 2025 13:25:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763990606; cv=none; b=FlNi2EARTQmaWsJuC6gB83Nq7m4LyD17RO0cv+L6RtxzRUtcgQNcz0P3iZzx1Nbtfm9Fc7x9d9pE1928l5YA9JhxC7N+RhRKKOlQ0BB+AOZOWARWGuFCXP83EuQvkKdV8s6jWk5s1V6vEYwLstuPnG65T0Bkp6tdOQsDHA61mkA=
+	t=1763990761; cv=none; b=rCJ5mp9k7qNaPzzBxuoCY4mvQEBBqiEdAHBqwz4riMxdO3VA0DWetkoB0OZPHOiplA7//bq2nlbpk9gBo9YbSvk5SGIjOBgxc3Oyww9FLnhyUk1Gp/llhEE2pX+gH6BKomFDc7ntcPlwhjeGYsY7hXdES7yu/jHEJQqAyceiLbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763990606; c=relaxed/simple;
-	bh=vLlgODH5KpLd5AVS127qIpHcnH7EPxxBTRoHkJhNjnA=;
+	s=arc-20240116; t=1763990761; c=relaxed/simple;
+	bh=OWSQ3if8mWDOoznpyesjZrhbsdJehlF2t0emZF3wWm4=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sbxhlftQPDvbR3mJPWoco1d3R8xxKyPRMewZLiY6sykewAvdmn3EAknLV0jPQ1kiGWxsg/lqrXNsHwx9P7sLWHEFGy8xhxUbXA8UeI8+WzASnRNKV0boP4cB3XIU4pCkJDDzZjLASuNaavRPrWZRBRnFsULQfliDgGruXcCrOdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U2kN19WH; arc=none smtp.client-ip=209.85.221.172
+	 To:Cc:Content-Type; b=GGiTktaI+FYHgQP8ylSaD/neHCAWT6EGyFw25Vwp9GEQEjKrRzxuMR06J0MLdzXdfXTmOrOb3g2q9sr8Ya328tQbK4AgjQmeZrRt/8alOmOiYE972+88u0++vo+s7Eb2JhS4wvRQ/3nwr3pu6+K2NZnZVyWuwhrFt4RIW6Fu11g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BSxKIq3H; arc=none smtp.client-ip=209.85.217.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U2kN19WH"
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-55b0af02ddeso460522e0c.3
-        for <git@vger.kernel.org>; Mon, 24 Nov 2025 05:23:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BSxKIq3H"
+Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-5dbd9c7e468so1767095137.3
+        for <git@vger.kernel.org>; Mon, 24 Nov 2025 05:25:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763990603; x=1764595403; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1763990757; x=1764595557; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zbww/NgD2AE3J/TJqn2vsb/KttOeSME+r4Tx3HIAVgY=;
-        b=U2kN19WHi8YJS6j1hNbrsj8rMHe3cFl46h5Yji419K5D7wVVi5o5rwnRAWGYF2UtSY
-         DtYSrc8usWz+SymmHCypFE2/OS1mcbkwUFw+rshdjSPtDfqT/TKEycZ5ZMYWelqkGUMD
-         ZqAV7lufMlER/uQZntENK0wiX4Gs2GFS4o1AObSO3Na+3Ujm/IM+S+e0sxRl/vaf6Mcb
-         vEoGuDeOiHGWqxRu4FdhoKiAnB9w7NJcWibVBJ0hZ5ZYxJrYDKCTrAy2iyUzDnuLBfek
-         jvAANGyy5Gr3PSkkpch3ndjUL9Kh10UqW/jTFE5i8SBXikizh93mfuqp3L1J5ATw4jcf
-         H5Zg==
+        bh=CtswvUDPvr2cPQ/fma5BJNVDo6mJIkl69UZo58tSN3o=;
+        b=BSxKIq3HH+UFEIK7DpJuWpiQZAdbNMRQzp+YBDMYIwRNIkXKJQCmJfwOMpYQ7ObFKQ
+         52jo24R+a7agroRh9VKj8TmfDzO47S0WpRrRQY6fqBTnSQJygFvddmzYyWqenAtSC4Uf
+         05Bm+UnKws/Ur1/66IKX2SmBjxztonpcsmgNPlE/GeaarfVtAOlLxeaEq5nwHew7tPkD
+         pWyH0sPd1eHx6ZevmUmme76DxMsE9SwPQ0mjrX98sFINR/eTpPtGte/ja7M+sTL+Pe5R
+         RmQ/uF7VWWkmIOJd0yRicl+sp9vGwEXdJeT9df1GmQiwFJ80yy4CqiYcjX2y0+/lElz8
+         N00w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763990603; x=1764595403;
+        d=1e100.net; s=20230601; t=1763990757; x=1764595557;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=zbww/NgD2AE3J/TJqn2vsb/KttOeSME+r4Tx3HIAVgY=;
-        b=AIvualhf72NQ7dUeu0d8YbnvE+PY4PhiEth0oRQAGix1inaSfmSMbH/JbjvdbX3m9g
-         mV/629M9EWjV3R5bs5maDHXcVWgBfHtE0ZSA4ySgzQiglgW861ac0kuBj8c5XmIj8E87
-         3/hsMfCfBqJcMLZ14P7B9gszSOIdY4UORykjWVlak7L35B51Wd6fB2lQpDwl6TTngN32
-         HYsJXYKILtv6YQxxUwZyw5njMHs9AhrQd189r1ptFFMvofulhbJec/choapbIAThv9pW
-         7OhlqsouGlr2J65Y+2hWjMulvStH8m7Hwuqoq0ApUqXl1tHJujhSyM/dUv2Y1PZA1UGv
-         MkHQ==
-X-Gm-Message-State: AOJu0YwK62cWqN7OE4+/9tD1Ovs3mEg836TEUGO35XMqIVTp95DXL/oC
-	o7ckpz2TF55KjHu5hJhlnJ0Vwa4mCTuBBXyZbtUEwrwahnpZZctaZH/RvK11uPQv5CK1JILxj41
-	qh32S86EkTuha206oe3ryKDCBBzuA4rgaIg==
-X-Gm-Gg: ASbGncs+0YY28zAnxaKuOhHukizlhUYFkLtIVRV1sBT5zgnND+0sDX5YKEyN22QS87m
-	g47fuM1ddpLUskHjVdPMcLuuxLm0c6EmeFtbFrtYz1LatlwGWSqxhxidYzQin1ecAKjl/vuAllH
-	d7lSqt5sbYfM8O+A2CMyMCH34tr8qxbpMvyvd9KB08XEV5qn6Msuhdc5abo3YrPoOtjRLgadxvE
-	a9GtSLroZwcV3xt/8asvHtatDASch7F3vKIJH1Spo5CMGF0dH+ka4ffrOX+ANE55hrGCVYOh2i+
-	VMzE0Dn+p0huS5FefLezjoHj6E5bJg==
-X-Google-Smtp-Source: AGHT+IEYbtlCg+w3QkAkmD5y+p0BaPpRQdmOJdejSrf6e10Jhc/zB4c10yoOAzytH6S1xU7uFjfMys9H8gZHk8PlsUI=
-X-Received: by 2002:a05:6122:546:b0:559:6723:628c with SMTP id
- 71dfb90a1353d-55b8f02589cmr3019054e0c.16.1763990603359; Mon, 24 Nov 2025
- 05:23:23 -0800 (PST)
+        bh=CtswvUDPvr2cPQ/fma5BJNVDo6mJIkl69UZo58tSN3o=;
+        b=UUByoTRmOmxuqAc3AIOMbU8TNZ4KM68boN1u9BxsMhIqtabJcqZYH+fP0OrGsgLQYl
+         8yW7nI9jhTlp6isAicvrO2lD+mGjbUCZT7UHkKTxxI0548y5tjS87QvbKBTr185j+XeI
+         A9ztB+29dbV2oA+K4eMyCJY1EzGGLxayr3i8VCgu+YdRPtMjy60XRK8YoaRNFYaJhm84
+         turo43GpxtN/Lhn3tvHeHxQuIThBugKbqWoMpbuQDvnVr+sVL7WIIjvQn/CUkp798FFa
+         xJ/yGAZ4EKKEpPSZkH6Nw0gZgEiTU724zEXvvWckWTRzPYUGN7pyyDAP2zWWgQLYe9nz
+         qCQg==
+X-Gm-Message-State: AOJu0YxIApdfzN2HKUAbkyGh8ZEpzzQ+6++dLsKiGixnRDCKky8PXO3P
+	V8IknY8NiGVvRKnbnHdk/6Gz+MwVFg2ymt+MzvC3ms7B7lh0uYtdSfXW6usf3qN/hLSfFzSUyOV
+	kOE144iXIC9yCVFLcDiXO29r746o/wkg=
+X-Gm-Gg: ASbGncvuooPbLTy6hpKZvv4E0S/Bv3tNeBH3UrcngaZ1QKNweUUySowziGT3mOq831V
+	SZ/PCukDosd2cVufDU2Mb/uNxg9nCr5Gh7lQp35Uu8RrMCRAgQkW2vRiJTR1kZArTALtJ9wkxhe
+	Rq9auRvMaMI1V9QWqpQyEq1UN03fHoZa9wiV+HQvQpIOuHLpxULJmdPbuojzRcOUT2lnyEmdTnK
+	JTN1DgU9q3e4PcHkHyAipr0Wl2wLNy8bqbdX4WhWb5nliGNZdwtEXkgHR19sWGzRE3DY5fRga2M
+	vLvxIwdsv1PnmFWzv9XjywD5r9jpkw==
+X-Google-Smtp-Source: AGHT+IH35R2+ptW/s9UIk7aZPZRqR0wTsOuKuCK4Xp7FRbgFuweB7kViAtuVBfJlukI4y0j0uBlYjFxyl77+8JEk520=
+X-Received: by 2002:a05:6102:5107:b0:5db:ef30:b74f with SMTP id
+ ada2fe7eead31-5e1de0c07b0mr2888296137.8.1763990756962; Mon, 24 Nov 2025
+ 05:25:56 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 24 Nov 2025 05:23:21 -0800
+ HTTPREST; Mon, 24 Nov 2025 05:25:55 -0800
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 24 Nov 2025 05:23:21 -0800
+ HTTPREST; Mon, 24 Nov 2025 05:25:55 -0800
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <3kdv5xzzoci5hmxau2qwhwtkx5rw7752vdb4a2mricrgt5vdqj@oxm7jvcr6ysy>
+In-Reply-To: <xmqq34675pz1.fsf@gitster.g>
 References: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
- <20251119-kn-alternate-ref-dir-v1-2-4cf4a94c8bed@gmail.com> <3kdv5xzzoci5hmxau2qwhwtkx5rw7752vdb4a2mricrgt5vdqj@oxm7jvcr6ysy>
+ <20251119-kn-alternate-ref-dir-v1-2-4cf4a94c8bed@gmail.com>
+ <87pl9b5wos.fsf@iotcl.com> <xmqq34675pz1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 24 Nov 2025 05:23:21 -0800
-X-Gm-Features: AWmQ_bnYeDQaYurIX3nnsDcAAwn_Dw9IovHqoQeJuoMHs0eYKoAgsolzTxkD7r8
-Message-ID: <CAOLa=ZS0oTvVK7bYGwOx-RhnfFw-p+ZjChJ5-3C-790qqLqX1g@mail.gmail.com>
+Date: Mon, 24 Nov 2025 05:25:55 -0800
+X-Gm-Features: AWmQ_bko-XiFjrNpT9bHij6esBssRzspBzGa1PdEhMIZRndADGDkk6DlltcjX-k
+Message-ID: <CAOLa=ZTn5UEqifJrJcVfCt=YyVOa3CMdLRsLpG=g4x2vmDPeKQ@mail.gmail.com>
 Subject: Re: [PATCH 2/2] refs: add GIT_REF_URI to specify reference backend
  and directory
-To: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
 Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000004d10ba06445711dd"
+Content-Type: multipart/mixed; boundary="00000000000074cda50644571a8c"
 
---0000000000004d10ba06445711dd
+--00000000000074cda50644571a8c
 Content-Type: text/plain; charset="UTF-8"
 
-Justin Tobler <jltobler@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 25/11/19 10:48PM, Karthik Nayak wrote:
->> Git allows setting a different object directory via
->> 'GIT_OBJECT_DIRECTORY', but provides no equivalent for references.
->> This asymmetry makes it difficult to test different reference backends
->> or use alternative reference storage locations without modifying the
->> repository structure.
->>
->> Add a new environment variable 'GIT_REF_URI' that specifies both the
->> reference backend and directory path using a URI format:
->>
->>     <ref_backend>://<path>
+> Toon Claes <toon@iotcl.com> writes:
 >
-> Ok, we include the reference format as part of the URI here since it is
-> possible that the alternative reference store could be using a different
-> backend that what the repository is currently configured to use. Makes
-> sense.
+>>>     <ref_backend>://<path>
+>>
+>> I like this idea. This would allow us in the future to also do something
+>> like:
+>>
+>>     reftable+nfs://10.11.12.13/ref-dir
 >
->> When set, this variable is used to obtain the main reference store for
->> all Git commands. The variable is checked in `get_main_ref_store()`
->> when lazily assigning `repo->refs_private`. We cannot initialize this
->> earlier in `repo_set_gitdir()` because the repository's hash algorithm
->> isn't known at that point, and the reftable backend requires this
->> information during initialization.
->>
->> When used with worktrees, the specified directory is treated as the
->> reference directory for all worktree operations.
->>
->> Add a new test file 't1423-ref-backend.sh' to test this environment
->> variable.
->>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>  Documentation/git.adoc |   8 ++++
->>  environment.h          |   1 +
->>  refs.c                 |  53 +++++++++++++++++++++++-
->>  t/meson.build          |   1 +
->>  t/t1423-ref-backend.sh | 109 +++++++++++++++++++++++++++++++++++++++++++++++++
->>  5 files changed, 171 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/git.adoc b/Documentation/git.adoc
->> index ce099e78b8..a1d1078f42 100644
->> --- a/Documentation/git.adoc
->> +++ b/Documentation/git.adoc
->> @@ -584,6 +584,14 @@ double-quotes and respecting backslash escapes. E.g., the value
->>  	repositories will be set to this value. The default is "files".
->>  	See `--ref-format` in linkgit:git-init[1].
->>
->> +`GIT_REF_URI`::
->> +    Specify which reference backend and path to be used, if not specified the
->> +    backend is inferred from the configuration and $GIT_DIR is used as the
->> +    path.
->> ++
->> +Expects the format '<ref_backend>://<path>', where the 'backend' specifies the
->> +reference backend and the 'path' specifies the directory used by the backend.
+> I actually thought from Karthik's definition that what you are
+> trying to say is spelled more like this:
 >
-> I think some users may assume that the path to the reference backend
-> would be something like ".git/refs" similar to how
-> `GIT_OBJECT_DIRECTORY` is usually ".git/objects". It might be worth
-> clarifying this in the docs here.
+>     reftable://nfs://10.11.12.13/ref-dir
 >
 
-Fair enough. I'll amend the commit.
+You're indeed correct.
 
->> +
->>  Git Commits
->>  ~~~~~~~~~~~
->>  `GIT_AUTHOR_NAME`::
->> diff --git a/environment.h b/environment.h
->> index 51898c99cd..9bc380bba4 100644
->> --- a/environment.h
->> +++ b/environment.h
->> @@ -42,6 +42,7 @@
->>  #define GIT_OPTIONAL_LOCKS_ENVIRONMENT "GIT_OPTIONAL_LOCKS"
->>  #define GIT_TEXT_DOMAIN_DIR_ENVIRONMENT "GIT_TEXTDOMAINDIR"
->>  #define GIT_ATTR_SOURCE_ENVIRONMENT "GIT_ATTR_SOURCE"
->> +#define GIT_REF_URI_ENVIRONMENT "GIT_REF_URI"
->>
->>  /*
->>   * Environment variable used to propagate the --no-advice global option to the
->> diff --git a/refs.c b/refs.c
->> index 23f46867f2..0922f08c9f 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -2186,15 +2186,66 @@ static struct ref_store *get_ref_store_for_dir(struct repository *r,
->>  	return maybe_debug_wrap_ref_store(dir, ref_store);
->>  }
->>
->> +static struct ref_store *get_ref_store_from_uri(struct repository *repo,
->> +						const char *uri)
->> +{
->> +	struct string_list ref_backend_info = STRING_LIST_INIT_DUP;
->> +	enum ref_storage_format format;
->> +	struct ref_store *store = NULL;
->> +	char *format_string;
->> +	char *dir;
->> +
->> +	if (!uri || !uri[0]) {
->> +		error("reference backend uri is empty");
->> +		goto cleanup;
->> +	}
->> +
->> +	if (string_list_split(&ref_backend_info, uri, ":", 2) != 2) {
->> +		error("invalid reference backend uri format '%s'", uri);
->> +		goto cleanup;
->> +	}
->> +
->> +	format_string = ref_backend_info.items[0].string;
->> +	dir = ref_backend_info.items[1].string + 2;
->> +
->> +	if (!dir || !dir[0]) {
->> +		error("invalid path in uri '%s'", uri);
->> +		goto cleanup;
->> +	}
->> +
->> +	format = ref_storage_format_by_name(format_string);
->> +	if (format == REF_STORAGE_FORMAT_UNKNOWN) {
->> +		error("unknown reference backend '%s'", format_string);
->> +		goto cleanup;
->> +	}
->> +
->> +	store = get_ref_store_for_dir(repo, dir, format);
->
-> Since we don't update the reference format stored in repo, if we were to
-> run:
->
->   $ GIT_REF_URI="reftable://<path> git repo info references.format
->
-> it would still report what ever the repository was originally configured
-> with. Since only a single reference backend can be used at time, I
-> wonder if we should go a bit further and update `r->ref_storage_format`
-> to be inline with how the repository reference backend is configured via
-> `GIT_REF_URI`.
->
+> IOW, the underlying URI to "reach the resource" is in the <path>
+> part (i.e., "nfs://<addr>/<directory>").  And I found it somewhat a
+> strange syntax, because the "to reach the resource, visit this" URI
+> may not necessarily look like <path>, and I also wondered if
+> spelling it like <ref_backend>:<URI-for-resource> is more
+> appropriate.
 
-Updating it here won't here won't work, this flow is lazy and only
-evaluated when you actually want to deal with references.
+This is a much better way to state what I was going for, I was
+considering the entire <ref_backend>:<path> as the URI since currently
+we only deal with FS paths (for files and reftable). But that could
+potentially change. As such, it makes sense to state it as
+<ref_backend>:<URI-for-resource>. Will modify accordingly.
 
-Commands like 'git repo info reference.format' will not trigger this
-flow and will only read the config. I'm also not sure we should be
-modifying it. Because the output of such a command is to note how the
-repository is configured. We are not changing that configuration, but
-instead we're simply asking the git to use a different backend for when
-the env is provided. What do you think?
+Thanks.
 
-> -Justin
-
---0000000000004d10ba06445711dd
+--00000000000074cda50644571a8c
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 11036e0629c4a236_0.1
+X-Attachment-Id: 7c2fff1569ba913e_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ra1hFWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK2FXQy85QzQrVWxjV3Z4QjdiTVV4OHNHQkJmWDRhVApJQ1F5Rk1ZZ202
-dXI0WDBSNDNDS2xranVmMG10S3I1TVgvbElHMTQxVHQ4VzJlS3dZam5FbUthRGk4S2JxQzJJCnJE
-cXAyMzBERVkzS1FuUlFmbVJabFJPbkhicmNTR0pmTmpobm9NUTZQdVdqek1IdzV1SDZiS1ZjU2N0
-VXcwNnkKZFZNQ0hCclJYN2VySzBaSUlDSytPVUhCVWtOdk1pODVnR1NzSFNuSXQ3ZmZicjRIdnVW
-Nktvbm9MdURJRjIxUApvWU5DdFhyaWxhcEtOUzRDNlJSdnNXZVZZWXZDOWNkMnQ1UUliR3BvdnR3
-RVRYWW0zQXJNaUd6NTl1MGNvYUhJCnZKUnZoOFVya1NGRC9Ib0dtdjhBQzdTMkNqcGtiTkc4SGtF
-YkpoeWk0RjYxSnBEc3NOZTUrUWJzeXMwVTJtazMKOTVGdUp2TjdxSEx4RGRrSFFrSkxIaWx3Q0M1
-aVJwajR0c2FVMXhNV2ViMUdVL3psZ1ZoT3g0cGdlMjB1NUVrago3REZxS2N2b1JrMmxqdzdlYTVI
-eWxDM1dKRlNGRXYybkg2Sm4zeVBYREhqSHRmb1EzVDRVcmd4MTRHLzdJbXM5CjF3YzB1SDRhUnVC
-dEFGYUw5Q0N4QUxpZnYzSEt5N1UrcGtPaVo1OD0KPVRsQy8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ra1hPSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMEhGQy80MWI1SStia2dTek93SzBtck5OK2YyYnV2dAp4R1d5L1FBdys4
+enptanljc2pKd1EvaCtLam02VUVieWxZdHVxUmlsSHMwRnpTZS9IT3JWYzQ5Q1o3RmJENTJtCmFE
+Nmk4QmtVUDBNeDV4aXd2UDhON2wxT3kxelROb0djWXBrMWpkaXFBNEVQUkwxTWd0SVAzUEUrY3Vj
+ODYrMW8KQzNlc2JEUy81R3lsbkJjaTI5ZWxERVFQMWZ5aG1wK1U2bEJZRm5VMGtGeTFpUzN2VWds
+NkFOWGtkMUJZbUMrcgpHUndFYWZJMTFrbndxcDFWZVludFpQN3QwVVo2RVUzb0JvRnVNNEU2WFNk
+a2ZZRjhQNGlrVUswU3h0eWlnbHRWCnFxQ0U0dVNicWZjUHBMZVk5dzY0TGJxNEY4RHUveWpOV25v
+QmZweFR1N2FwWTdSYTAwK3FXWWZUUXd3aWluSGsKZWJvaUVCaUZqYkxxWC95VDEvZ3NEWTNOZ2FY
+SklDR09vc3lTVnBlQmtFazNyNE5EUmNoSnl6OTNLZ1cwSFRreAp6enJZZXZOdnN1Y2JYUEdSRlA4
+MW9KbEp1amtkVERhTWxudnVma3BNWmdVTWRnN3N1RCtubFdaVS9JalhaQXhNCktvMzNoVUJUNDFL
+TXpyR3k5dHNUa2hjYS9OVE02RldCNVczQytwRT0KPUlTUTMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000004d10ba06445711dd--
+--00000000000074cda50644571a8c--
