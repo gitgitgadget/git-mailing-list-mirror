@@ -1,88 +1,93 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E622F0C46
-	for <git@vger.kernel.org>; Tue, 25 Nov 2025 19:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3255C338582
+	for <git@vger.kernel.org>; Tue, 25 Nov 2025 19:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764098859; cv=none; b=jRvARxIt4v8v/8W9HIw67+nF79U24oAijeRgBZPpwzdNcU6N8LkSdvtHHqv+XqanwYnw15M0cLeBcTnFttrgTaS99LtqvHulN/8eS4mrSPOOmocBSr93+xlThvAjauOF00zOfedVotc1gVCvXFX9STRiHg4fbW6qoNe7V2+wQm0=
+	t=1764099055; cv=none; b=JrILFVzgAEhorKqm2YfnHTuKtjX1RqcjYJ4TRJ380CQ1ycrrr8hX9fenCsAfKLyI2gOTNjXdAgAisSarV0bZ91WE2Qd8xaOfprTtHl4EgIZTqbdgcYMRcSPYwLE2ts8oLJtN5b6gIL/5aQ4e8MBeyeNDBFdjqS0dMr0VrgCvobY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764098859; c=relaxed/simple;
-	bh=cmg4vjvaf0PVIG6i1FQ+6ZGy4LZGyXbl/vIIA9Oc+XA=;
+	s=arc-20240116; t=1764099055; c=relaxed/simple;
+	bh=sBRVeW3BSyf9HGJLIIPu7Q7DCOYmFV0saiXyz05udpw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=m6ot0QAXguRYLASrUR8UaxcGNIoyct6J3Uvs+CkQ4SN/dzGp3OcFiZ/qz0WNOHDjHUs3nfp1igFi/dP442Pwsjq5W0StRQ9H1XF5cbOFMuPus2NvRspWvYEAXN5ng9n9i3w0j/3Z0VCqJAKje+8FU8rKxKT5HtEwYfwXpBYyVh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U/p/12w6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rR1nWK0M; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=fLdjfe9PSQ757hw1W9we79VR3mMiOe4Ot8g2rAg13ma0UM6oTXzJM8kWUZiE5IvTd72dS0zlMT807LchxFP6iNwV1uwGqJzlzxvxTsWAEaEg3I7AUQax/AT3fIavs3IIr0X2Z1jc/mgWjx3+vDu7kkxhwT1/broNTNoQ21tezmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=THGYhD2r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xd7TMdEB; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U/p/12w6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rR1nWK0M"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 474641400138;
-	Tue, 25 Nov 2025 14:27:36 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 25 Nov 2025 14:27:36 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="THGYhD2r";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xd7TMdEB"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 541E0140023A;
+	Tue, 25 Nov 2025 14:30:52 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 25 Nov 2025 14:30:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1764098856;
-	 x=1764185256; bh=pfFkoo7nQkI1puK3nH3lQcxKW2H/raHcD1kiLkWHB+c=; b=
-	U/p/12w6IkN2VK3tdlT8mvN92dRmG0L8+8LHMfVDZJWIeK5/U7tZdL1kXMWgaFYJ
-	/LKfllLpnF02VbyZOiVl5BDqviPNhW+GHJFy2cjGg2IYTou/cE5E7XBVUbbGzcVp
-	VSDO8SGwUns3pH40hzk4zes6U8ae17juKX/Jp4H/4/QHRBnbgH2z9jpDjBRV5/cx
-	qqXn+PULjS9TmT/cPC8SXNazqcehmo2MZcX1QZQOd0mbi3ap2quc9KFD8fGWYv6t
-	3ofSW3y9V1MBd3cyxhgAeZKPlGsncutdRjoCsNhdquugpwGGSiFzPtWAziqKyPni
-	RkQg/kLPPxr50meXujrICw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1764099052; x=1764185452; bh=9nregakLmi
+	9juRzepI2EAdAarsCrcEvL75I0O981Yig=; b=THGYhD2rLeHVtBZFCvKiglHxWF
+	Bsi4r4K2NMedB2gJxl6cgEZDcYvG4Ej0C4f9XepIrirhP6LSUJdjEfwZHDiW45/j
+	bPNkOLLS+9BMuvfsbJAyyfnS4KFTkio8bCy5J+dprD8H5S2JV3McuY+wPnyRO+V5
+	cFVypSXgDHE1XzSDmv/5KlIRHMnht9yI3Lr9yLX9uD5kFZUp1Bk/I3/uIvwX0ZoR
+	+idJRIol0aN91DQoHBcqStUBAy4aN8IHMr1RCuVgeQOwPuOHmdnaZ8qX1CZxxLSW
+	Fq11RogZ8GCnuS3qW8odUAztkQvfNHo5zyILovfoDj/NM1kcBvhU2suWWReQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1764098856; x=
-	1764185256; bh=pfFkoo7nQkI1puK3nH3lQcxKW2H/raHcD1kiLkWHB+c=; b=r
-	R1nWK0MfoVaiuP2MdyYv5i7fzr+bjAOOakrLr4lqDShkxGWYxeu8Far/lDNaKaj/
-	rtyYbxi8OEQlIh2+0bSSkdC6K0Qa/Tbh0wxc9bwkyyN2axwb1GsUHcW++xhBuUbH
-	nBFiS/piYOpztmFYYlcguOXMYSsAdPJkroRnHyVQpw9cTFxg5vXvztZonmS+XpIZ
-	RFHIcsRmPqIoahBobPg1Xxl1pKpjowwGNESlW39cYZBiji9ODGErA+KLv/uc509s
-	Ryqb9i6dKvAI0nFeynWsw5rHbOFOYxFOo4RkDelXZznsi25iKL0QNVhbqpzZaqvS
-	bKduhtdsnn2MfgoPyUVpQ==
-X-ME-Sender: <xms:JwMmaROMpKQ8in3xHe5iFxfQ9X26UGAA5kAIQlr9iB_3GtduS8INGw>
-    <xme:JwMmaa2cmabXb1YrUR_x990-ngBsigbquyTtqsHGcey58gDscFpNqfHQ5ISDn9jJH
-    Tb1adD5xpniPREPWOx-fbjIqRshZtg47v85nYtHWMQW8LzF-6criQ>
-X-ME-Received: <xmr:JwMmaYm2uQpoPSibznRZM0-Mdw22cMi9t9aNzUifgaXaZvsw39ZE8SvSaFae6lpEKa4Ojx5e_eVUvKGKglDEZam11bHyQTtt1Gqg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgedvfeduucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1764099052; x=1764185452; bh=9nregakLmi9juRzepI2EAdAarsCrcEvL75I
+	0O981Yig=; b=xd7TMdEB5LXnAmRIbhSwsdtHtAPMEXV6dhmy7jPALEhnEmApqfi
+	fjlHDPYlTSXLSLHyq9oTfqGVk4af61WXgD38B6nSCPtXvy/EaY498Kf0UR8jokPU
+	F1CZx34hq5jUToQ3vad40OoDO/H0JHMADK2S6mnCgzG9U7b3C+ElaMqDIrSJir6T
+	QqPK8PQ2PVIKEdV5iaZMaJje8hmXwrYziZZHF6mLWMagTyrniDh4jKP+a740t/8H
+	Ng9z9MOzhoOhweziAa03yDGaI7rK6jPT5V/U3XeAQHBDEd/zwAOSrUrpatFJOS56
+	JZSeAOkRiC35RJEQbBzUQaPP28IyGGACa+A==
+X-ME-Sender: <xms:6wMmaTnuU1aYrcszGRJDwgKN0nmnk4dA4-CfJCdod0gV6n8ZwIpWgQ>
+    <xme:6wMmaRO5hLtwqnKvMuz4ZfAqRu5gP3gYmlC83OaoWeQrSvSmNz2Nr0mZS6pZ5mB7X
+    JMPCHNALR5PMb3KG_lbQoj25p97e2SCqJxRXnkGy0INxpgvKDQXZA>
+X-ME-Received: <xmr:6wMmafx-FNoJ2qi4H1DufzsZAoso6ae_Wnaj8ZIfilf1sNnNl-zrgYOrtpARbPz3snsQFNeFQExO6df1UKsO6pdchtsyCVAsPri8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgedvfedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnse
-    hgmhigrdguvgdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:JwMmaZX4_gTc4NtDsiyyu_4i3or8-XTTedH8ZkeVI38Nvo3M4bE8eQ>
-    <xmx:KAMmaWtyV8imVmibvkFJRKOwc-giedq3EgKCrf9Sc1nN6fS_1ZFNnQ>
-    <xmx:KAMmaUYzqCbasuUb7u9IYQ4LDouo8MoaJWiN5BhwjwI6dt3LcGrIhA>
-    <xmx:KAMmadUAcOIKN7_oH-NcPmNJdsnfFdaBrOrJEeHzYBPxgNXWsUXqew>
-    <xmx:KAMmaWJFkrGFFnY4Q9h0Jzk4C59-6NaOdyIBlo7VZCzlJK-slLp_quKe>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhephefhkeefkeeiveelveekveekkeelgedvvdelgfeuhffhgffgieffjedviedv
+    gfegnecuffhomhgrihhnpehsvghquhgvnhgtvghrrdgtfienucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgt
+    ohhmpdhnsggprhgtphhtthhopeduhedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsth
+    hirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdr
+    ihhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepph
+    hhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehphhhi
+    lhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehkrghrth
+    hhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghouggvsehkhhgruhhg
+    shgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:6wMmaWudh_gwqfVkcWUww34bWerjXefe5iJtNbtVc2MKFflEFt-Q8g>
+    <xmx:6wMmaaYt-yUl2Na_Z109ITuXL4Gk6XPCRKOUbQctIUdeAj0Kgm1bog>
+    <xmx:6wMmad0GqBNCdXDVh8KKMPVNgpZgqPHVgcpBju-L2jnY8-63EfGS9g>
+    <xmx:6wMmaUvqVK-uNsVZesbhYSSoFqXX6zotKWwF5ukTR9rkYIV0nN-8pg>
+    <xmx:7AMmaRBep9r0NgD82bxU7O06-Yp_qBNsn6do62YcCG7BDNV3JieKfvpX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Nov 2025 14:27:35 -0500 (EST)
+ 25 Nov 2025 14:30:51 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Elijah Newren <newren@gmail.com>,  Johannes Schindelin via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] ci(dockerized): do show the result of failing tests again
-In-Reply-To: <d8054499-aacc-f697-c117-116729432c3a@gmx.de> (Johannes
-	Schindelin's message of "Tue, 25 Nov 2025 18:40:39 +0100 (CET)")
-References: <pull.2003.git.1763399064983.gitgitgadget@gmail.com>
-	<CABPp-BErdhTjbqDem4Xvc-XbhgLUEpy9-eiaaR1F_diMca--6A@mail.gmail.com>
-	<d8054499-aacc-f697-c117-116729432c3a@gmx.de>
-Date: Tue, 25 Nov 2025 11:27:34 -0800
-Message-ID: <xmqqsee1rjyx.fsf@gitster.g>
+To: Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im,
+  newren@gmail.com,  phillip.wood123@gmail.com,
+  phillip.wood@dunelm.org.uk,  karthik.188@gmail.com,
+  code@khaugsbakk.name,  rybak.a.v@gmail.com,  jltobler@gmail.com,
+  toon@iotcl.com,  johncai86@gmail.com,  johannes.schindelin@gmx.de
+Subject: Re: [PATCH 1/1] replay: add --revert option to reverse commit changes
+In-Reply-To: <xmqqwm3drk6m.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	25 Nov 2025 11:22:57 -0800")
+References: <20251125170056.34489-1-siddharthasthana31@gmail.com>
+	<20251125170056.34489-2-siddharthasthana31@gmail.com>
+	<xmqqwm3drk6m.fsf@gitster.g>
+Date: Tue, 25 Nov 2025 11:30:49 -0800
+Message-ID: <xmqqo6oprjti.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,36 +95,84 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Hi Elijah,
+> In do_pick_commit() where TODO_REVERT command is handled, we find a
+> code block that is almost identical to what this patch adds to the
+> new helper function; it should be rewritten to call the new helper
+> function or perhaps a shared helper function is introduced and
+> called from there and also from the sequencer_format_revert_header()
+> function, if there is still some impedance mismatch.  If such a
+> refactoring is done as a separate preliminary patch in a N-patch
+> series, the resulting patch series may be easier to follow (and
+> there may be other opportunities to reuse existing code more).
+> ...
+>> diff --git a/sequencer.c b/sequencer.c
+>> index 5476d39ba9..e6d82c8368 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -5572,6 +5572,29 @@ int sequencer_pick_revisions(struct repository *r,
+>>  	return res;
+>>  }
+>>  
+>> +void sequencer_format_revert_header(struct strbuf *out, const char *orig_subject)
+>> +{
+>> +	const char *revert_subject;
+>> +
+>> +	if (skip_prefix(orig_subject, "Revert \"", &revert_subject) &&
+>> +	    /*
+>> +	     * We don't touch pre-existing repeated reverts, because
+>> +	     * theoretically these can be nested arbitrarily deeply,
+>> +	     * thus requiring excessive complexity to deal with.
+>> +	     */
+>> +	    !starts_with(revert_subject, "Revert \"")) {
+>> +		strbuf_addstr(out, "Reapply \"");
+>> +		strbuf_addstr(out, revert_subject);
+>> +		strbuf_addch(out, '\n');
+>> +	} else {
+>> +		strbuf_addstr(out, "Revert \"");
+>> +		strbuf_addstr(out, orig_subject);
+>> +		strbuf_addstr(out, "\"\n");
+>> +	}
+>> +
+>> +	strbuf_addstr(out, "\nThis reverts commit ");
+>> +}
+>> +
 >
-> On Mon, 24 Nov 2025, Elijah Newren wrote:
->
->> On Mon, Nov 17, 2025 at 9:17 AM Johannes Schindelin via GitGitGadget
->> <gitgitgadget@gmail.com> wrote:
->> >
->> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
->> >
->> > The quality of tests/test suites does not show as much when there are no
->> > breakages as in the amount of time required after bugs trigger test
->> > failures before the bugs can be identified, analyzed and resolved.
->> 
->> I found this paragraph hard to parse.  After re-reading a couple
->> times, does the following convey the same meaning?:
->> 
->> The quality of tests and test suites is most apparent not when
->> everything passes, but in how quickly bugs can be identified,
->> analyzed, and resolved after test failures occur.
->
-> Yes, this reflects what I tried to say.
+> Dedup with do_pick_commit() where this was taken from.  Possibly in
+> a separte patch before the main one.
 
-So, do you mind if I locally amended the log message, or should we
-expect an updated patch sent to the list?  For a small thing like
-this, either is fine by me.
+Forgot to attach this at the end.  What I meant was that something
+along this line may be a good starting point.
 
-Thanks.
+ sequencer.c | 14 +-------------
+ 1 file changed, 1 insertion(+), 13 deletions(-)
 
+diff --git c/sequencer.c w/sequencer.c
+index e6d82c8368..29909952d4 100644
+--- c/sequencer.c
++++ w/sequencer.c
+@@ -2365,20 +2365,8 @@ static int do_pick_commit(struct repository *r,
+ 		if (opts->commit_use_reference) {
+ 			strbuf_commented_addf(&ctx->message, comment_line_str,
+ 				"*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
+-		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject) &&
+-			   /*
+-			    * We don't touch pre-existing repeated reverts, because
+-			    * theoretically these can be nested arbitrarily deeply,
+-			    * thus requiring excessive complexity to deal with.
+-			    */
+-			   !starts_with(orig_subject, "Revert \"")) {
+-			strbuf_addstr(&ctx->message, "Reapply \"");
+-			strbuf_addstr(&ctx->message, orig_subject);
+-			strbuf_addstr(&ctx->message, "\n");
+ 		} else {
+-			strbuf_addstr(&ctx->message, "Revert \"");
+-			strbuf_addstr(&ctx->message, msg.subject);
+-			strbuf_addstr(&ctx->message, "\"\n");
++			sequencer_format_revert_header(&ctx->message, msg.subject);
+ 		}
+ 		strbuf_addstr(&ctx->message, "\nThis reverts commit ");
+ 		refer_to_commit(opts, &ctx->message, commit);
