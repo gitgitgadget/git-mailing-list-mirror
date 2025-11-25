@@ -1,41 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F64F272E42
-	for <git@vger.kernel.org>; Mon, 24 Nov 2025 23:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619DC3EA8D
+	for <git@vger.kernel.org>; Tue, 25 Nov 2025 00:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764028534; cv=none; b=ggVHUzYUDoMMF3JrIi1suV5G8uJ+3ffcho0uRXKWy+/zAipIEYXHIRm6qDhlLyol+yD5cxsxuxeJv9JtcHVJeQoz9gg5V4iWN9l6s0hw4I950fespDFaXCVa4qFiL5FO8d90Dj4e283xwx3soHqqPqIrAxv+PjcrHsqWHmE/72g=
+	t=1764030512; cv=none; b=JBbMW0cBiTQPSQTUBl0D7xMFEvuZlnbnIzJLkdOkSfeK51OiuVAUvtzwdNQt/j8taaIdeYon1VH4Ed2QLr2Vk7ZaFPgGUUCFqbMsXAvKwgmb4AtJaEb2xCi/xoEuZdiV9Lv5CzvQsYXyy75gefZNn1LSp63YXq1BmvyfLSNcdw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764028534; c=relaxed/simple;
-	bh=bfyWO1ALWtHtV7CucUaVvNa3ag0IM9YxSoHbAVxfR+0=;
+	s=arc-20240116; t=1764030512; c=relaxed/simple;
+	bh=z3m4V/j/H2vI+quOxOEoEkb+kZ1cLiRp3Nuq4IfyT/c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EO7pGw0g+RDCMT4eHNj6oy0pTvfQdpj+l87bE3yd7W58eVXIVuz9a+RtVvtKWf+msqg3Czbz65htElQI/Wn867aD3UUJVyIG/LuyZXpAhK2SAi51SMK8bE6OYETy5rRRoo3zezEDAxLchusMu/nbmAcM+bEe/KiEz5Fmm2TMNhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=X1avWJva; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=j3prkruXfHx9AoXgeC7DTMfjff7WazXEK3mz+aju9HSx64DBiAadMjvB50UgjK+PrwVBuOvhLZRJMtJWkJ3+t7rPxi8Qdgg6oRZoTLfO6O/6yYb17pUWifIzZvqcC2MHTtCNPuQ7+UT27sERsHM4iXBre8tcasJJ9bLBmMsEjPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QpyowTiQ; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="X1avWJva"
-Received: (qmail 92120 invoked by uid 109); 24 Nov 2025 23:55:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=bfyWO1ALWtHtV7CucUaVvNa3ag0IM9YxSoHbAVxfR+0=; b=X1avWJvaMHQSQstRCv/JhD6M0TJ6sz5bONFTdSpCWriA/EePQys0mEZ5PEdNkC/81g2HZ8Cn7tC1Jzco/I5D5WF+D0PxUuWQGueIOgNrU451LdZ6e9NMgA5JBRnwx7IoPqwlPv53nNJ4CAxycUNSzXINSAFYTmTPH92XjnzVFbmpAXlLlwsZYJT7N74qQF0xeJlvPIQH+8ZqfCSMQqch/txKnChngrI3AIsCgUymigAOBJ7c2bF6hjU9vBQquyxz2uwYU8j6RA1bwcR8Aphrh4mPE7O0DwWPxjuUb9jgWFcMEUqyKvUYJkqGI+18BCqwW7C5sD2xfKHS09WVTTR1tg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QpyowTiQ"
+Received: (qmail 92207 invoked by uid 109); 25 Nov 2025 00:28:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=z3m4V/j/H2vI+quOxOEoEkb+kZ1cLiRp3Nuq4IfyT/c=; b=QpyowTiQ/9D+4c6pd44ZL4HSvL7mWCW9aFAln6BB5zgvD53HZNmJxWhWNjBXRkd7ynKFrhCb8kc9qguzg9OzGeTWwkUEDSyghJYvRT75Clwu1swXoqj2d++jfgjROnHFkMIq9+YM5fzKf3SBeBZPjpeuITCRAdv+NhGfTvNFlZ+zMCOQXfW7VSDPHZ3Uzo9sBRlTC8QpdiD9oETZUNp6StBwsFjxypF1hvKI95tGu3oXHVIf8/bFU1hZDFEwrddk46s+U7kADYwlyaP7eoIFlZphR/k3BM8q7xlPgLIHUpr4BfCC31EQVHRX7ugFp3r3sCcuqdDCdLk+7w1SX6s8rw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Nov 2025 23:55:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 25 Nov 2025 00:28:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 157064 invoked by uid 111); 24 Nov 2025 23:55:33 -0000
+Received: (qmail 157554 invoked by uid 111); 25 Nov 2025 00:28:32 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Nov 2025 18:55:33 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Nov 2025 19:28:32 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 24 Nov 2025 18:55:30 -0500
+Date: Mon, 24 Nov 2025 19:28:28 -0500
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-	Ran Ari-Gur <ran.arigur+git@samsara.com>, git@vger.kernel.org,
-	"raa.lkml@gmail.com" <raa.lkml@gmail.com>
-Subject: Re: [BUG] `git clone '-c KEY=VALUE'` no longer works
-Message-ID: <20251124235530.GC2051672@coredump.intra.peff.net>
-References: <CAN1UxBvk_GJjLWd0XexRxp8FFhYozGCNcodai0eqnjrhjKEh7Q@mail.gmail.com>
- <CALnO6CBJppT3ELyu54rJvP+uqcMomJS9Nr_JTgfssn8iqG7MWA@mail.gmail.com>
- <xmqq8qfvw2lh.fsf@gitster.g>
+Cc: Han Jiang <jhcarl0814@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: `git config get --type=path` results in segmentation fault on
+ value starting with `:(optional)`
+Message-ID: <20251125002828.GA2353309@coredump.intra.peff.net>
+References: <CANrWfmQUuGKWPc6JCzeCaa9t98ag_Lyk0G_Prtd8YmqP-TiRpg@mail.gmail.com>
+ <20251120075019.GA1283645@coredump.intra.peff.net>
+ <xmqq1pls8xeu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,94 +44,130 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq8qfvw2lh.fsf@gitster.g>
+In-Reply-To: <xmqq1pls8xeu.fsf@gitster.g>
 
-On Mon, Nov 24, 2025 at 01:19:22PM -0800, Junio C Hamano wrote:
+On Thu, Nov 20, 2025 at 08:46:17AM -0800, Junio C Hamano wrote:
 
-> Hmph, as documented in "git help clone",
+> > I put a [*] above on "more or less does the right thing" because there's
+> > another corner case, even for callers like commit.template. What should
+> > this:
+> >
+> >   [commit]
+> >   template = :(optional)does-exist
+> >   template = :(optional)does-not-exist
+> >
+> > With the current code, we will ignore the second config entry entirely,
+> > and the result will point to "does-exist". But that feels surprising to
+> > me.
 > 
->     `-c` `<key>=<value>`::
->     `--config` `<key>=<value>`::
->             Set a configuration variable in the newly-created repository;
->             this takes effect immediately after the repository is
->             initialized, but before the remote history is fetched or any
->             files checked out.  The _<key>_ is in the same format as expected by
->             linkgit:git-config[1] (e.g., `core.eol=true`).
+> The documentation says
 > 
-> I do not offhand know if the option really used to behave as the
-> original report described, but if
+> 	If prefixed with :(optional), the configuration variable is
+> 	treated as if it does not exist, if the named path does not
+> 	exist.
 > 
-> 	git clone '-c KEY=VALUE'
-> 	git clone '--config KEY=VALUE'
+> and when I wrote it, by "the configuration variable", I meant the
+> second "template = ..." line above, not the configuration variable
+> commit.template, that the machinery pretends not to exist.  So the
+> result pointing at does-exist matches my expectation.
+
+I confess that I did not read the documentation at all, and was only
+going on what I'd expect ":(optional)" to do. So you can take what you
+will from that. ;) It does feel to me like the user-facing behavior is
+driven by ease of implementation, not what users would necessarily want.
+But it probably is not worth revisiting at this point (especially
+because it is kind of a corner case for the distinction to matter at
+all).
+
+(I do agree that the documentation you quoted clearly covers the current
+behavior).
+
+> > I kind of wonder if git_config_pathname() ought to be returning more
+> > data to the caller, like:
+> >
+> >   struct config_pathname {
+> > 	char *path; /* never NULL */
+> > 	unsigned missing : 1;
+> >   };
+> >
+> > That would change the interface of git_config_pathname(), but that would
+> > also force us to make the appropriate changes in each caller.
 > 
-> does not complain-and-barf in the first place, I think that is a
-> bug.  The above option description clearly asks the user to give the
-> dashed option (either "-c" or "--config") and "<key>=<value>" as two
-> separate arguments on the command line.
+> The problem is that there is no mechanism for the function to say
+> "success" without setting *dest to the discovered value.  We could
+> introduce multiple kinds of "failure", and have callers react to the
+> differences, but then it is like setting NULL in *dest and having
+> callers react to it, so I am not sure how much benefit we would be
+> gaining by changing its interface.
 
-I was surprised that a single "-c foo" argument would work, but it makes
-sense: it is the "stuck" form of the short option "-c". So:
+In my mind, we'd still return "0" as long as there was any string at all
+(i.e., the only error is the non-bool case). And then the caller would
+have to pick the results out of the struct above. I agree that setting
+*dest to NULL is mostly equivalent to what I'm proposing. The main
+advantages of the struct are:
 
-  git cmd -cfoo
+  1. The caller gets to actually see what the value is. This may or may
+     not be useful for stuff like format_config(). See below.
 
-should be the equivalent of:
+  2. The interface change is a feature, since it requires examining and
+     updating each caller (enforced by the compiler).
 
-  git cmd -c foo
+     It looks like you already produced a patch to update the existing
+     callers, and I'll assume you caught them all. It does leave any
+     topics-in-flight potentially buggy, though. As somebody who used to
+     maintain a long-running fork, and who has a years-long backlog of
+     random topics, I do not consider "all of the branches in
+     gitster/git.git" to necessarily be all topics in flight. ;)
 
-whenever "-c" takes an option. It is just surprising to read because of
-the leading space in the value.
+     (I did check all of my topics and didn't have any new callers,
+     though).
 
-Using the long option as a single string, like:
+> On the other hand, builtin/config.c::format_config() probably needs
+> a richer set of return values.  When used from collect_config(), it
+> needs to be able to say "no, pretend that the key/value pair you fed
+> me did not exist" in addition to "that value is bogus---you have an
+> error (e.g., config_error_nonbool())".
 
-  git clone '--config KEY=VALUE'
+I was thinking that we might need some way for format_config() to show
+the original value (minus the ":(optional)" meta-tag). The same way that
+we may show include.path both as its own config variable, and as a
+mechanism that triggers an include. I.e., would somebody ask git-config
+about "commit.template" not as a path, but as a string?
 
-did not ever work (and should not), because there is no option of that
-name. It is only the stuck form:
+But the way to do that is to avoid saying "--type=path" in the first
+place, and get the full string (including the optional tag). If we had
+some kind of "--type=path --show-missing-paths" option, then we'd need
+to be able to see the missing name (like my struct proposal above). But
+we don't, and nobody is asking for it, so I think we can punt on it for
+now.
 
-  git clone '--config= KEY=VALUE'
+I did wonder also if format_config() would need to roll back any output
+for something like:
 
-which again makes sense from the config parser's perspective. It's just
-funny that the first character of the option value is a space.
+  git -c foo.bar=':(optional)/no-such-file' \
+    config --type=path --get-regexp --show-scope foo.bar
 
-So I don't think there are any errors in the option-parser side. It's
-just that we were overly lenient with trimming space in interpretation
-of " KEY=VALUE" itself. Which has now either been corrected, or
-erroneously broken, depending on your view. ;)
+which would show the key name and scope before even looking at the
+value. But because we assemble it all in a strbuf, we can just throw
+away the result.  And it looks like your patches handle that. It doesn't
+look like the tests cover it, though.
 
-> Interestingly, unlike other long options described nearby, we do not
-> seem to even list "--config=K=V" form, and that is a documentation
-> bug---other options like "server-option" is described to use "="
-> after it before its value, and to parse the "--config K=V", the code
-> uses the same mechanism.
+Looks your topic isn't in 'next' yet, so possibly squash this in?
 
-I don't think we're very consistent here. Look at --reference, --origin,
---branch, and others. I don't know if we have an existing style
-recommendation here (though we do recommend the "stuck" form in gitcli,
-which perhaps argues that we should be using that in our documentation).
-So I don't know that I'd call it a bug, but it may be a good long-term
-project to make the presentation of options more consistent.
-
-> Also, if the user writes
-> 
-> 	git clone -c ' KEY=VALUE'
-> 	git clone --config ' KEY=VALUE'
-> 
-> and we behaved as if it were "KEY=VALUE", that is another bug.  As
-> documented, "key" is in the format as expected by "git config", and
-> we never allowed leading or trailing whitespaces around the key
-> names.
-
-So yes, we did allow that until recently, along with:
-
-  git clone -c ' foo.bar   = baz'
-
-which keeps the space in the value "baz", but otherwise sets foo.bar.
-
-I agree it was certainly surprising. Despite the real-world report that
-started this thread, it is oddball enough that I do not think we want to
-continue supporting it even for historical reasons. It is not quite at
-the level of https://xkcd.com/1172/, but especially the form that the OP
-showed looks like a mistaken invocation that happened to work (and would
-not work for any other option in general).
+diff --git a/t/t1311-config-optional.sh b/t/t1311-config-optional.sh
+index 766693387f..fbbacfc67b 100755
+--- a/t/t1311-config-optional.sh
++++ b/t/t1311-config-optional.sh
+@@ -18,7 +18,9 @@ test_expect_success 'var=:(optional)path-exists' '
+ 
+ test_expect_success 'missing optional value is ignored' '
+ 	test_config a.path ":(optional)no-such-path" &&
+-	test_must_fail git config get --path a.path >actual &&
++	# Using --show-scope ensures we skip writing not only the value
++	# but also any meta-information about the ignored key.
++	test_must_fail git config get --show-scope --path a.path >actual &&
+ 	test_line_count = 0 actual
+ '
+ 
 
 -Peff
