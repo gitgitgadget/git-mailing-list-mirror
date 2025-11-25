@@ -1,161 +1,124 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C9D1487E9
-	for <git@vger.kernel.org>; Tue, 25 Nov 2025 16:42:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06DE32E73D
+	for <git@vger.kernel.org>; Tue, 25 Nov 2025 17:01:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764088953; cv=none; b=QujgCZbzXe9wm5Ohi84KbAY+cOAVohz4HiW3W/gfOOMa9+5+0BOqurEtNXP5JUuyed1OqBSqU/kBzKLFiuPZ9IZaPhjBLwnhnVbmwZjhgVC4EmLXJvO7VdJvpbsSI8XKmHhrL+JTxpd6DrNNewELzGjMuhZWg0sdS3zpRVtudgk=
+	t=1764090076; cv=none; b=VzeCfEwpH7xosXZwsfqB06tZjgf8XQ23HFINXVNxUJUpaEt9ZldEHK/LujSv5CBdtaAA4oJR37AxlQ1G4vPYzMPxrvbroaeOJcKVIzC6haJNPivh9kqQkvrI9WXSzgX/WwYPWQUQe9UDKZiNyw4FxPtvP8rdxKYHyDPT+YyQFUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764088953; c=relaxed/simple;
-	bh=LAWkjB0wtqcObXB6+NyAJOJPz8uzoZasUhNDtFLQVQY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VeflKeZTV6xatHo+03IUA1itcbvLrn/5y3Ek4s/G6vCbPviiPuirf6VYrycQzHXNKxvDmppD0DszjSgJF6TBcq3ipuW9v0b+tkRMwd3MYghjeKgw6IhpFW4JsvytakTEDymQc1z2jlKB+QlKQlkoaeaUdNRISv2QDedXln8dXUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eyTwKOaa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wmJeBq0E; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1764090076; c=relaxed/simple;
+	bh=9hLPvY9oZ/TahsZjPMn9fEblQkYp4S3Tb5sm2MBmNT8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=e1z1sPNM3IG22slDBewB8hTw4ctlHDv60OzTyDtUa69CHs23LdrTua/4At8cEus4A0gstded4OfHZv+K4oRZTNPEdYmgiDLTylmoo1KfwY9iueRuBa2KtDn7t6RVqGLcPxZnZG7VXJES4fSbF0RPlAeB7GIWHHdobkia901q128=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OQ/LTtfq; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eyTwKOaa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wmJeBq0E"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BCCE37A00B3;
-	Tue, 25 Nov 2025 11:42:29 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 25 Nov 2025 11:42:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1764088949; x=1764175349; bh=XHTjE7V8My
-	iqTIO9xQ2TGWuUnDFLi5Ylhi/xlLyB9bY=; b=eyTwKOaa/gkFHHvt6FBp5p7yLq
-	+ynjxCjM1rkUWCOVXOondx1FRvDOrPU/uSQ5vggfWDPWycFxkz/NqS//DmyyBi5D
-	tS6XFs0hkvuCt9Wjq+tA3UEuV8ODOoRy0Cdlw9CsxTa+MOmiYAncJErgFFChGJ9x
-	dbO3J4PFCgGDAUxOzjmR3LwWoR1f2dcaQJS4Y4CVMPS7X82LAM6yOn8inx+5ZW5n
-	1cxl+IK61OWwry10x4DLDEudZmhjMO11giz3xoJOwtCrNZHgr1LL0cTtgJXRd2Fv
-	89P091me7f0hMDCCc8y3CaCWuhRXqy61en93Y7Et0IxJFHQrryUVVDP3sgxQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1764088949; x=1764175349; bh=XHTjE7V8MyiqTIO9xQ2TGWuUnDFLi5Ylhi/
-	xlLyB9bY=; b=wmJeBq0EVq06i2cDegSGr4o2FlyCAKFslb79sESmLbf2T3r1ARz
-	CYgGmImGtYA67dnHoLEE/duVuSAENHxNAxOUkDthElY6bG9mMlah1Yy+FLijWR9A
-	Ispkpg2W9OSr4zkIFXQWPfW1gCRgwMb/W94OQPUBpRh5AUiVX1ZJTpGueiDw8TVe
-	/5fASOwEx8HUvyiB3VqqGICRQZXafB6N9ZF5CT3tRh3995z3riy8/vem923tPB23
-	SUPhV/azkfrV29Q/F2Ug6K9/PZ0W4m1CoZDLO/b+FjIraf3gVsYfZ6pDQOQ9iNKT
-	O7wKR0pSPMMym83SsSTc8ZTI1ic3sURdrIw==
-X-ME-Sender: <xms:ddwlaS18t6mZVQPKUuPASbfYkirbAp0fDT0dMwPi2UpS_k28zAvTuQ>
-    <xme:ddwlacENW__aS5sSqeywTe3K_TSbd8pN2LfoViwIWMSnr8XDBNJTTKu2VI2qP2hDt
-    Ja5oG5vZlND15ZXBz5LyTjSDhyWm0rZaNkKY5sWbJU1P2cKXjo>
-X-ME-Received: <xmr:ddwlaf5O9gEOUdcp6aWoa-jof3yy9Au9KjnTxq5McazLUCVQrMG3T9JhgfeDz0h_Rg_uN2tXwrM9zi3qQvyY8f3-uQE__EsknpAS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeduleekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhifihhkthhorhdtvdefsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ddwlaSvkHxDASjVOWvzbaWl7_XIMkNzjCPZTcpyEckgnvd-23PABqg>
-    <xmx:ddwlaQ7-d9NQnDN65mAAcEkds-UyZ3GjTfibtxzeDrOsO4eXqT6ixA>
-    <xmx:ddwladUN1n9Lo1bc8enxT80fIoFahzpA6kz9z-eGQ4oQMBQWaBowvg>
-    <xmx:ddwlaS9V2Ly1BCQeirqapQRTW-H4RcRkJjNrN4lIY3yE7k9oKjlYGw>
-    <xmx:ddwlabbeNCgJJ13w_5y5Dx5QiSFURCREaH3ixDCcO6ffXObZP3c0bfVA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Nov 2025 11:42:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Wiktor Mis via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Wiktor Mis <mwiktor023@gmail.com>
-Subject: Re: [PATCH] Add completion for short options
-In-Reply-To: <pull.2100.git.git.1764052739534.gitgitgadget@gmail.com> (Wiktor
-	Mis via GitGitGadget's message of "Tue, 25 Nov 2025 06:38:59 +0000")
-References: <pull.2100.git.git.1764052739534.gitgitgadget@gmail.com>
-Date: Tue, 25 Nov 2025 08:42:27 -0800
-Message-ID: <xmqq5xayt66k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OQ/LTtfq"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-7b852bb31d9so6596924b3a.0
+        for <git@vger.kernel.org>; Tue, 25 Nov 2025 09:01:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764090071; x=1764694871; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=U5b8aZHWrlmZQsjgdfH72Z05o3IyEEYclUaQoP77a7s=;
+        b=OQ/LTtfq/ffHZmVVl1H3emxULG/tKg362SrFFvkxVcKJWZ9yFalaieKdasEZURA5ve
+         VxhkvvLzVLrU7LVhFfAY+YRGsR1ywv240VSPEXJ7G530YoDQZCDCO1Ofduq1j+306pa4
+         1KAnEna/9lvSISRdIF5t/aTHqrttdau/zv7UK5LVuW7msh9JddGrr6ce9O/4IPXnFtOp
+         9qFcaY/wfN7oS4EcgUJyW1F/m9zsPyGdArXaIkvqMQPOXPGa33g64JIQPRUc16/Qb6i3
+         BE7ud10ZGPBSfQ7m82qLxLsyxJ7H6zDBx+p8ASanT11IycaWH0M9Q5GJJ7okzcXpE9H4
+         g9AA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764090071; x=1764694871;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U5b8aZHWrlmZQsjgdfH72Z05o3IyEEYclUaQoP77a7s=;
+        b=lfbUdXzsmktRJ2/QvzowOxyucY79fFCK9vNQ98QWBFfulnIAlDWtuKrpAEgo2oKz80
+         Fzr2/bToZAhsvE7I8geguN63qnvADexwnMzDwH46mh713bAfWcr4CQzwjklTOkYi90XO
+         6+b6zeY8rxdXHy5r14J6Tdfpr916G64OcTDMSvr8gpZxKuJX5iAPwx4JukSqTr0m/3dG
+         zAvvmEAnsmVkdLmfZNScsQk2mQGmVmZf4hCz6gkIrwGk2NM3/OKt90GkigLXSHqmssUB
+         /OOgmxWik39elbO0Ypt3zbsFj6OgxAXn1g4aVKRIBEI+ZjzeUGSFg0kp66J/86QTshM9
+         aMZw==
+X-Gm-Message-State: AOJu0YyObrrRiW0h1IhBceKjJcU3UcXeMl5g3+2Vb7NAxhzJJS/vb2TL
+	8yd553a71utu7Tz8yzIVQIdoFKBGKUqMOpK7f3NN2VZwpeizRhzJRXMhpMD9H7wr
+X-Gm-Gg: ASbGncuKqxn4Z2PggeDsYmTfQz/mdde88LF4/FQznBzJpcVKByHNKDNvU5hOuJu3kbV
+	HsFe5Hf77eUSs8N7U32YQUEIJFzblBCak0QCOfJ39qqytjNsq3Ar9ejlLG/AGEKXc3Wzlb1/0vN
+	LQqa1YPrgOxJ+oelnWm6xy35cv5ZxcWMBdHdTYN40coOskHHWmhQqIAXnkYbDVOJFVQ7Uyor1mF
+	vDSFZjH8lo8BI2M4eAPiMuRHDfNCf73riF3rtiPmQ4X3DD4rFBGYFhGIxmz7XUOFZ6KOBZ+xMH4
+	ukFjCq95zyE1R0doIpuG3kQLYJH3O6j6iQaqDPReLae0q8ulcHNJqmx68iierCuLS0iQOfTrXtC
+	v5zblBQvjfQglSrCQHhohH6ZLmvJkj9iffUKYr1pr1oUEpymxZ/+mUwgSdduB9YoZNr799IZsaM
+	EhNangtuCJbH9LYQxiOKJFYheZ76aiyLVgffXZIKI7f/+rueZ0WtjAb3AHxke51g==
+X-Google-Smtp-Source: AGHT+IHp8wuu0CuQ3+4nmJRkMajn+lcc66VODZhzRmVH2e/v4OcLofr9/+2qWh4wQWBbQBjyroJVLw==
+X-Received: by 2002:a05:6a20:a124:b0:355:c208:b248 with SMTP id adf61e73a8af0-36150f4305emr16380249637.60.1764090069496;
+        Tue, 25 Nov 2025 09:01:09 -0800 (PST)
+Received: from localhost.localdomain ([2409:40e3:30a4:b776:b45d:b475:12df:68c0])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-bd75def6346sm17014834a12.4.2025.11.25.09.01.03
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 25 Nov 2025 09:01:08 -0800 (PST)
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	ps@pks.im,
+	newren@gmail.com,
+	gitster@pobox.com,
+	phillip.wood123@gmail.com,
+	phillip.wood@dunelm.org.uk,
+	karthik.188@gmail.com,
+	code@khaugsbakk.name,
+	rybak.a.v@gmail.com,
+	jltobler@gmail.com,
+	toon@iotcl.com,
+	johncai86@gmail.com,
+	johannes.schindelin@gmx.de,
+	Siddharth Asthana <siddharthasthana31@gmail.com>
+Subject: [PATCH 0/1] replay: add --revert option to reverse commit changes
+Date: Tue, 25 Nov 2025 22:30:55 +0530
+Message-ID: <20251125170056.34489-1-siddharthasthana31@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Wiktor Mis via GitGitGadget" <gitgitgadget@gmail.com> writes:
+The `git replay` command currently supports cherry-picking commits for
+server-side history rewriting, but lacks the ability to revert them.
+This patch adds a `--revert` option to enable reversing commits directly
+on bare repositories.
 
-As the large part of the completion script is about completing git
-subcommands and options to these subcommands, it seems that nobody
-noticed the lack of completion for options of "git" itself.
+At GitLab, we use replay in Gitaly for efficient server-side operations.
+Adding revert functionality enables us to reverse problematic commits
+without client-side roundtrips, reducing network overhead.
 
-> Subject: Re: [PATCH] Add completion for short options
+The implementation leverages the insight that cherry-pick and revert are
+essentially the same merge operation with swapped arguments. By swapping
+the base and pickme trees when calling `merge_incore_nonrecursive()`, we
+effectively reverse the diff direction. The existing conflict handling,
+ref updates, and atomic transaction support work unchanged.
 
-This title makes it appear much broader than what the patch does,
-which is to complete "git -<TAB>" with short options for the "git"
-potty.
+The revert message generation logic is extracted into a new shared
+`sequencer_format_revert_header()` function in `sequencer.c`, allowing
+code reuse between `sequencer.c` and `builtin/replay.c`. The commit
+messages follow `git revert` conventions, including "Revert"/"Reapply"
+prefixes and the original commit SHA.
 
-    Subjct: [PATCH] completion: complete "git -<TAB>" with short options
+This patch includes comprehensive tests covering various scenarios:
+bare repositories, --advance mode, conflicts, reapply behavior, and
+multiple commits.
 
-perhaps.
+Siddharth Asthana (1):
+  replay: add --revert option to reverse commit changes
 
-> From: Wiktor Mis <mwiktor023@gmail.com>
->
-> Git provided completion for long options but not the short ones
+ Documentation/git-replay.adoc |  35 +++++++-
+ builtin/replay.c              |  86 ++++++++++++++----
+ sequencer.c                   |  23 +++++
+ sequencer.h                   |   8 ++
+ t/t3650-replay-basics.sh      | 160 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 295 insertions(+), 17 deletions(-)
 
-Complete the sentence with something like
+-- 
+2.51.0
 
-    ... not the short ones for "git" itself.
-
-> Signed-off-by: Wiktor Mis <mwiktor023@gmail.com>
-> ---
->     Add completion for short options
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2100%2FWiktorro%2Fpatch-3-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2100/Wiktorro/patch-3-v1
-> Pull-Request: https://github.com/git/git/pull/2100
->
->  contrib/completion/git-completion.bash | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 73abea31b4..3f1d6c0955 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -3916,6 +3916,16 @@ __git_main ()
->  			--help
->  			"
->  			;;
-> +		-*)
-> +			__gitcomp "
-> +			-C
-> +			-P
-> +			-c
-> +			-h
-> +			-p
-> +			-v
-> +			"
-> +			;;
-
-When you type
-
-    $ git -<TAB>
-
-the current completion without this patch does nothing.  The above
-change makes it instead show the listed six.
-
-Which is a good enough incremental update, I guess.
-
-I however wonder if a separate follow-up change to let
-
-    $ git -<TAB>
-
-to show completion for both short and long options make the world
-even a better place.  With the current completion, even with this
-patch, you need to type double-dash-and-TAB to ask for list of long
-options.
-
-Thanks, will queue.
