@@ -1,90 +1,115 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C31157487
-	for <git@vger.kernel.org>; Tue, 25 Nov 2025 06:15:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E340298987
+	for <git@vger.kernel.org>; Tue, 25 Nov 2025 06:39:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764051320; cv=none; b=dvrYLfckZfOof+i2rC8WHYq1SQQzq9GrmVr6gV3sloinpTTG0Pf8/Vu63EFeBHqpsq0klWYpYJ7k1EC2SH/LYm5KWGOfIKJR4ZwJ83/HVArOXOyGL2on4CYTUsHgzJN+BE2CARfSpYU4pGyJ3QcLSans+sZSSe2Zz/kcMPorIBU=
+	t=1764052743; cv=none; b=GMBSK7TQZ6buaAZDB/yUZsEulFy8ydACAu+8Ge4YwoDW2vaIheEV323Pn+UH8SCo3sKHLuEnlHK2pCiMGJ8DrrdygB4i38Rgd5MnCAhXi3wCrWIBYp5Es4OXjBp4nf0cOuzBuRQn7tnbLlj+qrsBSnB6X0LCgNonj4zvY2ArfOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764051320; c=relaxed/simple;
-	bh=qX9MdHEfzbv4rMCD1SLhPMSDm2/wKz+z1hOwaSzoWbk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NI5P3YJM2FDsdS68wU0L9oyWavL2B76p6DDMCrJve125Gpr2+s6r4MJ335Yi4VNyruob2X3NgoeUg5yVIectt6fiVqebe78d58Y4WfNnWlPhgjEF4gZZMwSJuCOkAwI7CUy51bFjl33L+9966qF/xzVrOCePSD/hz1J+M+oYumk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H1vu+h+e; arc=none smtp.client-ip=209.85.166.172
+	s=arc-20240116; t=1764052743; c=relaxed/simple;
+	bh=N3SRzrTMJrnpzNBbQ+h/6QaIZjtq8DUMDwVQ1vl2ZDY=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=j2N15x1rhUKXJqVwXXaRFWD5taPq2PhHYJwBTb12twlo+VWhdLoSWACN58Ze4u+nBozNh3FuAGcTPaTugcjDy6UCF5Zfimn8U53PPJ+Fg+3oL7ar2ZcXW4dQBqgJGjrgk/CD7qChwAAN+NvxLk4/cP83hkZE0OoCMP03FEGKANk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nk3ca5cR; arc=none smtp.client-ip=209.85.219.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H1vu+h+e"
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-43320651e53so19309985ab.3
-        for <git@vger.kernel.org>; Mon, 24 Nov 2025 22:15:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nk3ca5cR"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-880570bdef8so61463236d6.3
+        for <git@vger.kernel.org>; Mon, 24 Nov 2025 22:39:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764051318; x=1764656118; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DnuoA8OywEra/ToLRIxHAGBtgyUY1GiXIDzOxkxbXG4=;
-        b=H1vu+h+ev/iEptV96y84m60Aha4+AnZ8gRbUsiHRo4RUV3t0GUGz522qYpL7vPw4db
-         JYdU+mWXY4q/2OP4WsrwN8yOvQqzfKPO65bcMm29xOzrJYLUOOre4Flr/Z4lF++iox/1
-         tX8AkoaE4jMiPMMVmdD7lAgEp/DLyvAS93x7ndlG5e12Najmpj7aaCZcbT3EO6rEm8DA
-         QsL1iQ9PyTI4u7bWb7oRxyIPrKlbXq0e/+FoE31zVg7O7Tff3i+T8ULD8vq5Yy644o+b
-         yY5w9b5rNB2hK21NN06wA1IYfW4nLdReDVSrSHd7sDT8Dqdb8bdTA9odSvjbNM7b6oU7
-         m1ag==
+        d=gmail.com; s=20230601; t=1764052741; x=1764657541; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=v+iLUADsOXKqjIDBUviaEGHydgfw9TlynuPwhLZajsE=;
+        b=nk3ca5cRZSCWS+4sDhsvP93+xcVqCnQuttBseplUIqo9NbOv9/nYC49Iy8nvEBXiYk
+         //AXRUXslftShugD8t+aFlouOIP0IYxcj9CXtj0kPI/yFeqZAwJH1XGDLmnA2uCxjuCG
+         p1agsWmeDUx+1t6kpKpLZcIWe1DhD6OS6mAaLOY3ET+taAgiLtS4Py6dSPOvyPnCFYqX
+         VAJ2PCVvnankRwSAOFsX49OKN24YrKLt0hRUELeM4pXPmXEiOmoE9WX8dsgNJCaD6yRa
+         Cf2+A9XMBP+WReRw2lyIakYxJY+TGWEZFiydA5xRmQJPP5BDFH/E3VgqXgVCbbtnFGXo
+         knRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764051318; x=1764656118;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=DnuoA8OywEra/ToLRIxHAGBtgyUY1GiXIDzOxkxbXG4=;
-        b=jx8VbXMlC5Zb+OsGvG31Rgsdw/8ACRwXWqlRlu2HoBpcFe1vBZ/9LNDE8+E9eEgAM+
-         TCmw1v9L1JQN3uKJc/Dwd+3lWOiUZihfo0BDj0ucXVjdULuItBMZJwertgVpBQbOadM3
-         7JDb8U+Zp4Dh9I6a0rUGe6OxcWxLen1yo9P6TDDhucEHW9+V7XxCZcVSwqCW7qb7cEGP
-         TtKayrjacrc8RaYxvOjn6hnuSlha7NjXID+PJX8WxP3OTNJ5YnTT1ZEw8GQzi2MAzzRl
-         vWUoIuLhvyAH3Gq4a112ioNXIwUjU+YD0PD1FQ5540F6nmm6p4mNoesY+6TMvVzxme75
-         JdWQ==
-X-Gm-Message-State: AOJu0YyIEnggSzYdGPqoQ6U9gMPn+3GXMruVEDlcATJPLV8okmEbX49L
-	1zKjd6u3tvEZYMhdo+w8pp42a4HgE2RFmH8xYw7cncdgpo4pT6c6X6hRa5Eqi22ifaejGVo7ZDw
-	t16pcr3N+MbGhxRXDBb6QH8cOBfDlECQ=
-X-Gm-Gg: ASbGncuKoqaAcrbu+IWIA9JLugsHCNhTqLDtmZOpLBwNhVnz4rBWq42043A/PuJVZfo
-	MZjsDta8vRctdMRqOkrpygCaC5dxC6085mRaQT8jMNJGW/ebzsKFNvGii+hwOtkyDtigXG0yhBW
-	OSd2v9Vwq0U72LUId6DUEtTu6hSQ8huf2e/FnCtWuaZMo59+9Jine0YigTiVzvn5TYEqI08gGx6
-	zzMadAzfHTdjAw8ir+UCNStlifQgfy+b/Wab9N2Zi+iUVTB1IR68w2d7axNM0Pnv/iUunrrUy0o
-	itmIXZ8whsS3Phis/EGcgTCJeJxr
-X-Google-Smtp-Source: AGHT+IEuu11RTzNrVAIH6doQUMinhZZWj9P4ydfaEAp21tbA79K1yLES8N2mdI1UMm/agS/kb2eEVPEzX6/vEapmL3s=
-X-Received: by 2002:a05:6e02:258d:b0:434:96ea:ff69 with SMTP id
- e9e14a558f8ab-435dd124f68mr14942475ab.34.1764051318268; Mon, 24 Nov 2025
- 22:15:18 -0800 (PST)
+        d=1e100.net; s=20230601; t=1764052741; x=1764657541;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=v+iLUADsOXKqjIDBUviaEGHydgfw9TlynuPwhLZajsE=;
+        b=gFAEQhFCY0IUJ1B3EvogUkuHFiIuFQbwZfA/pewrDcptI/9nLRbbJ7e40N7NYeA3Lk
+         BSRj8YjYUjYqoy6gQygVcuQV5P4z6pW4eBKIawV2sQh6wqEKhqpypS/6Jov0yd3zYpN5
+         dSATEHJ9u8/CUS2cLlz8+TTagUMgkdQAkQi1LD1LRVd+K8ZzVzv6HZJLzNwQIRCP3MnF
+         M2nK76T3WvQIZE1l+ORrNFOIdOwa3HO2X0gc0b6Zh49CImo981sGHZCDWrQ4u2yj43AZ
+         2OxVabMIqWMVQ8PByu/AcNUUXmnpNHhnnoOuzh8H7nwUviEMx0Zm3SMEkkP7SC4w6aWA
+         lJOQ==
+X-Gm-Message-State: AOJu0Yzo8vaiyT86SYlH3O3DmEv8Mtrhd0qPWdvSQhc6tRz+KTyn3nRB
+	a5hku09NsTMU0wwYvxp0VJK7ufVyAYlhBvLRsuHC0UhSQnO7l+RDyDfTispJw9qW
+X-Gm-Gg: ASbGncu98n/CqfVU1hS7N28R1dJ05rAUYOK0LyHaDxb2RhqVxiYN16er6iG3Y73BkWr
+	ckV7sKIm9IV05r8/ERZg6B8MpR2iDfp1SMTYVQlGohCf50flidnxXBNA+oqcK87S3E4kj1DCYpW
+	slgHa9OBWXaFHuimGD20GLmo256ktdZf00BRwsyQcnkzxXmv478fMKU5F4xG3jdF+fGTmfsLjoc
+	iY4sEGpqeHC60W2QDzBlb1KBMG1SOJwWHBKVMPI3KBGeR3Qah171ItgnMUX9ITTBdZtwlj34jLL
+	lS/8+hMdBq0enF1Lr2YFjaigJPmNDvmMNpR5MQy1vDOqjIurO0wyUOiHDt/S08FiM4PJGywPBME
+	1HI36JueWihVwVWWsIwGazRpD9BPNFG7YcAOlrjfnRJJt3RsGTtv1QTLrtKV6ygZEllG3PXJlnJ
+	ShlLTkEatqb3k=
+X-Google-Smtp-Source: AGHT+IHEzKpojCdgMQbwRmUk23WpqElBVht6gpkGCEUWErK6+xXaT2KU2k2Lu+rPPE5xfTTchWvcrA==
+X-Received: by 2002:ad4:5be1:0:b0:882:489e:a7a3 with SMTP id 6a1803df08f44-8863afb10a1mr25758976d6.52.1764052740635;
+        Mon, 24 Nov 2025 22:39:00 -0800 (PST)
+Received: from [127.0.0.1] ([40.76.239.96])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8846e573909sm119463586d6.39.2025.11.24.22.38.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Nov 2025 22:38:59 -0800 (PST)
+Message-Id: <pull.2100.git.git.1764052739534.gitgitgadget@gmail.com>
+From: "Wiktor Mis via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 25 Nov 2025 06:38:59 +0000
+Subject: [PATCH] Add completion for short options
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2003.git.1763399064983.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2003.git.1763399064983.gitgitgadget@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 24 Nov 2025 22:15:07 -0800
-X-Gm-Features: AWmQ_bm__GAIe2YzxM24LifPcSNK3B15RX1I_TGiwCwJikFYegmpA5A3XfJ-Ngs
-Message-ID: <CABPp-BErdhTjbqDem4Xvc-XbhgLUEpy9-eiaaR1F_diMca--6A@mail.gmail.com>
-Subject: Re: [PATCH] ci(dockerized): do show the result of failing tests again
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Wiktor Mis <mwiktor023@gmail.com>,
+    Wiktor Mis <mwiktor023@gmail.com>
 
-On Mon, Nov 17, 2025 at 9:17=E2=80=AFAM Johannes Schindelin via GitGitGadge=
-t
-<gitgitgadget@gmail.com> wrote:
->
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> The quality of tests/test suites does not show as much when there are no
-> breakages as in the amount of time required after bugs trigger test
-> failures before the bugs can be identified, analyzed and resolved.
+From: Wiktor Mis <mwiktor023@gmail.com>
 
-I found this paragraph hard to parse.  After re-reading a couple
-times, does the following convey the same meaning?:
+Git provided completion for long options but not the short ones
 
-The quality of tests and test suites is most apparent not when
-everything passes, but in how quickly bugs can be identified,
-analyzed, and resolved after test failures occur.
+Signed-off-by: Wiktor Mis <mwiktor023@gmail.com>
+---
+    Add completion for short options
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2100%2FWiktorro%2Fpatch-3-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2100/Wiktorro/patch-3-v1
+Pull-Request: https://github.com/git/git/pull/2100
+
+ contrib/completion/git-completion.bash | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 73abea31b4..3f1d6c0955 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3916,6 +3916,16 @@ __git_main ()
+ 			--help
+ 			"
+ 			;;
++		-*)
++			__gitcomp "
++			-C
++			-P
++			-c
++			-h
++			-p
++			-v
++			"
++			;;
+ 		*)
+ 			if test -n "${GIT_TESTING_PORCELAIN_COMMAND_LIST-}"
+ 			then
+
+base-commit: fd372d9b1a69a01a676398882bbe3840bf51fe72
+-- 
+gitgitgadget
