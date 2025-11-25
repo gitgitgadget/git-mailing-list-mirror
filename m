@@ -1,248 +1,168 @@
 Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA65325728
-	for <git@vger.kernel.org>; Tue, 25 Nov 2025 17:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9132D32824A
+	for <git@vger.kernel.org>; Tue, 25 Nov 2025 17:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764092403; cv=none; b=IQDjy21T2LBnodQjiNc4dUJhZ9PYT0WZ/lzcupDXs5i1fADPlOSksOgvLqsSwMUstaRFNm5WIT/cNYBnI7MWWd82z3rIHko/kqk1bxxWC2XSZ5Z0rxZQzQTIPBwqLws5q/vyJyRfhf9nLXuvFrH1Jk1PycEnl/ELIIW2DSuwM+o=
+	t=1764092445; cv=none; b=HbMcZOGZjA2MURPdvAs33lFq0KZYN/ogHnr5U2sNM3wEaEBVL7xjJVtcOEy4LrfmVXADKkVuOIMIfyYsR50/0s0GyKCiCm1asM93Uqqe2EFVR67zgWlFpn/mSgt8zKRThYCvMlH44To1vHoBFoBJ1CJvaolrgER4sdjFkgjHRV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764092403; c=relaxed/simple;
-	bh=eLXAv43/7TsJ7EK7/fIm4ePZartvJ+5XrHD+DCEdbIA=;
+	s=arc-20240116; t=1764092445; c=relaxed/simple;
+	bh=12776nTdEqLEe6Bg8T09vnf8dJzLA95AgxfQTOX52gs=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=GKZX7hWv+uU8Fy0Sr+A3WpqKQMRW7YYxMw5dpmlLon04dUk+4V+VE+iAyb2YGuoDzaANirgqIwbdh0bVXBNgHyndiq4lD964LRqx64soYOjxM/kcHh8sBAjFG1kNNJi0j0u7hEO6X4JR64cs4VbUZt77IGNh0bjlD7aACrhTMsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=MnplpaQ3; arc=none smtp.client-ip=212.227.17.22
+	 MIME-Version:Content-Type; b=j9jFWpo9tC9izNJJYTIih21DSakPmM/KP3hd9f+xPyg6Z64FyoPntACs3meB4pwQvaHtDvSdA/ScC18YxiCMtS2ObmBsVUPrWA+cSTDMekFQNFnX8KJmSHGShvzu4NjHgfqeuRcjBCgYly+duegytOAbcgBFw+6cXCNOEhBRuwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ql3JCU/2; arc=none smtp.client-ip=212.227.17.22
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="MnplpaQ3"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ql3JCU/2"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1764092398; x=1764697198;
+	s=s31663417; t=1764092440; x=1764697240;
 	i=johannes.schindelin@gmx.de;
-	bh=7pYNRbrpJNGRLjj2M3PXLzGZg8g712ELATPkVI/8xso=;
+	bh=AfHgPEXyZnEPRAm6xyG1nmvZk88RUr2VKipzlqH6Vh0=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=MnplpaQ3bGI+/Ne3UdQRsQoIyyHFejbxpO+twg2QbD9zHXjbHdEgavTDsC8uLD82
-	 5d/CDi52EXGb2u5lWA4JMM07j8EiJ/tUbTMhz011qSzrBRGyBAAkkxhrtbIRXQ4cC
-	 C/Cj7WW050bfRy6qNo5Qx34RYQ5vLO062jqmCeZSgajyNb3Ljh+X61WO+d67reip+
-	 1ExnPl9sKtbmDEY8kTrdlgqNyQCMeAOozzpsToFokqnEFQwP8m+8TKsHEe7DJ0gFy
-	 wE9aI6yKuFz210jNUmUtb3zdIu5kOq9jfV0o5Z/U6sXuX65Yt25tKly7R5Oh8FS7Q
-	 2GxJjT6OIbkW6+j3Jg==
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=ql3JCU/2YQvKZMnW44SNeNSTgjKtN7y+pdKXDYfIvdQ1OvyDguLvCDCAF+76IJoz
+	 Cfi9ZCA4p8mpx8Z/xK39tqJ/WSQX0K3lkkJ2FRBeRCsebocC19falL0oeWoxd451z
+	 Fw407gPsSApLSrfDTAUbVd7Gp/QyASBf3daKf1kJKqWry+q0YC8NMaSLMazxyXM1g
+	 Tx7GZ7fIGwt/Hnyybz5HWkl5CoutHmk6quEtX6IAwzrkx/HKLSAy0Hqo0hlf/JIXD
+	 1frxPgT2uNTpayHErydixpj0B/Bu3Ju/3NHWmoplVdEfYGcTVZQ0zcEgE2BC4g1jj
+	 Y5aTFL+qGVKjacB3ow==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [172.23.242.68] ([89.1.213.165]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MryTF-1vrDp50Q5N-00jfEf; Tue, 25
- Nov 2025 18:39:58 +0100
-Date: Tue, 25 Nov 2025 18:39:57 +0100 (CET)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MiJZO-1w0sgA0Axa-00ad5J; Tue, 25
+ Nov 2025 18:40:40 +0100
+Date: Tue, 25 Nov 2025 18:40:39 +0100 (CET)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jeff King <peff@peff.net>
-cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] ci(windows-meson-test): handle options and output
- like other test jobs
-In-Reply-To: <20251118093519.GB530438@coredump.intra.peff.net>
-Message-ID: <a15a12e5-9099-f43b-fa11-e18d53759c1b@gmx.de>
-References: <20251118093221.GA530337@coredump.intra.peff.net> <20251118093519.GB530438@coredump.intra.peff.net>
+To: Elijah Newren <newren@gmail.com>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org
+Subject: Re: [PATCH] ci(dockerized): do show the result of failing tests
+ again
+In-Reply-To: <CABPp-BErdhTjbqDem4Xvc-XbhgLUEpy9-eiaaR1F_diMca--6A@mail.gmail.com>
+Message-ID: <d8054499-aacc-f697-c117-116729432c3a@gmx.de>
+References: <pull.2003.git.1763399064983.gitgitgadget@gmail.com> <CABPp-BErdhTjbqDem4Xvc-XbhgLUEpy9-eiaaR1F_diMca--6A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4Jjw3V6kterq8qE4GFzZRQFOwH711Ot/yACA4NTRI9kAmljcgku
- D4ozXHi48j6r0LiiJ3Bc6eHUEcK6M1h/2mccYRzLLCwnEyVejGfA6sZgDZVDBIo9RZICEo5
- RXH0Fobc2VWE/7ERPrz0nO9GFYp0jqgJwtC2zneqqMd3UJDzaP3pn7i2poBoC8JoO09x/8Q
- S8+jPPCuxNA4zS8g+xGKw==
+Content-Type: multipart/mixed; boundary="8323328-689714056-1764092440=:18364"
+X-Provags-ID: V03:K1:A+uhG531qu7TSHeGE1MUJOUJ/XtPJ8XlrcUPk7rGtnl+yFYviwo
+ lv7+FkbQoVNUaMSABrL7LOQdQ4oAsuglUJfqTGeLinvsP2wmIFbrZy0LCw5XuxkqdUbU044
+ YwyCnoK2uADoBgZhEJCDDTUZPZEZrqHaQfGHLf4o03KOmozbqhlI1Nh/Dfv9M6UHxAqjhdO
+ QbLqLx0WmyYhcaKiomV1Q==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:JwNFfCL2Nbg=;YzlPFTGQRZ+FVlnmxZwCMocNFtp
- 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
+UI-OutboundReport: notjunk:1;M01:P0:MaTSSNazTiI=;sfV61rVk9wwkMcitNY15ScDp5fb
+ U1FJ2+ses6p5vIlxcoXtsGB1tpV8RsvagzXnBOSl3RtpYs9FIn8RGp8xBnM9+qGc0vnzSAZA3
+ ooIzR+wo+Bu8O2E0ctW5hFMaqurHTs2BXdLpHhmQQ63Mp2G7e1+qPqZu5GotfGvhyl6aBHgwW
+ uQ2xsst5ldAiE93TWhPr+p7W/mdd3icIALTpCcoohCVBsKcJkkgaaf9xsHB2U5c2/W1D6NlNP
+ sMb8bim8Zchbj12Jl28AVVdiTimldHLWwg9EEQE84Nb8ogolshMdjjuU6BoQY3paRC45rT/Gr
+ biPeozu4DCIpO/IYi+kko94b2XKLv0qPP0+VnbXAbXNuY3oqxKOoFfcFnVRawWqokxWgddCsm
+ 0WElMASslFmRevEcS57+J+om89vxDt2Tjep2OHoRQNYdNI51a6JyEjSWk9xBRYngpEJFWix40
+ 3v+G1ozDAJxTkrmWvqtXPaf21wOKOgp4QFWXKJL2MT5OunrVqEH0Tb5XkCVFyuDWEfMHpTyUj
+ Yj7mKImBBKH4BKx+xt0/84QzTwIul4cj+NvHrLLksUEcui5tKDjnDzNYp4ithDsfCCXgxGoM1
+ 7dpVg41myDMhND1URncsxvdaWId3NEHRdolZPUPNb2JA5eVmCVOhDKdlp+ieEIka9tjNKyll5
+ 7s0NpkZMbkukd8s6Xm8pLKXrVl3lSHWxcUCJqwGi+4JGK0YEH2AIGgKypFCVLD8AQbZRbaH8R
+ w7Pqon+HenYXjemjeFLrQ2N7OkfL2QDopEs1kR5qJYoobQpetOw5CR9x56eztBjmw010xhD/a
+ kTE+idPTtrt7rGdr9+wvT2mhV95qN4DpUS2gJ2S3XZzAgsh4Bo0AfKWCg/1JHHYNR3fsNarde
+ ORVLed/Qu37CNe5X6r43mvQHMUv9RIm/AIyGKTZOAgfO4jxr8fFlVDpiLh1ogzJMZ6U2gr0pR
+ vS3Vv/bf41LiecMmHusccE4buELfDAMLJndgd3iUD9cBnhhhzTKAdRPEfosd3HEkuSkEbJ7MF
+ gpGVqo1MPA5NHoXe0Dzch/8+KJbkGmC4QcRSyLcmwZZRxsJsX5PcFjrqSMyzmE74okzBzHqni
+ tkGURSGqlx7AQGmOPfKeXGLWHkVb7fSgRXwYYTOJGrfklB6crkG48mcvWUcUxqKaMW0epVzVh
+ grlgnJ4JHvy1dwTzPVQt0K8N1kty8BPn09YBiBmBToxVvXT9jp7SgbwbsiZu9CCMLzK1ve+yc
+ 6DVxQ8k69JIalAhKdcWtpykHxLALGgjtePRTgktSaMWHlovHUCcofvAXW+pRKWCzKMFwOJyRM
+ 0iAPKWAY+JiKCehFiU9ICaWFBu684SctFHyxq8rqNiU2wjv5zcMOFUaFdS2LyWTxzXOW9yB+g
+ vkhzHF8i/iu4pS+IwlmITLcLr3e+0B23tRGcDicRdHfW4BpUxNbfA7bfduoaGT7P3g1OoqMis
+ MniK99iKxnZrAQeXV8iLmfHf7M5BVVuD++oQqxfKumFm0zagrn4X65FRyEmNNFc7r2nFVWM2t
+ GGPdDKKfkUwnGb6ndxbY/NZGS6z/UiqgoLyTKeBO3KvkdOY5DgXpLXEkPycxgyjY8yITf/Boe
+ qEgnzz916A21rSQTeUxv+dYjfbpZRYR9Chlr0tUTbp5r/J7Bqw3VuT9aRVnRZDE/MFz7h4e0f
+ LHGOnSLw93Ho532l3+VxvYnyW1qiWopivWYq8OKc8TuC4TdqBf1GFtgwa2TJX2P+qDC4Z5IYa
+ URjxbZrMCxdvaDhxMldnUAiO6Y+u4+hclDHOY3LKSc9e8iVdxe/EUTLGE7Yjd3A2hl94kAExd
+ q6OeAiewpNa+hJ7D6/gswDZq4Q1iUksgDVRnScaMNwPeDb3zztIfKZ8FhNfxB/lFaLlBjqvIM
+ DWQUoduWcE/TBOBdqbGrgOHp16o+8JxZxvCAJKlN+KNBqOBYlaHFbTfgktBoFTKk2MdrwlF+5
+ 2bxDLGA02jK3tsHyRRnX52ct30vK0K6WtIvYcsWeTGM8ntBLG+JP+JZ71H6EBzdIW3W6hOzEk
+ 0sX/S7YtcKbfOkvrpHYpE9KnG/R9Bjie/FFedvdeie4bdhxbO+wVPQZcnS+w9rzjxjml0p+6Z
+ ZD67NDYNqVr9ImBYpIp//UUG8BYaLe2qmMfOTZiqWV5+tvRtoO5M4tRHm2uBtJOhWizjgcHds
+ WqFz6n2IiuYeKResInVdtudXYj6Wh3/jq3PmRD4E8Oqtwx3W/hS3QU1aSs9jL3f0LRNJ5MgfR
+ ML7YbWi9Z2YZ4hinbjqzhRAfV7JwF7O8PLJDFVH930bq0JSPZlAup9p0uZRARX5ZjNc6IMsjl
+ xXEXxBXrXQnteqyTdas6WKIJxXVe/GIK3lKh8iSR6mNHP3kNJJzJexmq2NJXfLib4tTqvVHvN
+ H1OaL+K0X4uwK/YRap4wDd1i0SbhmMyumynhHw9JRf8eOtbR31miVLNiBRxZ2EY2lwa0fdG9a
+ kiQjxrHr6nPyJq0mHOty9v8MXJN/4I+kgK0Ds0O4+ktAoEp3oh8mYqKIx9GJvKA1lh/NL3lNC
+ Yil7R0lrBQu9SBPRJ90QZRPsiXsDyH5VDh3J4E0Enc4gHRziDcem/PBUoe/07ZoNjHhMP9uyc
+ Q84aQx0q2ZDtsqM54l6VPbM+x6a7S7vVAZ+c19SfSJNWpMDkwnwT8BmZpLjMWhAIj4PQ/mdkT
+ fwy8nmVDpnEKHYtxULA35PFnOCUmh0fFL6iLOBoNw2o7lnb8w3KHDxi9xd5U/LbO/1apQzhmB
+ aJ5gDCZq/k8S/sWLoW+B2TscSOzaU7B/DaEBDBqMiSh1ZHFOK3ltRmSnlrZHlp6woamfZAtvO
+ M9tmCUVjYw7j1/+VjjWMHXlBM9pybpJl48mzUghlQQcJHY8lpeWFZK8hOIf0Lh+C2MxPCVbdc
+ uXnm0zPq3YtCmHh/w8ZrFlhz21qS8K7ALvrQq0P66QcSoGRv0481dpevBpmv+VrfL371mt8fn
+ QqJmcu5b4L1AvpAKkLNZzM9jvGKdMngKhX1j09DsjI2biVD3XvbGdTdIuRsRzhseT+AWrQM6w
+ zifaaW8B+JXPYQwjBtpQRwFQko1odbtpOKXorATifDbnZpxCi/9NaXmsj+pkUufdGjix/Kej/
+ 0cZ5kVylnUlukm5wIlAPgR6e3bRzNYXogjVxPzMUQ4qo9O73Hy/v9/hm3RkuW1GBRUaY7NXBH
+ 8c6GtbzkofcigGOboZiXeM+/EjImihWxa4TOq6JxW1T+P7shY3TCG+ucsmz1Y150Qcd+WNFCD
+ 2bX5SZSA6UymwrE1hSQAM6FeTB+KBK/P5Fv7x+5hZhAG6f8IaWr0dKHDNU96Sd/fkyT7tGyIf
+ 386e4+W+lAi7s/XKjVGufPmIUr9hwvCSnHwP40rMARtKL9/hPdop6YyByEl1t5QviYB1VaXVb
+ gZqxguM/6DarH+9czRaOVMJA/ZFu34MDcwRkY7w237Pu6z8VkmM0TTHbOtLdhm0uG3RL+Az3Y
+ SwjBNUehuhHBcRmkbMj89DMxoOTe+08r6byEDmmk6rN2xa1DwiRkrOMgCPyONN6cpu9TvD1Se
+ XrPVUzMqCPWhH9bydkUmyR9Mjwss4po6+8Nk8kqgvLzgYTsj6jfgl35nMU8ynEI78jDEG8D3O
+ ANqKx56/+2sVUm2uvox9hgYpZCvgOQRlcpdF5+AufnHWA+vv6bNVG2UOAXFFTKYu9BzBumrij
+ WZpbDH5IWXwjPN6aSSazuR9Wx7uDf4zL1EzRI9pR45KG/3sYRQc/8DZTen7nyfxsXMxFhUlQp
+ dTBF+5wgyxIKVllrleb31CCceiHifvDOZMFlPmelEZj1FLK7K3tvLUcVud7isH0g1nrMzaEF9
+ 6F52e9NKxT3QqSzaUJuD1oZyKJH1n1TVIUleWr0mnDi4y0+Dk/hSyvYZqVFdFk/NDntERDR5V
+ yQ+kPexphcriXlsx9oPmKKOtJTNqaYXzjb26KRUNCLz8Zty6hMyvpU8M/B7zAL0SEr0yAZSVI
+ H9sZHgafyX5CfXVlCWZduklttI/BXM8wAlWjCONM6AtIlZOAteEW2BvdEj9m+JfirPmMeqqhO
+ jdu3Oo+P3n0YFHMvh8v6kfGLyaxGUuCZyRPmtNDazom8jvNMZYm8XV9PFdv6A4Qj+c/GYtv+h
+ OjjYf1xR8BhpiBV8wEK2+TsVDXBzwoonh05WFfszjKcaBWmSW5fjeC9krAQnOmUb+QfJsQLnK
+ o2CvsXWXz3ov0IfdfQPpfBgh2sw4OU8WJnwHTI07cWlUuYeYLIqGkgd0Zc4CP/y9Dj9KbAgKA
+ xTIg3xqM8NqKXDGQ4s2MH7Cym69uEjK8BoMwYbNOin/Hp/Dq5rnMotbTWglmbT9zSIQa+R65N
+ DaCV4iPUjffX5ETmEENfRCKzfPly3jt847r7AO8xq6mdJA72hROMwUjsYqnA6NKop3JR+Nl3v
+ SV1nBIuixnrnKqU6WIsFWRdhb5h+yqqoUQ4aoNXnnHrmUtCzDJ5DlKRR+RZvDVqISOED05I61
+ pD221uq+McOWd2KhG2C6uEKFv6lJ43DcbUvO/zm9/3FLG/YrlCBFzPxTqDvaS2st+xUW+Q4nD
+ GM9gxiWVirpLw4R3bxjppxSp5NN08nnQ++VeD38s0IAaTvH+OUZ6jZCxZFhoGZS+aP9CPCyNm
+ F/GVbMMVkw7QXIG396JsuFgPtz6k4qkFk8Xudqxa6Tn2aXpY0K6ZRzY/WpjovMAl8zD0CdtCG
+ BMykhr5EzxOUGLcUCUD9EtrWELEL5YZ69hMw8GJzX5livVTFSV+3l2XsEeLsxGMYkElqVNzPs
+ xibBQ1eqKqAZvZx0gTI09oYGyDatOeeB9Sk+9IUnuhdZQRU42BOYIfACKFWAl+qsjZeY+g7/a
+ TuHkgcwPW359B3YX8pXfLPUPrhP1wj6TQ07DXk7Me6pKwMS9Ya1ceDv28UoB8dQ0Pw0dFEi/0
+ JH4QaTirpM/TTvb0vlLedKOK12lXcJnoEwZl1XBRy6o1t7ueZqowHe9aqHjMNeBSyi+jgG0IK
+ R2quxELMuknypEMlbxOOcr70clySd9JKmSXcNkffZ9jQfbbRj0eKcurqTZoBtJs+5jznHRp6W
+ un74JWTVvflZbLRGzosdxAJ1M3HKAfM/GoWk4+3lHitsPuMkcs9zcF+nawABOVWo4z+tcGGbS
+ ZhT0jzDCa2V9yWylGHHnI3/M9QKQluzNhb1rGIp6yr4t3ngVbyoiIKuDfa9uwmiUdGzndKWGo
+ Oj/Ncqgul0p5WgtlD4qrFxinwhwCp
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-689714056-1764092440=:18364
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Jeff,
+Hi Elijah,
 
-On Tue, 18 Nov 2025, Jeff King wrote:
+On Mon, 24 Nov 2025, Elijah Newren wrote:
 
-> The GitHub windows-meson-test jobs directly run "meson test" with the
-> --slice option. This means they skip all of the ci/lib.sh
-> infrastructure, and in particular:
+> On Mon, Nov 17, 2025 at 9:17=E2=80=AFAM Johannes Schindelin via GitGitGa=
+dget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > The quality of tests/test suites does not show as much when there are =
+no
+> > breakages as in the amount of time required after bugs trigger test
+> > failures before the bugs can be identified, analyzed and resolved.
 >=20
->   1. They do not actually set any GIT_TEST_OPTS like --verbose-log or
->      -x.
+> I found this paragraph hard to parse.  After re-reading a couple
+> times, does the following convey the same meaning?:
 >=20
->   2. They do not do the usual handle_failed_tests() magic to print test
->      failures or tar up failed directories.
->=20
-> As a result, you get almost no feedback at all when a test fails in this
-> job, making debugging rather tricky.
->=20
-> Let's try to make this behave more like the other CI jobs. Because we're
-> on Windows, we can't just use the normal run-build-and-tests.sh script.
-> Our build runs as a separate job (like the non-meson Windows job), and
-> then we parallelize the tests across several job slices. So we need
-> something like the run-test-slice.sh script that the "windows-test" job
-> uses.
->=20
-> In theory we could just swap out the "make" invocation there for
-> "meson". But it doesn't quite work, because "make" knows how to pull
-> GIT_TEST_OPTS out of GIT-BUILD-OPTIONS automatically. But for meson, we
-> have to extract them into the --test-args option ourselves. I tried
-> making the logic in run-test-slice.sh conditional, but there ended up
-> being hardly any common code at all (and there are some tricky ordering
-> constraints). So I added up with a new meson-specific test-slice runner.
->=20
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
+> The quality of tests and test suites is most apparent not when
+> everything passes, but in how quickly bugs can be identified,
+> analyzed, and resolved after test failures occur.
 
-Thank you for fixing this. The patch looks good to me.
-
-I cannot help but wonder whether switching to Meson was worth it, as we're
-not only deviating from the mainstream (if MSYS2 is any indication, Meson
-usage is negligible: 16 packages use it in MSYS2, 294 use CMake, and 975
-use GNU make), but also are forced to repeat the very same steps we
-already took for `make`-based builds and then for CMake builds. This very
-much makes me think of some saying I vaguely remember that involves
-history and something about repetitions.
-
-> BTW, one curiosity. I tried swapping out "pwsh" as the shell for "bash",
-> to match what the non-meson test does. And it _mostly_ works, but
-> curiously it causes a handful of mergetool tests to fail (it looks like
-> maybe "c:\foo" Windows-style paths get used where we expect "/c/foo"
-> paths). I didn't dig further, and just added it to my "things that
-> confuse and terrify me about Windows" list.
-
-Indeed, the path conversion kicks in, where `/mingw64` gets converted to
-`D:\git-for-windows-minimal\mingw64` or something like that so that
-PowerShell isn't losing its mind over paths that simply don't exist. When
-you then call Bash (implicitly, as you know all too well Git's test suite
-depends on it in a major way, which is still a shame), this conversion is
-not reverted, at least not fully.
+Yes, this reflects what I tried to say.
 
 Ciao,
 Johannes
 
->=20
->  .github/workflows/main.yml | 12 +++++++++++-
->  ci/run-test-slice-meson.sh | 13 +++++++++++++
->  2 files changed, 24 insertions(+), 1 deletion(-)
->  create mode 100755 ci/run-test-slice-meson.sh
->=20
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index 816d5a34c4..27ebf2c8cc 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -298,7 +298,17 @@ jobs:
->          path: build
->      - name: Test
->        shell: pwsh
-> -      run: meson test -C build --no-rebuild --print-errorlogs --slice "=
-$(1+${{ matrix.nr }})/10"
-> +      run: ci/run-test-slice-meson.sh build ${{matrix.nr}} 10
-> +    - name: print test failures
-> +      if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
-> +      shell: bash
-> +      run: ci/print-test-failures.sh
-> +    - name: Upload failed tests' directories
-> +      if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
-> +      uses: actions/upload-artifact@v4
-> +      with:
-> +        name: failed-tests-windows-meson-${{ matrix.nr }}
-> +        path: ${{env.FAILED_TEST_ARTIFACTS}}
-> =20
->    regular:
->      name: ${{matrix.vector.jobname}} (${{matrix.vector.pool}})
-> diff --git a/ci/run-test-slice-meson.sh b/ci/run-test-slice-meson.sh
-> new file mode 100755
-> index 0000000000..961c94fba0
-> --- /dev/null
-> +++ b/ci/run-test-slice-meson.sh
-> @@ -0,0 +1,13 @@
-> +#!/bin/sh
-> +
-> +# We must load the build options so we know where to find
-> +# things like TEST_OUTPUT_DIRECTORY. This has to come before
-> +# loading lib.sh, though, because it may clobber some CI lib
-> +# variables like our custom GIT_TEST_OPTS.
-> +. "$1"/GIT-BUILD-OPTIONS
-> +. ${0%/*}/lib.sh
-> +
-> +group "Run tests" \
-> +	meson test -C "$1" --no-rebuild --print-errorlogs \
-> +		--test-args=3D"$GIT_TEST_OPTS" --slice "$((1+$2))/$3" ||
-> +handle_failed_tests
-> --=20
-> 2.52.0.278.gadc6434dc3
->=20
->=20
+--8323328-689714056-1764092440=:18364--
