@@ -1,156 +1,119 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392DA18BBAE
-	for <git@vger.kernel.org>; Tue, 25 Nov 2025 01:27:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C102F26F2B6
+	for <git@vger.kernel.org>; Tue, 25 Nov 2025 03:39:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764034029; cv=none; b=c8v0x1tK4krPF84ZTdbWhf5bRH0VkvHe3pXqp1dctGmH1QUx4vTkyCg6NStBMx9guOgVfOPAe0FLntXiFJxSmFi3laXscWrDCKBy43jqQMenzOS6MPqbei9itzC0pk1uU1/2ZI70oI+GCTRFmi7saffejtNTjeNXMRW+v9Ac7vE=
+	t=1764041991; cv=none; b=NPHywHJ8r4skAu6/pPY8PqfB+1Ilit11oT58EnZR9MLfh1Aa0n2v3XfOpJe5WsdAaPYcCyHzarJitQUE6lm/LlpDSqqfLZv9OJqqOsJGyxbGvKwi/O1rPaPGiJ4PHGINcn+L4wOCk6/cZK6o9FWiGooQE8oijCXbHjyUOHzUyTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764034029; c=relaxed/simple;
-	bh=zg1+lZ0FIqTFzuwM7fVYj3RMk1U3BQBUVAKOuqLgFFI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bE4XNa+KnlnFOKQoSwu9gBfjJGu934l2ESpuynbQuHFLHjx4X1ANj6qdaMtXQFy1fKFsRbnfz/MZ++WDH/yuc7JfCIJXFWrrUvHJm8CDw+RUb68+5mDpigad5DqxmvnLqM9tIk7FYZwSC6jWf3D7OXNvxM3pxaMzPFjmlQE9nZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AqxAWuiT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qjow412n; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1764041991; c=relaxed/simple;
+	bh=snMbTxejdN4o2hliVLmS9Ttm0/yh20AXmqjIA+YI5eA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ktnwC/zPBKgBLYiy9RliLmK3jC2p2fYg2ZJayCWxMIukA68vupEoPdEbI1Gv7IDIJdhedDO+tliCBA7Myf0EU8zBBAs/zg3Z2IvRlP8yHr8bfGwNbU7BizHVsvvSNf8qy3ys+vWPUnER6FMI6jyL1NI3Rn85O0u7g7uZqQsJvDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HwhH8pI9; arc=none smtp.client-ip=209.85.166.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AqxAWuiT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qjow412n"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 24155EC0399;
-	Mon, 24 Nov 2025 20:27:03 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Mon, 24 Nov 2025 20:27:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1764034023; x=1764120423; bh=eXYHlc1Ahd
-	z88KewoFAIvAHpGPy5CNr/Pig/19mJKrA=; b=AqxAWuiTod4d82oSurs8hUOBCl
-	cDWAE241Ajeq+xpTLNz8StOdOQpjp99xGaVacKX1EU61RA2s5AWbWdeq3z29Kiaz
-	ypaewFtVO9h+tjrufdRonnqE6SE93CP8WsYa3bS5JpvKP29dEzx997h99ml5FQqN
-	bhFDgbC/qOtdshXrpsVmh71oE5IVE2Wa5AI0laLBE3AyNJ/VDRAuHADSDrcBkfkU
-	RVhnYIXRiASoKQHHNw5QMalMlb3yhdI5qpSYebWtZ8yVK2jWS8L4v0Mm1nRG3ZqW
-	N9lKr5JJh38b9xcafzR2U0QaCava59nsY+I1pHkOWa03hKk/H6b5aInIyU8A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1764034023; x=1764120423; bh=eXYHlc1Ahdz88KewoFAIvAHpGPy5CNr/Pig
-	/19mJKrA=; b=Qjow412nXF3e9U1uEgV6DvRfKbLNFcDgkrXuJ1sRJboRCIm2Gz8
-	q6CXWNO1EdzG/ueUt1oDc17lS6WKfWinugCnw4naK9yYbtdPtmULAS1J7TTG+cVZ
-	xjdaYjT0DJBAenGdedXGbRaG3bIt95szauUhYY6BeH0jWbJ/iISWBHrC5zm403pE
-	3k3xxEFZJrQ646gPryN3SL826sw0x+NFRIbN0ATI/KHl+ftfzPtLyvx39gT3+OiP
-	XB2OK4kNGt6xokW8fdICZtwnaLYzejZL/y5R34xCVg1GlWsoSqVgk1h88ESkDiWS
-	txB6zulSndDrlrLFXbu/yRliQKpznHXH/KQ==
-X-ME-Sender: <xms:5gUlacGukoEPMVBEH9bZ6cmYpCaI6cutDV4MPlzV_LH3mkcdfpQDig>
-    <xme:5gUlaZAP02Pa5F8yq0jCBU5pyHDrkMkb_x5RMp3IEGjjisciMiRReB6kh_7Qfr4wZ
-    QR-TKlI4Y4jwJPH9k5tCWC555KJct0QagNq4ioNIPEQnPmGfvHRdOU>
-X-ME-Received: <xmr:5gUlaf9aXKIx_reuXsggAZJcWU8DNmMq-LGVFjODW87gUEF7uHGPjypXKpitVSbqSGWQsWTbmXL8Bur5npGm4PJc7TCStClkLP0x>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgedtudeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepjeevffeludelfeelgfetjefghfeugfejtdeijeffudevteffffeuuefhgfeh
-    veevnecuffhomhgrihhnpeigkhgtugdrtghomhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhn
-    sggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvghtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtoheprhgrnhdrrghrihhguhhrodhgihhtsehsrghmshgrrhgrrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehrrggrrdhlkhhmlhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:5gUlaVBIFQQrLwUDMD-2ZiMNp9SpG6i92Xe0aPE1UseemWidD1ozTg>
-    <xmx:5gUlaUR5PUyDOMSwqhGDj2Jze0tq0hhz_KdIs7LB_Sh7zhynfS8Lmg>
-    <xmx:5gUlacvY_wK1uG7RItnAq3gw94ooeAgFCVYMQaB4qHqPd7C7wV63Iw>
-    <xmx:5gUlaQ0n4hZnunGyZ7nRle9kI6x1omvF0lwTgIbMIFWZMvIpgGVLkw>
-    <xmx:5wUlaUtkKcoaKYJalqS3lYLPhdXuOETF8lHU8etcYQuULz2PQjdIK3GC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Nov 2025 20:27:02 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  Ran Ari-Gur
- <ran.arigur+git@samsara.com>,  git@vger.kernel.org,  "raa.lkml@gmail.com"
- <raa.lkml@gmail.com>
-Subject: Re: [BUG] `git clone '-c KEY=VALUE'` no longer works
-In-Reply-To: <20251124235530.GC2051672@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 24 Nov 2025 18:55:30 -0500")
-References: <CAN1UxBvk_GJjLWd0XexRxp8FFhYozGCNcodai0eqnjrhjKEh7Q@mail.gmail.com>
-	<CALnO6CBJppT3ELyu54rJvP+uqcMomJS9Nr_JTgfssn8iqG7MWA@mail.gmail.com>
-	<xmqq8qfvw2lh.fsf@gitster.g>
-	<20251124235530.GC2051672@coredump.intra.peff.net>
-Date: Mon, 24 Nov 2025 17:27:01 -0800
-Message-ID: <xmqqo6oqucka.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HwhH8pI9"
+Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-948da744f87so187030039f.1
+        for <git@vger.kernel.org>; Mon, 24 Nov 2025 19:39:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764041988; x=1764646788; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Fx3fSua4hjkVktw24C5pC/fasEHIWaiw62OUbuzDRpY=;
+        b=HwhH8pI9YnfuXUdb3d2Jjeoh4DAWDmR5x6b7B5AcdyJ4FSbmiQ5SfoQrKAMpFBuGxP
+         qF6MohhXYRaQpDFBP1oFDwZhl5ID/pL6M8Mg3YwpN+0qappIOn3RzAP/KyAO2StLn8m0
+         +8h1kZ9NGrigFmuY71afEpI0NZ+9fjaTbEcjG3+OIJ4ZLKLbCSTOpZxaHPSFQTWrC51K
+         G5LncYRokcfS2Ef1FvYxSN+qnxFgIj1qZaOxz5+wSjD7RBb4S1N5Bhzk5KeEDu1VQbKu
+         tFghGopvGYT/V+hSoW5gBK0BX0RWjtHtYBoGGJYMeUaIrM7+5lrLKV+4N8OCW02/tTyG
+         hWkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764041988; x=1764646788;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Fx3fSua4hjkVktw24C5pC/fasEHIWaiw62OUbuzDRpY=;
+        b=g4wgbT9U9+vujpzdTTCY9Mkb7V6ldC/6NAcu6oHayM/Gh2oINQaHwSKqkmr/fTg8MK
+         H7dpOMf+PsDoHeOar+BeGzZUjZhkutJtmlAiNIwjWwesMxRyNV7hlKENXKzQ+M1xzkt2
+         0I3p+Quyp2/hKGdUllk/wl7pn5qtKBS03iqFu4pPRT/EzJ0E1J4WmTH2RdTVNfwbtI+x
+         SliPm9Yah/azYTSPvU8Nt2KPBgiBcOiwBSHqD4A9CXBwJTrdpgoCyLhmL+4XMzb5Up00
+         O1OsFLG/OLyEEm8E/WWILAI/lFtsk6Pf6IxCBEOZSFh34L7grrZ52rXMe+0Rk7OWv46a
+         riWg==
+X-Forwarded-Encrypted: i=1; AJvYcCV17KJd951gRJ6OnO3U7rPQbT/g4k8lOl1ldyeZmnSe9xKxbrluVnu+KBMFqLHHNK5lEZQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzu+455Q5yH47fcdniy5DmaKylG4ADcLKZkww1do5SRyR9tpx0b
+	UbipqFVgZLPZAdwfrAwZX47tFULWwUpx8heP4Lo7hyFmVBeSR56omiG+kaV2fgoR/qVIXd0MNvF
+	yMyqELo72sayIuoIi297fcNBHKDJ4nvL7+Q==
+X-Gm-Gg: ASbGncsPadNdKvIPIOdYYhPa0mvOtqJAxDHMoclHAKWoojhCbEUvdtGKrqrE3EhsK+C
+	hJ+V3uFsy6oT++M/NFLBmc70+YXdow0qCLB4upbxZICjcl4YDKIJ08iAOrAavj99xnyIE2RtOgI
+	g/PEQ3NOLsn/NgDaZPP682zd+60gJkKP40ON3PX1KUL3pFThZAMyfxriOP4xVWxUx5M/DTD3rso
+	8fBKYeqQ1Fgy6GPv+j3+xc639UI32BPVA3WcZA9IFX6Qt7GZpX7J974+8MGHhSJf8EL6vuBbu1/
+	0p8BgN5e+3bXTukcIsMPMEHAFIyj
+X-Google-Smtp-Source: AGHT+IH0sPu/3NUuvLWlSaI94CK+2NcOaM9kvYYT8EiNRsadODxt3arMesXEMkLoS1ug2syyjNNdHEdMyG8KM4lArZ4=
+X-Received: by 2002:a02:c730:0:b0:5b7:ec76:1787 with SMTP id
+ 8926c6da1cb9f-5b99963e57fmr1055153173.12.1764041987753; Mon, 24 Nov 2025
+ 19:39:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+ <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
+ <CABPp-BGLrVv=maEqhs=j9MmST-F=K=XN6gGqmd9Hox5QRDMiHg@mail.gmail.com>
+ <xmqqbjkw78jj.fsf@gitster.g> <CABPp-BG+2+vanKAS-cwAD2XZxwx=PPcu5OG58ys+8O7rfZEhug@mail.gmail.com>
+ <xmqq7bvk77lr.fsf@gitster.g> <CABPp-BEyMFiRdHoseTaYG9rUFO6Ta=dBG88CGRb3CfNf8aSAkg@mail.gmail.com>
+ <3fb47b15-ed43-4137-95f8-cee97ab5e44c@gmail.com> <CABPp-BG-tLuydXkctsitFzozEq-=A+qTf2qOe1vYm+NeRnWsOA@mail.gmail.com>
+ <d9194329-266e-43df-ba11-933ecf83b8f8@gmail.com>
+In-Reply-To: <d9194329-266e-43df-ba11-933ecf83b8f8@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 24 Nov 2025 19:39:36 -0800
+X-Gm-Features: AWmQ_bkFmNLyCar6nGvdY4g4lsFUMOHlPhHpxvgtwXkxnwSXf1vSxsowYREbWSE
+Message-ID: <CABPp-BHTYQOooGcwYTQFPXnDG1TL-d=97a7YyBDQgn9QgO1M_Q@mail.gmail.com>
+Subject: Re: [PATCH v6 00/11] Introduce git-history(1) command for easy
+ history editing
+To: phillip.wood@dunelm.org.uk
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	"D. Ben Knoble" <ben.knoble@gmail.com>, Sergey Organov <sorganov@gmail.com>, 
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
+	Martin von Zweigbergk <martinvonz@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Karthik Nayak <karthik.188@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
-
-> I was surprised that a single "-c foo" argument would work, but it makes
-> sense: it is the "stuck" form of the short option "-c". So:
+On Mon, Nov 24, 2025 at 8:31=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
 >
->   git cmd -cfoo
+> On 23/11/2025 02:30, Elijah Newren wrote:
+> > On Fri, Nov 21, 2025 at 6:31=E2=80=AFAM Phillip Wood <phillip.wood123@g=
+mail.com> wrote:
+> >>
+[...]
+> > The range is included in the command above: "--ancestry-path
+> > ^${OLD_COMMIT_ID} --branches"
+> >
+> > And because of this, we don't even really need to "find" all the
+> > branches as a separate step, it's just part of the same revision walk
+> > for rewriting commits.
 >
-> should be the equivalent of:
+> Oh, so --branches means we consider all the branches and --ancestry-path
+> excludes the those that are not descended from the commit we're
+> rewriting - nice. We'd need to be careful about modifying the commit at
+> the tip of a branch though as in that case we'd exclude the branch from
+> the set of commits with ^{OLD_COMMIT_ID} and so "git replay" would not
+> update that branch.
+
+Ah, indeed, that's a good callout.
+
+[...]
+> > My replay-edit work used a just slightly modified form of that
+> > function,
+[...]
 >
->   git cmd -c foo
->
-> whenever "-c" takes an option. It is just surprising to read because of
-> the leading space in the value.
+> Interesting - I watched you're git merge talk about it recently and it
+> looked quite impressive.
 
-Ahh, OK, so
-
-	git cmd '-c foo.bar=baz'
-
-was doing
-
-	git cmd --config=' foo.bar=baz'
-
-or an easier-to-read form to express in the "stuck" form of the
-short option
-
-	git cmd -c' foo.bar=baz'
-
-which I totally missed.  I agree that the option parser is doing the
-right thing for that case, including passing " foo=bar" with a
-leading space as its value.
-
-> So yes, we did allow that until recently, along with:
->
->   git clone -c ' foo.bar   = baz'
->
-> which keeps the space in the value "baz", but otherwise sets foo.bar.
->
-> I agree it was certainly surprising. Despite the real-world report that
-> started this thread, it is oddball enough that I do not think we want to
-> continue supporting it even for historical reasons. It is not quite at
-> the level of https://xkcd.com/1172/, but especially the form that the OP
-> showed looks like a mistaken invocation that happened to work (and would
-> not work for any other option in general).
-
-After you explained the "that's stuck form with leading whitespace
-in the value" I missed, I wasn't so sure.  "The value is supposed to
-be a configuration variable, followed by an equal sign, followed by
-its value; what good does it do if we retained the leading
-whitespace---stripping is a usability feature" would work as an
-argument in this particular case, even though it may not work in
-general.  Of course, the right thing to do when "git clone -c"
-option was introduced would have been to notice that the stripping
-of spaces is unwelcome complication of the UI and reject/correct it,
-but it is way too late for that now.
-
-The right right thing to do at this point may be to fix the
-regression and at the same time mark the "feature" as deprecated,
-and remove it following the usual deprecation procedure, but that
-certainly sounds like an unnecessary waste of engineering effort.
-
-So, I dunno.
+Thanks.  :-)
