@@ -1,223 +1,136 @@
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655242D130B
-	for <git@vger.kernel.org>; Tue, 25 Nov 2025 06:55:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3B32D4816
+	for <git@vger.kernel.org>; Tue, 25 Nov 2025 07:28:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764053720; cv=none; b=B/q5HNVoIowHUa14PWT5dM7hmEEbxedtgmqlqoOHJjmogMQbO7b8R10pSoT/8Sg5AESixlYX1ZruSroSuX5y0xjChcJhyld7QNwllpcn2hbx177ztMjSx/fLiJmJvrs+2cScniEK5jckT6+H3n2IUtJRtzaD9V7jIVHZYjAh7H8=
+	t=1764055726; cv=none; b=toKBLHHRC+k1BeR16UUk7cQpFdFbsSBhJBC6ovdcVaaeAimNdh6s/+DnLUOX3/aULVetcddF5RwKqDwBatt4No01kDgCZ0/jte/9p0J9gOiTG7OHpF+onDeaz1AJsxaQZhG1owH/NSMMcq6yftWQ9loiI2+F2+XwfS8C9JJCQPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764053720; c=relaxed/simple;
-	bh=kv/iuSdr4gI7fVs7l7tQKWxuCU314oP4mtzARlPOjEE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uYzkC70o4PDoO6hQHq7/id5aNFyXYvi70aQuxeq/Sz916s8eS9E8kp9IQ+QYjyu8Lm+DM2EyRW2jPaP8DOwZVMyX5ykx1I89J4xeOt5Sx7OdIr5enz4wTQtbpOKmmbSjom6k/y5VFViewAx6ds9JGfZjTXkv28r0t1uh1IJCAi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mhc16dLc; arc=none smtp.client-ip=209.85.166.179
+	s=arc-20240116; t=1764055726; c=relaxed/simple;
+	bh=Sad+QeMPHSoZmYMs0UO1JNo5lo9Hy4XWv2Tqs7hNfBU=;
+	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:Mime-Version:
+	 References:In-Reply-To; b=Gu5U+vszULKRGopKCgvnvSr0yEOqPKsIrhPGGSFTipd3G/VsS5T9z+4drCVLw8n1IDhnQLdJJA9MmjF9P7Od7fvTDWpmHHliAIDhQpKsz5Tnml4zDSGy0KauE4bjVTIbpx/qstUKjlLQSrfqv1TPuFAgeRe2PYjP12mxWwqfqr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ItyPkXWW; arc=none smtp.client-ip=209.85.215.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mhc16dLc"
-Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-43379251ff9so29066805ab.1
-        for <git@vger.kernel.org>; Mon, 24 Nov 2025 22:55:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ItyPkXWW"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-bdb6f9561f9so1883660a12.3
+        for <git@vger.kernel.org>; Mon, 24 Nov 2025 23:28:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764053715; x=1764658515; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W5ywSM++3V9ow6xeXFAEI1OpVQQe/4jX8Z25L+rfCXg=;
-        b=mhc16dLcsqNk1xqXq1STppu0ZIaNr8LCKIOLzl6yjr1Vw44Ei/Kp0SmhALunRQiRdf
-         u5EEplgY64MQgWy01MpTJa5Qc6EE3IRpao8n0oQTAhL67JSm6xgVhG1eO5vYKTe5bGuN
-         TjCOFisp2CaUbOEeY54x7RtcuooP/wboqN+UoLJaDTJAi9KPQyltXib3Mtj/5lVuz0kw
-         t8b9gZm3eftpNoMfIHm66ziUrwPHQPpnoxi8Up+5jlv2maHNSt+oUUM0bjP7oXSnHm4V
-         GINEQnYr8s9U/5lGTzFiOpmcbXdP6zOtu/LVw6atTVzle7ijH558DI+aNwJvVPBIj/TR
-         zn1w==
+        d=gmail.com; s=20230601; t=1764055724; x=1764660524; darn=vger.kernel.org;
+        h=in-reply-to:references:mime-version:content-transfer-encoding:to
+         :from:subject:cc:message-id:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aCQGJ1Gc4FdHDNDiOjD9v/dk6WcIPeqOGU+bRBXqvzE=;
+        b=ItyPkXWWO0gDelY5SMfu2m8nFnSt6FJ63ZAhhiPVduJ/hyXjPbhVNM1nMcrD592UVX
+         M0kRCGkQyhAy5vAGtYuQGQ/7NWAm5ktSnPRz8wKwxrngG8eisuBCYdUdzp0mIKoI/BpQ
+         6c4e3FNX2nj/QNQbZcdjY7bWKLgMcc0VbxdfmsvQdQfGNfH2hmobJ8T9OUfLt7Kfv3gF
+         zBRXwdZ5Nptyv63tFQZTKxEiqJzURfgK8TziyoeL4Sj9G9fUM/DAtkOBmTh8pGmNb+DO
+         LHslFWJud7u2cjTw4TJbRrrPBdfooxbhsWCXQk3Of6FWHhKn5EQOLuZYc5bPgYkhrOi8
+         m3gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764053715; x=1764658515;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=W5ywSM++3V9ow6xeXFAEI1OpVQQe/4jX8Z25L+rfCXg=;
-        b=jcFqa4MGNcPGNQA9Ve7+LWCIdl1raWE/YC+p7naaMvOfx7Nu+FLGjYaLhMhKJvBbuZ
-         /Lx4FBWYCbVy5i1V434ToXwwJBf4MngWr7c23lSnxJYSjjL2mFWlnbneFAgztNrDjiLv
-         g+mV5D6Jzi0m5SF49tQn1qK5DQn48xZ0YNaR/66yGrWfM/oR+2Xf1ntQhqSXN68KTDqc
-         D+VxLtRmGMwSGZD4kGzceKFQ8zfXlCsZJ3v4PPvbmtxIJMZcAJgfidY7Yb/jgxUwvI2C
-         7MB3o+jENJnJtxPSMQW7G/qES59WAwZYImai4uAa3Bw6ui7NeryDk2v+rIMqJ1e/IVyS
-         ufAw==
-X-Gm-Message-State: AOJu0YxpJZVBXGUJAfds/re5ZUiqnE/T+ON/AeVjnDVcWq2qG6gb4lh5
-	H6EtUoNbFlE+cEo/wpSJS5uek1NN7m3VdjdxRWc0aiSKDTm/Gb44SlQaK8Nz8hShTsWxNKopNXe
-	KUquRh6Tji+k6UgqMpOo8xhrF4WzPKX3RXA==
-X-Gm-Gg: ASbGncujV90Bk/VYSmqbhPozsNv25F170UZHbWkT8jQzEMz94dVvFltbyap+tjk/Gkj
-	IA7DgVv6bTwQriTO78DTmi1cs3RMk7OqEKJ2gRK2Lcfp4mDedJWsp9hn00C9EaX1cPRZkwzFRqL
-	aljTHgmQzsJOMC2plQMCuP/THaZ2LzHheQN4uKk+DRrM2Xtf717NJFqqXfFd2mGfrbujJw9tT3P
-	KV5eHW31DnFsmrURWKWXngbF3vhNPAtzdhD0sPgE5AY2dxEFqyxV+M8sOFmV51A8YzdozUBiDsM
-	EYwsc5FJz7ORkM2PxGfy1I11+AZcEFdlM6q9yA==
-X-Google-Smtp-Source: AGHT+IEhHzadlpFnYTNgpjyc37Zn2yJlEfzrLsP/ov39/6tgk9YQeFOCMdIgPfvusLo6Msq/STPz2J5v41vXNwLGpVg=
-X-Received: by 2002:a05:6638:a702:b0:5b7:1805:cc4e with SMTP id
- 8926c6da1cb9f-5b956744c5amr15759901173.2.1764053715377; Mon, 24 Nov 2025
- 22:55:15 -0800 (PST)
+        d=1e100.net; s=20230601; t=1764055724; x=1764660524;
+        h=in-reply-to:references:mime-version:content-transfer-encoding:to
+         :from:subject:cc:message-id:date:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=aCQGJ1Gc4FdHDNDiOjD9v/dk6WcIPeqOGU+bRBXqvzE=;
+        b=QYtQFilEfFkp/Bbsr3+zjk06Lu/LF9j1jzMWA3c+L8iFo9uHht2Smg6EwxsSyzYqMK
+         zF03le13P0e2E1CBcKJL352mSfrD9PkqwLAyCiFBG02+FhRjlybSdze1rjrDhLg2kQmm
+         4DJvXiUGAxkAKTxRf1kO8ZfiNKpzxo3wdRpr11ihNEo5DgYOhJcbXraeXdv1tzadIOb2
+         DtGWTD/7vOuVVAbDvL+MivCN+HtMcxkV+q0ri3rawzvCcxCz5F/XDgN/2P820Ly42w4t
+         nEsLl6qpYFtXIkGLMv9WCEnCBxrVbJEY/5DpnWyHjLCi1kg23mN5bSPmqlNjbDdHImU2
+         1dWA==
+X-Forwarded-Encrypted: i=1; AJvYcCVWHwy1H4K9wxHjm2fXj2OhBotfw1sKMZ68vmnzBZCpTkAtMWPlEDPQv7LDdpClfpeBfME=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxYK0YUx3wBLgVX3wI30OJfyM/Mto7ksZYi5dneWaRE/b3rkCsx
+	NrVosEcSd0I63TAKBSGXcY1tDqWi7SdLmcSbSojSGHqd+hW/0rxl6AIt
+X-Gm-Gg: ASbGnctX4raRsudygJUs79VvvOeachh3iLajppNRE3VSnlwxnLITUs9+XbilO2FB78V
+	Kjn3r3YYmKXUqPHfF9vZE+3OrIjzCbY6IbbkeWWt9bc0x0reQet7LnL6LM2qyHxWbhe6Uun6qrS
+	5NL0Sns12I0Z0kqqZfntaGo99ALd8rGaoAJKxUSJwxNU20nwgEllyZWcsGjC93eJkFbFNwWhqBd
+	76jr2HVa9YNx1a4USrc+D+8Rht1ozUEh0jkK3fVrMvz39vq+/mNMlY0M1va0mSHL2J8YKPIX3Lr
+	Zd9iH6Wx+DCeXcvOGsEA6DujSHCFcEWKuUtenjeHiURcGhXXcAWMwBONbQXo6E15RCRAVz9l6Vl
+	qkNYrUTeEErRS55+DqyqtvZRA4MdITbfJLTYSWuSbgudANyMD4yA/eX86DzP2hocZMA5nQ2qiVH
+	0v96Tbgb+TNpPayJMV2i9unAuEjEWrfJoyRDsROkmux8E2
+X-Google-Smtp-Source: AGHT+IEGd3fkliyLSKn32vtJekkqU3HP8ti88rKUOTFz+21H+tiz1pMpWExBPbe0obnggBs1dIuaTA==
+X-Received: by 2002:a05:7301:7105:b0:2a4:3593:96a3 with SMTP id 5a478bee46e88-2a7192bce18mr7610154eec.32.1764055723797;
+        Mon, 24 Nov 2025 23:28:43 -0800 (PST)
+Received: from localhost (c-73-71-230-225.hsd1.ca.comcast.net. [73.71.230.225])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11c93db556csm79196871c88.1.2025.11.24.23.28.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Nov 2025 23:28:43 -0800 (PST)
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 24 Nov 2025 23:28:42 -0800
+Message-Id: <DEHLKBB96BBI.3V74A5NGVTVZA@gmail.com>
+Cc: "Chris Torek" <chris.torek@gmail.com>, "Johannes Sixt" <j6t@kdbg.org>,
+ <git@vger.kernel.org>
+Subject: Re: Filter smudge for secret restoration: no disk access?
+From: "Kache Hit" <kache.hit@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Kache Hit" <kache.hit@gmail.com>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <xmqq5xb0yqj9.fsf@gitster.g>
-In-Reply-To: <xmqq5xb0yqj9.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 24 Nov 2025 22:55:04 -0800
-X-Gm-Features: AWmQ_bmuI84Ephk2SrTbqNM3A9g-47HHxDdE-DvT7OEFKbVzNd7XuMyh3ruGjro
-Message-ID: <CABPp-BGEg0PFoXWQYQZ2GpdxxBvz1KdgenLDsvb3bdrhALEd-A@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2025, #07; Sun, 23)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+X-Mailer: aerc 0.21.0
+References: <DEGR5XSM0EVG.27IMOKOK1O98Y@gmail.com>
+ <9aa7cfdb-fc50-4ceb-936c-2ed441c462a3@kdbg.org>
+ <CAPx1GvcXkXMpWgOyMWdfHXGEDJQY4wJrJV0p7LHBMeQFPMDHnQ@mail.gmail.com>
+ <DEH58DEF5MGO.2CFIKCM2CAQY2@gmail.com> <xmqqms4bw7f7.fsf@gitster.g>
+In-Reply-To: <xmqqms4bw7f7.fsf@gitster.g>
 
-I tried to take a look at some of the series whose status you were
-asking for feedback on (and just threw an extra comment on one that
-you didn't ask about).  Comments below...
+On Mon Nov 24, 2025 at 11:35 AM PST, Junio C Hamano wrote:
+> I do not think it is a total dogmatic prohibition, but is a
+> practical piece of advice to be prepared in a situation where the
+> file %f does not exist on the disk in the working tree.  Also even
+> when the file %f does exist, its contents would not match (because
+> it was smudged when it was checked out, and the user may have
+> further modified it) what in the tree of the commit you are
+> switching out of.
 
-On Sun, Nov 23, 2025 at 8:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> * jc/optional-path (2025-11-20) 3 commits
->  - config: really treat missing optional path as not configured
->  - config: really pretend missing :(optional) value is not there
->  - config: mark otherwise unused function as file-scope static
->
->  "git config get --path" segfaulted on an ":(optional)path" that
->  does not exist, which has been corrected.
->
->  Will merge to 'next'?
->  source: <xmqqikf47ajk.fsf@gitster.g>
+You're right, it can be tricky as there are several cases to handle. I
+try covering this and other cases in the script's tests.
 
-This topic seems to be missing a squashed-in fix from
-xmqqy0o05nuy.fsf@gitster.g; should that be squashed in and then merge
-down to next?
+However, isn't properly handling different scenarios a separate issue?
+Simplying my concept to "ignoring" instead of "redacting":
 
-> * kh/doc-committer-date-is-author-date (2025-11-20) 1 commit
->  - doc: warn against --committer-date-is-author-date
->
->  The "--committer-date-is-author-date" option of "git am/rebase" is
->  a misguided one.  The documentation is updated to discourage its
->  use.
->
->  Will merge to 'next'?
->  source: <V2_committer-date-is-author-date.1@msgid.xyz>
+ * Clean: ignore certain lines, preventing them from being committed
+ * Smudge: don't overwrite working copy of ignored lines on checkout
 
-I think merging down makes sense.  It's a simple enough change, that
-just gives helpful documentation warnings.  (As a side note, I found
-it illuminating to read from that commit message about the reason that
-flag was added; it never made any sense to me, but I didn't dig
-further.  I'm glad Johannes and Kristoffer did.)
+Then the functionality becomes line-wise analogous to gitignore working
+on whole files. My local copy of gitignored `.env` isn't overwritten
+when I checkout. I'm looking for the same, just line-wise.
 
-> * js/ci-show-breakage-in-dockerized-jobs (2025-11-17) 1 commit
->  - ci(dockerized): do show the result of failing tests again
->
->  Dockerised jobs at the GitHub Actions CI have been taught to show
->  more details of failed tests.
->
->  Will merge to 'next' after amending?
->  cf. <xmqqpl9gike6.fsf@gitster.g>
->  source: <pull.2003.git.1763399064983.gitgitgadget@gmail.com>
+On Mon Nov 24, 2025 at 11:35 AM PST, Junio C Hamano wrote:
+> ... one of the things the checkout needs to do may be to remove the
+> existing file from the working tree, and then create a file anew
+> (probably in a temporary file) and move it to the final place, in
+> which case, your smudge filter may be called during "create a file
+> anew" phase, where the old file F or G may be missing from the working
+> tree.
 
-I had a slight tweak for the wording of the first paragraph, which I
-just left as a comment on the patch.  Not sure that needs to hold it
-up, but maybe worth considering to include in your amending if
-Johannes is fine with it?
+The old file being missing, being wholly removed right away, is exactly
+what I'm running into. If the working copy was kept around for `smudge`,
+I could achive a basic implementation of line-wise ignore/redact.
 
-> * js/strip-scalar-too (2025-11-17) 1 commit
->  - make strip: include `scalar`
->
->  "make strip" has been taught to strip "scalar" as well as "git".
->
->  Will merge to 'next'?
->  cf. <xmqq7bvoiadg.fsf@gitster.g>
->  source: <pull.2004.git.1763409086322.gitgitgadget@gmail.com>
+As-is, git's clean -> smudge filters can:
+ * idempotent op -> no-op, e.g. identing or formatting
+ * perfect mapping -> map back, e.g. git-lfs
+ * add info -> remove info, e.g. expand RCS keyword -> unexpand
 
-I'd kind of like to see a response to your suggested alternative.
+But not:
+ * remove info -> restore info, e.g. ignoring lines, redacting
 
-> * dw/config-global-list (2025-10-09) 4 commits
->  - config: keep bailing on unreadable global files
->  - config: read global scope via config_sequence
->  - config: test home and xdg files in `list --global`
->  - cleanup_path: force forward slashes on Windows
->
->  "git config --list --global", unlike "git config --list", did not
->  consult both of the two possible per-user sources of the
->  configuration files, i.e. $HOME/.gitconfig and the XDG one, which
->  has been corrected.
->
->  Comments?
->  source: <pull.1938.git.1760058849.gitgitgadget@gmail.com>
 
-Perhaps mark this topic as expecting a re-roll?  (c.f.
-20251122020047.GB3947@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal=
-.cloudapp.net)
+- Kache
 
-> * jc/submodule-add (2025-11-15) 1 commit
->  - submodule add: sanity check existing .gitmodules
->
->  "git submodule add" to add a submodule under <name> segfaulted,
->  when a submodule.<name>.something is already in .gitmodules file
->  without defining where its submodule.<name>.path is, which has been
->  corrected.
->
->  Comments?
->  source: <xmqqv7jacvdq.fsf@gitster.g>
+PS
 
-Left a couple minor wording suggestions.
-
-> * en/ort-rename-another-fix (2025-11-03) 3 commits
->   (merged to 'next' on 2025-11-19 at 53d94af6b4)
->  + merge-ort: fix failing merges in special corner case
->  + merge-ort: remove debugging crud
->  + t6429: update comment to mention correct tool
->
->  Yet another corner case fix around renames in the "ort" merge
->  strategy.
->
->  Will merge to 'master'.
->  source: <pull.1992.git.1762192908.gitgitgadget@gmail.com>
-
-A sidenote that probably doesn't matter since you've already marked it
-for merging down: this topic has been deployed at GitHub for just over
-a month without incident (whereas there were some problems prior to
-deploying these fixes, and those problems cleared up the minute that
-these changes were deployed).
-
-> * cc/fast-import-strip-if-invalid (2025-11-16) 3 commits
->  - fast-import: add 'strip-if-invalid' mode to --signed-commits=3D<mode>
->  - commit: refactor verify_commit_buffer()
->  - fast-import: refactor finalize_commit_buffer()
->
->  "git fast-import" learns "--strip-if-invalid" option to drop
->  invalid cryptographic signature from objects.
->
->  Comments?
->  source: <20251117043450.322644-1-christian.couder@gmail.com>
-
-I think this one is ready to merge down.
-
-> * en/xdiff-cleanup-2 (2025-11-18) 10 commits
->  - xdiff: rename rindex -> reference_index
->  - xdiff: change rindex from long to size_t in xdfile_t
->  - xdiff: make xdfile_t.nreff a size_t instead of long
->  - xdiff: make xdfile_t.nrec a size_t instead of long
->  - xdiff: split xrecord_t.ha into line_hash and minimal_perfect_hash
->  - xdiff: use unambiguous types in xdl_hash_record()
->  - xdiff: use size_t for xrecord_t.size
->  - xdiff: make xrecord_t.ptr a uint8_t instead of char
->  - xdiff: use ptrdiff_t for dstart/dend
->  - doc: define unambiguous type mappings across C and Rust
->
->  Code clean-up.
->
->  Will merge to 'next'?
->  source: <pull.2070.v5.git.git.1763505262.gitgitgadget@gmail.com>
-
-I think so.  There are certainly additional cleanups needed, as this
-series makes clear, but that's clearly a bigger problem and the author
-has stated he plans to work on those but just needed to limit the
-series to some initial cleanup that wasn't too big to send to the
-list.  The series has gotten reviews from lots of folks, and I just
-looked over v5 and couldn't spot anything to call out.
+I've just found a case I'm not yet handling: at the end of `smudge()`,
+any unused secrets from the "previous working copy" that haven't been
+restored into the template would be lost. It is analogous to having
+local changes to a file at commit `X` and checking out `Y` where that
+file has been deleted. Git avoids overwriting local changes by aborting
+the checkout.
