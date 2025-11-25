@@ -1,85 +1,95 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F219326B760
-	for <git@vger.kernel.org>; Tue, 25 Nov 2025 22:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAED22FDE6
+	for <git@vger.kernel.org>; Tue, 25 Nov 2025 23:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764111254; cv=none; b=uW2RVp7ps1fLsp/bUDY3/1VYb9z+PW3BS002xoLix9tLNp+ZucdA7FMplTaoZJzHO1Obc9CntIPMoGIY00K1jWI6Kpgjde3BJZ2a7YftLFNrqEGMPSRJGYC3PopYqXqH4cZ07oxLUDdUJJixntS4pMqiqdFCmgZWkf6HFmumw/c=
+	t=1764112532; cv=none; b=NBnXmX/w8uTmiCFXPwLaUJvihMTq2/gy8RH5HcOnYd6rufgHP+7Ofj9IBrx+HR8TWeHBHKhG2hfcuFlEcywyPjJtGqAD3/EXYETLfcnVd9zMH9ZPxF17bTSzb4BI2hQ1LfPha65Ai/0OK7NHPW9iQi0mwU2Mlzl4Rqzw8ERm5iQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764111254; c=relaxed/simple;
-	bh=amnqQ1/0leKNbrSFvT4I8x0RT3Cg+mlYI3iRT/75/AE=;
+	s=arc-20240116; t=1764112532; c=relaxed/simple;
+	bh=ei9CVfjWl7ES5tbHvfDRsl732GKtCkI7mXzmPh4tWrU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=h8hIESli73NGcy+cPnV4gvgMPK2hAyHt+Rh84tVtVGA+idzEULr3YyMU15bhmyoUhc5WyVXEoUocHSL+XresYe5QRLISbsoFR4UUdsIcpIf048Wp0mGXehlg3wvDwO3G6EUE3VuqGaFgdsf03AUhIT3FDSW4qj5/MDpGvMmq3TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fqvbbH4+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QSQEVO4O; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=Bfq2/r1+HueSEgepEDCqnJ8vVBuBQxQ/5Jm/mqswuXRAxjlF1aKmNhCTh/D+t6XYsQWYSd9c7RUpPEo6ku3H6E7d3546tgcWTIkr7KEj7CXOq+Ein+xhGFo0Xn3QDQLvwywRwA2MqsZZHMldBt1VYkNCS9AcK9CodiW/OqGpuX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fLwSZQm0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sZnNa0HI; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fqvbbH4+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QSQEVO4O"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1F38A1400078;
-	Tue, 25 Nov 2025 17:54:11 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fLwSZQm0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sZnNa0HI"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AC0CF1400130;
+	Tue, 25 Nov 2025 18:15:28 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 25 Nov 2025 17:54:11 -0500
+  by phl-compute-11.internal (MEProxy); Tue, 25 Nov 2025 18:15:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1764111251; x=1764197651; bh=lxoXWQYyFT
-	gs27EYr9gGbF803crWsqRQCtzjay3HViY=; b=fqvbbH4+9IJwGD+igHXXMsJjih
-	vldnruVs+VhxieXAYAi2aiLSiHCpc66Va+wOgjgmJnpVcb2Tx/odz0mgbMnsyEMr
-	uGXYq6uPH53Nv4h+Et5K8re0Kv0dtgBYDIVYp46ZUh+Z08gArNp8h+b+gVGZR+dj
-	yQlunZHVB9IaNFV3lQfYT3nqdHQunQgsUBMAW7T2dQ34pDuuj1jwMfowdr5dGZE3
-	Q8XwAXghzLBokyB/v5dqjoUu6irozihENPrM46Bd+4+8tSoF+oCO2PNsDFrm15RZ
-	roMGhIfWHq+5CQFDEu64VTS4qvP6V4i9rPjkZvQnMW5qL/EOcR/ZPYVVFYpw==
+	:subject:to:to; s=fm2; t=1764112528; x=1764198928; bh=u1d+0WVyvP
+	QAIe3XbyPoRhQDBHkAHN3D3hB50c7CUB8=; b=fLwSZQm0EgX/oU1WLiDMQsow/6
+	gh6lxhxivttXjnS74HEqOJxVJarO3IiKBv7iDJMuWmkeusq2Gvo1gmrMvScltE9h
+	TI/dBAu0fi48RhQNncM1SFxbwihazdC1ni2/z2Ftqm/NDoMVQEDXjVOzWsVLoZHI
+	c81WY44MeJoe/ZJakI7v5TNSVocqueT8aN/X0N/tzT36Oof3oW5TVwD/cORVHoJL
+	fQ8h5cZXbrLvpyJ3m3XYt+YDOHdDs0SD7hXIFMJus8ZEGoTahBkTb0BDJK3bbEkG
+	g1aRbxFYWT2STaF2HpyHa4Fpzk/vbaLUR2wPPPPoEA7H3sHaglQKiKkVCvRQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1764111251; x=1764197651; bh=lxoXWQYyFTgs27EYr9gGbF803crWsqRQCtz
-	jay3HViY=; b=QSQEVO4OdgotByyRSYDuEt5x5olQuMCZUP0gDPRJkavwBzFwFs1
-	d4NHccMyBJ8NK2y8fsIhJ+TR8u3jVzD32zpi70Qz3hVAH6jy3KnGIOF/+e6Mqvzm
-	oBSwZcrdtJBRIj3R55NXSR191YSADz5bfciKoQLuSwXbvW58knvpxMjXK3trS9tg
-	EsnwG18xrCGN6fIttfBpSIDCJXtLmHVPeKQnllvqH9ku9eymAmRiZ6ox1YqRdAqu
-	Wppdu29AA6zMuDE+0VhsDws95MZnDwGRLdRLQF4k48MF3y3TZkdjWNi/TW+ljwdH
-	0EiTd29ESig2usuqzPVAFS3ijESEhZwxyBg==
-X-ME-Sender: <xms:kjMmaXcHxetf2tU6OwOMo4j3ikj7-PrR_vXMhovJtGO-LH09fhOkjg>
-    <xme:kjMmaUPYe955-nBa9-aIqzPCVnE1l4EjXG37NF8nt895lVYdlfD2WT2rGzCvSIt2Q
-    QMF3iUNtCJP6Gt-1S2IHWBZZo2OVLRRLkk7YA7O_dn-GRE-v0RwPQ>
-X-ME-Received: <xmr:kjMmaVhUteTJZaXMt8_JkF09BAfWAuv-MYbUcyIbB-TRygNe2bUhNxy_J83bbiaH8zhzHNF5k_bzFVrrXLntcMTqNkfIDPJMil3v>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgedvjeduucetufdoteggodetrf
+	1764112528; x=1764198928; bh=u1d+0WVyvPQAIe3XbyPoRhQDBHkAHN3D3hB
+	50c7CUB8=; b=sZnNa0HI1Qc197XdsWSTbuaqXWU4OmL3g/LPuXvesTEIiN4mCll
+	/N8cLbWYfxUEyAr4xfgYI/8uTbENl6qFM/lP0Eh1/hzFViSBB04ke0f1Mfc4W2k0
+	MZxQp1ei3OhmXeY0S58qArXe9iiuLRqdVgeJI/B9eip332Pb/Y+/Na2uECON97wn
+	iJIdGjr99QYxtGbvd5qQJkEgi0o2Jq2aBEedadW3gzUmhzl3ualKs9d2g9fNa7Jr
+	QIArmrgSpOx68izFphIYVvURqlbuBHBwkP3NRS3bacqzLaUeAP0/o1bHjAkpKPQh
+	Im5/xsfNQAeXS1smVW8EwvF+43gFz6YkBUQ==
+X-ME-Sender: <xms:kDgmaQHP5vj_wyluPo1vH9imbgGkW1nvZEjkwUrcVvxs-B1KVpyxAA>
+    <xme:kDgmaRgan83kxqVn4853ktxflGAZqQw_yfmhwA6q29DeH62uqWD00-W1WPnYJ2cJf
+    t3E5BzaJRJrveDQh8G-B5lWFeL03iuzDFAjW5Kv1wUHPocwkhQ1GQ>
+X-ME-Received: <xmr:kDgmaVtuyuUIu6kFW8VTCksVK4S4M-D9qRumhjcKNuH1B170VFzJFBejRbIfne1mdQC63nU-pUzbUWWc56E0miPvLz056tsYTLmt>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgedvjeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
-    hmgidruggvpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:kjMmaX0HPDVgpZbIXTrl_MVnZOQY3PT20egbbc4xeTpub0sEDuXBBw>
-    <xmx:kjMmafizxpN0T2Ite2qi9dAe9N7xZef3-ZwWS7_7CjvTKQR_YM_46g>
-    <xmx:kjMmaXe-gbgSXHDCH-pNrQtyHi6tyuIXyW2AB0s5OSt2YYXZKstL3A>
-    <xmx:kjMmaSkW_G-g1yxFGw7TBNei6wY4gl4tW5115y-eZZs6rCsLuNIrwA>
-    <xmx:kzMmabIKHVuYHdBQMG1IKjPTFuyv6rdCrcyr_grZJA_rWFnaTXXFwGdZ>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhlrggsoh
+    hrrgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepvghmihhlhihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtth
+    hopehruggrmhgriihiohesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphhssehpkhhs
+    rdhimhdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpth
+    htohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhl
+    lhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtoh
+    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
+X-ME-Proxy: <xmx:kDgmactEs764x3SI4M9RdsMKYmub0Ub7fxktQDCN46BmCcHQsn4SSA>
+    <xmx:kDgmaSHwlK7YE0risfXkxoeZg13OopO6IhmZGVj-SbSQ3kEkzww5bw>
+    <xmx:kDgmafO2eBi23h4cl29gliFzmHm776GJGESZEmSRrSefjoDfXJPMVg>
+    <xmx:kDgmaZJSkxGfs-IBK59MTdRYOTzxYwhM9ZU-V7_P3R7jcHSewB4ZXg>
+    <xmx:kDgmafXKO5kuVmVe3ROED8pA5WqbF-14FCb1Bxc9Mk73fwThZOLmSlrs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Nov 2025 17:54:10 -0500 (EST)
+ 25 Nov 2025 18:15:27 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] make strip: include `scalar`
-In-Reply-To: <235775ef-d12f-4b19-0b80-672c4e5e1812@gmx.de> (Johannes
-	Schindelin's message of "Tue, 25 Nov 2025 18:47:42 +0100 (CET)")
-References: <pull.2004.git.1763409086322.gitgitgadget@gmail.com>
-	<xmqq7bvoiadg.fsf@gitster.g>
-	<235775ef-d12f-4b19-0b80-672c4e5e1812@gmx.de>
-Date: Tue, 25 Nov 2025 14:54:09 -0800
-Message-ID: <xmqq4iqhraem.fsf@gitster.g>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org,  Emily Shaffer <emilyshaffer@google.com>,  Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>,  Patrick Steinhardt <ps@pks.im>,
+  Josh Steadmon <steadmon@google.com>,  Ben Knoble <ben.knoble@gmail.com>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?=
+ Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH v3 01/10] run-command: add stdin callback for
+ parallelization
+In-Reply-To: <20251124172043.1650014-2-adrian.ratiu@collabora.com> (Adrian
+	Ratiu's message of "Mon, 24 Nov 2025 19:20:34 +0200")
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+	<20251124172043.1650014-1-adrian.ratiu@collabora.com>
+	<20251124172043.1650014-2-adrian.ratiu@collabora.com>
+Date: Tue, 25 Nov 2025 15:15:26 -0800
+Message-ID: <xmqqsee1puup.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,36 +99,78 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
->> > -strip: $(PROGRAMS) git$X
->> > +strip: $(PROGRAMS) git$X scalar$X
->> >  	$(STRIP) $(STRIP_OPTS) $^
->> 
->> I wonder why the original names git$X here explicitly, instead of
->> using say $(OTHER_PROGRAMS) that covers both of these.  I know that
->> the undocumented INCLUDE_DLLS_IN_ARTIFACTS knob uses OTHER_PROGRAMS
->> by throwing in non-programs like DLLs to it, so that artifacts-tar
->> target would include them, but perhaps instead of working around the
->> misdesign of that target, wouldn't it be better to correct its use
->> of OTHER_PROGRAMS and use it here instead?
->> 
->> The change (including the "strip scalar, too!" part) should look
->> like this, I think.
->
-> Sure.
->
->> Also do we need a matching change to CMake and meson?
->
-> I am unfamiliar with Meson, and do not see anything about stripping in
-> `meson.build` apart from a `--strip` option that is mentioned in a comment
-> (and which I would assume already handles all executables, otherwise the
-> move to Meson really is not worth all the hassle).
+> +static void pp_buffer_stdin(struct parallel_processes *pp,
+> +			    const struct run_process_parallel_opts *opts)
+> +{
+> +	/* Buffer stdin for each pipe. */
+> +	for (size_t i = 0; i < opts->processes; i++) {
+> +		struct child_process *proc = &pp->children[i].process;
+> +		int ret;
+> +
+> +		if (pp->children[i].state != GIT_CP_WORKING || proc->in <= 0)
+> +			continue;
 
-That's a great point.
+This combination of two conditions is a recurring theme in this
+series (e.g., something close to the reverse of this is called
+child-ready-for-cleanup later).
 
-Anyway, the original patch that started this thread is not wrong, so
-let me queue it as-is.  Those who want to improve on it can build on
-top.
+I wonder if it makes the code easier to follow if we add a set of
+helpers that take a pointer to &pp->children[i] (and we probably
+should give the struct that describes each child managed in the
+"struct parallel_processes" some name) and asks "is this thing
+done?" etc.
 
-Thanks.
+> +	/*
+> +	 * Child tasks might receive input via stdin, terminating early (or not), so
+> +	 * ignore the default SIGPIPE which gets handled by each feed_pipe_fn which
+> +	 * actually writes the data to children stdin fds.
+> +	 */
+> +	sigchain_push(SIGPIPE, SIG_IGN);
+> +
+>  	pp_init(&pp, opts, &pp_sig);
+>  	while (1) {
+>  		for (i = 0;
+> @@ -1792,13 +1864,7 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
+>  		}
+>  		if (!pp.nr_processes)
+>  			break;
+> -		if (opts->ungroup) {
+> -			for (size_t i = 0; i < opts->processes; i++)
+> -				pp.children[i].state = GIT_CP_WAIT_CLEANUP;
+> -		} else {
+> -			pp_buffer_stderr(&pp, opts, output_timeout);
+> -			pp_output(&pp);
+> -		}
+> +		pp_handle_child_IO(&pp, opts, output_timeout);
+
+OK, this helper roughly does the same thing as the removed if/else
+(and a bit more).
+
+> @@ -1809,6 +1875,8 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
+>  
+>  	pp_cleanup(&pp, opts);
+>  
+> +	sigchain_pop(SIGPIPE);
+
+OK.
+
+> diff --git a/run-command.h b/run-command.h
+> index 0df25e445f..e536ed7544 100644
+> --- a/run-command.h
+> +++ b/run-command.h
+> @@ -420,6 +420,22 @@ typedef int (*start_failure_fn)(struct strbuf *out,
+>  				void *pp_cb,
+>  				void *pp_task_cb);
+>  
+> +/**
+> + * This callback is repeatedly called on every child process who requests
+> + * start_command() to create a pipe by setting child_process.in < 0.
+> + *
+> + * pp_cb is the callback cookie as passed into run_processes_parallel, and
+> + * pp_task_cb is the callback cookie as passed into get_next_task_fn.
+> + * The contents of 'send' will be read into the pipe and passed to the pipe.
+
+There is no 'send' seen around here.  Does this refer to something
+a later step adds?
