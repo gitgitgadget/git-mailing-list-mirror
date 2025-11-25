@@ -1,168 +1,238 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9132D32824A
-	for <git@vger.kernel.org>; Tue, 25 Nov 2025 17:40:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9C7219E8D
+	for <git@vger.kernel.org>; Tue, 25 Nov 2025 17:47:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764092445; cv=none; b=HbMcZOGZjA2MURPdvAs33lFq0KZYN/ogHnr5U2sNM3wEaEBVL7xjJVtcOEy4LrfmVXADKkVuOIMIfyYsR50/0s0GyKCiCm1asM93Uqqe2EFVR67zgWlFpn/mSgt8zKRThYCvMlH44To1vHoBFoBJ1CJvaolrgER4sdjFkgjHRV0=
+	t=1764092871; cv=none; b=IOwKhmJp0J48G8FF3QA3x7s6CKT8CeF5YHu0Clscn/eHf7LC0PqoEvuMb+CDR+ZlAz4dtyGQIe20ba7FGe0IsWSWO9WteQQ1/pbOH+d9EiTh4a+9AqHL7AXFYfUphL86m60bjdZ8MlVojIqT96XZ/fI7vFwy9EVFPYPtmGRCDas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764092445; c=relaxed/simple;
-	bh=12776nTdEqLEe6Bg8T09vnf8dJzLA95AgxfQTOX52gs=;
+	s=arc-20240116; t=1764092871; c=relaxed/simple;
+	bh=JWal/xlkRgH4ZLMlZmhvi+mR8tJ5V3GYpAQ8HsoH2dM=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=j9jFWpo9tC9izNJJYTIih21DSakPmM/KP3hd9f+xPyg6Z64FyoPntACs3meB4pwQvaHtDvSdA/ScC18YxiCMtS2ObmBsVUPrWA+cSTDMekFQNFnX8KJmSHGShvzu4NjHgfqeuRcjBCgYly+duegytOAbcgBFw+6cXCNOEhBRuwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ql3JCU/2; arc=none smtp.client-ip=212.227.17.22
+	 MIME-Version:Content-Type; b=KhL9agy1HQ4fXDoWyHzllf1sN5IQtDm6Iwd15+EX1foG/IWrfKCBHZsDZehpLHv/YzMKY5kqjcHSZGOBjt/XBw0/UiH3oOX0CJTQKgxlkNf8i7xVacYlyq1aBhlJjsbs6Tx3Y+bsGEFNXmNTX1bkwdnDYKVKCZjvWuJ1cYllonM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=FzOdZzzh; arc=none smtp.client-ip=212.227.17.20
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ql3JCU/2"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="FzOdZzzh"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1764092440; x=1764697240;
+	s=s31663417; t=1764092863; x=1764697663;
 	i=johannes.schindelin@gmx.de;
-	bh=AfHgPEXyZnEPRAm6xyG1nmvZk88RUr2VKipzlqH6Vh0=;
+	bh=wKE5yVDLlN++GjxVJhs991HNZz2iUF6rYYXM/b09/4k=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=ql3JCU/2YQvKZMnW44SNeNSTgjKtN7y+pdKXDYfIvdQ1OvyDguLvCDCAF+76IJoz
-	 Cfi9ZCA4p8mpx8Z/xK39tqJ/WSQX0K3lkkJ2FRBeRCsebocC19falL0oeWoxd451z
-	 Fw407gPsSApLSrfDTAUbVd7Gp/QyASBf3daKf1kJKqWry+q0YC8NMaSLMazxyXM1g
-	 Tx7GZ7fIGwt/Hnyybz5HWkl5CoutHmk6quEtX6IAwzrkx/HKLSAy0Hqo0hlf/JIXD
-	 1frxPgT2uNTpayHErydixpj0B/Bu3Ju/3NHWmoplVdEfYGcTVZQ0zcEgE2BC4g1jj
-	 Y5aTFL+qGVKjacB3ow==
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=FzOdZzzhaRRv6wUcvqku+JM6o/W+2k23k6VGy0r8SLy1JI6J3Qzjq9bQLZ6sR2K/
+	 1F5I096cMJDF5O1HsLgOvQAjWa7laiv2NKc10ZWCkT/HJuq+nH2VOimHJr5Y4R5ko
+	 BHJ3vaCRNEqXQz6bdbiBbWGWVSkblS0pTqL7Howsost8oVo+Tf7sCLDHo1mBt9Jxg
+	 tmIoKnqHvXjHxOWybkKl3LMq5TgDAuiBJqDi33ZdjevpzjoHnH3djbz/aKMDlHzC4
+	 HpwMFe594107N05+Rb2zGCKXk4YUyzqO0SdUkyEGOfjiAKGMWfrBqaTebXzKIsYfd
+	 W9wL+SfnoZQq0B4uqg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.213.165]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MiJZO-1w0sgA0Axa-00ad5J; Tue, 25
- Nov 2025 18:40:40 +0100
-Date: Tue, 25 Nov 2025 18:40:39 +0100 (CET)
+Received: from [172.23.242.68] ([89.1.213.165]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MLzFx-1vfCuN3IbR-00Y7D9; Tue, 25
+ Nov 2025 18:47:42 +0100
+Date: Tue, 25 Nov 2025 18:47:42 +0100 (CET)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Elijah Newren <newren@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
 cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
     git@vger.kernel.org
-Subject: Re: [PATCH] ci(dockerized): do show the result of failing tests
- again
-In-Reply-To: <CABPp-BErdhTjbqDem4Xvc-XbhgLUEpy9-eiaaR1F_diMca--6A@mail.gmail.com>
-Message-ID: <d8054499-aacc-f697-c117-116729432c3a@gmx.de>
-References: <pull.2003.git.1763399064983.gitgitgadget@gmail.com> <CABPp-BErdhTjbqDem4Xvc-XbhgLUEpy9-eiaaR1F_diMca--6A@mail.gmail.com>
+Subject: Re: [PATCH] make strip: include `scalar`
+In-Reply-To: <xmqq7bvoiadg.fsf@gitster.g>
+Message-ID: <235775ef-d12f-4b19-0b80-672c4e5e1812@gmx.de>
+References: <pull.2004.git.1763409086322.gitgitgadget@gmail.com> <xmqq7bvoiadg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-689714056-1764092440=:18364"
-X-Provags-ID: V03:K1:A+uhG531qu7TSHeGE1MUJOUJ/XtPJ8XlrcUPk7rGtnl+yFYviwo
- lv7+FkbQoVNUaMSABrL7LOQdQ4oAsuglUJfqTGeLinvsP2wmIFbrZy0LCw5XuxkqdUbU044
- YwyCnoK2uADoBgZhEJCDDTUZPZEZrqHaQfGHLf4o03KOmozbqhlI1Nh/Dfv9M6UHxAqjhdO
- QbLqLx0WmyYhcaKiomV1Q==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:SCAjKVC63Zw7FPDPjb6zUoScr0rqnJd40FBPFxZPxYAzUB70NJ2
+ shA27WB/CWqUh8aLyvSANObj2OCP+og/46klOOuyh3Y3StvHYgizReueXYLHLarqvAI4W+Y
+ pjhZdV9OUuqy1icRvaAk754+gb6t7gc7WuX2y/E1roGCSZJYGEU1dOhp5lbGWx4juggeBxb
+ vb3ZfodmK5qzpDCc2cJSw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:MaTSSNazTiI=;sfV61rVk9wwkMcitNY15ScDp5fb
- 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
- Oj/Ncqgul0p5WgtlD4qrFxinwhwCp
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-689714056-1764092440=:18364
-Content-Type: text/plain; charset=UTF-8
+UI-OutboundReport: notjunk:1;M01:P0:HGpwbxGo+00=;nnAd1UZl4Cka6eRrR9fsBPRjDqB
+ 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
 Content-Transfer-Encoding: quoted-printable
 
-Hi Elijah,
+Hi Junio,
 
-On Mon, 24 Nov 2025, Elijah Newren wrote:
+On Mon, 17 Nov 2025, Junio C Hamano wrote:
 
-> On Mon, Nov 17, 2025 at 9:17=E2=80=AFAM Johannes Schindelin via GitGitGa=
-dget
-> <gitgitgadget@gmail.com> wrote:
-> >
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>=20
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > The quality of tests/test suites does not show as much when there are =
-no
-> > breakages as in the amount of time required after bugs trigger test
-> > failures before the bugs can be identified, analyzed and resolved.
+> > When Scalar was made a canonical part of Git in 7b5c93c6c68 (scalar:
+> > include in standard Git build & installation, 2022-09-02), it was adde=
+d
+> > to all relevant Makefile targets except for the `strip` target.
+> >
+> > Let's correct that.
 >=20
-> I found this paragraph hard to parse.  After re-reading a couple
-> times, does the following convey the same meaning?:
+> The motivation makes perfect sense.
 >=20
-> The quality of tests and test suites is most apparent not when
-> everything passes, but in how quickly bugs can be identified,
-> analyzed, and resolved after test failures occur.
+> > diff --git a/Makefile b/Makefile
+> > index 7e0f77e298..62f7f7bf56 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -2565,7 +2565,7 @@ please_set_SHELL_PATH_to_a_more_modern_shell:
+> > =20
+> >  shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shel=
+l
+> > =20
+> > -strip: $(PROGRAMS) git$X
+> > +strip: $(PROGRAMS) git$X scalar$X
+> >  	$(STRIP) $(STRIP_OPTS) $^
+>=20
+> I wonder why the original names git$X here explicitly, instead of
+> using say $(OTHER_PROGRAMS) that covers both of these.  I know that
+> the undocumented INCLUDE_DLLS_IN_ARTIFACTS knob uses OTHER_PROGRAMS
+> by throwing in non-programs like DLLs to it, so that artifacts-tar
+> target would include them, but perhaps instead of working around the
+> misdesign of that target, wouldn't it be better to correct its use
+> of OTHER_PROGRAMS and use it here instead?
+>=20
+> The change (including the "strip scalar, too!" part) should look
+> like this, I think.
 
-Yes, this reflects what I tried to say.
+Sure.
+
+> Also do we need a matching change to CMake and meson?
+
+I am unfamiliar with Meson, and do not see anything about stripping in
+`meson.build` apart from a `--strip` option that is mentioned in a comment
+(and which I would assume already handles all executables, otherwise the
+move to Meson really is not worth all the hassle).
+
+About CMake: It was always meant as a tool to help Visual Studio users to
+build and debug Git for Windows conveniently (something that Meson
+distinctly fails to accomplish). As such, there is no support for
+stripping executables in the CMake definition, that's completely up to how
+the Release builds are set up.
+
+Besides, since Meson was picked over CMake as the modern build setup, I am
+seriously playing with the idea of abandoning Git's CMake definition (and
+with that, all Visual Studio-based developers, of course).
 
 Ciao,
 Johannes
 
---8323328-689714056-1764092440=:18364--
+>=20
+>  Makefile | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>=20
+> diff --git c/Makefile w/Makefile
+> index 70d1543b6b..a63a4adbc7 100644
+> --- c/Makefile
+> +++ w/Makefile
+> @@ -682,6 +682,7 @@ LIB_OBJS =3D
+>  LIBGIT_PUB_OBJS =3D
+>  SCALAR_OBJS =3D
+>  OBJECTS =3D
+> +OTHER_ARTIFACTS =3D
+>  OTHER_PROGRAMS =3D
+>  PROGRAM_OBJS =3D
+>  PROGRAMS =3D
+> @@ -2499,7 +2500,7 @@ please_set_SHELL_PATH_to_a_more_modern_shell:
+> =20
+>  shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
+> =20
+> -strip: $(PROGRAMS) git$X
+> +strip: $(PROGRAMS) $(OTHER_PROGRAMS)
+>  	$(STRIP) $(STRIP_OPTS) $^
+> =20
+>  ### Target-specific flags and dependencies
+> @@ -3697,10 +3698,11 @@ rpm::
+>  .PHONY: rpm
+> =20
+>  ifneq ($(INCLUDE_DLLS_IN_ARTIFACTS),)
+> -OTHER_PROGRAMS +=3D $(shell echo *.dll t/helper/*.dll t/unit-tests/bin/=
+*.dll)
+> +OTHER_ARTIFACTS +=3D $(shell echo *.dll t/helper/*.dll t/unit-tests/bin=
+/*.dll)
+>  endif
+> =20
+>  artifacts-tar:: $(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRA=
+MS) \
+> +		$(OTHER_ARTIFACTS) \
+>  		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(test_bindir_programs) \
+>  		$(UNIT_TEST_PROGS) $(CLAR_TEST_PROG) $(MOFILES)
+>  	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) \
+>=20
+>=20
