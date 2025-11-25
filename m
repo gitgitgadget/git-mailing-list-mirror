@@ -1,52 +1,48 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E0A20DD51
-	for <git@vger.kernel.org>; Tue, 25 Nov 2025 17:25:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA65325728
+	for <git@vger.kernel.org>; Tue, 25 Nov 2025 17:39:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764091555; cv=none; b=aHYwmWsl1YROsSl6msgXROIQrWZq4+45NcrEYozTE7NFBkGqDRg/uJwthIGw82FlIldu/mI8nJk0z+W5LkOiP9Frli21GC0+PgtX9+5fwf4v2Av4iMF488iJvwMUu4pHe4dmHnC00RNF4AM27HJAbP7lYOhJX2LbiRKtTJHt2Gg=
+	t=1764092403; cv=none; b=IQDjy21T2LBnodQjiNc4dUJhZ9PYT0WZ/lzcupDXs5i1fADPlOSksOgvLqsSwMUstaRFNm5WIT/cNYBnI7MWWd82z3rIHko/kqk1bxxWC2XSZ5Z0rxZQzQTIPBwqLws5q/vyJyRfhf9nLXuvFrH1Jk1PycEnl/ELIIW2DSuwM+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764091555; c=relaxed/simple;
-	bh=NOh2dYGMG/WhXl1IlDQs/SR6lz32DkYfNmjUPpTOmdM=;
+	s=arc-20240116; t=1764092403; c=relaxed/simple;
+	bh=eLXAv43/7TsJ7EK7/fIm4ePZartvJ+5XrHD+DCEdbIA=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=nhjp1wRWZniUmQL9z13+5QEPz598Q9c1cu2yO0U8zohTtF/nUc21CHvvc0/cZoPzHffrYo3rHLduhJRvxCinqaEnQG1qrJVJNXOUXT43QONSwNYx7OuzIZOvnSjyArb0SZAXXfEaITPiZh3c5f/o1O7JHC594lr7v0sKgAVdo5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=Da9I/nGo; arc=none smtp.client-ip=212.227.17.20
+	 MIME-Version:Content-Type; b=GKZX7hWv+uU8Fy0Sr+A3WpqKQMRW7YYxMw5dpmlLon04dUk+4V+VE+iAyb2YGuoDzaANirgqIwbdh0bVXBNgHyndiq4lD964LRqx64soYOjxM/kcHh8sBAjFG1kNNJi0j0u7hEO6X4JR64cs4VbUZt77IGNh0bjlD7aACrhTMsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=MnplpaQ3; arc=none smtp.client-ip=212.227.17.22
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="Da9I/nGo"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="MnplpaQ3"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1764091542; x=1764696342;
+	s=s31663417; t=1764092398; x=1764697198;
 	i=johannes.schindelin@gmx.de;
-	bh=l5LpnpvxyfRGp78wS7ZnGAwpNrgWvxYInVDQMuIe2gM=;
+	bh=7pYNRbrpJNGRLjj2M3PXLzGZg8g712ELATPkVI/8xso=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=Da9I/nGoYVVYmDHMQMrBtRVw+W5KuB83HYxAD1dXDQiduaHBdtmZ6kDGeAAMwDXy
-	 ytMDr4AujNTVxpQyZe7Sf+KiRp9OAm5UQ7fH16TyIf56xyXUblwZFM+eGygwzxotb
-	 hdQcohQhoHPjTL8Cn4Ezn7diXNETPQ2EZVRWv1fN662lUyam9x9Xn44TX72i6u2iR
-	 pGoAVSx1a5vTp0r6rLwAJoSIe11jG7v6E5lw1N80UjxKzTTlHuSVVUdvHvQP4Z8xz
-	 sjv099Z0cq0Zm0yvjiWlwp/FzzxPuPMVsHpvyPS0Xh2VfuxiqcJ0OotVo2lPq57/R
-	 8shEfCqaUEDTlrf4Qw==
+	b=MnplpaQ3bGI+/Ne3UdQRsQoIyyHFejbxpO+twg2QbD9zHXjbHdEgavTDsC8uLD82
+	 5d/CDi52EXGb2u5lWA4JMM07j8EiJ/tUbTMhz011qSzrBRGyBAAkkxhrtbIRXQ4cC
+	 C/Cj7WW050bfRy6qNo5Qx34RYQ5vLO062jqmCeZSgajyNb3Ljh+X61WO+d67reip+
+	 1ExnPl9sKtbmDEY8kTrdlgqNyQCMeAOozzpsToFokqnEFQwP8m+8TKsHEe7DJ0gFy
+	 wE9aI6yKuFz210jNUmUtb3zdIu5kOq9jfV0o5Z/U6sXuX65Yt25tKly7R5Oh8FS7Q
+	 2GxJjT6OIbkW6+j3Jg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.213.165]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M4axq-1vNOIV3bV8-00GJcr; Tue, 25
- Nov 2025 18:25:41 +0100
-Date: Tue, 25 Nov 2025 18:25:41 +0100 (CET)
+Received: from [172.23.242.68] ([89.1.213.165]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MryTF-1vrDp50Q5N-00jfEf; Tue, 25
+ Nov 2025 18:39:58 +0100
+Date: Tue, 25 Nov 2025 18:39:57 +0100 (CET)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Siddharth Asthana <siddharthasthana31@gmail.com>
-cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im, 
-    newren@gmail.com, gitster@pobox.com, phillip.wood123@gmail.com, 
-    phillip.wood@dunelm.org.uk, karthik.188@gmail.com, code@khaugsbakk.name, 
-    rybak.a.v@gmail.com, jltobler@gmail.com, toon@iotcl.com, 
-    johncai86@gmail.com
-Subject: Re: [PATCH 0/1] replay: add --revert option to reverse commit
- changes
-In-Reply-To: <20251125170056.34489-1-siddharthasthana31@gmail.com>
-Message-ID: <4d75da90-7e85-573a-bb10-0c63a02b076c@gmx.de>
-References: <20251125170056.34489-1-siddharthasthana31@gmail.com>
+To: Jeff King <peff@peff.net>
+cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] ci(windows-meson-test): handle options and output
+ like other test jobs
+In-Reply-To: <20251118093519.GB530438@coredump.intra.peff.net>
+Message-ID: <a15a12e5-9099-f43b-fa11-e18d53759c1b@gmx.de>
+References: <20251118093221.GA530337@coredump.intra.peff.net> <20251118093519.GB530438@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -54,148 +50,199 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:eVv4+M8mVM9mvNLSm806yN68W2dZ+GMFkgI4TL9fWNGwwTfVX/W
- 1vZQFmJ1d+O3FKHqg2BN3DuajE+uh/DIQd/LE7CwE3VnYQDOSJw0IY4UDLaHXVecIyS7zBD
- FH9lP26ybrKtsx6FaUH4djUQDDwtpaEycpgvJwzT/UKyogBl/vcNlwRKki812TY1D7kdU2A
- thHxSAmDzF7YG2zFykoOw==
+X-Provags-ID: V03:K1:4Jjw3V6kterq8qE4GFzZRQFOwH711Ot/yACA4NTRI9kAmljcgku
+ D4ozXHi48j6r0LiiJ3Bc6eHUEcK6M1h/2mccYRzLLCwnEyVejGfA6sZgDZVDBIo9RZICEo5
+ RXH0Fobc2VWE/7ERPrz0nO9GFYp0jqgJwtC2zneqqMd3UJDzaP3pn7i2poBoC8JoO09x/8Q
+ S8+jPPCuxNA4zS8g+xGKw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:SIeFkvLNgcM=;OM6UAJosJiwhzGpkBiVAHp/eH2u
- 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
+UI-OutboundReport: notjunk:1;M01:P0:JwNFfCL2Nbg=;YzlPFTGQRZ+FVlnmxZwCMocNFtp
+ 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
 Content-Transfer-Encoding: quoted-printable
 
-Hi Siddharth,
+Hi Jeff,
 
-On Tue, 25 Nov 2025, Siddharth Asthana wrote:
+On Tue, 18 Nov 2025, Jeff King wrote:
 
-> The `git replay` command currently supports cherry-picking commits for
-> server-side history rewriting, but lacks the ability to revert them.
-> This patch adds a `--revert` option to enable reversing commits directly
-> on bare repositories.
+> The GitHub windows-meson-test jobs directly run "meson test" with the
+> --slice option. This means they skip all of the ci/lib.sh
+> infrastructure, and in particular:
 >=20
-> At GitLab, we use replay in Gitaly for efficient server-side operations.
-> Adding revert functionality enables us to reverse problematic commits
-> without client-side roundtrips, reducing network overhead.
+>   1. They do not actually set any GIT_TEST_OPTS like --verbose-log or
+>      -x.
 >=20
-> The implementation leverages the insight that cherry-pick and revert are
-> essentially the same merge operation with swapped arguments. By swapping
-> the base and pickme trees when calling `merge_incore_nonrecursive()`, we
-> effectively reverse the diff direction. The existing conflict handling,
-> ref updates, and atomic transaction support work unchanged.
+>   2. They do not do the usual handle_failed_tests() magic to print test
+>      failures or tar up failed directories.
+>=20
+> As a result, you get almost no feedback at all when a test fails in this
+> job, making debugging rather tricky.
+>=20
+> Let's try to make this behave more like the other CI jobs. Because we're
+> on Windows, we can't just use the normal run-build-and-tests.sh script.
+> Our build runs as a separate job (like the non-meson Windows job), and
+> then we parallelize the tests across several job slices. So we need
+> something like the run-test-slice.sh script that the "windows-test" job
+> uses.
+>=20
+> In theory we could just swap out the "make" invocation there for
+> "meson". But it doesn't quite work, because "make" knows how to pull
+> GIT_TEST_OPTS out of GIT-BUILD-OPTIONS automatically. But for meson, we
+> have to extract them into the --test-args option ourselves. I tried
+> making the logic in run-test-slice.sh conditional, but there ended up
+> being hardly any common code at all (and there are some tricky ordering
+> constraints). So I added up with a new meson-specific test-slice runner.
+>=20
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
 
-Are you reverting rebased Merge Requests commit by commit? If not, I would
-suggest the shortcut to use `merge-tree` directly for the entire Merge
-Request. That is, if `$BASE` corresponds to the base branch onto which the
-Merge Request was rebased, and `$TIP` corresponds to the Merge Request's
-rebased tip commit, then the following will revert that Merge Request:
+Thank you for fixing this. The patch looks good to me.
 
-	git merge-tree --merge-base $TIP HEAD $BASE
+I cannot help but wonder whether switching to Meson was worth it, as we're
+not only deviating from the mainstream (if MSYS2 is any indication, Meson
+usage is negligible: 16 packages use it in MSYS2, 294 use CMake, and 975
+use GNU make), but also are forced to repeat the very same steps we
+already took for `make`-based builds and then for CMake builds. This very
+much makes me think of some saying I vaguely remember that involves
+history and something about repetitions.
 
-The upside is that this can potentially avoid a lot of unnecessary merge
-conflicts. The downside is that it does not revert the rebased Merge
-Request commit by commit.
+> BTW, one curiosity. I tried swapping out "pwsh" as the shell for "bash",
+> to match what the non-meson test does. And it _mostly_ works, but
+> curiously it causes a handful of mergetool tests to fail (it looks like
+> maybe "c:\foo" Windows-style paths get used where we expect "/c/foo"
+> paths). I didn't dig further, and just added it to my "things that
+> confuse and terrify me about Windows" list.
 
-The patch itself looks fine to me, if a bit too extensive on the side of
-adding tests: Remember, a nimble test suite that catches a bug once is
-better than a long-running test suite that would catch a bug several times
-_iff_ it didn't tax the developer's patience so much that it is
-interrupted and aborted. You probably agree that Git's CI runtimes are
-already counter-productively long.
+Indeed, the path conversion kicks in, where `/mingw64` gets converted to
+`D:\git-for-windows-minimal\mingw64` or something like that so that
+PowerShell isn't losing its mind over paths that simply don't exist. When
+you then call Bash (implicitly, as you know all too well Git's test suite
+depends on it in a major way, which is still a shame), this conversion is
+not reverted, at least not fully.
 
 Ciao,
 Johannes
 
-> The revert message generation logic is extracted into a new shared
-> `sequencer_format_revert_header()` function in `sequencer.c`, allowing
-> code reuse between `sequencer.c` and `builtin/replay.c`. The commit
-> messages follow `git revert` conventions, including "Revert"/"Reapply"
-> prefixes and the original commit SHA.
 >=20
-> This patch includes comprehensive tests covering various scenarios:
-> bare repositories, --advance mode, conflicts, reapply behavior, and
-> multiple commits.
+>  .github/workflows/main.yml | 12 +++++++++++-
+>  ci/run-test-slice-meson.sh | 13 +++++++++++++
+>  2 files changed, 24 insertions(+), 1 deletion(-)
+>  create mode 100755 ci/run-test-slice-meson.sh
 >=20
-> Siddharth Asthana (1):
->   replay: add --revert option to reverse commit changes
->=20
->  Documentation/git-replay.adoc |  35 +++++++-
->  builtin/replay.c              |  86 ++++++++++++++----
->  sequencer.c                   |  23 +++++
->  sequencer.h                   |   8 ++
->  t/t3650-replay-basics.sh      | 160 ++++++++++++++++++++++++++++++++++
->  5 files changed, 295 insertions(+), 17 deletions(-)
->=20
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index 816d5a34c4..27ebf2c8cc 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -298,7 +298,17 @@ jobs:
+>          path: build
+>      - name: Test
+>        shell: pwsh
+> -      run: meson test -C build --no-rebuild --print-errorlogs --slice "=
+$(1+${{ matrix.nr }})/10"
+> +      run: ci/run-test-slice-meson.sh build ${{matrix.nr}} 10
+> +    - name: print test failures
+> +      if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
+> +      shell: bash
+> +      run: ci/print-test-failures.sh
+> +    - name: Upload failed tests' directories
+> +      if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
+> +      uses: actions/upload-artifact@v4
+> +      with:
+> +        name: failed-tests-windows-meson-${{ matrix.nr }}
+> +        path: ${{env.FAILED_TEST_ARTIFACTS}}
+> =20
+>    regular:
+>      name: ${{matrix.vector.jobname}} (${{matrix.vector.pool}})
+> diff --git a/ci/run-test-slice-meson.sh b/ci/run-test-slice-meson.sh
+> new file mode 100755
+> index 0000000000..961c94fba0
+> --- /dev/null
+> +++ b/ci/run-test-slice-meson.sh
+> @@ -0,0 +1,13 @@
+> +#!/bin/sh
+> +
+> +# We must load the build options so we know where to find
+> +# things like TEST_OUTPUT_DIRECTORY. This has to come before
+> +# loading lib.sh, though, because it may clobber some CI lib
+> +# variables like our custom GIT_TEST_OPTS.
+> +. "$1"/GIT-BUILD-OPTIONS
+> +. ${0%/*}/lib.sh
+> +
+> +group "Run tests" \
+> +	meson test -C "$1" --no-rebuild --print-errorlogs \
+> +		--test-args=3D"$GIT_TEST_OPTS" --slice "$((1+$2))/$3" ||
+> +handle_failed_tests
 > --=20
-> 2.51.0
+> 2.52.0.278.gadc6434dc3
 >=20
 >=20
