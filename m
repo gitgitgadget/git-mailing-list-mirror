@@ -1,213 +1,120 @@
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8D079DA
-	for <git@vger.kernel.org>; Wed, 26 Nov 2025 13:31:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88B930276D
+	for <git@vger.kernel.org>; Wed, 26 Nov 2025 14:33:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764163896; cv=none; b=tC/9B+qhCI3jCGxkaeLWjoQGD/gTJ6i1ZghtjE22yVCA+sGMN30liAn3ryRWnfw0IhoxMLOGbGgAZbEONsr+hcMMVme7oK+F3j0IHQcjVN/d6tAp+JU57xYXDdV07sPKVUMaGa+acypZ+cti/p5QPD6CQMNG6MxGql93UgwS4Ug=
+	t=1764167632; cv=none; b=gsLHrh0endcQ2vf7GwK7eyW6lsrKDzgNs5RhIoWmbtZGT2cQmX4KC/FNrgK69V02fMGHLqFLMuEw6cGalXc2LIzBHpORajHTx//ar0gzb2QIEnvZTDCOoJqi/6fiobytw9sb96FwC+p6jLjtlZxOwQcLo8q5XYmiXsgcYzApdTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764163896; c=relaxed/simple;
-	bh=y3nwVB372ziVtjIF3viJmPFujGhHSt9g7l89TRFB8v8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=ViEOCzkBUEbr0eVsrho0WQP61hFY6Mdf21k72C7qcPHo7t9lI92IX+RKKpPfatQchgW43CY0juWUw+ThjkRXtj+yJxL+uKiOVQMWp3rvU7G5HQklj9wz2lVFbmYjgB4yUKtFgGWpLc40mjWHvkxONcRl8kmYd5TcFW+EYDah3iE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BNJA+Dgq; arc=none smtp.client-ip=209.85.222.41
+	s=arc-20240116; t=1764167632; c=relaxed/simple;
+	bh=iKmT0LNDDYk2KIliLWJZXOJep0qdttG9yP25hNDb5VQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kOhgxAAVuIz0WXdl/d7NYeVSWIO1DBxmkqEdaGAlcwuUJYmU2xhtW5SCoeXsbhwPHpdAAgpKSk/MRcgTFpJ5cogyuQRXgQF0W9LDaOAZXaJajyHJcaZ2Ouh0cWTcxliTVmXiMdKr+J86IqvnOuC6bjlTI5/sUyQbjLwNFDZcKwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mLvNb944; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BNJA+Dgq"
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-9371f6f2813so1863016241.0
-        for <git@vger.kernel.org>; Wed, 26 Nov 2025 05:31:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mLvNb944"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4779adb38d3so48012865e9.2
+        for <git@vger.kernel.org>; Wed, 26 Nov 2025 06:33:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764163893; x=1764768693; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Gy9LdVWjOfhcPCMt9UNYssGgy48ZBCMnmicDI/9mqc8=;
-        b=BNJA+DgqXRXQQYzySzF0PjoECM9zv63NLlbC1JSAhpoj81By902QhLdDFYfqe7uPnU
-         rFQhWIJ/yuil5wzpHJ5V3rOeT5C/oBiqxIR2YioI043XgWdWhhmsLzp7cbMII4uXqIEJ
-         x41GoxNTtTDq4nIFfLph8rnfKvjJ4XpUEPJoZVxtuox6vc/41ug7bwfpHdi0dUOZwAr+
-         tE0pjhTCQvoFvHi/WFehfBGzWT6lNAFcmzsUkDn3DNYeOGjI2kb6pRE2yVLmydp6adpH
-         8bdkn/sxZnSabxeHqs72KRsanHGzg7A/QgJTMl+D4oLK7pj+AjahGp5JY/YXFhF18x/J
-         BhaA==
+        d=gmail.com; s=20230601; t=1764167628; x=1764772428; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=inLw6P403PVCjdCrnZ3KiTkhwHLqP3SHDGypF/i5VfA=;
+        b=mLvNb944iGA76PsSwg5N2LfWLbEYjI9VTJXe06itHrnZ8P6xk60N7GGRxPdGsSCwyt
+         V6nMd5x2OfudSZkpk6Dm9TCbIBZ68Dp/8MlHl5iLDXGTPzugx6ylHzmAVL/HC8Fj/p8G
+         soLJQ9XdR9SE939adewYXBZ5Adez2TptPnVf+FxyFxdsMphj+0s2OqxdeCHqrK8RO9h4
+         sMeRLIHIAgtHLcKdlT0Au3CPM9DHOioRo8N0YlTDBweyglpv9P9CFBucXUu4zx8D1FMy
+         /mTXB8Javx3ccfQr5dRHpy7etn4gF2BsJXg/312MDqGlFW85fA5dzttJ1d9Hc5+IZwYv
+         5OaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764163893; x=1764768693;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Gy9LdVWjOfhcPCMt9UNYssGgy48ZBCMnmicDI/9mqc8=;
-        b=vSXZm5oDL0JtZ1dVXVfPy1LOwqkQRlnNYHbTdiqsB5LdHdpi865Wg9Wnyb1QsFZ7d0
-         Xod6shENPhVifvUGlr8KlvEzE6NpyR5OAwxieWB0WvM9fYkC1Htla4Ok3BchDnm7E1EW
-         LD+WPymC9FV9ArIH+pSgHIzi2ldfe/L0D3g0H0QJJpDbCpM6fFoU7wGeFR0lbcnmdxc6
-         7dd9oyzkml4MPyb0Kot0IdZJyB+OCqZvANRXPgvPnchL3u+6MimC8vjpVTlI352XIH4l
-         nnIgiItwn4kH7lv/EdV6WboPsUSCk2XQlUA3ppPxRFfKOKYqKHQp+b4O+ihqOHxsL3+E
-         VBrA==
-X-Forwarded-Encrypted: i=1; AJvYcCUFoWc19/Zfm+bVG1FkmRdCZcffjinV8GvVJq9Lu7HVCnuQ1tFE+3ThU3WvCkgxTsK52Aw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHRCTTZxdiO8I3zjaGf0tJZDRnPF6aquC8d9E8mLYsaUNgDyzr
-	nGgRhahjrSj8zTWNwQHfOFuqBedpVwlo2lcmybEiXeQ0/CiEtxBXOl3Q0ayAKgiMeEF2A04IzlZ
-	9D9nkB3uDKQ01Q72doCeGqicLnpbSsbxpHw==
-X-Gm-Gg: ASbGncsOmYdreaTj3+i1T3t6vw/zXBOpU+908Ik/dAqjzAjPbGv0cjHqvGbeLghOWaX
-	uFUvVmYgFJTumCvPUDGP0z7GATtPQw0eZo1tuBvT+aEq8WzaqeMLpue51iGKxOOqWT2kPG6KU7I
-	Azhk3vuf6sQD0EWoAuI3O6Cs/lXuU9+8XEgrvfXwPRkgwrYjtZwG4qRzDNbt3nEobdz6M+0pbKp
-	Eh2kkbdlnhwu7QUMcPomS56G4h1EqsVkO4dwmuN2f2UCe/xlbUyZUY805te41930NIboTo53mPN
-	bYxu1iaMqJIU9LrebyToo0uMAMNwaw==
-X-Google-Smtp-Source: AGHT+IEuLhLk/EyuTfW5u1XpuQ0JhVLF2i1AOVEoV4RA1JbNHsL8Mcto6uNcl+i8eumnTb07PAr407K955Z7AVFjaAw=
-X-Received: by 2002:a05:6102:c4f:b0:5db:cfb2:e619 with SMTP id
- ada2fe7eead31-5e1de3c0ee6mr7127666137.20.1764163893522; Wed, 26 Nov 2025
- 05:31:33 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 26 Nov 2025 05:31:32 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 26 Nov 2025 05:31:32 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20251126-toon-last-modified-zzzz-v1-2-608350df0caa@iotcl.com>
-References: <20251126-toon-last-modified-zzzz-v1-0-608350df0caa@iotcl.com> <20251126-toon-last-modified-zzzz-v1-2-608350df0caa@iotcl.com>
+        d=1e100.net; s=20230601; t=1764167628; x=1764772428;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=inLw6P403PVCjdCrnZ3KiTkhwHLqP3SHDGypF/i5VfA=;
+        b=QdOMzm79j8JpzAaOccU+bX5YM0WLzHLJP6L7bsuT9Ml1/K/21rEQNLvfEBDLCygSMv
+         gFoJtv4bTA48mTaxTAtgUp7qBAlBZGVmbwo0e4bBTjvJkfKbAbIhBFbFXQQMWj+vrBzu
+         DZ/uPMCuupWVNStBmVszUdiCT2PKve+V29liS4Q0vnKyZQ5Bq5SaFqLg3cPLqcvVjFpr
+         aaX7dhPn/AlRhLT7qzLeE36gauvKVURNwXsCkgLp/Yhat1+B6nqJeGZOH0yWGvuqKm0w
+         sKILzPtC2UTlzu2iZpDLiQdM9ojEFMgjPvwd/VoYAPdDx+ek4Hh0UVSL+/yBsM/bq9yB
+         dcwQ==
+X-Gm-Message-State: AOJu0Ywl4KGDcpN3aCOC1Pk/4bokwuDHdlUbdT/+90B4J576QV6fq+5e
+	2EzFwSj+SmeybwJyLuecQLu9lubLNTWdsV09oZJgUEgfWscU8vl/4HI9Ody0bA==
+X-Gm-Gg: ASbGnctir2eRuAOzC449m9N7r8tO9ouXvHjSKwo0TMmQZrwp42gljdPqW0x3FlMbBAj
+	gpwLNU8lXCuPcr4m/nGDbnSLWPdT9GcXxxPnFnccoLd0ZuTrT9MB7W96CEyBXRX1D9ncPY5wb1s
+	M9gEwGOI8I3mYqrGP6qQ7Af/3i4ZGUF6NRoFbVCTdxNM0qC+UAZp+LSaF8w+AX5SuNLDzemEUgp
+	NkZ0j7RSs9Y7AnQ6NakUuEuDb5UFSWVSYDbyNZ9kAKO4M+xRXEFdriqYHxa+yDUvCojo12h6Obj
+	xPrahJeD8+lWZSK3JN6Jyns3R9wTDpDrGjkj4erkRcSw4ZQvF6Y7nt+PrBoh1omEBurvXHHzDUW
+	L1rkF7q9tUSPoJpnk/eDb+NHLBqqgBM2gEd2/mBVbT0SgQXrXE8nwFCyLHnaN628G2lXqj0IaP4
+	T37cfTdqeIC56Dxg==
+X-Google-Smtp-Source: AGHT+IEsGsvcatOnrADNMCejYnBXF5lLmSQmV6+9STFqx7yDy/9IrSPnZLjdvc6KBL296clclPyJ1g==
+X-Received: by 2002:a05:600c:21cb:b0:477:acb7:7141 with SMTP id 5b1f17b1804b1-4790f03337dmr11528615e9.3.1764167627684;
+        Wed, 26 Nov 2025 06:33:47 -0800 (PST)
+Received: from berwick ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42cb7f2e581sm38671467f8f.8.2025.11.26.06.33.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Nov 2025 06:33:47 -0800 (PST)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH] replay: do not copy "gpgsign-sha256" header
+Date: Wed, 26 Nov 2025 14:33:37 +0000
+Message-ID: <4f04af5790353b074cf122c450c1cd3f8d1cecf3.1764167611.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.52.0.362.g884e03848a9
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 26 Nov 2025 05:31:32 -0800
-X-Gm-Features: AWmQ_bkwcYdX03-2hlYlW4K53yf1_4-E3ISfjMPGsU2_Ej6cXvta940yJqakz6U
-Message-ID: <CAOLa=ZSbV6SeJ9orOz0T+oh3PVhYhTsaxrsYVkr+5q7i_tsVCw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] last-modified: document option --max-depth
-To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000331d8306447f6aab"
+Content-Transfer-Encoding: 8bit
 
---000000000000331d8306447f6aab
-Content-Type: text/plain; charset="UTF-8"
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Toon Claes <toon@iotcl.com> writes:
+When "git replay" replays a commit it copies the extended headers
+across from the original commit. However, if the original commit
+was signed, we do not want to copy the header associated with the
+signature is it wont be valid for the new commit. The code already
+knows to avoid coping the "gpgsig" header but does not know to avoid
+copying the "gpgsig-sha256" header.  Add that header to the list of
+exclusions to match what "git commit --amend" does.
 
-> Option --max-depth is supported by git-last-modified(1), because it was
-> added to the diff machinery in a1dfa5448d (diff: teach tree-diff a
-> max-depth parameter, 2025-08-07).
->
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+We should perhaps think about how we can centralize this list of
+exclusions as we now have three copies of it in builtin/commit.c,
+builtin/replay.c and sequencer.c.
 
-At this point, does it make more sense to link the respective sections
-within 'Documentation/diff-options.adoc' as done by many other commands?
-This would ensure that we don't have to repeat the documentation.
+This patch is based on maint to make it easier to backport.
+Unfortunately that means it conflicts with ps/history which moves the
+code that's changed here to a new file. I'm happy to rebase on on top
+of that branch if we decide it is not worth backporting this.
 
-> This option is useful for everyday use of the git-last-modified(1)
-> command, so document it's existence in the man page and `-h` output.
->
-> Signed-off-by: Toon Claes <toon@iotcl.com>
-> ---
->  Documentation/git-last-modified.adoc |  9 ++++++++-
->  builtin/last-modified.c              | 12 +++++++++++-
->  2 files changed, 19 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-last-modified.adoc b/Documentation/git-last-modified.adoc
-> index cd4a5040b0..8409daebe9 100644
-> --- a/Documentation/git-last-modified.adoc
-> +++ b/Documentation/git-last-modified.adoc
-> @@ -9,7 +9,8 @@ git-last-modified - EXPERIMENTAL: Show when files were last modified
->  SYNOPSIS
->  --------
->  [synopsis]
-> -git last-modified [--recursive] [--show-trees] [-z] [<revision-range>] [[--] <path>...]
-> +git last-modified [--recursive] [--show-trees] [--max-depth=<depth>] [-z]
-> +	[<revision-range>] [[--] <path>...]
->
->  DESCRIPTION
->  -----------
-> @@ -32,6 +33,12 @@ OPTIONS
->  	Show tree entries even when recursing into them. It has no effect
->  	without `--recursive`.
->
-> +`--max-depth=<depth>`::
-> +	For each pathspec given on the command line, descend at most `<depth>`
-> +	levels of directories. A negative value means no limit.
-> +	Setting a positive value implies `--recursive`.
-> +	Cannot be combined with wildcards in the pathspec.
-> +
->  `-z`::
->  	Terminate each line with a _NUL_ rather than a newline.
->
-> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-> index 9206bbdc1d..ccb7ff66d4 100644
-> --- a/builtin/last-modified.c
-> +++ b/builtin/last-modified.c
-> @@ -25,6 +25,7 @@
->
->  #define LAST_MODIFIED_INIT { \
->  	.line_termination = '\n', \
-> +	.max_depth = -1, \
->  }
->
->  struct last_modified_entry {
-> @@ -60,6 +61,7 @@ struct last_modified {
->  	bool recursive;
->  	bool show_trees;
->  	int line_termination;
-> +	int max_depth;
->
+Base-Commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Freplay-do-not-copy-gpgsig-sha256-header%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/9a2fb147f...4f04af579
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/replay-do-not-copy-gpgsig-sha256-header/v1
 
-Should this be signed?
+ builtin/replay.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->  	const char **all_paths;
->  	size_t all_paths_nr;
-> @@ -487,6 +489,12 @@ static int last_modified_init(struct last_modified *lm, struct repository *r,
->  	lm->rev.diffopt.flags.recursive = lm->recursive;
->  	lm->rev.diffopt.flags.tree_in_recursive = lm->show_trees;
->
-> +	if (lm->max_depth >= 0) {
-> +		lm->rev.diffopt.flags.recursive = 1;
-> +		lm->rev.diffopt.max_depth = lm->max_depth;
-> +		lm->rev.diffopt.max_depth_valid = 1;
-> +	}
-> +
+diff --git a/builtin/replay.c b/builtin/replay.c
+index 6172c8aacc9..d12e4d54872 100644
+--- a/builtin/replay.c
++++ b/builtin/replay.c
+@@ -67,7 +67,7 @@ static struct commit *create_commit(struct repository *repo,
+ 	const char *message = repo_logmsg_reencode(repo, based_on,
+ 						   NULL, out_enc);
+ 	const char *orig_message = NULL;
+-	const char *exclude_gpgsig[] = { "gpgsig", NULL };
++	const char *exclude_gpgsig[] = { "gpgsig", "gpgsig-sha256", NULL };
+ 
+ 	commit_list_insert(parent, &parents);
+ 	extra = read_commit_extra_headers(based_on, exclude_gpgsig);
+-- 
+2.52.0.362.g884e03848a9
 
-Or if our goal is to actually handle them within the
-'git-last-modified(1)' command, shouldn't we ensure we don't allow any
-additional flags from being parsed as diffopt?
-
-Currently other diffopts flags such as '--no-prefix', '--cc' and so on,
-are parsed even if they don't affect the output of
-'git-last-modified(1)'. Shouldn't we disallow such behavior?
-
->  	argc = setup_revisions(argc, argv, &lm->rev, NULL);
->  	if (argc > 1) {
->  		error(_("unknown last-modified argument: %s"), argv[1]);
-> @@ -515,7 +523,7 @@ int cmd_last_modified(int argc, const char **argv, const char *prefix,
->  	struct last_modified lm = LAST_MODIFIED_INIT;
->
->  	const char * const last_modified_usage[] = {
-> -		N_("git last-modified [--recursive] [--show-trees] [-z] "
-> +		N_("git last-modified [--recursive] [--show-trees] [--max-depth=<depth>] [-z] "
->  		   "[<revision-range>] [[--] <path>...]"),
->  		NULL
->  	};
-> @@ -525,6 +533,8 @@ int cmd_last_modified(int argc, const char **argv, const char *prefix,
->  			 N_("recurse into subtrees")),
->  		OPT_BOOL('t', "show-trees", &lm.show_trees,
->  			 N_("show tree entries when recursing into subtrees")),
-> +		OPT_INTEGER_F(0, "max-depth", &lm.max_depth,
-> +			N_("maximum tree depth to recurse"), PARSE_OPT_NONEG),
->  		OPT_SET_INT('z', NULL, &lm.line_termination,
->  			N_("lines are separated with NUL character"), '\0'),
->  		OPT_END()
->
-> --
-> 2.51.2
-
---000000000000331d8306447f6aab
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f95b556ee9901362_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1rbkFTZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mektvQy85WjFNdjU0VGY4dUZFYVhGVlpjVHZrMVhzcwo1dFAwdkZoSDdU
-ZkZQOHpPQm12T1QyNTN6WC9JbjFEd1JFOXhnRjhDaGd4K2dWejNTcWFFRzhXb2V5K1FqTEp3CkZy
-c1pBa2pjWjZkTGNiS0Z0QjhLeUsrdml6dWkxbEhQOG5rdURta0pvd21RR1h2WXhyQWFQRkRNT1pN
-aXRJUWoKYnBvdW9uMGtDS2tpdXQraDdGc2RyaFFDaGlxQWtMY2h0eXZHSldrejFQN1padkwzWGwy
-UGdFdzVsM25tZEcrUwo5VVFWemJ3amxWWkFTcUtlQWtwZkhsUG1teUcvRndFamJ1V2VNVXFCbHZk
-MytVYWZxWVN5TmJsajRRWEZWNFc4CklacXZTL1JQbzBHTDdKTTJCejR5ek9TTnB2ck9CL1Bka2J3
-SnJtQ2tkcFlwSjNYcFFHbjJvNC8xTFJzWXkzZ0cKSFRqY3hDd2RNUGdIWWlULzFXTzFZQnVvaWxV
-ZTZlSitKN1BtcFRWRVRJeUZFcUpHSXU1RzVsWUhGdTFRUFd6WQpYT0d3emM5SnZaL0hHN3N5NUNN
-RlFzQUtIVDZGQTBBRG1wZlRycFVnL094QlpLbHRUZ3NpbENnamtzbHkveXJhCmJXaENWMmhEMzVi
-dUpuR054Z1lpVk1ER25rMUkxQXU5RXBiMzFrND0KPVpPVlIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000331d8306447f6aab--
