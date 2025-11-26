@@ -1,104 +1,143 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175842E03F2
-	for <git@vger.kernel.org>; Wed, 26 Nov 2025 09:15:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A623E2ECD37
+	for <git@vger.kernel.org>; Wed, 26 Nov 2025 10:26:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764148546; cv=none; b=M4sFzloCsftVuuk1f8LHBQI4DVNohCaDRha2U6zJPKLyRPJMDKzYFbsoZrIHKZOYQbrXI+dVrnPJuRFcYU0MkqW9byjhY7xbtNPC3axCEDF+I/uLlxy5G3bSvW3z539qrh0FsKBpHLviEAfL/SkQEiKMdoPdtjhsik0poTdmkx0=
+	t=1764152764; cv=none; b=KtP6PBikx9QjtcLctPqRkv5/KDdOXJOD568JCyeaT3O7BLrKkjooAQ0iJqQTLrcxZIQ5nROVJW0wd+7cZ9MwSm9HctyJ9v2QIee+AHu481hxa8hEEYW7istMRFWcYxczzgl8bs7nPMxxq+fbV4GZQiAQu53tlUMfWK2Pd1/DHuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764148546; c=relaxed/simple;
-	bh=YfDJ9vHh2hlPlGNUH0iIMAno/yrB1gOC2w7GTW6ziV0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FAPnT9dPP8A8itlMl3Y7nn2wgTKrLV+7psaACpuxk/GSjX3jpaBvGkLrKuBh+ws3Od2oulgkbmPk1y4Y0d0KzCwVMroN1b95jeXBNItHlz5gKfl4pzRSLtDLPcnucJDkB4YE10GtU6bNMxjMu2qqUTYJFblWL8XO+CL1kwglvk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F+OXCbsY; arc=none smtp.client-ip=209.85.208.54
+	s=arc-20240116; t=1764152764; c=relaxed/simple;
+	bh=TorFOTT2n2654sX0g52DwaitW8Zw3whH+CMEkXjGseY=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=TdwMNlH+8F8YoD41pupi5oEp68zPhXIZ3523gp1qXov6C5jTwBJkavfzSf5ejKh7LuBKO2+511P4xCjFTYIWHZBu4w0wuurdhZwG0bUuOt6JqSQfYNWM8lEyy+9bTE/LpURdKhzcwxelcDPrrxrbm4VNwCnVfOIfctQTEJo+HO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PXKhzH33; arc=none smtp.client-ip=209.85.166.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F+OXCbsY"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-63c489f1e6cso1004635a12.1
-        for <git@vger.kernel.org>; Wed, 26 Nov 2025 01:15:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PXKhzH33"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-433100c59dcso24973305ab.0
+        for <git@vger.kernel.org>; Wed, 26 Nov 2025 02:26:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764148543; x=1764753343; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BenOQoStSULv6TwgQK8jO+QcnU+PzhRO10Taze56OrM=;
-        b=F+OXCbsY8qkCvRDnzN8BFUvAhTpSuOktPRGwzmdDVvm/pq+lK+AIdOCMC099bLhWya
-         a8QRAfGaG2tNfzQqS9OBLKC6dQU9ux+qtkRQ6GZis6ki21GTLQAQ/Z11+kzzCu2xHx7x
-         Yz/EW+u1ZwwEH0kLVAMUQqJoQi/ugrXCRjBGwV7nGEUASwiM/Cl1U5iNc3WJV0+529GM
-         kWHCJmKJaw6FoF8RtQfgFZ4OuCI1WgZeU7Ebsk9cyYOOVpkLMyhZRz4duGIOoFVcQJrd
-         O39xF88UYFHEXtsy1N5qeQ0l32RESAjQA9QJDRoKi70UkJJGWbOl74ucQ/EYG4pjkNRR
-         cvYw==
+        d=gmail.com; s=20230601; t=1764152759; x=1764757559; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=vu+xgjdv6tIRko8LM3mCMosTMC7/ghXQ7L1aqYAQLHE=;
+        b=PXKhzH336qJleK9zIsX4pscwdqWoPoMYJvrQEo6fAoEccGcJ3Hh/3xRuw0gsMAbZeP
+         1gXPFH3R4tR7LKC4gZPsLKEqaIHM2O8dn6mYBhy1bhVMrv6cGvQEBwgNDImTLukJ96CG
+         YS0LSD1HUt2bq1n/TA1qruL0m0vhgMHhQKSt/4cU0IPaVLa+hk8ircFOxgUB4ov/D3n2
+         25n5K2H+2zADZfvRTIvvlupkIJoHq6nyk+0zhP6MFD/yVx8dqhmoKHBJQrM8e+0wkxhw
+         S4YI0YIFN4qvy/3HH0Y49gzXJh733ZSZJbuXGq4fpnf/pdT1aUnHQlZ3Dg+J5iimfDwY
+         X2Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764148543; x=1764753343;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=BenOQoStSULv6TwgQK8jO+QcnU+PzhRO10Taze56OrM=;
-        b=jxulTthvwC2pbNikjGZkz+DFAUL8VVEbqty0e+npyN++w78+k4xqrbJw/T6yEuUHQv
-         YSDe1i6OxrTnDeqSDXzFoLx148uhhUnCxjkqjY/+jya06NX85joxmED2py9soj2UOIhN
-         LHgBWAXw5YqjpbgtcWk8BRkCVgHeJcrOcbEGtfio8T+6082mxDjst0YfcYWdJHrq4ZXS
-         vhrS8/oibRjeRvGLZD7v8yR3ZiSL3IXyJIoq6NunUG5y1pgF20fhMK1M8KwN6se3hipG
-         ma11QPNHEFG31tOtMRTIVXGBDYZ+p1fxSKwE9CRP/ul3SkjtHL4WpJouMrFiQ/EQCRmi
-         6vhQ==
-X-Gm-Message-State: AOJu0Yx/f1v9VAR+45R8pgL1+DzK7mdXtLuAjxO2qLFDnrS/oKrUC9A5
-	QRnD/YrsXlVgaGYnrri/6ZKbp9M/ZzFJODccN3eD39eRmJQ6WYBemKBH3nRMfE39/DseiN5P/MA
-	/jK0WERsipzAcdp7FLaFL16PnJ2bfvXB0aYPvmBA=
-X-Gm-Gg: ASbGnctTnlxNdMuJo02YBZDr9ceSAvoL/ZnPNE5Fqt4L6EHG0TPfRSAEjCyB+tMuPG8
-	M5pM1dlyG8JPY73HPktx7Oy0vnH/myawOFstQ30MDf+Sw6MW//vxUEnlXuzLCpcpCoCL0B033Wu
-	6fLKt5pjqAxbno6sFOWRVUJt7ViCmsQBpQTuX2HGa1hvkbQOgjRI89E2inAhaz/OAwNNjK/kVK9
-	2yvMrOass2j3TPfBsi1ZE/ObGRHZgi55BIPAE+KtPr814ftUWOZgPViXSg3ZpOZz/0u2MQ=
-X-Google-Smtp-Source: AGHT+IHo42Xgkd+2ObCIfBBwP44k+hXPainSzIbt53gg8XsyflOYajme20GYscgnmeoMZRJ/i/mET2NYDg/ASEyGPR4=
-X-Received: by 2002:a05:6402:26d0:b0:634:11d7:f70c with SMTP id
- 4fb4d7f45d1cf-6455507834bmr18760393a12.2.1764148543038; Wed, 26 Nov 2025
- 01:15:43 -0800 (PST)
+        d=1e100.net; s=20230601; t=1764152759; x=1764757559;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vu+xgjdv6tIRko8LM3mCMosTMC7/ghXQ7L1aqYAQLHE=;
+        b=fTj0nIsHx75hi8vulYrH3AQmMaj2hg5ZY37ZZFhlUucKlBXBplPt7GK+r75t37uPE5
+         nQ3AT8SoiflSKtAcwaXNOlmi6FOLEKMRogsTrhK0ymeUMmh+aYijJxYNjfnDiUGXhZNb
+         8gdbBAJpLaLCh0bqFoaqXzt31suu2fT+JUuv2X5e4gWNtJrGcv5gQKXA5f5/qeHoQ+fx
+         3Ac+XYoOZSHmcEFEuuEdRcjpiGIASDL1Ld2LGOxV9D+eNb8dhQ4iyMyL93F8nnxToBg2
+         qyCVAoRaKtF/5UpXTo64Gu2PN1D05khiZYzhOxUvB+7u74SdICRa+xzBiIHbMKCo5dD9
+         jIuQ==
+X-Gm-Message-State: AOJu0Yzhc6OtSdViRGiQRyvyUmkHXRjMbRL9Xg6u05lwpxk36sAJALLA
+	S3UmoDF3jy/1u71MOz2rwCvn9zch3mw9RVwqcEL50+VjYKZ1rrlALt+QM7BpKA==
+X-Gm-Gg: ASbGncsNgOjUWzWheqwwZ4c0y2s/sN2VdPhsWXFnZb7/+5XkJQcyY4MERe68kD+1/qf
+	NNNuikjpUqOawNhq1oNAoCwOKRFqsHMGeYLEhaleHu5ASDyv2WwFutH9sjR0UnmpTRj7rkHKc3Z
+	JKEmHX8+qe+oHbLn0rfbXxnRMVSEIS+mr1bxWCMGVcyA1obrvAeNH8035qkcSwGLRwCRsDIFfWk
+	22XiFSCBcsM6w+mZiWJIIIKlT04mAfTk++Yr+ROOdzR/jBTBirRw919W0+HlBVoyOAbV7jTMBDN
+	GdiWQCGs9fSFEHS4rp4ZiQ/S8CfsFsYp7jDfgeLl4kWR315mfhSpYhuw1/AaNZ+JdBtw09165YQ
+	YfRG3c1jE/UOS/O45igRtN3aue2RhqewSsHpbun5f/SHBq/K1FveGbw+5wddeEh3wK+44p/E/LZ
+	1yQ6Jo4+KF5kKYl6k=
+X-Google-Smtp-Source: AGHT+IGou+0duMuh/DGvyGAyKj1QK2ASu1biOjWnVmzkk3WDKzA0NaTErtOreDw24f8TbdV0u9gtNA==
+X-Received: by 2002:a05:6e02:13:b0:433:7673:1d with SMTP id e9e14a558f8ab-435dd1252cdmr61915335ab.31.1764152759296;
+        Wed, 26 Nov 2025 02:25:59 -0800 (PST)
+Received: from [127.0.0.1] ([135.232.201.224])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-435a90b6dedsm84910935ab.18.2025.11.26.02.25.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Nov 2025 02:25:58 -0800 (PST)
+Message-Id: <pull.2109.git.git.1764152756908.gitgitgadget@gmail.com>
+From: "Yee Cheng Chin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 26 Nov 2025 10:25:56 +0000
+Subject: [PATCH] xdiff: optimize patience diff's LCS search
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqo6oppqyt.fsf@gitster.g>
-In-Reply-To: <xmqqo6oppqyt.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 26 Nov 2025 10:15:31 +0100
-X-Gm-Features: AWmQ_bkYu5fVE8Lj9e0PF10qfncFcR6NvimImXgcm4xbEQ5tatYbQU4-U_OsOb8
-Message-ID: <CAP8UFD3BfcvRYA85Pp5L66Mqjx7A4AoxKZNkw2OFXqyWwBoViA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2025, #08; Tue, 25)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Yee Cheng Chin <ychin.git@gmail.com>,
+    Yee Cheng Chin <ychin.git@gmail.com>
 
-On Wed, Nov 26, 2025 at 1:39=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
+From: Yee Cheng Chin <ychin.git@gmail.com>
 
-> * cc/fast-import-strip-if-invalid (2025-11-16) 3 commits
->  - fast-import: add 'strip-if-invalid' mode to --signed-commits=3D<mode>
->  - commit: refactor verify_commit_buffer()
->  - fast-import: refactor finalize_commit_buffer()
->
->  "git fast-import" learns "--strip-if-invalid" option to drop
->  invalid cryptographic signature from objects.
->
->  Will merge to 'next'.
->  source: <20251117043450.322644-1-christian.couder@gmail.com>
+The find_longest_common_sequence() function in patience diff is
+inefficient as it calls binary_search() for every unique line it
+encounters when deciding where to put it in the sequence. From
+instrumentation (using xctrace) on popular repositories, binary_search()
+takes up 50-60% of the run time within patience_diff() when performing a
+diff.
 
-Not sure why but you seem to be the author of the "fast-import: add
-'strip-if-invalid' mode to --signed-commits=3D<mode>" commit now:
+To optimize this, add a boundary condition check before binary_search()
+is called to see if the encountered unique line is located after the
+entire currently tracked longest subsequence. If so, skip the
+unnecessary binary search and simply append the entry to the end of
+sequence. Given that most files compared in a diff are usually quite
+similar to each other, this condition is very common, and should be hit
+much more frequently than the binary search.
 
-$ git cat-file commit 6c723ad30a3f77787e2247f52d62fa462a24cf68
-tree 68ab2d63f36af2854b3e49c563bd213fea1357a6
-parent cb034c020aba54360e7c19faf82021399bf131e7
-author Junio C Hamano <gitster@pobox.com> 1763355463 -0800
-committer Junio C Hamano <gitster@pobox.com> 1763355463 -0800
+Below are some end-to-end performance results by timing `git log
+--shortstat --oneline -500 --patience` on different repositories with
+the old and new code. Generally speaking this seems to give at least
+8-10% speed up. The "binary search hit %" column describes how often the
+algorithm enters the binary search path instead of the new faster path.
+Even in the WebKit case we can see that it's quite rare (1.46%).
 
-fast-import: add 'strip-if-invalid' mode to --signed-commits=3D<mode>
+| Repo     | Speed difference | binary search hit % |
+|----------|------------------|---------------------|
+| vim      | 1.27x            | 0.01%               |
+| pytortch | 1.16x            | 0.02%               |
+| cpython  | 1.14x            | 0.06%               |
+| ripgrep  | 1.14x            | 0.03%               |
+| git      | 1.13x            | 0.12%               |
+| vscode   | 1.09x            | 0.10%               |
+| WebKit   | 1.08x            | 1.46%               |
 
-Tools like `git filter-repo`[1] use `git fast-export` and
-`git fast-import` to rewrite repository history. When rewriting
-history using one such tool though, commit signatures might become
-invalid because the commits they sign changed due to the changes
-in the repository history made by the tool between the fast-export
-and the fast-import steps.
+The benchmarks were done using hyperfine, on an Apple M1 Max laptop,
+with git compiled with `-O3 -flto`.
+
+Signed-off-by: Yee Cheng Chin <ychin.git@gmail.com>
+---
+    xdiff: optimize patience diff's LCS search
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2109%2Fychin%2Fpatience-optimizations-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2109/ychin/patience-optimizations-v1
+Pull-Request: https://github.com/git/git/pull/2109
+
+ xdiff/xpatience.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+index 669b653580..13ab0d591c 100644
+--- a/xdiff/xpatience.c
++++ b/xdiff/xpatience.c
+@@ -211,7 +211,10 @@ static int find_longest_common_sequence(struct hashmap *map, struct entry **res)
+ 	for (entry = map->first; entry; entry = entry->next) {
+ 		if (!entry->line2 || entry->line2 == NON_UNIQUE)
+ 			continue;
+-		i = binary_search(sequence, longest, entry);
++		if (longest == 0 || entry->line2 > sequence[longest - 1]->line2)
++			i = longest - 1;
++		else
++			i = binary_search(sequence, longest, entry);
+ 		entry->previous = i < 0 ? NULL : sequence[i];
+ 		++i;
+ 		if (i <= anchor_i)
+
+base-commit: 6ab38b7e9cc7adafc304f3204616a4debd49c6e9
+-- 
+gitgitgadget
