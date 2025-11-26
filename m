@@ -1,90 +1,92 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75800332ED8
-	for <git@vger.kernel.org>; Wed, 26 Nov 2025 17:08:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F9224E016
+	for <git@vger.kernel.org>; Wed, 26 Nov 2025 17:22:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764176917; cv=none; b=C7TUgaKZlbt7SMHu0QUxfHPnGyjRpblUo5SBe87V2r1ozrqUgbcZMeen9SeOkLUHDnm+1HcE/rGDfYX7o3mQSHKtlVsKa0hnDI2FBIWrLZL1JN/pszAMgCb42X1vEAf4WaraPwbYRyyHFdG/YQxMskfKguPUnbWgbo0nO6kn40A=
+	t=1764177764; cv=none; b=aC+R87+azdoyV8bXHWanBM6j8MZGVJ0m3ID9asbqgmc5nyugW0KPVARyMX/RK+yqujrbkZ7UEhs/eYRi/5xuUpwxfuH4YOO1aRy9mIAEJkOD4ecl92jTfBY6TJr4C9iWzdqLOxga5VLzSwRU7/HV7SDnGR9HkHc63JlRW3IDLpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764176917; c=relaxed/simple;
-	bh=Bcjl2Fhy2Ix8+j0wdWmwIVPyyTowGl3dPMqQ6lxzIck=;
+	s=arc-20240116; t=1764177764; c=relaxed/simple;
+	bh=ZQaN6chMfmh4u2N4X+Jc1Eeg7EMo2IwE67dcpJdDjJE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=C7SyJmvFtaNrUlhx3lVjxlrw5KpsGmeJ23v2jLSQKcvx08yupNn+PUxivhqzZ/A6w+TWVc8JBXkHVW7XV3lYfOx8hzEaWxuYFDpbevR6G49eoNkwoFVIOKtBZwttbTpHmFI+xBuq3/ycU17x791a3h5CBP5k5RGxB/C98/UPgzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q52FwfAH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eleBLCZl; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=I8PpMmYW06RpolTdm3iJiJp5DK8fTwYZXied8lztZ83yhKsC7XCTSJVr7TJ/9VnMQKWWQ+Dyq5yGe19TzNefzofIaURyNfsji2Ky0RwULy5iJK3RWtFJWcXCDBa193L2CKJ+/NGw+8pyh4F0md8kTTFPP+Lo/htpDLIIlEq4o4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=COIBlaK5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vHCVQ5WY; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q52FwfAH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eleBLCZl"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8C95DEC0469;
-	Wed, 26 Nov 2025 12:08:34 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 26 Nov 2025 12:08:34 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="COIBlaK5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vHCVQ5WY"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9BD191400197;
+	Wed, 26 Nov 2025 12:22:40 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Wed, 26 Nov 2025 12:22:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1764176914; x=1764263314; bh=Z36ZncB2Ha
-	IYTzhsJ4VRBiNC2QrEh64c1wLRhV7aeGk=; b=Q52FwfAH4zetjBtMBurdUqOQiV
-	49ufk7H+hcTBHYCAzr60NGzg0NKbozv2qUJKUKiVelo0NbuylJFhFpQiWYPFJWdP
-	cs1OMR69Hoq7kk60+G0TZcS504V4+fUAS1He4TxoMLy4Tg1+cBL93ilhT3KBlUy0
-	J6XuJVR22VIZO8XRyL8GHk9vjFB6yLdZyL4RRnmrbBRfcj+4zgZW9t1H4gvLGl3x
-	VLQdatxK5gZ1rehuLoE4e/9pUzST6WWBMfzw4B9yyJdy+nNVb3doomSJ0sGSRf+j
-	6Z4l3fSyJMYx1BLP69DLK+Kg0I9o7s425veZwm/lZOGVaNDuEpxRDHwFfbWw==
+	:subject:to:to; s=fm2; t=1764177760; x=1764264160; bh=t83XwYBSwS
+	9sv7T/xd2QWGQoiZQh2gELnYOHSOJsqHA=; b=COIBlaK5iU2Q/s93PyE2KzUHJ5
+	+oz1x6R9nx6klR+7GOGNzmKMQ9YEbo0mMvmMh6iD23Kz8pxBc9OuC3CTNP4BFiUr
+	FVZk/qfO6PRBs2r9ecwjYEZIafxt4q3XD7eu7CwbC4AW19EPn4XcY5a1ekFtfRuc
+	BKC7G4YPuzoWaK8fNQ8ekBNEYFb431WcK2j77SS4wpoTNefm9s4xPCNVycO0rP3i
+	NGaoAo7r4REIon5ABQxWGemEFeGdL4P9CQ9R5d7gHXYUV7YGRv7syNYTdlMJjgMM
+	Il0doZCbqDFmFtjrlEavSSeStdxj0I70ou0Po+hlQKFLkcvRmZUmGlBOumag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1764176914; x=1764263314; bh=Z36ZncB2HaIYTzhsJ4VRBiNC2QrEh64c1wL
-	RhV7aeGk=; b=eleBLCZl6kGeNaw/J68E8UGgmMh6Osg8Ny2hTwsKgJBzrGT5Xai
-	tG6/KSdhzRnASlBMzde/3T6iOHNFI/MkL1deHlHZrsJuHM8YaLl47A9/NoFU7Mw5
-	1aYjuBZaWS8+rWH+H347FhHmkTulXbLkHKUlyL3jbEgaE3HGkMKx4lVyvYwlZYKA
-	UTwqy9S0gcq4tU9Sql8zRz2OkIfKwdiUPpf7RM/BYEbfLXtvZiEvjJxg8IALro/v
-	qWKyVSQwu1ZeOyFtBv6ovRh9hlsbNqRIY4syV0MAr/kUZyD+7SRvXKb+1diHys3I
-	cc3pfPxiNEfTkmWUPswAwhL612KRfJNLa3A==
-X-ME-Sender: <xms:EjQnacuci0ksOneWR_0JWAmk-fYourkc-MRiCXLecdtNp832xDnFmg>
-    <xme:EjQnadJl5UvImSKRhEIBjJGqoXShMEEKx8JvmZ1dnwzYxdnOXL9agTr1A3vM4meCK
-    aFnuKnj8vLPm1SiU68OzbKIeqtNj6kRa4N5A7SRGS-sHJDwipB6wUM>
-X-ME-Received: <xmr:EjQnaRlhgqy8_MjBDtTcdBRGhVkGTyNnzSBzmSEMAaYDGN1IlCoGEEhIK11UEPhIcvXzCtNU8-aaLO1QQycCgqjt-ggUPChVcdVr>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeegleduucetufdoteggodetrf
+	1764177760; x=1764264160; bh=t83XwYBSwS9sv7T/xd2QWGQoiZQh2gELnYO
+	HSOJsqHA=; b=vHCVQ5WYr4RQMoWutd5Y22nZkhegk/+mGCyXRNUyx6fNGdOtwjH
+	uNn1AiWSxnbgGn3JT+PG4syToWPYV/ICjCtm2tp2Vw3tobUdi121+UVgRz84ICG6
+	byITYAHJq0un44CGMb/MWuSv2jdahrgm+NFnTN04oxdsKUIxxjtQPSD7EmDK8yxI
+	tzlrgqlhOnC8lnyhglz3gbepGDKf6/02kmHX62GR+mf4GhOjS9kQD50i8QXoPgP6
+	KDjD5xCcT4g5NZvCLKApZQN2SF77+adPX5KCK76lXYql7vdaFjLkucPSZC3BVUS7
+	Wdu08C6Riro494PhCF3nHtRvoemzB1qDA8A==
+X-ME-Sender: <xms:YDcnaTIXTSZBAz-ijU6SyuHrIN4wpAxuZQHB0Qxqfb1E50zP2-zsCg>
+    <xme:YDcnaZbQj07pDj8SiH0LbGg4K5e-vDN-xuuof0MDksF9mHsnAFfzKA7cdfETMsezG
+    EKsmmfc9M8KqF5voOZn21hzZO4OHf-Xt-kQ9dO7Aqkw10w0X_rQDZ0>
+X-ME-Received: <xmr:YDcnad9vLvJFCSz5w1mdd2DlFvqNdw8iyWLfIIOR-upt4GnpZi848UPbjm_bDodxdIfa5p2foRoOX4NkE9RDFpxcbPhm30YOM3iO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeegleefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
+    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    gsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehrrghnrdgrrhhi
-    ghhurhdoghhithesshgrmhhsrghrrgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhgrrgdrlhhkmhhlsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:EjQnaWI9uaubDRydhgN6hUqOjxLpl2emNiMJQNwjVuCdwCIimBHsmw>
-    <xmx:EjQnae790oPQsQ38dCsGLc91b5fCn__CyJasUHU2O_aw3cgC3p8HJg>
-    <xmx:EjQnaS0RkruPm8WTr_hO4mLt6etH1NDpWq621ZuPp2HHRW7w_1mKlQ>
-    <xmx:EjQnacc0JAJMfNh3EvNHLoIJsdgTdB7eC7ZS63o6WQ7pW--SzuDYRg>
-    <xmx:EjQnaTUIl11UyMY2CfKNjjKnUAABAB99BgLOex3m-qViyESJOKN8C7LK>
+    hphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpd
+    hrtghpthhtoheptghmlhhishhtshesshgvnhhtrdgtohhmpdhrtghpthhtohepmhgvseht
+    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:YDcnaSZqi-jYtaZoQqETGGElRQ-NTBH35AGfgZ3NXdMvBhFhw1OP_g>
+    <xmx:YDcnaZMqd1uHiVETSg0tEMs1B6JBxSDrM9aXbU-XPtRzj82rzfCL8A>
+    <xmx:YDcnaWCSzg2oSg-cBGF0fJLJxxvU1_sHD6Hyb39tTL1n-ZmFpv4u-A>
+    <xmx:YDcnaYLu0BwzTMV8gR6SY-3wO2-VG9hKu2Hc01Y1viK1eQQqpNdHmA>
+    <xmx:YDcnaUahZd4WOrVOzB21W-Jw_Sk1AVi4LNW07zydplPD2v3z16QG1Ovh>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Nov 2025 12:08:33 -0500 (EST)
+ 26 Nov 2025 12:22:39 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  Ran Ari-Gur
- <ran.arigur+git@samsara.com>,  git@vger.kernel.org,  "raa.lkml@gmail.com"
- <raa.lkml@gmail.com>
-Subject: Re: [BUG] `git clone '-c KEY=VALUE'` no longer works
-In-Reply-To: <20251126145320.GA4143292@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 26 Nov 2025 09:53:20 -0500")
-References: <CAN1UxBvk_GJjLWd0XexRxp8FFhYozGCNcodai0eqnjrhjKEh7Q@mail.gmail.com>
-	<CALnO6CBJppT3ELyu54rJvP+uqcMomJS9Nr_JTgfssn8iqG7MWA@mail.gmail.com>
-	<xmqq8qfvw2lh.fsf@gitster.g>
-	<20251124235530.GC2051672@coredump.intra.peff.net>
-	<xmqqo6oqucka.fsf@gitster.g>
-	<20251126145320.GA4143292@coredump.intra.peff.net>
-Date: Wed, 26 Nov 2025 09:08:32 -0800
-Message-ID: <xmqqpl94oh67.fsf@gitster.g>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  git@vger.kernel.org,  Patrick
+ Steinhardt <ps@pks.im>,  correctmost <cmlists@sent.com>,  Taylor Blau
+ <me@ttaylorr.com>
+Subject: Re: [PATCH v2 4/9] cache-tree: avoid strtol() on non-string buffer
+In-Reply-To: <20251126150931.GC4143292@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 26 Nov 2025 10:09:31 -0500")
+References: <20251118091127.GA4175601@coredump.intra.peff.net>
+	<20251118091218.GD529192@coredump.intra.peff.net>
+	<ca6d99cc-d05c-49fb-ab3c-d7668077d32b@gmail.com>
+	<xmqqtsylz2xh.fsf@gitster.g>
+	<20251124223023.GA2051672@coredump.intra.peff.net>
+	<xmqqms4buix0.fsf@gitster.g>
+	<20251126150931.GC4143292@coredump.intra.peff.net>
+Date: Wed, 26 Nov 2025 09:22:38 -0800
+Message-ID: <xmqqldjsogip.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,21 +98,36 @@ Content-Type: text/plain
 
 Jeff King <peff@peff.net> writes:
 
-> I would be more sympathetic if the original report was "it is useful for
-> so-and-so reason to do this whitespace stripping". But it really sounds
-> like the problem was some caller doing something like (in perl
-> pseudo-code):
->
->   system("git", "clone", "-c $key", $repo);
->
-> instead of:
->
->   system("git", "clone", "-c", $key, $repo);
->
-> which is just a bug that happened to work in this limited instance.
->
-> So my inclination would be to leave it be, because I do not think it
-> merits the time. But if somebody else wants to go for it, I will not
-> stop them. ;)
+> Hmm, I thought both of those things were reasonably clever. The other
+> obvious way to do it, AFAICT, is to used checked-operation intrinsics or
+> add unsigned_add_overflows() before every operation.
 
-;-)  I might, as it would consume my time as well as theirs.
+Yup, but the thing is, I didn't want something "clever".  I prefer
+"clean and obvious" if we add extra code for safety.
+
+> It is true that for the general case of: "x = y + z" or "x = y * z", you
+> cannot determine overflow strictly from checking that x < y. But I think
+> given that we know "z" must be small, it works in this case.
+>
+> It looks like you merged what I had into 'next'. Where do you want to go
+> from there? I am mostly content to let it be, but we can also try to
+> replace with something like your version.
+
+That is my preference.  While the topic is still in 'next', or after
+the topic graduates to 'master'.  Either is fine.  And it is fine if
+such an update did not come, too.  After all, this is to deal with
+contents in a locally generated file (.git/index), so a maliciously
+corrupt string that lack the expected whitespace character after the
+digit string is a sign that you are trying to burn yourself and you
+have only yourself to blame, isn't it?  An attacker that can put
+garbage in your .git/index has better ways to fool you by updating
+your .git/config file that sits next to it.  Or teach the sanitizer
+that this code path is already OK somehow?
+
+> Or even, I guess, work on a
+> global strntoi() that could be used everywhere, if we think it is robust
+> enough. (Though technically that name is reserved by the standard, which
+> is a shame, because that is really what this thing is).
+
+Well, we already use plenty of names beginning with 'str' followed
+by a lowercase letter, like strbuf_foo() and string_list_init().
