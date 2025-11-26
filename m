@@ -1,95 +1,87 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9AF2FE050
-	for <git@vger.kernel.org>; Wed, 26 Nov 2025 23:14:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A59D3009C8
+	for <git@vger.kernel.org>; Wed, 26 Nov 2025 23:55:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764198853; cv=none; b=ASci5+yVW9gy6MTVDhe0yhDiwzDs0llHWsB4pkV6E//nkB1Edlun2WAAUKy2xbI1CHQOdaVAL3wLcKf4Wkgdrp1hMdobfcUQ8v51P9rGj3oTYjFHwpoEwe1pCsSvWceAnOW6Vj1NQmvgngko8bx2Yontg62eo0B4utJeDftBCYY=
+	t=1764201316; cv=none; b=WSEwKXTJdr/tmWVW66j4j8ePrHFtcIk33hEqx1X48DMvTG9akDyGyHk7fHp2cx7L36+7Ws9jkYPR3AlhI+gm4aDPFQwqEWmTLc4tnfkY/WyjZ4L1YKq+GuDLk7cdGFZFh7evDIl+8FDGrP3etOCi5cT37nTjhNhohWsSsGo+bOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764198853; c=relaxed/simple;
-	bh=D7etFZipBhi6pTeh6sHu5XQ7aj6tWVVLLhP6DdmV4CU=;
+	s=arc-20240116; t=1764201316; c=relaxed/simple;
+	bh=51tzXzI3+ItatD8SF7MXdrSM/i2x4Htl1JJoafiPyyk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LylVkIMozep08INx8F7FAUL6kHA6MiyvA6fCVv/47JG46uKsCaPXrogTjTTAGCRMfNhrS71AT2QQhMvxQU6i5k8IWgqX4rVCBbpvxyRZp8lvbF5A/zF20zikDQT5+Wo4hrWoqO1lljNPxuaYAU3vgbF/CDwlFyAF9Fviy2xqwFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gAUqZC2j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vlPL/oSM; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=LLcWdnFifF0myJQI5DBjPZP3pHqAyC77x6BzncI5MaFtvDSGXESWUPWEnZRibE2UoZj3OtWHwDGtc09NW9n516xdCGGYNaeIBxm/FFZwvQ4YF5FKFbC7xgmdBX3aIrKiE1Xe5rj1cdsajIc2PmRqwInhZKKbFaaY9wQu9/8hKCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Nn7q2rC7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nc7WEDYG; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gAUqZC2j";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vlPL/oSM"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7CEF47A0068;
-	Wed, 26 Nov 2025 18:14:09 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Nn7q2rC7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nc7WEDYG"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id F18501D0014B;
+	Wed, 26 Nov 2025 18:55:12 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 26 Nov 2025 18:14:09 -0500
+  by phl-compute-03.internal (MEProxy); Wed, 26 Nov 2025 18:55:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1764198849; x=1764285249; bh=BbraIPkoSZ
-	sqS22lTIekLFaDVUW+LiY+recj631k5NA=; b=gAUqZC2jhM71FbRZt86/nRydM5
-	KydzbClmJf8vuWlnlgjEsOTtIKzSc2C0EWre4NaBUHE9jxpGHOel2OJKSd186x0F
-	KEAvAePnSH8gcikmCxvHo0FnWiMCmt1IeSo/lgTS0xHm+b5ctZFK2H1hHspnb4c0
-	uNfbKgpzhlhRyPMNE62e/J154gSALJEVlBhZU7K044AnZ33cO8JEoY3RrLpDJpCH
-	7pn3j9kR4GVUx6aoDxSDvOIl5d31dXpepTB0jVp1VMv1bMxyizpe7vqxwcEOI1xH
-	iMV/knV6zX9mRM2STd+mc5+mb+GMOOnonJSpnjY7Y9B/2YTEo5ke39BGE8fQ==
+	:subject:to:to; s=fm2; t=1764201312; x=1764287712; bh=qUEttidRUd
+	iarGebddr6VF5z3yWY9MSYbbk4qJALR4o=; b=Nn7q2rC7Hs7qjVXOVeI4grdRfz
+	Bk5Ru1O+5kh/O8Ui8KEQysDl3UKPtWHQZSahfg8aL6baOUt2o6zL2Hk10ZwuaPdH
+	LKnVmxj/H/tYvJca7PLzyL+IVXwWMaWDvGKL1AEB1Hfr6neiQi2qmVjNNN4s3lmr
+	cpaYbKB4vg8XoaJJNG3zcr4k3YTutnFxx/0LsQnfMTfRuckyNSKdww69VUIKjdv8
+	R0YeUX3gH8CCFjCJCy8bOvR02p0CQYhf8fQkND3N4QvhPlHvHMGsrzqayle3jTdE
+	0ACxYanTr7GmMfgM4esbkc/mUFIBVTDpNzqp63JeYsHbVP4A0WesIooEVVbg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1764198849; x=1764285249; bh=BbraIPkoSZsqS22lTIekLFaDVUW+LiY+rec
-	j631k5NA=; b=vlPL/oSMZXlL8VjEbULg/trQV7Po92cXSWIIeuW5LxT9Kaxm+TS
-	MVIg5egZRfMxg/Qah1kqnIJ5lriBW6C63dKMqlXIeEaz0vaRZJ1WOOAXRDiSrh/B
-	NGtCNqSo87UFHrjR5cnfUd1Cx57eH19RqQNeGzwUWn6Ia8XEHuCK9uppDiC/y768
-	Af3ynZ+SrptQhX0XnDX4UH4HynajuLhgaIMlq2o43Yh1ksgibIDi/KYUjoF0Hvb6
-	tBLlyxCi+T9lK5yD56nVooHL+bvJYU36FgPtLjGVLlsu0MoKvGLX2MP2A6qinDSm
-	naCJ6Phd6jSqD5sh0R6Va+SAgcaRQRMdxZw==
-X-ME-Sender: <xms:v4knaUTYKrICVMrm-D1Ge1pYhNgfzQVimnRWDsTjJiaqUKqgDqQEBw>
-    <xme:v4knaW90u-FVO0lbBqjtOE9NxudD2KN5IWmHRQqAhRWyTwAykO4yraStah-c-ZXpL
-    mBc5627jhNthsZXea1-SulMUAxoawExZAecyE_yji6q2Kl5c13iAg>
-X-ME-Received: <xmr:v4knaVPVKj_etWSlEQsBmv2o6nU8KpeRI69Kt0ebIDKp9jbJyXecwe8edfxBVVt3luJXpJrZGCoHmUZ1E-VYVsoxwu3H642tO8dN>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeehieegucetufdoteggodetrf
+	1764201312; x=1764287712; bh=qUEttidRUdiarGebddr6VF5z3yWY9MSYbbk
+	4qJALR4o=; b=Nc7WEDYGNLLhnIbXjo9ykwv0lPwU7M5rgL2m8FYsW3NBpE7VJ2l
+	Ur4CEda/cOZ9dHQq9rVUheyuNsisq4jT/2nC8i7hOl9xkC4SfTNOkurCWbekYwVn
+	nS+AHbEDy26qyzsb9lqE2xzmGB4N4C5cTsq6VW6j9GBGaQGE1oEUt0Qqp7vjPMOZ
+	SY70mArhU7/yzxWXgAzXdyBrZI7mtE9dwc3GtsdGoolSoXkHik2k3AvMxtHnVWgh
+	0EViZ6SkaxZfPHB7I3u0qknPzeSD0ZtdstydYC9uyC1+KLL7rdu0YIstwo6TcEwC
+	/eyAWMKBN1f35AYVf6TydEiVBd0DzzcNMGA==
+X-ME-Sender: <xms:YJMnaTLAcYSNjdNghgkiYnP4NrXnmTtwfK_MJMTnaj_SpPm47FABYA>
+    <xme:YJMnaZbFASDys517YPy2IlPwNnNUTgJVc6B_GIfvzku-ifAi_jbGrMBjcyEummI2-
+    hHtbfoeVsOfjoGbI6RsYb7J9WrrDg9nB5a8fg6i1bvDPdYK1P3hNUo>
+X-ME-Received: <xmr:YJMnad_A0V1p2_gQEmYsdxYzU0QROpgpzCCzhds8YyNXbEyrM3NBjMxKqxWbrcJcDg6UHCh6c0kOCyfvvvu-QY6amj_iFSrYplSR>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeehjedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
-    htthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphht
-    thhopehsihguughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhi
-    shhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkh
-    hsrdhimhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhr
-    tghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtoheprh
-    ihsggrkhdrrgdrvhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:v4knaXilh6FS93GbeNzNsYLBcez8CAFxxWnBAxhQz0kGdJk_MC5drw>
-    <xmx:v4knaYnXhiLEP8vj5PCTf4V1PavVQ9ADhvoBzDhizMvEfoRndkBkNQ>
-    <xmx:v4knaUNbO5rPdoku1OzqDk3ZNY0nwLV8T563eVQFU6CfZ8GqW-mw5w>
-    <xmx:v4knabGew33ZhGnEdOFgfadllIzFWw9EpFDYBMftuRNg9mOO3F468w>
-    <xmx:wYknabDBRGWd-cKn0L15FO-8KjQNlk_qAGWyGWlva2BZdwdavJvT7vtI>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehpshesphhkshdrihhmpdhrtghpthhtoheprghtthhhvgifhhhughhhvghsleefgeesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhn
+    sehgmhigrdguvgdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:YJMnaSbn2iPHEzu_nwHiyt2kmLMcFod7rcSG-HnhjciW_yvB43XBPQ>
+    <xmx:YJMnaZNjnUJgTT0gfVw3JddXyrjdHJGBNOAGQg2Bpyt5oklHOpHOUQ>
+    <xmx:YJMnaWDXSlyDS1SKu1hiFAvPeTbsH77LYZT0X87q3lZ6LauSl7Q1vw>
+    <xmx:YJMnaYJPuMmsuF3SG8l1aD6V6uz98oLfEvR87FaQbvIcNdeJgzSu5g>
+    <xmx:YJMnaVDCrPBO2mvXPsTdzB3hq_Cbe3D9a7e-HebBd9My3DIj5vCbaemO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Nov 2025 18:14:07 -0500 (EST)
+ 26 Nov 2025 18:55:12 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,  Siddharth Asthana
- <siddharthasthana31@gmail.com>,  git@vger.kernel.org,
-  christian.couder@gmail.com,  ps@pks.im,  karthik.188@gmail.com,
-  code@khaugsbakk.name,  rybak.a.v@gmail.com,  jltobler@gmail.com,
-  toon@iotcl.com,  johncai86@gmail.com,  johannes.schindelin@gmx.de
-Subject: Re: [PATCH 1/1] replay: add --revert option to reverse commit changes
-In-Reply-To: <CABPp-BHcCX8LDccRoarsqNO=YVr7a8gp67oc87b7taAmjch4dQ@mail.gmail.com>
-	(Elijah Newren's message of "Wed, 26 Nov 2025 15:06:19 -0800")
-References: <20251125170056.34489-1-siddharthasthana31@gmail.com>
-	<20251125170056.34489-2-siddharthasthana31@gmail.com>
-	<d563b68b-e01d-4b18-bd84-86f36e61a70d@gmail.com>
-	<CABPp-BEF1RVs7n4xf6ihyPUmxrhgpG6VEpZLrX=MTgcBWBRbfA@mail.gmail.com>
-	<xmqq3460ocv7.fsf@gitster.g> <xmqq3460mr3c.fsf@gitster.g>
-	<CABPp-BHcCX8LDccRoarsqNO=YVr7a8gp67oc87b7taAmjch4dQ@mail.gmail.com>
-Date: Wed, 26 Nov 2025 15:14:06 -0800
-Message-ID: <xmqqy0nsl741.fsf@gitster.g>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  atthewhughes934@gmail.com,
+  johannes.schindelin@gmx.de,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 1/5] scalar: annotate config file with "set by scalar"
+In-Reply-To: <a4ad8f80d062cd9fc62db69c21625eb286f4ebb8.1764195516.git.gitgitgadget@gmail.com>
+	(Derrick Stolee via GitGitGadget's message of "Wed, 26 Nov 2025
+	22:18:32 +0000")
+References: <pull.2010.git.1764195516.gitgitgadget@gmail.com>
+	<a4ad8f80d062cd9fc62db69c21625eb286f4ebb8.1764195516.git.gitgitgadget@gmail.com>
+Date: Wed, 26 Nov 2025 15:55:10 -0800
+Message-ID: <xmqqqztkl57l.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -99,28 +91,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Elijah Newren <newren@gmail.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> == Example command lines from your proposal ==
->
->    git replay --rebase main feature~3..feature
->
-> This command to me would suggest that main is being rebased, but it
-> isn't -- it rebases feature~3..feature onto main while updating
-> feature to point at the result.  I find the "--rebase main" part of
-> this command line confusing.
->
->    git replay --cherry-pick main feature~3..feature
->
-> This command to me would suggest that main is being cherry-picked, but
-> it isn't -- it cherry-picks feature~3..feature onto main while
-> updating main to point at the result.  Again, I find the
-> "--cherry-pick main" part of this command line confusing.
+> Add "# set by scalar" to the end of each config option to assist users
+> in identifying why these config options were set in their repo.
 
-That only tells us that if you want to help users by limiting the
-vocabulary to a single set (i.e. both command names, and mode names
-used in replay), you'd need to make sure you have the order of
-<branch> and <range> given to the replay command in logical order,
-in line with the option name, no?  Of course, if you want to say
-"cherry-pick", cherry-picked range would have to come near the
-option flag that says "cherry-pick", naturally.
+The implementation is quite straight-forward, inlining expansion of
+repo_config_set_gently() in the places that we want to add comment to.
+
+If we had (a lot) more than two callsites, I would have suggested to
+add a simple helper function, something like
+
+    static int scalar_config_set(struct repository *r, const char *key, const char *value)
+    {
+	char *file = repo_git_path(r, "config");
+        int res = repo_config_set_multivar_in_file_gently(r, file,
+		key, value, NULL, " # set by scalar", 0);
+	free(file);
+	return res;
+    }
+
+and then the updates to the callers would have been absolute minimum.
+
+Well, even with only two callsites, perhaps such a refactoring may
+still have value in reducing the risk of typo in the comment.
+
+> diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
+> index bd6f0c40d2..43c210a23d 100755
+> --- a/t/t9210-scalar.sh
+> +++ b/t/t9210-scalar.sh
+> @@ -210,6 +210,9 @@ test_expect_success 'scalar reconfigure' '
+>  	GIT_TRACE2_EVENT="$(pwd)/reconfigure" scalar reconfigure -a &&
+>  	test_path_is_file one/src/cron.txt &&
+>  	test true = "$(git -C one/src config core.preloadIndex)" &&
+> +	test_grep "preloadIndex = true # set by scalar" one/src/.git/config &&
+> +	test_grep "excludeDecoration = refs/prefetch/\* # set by scalar" one/src/.git/config &&
+> +
+>  	test_subcommand git maintenance start <reconfigure &&
+>  	test_subcommand ! git maintenance unregister --force <reconfigure &&
+
+Looks good.
