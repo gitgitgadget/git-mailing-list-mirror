@@ -1,211 +1,237 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D60632938A
-	for <git@vger.kernel.org>; Wed, 26 Nov 2025 12:30:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79AB1DE4E0
+	for <git@vger.kernel.org>; Wed, 26 Nov 2025 13:03:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764160240; cv=none; b=ZkwiIX22vw5a+28AwwveMLXnBJhiBbOJmL20K8IqCfjYRarfH/DKj9EfTzckledd4y1NB//jRN+6Mni9BQ5R8qn82WVUQbpuwGh2NjJYUP4M0J/HunDYCCYfKlUvHHLvS5qzE2+0pwCWqDezv/WaPhXOf/h/NNbQBYsQsJ6l884=
+	t=1764162190; cv=none; b=RIXp0VYdJNW44u7Oq/a/kzYfcLFvreBzecJDw6eJ41UiPAA4xcJsaSyb4hPzmZRQolDfDHGLQwFLwTowht3U7vuGoeStkjnXIvTg7G2bqdvMs0gVMbmIdp8oew2Dg+ng3Gy/Ot6uB+msf1EmVfUtzU0Hpbait1bk6dORURW+tyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764160240; c=relaxed/simple;
-	bh=HwK8eK75hCWjVV8B+uxSwXBq84clzv/rzQL91TNxCMo=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=MUwlUJbTw++y6zGDbWA4DOgk59K+IcQoWlyZWENWbRG9xqGSMGwDfaH2Je427TpsIpHAi/EIofskUsrxTSayQUFRDw2bU/Nxgrnz5+KztSiXbKaPl7FxqvtupMN14cU2nz78dOff4Z/47ULEHfP4nlu5Tz2dLMpkLDPMK124sMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PAIC6rYs; arc=none smtp.client-ip=209.85.214.182
+	s=arc-20240116; t=1764162190; c=relaxed/simple;
+	bh=386k4ppo/pppJnCfqJOzLfV/h0gZ2kTcXBbwtq3excs=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=sCPgifroutZGH9qzjxyqyDdJbHJn1yt8hvcGT5ZBbAMs1hFOB1c0RavCKT5XLxyHUOAs/IQ7qAaxX7N5gl5Tn4/kCjR2WFlvTW/C5X2nGsNhdZSmWNtRE/sBG4MZZSmZmbg73gMBGXlittIx4/a6EHQpqrzO40tlplw2M/B6ND4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SC4pn7oS; arc=none smtp.client-ip=209.85.160.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PAIC6rYs"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2984dfae0acso104265555ad.0
-        for <git@vger.kernel.org>; Wed, 26 Nov 2025 04:30:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SC4pn7oS"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-3e2d1477b9cso4407436fac.2
+        for <git@vger.kernel.org>; Wed, 26 Nov 2025 05:03:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764160237; x=1764765037; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zIgdZBUA/eWakJJmihvSYER8RurhuMloewbqipIn/NU=;
-        b=PAIC6rYs2DMXdTBnkAkV2+rYxNiMkmr0atFcNWDr4B6LZnFoWVeW1GJoZ85y0dLTH3
-         o0nZKoJGVsT7EKxfMDgzNLrca+5AZzvyISGwn37teXI7X15M7LdxkugoKKzobJ3n41n4
-         JYeUhYF3eN3969zKBmyzoaoO51NSQZBV6EH0A9Fj6lSKo7LSqTIq4C5iaMnJrWmTBzXX
-         XoIMTQVONKUPpjQewbRTuOA9CFSCob0ey1Y9rYKaumirvmcKW/lVrSN3r5bXmpZQKHr3
-         h1HG1tfP27xK2dSRYYQEgg089jNXS+VMrbCrEFu4Qlumjmkm/VlJdmaynsvFGtLoxD2S
-         q2Hg==
+        d=gmail.com; s=20230601; t=1764162188; x=1764766988; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=V5ok2hHlDeCpfbAKGgAMGtui18eYxBpIUsZTUUsTMeI=;
+        b=SC4pn7oSkvteorE8RGa7AfpZFHgoMnmdrTzti9rtMbpbsMFqNcuv3GgnpENONL4nFo
+         4eGBbw8gArOwMehT/j5kFN6auwgufYPkHscUt16YqzHSWffjOqjpGfkZtKBhCs8KjObT
+         gvtenO92+8dUJsxB4nA8I+VYtz76rP/3A7g29ixDNgZ1P5GdLVmCuCIEnVahmldqlPmh
+         5xTrBxivpVmrqxeyKFPpRGSTWf47DCMfup6W9ZPnRKLDT04ce/RrHvFwgamscM7Epinf
+         MxQHIL0J8SmJ6U7jzdF2/vOUPZjrP99yF68m+ffCGPWSTdWbSTJZ7/hv1IRlQ1AqRPHS
+         aZ6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764160237; x=1764765037;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=zIgdZBUA/eWakJJmihvSYER8RurhuMloewbqipIn/NU=;
-        b=Y893KyiYkQKc2FX58cnNKTPkIzGpUC4b//4+VBw5mDSpFXNZJkSM2Jf1jjWpSMpws9
-         7+yKyblw6mgu2cc0A0mmmmuqlvpbyC3s3o1qIfckqs7CauxbFKFCQcjfKokXqdIvlHNt
-         7S66I5GpNRVqwuAkd4gWe/Axma9mIt/srY0YI3lpiDC7yzCAd/MdWq/qxhZnXcCfICSI
-         VlKXArPp5TNFxh2Wy2+3KLdyYZdDJprPbpd4fpR1zK34yRAUtVnGhRksSYp3QLdiLrxU
-         DohmjA8cJnn0MT0tll6/gdDXF7Si86N9b+TBDs5LG1vOuPQqY5bO6/hoWGuqGHsX3dxK
-         F1Ww==
-X-Gm-Message-State: AOJu0Yxp1w6g5VnZJx4lWMMOGm2UeJ0WLo273H+xbe3Mv1xlI0lJEl0R
-	aAN2Tf4EUllRPstVZud9kQCjsk5TRT2NFGkY+YAYXSwatmGwCcG5hk0bmicPCA==
-X-Gm-Gg: ASbGncve67sm8JuU4YhVireiPFOTU+6YPuqTKnT3Q7yyNQsdi2J8oOagX9712Y3wmky
-	O6FV150vFLpFBxXqNSz7EiWFLbEg5QmjOJRsNN7nBwii6urEvkPO+Ao4tEZlocW7M35yXOKvoWK
-	bosOp6mbp7zq6nAUqh9qye714iqdH7YyNAM6xs9XMtf1dizi3gfu4HVCMaZmkVLZqdEcsYgcecY
-	ZXGRCuBRc0pgCO8gM4hN9JT1FzDIdHmccwEk9zHrQ2vAgk8izGMphQGZ6perhqOMghVQtvj1bR7
-	IBQmnb82qeLirGACgi+h57dn6jlfslOFuenqW+cQFBbrXcxaaJx+28QX0YGeVq0yr3SCHC0K5Ls
-	jHcz93evxt8Ofmd+WEI3a1gz7df/BdDNthqYBEEsh2h554cX195gQwacuVJv+DP6Bj5b/SSklEv
-	1zuKZYJWHAtPoMsVU=
-X-Google-Smtp-Source: AGHT+IHRHGitLmsWsYo/etohMeRnuCd/FMIIJ4VXfSt+QWjRhCiqYO1XLwGPnhDoaRUuu5ExRg6qhw==
-X-Received: by 2002:a17:903:360c:b0:298:450d:6926 with SMTP id d9443c01a7336-29bab148b39mr75411415ad.34.1764160236748;
-        Wed, 26 Nov 2025 04:30:36 -0800 (PST)
-Received: from [127.0.0.1] ([172.182.195.178])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29b5b2c018bsm198061975ad.98.2025.11.26.04.30.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Nov 2025 04:30:35 -0800 (PST)
-Message-Id: <adbcc0251faba4f86dd7da1f01e312fc38c4ee26.1764160227.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2008.git.1764160227.gitgitgadget@gmail.com>
-References: <pull.2008.git.1764160227.gitgitgadget@gmail.com>
-From: "Vaidas Pilkauskas via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 26 Nov 2025 12:30:27 +0000
-Subject: [PATCH 3/3] http: add trace2 logging for retry operations
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1764162188; x=1764766988;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=V5ok2hHlDeCpfbAKGgAMGtui18eYxBpIUsZTUUsTMeI=;
+        b=e26dSHI2pPydanZsARpuaaqW2leBKKiydse7qG54g/3gax3ZbffdBjaf3PL3XzjR60
+         +O5YQ8g/B0SLVG41rRgG0Ha1Npb7wO7jqeDm3uUk3HTndQuHo/AtO2nBwzbKGYffPhcC
+         jLU0bwkeYpRw2YyM/6EzDOtWLnsE/sWcCR4yaF5CCDym998ozpbIpfkqGT8IQXqfJEoG
+         N21lzS9HYHQ955VhebVZcqUz4BSKhUqFkwtp5A/Fw5yxIhJIIaiJ40V4S81Opz5XQu+x
+         2ixI/VNptNgy7vWEAzKSIjvcfqTBsSaGF7y1z5m41tD0WODrA6NeK+bVFptig/7aepEv
+         s8NQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVx8A3dGwCFlOtphY4FnsIprhTf4C3ZmzkHUX6KmU8yYgxtXTyIfWUQUCcZn7JkD+66rus=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNdp/EfmGAWsApuRpE6epFgbWT+lVRPhq0lvKxso8pzlOyPkkG
+	r9LMu+aee91QyVOE75FZWjsUY9hzaUahBBiDeUbBA7kxZSqtYzN2IJU8gPTlt2JG7RY01AxxW7z
+	2JcLrJu3MswnTCzR/bFNztEr39+dZqgMSdQ==
+X-Gm-Gg: ASbGncuSBXw2r4NvwC11P9KUPkGKXgcy0uzD8srYbPrMAJ4icqM+8E9LdUI9PQYPF9o
+	cT7zHfMVkiIWQEJh02EuJx5AoyBBhUe24Phql1iL3dFVHJXfjOSv6mk2v86VGG90CGdgw1PJD+x
+	1bJ0eUzp3056BpbyeahCVraLVtiuXIv+cIUGYDIwZj0Ab9odL9hdvU3V65VJ+9IYgKBpZaXeJAH
+	8zWn0P/u0UeO25B10eOvzejNG8QtwmLRZ376IApF4u+wuSKlBDbNqKodqRityUIJuf3ssp7UG8o
+	61FNhd1V4epVBCpIgvaBfyR1vTos0Q==
+X-Google-Smtp-Source: AGHT+IFC7KyIDccftuEnZNnk5AZdOhR3bub6lcWsOw84sbNPNzyE/vp906ITADEQK0Akvra3E7kBKrf4Bim0RHga8Aw=
+X-Received: by 2002:a05:6808:c1a8:b0:450:794a:6cee with SMTP id
+ 5614622812f47-45115a31b0amr7355515b6e.21.1764162187437; Wed, 26 Nov 2025
+ 05:03:07 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 26 Nov 2025 05:03:06 -0800
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 26 Nov 2025 05:03:06 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20251126-toon-last-modified-zzzz-v1-1-608350df0caa@iotcl.com>
+References: <20251126-toon-last-modified-zzzz-v1-0-608350df0caa@iotcl.com> <20251126-toon-last-modified-zzzz-v1-1-608350df0caa@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>,
-    Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
+Date: Wed, 26 Nov 2025 05:03:06 -0800
+X-Gm-Features: AWmQ_bkCi_PilsIoE3XTuDC8257iflMh6ObOr6JbpwrK4xrAOB6Y87drPYIOL3Q
+Message-ID: <CAOLa=ZRn45fDriKvwVgLV5yXbKUr7bwLadHjemPjb+Mw2tHVqQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] last-modified: handle and document NUL termination
+To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000082cdad06447f0436"
 
-From: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
+--00000000000082cdad06447f0436
+Content-Type: text/plain; charset="UTF-8"
 
-Add trace2 instrumentation to HTTP 429 retry operations to enable
-monitoring and debugging of rate limit scenarios in production
-environments.
+Toon Claes <toon@iotcl.com> writes:
 
-The trace2 logging captures:
+> When option `-z` is provided to git-last-modified(1), each line is
+> separated with a NUL instead of a newline.
 
-  * Retry attempt numbers (http/429-retry-attempt) to track retry
-    progression and identify how many attempts were needed
+This line make it seem like the option already exists..
 
-  * Retry-After header values (http/429-retry-after) from server
-    responses to understand server-requested delays
+> Document this properly and
+> handle parsing of the option in the builtin itself.
+>
 
-  * Actual sleep durations (http/retry-sleep-seconds) within trace2
-    regions (http/retry-sleep) to measure time spent waiting
+But this line says we add the option now. Perhaps this should be
+clearer.
 
-  * Error conditions (http/429-error) such as "retries-exhausted",
-    "exceeds-max-retry-time", "no-retry-after-config", and
-    "config-exceeds-max-retry-time" for diagnosing failures
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> ---
+>  Documentation/git-last-modified.adoc | 21 ++++++++++++++++++++-
+>  builtin/last-modified.c              | 13 ++++++++++---
+>  2 files changed, 30 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/git-last-modified.adoc b/Documentation/git-last-modified.adoc
+> index 602843e095..cd4a5040b0 100644
+> --- a/Documentation/git-last-modified.adoc
+> +++ b/Documentation/git-last-modified.adoc
+> @@ -9,7 +9,7 @@ git-last-modified - EXPERIMENTAL: Show when files were last modified
+>  SYNOPSIS
+>  --------
+>  [synopsis]
+> -git last-modified [--recursive] [--show-trees] [<revision-range>] [[--] <path>...]
+> +git last-modified [--recursive] [--show-trees] [-z] [<revision-range>] [[--] <path>...]
+>
 
-  * Retry source (http/429-retry-source) indicating whether delay
-    came from server header or config default
+This is a bit long now, let's wrap it.
 
-This instrumentation provides complete visibility into retry behavior,
-enabling operators to monitor rate limiting patterns, diagnose retry
-failures, and optimize retry configuration based on real-world data.
+>  DESCRIPTION
+>  -----------
+> @@ -32,6 +32,9 @@ OPTIONS
+>  	Show tree entries even when recursing into them. It has no effect
+>  	without `--recursive`.
+>
+> +`-z`::
+> +	Terminate each line with a _NUL_ rather than a newline.
+> +
 
-Signed-off-by: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
----
- http.c | 40 +++++++++++++++++++++++++++++++---------
- 1 file changed, 31 insertions(+), 9 deletions(-)
+Nit: perhaps it is just me, but it would nicer to read if it said 'a
+_NUL_ character'
 
-diff --git a/http.c b/http.c
-index 212805cad5..f318e2fbe8 100644
---- a/http.c
-+++ b/http.c
-@@ -23,6 +23,7 @@
- #include "odb.h"
- #include "tempfile.h"
- #include "date.h"
-+#include "trace2.h"
- 
- static struct trace_key trace_curl = TRACE_KEY_INIT(CURL);
- static int trace_curl_data = 1;
-@@ -1944,6 +1945,8 @@ static int handle_curl_result(struct slot_results *results)
- 	} else if (results->http_code == 429) {
- 		/* Store the retry_after value for use in retry logic */
- 		last_retry_after = results->retry_after;
-+		trace2_data_intmax("http", the_repository, "http/429-retry-after",
-+				   last_retry_after);
- 		return HTTP_RATE_LIMITED;
- 	} else {
- 		if (results->http_connectcode == 407)
-@@ -2338,11 +2341,15 @@ static void sleep_for_retry(long retry_after)
- 	if (retry_after > 0) {
- 		unsigned int remaining;
- 		warning(_("rate limited, waiting %ld seconds before retry"), retry_after);
-+		trace2_region_enter("http", "retry-sleep", the_repository);
-+		trace2_data_intmax("http", the_repository, "http/retry-sleep-seconds",
-+				retry_after);
- 		remaining = sleep(retry_after);
- 		while (remaining > 0) {
- 			/* Sleep was interrupted, continue sleeping */
- 			remaining = sleep(remaining);
- 		}
-+		trace2_region_leave("http", "retry-sleep", the_repository);
- 	}
- }
- 
-@@ -2400,10 +2407,15 @@ static int http_request_reauth(const char *url,
- 			/* Handle rate limiting with retry logic */
- 			int retry_attempt = http_max_retries - rate_limit_retries + 1;
- 
-+			trace2_data_intmax("http", the_repository, "http/429-retry-attempt",
-+					retry_attempt);
-+
- 			if (rate_limit_retries <= 0) {
- 				/* Retries are disabled or exhausted */
- 				if (http_max_retries > 0) {
- 					error(_("too many rate limit retries, giving up"));
-+					trace2_data_string("http", the_repository,
-+							"http/429-error", "retries-exhausted");
- 				}
- 				return HTTP_ERROR;
- 			}
-@@ -2418,6 +2430,10 @@ static int http_request_reauth(const char *url,
- 					error(_("rate limited (HTTP 429) requested %ld second delay, "
- 						"exceeds http.maxRetryTime of %ld seconds"),
- 					      last_retry_after, http_max_retry_time);
-+					trace2_data_string("http", the_repository,
-+							"http/429-error", "exceeds-max-retry-time");
-+					trace2_data_intmax("http", the_repository,
-+							"http/429-requested-delay", last_retry_after);
- 					last_retry_after = -1; /* Reset after use */
- 					return HTTP_ERROR;
- 				}
-@@ -2429,17 +2445,23 @@ static int http_request_reauth(const char *url,
- 					/* Not configured - exit with error */
- 					error(_("rate limited (HTTP 429) and no Retry-After header provided. "
- 						"Configure http.retryAfter or set GIT_HTTP_RETRY_AFTER."));
-+					trace2_data_string("http", the_repository,
-+							"http/429-error", "no-retry-after-config");
- 					return HTTP_ERROR;
- 				}
--				/* Check if configured default exceeds maximum allowed */
--				if (http_retry_after > http_max_retry_time) {
--					error(_("configured http.retryAfter (%ld seconds) exceeds "
--						"http.maxRetryTime (%ld seconds)"),
--					      http_retry_after, http_max_retry_time);
--					return HTTP_ERROR;
--				}
--				/* Use configured default retry-after value */
--				sleep_for_retry(http_retry_after);
-+			/* Check if configured default exceeds maximum allowed */
-+			if (http_retry_after > http_max_retry_time) {
-+				error(_("configured http.retryAfter (%ld seconds) exceeds "
-+					"http.maxRetryTime (%ld seconds)"),
-+				      http_retry_after, http_max_retry_time);
-+				trace2_data_string("http", the_repository,
-+						"http/429-error", "config-exceeds-max-retry-time");
-+				return HTTP_ERROR;
-+			}
-+			/* Use configured default retry-after value */
-+			trace2_data_string("http", the_repository,
-+					"http/429-retry-source", "config-default");
-+			sleep_for_retry(http_retry_after);
- 			}
- 		} else if (ret == HTTP_REAUTH) {
- 			credential_fill(the_repository, &http_auth, 1);
--- 
-gitgitgadget
+>  `<revision-range>`::
+>  	Only traverse commits in the specified revision range. When no
+>  	`<revision-range>` is specified, it defaults to `HEAD` (i.e. the whole
+> @@ -44,6 +47,22 @@ OPTIONS
+>  	Without an optional path parameter, all files and subdirectories
+>  	in path traversal the are included in the output.
+>
+> +OUTPUT
+> +------
+> +
+> +The output is in the format:
+> +
+> +------------
+> + <oid> TAB <path> LF
+> +------------
+> +
+> +If a path contains any special characters, the path is C-style quoted. To
+> +avoid quoting, pass option `-z` to terminate each line with a NUL.
+> +
+> +------------
+> + <oid> TAB <path> NUL
+> +------------
+> +
+>  SEE ALSO
+>  --------
+>  linkgit:git-blame[1],
+> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+> index b0ecbdc540..9206bbdc1d 100644
+> --- a/builtin/last-modified.c
+> +++ b/builtin/last-modified.c
+> @@ -23,6 +23,10 @@
+>  #define PARENT1 (1u<<16) /* used instead of SEEN */
+>  #define PARENT2 (1u<<17) /* used instead of BOTTOM, BOUNDARY */
+>
+> +#define LAST_MODIFIED_INIT { \
+> +	.line_termination = '\n', \
+> +}
+> +
+>  struct last_modified_entry {
+>  	struct hashmap_entry hashent;
+>  	struct object_id oid;
+> @@ -55,6 +59,7 @@ struct last_modified {
+>  	struct rev_info rev;
+>  	bool recursive;
+>  	bool show_trees;
+> +	int line_termination;
+>
+
+Wouldn't 'line_terminator' be a better name?
+
+>  	const char **all_paths;
+>  	size_t all_paths_nr;
+> @@ -165,7 +170,7 @@ static void last_modified_emit(struct last_modified *lm,
+>  		putchar('^');
+>  	printf("%s\t", oid_to_hex(&commit->object.oid));
+>
+> -	if (lm->rev.diffopt.line_termination)
+> +	if (lm->line_termination)
+
+So it did exist before. But this was parsed as part of diff_options, why
+make the change than?
+
+>  		write_name_quoted(path, stdout, '\n');
+>  	else
+>  		printf("%s%c", path, '\0');
+> @@ -507,10 +512,10 @@ int cmd_last_modified(int argc, const char **argv, const char *prefix,
+>  		      struct repository *repo)
+>  {
+>  	int ret;
+> -	struct last_modified lm = { 0 };
+> +	struct last_modified lm = LAST_MODIFIED_INIT;
+>
+>  	const char * const last_modified_usage[] = {
+> -		N_("git last-modified [--recursive] [--show-trees] "
+> +		N_("git last-modified [--recursive] [--show-trees] [-z] "
+>  		   "[<revision-range>] [[--] <path>...]"),
+>  		NULL
+>  	};
+> @@ -520,6 +525,8 @@ int cmd_last_modified(int argc, const char **argv, const char *prefix,
+>  			 N_("recurse into subtrees")),
+>  		OPT_BOOL('t', "show-trees", &lm.show_trees,
+>  			 N_("show tree entries when recursing into subtrees")),
+> +		OPT_SET_INT('z', NULL, &lm.line_termination,
+> +			N_("lines are separated with NUL character"), '\0'),
+>  		OPT_END()
+>  	};
+>
+>
+> --
+> 2.51.2
+
+--00000000000082cdad06447f0436
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: ae943fd30e8affd_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rbStvZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meU95Qy85aW10MnJVNEdBVlpSTE02OFRIS0NOdUk3Lwo2alE3ZXpSak9h
+OUlSekhPYU9XMFM3NFJlM1N1TUF4WmFxTnl5cnpBM1g3WjRIVzYyc21QRkg0UkQydnA1NUxNCkNm
+cmxIc3JLbTZFajBldGhVT2ViNU5WcExWSG9ZbDd6NFBnRHJLWFFYdUorTUVHU003RTFHSEozaDQz
+ekd1ZGEKUnhieC85NHBGbTFsM1czdjFBNjhwU1dMOE81aEQwZXRaR0NFUGIyVEZDREVPVWR6ampk
+NU1lNXZ1T21DNXpLSwpjM2c0RXdoUjFDMEZ0NXZTdWpRSVpMR1VkVVJaaURxYmxiQkhIV0JvVmFE
+MnZncTF5MzNzVUVTUDRPUFMxRjJSCkVRWS84VEZYL0YxbW5nSHZ0MUt1NjVuQU9yY2plSUV6VldR
+YVdTUGpvdUJ4Z2xDclppclBPRGUwWHZvN1c2d2MKTjQ5dkN4VXoyaTJTTlkyeWRoRGlDN3RRNHYr
+RGdtTTMybENRa0R5SVA3a3NvWmFhTVRuTVIvZGREbGVvTnV1YwpmQ3A1M09uQ2NXcWxHS1llYklU
+a0ZXNVlPR1FMaGpXQ1BQQW1Qa0NrVkJuenIzNE9nQTcxbmo5bmJjMy9wTUZ3CmhERDRLeEJrMkF6
+clhmVnIwS1lsaFZaN2E1UTE5SkRVUFdKOE51OD0KPTBBWU0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000082cdad06447f0436--
