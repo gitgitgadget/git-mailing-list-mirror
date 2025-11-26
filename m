@@ -1,133 +1,157 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A59D3009C8
-	for <git@vger.kernel.org>; Wed, 26 Nov 2025 23:55:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A58C2D7398
+	for <git@vger.kernel.org>; Wed, 26 Nov 2025 23:57:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764201316; cv=none; b=WSEwKXTJdr/tmWVW66j4j8ePrHFtcIk33hEqx1X48DMvTG9akDyGyHk7fHp2cx7L36+7Ws9jkYPR3AlhI+gm4aDPFQwqEWmTLc4tnfkY/WyjZ4L1YKq+GuDLk7cdGFZFh7evDIl+8FDGrP3etOCi5cT37nTjhNhohWsSsGo+bOw=
+	t=1764201440; cv=none; b=PmaNVLfv9tOAqQooRksvrwPpHMO5ydavKqj3GiVqOQqFPJHG3M/VfWjlL+4k/YR1FVRrrGN/q6l0LxJdKSk638CFxD8sGnMnlBxcISAGlC94uogboIOaDZzTyqn0qB2IeZJnzWlyRwqEuTCzT0F6t2/CRIJSEiM5gJf7obg0ZNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764201316; c=relaxed/simple;
-	bh=51tzXzI3+ItatD8SF7MXdrSM/i2x4Htl1JJoafiPyyk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LLcWdnFifF0myJQI5DBjPZP3pHqAyC77x6BzncI5MaFtvDSGXESWUPWEnZRibE2UoZj3OtWHwDGtc09NW9n516xdCGGYNaeIBxm/FFZwvQ4YF5FKFbC7xgmdBX3aIrKiE1Xe5rj1cdsajIc2PmRqwInhZKKbFaaY9wQu9/8hKCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Nn7q2rC7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nc7WEDYG; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1764201440; c=relaxed/simple;
+	bh=FvpuA3y2++ANelndgRqdcmOhvDgqse1z21CNjelLpdk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AB761J/0bk8xmMgfc6UnJmmbFBviGHob3eCpsGR6RkHNPkrSdjwNYclC394QLyLONBI6tcn4x+PwUScsvFKFXnWnG7bNlyzR8WUSk3ReZtzzGctbQbzpNzWWFFKrOiXn9hV2qbhuuh3HP4iMmVl7VOnHJe60C8KicRHH/IEieXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pov06WZF; arc=none smtp.client-ip=209.85.166.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Nn7q2rC7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nc7WEDYG"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id F18501D0014B;
-	Wed, 26 Nov 2025 18:55:12 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Wed, 26 Nov 2025 18:55:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1764201312; x=1764287712; bh=qUEttidRUd
-	iarGebddr6VF5z3yWY9MSYbbk4qJALR4o=; b=Nn7q2rC7Hs7qjVXOVeI4grdRfz
-	Bk5Ru1O+5kh/O8Ui8KEQysDl3UKPtWHQZSahfg8aL6baOUt2o6zL2Hk10ZwuaPdH
-	LKnVmxj/H/tYvJca7PLzyL+IVXwWMaWDvGKL1AEB1Hfr6neiQi2qmVjNNN4s3lmr
-	cpaYbKB4vg8XoaJJNG3zcr4k3YTutnFxx/0LsQnfMTfRuckyNSKdww69VUIKjdv8
-	R0YeUX3gH8CCFjCJCy8bOvR02p0CQYhf8fQkND3N4QvhPlHvHMGsrzqayle3jTdE
-	0ACxYanTr7GmMfgM4esbkc/mUFIBVTDpNzqp63JeYsHbVP4A0WesIooEVVbg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1764201312; x=1764287712; bh=qUEttidRUdiarGebddr6VF5z3yWY9MSYbbk
-	4qJALR4o=; b=Nc7WEDYGNLLhnIbXjo9ykwv0lPwU7M5rgL2m8FYsW3NBpE7VJ2l
-	Ur4CEda/cOZ9dHQq9rVUheyuNsisq4jT/2nC8i7hOl9xkC4SfTNOkurCWbekYwVn
-	nS+AHbEDy26qyzsb9lqE2xzmGB4N4C5cTsq6VW6j9GBGaQGE1oEUt0Qqp7vjPMOZ
-	SY70mArhU7/yzxWXgAzXdyBrZI7mtE9dwc3GtsdGoolSoXkHik2k3AvMxtHnVWgh
-	0EViZ6SkaxZfPHB7I3u0qknPzeSD0ZtdstydYC9uyC1+KLL7rdu0YIstwo6TcEwC
-	/eyAWMKBN1f35AYVf6TydEiVBd0DzzcNMGA==
-X-ME-Sender: <xms:YJMnaTLAcYSNjdNghgkiYnP4NrXnmTtwfK_MJMTnaj_SpPm47FABYA>
-    <xme:YJMnaZbFASDys517YPy2IlPwNnNUTgJVc6B_GIfvzku-ifAi_jbGrMBjcyEummI2-
-    hHtbfoeVsOfjoGbI6RsYb7J9WrrDg9nB5a8fg6i1bvDPdYK1P3hNUo>
-X-ME-Received: <xmr:YJMnad_A0V1p2_gQEmYsdxYzU0QROpgpzCCzhds8YyNXbEyrM3NBjMxKqxWbrcJcDg6UHCh6c0kOCyfvvvu-QY6amj_iFSrYplSR>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeehjedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehpshesphhkshdrihhmpdhrtghpthhtoheprghtthhhvgifhhhughhhvghsleefgeesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhn
-    sehgmhigrdguvgdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:YJMnaSbn2iPHEzu_nwHiyt2kmLMcFod7rcSG-HnhjciW_yvB43XBPQ>
-    <xmx:YJMnaZNjnUJgTT0gfVw3JddXyrjdHJGBNOAGQg2Bpyt5oklHOpHOUQ>
-    <xmx:YJMnaWDXSlyDS1SKu1hiFAvPeTbsH77LYZT0X87q3lZ6LauSl7Q1vw>
-    <xmx:YJMnaYJPuMmsuF3SG8l1aD6V6uz98oLfEvR87FaQbvIcNdeJgzSu5g>
-    <xmx:YJMnaVDCrPBO2mvXPsTdzB3hq_Cbe3D9a7e-HebBd9My3DIj5vCbaemO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Nov 2025 18:55:12 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  atthewhughes934@gmail.com,
-  johannes.schindelin@gmx.de,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 1/5] scalar: annotate config file with "set by scalar"
-In-Reply-To: <a4ad8f80d062cd9fc62db69c21625eb286f4ebb8.1764195516.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Wed, 26 Nov 2025
-	22:18:32 +0000")
-References: <pull.2010.git.1764195516.gitgitgadget@gmail.com>
-	<a4ad8f80d062cd9fc62db69c21625eb286f4ebb8.1764195516.git.gitgitgadget@gmail.com>
-Date: Wed, 26 Nov 2025 15:55:10 -0800
-Message-ID: <xmqqqztkl57l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pov06WZF"
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-949031532f9so18239639f.0
+        for <git@vger.kernel.org>; Wed, 26 Nov 2025 15:57:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764201437; x=1764806237; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7QXjsCMCq4ROJ0Hir8LtaO/RtHM6kBKwBjrjpDOpIhU=;
+        b=Pov06WZFZvppw9EjH2841d8L8tzrMwatZzsWnL6u+6V2kiAj8RUiYQHkDjAvgR4PLa
+         4Ub+9hP2b38mMXIbxHytXZoH6w7i5mT4s8fLDw1u361vw1UHgyCRog65rQTmYW6dnn7K
+         z5WvF8myIgajG8Mr2SubRZ+P+2O+N6pjK+FCmjjBb6a6HrMuNc/BULi5z7kbO/4XY3Ud
+         +M7Beu1Rpghx+TVvgvbjti+rQHNYGp3Cc8qR5VJKqO0/iQyXNjtaYbXVQJGDmD63oYwp
+         hevGFoPy9SROPDSJZ5bZb1f3ChvwtY0fQOL82vUhByJXyscenZAstek29xKrjqiyrJBB
+         a8Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764201437; x=1764806237;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=7QXjsCMCq4ROJ0Hir8LtaO/RtHM6kBKwBjrjpDOpIhU=;
+        b=fPpUC28vuSU6EPyVtHwmkQZZxrmzaVx1kBuX0sCI5yBNPx3Wd/QloCXKZVWLY1xxNS
+         PeORzAGXA3viFgDF8mkUG4RRNW7rkuhFixT2pGI1WBFoCiiDhhHfZ+yERfp4heo8cQsP
+         6qI+k2QEismupuU9gwUWfJQCE0k0Yl7FXIloFHVGzxa84xznxyujqwxwP/9ByUH51ffD
+         QA8RFelIk/9h9+z9hxBq12m9G57lxt/VgaXDTZf4lGTuufZX+vDkKnDEEmgnydNfup0z
+         cZFRhzFfupVD5hlF6xfR5yDrWI1AANnzngec/UEQLuDJJQlIbB0DfKesrZIe7Ca+2Rh/
+         DISg==
+X-Forwarded-Encrypted: i=1; AJvYcCW1gn13IAJnmAIVEPVJJ6Xd9wsn2lAiBLUsBZvm4zBMmjkL6zHdMYEVrE2/GPc0cnC/ms4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyA7tyeNilHaYvlghvj6H4CM1wD8XlXmuNTQMnZdoR+FkO8Hbiw
+	WaBt730qJOgLvY0IdTrZU4VByXb8JjwFzmdGkjCfEOlZTsGN/42Xlh6ifDUsfe1pI1CMRUfj9Z0
+	26tp/wDxhSOQbXFaHj5i7bZbScTL31jA=
+X-Gm-Gg: ASbGncuk3azmRu0MX4lBG6nEXX7vM4ECVuXtA7zuaHvFC2OksoBc6HH0/ZAJ3QP+fQo
+	v4C1gl8QBl8zZpEFVl0p9BXJ2egIG/8r8WcZEROKElAa+80ebwpNGt9baXCsuCywgNWhkQi/ruw
+	KtkyA9Xweva44IXmuSe9HYxRCC7SLveSJCciG36l4IA+ko1IAfoGZ/BkYxlIldkqwUjyjLe1AGX
+	hjMLYrMk2vgD3QWeYoP/t+0xg7YaHx2P+a2TFFYwTs6RdJXkJHEs0Oem4QzGjESl/dUQSNX8/7E
+	xe2HMY1jEi9EHkHsdNLmlFAB07hY
+X-Google-Smtp-Source: AGHT+IHsLFrBiCklh9FaLOiZaqage7ndwFDd9pvvEt/w8mFTOHXeIgAGc04PWJ81bi84z61VL6EamRiaLnczm2IN/Bg=
+X-Received: by 2002:a02:a482:0:b0:5b7:1bb7:db25 with SMTP id
+ 8926c6da1cb9f-5b9659b3f6cmr14506913173.4.1764201437485; Wed, 26 Nov 2025
+ 15:57:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20251125170056.34489-1-siddharthasthana31@gmail.com>
+ <20251125170056.34489-2-siddharthasthana31@gmail.com> <d563b68b-e01d-4b18-bd84-86f36e61a70d@gmail.com>
+ <CABPp-BEF1RVs7n4xf6ihyPUmxrhgpG6VEpZLrX=MTgcBWBRbfA@mail.gmail.com>
+ <xmqq3460ocv7.fsf@gitster.g> <xmqq3460mr3c.fsf@gitster.g> <CABPp-BHcCX8LDccRoarsqNO=YVr7a8gp67oc87b7taAmjch4dQ@mail.gmail.com>
+ <xmqqy0nsl741.fsf@gitster.g>
+In-Reply-To: <xmqqy0nsl741.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 26 Nov 2025 15:57:06 -0800
+X-Gm-Features: AWmQ_bl9SY0ZM7ZY7ph07Ng180LJSWPkZU5Vs4tbDDDwBLZgGuo8RQXoSJu-J_o
+Message-ID: <CABPp-BESM4PC+QVXZ-X_Y0m3PrSQGuc-jfB2pCJ+hXy0Gi-T5A@mail.gmail.com>
+Subject: Re: [PATCH 1/1] replay: add --revert option to reverse commit changes
+To: Junio C Hamano <gitster@pobox.com>
+Cc: phillip.wood@dunelm.org.uk, 
+	Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org, 
+	christian.couder@gmail.com, ps@pks.im, karthik.188@gmail.com, 
+	code@khaugsbakk.name, rybak.a.v@gmail.com, jltobler@gmail.com, toon@iotcl.com, 
+	johncai86@gmail.com, johannes.schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Nov 26, 2025 at 3:14=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > =3D=3D Example command lines from your proposal =3D=3D
+> >
+> >    git replay --rebase main feature~3..feature
+> >
+> > This command to me would suggest that main is being rebased, but it
+> > isn't -- it rebases feature~3..feature onto main while updating
+> > feature to point at the result.  I find the "--rebase main" part of
+> > this command line confusing.
+> >
+> >    git replay --cherry-pick main feature~3..feature
+> >
+> > This command to me would suggest that main is being cherry-picked, but
+> > it isn't -- it cherry-picks feature~3..feature onto main while
+> > updating main to point at the result.  Again, I find the
+> > "--cherry-pick main" part of this command line confusing.
+>
+> That only tells us that if you want to help users by limiting the
+> vocabulary to a single set (i.e. both command names, and mode names
+> used in replay), you'd need to make sure you have the order of
+> <branch> and <range> given to the replay command in logical order,
+> in line with the option name, no?  Of course, if you want to say
+> "cherry-pick", cherry-picked range would have to come near the
+> option flag that says "cherry-pick", naturally.
 
-> Add "# set by scalar" to the end of each config option to assist users
-> in identifying why these config options were set in their repo.
+--advance and --onto are flags that require an argument -- in this
+case, "main".  So, now you're suggesting more than renaming, in
+particular some bigger refactoring such as making these flags now
+require the <range> rather than the <base>.  Let's follow that path a
+bit further...
 
-The implementation is quite straight-forward, inlining expansion of
-repo_config_set_gently() in the places that we want to add comment to.
+Does your proposal assume that <range> is simple, such as
+"feature~3..feature" above (i.e. something that an argument parser
+would view as a single argument)?  What if the <range> were "^main
+feature1 feature2"?  Or ""^$COMMIT --ancestry-path --branches"?  (I
+don't see how to have the option parser easily be able to stuff the
+arguments to "--rebase ^$COMMIT --ancestry-path --branches" into a
+range variable that eats all of "^$COMMIT --ancestry-path
+--branches".)  While I use simple ranges to describe the feature, I
+specifically built the command to be able to do things like those
+other two examples and use it for those.  Those more complicated
+examples are things the rebase command just can't do.
 
-If we had (a lot) more than two callsites, I would have suggested to
-add a simple helper function, something like
+Also, just like `git log` allows `git log [<options>] [<revision
+range>]`, I wanted git replay to allow `git replay [<options>]
+[<revision range>]`.  Instead of doing magic to get an implicit
+revision range as rebase does (and with rather limited options because
+of that magic), suddenly people can use what they've learned from `git
+log` in another place.  But that piece of knowledge only really
+transfers if we do similarly to `git log`, i.e. the revision range
+comes after other options.
 
-    static int scalar_config_set(struct repository *r, const char *key, const char *value)
-    {
-	char *file = repo_git_path(r, "config");
-        int res = repo_config_set_multivar_in_file_gently(r, file,
-		key, value, NULL, " # set by scalar", 0);
-	free(file);
-	return res;
-    }
-
-and then the updates to the callers would have been absolute minimum.
-
-Well, even with only two callsites, perhaps such a refactoring may
-still have value in reducing the risk of typo in the comment.
-
-> diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
-> index bd6f0c40d2..43c210a23d 100755
-> --- a/t/t9210-scalar.sh
-> +++ b/t/t9210-scalar.sh
-> @@ -210,6 +210,9 @@ test_expect_success 'scalar reconfigure' '
->  	GIT_TRACE2_EVENT="$(pwd)/reconfigure" scalar reconfigure -a &&
->  	test_path_is_file one/src/cron.txt &&
->  	test true = "$(git -C one/src config core.preloadIndex)" &&
-> +	test_grep "preloadIndex = true # set by scalar" one/src/.git/config &&
-> +	test_grep "excludeDecoration = refs/prefetch/\* # set by scalar" one/src/.git/config &&
-> +
->  	test_subcommand git maintenance start <reconfigure &&
->  	test_subcommand ! git maintenance unregister --force <reconfigure &&
-
-Looks good.
+Perhaps one way to avoid the first problem above is to make
+`--onto/--advance/--rebase/--cherry-pick" stop requiring (or
+accepting) an argument and turn them into simple mode toggles, and
+then make both <base> and <range> be positional arguments, with some
+well-defined ordering.  However, if <base> comes before <revision>
+then we still have the same problem as my previous email, whereas if
+it comes after, then we weaken or destroy the connection to `git log`
+I made above.  Maybe the connection to `git log` isn't that important.
+What I think is important either way, though, is if we use positional
+arguments for both things instead of making (at least one) an option,
+then I feel we are copying one of the designs of `git rebase` that
+makes it hard for even me to use: I hate that it uses multiple
+positional arguments to define the operation; despite using the
+command heavily for 16-17 years and sending in lots of patches to
+improve it, I still can't remember the order of those positional
+arguments and have to look it up again when teaching others.  Maybe
+that's a personal shortcoming, but I would really rather that either
+<base> or <revision> was an option flag.
