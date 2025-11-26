@@ -1,67 +1,67 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F282033C1A5
-	for <git@vger.kernel.org>; Wed, 26 Nov 2025 19:28:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AFE1E520C
+	for <git@vger.kernel.org>; Wed, 26 Nov 2025 19:31:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764185329; cv=none; b=OIq1nWu8Wy8fRAk+nNCEgYhmWMrJWS19P9teaUD/B/Sq9CvaJf9uTG9vFOQpjwgNO29mE6cXtxhpkIrulbbBbONvZyGOQhciIWJyBGkZTTesrEeUXGOE3z4hJCZnzPCzVDsMeaTkm0apvek64yrgreessc1nTB5B7cOe6UhM8tg=
+	t=1764185472; cv=none; b=tQ4wIAtHvBgbWhLQFf2cMOqnSSOaRsErsLXbi6a3eHKlNDK7MSmTSBx9PGL4g8DR55kOhBkDMGLTz010dP8RxNoCLxgTN6uWn6msoZxTt8fH6jz4A37oTIFiXmnhe1UuUJECTIJgW6fNzStYKkYoh9Hv/JuQlbY56lbORIfScnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764185329; c=relaxed/simple;
-	bh=iybYpzehGmIh7vLzxEy7qQ0uPAUOL00CjSl1zfyl5mE=;
+	s=arc-20240116; t=1764185472; c=relaxed/simple;
+	bh=/Zj+GywGGJx/3crH6g/5jlqoqykfUguH20HLekca1gY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a0+oOhAMmOgm7oz4oRF+xhC06v/yaQMReFoXfYDNRzwnjR/eGZZsEEEyHWvj55pplGeHOzBepMhoeXq0LEJgQCE86pYlyVHnstlBC2Yeq0WKWexJPwOK5T8vus2bF+xS9+WBgVmqn4jKJqwZbm9z5T7dyRRPZZPo+pZoit/YiuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kv3Qhm86; arc=none smtp.client-ip=209.85.210.181
+	 In-Reply-To:Content-Type; b=SMwTUo0gg5bRLYZPbLEK+QDxkRPAStQRW57z833Bv1zuUAMqYBaqJBS6N9jg2+nGQ/iB/Rv2+VJwbQ6pY4H3NVuwNlsvAj/5/Fo1piNKCNkDhqu2LefOSN2FCdx8AhVo1Lb9JPMsZlq6GAIN7lbE+MMQ6FC0Gee5hYXjIKsEMVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J/3bIrLw; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kv3Qhm86"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-7a9c64dfa8aso46058b3a.3
-        for <git@vger.kernel.org>; Wed, 26 Nov 2025 11:28:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J/3bIrLw"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2984dfae0acso2009535ad.0
+        for <git@vger.kernel.org>; Wed, 26 Nov 2025 11:31:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764185327; x=1764790127; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764185470; x=1764790270; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RYgKojYqQ4M09EIsZfFHhmUMaF+oTC2/N0SXY9ZhFTY=;
-        b=kv3Qhm86qVvTlIP60FLScIYkFo7Np7edjPbchB+gky5BmfN5t9i9uHP89AdWUQ2EJy
-         4m7vkEwp8VCxT9OJoOgF1XbyxLdUrNB02tHi/XtBPYNDiOon5v0rDBkIE+A5t9IspSfZ
-         W+KX9YRRy8Ba6qeTaDSDsIvraIFZi72Jx8AO5Kibk9OzEA5FPy+dH04NmT4JujXE0GGB
-         eutQjH/QbxMtK6RB+Q06rAOLeUIDeeIn8J7MouBRsdCvxQOjJOBEPtrARsSuEWkJC+rW
-         dMuBTVv8xlLVNbYgMApqaS+SWPnhaZ+MfnqHzvc8C44qrD5guWULkjBLTzzx0Zam2FHq
-         tp7g==
+        bh=t4atc9HcJ4OGJ6qn6W8J+CBm9AqG3dfUo9nPbVysxGw=;
+        b=J/3bIrLwMx/gG2IWeEcKKcRHm/ITb0SgY02XQYxilF5e5BJcPfnoY6whTB90prRX3E
+         EzCgDV1sbjPFva9OZDYaPg+K54Y/XtMa9tcgNuz4+fg1MnBcGrwf7Pa1vGK0rLMrtKYh
+         Z3K1/mizRh9q+MiL4v+scq3cUBzZjdVochufnSVLTZ1q9W9y3jau9GqCoKDHtQ4MtrzI
+         4wrGX6S5aSEjTA/y3Z33bUZKxDd7hOWdI8FKkxyGt8GTtKiVqNRaJcWcu/Vw18EKSjct
+         OsNQnRGVSn8kyU8xI3UnwfcZrfkQXHOVoqjFTJ0oj2+BXk5dxO/XesTdmpm2gaRgV5EF
+         1aHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764185327; x=1764790127;
+        d=1e100.net; s=20230601; t=1764185470; x=1764790270;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=RYgKojYqQ4M09EIsZfFHhmUMaF+oTC2/N0SXY9ZhFTY=;
-        b=ZDJnuGGBKFgf4DlDwbgbPMR1/mvnMREvs9h244Om+hkd/8DktnsB+E8Ku7L/QRJ81h
-         KPceS0T4FwBnIROPCGuv+QqhEdRK+LbTzV9OxZdvnVJbi+P73G6Hx8P8BOpRDbdoYWUL
-         aIHOnBwwLD+oBqeEYvKQwaGs8hGCEX3FycZj7ni+AZOs9a+2/Zvvjdgef7RC+mya0Oip
-         y3aYX/jJzxzXgscLeaas1V5goFrOPHwmCvU3iT+LUhEKFe0N07CivPdoRh33oWZlLszJ
-         tokWn7HBfQJOplKSDRuGCWO6b1BWc04YXd1rnAHWzu9pgo7ilYmDRI0c17Dw4nYkR6aK
-         XQBw==
-X-Gm-Message-State: AOJu0YwMAVDVqezaesBQgt9T3GVm1uJEB8ZoyhijiuAnj5k5zptyNksf
-	2cvNCSYzgqbFSNvgHh5G4glxPOL9NzHflboNdpL+A3DoIxRRbroIDTRJ
-X-Gm-Gg: ASbGncuPXIN6iLs9Gz899zXXPfVm7cE/AZB00aayEVfNZGCi/WLLxzUFqQPonlwM7N3
-	quzDEcrTqyEnUFpEtdZfq21ZLJhCGayoCNVPxGrC5nbMkr8lFo1slh2HXvf6yihnISxxJwOUtUQ
-	vhT570P8iHe57iB/pr2THu5JmTu2N2b6j0Hxu9xyY8ewhwR4bO57r+nYOPBrSrZegmw4ksj9d5r
-	xwuPTQEQ/k4H64F7OIQi2Wl77HZ7JViZtidnT7I+W4RQB8cI94EfDVHrp8/jL9QlWJrRkrt1RBS
-	x+ULBeEGX3b+U85dKPbUzmK0mrxAocqLfi1VbBUrdNKwKGS6JzmjG/RLdUysWRrRAwYFmYdKfUA
-	082VDIJRmQpy3MGjFK8l2oelmtdBMvTwS8nkvaZY+TBmGJilnGXFN3R7wLgVWwnzyTPV6s9netI
-	WJsG7aln3ffacnrHtZmYmaquSuGEPTnch1WDNs/PLT4kVQxh6fxUyk50u7hKAI8Q+oZ54q8d3C/
-	BBDt0nIsC56BxKq8YNCzvE=
-X-Google-Smtp-Source: AGHT+IHHoxFPBaXjgrpD8RnGKEJQ1EVyW1Fn8Oy1yYerSJKxQcUq0k7uS9FCdxj0dobuscxHWgGRxA==
-X-Received: by 2002:a05:6a20:a105:b0:350:d523:80a4 with SMTP id adf61e73a8af0-3637dea0199mr9085972637.28.1764185326840;
-        Wed, 26 Nov 2025 11:28:46 -0800 (PST)
+        bh=t4atc9HcJ4OGJ6qn6W8J+CBm9AqG3dfUo9nPbVysxGw=;
+        b=UZiPnGj9DH6HXTlL8TZ7NC1TWOT1u/jT93mNaSUrA7hu//WSa8CvmsjJTnDA3swlxq
+         isV1/ZpI/MD1p2ey2Fp5ltc9eHqMXSY7e9lXlQTYglKf3YUEUVTEGexVFEnhM/I+xhAW
+         ZP6WDREvRwHHDJq3yudticNVAop/NQSb7ns8hVi368MfN4AECMLxllGyS9wJGWUfMf4A
+         bGfhvbQsloRkBTGBrrfWQima5qLsrG4ZZ/5VXXaRh+P8oqcTEwgO4QLr7mgAgLYEgzay
+         Z4YbxqNiTaWsQCaHkmXhpa5tPxyM/q5Ue6A7Tmgf6/ZZjnKjjNL4nrrsbOfy2kpnSwMK
+         fGJw==
+X-Gm-Message-State: AOJu0YxCGDNIsfDOLgQ0LnBlTZnh4tyFaELcbyh7VwYspRkMHVeup1Zz
+	Mknwuzv8o+XAnoQqLTDsTKk1ZsgfwLQP2bECBbLD/I8dLLpXrLWRMgMN
+X-Gm-Gg: ASbGncu959SUqShb8LD6oCfyXnk/DHN7v/1MdNzzuol1vzQNaHJeQBBamO9kt12cRoK
+	loIq3qJtb0Gm7pb9SSF9cMES4y04TpSbAa4wyYyOMyErAUwAqtwXbr1xsGfCi3e8x8/TDLAoVip
+	miZEakiqhgWU6DKR7702jts0pa7Kuj2FwFWV2qh0TlAyTISMTvPHlrO+tNIwsBTK/C8yfGzyRI1
+	TRBBDxpMACiSBCF0BPhZBk7qx7JqYzJrC13qkjClQS3r7+PmlkslF+2chOLQ5TsU8E7nofn1ieF
+	7XsP3TRAD/7ely3SnkG3IHLu/xMA00QBITUF04k+XF07NgXvh3Q65oj88oTqZdJDsGcvXFSBGKA
+	ahY51e9Ek6P0Jr9m6dJkjwt6qngqULfIox4JZy78lYVLTievfATLC8PbsNkM3xT1nEEPLzNQ0eo
+	4ujMggMCT11s3jVNZBYwc6liTLe2Kz0PG/zGodFaCz1FWkXF5hqRMjNfuttFqgd6w6WP1yZNFkp
+	5NsQ5qFnhKN7OAVlhGcIM4=
+X-Google-Smtp-Source: AGHT+IFQVlGZtJUL3/86TeWY3fHNicyRAtqzeplY4DyPeoCMqHHRDp5EGKoVDWP4LUtbESN6ytEj7g==
+X-Received: by 2002:a17:90b:1a84:b0:32b:65e6:ec48 with SMTP id 98e67ed59e1d1-3475ebd2f41mr7728548a91.8.1764185470340;
+        Wed, 26 Nov 2025 11:31:10 -0800 (PST)
 Received: from ?IPV6:2409:40e3:30a4:b776:bc94:4b73:d55a:67b2? ([2409:40e3:30a4:b776:bc94:4b73:d55a:67b2])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-bd775ccabfdsm19885592a12.29.2025.11.26.11.28.41
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3476a5c71d7sm3380220a91.15.2025.11.26.11.31.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Nov 2025 11:28:46 -0800 (PST)
-Message-ID: <515c997f-f562-4081-9c44-5a3049d75121@gmail.com>
-Date: Thu, 27 Nov 2025 00:58:40 +0530
+        Wed, 26 Nov 2025 11:31:09 -0800 (PST)
+Message-ID: <cc5cc77d-5d78-4a16-b4b5-91a903436788@gmail.com>
+Date: Thu, 27 Nov 2025 01:01:03 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,66 +80,80 @@ Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im,
 References: <20251125170056.34489-1-siddharthasthana31@gmail.com>
  <20251125170056.34489-2-siddharthasthana31@gmail.com>
  <xmqqwm3drk6m.fsf@gitster.g> <xmqqo6oprjti.fsf@gitster.g>
- <xmqqjyzdrjf1.fsf@gitster.g>
+ <xmqqjyzdrjf1.fsf@gitster.g> <xmqqfra1ri5n.fsf@gitster.g>
 From: Siddharth Asthana <siddharthasthana31@gmail.com>
-In-Reply-To: <xmqqjyzdrjf1.fsf@gitster.g>
+In-Reply-To: <xmqqfra1ri5n.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
-On 26/11/25 01:09, Junio C Hamano wrote:
+On 26/11/25 01:36, Junio C Hamano wrote:
 > Junio C Hamano <gitster@pobox.com> writes:
 >
->>> Dedup with do_pick_commit() where this was taken from.  Possibly in
->>> a separte patch before the main one.
->> Forgot to attach this at the end.  What I meant was that something
->> along this line may be a good starting point.
+>> By the way, I probably would not be queuing this version today, as
+>> this has obvious conflict with a large code movement made by
+>> Patrick's "history" series, which itself is expecting a reroll.
 >>
->>   sequencer.c | 14 +-------------
->>   1 file changed, 1 insertion(+), 13 deletions(-)
->>
->> diff --git c/sequencer.c w/sequencer.c
->> index e6d82c8368..29909952d4 100644
->> --- c/sequencer.c
->> +++ w/sequencer.c
->> @@ -2365,20 +2365,8 @@ static int do_pick_commit(struct repository *r,
->>   		if (opts->commit_use_reference) {
->>   			strbuf_commented_addf(&ctx->message, comment_line_str,
->>   				"*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
->> -		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject) &&
->> -			   /*
->> -			    * We don't touch pre-existing repeated reverts, because
->> -			    * theoretically these can be nested arbitrarily deeply,
->> -			    * thus requiring excessive complexity to deal with.
->> -			    */
->> -			   !starts_with(orig_subject, "Revert \"")) {
->> -			strbuf_addstr(&ctx->message, "Reapply \"");
->> -			strbuf_addstr(&ctx->message, orig_subject);
->> -			strbuf_addstr(&ctx->message, "\n");
->>   		} else {
->> -			strbuf_addstr(&ctx->message, "Revert \"");
->> -			strbuf_addstr(&ctx->message, msg.subject);
->> -			strbuf_addstr(&ctx->message, "\"\n");
->> +			sequencer_format_revert_header(&ctx->message, msg.subject);
->>   		}
->>   		strbuf_addstr(&ctx->message, "\nThis reverts commit ");
->>   		refer_to_commit(opts, &ctx->message, commit);
-> By the way, I probably would not be queuing this version today, as
-> this has obvious conflict with a large code movement made by
-> Patrick's "history" series, which itself is expecting a reroll.
+>> Perhaps collect review comments on this iteration a bit more and
+>> wait for that other topic to be rerolled, and if it turns out to be
+>> solid enough, base a v2 of this patch on top of it?
+> While I cannot test it with other topics, I had a chance to run
+> tests after applying the patch directly on top of 'master':
 >
-> Perhaps collect review comments on this iteration a bit more and
-> wait for that other topic to be rerolled, and if it turns out to be
-> solid enough, base a v2 of this patch on top of it?
+>      $ make CC=clang SANITIZE=address,leak test
+>      ...
+>      Test Summary Report
+>      -------------------
+>      t3650-replay-basics.sh                           (Wstat: 256 (exited 1) Tests: 31 Failed: 5)
+>        Failed tests:  23-25, 27, 31
+>        Non-zero exit status: 1
+>
+> The first failure was this one
+>
+>      expecting success of 3650.23 'using replay with --revert to revert a commit':
+>              # Revert commits D and E from topic2
+>              git replay --revert --onto topic1 topic1..topic2 >result &&
+>
+>              test_line_count = 1 result &&
+>              NEW_TOPIC2=$(cut -f 3 -d " " result) &&
+>
+>              # Verify the result updates the topic2 branch
+>              printf "update refs/heads/topic2 " >expect &&
+>              printf "%s " $NEW_TOPIC2 >>expect &&
+>              git rev-parse topic2 >>expect &&
+>
+>              test_cmp expect result &&
+>
+>              # Verify the commit messages contain "Revert"
+>              # topic1..topic2 contains D and E, so we get 2 reverts on top of topic1 (which has F, C, B, A)
+>              git log --format=%s $NEW_TOPIC2 >actual &&
+>              test_line_count = 6 actual &&
+>              head -n 1 actual >first-line &&
+>              test_grep "^Revert" first-line
+>
+>      test_line_count: line count for result != 1
+>
+> The "result" file has 0 bytes (hence 0 lines).
 
 
-Understood. I will wait for Patrick's "history" series to be rerolled 
-and base v2 on top of that to avoid conflicts. In the meantime, I will 
-address all the review feedback locally.
+Ah, this is because my patch was based on a tree that had atomic ref 
+updates as the default (REF_ACTION_UPDATE), which produces no stdout 
+output. The tests were written for --ref-action=print behavior.
+
+I have fixed the tests to either:
+1. Use --ref-action=print explicitly when expecting output, or
+2. Check the ref state directly rather than parsing stdout
+
+The test failures you saw should be fixed in v2.
 
 Thanks,
 Siddharth
 
 
 >
-> Thanks.
+> Actually, address or leak sanitizing build is not needed to
+> reproduce this problem, it seems.
+>
+>      $ make CC=clang test
+>
+> Was sufficient to see the same first failure.
