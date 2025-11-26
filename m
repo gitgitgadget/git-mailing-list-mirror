@@ -1,92 +1,82 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F9224E016
-	for <git@vger.kernel.org>; Wed, 26 Nov 2025 17:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A5F168BD
+	for <git@vger.kernel.org>; Wed, 26 Nov 2025 17:32:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764177764; cv=none; b=aC+R87+azdoyV8bXHWanBM6j8MZGVJ0m3ID9asbqgmc5nyugW0KPVARyMX/RK+yqujrbkZ7UEhs/eYRi/5xuUpwxfuH4YOO1aRy9mIAEJkOD4ecl92jTfBY6TJr4C9iWzdqLOxga5VLzSwRU7/HV7SDnGR9HkHc63JlRW3IDLpg=
+	t=1764178344; cv=none; b=fNPxowjy7OTK2gPQd0xewOwuYaw2YJYBVHKs9NEBupbp1ebl79/QYrUp4uQygsh8OkPRb2MzstnsQJYwfVAmDC85WJ2wEyvFGd09AXq8mGl0qxyXZxkLFy/tlbj1SXV0NC6DCp8OGQQ6ofF4HwuIBrKw2pHDNqDNmaff8QC6UyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764177764; c=relaxed/simple;
-	bh=ZQaN6chMfmh4u2N4X+Jc1Eeg7EMo2IwE67dcpJdDjJE=;
+	s=arc-20240116; t=1764178344; c=relaxed/simple;
+	bh=RldLfMls/+sFFb19CMTLYWebEgRXiXx+wEXCPu9VwrE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=I8PpMmYW06RpolTdm3iJiJp5DK8fTwYZXied8lztZ83yhKsC7XCTSJVr7TJ/9VnMQKWWQ+Dyq5yGe19TzNefzofIaURyNfsji2Ky0RwULy5iJK3RWtFJWcXCDBa193L2CKJ+/NGw+8pyh4F0md8kTTFPP+Lo/htpDLIIlEq4o4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=COIBlaK5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vHCVQ5WY; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=JU7ipALRJvwRYcQrXlltQllfBi4rF1Tar511eRBsdpms08lgZQnT2tlrwHFFZp16Rqt4HEGTwZg3vNOA1rEVbdw65vqOM4TNIcKzZrtGMxeuc9gZ8/aukEqltrfbbL8Z5lrRoeVVcf203lyayGT+KBKtzhgQMfZWD8YVUl3c8Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FEfWBsDu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SDQhagh6; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="COIBlaK5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vHCVQ5WY"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9BD191400197;
-	Wed, 26 Nov 2025 12:22:40 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FEfWBsDu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SDQhagh6"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 28E0914000D1;
+	Wed, 26 Nov 2025 12:32:20 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Wed, 26 Nov 2025 12:22:40 -0500
+  by phl-compute-04.internal (MEProxy); Wed, 26 Nov 2025 12:32:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1764177760; x=1764264160; bh=t83XwYBSwS
-	9sv7T/xd2QWGQoiZQh2gELnYOHSOJsqHA=; b=COIBlaK5iU2Q/s93PyE2KzUHJ5
-	+oz1x6R9nx6klR+7GOGNzmKMQ9YEbo0mMvmMh6iD23Kz8pxBc9OuC3CTNP4BFiUr
-	FVZk/qfO6PRBs2r9ecwjYEZIafxt4q3XD7eu7CwbC4AW19EPn4XcY5a1ekFtfRuc
-	BKC7G4YPuzoWaK8fNQ8ekBNEYFb431WcK2j77SS4wpoTNefm9s4xPCNVycO0rP3i
-	NGaoAo7r4REIon5ABQxWGemEFeGdL4P9CQ9R5d7gHXYUV7YGRv7syNYTdlMJjgMM
-	Il0doZCbqDFmFtjrlEavSSeStdxj0I70ou0Po+hlQKFLkcvRmZUmGlBOumag==
+	:subject:to:to; s=fm2; t=1764178340; x=1764264740; bh=BfMlnw+HVo
+	dJNLRauTKWI/LP5P6PMWwcyBYw8J7gqaw=; b=FEfWBsDuq4vSbcwuODpvGsLPpy
+	CMagXjNJWAFoLVX/UUgzaq0YaS1d+fZnNWXgAOqzj7HpJYLEsBQk+l3XFe9MPrUm
+	1RRQWqdV7GX7bakdj/08mvJHrAElUgu3E7q7dBnKz70khHi2mX/83pZoJWaz6vHK
+	bbXt+3+Tm6tQ+mESG1nSFPo8+Lvqzs0E8zHAeEugdid5KfSIpYmM21GrH6JuV3jm
+	b0XaAtTkKxNam5WXwHRa8oZPvhDvozXo0jmBHxUFudJPlVE5Zo6UGwxBHrdto1d8
+	UFsFczvF+T80x6FwV+sNdU+7zbitsCBfCaSONXkbU3DmeKPg9t3rcOv9YOBQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1764177760; x=1764264160; bh=t83XwYBSwS9sv7T/xd2QWGQoiZQh2gELnYO
-	HSOJsqHA=; b=vHCVQ5WYr4RQMoWutd5Y22nZkhegk/+mGCyXRNUyx6fNGdOtwjH
-	uNn1AiWSxnbgGn3JT+PG4syToWPYV/ICjCtm2tp2Vw3tobUdi121+UVgRz84ICG6
-	byITYAHJq0un44CGMb/MWuSv2jdahrgm+NFnTN04oxdsKUIxxjtQPSD7EmDK8yxI
-	tzlrgqlhOnC8lnyhglz3gbepGDKf6/02kmHX62GR+mf4GhOjS9kQD50i8QXoPgP6
-	KDjD5xCcT4g5NZvCLKApZQN2SF77+adPX5KCK76lXYql7vdaFjLkucPSZC3BVUS7
-	Wdu08C6Riro494PhCF3nHtRvoemzB1qDA8A==
-X-ME-Sender: <xms:YDcnaTIXTSZBAz-ijU6SyuHrIN4wpAxuZQHB0Qxqfb1E50zP2-zsCg>
-    <xme:YDcnaZbQj07pDj8SiH0LbGg4K5e-vDN-xuuof0MDksF9mHsnAFfzKA7cdfETMsezG
-    EKsmmfc9M8KqF5voOZn21hzZO4OHf-Xt-kQ9dO7Aqkw10w0X_rQDZ0>
-X-ME-Received: <xmr:YDcnad9vLvJFCSz5w1mdd2DlFvqNdw8iyWLfIIOR-upt4GnpZi848UPbjm_bDodxdIfa5p2foRoOX4NkE9RDFpxcbPhm30YOM3iO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeegleefucetufdoteggodetrf
+	1764178340; x=1764264740; bh=BfMlnw+HVodJNLRauTKWI/LP5P6PMWwcyBY
+	w8J7gqaw=; b=SDQhagh64cxUaAc9rI7cDU+Xb799ZN5yxaTH7ug0L/yJTcn1fE1
+	takiCaTgYlQEhBpFzTL3+vpHOKqohUYjnUG15231ZlkcNo+f3KnZmhyOW5CtiYJB
+	fe+UBLT+0qD/WSm9cmiZN2ZqAGtG4uAcQzaGyz6AJv6UKkOtIQbFEe+o1MJo04KT
+	jNjHSFqmu5TGrb5vptHUQYjfUxVx9hpaQH4z2lEANifYN/VIC1MFK7ABjU1ARNDx
+	tTZgVPd14176EPjs7EO77xI6fBevmCjQQyGaUAggsNhtrHGlbtWKHeHpBPX5ALDR
+	ezbG+eOmxS72dvrzZ1SfMwzVO2epzOPPQJg==
+X-ME-Sender: <xms:ozknacUukJGyPoCsXfJLRSnxpVfSHGlW_aEcDsprxq8gaSIEReuSuw>
+    <xme:ozknaXmoM9tSU6oicgg27XbVWDY9HaWj46fHMnKYEvxotOHa1a3FCwBOWk23OUNXR
+    pIh7LiTWyAuGADu8gKZ7vy68n_Z_ir2rM6xSizKUVeYdGMUjJiY_O8>
+X-ME-Received: <xmr:ozknaVZ_0WmH0RBh3sTDkrhUvCxGXmlxIt3iaClzPCVjwc1l8hG_0R4HLS_tAQYLZkohqUUhVcyvjMbrT35ubc3YCx4vZNVX58sA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeegleehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    hphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtoheptghmlhhishhtshesshgvnhhtrdgtohhmpdhrtghpthhtohepmhgvseht
-    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:YDcnaSZqi-jYtaZoQqETGGElRQ-NTBH35AGfgZ3NXdMvBhFhw1OP_g>
-    <xmx:YDcnaZMqd1uHiVETSg0tEMs1B6JBxSDrM9aXbU-XPtRzj82rzfCL8A>
-    <xmx:YDcnaWCSzg2oSg-cBGF0fJLJxxvU1_sHD6Hyb39tTL1n-ZmFpv4u-A>
-    <xmx:YDcnaYLu0BwzTMV8gR6SY-3wO2-VG9hKu2Hc01Y1viK1eQQqpNdHmA>
-    <xmx:YDcnaUahZd4WOrVOzB21W-Jw_Sk1AVi4LNW07zydplPD2v3z16QG1Ovh>
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphh
+    hilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ozknaaOJAhdSNVGfW7GVVfDOUm_G_2_LCU6CQcQRgpyFkcCV__bVJw>
+    <xmx:ozknaSZCQv00XAPj_ZTRRBo8VZdEERy22EpDm2NDz3u9nDdZ8hV5Bw>
+    <xmx:ozknaQ2cQpoSmWbU7Cu27pVoXg9tyw1CLIcXqNiIYifzOVUMD3POEw>
+    <xmx:ozknaQczdzCEQjZ7JuKNmIWoRXHC81udT9Cg0mtSimZYIAUig5UdSg>
+    <xmx:pDknaS0BvnyUfHwWBZP79lF86FNRPgxSVV8ZWU6jBfISoM5Gejr67Zu3>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Nov 2025 12:22:39 -0500 (EST)
+ 26 Nov 2025 12:32:19 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  git@vger.kernel.org,  Patrick
- Steinhardt <ps@pks.im>,  correctmost <cmlists@sent.com>,  Taylor Blau
- <me@ttaylorr.com>
-Subject: Re: [PATCH v2 4/9] cache-tree: avoid strtol() on non-string buffer
-In-Reply-To: <20251126150931.GC4143292@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 26 Nov 2025 10:09:31 -0500")
-References: <20251118091127.GA4175601@coredump.intra.peff.net>
-	<20251118091218.GD529192@coredump.intra.peff.net>
-	<ca6d99cc-d05c-49fb-ab3c-d7668077d32b@gmail.com>
-	<xmqqtsylz2xh.fsf@gitster.g>
-	<20251124223023.GA2051672@coredump.intra.peff.net>
-	<xmqqms4buix0.fsf@gitster.g>
-	<20251126150931.GC4143292@coredump.intra.peff.net>
-Date: Wed, 26 Nov 2025 09:22:38 -0800
-Message-ID: <xmqqldjsogip.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] replay: do not copy "gpgsign-sha256" header
+In-Reply-To: <4f04af5790353b074cf122c450c1cd3f8d1cecf3.1764167611.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Wed, 26 Nov 2025 14:33:37 +0000")
+References: <4f04af5790353b074cf122c450c1cd3f8d1cecf3.1764167611.git.phillip.wood@dunelm.org.uk>
+Date: Wed, 26 Nov 2025 09:32:18 -0800
+Message-ID: <xmqqh5ugog2l.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,38 +86,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Hmm, I thought both of those things were reasonably clever. The other
-> obvious way to do it, AFAICT, is to used checked-operation intrinsics or
-> add unsigned_add_overflows() before every operation.
-
-Yup, but the thing is, I didn't want something "clever".  I prefer
-"clean and obvious" if we add extra code for safety.
-
-> It is true that for the general case of: "x = y + z" or "x = y * z", you
-> cannot determine overflow strictly from checking that x < y. But I think
-> given that we know "z" must be small, it works in this case.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> It looks like you merged what I had into 'next'. Where do you want to go
-> from there? I am mostly content to let it be, but we can also try to
-> replace with something like your version.
+> When "git replay" replays a commit it copies the extended headers
+> across from the original commit. However, if the original commit
+> was signed, we do not want to copy the header associated with the
+> signature is it wont be valid for the new commit. The code already
+> knows to avoid coping the "gpgsig" header but does not know to avoid
+> copying the "gpgsig-sha256" header.  Add that header to the list of
+> exclusions to match what "git commit --amend" does.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+> We should perhaps think about how we can centralize this list of
+> exclusions as we now have three copies of it in builtin/commit.c,
+> builtin/replay.c and sequencer.c.
+>
+> This patch is based on maint to make it easier to backport.
+> Unfortunately that means it conflicts with ps/history which moves the
+> code that's changed here to a new file. I'm happy to rebase on on top
+> of that branch if we decide it is not worth backporting this.
 
-That is my preference.  While the topic is still in 'next', or after
-the topic graduates to 'master'.  Either is fine.  And it is fine if
-such an update did not come, too.  After all, this is to deal with
-contents in a locally generated file (.git/index), so a maliciously
-corrupt string that lack the expected whitespace character after the
-digit string is a sign that you are trying to burn yourself and you
-have only yourself to blame, isn't it?  An attacker that can put
-garbage in your .git/index has better ways to fool you by updating
-your .git/config file that sits next to it.  Or teach the sanitizer
-that this code path is already OK somehow?
+I'd rather give priority to fixes over new development.
 
-> Or even, I guess, work on a
-> global strntoi() that could be used everywhere, if we think it is robust
-> enough. (Though technically that name is reserved by the standard, which
-> is a shame, because that is really what this thing is).
+Thanks.
 
-Well, we already use plenty of names beginning with 'str' followed
-by a lowercase letter, like strbuf_foo() and string_list_init().
+>
+> Base-Commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
+> Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Freplay-do-not-copy-gpgsig-sha256-header%2Fv1
+> View-Changes-At: https://github.com/phillipwood/git/compare/9a2fb147f...4f04af579
+> Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/replay-do-not-copy-gpgsig-sha256-header/v1
+>
+>  builtin/replay.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/replay.c b/builtin/replay.c
+> index 6172c8aacc9..d12e4d54872 100644
+> --- a/builtin/replay.c
+> +++ b/builtin/replay.c
+> @@ -67,7 +67,7 @@ static struct commit *create_commit(struct repository *repo,
+>  	const char *message = repo_logmsg_reencode(repo, based_on,
+>  						   NULL, out_enc);
+>  	const char *orig_message = NULL;
+> -	const char *exclude_gpgsig[] = { "gpgsig", NULL };
+> +	const char *exclude_gpgsig[] = { "gpgsig", "gpgsig-sha256", NULL };
+>  
+>  	commit_list_insert(parent, &parents);
+>  	extra = read_commit_extra_headers(based_on, exclude_gpgsig);
