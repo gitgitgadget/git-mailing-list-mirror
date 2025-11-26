@@ -1,35 +1,35 @@
-Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
+Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9C43161BB
-	for <git@vger.kernel.org>; Wed, 26 Nov 2025 06:10:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA6924A046
+	for <git@vger.kernel.org>; Wed, 26 Nov 2025 06:10:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764137413; cv=none; b=fUL93X53HkLp7MfiiSzd4aYSHmFcD1T/oyHrKM28p+k3tS5+SLb9LFM5fxRmeAqOtNh9ujLYgV/zkyvQF1jwqZrJiamvxW9mVjT1ZZvdTPo2ujvGWQ2ncboo4nszmKFLuLhKL/5Ike2G5J+iSVfvYEGITVXlwJWyoFOCrbNb8wI=
+	t=1764137418; cv=none; b=IGbhI3dxIbkcG6h3Frdh361XHm+XUHDAHcb9vZ2x/+hUpLQvVIFNz6EMVxEn8FmaqEiMqnvWrHc9AW6sGL0FlINcKUCHtq+YHc07zLa6bvPUgfxDSuGvDCvjViAc4+OKQbP2nK54aaJ9r1fO6uL3fGJqdbQ5nYbO1H00KOqSgQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764137413; c=relaxed/simple;
-	bh=PFmihR9b7KQkp6vsb+zjDIeZ69tpYXiBuynSjhKXigU=;
+	s=arc-20240116; t=1764137418; c=relaxed/simple;
+	bh=D+HDLeGvK2SMbm4MgR0+ifnEHEwSQoddrKCNEk/Dpig=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=px0W1VgzYqyU188eygrfvdI42ts9/kpgtx+5HU5b8npczjiEMmW6E0yDnstFqA+Jyk0r0pAyYLyvhZm0lom+AMn9VYMO07OXJqvYzYT4pT7WkXjUegiLYT6ljV58QOyTNeW/wAUvYnYsfJ+OKZ0XX5sMibxnnBPBw4CzQ4KvySU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=HNQ2gM8r; arc=none smtp.client-ip=91.218.175.182
+	 In-Reply-To:To:Cc; b=uD3aPnMs4kU+t+prmVfYD6+EDmEKtrRqaX7zd2YWvP38IsMIv0gU34O1LH7XZLgqzEb75eVdsWiGwGFICIZ+/NS04Sfx+p5+hXfDJ2/yQaBOXgN9ur87U7+w3bm5djFvZkFXb1nVB+zrpYLgYLtXQoJrzwqpNrys5hhzQIi0KL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=heFrWAZ1; arc=none smtp.client-ip=91.218.175.185
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="HNQ2gM8r"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="heFrWAZ1"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1764137408;
+	t=1764137412;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=YFPJtD58GJgZiWF80YZak1lifdFOFBRMzwCi5udHUIc=;
-	b=HNQ2gM8rw/mQ/lTPzLMtYsuoeLfipU8QkGDqQ3lzNLynLY9X2gAWR4JrnHqrfbOLX7heaO
-	NpSZ3ANINNduFC/FjEERcAFeOPpDmK7Z/RSRokyuSpvgCUIQchUrES0XlAvV4InR4YHwk7
-	MJ/vBPp+xxK/Ub7wvGZXGzl0wDzP8WQ=
+	bh=33YyOxXCBuHjh6P7vxRr2hLQMmSfSFxxLA5p0olUAVo=;
+	b=heFrWAZ1GqssaW9fDvhQIX6oMVOnkwYGkgzZwnN2aVghvZDNk8ajJDWFM5iFjQfS03HRd8
+	9SpTsoenRshl51zxuyN8OEvEg8msV3eisXewMwKVNnhDY79rau/fowFNFv3P9GFINF2pXs
+	gC/Yxs+YDWXtbL3jmFrSIm9fdOdDE1s=
 From: Toon Claes <toon@iotcl.com>
-Date: Wed, 26 Nov 2025 07:09:44 +0100
-Subject: [PATCH 2/3] last-modified: document option --max-depth
+Date: Wed, 26 Nov 2025 07:09:45 +0100
+Subject: [PATCH 3/3] last-modified: better document how depth in handled
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,104 +38,90 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251126-toon-last-modified-zzzz-v1-2-608350df0caa@iotcl.com>
+Message-Id: <20251126-toon-last-modified-zzzz-v1-3-608350df0caa@iotcl.com>
 References: <20251126-toon-last-modified-zzzz-v1-0-608350df0caa@iotcl.com>
 In-Reply-To: <20251126-toon-last-modified-zzzz-v1-0-608350df0caa@iotcl.com>
 To: git@vger.kernel.org
 Cc: Toon Claes <toon@iotcl.com>
 X-Migadu-Flow: FLOW_OUT
 
-Option --max-depth is supported by git-last-modified(1), because it was
-added to the diff machinery in a1dfa5448d (diff: teach tree-diff a
-max-depth parameter, 2025-08-07).
-
-This option is useful for everyday use of the git-last-modified(1)
-command, so document it's existence in the man page and `-h` output.
+By default git-last-modified(1) only shows information about paths at
+the root level. This can be confusing. Clarify the command's behavior in
+the documentation.
 
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- Documentation/git-last-modified.adoc |  9 ++++++++-
- builtin/last-modified.c              | 12 +++++++++++-
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ Documentation/git-last-modified.adoc | 43 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
 diff --git a/Documentation/git-last-modified.adoc b/Documentation/git-last-modified.adoc
-index cd4a5040b0..8409daebe9 100644
+index 8409daebe9..36f72954a5 100644
 --- a/Documentation/git-last-modified.adoc
 +++ b/Documentation/git-last-modified.adoc
-@@ -9,7 +9,8 @@ git-last-modified - EXPERIMENTAL: Show when files were last modified
- SYNOPSIS
- --------
- [synopsis]
--git last-modified [--recursive] [--show-trees] [-z] [<revision-range>] [[--] <path>...]
-+git last-modified [--recursive] [--show-trees] [--max-depth=<depth>] [-z]
-+	[<revision-range>] [[--] <path>...]
+@@ -27,6 +27,7 @@ OPTIONS
+ `--recursive`::
+ 	Instead of showing tree entries, step into subtrees and show all entries
+ 	inside them recursively.
++	See the section "NOTES ABOUT DEPTH" below for more details.
  
- DESCRIPTION
- -----------
-@@ -32,6 +33,12 @@ OPTIONS
- 	Show tree entries even when recursing into them. It has no effect
- 	without `--recursive`.
+ `-t`::
+ `--show-trees`::
+@@ -38,6 +39,7 @@ OPTIONS
+ 	levels of directories. A negative value means no limit.
+ 	Setting a positive value implies `--recursive`.
+ 	Cannot be combined with wildcards in the pathspec.
++	See the section "NOTES ABOUT DEPTH" below for more details.
  
-+`--max-depth=<depth>`::
-+	For each pathspec given on the command line, descend at most `<depth>`
-+	levels of directories. A negative value means no limit.
-+	Setting a positive value implies `--recursive`.
-+	Cannot be combined with wildcards in the pathspec.
-+
  `-z`::
  	Terminate each line with a _NUL_ rather than a newline.
+@@ -70,6 +72,47 @@ avoid quoting, pass option `-z` to terminate each line with a NUL.
+  <oid> TAB <path> NUL
+ ------------
  
-diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-index 9206bbdc1d..ccb7ff66d4 100644
---- a/builtin/last-modified.c
-+++ b/builtin/last-modified.c
-@@ -25,6 +25,7 @@
- 
- #define LAST_MODIFIED_INIT { \
- 	.line_termination = '\n', \
-+	.max_depth = -1, \
- }
- 
- struct last_modified_entry {
-@@ -60,6 +61,7 @@ struct last_modified {
- 	bool recursive;
- 	bool show_trees;
- 	int line_termination;
-+	int max_depth;
- 
- 	const char **all_paths;
- 	size_t all_paths_nr;
-@@ -487,6 +489,12 @@ static int last_modified_init(struct last_modified *lm, struct repository *r,
- 	lm->rev.diffopt.flags.recursive = lm->recursive;
- 	lm->rev.diffopt.flags.tree_in_recursive = lm->show_trees;
- 
-+	if (lm->max_depth >= 0) {
-+		lm->rev.diffopt.flags.recursive = 1;
-+		lm->rev.diffopt.max_depth = lm->max_depth;
-+		lm->rev.diffopt.max_depth_valid = 1;
-+	}
++NOTES ABOUT DEPTH
++-----------------
 +
- 	argc = setup_revisions(argc, argv, &lm->rev, NULL);
- 	if (argc > 1) {
- 		error(_("unknown last-modified argument: %s"), argv[1]);
-@@ -515,7 +523,7 @@ int cmd_last_modified(int argc, const char **argv, const char *prefix,
- 	struct last_modified lm = LAST_MODIFIED_INIT;
- 
- 	const char * const last_modified_usage[] = {
--		N_("git last-modified [--recursive] [--show-trees] [-z] "
-+		N_("git last-modified [--recursive] [--show-trees] [--max-depth=<depth>] [-z] "
- 		   "[<revision-range>] [[--] <path>...]"),
- 		NULL
- 	};
-@@ -525,6 +533,8 @@ int cmd_last_modified(int argc, const char **argv, const char *prefix,
- 			 N_("recurse into subtrees")),
- 		OPT_BOOL('t', "show-trees", &lm.show_trees,
- 			 N_("show tree entries when recursing into subtrees")),
-+		OPT_INTEGER_F(0, "max-depth", &lm.max_depth,
-+			N_("maximum tree depth to recurse"), PARSE_OPT_NONEG),
- 		OPT_SET_INT('z', NULL, &lm.line_termination,
- 			N_("lines are separated with NUL character"), '\0'),
- 		OPT_END()
++By default this command only shows information about paths at the root level.
++When a path that lives in a subtree is provided, information about the top-level
++subtree is printed. For example:
++
++------------
++$ git last-modified -- sub/file
++
++abcd1234abcd1234abcd1234abcd1234abcd1234 sub
++------------
++
++To get details about the exact path in a subtree, add option `--recursive`:
++
++------------
++$ git last-modified --recursive -- sub/file
++
++5678abca5678abca5678abca5678abca5678abca sub/file
++------------
++
++This comes with a downside. When the path provided is a tree itself, with
++option `--recursive` all paths in that subtree are printed too:
++
++------------
++$ git last-modified --recursive -- sub/subsub
++
++1234cdef1234cdef1234cdef1234cdef1234cdef sub/subsub/a
++3456cdef3456cdef3456cdef3456cdef3456cdef sub/subsub/b
++5678abcd5678abcd5678abcd5678abcd5678abcd sub/subsub/c
++------------
++
++To stop this command from traversing deeper into trees, add option
++`--max-depth=0`:
++
++------------
++$ git last-modified --recursive --max-depth=0 -- sub/subsub
++
++3456def3456def3456def3456def3456def3456b sub/subsub
++------------
++
+ SEE ALSO
+ --------
+ linkgit:git-blame[1],
 
 -- 
 2.51.2
