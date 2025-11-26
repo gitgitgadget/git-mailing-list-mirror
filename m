@@ -1,157 +1,114 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A58C2D7398
-	for <git@vger.kernel.org>; Wed, 26 Nov 2025 23:57:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E0C2D7387
+	for <git@vger.kernel.org>; Wed, 26 Nov 2025 23:57:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764201440; cv=none; b=PmaNVLfv9tOAqQooRksvrwPpHMO5ydavKqj3GiVqOQqFPJHG3M/VfWjlL+4k/YR1FVRrrGN/q6l0LxJdKSk638CFxD8sGnMnlBxcISAGlC94uogboIOaDZzTyqn0qB2IeZJnzWlyRwqEuTCzT0F6t2/CRIJSEiM5gJf7obg0ZNw=
+	t=1764201458; cv=none; b=tIjmlE+zKsX1hCmKwSccXzBcuHEusBA7stib/5y4W/WM9LHYCwaRIvF1mfAEbGW7U/UAdrMSoO1c3j2ayAq+lpFpxN1pQ/sPtlRFe5hT+cR/YZz2teUUrOlQLziH65dYrGMOfPe7lScAnOFvSC8Sem/PWy0IHtsGMLARHb3b36A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764201440; c=relaxed/simple;
-	bh=FvpuA3y2++ANelndgRqdcmOhvDgqse1z21CNjelLpdk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AB761J/0bk8xmMgfc6UnJmmbFBviGHob3eCpsGR6RkHNPkrSdjwNYclC394QLyLONBI6tcn4x+PwUScsvFKFXnWnG7bNlyzR8WUSk3ReZtzzGctbQbzpNzWWFFKrOiXn9hV2qbhuuh3HP4iMmVl7VOnHJe60C8KicRHH/IEieXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pov06WZF; arc=none smtp.client-ip=209.85.166.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764201458; c=relaxed/simple;
+	bh=lZJdRSo9aycjKzEuiMp0gUJvwUzqLGMN3Qf6wBUyR6E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZCT//vimxLlo+4s7RkQzVACX3MRWsU73YY50eIZEB3zmdk8y2Nf8gLDwhiofLK7vnE99E/wqaU+OICf+eqJq9B7NRYqdF9cKy/0wtalyBbbqROrBFAglew74T+RRUcjQniFsedfIrOSnBa1BPOiV+zOEgtJMcDKsw2MyPfRokMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cYYVWY17; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xw97nnvv; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pov06WZF"
-Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-949031532f9so18239639f.0
-        for <git@vger.kernel.org>; Wed, 26 Nov 2025 15:57:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764201437; x=1764806237; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7QXjsCMCq4ROJ0Hir8LtaO/RtHM6kBKwBjrjpDOpIhU=;
-        b=Pov06WZFZvppw9EjH2841d8L8tzrMwatZzsWnL6u+6V2kiAj8RUiYQHkDjAvgR4PLa
-         4Ub+9hP2b38mMXIbxHytXZoH6w7i5mT4s8fLDw1u361vw1UHgyCRog65rQTmYW6dnn7K
-         z5WvF8myIgajG8Mr2SubRZ+P+2O+N6pjK+FCmjjBb6a6HrMuNc/BULi5z7kbO/4XY3Ud
-         +M7Beu1Rpghx+TVvgvbjti+rQHNYGp3Cc8qR5VJKqO0/iQyXNjtaYbXVQJGDmD63oYwp
-         hevGFoPy9SROPDSJZ5bZb1f3ChvwtY0fQOL82vUhByJXyscenZAstek29xKrjqiyrJBB
-         a8Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764201437; x=1764806237;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=7QXjsCMCq4ROJ0Hir8LtaO/RtHM6kBKwBjrjpDOpIhU=;
-        b=fPpUC28vuSU6EPyVtHwmkQZZxrmzaVx1kBuX0sCI5yBNPx3Wd/QloCXKZVWLY1xxNS
-         PeORzAGXA3viFgDF8mkUG4RRNW7rkuhFixT2pGI1WBFoCiiDhhHfZ+yERfp4heo8cQsP
-         6qI+k2QEismupuU9gwUWfJQCE0k0Yl7FXIloFHVGzxa84xznxyujqwxwP/9ByUH51ffD
-         QA8RFelIk/9h9+z9hxBq12m9G57lxt/VgaXDTZf4lGTuufZX+vDkKnDEEmgnydNfup0z
-         cZFRhzFfupVD5hlF6xfR5yDrWI1AANnzngec/UEQLuDJJQlIbB0DfKesrZIe7Ca+2Rh/
-         DISg==
-X-Forwarded-Encrypted: i=1; AJvYcCW1gn13IAJnmAIVEPVJJ6Xd9wsn2lAiBLUsBZvm4zBMmjkL6zHdMYEVrE2/GPc0cnC/ms4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyA7tyeNilHaYvlghvj6H4CM1wD8XlXmuNTQMnZdoR+FkO8Hbiw
-	WaBt730qJOgLvY0IdTrZU4VByXb8JjwFzmdGkjCfEOlZTsGN/42Xlh6ifDUsfe1pI1CMRUfj9Z0
-	26tp/wDxhSOQbXFaHj5i7bZbScTL31jA=
-X-Gm-Gg: ASbGncuk3azmRu0MX4lBG6nEXX7vM4ECVuXtA7zuaHvFC2OksoBc6HH0/ZAJ3QP+fQo
-	v4C1gl8QBl8zZpEFVl0p9BXJ2egIG/8r8WcZEROKElAa+80ebwpNGt9baXCsuCywgNWhkQi/ruw
-	KtkyA9Xweva44IXmuSe9HYxRCC7SLveSJCciG36l4IA+ko1IAfoGZ/BkYxlIldkqwUjyjLe1AGX
-	hjMLYrMk2vgD3QWeYoP/t+0xg7YaHx2P+a2TFFYwTs6RdJXkJHEs0Oem4QzGjESl/dUQSNX8/7E
-	xe2HMY1jEi9EHkHsdNLmlFAB07hY
-X-Google-Smtp-Source: AGHT+IHsLFrBiCklh9FaLOiZaqage7ndwFDd9pvvEt/w8mFTOHXeIgAGc04PWJ81bi84z61VL6EamRiaLnczm2IN/Bg=
-X-Received: by 2002:a02:a482:0:b0:5b7:1bb7:db25 with SMTP id
- 8926c6da1cb9f-5b9659b3f6cmr14506913173.4.1764201437485; Wed, 26 Nov 2025
- 15:57:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cYYVWY17";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xw97nnvv"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 22EA57A0073;
+	Wed, 26 Nov 2025 18:57:35 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 26 Nov 2025 18:57:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1764201455; x=1764287855; bh=8OtYPar50g
+	wCs9qI53e/N7VjcamgaAW5obiBp8NGuFo=; b=cYYVWY17nI9PjTT0sGXjJlNdOJ
+	Y3rPpCDVhX7o/ZJ8Embw75kgD5/HlqIlqctsXgpY3XBEsBG9hfV1MCahEcyI/AlQ
+	nWSj5XQfl7BMRuWCWk7GmsnCeRqNcKqq8CbADfYTCNJuy8bwRZXhMEzz42n4FgqK
+	gtWUYOaGudTQXiAApGDdyGCV93CzSxZAEHwzWBqLnX6k60ahGEeDzcOzSFrzGzxj
+	EoyJ62M+iXHCRBFfbCLwvrGqhi6v43/mU4ASBwZQ4e/7tzf7kHxqbdVqH0l5lUA6
+	/bcf/BSDS4KbljbWRbkKcAYrCIyaB1GZVkAMYi2b5m1YDed6QulwqEIy4Y3Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1764201455; x=1764287855; bh=8OtYPar50gwCs9qI53e/N7VjcamgaAW5obi
+	Bp8NGuFo=; b=Xw97nnvvSLGKTzYGa+AnUvqx3/E5Dh6sp4WlvJOAcE99cns0PK9
+	iJ5eD+9r6TyhI8YG8ZR4AN+q4KTxlVSpWet4cl0wHKNLl6YxHurYHANvIiVxRX5y
+	SYrFwcocjVR/seTfjDxrNL7B7WILJLxp1BXT3gy/TQUBFsZ1cS/cLPh71T1AfJ3u
+	YTzWQnKkwTDs8uKgoqF3TkhWn2ZejlVIRpFRxOipLqyl9DtJ6etiQqP97wyJtsDE
+	2V4n6ax6E2zBpqmVraprBw+k7HBExc1VucbRadW3EK/yWlieVBuzNUpgRGXRJOei
+	91u7A1gNXCmcWX9hgW+IABtGd3FjNWFtriQ==
+X-ME-Sender: <xms:7pMnaXrvrbGCq1dwtZrIzKcbUn6BtHRL71mUep4OjrlcvZiNPQBgCQ>
+    <xme:7pMnaT6XfHtOJpeqkGd4Thy7OHPCGIrx6RSvOnKrotTFGOn7BvI7gQP2446c1j7ke
+    xNRaNSbXTa_HK4zKEVN4SMaeAzV24lUXFMy9ndH8yraIsQOGqQv7Q>
+X-ME-Received: <xmr:7pMnaWf1WaBhya9iwMiDw0b1IsCT7ovWLn0DgJkRQsLm7s4LaxOrH-YU_fsb5yRFMSGlty7n-QD5SITjG-0VnwN2mQno5kgUnXg8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeehjeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehpshesphhkshdrihhmpdhrtghpthhtoheprghtthhhvgifhhhughhhvghsleefgeesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhn
+    sehgmhigrdguvgdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:7pMnaQ51azRomAbwT1K0nfQLuMbUOfTLRf9I12Mviy7Zw4cos3aUQw>
+    <xmx:7pMnaVs_iDFweXw9KWRkiHPL70dH7bAOs_9e48P-F31T-SiI3THAGw>
+    <xmx:7pMnaYgbICSyHKmaKh8fKMKL6lKGlf0Bgh1EfdN2tR2EJOKkJhWMXA>
+    <xmx:7pMnaYpEov9Cz3qKWrypFrE2GgH4pZBVHHQnf7ka_APhy8mFXyk1vA>
+    <xmx:7pMnaXiid0xrEOrnFrlV7qJHk0GAHvP4vxbAsqE_plZdpcjCNDW8xb0H>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 26 Nov 2025 18:57:34 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  atthewhughes934@gmail.com,
+  johannes.schindelin@gmx.de,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 2/5] scalar: use index.skipHash=true for performance
+In-Reply-To: <1c51dbb81485920e9faf336ffbda9d9258e7dfe1.1764195516.git.gitgitgadget@gmail.com>
+	(Derrick Stolee via GitGitGadget's message of "Wed, 26 Nov 2025
+	22:18:33 +0000")
+References: <pull.2010.git.1764195516.gitgitgadget@gmail.com>
+	<1c51dbb81485920e9faf336ffbda9d9258e7dfe1.1764195516.git.gitgitgadget@gmail.com>
+Date: Wed, 26 Nov 2025 15:57:33 -0800
+Message-ID: <xmqqldjsl53m.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251125170056.34489-1-siddharthasthana31@gmail.com>
- <20251125170056.34489-2-siddharthasthana31@gmail.com> <d563b68b-e01d-4b18-bd84-86f36e61a70d@gmail.com>
- <CABPp-BEF1RVs7n4xf6ihyPUmxrhgpG6VEpZLrX=MTgcBWBRbfA@mail.gmail.com>
- <xmqq3460ocv7.fsf@gitster.g> <xmqq3460mr3c.fsf@gitster.g> <CABPp-BHcCX8LDccRoarsqNO=YVr7a8gp67oc87b7taAmjch4dQ@mail.gmail.com>
- <xmqqy0nsl741.fsf@gitster.g>
-In-Reply-To: <xmqqy0nsl741.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 26 Nov 2025 15:57:06 -0800
-X-Gm-Features: AWmQ_bl9SY0ZM7ZY7ph07Ng180LJSWPkZU5Vs4tbDDDwBLZgGuo8RQXoSJu-J_o
-Message-ID: <CABPp-BESM4PC+QVXZ-X_Y0m3PrSQGuc-jfB2pCJ+hXy0Gi-T5A@mail.gmail.com>
-Subject: Re: [PATCH 1/1] replay: add --revert option to reverse commit changes
-To: Junio C Hamano <gitster@pobox.com>
-Cc: phillip.wood@dunelm.org.uk, 
-	Siddharth Asthana <siddharthasthana31@gmail.com>, git@vger.kernel.org, 
-	christian.couder@gmail.com, ps@pks.im, karthik.188@gmail.com, 
-	code@khaugsbakk.name, rybak.a.v@gmail.com, jltobler@gmail.com, toon@iotcl.com, 
-	johncai86@gmail.com, johannes.schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Nov 26, 2025 at 3:14=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > =3D=3D Example command lines from your proposal =3D=3D
-> >
-> >    git replay --rebase main feature~3..feature
-> >
-> > This command to me would suggest that main is being rebased, but it
-> > isn't -- it rebases feature~3..feature onto main while updating
-> > feature to point at the result.  I find the "--rebase main" part of
-> > this command line confusing.
-> >
-> >    git replay --cherry-pick main feature~3..feature
-> >
-> > This command to me would suggest that main is being cherry-picked, but
-> > it isn't -- it cherry-picks feature~3..feature onto main while
-> > updating main to point at the result.  Again, I find the
-> > "--cherry-pick main" part of this command line confusing.
->
-> That only tells us that if you want to help users by limiting the
-> vocabulary to a single set (i.e. both command names, and mode names
-> used in replay), you'd need to make sure you have the order of
-> <branch> and <range> given to the replay command in logical order,
-> in line with the option name, no?  Of course, if you want to say
-> "cherry-pick", cherry-picked range would have to come near the
-> option flag that says "cherry-pick", naturally.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---advance and --onto are flags that require an argument -- in this
-case, "main".  So, now you're suggesting more than renaming, in
-particular some bigger refactoring such as making these flags now
-require the <range> rather than the <base>.  Let's follow that path a
-bit further...
+> diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
+> index 43c210a23d..91d5964b73 100755
+> --- a/t/t9210-scalar.sh
+> +++ b/t/t9210-scalar.sh
+> @@ -246,6 +246,11 @@ test_expect_success 'scalar reconfigure --all with includeIf.onbranch' '
+>  '
+>  
+>  test_expect_success 'scalar reconfigure --all with detached HEADs' '
+> +	# This test demonstrates an issue with index.skipHash=true and
+> +	# this test variable for the split index. Disable the test variable.
+> +	GIT_TEST_SPLIT_INDEX= &&
+> +	export GIT_TEST_SPLIT_INDEX &&
 
-Does your proposal assume that <range> is simple, such as
-"feature~3..feature" above (i.e. something that an argument parser
-would view as a single argument)?  What if the <range> were "^main
-feature1 feature2"?  Or ""^$COMMIT --ancestry-path --branches"?  (I
-don't see how to have the option parser easily be able to stuff the
-arguments to "--rebase ^$COMMIT --ancestry-path --branches" into a
-range variable that eats all of "^$COMMIT --ancestry-path
---branches".)  While I use simple ranges to describe the feature, I
-specifically built the command to be able to do things like those
-other two examples and use it for those.  Those more complicated
-examples are things the rebase command just can't do.
+Interesting.  I would have expected to see a simple "sane_unset",
+instead of exporting an empty setting explicitly.
 
-Also, just like `git log` allows `git log [<options>] [<revision
-range>]`, I wanted git replay to allow `git replay [<options>]
-[<revision range>]`.  Instead of doing magic to get an implicit
-revision range as rebase does (and with rather limited options because
-of that magic), suddenly people can use what they've learned from `git
-log` in another place.  But that piece of knowledge only really
-transfers if we do similarly to `git log`, i.e. the revision range
-comes after other options.
-
-Perhaps one way to avoid the first problem above is to make
-`--onto/--advance/--rebase/--cherry-pick" stop requiring (or
-accepting) an argument and turn them into simple mode toggles, and
-then make both <base> and <range> be positional arguments, with some
-well-defined ordering.  However, if <base> comes before <revision>
-then we still have the same problem as my previous email, whereas if
-it comes after, then we weaken or destroy the connection to `git log`
-I made above.  Maybe the connection to `git log` isn't that important.
-What I think is important either way, though, is if we use positional
-arguments for both things instead of making (at least one) an option,
-then I feel we are copying one of the designs of `git rebase` that
-makes it hard for even me to use: I hate that it uses multiple
-positional arguments to define the operation; despite using the
-command heavily for 16-17 years and sending in lots of patches to
-improve it, I still can't remember the order of those positional
-arguments and have to look it up again when teaching others.  Maybe
-that's a personal shortcoming, but I would really rather that either
-<base> or <revision> was an option flag.
+>  	repos="two three four" &&
+>  	for num in $repos
+>  	do
