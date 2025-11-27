@@ -1,170 +1,211 @@
-Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D901A9FAB
-	for <git@vger.kernel.org>; Thu, 27 Nov 2025 16:09:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D88B125A9
+	for <git@vger.kernel.org>; Thu, 27 Nov 2025 16:16:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764259785; cv=none; b=eYIF3kl/B4w14gFrijdEsobcjXeatVhFeRkJE7EkonFOr8RHy8nSWe/zIVrOih0IoZ6WqT78T5svjx4S6a4z5hARFZxadbqDuJ7804T8QCtHcNMxz+pLkMCvKtHZDhH1GZvYRCMPi7nz7U9q1S1ENimuGp2++bRlTUAl8WARKf0=
+	t=1764260167; cv=none; b=XXXqfPUnANqgfl9/+AzycKQcxPE2zW1V2578aXOjcheuOvekR7yHjb4WWoSxW+0DED6ZPiQ0aTRd1Ux1Fet/gsCTpAaq2HQQH/jXQUJ4aLT0hRQR4ewzChWRvid/bFW41n2Jbg9zdnuSwJUldQ9Rvm2DFqp57ltWXGKkjj0vmIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764259785; c=relaxed/simple;
-	bh=G7mhe3R6+6cXeaa0oGTjgRJ9K1CstVOthiEE15Sjzc8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KdvdLhOXcEF5ORv08q/w2orR04mnoh5Aq6rG64cE0tzY6bWbp3U8fFGba49RpVnL0QiIRb1XSmRXCHNWVLdNBhzFOVEHKYBxCnR6QmmobEFm1/BVs1RNUXOAp+829XPV2vkS65jz+nYAm+0733qb5pDnN/6w9SZI3DxQgxlBPC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.103] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 4dHLwX4541zRnQP;
-	Thu, 27 Nov 2025 17:09:32 +0100 (CET)
-Message-ID: <b6656e6d-d1e8-4ebe-821f-9211643a71ab@kdbg.org>
-Date: Thu, 27 Nov 2025 17:09:32 +0100
+	s=arc-20240116; t=1764260167; c=relaxed/simple;
+	bh=zMHg/vieTMS4MjmBQyZfRB9n0pSNw+JdSrH/ni/P3uY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oY6tokBZ0pMpFN22rDwWFxE0WEkVjnKE/QyqRStuIUwkg8cIeBamanZVL9utR7RRgu6VHog4WXDPDjypiqXF6kFcCXtNGnNj+2nsh3/TFcvkTAjz2n8jQ0zTofE9UFVpaXlQcDZO80SlJ+AIl1Y7xP1/mv8qDAVUaFbEFunXxTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hI0CYyNg; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hI0CYyNg"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-477a2ab455fso10184295e9.3
+        for <git@vger.kernel.org>; Thu, 27 Nov 2025 08:16:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764260164; x=1764864964; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AJ8vuzsPFdPHBr/Toa7R6iQZAYxWAeEPGeTfJkSP9Lc=;
+        b=hI0CYyNgUvomNlN6gr1lXuHVy9HmDhqM/nv1sjuu5Bh7PlDYHl7aDA8S+RvMPDy/sJ
+         XDloyxgTtKODzmbl9GCN3xnCOeNfaKUiRd0F4U9s4qF8ND+5umgciQxmwKJeCzeydGu/
+         ySz72Y2Q02Ygo+28OypD9vPzR6G4hmyqyzN+P4n7Z964eUUsVmcNyo61LnzFyl26gNqa
+         K9i5nz1uhAlmJvmaUUIsnpRqGu0kPVKAKRyjVVgzAAvQypmOObwFA0DpQFw5LO9Ro3ad
+         4p7vv4147QVXQ7M0wjPAkXYkgY/E3z5GlHGiDCotYrhuO/21APKH7E2KxwBb+N4ZKbQs
+         xGeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764260164; x=1764864964;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=AJ8vuzsPFdPHBr/Toa7R6iQZAYxWAeEPGeTfJkSP9Lc=;
+        b=ZFXGX2rfP/WK+oiKPLfPoOHPlZTyPS3l01YSx6/Ved+B06UpOjJFKeEqzRN1UE94BK
+         UZincs/1iTBUijoZkb8pmHdwtj6AEGRm05pNH0nakk2hXObyqKAX0QJH7d+CwPx++Uyn
+         L31cYa7NDKlyxQSSK88YGljDVZVNFxBPYdh55gmKmrDxaRJdGOjIGrzUyPZSrKUR6SC9
+         1yXtMx5f3R0y81W79jE73HtWooiEx28JyCeVWORMbpo20XofnWHDzAJFqaC6a0VhSunm
+         Go/FEWsTFgnvmrBe6OC6y6hTNIploHBSY1PANCRlzEooGddRGvHSOoBd3VAylvLwT7uw
+         NQxA==
+X-Gm-Message-State: AOJu0YzqqxgySwF/3PCuzGkOHtFRCs4ZVcGhr4O22nSR51PDcbP/gtjG
+	RPGJwapW8+5mcNBBl3hWKvRzAX+3baOChm19nucjP8oqE6ylt7uLNiWDDLhDEA==
+X-Gm-Gg: ASbGncv4U3niuwcNFHtXrMYVy2liaCQXGIperf5yjtdbDcXrXW0wzKg4Y08i8xXYjkS
+	WF8Ry0c1WwM6q+GJjjNdI9fSuaP+TsaE8PZShdydNGC8AgMKfwwTpHoZw4607cPKDcxKiCVOpOr
+	Ju2zIic8x1o8lRstOP2ANAvWTSDNzxeE/m6gVsrdzOx5QLMClpi8vWaKT9JJTI2nkpmorJXPNSj
+	ADHiGYDYNySM/1R/8GZxnAZvJXpV/NG5FJYvc4TjDEHteZXc9GX5X036l5eURZ1RAn6u+n9/8gb
+	F0puPJ2IPgPOhfBIGrr4RdOqJW7oMDZSNQ596HBTgk3m3Apgqm0NhtEctst7G5tyJYfTw48j5nK
+	z4vgkC46k5tSa3R2UrfHsHn6MtrGdBocbgMd6BGJFOoV+3WsxoXYAuVNhjF+dhenWLBqdRfdqlA
+	n2i5LYir9wNC+55Q==
+X-Google-Smtp-Source: AGHT+IH5tQgzShjys2fW4arWYMwOePBIjU3CNrMoNr7waGs402slB+yrdKxLGq5PYV0sHDN5+sbgow==
+X-Received: by 2002:a05:600c:1f85:b0:477:7b30:a6fe with SMTP id 5b1f17b1804b1-477c1116013mr219140075e9.18.1764260164119;
+        Thu, 27 Nov 2025 08:16:04 -0800 (PST)
+Received: from berwick ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4790addeeaasm103803495e9.7.2025.11.27.08.16.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Nov 2025 08:16:03 -0800 (PST)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH] replay: drop commits that become empty
+Date: Thu, 27 Nov 2025 16:15:54 +0000
+Message-ID: <8a2a1215306452147cc7b803530ab2429bf57f15.1764260150.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.52.0.362.g884e03848a9
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] merge with Scheme regexp; fix bugs
-Content-Language: en-US
-To: "Scott L. Burson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
- =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
- Jaydeep P Das <jaydeepjd.8914@gmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>,
- "Scott L. Burson" <Scott@sympoiesis.com>, git@vger.kernel.org
-References: <pull.2000.git.1763201865025.gitgitgadget@gmail.com>
- <pull.2000.v2.git.1764211096.gitgitgadget@gmail.com>
- <86315aa3e36afa1ee741a2c9b9e95a71ca569302.1764211096.git.gitgitgadget@gmail.com>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <86315aa3e36afa1ee741a2c9b9e95a71ca569302.1764211096.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Am 27.11.25 um 03:38 schrieb Scott L. Burson via GitGitGadget:
-> From: "Scott L. Burson" <Scott@sympoiesis.com>
-> 
-> This commit merges (by disjoining) the new generic Lisp regexp into
-> the existing Scheme regexp.  It also fixes two bugs: the new regexp
-> was unintentionally allowing tabs, and the matching of "(def" should
-> be case-insensitive.
-> 
-> Signed-off-by: Scott L. Burson <Scott@sympoiesis.com>
-> ---
->  userdiff.c | 25 ++++++++++++-------------
->  1 file changed, 12 insertions(+), 13 deletions(-)
-> 
-> diff --git a/userdiff.c b/userdiff.c
-> index e127b4a1f1..b67dfddbef 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -249,14 +249,6 @@ PATTERNS("kotlin",
->  	 "|[.][0-9][0-9_]*([Ee][-+]?[0-9]+)?[fFlLuU]?"
->  	 /* unary and binary operators */
->  	 "|[-+*/<>%&^|=!]==?|--|\\+\\+|<<=|>>=|&&|\\|\\||->|\\.\\*|!!|[?:.][.:]"),
-> -PATTERNS("lisp",
-> -	 /* Either an unindented left paren, or a slightly indented line
-> -	  * starting with "(def" */
-> -	 "^((\\(|:space:{1,2}\\(def).*)$",
-> -	 /* Common Lisp symbol syntax allows arbitrary strings between vertical bars */
-> -	 "\\|([^\\\\]|\\\\\\\\|\\\\\\|)*\\|"
-> -	 /* All other words are delimited by spaces or parentheses/brackets/braces */
-> -	 "|([^][(){} \t])+"),
->  PATTERNS("markdown",
->  	 "^ {0,3}#{1,6}[ \t].*",
->  	 /* -- */
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-You made this commit a fixup commit of the commit from the first round.
-This isn't desirable as long as the earlier patch has not been
-integrated in "next", yet.
+If the changes in a commit being replayed are already in the branch
+that the commits are being replayed onto then "git replay" creates an
+empty commit. This is confusing because the commit message no longer
+matches the contents of the commit. Drop the commit instead. Commits
+that start off empty are not dropped. This matches the behavior of
+"git rebase --reapply-cherry-pick --empty=drop" and "git cherry-pick
+--empty-drop". If a branch points to a commit that is dropped it will
+be updated to point to the last commit that was not dropped. This can
+been seen in the new test where "topic1" is updated to point to the
+rebased "C" as "F" is dropped because it is already upstream. While
+this is a breaking change "git replay" is marked as experimental to
+allow improvements like this that change the behavior.
 
-You should have squashed the commits into one. The cover letter gives a
-really good justification for this change and should be the commit's
-message (with its subject line, ie, the PR title). However, don't write
-"This commit does X", but write "Do X" instead: you give someone an
-order to change the code. (Also, after squashing there is no bug to fix
-anymore, of course.)
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+Elijah - I'm not really clear why we were setting result->tree before
+calling merge_incore_nonrecursive(), was it just for convenience to
+avoid declaring a local variable or have I missed something?
 
-> @@ -352,14 +344,21 @@ PATTERNS("rust",
->  	 "|[0-9][0-9_a-fA-Fiosuxz]*(\\.([0-9]*[eE][+-]?)?[0-9_fF]*)?"
->  	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
->  PATTERNS("scheme",
-> -	 "^[\t ]*(\\(((define|def(struct|syntax|class|method|rules|record|proto|alias)?)[-*/ \t]|(library|module|struct|class)[*+ \t]).*)$",
-> +	 /* A possibly indented left paren followed by a Scheme keyword. */
-> +	 "^[\t ]*(\\(((define|def(struct|syntax|class|method|rules|record|proto|alias)?)[-*/ \t]|(library|module|struct|class)[*+ \t]).*)$\n"
+This patch is based on ps/history
 
-Mental note how this RE is nested:
+I think dropping commits that become empty is the sensible default,
+if it turns out that some users are relying on the current behavior
+we can add an option to retain the empty commits.
 
-	[\t ]*(
-		\((
-			(
-				define|def(
-					struct|syntax|class|method
-					|rules|record|proto|alias
-				)?
-			)[-*/ \t]
-			|
-			(
-				library|module|struct|class
-			)[*+ \t]
-		).*
-	)$
+Base-Commit: 4ac8283def34401e50908903b89fa22498bb23a2
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Freplay-drop-commits-that-become-empty%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/4ac8283de...8a2a12153
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/replay-drop-commits-that-become-empty/v1
 
-> +	 /*
-> +	  * For other Lisp dialects: either an unindented left paren, or a
-> +	  * slightly indented line starting with "(def".
-> +	  */
-> +	 "^((\\(| {1,2}\\([Dd][Ee][Ff]).*)$",
+ Documentation/git-replay.adoc |  4 +++-
+ replay.c                      | 10 +++++++---
+ t/t3650-replay-basics.sh      | 25 +++++++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 4 deletions(-)
 
-Here you are adding a very generous new pattern, the opening parenthesis
-without indentation. This will not only apply to "other Lisp dialects",
-as the comment says, but also Scheme code and will produce new matches.
-It does not change the test cases in t/t4018/scheme-*, because all have
-additional matches later.
-
-As such it would possibly be more honest to extract it out into its own
-(first) pattern and marked as applying to all dialects:
-
-	/*
-	 * An unindented opening parenthesis identifies a top-level
-         * structure in all Lisp dialects.
-	 */
-	"^(\\(.*)$\n",
-
-Note that the Scheme pattern excludes the indentation from the capture.
-You may want to do so here, too (and simplify "one or two spaces" like
-this):
-
-	"^  ?(\\([Dd][Ee][Ff].*)$",
-
-Would it be possible to have test cases of Lisp code that is not covered
-by the Scheme pattern?
-
->  	 /*
-> -	  * R7RS valid identifiers include any sequence enclosed
-> -	  * within vertical lines having no backslashes
-> +	  * The union of R7RS and Common Lisp symbol syntax: allows arbitrary
-> +	  * strings between vertical bars, including escaped backslashes and
-> +	  * vertical bars.
->  	  */
-> -	 "\\|([^\\\\]*)\\|"
-> +	 "\\|([^\\\\]|\\\\\\\\|\\\\\\|)*\\|"
-
-Without the C quoting we have
-
-	\|([^\\]|\\\\|\\\|)*\|
-
-So, this is everthing from | up to the next |, except that \| does not
-stop scanning and \\ is also considered so that \\| is not regarded as \
-followed by \|. Good.
-
->  	 /* All other words should be delimited by spaces or parentheses */
-> -	 "|([^][)(}{[ \t])+"),
-> +	 "|([^][)(}{ \t])+"),
-
-Here we have a single bracket expression. The removed opening [ does not
-begin a new one, but is a duplicated character. Good.
-
--- Hannes
+diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+index dcb26e8a8e8..96a3a557bf3 100644
+--- a/Documentation/git-replay.adoc
++++ b/Documentation/git-replay.adoc
+@@ -59,7 +59,9 @@ The default mode can be configured via the `replay.refAction` configuration vari
+ 	be passed, but in `--advance <branch>` mode, they should have
+ 	a single tip, so that it's clear where <branch> should point
+ 	to. See "Specifying Ranges" in linkgit:git-rev-parse[1] and the
+-	"Commit Limiting" options below.
++	"Commit Limiting" options below. Any commits in the range whose
++	changes are already present in the branch the commits are being
++	replayed onto will be dropped.
+ 
+ include::rev-list-options.adoc[]
+ 
+diff --git a/replay.c b/replay.c
+index 58fdc20140b..7cd7206eee5 100644
+--- a/replay.c
++++ b/replay.c
+@@ -88,12 +88,12 @@ struct commit *replay_pick_regular_commit(struct repository *repo,
+ 					  struct merge_result *result)
+ {
+ 	struct commit *base, *replayed_base;
+-	struct tree *pickme_tree, *base_tree;
++	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
+ 
+ 	base = pickme->parents->item;
+ 	replayed_base = mapped_commit(replayed_commits, base, onto);
+ 
+-	result->tree = repo_get_commit_tree(repo, replayed_base);
++	replayed_base_tree = repo_get_commit_tree(repo, replayed_base);
+ 	pickme_tree = repo_get_commit_tree(repo, pickme);
+ 	base_tree = repo_get_commit_tree(repo, base);
+ 
+@@ -103,13 +103,17 @@ struct commit *replay_pick_regular_commit(struct repository *repo,
+ 
+ 	merge_incore_nonrecursive(merge_opt,
+ 				  base_tree,
+-				  result->tree,
++				  replayed_base_tree,
+ 				  pickme_tree,
+ 				  result);
+ 
+ 	free((char*)merge_opt->ancestor);
+ 	merge_opt->ancestor = NULL;
+ 	if (!result->clean)
+ 		return NULL;
++	/* Drop commits that become empty */
++	if (oideq(&replayed_base_tree->object.oid, &result->tree->object.oid) &&
++	    !oideq(&pickme_tree->object.oid, &base_tree->object.oid))
++		return replayed_base;
+ 	return replay_create_commit(repo, result->tree, pickme, replayed_base);
+ }
+diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+index cf3aacf3551..d73ab16908a 100755
+--- a/t/t3650-replay-basics.sh
++++ b/t/t3650-replay-basics.sh
+@@ -25,6 +25,8 @@ test_expect_success 'setup' '
+ 	git switch -c topic3 &&
+ 	test_commit G &&
+ 	test_commit H &&
++	git switch -c empty &&
++	git commit --allow-empty --only -m empty &&
+ 	git switch -c topic4 main &&
+ 	test_commit I &&
+ 	test_commit J &&
+@@ -106,6 +108,29 @@ test_expect_success 'using replay on bare repo to perform basic cherry-pick' '
+ 	test_cmp expect result-bare
+ '
+ 
++test_expect_success 'commits that become empty are dropped' '
++	git replay --ref-action=print --advance main topic1^! >result &&
++	ONTO=$(cut -f 3 -d " " result) &&
++	git replay --ref-action=print --onto $ONTO \
++		--branches --ancestry-path=empty ^A >result &&
++	# Write the new value of refs/heads/empty to "new-empty" and
++	# generate a sed script that annotates the output of
++	# `git log --format="%H %s"` with the updated branches
++	SCRIPT="$(sed -e "
++		/empty/{
++			h
++			s|^.*empty \([^ ]*\) .*|\1|wnew-empty
++			g
++		}
++		s|^.*/\([^/ ]*\) \([^ ]*\).*|/^\2/s/\\\$/ (\1)/|
++		\$s|\$|;s/^[^ ]* //|" result)" &&
++	git log --format="%H %s" --stdin <new-empty >actual.raw &&
++	sed -e "$SCRIPT" actual.raw >actual &&
++	test_write_lines >expect \
++		"empty (empty)" "H (topic3)" G "C (topic1)" F M L B A &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'replay on bare repo fails with both --advance and --onto' '
+ 	test_must_fail git -C bare replay --advance main --onto main topic1..topic2 >result-bare
+ '
+-- 
+2.52.0.362.g884e03848a9
 
