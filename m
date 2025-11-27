@@ -1,69 +1,69 @@
-Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881692C159E
-	for <git@vger.kernel.org>; Thu, 27 Nov 2025 01:10:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81352C324E
+	for <git@vger.kernel.org>; Thu, 27 Nov 2025 01:10:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764205849; cv=none; b=h1mIfIUUpvhfnc9glUGa2vHwlANMAOOKWkGei3Gcw/pAEN1K0qFFzWvx6R6zLncdhICYJxKBBm0Xp5Wy2K70gff2iT4NcFAo3ZNUs4eenaZpa7Kur2ZeoYrQBSNZJagNNxVvSHchYcfqJ/gUr8Mx3jNWCR8+DkVQS7weGxfcytU=
+	t=1764205850; cv=none; b=cnWfGXlnUUOJfQEJrQGeCet+bnTVgigLw09jWevT+azld/LAdxfy6E3WI0B2ymth5fTd4VJGtBA7cBHp4WAChFSOYPK8lHWaL2FCM4nKggAtu2w6Gm9xWTOeD6eUNfg9b6+VGX/0+3TW/RNevk/OJO7DYYnLkz0Ph3hpsZV2elo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764205849; c=relaxed/simple;
-	bh=j0pC7d4slqUtDBJnTnOxnrvalf2kEH9H9Gqt1HOiaLc=;
+	s=arc-20240116; t=1764205850; c=relaxed/simple;
+	bh=7ovZ9GtRtJaylVsihELbg2WiizTEEcQN/yTetHqfSN8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=gcJ+1QFvfbxJbDVk9mLFWGf7KKBvh9YO9SyuTpnEf98IGxRJfSuxIGsYNm6gPA8kmhHZZnZADy8Z+tDVciaPotWlREuL4pBcOTPgLdRVQLfKBRqbqAiPv7XAiANBnhS8hgdK9vH6RPXfcl4uuiAfb8UKrWn6Yno8LArZn0cOdsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IaaowNmF; arc=none smtp.client-ip=209.85.166.46
+	 MIME-Version:To:Cc; b=nARWaBGgZr3bcBev2iwzbyNaPkW7v9vUoAzHZIoUJLy0Z2wG81Ct3nhC+7jCgRTgtZezvORHC07emcqdwkpgi/X9/IA0ebsTGY1yh3jp/qpjLKEL/qw/GUwllbP3EacWchdP7xWNB3TI3n/IS+xjV8DUBbsfkn6CM/AbybwFtow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ee/BMROg; arc=none smtp.client-ip=209.85.166.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IaaowNmF"
-Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-948fbdbc79fso12321439f.0
-        for <git@vger.kernel.org>; Wed, 26 Nov 2025 17:10:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ee/BMROg"
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-948673fdc47so14465339f.3
+        for <git@vger.kernel.org>; Wed, 26 Nov 2025 17:10:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764205846; x=1764810646; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764205847; x=1764810647; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TD2s1UKdX4wh57lGXny83ibne6X9duzcx1bnceF8e80=;
-        b=IaaowNmFafdNoRhVKCtPNFdLlwQfxWbyCZ/Q6bl7OntXXZHgOnC7Fjqi5QDJbNTfjQ
-         wm8J90Uoj7A+UW+Xz4pWC0fiFlGkNAi/URhqH0Gww6/p5tXogqEb657sngPJTpKHFX5e
-         3WzEUmnSDOn7WKVaHgGJ/E1NTaSDryKDPQVddDpHYhVJBmOItsTFrfzpjROEpqRL4K1Z
-         lXf79D29xxxa2mvIE8Gzmz8o3F6RfTeiQLguV0xfOhc6vreJlPjjXWuu1DD+0J2jyUZO
-         tPWdemLG3tHSKgKlVthnaKHhX+cS+zsx+2zmwscNWjhdjR4gtC+rIGrLEvK3ArB7zW7X
-         oXww==
+        bh=axWyVq6HVgxk1DIW0STGLI6px9v2dXr68h1DAteb7fU=;
+        b=ee/BMROgS406RMUhXv1XqkIdwSMG+Ozdzik76Upw0QOZaGrQ2bCYeHLDufcXn/ADj1
+         6yAFiiq4aqiCNxh7rkKT2tlyZKagExvk+fKJBdrrhY22WUh1BcWP6Kspuh75bGBnosWJ
+         pmeW+24BroqEzuyUEjPt68v7Vn4yKF0l9tbjrLNBu8PxDgLE6b+/iHk6d2QdSEjl2V7n
+         o7MepHXi9pjsBWkgTq/amQD+PUYClvPs3lrbwOLr+oizngZ+UpT7xflxe2P74GBDLdya
+         WDjBmF490Vdx7tf/ZhHV0toA8c1cHU7njNosVMdqKE0jQU38VcDwmkX476B11ueK8Os2
+         vC3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764205846; x=1764810646;
+        d=1e100.net; s=20230601; t=1764205847; x=1764810647;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=TD2s1UKdX4wh57lGXny83ibne6X9duzcx1bnceF8e80=;
-        b=QDFmKZvxL6LjYAajvDnIgp4J2Xkh4/DIdiVHa437hX/TwlIo7SN3ThUm3/u0DZ2/kg
-         ZX8P+X0aIW9ThELLXvjBvFFfuQWkwJYOtapxCiThqrxZcZ0xHYa9OTisiOhUKOKNsOsv
-         z+Vl6NHJi2MHSl8Nazy/qJuRzRhtDuJPsfICTzmoAHlB4aE3oMWdCUf15tgNb3HZ3KFq
-         QimprorDJ/nZk3ZMcw7Vq6ap7og3xQTovqwgE6j8Vr0bbCEfiG5gu99zOrew/uzRtCBU
-         SWVJ3y3q2kEn5pix1xIZL+Zp8arxS50CxCwPCuKWJBM1/Dw65JaMD7OimWDWy2zvdESX
-         OP9w==
-X-Gm-Message-State: AOJu0Yy58144f9RY5WHtS8aPgP9j7u/jZSVcnegzRh6PzAY9KK6K1F1N
-	wxsek+DuhCE9LDOOyk9Xh4GzMFnz0odZCPaDiPnU7hlMWMcXZtrowrsZzq/sljQL
-X-Gm-Gg: ASbGncvGcljDJgKUBuerZRt6BAfHsUJHSvWoOOS4ccUb+7Ry6b4qzRlK24XwLq5/KQe
-	wXL/0PjfVjM9z0YueTUy8bjKRq9tH8W726uU/+vMEMQrdHdfFrat6MPCeoXtwbT1Q+NHQCJrdmM
-	beoaiWUxNAt6LrLQR0GyUsa3LdHGf09X9U2oemJ2m4cu50T4xQMbNsgQnOYRX0KOs/J+ZQq/Jf/
-	2NdOS5NlCh9/IYK+OrbJENOmh303gdnfByKjaIqk0WvZAUK6GgrkbP3Jfqndc0a4uKEOGymaNQE
-	Nt94JPvcTmuoKnPUaTIOaPe9n/M3EAPWlgzZkGsEJIqotxsCDZ7HZ4v4t9tmVVeaXglerVtyHds
-	3PIadGCEPv9pVWXIeUUdOXz30nvx0v/W8SG7EirbFRSs66+8FER/HLCZXP8CMD1644uaRANKL7K
-	u1tZXoHSfM7ulR5A8ESh07STBq
-X-Google-Smtp-Source: AGHT+IGuVrft1jINJVEZloloJIxJhOnL0AYAkhr7aGyilD6e5OCL3OeacMjrL7j/gD/MchCQtyiN4Q==
-X-Received: by 2002:a05:6638:c0fb:b0:5ac:cd9a:4c4c with SMTP id 8926c6da1cb9f-5b999555c41mr7850756173.2.1764205845982;
-        Wed, 26 Nov 2025 17:10:45 -0800 (PST)
+        bh=axWyVq6HVgxk1DIW0STGLI6px9v2dXr68h1DAteb7fU=;
+        b=P1xYphkjefOqG8hDFtHa7tSqngXYaFUQkcKB8cbzdp5sdmjYU6fMITriQk3flWNnkT
+         gmVU3uBiEwA/VS07rele+sk3M6oYgRHPjJHQrShjxa5CaC1pSjouRoWH4EpEiDrwt6E9
+         j0Hg9SNrsf02FdgZAf8VKoOBw16aP/ABCk4hlOP4Sb0natWhhjzLE0gD62CIaOLlrFqG
+         vQMCb78kYeLV1jfr3UBIbbU4jmL5uXzxCS4xnaN9kEfD2mIZdAddpUVQgofpYYwcpdYM
+         X/840pPKCAT+cznFNIKdKjqDClZV242DySRYcOx8ZaRhiL6ClZXO58qEbv6AB5ubSwuN
+         Iesw==
+X-Gm-Message-State: AOJu0YxarJf9DyNyUehNvca5Aap2MDef3dBmr4jqWLi7POoL+4KT2U5k
+	dH2jgyfVFEN9+0VzHcjLJCwk5EHx0maXIghpHr/aYtgUWTrpRaLqplS4RU1D9K0N
+X-Gm-Gg: ASbGnctcUICItKFNO0sWxo5Cqy1Pm2Y+RzZXsHXB4MedLHKblsXnkwJcaNLJ1ichB48
+	rqxt1R13eZRco69P6ckHe4p1eByl+ndMMqd64IqTZ8t/JOd2XqQQmj31wJcpatYCL0+eYgVKu0m
+	TBj0ntAjokJ0KlnkMA2Sx6/WuS8kKh26wr+JrnZ34bynnt6qvNSVlaRaMCTpG+oXeF/r1PKDfq6
+	mvmGtizUt/E5S2+Y28HaQKvfnuCuFiB5zUk0udWX38tXZ+m038HE2nXy+C/4zCJIUMSd308LQg0
+	R7VXHjEN7W1ysuhBmSZlkztjAX9DTH5Yw9kx3itV9mBPv4VfSXbdIlC4yw8CCBqVeUiLUfx6nYR
+	QEgx8Vii63ipCdUjjZK46n3lz8dST7L/lRZtcyrFHQs7FY+8Cbef9rLKg+u5R9ZxG0aWs4nUTye
+	pn7bmq4ZqT9oWLrw==
+X-Google-Smtp-Source: AGHT+IH6IMpaIrnewaRHpU2V2JqJ//f/L1o2ScVI/E5NQJ4LfCGBqcWGzW6yI+WJqwjP8XMRpDkjYg==
+X-Received: by 2002:a05:6638:1448:b0:5b7:c786:c100 with SMTP id 8926c6da1cb9f-5b967889da5mr17486659173.0.1764205847441;
+        Wed, 26 Nov 2025 17:10:47 -0800 (PST)
 Received: from [127.0.0.1] ([64.236.141.183])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5b954a0ee6csm8895127173.8.2025.11.26.17.10.45
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5b954a0deb0sm8824841173.9.2025.11.26.17.10.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Nov 2025 17:10:45 -0800 (PST)
-Message-Id: <4a17edade9aa18eaa7a173bf2bd5eecda74508c3.1764205835.git.gitgitgadget@gmail.com>
+        Wed, 26 Nov 2025 17:10:46 -0800 (PST)
+Message-Id: <e51a78cfb5dd6d34948dc26d21513450469c6790.1764205835.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2110.git.git.1764205835.gitgitgadget@gmail.com>
 References: <pull.2110.git.git.1764205835.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 27 Nov 2025 01:10:28 +0000
-Subject: [PATCH 06/13] cargo: create crate generate-headers
+Date: Thu, 27 Nov 2025 01:10:29 +0000
+Subject: [PATCH 07/13] cargo: create crate link-with-c
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,112 +81,109 @@ From: Ezekiel Newren <ezekielnewren@gmail.com>
 
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- Cargo.toml                        |  1 +
- rust/cbindgen-template.toml       | 13 +++++++++
- rust/generate-headers/Cargo.toml  | 12 +++++++++
- rust/generate-headers/src/main.rs | 44 +++++++++++++++++++++++++++++++
- 4 files changed, 70 insertions(+)
- create mode 100644 rust/cbindgen-template.toml
- create mode 100644 rust/generate-headers/Cargo.toml
- create mode 100644 rust/generate-headers/src/main.rs
+ rust/link-with-c/Cargo.toml |  9 +++++
+ rust/link-with-c/src/lib.rs | 77 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 86 insertions(+)
+ create mode 100644 rust/link-with-c/Cargo.toml
+ create mode 100644 rust/link-with-c/src/lib.rs
 
-diff --git a/Cargo.toml b/Cargo.toml
-index 02273f5142..b7b5890934 100644
---- a/Cargo.toml
-+++ b/Cargo.toml
-@@ -1,5 +1,6 @@
- [workspace]
- members = [
-+    "rust/generate-headers",
-     "rust/gitcore",
- ]
- resolver = "2"
-diff --git a/rust/cbindgen-template.toml b/rust/cbindgen-template.toml
+diff --git a/rust/link-with-c/Cargo.toml b/rust/link-with-c/Cargo.toml
 new file mode 100644
-index 0000000000..13c192d60e
+index 0000000000..adb38fdc9c
 --- /dev/null
-+++ b/rust/cbindgen-template.toml
-@@ -0,0 +1,13 @@
-+## don't include any system files, not even git-compat-util.h
-+# sys_includes = []
-+
-+autogen_warning = "/* Warning, this file is autogenerated by cbindgen. Don't modify this manually. */"
-+
-+language = "C"
-+no_includes = true
-+usize_is_size_t = true
-+style = "tag"
-+tab_width = 8
-+
-+[parse]
-+parse_deps = false
-diff --git a/rust/generate-headers/Cargo.toml b/rust/generate-headers/Cargo.toml
-new file mode 100644
-index 0000000000..9216d83d75
---- /dev/null
-+++ b/rust/generate-headers/Cargo.toml
-@@ -0,0 +1,12 @@
++++ b/rust/link-with-c/Cargo.toml
+@@ -0,0 +1,9 @@
 +[package]
-+name = "generate-headers"
++name = "link-with-c"
 +version = "0.1.0"
 +edition = "2018"
 +
++[lib]
++crate-type = ["staticlib", "rlib"]
++
 +[dependencies]
-+cbindgen = "0.24.0"
-+textwrap = "=0.16.1"
-+once_cell = "=1.20.3"
-+unicode-width = "=0.1.13"
-+quote = "=1.0.41"
-+syn = "=2.0.106"
-diff --git a/rust/generate-headers/src/main.rs b/rust/generate-headers/src/main.rs
+diff --git a/rust/link-with-c/src/lib.rs b/rust/link-with-c/src/lib.rs
 new file mode 100644
-index 0000000000..da68c8ae3d
+index 0000000000..f6faaf774d
 --- /dev/null
-+++ b/rust/generate-headers/src/main.rs
-@@ -0,0 +1,44 @@
-+use cbindgen;
-+
-+use std::io::Write;
++++ b/rust/link-with-c/src/lib.rs
+@@ -0,0 +1,77 @@
++use std::collections::HashMap;
 +use std::path::PathBuf;
-+use cbindgen::Config;
 +
-+fn generate_header<F>(crate_name: String, editor: F)
-+where
-+    F: Fn(&mut Config)
-+{
-+    let dir_workspace = PathBuf::default();
-+    let dir_rust = dir_workspace.join("rust");
-+    let dir_crate = dir_rust.join(crate_name.clone());
-+    let dir_generated = dir_workspace.join("generated");
-+    if !dir_generated.exists() {
-+        std::fs::create_dir(dir_generated.clone()).unwrap();
++
++fn parse_bool_from_str(value: &str) -> bool {
++    match value {
++        "1" | "true"  | "yes" | "on"  => true,
++        "0" | "false" | "no"  | "off" => false,
++        _ => false
 +    }
-+
-+    let file_cbindgen = dir_rust.join("cbindgen-template.toml");
-+    let file_out = dir_generated.join(format!("{}.h", crate_name.clone()));
-+
-+    let mut config = Config::from_file(file_cbindgen.display().to_string().as_str()).unwrap();
-+    config.include_guard = Some(format!("{}_H", crate_name.to_uppercase()));
-+
-+    editor(&mut config);
-+
-+    let mut buffer = Vec::<u8>::new();
-+    cbindgen::Builder::new()
-+        .with_crate(dir_crate.clone())
-+        .with_config(config)
-+        .with_std_types(true)
-+        .generate()
-+        .expect("Unable to generate bindings")
-+        .write(&mut buffer);
-+
-+    let mut fd = std::fs::File::create(file_out).unwrap();
-+    fd.write(buffer.as_slice()).unwrap();
 +}
 +
-+fn main() {
-+    // cargo run -p generate-headers
++fn parse_bool_from_option(value: Option<&String>, default: bool) -> bool {
++    match value {
++        Some(v) => {
++            parse_bool_from_str(v.as_str())
++        },
++        None => default,
++    }
++}
 +
-+    generate_header(String::from("gitcore"), |_|{});
++/// To build without linking against C libraries run `USE_LINKING=false cargo build`
++/// To run tests set GIT_BUILD_DIR and run `USE_LINKING=true cargo test`
++pub struct BuildHelper {
++    crate_env: HashMap<String, String>,
++}
++
++
++impl BuildHelper {
++    pub fn new(crate_env: HashMap<String, String>) -> Self {
++        Self {
++            crate_env,
++        }
++    }
++
++    pub fn crate_name(&self) -> String {
++        self.crate_env["CARGO_PKG_NAME"].clone()
++    }
++
++    pub fn dir_crate(&self) -> PathBuf {
++        PathBuf::from(self.crate_env["CARGO_MANIFEST_DIR"].clone())
++    }
++
++    pub fn build(self) {
++        let use_linking = parse_bool_from_option(self.crate_env.get("USE_LINKING"), self.crate_env.get("CARGO_TARGET_DIR").is_none());
++        let dir_crate = self.dir_crate();
++        let dir_git = dir_crate.parent().unwrap().parent().unwrap();
++
++        println!("cargo:rerun-if-changed={}", dir_git.display());
++
++        if use_linking {
++            if let Some(git_build_dir) = self.crate_env.get("GIT_BUILD_DIR") {
++                let path_git_build_dir = PathBuf::from(git_build_dir);
++                let is_abs = path_git_build_dir.is_absolute();
++                if !is_abs {
++                    panic!("GIT_BUILD_DIR must be an absolute path: {}'", path_git_build_dir.display());
++                }
++                if !path_git_build_dir.is_dir() {
++                    panic!("'GIT_BUILD_DIR' is not a directory: {}", path_git_build_dir.display());
++                }
++                println!("cargo:rustc-link-search=native={}", git_build_dir);
++            } else {
++                panic!("environment variable 'GIT_BUILD_DIR' is not set");
++            }
++
++            println!("cargo:rustc-link-lib=static=git");
++            println!("cargo:rustc-link-lib=pcre2-8");
++            if self.crate_env.get("ZLIB_NG").is_some() {
++                println!("cargo:rustc-link-lib=z-ng");
++            } else {
++                println!("cargo:rustc-link-lib=z");
++            }
++        } else {
++            println!("cargo:warning={} is not linking against C objects, `USE_LINKING=true cargo test`", self.crate_env["CARGO_PKG_NAME"]);
++        }
++    }
 +}
 -- 
 gitgitgadget
