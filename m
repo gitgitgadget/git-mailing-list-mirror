@@ -1,69 +1,69 @@
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304A628B4FD
-	for <git@vger.kernel.org>; Thu, 27 Nov 2025 01:10:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C9B29BD91
+	for <git@vger.kernel.org>; Thu, 27 Nov 2025 01:10:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764205843; cv=none; b=tw8VnKjL2LmjhW6C4RXonpCo19uORp9oHqMEGAXaUFD5bn5EjIQulDF+5Qsni8DK9kK5QaHlUEqdRZP25GXtqwGrJGnSFzFEGtsBw82pfkyTu7rLjEIyJfxLvEUM1I+WO1RfySTmxglNblRLsVr8rupMSRi1XBmfcG6SKAB+G58=
+	t=1764205844; cv=none; b=aXKmQySYKBnFOceUhFupkxtW0NVnTYVzI6VkU2pb6bQ4ZopBDx9ODYYlCpGcShCoPHBCgI8GyaaJAj3KS0gmpxO7O7FaSm9lyNMLdWMCcLI0om9Kj0sWeK1q3ZvSTcjTX0NVDWw7UPrWh83oQ/WA8A4Rok1Ee/uT/vCdndGg4VA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764205843; c=relaxed/simple;
-	bh=C/T3gFDw40mBKQpvu+qHmLI8cyPw2KrI8Fw9SdT5XPg=;
+	s=arc-20240116; t=1764205844; c=relaxed/simple;
+	bh=tOg1E15qV3tkd6HQk940FupJCoMJw9zMC6yFkXhzm68=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ipbK7KzeXZJ7XpNvPr6/++1sin48dRAJ5ru3iumo4z+wzPUO1aLHNDCMa85gAVJUT2SBbFr6V9O47c3Gh7/loILH8UWJrwGmnTdDxLRs0+EUKg8DmZkQ+MB3qHWZaerGCAIRtGtWNjHn6nAVEpCpyysX7A1hwvH+y4ImpuFvEbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OO5ogfdG; arc=none smtp.client-ip=209.85.166.47
+	 MIME-Version:To:Cc; b=BQLZ3XM87hgBIWXui8DFJBZV2A16gS2BNq/gyMR+iSxsMWYGfpVRqPVLtFjyIcziw+lHFEh5vscvhVeLfrKqorJxgK7gSdkygLT2JXAk76aabRwyN4Gc1Xmf0LkZFWXsNKQ5IvzGmLiNd33x0LOVtXHkts1ZNJYMjNeLywf2cF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eWkAebU6; arc=none smtp.client-ip=209.85.166.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OO5ogfdG"
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-9491604d00fso14177739f.2
-        for <git@vger.kernel.org>; Wed, 26 Nov 2025 17:10:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eWkAebU6"
+Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-949031532f9so20635139f.0
+        for <git@vger.kernel.org>; Wed, 26 Nov 2025 17:10:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764205841; x=1764810641; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764205842; x=1764810642; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y64Gpm3X5F+xH4GFazA4o5MZ8bEHaPJg/KdC3jF+oAI=;
-        b=OO5ogfdGqHL+hn5IEx2muV2BEtA5vY7tTTPyvG62rkUfLH5c7ztFZyLXn7nWoRz7Ls
-         PygUkuRe7IBDc1liy5Pd+mldC1w95pY9zyAZaO0rslEgv7DWajYBYdEZOOHbCGLkvy71
-         GmN9jc4GJcLWu1/FcLh3Tz8XalFEB5bGNhPlzYNA9/eEh97h5lRFaVVWcdYAip6r1g3B
-         PBnAh5V3/gbEkoj4Ng2LaW+q+lMsUBQ8t0QBp+szKvjiSfIcPccVftN5iWwm26qXz2E0
-         VjhzYn5V2Sf68Zh7RHDjvjc6ZwQjoJjmxdaU3xfWiFwR0TwcP9pTtFvrdwJQx0yhoHu1
-         RRVw==
+        bh=NwPnNvEzjTHv7hvNu+05u60QS91n9rv0cTDawJxktmY=;
+        b=eWkAebU60y4xjsAMDtHyscuR7DVSWnt8Ag1lhqrADPGs3ifATVZ586DarvRq4s8Cgm
+         j36qXo9gTAYWNP5C/w24YeT3ZJTvg+mMBoclOXDMHE9MWH8w8yQ7DrimxSISy12xtVeP
+         rwVstWXJ98P4zGFN/PXgO5QlJwh3IMbs7d/QZ+17F9R2t6BhPTcTbpWXgWaME6BTr/+9
+         qj1awv1ocgcQQM0mGbp5FBEO9ps5+Ji223oYYSXXtBK/tOfhBb2beihfPQtOTSABUuAw
+         eDjpswWV5rCiRzQ4rsVoyI2FIoIjk/vx1XT4S5kOUEoeSEX2oJq05Q4JaXQSIYF6lwaI
+         GAPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764205841; x=1764810641;
+        d=1e100.net; s=20230601; t=1764205842; x=1764810642;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Y64Gpm3X5F+xH4GFazA4o5MZ8bEHaPJg/KdC3jF+oAI=;
-        b=csCY5v9eoFSZ5S3Vb0u0x7Fxf3cUHZOxeO49eMll/y70gCXRZ1FIVHn3r1esvhw8B3
-         r63a0wKeD0fKeQJX2BLRL+ey1f3DgtBswvdvdAobSCyKr+l7SsACtaRKfA8hpiTlSf3n
-         tVcPHLJME+CnZ5nn/jgjee0E0mBWfM/ywlIL4fVEqwayTRpEIx1c8qSW6B3qZ2eH7+S3
-         P6IPuODQXTvaXkVtqQ1lE38sssjyR42UJhwQFlqnTFOiVk5B/fR2OnV+RTYOptfdcB+/
-         LgYGwAlVXZ3Xi3h/G8kkH4ZM1G6upHqLkVigfsz+i1Ht2yN68b5SpQ+7lKWUnA3r0IcT
-         IgHg==
-X-Gm-Message-State: AOJu0YyG/VAlgNNTYPFTQH/r3cNIyv+qecODuGNbKWQ3wii2UbHmDA45
-	okR52nSzq9PFYfcNSLXUcVhqPY/zhOJyFr11BipzUmnzfZSFdOBb+VpgW8YWCn1F
-X-Gm-Gg: ASbGncuNryeatqy1wY9XNz9nPuMSe5kpu9VhgF6qyAd13ZDKFJxKzSWDNnbjZaZTfed
-	tCIJOUAsQ4Iipx3FeDgEwJzMWDnSklLUfnVAR+KqhJn6m4ocXEecDn3vEMdB5F68myI7ynTAQBd
-	hTsWKUEpkrIPvyQ/0OBXLJMeDdvXY8BUL7qNpewnFfQPwVIjD5VHrBQ5VL0Yfdvfdr45yXS3mWe
-	Uy2RxuC7sQEuh6O69AKo65MRz+zhJ/AaAOSt2KRYSlnbBD0zdjjYbGtBfG1Q0KMP68/xxNXOn3E
-	kAIuLkZ1RgvqRC8pqrA0fkPlaenxu/u+GdlcBKRyjDA/0F1jQjYbsnoOAAZQDkULAnfWJbiAS6x
-	iHZalYwMx74GJI+ASMDDIJUts0aGKZqAEa6oit6yOMYEDtnBQ+aIDkEdKEx6Kk00/xYiXdMTUMb
-	eEkT9s1fUQpq4oiw==
-X-Google-Smtp-Source: AGHT+IGq53MoUdFpN4NXQIYfYRh463nPLYNBMj+2+2QdvLW0Z/H7VnJf/751ej+RNqAWNKmLq/RKDg==
-X-Received: by 2002:a05:6638:6809:b0:5b7:c88e:1837 with SMTP id 8926c6da1cb9f-5b967a8b201mr13778352173.16.1764205840807;
-        Wed, 26 Nov 2025 17:10:40 -0800 (PST)
+        bh=NwPnNvEzjTHv7hvNu+05u60QS91n9rv0cTDawJxktmY=;
+        b=SUWBRI3iQkjpY0ovUSv7IeG5k6fMr1tMdeQLV5gMTnOhRe0nBSu8fnmi84JEogLvx7
+         sb5RdgWXFrqcA8YySEU027z8BipNCcNta08NL4usCcFMwKB7uM1v++GkDDm7vFDhomKY
+         M2hWL/9msxTvhaAXq3hf8mORPevDOLOZRohZ02qdtDkYBRITvTy3kZAxQgIDec6OPsrG
+         rnaVjBkFrcVlwxoe2+Q8tOEAr5JYBRdH5wWQ3v9vFK2SurVIAzJak4GCray47qLsTmG1
+         3FpxoeEwbc/B5VFhjRIZk7Yg0HqzbbGCP2IP/0NJUaGKVR+KNGZjwiGubZXPDzPNQ600
+         6P5A==
+X-Gm-Message-State: AOJu0YxlRBPZQ8aNiHQFNZDGUWU4JMUSgyWAB2w3c0GAXezf+NJSCYcF
+	/sNgdMTaXbv7g7t/oEArliN8fIsqOzhmUxAsIfW/JvAy+r42i9PFQOH2B8l9XY2G
+X-Gm-Gg: ASbGnct1yEjfxWDNc9oZOWalgqJ43cg0IqufuPm0y3W7YcSGpEd/iYfHaDsgBvPs/nT
+	yM9IUjNidgru0Fe5wgyFqeiY7SHWZyE8ouAcizghBP2+tZhrlMgFVKbAswrOmbyxVqn0px9BBof
+	x3NpUBAzKf/q25nFUHC7LfeO7kGrCcblL02ZbVpXX2VKTI46FnMDvK80NcV3kUzOmjdP2ygds32
+	3r2yUwZrIpgTUsEvzRUL9d+vUxX9p/txmDWwwXdqraoaDQcpRbGdID0X+kO+ONMkvbeTLpYd7z3
+	Am9Lu5/Siwsq0JxcHHbejKBYzyI8nF/TJphRN+HTBg+0LPsiDRe5pqPCdovbXk8S76iY9dvUJ18
+	XbsRQLAmsOjfz1jRnesHz1fCEREnpCwGjNtW/h/TJx+8PUrRo8FTNaep3hY4klVeLazhCLFD9+S
+	GNdoX6nacliam1iA==
+X-Google-Smtp-Source: AGHT+IEB205MKH21AC6DABsyVU4EQz1kZg5MTe/Mq2pf1/xSLAQPwK15nlTUfIa+c3ieBjXeqHdKPg==
+X-Received: by 2002:a05:6638:8721:b0:5b7:10ea:e2a7 with SMTP id 8926c6da1cb9f-5b965b1af7bmr18101303173.8.1764205842089;
+        Wed, 26 Nov 2025 17:10:42 -0800 (PST)
 Received: from [127.0.0.1] ([64.236.141.183])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5b954a0de5esm8982456173.6.2025.11.26.17.10.40
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5b9594bd003sm8475178173.35.2025.11.26.17.10.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Nov 2025 17:10:40 -0800 (PST)
-Message-Id: <dd8787e3e07a567acf56c23c69599aaefd87b3b0.1764205835.git.gitgitgadget@gmail.com>
+        Wed, 26 Nov 2025 17:10:41 -0800 (PST)
+Message-Id: <e49ffba5c99ce40b67500bac52a36ae83d10647b.1764205835.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2110.git.git.1764205835.gitgitgadget@gmail.com>
 References: <pull.2110.git.git.1764205835.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 27 Nov 2025 01:10:24 +0000
-Subject: [PATCH 02/13] meson: undo Patrick's changes concerning Rust
+Date: Thu, 27 Nov 2025 01:10:25 +0000
+Subject: [PATCH 03/13] cargo: convert from a crate to a workspace
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,165 +81,59 @@ From: Ezekiel Newren <ezekielnewren@gmail.com>
 
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- meson.build        | 19 ++-----------------
- meson_options.txt  |  4 ++--
- src/cargo-meson.sh | 39 ---------------------------------------
- src/meson.build    | 41 -----------------------------------------
- 4 files changed, 4 insertions(+), 99 deletions(-)
- delete mode 100755 src/cargo-meson.sh
- delete mode 100644 src/meson.build
+ Cargo.toml                          | 15 +++++----------
+ rust/gitcore/Cargo.toml             | 10 ++++++++++
+ {src => rust/gitcore/src}/lib.rs    |  0
+ {src => rust/gitcore/src}/varint.rs |  0
+ 4 files changed, 15 insertions(+), 10 deletions(-)
+ create mode 100644 rust/gitcore/Cargo.toml
+ rename {src => rust/gitcore/src}/lib.rs (100%)
+ rename {src => rust/gitcore/src}/varint.rs (100%)
 
-diff --git a/meson.build b/meson.build
-index 2b763f7c53..8966596ee8 100644
---- a/meson.build
-+++ b/meson.build
-@@ -220,7 +220,7 @@ project('git', 'c',
-   # learned to define __STDC_VERSION__ with C11 and later. We thus require
-   # GNU C99 and fall back to C11. Meson only learned to handle the fallback
-   # with version 1.3.0, so on older versions we use GNU C99 unconditionally.
--  default_options: meson.version().version_compare('>=1.3.0') ? ['rust_std=2018', 'c_std=gnu99,c11'] : ['rust_std=2018', 'c_std=gnu99'],
-+  default_options: meson.version().version_compare('>=1.3.0') ? ['c_std=gnu99,c11'] : ['c_std=gnu99'],
- )
- 
- fs = import('fs')
-@@ -1709,21 +1709,6 @@ version_def_h = custom_target(
- )
- libgit_sources += version_def_h
- 
--cargo = find_program('cargo', dirs: program_path, native: true, required: get_option('rust'))
--rust_option = get_option('rust').disable_auto_if(not cargo.found())
--if rust_option.allowed()
--  subdir('src')
--  libgit_c_args += '-DWITH_RUST'
+diff --git a/Cargo.toml b/Cargo.toml
+index 2f51bf5d5f..02273f5142 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -1,10 +1,5 @@
+-[package]
+-name = "gitcore"
+-version = "0.1.0"
+-edition = "2018"
+-rust-version = "1.49.0"
 -
--  if host_machine.system() == 'windows'
--    libgit_dependencies += compiler.find_library('userenv')
--  endif
--else
--  libgit_sources += [
--    'varint.c',
--  ]
--endif
+-[lib]
+-crate-type = ["staticlib"]
 -
- libgit = declare_dependency(
-   link_with: static_library('git',
-     sources: libgit_sources,
-@@ -2270,7 +2255,7 @@ summary({
-   'pcre2': pcre2,
-   'perl': perl_features_enabled,
-   'python': target_python.found(),
--  'rust': rust_option.allowed(),
-+  'rust': get_option('with_rust'),
- }, section: 'Auto-detected features', bool_yn: true)
- 
- summary({
-diff --git a/meson_options.txt b/meson_options.txt
-index 143dee9237..0059b7c7df 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -71,8 +71,8 @@ option('zlib_backend', type: 'combo', choices: ['auto', 'zlib', 'zlib-ng'], valu
- # Build tweaks.
- option('breaking_changes', type: 'boolean', value: false,
-   description: 'Enable upcoming breaking changes.')
--option('rust', type: 'feature', value: 'auto',
--  description: 'Enable building with Rust.')
-+option('with_rust', type: 'boolean', value: true,
-+  description: 'Enable building with Rust, true by default.')
- option('macos_use_homebrew_gettext', type: 'boolean', value: true,
-   description: 'Use gettext from Homebrew instead of the slightly-broken system-provided one.')
- 
-diff --git a/src/cargo-meson.sh b/src/cargo-meson.sh
-deleted file mode 100755
-index 3998db0435..0000000000
---- a/src/cargo-meson.sh
-+++ /dev/null
-@@ -1,39 +0,0 @@
--#!/bin/sh
--
--if test "$#" -lt 2
--then
--	exit 1
--fi
--
--SOURCE_DIR="$1"
--BUILD_DIR="$2"
--BUILD_TYPE=debug
--
--shift 2
--
--for arg
--do
--	case "$arg" in
--	--release)
--		BUILD_TYPE=release;;
--	esac
--done
--
--cargo build --lib --quiet --manifest-path="$SOURCE_DIR/Cargo.toml" --target-dir="$BUILD_DIR" "$@"
--RET=$?
--if test $RET -ne 0
--then
--	exit $RET
--fi
--
--case "$(cargo -vV | sed -s 's/^host: \(.*\)$/\1/')" in
--	*-windows-*)
--		LIBNAME=gitcore.lib;;
--	*)
--		LIBNAME=libgitcore.a;;
--esac
--
--if ! cmp "$BUILD_DIR/$BUILD_TYPE/$LIBNAME" "$BUILD_DIR/libgitcore.a" >/dev/null 2>&1
--then
--	cp "$BUILD_DIR/$BUILD_TYPE/$LIBNAME" "$BUILD_DIR/libgitcore.a"
--fi
-diff --git a/src/meson.build b/src/meson.build
-deleted file mode 100644
-index 25b9ad5a14..0000000000
---- a/src/meson.build
-+++ /dev/null
-@@ -1,41 +0,0 @@
--libgit_rs_sources = [
--  'lib.rs',
--  'varint.rs',
--]
--
--# Unfortunately we must use a wrapper command to move the output file into the
--# current build directory. This can fixed once `cargo build --artifact-dir`
--# stabilizes. See https://github.com/rust-lang/cargo/issues/6790 for that
--# effort.
--cargo_command = [
--  shell,
--  meson.current_source_dir() / 'cargo-meson.sh',
--  meson.project_source_root(),
--  meson.current_build_dir(),
--]
--if get_option('buildtype') == 'release'
--  cargo_command += '--release'
--endif
--
--libgit_rs = custom_target('git_rs',
--  input: libgit_rs_sources + [
--    meson.project_source_root() / 'Cargo.toml',
--  ],
--  output: 'libgitcore.a',
--  command: cargo_command,
--)
--libgit_dependencies += declare_dependency(link_with: libgit_rs)
--
--if get_option('tests')
--  test('rust', cargo,
--    args: [
--      'test',
--      '--manifest-path',
--      meson.project_source_root() / 'Cargo.toml',
--      '--target-dir',
--      meson.current_build_dir() / 'target',
--    ],
--    timeout: 0,
--    protocol: 'rust',
--  )
--endif
+-[dependencies]
++[workspace]
++members = [
++    "rust/gitcore",
++]
++resolver = "2"
+diff --git a/rust/gitcore/Cargo.toml b/rust/gitcore/Cargo.toml
+new file mode 100644
+index 0000000000..2f51bf5d5f
+--- /dev/null
++++ b/rust/gitcore/Cargo.toml
+@@ -0,0 +1,10 @@
++[package]
++name = "gitcore"
++version = "0.1.0"
++edition = "2018"
++rust-version = "1.49.0"
++
++[lib]
++crate-type = ["staticlib"]
++
++[dependencies]
+diff --git a/src/lib.rs b/rust/gitcore/src/lib.rs
+similarity index 100%
+rename from src/lib.rs
+rename to rust/gitcore/src/lib.rs
+diff --git a/src/varint.rs b/rust/gitcore/src/varint.rs
+similarity index 100%
+rename from src/varint.rs
+rename to rust/gitcore/src/varint.rs
 -- 
 gitgitgadget
 
