@@ -1,70 +1,70 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A41526CE1A
-	for <git@vger.kernel.org>; Thu, 27 Nov 2025 02:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFC1271451
+	for <git@vger.kernel.org>; Thu, 27 Nov 2025 02:38:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764211101; cv=none; b=lIwXsQJqwImGkxsETeKJNmv40vlHPU2FbAgtd13ujb8jDB0CvteV3MAnp+qzd/QQ4K43qP6SPgR//c4vFPrLGg7wYs7lPcPF9m/8RoKZOUq96ADjUgZdLWvugxXfYKnUjsnjFR/m5G2jEdoSGm8LL3x57T7eJ54J0UvGoIl1nWg=
+	t=1764211103; cv=none; b=ueyikEauunE7WMWkrw1Ryc0ueVcTkLfr+21nFp29/dTGL9AH76s+oh2lmMVlSmEYN493IV0ezBl7Sir52c2QxHBFdlx5HBCVjTmH/iDigCmdEtU0fWY+C7ogEDwa/HCd40yjLfPMOUmoKyH6YNfkgTboJgsyaQxSRmGk7nxVA+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764211101; c=relaxed/simple;
-	bh=FGZEpwYWMRuXLoQ08VDO3TIlgrSrDYNhyDq7uKIHsIU=;
+	s=arc-20240116; t=1764211103; c=relaxed/simple;
+	bh=+lh5fQrDbkinhZHuRy2X5UF8wcimD7dLKxRaydIKzsc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=iHFgoHdTDXB37XofBMeAj6Cc2cmIOeCt/TyWJuM9vCgrqNdfcTBJrNPKzsXxFU3sl9mLwFMPrkvI01cqn0hyYIS8ZcPOLcjb2HSoHmOdNjwuwqplLafd13BzU3I0/cwvFNYNdLCNVv9kMwSgA/w1FADUBZzMOO48f+yMQwDcIso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D8nGzcD/; arc=none smtp.client-ip=209.85.215.175
+	 MIME-Version:To:Cc; b=ls1cyfq7bzWSgPj73/UxGvyfRwd+JmM5aN2Is4+JdPAZ8yUeu38cf/+nuINvO2YKdW8XjQnFFNu85T0QqNE7ROMEHS7A+hvYf2RzWUHSkqH0ij+Q5TWCh2m+eeBuZ/aGoGyGrFsML1TA8V136fGE57Ivt86uTuEkfY1Q4U1M2Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UbVXqyyZ; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D8nGzcD/"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-bc0d7255434so234799a12.0
-        for <git@vger.kernel.org>; Wed, 26 Nov 2025 18:38:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UbVXqyyZ"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-3436a97f092so478899a91.3
+        for <git@vger.kernel.org>; Wed, 26 Nov 2025 18:38:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764211099; x=1764815899; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764211100; x=1764815900; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OdsQqGwmcud2LexeDmZI2UjoCUAemH3F+RUmZbG91nE=;
-        b=D8nGzcD/Wz+VULjdE5klxF46q6lIEMVFuVovGntrPgBluhQIYFwQc5qGpc6ahgL8uJ
-         3ng+TiDkzy3cOzeqSuu1lEwEas1BJ/cC9SGl+P+1QojGkmk7qiFJA9IYE9M9IylZUYR3
-         qOCWE31gCWzSj3tA5qb2eLKHBlAiworMrecbQxtLIkx+0/74yjo3gtVPAu11daaIjM5Z
-         BVB59WYo9zrISV3zSrFeUykfvgO7YrSTCUyWMykg4J2YNeE+XsFZEvAuXgX3u1Ufr6wx
-         3VQcvCfeAusEpeNRQLjoxXwiku+bykpXtIug1LgIiMtm3nKtP2EW2pCE8zc4gIa9Uffd
-         rCBQ==
+        bh=/fTubhSHNpP6L+VkYEq3mTY6wjQz8EDfajSuKmL9nQk=;
+        b=UbVXqyyZDWs8wCZoQYF19DDB6KUVAlxCeKwQG6jEu6B8j82BpJuBTXqQFXJtWxiYGr
+         NSGSk0EQTgZXOgEqEMhAMPQB6WN6gMclFkr0fU6o5QQosQM0z9Jz3iB1+elz9eKYAGzd
+         ztC5XQ1wdXyX6WMq/pu2hUcpW1E6QRyHjkpLJI9LflHH0WWZUAKF32M3iHenJQBjO3cM
+         RXGl5sA3sRSYtWSU8BEZHldraOm71nkJbGj2dUtMsGPlaCmXHsgPi6Pn58WQN1sRC6Xp
+         REUtnjlXuwK/PmXXVsPQAsvz2Nq7vbRwyB1ZtzblwQMavZhfKfnxsxAVcTrE8HeJuqsN
+         6cRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764211099; x=1764815899;
+        d=1e100.net; s=20230601; t=1764211100; x=1764815900;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=OdsQqGwmcud2LexeDmZI2UjoCUAemH3F+RUmZbG91nE=;
-        b=Kbox2I39esE8Gc4w5slAAWvrwspV+T7vA2gBmVb9LPW/Fbsl6CqA1PrPuq3zHRsoih
-         JbgBrNYI32HFUiNGprZkiwgVqz0hA4emCifHDxvV67N6fUeVXPFOmusAq8WPnbiZQECF
-         qOWsKJkiFCCtxKF8Ee1K20h67vKSWxRb3wJ7aesE7hTRXEs7o1591vntBEB8QbHknRDv
-         DloO0G0Lk0XY+j7bX7sFIi0pBAb/HPZyRpSOeFAoprgQFxE9XZfLn5+nw8O+BnR8W91o
-         /CNNcElg91K2OKIDGLb3yI6HJO0BaFn7tlepHtMnL8bhI+YFWDMUJbmad/9o3XOSKfcK
-         dnTA==
-X-Gm-Message-State: AOJu0YwtCuUhiFgrH9Noen1l5NeoHZVCI02oEzYVRSOk2LJav6KuZky+
-	4VbzMNFgX4i4SiNqB1PeQwPgOW6gQqTg1/PFdXcq2k8IAcckeQyjaZ/TKTxYtb1O
-X-Gm-Gg: ASbGncsW+aEzqWI6B7zrH0quR2g2EHHWqFA1SC148sU/bA8v/FmjQedQOJSVDXc2pYR
-	wl01ryIWRHfWjHito5x2obXX0QiRPyD/2lSsYzfKFx6ziBcWCFndgFa+a6ONNsHzbrO5UdYLt4x
-	ZtCOOSrb/CanSmU5rflI3a9SsM8aU/ySmXmFScfl4WovDtwZgoUj+cxznKStGA7aPSDqGNu2pjF
-	kGZyCGTuB2JtV60LQc1LAjXlb5+aWALf03Rqq+WLeXZOKEG8FLwcyN41xlRxLjIXHhQGT0XndCM
-	ooNhEcUHFPdHAfPXHxeuS8RJVJZ3F347OQ47jifDWJjyISLz6j7G975XZPCjOU9EAUF7YKAzzvy
-	QRCSMjdTmV0p7co1OsVOM2h89eeLpu4rDcvBpURJp+rCwap034lamD6PEf8x2kHFHU+pLLPnjzB
-	7kJNPY0L6gmQQnRWMIPJJb5A==
-X-Google-Smtp-Source: AGHT+IFd0vHMCKba9tlza2c8ZijaNQuugbaPUGbXDXUUpoB3HR9nb/CpufifWTRNKy1LrVCCBvQAsw==
-X-Received: by 2002:a05:7301:5795:b0:2a6:a0f0:d7c1 with SMTP id 5a478bee46e88-2a9415a402dmr5685020eec.12.1764211098814;
-        Wed, 26 Nov 2025 18:38:18 -0800 (PST)
+        bh=/fTubhSHNpP6L+VkYEq3mTY6wjQz8EDfajSuKmL9nQk=;
+        b=lv9/PK9c1xv/7J9rgfOHQLi6CHkwPGMOd/BSo6esQY6GPTpkBG5RynnLm68vYtgeam
+         shgVA5gct+h+0vFhRFwKhW8M23UewmcnUUBc7RaYts6eRw4k1lnjatOqn+XqilKB2Z+9
+         dA/ZC7uUL8gWVtMMedU2jE1CxgZ+KgejAdGFVSKWNHGoLyMkYTXR4YDbst6NFQTm9Jru
+         yEVN+5SIJwjTQp6vnyfmC32zbWkF2Kn3yIKHcJ1ZmnOzMDOH9BA6Ost7NTEQkrZWG2lY
+         yXAF6kotgkVHiGgtM24FQq13cKPXh8xmSLpDX9sM6AR7CNAmT1dQEfefoTWXvMAxQkcB
+         UKew==
+X-Gm-Message-State: AOJu0YzPOMLvvbx6/A98xzoCV5nmWF8PZQeobg2hkdLYa3A46+XFcRqo
+	bU0JzYaDDoTVIanS56CngMadMtQupCY4EqpIRbcGz2EG1kX0NZRBDJBJzHojymPq
+X-Gm-Gg: ASbGncu8/haGmogIAtt8/7+lMhAXFyBI/UzYrArYPHnlWkbrGOGVbQzHNtjbaj75CKq
+	h19sPWl2mLYbqWqTNKC3BAXnk9IsGueDzhareGsk6xTRI6Hh1CqYkAPgFQ8ZgDKC87fYsyUG81Y
+	OaxXb403vj8TTKZj9Hnjl6K42FpyRQe8Zi5VShERiXRrtP7vtUyeb37rWN2BOH+Vu5/1t/vfYZi
+	IGgvxWavgmSaJRDQqNkdZRH7tOpa/Uuwuue7GZ5fBft3B5ZUyz3QSif1OAZRx+85zjxN4TtkaIc
+	Z1z/Y2XEgZrsHaYu7BWJDMJ5GS8RS6mOCsoH554amiuIX9FT97Vi1r/GDy8ShRSow30g8ar790R
+	GtEOGA4lFU7MNWXJqilf7FqGgmHMhnaDY1K6DpCVxKzA7s0REHuXuV+TmbldH+xIpblQEmujSyV
+	DgcFwFQWsS3I8=
+X-Google-Smtp-Source: AGHT+IEkqAUUHyBE9M/co+vnLkHIe2fD7e1gTriXkONe3Sws+5JQSERCdcZdrd/jj1AB95qz+6+Cpg==
+X-Received: by 2002:a05:7023:b89:b0:11b:3742:1257 with SMTP id a92af1059eb24-11cbba4a6aemr8596284c88.34.1764211100359;
+        Wed, 26 Nov 2025 18:38:20 -0800 (PST)
 Received: from [127.0.0.1] ([52.234.41.68])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2a965b1ceeesm1537240eec.5.2025.11.26.18.38.18
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11dcaee660asm810257c88.3.2025.11.26.18.38.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Nov 2025 18:38:18 -0800 (PST)
-Message-Id: <da99bb0bcd8c92e0d6de8b929b67095fae251f88.1764211096.git.gitgitgadget@gmail.com>
+        Wed, 26 Nov 2025 18:38:19 -0800 (PST)
+Message-Id: <86315aa3e36afa1ee741a2c9b9e95a71ca569302.1764211096.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2000.v2.git.1764211096.gitgitgadget@gmail.com>
 References: <pull.2000.git.1763201865025.gitgitgadget@gmail.com>
 	<pull.2000.v2.git.1764211096.gitgitgadget@gmail.com>
 From: "Scott L. Burson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 27 Nov 2025 02:38:15 +0000
-Subject: [PATCH v2 1/2] diff: "lisp" userdiff_driver
+Date: Thu, 27 Nov 2025 02:38:16 +0000
+Subject: [PATCH v2 2/2] merge with Scheme regexp; fix bugs
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,34 +85,61 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 
 From: "Scott L. Burson" <Scott@sympoiesis.com>
 
-The "scheme" driver doesn't quite work for Common Lisp.  This driver
-is very generic and should work for almost any dialect of Lisp,
-including Common Lisp.
+This commit merges (by disjoining) the new generic Lisp regexp into
+the existing Scheme regexp.  It also fixes two bugs: the new regexp
+was unintentionally allowing tabs, and the matching of "(def" should
+be case-insensitive.
 
 Signed-off-by: Scott L. Burson <Scott@sympoiesis.com>
 ---
- userdiff.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ userdiff.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
 diff --git a/userdiff.c b/userdiff.c
-index fe710a68bf..e127b4a1f1 100644
+index e127b4a1f1..b67dfddbef 100644
 --- a/userdiff.c
 +++ b/userdiff.c
-@@ -249,6 +249,14 @@ PATTERNS("kotlin",
+@@ -249,14 +249,6 @@ PATTERNS("kotlin",
  	 "|[.][0-9][0-9_]*([Ee][-+]?[0-9]+)?[fFlLuU]?"
  	 /* unary and binary operators */
  	 "|[-+*/<>%&^|=!]==?|--|\\+\\+|<<=|>>=|&&|\\|\\||->|\\.\\*|!!|[?:.][.:]"),
-+PATTERNS("lisp",
-+	 /* Either an unindented left paren, or a slightly indented line
-+	  * starting with "(def" */
-+	 "^((\\(|:space:{1,2}\\(def).*)$",
-+	 /* Common Lisp symbol syntax allows arbitrary strings between vertical bars */
-+	 "\\|([^\\\\]|\\\\\\\\|\\\\\\|)*\\|"
-+	 /* All other words are delimited by spaces or parentheses/brackets/braces */
-+	 "|([^][(){} \t])+"),
+-PATTERNS("lisp",
+-	 /* Either an unindented left paren, or a slightly indented line
+-	  * starting with "(def" */
+-	 "^((\\(|:space:{1,2}\\(def).*)$",
+-	 /* Common Lisp symbol syntax allows arbitrary strings between vertical bars */
+-	 "\\|([^\\\\]|\\\\\\\\|\\\\\\|)*\\|"
+-	 /* All other words are delimited by spaces or parentheses/brackets/braces */
+-	 "|([^][(){} \t])+"),
  PATTERNS("markdown",
  	 "^ {0,3}#{1,6}[ \t].*",
  	 /* -- */
+@@ -352,14 +344,21 @@ PATTERNS("rust",
+ 	 "|[0-9][0-9_a-fA-Fiosuxz]*(\\.([0-9]*[eE][+-]?)?[0-9_fF]*)?"
+ 	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
+ PATTERNS("scheme",
+-	 "^[\t ]*(\\(((define|def(struct|syntax|class|method|rules|record|proto|alias)?)[-*/ \t]|(library|module|struct|class)[*+ \t]).*)$",
++	 /* A possibly indented left paren followed by a Scheme keyword. */
++	 "^[\t ]*(\\(((define|def(struct|syntax|class|method|rules|record|proto|alias)?)[-*/ \t]|(library|module|struct|class)[*+ \t]).*)$\n"
++	 /*
++	  * For other Lisp dialects: either an unindented left paren, or a
++	  * slightly indented line starting with "(def".
++	  */
++	 "^((\\(| {1,2}\\([Dd][Ee][Ff]).*)$",
+ 	 /*
+-	  * R7RS valid identifiers include any sequence enclosed
+-	  * within vertical lines having no backslashes
++	  * The union of R7RS and Common Lisp symbol syntax: allows arbitrary
++	  * strings between vertical bars, including escaped backslashes and
++	  * vertical bars.
+ 	  */
+-	 "\\|([^\\\\]*)\\|"
++	 "\\|([^\\\\]|\\\\\\\\|\\\\\\|)*\\|"
+ 	 /* All other words should be delimited by spaces or parentheses */
+-	 "|([^][)(}{[ \t])+"),
++	 "|([^][)(}{ \t])+"),
+ PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+ 	 "\\\\[a-zA-Z@]+|\\\\.|([a-zA-Z0-9]|[^\x01-\x7f])+"),
+ { .name = "default", .binary = -1 },
 -- 
 gitgitgadget
-
