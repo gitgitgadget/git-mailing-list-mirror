@@ -1,86 +1,68 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp3.bon.at (bsmtp3.bon.at [213.33.87.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3297F32AACC
-	for <git@vger.kernel.org>; Thu, 27 Nov 2025 10:32:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0BC2F90E0
+	for <git@vger.kernel.org>; Thu, 27 Nov 2025 10:51:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764239571; cv=none; b=VkGKKtrQaQRzw3n0twSHm1iXHeMoojWqOx+nhzX6KVofhE2H4EllD8KI9R7Rw7fVbm3fwaldw1pusnBLKo8Av9IqBWK/LpGXy0ZlEOzB8l01Et1vc6Pdr4wol0+ODeiYCGVGkfqlJEf+JXQrPj+qeqKkIyV3tKCnMcq423RMbCo=
+	t=1764240690; cv=none; b=ZNhGlgd145aI3pztlgGpUEdfJEUbiZKEM2iVHG2dVjY5AFZ2QqMaeEO6w6vVdilE3jDjtLZikAxVobtyj8aJr4XylklO6HUprUHMQBVSZBvUwQSclAia7hJzElWGvKxQsonTKBvvsKZlsVB8/85QWb41xSTTlItNyLFvgNocVmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764239571; c=relaxed/simple;
-	bh=oHQMprnqwMpHuKKC2YQyTLFWYAeIJH7gvNEi7wPHjfQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gKh+CM4kU4AXVyLKERNdzeSkIDAaS4uOYS5s8SlPPWwS1lIU93/CN2dkKSEUJhrlMWcA1x1/OmqonFeEUJopGsd2YLsn4ayke9vNNzd69QTKKvemRX5WF004EbjwVhxNAeFYBhzSoEWHhzzoNJJhfOQviJ0G0IJJup9vsedc3ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sympoiesis.com; spf=pass smtp.mailfrom=zeta-soft.com; dkim=pass (2048-bit key) header.d=zeta-soft-com.20230601.gappssmtp.com header.i=@zeta-soft-com.20230601.gappssmtp.com header.b=1DoBY3NB; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sympoiesis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zeta-soft.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zeta-soft-com.20230601.gappssmtp.com header.i=@zeta-soft-com.20230601.gappssmtp.com header.b="1DoBY3NB"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-644f90587e5so1262427a12.0
-        for <git@vger.kernel.org>; Thu, 27 Nov 2025 02:32:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=zeta-soft-com.20230601.gappssmtp.com; s=20230601; t=1764239567; x=1764844367; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S2OKpfAyCMJFj2LWM5W7qbGiqFfPQX4hjtjCCJ+jnH4=;
-        b=1DoBY3NBkXYkvcGzJKupprWvdzQdJpOktI5Gi1qV9fVhb23TfrGbe/8AuTaGceUTEf
-         mf9xt9fcgKPXVU9sr18zcnj1sQwWcaC/zaxXoT0AkmWZHnXDF+FCP/pJa9IflzFcfE3k
-         xUomV5+QSMMZxzKLcykhMidSmviyDI5Gk72vJOhR0AJgYtmJb7IHBWJ2EZEq6mOSvLS7
-         XAaW31dl82ze7unluQ8VGGEWD5vQ3xdYurxPLcefVTFgTF2/q7iA5XxrCAN9+8XLFOHd
-         sAg4OkxV3CTK6w1UN1ot0mk8vXK/OaSJuZaEcGXggCN0DKmL/Xdtz5m0cmnpmoCGjpcu
-         rfqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764239567; x=1764844367;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=S2OKpfAyCMJFj2LWM5W7qbGiqFfPQX4hjtjCCJ+jnH4=;
-        b=QXN3OuNBkFe6tTfGWTgsPeb0mjt1Cqj5J7hMr+4bIO4IBZF/QWu0BQOLgS0ub/NDB8
-         diMbDaiZNtG/j+r2WWB5GhRHTuQ6WRKShg3gV+U90Yu/ILFwf419L/Grl29+wD9+0oWM
-         L6leDUNyrifwh62A1em1l8shOBROUxZI3ONolXbzqXPXRuiZICOPprBuKwWu0oGa4zA3
-         tKMUFCyLI9mMC1UjZJ3NAQTsQgb2RDxQZLBacMxrilhpOHdRRx6AanMBuXzAGsz1J1h0
-         KmKaXBDfB0grXnSlxtKN3x1sfRjJN9lkEY9x2+noOB12bRj6oDhzCIfLQH3wFWlEfARL
-         uVyQ==
-X-Gm-Message-State: AOJu0Yw2fVQ3PeuBh4dbWVzpdlrPv3JNWqgDP1LB66+zNQx76Nw2YlXh
-	Jmhe3GOZMFgGhHddplIAMiU2NdmXtKqcmHuBa4aqCehKFyModAu0oKBjGr8NiRwt5JyaYMPkpwy
-	jIff3juHJNdWKOSY1+22Go3UXWliq5bvvl75FNhzBTw==
-X-Gm-Gg: ASbGncu/Ip+uoOSbQQBruV2L4O6BGxESS+y4ecWs9FqyZS8z6/bGOy14aIPb6AS6P9o
-	vDIyRTMWtbMg/AvQV24Ib01sLrw67lfV7yT/7cLCkm9SHiHwpyU48ZCs0sc5WWARFAga3YrP2pU
-	KYb28AiWFYo0hJEW/QCiQ5cp2kxdxIKGAxdvWvviX+Aw1MLG4O6rxK6SYyU3ic1SgMqVT5CNfha
-	nrwq2jJMIfRDdyHnfTFl6rYMl31+vM0CBVUa/pdMm7dh8vVK8DWjjIGELNdQ8c1wXw=
-X-Google-Smtp-Source: AGHT+IGKaCrE8hUNfA3+X5zQwzC129oRYQ2JQ9Y1gMVnO8yB/7r4Ma8yYJ0mPToHBsUg6FrwBS2+nh/SBixTSyqALQ8=
-X-Received: by 2002:a17:906:d54e:b0:b73:8307:4e95 with SMTP id
- a640c23a62f3a-b76c5356e5fmr1015741566b.4.1764239566978; Thu, 27 Nov 2025
- 02:32:46 -0800 (PST)
+	s=arc-20240116; t=1764240690; c=relaxed/simple;
+	bh=Ew9WC39Y1tPN/5tYvSP4Xp8CLzlNSKsFyODg54W+h7g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rqJkweL15tQ+WkClddP2eqKUcmdlRfeEHn3FTF1mNCbB1lg1puWw4mWvrOgCnLgYzpRsMT35Y+mvxX7X0SHG1kC8RcZDt3zI/4mNbiA/0LofrcW2f7TjDzbfv3QHVz+ozE7A7aF60WlNVr1w6rkEilGFjjwR2ACcQU+OW4Dj0fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.103] (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4dHCsS4XfdzRnDC;
+	Thu, 27 Nov 2025 11:51:24 +0100 (CET)
+Message-ID: <8800e796-77f4-4613-8c68-25bfa091d424@kdbg.org>
+Date: Thu, 27 Nov 2025 11:51:23 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2000.git.1763201865025.gitgitgadget@gmail.com>
- <pull.2000.v2.git.1764211096.gitgitgadget@gmail.com> <da99bb0bcd8c92e0d6de8b929b67095fae251f88.1764211096.git.gitgitgadget@gmail.com>
-In-Reply-To: <da99bb0bcd8c92e0d6de8b929b67095fae251f88.1764211096.git.gitgitgadget@gmail.com>
-From: "Scott L. Burson" <Scott@sympoiesis.com>
-Date: Thu, 27 Nov 2025 02:32:07 -0800
-X-Gm-Features: AWmQ_bkPzhHAlIq-0VarNUAVqXoD8tD1bXIXsgq-Y6lzINihheY3S3Y5ud0X8NE
-Message-ID: <CAF5LJ4B2PeLPZi5gD6Htqdwhj5T-5U9Od_NhDe-8kXTN1-v6_Q@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 1/2] diff: "lisp" userdiff_driver
-To: "Scott L. Burson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Jaydeep P Das <jaydeepjd.8914@gmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: "Scott L. Burson" <Scott@sympoiesis.com>,
+ "Scott L. Burson via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+ Jaydeep P Das <jaydeepjd.8914@gmail.com>,
+ "D. Ben Knoble" <ben.knoble@gmail.com>
+References: <pull.2000.git.1763201865025.gitgitgadget@gmail.com>
+ <pull.2000.v2.git.1764211096.gitgitgadget@gmail.com>
+ <da99bb0bcd8c92e0d6de8b929b67095fae251f88.1764211096.git.gitgitgadget@gmail.com>
+ <CAF5LJ4B2PeLPZi5gD6Htqdwhj5T-5U9Od_NhDe-8kXTN1-v6_Q@mail.gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <CAF5LJ4B2PeLPZi5gD6Htqdwhj5T-5U9Od_NhDe-8kXTN1-v6_Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Nov 26, 2025, 6:38=E2=80=AFPM Scott L. Burson via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-[duplicate of first message]
+Am 27.11.25 um 11:32 schrieb Scott L. Burson:
+> On Wed, Nov 26, 2025, 6:38 PM Scott L. Burson via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> [duplicate of first message]
+> 
+> Hmm.  Somehow I have screwed things up so that GitGitGadget sends out
+> only the first commit, not including the changes in the second, nor
+> using the PR title and the text in the description.  Sorry for the
+> noise.  Is there an easy fix, or do I need to make a new PR?
+I think all went as expected as far as GGG is concerend. You made a new
+commit on top of the one in the earlier round, and then asked GGG to
+submit the PR to the mailing list. GGG made a patch series with a cover
+letter and the two patches. That's expected, because the first patch
+hasn't been integrated in upstream Git, yet.
 
-Hmm.  Somehow I have screwed things up so that GitGitGadget sends out
-only the first commit, not including the changes in the second, nor
-using the PR title and the text in the description.  Sorry for the
-noise.  Is there an easy fix, or do I need to make a new PR?
+If you intended to send just the second patch (as a fixup of the first
+one), then GGG cannot help you, not even if you make another pull request.
 
--- Scott
+But you shouldn't have sent a fixup commit anyway, but that is a matter
+I'll address in a separate message.
+
+-- Hannes
+
