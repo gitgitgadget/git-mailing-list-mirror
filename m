@@ -1,67 +1,68 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E532C3276
-	for <git@vger.kernel.org>; Thu, 27 Nov 2025 16:21:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F85149C6F
+	for <git@vger.kernel.org>; Thu, 27 Nov 2025 19:21:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764260469; cv=none; b=kBmNOYm5s4YSHfhjN+RoMevXZyz4WD01qrqeCEnao/8iYioB+mlHI0WYQ04bO4KySl9gLNHW95mUt4xwNUlG0DUAjqILaUEPKvcmNEQNym7S26foF8mxyeW/lSU9+C6rlA9RapTYa4DkvUT4MzGyoSRRggeDjAZwPaWhaC26lOs=
+	t=1764271310; cv=none; b=cuY2d5BUQL6ZLuTEZklPw1tRPJx6JS+NVvxYo2xrFFaL0GxZXjNH9GwSGDP+WUWHKW4ClPDHWCzkz3D/zvYPbfnQrvuWtmfqZ9k0bYIywWZQ/CKSh3+LPrwLEZCj0OutkuE0TPhRb0XWXlhHU4S/iSKn1vpTIznFxn/RMdEgHCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764260469; c=relaxed/simple;
-	bh=zqCdtq7AKxTprNUa0M8/N3GHacV/xym5ZoC//DirmhE=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=PvIzgp+ZtwLLRrWdiW2UbKRHc6yFtXf3NIcz/iLkTZ9RPTD2PaOXTLyeZL0gjMhDOCXt88Mr6qXrAVwsg8isNIV13QwKzPj01RyOdMnQ+tmgHno/L3RSL6vEloqOygyKxX/+ribzdXa4eA5lrCynWXujNAu+m8afvXHcQKQHUEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lqhZp2WH; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1764271310; c=relaxed/simple;
+	bh=aXaUTCHTPaj+WLTORTr8ZP8FiE11Zh7+gNsCuOY/tKQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jy1I19lGSGBcMcGAkDxniIAlcaJXco1n5jRKUhkVEq9xBhfwIlFgMUjXa4Nuv1Ny0jhwkFrZk5fybgqE5lKpToFcBbs2zExsEqy2MSaPAz9wXJtSC4ScOwWka1xud3w86YJyFppeelyd7lMFokGVmbtGLUhEdqRWmmsydQWAi6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QR/bkNpZ; arc=none smtp.client-ip=209.85.216.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lqhZp2WH"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-42b2e9ac45aso687971f8f.0
-        for <git@vger.kernel.org>; Thu, 27 Nov 2025 08:21:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QR/bkNpZ"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-3437af8444cso1276964a91.2
+        for <git@vger.kernel.org>; Thu, 27 Nov 2025 11:21:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764260466; x=1764865266; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1764271309; x=1764876109; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=J6fcWqky99WB/dj4na/WLhpcppAGHwtwguDnhSRZFXA=;
-        b=lqhZp2WHN4iTMx7EQHR4/4lL0MPMaHJy6OLr2GD487xsyJSxPz2yRoTvkeagCi9PDy
-         c9bD6iSN/1+XY4p+5dMm79lSw0xX5Rvp+1bLFZCa67Y8u7XQEnYKcApxXvj8x6Tal4/D
-         mWiNyduesfQh+dggrxxzuxh0HEBfVUi2Z0KARE9pVsJUD1nLxeIi1E70Rh1F51clBFnq
-         4u4NzIZgiiDS62lGPl3brrEQN9M5RMn8ojV/fu5Yg9qIi+0+8Na4rK3g4cu1pxCWYou6
-         HqjRl8acnoR95IZ++LxWyB5wbzcIb+FLkk5m5uOCFNb0JIVnyh9/xccfrsdV3pwfRKwf
-         XOjA==
+        bh=3qGocpGkLSE5loEd67DY8z4Q9kQ1GQWeXeWv7jWhF0g=;
+        b=QR/bkNpZdqzTDWZ3akMcz12gnZuMNWa9TPGWWTAGLvRUKjrDRn7bATUikH4WFSvCLh
+         B7V4p0gs2D/2H3cGqDn46wf3UK2CBB2QrM+ttBWKwOsX0HMtJIXJy1Fy2s8whLabzzj2
+         sEW7HmI9Fd7+shsjWgE6K33Hvh+oNZRPiKrmMU03igMXHwH9Yn74kw391znAI3t89Qfd
+         JGcUhft45EvwsYO0NETET9IcBxxBiGAaNbBXFSm4vjd6/IrofwLFjb8CEmvS7vbBJ+Vc
+         DfGoUL+NwQBG9fHBsq1OouTDRkW82cZhqcdVewL+nPl0wo9TYxej7fcELPE16HqJLd9n
+         kL4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764260466; x=1764865266;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1764271309; x=1764876109;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=J6fcWqky99WB/dj4na/WLhpcppAGHwtwguDnhSRZFXA=;
-        b=FZGHWuH5puYmPnBqIgquhsHqyqFoxrvEe9caq2xbBPCAfECEREeFOIryllr9av+3cy
-         F84VGQgFjwJj/5fLL4xWq1Lz1zjwjx/LuGtcxHp2W3iizRTO7yaEXn0wSXS0zWHuFAmJ
-         ztsCABJyBhRg33eJXZOZOd7lVYX0KgWRrWuuP8eXFx9lP0rwHhENc9FUibBnVqoKsnfv
-         DqkAOeSX1RUzFRzvvFp0VnbiAMHw11cehhgF3yAHK8enu8ITbBNpxvRyABgcfqMZcbsS
-         Kz+fZZ4TER4xfQ7VEuFlez/NQjQe06LUoYyWq5rNB0YlyZ0zf6lF9GyhZ3zutXbVb3Fx
-         MKBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX4EeRqZpPX/ttN7AFSfQlYjyN/3jrq+Tq0p+eV5pcVfOKf/cyQZoTk4hVjHrzH28zf/II=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQ2yEDBqvRTQY+JHXgQgHMnTBcxxvF/XhjAq0iU5Sh4xIcvmIC
-	fmWVj+NnqeF5rvlhjorbJoV+Dw9ZCeQNOUQL5q8Ws4eCgF9SxOMF4dRK
-X-Gm-Gg: ASbGncuApvoPnnYlNwPwO17DxQBWV3L+XBUKvIoT9qD2oPnoQi7hU0BvMotZUwo/HnM
-	zSnrprNvF+WRNCgG/D5d4G7rPI1R4O/xwuxGbEkjXiUBmzbC2wRORMOxnZjIbkqapKAU+qGs562
-	/4NtEX1T+N9MWgVeTj+PvSk8lIjj1T/mKc/mHqHEvem1mXNpovfKPrcbXiuVfN4Kk/M2RP5AqUN
-	KShU7baVOFjdkiSiG31niDaVjna/DNifGa0loUdKEV1efzovU7NkC+d3acAM1+NqJXdbiWiKblA
-	QxXWmi7Mc01Gg0TY9Gqvp1YSZiQZ1bEpxd2zM7AOPosKF6WuPDdlDw09m23raOxguAj4svuO/Ry
-	yg7E+Y7m0LkiNdgHWTikmqC+ODouMGvzgFVJ0n/SWFrS7T/QhGLyd0eqSNsx/soKtZ7XDhIALco
-	8CFsSIpCXP7fTXSZFzdJ44NDf0p7QwKgqCDnqPlKcipwHyZ7WbyeOJJtHWCTP30+M=
-X-Google-Smtp-Source: AGHT+IHJz1p68/ED715Sg5iCjIH/aSz6bZaAfoLrJldhyzWR3T9dzGTUfev66irIITRscLE/jKIYyw==
-X-Received: by 2002:a05:6000:4313:b0:401:5ad1:682 with SMTP id ffacd0b85a97d-42e0f213731mr11683342f8f.14.1764260466539;
-        Thu, 27 Nov 2025 08:21:06 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42e1c5e3857sm4875662f8f.19.2025.11.27.08.21.05
+        bh=3qGocpGkLSE5loEd67DY8z4Q9kQ1GQWeXeWv7jWhF0g=;
+        b=SQePXM27W+h9Hl7Tm1XJC4bguBakYbD4iQBt3h6TVg3gUr5PWtHTzP22p/w2aUIuWp
+         aVpbsbmWquIuarcmIufNPut3pKv3lHva9BkkVkY6PKO5tMFZiGi4zFsiXWVkVxtlf/L3
+         REmypBt2+27vvqYAa0lZ5CK2ak3fRsh/TvRuDP55sB0v0QsF7RW0Xujbq+DCuzDXaHjX
+         MxsLWMTVYYVio2cNPnPxd0ffWYfw5yHH1hdjfyp1U0GjtD6K1ojH9MlmWPymLfWkDLAb
+         lRMkTu9lDg9/IEdV9qejLLkjeqocpLMzPAX44suD16SniQ8ZL0v1t6MBYpJx3QL2EE4v
+         XLsw==
+X-Forwarded-Encrypted: i=1; AJvYcCXn0t7mds8vTP/2G//PIOF2SH04rNp9NAGsPa5mQpfEDtnxTH/AjU7f/33igiHw8vm6MGw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxPq8ihK7zr5k74cYS1e5OcuJWC7APkdiRzxHexO83bpKledQ7W
+	8gHUOj0mfzbBIh9vXzNK/k4y6gIxyqFdWwd4aDNmRx68jlRCAa7s9gOq
+X-Gm-Gg: ASbGncu/QIp4gxhwMbQwDVI6+Ccj4jrAKRTvp4xv3ZXIdYRPfvFR28qG5u1kKTEAdg4
+	X0Y6+cjWagqlMvL+RINFPMh6JDHrd02WTEqKP2i6XX+RUUQMyouO5/6fzWLQ2+Kr1PCm1vqSMb6
+	iaAOmUyg1tL3mLxxBAWRewR1LlMy+6U5zgn8Wy7hWCczMxk2neiqChVGkMW9yymHfGylbN27FRJ
+	/G+bv4nuMTZA5jIN/erAxUaP3AckKEfM/gAwFh0ovbArB1F+BZ01JdW+s/TiDFPtDdh6ta2yU2g
+	1F0qo5KwXkQtKpdDHd5ygjpV8eikkTP0undmmeiuWgGi6GaZaJNe/VU3PyF68jPUEKoJF+M2fsf
+	Q3Ta5fOVGxSQrBkkJz0AZU2u4KWwhsB0qspwPZLEn09iL93Qa7RHJ1jtAj5WuLDOm5cHgTP4YHt
+	sgFwgUTkcbmGpMhXPM5vIeinUfnJkni3+xVOOvyg0yy1/gP9O5rqXi8Luie37PLothkoQomxMCM
+	rV9PAaDrL8UacGO3iZoA48=
+X-Google-Smtp-Source: AGHT+IFgLDQbYN3pHv531OkLF4CDpMceGBfMhMQR6qc9a7xk5JZBX/gbib0EZsCgVReKuiz9zYrhkg==
+X-Received: by 2002:a17:90b:3e48:b0:341:2b78:61b8 with SMTP id 98e67ed59e1d1-34733f23e04mr22538885a91.20.1764271308661;
+        Thu, 27 Nov 2025 11:21:48 -0800 (PST)
+Received: from ?IPV6:2409:40e3:30a4:b776:a4fb:44b4:6c24:a31a? ([2409:40e3:30a4:b776:a4fb:44b4:6c24:a31a])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3477b732b91sm2541488a91.9.2025.11.27.11.21.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Nov 2025 08:21:06 -0800 (PST)
-Message-ID: <bc974d63-b3f1-4ef9-8fc5-e7e719b6ae89@gmail.com>
-Date: Thu, 27 Nov 2025 16:21:03 +0000
+        Thu, 27 Nov 2025 11:21:48 -0800 (PST)
+Message-ID: <fa403239-cae3-463b-8c62-8761116ec652@gmail.com>
+Date: Fri, 28 Nov 2025 00:51:41 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,44 +70,55 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/1] replay: add --revert option to reverse commit changes
-To: Siddharth Asthana <siddharthasthana31@gmail.com>,
- phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc: christian.couder@gmail.com, ps@pks.im, newren@gmail.com,
- gitster@pobox.com, karthik.188@gmail.com, code@khaugsbakk.name,
- rybak.a.v@gmail.com, jltobler@gmail.com, toon@iotcl.com,
- johncai86@gmail.com, johannes.schindelin@gmx.de
+Subject: Re: [PATCH 0/1] replay: add --revert option to reverse commit changes
+Content-Language: en-GB
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org,
+ christian.couder@gmail.com, ps@pks.im, newren@gmail.com,
+ phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk,
+ karthik.188@gmail.com, code@khaugsbakk.name, rybak.a.v@gmail.com,
+ jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com
 References: <20251125170056.34489-1-siddharthasthana31@gmail.com>
- <20251125170056.34489-2-siddharthasthana31@gmail.com>
- <d563b68b-e01d-4b18-bd84-86f36e61a70d@gmail.com>
- <38b51e19-7939-4a5e-8ad0-2d8168bc0fac@gmail.com>
-Content-Language: en-US
-In-Reply-To: <38b51e19-7939-4a5e-8ad0-2d8168bc0fac@gmail.com>
+ <4d75da90-7e85-573a-bb10-0c63a02b076c@gmx.de>
+ <27fef9e1-bf26-48af-b3df-35948937c891@gmail.com> <xmqqcy54mro6.fsf@gitster.g>
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <xmqqcy54mro6.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi Siddharth
 
-On 26/11/2025 19:39, Siddharth Asthana wrote:
-> 
-> The realistic use case is reverting commits from a branch where those 
-> commits already exist. For example:
-> 
->      git replay --revert main~3..main
-> 
-> This would revert the last 3 commits on main, creating revert commits on 
-> top of main.
+On 27/11/25 02:34, Junio C Hamano wrote:
+> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
+>
+>> 1. For quick undoing an entire MR, the `merge-tree` approach you
+>> suggest is indeed more efficient and avoids unnecessary intermediate
+>> conflicts.
+>>
+>> 2. For commit-by-commit reverts, we need individual revert commits with
+>> proper attribution (which commit is being reverted) for auditability and
+>> history clarity. This is particularly useful when only specific commits
+>> from a merged branch need to be reverted.
+> These are both good workflows with appropriate uses.  To make the
+> tool useful for #2, it needs to be able to allow "I have merged a
+> topic with 7 commits, but the first commit and the fourth commit are
+> faulty and I need to revert them", i.e., not just a range
 
-We want to be able to revert an arbitary range of commits. That means we 
-need to give --revert a branch name to update in addition to the range 
-of commits to revert. The following example would update "main", 
-reverting all the commits from the branch "feature"
 
-	git replay --revert main main..feature
+Since replay uses the same rev-list machinery as `git log`, users can 
+already specify disconnected commits:
 
-Thanks
+     git replay --revert <target> <commit1> <commit4>
 
-Phillip
+I will add a test to verify this works and document the capability.
 
+Thanks,
+Siddharth
+
+
+> (like
+> "rebase" and "cherry-pick" workflows take), but a set of commits
+> that are potentially disconnected.  The current command line
+> arguments "git replay" supports, or "git revert A..B" for that
+> matter, are not exactly a good fit for such a use case, although the
+> user can of course run two single-commit revert operations in a row.
+>
