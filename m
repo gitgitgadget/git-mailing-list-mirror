@@ -1,115 +1,165 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56942417F0
-	for <git@vger.kernel.org>; Thu, 27 Nov 2025 02:10:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B3E288B1
+	for <git@vger.kernel.org>; Thu, 27 Nov 2025 02:16:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764209441; cv=none; b=GGngJmO8iWIrKAoPRX7kdo6RshM9z0LilZF7zxhPRFKLafY/6li2vlp4BUEwkH56CtY8yVenz2wwCVqMEYoQBHadelNpOtEY6hLqktjFPbawGrnwUJpJyPhuAX2EyRLmAFW2qXmca3r46H7NNDXbcqI2SbjFzLIt67knZPt7Ri4=
+	t=1764209771; cv=none; b=fwPQS1Jv3+R1Q/ru08u9RrJ6ypS9bP7ogsSM1hU5212SrTNd/Ak0Q9fqRLU2Ug6qlWv8funan0artC4eFYbBJnZsSO7/NaDTn4tBpmuVJy8fee2F5CtyYdqzU3rW/NcP4wPwvfHB2EL6be7shN45n/hD+BxjsLjf9c1Lrlb5+JA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764209441; c=relaxed/simple;
-	bh=y08Xnia1KJfNLrwyxcWsbKg2UGELQyu3/dONbLY+6MQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Y09vkPWpzfUzRxUFz9s0CG7xVLKCZz0uM3YS9rqSy4ievVo+dLy6jrFICJFNsPgkC+ivjPiQAPNZU1aD15wwbwMgz60A96JBTdOCeslN13PNzANu/aYBl61rnaEJU+Rf7gID4qOOFD3Ffu/pMGjDiVXzWNMF9cL4my+/ZcMdem0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sympoiesis.com; spf=pass smtp.mailfrom=zeta-soft.com; dkim=pass (2048-bit key) header.d=zeta-soft-com.20230601.gappssmtp.com header.i=@zeta-soft-com.20230601.gappssmtp.com header.b=SLQYjD5i; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sympoiesis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zeta-soft.com
+	s=arc-20240116; t=1764209771; c=relaxed/simple;
+	bh=eizYvNzqxPAmzxx9THeUwUIurOclDUMsH/9ZN3VE/cI=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=EqSwsDcLQDRmcgUogHg1TX8uYIUuFBndRvCYoWShVUO9TMedYVV8rFvMJg7VNzZELM12lDG5lSqRqdlOPDcH+xLh0EKY+ce9UodkPhMbCcbecl1Yg8iXVg27p6zFulHtZ9dJP9E4kVtA9BPl/PlWKahF+vcDadI8Si1MWNZHleA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MK4BJJ1s; arc=none smtp.client-ip=209.85.219.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zeta-soft-com.20230601.gappssmtp.com header.i=@zeta-soft-com.20230601.gappssmtp.com header.b="SLQYjD5i"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-640a503fbe8so799347a12.1
-        for <git@vger.kernel.org>; Wed, 26 Nov 2025 18:10:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MK4BJJ1s"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-8804f1bd6a7so3158456d6.2
+        for <git@vger.kernel.org>; Wed, 26 Nov 2025 18:16:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=zeta-soft-com.20230601.gappssmtp.com; s=20230601; t=1764209437; x=1764814237; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1764209769; x=1764814569; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=j5tUvfP/Tcv6uO+wEDKU91i81IytHmfbfs8HgBWIBJw=;
-        b=SLQYjD5ieYkppdDjFEmkO24+oDiZe7iUhpboLLrIWMJhr4e4eJcZ9pZPjVGef6RaRv
-         Hod8AkAxtlDanaUA1nSix5XqsL9VNFSFNOfiEcFsHiqk+V8iH26jwF4hGbQjXbQNlgVv
-         10FKCAj+Ie6uf7m044tsXjx6e2Vqk0TFx2LrNflSuX1roF7JBCqEDN8t5BNHXRl1IvyV
-         vm43AZs9L9fe6RqrF109aoL/huxQ3Yc/Ifo2LFzvYd7JAyYhfhhBOChizNpYrt+l/P56
-         gCEUaTGHqQBdDge/Qp/HabOL0d5oCtrXRdKn4oQw3cNPEXhvN1ekRa7CAzZ/vz9I6r/d
-         5bcQ==
+        bh=6kb4Dpr1syEhkBn8yhFSh6nvkgUuqswtu2BinAQKY3U=;
+        b=MK4BJJ1suqkXQfSdx99P85dIPdmJk0NhldLnFWua8jAxzeMCgL6YKmBGNeJnMAkebS
+         ehVlVLoH4yOVSVWr7WD1uF/DnhXo7HGRL7ZDMrw1U3E9TwogJxlc28eKuUUSXWFp59at
+         J8Ayq+Hs+4VSB9q4g9SpUWP8vFYTcSnUU6hDOkCKDVO7SAid3zRZEKgn/J2oSiLb9rPS
+         D0VjLBc+Em55N/fMQUWDsu9XJU3BVWIHSCuaRcyXDtMumUswRJztwknV2ehL0SyH6NQv
+         upxZ8u6njcwwTArS/1Acr5sMBoBACXyh3DBG0wXubeBu9GL+mAnUY/wDBDq7WmFXNJRA
+         CYhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764209437; x=1764814237;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1764209769; x=1764814569;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=j5tUvfP/Tcv6uO+wEDKU91i81IytHmfbfs8HgBWIBJw=;
-        b=nygFebB2cf4dPrZiNPaUBHvSLIgeCALM6Td32bHrHRrRjTDcb1UORT55IBeV9Fj2IY
-         pu/+X+QF+0E0/foZxEWOO35onFMYD4diayFbIDOBT3o/NE9LAwac/e8iW6vMbcYc4HaF
-         RA7A7GmYtVEkV3VXNXPx2pKysKoMV7rT8n+X7LCMmYTPvR8nsD6K83ycNZXoHgy3anfd
-         WH8hCTBe1Np9U8+bwL19nUXC17BiTqe4LUp5d1b3iLwDupUuB0hUnIx1nI+i6XjX/R0o
-         2aGS5Dwc1sZz2XG1HrNPEHZWjoSo1fl7vvLv5yq2q2Pg+pbOLuCmvVRI0KSISB3zrxjN
-         dbLw==
-X-Forwarded-Encrypted: i=1; AJvYcCW4xipDL8fMDZklD2eZkfJIfoG5/RfQThhhi7bMk5UB7J1yq6wLgdK8PyhDf/unpX/mU5U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwG0mSA1TaHFaVc9f1Ls0KtNuLBUcqM0HvCaSSUu0Wc5yl7ltHC
-	BIcdvhReeT+svPNTpIbFWo6RIRuP1h7N5cJ9CWuyjudk8bt+HtKs8jlsKqH2O6wngq58UMgASHx
-	SuBdAqDRnpT6sVNUqMV4lsYnS1UxBpIIWF4KkusFNMu20ImIZ9UU1lMWh+liE
-X-Gm-Gg: ASbGncuCFjpA0X6gexmzoDPSOk+Kl2yem1RAh5ZTMTpSywPcjFj9qFOhpkYbbmnAKzg
-	RGzHUU6UDaAaSG8ypBwVq6u1L5CcYxSgaaEWBo/m8SJIpL7Ql9v12aQYAPBU3SrgAOJ8pxMGzZ7
-	uvGmmJ7qRCvxPFOd9CYKO3gLJMf37WNldWJOFjLPVL4gE3vo7eeYoEu+lzutlq/KLHcQCX00tUb
-	9BVGHeoyJPyWvEFbMTDx2uacDTevqnVfus2JCd3+hBInPJmU56XB3XNh4/O98TEsZw=
-X-Google-Smtp-Source: AGHT+IGvVBOwq6yEZveJRzAlkYGvQ7fbOYFtU/w969Ig5kqh79klwKderwhU+J0gXnakI0K25QPykyoh+suajyVp0eI=
-X-Received: by 2002:a17:907:6d1c:b0:b73:5936:77fc with SMTP id
- a640c23a62f3a-b76c54b85b0mr920535966b.13.1764209436938; Wed, 26 Nov 2025
- 18:10:36 -0800 (PST)
+        bh=6kb4Dpr1syEhkBn8yhFSh6nvkgUuqswtu2BinAQKY3U=;
+        b=Ve5rTELaAzWC5A4TfyvnsPt9Hq3c3t61Xo7GIdIDqNCQp1GXSXbz7warPfYkOv+2mo
+         8k66WqB9xJuGG8wiWsx9bDDU6+4EuZTj4/QcwDwu/TiYCOkuwYYAqUaVCT+POay6MYME
+         tGvMTxTX797lPPxEgzjN+MCAHAfroDibJWUK7qqjOJyQDjVi7OA468f3+dvptSdoIfl9
+         Y1GjQGD8z+0ZqCTtBO7ViiDR6iFFRkTWlVK9pD+MKdinP8F+aAP2AYzWijmuOdtdvoED
+         7FKIOtkpO1E7LqVk57eJ+xzPrfHN46onJngdf7H878NFeHfLZI7qwa8+By9QhLjM49Mz
+         JFBQ==
+X-Gm-Message-State: AOJu0Yyw7Fvf3STP+Q8va9PYP+/xZq64oY/I7evUbJHuT2lDadO+cYub
+	UGFEblWGmpW/waNntWJRPq1cYnQKGPUm47/JF3uCLFVSsSZO0ii4SKEK1eff2EB5
+X-Gm-Gg: ASbGncuTKodilfBBJ8UZRP3wM87pjK5cpOOSdXRsOZpqIQ7ewJu7pTKi2OF8qu6L2ru
+	mKrZ6iWYe0xhojAQjE4xuheEtTaH3E7IbvvIwthtRG+GBEERgvUWpSdwohewDYRA3ePNwSbKqw/
+	mqGAMa2p8GeagcTodX2/77I/55DQlL0vkkPf1VTjlV3p9AngG27YTGkgEeq7mPYzfvhDA/jzWjj
+	WtV7vmnAsCupvp6mr+65n6NmA9lYhKKXZ86T+rFziV6HMHcu5X0iRUjlScrVHQ2RxBRiBm5RzB5
+	evVt34CHU6ZzhgZWlbeEpmjZhTCK3lERT1iJRa5JR+5uUGKcLO/qk8AinoHgk7YQPokjI10jTt/
+	LyBeAExzHIny7DLxcf/Wa6GNMk8dJ+yUoTG26XGIDmxPecr0WZUTP8nMzoGiGKtzPQZMN1BtO7M
+	yMb+1iFeBg9SMfEQ==
+X-Google-Smtp-Source: AGHT+IEhk47o3HW1YlHeHIQ6pYtLPuipc712JnDcOVaX3OtHeRtRdpT8AAUXHAgT7yk1qsnkscM6SQ==
+X-Received: by 2002:a05:622a:14cb:b0:4ed:b6aa:ee26 with SMTP id d75a77b69052e-4efbdaef286mr125391141cf.55.1764209768699;
+        Wed, 26 Nov 2025 18:16:08 -0800 (PST)
+Received: from [127.0.0.1] ([172.172.86.227])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4efd2f9a71fsm1772041cf.6.2025.11.26.18.16.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Nov 2025 18:16:07 -0800 (PST)
+Message-Id: <pull.2109.v2.git.git.1764209766305.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2109.git.git.1764152756908.gitgitgadget@gmail.com>
+References: <pull.2109.git.git.1764152756908.gitgitgadget@gmail.com>
+From: "Yee Cheng Chin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 27 Nov 2025 02:16:06 +0000
+Subject: [PATCH v2] xdiff: optimize patience diff's LCS search
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2000.git.1763201865025.gitgitgadget@gmail.com>
- <773d3233-c890-4df9-8f7e-32ff8a48651e@kdbg.org> <CAF5LJ4D4q2S2VFhvEgVOe1Ar0e6cu=H3e_o_98VwHN7wYHh+DQ@mail.gmail.com>
- <CALnO6CBFKjewrkPeEUh7Q-A2dZ7Fknjy4DszG8xCKu-NvGETfQ@mail.gmail.com>
-In-Reply-To: <CALnO6CBFKjewrkPeEUh7Q-A2dZ7Fknjy4DszG8xCKu-NvGETfQ@mail.gmail.com>
-From: "Scott L. Burson" <Scott@sympoiesis.com>
-Date: Wed, 26 Nov 2025 18:10:00 -0800
-X-Gm-Features: AWmQ_blxa4pG5pU6EiSHGzWomMgIjGoIGs98V6c-lC9728YY-Dr0dM-Pm4vZ6W4
-Message-ID: <CAF5LJ4AgJvMHej1uRm5Q0v_BTavmm+aXPBC-nGmBp9URX16Gkw@mail.gmail.com>
-Subject: Re: [PATCH] diff: "lisp" userdiff_driver
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Jaydeep P Das <jaydeepjd.8914@gmail.com>, Atharva Raykar <raykar.ath@gmail.com>, git@vger.kernel.org, 
-	"Scott L. Burson via GitGitGadget" <gitgitgadget@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Yee Cheng Chin <ychin.git@gmail.com>,
+    Yee Cheng Chin <ychin.git@gmail.com>
 
-On Thu, Nov 20, 2025 at 8:47=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.com=
-> wrote:
-> Without "going there," I think there are enough differences to warrant
-> a different driver. (OTOH, I have sometimes wanted to teach the Scheme
-> driver that most "def" things are probably definitions.) Our
-> indentation is less rigid in that indented forms may be more deeply
-> nested than only one or two spaces (and we of course have more
-> definition forms than "only things starting with def"), and I don't
-> understand the downthread desire to not permit tabs.
+From: Yee Cheng Chin <ychin.git@gmail.com>
 
-The proposal on the table is not to replace the current Scheme regexp
-with the Lisp one, but rather to disjoin them, so as to match any line
-that either one would match.  So you don't need to worry about false
-negatives.
+The find_longest_common_sequence() function in patience diff is
+inefficient as it calls binary_search() for every unique line it
+encounters when deciding where to put it in the sequence. From
+instrumentation (using xctrace) on popular repositories, binary_search()
+takes up 50-60% of the run time within patience_diff() when performing a
+diff.
 
-The thing about tabs was that, the way I had initially written the
-regexp, it would have matched a line starting with one or two tabs, or
-a tab and a space -- but no other whitespace -- followed by "(def".
-This was not my intention.  I was just trying to match lines starting
-with a space or two and "(def".  Again, this is in addition to the
-lines currently being matched by the Scheme regexp.
+To optimize this, add a boundary condition check before binary_search()
+is called to see if the encountered unique line is located after the
+entire currently tracked longest subsequence. If so, skip the
+unnecessary binary search and simply append the entry to the end of
+sequence. Given that most files compared in a diff are usually quite
+similar to each other, this condition is very common, and should be hit
+much more frequently than the binary search.
 
-> As for Scheme community, I'll suggest asking on the Racket channels
-> (Discourse is probably best if you want a mailing-list-like
-> discussion?)
+Below are some end-to-end performance results by timing `git log
+--shortstat --oneline -500 --patience` on different repositories with
+the old and new code. Generally speaking this seems to give at least
+8-10% speed up. The "binary search hit %" column describes how often the
+algorithm enters the binary search path instead of the new faster path.
+Even in the WebKit case we can see that it's quite rare (1.46%).
 
-I have asked on Reddit under /r/scheme, and got only the same
-objection that you offered ("define" etc. forms more deeply nested),
-with the same resolution (disjoining the new pattern to the existing
-one).
+| Repo     | Speed difference | binary search hit % |
+|----------|------------------|---------------------|
+| vim      | 1.27x            | 0.01%               |
+| pytorch  | 1.16x            | 0.02%               |
+| cpython  | 1.14x            | 0.06%               |
+| ripgrep  | 1.14x            | 0.03%               |
+| git      | 1.13x            | 0.12%               |
+| vscode   | 1.09x            | 0.10%               |
+| WebKit   | 1.08x            | 1.46%               |
 
-Reddit says my post got some 4300 views.  That seems like an adequate
-sample to me, but I can try elsewhere if you think it's important.
+The benchmarks were done using hyperfine, on an Apple M1 Max laptop,
+with git compiled with `-O3 -flto`.
 
-I have an updated version of the patch ready; I will submit it
-shortly.
+Signed-off-by: Yee Cheng Chin <ychin.git@gmail.com>
+---
+    xdiff: optimize patience diff's LCS search
+    
+    Changes since v1:
+    
+     * Fix typo in commit message for "pytortch"
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2109%2Fychin%2Fpatience-optimizations-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2109/ychin/patience-optimizations-v2
+Pull-Request: https://github.com/git/git/pull/2109
+
+Range-diff vs v1:
+
+ 1:  dc6d509b59 ! 1:  0f8a2dd719 xdiff: optimize patience diff's LCS search
+     @@ Commit message
+          | Repo     | Speed difference | binary search hit % |
+          |----------|------------------|---------------------|
+          | vim      | 1.27x            | 0.01%               |
+     -    | pytortch | 1.16x            | 0.02%               |
+     +    | pytorch  | 1.16x            | 0.02%               |
+          | cpython  | 1.14x            | 0.06%               |
+          | ripgrep  | 1.14x            | 0.03%               |
+          | git      | 1.13x            | 0.12%               |
+
+
+ xdiff/xpatience.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+index 669b653580..13ab0d591c 100644
+--- a/xdiff/xpatience.c
++++ b/xdiff/xpatience.c
+@@ -211,7 +211,10 @@ static int find_longest_common_sequence(struct hashmap *map, struct entry **res)
+ 	for (entry = map->first; entry; entry = entry->next) {
+ 		if (!entry->line2 || entry->line2 == NON_UNIQUE)
+ 			continue;
+-		i = binary_search(sequence, longest, entry);
++		if (longest == 0 || entry->line2 > sequence[longest - 1]->line2)
++			i = longest - 1;
++		else
++			i = binary_search(sequence, longest, entry);
+ 		entry->previous = i < 0 ? NULL : sequence[i];
+ 		++i;
+ 		if (i <= anchor_i)
+
+base-commit: 6ab38b7e9cc7adafc304f3204616a4debd49c6e9
+-- 
+gitgitgadget
