@@ -1,65 +1,69 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3093028B4FD
-	for <git@vger.kernel.org>; Thu, 27 Nov 2025 01:10:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D26299A94
+	for <git@vger.kernel.org>; Thu, 27 Nov 2025 01:10:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764205840; cv=none; b=oePN5EpJpBMZBbnxr+++UL/RC5IVbVt/ZD1+4GG9XbTgslXO028ps1Xuzzj82Qr1l3kwdhvdO+ZbCQ90RLgYIbIJ8K/DQBAvsVKh4GWrg6asptNUrPtiLFIoVxq//Ld+x6EZrmhylMBlBwiErVfzGKlHfElJzg9eG/VP9aFPLIs=
+	t=1764205842; cv=none; b=DEgJrS2JIr/SSVGODv9LUf0vXjxN8siBfoPvYLYStObTMyfAuno6nmatuvCv3boA/ufzoStI1Ed3tSAOvvV0Q1o4EicXONB7K3wjUP/hKkJPYXWCCKLlYK/UUY6L/hjrOSgSDkotTc0tzWrcCUwh06IwYWqYZ3YcnYCH3h9rc88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764205840; c=relaxed/simple;
-	bh=8rkfvec1jKUY/9aOMthknK/1lULU4JBk6UMHAQiwnos=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=X0LwnYSMFZXjcesixxm7ClfMJaGH4xSTWENpEh6lQEL3Q+p2UdVzK16gJLnvYVieMmxDbgvTwonHsKqzg+TP3cowImpcSiMLSDb6W4nob4PZ1vKI20TVUpJms67tlWQSdGnf/jrco9imr6FXZAss/n9AWNi6F0wYSVn5t3jNTDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MyYeIm4K; arc=none smtp.client-ip=209.85.166.180
+	s=arc-20240116; t=1764205842; c=relaxed/simple;
+	bh=Wndj7prhJGD6cxcfvA8Ft5Rn265YIuOXXYBw4Dgm1VI=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=bCDnV0okmM+26GBGdLr8tPbXHDLadVl2uNsDSrroM2YCOeUdpUGXJczWbskaaHIZPry+j3nqPuqmYzRQKhTftiFGe0M81hxaUkcG+EAVjlvHo3g4Z5qIFAoqxJ/PsO8GSMmPUIzvwMB9aGhM4qtchA0bGO9mUpBPaUDp6tGjVdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fq0WITk4; arc=none smtp.client-ip=209.85.166.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MyYeIm4K"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-4330d78f935so1753945ab.2
-        for <git@vger.kernel.org>; Wed, 26 Nov 2025 17:10:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fq0WITk4"
+Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-9490c862fcbso14868239f.2
+        for <git@vger.kernel.org>; Wed, 26 Nov 2025 17:10:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764205837; x=1764810637; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764205840; x=1764810640; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=oO/YRzHlZrnsPAOL5JVMMj2fW3ffkSVPUVdzEYk++a4=;
-        b=MyYeIm4KATjMrl/g0spxpNgWzfM9UqKCEygt6KuPfOCpmrTulKdbqXq59r3YVGDYkn
-         d6b9HxP20i77JxG1XKHXNjKHdgcoCrWh16CfLIKGngEUc4xpZpQB0NzLCbIzTCpNfxe+
-         e7exUnokNjFZM1jUzjyJXCAwc3171kvPwzAzn37SMcJgb2xseo+UqcsT2vojEK/+9VPZ
-         ffW3HqbowI853i9C7pTFndqjeA/fX06hI5kv/+yBNGxv8d1v8DvUjb6oLa56PNi9I/SC
-         0x5UFF5zGV54C8ZRgRSGFBq85e0rETiVuGbTg9RC8mBeP4PFfIf+Lt3Zsc8StrzYyhmj
-         v0Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764205837; x=1764810637;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oO/YRzHlZrnsPAOL5JVMMj2fW3ffkSVPUVdzEYk++a4=;
-        b=mR7uqK9/yyVmQlBprXRgEawWzWPc/QAGNNTjmYs/i9Aw6txQcfj5R84Ff9yCoMMjzu
-         xaXe4nRNFO/p705fxVScmi6F6DpO929YE7PIOPe4uNBukr5ClzO/oep0v4n7lNH4nkYh
-         t34QWMSA31eQvp0w3y/axYSw3m6kItXnHcS/4dn+WTgTIjEZS33gDaAnQ0ceZcGdyfMp
-         5frIcU1tBzmxl9kIyFNygHuR4YS4hSOtHVZJVyU6Bq+HZfOunJNt74vYc5xD0JTha8B3
-         iznmRWpORAzgZq1YuChgPkvRNEy5nqys68Sd/62CnRkAzUcZH30tAQs6LCI1iFVbpAqv
-         /T+w==
-X-Gm-Message-State: AOJu0Yw0VdzOVKkz8ZKWe0wlHRnytygH9v3ObcRepH77kF2xsRE3op7a
-	PAlavA2aT1BRtzN12kjBk7qfCZ+lKpxxssBn1EPmnTpnqWGRt8n3jmblMUCDwg==
-X-Gm-Gg: ASbGncuQ7PjFPHp279qBF7G1BKT6kncdT3bWKiJafUXbR8LdGyWr+fqJPuwEaHowJ2S
-	siNLVsa4J6Bj7OmjBmsAdEFwGzvPmT277KNy0N43WUY0bAOqBcko2+Irk0rQzv9K018vZhOjjzP
-	i839KO7sxzpGXtn77+cpCI0/LKsDIn5V52LtQ8c3qnlSLMCMV2mGXyvPasbu6Gmuk6ZKo8dDZHv
-	cpeZo86gWL+CdHLwyNlIwwQuEXui9v1ZZjMpSzvO5M/MYRDzwbzQKbgjVbdnxgNjNj7MkH/CZwB
-	iDBfm3k4hEt6n+kvOiGXjtwpa0SLowKR5Sx98L0dhfm0h6ydgHieXnMvvklBbDVV7ebMRdlJ3k0
-	LsnnKqCs3zFIu/c8vwgcgdM1Vo1UGXdGxBrXV0jcbsdlnT/ECOKqhgd75y5O5IzhbZRCVAjkyvw
-	5MusK4qiUkEAGdUA==
-X-Google-Smtp-Source: AGHT+IEaiBPuHBVEH3T9FPSWVpC3vryKxOKS2dy9kP5z8NfWw2ECH1CwROesm557qSNxKoWxrCsxSg==
-X-Received: by 2002:a05:6e02:19cc:b0:434:7cf6:6d20 with SMTP id e9e14a558f8ab-435b8c0991fmr186907185ab.11.1764205836688;
-        Wed, 26 Nov 2025 17:10:36 -0800 (PST)
+        bh=F+YAJABOGYmYr7NJbjwXugvu4LYxBNw84jHqmVk8QbE=;
+        b=Fq0WITk4ngwfM8i6owRLHTE0l5KGjSWJ/W8RWERMpc/+QhAN7XWH6++ApJ/vEu73u3
+         GnB/8Bj2budgwooRtTmSaPrOHNpkbCVo//7W4Ha14HnSWTskM4oHhIQGFMZ5+lTzVUxy
+         dUT4yBEUNSc2l+Xf9l6lRM0gbI+4r+u83zBZQHbzLucsL8ujf8rIQA02JZRzARd+dFZF
+         QNhDUwEJwbTlITLBHDvZk+Oy0FDdsFUOvy5gSapGbElXglQXVSuEEnp+Ley4QJbuAw8w
+         3TLwW8fWvKBcasjPVvNA6V3+4ofznN6ISwq8v3jQQb0jZ5RtcQQQnI2Rop1UQrVo2PIX
+         MY9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764205840; x=1764810640;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=F+YAJABOGYmYr7NJbjwXugvu4LYxBNw84jHqmVk8QbE=;
+        b=KKfGPYx4iHlzwg+qTMycIy47iiI7muWI8q512fY1lRefd0ZytFch2HkMv3M3wtaCqe
+         ZQ5uWNorgWX5+2G/XImn/yzkrsepbFg/arTOU4NcFsqy1YSIamORnrQmYHbZmvulkRhq
+         Pn+T81CIUosqMgEblOKC6ttqGRSJus1agienFqUHveQJe2fHN9pae0/J7nKtqFwPuDvS
+         T3Zl7yk3kbmdXjM8kR6lJ1PBRRJ3I09HWdh/sfFt/CEEAiDxXNJqJr8QvcWYahyjzznn
+         SbNFilrhl20dC1txeG6ouiF0HS7xYB474UJRIAL23eHB3I0pcDRzH4ZUH3nwBMQl90sv
+         rxyw==
+X-Gm-Message-State: AOJu0Yz2wxWXlfczkHod7HYy9KionL0ZS0zVSZFpKErPJYaAUQszEZO1
+	8p0h6RZGC3/0bk0Wk+cIdjJzULksA3G7XjQtmGMfTd/y1BGNU4NOourWi7YbX2Ai
+X-Gm-Gg: ASbGncupNrRHnE/vgNGRbSZ74QPMxMpSwy7737uTIeCC7xIa6pj/MZt9FvY33WE2LA8
+	PZq4Ppc7rjkWWfM9O8DRaFjAScIOqirBRiiPYGaxoxkWkDtjdzf0rJmNtbMSa3SIQy0GPu3jCPZ
+	GE/fwicAWoTbyX4d83pEwkqukVMKS3/uqLQTVndGVRMETqQ6ZFqZ38wXcmCCTAx6ExYhtmTAJOu
+	bTlgKSS7LIEjt47mFsFSXNwreQeKKIEhTr31Q+Lv1KLAiAn+OG3SMLUPq33Sfh+j9tCnWV0UNFM
+	MtR13nPb4LqyKHoyZnboXNQ2pTlhFRJ8uJ0Vv6zHgOXC3vLt45sE432kBcBG2Jp/cbsXvXxQN3B
+	JDHVFaIGJsVjrNHOe70STGN7J/bdymDuE322gBv0VhU9Fbox5Y+oFqyH7HPNmvXci29q8TRYalL
+	6786tv/zo2oRUluw==
+X-Google-Smtp-Source: AGHT+IFh6MHDshr24OQlk2ehunfAJmtbQrxjE20zG2yKm+LYZj1PdS2upxeDMyjg2kISNaZ97gDN2g==
+X-Received: by 2002:a05:6602:2c03:b0:949:839d:3cf9 with SMTP id ca18e2360f4ac-949839d3ea6mr492501339f.14.1764205839631;
+        Wed, 26 Nov 2025 17:10:39 -0800 (PST)
 Received: from [127.0.0.1] ([64.236.141.183])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5b954a0dbaasm9024491173.4.2025.11.26.17.10.35
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-9498fbee70csm2756839f.7.2025.11.26.17.10.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Nov 2025 17:10:36 -0800 (PST)
-Message-Id: <pull.2110.git.git.1764205835.gitgitgadget@gmail.com>
+        Wed, 26 Nov 2025 17:10:38 -0800 (PST)
+Message-Id: <12ab631072e6076f9dbcd905c62a42795ea9dbfa.1764205835.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2110.git.git.1764205835.gitgitgadget@gmail.com>
+References: <pull.2110.git.git.1764205835.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 27 Nov 2025 01:10:22 +0000
-Subject: [PATCH 00/13] RFC: Convert to Cargo workspace
+Date: Thu, 27 Nov 2025 01:10:23 +0000
+Subject: [PATCH 01/13] make: undo Patrick's changes concerning Rust
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,103 +74,139 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Ezekiel Newren <ezekielnewren@gmail.com>
+Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
+    Ezekiel Newren <ezekielnewren@gmail.com>
 
-The goal of this patch series is to get feedback on converting from a single
-cargo crate to a cargo workspace. This series is incomplete, and as such, is
-marked as RFC.
+From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-Why using a cargo workspace is better than a single crate:
+Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
+---
+ Makefile   | 49 -------------------------------------------------
+ shared.mak |  1 -
+ 2 files changed, 50 deletions(-)
 
- * Better modularity.
- * Since a crate is the smallest unit of compilation in Rust (not individual
-   files), multiple crates avoid recompiling everything
- * A C header is created for each crate by cbindgen (if requested), avoiding
-   a single monolithic C header from all Rust sources.
- * This separates the dependencies of each crate, which is important if
-   we’re forced to take an old or new dependency for a non-library crate,
-   for example, and don’t want those altered dependencies affecting other
-   crates.
-
-I am particularly interested in feedback on the known issues below:
-
- * github workflow rust-analysis: broken because I removed the rust-version
-   statement in Cargo.toml. The minimum Rust version supported by Git should
-   be documented, but we shouldn’t require building with that minimum
-   version.
- * win+Meson build: failing because it can't find the static library
- * Rust unit testing: not implemented yet, Make and Meson need to call cargo
-   test
- * Conflicts with Brian's "SHA-1/SHA-256 interoperability" patch series
-
-Much of Patrick's earlier work needed to be removed because it assumed a
-single-crate layout.
-
-The Rust crates are located under rust/, but cargo build must be invoked
-from the top-level Git directory. cbindgen is included as part of this
-series, but nothing uses it yet. The generated/ directory is where cbindgen
-places the generated C header files.
-
-Ezekiel Newren (13):
-  make: undo Patrick's changes concerning Rust
-  meson: undo Patrick's changes concerning Rust
-  cargo: convert from a crate to a workspace
-  build: build Rust with Makefile and Meson
-  .gitignore: ignore /generated/
-  cargo: create crate generate-headers
-  cargo: create crate link-with-c
-  rust/gitcore: link with c
-  varint.h: unsigned char -> uint8_t
-  make: delete files in generated/
-  github-workflows: unify with rust parameters in make and meson
-  github workflows: install Rust
-  rust/build-rust.sh: update dir_git_root variable instantiation
-
- .github/workflows/main.yml          |  62 ++++++++++++++-
- .gitignore                          |   1 +
- Cargo.toml                          |  17 ++--
- Makefile                            | 118 ++++++++++++++++------------
- ci/install-dependencies.sh          |  14 ++--
- ci/install-rust-toolchain.sh        |  30 +++++++
- ci/install-rustup.sh                |  25 ++++++
- ci/make-test-artifacts.sh           |   9 +++
- ci/run-build-and-tests.sh           |  17 +++-
- meson.build                         |  83 ++++++++++++++-----
- meson_options.txt                   |   4 +-
- rust/build-crate.sh                 |  63 +++++++++++++++
- rust/cbindgen-template.toml         |  13 +++
- rust/generate-headers/Cargo.toml    |  12 +++
- rust/generate-headers/src/main.rs   |  44 +++++++++++
- rust/gitcore/Cargo.toml             |  12 +++
- rust/gitcore/build.rs               |   7 ++
- {src => rust/gitcore/src}/lib.rs    |   0
- {src => rust/gitcore/src}/varint.rs |   0
- rust/link-with-c/Cargo.toml         |   9 +++
- rust/link-with-c/src/lib.rs         |  77 ++++++++++++++++++
- shared.mak                          |   1 -
- src/cargo-meson.sh                  |  39 ---------
- src/meson.build                     |  41 ----------
- varint.h                            |   4 +-
- 25 files changed, 528 insertions(+), 174 deletions(-)
- create mode 100755 ci/install-rust-toolchain.sh
- create mode 100755 ci/install-rustup.sh
- create mode 100755 rust/build-crate.sh
- create mode 100644 rust/cbindgen-template.toml
- create mode 100644 rust/generate-headers/Cargo.toml
- create mode 100644 rust/generate-headers/src/main.rs
- create mode 100644 rust/gitcore/Cargo.toml
- create mode 100644 rust/gitcore/build.rs
- rename {src => rust/gitcore/src}/lib.rs (100%)
- rename {src => rust/gitcore/src}/varint.rs (100%)
- create mode 100644 rust/link-with-c/Cargo.toml
- create mode 100644 rust/link-with-c/src/lib.rs
- delete mode 100755 src/cargo-meson.sh
- delete mode 100644 src/meson.build
-
-
-base-commit: a99f379adf116d53eb11957af5bab5214915f91d
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2110%2Fezekielnewren%2Fcargo-workspace-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2110/ezekielnewren/cargo-workspace-v1
-Pull-Request: https://github.com/git/git/pull/2110
+diff --git a/Makefile b/Makefile
+index 7e0f77e298..28bc00e648 100644
+--- a/Makefile
++++ b/Makefile
+@@ -483,14 +483,6 @@ include shared.mak
+ # Define LIBPCREDIR=/foo/bar if your PCRE header and library files are
+ # in /foo/bar/include and /foo/bar/lib directories.
+ #
+-# == Optional Rust support ==
+-#
+-# Define WITH_RUST if you want to include features and subsystems written in
+-# Rust into Git. For now, Rust is still an optional feature of the build
+-# process. With Git 3.0 though, Rust will always be enabled.
+-#
+-# Building Rust code requires Cargo.
+-#
+ # == SHA-1 and SHA-256 defines ==
+ #
+ # === SHA-1 backend ===
+@@ -691,7 +683,6 @@ OBJECTS =
+ OTHER_PROGRAMS =
+ PROGRAM_OBJS =
+ PROGRAMS =
+-RUST_SOURCES =
+ EXCLUDED_PROGRAMS =
+ SCRIPT_PERL =
+ SCRIPT_PYTHON =
+@@ -928,18 +919,6 @@ TEST_SHELL_PATH = $(SHELL_PATH)
+ 
+ LIB_FILE = libgit.a
+ 
+-ifdef DEBUG
+-RUST_TARGET_DIR = target/debug
+-else
+-RUST_TARGET_DIR = target/release
+-endif
+-
+-ifeq ($(uname_S),Windows)
+-RUST_LIB = $(RUST_TARGET_DIR)/gitcore.lib
+-else
+-RUST_LIB = $(RUST_TARGET_DIR)/libgitcore.a
+-endif
+-
+ GITLIBS = common-main.o $(LIB_FILE)
+ EXTLIBS =
+ 
+@@ -963,15 +942,6 @@ BASIC_LDFLAGS =
+ ARFLAGS = rcs
+ PTHREAD_CFLAGS =
+ 
+-# Rust flags
+-CARGO_ARGS =
+-ifndef V
+-CARGO_ARGS += --quiet
+-endif
+-ifndef DEBUG
+-CARGO_ARGS += --release
+-endif
+-
+ # For the 'sparse' target
+ SPARSE_FLAGS ?= -std=gnu99 -D__STDC_NO_VLA__
+ SP_EXTRA_FLAGS =
+@@ -1333,9 +1303,7 @@ LIB_OBJS += urlmatch.o
+ LIB_OBJS += usage.o
+ LIB_OBJS += userdiff.o
+ LIB_OBJS += utf8.o
+-ifndef WITH_RUST
+ LIB_OBJS += varint.o
+-endif
+ LIB_OBJS += version.o
+ LIB_OBJS += versioncmp.o
+ LIB_OBJS += walker.o
+@@ -1534,9 +1502,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+ 
+ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+ 
+-RUST_SOURCES += src/lib.rs
+-RUST_SOURCES += src/varint.rs
+-
+ GIT-VERSION-FILE: FORCE
+ 	@OLD=$$(cat $@ 2>/dev/null || :) && \
+ 	$(call version_gen,"$(shell pwd)",GIT-VERSION-FILE.in,$@) && \
+@@ -1566,14 +1531,6 @@ endif
+ ALL_CFLAGS = $(DEVELOPER_CFLAGS) $(CPPFLAGS) $(CFLAGS) $(CFLAGS_APPEND)
+ ALL_LDFLAGS = $(LDFLAGS) $(LDFLAGS_APPEND)
+ 
+-ifdef WITH_RUST
+-BASIC_CFLAGS += -DWITH_RUST
+-GITLIBS += $(RUST_LIB)
+-ifeq ($(uname_S),Windows)
+-EXTLIBS += -luserenv
+-endif
+-endif
+-
+ ifdef SANITIZE
+ SANITIZERS := $(foreach flag,$(subst $(comma),$(space),$(SANITIZE)),$(flag))
+ BASIC_CFLAGS += -fsanitize=$(SANITIZE) -fno-sanitize-recover=$(SANITIZE)
+@@ -2963,12 +2920,6 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
+ $(LIB_FILE): $(LIB_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ 
+-$(RUST_LIB): Cargo.toml $(RUST_SOURCES)
+-	$(QUIET_CARGO)cargo build $(CARGO_ARGS)
+-
+-.PHONY: rust
+-rust: $(RUST_LIB)
+-
+ export DEFAULT_EDITOR DEFAULT_PAGER
+ 
+ Documentation/GIT-EXCLUDED-PROGRAMS: FORCE
+diff --git a/shared.mak b/shared.mak
+index 0e7492076e..5c7bc94785 100644
+--- a/shared.mak
++++ b/shared.mak
+@@ -56,7 +56,6 @@ ifndef V
+ 	QUIET_MKDIR_P_PARENT  = @echo '   ' MKDIR -p $(@D);
+ 
+ ## Used in "Makefile"
+-	QUIET_CARGO    = @echo '   ' CARGO $@;
+ 	QUIET_CC       = @echo '   ' CC $@;
+ 	QUIET_AR       = @echo '   ' AR $@;
+ 	QUIET_LINK     = @echo '   ' LINK $@;
 -- 
 gitgitgadget
+
