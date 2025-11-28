@@ -1,152 +1,108 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9201CFBA
-	for <git@vger.kernel.org>; Fri, 28 Nov 2025 12:54:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF0D32D0F3
+	for <git@vger.kernel.org>; Fri, 28 Nov 2025 13:16:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764334495; cv=none; b=Uktk10xb4suLFi/sRTqd6e7Oog6vggyTRo6ww9FXZy9+UPj+dZxsElK5dYLsnC/UpjqpSO097TSTnnTbgfzG1Vnm8PtyfdfQM5S7skiIsS4TDNT5uOpfpqWms4Q0XEozh0DnfKp81+SaSwbiZI/H3O/CTsz7BuFmL53Iwu7X2gk=
+	t=1764335786; cv=none; b=QAlqLIgouVTbHsRea1Lr7OBqHumXj3oQqKzxfvoIJg+AS5Fr/hJyakO6X98TrtUQPs4ZsdqdInGvjWNoxD3BHheBtqALGYSeyIm9gPjYKO7j9SLarzf3Qjdsj6xn9r8FVSJjznRhbQUOtGXVZMFoLBVhyMSi34V8pbX6hcV3EYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764334495; c=relaxed/simple;
-	bh=0WEJut8SXhWtYoQ1TV6BLsrKm9LyjqGLpGeuf8u3FiE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=OoC95r5fIBGMXJ7Hjza7NSDLbKGy4op5e+ryBuuoPBVMalouG8nX8Y+nFqb0ABL6CCe53f9W5GsUALPSZrojZpLFhb2aXzYqPilbnQFvIlQdso1o4X/QyAxZIHvkNYj0Plxxk3gkNkoO9HuwVRMm7j/4zfg6vJgUmg8HiZRPk4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=UM0UjMvE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yg2ubP7B; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1764335786; c=relaxed/simple;
+	bh=xFX+MB9jqFvIOj5fEyfBau13U0nXPOR4LyKOVMa03qU=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=C7sp7RcSHiJMOVzTZunAPC/x4lUu/sajG08zHR+kwa7l44xUy28aV2Vb59/sJhVv3y9HduGkIn863DYfycVKqY7kHDTahsQ4SDbc4wVn2Axxpaxzj8HmX6kURg8CJQn5OASIIO1obmErnJzqhZs+9K2XwZMpEAitY6dIuD0y8RM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VyQ3sGRi; arc=none smtp.client-ip=209.85.166.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="UM0UjMvE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yg2ubP7B"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id DF0D91D00769;
-	Fri, 28 Nov 2025 07:54:51 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Fri, 28 Nov 2025 07:54:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm1; t=1764334491; x=1764420891; bh=I9
-	4iKd40P1Xa2RA+x3s5Euat/zuDZ9YaWQeu4O2XIRk=; b=UM0UjMvE+qDu01zsJ4
-	4EyUXPiK2I4J9BlErheb7g8zUf1mODrgT3POPRFLZK64E4KKsNwNnt2jcgfZMYkB
-	/NZfsULMD4d9K7k+b7LeDHy4zoQqqcJ9qhfkTBU7mea4tr9s4mLci4kTCPAyV7nd
-	TNRUb0AaIhSXfBwEkAkbEduJUHCXkMot2jPzDC/CyFMjIyI++g6HfFSvhvBL0rLn
-	k19xCEoNU4/UXCyl4+LiMJBEcsCyRY3OyHU4CJgSkqs57DOCfe9cKA7FpcPkNOx7
-	I/HhSwxMq9VBPzQ/OXHsQiAZd3vzswryVYapbH5xzYPhd7pI3C3wv4Y+OtX9CfkM
-	pQdA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1764334491; x=1764420891; bh=I94iKd40P1Xa2RA+x3s5Euat/zuD
-	Z9YaWQeu4O2XIRk=; b=yg2ubP7BhoXT/E+34OngANS+z3/JPI7z4qcpaZaV23Hr
-	KyApC8nb0UEBUtN3gYVQIpnAEUr82jvfeZOX4ZAs7Q7wz00vbXTUzZRWRbNJrWQO
-	S4reXN7l3q7JcYiAyydIHMinT8pZ45cWm++VgEiQ0OH1hdOEAMyO87RDIR9ReQcg
-	pZ2gDu9qNUjEJNqsWqV8ZZ3e3Kz6raDZ43bxz+O76YK9uvtTF1vjs8X4YzMp4wbp
-	G3ZMG6uRJoDM/WI3KcSBxTTEawLOR7oQ/DDz3ux/Qdf64yaOSlVXvjBjOhsurUBP
-	TORzh4e2UAd/0ydoQoBmD1l9iDgTLfo2Ffsuor/ehQ==
-X-ME-Sender: <xms:m5spaTbMAH3Dbux_aoKkOl31hNKGm3fLaAeKSisK1z3-egs3r9S0xic>
-    <xme:m5spaYYWK9-LLQV9MCI04mB87XTdS_LMHUFPxF8S3BjhLEY7NG7wXPA1v8btWO3nM
-    dgw25GhsrKMWq9K-MTwNPeG8X2m1aPPwrpiHzPz-20UhZrRdPD5BA>
-X-ME-Received: <xmr:m5spaTnxZedE1BZkVD6k_t152IvCK2SNDf9ziHf3wDTCAe5X1tZrFE9qJJr0Kg-jQQPic-a9obfq5T3cYQ3Vb3P7W0bOZMOwoncijGY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeelleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpefhvfevuf
-    ffkffogggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnheptefgkeejff
-    dufeefffegkeevgfevvdegffeujeejleegudfhtdffieekleefhffgnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhh
-    gruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:m5spaUw0hxNBaDmQ7RZy62bQXUXMsopTJKX3Y0Sp5f-kcGRkgPGoMw>
-    <xmx:m5spaRMKZNHSbIDrzmZwxV7Z6kBnmeMlXA5lz8l8pcLfcgfYxGpqwQ>
-    <xmx:m5spaYRHwWmKrT3QLIJtzQNxhjFHXFeCv9yiJ_4_QkZxyzs2QcYuwg>
-    <xmx:m5spafa90O4JZ5_2i_zffwhS-Z6koR15H5OueZ62tnw0iUGbJO9CGA>
-    <xmx:m5spaWwtrl08VRB3cOYUxqSVOSAPDprKvhgvcqVEt3ZTYF7IaGoVPGYw>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Nov 2025 07:54:50 -0500 (EST)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH] branch: advice using git-help(1) instead of man(1)
-Date: Fri, 28 Nov 2025 13:54:29 +0100
-Message-ID: <advice_git-help.64@msgid.xyz>
-X-Mailer: git-send-email 2.52.0.10.g08704017180
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VyQ3sGRi"
+Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-948f9b5987dso58241439f.0
+        for <git@vger.kernel.org>; Fri, 28 Nov 2025 05:16:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764335783; x=1764940583; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=4rN4TBgVPcB8TnUowKX/Bxj03TqUxEpKDVM5SKnmfz0=;
+        b=VyQ3sGRia8sz1NXj4a830BMH+1zqq5zb3G5uTR0NmPZJMNHwaylmRxHTy3pBSRTdif
+         aEYfKuQxGU4go5P/gRl67aOeRraCRoevtZTzJMt1rm2bYxomArr2XSGx+PWDsW4Xa4jk
+         KiAwTrUERCyFb3NDqTMHSPOaPQnEv0OQe+DYz1zmsNgW7YHTXEpVQYw5tyz5QRUsY8c5
+         QbF1GRZ4Ra1nk9a9RS7p8xv6GnIIWlLjStrK2lTH3bn5QEv9Z6xU0zHpMAdQ07+8K1Zv
+         8uWqNkbnnVa4t6kcVdJXwjC36pmAxjgm3UsdGyZv7Ruf43Ls0Wm7kQx58Gr5Cgd2T/aK
+         2IwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764335783; x=1764940583;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4rN4TBgVPcB8TnUowKX/Bxj03TqUxEpKDVM5SKnmfz0=;
+        b=om2sEpZF1D4iqLPlsPRx8zutirWXCAPx6CYH7ng2rfm3H6qyDSGGLfdNlsGhEMPCp9
+         I/IqoBBedDoj/dGSHlTxCdsn9wJZbr/aucpECqYAotarmrkFDtRY4NCibJZjRY9lZDDt
+         hMDJFqMK/x4zRg6T/dcvPSz8enowMnKsj9rWtQNrXLFLmtvJ5tCcPvR6H0xAGKeiPQrs
+         JAlhmcxrolQeDE0ExkIDlabd9N2pGwdOtb3tr7uAlvDHXzxQAYydt7dMJe3rk2SdlLNl
+         VW0MRSFfEghEmwbTRPcqVP1MhFzEUGbuqaxdV9Pc+L/YY7DTFjpjIu7puU3i8ANTZFON
+         yTjQ==
+X-Gm-Message-State: AOJu0YwmYBZOOkJJXmxyPvRxwugOn/Jce2nThDkP4hZKdwA9yhxu6azB
+	sC1SM8atu1wZV3kHwZHbw1YdlILp39S/O9KyIAxqpzHLMw34NGieI03YhLrt5w==
+X-Gm-Gg: ASbGncuaCGcpjjBoO8PSlYWVE5JxCtm9XWeMriKeJ0X9TJjOPqi1jRzpq2ebTLrHINx
+	CsOi0gsEE/tB6OGSfu9t207MGSALkQCRIT8SKl7KHH92DY3UKNrFejsDneCa7sPm1h4JqN29m2V
+	1aVROvI8NCCxuJ7G0X8cougHHtFo+2qgtjEl+l5c2azDRWQPC4Fbl/0Zs4K+J/IOxHLNDXRdNF9
+	tfmVxPV/g1IqjKUC+qD9yD2uU5WUaEyfJ7+2WQ5xdgAER10V9iHiAfpOnqodbQA94gnMAk/186h
+	umr48yPVwpiGCBAZmL5SKrvSKGsyOLqqXVqUrv3Y0SpVUnOPF/SQUo7qFfI+kuWrrXiTIcuJ2jb
+	bnR+65SHR9bmrNF4e7D2+m4p5IuP+JVwQnJ9KooCzh4a8oxkokk+sw+OsiEy6L5l+MDo3XXbqeu
+	kAWCZuZLsrUb41aw==
+X-Google-Smtp-Source: AGHT+IHe1SPYN/69ozjzfjpwzEoBQqTMyj+NozSljgU6CMZBGLwR14mjxkzVU2QElpwYWErtpgHHig==
+X-Received: by 2002:a05:6e02:18c5:b0:433:6aa2:f6aa with SMTP id e9e14a558f8ab-435b8e620e9mr271240185ab.29.1764335783114;
+        Fri, 28 Nov 2025 05:16:23 -0800 (PST)
+Received: from [127.0.0.1] ([52.173.219.145])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-9498fbc3f10sm215979639f.4.2025.11.28.05.16.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Nov 2025 05:16:21 -0800 (PST)
+Message-Id: <pull.2111.git.git.1764335780515.gitgitgadget@gmail.com>
+From: "Stefan Rieche via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 28 Nov 2025 13:16:20 +0000
+Subject: [PATCH] docs(git-pull.adoc): fix man page typo
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Stefan Rieche <stefanrieche@gmail.com>,
+    snowdroppe <stefanrieche@gmail.com>
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+From: snowdroppe <stefanrieche@gmail.com>
 
-8fbd903e (branch: advise about ref syntax rules, 2024-03-05) added
-an advice about checking git-check-ref-format(1) for the ref syntax
-rules. The advice uses man(1). It’s better to use Git’s own git-help(1)
-instead of an external command.
+Fix typo in man page from "git --rebase abort"
+to "git rebase --abort"
 
-Also change to using single quotes (') to quote the command since that
-is more conventional.
-
-While here let’s also update the test to use `{SQ}`, which is more
-readable and easier to edit.
-
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Signed-off-by: Stefan Rieche <stefanrieche@gmail.com>
 ---
- branch.c          | 2 +-
- builtin/branch.c  | 2 +-
- t/t3200-branch.sh | 6 +++---
- 3 files changed, 5 insertions(+), 5 deletions(-)
+    docs(git-pull.adoc): fix man page typo
 
-diff --git a/branch.c b/branch.c
-index 26be3583471..243db7d0fc0 100644
---- a/branch.c
-+++ b/branch.c
-@@ -375,7 +375,7 @@ int validate_branchname(const char *name, struct strbuf *ref)
- 	if (check_branch_ref(ref, name)) {
- 		int code = die_message(_("'%s' is not a valid branch name"), name);
- 		advise_if_enabled(ADVICE_REF_SYNTAX,
--				  _("See `man git check-ref-format`"));
-+				  _("See 'git help check-ref-format'"));
- 		exit(code);
- 	}
- 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 9fcf04bebb2..c577b5d20f2 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -591,7 +591,7 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 		else {
- 			int code = die_message(_("invalid branch name: '%s'"), oldname);
- 			advise_if_enabled(ADVICE_REF_SYNTAX,
--					  _("See `man git check-ref-format`"));
-+					  _("See 'git help check-ref-format'"));
- 			exit(code);
- 		}
- 	}
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index f3e720dc10d..c58e505c43f 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1707,9 +1707,9 @@ test_expect_success '--track overrides branch.autoSetupMerge' '
- '
- 
- test_expect_success 'errors if given a bad branch name' '
--	cat <<-\EOF >expect &&
--	fatal: '\''foo..bar'\'' is not a valid branch name
--	hint: See `man git check-ref-format`
-+	cat <<-EOF >expect &&
-+	fatal: ${SQ}foo..bar${SQ} is not a valid branch name
-+	hint: See ${SQ}git help check-ref-format${SQ}
- 	hint: Disable this message with "git config set advice.refSyntax false"
- 	EOF
- 	test_must_fail git branch foo..bar >actual 2>&1 &&
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2111%2Fsnowdroppe%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2111/snowdroppe/master-v1
+Pull-Request: https://github.com/git/git/pull/2111
 
-base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
+ Documentation/git-pull.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/git-pull.adoc b/Documentation/git-pull.adoc
+index cd3bbc90e3..d3006359ed 100644
+--- a/Documentation/git-pull.adoc
++++ b/Documentation/git-pull.adoc
+@@ -38,7 +38,7 @@ or `pull.ff` with your preferred behaviour.
+ 
+ If there's a merge conflict during the merge or rebase that you don't
+ want to handle, you can safely abort it with `git merge --abort` or `git
+---rebase abort`.
++rebase --abort`.
+ 
+ OPTIONS
+ -------
+
+base-commit: b31ab939fe8e3cbe8be48dddd1c6ac0265991f45
 -- 
-2.52.0.10.g08704017180
-
+gitgitgadget
