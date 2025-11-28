@@ -1,108 +1,166 @@
-Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF0D32D0F3
-	for <git@vger.kernel.org>; Fri, 28 Nov 2025 13:16:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61F41E32A2
+	for <git@vger.kernel.org>; Fri, 28 Nov 2025 13:35:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764335786; cv=none; b=QAlqLIgouVTbHsRea1Lr7OBqHumXj3oQqKzxfvoIJg+AS5Fr/hJyakO6X98TrtUQPs4ZsdqdInGvjWNoxD3BHheBtqALGYSeyIm9gPjYKO7j9SLarzf3Qjdsj6xn9r8FVSJjznRhbQUOtGXVZMFoLBVhyMSi34V8pbX6hcV3EYY=
+	t=1764336903; cv=none; b=SGggwJlIX7doilDQAXw49Ce1kYMHvGD7m1qyISh9aMXu/4vLg1R5o1Zym0Ot41ZiIA42Jo+Kdf4qo9BN4rymtChGo5/p9mwcGEs+rBpI8DY17UepRiC2eDlYiR1GDjuo3DCn1KQj3ZoLpdJp9LHu6ylHrV4N7FdWrFSJNaSoFx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764335786; c=relaxed/simple;
-	bh=xFX+MB9jqFvIOj5fEyfBau13U0nXPOR4LyKOVMa03qU=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=C7sp7RcSHiJMOVzTZunAPC/x4lUu/sajG08zHR+kwa7l44xUy28aV2Vb59/sJhVv3y9HduGkIn863DYfycVKqY7kHDTahsQ4SDbc4wVn2Axxpaxzj8HmX6kURg8CJQn5OASIIO1obmErnJzqhZs+9K2XwZMpEAitY6dIuD0y8RM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VyQ3sGRi; arc=none smtp.client-ip=209.85.166.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764336903; c=relaxed/simple;
+	bh=FKoXe84dBF5zh2o6xrqgoKbGm1D3MqgQblsFSQqxxGY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=mKIAEiOLq8jQzFhPKnNOTxhHYVIRBRU4kn3NA8xJzOGjtRlftGREFcbDGX1qpoLf4X9oVYLO5wauygp6fU3UkQ5HSyPeB1ESDcrXm3s5FuHbrx34vYQQyLGGZG/DP6Sobq7SMi4Ourh969iEWxvD8J6pJqULvX7b0VeAX9xqK5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=bC+wI7Nn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UW8Wk300; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VyQ3sGRi"
-Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-948f9b5987dso58241439f.0
-        for <git@vger.kernel.org>; Fri, 28 Nov 2025 05:16:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764335783; x=1764940583; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4rN4TBgVPcB8TnUowKX/Bxj03TqUxEpKDVM5SKnmfz0=;
-        b=VyQ3sGRia8sz1NXj4a830BMH+1zqq5zb3G5uTR0NmPZJMNHwaylmRxHTy3pBSRTdif
-         aEYfKuQxGU4go5P/gRl67aOeRraCRoevtZTzJMt1rm2bYxomArr2XSGx+PWDsW4Xa4jk
-         KiAwTrUERCyFb3NDqTMHSPOaPQnEv0OQe+DYz1zmsNgW7YHTXEpVQYw5tyz5QRUsY8c5
-         QbF1GRZ4Ra1nk9a9RS7p8xv6GnIIWlLjStrK2lTH3bn5QEv9Z6xU0zHpMAdQ07+8K1Zv
-         8uWqNkbnnVa4t6kcVdJXwjC36pmAxjgm3UsdGyZv7Ruf43Ls0Wm7kQx58Gr5Cgd2T/aK
-         2IwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764335783; x=1764940583;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4rN4TBgVPcB8TnUowKX/Bxj03TqUxEpKDVM5SKnmfz0=;
-        b=om2sEpZF1D4iqLPlsPRx8zutirWXCAPx6CYH7ng2rfm3H6qyDSGGLfdNlsGhEMPCp9
-         I/IqoBBedDoj/dGSHlTxCdsn9wJZbr/aucpECqYAotarmrkFDtRY4NCibJZjRY9lZDDt
-         hMDJFqMK/x4zRg6T/dcvPSz8enowMnKsj9rWtQNrXLFLmtvJ5tCcPvR6H0xAGKeiPQrs
-         JAlhmcxrolQeDE0ExkIDlabd9N2pGwdOtb3tr7uAlvDHXzxQAYydt7dMJe3rk2SdlLNl
-         VW0MRSFfEghEmwbTRPcqVP1MhFzEUGbuqaxdV9Pc+L/YY7DTFjpjIu7puU3i8ANTZFON
-         yTjQ==
-X-Gm-Message-State: AOJu0YwmYBZOOkJJXmxyPvRxwugOn/Jce2nThDkP4hZKdwA9yhxu6azB
-	sC1SM8atu1wZV3kHwZHbw1YdlILp39S/O9KyIAxqpzHLMw34NGieI03YhLrt5w==
-X-Gm-Gg: ASbGncuaCGcpjjBoO8PSlYWVE5JxCtm9XWeMriKeJ0X9TJjOPqi1jRzpq2ebTLrHINx
-	CsOi0gsEE/tB6OGSfu9t207MGSALkQCRIT8SKl7KHH92DY3UKNrFejsDneCa7sPm1h4JqN29m2V
-	1aVROvI8NCCxuJ7G0X8cougHHtFo+2qgtjEl+l5c2azDRWQPC4Fbl/0Zs4K+J/IOxHLNDXRdNF9
-	tfmVxPV/g1IqjKUC+qD9yD2uU5WUaEyfJ7+2WQ5xdgAER10V9iHiAfpOnqodbQA94gnMAk/186h
-	umr48yPVwpiGCBAZmL5SKrvSKGsyOLqqXVqUrv3Y0SpVUnOPF/SQUo7qFfI+kuWrrXiTIcuJ2jb
-	bnR+65SHR9bmrNF4e7D2+m4p5IuP+JVwQnJ9KooCzh4a8oxkokk+sw+OsiEy6L5l+MDo3XXbqeu
-	kAWCZuZLsrUb41aw==
-X-Google-Smtp-Source: AGHT+IHe1SPYN/69ozjzfjpwzEoBQqTMyj+NozSljgU6CMZBGLwR14mjxkzVU2QElpwYWErtpgHHig==
-X-Received: by 2002:a05:6e02:18c5:b0:433:6aa2:f6aa with SMTP id e9e14a558f8ab-435b8e620e9mr271240185ab.29.1764335783114;
-        Fri, 28 Nov 2025 05:16:23 -0800 (PST)
-Received: from [127.0.0.1] ([52.173.219.145])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-9498fbc3f10sm215979639f.4.2025.11.28.05.16.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Nov 2025 05:16:21 -0800 (PST)
-Message-Id: <pull.2111.git.git.1764335780515.gitgitgadget@gmail.com>
-From: "Stefan Rieche via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 28 Nov 2025 13:16:20 +0000
-Subject: [PATCH] docs(git-pull.adoc): fix man page typo
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="bC+wI7Nn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UW8Wk300"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D1F917A0569;
+	Fri, 28 Nov 2025 08:35:00 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Fri, 28 Nov 2025 08:35:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1764336900;
+	 x=1764423300; bh=osZiPv5yocU6h/Up5TlELxiEcdq1k1wzebCAUhsQs0Y=; b=
+	bC+wI7NnmXDbycCFtdAyfag3fZ/fo/zOamgtPkmlLWQqrQRQe6EVVPSkfO29jKVO
+	AF3ZGRcrOmWfrPEZcwBdkoV3wOD/TQnaIEoaz5EFv909LwusfNhyrL5nI48ulBCs
+	gwgVf46ipDkKFiVGu3C/Dz15JgzQC/RgEFP55YYy53PfUTBlGyotFBN/wiS9mr5l
+	AMiVLjJDBWZKhtJBspo2QOpmXrNbE4/Ui98iWppVsObF4uYbjZ9DEDi4aZT38A0f
+	1xrTgAa+VaMrQUg5GrHXekBWMzKUyg0YoPwCymcFXs6vmRT8lnBMwDvBskQmUt8S
+	+xCT6PJhs2fIInUnxTVjbA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764336900; x=
+	1764423300; bh=osZiPv5yocU6h/Up5TlELxiEcdq1k1wzebCAUhsQs0Y=; b=U
+	W8Wk300GFDMzBDVx3/0WsLMMZCB9GTYcyl+L1AqJzGEtzsyRV2aSAh4OZVnKCmtg
+	M06v8/FT9ovsE5/o+7N4zNre/IodnyD5yauRKysy8ayTTSdEx5Rnl4I4TEzHzMh1
+	nM1++6vzteH2iu2lqMnpIarizLgDMIrfTTqsGcjsvNTHAzrBrDoQvLOw3EXVxQSy
+	yUeqUpxumdHeahJx5orksdMD16i5gRWTqs9YXv/YOH3WAghYXhC4k1f2JHPN8YR7
+	sQVnpgFATlSA1hFVKmm2z0U8ceT+b8GrkA79BnkJ2DaQeEhBAhUTFDCk6Yh+MI/D
+	jv7mrw6lUkBbaYyqh8EnA==
+X-ME-Sender: <xms:BKUpacWsrUWFkkszPlnNO9Jr4GRSTkREi3WLOdQVvRlV7vDPt-PTexU>
+    <xme:BKUpabZhVqs6dp1QlUh8z_x0DAQppSmIP6R52fsjd7MrMt24O-AaxCuImR00wgLCX
+    d558j8g4ufLrlJEi7RumX2Qb6aqGOFVZXky-2IVvyAkgLY0Jy_7kw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvhedttdduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepleefjedujeff
+    gfeludehgeehueeffeeftdfgfeefveduueelffegkedtleeukeeinecuffhomhgrihhnpe
+    hgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
+    drtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtvg
+    hfrghnrhhivggthhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:BKUpaTTdFwJEJ8ey5ynDt2EaeYAxBY0qvQE2V2ZCKGt_QK0KNUFMUg>
+    <xmx:BKUpachqoEG_zT0B9hj-v53H6FUoohtg7GWo-y9TDUM2bk9C1lh2Hg>
+    <xmx:BKUpab6i_luCFa2tPaOZaRyK8-r3hG1plKg5Xth2yBdLDXXWlwGplQ>
+    <xmx:BKUpaRCAW8erAZaCs4aiOmzVyVJ4waYB1EOgTnA4OrOw7JLuDVAkPg>
+    <xmx:BKUpaRRZunNZe7RJKeEm_hnpmzcF5WXzqJmWeSvuLahpgFKyzUGni3gM>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 5ED651EA0068; Fri, 28 Nov 2025 08:35:00 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Stefan Rieche <stefanrieche@gmail.com>,
-    snowdroppe <stefanrieche@gmail.com>
+X-ThreadId: AB3l5Xj7q0AR
+Date: Fri, 28 Nov 2025 14:34:39 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: "Stefan Rieche" <stefanrieche@gmail.com>
+Message-Id: <f66c3b5a-6126-4fec-9c13-e4cdd3043fa0@app.fastmail.com>
+In-Reply-To: <pull.2111.git.git.1764335780515.gitgitgadget@gmail.com>
+References: <pull.2111.git.git.1764335780515.gitgitgadget@gmail.com>
+Subject: Re: [PATCH] docs(git-pull.adoc): fix man page typo
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: snowdroppe <stefanrieche@gmail.com>
+Nice fix.
 
-Fix typo in man page from "git --rebase abort"
-to "git rebase --abort"
+> docs(git-pull.adoc): fix man page typo
 
-Signed-off-by: Stefan Rieche <stefanrieche@gmail.com>
----
-    docs(git-pull.adoc): fix man page typo
+Correct, you need an =E2=80=9Carea=E2=80=9D in front of the message. But=
+ if you want
+something like =E2=80=9Cdocs=E2=80=9D it would be more typical/conventio=
+nal with
+something like this:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2111%2Fsnowdroppe%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2111/snowdroppe/master-v1
-Pull-Request: https://github.com/git/git/pull/2111
+    doc: pull:
 
- Documentation/git-pull.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+or:
 
-diff --git a/Documentation/git-pull.adoc b/Documentation/git-pull.adoc
-index cd3bbc90e3..d3006359ed 100644
---- a/Documentation/git-pull.adoc
-+++ b/Documentation/git-pull.adoc
-@@ -38,7 +38,7 @@ or `pull.ff` with your preferred behaviour.
- 
- If there's a merge conflict during the merge or rebase that you don't
- want to handle, you can safely abort it with `git merge --abort` or `git
----rebase abort`.
-+rebase --abort`.
- 
- OPTIONS
- -------
+    doc: git-pull:
 
-base-commit: b31ab939fe8e3cbe8be48dddd1c6ac0265991f45
--- 
-gitgitgadget
+And then for the rest you don=E2=80=99t need =E2=80=9Cman page typo=E2=80=
+=9D since we know that
+this is a doc already. And =E2=80=9Cman page=E2=80=9D is too specific si=
+nce you can make
+HTML as well. Maybe:
+
+    fix typo in command
+
+On Fri, Nov 28, 2025, at 14:16, Stefan Rieche via GitGitGadget wrote:
+> From: snowdroppe <stefanrieche@gmail.com>
+>
+> Fix typo in man page from "git --rebase abort"
+> to "git rebase --abort"
+>
+> Signed-off-by: Stefan Rieche <stefanrieche@gmail.com>
+
+The `From:` (author) and signoff line should match. See `real-name` in
+`Documentation/SubmittingPatches`. Either a pseudonym or real/preferred
+name. But it looks like you want to use your real name.
+
+I see on the PR that you have used `snowdroppe <stefanrieche@gmail.com>`
+as the author on the commit. You can change your config for the project
+to use the same name and email as the signoff line. Then
+
+    git commit --amend --reset-author
+
+And force push to the branch on the remote.
+
+> ---
+>     docs(git-pull.adoc): fix man page typo
+>
+> Published-As:
+> https://github.com/gitgitgadget/git/releases/tag/pr-git-2111%2Fsnowdro=
+ppe%2Fmaster-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git
+> pr-git-2111/snowdroppe/master-v1
+> Pull-Request: https://github.com/git/git/pull/2111
+>
+>  Documentation/git-pull.adoc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-pull.adoc b/Documentation/git-pull.adoc
+> index cd3bbc90e3..d3006359ed 100644
+> --- a/Documentation/git-pull.adoc
+> +++ b/Documentation/git-pull.adoc
+> @@ -38,7 +38,7 @@ or `pull.ff` with your preferred behaviour.
+>
+>  If there's a merge conflict during the merge or rebase that you don't
+>  want to handle, you can safely abort it with `git merge --abort` or `=
+git
+> ---rebase abort`.
+> +rebase --abort`.
+>
+>  OPTIONS
+>  -------
+>
+> base-commit: b31ab939fe8e3cbe8be48dddd1c6ac0265991f45
+> --
+> gitgitgadget
