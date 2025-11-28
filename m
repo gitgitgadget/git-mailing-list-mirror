@@ -1,134 +1,115 @@
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894F32C21DB
-	for <git@vger.kernel.org>; Fri, 28 Nov 2025 17:07:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBDB332903
+	for <git@vger.kernel.org>; Fri, 28 Nov 2025 17:36:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764349638; cv=none; b=rcUY5SPYz/TqazK7LGPHQtNi4vLr0Jk8mebGCpJDg4WhsCoCGQhS6VoC1zydHSov6Qge0OZKLO/DvZuoMpQGebdN0krvA17nko8LwKcXNIW5G1YmGD0xTN65pFbAMCGRhI37RqgQlZPLwUZ+2c9o6BAvdHjPHqqJjRrdF3FSC5A=
+	t=1764351376; cv=none; b=S0fHU3pNiqvEOBvipvyVUGEW4gSNrUMy6Fb6OQjPUM34dke9gLmLPUrtL8WEgdFzIac/DbYYfVi8H4UNGp0/7ouDoMzFAy/bmDNkGlx5zSxgYd8J4hXnn0UKlne6Kq3cak+sPLjWMuIvWa4E55RKxTIim/Fcb3Pi0CtAfsfVwNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764349638; c=relaxed/simple;
-	bh=mMa9eMwZykIkojvbk6HHQqGsZFTDfEXxMaXQG3vbUOE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ft9f0FVz8Kbd0JrFI1oArz2ktSE14YiN4kIsw6iN65cVVpb7Z1zS3U8KWzWtPrOgTcWwHoyDAnhSlUHhUYk5efGE9l+ns9H00P8IFR4ENQTu5sz/2lCgYmUsOSVC9oV2x+V/M0gMxcZPv0wTV5K7RZdYptiHOClILieogyTgEPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MOTWJq8z; arc=none smtp.client-ip=209.85.166.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764351376; c=relaxed/simple;
+	bh=sfwz7ZelXRUIDY64YUGLra5GCKhNZcO+s0DfM4Xdo4o=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Ag8p3pSykm63SKIWpPH0uOJc8ZqNONKhEUmD4wy7Fz7vry9ntxNIcya9N3zM4zxdvBVfB0z/z0LC8PfIlMtyR94k7SExjZPI8QmIMxK/qxSxnNs70XXVlE1ike1XUAeDVWplepR3ez8i55Jv/ixN5HAfaKaNsZhtJ6ydcmhSqlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=n/Maei86; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r4H+38u6; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MOTWJq8z"
-Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-948e1ec34afso94756639f.3
-        for <git@vger.kernel.org>; Fri, 28 Nov 2025 09:07:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764349635; x=1764954435; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nm0VkEn8PrZgQmrGogct6v+TTJZu8kjl6RgBgTqDAew=;
-        b=MOTWJq8zKW7hek35hqk8Ti/DMQX6EZ1+Cd64OKaAmknQWxEITZX/X0Xgaxtob6xJQN
-         WhTjhEqm8EsLDATezO6vpDcQ6sjZ7AcVgF5XLa84sC6wjYNm/4T1g1kKuV/eR6tkSXch
-         v3ErvCwkE/gSYO03HccgW6pTjX2CAaklHGEVUfbp+c45/ehCF0+EUbuz1rq6M83uooCu
-         zGQRuwSjZBN9yNGcfXO+QdOPrzU/ofyMIHKU8WFFmJXDMrobswVKwS7ljh8qd+k3qDIb
-         AyNAWJGOP5JUtDmerY1xKrZVmsIDqYpl6bqX5k0Gz+oOyWLJL891FG9taHpf4ZLYqsu0
-         J+bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764349635; x=1764954435;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=nm0VkEn8PrZgQmrGogct6v+TTJZu8kjl6RgBgTqDAew=;
-        b=XelSYD7XU++IZxZr/VfjuS/k8DOBP6rFS/3xRSXtEm9H0BJ2JddjGNLQN0yfUurtgH
-         W8WZ7XpR22VJwc3276ii5H/hQe8rGVERoNbb2hZlwY8vY2CYwyMVEX49qmWn713rTS05
-         cP1E5N4LdF9+kj1pDhBm31hNRiqZAVeFZ/E45y4mhnkJiHI8Gb+d+ez2E3sQCOLdLeTu
-         G7GvKr0WmfmSKs97HrYg6pMkWOiTIi0Q8SlRmCNz05RAq2eZOmYUUmgB53IdIcpUpWo/
-         3lA0ktLAr6MPnZs2pCrdKUmX7CLBLCz09Ws+Di/U2fBE+olbGnkOXyWaHWThTLNewRpi
-         jBzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWISgazC1XRY/3jyvCFZG/piAzdktd+/qVSpTBp7TucTr7S85Jlbwgmt34kYYgxm9PiNYs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/ABDzvoN8duVfMCsMQ7gMION+kl19L7/KbPFmVQAx2bVGnKzG
-	n6ueTmm6raKV4bilGmLRPGe0Vxj2hoaS7Nv0UgN42D8E0cFQ034JG38dg3GyXb6FT2los4SAQqf
-	dBYh8LNp7swMlRQJkUj6+Ky616ZJpzHM=
-X-Gm-Gg: ASbGncsraqhpjBqOL5FES6WWfmQ1UxGK18lH2Mf+E44hF6ykpXUaII5VuMHShWeVOrE
-	GRfr6UxNBfkNeHrCo0xz8PB9R4ifNEWkqATiLjZZQKEVgSoHoWd06k0r5TA1kIoDC/C76TpnQB9
-	I7hSBOGOiiO79nKMTO8PKV1V9AyYG1gYzEgh2jEfqdtCbaUj55Ks959KoxU1ielrrqiqzO5Nwkj
-	CCPKfsgDQL/A4WGZfE2cCvx3PnLD4NkxzlruC/+u4Esqa4boOeq+CLnwSdTPiwcpPbHWWkAfUZg
-	vJWwqcY7XAEHOu7MCqcKuOdb70YQ
-X-Google-Smtp-Source: AGHT+IEunAC3Jiy5V+hP/u5IOKsATb5uWQvaoduWMiwZdCrGVZTeTDcY5IVIwMFH/Xw/DO7vljq0KU+dBT6QSgIoi+o=
-X-Received: by 2002:a05:6638:29b6:b0:5ab:c42b:fb9f with SMTP id
- 8926c6da1cb9f-5b999696f60mr11383048173.19.1764349635208; Fri, 28 Nov 2025
- 09:07:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="n/Maei86";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r4H+38u6"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 661BB1D003EA;
+	Fri, 28 Nov 2025 12:36:13 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Fri, 28 Nov 2025 12:36:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1764351373;
+	 x=1764437773; bh=sfwz7ZelXRUIDY64YUGLra5GCKhNZcO+s0DfM4Xdo4o=; b=
+	n/Maei86tWV0Rfg6NuxC+Z/xxYXeVi/ZulDuZ2cPYp8dh4JVJ6SxAyasXSBQ+nXl
+	vx5ETlDG3sfl/nnIzkE/5Q6eEdlssuu35K34QAAnEyAnR8J7Z9aSfQiKnECwP1ct
+	Fn1CVmf1XFpuj75vD7yPo/t8UlAJhR4/yawFsyWbM77RApQj7qDHeYYGlLbyS9Nt
+	ICqY8IwMz3zuxe/WzVgYTk4z4+6m0IaiLsQwt+mzahqWmwT2AkLDYTD/kESVHCZB
+	0od+1SDtj7Ao5d3RGv/A3y00Vz67qsVvpT0pSdL+bUObImu0CibuV9QHf/QL/261
+	l4zuf/oVPz4coZRD8YAXkA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764351373; x=
+	1764437773; bh=sfwz7ZelXRUIDY64YUGLra5GCKhNZcO+s0DfM4Xdo4o=; b=r
+	4H+38u6ILsrP7ZoRguIEC4qXQ+vwhAuCwkuV6pyctLugcit1wQ3rWipK8Jvfu2Ph
+	QRlRYfQn5Et+nBe9DSMRPgUjdH8KAxiFYczaeOBC4VR3xzISunhHKrqJ9F037PeE
+	deA+T5QMxoaA04tOMKH4zUxKsK/fc6AWoJq5GCX2lCq+fndx/rT/xAeYj72xNAWQ
+	EZmiXRfS4bMt1sHFdMPvLQz1cRj08rsWm83JHzFsNil1yyXXZUjtaY7ha6oFAFFU
+	Y0kXr6jznNU+BcEs23id8Rd7M63l/mNnZEm0wY/+GnSy3Hwm+4a7jhGHdUxPYiQQ
+	GWpXr6HRCyszdv8p1KnsQ==
+X-ME-Sender: <xms:jN0pafVPzc40eM8Aa149_Vx5ronsDser5QVUxzqp2_tlIwcqCkrt7jc>
+    <xme:jN0paSb9q4q5l0ADlaq1X48UZO0P_eH5SQ_ZjwpwDeVhOC4_pvnN1ti7PEHdQ_fRe
+    1sbmhFjkuxO8AQ9UARMP6ts4ULFp4sKhJxytFlL9wBo7k1BDatCpQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvhedtgeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgt
+    phhtthhopegrnhguvghrshhksehmihhtrdgvughupdhrtghpthhtoheprhhssggvtghkvg
+    hrsehnvgigsghrihgughgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgv
+    thdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:jN0paU5cS7orXvHkC7mmV4Sp6u53Ss2TZXbPU5ZGapvid0-xUXBx1A>
+    <xmx:jN0paXaLjUiYzsgi9APuKo4vAhVjPfS7uS4hoDbjkJdnL1rMTqgdeQ>
+    <xmx:jN0paTgibinMvtkxRRqp8ZN1SFLdDk7WFWvBfjrFj1QnQ-DLjb-uQg>
+    <xmx:jN0paY87P7Z7xaTZJjXjLtRWfpI325ep0wKjtpnYa2_5dtFmLOIW4Q>
+    <xmx:jd0paVN7QDWGPN9smeSt38PC2skAEMhvl-OYiCJRK_ogMfBtJOLYBjI3>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 67CB91EA0066; Fri, 28 Nov 2025 12:36:12 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251125170056.34489-1-siddharthasthana31@gmail.com>
- <4d75da90-7e85-573a-bb10-0c63a02b076c@gmx.de> <27fef9e1-bf26-48af-b3df-35948937c891@gmail.com>
- <xmqqcy54mro6.fsf@gitster.g> <fa403239-cae3-463b-8c62-8761116ec652@gmail.com>
- <CABPp-BFsDJVtR6RV8KugCW2vmbD1=rTOKLp2jeawRfuPUEsNEA@mail.gmail.com>
- <c930d6df-5dc4-401f-a9a1-eb2f00b2e837@gmail.com> <xmqq7bvajesl.fsf@gitster.g>
-In-Reply-To: <xmqq7bvajesl.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 28 Nov 2025 09:07:04 -0800
-X-Gm-Features: AWmQ_bmKmlWUtX58fOjNXPqTcSRWpr7w_oCyIdNe-wOctCWJhy2d7lmA4LZP_W0
-Message-ID: <CABPp-BF48AF9qoP_pUs1X=sUV-_G5BpsxnG6AEhQYkJkE_TBjA@mail.gmail.com>
-Subject: Re: [PATCH 0/1] replay: add --revert option to reverse commit changes
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Siddharth Asthana <siddharthasthana31@gmail.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org, 
-	christian.couder@gmail.com, ps@pks.im, phillip.wood123@gmail.com, 
-	phillip.wood@dunelm.org.uk, karthik.188@gmail.com, code@khaugsbakk.name, 
-	rybak.a.v@gmail.com, jltobler@gmail.com, toon@iotcl.com, johncai86@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: ArU5Rl7MVZ7F
+Date: Fri, 28 Nov 2025 18:35:52 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Toon Claes" <toon@iotcl.com>, "Jeff King" <peff@peff.net>,
+ "Anders Kaseorg" <andersk@mit.edu>
+Cc: rsbecker <rsbecker@nexbridge.com>, git@vger.kernel.org
+Message-Id: <a7de959c-cedf-4a24-a45f-a28939ab5125@app.fastmail.com>
+In-Reply-To: <87y0nq14xm.fsf@iotcl.com>
+References: 
+ <20251023-b4-toon-last-modified-faster-v3-1-40a4ddbbadec@iotcl.com>
+ <20251103154726.26592-1-toon@iotcl.com>
+ <4dc4c8cd-c0cc-4784-8fcf-defa3a051087@mit.edu>
+ <3b24b6a3-61cc-4b9a-a823-f1e58fd9919b@app.fastmail.com>
+ <ceacc47b-9d29-4e32-9d83-6bd68279c83c@mit.edu>
+ <20251120081611.GC1283645@coredump.intra.peff.net> <87y0nq14xm.fsf@iotcl.com>
+Subject: Re: t8020-last-modified.sh failure on s390x (Re: [PATCH v4] last-modified:
+ implement faster algorithm)
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Nov 28, 2025 at 8:35=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Fri, Nov 28, 2025, at 17:45, Toon Claes wrote:
+> Jeff King <peff@peff.net> writes:
+>[snip]
+>>> --- expect=C2=A0 =C2=A0 2025-11-19 11:29:03.492349022 +0000
+>>> +++ actual=C2=A0 =C2=A0 2025-11-19 11:29:03.648355864 +0000
+>>> @@ -1,2 +1,2 @@
+>>> -b5 file2
+>>> -b2 file
+>>> +da1857e0652b6f264c0038d684ddecddc273e506 file2
+>>> +da1857e0652b6f264c0038d684ddecddc273e506 file
 >
-> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
->
-> > Agreed. I will keep the current submission focused on basic --revert
-> > functionality. Supporting --no-walk for disconnected commits (benefitin=
-g
-> > both --advance and --revert) would make a nice follow-up series.
->
-> If we want to have a useful support for disconnected set of commits,
-> "--no-walk" is not the way to go, I would say.
->
-> Imagine "among the 7-patch topic merged, the second commit (i.e.,
-> topic~5) and the final 3 (i.e., topic~3..topic) need to go".  You'd
-> want to be able to say (without going into details of the syntax)
->
->     revert topic~5 topic~3..topic
->
-> The setup_revisions() parser is still the right thing to use to
-> parse the command line arguments and pick out "topic~5" and
-> "topic~3..topic", but instead of letting prepare_revision_walk()
-> turn them into a single contiguous set of revisions, you'd need to
-> check revs->cmdline->rev[] and
->
->  (1) treat singleton as its own disconnected island that require no
->      walking,
->
->  (2) treat A..B as a range and independently walk them, and
->
->  (3) dedup the result from cmdline->rev[] elements into a set of
->      commits that are potentially disconnected.
->
-> I agree 100% that this topic should not attempt to deal with a
-> disconnected set of commits.  That can and should be done as a
-> separate series.
+> Kristoffer, thank you for reporting this bug. It seems there was a real
+> bug in git-last-modified, which was uncovered by these tests running on
+> s390x.
 
-How does one distinguish the "topic~5" in the range "topic~5
-topic~3..topic" from
-  * the topic~5 in "^topic~7 topic~5"
-  * the "topic1" and "topic2" in "^$OLD_COMMIT --ancestry-path topic1 topic=
-2"
-?
-I kind of think we still need some kind of flag (possibly implied by
-default for --advance and --revert but not for --onto?), though I
-agree it'd need to be a new one rather than --no-walk for your example
-to work.
-
-And if one can do this, should this flag also be added to other
-commands, so that e.g. `git log <someflag> topic~5 topic~3..topic"
-would also show the commits in topic~3..topic plus topic~5?
+Typo. r/Kristoffer/Anders/ :)
