@@ -1,85 +1,87 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F3E1A9FB5
-	for <git@vger.kernel.org>; Fri, 28 Nov 2025 16:41:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E292882AF
+	for <git@vger.kernel.org>; Fri, 28 Nov 2025 16:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764348064; cv=none; b=OFE/cI5kIVEw8RhPCtT/hQj0yoAQ9YWQpdgULfStkSxuajXAy9b3ARwflQ0XE0maxpyv3n9fuH+wir8nQ/5NoeSSKjtWrutVI7AoXBVZpMTph5ALfHLB3eTeLr93mDwn0eCCU4aikIr9o3YpNfmx18wCmQIQ26++xtsAZfrcdrI=
+	t=1764348188; cv=none; b=k8tnEsMo9bO9+wtKcq3q1pQ2yIW8fVrNrurcTyECAhuGwi+KyWa8IQD9JQXUFet3rdXOIGWLbMTAJbHrArvquWv1JIwCvDLwfmt3CriM6mxnu8NLH37n81qPe5+KVmbFZLl929IJ7R78WkPwPsQemfM/qVHtx/kelSlDIhpojwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764348064; c=relaxed/simple;
-	bh=LkgbEizDDGuuggsm/M30lMM0BDRcDurEV9HRT2YTUms=;
+	s=arc-20240116; t=1764348188; c=relaxed/simple;
+	bh=CVzfLrKO4wkW6QWAK7rWWb0WU9EpvG2LXxQGp6LgMZ4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UGdBLcqAzU1KliGTTnFMwqrw1sxBi2F2Rkgujs1Ut3U6HqoEBitk5zHuFkCFi3aPHHGgSzX1zRCzpGxNnUfQUpaiKXjZ00mvDxQ3T9H1oMEGRrDc+/el0bHMeOLMokgVUuKrOi4HboiyATk8Y80zW8T/E8YW12U4cNWwWE1zBVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CdZHWPli; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rLEZeUMS; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=qRb/9JVvCl5eEHpK3YG0jqtrF0eRiCNC2wtRJAWAjFNopJcRYNapJiarwpcWDu9jj/uAIXuw6zMsqDKxibK93mFoK/OJNhaPGXTnc+qjX89K/yYlHRv8u9aWkGas3e0FQBOKXEeu1LUwKcwJv5uIxwJTMIGaDiOK2s19I8GSN8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GnwAJ40L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m0mzRBGG; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CdZHWPli";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rLEZeUMS"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7496F14001FD;
-	Fri, 28 Nov 2025 11:41:01 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Fri, 28 Nov 2025 11:41:01 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GnwAJ40L";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m0mzRBGG"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1C789EC04C0;
+	Fri, 28 Nov 2025 11:43:06 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Fri, 28 Nov 2025 11:43:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1764348061;
-	 x=1764434461; bh=5TKP/S7CrcVE50EgAy0WHgjvyagpseB3/TR1M6U7J34=; b=
-	CdZHWPliF7NGyDkonJQFa8pFzNttOLHPr/TpVLiL+jbZxjNBWD3FWN4ynRS4cOMU
-	oh/mLAB7D+YX7pGnszU2NEwnaSeZXnFnqjlyJ7iNo9PmCNioZ0Iegigfuw5u52OB
-	BKrjukLJWe3Qa5m0i06e22hjBZELEVKS9VkdnWfVljJMtLtWmDIjEPfRPbdFxvsw
-	2IXTJYchQY3gt7S3+RUCR8NANPYVcyQHtoOTBKgaBzbhr5nRJ8yi5/aWvtgk2XVG
-	wpKnbFPK85jKid2DKGC3C2FTZUqV1K+hQFyjgUtmGehaZFAtoouhYcE93iNUV9+x
-	ETOntL4oWnIG1y9CblCdCQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1764348186;
+	 x=1764434586; bh=NdKCKpja9ZiCMy0jPcnNnnj2y52rlfLzOmlshytbMoI=; b=
+	GnwAJ40LiDWzqKY5jlW2lM+9WBRUtRk4HEqqhCCzwi2f2yI2CCSU29+NWFjbeJs7
+	MvQvoerFvJzk05uGxocsbx+PM7/H7MhY6QK0+N+Z+UzlREKeLTkFTGKZMtcv4jce
+	0E1R6eVhiuQiZKcdkk5PSPs66+nplAyQaLFRuEWp/r3PwHzygf6/TBQV82+RZTCs
+	BwzvAnPq+fhinEgzXGRLe3BHBFLs6ptrhtGAGAIUaEw6n+mZwi9YC8mQN2ICg0hJ
+	nZc9zuJz0LhRP36EjTHG9i+2UZh4kDlfC0lZADrtLEYJDKU0N+rgEfGSKSetfGGY
+	eHMxHru9+ZU8OAFQ8rBRog==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764348061; x=
-	1764434461; bh=5TKP/S7CrcVE50EgAy0WHgjvyagpseB3/TR1M6U7J34=; b=r
-	LEZeUMSUOleLN83mhzfwXEt4lCjzbSInZejzG9IrR+dsz7UV0okLsoviuFvcsAWn
-	Akqz7SIzk7BdOoAt6lT5wAyrGfbNAO4e5NJ5o1ew4Takji8EKTTJkR/5K4+UUtmO
-	SGbqIQqNU9gb7gtW13Hs93N8IJ9b6p2eydYamirCbHy9uztCHQnstBncT4KM4QE1
-	WRapqaBxIQsw2aA+oF81DPawPlsKEjw4YMr1qKBhEiWOjPDq1rtBq+yxg13HufAD
-	GNoFFQ7ak0wr/t9XUYZtEECI1cDCoDkvlqc1lHT572sa6/KKB/maV/txGP8jamyf
-	rHC0gJXR/ARKUY1eY4NEw==
-X-ME-Sender: <xms:ndApafexXCmbeEFzDF0eN2ztbSoCV_MmW5Z4urmRzG3BDxxFZ5Lydg>
-    <xme:ndApacNwPok5VFos5EpEmJc_VTgXUVrsDSju1mcOMpLGIYZToyIq6pALdZpzhObrd
-    lSiDOzbM2Pk4jSsdICUCD4vcQiHEPmV4_hFi99wR26Rg0FVYiiWIA>
-X-ME-Received: <xmr:ndApadhCkwSXzoB2iqU1VkNYjhyu4wKegDV26tXLeobINIrwAanalpGzPaAuJdv9fblDW0P-2yn4I4-2MzwKWyxHjeTMSCLPelsX>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764348186; x=
+	1764434586; bh=NdKCKpja9ZiCMy0jPcnNnnj2y52rlfLzOmlshytbMoI=; b=m
+	0mzRBGGRrM8DRRVNu0ayfl9GLcg4deHZ+z5Tdx3iLsW0V1aLbQRHGDdkb16XueG2
+	xOgFK9Sy7WD8bNulm74TbrrAIFLPBPVmp3RFyCqo+nbZR4HDAkTsuPa0V6QEFXRE
+	YOIcLh9Yhdogk6GPWdOqoJkMXT6ryT0ktLvHK4ZM0PuTcQaIWYy78ioIV31dnT9x
+	1dyjUBBDgb+16mnvB9VOU9JGXDInpNV73KPTx5fNtKLHU0Ah9k8vzzQFpwcqPTu/
+	jv8YVwBLLo+ih6j/N0C8+ExFKH7YwZeIGmOAz862gvJBzeFLxHDJOv+VbytDbhgL
+	AIskL5FQ7j+67eUL38RPw==
+X-ME-Sender: <xms:GdEpaQ7JrUwI7J57qOn72TPYcrMb4EPuYtm3KZEJ7I-6Njv1slZ4NQ>
+    <xme:GdEpadbBm-i0aCQxxIAVnVJK83GObgj9n5Gqi-G23wlGbFe0YOOg1J09u1y28QGr6
+    90LrD8EO701Mz8BFcoJhVB3Nwy87rbcg9K1biN53olk9M6QuWdz6Q>
+X-ME-Received: <xmr:GdEpaV72YMVhSofpA83_D2uSpSAGnFHOFfOWwHCoXqO2LBoAPrIWtmCRSfTFCQ1o-TM11M6LdPDDc_pBF1sBjILP1EDNmKTNgddL>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvhedtfeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekre
-    dttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhes
-    phhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuve
-    elgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
-    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhs
-    thhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhh
-    rghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:ndApaf2TAQnxLYWzaYpUpm04AJBuilch95xtANHEHYCK-3ZLOiNa9Q>
-    <xmx:ndApaXiGHsF94LiR8FSpckYqh8Jd_BLKePIXmHE4mOG0LveRl4d1FQ>
-    <xmx:ndApafdeBfzfKq-PDHIPcqtaqrRWDESaB04t-hIWsgmFbaFCCpCWjw>
-    <xmx:ndApaalsOmdPmvQRkbdFkLqBzVf0NN0SrnunVhbTNV1aG6qSoKQbgA>
-    <xmx:ndApaUIDQ7_ZHrmyvf1ugNPPDleWuIT8u93kNgBcXORx6V1b3U7BpOLG>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
+    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepshhtvghfrghnrhhivggthhgvsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:GdEpaQAXX__3fe-ImfhBb5UE5wJxvmRSOCIe6yONTeZUsrB7F_PGNA>
+    <xmx:GdEpabckI2JIRN4vKXf0xw4HFrlthOPYZ6pgEFnQHDW8HT2akv1xSQ>
+    <xmx:GdEpafJT4Dxy6Vmei2lNNnn1svqlsxxQugs_LqpAC6WlFIC3Bs2j9w>
+    <xmx:GdEpaW1reK0hKt2f7eE1skFYU8B5A6GDNaCnC4TpxBRVjpj0iM2J2Q>
+    <xmx:GtEpaXYY0LzacsnoVUXk4oDmpWMyBWR6XPmrg8uRXrxEI33imr8gjmKq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Nov 2025 11:41:00 -0500 (EST)
+ 28 Nov 2025 11:43:05 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH] branch: advice using git-help(1) instead of man(1)
-In-Reply-To: <advice_git-help.64@msgid.xyz>
-	(kristofferhaugsbakk@fastmail.com's message of "Fri, 28 Nov 2025
-	13:54:29 +0100")
-References: <advice_git-help.64@msgid.xyz>
-Date: Fri, 28 Nov 2025 08:40:59 -0800
-Message-ID: <xmqq345yjejo.fsf@gitster.g>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Josh Soref" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "Stefan
+ Rieche" <stefanrieche@gmail.com>
+Subject: Re: [PATCH] docs(git-pull.adoc): fix man page typo
+In-Reply-To: <f66c3b5a-6126-4fec-9c13-e4cdd3043fa0@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Fri, 28 Nov 2025 14:34:39 +0100")
+References: <pull.2111.git.git.1764335780515.gitgitgadget@gmail.com>
+	<f66c3b5a-6126-4fec-9c13-e4cdd3043fa0@app.fastmail.com>
+Date: Fri, 28 Nov 2025 08:43:04 -0800
+Message-ID: <xmqqy0nqhzvr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,31 +92,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-kristofferhaugsbakk@fastmail.com writes:
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> Nice fix.
 >
-> 8fbd903e (branch: advise about ref syntax rules, 2024-03-05) added
-> an advice about checking git-check-ref-format(1) for the ref syntax
-> rules. The advice uses man(1). It’s better to use Git’s own git-help(1)
-> instead of an external command.
+>> docs(git-pull.adoc): fix man page typo
+>
+> Correct, you need an “area” in front of the message. But if you want
+> something like “docs” it would be more typical/conventional with
+> something like this:
+>
+>     doc: pull:
+>
+> or:
+>
+>     doc: git-pull:
 
-Substatiate "better" a bit better?  If there were a universal help
-facility, we wouldn't have had to invent our own, and that would
-have been even better, but since we do not live in such an ideal
-world, we cater to people who live in a man-less land by having our
-own.
+or
 
-In other words, "An external command" is not the issue.  Some people
-living in a man-less land is.
+	doc: fix typo in git-pull.adoc
 
-    ... for the ref syntax rules and refers to the man(1) command,
-    which may not be available on some platforms.  Refer to 'git
-    help' instead.
+>> Fix typo in man page from "git --rebase abort"
+>> to "git rebase --abort"
+>>
+>> Signed-off-by: Stefan Rieche <stefanrieche@gmail.com>
+>
+> The `From:` (author) and signoff line should match. See `real-name` in
+> `Documentation/SubmittingPatches`. Either a pseudonym or real/preferred
+> name. But it looks like you want to use your real name.
+>
+> I see on the PR that you have used `snowdroppe <stefanrieche@gmail.com>`
+> as the author on the commit. You can change your config for the project
+> to use the same name and email as the signoff line. Then
+>
+>     git commit --amend --reset-author
+>
+> And force push to the branch on the remote.
 
-> Also change to using single quotes (') to quote the command since that
-> is more conventional.
+Great.  Which would mean that the in-body From: line early in the
+message will also say Stefan Rieche, not snowdroppe.
 
-Yup.  We haven't added markdown or asciidoc interpreter to our
-advise() machinery ;-)
-
+Thanks for a review.
