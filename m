@@ -1,88 +1,47 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from out-176.mta1.migadu.com (out-176.mta1.migadu.com [95.215.58.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E292882AF
-	for <git@vger.kernel.org>; Fri, 28 Nov 2025 16:43:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3F02882A7
+	for <git@vger.kernel.org>; Fri, 28 Nov 2025 16:46:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764348188; cv=none; b=k8tnEsMo9bO9+wtKcq3q1pQ2yIW8fVrNrurcTyECAhuGwi+KyWa8IQD9JQXUFet3rdXOIGWLbMTAJbHrArvquWv1JIwCvDLwfmt3CriM6mxnu8NLH37n81qPe5+KVmbFZLl929IJ7R78WkPwPsQemfM/qVHtx/kelSlDIhpojwo=
+	t=1764348376; cv=none; b=oDo5tsoXpW//LHyzPsZStAVCKgXQcN3Gp/qX7ORj0vbIXAVZGDyRCXr3qJd6HbDMKWQVq3VaEXKOgtKpRVCOirx0HGYnmn/bQqDf45UrsobPRhBfd2a3/n7J/jx1V9M/mw931eSdNPicajmIOP+m54qdAQgGXmrENO50lGGgPaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764348188; c=relaxed/simple;
-	bh=CVzfLrKO4wkW6QWAK7rWWb0WU9EpvG2LXxQGp6LgMZ4=;
+	s=arc-20240116; t=1764348376; c=relaxed/simple;
+	bh=Fau4RJMlsAAFYR8smfZoliUQLEgzzaWS6+zkqQ+nfbk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qRb/9JVvCl5eEHpK3YG0jqtrF0eRiCNC2wtRJAWAjFNopJcRYNapJiarwpcWDu9jj/uAIXuw6zMsqDKxibK93mFoK/OJNhaPGXTnc+qjX89K/yYlHRv8u9aWkGas3e0FQBOKXEeu1LUwKcwJv5uIxwJTMIGaDiOK2s19I8GSN8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GnwAJ40L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m0mzRBGG; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=XmxfS4V60eUJPr8Z7nzVrokOkZHlKVuV1VsglXn7FPdZoVlRBCO13lDeC7qhA4zPWN69Zefg3vwiG6q0fONL/WytY5YRQh8MsO1Q2FpeVkjvnGuKgAp9mYpvBlPlLo8L7VTR4JhC4aywugO8m+LYRD1kt9uyq4fcvG5TGJIy5E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=qE5Hg3bq; arc=none smtp.client-ip=95.215.58.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GnwAJ40L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m0mzRBGG"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1C789EC04C0;
-	Fri, 28 Nov 2025 11:43:06 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Fri, 28 Nov 2025 11:43:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1764348186;
-	 x=1764434586; bh=NdKCKpja9ZiCMy0jPcnNnnj2y52rlfLzOmlshytbMoI=; b=
-	GnwAJ40LiDWzqKY5jlW2lM+9WBRUtRk4HEqqhCCzwi2f2yI2CCSU29+NWFjbeJs7
-	MvQvoerFvJzk05uGxocsbx+PM7/H7MhY6QK0+N+Z+UzlREKeLTkFTGKZMtcv4jce
-	0E1R6eVhiuQiZKcdkk5PSPs66+nplAyQaLFRuEWp/r3PwHzygf6/TBQV82+RZTCs
-	BwzvAnPq+fhinEgzXGRLe3BHBFLs6ptrhtGAGAIUaEw6n+mZwi9YC8mQN2ICg0hJ
-	nZc9zuJz0LhRP36EjTHG9i+2UZh4kDlfC0lZADrtLEYJDKU0N+rgEfGSKSetfGGY
-	eHMxHru9+ZU8OAFQ8rBRog==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764348186; x=
-	1764434586; bh=NdKCKpja9ZiCMy0jPcnNnnj2y52rlfLzOmlshytbMoI=; b=m
-	0mzRBGGRrM8DRRVNu0ayfl9GLcg4deHZ+z5Tdx3iLsW0V1aLbQRHGDdkb16XueG2
-	xOgFK9Sy7WD8bNulm74TbrrAIFLPBPVmp3RFyCqo+nbZR4HDAkTsuPa0V6QEFXRE
-	YOIcLh9Yhdogk6GPWdOqoJkMXT6ryT0ktLvHK4ZM0PuTcQaIWYy78ioIV31dnT9x
-	1dyjUBBDgb+16mnvB9VOU9JGXDInpNV73KPTx5fNtKLHU0Ah9k8vzzQFpwcqPTu/
-	jv8YVwBLLo+ih6j/N0C8+ExFKH7YwZeIGmOAz862gvJBzeFLxHDJOv+VbytDbhgL
-	AIskL5FQ7j+67eUL38RPw==
-X-ME-Sender: <xms:GdEpaQ7JrUwI7J57qOn72TPYcrMb4EPuYtm3KZEJ7I-6Njv1slZ4NQ>
-    <xme:GdEpadbBm-i0aCQxxIAVnVJK83GObgj9n5Gqi-G23wlGbFe0YOOg1J09u1y28QGr6
-    90LrD8EO701Mz8BFcoJhVB3Nwy87rbcg9K1biN53olk9M6QuWdz6Q>
-X-ME-Received: <xmr:GdEpaV72YMVhSofpA83_D2uSpSAGnFHOFfOWwHCoXqO2LBoAPrIWtmCRSfTFCQ1o-TM11M6LdPDDc_pBF1sBjILP1EDNmKTNgddL>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvhedtfeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
-    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepshhtvghfrghnrhhivggthhgvsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:GdEpaQAXX__3fe-ImfhBb5UE5wJxvmRSOCIe6yONTeZUsrB7F_PGNA>
-    <xmx:GdEpabckI2JIRN4vKXf0xw4HFrlthOPYZ6pgEFnQHDW8HT2akv1xSQ>
-    <xmx:GdEpafJT4Dxy6Vmei2lNNnn1svqlsxxQugs_LqpAC6WlFIC3Bs2j9w>
-    <xmx:GdEpaW1reK0hKt2f7eE1skFYU8B5A6GDNaCnC4TpxBRVjpj0iM2J2Q>
-    <xmx:GtEpaXYY0LzacsnoVUXk4oDmpWMyBWR6XPmrg8uRXrxEI33imr8gjmKq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Nov 2025 11:43:05 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: "Josh Soref" <gitgitgadget@gmail.com>,  git@vger.kernel.org,  "Stefan
- Rieche" <stefanrieche@gmail.com>
-Subject: Re: [PATCH] docs(git-pull.adoc): fix man page typo
-In-Reply-To: <f66c3b5a-6126-4fec-9c13-e4cdd3043fa0@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Fri, 28 Nov 2025 14:34:39 +0100")
-References: <pull.2111.git.git.1764335780515.gitgitgadget@gmail.com>
-	<f66c3b5a-6126-4fec-9c13-e4cdd3043fa0@app.fastmail.com>
-Date: Fri, 28 Nov 2025 08:43:04 -0800
-Message-ID: <xmqqy0nqhzvr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="qE5Hg3bq"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1764348371;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=A1Bs9iefr4fQRsealfvA9be1K5TpLAQPdeK+MbxjvfQ=;
+	b=qE5Hg3bqbsq9xzS2ZfB3p4lzRBbEFHFYxCfEhM0JD1L/zBmlyTQBXjYruppqZk/2m3upxW
+	2iBCH36Z2i+mAkDSyNrdkfKXQgAL5mEmMn82LjInFOmMfVDcEk4nm2Ck6iC4rjrK3R7EMR
+	BHRBt0eiv3S9v3sA3vFtaklh0svbBrY=
+From: Toon Claes <toon@iotcl.com>
+To: Jeff King <peff@peff.net>, Anders Kaseorg <andersk@mit.edu>
+Cc: rsbecker@nexbridge.com, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>, git@vger.kernel.org
+Subject: Re: t8020-last-modified.sh failure on s390x (Re: [PATCH v4]
+ last-modified: implement faster algorithm)
+In-Reply-To: <20251120081611.GC1283645@coredump.intra.peff.net>
+References: <20251023-b4-toon-last-modified-faster-v3-1-40a4ddbbadec@iotcl.com>
+ <20251103154726.26592-1-toon@iotcl.com>
+ <4dc4c8cd-c0cc-4784-8fcf-defa3a051087@mit.edu>
+ <3b24b6a3-61cc-4b9a-a823-f1e58fd9919b@app.fastmail.com>
+ <ceacc47b-9d29-4e32-9d83-6bd68279c83c@mit.edu>
+ <20251120081611.GC1283645@coredump.intra.peff.net>
+Date: Fri, 28 Nov 2025 17:45:57 +0100
+Message-ID: <87y0nq14xm.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,46 +49,68 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Nice fix.
+> On Wed, Nov 19, 2025 at 12:06:35PM -0800, Anders Kaseorg wrote:
 >
->> docs(git-pull.adoc): fix man page typo
->
-> Correct, you need an “area” in front of the message. But if you want
-> something like “docs” it would be more typical/conventional with
-> something like this:
->
->     doc: pull:
->
-> or:
->
->     doc: git-pull:
+>> The failures in subtests 16 and 19 come with these diffs:
+>>=20
+>> --- expect=C2=A0 =C2=A0 2025-11-19 11:28:57.966106204 +0000
+>> +++ actual=C2=A0 =C2=A0 2025-11-19 11:28:58.110112543 +0000
+>> @@ -1,2 +1,2 @@
+>> +ac29b6e974b49803f1c6ec5a705d1bf7dbfa7d2f m1.t
+>> =C2=A0m2 m2.t
+>> -m1 m1.t
+>>=20
+>> [=E2=80=A6]
+>>=20
+>> --- expect=C2=A0 =C2=A0 2025-11-19 11:29:03.492349022 +0000
+>> +++ actual=C2=A0 =C2=A0 2025-11-19 11:29:03.648355864 +0000
+>> @@ -1,2 +1,2 @@
+>> -b5 file2
+>> -b2 file
+>> +da1857e0652b6f264c0038d684ddecddc273e506 file2
+>> +da1857e0652b6f264c0038d684ddecddc273e506 file
 
-or
+Kristoffer, thank you for reporting this bug. It seems there was a real
+bug in git-last-modified, which was uncovered by these tests running on
+s390x.
 
-	doc: fix typo in git-pull.adoc
+> Interestingly, the commits it returns are merges. E.g., here is the
+> state after test 16:
+>
+>   $ git log --oneline --graph
+>   *   ac29b6e (HEAD) Merge tag 'm1' into HEAD
+>   |\
+>   | * 53e7187 (tag: m1) m1
+>   * | 9b81a41 (tag: m2) m2
+>   |/
+>   * 08525b6 (master) remove a
+>   * 664d121 (tag: 3) 3
+>   * a732b0c (tag: 2) 2
+>   * 1edf6f6 (tag: 1) 1
+>
+> Though it is also the first commit we start traversing from. The same is
+> true after test 19 (da1857e is the tip of HEAD there). So I am not sure
+> if the bug is "we are not passing down blame from the merge", or just
+> "we are not passing down blame at all".
+>
+> I can't help but notice that this same failure is seen on s390x and HP
+> NonStop[1], both of which are (I think) big-endian. And not on any of
+> our usual little-endian platforms.
 
->> Fix typo in man page from "git --rebase abort"
->> to "git rebase --abort"
->>
->> Signed-off-by: Stefan Rieche <stefanrieche@gmail.com>
->
-> The `From:` (author) and signoff line should match. See `real-name` in
-> `Documentation/SubmittingPatches`. Either a pseudonym or real/preferred
-> name. But it looks like you want to use your real name.
->
-> I see on the PR that you have used `snowdroppe <stefanrieche@gmail.com>`
-> as the author on the commit. You can change your config for the project
-> to use the same name and email as the signoff line. Then
->
->     git commit --amend --reset-author
->
-> And force push to the branch on the remote.
+Peff, thanks for the pointer. It costed me more time than I'd like to
+admit, but I've reproduced and debugged the issue to find and fix the
+root cause. The problem is bigger than on big-endian only, bug it was
+uncovered by this test running on a big-endian system.
 
-Great.  Which would mean that the in-body From: line early in the
-message will also say Stefan Rieche, not snowdroppe.
+Both, I've submitted a bug fix at:
+https://lore.kernel.org/git/20251128-toon-big-endian-ci-v1-1-80da0f629c1e@i=
+otcl.com/
 
-Thanks for a review.
+--=20
+Cheers,
+Toon
