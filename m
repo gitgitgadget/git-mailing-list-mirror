@@ -1,65 +1,69 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0F630FF39
-	for <git@vger.kernel.org>; Sat, 29 Nov 2025 18:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A3530CD9E
+	for <git@vger.kernel.org>; Sat, 29 Nov 2025 18:28:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764440912; cv=none; b=ckZvqnQp3EN63+lMdkxLzJye9fAjd+x6SWwyucJAtfhVyzNseVClXxsuON45CYB6127LVAA1N/qAoj5O8eOqAhDJWXy9clH8qAiDbQNZbD57LD8TG/yePLCJ8vF+J9SWf7BsH6juYVatIqYut4XcH+z1IhmKeXR3gZBfN112RlU=
+	t=1764440914; cv=none; b=K4aF7b2isT7APp7z9bA2Gd2unGGSkgdeH+RTFrvZEnlmSAFwmhs5QvvPkEekj8PJM+tE0wwb4caAux39ss610S4CtKqJKvsvBrvlD0qF07X6LpBaELFkLpU6jjDnKknkiZy3wl6SeCAeModdUhNsCh+R31pwGuG1j+fOBEs6OD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764440912; c=relaxed/simple;
-	bh=Pj8oqcotboq+exBOr77lE7ozBR1Q8It01xB73FC6/JA=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=XXrzJn/l+fqM/FuBCByrS2n/GWeW4f0LtmWHgh5zVrouSVRh3GifZBzQDATBfGR9OJfsq4OgPlzHUKA+Ir6UTm2a+5MTaeppLIzVfoLzRJzaJf+DXKjUAOfnUQoIfX/cNU7M+0pgT23CEn5MDlAJiwUGdvg+ou56g0bm3c9Dmnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wj2slXy4; arc=none smtp.client-ip=209.85.222.179
+	s=arc-20240116; t=1764440914; c=relaxed/simple;
+	bh=TnwZkSxTTNL5cz6TgNMSreKILDUTjWvsn+uUSjaWgUc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=C1QI10KF2nOs0fTkGAuTLZ5Dqysmj+9+CEu5rwRIm5BEZZ/XZFh6Fsi3Q4OupUMuzoghwZ5zIs33PZRmBk7XZ+2puFftZ66y4K8QMN2dqD1z6GZ0aBetdPPgiw8rtcUAUtQWXx3nvMXt3be5QDGWPulsiNCyj/KNgS6T9Yq0e1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q2s00m/E; arc=none smtp.client-ip=209.85.160.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wj2slXy4"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8b31a665ba5so253662485a.2
-        for <git@vger.kernel.org>; Sat, 29 Nov 2025 10:28:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q2s00m/E"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4ee13dc0c52so23855991cf.2
+        for <git@vger.kernel.org>; Sat, 29 Nov 2025 10:28:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764440909; x=1765045709; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764440911; x=1765045711; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=pUkzKhDX0dfo8LQPYUzF7UtBBQWWkK6PESwErDauZko=;
-        b=Wj2slXy4lZeC00FZzpWeYMlDPJrwfCSXdzsDVLXAFhma3ynV85lXy03uXXGSm/W/LX
-         Y9yAx1v07Vky9bQ+w6OhNwUrFnmqvhCqNrdPcX1037JgpGmc3GtS66M/cVb+8mAhi654
-         USFTVK70I596sOs7CxFCHyr8k8uvUqIsyCzvF46mLABvf1f8X1X9ZNBRP/E3h2pkReX7
-         OA9JFO+kaXz2S75Ci0xRYOWZEalXua8uqu8z5P3ttvfp1GYLfLZHOGLqaUcKOGDB6w9P
-         njOjABP1Wa+0QGCvXX/18zXqV1uzewNhZ5522ss/rhKLDeGnxuyMUoV9bMim7KxH+kT7
-         WRnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764440909; x=1765045709;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pUkzKhDX0dfo8LQPYUzF7UtBBQWWkK6PESwErDauZko=;
-        b=ZAzJCD5/NsjoI6zpChwYUwrX6g87DqvHR0fc2PTl0V21xc3KHIPjx++/xkmi6h/AAf
-         Scva4n2wl9d54Oquc9ppGEOxnl9784iZU2ao7mB2PIHr8mGvyK/ZbGpdnotJunZLevrt
-         9ZDUURyibjAICs9a8JcTYB6CUaNgpwMbqpY8vkyTEqP//Mbzh7s+J090jP3PjmQB0vUI
-         NbBXkZnhTIl0creW4Xo0U/XhTkyk7Q/ko/C2soMVTIJmCXp0EE+8RJqismWcHag4Cwze
-         GU37Nkw+CWgxTt516m8Vfm7gJWBQwpLoe6Zvs6rMQlKIaqqmPPehnBFsQ1/L5LPzvtjy
-         h0IA==
-X-Gm-Message-State: AOJu0YxD1VDQLTxR2shXwxhsSMgDbdHheZr8aMnLaef240gLanMeDIv7
-	6jnzixBYYJCdhRLhPcvxjaVc3e63OjT/v9UkIwkCE+wXpo03bwZJCxTP9y+AXA==
-X-Gm-Gg: ASbGncu8pTDOJIatXpZ3OH/EsYC+9BwF/kilHV2JHH5rF7IG4ghVqsVt1l02iRdg12j
-	hAZ3qXL8VxrJyIhMptCWM8qGlLmaQhD6ah6JTJQnL4qLdfZ3+ox3OY8glxcbaUba6BcikPgC1xM
-	Q2kR1xXKvQqvRPmDB0TBAWqms1vfZXfZJ1NvGkzD+E4XLrbqUCcUZ/jZ2+Wg+oQ3u4y0fNlLyYh
-	TNZSGuv1ZtzgzrF1KCV/Y2W4LbY9q9LhMpPwwpT49g3oNldslse1C1TgMqFOl4jG1wZ/wI//oo6
-	rvcJ6ftQ1nwWHN9IriuqqHuK6gv/pwru6tTZXyyMENJGbgm4Tc7DYWBMD1RtFJgZeXH0Syet39h
-	i8PzC1RGNZv69vQTiIH3kjmNPehzhVzXTnyt9VU6JjfEhyGJG1UFSyNVlzo10XZjwd6/5+majMQ
-	NK+pVlxwpfOKdE
-X-Google-Smtp-Source: AGHT+IEqRxaNkP8jB5YjG2PGOeSgjkDdH3huWMZHh08hAWUB3QqeWMlfbY+CaJRnzuRwDuuYRgZ4nQ==
-X-Received: by 2002:a05:620a:3f85:b0:890:1cd0:efde with SMTP id af79cd13be357-8b4ebdbdbf4mr3199217685a.64.1764440908858;
-        Sat, 29 Nov 2025 10:28:28 -0800 (PST)
+        bh=W+gahIf3OI+po5aM7+4m/0772/i2Gf2zNdbfP4SS9mU=;
+        b=Q2s00m/EUTuivLspjM6LNtZm1DJthrPZlWnDvZPJ03EPU4JmJu7gZ/BNLX7dqZ2zmL
+         ZPmUoo7kxW+IkjWKhYUAyRlb26vNuJnM7ESm1lEGPkNVW3azbGilX5m6drdbwbQZxCit
+         kQB4NezfhDi2QZd1IFtv5w224yiRodELIdP/PAJHWbGW0JSbvi6sBMfLzySe19UbTLXo
+         JkZNHpOMZl7/i8AS+LCJ7aEi8s1dc8bAqJ+A7MGBF4jhmzyjG+Hc/BaY3fKyXXJjqdzS
+         NEyeXZemjK/47zZ3vOzReNvNp9AU6Tsff27SmWAxTzy1gzmVQvv5JdpNtG8prMCF6hA+
+         4hDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764440911; x=1765045711;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=W+gahIf3OI+po5aM7+4m/0772/i2Gf2zNdbfP4SS9mU=;
+        b=rzz+k3o3MP4kr/Emy42Cod1LBcoepJ9PGNX3U9BXAgsA3kLq6i9QgfPMmYgXvp8ycq
+         ze0Sk475hJ037hWFKABbrynC29lqYglYMPY9571pFcbOfnOnUKqSE0kZen9eUciKDUEn
+         v1pCBnyUuPzdc3Yrt3+Ti5UFvcCE67ssH59N99cqEfDYOAMkC8tCvRBDl4KkxUd3Qyxr
+         qq/Cu1dFpZSILr3DObj9EzDQA9Hf6VCWirYQO8qDRqXUzJ5N+j3tis5/prS2s2umNXbO
+         87H48i4ZKxokZkPVyiXSBzwTSACXHaHeiflGRuABHRZoVtYncBl6OQ9S6YCSkiv6/n8z
+         63dw==
+X-Gm-Message-State: AOJu0YzrzCryjqJ8hSgmoI9KlfVxeKlg4l+M5egFmUcxoapogOe+7Y6H
+	+88M4YL8rfBtR510yNpFErbqxjkd+Pdigyc01Q+Mf6mRmYWhU7qt5wrVQejUvQ==
+X-Gm-Gg: ASbGncsb6rF5/3vM5Lbo1ibrYpRM0/LVc1jzlc5DpdytcUP3qSrmmsKgkL4VIErvTmn
+	Fo75pGwZi2tDujz7ZT5WEES+4DoMCNS9Pcrr2d0bHQBGBFAiBSRbtjdDm8m8/2QF/itIuyMS+DH
+	lycP7PsGzoZExdsCl8DgTXxvJV572V0FVXih6cmiQE7E6rskBo2fPqZ/dpumMYZXvoZmRLT2Kji
+	yyR4dV0TOz66mD3u4Jtjqh9EW12CKdwIs7QNHZ14E9ObyW0o6Z5vqxpXkJYy7b/7KMp3w48AYtD
+	yFW7dU8mLh14k/8iN04YZY28tdmBnTvi3CMW+Gzb2/+zdfCxzm/WbfNJaH7kA8windbzEwAIKlb
+	HEkM/Pb8L1LEE2LuW0OGlEZgyEQqJVWqdy3qqZx4IqKYrMVATWD4SbLHrGjePv2/LTeKOYgjfcG
+	Q/N6iT0F2f3SppcQ4C2SvIF5w=
+X-Google-Smtp-Source: AGHT+IEB7NyRZIdXERA63rv/EJ89yc9s8k7O4AB/m6wdFSppRytgCxHbRyOYsmHdMZCgRgCUAiMDHw==
+X-Received: by 2002:a05:622a:c8:b0:4ee:1ed1:43c6 with SMTP id d75a77b69052e-4ee58a84866mr373393001cf.10.1764440910538;
+        Sat, 29 Nov 2025 10:28:30 -0800 (PST)
 Received: from [127.0.0.1] ([20.97.198.243])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b529a9c030sm543584385a.21.2025.11.29.10.28.26
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4efd2fbc481sm46120481cf.10.2025.11.29.10.28.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Nov 2025 10:28:27 -0800 (PST)
-Message-Id: <pull.2009.git.1764440906.gitgitgadget@gmail.com>
+        Sat, 29 Nov 2025 10:28:30 -0800 (PST)
+Message-Id: <2d329837e34a88cfe28be728fe24bb5a2c6a9752.1764440906.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2009.git.1764440906.gitgitgadget@gmail.com>
+References: <pull.2009.git.1764440906.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 29 Nov 2025 18:28:16 +0000
-Subject: [PATCH 00/10] Prepare Git's test suite for symbolic link support on Windows
+Date: Sat, 29 Nov 2025 18:28:17 +0000
+Subject: [PATCH 01/10] t9700: accommodate for Windows paths
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,71 +74,79 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Git for Windows has supported symbolic links for quite some time: In
-https://github.com/git-for-windows/git/pull/156, this support was introduced
-already into Git for Windows v2.4.2.windows.1 in May 2015.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-However, the Git for Windows CI never ran the test suite with symbolic link
-support because the MSYS2 runtime (i.e. the POSIX emulation layer required
-to run Git's test suite because the latter is written in Unix shell script)
-does not support symbolic links right out of the box. This is for historical
-reasons: Symbolic link support was introduced in Windows 7, where these
-links could only be created by administrators by default, and it took until
-Windows 10 Build 14972 that at least in Developer Mode, non-administrators
-would be permitted to create them.
+Ever since fe53bbc9beb (Git.pm: Always set Repository to absolute path
+if autodetecting, 2009-05-07), the t9700 test _must_ fail on Windows
+because of that age-old Unix paths vs Windows paths problem.
 
-The MSYS2 runtime does have some sort of support for symbolic links,
-although with caveats: seeing as it expects the inputs as Unix-like paths,
-but the outputs need to be Win32 symbolic links pointing to Win32 paths,
-some normalization has to be performed in the process. This leads to
-sometimes surprising behavior e.g. when a link target like a/b/.. is
-normalized to a.
+The underlying root cause is that Git cannot run with a regular Win32
+variant of Perl, the assumption that every path is a Unix path is just
+too strong in Git's Perl code.
 
-It has been a minute or three since the time when Windows versions without
-symbolic link support were common, therefore there are plans to turn on that
-support in the MSYS2 runtime on these Windows versions by default, see
-https://github.com/msys2/msys2-runtime/pull/114 for more details about this.
+As a consequence, Git for Windows is basically stuck with using the
+MSYS2 variant of Perl which uses a POSIX emulation layer (which is a
+friendly fork of Cygwin) _and_ a best-effort Unix <-> Windows paths
+conversion whenever crossing the boundary between MSYS2 and regular
+Win32 processes. It is best effort only, though, using heuristics to
+automagically convert correctly in most cases, but not in all cases.
 
-To prepare for this, I am working toward upstreaming Git for Windows' own
-support for symbolic links. And to prepare for that, in turn, I am hereby
-contributing preemptively the fixes required to eventually let Git's test
-suite pass when both MSYS2 runtime and Git support symbolic links.
+In the context of this here patch, this means that asking `git.exe` for
+the absolute path of the `.git/` directory will return a Win32 path
+because `git.exe` is a regular Win32 executable that has no idea about
+Unix-ish paths. But above-mentioned commit introduced a test that wants
+to verify that this path is identical to the one that the Git Perl
+module reports (which refuses to use Win32 paths and uses Unix-ish paths
+instead). Obviously, this must fail because no heuristics can kick in at
+that layer.
 
-As a bonus, this patch series also contains fixes for the Perl tests (which
-were broken for a few years, unnoticed because the CI runs need to save on
-runtime and therefore skip the Perl tests because the consume a lot of
-time).
+This test failure has not even been caught when Git introduced Windows
+support in its CI definition in 2e90484eb4a (ci: add a Windows job to
+the Azure Pipelines definition, 2019-01-29), as all tests relying on
+Perl had to be disabled even from the start (because the CI runs would
+otherwise have resulted in prohibitively long runtimes, not because
+Windows is super slow per se, but because Git's test suite keeps
+insisting on using technology that requires a POSIX emulation layer,
+which _is_ super slow on Windows).
 
-Johannes Schindelin (10):
-  t9700: accommodate for Windows paths
-  apply: symbolic links lack a "trustable executable bit"
-  mingw: special-case `open(symlink, O_CREAT | O_EXCL)`
-  t0001: handle `diff --no-index` gracefully
-  t0301: another fix for Windows compatibility
-  t0600: fix incomplete prerequisite for a test case
-  t1006: accommodate for symlink support in MSYS2
-  t1305: skip symlink tests that do not apply to Windows
-  t6423: introduce Windows-specific handling for symlinking to /dev/null
-  t7800: work around the MSYS path conversion on Windows
+To work around this failure, let's use the `cygpath` utility to convert
+the absolute `gitdir` path into the form that the Perl code expects.
 
- apply.c                             |  2 +-
- compat/mingw.c                      | 14 ++++++++++++++
- t/t0001-init.sh                     |  5 ++++-
- t/t0301-credential-cache.sh         |  3 ++-
- t/t0600-reffiles-backend.sh         |  2 +-
- t/t1006-cat-file.sh                 | 24 +++++++++++++++++-------
- t/t1305-config-include.sh           |  4 ++--
- t/t6423-merge-rename-directories.sh |  9 +++++++--
- t/t7800-difftool.sh                 |  8 ++++----
- t/t9700/test.pl                     |  9 +++++++--
- 10 files changed, 59 insertions(+), 21 deletions(-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t9700/test.pl | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-
-base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2009%2Fdscho%2Fprepare-the-test-suite-for-symlink-support-on-windows-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2009/dscho/prepare-the-test-suite-for-symlink-support-on-windows-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2009
+diff --git a/t/t9700/test.pl b/t/t9700/test.pl
+index 58a9b328d5..570b0c5680 100755
+--- a/t/t9700/test.pl
++++ b/t/t9700/test.pl
+@@ -117,7 +117,12 @@ close TEMPFILE;
+ unlink $tmpfile;
+ 
+ # paths
+-is($r->repo_path, $abs_repo_dir . "/.git", "repo_path");
++my $abs_git_dir = $abs_repo_dir . "/.git";
++if ($^O eq 'msys' or $^O eq 'cygwin') {
++  $abs_git_dir = `cygpath -am "$abs_repo_dir/.git"`;
++  $abs_git_dir =~ s/\r?\n?$//;
++}
++is($r->repo_path, $abs_git_dir, "repo_path");
+ is($r->wc_path, $abs_repo_dir . "/", "wc_path");
+ is($r->wc_subdir, "", "wc_subdir initial");
+ $r->wc_chdir("directory1");
+@@ -127,7 +132,7 @@ is($r->config("test.string"), "value", "config after wc_chdir");
+ # Object generation in sub directory
+ chdir("directory2");
+ my $r2 = Git->repository();
+-is($r2->repo_path, $abs_repo_dir . "/.git", "repo_path (2)");
++is($r2->repo_path, $abs_git_dir, "repo_path (2)");
+ is($r2->wc_path, $abs_repo_dir . "/", "wc_path (2)");
+ is($r2->wc_subdir, "directory2/", "wc_subdir initial (2)");
+ 
 -- 
 gitgitgadget
+
