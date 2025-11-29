@@ -1,140 +1,182 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA8A26738D
-	for <git@vger.kernel.org>; Sat, 29 Nov 2025 13:43:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A22185955
+	for <git@vger.kernel.org>; Sat, 29 Nov 2025 14:59:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764423831; cv=none; b=knFSV5INOi9P5xNByOTKsuA4xn2HIBJUT86ZE1zGZoLdvNd8jZPiqC6+rnkcdT2j0elcgx0/Wm8uAkVIzfsFVzA31OB9vusk0ocG6He0zaeSgGTgzmT3TtfpJoeH4Q5aLs+kQO9K0rZT1PsSm4whV9bvBho/eT9YsKv3L0JGS7s=
+	t=1764428368; cv=none; b=nJeJjYB0+R7jc1E7GSz88++pTARFcF34RXGLLXFtifsp8ksLDddtNtKSf8ORnkflN8uHFTCJPclQgFwPkRsLJij1xPtIbii7SJk9XH/xb+PVdktIMoGbb8SmFkMx2ou1MiEg/Cmwzh+BZmagYCqwRLaa7VEVpuLMJDok90brHY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764423831; c=relaxed/simple;
-	bh=7AtGK+uNJyaKnbvEoLRAd9TjR68oOtqzkPtSi84/Ozw=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=csuKRh2cmziYqjS1F2KKThbacW08G7xaObCBUCVaEkI6234wVFFyRW6jkSghEbNABgNp1djmWNBkkepqU/cZtywDwg4hWAMmAz2Gp9rc0K+S9I+fT5JDGi8Lqcw43XNQvstBy58auC+VhtJibC6JWVCtxvEeryU9AlS9VuNVKkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aZFIl96U; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764428368; c=relaxed/simple;
+	bh=0/a7DWHbpMYYSUA5u2yyGDBrpMCnTJgGfHI1eB5pCws=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ou34Hyd/ipnfLnsXTsIgm5Xex6bVtqwJysvNOVXCCIoOSKEFK4WljuN94wlk4kXo+NdU1mKsv+bcIC2fTj9z/+Eqb7nBYKz4Jf7J73DArIVJH8liV7E5x6VuyRvBg5Oy+D5ggiRzq1fVuqxGKoh/i6i/ZelWCTwKmv/ywb4S8wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=P6OV+tAT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aX1ti+qz; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aZFIl96U"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-bc0e89640b9so1781367a12.1
-        for <git@vger.kernel.org>; Sat, 29 Nov 2025 05:43:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764423829; x=1765028629; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=e4Po35fOBMhhKSQaF13AgPH9cXZYD/7NJfksfIK1MMI=;
-        b=aZFIl96UWipTgRzWMwlbgtXFDzHyubLhpPmvfF6AqBrp8g4t63AZJmW/8ojaC3mEFL
-         somRimuWhgDvSG24jXnVVKkPWno7bsqDvCmgdAMIfbul7nEc9Go9sZlrC/o9b9JGSF8E
-         BPy7NxOk0aYpFOsDfO+RzRaeIb6MpaYhVn9YnV28pV/IAwa0p05tCRw6VpiLCgLpWpWN
-         32omAOrF4qhp9hssQd7YK7ANdGCtR3oyvmENfkqDxI3jY2xgg63Xrj5CjZ705i7NsWF5
-         /dLlrGFGRMsOfss5fc/6CnnYTFYWL6cCzkr9HEwy+MAlNZIe7NgdOonu1YztsnobgAiK
-         LuaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764423829; x=1765028629;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e4Po35fOBMhhKSQaF13AgPH9cXZYD/7NJfksfIK1MMI=;
-        b=OnoB5qSIa+HCH45WpDmqwdTjdFJtjvUNm7KljbF/MYXBxTQOL4/3kErdCg+x6DDbdE
-         2K+hi6qPdudaJjQ7UYlHoLfHvGK52he8rc6JlHBSTF/ashQ83/ITYXWI6iYVaGiG3a8L
-         B+Xlplx3SGEml/4TRHBcyG7rnRQeWQLftucTpmgDkvub+cLEFGjVGwWhqCHwdN45Cgkd
-         oHEg529SGdh5av2k2ZyVhaTYss3GIHpuUuH8qq4nsCind7ZnL9lA/YwTEiO8Nn8CGdyC
-         sU0OvFld0I8yJ9QfVAS1AOFUTAaiLMILfemfLTgb+xliq+FQ8MSlz04qqHolhNCxZ+X0
-         beIg==
-X-Gm-Message-State: AOJu0YwQgmV4WAk2dIx99SvGFVq+T8plcUC0WUpCRr8nV19VQLQbf38v
-	I1MXMUt9P4EUzDJqf7VOfXdD+OES4aBj6cw6s401DfvxinOZVZZOqiDJgo89nQ==
-X-Gm-Gg: ASbGnctW/1oiMw1Kng85csHdAaRq8Y9fW8gbkt1KC1S3L1ZtizlSvlnLcF/f1dFbyB9
-	tyE7l6EnFg2ZZqU8WotzXdCaBlkRxblKYecHzdgT1xFII6g+YsMiR4LyCdvz7+ZbUgKmBP874wV
-	QVzWklHaunaq/YbRgpZELrqzY4Rb1uKqEFlvzoeXB2vGm1qLJUWJsOoKjLIvN4GBTUT76z5lAd/
-	1AJ/lf8oem70iiUrACY4M3qaw3LlRyU9bTc55VoS2HM7yF75srQkKtYiF8K6VKZyzOJp4BcatNQ
-	VD8y2OgZRWCSa9+RT2AUNcBecYvDW2d2oyjw5iKFquq0gO68DBSMf0Wos6NwBD09qvgf1uMVwNN
-	+EXfzS7P6uBiyWuHF8IoEzc1R90cRf6c/11xufefjn+b7TsRgxAMGV0r9Mo5FotjXTUO9eTdElq
-	NywJxhIOHl63K/
-X-Google-Smtp-Source: AGHT+IEZwD/q8k1L239Zv12ptMobnZBCkhj8AWxWLDbe0ts36S9FfC579ZB3CtFtnTZVSLzfQt0QAA==
-X-Received: by 2002:a05:7300:1344:b0:2a4:3594:72e3 with SMTP id 5a478bee46e88-2a71927b67emr21715312eec.18.1764423828577;
-        Sat, 29 Nov 2025 05:43:48 -0800 (PST)
-Received: from [127.0.0.1] ([52.161.82.114])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2a9655ceb04sm24914464eec.1.2025.11.29.05.43.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Nov 2025 05:43:47 -0800 (PST)
-Message-Id: <pull.2013.git.1764423826908.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 29 Nov 2025 13:43:46 +0000
-Subject: [PATCH] last-modified: support sparse checkouts
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="P6OV+tAT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aX1ti+qz"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id A14A31D00214;
+	Sat, 29 Nov 2025 09:59:24 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Sat, 29 Nov 2025 09:59:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1764428364; x=1764514764; bh=rej3r8r0Hx
+	qROBdSlzt814DSXZBF1feFMpLx2oqA+No=; b=P6OV+tATKtkCi3ufiYRWbGSA7z
+	mPfRv7mVzgSMhS0amFfVc6GADQyE3NF4mjQEKX0B/QPncouCg2vRMfUCzpy4/YQJ
+	CeR2VrK3/j+DoxHvDPRFUzByhJW8wIz1yoQOOY0rwGgD6h4Rp3GAvXfYFPVFhvD1
+	ntfmRcIoKzu+uCErp/k3aF/DNLfO9Fp3Egq8v6caS4WqwbTTuKHE8rq+NjZBggzm
+	xWi0fP6l8wpcWHxSuNvMrkaewMRncpBpUEV2O0bmQmD0Uz6IWyGy+qWm0WAYBgWO
+	fPwzETnyP6HfxUssT1Gr3wwFvI61Kb1/lOIID3FEoLC1NraGq3SNvZFlPDuA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1764428364; x=1764514764; bh=rej3r8r0HxqROBdSlzt814DSXZBF1feFMpL
+	x2oqA+No=; b=aX1ti+qzwenspmUQlxoPSAPvmGjS6mAoGBtR7Fsb22cBZs2Sg6n
+	FiOFQ1Z38pDh4izdRGNNS4/csNBBpgEVvabB6wiEdzRLYLd0NyaS9kt+dbxtSFOX
+	4sBjpRqAO/Xv5u7ivPNOt1jPZ/j59ipz2Sv5WMRFAzY9tJqx/sqqzXLU28aPfsfX
+	T7PoGAOs+3UJ35ZzyMqOok/KqwL8Jnb0yGU/PawlOJ2GhYd+PLTiyyKUyRmX8qoP
+	x7xtagsoWX8DwyYF4zrbdEetG2kT/9tqZNaHKj1hThilV9UKgRhrTu6oU2QOrwVD
+	EUVx2XPoTgGb0FAndBK3jPJNvZiVQKtTETw==
+X-ME-Sender: <xms:TAoradONVYZ-t4g4VNtfYBrLfF6pg2P4mounD1UBYj1LbT28srKd3w>
+    <xme:TAoraTo2zr9ublXJnyBqd8bh04U4A73RY3jhWxJPitGDVTBBLyFKikaPZRcnhR58g
+    oj3PMKdn7qHGiFBLwRbSGdaw6iDitNO4x_NFiw1sMOBESZpVpJEQQ>
+X-ME-Received: <xmr:TAoraWGNwIHwajWknyG8g8JM0cOSQGDKr2PvqyauzJcOewOxykq3Xorq7EQD7IGay6KBdrLc0EK9GBdWSHlFn7VWr9geYE_CTXpw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvhedvjeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfe
+    esghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:TAoraQrIWpXQgnlMM6DgeZO5ljB8NdRIXap_TPSm3K2pN-a5gd-f7g>
+    <xmx:TAoraXb3DaPvCW3gUEhH14bxg-LRpjLpHnjho6dWRxfuegfoVWymTw>
+    <xmx:TAoraRWAPv1880ai0VfKwHgEfp3EUP-L1Gi6QHo36n4ZhJYHLK23QQ>
+    <xmx:TAoraY_dE1KZ-hSl9BZbxsPkONecbslUvw3Zm84MoutAi28GESKRSw>
+    <xmx:TAoraRxL9aq6UDw1vbW0yrPZ3_iWI_V4QrUatk-YbljYRFnquYbLv_I9>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 29 Nov 2025 09:59:23 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,
+  Christian Couder <christian.couder@gmail.com>,  Elijah Newren
+ <newren@gmail.com>
+Subject: Re: [PATCH] Documentation/git-replay.adoc: fix errors around
+ revision range
+In-Reply-To: <pull.2012.git.1764391464952.gitgitgadget@gmail.com> (Elijah
+	Newren via GitGitGadget's message of "Sat, 29 Nov 2025 04:44:24
+	+0000")
+References: <pull.2012.git.1764391464952.gitgitgadget@gmail.com>
+Date: Sat, 29 Nov 2025 06:59:22 -0800
+Message-ID: <xmqqcy50hol1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Toon Claes <toon@iotcl.com>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-In a sparse checkout, a user might want to run `last-modified` on a
-directory outside the worktree.
+> From: Elijah Newren <newren@gmail.com>
+>
+> There was significant confusion in the git-replay manual about what
+> constitutes a revision range.  As noted in f302c1e4aa09 (revisions(7):
+> clarify that most commands take a single revision range, 2021-05-18):
+>
+>    Commands that are specifically designed to take two distinct ranges
+>    (e.g. "git range-diff R1 R2" to compare two ranges) do exist, but they
+>    are exceptions. Unless otherwise noted, all "git" commands that operate
+>    on a set of commits work on a single revision range.
+>
+> `git replay` is not an exception, but a few places in the manual were
+> written as though it were.  These appear to have come in revisions to
+> the original series, between v3->v4 (see
+> https://lore.kernel.org/git/CAP8UFD3bpLrVW97DH7j=V9H2GsTSAkksC9L3QujQERFk_kLnZA@mail.gmail.com/
+> , "More than one <revision-range> can be passed") and between v6->v7
+> (https://lore.kernel.org/git/20231115143327.2441397-1-christian.couder@gmail.com/,
+> "Takes ranges of commits"), and I missed both of these revisions when
+> reviewing.  Fix them now.
+>
+> There was also a reference to the "Commit Limiting options below", but
+> this page has no such section of options; strike the misleading
+> reference.
+>
+> It is worth noting that we are documenting existing behavior, rather
+> than optimal behavior.  Junio has multiple times suggested introducing
+> alternative ways to walk revisions and use them in `git replay
+> --advance`, e.g. at
+>   * https://lore.kernel.org/git/xmqqy1mqo6kv.fsf@gitster.g/
+>   * https://lore.kernel.org/git/xmqq8rb3is8c.fsf@gitster.g/
+>   * https://lore.kernel.org/git/xmqqtsydj2zk.fsf@gitster.g/ (item (2))
+> If/when we introduce some new revision walking flag that implements one
+> of these alternate types of revision walks, we can update the --advance
+> option and this manual appropriately.
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+> index dcb26e8a8e..d03235cca0 100644
+> --- a/Documentation/git-replay.adoc
+> +++ b/Documentation/git-replay.adoc
+> @@ -9,12 +9,12 @@ git-replay - EXPERIMENTAL: Replay commits on a new base, works with bare repos t
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch>) [--ref-action[=<mode>]] <revision-range>...
+> +(EXPERIMENTAL!) 'git replay' ([--contained] --onto <newbase> | --advance <branch>) [--ref-action[=<mode>]] <revision-range>
 
-And even in non-sparse checkouts, a user might need to run that command
-on a directory that does not exist in the worktree.
+Glad to see this overly long line shrink by a few characters, but we
+need to shrink more or line wrap to bring it below the acceptable
+width like 65-75 characters.  That is obviously not the reason why
+we are losing "..." here, and outside the scope of this patch ;-).
 
-These use cases should be supported via the `--` separator between
-revision and file arguments, which is even advertised in the
-documentation. This patch fixes a tiny bug that prevents that from
-working.
+> -Takes ranges of commits and replays them onto a new location. Leaves
+> +Takes a range of commits and replays them onto a new location. Leaves
 
-This fixes https://github.com/git-for-windows/git/issues/5978
+OK.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    last-modified: support sparse checkouts
+> @@ -55,11 +55,10 @@ which uses the target only as a starting point without updating it.
+>  The default mode can be configured via the `replay.refAction` configuration variable.
+>  
+>  <revision-range>::
+> +	Range of commits to replay; see "Specifying Ranges" in
+> +	linkgit:git-rev-parse[1]. In `--advance <branch>` mode, the
+> +	range should have a single tip, so that it's clear to which tip the
+> +	advanced <branch> should point.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2013%2Fdscho%2Flast-modified-vs-sparse-checkouts-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2013/dscho/last-modified-vs-sparse-checkouts-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2013
+Good.
 
- builtin/last-modified.c  | 3 ++-
- t/t8020-last-modified.sh | 8 ++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+> diff --git a/builtin/replay.c b/builtin/replay.c
+> index 6606a2c94b..e6d6d28239 100644
+> --- a/builtin/replay.c
+> +++ b/builtin/replay.c
+> @@ -366,7 +366,7 @@ int cmd_replay(int argc,
+>  	const char *const replay_usage[] = {
+>  		N_("(EXPERIMENTAL!) git replay "
+>  		   "([--contained] --onto <newbase> | --advance <branch>) "
+> -		   "[--ref-action[=<mode>]] <revision-range>..."),
+> +		   "[--ref-action[=<mode>]] <revision-range>"),
+>  		NULL
+>  	};
+>  	struct option replay_options[] = {
+>
+> base-commit: b31ab939fe8e3cbe8be48dddd1c6ac0265991f45
 
-diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-index b0ecbdc540..dc1e229f4d 100644
---- a/builtin/last-modified.c
-+++ b/builtin/last-modified.c
-@@ -525,7 +525,8 @@ int cmd_last_modified(int argc, const char **argv, const char *prefix,
- 
- 	argc = parse_options(argc, argv, prefix, last_modified_options,
- 			     last_modified_usage,
--			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT);
-+			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT |
-+			     PARSE_OPT_KEEP_DASHDASH);
- 
- 	repo_config(repo, git_default_config, NULL);
- 
-diff --git a/t/t8020-last-modified.sh b/t/t8020-last-modified.sh
-index a4c1114ee2..50f4312f71 100755
---- a/t/t8020-last-modified.sh
-+++ b/t/t8020-last-modified.sh
-@@ -78,6 +78,14 @@ test_expect_success 'last-modified subdir' '
- 	EOF
- '
- 
-+test_expect_success 'last-modified in sparse checkout' '
-+	test_when_finished "git sparse-checkout disable" &&
-+	git sparse-checkout set b &&
-+	check_last_modified -- a <<-\EOF
-+	3 a
-+	EOF
-+'
-+
- test_expect_success 'last-modified subdir recursive' '
- 	check_last_modified -r a <<-\EOF
- 	3 a/b/file
-
-base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
--- 
-gitgitgadget
+Thanks, will apply.
