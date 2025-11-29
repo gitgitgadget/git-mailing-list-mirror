@@ -1,101 +1,92 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65E721770B
-	for <git@vger.kernel.org>; Sat, 29 Nov 2025 18:33:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545751EA7DB
+	for <git@vger.kernel.org>; Sat, 29 Nov 2025 19:55:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764441204; cv=none; b=TGuDB2fg0XmgMTVL/Bu4grqyPoRj9b6WY65/HdyjAJZINXdJIk0c9ur3sca6OkWAEFHcbviglG/BXbdk+N0BKUEuyjpPr5VHrOjeCJUqNIKM94QgFQ7iAVyJvxpTybZPmjyCGa5+yndmZnYnXu+Xg+85/+kAe4ea4wUnd2tvGKg=
+	t=1764446124; cv=none; b=XBnlo+dCCmquVpvbH57H4l62h8yBmXGiekbM7ztBqcYYRsRvO0Zy8F3sHFMSUwZuQmmO+9Hn4L1KdePvdVlcbuWIDDaqTz7ZfC+ggw8FNFKTaS9Rx/rZPYTNDiTbf5Z2zFDT+c9VcMbg4xMPtEHacDvHDXXZuJjwht1UoJvA2JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764441204; c=relaxed/simple;
-	bh=7iRZ/PyTpzwwPQyLFu46+QT+1edlu9mMj7GVhAp1Dpw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qTJFM8gsR2RaKBO2BWWIp6+2GTPAnGf/64m/REpL0cq62xwpPePWLrGPKKoiDonnm/zinl6AeROA7IOQFLkh5qQTQRsxFGhkhCuLeFePpW4JCdjUb4WtzGBaZoyBrHPxYXOUz9XOx3RUBTc7wXuLqd+0JFBUxhXVGgoMN46PbEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V/SfTK0K; arc=none smtp.client-ip=209.85.221.41
+	s=arc-20240116; t=1764446124; c=relaxed/simple;
+	bh=x6UyVlC8E3vdA8r+uh+Mxgre433PXz5esuvoQRcPFbA=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=FSsV/gJI9GwQpciBK3uulCrX1lscxiYUAI1YzAVIZGxqrAkbPQJh9Ah0iggfzZOiqjLgAH1YxEbdKu9qX4XIDtsWeWRTWMH5cx0wYABKYtxbKcUQFwo5EKmmEEQ1eu9vV6Mt5PaZE98W14HS0l7RwKPjJ1GJENwP/yDRC5Uw2zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YQUKzdYi; arc=none smtp.client-ip=209.85.128.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V/SfTK0K"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-42b2de74838so162109f8f.2
-        for <git@vger.kernel.org>; Sat, 29 Nov 2025 10:33:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YQUKzdYi"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-78ab039ddb4so28042557b3.3
+        for <git@vger.kernel.org>; Sat, 29 Nov 2025 11:55:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764441201; x=1765046001; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=62pAgPW74xmYsSsM4uMD6LWnt7XIaAEb3bUGwPvPqNY=;
-        b=V/SfTK0K9tgEkAMaTwTn2fjvD0zEq7Xcmb6Bo+Fpd0vIGLn2gAkUG4jCpJbBzCYu06
-         BThXcM8g5u/kjcl/vdkmosRiIlegm1CNyYexMznE4SYsDQn7Kmu5e71bOJUXue2SH6A6
-         Z618+KbY1IJs/rsEsT+LGHAGxarJcvlBrWeIuvMXnKWO1BS0tDBaq7N2gHG2lT5nvDDd
-         cBRXpvw2KuyClGuE0KN9HVw99xE12arYkf5SqVXA05m1UB3FY5VPVDBIGX+4MSxCxUIw
-         rqTGhx5nc3rKEuCuEaOKSNKPKiCFbR4AnM6LuUgYK+r8Ne1GY+wWe+be5Jjw56WDQzHH
-         uR6A==
+        d=gmail.com; s=20230601; t=1764446122; x=1765050922; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x6UyVlC8E3vdA8r+uh+Mxgre433PXz5esuvoQRcPFbA=;
+        b=YQUKzdYijPtBOMr5nIVMWPoE1bkE/Bv5xT5lAm2mnZNF3nIGWrklinHsVnNzC2YeQZ
+         hY1faKJlWZjq3XobcMLIa379P/i+f5AnhKV9YQ2hyMT2HoQdXMURjDCn7xIeHaU/d3N/
+         beIxgfQ/eLCu42sYtrTr6uFG2qmkC9CDYEGrKKdhO5iDYidlQesRqw8hLnL5hkrlfOag
+         enQ+sy2e5wfW6ecYCpF+d8KbdxDwJ03OSGcYnkxBmk5Q8A3gp4VKHr+dUd2cUgpTEKS4
+         BWGsl2cgpdRqTcoX2c3ZeYVAOdVC50VYvhmRZPqf5b0H2LBAszQQhtWgj7naVFy9ZGJb
+         8eDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764441201; x=1765046001;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=62pAgPW74xmYsSsM4uMD6LWnt7XIaAEb3bUGwPvPqNY=;
-        b=bzH+3hj1z8ejkM+rzAULkLx4bYUTupuQEmLmWO9r6Rbs1VTrSSv7IH6CfnnUnTXJsB
-         5jUIOjbZN+3dBMTzndvsaQlnL/maJRSXPsbsYnjFZxxJaUuwZN77L/HuRHoPHIGeO+O2
-         Q3TxQbpd9hkzKtb6GYI5dFMyVYUEskqP3qgOfH2naxGVX4azjELr0d1a30R8/B5i9wL7
-         mOzzh87t+wIMCjGLrh02RG0wLrQsgH6zpdaTf3pXVm2KxgCtJ10pTWizF8o1RssEA5Hj
-         jJyxRl3quR4Kg+JimgKHvxhm/6EkDKkptR4oswjouuWzXwQ55cpFUoi9w0E4Dxl5lD9m
-         hZTg==
-X-Gm-Message-State: AOJu0Ywf0GL9f51bGwRicnnp7dQfa1EUuYtYq0iUy95Tf06oPJDki2yg
-	gLL6Zj7W6jxhg6xufWjh8Cm1nvy94kwMqjjsGMqnFfOWdMOshG+Bp/M/P8S9IjCns+M=
-X-Gm-Gg: ASbGnctqRR8umjFAAmELCxxzFPCRR324IFkXLwBhg2gvu1M5ekDR+zYNs6TyeA/MFls
-	D8n5QigLLmkmma+NdP5xaNpKnjJ49KcSHtIgnMNALlOZEMeJ8rgABWZHX3NSqwDBqMs5ZhRfYdQ
-	/BAGgC4p9ADq1s50NgKMXuHprs1b3eFQBy5p1MfZK4QyhFhYlvct7g37fYltUpITKxvBHCW1k37
-	EHTMoO1MviV1yJoFZwSYKBhorsgD9Nz4ULe/hya2ZhhdRUEUqyxM7Qr/RTaU39K223j+S2iJyUr
-	E3RGVfyGvVLdLoF1KO6kAXJTtMtFC5QpLUmLYagZ/wJGdOmiG9G9F31zZRxjom0mOCg8KKZhVEk
-	fSOpRtHTWPrcf0cnr9/xSuWiUuEaZry6RuodiAB+j1PePXvtsxDuyyv+h3fPoTBMKYjPabRISf1
-	zR48Im0JzrLEAqWQ==
-X-Google-Smtp-Source: AGHT+IHkpUJgvP8kVGDsrRnYH6mFFvpQM6LLkd1TrkC29IrliC+1xKFvmvspHuQAc5KXYmkYKZsklg==
-X-Received: by 2002:a05:6000:240c:b0:429:bde0:1da8 with SMTP id ffacd0b85a97d-42cc3fdf636mr18565988f8f.7.1764441200805;
-        Sat, 29 Nov 2025 10:33:20 -0800 (PST)
-Received: from desktop ([194.127.199.48])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42e1ca8e00fsm16579377f8f.34.2025.11.29.10.33.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Nov 2025 10:33:20 -0800 (PST)
-Date: Sat, 29 Nov 2025 18:33:19 +0000
-From: Matthew Hughes <matthewhughes934@gmail.com>
-To: git@vger.kernel.org
-Cc: Matthew Hughes <matthewhughes934@gmail.com>
-Subject: [PATCH v2 2/2] config: document `gui.GCWarning`
-Message-ID: <20251129183236.52760-3-matthewhughes934@gmail.com>
-X-Mailer: git-send-email 2.52.0
-References: <20251129183236.52760-1-matthewhughes934@gmail.com>
+        d=1e100.net; s=20230601; t=1764446122; x=1765050922;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=x6UyVlC8E3vdA8r+uh+Mxgre433PXz5esuvoQRcPFbA=;
+        b=sY69Fr1XCgd/qvxMn99JSVFtvyFWLSnXbTrK6PF6qwkdZ8GGYLiNuM2rM7I9t5l/Kw
+         lJtSMiJXnDoAHv1gbXHOtySltRnAWUzFPcnmFGl8ulqsZFXfWZOsZIyFUBSHuMPCRRfQ
+         c6fFpjOisbLH0qK5+pSH4ymPA08iaVWD7uQ2uJ+HvUUQwQpB5VyUVUVMK/gtz+qCQmvf
+         VrQSNAPSuz+TibD1y5Ip48xUZ4B5HVc8oIJgwwlWkBAY+zNbwMk19Al/wlLv6gtdFkFX
+         Pab8eFd7cgBoStiUMyHx2byzm4l+cmGpECOEgCRLXLHL9RxQ5vbnU4HXT1nHCmQBZBba
+         Vcjw==
+X-Gm-Message-State: AOJu0Ywmq1IsqfH3jYRNgXqvNLlyEa1EOY7jMtqkCs5WLbZ+6/CuZJd6
+	HflzCWmjSGgQl+uRj3kfG09x7zcED0+yWsa+ix+1phbs9PdLJCAZt8bD
+X-Gm-Gg: ASbGncsdMQX8GgxmmjxA5o49kpE/Da5u9NMfB8HzbP71hhSCJi7ClUfH6924aZ1qN4K
+	Ctni6ZOfFvYIEpIIhxfX8GhrxXAWjYYIeUBTg9fmUJGrQZ03hIf1+aVr3IX/Qdfl3F7r23Uk6qb
+	r/k77huzfDgVDg4Z6TMrj+hcoKvITb/mjbCDVzxofpLpQc9h4QrADobXhBXZYbNNzTSTgIbGc1J
+	1riBG2s5hLvgvgJULAOLMOn5iK9NTqKls0ajXI0k6FJSe2zWkf0kJUfz5gawH0vkvyHHgT0JkDn
+	kMcEwsUMfQtf+LfJVJbCfMRDYe3U6n0alYU32r5Z52pvClON/G5nvoYT58IO/Hh7wFMwI1Ilt4Y
+	vBnHCaYx3l/pCvenbf5xIq4kwSH8ugS7NPGydkhXd7/5Z2HUiTIjXUaVijhkWNOMYYAjxF8hiwP
+	W/o0BrYqcy33bZIpWGOrVnRQvStGYSiC9aMTCUxQ==
+X-Google-Smtp-Source: AGHT+IEpRcETgNQATDSV/Wx4f4XqyM2ZlJ0GvD3s7z9K6tIoAToC3gniEsmBUnPhE5fUurOJQolhgg==
+X-Received: by 2002:a05:690c:e3cd:b0:788:1cde:cac9 with SMTP id 00721157ae682-78a8b495a4cmr255484707b3.23.1764446122250;
+        Sat, 29 Nov 2025 11:55:22 -0800 (PST)
+Received: from smtpclient.apple ([2601:740:8400:bc03:701a:4ded:83d1:3cff])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-78ad0d5f4c5sm28897487b3.13.2025.11.29.11.55.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 29 Nov 2025 11:55:21 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v2 0/2] Update documentation/discoverability around `scalar`
+Date: Sat, 29 Nov 2025 14:55:10 -0500
+Message-Id: <FD92D0BF-E2C0-485E-A121-4C92BD20F7F9@gmail.com>
+References: <20251129183236.52760-1-matthewhughes934@gmail.com>
+Cc: git@vger.kernel.org
 In-Reply-To: <20251129183236.52760-1-matthewhughes934@gmail.com>
+To: Matthew Hughes <matthewhughes934@gmail.com>
+X-Mailer: iPhone Mail (21F90)
 
-While investigating the config options set by `scalar` I noticed this
-one wasn't documented.
 
-Signed-off-by: Matthew Hughes <matthewhughes934@gmail.com>
----
- Documentation/config/gui.adoc | 5 +++++
- 1 file changed, 5 insertions(+)
+> Le 29 nov. 2025 =C3=A0 13:33, Matthew Hughes <matthewhughes934@gmail.com> a=
+ =C3=A9crit :
+>=20
+> =EF=BB=BFA couple of changes following on from a discussion around the
+> discoverability of `scalar` config changes[1].
+>=20
+> Following that thread, I was additionally working on a patch that would
+> involve commenting each of the changes and why they're set. But that was
+> taking me longer than expected so I figured I get these smaller changes
+> up rather than waiting to complete everything.
 
-diff --git a/Documentation/config/gui.adoc b/Documentation/config/gui.adoc
-index 171be774d2..3323ff9b7e 100644
---- a/Documentation/config/gui.adoc
-+++ b/Documentation/config/gui.adoc
-@@ -55,3 +55,8 @@ gui.blamehistoryctx::
- 	linkgit:gitk[1] for the selected commit, when the `Show History
- 	Context` menu item is invoked from 'git gui blame'. If this
- 	variable is set to zero, the whole history is shown.
-+
-+gui.GCWarning:
-+	Determines whether linkgit:git-gui[1] should prompt for garbage
-+	collection when git detects a large number of loose objects in
-+	the repository. The default value is "true".
--- 
-2.52.0
+I think Stolee implemented a few similar things in GitGitGadget PR 2010
 
