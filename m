@@ -1,69 +1,68 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F2D36D50E
-	for <git@vger.kernel.org>; Sat, 29 Nov 2025 18:33:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65E721770B
+	for <git@vger.kernel.org>; Sat, 29 Nov 2025 18:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764441193; cv=none; b=MY1Ilr9zWlDfixAS+ablsiJuFRc4u5VjqAoGJexpi8BI7lkhoXxTQUg+PvxM9MF4RzdAcXY0gsuEdtlG8UukNuAcbVYG/Mg1s1MJlmsJLyJ0W6uejQYiHAOFMF5UxWsExhdQVwtA8J2p/qk8vA2l+7QPwygrHjXEblli+4Dhpec=
+	t=1764441204; cv=none; b=TGuDB2fg0XmgMTVL/Bu4grqyPoRj9b6WY65/HdyjAJZINXdJIk0c9ur3sca6OkWAEFHcbviglG/BXbdk+N0BKUEuyjpPr5VHrOjeCJUqNIKM94QgFQ7iAVyJvxpTybZPmjyCGa5+yndmZnYnXu+Xg+85/+kAe4ea4wUnd2tvGKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764441193; c=relaxed/simple;
-	bh=qeh77W5FvtY1H7vNe06MHY21ZdsM2axsorHFNxygkPY=;
+	s=arc-20240116; t=1764441204; c=relaxed/simple;
+	bh=7iRZ/PyTpzwwPQyLFu46+QT+1edlu9mMj7GVhAp1Dpw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uCQwyWye2qcksi21o4fLAfV141gmi6OjxUUxC5GYDoEcEwYabuBiInTLS4/e9V9Ov8QkwOvZZwmsn6LuklvxryQqYNQl5iZ6ryzi0pGGwE4uDd6BsB966S+QBF+HmQgo/FItkk+xNC4tq6KrgLJevpRBNqkEZY09/aVXRxFxNSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=POmmeZLl; arc=none smtp.client-ip=209.85.221.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=qTJFM8gsR2RaKBO2BWWIp6+2GTPAnGf/64m/REpL0cq62xwpPePWLrGPKKoiDonnm/zinl6AeROA7IOQFLkh5qQTQRsxFGhkhCuLeFePpW4JCdjUb4WtzGBaZoyBrHPxYXOUz9XOx3RUBTc7wXuLqd+0JFBUxhXVGgoMN46PbEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V/SfTK0K; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="POmmeZLl"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-42b2cff817aso206953f8f.0
-        for <git@vger.kernel.org>; Sat, 29 Nov 2025 10:33:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V/SfTK0K"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-42b2de74838so162109f8f.2
+        for <git@vger.kernel.org>; Sat, 29 Nov 2025 10:33:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764441189; x=1765045989; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764441201; x=1765046001; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=328YD6vrrZD1/H0VPAPwIcE+snIo7YymjA9J5ELD/7Q=;
-        b=POmmeZLloeVP/x4DR24dCYnbbHgWO5iR4QrAsAB9CRquQr+u/DlbikvpGiZuWMqYQO
-         QbB598/bPVWejJTN4umfchGtW9mg+8ZJBzwGd+ybX5j9lpNr2KnOaHston9iLw/ZH9kB
-         /MkQrJvNsNh/QGXFWmMQ4u/CopsiH8ZKh5Fr7W6F39SbogQ/RBCEBv8WMFVO+lVETpUe
-         dnKtoBKQNQ8Mq5wWawMtKpRel744a0nxGX4UVrA/MeOH8kEk8agT23ziZWCF5u+ldqG8
-         DnUxPH9/1pkMpwwGz/DF3Y+rRcNCsZixIta0jAINQyjP3hdmtWTUl2gupCsj6Hf4cBfx
-         jxTQ==
+        bh=62pAgPW74xmYsSsM4uMD6LWnt7XIaAEb3bUGwPvPqNY=;
+        b=V/SfTK0K9tgEkAMaTwTn2fjvD0zEq7Xcmb6Bo+Fpd0vIGLn2gAkUG4jCpJbBzCYu06
+         BThXcM8g5u/kjcl/vdkmosRiIlegm1CNyYexMznE4SYsDQn7Kmu5e71bOJUXue2SH6A6
+         Z618+KbY1IJs/rsEsT+LGHAGxarJcvlBrWeIuvMXnKWO1BS0tDBaq7N2gHG2lT5nvDDd
+         cBRXpvw2KuyClGuE0KN9HVw99xE12arYkf5SqVXA05m1UB3FY5VPVDBIGX+4MSxCxUIw
+         rqTGhx5nc3rKEuCuEaOKSNKPKiCFbR4AnM6LuUgYK+r8Ne1GY+wWe+be5Jjw56WDQzHH
+         uR6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764441189; x=1765045989;
+        d=1e100.net; s=20230601; t=1764441201; x=1765046001;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=328YD6vrrZD1/H0VPAPwIcE+snIo7YymjA9J5ELD/7Q=;
-        b=bDgfeLSw8hA35BTfr1OKoafUZqnHDgGTsror3gPohIllibU/yAwBw6dfb7v5Q7wgeS
-         TyF0AYkCoh9pp1f814Uu4zgmbS6PQ7K4LERoWuy1q4tSH8/qB1lDG6f5k9oUapnGZNax
-         W5OswHKxrR34Nx7r86bOKQ5Sbjfp83aeo8eysVeWFH0fpTaHL2pWGWonObyyMYWlWE4D
-         oULiTSE3X5UZr1OKm2J+pthO5rq7XB7EREA5CowaNHWl9EcsNiC+WdQCe+V2tAgYW0zF
-         QDbcBux41yW4vh0vTv9Ba0F6qBynDBEV9C8JPRKhewBL99HABjAHaVvRs8GJUAoq5uFI
-         qBRA==
-X-Gm-Message-State: AOJu0Yy/D59gpn/9jydBCFMb816D/iDbucHGmVFInxb6DWRzFPNlZ3aL
-	bjGb6Vjf7/cMgxOZgwi5Z1zdAvAl5Ak+EgSRH4XOCUU+iR84ss2rausmBEufKVTt3kmxlA==
-X-Gm-Gg: ASbGncvhkog3Hh/NmYL1JlUFud1WjXmllpuQkWQjB6D+KF8IWh4jwFyTiyOg4YzfP1c
-	N9ZT1TVtNgY4toVIV1ZOBc3OhARVqmM5ATJHQOK9BxKZGVGbUG+Wz+eMxJ+jewKze64FRBWJIAg
-	jxduDNyL2urbG50huxHixfs/pc5cKg72ZzoEFdriANkjAYsirASgdeqM6OFMDZlj5aquweXLxRH
-	m1xekf+6pRMllNehTMzL5sHE3ZYOEZ0OZ2xdRo5tu4a5jitbQQ1NzoZySyu18qiICyCgvsFYzHJ
-	dufUPewYaZt5wlOIwgnYacbkKZqANMZcKJpOomyR6H1qqUZsAZSkPbeKD9DextI+ndaxHXkW7Fq
-	BphtO/V1qySgsSyjdmkbFeT26V6QxPqJwgakB3G+rhgO0QbfG7yi3w0CZUHUGF3JV3jqkn3IyMJ
-	6hwYnK5zvFM3dAwwSuOE4yZN2X
-X-Google-Smtp-Source: AGHT+IEj0ymvaJLaARW/F4gNK0cG77zbG5K0UWWtq2V9+efK6oVRePpLCq+Id/mibY3dThWUnDpfag==
-X-Received: by 2002:a05:600c:3553:b0:477:563a:fc9c with SMTP id 5b1f17b1804b1-477c0169f34mr187561355e9.1.1764441189366;
-        Sat, 29 Nov 2025 10:33:09 -0800 (PST)
+        bh=62pAgPW74xmYsSsM4uMD6LWnt7XIaAEb3bUGwPvPqNY=;
+        b=bzH+3hj1z8ejkM+rzAULkLx4bYUTupuQEmLmWO9r6Rbs1VTrSSv7IH6CfnnUnTXJsB
+         5jUIOjbZN+3dBMTzndvsaQlnL/maJRSXPsbsYnjFZxxJaUuwZN77L/HuRHoPHIGeO+O2
+         Q3TxQbpd9hkzKtb6GYI5dFMyVYUEskqP3qgOfH2naxGVX4azjELr0d1a30R8/B5i9wL7
+         mOzzh87t+wIMCjGLrh02RG0wLrQsgH6zpdaTf3pXVm2KxgCtJ10pTWizF8o1RssEA5Hj
+         jJyxRl3quR4Kg+JimgKHvxhm/6EkDKkptR4oswjouuWzXwQ55cpFUoi9w0E4Dxl5lD9m
+         hZTg==
+X-Gm-Message-State: AOJu0Ywf0GL9f51bGwRicnnp7dQfa1EUuYtYq0iUy95Tf06oPJDki2yg
+	gLL6Zj7W6jxhg6xufWjh8Cm1nvy94kwMqjjsGMqnFfOWdMOshG+Bp/M/P8S9IjCns+M=
+X-Gm-Gg: ASbGnctqRR8umjFAAmELCxxzFPCRR324IFkXLwBhg2gvu1M5ekDR+zYNs6TyeA/MFls
+	D8n5QigLLmkmma+NdP5xaNpKnjJ49KcSHtIgnMNALlOZEMeJ8rgABWZHX3NSqwDBqMs5ZhRfYdQ
+	/BAGgC4p9ADq1s50NgKMXuHprs1b3eFQBy5p1MfZK4QyhFhYlvct7g37fYltUpITKxvBHCW1k37
+	EHTMoO1MviV1yJoFZwSYKBhorsgD9Nz4ULe/hya2ZhhdRUEUqyxM7Qr/RTaU39K223j+S2iJyUr
+	E3RGVfyGvVLdLoF1KO6kAXJTtMtFC5QpLUmLYagZ/wJGdOmiG9G9F31zZRxjom0mOCg8KKZhVEk
+	fSOpRtHTWPrcf0cnr9/xSuWiUuEaZry6RuodiAB+j1PePXvtsxDuyyv+h3fPoTBMKYjPabRISf1
+	zR48Im0JzrLEAqWQ==
+X-Google-Smtp-Source: AGHT+IHkpUJgvP8kVGDsrRnYH6mFFvpQM6LLkd1TrkC29IrliC+1xKFvmvspHuQAc5KXYmkYKZsklg==
+X-Received: by 2002:a05:6000:240c:b0:429:bde0:1da8 with SMTP id ffacd0b85a97d-42cc3fdf636mr18565988f8f.7.1764441200805;
+        Sat, 29 Nov 2025 10:33:20 -0800 (PST)
 Received: from desktop ([194.127.199.48])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-479052def4bsm115298835e9.13.2025.11.29.10.33.08
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42e1ca8e00fsm16579377f8f.34.2025.11.29.10.33.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Nov 2025 10:33:08 -0800 (PST)
-Date: Sat, 29 Nov 2025 18:33:07 +0000
+        Sat, 29 Nov 2025 10:33:20 -0800 (PST)
+Date: Sat, 29 Nov 2025 18:33:19 +0000
 From: Matthew Hughes <matthewhughes934@gmail.com>
 To: git@vger.kernel.org
-Cc: Matthew Hughes <matthewhughes934@gmail.com>, 
-	Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH v2 1/2] scalar: add comments when setting config
-Message-ID: <20251129183236.52760-2-matthewhughes934@gmail.com>
+Cc: Matthew Hughes <matthewhughes934@gmail.com>
+Subject: [PATCH v2 2/2] config: document `gui.GCWarning`
+Message-ID: <20251129183236.52760-3-matthewhughes934@gmail.com>
 X-Mailer: git-send-email 2.52.0
 References: <20251129183236.52760-1-matthewhughes934@gmail.com>
 Precedence: bulk
@@ -76,44 +75,27 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20251129183236.52760-1-matthewhughes934@gmail.com>
 
-This is to help users understand that a change in the config was made by
-`scalar` (and not e.g. manually by themselves at some point in the
-past).
+While investigating the config options set by `scalar` I noticed this
+one wasn't documented.
 
-As discussed on a thread[1].
-
-Link: https://lore.kernel.org/git/aMkVqNbdgxqBJ9K4@pks.im/ [1]
-Co-authored-by: Derrick Stolee <stolee@gmail.com>
 Signed-off-by: Matthew Hughes <matthewhughes934@gmail.com>
 ---
- scalar.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ Documentation/config/gui.adoc | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/scalar.c b/scalar.c
-index f754311627..4bdf8cf121 100644
---- a/scalar.c
-+++ b/scalar.c
-@@ -19,6 +19,7 @@
- #include "help.h"
- #include "setup.h"
- #include "trace2.h"
-+#include "path.h"
- 
- static void setup_enlistment_directory(int argc, const char **argv,
- 				       const char * const *usagestr,
-@@ -102,8 +103,11 @@ static int set_scalar_config(const struct scalar_config *config, int reconfigure
- 
- 	if ((reconfigure && config->overwrite_on_reconfigure) ||
- 	    repo_config_get_string(the_repository, config->key, &value)) {
-+		char *cfg_file = repo_git_path(the_repository, "config");
-+		const char *comment = " # set by git-scalar";
- 		trace2_data_string("scalar", the_repository, config->key, "created");
--		res = repo_config_set_gently(the_repository, config->key, config->value);
-+		res = repo_config_set_in_file_gently(the_repository, cfg_file, config->key, comment, config->value);
-+		free(cfg_file);
- 	} else {
- 		trace2_data_string("scalar", the_repository, config->key, "exists");
- 		res = 0;
+diff --git a/Documentation/config/gui.adoc b/Documentation/config/gui.adoc
+index 171be774d2..3323ff9b7e 100644
+--- a/Documentation/config/gui.adoc
++++ b/Documentation/config/gui.adoc
+@@ -55,3 +55,8 @@ gui.blamehistoryctx::
+ 	linkgit:gitk[1] for the selected commit, when the `Show History
+ 	Context` menu item is invoked from 'git gui blame'. If this
+ 	variable is set to zero, the whole history is shown.
++
++gui.GCWarning:
++	Determines whether linkgit:git-gui[1] should prompt for garbage
++	collection when git detects a large number of loose objects in
++	the repository. The default value is "true".
 -- 
 2.52.0
 
