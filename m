@@ -1,79 +1,63 @@
-Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9008D26C3BD
-	for <git@vger.kernel.org>; Sat, 29 Nov 2025 09:38:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87223093BC
+	for <git@vger.kernel.org>; Sat, 29 Nov 2025 10:50:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764409127; cv=none; b=Pn1p8Ks961j3N1pCNuCcPbpdTSN2TGIb9Az6jhKZhTaYuvmmoVdGtGA6aSnyAoEm5/HznphzYsEVKoIr/hqA5LVOonIXkY+jza/R9GJe+epY/5Sh1ZnF8w/gsNYq6yyVW19EKJljYrdowY3Bm0c0jIRZr03a6GdwWFFbGnB2st4=
+	t=1764413431; cv=none; b=G5HjmB4CNWgcbomvoOCfikQHjy30ldoM20lW2e0kdAibsamrTJMG13qAjJ18jNit38Hm5Qrg0mmL19XhVZK5FrYA1eGR2LDckcdM5z9CyH0D/fFLTiO1T/cqy/T/OrQvpc6ZfKUZaQBDc+bxQgvvRTYBGpoX0CoL14g4ex86AfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764409127; c=relaxed/simple;
-	bh=vawBevYgM2NCe9xwjA1PHN0/khkHrDKCUCVhu9Zs9Q0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=n9ThrHAXMoWHP/mhIuEuLsdF1p10yrvWmOWp8sIfxmDe/p41ho4mrDYqJzb4j57vLawF8RILuQDyTK40KbzJmiZ3E9/ZjUzQWeYoi99BR9v8Qs079Vowva0A2g+R9iaNqqUNBbhgpgvnjZ/z4naTVa6aCd/3v63SLUiGoAbSdhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=EdTn1PTa; arc=none smtp.client-ip=95.215.58.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1764413431; c=relaxed/simple;
+	bh=FNSnqZG1rCbbh65oDG887UnCP+MdHM/V+KLDNObfiP8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Djm3k2aGkO/EzHfFIdE3DNHiMIeQGaT/Huef6aetyUmaB+hScEc2RSMt6xRJjVlo9LTJGUPz7EtOoVdU/awrvrRDi/Y+rKyvtPIqOULfHIvYT80e1EOhTWM2C6VjtaTU03JLtjMs1oqhbTjRmHT5WDslySe2tGIYZmGa06Y9MAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=IqZ8wUGI; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="EdTn1PTa"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1764409120;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=djPIWBLsjxhjnAhhDbiPIA4WzoUYYFPkSHw/NRXegEE=;
-	b=EdTn1PTaKoz9Kpq9rwytB2MkNx+MHsXhYVUXBwpBTlz9DpWQxW/85tmVhcCUd4yT+RxGeb
-	ZUUj4BglGnVX25oPK2Bv1hxFfghutcPrOg8g+LYf5Ew7qNWuei/JeE+2xzwe61BmTA5Anj
-	x5SBWqs3RWnQ3tI6j7LJnu3MqQadc7k=
-From: Toon Claes <toon@iotcl.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Karthik Nayak
- <karthik.188@gmail.com>, Anders Kaseorg <andersk@MIT.EDU>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="IqZ8wUGI"
+Received: (qmail 142928 invoked by uid 109); 29 Nov 2025 10:50:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=FNSnqZG1rCbbh65oDG887UnCP+MdHM/V+KLDNObfiP8=; b=IqZ8wUGITdUovATFMB8/LfpwbE2bQvc9sAZ+b0F/Q1jfDkUQyZvJfmP4efcL2nI68/95tuLpilxeQ3I+SZXmybbVvcDAtVAjrtjQaBDDFjKdqYWITWv7qFj24cYmvWQXlsMtb6GWeI7rXrdzadKUxPDeHnUi4trgX5sCsSe3QxFeNdOSWgoG7ZYMc/hq++KxShK6iJrblkefVdWb3u/5PV7Xm/3AQBWYXM6eqT5ffyijqNLw5fToJ4J4m4wFKF3jGA+W294wODApXUy3zMsMu0sc4IimkI332cSjSF+qEbCnaYbZjRZgCUM2PPzQTmBuRaIOaZoR31TXr/GAV7D5dg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 29 Nov 2025 10:50:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 236079 invoked by uid 111); 29 Nov 2025 10:50:29 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 29 Nov 2025 05:50:29 -0500
+Authentication-Results: peff.net; auth=none
+Date: Sat, 29 Nov 2025 05:50:23 -0500
+From: Jeff King <peff@peff.net>
+To: Anders Kaseorg <andersk@mit.edu>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>
 Subject: Re: [PATCH] last-modified: fix bug caused by inproper initialized
  memory
-In-Reply-To: <xmqqwm39h9kb.fsf@gitster.g>
+Message-ID: <20251129105023.GA646133@coredump.intra.peff.net>
 References: <20251128-toon-big-endian-ci-v1-1-80da0f629c1e@iotcl.com>
- <xmqq8qfpioln.fsf@gitster.g> <xmqqwm39h9kb.fsf@gitster.g>
-Date: Sat, 29 Nov 2025 10:38:10 +0100
-Message-ID: <87ms4518n1.fsf@iotcl.com>
+ <20251128205514.GA605489@coredump.intra.peff.net>
+ <5699f2cc-5157-441e-af98-4d8df492ec72@mit.edu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5699f2cc-5157-441e-af98-4d8df492ec72@mit.edu>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Nov 28, 2025 at 02:20:22PM -0800, Anders Kaseorg wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> This dates back to v2.52.0~4 and is clearly a maint material.
+> On 11/28/25 12:55, Jeff King wrote:
+> > In the same vein, probably using "sizeof(lm->scratch->words)" is better
+> > than "sizeof(eword_t)". But again, I find it an unlikely detail for us
+> > to catch under the hood.
+> 
+> As words is a pointer, you must have meant sizeof *lm->scratch->words or
+> sizeof lm->scratch->words[0].
 
-Makes sense. I appreciate it.
+Whoops, yes. I prefer sizeof(*var) over sizeof(type) because it tracks
+changes to the type of "var" automatically. But the opportunity to
+forget the "*" is perhaps a point against it. :)
 
->> Thanks for finding and fixing.
-
-Yes, I'm happy Anders reported this, although I didn't expect it to have
-impact on all platforms. It would have been a nasty bug to hunt down if
-users would complain "the results are incorrect".
-
->> Subject: Re: [PATCH] last-modified: fix bug caused by inproper initialized memory
->
-> Let's retitle, as inproper is not a word.  Is
-
-I wasn't sure about that. But my spell checker didn't pick it up, so I
-rolled with it.
-
->     Subject: [PATCH] last-modified: fix use of uninitialized memory
->
-> good enough?
-
-Absolutely.
-
-
--- 
-Cheers,
-Toon
+-Peff
