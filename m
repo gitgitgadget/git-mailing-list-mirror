@@ -1,69 +1,69 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2F13126A8
-	for <git@vger.kernel.org>; Sat, 29 Nov 2025 18:28:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525A5311C31
+	for <git@vger.kernel.org>; Sat, 29 Nov 2025 18:28:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764440918; cv=none; b=jT22imB0EmvipsJkhHe/wrttcRUdxWO7//zyag0Ow7rBDyUxiT6DJdKAUl0pMyDVZMHdo1M5rm28HBs6vZzsIroPNvUSpZ+7AybUnRpvVirI5Yv5GeJ1D6veYD8Qu3IwCCf0mAYspgtM6SJQjU0JIX0mIKjOMGOJGXz1cDlEHfM=
+	t=1764440920; cv=none; b=rzcVHJ4kV0vviqeRBDwJMqfvHvc6Ow75R3NmGgDUw78BcF+hkWFwvcgJ5tciEWfNOYLe8UfXzJHjuyr5dCO1rQWVXGLZFFyfzEDf0aUjEtGl8aL/sSQuEyuK51tts+9z73YrPgsUgsxmo65oQYO6iEv/aKVN/UVM1EttV6inGoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764440918; c=relaxed/simple;
-	bh=4ikaidTQUswM7Vl1vRvk9Z7Tn6vFM8tIAzH/uuuXmn8=;
+	s=arc-20240116; t=1764440920; c=relaxed/simple;
+	bh=tB9n4qBP7/ay58CIJd+yE4SrD/5kA07O70tuYTTFUSc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=HbLONlFB2UsXgYejlo60kKpvHLlEiq7Ax6gdiAOP1BtR8lMFb+SBriDY2K8w0ZdkxD3DCxucopN90ltwgXbFLMaXLDwiGvICyD0bkYc59Z7NqUpvkS2FdTc3tBCDd7dglVU6mmwL1uKw+0LOR17X7Wg/eSb+jdUoyzz+GuzRAe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jII7DBIu; arc=none smtp.client-ip=209.85.222.179
+	 MIME-Version:To:Cc; b=l/5856B8v1jt24czE5EolM84q7/+95+JrWn4a4iUckhSk0E07FbsdFX+PJAMKAaY0z3zM+0ZyptPylH+JiGEgIlr6d26Ai1ez9WOuDIbSC1RV77c4Qd2zZvwNflLtlNq/H6GhhTcv1Y+jUZJ42VdR1Qy1G4loey+J1zm4BVRZy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Muxiy+fL; arc=none smtp.client-ip=209.85.219.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jII7DBIu"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8b2148ca40eso338510685a.1
-        for <git@vger.kernel.org>; Sat, 29 Nov 2025 10:28:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Muxiy+fL"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-88057f5d041so25401526d6.1
+        for <git@vger.kernel.org>; Sat, 29 Nov 2025 10:28:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764440915; x=1765045715; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764440917; x=1765045717; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WhYLIqJQiI29ooMc1E4iqbRn8GunyFNz3LunG6Shb0c=;
-        b=jII7DBIuDYQPDXO+FUH6hxM6hoY1y/xB5MfluBj39P6Xv1hd6IBIiEPLO+Kb95k76M
-         K3VAthzl9nD1Sw4HQGskeNxYidqDCP5v1DGkbd8lZV7kbWqFLSMw6Vo9rgsfi4Qd/a3g
-         aLJHWsUd41nofKN/1lCJkBGEzyj8mHDPZ5lWr6QBDOXRx+wuBdhiEz21dLh8BZKjpWUQ
-         9yHCduxp3DXPaIWiEOiik1g+1UsfNaA+Spd/65RqG50IH/r43WosjLM0zWc/Vxxc7icw
-         4AOT0Mqh+rzt6rMpgui8Uk2MbrJrQeBdXQWk8aTovp37VhG6Po/relwRqUIay3fQR3dj
-         sVHw==
+        bh=JU/Dzu+KEcHoz3D5+7iHkxFvIVaCxjJweQqxeG94cls=;
+        b=Muxiy+fLcDry4IGyYe8Nk210xoG43IdaY5ijPlasjuzHzYu2Tq7iq/1EU8qu3xyDEh
+         BRBGwuFOiagLZ7Qmw55FuMWuTWnqAW21tr+mxRXBpD4Bh5wtPf+YKUZm8u0VS9EbTZfo
+         Ig9rwOzRkffBT5V2u8yIZFGg8wzBOCEEGZ5ZKDSge/JD/IfLHKBCfU55EVA8GThyOkMm
+         flpRRl1SMzIIOsKKoXAql9DLSUmYgRtTTGDsy3yQUggbMa4B7tI6KrwMX1cADgmJYS6N
+         9f26zMDPNCuj+FOAN+2p2PA/jWygspzoH9zAU7X1nawpwBSMjmejvLnTCfHZ44cj6DYO
+         miGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764440915; x=1765045715;
+        d=1e100.net; s=20230601; t=1764440917; x=1765045717;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=WhYLIqJQiI29ooMc1E4iqbRn8GunyFNz3LunG6Shb0c=;
-        b=g5AUVqCWO/SAzsCkLKjg2eMdJA4sezbMHfrARFUYb/yI25eQW7eJnLbvyKG+FSXSgf
-         SL50wXIpb3Q8lj5aqO+thAk6V09GbdL2VAIRKuQviz0W8rbuFVrlXV6P7j9GG20tI9Ri
-         0XKl+UwyFGFx+SMWcbqUv3aPexBvjCLp9XErKtnrcbJLJB7Jr9EzGTcNP1SxK5I/7jha
-         feqHru3yQiODnMb/zEB9WCxTikHGbHi68GHTNd1XwPwIQDGn7MKEXkBPP2UEJr4cRH6Y
-         3M9aFuYNs2IRgtzM6obsWt4iYN4IDVTydDFp0Mvq8qjLTfP8hF+imFkCZES0tmedUKxK
-         3WMw==
-X-Gm-Message-State: AOJu0YwkudH0OkFM4w+i/K27d2H2/qGb6oOONZuFPCzblKaxfm/f26ma
-	5xooxfUWjVQdOEgD19Yap8+rvMBkb5kFe50kkoSbcnnD7WeYaUMHD+UT0XIO2A==
-X-Gm-Gg: ASbGncuSAGP2oXMxgsK6TVoIeevvreTfyjMedjFqqR/BJpMUjcY2ad1EAsaFa5OFsgS
-	elUaJAYpmGG2JXB2QO+64p2VnnUTEmps9xWP7mVphJgEUQ+7sSumBMN60gR6VqA0G5lo1hEiMj/
-	JVo49ELGRfdZOlCkHt5IiB5OQ+kPYLjm4btfKtWWaLN1K6bfqEpbd/88ZLJniIWXK//dajR7IE3
-	2u5FAjBTqLFMAdEYofiJ31CcJl2rhRxS7nAR7arxZ9JGSO6lvQuq66GpgJK6Kh1ym4nigsa5aay
-	w4z1m7E85AsSoDDCcPYil7wlABNC/ZmApMsPB0+zRQC7f0QgI6FglmzXGU1v/0cm3RNCJRvgvba
-	sqa7EsDAirXweoTd9dGKt0DElRvuWR4QyrD/LTADpiyHbNdlhkxG5gmFdmDThdHaD1HepaDcOVT
-	kPOvG2/Q4s71v8
-X-Google-Smtp-Source: AGHT+IGGjXIhXTpJKy2u7TFZe3v0CtusBgxpxSYjzov+GHTn/wAT+B+O3lq6ka8T1FF1slxPWTBTVg==
-X-Received: by 2002:a05:620a:4113:b0:8b2:d256:d064 with SMTP id af79cd13be357-8b33d4795bamr4286231085a.41.1764440915307;
-        Sat, 29 Nov 2025 10:28:35 -0800 (PST)
+        bh=JU/Dzu+KEcHoz3D5+7iHkxFvIVaCxjJweQqxeG94cls=;
+        b=GzhljSeaAdVM8HjMrDVutgTtaVgOaoDpgbGPUkHophLAU5hTdNOLpZNWUThZJGk9Qk
+         b/qbjkFdlYjcnflAKe5wbNz0tTv9g9nfWArEvrNq7ux5zS/MTzcjMpwiDtfiBdonPduS
+         7vFiOJoENHdrgyfAqLQweSFo64edP+8wc6DD8b4TatrkKk2/LY4HD5eQFHJVZvcV76dZ
+         FPzPn/rLJo2N+z+Fw15FUtZpHvKiBwbO+aiK2gg2ngqKQ+TcWGWxFCeENxNXvCF6Yj/z
+         lPF5FBYHjwwdufDeaegCtl95xMwdhXvfHmBNgfiN6sHP+Fhqf79uZZ0jZwNM8cJwGO20
+         MnUw==
+X-Gm-Message-State: AOJu0Yz77tJjXrfkWxrapfefwMQmWXGyfQiKx7ZSgAdfMGnGKNMy7K5a
+	ZOY4FQtkh7YpU5C18xINWTD0f/h2GO3edwqY+dVPRd8sklg0qh3WpzFNxjEviw==
+X-Gm-Gg: ASbGncuqXeA0qRyZxmpfCf+4Ov1xTtliJXpS00hBZ9vrc5TKDH3SnA/TbfHjhM9vaJO
+	XD2gl/jtcXPo7gSRzgLasO1YzpfLHlXt6HAEz8MkoPtG0KiEToS1RDFsd4B47ZuXFT25ViCreWo
+	UNvBCSAglx9rw7Ztw1YXztFqjEXXcoaDScKORoIDTfpCzD7x35s8Sz/qVmDI3ybgBZ6qXn+KS0/
+	YVO3YSP2EUp6vof+CE5DeyZVa/KhaYZLFCREfuWQKua+LBR3MpYTFIy90IA775ClQOuGvMstVF8
+	pQX5AtONp+z3XVu2yjR3euZqfq0or4+9PwJv9dfdyhmyvzhLQ9O8mBgFnYBiPDhAFP+9YazNVKm
+	h80M9YACh4ZBFpLLSfU1TG/j7brAeevJYskPRuxwsuPp5bjgUQ3xtyaUf/bHZ3ymNQoK6UjIe53
+	ae/ExqLyXpP1SF
+X-Google-Smtp-Source: AGHT+IHSG42lxR8tiLSK06dKnO7jeW9IetJPNhbl6sJp65gQvXrjMPAhADR5CeEUO+uiJrPrMqGVBA==
+X-Received: by 2002:a05:6214:623:b0:880:4896:5d81 with SMTP id 6a1803df08f44-8863aee6cfamr305569426d6.3.1764440916868;
+        Sat, 29 Nov 2025 10:28:36 -0800 (PST)
 Received: from [127.0.0.1] ([20.97.198.243])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b529994c8fsm548347785a.6.2025.11.29.10.28.34
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88652b69ff2sm51465906d6.39.2025.11.29.10.28.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Nov 2025 10:28:34 -0800 (PST)
-Message-Id: <c59a5f24789cff55819caf92d828256f2291b3ff.1764440906.git.gitgitgadget@gmail.com>
+        Sat, 29 Nov 2025 10:28:35 -0800 (PST)
+Message-Id: <0866db0a17d88016617e7e626dc032af599679c8.1764440906.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2009.git.1764440906.gitgitgadget@gmail.com>
 References: <pull.2009.git.1764440906.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 29 Nov 2025 18:28:21 +0000
-Subject: [PATCH 05/10] t0301: another fix for Windows compatibility
+Date: Sat, 29 Nov 2025 18:28:22 +0000
+Subject: [PATCH 06/10] t0600: fix incomplete prerequisite for a test case
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,36 +79,31 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Just like 0fdcfa2f9f5 (t0301: fixes for windows compatibility,
-2021-09-14) explained, we should not call `mkdir -m<mode>` in the test
-suite because that would fail on Windows (because Windows has a much
-more powerful permission system that cannot be mapped into the simpler
-user/group/other read/write/execute model).
+The 'symref transaction supports symlinks' test case is guarded by the
+`SYMLINK` prerequisite because `core.prefersymlinkrefs = true` requires
+symbolic links to be supported.
 
-There was one forgotten instance of this which was hidden by a `SYMLINK`
-prerequisite. Currently, this prevents this test case from being
-executed on Windows, but with the upcoming support for symbolic links,
-it would become a problem.
+However, the `preferSymlinkRefs` feature is not supported on Windows,
+therefore this test case needs the `MINGW` prerequisite, too.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t0301-credential-cache.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t0600-reffiles-backend.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
-index dc30289f75..6f7cfd9e33 100755
---- a/t/t0301-credential-cache.sh
-+++ b/t/t0301-credential-cache.sh
-@@ -123,7 +123,8 @@ test_expect_success SYMLINKS 'use user socket if user directory is a symlink to
- 		rmdir \"\$HOME/dir/\" &&
- 		rm \"\$HOME/.git-credential-cache\"
- 	" &&
--	mkdir -p -m 700 "$HOME/dir/" &&
-+	mkdir -p "$HOME/dir/" &&
-+	chmod 700 "$HOME/dir/" &&
- 	ln -s "$HOME/dir" "$HOME/.git-credential-cache" &&
- 	check approve cache <<-\EOF &&
- 	protocol=https
+diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
+index b11126ed47..74bfa2e9ba 100755
+--- a/t/t0600-reffiles-backend.sh
++++ b/t/t0600-reffiles-backend.sh
+@@ -467,7 +467,7 @@ test_expect_success POSIXPERM 'git reflog expire honors core.sharedRepository' '
+ 	esac
+ '
+ 
+-test_expect_success SYMLINKS 'symref transaction supports symlinks' '
++test_expect_success SYMLINKS,!MINGW 'symref transaction supports symlinks' '
+ 	test_when_finished "git symbolic-ref -d TEST_SYMREF_HEAD" &&
+ 	git update-ref refs/heads/new @ &&
+ 	test_config core.prefersymlinkrefs true &&
 -- 
 gitgitgadget
 
