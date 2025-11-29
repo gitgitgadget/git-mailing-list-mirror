@@ -1,78 +1,104 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9891B81D3
-	for <git@vger.kernel.org>; Sat, 29 Nov 2025 00:50:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD71C1E4BE
+	for <git@vger.kernel.org>; Sat, 29 Nov 2025 01:56:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764377404; cv=none; b=n40Es/I7W4cQTlvXNWhiyL0V7NvrL3COl3mdpeHTq2tD/vYeruohoWknQI6PV7axDsNGbsPUrrNrGFxuEAcrtwVCC/DRG7ZZT5uIG9AxcsNqhCV+gr45bf8u/2Xd072gwFIwV9Kav2WpB6rFi6I9msd5+Gdi2HfR2rgB+VLN4sc=
+	t=1764381413; cv=none; b=htQMhY8INWkJyjrxTxZwtNnB6oGflf/bDg5wUiw54TE1t46nsAnaCgSAgTNoj8OE56ng/0kly+pB+Lxu9+py7EX7wMIBNeC9UFeHr79oISlZLZMJyxwqlHk7JaPy/wxb/jxRcRkDdpWwCtl62ILa/qwYaG8sq93z9xGrHKn56/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764377404; c=relaxed/simple;
-	bh=MPT7ZGIJd+e4f/1u2QSm1RPgIezca+SR0IUZYFc//6c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=TG+DmkoGpApizDa+kXlm1vEGvukjQBlWb1KEs2+DHAkhZTCE3ViOpJPY3TqmfErQH4Ejn10nbpMARXOwovkzAn2+hjhpYZIU8G2wVETXQsHSTXGNfA9D2xdKq7idqAPHWbAyGNb74VPkDWFFSvRHPPhNbd5UiItQkg07gm8gpvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A2lhZuZN; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764381413; c=relaxed/simple;
+	bh=mR63n1uGvsv4fKo7GoaI1MgRZDrzFxB2r4QLwGHQfYQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aZiXoOhMhrHeBfRCem+3szKfGoaciNpGoYvsLrf0kmXcT9hCJgR8/p8P53fRyn3Gy7Uhq6L9y9ISwt41aM/ZkT+Y5kIbPAQRdeHalct4dVqUXBGOM0oOVDUfx5PFvkLHO9xPkuvvS5TR0rbJQngsSDQo8V4JV3noXpxxg+83QKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YVlT+HAk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N6irzdNl; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A2lhZuZN"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-bc274b8ab7dso1700979a12.3
-        for <git@vger.kernel.org>; Fri, 28 Nov 2025 16:50:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764377403; x=1764982203; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MPT7ZGIJd+e4f/1u2QSm1RPgIezca+SR0IUZYFc//6c=;
-        b=A2lhZuZNtGTlfgey+40VudY3lA0ESw0x5oii1iB7ZnmALAJZ0MkWAMT7STOP0qVRAT
-         7XxpwMhCeDDO7grMkb1rj+6JvUSrpGA+LCUiZfKp1AdJ/itXnNgXEyt4uyly88Dcl07m
-         qP4TXqMIV24jlG3lC/RCwzMN8+dbEYjZfXvWCGdUl0urlYZp7mx9xfM0bTsOVIwyDSqz
-         L5js3VkqmvFEmdD6tycmpYhqp4vUmZiQWQl9vVETnVa4sZbFaOxwifQ8ym69XLOW4INn
-         A3NDOXvICCXPXSrX58Fi/T4lMOi6h2W6CBrF9gw+FsrWDVvz3UG6GT4/wUBZGUB/2OyC
-         7GIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764377403; x=1764982203;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MPT7ZGIJd+e4f/1u2QSm1RPgIezca+SR0IUZYFc//6c=;
-        b=C3QjBqYB3VBZS7tSloNVBfF3szhpj9AN5aNiUqymap0lNpmSKkQnhkeoz8SHaZSgO+
-         tePKgz7aTsTDO8vaW0OT0qMElokNPathAgTqqpNElEzFHLp09lkj+/Avf41tsBAYyv/A
-         8F99Zdv1bANVoCBP5Uy3pKh990ZqqPc6AaokUS0anWOAYD+R2XZDxADyU2L3HyNiMqEw
-         Ju3LENUnlFrwgKKrJDP3gDdkDCWgpJVAR2XaxtMZVpg47bfgctf79mQmP3WmIm+wfKr7
-         pEJVwJILC30FZdXWQZ5Vo0C6DEdbkpGGWygK8Lr1WxyU0cRqC1V+4qt1yUDSB8G8Gbd6
-         jqTA==
-X-Forwarded-Encrypted: i=1; AJvYcCXY4Z2ntZjJCSaRwyLw4kohk5sVwP883A8k6VIMVDJ7liO6Xns/hK8zLi8BttftUAVADDQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw9mHdbmXC4cilN6gaL57V/mjz+QeYcKJptTLVs2R040KLNgmbj
-	Htdwa9Thbwx73B1+MHaWEogWiBbP5EC0AYkQzygflZ6TS5uVbasLwL+1JC5d84Elmk+Py6w+heG
-	eApACXz8np+l+UGc6xPwxGDyiwKcY4A==
-X-Gm-Gg: ASbGncsXjWNkm52eEn4I/Ozgco3O9mFj5ESUce58d4p5giJtX3cCobls6W3m1vqfyHe
-	Wu2c1NHzUre3Yz/5mAnsxtajTGWcGtYgB2JnLDnWrz3Bd2I8b4rkVszVVl8WiHSrRwumiUgMoWe
-	r3IFfvqSrJmz2FktV49XxSJIUpsxhDctFGnCo/w8JkvhEphPmbJW5SUYRYgUhh9goZnV8enlVxm
-	kVv1wJ5oKMSd9YT7U+QJOY6Gpnipz+l7A3gusyJcxvWiuV6rJ0jxpR1MSBhOL7bDE2mDXWTuNTH
-	/VoKdv9cQJyXSefEhx1Cth0h/5bnf6lDw1HV4TiJyk94N7CZvMV90+1QH1UxaWh+tAT+mQ9pqKZ
-	lwmgfNR6nA3tuZziIoc+JRjndbv0wxKtmN0wjUxD0
-X-Google-Smtp-Source: AGHT+IFHlptWaBx3YJsQHjejkTDeUoTu/T7WzbFPkrAOJzoBoR6gRm3kajAG2UH/i0yBk8jfhysdFKwOKHkhUDGdGeQ=
-X-Received: by 2002:a05:7301:550a:b0:2a4:3594:72f3 with SMTP id
- 5a478bee46e88-2a7192d6efemr14002268eec.34.1764377402885; Fri, 28 Nov 2025
- 16:50:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YVlT+HAk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N6irzdNl"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id A5F201D00358;
+	Fri, 28 Nov 2025 20:56:49 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 28 Nov 2025 20:56:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1764381409; x=1764467809; bh=kuVRVCdlYj
+	xuB+bp2vUlHsflyVeXvhcGvBz0sqUivKM=; b=YVlT+HAkSe7mofsFiZwAMKb46n
+	0pzFwIALjBSVvsDOkoesZXmnX6l5fHyW+kk1IKSyIW2XiZXT4/sd5R072iegxSjb
+	YQQHITtjK9yxcCCoQ9teaB5bDqWdjyEO/9Xv7oAHPrcQBPXieaaehvmSq3H0WU07
+	EI3ckNva4+pDue5bMsr6B1NIyUiqR1TbLboth+GwBQrdaAdYd/2UeEVs1mss29zH
+	e6jREKNg+vaJyc5VjGwQssXDV1VvF7xeJBXWr5it1JbVk3zfu8qjbftE/KmdlaKB
+	0p3uPnYPWMl7ZxqeXcxAOL2FeyNNoX4aG7xmqEDX/S5VihLFABE63LBqXfkg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1764381409; x=1764467809; bh=kuVRVCdlYjxuB+bp2vUlHsflyVeXvhcGvBz
+	0sqUivKM=; b=N6irzdNlX8eYacA/XUqKKmvSNCeE/8L0UF+ssEdpGe0zYzjW3zc
+	RpiMJi2CokUXJhrFFu0uZh+wCgSOnjS8Fkbrq+cm74iUyCAio7YCxSMtXPcaXIxh
+	poj4ASueOawLgdXYM2xrPB/HDeUGOg2677Crpw0/azX4PNJLBhx9zOxAuLKLsTAz
+	52gZj8KAjB+bj5YmI3EySKrL8U4uRYg0lvRnvlgiJCnvjJjiQD5jn2rE/R+oZgGB
+	45zjtN8izYN+j2sWFJuOm67XdJIg4mJ0v4vCcG0q/pd/MN4JCTSJMSnNuOPFmJxg
+	5A7GN1ZlBehOEWw5PI3HwVD2TmMwp3qwk5g==
+X-ME-Sender: <xms:4VIqaShFsDYIw2N5l-hjdzONSAC9VotAEvSoM05FjNfwWRLpuagpZA>
+    <xme:4VIqaaAiPnt-pTmhmcAr8hMamPUeRKr-_VZKyh2htwlnCvGLIixYjKnTcrq5d6inL
+    o89V-rdfQSrUfKn8zHff1QG_LFy754LRpgId-L2icZcnTR8VY_ybA>
+X-ME-Received: <xmr:4VIqafGL-mWjgibF0kWjBwrqbzkr3KduYuCF6O0G1qAWtc22kBBUjZC7k0FJK3gQcuF_HVmiqnsDMZSNTe3kscWvBCzEjGCGlFL1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvheduvddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeuheelfeehudduheetueeltdduge
+    dthfffhfefjefhuefhtddvfeevteeuvdfgfeenucffohhmrghinhepfhhorhhmrghtrdhs
+    ohenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
+    hsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:4VIqaaIptF6v9i49YOFPn1CLyORvrp7BY2CTRIQTF2tG-47Wz6owIA>
+    <xmx:4VIqabl7trp97kMKxnJne4VeWuoZxfnG7Axcd4OcfKpmuE6HE2vFUQ>
+    <xmx:4VIqaaQx_T2TwWmAMkaO3uGYCr7lnR8dgEcfnYSfdFZmUuH93ISY5Q>
+    <xmx:4VIqaVKOgmJjbC3i9PLICqsnlu_lGueWR0JBA3qmdDXKsCDH64ewqw>
+    <xmx:4VIqadvMKUwQWsJ9ofi6VDfmBjadzTL3z2FZ83dpO0xavLkuew2CFC-E>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 28 Nov 2025 20:56:48 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH] branch: advice using git-help(1) instead of man(1)
+In-Reply-To: <xmqq345yjejo.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	28 Nov 2025 08:40:59 -0800")
+References: <advice_git-help.64@msgid.xyz> <xmqq345yjejo.fsf@gitster.g>
+Date: Fri, 28 Nov 2025 17:56:47 -0800
+Message-ID: <xmqqcy51iotc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAB=S_8JufSGCOBjCQJ6R1Lq-GumJXTPzWGv2JCZK2SPw_XuGPA@mail.gmail.com>
- <aSo2n2dhEoZd3nZW@fruit.crustytoothpaste.net> <CAB=S_8JFLYsGe7fs7UjCfFfTJGMqpikZavztU6ZiW4KS21A+MQ@mail.gmail.com>
- <CAB=S_8+omhdW9Mx3kr=McZvoC-GbftWmsBVLQuRH=0CmChq85Q@mail.gmail.com>
-In-Reply-To: <CAB=S_8+omhdW9Mx3kr=McZvoC-GbftWmsBVLQuRH=0CmChq85Q@mail.gmail.com>
-From: Justin Su <injustsu@gmail.com>
-Date: Fri, 28 Nov 2025 19:49:26 -0500
-X-Gm-Features: AWmQ_bmxWZo1OGko24xEPtvKNmX_NCqivxKMcZnTUMgP61i6Ff_zGLxg2_Med2M
-Message-ID: <CAB=S_8++iZZtPXm_Fp9ZuBJ_zKN1c3SWy1qMghbx+qop4y7OCQ@mail.gmail.com>
-Subject: Re: SIGSEGV when running git fetch
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Justin Su <injustsu@gmail.com>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-After installing Git 2.52.0 from the Ubuntu PPA, I can no longer
-reproduce the crash.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> In other words, "An external command" is not the issue.  Some people
+> living in a man-less land is.
+
+Another is that a user with access to "man" may prefer "html" (with
+"git help -w" or "help.format").  So this is only ...
+
+>     ... for the ref syntax rules and refers to the man(1) command,
+>     which may not be available on some platforms.  Refer to 'git
+>     help' instead.
+
+... half a story.
+
+    ... which may not be available on some platforms, or which the
+    user may prefer less.  Refer to 'git help' instead.
