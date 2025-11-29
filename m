@@ -1,60 +1,60 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6251F3BB44
-	for <git@vger.kernel.org>; Sat, 29 Nov 2025 00:30:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9891B81D3
+	for <git@vger.kernel.org>; Sat, 29 Nov 2025 00:50:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764376210; cv=none; b=llUreYqg9lWLMqPUYbjMx4GNaaE0F+l/O7+xagQdoWAzuE3gLgaq5wn203xxxJRqupW+UP8XCPCXXjnVmXRysfNhkXfljomn02+XWs+B5+vALzleDeRyGBdI5DOt5fQBpFkvoZqXLrhNzB/UHiWbT3R3r7UXtDylvgMa+/Oq2jQ=
+	t=1764377404; cv=none; b=n40Es/I7W4cQTlvXNWhiyL0V7NvrL3COl3mdpeHTq2tD/vYeruohoWknQI6PV7axDsNGbsPUrrNrGFxuEAcrtwVCC/DRG7ZZT5uIG9AxcsNqhCV+gr45bf8u/2Xd072gwFIwV9Kav2WpB6rFi6I9msd5+Gdi2HfR2rgB+VLN4sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764376210; c=relaxed/simple;
-	bh=a2DkpqPegcYtZx5nHg1oA4f4MB9J5TQIWSBL/BvkUdk=;
+	s=arc-20240116; t=1764377404; c=relaxed/simple;
+	bh=MPT7ZGIJd+e4f/1u2QSm1RPgIezca+SR0IUZYFc//6c=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=N1trS+miYQy5tx39AA4CkE4iTx9Mj1vc5eWKRNSD8rIt1EeII2AZgIWAqhg5HTeb4WdVuiIW6eamchNA1pGqDnX41XxFAXhBMXi93JxQhbRjUkSmpTr84GhaXfXU6PJErjhOOyQ+6qaJAdfBoLiru9kvuWwV320XeJBOITOr2/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dpsdXjMo; arc=none smtp.client-ip=209.85.215.169
+	 To:Content-Type; b=TG+DmkoGpApizDa+kXlm1vEGvukjQBlWb1KEs2+DHAkhZTCE3ViOpJPY3TqmfErQH4Ejn10nbpMARXOwovkzAn2+hjhpYZIU8G2wVETXQsHSTXGNfA9D2xdKq7idqAPHWbAyGNb74VPkDWFFSvRHPPhNbd5UiItQkg07gm8gpvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A2lhZuZN; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dpsdXjMo"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-bc8ceb76c04so1584754a12.1
-        for <git@vger.kernel.org>; Fri, 28 Nov 2025 16:30:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A2lhZuZN"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-bc274b8ab7dso1700979a12.3
+        for <git@vger.kernel.org>; Fri, 28 Nov 2025 16:50:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764376208; x=1764981008; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764377403; x=1764982203; darn=vger.kernel.org;
         h=to:subject:message-id:date:from:in-reply-to:references:mime-version
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=a2DkpqPegcYtZx5nHg1oA4f4MB9J5TQIWSBL/BvkUdk=;
-        b=dpsdXjMoVTfKbFuBTu2QDDGZZcZMZJoNeWV2xRiB0Sj0Sqoh9Twco+xg8SWnNl+iMq
-         tOFbBPLBtHcUsESKvM2sKPw59UFX00hwjc+0dMoavu+gVkGlsaENd+v+0M32UYQRWt47
-         gkL93QSwFwt43Y6NHHqBkKrJRO/OzEzCENTQRnMTVbdLBwa3MXeyxEqg5PsgWyzpwwYC
-         1LtuhvXtOTDheXdmUhD/gYeEDTIHdqTxgcod7R8j2Gg5G4b9jHUQ8fCfHszxdJKtQxKd
-         DiS9Dab2T2rImBFX5VNrLgOmcyDu6peIlApP/TDbRjXCnrIzfXnBQj9H8bTAwGB63f86
-         3gFg==
+        bh=MPT7ZGIJd+e4f/1u2QSm1RPgIezca+SR0IUZYFc//6c=;
+        b=A2lhZuZNtGTlfgey+40VudY3lA0ESw0x5oii1iB7ZnmALAJZ0MkWAMT7STOP0qVRAT
+         7XxpwMhCeDDO7grMkb1rj+6JvUSrpGA+LCUiZfKp1AdJ/itXnNgXEyt4uyly88Dcl07m
+         qP4TXqMIV24jlG3lC/RCwzMN8+dbEYjZfXvWCGdUl0urlYZp7mx9xfM0bTsOVIwyDSqz
+         L5js3VkqmvFEmdD6tycmpYhqp4vUmZiQWQl9vVETnVa4sZbFaOxwifQ8ym69XLOW4INn
+         A3NDOXvICCXPXSrX58Fi/T4lMOi6h2W6CBrF9gw+FsrWDVvz3UG6GT4/wUBZGUB/2OyC
+         7GIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764376208; x=1764981008;
+        d=1e100.net; s=20230601; t=1764377403; x=1764982203;
         h=to:subject:message-id:date:from:in-reply-to:references:mime-version
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=a2DkpqPegcYtZx5nHg1oA4f4MB9J5TQIWSBL/BvkUdk=;
-        b=QqGrW9J/oPVZVrey9XLCDnveEVb6mE4PGNlr4okl5f907zbjLBb4moLwJVVJXlPEMK
-         KocCvANxhQOoSXzxZVdZ9Dij3qJQuIj4jpyGr5+RfRt9q8Ku5w+6Txq1n2l9Y+ueimEQ
-         vfFtUObKr0GPUcdpXbcYp7LDzBltopXj/Nr3Nd4HnKeGZHgwyT/Z4fJQ1AR3W73W6j5J
-         t5vc7oHhWHXMClrR5zQOnVZCCzSxik/zFJFfyJU8WhLVh3aTBYshFR24iLDPYKXSl19t
-         /anzpU324RmmQ5Bz5GyPc/7672ahJShKmPkFXdk+3bwLjDcy6kE+b3BWkLQn7qe7vYZf
-         kfmw==
-X-Forwarded-Encrypted: i=1; AJvYcCUqtqfnH+MeYCfmRdNlegSvF0OqqzfQDvZ3N30lGdAzqb9BkhHnRaPBsUay4WKvQWIvvaA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6AXQax6Bj+9da+q/cwJBkAkh2GKrBjhuwv4bpH7foNPJpyFMp
-	8pOT5olmTNNkX2t8GNAf8owpQOjVp0gMcW8ypYldRtT93JDIC5xsCbydQYlRiaX0cakn+XxHArf
-	403nLY3V8kdhogpnguyxZ0M091AQg7A==
-X-Gm-Gg: ASbGncuiZyn4N1dVXwPzZD6Y7HP0b02HLGNKjEF8cgMaqbPl6EYxLDSTXDvCF15jVUM
-	kEV+a9yauKjPTYIBqt4Yvl8vlDkPsUA5SWQk9gbZYRIYOt7vAWPBBwFPsybWoxZrNa9ze9MjewY
-	YA3TyFwbT4Yk7tvcVCwYwsm6Kj3z8nCWs5cEL1c2mfRILjRMAqydIW93NBIbwjd+9WArsmOZbQF
-	IQLIjeyLTL+lh3U6Mxr8/MT6njQIgrqQLpxFph1BzeVWMxY/DtrcqhZzLejEz8wJPL7WEZ+WZsr
-	yVZLZbAQUoYh7MXMk7kDTW2QoH8x6MmAwQIt62Ubo1ciRsshmrTBDTkzTmtgO0E71YtXNWC9gjh
-	rnQv1oC6PJ0w8c2wIyGWiNJQhpNlCUPwRHf1wtwTs
-X-Google-Smtp-Source: AGHT+IFwpjm2C1I2ClfA5lneYVM0+F0IO8ki5ORE9o/tUqgreN0cwnjpdI+ggBQ7lEP0e/76YWNbq4JWHc5VXxaCJ+w=
-X-Received: by 2002:a05:7300:d405:b0:2a4:3593:c7d6 with SMTP id
- 5a478bee46e88-2a7195cb23fmr17148503eec.22.1764376208550; Fri, 28 Nov 2025
- 16:30:08 -0800 (PST)
+        bh=MPT7ZGIJd+e4f/1u2QSm1RPgIezca+SR0IUZYFc//6c=;
+        b=C3QjBqYB3VBZS7tSloNVBfF3szhpj9AN5aNiUqymap0lNpmSKkQnhkeoz8SHaZSgO+
+         tePKgz7aTsTDO8vaW0OT0qMElokNPathAgTqqpNElEzFHLp09lkj+/Avf41tsBAYyv/A
+         8F99Zdv1bANVoCBP5Uy3pKh990ZqqPc6AaokUS0anWOAYD+R2XZDxADyU2L3HyNiMqEw
+         Ju3LENUnlFrwgKKrJDP3gDdkDCWgpJVAR2XaxtMZVpg47bfgctf79mQmP3WmIm+wfKr7
+         pEJVwJILC30FZdXWQZ5Vo0C6DEdbkpGGWygK8Lr1WxyU0cRqC1V+4qt1yUDSB8G8Gbd6
+         jqTA==
+X-Forwarded-Encrypted: i=1; AJvYcCXY4Z2ntZjJCSaRwyLw4kohk5sVwP883A8k6VIMVDJ7liO6Xns/hK8zLi8BttftUAVADDQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw9mHdbmXC4cilN6gaL57V/mjz+QeYcKJptTLVs2R040KLNgmbj
+	Htdwa9Thbwx73B1+MHaWEogWiBbP5EC0AYkQzygflZ6TS5uVbasLwL+1JC5d84Elmk+Py6w+heG
+	eApACXz8np+l+UGc6xPwxGDyiwKcY4A==
+X-Gm-Gg: ASbGncsXjWNkm52eEn4I/Ozgco3O9mFj5ESUce58d4p5giJtX3cCobls6W3m1vqfyHe
+	Wu2c1NHzUre3Yz/5mAnsxtajTGWcGtYgB2JnLDnWrz3Bd2I8b4rkVszVVl8WiHSrRwumiUgMoWe
+	r3IFfvqSrJmz2FktV49XxSJIUpsxhDctFGnCo/w8JkvhEphPmbJW5SUYRYgUhh9goZnV8enlVxm
+	kVv1wJ5oKMSd9YT7U+QJOY6Gpnipz+l7A3gusyJcxvWiuV6rJ0jxpR1MSBhOL7bDE2mDXWTuNTH
+	/VoKdv9cQJyXSefEhx1Cth0h/5bnf6lDw1HV4TiJyk94N7CZvMV90+1QH1UxaWh+tAT+mQ9pqKZ
+	lwmgfNR6nA3tuZziIoc+JRjndbv0wxKtmN0wjUxD0
+X-Google-Smtp-Source: AGHT+IFHlptWaBx3YJsQHjejkTDeUoTu/T7WzbFPkrAOJzoBoR6gRm3kajAG2UH/i0yBk8jfhysdFKwOKHkhUDGdGeQ=
+X-Received: by 2002:a05:7301:550a:b0:2a4:3594:72f3 with SMTP id
+ 5a478bee46e88-2a7192d6efemr14002268eec.34.1764377402885; Fri, 28 Nov 2025
+ 16:50:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,18 +63,16 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <CAB=S_8JufSGCOBjCQJ6R1Lq-GumJXTPzWGv2JCZK2SPw_XuGPA@mail.gmail.com>
  <aSo2n2dhEoZd3nZW@fruit.crustytoothpaste.net> <CAB=S_8JFLYsGe7fs7UjCfFfTJGMqpikZavztU6ZiW4KS21A+MQ@mail.gmail.com>
-In-Reply-To: <CAB=S_8JFLYsGe7fs7UjCfFfTJGMqpikZavztU6ZiW4KS21A+MQ@mail.gmail.com>
+ <CAB=S_8+omhdW9Mx3kr=McZvoC-GbftWmsBVLQuRH=0CmChq85Q@mail.gmail.com>
+In-Reply-To: <CAB=S_8+omhdW9Mx3kr=McZvoC-GbftWmsBVLQuRH=0CmChq85Q@mail.gmail.com>
 From: Justin Su <injustsu@gmail.com>
-Date: Fri, 28 Nov 2025 19:29:32 -0500
-X-Gm-Features: AWmQ_blgpTrfAswJ2tY4HmXj3oN8t0xlwKx_LHMoVcGVKjKH7zgeto3pqNIqmyM
-Message-ID: <CAB=S_8+omhdW9Mx3kr=McZvoC-GbftWmsBVLQuRH=0CmChq85Q@mail.gmail.com>
+Date: Fri, 28 Nov 2025 19:49:26 -0500
+X-Gm-Features: AWmQ_bmxWZo1OGko24xEPtvKNmX_NCqivxKMcZnTUMgP61i6Ff_zGLxg2_Med2M
+Message-ID: <CAB=S_8++iZZtPXm_Fp9ZuBJ_zKN1c3SWy1qMghbx+qop4y7OCQ@mail.gmail.com>
 Subject: Re: SIGSEGV when running git fetch
 To: "brian m. carlson" <sandals@crustytoothpaste.net>, Justin Su <injustsu@gmail.com>, 
 	git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-I narrowed down my Git config to these 2 options that reproduce the crash:
-
-`git -c fetch.writeCommitGraph=true -c submodule.recurse=true fetch`
-
-I tested with a fresh clone of the repo on a new EC2 instance.
+After installing Git 2.52.0 from the Ubuntu PPA, I can no longer
+reproduce the crash.
