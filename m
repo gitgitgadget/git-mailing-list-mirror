@@ -1,163 +1,110 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CC813A3ED
-	for <git@vger.kernel.org>; Sun, 30 Nov 2025 18:32:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4522AD3D
+	for <git@vger.kernel.org>; Sun, 30 Nov 2025 18:40:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764527583; cv=none; b=SHnqJ6fubF6ea5IUHOAeYwsrYA/bSsbO+ipGri9wpM1DcDNQHrQcPYsekdgARAFd4bw8gDfy4E+RP0FNhyx/uyuqelSH5U2PjvNMQEN1GnSLlFUa/VAGyaKlRZnqtfxkcgpQ5KJEM5FzcSfXfkhRwDZb0pefE9hF9+/yLNF4o60=
+	t=1764528003; cv=none; b=RkXjTF5hm0J3w3+ouDyIW8Shc8yOTqTqbpNEKODDm46uNY1+X9+EJIXBbzbQxcptf9evtJol00FbUD+xenZsOsyDXCj8lallbKUEMxT2kVcmn8BaMw++qo3Qak232UUt76xcYGnB/oXyBUi1uUJdkPjtgqVielMv653h0sunHl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764527583; c=relaxed/simple;
-	bh=LVwbedgSv7gyyp5FYuQyFbuzbquJR4Kl/LiRnr6jOJc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OKgw+8/x/jaMk+btLGaTz4kxhlBOyfhHbN2eH0YUgMlFdD1ew3eYRbg0gATbowuxcgF9nfct6LRtWoNhBINHjIHggbFBr2YbZV28q61wz3ulMbSqbuJp5TD9XmaON5njvTYfk7+3Ze1MsyrMi9waSl3kWvU+2SO4hA2oZuZAGjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D7c/FvQE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RGfBSBAp; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1764528003; c=relaxed/simple;
+	bh=cjBPnik+tOtntH0X94iXbojMGLLfijiklAeglfQ09dY=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=bXv/laHjJuUrxaKzKunwD0SnE/PbdN05KX1GJmYfR7HLutqnvcwBsQtOcPJ8HsyIoZ5mCRNaNtYZk+e4XYb8iBqrxKsvzJwYNHr9t5YqBKfEzQcptKUTj0mpiRCUVLbcOf+fCmhyh0U2+3ZKKgcjw52pkLnn3p332IvhVb36nvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WdUijqen; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D7c/FvQE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RGfBSBAp"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0C9A37A013B;
-	Sun, 30 Nov 2025 13:32:59 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Sun, 30 Nov 2025 13:32:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1764527578; x=1764613978; bh=U0FqbdeiuT
-	5fKIjuK+zHtPRWpmK9CZ2vJVbofBzYvYA=; b=D7c/FvQE9t1dECikAvEzw1gO7K
-	VvCzYsOxP+WGImP/Xupfmz7O0SINDSX2kTpUu66xEVrea9qtspjvGtbp7WCPEHYZ
-	Z7yfWODcbgqRpfeMU/z6XoC9JfJDnge2Lb9tFDVWxL6N4D6xD/2hnyItZJnfBYaF
-	JkrOv7TeBw4vyAnxiQcWpnQ2uPTWLyUZ3w9LWPsFFfRL9CPIt9ks3AeoS4UV/KMZ
-	RKTRsCeiiARApEwK8y43YwAsS6hsbZQAV+fJgVU8Yd8ExNp7Ao18Ts15T0CeP9Fj
-	h7SV89sWrTx20muiFP0zysHukqj/E5WDPYa6+nUTCcGcrGsIOWGL6bakOTZw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1764527578; x=1764613978; bh=U0FqbdeiuT5fKIjuK+zHtPRWpmK9CZ2vJVb
-	ofBzYvYA=; b=RGfBSBAp3aDpUxzWVpimcMg8Euh9nT0yVr0hokIwsYCTSyzISKv
-	twuAPNNcR63Mi/sWWsODxaQ02BII7MOd3SRrZIKl+OcdJ+5viDuvKncJJKpRczjV
-	GgLCP7nap3qR1R0DT9w0+mfF8HJSEk5wXmUqgA8SrIIv820t05KxB8so3rcN2z6C
-	69psTjLKq8ZFkshZLhIqfGaLYVn2SHgMym0+U90L2I/M2Z1yvit8G9VBvNVt7Plk
-	IhpqXGTtwymPX0t1R0zmIb/S9ftFjrAgNnWZ04o9NHET0iGfao+uQc59oEJ3attE
-	zdjjdcSfb1ebSgDy6GmohNwrECKVvi+byAA==
-X-ME-Sender: <xms:2o0sad2OkbgdmYuOVtQ7hc6i8CO5b08TckK-0We8rrCXrOEdH7lDOg>
-    <xme:2o0saa9IPdFM02dCyXHpMdaa-hXRNgMN73wpyCMTIaZZDaERyu3jSiwDLTptSoSrQ
-    GXxUzSZ4wk5V0_9kTRqBze6xhof87-Hv_2LK88OP20_-16zcirvUA>
-X-ME-Received: <xmr:2o0saWO_y4ygMeF-RDnkUCn8kBQYAHnu8nCRoIHNRJ2eDxb7fIRUnVfpk8iGwz5uC1fblYXoZse3Rwl70ix1QEdQu4bVYWmtdNBw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvheehheeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
-    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprggsrhgrhhgrmhgruggvkhhunhhlvgehtdesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlihhprdifohhoug
-    duvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:2o0saWeZmM91PBizgTqSGG8sfjoHHNxzw_omjenXljRaFFnUG5X_4Q>
-    <xmx:2o0sadWX1W9mgXYO0Jeh9HmuwN_0fo9V4B16CqEA85635IKghZBQ5g>
-    <xmx:2o0saWhdszaFJ1-XrM5hUuRnPBDF6TuTg-ZSvS8jvCrxqIKTgXfs7w>
-    <xmx:2o0saU99YxK4nJZdJnIMtbX4qaVTa4SmFw7Kk_5kxB_rYdu1J5Tn7A>
-    <xmx:2o0saYsVK2J8DLQ3RiVxZjIHncaCkHqw6p1--il6K_JqjIZMpnwtZGlh>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 30 Nov 2025 13:32:58 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Re: [PATCH] add -p: show hunk selection state when selecting hunks
-In-Reply-To: <aSxQhqwzT34hIjV8@Adekunles-MacBook-Air.local> (Abraham Samuel
-	Adekunle's message of "Sun, 30 Nov 2025 16:06:15 +0100")
-References: <aSxQhqwzT34hIjV8@Adekunles-MacBook-Air.local>
-Date: Sun, 30 Nov 2025 10:32:56 -0800
-Message-ID: <xmqqqztfbcbr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WdUijqen"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-787e35ab178so25863627b3.2
+        for <git@vger.kernel.org>; Sun, 30 Nov 2025 10:40:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764528000; x=1765132800; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=t3KUZDyIS2J+9yM/p6DTZ6eHOIQvyC+kRFV8fy1zgO8=;
+        b=WdUijqenoMp/FC6dWzIydo9p5hlyUSGI22x9/CdeBO5cGEjBr0GSfFZ+BOJ9OZtXo+
+         4hJEfBL6ssBd8tHDzJkoXCyDG0IpZXapeG8uEnSMcX6sQvEhMjTtR63MJ/pszntNqp1w
+         w738ul/IgQ0mXDsPPjg0Cv5MmfFZKFtu21bG9as6KJ1VZzzTclKxFUnq348BHuW/8+MG
+         OhfXhk2mZ+dITZgJXyj1KSdeF5b/ObV+obxGCtCQHh99zF84R0a+ziVTlbnChMH6R6vl
+         b12LIEwUdlDGXPStP2KUOeTJRWV7M+TotZO9WKbFGHwqOxS7M71LUqgOFkrtTpl7vMXi
+         /7Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764528000; x=1765132800;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=t3KUZDyIS2J+9yM/p6DTZ6eHOIQvyC+kRFV8fy1zgO8=;
+        b=LKn9oQOR0WgrC1+TSmWMPcWfFz2KvgcMtUFS/3Y90QjTJrQprjFg4d8j0VKuLawpRJ
+         SxpCcvLPdHSRUAtvqFsvuWaZUTLaQkxmx538Kb4UuIRxsaGSVbBXGf2CK3lV3bOcNKWE
+         qhhu7cPtObbbJnc7/e2Zd92cjr3gctGhhqIDDaVPmk0cJgJbjj6vRPZLRXyW/OsnlQJU
+         ujBFp7YZTswTsISfcoyjbmJjhChqP6mMQbXYhXp/dkiCt/6nFOPBxhDGJdkhk+UqSLzc
+         uyXFVFoLUimaiIQyE54sF0OxtMgIO9qJeBMC94qYWrZ935GCRVlb0Ijpc00YW0WWb6wd
+         ObXw==
+X-Forwarded-Encrypted: i=1; AJvYcCXyglwto+qxWur/XvQsKOuBB/zPFN/XosMxYHTm0fjxlYHk5h2kofphi4YBdLW0etWZKOs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzefUGmp5YAihhqWzIm1zjjawhhBjPhW5FR/wRamDhnQwUifbDP
+	BTTMfeUvCs2Npe6PG8xtoajZS9C6HZl5/p7WStzfz1+bloopZWJ1cQOyJIYeffvK
+X-Gm-Gg: ASbGncvEgXqJUlpsXa5oIKGEcqB9c+iCnZgxtCqHkM3Ogaztw907CaLOSHzKbmVzlwx
+	h/LPtN18d5QWh2hxglMVCA6srvgaflw+zqUh4PSirPRhh9fjBVSrzZ49ycW2Dbbn3MSbfc3vOG9
+	OVFn7V6mVh30sgRrZHLuf1hDQawWd76I8xyGIU4+cScbrmZBNGcrll6KjEgpjD/T6V82b1NmiEg
+	IeRhtYDjcToP4OhOZCxSd3hmqid+GjMr2U9vO5gtdtJgM61Y0CR4SFCbcfgmCkL8nQ+ENbSLoML
+	elikJw/dE5nGkPvfjOj107ZGuF10s6O3XHw53qkZnmD4MmIB8K6yCdm3gGpCHvEoTt37oYKtNbY
+	fUMlu9jMMFMxQQp0eusLuFoXZgUdWZqLQHZgw+DJpjZszP0MyS7i+yzyajSwQOYVxT35qMEZFfg
+	7RmfXmM+j5Ar6kNmJIHiiKSV4TFJFMUu66gQjeeKWe6xCqpKTEHFkRETM=
+X-Google-Smtp-Source: AGHT+IH4tp1uRKa5oZZgqmAPsRXRur0nTPyFZnvwB5oRx2sqF1a4l1jTDbHsajQmoaCx/OAxPyH97w==
+X-Received: by 2002:a05:690c:4807:b0:786:7a54:4615 with SMTP id 00721157ae682-78a8b478b10mr312396617b3.4.1764528000210;
+        Sun, 30 Nov 2025 10:40:00 -0800 (PST)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:7160:681e:efbe:a946])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-78ad1043a08sm39496727b3.52.2025.11.30.10.39.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 30 Nov 2025 10:39:59 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v2 0/2] Update documentation/discoverability around `scalar`
+Date: Sun, 30 Nov 2025 13:39:49 -0500
+Message-Id: <7AB80AA4-D3B6-46F9-B02C-7A60A9A1C5EC@gmail.com>
+References: <xmqqqztgcu67.fsf@gitster.g>
+Cc: Matthew Hughes <matthewhughes934@gmail.com>, git@vger.kernel.org
+In-Reply-To: <xmqqqztgcu67.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: iPhone Mail (21F90)
 
-Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
 
-> diff --git a/add-patch.c b/add-patch.c
-> index 173a53241e..e70e390506 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -45,7 +45,7 @@ static struct patch_mode patch_mode_add = {
->  		N_("Stage mode change [y,n,q,a,d%s,?]? "),
->  		N_("Stage deletion [y,n,q,a,d%s,?]? "),
->  		N_("Stage addition [y,n,q,a,d%s,?]? "),
-> -		N_("Stage this hunk [y,n,q,a,d%s,?]? ")
-> +		N_("Stage this hunk [y,n,q,a,d%s,?] %s? ")
->  	},
+> Le 29 nov. 2025 =C3=A0 18:09, Junio C Hamano <gitster@pobox.com> a =C3=A9c=
+rit :
+>=20
+> =EF=BB=BFBen Knoble <ben.knoble@gmail.com> writes:
+>=20
+>>>> Le 29 nov. 2025 =C3=A0 13:33, Matthew Hughes <matthewhughes934@gmail.co=
+m> a =C3=A9crit :
+>>>=20
+>>> =EF=BB=BFA couple of changes following on from a discussion around the
+>>> discoverability of `scalar` config changes[1].
+>>>=20
+>>> Following that thread, I was additionally working on a patch that would
+>>> involve commenting each of the changes and why they're set. But that was=
 
-Three comments:
+>>> taking me longer than expected so I figured I get these smaller changes
+>>> up rather than waiting to complete everything.
+>>=20
+>> I think Stolee implemented a few similar things in GitGitGadget PR 2010
+>=20
+> Also known as
+>=20
+>    https://lore.kernel.org/git/pull.2010.git.1764195516.gitgitgadget@gmail=
+.com/
+>=20
+> queued on 'ds/doc-scalar-config' topic that ends at c483f0a5
+> (scalar: document config settings, 2025-11-26).
 
- * These sets of prompts exist for each front-end that uses the
-   interactive patch machinery, and we are looking at the set used
-   by "git add -p".  But the "I came back here with K, or I do not
-   remember which between k and K I came back here with, and I
-   cannot easily tell if the hunk I am looking at is already
-   selected" issue is shared with other users like "git reset -p".
-
- * "chmod +x Makefile && echo >>Makefile && git add -p" would ask if
-   you want to stage the mode change of the path and content change
-   for the path separately.  You may skip, and later come back with
-   K to this question.  The same "hmph, have I selected to use
-   this?" issue exists, no?
-
- * The existing "[choices]? " was designed to be at the very end of
-   the question, so that the answer given by the user will come
-   immediately after the offered choices.  Adding an overly long
-   "selected" or "deselected" to make it "[choices] selected?" does
-   not give us a pleasant end-user experience.
-
-Also, after you decided on one hunk when you have two hunks, typing
-'j' or 'k' would tell you "No other undecided hunk".  The phrase
-used here, "undecided", refers to the choice between USE or SKIP.
-To convey the intent clearly, "Select"/"Deselect" feels a rather
-indirect way (i.e. "selected for use" vs "selected to skip") to say
-what is happening.
-
-Ideally, if we can convey
-
-    Stage this mode change (you previously decided to use it) [y,n,q,a,d%s,?]?
-    Stage this mode change (you previously decided to skip it) [y,n,q,a,d%s,?]?
-    Stage this deletion (you previously decided to use it) [y,n,q,a,d%sm,?]?
-    ...
-
-without wasting too many extra display width, that would be great,
-but this patch is not quite there, I am afraid to say.
-
-> @@ -1564,7 +1564,19 @@ static int patch_update_file(struct add_p_state *s,
->  			      (uintmax_t)(file_diff->hunk_nr
->  						? file_diff->hunk_nr
->  						: 1));
-> -		printf(_(s->mode->prompt_mode[prompt_mode_type]),
-> +		if (prompt_mode_type == PROMPT_HUNK) {
-> +			const char *state = "";
-> +			if (file_diff->hunk_nr) {
-> +				if (hunk->use == USE_HUNK)
-> +					state = _("[selected]");
-> +				else if (hunk->use == SKIP_HUNK)
-> +					state = _("[deselected]");
-> +			}
-> +			printf(_(s->mode->prompt_mode[prompt_mode_type]),
-> +				s->buf.buf, state);
-> +		}
-> +		else
-> +			printf(_(s->mode->prompt_mode[prompt_mode_type]),
->  		       s->buf.buf);
->  		if (*s->s.reset_color_interactive)
->  			fputs(s->s.reset_color_interactive, stdout);
+Thanks. If I paste URLs into my phone=E2=80=99s email client, the message I=E2=
+=80=99m composing is no longer plain text. Ditto if I paste the message id f=
+rom lore. And this was a long one to type by hand, so =F0=9F=98=85=
