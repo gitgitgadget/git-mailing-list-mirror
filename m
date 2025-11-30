@@ -1,126 +1,121 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AD3273F9
-	for <git@vger.kernel.org>; Sun, 30 Nov 2025 15:06:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49A917A2FC
+	for <git@vger.kernel.org>; Sun, 30 Nov 2025 18:02:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764515168; cv=none; b=usdDWTR4KOK4a/VwrGzbu7BU/Ik4mofGLqMTkS+RjfanNKe8rWyOyQYugk3MzdBUaKEiMAxqseO6vtDBXAPCVN5/Fx/S834JLOuganNrhPT4KLIaAF2s0EQK7x8kfHTM4of2HrpxlVjEDzrQZ6C07PkCKRuNMtWZhqZZn7EdoZQ=
+	t=1764525745; cv=none; b=n1r5dtXCiAqme6xABxAivRGw5XO/G8PFiisCY1GSiKLRYjRoKCthJ/ABTu9wHwQpGfp6UQms0O01u875PY6PHDetcs3sqdlp9X/135uRdfrFGAM4QsaelC37MdqIpQS/WMW2zs1Qu3z223zFJiEF+R4faBPE8G3YGeu4FfE6tyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764515168; c=relaxed/simple;
-	bh=94i0pyGyKqoetI7ONTG/8Mu4edOjnT+mB+RsKLenx4U=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=qWc/WnGOd+kXpWTagFw5l+2b8TSb2ekCNPor0Wc9cJl/f51MRxOcz+xZdyoQQkTqoW1DYPTuA/2G0bxROGHge7aqWt08SHNwqIH0gIrH6pbXnZ7vI9iC+N9IsDXQwnoIGDaUjkLvP+nlQjwC7Bgvd2xFn+btsH/3GNH2o/jJVWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=laX52rH9; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764525745; c=relaxed/simple;
+	bh=RrMAPf+Vc6VqXxqgDojDD7zDziyFqnnYD7s+DSEDKpI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GdNJdTFpQ22WMsvLV4w54dln6EcSID/l6ORZCwrWb8bFiyJcIfJE9xRIYl2XHNsQzNksR8vX6agjNPolsjdJ1eUNN+b5Ggjgieu8dFyImr2HfHW9BTXJNjXVP03liaK6Qe/7OzCwxPmwCTBvOb7gM+c2TD4q3MDPMBAyhOLboGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=m/20rTgH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c4CnAbAz; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="laX52rH9"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4779a4fc95aso27916775e9.1
-        for <git@vger.kernel.org>; Sun, 30 Nov 2025 07:06:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764515165; x=1765119965; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=K6Rj1CRD13fjWj3+jz7YoMKtrPzClIAIRRdOX366EtA=;
-        b=laX52rH9XY3EcPirQoCqHZsmn5ufMWYK6NHuYPwbZTPOjQ9oNttUDyBjTXmxtN5/4k
-         sZj8hsVMYQCX+b7EBS7RjS6CpJ+apt4aWlISRcNCp1Vl9wOdsEWRmo1TxKo28Uk9Il9E
-         /fjz3HSr120zYmiPjGSkJg4IcABseH8sVxrzctv8GnAULikBRmuGrtATxmB6MyWHKqbi
-         BSU+FsgkLDhWaWtbW5KniehEmJJ8LHRcW9/DNjw883UEQ5CArEwjoMNNqNyD3FoPMZeL
-         Wy9Mw+KAbEeAR9xLTg/0pA8fJol8wjeFZkfER9rUlGURD2aKRCtwppTIlbP65TbdTkRX
-         E8Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764515165; x=1765119965;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=K6Rj1CRD13fjWj3+jz7YoMKtrPzClIAIRRdOX366EtA=;
-        b=MBTjHKPuLn7yh866Jtf3ZG1P/bfhr2CYzFwcDJ86v7Ra30DRKV8KmAQWIf72pUwQoU
-         uft4y79HyseRks2M2qgOsyt0nUnToDEF2xTm8hbse5mC+BSsnBnyUMEgJvLqZWYR97ml
-         pdmHJzMSdQaJqIuirCbwr4aNxiQ1hLaOUTcXsZaN+Aiesl8tCN8u6v2LOI6evOpV4BCk
-         VJGTKo5nf4vUo8dkK7VNDkrB6tQK5Gct1egUSJzoFWFU1q1C3TFjReQPNUKZylXkil46
-         WcjhVdTXlkSt8l37mzBUicTmcb4L6j3rPrgJLRoyu1+7V9EES+O1YKKv/LgfXmt8Y4E9
-         NooQ==
-X-Gm-Message-State: AOJu0YxbDrb9Ax8MVo5MiobzmyuSNuJ6aiJulFh5pdb2SSmjy7oQfG/d
-	cyPlpx1bfFLS7hFoLZxJzsg8B2TkEUuW7FhxFb3wGrVlDGFtuujzjWXO+LvqzZU8
-X-Gm-Gg: ASbGnctHrWmkFH2KN/b6DeiCb8wabxjmS/EXLUZqc4LQ7dzwj2/yH0P4nq7/0z5nJcR
-	IJIQSRjxmzwvYaW5vOFxcaQUZZu4+JaS8s7L56E7vTaBmGIUQYzhvduTQC+z2kklNZqy1m8hrZ+
-	h6brxj3JXuV5eck1+6OZe7QNuhmBtgNitu7Lcvw3MSWlJlrf0i2jC12nvRcq9fNf9hEr/GykDNn
-	DIJsDT8itmFq/JTWKcESjZhsoq9cVZ3Q8V315wpjmz+D+EQLYA48mvMdEiA2y1S0IAelPbNjxwN
-	IHEHdkHuBQHR/2e8GF7kv6X7mn5RaCKg2EgGhq1KKQZ2xAxtb58sw5YCYiQXVWYKtKyaac2pe/M
-	ooa/f/Djhq+f109YPCBcbU1hLQlkilsahMlKoVwZaNF67MLG0kG8bKfEM7UHnBU5VnfrO3z+l4y
-	wngmWyqHfg84bYa1kw4yUTNpwWQCdw
-X-Google-Smtp-Source: AGHT+IEOpM6jA3Gxrhl6hirkH2baACVsdO31wly+a1mMT6r51SfcGUPRSlohdX6ak9IA1Rv3VYS1Zw==
-X-Received: by 2002:a05:600c:b52:b0:475:d91d:28fb with SMTP id 5b1f17b1804b1-477b9ea35fbmr262339665e9.4.1764515164715;
-        Sun, 30 Nov 2025 07:06:04 -0800 (PST)
-Received: from localhost ([105.112.233.21])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4791165b1fesm189371295e9.15.2025.11.30.07.06.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 Nov 2025 07:06:04 -0800 (PST)
-Date: Sun, 30 Nov 2025 16:06:15 +0100
-From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] add -p: show hunk selection state when selecting hunks
-Message-ID: <aSxQhqwzT34hIjV8@Adekunles-MacBook-Air.local>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="m/20rTgH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c4CnAbAz"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1078F7A0086;
+	Sun, 30 Nov 2025 13:02:22 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Sun, 30 Nov 2025 13:02:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1764525741;
+	 x=1764612141; bh=QyR8Fuo1fwBs+54KzZLxbPfyj43aYgab3VgMFseTH+E=; b=
+	m/20rTgHeZnsZrt5rcrSZ6XNRUcqzzzuEgqJwzUyPZazReHKYqilUZ14yMzvfifD
+	47lWg88ij8JEJjpoYe4KoHcc2IS+j11TxAHrm4GMgyoa5kLhqFAtmbA2BTwlbTe1
+	zHpP+b/rfWqCijUi3jzjBTqRBQ/tZDi2p4kOtHL44+Ncq7BKeiWD3r4Tsc/l78ls
+	uKrqvk6PJzlXolUsAbEi0yYPKOjZVENI4AbDiSHT1fE0LVTA3Zhz3Efn8Z6o7Eei
+	i5BXM9CPaO74keZ9HCbMtrHjhZQxWqHHeR6mCJLKU5Qqt6dqYlQ62q6A6CzqdmlH
+	BeyW2B4Yg0Gd+TO7Sh5NJA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764525741; x=
+	1764612141; bh=QyR8Fuo1fwBs+54KzZLxbPfyj43aYgab3VgMFseTH+E=; b=c
+	4CnAbAzB9fnkxHnY1gLgRzp/SBA3LBTivvCaaNQXU4YxKYYqfsiY4PpMez7wvdjy
+	mc1AUNXKjKWY0TmC+RUFO7hu4chRF7ngjcv/OIGjXi0fnNMpy3uCtQjBABwMPt/D
+	VmJMqaR7LdiBrELrPaLf03KSEVJi+6DfhHyTYvc0i9Qq/w813wzMFgF9OB3jCySS
+	++DyTdk4OdFUyS6AbeOWld5JZVfR7UmY/Sduat/KgSrrSvJ6dhAT3iUxNx1fbBXJ
+	SZ3Xv9IDHpYfS2/zqrYdXdQCAYuOGKwRcNj0xHxhMrP1Xp3q9Lh4VNU6UGb0gPXD
+	hkAtsR4objIGofRERVhTw==
+X-ME-Sender: <xms:rYYsacNkwJA5LROdp0D08dskRgHL0OuKluW0tmCKxX1GlQHeO9v4Rg>
+    <xme:rYYsacSII14K9x12y6F3fK7lDSPTubGuO4qy3OefVeNa_A7lN0NPeAE5w6krjNMpo
+    hqSR0-AiDp__F8RFSopmM636N8h0HQlMoMG_wYnpzsqUuuug9FKzQ>
+X-ME-Received: <xmr:rYYsaagiJ3WihcwiJw1OHxVquO3Q0kXdFGJHv3GVvTRVodtGd0IuG3wgOJrMxkTJ3Fx49dej3Ymh6_5LGbHQKzkgud6f05OG74D8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvheehhedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
+    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
+    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgs
+    lhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
+    gtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:rYYsaV_Q3Dyfi7b_RarraP7Bw5UJGLIkYtOp6VAhMx2IpggizRLwcw>
+    <xmx:rYYsaRGJ1tRc9bsdZEC3vrbK5a7_LxwEvAg64W1tM4DEcm_UUlXcpg>
+    <xmx:rYYsaYmm93YkjGv4TjQVsq9ldHynEk7zpJ42yq6zcj3sulb1KOu40w>
+    <xmx:rYYsaVbaoGb9y-5b6edqHzBlaHISDT1FHMmEBQpbM4-ruTeDs4_NCw>
+    <xmx:rYYsabzLsrTrDQ7KUosLpSdWG7MAakdB8V7s8-IaEoacrhFNZYKro_Ja>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 30 Nov 2025 13:02:20 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>,  "D. Ben Knoble" <ben.knoble@gmail.com>,
+  Jeff King <peff@peff.net>,  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2] diff-index: don't queue unchanged filepairs with
+ diff_change()
+In-Reply-To: <aa28974b-ec73-4562-bfc8-4745ad58b55a@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Sun, 30 Nov 2025 12:47:17 +0100")
+References: <aa28974b-ec73-4562-bfc8-4745ad58b55a@web.de>
+Date: Sun, 30 Nov 2025 10:02:19 -0800
+Message-ID: <xmqq5xarcsb8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-When selecting hunks to stage or not to stage, there is no way to know
-if a hunk has been selected or not when navigating through the previous
-and next hunks using K/J respectively.
+René Scharfe <l.s.r@web.de> writes:
 
-Improve the UI to show whether a particular hunk has been selected
-or deselected to improve clarity and aid the navigation process.
+> Add a new streamlined function for queuing unchanged filepairs and
+> use it in show_modified(), which is called by diff_cache() via
+> oneway_diff() and do_oneway_diff().  It allocates only a single filespec
+> for each filepair and uses it twice with reference counting.  This has a
+> measurable effect if there are a lot of them, like in the Linux repo:
+>
+> Benchmark 1: ./git_v2.52.0 -C ../linux diff --cached --find-copies-harder
+>   Time (mean ± σ):      31.8 ms ±   0.2 ms    [User: 24.2 ms, System: 6.3 ms]
+>   Range (min … max):    31.5 ms …  32.3 ms    85 runs
+>
+> Benchmark 2: ./git -C ../linux diff --cached --find-copies-harder
+>   Time (mean ± σ):      23.9 ms ±   0.2 ms    [User: 18.1 ms, System: 4.6 ms]
+>   Range (min … max):    23.5 ms …  24.4 ms    111 runs
+>
+> Summary
+>   ./git -C ../linux diff --cached --find-copies-harder ran
+>     1.33 ± 0.01 times faster than ./git_v2.52.0 -C ../linux diff --cached --find-copies-harder
 
-Reported-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
----
- add-patch.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+Nice.  Is this technique only applicable to diff-index among the
+three diff plumbing siblings?  I suspect diff-files is an oddball
+in that on the working tree side we do not necessarily have the
+blob object names, but it would apply to diff-tree, wouldn't it?
 
-diff --git a/add-patch.c b/add-patch.c
-index 173a53241e..e70e390506 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -45,7 +45,7 @@ static struct patch_mode patch_mode_add = {
- 		N_("Stage mode change [y,n,q,a,d%s,?]? "),
- 		N_("Stage deletion [y,n,q,a,d%s,?]? "),
- 		N_("Stage addition [y,n,q,a,d%s,?]? "),
--		N_("Stage this hunk [y,n,q,a,d%s,?]? ")
-+		N_("Stage this hunk [y,n,q,a,d%s,?] %s? ")
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for staging."),
-@@ -1564,7 +1564,19 @@ static int patch_update_file(struct add_p_state *s,
- 			      (uintmax_t)(file_diff->hunk_nr
- 						? file_diff->hunk_nr
- 						: 1));
--		printf(_(s->mode->prompt_mode[prompt_mode_type]),
-+		if (prompt_mode_type == PROMPT_HUNK) {
-+			const char *state = "";
-+			if (file_diff->hunk_nr) {
-+				if (hunk->use == USE_HUNK)
-+					state = _("[selected]");
-+				else if (hunk->use == SKIP_HUNK)
-+					state = _("[deselected]");
-+			}
-+			printf(_(s->mode->prompt_mode[prompt_mode_type]),
-+				s->buf.buf, state);
-+		}
-+		else
-+			printf(_(s->mode->prompt_mode[prompt_mode_type]),
- 		       s->buf.buf);
- 		if (*s->s.reset_color_interactive)
- 			fputs(s->s.reset_color_interactive, stdout);
--- 
-2.39.5 (Apple Git-154)
-
+Will queue.  Thanks.
