@@ -1,117 +1,100 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEDC1A2C0B
-	for <git@vger.kernel.org>; Sun, 30 Nov 2025 20:00:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5987A26E6FD
+	for <git@vger.kernel.org>; Sun, 30 Nov 2025 20:29:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764532836; cv=none; b=AyPY9IUWtHdoPrZfjkaWBmSJKzhmRD2lTCLyvHmX1dzZ5ueNnnGfm46QsiZ3WQXNlxxV8GG6x1ZBy3Vq8itHxLzDuMlIkFmP9Grq6zjKePZK04yBB1gXCLX79gKFj9i4HPYbrfO5Or2GbGeZg42vaj3r2OMogFlBOfjpx/yPtBw=
+	t=1764534550; cv=none; b=T4c29v54/NlvJ8j72cliJc+6jlndkWRdCdeXItthY5tKo/jumf+agsojbGzEtBfGtYHCes/XOMGyYN3trPcRHJZ7oWYWGPJmjFQ9q8Y/EUh86eyb1/ttHMPQvZaaWDB8Cq5pKiRQIt4c8+LeY6lVnH30S3FFFVNoj/a4dVKFLkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764532836; c=relaxed/simple;
-	bh=BX8P/g6pQ1Hx+/zaEXvBVT8y2Z4ltwcbWZl6ICRtQdg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E8r51xcC9WIJLBmOhAn3XpTpTC6tDzyHLA7yPk41/iq5Tkom+Rn1G7T3W0m5JYBmRBbC+wkW2+OKOPfMvOSUONWNHh6ntv/M0a10uEIZmflcq/2NgsGdcTzFaKO2hnC5XoFe630VZtqpzyDtRThGZMGx0T/F9QRyhiM01Z2+10k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iaICBiof; arc=none smtp.client-ip=209.85.160.172
+	s=arc-20240116; t=1764534550; c=relaxed/simple;
+	bh=hrYkIdTNSToeehn1c92UReBWuWvOfQgoRfy0Z/f2N74=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=eeS5B5B9yWNYhskrNegxWDfCOoQfeiyWyN0D/GszApzag35ulshAMC6/1/DVvQ6C4hsDbZy51JK3bXfvC3xYgr/7V6OaZl02llDv3Lcoh0X8oNyXLRintThFLjd/8nDBftkQkrnV6NOvLczRu9h0fXgNKrq5iBJwHB8VLqGVii0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JGN+VPDl; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iaICBiof"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-4ed6882991aso28126001cf.1
-        for <git@vger.kernel.org>; Sun, 30 Nov 2025 12:00:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JGN+VPDl"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-b73b24f1784so682595466b.0
+        for <git@vger.kernel.org>; Sun, 30 Nov 2025 12:29:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764532832; x=1765137632; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=krh91qmdEeyd6uQNl2YOrSoD29jduXVb6cQdwOcYZcg=;
-        b=iaICBiofhyNYaqEpzLl+MCRhudZvD0qYjnPRCjDU7Gz9XENiQTb1fuatV2GsER8XhZ
-         v3hvQQuuD1W0rJgNy/v9YMrFRR72TY0zgv7zVLv/4dJLe8qB2AKaUja6kkeQLhZf2wR1
-         /wnm87J0LsdVIyGXl0O/ogA6XPYXBfFKPaAsxyJ8HVXi6I4UAAnvG1XIFtxOr9s/KYn7
-         e0EQm+Z8m3WAXXVTwkjG+BEYm2xnrySOo478MEYSEPb3UQT1p4L4Neag2KgiMShH/p4J
-         D6ePRdZncgyg9SdQooeGzr8O2eXAurTYa8RZBYSA32yUIIG2owD+PI8sJiLuBR0EDlBC
-         1Brg==
+        d=gmail.com; s=20230601; t=1764534544; x=1765139344; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=n+qe3cnZXOyLMmmd3gqK+3jF/WnS1N7BplwusTerQCg=;
+        b=JGN+VPDld2Hi9siy9S2Weo1lNXXmSAdPidJJ2XLK9H5u5MugTE9WRIAomX/ZpdTv1y
+         fMAXg4Jo6ysUdiX0gFX2NFB1UzKqiqa9kO/N036dOFCMVNGxmONEt7T62RXoWOsWMB/8
+         UqcFTCRvZJ8CnjTdVYgYX1oyStvR6yfjrg2dqQUEiemTTvTu3aIMSyce/Frzyh8wqVRC
+         XbU6jSE1VRFZSrWCPLwUilVnNfwKneQMh0LIX6sLLSuSMbJwzz5xrXV4OAVdqA0H6fDA
+         hFXoA+iw2B/nbDmZ8aLusasFtZzyCEN+iGNoSB5F78iXg2itluz10ZWimpXwhw2stfFG
+         TglA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764532832; x=1765137632;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=krh91qmdEeyd6uQNl2YOrSoD29jduXVb6cQdwOcYZcg=;
-        b=FY0xf216x0/5VGhgrxaz1egvvL9s0LK9VVsvPGwehmsf97j8C+4RKSjtAyS3VTWdPe
-         pqG8Wl1DpOA+o4Fsd8J26W4mLRTm5+DCzXTi4japwiAdAd9MtefasoAo6WlFVvgz58Ig
-         R+jkhimO5966ixnRCPlwZnP5DnxZWF4TjEV3pckXshoqrgvwLvyvz/iOAgyd0pFAlhZe
-         N4WLS1wrXVOIoTJjoxDGjZJ1LuLmgFRtsl77bm+lUfENgAZiw9e6Ys+4XxQkhMFQxpYj
-         kk2hPRSWlQaq3U6W8URaRX5mxhwtka1GYCQXzbSIsOlC+npgA4/ESEXdUfnACwRE8VVL
-         /RjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUwRFgtIZUWutWkc2d7NI3GmaNEvyZac41Uo0xeIGP1WQYN8K3HoWZlFL73pojbCQzlbMw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwSHYmpQzPXsBhOtKaZ7z3TtUVVlN3JekzO3G3Gyf/MCx+ZLbt3
-	g5H+vNyiKSFstxBqLyDwqCAoPM9niGlDRCHxjLAasdP+EfTidvewel62
-X-Gm-Gg: ASbGncsIAOG9kUpk4Tn0mjxLwR815uYFDl56C11uOlxfYGomRnBUcwgJzA2y9JSOHv/
-	yAz3PGTR1dIo8D2FhBh6YR408wOcx+BeNxUrCfN5nYghQLXBKtTRIGB6OCe1Mpiho5haOuy1epP
-	3/4sCX0DD3GUAUIAVDjjIQVZ0igKomYHGqagex6VhGIJV38CLnc0kGpqfNCiHebFuSYyU5/9nbL
-	mWBKVGuhGjKp+BVoLBF3rs7DNLVtM965Fq4gHJnADFKVvk0tFDzxEA14mxCYhNPRL2rM7ERZxw/
-	5cU/UZJwpbvQdMoxjdoGQGxdo3iF19YNVdn4xIYdrHgSRLazYemtkf5CsMPzjFh/EluQc4GSG+P
-	+/4+KnnrIGzCkg/PvYUomPPQ4QFubqgiopT8IbZcurkwqAsFIPe0cbzs0i4diEHNPS+YgFvc6+a
-	RWx4EkccRlRLhfa/N5czzX6Rdq8pwFCVdWglhxCuQBdtDj+bKg+f5vKnksGw==
-X-Google-Smtp-Source: AGHT+IEvds6yjVjPf35hK2nHFpOJjSoxtwlpUapsxFtgfE+Nb1dxhkaLfr4iCUatfGX0V2WaBgDdsA==
-X-Received: by 2002:a05:622a:1354:b0:4ee:bac:e3aa with SMTP id d75a77b69052e-4ee4b5bf500mr584718261cf.35.1764532832340;
-        Sun, 30 Nov 2025 12:00:32 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4efd341f290sm61673251cf.21.2025.11.30.12.00.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 30 Nov 2025 12:00:31 -0800 (PST)
-Message-ID: <75f862a5-2663-4211-b96c-d2c5d1c6f91e@gmail.com>
-Date: Sun, 30 Nov 2025 15:00:30 -0500
+        d=1e100.net; s=20230601; t=1764534544; x=1765139344;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=n+qe3cnZXOyLMmmd3gqK+3jF/WnS1N7BplwusTerQCg=;
+        b=Jp0f4mlm1v1l84jkQ1WoT4C281zwerPj+IdP7Qx/j/NU842fA/9C45TO+EpgBn0JyC
+         E092o4chp6VT6G4lHflZc8lLlWgdn2NifMgwW3+cHvpW3YyGH69m4TKxQcQpyj+LpayU
+         f9V5I+eiF/SuVuP401XEhPah5KRL49ngqNP6jnipArzuevcB17AVH7+XgM4fWtv1BDQj
+         NvgOlOkSfM/w1NG+fxPQwBea+VglsPB7Gl0LRZvSFrWCtyi0nQCW+AIi8T8vAF70tbgi
+         CfUWzYJuwohz21d1MqRFt3CZ/JLqDvtWtPxO1DpipiJEPp+xD80oab/57k+FoG5KFY3Z
+         yT7w==
+X-Gm-Message-State: AOJu0YwrSKfFP74yx7ktU7yOsHm8ZnHzVbsMxASxdLJVGWL5s56pFnvQ
+	L20VKF0JtzcMyhReDtNq7t8uFeAY+Z44rXRyTViLnAMUFiV1m6MleWY2vLVlKK+G/ytswjuJkvF
+	W5BWZIGavhO0/0vKRmzsZi/jfuXGYvSEvwR4G
+X-Gm-Gg: ASbGncvQmTiMrop1i0pbI4opQy/uUN0o115PXbus5y+ruPBdPTDqpdjNuxfIwOB0mM/
+	fUibOKAX6R6g6BWq0+voEI/JR7fiFUHydtpuhHYr8iSUPqvwu5fGNVX5aTDaBx3FP+gp2PcL9kg
+	a/px/Gc9RfgZ5SC9V0z7VDVpjKkF5dVAOVs3uq2wWJb5yIqOdwQgJSKofxjXsBCygRXNV9jA6b/
+	ZEEtksDCM8yUZRTz6uKHfjWVsMFChRQTOYIycFE1ov9PU8bFirEgZiqUGvZmZZSacACiQo=
+X-Google-Smtp-Source: AGHT+IHr45zrOtndRNhAOhTxFMJcgDcKO3bCBJep0/ck547LhHj5HTEt2JVxo5EKzj2LeILp7Wp/lggB0yAD6jiskpE=
+X-Received: by 2002:a17:907:2d29:b0:b07:e258:4629 with SMTP id
+ a640c23a62f3a-b7657285447mr5032901666b.16.1764534543778; Sun, 30 Nov 2025
+ 12:29:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] last-modified: support sparse checkouts
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Toon Claes <toon@iotcl.com>,
- Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.2013.git.1764423826908.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <pull.2013.git.1764423826908.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Christian Couder <christian.couder@gmail.com>
+Date: Sun, 30 Nov 2025 21:28:52 +0100
+X-Gm-Features: AWmQ_bkqkm0VEClxooRJoFjVBgk4p6kktt8mD0Go27mBnr2ixF_w5OyrjVDxC70
+Message-ID: <CAP8UFD0X5iRhmQbXp3hygk=2RFm-wepo2TT+JXxd9++zSXepTA@mail.gmail.com>
+Subject: Draft of Git Rev News edition 129
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Ayush Chandekar <ayu.chandekar@gmail.com>, Chris Torek <chris.torek@gmail.com>, 
+	Johannes Sixt <j6t@kdbg.org>, Bhavik Bavishi <bhavikdbavishi@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/29/2025 8:43 AM, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> In a sparse checkout, a user might want to run `last-modified` on a
-> directory outside the worktree.
-> 
-> And even in non-sparse checkouts, a user might need to run that command
-> on a directory that does not exist in the worktree.
-> 
-> These use cases should be supported via the `--` separator between
-> revision and file arguments, which is even advertised in the
-> documentation. This patch fixes a tiny bug that prevents that from
-> working.
+Hi everyone,
 
->  	argc = parse_options(argc, argv, prefix, last_modified_options,
->  			     last_modified_usage,
-> -			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT);
-> +			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT |
-> +			     PARSE_OPT_KEEP_DASHDASH);
+A draft of a new Git Rev News edition is available here:
 
-I'm intrigued that this is the only fix that was required.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-129.md
 
-> +test_expect_success 'last-modified in sparse checkout' '
-> +	test_when_finished "git sparse-checkout disable" &&
-> +	git sparse-checkout set b &&
-> +	check_last_modified -- a <<-\EOF
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-Would we expect this to work without the '--'? Should it
-fail for a directory that exists at HEAD but is outside of
-the sparse-checkout?
+  https://github.com/git/git.github.io/issues/807
+
+You can also reply to this email.
+
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
+
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and I plan to publish this edition on Tuesday
+December 2nd, 2025.
 
 Thanks,
--Stolee
-
+Christian.
