@@ -1,88 +1,94 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49A917A2FC
-	for <git@vger.kernel.org>; Sun, 30 Nov 2025 18:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE7123A58F
+	for <git@vger.kernel.org>; Sun, 30 Nov 2025 18:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764525745; cv=none; b=n1r5dtXCiAqme6xABxAivRGw5XO/G8PFiisCY1GSiKLRYjRoKCthJ/ABTu9wHwQpGfp6UQms0O01u875PY6PHDetcs3sqdlp9X/135uRdfrFGAM4QsaelC37MdqIpQS/WMW2zs1Qu3z223zFJiEF+R4faBPE8G3YGeu4FfE6tyQ=
+	t=1764526271; cv=none; b=Jd66STucd526ccRcSDSjDAM4gSr0IlbeVip3VsR8km3MWxz6X6FnIGgSK8+I3Y8egbhuz8QiKvoTEXf6QFB3u+8WtZsGXDYNNY87l18J4xU0TN+NFa2IkT2554Wa+Pb652tATFPZjbD/OEu3FGBgl61lmx/BrsOfmd8gzKMLOa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764525745; c=relaxed/simple;
-	bh=RrMAPf+Vc6VqXxqgDojDD7zDziyFqnnYD7s+DSEDKpI=;
+	s=arc-20240116; t=1764526271; c=relaxed/simple;
+	bh=3DLEiIdXB604i5LH51531txh4TBBFh3FWDe/nduxvS8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GdNJdTFpQ22WMsvLV4w54dln6EcSID/l6ORZCwrWb8bFiyJcIfJE9xRIYl2XHNsQzNksR8vX6agjNPolsjdJ1eUNN+b5Ggjgieu8dFyImr2HfHW9BTXJNjXVP03liaK6Qe/7OzCwxPmwCTBvOb7gM+c2TD4q3MDPMBAyhOLboGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=m/20rTgH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c4CnAbAz; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=UiYI4Xtwbd57LekkfrzEzZXpB8uyKOzSggvQjzaHy8IWKxbrbpigatd1EDYinxl2aSrqnIv6gHxxJMo5klRHWTAF2rTN/wqgw1nd5fqkLzSkDBK3oa4u3OS0DKJ0XZA/t9aJy0kqsr8KmxMi4TWgfpE9kshvws5NDcOYpgO2CRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZLjsDGvb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O0SjputL; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="m/20rTgH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c4CnAbAz"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1078F7A0086;
-	Sun, 30 Nov 2025 13:02:22 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZLjsDGvb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O0SjputL"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 40E077A007D;
+	Sun, 30 Nov 2025 13:11:08 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Sun, 30 Nov 2025 13:02:22 -0500
+  by phl-compute-05.internal (MEProxy); Sun, 30 Nov 2025 13:11:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1764525741;
-	 x=1764612141; bh=QyR8Fuo1fwBs+54KzZLxbPfyj43aYgab3VgMFseTH+E=; b=
-	m/20rTgHeZnsZrt5rcrSZ6XNRUcqzzzuEgqJwzUyPZazReHKYqilUZ14yMzvfifD
-	47lWg88ij8JEJjpoYe4KoHcc2IS+j11TxAHrm4GMgyoa5kLhqFAtmbA2BTwlbTe1
-	zHpP+b/rfWqCijUi3jzjBTqRBQ/tZDi2p4kOtHL44+Ncq7BKeiWD3r4Tsc/l78ls
-	uKrqvk6PJzlXolUsAbEi0yYPKOjZVENI4AbDiSHT1fE0LVTA3Zhz3Efn8Z6o7Eei
-	i5BXM9CPaO74keZ9HCbMtrHjhZQxWqHHeR6mCJLKU5Qqt6dqYlQ62q6A6CzqdmlH
-	BeyW2B4Yg0Gd+TO7Sh5NJA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1764526268; x=1764612668; bh=JxIiFXI2YS
+	xncb1/4hjlYE/1ds42J0Dd3mbXAcNkz4A=; b=ZLjsDGvbmtbRq0RubmVVacjX1I
+	S0y1SHX8Gm8Ew+SV1NMsn7iBHyjYzd5geJfuAN/kb0wWMt/wotN+S2aCQmaXKpma
+	DOCwF3/HLvMwokggB/sdRuxgtsOuWm+I6dKttvvL34K0mL5R7YVO0NLCi6lzRK7D
+	WKQ3RpYkVqprWU2Q4L2jAVPtjGrZ5IYpV6Vyr+KDaJh4UKpblw0mZkirtHEyolsJ
+	IDoVaVsZgqEvx27joTXoZNJU3k3kwEWa0hbvNowZJFp53tZ2LvZV8VDUUIdr7hZP
+	34mHvoENvKXgdABRGbVo1JPvNeM2tWG19gdWeE++A5qzG69uo4Vnp7y4bn3Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764525741; x=
-	1764612141; bh=QyR8Fuo1fwBs+54KzZLxbPfyj43aYgab3VgMFseTH+E=; b=c
-	4CnAbAzB9fnkxHnY1gLgRzp/SBA3LBTivvCaaNQXU4YxKYYqfsiY4PpMez7wvdjy
-	mc1AUNXKjKWY0TmC+RUFO7hu4chRF7ngjcv/OIGjXi0fnNMpy3uCtQjBABwMPt/D
-	VmJMqaR7LdiBrELrPaLf03KSEVJi+6DfhHyTYvc0i9Qq/w813wzMFgF9OB3jCySS
-	++DyTdk4OdFUyS6AbeOWld5JZVfR7UmY/Sduat/KgSrrSvJ6dhAT3iUxNx1fbBXJ
-	SZ3Xv9IDHpYfS2/zqrYdXdQCAYuOGKwRcNj0xHxhMrP1Xp3q9Lh4VNU6UGb0gPXD
-	hkAtsR4objIGofRERVhTw==
-X-ME-Sender: <xms:rYYsacNkwJA5LROdp0D08dskRgHL0OuKluW0tmCKxX1GlQHeO9v4Rg>
-    <xme:rYYsacSII14K9x12y6F3fK7lDSPTubGuO4qy3OefVeNa_A7lN0NPeAE5w6krjNMpo
-    hqSR0-AiDp__F8RFSopmM636N8h0HQlMoMG_wYnpzsqUuuug9FKzQ>
-X-ME-Received: <xmr:rYYsaagiJ3WihcwiJw1OHxVquO3Q0kXdFGJHv3GVvTRVodtGd0IuG3wgOJrMxkTJ3Fx49dej3Ymh6_5LGbHQKzkgud6f05OG74D8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvheehhedtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1764526268; x=1764612668; bh=JxIiFXI2YSxncb1/4hjlYE/1ds42J0Dd3mb
+	XAcNkz4A=; b=O0SjputLpGHuZDmUIysofKpK4H5KzqSZm6dU4Kbr2I9gCM29EXr
+	kU+tq755ybjufDyGMGnYx29XTKyJ1+APIjurXYf4JqTAKTkDBltCX9ITQxDIWGP9
+	2qtdVaHxMdWO7Ul+IJrcVl3qQzH0j61ACD2DQre+K/q2itpo8Pbw3xeyCAr3ncaJ
+	pC25YBao/xQ7f/SvZeS0oBDIWlGFzXG4LmNXAfEsoZJ3JoN9zB69jM51u1RXgmBS
+	fVEXh6FNPJS/v9U9ltadEMESb2ZM8+eYwOqnrLPmnzDNOLKX04ajyktlq/Wj7Mt2
+	Q+Fyl5Qi4w/SODYm38hEoq5FMGd0GuAq05Q==
+X-ME-Sender: <xms:u4gsabBUuqYcZjqQhFMvIgTXfdEYlc8h_7cWpz5qwvI0QKnGP7g8wA>
+    <xme:u4gsaVNwHQ8B0nT_OnCjxPPR_adho3ntyG5BlL217sJZVJ7ONBd2kVUrF-uDv9GsB
+    E-zDsOIfzQ-uZHQ-It_5YyLwndhO8vOr2c49BQ4ddOkVmQiLBCCKQ>
+X-ME-Received: <xmr:u4gsaQbAurGCDUtwHjmqDiEPUXI0XUL9ipeYdqkHMJYtIkJFQCGF9_Qi-2pF-PTIngD8LvcjE9mAG63OHhYZW82BDAkrKKyVuz6L>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvheehhedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
+    gurhephffvvefujghfkgffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihho
     ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgs
-    lhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
-    gtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:rYYsaV_Q3Dyfi7b_RarraP7Bw5UJGLIkYtOp6VAhMx2IpggizRLwcw>
-    <xmx:rYYsaRGJ1tRc9bsdZEC3vrbK5a7_LxwEvAg64W1tM4DEcm_UUlXcpg>
-    <xmx:rYYsaYmm93YkjGv4TjQVsq9ldHynEk7zpJ42yq6zcj3sulb1KOu40w>
-    <xmx:rYYsaVbaoGb9y-5b6edqHzBlaHISDT1FHMmEBQpbM4-ruTeDs4_NCw>
-    <xmx:rYYsabzLsrTrDQ7KUosLpSdWG7MAakdB8V7s8-IaEoacrhFNZYKro_Ja>
+    htthgvrhhnpefhieeflefgfeeuudejleegtdfhieeivdffteevfeeivdevhffghefhhedt
+    hfejvdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
+    mhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepph
+    gvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehrrghnrdgrrhhighhurhdoghhithesshgrmhhsrghrrg
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtoheprhgrrgdrlhhkmhhlsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:u4gsaUuWfpL1Uj-0Jc5Vbt4qCpIgQEIdy608oN26b6SM8VHHFvw6Tw>
+    <xmx:u4gsaSMvhxgvJFWXXMEMnv8KSJf7t0Md5FnW7DaXKRMMVtQVN1gVrQ>
+    <xmx:u4gsab6iXENi4crTWsmJ-R7eeS-EKwhWHgnUCB2AHz7gckjHqKjg5Q>
+    <xmx:u4gsaYR12MGsO20o1dVkuaeU5zu3asOmimmru8Kc4nnYh6n2uDaEEA>
+    <xmx:vIgsaQoFrowb6fLpd7YlA-SyouXn95a9BC7W1I8sDupoGn6BwVYemCdj>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 30 Nov 2025 13:02:20 -0500 (EST)
+ 30 Nov 2025 13:11:07 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>,  "D. Ben Knoble" <ben.knoble@gmail.com>,
-  Jeff King <peff@peff.net>,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2] diff-index: don't queue unchanged filepairs with
- diff_change()
-In-Reply-To: <aa28974b-ec73-4562-bfc8-4745ad58b55a@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Sun, 30 Nov 2025 12:47:17 +0100")
-References: <aa28974b-ec73-4562-bfc8-4745ad58b55a@web.de>
-Date: Sun, 30 Nov 2025 10:02:19 -0800
-Message-ID: <xmqq5xarcsb8.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  Ran Ari-Gur
+ <ran.arigur+git@samsara.com>,  git@vger.kernel.org,  "raa.lkml@gmail.com"
+ <raa.lkml@gmail.com>
+Subject: Re: [BUG] `git clone '-c KEY=VALUE'` no longer works
+In-Reply-To: <20251130134930.GB199421@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 30 Nov 2025 08:49:30 -0500")
+References: <CAN1UxBvk_GJjLWd0XexRxp8FFhYozGCNcodai0eqnjrhjKEh7Q@mail.gmail.com>
+	<CALnO6CBJppT3ELyu54rJvP+uqcMomJS9Nr_JTgfssn8iqG7MWA@mail.gmail.com>
+	<xmqq8qfvw2lh.fsf@gitster.g>
+	<20251124235530.GC2051672@coredump.intra.peff.net>
+	<xmqqo6oqucka.fsf@gitster.g> <xmqq8qftrcqb.fsf@gitster.g>
+	<20251126150215.GB4143292@coredump.intra.peff.net>
+	<xmqqtsygoh96.fsf@gitster.g>
+	<20251130134930.GB199421@coredump.intra.peff.net>
+Importance: high
+Date: Sun, 30 Nov 2025 10:11:06 -0800
+Message-ID: <xmqqzf83bdc5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,32 +96,30 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-René Scharfe <l.s.r@web.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> Add a new streamlined function for queuing unchanged filepairs and
-> use it in show_modified(), which is called by diff_cache() via
-> oneway_diff() and do_oneway_diff().  It allocates only a single filespec
-> for each filepair and uses it twice with reference counting.  This has a
-> measurable effect if there are a lot of them, like in the Linux repo:
->
-> Benchmark 1: ./git_v2.52.0 -C ../linux diff --cached --find-copies-harder
->   Time (mean ± σ):      31.8 ms ±   0.2 ms    [User: 24.2 ms, System: 6.3 ms]
->   Range (min … max):    31.5 ms …  32.3 ms    85 runs
->
-> Benchmark 2: ./git -C ../linux diff --cached --find-copies-harder
->   Time (mean ± σ):      23.9 ms ±   0.2 ms    [User: 18.1 ms, System: 4.6 ms]
->   Range (min … max):    23.5 ms …  24.4 ms    111 runs
->
-> Summary
->   ./git -C ../linux diff --cached --find-copies-harder ran
->     1.33 ± 0.01 times faster than ./git_v2.52.0 -C ../linux diff --cached --find-copies-harder
+> That's about where I'm at, though I'm a little worried by Dscho's
+> mention that apparently git-lfs has the same problem. So maybe it's more
+> widespread than I am giving it credit for?
 
-Nice.  Is this technique only applicable to diff-index among the
-three diff plumbing siblings?  I suspect diff-files is an oddball
-in that on the working tree side we do not necessarily have the
-blob object names, but it would apply to diff-tree, wouldn't it?
+Reading <https://github.com/git-for-windows/git/issues/5972>, I
+think the mention of LFS in Dscho's message on this list was a
+red-herring, as corrected by Dscho himself at
 
-Will queue.  Thanks.
+  https://github.com/git-for-windows/git/issues/5972#issuecomment-3577520017
+
+I do not know if buggily constructed command line by Atlassian
+Bamboo is something we want to bend over backwards to help papering
+over, but probably not.
+
+> I dunno. I certainly do not want to get into a deprecation period and
+> all of that mess. Maybe the breakage in v2.52.0 would be enough for
+> callers to notice and fix their invocations, and we could just quietly
+> remove the hack later? But then, I am not sure what makes "later" any
+> better than "now".
+
+Yes.  Let's write it off as an inadvertent bugfix ;-)
+
+Thanks.
