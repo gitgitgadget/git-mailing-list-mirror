@@ -1,83 +1,80 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EE83002AA
-	for <git@vger.kernel.org>; Mon,  1 Dec 2025 09:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C13B301464
+	for <git@vger.kernel.org>; Mon,  1 Dec 2025 09:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764582443; cv=none; b=fGXBj1aOZL1vK5TGG2anoEGOfIoFk7FIZwoet+Ti7nQfR57PUzztY2x0dlSeSxnsDZeyISOawv+QRXo9MeSnhSBstrGljGnYnhEhXK5Z5/7UBwrs/J0O1f3/UcL05p/ueu1ihAPz0npunAgN/f+6T1zolNyI/Fq/r4Cvd0P9+yY=
+	t=1764582875; cv=none; b=Ajagw+lF1N8Rh/6cqk+l5pnUhjNdRviefPrGMzbZBh4ZAIF3Wo69pkaNbZyU8n0VS2E8AW9FZWxdvN4QfhQMeoJQ/2VKZTYf0vR1DrL2rzGah56wBw4XdJd16Pe9/ZtmPome9uHH+iaQ3kEEDQUzAkpj6zzmQDZD+zvlACMORSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764582443; c=relaxed/simple;
-	bh=QBBaV4t+27VBAd6fAsJYYxFn4XWuvaz55Wk218V/shQ=;
+	s=arc-20240116; t=1764582875; c=relaxed/simple;
+	bh=Uz0VGvxv8vaYteVEt3PVd1O6ZMkFbL8l3Xe6aKmrvL4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fvlxo+E6/s3lIlQuuU9qDgyieOcND0L1KMm3o6C8qXup64qD3qN1BSFj5qQyBeX3EiJTQWoVTWS6V9lStS2wSm1xpDbuA2HEJWi6gXTcDSP0cy1Sr7ksZ97PJAYWn2OcGwj4rveBPNo9mNza1poY0aOQY7y5n920Ayj61Kkv8uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OmyCrt39; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c6WZyQMl; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=cFv2QCHfRRFfsZRX3MuIfrXdDdF4S3rhTlqfjITJrG1I9uzYbgezFwZ3QEC/IysEsYJh7Sb1hrOaNWxb97RZPfDsuieLNuKjxrpB6ezOYMQhgNuTmoUZxPitYktGm96AAYzS3hl1F+cDZ80puQ0CrFoGpPuJ+E6rRNsYjWPK9cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GLJCgkem; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ojwy4jKB; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OmyCrt39";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c6WZyQMl"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C92EC14001BB;
-	Mon,  1 Dec 2025 04:47:20 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 01 Dec 2025 04:47:20 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GLJCgkem";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ojwy4jKB"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3788A1400135;
+	Mon,  1 Dec 2025 04:54:31 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 01 Dec 2025 04:54:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1764582440; x=1764668840; bh=fvmenQuUfB
-	U/EvuwwZpt0PaASNcUPkjXPJZWNlGsdHs=; b=OmyCrt39cyg1Pn36bwA/AeB/Ls
-	9NEIULTS9ThrUBELtb45jxIFCnYIjRFaUGnmF3jumhkX2/yDNB3hKNl4szGpp/w9
-	Xx9a5KUrc9jCBaAQ23bfSSyaTljkX7fSrThVkuLlK1m4aA/YRe48uMGsV1C1YaRk
-	nVCBLkl3fYLKqlVxzO/DJ9RHaBbRS1e7R3NpjSksoEedP5UEgmLJZRNRM0SqPa6P
-	sVpI/E4YHaWO8SyfE2qCXtY/URwu2vGl4Zx5qXlKjLQ0KhbM9e6L64NU0qehQNkA
-	zsNNM490KM5dRoabVYGYldot6/pDbeR1b4Ji6XdDbbI+sw18QN86ekc4DbWg==
+	:subject:to:to; s=fm1; t=1764582871; x=1764669271; bh=u+woNwFAe6
+	RPSB1yrHKFfDNalHTOsYGaHCNErz2fBbQ=; b=GLJCgkem7OCxNkocCaVi80Bw0m
+	w7kUBTVsqzCfYaMbBU6HqJPcVoHVx8w7zWCodVlSnWW2K3HgR+S5Q1vR1OyTrGpF
+	xlWJKenVfNvwm+99na2S1Dd/LQkdPbaPaMWXxq3wd4DmGZ91tlGBKUvgKcKHcSyd
+	GrAcLmAsqJwpmmWFqPtfoKF/BcIQ5rKsFp7/GayHYgqysG6EwbCaJOM6xHpVHbYs
+	n/ciKo+t3zUhGupGAo+IaxZyAnh4SUgPNmsCYL4IwZZJMdWYPrbJClDit6hmDLHA
+	VAfy3dQLQwgLFwD0lxMViR/f0HWGzc5rb2XQo2bAtXXOfyQ3KszlXBvRx7lA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1764582440; x=1764668840; bh=fvmenQuUfBU/EvuwwZpt0PaASNcUPkjXPJZ
-	WNlGsdHs=; b=c6WZyQMlaSOGU/pYPoTShuVgt6X2i9kv2vD26N3eFYmSfrp+Yt7
-	UHnBupDpiljrNDhU/pyqbZ5Xo2E9qTFwTqVYqPQhZ0rupDZjdhIsysDa4dZnVBLC
-	Jj3gFwNBR7/S3y3aow49Di4WTHYngvx90A6ucuZETH+tMWO0vyjpcRQJ9TVRbAoW
-	l9ZKfnrTGe3+ucepUz3jtF2LlsxlDiVgZ8BLoxvtvbA19V8lofkkpPsetCoZ+jg0
-	hYLIGfVUTCIhlRpO7bso4W1y7rmIA5BXQ4V+ovCktgk7y8E4dK/pax5wdZ7I/0kX
-	ZPTOsEm9GSGBRL1lsaM6dEw9UZVTT742mIg==
-X-ME-Sender: <xms:KGQtaSDAUOpz1kt1Muo_edMcEN7t-_WapK_B--CtR-s-olJhdQrtqw>
-    <xme:KGQtaT-FUODbCveHc-xmAwUu5T4gNilbId8YGd_19d8zaWBDPNWKyi5XtXFFpHacb
-    qy4GPUDuGke5xWxamcI2MGrSJEMLSlMANOjer5law73cJ98iwtRJA>
-X-ME-Received: <xmr:KGQtaS9ekYbdBMzTXo1ZzF1lbweFIe4XXpVBZJ1iCOfuSufflSXD2WuZYGKIhLdOzCrFRy9wVnztgTPhHMuyDyZ5lrZzURimuqEH47z8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvheejfeelucetufdoteggodetrf
+	1764582871; x=1764669271; bh=u+woNwFAe6RPSB1yrHKFfDNalHTOsYGaHCN
+	Erz2fBbQ=; b=Ojwy4jKB/2I5dMrJhniuRTj0cebZDqV9aCEI/MLh1Qq8Lkp81au
+	Z9MI7N9RA7wwx/v3RpFgu57JRJKPM2sC2r57Y0x9YRKAa5c8Adg7OU1NbdT1Bn7V
+	HiUgP4u2qYpdUBfn22sZMceq71+/YdxxDE6sg7+LlpuwU3dCBRwcPcuKSazy+NQD
+	x7yfj1LxRTNdPi6vqkbELMSuzKS+M08o34FS24zPT97IrSFbL8KsWZ5bh/GTPiQp
+	NI953Dd2zVn/5LVon3NOY4shX10oDiZgybKOWgT9TrOcG4rqYnriLoxJv6Imsw8e
+	v3fgWCQvH0CbixHkSzfxMjOxqEm457PlA3Q==
+X-ME-Sender: <xms:1mUtaTcVGxiX-PSX6bMpVwaN7q3SmRkXRg28JRJRtKo1UKF7KezVgQ>
+    <xme:1mUtafMR37Ewzz3PNJQmUIjXZwSAEmfGpD4i5zrfNNPBh9bBpIH2Q7p1LVVWQdYIs
+    Z_MYp9hxmJ7q19axtMiYWMKm5IC7R0x7I2juuhq9DLk7brFC13VLg>
+X-ME-Received: <xmr:1mUtaaLsZ6BC__FetJhzYxH1IYvUGNIKv-AwQK5r1LfoCavc58t2aVYON22Ey8pb9wzlnTUPpKNrQbNjCyy3aJ5i27nRFPJeLxpvk6a0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvheejgedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnh
-    gvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtghhithhg
-    rggughgvthesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:KGQtaafXoWStQCi6YwjEHJtG7bbtJga08TYnVlEGl2nprGJEz-buRQ>
-    <xmx:KGQtabFX_kqAiIEie0XgbvfHcYZnxo3o5-lDv8yNwmGT2vjX7B7zrA>
-    <xmx:KGQtaYfd0dBqxvRYRHLhthTFnWts9AYuDdknvsyvsC7aaYp1C6Y1XA>
-    <xmx:KGQtaVGmqS59u4Pe_vkB3DLW3kgoGfym_VnZlMDE_YlZQcYtKz9JbA>
-    <xmx:KGQtaQfncrre_OnK25CGDNzQd-uknpLLv-wT75Pf7rERwbv1gYRSS4rG>
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:12UtaQGWC3SX9-ECyrf8Z-jv-Jyy3Xijwh_eiqrfZBidXpIaj_BGLw>
+    <xmx:12UtaSRCZuJRPSFUxHoXRmLFXGO_6QpozMRJo_p6J_M7DqTzNYQ0Mw>
+    <xmx:12UtacFsvhMjPj_RohZVDqN8qQh8NRSQP1JDDuk_UZ2x04Ku8PX9SA>
+    <xmx:12Utae9mSvnUGwN-mZcbicp1oj1pTj7N9EsnjXQ5OnfHgnzkmaEcWw>
+    <xmx:12Utae0KjvPHWdMYtap2Ex8kPs5JCHJy0f11Wv9yBEVZZds166DiASbj>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Dec 2025 04:47:19 -0500 (EST)
+ 1 Dec 2025 04:54:30 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2d6c1df2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 1 Dec 2025 09:47:18 +0000 (UTC)
-Date: Mon, 1 Dec 2025 10:47:15 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 607f2b80 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 1 Dec 2025 09:54:29 +0000 (UTC)
+Date: Mon, 1 Dec 2025 10:54:25 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 07/10] t1006: accommodate for symlink support in MSYS2
-Message-ID: <aS1kI0AR8TLVkm07@pks.im>
-References: <pull.2009.git.1764440906.gitgitgadget@gmail.com>
- <8a7c68b629f64a3fd8c08f54b5e8693f6568885c.1764440906.git.gitgitgadget@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2025, #10; Sun, 30)
+Message-ID: <aS1l0YuU9xOE7eog@pks.im>
+References: <xmqq5xaqbxmk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,59 +83,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8a7c68b629f64a3fd8c08f54b5e8693f6568885c.1764440906.git.gitgitgadget@gmail.com>
+In-Reply-To: <xmqq5xaqbxmk.fsf@gitster.g>
 
-On Sat, Nov 29, 2025 at 06:28:23PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-> index 1f61b666a7..0eee3bb878 100755
-> --- a/t/t1006-cat-file.sh
-> +++ b/t/t1006-cat-file.sh
-> @@ -1048,18 +1048,28 @@ test_expect_success 'git cat-file --batch-check --follow-symlinks works for out-
->  	echo .. >>expect &&
->  	echo HEAD:dir/subdir/out-of-repo-link-dir | git cat-file --batch-check --follow-symlinks >actual &&
->  	test_cmp expect actual &&
-> -	echo symlink 3 >expect &&
-> -	echo ../ >>expect &&
-> +	if test_have_prereq MINGW,SYMLINKS
-> +	then
-> +		test_write_lines "symlink 2" ..
-> +	else
-> +		test_write_lines "symlink 3" ../
-> +	fi >expect &&
->  	echo HEAD:dir/subdir/out-of-repo-link-dir-trailing | git cat-file --batch-check --follow-symlinks >actual &&
->  	test_cmp expect actual
->  '
+On Sun, Nov 30, 2025 at 09:05:07PM -0800, Junio C Hamano wrote:
+> * ps/object-read-stream (2025-11-23) 20 commits
+>  - streaming: drop redundant type and size pointers
+>  - streaming: move into object database subsystem
+>  - streaming: refactor interface to be object-database-centric
+>  - streaming: move logic to read packed objects streams into backend
+>  - streaming: move logic to read loose objects streams into backend
+>  - streaming: make the `odb_read_stream` definition public
+>  - streaming: get rid of `the_repository`
+>  - streaming: rely on object sources to create object stream
+>  - packfile: introduce function to read object info from a store
+>  - streaming: move zlib stream into backends
+>  - streaming: create structure for filtered object streams
+>  - streaming: create structure for packed object streams
+>  - streaming: create structure for loose object streams
+>  - streaming: create structure for in-core object streams
+>  - streaming: allocate stream inside the backend-specific logic
+>  - streaming: explicitly pass packfile info when streaming a packed object
+>  - streaming: propagate final object type via the stream
+>  - streaming: drop the `open()` callback function
+>  - streaming: rename `git_istream` into `odb_read_stream`
+>  - Merge branch 'ps/object-source-loose' into ps/object-read-stream
+> 
+>  The "git_istream" abstraction has been revamped to make it easier
+>  to interface with pluggable object database design.
+> 
+>  Will merge to 'next'?
+>  source: <20251123-b4-pks-odb-read-stream-v3-0-1a129182822b@pks.im>
 
-Okay.
+I think this topic should be ready for next. The latest version didn't
+receive any feedback, but all it did is to improve some commit messages
+and rename a function based on previous reviews.
 
->  test_expect_success 'git cat-file --batch-check --follow-symlinks works for symlinks with internal ..' '
-> -	echo HEAD: | git cat-file --batch-check >expect &&
-> -	echo HEAD:up-down | git cat-file --batch-check --follow-symlinks >actual &&
-> -	test_cmp expect actual &&
-> -	echo HEAD:up-down-trailing | git cat-file --batch-check --follow-symlinks >actual &&
-> -	test_cmp expect actual &&
-> +	if test_have_prereq !MINGW
-> +	then
-> +		# The `up-down` and `up-down-trailing` symlinks are normalized
-> +		# in MSYS in `winsymlinks` mode and are therefore in a
-> +		# different shape than Git expects them.
-> +		echo HEAD: | git cat-file --batch-check >expect &&
-> +		echo HEAD:up-down | git cat-file --batch-check --follow-symlinks >actual &&
-> +		test_cmp expect actual &&
-> +		echo HEAD:up-down-trailing | git cat-file --batch-check --follow-symlinks >actual &&
-> +		test_cmp expect actual
-> +	fi &&
->  	echo HEAD:up-down-file | git cat-file --batch-check --follow-symlinks >actual &&
->  	test_cmp found actual &&
->  	echo symlink 7 >expect &&
+> * ps/history (2025-10-27) 12 commits
+>  - builtin/history: implement "split" subcommand
+>  - cache-tree: allow writing in-memory index as tree
+>  - add-patch: add support for in-memory index patching
+>  - add-patch: remove dependency on "add-interactive" subsystem
+>  - add-patch: split out `struct interactive_options`
+>  - add-patch: split out header from "add-interactive.h"
+>  - builtin/history: implement "reword" subcommand
+>  - builtin: add new "history" command
+>  - replay: stop using `the_repository`
+>  - replay: extract logic to pick commits
+>  - wt-status: provide function to expose status for trees
+>  - Merge branch 'sa/replay-atomic-ref-updates' into ps/history
+>  (this branch is used by pw/replay-drop-empty.)
+> 
+>  "git history" history rewriting UI.
+> 
+>  Expecting a reroll.
+>  cf. <aRxDYkeAi8T-HH8M@pks.im>
+>  source: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
 
-I'm not quite sure I follow, so my questions may be dumb. Does this mean
-that git-cat-file(1) fails to follow the symlink in this case, and
-consequently we cannot execute it at all? If so, is this a bug that
-we'll eventually have to fix?
+I'll address feedback on this topic later this week.
 
-If this is something we can fix it could be sensible to have an `else`
-branch that documents the failure case. In that case, we would then
-notice that the test fails once we fix the underlying issue.
+Thanks!
 
 Patrick
