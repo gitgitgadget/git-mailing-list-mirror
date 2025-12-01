@@ -1,249 +1,238 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC9A2ED84A
-	for <git@vger.kernel.org>; Mon,  1 Dec 2025 13:18:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7CC311583
+	for <git@vger.kernel.org>; Mon,  1 Dec 2025 13:19:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764595105; cv=none; b=l7ClEWO4hUbawrAYjygZ3nZd7nIzrCE8qFw75q9vvZCL8K4FLv0ax9xfi9yLt/i4HqtL5HmRsTw2t5/JMv1qMAaUCazz7FoHmOgoYA8NBIXDmUWIO55Xl+GKT6DV0cUxgt8L4tMl1WB+b4bVWu1fb9Cz1xrY7Txn3w5Ua8pYqYY=
+	t=1764595178; cv=none; b=J2Vw8hHUWVb8NA4HAxbiM7a3+7Hi0rS4UZmgJdrUlzlNWtCWwVS8QKrFZ5F3fcgBl1qRZXsxp0IHlrAAZELT6CjKyRUucTbYRXuXPnWStTUni0A1fQYh6404p/6XVZglesxbbauHYeq0N1r+CpEqwFz81t1yM8yrqfnNRn5raaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764595105; c=relaxed/simple;
-	bh=i2RdvDoeQDvLAygV7sCd3O1brDl4jVzpT36LYTqapAs=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=TqapYyQa4xxsNmJP1igevEXa1KwUKHg4CRMpP9KuQT+bV8sWeuf2+Y7AY3F9Hsja8kOmY45zqwhn/9ALZ2I4yHGFxMA14r9X237SGKct8UdtFOnWef7jKEX8vA09BhOmwymCjsScArNF2fc/1XrQ53UTlzELbBfqkeOzkVJWKUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=SUzVczLQ; arc=none smtp.client-ip=212.227.15.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1764595178; c=relaxed/simple;
+	bh=3/iDtx68rmRueYFh1mDoiFc8cw2tDQorQxCj2hDNwyY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SZcSYtCkJchgLM2a2wj60NWYTiuRkM5YOYZkbqo+dzt6qbZ1ErAYaUWQxeKQo106sNE4+Tt3rZyLoY0m7Aht38gLY8T4L3W7HDnzJ1cFBxMuhoXptrWAkep7KHAoMMzNITQoHqTo9PaxJtsLh7prUxFvrhbdGJPKrL4RY255DyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KiVpbqr7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yG0/EWGD; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="SUzVczLQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1764595099; x=1765199899;
-	i=johannes.schindelin@gmx.de;
-	bh=ub5+NyqBktd4ViCHWYAGJXLHXzUczkEO0UkObOjA7S4=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=SUzVczLQqurRpJmjQJ2x0NGqrFKf8kdoZHLMFYhBkieOFmHOJ/o9UghrZ2fzObmx
-	 2dR8657/axlFKPlF5zDwWUyUzf9lRaHmzZZNyAbbif3O5E1QOFUeFbWPnvOS4SyfP
-	 ge6HCoMd/vpPvRt6fqOS9BogkAs0N6E2Zb1HVZ7cuxt92zhs2Kc01+8sJ0YFZq2JA
-	 7Mr4wvOicLhdsTGcIvI1aXYUqRQjGHDaiOznrf1+aY4GEKZWOJzVRSRfbP8GpVZO6
-	 XECAEc/8V4znYHTmln9d6q1bFw2uuxUClrUd0qa3Uhb+yyPvIl7shTfeIg0tOd9oC
-	 BFLMcsYZw04OEj72EA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.213.165]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MqJm5-1vv0tk2XY3-00pDod; Mon, 01
- Dec 2025 14:18:19 +0100
-Date: Mon, 1 Dec 2025 14:18:17 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KiVpbqr7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yG0/EWGD"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 00745EC0557;
+	Mon,  1 Dec 2025 08:19:35 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 01 Dec 2025 08:19:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1764595174; x=1764681574; bh=JJRxrroM3B
+	X60UWCNTopxivyj7/hfPjpoZ/zH7CwG2E=; b=KiVpbqr7Tj+8Kp8M9lF5NAwuqK
+	Lbng4EWzgzKSWP70aIFINs1CznFtgrz3OGFgYoNZE0wGVuPr/iy751tOW58j9HCB
+	h3OZGqwMvvKVLK8k8PiVHLaFJLS8etdUPv3aRR+SOrw0pZ6ckB+Ze1qHsM4cS500
+	oTu1cYcQVAP3E3r6I/U3UfyBxbF3uWpnRn+Mg8nB0p3mk70Bq7aQRiD7j+yY9hTC
+	m+rDaXTVGianNcrpL/N+hUsbYhkubiaaRus9dVyUW+Aifw6D8UvmR3CajoDqx0R+
+	yhQWvecy/6bV6vRH+r3RN0VUhTu8Yz3A43EXbdceyX30ed9Epfqf+KTJYhsA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1764595174; x=1764681574; bh=JJRxrroM3BX60UWCNTopxivyj7/hfPjpoZ/
+	zH7CwG2E=; b=yG0/EWGDejFQ5I1SA9plNMmyaSSNlaarIaMJaPWBuuCLCgB0MRw
+	85Dulf95/CmsKyMDZZ58AjBJnqNENpZ1lgDx/pHjEKQeM46C2uhKY7BxniH+YIdR
+	RVb6djZrpURx4XMoCnK2WgVE+1IUbYBq5gg6ZM2Jg7KEP21xowyOcvLyfPo7qF1S
+	MJf2Ta/IHgV1IbkoUOk8NTtmfrFujZ2iTXWiPWaW9jichUXQTvUPpwK7C0yI53XQ
+	u52eQOBFwF4CdQZqM8BRVP9XOlWkxlm/fpYMhfHFwN/9XnhEN1KGOuTURu2p48Ep
+	PN/oWl/rwsvrAVggNVcpKElMFvDTig7pb4g==
+X-ME-Sender: <xms:5pUtaWdwCLaBpjxPr40VN3_NpIWcHk_joRMQ4vm6sCETZ4J89O1vmg>
+    <xme:5pUtaTduBjzOZhQgqVaGtDwYy__VEDI9alqDUJGyMe1ZbZOFsviS3-YXr1zSCNsut
+    Pmai-ghxqNt0fdBy6Xoc4Ih91kadWDfpi4lunQm9wfiqw03ymyVEg>
+X-ME-Received: <xmr:5pUtaQ_bQIsebzZQSVCfBvXDChYk-bCFn3fcv_jan-BRMxQvtXPCYwjaJvHHagR1vx4u9FattjvltHUCUPbrnwKSUltbD4Y96z0zH9PX>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvheejkeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epgfeuffdtieejgeeutdetvdduhfeigffgfffhhfdtvdejteefuedtgfeihfetffehnecu
+    ffhomhgrihhnpedtgigsshgrtddrohhnvgenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeef
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:5pUtafk6ou34KJepvcFijstVrO7HsVsWlHML_UmZ1Ioyj8xiaLeF-A>
+    <xmx:5pUtaS9TLEVSgFn5bfIypZHQAioIdceK-KIY3MDxCJfvLwbvDVNoGA>
+    <xmx:5pUtadmuwiVXi1qUqe2yzyUV2vG2j96RpQAO2JJCMHrw7I9EzOCgsA>
+    <xmx:5pUtaf0oNr7ob2WvKC8-bYxqalukoGk-7e0jtk-M3NcGq2lo1ia4eg>
+    <xmx:5pUtaYEtJ80U7lzV-zRelyFXxlrA0-TBsQZ6jFm3P7kqzUn7FaTBfzUZ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 1 Dec 2025 08:19:33 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3ca88fe5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 1 Dec 2025 13:19:32 +0000 (UTC)
+Date: Mon, 1 Dec 2025 14:19:29 +0100
+From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org
-Subject: Re: [PATCH 03/10] mingw: special-case `open(symlink, O_CREAT |
- O_EXCL)`
-In-Reply-To: <xmqqecpgc8wd.fsf@gitster.g>
-Message-ID: <4cf1c638-3b0b-a36a-ce35-41d55e9fae12@gmx.de>
-References: <pull.2009.git.1764440906.gitgitgadget@gmail.com> <96e279f50ebc26084095e781cf58db233fa05b74.1764440906.git.gitgitgadget@gmail.com> <xmqqecpgc8wd.fsf@gitster.g>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/2] refs: allow setting the reference directory
+Message-ID: <aS2V4TKeS4V_oxAb@pks.im>
+References: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
+ <xmqq34651ie5.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:hH93A9lG2ZfRKOF3FZAxwGG+Fc9tcmOk63g7JU7od3pNsto5S0u
- HVfvWjHBStIEKjSGmUljKBVs6KNJhdXABTEY4U3oaQe0ztBqKJBawZaGM3Q2jaZ/WNfZsf5
- 7/8GLmVKm2p/4Fs3m+saO0VBb6u+qsn/S/5Z5Cn3xSs+X7nswmjGjG1Qg6KoS+IIGGYBFI7
- QcT/KOE+0StVPh1H8C5SA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:yDpuEXSZsYw=;k5k989803DiTO28pm9EeFIDDKkk
- +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
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq34651ie5.fsf@gitster.g>
 
-Hi Junio,
+On Sat, Nov 22, 2025 at 08:29:22PM -0800, Junio C Hamano wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+> 
+> > While Git allows users to select different reference backends, unlike
+> > with objects, there is no flexibility in selecting the reference
+> > directory. Currently, the reference format is obtained from the config
+> > of the repository and the reference directory is set to the $GIT_DIR.
+> 
+> I actually am not sure if I like the proposed environment variable.
+> 
+> The proposal is based on an assumption that any reference backend
+> should be able to move their backing store anywhere, and they should
+> be able to express the location of their backing store as a single
+> string <path>.  For a new backend, "where is your backing store" may
+> not even be a question that does not make much sense (as "somewhere
+> in the cloud that you do not even have to know" is certainly
+> possible), and even for a new backend design that does allow such a
+> question to have a meaningful answer, this "you have to be able to
+> use a random place specified by this environment variable as your
+> backing storage" is an additional requirement that its implementors
+> may not need to satisfy in order to please their user base.
+> 
+> For reftable and files backends, these assumptions may be true, but
+> then it is not too cumbersome if these stay to be backend specific,
+> as there are only two backends.
 
-On Sat, 29 Nov 2025, Junio C Hamano wrote:
+I think it's a reasonable assumption to make that the path _can_ be
+represented as a single string. For now, we don't really require any
+configuration for the backend in the first place. So all you need to do
+is to say:
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->=20
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+    [extension]
+    refStorage = reftable
+
+This implicitly identifies the location of the backend, too, as we
+derive it from the commondir/gitdir. As you say that's sufficient for
+the "files" and "reftable" backends, but it may be insufficient for
+other backends.
+
+Suppose that we for example have a Postgres database to store data. It's
+clearly not sufficient to specify "extension.refStorage=postgres", as
+that wouldn't give you enough information to also know how to connect to
+the database.
+
+It's a problem I have been thinking about quite a lot in the context of
+pluggable object databases, as well. Ultimately, the solution I arrived
+at is to extend the extension format itself. For pluggable ODBs this
+would look like this:
+
+    [extension]
+    objectStorage = postgres://127.0.0.1:5432?database=myrepo
+
+This is similar to a normal URI with a schema: everything before the
+"://" identifies the format that is to be used, and everything after is
+then passed as-is to the backend itself. I think this should give us
+enough flexibility for any future formats and it is easy enough to
+configure. The added benefit is that this can also work in contexts like
+the GIT_OBJECT_DIRECTORY and GIT_ALTERNATE_OBJECT_DIRECTORIES
+environment variables, even though their naming is off now.
+
+For the reference storage I think we should be moving into a similar
+direction. Sure, for the current formats that we know its sufficient to
+only specify their directory. But I think we should treat the directory
+as an opaque string and then let the reference backend handle it, same
+as with the proposed format for object databases:
+
+    # A schema-only variable will be treated as if we specified the
+    # common directory.
+    [extension]
+    refStorage = reftable
+
+    # It's also possible to explicitly specify a different location for
+    # the backend.
+    [extension]
+    refStorage = reftable:///foo/bar
+
+    # And same as above, we can also specify non-locations.
+    [extension]
+    refStorage = postgres://127.0.0.1:5432?database=myrepo
+
+As said, the important thing here is that the reference backends get the
+string after the schema as opaque blobs that they can self-interpret.
+
+> So I dunno.  In addition, if this is designed to help migration
+> (which is the impression I am getting from the cover letter
+> description), don't you need a way to specify more than one (i.e.,
+> source to migrate from and destination to migrate to)?  With a
+> single GIT_REF_URI, it would not be obvious what it refers to,
+> whether it is an additional place to write to, to read from, or
+> something completely unrelated.  For example ...
+
+I think we cannot easily retrofit handling of multiple refdbs into Git
+at this point in time anymore. The way to drive this would be that we
+have two processes:
+
+  - One `git refs list` process in the repository that uses the old
+    format.
+
+  - One `git update-ref --stdin` process in the repository that uses the
+    new format specified via GIT_REF_URI.
+
+This allows us to do an online migration of data into a separate ref
+store.
+
+> > This patch series adds a new ENV variable 'GIT_REF_URI' which takes the
+> > reference backend and path in a URI form:
 > >
-> > The `_wopen()` function would gladly follow a symbolic link to a
-> > non-existent file and create it when given above-mentioned flags.
+> >     <reference_backend>://<path>
 > >
-> > Git expects the `open()` call to fail, though. So let's add yet anothe=
-r
-> > work-around to pretend that Windows behaves like Linux.
->=20
-> "like Linux" -> "as POSIX expects"?
->=20
-> cf. https://pubs.opengroup.org/onlinepubs/007904875/functions/open.html#=
-:~:text=3DIf%20O_CREAT%20and%20O_EXCL%20are,set%2C%20the%20result%20is%20u=
-ndefined.
-
-You are both correct and incorrect. The behavior I described indeed is not
-limited to Linux, insofar you are correct. The behavior I wanted to
-imitate is Linux', though, not POSIX.
-
-I noticed that there was a recent shift, mostly by one particular
-contributor on this list, who pushes for POSIX compliance to be the gold
-standard Git lives by. However, that does not match my understanding of
-what the Git project agreed upon, as documented in
-https://gitlab.com/git-scm/git/-/blob/v2.52.0/Documentation/CodingGuidelin=
-es?ref_type=3Dtags#L4-6
-(and there was no attempt to change this).
-
-As such, I still deem it more appropriate to keep the commit message as I
-wrote it, as it matches my intent.
-
-You're of course free to edit the commit message to your liking, as you
-have done in the past. It just would not match my intent anymore.
-
-Ciao,
-Johannes
-
-> > This is required to let t4115.8(--reject removes .rej symlink if it
-> > exists) pass on Windows when enabling the MSYS2 runtime's symbolic lin=
-k
-> > support.
+> > For e.g. 'reftable:///foo' or 'files://$GIT_DIR/ref_migration.0xBsa0'.
 > >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  compat/mingw.c | 14 ++++++++++++++
-> >  1 file changed, 14 insertions(+)
+> > One use case for this is migration between different backends. On the
+> > server side, migrating from the files backend to the newly introduced
+> > reftable backend can be achieved by running 'git refs migrate'. However,
+> > for large repositories with millions of references, this migration can
+> > take from seconds to minutes.
 > >
-> > diff --git a/compat/mingw.c b/compat/mingw.c
-> > index 736a07a028..9fbf12a3d3 100644
-> > --- a/compat/mingw.c
-> > +++ b/compat/mingw.c
-> > @@ -627,6 +627,7 @@ int mingw_open (const char *filename, int oflags, =
-...)
-> >  	int fd, create =3D (oflags & (O_CREAT | O_EXCL)) =3D=3D (O_CREAT | O=
-_EXCL);
-> >  	wchar_t wfilename[MAX_PATH];
-> >  	open_fn_t open_fn;
-> > +	WIN32_FILE_ATTRIBUTE_DATA fdata;
-> > =20
-> >  	DECLARE_PROC_ADDR(ntdll.dll, NTSTATUS, NTAPI, RtlGetLastNtStatus, vo=
-id);
-> > =20
-> > @@ -651,6 +652,19 @@ int mingw_open (const char *filename, int oflags,=
- ...)
-> >  	else if (xutftowcs_path(wfilename, filename) < 0)
-> >  		return -1;
-> > =20
-> > +	/*
-> > +	 * When `symlink` exists and is a symbolic link pointing to a
-> > +	 * non-existing file, `_wopen(symlink, O_CREAT | O_EXCL)` would
-> > +	 * create that file. Not what we want: Linux would say `EEXIST`
-> > +	 * in that instance, which is therefore what Git expects.
-> > +	 */
->=20
-> "Linux" -> "open() on POSIX-compliant systems".
->=20
-> IOW, _wopen() does not have to behave like POSIX open() and the compat/
-> layer is how the emulation goes.
->=20
-> FWIW, this is not limited to symbolic links but anything that exists
-> at the path specified should cause the same EEXIST failure.  The
-> O_CREAT|O_EXCL combination asks the system to atomically create the
-> thing anew (or fail).
->=20
->     O_EXCL
->         If O_CREAT and O_EXCL are set, open() shall fail if the file
->         exists. The check for the existence of the file and the creation=
- of
->         the file if it does not exist shall be atomic with respect to ot=
-her
->         threads executing open() naming the same filename in the same
->         directory with O_EXCL and O_CREAT set. If O_EXCL and O_CREAT are
->         set, and path names a symbolic link, open() shall fail and set e=
-rrno
->         to [EEXIST], regardless of the contents of the symbolic link. If
->         O_EXCL is set and O_CREAT is not set, the result is undefined.
->=20
-> > +	if (create &&
-> > +	    GetFileAttributesExW(wfilename, GetFileExInfoStandard, &fdata) &=
-&
-> > +	    (fdata.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT)) {
-> > +		errno =3D EEXIST;
-> > +		return -1;
-> > +	}
-> > +
-> >  	fd =3D open_fn(wfilename, oflags, mode);
-> > =20
-> >  	/*
->=20
+> > We could make the migration non-blocking by running the migration in the
+> > background and capturing and replaying updates to both backends. This
+> > would require Git to support writing references to different reference
+> > backends and paths.
+> 
+> ... I am reading that the above is saying that the system will write
+> to whatever reference backend specified in the extension.refStorage,
+> plus also where GIT_REF_URI points at, but if that is the way how
+> the mechanism works, the variable should be named more specific to
+> what it does, no?  It is not just a random "REF URI"; it is an
+> additional ref backend that the updates are dumped to.  Maybe there
+> would be a different use case where you may want to read from two
+> reference backends, and you'd need to specify the secondary one with
+> an environment variable, but if the system behaves one specific way
+> for GIT_REF_URI (say, all updates are also copied to this additional
+> ref backend at the specified ref backing store), a different
+> environment variable name needs to be chosen to serve such a
+> different use case, no?
+
+Truth be told, I'm not realy a huge fan of the name, either. But as
+said, I don't think we can easily "overlay" multiple refdbs, as it would
+lead to various different questions due to our hierarchical layout of
+references.
+
+That being said, I personally would prefer `GIT_REFERENCE_BACKEND` as
+variable name that accepts exactly the same kind of strings as the
+`extension.refStorage` values I have proposed above.
+
+Thanks!
+
+Patrick
