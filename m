@@ -1,80 +1,72 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C13B301464
-	for <git@vger.kernel.org>; Mon,  1 Dec 2025 09:54:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622D7302747
+	for <git@vger.kernel.org>; Mon,  1 Dec 2025 10:01:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764582875; cv=none; b=Ajagw+lF1N8Rh/6cqk+l5pnUhjNdRviefPrGMzbZBh4ZAIF3Wo69pkaNbZyU8n0VS2E8AW9FZWxdvN4QfhQMeoJQ/2VKZTYf0vR1DrL2rzGah56wBw4XdJd16Pe9/ZtmPome9uHH+iaQ3kEEDQUzAkpj6zzmQDZD+zvlACMORSQ=
+	t=1764583299; cv=none; b=f29aQQQ1RIML9uhHyTJJ71NlRe0JBdfrbCfhy92+9tptYU+5pujs/T4VOSk5XDa9CwrwmzUcj7WCPI2V9qlyweIKwqCn8xjdQlfHnDLVC+G+bLkHxGOTGiZfbTToVhp3fdm/zNjlFfQfutamS1HHVpx3nMEzaFAP//6nyxmk+Hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764582875; c=relaxed/simple;
-	bh=Uz0VGvxv8vaYteVEt3PVd1O6ZMkFbL8l3Xe6aKmrvL4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cFv2QCHfRRFfsZRX3MuIfrXdDdF4S3rhTlqfjITJrG1I9uzYbgezFwZ3QEC/IysEsYJh7Sb1hrOaNWxb97RZPfDsuieLNuKjxrpB6ezOYMQhgNuTmoUZxPitYktGm96AAYzS3hl1F+cDZ80puQ0CrFoGpPuJ+E6rRNsYjWPK9cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GLJCgkem; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ojwy4jKB; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1764583299; c=relaxed/simple;
+	bh=OLsp5+rPVIDS7EuwmpvfJZsAdoWVPMyats4UYVzLFOU=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rIRQojaG+x9/ngNMVh+OF9h6Q9JMW/TojmvcI1S8+bBLxTMORBMmLQ1UOBLNz6dRj95gKssOwrJsC/j6+TXMtOBiDSuUcHSABXZmG8XT6hXcV+FCnLHelvffr9pR6sX3ZUfVsfiJlmcxi97FTUlglxhQp+Sx/S5IJYv8yCFuxFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XrrlOYZ2; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GLJCgkem";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ojwy4jKB"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3788A1400135;
-	Mon,  1 Dec 2025 04:54:31 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 01 Dec 2025 04:54:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1764582871; x=1764669271; bh=u+woNwFAe6
-	RPSB1yrHKFfDNalHTOsYGaHCNErz2fBbQ=; b=GLJCgkem7OCxNkocCaVi80Bw0m
-	w7kUBTVsqzCfYaMbBU6HqJPcVoHVx8w7zWCodVlSnWW2K3HgR+S5Q1vR1OyTrGpF
-	xlWJKenVfNvwm+99na2S1Dd/LQkdPbaPaMWXxq3wd4DmGZ91tlGBKUvgKcKHcSyd
-	GrAcLmAsqJwpmmWFqPtfoKF/BcIQ5rKsFp7/GayHYgqysG6EwbCaJOM6xHpVHbYs
-	n/ciKo+t3zUhGupGAo+IaxZyAnh4SUgPNmsCYL4IwZZJMdWYPrbJClDit6hmDLHA
-	VAfy3dQLQwgLFwD0lxMViR/f0HWGzc5rb2XQo2bAtXXOfyQ3KszlXBvRx7lA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1764582871; x=1764669271; bh=u+woNwFAe6RPSB1yrHKFfDNalHTOsYGaHCN
-	Erz2fBbQ=; b=Ojwy4jKB/2I5dMrJhniuRTj0cebZDqV9aCEI/MLh1Qq8Lkp81au
-	Z9MI7N9RA7wwx/v3RpFgu57JRJKPM2sC2r57Y0x9YRKAa5c8Adg7OU1NbdT1Bn7V
-	HiUgP4u2qYpdUBfn22sZMceq71+/YdxxDE6sg7+LlpuwU3dCBRwcPcuKSazy+NQD
-	x7yfj1LxRTNdPi6vqkbELMSuzKS+M08o34FS24zPT97IrSFbL8KsWZ5bh/GTPiQp
-	NI953Dd2zVn/5LVon3NOY4shX10oDiZgybKOWgT9TrOcG4rqYnriLoxJv6Imsw8e
-	v3fgWCQvH0CbixHkSzfxMjOxqEm457PlA3Q==
-X-ME-Sender: <xms:1mUtaTcVGxiX-PSX6bMpVwaN7q3SmRkXRg28JRJRtKo1UKF7KezVgQ>
-    <xme:1mUtafMR37Ewzz3PNJQmUIjXZwSAEmfGpD4i5zrfNNPBh9bBpIH2Q7p1LVVWQdYIs
-    Z_MYp9hxmJ7q19axtMiYWMKm5IC7R0x7I2juuhq9DLk7brFC13VLg>
-X-ME-Received: <xmr:1mUtaaLsZ6BC__FetJhzYxH1IYvUGNIKv-AwQK5r1LfoCavc58t2aVYON22Ey8pb9wzlnTUPpKNrQbNjCyy3aJ5i27nRFPJeLxpvk6a0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvheejgedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
-    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:12UtaQGWC3SX9-ECyrf8Z-jv-Jyy3Xijwh_eiqrfZBidXpIaj_BGLw>
-    <xmx:12UtaSRCZuJRPSFUxHoXRmLFXGO_6QpozMRJo_p6J_M7DqTzNYQ0Mw>
-    <xmx:12UtacFsvhMjPj_RohZVDqN8qQh8NRSQP1JDDuk_UZ2x04Ku8PX9SA>
-    <xmx:12Utae9mSvnUGwN-mZcbicp1oj1pTj7N9EsnjXQ5OnfHgnzkmaEcWw>
-    <xmx:12Utae0KjvPHWdMYtap2Ex8kPs5JCHJy0f11Wv9yBEVZZds166DiASbj>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Dec 2025 04:54:30 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 607f2b80 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 1 Dec 2025 09:54:29 +0000 (UTC)
-Date: Mon, 1 Dec 2025 10:54:25 +0100
-From: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XrrlOYZ2"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-47118259fd8so36722175e9.3
+        for <git@vger.kernel.org>; Mon, 01 Dec 2025 02:01:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764583296; x=1765188096; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=E7syEy6V1mvFqof80rUDNBAh38CzIYAWRJbZ6RSnn+8=;
+        b=XrrlOYZ23DfVytAGzEG/XB7a3uS+dCq/P5LOUYsVJiTu3oIFQ5kX0C0uCEq7151/j9
+         Bb5mOWg8n9/bZz49eLQbS+XfyDmOJ7e7rcHfbsN5VsfnO00UAg22UrlS/k/rYTnJkE7l
+         ac0fsSV+4FetsdjpWG3jaIkEKu3YPNaktqlQr9EM7VOOTbyNc5S38B5c53nJd2m7x3Kh
+         2c6XGx2QFZusiYegLPIJdX6mbUP/mLnsfM0Udy5iF9wVlAFM8W4482lRKarZ2bi4K7Yl
+         hulY05l8Xu6yh1kVCrmhKB/DJTnBeYA9RQyNWLfvUpBptlNIaSHmowg8JdEiqlK18j7x
+         it4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764583296; x=1765188096;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=E7syEy6V1mvFqof80rUDNBAh38CzIYAWRJbZ6RSnn+8=;
+        b=Zi2EH59tQ16v9uJE993CYbpdNYGRP+wlADm8y9WEInKTfh+DrcXLK1Ycfkf2WgDjKl
+         MEoM6tDzKf5KAOSVy05nkRbsDEYshSScV9OmfwPurzz0QZ83JhqSmxkpzhuPgvfVbxm0
+         Ehk6oidVyrre7uHY5GniJsSH1GvzC6jQZKnWMIH19uTyBB6FyRBZwmH6bYJOhRvc4YDF
+         vtzbyvUhXffL0L7knGYi6PkiGV1lkZSGaY7y9EuzWQTtpRo7k7/4014KAgtd5BTRQk2J
+         FXm08Skc+AjczNKnzm3qrWGUuijuKg4SXVlXhxDEnTwv3JPn5wEEhTDS+NzIMRx0L5h9
+         JOAg==
+X-Gm-Message-State: AOJu0YxEYaVKptBOfKiqRr9PD8CP+WHDyJQfBOBbtUYa02KXPvDC5nr3
+	jw5n5Iqp5jYAx3E3LZt4L8wRCpA0PBtPcMn3ZC/+Ei/N4UcZLIAbogoeai6+oDXW
+X-Gm-Gg: ASbGncv9IbaUIRgrFt/9GsHFw2tYHq7OQitbKMvMVAgvMXN/DxvBZ0N6zCUU4hpEDSu
+	axGLvqX21Iibo/rzhFCiFcVzIWFH3KHqEgQjRr+WB3ce4tXaijIbCxcaj/6xr3IEcdBQ8+Lkn9f
+	yjWpnZ0mpG6cDVyRfGEcqnD1fWhdJhy6fAODYwXE0PkZAYfxQdJXmEqRRIbEf2+kjW6bu9mN4pW
+	Rr7sGZrNa0hSfmuerhQXHRWiqSLt7dbCJCyDrx1tkrFgr5iN7nvLH7bTY/VNtrmh44UihOrC677
+	JAAVdQjBc/Wo+ZGi6VnHqCnpuItAsnPLrsIrWGgfTkVEwaGUayieOgEqnVGTn/hxoyYlig89wpi
+	JWgJDy1ud0tJgVL1D2uKn+5+k18JG7nBwWZVNGow6xa4bwnZJ84GVnZiwERfuMHNhcI8ZfL9Xph
+	mPQIHr17Ul5yNFYZJeffTzhjDrUMAOm4J7520uL8pAt65rA9wSUXrq2Uk=
+X-Google-Smtp-Source: AGHT+IGI1iT/TjwE/AjpvLNHRneUNAljopiy01gnTrBPQbOuvmlMBgtQ3wPC5HW/24eqbkP3L1Wrag==
+X-Received: by 2002:a05:6000:2307:b0:42b:3bc4:16dc with SMTP id ffacd0b85a97d-42e0f213b9emr25978166f8f.21.1764583295443;
+        Mon, 01 Dec 2025 02:01:35 -0800 (PST)
+Received: from localhost ([105.117.9.83])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42e1c5c3c8csm29303295f8f.2.2025.12.01.02.01.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Dec 2025 02:01:34 -0800 (PST)
+From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+X-Google-Original-From: Abraham Samuel Adekunle <AbrahamSamuelAdekunle@adekunles-macbook-air.local>
+Date: Mon, 1 Dec 2025 11:01:43 +0100
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2025, #10; Sun, 30)
-Message-ID: <aS1l0YuU9xOE7eog@pks.im>
-References: <xmqq5xaqbxmk.fsf@gitster.g>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH] add -p: show hunk selection state when selecting hunks
+Message-ID: <aS1nhwhZ6tZ3w9RT@Adekunles-MacBook-Air.local>
+References: <aSxQhqwzT34hIjV8@Adekunles-MacBook-Air.local>
+ <xmqqqztfbcbr.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,64 +75,84 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq5xaqbxmk.fsf@gitster.g>
+In-Reply-To: <xmqqqztfbcbr.fsf@gitster.g>
 
-On Sun, Nov 30, 2025 at 09:05:07PM -0800, Junio C Hamano wrote:
-> * ps/object-read-stream (2025-11-23) 20 commits
->  - streaming: drop redundant type and size pointers
->  - streaming: move into object database subsystem
->  - streaming: refactor interface to be object-database-centric
->  - streaming: move logic to read packed objects streams into backend
->  - streaming: move logic to read loose objects streams into backend
->  - streaming: make the `odb_read_stream` definition public
->  - streaming: get rid of `the_repository`
->  - streaming: rely on object sources to create object stream
->  - packfile: introduce function to read object info from a store
->  - streaming: move zlib stream into backends
->  - streaming: create structure for filtered object streams
->  - streaming: create structure for packed object streams
->  - streaming: create structure for loose object streams
->  - streaming: create structure for in-core object streams
->  - streaming: allocate stream inside the backend-specific logic
->  - streaming: explicitly pass packfile info when streaming a packed object
->  - streaming: propagate final object type via the stream
->  - streaming: drop the `open()` callback function
->  - streaming: rename `git_istream` into `odb_read_stream`
->  - Merge branch 'ps/object-source-loose' into ps/object-read-stream
+On Sun, Nov 30, 2025 at 10:32:56AM -0800, Junio C Hamano wrote:
+> Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
 > 
->  The "git_istream" abstraction has been revamped to make it easier
->  to interface with pluggable object database design.
+> > diff --git a/add-patch.c b/add-patch.c
+> > index 173a53241e..e70e390506 100644
+> > --- a/add-patch.c
+> > +++ b/add-patch.c
+> > @@ -45,7 +45,7 @@ static struct patch_mode patch_mode_add = {
+> >  		N_("Stage mode change [y,n,q,a,d%s,?]? "),
+> >  		N_("Stage deletion [y,n,q,a,d%s,?]? "),
+> >  		N_("Stage addition [y,n,q,a,d%s,?]? "),
+> > -		N_("Stage this hunk [y,n,q,a,d%s,?]? ")
+> > +		N_("Stage this hunk [y,n,q,a,d%s,?] %s? ")
+> >  	},
 > 
->  Will merge to 'next'?
->  source: <20251123-b4-pks-odb-read-stream-v3-0-1a129182822b@pks.im>
-
-I think this topic should be ready for next. The latest version didn't
-receive any feedback, but all it did is to improve some commit messages
-and rename a function based on previous reviews.
-
-> * ps/history (2025-10-27) 12 commits
->  - builtin/history: implement "split" subcommand
->  - cache-tree: allow writing in-memory index as tree
->  - add-patch: add support for in-memory index patching
->  - add-patch: remove dependency on "add-interactive" subsystem
->  - add-patch: split out `struct interactive_options`
->  - add-patch: split out header from "add-interactive.h"
->  - builtin/history: implement "reword" subcommand
->  - builtin: add new "history" command
->  - replay: stop using `the_repository`
->  - replay: extract logic to pick commits
->  - wt-status: provide function to expose status for trees
->  - Merge branch 'sa/replay-atomic-ref-updates' into ps/history
->  (this branch is used by pw/replay-drop-empty.)
+> Three comments:
 > 
->  "git history" history rewriting UI.
+>  * These sets of prompts exist for each front-end that uses the
+>    interactive patch machinery, and we are looking at the set used
+>    by "git add -p".  But the "I came back here with K, or I do not
+>    remember which between k and K I came back here with, and I
+>    cannot easily tell if the hunk I am looking at is already
+>    selected" issue is shared with other users like "git reset -p".
+
+Hello Junio,
+Thank you for your review.
+
+Okay, are you suggesting I apply the tweak in all prompt_mode arrays
+used by other front-ends. I can see all the others modes (patch_mode_*)
+shown in the file.
+
 > 
->  Expecting a reroll.
->  cf. <aRxDYkeAi8T-HH8M@pks.im>
->  source: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
+>  * "chmod +x Makefile && echo >>Makefile && git add -p" would ask if
+>    you want to stage the mode change of the path and content change
+>    for the path separately.  You may skip, and later come back with
+>    K to this question.  The same "hmph, have I selected to use
+>    this?" issue exists, no?
 
-I'll address feedback on this topic later this week.
+Yes true, the issue does exist.
+I will fix the change for the others
+> 
+>  * The existing "[choices]? " was designed to be at the very end of
+>    the question, so that the answer given by the user will come
+>    immediately after the offered choices.  Adding an overly long
+>    "selected" or "deselected" to make it "[choices] selected?" does
+>    not give us a pleasant end-user experience.
 
-Thanks!
+Okay.
 
-Patrick
+> 
+> Also, after you decided on one hunk when you have two hunks, typing
+> 'j' or 'k' would tell you "No other undecided hunk".  The phrase
+> used here, "undecided", refers to the choice between USE or SKIP.
+> To convey the intent clearly, "Select"/"Deselect" feels a rather
+> indirect way (i.e. "selected for use" vs "selected to skip") to say
+> what is happening.
+> 
+> Ideally, if we can convey
+> 
+>     Stage this mode change (you previously decided to use it) [y,n,q,a,d%s,?]?
+>     Stage this mode change (you previously decided to skip it) [y,n,q,a,d%s,?]?
+>     Stage this deletion (you previously decided to use it) [y,n,q,a,d%sm,?]?
+>     ...
+> 
+> without wasting too many extra display width, that would be great,
+
+Okay this makes sense. But since the display width is something to watch out for,
+would something like below siffice?
+
+	Stage this mode change (previous decision: stage) [y,n,q,a,d%s,?]?
+	Stage this mode change (previous decision: skip) [y,n,q,a,d%s,?]?
+	Stage this deletion (previous decision: stage) [y,n,q,a,d%s,?]?
+
+> but this patch is not quite there, I am afraid to say.
+
+Thank you Junio, I will work towards getting it there.
+[...]
+
+Abraham
