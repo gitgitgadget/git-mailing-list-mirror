@@ -1,72 +1,84 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622D7302747
-	for <git@vger.kernel.org>; Mon,  1 Dec 2025 10:01:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B903C849C
+	for <git@vger.kernel.org>; Mon,  1 Dec 2025 10:32:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764583299; cv=none; b=f29aQQQ1RIML9uhHyTJJ71NlRe0JBdfrbCfhy92+9tptYU+5pujs/T4VOSk5XDa9CwrwmzUcj7WCPI2V9qlyweIKwqCn8xjdQlfHnDLVC+G+bLkHxGOTGiZfbTToVhp3fdm/zNjlFfQfutamS1HHVpx3nMEzaFAP//6nyxmk+Hs=
+	t=1764585171; cv=none; b=uLAjJCEj17IbUT95whgcblk8d7oaWUYNqPxeIV19OGBWE0Teb5pSnSv2zEnuIyS0Knqcd0h6q+y6kdIei0G5D1RQDhuqgjquZ4IOXz6hdfqfyG2jAjzLwYdlym7bVDTNPrFvKXOyEbKinNmG2BgORhhvHTUKGVvw23BzV0jm2xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764583299; c=relaxed/simple;
-	bh=OLsp5+rPVIDS7EuwmpvfJZsAdoWVPMyats4UYVzLFOU=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rIRQojaG+x9/ngNMVh+OF9h6Q9JMW/TojmvcI1S8+bBLxTMORBMmLQ1UOBLNz6dRj95gKssOwrJsC/j6+TXMtOBiDSuUcHSABXZmG8XT6hXcV+FCnLHelvffr9pR6sX3ZUfVsfiJlmcxi97FTUlglxhQp+Sx/S5IJYv8yCFuxFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XrrlOYZ2; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764585171; c=relaxed/simple;
+	bh=+EyPuR4F9csGfs/KMIPe789DMu6WZnXF7KVvLKH7Wq0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RWjCITMmkJqj/BcsevqWjnSU/7Obn6ReVPwPnYCEyPkPAIoipRPsFfDJTQ3GHLt+AlmEnCuLmLDLc4v1W9mdFhoi5KYEaJgKQA41B4VkTDRKjqB0hlQ7px3/xPO6wsxCbsGTwWYyWq1TdZhMdHUXF9qJvily5pog0bgi+IH+tNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=U+tUeVZm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GpkDqdeO; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XrrlOYZ2"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-47118259fd8so36722175e9.3
-        for <git@vger.kernel.org>; Mon, 01 Dec 2025 02:01:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764583296; x=1765188096; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=E7syEy6V1mvFqof80rUDNBAh38CzIYAWRJbZ6RSnn+8=;
-        b=XrrlOYZ23DfVytAGzEG/XB7a3uS+dCq/P5LOUYsVJiTu3oIFQ5kX0C0uCEq7151/j9
-         Bb5mOWg8n9/bZz49eLQbS+XfyDmOJ7e7rcHfbsN5VsfnO00UAg22UrlS/k/rYTnJkE7l
-         ac0fsSV+4FetsdjpWG3jaIkEKu3YPNaktqlQr9EM7VOOTbyNc5S38B5c53nJd2m7x3Kh
-         2c6XGx2QFZusiYegLPIJdX6mbUP/mLnsfM0Udy5iF9wVlAFM8W4482lRKarZ2bi4K7Yl
-         hulY05l8Xu6yh1kVCrmhKB/DJTnBeYA9RQyNWLfvUpBptlNIaSHmowg8JdEiqlK18j7x
-         it4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764583296; x=1765188096;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=E7syEy6V1mvFqof80rUDNBAh38CzIYAWRJbZ6RSnn+8=;
-        b=Zi2EH59tQ16v9uJE993CYbpdNYGRP+wlADm8y9WEInKTfh+DrcXLK1Ycfkf2WgDjKl
-         MEoM6tDzKf5KAOSVy05nkRbsDEYshSScV9OmfwPurzz0QZ83JhqSmxkpzhuPgvfVbxm0
-         Ehk6oidVyrre7uHY5GniJsSH1GvzC6jQZKnWMIH19uTyBB6FyRBZwmH6bYJOhRvc4YDF
-         vtzbyvUhXffL0L7knGYi6PkiGV1lkZSGaY7y9EuzWQTtpRo7k7/4014KAgtd5BTRQk2J
-         FXm08Skc+AjczNKnzm3qrWGUuijuKg4SXVlXhxDEnTwv3JPn5wEEhTDS+NzIMRx0L5h9
-         JOAg==
-X-Gm-Message-State: AOJu0YxEYaVKptBOfKiqRr9PD8CP+WHDyJQfBOBbtUYa02KXPvDC5nr3
-	jw5n5Iqp5jYAx3E3LZt4L8wRCpA0PBtPcMn3ZC/+Ei/N4UcZLIAbogoeai6+oDXW
-X-Gm-Gg: ASbGncv9IbaUIRgrFt/9GsHFw2tYHq7OQitbKMvMVAgvMXN/DxvBZ0N6zCUU4hpEDSu
-	axGLvqX21Iibo/rzhFCiFcVzIWFH3KHqEgQjRr+WB3ce4tXaijIbCxcaj/6xr3IEcdBQ8+Lkn9f
-	yjWpnZ0mpG6cDVyRfGEcqnD1fWhdJhy6fAODYwXE0PkZAYfxQdJXmEqRRIbEf2+kjW6bu9mN4pW
-	Rr7sGZrNa0hSfmuerhQXHRWiqSLt7dbCJCyDrx1tkrFgr5iN7nvLH7bTY/VNtrmh44UihOrC677
-	JAAVdQjBc/Wo+ZGi6VnHqCnpuItAsnPLrsIrWGgfTkVEwaGUayieOgEqnVGTn/hxoyYlig89wpi
-	JWgJDy1ud0tJgVL1D2uKn+5+k18JG7nBwWZVNGow6xa4bwnZJ84GVnZiwERfuMHNhcI8ZfL9Xph
-	mPQIHr17Ul5yNFYZJeffTzhjDrUMAOm4J7520uL8pAt65rA9wSUXrq2Uk=
-X-Google-Smtp-Source: AGHT+IGI1iT/TjwE/AjpvLNHRneUNAljopiy01gnTrBPQbOuvmlMBgtQ3wPC5HW/24eqbkP3L1Wrag==
-X-Received: by 2002:a05:6000:2307:b0:42b:3bc4:16dc with SMTP id ffacd0b85a97d-42e0f213b9emr25978166f8f.21.1764583295443;
-        Mon, 01 Dec 2025 02:01:35 -0800 (PST)
-Received: from localhost ([105.117.9.83])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42e1c5c3c8csm29303295f8f.2.2025.12.01.02.01.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Dec 2025 02:01:34 -0800 (PST)
-From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-X-Google-Original-From: Abraham Samuel Adekunle <AbrahamSamuelAdekunle@adekunles-macbook-air.local>
-Date: Mon, 1 Dec 2025 11:01:43 +0100
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH] add -p: show hunk selection state when selecting hunks
-Message-ID: <aS1nhwhZ6tZ3w9RT@Adekunles-MacBook-Air.local>
-References: <aSxQhqwzT34hIjV8@Adekunles-MacBook-Air.local>
- <xmqqqztfbcbr.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U+tUeVZm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GpkDqdeO"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A6DE3140001D;
+	Mon,  1 Dec 2025 05:32:47 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Mon, 01 Dec 2025 05:32:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1764585167; x=1764671567; bh=ESBgBoe+YR
+	sP4Uycz2NEaNYAx6LdffY0nmXwrAFR3ik=; b=U+tUeVZmuR6I2gxTreGsEvYLL/
+	tKHfiwuA1EJrGTvVXkW9T2YHcsxiBZqZ8uzrmNhKf59F85FDQpgl2NPBG6v2Tkad
+	THozQhK/w7hUsm9wFE3UOV5bLKc4gBl24g2BI+0cL7jMh9Z3Jqt4NY0vvQwJJMwg
+	CjWVTbzHR8VSJhP94sk/7zeGO8Q2cdcuC4X+WwH1tK4rjvh1CB51v3UmSaiRsDMB
+	IocEhdNrxmBodJWuSpKXLkxR43zGbF0IWaldX5CNOu5LHlpDtOg1CMJfjqwcPCX9
+	rYg6JFIWAcy3UkjZ31hG06McB9dhh2nn+nk7Adpa9rItUi2mS83Y3LRq1VmQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1764585167; x=1764671567; bh=ESBgBoe+YRsP4Uycz2NEaNYAx6LdffY0nmX
+	wrAFR3ik=; b=GpkDqdeOOT+UO/gc4ppAB89D/JPYE4nJDZK3XnJY7ygO4Lg7BM3
+	l7j1KYQUWRNYqoBPBI3t+P8NJyqkX2mz1Ff0OtDkTwYNRyr40DvTFiy3viTcvSbg
+	LBoZId8KJkf6l8qvzOfhs7qJ+VGBX9V+Y0Wk58kCuTadVwNpK+Ms2w0nblYNItiP
+	shpPw8g6WAg7yo+6BbJU1cMZYC7Hpm7xEdUDRjttW1NJRwmoYcuk0eQumqY5EAAk
+	jeEVgQOVGYVInr/4I1NC9sPE48qrPy+Nmx7Dll2ygeQ4KIQXLUDqUwToqCNhBYg0
+	mkrT9TkDOOqzSFGqyoCEPbq+dzdwolHPqSQ==
+X-ME-Sender: <xms:z24taRcwoQU352tfgoi4KxiE8SyjXTprXKStt949kVkV7QjQIvIgCw>
+    <xme:z24taWob3C9swXZzdP3ujxb_927j8zKCWSdHmyP1bSvp46nqvKvAzXPPcOP-nnfO3
+    oAPejUU92QM8QFeex_Ibf57NR5Qy99pDUL24jepjE4vMJuniBHLIw>
+X-ME-Received: <xmr:z24taX7wjofTan37UTp47uurjXHUhThNT26zSvK9jjYkdwp5yQLDbIbjCVOPuze_xmTAMmsJxAaGaIDLbcNcQxdvV-vmZrpPhijTr1G3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvheejgeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhonhesih
+    hothgtlhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:z24taUod4AQHSPspmxV5ZcpTOsogxyHLAhWisKPcby-YT3eJqRyMlg>
+    <xmx:z24taRhwVgSgPyZMzNeunYEBNAcXTxLkuuKzzKZJBymOYrGCwLcgQQ>
+    <xmx:z24taWLLNLLWuz0N3uXZBbvRlLi5sOuhMDNwN7WJPdYPz-PblZMtvw>
+    <xmx:z24taZCuXzf7EYXFQtEoq0re76eFhxUmMQGv10sleYyV6mK-U02d_w>
+    <xmx:z24taSQySMZQuY2tNk4fdbEumKQsWakeKz7pvrpV6Jqd6s_YaI8eEHUY>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 1 Dec 2025 05:32:46 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 509555aa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 1 Dec 2025 10:32:44 +0000 (UTC)
+Date: Mon, 1 Dec 2025 11:32:37 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] last-modified: handle and document NUL termination
+Message-ID: <aS1uxbvNE6rAQ1dl@pks.im>
+References: <20251126-toon-last-modified-zzzz-v1-0-608350df0caa@iotcl.com>
+ <20251126-toon-last-modified-zzzz-v1-1-608350df0caa@iotcl.com>
+ <xmqq3460pw8y.fsf@gitster.g>
+ <87tsye0z61.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,84 +87,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqqztfbcbr.fsf@gitster.g>
+In-Reply-To: <87tsye0z61.fsf@iotcl.com>
 
-On Sun, Nov 30, 2025 at 10:32:56AM -0800, Junio C Hamano wrote:
-> Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
+On Fri, Nov 28, 2025 at 07:50:30PM +0100, Toon Claes wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> > diff --git a/add-patch.c b/add-patch.c
-> > index 173a53241e..e70e390506 100644
-> > --- a/add-patch.c
-> > +++ b/add-patch.c
-> > @@ -45,7 +45,7 @@ static struct patch_mode patch_mode_add = {
-> >  		N_("Stage mode change [y,n,q,a,d%s,?]? "),
-> >  		N_("Stage deletion [y,n,q,a,d%s,?]? "),
-> >  		N_("Stage addition [y,n,q,a,d%s,?]? "),
-> > -		N_("Stage this hunk [y,n,q,a,d%s,?]? ")
-> > +		N_("Stage this hunk [y,n,q,a,d%s,?] %s? ")
-> >  	},
+> > Toon Claes <toon@iotcl.com> writes:
+> >
+> >> When option `-z` is provided to git-last-modified(1), each line is
+> >> separated with a NUL instead of a newline. Document this properly and
+> >> handle parsing of the option in the builtin itself.
+> >
+> > I think documenting does make sense, but it is not clear from the
+> > description why it is better to handle the option in the builtin
+> > itself, instead of letting the setup_revisions() take care of it.
 > 
-> Three comments:
-> 
->  * These sets of prompts exist for each front-end that uses the
->    interactive patch machinery, and we are looking at the set used
->    by "git add -p".  But the "I came back here with K, or I do not
->    remember which between k and K I came back here with, and I
->    cannot easily tell if the hunk I am looking at is already
->    selected" issue is shared with other users like "git reset -p".
+> I know it's silly, but I wanted to feed these options to
+> parse_options(). Doing this would make them show up in `git
+> last-modified -h`.
 
-Hello Junio,
-Thank you for your review.
+I think that reasoning makes sense, but it's certainly non-obvious from
+the commit message. So if you expand the commit message with an
+explanation the change becomes much more sensible.
 
-Okay, are you suggesting I apply the tweak in all prompt_mode arrays
-used by other front-ends. I can see all the others modes (patch_mode_*)
-shown in the file.
-
-> 
->  * "chmod +x Makefile && echo >>Makefile && git add -p" would ask if
->    you want to stage the mode change of the path and content change
->    for the path separately.  You may skip, and later come back with
->    K to this question.  The same "hmph, have I selected to use
->    this?" issue exists, no?
-
-Yes true, the issue does exist.
-I will fix the change for the others
-> 
->  * The existing "[choices]? " was designed to be at the very end of
->    the question, so that the answer given by the user will come
->    immediately after the offered choices.  Adding an overly long
->    "selected" or "deselected" to make it "[choices] selected?" does
->    not give us a pleasant end-user experience.
-
-Okay.
-
-> 
-> Also, after you decided on one hunk when you have two hunks, typing
-> 'j' or 'k' would tell you "No other undecided hunk".  The phrase
-> used here, "undecided", refers to the choice between USE or SKIP.
-> To convey the intent clearly, "Select"/"Deselect" feels a rather
-> indirect way (i.e. "selected for use" vs "selected to skip") to say
-> what is happening.
-> 
-> Ideally, if we can convey
-> 
->     Stage this mode change (you previously decided to use it) [y,n,q,a,d%s,?]?
->     Stage this mode change (you previously decided to skip it) [y,n,q,a,d%s,?]?
->     Stage this deletion (you previously decided to use it) [y,n,q,a,d%sm,?]?
->     ...
-> 
-> without wasting too many extra display width, that would be great,
-
-Okay this makes sense. But since the display width is something to watch out for,
-would something like below siffice?
-
-	Stage this mode change (previous decision: stage) [y,n,q,a,d%s,?]?
-	Stage this mode change (previous decision: skip) [y,n,q,a,d%s,?]?
-	Stage this deletion (previous decision: stage) [y,n,q,a,d%s,?]?
-
-> but this patch is not quite there, I am afraid to say.
-
-Thank you Junio, I will work towards getting it there.
-[...]
-
-Abraham
+Patrick
