@@ -1,100 +1,133 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A061302161
-	for <git@vger.kernel.org>; Mon,  1 Dec 2025 10:32:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28352FE591
+	for <git@vger.kernel.org>; Mon,  1 Dec 2025 10:53:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764585174; cv=none; b=KHDlzlKmZ/EtVc0dydoFkWQRtP2EIZYpDrAOI360kuaHFGNPCaA2/CZfszVip3YVOAkO+6iSQ2N+sGUFvLdFOMmpaEMlH5J2SAR1+/uNXAPycRf6cSlrBpETchkVQJYrVZBlxaOd1L0DYlXOdqPPXZJllZ0UMoN0DMt/uHsG/1k=
+	t=1764586426; cv=none; b=l/Pekc+0ZKKx7ECjqMJ+uzRc6MfugC35+lrsyE4Hnunz9dQ2flQsyV0FgcMcaUegjbdLAWXcv5jZm9arBSbKemBwCjf5MRR1JtIGuVU5MZSr1UqPLm4Lv9oDh1MsjQodmpevnOmxYM3XNWwJvaNWExkTPJ0MczIi4H3v/o1XRVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764585174; c=relaxed/simple;
-	bh=pqQOR867UsKrvHoNozDVS0+2tC6ev5Jqr6Wy6De443s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iQvrdxBuxwk1euGoiXBOiaUBgt40Of3MT3PScFIl4oVV4zW9/bpBqZL2VHh4vEJ8mW+5PNE+3MnHpLgqJGkursWI/AETn65AmcOn+fyk24gzfbBY43Qni3EiFPjEYZvvzhFd1grpMY5I5B1fqDctmZsGqCBGdOcjKRIjFnEp7ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vzeYkpG8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TeIYLR93; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1764586426; c=relaxed/simple;
+	bh=//ke/IT6pro+m4coH8QJFFDAajYUNLoW8bQXX1otcr0=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=X2XAxsRuOPJX9hFX+Ed1saIGclDCyWdbNxvjKTkrnFQ4T6og2zH98ZwvMMr/bUFs4yzEftguQRVNcL8KDEt+vcJltV3Mvw/8aa5iQD0I9s/RHqvCM5Td34wgXdW8WSRsvzvCfglcwvxbH0v5vsQHqa0S+Fdz7U/5dNrnkAIw+Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CgZBGTcv; arc=none smtp.client-ip=209.85.217.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vzeYkpG8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TeIYLR93"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ACED91400013;
-	Mon,  1 Dec 2025 05:32:51 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 01 Dec 2025 05:32:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1764585171; x=1764671571; bh=pqQOR867Us
-	KrvHoNozDVS0+2tC6ev5Jqr6Wy6De443s=; b=vzeYkpG8a7tQPqIgyIrWiIBMSL
-	GqdQXO/7RWMwl6HaMENHgmWxTlQ/pZgxhsCwhJChPntz8fxasV/KO2dfyB8grQnW
-	2I+mIFoDCtR12S5vCeeoD2fQ7t5I6DFR4Sx86JNibLLHXkb5H+M48aKKZ+98OqTj
-	8jDJiyQdM2iLZqkArZfXDGsJ04/effFgyjFnbPitW4vrrD07xbwS/VqFcdX7H9x+
-	HRJPdu8SFdsZ2/E9+XUb8yW2ew8yCjGMbfKe/byOtXOjC7k/LbyxFl6JRkYd7Gkf
-	zs998LOJAUZNXJvgV5sGYymclMlavlSQSxgBtauc/c4fSvZlTnt2WpsFpsXQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1764585171; x=1764671571; bh=pqQOR867UsKrvHoNozDVS0+2tC6ev5Jqr6W
-	y6De443s=; b=TeIYLR93DX0fSgKcR4FpDDoOP/snWDpIntgmf8HBD2PkoYMKKnd
-	zaY/roH8Zc0qMm1bLSHreYZ7aFXgQvnwcZ6FXGSPAZgXfOoaS2Mc2cBYhRcKLAkY
-	vU3iO3e6MylnGIEbpuYX6AY3KqaOp75+O12Bvi5eRtkQwEacIkrNTphy4upg+NkJ
-	AyG6R0AnYMJ+EUeHMkkoDYfStf/eklYOHdoYFjpjyAP6s9ahnmW+WXpAVe5u6F/5
-	MWAJLWt3h4Zs9bxfGhvO+JQF1pk0IcnNLgd7sV6WlDxXkY4swsZqRJAJ6wFZmnmN
-	e0iJL1xJMVV3wjLTSu3l6qX8K/GRLg9zfpw==
-X-ME-Sender: <xms:024taSwYYbaVC_BaPD9T7AZRVl3r3Gth2q5wqXN_6IKIOkAENH66mw>
-    <xme:024taURyMixadRdY2p6bm4RvRIZ9_asUec8nr1hChkAAJ0jAubneysKTDDd2a6kKP
-    hzQ52Zt2vciuHswOrpCtiTdjjTnJcMIBH2xFQWKN4X36yqPiL4>
-X-ME-Received: <xmr:024taR-1HKeX9nPKWybrj7voV7HRkXG0r7KV3V6MbgTpnY38l16r6IXlHdzY5B9_xDIfy1x4iYWIvhT6TKgJ8j2v2UxrpQPXvr_QFw2r>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvheejgeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:024taTpBYfR8ADL0I5-Rm0zaRxQzBR0EaJ3hW5PBdxsoYDGw_769tg>
-    <xmx:024taWlfQcVWAD0CFhqqwvZ_ZJIiHgo_b_kVkEwRhmZJyqupEkitkA>
-    <xmx:024taSLh8Vg6JNBw_nr8PdS6TOoLq03nZRqBTV6c1UjJbWTUkOESkw>
-    <xmx:024taTwaLhJWwxlnuDmPWV01IE0ULqBrQ0hdNveL0PcjMZehu_I-YA>
-    <xmx:024taWKs4Tsh4jPGPuB6gKwlHq5J4hRp0A42U9U928ZYVkNCGPeRAiv5>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Dec 2025 05:32:50 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4888f57b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 1 Dec 2025 10:32:50 +0000 (UTC)
-Date: Mon, 1 Dec 2025 11:32:47 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/3] last-modified: better document how depth in handled
-Message-ID: <aS1uz6mc0WW9kjzN@pks.im>
-References: <20251126-toon-last-modified-zzzz-v1-0-608350df0caa@iotcl.com>
- <20251126-toon-last-modified-zzzz-v1-3-608350df0caa@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CgZBGTcv"
+Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-5dbd8bb36fcso3495223137.1
+        for <git@vger.kernel.org>; Mon, 01 Dec 2025 02:53:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764586424; x=1765191224; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0KLxBC5RvuaJQ8/Qe2duZQYDJFhgfwDZ2eSzwZNmvTM=;
+        b=CgZBGTcvfbRcCEVyc/fSv9BaZdGVrlmUyoHW2ettCvdxrpUeeOIPOqVE4Y3QKddNgl
+         6hQjggU+AEqUpEReFqbB54ec1YOwvFOT+L2hVBfprke6EgLg4gCgeOv8XYbx2A64UL4d
+         KQA+M+R788jQM9YhKmAKSZouOH0dQXwrEVN8FT2eJ93+ziFU+OjAlJ0xDZ/2b64vZR6k
+         TVOTG7E5tUPed84WP8xiOC/snHP7Wvxp9GARebszvBvMKPErFgKE6+lLDOcWZuY2F2iQ
+         ldLaHvB0R0It9q3g5ioszUCLKwLJcvXjavWfBgcnvcG0ihmTgA8aSkJjCTzdfeTf5R2l
+         Xmyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764586424; x=1765191224;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0KLxBC5RvuaJQ8/Qe2duZQYDJFhgfwDZ2eSzwZNmvTM=;
+        b=xQWrGQpyW9K2UYxg0H5do4Ty5PCx+JZiKYr3ppXupp8DXAb1AIXNNoy2DArWw7ZBi5
+         Xh+nUBzbmpum03gFVmtcnq6W1QQ9pNhagQd2IxdVksCVrPbjeb3lu4aGbJo6qKDlt6d5
+         AYSxEO0JtGyrxDmuqal9khypTWP0xOOK8qXjgVTnSCUfs5Xjxjdi+tDiPu2TsEAbLxAt
+         4Ym4gEKyrFeFXylFAOqB6u9rZfFgxG76KcFCJql9445qP2lzRmgHF7lW27ff6Llu567V
+         wtC7Jx3lrSU5RZI1InoL6/t4gRFrMTlIjBLcW8/cKog71qvZlwF9A6ExyRDCiMocIDAp
+         eQbw==
+X-Forwarded-Encrypted: i=1; AJvYcCUjZxANfPvN5KhLwlP7vLxrLCG8Yw/gWgScDRXseftAqubL3OmQgxtnXbF8f0F6PScAZu4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwZvNa6IWMCJHe14TcFAAuFfJ9+L6osR0wK5rRhD03psO6pp545
+	EsURuQ828IK5GPA3sTLdMoreqjQz7DrXNTDAjjeo5b0xVRHk6tClG31CMjWgFeVH3MaPfo4QFCT
+	NIWIDUxipbk8gsSnzvzXwIf/28hg9A6Q=
+X-Gm-Gg: ASbGncvTqVYj5vAKlv68b06SBXBfDE2EdF7hBM7WtaJrNrf8FI86B067aCM/3wECAkU
+	yxtb/F26rFPdsMR2cCwv+NxP9MLgXll2wDorx9/0Tbv8Axx1Up51dhd1XLCOvc11LNhMzR4AAGy
+	k3/h4BbR7ZXb4iqtZEUfdh00+C4DDglC1Y8JlYiobR4D47OAJ6b5ZZ4NfUlWJT27uuBXOmMtWnS
+	0ZQnGNAbS3QsX0BLXK8QwRXgHgkq55x85L1vPLGTkPj55dGLfpxh39QfzX59fRK6ZtsbQ==
+X-Google-Smtp-Source: AGHT+IFadjzekGLL2Fl+5wJ9wLuqUI1feSIFvwGaBZK55MU+Kl9sobF9EqIAch4TUMkVkzUh0PJ6k9OSlYf6qMtCx68=
+X-Received: by 2002:a05:6102:5812:b0:5d5:f6ae:3914 with SMTP id
+ ada2fe7eead31-5e1dd01627dmr16263292137.22.1764586423872; Mon, 01 Dec 2025
+ 02:53:43 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 1 Dec 2025 04:53:42 -0600
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 1 Dec 2025 04:53:42 -0600
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqq5xaqbxmk.fsf@gitster.g>
+References: <xmqq5xaqbxmk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251126-toon-last-modified-zzzz-v1-3-608350df0caa@iotcl.com>
+Date: Mon, 1 Dec 2025 04:53:42 -0600
+X-Gm-Features: AWmQ_bm13KrS0ZkABZ7FyEhbFHZ2RVftuLggMRAArp1xihoawTrhepId6I1ORWY
+Message-ID: <CAOLa=ZTC3gWcFVENTCa2WQsxaq4X2a_D+0qQUBdg31uf0zjoTg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2025, #10; Sun, 30)
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000f88dd80644e1ca89"
 
-On Wed, Nov 26, 2025 at 07:09:45AM +0100, Toon Claes wrote:
-> By default git-last-modified(1) only shows information about paths at
-> the root level. This can be confusing. Clarify the command's behavior in
-> the documentation.
+--000000000000f88dd80644e1ca89
+Content-Type: text/plain; charset="UTF-8"
 
-Hm, that's confusing indeed. Is it possible for git-last-modified(1) to
-do the "right thing" automatically? That is, given "sub/file", show when
-that specific file has been last modified? Or is there a good
-(non-technical) reason it behaves the way it does?
+Junio C Hamano <gitster@pobox.com> writes:
 
-Patrick
+> * kn/ref-location (2025-11-26) 2 commits
+>  - refs: add GIT_REF_URI to specify reference backend and directory
+>  - refs: support obtaining ref_store for given dir
+>
+>  A mechanism to specify what reference backend to use and store
+>  references in which directory is introduced, which would likely to
+>  be useful during ref migration.
+>
+>  Comments?
+>  source: <20251126-kn-alternate-ref-dir-v2-0-8b9f6f18f635@gmail.com>
+>
+
+I'll send in a new version for this today.
+
+> * kn/fix-fetch-backfill-tag-with-batched-ref-updates (2025-11-21) 3 commits
+>  - fetch: fix failed batched updates skipping operations
+>  - fetch: fix non-conflicting tags not being committed
+>  - fetch: extract out reference committing logic
+>
+>  "git fetch" that involves fetching tags, when a tag being fetched
+>  needs to overwrite existing one, failed to fetch other tags, which
+>  has been corrected.
+>
+>  Will merge to 'next'?
+>  source: <20251121-fix-tags-not-fetching-v8-0-23b53a8a8334@gmail.com>
+>
+>
+
+This should be ready for merge, it has been reviewed over multiple
+versions.
+
+Thanks!
+
+--000000000000f88dd80644e1ca89
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 4fc6e53438dd1a7_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rdGM3UVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK3d6Qy85a1l3SjJKNElrTGFjYTNibWtaNGhhY2JKOApwZjA5aUtmWkQ4
+Kzc5VVloa2Y2SjJ4K1preWdwbHhYWE96MDI1bnlzSVJ5ZEU1aklXVjB4K20zVzBzaWtObnNRCmRQ
+LzcvcWpHYU1VU05DYU1uaWlkSk9lUkNLTlRQTCtVbEpZUFVHd2NMWXlFYzA4UE1lMHBnQkIrdTFy
+M3NQNEMKZFhZK0xXMW8raFdJUlQveEpJY0RRNm51S3pCRTNoQmFrSSt3cDhKK3A5VitiODRKdlpa
+SEhoSXd1Tzd4alY3SgpDNFI2anFqZkxkRWJINlVrQzBpTXo5TTJiVDkvQTY3aXNxQlI3ZmR3QWQx
+Zk12N1QrQlZVZ3BxVWk5NFlrdXpGCjdFWlFzRzQxbWJuV3hmczhacGZBRzAzVVdWdFV3M29WZzhI
+WHVjc3F0MGhkWTgxZXBmMmlJSmV3L01NUjhKSm0KamdsNk5qNWtwUlBRRXYwZ3V4dzUzMXVkeW5j
+YlJ5b0VvYjhJUWh4VnhSdm1mQmRMODE0K3lrbzBEVUltRkFWVQoxOHIzNkp1YWx3UzdzUnN4TEZW
+bXdaeitKTkxrSEJ0a1pjNWtYckhsTGJqSEJhWUppWGVJQ281ckxYN2dJRkVpCjVXVGhMbzBTSUZY
+NmJqY0N5T2hWZWVLd3VqWkFzeHg2bkhJOVJKcz0KPWt5VDkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f88dd80644e1ca89--
