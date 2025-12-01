@@ -1,48 +1,48 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDAA30F542
-	for <git@vger.kernel.org>; Mon,  1 Dec 2025 13:20:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E7030BB94
+	for <git@vger.kernel.org>; Mon,  1 Dec 2025 13:25:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764595235; cv=none; b=a0JoT0yQfMQj3AiKMeudoXuVN5SnBZhpFR20Ou2TArQG8gE2WnoyWBJIzKCKUursHqcUh2qT3Li3Vx4cTgRwYY7yoldEdx3uOthOhAce+elpyd4+uMrqAg4lQ/hrMSzflvJRfx6LGbJXy1dSklJRzUYJ0XunMevWT4POinWxfTA=
+	t=1764595549; cv=none; b=o3d9/2xKG81PTcS9uYIhhF0eOeTeZb3VCwuGbyW9na8hw5AzNoHbL65Kicl9ipY3eLH2BaBVTYNBN0FfGkiYfq8Oepen9jeh73W0HRfgWn8txb79bLOHt81mJTk366X8gR9CqIoHDEfdRVVaIvNUfSF6yoP5GAwUviTyJWZYV5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764595235; c=relaxed/simple;
-	bh=EozTcl8vpmPCG2kEbDRVMC+Pp0ckslyu4xACYKCJFRQ=;
+	s=arc-20240116; t=1764595549; c=relaxed/simple;
+	bh=9L1DrQEocEu84onTg2Rpy6paZ8LOIIMTlMOQ3t4wt+8=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=NhiyjaK8BwuOQIjgvLcVONrOVcUvsrZ6J2BeuM35e2terD4j6HxrCj8ZBLnNOMqClYvd8A4k3uqWdkhBR50M32Z80HuurTbnjvHYDxy34DHhckodCCW/VSdEprwW5KCAOEipJRBjIWbXjwgy2Zk9bz+MdKHN8/NmIJLVtOqpcVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=L+ODg8jM; arc=none smtp.client-ip=212.227.15.18
+	 MIME-Version:Content-Type; b=gEnHKExwdrSsXXhYZqHgA5ehsmldp1ihGDePfaaXVUv+H9PQ4hz89eVmn/DqtAXUyVER1ExiWJ6HzpRqpnJ543mLm3jf7+YMtR+AXUxMRox3tgUxRP3W9am8R+n8/JuDo8aPp20VE3PgRapK8O3XFM69vDEXFMH6gqN8dDfbLPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=EssL2qCZ; arc=none smtp.client-ip=212.227.15.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="L+ODg8jM"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="EssL2qCZ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1764595230; x=1765200030;
+	s=s31663417; t=1764595541; x=1765200341;
 	i=johannes.schindelin@gmx.de;
-	bh=HgagytNzVjaanym+tZGit3IB8ZNkfnv/Iz8VReKMYrk=;
+	bh=CstGpg7zu2uXOXFR47jW9TzJwbpyiCTNPGickbNMLJg=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=L+ODg8jMrXSj7svHtIeIJeHHQG8/SunyYUCojXHhVMhf25R+X0hQ7W5PibMnuhfm
-	 lj1kXeJt7N8o9mKD5V8ywYoiOCZmwcb8/f6aAwFIvjS3gAlI7o/UTxhZHz4D+MB2o
-	 /NvgD0rY9ixASypPOQaoNNNfGF54p/uV/RCXPHV9e8GxpsGVNpgPYEUiDnhgTGhFn
-	 zBS0o4PFqyBhnlVLPDLbnMFS55PLm8tl3Y73JlyvINStPuUZell4MPqdUe4BuOqqL
-	 00MIaKM/yucA5+ZDC+JlYsSMnZy1VGHOgyDVBz1iTYL51pEtlxEIHIuy2+isCBw2S
-	 GnPr6rkDxXxfS80+pA==
+	b=EssL2qCZaneJz9+rwmwCscQHzZg3okXfclN+T2Th6f5WKFnzokZPB8u8o1jmwNSW
+	 fiyIzBS85Mw5fa/12Z3deR8qh0zlPBL8ikZmnD2YpQGzKyIQZO89Ck5rcJMa0S+kt
+	 b/ngnpETGEgskkt0yxQ+mF511dV7BqvYgRqOmXn1mNkDjUdBBZqsuRoe7NX30ZvKz
+	 SVL7yZOz7EzokXoigSe77WDEwPXezIvMKTsrN6P7DMh7V53KETIJWYfR3V9qHM0je
+	 CnzyyeaoIuS/1A9rUPgzfzzfosOfrfrFklbboIR5TE3ChoO9CyC0lXolGT1VepvBm
+	 RwZY8xyc+1ybLhoDgg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.213.165]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2wL0-1vMlVJ3Sua-001dWb; Mon, 01
- Dec 2025 14:20:29 +0100
-Date: Mon, 1 Dec 2025 14:20:28 +0100 (CET)
+Received: from [172.23.242.68] ([89.1.213.165]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbRk3-1vweho2D9t-00jF1K; Mon, 01
+ Dec 2025 14:25:41 +0100
+Date: Mon, 1 Dec 2025 14:25:40 +0100 (CET)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Junio C Hamano <gitster@pobox.com>
 cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
     git@vger.kernel.org
-Subject: Re: [PATCH 04/10] t0001: handle `diff --no-index` gracefully
-In-Reply-To: <xmqqms44cb7p.fsf@gitster.g>
-Message-ID: <07dd2e66-7cdc-7839-aaf7-274b116df51c@gmx.de>
-References: <pull.2009.git.1764440906.gitgitgadget@gmail.com> <3be9594e80c37b2b393f5883a173694ab6793813.1764440906.git.gitgitgadget@gmail.com> <xmqqms44cb7p.fsf@gitster.g>
+Subject: Re: [PATCH 05/10] t0301: another fix for Windows compatibility
+In-Reply-To: <xmqqikescar1.fsf@gitster.g>
+Message-ID: <e355d80a-a0e9-7795-06cd-1b8acfa6c7c8@gmx.de>
+References: <pull.2009.git.1764440906.gitgitgadget@gmail.com> <c59a5f24789cff55819caf92d828256f2291b3ff.1764440906.git.gitgitgadget@gmail.com> <xmqqikescar1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -50,84 +50,85 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:t0b1oNGDmBfng7mG/TXqkXByrUx2hZ7wYU6gmQAJNEJhB+MD9no
- EJ/c5MnJ0fHvmAwHJF3GtKqxxZ0A1I2N/6LWoIO0beSUWbRJ87lV0MRyOgoFUFSzBEoBYK4
- +uTU658v/s4tpMlYLiKe8U3nQTWHUVqKi9sZev/vp5sjM99jH96cLBoX+7BRa5+KwaAC/Y2
- 7HTq0SToMwgF6fQFBfijA==
+X-Provags-ID: V03:K1:1RjPar4ys0pS/x3B7R6GIaGS/277oF1S/HV/LFuAi1LaUGYvVsR
+ FPYOhnHfarAP7Js+pnC4vbt616sg/+XMez6ZvirNJqG8Hn6UQ751IrX7k+M4WP3K8ymtb/2
+ MkkNPIpPkaw4eK2Egf8FHJemUZUiXYJol3dd8GKR4jQ5QcqCB/1qen+SiXrMYVg1q+rcZbX
+ c/tmB74mT1ILIbembeFZg==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:NjE/PXAHSVE=;2iqrzFix9pmrju9ELtkbighTM1f
- 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
- uEAtdB1EMqSRDudFKA3g+/BbpLBd7xFlh4Qk/X
+UI-OutboundReport: notjunk:1;M01:P0:ktU+GVcSn70=;ZkwF063Tahlp/xvAjIR/Q9izK1c
+ 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
+ LjVPdnlc=
 Content-Transfer-Encoding: quoted-printable
 
 Hi Junio,
@@ -139,66 +140,69 @@ On Sat, 29 Nov 2025, Junio C Hamano wrote:
 >=20
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > The test case 're-init to move gitdir symlink' wants to compare the
-> > contents of `newdir/.git`, which is a symbolic link pointing to a file=
-.
-> > However, `git diff --no-index`, which is used by `test_cmp` on Windows=
-,
-> > does not resolve symlinks; It shows the symlink _target_ instead (with=
- a
-> > file mode of 120000). That is totally unexpected by the test case, whi=
-ch
-> > as a consequence fails, meaning that it's a bug in the test case itsel=
-f.
+> > Just like 0fdcfa2f9f5 (t0301: fixes for windows compatibility,
+> > 2021-09-14) explained, we should not call `mkdir -m<mode>` in the test
+> > suite because that would fail on Windows (because Windows has a much
+> > more powerful permission system that cannot be mapped into the simpler
+> > user/group/other read/write/execute model).
 >=20
-> It is dubious if it is a bug in this particular test case, or
-> test_cmp implementation that uses "git diff --no-index", though.
->=20
-> Either way, when test_cmp here does not do "diff", the test would
-> fail, so you are correct to notice that this piece of code needs to
-> be patched in some way.  I do not think not comparing is the right
-> solution, though.  Would there be a better option than completely
-> punting on the comparison?  Something silly like:
->=20
-> > +	case "$GIT_TEST_CMP" in
-> > +	# git diff --no-index does not resolve symlinks
-> > +	*--no-index*) cmp expected newdir/.git ;;
-> > +	*) test_cmp expected newdir/.git ;;
-> > +	esac &&
->=20
-> perhaps?
+> But in this case, we are emulating "mkdir -m 700" that is expressed
+> in a very simpler world view of ugo=3Drwx with a much more powerful
+> permission system, isn't it?  If something is more powerful, it
+> should be easy/possible to emulate a simpler system, I would naively
+> think.
 
-Sure. It's not like this adds much confidence, though, as the tested-for
-functionality isn't specific to Windows, so I'd expect this to fail on
-Linux, too, if it was broken, and running that comparison on Windows does
-not add much.
+It is probably outside the purview of this patch series to question why
+Cygwin's `mkdir -m` doesn't emulate Unix semantics let alone to fix it. So
+I'll bow out of that tangent.
 
-Since you spent time on this, I will change it, though.
+> In any case, a more productive than rethinking the "can we express
+> what mkdir -m <mode>, which is a construct in a simpler world, wants
+> to do in terms of a much more powerful permission system?" would be
+> to see if the test linter can be taught about this particular rule.
+
+Seeing that this issue had to be fixed twice within the course of over 4
+years, https://xkcd.com/1205/ applies.
 
 Ciao,
 Johannes
 
 >=20
+> It is easy to forget that there is a platform we care about whose
+> testing environment that emulates POSIX does not like "mkdir -m
+> 700", and it is a bit too much to burden developers to remember.
+>=20
+> > There was one forgotten instance of this which was hidden by a `SYMLIN=
+K`
+> > prerequisite. Currently, this prevents this test case from being
+> > executed on Windows, but with the upcoming support for symbolic links,
+> > it would become a problem.
+> >
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
-> >  t/t0001-init.sh | 5 ++++-
-> >  1 file changed, 4 insertions(+), 1 deletion(-)
+> >  t/t0301-credential-cache.sh | 3 ++-
+> >  1 file changed, 2 insertions(+), 1 deletion(-)
 > >
-> > diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-> > index 618da080dc..2f38e09b58 100755
-> > --- a/t/t0001-init.sh
-> > +++ b/t/t0001-init.sh
-> > @@ -425,7 +425,10 @@ test_expect_success SYMLINKS 're-init to move git=
-dir symlink' '
-> >  	git init --separate-git-dir ../realgitdir
-> >  	) &&
-> >  	echo "gitdir: $(pwd)/realgitdir" >expected &&
-> > -	test_cmp expected newdir/.git &&
-> > +	case "$GIT_TEST_CMP" in
-> > +	*--no-index*) ;; # git diff --no-index does not resolve symlinks
-> > +	*) test_cmp expected newdir/.git;;
-> > +	esac &&
-> >  	test_cmp expected newdir/here &&
-> >  	test_path_is_dir realgitdir/refs
-> >  '
+> > diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
+> > index dc30289f75..6f7cfd9e33 100755
+> > --- a/t/t0301-credential-cache.sh
+> > +++ b/t/t0301-credential-cache.sh
+> > @@ -123,7 +123,8 @@ test_expect_success SYMLINKS 'use user socket if u=
+ser directory is a symlink to
+> >  		rmdir \"\$HOME/dir/\" &&
+> >  		rm \"\$HOME/.git-credential-cache\"
+> >  	" &&
+> > -	mkdir -p -m 700 "$HOME/dir/" &&
+> > +	mkdir -p "$HOME/dir/" &&
+> > +	chmod 700 "$HOME/dir/" &&
+>=20
+> That "mkdir -p -m 700" is a no-no while "mkdir -p" followed by
+> "chmod 700" is OK is a bit puzzling, but I assume $HOME does exist
+> in the testing envioronment, so this new sequence should be
+> equivalent in the simpler permission system.  If it works fine on
+> Windows, that is great.
+>=20
+> >  	ln -s "$HOME/dir" "$HOME/.git-credential-cache" &&
+> >  	check approve cache <<-\EOF &&
+> >  	protocol=3Dhttps
 >=20
