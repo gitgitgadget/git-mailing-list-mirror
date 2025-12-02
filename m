@@ -1,83 +1,69 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CB5221FD0
-	for <git@vger.kernel.org>; Tue,  2 Dec 2025 08:18:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B258530EF88
+	for <git@vger.kernel.org>; Tue,  2 Dec 2025 09:40:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764663525; cv=none; b=F6PKqvD7nC5Bi3BpY0hefpxKyForQNmdIDOfeN24Tu4Ax/jz/Q/+c0i4aNg8nknpkxxm09pi+1ZLEecEFLjcvkP1unnCwk+33yd71G5sETh2O7MrsLH/W69YwX4e6+bpyLkAT1QRzyNAN+nYGJtZhqEYlbBy3AlNjehCZk/XBxs=
+	t=1764668422; cv=none; b=QsUzTxjZhNrsVMgcw5CqpCAt3r5Y1B17W+gupVMk4DjF64HDrSfy6XXyoqgQxKch2xZZpG03iVNnG0NGNpGQqKrZ174CgalEJ6C/6w3LgWy4YboR4l9z6waXpk0HLmD34BJ3Ivw1ujQADUT0tX09MHsmPOH5hO8hWKQ2C1Ptdgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764663525; c=relaxed/simple;
-	bh=KV4IUIB7hUsXyyF7y+yLXuHJP5Keg6YI2fRCi3bpq10=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AgiUTPKXoDfDkc74ffD41SQ3V6c3gqYONqbihyhf3L5dpATJJLewiYBaTOnjl4BoAn7W4xsrYBtf0rSJ568ne/kZcgGYiSEqmwoGgfFCAvtKY0VFLYXaPjvgumJUHj9A13Oj+uya0j9GtMmz30CsHqu6hte6cqp2NnVBBq6udrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VGB3NDyI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=twS7CMzE; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1764668422; c=relaxed/simple;
+	bh=ZW/5HZLaK81BBO4tjRDALEv0HnJVdx3KoRGLa96XeyM=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=YRsYz1EI+7I49hlB6WTkckMPSdFcQnaa64zDoyH9AdK3XAJy0cIrvgKCEnrgUTAqbxGOP633y8pXHFZLy2hgR95DVWWgXInwY9o9OkAbZWyPdD8CmVxyDZnROKk0dDvAIuB180HOwZiYVNuSAKXi8yticEtYfiPe9JZo8XVGQiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TQ+JK4Ef; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VGB3NDyI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="twS7CMzE"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A00D87A0199;
-	Tue,  2 Dec 2025 03:18:42 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 02 Dec 2025 03:18:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1764663522; x=1764749922; bh=nsr0qfn3LB
-	wmYbuVyglatgNTfJAK3WTy3VLwY9WQ+jM=; b=VGB3NDyIfupy+PIzH4eXk3SJkb
-	1OjHsprvUmqsE9aXTGjJQ3mfePtbIlDis51GQ8D+360YHXiZZCS4JoNF6kVJfH3W
-	mOoIkyQ2G26v1mFfF7/0jVFxgRC2JSjyrywAlCe2W5gIZvJdduy43DMUzJBN+NL1
-	QwlACHFS6FbJFyt6pyTNfcuoAzMszVVBfdZjab4GtK6xds7zwM+tB3AEqrGFvsgZ
-	Nq4nDPCh1c8N2HYQXnbiMrK+pMp8FUCBQ2jSD+XQX0AOZiklKfB1mcy9DvpuKlc5
-	fLdbVAnWKZuIBjaALFBCTzYXqyVRASKokrvPwBkw09Sslk3Ez/Z3wOwtIVow==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1764663522; x=1764749922; bh=nsr0qfn3LBwmYbuVyglatgNTfJAK3WTy3VL
-	wY9WQ+jM=; b=twS7CMzEDRn6nhh1TVATRj9JLQ/0kaKnTeXzvUqXUPEGek4cAQ6
-	s0XE6rD5lis5su9Mo5eiWHe2TX9c458B7DODNLVjuXnRlvyi/w14/aNX2BKlzhpl
-	bVSF84t2nvSH9+ukwD/ll9rupdlBehR7B/8hwh8UkK3RMjq/eYaTHmIv5VFs7Wui
-	pcaiqUR4Cg6yT8oWyAZ15/MgVyM2ZykvOT3y6d5ome8BhKrPRwnoiGIuMNDhiEzN
-	yHlArUpG7sa2sfupDQqa9naoMRLqvrtpkZr054FwlsPks4cm0+6hNSJ2EPnMDOhZ
-	dHnqu4DJLNyCumr+yQdt0PkKa4jQD2WfpsQ==
-X-ME-Sender: <xms:4qAuaeIQ9Z4haCccvCwpAO_oI4fmCaIv9dtMEILoStKkjCZERrb3eA>
-    <xme:4qAuadkzrRmuGvzda33ELZF9yAlpJcMsb_VwesTnsnfRdOFnr4r7ilC8PMlEmhQN_
-    uAb5dgPVz-VfB9f5tNvtlmdYfuOWxzx0WBVl3kKM-tmkvlTDCk>
-X-ME-Received: <xmr:4qAuacER3rnIuCokE-GK3OD-cI5eyQ-BRthtE0lpk0HbwHT_m2nLHsHphmoUONcqUqnQpflbAisCgn_NjKVvkYe36fDzLqP1yTCnrBP3_Nc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddviedttdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeeugedtgefhiefhkeeludekgefgveehjeehge
-    fhlefhveeivdduveeludekueelgfenucffohhmrghinheptghonhhfrdhinhenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
-    hmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehs
-    rghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:4qAuadF4N0wsNoq3CcZ7W7XRoPkXIFuS-lm1J6KKq0tGXqRbPyZ2Hw>
-    <xmx:4qAuaZOyN1NGLf1VDm_d8aZIhvAcQmM690zo53DP61eRirbX6zi4LQ>
-    <xmx:4qAuacGbPJ0BUj7sZZKQs8tg5R6a8XatX8Vcs9sAlfqMwZve4iqUqw>
-    <xmx:4qAuaQPBfMgFdXu3xNw9MRCmg0nNQPwrLJSuc5szNqmpooxMGrPrBA>
-    <xmx:4qAuaUwp4AHoKrJPQTTtZ2WCOuID8lxDdxVLTfBIArelEUNKEF0HJeld>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Dec 2025 03:18:41 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 24afd300 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 2 Dec 2025 08:18:39 +0000 (UTC)
-Date: Tue, 2 Dec 2025 09:18:25 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] Fix doc default hash algorithm in
- WITH_BREAKING_CHANGES mode
-Message-ID: <aS6g0Zjzd5OEd-mb@pks.im>
-References: <20251202014605.52110-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TQ+JK4Ef"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4775ae77516so51635075e9.1
+        for <git@vger.kernel.org>; Tue, 02 Dec 2025 01:40:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764668419; x=1765273219; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZW/5HZLaK81BBO4tjRDALEv0HnJVdx3KoRGLa96XeyM=;
+        b=TQ+JK4EfME3a+EZW/PF1ZPhARUrRTyOIY6ZPgmCrFA0wfHp6hviWUtn/YWIEm9Wrol
+         vtRAZDmkNfZ9Ml3Ab1Z2uaaoIob/6oZmGobYK8aBjvKAw3iUm7vID3GThaEAuSsAA0Fe
+         lb1+gw97VSly/AxOjA43YZ+eeHZvMiYvF14OJ7wf4yl8xYZcEH24Hos5E/U1KM8owINu
+         ULT10H3+7lMKgqe9NWJ0ZqD2qeV/tWqlv2uPmXfdqGHhjTZKPaLzmAdZ+w072Y2cfwm2
+         Yj8lJYusR9wbW/31Klnpxm6FGDobotn1YtvD7DwB1907NlbyLA9uiOuGGKuT0ulVAwy1
+         ZgRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764668419; x=1765273219;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZW/5HZLaK81BBO4tjRDALEv0HnJVdx3KoRGLa96XeyM=;
+        b=DwVc8VGBFUasRT15FqsbuS0Y0785JtB2L5yb2NXBE59zXjZC1DR/zWgP1N7keV4E/g
+         SnsEMaKltMYdMrngD+m+bGco2K1mISSb122VaREiJSP7yv1HXvX9oTUhj+TSXEHGBja+
+         43rPk9MrjsuZNpHKDXpX3BkdUIX6sznTpVlGUjeDGP3L3gq5TzD2AWooITNGvRCz8ZFx
+         ohhyAnbFxqDOLTmPrAFAmenzG1/IEjA2kcOxuvJ2eCDUH7dnEvUlIQJvxde83SSFsv86
+         n9rb3DZAmZ8x5zfQL+k+hM5Nd8+rr2MBvSygQhVREvPdLRXQwyqGggSbw1S+kSDVa3Ow
+         0erg==
+X-Gm-Message-State: AOJu0YzBdy5v+UC6Ch+OrcLI4hKxymWA2SYGmEcC9rjhj/n30bm+Nob7
+	rNY+z316bmiW2WzjjAisbDf06sN/TiOKNjjzlwN/pcDLsbe+dBU8rzzM
+X-Gm-Gg: ASbGncsKw4WmOXmDFfy84dhqSG3q9oU1/1zFCmUZo4faZ5dm9c3+g8Mj6PFyhWOxTUT
+	lo+mt0wtzR586XRYPs3aOsRkpiMSJON8EJgic/2wzhXEeK29lZAgffrtQuZNx+G70BN0N0UCOsL
+	noFZYks0jeSsnwihma29TJUZzTigbNKuEWxAi3Csm6WJXUdpO51l5aK7vLF7G2nkZfXvcxymK1f
+	d4fxstGukAk5d2y39yx5MHJZbmn0Y8Sgfl6Racbgi9PZ9TueefBRdoW6FL6CJFZKyEsbUe7j9KX
+	EDXgIgOAFyA+TcoKmOUGC0jyjxi2S5QULSz43ruvLxDvt1kRWPZ+HRJzkkQV/M8sPhAMltwqsWj
+	o/zsPn4wYO0gy0gWx+8IqtZuwJNfYWX+NqPIevf3CIEzISnPjSGYl8FRzkrWsOnTSyJ67kbcR2U
+	O/K6rAS/5fDn/GGac=
+X-Google-Smtp-Source: AGHT+IG3K1LvMvqA5UdyORQtI8o7bRNiwCKsR202GsHswCLkycaWgUiU+5JVicAYS5TD/1X1DEmNsA==
+X-Received: by 2002:a05:600c:a07:b0:477:a219:cdb7 with SMTP id 5b1f17b1804b1-477c10523aamr455516465e9.0.1764668418826;
+        Tue, 02 Dec 2025 01:40:18 -0800 (PST)
+Received: from ubuntu ([105.117.0.144])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47926f2c5e1sm14091175e9.2.2025.12.02.01.40.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Dec 2025 01:40:18 -0800 (PST)
+Date: Tue, 2 Dec 2025 09:40:15 +0000
+From: Bello Olamide <belkid98@gmail.com>
+To: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>,
+	Christain Couder <christian.couder@gmail.com>
+Subject: [Outreachy] Git Internship: Refactor in order to reduce Git's global
+ state
+Message-ID: <CAD=f0L_-b5d5qVdL0TASS5iA8rWQxianT4_2zmhMtwN8p_TYbw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,58 +72,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251202014605.52110-1-sandals@crustytoothpaste.net>
 
-On Tue, Dec 02, 2025 at 01:46:01AM +0000, brian m. carlson wrote:
-> When WITH_BREAKING_CHANGES is defined, the default hash algorithm is not
-> SHA-1, but SHA-256.  However, our documentation was never updated to
-> reflect this, and as a result, we end up misinforming users.
-> 
-> This series fixes four places where we indicate a default hash algorithm
-> in our documentation such that they conditionally say that either SHA-1
-> or SHA-256 is the default, based on the the with-breaking-changes
-> attribute.  This both improves accuracy now and also makes it less
-> likely that we'll forget to update these places when we hit Git 3.0.
+Hello Git Community,
 
-All of these look good to me. One alternative would be to introduce an
-attribute that we can then reference in the docs. The below patch shows
-how to do this with Asciidoc, but of course we'd also have to do this
-for Asciidoctor.
+I write to you with great joy, humility and gratitude to have been selected
+as an Outreachy intern for the December 2025 - March 2026 Internship program.
+Working on this renowned project gives me the privilege of working with,
+and being guided by, some of the best and most impactful engineers.
 
-I don't mind much which approach we use, but wanted to suggest this as
-an alternative.
+My appreciation goes to everyone who guided and assisted me during the
+contribution phase. I have learnt a lot already, but I am eager and keen
+to learn even more.
 
-Thanks!
+In the coming days, I will be working on the project
+"Refactor in order to reduce Git's global state" and I hope to make
+significant contributions both during and after the internship period.
 
-Patrick
+Thank you all once again.
 
-diff --git a/Documentation/asciidoc.conf.in b/Documentation/asciidoc.conf.in
-index ff9ea0a294..fe1c150ec6 100644
---- a/Documentation/asciidoc.conf.in
-+++ b/Documentation/asciidoc.conf.in
-@@ -24,6 +24,12 @@ litdd=&#45;&#45;
- manmanual=Git Manual
- mansource=Git @GIT_VERSION@
- revdate=@GIT_DATE@
-+ifndef::with-breaking-changes[]
-+default-hash-algo=sha1
-+endif::with-breaking-changes[]
-+ifdef::with-breaking-changes[]
-+default-hash-algo=sha256
-+endif::with-breaking-changes[]
- 
- ifdef::doctype-book[]
- [titles]
-diff --git a/Documentation/git-index-pack.adoc b/Documentation/git-index-pack.adoc
-index 18036953c0..730c3835e6 100644
---- a/Documentation/git-index-pack.adoc
-+++ b/Documentation/git-index-pack.adoc
-@@ -126,7 +126,7 @@ information on the possible values of `<msg-id>` and `<severity>`.
- --object-format=<hash-algorithm>::
- 	Specify the given object format (hash algorithm) for the pack.  The valid
- 	values are 'sha1' and (if enabled) 'sha256'.  The default is the algorithm for
--	the current repository (set by `extensions.objectFormat`), or 'sha1' if no
-+	the current repository (set by `extensions.objectFormat`), or '{default-hash-algo}' if no
- 	value is set or outside a repository.
- +
- This option cannot be used with --stdin.
+Olamide Bello.
