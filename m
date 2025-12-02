@@ -1,125 +1,143 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFCC3064B2
-	for <git@vger.kernel.org>; Tue,  2 Dec 2025 08:15:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CB5221FD0
+	for <git@vger.kernel.org>; Tue,  2 Dec 2025 08:18:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764663314; cv=none; b=rlY4ONyFzvnil0irjwnPAWXvUc+6uUSmVRVEpmkhKyMXTsGWoAQPc6Fx4Gg2dL5tmKVobGE2u86hr6WT22wYGVd2imtquQiR7FpfvfJZF+oPdpqn2zeWBc0PrxlW5icT22WWE5BdBjUIH8ADMvxH2CHagzzyxzN5/Vt4fVBnXEA=
+	t=1764663525; cv=none; b=F6PKqvD7nC5Bi3BpY0hefpxKyForQNmdIDOfeN24Tu4Ax/jz/Q/+c0i4aNg8nknpkxxm09pi+1ZLEecEFLjcvkP1unnCwk+33yd71G5sETh2O7MrsLH/W69YwX4e6+bpyLkAT1QRzyNAN+nYGJtZhqEYlbBy3AlNjehCZk/XBxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764663314; c=relaxed/simple;
-	bh=U04SS7iMGIp6xz6lDyJOu/2mxKOg+O525iV+Bta6EZ0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=coaN9Re2g57eT9qFaOyyiDP1C7ibZYe/NGZGFlFNPTi7XY2gbkb9mD/cVjqWy8bTmT7M14VtyuPngJoJZAfDzdfU4o6N/U9J1ND7xdy0hXO/wOTQ69vxisNjer8wQmSRfnJD16SFNc7zkSEZ6rmukt5HuCpCU97ks+ax+daulBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jzcdwQPN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vYY5cP+g; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1764663525; c=relaxed/simple;
+	bh=KV4IUIB7hUsXyyF7y+yLXuHJP5Keg6YI2fRCi3bpq10=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AgiUTPKXoDfDkc74ffD41SQ3V6c3gqYONqbihyhf3L5dpATJJLewiYBaTOnjl4BoAn7W4xsrYBtf0rSJ568ne/kZcgGYiSEqmwoGgfFCAvtKY0VFLYXaPjvgumJUHj9A13Oj+uya0j9GtMmz30CsHqu6hte6cqp2NnVBBq6udrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VGB3NDyI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=twS7CMzE; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jzcdwQPN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vYY5cP+g"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 438F7EC0402;
-	Tue,  2 Dec 2025 03:15:11 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 02 Dec 2025 03:15:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VGB3NDyI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="twS7CMzE"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A00D87A0199;
+	Tue,  2 Dec 2025 03:18:42 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Tue, 02 Dec 2025 03:18:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1764663311; x=1764749711; bh=JaZkER4Z9I
-	B51jHjX5zEr7JjVcBHCYBTmyf960VP8Gs=; b=jzcdwQPNkxHjmWdFqg3vSkAuSb
-	gqvnJKRhhwKtB1dZMB1KLrdmiUdmkKuKDI5VpPNkdeoYgZIP9geo38Cb7x9XUzd8
-	i72d400qZ0Ap52McZhYSXz4p3TSDvKREI8yh8at6CTAmwvC1oYdMz/MCEgbRwK2H
-	9BZPhhtGWBocos/LhLzF7D+ziq6MYJO3XNTKFZ9EdeSiMfdAz3BYlyG/1jNj3+13
-	L37Q+f5LiJJmqz60WZniNIhlGFqyX0B3NMr8ck3SJjCUXb7nxiXY2ewq0kRODn0F
-	xnw5jALNCn6FJCBzzZ+qzHZVOFlcUNDVcJQnwKmJu7ckfadX+NyNRM3cw+9w==
+	:subject:to:to; s=fm1; t=1764663522; x=1764749922; bh=nsr0qfn3LB
+	wmYbuVyglatgNTfJAK3WTy3VLwY9WQ+jM=; b=VGB3NDyIfupy+PIzH4eXk3SJkb
+	1OjHsprvUmqsE9aXTGjJQ3mfePtbIlDis51GQ8D+360YHXiZZCS4JoNF6kVJfH3W
+	mOoIkyQ2G26v1mFfF7/0jVFxgRC2JSjyrywAlCe2W5gIZvJdduy43DMUzJBN+NL1
+	QwlACHFS6FbJFyt6pyTNfcuoAzMszVVBfdZjab4GtK6xds7zwM+tB3AEqrGFvsgZ
+	Nq4nDPCh1c8N2HYQXnbiMrK+pMp8FUCBQ2jSD+XQX0AOZiklKfB1mcy9DvpuKlc5
+	fLdbVAnWKZuIBjaALFBCTzYXqyVRASKokrvPwBkw09Sslk3Ez/Z3wOwtIVow==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1764663311; x=1764749711; bh=JaZkER4Z9IB51jHjX5zEr7JjVcBHCYBTmyf
-	960VP8Gs=; b=vYY5cP+gP+MR5voDf6AV8CJuHshOnSqbtRb8AW9rZPO/+oq5rio
-	K25p+D0ZypCK568ZijGqA0rmk1X0ofcQQykmffEt/JAxoTJRa6lcjamQGa/H1dZp
-	Vrg1R+U0JDxeRXiO+onGrP+bPTm29i5FBH6X5HNjmuhwWDGQejgGn/KHhDS1HJo/
-	cgIr4Y4aTLT9T/2ALsVnlEw+3ypl5nGE3JkhvxR6OQrmPU5qKzwhncZKcn9No2z+
-	VCupOQNCuSOxu7hIWfaTbJ6LaV6UvhBB9Z+YwX918CJeORNgJhEwTrPb+hmcXtq1
-	uN/N54Fp0ifJTan8KMEtmddOsVKEmP8XO/g==
-X-ME-Sender: <xms:D6AuaR0qfcsCnfLL8jbib2A9w0iTzepYTdzlb3LxaRwbhO6x93e-aA>
-    <xme:D6AuafG8C3Q0Tgst1LTOCn1YXZnrCe3WO5BQDeRnjEGUgdIuD2xzmHQYnVNtKlslk
-    bP1LIJq1LPwJ1Okw3EwkE_5GzIoZ4wXHiPXngWIv1LQQrwPEzng>
-X-ME-Received: <xmr:D6AuaW4G1o4sOtN15vjKmZYLll43KI0ksb_LTgJ740Ui2JV2YNDl-hPvOCIufER7WP0iM1NO3peiuqsA5dYpCU4PRV-1qo_kFqkD>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddviedttdejucetufdoteggodetrf
+	1764663522; x=1764749922; bh=nsr0qfn3LBwmYbuVyglatgNTfJAK3WTy3VL
+	wY9WQ+jM=; b=twS7CMzEDRn6nhh1TVATRj9JLQ/0kaKnTeXzvUqXUPEGek4cAQ6
+	s0XE6rD5lis5su9Mo5eiWHe2TX9c458B7DODNLVjuXnRlvyi/w14/aNX2BKlzhpl
+	bVSF84t2nvSH9+ukwD/ll9rupdlBehR7B/8hwh8UkK3RMjq/eYaTHmIv5VFs7Wui
+	pcaiqUR4Cg6yT8oWyAZ15/MgVyM2ZykvOT3y6d5ome8BhKrPRwnoiGIuMNDhiEzN
+	yHlArUpG7sa2sfupDQqa9naoMRLqvrtpkZr054FwlsPks4cm0+6hNSJ2EPnMDOhZ
+	dHnqu4DJLNyCumr+yQdt0PkKa4jQD2WfpsQ==
+X-ME-Sender: <xms:4qAuaeIQ9Z4haCccvCwpAO_oI4fmCaIv9dtMEILoStKkjCZERrb3eA>
+    <xme:4qAuadkzrRmuGvzda33ELZF9yAlpJcMsb_VwesTnsnfRdOFnr4r7ilC8PMlEmhQN_
+    uAb5dgPVz-VfB9f5tNvtlmdYfuOWxzx0WBVl3kKM-tmkvlTDCk>
+X-ME-Received: <xmr:4qAuacER3rnIuCokE-GK3OD-cI5eyQ-BRthtE0lpk0HbwHT_m2nLHsHphmoUONcqUqnQpflbAisCgn_NjKVvkYe36fDzLqP1yTCnrBP3_Nc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddviedttdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
-    hmgidruggvpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:D6Auadueb0XuYmfoHZSe-zf4JzvUY8tj5z3SJoZ1lSpE_gUxSC814w>
-    <xmx:D6Auaf6aZOJlfL7crG0dwx6JA5hllaqn_Y8jfLdR_WjtLb1rd2Iuxw>
-    <xmx:D6AuaQWA1DxEjXOlrYtKotS3s4B5kANOch5UsqDH5e1N078-exh-6Q>
-    <xmx:D6AuaZ8TBrRvtBdtjfnqa64O2mc8ESB2MyDAcSmYgQAR9AKTz9Y8gA>
-    <xmx:D6AuaUSyv-tjmOZI4qr2PpOZckvYT7KzCu6CqihkiGJHwbSd0LWyI5R7>
-Feedback-ID: if26b431b:Fastmail
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeeugedtgefhiefhkeeludekgefgveehjeehge
+    fhlefhveeivdduveeludekueelgfenucffohhmrghinheptghonhhfrdhinhenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
+    hmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehs
+    rghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:4qAuadF4N0wsNoq3CcZ7W7XRoPkXIFuS-lm1J6KKq0tGXqRbPyZ2Hw>
+    <xmx:4qAuaZOyN1NGLf1VDm_d8aZIhvAcQmM690zo53DP61eRirbX6zi4LQ>
+    <xmx:4qAuacGbPJ0BUj7sZZKQs8tg5R6a8XatX8Vcs9sAlfqMwZve4iqUqw>
+    <xmx:4qAuaQPBfMgFdXu3xNw9MRCmg0nNQPwrLJSuc5szNqmpooxMGrPrBA>
+    <xmx:4qAuaUwp4AHoKrJPQTTtZ2WCOuID8lxDdxVLTfBIArelEUNKEF0HJeld>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Dec 2025 03:15:10 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH 04/10] t0001: handle `diff --no-index` gracefully
-In-Reply-To: <07dd2e66-7cdc-7839-aaf7-274b116df51c@gmx.de> (Johannes
-	Schindelin's message of "Mon, 1 Dec 2025 14:20:28 +0100 (CET)")
-References: <pull.2009.git.1764440906.gitgitgadget@gmail.com>
-	<3be9594e80c37b2b393f5883a173694ab6793813.1764440906.git.gitgitgadget@gmail.com>
-	<xmqqms44cb7p.fsf@gitster.g>
-	<07dd2e66-7cdc-7839-aaf7-274b116df51c@gmx.de>
-Date: Tue, 02 Dec 2025 00:15:09 -0800
-Message-ID: <xmqqbjkh8fle.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 2 Dec 2025 03:18:41 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 24afd300 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Dec 2025 08:18:39 +0000 (UTC)
+Date: Tue, 2 Dec 2025 09:18:25 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] Fix doc default hash algorithm in
+ WITH_BREAKING_CHANGES mode
+Message-ID: <aS6g0Zjzd5OEd-mb@pks.im>
+References: <20251202014605.52110-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251202014605.52110-1-sandals@crustytoothpaste.net>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, Dec 02, 2025 at 01:46:01AM +0000, brian m. carlson wrote:
+> When WITH_BREAKING_CHANGES is defined, the default hash algorithm is not
+> SHA-1, but SHA-256.  However, our documentation was never updated to
+> reflect this, and as a result, we end up misinforming users.
+> 
+> This series fixes four places where we indicate a default hash algorithm
+> in our documentation such that they conditionally say that either SHA-1
+> or SHA-256 is the default, based on the the with-breaking-changes
+> attribute.  This both improves accuracy now and also makes it less
+> likely that we'll forget to update these places when we hit Git 3.0.
 
->> > +	case "$GIT_TEST_CMP" in
->> > +	# git diff --no-index does not resolve symlinks
->> > +	*--no-index*) cmp expected newdir/.git ;;
->> > +	*) test_cmp expected newdir/.git ;;
->> > +	esac &&
->> 
->> perhaps?
->
-> Sure. It's not like this adds much confidence, though, as the tested-for
-> functionality isn't specific to Windows, so I'd expect this to fail on
-> Linux, too, if it was broken, and running that comparison on Windows does
-> not add much.
+All of these look good to me. One alternative would be to introduce an
+attribute that we can then reference in the docs. The below patch shows
+how to do this with Asciidoc, but of course we'd also have to do this
+for Asciidoctor.
 
-It sounds like you are saying running tests on Windows on most of
-the platform neutral Git code is waste of resources, and looking at
-the number of shareded tests used in CI, it might not be a bad idea
-if we can cleanly separate the Git functionality into two categories
-(i.e., those that must behave identically on all platforms and
-others) and shuffle our tests around to let platforms that runs our
-tests slower only the "other" tests, while the faster platform to
-run all of them.  But I am not sure if that approach is a practical.
+I don't mind much which approach we use, but wanted to suggest this as
+an alternative.
 
-> Since you spent time on this, I will change it, though.
+Thanks!
 
-The time I spent does not matter as much as the time other folks
-will spend scratching their heads reading the code left by this
-patch.  I will be mostly offline this week, so please take your
-time.
+Patrick
 
-Thanks.
-
+diff --git a/Documentation/asciidoc.conf.in b/Documentation/asciidoc.conf.in
+index ff9ea0a294..fe1c150ec6 100644
+--- a/Documentation/asciidoc.conf.in
++++ b/Documentation/asciidoc.conf.in
+@@ -24,6 +24,12 @@ litdd=&#45;&#45;
+ manmanual=Git Manual
+ mansource=Git @GIT_VERSION@
+ revdate=@GIT_DATE@
++ifndef::with-breaking-changes[]
++default-hash-algo=sha1
++endif::with-breaking-changes[]
++ifdef::with-breaking-changes[]
++default-hash-algo=sha256
++endif::with-breaking-changes[]
+ 
+ ifdef::doctype-book[]
+ [titles]
+diff --git a/Documentation/git-index-pack.adoc b/Documentation/git-index-pack.adoc
+index 18036953c0..730c3835e6 100644
+--- a/Documentation/git-index-pack.adoc
++++ b/Documentation/git-index-pack.adoc
+@@ -126,7 +126,7 @@ information on the possible values of `<msg-id>` and `<severity>`.
+ --object-format=<hash-algorithm>::
+ 	Specify the given object format (hash algorithm) for the pack.  The valid
+ 	values are 'sha1' and (if enabled) 'sha256'.  The default is the algorithm for
+-	the current repository (set by `extensions.objectFormat`), or 'sha1' if no
++	the current repository (set by `extensions.objectFormat`), or '{default-hash-algo}' if no
+ 	value is set or outside a repository.
+ +
+ This option cannot be used with --stdin.
