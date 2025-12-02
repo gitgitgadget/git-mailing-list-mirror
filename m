@@ -1,82 +1,82 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A0621D3C5
-	for <git@vger.kernel.org>; Tue,  2 Dec 2025 18:49:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC6421D3C5
+	for <git@vger.kernel.org>; Tue,  2 Dec 2025 18:49:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764701357; cv=none; b=FoL5Xd3Lx/KHHCRef8f7HwPWGBepZlUGMKBgQFLrAIzxoXHUg5/xqQNlaflaH0f6A8HsPJM04qeSP8irk4e5ETL5IxXu3dqtlmWdowFDSjMUjY5tuiMvpDI/AoCOkZdraD/6wiT9FW27ZGZcamUgSJP58IQ/f+mPO5dB0OoaiYo=
+	t=1764701391; cv=none; b=IheYMNKyP1vp0pnclBrAxmObnczYKaIdV3PC+K3R3mLsEwV3FIfIEy7NYFbrQF24niw56tDXaD6wL6Sjik/6Ze21+pN4BKHBCH9qobma2bWVtM9R7oRmfN9uWN6UjfmuuNp29iUM7dC1veunRw0RZY2Qb4RwOlbdCxdj5GsQkvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764701357; c=relaxed/simple;
-	bh=aSsLiyL4f5tLVc4WSQKhvhJ+MUB9siZ5Hzjcnn6hs2o=;
+	s=arc-20240116; t=1764701391; c=relaxed/simple;
+	bh=bZjrZOz5n8CP5+ZlDd5X0qZ5ZnLpne3uMnhWJ2Rk1zw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H0yHFKv09z2BB7MRr5L4vAdsX7e4DJPzMrQLj70p5BZPHwXwCe2LsbioRughhNo+HHINKq8cCwMdShjkgvg8OKcVxQQY62itDEiQpr/UcscPK4TFS2P9J8ahRIhYJ7uD1rdP9B5Wa4tejS2LDQxWd9YyRJiIuKfnM5puYcleEA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XUMEtceM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mr7Mc8yR; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=ufnsnOA0VYCRXtP+T45CBZolQufq8qVhRyTxRJpGZHh8Q846CDueYRS/ElwBjVVhHFbxNEuhUmJ9VgCooR+GEx61QcDXONzsJRyqf0j31W09pkEeIBqIJXXI1Ht66viapfJvbUAbhHyTCpTYgCP0Ar3gnfm1poYXsQgSnrgTtMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OWutV/lF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a6kfERKw; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XUMEtceM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mr7Mc8yR"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 74BC5EC05A8;
-	Tue,  2 Dec 2025 13:49:14 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 02 Dec 2025 13:49:14 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OWutV/lF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a6kfERKw"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7315814001E3;
+	Tue,  2 Dec 2025 13:49:48 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Tue, 02 Dec 2025 13:49:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1764701354;
-	 x=1764787754; bh=HnnCAvKQhOt554aV/qVi9Ru0PJrE2Myn1svb0snRl70=; b=
-	XUMEtceMuT+Ud5AeM6nLunI2tmezd69njAAHqPTPL7PH4VQVHROv83wxJgfmFmwY
-	eg6AvstWsyRhrUh8w2edt1Xca6DF47TotreaTHrrguqlIuCfC8WWV7AfLgj7B6j+
-	ZtUz1mULm+XyB/hdMQFtyFGCIBOCW+cnKzGvRxUklpuKl8uXwckxT8Ffqmi61nYC
-	MzB8moiCULXnft6MMyyb8wWDbE5D5s74pNvUBJwegeEYt1eYycloIvq60i/SO+rC
-	9yFfOsEzBe2UIVU18LrXN6gIim5O4Fjms6IVFdi9S8hoEC0RSNE4KH5HcLrGO9sa
-	fDwJDKHyr1KoA9n60Pc0eA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1764701388;
+	 x=1764787788; bh=aBggBEO3DIokCri1/cXCPJCgy6FnFoQOhIQY9HsV888=; b=
+	OWutV/lFAIHMN2wGGrKuY9uNa/c68IY3YK+sq+F3DicpsyNxLbDftge9CeihbxLL
+	lm9W9b7RVCs05yq0ez2sMGQp3HhmZxKVuADIC9RcW1Rzz1jERFV44lXBpvMST641
+	iewZ9sFsS5xFPAFdIOv4mPDlfk62IN8nrLfQ7YgG5hcBm51XlZ9WGpJF30+nkd4J
+	cbFwRygSycJFP1TlSKsiiyzzpPXfI2AV4T3ESKQZ7qkzNZqrp/+E3gIjZet8Oa8k
+	JS04bGax6AeAabNA/C/otS3py6oBH4RtS0NM0JJyN+MAsPZmTAR/7ot4uY4UezGA
+	Vd4r900z1qo0WoywksBuEA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764701354; x=
-	1764787754; bh=HnnCAvKQhOt554aV/qVi9Ru0PJrE2Myn1svb0snRl70=; b=m
-	r7Mc8yRO1ReGzLWaUS/S55eXm+nS0C0294a6btEyg1/0X8CtDaC4UDDzZ1RFnj4c
-	H+c7e7BSh8S1HbSNehnam3/0FzixGWm7v8xV0zoUSaeUIfa7i/R0ETgyutspg4Ny
-	dAfZjWtFGSDFnQE/UGcLCLeyyFJsk3LycG9svQIh1sVbKTk/L3zSPX73pSy7mLB4
-	eZgG5Kn5HMvgduy49qqJiuY9ond2EzIAkbE3C0bc9xT8GX7FkODjOvylauLQd16q
-	Oe3NnR/+wASBs285nGstL1ctfBKhESw1Gb9ZujtT/yCDqtzSlVgT5o+pHrHjGWLA
-	8ZYGgBCGLbZQlBrY3nGJQ==
-X-ME-Sender: <xms:qjQvaQ07cwcnc_75bNIlavDpVVG5sXyptZryydrUgSkuWMixk4Ed7w>
-    <xme:qjQvadqyzZsjzdUjrgXdA5V6u-CmFW0csV0yRHFu5z1uG72HCNcQSjdfbFc_ZbE1P
-    tVuFp69KRkrkliqVcNHmpoYj-ON_8j_-V7z1t_PL9-UpZGTL0m_Tw>
-X-ME-Received: <xmr:qjQvacjXWpnRAj1d5kUYWj3Nz71O4nuQWqyTQMU6gOfs8uTsJSRp-z3tNg-VPF0wXeTrbPEv_qnJ31Llky8R2aWC8N0AH4m1qAevFKJ2GX4>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764701388; x=
+	1764787788; bh=aBggBEO3DIokCri1/cXCPJCgy6FnFoQOhIQY9HsV888=; b=a
+	6kfERKws3XdDLv/9A3/RdBhdtz9PWlXnfqiHghfdHUuJsjPrzKb3r+wmwnaaLVwk
+	N2jLy/5jyU2Q/tvC8nN4Uu1Tm+y3X07yM2n2Qct2CIFtsB5BN+KbaWOENeCYi7JX
+	dk7sNbUPo8s8XQB+PwBd+38GFgP4cMusEXFOy9+UGHMC6BCM2el8Fel9bXYODKAM
+	wjYIwZyQojjTNcMgHmnJwKznJeNYbJAyrPYz5ad0MuFcRKHq9gPOFAlRzgm+2wXt
+	YAzhpvAu/MvAAXcXSd7KkAgZk0CxSlTdRO5GulqQo563tZKN01GJAT1Inb2NBwyW
+	6JimbyYtmsyzo41Jtw+vw==
+X-ME-Sender: <xms:zDQvaUY6PTzkWKgi7bu95NoocEKQZL8rrWqL9jMIw6lSORal3_etGg>
+    <xme:zDQvaR-UqEcs0iZz76MgO-ianJ2YHnaDdfD43fH2l6k6bNDXt3zknVc4p0oNAaEZ5
+    T_KFY7EMEHyUG0fhk-SZl_1jSxZlosJfqvt9Olvki5zT8UEaY2bqA>
+X-ME-Received: <xmr:zDQvaSnAjO2BENWm9u2SmlaTQJxBIZEbhE00KmEQq5t_rLTUTWeCrw_H7OiHbSY9huB9UVOwnNGFhZz3c6b1b2Amh0JsdwjZ864tIqWU-9w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
     ohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpe
     ffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcu
     ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvd
     efjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehl
-    uhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
     himhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehsohhrghgrnhhovhesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepkhhrihhsthhofhhfvghr
-    hhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepmhgrrhhtih
-    hnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:qjQvaZ9FeFPtMjkxHaCLZ0Jw-e3eU_77PWdK9gUb9X1veOSD7AOEYg>
-    <xmx:qjQvaYWu1ioAARPjNUjsMkZwUo7Q6QY3XYTiHs7mdbmf0vxzVFjRoQ>
-    <xmx:qjQvadCCcWhqROdIGk4kvOhZwbm7L3x1OWtddH8kJW3FFyXdz8xW6w>
-    <xmx:qjQvadGOojR3llS1xtBCU_kLOhCwdnslEIuWM4f9nOZBB1_4BnNiPQ>
-    <xmx:qjQvafgB8CbNWfvkgenjGYsyCQ6jdvHzrEYxlymIslHhnA5OPyMQ8p_U>
+    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvg
+    esghhmrghilhdrtghomhdprhgtphhtthhopehsohhrghgrnhhovhesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudek
+    keesghhmrghilhdrtghomhdprhgtphhtthhopehmrghrthhinhhvohhniiesghhmrghilh
+    drtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghs
+    thhmrghilhdrtghomhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrh
+X-ME-Proxy: <xmx:zDQvaexc61r9E1tZkr2FQ_4ME2IZbjGtJFQNI7tvD4FtDLP8qPH3nA>
+    <xmx:zDQvaU7Iwv5eMrzJbQxKlrI9WZzx9rl7kOS0LHZYF04hlBoqOUT2IA>
+    <xmx:zDQvaWUTb9YWJd7pu1ymavC08MrgpummcS5rnimuJEIOn17xSajigA>
+    <xmx:zDQvaUL82lgB9PmKHsXWoP5tzW0PaSFj96r60cLQgCVXEDu_6-2Vpg>
+    <xmx:zDQvacXYbElWF_4vEM5dDm1GZr0FSp_ALAC_4pB5yNRQ2zOJTaRzbQ2C>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Dec 2025 13:49:12 -0500 (EST)
+ 2 Dec 2025 13:49:46 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6ab4a5b6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 2 Dec 2025 18:49:11 +0000 (UTC)
-Date: Tue, 2 Dec 2025 19:49:05 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 5a9d3b47 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Dec 2025 18:49:45 +0000 (UTC)
+Date: Tue, 2 Dec 2025 19:49:39 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Elijah Newren <newren@gmail.com>
 Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
@@ -86,12 +86,11 @@ Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
 	Martin von Zweigbergk <martinvonz@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v6 09/11] add-patch: add support for in-memory index
- patching
-Message-ID: <aS80oc61kHICD0zZ@pks.im>
+Subject: Re: [PATCH v6 11/11] builtin/history: implement "split" subcommand
+Message-ID: <aS80wzWB57VPGxIq@pks.im>
 References: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
- <20251027-b4-pks-history-builtin-v6-9-407dd3f57ad3@pks.im>
- <CABPp-BGRnx7+qvFcDeWCZEZm1aRn=kRezZ2KZA0E=8hji9Vjiw@mail.gmail.com>
+ <20251027-b4-pks-history-builtin-v6-11-407dd3f57ad3@pks.im>
+ <CABPp-BGP_BecoGf093MTK-FaXTc-B0SGRkH8SHkB39nAT5fb3Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -101,122 +100,285 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BGRnx7+qvFcDeWCZEZm1aRn=kRezZ2KZA0E=8hji9Vjiw@mail.gmail.com>
+In-Reply-To: <CABPp-BGP_BecoGf093MTK-FaXTc-B0SGRkH8SHkB39nAT5fb3Q@mail.gmail.com>
 
-On Wed, Nov 19, 2025 at 11:04:21PM -0800, Elijah Newren wrote:
+On Wed, Nov 19, 2025 at 11:05:37PM -0800, Elijah Newren wrote:
 > On Mon, Oct 27, 2025 at 4:34 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+> > index bd903875120..3d6b2665f8d 100644
+> > --- a/Documentation/git-history.adoc
+> > +++ b/Documentation/git-history.adoc
+> > @@ -37,6 +38,26 @@ Several commands are available to rewrite history in different ways:
+> >         details of this commit remain unchanged. This command will spawn an
+> >         editor with the current message of that commit.
+> >
+> > +`split <commit> [--] [<pathspec>...]`::
+> > +       Interactively split up <commit> into two commits by choosing
+> > +       hunks introduced by it that will be moved into the new split-out
+> > +       commit. These hunks will then be written into a new commit that
+> > +       becomes the parent of the previous commit. The original commit
+> > +       stays intact, except that its parent will be the newly split-out
+> > +       commit.
 > 
-> > +int run_add_p_index(struct repository *r,
-> > +                   struct index_state *index,
-> > +                   const char *index_file,
-> > +                   struct interactive_options *opts,
-> > +                   const char *revision,
-> > +                   const struct pathspec *ps)
-> > +{
-> > +       struct patch_mode mode = {
-> > +               .apply_args = { "--cached", NULL },
-> > +               .apply_check_args = { "--cached", NULL },
-> > +               .prompt_mode = {
-> > +                       N_("Stage mode change [y,n,q,a,d%s,?]? "),
-> > +                       N_("Stage deletion [y,n,q,a,d%s,?]? "),
-> > +                       N_("Stage addition [y,n,q,a,d%s,?]? "),
-> > +                       N_("Stage this hunk [y,n,q,a,d%s,?]? ")
-> > +               },
-> > +               .edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
-> > +                                    "will immediately be marked for staging."),
-> > +               .help_patch_text =
-> > +                       N_("y - stage this hunk\n"
-> > +                          "n - do not stage this hunk\n"
-> > +                          "q - quit; do not stage this hunk or any of the remaining "
-> > +                               "ones\n"
-> > +                          "a - stage this hunk and all later hunks in the file\n"
-> > +                          "d - do not stage this hunk or any of the later hunks in "
-> > +                               "the file\n"),
-> > +               .index_only = 1,
-> > +       };
-> > +       struct add_p_state s = {
-> > +               .r = r,
-> > +               .index = index,
-> > +               .index_file = index_file,
-> > +               .answer = STRBUF_INIT,
-> > +               .buf = STRBUF_INIT,
-> > +               .plain = STRBUF_INIT,
-> > +               .colored = STRBUF_INIT,
-> > +               .mode = &mode,
-> > +               .revision = revision,
-> > +       };
-> > +       struct strbuf parent_revision = STRBUF_INIT;
-> > +       char parent_tree_oid[GIT_MAX_HEXSZ + 1];
-> > +       size_t binary_count = 0;
-> > +       struct commit *commit;
-> > +       int ret;
-> > +
-> > +       commit = lookup_commit_reference_by_name(revision);
-> > +       if (!commit) {
-> > +               err(&s, _("Revision does not refer to a commit"));
-> > +               ret = -1;
-> > +               goto out;
-> > +       }
-> > +
-> > +       if (commit->parents)
-> > +               oid_to_hex_r(parent_tree_oid, get_commit_tree_oid(commit->parents->item));
-> > +       else
-> > +               oid_to_hex_r(parent_tree_oid, r->hash_algo->empty_tree);
-> > +
-> > +       strbuf_addf(&parent_revision, "%s~", revision);
-> > +       mode.diff_cmd[0] = "diff-tree";
-> > +       mode.diff_cmd[1] = "-r";
-> > +       mode.diff_cmd[2] = parent_tree_oid;
-> > +
-> > +       interactive_config_init(&s.cfg, r, opts);
-> > +
-> > +       if (parse_diff(&s, ps) < 0) {
-> > +               ret = -1;
-> > +               goto out;
-> > +       }
-> > +
-> > +       for (size_t i = 0; i < s.file_diff_nr; i++) {
-> > +               if (s.file_diff[i].binary && !s.file_diff[i].hunk_nr)
-> > +                       binary_count++;
-> > +               else if (patch_update_file(&s, s.file_diff + i))
-> > +                       break;
-> > +       }
-> > +
-> > +       if (s.file_diff_nr == 0) {
-> > +               err(&s, _("No changes."));
-> > +               ret = -1;
-> > +               goto out;
-> > +       }
-> > +
-> > +       if (binary_count == s.file_diff_nr) {
-> > +               err(&s, _("Only binary files changed."));
-> > +               ret = -1;
-> > +               goto out;
-> > +       }
-> > +
-> > +       ret = 0;
-> > +
-> > +out:
-> > +       strbuf_release(&parent_revision);
-> > +       add_p_state_clear(&s);
-> > +       return ret;
-> > +}
+> Always two?  Should we allow someone to split into three or four?
+
+For now it's always two, yes. This is mostly modeled after `jj split`,
+which also does the same. For the sake of simplicity I'd suggest to keep
+it like this by default, but I could certainly see that we introduce a
+new option in the future that allows the user to split into multiple
+commits. In that case, we would simply loop around the interactive
+prompt until all remaining hunks have been selected.
+
+> > ++
+> > +The commit message of the new commit will be asked for by launching the
+> > +configured editor. Authorship of the commit will be the same as for the
+> > +original commit.
 > 
-> I'm totally unfamiliar with add-patch.[ch] beyond what I've been
-> reviewing in this series, so this may be a dumb/naive question, but
-> why add a sibling run_add_p_index() to run_add_p() via
-> copy+paste+modify?  (Or is it not copy+paste+modify in some
-> interesting way?)  I'm worried the two will drift, and I'm curious
-> whether run_add_p() should just be calling run_add_p_index() and just
-> passing r->index for the index field.  Is there a reason that doesn't
-> work?
+> Which one is the new one?  Aren't they both?
 
-Most of the function isn't actually copy-paste-modify. Out of the ~90
-lines of code of the new function only ~20 are the same. We could of
-course introduce a function to share those lines, but it doesn't save us
-_that_ much.
+I'll change the behaviour to ask for a message for both commits, so I'll
+adapt this.
 
-I think the logic is non-trivial enough though to warrant it being
-duplicated regardless of that.
+> > ++
+> > +If passed, _<pathspec>_ can be used to limit which changes shall be split out
+> > +of the original commit. Files not matching any of the pathspecs will remain
+> > +part of the original commit. For more details, see the 'pathspec' entry in
+> > +linkgit:gitglossary[7].
+> > ++
+> > +It is invalid to select either all or no hunks, as that would lead to
+> > +one of the commits becoming empty.
+> 
+> If the user edits a hunk, what happens then?  Is this function
+> prepared to deal with that?
+
+The second commit will retain the original tree, so there wouldn't be a
+conflict even in that case. It's a good question though -- maybe we
+should disable editing hunks for now?
+
+> > +diff --git a/foo b/foo
+> > +new file mode 100644
+> > +index 0000000..257cc56
+> > +--- /dev/null
+> > ++++ b/foo
+[snip]
+> > +       /* We retain authorship of the original commit. */
+> > +       original_message = repo_logmsg_reencode(repo, original_commit, NULL, NULL);
+> > +       ptr = find_commit_header(original_message, "author", &len);
+> > +       if (ptr)
+> > +               original_author = xmemdupz(ptr, len);
+> > +
+> > +       ret = fill_commit_message(repo, &parent_tree_oid, &split_tree->object.oid,
+> > +                                 "", "split-out", &split_message);
+> > +       if (ret < 0)
+> > +               goto out;
+> > +
+> > +       ret = commit_tree(split_message.buf, split_message.len, &split_tree->object.oid,
+> > +                         original_commit->parents, &out[0], original_author, NULL);
+> 
+> As with reword, you are discarding all extended headers?
+
+Good catch, will fix!
+
+> > +       if (ret < 0) {
+> > +               ret = error(_("failed writing split-out commit"));
+> > +               goto out;
+> > +       }
+> > +
+> > +       /*
+> > +       * The second commit is much simpler to construct, as we can simply use
+> > +       * the original commit details, except that we adjust its parent to be
+> > +       * the newly split-out commit.
+> > +       */
+> > +       find_commit_subject(original_message, &original_body);
+> > +       first_commit = lookup_commit_reference(repo, &out[0]);
+> > +       commit_list_append(first_commit, &parents);
+> > +
+> > +       ret = commit_tree(original_body, strlen(original_body), &original_commit_tree_oid,
+> > +                         parents, &out[1], original_author, NULL);
+> 
+> I don't understand why the second commit is the one that is to retain
+> the commit message.  I can see that users would sometimes want that,
+> but I don't see why it'd be hardcoded.
+
+My thinking here is that "I am splitting changes out of a specific
+commit", so that commit still continues to exist.
+
+[snip]
+> > +       commit_list_append(original_commit, &from_list);
+> > +       if (!repo_is_descendant_of(repo, head, from_list)) {
+> > +               ret = error(_("split commit must be reachable from current HEAD commit"));
+> > +               goto out;
+> > +       }
+> 
+> Again, I don't see why the commit to be split needs to be an ancestor
+> of HEAD; seems like an arbitrary requirement.
+
+This is done for the sake of simplicity: I'd rather want to be as
+restrictive as possible initially and then extend git-history(1) to
+handle more cases as we go forward.
+
+[snip]
+> > +       /*
+> > +        * Then we split up the commit and replace the original commit with the
+> > +        * new ones.
+> > +        */
+> > +       ret = split_commit(repo, original_commit, &pathspec, split_commits);
+> > +       if (ret < 0)
+> > +               goto out;
+> > +
+> > +       replace_commits(&commits, &original_commit->object.oid,
+> > +                       split_commits, ARRAY_SIZE(split_commits));
+> > +
+> > +       ret = apply_commits(repo, &commits, parent, head, "split");
+> > +       if (ret < 0)
+> > +               goto out;
+> 
+> Much like with "reword", I think we could drop your auxiliary
+> functions (collect_commits(), replace_commits(), apply_commits()),
+> since replay already handles revision walking.
+
+I mostly introduced these functions because I want to extend
+git-history(1) going forward to also handle cases that git-replay(1)
+doesn't currently handle. This includes for example also reordering of
+commits, which I think isn't easily possible with the replay subsystem?
+
+> However, unlike with "reword" you've got a slight mess here.  If the
+> user edits the hunk to be applied, then (1) the rest of the replayed
+> commits may have conflicts (which replay doesn't handle yet), and (2)
+> after replaying you'll need to reset your working tree and index to
+> match the rebased result, which will be tricky if you had either
+> staged or unstaged modifications.
+
+Yeah, the "editing" part is an actual oversight on my part. I'll
+restrict this for now.
+
+> > diff --git a/t/t3452-history-split.sh b/t/t3452-history-split.sh
+> > new file mode 100755
+> > index 00000000000..2aac28afdf0
+> > --- /dev/null
+> > +++ b/t/t3452-history-split.sh
+> > @@ -0,0 +1,432 @@
+[snip]
+> > +test_expect_success 'refuses to work with unrelated commits' '
+> > +       test_when_finished "rm -rf repo" &&
+> > +       git init repo &&
+> > +       (
+> > +               cd repo &&
+> > +               test_commit base &&
+> > +               git branch branch &&
+> > +               test_commit ours &&
+> > +               git switch branch &&
+> > +               test_commit theirs &&
+> > +               test_must_fail git history split ours 2>err &&
+> > +               test_grep "split commit must be reachable from current HEAD commit" err
+> > +       )
+> > +'
+> 
+> I don't understand why this test is desirable.  I guess that's not
+> surprising given that I called into question why you'd want this to be
+> an error in the relevant code.
+
+The question is what happens in the case where you edit a commit that is
+unrelated to the current history. Which branches would be updated? Do we
+update any at all? If not, what would the user-visible result be? We're
+getting into territory where semantics are not immediately obvious, and
+I want git-history(1) to be a command that makes history editing easy
+for the most common use cases.
+
+If we find good semantics in the future for how to perform such an
+operation I'm very much in favor of adding that behaviour. But I think
+that this is outside the scope of this series right now, as I rather
+care about making the easy and obvious parts work first.
+
+And meanwhile, while we still have restrictions like these in place, I
+want to ensure that we don't accidentally do the wrong thing in cases
+that we don't yet support. Hence the test.
+
+> > +test_expect_success 'hooks are executed for rewritten commits' '
+> > +       test_when_finished "rm -rf repo" &&
+> > +       git init repo &&
+> > +       (
+> > +               cd repo &&
+> > +               touch bar foo &&
+> > +               git add . &&
+> > +               git commit -m split-me &&
+> > +               old_head=$(git rev-parse HEAD) &&
+> > +
+> > +               write_script .git/hooks/prepare-commit-msg <<-EOF &&
+> > +               touch "$(pwd)/hooks.log"
+> > +               EOF
+> > +               write_script .git/hooks/post-commit <<-EOF &&
+> > +               touch "$(pwd)/hooks.log"
+> > +               EOF
+> > +               write_script .git/hooks/post-rewrite <<-EOF &&
+> > +               touch "$(pwd)/hooks.log"
+> > +               EOF
+> > +
+> > +               set_fake_editor "split-out commit" &&
+> > +               git history split HEAD <<-EOF &&
+> > +               y
+> > +               n
+> > +               EOF
+> > +
+> > +               expect_log <<-EOF &&
+> > +               split-me
+> > +               split-out commit
+> > +               EOF
+> > +
+> > +               test_path_is_missing hooks.log
+> > +       )
+> > +'
+> 
+> `test_path_is_missing hooks.log` suggests the hooks are NOT executed
+> for rewritten commits; your cover letter and documentation said hooks
+> wouldn't run either, so I'm guessing the test description is the bug
+> here left over from an earlier round?
+
+It is indeed, thanks!
+
+> > +test_expect_success 'retains changes in the worktree and index' '
+> > +       test_when_finished "rm -rf repo" &&
+> > +       git init repo &&
+> > +       (
+> > +               cd repo &&
+> > +               echo a >a &&
+> > +               echo b >b &&
+> > +               git add . &&
+> > +               git commit -m "initial commit" &&
+> > +               echo a-modified >a &&
+> > +               echo b-modified >b &&
+> > +               git add b &&
+> > +               set_fake_editor "a-only" &&
+> > +               git history split HEAD <<-EOF &&
+> > +               y
+> > +               n
+> > +               EOF
+> > +
+> > +               expect_tree_entries HEAD~ <<-EOF &&
+> > +               a
+> > +               EOF
+> > +               expect_tree_entries HEAD <<-EOF &&
+> > +               a
+> > +               b
+> > +               EOF
+> > +
+> > +               cat >expect <<-\EOF &&
+> > +                M a
+> > +               M  b
+> > +               ?? actual
+> > +               ?? expect
+> > +               ?? fake-editor.sh
+> > +               EOF
+> > +               git status --porcelain >actual &&
+> > +               test_cmp expect actual
+> > +       )
+> > +'
+> 
+> ...but does this test mean we need to prevent users from editing hunks
+> when splitting commits?  If we don't, how can we retain changes in the
+> worktree and index?
+
+I'll disallow editing hunks for now. We may reintroduce this ability in
+the future, but let's focus on the easy parts for now :)
 
 Patrick
