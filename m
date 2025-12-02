@@ -1,173 +1,146 @@
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2990B2F9985
-	for <git@vger.kernel.org>; Tue,  2 Dec 2025 22:35:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86B12F691E
+	for <git@vger.kernel.org>; Tue,  2 Dec 2025 22:44:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764714920; cv=none; b=TPF5QtA5bNhs4RCg6a38IZ2ZQIKZb6ZNOpJYJwsU8FwlQjtcLq5Xd6JQRW4cSfI6v06K/kpbahEBkSDYUTrlJz5WMu5iJQCNHNQmCmRjyIJAifC7FVHY6fV5wkpnolTRMtqViGhoA9lKW7x1n6qA4iyi3sYNjIkqr4DayeRaE74=
+	t=1764715469; cv=none; b=CiR7EUXoCog9D0iZR4yCMm2r5G0b5CagUpD44TFzC3I7J8qHWUC4K0PKij4bNvY1N8LUb5qS0m9MJ+pAYSNG7iROn3ObogOxkTVN1TfaM8pz6tXMjpOnW5PaCq8CElv/aOZRhjSXr+YeEmNx6wf9s60YhfxB/Dg8vObKjs9RYcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764714920; c=relaxed/simple;
-	bh=SclWWQev7dM/o1YRcCkLZi+DsA94FAPjZok8V/ctbao=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=u/5IIVqtimSSyqB0aRsZoXBfkmY14r2Z1cWyuO0vAnw38xBNbGDq2RhX7781GCn7H39/mWBZgPyAB3wF6eU6M7vpAHpgsI1/4I1Jd+2ELDhnhJyxc4rh97YykfTUxS7NvNK1KGR2LD4FmJz7geixjTffTj+TkM+H5iQU6QyZ42Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f/eh0XCy; arc=none smtp.client-ip=209.85.217.47
+	s=arc-20240116; t=1764715469; c=relaxed/simple;
+	bh=Oc3/lzk77UV9LHY7OohrRkIm82BP9sMvGSqMnzzgnpo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mvM6Nv3mYawKRM/OjYw+HXGNvicdQAd6Qqo/i0fPeRkiV2TsRpDBvyDWB7Ai9QLh4DHMw2ZPXo6xjem0mCUpue7azCNj+L6zmB8Cl582cMplPjbLo6VzEQ2wB5M4LWi2FjPeu8K1jY0d6XVr/ZCvvhKll/mGWs5bV33duNtgk1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yh0HX/uT; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f/eh0XCy"
-Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-5dbdb139b5bso5199685137.2
-        for <git@vger.kernel.org>; Tue, 02 Dec 2025 14:35:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yh0HX/uT"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-340bb1cb9ddso5185199a91.2
+        for <git@vger.kernel.org>; Tue, 02 Dec 2025 14:44:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764714918; x=1765319718; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pg/J390ZtXV4cqvJzKO1aBFPwQmjeRMY1jefOUMaKWs=;
-        b=f/eh0XCyw4mzYpi0wifxqZpNC9N+SiUGIBdIpBS95J7PYd152Q43UNrsbG2S0hbR5G
-         HP2urJiItpxoMjUhMHuqjIXZ8pt6tnlPdx+0QR30wwnykZrurGDfdFFpxsQ6Hbkme4UI
-         MY9+z+WYLKZ2wzzUx3iLzwnR69k1sFsdHu9a3qUQmN7bDsyR5oYUsoXrO/JcVPW62wWw
-         JsrCAHc+Uf1TDNBWVIngcLGQpgx+GBSbI9a+cye/nsOqPIbI+edPyTjX8nEQIafQIMrn
-         bXUGNVTGP98O6JyfrrwWQuG8ypigamy47uyOrh95pJV4OZje4oK7Meqy3n9RsBHIIQia
-         P8LQ==
+        d=gmail.com; s=20230601; t=1764715467; x=1765320267; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wRZOYga+UclKyv22PKImwejVNWT5pimRd8tMP5N5xRY=;
+        b=Yh0HX/uTiu93RmvMlGnTrKs+Ox/DRaWBYAoSYfCLP+KMZcPCisjYLBe1aNoFrPilkA
+         1JgOKCDhdgVAR5qxMHa0GPNQrVVyQS7G7WY2QudPaNwoqa/Z/R0JtPFYRuEs9rzbLM66
+         X1FaiE28Q1lyHsdT2NZAPJALvRbA/LNM5dYh2TZs+NZursMWQaTqL66gWnY+KITBY823
+         y1lJpJ1V/XAWXyUTZ2id55jgczzV5zYqPzOo7VEHEmWShBcVe6VU+RqsVewAlMS+PrZw
+         4vznVtaZQjGunDDXEwsn9MlVpsTMbMyJaNpf/pks90HJYJplIXPBn1OzNjSfT5dJIjGO
+         xbcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764714918; x=1765319718;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pg/J390ZtXV4cqvJzKO1aBFPwQmjeRMY1jefOUMaKWs=;
-        b=F3ufDkzS2AcgwQ2KpqK8jMf4wcrOiQ2avNRlmlUytC38zhdrNGYr8JjIXDAR5rqlty
-         W+d9FMhlD1/jwzDiyTCDzs6UWp5cYb9WI/uE9MVtl0qYK9MuyCv2EcWkJWtpbY+JytZl
-         k9JoRvr5hRYF7D7nLLa5uxFlCdvyqIXX0xAR/CV7ySNbaCbTS+aAewYLwuvE4zKazWj0
-         PIODs9AOiUbUSwR9BeXII6RG4PuzyYaveLTbMWXknmbqCyLC3A2o7ymhPGyAEzbDNHRy
-         fQs0NvHrjmkZgLOE4koS4OqKA2Thyrf6e4p+NnMtvTgoBXB61BSYFqVxz8n7Ja7QfdsE
-         DBtA==
-X-Gm-Message-State: AOJu0YwQEfn5Rg6mGTZorv1BO6FJL6CJZsMahWOF1FtHhlCQNvhIxkLw
-	gcTeWNyGf69FL7i0hUr2Y4JkjE+Eh3ajZCtIxIgpgZMNPG+D1ebyqTk04M94i9B4aaQmQhw30d8
-	8kvvXJp948bVSJl/TKaYPwd9V+8gaxY0=
-X-Gm-Gg: ASbGncvKeJMlLqq1t6Kx20adn4o1JzsSo+Z397Bk1r/B1z3s3XDjvp+8+qdIFkSLnFd
-	LLPdIKF9Iy45wSit+Mcv3rFRZPxEGlev2FbZQdBwJvd6dxnUOuNpNK6N/K/2hoWN7jHdZYF9cy9
-	JYeM8mgaA/1+I86kNpK6ykl4IXzoDejOBwr1r6ewHHdprNUjVK/HVNWfLiGig4Y0etFZptmYqMC
-	XuiSeISm3RPhaLyTq75zwrDlGb8DH8ZcAfyAdMXDOxAKmIQFSOn+kddztZxQoMCbKtTmnlnoNY9
-	VHaOWsCqKVB9hSVJTBISIXW7HsfT
-X-Google-Smtp-Source: AGHT+IFoPG5RpkT30x00m+VDjn9Yu6hJiqLXYC6uafiWsC2ZZSpbhrzjsm8Z8rwtkYk0hqkofqc/w76kwKtMhE4HjCQ=
-X-Received: by 2002:a05:6102:c13:b0:5db:fce3:af72 with SMTP id
- ada2fe7eead31-5e48e2545ccmr51807137.11.1764714918124; Tue, 02 Dec 2025
- 14:35:18 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Dec 2025 14:35:16 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Dec 2025 14:35:16 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aS2Q6y_hnwBxycGk@pks.im>
-References: <20251121-fix-tags-not-fetching-v8-0-23b53a8a8334@gmail.com>
- <20251121-fix-tags-not-fetching-v8-3-23b53a8a8334@gmail.com> <aS2Q6y_hnwBxycGk@pks.im>
+        d=1e100.net; s=20230601; t=1764715467; x=1765320267;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=wRZOYga+UclKyv22PKImwejVNWT5pimRd8tMP5N5xRY=;
+        b=VAbiM1VxHf/t1cmfICy+vvv6N+zFLjx46qJVg5oyxHDMbZHHpBU1UudpdV2Vs39M1i
+         uBK3sARGJGHkE3KlxW0qFmEmddPA4pta7cc8A8PdgosQfm9ZS2Grnjc+mLpdFGVq1Jxa
+         q/tsLl5lHZMmi5a9Bo/K99GRzHuuAknX4cgI5PtYQFbhAZESSrqIGxbdQIXn3d9NxNWK
+         De7Dg4ydh4bcB5mSrGJlw/YeGpKUTc7KgSkJos0SyOnUvXmC0LXSnvR1khF8tpcQGo6d
+         vvLup4wu16okNriI7qX7cR1eoAFIL6Y9xfv28mhR+MPoDnTGfFixYPLbGc81XDYwVNKg
+         d0Iw==
+X-Forwarded-Encrypted: i=1; AJvYcCU8s/hxbj0GfWFikT3PfIiktmaXsenjREgaIecoJ7Zk+sg3wX3wEf4QVvKVJW8rlnaOxxM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzb3fZcg5YG4qkFEsImEsd1T2q1zX6j0oeRZKZfp+bapoVxiQgJ
+	PHGaev4LI05HQgErd79Uw0UEhaBRzt/8oJto3tUedJtgFMCH92aLY6cNiA+seLkqE60Okesue7s
+	OSMF9kqGEiBubMoga+1CDKZ/GzMjlEkg=
+X-Gm-Gg: ASbGncukfdgt49ydK5jOKjcp9wePb6nWH/+J6HLM8cWVKB24tNK2LZ6CMgE01Q7MoP1
+	B8yE1M6fKh3aZ/9RoMxHRj9rGIUCdvzHAU3vch8tVwlpHpWzBFiCV47h5Su51NGJX31cUyqDxj2
+	wc+9s3rMhEEr3th4aiRi5lUUwoCSt35DoyW0+XdhYxIMkJxOOMt4/YYs76TztRaOGzdG9lnaUbc
+	Ta6BimM6CneYb79HXQqIAVKU1z8WrhLXSSPNvN+AAAAXJm+t6xyvLc27kmwrG5Ry5aPThA6QZMo
+	Zb/fxkooSQ1HFISWqZuFUBp++b9tSO5U/zJhpVij
+X-Google-Smtp-Source: AGHT+IFyFK5P8/U8L0mEK4/pDkno/Psy2IMS4Xv8XY7z2pLYpiwkWSL37UlfTUEeVEDSWKhshzUThzzNDoWYKDTXx60=
+X-Received: by 2002:a17:90b:3c85:b0:340:f009:ca89 with SMTP id
+ 98e67ed59e1d1-349127cb4bcmr250350a91.22.1764715466844; Tue, 02 Dec 2025
+ 14:44:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 2 Dec 2025 14:35:16 -0800
-X-Gm-Features: AWmQ_blRWBtnlFTPmsDz9q4RwIf9QAr8qx5RD767top6d5Q4DlylpsuiuJ9oOIo
-Message-ID: <CAOLa=ZTdfkK0ty2YQfE+GTtgYZ7wrOW_04Ony8tN+x2oqoXSCg@mail.gmail.com>
-Subject: Re: [PATCH v8 3/3] fetch: fix failed batched updates skipping operations
+References: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
+ <20251027-b4-pks-history-builtin-v6-4-407dd3f57ad3@pks.im>
+ <CABPp-BGSYKPB7met4U_4ECNgA9vb5y_AWnMWfpiisOHnd_OyhQ@mail.gmail.com> <aS80co7VTABD6nXs@pks.im>
+In-Reply-To: <aS80co7VTABD6nXs@pks.im>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 2 Dec 2025 17:44:15 -0500
+X-Gm-Features: AWmQ_bnYryFlQ_hAWjo77FnAJ_GoKeOQuf5IIfYIAulQ6f-iIigbxeOmhQw9rcs
+Message-ID: <CALnO6CDG5EMha8k4DPy=p0FT1hO_SeU0wxm6qn2+Q92xNY6hqQ@mail.gmail.com>
+Subject: Re: [PATCH v6 04/11] builtin: add new "history" command
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, jltobler@gmail.com, gitster@pobox.com, 
-	sunshine@sunshineco.com
-Content-Type: multipart/mixed; boundary="000000000000d33e950644ffb566"
-
---000000000000d33e950644ffb566
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>, 
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
+	Martin von Zweigbergk <martinvonz@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Karthik Nayak <karthik.188@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-[snip]
-
->> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
->> index 4b113d7c27..a1ca4e1ac7 100755
->> --- a/t/t5510-fetch.sh
->> +++ b/t/t5510-fetch.sh
->> @@ -1639,6 +1639,94 @@ test_expect_success "backfill tags when providing a refspec" '
->>  	test_cmp expect actual
->>  '
->>
->> +test_expect_success REFFILES "FETCH_HEAD is updated even if ref updates fail" '
->> +	test_when_finished rm -rf base repo &&
->> +
->> +	git init base &&
->> +	(
->> +		cd base &&
->> +		test_commit "updated" &&
->> +
->> +		git update-ref refs/heads/foo @ &&
->> +		git update-ref refs/heads/branch @
->> +	) &&
->> +
->> +	git init --bare repo &&
->> +	(
->> +		cd repo &&
->> +		rm -f FETCH_HEAD &&
->> +		git remote add origin ../base &&
->> +		>refs/heads/foo.lock &&
+On Tue, Dec 2, 2025 at 1:48=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrote=
+:
 >
-> Hm. Is this compatible with all supported systems? We typically write
-> this as:
+> On Wed, Nov 19, 2025 at 11:02:20PM -0800, Elijah Newren wrote:
+> > In addition to what Phillip commented on...
+> >
+> > On Mon, Oct 27, 2025 at 4:34=E2=80=AFAM Patrick Steinhardt <ps@pks.im> =
+wrote:
+> > >
+> > > When rewriting history via git-rebase(1) there are a couple of very
+> > > common use cases:
+> > >
+> > >   - The ordering of two commits should be reversed.
+> > >
+> > >   - A commit should be split up into two commits.
+> > >
+> > >   - A commit should be dropped from the history completely.
+> > >
+> > >   - Multiple commits should be squashed into one.
+> > >
+> > > While these operations are all doable, it often feels needlessly klud=
+gey
+> > > to do so by doing an interactive rebase, using the editor to say what
+> > > one wants, and then perform the actions. Furthermore, some operations
+> > > like splitting up a commit into two are way more involved than that a=
+nd
+> > > require a whole series of commands.
+> > >
+> > > Add a new "history" command to plug this gap. This command will have
+> > > several different subcommands to imperatively rewrite history for com=
+mon
+> > > use cases like the above. These subcommands will be implemented in
+> > > subsequent commits.
+> >
+> > "...*Some of* these subcommands will be implemented...", right?  You
+> > only implement two of them in this series, not all of them, or am I
+> > reading wrong?
 >
->     : >refs/heads/foo.lock
->
-> But I have to acknowledge that I only do this because some people that
-> are more knowledgeable than I am know that we need this.
->
-> Other than that I'm happy with the current state of this patch series.
-> If the above turns out to be a non-issue I think it should be ready for
-> 'next'.
->
-
-I didn't know about this. The CI didn't complain about this too.
-
-A quick search through our repo shows
-
-$ rg --stats '^\s*>[\w/.-]+' t/
-...
-969 matches
-969 matched lines
-285 files contained matches
-...
-
-$ rg --stats '^\s*:\s*>[\w/.-]+' t/
-...
-188 matches
-188 matched lines
-58 files contained matches
-...
-
-So seems like we use both, meaning, this should be okay?
-
-> Thanks!
+> No, you're right. The initial versions of this series implemented more
+> of the above commands, but at no point in time did we actually implement
+> all of them.
 >
 > Patrick
 
-Thanks for the review.
+While I'm thinking of it, at work today I had occasion to use "drop"
+and "reorder" (from an old version of this series whose binary I
+happened to still have laying around), and it was very convenient.
+Looking forward to it ;)
 
-Since the other comment was a nit. I will hold off on sending a new version :)
+- drop: I had made some changes on my tree that needed to be in a
+separate branch. I didn't want to mess with stashes for some reason,
+so I did "commit; switch -c =E2=80=A6; cherry-pick @@{1}" (or something
+similar). Then when coming back (switch -), I could just do "drop @".
+I'm sure there's a better way to do this slicing that wouldn't have
+needed drop, but I couldn't think of it at the time.
 
---000000000000d33e950644ffb566
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: aabcec9c7cdebc87_0.1
+- reorder: I have a series of mostly logical, separate wip commits
+that need some more explanation and might need further tweaks as I go;
+I'm working on uncommitted changes that logically belong to the tip,
+but spot something else that will be a separate commit. I make that
+commit, then "reorder @ --before-commit=3D@~", and voil=C3=A0, I'm ready to
+amend again when I get around to committing the rest of what I have.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1rdmFhSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMkVlQy8wVG1lUHlRd0VKNFFIWFVhWUJRdzdhN1I3Vgp2RlBxVGxlWDZl
-Ykh6ODJjUUY1VG9rdHNMZXk4bnRPZVhyNEpxajFyejZWUlduMkl6ZDBuLzFvQVlZQUJTRk4zCklq
-Q3daVEovVFFQVnhTYnVadkU2Vm9aaWRTeWZVM3Q1Lzc2bm1UT2x2NUNLdEJ3Ulp0T29Pd1Rad0N2
-SjdSRkcKaGkvcnRVOVJFL2xLNG1jTTJiNnQzUE9ud3I4L0dTdmQ1R216S1JvUk1IeHdZS3YxMUdE
-N1RrOEVjSVRhbnNVeQpBK3UvZFdvVTEwQllOS0IyRW1kTzNQQzNaWXdHTG5IMUZmcmthcGVGaVpC
-WnY1VXc1SlBnbUhTSExnOW82QlpiCnlxMlV3VUNjQnMrT29oNDEvTzk2Ulg0Rk8vZ0l0QTAvME4r
-aFlOdjVrazhHbndacVQwdGNWZ1VINHBpaWZtSmQKVS9vdVBSOXUvSHRwWi9JMjJoMytKNWRKVHUw
-MGpGYkk1N2JJcEJtR0RhU1h5bmFvVVFPczNyV3FqSHdBV3dOagovR2dzTTZxTmNBZEtLbGRNbDJm
-anpQbzhxWlV2MURCRkZPRHlHQzVlWWZ3TU9xSlRqRVJWVmdxUFcrR3V3bzRJCjMxUmVWVFNXNkNq
-SXRtc1c2cEhXWHVmeGoxdkZ0emxrQjFuVDNpRT0KPWl0QjUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000d33e950644ffb566--
+--=20
+D. Ben Knoble
