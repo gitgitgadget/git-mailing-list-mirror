@@ -1,185 +1,131 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
+Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2523F17BED0
-	for <git@vger.kernel.org>; Tue,  2 Dec 2025 22:21:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657F72F25F8
+	for <git@vger.kernel.org>; Tue,  2 Dec 2025 22:26:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764714117; cv=none; b=r9+/vLwCmkKhgkYCXHTpw8Bimj/vqI9Ssmp56gtJ+RGy130jElKL759R8rKzSYkTB6T/jx+c3eEz9AUZ0LavB6awy78uqeoxIkOzdvkAgHLdc6hxXSs1TWEl9cM5gKH46kSHbl62QqPXdEA+QBbg9eBITJpixLiO6J5yTGjBc1Y=
+	t=1764714369; cv=none; b=IpqEnngs01HAliddmLJpwIbk9sidlloJhfCcF+cHHwEh8LrUYQLwKTHzpAqcmO0pupid78tk0MNhunFRiMWOF+/g9G61ePIoaPAFvnl2r40LL/uN9aoUbzcUL9u6LtYXyHidxwasexsN++5b1aTkpjbd4j3iWBjhXs4gHm2peRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764714117; c=relaxed/simple;
-	bh=jlnn1GltTO1qgPtR5MiSWAlyP+z/IUMdnb9XRno1+jU=;
+	s=arc-20240116; t=1764714369; c=relaxed/simple;
+	bh=NtTX70VPb1korlk9GbRDq5RMl478SMAUlytIi1ExpZI=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fm8bkwkjYhGzXm6B5zzliYC877Lnps93IGJ/3dm+25UZW/D66RqS3DXtUgQl2fTN+kMt1hEvcpYwyklBWYbSbJqytlm9ZABVY4DZLnGZrs7GvwKpX8+gd2qpd4IahWP0N3zvn8IgbbuI56HL1KnkD9v7d6vt+rW90MgW03h6RZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E7KLsLiS; arc=none smtp.client-ip=209.85.217.44
+	 To:Cc:Content-Type; b=XefzQVW61pbSFNJyJxHs5Bd152vfkQ4dYi+XXw5hcRCk4ysSaA/3OXk8othPG4PEeX8fYZr/UWZNKgEmq6Wxz2jRcV2c1qeENYjAtX38AQcY86gYEQ6R1VAuSaE8h2eBRUYwAI8kWTMFWzqAfk0/ioiCDgWGMFlrWSqEP3cE1Eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G8fM4zcq; arc=none smtp.client-ip=209.85.222.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E7KLsLiS"
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-5dbdb139b5bso5190382137.2
-        for <git@vger.kernel.org>; Tue, 02 Dec 2025 14:21:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G8fM4zcq"
+Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-9351ed45fb8so1489287241.0
+        for <git@vger.kernel.org>; Tue, 02 Dec 2025 14:26:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764714115; x=1765318915; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764714363; x=1765319163; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZIFrndMryWvAmzW7bGJF6Vq0V+bqzBHLmlXpz3p4Xk0=;
-        b=E7KLsLiSZHQOS+zWd3cbbmwhNhkke62D89YZbuxY9Aw3C/ze0lROxer/1XqpcJca9h
-         oh6qgCKsyWX8RJpmooLr6G83ceQTLPRrRQkv0dAeQujYxDb7fre/6Xw1tlyTmr9aYu75
-         +NyYWwtmawSu5JaZJKIbLo4idpXMoC8qAuOxojMEIXfvxSoFMxqTmIRWcEHOYyLbCWLo
-         PVoTkS2bGLVv4B5eyK6s+XVnTQ1+jHasCIwW7L18NNg/nsQL9/dwYSXc5RNGhu/N9oXA
-         toXfmslnxBJpuRRr2dYF3uN/lcG8ZFuBxyVIlYIk2VVEAZFwhSg/18zzsP9VvYsJPxLk
-         8JFw==
+        bh=3XpAHyXfyz1nlgKHoyekdrDwqTkRFIXTWCFSpOACl/w=;
+        b=G8fM4zcqJfwsW3/sLxNox5uCaf0x8QRyI6tHgh5Mi41NpkKQqhWtq3tn77goitYD0v
+         VUZoR82uQtP60HexNP3pINljTKNWH08+Jg5flkQkiQDCO86D1QZ1Gxg/HTk41qaT/0am
+         4/95us+B1rwTl+D672VzjwSVwHTITj4l36XQRmElzjrnXRG+wQ8ahWBMlmrszHbqEfkR
+         qSEhxBTn6vLtiXNAs7l/B2eEplfqDT8WorX5Z8n5T2FjgYoD8mZ31XrYfSRgXPIKvlV6
+         WV2PAH3hgttW3EBg+GB5EHuo/Js+OFIzrbFTHCqG/SsystOqTY7RTD/3NgNaKyL+M/pO
+         mNLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764714115; x=1765318915;
+        d=1e100.net; s=20230601; t=1764714363; x=1765319163;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZIFrndMryWvAmzW7bGJF6Vq0V+bqzBHLmlXpz3p4Xk0=;
-        b=E0aW6VRIdwRa1l3y4oU3bBf/kAq9E6AKTwSyVeCayM+6H/qhhuefqSlIKS+C1wzMgW
-         SwZZsO4MhUoea66UceHrGrTE3XigQTRz3hKd92xlhRqLrN2Nc+37XEpY5GWzWdNlwaMN
-         k0Dmi5BHT+kVGDulkgsrRxUNE5clp/p6hNjQMgp6FeAyEnonkxMxsEEYI7Pl/pZrRZG6
-         uzChdcMC2y+M3fKHPmanEm5bc2eAxli3oMEcIk+otI7xH0lvnOBgoawJ/FBcF9AUWtD6
-         rMS9Wo9gg970tjqwAI0BGhGpWQ8rCP5kKXFetb1gKK0Q6Tz1xUEumJJNtjB+VJalbNsM
-         aMvg==
-X-Gm-Message-State: AOJu0YzBeLcNPEhRaBsWTF9J7HxS7WyNyUpTIFdwp3i5QfPxp2zCBP+K
-	5dYnGBywvayDSS0pchvfLyYComxKn8LvnGy6sJblbgFmfkfJ+AQsK0UPlqC+WqOkAUIXCtmkBXb
-	NTfyVyEMd3u8IaXfGZxADEDJVGgqDTyhhHA==
-X-Gm-Gg: ASbGncsasrg4iEoceD2Fi9JMgKIOK7RQonEMZM1gIeGWP+w53ECcbqwWw2iZz73FpDz
-	QfhOOvRGJzCS0nosflMQT0KDMdyXuNC5UW378BM4E+AYYf7v1SvBLdhUh4Ay0qr+YdZgKMC1fft
-	DjxMuHCDlUpsbRtjqKiCL1Fa3VbsDExN1mnXbTGdmKco3gXG+gLrl70xbiNSoDJ5q2ISrHLC18R
-	kdtej7TwURP1XdGqL5hir2QE1njLwN+g1yqNWeYhUwjYu7f3pqa/TyiuwxdOBgZG3Y/Vu/tpBuI
-	c0jd1qfevuD6npgm0w/6LumeqipNoEaO82Mn70o=
-X-Google-Smtp-Source: AGHT+IGHynOFO3rdHk4C88ta4zCVpsucJIF6GfOn1vC1nDnGhaOVqVXpG2FdVwFt3+Nbig/RMbtuxUWtRzBumQ8+dSw=
-X-Received: by 2002:a05:6102:cce:b0:5d5:f53b:c993 with SMTP id
- ada2fe7eead31-5e48e336b40mr31249137.24.1764714115013; Tue, 02 Dec 2025
- 14:21:55 -0800 (PST)
+        bh=3XpAHyXfyz1nlgKHoyekdrDwqTkRFIXTWCFSpOACl/w=;
+        b=HM0ScAQfbevSpEfTG6f6svvFD5rC3vSF+oe4JeDjFcalFbhy4h9aeb6zXlWDu0e/+Y
+         5FIA0V/4xwoUMBw2xVXeYqjxNPiGvyAXmI/+rmyKoUtusSUEQttYpV//PLFsawFSJ4X1
+         Zn2x+TvkMkgMdzx9QWRxa0hgdUqcY+t51MLf7eb+epW/bXLEtE3QTF8sy3SMwu34RL+J
+         uLldo3/ABMjDNHP3ifTTZ5KZ9tVti5XTgS+U+zLOECTrRa76aJye1MEJT5elMaest9Cl
+         gDlYKtapE3AMZWiiYVFkC1MySPWt9nmBEwZJ+q8Tz6+Z4cxIw4wUIum1YWl6EMFydiGN
+         5Amg==
+X-Gm-Message-State: AOJu0YxXiw/wfAKJAvaP3lNxHMVorCVuGr3n5kEFbtgma0eTmmHpzU1y
+	u9Dp4OVAznH86bKoYw3FrN0BJ7+V7+QWvUCXKu9RDtsGJR9mqn+4wuSlKAAxxK573oeURNhlNba
+	YPEuEdRSCt7A1meI+2maktti5qviYe0GuZA==
+X-Gm-Gg: ASbGncuolwGzQNGrIcRZBcWKUpNVv2wTa5Ll7g9KNGV7GaDYAHSGDaHmVQ1VJWW+SX8
+	ofZ15UM6vbL6gEct6lnxhzsyWq04kklbr0IVVA2s5+USGVKTsog50ISU6ehmXFZhSRzYebqyb/X
+	aPGVLxRS/z+QFpZ4ku1XiAqc1KOBxzGv6xU9cq7y6F70y4Ti/Rg+CpTP9vc4nazFmS8I1s2a5H5
+	ASt4QekuD4bULwoDe4ITlEDzebx/6XoJETTunCwKg1cRXTYAVt7TsZpFRLtxZfwHuFWHwGMuIQZ
+	WgGaUB1+GaRJhKwAnKGrTfMN+M6qOC9SsnWXkO3KjBGNeolmWw==
+X-Google-Smtp-Source: AGHT+IGHMFFxSH0morw3ABu4kNOKT+/zkMt6gUtd4X0iVzdfzauBAW++xsdMcXxLqBHOXpPlZ5gLQz1RahtnGtZXf68=
+X-Received: by 2002:a05:6102:3ca0:b0:5db:23ed:3840 with SMTP id
+ ada2fe7eead31-5e48e40eaf6mr10723137.37.1764714362975; Tue, 02 Dec 2025
+ 14:26:02 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Dec 2025 14:21:53 -0800
+ HTTPREST; Tue, 2 Dec 2025 14:26:01 -0800
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Dec 2025 14:21:53 -0800
+ HTTPREST; Tue, 2 Dec 2025 14:26:01 -0800
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aS2X7pI8muco7a1Z@pks.im>
-References: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
- <20251119-kn-alternate-ref-dir-v1-2-4cf4a94c8bed@gmail.com> <aS2X7pI8muco7a1Z@pks.im>
+In-Reply-To: <aS2Q4-U5kgJ2nNVv@pks.im>
+References: <20251121-fix-tags-not-fetching-v8-0-23b53a8a8334@gmail.com>
+ <20251121-fix-tags-not-fetching-v8-2-23b53a8a8334@gmail.com> <aS2Q4-U5kgJ2nNVv@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 2 Dec 2025 14:21:53 -0800
-X-Gm-Features: AWmQ_bkd94KYi2mNvjvcciILbCdmDLZfoi8wqZ4h2zswoCYPKWPSIcA1FelWwkc
-Message-ID: <CAOLa=ZR+YaWmqUxz+OjtKP88hWj5BEKwpvY78vrgWdoJecEwkQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] refs: add GIT_REF_URI to specify reference backend
- and directory
+Date: Tue, 2 Dec 2025 14:26:01 -0800
+X-Gm-Features: AWmQ_bnj12N_4ukIS8z1aSKxykNMQQRDSZKKe8tNcJJ-O8pNgD9VTxYTD5wWEd8
+Message-ID: <CAOLa=ZQ-O7V9qHbgeuQ78R1bHGDmGEM6fP5Kr9aC0AfvSF8MZA@mail.gmail.com>
+Subject: Re: [PATCH v8 2/3] fetch: fix non-conflicting tags not being committed
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000f4b71f0644ff85a9"
+Cc: git@vger.kernel.org, jltobler@gmail.com, gitster@pobox.com, 
+	sunshine@sunshineco.com, David Bohman <debohman@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000bc54890644ff94e1"
 
---000000000000f4b71f0644ff85a9
+--000000000000bc54890644ff94e1
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Wed, Nov 19, 2025 at 10:48:53PM +0100, Karthik Nayak wrote:
->> Git allows setting a different object directory via
->> 'GIT_OBJECT_DIRECTORY', but provides no equivalent for references.
->> This asymmetry makes it difficult to test different reference backends
->> or use alternative reference storage locations without modifying the
->> repository structure.
->>
->> Add a new environment variable 'GIT_REF_URI' that specifies both the
->> reference backend and directory path using a URI format:
->>
->>     <ref_backend>://<path>
->>
->> When set, this variable is used to obtain the main reference store for
->> all Git commands. The variable is checked in `get_main_ref_store()`
->> when lazily assigning `repo->refs_private`. We cannot initialize this
->> earlier in `repo_set_gitdir()` because the repository's hash algorithm
->> isn't known at that point, and the reftable backend requires this
->> information during initialization.
->>
->> When used with worktrees, the specified directory is treated as the
->> reference directory for all worktree operations.
->>
->> Add a new test file 't1423-ref-backend.sh' to test this environment
->> variable.
+> On Fri, Nov 21, 2025 at 12:13:46PM +0100, Karthik Nayak wrote:
+>> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+>> index b7059cccaa..4b113d7c27 100755
+>> --- a/t/t5510-fetch.sh
+>> +++ b/t/t5510-fetch.sh
+>> @@ -1577,6 +1578,67 @@ test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with loc
+> [snip]
+>> +test_expect_success "backfill tags when providing a refspec" '
+>> +	test_when_finished rm -rf source target &&
+>> +
+>> +	git init source &&
+>> +	git -C source commit --allow-empty --message common &&
+>> +	git clone file://"$(pwd)"/source target &&
+>> +	(
+>> +	    cd source &&
+>> +	    test_commit history &&
+>> +	    test_commit fetch-me
+>> +	) &&
+>> +
+>> +	# The "history" tag is backfilled eventhough we requested
 >
-> Based on my reply in <aS2V4TKeS4V_oxAb@pks.im> I wonder whether we want
-> to take a bit of a different approach:
->
->   - We extend the format understood by "extensions.refStorage" to
->     understand "schema://data"-style strings and adapt the "data" part
->     to be passed through to the reference backend.
->
->   - We then use the same mechanism to parse both "extensions.refStorage"
->     and the environment variable.
->
-> This would have a couple advantages:
->
->   - We make the ref storage extension more flexible so that you can move
->     your reference backends somewhere else entirely.
->
->   - We prepare for a potential future ref format that _needs_ to receive
->     data as input.
->
->   - We have consistent behaviour between the environment variable and
->     the extension. So basically, the environment variable starts to
->     behave as an override to the extension.
->
-
-I did read/respond to your reply there and I agree with your suggested
-approach. An additional advantage would be that this would also mean the
-ENV variable is more deeply integrated. So the backend override added by
-the ENV variable would also show up when running `git repo info`.
-
-> One issue that we'd then have to solve is how to derive the worktree
-> references from the backend. Arguably though, I think that the extension
-> that was specified should also be sufficient to identify the location of
-> the worktree references.
->
-> We'd have to refactor the code base a bit though to properly reflect
-> that in our tree. One way to do this is to extend `ref_store_init()` so
-> that it receives the worktree (or NULL) as input. In that case, we would
-> continue to pass the combination of format and "data" to the init
-> function, and it would then know to locate the worktree references
-> itself.
->
-
-Yeah, I'm considering adding this information to the `repository`
-structure, so along with `ref_storage_format`, it would also contain a
-`ref_storage_data` which would be passed down to `get_main_ref_store()`
-which would in-turn call `ref_store_init()`.
-
-In that sense, when in a worktree the $GIT_DIR is set appropriately and
-this should all work accordingly.
-
-> What do you think?
->
-> Thanks!
+> Tiny nit, not worth a reroll: s/eventhough/even though/. Other than that
+> this patch looks good to me.
 >
 > Patrick
 
-Sounds great. Thanks for the input
+Will add it in. Thanks!
 
---000000000000f4b71f0644ff85a9
+--000000000000bc54890644ff94e1
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 88ce6e3855dfb9c9_0.1
+X-Attachment-Id: 6135a7dbcae62085_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1rdlpvQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL0JqQy85N05jTlJ6Smh6eEJRaEh6Q0tLdXFRUUU0dwp3SGFveDA4UE5W
-RTVVNkxRMjZQSjExK3pPbkNZQ05Lc0NWbFh5bUVkMndqU3Y5enA4S2d3TWNGUGdtWG5FZkVOCmRj
-YjZRTzNSTW1HeXdzbDFFbm1hYjYwRm9tdTQxNU03N05rUk0xcGpjUTB0UkJ2Vk9raVdXdXBGMVY5
-ZkhBaDEKeVJQVm9UL3BLeTlMeGd4QzRWTkV2TjdZZmVTMkdMWk5vdEdra29GWDVWZGwrSHFpTHhD
-NkZTTFMzaG4xN2k3aApXVEJZNER2ams0UUVMMTdHWENDa2hYUm1WQ1pOckNxOTd2UDhXa1VWV25W
-RyttYThGTitobGxnenBSQUg1L3lXClNvZ3Y2TXRHOVdjTXFjVk5nSUhZR0JoQ1RWYlZMbVBtR3pr
-ODlHeUM3TkhTSEJqMk9rbGlGNXhKWG1DUUUrUjYKNVVyODN6bFZqbDEwdlNBSlBMSjNQbGUvUENE
-OEtPclJiaHY2ZXlJcVVMN3pDSE42TEhQMG1QSHUvcWMxdmg0TwpwN2xPamNTYXROKzN0NklkUmxG
-cVNtMUVDekJQdUw2bGQzLytlenc5SDd2Q1JDVWd4ZGl2SGRocytWbk9GZnZqCnlTdDVlS0k5cUZM
-Y1pMa054VERxVmE4OSs4THBPbHZMNUNXNEpLaz0KPUZxOWUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rdlozZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meDBiQy80ME1LTGd2YzJTY0poR3EySExsbXNqd09mMApYeUFtQ2Y4aWJq
+WFdRQ2E5Q0dtWFhwa3ZhQWUvVHdJalArZ0VxYko1eTZ2UktPVzNCcmVHaVJHTXpNdlZ1N2drCm1R
+WlZqRUhscnRTVVVBcDhIMlcxdEhkUDZMQlgvcmdGMm44bFpyOXp2M0xNeEJxTU5WR0FIV1VBQzNa
+WjVjYkkKMXBhN3pCQUpyNk1GRmpyTXNrZEZ2Uk5qejVkSkJEei9Hc3k1R3hQZUt1aTVFaGZBR25T
+S1p4czgwcGovMUd5VgpJYXNmdXhzV1hLb3dpZU0yRDIyZm5ISFA0ZkdPeTgwS2ZsbDBSVExONHBr
+WVVTVlZCTElISEFwZGMwRERMTVlsCjMxaHFuNXNiT3ZjYVJsVkZPZlk1V2xwQ04wQzEydXpLVmk5
+NmVPSU53V3VzOU1EQVhDeHpXRHlIWW1rbk1oTisKMmlNMk81eWhyci9VNWJ5a3NFUURMRTRaNTlD
+ZGJOeUlxMk1MMnBGZHlDTW5XU3Y2bStoMzBwSnFoK0dhbW1lcgpYanc2R254THZ1K2RJN1pNSDNN
+dXpqVEh1SEM2bWJEWExLVmlJZGxXSDRGWG15MUJhWDA3LzVxY0xLZFJuYlhlCjJhb2lsWHd4K1N2
+djFWWnEvWUM1cjNEdGRxb2UxVmovOTBEQlMwWT0KPXJYTTMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000f4b71f0644ff85a9--
+--000000000000bc54890644ff94e1--
