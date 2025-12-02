@@ -1,266 +1,243 @@
-Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA9B25F975
-	for <git@vger.kernel.org>; Tue,  2 Dec 2025 15:29:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF0627700D
+	for <git@vger.kernel.org>; Tue,  2 Dec 2025 15:43:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764689357; cv=none; b=JC+OBDy/sDqcUDFkPTz4QZSzEgb15Vt0KYtTr/rXuL6m9tWGhLypRmeM/uLX3MdbCGeH9oy8F8Vu7LTm6R2hMCldRtLvaLbH13MA/8OKzR95CzI3gnuBXCpfBk+elyYnMGiUVjJAzdbc2TRXCA/zz3KF2UWJFtT1G3kQOkKGILs=
+	t=1764690242; cv=none; b=eMZMCo6upLzMhGS6eBzBlTvCR40+top4Cn4diZgRUXvlxN5AqlSrGyoRCqp+ebYVFGoTwWq4T2uXaEGB3uM8H0xuVodkGsw0Bo9Kw6oqZJmM7bSbeXSRJDsrM8yyBBz2tdPJMvvai//ik3osvUDYXH2qLd+vVuEVmd90/ZicHo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764689357; c=relaxed/simple;
-	bh=wpoFtY1noj0n+HECxcqGY0mHYiw8e5BuvgNMuxMKC8Y=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=k6u13ZkH6qriqo2HCF6WuJMeMHhBKzv2bfD3ON5K+4gISQcU0u1uBZMmVdIVjYy6XkX0AIPUdM67nr6AE5ouASUI7A0CI33ADSV37X3ZrzxiHOlMP/mffUhdUZUDbswEEYrV9XTU0fd6bTWI+DIbKuxUG3e0SseHLtymW8g3VnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OFyQBnuX; arc=none smtp.client-ip=209.85.221.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764690242; c=relaxed/simple;
+	bh=zqEH/2GvFwIRam5lFQsnq4oUTBR1HtDJPfcxCQyMJi4=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=XBkQVsFpkE/EczbcKqvK4MrFa1OBx9S/RfJN4d7CE7eRU2dM1ozcQyC+chIDTGgvPS6pmNrEvkUueC9C5cyi71ppy9EKOdAZYsWAY6YAJp9kd9oelW7gWsQDh0ggNhm1Opi7BAG1C6GzfNRbrmUdzQkOTv6Co4pTu4mDEiS+TeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=WpBH/EHQ; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OFyQBnuX"
-Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-55b0d4b560aso4165982e0c.0
-        for <git@vger.kernel.org>; Tue, 02 Dec 2025 07:29:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764689353; x=1765294153; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=SabtBtaE3WVqAc6iwFfzukKrdAGUDo5ENkiLAh2zg8o=;
-        b=OFyQBnuXthSEhESJJKnc/5SSUKZFI7W6Ybxfkf1eEL/I+n40g87COKBoHYrvsr2Lag
-         g9uPXnaiOgmTso9qpJZlKgG9zL9RAAvrpE1H//Gwm1sFhvAtIlVQ0MO64ke77a9HUClr
-         +HHYof7Hgdmk9k0uWPcI3wAXxgj04HC40MvzJOb8euccvDpenhRofdcjiJWz9B+TQ6VU
-         9bQBT8HcxKu8Lxk6uzBL6oikmDuvyTI/lQ/8mrTPasfzkMhYeFiO/ZEhKFK0aPSluA5u
-         hMw0y+dU1j6o16/rZPXh8BOv/AzVgSZ6eCkUkI/gMUqe48CROzuRnCZLAEhxLZigL0ff
-         Q3Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764689353; x=1765294153;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SabtBtaE3WVqAc6iwFfzukKrdAGUDo5ENkiLAh2zg8o=;
-        b=ifrXWpByw5hgRZAU3I3NUSE5lgEp6naB/5GAjNDFKDy2Iv5bqbjU1DZD4/AqkAR0OB
-         9BfTMBJz8C5IsbhjWkHeDmzRYBUD8lAVSY5v/wMcNHI/Sn/UBxlyw6ipMv1vN9596dPP
-         jSL/2tZrfuMbC4NxCwyE9C5Kh3FrvsKvfUkCE/5x/rMrJyawyRM/GNsDFtRTyxe58Mst
-         SZ2RaPK6SMHt1fxDWE5K0FH+RLaq4pd+6m9eKxSHt0NzThyHsR+h5OnUzi9VbNr4/DAL
-         13kLD2cfc7SpssFe1+77zZIj3ciK6l4c5LXijqVnhTVRX+Mzkk6YRNztoTciZSCL9HgC
-         wdrg==
-X-Gm-Message-State: AOJu0YwP/6rcxxj+M7dRo1V88eQDkGy1f3m1+x8o4frHMz0yLTpBGslT
-	30pJMncg2ud8w5HS6Ln9hZFDJ0Lqufs1r5HZa8qK4AomytLZeIR1S5qsnWA2HOXrfHroyEv56RL
-	/d7xXwY3KNzrsZ5Er1sBcJi0dmrnNw/KC0Q==
-X-Gm-Gg: ASbGncvss/qOhd0jDTbaFvnIH/x17dcz+sW87cAh6Bx+GL+FC/LWRlVesgYSoW1xJv4
-	8tOv6Frzprnb5wTIYRkuIXzjiFuoUzvJocZvOaqrF2ctxc+OKM594R6OKRrjCzilttVThFIiz+A
-	YhR17ovbyUt76pwqNDv9/pLtWBlT9LfkFvP+lHzLE2sL0vcoD3VqAhVwMGagReCbx1nNxMGO0d0
-	j8GN5Ae5/SrkfB9j2UA4OSpUWXjXSe4GTiCjCXesRM/4n1hxg8JQPttNQfjL1OcJLm4rBjnBhxA
-	cbfc/VACysQU2zeTxdGxbVMQc1ZkQg==
-X-Google-Smtp-Source: AGHT+IEzabwRyHcXFnmam4KNGvbhDKZkgQChXb1iI4m9EmPMUkhQWRs78d9qFkoPBE/pKZ8i4vZbm4Od8AvPh+MC/rw=
-X-Received: by 2002:a05:6122:8006:b0:559:6788:7b55 with SMTP id
- 71dfb90a1353d-55e4e6d6acemr1266370e0c.3.1764689353443; Tue, 02 Dec 2025
- 07:29:13 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Dec 2025 07:29:11 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Dec 2025 07:29:11 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aS2V4TKeS4V_oxAb@pks.im>
-References: <20251119-kn-alternate-ref-dir-v1-0-4cf4a94c8bed@gmail.com>
- <xmqq34651ie5.fsf@gitster.g> <aS2V4TKeS4V_oxAb@pks.im>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="WpBH/EHQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1764690236; x=1765295036;
+	i=johannes.schindelin@gmx.de;
+	bh=yegPSgC2vo9dMcaIBB1MMZmtdbmyR8nDQjx5TOOzok8=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=WpBH/EHQYybukDK2rQBXnsjKn8ixFAjfmW9seap3r3xgAsoreue+5d9PDCrCuFnN
+	 UMinfHOqlc8lCe9Nnk2+3BYhhnVrzkX34/vdksxOVcPVIuqQDOzNb5jyfXKwTleW6
+	 8Y6UCfvfPOt+csrOVXtae+prVuWEF1Rwe8yJXglg78tNOABwCeCUhR2Xn7PKYyQO8
+	 kd9mSzyNy5IETVjRCthsjgRtzxWTn77fhHB9/Jg7MQNc99k+knPyIwctlvOECYW60
+	 3TghIbaQqXvY4xMU70AAM7DuB4cmh4n2sN5WNKAEUwGIhwaIaVwYkwGVDc7r4igwL
+	 ZL1T9C5L6G2bImrfww==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.213.165]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MYvcA-1vdmM01j3A-00PMh3; Tue, 02
+ Dec 2025 16:43:56 +0100
+Date: Tue, 2 Dec 2025 16:43:54 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: phillip.wood@dunelm.org.uk
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org
+Subject: Re: [PATCH 1/3] sideband: mask control characters
+In-Reply-To: <f2ce08c4-f70e-487a-8dd9-286ee5bc683d@gmail.com>
+Message-ID: <7fa83a64-95f3-9ca8-537e-12a7f919d8ae@gmx.de>
+References: <pull.1853.git.1736878772.gitgitgadget@gmail.com> <f7fb7a38333cf6527345e3dbefaeb2cd8ade6429.1736878772.git.gitgitgadget@gmail.com> <f2ce08c4-f70e-487a-8dd9-286ee5bc683d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 2 Dec 2025 07:29:11 -0800
-X-Gm-Features: AWmQ_bn9tpGcXvY9mymN3HO6XrktB7oO75JrkkkoKv4biMinTfOU40PyXexzwW8
-Message-ID: <CAOLa=ZQLUjgKkoSExd=zBO8bfXR212M=_rTUaACjZUOR0e6v7A@mail.gmail.com>
-Subject: Re: [PATCH 0/2] refs: allow setting the reference directory
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000000d41560644f9c28b"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ptMOx/L5yXTGi3XXW7Y+q/AbwdEj3KTa+/m7Qwdhxeq4XgAt5gp
+ nAMQFdpbKpl+YrRgzYZNaDFEkYeaEQnqUuHeXsBdpYleovDOyLtKpwi03eRqCUtGcKQwYvF
+ +KczHDBNs0iaMRFmeONIpfTv4HDR22KCjMfZGemUUOfjYrok0ZHU8Z2Cx5tRaNXFu92WjCv
+ +EAN8gt779fis84xqp1VQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:OismjRqq4TU=;ShYBcpfL4r24GzS3NpGg+vF+7o2
+ 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
+ Vi5C80wOVNWDcUJe0psK1VkmbyqKQ
+Content-Transfer-Encoding: quoted-printable
 
---0000000000000d41560644f9c28b
-Content-Type: text/plain; charset="UTF-8"
+Hi Phillip,
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Wed, 15 Jan 2025, Phillip Wood wrote:
 
-> On Sat, Nov 22, 2025 at 08:29:22PM -0800, Junio C Hamano wrote:
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->> > While Git allows users to select different reference backends, unlike
->> > with objects, there is no flexibility in selecting the reference
->> > directory. Currently, the reference format is obtained from the config
->> > of the repository and the reference directory is set to the $GIT_DIR.
->>
->> I actually am not sure if I like the proposed environment variable.
->>
->> The proposal is based on an assumption that any reference backend
->> should be able to move their backing store anywhere, and they should
->> be able to express the location of their backing store as a single
->> string <path>.  For a new backend, "where is your backing store" may
->> not even be a question that does not make much sense (as "somewhere
->> in the cloud that you do not even have to know" is certainly
->> possible), and even for a new backend design that does allow such a
->> question to have a meaningful answer, this "you have to be able to
->> use a random place specified by this environment variable as your
->> backing storage" is an additional requirement that its implementors
->> may not need to satisfy in order to please their user base.
->>
->> For reftable and files backends, these assumptions may be true, but
->> then it is not too cumbersome if these stay to be backend specific,
->> as there are only two backends.
->
-> I think it's a reasonable assumption to make that the path _can_ be
-> represented as a single string. For now, we don't really require any
-> configuration for the backend in the first place. So all you need to do
-> is to say:
->
->     [extension]
->     refStorage = reftable
->
-> This implicitly identifies the location of the backend, too, as we
-> derive it from the commondir/gitdir. As you say that's sufficient for
-> the "files" and "reftable" backends, but it may be insufficient for
-> other backends.
->
-> Suppose that we for example have a Postgres database to store data. It's
-> clearly not sufficient to specify "extension.refStorage=postgres", as
-> that wouldn't give you enough information to also know how to connect to
-> the database.
->
-> It's a problem I have been thinking about quite a lot in the context of
-> pluggable object databases, as well. Ultimately, the solution I arrived
-> at is to extend the extension format itself. For pluggable ODBs this
-> would look like this:
->
->     [extension]
->     objectStorage = postgres://127.0.0.1:5432?database=myrepo
->
-> This is similar to a normal URI with a schema: everything before the
-> "://" identifies the format that is to be used, and everything after is
-> then passed as-is to the backend itself. I think this should give us
-> enough flexibility for any future formats and it is easy enough to
-> configure. The added benefit is that this can also work in contexts like
-> the GIT_OBJECT_DIRECTORY and GIT_ALTERNATE_OBJECT_DIRECTORIES
-> environment variables, even though their naming is off now.
->
-> For the reference storage I think we should be moving into a similar
-> direction. Sure, for the current formats that we know its sufficient to
-> only specify their directory. But I think we should treat the directory
-> as an opaque string and then let the reference backend handle it, same
-> as with the proposed format for object databases:
->
->     # A schema-only variable will be treated as if we specified the
->     # common directory.
->     [extension]
->     refStorage = reftable
->
->     # It's also possible to explicitly specify a different location for
->     # the backend.
->     [extension]
->     refStorage = reftable:///foo/bar
->
->     # And same as above, we can also specify non-locations.
->     [extension]
->     refStorage = postgres://127.0.0.1:5432?database=myrepo
->
-> As said, the important thing here is that the reference backends get the
-> string after the schema as opaque blobs that they can self-interpret.
->
+> Just a couple of small comments
+>=20
+> On 14/01/2025 18:19, Johannes Schindelin via GitGitGadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >=20
+> > +static void strbuf_add_sanitized(struct strbuf *dest, const char *src=
+, int
+> > n)
+> > +{
+> > +	strbuf_grow(dest, n);
+> > +	for (; n && *src; src++, n--) {
+> > +		if (!iscntrl(*src) || *src =3D=3D '\t' || *src =3D=3D '\n')
+>=20
+> Isn't it a bug to pass '\n' to maybe_colorize_sideband() ?
 
-I think you bring in some good points here, I didn't think of
-`extension.refStorage` and I think we can extend that like you
-mentioned, while staying backwards compatible.
+While a band 2 message is indeed split by newlines and fed to this
+function line by line, which is the case for a long time already: since
+ed1902ef5c6 (cope with multiple line breaks within sideband progress
+messages, 2007-10-16), the same is not true for band 3 messages: They pass
+the entire message in one go (and for multi-line payload, only the first
+line is prefixed with `remote:`, which is arguably a bug, but not one that
+is within this here patch series' scope).
 
->> So I dunno.  In addition, if this is designed to help migration
->> (which is the impression I am getting from the cover letter
->> description), don't you need a way to specify more than one (i.e.,
->> source to migrate from and destination to migrate to)?  With a
->> single GIT_REF_URI, it would not be obvious what it refers to,
->> whether it is an additional place to write to, to read from, or
->> something completely unrelated.  For example ...
->
-> I think we cannot easily retrofit handling of multiple refdbs into Git
-> at this point in time anymore. The way to drive this would be that we
-> have two processes:
->
->   - One `git refs list` process in the repository that uses the old
->     format.
->
->   - One `git update-ref --stdin` process in the repository that uses the
->     new format specified via GIT_REF_URI.
->
-> This allows us to do an online migration of data into a separate ref
-> store.
->
+See
+https://gitlab.com/git-scm/git/-/blob/v2.52.0/sideband.c#L191 and
+https://gitlab.com/git-scm/git/-/blob/v2.52.0/sideband.c#L176,
+respectively.
 
-That's exactly the mechanism I was talking about, thanks for explaining.
+So no, I don't think that we can currently consider it a bug to pass `\n`
+as part of the `src` parameter to `maybe_colorize_sideband()`.
 
->> > This patch series adds a new ENV variable 'GIT_REF_URI' which takes the
->> > reference backend and path in a URI form:
->> >
->> >     <reference_backend>://<path>
->> >
->> > For e.g. 'reftable:///foo' or 'files://$GIT_DIR/ref_migration.0xBsa0'.
->> >
->> > One use case for this is migration between different backends. On the
->> > server side, migrating from the files backend to the newly introduced
->> > reftable backend can be achieved by running 'git refs migrate'. However,
->> > for large repositories with millions of references, this migration can
->> > take from seconds to minutes.
->> >
->> > We could make the migration non-blocking by running the migration in the
->> > background and capturing and replaying updates to both backends. This
->> > would require Git to support writing references to different reference
->> > backends and paths.
->>
->> ... I am reading that the above is saying that the system will write
->> to whatever reference backend specified in the extension.refStorage,
->> plus also where GIT_REF_URI points at, but if that is the way how
->> the mechanism works, the variable should be named more specific to
->> what it does, no?  It is not just a random "REF URI"; it is an
->> additional ref backend that the updates are dumped to.  Maybe there
->> would be a different use case where you may want to read from two
->> reference backends, and you'd need to specify the secondary one with
->> an environment variable, but if the system behaves one specific way
->> for GIT_REF_URI (say, all updates are also copied to this additional
->> ref backend at the specified ref backing store), a different
->> environment variable name needs to be chosen to serve such a
->> different use case, no?
->
-> Truth be told, I'm not realy a huge fan of the name, either. But as
-> said, I don't think we can easily "overlay" multiple refdbs, as it would
-> lead to various different questions due to our hierarchical layout of
-> references.
->
-> That being said, I personally would prefer `GIT_REFERENCE_BACKEND` as
-> variable name that accepts exactly the same kind of strings as the
-> `extension.refStorage` values I have proposed above.
->
+> > +			strbuf_addch(dest, *src);
+> > +		else {
+> > +			strbuf_addch(dest, '^');
+> > +			strbuf_addch(dest, 0x40 + *src);
+>=20
+> This will escape DEL ('\x7f') as "^\xbf" which is invalid in utf-8 local=
+es.
+> Perhaps we could use "^?" for that instead.
 
-Fair enough. Once both the env variable and `extension.refStorage` take
-in the same input, it does make sense to rename the env variable to
-`GIT_REFERENCE_BACKEND`.
+Good point! This seems to be the historical way to escape DEL, probably
+because 0x3f ('?') is 0x7f + 0x40 truncated to 7 bits. I'll do this in the
+next iteration:
 
-> Thanks!
->
-> Patrick
+=2D- snip --
+diff --git a/sideband.c b/sideband.c
+index f613d4d6cc3..684621579fd 100644
+=2D-- a/sideband.c
++++ b/sideband.c
+@@ -175,7 +175,7 @@ static void strbuf_add_sanitized(struct strbuf *dest, =
+const char *src, int n)
+ 			n -=3D i;
+ 		} else {
+ 			strbuf_addch(dest, '^');
+-			strbuf_addch(dest, 0x40 + *src);
++			strbuf_addch(dest, *src =3D=3D 0x7f ? '?' : 0x40 + *src);
+ 		}
+ 	}
+ }
+=2D- snap --
 
-Thanks for your input. I'll make the necessary changes for v4 :)
+>=20
+> > +test_expect_success 'disallow (color) control sequences in sideband' =
+'
+> > +	write_script .git/color-me-surprised <<-\EOF &&
+> > +	printf "error: Have you \\033[31mread\\033[m this?\\n" >&2
+> > +	exec "$@"
+> > +	EOF
+> > +	test_config_global uploadPack.packObjectshook ./color-me-surprised &=
+&
+> > +	test_commit need-at-least-one-commit &&
+> > +	git clone --no-local . throw-away 2>stderr &&
+> > +	test_decode_color <stderr >decoded &&
+> > +	test_grep ! RED decoded
+>=20
+> I'd be happier if we used test_cmp() here so that we check that the sani=
+tized
+> version matches what we expect and the test does not pass if there a typ=
+o in
+> the script above stops it from writing the SGR code for red.
 
---0000000000000d41560644f9c28b
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 6dd1649844c84e14_0.1
+I often debug test failures in Git's test suite and one of the most
+annoying category of test failures is when test cases expect byte-wise
+exact Git output that changed for totally legitimate reasons [*1*].
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1rdkJjVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMzlwQy8wZW1sNU5tYzYxOXVvK0lObWpnZmVkdlFUNgorVDRIemZhTjlO
-MlpyaFNxdHYvK2pXRE9Idk5wcjRGTVJqMWxNZ2oySU55Q2ZBdHF4SGl0Q2NXR1VVY3BEbWZQCjVN
-T0IzNW9SYlhjWGw5dXFtSEgxOEhUZEZJbW5XbU5DbXBZRGowekJCaWgzdVNzZTlFekVaTlBPaGh4
-bHFFYW0KU1ZNcndpOHNjSWY2bHl1bVYyQmExNEhEbjNqb1JTOEJkS3BMeEV2M0dGMExqcHZMK1Nn
-R0VDdklLZGpzazY2aQpwNlNIWmxhRmpTK29BdnVoNDhkN0dOZmZiNFVFelRGWEVycVVRdUpEQnFE
-dHhuK1BHMFc2d085UVlveGFaRHRKCk5vN0hSNnl1K2xMeFZQeVluOGVZVkdYTGtWVlFUWHZIQmhj
-RW1tVys0MHFQWnFndlhXSWVDdzU1QjlUUVd3T1QKMlE2Ky9Xb3ZhVXdBWElDblRwREFpOUlRRkxk
-bTlYTGFlcmwrSmlCWno2Q3A2WUxlWUhJTU83RXU0V0xPcllPZQozekl4TjBPZTlKalhVd3kzWFBz
-UXc0RWF6UW5zUUNMTU9oODlKSVdrWUtERlkyMVdmTTNhdFE1U1p5QldCMFVkCjN4cEMxWWFVRU14
-VEVUV0NwbE9DM0wwTWdWeENvU2dqZnpKQzczND0KPWE2ckwKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000000d41560644f9c28b--
+Even worse: In many of those instances, the _intent_ of the check is not
+even clear from that `test_cmp` and has to be reconstructed, a boring,
+tedious task with little benefit to show for the effort.
+
+I much prefer tests like this one, where a precise `test_grep` states
+exactly what it expects to be present, or missing. The intent of such a
+command is much clearer than that of `test_cmp expect actual`.
+
+So, much as I appreciate your suggestion, I would prefer to keep the code
+as-is.
+
+Ciao,
+Johannes
+
+Footnote *1*: This really is not hypothetical. I had to battle quite a bit
+with unstable compression sizes that are part of a `test_cmp` comparison,
+https://github.com/git-for-windows/git/pull/5926#issuecomment-3486556940
+shows a bit of the problems but is very shy about providing the specific
+number of days I spent on addressing this issue. In hindsight, I should
+have spent at most two hours on converting that from a byte-wise
+comparison to a qualitative comparison.
