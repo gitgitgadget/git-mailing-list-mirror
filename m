@@ -1,109 +1,102 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD0A315772
-	for <git@vger.kernel.org>; Tue,  2 Dec 2025 11:52:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FFF3112C0
+	for <git@vger.kernel.org>; Tue,  2 Dec 2025 12:25:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764676357; cv=none; b=MVr0D5ivL9kzP+VPaT9MG/8zVkOWvxmWD1iXxfF7bI9Di1qnlFjklwldmooq1IUR8/0Ig9l6v8CH8WUWSnUHNJvbvRnEsaJvouDXadCj7Hvnh2l+M2q+P6yocir79QzCV6ULLRYT+zMT9Oz75Gg2/+ltdvl8aJoexqRK6MzXUzI=
+	t=1764678345; cv=none; b=N4tY+F9ANVR1sdq/brlCWgTGpVZbZLWH+qHj7UcX3RvktbltsUSAGTiZAilfDcdzfROGCQPQZa/5NqM/5X5bv+Pmqy16oqznuuJqY5i9Z4mXfFhr7TTCyyn+ShVlOrx/XVKE1x+HW3iwDerU8yEx42tifxI9dfduOIgA5StTxm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764676357; c=relaxed/simple;
-	bh=7mwXyyB4ttmYZ6zGxbIsswGaUdCWX57MgqwR5ItbkwA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YvTJSLwwe8meivXzpKJgyUzjHM/fP9q3P1KdB8Qt13gISiTQKRwiFoUvSS2zzaO7T73zIU3vh2NiKOfCXQhaXHbzJPAfpkIb4cxuJQ3VcHnkv0BQCzDKPemPmCRTgAsU5cPFYd2YpCFnB8TXUmwrtDZpAq9AZZYU8WHsepWbDuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=MFdt24Ug; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1764678345; c=relaxed/simple;
+	bh=mq+uptBUbcrPrQblu5MkhNJqJ5st+PAiDmay+AiaYeg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RgqR+NomBfm1TwhvgtCfS/IcRFOIoTqwiDHBKC10sHPSL0gKXGdnGc2PhFd2AACWyb79RFwtNOL4N/kAhDrgT/1RMc5jzcGPC28BxIyBD7WTmXWtQ3+ySVWCWdLdoki2c6PeCKxr8uszsu+hPKuXFLp+W+dRhOmFfUco/h+/7eM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KDlvwqv5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wdw82++m; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MFdt24Ug"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1764676353;
-	bh=7mwXyyB4ttmYZ6zGxbIsswGaUdCWX57MgqwR5ItbkwA=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=MFdt24Ugdb3cg7hyHIDLEDSra4xYsZPl6xw5jD6KxZSyeqSLQqSfOtXO5pi78rsPN
-	 H2yphdofafwATsmJXLj0w0oF/jmtBpR64pd0F/HWxVqp7XP7lwohy+VJWZCgTHzJ/f
-	 PjM03+1Kkeevu5PMESemEJLb8DgOR4DrRUZIoacLhQsakwbjEYs115PHIPo00xTnOi
-	 ggNYCvDMMCAC2AFvuq63gdrTcCU3gm5Kcp5Y+/ink3+SJ516cY3g5Ah0gDCAX5Ip2c
-	 AXn5/F0niZF7zik0nyVcgCbXVtTvToiAWaRsfOukCppemBm4KnNTokiwUxqBhiHN6E
-	 VfE9vPkpyOB51xnTmOdLQNMQCizIDI4a9f0xi+zVG8JhnYgMi+VZkFldIOWWTlaUY3
-	 BwO3Vz6coLqioEtMmYdKBUWhR8uRO/yvqYztG4LeEfPE6rWSNWtS8CTczWpdEzKPv4
-	 hiocnEMuY1n+j151A1e5MQPM2EONx+rPUCGCqI9NBKnU3vl6NK1
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:eb0a:dd97:4aaa:b0f9])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 522232007E;
-	Tue,  2 Dec 2025 11:52:33 +0000 (UTC)
-Date: Tue, 2 Dec 2025 11:52:31 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KDlvwqv5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wdw82++m"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C251C1400334;
+	Tue,  2 Dec 2025 07:25:09 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 02 Dec 2025 07:25:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1764678309; x=1764764709; bh=mq+uptBUbc
+	rPrQblu5MkhNJqJ5st+PAiDmay+AiaYeg=; b=KDlvwqv5LkiSDc/6GlhmquOPL4
+	e5gtm4G5C04GkUbMzGOFEP+re8xQwGlVkWUD110LQBiQQVHhhKk3LkJUP4O1Txrz
+	msGekILUQ1m8WmECddFPHcZBGOtYEpEdyD50JD0qDFl+dyZ9ADFdTaW6iY/VzQBZ
+	GwoL3DPJL48VlXhnleAwYU+zOSqElE9KGuKmNexzAE/sSOg72TKkUqlut5XzVSXB
+	SnZ9NQmYswQBOtteCyemqxxvCOckFfMz68t0GThvwCK4D6+xKrAIG7mhtTQbpHSa
+	lOSuGVRfwdbwjkD+f00/chdkMXUvMWq0oAN4BY8kuJNbhJYnrhw1yvirzZNw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1764678309; x=1764764709; bh=mq+uptBUbcrPrQblu5MkhNJqJ5st+PAiDma
+	y+AiaYeg=; b=wdw82++m8zkcrCIEqEetb86W0fzVsaIUQ5kwsAbwUsn8LUq/nEx
+	q/17LSfMuggchA4qZ/OW65yYPqoWQWhV0M08m/rNLjiTDxaJCtNXGjEep1+SBEMk
+	gkS90zpTuYsK8Qu6A7byJCBx8kst0cWH0/mY8Zukis28D6ug8MdtfYXKS6mb10R1
+	YSNTnrGsU+wfbp4ZDKeXsq3bcjGhQyVXli4QaRjLpHDaOnOd0ClfNntoZ+xmtmJ5
+	scBI0KdRtUcGmoUtlJ8Bb2tMxGZqrolPBmwn9CVAzDpX23qsFSJv2EqMlC9fquVM
+	+4pxFdxBtFaRifT43TysvMCVHXOUXXrtbpw==
+X-ME-Sender: <xms:pdouaZSIG1OdUxe9WakZb0w_x4_PKXMm6fR1LYIqHoTQdU6SHXhs0A>
+    <xme:pdouaVAjrF4AXMBgdRYGFTfRAU2NVkrZqU9RDlB02l5Gh2ap-Ns1jQHQNz85IM0wt
+    cGtEHChgyCvppBYT_FIcHxiTAO0M6h3cm1BRfaKF-eWhNhtmWI1Bg>
+X-ME-Received: <xmr:pdouaRHFCNAYgL_G_cFTxLtW3-4DjqNaRXQLzOmuHXgRhRRQ7LQTAFWzWX_Yj9uY3torYDRHJsOeh9RmG58fXP9aipH3lrzWHC18>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
+    ohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpe
+    fhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfj
+    rghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrh
+    hnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
+    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhp
+    ohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhgihhtgh
+    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
+    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:pdouaXCcJG0TZJrqbCin0ZIwYwrKaIgY_AYuXkmWT8DOZ3MrwidgAw>
+    <xmx:pdouaRUQGPzUDFaZWidwLKBUl0w9xn1OcQfT6KfQByJ7nXtXoewBVw>
+    <xmx:pdouaboWW1DvPehgTBZ2z03o5AoVwjPjk0oMXR0eJqZoQtxU2GezSA>
+    <xmx:pdouadQkhsBlgPGRpwgIj-TthY6Kq8vg0nQpX7-0Fo7wLuGmTV7mlg>
+    <xmx:pdouaX235cXCBy7rEU8d2_zCVGaZIy9HGiTMPBsdTmG-IMfJ3-pGhyd->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Dec 2025 07:25:08 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] Fix doc default hash algorithm in
- WITH_BREAKING_CHANGES mode
-Message-ID: <aS7S_zSpfk3r7jxh@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-References: <20251202014605.52110-1-sandals@crustytoothpaste.net>
- <aS6g0Zjzd5OEd-mb@pks.im>
+Cc: Julia Evans via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  "D. Ben Knoble"
+ <ben.knoble@gmail.com>,  Julia Evans <julia@jvns.ca>
+Subject: Re: [PATCH v7] doc: add an explanation of Git's data model
+In-Reply-To: <aS1OXhBcx0IegwRw@pks.im> (Patrick Steinhardt's message of "Mon,
+	1 Dec 2025 09:14:22 +0100")
+References: <pull.1981.v6.git.1762545177204.gitgitgadget@gmail.com>
+	<pull.1981.v7.git.1762977200244.gitgitgadget@gmail.com>
+	<xmqqv7j11nkc.fsf@gitster.g> <aS1OXhBcx0IegwRw@pks.im>
+Date: Tue, 02 Dec 2025 04:25:07 -0800
+Message-ID: <xmqq345t840s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="RgZ+Vsvsw27nCD9r"
-Content-Disposition: inline
-In-Reply-To: <aS6g0Zjzd5OEd-mb@pks.im>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Patrick Steinhardt <ps@pks.im> writes:
 
---RgZ+Vsvsw27nCD9r
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> By the way, thanks a ton Julia for all these improvements to our docs. I
+> highly appreciate them and think that this is sorely needed. Our users
+> will certainly appreciate your work!
 
-On 2025-12-02 at 08:18:25, Patrick Steinhardt wrote:
-> On Tue, Dec 02, 2025 at 01:46:01AM +0000, brian m. carlson wrote:
-> > When WITH_BREAKING_CHANGES is defined, the default hash algorithm is not
-> > SHA-1, but SHA-256.  However, our documentation was never updated to
-> > reflect this, and as a result, we end up misinforming users.
-> >=20
-> > This series fixes four places where we indicate a default hash algorithm
-> > in our documentation such that they conditionally say that either SHA-1
-> > or SHA-256 is the default, based on the the with-breaking-changes
-> > attribute.  This both improves accuracy now and also makes it less
-> > likely that we'll forget to update these places when we hit Git 3.0.
->=20
-> All of these look good to me. One alternative would be to introduce an
-> attribute that we can then reference in the docs. The below patch shows
-> how to do this with Asciidoc, but of course we'd also have to do this
-> for Asciidoctor.
->=20
-> I don't mind much which approach we use, but wanted to suggest this as
-> an alternative.
-
-I think it may be easier to set this in the Makefile and Meson config,
-but I'll try to see if I can adopt a similar approach here and if so,
-I'll send a v2.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---RgZ+Vsvsw27nCD9r
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaS7S/wAKCRB8DEliiIei
-gTdCAP9wTM3Hy+xyS5GGB6V0FCXnNbWHxwSCd1bTYqp68S+fwwD/TLl4CVBoylGD
-lEJQLnwN35/3IQgB1jzvTuuiH50vFgA=
-=u7h0
------END PGP SIGNATURE-----
-
---RgZ+Vsvsw27nCD9r--
+Same here.
