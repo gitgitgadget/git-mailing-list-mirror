@@ -1,166 +1,128 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29AB7EEBB
-	for <git@vger.kernel.org>; Tue,  2 Dec 2025 07:04:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CFD302CCA
+	for <git@vger.kernel.org>; Tue,  2 Dec 2025 07:53:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764659063; cv=none; b=O4WkO3SP+V2BlvTZsvRn7vZWx06scXrg570m1aw8tLQ5X6rChuXzLjPCNmJg4q7Hwi/nBwJrdnxMye4f9qqyNdUUM45JoWex1vSNJV7WbJ3jdpHdYmqAbz7c6qK//3LgZGAYaCTyG6dWslZc6JyWVdMab2OrIpv0hl2mxZqX6WU=
+	t=1764662028; cv=none; b=kmpmoOIvNrgTSE1mOKVEK0OzijP121f+FvYWOkEdDC+6DS5XEhb9uAPL/GCH8svLwDGeDpv9HoHgTPf09sO6cGUX9pPSN+kq9ZVXHcO2udf5tgEz/b7OR8FVtuAz2tvPj9VXfwd2VIvLnddbCPK078kyXlJqH6FRkPXhFA57jTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764659063; c=relaxed/simple;
-	bh=mGU6lKvaW0EQ2n5OFPQuM3ECe3oUf9J1yi6zAE1Hk34=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=H2ukeJWV/qV/WzGx9OSGTIRRuKi0fRQDKgBbCwHgTq68aHzGwrsl9W04tfsVR3YcGo8cNZ94nxtQfKOEbkU1VR0/CftvNYDeaGR8kSFVt0fMSAKG0xZzqPpPNLniijAqbflsU98o/ffu0Zt2fpSE6uQ1toKYgxJvNiN8pklg8GM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X03pFtou; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=crH/rNUa; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1764662028; c=relaxed/simple;
+	bh=qgbf5fePTNt4UZt5eKY9g/3N7FDpcTwTWIsv3vhdPLk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cpA8t6pon/gb52fUVYktV3/FQfkwXyvjw1QRspyeBb8P444uAhLt5Zf1FcK6F+4CfLf8YCTaizWvvoqeB1pHKyU6milV8dtbPh9OADWt+kvxwdX7tWbjjfB+xzBRUfG5vtyw5vCcfkjXFtQrDshFLyyFLp0FRZKhvRjPbmyzx+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pV+RUf33; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZTGi7r4a; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X03pFtou";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="crH/rNUa"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 311B2EC03CF;
-	Tue,  2 Dec 2025 02:04:20 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 02 Dec 2025 02:04:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pV+RUf33";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZTGi7r4a"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2CB3F1D001CA;
+	Tue,  2 Dec 2025 02:53:44 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Tue, 02 Dec 2025 02:53:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1764659060; x=1764745460; bh=VwjI9QOLfd
-	xybBMOgzfBPtiPb9KkKyMoPjW722XqZu4=; b=X03pFtoux4abUIc6a8TnAVV2qA
-	GqyKLGVmMLZe+1ETzcdTmGMnWVqh9mBrR5FMPRJHRubAGZbjAN+NL+iEkwHVpVlE
-	/UiXKd8mKf3Pw83oDefZTZJxoSatzoci2cfVGfPoUGCA0s+SnXPBLAt7bzgnydwl
-	sWbJq3thO9d3CYOMc7c0lTgPojhiVphI0aBK4dcHNQRBDH11/2qi5ZTbuyk08y/b
-	nTkTvRMqMcZP3PH0eYRQ0nnZ2ibA/kriIFCyB0JE3NaZKeWXXGS6VPV9jnhYN4oX
-	jTv6CcsOH9sv1FhpUvV4CsjDahp761OWVJQs1o/5k7AqD13C9HSp/pqvIkZQ==
+	:subject:to:to; s=fm1; t=1764662024; x=1764748424; bh=ULWcnXlUvz
+	duVL8RyoPO9zW9foLRe2SruXS8z7ViLlE=; b=pV+RUf33lvdeFdcCextvU0iKaY
+	0ntjJ9yPYJEyRKT6DIrJYyKUeyK4dUTetstJgKB5TlTv27XLGj/VDNsMHwMOkRiN
+	QwMm1lR3t3fK0NHRodwk14XytwzzB5j+m2VKT29IlKRYDbJWL/XMf2J9NANvSuDj
+	13504/xnJaYByg+31f/gxUJhtLASFQFC4zQoB0Y/fGKltDpcRtFap0GNsW1NbFEZ
+	Qyo4Fcd2MyH1G6pJtjfT/BTD++29uQSrGtvlJMawjOsCKI6v7Pr4dU8fDt4SqVrg
+	10OjSE+qwdz4jZxPGU4OW3gRlx6q9wXJ2ROFw7rNq7uPHd7Hz+Cssh+tqi+Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1764659060; x=1764745460; bh=VwjI9QOLfdxybBMOgzfBPtiPb9KkKyMoPjW
-	722XqZu4=; b=crH/rNUaktjf+LhJS6MDvuo/9TfZq8u3VrL5YtH+2FMB9CXzd4U
-	nGxPowlXifxSE+ZKpstlml2a+W84Wg5AmlHg5o6afvmuzxvob9/7aKOcL1YIad/V
-	4F6sqTbgL8g0NCtaMpvA2xWGZ+BF13E8e9MwLX62GLDvosq1e7uqddiCmSxi0q8t
-	UEbVYHt95B7Ij69l9gvIdIHd2aJSEJLWwfhcsLBM6Rv1AjWNLHsPQMQclb0Al6AN
-	ay5iMx93vt2LC0Vt3QvjYfbUJlvC1Fv0umfQWSumYIWU0slpPv2lOGQNOSb7S+Dy
-	CXiCoUDeooGvNi2WzjBoJAUM5yyc/23qfDw==
-X-ME-Sender: <xms:c48uaalTQwEYscHYk9ZUtAN7lKIUT54SY07WrokfczuV9wvEidgqIA>
-    <xme:c48uaY01zxcCSr9Q6fZsgdx1JjmN4SmNVwY6MJ7Q7XKhkDpM3aD8VpJb82AHt_79R
-    O1OTcK_Xh5EI-N_Uy3otP42N4Ima4sVlXrJhIAWUE8HBqUGg2bf>
-X-ME-Received: <xmr:c48uadqIPF9UO2SrTgK1HeOLTFPf-v96AddNCicAsliT-xK6Qi_-o3-6EBX0cD4CK3yhOWlGqYVsjLfBHM4mNSWG7CVODB8kOxT_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvheelleefucetufdoteggodetrf
+	1764662024; x=1764748424; bh=ULWcnXlUvzduVL8RyoPO9zW9foLRe2SruXS
+	8z7ViLlE=; b=ZTGi7r4aJgxfvdTfivo9lSgaR6orxzSNPvTE3W+eTYdo3r5s9vX
+	v9gKFgsZQbTHsVcX+KBP0C0u41eap9HADyOjlCqE1EGUURVYrn/7z+dRllxXGFjr
+	xlbzLjvgq+MT7UcardPnMHxcUewckfVKmeIQLNOe4WBpBIcsS78Cw7vpqAIY6hXy
+	tGlJ+scgs5UUTvvD7g02gcUaGgAsMthFwr/454wjZoKUdPIyod7IDvp9VoexEhV2
+	s4hyFdiQXFg9BSfEKb9/oomMDjbqHmjgXtKNbZWGmLWUDeRfFDqX1FtEjRJEKYUP
+	JdjrmNOeg/8GeQAQ2mTje4zxFQ2/7Ruwqxw==
+X-ME-Sender: <xms:B5suaVNZI-kdusfXwTkT0Yl4WZsmoeilOp1PSiplTi89iD1Mqwus-w>
+    <xme:B5suabrbQlAhgE-4s8Lk3OpKVreSkftltjong0cpbBjJw4rcZ3yDVum5sd2X5meRZ
+    A3y41Rx7QogWCbcXyDR5YC7aPxeYJPgvwMF63on4kK1o9lU__Q0gw>
+X-ME-Received: <xmr:B5suaeEEHGK4e3dP8tbxaHa83S4jvECl8ImlaGxCD1jbg0xBKrUi3Ej5WC6pr0ecmWOFtoGmEGzhAKzlxzJ_1mKzl7Tdy6f6a18FXquBi8I>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddviedttdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepiedugeffiefhheefudejhfelvdfggfeigedukeevhfegkeefvdfhgedugeeg
-    hfetnecuffhomhgrihhnpegtohhnfhdrihhnnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgs
-    pghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurg
-    hlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:c48uadcu0v3Z_o8d05Tcteqy2B6dPFG7vJLH2KsyBuXxG3d7E1FnDQ>
-    <xmx:c48uaUpRCDa0By3YzHi9A5wEviy0dBsw9tfSSr4Rj_KYJWQDY_Ap6Q>
-    <xmx:c48uaWFmYeWFnLpqBuW0dlA8KoELY2K-YxZSrgpx0DO0pN15e9Myaw>
-    <xmx:c48uacvQyjPoQFZS8wuBqxw5K_EhQD3gsX86Fm27Kb_DFGyelpq-ag>
-    <xmx:dI8uaQtpdHI-U5maMpe9OXMBJS6xh3kv0687UAsXhGnfFpmmNEI-zdrf>
-Feedback-ID: if26b431b:Fastmail
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtghhithhgrg
+    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
+    hmgidruggvpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthht
+    oheprghtthhhvgifhhhughhhvghsleefgeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:B5suaYqpqXM5wNEyxOB2WeKvEK3I3VAlcfBuR-6nAnFoX1LIPMULZg>
+    <xmx:B5suafb6PAuq8vPQI2L-IU2Q_I6eMebSLHqrBLafH2xlkU-cdyF-sQ>
+    <xmx:B5suaZX9Z9DCF6c9Op3WReKWiAjxoHN5sJntPRiNU1qnn0Ek61F67g>
+    <xmx:B5suaQ9NfzMCtvSsJY3yl_1F8f2OUNoFuGarGPcb2RJeRtXANMOP_Q>
+    <xmx:CJsuaeqmfEN373ra-r_8AnCYvaHLdn1A4GH9XGbxSu8FDPmFcIHJqsu6>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Dec 2025 02:04:19 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 1/4] docs: update git hash algorithm for breaking
- changes mode
-In-Reply-To: <20251202014605.52110-2-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Tue, 2 Dec 2025 01:46:02 +0000")
-References: <20251202014605.52110-1-sandals@crustytoothpaste.net>
-	<20251202014605.52110-2-sandals@crustytoothpaste.net>
-Date: Mon, 01 Dec 2025 23:04:18 -0800
-Message-ID: <xmqqjyz58ivh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 2 Dec 2025 02:53:42 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id cc78406b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Dec 2025 07:53:40 +0000 (UTC)
+Date: Tue, 2 Dec 2025 08:53:28 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, atthewhughes934@gmail.com,
+	johannes.schindelin@gmx.de, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 1/5] scalar: annotate config file with "set by scalar"
+Message-ID: <aS6a-K--2acXnIFY@pks.im>
+References: <pull.2010.git.1764195516.gitgitgadget@gmail.com>
+ <pull.2010.v2.git.1764607847.gitgitgadget@gmail.com>
+ <639ff98c44c45bb570fdde5123127aa099c299f8.1764607847.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <639ff98c44c45bb570fdde5123127aa099c299f8.1764607847.git.gitgitgadget@gmail.com>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Mon, Dec 01, 2025 at 04:50:43PM +0000, Derrick Stolee via GitGitGadget wrote:
+> diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
+> index bd6f0c40d2..43c210a23d 100755
+> --- a/t/t9210-scalar.sh
+> +++ b/t/t9210-scalar.sh
+> @@ -210,6 +210,9 @@ test_expect_success 'scalar reconfigure' '
+>  	GIT_TRACE2_EVENT="$(pwd)/reconfigure" scalar reconfigure -a &&
+>  	test_path_is_file one/src/cron.txt &&
+>  	test true = "$(git -C one/src config core.preloadIndex)" &&
+> +	test_grep "preloadIndex = true # set by scalar" one/src/.git/config &&
+> +	test_grep "excludeDecoration = refs/prefetch/\* # set by scalar" one/src/.git/config &&
+> +
+>  	test_subcommand git maintenance start <reconfigure &&
+>  	test_subcommand ! git maintenance unregister --force <reconfigure &&
 
-> +ifndef::with-breaking-changes[]
-> +	The default is "sha1".
-> +endif::with-breaking-changes[]
-> +ifdef::with-breaking-changes[]
-> +	The default is "sha256".
-> +endif::with-breaking-changes[]
->  	See `--object-format` in linkgit:git-init[1].
->  
->  `GIT_DEFAULT_REF_FORMAT`::
+We _could_ make this a bit more solid by adding a test that:
 
-I wonder if we can have a macro definition at a central location, so
-that we can refer to the text without "ifdef" everywhere?
+  1. Initializes a new repository.
 
-Caution: this illustration of the idea seems to work with AsciiDoc
-but it was typed in an airline lounge with rum-and-coke in my left
-hand and haven't been tested with Asciidoctor at all.  I do not even
-understand why many other [attributes] entries like {asterisk} can
-successfully be grokked by Asciidoctor, but we seem to do -alitdd=<>
-in the Makefile for Asciidoctor, so I mimicked it without fully
-understanding what is going on.
+  2. Saves the configuration.
 
-But the patch should be good enough to illustrate the idea.
+  3. Performs `scalar reconfigure`.
 
- Documentation/Makefile         | 5 +++++
- Documentation/asciidoc.conf.in | 6 ++++++
- Documentation/git.adoc         | 2 +-
- 3 files changed, 12 insertions(+), 1 deletion(-)
+  4. Asserts that all new non-section-header lines in the configuration
+     have a trailing "#set by scalar" comment.
 
-diff --git c/Documentation/Makefile w/Documentation/Makefile
-index 04e9e10b27..88b8ed55a2 100644
---- c/Documentation/Makefile
-+++ w/Documentation/Makefile
-@@ -222,6 +222,11 @@ ASCIIDOC_DOCBOOK = docbook5
- ASCIIDOC_EXTRA += -acompat-mode -atabsize=8
- ASCIIDOC_EXTRA += -I. -rasciidoctor-extensions
- ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
-+ifdef WITH_BREAKING_CHANGES
-+ASCIIDOC_EXTRA += -adefaulthash=sha256
-+else
-+ASCIIDOC_EXTRA += -adefaulthash=sha1
-+endif
- ASCIIDOC_EXTRA += -adocinfo=shared
- ASCIIDOC_DEPS = asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
- DBLATEX_COMMON =
-diff --git c/Documentation/asciidoc.conf.in w/Documentation/asciidoc.conf.in
-index ff9ea0a294..2de6b80197 100644
---- c/Documentation/asciidoc.conf.in
-+++ w/Documentation/asciidoc.conf.in
-@@ -24,6 +24,12 @@ litdd=&#45;&#45;
- manmanual=Git Manual
- mansource=Git @GIT_VERSION@
- revdate=@GIT_DATE@
-+ifdef::with-breaking-changes[]
-+defaulthash=sha256
-+endif::with-breaking-changes[]
-+ifndef::with-breaking-changes[]
-+defaulthash=sha1
-+endif::with-breaking-changes[]
- 
- ifdef::doctype-book[]
- [titles]
-diff --git c/Documentation/git.adoc w/Documentation/git.adoc
-index 8c6a3f6042..f21dbba5a1 100644
---- c/Documentation/git.adoc
-+++ w/Documentation/git.adoc
-@@ -576,7 +576,7 @@ double-quotes and respecting backslash escapes. E.g., the value
- 	If this variable is set, the default hash algorithm for new
- 	repositories will be set to this value. This value is
- 	ignored when cloning and the setting of the remote repository
--	is always used. The default is "sha1".
-+	is always used. The default is "{defaulthash}".
- 	See `--object-format` in linkgit:git-init[1].
- 
- `GIT_DEFAULT_REF_FORMAT`::
+This would ensure that there is no callsite we forgot to add the new
+annotation to, and that there are new future callsites where somebody
+isn't aware of the comments.
+
+I don't insist on such a test though, so please feel free to ignore this
+suggestion.
+
+Patrick
