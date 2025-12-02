@@ -1,131 +1,128 @@
-Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657F72F25F8
-	for <git@vger.kernel.org>; Tue,  2 Dec 2025 22:26:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA852BEC43
+	for <git@vger.kernel.org>; Tue,  2 Dec 2025 22:29:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764714369; cv=none; b=IpqEnngs01HAliddmLJpwIbk9sidlloJhfCcF+cHHwEh8LrUYQLwKTHzpAqcmO0pupid78tk0MNhunFRiMWOF+/g9G61ePIoaPAFvnl2r40LL/uN9aoUbzcUL9u6LtYXyHidxwasexsN++5b1aTkpjbd4j3iWBjhXs4gHm2peRs=
+	t=1764714595; cv=none; b=Mc+Z+7I58h7kMoURbPfCR3c7bTCILJhdncBerj+PI4lOSFZOWaWN87/dKHx5hnPPknzvLox+w7r3WpJsvmvnjPKNZGqTJj6prRUpAOSGzffIwPBToKwPUv/if2TJQqBEh7kQXdc779KbzedpQu7/KbM66i9GabILwbinYRe7P1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764714369; c=relaxed/simple;
-	bh=NtTX70VPb1korlk9GbRDq5RMl478SMAUlytIi1ExpZI=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XefzQVW61pbSFNJyJxHs5Bd152vfkQ4dYi+XXw5hcRCk4ysSaA/3OXk8othPG4PEeX8fYZr/UWZNKgEmq6Wxz2jRcV2c1qeENYjAtX38AQcY86gYEQ6R1VAuSaE8h2eBRUYwAI8kWTMFWzqAfk0/ioiCDgWGMFlrWSqEP3cE1Eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G8fM4zcq; arc=none smtp.client-ip=209.85.222.52
+	s=arc-20240116; t=1764714595; c=relaxed/simple;
+	bh=4K16relcEOi/jKCpISWZuP3DUOo/GULIixPLWJiiMPc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dLHw30y7sUPaNDvNvuR70OhW1yvVxC62qM5WJrcgSpDADeJN+Hv9JhQSm/DOlVarcYI5HUEM3vnorzqjR2EsHg5gL2b+Fo8amR6UHifm5J6CL3hf5jueP+l0sJNLGbqQkAlHHWpNgiisGU+7wFIHzUYGKnahId/SlXoKUETXNNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NOWidQkZ; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G8fM4zcq"
-Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-9351ed45fb8so1489287241.0
-        for <git@vger.kernel.org>; Tue, 02 Dec 2025 14:26:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NOWidQkZ"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-343ff854297so7938344a91.1
+        for <git@vger.kernel.org>; Tue, 02 Dec 2025 14:29:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764714363; x=1765319163; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3XpAHyXfyz1nlgKHoyekdrDwqTkRFIXTWCFSpOACl/w=;
-        b=G8fM4zcqJfwsW3/sLxNox5uCaf0x8QRyI6tHgh5Mi41NpkKQqhWtq3tn77goitYD0v
-         VUZoR82uQtP60HexNP3pINljTKNWH08+Jg5flkQkiQDCO86D1QZ1Gxg/HTk41qaT/0am
-         4/95us+B1rwTl+D672VzjwSVwHTITj4l36XQRmElzjrnXRG+wQ8ahWBMlmrszHbqEfkR
-         qSEhxBTn6vLtiXNAs7l/B2eEplfqDT8WorX5Z8n5T2FjgYoD8mZ31XrYfSRgXPIKvlV6
-         WV2PAH3hgttW3EBg+GB5EHuo/Js+OFIzrbFTHCqG/SsystOqTY7RTD/3NgNaKyL+M/pO
-         mNLQ==
+        d=gmail.com; s=20230601; t=1764714593; x=1765319393; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GKj5T0NMEo1vCJhfHgvC+uS58TQqVhllOmDCDTJ7YHM=;
+        b=NOWidQkZJi4/FoNa2Tx//pf5sUKKaQzwA+e9qo1Jvg75HV1CztB4CoOgRbvgoYmcTc
+         ndxvCBzbZM3GXUHxT7gVa7LDbVwbH5QIeofZd9xGKoO2gZ1Nstf+Yts9EL0WfGMLnVLp
+         G7bBl6gU+eV6ejtLCCuLulSpjTIwdtgAcUpsfSC5PXwMDKW1l3I+Py++tlX0uY0nsvrg
+         iZS6Iz6/ZUh+QL14+2kzHMcMrJ6oz/bGwVvjDfI5m3lmMa4BYRIMXHEtfQd/WTIblgsy
+         ORoQqa19GO+OOGXzp71ysijOEBxrIr18OtUOQ7UcjmqCwfOq9XAFx7/ifJXYyLn3UrZR
+         hGOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764714363; x=1765319163;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3XpAHyXfyz1nlgKHoyekdrDwqTkRFIXTWCFSpOACl/w=;
-        b=HM0ScAQfbevSpEfTG6f6svvFD5rC3vSF+oe4JeDjFcalFbhy4h9aeb6zXlWDu0e/+Y
-         5FIA0V/4xwoUMBw2xVXeYqjxNPiGvyAXmI/+rmyKoUtusSUEQttYpV//PLFsawFSJ4X1
-         Zn2x+TvkMkgMdzx9QWRxa0hgdUqcY+t51MLf7eb+epW/bXLEtE3QTF8sy3SMwu34RL+J
-         uLldo3/ABMjDNHP3ifTTZ5KZ9tVti5XTgS+U+zLOECTrRa76aJye1MEJT5elMaest9Cl
-         gDlYKtapE3AMZWiiYVFkC1MySPWt9nmBEwZJ+q8Tz6+Z4cxIw4wUIum1YWl6EMFydiGN
-         5Amg==
-X-Gm-Message-State: AOJu0YxXiw/wfAKJAvaP3lNxHMVorCVuGr3n5kEFbtgma0eTmmHpzU1y
-	u9Dp4OVAznH86bKoYw3FrN0BJ7+V7+QWvUCXKu9RDtsGJR9mqn+4wuSlKAAxxK573oeURNhlNba
-	YPEuEdRSCt7A1meI+2maktti5qviYe0GuZA==
-X-Gm-Gg: ASbGncuolwGzQNGrIcRZBcWKUpNVv2wTa5Ll7g9KNGV7GaDYAHSGDaHmVQ1VJWW+SX8
-	ofZ15UM6vbL6gEct6lnxhzsyWq04kklbr0IVVA2s5+USGVKTsog50ISU6ehmXFZhSRzYebqyb/X
-	aPGVLxRS/z+QFpZ4ku1XiAqc1KOBxzGv6xU9cq7y6F70y4Ti/Rg+CpTP9vc4nazFmS8I1s2a5H5
-	ASt4QekuD4bULwoDe4ITlEDzebx/6XoJETTunCwKg1cRXTYAVt7TsZpFRLtxZfwHuFWHwGMuIQZ
-	WgGaUB1+GaRJhKwAnKGrTfMN+M6qOC9SsnWXkO3KjBGNeolmWw==
-X-Google-Smtp-Source: AGHT+IGHMFFxSH0morw3ABu4kNOKT+/zkMt6gUtd4X0iVzdfzauBAW++xsdMcXxLqBHOXpPlZ5gLQz1RahtnGtZXf68=
-X-Received: by 2002:a05:6102:3ca0:b0:5db:23ed:3840 with SMTP id
- ada2fe7eead31-5e48e40eaf6mr10723137.37.1764714362975; Tue, 02 Dec 2025
- 14:26:02 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Dec 2025 14:26:01 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Dec 2025 14:26:01 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aS2Q4-U5kgJ2nNVv@pks.im>
-References: <20251121-fix-tags-not-fetching-v8-0-23b53a8a8334@gmail.com>
- <20251121-fix-tags-not-fetching-v8-2-23b53a8a8334@gmail.com> <aS2Q4-U5kgJ2nNVv@pks.im>
+        d=1e100.net; s=20230601; t=1764714593; x=1765319393;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=GKj5T0NMEo1vCJhfHgvC+uS58TQqVhllOmDCDTJ7YHM=;
+        b=G+O4B7kQ7ecRPNzj8esO8BPejCZhSRgjpSX8wJEHzDeoqMVn1KQksoTMCpgN7lPhYY
+         DPzrN4bp6qP9R4ndxNgCH9tm6aBM2QZqobzGy6Qq90Jc11DrV5W2mgYVMKfWNFexM0Ho
+         I3qWH7QwwNAQ0p4LDNmyacgkukZAayTl1H1WDrvub9s8t1X4THB/SSB22hRnLch55VFd
+         bbUJJLeeE7QXwqfvEDxUytQRVFv6fkSuS4BSlMLBSgV61p51SRzIHowFZtmnAV+8VBUt
+         Uj+gE9te5RketPtgB5yhnACSUo95Qs0//6kDVKQg8XzZwZ/JUn2EVMBGKd0caDog6jzo
+         O9yA==
+X-Gm-Message-State: AOJu0YxjH5NRQ5a4eZkijdv32edlyGH4KysykAY7qqhI+w1pAKDXsKAj
+	kzBSfXi7LvYPXKaf7W0qTT0F1AKtAv/B4yxxVj/XbhpUKUdHNbYVUDKblKXhSDpSS4oXY+QfAQZ
+	E/3RqbBWRnuTfAboxTCuI1sT+HgJNUOReuw==
+X-Gm-Gg: ASbGncsn3GY+wiIGcBFf3zqou/mf9DasuGN7hcvhH2jM0cweJQnk701DVE4StEkFU5u
+	6V94ZaPRKsp7eD1b35iqykYdgyHuOxk/MGSoqkC6M9nzO2FBBr1mJ4w1eMiZgKSsfmyejaYJbOx
+	FrhoiIk8t+3EhibdWtHGOPDh7H0hDJhzwrGt64BSfMQptc9/Cek+URDXkf/8Rf48dHkKCuFCzqT
+	WAKzo3l8t2ISoaeiZps0uurO3fPoLMba+Uwmje6WnUyxbdtRv8bIyLXnwcOMvbJ7nEXqRyEeMxs
+	8Zj8IdybgRjNW2xhCVO5ssppSYS4Hw==
+X-Google-Smtp-Source: AGHT+IE0G5/XTww86rwDvWj10o8urhLCKdabbMd92oT3gcSYapiZH5aMbLbAZRnbySH+F4Y+8m6LQ6nfZfSGXPHnYH0=
+X-Received: by 2002:a17:90b:2752:b0:343:cf66:cd9a with SMTP id
+ 98e67ed59e1d1-349127c9c43mr293628a91.17.1764714592722; Tue, 02 Dec 2025
+ 14:29:52 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 2 Dec 2025 14:26:01 -0800
-X-Gm-Features: AWmQ_bnj12N_4ukIS8z1aSKxykNMQQRDSZKKe8tNcJJ-O8pNgD9VTxYTD5wWEd8
-Message-ID: <CAOLa=ZQ-O7V9qHbgeuQ78R1bHGDmGEM6fP5Kr9aC0AfvSF8MZA@mail.gmail.com>
-Subject: Re: [PATCH v8 2/3] fetch: fix non-conflicting tags not being committed
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, jltobler@gmail.com, gitster@pobox.com, 
-	sunshine@sunshineco.com, David Bohman <debohman@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000bc54890644ff94e1"
-
---000000000000bc54890644ff94e1
+References: <pull.2011.git.1764688047077.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2011.git.1764688047077.gitgitgadget@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 2 Dec 2025 17:29:40 -0500
+X-Gm-Features: AWmQ_bkupWVdjgtfRQA-4uORcJXfBgpRNBs66dT0XDp-uAFt1XWBob2NxFmqNB4
+Message-ID: <CALnO6CB1igUL7nv6ByUmwMRc9tqEvs=18wD81GNpaA=FLpL2vw@mail.gmail.com>
+Subject: Re: [PATCH] lockfile: add PID file for debugging stale locks
+To: Paulo Casaretto via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
+	Paulo Casaretto <pcasaretto@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Fri, Nov 21, 2025 at 12:13:46PM +0100, Karthik Nayak wrote:
->> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
->> index b7059cccaa..4b113d7c27 100755
->> --- a/t/t5510-fetch.sh
->> +++ b/t/t5510-fetch.sh
->> @@ -1577,6 +1578,67 @@ test_expect_success REFFILES 'D/F conflict on case sensitive filesystem with loc
-> [snip]
->> +test_expect_success "backfill tags when providing a refspec" '
->> +	test_when_finished rm -rf source target &&
->> +
->> +	git init source &&
->> +	git -C source commit --allow-empty --message common &&
->> +	git clone file://"$(pwd)"/source target &&
->> +	(
->> +	    cd source &&
->> +	    test_commit history &&
->> +	    test_commit fetch-me
->> +	) &&
->> +
->> +	# The "history" tag is backfilled eventhough we requested
+On Tue, Dec 2, 2025 at 10:07=E2=80=AFAM Paulo Casaretto via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Tiny nit, not worth a reroll: s/eventhough/even though/. Other than that
-> this patch looks good to me.
+> From: Paulo Casaretto <pcasaretto@gmail.com>
 >
-> Patrick
+> When a lock file is held, it can be helpful to know which process owns
+> it, especially when debugging stale locks left behind by crashed
+> processes. Add an optional feature that creates a companion .lock.pid
+> file alongside each lock file, containing the PID of the lock holder.
+>
+> The .lock.pid file is created when a lock is acquired (if enabled), and
+> automatically cleaned up when the lock is released (via commit or
+> rollback). The file is registered as a tempfile so it gets cleaned up
+> by signal and atexit handlers if the process terminates abnormally.
+>
+> When a lock conflict occurs, the code checks if the PID from the .pid
+> file is still running using kill(pid, 0). This allows providing
+> context-aware error messages. With PID info enabled:
+>
+>   Lock is held by process 12345. Wait for it to finish, or remove
+>   the lock file to continue.
+>
+> Or for a stale lock:
+>
+>   Lock was held by process 12345, which is no longer running.
+>   Remove the stale lock file to continue.
+>
+> Without PID info (default):
+>
+>   Another git process seems to be running in this repository.
+>   Wait for it to finish, or remove the lock file to continue.
+>
+> The feature is opt-in via GIT_LOCK_PID_INFO=3D1 environment variable.
+>
+> Signed-off-by: Paulo Casaretto <pcasaretto@gmail.com>
 
-Will add it in. Thanks!
+Sounds interesting. I think by the time I wish I knew what else was
+using the lockfile, it's too late for me to alter my environment.
+Perhaps (in addition to allowing the environment opt-in) we could
+opt-in via configuration? Or is this really only useful, say, on the
+server side where the environment is carefully controlled? I don't
+relish putting this variable into my environment to take advantage of
+something that looks very useful.
 
---000000000000bc54890644ff94e1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 6135a7dbcae62085_0.1
+Are there downsides that make it necessary to be opt-in? I also
+imagine this could be a useful default; occasionally folks at work hit
+something similar and ask "what's up with that?"
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1rdlozZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meDBiQy80ME1LTGd2YzJTY0poR3EySExsbXNqd09mMApYeUFtQ2Y4aWJq
-WFdRQ2E5Q0dtWFhwa3ZhQWUvVHdJalArZ0VxYko1eTZ2UktPVzNCcmVHaVJHTXpNdlZ1N2drCm1R
-WlZqRUhscnRTVVVBcDhIMlcxdEhkUDZMQlgvcmdGMm44bFpyOXp2M0xNeEJxTU5WR0FIV1VBQzNa
-WjVjYkkKMXBhN3pCQUpyNk1GRmpyTXNrZEZ2Uk5qejVkSkJEei9Hc3k1R3hQZUt1aTVFaGZBR25T
-S1p4czgwcGovMUd5VgpJYXNmdXhzV1hLb3dpZU0yRDIyZm5ISFA0ZkdPeTgwS2ZsbDBSVExONHBr
-WVVTVlZCTElISEFwZGMwRERMTVlsCjMxaHFuNXNiT3ZjYVJsVkZPZlk1V2xwQ04wQzEydXpLVmk5
-NmVPSU53V3VzOU1EQVhDeHpXRHlIWW1rbk1oTisKMmlNMk81eWhyci9VNWJ5a3NFUURMRTRaNTlD
-ZGJOeUlxMk1MMnBGZHlDTW5XU3Y2bStoMzBwSnFoK0dhbW1lcgpYanc2R254THZ1K2RJN1pNSDNN
-dXpqVEh1SEM2bWJEWExLVmlJZGxXSDRGWG15MUJhWDA3LzVxY0xLZFJuYlhlCjJhb2lsWHd4K1N2
-djFWWnEvWUM1cjNEdGRxb2UxVmovOTBEQlMwWT0KPXJYTTMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000bc54890644ff94e1--
+Only other thing is: just because a process X is running doesn't mean
+it was the one holding the lock, right? Since PIDs can be reused.
+
+--=20
+D. Ben Knoble
