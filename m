@@ -1,109 +1,141 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D329F2C0323
-	for <git@vger.kernel.org>; Tue,  2 Dec 2025 18:11:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C6221D3C5
+	for <git@vger.kernel.org>; Tue,  2 Dec 2025 18:48:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764699090; cv=none; b=eL91RfxC4QAGb3+OMy19P+ouFRx/22XZiEj3sULYdhwyNJWU4xZxRNMDcjFJQUl9jcDlsRusSE/JlisAS7vUZr4l25KAw2/1Re0ai8rNrSu09g59ydYPZRpoL6DQf9vRVqD/5PEw7LpJxX9TTWHeSUfC3wEFdzZatKG4qzzLw6Y=
+	t=1764701282; cv=none; b=MxnYdqCNQV5LE6iTY7NvO0dpn15BNDLy5DzlBqoUJkvqrU4Hi8KypRWAAmQOGLoyZqRDBTEOHhHxr2YYW856tSWuLkZGuDmdMTSiVh+Gw5igDBkqnTua2cJkhDju4ejYa1A4loN9P4S+wwMQETCT4MzO1jSuTLX+G4asiltLB50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764699090; c=relaxed/simple;
-	bh=zYMcbf9Hz5NI6gm8lctuFS9RnELe5oaCERjy9MWgT7k=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=qtDkh5DD0VKHOxw7LCRzdl3ELCLYOPaU7eEMBPvjSH9UVSDvtNSjPNkmvGscSx7xHpEAC4wE3nfdpoXQ7aqt9DpEqjLgP4P5MRO8O/qrJ3BY3MB8DtvbBEwXu27/vPWiF//EMDxzGmbO2qk9mLu1qUXHaTII4fpVXFaDqs+lLjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nDcg2y4+; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764701282; c=relaxed/simple;
+	bh=e1o1ocuCv+GiqjE0aggx1WMRwlZMAbepVHYxxlbyaPc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HT2/dI4yCFtzxf2MvOxSzG48aZzr2rNw9Cckdy3HJwMhjXkn+bwHRQ2ifsbK+ogWmg40iit20p9PlWsRlHFXr2cTYUFCyBXFObaqBAbW6lP7XMaz98AbvyvoT7p/ixzvYYnUA/iOC/j8n/SlddYzjMSARXgTNwoqEpVxm+ZAH34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IfQ57EeV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nlEjCoQx; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nDcg2y4+"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-7bb710d1d1dso8868398b3a.1
-        for <git@vger.kernel.org>; Tue, 02 Dec 2025 10:11:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764699087; x=1765303887; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=7Fw0Gxp25ebhgH7PAugQXlExHqJ7w1/GJ7/Ls+KRUAc=;
-        b=nDcg2y4+dIsMJdo0jpDMqwsFiuPRul6Bojo7/G1pQBeHsie5OjnXBM+QZ8VyjgvFjS
-         b+07ES0TDYwWLNlugDQC8hrHPy6p4zuyTuYYkaxR3hDk3bTuIPYu0wcxjx27fUVAqXs8
-         m6DzXsUEKqf7gDsVRfDsa85MxEfHpxssUkBpMXCiED6mKnMyB5KoAOxgWUI+g5EE37YK
-         pqnfdU68EXi25UD0K/ADRXHMdyhQVxKjDp2NsX/C04XImHYZ0wZXJh+hU+eQbBgRB6HE
-         sCvcoK2XRV7Xk7EngMcJD+Vlkk5eCx413o8tzKeypPThZ6yhTxJgUmGrkdjdiNkgN47I
-         C+wQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764699087; x=1765303887;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7Fw0Gxp25ebhgH7PAugQXlExHqJ7w1/GJ7/Ls+KRUAc=;
-        b=SjoQXlXJhp2mbLaZa6Oi9b0/0KBJcNQsA6iJ5zElgSHIN7rEcdEAFvKtzHsLOPUWdc
-         wVFPOPVDEdmbC1y4+h568RBvmBocAFaHLX9TpK7ARFPAkKKvgrYxsjO4Os4H7+qcamqp
-         +YLFfMdEHId5TKCOmiLdYNYZFybqvDcu6a2Lje/yG14aVSNuImtzUQPppwAN18nMJA5q
-         9dB8m/EhCkRD2dMV34XTZpgH9xbYiIqw8BbtqWu8NRgxONOnYXc9r9qEQsaAt3IwqXsU
-         j4olh4hP5sP39iCKhOgqEM9l8AmUZR9rtH55cXzcEnGgLGpPL3sGAnlVKI/Hr2vm9SNh
-         ZK5w==
-X-Gm-Message-State: AOJu0YxpeOKDEflL0HhXNd8NH62iaj7jdq+Y/GzRfkRIb/WY8+NsSjgv
-	M2WschaJrp3m4j2yy2ew6lOqZjsgok+cBG05BdIY2g8UDvZYTHaxHabzeCYuLQ==
-X-Gm-Gg: ASbGncsCevXhqma2A4V0NyaEPIg3mCKtfKEGlXxV8wIhKvSJMvAEIwJ5GtwQxqqoBLA
-	AkUKblIhRoCBHjaI9itFF5SvNs/ydrojvzS74EmZKPEPA+WnF7yGV4ZrzIrAuNaqE2uv3Lw7so/
-	MaGJKJKNKpPQ7DbA8QrN2P6qla88fgTdMDRi7wxsdNPdikZN9h+u6uM8k+sWa7BWs5NJgC9js0e
-	fT1sft0jd2Z9L63QTIAYnKEFxYZUBoU7okt4AlhwWJqT9TyKNhajprikjEVDjTHuPJ9XXV9OVjz
-	aRgOO5TgLZSoRhC56OPSVJKsALJ1I6UJPPelZsqx9IMerityW4rqf6KMzPRlF07SbG7LmZpQF8W
-	wRr4duHQzm65hwjtF6eBxkyI8Eq9FWGy2qLQd/GvbSxTCfE6TbJDU10rrvq+AibneLlGZcY2FAr
-	AeZ1aSmzsnnQgCYQ==
-X-Google-Smtp-Source: AGHT+IGRL5cCe4mR9vyXZSfoySjxtfb75a5BKjSJb4DTdkXvW80lGo1/gQYjZf0+7AxyD3sIFei9Kw==
-X-Received: by 2002:a05:6a20:3d1d:b0:361:51d9:e18e with SMTP id adf61e73a8af0-3637e0d2ac9mr33590553637.52.1764699087458;
-        Tue, 02 Dec 2025 10:11:27 -0800 (PST)
-Received: from [127.0.0.1] ([172.208.154.21])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7d150b68805sm17653838b3a.9.2025.12.02.10.11.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Dec 2025 10:11:25 -0800 (PST)
-Message-Id: <pull.2014.git.1764699084703.gitgitgadget@gmail.com>
-From: "Julia Evans via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 02 Dec 2025 18:11:24 +0000
-Subject: [PATCH] doc: remove stray text in Git data model
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IfQ57EeV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nlEjCoQx"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9C54EEC048E;
+	Tue,  2 Dec 2025 13:47:59 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Tue, 02 Dec 2025 13:47:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1764701279;
+	 x=1764787679; bh=3fOA8FKAwdvG8udlN/LR01D7fdn2g6vd+QtBe4dw2Qw=; b=
+	IfQ57EeVoJmyIYKZhLx+lB6p+VRc5zBQOvFlqJBd5xsBD962CrNdwq/4EJG2XXrc
+	aHBduHO+YWU0qLM12zmW0M3ER7jWzYWl/m+QPrXlIpFDHVqdM2yNMdo0sLt0CtMo
+	UALvw5ad4FPwtuD4NuyzMTld6ax+mLx4hbMUTlCWGcBfuzQqWOcTZWOm8Mo3SbdH
+	pD0f9/+I7g9QpBZiUbXSQd/kvZ3a/YdhUmNjvtG88QJyiuvmbnOFa9s5rqyUcKan
+	NYVMRJibvf1tyfmTzC8PwrykVMd9v5NzRc/avGSYOtW4hD7IPoNImUwL+8q+ELu6
+	CklVfeCrLYiPpjscxzF5DA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764701279; x=
+	1764787679; bh=3fOA8FKAwdvG8udlN/LR01D7fdn2g6vd+QtBe4dw2Qw=; b=n
+	lEjCoQxci30bOdwjB5tJv9pjUw4VhgrZZLRVM9OdsaPF7DILtU559MzVs9plToZb
+	PDxoCWmeH3dbet443sCj2Ej56aTddL9Xlp+5BKrq2pP1yN/oUr+Rm4jzAMR7Bw9E
+	z5gKbus38BNfth/I6LfvJIZqeZN2jDJ2yMRe17C5/pzxhk599hl0c3BnBh+nBh5P
+	GLMS1EYV88Mne82yJlooLuXSAD2c2NejqAbYpcbvn790cEtFAmXF/X3EeM0Ko4oP
+	Ovbh0ospibL0IqKADCUCkLAKr7VRBKTBQqru7FPhRlQTdbbp1GdHs9T7w2Hu00Vi
+	rTRsonhTs+3wkGi32Fm8A==
+X-ME-Sender: <xms:XzQvae8qSjApYBGrqwwb_5GR_zntFQErTNnLoZ5dxk6QiwN4OCMR2w>
+    <xme:XzQvaRTiLjvdQPjLatXB0Q76KMpC2_jwqB8YBWZT-xFbBYCrnVPq8dQ_DVI28KQcm
+    IMKJry9Fa8d6yYGHm_OxCDqf5aPDlQfWLTUOxtFq_SzYKUrT79r_g>
+X-ME-Received: <xmr:XzQvaXoPopuup6aFoNmD3g7PMGAWueBvShy5-kE3Hgq4R9aMk09gS8PcQgLd-3g1nogA8x0ebwjmIIIhP0IfIi-Iy0ZuTLTP1ITVtH7ca1A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekjecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
+    ohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpe
+    ffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvd
+    efjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehsohhrghgrnhhovhesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthho
+    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepsg
+    gvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrh
+X-ME-Proxy: <xmx:XzQvaWno7PudYJ_kv31LNDS8N-20PTAiJsQW5ozpRhi4GY_wzgrgEg>
+    <xmx:XzQvaYd6-ex9rDWmhERXsl0rNSuC8Jlew71rvagJH9vYUjszKi9K-Q>
+    <xmx:XzQvaaorZCIcuU3O3Pmg3gkrGJn09zeJRBTSGE4eOjxIe7Ze_a6aHA>
+    <xmx:XzQvaaNPoBnIU4ZFtBoJx9JFPhG4rNxV5IaWN0qdS85fVRyhzmpcUw>
+    <xmx:XzQvacKrFWlZwrIKDaMP8SJ5-u7UP7yQkkLNJHY54JyxCiproi8xczNP>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Dec 2025 13:47:57 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 416af0ad (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Dec 2025 18:47:55 +0000 (UTC)
+Date: Tue, 2 Dec 2025 19:47:43 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sergey Organov <sorganov@gmail.com>,
+	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v6 03/11] replay: stop using `the_repository`
+Message-ID: <aS8zvg1WquqJiC4H@pks.im>
+References: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
+ <20251027-b4-pks-history-builtin-v6-3-407dd3f57ad3@pks.im>
+ <CABPp-BH7E1Bh2g0vR3T4NEsv34DvFQPzMuJSsqtOAaWY-fFCxg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Julia Evans <julia@jvns.ca>,
-    Julia Evans <julia@jvns.ca>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BH7E1Bh2g0vR3T4NEsv34DvFQPzMuJSsqtOAaWY-fFCxg@mail.gmail.com>
 
-From: Julia Evans <julia@jvns.ca>
+On Wed, Nov 19, 2025 at 11:01:29PM -0800, Elijah Newren wrote:
+> On Mon, Oct 27, 2025 at 4:34 AM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > In `create_commit()` we're using `the_repository` even though we already
+> > have a repository passed to use as an argument. Fix this.
+> 
+> I feel like I've fixed this multiple times, but it keeps coming back.
+> In fact, I have this same fix locally in my replay-edit work.  Thanks
+> for fixing it.
+> 
+> >
+> > Note that we still cannot get rid of `USE_THE_REPOSITORY_VARIABLE`. This
+> > is because we use `DEFAULT_ABBREV and `get_commit_output_encoding()`,
+> > both of which are stored as global variables that can be modified via
+> > the Git configuration.
+> 
+> Indeed.
+> 
+> Going on a tangent for a second...I feel like I've had to remove
+> "the_repository" from builtin/replay.c multiple times.  In my local
+> replay-edit work, I actually added a "#define the_repository
+> DO_NOT_USE_THE_REPOSITORY" in builtin/replay.c, after all the header
+> includes, because the_repository isn't what builtin/replay.c is using,
+> it's these other two things that are also only included if
+> USE_THE_REPOSITORY_VARIABALE is defined.  That obviously doesn't need
+> to be part of your series, but what would you think if I were to
+> submit that?  Is it too ugly/weird of a way to avoid the_repository
+> being added back to builtin/replay.c so we can stop having to remove
+> it again?
 
-I meant to delete this sentence fragment when rewriting this paragraph,
-but accidentally left it in. It's repetitive (since it was meant to be
-deleted) and it's causing some formatting issues with the note.
+It does feel somewhat ugly, and the better solution would of course be
+to refactor both `DEFAULT_ABBREV` and `get_commit_output_encoding()` to
+accept a repository as input. But if I remember correctly that was a
+nontrivial endeavour, so your proposed hack might be the next-best
+solution.
 
-Signed-off-by: Julia Evans <julia@jvns.ca>
----
-    doc: Remove stray sentence fragment in Git data model
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2014%2Fjvns%2Fgitdatamodel-stray-text-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2014/jvns/gitdatamodel-stray-text-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2014
-
- Documentation/gitdatamodel.adoc | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/Documentation/gitdatamodel.adoc b/Documentation/gitdatamodel.adoc
-index 3614f5960e..dcfdff0346 100644
---- a/Documentation/gitdatamodel.adoc
-+++ b/Documentation/gitdatamodel.adoc
-@@ -235,8 +235,6 @@ there will no longer be a branch that points at the old commit.
- The old commit is recorded in the current branch's <<reflogs,reflog>>,
- so it is still "reachable", but when the reflog entry expires it may
- become unreachable and get deleted.
--
--the old commit will usually not be reachable, so it may be deleted eventually.
- Reachable objects will never be deleted.
- 
- [[index]]
-
-base-commit: f0ef5b6d9bcc258e4cbef93839d1b7465d5212b9
--- 
-gitgitgadget
+Patrick
