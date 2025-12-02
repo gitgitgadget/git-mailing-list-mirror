@@ -1,140 +1,138 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9799121D3C5
-	for <git@vger.kernel.org>; Tue,  2 Dec 2025 18:48:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFA023E229
+	for <git@vger.kernel.org>; Tue,  2 Dec 2025 18:48:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764701309; cv=none; b=Haoae1S6gOCTiV7/BZNNVVCpfOqr0k5sM9Je6T4Z5exzCrsXfRE5nOxROiNCZA2xIYPKcDktRYP+Y/97KC+N94SdUQSXGR/ume0xbjv9WR3NKfpTFXk75m9m81tJo0OLgqE9vM/pwcqceKZAgnzKF7dY05Caeu+ANi5oYZ+YQFA=
+	t=1764701324; cv=none; b=TzNOVa3k5DzRh+Jh6GMXsPaPPOhcPvWV2H+5jgAcM9x02IQIqPNBcS9y1NhcEhRgRMA1i1X1B/ZMiNcaxKyE/eTG4AFrPc7QuGaCr5O8jvGLSnT06iK5xaM8oNBGriOtKZPPx80mpVZv6G54wKFanoB3OVpYvuF2I5FErB/Ht8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764701309; c=relaxed/simple;
-	bh=0VGKN+2y9tRkjAO3WO75Qf81+OXiaFLi05nMGxYHGzo=;
+	s=arc-20240116; t=1764701324; c=relaxed/simple;
+	bh=tegTU5faRGFSMDt7YPPmjWEC5+HG73B6aYtpDBPgH8A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U3FXc8bR1AktVNMIM9XYoJOBhOeVgl6fFzl5h0lVBtNMG826lqQqaHC/vmqh+rMB6ffX4STgTLvYNB//+ohFIVKRR45VbnkByMN9pl0dIK3WLpDZ0kzz0CakG1GNxOh2X3DgKz1zbS6mRg/Xn3NLRrgKt5vRVO9ooZS3qmTpRN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JKRnYyAS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nGjcsPp/; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=Dw58Dzuffm0PpwCUfpPnnyjbgy5GSCy8JOtikZOLW1st8wNgUGe6C0Fh8r2a5qDU1xaSilmM5IlPcx0Ys9Cin1UHeyLUsDlbtMFl+2BJYBgP34tohzAnBLGSltjo0pUjeXmz839NCnO74fwQLUXZa4JhfU4fwsOpZQH0g4ruRa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cQSdpeBz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mxp+yCnl; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JKRnYyAS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nGjcsPp/"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id B359AEC0556;
-	Tue,  2 Dec 2025 13:48:26 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cQSdpeBz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mxp+yCnl"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AC8B314001E6;
+	Tue,  2 Dec 2025 13:48:41 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 02 Dec 2025 13:48:26 -0500
+  by phl-compute-03.internal (MEProxy); Tue, 02 Dec 2025 13:48:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1764701306;
-	 x=1764787706; bh=ihFue8TpBX8AQSiz4T8mOiPhSh5tI0fON051jgGG3eE=; b=
-	JKRnYyASAcI08pzkLlBk0NBgoX1necGCLgOXHJTKqxef5aNOG7vmkRi5DH1cUhpL
-	jmkIvizX0B4kDrndNHetkh745m7OXdlZuHOgZKuaUWTrltw67KR2B8hWxJk+9chP
-	vdVZm058e1a8n8aadRsjE6hQIfPZUpQTF5QIgqY5xM3jkBylSiVipsvR4l+cHmhC
-	ACbhwcWVefdVOkxicQ+fmQ/wmO7fIO2m1ExHG9UR1Ifl0a5hUrQrCaxsC+ZHCHx7
-	7HCyFKhNjGx87St1rLUABUotfLk/brnZ2dzx+mAesqgUmBSLZsjzSRLdjf8NMBSL
-	A5l1zu53rzEWQuWe7ttBhw==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1764701321; x=1764787721; bh=dONROHiBCO
+	onuBnwjyLOEGNXXpOwsdw0mjw94B1NB8E=; b=cQSdpeBzk6FyKmRyyRFnKrAWYC
+	ZCEBPrajHGWDum321Wd5hyGa8M/UdYrcm66iga8FWDGRxefcbydKRqnfSRakxUKe
+	YX60ddh6Wpqt3q3vORYP34tUlcjzeJ93rCTndjsmXj6pbV45b565oF686fn3C0uV
+	JKhBM8wZtbOOtSqGYFKUv7AwJUxZAguWvnsjN+FFOPqzhf7qaeac1VZKFgs5LZgP
+	O/uP0+acOb9DGAwpe5dK+I7Uhil5szPK75J/LKCvxjmyDOIAAiwjmPOj0s3q0yfC
+	CdzbQ5G4tMyUWHnfLSBndZ1BFjMQqs754zQQVFYfIhxO+qQzDKRbLkqxjhiw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764701306; x=
-	1764787706; bh=ihFue8TpBX8AQSiz4T8mOiPhSh5tI0fON051jgGG3eE=; b=n
-	GjcsPp/XtjKeUlWsMNp3KX8zsIdR0QrLp91eAmTqfXG4tgV+qhl8OFIgRNbjUxhp
-	i8hAmMVQk2yiO2ftfjcef4XrGldcnaARwDPzG9lp59oDH3LjKq8WuZQpVVyWltZp
-	XrnoOyk9QmiU/ujQlAm4vU3vM+5e5YRVoV3Or86/XwlBQDko3XZWMvwWdUn185VS
-	dd0aD9BAgqpnRdjnq6QO5jYS1ovDqRsD6j/halBCHtyWzzPGwr+WaZvCwv/MSyN+
-	OMcqLAeGzN7YIeNaP+Ei47nMRsY3M8YAYp0sNkh2BvNT4Ijnq0ZuhCiF6knk4jIX
-	NUxPPU9TCHXLIAdQ8Vvaw==
-X-ME-Sender: <xms:ejQvaYjuK2yfMs6wz44cTlpqbn2k-j9Gt6LBemGOGVr84UBpLw3x7w>
-    <xme:ejQvaTmgFo-FC33l4KToWquYsF0DYgqrjraV6-nm-ToORmbuhHd1yRb8031a2qR4D
-    p3m4k-Qv9pPYqVSHuTki-6YKCcCrIobOAIUYO_L9kaIvfhzC5autQ>
-X-ME-Received: <xmr:ejQvaTtDP-oiHpcgJYGPq-4hbEOkS5GRGSclDpILBuqJqAYt6-HsN7_xTV0huAv_X3NTW35ybkFYx4-IsxQ8eTrfjuSrIq_lo3q0P4ztp4s>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekkecutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1764701321; x=1764787721; bh=dONROHiBCOonuBnwjyLOEGNXXpOwsdw0mjw
+	94B1NB8E=; b=mxp+yCnlmqz6c1vC6Hrt527k+FgmjFEkssSguR0+SGf4jhSsheX
+	eMOhbbqHpe8qnO+slQpbUSuSt+BZL9EmlPNRPZZglT8JVE4Pi1Uey0JDo6lVcK1m
+	dD4Ij/3FBw4cES868TqMWjuCWlvpK0Q3mJzfDokWl3QlHIG2BbYp+esM/CqI4YS1
+	4BHT+XLVDKzCjvgrQaYXSFtmMpuNvidUTpZgWHAdO0+4KKBflTlOliQtWEht2597
+	F5a5EoBhIknYcRDBwd1DwPtEiYU2HPcz5BWF+40b4i+ncTkMThxJY9uVWjoQ05+B
+	VbY+MvSd5qcv0JS0Ltyp9KvA9BaYWMr6tvg==
+X-ME-Sender: <xms:iTQvaTRf6FCajUlgCjlXoGNAJvexMafmVCRrOHoziqdjyShF3DexkQ>
+    <xme:iTQvaX1C3kSnezKkPfsrhetuqU9l2SroWuQYb9hk1DjVjNTmMdp6fORaV2Vey-pwb
+    rhSSx5iNjhGD6DSkI00aPM147_8h0n7E6fq76ttDUHXawB07Ij-gw>
+X-ME-Received: <xmr:iTQvaTd1uA8MCotdG67knSMQrqiugLdaxJYg0pmYyvg_es0133NTJ9WiUy6tr8lfcAr0dZGsb2FxifgMfIrMmXRXrKsoac0Wf70PA71OyNc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegrihhl
     ohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpe
-    ffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcu
-    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvd
-    efjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
-    himhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsh
-    horhhgrghnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehf
-    rhgvvgdrfhhrpdhrtghpthhtohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhl
-    rdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:ejQvaZZXR8VTR1nAgGbTQHa_T1DVTlhzyOUMxHXtlILCSnKwklrV5w>
-    <xmx:ejQvabA-2Wvr2PU7ReL6-62AYEsg3T3lDkvSBUdxH8TnCBMy1yTMpQ>
-    <xmx:ejQvaR-Hs5UU7EH2-HiGVhadzVWhxR2uhmeijHY18XOV1c4rNsogVw>
-    <xmx:ejQvaXRecUSoEKL2c0qIL5tB7MdCYKbCZEL6pr4m_0CGvHY9Z33yyA>
-    <xmx:ejQvaW8qnvCa3mRZwxCPnQukCpZbXdg5rr90ee3WKpRxb7jd6duQ968->
+    ffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfu
+    thgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevke
+    ekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
+    hmpdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsohhrghgrnhhovh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohep
+    jhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepmhgrrhhtihhnvhhonhiise
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdr
+    tghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:iTQvafPJjwQyT6cUyuQTOwQv42TLsD2cKtMLF3i1KDCsaNnV2kdBiA>
+    <xmx:iTQvaXW3bZpqUmkEupEY1JlInD4IqkG0dasRp6JFQCWwggOdD8nCWQ>
+    <xmx:iTQvaXxL2Ks-S0GtEeN3gwws_bZSOFSCWX0HXXQYn8k34shB-PF7yw>
+    <xmx:iTQvae9NtCa6vzPNXUYW6rJm17MKi-AlCURB5vm-Gh3Gjkr8wFLRhQ>
+    <xmx:iTQvaeZABc6CxWn8zFICWVLlYCo0dNc-QFCD3s0Xz3hHR26LHJJEEHNB>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Dec 2025 13:48:25 -0500 (EST)
+ 2 Dec 2025 13:48:39 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cb9ef828 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 2 Dec 2025 18:48:24 +0000 (UTC)
-Date: Tue, 2 Dec 2025 19:48:18 +0100
+	by mail (OpenSMTPD) with ESMTPSA id b33b5241 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Dec 2025 18:48:38 +0000 (UTC)
+Date: Tue, 2 Dec 2025 19:48:32 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Elijah Newren <newren@gmail.com>
+To: phillip.wood@dunelm.org.uk
 Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Sergey Organov <sorganov@gmail.com>,
 	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
 	Martin von Zweigbergk <martinvonz@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Elijah Newren <newren@gmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v6 04/11] builtin: add new "history" command
-Message-ID: <aS80co7VTABD6nXs@pks.im>
+Subject: Re: [PATCH v6 07/11] add-patch: split out `struct
+ interactive_options`
+Message-ID: <aS80gHQOfKWtSy5n@pks.im>
 References: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
- <20251027-b4-pks-history-builtin-v6-4-407dd3f57ad3@pks.im>
- <CABPp-BGSYKPB7met4U_4ECNgA9vb5y_AWnMWfpiisOHnd_OyhQ@mail.gmail.com>
+ <20251027-b4-pks-history-builtin-v6-7-407dd3f57ad3@pks.im>
+ <3872545c-6738-4852-ab2c-8c08525ff795@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABPp-BGSYKPB7met4U_4ECNgA9vb5y_AWnMWfpiisOHnd_OyhQ@mail.gmail.com>
+In-Reply-To: <3872545c-6738-4852-ab2c-8c08525ff795@gmail.com>
 
-On Wed, Nov 19, 2025 at 11:02:20PM -0800, Elijah Newren wrote:
-> In addition to what Phillip commented on...
+On Thu, Nov 20, 2025 at 03:05:17PM +0000, Phillip Wood wrote:
+> On 27/10/2025 11:33, Patrick Steinhardt wrote:
+> > Refactor the code and split out a new `struct interactive_options` that
+> > hosts common options used by both. These options are then applied to a
+> > `struct interactive_config` that hosts common configuration.
 > 
-> On Mon, Oct 27, 2025 at 4:34 AM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > When rewriting history via git-rebase(1) there are a couple of very
-> > common use cases:
-> >
-> >   - The ordering of two commits should be reversed.
-> >
-> >   - A commit should be split up into two commits.
-> >
-> >   - A commit should be dropped from the history completely.
-> >
-> >   - Multiple commits should be squashed into one.
-> >
-> > While these operations are all doable, it often feels needlessly kludgey
-> > to do so by doing an interactive rebase, using the editor to say what
-> > one wants, and then perform the actions. Furthermore, some operations
-> > like splitting up a commit into two are way more involved than that and
-> > require a whole series of commands.
-> >
-> > Add a new "history" command to plug this gap. This command will have
-> > several different subcommands to imperatively rewrite history for common
-> > use cases like the above. These subcommands will be implemented in
-> > subsequent commits.
-> 
-> "...*Some of* these subcommands will be implemented...", right?  You
-> only implement two of them in this series, not all of them, or am I
-> reading wrong?
+> I'm a little skeptical about renaming "sturct add_p_opt" as it only holds
+> members that are relavent to run_add_p(). Also if we're trying to draw clear
+> boundaries between the two subsystems hosting "struct interactive_options"
+> and "struct interactive_config" in add-patch.c rather than add-interactive.c
+> is potentially confusing.
 
-No, you're right. The initial versions of this series implemented more
-of the above commands, but at no point in time did we actually implement
-all of them.
+I didn't want to add it to "add-interactive.c" though because of the
+direction of the dependency: "add-interactive.c" will depend on
+"add-patch.c", not the other way round.
+
+We could of course split out the new options into a separate file
+altogether. But that felt a bit heavy-handed to me.
+
+> > This refactoring doesn't yet fully detangle the two subsystems from one
+> > another, as we still end up calling `init_add_i_state()` in the "git add
+> > -p" subsystem. This will be fixed in a subsequent commit.
+> 
+> I think the ultimate aim of not having to initalize a "struct add_i_state"
+> in run_add_p() is a good idea. I'm not sure though that having to pass a
+> "struct interactive_options" to run_add_p() is any less confusing than
+> having to pass a "struct add_p_opt" to run_add_i().
+
+I agree that the end result is still a bit confusing. But what I wanted
+to achieve is that at least the two subsystems are clearly separated
+from so that one doesn't have to wonder anymore which parts interact
+with one another. It was extremely puzzling to me at first, and the end
+result here is significantly easier to understand from my point of view.
 
 Patrick
