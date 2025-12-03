@@ -1,87 +1,237 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695A51F5842
-	for <git@vger.kernel.org>; Wed,  3 Dec 2025 00:46:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45BA6200C2
+	for <git@vger.kernel.org>; Wed,  3 Dec 2025 00:47:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764722798; cv=none; b=gnHVD5vui/Q8Km0QrNbBvS/xRs+E/0SQB1FzKl9t0vPCqqYRMGd1GZ/JlVdaFr/xBnR5HQKidSfgYKy5BU/o6ohpA1KcwZEVRtFZK3YLNYV0KtAPBXZyA4huMHu67GrAAx/kG9Y7SsUi8bqBc5BZDI8A1NARhu2MBYtKCECtE5A=
+	t=1764722843; cv=none; b=drhfz5Wa4YOX6Rizjpu1b4Lrl7V3FWC3inIZd8sXcTRnmU3lYD28myZknNATGU1pZSZcdossOMyQWq6jdVD7AwptN2exmiz2il2EI7V2FmJQsoBScmZvYQZF9yV4y/waYnd+Kp1dnD55NaFfGFpU8sZGaTeLvr3alNm1VUYuwyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764722798; c=relaxed/simple;
-	bh=aShVkd122AhZfQ7M3E6N3lYXKPGS0WvgwlBkFiJhh3s=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=u0XeiiAyuywQLXc2ak6K3P36QOV3UBOfDP4OwEwZCD+eFcV2YD9bohqLQET4tIPLj2FVoNUUUcU3Qe1E9lYmsiPT0jE54NswyYKu6Fxsr3xJmbyUY+iZ0CdJ8+brEt7O6A/LHZ8ffbkD0VyS/wzQ+3g1Rm3+hvP5XPBz9KINtNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZiGH96NN; arc=none smtp.client-ip=209.85.215.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764722843; c=relaxed/simple;
+	bh=D83y6+GwQYv3PnWlCaOIOsnajJNPk7Ly9k/1k9GHbDY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dCdZHk2ICFREENvgCtZLPKKBrDFbKnIhvjHQHm+d1MY9qOwHtvp5FNyStHMjrWcYcqfbpMoYA/Mfn9kQUTIP1ohH/pbD54SNeWwekQ7qQeYCc0mjf8GFILQg6EIZzp/4tjeJ1moyNEZdAwC0oqaCoFUXgt7VCGkNuWsq0CPRfp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=k7dU0Ljn; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZiGH96NN"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-bddba676613so3830225a12.2
-        for <git@vger.kernel.org>; Tue, 02 Dec 2025 16:46:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764722796; x=1765327596; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aShVkd122AhZfQ7M3E6N3lYXKPGS0WvgwlBkFiJhh3s=;
-        b=ZiGH96NNbZ/7dq+46++tZmqLJuEBvFkn9FHkM+s+Hl0Ha1hj54LCPDF/Pxa3L+uGrw
-         WnzkOSw/o3Tm2FV1+gMwrOAyJCC1/Qmox917jsIEp818ufCYi6LKTrW7S9IVD1WyY/Ck
-         Z/dAS/HTFEmi+DNXEvMmiTxncRjlr9Oo+CMqR2M4S8QXeY6Hf3jh2ffKoLYh8HASYl23
-         dDvIH6/rirVInyjifsEvCjZ2kET5mtuKeQBo8miO6OoR8Xdljj1AFnOYF4n4QaMCsVz/
-         7TyoZcXxEZvZC6lcmKw0wLFNxXig7Kg0kCOJmImQSSpwydHmEwHyXnVjw0XxNiRWm+k+
-         W+Rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764722796; x=1765327596;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aShVkd122AhZfQ7M3E6N3lYXKPGS0WvgwlBkFiJhh3s=;
-        b=CsFaKdRVdMe58NFI7zZJDe9b6afrdfvS4xFysQLooJD8UtNGBI7V8CGH00iJmoC8YF
-         KAWbgyA9x39uT5bUDzSuyURDQ4SiWYgOsiHknrHWIM4oi+yPLvKpiYd/yxngNu2I0pIm
-         3Xe8oGAtsIvlpBJsfnMs7F+Gb1Yv6+hdh4KX2Tu6I/oDJqb2cTPSVGNwYkgtnxOGDGwL
-         syESxkYu0ddrh+xVP0Br1xQKXscNiwe+P+ckLxfaJCMz9/QRznzhCWCOhKgOhwNmRKnp
-         hnGxvZrqo9Bkh2tLMKe9LyZjx4XbHg5qlhfnDTH2t0IeaxmKlO908zZ7CxqMVUwG6OvZ
-         PbZg==
-X-Gm-Message-State: AOJu0YydoEIQpnTRcp+GLYaGjCzH2mZn4wi8ZRt0aQJpjskcM9oWWe7H
-	z138vvjbQOfc2iGd/2UEb10oyGIX3rm+15Unp4rf+dgLq+MeBp+a/jk2
-X-Gm-Gg: ASbGnctQxE4lRxxKdiuqRw0Y6uvtCw96irSa6kOUNg/zCQ9T0OXopvYR22I0RZXQsBy
-	RjCJfPc9mdvtPtWy5NmZtihok9DOELwG1e4j6ff7psjY/jhfDv51gIcQjvv6+Dza9SuarVz3mo5
-	hoKpftJ1T2kXFZxw5NL6QIgih389P9Wb/bTsUcQTCS658V5MUdAEff4KVagBMbs17avwqF4DOfj
-	wtuvupuRUsvIAzGs4AdPM9Rv6jpZDjZtzcM+PMf8FEvzAklvBxpxtCS9+JwgUIyogdtffpC58Vf
-	3lXK3pufJ/ii8ViwMw83hreKZ5yg23LEE0uHk5DACkqBOOTmRMGEytKNcp7YMGJnBUD0xrrHsuX
-	7dKe3/MO86iffU6pSLeMsxW3zfrrBumyOuk2g5Iv1rss/S/r4yHNy4QbYG6k+cHazQbluOrxmVD
-	RYq67vlUSNbbLEO0oAYgmP0e+iuBxQCyriSdSWfc2I
-X-Google-Smtp-Source: AGHT+IG6iBopwE89IgImx1DjGE/ghVRyEHEIuv6HGZzVupfJ6mZ3H9V7Yc4EdbiHwvlbIIQPlFHtJw==
-X-Received: by 2002:a05:7022:4281:b0:11a:c387:1357 with SMTP id a92af1059eb24-11df0bf7989mr472761c88.16.1764722796434;
-        Tue, 02 Dec 2025 16:46:36 -0800 (PST)
-Received: from smtpclient.apple ([177.103.85.82])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11dcaee660asm85869820c88.3.2025.12.02.16.46.34
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 Dec 2025 16:46:36 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="k7dU0Ljn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1764722840;
+	bh=D83y6+GwQYv3PnWlCaOIOsnajJNPk7Ly9k/1k9GHbDY=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=k7dU0LjnvqEUhw9LNCIdImapxUy8j5UB+cXr2DCYGahIfU0ziMje0T8s6HWHBJjz9
+	 cg/m+oWPK478SDVFzx0keipZThfnBpiTE+M//1wuzuA0KKcYbs5aLY+Ul26PCbIuLd
+	 3Yzna+9aN6QmQ8eoH35c/cbSjeUp2QuObAcYQdiJetrs5cNJkzUNOqWvG8JlVRu9Ob
+	 U9y+Ac0jnLJ23LWyKxl3vsQXa4NqjwKrsAabfTwqyE5zfj/K7VketmD9EzLdFzA+Mb
+	 jpzDTWQY2SXcSc/XoWF15LvJse/wzYb+vhoC8qOpv9wwyIYHrYKGeRzFbu+e+j2k7c
+	 YilgDD9tAhqiXdRg3omZcWVlasm9nV2XYmKNjiG1dm37W20bjo45GtyyUJHULEyGKk
+	 FXPMt9wQ6A+SIbpE+GvuNJg6AkHcEZ9ygxdi9JgMvcrF+4YiqxCk/M84zpJ4SQ92Dt
+	 dYrK+ZMtIcZmcpmgtv6WyKzKSGKSVXNGxrvmsHoobEIl+GzmQu+
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ec58:fb7:4d4e:5078])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0B8522003B;
+	Wed,  3 Dec 2025 00:47:20 +0000 (UTC)
+Date: Wed, 3 Dec 2025 00:47:16 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 0/3] Sanitize sideband channel messages
+Message-ID: <aS-D5lD2Kk6BHNIl@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+References: <pull.1853.git.1736878772.gitgitgadget@gmail.com>
+ <Z4bqMYKRP7Gva5St@tapette.crustytoothpaste.net>
+ <xmqqwmevtfye.fsf@gitster.g>
+ <f4a0cf5a-fe35-e038-a78e-e87caef03780@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.200.81.1.6\))
-Subject: Re: [Outreachy] Git Internship: Refactor in order to reduce Git's
- global state
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <CAD=f0L_-b5d5qVdL0TASS5iA8rWQxianT4_2zmhMtwN8p_TYbw@mail.gmail.com>
-Date: Tue, 2 Dec 2025 21:46:23 -0300
-Cc: git@vger.kernel.org,
- Usman Akinyemi <usmanakinyemi202@gmail.com>,
- Christain Couder <christian.couder@gmail.com>
-Content-Transfer-Encoding: 7bit
-Message-Id: <2C17EA98-FAEF-46D3-B366-1C41965B934F@gmail.com>
-References: <CAD=f0L_-b5d5qVdL0TASS5iA8rWQxianT4_2zmhMtwN8p_TYbw@mail.gmail.com>
-To: Bello Olamide <belkid98@gmail.com>
-X-Mailer: Apple Mail (2.3864.200.81.1.6)
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Fp3myG8fs9o9LfQV"
+Content-Disposition: inline
+In-Reply-To: <f4a0cf5a-fe35-e038-a78e-e87caef03780@gmx.de>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-> Hello Git Community,
+--Fp3myG8fs9o9LfQV
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi, welcome!
+On 2025-12-02 at 14:11:54, Johannes Schindelin wrote:
+> So you haven't come across `OSC P 1 0 ; ? ST` (see e.g.
+> https://www.xfree86.org/current/ctlseqs.html#:~:text=3DOSC%20P%20s%20;%20=
+P%20t%20ST
+> for this control sequence, as well as others that elicit responses from
+> terminal emulators, from current cursor position to terminal
+> capabilities)? I use this Escape sequence myself in my `tmux` sessions to
+> toggle the colors between bright-on-dark and dark-on-bright.
 
+So let's talk about this class of escape sequences with your patches for
+a moment.  I compiled the patches in this series on my system and
+changed the default PATH to use that client-side git binary (the
+server-side is unchanged).  I have not changed any configuration related
+to your patches, so the behaviour is the patch default.
+
+I have a server called castro (after the San Francisco neighbourhood)
+and I added the following script called `~/bin/fake-git-upload-pack`,
+which should let us simulate a malicious server:
+
+----
+#!/bin/sh
+
+printf '\033]10;rgb:ffff/ffff/ffff\007Hello, world!\n' >&2
+
+exec git-upload-pack "$@"
+----
+
+This basically uses this class of escape sequences to change the
+foreground colour to bright white.
+
+I then ran a clone command, like so:
+
+----
+% git clone -u fake-git-upload-pack castro:~/git/css.git
+Cloning into 'css'...
+Hello, world!
+remote: Enumerating objects: 663, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 663 (delta 0), reused 0 (delta 0), pack-reused 659 (from 1)
+Receiving objects: 100% (663/663), 114.83 KiB | 38.28 MiB/s, done.
+Resolving deltas: 100% (329/329), done.
+----
+
+Despite my patched Git binary, the escape sequence was executed and my
+foreground colour was changed.  So I don't think these patches are
+sufficient to actually fix the issue and I somewhat doubt that it's even
+possible at all to defend against a malicious SSH server which would
+like to send arbitrary escape sequences in general.
+
+I don't think we can just close stderr or not wire it up to the TTY
+because OpenSSH needs the TTY to prompt and doing so also breaks things
+on Windows.[0]  There are also cases where the remote side sends
+messages over the Banner portion of the protocol that are required for
+auth ($DAYJOB sends a unique URL for 2FA, for instance) and redirecting
+stderr to `/dev/null` would mean that people couldn't log into those
+machines.
+
+If it's the case that we effectively can't fix this for SSH, I don't see
+the advantage to trying to patch this for HTTPS, since it would give a
+false sense of security and many people use both in their daily work (I
+certainly do).
+
+> It is true that many terminal emulators started disabling support for such
+> Escape sequences. But that's not because the terminal emulators' features
+> were buggy. That's because some console programs are buggy, allowing
+> payload originating from outside the user's trust boundary to be passed
+> through to the terminal without proper sanitizing. That's what the entire
+> CWE-150 weakness class (https://cwe.mitre.org/data/definitions/150.html)
+> is all about.
+
+It is in general very difficult to eliminate all sources of untrusted
+input in the terminal because people run `cat` and a variety of other
+tools on untrusted files all the time.  It would certainly be convenient
+if we did not need to deal with that case, but we do nonetheless.
+That's why we've tended to patch terminal emulators when escape
+sequences execute code.
+
+> That check, whether the output is even sent to a terminal emulator or not,
+> is notably something that cannot ever be done by those `pre-receive` hooks
+> that were held up as examples to block this here patch series: They have
+> no way of knowing whether or not their output goes to a terminal, but they
+> send the control sequences anyway. Because YOLO, I guess. In that
+> respect, I think that even you two would agree that those `pre-receive`
+> hooks are broken by design.
+
+I don't agree.  Lots of systems that are not terminals interpret
+at least some terminal escape sequences, such as GitHub Actions.  And I
+can tell you that there are a substantial number of organizations that do
+indeed have actual pre-receive hooks in production that use terminal
+escape sequences without actually knowing that the other side supports
+them because I have had to troubleshoot those pre-receive hooks.
+
+Even if we were to agree that it might not be desirable to send terminal
+escape sequences without knowing if there's a terminal, people do it,
+and even Vim does it (try `TERM=3Ddumb vim -e`, whereupon it will send
+escape sequences, much to my annoyance).  I don't think we can say that
+everybody thinks this kind of thing is unreasonable and clearly some
+people very much want to do it and make reasonably good use of it, so
+it's a use case we should consider.
+
+> Also, it is relatively easy if you fail to protect your terminal emulator
+> to have your entire session messed up to a point where not even a `reset`
+> restores it. And corrupting the terminal session is still much better than
+> getting pranked by having all of Git's output be overwritten with a
+> picture of a snake (download the raw version of
+> https://github.com/csdvrx/sixel-testsuite/blob/master/snake.six -- after!
+> verifying that it is just a regular text file containing only a few
+> harmless escape sequences~ -- and then `cat` it to your terminal). That
+> could have been goatse, too, though. Or for that matter (as
+> https://github.com/mpv-player/mpv demonstrates, which allows you to render
+> entire Youtube videos in your current terminal window) you could be
+> Rick-rolled. And all of those are still pranks more than anything. Much
+> worse can be done with those terminal emulator capabilities.
+
+As I mentioned, sending Sixel images can be legitimately useful to send
+things like QR codes to build outputs or for things like authentication.
+Certainly there are less savoury things one can do as well.
+
+> For the record, I was almost successfully gas-lit into believing that this
+> here issue is not even a vulnerability, as was claimed by some (but not
+> all) involved in the discussion on the Git security list. Fortunately I am
+> in a wonderful position that I have access to outstanding security
+> researchers, and I asked two of them, independently, to tell me whether or
+> not this is a vulnerability that needs to be fixed. Independently, both
+> agreed that my assessment "High" was too high, and it should have been
+> "Moderate" instead. At the same time, they also both agreed that it is a
+> vulnerability that should be fixed in Git.
+
+I don't think "gas-lit" is an accurate characterization of the
+discussion.  I disagreed with you that this was a Git-specific problem
+and some others wanted more discussion about the matter.  I don't think
+anyone else had intentions of misleading or deceiving you, or making you
+doubt your memory or perceptions of reality, and I certainly did not.
+Instead, we simply disagreed on a technical matter.  Linus and I have
+clearly disagreed strongly on some matters on this list in the past and
+I don't think that "gaslighting" would be an accurate characterization
+there, either.
+
+I will state that while I do disagree with you on this matter and it's
+clear that we don't always see eye to eye or necessarily get along
+famously, I do appreciate the work that you do for this project and Git
+for Windows and I do respect you and your contributions.
+
+[0] I remember this from Git LFS: https://github.com/git-lfs/git-lfs/issues=
+/1843
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--Fp3myG8fs9o9LfQV
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaS+IkwAKCRB8DEliiIei
+gW9IAPwO3kgUseBrwpVsreTU2fW7R8gAc4a/l6YYcMPCAnSRVQEA/J5oaXWl7ePV
+lc+Bim2Tla4Hl6Adkx137O9mS68tFgk=
+=IBMb
+-----END PGP SIGNATURE-----
+
+--Fp3myG8fs9o9LfQV--
