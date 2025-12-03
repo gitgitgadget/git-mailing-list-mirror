@@ -1,27 +1,39 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from mout.web.de (mout.web.de [212.227.15.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94412853F8
-	for <git@vger.kernel.org>; Wed,  3 Dec 2025 10:15:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB1C2F12BE
+	for <git@vger.kernel.org>; Wed,  3 Dec 2025 10:45:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764756940; cv=none; b=uCT4Kz4TNAcEppmgvZtPhoxSnqtMKcJS6Q/k08Pc7McHDjewEOzFz2KNL+0jnmGgXqYfZAt+cFAMOhl/104/QYR9HjolcO+1WDsIwrBRy1/SmrKNpKJabG6JU6Zd8Rmfz5kKPlmAsrG4AQYB597VV1E3KOvwySveGyslP166tVg=
+	t=1764758718; cv=none; b=jI6BMr5mZlgettwJv3dKeGHVpTMnaGAcv/hFUtGIAeNjKCJwYcuCUjFMRYbDPfgnG6a0ifOfdxqbqeMy4jIwVARvI742k232/owpbJznTEqx3rHiP2+276vVxFl03fDjiB47Xbfdq0uCLtJFzJusZv/WwX1PawnKwESjQdvZm18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764756940; c=relaxed/simple;
-	bh=XN2rnlQIapAHTlomqTYak0xx3u/Y2RLeJN87V/DgaTU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=Ur6GL+p/+cUclVp+0PIg6lEVOCtvqDPdW4T8Y7vx2C1h9SXWIGr52mrM1mogpJBmXHe3iWwvpyWO6bvAb9OdtjwJXS4y8O4Hu9dTPc50fYhy3oAjyVeA7hFz8Eczf8PEz3UNR5UonILdURUqhWgwWwZYaNYMFVhJ/gYKyuALEVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp1.bon.at (unknown [192.168.181.104])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4dLtnG1CCMz7RX54
-	for <git@vger.kernel.org>; Wed,  3 Dec 2025 11:15:30 +0100 (CET)
-Received: from [192.168.0.103] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4dLtn442lpzRpL2;
-	Wed,  3 Dec 2025 11:15:20 +0100 (CET)
-Message-ID: <9a9441d5-fb64-4718-8765-852e66458598@kdbg.org>
-Date: Wed, 3 Dec 2025 11:15:20 +0100
+	s=arc-20240116; t=1764758718; c=relaxed/simple;
+	bh=FZWuPVLvYEkWxqOA7CusbM4kAIuQslIlhxry47ZAMpI=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=Oz0a+tqub6MIrpU40lsHuIzCzUVxZXe5FMf1OwTIfx4BDCdVkuRfrus79rVQYcPT0AtgGQNJYb5a6CL0yTuEEnOVhBP0Pl7tocos3YAhuNLwyKRqq7t1huYkc6QNfIzHPkFOjWW/KDK1RqEEYkDnItvbSytbMpdzWdc+eULErj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=LYfYF3jH; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="LYfYF3jH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1764758713; x=1765363513; i=l.s.r@web.de;
+	bh=AEdMUi/qtF1RRLL8SQvrD5jEsI61xj90P3Ijkq1ZMuc=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
+	 Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=LYfYF3jHZkfz+4VGZOzwXgp8fZ9R5hPzPyevU5HGsRw3eHLO+0ThaHCHnm7NMO9W
+	 agekVr81cy+YFzhUrQkcaPwYFjth/oo5hHT5TYWBeXRX44DlDTiaBB27nGmuxN5xM
+	 aK3zjGzYVixEtgqm2ZOF/Glf3gDOo4bmgyJZb1fJYCkbwtuuJiZpQdSEGXHYGZGw9
+	 4J452AXGeCK8HlVwXsiWZQvQXhCuwzlEYNJgrLIO42l1figpTLIZ1kOct1eQCZjX6
+	 bWVEf/wwdzrx18K9xcul+GMErGpEli7ww/exxfj0/BetI6blFz+j+7cwfUF6RqfKq
+	 RVD3vCWP56tQkcziRg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([79.203.29.250]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N2BI2-1wCq9v1RZG-00yOHX for
+ <git@vger.kernel.org>; Wed, 03 Dec 2025 11:45:13 +0100
+Message-ID: <784f495a-4b1a-4acf-96cd-599243ef9e27@web.de>
+Date: Wed, 3 Dec 2025 11:45:13 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -29,198 +41,103 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitk: fix history window panes position
-To: "tobias.boesch@miele.com" <tobias.boesch@miele.com>
-References: <AM0PR08MB5426BC141388A69BB5087732E1D8A@AM0PR08MB5426.eurprd08.prod.outlook.com>
 Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-Cc: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <AM0PR08MB5426BC141388A69BB5087732E1D8A@AM0PR08MB5426.eurprd08.prod.outlook.com>
+To: Git List <git@vger.kernel.org>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 0/4] ban mktemp(3)
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ctzOta0rJyYajYIe05bIU6VGpCAGuIatYCDhsv6ntkF+Zy24UW6
+ qh5AOQ6WvVSbkjyQ2ESgwB2g2tr+U4WcwuxeHpzfDDPQZkjlR17x/0GvipTfykAzWXChylz
+ vC0JZ00mGgMDxk/jHwXQSO19k2iQziqDo4e7dmSAbMEOdAFyFLh4gvQTDHSUEWhCnTUbw8T
+ UZvSpSw+T5aAX9lhSrZQQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:ZfWZjXQ7CR4=;HMieTJNqt5vU/Xmd3W9aKov2RWm
+ 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
+ 0fJEEv8yhSkDBNCi3ch3j0g==
 
-Am 02.12.25 um 14:08 schrieb tobias.boesch@miele.com:
-> From: Tobias Boesch <tobias.boesch@miele.com>
-> Date: Thu, 27 Nov 2025 11:27:16 +0100
-> Subject: [PATCH] gitk: fix history window panes position
-> 
-> When the history window panes in are resized
-> by moving either of the two sashes and then
-> the gitk window is vertically resized,
-> the sashes fall back into their previous
-> position without respecting the users wish
-> for resizing.
+mktemp(3) is insecure and POSIX.1-2008 no longer specifies it.  Stop
+using it.
 
-You say "the Gitk windows is resized vertically". Did you mean "resized
-horizontally"? If I change only the height of the Gitk window, the
-widths of the top panel (history, author, date) aren't changed at all.
-However, if I change only the width, the symptoms do occur.
+  wrapper: add git_mkdtemp()
+  compat: use git_mkdtemp()
+  compat: remove mingw_mktemp()
+  banned.h: ban mktemp(3)
 
-Also, the error is not limited to the upper half of the window. The
-lower panel (patch text, file list) also forgets the last used position
-when the window size is changed. Can we fix this, too?
+ banned.h             |  3 +++
+ compat/mingw-posix.h |  3 ---
+ compat/mingw.c       | 12 ------------
+ compat/mkdtemp.c     |  4 +---
+ wrapper.c            | 17 +++++++++++++++--
+ wrapper.h            |  2 ++
+ 6 files changed, 21 insertions(+), 20 deletions(-)
 
-> Save the sash position when the sashes are
-> moved to make them keep their position when
-> the window is resized afterwards.
-> 
-> When the gitk window is opened and maximized
-> on a screen, then closed and opened on a
-> screen smaller than the previously used one,
-> the author pane and time pane of the history
-> window only are a few pixels wide and their
-> contents are barely visible.
-> Widen the two panes on start of gitk to a
-> reasonable fixed size that shows a good amount
-> of text of authors and time.
-
-I did this test:
-
-0. Make Gitk significantly less than the screen size.
-1. Adjust pane size to 1/2 history, 1/3 author, 1/6 date.
-2. Maximize window via "Maximize" button.
-3. Restore window via "Maximize" button.
-
-After 2., the pane widths are scaled with the window width and retain
-their proportions (or so it seems).
-
-But after 3., the pane widths are completely scrambled. The date pane is
-far too wide (wider than in the maximized window), the history pane
-steals a lot of the remaining width, and the author pane is squished to
-a minimal size.
-
-The behavior without the patch was better in this regard, because the
-proportions of the memoized panel widths were retained.
-
-> 
-> Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
-> ---
-> 
-> Notes:
->     Debug print statements are left in the code for easier
->     testing by maintainers.
->     They will be removed when the review is finished.
-> 
->  gitk-git/gitk | 41 +++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 41 insertions(+)
-> 
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 7f62c8041d..6fbc2588fb 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -2471,6 +2471,23 @@ proc makewindow {} {
->          -xscrollincr $linespc \
->          -yscrollincr $linespc -yscrollcommand "scrollcanv $cscroll"
->      .tf.histframe.pwclist add $canv
-> +    bind .tf.histframe.pwclist.canv <Configure> {
-> +        global oldsash
-> +        set parent [regsub {\.[A-Za-z]+$} %W ""]
-> +        puts "Canvas (pwclist) configuration changed saving sash \
-> +                position if parent panedwindow $parent is initialised \
-> +                (oldsash exist)"
-> +        if {[info exists oldsash($parent)]} {
-> +            set s0 [$parent sashpos 0]
-> +            set s1 [$parent sashpos 1]
-> +            puts "   Sash0 is $s0"
-> +            puts "   Sash1 is $s1"
-> +            set oldsash($parent) [list $s0 $s1]
-> +            puts "   oldsash saved for $parent"
-> +        } else {
-> +            puts "   oldsash not yet existing so oldsash is not saved for $parent"
-> +        }
-> +    }
-
-I wonder why this handler is only installed for one of the three panes.
-
-Does panedwindow not have any features that can notify us to store the
-current sash positions? Can we perhaps bind to its <Motion> or
-<ButtonRelease> instead?
-
-At any rate, a callback like this is large enough (even without
-debugging code) to be moved to its own function. Is there a reason that
-proc resizeclistpanes cannot be reused in some way?
-
->      set canv2 .tf.histframe.pwclist.canv2
->      canvas $canv2 \
->          -selectbackground $selectbgcolor \
-> @@ -3116,30 +3133,53 @@ proc savestuff {w} {
-> 
->  proc resizeclistpanes {win w} {
->      global oldwidth oldsash
-> +    puts "Starting resizeclistpanes..."
->      if {[info exists oldwidth($win)]} {
->          if {[info exists oldsash($win)]} {
-> +            puts "   Using oldsash from window"
->              set s0 [lindex $oldsash($win) 0]
->              set s1 [lindex $oldsash($win) 1]
-> +            puts "   Sash0 is $s0"
-> +            puts "   Sash1 is $s1"
->          } else {
-> +            puts "   New window creation detected"
-> +            puts "   Width is $w"
-> +            puts "   Using sash from window sashpos directly"
->              set s0 [$win sashpos 0]
->              set s1 [$win sashpos 1]
-> +            puts "   Sash0 is $s0"
-> +            puts "   Sash1 is $s1"
-> +            if {$s1 > $w - 140} {
-> +                puts "      Sash1 greater than width - 140, setting max size"
-> +                set s1 [expr {$w - 140}]
-> +                if {$s0 > $s1 - 300} {> +                    puts "
-      Sash0 greater than sash1 - 300, setting max size"
-> +                    set s0 [expr {$s1 - 300}]
-
-So, these aren't "max size", but actually "minimal width".
-
-It is strange that the minimal width of the author pane is only
-corrected if the date pane is too small as well.
-
-I have an issue with this. If the user makes the panes small, the wider
-versions are forced on them. The user's wish should have priority.
-
-I understand that you want to restore the widths to a sane size after
-the "maximize-restore" operation has caused the degenerated widths. But
-doesn't this solution just paper over the real bug that the window
-resize operation doesn't heed the pane width proportions?
-
-> +                }
-> +            }
->          }
->          if {$w < 60} {
-> +            puts "   Narrow window ($w), scaling sash in dependency to window width"
->              set sash0 [expr {int($w/2 - 2)}]
->              set sash1 [expr {int($w*5/6 - 2)}]
->          } else {
-> +            puts "   Wide window ($w), scaling sash in dependency to old width, oldsash and window width"
->              set factor [expr {1.0 * $w / $oldwidth($win)}]
->              set sash0 [expr {int($factor * [lindex $s0 0])}]
->              set sash1 [expr {int($factor * [lindex $s1 0])}]
-
-Not a problem of this patch, but I wonder why we have [lindex] here.
-
->              if {$sash0 < 30} {
-> +                puts "      Sash0 too small, setting min size"
->                  set sash0 30
->              }
->              if {$sash1 < $sash0 + 20} {
-> +                puts "      Sash1 smaller than sash0 + 20, setting min size"
->                  set sash1 [expr {$sash0 + 20}]
->              }
->              if {$sash1 > $w - 10} {
-> +                puts "      Sash1 greater than width - 140, setting max size"
->                  set sash1 [expr {$w - 10}]
->                  if {$sash0 > $sash1 - 20} {
-> +                    puts "         Sash0 greater than sash1 - 300, setting max size"
->                      set sash0 [expr {$sash1 - 20}]
->                  }
->              }
-> @@ -3149,6 +3189,7 @@ proc resizeclistpanes {win w} {
->          set oldsash($win) [list $sash0 $sash1]
->      }
->      set oldwidth($win) $w
-> +    puts "Finished resizeclistpanes..."
->  }
-> 
->  proc resizecdetpanes {win w} {
--- Hannes
-
+=2D-=20
+2.52.0
