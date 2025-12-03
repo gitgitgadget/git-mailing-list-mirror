@@ -1,135 +1,87 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56973302CA6
-	for <git@vger.kernel.org>; Tue,  2 Dec 2025 23:49:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695A51F5842
+	for <git@vger.kernel.org>; Wed,  3 Dec 2025 00:46:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764719357; cv=none; b=M0VzeBZcrqxdfS1UJJcX9XqlOMtMhO90qMOKisKOWaxzDHfEU4SctdSQmAckl9mHQtB0RWvCnBdU3iHg2L0BSCfUagg6aK/0ai7KhzQH7/mdMxpNd9LzAXMZnc8bvGiQ/1ZUK68RRk3XqiXysv+mZ/YRjNn6AkLqVcwPcTwmx7k=
+	t=1764722798; cv=none; b=gnHVD5vui/Q8Km0QrNbBvS/xRs+E/0SQB1FzKl9t0vPCqqYRMGd1GZ/JlVdaFr/xBnR5HQKidSfgYKy5BU/o6ohpA1KcwZEVRtFZK3YLNYV0KtAPBXZyA4huMHu67GrAAx/kG9Y7SsUi8bqBc5BZDI8A1NARhu2MBYtKCECtE5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764719357; c=relaxed/simple;
-	bh=XkFPnYdTnk5JEfNiIh3kJ0R2b+L45XgDgP/VHiPAA3Y=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=kiYvCbj7KG2C7tBhUwCombdaSm9h+16YkRRP+AbXaFHbqz/b5Odph2u69dqhlxXoEP6xBh5gKTZ9Wox8qu5npmfGndxCkscm2Jh4sx7XL5HHidRwx1re93cVODSsMvIftDZrSzlNkiP5cjKhcEIUWkTPWUHwUxlBUKpZeeKXFJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T8d1BmNS; arc=none smtp.client-ip=209.85.222.177
+	s=arc-20240116; t=1764722798; c=relaxed/simple;
+	bh=aShVkd122AhZfQ7M3E6N3lYXKPGS0WvgwlBkFiJhh3s=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=u0XeiiAyuywQLXc2ak6K3P36QOV3UBOfDP4OwEwZCD+eFcV2YD9bohqLQET4tIPLj2FVoNUUUcU3Qe1E9lYmsiPT0jE54NswyYKu6Fxsr3xJmbyUY+iZ0CdJ8+brEt7O6A/LHZ8ffbkD0VyS/wzQ+3g1Rm3+hvP5XPBz9KINtNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZiGH96NN; arc=none smtp.client-ip=209.85.215.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T8d1BmNS"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8b2d7c38352so38541885a.0
-        for <git@vger.kernel.org>; Tue, 02 Dec 2025 15:49:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZiGH96NN"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-bddba676613so3830225a12.2
+        for <git@vger.kernel.org>; Tue, 02 Dec 2025 16:46:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764719355; x=1765324155; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1764722796; x=1765327596; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=os0T7MdRQxRYppLQfYleWy8xwIIGkZhsryw3OJv00x8=;
-        b=T8d1BmNSqk84gLlUWyZA9O4oPJQxODEPScBJIycgErvkqhf6L7xavD0UVJeVGlDLKb
-         erustui5fTx2xfZWHjTj4soBKuxiTEB4PZvXlWQV6M3mOE4I7exUBHQGkW1UKoG9rmOq
-         59b3vQNoHsACn6YjBsdyiKrb94zR7VQsi1vpBm7z7jmrMSBU+eJZ9DVt1vUifc2o3qMr
-         S9XWcecsI7UTzLaueb2M01zghM8dYSgU8ir1+bXN3teuoRCx3KxFJzF+UgNcmSDCGq0j
-         MY9nEQVD+m2MQV+DIm1gAku+5xoo+4FCbbReCb/UtWHJ/GAe725yuXoadfGOzffCF8/E
-         x+3A==
+        bh=aShVkd122AhZfQ7M3E6N3lYXKPGS0WvgwlBkFiJhh3s=;
+        b=ZiGH96NNbZ/7dq+46++tZmqLJuEBvFkn9FHkM+s+Hl0Ha1hj54LCPDF/Pxa3L+uGrw
+         WnzkOSw/o3Tm2FV1+gMwrOAyJCC1/Qmox917jsIEp818ufCYi6LKTrW7S9IVD1WyY/Ck
+         Z/dAS/HTFEmi+DNXEvMmiTxncRjlr9Oo+CMqR2M4S8QXeY6Hf3jh2ffKoLYh8HASYl23
+         dDvIH6/rirVInyjifsEvCjZ2kET5mtuKeQBo8miO6OoR8Xdljj1AFnOYF4n4QaMCsVz/
+         7TyoZcXxEZvZC6lcmKw0wLFNxXig7Kg0kCOJmImQSSpwydHmEwHyXnVjw0XxNiRWm+k+
+         W+Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764719355; x=1765324155;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=os0T7MdRQxRYppLQfYleWy8xwIIGkZhsryw3OJv00x8=;
-        b=gE3tn3/Vo1BWAANrE5OYvr+usEgau5b3PwV+5A4RYVCC3HGUYsLRczId6B/DwfLUGe
-         3/SzcysSyJ5uzSucNpu7UpiZcN5hFChDxeSc0WQUkyGDtdJd1WgbBClPVl5Wx+f2aElz
-         9xTcXR8ONdJYzgWdNH/zNHFWbNDcfumHthtN5aVDtPWmIZTt/u9i1PhFhTxELV7ZEZpn
-         HaFou1ZO3DR6QVUIy5zpRYYh3fTBVscSafEcXL2V/8acbf89TLEn5sXm4YXddL1KMMkE
-         Ma1NxyDLfl08Y+MihN2z6O7xNEIK/ekaRrCNunPiiOgDVxPVyuYX/u3BRiGNTS//alpd
-         zVeQ==
-X-Gm-Message-State: AOJu0YwQtE7X05kxjtsV9EaBGd9BQ3uBIYDAXsLIVgpqX3hApNGpQ53G
-	ByRhPNam/gO6zPwL4BAmjhWtJG/tazYcE9x0WLqDUnyx0YZazIv7RSlZTo8QPQ==
-X-Gm-Gg: ASbGncu+21m7GFK0eAGUPezRwZBnnjYWXvzTakUsxWsG4fqc72ZVR0HbaZIsUJpWXQG
-	tfEysbnOUZ/zCzktPJyY2dbLi9LDY5R1pYpLssUbZFW2qIuB/6FdxHPuPzq9r42S5NZesUFv5Dh
-	znoIJIOiP2VhVFHiGEexofvwZGzPDXHY6TSaagIqMsBTUJzcblup5MuuNi+vN3gPXCjvLyVwmhK
-	8bGhLHZ8qP4Oztf431OsJYT4BvAKwEGljIj+kEa/XWKwvg9z9W6hh3v5mP0YmAPXuNYhOAh3iAF
-	9yGGj7vz/ZXH8Ym457PuqPICjjsg4lE8dHNquFuBxuJ4bY4YrmwoYeZvQJHrGhsqRJt9FoJC315
-	RGa9FvGrg/mnJCJvpMMZKLvPJR47dWhYroExgtg/N5naXcXufvMwNecaV60Lby2dqXUB5Xk0CRV
-	jKTpMOCVq2d0ge1g==
-X-Google-Smtp-Source: AGHT+IH1YlxWIIBxcOnlG288fNiMzsNpNER907JxQTdwDJnFnQgMaSyhVYp1KBsBtytalNCuc2NGxw==
-X-Received: by 2002:a05:620a:4449:b0:8a2:bff5:40e3 with SMTP id af79cd13be357-8b5e00f85e1mr70530685a.38.1764719354592;
-        Tue, 02 Dec 2025 15:49:14 -0800 (PST)
-Received: from [127.0.0.1] ([145.132.102.55])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b529993ca7sm1194756585a.9.2025.12.02.15.49.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Dec 2025 15:49:14 -0800 (PST)
-Message-Id: <pull.2111.v3.git.git.1764719353631.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2111.v2.git.git.1764339945182.gitgitgadget@gmail.com>
-References: <pull.2111.v2.git.git.1764339945182.gitgitgadget@gmail.com>
-From: "Stefan Rieche via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 02 Dec 2025 23:49:13 +0000
-Subject: [PATCH v3] doc: fix typo in git-pull.adoc
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1764722796; x=1765327596;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aShVkd122AhZfQ7M3E6N3lYXKPGS0WvgwlBkFiJhh3s=;
+        b=CsFaKdRVdMe58NFI7zZJDe9b6afrdfvS4xFysQLooJD8UtNGBI7V8CGH00iJmoC8YF
+         KAWbgyA9x39uT5bUDzSuyURDQ4SiWYgOsiHknrHWIM4oi+yPLvKpiYd/yxngNu2I0pIm
+         3Xe8oGAtsIvlpBJsfnMs7F+Gb1Yv6+hdh4KX2Tu6I/oDJqb2cTPSVGNwYkgtnxOGDGwL
+         syESxkYu0ddrh+xVP0Br1xQKXscNiwe+P+ckLxfaJCMz9/QRznzhCWCOhKgOhwNmRKnp
+         hnGxvZrqo9Bkh2tLMKe9LyZjx4XbHg5qlhfnDTH2t0IeaxmKlO908zZ7CxqMVUwG6OvZ
+         PbZg==
+X-Gm-Message-State: AOJu0YydoEIQpnTRcp+GLYaGjCzH2mZn4wi8ZRt0aQJpjskcM9oWWe7H
+	z138vvjbQOfc2iGd/2UEb10oyGIX3rm+15Unp4rf+dgLq+MeBp+a/jk2
+X-Gm-Gg: ASbGnctQxE4lRxxKdiuqRw0Y6uvtCw96irSa6kOUNg/zCQ9T0OXopvYR22I0RZXQsBy
+	RjCJfPc9mdvtPtWy5NmZtihok9DOELwG1e4j6ff7psjY/jhfDv51gIcQjvv6+Dza9SuarVz3mo5
+	hoKpftJ1T2kXFZxw5NL6QIgih389P9Wb/bTsUcQTCS658V5MUdAEff4KVagBMbs17avwqF4DOfj
+	wtuvupuRUsvIAzGs4AdPM9Rv6jpZDjZtzcM+PMf8FEvzAklvBxpxtCS9+JwgUIyogdtffpC58Vf
+	3lXK3pufJ/ii8ViwMw83hreKZ5yg23LEE0uHk5DACkqBOOTmRMGEytKNcp7YMGJnBUD0xrrHsuX
+	7dKe3/MO86iffU6pSLeMsxW3zfrrBumyOuk2g5Iv1rss/S/r4yHNy4QbYG6k+cHazQbluOrxmVD
+	RYq67vlUSNbbLEO0oAYgmP0e+iuBxQCyriSdSWfc2I
+X-Google-Smtp-Source: AGHT+IG6iBopwE89IgImx1DjGE/ghVRyEHEIuv6HGZzVupfJ6mZ3H9V7Yc4EdbiHwvlbIIQPlFHtJw==
+X-Received: by 2002:a05:7022:4281:b0:11a:c387:1357 with SMTP id a92af1059eb24-11df0bf7989mr472761c88.16.1764722796434;
+        Tue, 02 Dec 2025 16:46:36 -0800 (PST)
+Received: from smtpclient.apple ([177.103.85.82])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11dcaee660asm85869820c88.3.2025.12.02.16.46.34
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 02 Dec 2025 16:46:36 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Stefan Rieche <stefanrieche@gmail.com>,
-    snowdroppe <stefanrieche@gmail.com>
-
-From: snowdroppe <stefanrieche@gmail.com>
-
-Fix typo in git-pull.doc from "git --rebase abort"
-to "git rebase --abort"
-
-Signed-off-by: snowdroppe <stefanrieche@gmail.com>
----
-    doc: fix typo in git-pull.adoc
-    
-    Changes since v1:
-    
-     * Updated commit message as suggested by Kristoffer Haugsbakk
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2111%2Fsnowdroppe%2Fmaster-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2111/snowdroppe/master-v3
-Pull-Request: https://github.com/git/git/pull/2111
-
-Range-diff vs v2:
-
- 1:  a4a2c58461 ! 1:  7ea5aabac5 doc: git-pull: fix typo in command
-     @@ Metadata
-      Author: snowdroppe <stefanrieche@gmail.com>
-      
-       ## Commit message ##
-     -    doc: git-pull: fix typo in command
-     +    doc: fix typo in git-pull.adoc
-      
-     -    Fix typo in git-pull doc from "git --rebase abort"
-     +    Fix typo in git-pull.doc from "git --rebase abort"
-          to "git rebase --abort"
-      
-          Signed-off-by: snowdroppe <stefanrieche@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.200.81.1.6\))
+Subject: Re: [Outreachy] Git Internship: Refactor in order to reduce Git's
+ global state
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <CAD=f0L_-b5d5qVdL0TASS5iA8rWQxianT4_2zmhMtwN8p_TYbw@mail.gmail.com>
+Date: Tue, 2 Dec 2025 21:46:23 -0300
+Cc: git@vger.kernel.org,
+ Usman Akinyemi <usmanakinyemi202@gmail.com>,
+ Christain Couder <christian.couder@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <2C17EA98-FAEF-46D3-B366-1C41965B934F@gmail.com>
+References: <CAD=f0L_-b5d5qVdL0TASS5iA8rWQxianT4_2zmhMtwN8p_TYbw@mail.gmail.com>
+To: Bello Olamide <belkid98@gmail.com>
+X-Mailer: Apple Mail (2.3864.200.81.1.6)
 
 
- Documentation/git-pull.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Hello Git Community,
 
-diff --git a/Documentation/git-pull.adoc b/Documentation/git-pull.adoc
-index cd3bbc90e3..d3006359ed 100644
---- a/Documentation/git-pull.adoc
-+++ b/Documentation/git-pull.adoc
-@@ -38,7 +38,7 @@ or `pull.ff` with your preferred behaviour.
- 
- If there's a merge conflict during the merge or rebase that you don't
- want to handle, you can safely abort it with `git merge --abort` or `git
----rebase abort`.
-+rebase --abort`.
- 
- OPTIONS
- -------
+Hi, welcome!
 
-base-commit: b31ab939fe8e3cbe8be48dddd1c6ac0265991f45
--- 
-gitgitgadget
