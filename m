@@ -1,73 +1,70 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B85C2367D5
-	for <git@vger.kernel.org>; Wed,  3 Dec 2025 23:19:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4388822A7F9
+	for <git@vger.kernel.org>; Wed,  3 Dec 2025 23:39:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764803991; cv=none; b=Fpi+D/Ca8k5cnkWxRMYL3iuFiXoFidB05JJ9KzPHh0xLLcWWjubd8T8tiKOz6EvDBgLV7gt5IY03I+0E6UCMwz/bq0dniKB0DWrToU/8gwMw3T9BqoJ0rCDA212E/LulXZwIr+dkeaxhi+HabDp1+VxbQqncseoUGYf2HqQu60M=
+	t=1764805168; cv=none; b=rDbqro7sbfIpqNTrQX8VqvLpcSXb7xjkykZIJgT2F6XwDk4FhDRPh9LGAKdTW1RtJpDfhBnrQOiEkhd9bcR2i97s7YFqAqEDVSNgQjxYtbrHnjVfuBEwF99LPVO3dznjwipmAMTNX/0Xmcx0aGS83Sfk1VjQnfPfjjywnFy/9OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764803991; c=relaxed/simple;
-	bh=oXPwshJ73TvOmhH4anFVFlm7bYwmTQcsREB6p1WIZ7Q=;
+	s=arc-20240116; t=1764805168; c=relaxed/simple;
+	bh=bvCZk3eiw9pJQwvkHegbm2ZgeNSEZcuomvu9l9mH7xg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KsSQBk4e7Y/wX8l9CKjSOhIJ/3l6CO8Tj8YEDH5gKufI4/GMFa+Mdksr7FcebMz5t6DrGF+nrpC/XULw49QAZkGWogNgx1HUEXmj+T9gNUm2xT39lfuzRsqr/0QpsugV06Lt3PGSKJPoKuNZZ+yQiXglgYIrALUkTtvmvIKVR1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ZTuPzq8C; arc=none smtp.client-ip=209.85.128.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=oJeeATuejkkMOFOOZE6uPgqmQQhow5FctQmeFFt5tSPCltiuZt+q/kEyjKEZLpQEEp134qEttA6BCVnHPkw5dQox4PbryqcVTcNNtyJJG2u3PaJeAEfZWxO0ex2pabHFDGOh3RMOUSX8R6OSxUR1szpakg9kba+ZgeHUlrkPh0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=IJ7ceZQi; arc=none smtp.client-ip=74.125.224.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ZTuPzq8C"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-787da30c50fso3454327b3.3
-        for <git@vger.kernel.org>; Wed, 03 Dec 2025 15:19:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="IJ7ceZQi"
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-642fcb38f35so233028d50.1
+        for <git@vger.kernel.org>; Wed, 03 Dec 2025 15:39:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1764803988; x=1765408788; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1764805165; x=1765409965; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=FqCFfgvoQ8MPZoGvfps01Uu4tx8tBPkwo2sBORo+UVI=;
-        b=ZTuPzq8Csl7rVO5fNyQTOmHb4E/eNbtQEKpYbUeCYzFytWjSsIPmgtw7L5x/uToYXk
-         S3SJ3XoHWtE4ymbe2JXEsECbPHqvM6UU00Dwmhdt8dYAtbTYWxIlMp00E+MG8HsQcgcX
-         UtzourAeeRzwUTARsGuWdM5cCa0whRX6JbMBt/5hIZ2SVNY+BqaxmvnD6xe2DrWlSUVj
-         APgDJRV9YkYlWpcwQi86dSgH96y3TiVmm5d+aaZbnRHueTNG25uvKXhu5gPvNO5tg19p
-         YAVEVJVK3G5JTo8VN1H+DGPDp4ONILwIy8fGyRjeRp0+8Ene61BJoHRptcv7urjzX5tM
-         X/qg==
+        bh=hkdr+zhnyLe3k7h/5WJv01jnd/hm5GzIJcZ/it7+BoI=;
+        b=IJ7ceZQiddM3RruJ6Upot1mdvRCDCJn3RiL/hBtvBr0k5hpHqBv4QY/f/OnYOzTKd0
+         wR4ZqXmbKt5tIKP19BKHe11+p6tZgymz3u2FzjmjSfII11dRcF/MWQXfJrm8XkLSF4qI
+         rrJrWqKcHSO0fukdVyjSNtlDsrul4vhrijLmTAoP/OYuVepMHadhqP1uqQrxleHgWSv0
+         mTJJDxqOsNIKqX8jRExNt8Gr5T5nUwSX3EfiR+bbAkTP8beTlYEgDnONzyR4l0KlzKNh
+         W6jZcAyzq5WuUoysG1rGosCBF28R2BxLZo8FNfuSH5PNMTw18gP3VDXc17wtsO+hlPk7
+         ko3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764803988; x=1765408788;
+        d=1e100.net; s=20230601; t=1764805165; x=1765409965;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FqCFfgvoQ8MPZoGvfps01Uu4tx8tBPkwo2sBORo+UVI=;
-        b=vqKTq+VRaAz7ctwgumawYRva9U8Z4aloEEjrpDzCHaqiMgaGKlPg8GR1oM1EVssdKG
-         ki1ICVHLQGRl8d4lBzhikLBxxeA1Ssm6jOLsNrjyAeQOo63yEQAkOr8GNolrpMAO13KU
-         JpREVgth4TANUBPFJQZGPiiKiijhoS/EPxg4tFOb2QelB6lYzdlm9ObJdIdMZrgHoSRu
-         ousSnWHU6AgNdI/EPxLEjtKJFfPL3ZI1PR4AWdXOWturOIoPtDNLl129s/IPg4YPMrlN
-         At+FCM5WoWDFIvRyVMgetfvrenT3tELbk44MDdvmdWiCQrmWGOljLbUyWd2binwmvqA6
-         HX1g==
-X-Forwarded-Encrypted: i=1; AJvYcCWnEOCvZArZqGoDs301Zs0HvrG8de5q1CLasPH4TmJ4yA/Z0XLUImwPbn/7Xm4rM+G4yb0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxfHyfPtCqfEcTkLga/5obcJ6E1eJ0A9QhcVuGJdrizcQP6X2WX
-	2TwUJH8EgHzskpeOlObnn5cQvJQXRzwGurPnGXFkzrdc5t75tvtm8HzdPu7WLObrQ8g=
-X-Gm-Gg: ASbGncuqRgI3uhgiGxYiMPziNL/WdE/0MwJOCe93Zl9mShX1DkkgKsClxOHhbkuHu9Y
-	gDF1CdaLMEbein7gT5GHkCB5MVc2bfR9PgxPRCefn95pDFkoztuGSlyK5ESvYC37CJ2D65sxNvH
-	4pOhciogcOmKI/H2TiGbu100b/GmIjoQ/a9AdXONTTI5aKcSPQipUZi5CIq9/af4zCLSDZdJnfm
-	PoUmVr3CoUa/53BOSbI62BPqU5huwdOW3mHTDrYTMM/PctDplwPIWuSxX0FbFKg0/pOnq89M16u
-	JFV8pRD+DUzPPboFavDyWNdKUUfrZ10hb/CF3A530e7qiYZ/UGBVEzHVloARPGa1QPLHMWH2bZI
-	KHETLHHvBoO3MK3o99JsxNuj8GZKyAZDfIaAtD9zjWoyP9BQ+hZ7Y+vHtWZPQsDTnBItrHBSLS4
-	ImLNInbDRExXWWSHfR9FwsdvUY5eYZsF9eMVvRzlbgKr0FdHvtLvtSkiS5FUYAFAqWh1+yKweO5
-	e7Xv1PFn9CZ/YE3FA==
-X-Google-Smtp-Source: AGHT+IHV8TQzkALSZ+bvaefOi4zUb4OS48lE+dG5Cf9OkrXQZZLk+XC7fUJ5oL0bxOZfLDBiRErOcw==
-X-Received: by 2002:a05:690c:4d01:b0:784:88df:d9d with SMTP id 00721157ae682-78c186006d7mr15221197b3.2.1764803988294;
-        Wed, 03 Dec 2025 15:19:48 -0800 (PST)
+        bh=hkdr+zhnyLe3k7h/5WJv01jnd/hm5GzIJcZ/it7+BoI=;
+        b=wA/DYWGGQkIME1aj1VexuXyEG4BZtei66R7IMKrKygWDa3AMpY/oRxvQSfwQw5+T9w
+         7wQbJx7WtZB8zn6TmoaBX9f8oJz04sgtKkszh4jgyLUvHEVxdcpav2WUQ+p4SgsDD+St
+         cQGjpBGURUQ6cIBhANZFItk+wWzgyIYF5IE1QuGhFd57FMsbXPpRbp//FkQBfC+bnnec
+         h7SilkyO0scupZN03zjYMUdh4ZtdlB3hLP9Hn4EurhQLzhWInc5xHPR3viOsOr6NBdKd
+         ykfZNFrfAmzvSgmAWErlBXyRaJgpwbxreCxIXAPm7cGanReuHmUvHxCn9EhMAGO4l0Ge
+         0tFw==
+X-Gm-Message-State: AOJu0YwgPDm8sh+aZLNSPMsquoLC/SoFN8hL9DAn7R/r+/p1pT/mNrHz
+	DhNSrHgGOiRjiqXj3LWWpA6NngYpwHRtDAWLr3ObsIAROQkDrV/3hbC0SYDkFV9Y4R4=
+X-Gm-Gg: ASbGncs6ia/K30SHZ2Jq7SrCEPHeTMAHPTqYDbnokNqt6RJM/MEGV7ccCfcUSsNhu+j
+	zCi12FHp4YB83zXvztOyD7PiG5J7M1YZXeju3JDzfFZWbzO661unbwm/3Paj3wpRU9Ivy9/SAh0
+	rVL+VSMJIr38M+nnR4UTIk05heT+Dy409CPSy8lKsANhTuEORD2hdwvpW43ur3+UdSifwyNg/Wi
+	wkEXR4HAE26O4hgPj16uNb0EHrL6JrWMdB84b0XkP/TO4wiBDsqMFWlNfqdKwsgJTpXHn/Jr2D3
+	k8RCnwSSNS8jfBuwSSeb/De3N7svBiBLMghV4VdyqmJuFIHRKXmY9L+ogDI/EsDcF4p0AC10Ek3
+	AxxP038Uk8SHD2m/xNWQeAaBW6TcJV3rGuI+rjHpQuqwW523Eq/43neVG5ERupzQmkpSM7WrHgH
+	PvqceIMsDwirucACZ0m2PYbhkotlioMIT5DgOXrkK+7u2yRw4GttY3eNEe6r7UrIcG/7nlHvHZb
+	1ztcGW/FRabDidi6g==
+X-Google-Smtp-Source: AGHT+IFMroWvZRLLqMD8hiXCXhrlc9jWHPPuymSCGRiXJqC8xUpQIEnZpBjvIwGB4f4rhBB70r3EeQ==
+X-Received: by 2002:a53:acd7:0:20b0:641:f5bc:697c with SMTP id 956f58d0204a3-6443704b3ffmr2473878d50.72.1764805165135;
+        Wed, 03 Dec 2025 15:39:25 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78ad100bd23sm79204937b3.36.2025.12.03.15.19.47
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78ad0d3f600sm79719177b3.9.2025.12.03.15.39.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Dec 2025 15:19:47 -0800 (PST)
-Date: Wed, 3 Dec 2025 18:19:46 -0500
+        Wed, 03 Dec 2025 15:39:24 -0800 (PST)
+Date: Wed, 3 Dec 2025 18:39:23 -0500
 From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: Paulo Casaretto via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Paulo Casaretto <pcasaretto@gmail.com>
+To: Paulo Casaretto via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Paulo Casaretto <pcasaretto@gmail.com>
 Subject: Re: [PATCH] lockfile: add PID file for debugging stale locks
-Message-ID: <aTDFks3RW57Ytwvq@nand.local>
+Message-ID: <aTDKK6Ibcx35q3Tz@nand.local>
 References: <pull.2011.git.1764688047077.gitgitgadget@gmail.com>
- <20251203211610.GA64204@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,101 +73,235 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251203211610.GA64204@coredump.intra.peff.net>
+In-Reply-To: <pull.2011.git.1764688047077.gitgitgadget@gmail.com>
 
-On Wed, Dec 03, 2025 at 04:16:10PM -0500, Jeff King wrote:
-> On Tue, Dec 02, 2025 at 03:07:27PM +0000, Paulo Casaretto via GitGitGadget wrote:
+Hi Paulo,
+
+On Tue, Dec 02, 2025 at 03:07:27PM +0000, Paulo Casaretto via GitGitGadget wrote:
+> The .lock.pid file is created when a lock is acquired (if enabled), and
+> automatically cleaned up when the lock is released (via commit or
+> rollback). The file is registered as a tempfile so it gets cleaned up
+> by signal and atexit handlers if the process terminates abnormally.
+
+(For the purposes of this review, I'll ignore the naming conventions
+that are discussed elsewhere in the thread, which I think can be
+resolved separately of any technical concerns.)
+
+> diff --git a/Documentation/git.adoc b/Documentation/git.adoc
+> index ce099e78b8..6fdd509d34 100644
+> --- a/Documentation/git.adoc
+> +++ b/Documentation/git.adoc
+> @@ -1010,6 +1010,16 @@ be in the future).
+>  	the background which do not want to cause lock contention with
+>  	other operations on the repository.  Defaults to `1`.
 >
-> > The .lock.pid file is created when a lock is acquired (if enabled), and
-> > automatically cleaned up when the lock is released (via commit or
-> > rollback). The file is registered as a tempfile so it gets cleaned up
-> > by signal and atexit handlers if the process terminates abnormally.
+> +`GIT_LOCK_PID_INFO`::
+> +	If this Boolean environment variable is set to `1`, Git will create
+> +	a `.lock.pid` file alongside each lock file containing the PID of the
+> +	process that created the lock. This information is displayed in error
+> +	messages when a lock conflict occurs, making it easier to identify
+> +	stale locks or debug locking issues. The PID files are automatically
+> +	cleaned up via signal and atexit handlers; however, if a process is
+> +	terminated abnormally (e.g., SIGKILL), the file may remain as a stale
+> +	indicator. Disabled by default.
+
+Regardless of whether or not we expose this functionality behind an
+environment variable or configuration, I think it would be nice to be
+able to turn PID tracking on and off for different components (e.g., for
+scenarios where you care about who is holding open, say, $GIT_DIR/index,
+but not who is creating a lock during ref creation).
+
+If we determined this through an environment variable, I think it would
+be reasonable to adopt the convention from the "core.fsync"
+configuration and use a comma-separated list. Alternatively, we could
+adopt that same convention for a configuration variable, say,
+"core.lockfile".
+
+But I think that having this exposed as a per-component setting via
+configuration is preferable than a global switch, since callers don't
+have to remember to set this variable in their environment to get the
+desired effect. Callers that want to opt-in or out of this feature on a
+one-off basis can still override the configuration via the top-level
+"-c" flag.
+
+>  `GIT_REDIRECT_STDIN`::
+>  `GIT_REDIRECT_STDOUT`::
+>  `GIT_REDIRECT_STDERR`::
+> diff --git a/lockfile.c b/lockfile.c
+> index 1d5ed01682..4a694b9c3d 100644
+> --- a/lockfile.c
+> +++ b/lockfile.c
+> @@ -6,6 +6,9 @@
+>  #include "abspath.h"
+>  #include "gettext.h"
+>  #include "lockfile.h"
+> +#include "parse.h"
+> +#include "strbuf.h"
+> +#include "wrapper.h"
 >
-> I'm sympathetic to the goal of this series, and the implementation looks
-> cleanly done. But I wonder if there might be some system-level side
-> effects that make these .pid files awkward.
+>  /*
+>   * path = absolute or relative path name
+> @@ -71,6 +74,62 @@ static void resolve_symlink(struct strbuf *path)
+>  	strbuf_reset(&link);
+>  }
 >
-> Temporarily having an extra .git/index.lock.pid file is probably not a
-> big deal. But for other namespaces, like refs, we're colliding with
-> names that have other meanings. So if we want to update refs/heads/foo,
-> for example, we'll create refs/heads/foo.lock now. And after your patch,
-> also refs/heads/foo.lock.pid.
->
-> The ".lock" suffix is special, in that we disallow it in a refname and
-> know to skip it when iterating over loose refs. But for the ".pid"
-> variant, we run the risk of colliding with a real branch named
-> "foo.lock.pid", both for reading and writing.
+> +/*
+> + * Lock PID file functions - write PID to a .lock.pid file alongside
+> + * the lock file for debugging stale locks. The PID file is registered
+> + * as a tempfile so it gets cleaned up by signal/atexit handlers.
+> + */
+> +
+> +static int lock_pid_info_enabled(void)
+> +{
 
-Good point. I don't have a strong opinion on whether or not we should
-use an append-only log of which PIDs grabbed which lockfiles when versus
-tracking them on a per-lock basis. But I wonder if this would be
-mitigated by either:
+With the above suggestion, I think this function would get a little more
+complicated to instead take a component argument. That's not a huge deal
+in and of itself, but callers that *create* a lockfile will have to
+somehow pass in the component name when acquiring the lock.
 
- - Keeping the ".lock" suffix as-is, so that holding a lockfile at path
-   "$GIT_DIR/index.lock" would create "$GIT_DIR/index-pid.lock" or
-   something similar.
+> +	return git_env_bool(GIT_LOCK_PID_INFO_ENVIRONMENT, 0);
+> +}
+> +
+> +static struct tempfile *create_lock_pid_file(const char *lock_path, int mode)
+> +{
+> +	struct strbuf pid_path = STRBUF_INIT;
+> +	struct strbuf content = STRBUF_INIT;
+> +	struct tempfile *pid_tempfile = NULL;
+> +	int fd;
+> +
+> +	if (!lock_pid_info_enabled())
+> +		return NULL;
+> +
+> +	strbuf_addf(&pid_path, "%s%s", lock_path, LOCK_PID_SUFFIX);
+> +	fd = open(pid_path.buf, O_WRONLY | O_CREAT | O_TRUNC, mode);
 
- - Introducing a new reference name constraint that treats ".lock.pid"
-   as a reserved in a manner identical to how we currently treat
-   ".lock".
+I'm not sure whether or not we should pass O_EXCL here, but I think it
+depends on the naming convention we pick.
 
-Between the two, I vastly prefer the former, but see below for more on
-why.
+> +	if (fd >= 0) {
 
-> But we can see the writes in the opposite order, which I think can also
-> lead to data loss. Something like:
->
->   - process A wants to write branch "foo", so it holds
->     refs/heads/foo.lock and now also the matching foo.lock.pid
->
->   - process B wants to write branch "foo.lock.pid", so it holds
->     refs/heads/foo.lock.pid.lock (and the matching pid)
-
-Changing the naming scheme as above would cause us to hold
-"foo.pid.lock" in addition to "foo.lock". That would allow process B
-here to write branch "foo.lock.pid" (as is the case today). But if the
-scenario were instead "process B wants to write branch foo.pid.lock", it
-would fail immediately since the ".lock" suffix is reserved.
-
-> I think both could be mitigated if we disallowed ".lock.pid" as a suffix
-> in refnames, but that is a big user-facing change.
-
-Yeah, I don't think that we should change the refname constraints here,
-especially in a world where reftable deployments are more common. In
-that world I think we should err on the side of removing constraints,
-not adding them ;-).
-
-> So I dunno what that means for your patch. I notice that the user has to
-> enable the feature manually. But it feels more like it should be
-> selective based on which subsystem is using the lockfile (so refs would
-> never want it, but other lockfiles/tempfiles might).
-
-Yeah, I think that something similar to the "which files do we fsync()
-and how?" configuration we have today would be a nice complement here.
-
-(As an aside, I wonder if that interface, too, could be slightly
-improved. Right now we have a comma-separated list of values in the
-"core.fsync" configuration for listing different "components", and then
-a global core.fsyncMethod to either issue a fsync(), or a pagecache
-writeback, or writeout-only flushes in batches. It might be nice to have
+This is a style preference, but I'd suggest handling the happy path
+outside of this conditional if possible by inverting it. Perhaps
 something like:
 
-  [fsync "loose-object"]
-    method = fsync
-  [fsync "packfile"]
-    method = writeout
+    if (fd < 0)
+        goto out;
 
-, so the analog here would be something like:
+    strbuf_addf(&content, ...);
+    if (write_in_full(fd, content.buf, content.len) < 0)
+        warning_errno(...);
 
-  [lockfile "refs"]
-    pidfile = false
-  [lockfile "index"]
-    pidfile = true
+    close(fd);
+    pid_tempfile = register_tempfile(pid_path.buf);
 
-or similar. That could also be represented as core.lockfile=index,
-omitting "refs" to avoid tracking it. It may be that people don't really
-care to ever use different fsync methods for different fsync-able
-components, so perhaps the analogy doesn't hold up perfectly.)
+    out:
+        strbuf_release(...);
+        return pid_tempfile;
+
+> +static int read_lock_pid(const char *lock_path, uintmax_t *pid_out)
+> +{
+> +	struct strbuf pid_path = STRBUF_INIT;
+> +	struct strbuf content = STRBUF_INIT;
+> +	int ret = -1;
+> +
+> +	strbuf_addf(&pid_path, "%s%s", lock_path, LOCK_PID_SUFFIX);
+> +	if (strbuf_read_file(&content, pid_path.buf, LOCK_PID_MAXLEN) > 0) {
+> +		char *endptr;
+> +		*pid_out = strtoumax(content.buf, &endptr, 10);
+> +		if (*pid_out > 0 && (*endptr == '\n' || *endptr == '\0'))
+> +			ret = 0;
+
+Same note here. I'd suggest setting "ret = 0" during initialization, and
+inverting this conditional to:
+
+    if (*pid_out <= 0 || (*endptr != '\n' && *endptr != '\0')) {
+        warning(...);
+        ret = -1;
+        goto out;
+    }
+> +		else
+> +			warning(_("malformed lock pid file '%s'"), pid_path.buf);
+> +	}
+> +	strbuf_release(&pid_path);
+> +	strbuf_release(&content);
+> +	return ret;
+> +}
+> +
+>  /* Make sure errno contains a meaningful value on error */
+>  static int lock_file(struct lock_file *lk, const char *path, int flags,
+>  		     int mode)
+> @@ -80,9 +139,12 @@ static int lock_file(struct lock_file *lk, const char *path, int flags,
+>  	strbuf_addstr(&filename, path);
+>  	if (!(flags & LOCK_NO_DEREF))
+>  		resolve_symlink(&filename);
+> -
+>  	strbuf_addstr(&filename, LOCK_SUFFIX);
+> +
+
+These look like stray whitespace changes that were left behind from
+development.
+
+> +		if (pid_status == 1)
+> +			strbuf_addf(buf, _("Lock is held by process %"PRIuMAX". "
+> +			    "Wait for it to finish, or remove the lock file to continue"),
+> +			    pid);
+> +		else if (pid_status == -1)
+> +			strbuf_addf(buf, _("Lock was held by process %"PRIuMAX", "
+> +			    "which is no longer running. Remove the stale lock file to continue"),
+> +			    pid);
+> +		else
+> +			strbuf_addstr(buf, _("Another git process seems to be running in this repository. "
+> +			    "Wait for it to finish, or remove the lock file to continue"));
+
+On one hand I prefer the new "Another git process" message for when we
+don't have a PID lockfile. But on the other hand, I think the "If it
+still fails, a git process may have crashed..." message is useful for
+users who may not be immediately aware of the consequences of simply
+removing the lockfile to continue.
+
+I do think the original message is somewhat verbose, so maybe the change
+here in the non-PID case is worth doing. What are your thoughts?
+
+> +
+> +		strbuf_release(&lock_path);
+>  	} else
+>  		strbuf_addf(buf, _("Unable to create '%s.lock': %s"),
+>  			    absolute_path(path), strerror(err));
+> @@ -207,6 +292,8 @@ int commit_lock_file(struct lock_file *lk)
+>  {
+>  	char *result_path = get_locked_file_path(lk);
+>
+> +	delete_tempfile(&lk->pid_tempfile);
+> +
+
+Do we want to wait to delete the PID file until after we know that we
+successfully committed the lockfile?
+
+> +/* Maximum length for PID file content */
+> +#define LOCK_PID_MAXLEN 32
+
+Makes sense ;-). This should be plenty of space, since on my system
+maximum PID value is 2^22:
+
+    $ cat /proc/sys/kernel/pid_max
+    4194304
+
+> +test_expect_success 'PID info file cleaned up on successful operation when enabled' '
+> +	git init repo4 &&
+> +	(
+> +		cd repo4 &&
+> +		echo content >file &&
+> +		env GIT_LOCK_PID_INFO=1 git add file &&
+> +		# After successful add, no lock or PID files should exist
+> +		! test -f .git/index.lock &&
+> +		! test -f .git/index.lock.pid
+
+These should be:
+
+    test_path_is_missing .git/index.lock &&
+    test_path_is_missing .git/index.lock.pid
+
+instead of bare "! test -f"'s.
 
 Thanks,
 Taylor
