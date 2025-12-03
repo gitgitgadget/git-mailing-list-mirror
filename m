@@ -1,143 +1,174 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB1C2F12BE
-	for <git@vger.kernel.org>; Wed,  3 Dec 2025 10:45:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB4A2DAFBD
+	for <git@vger.kernel.org>; Wed,  3 Dec 2025 10:48:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764758718; cv=none; b=jI6BMr5mZlgettwJv3dKeGHVpTMnaGAcv/hFUtGIAeNjKCJwYcuCUjFMRYbDPfgnG6a0ifOfdxqbqeMy4jIwVARvI742k232/owpbJznTEqx3rHiP2+276vVxFl03fDjiB47Xbfdq0uCLtJFzJusZv/WwX1PawnKwESjQdvZm18=
+	t=1764758906; cv=none; b=BooR9aGyZehUZzRklTxv3o0KTyJ5vHrRvRRuABzRFcdTTZ6oy52cV8y3nN3krpE6aXtmyOXU0BIT1w3I/J+2UzFbCHgDnQg5lDp1dCmrc7cUCyuYBCV9sE5c4+WcnRyq9LMckqroeufzQRDxlEzjkinVtZZJR7QDX7qsfg2iGsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764758718; c=relaxed/simple;
-	bh=FZWuPVLvYEkWxqOA7CusbM4kAIuQslIlhxry47ZAMpI=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=Oz0a+tqub6MIrpU40lsHuIzCzUVxZXe5FMf1OwTIfx4BDCdVkuRfrus79rVQYcPT0AtgGQNJYb5a6CL0yTuEEnOVhBP0Pl7tocos3YAhuNLwyKRqq7t1huYkc6QNfIzHPkFOjWW/KDK1RqEEYkDnItvbSytbMpdzWdc+eULErj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=LYfYF3jH; arc=none smtp.client-ip=212.227.15.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1764758906; c=relaxed/simple;
+	bh=ViqgT2YLnaVhNbEdbIN9EIBVoztpQkdaMrdjGgAs80g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AblPmV3tSqUXRN0+lN/LZCfLVd83++q9B3nnPaVzuDcnloQCoOOUmmIaJ6zqd3wWDBr8mxaJW3UFKsaT0p9KsLRiBt2XmZP3yhS1ofU230b6skF/2/3C5F7Wxk3sTsCgOPrlV7q5OotB++z9YGMHVQe52Wt9WAx1466JzNye5Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IpzXBB8q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uE8TStTt; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="LYfYF3jH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1764758713; x=1765363513; i=l.s.r@web.de;
-	bh=AEdMUi/qtF1RRLL8SQvrD5jEsI61xj90P3Ijkq1ZMuc=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
-	 Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=LYfYF3jHZkfz+4VGZOzwXgp8fZ9R5hPzPyevU5HGsRw3eHLO+0ThaHCHnm7NMO9W
-	 agekVr81cy+YFzhUrQkcaPwYFjth/oo5hHT5TYWBeXRX44DlDTiaBB27nGmuxN5xM
-	 aK3zjGzYVixEtgqm2ZOF/Glf3gDOo4bmgyJZb1fJYCkbwtuuJiZpQdSEGXHYGZGw9
-	 4J452AXGeCK8HlVwXsiWZQvQXhCuwzlEYNJgrLIO42l1figpTLIZ1kOct1eQCZjX6
-	 bWVEf/wwdzrx18K9xcul+GMErGpEli7ww/exxfj0/BetI6blFz+j+7cwfUF6RqfKq
-	 RVD3vCWP56tQkcziRg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.29.250]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N2BI2-1wCq9v1RZG-00yOHX for
- <git@vger.kernel.org>; Wed, 03 Dec 2025 11:45:13 +0100
-Message-ID: <784f495a-4b1a-4acf-96cd-599243ef9e27@web.de>
-Date: Wed, 3 Dec 2025 11:45:13 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IpzXBB8q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uE8TStTt"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4EC4F14001AE;
+	Wed,  3 Dec 2025 05:48:23 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Wed, 03 Dec 2025 05:48:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1764758903;
+	 x=1764845303; bh=EAH/uBg88IyY+6BeTAgWZN/0D50sbNo9aNKwYZg0g5g=; b=
+	IpzXBB8qr/KFXot5V5lNdTuh3+6FFrIVj9opiOCcdEb1CofTXZBPYkzlP3j61Ei8
+	pn9ruWueOLlaUx/7BXDF9Qs2qjt6Rm3z0utpM4m6w5GLuyKtokLiIfOFdXZOvMdy
+	IIVmTIxSpUl7X55CkPi0RkFHmMhZbBsFO0qua9ixlAIouKUXVzCnRBNIBA+HkKZB
+	2bpETGurdSo0KDi06CBxVzU7Cl12L9uRWjLQp8IA5Oz4R/5WG2pUxL2tZ1EvaDD/
+	xI+f+xnD9C5Ilb9uNkFyOPS5b0PHm06cwiN38fgcGYunbHcpE9ITq9JLLaWGamWZ
+	Z87BsqGFpEERS9rsjHqKaw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764758903; x=
+	1764845303; bh=EAH/uBg88IyY+6BeTAgWZN/0D50sbNo9aNKwYZg0g5g=; b=u
+	E8TStTteP1C64pB3JRLo2r03ZaTMKeW7BnvJEni+OU4wgbg5fT+yRCQtdrofC1dg
+	jnhT/1dTdFrClIAleoJ22BBtfrKeT2DdkqVFw/S5zFwP8u1RH5t91evhGDP8AVbJ
+	Bvam+i+02PetK4lW0m6emTm7wevHj2gIoyRJNdBbkXBfpDOkbES5WQM8RF+WAYaA
+	rlzKBX0Tf4DMTbF3KGLqUm0VyK1N+szVpepriBJ8CJznFztrBsIdv0KDo1Vu2kXP
+	+zqp60Ib3RwTpXPW9dc1nn+uVjANo8hpDH+X9toTs5OhDXtXw25IzBVdpFNDkz0I
+	mA8PJ5wbaxIDzv647Lijw==
+X-ME-Sender: <xms:dxUwaX4kF8eY13-kKwGARE-wlql0dEiG_b72UTNbQWZFUxKOWEPo2w>
+    <xme:dxUwafedf6rG3obhc-CiucGiCN6LSeIvG1ZyWOQL1gFpdFfSkpPOiNFGd0iuAplZR
+    rzzZfc0O_zJHR8WWXkROm0YxrMyman7GqtV3b2ZUKd5bWwDvnub6Q>
+X-ME-Received: <xmr:dxUwaSEBFJkDvioxTw5NU9-cVat-WTx6A52uxBAxWB7_80Nddd0_76_VLOH1GTjFzu0FP5Kl9ynhfinIJzI8OkK9ob1LD5A19e8-Nbg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    epfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    dvfeejiedtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhorhhgrg
+    hnohhvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhf
+    vghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepmhgrrh
+    htihhnvhhonhiisehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgv
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:dxUwaYTWgNz2oMgoRdb_fm6n6Bl_DpjKgdnAeqYf6g01XLSBAVigog>
+    <xmx:dxUwaQYexl4aFIppsTiopPR5vbHTbpF6Hc-LosKXdg066FllR5JG7w>
+    <xmx:dxUwab3ifUy5rjltEuET93y2KrjhvLXox5TUzJSHSe5bcAg_zPgYRA>
+    <xmx:dxUwabpUkmA9MrzXK2YnxgD-9-VKJMSOQZfY3bHwtWZvUFKVVrB67g>
+    <xmx:dxUwaV1WMg_fBIbMY07jC7hojFFd4H8a9hCLVib5CF7OlQiN-E7VC1BC>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 3 Dec 2025 05:48:21 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 378f6894 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 3 Dec 2025 10:48:19 +0000 (UTC)
+Date: Wed, 3 Dec 2025 11:48:15 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Sergey Organov <sorganov@gmail.com>,
+	=?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v6 04/11] builtin: add new "history" command
+Message-ID: <aTAVb337XsGuRUTa@pks.im>
+References: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
+ <20251027-b4-pks-history-builtin-v6-4-407dd3f57ad3@pks.im>
+ <CABPp-BGSYKPB7met4U_4ECNgA9vb5y_AWnMWfpiisOHnd_OyhQ@mail.gmail.com>
+ <aS80co7VTABD6nXs@pks.im>
+ <CALnO6CDG5EMha8k4DPy=p0FT1hO_SeU0wxm6qn2+Q92xNY6hqQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 0/4] ban mktemp(3)
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ctzOta0rJyYajYIe05bIU6VGpCAGuIatYCDhsv6ntkF+Zy24UW6
- qh5AOQ6WvVSbkjyQ2ESgwB2g2tr+U4WcwuxeHpzfDDPQZkjlR17x/0GvipTfykAzWXChylz
- vC0JZ00mGgMDxk/jHwXQSO19k2iQziqDo4e7dmSAbMEOdAFyFLh4gvQTDHSUEWhCnTUbw8T
- UZvSpSw+T5aAX9lhSrZQQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:ZfWZjXQ7CR4=;HMieTJNqt5vU/Xmd3W9aKov2RWm
- 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
- 0fJEEv8yhSkDBNCi3ch3j0g==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALnO6CDG5EMha8k4DPy=p0FT1hO_SeU0wxm6qn2+Q92xNY6hqQ@mail.gmail.com>
 
-mktemp(3) is insecure and POSIX.1-2008 no longer specifies it.  Stop
-using it.
+On Tue, Dec 02, 2025 at 05:44:15PM -0500, D. Ben Knoble wrote:
+> On Tue, Dec 2, 2025 at 1:48 PM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > On Wed, Nov 19, 2025 at 11:02:20PM -0800, Elijah Newren wrote:
+> > > In addition to what Phillip commented on...
+> > >
+> > > On Mon, Oct 27, 2025 at 4:34 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > > >
+> > > > When rewriting history via git-rebase(1) there are a couple of very
+> > > > common use cases:
+> > > >
+> > > >   - The ordering of two commits should be reversed.
+> > > >
+> > > >   - A commit should be split up into two commits.
+> > > >
+> > > >   - A commit should be dropped from the history completely.
+> > > >
+> > > >   - Multiple commits should be squashed into one.
+> > > >
+> > > > While these operations are all doable, it often feels needlessly kludgey
+> > > > to do so by doing an interactive rebase, using the editor to say what
+> > > > one wants, and then perform the actions. Furthermore, some operations
+> > > > like splitting up a commit into two are way more involved than that and
+> > > > require a whole series of commands.
+> > > >
+> > > > Add a new "history" command to plug this gap. This command will have
+> > > > several different subcommands to imperatively rewrite history for common
+> > > > use cases like the above. These subcommands will be implemented in
+> > > > subsequent commits.
+> > >
+> > > "...*Some of* these subcommands will be implemented...", right?  You
+> > > only implement two of them in this series, not all of them, or am I
+> > > reading wrong?
+> >
+> > No, you're right. The initial versions of this series implemented more
+> > of the above commands, but at no point in time did we actually implement
+> > all of them.
+> >
+> > Patrick
+> 
+> While I'm thinking of it, at work today I had occasion to use "drop"
+> and "reorder" (from an old version of this series whose binary I
+> happened to still have laying around), and it was very convenient.
+> Looking forward to it ;)
+> 
+> - drop: I had made some changes on my tree that needed to be in a
+> separate branch. I didn't want to mess with stashes for some reason,
+> so I did "commit; switch -c …; cherry-pick @@{1}" (or something
+> similar). Then when coming back (switch -), I could just do "drop @".
+> I'm sure there's a better way to do this slicing that wouldn't have
+> needed drop, but I couldn't think of it at the time.
+> 
+> - reorder: I have a series of mostly logical, separate wip commits
+> that need some more explanation and might need further tweaks as I go;
+> I'm working on uncommitted changes that logically belong to the tip,
+> but spot something else that will be a separate commit. I make that
+> commit, then "reorder @ --before-commit=@~", and voilà, I'm ready to
+> amend again when I get around to committing the rest of what I have.
 
-  wrapper: add git_mkdtemp()
-  compat: use git_mkdtemp()
-  compat: remove mingw_mktemp()
-  banned.h: ban mktemp(3)
+Yeah, I definitely do wish to also upstream these two going forward.
+It's going to be a bit more complicated though now that we are building
+on top of the replay infrastructure, because it doesn't know to handle
+conflicts.
 
- banned.h             |  3 +++
- compat/mingw-posix.h |  3 ---
- compat/mingw.c       | 12 ------------
- compat/mkdtemp.c     |  4 +---
- wrapper.c            | 17 +++++++++++++++--
- wrapper.h            |  2 ++
- 6 files changed, 21 insertions(+), 20 deletions(-)
+Maybe for an initial version we can get away with just bailing out on a
+conflict and then iterate.
 
-=2D-=20
-2.52.0
+Patrick
