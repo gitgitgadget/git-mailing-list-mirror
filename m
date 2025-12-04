@@ -1,171 +1,95 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1128132AAB4
-	for <git@vger.kernel.org>; Thu,  4 Dec 2025 21:09:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57230220F2A
+	for <git@vger.kernel.org>; Thu,  4 Dec 2025 22:08:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764882584; cv=none; b=orHf80pLCmx7i9m5gEc4eBadtIzsBunsZi1PpoNeIIUyucALzz6hsHSIR0w+FHqB/bb3/wniH3g0e3Jh+qVwsWiU/XpsSk3t6N9SXF1dOwyFlDLxks8Q73UoZw/YzM1sdZu8G1ZZbGKxteF9d9N2jCfE8KoP8VyHUxncC3EcoLA=
+	t=1764886092; cv=none; b=k8OpPt/qSu1iMYv/9o8Xah5CFedfMUB6R1GIItMUvFObxWMUSbyB4J7ZQlliFpfpbKzEPjMXKYAiY3Ah26PjZ+zrbEyUu/xXXFOMLmuX23WowQ0dKQIblRfD8xYSmkrQPxXF4HffjHKgVZl/qEzMZEOFgUTIV0vwC6mIDbYhYWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764882584; c=relaxed/simple;
-	bh=sv1pd3Hhi7F+N258jwhCEA9Gitu0nTLF2BlFpJXSzZo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JHt5YQjwLkfTZeh5+J5/MErVm2NZPYToCmZQfRd3n7oeqSZ9OZu4HjxzvvjORfh9JAFr7T04ZYEYvMVT2LKbg46Mh5PvQQ+mVIZkNPIsNKxvq9jS+bCl47ieW1EJ3kN2WwHsbc3IMdfVF2s3V9ubWoJLR7IPkKfiG8FQvHU5dYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LJMed4Vo; arc=none smtp.client-ip=209.85.215.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764886092; c=relaxed/simple;
+	bh=vYogc/nhQT3RZ8GGXGAMFh7m0p24S6MxFRm2uBR9Wdk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SVetV70HbTi7r1cZG/JTJx5j88aW16s3PXliDR5We+mfgWF+otv0FWdWHAbBhWmZFZ+jz5blgA77USvxJ5OyUhDBnZkpSytW+xMwiSmOjidD1zR+4O2OeMVZraqqJOIekeg70GLZhT8dLKc2jizGsVYnyGfwsbNu321Jhe/7IWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=qpWRDvTm; arc=none smtp.client-ip=74.125.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LJMed4Vo"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-b98983bae8eso1121354a12.0
-        for <git@vger.kernel.org>; Thu, 04 Dec 2025 13:09:42 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="qpWRDvTm"
+Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-63f9beb2730so1248083d50.0
+        for <git@vger.kernel.org>; Thu, 04 Dec 2025 14:08:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764882582; x=1765487382; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9FKtuxG2jcrvD++HA5kPFzJA4naQYx2BxUrXnerXN/g=;
-        b=LJMed4VoOvD2BnD02oAd99sE4duFWMnHCrmVez3cvWINHwgbMPZAnWWu5OeIyMqpO0
-         j3Iaod1d79Jgds8qLV+Ff/FA9HMfppCg65X3DC/OaT34crCDZ6bSPV6wuPOIBQt0shpa
-         AitX7x/zS/DctVyZjX84zKXU/Ydx/+kYXQ3Z5GKakCT+rjKWr5eJ1WYDLazvHPAa+zly
-         mtZOdGx6wdd3gzvcASwjnWaDCitFRNbPKiAPSYA8CXjMEbzjgTf/ygInX9cNyzMT1n9G
-         YAI01uQv9YWtANMR/FrXyai54v1g50JbgWRlJ1Vi8VpHb+6aWYCz/knWHqIUDl11RGZ8
-         T20g==
+        d=ttaylorr.com; s=google; t=1764886090; x=1765490890; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=vYogc/nhQT3RZ8GGXGAMFh7m0p24S6MxFRm2uBR9Wdk=;
+        b=qpWRDvTmcBNKy55/suqtdX1s9AZLYWjB2sJCmLNc48NbNz+RIPLSWIZ8K3bp1CCFEz
+         0qHbLDXEec5/SESpqiMvrGr881ezssO0R5+GiEMLTOWMgDoH+klMHXlmosVw7BDJMIoj
+         hX9RMTEuddG8tQyAkAIaMBZz0hLB6SvVtyqSa/OssRbdbpgxfo8zEfWVX1mH9M7gpTbd
+         EpvqoDODMZ0MuqzJXleta0S99thfg4MibSe923en/KcgUr02zF0LCItm8WDsblEc+2Ge
+         yicGYZVohf+mRrr/N5ZNfT+x3m7UV50FlBwkcYiGSBElzyAvnNUfP4MSH2UXmFoN0TmZ
+         dLIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764882582; x=1765487382;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=9FKtuxG2jcrvD++HA5kPFzJA4naQYx2BxUrXnerXN/g=;
-        b=C/lDmMp6NvE/p3MD49aL0mxLpLFTCVY0YqiHYUyWrV5EmbT4cg+RWRPrfh8dnEGFt6
-         T7R/EWbV3TrHQD5/tYE0nWcZDWKno5sC4c8QWZaa4C9CKQEz3E3gJb7HlYUAA/knag4P
-         PANmvNKeBjTc5sDj6BDpDbgPiNetB82RMQjd9lB2MNWXB/YMUrqEIsgQUNtg5M6Gy+Y+
-         diXLb2q06N2oqSmx+/ei9ClYjapujvJfNS7x/ne/4cLBf7tFCeKoN0pAjcV+jMI8lheM
-         Unr/CXAHMPFyrzK+I84yP54oblTxfLx46O7TQGBpg2CEikTfpQ23QQBqZHxrLaAC27jO
-         7P4A==
-X-Gm-Message-State: AOJu0Yz/xdAyHKto6QrL8ACUJES2kWF+ZzyIa1TrV8XUFpHbKX9LM1QI
-	Lf9T5cYFK9RUcIDwuPgDP2oRscs7XzGkj+w2nTUcyU1rGOk5k7ZdAbgzJiyRWg==
-X-Gm-Gg: ASbGncvntInCKrd1dT1znTD7AqF4fVCnV8S5VBSJoXUlhLwr2fFNJ9ikTVfRKa4LeGl
-	2auOAv7kNRs9+0G4mKh3lw/cUtcaU+XapmM5GION/jZcLXbYpVWg21K/DaYs1PTBwWr/MhGZsyN
-	lOeLivmtR61+jrHH7h8rDp0lSM45gZ6YghFF+RBZV1UUNwNH8+Iaj8FR9LqNQt4pveCwMBPL/sa
-	FxpCCnVVCh1gJ0vprXknAvRLMZc8LLZMlaxg3g9tlZAzvF+ynGolKybcGGpjRFyMfcuJEc/7WjA
-	1vdkJCjexYslr0eS8IwrKlw5FzY8+LFC+egYIbkA9PMGbE7SBPcdkriZyfwobNv1T5c9aB5FXK4
-	+izfIO5SPla2DYoR5ivnFWQ9s14ONK5UBvQZgm8XhGSToBn6EuZ8Xm2beHkr4cTaDh26LnoHZsh
-	4vOkUWhOWldf1hitL01wyxlQ82ZNWBV8MchlHLxSZifgdUfA4grWLuww==
-X-Google-Smtp-Source: AGHT+IH/kJmpi807wKgX5VhnOOv46yGQmpopovgM82gY5fMpUpgr20R68l71r666FmEvqfHqUir0IA==
-X-Received: by 2002:a05:7300:d518:b0:2a4:3592:cf73 with SMTP id 5a478bee46e88-2aba42fe06amr3249750eec.23.1764882582141;
-        Thu, 04 Dec 2025 13:09:42 -0800 (PST)
-Received: from localhost.localdomain ([2804:14c:32:8e1d:1817:8b3:9658:8ab6])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2aba822b615sm7882624eec.0.2025.12.04.13.09.40
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 04 Dec 2025 13:09:41 -0800 (PST)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	jltobler@gmail.com,
-	ps@pks.im,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [PATCH v2 3/3] repo: add -z as an alias for --format=nul to git-repo-structure
-Date: Thu,  4 Dec 2025 17:10:12 -0300
-Message-ID: <20251204210843.79411-4-lucasseikioshiro@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20251204210843.79411-1-lucasseikioshiro@gmail.com>
-References: <20251130203456.28437-1-lucasseikioshiro@gmail.com>
- <20251204210843.79411-1-lucasseikioshiro@gmail.com>
+        d=1e100.net; s=20230601; t=1764886090; x=1765490890;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vYogc/nhQT3RZ8GGXGAMFh7m0p24S6MxFRm2uBR9Wdk=;
+        b=CCNRwNodqEVlBY6mCYUjqvgB+VIZoKXHiw/1uuxRI1eOySqNfp8cUkMidijXWoFsnP
+         fWheXncGgC501541j0Y8qUm7oPD64xFXGcXaQxOVfKnmX1eqeZfTS+Z+pXePB5YYI2rq
+         Ap0GtA35uM0s4Nfp0c2oykyKu4htXaQDjNDjtQkqBc+5OXirspr9r5egCKG3GppIbF/+
+         cAf/WaGnnXV0Wr8VK34057F6hoXp6VFBBb/ngB87pzH7y+sJ/rdzDnW4cf2N2yExM9TV
+         tc7weYQ4Uo0qkZQp+Z/+F3vG0pFxZCHX2SeiEla3n8E/+AqpMq556j8+OdnaVNYdSk73
+         RDrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWZN8qrVOoGLqeA7EaP4O8lz90Y7N/GydlrpVNfwcRvxPsmw5dxQGI85iHWcKOmiUaegj0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQSB4cbYw3da3OZvPRfC9gaEp7R+7IOdWnZat71pcw1Z/+apST
+	c3yLPtRkk0SzBHzkPZ1Iin0emm5POjfBQ1gXyxcRXrtXaTnl5XsIbKtaGMLZEvLt6tg=
+X-Gm-Gg: ASbGncsC9VwTqRl9dCgt75C8wfxHaN32v9tPur9R2ax+2Q54Vl1Pj22UJuNlPumCDJt
+	e9+lasVV2dbUraXglVrLANIugpIbNRoQNlM+vU1GNrfimPpiustP8I37wqwRy4iVyrI9Cnu6JMr
+	e17xv8cGgxRLHKiU7V9PZxYvRxtYd+vKbwgP7WfEa3gLGU3qZi7AlrDdwQwoFLCZtjJ8BmcqVkb
+	DpB+1N3ztdDswgCwjDqG22zTY422kS0Abib0hyE6BzkFm7GmsKdSOkPHzoSSfKcECik+becnfNV
+	a1lT+Ugcg72OYmAxilSvh4uce3PIcR9sdDZADbAQU+ZrnvTOBk8ZO/ZbaFDwQ8NYAqWfZbTcgxu
+	gD65Ryj7hoR1TVCWCWRKcMMFCp6yZL77jHnXRG05gKpVP6ZZP7CKvqiMwIEkBVz1XeW7ZZWCPNu
+	uEEltMeZVZhpL+bioptsTJY1+R07nOg24t5sstD2o3HAiJ/OoPePLZ+1kGOiWdU8rXUki6qQj43
+	WlqW5sF6CRUKwx1Fw==
+X-Google-Smtp-Source: AGHT+IEHbK363fDMo1psONIan9vwcyFI1uPELAGEFFEvyFahRFVQwOqGY2GTTSyuIC5KiBBMoK3BQA==
+X-Received: by 2002:a05:690e:d0e:b0:63f:9cef:d5f4 with SMTP id 956f58d0204a3-6443d9366dcmr3350327d50.36.1764886090168;
+        Thu, 04 Dec 2025 14:08:10 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78c1b77941fsm10044087b3.32.2025.12.04.14.08.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Dec 2025 14:08:09 -0800 (PST)
+Date: Thu, 4 Dec 2025 17:08:00 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [GIT PULL] refs/notes/amlog from git/git
+Message-ID: <aTIGQB5dfzz6OAqb@nand.local>
+References: <16dd8441-b828-4526-8d21-76ee834b398c@app.fastmail.com>
+ <3d396982-8da4-4e30-950b-3034dcc987e5@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <3d396982-8da4-4e30-950b-3034dcc987e5@app.fastmail.com>
 
-Other Git commands that have nul-terminated output, such as git-config,
-git-status, git-ls-files, and git-repo-info have a flag `-z` for using
-the null character as the record separator.
+On Thu, Dec 04, 2025 at 11:07:45AM +0100, Kristoffer Haugsbakk wrote:
+> I see now that all of Taylor’s amlog entries are in `refs/notes/amlog`
+> for gitster/git (at 6b6c4b3fb846382a93fc1c94747a90cbe1b5e833). So this
+> is irrelevant.
 
-Add the `-z` flag to git-repo-structure as an alias for `--format=nul`,
-making it consistent with the behavior of the other commands.
+I was extremely confused reading this thread before realizing that the
+message this one is in reply to is over a year old! ;-)
 
-Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
----
- Documentation/git-repo.adoc | 6 ++++--
- builtin/repo.c              | 6 +++++-
- t/t1901-repo-structure.sh   | 7 +++++++
- 3 files changed, 16 insertions(+), 3 deletions(-)
+Besides my momentary confusion, both git/git and gitster/git (on GitHub)
+have their refs/notes/amlog at 6b6c4b3fb846382a93fc1c94747a90cbe1b5e833,
+and both are up-to-date.
 
-diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index f24514deaa..c4a78277df 100644
---- a/Documentation/git-repo.adoc
-+++ b/Documentation/git-repo.adoc
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [synopsis]
- git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
--git repo structure [--format=(table|keyvalue|nul)]
-+git repo structure [--format=(table|keyvalue|nul) | -z]
- 
- DESCRIPTION
- -----------
-@@ -44,7 +44,7 @@ supported:
- +
- `-z` is an alias for `--format=nul`.
- 
--`structure [--format=(table|keyvalue|nul)]`::
-+`structure [--format=(table|keyvalue|nul) | -z]`::
- 	Retrieve statistics about the current repository structure. The
- 	following kinds of information are reported:
- +
-@@ -71,6 +71,8 @@ supported:
- 	the delimiter between the key and value instead of '='. Unlike the
- 	`keyvalue` format, values containing "unusual" characters are never
- 	quoted.
-++
-+`-z` is an alias for `--format=nul`.
- 
- INFO KEYS
- ---------
-diff --git a/builtin/repo.c b/builtin/repo.c
-index cc97dd1836..0dd41b1778 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -16,7 +16,7 @@
- 
- static const char *const repo_usage[] = {
- 	"git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]",
--	"git repo structure [--format=(table|keyvalue|nul)]",
-+	"git repo structure [--format=(table|keyvalue|nul) | -z]",
- 	NULL
- };
- 
-@@ -529,6 +529,10 @@ static int cmd_repo_structure(int argc, const char **argv, const char *prefix,
- 		OPT_CALLBACK_F(0, "format", &format, N_("format"),
- 			       N_("output format"),
- 			       PARSE_OPT_NONEG, parse_format_cb),
-+		OPT_CALLBACK_F('z', NULL, &format, NULL,
-+			       N_("synonym for --format=nul"),
-+			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-+			       parse_format_cb),
- 		OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
- 		OPT_END()
- 	};
-diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
-index 36a71a144e..df7d4ea524 100755
---- a/t/t1901-repo-structure.sh
-+++ b/t/t1901-repo-structure.sh
-@@ -101,6 +101,13 @@ test_expect_success 'keyvalue and nul format' '
- 		tr "\n=" "\0\n" <expect >expect_nul &&
- 		git repo structure --format=nul >out 2>err &&
- 
-+		test_cmp expect_nul out &&
-+		test_line_count = 0 err &&
-+
-+		# "-z", as a synonym to "--format=nul", participates in the
-+		# usual "last one wins" rule.
-+		git repo structure --format=table -z >out 2>err &&
-+
- 		test_cmp expect_nul out &&
- 		test_line_count = 0 err
- 	)
--- 
-2.50.1 (Apple Git-155)
-
+Thanks,
+Taylor
