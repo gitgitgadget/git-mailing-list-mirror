@@ -1,94 +1,67 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2497B334C0B
-	for <git@vger.kernel.org>; Thu,  4 Dec 2025 11:52:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC5121D3C0
+	for <git@vger.kernel.org>; Thu,  4 Dec 2025 14:05:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764849133; cv=none; b=NefO8BW8AP1/18znLsgln52W9jFpTe5PhkQiW10CLCaQXl3DtQSqBw9e6TRCyr4M/7ZrRihsz8jyXNHzEJtm4TEnyl9hUrKIaqzL9fLQKw+xyI/dgICFx/TgLYplaRzpZzDoS0R0Ng8YwqlJZZkFc1Mc5LgyubwLYO5sXOnjLuw=
+	t=1764857141; cv=none; b=sbVyx9Q+JUPQ0SgiEECuKpfwbfLOC139HJS+pFMMPdI9DIjccpJmLpwyGUn8Q0U5mqp4OCMgrmvzZc/WQTvnAFS7K+UfuFSCXL8tdIy/fg91k5TgTmrqyds3uGEk/aOCWwKIsOfDImrfnmw0zWQHPR567ZK9UvqBikVPpH9hmrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764849133; c=relaxed/simple;
-	bh=vWRJFO6L6FHxf6lmCDWqemcvQNvJBjXhC7Tq1osXCEM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=btS+iRtRMSqEZL73DSL3OuViXBUr67PqqtH40HfLq+gqRqOlFqufXwerCKee1bXfw2DlOtYmcac5/HVO/JVqHnmGHQxnlOwmiwy4KijOQDboEx4ier5pYPJkS5NynQjE571aRPs0aFoAOl1fjJQpV27sp38qMmk4Ul+AVHlp9TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KUnErWcX; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KUnErWcX"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-597c83bb5c2so641105e87.3
-        for <git@vger.kernel.org>; Thu, 04 Dec 2025 03:52:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764849130; x=1765453930; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mOW6XeNbUs78kT8+JMapPDVnabb6YIjk8gYSAFqchKo=;
-        b=KUnErWcXTVh50ixPeo0Fh8R9fGoxt8LnuPllm57gxeOYiEog1PpOCtBZSlgP6wxFpz
-         HfySSxZCr1OOhCei5SWbKaY6HTQm7L2HI5sShaOOl+zn76sqFC6iKxOvA5hso1J+lQgE
-         eL/FLGSXEXBw/bZD4ilkszeaHy+v7o3zgdAfxL1Xd1kZiWVhIWVT3dYIvGB1qZlI9jVC
-         DRIOi0fpE2CHfzRi2v7rtFrV+yeGzI0R13umqXdFcLwjdCf1KhjlUptZTfGi4mC6USYY
-         Ga12ZXujgtuUQbYbVCcRs0BwFGySTOvSmo8t85EHCqQ2rkYMhK2Q+7VGqtNc7brwcXyv
-         Wx4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764849130; x=1765453930;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=mOW6XeNbUs78kT8+JMapPDVnabb6YIjk8gYSAFqchKo=;
-        b=sc4xPMy2extW4CvCQgastTHb4Gb37ZPgynU5ljakZdBKUNTT9KlJnbgH3pTkz0fvKS
-         Lmg1Or9yiniU9UCcJteX+f9tdBXqgFOfp5SLizIswFXYOQtmhgQswRDMbBB1FSzWlNbH
-         O1A700EKN7/6YT+dQ7x5XPfcmqGH8iODcXvFeilnUDuAW0DZNzS/s3FyfMDVDe2naweQ
-         VL6UoePw9r748d+BwY1XqGSIblEGfC96qtQEIJmSbv7vOK7bOn9vzy5dvmCQ+2m84ARE
-         taW3GlFvUtMgX5K5JRQXUuKW8y++jycUpFQJJzNaMN0tZg8EmzUCrImM4Ssg2nZkJDtB
-         oUjg==
-X-Gm-Message-State: AOJu0YyQ+ZBTFhHl0wtQQjNsU1o/rY4xRL7fqWfZdpzfDWJl0xyowtT1
-	kYFfCY55WmUN7Q4aCl4o+3CRoYixmTFXRhOBBpIyBqQ1Bgd3e2UPVt62NXopbGp32JdxCA5X+zO
-	2LWzshDksunJ13R43qXu7cqvr6ORuNemP9pW5
-X-Gm-Gg: ASbGncuQ4gOmcSllEaS8nZs0NbPxocNisjhtNI27hHeNT0k0/FhuOcZcWl1KIHlNHM7
-	9gc+5cLsRFohPBy903E2UZZRdBhTUhLu4otfZ4w0/M2uVhShmTaB2UxrvwkRlEwbXaPw63nrbcF
-	/YvjYUChxKJorfPW8RMkv5jwRfKGeA9KHjgT9SOg63d89Z14iGBEqFZeUBUhvlqHpCWJXuoCYIU
-	g3+Ph7bmSIDrTLrl77IjwyKohs/YBUk2L5agVo+mFIfr4RiuI1BkLcoXChEsCbz35Rhp2Zb
-X-Google-Smtp-Source: AGHT+IFK2yfLa48qZsSdN8dl/cRA8Sqwhq0XEH8OFjnPbhTBK1Lkrti15+2j1PoUo2kmduNUkNlgdpuuHFoP2aKRJdM=
-X-Received: by 2002:a05:6512:a89:b0:594:3039:2d16 with SMTP id
- 2adb3069b0e04-597d3fa5200mr2323815e87.32.1764849129918; Thu, 04 Dec 2025
- 03:52:09 -0800 (PST)
+	s=arc-20240116; t=1764857141; c=relaxed/simple;
+	bh=q2CtKAFInOlCJTgLrQdrnphMrLLufdRpYtQwIQyAky8=;
+	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BgEecrZ0iTeSfhkV2pX54ZkWYrWXCR5w6FDJraJP3/+21KN2WMp5q/qV+FYHC8T1CCHW27OdDRfrRv4U1rxFkOdUCgYLw/ZgvONRGbdS4O3k69s3E5VmSvAoG1mHfFmisKuv9kDVTPuMc/ol+5kSG1W8sd3laEg9As96tQxS4+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 5B4E55ba528305
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 4 Dec 2025 14:05:05 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Mark Boonie'" <boonie@us.ibm.com>, <git@vger.kernel.org>
+References: <PH7PR15MB617958EEAF07E4C5F8CDF0C5FBA6A@PH7PR15MB6179.namprd15.prod.outlook.com>
+In-Reply-To: <PH7PR15MB617958EEAF07E4C5F8CDF0C5FBA6A@PH7PR15MB6179.namprd15.prod.outlook.com>
+Subject: RE: Command line query for teams
+Date: Thu, 4 Dec 2025 09:04:59 -0500
+Organization: Nexbridge Inc.
+Message-ID: <01c801dc6526$fdc522b0$f94f6810$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <784f495a-4b1a-4acf-96cd-599243ef9e27@web.de> <65c997a7-e480-4617-a761-fc9dc8a7b20d@web.de>
-In-Reply-To: <65c997a7-e480-4617-a761-fc9dc8a7b20d@web.de>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Thu, 4 Dec 2025 03:51:57 -0800
-X-Gm-Features: AWmQ_bn_x-s1zTNxuyxHmHn9BU7t_BF5eyYnlMxwCP3OeQequQWlxQ-_oq-d9fo
-Message-ID: <CAPx1GvfAFLZz_SA+mBe7o8Cu4sL0_U5zzerhpev=sp4asEwcPw@mail.gmail.com>
-Subject: Re: [PATCH 1/4] wrapper: add git_mkdtemp()
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQH/cvSL2DDII4WKH1MW7G6PyLp/eLTLZ3Bg
+X-Antivirus: Norton (VPS 251204-0, 12/3/2025), Outbound message
+X-Antivirus-Status: Clean
 
-fairly trivial, but:
+On December 4, 2025 12:10 AM, Mark Boonie wrote:
+>I'm a git very-newbie, still trying to find my way around, so I apologize
+if the answer
+>to this question is somewhere obvious to everyone but me.  I'm looking for
+a
+>command that will return the teams that I'm on.  Someone gave me the URL
+>https://github.ibm.com/orgs/ztpf/teams?query=+members%3Ame, which gives
+>me the information in a GUI, but I would like to get the information from
+the
+>command line.  Any suggestions?
 
-On Wed, Dec 3, 2025 at 2:52=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de> wro=
-te:
-> Extend git_mkstemps_mode() to optionally call mkdir(2) instead of
-> open(2), then use that ability to create a mkdtemp(3) replacement,
-> git_mkdtemp().  We'll start using it in the next commit.
-[snip]
-> -               fd =3D open(pattern, O_CREAT | O_EXCL | O_RDWR, mode);
-> +               if (dir)
-> +                       fd =3D mkdir(pattern, mode);
-> +               else
-> +                       fd =3D open(pattern, O_CREAT | O_EXCL | O_RDWR, m=
-ode);
+Hi Mark,
 
-mkdir() returns a success (0) / fail (-1) indication, rather than
-a file descriptor, so this is kind of misleading.  I think a
-comment mentioning it would suffice (but also be a good idea, lest
-someone later think it needs a close() call).
+This is probably a function of the upstream git implementation (GitHub,
+BitBucket, GitLab, Azure). The function is likely done via a REST HTTPS API
+and is not part of core git. You might want to check with the appropriate
+documentation on those.
 
-Chris
+Regards,
+Randall
+
