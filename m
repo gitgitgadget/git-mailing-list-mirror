@@ -1,54 +1,54 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0324D33CEB6
-	for <git@vger.kernel.org>; Thu,  4 Dec 2025 11:23:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB7533D6FD
+	for <git@vger.kernel.org>; Thu,  4 Dec 2025 11:23:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764847409; cv=none; b=kxaUNmEEcFXQjzTnvXLBQemskQOtex0DhEWyxGwOBb9LHNjJi/PbGGylfJqac1V8D1uxVG/jbpRzJ2GdA0bgbRLLBkQzJpj15iYuhLlDkEcVrzpatFsa1hDSYa4zflUaZMZyDKYB4BvgopyVX9MNvixUBbT5v4iTJVBnOkI6vs8=
+	t=1764847425; cv=none; b=qWzruHorepFrHF+bPCWY7MVEvl9cmLLf6QP4PvgpVFe0+h0+DPnmVtzOaAkB2VV6qyqfspGMPfuYP+FHqblwAva0PnF0fZoUBJQZ38K3y+Q0Kz9avp/M8WmkP29W8BhLNKNrGHNc6EEbDGe9H32Y8kvv9Kwd467anykiWnvnhw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764847409; c=relaxed/simple;
-	bh=9GmqNwPRfalQy5fTER/3UKBXCOQGE6l73gRhGP3XVPI=;
+	s=arc-20240116; t=1764847425; c=relaxed/simple;
+	bh=TUKWYl3KQ7BwNjl0v+D32SgzTBZrY3TOG1Yf98ViQxY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LjPt1vZLTUNfj5/Add6JOnMwUiloM1B5LtOzw8z3h2O4HpRDT7sDVZq3D56wfuI8in/C20BVGG5RCoSB2nLUqFwng1EG6qDYywS2eG1/MIjLM+hw0vTjeo+gG0xXtF3Vsij1iyf6RLx2/LfVJ+4z5kfFJF+Lar2rVsVvZOnmOGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pxZUU8Vx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HOhh+YQt; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=tzAHPvzAEgIDdiqOPBHnwW3w2+CmpGQkPOhjaXGwXvR3jEKr7o5X2D5+UGVuPXbiWWtIvroEPWu1pI0dWslMayDJLW/TlT3RDtY5YJ5z2BW3paL4y2WuiijSHaNzZISaaeng3nsbhHllbA/vHVKoQjaLuwhtGwfHywJNCu1wckM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IIA6TKeK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W4T/SKQ0; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pxZUU8Vx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HOhh+YQt"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0BC52EC05B2;
-	Thu,  4 Dec 2025 06:23:26 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IIA6TKeK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W4T/SKQ0"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7586014001D9;
+	Thu,  4 Dec 2025 06:23:32 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Thu, 04 Dec 2025 06:23:26 -0500
+  by phl-compute-01.internal (MEProxy); Thu, 04 Dec 2025 06:23:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1764847406; x=1764933806; bh=P7NgTJP3GA
-	KE3iFlhkA6677NB7r0EuYpJPB81skQdFo=; b=pxZUU8VxNBYsh2YIh+VqV9vyuo
-	WVaheKAISce/BGcdP/D727sn/X2PHYvkb6jl1dj76k0hPuk0/iw+hL7/YgO83kz3
-	nOoE4wKZzZoD/7K9ezMqKGD6pTcc94hivj64suJEhbfqtxl79C70WeQkGS6VyzDy
-	cQmo5+h7O77PCtCVG2xKPrT0VhImGGL+pY8z9DeP0jJn2aSdnMgqyUe1gS5gD6ee
-	fqCZTqWHjvxwfqVytmZUwso2t5T8tSjm9hEDpTGfoz3geb+68OzoJrGU/5TX75d2
-	mYp33MatGfPtJ1xdT7Whd6aajs1gGFzeicMWIMZxGEP+NvmogYKegVgP1TYA==
+	:subject:to:to; s=fm1; t=1764847412; x=1764933812; bh=dGCLDTYLKb
+	3TZyIWmMsUVOSzAEz68vOjbuF/ihmMoOU=; b=IIA6TKeKxBpaCUOWU/bkhqUDAO
+	5a09e524Tr414YZ9uZ0aLpRt3DMl021y9zz8vEt+c3iFCTufYDWRJBFRco56udd6
+	6VKxiOpI+3iI0zr6XWdTDDlUgzgiYnNmKqlONG1ycdA0CFHenf6qttqqSBTTP1kn
+	C8ay/x5ibN+QQIw3Nyu/wWKC7LHs/EzVEfRvga744M+pWcobKZFsXrUkzboPptg4
+	oYbn07HBhFBrW/ASHySwYJIdBRRWBAHJkkEakEg4Q3G7yPBJFNhNXwakf0yJo6+B
+	9OhvVLtb0zbQl7uIKg79m63igpa9hPdSsMqwBP9lr6a9/tRwsuzWXMncXTLw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1764847406; x=1764933806; bh=P7NgTJP3GAKE3iFlhkA6677NB7r0EuYpJPB
-	81skQdFo=; b=HOhh+YQtOGDJfndLyVCxoghpk06dEmbsNtV7wqkJgL0cbfAOTGg
-	8+pDVNJBbECMLEtJ/u2VZ7NlXpfnhMTlKZu9VQgjhcYj1T4d41l0TUtp6McF3vaL
-	aY/R5F0zEEAdsuqwKqWHFZ21RKCp67+d5yF20uwEw6jTvIU+9IoymcJzkGUnuA5N
-	T0dCA9ySREQX2iUxcmuefcOa0gYQITA1OtLQcst+UV0i5349Fv8D75HueZcmEwqe
-	UEPZa08rltL65q5CtMxl0jp5IuEB4JiI+MespdqJdCR8HvgWBWykC+A1Lg19OyX2
-	EL0JrzmuV0OX+ebpBc6gBdL8a0NK+mHjEJg==
-X-ME-Sender: <xms:LW8xaXt8Yo9mM_n7dTwreu16AESR_8FnBNO_7bLgFjDF3HUkB-3gLg>
-    <xme:LW8xacLDmuvo38CdIdJ80CBjgmEgfZ1xtLMpP3d_qsV8vik6WvFTCVssXP8lgyoJG
-    XwnQUgoACpHTz5Pe2X3pqZE_SgNpMaK3pDPvZeFsLIRAUFOh1gmQg>
-X-ME-Received: <xmr:LW8xaUkAYVjusxPy4UZR9GaX5lq5nJZmP2ajUA4k19Vw2y0SMyo4g-kEFTAI6Whx0IKV9kt2jRhIj3x7BedeA54nFKFR10JabVKM60lVIg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehgeehucetufdoteggodetrfdotf
+	1764847412; x=1764933812; bh=dGCLDTYLKb3TZyIWmMsUVOSzAEz68vOjbuF
+	/ihmMoOU=; b=W4T/SKQ0nIyYEms4gGjQBwFgYwTvg0sL2xcHfPZXlw4GbVwG7gm
+	T9nXYhxrYAy4jg0szWSTVrPQJzuCUU48AFHdaHmHRWhd2nPLF8UbS621GT5vISng
+	6J2YPosVk1oQ23s6vOymZ/z0vaUhYM6FdTS3nvG3jr/SwsKfpwriHZQAMhGuRklU
+	CR9iPNE+wmex72hjjVVP+1Syiph+HxH1ze6dfVutWGxPQDGeP4ZryavATbiFlsQh
+	XRKIXmT/18WLSc/1CS5xPI1eX0e+kixN2iOT4dyU2niqLoPZIGBbza7KrqGw/ZN/
+	NsaVtOi5nbQziVUf3NfhcaUoMVtTQTKvKZQ==
+X-ME-Sender: <xms:NG8xaT-9DEhY3UO1t10z6mnBIJgPZWKpZkvgtkHBkT8WSnuMpfpQBA>
+    <xme:NG8xaTZv-C6-KcNZJYe1fdxl_zLuXbsTudb-ukbhvDJA5r9L_YJsBUSCPHKD8SBfl
+    3j-KFdTFoxQoO8jvU_yKxnHpnisN6aqbZG2X2mpOg076xnixi_RgQ>
+X-ME-Received: <xmr:NG8xaa04PdZgxLyoKgh-nAFhoz-EnnxwuBZdjFJFABl64sHT4OH5k82hYO2V9Ez5XE-zz8LWcqjce7-I_z0BOhqX2Q6JE0J-2BLZMeF3ag>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehgeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
     epfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
@@ -56,33 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehgeehucetufdoteggod
     ekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehl
     uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
     himhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    phgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegtmhhlihhsthhssehsvghnthdrtg
-    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprd
-    ifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhr
-    rhdrtghomh
-X-ME-Proxy: <xmx:LW8xadIkyDwNm8M3ZanAUM7pRiw-vb6388_ITX8DGQmvayR73i1U1w>
-    <xmx:LW8xaZ4oWiZLph2CF7icjfUlza8nEr_-8lqblY6Qo2HhRqOtZu0mPg>
-    <xmx:LW8xaR1euVl-WJVQAmkeYFBQEOv7CEJsAte9scDkwUhdGAiJVAQSzg>
-    <xmx:LW8xafeWP7UIBncLECdZHj9Vfzx54rg_BrfG12jSXJPkixHzamzRGA>
-    <xmx:Lm8xaYKOEvA0qvnP_PPuEGvtiow_V5w9nAkMfyCFeswLKSD5Yp0GQH-P>
+    tghmlhhishhtshesshgvnhhtrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
+    tghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghf
+    fhdrnhgvth
+X-ME-Proxy: <xmx:NG8xaWb_ZWIF-2CDupPnY6TbG7qBltQQxVodxBC_oC7GOw2WDKuvXQ>
+    <xmx:NG8xaaIxYdVJpXm0WAqZYToMnykNEMid7NXp7-m7k7MLgsKH6-0Okg>
+    <xmx:NG8xadHMgfk93_FRD5QgVI5cUjhfPK_h8nYhwo4JQyTrVJe6xAAmsA>
+    <xmx:NG8xaZtx_Pby09KU3GRmoJ0S0_7WOuFoPzr2uKZqGiuLFuM4BzqRkg>
+    <xmx:NG8xabwoyJN06lNHaxGd5x1BZihT86SWSPu2CTluOzcWT9i46lbslXmw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Dec 2025 06:23:24 -0500 (EST)
+ 4 Dec 2025 06:23:31 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6556c2ea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Dec 2025 11:23:23 +0000 (UTC)
-Date: Thu, 4 Dec 2025 12:23:20 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 32069910 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 4 Dec 2025 11:23:30 +0000 (UTC)
+Date: Thu, 4 Dec 2025 12:23:27 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Jeff King <peff@peff.net>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
 	correctmost <cmlists@sent.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 2/4] parse: add functions for parsing from non-string
- buffers
-Message-ID: <aTFvKOHlm4zfT9dU@pks.im>
+Subject: Re: [PATCH 1/4] parse: prefer bool to int for boolean returns
+Message-ID: <aTFvL1GV76o-tUJL@pks.im>
 References: <20251130131351.GA198697@coredump.intra.peff.net>
- <20251130131537.GB199335@coredump.intra.peff.net>
+ <20251130131441.GA199335@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,117 +90,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251130131537.GB199335@coredump.intra.peff.net>
+In-Reply-To: <20251130131441.GA199335@coredump.intra.peff.net>
 
-On Sun, Nov 30, 2025 at 08:15:37AM -0500, Jeff King wrote:
-[snip]
-> For the interface:
+On Sun, Nov 30, 2025 at 08:14:41AM -0500, Jeff King wrote:
+> All of the integer parsing functions in parse.[ch] return an int that is
+> "0" for failure or "1" for success. Since most of the other functions in
+> Git use "0" for success and "-1" for failure, this can be confusing.
+> Let's switch the return types to bool to make it clear that we are using
+> this other convention. Callers should not need to update at all.
 > 
->   - What do we call it? We have git_parse_int() and friends, which aim
->     to make parsing less error-prone. And in some ways, these are just
->     buffer (rather than string) versions of those functions. But not
->     entirely. Those functions are aimed at parsing a single user-facing
->     value. So they accept a unit prefix (e.g., "10k"), which we won't
->     always want. And they insist that the whole string is consumed
->     (rather than passing back an "end" pointer).
-> 
->     We also have strtol_i() and strtoul_ui() wrappers, which try to make
->     error handling simpler (especially around overflow), but mostly
->     behave like their libc counterparts. These also don't pass out an
->     end pointer, though.
-> 
->     So I started a new namespace, "parse_<type>_from_buf".
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Obviously not strictly necessary for this series, but I think a good
+> idea regardless of the rest of it.
 
-I think it would be nice if we could eventually converge towards a
-common namespace here. E.g. `strotol_i()` would then become
-`parse_<type>()`, without the `_from_buf()` suffix. That would make it a
-bit more discoverable.
+Agreed, I think this is a sensible change as it helps guide users. I
+know that I was confused by the API several times already.
 
-Similarly, `git_parse_int()` could become `parse_<type>_with_units()`
-eventually.
-
-That certainly doesn't have to be part of this series though.
-
->   - Like those other functions above, we use an out-parameter to store
->     the result, which lets us return an error code directly. This avoids
->     the complicated errno dance for detecting overflow that you get with
->     strtol().
-> 
->     What should the error code look like? git_parse_int() uses a bool
->     for success/failure. But strtol_ui() uses the syscall-like "0 is
->     success, -1 is error" convention.
-> 
->     I went with the bool approach here. Since the names are closest to
->     those functions, I thought it would cause the least confusion.
-
-I think that's a sensible choice.
-
-> diff --git a/Makefile b/Makefile
-> index 237b56fc9d..751bd40a9f 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1510,6 +1510,7 @@ CLAR_TEST_SUITES += u-mem-pool
->  CLAR_TEST_SUITES += u-oid-array
->  CLAR_TEST_SUITES += u-oidmap
->  CLAR_TEST_SUITES += u-oidtree
-> +CLAR_TEST_SUITES += u-parse-int
->  CLAR_TEST_SUITES += u-prio-queue
->  CLAR_TEST_SUITES += u-reftable-basics
->  CLAR_TEST_SUITES += u-reftable-block
 > diff --git a/parse.c b/parse.c
-> index f626846def..1dcbcf64a1 100644
+> index 48313571aa..f626846def 100644
 > --- a/parse.c
 > +++ b/parse.c
-> @@ -209,3 +209,99 @@ unsigned long git_env_ulong(const char *k, unsigned long val)
->  		die(_("failed to parse %s"), k);
->  	return val;
->  }
-> +
-> +/*
-> + * Helper that handles both signed/unsigned cases. If "negate" is NULL,
-> + * negative values are disallowed. If not NULL and the input is negative,
-> + * the value is range-checked but the caller is responsible for actually doing
-> + * the negatiion. You probably don't want to use this! Use one of
-> + * parse_signed_from_buf() or parse_unsigned_from_buf() below.
-> + */
-> +static bool parse_from_buf_internal(const char *buf, size_t len,
-> +				    const char **ep, bool *negate,
-> +				    uintmax_t *ret, uintmax_t max)
-> +{
-> +	const char *end = buf + len;
-> +	uintmax_t val = 0;
-> +
-> +	while (buf < end && isspace(*buf))
-> +		buf++;
+>  int git_parse_maybe_bool_text(const char *value)
+> diff --git a/parse.h b/parse.h
+> index ea32de9a91..f80cc5b9fd 100644
+> --- a/parse.h
+> +++ b/parse.h
+> @@ -1,13 +1,13 @@
+>  #ifndef PARSE_H
+>  #define PARSE_H
+>  
+> -int git_parse_signed(const char *value, intmax_t *ret, intmax_t max);
+> -int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max);
+> -int git_parse_ssize_t(const char *, ssize_t *);
+> -int git_parse_ulong(const char *, unsigned long *);
+> -int git_parse_int(const char *value, int *ret);
+> -int git_parse_int64(const char *value, int64_t *ret);
+> -int git_parse_double(const char *value, double *ret);
+> +bool git_parse_signed(const char *value, intmax_t *ret, intmax_t max);
+> +bool git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max);
+> +bool git_parse_ssize_t(const char *, ssize_t *);
+> +bool git_parse_ulong(const char *, unsigned long *);
+> +bool git_parse_int(const char *value, int *ret);
+> +bool git_parse_int64(const char *value, int64_t *ret);
+> +bool git_parse_double(const char *value, double *ret);
 
-Hm. Do we really want to retain the behaviour of skipping leading
-spaces? I think it's a rather weird edge case of `strtol()` and friends,
-and if we can avoid it I'd prefer to not replicate this behaviour.
-
-> diff --git a/t/unit-tests/u-parse-int.c b/t/unit-tests/u-parse-int.c
-> new file mode 100644
-> index 0000000000..a1601bb16b
-> --- /dev/null
-> +++ b/t/unit-tests/u-parse-int.c
-> @@ -0,0 +1,98 @@
-[snip]
-> +void test_parse_int__basic(void)
-> +{
-> +	cl_invoke(check_int_full("0", 0));
-> +	cl_invoke(check_int_full("11", 11));
-> +	cl_invoke(check_int_full("-23", -23));
-> +	cl_invoke(check_int_full("+23", 23));
-> +
-> +	cl_invoke(check_int_str("  31337  ", 7, 0, 31337));
-> +
-> +	cl_invoke(check_int_err("  garbage", EINVAL));
-> +	cl_invoke(check_int_err("", EINVAL));
-> +	cl_invoke(check_int_err("-", EINVAL));
-> +
-> +	cl_invoke(check_int("123", 2, 2, 0, 12));
-> +}
-
-As Phillip suggested, it might make sense to wrap these `cl_invoke()`
-calls into a macro.
+Should we maybe add a comment to these functions while at it to document
+their behaviour?
 
 Patrick
