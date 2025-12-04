@@ -1,41 +1,41 @@
-Received: from sender3-pp-f112.zoho.com (sender3-pp-f112.zoho.com [136.143.184.112])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0BD347FE2
-	for <git@vger.kernel.org>; Thu,  4 Dec 2025 14:16:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.184.112
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFFE4347FF4
+	for <git@vger.kernel.org>; Thu,  4 Dec 2025 14:16:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764857776; cv=pass; b=NEXylROk5uyuHUUNfJ3GbZPxb285yAPz+LdCfQhU81Afi3iLp0JqWB4ZVlJZ3zigEYcHm7sIfLGKdX0twAUVH+vgACFJ4iFGLZL3/Rp/sHzLn2IigiYGHG/zwW6uIX4RBXWIcTR/dU1y8/yvIWdAUBlZC2PjgBmRAuP0Bjcj1Ew=
+	t=1764857777; cv=pass; b=qLBGXd8uQWdwnuoUgfBne0H9Q0635mRBS31cidtQporcwHkpUcPN0B2OhdbDSFuxswYJZxUagSsC7XhZ7ZHGnJOnBw8m+yqOzhszNl0ER2YHgtX0mGG4+KjjOkn2OR1qT0JlKJS/IQuRzraxErbfrHJcG8m+AVu0CAvlpv13lOA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764857776; c=relaxed/simple;
-	bh=Ij85HUjoBvm6j2ILzoUoQPgz5CKor0HvMV7JH+v4jRY=;
+	s=arc-20240116; t=1764857777; c=relaxed/simple;
+	bh=XQdfyzJwxrJzncsDbdBN3MlDMNR6FOke+1Ay88iZOu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=It/nj9HzY+37J+9Evw54KGl4msSz5c7Kgfpccs1U6TPmNqyywvL3pJ3iutIcOf63jCIjBU585OgbK3cRHjSD39nx/bq11eXxnqdpu6VwfCXUwRi7jsRjyzFCEOoglowdp9J5csdJrFL31dxiTfsql2r1sHQaUSt21RV3LrHFA9k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=gXPgPEbp; arc=pass smtp.client-ip=136.143.184.112
+	 MIME-Version; b=GpIUnOUDoYWSwyLLsAU8k+DZh5aSFpbOOcrI7orqCdD0SQd5UJgZ2GuPlSFYgLciJ54HHPYoGzTumALSfFwO8j2kCNeORQ7eeHKpWMAVYMvpd6lthX1tgVM++pDuqhCaWBaTEtF+4HHC/pbMBdgWbk5US2Fr6zQCib2gmTgCK5M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=Dd8gtkVt; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="gXPgPEbp"
-ARC-Seal: i=1; a=rsa-sha256; t=1764857763; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="Dd8gtkVt"
+ARC-Seal: i=1; a=rsa-sha256; t=1764857766; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=Gs0ylX8ek3/OtFNLoO3tJCOsmvTQdZ2G3W2H3E8e9Jf0yv0vWoboHSOT3kYk19JFTx610sVpL7klCjEjCREVDnmuWnq9lVSFQOL5d/jNwoRg6QWOzTIAxJcld51VcJ4aY5Ct4g22EfOVBgfAIgKAcKa5u1jRZ/5aERIBN+9/udo=
+	b=cASRbiUH4u1lLlC3XZWSZuBhjbL4vJe2Q/CspPKfuhJk/tVprajvLMaxVYNpq46rwdDs7QxMmMTRYukVwY29SgIPeoJkHgvOsuhaPN2L71SN41TCrqTR/dXan0OnsjuZpmtu+oAYDDmo/4pp9DHHtD/s1wZ3RQuE5w7aUQrdqbk=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1764857763; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=r9poDe2TwzfwDWMu85JQBiZxpw8UHT9rDbYUdaez+ng=; 
-	b=Oi/YHf1R54gs+p7LKDXEucH7UPOq9jj6feYEUvtYuyIZK2rUUVjixghg/KxO0XK9U2jDiX7zmZzg9cMicjX3KBKLQAE07+ZLm+605Yb1A1KiKsgprFfxOchvaT7H/QQ2BOcWCa7JxLHs5Yi5j0wTFhGXI6JBE83t7ttdDL9WFlk=
+	t=1764857766; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=QEi9Ao2svq9XV+WjfgjB4uIQ8p/IBraSe4uOwDiX8sU=; 
+	b=AmHozQBQFEgqPaokei1G7qhW+U80gNep5x9eyarIgHRf1dXLwqG1sfVEVXy9S66wV4GJF85IaXyj3TtTKIk3oYIDcLJgdh0YB0R7wLaioaB5QEoxurIOBldUuQAAV4hMN6WmFzsbLkauDb45CAvx9KaAf3aG1qESUOMgUEObuE4=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764857763;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764857766;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=r9poDe2TwzfwDWMu85JQBiZxpw8UHT9rDbYUdaez+ng=;
-	b=gXPgPEbpZyOotabZ5eKab/Pfepi99RzaDC0xcbHPimDDgAJAm/jOGAi3TIfO8zEw
-	ltEIVtUgNet0QhyrBxUy2morCGsqu3nO8yYW6q11qxt1ZR1AXXzZnJHSLpfKThqNb1w
-	3Iz0l8vC1CoGXKObijy2tPQ8/f98uQT8XppNdScw=
-Received: by mx.zohomail.com with SMTPS id 176485776063552.32072096045715;
-	Thu, 4 Dec 2025 06:16:00 -0800 (PST)
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=QEi9Ao2svq9XV+WjfgjB4uIQ8p/IBraSe4uOwDiX8sU=;
+	b=Dd8gtkVtSGblhMVL7CwRScyK6EmKvKe50mO5w1/+cUzKYfDadM8sPnO0miJwGGIb
+	D+k8e37cCU2uYOvAm/SbFwUhVTUjdPTF34QcWWplhPAC6991GX65GVbl4i4AY2TDhCu
+	T0Nin94CfDFkap1T2JAmm1wCIOXImiwQuCzYCGtA=
+Received: by mx.zohomail.com with SMTPS id 1764857765926899.0297037853577;
+	Thu, 4 Dec 2025 06:16:05 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -46,11 +46,10 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v4 05/11] transport: convert pre-push to hook API
-Date: Thu,  4 Dec 2025 16:15:29 +0200
-Message-ID: <20251204141535.1986263-6-adrian.ratiu@collabora.com>
+Subject: [PATCH v4 07/11] hook: allow overriding the ungroup option
+Date: Thu,  4 Dec 2025 16:15:31 +0200
+Message-ID: <20251204141535.1986263-8-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251204141535.1986263-1-adrian.ratiu@collabora.com>
 References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
@@ -61,143 +60,100 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-From: Emily Shaffer <emilyshaffer@google.com>
+When calling run_process_parallel() in run_hooks_opt(), the
+ungroup option is currently hardcoded to .ungroup = 1.
 
-Move the pre-push hook from custom run-command invocations to
-the new hook API which doesn't require a custom child_process
-structure and signal toggling.
+This causes problems when ungrouping should be disabled, for
+example when sideband-reading collated output from child hooks,
+because sideband-reading and ungrouping are mutually exclusive.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Thus a new hook.h option is added to allow overriding.
+
+The existing ungroup=1 behavior is preserved in the run_hooks()
+API and the "hook run" command. We could modify these to take
+an option if necessary, so I added two code comments there.
+
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- transport.c | 94 ++++++++++++++++++++++++++++-------------------------
- 1 file changed, 50 insertions(+), 44 deletions(-)
+ builtin/hook.c | 6 ++++++
+ commit.c       | 3 +++
+ hook.c         | 5 ++++-
+ hook.h         | 5 +++++
+ 4 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/transport.c b/transport.c
-index c7f06a7382..047f2cefba 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1316,65 +1316,71 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
- 	die(_("Aborting."));
- }
+diff --git a/builtin/hook.c b/builtin/hook.c
+index 7afec380d2..73e7b8c2e8 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -43,6 +43,12 @@ static int run(int argc, const char **argv, const char *prefix,
+ 	if (!argc)
+ 		goto usage;
  
--static int run_pre_push_hook(struct transport *transport,
--			     struct ref *remote_refs)
--{
--	int ret = 0, x;
--	struct ref *r;
--	struct child_process proc = CHILD_PROCESS_INIT;
-+struct feed_pre_push_hook_data {
- 	struct strbuf buf;
--	const char *hook_path = find_hook(the_repository, "pre-push");
-+	const struct ref *refs;
-+};
- 
--	if (!hook_path)
--		return 0;
-+static int pre_push_hook_feed_stdin(int hook_stdin_fd, void *pp_cb UNUSED, void *pp_task_cb)
-+{
-+	struct feed_pre_push_hook_data *data = pp_task_cb;
-+	const struct ref *r = data->refs;
-+	int ret = 0;
- 
--	strvec_push(&proc.args, hook_path);
--	strvec_push(&proc.args, transport->remote->name);
--	strvec_push(&proc.args, transport->url);
-+	if (!r)
-+		return 1; /* no more refs */
- 
--	proc.in = -1;
--	proc.trace2_hook_name = "pre-push";
-+	data->refs = r->next;
- 
--	if (start_command(&proc)) {
--		finish_command(&proc);
--		return -1;
-+	switch (r->status) {
-+	case REF_STATUS_REJECT_ALREADY_EXISTS:
-+	case REF_STATUS_REJECT_FETCH_FIRST:
-+	case REF_STATUS_REJECT_NEEDS_FORCE:
-+	case REF_STATUS_REJECT_NODELETE:
-+	case REF_STATUS_REJECT_NONFASTFORWARD:
-+	case REF_STATUS_REJECT_REMOTE_UPDATED:
-+	case REF_STATUS_REJECT_SHALLOW:
-+	case REF_STATUS_REJECT_STALE:
-+	case REF_STATUS_UPTODATE:
-+		return 0; /* skip refs which won't be pushed */
-+	default:
-+		break;
- 	}
- 
--	sigchain_push(SIGPIPE, SIG_IGN);
-+	if (!r->peer_ref)
-+		return 0;
- 
--	strbuf_init(&buf, 256);
-+	strbuf_reset(&data->buf);
-+	strbuf_addf(&data->buf, "%s %s %s %s\n",
-+		    r->peer_ref->name, oid_to_hex(&r->new_oid),
-+		    r->name, oid_to_hex(&r->old_oid));
- 
--	for (r = remote_refs; r; r = r->next) {
--		if (!r->peer_ref) continue;
--		if (r->status == REF_STATUS_REJECT_NONFASTFORWARD) continue;
--		if (r->status == REF_STATUS_REJECT_STALE) continue;
--		if (r->status == REF_STATUS_REJECT_REMOTE_UPDATED) continue;
--		if (r->status == REF_STATUS_UPTODATE) continue;
-+	ret = write_in_full(hook_stdin_fd, data->buf.buf, data->buf.len);
-+	if (ret < 0 && errno != EPIPE)
-+		return ret; /* We do not mind if a hook does not read all refs. */
- 
--		strbuf_reset(&buf);
--		strbuf_addf( &buf, "%s %s %s %s\n",
--			 r->peer_ref->name, oid_to_hex(&r->new_oid),
--			 r->name, oid_to_hex(&r->old_oid));
-+	return 0;
-+}
- 
--		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
--			/* We do not mind if a hook does not read all refs. */
--			if (errno != EPIPE)
--				ret = -1;
--			break;
--		}
--	}
-+static int run_pre_push_hook(struct transport *transport,
-+			     struct ref *remote_refs)
-+{
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-+	struct feed_pre_push_hook_data data;
-+	int ret = 0;
++	/*
++	 * All current "hook run" use-cases require ungrouped child output.
++	 * If this changes, a hook run argument can be added to toggle it.
++	 */
++	opt.ungroup = 1;
 +
-+	strvec_push(&opt.args, transport->remote->name);
-+	strvec_push(&opt.args, transport->url);
+ 	/*
+ 	 * Having a -- for "run" when providing <hook-args> is
+ 	 * mandatory.
+diff --git a/commit.c b/commit.c
+index 16d91b2bfc..7da33dde86 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1965,6 +1965,9 @@ int run_commit_hook(int editor_is_used, const char *index_file,
+ 		strvec_push(&opt.args, arg);
+ 	va_end(args);
  
--	strbuf_release(&buf);
-+	strbuf_init(&data.buf, 0);
-+	data.refs = remote_refs;
- 
--	x = close(proc.in);
--	if (!ret)
--		ret = x;
-+	opt.feed_pipe = pre_push_hook_feed_stdin;
-+	opt.feed_pipe_cb_data = &data;
- 
--	sigchain_pop(SIGPIPE);
-+	ret = run_hooks_opt(the_repository, "pre-push", &opt);
- 
--	x = finish_command(&proc);
--	if (!ret)
--		ret = x;
-+	strbuf_release(&data.buf);
- 
- 	return ret;
++	/* All commit hook use-cases require ungrouping child output. */
++	opt.ungroup = 1;
++
+ 	opt.invoked_hook = invoked_hook;
+ 	return run_hooks_opt(the_repository, name, &opt);
  }
+diff --git a/hook.c b/hook.c
+index 5ddd7678d1..00a1e2ad22 100644
+--- a/hook.c
++++ b/hook.c
+@@ -153,7 +153,7 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
+ 		.tr2_label = hook_name,
+ 
+ 		.processes = 1,
+-		.ungroup = 1,
++		.ungroup = options->ungroup,
+ 
+ 		.get_next_task = pick_next_hook,
+ 		.start_failure = notify_start_failure,
+@@ -198,6 +198,9 @@ int run_hooks(struct repository *r, const char *hook_name)
+ {
+ 	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+ 
++	/* All use-cases of this API require ungrouping. */
++	opt.ungroup = 1;
++
+ 	return run_hooks_opt(r, hook_name, &opt);
+ }
+ 
+diff --git a/hook.h b/hook.h
+index 51cab785ea..01f91feab8 100644
+--- a/hook.h
++++ b/hook.h
+@@ -34,6 +34,11 @@ struct run_hooks_opt
+ 	 */
+ 	int *invoked_hook;
+ 
++	/**
++	 * Allow hooks to set run_processes_parallel() 'ungroup' behavior.
++	 */
++	unsigned int ungroup:1;
++
+ 	/**
+ 	 * Path to file which should be piped to stdin for each hook.
+ 	 */
 -- 
 2.51.0
 
