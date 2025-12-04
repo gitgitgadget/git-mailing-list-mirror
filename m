@@ -1,141 +1,94 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB7533D6FD
-	for <git@vger.kernel.org>; Thu,  4 Dec 2025 11:23:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2497B334C0B
+	for <git@vger.kernel.org>; Thu,  4 Dec 2025 11:52:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764847425; cv=none; b=qWzruHorepFrHF+bPCWY7MVEvl9cmLLf6QP4PvgpVFe0+h0+DPnmVtzOaAkB2VV6qyqfspGMPfuYP+FHqblwAva0PnF0fZoUBJQZ38K3y+Q0Kz9avp/M8WmkP29W8BhLNKNrGHNc6EEbDGe9H32Y8kvv9Kwd467anykiWnvnhw4=
+	t=1764849133; cv=none; b=NefO8BW8AP1/18znLsgln52W9jFpTe5PhkQiW10CLCaQXl3DtQSqBw9e6TRCyr4M/7ZrRihsz8jyXNHzEJtm4TEnyl9hUrKIaqzL9fLQKw+xyI/dgICFx/TgLYplaRzpZzDoS0R0Ng8YwqlJZZkFc1Mc5LgyubwLYO5sXOnjLuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764847425; c=relaxed/simple;
-	bh=TUKWYl3KQ7BwNjl0v+D32SgzTBZrY3TOG1Yf98ViQxY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tzAHPvzAEgIDdiqOPBHnwW3w2+CmpGQkPOhjaXGwXvR3jEKr7o5X2D5+UGVuPXbiWWtIvroEPWu1pI0dWslMayDJLW/TlT3RDtY5YJ5z2BW3paL4y2WuiijSHaNzZISaaeng3nsbhHllbA/vHVKoQjaLuwhtGwfHywJNCu1wckM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IIA6TKeK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W4T/SKQ0; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1764849133; c=relaxed/simple;
+	bh=vWRJFO6L6FHxf6lmCDWqemcvQNvJBjXhC7Tq1osXCEM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=btS+iRtRMSqEZL73DSL3OuViXBUr67PqqtH40HfLq+gqRqOlFqufXwerCKee1bXfw2DlOtYmcac5/HVO/JVqHnmGHQxnlOwmiwy4KijOQDboEx4ier5pYPJkS5NynQjE571aRPs0aFoAOl1fjJQpV27sp38qMmk4Ul+AVHlp9TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KUnErWcX; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IIA6TKeK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W4T/SKQ0"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7586014001D9;
-	Thu,  4 Dec 2025 06:23:32 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 04 Dec 2025 06:23:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1764847412; x=1764933812; bh=dGCLDTYLKb
-	3TZyIWmMsUVOSzAEz68vOjbuF/ihmMoOU=; b=IIA6TKeKxBpaCUOWU/bkhqUDAO
-	5a09e524Tr414YZ9uZ0aLpRt3DMl021y9zz8vEt+c3iFCTufYDWRJBFRco56udd6
-	6VKxiOpI+3iI0zr6XWdTDDlUgzgiYnNmKqlONG1ycdA0CFHenf6qttqqSBTTP1kn
-	C8ay/x5ibN+QQIw3Nyu/wWKC7LHs/EzVEfRvga744M+pWcobKZFsXrUkzboPptg4
-	oYbn07HBhFBrW/ASHySwYJIdBRRWBAHJkkEakEg4Q3G7yPBJFNhNXwakf0yJo6+B
-	9OhvVLtb0zbQl7uIKg79m63igpa9hPdSsMqwBP9lr6a9/tRwsuzWXMncXTLw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1764847412; x=1764933812; bh=dGCLDTYLKb3TZyIWmMsUVOSzAEz68vOjbuF
-	/ihmMoOU=; b=W4T/SKQ0nIyYEms4gGjQBwFgYwTvg0sL2xcHfPZXlw4GbVwG7gm
-	T9nXYhxrYAy4jg0szWSTVrPQJzuCUU48AFHdaHmHRWhd2nPLF8UbS621GT5vISng
-	6J2YPosVk1oQ23s6vOymZ/z0vaUhYM6FdTS3nvG3jr/SwsKfpwriHZQAMhGuRklU
-	CR9iPNE+wmex72hjjVVP+1Syiph+HxH1ze6dfVutWGxPQDGeP4ZryavATbiFlsQh
-	XRKIXmT/18WLSc/1CS5xPI1eX0e+kixN2iOT4dyU2niqLoPZIGBbza7KrqGw/ZN/
-	NsaVtOi5nbQziVUf3NfhcaUoMVtTQTKvKZQ==
-X-ME-Sender: <xms:NG8xaT-9DEhY3UO1t10z6mnBIJgPZWKpZkvgtkHBkT8WSnuMpfpQBA>
-    <xme:NG8xaTZv-C6-KcNZJYe1fdxl_zLuXbsTudb-ukbhvDJA5r9L_YJsBUSCPHKD8SBfl
-    3j-KFdTFoxQoO8jvU_yKxnHpnisN6aqbZG2X2mpOg076xnixi_RgQ>
-X-ME-Received: <xmr:NG8xaa04PdZgxLyoKgh-nAFhoz-EnnxwuBZdjFJFABl64sHT4OH5k82hYO2V9Ez5XE-zz8LWcqjce7-I_z0BOhqX2Q6JE0J-2BLZMeF3ag>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehgeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    epfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
-    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepve
-    ekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
-    himhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    tghmlhhishhtshesshgvnhhtrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
-    tghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhilhhlih
-    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghf
-    fhdrnhgvth
-X-ME-Proxy: <xmx:NG8xaWb_ZWIF-2CDupPnY6TbG7qBltQQxVodxBC_oC7GOw2WDKuvXQ>
-    <xmx:NG8xaaIxYdVJpXm0WAqZYToMnykNEMid7NXp7-m7k7MLgsKH6-0Okg>
-    <xmx:NG8xadHMgfk93_FRD5QgVI5cUjhfPK_h8nYhwo4JQyTrVJe6xAAmsA>
-    <xmx:NG8xaZtx_Pby09KU3GRmoJ0S0_7WOuFoPzr2uKZqGiuLFuM4BzqRkg>
-    <xmx:NG8xabwoyJN06lNHaxGd5x1BZihT86SWSPu2CTluOzcWT9i46lbslXmw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Dec 2025 06:23:31 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 32069910 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Dec 2025 11:23:30 +0000 (UTC)
-Date: Thu, 4 Dec 2025 12:23:27 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-	correctmost <cmlists@sent.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 1/4] parse: prefer bool to int for boolean returns
-Message-ID: <aTFvL1GV76o-tUJL@pks.im>
-References: <20251130131351.GA198697@coredump.intra.peff.net>
- <20251130131441.GA199335@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KUnErWcX"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-597c83bb5c2so641105e87.3
+        for <git@vger.kernel.org>; Thu, 04 Dec 2025 03:52:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764849130; x=1765453930; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mOW6XeNbUs78kT8+JMapPDVnabb6YIjk8gYSAFqchKo=;
+        b=KUnErWcXTVh50ixPeo0Fh8R9fGoxt8LnuPllm57gxeOYiEog1PpOCtBZSlgP6wxFpz
+         HfySSxZCr1OOhCei5SWbKaY6HTQm7L2HI5sShaOOl+zn76sqFC6iKxOvA5hso1J+lQgE
+         eL/FLGSXEXBw/bZD4ilkszeaHy+v7o3zgdAfxL1Xd1kZiWVhIWVT3dYIvGB1qZlI9jVC
+         DRIOi0fpE2CHfzRi2v7rtFrV+yeGzI0R13umqXdFcLwjdCf1KhjlUptZTfGi4mC6USYY
+         Ga12ZXujgtuUQbYbVCcRs0BwFGySTOvSmo8t85EHCqQ2rkYMhK2Q+7VGqtNc7brwcXyv
+         Wx4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764849130; x=1765453930;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=mOW6XeNbUs78kT8+JMapPDVnabb6YIjk8gYSAFqchKo=;
+        b=sc4xPMy2extW4CvCQgastTHb4Gb37ZPgynU5ljakZdBKUNTT9KlJnbgH3pTkz0fvKS
+         Lmg1Or9yiniU9UCcJteX+f9tdBXqgFOfp5SLizIswFXYOQtmhgQswRDMbBB1FSzWlNbH
+         O1A700EKN7/6YT+dQ7x5XPfcmqGH8iODcXvFeilnUDuAW0DZNzS/s3FyfMDVDe2naweQ
+         VL6UoePw9r748d+BwY1XqGSIblEGfC96qtQEIJmSbv7vOK7bOn9vzy5dvmCQ+2m84ARE
+         taW3GlFvUtMgX5K5JRQXUuKW8y++jycUpFQJJzNaMN0tZg8EmzUCrImM4Ssg2nZkJDtB
+         oUjg==
+X-Gm-Message-State: AOJu0YyQ+ZBTFhHl0wtQQjNsU1o/rY4xRL7fqWfZdpzfDWJl0xyowtT1
+	kYFfCY55WmUN7Q4aCl4o+3CRoYixmTFXRhOBBpIyBqQ1Bgd3e2UPVt62NXopbGp32JdxCA5X+zO
+	2LWzshDksunJ13R43qXu7cqvr6ORuNemP9pW5
+X-Gm-Gg: ASbGncuQ4gOmcSllEaS8nZs0NbPxocNisjhtNI27hHeNT0k0/FhuOcZcWl1KIHlNHM7
+	9gc+5cLsRFohPBy903E2UZZRdBhTUhLu4otfZ4w0/M2uVhShmTaB2UxrvwkRlEwbXaPw63nrbcF
+	/YvjYUChxKJorfPW8RMkv5jwRfKGeA9KHjgT9SOg63d89Z14iGBEqFZeUBUhvlqHpCWJXuoCYIU
+	g3+Ph7bmSIDrTLrl77IjwyKohs/YBUk2L5agVo+mFIfr4RiuI1BkLcoXChEsCbz35Rhp2Zb
+X-Google-Smtp-Source: AGHT+IFK2yfLa48qZsSdN8dl/cRA8Sqwhq0XEH8OFjnPbhTBK1Lkrti15+2j1PoUo2kmduNUkNlgdpuuHFoP2aKRJdM=
+X-Received: by 2002:a05:6512:a89:b0:594:3039:2d16 with SMTP id
+ 2adb3069b0e04-597d3fa5200mr2323815e87.32.1764849129918; Thu, 04 Dec 2025
+ 03:52:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251130131441.GA199335@coredump.intra.peff.net>
+References: <784f495a-4b1a-4acf-96cd-599243ef9e27@web.de> <65c997a7-e480-4617-a761-fc9dc8a7b20d@web.de>
+In-Reply-To: <65c997a7-e480-4617-a761-fc9dc8a7b20d@web.de>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Thu, 4 Dec 2025 03:51:57 -0800
+X-Gm-Features: AWmQ_bn_x-s1zTNxuyxHmHn9BU7t_BF5eyYnlMxwCP3OeQequQWlxQ-_oq-d9fo
+Message-ID: <CAPx1GvfAFLZz_SA+mBe7o8Cu4sL0_U5zzerhpev=sp4asEwcPw@mail.gmail.com>
+Subject: Re: [PATCH 1/4] wrapper: add git_mkdtemp()
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Nov 30, 2025 at 08:14:41AM -0500, Jeff King wrote:
-> All of the integer parsing functions in parse.[ch] return an int that is
-> "0" for failure or "1" for success. Since most of the other functions in
-> Git use "0" for success and "-1" for failure, this can be confusing.
-> Let's switch the return types to bool to make it clear that we are using
-> this other convention. Callers should not need to update at all.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Obviously not strictly necessary for this series, but I think a good
-> idea regardless of the rest of it.
+fairly trivial, but:
 
-Agreed, I think this is a sensible change as it helps guide users. I
-know that I was confused by the API several times already.
+On Wed, Dec 3, 2025 at 2:52=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de> wro=
+te:
+> Extend git_mkstemps_mode() to optionally call mkdir(2) instead of
+> open(2), then use that ability to create a mkdtemp(3) replacement,
+> git_mkdtemp().  We'll start using it in the next commit.
+[snip]
+> -               fd =3D open(pattern, O_CREAT | O_EXCL | O_RDWR, mode);
+> +               if (dir)
+> +                       fd =3D mkdir(pattern, mode);
+> +               else
+> +                       fd =3D open(pattern, O_CREAT | O_EXCL | O_RDWR, m=
+ode);
 
-> diff --git a/parse.c b/parse.c
-> index 48313571aa..f626846def 100644
-> --- a/parse.c
-> +++ b/parse.c
->  int git_parse_maybe_bool_text(const char *value)
-> diff --git a/parse.h b/parse.h
-> index ea32de9a91..f80cc5b9fd 100644
-> --- a/parse.h
-> +++ b/parse.h
-> @@ -1,13 +1,13 @@
->  #ifndef PARSE_H
->  #define PARSE_H
->  
-> -int git_parse_signed(const char *value, intmax_t *ret, intmax_t max);
-> -int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max);
-> -int git_parse_ssize_t(const char *, ssize_t *);
-> -int git_parse_ulong(const char *, unsigned long *);
-> -int git_parse_int(const char *value, int *ret);
-> -int git_parse_int64(const char *value, int64_t *ret);
-> -int git_parse_double(const char *value, double *ret);
-> +bool git_parse_signed(const char *value, intmax_t *ret, intmax_t max);
-> +bool git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max);
-> +bool git_parse_ssize_t(const char *, ssize_t *);
-> +bool git_parse_ulong(const char *, unsigned long *);
-> +bool git_parse_int(const char *value, int *ret);
-> +bool git_parse_int64(const char *value, int64_t *ret);
-> +bool git_parse_double(const char *value, double *ret);
+mkdir() returns a success (0) / fail (-1) indication, rather than
+a file descriptor, so this is kind of misleading.  I think a
+comment mentioning it would suffice (but also be a good idea, lest
+someone later think it needs a close() call).
 
-Should we maybe add a comment to these functions while at it to document
-their behaviour?
-
-Patrick
+Chris
