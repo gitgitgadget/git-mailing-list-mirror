@@ -1,87 +1,88 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6072DF12E
-	for <git@vger.kernel.org>; Thu,  4 Dec 2025 11:10:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0324D33CEB6
+	for <git@vger.kernel.org>; Thu,  4 Dec 2025 11:23:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764846606; cv=none; b=l+e6Yiq++bsG/6lNOGYLi2SpsOSM+fvgp4mu8tlPCkbnoArSHtuls/WAdUcmf1dsGknleTCndmsbHaZbYxapLe6v0y/rizlnQNQKj4bW5lC0H2uK/7krDZCNttooPDdZ+4R+XxiEu4I71Xo+tEmCdVeGmavqb8yxfAAQ2SilCDU=
+	t=1764847409; cv=none; b=kxaUNmEEcFXQjzTnvXLBQemskQOtex0DhEWyxGwOBb9LHNjJi/PbGGylfJqac1V8D1uxVG/jbpRzJ2GdA0bgbRLLBkQzJpj15iYuhLlDkEcVrzpatFsa1hDSYa4zflUaZMZyDKYB4BvgopyVX9MNvixUBbT5v4iTJVBnOkI6vs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764846606; c=relaxed/simple;
-	bh=75IhXYTzNUhoTWLsBk/plCztki9cmgRmfY8rpzCBEXQ=;
+	s=arc-20240116; t=1764847409; c=relaxed/simple;
+	bh=9GmqNwPRfalQy5fTER/3UKBXCOQGE6l73gRhGP3XVPI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hzhJlrXa2bVjky898POoazTinJi90zYZjmMFRNK75ijjBj199ENpX98E8iP/SBDc9fwbWtDpnGSwOcGcCVv2cP3Kx2N2mpXVH/tECk4QmzV32RtsQAw6Rsbt9qN6J935GCvBVfIV5rovBYaNHWPDAJofz2coGYSRUYN+kQN8V44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ndpKvgX6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TNmK3tbH; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=LjPt1vZLTUNfj5/Add6JOnMwUiloM1B5LtOzw8z3h2O4HpRDT7sDVZq3D56wfuI8in/C20BVGG5RCoSB2nLUqFwng1EG6qDYywS2eG1/MIjLM+hw0vTjeo+gG0xXtF3Vsij1iyf6RLx2/LfVJ+4z5kfFJF+Lar2rVsVvZOnmOGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pxZUU8Vx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HOhh+YQt; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ndpKvgX6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TNmK3tbH"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A63931400209;
-	Thu,  4 Dec 2025 06:10:01 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 04 Dec 2025 06:10:01 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pxZUU8Vx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HOhh+YQt"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0BC52EC05B2;
+	Thu,  4 Dec 2025 06:23:26 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Thu, 04 Dec 2025 06:23:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1764846601; x=1764933001; bh=pqhbNSDzsK
-	pVFE0F9CW/jh1ZU20IXgi2ZlXvvHpGNpA=; b=ndpKvgX6gocCh0WtQUpdTs2dGQ
-	4P4SP35jTmatqFLGJ+f1AFjq1wl+ad5Xsl6mXbYUGAmSzhLIKjsay0pCLmj94hZh
-	6BoEiz3TJR9qVnAhdzD+KjFP2UNGrQswh4sHzr6QgE574secEiKL8qny9uVxW4Wx
-	rIvn9ktWbZ23I+zM/iaS9pGP8oBsGWOe/35ExVFs1gZEqCG1IOm5e87zs3STbJCw
-	GhAvDzGhFetrvF2L769Sq5LW5TJ1A1szSubJvHleAX8/BJgXn5YVOrxqXZMGxHuX
-	hWEiLaJ22jG4oprKdybqf16AuRakAGAMSWAO4Iw4FjGwuJKMiblisMGJPQNA==
+	:subject:to:to; s=fm1; t=1764847406; x=1764933806; bh=P7NgTJP3GA
+	KE3iFlhkA6677NB7r0EuYpJPB81skQdFo=; b=pxZUU8VxNBYsh2YIh+VqV9vyuo
+	WVaheKAISce/BGcdP/D727sn/X2PHYvkb6jl1dj76k0hPuk0/iw+hL7/YgO83kz3
+	nOoE4wKZzZoD/7K9ezMqKGD6pTcc94hivj64suJEhbfqtxl79C70WeQkGS6VyzDy
+	cQmo5+h7O77PCtCVG2xKPrT0VhImGGL+pY8z9DeP0jJn2aSdnMgqyUe1gS5gD6ee
+	fqCZTqWHjvxwfqVytmZUwso2t5T8tSjm9hEDpTGfoz3geb+68OzoJrGU/5TX75d2
+	mYp33MatGfPtJ1xdT7Whd6aajs1gGFzeicMWIMZxGEP+NvmogYKegVgP1TYA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1764846601; x=1764933001; bh=pqhbNSDzsKpVFE0F9CW/jh1ZU20IXgi2ZlX
-	vvHpGNpA=; b=TNmK3tbHqEwzaWlOltzkWnCtHhMEUo39yHPjGiUxjNI9kRGJ4//
-	CP4ve2sntNpreYphITEAXppnzWNV6L+43m3bjTs5kwTlgSepOaIA3EhEWQpLBY8E
-	oWoGKuVr7Y3f1g0lhU05COFrsZ5vInTgKxYb7H0PHW4xWtQTYH+yQNmS05GMRsbG
-	DrOQhloDg/Ll3p9dj7VVfy/NChNA94rf1FN8h6raDZd54Vy71Z41ghlsL/Lv4MPi
-	2/I0OmKVVSxTTu1dzyiRRmr44xJnmzHTZERyj/AbU5x/M9AvG995jmGkxe+UkzYH
-	ekklzQq2MkK0JsoWWDDxt5J1ksyPEQUe1ww==
-X-ME-Sender: <xms:CWwxaYWbxoOHr7q5Z_PFisT5GIT4X1VXq0Czk9P_luORRVCtrp4iHw>
-    <xme:CWwxaeHfhsXanIKI7iC5dhXPDUx3Mg8jNAT8CUAsANoFcA-UsHlTTTDRI84XSPgjI
-    Wom2UGCZVPFF0ZVJujpm6RRMyGDQgfju_sBGNmZWheecCyEA2vZ8A>
-X-ME-Received: <xmr:CWwxacc1E_5liXtVAKi0GG-ayPzt8Ktjk5p7r91nHq2ZVperGo_y7JcFM4ZpUD0fBbqhUQ98rldINFa0GFyU6SIrAkDvmS9qgv9cQMN3sA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehgedvucetufdoteggodetrfdotf
+	1764847406; x=1764933806; bh=P7NgTJP3GAKE3iFlhkA6677NB7r0EuYpJPB
+	81skQdFo=; b=HOhh+YQtOGDJfndLyVCxoghpk06dEmbsNtV7wqkJgL0cbfAOTGg
+	8+pDVNJBbECMLEtJ/u2VZ7NlXpfnhMTlKZu9VQgjhcYj1T4d41l0TUtp6McF3vaL
+	aY/R5F0zEEAdsuqwKqWHFZ21RKCp67+d5yF20uwEw6jTvIU+9IoymcJzkGUnuA5N
+	T0dCA9ySREQX2iUxcmuefcOa0gYQITA1OtLQcst+UV0i5349Fv8D75HueZcmEwqe
+	UEPZa08rltL65q5CtMxl0jp5IuEB4JiI+MespdqJdCR8HvgWBWykC+A1Lg19OyX2
+	EL0JrzmuV0OX+ebpBc6gBdL8a0NK+mHjEJg==
+X-ME-Sender: <xms:LW8xaXt8Yo9mM_n7dTwreu16AESR_8FnBNO_7bLgFjDF3HUkB-3gLg>
+    <xme:LW8xacLDmuvo38CdIdJ80CBjgmEgfZ1xtLMpP3d_qsV8vik6WvFTCVssXP8lgyoJG
+    XwnQUgoACpHTz5Pe2X3pqZE_SgNpMaK3pDPvZeFsLIRAUFOh1gmQg>
+X-ME-Received: <xmr:LW8xaUkAYVjusxPy4UZR9GaX5lq5nJZmP2ajUA4k19Vw2y0SMyo4g-kEFTAI6Whx0IKV9kt2jRhIj3x7BedeA54nFKFR10JabVKM60lVIg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehgeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttd
-    dvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
-    ihhmqeenucggtffrrghtthgvrhhnpefhiefgvdffvddtuefhlefgleehgfefveeuteffud
-    fgheetgfevlefhueeuveeuvdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehl
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    epfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepve
+    ekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehl
     uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
-    himhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehphhhilhhlihhprdifoh
-    hougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehmvgesthhtrgihlhhorhhr
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:CWwxaXIJ75mehSEdPJe8Zw0lUtcsstGHXTaxVobn9BjIEBSuJ99AFQ>
-    <xmx:CWwxaZG5lDRGA6xKW38pcg6zqG2LvujZT22wUJo56bjc3qR39E27lg>
-    <xmx:CWwxaSCKKMnP180uQIwTb66nXnUtYBlfq35823bTcJZPGFDvNga8NA>
-    <xmx:CWwxaU_qnnBuUEzIZF4U8M7DLUBTcYkUFIY8WYS6BGIN8iyyAolepw>
-    <xmx:CWwxabYcAa1kzPbZ6WltTUDFJvVhiRln3Qboqze0LmMpAiG6ED2ZSPY->
+    himhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    phgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegtmhhlihhsthhssehsvghnthdrtg
+    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprd
+    ifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhr
+    rhdrtghomh
+X-ME-Proxy: <xmx:LW8xadIkyDwNm8M3ZanAUM7pRiw-vb6388_ITX8DGQmvayR73i1U1w>
+    <xmx:LW8xaZ4oWiZLph2CF7icjfUlza8nEr_-8lqblY6Qo2HhRqOtZu0mPg>
+    <xmx:LW8xaR1euVl-WJVQAmkeYFBQEOv7CEJsAte9scDkwUhdGAiJVAQSzg>
+    <xmx:LW8xafeWP7UIBncLECdZHj9Vfzx54rg_BrfG12jSXJPkixHzamzRGA>
+    <xmx:Lm8xaYKOEvA0qvnP_PPuEGvtiow_V5w9nAkMfyCFeswLKSD5Yp0GQH-P>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Dec 2025 06:10:00 -0500 (EST)
+ 4 Dec 2025 06:23:24 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3f058884 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Dec 2025 11:09:58 +0000 (UTC)
-Date: Thu, 4 Dec 2025 12:09:55 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 6556c2ea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 4 Dec 2025 11:23:23 +0000 (UTC)
+Date: Thu, 4 Dec 2025 12:23:20 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: my complaints with clar
-Message-ID: <aTFsA-jJqcRZJs53@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+	correctmost <cmlists@sent.com>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 2/4] parse: add functions for parsing from non-string
+ buffers
+Message-ID: <aTFvKOHlm4zfT9dU@pks.im>
 References: <20251130131351.GA198697@coredump.intra.peff.net>
  <20251130131537.GB199335@coredump.intra.peff.net>
- <20251130134625.GA199421@coredump.intra.peff.net>
- <bd0a8a76-fccb-4b6c-abb7-b53dd890e9e0@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,99 +91,117 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <bd0a8a76-fccb-4b6c-abb7-b53dd890e9e0@gmail.com>
+In-Reply-To: <20251130131537.GB199335@coredump.intra.peff.net>
 
-On Mon, Dec 01, 2025 at 02:16:13PM +0000, Phillip Wood wrote:
-> On 30/11/2025 13:46, Jeff King wrote:
-> > > +	/*
-> > > +	 * Do not use cl_assert_equal_i_fmt(..., PRIuMAX) here. The macro
-> > > +	 * casts to int under the hood, corrupting the values.
-> > > +	 */
-> > > +	clar__assert_equal(CLAR_CURRENT_FILE, CLAR_CURRENT_FUNC,
-> > > +			   CLAR_CURRENT_LINE,
-> > > +			   "expect_result != result", 1,
-> > > +			   "%"PRIuMAX, expect_result, result);
-> > > +}
-> > 
-> > This was an exciting bug to track down. If you use i_fmt() here, you get
-> > some neat undefined behavior. It worked for gcc, but failed with clang
-> > (but only with -O2!).
-> > 
-> > Obviously this was me using it wrong, and the "i" in the macro should
-> > have been a hint. But this invocation is kind of ugly, with the explicit
-> > mentions of internal CLAR variables. clar__assert_equal() understands
-> > PRIuMAX as a comparator, but there doesn't appear to be any macro to use
-> > it nicely.
-> > 
-> > Should there be a generic cl_assert_equal() that fills in the first
-> > few parameters but is otherwise type-agnostic?
+On Sun, Nov 30, 2025 at 08:15:37AM -0500, Jeff King wrote:
+[snip]
+> For the interface:
 > 
-> Patrick's got a PR open for that at
-> https://github.com/clar-test/clar/pull/117 it seems to have got stuck
-> because of a lack of review.
-
-Yeah, this is indeed a long-standing issue. As Phillip mentioned I've
-already had the fix pending, but I lost track and just never merged it.
-Phillip now left a review, and I've polished the PR a bit. I'll wait a
-few more days before merging it, and then these issues will be a thing
-of the past :)
-
-> >    # start of suite 10: parse_int
-> >    not ok 59 - parse_int::basic
-> >        ---
-> >        reason: |
-> >          expect_result != result
-> >          10 != 11
-> >        at:
-> >          file: 't/unit-tests/u-parse-int.c'
-> >          line: 41
-> >          function: 'test_parse_int__basic'
-> >        ---
-> > 
-> > OK, but "prove t/unit-tests/bin/unit-tests" gives me:
-> > 
-> >    t/unit-tests/bin/unit-tests .. Failed 1/59 subtests
-> >    Test Summary Report
-> >    -------------------
-> >    t/unit-tests/bin/unit-tests (Wstat: (none) Tests: 59 Failed: 1)
-> >      Failed test:  59
-> >      Parse errors: Badly formed hash line: '---' at /usr/share/perl/5.40/TAP/Parser/YAMLish/Reader.pm line 244.
-> > 
-> > Yuck. It actually does have what I need (that test 59 was the failure),
-> > so the extra parse error is mostly a red herring (though it does prevent
-> > us finding any further failures). I think in TAP that arbitrary output
-> > is supposed to be prefixed with a "#".
+>   - What do we call it? We have git_parse_int() and friends, which aim
+>     to make parsing less error-prone. And in some ways, these are just
+>     buffer (rather than string) versions of those functions. But not
+>     entirely. Those functions are aimed at parsing a single user-facing
+>     value. So they accept a unit prefix (e.g., "10k"), which we won't
+>     always want. And they insist that the whole string is consumed
+>     (rather than passing back an "end" pointer).
 > 
-> TAP also allows you to embed YAML and unfortunately that's what clar tries
-> to do but that last "    ---" line should be "    ...". With the diff below
-> (which I'm afraid thunderbird will probably mangle) prove parses the output
-> correctly but still does not print the error message. I'll update clar's
-> self tests and open a PR later this week.
+>     We also have strtol_i() and strtoul_ui() wrappers, which try to make
+>     error handling simpler (especially around overflow), but mostly
+>     behave like their libc counterparts. These also don't pass out an
+>     end pointer, though.
 > 
-> ---- 8< ----
-> diff --git a/t/unit-tests/clar/clar/print.h b/t/unit-tests/clar/clar/print.h
-> index 89b66591d75..6a2321b399d 100644
-> --- a/t/unit-tests/clar/clar/print.h
-> +++ b/t/unit-tests/clar/clar/print.h
-> @@ -164,7 +164,7 @@ static void clar_print_tap_ontest(const char
-> *suite_name, const char *test_name,
->                          printf("      file: '");
-> print_escaped(error->file); printf("'\n");
->                          printf("      line: %" PRIuMAX "\n",
-> error->line_number);
->                          printf("      function: '%s'\n", error->function);
-> -                        printf("    ---\n");
-> +                        printf("    ...\n");
->                  }
+>     So I started a new namespace, "parse_<type>_from_buf".
+
+I think it would be nice if we could eventually converge towards a
+common namespace here. E.g. `strotol_i()` would then become
+`parse_<type>()`, without the `_from_buf()` suffix. That would make it a
+bit more discoverable.
+
+Similarly, `git_parse_int()` could become `parse_<type>_with_units()`
+eventually.
+
+That certainly doesn't have to be part of this series though.
+
+>   - Like those other functions above, we use an out-parameter to store
+>     the result, which lets us return an error code directly. This avoids
+>     the complicated errno dance for detecting overflow that you get with
+>     strtol().
 > 
->                  break;
-> ---- >8 ----
+>     What should the error code look like? git_parse_int() uses a bool
+>     for success/failure. But strtol_ui() uses the syscall-like "0 is
+>     success, -1 is error" convention.
+> 
+>     I went with the bool approach here. Since the names are closest to
+>     those functions, I thought it would cause the least confusion.
 
-Indeed, this was a plain bug. I've merged your upstream PR, thanks!
+I think that's a sensible choice.
 
-I'll send a pull request soonish to update our own version of clar.
+> diff --git a/Makefile b/Makefile
+> index 237b56fc9d..751bd40a9f 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1510,6 +1510,7 @@ CLAR_TEST_SUITES += u-mem-pool
+>  CLAR_TEST_SUITES += u-oid-array
+>  CLAR_TEST_SUITES += u-oidmap
+>  CLAR_TEST_SUITES += u-oidtree
+> +CLAR_TEST_SUITES += u-parse-int
+>  CLAR_TEST_SUITES += u-prio-queue
+>  CLAR_TEST_SUITES += u-reftable-basics
+>  CLAR_TEST_SUITES += u-reftable-block
+> diff --git a/parse.c b/parse.c
+> index f626846def..1dcbcf64a1 100644
+> --- a/parse.c
+> +++ b/parse.c
+> @@ -209,3 +209,99 @@ unsigned long git_env_ulong(const char *k, unsigned long val)
+>  		die(_("failed to parse %s"), k);
+>  	return val;
+>  }
+> +
+> +/*
+> + * Helper that handles both signed/unsigned cases. If "negate" is NULL,
+> + * negative values are disallowed. If not NULL and the input is negative,
+> + * the value is range-checked but the caller is responsible for actually doing
+> + * the negatiion. You probably don't want to use this! Use one of
+> + * parse_signed_from_buf() or parse_unsigned_from_buf() below.
+> + */
+> +static bool parse_from_buf_internal(const char *buf, size_t len,
+> +				    const char **ep, bool *negate,
+> +				    uintmax_t *ret, uintmax_t max)
+> +{
+> +	const char *end = buf + len;
+> +	uintmax_t val = 0;
+> +
+> +	while (buf < end && isspace(*buf))
+> +		buf++;
 
-Thanks for the feedback! Hope that the pending changes will improve the
-status quo.
+Hm. Do we really want to retain the behaviour of skipping leading
+spaces? I think it's a rather weird edge case of `strtol()` and friends,
+and if we can avoid it I'd prefer to not replicate this behaviour.
+
+> diff --git a/t/unit-tests/u-parse-int.c b/t/unit-tests/u-parse-int.c
+> new file mode 100644
+> index 0000000000..a1601bb16b
+> --- /dev/null
+> +++ b/t/unit-tests/u-parse-int.c
+> @@ -0,0 +1,98 @@
+[snip]
+> +void test_parse_int__basic(void)
+> +{
+> +	cl_invoke(check_int_full("0", 0));
+> +	cl_invoke(check_int_full("11", 11));
+> +	cl_invoke(check_int_full("-23", -23));
+> +	cl_invoke(check_int_full("+23", 23));
+> +
+> +	cl_invoke(check_int_str("  31337  ", 7, 0, 31337));
+> +
+> +	cl_invoke(check_int_err("  garbage", EINVAL));
+> +	cl_invoke(check_int_err("", EINVAL));
+> +	cl_invoke(check_int_err("-", EINVAL));
+> +
+> +	cl_invoke(check_int("123", 2, 2, 0, 12));
+> +}
+
+As Phillip suggested, it might make sense to wrap these `cl_invoke()`
+calls into a macro.
 
 Patrick
