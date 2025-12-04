@@ -1,66 +1,66 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE9921FF2A
-	for <git@vger.kernel.org>; Thu,  4 Dec 2025 14:07:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B89219D093
+	for <git@vger.kernel.org>; Thu,  4 Dec 2025 14:08:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764857223; cv=none; b=iPOULC9r+044kQUW8fwUDqiJ/ZS5y1S15Kl0bpSIsJogBUAsaMV4gzKW/7VJZbvTMKtMRvR7aF4LP22Oungs2w/k52g5jZVy9mPZdxRDLb/TJ/NcJKL7Hjpim9xhWzU7tqX/ID/fC+6JcV+ZvrVvXtsildasDAeccuWdddmmLtg=
+	t=1764857338; cv=none; b=VGdLAdgLo6a+UTHAhDkEIYti5fHw4mm4CZIDvGm0ZoCSYYRLDTDT80+1pW36yQexlMVaTc3gZqaUAYgWTH/ah4Y+gNVuiKcCCWUMDjhQaKzj1Z9lwqU3AN5OS7evwau4FUVnZh8hBBIBApg9Z2+yk16i2c3i/FThwlHwZuKkWMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764857223; c=relaxed/simple;
-	bh=wbNrooi+GzjL9ZK/3o6QRQFsIrh/Pek0bT1d1XIDu6w=;
+	s=arc-20240116; t=1764857338; c=relaxed/simple;
+	bh=ChEvucTELc2RKeRW1fn82oreP07mlYt5fJczGxcMGXU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=idTqfcXM2eLpYurb8xP4Fy+1kDWlQB3OpxoCMZtmwgu29n0vOohKo92S1skIv9MOs5H/Rr3vOjwycAgLH1QmanSgkZuy6hlmsHv0sv2F7P628ImuqPMam7LWNNz6mcSy08wOIFpuLnGUVnYNMpCAx5cLwxW2KipCSoKbN/mz8es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X91Ms3tZ; arc=none smtp.client-ip=209.85.221.46
+	 In-Reply-To:Content-Type; b=cs79V3vq0e7owwOma7VwM/wx7ruRTIAO5c9fQK4B51AAizSXOuNQp9Y1xeNPa1YfzhqqiWpwRpHFL3B6/IDUesMsK/VBpiYZQ3xLmCygjwpFAKJlIAWM4luhwgZTCClc6t4tSYTIwuu3Wc2rZXgYKtnStElc7g1xFC+HQzjJ9oM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bp5pQh+s; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X91Ms3tZ"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-42e2e3c0dccso639002f8f.2
-        for <git@vger.kernel.org>; Thu, 04 Dec 2025 06:07:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bp5pQh+s"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-42e2d52c24dso553885f8f.1
+        for <git@vger.kernel.org>; Thu, 04 Dec 2025 06:08:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764857220; x=1765462020; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764857331; x=1765462131; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=C6W8uWMjipQSPvQG6wWh6eHrOtlcmVxm9dSWcJnTXl4=;
-        b=X91Ms3tZtagASNg4t4DXwP2LLXwi6mmqbCjtlAoUWvDwHhvTc0lC+2l1LB8k1R7zvX
-         D537c/UuT4AzezGpmsOO441Y0IR/OHRQWz/ONBBbhIwYO83Hio89m1vKFiVRUuMNqp7B
-         fwOO4vt7+nzQ6/mZBDbgYLOxMJ7ERWCO7c/zoDcGS5tliyQRorVqKMN2uTarIU7wnNi6
-         h9DYsE9CtF+dGBqS+MaEp+RA0d8VAcHsfV1qA5zGfkwx8eVNRjblNC/D/pOcwde5Lp/o
-         JdAhZ60fq9DT2CTFJIpD09C7N57InguO+1ncG6yvI9lv+mS4EwFvo44LDgUKJ73yJ3g5
-         Eh5A==
+        bh=wxi1hyfzB4nx/0XMBlwNDfthABkAAGBKCW6AJehuPFY=;
+        b=Bp5pQh+sZoMdiNHjfiXTFFpol8AazHTzKpKqz97JHU4oCfYAoNIu675KYt0z+EcZGb
+         si1mZOsOiN8BXGCOusaKCCp3oDl6HqX4WZswQnOZF2qeUpFMCMogeBEfKS8PyTfhVr4a
+         RZOSMwJ0YfYw+vNXoBNnlkJJIYDHOqYzLHwoKhJQccvnbRrJVOEbEnimDhwi9AFXsf0V
+         6InvlySiFWxWmMBUHOaGIgXEVrb3G4qaLO7hELIIspcPDm9dCZlEXRDT5dOD8ZpeEUjq
+         kzhaF2p15KR/RJo9zporwoYHNFs1XbmcKsKxVtXD4Ew3VmgbImVmS3OgSix30jUC/75V
+         6UEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764857220; x=1765462020;
+        d=1e100.net; s=20230601; t=1764857331; x=1765462131;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=C6W8uWMjipQSPvQG6wWh6eHrOtlcmVxm9dSWcJnTXl4=;
-        b=VQezpZXf+YJsaoOSnGowA1gKPyS6V4pG4ZZDTWgxdvqhkR2Njy2ORY0IFzPo0lbJQn
-         hZ81zbJ76tPJXRU3qf7oXY5SZhbDVYzJPc0velK9Y2wy/K8mB2BD/k5VRMGP72G6uNdZ
-         aHjmLdeeOaIIme8rD9ms7ADgX9cUFKK2vPOMWCVOV//GUH84nyLipcR8kwLOXe8oG1JX
-         I35yaNxLBZckJQHl3lQbh8YgusfCYXRQYPG65MmlUyOeYzN5XExqaHkFjNpCUvurNr03
-         NaBTQOh7YemUQmC3NoQakOlZiLgrHjmkbn3GUYC7JFt1LsuxPkED20T19h88s5YzYVf7
-         iCtA==
-X-Gm-Message-State: AOJu0YxBOYm301cC007lKuJIUWHpLAlDfvMWf2V4qkZXrN94B4SNOwTR
-	+y6u6lUQaUqWNWUT1NpcQ4fqFyMDE9kzxIWg11Vj/2tV/w7VFr2XNu6hgytCHA==
-X-Gm-Gg: ASbGncuAxRS0/7F2zkT/UsYXDjlM77cM3q5JBzS9jjc30lnoziZ741Zwbso+iGoxw2d
-	QA8mh59ymASEQ0YpZk9FQz59Os11aCQihgo0QuWDz0wplekXoutH87G3ViChRWLTpZJ/AmRQERV
-	TYO5uNF7/PVnCJsBh6x6engdKVb950vjoRuTl1j946jaZFfZKWhqu8bErtyxazUonLsjQxklHeq
-	mtySYW0g0trN2nP63obeqny5OROZn3YJlpCqYDTzKKU73Ga83czgjGyXjNlNcbP24V3+Ct/BsHd
-	tTh/qiKTnByjVrWtOKzkmYoLv0Y9piJByJFrQTJc50UJjpl8WRxRQfuJ83Sub/1iMA9z5Qvf2aP
-	/pi/zY88AKuoTj6wEI8CJId5GXxp+rw2nysL62Qk4sRuk06NQJSA3btloGytcpSY0TWOzjSogq5
-	mvWE28R8I2DFnTotx/KDjUdMuQvXH/5Cn91xDVhb4za4sCtvn/2k+rcqYhmhPEu4E=
-X-Google-Smtp-Source: AGHT+IFHSQ2H1Uu6dAX+RuFTtEhnaQMD7gnCW+YsN3Vas1Yz/5+vFsINtby66HV4/Q8cxuDlQ76d0g==
-X-Received: by 2002:a05:6000:1a8a:b0:42b:5628:f4a3 with SMTP id ffacd0b85a97d-42f731678e9mr6706565f8f.1.1764857219756;
-        Thu, 04 Dec 2025 06:06:59 -0800 (PST)
+        bh=wxi1hyfzB4nx/0XMBlwNDfthABkAAGBKCW6AJehuPFY=;
+        b=DEgoO2P+PZmJKBoBFHmj31FBlkoahy9rlYXKBAFcRCsx4FJlqx64JdC9MeSFgoNRU/
+         wSHkpVSJfvEQKjwTgJk712OOIuirk6hqnKgJCsCAkxI8dAwSDrgdj2OYS74QzhPAuBLu
+         ZB1CpNXXTkI7sRBKYzRf0a46ejKAJQcXNB8xrDDMc/Yf6IBfsDLu04dUhCr3vq6vIND5
+         tkQ4IWEwhmu4wqp1J+WxPF9OYWfmDRBen3JLE66zfGmywrBpbUUz/H4ZEbl+BzIltpbw
+         OmAM8hM3OcZQWyqFZp3n0HCky7Z2/7m3rYkTOQ+WVyBFc+tkoVuJSQC4v4cEdzhjLst9
+         Oq9Q==
+X-Gm-Message-State: AOJu0Yx1qmaRM2a1Hi6OT8QrX8Dz+LCml4kOGA7rx+pBSvlSUYh7aBe4
+	4SB3Q/xLTiI16LgPipkMAW4KLRlsmjZk9qnE3XDzpmv3g0SWqFW2MjQS5cgidg==
+X-Gm-Gg: ASbGncvkUA3gGXrq2HWlR+2btc7OWtjtcKhUhyD+T4Sz0t3iK50ZeRDJwu62Xhg4bn9
+	CyCKrSp57Z1BS4yhVXk0d/IOcJ+dlQhLkI7CBOWQ4LMhkanQFSqtUQZC8L6VgbLCWrJEBMl1PQp
+	S6fnUNQ/MIzlfRhiTeu3Pr8iTr0ZzRJn/H7jWrTDxTmMofPXEyteHlqemBQZ2yAf2zgzDxhNiPW
+	k4alqtmOJZEicCZOp+AOSMJQStuyUhkYPq5grZLdQL4NFsxa1wjNrQlRxh+MKqFgiqImK6ZppIS
+	jQti7mKYY6CsVo8ixv5+Fq7H4sXq2HqJh88b52pFDMHG29pJjQYhQXW20Y+Moc9fINRM14XEAV3
+	ULI1jHdTi6OGr+Knp8lKERGe4lGVXMmoqTQHFIr8D5XUwH02gH/Aghm+U5eL6R5CN8ZXWChT/ZQ
+	6V2MuDAQPV4WBSLYzaZMe567LhqjVwEz7EA2zUC1SAtRmg2ABtb//TlqnCdVEQNUk=
+X-Google-Smtp-Source: AGHT+IFOEn+9efIXbHFKdK3Oe5hM1lFVbsqjo4pW8TfRLWf194v5KY1RppGGb3VE0somDia/LAafhQ==
+X-Received: by 2002:a05:6000:1a8f:b0:42b:47da:c318 with SMTP id ffacd0b85a97d-42f7320b37emr7093669f8f.52.1764857330945;
+        Thu, 04 Dec 2025 06:08:50 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42f7d222478sm3374940f8f.20.2025.12.04.06.06.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42f7d353f80sm3431213f8f.41.2025.12.04.06.08.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Dec 2025 06:06:59 -0800 (PST)
-Message-ID: <10f9afd8-6ac2-4e17-979f-2222bd0a2fda@gmail.com>
-Date: Thu, 4 Dec 2025 14:06:51 +0000
+        Thu, 04 Dec 2025 06:08:50 -0800 (PST)
+Message-ID: <007cd7f3-0876-4912-9a86-e549876ec9db@gmail.com>
+Date: Thu, 4 Dec 2025 14:08:43 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,118 +70,27 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH] replay: drop commits that become empty
-To: Elijah Newren <newren@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
 References: <8a2a1215306452147cc7b803530ab2429bf57f15.1764260150.git.phillip.wood@dunelm.org.uk>
- <CABPp-BEZFPmLnEtnD0WaNbkZ5uE7q5T6uKJQRUvtq+L=C1o9wg@mail.gmail.com>
+ <xmqqbjkmk431.fsf@gitster.g>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CABPp-BEZFPmLnEtnD0WaNbkZ5uE7q5T6uKJQRUvtq+L=C1o9wg@mail.gmail.com>
+In-Reply-To: <xmqqbjkmk431.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 28/11/2025 08:06, Elijah Newren wrote:
-> On Thu, Nov 27, 2025 at 8:16 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+On 28/11/2025 07:29, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 >>
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> If the changes in a commit being replayed are already in the branch
->> that the commits are being replayed onto then "git replay" creates an
->> empty commit. This is confusing because the commit message no longer
->> matches the contents of the commit. Drop the commit instead. Commits
->> that start off empty are not dropped.
+>> This patch is based on ps/history
 > 
-> Yeah, I've got a commit in my local branch that does the same thing.
-> 
-> It feels like there should be a paragraph break in here somewhere, but
-> maybe that's just me?  Pretty minor either way.
+> As I take this more as a rfc/rfh than finalized version, it is OK to
+> depend on the topic that is known to be rerolled soonish.
 
-Yes it could do with a paragraph break, I'll add one
-
->> This matches the behavior of
->> "git rebase --reapply-cherry-pick --empty=drop" and "git cherry-pick
->> --empty-drop". If a branch points to a commit that is dropped it will
->> be updated to point to the last commit that was not dropped. This can
->> been seen in the new test where "topic1" is updated to point to the
->> rebased "C" as "F" is dropped because it is already upstream. While
->> this is a breaking change "git replay" is marked as experimental to
->> allow improvements like this that change the behavior.
-> 
-> Yep.
-> 
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->> Elijah - I'm not really clear why we were setting result->tree before
->> calling merge_incore_nonrecursive(), was it just for convenience to
->> avoid declaring a local variable or have I missed something?
-> 
-> I don't know the reason.  That traces back to a commit with
-> Christian's Co-authored-by, so it may have been either him or me that
-> introduced it.  My original work on replay was on a branch that I long
-> ago rebased on top of the version Christian submitted, and the old
-> history is no longer reachable from my local reflog, so I don't have a
-> way to narrow down who of us did it.  If it was him, he may be able to
-> answer.  If it was me, I've long since forgotten.  I think using a
-> temporary, as you've done, is better.
-
-Thanks, I was worried I might have missed some subtlety and 
-inadvertently broken a corner case.
-
->> +       # Write the new value of refs/heads/empty to "new-empty" and
->> +       # generate a sed script that annotates the output of
->> +       # `git log --format="%H %s"` with the updated branches
->> +       SCRIPT="$(sed -e "
->> +               /empty/{
->> +                       h
->> +                       s|^.*empty \([^ ]*\) .*|\1|wnew-empty
->> +                       g
->> +               }
->> +               s|^.*/\([^/ ]*\) \([^ ]*\).*|/^\2/s/\\\$/ (\1)/|
->> +               \$s|\$|;s/^[^ ]* //|" result)" &&
->> +       git log --format="%H %s" --stdin <new-empty >actual.raw &&
->> +       sed -e "$SCRIPT" actual.raw >actual &&
->> +       test_write_lines >expect \
->> +               "empty (empty)" "H (topic3)" G "C (topic1)" F M L B A &&
->> +       test_cmp expect actual
-> 
-> After digging around for a while (my sed-fu is far weaker than yours),
-> this feels like you are going out of your way to avoid changing any
-> branches, but then trying to figure out what the branch changes would
-> have been.  Would it be simpler to remove the --ref-action=print
-> flags, check directly what changes were made, and use a
-> test_when_finished to reset the branches back to their starting point
-> at the end?  That'd change this test to something like:
-
-I used --ref-action=print to match the existing tests, but it would be 
-much simpler to drop it. Your suggestion below looks good.
+Would you rather I rebased onto master when I re-roll?
 
 Thanks
 
 Phillip
-
-
-> test_expect_success 'commits that become empty are dropped' '
->      # Save original branches
->      git for-each-ref --format="update %(refname) %(objectname)"
-> refs/heads/ >original-branches &&
->      test_when_finished "git update-ref --stdin <original-branches &&
-> rm original-branches" &&
-> 
->      # Cherry-pick tip of topic1 ("F"), from the middle of A..empty, to main
->      git replay --advance main topic1^! &&
-> 
->      # Replay all of A..empty onto main (which includes topic1 & thus F
-> in the middle)
->      git replay --onto main --contained A..empty &&
-> 
->      # Check that "F" was applied first, then "C", and that "F" wasn't
-> applied twice.  Also, that topic1 now points to "C".
->      git log --format="%s%d" L..empty >actual &&
->      test_write_lines >expect \
->          "empty (empty)" "H (topic3)" G "C (topic1)" F "M (main)" &&
->      test_cmp expect actual
-> '
-> 
 
