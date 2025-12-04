@@ -1,72 +1,72 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2118F329394
-	for <git@vger.kernel.org>; Thu,  4 Dec 2025 21:09:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1128132AAB4
+	for <git@vger.kernel.org>; Thu,  4 Dec 2025 21:09:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764882582; cv=none; b=E5Zm+mX8TKaHARDl2VAjBdavBsP5s8Q988r/sJqZj2IlZknVLWiWLbXm9yNFoauUmsmG93vdg33EufbuthJqbbKEkG0h/r+ffZeNJ5b5a+WiKVcH40orlk19BvuFoCkx7NVMYG1KK1P8eaaAt0G2OCpDW3JMzdiLJq52bhriR1M=
+	t=1764882584; cv=none; b=orHf80pLCmx7i9m5gEc4eBadtIzsBunsZi1PpoNeIIUyucALzz6hsHSIR0w+FHqB/bb3/wniH3g0e3Jh+qVwsWiU/XpsSk3t6N9SXF1dOwyFlDLxks8Q73UoZw/YzM1sdZu8G1ZZbGKxteF9d9N2jCfE8KoP8VyHUxncC3EcoLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764882582; c=relaxed/simple;
-	bh=ouSuM9o1W/4Pk3dZTHqcLD04vsW4MFvub1d28uAQRzQ=;
+	s=arc-20240116; t=1764882584; c=relaxed/simple;
+	bh=sv1pd3Hhi7F+N258jwhCEA9Gitu0nTLF2BlFpJXSzZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmWQtf8O6Ytr/6YWx5lXA6AoTZqu+G7DNCWgcSSdCYuyUNYmrku4SFPNCn503gMZFFCXLRNm7ZT/gST9f/6K/olaF51vRymQadKH8iMhxSKxnNaA8OyqM327/ZRG/lwDALRFPVUrsqCc9o/u5brsZ4Sq/h/caWBYUEDfrFKnZTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jelRv2A3; arc=none smtp.client-ip=209.85.215.182
+	 MIME-Version; b=JHt5YQjwLkfTZeh5+J5/MErVm2NZPYToCmZQfRd3n7oeqSZ9OZu4HjxzvvjORfh9JAFr7T04ZYEYvMVT2LKbg46Mh5PvQQ+mVIZkNPIsNKxvq9jS+bCl47ieW1EJ3kN2WwHsbc3IMdfVF2s3V9ubWoJLR7IPkKfiG8FQvHU5dYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LJMed4Vo; arc=none smtp.client-ip=209.85.215.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jelRv2A3"
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-bddba676613so922313a12.2
-        for <git@vger.kernel.org>; Thu, 04 Dec 2025 13:09:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LJMed4Vo"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-b98983bae8eso1121354a12.0
+        for <git@vger.kernel.org>; Thu, 04 Dec 2025 13:09:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764882580; x=1765487380; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764882582; x=1765487382; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SOajHTO+VZ/xPNcVebIQefbT2GfpOftgWfktOYBWjDM=;
-        b=jelRv2A3Aj+FOWPXEM9Drl4Vw1j56pwxucQ9gDOs8UfyORRkzpIB3a6fjlHHib83XO
-         my0mdgoqcU+OYydIXTPvhKziwbLJ0LL8GcFeQiBl4gxfXYzijignAlWHn3rcamAirMnB
-         cIOy2o0h0AwJuRrkLiiwY9ZLv9RftRehAla9TZD9d9SuJI0EqRxb4TIzWfJIHvEumhSP
-         87CImowcl7iaNaVs0d11HHYhvk3zegZX9RpcxwbcgyJyDeWq4NUNeUVHWxBBBmsIvkxI
-         OWU9qkTujPQYtCNdrRd1BU55MD/tj+lnS/ts7kNPNzlyOcaJLQf32pmt8xqcNUnyxIm2
-         Xb2A==
+        bh=9FKtuxG2jcrvD++HA5kPFzJA4naQYx2BxUrXnerXN/g=;
+        b=LJMed4VoOvD2BnD02oAd99sE4duFWMnHCrmVez3cvWINHwgbMPZAnWWu5OeIyMqpO0
+         j3Iaod1d79Jgds8qLV+Ff/FA9HMfppCg65X3DC/OaT34crCDZ6bSPV6wuPOIBQt0shpa
+         AitX7x/zS/DctVyZjX84zKXU/Ydx/+kYXQ3Z5GKakCT+rjKWr5eJ1WYDLazvHPAa+zly
+         mtZOdGx6wdd3gzvcASwjnWaDCitFRNbPKiAPSYA8CXjMEbzjgTf/ygInX9cNyzMT1n9G
+         YAI01uQv9YWtANMR/FrXyai54v1g50JbgWRlJ1Vi8VpHb+6aWYCz/knWHqIUDl11RGZ8
+         T20g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764882580; x=1765487380;
+        d=1e100.net; s=20230601; t=1764882582; x=1765487382;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=SOajHTO+VZ/xPNcVebIQefbT2GfpOftgWfktOYBWjDM=;
-        b=V0PYWSHwjUT90SsYprtQRc3O9Y9o4uWfWcY17TYswZHySCTkaiUKpKozerpbBGrdYh
-         SartBCm5DbGlcosF3nN3MVQtpooNYdPEVOSNUTzgYu1HSrKvdX80lXfG0+dhJUDD1/sL
-         g9lrHszok/e1cqrmcqlsj7XNKYIJV+YjLMJr+kzGo3b0xMYevqmyYHtPOUbclP3Up/qr
-         sk0mX47RtyTXhMp8X/GApJoqpv7bzrHdo6AF3UB9r/DHXzGiO20KLswE/UW5kRtzBhWH
-         27e/J1Gx6TBvejXGM8wNrqE134pT0A5jjGLkpG5RJHwFQNXG/iGRKhlM31u2CxKlOyuc
-         kwfg==
-X-Gm-Message-State: AOJu0YxOUWQ4+0Q4Fx/gM537vePxHiH25yZaCCO+Olc5s6KzQJArsTCH
-	vpgm7xOPo47zDPwlXmyQ9Oi2dfdR+8veXxsk+bjT04J+zN/R5sOmCSnAFrY/oA==
-X-Gm-Gg: ASbGncu3or2oyM+gRI8EuGEd1dauyZ6xbgvLl0uT4GBtHU4qXIdtbVjf6877yKAIGBa
-	PfbTSzvThrsin4+uBCe623tZJEUS+bzB5IzmN5+INIT/rRcqq465y7C5uONHF7CV+QsMNWvAgfV
-	fszg6WubiDTbjP1sCRe5nzHWP6Tat8cx236fzqMoGaW2n6oLK+NqmreWLCfNzstD0ACb1Eo0tEW
-	B2G8FyDtZQAoIe1xIBgr2vzEKi6hITXxpyqcCefdN3v95PyI19hqw9kw1tsfv5zYi3bVvibxeuE
-	YHPfOKv4pc5qKc9WZX1Eg2yrdMq6FY1dG/FnQko7S4Bn8ffEOWOMvpN7A/uWTX8INBtg+GOUGYe
-	6AIpEcC2SVmlR2ugDTIaTUPdcv7JbxB+ecSmfKdMytCZjdS/Dchhf5FZIg6bSK4aM8ZoKkA8DX9
-	6uXPAvy2hXhlt/25mcqsJId36gaIV5jI0vzwyYeYk+pKDOjHBtR/ZP0A==
-X-Google-Smtp-Source: AGHT+IG5GWev/UutZsoAfWgp36sGt97ObgvB3JuYRG+HsSjcRrb/XhaYsfygLSesQw8wGEkZrKMlOA==
-X-Received: by 2002:a05:7300:5a0d:b0:2a4:3593:c7df with SMTP id 5a478bee46e88-2ab92ee610bmr4461300eec.31.1764882580105;
-        Thu, 04 Dec 2025 13:09:40 -0800 (PST)
+        bh=9FKtuxG2jcrvD++HA5kPFzJA4naQYx2BxUrXnerXN/g=;
+        b=C/lDmMp6NvE/p3MD49aL0mxLpLFTCVY0YqiHYUyWrV5EmbT4cg+RWRPrfh8dnEGFt6
+         T7R/EWbV3TrHQD5/tYE0nWcZDWKno5sC4c8QWZaa4C9CKQEz3E3gJb7HlYUAA/knag4P
+         PANmvNKeBjTc5sDj6BDpDbgPiNetB82RMQjd9lB2MNWXB/YMUrqEIsgQUNtg5M6Gy+Y+
+         diXLb2q06N2oqSmx+/ei9ClYjapujvJfNS7x/ne/4cLBf7tFCeKoN0pAjcV+jMI8lheM
+         Unr/CXAHMPFyrzK+I84yP54oblTxfLx46O7TQGBpg2CEikTfpQ23QQBqZHxrLaAC27jO
+         7P4A==
+X-Gm-Message-State: AOJu0Yz/xdAyHKto6QrL8ACUJES2kWF+ZzyIa1TrV8XUFpHbKX9LM1QI
+	Lf9T5cYFK9RUcIDwuPgDP2oRscs7XzGkj+w2nTUcyU1rGOk5k7ZdAbgzJiyRWg==
+X-Gm-Gg: ASbGncvntInCKrd1dT1znTD7AqF4fVCnV8S5VBSJoXUlhLwr2fFNJ9ikTVfRKa4LeGl
+	2auOAv7kNRs9+0G4mKh3lw/cUtcaU+XapmM5GION/jZcLXbYpVWg21K/DaYs1PTBwWr/MhGZsyN
+	lOeLivmtR61+jrHH7h8rDp0lSM45gZ6YghFF+RBZV1UUNwNH8+Iaj8FR9LqNQt4pveCwMBPL/sa
+	FxpCCnVVCh1gJ0vprXknAvRLMZc8LLZMlaxg3g9tlZAzvF+ynGolKybcGGpjRFyMfcuJEc/7WjA
+	1vdkJCjexYslr0eS8IwrKlw5FzY8+LFC+egYIbkA9PMGbE7SBPcdkriZyfwobNv1T5c9aB5FXK4
+	+izfIO5SPla2DYoR5ivnFWQ9s14ONK5UBvQZgm8XhGSToBn6EuZ8Xm2beHkr4cTaDh26LnoHZsh
+	4vOkUWhOWldf1hitL01wyxlQ82ZNWBV8MchlHLxSZifgdUfA4grWLuww==
+X-Google-Smtp-Source: AGHT+IH/kJmpi807wKgX5VhnOOv46yGQmpopovgM82gY5fMpUpgr20R68l71r666FmEvqfHqUir0IA==
+X-Received: by 2002:a05:7300:d518:b0:2a4:3592:cf73 with SMTP id 5a478bee46e88-2aba42fe06amr3249750eec.23.1764882582141;
+        Thu, 04 Dec 2025 13:09:42 -0800 (PST)
 Received: from localhost.localdomain ([2804:14c:32:8e1d:1817:8b3:9658:8ab6])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2aba822b615sm7882624eec.0.2025.12.04.13.09.38
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2aba822b615sm7882624eec.0.2025.12.04.13.09.40
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 04 Dec 2025 13:09:39 -0800 (PST)
+        Thu, 04 Dec 2025 13:09:41 -0800 (PST)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	jltobler@gmail.com,
 	ps@pks.im,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [PATCH v2 2/3] repo: use [--format=... | -z] instead of [-z] in git-repo-info synopsis
-Date: Thu,  4 Dec 2025 17:10:11 -0300
-Message-ID: <20251204210843.79411-3-lucasseikioshiro@gmail.com>
+Subject: [PATCH v2 3/3] repo: add -z as an alias for --format=nul to git-repo-structure
+Date: Thu,  4 Dec 2025 17:10:12 -0300
+Message-ID: <20251204210843.79411-4-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251204210843.79411-1-lucasseikioshiro@gmail.com>
 References: <20251130203456.28437-1-lucasseikioshiro@gmail.com>
@@ -79,55 +79,93 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The flag -z is only an alias for --format=null and even though --format
-and -z can be used together and repeated, only the last one is
-considered.
+Other Git commands that have nul-terminated output, such as git-config,
+git-status, git-ls-files, and git-repo-info have a flag `-z` for using
+the null character as the record separator.
 
-Replace `[-z]` in the synopsis of git-repo-info by
-`[--format=... | -z]`, expliciting that the use of one of those flags
-replace the other.
+Add the `-z` flag to git-repo-structure as an alias for `--format=nul`,
+making it consistent with the behavior of the other commands.
 
 Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 ---
- Documentation/git-repo.adoc | 4 ++--
- builtin/repo.c              | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ Documentation/git-repo.adoc | 6 ++++--
+ builtin/repo.c              | 6 +++++-
+ t/t1901-repo-structure.sh   | 7 +++++++
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 5d9c7641c2..f24514deaa 100644
+index f24514deaa..c4a78277df 100644
 --- a/Documentation/git-repo.adoc
 +++ b/Documentation/git-repo.adoc
-@@ -8,7 +8,7 @@ git-repo - Retrieve information about the repository
- SYNOPSIS
+@@ -9,7 +9,7 @@ SYNOPSIS
  --------
  [synopsis]
--git repo info [--format=(keyvalue|nul)] [-z] [--all | <key>...]
-+git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
- git repo structure [--format=(table|keyvalue|nul)]
+ git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
+-git repo structure [--format=(table|keyvalue|nul)]
++git repo structure [--format=(table|keyvalue|nul) | -z]
  
  DESCRIPTION
-@@ -19,7 +19,7 @@ THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+ -----------
+@@ -44,7 +44,7 @@ supported:
+ +
+ `-z` is an alias for `--format=nul`.
  
- COMMANDS
- --------
--`info [--format=(keyvalue|nul)] [-z] [--all | <key>...]`::
-+`info [--format=(keyvalue|nul) | -z] [--all | <key>...]`::
- 	Retrieve metadata-related information about the current repository. Only
- 	the requested data will be returned based on their keys (see "INFO KEYS"
- 	section below).
+-`structure [--format=(table|keyvalue|nul)]`::
++`structure [--format=(table|keyvalue|nul) | -z]`::
+ 	Retrieve statistics about the current repository structure. The
+ 	following kinds of information are reported:
+ +
+@@ -71,6 +71,8 @@ supported:
+ 	the delimiter between the key and value instead of '='. Unlike the
+ 	`keyvalue` format, values containing "unusual" characters are never
+ 	quoted.
+++
++`-z` is an alias for `--format=nul`.
+ 
+ INFO KEYS
+ ---------
 diff --git a/builtin/repo.c b/builtin/repo.c
-index 2a653bd3ea..cc97dd1836 100644
+index cc97dd1836..0dd41b1778 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -15,7 +15,7 @@
- #include "utf8.h"
+@@ -16,7 +16,7 @@
  
  static const char *const repo_usage[] = {
--	"git repo info [--format=(keyvalue|nul)] [-z] [--all | <key>...]",
-+	"git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]",
- 	"git repo structure [--format=(table|keyvalue|nul)]",
+ 	"git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]",
+-	"git repo structure [--format=(table|keyvalue|nul)]",
++	"git repo structure [--format=(table|keyvalue|nul) | -z]",
  	NULL
  };
+ 
+@@ -529,6 +529,10 @@ static int cmd_repo_structure(int argc, const char **argv, const char *prefix,
+ 		OPT_CALLBACK_F(0, "format", &format, N_("format"),
+ 			       N_("output format"),
+ 			       PARSE_OPT_NONEG, parse_format_cb),
++		OPT_CALLBACK_F('z', NULL, &format, NULL,
++			       N_("synonym for --format=nul"),
++			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
++			       parse_format_cb),
+ 		OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
+ 		OPT_END()
+ 	};
+diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
+index 36a71a144e..df7d4ea524 100755
+--- a/t/t1901-repo-structure.sh
++++ b/t/t1901-repo-structure.sh
+@@ -101,6 +101,13 @@ test_expect_success 'keyvalue and nul format' '
+ 		tr "\n=" "\0\n" <expect >expect_nul &&
+ 		git repo structure --format=nul >out 2>err &&
+ 
++		test_cmp expect_nul out &&
++		test_line_count = 0 err &&
++
++		# "-z", as a synonym to "--format=nul", participates in the
++		# usual "last one wins" rule.
++		git repo structure --format=table -z >out 2>err &&
++
+ 		test_cmp expect_nul out &&
+ 		test_line_count = 0 err
+ 	)
 -- 
 2.50.1 (Apple Git-155)
 
