@@ -1,139 +1,90 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022FB196C7C
-	for <git@vger.kernel.org>; Thu,  4 Dec 2025 10:08:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CD0334C39
+	for <git@vger.kernel.org>; Thu,  4 Dec 2025 10:08:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764842895; cv=none; b=nLCfGz1A93EgAN/bqL8tK6z9nS1wlQF4iJ/LLD+bzLdPG+twar8asJApdJhPw3ALIYFsIFFfI1R3N09Uv6qwH0IJis3nIi76Hf5Ds8FPRIRaRFrEyZmhruoebj9rVCbTG8qFUBUFKOVvPinrfa8iQF1n1BaZ3qrz+PUu16AECyA=
+	t=1764842927; cv=none; b=VmfAl//WGUhNpJpWo04bIx/rJSJT8zxFn/HhU6bvoF2U/7wYtqbakzePZevi9i1tZA7nS3kiVlGfmUu/krzEwiAYzmMLRdktsCuVQGTvY2ACEmgwpQO1qv+XFca+LYIMNErXlq1pnTFOEzxap4jwjPv4RB7ZgW7T6r5Rrl89GPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764842895; c=relaxed/simple;
-	bh=M29Usc7ah4sZw7fPmSzlMM9BHF7Xqqum4I7klzV418U=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=nGk52QuqvrxPrZ+vWbityIuyjmR/ZYNArzMxvbM8/3el7/IGRJJ5e9zFkmfqX5euCZizAQ0y4jaS4jcL0XEoymvnp/Ix4abzXGI4Vjsrxp811/0/fjymN3wodj4vmCznj1uPWwLHZhjxmFKTYVUaWviWdXfYSuZjOQLBpoengm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=DWMgcsik; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qECQN6Rn; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1764842927; c=relaxed/simple;
+	bh=aNHD9A0B8ucKCrjTk+dCVADV5ZJjEV+7W2uaup14gmQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=iE3Xe0b8O5ZT5WIHtgWaJG18Vae91lqrZ9pXohh/GhEpOsNixfUeycRkMN/8aAW02HpQq0s2li2pSASfbqvTMg//aAetiigi39PJTAgFBVkBM5K6HB8zZA8/ry7hEip/twcFYIDub5tQfZ/42B3+IQTLrNYpG2G5mmfZqCudxMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FM5wGhMn; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="DWMgcsik";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qECQN6Rn"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 379507A01DA;
-	Thu,  4 Dec 2025 05:08:12 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Thu, 04 Dec 2025 05:08:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1764842892;
-	 x=1764929292; bh=kEA8zc9KZjDIbpF3JXBlWaimHwf2S8dI5qyklRdPcuM=; b=
-	DWMgcsikvlGYfwKFS+EoaLQO2HAtF+taKuAHS2vmKsUcYSxo6ci8oMwi86cSWWkj
-	Sv5VjPGyzlnRAF5/IRXNtMhS+n0kWrjlIVYFnpH0Kj/LSa2n4PPrIwuWds5M4D5Q
-	S8VIpnpcwFTF8CK0AETw9uzvrueauBlnJDLkBvBrRCVXJlcZwoNvWsPR2fYiSNw7
-	tBIjCvkauAa6YOiIWUoVFJVkoQVsnD5+aVs6EHMTakPq9QeLGpTmOk87CqO63zVv
-	HaS6hnjnmeVsvYMw4HK4ZoihivoFLNagKWckLnuDv2KvV/tH1JQ2vSMQ3JeGs1iD
-	7Ahze516c3F85QO+Vy/Niw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764842892; x=
-	1764929292; bh=kEA8zc9KZjDIbpF3JXBlWaimHwf2S8dI5qyklRdPcuM=; b=q
-	ECQN6Rn6/9U119IPDZy5SzmXFuUaoBwdsS8gIsF6APTyQaUFe6cIDgSN/d3w+T3m
-	wG0m+D43i9w0UgZstW4PigFOI2e5xMMiXArPCXp3pzN0PmX84d8ueJZ8Uo3z2tmm
-	4YOcyLKdq9LPZZWn0x1/MMWxcMoRPURu6csW3xPT1lb7HKpkikh0zFyZTm6rRBxK
-	yTMDvWR+4wG1plAA7wKuKOniKrLrdB4YUE/Gb8ZlYEVN5HsosDpN3Y4pnpG9X3M/
-	G5kArGZ94P+ZI+9Ezw+tJ2zrVTgpm67418GvOGT7czbgeq997WKuC3Tc3bTCgq4h
-	itgnwsnF7C4aGTHQ2LKtA==
-X-ME-Sender: <xms:i10xaeQMZSd_VV3bqReklIj8ZRjiXRaoTZlbRDXcGwx11gbLwLQLmgs>
-    <xme:i10xaekoWgUyO6-TPSxrKlTjwzkIBRMkIGla1LAZpkyK49al1IpcZvdpCh0CQOjUt
-    XOS9PLfrWIOvghYTsxPRsCpC_cmhkXvSBYhIsUAeIhD6wWiWNpU9Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehfedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtre
-    dtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
-    frrghtthgvrhhnpeelfeejudejfffgleduheegheeufeeffedtgfeffeevudeuleffgeek
-    tdelueekieenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
-    tghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:i10xaRusB-ZUn8ulIwVdvLxNU-ghRD1EKLfhn92Tb3d4L3TkqS4ESA>
-    <xmx:i10xaSMNk9HYSuAsVLvOlcItvYvmAonRJ93uTfNNY6WNqvwleDnw6g>
-    <xmx:i10xaX2FDzq08KZ_z-JG9ypg2ZIR_y1sAKaMzG5xDC_MsjvjIPzr8Q>
-    <xmx:i10xaWOlVyr8uegJE11cZB6iesdJjLAtPNtsIrWPpJfVHXWJZKhThw>
-    <xmx:jF0xaQhMJFQKXocINAmS2lHY2dksTDY1DppM3GI2itcOvX3G-8WXfmJ7>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id DE6A21EA0068; Thu,  4 Dec 2025 05:08:11 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FM5wGhMn"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4779a4fc95aso13362495e9.1
+        for <git@vger.kernel.org>; Thu, 04 Dec 2025 02:08:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764842924; x=1765447724; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aNHD9A0B8ucKCrjTk+dCVADV5ZJjEV+7W2uaup14gmQ=;
+        b=FM5wGhMnLLrN7D8N/oV64zwvS8eEen7cRQGVizYK4uz2XrklPV82Jcje6BkJqRmuYv
+         TOFZ+HRdb1I02HbKpO+I/ifMUICwuVI+/CI8pVvB5CT8vgmJ0qD5iZshGNMxi+CHVJ9m
+         6u4Vb7AD/upn/Wq0M+ISckFy9HQsOjmcID6BPzoEnFWXHbZ/N0Xp1gEVpocwoP4TddnZ
+         gEomcbQ6iPcToXrInO3w8q0XsNHyF3Bm2YdhT3KGOWvtTJ7ItiD8+w9ZoGK1iNgF41M6
+         HBV1q0z0F138j0WOilvRg1XOUhSXhsdyR1e+9cjtOPeoojpz498yvTSkbs5CBin+lDlj
+         OeIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764842924; x=1765447724;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aNHD9A0B8ucKCrjTk+dCVADV5ZJjEV+7W2uaup14gmQ=;
+        b=Tml9HiRB9Xq6G21sGfElcNFqeXfyTKSMfMACq9Y0JuDSAmuCW274CmrwbHH95yJZSe
+         ToRboawsSj7ky1fPyPlDHiOVP9kCuBbJ69GO6EN4V/xqTkLoaTiM2n673ODT7Gxs8dZU
+         95qPnoTbSUEgpJEYj3jI0qudDSSa3xfbTiyfXAA/auu8lmfRnZIM9v2zV9mZ4lpDHbd6
+         4olRQyxlDVCdqqPdIJcai6xjgjiSybBRdDZLZKh93FOJZOJlPeucxertrzqZbsiiK4jd
+         Eie5Jdt73oOBHku640695IeJQyyHW8oQoIV+CFfu3CKlO6cqXSRSI+HX7XrsgMgqMt04
+         BVHQ==
+X-Gm-Message-State: AOJu0YwuG6vp7k+rjrkmwu/amjJVZj7HkVhCkFHQyJghCaPB0A66mseL
+	a0vWcCqvPT8Mp5TQlH4Di0utzvC+z+1gH0FLz0oUV+bu54Y9JhuDMalY
+X-Gm-Gg: ASbGncv9YalKfqDJiqRjWI+PDGrxYQx/J1KjtdzLG4ODSQa394/H3OwrKmWBW2Y9vS+
+	OMllwzKYYY0ifOM4xlyYXt/oY9k0GC+vY21FsNvuy4ILOzV/JA9XtvZgCxeNC1332JvyIHBBfM8
+	CAbZ9goKpESffXBAME07YG0eXiQvdFnLI2uC6LWnr1PDvjiCl9nFhlOw4ICgXxbzxUD8Jmr6V20
+	j61tEus8Lr2eXIInt9v2Bdv3i8RO6sXold2kJwJSeFzXdCvVN6ycItZErDtDpwq0EXLJM83ObnF
+	Gc1fva8p9SlUKlNkt5PxdE+dv6rO5SyvIKIQ5rBmSzp6uZzvDAIzYFPaA2zRJw+vPc15xj9wdHx
+	VRS4TxGKAVdmdFipOqv5C6nd0o5vYh8huzL+x7bSsuStEDj2kWbKzojHSD/fLE+O8euW0MmINpe
+	Tr4A==
+X-Google-Smtp-Source: AGHT+IEeaHC/++f+Va9r4tYUMMLmBwTiJGf6rV9L9eyehA/j9m4/pr5K7gLE1t7PQAPUEreLuZ1D6g==
+X-Received: by 2002:a05:600c:4fd6:b0:477:a219:cdc3 with SMTP id 5b1f17b1804b1-4792eb36fd9mr31767115e9.12.1764842923384;
+        Thu, 04 Dec 2025 02:08:43 -0800 (PST)
+Received: from ubuntu ([105.117.8.216])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47930f286f4sm22503965e9.0.2025.12.04.02.08.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Dec 2025 02:08:42 -0800 (PST)
+Date: Thu, 4 Dec 2025 10:08:37 +0000
+From: Bello Caleb Olamide <belkid98@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com, usmanakinyemi202@gmail.com
+Subject: [Outreachy] Blog: Refactor in order to reduce Git's global state
+Message-ID: <aTFdpfZMa4S4hxMh@ubuntu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AoCHDQFv_cPs
-Date: Thu, 04 Dec 2025 11:07:45 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Taylor Blau" <me@ttaylorr.com>, git@vger.kernel.org
-Message-Id: <3d396982-8da4-4e30-950b-3034dcc987e5@app.fastmail.com>
-In-Reply-To: <16dd8441-b828-4526-8d21-76ee834b398c@app.fastmail.com>
-References: <16dd8441-b828-4526-8d21-76ee834b398c@app.fastmail.com>
-Subject: Re: [GIT PULL] refs/notes/amlog from git/git
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Fri, Sep 20, 2024, at 19:31, Kristoffer Haugsbakk wrote:
-> Hi
->
-> I have noticed (a couple of times now) that I=E2=80=99ve used the stal=
-e =E2=80=98amlog=E2=80=99
-> at the GitHub mirror. Maybe there was a temporary maintainer at the ti=
-me
-> (see the bulk of the commits).
->
-> I merged git/git=E2=80=99s =E2=80=98amlog=E2=80=99 into gitster/git=E2=
-=80=99s =E2=80=98amlog=E2=80=99. That adds 193 new
-> notes on commits that are reachable for me (presumably all on =E2=80=98=
-master=E2=80=99).
->
-> PS: git/git=E2=80=99s =E2=80=98amlog=E2=80=99 could be deleted after t=
-his is merged to avoid
-> accidental stale fetches.
->
-> ---
->
-> The following changes since commit [no common base; unrelated histories
-> (squash: cd046fc8b70 (amlog, 2022-10-23))]
->
-> are available in the Git repository at:
->
->   https://github.com/git/git refs/notes/amlog
->
-> for you to fetch changes up to d3d558e9824282479562a721e2a2a1cbbcf7c01=
-6:
->
->   Notes added by 'git notes add' (2022-11-18 18:30:49 -0500)
->
-> ----------------------------------------------------------------
-> John Cai (1):
->       Notes added by 'git commit --amend'
->
-> Junio C Hamano (31):
->       amlog
->       Notes added by 'git notes add'
->       [=E2=80=A6]
->
-> Taylor Blau (588):
->       Notes added by 'git notes add'
->       [=E2=80=A6]
+Hello everyone,
 
-I see now that all of Taylor=E2=80=99s amlog entries are in `refs/notes/=
-amlog`
-for gitster/git (at 6b6c4b3fb846382a93fc1c94747a90cbe1b5e833). So this
-is irrelevant.
+I am the new mentee for the Outreachy December internship round. I have
+created my blog [1] where I will post my weekly updates, challenges and
+progress reports every Wednesday.
+
+You can find my first post [2] on getting ready for the internship.
+I will update this thread weekly about new posts and if you have any feedbacks,
+you mail me.
+
+Thank you.
+
+[1]. https://cloobtech.hashnode.dev/
+[2]. https://cloobtech.hashnode.dev/beginning-my-outreachy-opensource-internship-at-git-overview-and-project-description
+
+
