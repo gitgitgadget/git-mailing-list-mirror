@@ -1,79 +1,81 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174CA311C2C
-	for <git@vger.kernel.org>; Fri,  5 Dec 2025 08:20:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE083101BC
+	for <git@vger.kernel.org>; Fri,  5 Dec 2025 08:20:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764922831; cv=none; b=NMrpjSNuIbHbCXFHuwRp7wWZOYUSVGTq+Abals9mdwMTnyaHCCU9WVveQ8FfwaO8nQQZTIqXIXn8WC07892jAm3Ass1kgiuh1exLANGenCqY9HSKD+J/aLQ3DffXYBzl5NMnf6l+GSjysIIb7lHjfol8sBm7grKmLOToGUsM634=
+	t=1764922829; cv=none; b=M5D8/qVNn1Eoj+rpHOj4vYCAyhxx2ZoDOrOcsTOB1VywIgDSSjPdWYI27anaAKfMNsOVMOJ5c/xSP0Ylr+uipjTmd2OZU6fnSjwzcf4a+MNMslxZnYjio5H2LZYVNDZLy38zi6eZ+iy/hsrpmxr6pqWr7TukmI+kz+F4kpEoiKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764922831; c=relaxed/simple;
-	bh=HJnfuOuYPksQTgt4OlI4PYrerxVjjy9Xqp2o4jFMVZ0=;
+	s=arc-20240116; t=1764922829; c=relaxed/simple;
+	bh=+sJb6T0qHRr58+brqkh90pfL/vHBRW0bLujR4ZVNGoo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Uvv/uumdQjOTUeL0XBQvcjhehHV0ZAGnsNSL1IAGVsfMNEC3V3U/iy1OaOBb6F9sPHCVyxLWe/hk/z632YQ4wIx0xB9EbAOIaAwNgzmtrmisQ7PBPMahvgn1TU+QmZ1Tvn242T4juPErzAsAxtcsS26uflNCqMUNRyDIJNgKOzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=puP5FPYB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FwK0NVnV; arc=none smtp.client-ip=202.12.124.144
+	 In-Reply-To:To:Cc; b=H/fEPlyt++WtgbU9l1iRRoCD4EIqeoqmZkz/sGeKpFG0jHZhAstie2S15ol3mjSbiMLTNOxTzsM/fHG+KiMnX9SGuCX2Du30Cvsf4ihItiu3IZefIq2RK9a+F+0dE/hn9RHRiXwvVbj0x3Rrv7bqZ5s9M+HOnrGAceABDktOSLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kf5q2YW7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DE+KgNbU; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="puP5FPYB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FwK0NVnV"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1FCE81D00258
-	for <git@vger.kernel.org>; Fri,  5 Dec 2025 03:20:20 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kf5q2YW7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DE+KgNbU"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 40F5B7A029B
+	for <git@vger.kernel.org>; Fri,  5 Dec 2025 03:20:17 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 05 Dec 2025 03:20:20 -0500
+  by phl-compute-04.internal (MEProxy); Fri, 05 Dec 2025 03:20:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1764922819;
-	 x=1765009219; bh=fOnSxwoGFLo58BrRL2nTqLSlIisPN0YHfVZvIZ18kNk=; b=
-	puP5FPYBcJKGRTIP72LoKU4fvpKid8Fszz0BK7NSax6wuXuYC2ph/u2SHiMKuAvZ
-	WLgws9XOcvRPvOEfbrmkjsnRUWkBn6mdC9FMjh6F+RZLYVygyO8reqawwUsMW8E2
-	N+QLXUPtFR5RVfzOeernwCQ4sEYnbgPP9vI7kPaliWemwGIw82bbR4c59bzI745z
-	AlrRSWz9lvBuw7M+4XTPn/iJNdSii2GkXhTnwNhnlgbEwXQO9r4XU3DhQ8pF5c81
-	1B3ue2pCx3Y3Ft9RxzsTAcxYk18A8O/zvpISSF9rY+YzSUl1rbDHhANGS+zP7aTA
-	nGydNPmylnCZF8G2Gz4dFA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1764922817;
+	 x=1765009217; bh=Ex8sVgmD9RsJQL9PKV777qWSquS2f5dBmEUvHEmsdi4=; b=
+	kf5q2YW72ADuhjeVT4GRIcN2hHFuEZN6nGBlsGff2C1+uLvbw6fMdAuL+FLq/XSX
+	SoQNCpDcj3VQOyAX1hKZJJ+cCkNJmSJTOIkTQKxyBnEXc3af2/SjYSFN6mVhJfVu
+	ufTsSpT79RIcVsrcyaxZLsh9smYyeyS8dJjYJDFHGH+mfQicJaf2QWZwhiQCLdXp
+	KcUGPy5w+yEvSIr2eDoZ0NttzR77CiRqFvwa2peGgaoZb1xE3QdhhAyh6xOpwbT0
+	shn8s8oVT3YvhcrigrJpGp9xkx/UEYXbd+fE3SbCH5q2PmZEUIZap4jPotNDcIjA
+	ZNdLJxvDD+tJn7pvpYXKgw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764922819; x=
-	1765009219; bh=fOnSxwoGFLo58BrRL2nTqLSlIisPN0YHfVZvIZ18kNk=; b=F
-	wK0NVnVFuyDIOI2kQ/Gc2J9st0S33cKr2wh/ewMGVPSeWFYRtKfjX7y1g42zCRCi
-	0e+bMAnJjQYzhXTjqkWF872gAGf2PSkVRCxiutDwLrlcsnppeKfu2HYLPLpFHi8/
-	oQ/NhGEEJ7H2wNON5YLoIf0M4FeOBdpUsrj1mb9aGD8+XwKcjfhowkiPr91S0DYF
-	dkxi4lSuUT6lvWs0ZiertiClKWzCmXaucTtMjbiSzD1QubyBlf2kL07367FZpe9S
-	pgE7vzfpGUhSuWas35UBYWNJd3seCxCabImyflDN1rhlbsp9k96g4qw8N005s05M
-	LJS+9Tj47lEwvYceRwA5w==
-X-ME-Sender: <xms:w5UyaZWtim5TNYdg5_D7PxuC7Qo7RL1imWxlk3gny1JSBj6CFQPnzA>
-    <xme:w5UyaQjb-4oS2TBEZcZS8rLGMPL5y2nrH4nun8AnVoqdO-VRFoa47Cs4UzQGSPXeY
-    Ntg2PSOJetK2Xg5T7dU-RJ0JvpQIRDnqowtKHK7omcm69PHytbIsA>
-X-ME-Received: <xmr:w5UyabDdh8vQD-T1zLwcvPLzB1e2JkeqG2LgYWhZ2kFJQQaOsr8oJ_Wxmd7GHU8X9EkW6zuUY7re3a7EUu8jJDHSv7-9Idk-Eh-cPa3cNPs>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764922817; x=
+	1765009217; bh=Ex8sVgmD9RsJQL9PKV777qWSquS2f5dBmEUvHEmsdi4=; b=D
+	E+KgNbUy7HO3SKdGqqJ9RfVCizNZ+i1sZ3X7n4DwVKNCLGm8w2DeTVYrKs5gqdKY
+	EKjs0t5awmNq+bHSaZI4MOwaqLDNkIxy8//ETusrly4D6gi75oIF+8tCWxY34+3y
+	jYPOJrqDXjbrTyB6ciu75OdpqYkNxmjyb72wVa1BnhyWQMaiCDIAlTAusBiDhQ2K
+	WQ4l0c+e0iSNz4hzkkMxL5A5HvpJmRzflFhsaxQIkscFSS4l7XXK6J6iKB0d1z6L
+	DdpGg5OZS15ape64ZiAyWvaN9CNYMewKLuJczH7FbXUk7DMU42FlzgVXnSuKRCvd
+	ItUXX9ZJT4B/kFP5ezjOA==
+X-ME-Sender: <xms:wZUyaYZoC0HGsDoktVlJzoXd_PSOz-_VvpCoCSw33oUzxnG_73kD4w>
+    <xme:wZUyaaX56yfYTiL2V8EMonnERhB9fROpxoXsyMFlR-rZgp5IXSfWu9n_aZlbx5_7W
+    qPf4CRr-ws6tXeoltdtZrY6dGk4CY8O9NeoTcvbByR8p6GWJkxsoA>
+X-ME-Received: <xmr:wZUyaYn0AbiNFoSNGjtMQCHANRzLD3jb0wBCKQK1cUrwnUPmWrntB0EMoOeUGxj0xRQt4wz9o854lfbh1nnjhmILxU_uXEeA1pTiKTctIaw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdejkeekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtre
-    dtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetke
-    duheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    gh
-X-ME-Proxy: <xmx:w5UyaRcFuyDIulKhKvIwiw9ONVguGRytfQGAYCW0Px9R_t4D-l--DA>
-    <xmx:w5UyaTfKjDoG1uxIqZ7-phIe3XXlMH9ZG57-PZnZQWXpBSyk01YhAQ>
-    <xmx:w5UyaVhw_kkTk8Tz8RaJUZYUB6BWd-VyuR2a1nf8n3RVQp9lsNDKHw>
-    <xmx:w5UyafTuYwqkAxhaoY8y7B_PWplxZGUrSjkhYs7Vfdr8FG5WgZ4svA>
-    <xmx:w5UyaUnI5hVHyKBLDZloRmMKQWT1UuWBd7zqGs70WHQeM8SaM4sFF0ss>
+    lhhouhhtmecufedttdenucgovfgvgihtqfhnlhihqddqteefjeefqddtgeculdehtddmne
+    cujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeelkeefvdfhieeffffhhedthfefhfffheefvdffudehheetffehgeffgfelleef
+    udenucffohhmrghinheptghomhhmihhtqdhgrhgrphhhrdgruhhtohenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhn
+    sggprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:wZUyaXy1Sb8kzUBfm4HX_LPZex5CwYxDEPVyWaz5ZntLd2frswxR7w>
+    <xmx:wZUyaTij5CKHmPc2aMsd14AiYiS3bK1y3hUvWAaDB_Pega1juoLGmw>
+    <xmx:wZUyacW7SA8uBjS1wiTSVbK7MayJ1JrE2Vuo5AV5eaRyxYbE72b7iw>
+    <xmx:wZUyaV36RdkhIeicpcYsp0K0zQb9Tsk14F-GUlu0-IjvRSq6GCgraA>
+    <xmx:wZUyae5bRkOlw82eJgX4ObzK120rfu-fSSoYWynnRMO-JtN13NglSu2b>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 5 Dec 2025 03:20:19 -0500 (EST)
+ <git@vger.kernel.org>; Fri, 5 Dec 2025 03:20:16 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5926aa87 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id e85ac40b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 5 Dec 2025 08:20:18 +0000 (UTC)
+	Fri, 5 Dec 2025 08:20:15 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 05 Dec 2025 09:20:00 +0100
-Subject: [PATCH 3/3] odb: properly close sources before freeing them
+Date: Fri, 05 Dec 2025 09:19:59 +0100
+Subject: [PATCH 2/3] builtin/gc: fix condition for whether to write commit
+ graphs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,85 +84,142 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251205-odb-related-fixes-v1-3-ef4250abb584@pks.im>
+Message-Id: <20251205-odb-related-fixes-v1-2-ef4250abb584@pks.im>
 References: <20251205-odb-related-fixes-v1-0-ef4250abb584@pks.im>
 In-Reply-To: <20251205-odb-related-fixes-v1-0-ef4250abb584@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.3
 
-In the next commit we are about to move the packfile store into the ODB
-source so that we have one store per source. This will lead to a memory
-leak in the following commit when reading data from a submodule via
-git-grep(1):
+When performing auto-maintenance we check whether commit graphs need to
+be generated by counting the number of commits that are reachable by any
+reference, but not covered by a commit graph. This search is performed
+by iterating through all references and then doing a depth-first search
+until we have found enough commits that are not present in the commit
+graph.
 
-  Direct leak of 192 byte(s) in 1 object(s) allocated from:
-    #0 0x55555562e726 in calloc (git+0xda726)
-    #1 0x555555964734 in xcalloc ../wrapper.c:154:8
-    #2 0x555555835136 in load_multi_pack_index_one ../midx.c:135:2
-    #3 0x555555834fd6 in load_multi_pack_index ../midx.c:382:6
-    #4 0x5555558365b6 in prepare_multi_pack_index_one ../midx.c:716:17
-    #5 0x55555586c605 in packfile_store_prepare ../packfile.c:1103:3
-    #6 0x55555586c90c in packfile_store_reprepare ../packfile.c:1118:2
-    #7 0x5555558546b3 in odb_reprepare ../odb.c:1106:2
-    #8 0x5555558539e4 in do_oid_object_info_extended ../odb.c:715:4
-    #9 0x5555558533d1 in odb_read_object_info_extended ../odb.c:862:8
-    #10 0x5555558540bd in odb_read_object ../odb.c:920:6
-    #11 0x55555580a330 in grep_source_load_oid ../grep.c:1934:12
-    #12 0x55555580a13a in grep_source_load ../grep.c:1986:10
-    #13 0x555555809103 in grep_source_is_binary ../grep.c:2014:7
-    #14 0x555555807574 in grep_source_1 ../grep.c:1625:8
-    #15 0x555555807322 in grep_source ../grep.c:1837:10
-    #16 0x5555556a5c58 in run ../builtin/grep.c:208:10
-    #17 0x55555562bb42 in void* ThreadStartFunc<false>(void*) lsan_interceptors.cpp.o
-    #18 0x7ffff7a9a979 in start_thread (/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/libc.so.6+0x9a979) (BuildId: cddea92d6cba8333be952b5a02fd47d61054c5ab)
-    #19 0x7ffff7b22d2b in __GI___clone3 (/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/libc.so.6+0x122d2b) (BuildId: cddea92d6cba8333be952b5a02fd47d61054c5ab)
+This logic has a memory leak though:
 
-The root caues of this leak is the way we set up and release the
-submodule:
+  Direct leak of 16 byte(s) in 1 object(s) allocated from:
+      #0 0x55555562e433 in malloc (git+0xda433)
+      #1 0x555555964322 in do_xmalloc ../wrapper.c:55:8
+      #2 0x5555559642e6 in xmalloc ../wrapper.c:76:9
+      #3 0x55555579bf29 in commit_list_append ../commit.c:1872:35
+      #4 0x55555569f160 in dfs_on_ref ../builtin/gc.c:1165:4
+      #5 0x5555558c33fd in do_for_each_ref_iterator ../refs/iterator.c:431:12
+      #6 0x5555558af520 in do_for_each_ref ../refs.c:1828:9
+      #7 0x5555558ac317 in refs_for_each_ref ../refs.c:1833:9
+      #8 0x55555569e207 in should_write_commit_graph ../builtin/gc.c:1188:11
+      #9 0x55555569c915 in maintenance_is_needed ../builtin/gc.c:3492:8
+      #10 0x55555569b76a in cmd_maintenance ../builtin/gc.c:3542:9
+      #11 0x55555575166a in run_builtin ../git.c:506:11
+      #12 0x5555557502f0 in handle_builtin ../git.c:779:9
+      #13 0x555555751127 in run_argv ../git.c:862:4
+      #14 0x55555575007b in cmd_main ../git.c:984:19
+      #15 0x5555557523aa in main ../common-main.c:9:11
+      #16 0x7ffff7a2a4d7 in __libc_start_call_main (/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/libc.so.6+0x2a4d7) (BuildId: cddea92d6cba8333be952b5a02fd47d61054c5ab)
+      #17 0x7ffff7a2a59a in __libc_start_main@GLIBC_2.2.5 (/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/libc.so.6+0x2a59a) (BuildId: cddea92d6cba8333be952b5a02fd47d61054c5ab)
+      #18 0x5555555f0934 in _start (git+0x9c934)
 
-  1. We use `repo_submodule_init()` to initialize a new repository. This
-     repository is stored in `repos_to_free`.
+The root cause of this memory leak is our use of `commit_list_append()`.
+This function expects as parameters the item to append and the _tail_ of
+the list to append. This tail will then be overwritten with the new tail
+of the list so that it can be used in subsequent calls. But we call it
+with `commit_list_append(parent->item, &stack)`, so we end up losing
+everything but the new item.
 
-  2. We now read data from the submodule repository.
+This issue only surfaces when counting merge commits. Next to being a
+memory leak, it also shows that we're in fact miscounting as we only
+respect children of the last parent. All previous parents are discarded,
+so their children will be disregarded unless they are hit via another
+reference.
 
-  3. We then call `repo_clear()` on the submodule repositories.
+While crafting a test case for the issue I was puzzled that I couldn't
+establish the proper border at which the auto-condition would be
+fulfilled. As it turns out, there's another bug: if an object is at the
+tip of any reference we don't mark it as seen. Consequently, if it is
+reachable via any other reference, we'd count that object twice.
 
-  4. `repo_clear()` calls `odb_free()`.
-
-  5. `odb_free()` calls `odb_free_sources()` followed by `odb_close()`.
-
-The issue here is the 5th step: we call `odb_free_sources()` _before_ we
-call `odb_close()`. But `odb_free_sources()` already frees all sources,
-so the logic that closes them in `odb_close()` now becomes a no-op. As a
-consequence, we never explicitly close sources at all.
-
-Fix the leak by closing the store before we free the sources.
+Fix both of these bugs so that we properly count objects without leaking
+any memory.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/gc.c           |  8 +++++---
+ t/t7900-maintenance.sh | 26 ++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+), 3 deletions(-)
 
-diff --git a/odb.c b/odb.c
-index dc8f292f3d..8e67afe185 100644
---- a/odb.c
-+++ b/odb.c
-@@ -1132,13 +1132,13 @@ void odb_free(struct object_database *o)
- 	oidmap_clear(&o->replace_map, 1);
- 	pthread_mutex_destroy(&o->replace_mutex);
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 92c6e7b954..17ff68cbd9 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1130,8 +1130,10 @@ static int dfs_on_ref(const struct reference *ref, void *cb_data)
+ 		return 0;
  
-+	odb_close(o);
- 	odb_free_sources(o);
+ 	commit = lookup_commit(the_repository, maybe_peeled);
+-	if (!commit)
++	if (!commit || commit->object.flags & SEEN)
+ 		return 0;
++	commit->object.flags |= SEEN;
++
+ 	if (repo_parse_commit(the_repository, commit) ||
+ 	    commit_graph_position(commit) != COMMIT_NOT_FROM_GRAPH)
+ 		return 0;
+@@ -1141,7 +1143,7 @@ static int dfs_on_ref(const struct reference *ref, void *cb_data)
+ 	if (data->num_not_in_graph >= data->limit)
+ 		return 1;
  
- 	for (size_t i = 0; i < o->cached_object_nr; i++)
- 		free((char *) o->cached_objects[i].value.buf);
- 	free(o->cached_objects);
+-	commit_list_append(commit, &stack);
++	commit_list_insert(commit, &stack);
  
--	odb_close(o);
- 	packfile_store_free(o->packfiles);
- 	string_list_clear(&o->submodule_source_paths, 0);
+ 	while (!result && stack) {
+ 		struct commit_list *parent;
+@@ -1162,7 +1164,7 @@ static int dfs_on_ref(const struct reference *ref, void *cb_data)
+ 				break;
+ 			}
  
+-			commit_list_append(parent->item, &stack);
++			commit_list_insert(parent->item, &stack);
+ 		}
+ 	}
+ 
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 6b36f52df7..6f3117304f 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -206,6 +206,32 @@ test_expect_success 'commit-graph auto condition' '
+ 	test_subcommand $COMMIT_GRAPH_WRITE <cg-two-satisfied.txt
+ '
+ 
++test_expect_success 'commit-graph auto condition with merges' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		git config set maintenance.auto false &&
++		git commit --allow-empty -m initial &&
++		git switch --create feature &&
++		git commit --allow-empty -m feature-1 &&
++		git commit --allow-empty -m feature-2 &&
++		git switch - &&
++		git commit --allow-empty -m main-1 &&
++		git commit --allow-empty -m main-2 &&
++		git merge feature &&
++		git branch -D feature &&
++
++		# We have 6 commit, none of which are covered by a commit
++		# graph. So this must be the boundary at which we start to
++		# perform maintenance.
++		test_must_fail git -c maintenance.commit-graph.auto=7 \
++			maintenance is-needed --auto --task=commit-graph &&
++		git -c maintenance.commit-graph.auto=6 \
++			maintenance is-needed --auto --task=commit-graph
++	)
++'
++
+ test_expect_success 'run --task=bogus' '
+ 	test_must_fail git maintenance run --task=bogus 2>err &&
+ 	test_grep "is not a valid task" err
 
 -- 
 2.52.0.239.gd5f0c6e74e.dirty
