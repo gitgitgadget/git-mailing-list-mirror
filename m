@@ -1,81 +1,80 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6705726F467
-	for <git@vger.kernel.org>; Fri,  5 Dec 2025 12:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783D62FC006
+	for <git@vger.kernel.org>; Fri,  5 Dec 2025 12:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764937024; cv=none; b=d0HrO03LnOjZLIjiSsbfBodssG/U9JbJFutf5qkF9/gEyqF9MlTnxIb41IjkEmF6qfahIS6fNyDE9cXsogxpgwneZZ+Q9PjontkM49lIQPTTLhu5Id8yMTAZTP0Co25pBa721MkzRM3pC10Ed9Oow2FPMlpTOD2yHSjEQeulzp4=
+	t=1764937031; cv=none; b=IIbzOD9/1nRgs/5cHaCOe1yFWZxb1gmCwwEQEbQKgtGMWF+AXSDVhXdCfhmZrJJKhiTqmZMLDbYCSv7GJGvxrgS4VWWt2BxEBKWt0dGfCvbJmqcbWisvinvQxTn36KNUKpX3z3vAUbbWzwm6B0JfkNhGTDTNM4C1bxZtZC5CsY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764937024; c=relaxed/simple;
-	bh=zS5oJn4hydlQ7Dn6RDghwxHjhjyjFyI1PbgP7zqHLU8=;
+	s=arc-20240116; t=1764937031; c=relaxed/simple;
+	bh=nV44V6db3F2KZ4jNB//4EEtmDdLQVxLjiHTHgGhiCLs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tIAQnrSMlNs0qKD7Q/3yQgNzGQfek36+SZkkUwlO9nlw82p+UlizBrPXRNWUJFFdCSqbs5TkdJwa8he54FA0DcuJRbY6foNTzjHGe954ecGHN0tiQH+sYZwSBD1HB8HTJ2K8kB0NjY8SQNMFqsSTfTBQ4D/zEpw5cTWhrEsBihU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ok54AWzr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TU1w9jrw; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=eRPAUpJ3jJLz7k6hGlwUzblhTb29RoeArOSqclDL+Vj5+z3klRWPmKL0K68zD04ZiSTqp0GuaOPahpO1wEOSsfZrqw+reB/srzE8gSwzpKH6PWPNdxw5Z2WgOpzlhdllFvgybD0hjMTDlfx2Mh5T2KeInBnm0jlcL+mwI72y1Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JKS0nPJa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WKJt+8GD; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ok54AWzr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TU1w9jrw"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id E3257EC05A8;
-	Fri,  5 Dec 2025 07:16:58 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JKS0nPJa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WKJt+8GD"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id D7341EC05B5;
+	Fri,  5 Dec 2025 07:17:05 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 05 Dec 2025 07:16:58 -0500
+  by phl-compute-06.internal (MEProxy); Fri, 05 Dec 2025 07:17:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1764937018; x=1765023418; bh=Ja8lr02lgT
-	UUB0EVYh3eu0POQnqjO9KzZ6nuPjfuIGw=; b=Ok54AWzrgqVdzx28+YuaY9FRaN
-	mcWJJfBjoUYiGDkuoUUbTV1rj+Qs7zbdbaav1dt+6wR+nIVFFvJAh1VvFrafDUd1
-	QDSxpl1hDI2VeJ+aRjgp59HbJCh6xtQPPL3CZnIqkv/iwi2USiJTbpGIKre1NRo4
-	MbUjkIFybA9Ap7Sa7zsQPY+VvVZojVOIBpLt7AW0ZZ/PwfR+Geb4ECleMi9tgWWl
-	Qb5k4R70NRfxgCrnyXc7SmYKRfNyTW4XjC/ddK11q77tcUdNfg2U4Jv81PVthMYv
-	Ysjm0UBkDZ3rBygbDSJHyqbwHxLZxZ17+8cMn92AkOElBFs0rYmKAXnSlo7w==
+	:subject:to:to; s=fm1; t=1764937025; x=1765023425; bh=pYl0hRWab6
+	0IcyjCf8c8h71OUqwY4YKQjEOzBSYeuXI=; b=JKS0nPJaVkVWsVbL52QRMWhzJj
+	HlJt9hkYu92k9+hhNl2SVmSwmhhi5dHDuOI+jN1KNIkyiqc+6wF6NTdNsbE1yGwn
+	pdTW3pxsLS/up2d6uV0SmZhip3FAJxmGD40NJQKqo5JTf4rQoVcGPvEH0Q/xkGM3
+	QmM2qbGVM7d9eW2lnvWJ3DSdPM8VjsXJQgYMQ0g9plE4We1HV0gc26bwqQGmOxrK
+	IkyK79hMJa3TRS2yY0IVGSXcR2GM6xhlRByzA3L6a/YNAgPYy2LxDomVy41f8+d5
+	lzRQfxLogUUQmAv1yFBn8iUbZOJPOana+9Z8ewa99/moBgo/0UH3b9V2qOzg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1764937018; x=1765023418; bh=Ja8lr02lgTUUB0EVYh3eu0POQnqjO9KzZ6n
-	uPjfuIGw=; b=TU1w9jrwopH7hfkyUc0ZmVhEBpq/osjeRZ/RDUyuEbBYqqUDL15
-	qCdZczKGb9US5mkBZtzo3hlYpMoEMYJymxwrQzFqhxhDIz7UTSKsybAMYAlrBtqG
-	8SzNDbGoRn6KE4bIUiEz/+AeUUAMKv3ZKNjXK8DbuQntP0hUw3BjmFQMG0iJ9xHv
-	16qUJEnMtKuY9e0xoUSRlo6eThbUgkpGFP9Vu/GZA6utknAPA2J4+olwD/KepdEE
-	rSzXXURnVWlqin5g5OsEVBri5nJgkb2Uq4TeP5fxiecADKX8otI69Rka21XP3I2F
-	5+ztbobeBCNLevInPkszomJimMzC32j0LDQ==
-X-ME-Sender: <xms:Os0yacyridfuync-SPzlXu-fzAxkMZZhaEklbXtoVtUq8wD37YKLkQ>
-    <xme:Os0yaYd-eYCNBmN-qa3H90HWuejFk_Fx5pJC2iXFpI1HKs-2HWfYsilJagDQ05KRv
-    vS3ULU3LCqSlB5i8_xIc67We7p7XzJ41X3EBebo072X6CPHnKN8AQ>
-X-ME-Received: <xmr:Os0yaZ7rVhuscyAODaL2ObCmCx9lQ4PEYJJAzKDF1DlhqghN3I1WHpLLdUdsMg4fUzregf1vhR1mTsq_VozSYTWtZ_FOySYb8fWqhuvZzJM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekfeehucetufdoteggodetrfdotf
+	1764937025; x=1765023425; bh=pYl0hRWab60IcyjCf8c8h71OUqwY4YKQjEO
+	zBSYeuXI=; b=WKJt+8GDUDae5g+CPuwaekUfZjhHEUAbJkbxDOlnann61VT2kGQ
+	X0/Y3x+c6SEPqCH5po7XYWYrGgEgWCX51U6rnem/Wc084Pvl7uS0VrVICYfBifVL
+	VIBttuz/qFjUZiHIP+aVq9D4/arDLkcvPqsECYpIDfQ2IIGp+ScREo5N91riWoK+
+	6tu4WlsbIMAtaE4/KpIrc5prKjor6QX9k6IX0fAeOyFNC1UoO/N80h9Bfkobn8W2
+	IS1HfV/hQSdhFt00s9vG7acHPu7FriI5ycTmUEFe+IpFCs9iEtZT2tEU7S2svczd
+	VUd7qkcmqlwkDWcGGkkWSSmSjzoImWD/Rrg==
+X-ME-Sender: <xms:Qc0yacSe9a0BaZCq-BSY_qqp2ohXZTgT7udtlNg6ObSNebIpEcHJ5w>
+    <xme:Qc0yaZdzY5zYVy-nBRmVe42GQGxLG1UAm_gGXzxeCZ2U2YJMLmYrfuU4_Y32m1oe-
+    oBEYDtc8hO00Bvt2lFVH-ojnqS5y0hvWuBq_91u_gudwL-SLYGc>
+X-ME-Received: <xmr:Qc0yaVdn3tNdRzHPySPQa8tRDuIsfqraAp8sthk5mXp-Nrx0yElFdQDLt4xbBEZr7ZJINo7XQtwOaxMZ8czHXJ_r8CIMZF8uPiR2wYmO9sc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekfeeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    epfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
-    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepve
-    ekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehl
+    epfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepje
+    dttdegffekudejjeegudehgfehtdfgtdeiudelueelgfeuteehledugeeuueevnecuvehl
     uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
     himhdpnhgspghrtghpthhtohepuddupdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pegvmhhilhihshhhrghffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrughrihgrnhdrrhgrthhi
-    uhestgholhhlrggsohhrrgdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhm
-    pdhrtghpthhtoheprhgurghmrgiiihhosehgohhoghhlvgdrtghomhdprhgtphhtthhope
-    hphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhr
-    nhhivgguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprggrrhhonhesshgthhhrrg
-    gsrdgtohhm
-X-ME-Proxy: <xmx:Os0yaVLM0lf8joSZwRp3ny7EXNjwlE_xt8Ybtanzly3mtogkN2nmKQ>
-    <xmx:Os0yaZzuODfAnNQgG-w5IKoy_uqfTTiw7z7W5m5wcPDRwTmsQpb5-g>
-    <xmx:Os0yaVKTUuDWortnZsCE0OGvgYCNKyUZRsAII_GF1ObtfVGNT-3dFA>
-    <xmx:Os0yaQWB525LPwjGnRB2cS0OzIsQ3yVgHl6MXHDZ8yRV77EnHKx2Pw>
-    <xmx:Os0yaYgnLGP4N-k3TDvzIz1Oq3_bHNObyt-4cyl4yReDUQj7g0DDGqqe>
+    pegvmhhilhihshhhrghffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtoheprggurh
+    hirghnrdhrrghtihhusegtohhllhgrsghorhgrrdgtohhmpdhrtghpthhtohepphgvfhhf
+    sehpvghffhdrnhgvthdprhgtphhtthhopehjrhhnihgvuggvrhesghhmrghilhdrtghomh
+    dprhgtphhtthhopegrrghrohhnsehstghhrhgrsgdrtghomhdprhgtphhtthhopegsvghn
+    rdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehruggrmhgriihiohesgh
+    hoohhglhgvrdgtohhmpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Qc0yab1tDLRd-ippfYAknLBlHRfCUWEUJoxkUNXCDMaanSJgd4Rl3Q>
+    <xmx:Qc0yaV9aA9vl6HYHUAQ8PaR4lbu09TnM6dYgJT6UEO7QkXDOdUHUEA>
+    <xmx:Qc0yaY7v_cQC7tF4-W31VVt0lSF8gROV7zjQSQj1JQR5KKGTrH577A>
+    <xmx:Qc0yaVv-cb0hqGI9v0_zW_tTY0uvFT4ASW_Wc5E79kreawCclGu5CA>
+    <xmx:Qc0yaQ8zYQIbcTElJqwhcnhU2dL3W8d58lqHvvku3BwzgGsRhOWxjZ4->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Dec 2025 07:16:56 -0500 (EST)
+ 5 Dec 2025 07:17:04 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b9ff6831 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 5 Dec 2025 12:16:55 +0000 (UTC)
-Date: Fri, 5 Dec 2025 13:16:46 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 220ab93a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 5 Dec 2025 12:17:03 +0000 (UTC)
+Date: Fri, 5 Dec 2025 13:17:00 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
 Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
@@ -86,12 +85,12 @@ Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 2/7] builtin/credential-store: move
- is_rfc3986_unreserved to url.[ch]
-Message-ID: <aTLNLnF_ZLpMnso-@pks.im>
+Subject: Re: [PATCH v5 3/7] submodule: always validate gitdirs inside
+ submodule_name_to_gitdir
+Message-ID: <aTLNPKlDnsNzyZkC@pks.im>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
  <20251119211030.2008441-1-adrian.ratiu@collabora.com>
- <20251119211030.2008441-3-adrian.ratiu@collabora.com>
+ <20251119211030.2008441-4-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -100,46 +99,83 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251119211030.2008441-3-adrian.ratiu@collabora.com>
+In-Reply-To: <20251119211030.2008441-4-adrian.ratiu@collabora.com>
 
-On Wed, Nov 19, 2025 at 11:10:25PM +0200, Adrian Ratiu wrote:
-> is_rfc3986_unreserved() was moved to credential-store.c and was made
-> static by f89854362c (credential-store: move related functions to
-> credential-store file, 2023-06-06) under a correct assumption, at the
-> time, that it was the only place using it.
-> 
-> However now we need it to apply URL-encoding to submodule names when
-> constructing gitdir paths, to avoid conflicts, so bring it back as a
-> public function exposed via url.h, instead of the old helper path
-> (strbuf), which has nothing to do with 3986 encoding/decoding anymore.
-> 
-> This function will be used by submodule.c in the next commit.
-
-Nit: this statement isn't true anymore :)
-
-> diff --git a/url.c b/url.c
-> index 282b12495a..0fb1859b28 100644
-> --- a/url.c
-> +++ b/url.c
-> @@ -3,6 +3,17 @@
->  #include "strbuf.h"
->  #include "url.h"
+On Wed, Nov 19, 2025 at 11:10:26PM +0200, Adrian Ratiu wrote:
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 2873b2780e..9914ca0786 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -1780,23 +1776,6 @@ static int clone_submodule(const struct module_clone_data *clone_data,
+>  		free(path);
+>  	}
 >  
-> +/*
-> + * The set of unreserved characters as per STD66 (RFC3986) is
-> + * '[A-Za-z0-9-._~]'. These characters are safe to appear in URI
-> + * components without percent-encoding.
-> + */
-> +int is_rfc3986_unreserved(char ch)
-> +{
-> +	return isalnum(ch) ||
-> +		ch == '-' || ch == '_' || ch == '.' || ch == '~';
-> +}
-> +
->  int is_urlschemechar(int first_flag, int ch)
->  {
->  	/*
+> -	/*
+> -	 * We already performed this check at the beginning of this function,
+> -	 * before cloning the objects. This tries to detect racy behavior e.g.
+> -	 * in parallel clones, where another process could easily have made the
+> -	 * gitdir nested _after_ it was created.
+> -	 *
+> -	 * To prevent further harm coming from this unintentionally-nested
+> -	 * gitdir, let's disable it by deleting the `HEAD` file.
+> -	 */
+> -	if (validate_submodule_git_dir(sm_gitdir, clone_data->name) < 0) {
+> -		char *head = xstrfmt("%s/HEAD", sm_gitdir);
+> -		unlink(head);
+> -		free(head);
+> -		die(_("refusing to create/use '%s' in another submodule's "
+> -		      "git dir"), sm_gitdir);
+> -	}
+> -
+>  	connect_work_tree_and_git_dir(clone_data_path, sm_gitdir, 0);
+>  
+>  	p = repo_submodule_path(the_repository, clone_data_path, "config");
 
-Nit: the function documentation should rather live in the header file.
+Hm. This one is a bit puzzling to me. This seems to explicitly be a
+check about a TOCTOU-style race, where a concurrent process might have
+created the parent repository after our initial validation of the path.
+We don't call `submodule_name_to_gitdir()` inbetween those two calls
+though, so why is this not a concern anymore with the unified API?
+
+> diff --git a/submodule.c b/submodule.c
+> index 35c55155f7..8ef028f26b 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -2153,30 +2153,11 @@ int submodule_move_head(const char *path, const char *super_prefix,
+>  
+>  	if (!(flags & SUBMODULE_MOVE_HEAD_DRY_RUN)) {
+>  		if (old_head) {
+> -			if (!submodule_uses_gitfile(path))
+> -				absorb_git_dir_into_superproject(path,
+> -								 super_prefix);
+> -			else {
+> -				char *dotgit = xstrfmt("%s/.git", path);
+> -				char *git_dir = xstrdup(read_gitfile(dotgit));
+> -
+> -				free(dotgit);
+> -				if (validate_submodule_git_dir(git_dir,
+> -							       sub->name) < 0)
+> -					die(_("refusing to create/use '%s' in "
+> -					      "another submodule's git dir"),
+> -					    git_dir);
+> -				free(git_dir);
+> -			}
+> +			absorb_git_dir_into_superproject(path, super_prefix);
+>  		} else {
+>  			struct strbuf gitdir = STRBUF_INIT;
+>  			submodule_name_to_gitdir(&gitdir, the_repository,
+>  						 sub->name);
+> -			if (validate_submodule_git_dir(gitdir.buf,
+> -						       sub->name) < 0)
+> -				die(_("refusing to create/use '%s' in another "
+> -				      "submodule's git dir"),
+> -				    gitdir.buf);
+>  			connect_work_tree_and_git_dir(path, gitdir.buf, 0);
+>  			strbuf_release(&gitdir);
+
+The second case here makes sense to me, as we do call
+`submodule_name_to_gitdir()`. But in the first branch of the condition
+we retrieve the path directly, so we're not guarded by the validation
+anymore, are we?
 
 Patrick
