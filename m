@@ -1,89 +1,118 @@
-Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776F82D8365
-	for <git@vger.kernel.org>; Fri,  5 Dec 2025 14:03:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A18B302166
+	for <git@vger.kernel.org>; Fri,  5 Dec 2025 15:02:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764943427; cv=none; b=AE0uJu2x/gUYWN63bgS748Q6jT3IxKfglQNod+OzdJflQc/jZN/6XQlUOm4TYC23lIT0ITL8/KiOVZ5RrAqoGaXILs6aaC/L8IzwM7ggMIrIod4jU9w4wMQZhyo4YR/ADxnbw3hD5gHph3dGSYVZLT0fBIh945I+DMOLzBH/Rzo=
+	t=1764946958; cv=none; b=BglOdUrE/IFe9B4+5Ht+fjHFmjZI3M3T4y/HOsopALIbe9g+sobV538j9DWUIt0qNfKegRx/x8N1yObHLgO1rGRsm4n4c5d0GtwDn219tWOesXnjhG9AjYg0mzSByM4OdkDJQx3K1UHaRe6z2/YhTdeuOS/R9h+ZDlNGqMl7l3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764943427; c=relaxed/simple;
-	bh=b7Np6fhz8VpdJkgGpyaZ3JVH3EQhw+UG1brx4KqKltM=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=VmtknTy1zQKWAk+ULEOJrsuBFvmRwNtQ75wJgt8avTZ884tBh0u8I5JBmYptpO3BF+Q/ZkoTw07+Awzt5NCFAMcUV+67jNJnzUFmVQd8wJQms5wA5OL1UVGlylimNVq9UN9wrD/N7nzecIn0Aiu+6GpGoIb2DzG6wW3N9lgJ0Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gGaUp15l; arc=none smtp.client-ip=209.85.221.176
+	s=arc-20240116; t=1764946958; c=relaxed/simple;
+	bh=ZbvltTBk2RxO6u673XwmN6IKn95QiVwaX+EYx22ScSM=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=bu5fbISRCLxclvZd934VKWoRe7FZdg28ZD94lAMffpMw66ERKJYNcHnYRMp+i4Zl6xi3D2VUtyqFNhdc7JTXBG6X4AMb+MZ1++XMW85hTIgxiVS1gJxFUO+TScuh8w7grFVy0WL1uSVE4DGvBceHWY89Jcu2p1fgec+juw+9qPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BQ17LcSg; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gGaUp15l"
-Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-559966a86caso589338e0c.2
-        for <git@vger.kernel.org>; Fri, 05 Dec 2025 06:03:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BQ17LcSg"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8b22b1d3e7fso205222285a.3
+        for <git@vger.kernel.org>; Fri, 05 Dec 2025 07:02:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764943424; x=1765548224; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1764946949; x=1765551749; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=b7Np6fhz8VpdJkgGpyaZ3JVH3EQhw+UG1brx4KqKltM=;
-        b=gGaUp15luA9W+y8+hR+NurYT1YpIV27o2Kw6mOAojCIb00VzT95NezcO+87uO/xgYc
-         pfnqL+/G3ldvgdXi72uF2jRBgaqKMk4qC1i6fm+l6paoX7/4Q0liNYEFFuFW3kSz56+D
-         DtJLPStw2pyP2UgWInJf5L0jQi0XDhK/GBE84CTT3xu3bQCIZsIhmrx9ePzA1vjet7L4
-         ufhpBjMppoL2kVGlUTBnsZAzxmk+qiM/MpuTeZHxQlsXHaLeQ8Zm9TU8przFUcTlLHio
-         kMwKqBx6TRPFJFGATqirr6TwmGPMyET0ulEbXMjXEPbjX8aXgQLz9aR65ks7DPj/Jl+F
-         eBQw==
+        bh=TpPCJ8F0XSC6L7Xc9j8KJxmdrZQSXhsGQKMK39ulf3M=;
+        b=BQ17LcSgNk/C/YF0ZlNyX1pvLS/B/Cq1OZ/4D+G6yKSxrjOxuz/SyQdG7Z8/ocYaOO
+         Z/FthlQ05Fz7iXyM+09/Ai9RVdlWdmB2aPNEMAfx17LepfEsacYb+VQ7tvKJ57bG4KzK
+         7mL2p/vkqq21lkFHmohRUwtAKJ2Q45uaSVcnepoWccbOB3PxtOAcfC3rcR5hV2DkmZ4O
+         /fFZHuZUOk/Tai7Zf69VqzGdKRv3u/UkqHB3Nu04D0BbWYdVLdwBfix00rGlAptA1W4T
+         FMx1+JkIIQkRs4jLcZD/7U6jt9KisJbUhcvzeael+Mj0SP6b6Ahfb4+jPZJ+pbx9GF3D
+         ylNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764943424; x=1765548224;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=b7Np6fhz8VpdJkgGpyaZ3JVH3EQhw+UG1brx4KqKltM=;
-        b=u3EoxHtojRJDnaEvbX35Gwe7/71NPmg+sCDSwW1wSpcmweI1vpS0/lfpmWR3UwbE80
-         ZAVThaiLtA0a6OEYw8pV9VQoQd86pEmSPPI6UcG2iFQ+xROgBMyDbJaLyplnTvQSppEl
-         VFYQxhSA7HwQOFLlFQN7pCgALCPvwz6yhnURs6rZokN3UVSUyv2YfvXIr7haBcyxR/Q5
-         5KVsnuX5gtKB9T80ZMKzrCotGVCiZgX6I1glbTJNOZypbNNlx7V8ltzP8HnUu+XYuMSW
-         HTx7bzFdlO+0brj0CGJi37ANpcdwYk7JyygyhP1vESGhtVegTCvXoudITqpEQPYRLq1d
-         k/LQ==
-X-Gm-Message-State: AOJu0YwCRjJur6ZXXUggFIi+JXmXl9JbpHzMTSSK/H74vIuV0SLivn2O
-	0lKIpBZ3OQvgDpRq62HGbl1TiXn/XuWaDfsRy4F4Q9MUsXp3wmcsUu/g
-X-Gm-Gg: ASbGnctWVb0H8PzOiCJSHdk7ZaijVheS4fYPCXrfN36L6XDDsag15O5E1wQ7IIPGhBo
-	qnd8Ni1/9VUv/yClKOlvuuhAN55JLrBBBmc1JY6UcDluH3HvsUCChD3L5+glzH4JrDzOMxK2BDx
-	HVGs5fImhjkLPqaTrkzii9gsOHcWXttpF4kGF4LsBu7mlboVNXL4Fg/0dauwUKLXPGkxegrwo8x
-	e4RJMln2pVZItBzzJDJiz2okxyJtuNHZQlA3Dfs5XCkbSeC6fhRe/DSi6KWYPG29tHFhrqZAOhz
-	g8tjCyZLaREC3HwGLVrhYXEEFao98fGGJMx03nWMzp50TX57TFHQeRuTl3P8Zqkj4mHXGHMds2s
-	NLc3B/hjqmh3yc/l0pw6r8q52aukYG25XwtANtXfEkwSKaFGADYa1cRU5PR23QrccFiCs3ADd4r
-	fn6Bt8tDRF35bD4PHbEFmX1CPUp20cVVMCynF3kcWiWYSyX3dv+vWoTpY5ig==
-X-Google-Smtp-Source: AGHT+IEBZRjaRl37gbsAPv6QrhL1JiNYzfVa+g0dicu31PYBz2VSo+eQ1rQBpM4nem3yVeynp7ebxA==
-X-Received: by 2002:a05:6122:1d0b:b0:55b:305b:4e2d with SMTP id 71dfb90a1353d-55e6a17a757mr1917815e0c.20.1764943423689;
-        Fri, 05 Dec 2025 06:03:43 -0800 (PST)
-Received: from smtpclient.apple ([2804:14c:32:8e1d:fd21:485e:424:7ca9])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-55e6c58d7c5sm2220081e0c.7.2025.12.05.06.03.41
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Dec 2025 06:03:43 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
+        d=1e100.net; s=20230601; t=1764946949; x=1765551749;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=TpPCJ8F0XSC6L7Xc9j8KJxmdrZQSXhsGQKMK39ulf3M=;
+        b=RewcwPEwVjzx+DrDdzZvgVONPR3/rsdh+Nk5Z1vqogV6l3zx6ytsewePsRqOt7Lk8E
+         PLnMjLmL/TNbYjM0ybjgdAzVpi8o5tYUYJS01F37GMnXqAax1UDNOa5fQ6pW4gDwvTm/
+         zXwuA7mPRSGnP9zBZjAw3Ir06GM5unZzAMkRruobVpDGCxMoNEawDGEt0i0sUj+++Cy4
+         fHdKaQ1mqUbIvnIo23AAqIotfBEoH0oeaPze7GBl+og+pYCZlKaHQSlm4BbYIrYUyMCs
+         FLUlQdo8Ydfv5AGHoIG8dIPV9mPaGdvJ/gY0vmU25lPa/oWIvqOsCj+mkoz1NKHFeVYr
+         +Arw==
+X-Gm-Message-State: AOJu0Yxn18CVI1Y6r1eugR48YT5Aj7bkn+1exQJF8/fdb1TwW+Bw3Cd2
+	DOnfsAE6lo6MiuQHvRhloJUyAL9Waf7HKkz6sP5eNJ3g/OqR1mjjv2swwxghvA==
+X-Gm-Gg: ASbGncvQLuUoeH9g6IpL9+y39IWjP2vquWMlundUCSiTc9nOAMlvoFLWAD+m+LrwR4i
+	QvaX+3ptVPB5yjtz1VEfDqxuo7ZufJrRisfv9CkEU6BenNcfDkrcOPF04uUNzw46b7tCwzPW9MO
+	US1FUMHVQuNv4yJcrnZ3/e6lMugsCtkgZ1iNhE4ZJVaBO3gMusQJiqxOOC/zbuUBPFEE0Ipj7H7
+	FBu/QABYA+eSmSHztf6YIG6mt4iJqWCTRZlmxyHgtPhRDel/LIp6HXjhRZpiccyNptqyrt4C7zu
+	mQEg83zlAH9SDY6jd8YxHMP9+JUBqGqIEyVu8fSSg5ZbTyH7W6mKW1gfldP838ecN5PTNrW39uP
+	9saCASitvGYVeB4k+bbvoW7JkmIUKlLu3Tk6S9U0teuowi0nLOlBCqCpmGo/46LmrwPZSgw4DbP
+	+J96sRHFWOGmHx
+X-Google-Smtp-Source: AGHT+IF+kIpdasGt/+lFrOF7mk+reA7IxLHaA9eyu32/4YWVSIDChVn5RonVSW+CTzco0tDGzEFrcQ==
+X-Received: by 2002:a05:620a:4088:b0:892:eeb9:4def with SMTP id af79cd13be357-8b5e6c851bdmr1426879985a.49.1764946949202;
+        Fri, 05 Dec 2025 07:02:29 -0800 (PST)
+Received: from [127.0.0.1] ([48.214.53.115])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b627ab3d15sm392592585a.55.2025.12.05.07.02.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Dec 2025 07:02:28 -0800 (PST)
+Message-Id: <b97afa9a5c28aa89fd94f210a0dec5de891eb221.1764946945.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2009.v2.git.1764946945.gitgitgadget@gmail.com>
+References: <pull.2009.git.1764440906.gitgitgadget@gmail.com>
+	<pull.2009.v2.git.1764946945.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 05 Dec 2025 15:02:17 +0000
+Subject: [PATCH v2 02/10] apply: symbolic links lack a "trustable executable
+ bit"
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.200.81.1.6\))
-Subject: Re: Introduction and early interest - Ayush Jain
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <CAMQGJGT+BYams0dxXYd33A91hiONCSAoUiomv-2_XqOZidYSwA@mail.gmail.com>
-Date: Fri, 5 Dec 2025 11:03:29 -0300
-Cc: git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <D32EAEFC-6821-4883-9BAB-2DDB80033E91@gmail.com>
-References: <CAMQGJGT+BYams0dxXYd33A91hiONCSAoUiomv-2_XqOZidYSwA@mail.gmail.com>
-To: Ayush <by.ayushjain@gmail.com>
-X-Mailer: Apple Mail (2.3864.200.81.1.6)
+MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> Hello Git Community,
+When 0482c32c334b (apply: ignore working tree filemode when
+!core.filemode, 2023-12-26) fixed `git apply` to stop warning about
+executable files, it inadvertently changed the code flow also for
+symbolic links and directories.
 
-Hi Ayush!
+Let's narrow the scope of the special `!trust_executable_git` code path
+to apply only to regular files.
 
-> I am currently setting up the build environment and tests, and will =
-look to submit a small cleanup patch or documentation fix soon to get =
-familiar with the workflow.
+This is needed to let t4115.5(symlink escape when creating new files)
+pass on Windows when symbolic link support is enabled in the MSYS2
+runtime.
 
-If you want a suggestion, take a look at the microprojects page.=
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ apply.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/apply.c b/apply.c
+index a2ceb3fb40..de5750354a 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3779,7 +3779,7 @@ static int check_preimage(struct apply_state *state,
+ 		if (*ce && !(*ce)->ce_mode)
+ 			BUG("ce_mode == 0 for path '%s'", old_name);
+ 
+-		if (trust_executable_bit)
++		if (trust_executable_bit || !S_ISREG(st->st_mode))
+ 			st_mode = ce_mode_from_stat(*ce, st->st_mode);
+ 		else if (*ce)
+ 			st_mode = (*ce)->ce_mode;
+-- 
+gitgitgadget
+
