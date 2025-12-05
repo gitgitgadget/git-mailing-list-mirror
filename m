@@ -1,71 +1,71 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28E83164C5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BDD33BBAB
 	for <git@vger.kernel.org>; Fri,  5 Dec 2025 15:02:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764946968; cv=none; b=bWb/LjcVV6sQGMAETEPyX6/mbKc9hIqLyxp/R1myhaJg/nwOb8o/q3h8dUAe5IeryOgUww1nJYDfBT0Fx78kHsX2Lo+mZA0JMsfN+dUsdoMDBfPNWH3026gDiP/Q3zuXpL2wTX3OJHTC8miW31OrokrWkKw4M5LS2t7d6JUSkzI=
+	t=1764946969; cv=none; b=YnLDEbz/6061pBIBIC5i14GHK6eXWQBvRYZIV9nIfgW69FdtcQuTIC3Pv5okQtjP81+cDhOaoL2q7KSiCSodh+2fxH8tGzbov/O6YMjsVCwWQObqjfG++gJAMVj+3bwpme409FJZ4JoiaLwSMnMYlx6KJPGuXUw3oV6dSHCuAKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764946968; c=relaxed/simple;
-	bh=miKtS8gVeLBQxEb1qhafBvJeGFIR8q5A5wiQrIWCScE=;
+	s=arc-20240116; t=1764946969; c=relaxed/simple;
+	bh=2VfQit1KacBHCYA5GK+sLpvalM7bM/E/vJtRGbY8Rkw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Q5v/KbiLcxSXaLbWMu6Dh+sVo8n9y//wS0ErrmOX4z3mFVMUx/uIktKuceKnxZhXrvMqWVB/WROudYjAElSkPHvw7rUinPnv6YTb6Kt2sEhSW2y/s+W33L98g81AOabQzeQRPz4bBNQl76A7Pq1QeRhnMNfA+fCiLw74ya7eVW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QPIjHmdU; arc=none smtp.client-ip=209.85.222.180
+	 MIME-Version:To:Cc; b=DoLtxIgislBflBj4TmZ/NbjrY3Czs0DRZnhm0QhyE9P4OGFXcPnk8DxrKU0Rxhnsyh8FkDnP4eFJrEd1VRFBrGkuYi99vKKIJS7c897aLMesXkNg9SyVjiJFvZWhSl/6YHh2aPQDk5upb84++9Bag767chVH35YLjYpvi/y+0x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IewtnnDf; arc=none smtp.client-ip=209.85.160.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QPIjHmdU"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8b144ec3aa8so192690585a.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IewtnnDf"
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4edf1be4434so14530011cf.1
         for <git@vger.kernel.org>; Fri, 05 Dec 2025 07:02:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764946962; x=1765551762; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764946963; x=1765551763; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rDI6RHdU35FaQH8EQ/fZmzFLT4U35ZFph/RzRv+jlX4=;
-        b=QPIjHmdUYc8lu9SkY3ICQo57AAlVArl57kPj8xmu4xx1mV6zjKnhRUD7mktbLG8xR5
-         +OFFvd7IJpZhIZs4IgCnmJuBbsQFuP3oH3MwiCymiObaxZ43DcvznE91X/03pL0lO3mD
-         xci2AmTeyADvpZ5NlAc7EvSAbLPZQ3dvjLCugTkZ64hwfJdK7zWO7EO+sNLObQ3sdHme
-         OQnOMSIECZQdwh2hKGWChuT4i4Vz9ccuNze4Kgom0E1tE+ClQA0fm4KxvO/jk6TcD/kH
-         6beP2cIIDW6lqT1Lbbsa0LZ9ADfkssIek5XXd0Oz8yYLqho8ATt5ZmAFhmPPyu5ejbiw
-         jfrw==
+        bh=dp3icUk0BgVzAoV0eS8ExmZLwZUm1qYrjh29LN/N6Kw=;
+        b=IewtnnDfp9ldBSILpz/F5mWEGgO7nijrKqQyrns2zfWOHJmS32JAWet/6KNYzkS67E
+         X/b/j4va6KlhnReCON4Pc5pKbzkH4uUhH77zpZlkeqAv1ivSuyEYTgsPhnYIOouAbKVF
+         auJtu4AWb/w17DFGUpHmq2z453Kkm5axB+ZZRCfG2b23es/iRvtO+/12S/psCGuqb0BT
+         FwmfrtS0PSDXobdVOJafBQAgJ04bOiSU3hUs0pU106AYoSsRZ5Xm69eHSZ5auIrpABmz
+         nNT98Hyrr8gnD5WWNgSrl+wXBXlV0Advh8da/7ojy9BUTJOcbEV57Iq3ERoCMSWoNo6W
+         02fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764946962; x=1765551762;
+        d=1e100.net; s=20230601; t=1764946963; x=1765551763;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=rDI6RHdU35FaQH8EQ/fZmzFLT4U35ZFph/RzRv+jlX4=;
-        b=IjIFnNTxem8D14QDuxBk6hRndW2VFAhtr3qimGt4K6QxKz3D7V6fwFSUAteJifR0nH
-         cAJjwvbqJ6yYSepQjxV0TNx4g1cjslq1/mSSrdnHk40yKfW+MQbr1SDeS/sowBmNJV22
-         gHCb/s+OfVsJLAioe0ybeK3IS/OtKfS0PZFvON01fD8fOjFq2ZujQBUwdyj864k25aPy
-         yk209EBCG3CrcQrMHPeo6dNlO/lA1PeCzTvTyYD2BVWa6MAtRThRe7XHVELnKkyg7+f0
-         fPqsCR1WHEpFNt+x8FCh2g3ncqIYTkTp7YR3N6G7xz8wooTBQeJmBQHCBByJnWRks7Qk
-         uBBg==
-X-Gm-Message-State: AOJu0YxjNjjwxTC+ZafDEIy/dpdjn6rNd+injqaVnsdPfR8Ovr2G8U7q
-	++mW8kgGysTxptqnRRD3VKoQRojSYNU2D3Q5VvItg3NeaT06+2MUUMcBHYBCcQ==
-X-Gm-Gg: ASbGncuwvpN0wEkzHgDDzeTulRtMFVm65ILxfICgd8XhOYwO12zSggb3slbUMlTXMLN
-	4J6KwU1mVr6Bk1kMZFc6541FJ9Yy6fSkMsEvvol3Lrl+uHrC4DVr9wmoUlIBbo4039FcOmv6zvo
-	Z8iy+8rU1Ruo1XN6glGcBZR9TGd8XiHcQtkM4ubdG24sRFcJ8Za+OSvWL+PCQ12o8+4dnqBsI9c
-	94RiaLXTxL5FkChDW1mPcmsrY4gzhl0K5EYF0ZD2DgYBx5zFy839/eHPicuRtADXOzKswDzNLKL
-	TRifAP92fj9AFlu76dYfl7FMMRFgksVyDJS1spKEkzcBJhKruGVlYJ/AExnDwCaswrZlG5b4kUw
-	fY4+hrAuhKxs3X2UTyAFujN+Tc1GcTfBxYlI4N4yxXm//1d4Ib6miXyZuo/eDtWu6JGHyOa6Y3q
-	ID0Hqa+Ib3KRDU
-X-Google-Smtp-Source: AGHT+IHgU8evVNu+FAnABjKKb1PG20TpyyVyw6+LzjxkPocrncSDT4IqwgekA4fAD6cOeHCpLjhX0Q==
-X-Received: by 2002:a05:620a:460d:b0:8b2:e9d2:9c69 with SMTP id af79cd13be357-8b5e535ec5dmr1508542985a.22.1764946960917;
-        Fri, 05 Dec 2025 07:02:40 -0800 (PST)
+        bh=dp3icUk0BgVzAoV0eS8ExmZLwZUm1qYrjh29LN/N6Kw=;
+        b=jT+wtPf+DWi/cYYGvdMrFUkWKCnpuYRIwSEb007yI9BVJqwH4VlQJxDxBjERE01Se1
+         WQ6vOGuvSiayMKF8+k3FarKi2Ucwfep+YxXe8yV1p8Logaa1ERzB3DCwgFnBrk6fWZor
+         O71q8gk+5VBWZNs4qCQ3pS2uhFARFf7nClqoVhd7S/abESFXZc7CSBrJ3D2DkmioRo7v
+         t+CITW4ZvCTKk5mOChYo0hTqikuH3OS3y1rIvtmzJu0M5A1XKUy6nEGoB3P2JIGOv6cB
+         7i9A/Krnph/WnQ92SkzPUCztprf3cEQ37Y49BQAAn474/ew44Fzz/iD/TL6TinEW+ADs
+         A0xw==
+X-Gm-Message-State: AOJu0Yy9p8Z8SdLoG/BGDPitMYt7kM3Deu5oZWWL1JgiXBEwD0mEqAGj
+	7e4QI5A+TI1V+BEF+gQ+7i94YLS3sRyJsn730YBaJjJKD72Nq+ayaY+SgPe5AQ==
+X-Gm-Gg: ASbGncvXQCmJnK0hLhgaX9g5VW9hGxUqmosxC+uf+tUH3X9jOzUlVUZUFdjBsHsS0Li
+	UAYVw6/T/twuDEn0NfottZI0YmSNuOoTBHSh2xW8KsK5dGWbcNrp/w1icvVLOKO/e3kBK1w4RNZ
+	JgkIA1EIoWxS75zpJyzbX/uONH0zFrrqx9vESt1PhqKHhxJ0g/Mv1EJ6z1Y2p7KNoYI8AxkXi02
+	6jRs6qKDCf+L8EzjhPGX3QfP26GIN2wxcsV9TQS+hdO8gJujZnA37PJBaMJ75uXRIG1zvOsoGUQ
+	s7K4yU6M6kG2dGuP5zozXJw7LiDx8Tq0J9+twXvqV2zgSVfrmu4NJpxFyie0FWo0g47KTFhk1VI
+	h5bXn5mFqlodsoaRxxsqBDt2XTw+mZpNV+PSwPmieUDOx+4S1PJrGNEzK5aH1g0Q1/qbTb+tXD3
+	xWaUaxmX5P8yAg
+X-Google-Smtp-Source: AGHT+IHD1E69+Kd6saxsNuFhGspzQlFElKvHECaXLLdhjR3mI8WoiLy4ZEFZaNJoFBL03l3PTBSv+w==
+X-Received: by 2002:ac8:5889:0:b0:4ee:1ec9:f947 with SMTP id d75a77b69052e-4f0239d8771mr105165941cf.3.1764946962386;
+        Fri, 05 Dec 2025 07:02:42 -0800 (PST)
 Received: from [127.0.0.1] ([48.214.53.115])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b627a9577fsm403618185a.45.2025.12.05.07.02.40
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4f027d56fd6sm26854631cf.30.2025.12.05.07.02.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Dec 2025 07:02:40 -0800 (PST)
-Message-Id: <807bb679cd8665007d207b8324d1d43e8a5d0fc9.1764946945.git.gitgitgadget@gmail.com>
+        Fri, 05 Dec 2025 07:02:41 -0800 (PST)
+Message-Id: <945306b5d4ed35d317805b35e1c2dd719cc7829f.1764946945.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2009.v2.git.1764946945.gitgitgadget@gmail.com>
 References: <pull.2009.git.1764440906.gitgitgadget@gmail.com>
 	<pull.2009.v2.git.1764946945.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 05 Dec 2025 15:02:24 +0000
-Subject: [PATCH v2 09/10] t6423: introduce Windows-specific handling for
- symlinking to /dev/null
+Date: Fri, 05 Dec 2025 15:02:25 +0000
+Subject: [PATCH v2 10/10] t7800: work around the MSYS path conversion on
+ Windows
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,51 +83,71 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The device `/dev/null` does not exist on Windows, it's called `NUL`
-there. Calling `ln -s /dev/null my-symlink` in a symlink-enabled MSYS2
-Bash will therefore literally link to a file or directory called `null`
-that is supposed to be in the current drive's top-level `dev` directory.
-Which typically does not exist.
+Git's test suite's relies on Unix shell scripting, which is
+understandable, of course, given Git's firm roots (and indeed, ongoing
+focus) on Linux.
 
-The test, however, really wants the created symbolic link to point to
-the NUL device. Let's instead use the `mklink` utility on Windows to
-perform that job, and keep using `ln -s /dev/null <target>` on
-non-Windows platforms.
+This fact, combined with Unix shell scripting's natural
+habitat -- which is, naturally... *drumroll*... Unix --
+often has unintended side effects, where developers expect the test
+suite to run in a Unix environment, which is an incorrect assumption.
 
-While at it, add the missing `SYMLINKS` prereq because this test _still_
-would not pass on Windows before support for symbolic links is
-upstreamed from Git for Windows.
+One instance of this problem can be observed in the 'difftool --dir-diff
+handles modified symlinks' test case in `t7800-difftool.sh`, which
+assumes that all absolute paths start with a forward slash. That
+assumption is incorrect in general, e.g. on Windows, where absolute
+paths have many shapes and forms, none of which starts with a forward
+slash.
+
+The only saving grace is that this test case is currently not run on
+Windows because of the `SYMLINK` prerequisite. However, I am currently
+working towards upstreaming symbolic link support from Git for Windows
+to upstream Git, which will put a crack into that saving grace.
+
+Let's change that test case so that it does not rely on absolute paths
+(which are passed to the "external command" `ls` as parameters and are
+therefore part of its output, and which the test case wants to filter
+out before verifying that the output is as expected) starting with a
+forward slash. Let's instead rely on the much more reliable fact that
+`ls` will output the path in a line that ends in a colon, and simply
+filter out those lines by matching said colon instead.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t6423-merge-rename-directories.sh | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ t/t7800-difftool.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
-index 533ac85dc8..53535a8ebf 100755
---- a/t/t6423-merge-rename-directories.sh
-+++ b/t/t6423-merge-rename-directories.sh
-@@ -5158,13 +5158,18 @@ test_setup_12m () {
- 		git switch B &&
- 		git rm dir/subdir/file &&
- 		mkdir dir &&
--		ln -s /dev/null dir/subdir &&
-+		if test_have_prereq MINGW
-+		then
-+			cmd //c 'mklink dir\subdir NUL'
-+		else
-+			ln -s /dev/null dir/subdir
-+		fi &&
- 		git add . &&
- 		git commit -m "B"
- 	)
- }
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 9b74db5563..bf0f67378d 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -752,11 +752,11 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
+ 		c
+ 	EOF
+ 	git difftool --symlinks --dir-diff --extcmd ls >output &&
+-	grep -v ^/ output >actual &&
++	grep -v ":\$" output >actual &&
+ 	test_cmp expect actual &&
  
--test_expect_success '12m: Change parent of renamed-dir to symlink on other side' '
-+test_expect_success SYMLINKS '12m: Change parent of renamed-dir to symlink on other side' '
- 	test_setup_12m &&
- 	(
- 		cd 12m &&
+ 	git difftool --no-symlinks --dir-diff --extcmd ls >output &&
+-	grep -v ^/ output >actual &&
++	grep -v ":\$" output >actual &&
+ 	test_cmp expect actual &&
+ 
+ 	# The left side contains symlink "c" that points to "b"
+@@ -786,11 +786,11 @@ test_expect_success SYMLINKS 'difftool --dir-diff handles modified symlinks' '
+ 
+ 	EOF
+ 	git difftool --symlinks --dir-diff --extcmd ls >output &&
+-	grep -v ^/ output >actual &&
++	grep -v ":\$" output >actual &&
+ 	test_cmp expect actual &&
+ 
+ 	git difftool --no-symlinks --dir-diff --extcmd ls >output &&
+-	grep -v ^/ output >actual &&
++	grep -v ":\$" output >actual &&
+ 	test_cmp expect actual
+ '
+ 
 -- 
 gitgitgadget
-
