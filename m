@@ -1,71 +1,71 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A41723D7DD
-	for <git@vger.kernel.org>; Fri,  5 Dec 2025 15:02:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A942F325720
+	for <git@vger.kernel.org>; Fri,  5 Dec 2025 15:02:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764946959; cv=none; b=QnS7uRxYGE6IXFs/nStpEP7rUYDohurUoZY4OAA+7nhqHFlTqd3II8n5PTIgyddKcu0CLW0nruRkNz7qltG2YJeixaFv2ZKsheTv/eb7mU9zk5/Q3VJk0kabG087emOwXOYRllzF1H1Yqxm3RTWCq0uQ1bnTaAORLlPRLw0a3io=
+	t=1764946966; cv=none; b=m0XmrqFRqdn30ywfyHZDu7wFFzEJrVrK963psuEAMt9mRVLX7MSBugxknnaIjPBy6gaDaRL2tekELYdtxF9vpAt2XV4YuNd5rQBpELRL60Wi1Y2QSqCGOaRNx62gKJUhD5KtDIN75ELxi38A17V19qpB/RWeB7KlwpDDOfhnTtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764946959; c=relaxed/simple;
-	bh=96XjwrIn3XUzTvRB9kGSlc1CeZWI9mmwVRv7HHNyqQY=;
+	s=arc-20240116; t=1764946966; c=relaxed/simple;
+	bh=O6EElKeKhS/+ysBMW1WfpuWyFSwKhNdEdQuMPUOF9X8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=LwpuTEOkRCENTFrAw5AjgXIqUfM7VIdWfqSki8y89+iTpQFcDAD4pzdZgQs5fimijtUyx+ZG0ygsteBaDWP9siCSBoHDtfH0KSjFJ42qNRuk+Nd7bGVmZbTITFwTCKwGa1+nrQ8+ksd7KxPSQDzci5HZXP0Mq5oTU+ujBSfYKyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZV6PkEp4; arc=none smtp.client-ip=209.85.160.175
+	 MIME-Version:To:Cc; b=ekY7WDOPqh/VWW1DV2DNx3JCorVg564HAxXDhnO+9cUf7DwUnvEe7vMqOn7fCeiqZE0Aj4s76cLR6Vkkhqd2b+vpyV7l/LXdmDwhdAUbgz0EBcnJteBc9vvSEmPtWGNeLdWWCaEb8/ScnYfYf5raX1aJm3uhUuzs63TT1zkPUt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ST7pYf/C; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZV6PkEp4"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-4eda26a04bfso22428901cf.2
-        for <git@vger.kernel.org>; Fri, 05 Dec 2025 07:02:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ST7pYf/C"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8b2da83f721so238244985a.1
+        for <git@vger.kernel.org>; Fri, 05 Dec 2025 07:02:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764946951; x=1765551751; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1764946960; x=1765551760; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ItOI4uMh0uMFKRfhENseGlftt8X5Mk8TBixVlXyJ1X4=;
-        b=ZV6PkEp4D4XjHAtQ5Vcq7VusK9I6SfBm+M79MOfec8DHZDk33F6f1QJoDx9Tiz6P4U
-         AeiBNa1UHhh6UmFaNm9MOS1ST1OJyr9xY3OQPehbUZxwbHGeFMZqGZirG8f8OKrszQMm
-         8uHrje6vHmHI376P+LJ27rWcISkB5orxyNc8A6IsAGf5eQmAu+1VsGCvBsa15e9t+y2n
-         2izKIndkMd5qN0wi5kmxIAMqhmo/n512DNSsTUvI5zjxoJJK+j/EEZfVjAukqbv6o2BK
-         23pM56jCINDOfUPQES9zNSdEhQKTASqa2DeImgTTNnyNKFePoR/HV7sr4mr/GZ2vBevK
-         muJA==
+        bh=1v95A+ZphT0efPuJgA2huEtwXQ34whmACedkSr3ysbY=;
+        b=ST7pYf/CEGXuFWf7f9dxQYOnD9QqobEyW/ZrrJ6EgtMiIBwKuvB4wmZAppHE0/Ef2f
+         WOzFB1G09Bw/r8UEb70QPty1iaU/rkcGrPKLpBoeyVIvydjRHmDhXLjZHXWTi9fW5Tpf
+         U4LpTRz2wjAUVCMkhGFGkHqFjRV0e+Ug5wzDbbZfcm3oX9vU0NHPMUm2FYUQTzv5+t8u
+         r3UU7rQ8QpfxISy0b1FD+W4e1w5/eCGs5MZueFecad6LH5k4RBsxB1CO6fSTuOU+OymL
+         hmxB2R6UEFll78KHRatS7evb6cE/VqLYkckdI0g9B2ljYBVlgC5yBXALkppGagSodttV
+         2+Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764946951; x=1765551751;
+        d=1e100.net; s=20230601; t=1764946960; x=1765551760;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ItOI4uMh0uMFKRfhENseGlftt8X5Mk8TBixVlXyJ1X4=;
-        b=rx4UwxvmUntIQ5xNNivv0aYUk+35G3SbtrwvX/OKrwhzv937BJAyLxctJrLmeOQrim
-         oOycFYVUTVGeypmrivHQteNrvmp2+W119dJduA+iEuiEf5HD9TgC8WGqfKolXAv++1zk
-         Jg6JZ39yQVU+sLgqQnO8xQEuVfnnRiid6DO8VPA7jzXnEW9mQoLeHQefGIR+BMqdXQXG
-         kTKo1fn2jXj9Sxacfd+YsPmiUEp2tXTUkM0a6yzGiE+yRQ+s2RDjPTvPm6aUEfTgc2cZ
-         152psIGJQBPJ+ddc7qWfzBQw2QLIVzxyVQcsJ7jUzYKRkr6MdgEHnYZMYiXrQpmvMWmi
-         arUw==
-X-Gm-Message-State: AOJu0YwNE19ZZI2xcWUP1cMJ+SF4443VjJYiIW3tTmy1vbA7zH6Q1tMO
-	+LYpINaLRq8lB+tUinThf6m57OedgBiADtYTEv//6TbK2O+kisPCp5j+FOTqrA==
-X-Gm-Gg: ASbGncswbtQkh8S3alKCfz2w/25cblYjW+q1JsM2p/A6zCYNsxjm8gaWfrZzwzeZ+Bt
-	y/s1jMSfKSMwnfYFTvkEFqiWILw5NVJWVfEok6ythtXQZZg8GvJC9An38WklovshRxdB/b0KrKg
-	1kxzJHkPtXx94nB1ntS2R8DGRD3BEyfwanq7FJU3rBP+SzW5mG/3mhSaIaCkt7FJE/39GASxnGW
-	a9Wda5tKKY/hWKwKb8Ehn4+mvnS7geWNzQLFc9LFkhriCwyRQ23NcUaxCznrP8G0MjhTjelI13W
-	P6tGXKur+RQW8Wei2WIKjWAhr0j/fcHXV4aR9cRCosG/K7uDReyvyBp4oGX7TE4nPRz7m2UKBLt
-	TNxxX9iT8OByUeGwCIRKQHpxNdLIzgqK04sgBYSG9NvfNYd3pO6qc1yptbo0PK919hFPlK9ylxb
-	TUmlmPxosEZiev
-X-Google-Smtp-Source: AGHT+IEo/OXl+uAR9ux04SAqLrLPtYFbXt7WaFPDg29/jh3TDev/QGm5p9hA/+9wFpzCUGgSw+ZAxg==
-X-Received: by 2002:a05:622a:1454:b0:4ed:43fe:f51e with SMTP id d75a77b69052e-4f0176033bcmr152267561cf.39.1764946950671;
-        Fri, 05 Dec 2025 07:02:30 -0800 (PST)
+        bh=1v95A+ZphT0efPuJgA2huEtwXQ34whmACedkSr3ysbY=;
+        b=MDUxm80jrArP2dVDg/mMwE/2UL4OPe++UPXeS1lyMlAwqSAq2hTiPArbx4L6aFAqlg
+         aPd6b6R7n2SqCbJqiTlzWW5FeP7mUlyI1QgidIQp8YebZIy0frgDMaOqOmsA/vb4oLdl
+         FZi0PL9NB2m9IrAz95yxw/11XjgbVLD5H6YW7r3XnA+aA4OHn4GpUIlrSgM5afE+gj1B
+         QOxDSSQMxjQRU3idj3cUYHBW4oBo+l6SaM9aB3SGXEIFaPIVXYq9BlMpF1zX7bYzOmsX
+         jn/dWNsck1p4amYrnsnTt0uS9Kr9ZNzOFpfkS30oTcixad+bAsYHHBEtOBHpfnT7sk3Q
+         JYPQ==
+X-Gm-Message-State: AOJu0YziQiqkUl/BUaOq3irwxpCI4XZqr8UG3kcHvf+NoMxnf5F1IcLO
+	r5C6QsUmHuYdYhqC8qH8NY8g5dlnSO3300kc4w+ldndvb0U4O2K0Y6NwiWPLpA==
+X-Gm-Gg: ASbGncuxwDKGDZMja8bOe3BHaVCDbs3zbyt1d7Uyu98w7S21qOi9AlrBEzYQS8c/OH7
+	JUDtYi+ZhzNzywkFkivCAdSGmEhOJHjoe57gTgEXVDkqJ3hD1WdvNhitfQI51Uzqt9ovRjlCmKW
+	KwbWQPk4yQxiPE8IcqFsNzXW46ar0H+Y3cwCAT9n0oHaqaEx6U8mIgJ0wgPt/SgGL5+j4VCCCHV
+	XPj2Mstp7Mi48/EKjHONT/UwsvdRjLQpjRVrBddKCquKcZCq0meW+eEUXhED0zOn81nSq5A+Zl7
+	s2h17cA2PxDRqHfxJrRWaE3WGMSrN4P4VTnjBAhRxC3XQh1GUr3eg3h9N/dfzgrVclGSsUl7k/4
+	zny4zhHHblO3sYbDrPCvEgBm6gi48+uqkGMnYjhEAerU5PD6HLzVXGHECkP924KMRWGqAIboRrH
+	r7qK8/eTxJ9OWH
+X-Google-Smtp-Source: AGHT+IHMgQLwAkcJ6Bi//ujvylPQUw5iXeyw7tKttYYhVoaQBbG4Ker7GaH6DEKWC/Y4cFUdlcs7UA==
+X-Received: by 2002:a05:620a:4092:b0:8b5:a07b:3c66 with SMTP id af79cd13be357-8b614858dd6mr969553085a.21.1764946959757;
+        Fri, 05 Dec 2025 07:02:39 -0800 (PST)
 Received: from [127.0.0.1] ([48.214.53.115])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4f027d2a875sm26932501cf.24.2025.12.05.07.02.29
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b62529f08asm404501485a.11.2025.12.05.07.02.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Dec 2025 07:02:30 -0800 (PST)
-Message-Id: <96e279f50ebc26084095e781cf58db233fa05b74.1764946945.git.gitgitgadget@gmail.com>
+        Fri, 05 Dec 2025 07:02:39 -0800 (PST)
+Message-Id: <1619ea4a3b0767e6879f41bff6430512b3e8fcbf.1764946945.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2009.v2.git.1764946945.gitgitgadget@gmail.com>
 References: <pull.2009.git.1764440906.gitgitgadget@gmail.com>
 	<pull.2009.v2.git.1764946945.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 05 Dec 2025 15:02:18 +0000
-Subject: [PATCH v2 03/10] mingw: special-case `open(symlink, O_CREAT |
- O_EXCL)`
+Date: Fri, 05 Dec 2025 15:02:23 +0000
+Subject: [PATCH v2 08/10] t1305: skip symlink tests that do not apply to
+ Windows
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,53 +83,40 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The `_wopen()` function would gladly follow a symbolic link to a
-non-existent file and create it when given above-mentioned flags.
+In Git for Windows, the gitdir is canonicalized so that even when the
+gitdir is specified via a symbolic link, the `gitdir:` conditional
+include will only match the real directory path.
 
-Git expects the `open()` call to fail, though. So let's add yet another
-work-around to pretend that Windows behaves like Linux.
-
-This is required to let t4115.8(--reject removes .rej symlink if it
-exists) pass on Windows when enabling the MSYS2 runtime's symbolic link
-support.
+Unfortunately, t1305 codifies a different behavior in two test cases,
+which are hereby skipped on Windows.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ t/t1305-config-include.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 736a07a028..9fbf12a3d3 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -627,6 +627,7 @@ int mingw_open (const char *filename, int oflags, ...)
- 	int fd, create = (oflags & (O_CREAT | O_EXCL)) == (O_CREAT | O_EXCL);
- 	wchar_t wfilename[MAX_PATH];
- 	open_fn_t open_fn;
-+	WIN32_FILE_ATTRIBUTE_DATA fdata;
+diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+index 8ff2b0c232..6e51f892f3 100755
+--- a/t/t1305-config-include.sh
++++ b/t/t1305-config-include.sh
+@@ -286,7 +286,7 @@ test_expect_success SYMLINKS 'conditional include, relative path with symlinks'
+ 	)
+ '
  
- 	DECLARE_PROC_ADDR(ntdll.dll, NTSTATUS, NTAPI, RtlGetLastNtStatus, void);
+-test_expect_success SYMLINKS 'conditional include, gitdir matching symlink' '
++test_expect_success SYMLINKS,!MINGW 'conditional include, gitdir matching symlink' '
+ 	ln -s foo bar &&
+ 	(
+ 		cd bar &&
+@@ -298,7 +298,7 @@ test_expect_success SYMLINKS 'conditional include, gitdir matching symlink' '
+ 	)
+ '
  
-@@ -651,6 +652,19 @@ int mingw_open (const char *filename, int oflags, ...)
- 	else if (xutftowcs_path(wfilename, filename) < 0)
- 		return -1;
- 
-+	/*
-+	 * When `symlink` exists and is a symbolic link pointing to a
-+	 * non-existing file, `_wopen(symlink, O_CREAT | O_EXCL)` would
-+	 * create that file. Not what we want: Linux would say `EEXIST`
-+	 * in that instance, which is therefore what Git expects.
-+	 */
-+	if (create &&
-+	    GetFileAttributesExW(wfilename, GetFileExInfoStandard, &fdata) &&
-+	    (fdata.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT)) {
-+		errno = EEXIST;
-+		return -1;
-+	}
-+
- 	fd = open_fn(wfilename, oflags, mode);
- 
- 	/*
+-test_expect_success SYMLINKS 'conditional include, gitdir matching symlink, icase' '
++test_expect_success SYMLINKS,!MINGW 'conditional include, gitdir matching symlink, icase' '
+ 	(
+ 		cd bar &&
+ 		echo "[includeIf \"gitdir/i:BAR/\"]path=bar8" >>.git/config &&
 -- 
 gitgitgadget
 
