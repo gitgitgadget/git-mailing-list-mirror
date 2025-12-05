@@ -1,72 +1,110 @@
-Received: from smtp161.vfemail.net (smtp161.vfemail.net [146.59.185.161])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB92342513
-	for <git@vger.kernel.org>; Fri,  5 Dec 2025 16:58:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=146.59.185.161
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764953941; cv=none; b=bZWP4Cll3sO4H0uOVQnigr0VIazyB35R8fY9sAt4Vtv+LBI5DTCXbixXPA8U2QLnf6kkq4PhXO9fo9+vrxm8ybB1VrDXDXB6h2W8r1ZEd/OyzavRDVsrJI5uTJygXLOg9AHFPE7J7u4nHL/YmB4pXdr6oHKSG1IzuBGe3TGNBoc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764953941; c=relaxed/simple;
-	bh=dFwFZrHg2z0WJ5R9BqQbmEDp3y2Vckq5nhIiVN3HEaI=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=VepoRfHFLUomN64L8zbIUKVm9twU7Q8qb3/GTinjkyR+CWsVaKLyJufISZB3GM67o947/MMmVGMec5au+15T9PQgTLvS1EMczWE26sUCuBC+p7IWuW+w/b1J9maJmrbhsGh8UUpybR3mryj2dziur5mjjJLfrJFzmQWju3ADAbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=openmail.cc; spf=pass smtp.mailfrom=openmail.cc; dkim=pass (1024-bit key) header.d=openmail.cc header.i=@openmail.cc header.b=FesROXgf; arc=none smtp.client-ip=146.59.185.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=openmail.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openmail.cc
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154893557FC
+	for <git@vger.kernel.org>; Fri,  5 Dec 2025 17:25:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1764955559; cv=pass; b=kRvn/Jzk7NyeWyONXU+lvs7ApXwXu3PMw5szRIV016nDZ0RJBxM6dBG4pGmJ1MP0Q/YOnKD2v0QQox+gz34NbKW6cLxeMaTj/o+26HvqiHFNpdBa98tQ/81Sm58dBelqFWYRl48QNcuXiaLX+jVfzVSQP/h7imGY7Q2L64WGk7A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1764955559; c=relaxed/simple;
+	bh=3GRFSOeWgqx7IxtjBf5PVUgn3UbAETo89H4Tgj8ZFV0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ekVXEP2ZJuAwc6PjJ0bg/uL9GPbTNp9cMnv+uQ4WAVCNRhoJueea7zldYuBmeAwSZ2GHZDL3JchFQBupGPhk+r34c7KHmfSGpE/v6gzy9Kgj+KUj0MsEsvrBc9EHgmACQo2nMP8bLKyUU2Ij7w6Y4/HWN4mzMCatc0c/uHRJdIo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=exEKpXYt; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openmail.cc header.i=@openmail.cc header.b="FesROXgf"
-Received: (qmail 4876 invoked from network); 5 Dec 2025 16:52:09 +0000
-Received: from localhost (HELO nl101-3.vfemail.net) ()
-  by smtpout.vfemail.net with SMTP; 5 Dec 2025 16:52:09 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=openmail.cc; h=date:from
-	:to:subject:message-id:mime-version:content-type; s=2018; bh=dFw
-	FZrHg2z0WJ5R9BqQbmEDp3y2Vckq5nhIiVN3HEaI=; b=FesROXgfiEouhrsq1tR
-	JU7lTeA6F5DQu4bVgnmjPLwRetkpsZuK8qmWPs8fuZDKZUvQy7xqP/ZzjuOVZ0zs
-	+SfB2JAjrbrV1nIkEfQJJ12pifuucRkUAYUobG+nxBOH8dvxIxadkuii6QioQsE6
-	RkXgsL92lhUINQcIohHTLomU=
-Received: (qmail 75520 invoked from network); 5 Dec 2025 10:52:08 -0600
-Received: by simscan 1.4.0 ppid: 75511, pid: 75518, t: 0.0413s
-         scanners:none
-Received: from unknown (HELO bmwxMDEudmZlbWFpbC5uZXQ=) (bWFuZGF5QG9wZW5tYWlsLmNj@MTkyLjE2OC4xLjE5Mg==)
-  by nl101.vfemail.net with ESMTPA; 5 Dec 2025 16:52:08 -0000
-Date: Fri, 5 Dec 2025 17:51:01 +0100
-From: Cedric Sodhi <manday@openmail.cc>
-To: git@vger.kernel.org
-Subject: Git for structured data
-Message-ID: <aTMNdQ_NHTVPtwG8@air>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="exEKpXYt"
+ARC-Seal: i=1; a=rsa-sha256; t=1764955542; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=EpdRm3FboqUqwPHI1XhMhU63vJS9FSwVxKTEplttfU/ghbAimI/RMmxxddnGGcuOzpni7DaCDO2+hVvlxQ6xR3o1QTT6nV+lP47AUJjUCqGOUUyD++P8fnbZlCv3VWF9eKpP13virsycNu5nBHiGuDskzftZ6X2pTCQQSCxsY9E=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1764955542; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=viyHmhV6aW1Ymrpi7IhZTxRVtn1IFcgIaII7ZM5eqVA=; 
+	b=Nj1QEuswi1mcpYKtRxw3+Y001TbFbuXycfZBM2wkpDa2pFbHSHMFNdkFcOS4jEpFflYOlv/x5GhPKqkZqFdWA0Trtw/gVcc6C8jwzNWWuyWTwdRLZtyANzCliMygeUVG5Bd4DMG7jXqp2fO8nGjriVvCEa01xnDJz3vxuQh2cwk=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764955542;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=viyHmhV6aW1Ymrpi7IhZTxRVtn1IFcgIaII7ZM5eqVA=;
+	b=exEKpXYtcMZfh1syOQcmiF0EoTQYaO6zIl0W2VT1qzB+MZf5bVWU97gXdyWTplHy
+	FAnrvyik1d8dLKpS9ek6fT18pb3kYs3dgZINnvt+pL1OzuFm50AUUKJTbTA8Y6rSgAa
+	ryez021jA3sYPOK3dAehDeJLYdYS3/SOFqewcI7I=
+Received: by mx.zohomail.com with SMTPS id 1764955541453947.6582468843446;
+	Fri, 5 Dec 2025 09:25:41 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio
+ C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan
+ Nieder <jrnieder@gmail.com>, Josh Steadmon <steadmon@google.com>, Ben
+ Knoble <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v5 2/7] builtin/credential-store: move
+ is_rfc3986_unreserved to url.[ch]
+In-Reply-To: <aTLNLnF_ZLpMnso-@pks.im>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20251119211030.2008441-1-adrian.ratiu@collabora.com>
+ <20251119211030.2008441-3-adrian.ratiu@collabora.com>
+ <aTLNLnF_ZLpMnso-@pks.im>
+Date: Fri, 05 Dec 2025 19:25:37 +0200
+Message-ID: <871pl8g7se.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain
+X-ZohoMailClient: External
 
-Hello (from off list),
+On Fri, 05 Dec 2025, Patrick Steinhardt <ps@pks.im> wrote:
+> On Wed, Nov 19, 2025 at 11:10:25PM +0200, Adrian Ratiu wrote:
+>> is_rfc3986_unreserved() was moved to credential-store.c and was made
+>> static by f89854362c (credential-store: move related functions to
+>> credential-store file, 2023-06-06) under a correct assumption, at the
+>> time, that it was the only place using it.
+>> 
+>> However now we need it to apply URL-encoding to submodule names when
+>> constructing gitdir paths, to avoid conflicts, so bring it back as a
+>> public function exposed via url.h, instead of the old helper path
+>> (strbuf), which has nothing to do with 3986 encoding/decoding anymore.
+>> 
+>> This function will be used by submodule.c in the next commit.
+>
+> Nit: this statement isn't true anymore :)
+>
 
-a filesystem of Git's working directory type can be seen as a type of database. Compared to other types of databases (relational or not), it might even be considered a fairly complex database with arbitrary nesting depth and relational semantics through symbolic links.
+Indeed, thanks for catching these.
 
-Git excels at version control of this specific type of database, the filesystem. Yet, Git can't be used as-is to version control any other type of database; even though they might be simpler, semantically.
+I will fix both nits in v6.
 
-We can have structured data (databases with schemas). We can have version controlled data (files with Git).
-
-Why can't we have structured, version controlled data?
-
-In recent years I've repeatedly struck cases where exactly that was needed. For amounts of data which are comparable to what you typically version with git; only structured. Without workarounds, either structure (table schemas) or versioning (Git) had to be sacrificed. Which is disappointing, in my opinion, seen how this only hinges on the type of source Git would have to read the data from.
-
-I'd like to ask your opinion, on what you think is the most promising approach to unify structure and version control with Git. Currently, I can think of two, kind of complementary options:
-
-A) Map structured data into a filesystem, possibly through FUSE, then version control that with Git.
-Pros: Can mix non-structured data and structured data.
-Cons: Expect terrible performance
-
-B) Abstract Git's data backend to allow Git to read directly from databases
-Pros: Perhaps reasonable performance
-Cons: Additional changes to Git would be needed to allow mixing data.
-
-What would you recommend?
-
-Kind regards,
-Cedric
+>> diff --git a/url.c b/url.c
+>> index 282b12495a..0fb1859b28 100644
+>> --- a/url.c
+>> +++ b/url.c
+>> @@ -3,6 +3,17 @@
+>>  #include "strbuf.h"
+>>  #include "url.h"
+>>  
+>> +/*
+>> + * The set of unreserved characters as per STD66 (RFC3986) is
+>> + * '[A-Za-z0-9-._~]'. These characters are safe to appear in URI
+>> + * components without percent-encoding.
+>> + */
+>> +int is_rfc3986_unreserved(char ch)
+>> +{
+>> +	return isalnum(ch) ||
+>> +		ch == '-' || ch == '_' || ch == '.' || ch == '~';
+>> +}
+>> +
+>>  int is_urlschemechar(int first_flag, int ch)
+>>  {
+>>  	/*
+>
+> Nit: the function documentation should rather live in the header file.
+>
+> Patrick
