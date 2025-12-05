@@ -1,145 +1,109 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C7627FB3C
-	for <git@vger.kernel.org>; Fri,  5 Dec 2025 17:49:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF002E0B5B
+	for <git@vger.kernel.org>; Fri,  5 Dec 2025 17:53:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764956947; cv=none; b=Q/IoukvGg+vUdgaFr7dytRezWGnmxMQwfm//GyiQDxjeqA52n4GYriiRYt4BkpHRHlnpnb99Cdipy07pXjZwuUzPiJvuGnuOmBY928GIAUZz/efPzGLMA0KJ7cEWCB9pFnTVMdxvmNUZfNUnc3h1WTQ6KlK7zY5V9PAAvkOMtoQ=
+	t=1764957196; cv=none; b=u9HlEVQN7VdvGXkZSQzwsUCrjFEZDLK6ILvGE8XL3cDPNBMg0oxOvrUpDulgmzO/MPw33xE9ekP304wbc2KDH04+S7604Dbq8XOB7pxRj0pzgoelIyNL1OGt85ExfDooQehfH9fndMG/gPatH05lAHCbP8cf8V13K4lnlZPwG6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764956947; c=relaxed/simple;
-	bh=lz58dpFU6uqFhjFTL+htQsElbABxioCNlZClUQ3SuuU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HjH/AjAj0Uc3GKePTxc7EUP+5UJIIm+S0PYR7tBfHV0+057eb/TYjjULcZamPH5vLP4xkyszrHoDZQxM2dWWFiVS7rqMWQJ95kcIcw5tzJUB/g3ttuA1XiO4M/110d5wi5G4RNqVR8fz1Dxn4cOc5Ic1S2gRbyyKEODEZCXgXWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=bLnXjkfl; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1764957196; c=relaxed/simple;
+	bh=tryZP9yDlgcnkWtkW+ZwE4rolRv6AA3EFyIpKn4KvBA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bvB67fwyQeX0VUo8dsiqEoCY51L4+d8d3YFYlCPiuE2pEkh56SmaThRTkMcCd/RWvbHRXcSkp0Ly6dNHDG6N7f7NbYsTFXOU47nev/q6r0XLxNbHucZSVPRSR0Y50r8zytHNuJVTdVl35ohCR5BgDwPnZwyfeSVt+A6KXybSQ9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nqPJFohm; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="bLnXjkfl"
-Received: (qmail 271800 invoked by uid 109); 5 Dec 2025 17:48:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=lz58dpFU6uqFhjFTL+htQsElbABxioCNlZClUQ3SuuU=; b=bLnXjkflFoD0+AZt45vRpF1/fJ9ftqG6xl0pQHCl1bWYlrIfJjM5dtAGQZLHOvoEDVEIjOnaBBgKSWkqLMNV0ipFieU8FMvTG803YuL8ycWGtWe1Jwg6IK1q7U+qWFSuHGpoDL+nkRMR8xOaR7U+FDG8SIOIatUAR9QVcVZ/nnYB0RvXAezgrb/hHzRXK20i/WfKtIqHsvmuE8eJNPdUfic1+QLLkKis0Uqros+kbnKaODnd+4HW4zyBxBDT1idNCrK3t6pIcc5VS88v37VpdzrA4CJ4bBuL3UfNabymfoK7zxXNY7SZAarHHorVE8IF3awgsF6XpMezEIK6dzJIcw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Dec 2025 17:48:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 339846 invoked by uid 111); 5 Dec 2025 17:48:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Dec 2025 12:48:55 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 5 Dec 2025 12:48:54 -0500
-From: Jeff King <peff@peff.net>
-To: Aaron Plattner <aplattner@nvidia.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] packfile: skip decompressing and hashing blobs in
- add_promisor_object()
-Message-ID: <20251205174854.GA18566@coredump.intra.peff.net>
-References: <20251204172132.319360-1-aplattner@nvidia.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nqPJFohm"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-7ba55660769so2117650b3a.1
+        for <git@vger.kernel.org>; Fri, 05 Dec 2025 09:53:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764957195; x=1765561995; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=tryZP9yDlgcnkWtkW+ZwE4rolRv6AA3EFyIpKn4KvBA=;
+        b=nqPJFohmPnTiZZEfnAIrkNFB6yCoO7VS23tr3VxI/Q7lmkFl0guwLbAk7FVmKyllze
+         gdACyKhyYp5+GmT+237ukfzjX3LdtJPpa0n7bpYeBkEIBCjeHjSm4+1s6fV0UrHnZDyk
+         JCpTxRVo5TWXUxqb6ewLXIwTA7cSn9AufH7v+5L6p2jML9RcWyF/SjWkBqehTAGuIfmc
+         4hh2BDffzFJWPPw2GexL9vUGX27rqAaZY5gZ2ALIi7k09aHEC6PXXzGJBltm/0ADoiUv
+         sfe3yzsvsQBg7pMp86fH7Yi4b8m4y09v4Ke0HKqWR7zY2grVrMOLgrZde78gbfhtviKe
+         UvPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764957195; x=1765561995;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tryZP9yDlgcnkWtkW+ZwE4rolRv6AA3EFyIpKn4KvBA=;
+        b=WTYNEGN+C5a4NNTLlJqwaNDvvPlhZrllpRNOo/33U6lg2fcxtkVWkQU16iyYsFr3DS
+         xcmBeORufVr9TeisaQjYEmb0vLstmX0/arQssWD0AaV6+1Hi1ZSaFm5G4oJYeFtZ9kJw
+         UOEV/yONidcYLMsx1F3orvWfYMkhXL5rDOnQtyL35hRXdh2Dr+qgBleiuJZXncOS5E2g
+         9APTqqssm3tu2lxWIKZbzQS2Ot7pt2jN+CZqTOoapc9w5maiijw0BQCd25e/NrLvfCTX
+         yorhHJ+HSIOKI1ihsjnx8OndIrlm3HXY2NNYgKrDOdYzsX00IBpUksZhceNkz/Rg5l/g
+         xiWw==
+X-Gm-Message-State: AOJu0Yx+R/3BqJ4tcrYiXBM3tpTiQx0hDIeJfSsViNgYtmY7lLlJI9Dt
+	u7srsBhGIe+aFYYEaE9b3fAoYKnPaij/HxUVRXXYUsDzQhVJCyONjWJaa1z9vfpObiRz03nwBT7
+	Vy0aru5ggBEYJkXIdVvotKHavGgWfpic=
+X-Gm-Gg: ASbGnctzxGimliApw15k/exLCNXcdgqCoxY5bRrWYCZ8UzGr68N7VbARgkxI/nLL5Pj
+	JhbZAmsTtdqpgZHLdzT5BKaX/ehVlHB6xyuLwt06CgYpk1H1uKMRUZJk/d5kZkuY1euO6SGFfCv
+	nZuAG8FS/gJ96pd0dRXdbx2/vxi1X9+J/YiPtW0lYDSBIQoBh6qrVkINwhl8J9IQQJ5NW+Za4IO
+	XYnZmI2qtnTNsMy0Ef+4ODNJk4ZhTxT69V9Pb3aulqp/j4OaSfuAvXF1SgPY9naFQpr
+X-Google-Smtp-Source: AGHT+IGH3M/0qGxlEviq6fqDlW0vYB+FCh/CnzKyUCrgiljf2MEcPvC+xgLnXaLgK4ZQbfrkImboqe7A/cb9wDF2k+I=
+X-Received: by 2002:a05:7022:6b95:b0:11b:95fe:beed with SMTP id
+ a92af1059eb24-11df0c3d4f3mr7641765c88.38.1764957194590; Fri, 05 Dec 2025
+ 09:53:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251204172132.319360-1-aplattner@nvidia.com>
+References: <CAD=f0L_-b5d5qVdL0TASS5iA8rWQxianT4_2zmhMtwN8p_TYbw@mail.gmail.com>
+ <0D20055E-51C1-4503-815D-F7B4CBBF4C1E@gmail.com>
+In-Reply-To: <0D20055E-51C1-4503-815D-F7B4CBBF4C1E@gmail.com>
+From: Bello Olamide <belkid98@gmail.com>
+Date: Fri, 5 Dec 2025 18:53:15 +0100
+X-Gm-Features: AWmQ_bkzLvP3p7SKnYD28UzjOnWUmxx261PJvAdmYOy7096HdE01813_hVhKHgU
+Message-ID: <CAD=f0L_zYNYnhmMv+g7=gkSg6Eaf55nm0NrerNL0KGgf1tf=+A@mail.gmail.com>
+Subject: Re: [Outreachy] Git Internship: Refactor in order to reduce Git's
+ global state
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
+	Christain Couder <christian.couder@gmail.com>, Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Dec 04, 2025 at 09:21:29AM -0800, Aaron Plattner wrote:
+On Fri, 5 Dec 2025 at 10:28, Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+>
+> Hi Olamide Bello,
 
-> For repositories with large pack files, this can take an extremely long
-> time. For example, on a production repository with a 176 GB promisor
-> pack:
-> 
->  $ time ~/git/git/git-rev-list --objects --all --exclude-promisor-objects --quiet
->  ________________________________________________________
->  Executed in   76.10 mins    fish           external
->     usr time   72.10 mins    1.83 millis   72.10 mins
->     sys time    3.56 mins    0.17 millis    3.56 mins
+Hello Sivaraam
 
-FWIW, I had a hard time replicating the results with this command,
-because it won't necessarily call is_promisor_object(). It only does so
-when it finds a missing object. But it also marks everything in the
-promisor pack as UNINTERESTING from the start, so you need a
-non-promisor commit that points to an object excluded from the narrow
-clone.
+>
+> On 2 December 2025 3:10:15 pm IST, Bello Olamide <belkid98@gmail.com> wrote:
+> >
+> >I write to you with great joy, humility and gratitude to have been selected
+> >as an Outreachy intern for the December 2025 - March 2026 Internship program.
+> >Working on this renowned project gives me the privilege of working with,
+> >and being guided by, some of the best and most impactful engineers.
+> >
+>
+> Kudos on being selected! I hope you have a great learning experience :-)
 
-An easier way to trigger it is with a fake oid like:
+Thank you
 
-  rev-list --objects --all --exclude-promisor-objects $(perl -e 'print "1" x 40')
+>
+> If you need anything / have any doubts, always feel free to reach out to your mentors (or) one of the coordinators:
+>
+> - Christian Couder
+> - Taylor Blau (in Cc)
+> - Kaartic Sivaraam (myself)
 
-Then we have to check is_promisor_object() to know that the 111... oid
-isn't really a promisor mentioned somewhere.
+Okay I will surely do that.
+Thanks.
 
-> For objects that weren't already parsed, use odb_read_object_info() to
-> query the object type. If it's a blob, just insert it into the oidset
-> without parsing it. This improves performance for very large pack files
-> significantly:
-> 
->  $ time ~/git/git/git-rev-list --objects --all --exclude-promisor-objects --quiet
->  ________________________________________________________
->  Executed in  118.76 secs    fish           external
->     usr time   50.88 secs   11.02 millis   50.87 secs
->     sys time   36.31 secs    0.08 millis   36.31 secs
-
-Yeah, this is obviously a good idea. This all seemed eerily familiar,
-and I wondered if we weren't doing this already. But it looks like it
-came up as "maybe we should do this" along with some other
-optimizations, but we never did it. Your 176GB (!) repository is
-obviously a good way to show off the change. But I think we can see it
-even in a fresh clone of linux.git, which (with my command above) goes
-from ~7.5 minutes to under 2 minutes with your patch.
-
-But I have an idea that makes your patch a little simpler and should
-give us another little speed bump.
-
-> diff --git a/packfile.c b/packfile.c
-> index 9cc11b6dc5..563fd14f0e 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -2309,6 +2309,17 @@ static int add_promisor_object(const struct object_id *oid,
->  	if (obj && obj->parsed) {
->  		we_parsed_object = 0;
->  	} else {
-> +		/*
-> +		 * Blobs don't reference other objects, so skip parsing them
-> +		 * to save time.
-> +		 */
-> +		enum object_type type;
-> +		type = odb_read_object_info(pack->repo->objects, oid, NULL);
-> +		if (type == OBJ_BLOB) {
-> +			oidset_insert(set, oid);
-> +			return 0;
-> +		}
-> +
-
-OK, so we are checking the type up front and then skipping
-parse_object() if we can. But there is already some logic inside
-parse_object() for these kinds of optimizations. If we tell it we are
-not interested in checking the hash of the objects, then it knows it can
-skip loading the blob entirely.
-
-But it can _also_ use that flag for other things, like using the
-commit-graph rather than loading individual commit objects. So doing
-this:
-  
-diff --git a/packfile.c b/packfile.c
-index 9cc11b6dc5..01b992a4e1 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -2310,7 +2310,8 @@ static int add_promisor_object(const struct object_id *oid,
- 		we_parsed_object = 0;
- 	} else {
- 		we_parsed_object = 1;
--		obj = parse_object(pack->repo, oid);
-+		obj = parse_object_with_flags(pack->repo, oid,
-+					      PARSE_OBJECT_SKIP_HASH_CHECK);
- 	}
- 
- 	if (!obj)
-
-drops my linux.git case down to 49s. It's skipping the blobs (with no
-need for your patch) and loading the commits out of the graph file. Note
-that you may need to "git commit-graph write --reachable" to see the
-effect (I think we do generate graphs by default in git-gc these days,
-but I'm not sure if we do so right after cloning).
-
--Peff
+>
+> Cheers,
+> Sivaraam
+>
+> Sent from my Android device with K-9 Mail. Please excuse my brevity.
