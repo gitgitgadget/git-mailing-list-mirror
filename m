@@ -1,301 +1,444 @@
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBCE2D0C83
-	for <git@vger.kernel.org>; Sat,  6 Dec 2025 20:31:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B543B8D53
+	for <git@vger.kernel.org>; Sat,  6 Dec 2025 20:51:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765053114; cv=none; b=AHrvIl08TbJ+n/r7TLcEK0zvyEfxqtipFLXAF2KJN3pERiuhU8ya7+eHE3XGMFV7xKgF+QPvNW8Ouu/l9kfpMILUY9aQxOvD7V5pHHnivfjwZ/4XdLVuJrpPed6IRHGaIPQp71X57sKPShAerXhTjya1uPEqPjUGv0at4qN14oU=
+	t=1765054294; cv=none; b=MkVX886+Joau3vKyvs921oUksNpEfKI5+DhkWcIfZO1F+Z1o3miEYM6gfPqyiWqBf2pylUMINShTuGXB6mX0FbUArNvg4/5lg+fXmRFbg8lfpELNUCqlrEGj0N4rWPEHDSRGVo0LkqSsdqGjLP5j8cXF0jrAlRUv04Sujmt5Et4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765053114; c=relaxed/simple;
-	bh=8PmuCvr5ADlptLGbptyXJ0fCtxpgfAqErNgAIcGYnFg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n2/jN5rZ6uxlpbKKSp1hMGvWl8+FT9jaHY2tMfCBhz699Omb8I+jO7mIQbGDZqqgb9W1avZ27BhPKAp76KcWbJWRLPm1ML46MmBMIFDbYzzKhJkI61mprOKFV9SibObuI9RJ9bNG2AQIzzwqKdV9KGoncTbm1QOhza+70ZuzEP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=k09XBwLK; arc=none smtp.client-ip=74.125.224.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1765054294; c=relaxed/simple;
+	bh=EchrOyCdDi67t3mhLHDi0t3qc8VwMdMWhSdTf6e3Uik=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=E/VArMiVp+577mNyAtwZqiy6oUHNDO8Fk085SQlTRVl3IhMjkyiqJ60q5R/hGGEPV3FafecbTs4lsKsoL3cNakyj0TGQmnlaVg3b3fPkMkOWHl7lmHRotv8MPN96+6ILr9hmHeS7MPONJhiw0X7c0VYW1IDfF4s6CCsXiugTjfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LGKndY6P; arc=none smtp.client-ip=209.85.160.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="k09XBwLK"
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-640f2c9cc72so2974084d50.3
-        for <git@vger.kernel.org>; Sat, 06 Dec 2025 12:31:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LGKndY6P"
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-3e898ba2a03so2471955fac.0
+        for <git@vger.kernel.org>; Sat, 06 Dec 2025 12:51:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1765053111; x=1765657911; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=FBrhBNgL/QE73WQ5xFheLWcog+Ri7thR4m3cb7NU3XI=;
-        b=k09XBwLKAyfJaosDV8C0ovkw0AYUhwzdYx/pHbzUdXFxHgciqywIqMl6fxXxwYEJ7/
-         60pQGOlKLcN6jPc/qo+mFTrqvpns6WQkqEOomo1jvWDE1jCnreo8IwVZ7oP2vkXmORM+
-         iGRIrQT14SavpLm1lzAlQ8k6logk1KGa4P5q3Gkpi6RMgXcbVOzI6B2sggTdmcAgaca4
-         8MB8uaVviX6q2DbhYRta+HScvu0UH5i7C6nlwhfTwBpbMj1XyVXnsiDdIaTwNNaYl49R
-         EfZPpeqx8yfyyiU51CbPVnk+URg7uJ9A1MSvCR0bQlzt15PabTvGhI6reeE7FixVjP00
-         xRLA==
+        d=gmail.com; s=20230601; t=1765054291; x=1765659091; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=C3ttOxkXWHDvdNIrEGBl70MPuIFwwLQ0UOXjmk2p/T8=;
+        b=LGKndY6PJJxIX/w7Go7Ptel3AC/Bz1mtn4EZdk7qxC3jVEFSnEbXsE16sQo2kNNeWd
+         YRXFBv90nJn9iGBRO4DTlrG2yu2RKIvJxwSnZ0vvIlLBSouaIdD6ksipE6S1imrJ61Mt
+         ZEyr8C5Lug5ceIly5WWGJ5l/m7/zslhLhE8afOHhT14SxfilxGR2bI3RWcaSQr5UPeDK
+         4bmlwxXDYO6tPp28/DKZi8NiYUXdQoA9QQmK1YSlC2VNyoMapiI1m10khWSgKw03BjwZ
+         noC7Drg1GDAhAs0o05ONUviVJoDEt7X3rdUINhNdnoK95ktlUjZkWt9Q+CeZl2HjfeZ9
+         Xtyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765053111; x=1765657911;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FBrhBNgL/QE73WQ5xFheLWcog+Ri7thR4m3cb7NU3XI=;
-        b=OdEefcBaBEy2RVVW/2ST9zDiRCDzGA02Hfn/8S0wxWenJmD4e0UDSLrsFVWzNyAI2M
-         COSnsZQnUVQFr/kUylNwrY8slJdi/6JSwH5vz9CLg6Lq800tH4fU6R4c4Ln7g55O8kYg
-         ObV+VQZ61oY3n1Cv6bsemS4ZPz0ZFUVYY6iKSGnm5CCnHh80ZFJajMwS3YLAqPzIZy3h
-         pQbYM2cf7LVK0LSxT8PZGgKHUtRQ0npEM5+6zmeqUWGP8ZoGBrqCuI9AVpKhtzFdoYBz
-         1yCJ2fh727crSUqce8YzYwPo423tnkCs4IWkAyk1SwSmBHmN7Gh70Poy/kYULkt6Jq9c
-         B9Kg==
-X-Gm-Message-State: AOJu0Yy5C+ytZEi8FnsXZHJY/sJk2uW2mW0c4p37gKL+NGml0TGHNRnB
-	jCea+135Vm+1POphZiv2tM7rvJ9qmkw/idnIGlyYDtW61s7TOpWzxm954w7/rwvYxJJmEZm+de5
-	rchuDfcI=
-X-Gm-Gg: ASbGncse+DWA8haQymJSeDUJywo1KFNb+QgusfZ/w2n+6pumrWvOFU0PfQdP4vOPkkf
-	N/+iJ1gJARxn0iwo2Iq7qpSffUFxhKU/f7VqYT0Cpk+98osQMeBoNaxqxwb9Fk4bGWwQR5WB+5H
-	jPe4vwDbUIg2AVz1b9cJbPbye5YluKyyz5e6baYfru6oIMw/i1PyL8NKtT0BPMDwkF/m/FOYnlE
-	RPzOZqFsRaMf2T9/LtVvb6H4d6nVeIqt5qwypfH1yhApbKR+s8RniF9BECNO8+rEiaj3pXFYowe
-	cyJeRnkZ6koZckg1YCI4oc4bPGpn+IfPijzRzWE2vcAo4q/oi1uR5FoBSsZwAm1afLih4ecwjvb
-	v6p9VjT244WtlBljgaeZjeBCRbWJfA/4fm+0wfRXU/qeathcWzdI7AWtqSLgQFqnAzTHXSc/j+H
-	wCLUAPwSHkniJAExUXYWjYiUKr6poXQVSEItXf0aeb/FEQH9EZFHw5yTyDi8AqRXM5nMxuGiZQW
-	l3ud+gbXhjkuubz9g==
-X-Google-Smtp-Source: AGHT+IHPhDQAbZx27hmnWDXhkCSQomoAB8vR0yylXpga1juNhPH8mIbLIWJxPnIVHRREzHVsMKHSHg==
-X-Received: by 2002:a05:690c:690c:b0:787:ca0f:2687 with SMTP id 00721157ae682-78c33c16cf0mr56955967b3.34.1765053111283;
-        Sat, 06 Dec 2025 12:31:51 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78c1b779485sm30516087b3.28.2025.12.06.12.31.50
+        d=1e100.net; s=20230601; t=1765054291; x=1765659091;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=C3ttOxkXWHDvdNIrEGBl70MPuIFwwLQ0UOXjmk2p/T8=;
+        b=id0kTH40au1Lunlk5lWPdEZVlXP+806MtzYB/9m1U1dVPm0aHjk9Yyw0rrDBL6w5Pi
+         yEod8GdvpNqT+pDK2Es77UhKCAPVYXMEXJqGv2SvomkUy4BNk6a5/KOy0SfpIOee2YA5
+         DRKkzF7EFbvvBpM9QWFtQnJY6aMIA64H/eN0Tltj4tA68on54arOcT9mR0HFpvnPsZcI
+         X26VOp1v/dDKH79rDf+cxGFvwq1hHUtc3aGeg9bjTVRXh+YM1bJdjm9SUnSjMu6JaZg9
+         w9gJkOsPXaIflCSO7QdYDPwOXB17xLOp6nj1/OL3xL79fn6w/FRf5VYF2t9XMIYLLKNO
+         iPOw==
+X-Gm-Message-State: AOJu0YwDkQAXGNXork/xkIuPIArW3tlyQJix2Ex91pNfWE5DvG/y4NCg
+	2WWkZ3QhoXoiGCMcN7EDiijrLlUa0hsWL80UZ6Ilys4888JXncl8iTVCE4fjEQ==
+X-Gm-Gg: ASbGncv511qavRkKXp2pGf0NEtKdWsJFsmUBKmmVnsLZZUjx9e0a4Z285brlecnWd9B
+	EFsEMKu2bwGcQA0FIbtbBu/T83XZgS/l+7tiNxbKc/tQNHFz0GkCU7ZDcDPyD5gXmi4tLMYMkH1
+	XqDXZ8KmPCJu2Eam4tELLA9qzpsE4vdCe3qBIsYxr6tpFSLZTWUReKQc5yG+AJyXKr6niAvUiXm
+	8rVmCNenwc1KEiScUNTjK7R8eyA/x8g/KsXv8jLLJPEHibX7Sczrj8g+KKo3526QwNzDuVjpqyQ
+	7R9FRKf+0acdPN9brdfhTG4mkdJLeLKU7uFeFb+Ct/HdxPi8o8uNc1AtjDYotmgBQAhpQEAzNxt
+	UtHASjaMEtldt5qUOqJVOY0f57qo34bU2yg6bRKI2iFvXZNaCNPckqWdIv9Gt6TaMTeOdYsBE/K
+	bcHiCB3zQ/rYc=
+X-Google-Smtp-Source: AGHT+IFAei3wsF0UbLyyNFanZ4xfSVoecMF9NK0vJ6R9q2sGqmVvATPe8v3t10IH3XXAO5hezOZtAQ==
+X-Received: by 2002:a05:6820:6af0:b0:659:9a49:9072 with SMTP id 006d021491bc7-6599a97bf31mr1427796eaf.61.1765054290849;
+        Sat, 06 Dec 2025 12:51:30 -0800 (PST)
+Received: from [127.0.0.1] ([52.154.20.48])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6597ec25edcsm4172433eaf.2.2025.12.06.12.51.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Dec 2025 12:31:51 -0800 (PST)
-Date: Sat, 6 Dec 2025 15:31:50 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 17/17] midx: enable reachability bitmaps during MIDX
- compaction
-Message-ID: <d6a4e6b69552d8626e6df2d7cd042b9fe151914a.1765053054.git.me@ttaylorr.com>
-References: <cover.1765053054.git.me@ttaylorr.com>
+        Sat, 06 Dec 2025 12:51:29 -0800 (PST)
+Message-Id: <pull.2120.git.git.1765054287938.gitgitgadget@gmail.com>
+From: "Yee Cheng Chin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 06 Dec 2025 20:51:27 +0000
+Subject: [PATCH] xdiff: re-diff shifted change groups when using histogram
+ algorithm
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1765053054.git.me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Yee Cheng Chin <ychin.git@gmail.com>,
+    Yee Cheng Chin <ychin.git@gmail.com>
 
-Enable callers to generate reachability bitmaps when performing MIDX
-layer compaction by combining all existing bitmaps from the compacted
-layers.
+From: Yee Cheng Chin <ychin.git@gmail.com>
 
-Note that the because of the object/pack ordering described by the
-previous commit, the pseudo-pack order for the compacted MIDX is the
-same as concatenating the individual pseudo-pack orderings for each
-layer in the compaction range.
+After a diff algorithm has been run, the compaction phase
+(xdl_change_compact()) shifts and merges change groups to produce a
+cleaner output. However, this shifting could create a new matched group
+where both sides now have matching lines. This results in a
+wrong-looking diff output which contains redundant lines that are the
+same on both files.
 
-As a result, the only non-test or documentation change necessary is to
-treat all objects as non-preferred during compaction so as not to
-disturb the object ordering.
+Fix this by detecting this situation, and re-diff the texts on each side
+to find similar lines, using the fall-back Myer's diff. Only do this for
+histogram diff as it's the only algorithm where this is relevant. Below
+contains an example, and more details.
 
-In the future, we may want to adjust which commit(s) receive
-reachability bitmaps when compacting multiple .bitmap files into one, or
-even generate new bitmaps (e.g., if the references have moved
-significantly since the .bitmap was generated). This commit only
-implements combining all existing bitmaps in range together in order to
-demonstrate and lay the groundwork for more exotic strategies.
+For an example, consider two files below:
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
+    file1:
+        A
+
+        A
+        A
+        A
+
+        A
+        A
+        A
+
+    file2:
+        A
+
+        A
+        x
+        A
+
+        A
+        A
+        A
+
+When using Myer's diff, the algorithm finds that only the "x" has been
+changed, and produces a final diff result (these are line diffs, but
+using word-diff syntax for ease of presentation):
+
+        A A[-A-]{+x+}A AAA
+
+When using histogram diff, the algorithm first discovers the LCS "A
+AAA", which it uses as anchor, then produces an intermediate diff:
+
+        {+A Ax+}A AAA[- AAA-].
+
+This is a longer diff than Myer's, but it's still self-consistent.
+However, the compaction phase attempts to shift the first file's diff
+group upwards (note that this shift crosses the anchor that histogram
+had used), leading to the final results for histogram diff:
+
+        [-A AA-]{+A Ax+}A AAA
+
+This is a technically correct patch but looks clearly redundant to a
+human as the first 3 lines should not be in the diff.
+
+The fix would detect that a shift has caused matching to a new group,
+and re-diff the "A AA" and "A Ax" parts, which results in "A A"
+correctly re-marked as unchanged. This creates the now correct histogram
+diff:
+
+        A A[-A-]{+x+}A AAA
+
+This issue is not applicable to Myer's diff algorithm as it already
+generates a minimal diff, which means a shift cannot result in a smaller
+diff output (the default Myer's diff in xdiff is not guaranteed to be
+minimal for performance reasons, but it typically does a good enough
+job).
+
+It's also not applicable to patience diff, because it uses only unique
+lines as anchor for its splits, and falls back to Myer's diff within
+each split. Shifting requires both ends having the same lines, and
+therefore cannot cross the unique line boundaries established by the
+patience algorithm. In contrast histogram diff uses non-unique lines as
+anchors, and therefore shifting can cross over them.
+
+This issue is rare in a normal repository. Below is a table of
+repositories (`git log --no-merges -p --histogram -1000`), showing how
+many times a re-diff was done and how many times it resulted in finding
+matching lines (therefore addressing this issue) with the fix. In
+general it is fewer than 1% of diff's that exhibit this offending
+behavior:
+
+| Repo (1k commits)  | Re-diff | Found matching lines |
+|--------------------|---------|----------------------|
+| llvm-project       |  45     | 11                   |
+| vim                | 110     |  9                   |
+| git                |  18     |  2                   |
+| WebKit             | 168     |  1                   |
+| ripgrep            |  22     |  1                   |
+| cpython            |  32     |  0                   |
+| vscode             |  13     |  0                   |
+
+Signed-off-by: Yee Cheng Chin <ychin.git@gmail.com>
 ---
- Documentation/git-multi-pack-index.adoc |   2 +-
- builtin/multi-pack-index.c              |   4 +-
- midx-write.c                            |   2 +-
- t/t5335-compact-multi-pack-index.sh     | 120 +++++++++++++++++++++++-
- 4 files changed, 123 insertions(+), 5 deletions(-)
+    xdiff: re-diff shifted change groups when using histogram algorithm
+    
+    This is a somewhat rare issue when using histogram to diff files, as the
+    algorithm will generate a diff output that looks redundant and wrong to
+    a human. I provided a synthetic example in the commit message, but for
+    one from the real world, do the following command in the Git repo:
+    
+    git show -U0 --diff-algorithm=histogram 2c8999027c -- po/ga.po
+    
+    
+    Scroll to the line "@@ -7239,3 +5831,5 @@", and we can see the following
+    diff hunk:
+    
+    -#: builtin/diff.c
+    -msgid "Not a git repository"
+    -msgstr "Ní stór git"
+    +msgid "cannot come back to cwd"
+    +msgstr "ní féidir teacht ar ais chuig cwd"
+    +
+    +msgid "Not a git repository"
+    +msgstr "Ní stór git é"
+    
+    
+    We can see that the "Not a git repository" line is identical on both
+    sides, which means it should not have been in the diff results to begin
+    with. Under other diff algorithms (or histogram diff with this fix),
+    said line is not considered to be part of the diff.
+    
+    Also, when I was implementing this, an alternative I was considering was
+    to add a bespoke linear-time algorithm to remove matching lines on both
+    sides. Just calling the fall-back diff seems the easiest and cleanest
+    and so I went with that.
 
-diff --git a/Documentation/git-multi-pack-index.adoc b/Documentation/git-multi-pack-index.adoc
-index a9664e77411..458bb873633 100644
---- a/Documentation/git-multi-pack-index.adoc
-+++ b/Documentation/git-multi-pack-index.adoc
-@@ -13,7 +13,7 @@ SYNOPSIS
- 		         [--[no-]bitmap] [--[no-]incremental] [--[no-]stdin-packs]
- 		         [--refs-snapshot=<path>]
- 'git multi-pack-index' [<options>] compact [--[no-]incremental]
--		         <from> <to>
-+		         [--[no-]bitmap] <from> <to>
- 'git multi-pack-index' [<options>] verify
- 'git multi-pack-index' [<options>] expire
- 'git multi-pack-index' [<options>] repack [--batch-size=<size>]
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 9b0c2082cb3..40afa8f1ed8 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -19,7 +19,7 @@
- 
- #define BUILTIN_MIDX_COMPACT_USAGE \
- 	N_("git multi-pack-index [<options>] compact [--[no-]incremental]\n" \
--	   "  <from> <to>")
-+	   "  [--[no-]bitmap] <from> <to>")
- 
- #define BUILTIN_MIDX_VERIFY_USAGE \
- 	N_("git multi-pack-index [<options>] verify")
-@@ -216,6 +216,8 @@ static int cmd_multi_pack_index_compact(int argc, const char **argv,
- 
- 	struct option *options;
- 	static struct option builtin_multi_pack_index_compact_options[] = {
-+		OPT_BIT(0, "bitmap", &opts.flags, N_("write multi-pack bitmap"),
-+			MIDX_WRITE_BITMAP | MIDX_WRITE_REV_INDEX),
- 		OPT_BIT(0, "incremental", &opts.flags,
- 			N_("write a new incremental MIDX"), MIDX_WRITE_INCREMENTAL),
- 		OPT_END(),
-diff --git a/midx-write.c b/midx-write.c
-index fcbfedcd913..f2dbacef4cd 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -657,7 +657,7 @@ static uint32_t *midx_pack_order(struct write_midx_context *ctx)
- 		struct pack_midx_entry *e = &ctx->entries[i];
- 		data[i].nr = i;
- 		data[i].pack = midx_pack_perm(ctx, e->pack_int_id);
--		if (!e->preferred)
-+		if (!e->preferred || ctx->compact)
- 			data[i].pack |= (1U << 31);
- 		data[i].offset = e->offset;
- 	}
-diff --git a/t/t5335-compact-multi-pack-index.sh b/t/t5335-compact-multi-pack-index.sh
-index f889af7fb1d..a306f504305 100755
---- a/t/t5335-compact-multi-pack-index.sh
-+++ b/t/t5335-compact-multi-pack-index.sh
-@@ -65,7 +65,7 @@ test_expect_success 'MIDX compaction with lex-ordered pack names' '
- 		write_packs A B C D E &&
- 		test_line_count = 5 $midx_chain &&
- 
--		git multi-pack-index compact --incremental \
-+		git multi-pack-index compact --incremental --bitmap \
- 			"$(nth_line 2 "$midx_chain")" \
- 			"$(nth_line 4 "$midx_chain")" &&
- 		test_line_count = 3 $midx_chain &&
-@@ -86,7 +86,7 @@ test_expect_success 'MIDX compaction with non-lex-ordered pack names' '
- 		write_packs D C A B E &&
- 		test_line_count = 5 $midx_chain &&
- 
--		git multi-pack-index compact --incremental \
-+		git multi-pack-index compact --incremental --bitmap \
- 			"$(nth_line 2 "$midx_chain")" \
- 			"$(nth_line 4 "$midx_chain")" &&
- 		test_line_count = 3 $midx_chain &&
-@@ -99,4 +99,120 @@ test_expect_success 'MIDX compaction with non-lex-ordered pack names' '
- 	)
- '
- 
-+midx_objs_by_pack () {
-+	awk '/\.pack$/ { split($3, a, "-"); print a[2], $1 }' | sort
-+}
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2120%2Fychin%2Fxdiff-fix-compact-remove-redundant-lines-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2120/ychin/xdiff-fix-compact-remove-redundant-lines-v1
+Pull-Request: https://github.com/git/git/pull/2120
+
+ t/meson.build                         |   1 +
+ t/t4073-diff-shifted-matched-group.sh | 137 ++++++++++++++++++++++++++
+ xdiff/xdiffi.c                        |  43 ++++++++
+ 3 files changed, 181 insertions(+)
+ create mode 100755 t/t4073-diff-shifted-matched-group.sh
+
+diff --git a/t/meson.build b/t/meson.build
+index 7c994d4643..ee233e80da 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -497,6 +497,7 @@ integration_tests = [
+   't4070-diff-pairs.sh',
+   't4071-diff-minimal.sh',
+   't4072-diff-max-depth.sh',
++  't4073-diff-shifted-matched-group.sh',
+   't4100-apply-stat.sh',
+   't4101-apply-nonl.sh',
+   't4102-apply-rename.sh',
+diff --git a/t/t4073-diff-shifted-matched-group.sh b/t/t4073-diff-shifted-matched-group.sh
+new file mode 100755
+index 0000000000..0e915b78a6
+--- /dev/null
++++ b/t/t4073-diff-shifted-matched-group.sh
+@@ -0,0 +1,137 @@
++#!/bin/sh
 +
-+tag_objs_from_pack () {
-+	objs="$(git rev-list --objects --no-object-names "$2")" &&
-+	printf "$1 %s\n" $objs | sort
-+}
++test_description='shifted diff groups re-diffing during histogram diff'
 +
-+test_expect_success 'MIDX compaction preserves pack object selection' '
-+	git init midx-compact-preserve-selection &&
-+	(
-+		cd midx-compact-preserve-selection &&
++. ./test-lib.sh
 +
-+		test_commit A &&
-+		test_commit B &&
++test_expect_success 'shifted diff group should re-diff to minimize patch' '
++	test_write_lines A x A A A x A A A >file1 &&
++	test_write_lines A x A Z A x A A A >file2 &&
 +
-+		# Create two packs, one containing just the objects from
-+		# A, and another containing all objects from the
-+		# repository.
-+		p1="$(echo A | git pack-objects --revs --delta-base-offset \
-+			$packdir/pack-1)" &&
-+		p0="$(echo B | git pack-objects --revs --delta-base-offset \
-+			$packdir/pack-0)" &&
++	file1_h=$(git rev-parse --short $(git hash-object file1)) &&
++	file2_h=$(git rev-parse --short $(git hash-object file2)) &&
 +
-+		echo "pack-1-$p1.idx" | git multi-pack-index write \
-+			--incremental --bitmap --stdin-packs &&
-+		echo "pack-0-$p0.idx" | git multi-pack-index write \
-+			--incremental --bitmap --stdin-packs &&
++	cat >expect <<-EOF &&
++	diff --git a/file1 b/file2
++	index $file1_h..$file2_h 100644
++	--- a/file1
++	+++ b/file2
++	@@ -1,7 +1,7 @@
++	 A
++	 x
++	 A
++	-A
++	+Z
++	 A
++	 x
++	 A
++	EOF
 +
-+		write_packs C &&
-+
-+		git multi-pack-index compact --incremental --bitmap \
-+			"$(nth_line 1 "$midx_chain")" \
-+			"$(nth_line 2 "$midx_chain")" &&
-+
-+
-+		test-tool read-midx --show-objects $objdir \
-+			"$(nth_line 1 "$midx_chain")" >AB.info &&
-+		test-tool read-midx --show-objects $objdir \
-+			"$(nth_line 2 "$midx_chain")" >C.info &&
-+
-+		midx_objs_by_pack <AB.info >AB.actual &&
-+		midx_objs_by_pack <C.info >C.actual &&
-+
-+		{
-+			tag_objs_from_pack 1 A &&
-+			tag_objs_from_pack 0 A..B
-+		} | sort >AB.expect &&
-+		tag_objs_from_pack C B..C >C.expect &&
-+
-+		test_cmp AB.expect AB.actual &&
-+		test_cmp C.expect C.actual
-+	)
++	test_expect_code 1 git diff --no-index --histogram file1 file2 >output &&
++	test_cmp expect output
 +'
 +
-+test_expect_success 'MIDX compaction with bitmaps' '
-+	git init midx-compact-with-bitmaps &&
-+	(
-+		cd midx-compact-with-bitmaps &&
++test_expect_success 're-diff should preserve diff flags' '
++	test_write_lines a b c a b c >file1 &&
++	test_write_lines x " b" z a b c >file2 &&
 +
-+		write_packs foo bar baz quux woot &&
++	file1_h=$(git rev-parse --short $(git hash-object file1)) &&
++	file2_h=$(git rev-parse --short $(git hash-object file2)) &&
 +
-+		test-tool read-midx --bitmap $objdir >bitmap.expect &&
-+		git multi-pack-index compact --incremental --bitmap \
-+			"$(nth_line 2 "$midx_chain")" \
-+			"$(nth_line 4 "$midx_chain")" &&
-+		test-tool read-midx --bitmap $objdir >bitmap.actual &&
++	cat >expect <<-EOF &&
++	diff --git a/file1 b/file2
++	index $file1_h..$file2_h 100644
++	--- a/file1
++	+++ b/file2
++	@@ -1,6 +1,6 @@
++	-a
++	-b
++	-c
++	+x
++	+ b
++	+z
++	 a
++	 b
++	 c
++	EOF
 +
-+		test_cmp bitmap.expect bitmap.actual &&
++	test_expect_code 1 git diff --no-index --histogram file1 file2 >output &&
++	test_cmp expect output &&
 +
-+		true
-+	)
++	cat >expect_iwhite <<-EOF &&
++	diff --git a/file1 b/file2
++	index $file1_h..$file2_h 100644
++	--- a/file1
++	+++ b/file2
++	@@ -1,6 +1,6 @@
++	-a
++	+x
++	  b
++	-c
++	+z
++	 a
++	 b
++	 c
++	EOF
++
++	test_expect_code 1 git diff --no-index --histogram --ignore-all-space file1 file2 >output_iwhite &&
++	test_cmp expect_iwhite output_iwhite
 +'
 +
-+test_expect_success 'MIDX compaction with bitmaps (non-trivial)' '
-+	git init midx-compact-with-bitmaps-non-trivial &&
-+	(
-+		cd midx-compact-with-bitmaps-non-trivial &&
++test_expect_success 'shifting on either side should trigger re-diff properly' '
++	test_write_lines a b c a b c a b c >file1 &&
++	test_write_lines a b c a1 a2 a3 b c1 a b c >file2 &&
 +
-+		git branch -m main &&
++	file1_h=$(git rev-parse --short $(git hash-object file1)) &&
++	file2_h=$(git rev-parse --short $(git hash-object file2)) &&
 +
-+		#               D(4)
-+		#              /
-+		# A(1) --- B(2) --- C(3) --- G(7)
-+		#              \
-+		#               E(5) --- F(6)
-+		write_packs A B C &&
-+		git checkout -b side &&
-+		write_packs D &&
-+		git checkout -b other B &&
-+		write_packs E F &&
-+		git checkout main &&
-+		write_packs G &&
++	cat >expect1 <<-EOF &&
++	diff --git a/file1 b/file2
++	index $file1_h..$file2_h 100644
++	--- a/file1
++	+++ b/file2
++	@@ -1,9 +1,11 @@
++	 a
++	 b
++	 c
++	-a
++	+a1
++	+a2
++	+a3
++	 b
++	-c
++	+c1
++	 a
++	 b
++	 c
++	EOF
 +
-+		cat $midx_chain &&
++	test_expect_code 1 git diff --no-index --histogram file1 file2 >output1 &&
++	test_cmp expect1 output1 &&
 +
-+		# Compact layers 2-4, leaving us with:
-+		#
-+		#  [A, [B, C, D], E, F, G]
-+		git multi-pack-index compact --incremental --bitmap \
-+			"$(nth_line 2 "$midx_chain")" \
-+			"$(nth_line 4 "$midx_chain")" &&
++	cat >expect2 <<-EOF &&
++	diff --git a/file2 b/file1
++	index $file2_h..$file1_h 100644
++	--- a/file2
++	+++ b/file1
++	@@ -1,11 +1,9 @@
++	 a
++	 b
++	 c
++	-a1
++	-a2
++	-a3
++	+a
++	 b
++	-c1
++	+c
++	 a
++	 b
++	 c
++	EOF
 +
-+		# Then compact the top two layers, condensing the above
-+		# such that the new 4th layer contains F and G.
-+		#
-+		#  [A, [B, C, D], E, [F, G]]
-+		git multi-pack-index compact --incremental --bitmap \
-+			"$(nth_line 4 "$midx_chain")" \
-+			"$(nth_line 5 "$midx_chain")" &&
-+
-+		cat $midx_chain
-+	)
++	test_expect_code 1 git diff --no-index --histogram file2 file1 >output2 &&
++	test_cmp expect2 output2
 +'
 +
- test_done
++test_done
+diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+index 6f3998ee54..5d9c7b5434 100644
+--- a/xdiff/xdiffi.c
++++ b/xdiff/xdiffi.c
+@@ -793,6 +793,7 @@ static int group_slide_up(xdfile_t *xdf, struct xdlgroup *g)
+  */
+ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 	struct xdlgroup g, go;
++	struct xdlgroup g_orig, go_orig;
+ 	long earliest_end, end_matching_other;
+ 	long groupsize;
+ 
+@@ -806,6 +807,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 		if (g.end == g.start)
+ 			goto next;
+ 
++		g_orig = g;
++		go_orig = go;
++
+ 		/*
+ 		 * Now shift the change up and then down as far as possible in
+ 		 * each direction. If it bumps into any other changes, merge
+@@ -915,6 +919,45 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			}
+ 		}
+ 
++		/*
++		 * If this has a matching group from the other file, it could
++		 * either be the original match from the diff algorithm, or
++		 * arrived at by shifting and joining groups. When it's the
++		 * latter, it's possible for the two newly joined sides to have
++		 * matching lines. Re-diff the group to mark these matching
++		 * lines as unchanged and remove from the diff output.
++		 *
++		 * Only do this for histogram diff as its LCS algorithm makes
++		 * this scenario possible. In contrast, patience diff finds LCS
++		 * of unique lines that groups cannot be shifted across.
++		 * Myer's diff (standalone or used as fall-back in patience
++		 * diff) already finds minimal edits so it is not possible for
++		 * shifted groups to result in a smaller diff. (Without
++		 * XDF_NEED_MINIMAL, Myer's isn't technically guaranteed to be
++		 * minimal, but it should be so most of the time)
++		 */
++		if (end_matching_other != -1 &&
++				XDF_DIFF_ALG(flags) == XDF_HISTOGRAM_DIFF &&
++				(g.start != g_orig.start ||
++				 g.end != g_orig.end ||
++				 go.start != go_orig.start ||
++				 go.end != go_orig.end)) {
++			xpparam_t xpp;
++			xdfenv_t xe;
++
++			memset(&xpp, 0, sizeof(xpp));
++			xpp.flags = flags & ~XDF_DIFF_ALGORITHM_MASK;
++
++			memcpy(&xe.xdf1, xdf, sizeof(xdfile_t));
++			memcpy(&xe.xdf2, xdfo, sizeof(xdfile_t));
++
++			if (xdl_fall_back_diff(&xe, &xpp,
++					       g.start + 1, g.end - g.start,
++					       go.start + 1, go.end - go.start)) {
++				return -1;
++			}
++		}
++
+ 	next:
+ 		/* Move past the just-processed group: */
+ 		if (group_next(xdf, &g))
+
+base-commit: f0ef5b6d9bcc258e4cbef93839d1b7465d5212b9
 -- 
-2.52.0.171.gd6a4e6b6955
+gitgitgadget
