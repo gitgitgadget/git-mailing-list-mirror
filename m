@@ -1,103 +1,115 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8D02D9EC9
-	for <git@vger.kernel.org>; Sat,  6 Dec 2025 11:43:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656AD13D539
+	for <git@vger.kernel.org>; Sat,  6 Dec 2025 11:46:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765021435; cv=none; b=I/kSlDKUh1AAVpkf2a4RwxtwE+m4OirzKi7eR6TBG7KwwRBgXSNCnRaW3FoMM+ctIXhMBBWQHNvwYD8k7n9FJpX+rH2uXoIpqMnvlY8E7htvl4GQyhAqs7h2SzTNaA2fK2LoZt9CyovJVFfipHEnS4p/uuStKM6z0id0FA3I4BQ=
+	t=1765021586; cv=none; b=NS0abdjzAe3eIYDvs7XSoblHfP3yv7n+nyb7TzQizOb6rmJrIfYku/iULCt5lD761phZq9O9pE717CvZJUXiMU3+v3ZH+C8e2btiPXJfeXDYzB37xGUyXA4E6a22+NEgVPWMyFFq6sqwZB4cnL/Q7rpNvkz9RFDy8NOx9AHjV4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765021435; c=relaxed/simple;
-	bh=0gBdt9GawTmio3bmJrWKfimjym20urTBMv0ukRV4+3o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TlLucfQ5FDWymiTiRIr0MHPJZ67dRlE48UNXoos8x5k2f+l7W+JAn1yx4E1/1nMvV6m1RJGk7Z4wvachmeDyhSyF2BPEJZwT7WsjZezxF6cnt0kntSC5+KzNL/ir3oQpIwp0cNPZk3V6p9WUg79kHlttCgnC1Kw1P0TOZZDEOjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-8b2da4fb076so55521185a.2
-        for <git@vger.kernel.org>; Sat, 06 Dec 2025 03:43:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765021432; x=1765626232;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=xmsUZNjD9Yn1xqOzE7qn8lpMmTQDAN1s/t3Wnb6BnBA=;
-        b=VREMeqPvL3wE5GBwH168i0RKLxdd3OU0JeMINXHxyp7tefTFcWh+/qKMzW8ae1XzuG
-         UUlIMdY61blNXW6BxGQfijioM84baFdAGPJogNp2I37izXVzeTYpDvpe79SVRLlWwkQ6
-         bFxRz5Y++Q3jPZF/hCFcVIKcosYHJZTuFM6OqBehohrpVOdaqrnktj/RkTzLPQSnY+4F
-         Aw49Jb0x7Q9R5Gr8yAbRhTiIxDr32lQf6jT3p7MLNglWYeUyAJonMSt4KO5FzanZqmv3
-         lUSXVhaGLvk2rjjvjGVQH35lAnfoSSkYUSU/NIv0RBkJ0rIpG9ae4dJOd6/ibrU4Rsll
-         MxSA==
-X-Gm-Message-State: AOJu0Yz6FtJIpO3VQn5v7NVryqqCdgD8ScpmKkg4SMzCx4TEggz9AxE4
-	8C5CkU1+QmKubIA6rnxHPuNnzaYPaFB39aAcdr3aLcwEZpFa/3Mr/VOFCYEx9xcXFAMrvsjFrHq
-	9bEXeeLn0IgLyhv5GuGXj5VLkwRBcGAoR3g==
-X-Gm-Gg: ASbGnctF7gOMvylvlrnfCsrriueKyM4j9n9qvS+NwmbkKq+uTAxvBHLgc7rlsZyK2/y
-	c6FeKbESesHH6XefaAvPzcFEKBSZtfmejhUs43dQRpv/6kZUe+sl056Z8fukp/7S4TX6RMRGnxi
-	2tEF1+WeaRqyJPch05OuLkC6pTKYkRPlkH4OJ8yF/Cc5mkBIhIdxkxzW/WZt6T6YCbqH4rpq4JP
-	GlBCsg4mKethUuAQYO1WlyNWhEYQoLz8Xgwq5e1GbYS/tMV7O3Fq8KgQXyutywg2AWGYWy6WHqo
-	QJUP5YIojsnNmpghIW8ASuLlR1f8gwq6+PI9B0I=
-X-Google-Smtp-Source: AGHT+IGXzynPhUUrFIH8Y2g25wwMIFsGnTl4kwgaxCAV/Q8Kxmax/y+zsj3XWSV4bNi3bv6N2a+ftyPJRvaLWFeb8sM=
-X-Received: by 2002:a05:622a:1ba1:b0:4ed:67c4:b7b9 with SMTP id
- d75a77b69052e-4f03fd5240dmr22580171cf.1.1765021432265; Sat, 06 Dec 2025
- 03:43:52 -0800 (PST)
+	s=arc-20240116; t=1765021586; c=relaxed/simple;
+	bh=dU+lF8iVkOQO3InpTHaPV8vA0IZY0IEz6+e+CuCw2Ps=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BWWRka2X4tqD9/gZlp3cXk+u73jzsFnT46WzUZutzLdZJJXOD+PI1AzLri2p2qBZ+zP3NSOd1giPG4mA1GdmpUifze1j++ap8g3iOPuLBOsX4aaFzuy2lxQTuwGgQS93ZmqzKur3i/yQssPpGwFD6LRm9g4QDAdRS8b/sxG+j6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pOl0VAa7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZSlanXDa; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pOl0VAa7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZSlanXDa"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7AA527A0083;
+	Sat,  6 Dec 2025 06:46:23 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Sat, 06 Dec 2025 06:46:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1765021583; x=1765107983; bh=tZjeuAY1Iy
+	hOGyzakN2wvT00a9rrH9EJOYhW0PdvdYg=; b=pOl0VAa7UWIqPsjw9IipJlDk5K
+	61RujwkHsAQB4kP/5RVhr8ngIS58zfcWAFImOHjvihpwUMwCUnHEaZkwDACFyai4
+	Ss+ibULQ9uGLW+yL5b9vHQdUk7i+eoIZMU8oOrpV65pY+r8kc7asTZgi8JYGzdzd
+	GVZygDKq4W9hJIIyxrVt/dlL7SRQndGC1rdd7vPwhVmgqiS3FVGFml6X/weZwSIg
+	Xbid5XisaoOIq4thPgXG5vMgGntV5A/SVCj8Za6mGVRASZmlEokEKPib8U6+E2bT
+	Zw60rtZ5oNQhL7oljHZjbv5sbVaIvT+ElDbobN1gx8NZY0bwJEzVL4pbQ6Og==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765021583; x=1765107983; bh=tZjeuAY1IyhOGyzakN2wvT00a9rrH9EJOYh
+	W0PdvdYg=; b=ZSlanXDao/5v/Uv6c0cKrcdSEBW9li4VXyuZ7qJeuhfIs5OTlv8
+	JVvg2kT135aBMcCTuODYAGF20R8PG8wzoskcw7xyCMKgaz+oTjiAeMS89CKfFq6/
+	8EuU9YEc1Z3D9w0L5BxggkX1ogmKnywqfw1u5MDt17Uz89uAHbrS4VfcgdVq/SYL
+	fmiDMw4Urdibkb2Wyn6soYEe2Xxcjnteuee4UEB2k8wOP5WemyDYegyz96ZwJs6K
+	X0f8edkvTKX5fp8l5eUMRZffa9vKh8zDzcbsUH5UUHzu3l3m3jrksIJperExu68F
+	LZJVn3Ma6nYQtOrfv0iRAUBYa5dCEuZ4aHw==
+X-ME-Sender: <xms:jxc0aZzO8Rrpf0-53wyl9HHyAi747yBFUAPtD_bDzTRj8TiU3VL1Kg>
+    <xme:jxc0aQThk9skvqVBk-HvuzBpHoA_XT581i1ttr22mBJehQ3pJg00QVdzyQnlD0Vjw
+    8dfc_zMBK0--Q0NrJzqDWH0_y-ILt0EtFKkcBpcEPFf1U4Cvtlnqw>
+X-ME-Received: <xmr:jxc0aYV0uq9Ba-ANHF9GVNkz22HpgXWGEowc8ckdeIMgRI3TuP0-fzJeWHtJSEUMBHKF-NZ8AJBhBMndJMwqsqCP698R8P7M11OoxjCA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdekiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghp
+    thhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:jxc0aaYoz_Ay_oViEyJKGZfGzb7M8pyFSnn083lDQ7j2EQGcl8dw8A>
+    <xmx:jxc0aW2oAsGh5AhA-BNlUS-UIZZFwgmG-Mq3oVXgsbPVWT3WlMFjkA>
+    <xmx:jxc0aUjyhapn1gDOD0jlxWa9i7oQxJrA6cvikH7Ggth6Sz5fe4o6-Q>
+    <xmx:jxc0aSbs_0RVSxXf9MmMQanBdBfqs6hP1RJzQNy1HOhB38UzDcSZEQ>
+    <xmx:jxc0aaSHkrBy3_M-oux2k120ms9Vd8J5mO3Qw6EtirKJ9Pr5fnykCcMN>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 6 Dec 2025 06:46:22 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3f37196b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sat, 6 Dec 2025 11:46:20 +0000 (UTC)
+Date: Sat, 6 Dec 2025 12:46:14 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 1/2] t/unit-tests: update clar to 39f11fe
+Message-ID: <aTQXhoIvqn7f3dzb@pks.im>
+References: <20251205-b4-pks-clar-update-v1-0-fd70aac2ab90@pks.im>
+ <20251205-b4-pks-clar-update-v1-1-fd70aac2ab90@pks.im>
+ <xmqq7bv05gdg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251205-odb-related-fixes-v1-0-ef4250abb584@pks.im>
- <20251205-odb-related-fixes-v1-3-ef4250abb584@pks.im> <CAPig+cRW6tXFTqqnhH1Be33TgzT2dsdzNLFii3Now7+DNiTTvw@mail.gmail.com>
- <aTQVt4zgMbsX_6tD@pks.im>
-In-Reply-To: <aTQVt4zgMbsX_6tD@pks.im>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sat, 6 Dec 2025 06:43:40 -0500
-X-Gm-Features: AQt7F2qQeeSNwYsU4ITCOvpWHgCtgC658CuxMQN7Xpa_evaYqOrDeNW5AQnarIo
-Message-ID: <CAPig+cQNKQt=kMaNYNWAPAfGej-mhLUR_BXS4J58JjVUtG7VKw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] odb: properly close sources before freeing them
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq7bv05gdg.fsf@gitster.g>
 
-On Sat, Dec 6, 2025 at 6:38=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
-> On Fri, Dec 05, 2025 at 06:14:22PM -0500, Eric Sunshine wrote:
-> > On Fri, Dec 5, 2025 at 6:36=E2=80=AFAM Patrick Steinhardt <ps@pks.im> w=
-rote:
-> > > In the next commit we are about to move the packfile store into the O=
-DB
-> > > source so that we have one store per source. This will lead to a memo=
-ry
-> > > leak in the following commit when reading data from a submodule via
-> > > git-grep(1):
-> > > [...]
-> > > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> >
-> > Considering that this is patch [3/3], to what does "In the next
-> > commit..." refer?
->
-> Good catch! I split this out of another, bigger, patch series. But as
-> I've started to hit the leak in a different patch series, as well, I
-> decided to split it out into a smaller patch series.
->
-> I've queued the following change locally, but will refrain from sending
-> out a new version for now.
->
-> 3:  a06d0716c3 ! 3:  c9ca233c29 odb: properly close sources before freein=
-g them
->     @@ Commit message
->          In the next commit we are about to move the packfile store into =
-the ODB
->     -    source so that we have one store per source. This will lead to a=
- memory
->     -    leak in the following commit when reading data from a submodule =
-via
->     -    git-grep(1):
->     +    source so that we have one store per source. This can lead to a =
-memory
->     +    leak when reading data from a submodule via git-grep(1):
+On Sat, Dec 06, 2025 at 02:27:55PM +0900, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > diff --git a/t/unit-tests/clar/test/expected/quiet b/t/unit-tests/clar/test/expected/quiet
+> > index 280c99d8ad..a93273b5a2 100644
+> > --- a/t/unit-tests/clar/test/expected/quiet
+> > +++ b/t/unit-tests/clar/test/expected/quiet
+> > @@ -18,27 +18,57 @@ combined::strings_with_length [file:42]
+> > ...
+> > +  15) Failure:
+> > +combined::compare_u_with_format [file:42]
+> > +  Expected comparison to hold: two < 1
+> > +  foo: bar
+> > +
+> > diff ...
+> 
+> If these files in t/unit-tests/clar/test/expected/ directory are
+> expected to end in a blank line, can we teach our .gitattributes
+> file that these are OK?
 
-I would think that you would also want to drop the "In the next commit
-we are about to..." bit (considering, again, that this is patch
-[3/3]).
+Yup, will do. Thanks!
+
+Patrick
