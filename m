@@ -1,72 +1,72 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C483BB40
-	for <git@vger.kernel.org>; Sat,  6 Dec 2025 20:31:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFFBCA5A
+	for <git@vger.kernel.org>; Sat,  6 Dec 2025 20:31:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765053070; cv=none; b=roCm4CEOSa49Y0bN3Ya7k9QDf95KvMJ30n7W+7Ilc7sAsKNsd7RF4y7IRCmrtRjQN/GVV1oCHtgQrgIRYJlI4f+TLtjqFK2+XxmBp6d0TyOia2Sp0KyPrYGlCVcfJTiQAmGRKQBUbXTJVky0wt1cgeWgP89P2L9ZMXbn5Y3OSGo=
+	t=1765053072; cv=none; b=kkkuCANtSmcHX/LftjvFv0ZvMRbu1vyBDW8nSST34uIgJBj5z17EN+877X0PI/3AzTN0hbAHSvTnNwYNyJNjmoiNJWlUNbzxokpTswL+6shUngh06X5xchmQkFNq5OgfRNNblpdGSOtMulDJrgiptjTezZLHfDV9TdokHZ5ez+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765053070; c=relaxed/simple;
-	bh=vuC6ITXnGUTJJDBKJlWKyks4rEA/8u1mTMJxKrELPz0=;
+	s=arc-20240116; t=1765053072; c=relaxed/simple;
+	bh=sT7//Fy5Ju7tFT9ZC+pNouk91CThhxUUz/O+9bP59Uc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pYjDbOu2nn7+YGvrBCdcfiX5j5g0Xp+20pQ0x8LD8Ac1objyucEHFYb8huZCTDCM+ZI5gXCYkfpEBGyu2S8Uwup3cPDdoruCBa7CwnvwmQ7paCQ7lJqM2KU2G81gxInSn74rBuT34QUp2UkIlAo0FgJCHFWoU/nNZsmqMlykGwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=WQgZLOdy; arc=none smtp.client-ip=209.85.128.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=YMNLku3KR04iCHA06VH48F95JEAWjYzjvlVUGYy+q72sqFp567WZlSnC4F/8EcCr90f41qrqJM0tkifF6CwKTGOXKzrejihCfaOiUObakrHatUSS0kkCymdX6E1TVjWE+k80zNkJkEcA8wNwTo+XAzzPAFZQX5Jrai12x3DOnq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=nwuFfhiu; arc=none smtp.client-ip=74.125.224.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="WQgZLOdy"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-786d1658793so27414947b3.1
-        for <git@vger.kernel.org>; Sat, 06 Dec 2025 12:31:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="nwuFfhiu"
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-641e4744e59so3205068d50.2
+        for <git@vger.kernel.org>; Sat, 06 Dec 2025 12:31:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1765053066; x=1765657866; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1765053069; x=1765657869; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dt3H6zLktH3IZNZehfyPEunp5ASqxk/mgDWQ1ykeJK4=;
-        b=WQgZLOdyrw1Ys8QWDzXcGMOtSQcBl6aow+fk/khPkjQI8V8GRY5l3KI3emM9qe5gOz
-         VnGuJa9l7HTOn/u/vxORGVQXqVJwiaDeVBgC/HMpW8wyNx/inavlym0g+q8lEZZ1P/Ct
-         m6V7O72lmu0orwII7n48ZRYGWPkxH35Gzs4ljzIzWbGATKOBqBvzNOSSTAuzHoan5aEb
-         iWdeFiV3a1YoJe7tiYDBbCRnOAL6sOegqc0BbY6g89KHJABlAbjenxo1X6tdrIvq7HR4
-         HQZjECNQ9Fy84YMdyfNzn1g6pRY3D0pSEbdCRicZ1td2dBE5Qn92J1FplrqTkpOlXk3b
-         9J5A==
+        bh=eGzExxNzoMbyH6iiUsg3/XKnNi+t7r6wPfXpLSLakb0=;
+        b=nwuFfhiutFC6uqC4E1QyYCONic+qJhg1poR1NpZVpEaTgzIlVB6mmvBht8lTnjzzmr
+         clXZLUmEW6IdhXJBMBwnT6b94/4qCTbGv4DjoDyDpcMMUbtdYJKsrcDh7m5Ju3xMenVY
+         hwY4skbrV9vzMw0BjiS4M4WkUqRze+JtPnhnkIQSaWHbuCmiHfXZIwsOoH4f8nxFzkyJ
+         Rr8X+VENF7wplsOp2mxPhNU3g1BsjtWvc0atYgQl8hgs09WEcZUrdWBARNaQbvWkgfL/
+         JwfzSkBkOkdpkTOLhAdWW0H9u+XFEVVXsi5eOyrNrhRN+hBO0RVUBYyuXAIEmzq9sLc0
+         ypPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765053066; x=1765657866;
+        d=1e100.net; s=20230601; t=1765053069; x=1765657869;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dt3H6zLktH3IZNZehfyPEunp5ASqxk/mgDWQ1ykeJK4=;
-        b=TX0p/jqLpJkGdhKY/qGYBs0Ath9NTV/yuVM7i00GUFE66duvaxRFuOcu22JFnrPrjO
-         gEJ3VK4w9PaGQN+zRf1wQMDcS1VZ0vylkQSTecxnwGDwMRqTxkKXQqKGYc0UF790qcdC
-         p8mSsLUSxTYcTRdrwCRF3Lhduvl4CoitBINm8Or7W7ZmqpYggOXEdAMTmP9pvxPP70C8
-         SsKsX4XZVvpiQnB2YxlB4383FZ74TScutE/DGkj7pBwCYkTefUl6LEbe4GDUHDvMoRJ6
-         c2krEfS5XjqOHwR1lmBb2Db5eWAoWtK8gg66xOyzcNuqGPz6FTX9I0TPSjBPGQH7v7Wu
-         CcUQ==
-X-Gm-Message-State: AOJu0YxcbEAtwe6wbG74XVOvD4Ofgvf9NCPqT8ReFpVFQB6cEDC2kT3r
-	EcJMoVgEMcBx9GQYGVLKFUeKYrjuDuol24jp/MaXhd7VGwBXoN6V5eyDGuSpofhxYixDxxCvMo+
-	yxKYDgR8=
-X-Gm-Gg: ASbGncvpVa+IGNnljdOzwZJgnk8q32r3ukQNv+vbzW7edMYF7o/I2ni1h63RYjvDT3p
-	g5hNO6IxDlxuo0d/ciqz4e/U+feKLmBWeiEBxHPQ9IAZxZYM0J6xUkk3r1GnOTfck0mW3bLJ8V8
-	/5N4+NtuV9AiRnik8P/5KaGKMd0gZxvbPd6lQUpnoNseo5Txi/N/Qywa6kpDQNMjk8aWiLzneJX
-	H0KlqkX5aCKyR11J2wHANM9Hw4LaucPAeIcdNhvFFthn1/XnP8URIT78nl8Dt8a52RoY3kvMKOJ
-	WQ7KlHU4aNgXyi4/b7QwVuvDqR2whjFC4CucuWg+x0D+f2NHAa0jgdi7lW4DpIup8bARvDIku1V
-	ypoIM49XPQf5B5NBP1DmSimB8Pfe2tS1nHMIOvAK3A5qQsZssWBJrQuObATvF8MidcZnKXQaUjm
-	fmzk27s53Du+jfMXNkE7+7PVH+4Y2RHLJfcFnmZ+NAsqW+/P592Mz894jY/R2Q06It4bXEMJPqB
-	cHH7/VfKr/ofGPXuAkJODEQ4BNg
-X-Google-Smtp-Source: AGHT+IG+GyNfSqKnAfa42SNnIiokbIZ/YfKB1FXW8U6MRjrU/5sR2J2NOeByYK3YevgIBhP9PweYWw==
-X-Received: by 2002:a05:690c:46c7:b0:786:4459:cb84 with SMTP id 00721157ae682-78c33b7641emr54669697b3.29.1765053065961;
-        Sat, 06 Dec 2025 12:31:05 -0800 (PST)
+        bh=eGzExxNzoMbyH6iiUsg3/XKnNi+t7r6wPfXpLSLakb0=;
+        b=kVukMPX0FRTpGLrp1ULFLJc45M7IfB7Nl9xIbqN2FHvsG3qkHybmXspwUiareSIKR6
+         NpyyeKWqk59Yc0DQYcaMMlXfCw0gUMb80g7SrB/MPHwlBcMk+ryHF+SB+QLig/aFYs1r
+         1gu0R85RWMlJ1/Ut+ZAFSs9a8JBptWG/A9PORSXJ1BU7igwPZ8fw3vsiiIMnnMSXntM/
+         ijwpeAlTgc9FwkvYrH3a29wH/FywwbF5qqO1YsWi0UaouqxkN9AUKHr98tG9JnlR9rIs
+         NZc477vfkHvrBIMNZB4bBDBFlQUnkr5dsDKArXklRmq1yVIiEhHYycWwuNG+KjXS6fS9
+         hMqA==
+X-Gm-Message-State: AOJu0Yw+WnljTbUFHhJXRhuKO2vYHGaSNVRUtArOxBFrolxcr7HV99sC
+	/cdz5RZyk3ssl+RC8qSc2yBkFN85mqHhDkUjr7+G6SpMp2cl9JUPKjaxEjdMS9jq/+QMf6LD2Ol
+	Z0sjBDHI=
+X-Gm-Gg: ASbGnctwnev3EN2c7B87fZygEi2LJuMXxaOoTX22IEtUcOgh7tFWJzJnkEIOVXVRH94
+	a/Rsb14QU68tJXQQC7wjIdUJSJs5PWIBV0EnoNplm51jNzzNk59slFshTGyuZ5l70k31AHEf9Ex
+	KvMPobS1gN5VYzLdbbZfLh3BeiZf4SgJ4LepSqDnSL/g5qeSZgAqAIOK5YNPNiUSCj1pSd+HGRG
+	TAr8FLDjkbJfQmEwUCxLnKC/VFz7vCgtUnMI8LY4FzGKBogTP0bXZ1TwgxX9R8uR2ePF2SozTNR
+	OXT5F/SQtHEgQ6U9anRFd4+WkwBb9YGXib5U/hfzw7Q6/dVtuAgn/l2ZDjkaxbzPeOtHGM6oDub
+	qINs29qLnEFpqsTn6vYGQcBqHIOI5zR+ySF7NIl7wdvEZRsS6Ax1H6IQcKNVIQ+3QdznVXzZzFO
+	bnVzUCrd4GcaIUCRZ3+k6HGnsoBQNdxUg/S35moSxcnEXAGxUZVr1NjJi51kxU991O4AYSu32XL
+	mdicvhtIV5kXja8bg==
+X-Google-Smtp-Source: AGHT+IGYSxrsKlOWDw/vtA0+OgD8EjTfHPSWPEurGntat6Soe7dwZ68hXpBPpVPHSvVEGRZDWZ7Wtg==
+X-Received: by 2002:a05:690e:190b:b0:640:d0d4:526d with SMTP id 956f58d0204a3-6444e746280mr2388724d50.9.1765053068954;
+        Sat, 06 Dec 2025 12:31:08 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78c1b7902e7sm30647897b3.46.2025.12.06.12.31.05
+        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-6443f2b7d81sm3377093d50.7.2025.12.06.12.31.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Dec 2025 12:31:05 -0800 (PST)
-Date: Sat, 6 Dec 2025 15:31:04 -0500
+        Sat, 06 Dec 2025 12:31:08 -0800 (PST)
+Date: Sat, 6 Dec 2025 15:31:07 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 02/17] midx: split `get_midx_checksum()` by adding
- `get_midx_hash()`
-Message-ID: <d583a169f08eea9d750622c6e3cf79774a2a68e7.1765053054.git.me@ttaylorr.com>
+Subject: [PATCH 03/17] builtin/multi-pack-index.c: make '--progress' a common
+ option
+Message-ID: <35377d47c36b4ea28428cfa562dd7b1e2cb00656.1765053054.git.me@ttaylorr.com>
 References: <cover.1765053054.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -78,175 +78,82 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1765053054.git.me@ttaylorr.com>
 
-When trying to print out, say, the hexadecimal representation of a
-MIDX's hash, our code will do something like:
+All multi-pack-index sub-commands (write, verify, repack, and expire)
+support a '--progress' command-line option, despite not listing it as
+one of the common options in `common_opts`.
 
-    hash_to_hex_algop(get_midx_checksum(m),
-                      m->source->odb->repo->hash_algo);
-
-, which is both cumbersome and repetitive. In fact, all but a handful of
-callers to `get_midx_checksum()` do exactly the above. Reduce the
-repetitive nature of calling `get_midx_checksum()` by having it return a
-pointer into a static buffer containing the above result.
-
-For the handful of callers that do need to compare the raw bytes and
-don't want to deal with an encoded copy (e.g., because they are passing
-it to hasheq() or similar), introduce `get_midx_hash()` which returns
-the raw bytes.
+As a result each sub-command declares its own `OPT_BIT()` for a
+"--progress" command-line option. Centralize this within the
+`common_opts` to avoid re-declaring it in each sub-command.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx-write.c              | 8 +++-----
- midx.c                    | 8 +++++++-
- midx.h                    | 3 ++-
- pack-bitmap.c             | 9 ++++-----
- pack-revindex.c           | 4 ++--
- t/helper/test-read-midx.c | 4 ++--
- 6 files changed, 20 insertions(+), 16 deletions(-)
+ Documentation/git-multi-pack-index.adoc |  2 ++
+ builtin/multi-pack-index.c              | 10 ++--------
+ 2 files changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/midx-write.c b/midx-write.c
-index 23e61cb0001..73d24fabbc6 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -955,7 +955,7 @@ static int link_midx_to_chain(struct multi_pack_index *m)
- 	}
+diff --git a/Documentation/git-multi-pack-index.adoc b/Documentation/git-multi-pack-index.adoc
+index 2f642697e9e..a4550e28bed 100644
+--- a/Documentation/git-multi-pack-index.adoc
++++ b/Documentation/git-multi-pack-index.adoc
+@@ -18,6 +18,8 @@ Write or verify a multi-pack-index (MIDX) file.
+ OPTIONS
+ -------
  
- 	for (i = 0; i < ARRAY_SIZE(midx_exts); i++) {
--		const unsigned char *hash = get_midx_checksum(m);
-+		const unsigned char *hash = get_midx_hash(m);
- 
- 		get_midx_filename_ext(m->source, &from,
- 				      hash, midx_exts[i].non_split);
-@@ -1086,8 +1086,7 @@ static int write_midx_internal(struct odb_source *source,
- 		while (m) {
- 			if (flags & MIDX_WRITE_BITMAP && load_midx_revindex(m)) {
- 				error(_("could not load reverse index for MIDX %s"),
--				      hash_to_hex_algop(get_midx_checksum(m),
--							m->source->odb->repo->hash_algo));
-+				      get_midx_checksum(m));
- 				goto cleanup;
- 			}
- 			ctx.num_multi_pack_indexes_before++;
-@@ -1445,8 +1444,7 @@ static int write_midx_internal(struct odb_source *source,
- 		for (uint32_t i = 0; i < ctx.num_multi_pack_indexes_before; i++) {
- 			uint32_t j = ctx.num_multi_pack_indexes_before - i - 1;
- 
--			keep_hashes[j] = xstrdup(hash_to_hex_algop(get_midx_checksum(m),
--								   r->hash_algo));
-+			keep_hashes[j] = xstrdup(get_midx_checksum(m));
- 			m = m->base_midx;
- 		}
- 
-diff --git a/midx.c b/midx.c
-index 6c01f0fa522..f9b11de9ca9 100644
---- a/midx.c
-+++ b/midx.c
-@@ -24,7 +24,13 @@ void clear_incremental_midx_files_ext(struct odb_source *source, const char *ext
- int cmp_idx_or_pack_name(const char *idx_or_pack_name,
- 			 const char *idx_name);
- 
--const unsigned char *get_midx_checksum(const struct multi_pack_index *m)
-+const char *get_midx_checksum(const struct multi_pack_index *m)
-+{
-+	return hash_to_hex_algop(get_midx_hash(m),
-+				 m->source->odb->repo->hash_algo);
-+}
++The following command-line options are applicable to all sub-commands:
 +
-+const unsigned char *get_midx_hash(const struct multi_pack_index *m)
+ --object-dir=<dir>::
+ 	Use given directory for the location of Git objects. We check
+ 	`<dir>/packs/multi-pack-index` for the current MIDX file, and
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index 5f364aa816b..ca98d4c3ba3 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -84,6 +84,8 @@ static struct option common_opts[] = {
+ 	  N_("directory"),
+ 	  N_("object directory containing set of packfile and pack-index pairs"),
+ 	  parse_object_dir),
++	OPT_BIT(0, "progress", &opts.flags, N_("force progress reporting"),
++		MIDX_PROGRESS),
+ 	OPT_END(),
+ };
+ 
+@@ -138,8 +140,6 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
+ 			   N_("pack for reuse when computing a multi-pack bitmap")),
+ 		OPT_BIT(0, "bitmap", &opts.flags, N_("write multi-pack bitmap"),
+ 			MIDX_WRITE_BITMAP | MIDX_WRITE_REV_INDEX),
+-		OPT_BIT(0, "progress", &opts.flags,
+-			N_("force progress reporting"), MIDX_PROGRESS),
+ 		OPT_BIT(0, "incremental", &opts.flags,
+ 			N_("write a new incremental MIDX"), MIDX_WRITE_INCREMENTAL),
+ 		OPT_BOOL(0, "stdin-packs", &opts.stdin_packs,
+@@ -200,8 +200,6 @@ static int cmd_multi_pack_index_verify(int argc, const char **argv,
  {
- 	return m->data + m->data_len - m->source->odb->repo->hash_algo->rawsz;
- }
-diff --git a/midx.h b/midx.h
-index 7c7e0b59121..e188ffeb578 100644
---- a/midx.h
-+++ b/midx.h
-@@ -85,7 +85,8 @@ struct multi_pack_index {
- #define MIDX_EXT_BITMAP "bitmap"
- #define MIDX_EXT_MIDX "midx"
- 
--const unsigned char *get_midx_checksum(const struct multi_pack_index *m);
-+const char *get_midx_checksum(const struct multi_pack_index *m) /* static buffer */;
-+const unsigned char *get_midx_hash(const struct multi_pack_index *m);
- void get_midx_filename(struct odb_source *source, struct strbuf *out);
- void get_midx_filename_ext(struct odb_source *source, struct strbuf *out,
- 			   const unsigned char *hash, const char *ext);
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 8ca79725b1d..f466ed2ddcb 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -441,11 +441,11 @@ char *midx_bitmap_filename(struct multi_pack_index *midx)
- 	struct strbuf buf = STRBUF_INIT;
- 	if (midx->has_chain)
- 		get_split_midx_filename_ext(midx->source, &buf,
--					    get_midx_checksum(midx),
-+					    get_midx_hash(midx),
- 					    MIDX_EXT_BITMAP);
- 	else
- 		get_midx_filename_ext(midx->source, &buf,
--				      get_midx_checksum(midx),
-+				      get_midx_hash(midx),
- 				      MIDX_EXT_BITMAP);
- 
- 	return strbuf_detach(&buf, NULL);
-@@ -502,7 +502,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
- 	if (load_bitmap_header(bitmap_git) < 0)
- 		goto cleanup;
- 
--	if (!hasheq(get_midx_checksum(bitmap_git->midx), bitmap_git->checksum,
-+	if (!hasheq(get_midx_hash(bitmap_git->midx), bitmap_git->checksum,
- 		    bitmap_repo(bitmap_git)->hash_algo)) {
- 		error(_("checksum doesn't match in MIDX and bitmap"));
- 		goto cleanup;
-@@ -2820,8 +2820,7 @@ void test_bitmap_walk(struct rev_info *revs)
- 
- 		if (bitmap_is_midx(found))
- 			fprintf_ln(stderr, "Located via MIDX '%s'.",
--				   hash_to_hex_algop(get_midx_checksum(found->midx),
--						     revs->repo->hash_algo));
-+				   get_midx_checksum(found->midx));
- 		else
- 			fprintf_ln(stderr, "Located via pack '%s'.",
- 				   hash_to_hex_algop(found->pack->hash,
-diff --git a/pack-revindex.c b/pack-revindex.c
-index d0791cc4938..016195ceb93 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -390,11 +390,11 @@ int load_midx_revindex(struct multi_pack_index *m)
- 
- 	if (m->has_chain)
- 		get_split_midx_filename_ext(m->source, &revindex_name,
--					    get_midx_checksum(m),
-+					    get_midx_hash(m),
- 					    MIDX_EXT_REV);
- 	else
- 		get_midx_filename_ext(m->source, &revindex_name,
--				      get_midx_checksum(m),
-+				      get_midx_hash(m),
- 				      MIDX_EXT_REV);
- 
- 	ret = load_revindex_from_disk(m->source->odb->repo->hash_algo,
-diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
-index 6de5d1665af..dee603b3cd0 100644
---- a/t/helper/test-read-midx.c
-+++ b/t/helper/test-read-midx.c
-@@ -34,7 +34,7 @@ static int read_midx_file(const char *object_dir, const char *checksum,
- 		return 1;
- 
- 	if (checksum) {
--		while (m && strcmp(hash_to_hex(get_midx_checksum(m)), checksum))
-+		while (m && strcmp(get_midx_checksum(m), checksum))
- 			m = m->base_midx;
- 		if (!m)
- 			return 1;
-@@ -94,7 +94,7 @@ static int read_midx_checksum(const char *object_dir)
- 	m = setup_midx(object_dir);
- 	if (!m)
- 		return 1;
--	printf("%s\n", hash_to_hex(get_midx_checksum(m)));
-+	printf("%s\n", get_midx_checksum(m));
- 
- 	close_midx(m);
- 	return 0;
+ 	struct option *options;
+ 	static struct option builtin_multi_pack_index_verify_options[] = {
+-		OPT_BIT(0, "progress", &opts.flags,
+-			N_("force progress reporting"), MIDX_PROGRESS),
+ 		OPT_END(),
+ 	};
+ 	struct odb_source *source;
+@@ -231,8 +229,6 @@ static int cmd_multi_pack_index_expire(int argc, const char **argv,
+ {
+ 	struct option *options;
+ 	static struct option builtin_multi_pack_index_expire_options[] = {
+-		OPT_BIT(0, "progress", &opts.flags,
+-			N_("force progress reporting"), MIDX_PROGRESS),
+ 		OPT_END(),
+ 	};
+ 	struct odb_source *source;
+@@ -264,8 +260,6 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv,
+ 	static struct option builtin_multi_pack_index_repack_options[] = {
+ 		OPT_UNSIGNED(0, "batch-size", &opts.batch_size,
+ 		  N_("during repack, collect pack-files of smaller size into a batch that is larger than this size")),
+-		OPT_BIT(0, "progress", &opts.flags,
+-		  N_("force progress reporting"), MIDX_PROGRESS),
+ 		OPT_END(),
+ 	};
+ 	struct odb_source *source;
 -- 
 2.52.0.171.gd6a4e6b6955
 
