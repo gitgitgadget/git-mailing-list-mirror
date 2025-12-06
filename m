@@ -1,71 +1,73 @@
-Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F625CA5A
-	for <git@vger.kernel.org>; Sat,  6 Dec 2025 20:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C483BB40
+	for <git@vger.kernel.org>; Sat,  6 Dec 2025 20:31:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765053068; cv=none; b=Hl9efvPIcXEHpYSNfLdL3ZbYPRegKC1MeU+/6ErJKgxT4F7jA0bu6B+QyPrkTqAOoSmwi3f5k/p8EUPt3D1acBw42u5BI1IPdQ13nGLTzLn6CqzdOFKVs6SgkiJdTlxfsvulL1WQgpfhNScKwhHIQ8hQbKj6WFy9ug4jOi+K43I=
+	t=1765053070; cv=none; b=roCm4CEOSa49Y0bN3Ya7k9QDf95KvMJ30n7W+7Ilc7sAsKNsd7RF4y7IRCmrtRjQN/GVV1oCHtgQrgIRYJlI4f+TLtjqFK2+XxmBp6d0TyOia2Sp0KyPrYGlCVcfJTiQAmGRKQBUbXTJVky0wt1cgeWgP89P2L9ZMXbn5Y3OSGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765053068; c=relaxed/simple;
-	bh=h9wFGX2i+XRf3sHV3bE8peh7ByB7PP62JdC+xB1C9xE=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=CwetfZyBlecZLeoWENWFQ5CZE82WVrD9K4liGFzV/JOl33mH1+OIBqu/ot+BQD4F3KPRBuePXsucEA9fJTEEVIIeoMY2Jr3ULK/ZayY84SmuSSmpCmMNMY9ARP1V2yEdQYxQn/s+WA4USq79oyz5nCjh72UG7kIWQdyFCj1QnYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=WVkfIaQs; arc=none smtp.client-ip=74.125.224.48
+	s=arc-20240116; t=1765053070; c=relaxed/simple;
+	bh=vuC6ITXnGUTJJDBKJlWKyks4rEA/8u1mTMJxKrELPz0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pYjDbOu2nn7+YGvrBCdcfiX5j5g0Xp+20pQ0x8LD8Ac1objyucEHFYb8huZCTDCM+ZI5gXCYkfpEBGyu2S8Uwup3cPDdoruCBa7CwnvwmQ7paCQ7lJqM2KU2G81gxInSn74rBuT34QUp2UkIlAo0FgJCHFWoU/nNZsmqMlykGwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=WQgZLOdy; arc=none smtp.client-ip=209.85.128.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="WVkfIaQs"
-Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-64308342458so2951756d50.0
-        for <git@vger.kernel.org>; Sat, 06 Dec 2025 12:31:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="WQgZLOdy"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-786d1658793so27414947b3.1
+        for <git@vger.kernel.org>; Sat, 06 Dec 2025 12:31:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1765053059; x=1765657859; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ACXcOUGUgqWnDdN7SjAcKHIM75qE8aAQtDSSHgevjKc=;
-        b=WVkfIaQs4ejnZtZv86y3gRPXqw4+hMVJBPcWqpHRi37oxYFvv9JhuU7GCvtTGKvzLs
-         skSZzesTF0c5S9r7iZ4/j/vz1jErscuSp+V8DjfQKWWx+7k1DumiS/n/IRR1GpSYQ2Nu
-         ULKPvvHO4TJZqK3kyyC7bKwUnA6dvFP+/VLFD6at6j96ECnpmocceX20VAAsn9ev44vu
-         XLqtuAKOuUjfBXFfeXvgfrND2IR/8hiBhhCzXsyBChKpwFR/zjXzOt+l42RhgIezT5IG
-         F4KAu4KZSssiqhFbsoFAeu0lruqO86w0lhy6UvnU2esI61rZjB0F+bs+pq/pZBCgVFoZ
-         /+aA==
+        d=ttaylorr.com; s=google; t=1765053066; x=1765657866; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dt3H6zLktH3IZNZehfyPEunp5ASqxk/mgDWQ1ykeJK4=;
+        b=WQgZLOdyrw1Ys8QWDzXcGMOtSQcBl6aow+fk/khPkjQI8V8GRY5l3KI3emM9qe5gOz
+         VnGuJa9l7HTOn/u/vxORGVQXqVJwiaDeVBgC/HMpW8wyNx/inavlym0g+q8lEZZ1P/Ct
+         m6V7O72lmu0orwII7n48ZRYGWPkxH35Gzs4ljzIzWbGATKOBqBvzNOSSTAuzHoan5aEb
+         iWdeFiV3a1YoJe7tiYDBbCRnOAL6sOegqc0BbY6g89KHJABlAbjenxo1X6tdrIvq7HR4
+         HQZjECNQ9Fy84YMdyfNzn1g6pRY3D0pSEbdCRicZ1td2dBE5Qn92J1FplrqTkpOlXk3b
+         9J5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765053059; x=1765657859;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ACXcOUGUgqWnDdN7SjAcKHIM75qE8aAQtDSSHgevjKc=;
-        b=h51/zb0Rqiuk19mG2blFRjvsq9i5beB0zKt3+YyOlNeeAndzADiHZPChNNL0Nq4OoJ
-         K1cfTbvzgpB8efZrsIRGTLEnja+4BiP9w9AxQlPwVhiRkD9ZW4E+LUtiquz+XCMYUrJI
-         4gR8EMTCzkl6K0hwFSAWJr++UvnXv5xU7vk35D3xkrKSML8K7Pb2aZW4P+x9MFBlpB2z
-         rt+bzjzXJMwHWDz95MkmPGBh16VoQcgwxRf1gAzE7zorOsIQ2HGtUBKYN73MQqCeieOS
-         1+s97P8LWFWQjtFq0hqMixC6HuIbXw8ionG9yLekw+eEtRnFb6s4ULF8XEtSKAzv50c/
-         ajKg==
-X-Gm-Message-State: AOJu0Yy+nav3EU2PtQUhIdlvYt2AfLr8YDp8sbSgNNb418WrHW85dUYL
-	62r2F1eWJGKnaPj7ctQsw+EoB1e+yZhCvtkp1nYSavru66PXaiRE+laMFiEp1wxjIWhBPef793K
-	MCRIzkfI=
-X-Gm-Gg: ASbGnctCFokgP8u/wfZDGJnHEGY2jHvmCjAthIn0QuMTdTfPCj1Hw10BZR/qMjVjshh
-	KkuFOtJefZYlOPqn5N5HfxTRoowyNyAkgXJtTSxUdEW5Bi15qUh13Q2ArIW+ZlU0mO5wJVbrQt+
-	mH4MT5KLmmdeiBO+NgVKCeY7CzWMAkO4ltWccS3qNFthyIOxuRE8sfpgaJItE/kNQZzPbmPTYYD
-	nRHwjCQI2kKcY0LKelodZ25oX/JaoSexi74nuu1xczYlATmAneoffnUxkW0XwcDoDTuej0LSxJW
-	/0M+Vv6iH1FFbGP+c2960qJB5gCcv8IryVPooJtRxwevo39frVKLWlCvFFESrCA68qAhyQ8JGDf
-	PkjzQdpbqkMFG5IROyciMVWu/g1QutcEnFPO7CQbRboFhT1BUszp9ZRTG95VFbkIhzV7gIOnIJR
-	VhfZRmM01kPN02WhZw3nUP9UQhJUASCQ9FtXLpMGOwORnNEiW8HDIYD5FmQmy4RsKY2sgdYlwAg
-	iiqtV8pR6G2G6FCuA==
-X-Google-Smtp-Source: AGHT+IHtvWD4uDwZYq1+i7NPGy5REUL9mh746izWcCgxppDQ3SA3f8MgQbIhuhDY8/MDrQ+NkNOGCg==
-X-Received: by 2002:a53:bad0:0:b0:641:f5bc:6966 with SMTP id 956f58d0204a3-6444e7f0f17mr2029180d50.82.1765053059027;
-        Sat, 06 Dec 2025 12:30:59 -0800 (PST)
+        d=1e100.net; s=20230601; t=1765053066; x=1765657866;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dt3H6zLktH3IZNZehfyPEunp5ASqxk/mgDWQ1ykeJK4=;
+        b=TX0p/jqLpJkGdhKY/qGYBs0Ath9NTV/yuVM7i00GUFE66duvaxRFuOcu22JFnrPrjO
+         gEJ3VK4w9PaGQN+zRf1wQMDcS1VZ0vylkQSTecxnwGDwMRqTxkKXQqKGYc0UF790qcdC
+         p8mSsLUSxTYcTRdrwCRF3Lhduvl4CoitBINm8Or7W7ZmqpYggOXEdAMTmP9pvxPP70C8
+         SsKsX4XZVvpiQnB2YxlB4383FZ74TScutE/DGkj7pBwCYkTefUl6LEbe4GDUHDvMoRJ6
+         c2krEfS5XjqOHwR1lmBb2Db5eWAoWtK8gg66xOyzcNuqGPz6FTX9I0TPSjBPGQH7v7Wu
+         CcUQ==
+X-Gm-Message-State: AOJu0YxcbEAtwe6wbG74XVOvD4Ofgvf9NCPqT8ReFpVFQB6cEDC2kT3r
+	EcJMoVgEMcBx9GQYGVLKFUeKYrjuDuol24jp/MaXhd7VGwBXoN6V5eyDGuSpofhxYixDxxCvMo+
+	yxKYDgR8=
+X-Gm-Gg: ASbGncvpVa+IGNnljdOzwZJgnk8q32r3ukQNv+vbzW7edMYF7o/I2ni1h63RYjvDT3p
+	g5hNO6IxDlxuo0d/ciqz4e/U+feKLmBWeiEBxHPQ9IAZxZYM0J6xUkk3r1GnOTfck0mW3bLJ8V8
+	/5N4+NtuV9AiRnik8P/5KaGKMd0gZxvbPd6lQUpnoNseo5Txi/N/Qywa6kpDQNMjk8aWiLzneJX
+	H0KlqkX5aCKyR11J2wHANM9Hw4LaucPAeIcdNhvFFthn1/XnP8URIT78nl8Dt8a52RoY3kvMKOJ
+	WQ7KlHU4aNgXyi4/b7QwVuvDqR2whjFC4CucuWg+x0D+f2NHAa0jgdi7lW4DpIup8bARvDIku1V
+	ypoIM49XPQf5B5NBP1DmSimB8Pfe2tS1nHMIOvAK3A5qQsZssWBJrQuObATvF8MidcZnKXQaUjm
+	fmzk27s53Du+jfMXNkE7+7PVH+4Y2RHLJfcFnmZ+NAsqW+/P592Mz894jY/R2Q06It4bXEMJPqB
+	cHH7/VfKr/ofGPXuAkJODEQ4BNg
+X-Google-Smtp-Source: AGHT+IG+GyNfSqKnAfa42SNnIiokbIZ/YfKB1FXW8U6MRjrU/5sR2J2NOeByYK3YevgIBhP9PweYWw==
+X-Received: by 2002:a05:690c:46c7:b0:786:4459:cb84 with SMTP id 00721157ae682-78c33b7641emr54669697b3.29.1765053065961;
+        Sat, 06 Dec 2025 12:31:05 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78c1b790577sm30347447b3.47.2025.12.06.12.30.58
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78c1b7902e7sm30647897b3.46.2025.12.06.12.31.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Dec 2025 12:30:58 -0800 (PST)
-Date: Sat, 6 Dec 2025 15:30:57 -0500
+        Sat, 06 Dec 2025 12:31:05 -0800 (PST)
+Date: Sat, 6 Dec 2025 15:31:04 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 00/17] midx: incremental MIDX/bitmap layer compaction
-Message-ID: <cover.1765053054.git.me@ttaylorr.com>
+Subject: [PATCH 02/17] midx: split `get_midx_checksum()` by adding
+ `get_midx_hash()`
+Message-ID: <d583a169f08eea9d750622c6e3cf79774a2a68e7.1765053054.git.me@ttaylorr.com>
+References: <cover.1765053054.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,173 +76,177 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1765053054.git.me@ttaylorr.com>
 
-Note to the maintainer:
+When trying to print out, say, the hexadecimal representation of a
+MIDX's hash, our code will do something like:
 
- * This series is the spiritual successor to my earlier series queued
-   as 'tb/incremental-midx-part-3.1', but is based on 'master'
-   (currently f0ef5b6d9bc (The fifth batch, 2025-11-30) at the time of
-   writing). I suggest queueing as 'tb/incremental-midx-part-3.2'.
+    hash_to_hex_algop(get_midx_checksum(m),
+                      m->source->odb->repo->hash_algo);
 
-OVERVIEW
-========
+, which is both cumbersome and repetitive. In fact, all but a handful of
+callers to `get_midx_checksum()` do exactly the above. Reduce the
+repetitive nature of calling `get_midx_checksum()` by having it return a
+pointer into a static buffer containing the above result.
 
-This series implements the second of three major components for an
-incremental MIDX/bitmap-based repacking strategy. Those components
-are:
+For the handful of callers that do need to compare the raw bytes and
+don't want to deal with an encoded copy (e.g., because they are passing
+it to hasheq() or similar), introduce `get_midx_hash()` which returns
+the raw bytes.
 
- 1. Refactoring code out of builtin/repack.c into individual
-    compilation units outside of the builtin directory.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ midx-write.c              | 8 +++-----
+ midx.c                    | 8 +++++++-
+ midx.h                    | 3 ++-
+ pack-bitmap.c             | 9 ++++-----
+ pack-revindex.c           | 4 ++--
+ t/helper/test-read-midx.c | 4 ++--
+ 6 files changed, 20 insertions(+), 16 deletions(-)
 
- 2. (this series) Implementing MIDX layer compaction, i.e. the ability
-    to take an contiguous sequence of MIDX layers in an existing MIDX
-    chain and replace them with a single layer representing the union
-    of objects/packs among the compacted layers.
-
- 3. An incremental repacking strategy that, unlike our current
-    '--geometric' approach, does not require periodic all-into-one
-    repacks.
-
-BACKGROUND
-==========
-
-I'll briefly discuss that repacking strategy here in order to provide
-some context on why MIDX layer compaction is important. When doing a
---geometric repack today, any update to the MIDX and/or its .bitmap
-requires a full rewrite. For most repositories this is not such a big
-deal, but in large monorepos these costs can add up significantly over
-time.
-
-To deal with this, incremental MIDXs (and corresponding support for
-reachability bitmaps) were introduced as a way to append updates to
-the end of a MIDX chain without having to rewrite anything.
-
-Of course, growing a MIDX chain infinitely without ever shrinking it
-would be pointless. So any repacking strategy which leverages
-incremental MIDXs must take some action which encourages the MIDX
-chain to avoid growing too large.
-
-The strategy that I will share in the forthcoming topic related to
-this effort does (roughly) the following:
-
- 1. Repack all non-MIDX'd packs geometrically, optionally including
-    any packs in the most recent MIDX layer iff it has more than some
-    threshold of packs.
-
- 2. Write out a new MIDX layer which is the result of the previous
-    step, adding it onto the end of the chain (or replacing the
-    previous end, depending on whether the pack threshold condition
-    was met).
-
- 3. Perform a compaction pass, combining adjacent MIDX layers to
-    restore a geometric progression on object count among MIDX layers
-    in the chain.
-
-(As an aside, this description is not the most efficient way to
-implement this behavior, and so the actual implementation varies
-slightly, though achieves the same effect.)
-
-This strategy encourages MIDX chains where older layers have fewer,
-larger packs, and newer layers have a greater number of smaller packs.
-The compaction pass prevents the MIDX chain from ever growing too
-large. (In my simulation[1], even a large number of simulated pushes
-yields a MIDX chain which is consistently fewer than ~10 or so layers
-long.)
-
-COMPACTION
-==========
-
-MIDX compaction works by producing a new MIDX layer which is the
-logical union of any contiguous sequence within the existing MIDX
-chain. Importantly, the packs/objects from those layers within the
-compaction range have their order preserved. That means that the
-pseudo-pack order of the compacted layer is guaranteed to be the same
-as the concatenated pseudo-pack order across all layers in the
-compaction range.
-
-As a result, we can reuse any selected bitmaps within the compaction
-range verbatim. More importantly, any bitmaps belonging to layers
-which are descendants of the compacted one do not need to permute any
-existing bitmaps in order for them to be valid post-compaction.
-
-This allows us to cheaply combine parts of the MIDX chain without
-needing to do any work outside of the combine layers, which is
-essential in the above-described repacking strategy.
-
-THIS SERIES
-===========
-
-This series implements MIDX compaction, and is organized roughly as
-follows:
-
- * The first two patches are stray code clean-up and minor refactoring
-   changes that I made while writing this series.
-
- * The next three patches clean up the SYNOPSIS for in the manual page
-   for git-multi-pack-index(1), and removes the builtin from the list
-   of known failures in t0450.
-
- * The next patch is a typofix, and the one following that is a
-   preemptive bugfix.
-
- * The eighth patch is a code refactoring patch that makes the
-   argument list for midx-write.c::write_midx_internal() easier to
-   reason about.
-
- * The ninth patch relaxes a MIDX constraint that forces all packs
-   within a layer to be sorted lexicographically.
-
- * The remaining patches prepare for and introduce MIDX compaction.
-
-The test coverage in the new t5335-compact-multi-pack-index.sh is
-fairly sparse in my opinion, though most of the interesting behavior
-is already exercised via t5319 and t5334. If others have ideas on how
-to improve test coverage here, please let me know!
-
-This series is somewhat lengthy, though the individual changes are
-relatively small for the most part, so I am hoping that they aren't
-too bad to review.
-
-Thanks in advance for your review!
-
-[1]: https://gist.github.com/ttaylorr/7ac0305f130197744f3583096c8198a1
-
-Taylor Blau (17):
-  midx: mark `get_midx_checksum()` arguments as const
-  midx: split `get_midx_checksum()` by adding `get_midx_hash()`
-  builtin/multi-pack-index.c: make '--progress' a common option
-  git-multi-pack-index(1): remove non-existent incompatibility
-  git-multi-pack-index(1): align SYNOPSIS with 'git multi-pack-index -h'
-  t/t5319-multi-pack-index.sh: fix copy-and-paste error in t5319.39
-  midx-write.c: don't use `pack_perm` when assigning `bitmap_pos`
-  midx-write.c: introduce `struct write_midx_opts`
-  midx: do not require packs to be sorted in lexicographic order
-  git-compat-util.h: introduce `u32_add()`
-  midx-write.c: introduce `midx_pack_perm()` helper
-  midx-write.c: extract `fill_pack_from_midx()`
-  midx-write.c: enumerate `pack_int_id` values directly
-  midx-write.c: factor fanout layering from `compute_sorted_entries()`
-  t/helper/test-read-midx.c: plug memory leak when selecting layer
-  midx: implement MIDX compaction
-  midx: enable reachability bitmaps during MIDX compaction
-
- Documentation/git-multi-pack-index.adoc |  24 +-
- builtin/multi-pack-index.c              |  84 ++++-
- git-compat-util.h                       |   8 +
- midx-write.c                            | 463 ++++++++++++++++++------
- midx.c                                  |  36 +-
- midx.h                                  |   9 +-
- pack-bitmap.c                           |   9 +-
- pack-revindex.c                         |   4 +-
- t/helper/test-read-midx.c               |  21 +-
- t/meson.build                           |   1 +
- t/t0450/adoc-help-mismatches            |   1 -
- t/t5319-multi-pack-index.sh             |   7 +-
- t/t5335-compact-multi-pack-index.sh     | 218 +++++++++++
- 13 files changed, 737 insertions(+), 148 deletions(-)
- create mode 100755 t/t5335-compact-multi-pack-index.sh
-
-
-base-commit: f0ef5b6d9bcc258e4cbef93839d1b7465d5212b9
+diff --git a/midx-write.c b/midx-write.c
+index 23e61cb0001..73d24fabbc6 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -955,7 +955,7 @@ static int link_midx_to_chain(struct multi_pack_index *m)
+ 	}
+ 
+ 	for (i = 0; i < ARRAY_SIZE(midx_exts); i++) {
+-		const unsigned char *hash = get_midx_checksum(m);
++		const unsigned char *hash = get_midx_hash(m);
+ 
+ 		get_midx_filename_ext(m->source, &from,
+ 				      hash, midx_exts[i].non_split);
+@@ -1086,8 +1086,7 @@ static int write_midx_internal(struct odb_source *source,
+ 		while (m) {
+ 			if (flags & MIDX_WRITE_BITMAP && load_midx_revindex(m)) {
+ 				error(_("could not load reverse index for MIDX %s"),
+-				      hash_to_hex_algop(get_midx_checksum(m),
+-							m->source->odb->repo->hash_algo));
++				      get_midx_checksum(m));
+ 				goto cleanup;
+ 			}
+ 			ctx.num_multi_pack_indexes_before++;
+@@ -1445,8 +1444,7 @@ static int write_midx_internal(struct odb_source *source,
+ 		for (uint32_t i = 0; i < ctx.num_multi_pack_indexes_before; i++) {
+ 			uint32_t j = ctx.num_multi_pack_indexes_before - i - 1;
+ 
+-			keep_hashes[j] = xstrdup(hash_to_hex_algop(get_midx_checksum(m),
+-								   r->hash_algo));
++			keep_hashes[j] = xstrdup(get_midx_checksum(m));
+ 			m = m->base_midx;
+ 		}
+ 
+diff --git a/midx.c b/midx.c
+index 6c01f0fa522..f9b11de9ca9 100644
+--- a/midx.c
++++ b/midx.c
+@@ -24,7 +24,13 @@ void clear_incremental_midx_files_ext(struct odb_source *source, const char *ext
+ int cmp_idx_or_pack_name(const char *idx_or_pack_name,
+ 			 const char *idx_name);
+ 
+-const unsigned char *get_midx_checksum(const struct multi_pack_index *m)
++const char *get_midx_checksum(const struct multi_pack_index *m)
++{
++	return hash_to_hex_algop(get_midx_hash(m),
++				 m->source->odb->repo->hash_algo);
++}
++
++const unsigned char *get_midx_hash(const struct multi_pack_index *m)
+ {
+ 	return m->data + m->data_len - m->source->odb->repo->hash_algo->rawsz;
+ }
+diff --git a/midx.h b/midx.h
+index 7c7e0b59121..e188ffeb578 100644
+--- a/midx.h
++++ b/midx.h
+@@ -85,7 +85,8 @@ struct multi_pack_index {
+ #define MIDX_EXT_BITMAP "bitmap"
+ #define MIDX_EXT_MIDX "midx"
+ 
+-const unsigned char *get_midx_checksum(const struct multi_pack_index *m);
++const char *get_midx_checksum(const struct multi_pack_index *m) /* static buffer */;
++const unsigned char *get_midx_hash(const struct multi_pack_index *m);
+ void get_midx_filename(struct odb_source *source, struct strbuf *out);
+ void get_midx_filename_ext(struct odb_source *source, struct strbuf *out,
+ 			   const unsigned char *hash, const char *ext);
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 8ca79725b1d..f466ed2ddcb 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -441,11 +441,11 @@ char *midx_bitmap_filename(struct multi_pack_index *midx)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	if (midx->has_chain)
+ 		get_split_midx_filename_ext(midx->source, &buf,
+-					    get_midx_checksum(midx),
++					    get_midx_hash(midx),
+ 					    MIDX_EXT_BITMAP);
+ 	else
+ 		get_midx_filename_ext(midx->source, &buf,
+-				      get_midx_checksum(midx),
++				      get_midx_hash(midx),
+ 				      MIDX_EXT_BITMAP);
+ 
+ 	return strbuf_detach(&buf, NULL);
+@@ -502,7 +502,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+ 	if (load_bitmap_header(bitmap_git) < 0)
+ 		goto cleanup;
+ 
+-	if (!hasheq(get_midx_checksum(bitmap_git->midx), bitmap_git->checksum,
++	if (!hasheq(get_midx_hash(bitmap_git->midx), bitmap_git->checksum,
+ 		    bitmap_repo(bitmap_git)->hash_algo)) {
+ 		error(_("checksum doesn't match in MIDX and bitmap"));
+ 		goto cleanup;
+@@ -2820,8 +2820,7 @@ void test_bitmap_walk(struct rev_info *revs)
+ 
+ 		if (bitmap_is_midx(found))
+ 			fprintf_ln(stderr, "Located via MIDX '%s'.",
+-				   hash_to_hex_algop(get_midx_checksum(found->midx),
+-						     revs->repo->hash_algo));
++				   get_midx_checksum(found->midx));
+ 		else
+ 			fprintf_ln(stderr, "Located via pack '%s'.",
+ 				   hash_to_hex_algop(found->pack->hash,
+diff --git a/pack-revindex.c b/pack-revindex.c
+index d0791cc4938..016195ceb93 100644
+--- a/pack-revindex.c
++++ b/pack-revindex.c
+@@ -390,11 +390,11 @@ int load_midx_revindex(struct multi_pack_index *m)
+ 
+ 	if (m->has_chain)
+ 		get_split_midx_filename_ext(m->source, &revindex_name,
+-					    get_midx_checksum(m),
++					    get_midx_hash(m),
+ 					    MIDX_EXT_REV);
+ 	else
+ 		get_midx_filename_ext(m->source, &revindex_name,
+-				      get_midx_checksum(m),
++				      get_midx_hash(m),
+ 				      MIDX_EXT_REV);
+ 
+ 	ret = load_revindex_from_disk(m->source->odb->repo->hash_algo,
+diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
+index 6de5d1665af..dee603b3cd0 100644
+--- a/t/helper/test-read-midx.c
++++ b/t/helper/test-read-midx.c
+@@ -34,7 +34,7 @@ static int read_midx_file(const char *object_dir, const char *checksum,
+ 		return 1;
+ 
+ 	if (checksum) {
+-		while (m && strcmp(hash_to_hex(get_midx_checksum(m)), checksum))
++		while (m && strcmp(get_midx_checksum(m), checksum))
+ 			m = m->base_midx;
+ 		if (!m)
+ 			return 1;
+@@ -94,7 +94,7 @@ static int read_midx_checksum(const char *object_dir)
+ 	m = setup_midx(object_dir);
+ 	if (!m)
+ 		return 1;
+-	printf("%s\n", hash_to_hex(get_midx_checksum(m)));
++	printf("%s\n", get_midx_checksum(m));
+ 
+ 	close_midx(m);
+ 	return 0;
 -- 
 2.52.0.171.gd6a4e6b6955
+
