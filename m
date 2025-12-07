@@ -1,162 +1,144 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04914257830
-	for <git@vger.kernel.org>; Sun,  7 Dec 2025 22:14:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31730274B39
+	for <git@vger.kernel.org>; Sun,  7 Dec 2025 23:01:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765145645; cv=none; b=FSOcAefnxueWhaWCna5lJ61k+nsFUzzvvEfiJuuvNXmZaQVo/4KTa0zcckW1vFuMtRWmuP6kkY0iayVjhI2ieIUb9oBuwk854P1fuFrm+T5APvDZq58ZF1QSAkWL2aUv+JNUzC4zFvjX64M35DsO+rF0YYXwNeYrz7CcdYrNhg8=
+	t=1765148470; cv=none; b=UHNH85XFNxuEKT/5nkHjR5VhfvmwpPik3RTIEbz2sDOGqbGK+8XHAYWbkhE++zQ4HrSipLAp+0DCIFhmbuzyrneHW5RocrV0NdZuDnpM91dfOyKeOwgjQIggsFfJr8sq3bG+i+QbchpB7zjCKtr69/cPGjIosF65meHV5wbJxRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765145645; c=relaxed/simple;
-	bh=3hbPirOdmIQH+AbLWamcZBJDZcNEdrBq0ltM9ow/J1I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XSwv0OCzM5xA12VR/nDhcLD0DnfspHbp6Y1u7DCUOm1LbPZ2lmWsJjbhKoW+WycZn2DCKiWjPhLobqMH/7aPIuh4FRqKEehCs/Wn4pgC96ruMYnIaKjaKbQc8A7ybhGn1Mzm0Y8nztyXW//wqLctvQY/A/J7T9PODVsIqsOecNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iyVBf24Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=spmEHSCo; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1765148470; c=relaxed/simple;
+	bh=YM5wQeYfvhNZtchlIrBnf5V5zxR1AMl3FkvK8x9bkgU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=L+3SUuoBV/t0oTV9bytDDhafSQkmQ7qLphwNMABbx7Ah1QMMn0eXTYuP1gd9Of2iU+Pg8poBVgtUq2QC1+nVvYe7p3pVR0cRndpUn1CTraWUIsjkQxWbEuKUEBYkL3txOlFUhYua/Qz3A5NE7T4/ZbyGr77LkNmAizN9Al/tqiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IZTCw7FG; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iyVBf24Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="spmEHSCo"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 216D51D0017A;
-	Sun,  7 Dec 2025 17:14:02 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Sun, 07 Dec 2025 17:14:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1765145641; x=1765232041; bh=5Oesd8qXC6
-	BJHP4coqs6SxeSF0QimSGEAfijuIEExwA=; b=iyVBf24Q4GFKeXieTNMIO2k0u7
-	Nu+pGG6IH0ASFj6yxMpnj57nkLcD4jqynoYf+Msqtd0Fdi7qcnW5rFWfMm9FUTsm
-	HBFqEZvlMlVb0GkERM5SOdZaTVXYqw1NT1IAQC3wEd0mG+Ya6kK44G23XJOGhgmr
-	p47CI+xyzOqD9y6HZE/y1ahESS5qCi8/jq4hmuCljXifFwLYF+rHpC5cyiT7p+15
-	ppfWGRgPNxb8eMzx21qfoCC1RNu81CQ6aFTsu6e+bX+TxVargZLlLzZLb7pJQ3T7
-	ut7S9xiTTkpME/Xc8e9z+EaCLgxgZBR2uRuKocmO6+8TC4JPpkez3kSi/BDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765145641; x=1765232041; bh=5Oesd8qXC6BJHP4coqs6SxeSF0QimSGEAfi
-	juIEExwA=; b=spmEHSCoRSLBOg566A1bmdQE7SmXlYcrogZYpmQfdjU9pErOdSs
-	VuiV0Qso+6TpaMiHWCqnRBfXI4fSE7At96bS/+qz3UZl2n5T55HYnChdaq1ZaXdd
-	LPPmzWeZlx4ws5NY8/Im70GUV4JJgVLpkLmuQKfaA3pClWQ5/aVeM3+RlfdfBL7Q
-	w8LJ1O9jcQVXK8EBkMKbv6B/92EwlW5dKk6qsiJigmd/gAeOd224MilGwuxNRoml
-	vaPYYcl8fWjAXzS6ObXfBEI00N1j51UBKgsD3ADw9xxQwSG4rU4WppqTjdtqG6Mi
-	rGIKq866exYIMZZ9CxT4My2k/s9jsKjgssQ==
-X-ME-Sender: <xms:Kfw1aba6V1ijFHBeyVHuLHo2s0sp2vh-3FU0J6ER5Tk6uOxl9YWZEg>
-    <xme:Kfw1aR37sxRNCXGhXeLSJUzbMcDmB3hdk15DgFGuKTyByKGrtQkNuAMLLe7mmGn1w
-    j9HArHhnRXvR1EtiUBS5Qcc8djgdItc4tDDRpjNMxjDpDzfY0GKGko>
-X-ME-Received: <xmr:Kfw1abUBeF2bBHTh8AFw33Eh5P2s5yaclso-jJF-_psNjWnqlp1OhX6j4BpBHx-2ayFuFc-JkVWALCl0rOcLyNxkQqSoJAl5OQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeelkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Kfw1abXbRw_MaBIfw-gMk_TqorEOqvrO4C0DaMxzeun9wBrv9lz3Tg>
-    <xmx:Kfw1aaelOvyhZzI39lGeNNhCvsLfjUDuR6bGK9h9AJFNAY8qG0mGoA>
-    <xmx:Kfw1aUUTUqjYrLa7Uqb-q0OVsxH03m2v6j__46AbFGrd1XQu2_fAyA>
-    <xmx:Kfw1aTc8sW9gR3JCxXmIk6n9Rv00l2z3ppGVUGPhIpt9rlxZNyoFRQ>
-    <xmx:Kfw1aZ3LQkpH1lP1twEdjnFbsVCf9aDG77iA-j1DQxldrfR-2DcOWTfY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 7 Dec 2025 17:14:01 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] repo: add new flag --keys to git-repo-info
-In-Reply-To: <20251207190532.67107-1-lucasseikioshiro@gmail.com> (Lucas Seiki
-	Oshiro's message of "Sun, 7 Dec 2025 16:02:10 -0300")
-References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
-Date: Mon, 08 Dec 2025 07:14:00 +0900
-Message-ID: <xmqqqzt6kkif.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IZTCw7FG"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7a9c64dfa8aso2948899b3a.3
+        for <git@vger.kernel.org>; Sun, 07 Dec 2025 15:01:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765148466; x=1765753266; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=L/saoqZXBzgey9Uo6Tsd4HWFpjPI5Flal2cBY2RVnRo=;
+        b=IZTCw7FGj0wHVDNGBbsOwBKMb/wp1rl4en6cwZ40h8lF5FX3QUzCzPGZ1C4vlyuIOx
+         NCPqragHUu2YlKFR7I/o27rZudW6bZyD0SMxEMGOQdI9jbDudi0SWazHCUhGAehv5DxA
+         J1AEchg/5VY1eIoutoQX30iNYu9+++gm7oFqpXtHgVjms4+1Im0hpnV/1Fkg6cKuNmpv
+         SNKynutl75OIw+4yiFVnsF9oAJ8kWub7EozoKcfeEeHMCUkZPHY7NoQsxXYUxhdKKN6g
+         gM6yQYiIxpwRxXvL3OXCLiRIM2LIL2wQ9icRCZcPsZeMhl5g0PAH2n0CnFIcq0OswtmQ
+         /LwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765148466; x=1765753266;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=L/saoqZXBzgey9Uo6Tsd4HWFpjPI5Flal2cBY2RVnRo=;
+        b=C3nad4nb6sCYFQ3zSInWV/Een05LmovCMu/YeFHmTGJai4NPrGtRXh+2fLFKIkcVhy
+         /YdbLLd/Phytkqc35olmhMcZnYqJ9PUDc5ISc1l/Iq67PyW3lByrxxjBnN/ZIDn+bAnH
+         7RyIGmmhcBh2lW9rLd/JoxIE8o5ist4ddCFWW+nfq96ZV063iL6N3TEbj58riWVACMDB
+         5ZzwkXxsiapswCfaQ3x3bkZNIeldzLKSUgaPGo65ayS0Hz+nMiIRe/PcQ3YTdlaTj9HK
+         mhW+NvADsI8CfFC7Ijk+rhjKMgd13fKZvVeUW9hmSmgxeXx7fIye9Rm8GKXchfE+Lv8m
+         gGNA==
+X-Gm-Message-State: AOJu0YyEI9mLNAbUT6rnUmCWdAUJCPIPVsWK1yC9Pt0hBMPl02qk96sS
+	d4b2oKka7WOT6vPPXpOJ272IcbfFA0HU86TDlMwqaJpo3gJo34g/iHNK
+X-Gm-Gg: ASbGncsgL5NRhbQ53LANcMcUrZrxFNhsXxfBLjHcWv6kjhlOCAuQbz3MRtkfBl2LMju
+	/haYs5dEUZ+Ihw7zCKrj/w6uUlzgy/PyaO28/+Kmt9phKHgSTWAttxvb7tNOqAgMaKnm6exxiHF
+	BudyHwLgzYLbWIsyyksf6f0CUuU0c4A5DquQ//AJ3BT2LP9KTtJ58lcjZfvc6W4DMyu4G0I5rqd
+	RakoHcPJh/G7wQEpFOx8xOeUPYHN/0ny6PMW0Fp4XXO8GdoXJOooo+wEQ4KUcsKSjo0rJT34TwI
+	l43f6h8uSYESNYQR0uf1M9HWTpll1NQdyNTaf6FVv6qH0R+TcXsi1WxWd1dBWoHGYm5ZbWBt2yh
+	dzDdkI3YlgVh5KW2+B6vQkjhcYRxnuJaUo5O313VuMphK0Jo9tjzV1zCTz39pmXaMdU75BQZA6e
+	KsqCNf3p/uMuiJES3ESkSHpmNx7imkRGDeGe6qcwwDQnlNRbEaqCICZ4stxt8aQbgnGIXpmdc+E
+	3ICNSEKNWndzHfl3Z+zrO0=
+X-Google-Smtp-Source: AGHT+IGRNfhQMn6g766ah+6/rDX2m9lWhpRwHPh8zmdUSR9wbbzDUXJCgHWDalQd3cn55IGgjBEvJw==
+X-Received: by 2002:a05:6a20:7488:b0:366:14af:9bd0 with SMTP id adf61e73a8af0-366182be663mr5010203637.70.1765148466240;
+        Sun, 07 Dec 2025 15:01:06 -0800 (PST)
+Received: from ?IPV6:2409:40e3:30a4:b776:2d5f:847f:53c0:cfd7? ([2409:40e3:30a4:b776:2d5f:847f:53c0:cfd7])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-bf6817395ccsm10131990a12.5.2025.12.07.15.01.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 07 Dec 2025 15:01:05 -0800 (PST)
+Message-ID: <ac12100d-4aba-4d15-8bcf-c50e6100c95e@gmail.com>
+Date: Mon, 8 Dec 2025 04:30:58 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] sequencer: extract revert message formatting into
+ shared function
+Content-Language: en-GB
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, newren@gmail.com,
+ gitster@pobox.com, phillip.wood123@gmail.com, phillip.wood@dunelm.org.uk,
+ karthik.188@gmail.com, johannes.schindelin@gmx.de, toon@iotcl.com
+References: <20251125170056.34489-1-siddharthasthana31@gmail.com>
+ <20251202201611.22137-1-siddharthasthana31@gmail.com>
+ <20251202201611.22137-2-siddharthasthana31@gmail.com>
+ <aTLDA11AKs0jlxFJ@pks.im>
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <aTLDA11AKs0jlxFJ@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 
-> Currently, if the user wants to find what are the available keys,
-> they need to either check the documentation or to ask to all the
-> key-value pairs by using --all.
+On 05/12/25 17:03, Patrick Steinhardt wrote:
+> On Wed, Dec 03, 2025 at 01:46:10AM +0530, Siddharth Asthana wrote:
+>> diff --git a/sequencer.c b/sequencer.c
+>> index 5476d39ba9..9f621aef4b 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -2365,22 +2365,10 @@ static int do_pick_commit(struct repository *r,
+>>   		if (opts->commit_use_reference) {
+>>   			strbuf_commented_addf(&ctx->message, comment_line_str,
+>>   				"*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
+>> -		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject) &&
+>> -			   /*
+>> -			    * We don't touch pre-existing repeated reverts, because
+>> -			    * theoretically these can be nested arbitrarily deeply,
+>> -			    * thus requiring excessive complexity to deal with.
+>> -			    */
+>> -			   !starts_with(orig_subject, "Revert \"")) {
+>> -			strbuf_addstr(&ctx->message, "Reapply \"");
+>> -			strbuf_addstr(&ctx->message, orig_subject);
+>> -			strbuf_addstr(&ctx->message, "\n");
+>> +			strbuf_addstr(&ctx->message, "\nThis reverts commit ");
+>>   		} else {
+>> -			strbuf_addstr(&ctx->message, "Revert \"");
+>> -			strbuf_addstr(&ctx->message, msg.subject);
+>> -			strbuf_addstr(&ctx->message, "\"\n");
+>> +			sequencer_format_revert_header(&ctx->message, msg.subject);
+>>   		}
+>> -		strbuf_addstr(&ctx->message, "\nThis reverts commit ");
+>>   		refer_to_commit(opts, &ctx->message, commit);
+>>   
+>>   		if (commit->parents && commit->parents->next) {
+> Is there any reason why we don't also handle `refer_to_commit()` in that
+> new function?
+
+
+The `refer_to_commit()` function depends on `struct replay_opts` and its 
+`commit_use_reference` flag, which controls whether to use abbreviated 
+commit info ("%h (%s, %ad)") or the full OID. This is specific to 
+sequencer.c's interactive workflow where users can choose the reference 
+style via --reference.
+
+In replay.c, we always use the full OID via `oid_to_hex()` since it's 
+designed for non-interactive server-side operations without the 
+`replay_opts` framework. Including `refer_to_commit()` would require 
+either passing `replay_opts` to the shared function (leaking sequencer 
+internals) or adding a format parameter which feels like 
+over-engineering for current needs.
+
+Happy to reconsider if you think there's a cleaner way to share this.
+
+Thanks,
+Siddharth
+
+
 >
-> Add a new flag --keys for listing only the available keys without
-> listing the values.
-
-We do not need to say "Currently," but other than that the above is
-very well written.  Easy to grok and to the point.
-
->  [synopsis]
->  git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
-> +git repo info --keys
->  git repo structure [--format=(table|keyvalue|nul) | -z]
-
-So "git repo info --keys --all" or "git repo info --keys --format=..."
-is not supported.  Does the implementation behave sensibly when given
-such nonsense commands?  Let's see.
-
-> @@ -170,6 +181,7 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
->  {
->  	enum output_format format = FORMAT_KEYVALUE;
->  	int all_keys = 0;
-> +	int show_keys = 0;
->  	struct option options[] = {
->  		OPT_CALLBACK_F(0, "format", &format, N_("format"),
->  			       N_("output format"),
-> @@ -179,10 +191,15 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
->  			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
->  			       parse_format_cb),
->  		OPT_BOOL(0, "all", &all_keys, N_("print all keys/values")),
-> +		OPT_BOOL(0, "keys", &show_keys, N_("show keys")),
->  		OPT_END()
->  	};
->  
->  	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
-> +
-> +	if (show_keys)
-> +		return print_keys();
-> +
->  	if (format != FORMAT_KEYVALUE && format != FORMAT_NUL_TERMINATED)
->  		die(_("unsupported output format"));
-
-OK, so it is:
-
-    "git repo info --all --keys" and "git repo info --keys layout.bare"
-    both behave as if "git repo --keys" was given, ignoring
-    everything else.
-
-Shouldn't "--keys" be explicitly marked incompatible with "--all"
-and remaining keys in argc/argv[]?
-
-While there is no strong reason why anybody must use NUL-terminated
-output format, simply because repo_info_fields[] contains no tokens
-with strange byte values, but just as principle, shouldn't
-
-    "git repo info --keys -z"
-
-do what is naturally expected?
-
-Perhaps
-
-	if (format != ...)
-		die(_("unsupported output format"));
-
-	if (show_keys && (all_keys || argc))
-		die(_("--keys cannot be used with a <key> or --all"));
-
-	if (show_keys)
-		return print_keys(output_format);
-
-with a trivial update to print_keys() to support NUL-terminated
-records, instead of puts()?
+> Patrick
