@@ -1,64 +1,110 @@
-Received: from smtp161.vfemail.net (smtp161.vfemail.net [146.59.185.161])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FDA2BE7B6
-	for <git@vger.kernel.org>; Sun,  7 Dec 2025 17:24:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=146.59.185.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0F92D73A0
+	for <git@vger.kernel.org>; Sun,  7 Dec 2025 17:55:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765128284; cv=none; b=FSkZc35YYFOAU3RsMSEvAjo7NXTRFALpwppBjYOi1Hh/W24/gp+bGOhaejlsfd1jqKSvaBtNInKNH2NcoWjPrwysdtVzSPDRips/3b7Mqm1bAo2q9ZNKUteKa9W2XsSKdogTpYZVzzpIa8Rc87cdycTzW/TkZvycm1Cat4bDrX8=
+	t=1765130142; cv=none; b=OX6btLFxVpUiwZzabaXR2FWlQgjscbQW0wIOfS7kpQawI2eJD2pCiiB0Zps885ZVaQZw7qxZoaDH6Wltnv7+tmEVGzpz3rE0Vo5ZjDps15P6wM+Z1FuJkl6CR1DWZJncpMnGuhPFUsjAc1saiZO4+UcDeYZl1svm45v5dd7SWqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765128284; c=relaxed/simple;
-	bh=Lxz/3q84hPwy5M7M+RqU2US/nadb+W4WJf65r+VjjHM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jYSjtstw9gXBXdLYstKWSi4kF7++oC/NGmr4rxzkaxihbqV0sB6lx/jyz3KVYppsU3dRUb3K8WwfTvQY7/Hslila9qWYJ08avncL6E6Sp8OpMJ9+rglDShaAtRBy7r+Oypv21EKT9zETA0rxUi2YuShsKpGlUphvCRYk69gJlJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=openmail.cc; spf=pass smtp.mailfrom=openmail.cc; dkim=pass (1024-bit key) header.d=openmail.cc header.i=@openmail.cc header.b=ppW3+MRE; arc=none smtp.client-ip=146.59.185.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=openmail.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=openmail.cc
+	s=arc-20240116; t=1765130142; c=relaxed/simple;
+	bh=uzjGb6RYspybRlJ0J4aSTJ+vgvIivwKmNyObDnWsiJM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NqKxNPEgq4u3JhMFmlwqt4GNlCndmNU+m9+8I23MJyxWiLlCfU18nCobNisJticNSfKgssX8gchi2gtxlchO5U/Lg/ctDo2pdNc7TSwBarXhtUkoSqhJD+zoii3VElX/SK/9P1tLL/4xM259w8rfLouU3DPV0ieaeUSvnP43YtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=MJ6vmFLy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H/7cDSZA; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=openmail.cc header.i=@openmail.cc header.b="ppW3+MRE"
-Received: (qmail 31385 invoked from network); 7 Dec 2025 17:24:40 +0000
-Received: from localhost (HELO nl101-3.vfemail.net) ()
-  by smtpout.vfemail.net with SMTP; 7 Dec 2025 17:24:40 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=openmail.cc; h=date:from
-	:to:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=2018; bh=Lxz/3q84hPwy5M7M+RqU2US/nadb+W4WJf65r+V
-	jjHM=; b=ppW3+MREnYHgN73FLbGaYPHm7zhqxYTTiF3MOAheKixKUOl9J2wW08l
-	23g+gQgV0EWscjxZWrHEym5Okzcuqk7TVtwtGmQvTe7rXVi8Yqn/75Md7z7tElaW
-	peMi+VuCGGNenuXEykBBIkrhsQhooOcN8rX1NmO0SxgyONS/ilMw=
-Received: (qmail 42951 invoked from network); 7 Dec 2025 11:24:39 -0600
-Received: by simscan 1.4.0 ppid: 42941, pid: 42949, t: 0.0496s
-         scanners:none
-Received: from unknown (HELO bmwxMDEudmZlbWFpbC5uZXQ=) (bWFuZGF5QG9wZW5tYWlsLmNj@MTkyLjE2OC4xLjE5Mg==)
-  by nl101.vfemail.net with ESMTPA; 7 Dec 2025 17:24:39 -0000
-Date: Sun, 7 Dec 2025 18:23:30 +0100
-From: Cedric Sodhi <manday@openmail.cc>
-To: Simon Richter <Simon.Richter@hogyros.de>
-Cc: git@vger.kernel.org
-Subject: Re: Git for structured data
-Message-ID: <aTW4EsiThW7WFwSl@air>
-References: <aTMNdQ_NHTVPtwG8@air>
- <2ae0a2d5-e909-4c51-9459-83f5c6950d51@hogyros.de>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="MJ6vmFLy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H/7cDSZA"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0E47FEC04C4;
+	Sun,  7 Dec 2025 12:55:39 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Sun, 07 Dec 2025 12:55:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm1; t=1765130139; x=1765216539; bh=OTgXw8rkz0D7JGJghm1nT
+	eFfVFcW/aWedoFZg9aoRL4=; b=MJ6vmFLykQsv3ZwO/FOXze0JDB4xNPt7g7gld
+	qLMy6niOyy4PIGsjv4E9Lp9OuQ2zlt/M4Xe8KJqWKFploRbm7XzfLcvThHMWWJrO
+	0RGLjD+59IHhlg24bOApFLYT2tK/L2pNyQvw2DEcSDj2zoO5yhjgic3UGTxeTVTV
+	PU8bXSDYjTCSWrQdF8CtgNMYaYMOxNYvpVOfg1m4vxj4TAvn2nupaEmdqVg9/WcK
+	W6Xh4feh6wGn2VdVRPXlSrJ+QjjgcYFuM2bE4gQmerZ1/L7GD+VA7MBlUsWBNCgY
+	eIRpWQXpRH212aeY8BpMG5EJVEklufTLiLatZdwDqQ4p2lHTQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765130139; x=1765216539; bh=OTgXw8rkz0D7JGJghm1nTeFfVFcW/aWedoF
+	Zg9aoRL4=; b=H/7cDSZAChPt0skvN3geeYTzEhIQUhfNrQar+Upsp0dJgXv1v3W
+	9Adblxo1pJ27rNcry+qYlbapGdCIfdR+2FNDg95jQSHW8Q7/eLKMiU5bc24vWv93
+	IS87yBm0T0MmKHAItPX0XDrtOdG72jj2obRJmJwCQua0fRoQ/7YfIyP8zxlCRLp6
+	ALyH7G2vq7aRdMrRPV4aT+KSh9Rz8q+UowA8/mp/wOy7vgVfw90j37Ej0D2+1ty5
+	PwU9CPR/WKn035rZxvPtKI1pjjtiQA37ksx/5URVfruQnSkfEDairBLiJcV8+O8b
+	/AlcLE3CasTXKINSvsbW8xYjpp4W0dHkJvg==
+X-ME-Sender: <xms:mr81aaPWuVp8Gv0rVm2oo2ZMb261jwu2T5XhA7Vivh9ob9GBDKjcmYg>
+    <xme:mr81af27Z-sYERjIboCI6I5JabquOEJSDE7V8W-6VOF9AeJICFRjtG3XuV6CHJRze
+    0u8bbM--GI7f5ZUf2YtdyuDpbvYwTuziALIEq89IRTa_1BXdNgNUQ>
+X-ME-Received: <xmr:mr81aZnrXsTm7stQEyvL6KDPd83oQCXn3x5jR4pWkfAzAbTpO8eAXziE8tYPY6aOnsqwXpjcbOUdNQCWD82FqdE4n8OdvcAjl2zF9XldD0Mau8Hf7WWiwfw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeegjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
+    cuvffnffculdefhedmnecujfgurhephffvvefufffkofgggfestdekredtredttdenucfh
+    rhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtoh
+    hmnecuggftrfgrthhtvghrnhepvdehledvjeehjeejheevtedtjeekhffhffevtedtfffg
+    keduvddvteefjefhuddtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhl
+    rdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehk
+    hhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouh
+    guvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrd
+    gtohhm
+X-ME-Proxy: <xmx:mr81aWXwwkiwIaTd2_vKb5KPuDT-oU9A3DmRL_g5xBsF2GYMzKSYGw>
+    <xmx:mr81afvVLIey8KrWWhs7XJVI4GfSg3FZrAFHbFxw9ZfmWEOdeznklw>
+    <xmx:mr81aZb3tsc9U4Jn1wNydJ23Gzs8xZJ7GhvUkDU72G9WA4hvUwdMVg>
+    <xmx:mr81aeV22ROfFuKjqjHsTfuc_vnJUytMck5iAEI3QBxlG_gJytWNqQ>
+    <xmx:m781aTE_ybUPkAsJVYzbE5LtNlvyrhWxKiaHCsFTgboTcYb9ii4Xv7fc>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 7 Dec 2025 12:55:37 -0500 (EST)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	christian.couder@gmail.com,
+	newren@gmail.com,
+	Siddharth Asthana <siddharthasthana31@gmail.com>
+Subject: [PATCH 0/3] doc: replay: improvements like "mention no output on conflicts"
+Date: Sun,  7 Dec 2025 18:55:08 +0100
+Message-ID: <CV_replay_conflict.101@msgid.xyz>
+X-Mailer: git-send-email 2.52.0.10.g08704017180
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2ae0a2d5-e909-4c51-9459-83f5c6950d51@hogyros.de>
+Content-Transfer-Encoding: 8bit
 
-Hi Simon
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-If your suggestion at this point would be that I consider implementing an VCS in the database instead of basing it on Git, I'll be sceptical. I'd end up re-implementing Git's features.
+Explicitly say that conflicts do not give any output. I found this a bit
+confusing with the current doc since I am used to other commands
+complaining loudly.
 
-I agree with many things you say. There is no magic recipe to apply Git to relational databases; specific tools -- at the very least one per database type, but possibly tailored further to the specific data it holds -- would have to be written.
+Also two other things:
 
-However, I do think Git generalizes to RDBS more readily than it may seem and, in fact, one method to map a DB into a filesystem-isomorphic thing which Git knows how to handle, would fit 99% of all cases. Your example from KiCad (which can be understood as content which are stored in a RDBS), could be a good illustration:
+Kristoffer Haugsbakk (3):
+  doc: replay: mention no output on conflicts
+  doc: replay: document --contained
+  doc: replay: link section using markup
 
-If you normalize the file (one element per line) by sorting by UIDs corresponding to the individual elements, then you'd see no diff unless either UID or contents change. And UIDs typically wouldn't change unless you actually delete-and-recreate something. Every table in the DB which is normalized that way could be mapped as a single file. Of course a more granular mapping table-file or even row-file would be possible. In fact, mapping one row (or element of the Schema/Layout) per file would exploit Git's ability to detect "moves" meaning that you wouldn't even need UIDs for the elements to create good diffs. There is power in the semantics of the filesystem hierarchy which you lose when all contents become a single database/KiCad-file.
+ Documentation/git-replay.adoc | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-In short: In my opinion, there really doesn't seem to be any algorithmic difficulty. The only thing that stops Git from doing praticable versioning of databases is its inability to access its contents transparently in any of most trivial manners.
 
-Best,
-Cedric
+base-commit: bdc5341ff65278a3cc80b2e8a02a2f02aa1fac06
+-- 
+2.52.0.10.g08704017180
+
