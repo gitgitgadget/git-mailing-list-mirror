@@ -1,84 +1,89 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0F92D73A0
-	for <git@vger.kernel.org>; Sun,  7 Dec 2025 17:55:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB9A2D73A0
+	for <git@vger.kernel.org>; Sun,  7 Dec 2025 17:55:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765130142; cv=none; b=OX6btLFxVpUiwZzabaXR2FWlQgjscbQW0wIOfS7kpQawI2eJD2pCiiB0Zps885ZVaQZw7qxZoaDH6Wltnv7+tmEVGzpz3rE0Vo5ZjDps15P6wM+Z1FuJkl6CR1DWZJncpMnGuhPFUsjAc1saiZO4+UcDeYZl1svm45v5dd7SWqE=
+	t=1765130160; cv=none; b=L6m+g440bwO+AJMy4jRIFbZG3gdjEPBgQrWmNN3HZbVEbC0135UpELzP2eQgmofKGB63/6cma3SHKTMjfAAVTDggS07nQ7HWd4KAieTA+SJTGDENR67YVbP2Q0kTBHhtQFe6pbTVYU3NN9XBUC6nU2D5S/e9DBlxc05r1ZMewuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765130142; c=relaxed/simple;
-	bh=uzjGb6RYspybRlJ0J4aSTJ+vgvIivwKmNyObDnWsiJM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NqKxNPEgq4u3JhMFmlwqt4GNlCndmNU+m9+8I23MJyxWiLlCfU18nCobNisJticNSfKgssX8gchi2gtxlchO5U/Lg/ctDo2pdNc7TSwBarXhtUkoSqhJD+zoii3VElX/SK/9P1tLL/4xM259w8rfLouU3DPV0ieaeUSvnP43YtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=MJ6vmFLy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H/7cDSZA; arc=none smtp.client-ip=103.168.172.148
+	s=arc-20240116; t=1765130160; c=relaxed/simple;
+	bh=/HjVNM9+/trRiLV4x1WZoiGS9rru5vW/u5aNE/zuaMA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=gMwphoWFOs7BQras1+rgQ16UlVICcuwjvFJ2jVH2pFuqJkaSnaGzEJsXAOlgW4p1qpwU68AW84VTevUaDq7L6dwr0G+qsbcVfnTW+fVtTGAEYew7Lsf+xFcot750ZirJT6kA6ZzLmtfUiuNqhsAo9AKniIc0JnCAos9LmB81E/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=CWlxyzl0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FPQfDC30; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="MJ6vmFLy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H/7cDSZA"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="CWlxyzl0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FPQfDC30"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0E47FEC04C4;
-	Sun,  7 Dec 2025 12:55:39 -0500 (EST)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8CDE014001E4;
+	Sun,  7 Dec 2025 12:55:57 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Sun, 07 Dec 2025 12:55:39 -0500
+  by phl-compute-02.internal (MEProxy); Sun, 07 Dec 2025 12:55:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=fm1; t=1765130139; x=1765216539; bh=OTgXw8rkz0D7JGJghm1nT
-	eFfVFcW/aWedoFZg9aoRL4=; b=MJ6vmFLykQsv3ZwO/FOXze0JDB4xNPt7g7gld
-	qLMy6niOyy4PIGsjv4E9Lp9OuQ2zlt/M4Xe8KJqWKFploRbm7XzfLcvThHMWWJrO
-	0RGLjD+59IHhlg24bOApFLYT2tK/L2pNyQvw2DEcSDj2zoO5yhjgic3UGTxeTVTV
-	PU8bXSDYjTCSWrQdF8CtgNMYaYMOxNYvpVOfg1m4vxj4TAvn2nupaEmdqVg9/WcK
-	W6Xh4feh6wGn2VdVRPXlSrJ+QjjgcYFuM2bE4gQmerZ1/L7GD+VA7MBlUsWBNCgY
-	eIRpWQXpRH212aeY8BpMG5EJVEklufTLiLatZdwDqQ4p2lHTQ==
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm1; t=1765130157; x=
+	1765216557; bh=C21P/ZDDYiuprkRv18x0o9B5nCs5MRocL5QXv8UZOco=; b=C
+	Wlxyzl0gBdvzR0jatjSMR/4aVM8HtPd6lCnIel0EnYODYAtXSSKijE9hop54RnRH
+	ZdhCTEHXF/bDGCxsWSVkV/c/S66kqyi0pDc1qjmZZ8QdOmu+wVJbUMGHsbmRGtIv
+	Ulyu10AJcJWcjrdKl0SpVCn8KJDQbEZxNvw9dRo5a1KtN4i6YvKinrsNGuqtb/S0
+	X83EpY7bnZJOBAhR9nnJ3cyjFCbtmp65PTWd0IyB9kurFUVOq4duk2zbSKOQa3BD
+	2/DgceFCE7s2JPy/6Ie4h1AiZI8ahH3EcXtSQtJ6BxbG6/dvqbzWtRWm1QfMjSze
+	uG2zGEBaNcqih7+2ykQzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765130139; x=1765216539; bh=OTgXw8rkz0D7JGJghm1nTeFfVFcW/aWedoF
-	Zg9aoRL4=; b=H/7cDSZAChPt0skvN3geeYTzEhIQUhfNrQar+Upsp0dJgXv1v3W
-	9Adblxo1pJ27rNcry+qYlbapGdCIfdR+2FNDg95jQSHW8Q7/eLKMiU5bc24vWv93
-	IS87yBm0T0MmKHAItPX0XDrtOdG72jj2obRJmJwCQua0fRoQ/7YfIyP8zxlCRLp6
-	ALyH7G2vq7aRdMrRPV4aT+KSh9Rz8q+UowA8/mp/wOy7vgVfw90j37Ej0D2+1ty5
-	PwU9CPR/WKn035rZxvPtKI1pjjtiQA37ksx/5URVfruQnSkfEDairBLiJcV8+O8b
-	/AlcLE3CasTXKINSvsbW8xYjpp4W0dHkJvg==
-X-ME-Sender: <xms:mr81aaPWuVp8Gv0rVm2oo2ZMb261jwu2T5XhA7Vivh9ob9GBDKjcmYg>
-    <xme:mr81af27Z-sYERjIboCI6I5JabquOEJSDE7V8W-6VOF9AeJICFRjtG3XuV6CHJRze
-    0u8bbM--GI7f5ZUf2YtdyuDpbvYwTuziALIEq89IRTa_1BXdNgNUQ>
-X-ME-Received: <xmr:mr81aZnrXsTm7stQEyvL6KDPd83oQCXn3x5jR4pWkfAzAbTpO8eAXziE8tYPY6aOnsqwXpjcbOUdNQCWD82FqdE4n8OdvcAjl2zF9XldD0Mau8Hf7WWiwfw>
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1765130157; x=1765216557; bh=C
+	21P/ZDDYiuprkRv18x0o9B5nCs5MRocL5QXv8UZOco=; b=FPQfDC30W8Gh/WvUM
+	yCIkFMMZW7m0bKHIW2kNnvVz1hXkqhfKISA4KMZyP17M1qsOTkwZ08yIlu9fJLSH
+	dUOwGIItc0MiSCadcVOdWAEhSGokhuybsiV24zyt30DRWpxQOjI+paIW73keJwnY
+	RL7hT/TTdNjggZ5BZIlUgIfXUlsafV2rFzwQ6+SlfA5vWpwAIdwOYTd64+qVY+2c
+	f+D/jfPmqhge44bF27yC/akMIHPOhum1hsv+VCqHQbx04vcz9t4mA+SviDjbCYTR
+	FWmoqF9xSq2DbYHmc3/KcHsh3aioEFHOLkywNLAKGM6AL7WaTUFA49+2KjnTrqlf
+	0wBFA==
+X-ME-Sender: <xms:rb81aR6rDrgMNJzU0KlGsofV_4Ws24Yegpipu7CWTl4wnYEGRLXRNoc>
+    <xme:rb81aVy20Gpu_ZQddBJzXs1NPWxcahm9-f-CJRJjuWv69mP7XLjqVvCW9iccZheKw
+    uRdKMFzUK7DEjhKzBksMiobwXLuj7WRDxH836woNQvvSTAcNKfx8w>
+X-ME-Received: <xmr:rb81aQzgloa77draNDUTvJjO4zgj0igxPyd2tUn8XCVmqPUxjATbnAn_NkAhY_vCTeBbiuiErkuu06irxd8AfqeAYc7ajk3In2Q-St-U3k_3ssefUMrcwv4>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeegjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
-    cuvffnffculdefhedmnecujfgurhephffvvefufffkofgggfestdekredtredttdenucfh
-    rhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtoh
-    hmnecuggftrfgrthhtvghrnhepvdehledvjeehjeejheevtedtjeekhffhffevtedtfffg
-    keduvddvteefjefhuddtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhl
-    rdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehk
-    hhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouh
-    guvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrd
-    gtohhm
-X-ME-Proxy: <xmx:mr81aWXwwkiwIaTd2_vKb5KPuDT-oU9A3DmRL_g5xBsF2GYMzKSYGw>
-    <xmx:mr81afvVLIey8KrWWhs7XJVI4GfSg3FZrAFHbFxw9ZfmWEOdeznklw>
-    <xmx:mr81aZb3tsc9U4Jn1wNydJ23Gzs8xZJ7GhvUkDU72G9WA4hvUwdMVg>
-    <xmx:mr81aeV22ROfFuKjqjHsTfuc_vnJUytMck5iAEI3QBxlG_gJytWNqQ>
-    <xmx:m781aTE_ybUPkAsJVYzbE5LtNlvyrhWxKiaHCsFTgboTcYb9ii4Xv7fc>
+    cuvffnffculdefhedmnecujfgurhephffvvefufffkofgjfhgggfestdekredtredttden
+    ucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
+    gtohhmnecuggftrfgrthhtvghrnhepfeehteekfedtieffvdejteeutefhuefgtefgtdev
+    hefhveffuefftdehiedtfedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
+    ihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggv
+    sehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtoheptghhrhhishhtihgrnhdrtg
+    houhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrih
+    hlrdgtohhm
+X-ME-Proxy: <xmx:rb81aVxXOVQl-4TRXIgFDLtvpwqoT-8SpD0APmaxeN8BjD5EDu58Pw>
+    <xmx:rb81aSaXzOY00llddBPdQMHtIEicGvz9gwU5tcHM5lwtod2X6UXdNA>
+    <xmx:rb81aeXY7GORbGFldJEZ6IEMkSHHJkpriwhXZwZ9w7y3M0L5FkSvjw>
+    <xmx:rb81aYhfCzYHm7Y9qmqxu6QOq8U8pgSLxNSw8RtWFoIUKm8wc1EDuw>
+    <xmx:rb81aZAE0OqY3pxAUTN7wBu1uCONtAdUDv5qujoqDlTyxuICjNCT4Tv5>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 7 Dec 2025 12:55:37 -0500 (EST)
+ 7 Dec 2025 12:55:56 -0500 (EST)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	christian.couder@gmail.com,
 	newren@gmail.com,
 	Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: [PATCH 0/3] doc: replay: improvements like "mention no output on conflicts"
-Date: Sun,  7 Dec 2025 18:55:08 +0100
-Message-ID: <CV_replay_conflict.101@msgid.xyz>
+Subject: [PATCH 1/3] doc: replay: mention no output on conflicts
+Date: Sun,  7 Dec 2025 18:55:09 +0100
+Message-ID: <no_output_on_conflict.102@msgid.xyz>
 X-Mailer: git-send-email 2.52.0.10.g08704017180
+In-Reply-To: <CV_replay_conflict.101@msgid.xyz>
+References: <CV_replay_conflict.101@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,22 +94,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Explicitly say that conflicts do not give any output. I found this a bit
-confusing with the current doc since I am used to other commands
-complaining loudly.
+Some commands will produce output on stderr if there are conflicts, but
+git-replay(1) is completely silent. Explicitly spell that out.
 
-Also two other things:
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+ Documentation/git-replay.adoc | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Kristoffer Haugsbakk (3):
-  doc: replay: mention no output on conflicts
-  doc: replay: document --contained
-  doc: replay: link section using markup
-
- Documentation/git-replay.adoc | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
-
-
-base-commit: bdc5341ff65278a3cc80b2e8a02a2f02aa1fac06
+diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+index dcb26e8a8e8..6fbb527b9d8 100644
+--- a/Documentation/git-replay.adoc
++++ b/Documentation/git-replay.adoc
+@@ -81,6 +81,10 @@ the shape of the history being replayed.  When using `--advance`, the
+ number of refs updated is always one, but for `--onto`, it can be one
+ or more (rebasing multiple branches simultaneously is supported).
+ 
++There is no stderr output on conflicts; see the <<exit-status,EXIT
++STATUS>> section below.
++
++[[exit-status]]
+ EXIT STATUS
+ -----------
+ 
 -- 
 2.52.0.10.g08704017180
 
