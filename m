@@ -1,76 +1,83 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6CB3B8D4B
-	for <git@vger.kernel.org>; Sun,  7 Dec 2025 10:12:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616CC22C32D
+	for <git@vger.kernel.org>; Sun,  7 Dec 2025 10:17:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765102371; cv=none; b=dQBiu4owVVY3MtIg9cGv70pn+S3HljYFhyNDqtfJWEVyp3lJbBaadoZtNSDjnogLtDVY1Xv/VgpeytXJBjXy750gdc4Eqx3QZRCdjmFd5mRBaJqNBUjiGmm2xIwLFrGIq3GnCOAzK9vwNLRnV7FCnIyWqnNB0Wq9DPvN1h8n3bc=
+	t=1765102659; cv=none; b=uEFu0PRoE1d4y0Ok3HqlYqT6fjUGYkZNbFX6wqQFBlS8BXg9DBE2F5sRujOZOWEJyzq+qNCp7RlPjOcX8RTEs9vNyFGuXKeNV9kjif6rJLp4rrgBhH66mVGIoEkM4WEKZXPPowNm1Hzz5tF13SrATagPuiqFI8jic5wKb859TBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765102371; c=relaxed/simple;
-	bh=mHJVwtrI8Ee3vzrXZj1iB1/9UChsDi3KG/ZNQnghp2A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=b7GqZk4J9mlG6hCqP09Dp48wYQ5pIwKRulpDwgvxIIf96GuZdfH5NL/DrNpn8lae1m3wj9kNae+UOzhRR8Bk9787EdHAjmuQogniEsPKyZWJGLgDgDHtKzcX4MxGIlgzwxXVbr5k/a+4xAbfAH33OZ16GiW/2RwHnCF/3OC3qPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dj-djl.com; spf=none smtp.mailfrom=dj-djl.com; dkim=pass (2048-bit key) header.d=dj-djl-com.20230601.gappssmtp.com header.i=@dj-djl-com.20230601.gappssmtp.com header.b=yfU5b5wD; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dj-djl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=dj-djl.com
+	s=arc-20240116; t=1765102659; c=relaxed/simple;
+	bh=vPBGDGog7cwGaJrzo2Ouw75MmohXsyvVFGZXs8+UBTs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EyvNAiLc9z5qpBCb7lLujCfmU1C6JZB962pcmvkHofsx6nhckihH2bQfbTFKJQdhWsnFysmKk0oNQv5uAmIBrlvFvp+llRN3d4rTzIndypkhDbCPqlGFcP9wgx32eUZud7yHQbw66kD5vriIdvly+azxnEdyIGCHiZq2QCNtgeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OSrqZttR; arc=none smtp.client-ip=74.125.82.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=dj-djl-com.20230601.gappssmtp.com header.i=@dj-djl-com.20230601.gappssmtp.com header.b="yfU5b5wD"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-37a2dcc52aeso31646251fa.0
-        for <git@vger.kernel.org>; Sun, 07 Dec 2025 02:12:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OSrqZttR"
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-2a45877bd5eso5672639eec.0
+        for <git@vger.kernel.org>; Sun, 07 Dec 2025 02:17:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dj-djl-com.20230601.gappssmtp.com; s=20230601; t=1765102368; x=1765707168; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mHJVwtrI8Ee3vzrXZj1iB1/9UChsDi3KG/ZNQnghp2A=;
-        b=yfU5b5wDC2yXBLklzc245SatQDuZoB/owswdy8XfsVJHztts73zHUbYB+ptASwUa5G
-         Us0SWaAuCjko+kqvqSMDTsUACHRqRja2HJi4gXEmeV9nSuyOk5mBFkUvbv/VbvvDQpIo
-         N5vzsAdJBp4MWSjYPR05o2fwGIFgJTyCvLCkQZUXSvHAjzcy8hKua4Wtk/xkayeiLC0k
-         3XZvy7dZ7nYGZkqsx1jwFfldf4BhmHgmnjWOOnaX505sLP3oYsk/ehoLp9R4Lw1DBOp/
-         EKZ27cIbd7w7Q9xoh95hDqerAJEI7MsXslv/e5tvyxC4TWujwBvUpPiwzFoNC2h7awnn
-         32dg==
+        d=gmail.com; s=20230601; t=1765102657; x=1765707457; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vPBGDGog7cwGaJrzo2Ouw75MmohXsyvVFGZXs8+UBTs=;
+        b=OSrqZttRLI//G1ipZJrxp/da1y2vF5rSEYiMRFUHDC0R0kO/SJ5+Rk5eux9wQHzS/Y
+         aGDtqdfo0Rk52kmZh85Lo1M/3YXRTkoGLqRfGOA2BsbjBYgjdWhVJIgmHSzkoS3lspRU
+         Y+k+bjNulFUVNM4DLjQ/ovYDtze7+LGL+//KZRvLN2NGK16KjsG+B+q4aG3De/alAg4X
+         sw2b1EOLiK9L6ffyna0UXfWVFwiY3MjSGJhMWPoMGNmLM7/ixHfBOBL6g+twPey31Wkb
+         V5+KJznfTtgGsqLAnvQwi41omR/Fdm+b3XzebON4ayXjIIfyV4Vn5BI1lNveZ7HCfohb
+         +ssw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765102368; x=1765707168;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mHJVwtrI8Ee3vzrXZj1iB1/9UChsDi3KG/ZNQnghp2A=;
-        b=Il8h0tTiDDAcgq3C2sSJRbdV42QRaENpGtrwjp/MoyO6UVllKpN1/Lh1g246RHMRXs
-         TFr5L/EMJsDGo5SajvXeZt73V/JpyltTi0k552azGMIb80Gj4Zx9+BfFVN41kPfxdJCh
-         cBSRFznPa4SALTg3UXU4fJQLnsIhAaH54321j65EaXmKm6fHOejhnKwhs1ruRa4BbzfT
-         PczoVMiYHatwz5qbmAmgKDCQ6vur9NXQ9j0HUK2bpU9AmhUTdh1+yHxyJaK814lx/yOu
-         evhX8s4YC8a/RqEoTlcqKFxRtbJDavkBLgfdH2kq+pRQTGWtzuR0knt7B42wUfVgXKBh
-         kppw==
-X-Gm-Message-State: AOJu0Yxwinel8k5pvzRq4FDrl/FJkhfQLbxI0iOwTzVsiAWbi+UuO4zK
-	xF055js337tK2kyYYl8lQw3SigW2WHoxGoVzShaWaE5jDvAc/QgS6exwR+vw/Ma/Ek1PvvenVhF
-	CcpbjqYDNma1955wa9qVIUQu5bQyw8ursjAh08YSDFuub+rZ4atv/
-X-Gm-Gg: ASbGncubAnzaMKEF4vGc+VwoGRhuA2OeACith0ltdSxGVxWmWI2OnVs2cwzKTxk4drH
-	xQ55pSEMp+f+lkD+GQhnZeIVW4RUeO6eqTfNCIp0vur9z5Ng/9Z1VN5Y78gH/xawbjVAaAicUr0
-	YcVPLdrub00RrBsRu6Nyqk86ocMLBtfdGdLLiLCfAEOhwkDccNtkA4Z8bYmGIdBKRHgj7dz0hkQ
-	Y7BR9MTDAqUspSY/FhOsmjRedEVEdBzrBey11z01Edf9wN469J4AZgt2qlQCDQPLpaMOkTefA==
-X-Google-Smtp-Source: AGHT+IHpufR3KLZx5pJZiuN3oKcvfHQA9krf1CYatRKrIXH4+jjamVEv9ZT6yAOfVTXyUlmVa02fNaeBGeSkAxsmuuE=
-X-Received: by 2002:a05:651c:506:b0:37b:b9d9:396f with SMTP id
- 38308e7fff4ca-37ed840a2e1mr10530171fa.43.1765102366771; Sun, 07 Dec 2025
- 02:12:46 -0800 (PST)
+        d=1e100.net; s=20230601; t=1765102657; x=1765707457;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vPBGDGog7cwGaJrzo2Ouw75MmohXsyvVFGZXs8+UBTs=;
+        b=DM8mYgs5IgSBEpZJJZonHVss8Seo3LvS8+YBnpiPVYRWRlACrPdWbxtF7yj+ugIWkA
+         9uqgsNJqJlLkNh3YBH+0v1jWtl02k7dcZMJF2dB68utjPUvB5MyS07fYNN2V2e7vrpy5
+         RwCxPCZnTnyXAn0CT4stTB32Xxl2j2yDEuBM6j7PUEzsFz/6fuDvTl7svxyAo2mKMGQt
+         6UcyWxFDzPSfRW4xFPbwUV2xv1jRYbktftbUOHery9bYoIv6BnNYNLiMH/jYVnlKT3EK
+         TBiBbJsLYWd/YDlhdJZJwyNMgh6DnFTKLdMiht4MJhLhZUh8GeZKiBgmI3xQT81jy385
+         dl2w==
+X-Gm-Message-State: AOJu0Yy6qtpJnKbfFHxnKqxFYP2elLxeMKcEK+ou18bOLAwODhUhPIwE
+	/Ej0hJ1yRx8e1P+kKPRmTludTP1ZUYJ5IfsgzqqZfIDV1BWii8qmvpIUCCZVYA==
+X-Gm-Gg: ASbGncvj235fsfPy692FQpwkZcYAgWPU2CrRUG0WXIso59dmmHvOVHcZViYqFf2DxkE
+	Qw4366km/hb2h8RQabas3IU6k5ZRpADoGOgtr8FtMik62DY3jjjVRopCG5WJGWXf5Sr631+PhAd
+	50IiuQqfjj8eBJIj0jNr7Z7F4utH1kMACbDOK7PCxXan5p7DfGPIUzj87PnK/LCdnCk0Nqp/6n3
+	1NhXAZY36oyHgFoIz5LB3GY++cBw+GWmDbTRPo7pDIc4MNL64Z5HG1oLYliU+K5Sb/Rb8B6rvgl
+	grQfCnS5kRFW6BCCLCjPDmBWA8zB+Km1EBOpTEKcqxXROCaNFH0IfiP1S2ElXBfD06vAVF2nBnx
+	5oTw+nuIrDLB3anDCgNlAreYKgkU6OdPJAG/qTt15qPO3Ae9QMW8R+UgQv3jCqipRT73RMqNPNh
+	RkZ0c2oyAYONIvB4Z+DolreJXxYdzgmwQeZieR9ZIMBGYzWIB6UVU8FZPcPuTki1oKF19vu62YB
+	sa6Dp+/f+CtCZBptEsYzN3++i9w2JCosmTh+Wya5HzdHg==
+X-Google-Smtp-Source: AGHT+IFznJ5PEvynlTOhmEAR4QRL1GzbWXx7K99nKDMuVofGdHyG7SNQEk/5dLesnSD0V8Siq8MPUg==
+X-Received: by 2002:a05:7300:8818:b0:2ab:9d23:f0b1 with SMTP id 5a478bee46e88-2aba34c1809mr5795166eec.13.1765102657262;
+        Sun, 07 Dec 2025 02:17:37 -0800 (PST)
+Received: from macbookair.lan (c-73-70-17-6.hsd1.ca.comcast.net. [73.70.17.6])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2aba87aa5fcsm27279293eec.3.2025.12.07.02.17.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Dec 2025 02:17:36 -0800 (PST)
+Date: Sun, 7 Dec 2025 02:17:35 -0800
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 0/2] Few fixes for cross-compiling with Meson
+Message-ID: <3tucvydzaelj2mngkocb75l52nssxkkdtt3dj4paviatd3uvnc@u2sy4vig7owz>
+References: <20251202-toon-cross-compile-v1-0-cabc8bce529f@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOFvV7kFm-A2_i2URg-2wgfTet8Dv9SMAD0Aw1AwStCJm5WOLA@mail.gmail.com>
-In-Reply-To: <CAOFvV7kFm-A2_i2URg-2wgfTet8Dv9SMAD0Aw1AwStCJm5WOLA@mail.gmail.com>
-From: Lee Smith <lee@dj-djl.com>
-Date: Sun, 7 Dec 2025 11:12:34 +0100
-X-Gm-Features: AQt7F2pbWOKr411ZBq2CM-jqZR-LgWtQw7jAB2F80gdgM49VD0pWr4_FsEPpqJE
-Message-ID: <CAOFvV7=DjmWhdoRK=f7ON7gRzaHSGWct25SCo8T_34XBj6XFHw@mail.gmail.com>
-Subject: I still use git whatchanged
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251202-toon-cross-compile-v1-0-cabc8bce529f@iotcl.com>
 
-I use this regularly, despite learning git after git log was added.
-Remembering all the different options is hard so it's useful to have shortcuts.
+On Tue, Dec 02, 2025 at 11:48:07AM -0800, Toon Claes wrote:
+> I was cross-compiling for s390x.
 
-If it's difficult to maintain I can understand why you might want to
-remove it but I recommend adjusting the message that is shown to
-suggest adding an alias instead.
+Just to clarify, you mean Linux on IBM Z/LinuxOne, not 64bit ZOS/ZVM, right?
+
+Carlo
