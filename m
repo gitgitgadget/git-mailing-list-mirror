@@ -1,89 +1,81 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612E22AD37
-	for <git@vger.kernel.org>; Sun,  7 Dec 2025 21:58:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04914257830
+	for <git@vger.kernel.org>; Sun,  7 Dec 2025 22:14:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765144698; cv=none; b=cAfkr2keRjBUYvglV5AhNNPjNui8xM4ERT1fff4BQNt+mcd0+LU8CKBSqcmGU/zp0WynoKG17hnMzX1AvUuO8b/ltVRyltcLTewhER/PifV5lNb3GKE965SX1UBOYicCShbJQox27XBb7G0bUYC/mb6JFCN4BPp5I+fnzOCo+TE=
+	t=1765145645; cv=none; b=FSOcAefnxueWhaWCna5lJ61k+nsFUzzvvEfiJuuvNXmZaQVo/4KTa0zcckW1vFuMtRWmuP6kkY0iayVjhI2ieIUb9oBuwk854P1fuFrm+T5APvDZq58ZF1QSAkWL2aUv+JNUzC4zFvjX64M35DsO+rF0YYXwNeYrz7CcdYrNhg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765144698; c=relaxed/simple;
-	bh=+8VaEBGJgcu/VIngjbPxHDi89bnCbk2OvcGtPLiYlVc=;
+	s=arc-20240116; t=1765145645; c=relaxed/simple;
+	bh=3hbPirOdmIQH+AbLWamcZBJDZcNEdrBq0ltM9ow/J1I=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AONZxfNHu239tV6KHVAUuOy7DU56WOUrlw48kFsj3aemYAdIRzD8u353j7KoQ+1p9pbDT9E2bpoHJgMellNairgC4p8ADk+7CXtuLMOeEM5J7GPwfCjDY1dsGwLHIOQts7TiuRaLAOHb+0XVp+ORUagfC/QZh+sLWl8VLvso5hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gdyhUfTO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rqmH787K; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=XSwv0OCzM5xA12VR/nDhcLD0DnfspHbp6Y1u7DCUOm1LbPZ2lmWsJjbhKoW+WycZn2DCKiWjPhLobqMH/7aPIuh4FRqKEehCs/Wn4pgC96ruMYnIaKjaKbQc8A7ybhGn1Mzm0Y8nztyXW//wqLctvQY/A/J7T9PODVsIqsOecNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iyVBf24Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=spmEHSCo; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gdyhUfTO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rqmH787K"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 740117A017D;
-	Sun,  7 Dec 2025 16:58:15 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iyVBf24Q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="spmEHSCo"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 216D51D0017A;
+	Sun,  7 Dec 2025 17:14:02 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Sun, 07 Dec 2025 16:58:15 -0500
+  by phl-compute-07.internal (MEProxy); Sun, 07 Dec 2025 17:14:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1765144695; x=1765231095; bh=dmmn9jBneG
-	n57wahRN5U5onUIszmrfrsVoBX6ENSL/w=; b=gdyhUfTOA2w/y1eGIjdxCbR8rC
-	h9tBMtDldRvPwdQwy11f1dHy9t8u8fq83LJOj9yzX6rEU5qDCvIbzoD2NhHA/pha
-	K69Srxi8OezZOcsW+mFupDy4PSm+XFU7hH5WTdGNovrH3V4vUPUfKSsujRIK0x4V
-	KF2iJeBAe4ZX6ZcEiMNlwOryTuvqfUojh6l13M7ddFk6J4FEABIW1g2FSlTcTlfc
-	THGqFZzB4GtwgLarP3AsPXXeWWn1/55h6xDsP32CzqCp5G33XTktTEd2pANe+5kU
-	Epa1z24pruoHV0ygyYFDhtlPERXz1//9sWplkQkodI1WCKyIwEmfvejpre8g==
+	:subject:to:to; s=fm3; t=1765145641; x=1765232041; bh=5Oesd8qXC6
+	BJHP4coqs6SxeSF0QimSGEAfijuIEExwA=; b=iyVBf24Q4GFKeXieTNMIO2k0u7
+	Nu+pGG6IH0ASFj6yxMpnj57nkLcD4jqynoYf+Msqtd0Fdi7qcnW5rFWfMm9FUTsm
+	HBFqEZvlMlVb0GkERM5SOdZaTVXYqw1NT1IAQC3wEd0mG+Ya6kK44G23XJOGhgmr
+	p47CI+xyzOqD9y6HZE/y1ahESS5qCi8/jq4hmuCljXifFwLYF+rHpC5cyiT7p+15
+	ppfWGRgPNxb8eMzx21qfoCC1RNu81CQ6aFTsu6e+bX+TxVargZLlLzZLb7pJQ3T7
+	ut7S9xiTTkpME/Xc8e9z+EaCLgxgZBR2uRuKocmO6+8TC4JPpkez3kSi/BDA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765144695; x=1765231095; bh=dmmn9jBneGn57wahRN5U5onUIszmrfrsVoB
-	X6ENSL/w=; b=rqmH787KkGCdXyhgEnlu8NPlJx+CRXv9XRarPKOqs51frf83ELn
-	ty4JuTdWq0NFdm9YA6ndib5zL2QPxQIpc8dkMbRxjSxiODwJWhW9Ndzr4GTEcH2d
-	aEFZXW4mbqON6vazWTEACe8p1xfz/742389n9CJnwV2spn9lTyYIXqN5cSeONN0m
-	kOKyOzKEsp7rShtWbKcdXGRwpNvDDh0nLohn3IT8327DewkpULsUs3SocBIvGhvo
-	lWS7CBOW3k+j6f6GzhJdS9z7L6hVTCnvhlOG8pwFeGOEypZhmRs0+aEmqyBrJzHm
-	1ikGNIjNAvMhWJgAgM5ed/5NXKEBdGEtJaQ==
-X-ME-Sender: <xms:d_g1aeFyAnRRn3iUjiQeK8G-aRPFcQcWWSRBcIeTD8OdFm9hYBQJqw>
-    <xme:d_g1aRkUe5x6NLQjWR8SSRyASDD97rPeHJQvBa8LhdhtzjQjhXrs4FtjAyRhEMu7I
-    FGoUFEazcyKOzrfmHvfMkjyfa0zaBXFMXG5u8OOUdDM941ga0qR0Jk>
-X-ME-Received: <xmr:d_g1aabgxVQ-jDqj4KL_cEJdkGEjZtemhWOCFq2OZJRndV9CTzS6wLctoUi2CLB3S9MZEvQo4jLTGmO6408oz7dSVHa1rQoCDQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeelgecutefuodetggdotefrod
+	1765145641; x=1765232041; bh=5Oesd8qXC6BJHP4coqs6SxeSF0QimSGEAfi
+	juIEExwA=; b=spmEHSCoRSLBOg566A1bmdQE7SmXlYcrogZYpmQfdjU9pErOdSs
+	VuiV0Qso+6TpaMiHWCqnRBfXI4fSE7At96bS/+qz3UZl2n5T55HYnChdaq1ZaXdd
+	LPPmzWeZlx4ws5NY8/Im70GUV4JJgVLpkLmuQKfaA3pClWQ5/aVeM3+RlfdfBL7Q
+	w8LJ1O9jcQVXK8EBkMKbv6B/92EwlW5dKk6qsiJigmd/gAeOd224MilGwuxNRoml
+	vaPYYcl8fWjAXzS6ObXfBEI00N1j51UBKgsD3ADw9xxQwSG4rU4WppqTjdtqG6Mi
+	rGIKq866exYIMZZ9CxT4My2k/s9jsKjgssQ==
+X-ME-Sender: <xms:Kfw1aba6V1ijFHBeyVHuLHo2s0sp2vh-3FU0J6ER5Tk6uOxl9YWZEg>
+    <xme:Kfw1aR37sxRNCXGhXeLSJUzbMcDmB3hdk15DgFGuKTyByKGrtQkNuAMLLe7mmGn1w
+    j9HArHhnRXvR1EtiUBS5Qcc8djgdItc4tDDRpjNMxjDpDzfY0GKGko>
+X-ME-Received: <xmr:Kfw1abUBeF2bBHTh8AFw33Eh5P2s5yaclso-jJF-_psNjWnqlp1OhX6j4BpBHx-2ayFuFc-JkVWALCl0rOcLyNxkQqSoJAl5OQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeelkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpth
-    htoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthh
-    grshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:d_g1aeE4zXtwMqR2-TjmW2nxTw8EJ0KFDufDLw2MLdxi1sMdxuvwNw>
-    <xmx:d_g1aTIynOxWLdp_KO0FdZLdUhUmAYamV9DCqy2ErJgMGVY9jQU7Ww>
-    <xmx:d_g1aROr_we7xFiLeVsfwMz2FEtwQ9bLaT-epROCk2ri1p6GfsnRiw>
-    <xmx:d_g1ablE7b4Fyg-12Nv480O0aGrCWduP0cDy4oIzJj7Yo1-xzeLhTw>
-    <xmx:d_g1aRbVdGMg8iR4IWM_u90cyNyJRLT92mBudsV-ulchs_FOVo0kbSr7>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Kfw1abXbRw_MaBIfw-gMk_TqorEOqvrO4C0DaMxzeun9wBrv9lz3Tg>
+    <xmx:Kfw1aaelOvyhZzI39lGeNNhCvsLfjUDuR6bGK9h9AJFNAY8qG0mGoA>
+    <xmx:Kfw1aUUTUqjYrLa7Uqb-q0OVsxH03m2v6j__46AbFGrd1XQu2_fAyA>
+    <xmx:Kfw1aTc8sW9gR3JCxXmIk6n9Rv00l2z3ppGVUGPhIpt9rlxZNyoFRQ>
+    <xmx:Kfw1aZ3LQkpH1lP1twEdjnFbsVCf9aDG77iA-j1DQxldrfR-2DcOWTfY>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 7 Dec 2025 16:58:14 -0500 (EST)
+ 7 Dec 2025 17:14:01 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
-  christian.couder@gmail.com,  newren@gmail.com,  Siddharth Asthana
- <siddharthasthana31@gmail.com>
-Subject: Re: [PATCH 0/3] doc: replay: improvements like "mention no output
- on conflicts"
-In-Reply-To: <CV_replay_conflict.101@msgid.xyz>
-	(kristofferhaugsbakk@fastmail.com's message of "Sun, 7 Dec 2025
-	18:55:08 +0100")
-References: <CV_replay_conflict.101@msgid.xyz>
-Date: Mon, 08 Dec 2025 06:58:13 +0900
-Message-ID: <xmqq1pl6lzt6.fsf@gitster.g>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] repo: add new flag --keys to git-repo-info
+In-Reply-To: <20251207190532.67107-1-lucasseikioshiro@gmail.com> (Lucas Seiki
+	Oshiro's message of "Sun, 7 Dec 2025 16:02:10 -0300")
+References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
+Date: Mon, 08 Dec 2025 07:14:00 +0900
+Message-ID: <xmqqqzt6kkif.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,29 +85,78 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-kristofferhaugsbakk@fastmail.com writes:
+Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> Currently, if the user wants to find what are the available keys,
+> they need to either check the documentation or to ask to all the
+> key-value pairs by using --all.
 >
-> Explicitly say that conflicts do not give any output. I found this a bit
-> confusing with the current doc since I am used to other commands
-> complaining loudly.
->
-> Also two other things:
->
-> Kristoffer Haugsbakk (3):
->   doc: replay: mention no output on conflicts
->   doc: replay: document --contained
->   doc: replay: link section using markup
->
->  Documentation/git-replay.adoc | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
->
->
-> base-commit: bdc5341ff65278a3cc80b2e8a02a2f02aa1fac06
+> Add a new flag --keys for listing only the available keys without
+> listing the values.
 
-All looked sensible.
+We do not need to say "Currently," but other than that the above is
+very well written.  Easy to grok and to the point.
 
-The second one looked a bit sketchy, but that was the phrase used by
-the log message for c4611130 (replay: add --contained to rebase
-contained branches, 2023-11-24).
+>  [synopsis]
+>  git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
+> +git repo info --keys
+>  git repo structure [--format=(table|keyvalue|nul) | -z]
+
+So "git repo info --keys --all" or "git repo info --keys --format=..."
+is not supported.  Does the implementation behave sensibly when given
+such nonsense commands?  Let's see.
+
+> @@ -170,6 +181,7 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+>  {
+>  	enum output_format format = FORMAT_KEYVALUE;
+>  	int all_keys = 0;
+> +	int show_keys = 0;
+>  	struct option options[] = {
+>  		OPT_CALLBACK_F(0, "format", &format, N_("format"),
+>  			       N_("output format"),
+> @@ -179,10 +191,15 @@ static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+>  			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+>  			       parse_format_cb),
+>  		OPT_BOOL(0, "all", &all_keys, N_("print all keys/values")),
+> +		OPT_BOOL(0, "keys", &show_keys, N_("show keys")),
+>  		OPT_END()
+>  	};
+>  
+>  	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
+> +
+> +	if (show_keys)
+> +		return print_keys();
+> +
+>  	if (format != FORMAT_KEYVALUE && format != FORMAT_NUL_TERMINATED)
+>  		die(_("unsupported output format"));
+
+OK, so it is:
+
+    "git repo info --all --keys" and "git repo info --keys layout.bare"
+    both behave as if "git repo --keys" was given, ignoring
+    everything else.
+
+Shouldn't "--keys" be explicitly marked incompatible with "--all"
+and remaining keys in argc/argv[]?
+
+While there is no strong reason why anybody must use NUL-terminated
+output format, simply because repo_info_fields[] contains no tokens
+with strange byte values, but just as principle, shouldn't
+
+    "git repo info --keys -z"
+
+do what is naturally expected?
+
+Perhaps
+
+	if (format != ...)
+		die(_("unsupported output format"));
+
+	if (show_keys && (all_keys || argc))
+		die(_("--keys cannot be used with a <key> or --all"));
+
+	if (show_keys)
+		return print_keys(output_format);
+
+with a trivial update to print_keys() to support NUL-terminated
+records, instead of puts()?
