@@ -1,88 +1,133 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1B23B8D74
-	for <git@vger.kernel.org>; Sat,  6 Dec 2025 21:02:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E346D1C68F
+	for <git@vger.kernel.org>; Sun,  7 Dec 2025 00:18:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765054975; cv=none; b=ZiBrrQycAINj+C9Ys/UR/QX0uo2dqaJxvXYyV8viwQn//nR68+G8rAwI2D1GKD0Ym2yixBqRPMTfpgr8hBZ0l7/MoBRlUa23VDOuu75oXSTYLZINHRWklCGza9E7K86h7qnFfAB1p0fXmdRvrAVSHJupypMz+YU9+4mVNZrEM30=
+	t=1765066717; cv=none; b=I8UoNg+pYlydOY+JRQLTAfUwUOunJTW58Sdt97UtBj6Pl29sIFkMrBnYgBTpM3VsIyimvvgzsmwztP8AoSMMETH5GlNaAA/z2UE8Za6TSpG/BJ7c2YWt1TKfHsRnHMh4kC6kM4jpkUMh911Wgut8+lHZHPbJnonJND7AzT+mbYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765054975; c=relaxed/simple;
-	bh=473UIHV7xyiOtB5czztD5t0Mlw6l9RSTN3PdyRqgf7Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cgrwdCHFRkD5SCWheUFvVkwEql2E288F44Ww9IgmR+uF547jhsPFaxz46Vu0Myry1HC+cDTFx9G6D0Mk+iUdCoOpjhIEPqKz5pb5HZptdVTZNooYmmeauaHeAvAErGMI2jeD2/D/B3kl0iJ2acRnzonshwJZdGp/4UpWViMBlV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lYh2teMt; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765066717; c=relaxed/simple;
+	bh=3acBDWquIo5rsk/33o1HgHhZdoPxbZPF1rBCxXnYG8E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QWthvBl1bbTm16kxS4logU+PUDeQrDLlInJVMnjlHKCk3Wtn7+sMIvHJ6OhA/v8H+ulGHz/l4Ws41UCvgshNWdcxfLHOr8UH/lpsqpLv2IIGBR2ZnlSyK0LS9ZziGhcgWKiNsXd50fYOAN4Rt+PBK13AhRrBTGqJZ/oWhaUMmgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ebDSZvwZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IkgPsf/v; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lYh2teMt"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-640b06fa959so5378398a12.3
-        for <git@vger.kernel.org>; Sat, 06 Dec 2025 13:02:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765054971; x=1765659771; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=473UIHV7xyiOtB5czztD5t0Mlw6l9RSTN3PdyRqgf7Q=;
-        b=lYh2teMt6VOHW5vQ3etedsMI/jLvYiP3Q6CEjuLjNfGROSfxrvrMmk59w/I7grpQjC
-         vaptDl3wPNAVyrFxu1tawjKv1b/Jsb4k+le2ltorYc6hDiXwp4cJD0J0ATV2tszHGrQ1
-         W/JooR5Iu2OmMfyq/qNy3mvKpMrKWpWxewO9pY6tQZi6rNkY3Xm5kH9UoYMKY2Up+j/h
-         +rQKF/WRR09zl3FaCPtt1kCY/M8rFTmYhs+jnKyG8fchDTUvTSEad6jZfCifdPYcfRVT
-         +gHrzzTTfvaDoC4VhZw80x8Msr5LGcfrzv88MGz7NxdG0xXJBlky/TLPdM22SXIQC6OZ
-         J2gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765054971; x=1765659771;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=473UIHV7xyiOtB5czztD5t0Mlw6l9RSTN3PdyRqgf7Q=;
-        b=nwxvag7tbRD4vvf7K5A6XRpbuXblXIzSAwIFy7WiRqNcHUD9ZreyX4v1vXfDdUdcHG
-         sUZch6jwjTLnwmDWJU3A+aLG5YWjrPbpqSoQYlolW+BUaapK0u3StOQBYuVSVMRG3fEM
-         PKdhRuLcOQIIZxdDezPUk8K0eXr3+0SMOcXTbENQ0NUP67VDIHvTHJpAHJtl+7oQ6Bv1
-         Et2bIxeJw6D33EmuZVwyrmSXnz6RykOTy/M1m5CM3QaJrrLPujcRd8/P14Vfeu9SAxnn
-         GYGj+znFZN952rcgqW9tQWGnXP9ONGQIm+qLCsKv8RRuFVqFyi6P6wlcGFB9wcwwoMHp
-         JPog==
-X-Forwarded-Encrypted: i=1; AJvYcCXa4eOpwHvabZh6i3aZH0awdwFrh+W095P7nK7uHu2wNZVTtmdhkbd51ksfutP2LX3zAiQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxVF5pfE3OOBp9XtG721kCh2jWyX2RL+xu7HRF8C6f8+h+qHkA0
-	vPuEam3W4fN7gS1nzscSMdB4QMMtNATgD5sYnIgIO2oiyY1//lmgRyUE4Q9mH8xu3dLsuzwkO40
-	2KTu224ii+masoL1V0+NCLOyYVsXTt0A=
-X-Gm-Gg: ASbGncuXSOPQ8MKamnn5OmhRmTHsmiC82Lr3VD+/Czixv3VjiGcmGTn1N3fMYByoNC6
-	z+tIvmuZBp5c+anYHrHsniXXvSfGy9KtcZUPpsn3vSQj3Bj6GZNSR/ho4VT74nDFyvY7vCYfO5J
-	+zzrew1mbWwOFPi9GcsUV/PP7lNdfd4RB4w7zkVwEIlgi3WyIxSEd9U5vvAsyuKXY/syht04FVj
-	A7/mKtLvcOnxwKDZUxkFuoBsyoNVJN+XWdBBnNIU50NhYXos7/PWAjHIE2JfQXBFNu6DZjyCSOM
-	IN77oauUFcBunM0v0zzoQD/GFL+v9BhUtzj5HMggBHQ++/nAQNmpzEYX
-X-Google-Smtp-Source: AGHT+IEcBHPD0FQkTxysxAvr0M7UyTLCBFCGqyRF8ppfah6QgfNeSadEEpUor9Brb8ejCHb3crTEKPkdGyK/rVHsOvE=
-X-Received: by 2002:a05:6402:26cc:b0:640:ff5f:47a8 with SMTP id
- 4fb4d7f45d1cf-6491a3d62demr2871589a12.8.1765054970866; Sat, 06 Dec 2025
- 13:02:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ebDSZvwZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IkgPsf/v"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0109C140004E;
+	Sat,  6 Dec 2025 19:18:34 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Sat, 06 Dec 2025 19:18:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1765066713; x=1765153113; bh=sOvtLLtys+
+	AIHFboJbQuEQwSc8yhFsms8c+cLdMeCt8=; b=ebDSZvwZ6vtsZWMKSmP0u1EqK8
+	K9q69RKwki0tZ2kppgPC0XWTfc9s+5aAZNAvz0Dcw1m9RsDDJ7DpzEv7gqu4YGH4
+	cPAXXaNgwHv0XZBQA7Lz6mmdW+ZwVINycAM8LxDWUtK4Ffp70DfkiVv212yOt8pb
+	EfNJs+fByse8hdfEnuk8tGoJSu14dMvLU0aMAX3YKj6GFG3YJIyWMpTa84OSoyyF
+	efWGtaBM08wzwzW476JfV92E9Tujp37CVRjFpfl4ZBD9srJ9pPlsghih6aHz3Qj8
+	aqDWaTqNXI+j3zNxPpUeAfQ9YNn8MEYRLp1nBN04Wplk/auXZUhJqucjmxEw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765066713; x=1765153113; bh=sOvtLLtys+AIHFboJbQuEQwSc8yhFsms8c+
+	cLdMeCt8=; b=IkgPsf/vH3jW9iuDIbqoh6AP3eZSwhmzZQnwM09xh8uf+lBh+9l
+	jdfs36FCbnUh+l2D/LRHGU2cxi/KvNDhq/0reWnvJraxGo8vqiIOrdtU6gn4EkT6
+	/gut1P5ADLqNu1AfqA2s+wT7lvGImoEpPFrexKDAajhs76MEZqM3Mdb89oBqwYWU
+	HmcHTUA/OVnytYuGHIFWLD6JZd7zVsAuoOXR2uaEICAkvRIcVPsjE81od4jS5W8t
+	QWmYMeIFyGrPdKsb/5fFQvfsQ322Uz0f881SvNwtubacY7kzB60mpESK770MbCg5
+	ilGT6ozak3lkAMQ1Yr8Ox5e8jh8NGp41srg==
+X-ME-Sender: <xms:2cc0abmYXuoASr6Il0OvGF8x2RJdZly1nvjf0ngMcbN95uCZDqFNMQ>
+    <xme:2cc0aV39N2OHL44B6iwYlC28X2vT_g8pXUVUoqyefWN3xDzx7aBag3B1aLf50DwNZ
+    q58OduzKZeJU6JHqVP_TvEELV9AgR37bw8nKrQ2ITD3ZL6L4equJA>
+X-ME-Received: <xmr:2cc0aWp8HjKU6jTpUwOXUVK1eb5matw5Pq20V5tm2IPHa4EHVGc7-Vc39mMeFnQHxtetgDlddOnvRqmhPxjduAt8XFo150vBIQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdefhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhfuhhnnhhivdefgeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:2cc0aSdDmjE2x4HNDBU_kQwR0paB869ZhUefuWjez1VKqzA42iGYOg>
+    <xmx:2cc0aVrXOB49tWzlRrMU3YKLban2UMiKgeLm_uBBmHR9H2Wd96uPCA>
+    <xmx:2cc0aTHbPNEvQ8A4cjlcr98FFBa_PrElv-kE3POLyhry74teySu5Nw>
+    <xmx:2cc0aVtt7tqJcz1jNIX9HG9eQcl4FGLmFMmDI6kHdewmQuvhbnnapw>
+    <xmx:2cc0aSKLZyI7upIiA6QX2daTKajs2qdB1njpxa-LpTjsXTulZkEnuv3D>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 6 Dec 2025 19:18:33 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: "AZero13 via GitGitGadget" <gitgitgadget@gmail.com>,  AZero13
+ <gfunni234@gmail.com>
+Subject: Re: [PATCH v3] win32: pthread_cond_init should return a value
+In-Reply-To: <xmqqecps5f8u.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	20 Nov 2025 17:46:57 -0800")
+References: <pull.2103.v2.git.git.1763480546981.gitgitgadget@gmail.com>
+	<pull.2103.v3.git.git.1763675016637.gitgitgadget@gmail.com>
+	<xmqqecps5f8u.fsf@gitster.g>
+Date: Sun, 07 Dec 2025 09:18:31 +0900
+Message-ID: <xmqqwm2znnzc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <aTMNdQ_NHTVPtwG8@air> <be503e5e-43e7-41e3-afbe-265cd3da0636@web.de>
- <aTR6Ky7Nq32uj4_5@air>
-In-Reply-To: <aTR6Ky7Nq32uj4_5@air>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Sat, 6 Dec 2025 22:02:39 +0100
-X-Gm-Features: AQt7F2q6SM7rHuUHm_TDQzPICeHbFKzC7WpPqSG4zTuj9M4AyyYgLI5CKKfSXwc
-Message-ID: <CAP8UFD3Ta5jdC7uU83iqT9+ZYEb2-CFkUWanAGQtD6fARmxG-Q@mail.gmail.com>
-Subject: Re: Git for structured data
-To: Cedric Sodhi <manday@openmail.cc>
-Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sat, Dec 6, 2025 at 7:48=E2=80=AFPM Cedric Sodhi <manday@openmail.cc> wr=
-ote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Hello and thank you for the two suggestions. I've read up on them and cam=
-e to the following understanding. But first, I would like to mention that b=
-y "data" that needs to be versioned, I was not referring to binary (opaque)=
- data, but rather exactly the type of data which Git currently manages ("so=
-urce code", in a sense); but in a structured form. Think text or sourcecode=
- fragments in an SQL database.
+> "AZero13 via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> From: Greg Funni <gfunni234@gmail.com>
+>>
+>> This value is not checked, but it must return to match POSIX
+>>
+>> Signed-off-by: Greg Funni <gfunni234@gmail.com>
+>> ---
+>>     win32: pthread_cond_init should return a value
+>>     
+>>     This value is not checked, but it must return to match POSIX
+>> ...
+>> -#define pthread_cond_init(a,b) InitializeConditionVariable((a))
+>> +#define pthread_cond_init(a,b) return_0((InitializeConditionVariable((a)), 0))
+>
+> This is tricky and I like it.
+>
+> Because InitializeConditionVariable() returns void, and return_0()
+> is defined as such:
+>
+>     static inline int return_0(int i) { return 0; }
+>
+> you cannot directly pass InitializeConditionVariable() to it, so you
+> use a comma operator and pass 0 to return_0().  Because the type of
+> the comma operator with mixed operands is the type of the rightmost
+> operand, the type of "InitializeConditionVariable((a)), 0" is type
+> of "0", so return_0() would happily take it as an int, and returns
+> 0.
+>
+> This should work correctly, but it still is tricky and yucky.
+>
+> You may not have to use return_0(), but OK.
+>
+> Will queue.  Thanks.
 
-Not sure it's what you are looking for but https://fossil-scm.org
-stores its content in an SQLite database.
+As I do not do Windows, I was hoping somebody more clueful than
+myself on the platform would give an Ack to this patch, but we saw
+nothing.  I'll mark the topic for 'next'.  I do not anticipate
+breakage but if there were something fishy, hopefully we will hear
+quickly enough.
