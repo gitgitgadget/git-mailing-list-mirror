@@ -1,99 +1,98 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6421E98E3
-	for <git@vger.kernel.org>; Mon,  8 Dec 2025 19:04:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32E42D1913
+	for <git@vger.kernel.org>; Mon,  8 Dec 2025 19:20:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765220680; cv=none; b=bGNyIn7xzPM/+CIFugGhqhzsIL7UyLg/dHr1iumAeAHLDt9evL2cvBN7V6G2FL8O5P1gKBIPsgK6dk/+ZpS7lCSmOsfV2rajrBF+0ycRCqmOj9V5hdDu/d3jqox7YUTTVCPd3OtbKixYOYRibdJb0lTTA12pjQ4C28vwBOOEk7U=
+	t=1765221640; cv=none; b=UpXr5QOVPm+SEtK293GT5KczmiqggbAWmGWbJhqeSWp+ySMqGra34qbyeYj21icdsDLzUfa/iU6SqHxyfEIQ5KM6ETuWH1V0/abRLkjJTCRXCTQNYc9KHwcskbip2Vawz3Pv3oOKVBcLP/Jjbo7QitfQm1F2YmqtUOq4vMkX7d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765220680; c=relaxed/simple;
-	bh=Q3h/HqBqLECUx24qTN9s/nPgvlGzN/rM7+vxgDoFxk8=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=M2WWTyDuJRfIz3DLjX68ApckGtRhPzkFqVy62oezot1TqWxs5xRck9NYXgqJXavOYhrBN1FV/G6GwpSlFcTwRR53rYR8ZrGQMJ0Y2X+nnQ/paO4+WMd+0cHJ/v2yq1KuN7Z5ec8Q59LevMehlxb5FioazW/qm67qnKuCjgkZdrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BQzvFd37; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765221640; c=relaxed/simple;
+	bh=x2KRlL2syZZbi+OMElpI4NYa+Y8qBmoBB8ZWD4DnDrE=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=pPDqdooufppjGYokWHMUAtiw1hjrV68CL9JrvZ3eXh+SrCk3/eTJJl+Ld0qMWwmYXZiFQ+E/h9u3IMIvkKL+4g2ruOWbZgSkDfU+zVpT0SHegSaqsDP5s+Oizs3Scz3zJZknxHfT6KEBLZb8AgR/V6RWQYJLaFyrSoBq9VJkaEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=cSBmkYaN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bo2T3L4h; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BQzvFd37"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-47798089d30so5016425e9.1
-        for <git@vger.kernel.org>; Mon, 08 Dec 2025 11:04:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765220676; x=1765825476; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eSJqd6eotKeNjylTBXvCl2ZhMX1hDkXwoZTqC+x8m0U=;
-        b=BQzvFd37OLa+hQeRECfIpA5xO65xbLof/4ZqXI5Hx0oTqQYo2jsDThEw7/SPf9Y3i+
-         c4qDcKUJmtcwiCYZYt2lbRYYaQCzs1W/hCh9PtJA7odMnku9bjUmvrpiHsce0ItKpAkn
-         EBmi86uk1/eeqd0FHaY+UniQTOjCxngKCYLQ9fDevYL1GaoKJY8PcwbWoGdNtd+COPim
-         5utSqnsULuybrJwYOXEg0fv4LhE0dOGCRdKAZo9ra1+4n7dTFirEc5QrU1DeSzWQ4LTr
-         gaXlcWdpw7EYfkLCO6Md7OeSa9szac1OmUzFM671ldYKA1EM49XWiIWa7FlVVZ3rCt0d
-         RIJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765220676; x=1765825476;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eSJqd6eotKeNjylTBXvCl2ZhMX1hDkXwoZTqC+x8m0U=;
-        b=aiu47+ZC8XvlSqoTHg/44HF0pqO5n3U4BY0TLY6hQe2yZu4UcN4EE9vSyNXCG2JlWy
-         M9Q8At0FcsdqSxn4hvJ8d0Er4uu1BHI74q1fE5ZiCH0KEvhoBfa8B3tStGgr7uZ430iC
-         OAnN/z6OAsLn51RCUcnud70admggiTKnC83Eetlxz0nJGLumkrguwTa2dZn3ahYoEP34
-         qn40+HxwkvR9veZB0JOs/4qd5gb3KG2fnVR3611UHDFsfLp+hcYh9c8mMLsgzPjSR71f
-         DUUa6WnfWUn8+3++3aXc7uXxfr5fJkw97EduGCgvR7Xl8plbrQCjx+T6b2yV6plfgbEI
-         Ma2g==
-X-Gm-Message-State: AOJu0YzOeo1sXkZcAqntlgl5ugpsHBj+gv3g9j5lF+DVWzqe2dvwUK4C
-	eCNePaS60ar7EN4NS0jjQT5FpyyIvNpgJr9V1tb3G0V3lKh1BfTmUffAFjrdHfJc5IE=
-X-Gm-Gg: ASbGncvkmPleqp5nrxEK5pRi8ZCYs34FYDIX/oZhiGOiErafleEEvh//HkFgUzAPcq+
-	30ZkzO86yJ+v8qaPxl1PfepVEXrMOpituSryfcBp5Ml1NDIFACS7irgMATXhkZoahH/53cOk6YO
-	H7ToeFj2HfsBGBMzT6gMwjyGeWMwumW2NYDkZ2gMB3Tes2MPlaKr4gVbMUmwyp8efm7XPdPZ7PV
-	RAqaEnBhGlmUUTKRMcI/9o13aeaXBMudwu3jkVqxWYBr5RIMyBgJipwr1MyRFpooK0Md6mAghBt
-	arQkkvfy1rdSdYUbPb+ZQnnkt4Gq95DNDE97Qoj8xP1tI49KxOCe4Hvn3mpGpTbiT60t73HQcKm
-	anFLkEDE/9cQJUCoW9lFJQNhUnewQU51MvrXQJ3bLeQz8MfIVhVQdR8/XYm1qgxTG5v33ILGNHX
-	tfE1Jj02qBJATf1A==
-X-Google-Smtp-Source: AGHT+IHoKEg81mIMxKKg9KeMhQ0AKgprFIFJc2vu9TRk7Uyi0+7RGv/N9/fnYGc7Mu7oMBmlA75oQA==
-X-Received: by 2002:a05:600c:524a:b0:477:7a78:3000 with SMTP id 5b1f17b1804b1-47939e4609dmr51718815e9.6.1765220676340;
-        Mon, 08 Dec 2025 11:04:36 -0800 (PST)
-Received: from desktop ([194.127.199.18])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42f7cbe8a7bsm27215710f8f.4.2025.12.08.11.04.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Dec 2025 11:04:36 -0800 (PST)
-Date: Mon, 8 Dec 2025 19:04:35 +0000
-From: Matthew Hughes <matthewhughes934@gmail.com>
-To: git@vger.kernel.org
-Cc: Matthew Hughes <matthewhughes934@gmail.com>
-Subject: [PATCH] config: document 'gui.GCWarning'
-Message-ID: <20251208190400.64920-1-matthewhughes934@gmail.com>
-X-Mailer: git-send-email 2.52.0
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="cSBmkYaN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bo2T3L4h"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D301814001C8;
+	Mon,  8 Dec 2025 14:20:34 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Mon, 08 Dec 2025 14:20:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1765221634;
+	 x=1765308034; bh=x2KRlL2syZZbi+OMElpI4NYa+Y8qBmoBB8ZWD4DnDrE=; b=
+	cSBmkYaNsPkx4s6OqmOYK3izQHzO1RgTgBeZopKHoB3Akve9BD5PPniFY1kzcaQE
+	T16D0ren5NEOnneO66bTkZoWtjejK2sdohQDIxvTuIoi6A+NGJ5m/h6wYp1bvB2X
+	OioMSUhJ1p8mhXZgAUnLWk7HRQue7OtbyOkXllMqK4NPAVrpDdedh+jtEY8f9agA
+	2tJvvloB6lIqQcv0eXqzT7AV2D0jNW2yU17DgKeYoD0+Ua8AYj/X7MijQxSJiXw2
+	snLsoVIR/DQXO64V3F6rYe4310YqAgM/lDJYu2ewUMfVoFBhr1REXS/6Aa1UZEF+
+	TFDsRE2WwaQDs29nLF9BPg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1765221634; x=1765308034; bh=x
+	2KRlL2syZZbi+OMElpI4NYa+Y8qBmoBB8ZWD4DnDrE=; b=Bo2T3L4hOnpa4FY9X
+	v5Tmt2x/8+/CsZN1vL+uj8tUiCIjwrFUMWDWkZFlFUAdvhvLDnbpAEhtAZSrTnAO
+	pSgInVwHqYsLuPeaIgpsxyIOHMDV5HWptMBwEqJTDOCsgCLQe3Qe4Y5vRfm6JbJW
+	REb5GoX313EAezv7btIHRA27bmOCt3xWP/ZasHAc5I98SynRp7q0Gv9phKvpg4cY
+	Asn2ecrre4chbl+fZWE/gMpL35mEo33c3l9xTQec+wUiYyfFLdQBOLBD4MJa0P6z
+	xDRjNcSnpGL8dhu0gbHnKh00bAENZcfOt+JjYCZs5spWRmEowzvJMBX8zzVj0Jpa
+	CaRqg==
+X-ME-Sender: <xms:AiU3abwhcmDz-jplZ5dS1LXBzrb57Zhx1oNKEfOYfbWDZtZvsw9-wzk>
+    <xme:AiU3aeEYxpfpBJLPF4zybr9bqx8ozqyQtMRwGI4MVddiP09x86qe-32WapypWRWHQ
+    Ndpgnt1b4IZaD7j1QJdeRUk_ayysC-DvCpvWC2Cxr_AHt1aZN00fg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeehtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhsthho
+    fhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkh
+    hksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepffdtfffhfeffjeef
+    ffettedvtedtveefteehgedthedtiedufeffudelffelleejnecuffhomhgrihhnpehkvg
+    hrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtg
+    homhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    mhgrthhthhgvfihhuhhghhgvshelfeegsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:AiU3aedvuCVel1y4AQ8mqSwkgtJ5ztWjJ01WlFkfkCLe4QSzfda2hA>
+    <xmx:AiU3aWJ432bwEWcj3LRkRnOLQsS2l-7Vx0d3a1A3StK9Ivea9ex96g>
+    <xmx:AiU3aXHLbHO94lyN4-A7xUnCFaVH9MoLiFV8ZoK7OqSMV7CcyAajCQ>
+    <xmx:AiU3aYoQ3gvjuyRelQClhrCKlXRBEApDucpfcMQwmUSZTnGJM1G2Uw>
+    <xmx:AiU3aW1cXgo8SVeRPqnTU6D3_cdh_3v1hGV36QhaxbWbuq7ZeVrGU8Ka>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id B42411EA0066; Mon,  8 Dec 2025 14:20:34 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+X-ThreadId: AgBmJBpImkWV
+Date: Mon, 08 Dec 2025 20:20:07 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Matthew Hughes" <matthewhughes934@gmail.com>, git@vger.kernel.org
+Message-Id: <ded2184e-595c-46f3-bba7-1bb574c2964c@app.fastmail.com>
+In-Reply-To: <20251208190400.64920-1-matthewhughes934@gmail.com>
+References: <20251208190400.64920-1-matthewhughes934@gmail.com>
+Subject: Re: [PATCH] config: document 'gui.GCWarning'
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-While investigating the config options set by 'scalar' I noticed this
-one wasn't documented.
+On Mon, Dec 8, 2025, at 20:04, Matthew Hughes wrote:
+> While investigating the config options set by 'scalar' I noticed this
+> one wasn't documented.
+>
+> Signed-off-by: Matthew Hughes <matthewhughes934@gmail.com>
+> ---
+>[snip]
 
-Signed-off-by: Matthew Hughes <matthewhughes934@gmail.com>
----
- Documentation/config/gui.adoc | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/Documentation/config/gui.adoc b/Documentation/config/gui.adoc
-index 171be774d2..1565c0af19 100644
---- a/Documentation/config/gui.adoc
-+++ b/Documentation/config/gui.adoc
-@@ -55,3 +55,8 @@ gui.blamehistoryctx::
- 	linkgit:gitk[1] for the selected commit, when the `Show History
- 	Context` menu item is invoked from 'git gui blame'. If this
- 	variable is set to zero, the whole history is shown.
-+
-+gui.GCWarning::
-+	Determines whether linkgit:git-gui[1] should prompt for garbage
-+	collection when git detects a large number of loose objects in
-+	the repository. The default value is "true".
--- 
-2.52.0
-
+Apparently this is a continuation from here https://lore.kernel.org/git/jcqsqytuxpqwn3yhpz7fxucbuuf635q3jfgkjzauxwhrkhl7gg@g42r5kwwoknd/
