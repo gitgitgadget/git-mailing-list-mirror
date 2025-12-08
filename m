@@ -1,196 +1,105 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B502D3ECA
-	for <git@vger.kernel.org>; Mon,  8 Dec 2025 08:05:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765181103; cv=none; b=Ran/g7AScZSBMtJUmKqAMGQZX8J8ZN8m0AXXSplUhZC5Dmv+FXPX9NuFX8DUf7Ve4LeHOG8JcvE8UineHN30f1Aji5fVYDkCUXMcHLMev/4yO/UZgtcihvAIK+FWLemAZ5Wz+UOAFzWUbqvWFSFger401KMj1zvwzvKH2cqFtR4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765181103; c=relaxed/simple;
-	bh=Xf7J3uCTL6UXNjHbuzrfiqkAfeYSJdJa6eFVz1TG4Co=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=T2l+K7dSEZbk4FcZTQFcKdykPJz8c1K/q93FYWyoxz31jnpvkZFxomi+7xAgYoZpuCDWqnmqXf8ORUrOQx2adoTMNWS5/okwQlXU4unTqMbf4RMk1CtWcruj9IdKiz3DkwvCO3ROYoQoW5o993GcRp/JgytIYkgw/pZ4jcRtIh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TbNPCxRp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YUHGQzQu; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AD02D6409
+	for <git@vger.kernel.org>; Mon,  8 Dec 2025 08:44:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765183486; cv=pass; b=Ax013JlhEJCnJfKCHAYGMz9ueJl0sijjb3vTxYr4mwYql5ENA67sN5qUkcF5bKCV5S47KCiokIfu1nftG1Foz/t5JVcSCT1bA2E9EP+K/SZVXhCCY8j0707VgxGGjJnV9twmnN2I5u0fjnJd0b+mIuKm2kIuAsB1PmfB7WA51oY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765183486; c=relaxed/simple;
+	bh=WAeJ1J6wn33NfSJzCbExKcMa852qDGyL8bwwAgtrLF8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MCUch8r6vNl3xNIFl+eJCa7VjC30i0O3UNFA9SOznKXbrBlOeq6iWe1cpvBdCX7x1yVYYKhpspgGBuvOJiOw9QcIUHA6G61oUPH4MICrAAh5QnWSUMtI2LptVZT/k+/avSMn9QBWi1yy2ULeYAnuZgZP/VLT2F862JMtnn8qaIU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=V1i0d5Vo; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TbNPCxRp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YUHGQzQu"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6D7B57A01E0
-	for <git@vger.kernel.org>; Mon,  8 Dec 2025 03:05:01 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 08 Dec 2025 03:05:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1765181101;
-	 x=1765267501; bh=+sEyb3mR2MbBP+r5w3b1kGWdlTmVrmnnwMHEJvGg5gE=; b=
-	TbNPCxRpl20vmNaQQNPi37iVnjfOpY9QXSOVIS6mSIeP+15l4b0KkSgAjxyhOBx3
-	zWXb39SWruft/wM5wF4mzZlqSJM0mF2IgX+rfezw/STCb/0HcWbyFA6vDzkrVa7y
-	+MrHXk2ZWfQP5466L2GMeXhp9yI8DHyxtuaYuKIjpi2Rsavwmf6Nba1VVq+rZxfU
-	N7kxWcsWlWeUIaBEAPq9GWsRFarlN5GuKRCd5ZhK3FXYzC9hoTFNmUO9Jz/ZX+pL
-	OiHwoQDJ86UT0gf0ZIKQLBCeKn1KsU5j4xWO9pnZpT1w84HuENwj0P84nlGnCTpY
-	ZUcs3ryRin+twJtS0AP1nQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765181101; x=
-	1765267501; bh=+sEyb3mR2MbBP+r5w3b1kGWdlTmVrmnnwMHEJvGg5gE=; b=Y
-	UHGQzQugBO1RT670yoEtbF6E1phEmQSKoewfaovoeVgJO+COh55Cub4yQ6vP7PNN
-	k8ruYJBDwNP20ty8DoyIj2a0WITZj0iQpxHi/zgT9BibWK6TuZkeilaMTPwtKNDy
-	3B8H/RuKwhmVD4pjwONolRS3OMSXigl+YLeBWXanlE0UvEsYrJEYfODTO2OxuaOv
-	sQvDWwTo/fj1i6NjwC4QXKytilsLhwiIBzkTxhfVQ4E29n1bP515l7IrUaMAjcqH
-	fXj40aq04zWyOMA2OD+bEvs+DpqyMHrJHNhdla+odSxYqv3hIlgqRk2UmTy/t/Vu
-	uSOJjhy9lSNal1XBZ3k+g==
-X-ME-Sender: <xms:rYY2acTbs5SSwarCzKQDZ-oY8Fe-jT0R_lZUyq1nRxg2RBjAl6yJNw>
-    <xme:rYY2aQu_Vh_AJLpUDSP5jRF4-OorTWVG4m3jPaoSFBok9gm0NEzvwLv99BYdZsa8w
-    Me7bRN-EDfm3YGg15sbSSHwuNsCKDRehAHfccK-1ueMBuUQPt61GA>
-X-ME-Received: <xmr:rYY2afek2WsAuolBo48MAxjY2spmTWUPUVHbDFURQG5Ua_hPvVyXMJnu0Bsf6HiUMhbVSZ6BN1Tbvka4_3cG5rVUL4JvpSofDIorK1nJAL0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieduhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
-    ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelte
-    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedupdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhg
-X-ME-Proxy: <xmx:rYY2aVKoCiRH3XBLMeh26ExiGGacyVPRou6kbOWJ2w-j5-0jYxIXUA>
-    <xmx:rYY2aVZMgNTx2e8aUR6RGnL1_sWKF_d9Jh9CcIa_8BoCMYzUpQn5Dw>
-    <xmx:rYY2aYuxKHS6jY8AClREzWRvWAXxrowzlhktqrC1gqf_S2cjIpJ0-w>
-    <xmx:rYY2aauD-UkOhtVnXZCYBdSiNJlkQN8ULG1ZDqckHxgOWO-AWX_0Ag>
-    <xmx:rYY2aUSwIaOy7kdomctkqPVUeOrkMBidUbsSkr_YrQDjOHQl0tfcvss0>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 8 Dec 2025 03:05:00 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 90f15cf7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Mon, 8 Dec 2025 08:04:59 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 08 Dec 2025 09:04:25 +0100
-Subject: [PATCH 8/8] odb: write alternates via sources
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="V1i0d5Vo"
+ARC-Seal: i=1; a=rsa-sha256; t=1765183473; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=mUWdJaLcMjmMEYIGXkM/35xHzD/gzplegFNN0YT+qW1iGS8HlzQ0EO4YlnU9Uo7EHZgCddRBB01qbmQ4xfNhwN+Y0lkx3z7EhBq8/RP04WkfZPWa3tUtA9p4PoBWWZTLFk4LF7GrpCzg5RObLYuYDF1xm90Npq3R8yjYnnDnAPw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1765183473; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=LXg0Kk4CEDOxfRNGKZfp9GMExX23UQ4tmUmnFXR0/Sc=; 
+	b=ET1Ubv3410aLUF3QK2wTX05gcAPsgemQwO/nxIuE7i0v8aakEJMq7tatlLQqDaUFl0ZTCGJw13GMeJ9qXp3ZPvj5IYUHKwv9SdcH8HZsI4habKySo8Ou8Q3eA5wVqNSdqHcp5UWTx3o5S7ZnjYVHg75A35mzIWpbTcFmc0VxJFA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765183473;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=LXg0Kk4CEDOxfRNGKZfp9GMExX23UQ4tmUmnFXR0/Sc=;
+	b=V1i0d5Vos/gFaKhH5a38ocrRGxI//TgI/m4TbIywsXzTWZQA9fDm9Uy7yl3awVBz
+	4mio6KtYAbtXwKD7+AqOR042VVU+p/21IZrbbLGL63Lmp0GkG08j5g8C7sSsJywHpUb
+	QP+sWR5XwbHokYhgXXtUfFZCCC3/k5sQXvBGReJQ=
+Received: by mx.zohomail.com with SMTPS id 17651834712781020.2088196172223;
+	Mon, 8 Dec 2025 00:44:31 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2025, #10; Sun, 30)
+In-Reply-To: <20251201114336.GA1559453@coredump.intra.peff.net>
+References: <xmqq5xaqbxmk.fsf@gitster.g>
+ <20251201114336.GA1559453@coredump.intra.peff.net>
+Date: Mon, 08 Dec 2025 10:44:26 +0200
+Message-ID: <87wm2xuzv9.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251208-b4-pks-odb-alternates-via-source-v1-8-e7ebb8b18c03@pks.im>
-References: <20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im>
-In-Reply-To: <20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.3
+Content-Type: text/plain
+X-ZohoMailClient: External
 
-Refactor writing of alternates so that the actual business logic is
-structured around the object database source we want to write the
-alternate to. Same as with the preceding commit, this will eventually
-allow us to have different logic for writing alternates depending on the
-backend used.
+On Mon, 01 Dec 2025, Jeff King <peff@peff.net> wrote:
+> On Sun, Nov 30, 2025 at 09:05:07PM -0800, Junio C Hamano wrote:
+>
+>> * ar/submodule-gitdir-tweak (2025-11-19) 7 commits
+>>  - meson/Makefile: allow setting submodule encoding at build time
+>>  - submodule: use hashed name for gitdir
+>>  - submodule: fix case-folding gitdir filesystem colisions
+>>  - submodule: add extension to encode gitdir paths
+>>  - submodule: always validate gitdirs inside submodule_name_to_gitdir
+>>  - builtin/credential-store: move is_rfc3986_unreserved to url.[ch]
+>>  - submodule--helper: use submodule_name_to_gitdir in add_submodule
+>> 
+>>  Avoid local submodule repository directory paths overlapping with
+>>  each other by encoding submodule names before using them as path
+>>  components.
+>> 
+>>  Will merge to 'next'?
+>>  source: <20251119211030.2008441-1-adrian.ratiu@collabora.com>
+>
+> This topic seems to introduce a race in t7450. Running:
+>
+>   make && (cd t && ./t7450-bad-git-dotfiles.sh --stress-limit=50)
+>
+> usually fails within 10 or so iterations, whereas without this topic I
+> can reliably get through 50 iterations (since it's racy, nothing is for
+> sure, but it seems to trigger pretty easily).
+>
+> The failing test is the parallel one added by 9cf8547320 (clone: prevent
+> clashing git dirs when cloning submodule in parallel, 2024-01-28), which
+> is making sure we catch nested modules during a parallel checkout. The
+> race seems to be in Git itself, and not an artifact of the test (so this
+> isn't a race we want to wave away, but probably a real bug, perhaps even
+> one with security implications, according to that commit).
+>
+> Bisection points to 099fe37397 (submodule: always validate gitdirs
+> inside submodule_name_to_gitdir, 2025-11-19). Which seems plausible,
+> given that it tries to move those same checks from 9cf8547320 around.
+>
+> It's also possible that the race was always there and this simply makes
+> it worse, but I wasn't ever able to trigger it on a pre-099fe37397
+> commit.
 
-Note that after the refactoring we start to call `odb_add_source()`
-unconditionally. This is fine though as we know to skip adding sources
-that are tracked already.
+Hi and sorry for the delayed response.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- odb.c | 51 +++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 35 insertions(+), 16 deletions(-)
+After a conversation I had with Patrick on the patch series, I think I
+understand what caused this: we need to keep one of the validation
+checks outside submodule_name_to_gitdir(), to prevent the race.
 
-diff --git a/odb.c b/odb.c
-index bf364fe3dd..9e7d078a46 100644
---- a/odb.c
-+++ b/odb.c
-@@ -271,25 +271,28 @@ static struct odb_source *odb_add_source(struct object_database *odb,
- 	return alternate;
- }
- 
--void odb_add_to_alternates_file(struct object_database *odb,
--				const char *dir)
-+static int odb_source_write_alternate(struct odb_source *source,
-+				      const char *alternate)
- {
- 	struct lock_file lock = LOCK_INIT;
--	char *alts = repo_git_path(odb->repo, "objects/info/alternates");
-+	char *path = xstrfmt("%s/%s", source->path, "info/alternates");
- 	FILE *in, *out;
- 	int found = 0;
-+	int ret;
- 
--	hold_lock_file_for_update(&lock, alts, LOCK_DIE_ON_ERROR);
-+	hold_lock_file_for_update(&lock, path, LOCK_DIE_ON_ERROR);
- 	out = fdopen_lock_file(&lock, "w");
--	if (!out)
--		die_errno(_("unable to fdopen alternates lockfile"));
-+	if (!out) {
-+		ret = error_errno(_("unable to fdopen alternates lockfile"));
-+		goto out;
-+	}
- 
--	in = fopen(alts, "r");
-+	in = fopen(path, "r");
- 	if (in) {
- 		struct strbuf line = STRBUF_INIT;
- 
- 		while (strbuf_getline(&line, in) != EOF) {
--			if (!strcmp(dir, line.buf)) {
-+			if (!strcmp(alternate, line.buf)) {
- 				found = 1;
- 				break;
- 			}
-@@ -298,20 +301,36 @@ void odb_add_to_alternates_file(struct object_database *odb,
- 
- 		strbuf_release(&line);
- 		fclose(in);
-+	} else if (errno != ENOENT) {
-+		ret = error_errno(_("unable to read alternates file"));
-+		goto out;
- 	}
--	else if (errno != ENOENT)
--		die_errno(_("unable to read alternates file"));
- 
- 	if (found) {
- 		rollback_lock_file(&lock);
- 	} else {
--		fprintf_or_die(out, "%s\n", dir);
--		if (commit_lock_file(&lock))
--			die_errno(_("unable to move new alternates file into place"));
--		if (odb->loaded_alternates)
--			odb_add_source(odb, dir, 0);
-+		fprintf_or_die(out, "%s\n", alternate);
-+		if (commit_lock_file(&lock)) {
-+			ret = error_errno(_("unable to move new alternates file into place"));
-+			goto out;
-+		}
- 	}
--	free(alts);
-+
-+	ret = 0;
-+
-+out:
-+	free(path);
-+	return ret;
-+}
-+
-+void odb_add_to_alternates_file(struct object_database *odb,
-+				const char *dir)
-+{
-+	int ret = odb_source_write_alternate(odb->sources, dir);
-+	if (ret < 0)
-+		die(NULL);
-+	if (odb->loaded_alternates)
-+		odb_add_source(odb, dir, 0);
- }
- 
- struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
-
--- 
-2.52.0.270.g3f4935d65f.dirty
-
+Will fix in v6.
