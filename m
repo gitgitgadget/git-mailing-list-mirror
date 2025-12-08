@@ -1,80 +1,79 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3365C2D0C82
-	for <git@vger.kernel.org>; Mon,  8 Dec 2025 08:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D0D2D7DC7
+	for <git@vger.kernel.org>; Mon,  8 Dec 2025 08:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765181095; cv=none; b=VMW29yUVovqDXoiq4E3RQaGM5e5PE9HGG1J1xESqvaK0RmcHhWb1xNbJl6ioUqmW7Lw2HM22I7/oX3IW6vfJGs5+JSkdHfSpJVqTqxC3ldnW4AjNAwdkFfGkP7wGE8stITdcckEmdHc2wfUcDSJNOpQ207q0U8nT5JLUe20iilw=
+	t=1765181099; cv=none; b=HkwkRLKsyV7eSffAJ0g0SMTxuNQ8Cj496yTvZKuI+MNI0UXSvfqj/uyQSoLLYyuZXc2VS/HxLOjozmeqyFFXYu5hsO+Di1/tt6r9RSaFN6F03BDQOMhYGqH5wvoaWzObPtVmB5n3L9yMJooTi8yIHBfS/verLrEVxfnHN1o1i3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765181095; c=relaxed/simple;
-	bh=Pd4AZGRpurJtXOPK3ARrRuAhlgYwOcqQwKTk0HlG2wE=;
+	s=arc-20240116; t=1765181099; c=relaxed/simple;
+	bh=aSih4icMWia/jTnsw864sZv/5J55223c1slk4ptvsZA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DTfovqkpkWHPPHNFRmIaDg8+TtCqa3Uw0t4sGQ+tibphiXrSrEjOtCAa2UKMTPRJySaayuFUGD4mS4a7UTs9Kx5P0en/mrCWLsQ9TlVYte01vyVguUvFVS5DPwmwTxuI3hfOO6ZzA85dKd1dcQe+Nuy4Lxw6zHI9ILLTmCIF/eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B8QxEvbM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VwKZoPsU; arc=none smtp.client-ip=202.12.124.156
+	 In-Reply-To:To:Cc; b=bQcusmPj5tfv4Y89FknyzsKUrgDSVYMD0sIq1BMJO9EgWLpCGoO18GqpVu3EuWijTBdrAqjY4+GNXkZtb8BOIB67H/Y9szLpbv35k7YxY5dG+5jpiL+Ehf6x9UFBHEzGGdlyhZQKXrI67aRgc6AOFFaE7cLa+r+FLae6tH0rfnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QZfF+2pi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YYxC6xYj; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B8QxEvbM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VwKZoPsU"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8F16A7A01EE
-	for <git@vger.kernel.org>; Mon,  8 Dec 2025 03:04:53 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QZfF+2pi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YYxC6xYj"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 83D977A01E0
+	for <git@vger.kernel.org>; Mon,  8 Dec 2025 03:04:57 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 08 Dec 2025 03:04:53 -0500
+  by phl-compute-05.internal (MEProxy); Mon, 08 Dec 2025 03:04:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1765181093;
-	 x=1765267493; bh=nssBSKgtbeCqrwFWhu4aa2vOJjpJevPEzG4VL8e1NnQ=; b=
-	B8QxEvbMlfccTA4LRoEsZpmBMYoMhqRQ/ysG45bxQZ2/yt1uwDHbUJkLTuWJ/g6q
-	o0fzf4ytcDzKnsbe/diiQjrsiEsqJAj4/fgANdJOjyDDL/dCQUXaXZ3Fm9B9CvQY
-	MTnfRjCuc98kH/waxMa5vyg8ZfL7gB7EmV4kG3Ou+Q9vhnewNcN2jwz9Ft+oTUAs
-	HtgCxbfEC9OunET1tEDSUSXsd9h+LTeo+A+1jq1EDXsCximxPjXLUxW8H7D22L9H
-	49aVcVGPp/awmvQC0TycOOoZ1dC0+RA3PEzgFBsKjtLjVByZYzKk4AfBQXTRLHMC
-	cCVwjU/OcFAZ4op5LqMBCg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1765181097;
+	 x=1765267497; bh=Pv3d/vgcvfyeHCrDrpWEzwxs6UqaaSuctHTipbeAls0=; b=
+	QZfF+2pieYX29l0sXdpnzSx2lhGLpVfoQvuSENX9B1M5crFK4vf04TLS0PYnV8BH
+	WkNz1ck8FFJ4CJwgFeDo8/Azdvdvm6jbL/DQVIdehNFAQKyDtYi3YImI8gB7B9bE
+	Gsjrh1Z11DewPdzydshdb0IYw4nfEc3b7sE2zMRKchUhof8xE78m0IYOevzZZLQH
+	uu/Wa0sFCiPdj+JbzZz/Pl85rFMQ+zcB9tcTjrq2AfwoykMN6hAZ4QHwTOUuIwVh
+	CzUfGAfsX4SerV5b5I0eyhDritRS+mv0C3mSwYVNnC7rJpMLHn+wbIS8y98Xa6fT
+	+OnRbydMzz+2ibtr9Dbfwg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765181093; x=
-	1765267493; bh=nssBSKgtbeCqrwFWhu4aa2vOJjpJevPEzG4VL8e1NnQ=; b=V
-	wKZoPsU7vXjPxahwsoLEJB2cyM/IjhorrvyN1VnFlK1ltAi357Vy6lF8QhTilUza
-	7arAoi9p+wAi4SLOe+vcSZPHAsOMEnXia4uJuGMHG35S045LcOhuozy00n/5qcAA
-	cUwUc3XEGoYd0YmsaGA1rCbKC/QZp6HnU7unCEgIgbdJD1DxQyj5w1Zp1Xp78/G7
-	ZyEod+XPfoMVZX3cNyywXiHn51vcw6ROqzEqFxmunsP94UIOxa5xgR9hbQzErxM/
-	NCOlQIKKVlUIk0HFmgUQzPGRTfdDIOHMVSGSIoqLHVxNL9Tbqy0YFB2dpDiMJsJA
-	G9jI0oe4ZqZo0sYfzYObg==
-X-ME-Sender: <xms:pYY2aR56it2vyx1ZcMZ3T2caGg5vyjk-MpaB_RopoKH4NJGBuPef9w>
-    <xme:pYY2aV0H9ft29AJIGn-x_Dx5tSmBTL0vK3gGKcajIXDPXJ1XwiLBcBW7hgxcWGDUq
-    A-83RfEmbjPS0a5-dRQqrQqWrHvrBYWI-nD77gGXpt7MhypkDAP>
-X-ME-Received: <xmr:pYY2aeEb0Ff_wzYEkcEZUQKJugPhJsVgO_94ISqpVvIYkLwQ_sI3BdzWaicnyS4fLzv-HEVcaXdt5UKUzhyBVlM4ZFJ3panRMcug82pKXAI>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765181097; x=
+	1765267497; bh=Pv3d/vgcvfyeHCrDrpWEzwxs6UqaaSuctHTipbeAls0=; b=Y
+	YxC6xYjHq5+gChVLOs/Zv7kSAOVFV6ZMHcI56gURAAzqSEgtRHGbrwiAtTfsor3z
+	u2n7jMqWmr9YCje8Y5Jwm2oO2HVDS+NvKzx6oD1noVfzWm2MJ7u1FW9Pxl66aFN+
+	/M+RjCgBSikUNagqLDsw94ZlRXbXMcl+NkG2af5EmClPMN/u2IULGksh97x54moz
+	egJDuGhDy3+bQE3mhrdMjRzU6sVXiha9kE5pVkEiSEhegDW866hdrpKsVlo/axnG
+	oF+SX+cbcXKvjOf/bVPOuXRkpx+hKViAkCs3qga6llSX1hEbpHLmjrv5S+UymCsW
+	F2BFpaMH+bhYisW2OO6jA==
+X-ME-Sender: <xms:qYY2aUxavphCZEGzVYYxUVdO58FN28DleDIODpp-UxQQgbdF2Xnjmw>
+    <xme:qYY2afPO3Npos96J38OYHC-iOQe_2PMql13ZhE1VOtn99hRid8nxJkegGkjhnshkS
+    9chTPZzAbCoNeyQSTNqL77X_I1Aes2Yt9raszcvwEBMa21nSOR7>
+X-ME-Received: <xmr:qYY2ab_aGJA5XhXR7IFsMpKNeQigNbeVmaCBxxzwl4tBqCQK7cxdaY8weV-h7WPU8ItZL1PgnobRq0MF2IjTs9N1HKdHG3SXHTYNZRguwOE>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieduhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
     ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
     shdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelte
-    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgr
+    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedupdhmoh
     guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
     rhhg
-X-ME-Proxy: <xmx:pYY2afSFiZZajcLCfsAtu0nc5y_KI-t2tZBIaA_FNKwTj_ASYL_QBg>
-    <xmx:pYY2aVA2_FzkMpmVltOWAlMBkhJRxP8xwV8wZhle__8-WYuOCrMPXQ>
-    <xmx:pYY2af3smWNagBFiHlwioz7gmqDqwAhMkxzuvvxJbVk_8bKRG3zmAA>
-    <xmx:pYY2aTU_sKHFmtq83d0jbgpUmg60zsWZ_wNODO47GFsPwTQNEpQIWg>
-    <xmx:pYY2aWY6e-DztDHTNRdvwxhsQBZGOQoFy147a4Q5QF9jonhk1XRdFs5t>
+X-ME-Proxy: <xmx:qYY2aXo-pmHZojaePjKHESRmx_u-E16eRMc7_JKRHvzBWxZKlp7esQ>
+    <xmx:qYY2aV4rh_WEO-mXqKNW6RfPvgUQuj77BAMfZtcE4DMPL_HHLq6BKg>
+    <xmx:qYY2afPX1jvdGngUou5jAHS4ZEfgsuhaKDTptQBg2rDNd8u2zHIFzA>
+    <xmx:qYY2afNNgV3R-sse--72KoJJuXRJOOYj2700Ov-ZW1t-PshFCYEC_w>
+    <xmx:qYY2aWwg74hBPL4vCFOzomtSekNGS6gxCmbsXwDAkPASCxPY3Z0yieH7>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 8 Dec 2025 03:04:52 -0500 (EST)
+ <git@vger.kernel.org>; Mon, 8 Dec 2025 03:04:56 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 54f4a886 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 4d33757d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 8 Dec 2025 08:04:51 +0000 (UTC)
+	Mon, 8 Dec 2025 08:04:55 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 08 Dec 2025 09:04:23 +0100
-Subject: [PATCH 6/8] odb: drop forward declaration of
- `read_info_alternates()`
+Date: Mon, 08 Dec 2025 09:04:24 +0100
+Subject: [PATCH 7/8] odb: read alternates via sources
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,170 +82,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251208-b4-pks-odb-alternates-via-source-v1-6-e7ebb8b18c03@pks.im>
+Message-Id: <20251208-b4-pks-odb-alternates-via-source-v1-7-e7ebb8b18c03@pks.im>
 References: <20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im>
 In-Reply-To: <20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.3
 
-Now that we have removed the mutual recursion in the preceding commit
-it is not necessary anymore to have a forward declaration of the
-`read_info_alternates()` function. Move the function and its
-dependencies further up so that we can remove it.
-
-Note that this commit also removes the function documentation of
-`read_info_alternates()`. It's unclear what it's documenting, but it for
-sure isn't documenting the modern behaviour of the function anymore.
+Adapt how we read alternates so that the interface is structured around
+the object database source we're reading from. This will eventually
+allow us to abstract away this behaviour with pluggable object databases
+so that every format can have its own mechanism for listing alternates.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb.c | 125 +++++++++++++++++++++++++++++-------------------------------------
- 1 file changed, 54 insertions(+), 71 deletions(-)
+ odb.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/odb.c b/odb.c
-index 27f3c8e263..1d83a915e3 100644
+index 1d83a915e3..bf364fe3dd 100644
 --- a/odb.c
 +++ b/odb.c
-@@ -132,77 +132,6 @@ static bool odb_is_source_usable(struct object_database *o, const char *path)
- 	return usable;
+@@ -199,19 +199,19 @@ static void parse_alternates(const char *string,
+ 	strbuf_release(&buf);
  }
  
--/*
-- * Prepare alternate object database registry.
-- *
-- * The variable alt_odb_list points at the list of struct
-- * odb_source.  The elements on this list come from
-- * non-empty elements from colon separated ALTERNATE_DB_ENVIRONMENT
-- * environment variable, and $GIT_OBJECT_DIRECTORY/info/alternates,
-- * whose contents is similar to that environment variable but can be
-- * LF separated.  Its base points at a statically allocated buffer that
-- * contains "/the/directory/corresponding/to/.git/objects/...", while
-- * its name points just after the slash at the end of ".git/objects/"
-- * in the example above, and has enough space to hold all hex characters
-- * of the object ID, an extra slash for the first level indirection, and
-- * the terminating NUL.
-- */
 -static void read_info_alternates(const char *relative_base,
--				 struct strvec *out);
--
--static struct odb_source *odb_source_new(struct object_database *odb,
--					 const char *path,
--					 bool local)
--{
--	struct odb_source *source;
--
--	CALLOC_ARRAY(source, 1);
--	source->odb = odb;
--	source->local = local;
--	source->path = xstrdup(path);
--	source->loose = odb_source_loose_new(source);
--
--	return source;
--}
--
--static struct odb_source *odb_add_source(struct object_database *odb,
--					 const char *source,
--					 int depth)
--{
--	struct odb_source *alternate = NULL;
--	struct strvec sources = STRVEC_INIT;
--	khiter_t pos;
--	int ret;
--
--	if (!odb_is_source_usable(odb, source))
--		goto error;
--
--	alternate = odb_source_new(odb, source, false);
--
--	/* add the alternate entry */
--	*odb->sources_tail = alternate;
--	odb->sources_tail = &(alternate->next);
--
--	pos = kh_put_odb_path_map(odb->source_by_path, alternate->path, &ret);
--	if (!ret)
--		BUG("source must not yet exist");
--	kh_value(odb->source_by_path, pos) = alternate;
--
--	/* recursively add alternates */
--	read_info_alternates(alternate->path, &sources);
--	if (sources.nr && depth + 1 > 5) {
--		error(_("%s: ignoring alternate object stores, nesting too deep"),
--		      source);
--	} else {
--		for (size_t i = 0; i < sources.nr; i++)
--			odb_add_source(odb, sources.v[i], depth + 1);
--	}
--
-- error:
--	strvec_clear(&sources);
--	return alternate;
--}
--
- static void parse_alternates(const char *string,
- 			     int sep,
- 			     const char *relative_base,
-@@ -288,6 +217,60 @@ static void read_info_alternates(const char *relative_base,
- 	free(path);
- }
- 
-+
-+static struct odb_source *odb_source_new(struct object_database *odb,
-+					 const char *path,
-+					 bool local)
-+{
-+	struct odb_source *source;
-+
-+	CALLOC_ARRAY(source, 1);
-+	source->odb = odb;
-+	source->local = local;
-+	source->path = xstrdup(path);
-+	source->loose = odb_source_loose_new(source);
-+
-+	return source;
-+}
-+
-+static struct odb_source *odb_add_source(struct object_database *odb,
-+					 const char *source,
-+					 int depth)
-+{
-+	struct odb_source *alternate = NULL;
-+	struct strvec sources = STRVEC_INIT;
-+	khiter_t pos;
-+	int ret;
-+
-+	if (!odb_is_source_usable(odb, source))
-+		goto error;
-+
-+	alternate = odb_source_new(odb, source, false);
-+
-+	/* add the alternate entry */
-+	*odb->sources_tail = alternate;
-+	odb->sources_tail = &(alternate->next);
-+
-+	pos = kh_put_odb_path_map(odb->source_by_path, alternate->path, &ret);
-+	if (!ret)
-+		BUG("source must not yet exist");
-+	kh_value(odb->source_by_path, pos) = alternate;
-+
-+	/* recursively add alternates */
-+	read_info_alternates(alternate->path, &sources);
-+	if (sources.nr && depth + 1 > 5) {
-+		error(_("%s: ignoring alternate object stores, nesting too deep"),
-+		      source);
-+	} else {
-+		for (size_t i = 0; i < sources.nr; i++)
-+			odb_add_source(odb, sources.v[i], depth + 1);
-+	}
-+
-+ error:
-+	strvec_clear(&sources);
-+	return alternate;
-+}
-+
- void odb_add_to_alternates_file(struct object_database *odb,
- 				const char *dir)
+-				 struct strvec *out)
++static void odb_source_read_alternates(struct odb_source *source,
++				       struct strvec *out)
  {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	char *path;
+ 
+-	path = xstrfmt("%s/info/alternates", relative_base);
++	path = xstrfmt("%s/info/alternates", source->path);
+ 	if (strbuf_read_file(&buf, path, 1024) < 0) {
+ 		warn_on_fopen_errors(path);
+ 		free(path);
+ 		return;
+ 	}
+-	parse_alternates(buf.buf, '\n', relative_base, out);
++	parse_alternates(buf.buf, '\n', source->path, out);
+ 
+ 	strbuf_release(&buf);
+ 	free(path);
+@@ -257,7 +257,7 @@ static struct odb_source *odb_add_source(struct object_database *odb,
+ 	kh_value(odb->source_by_path, pos) = alternate;
+ 
+ 	/* recursively add alternates */
+-	read_info_alternates(alternate->path, &sources);
++	odb_source_read_alternates(alternate, &sources);
+ 	if (sources.nr && depth + 1 > 5) {
+ 		error(_("%s: ignoring alternate object stores, nesting too deep"),
+ 		      source);
+@@ -599,7 +599,7 @@ void odb_prepare_alternates(struct object_database *odb)
+ 		return;
+ 
+ 	parse_alternates(odb->alternate_db, PATH_SEP, NULL, &sources);
+-	read_info_alternates(odb->sources->path, &sources);
++	odb_source_read_alternates(odb->sources, &sources);
+ 	for (size_t i = 0; i < sources.nr; i++)
+ 		odb_add_source(odb, sources.v[i], 0);
+ 
 
 -- 
 2.52.0.270.g3f4935d65f.dirty
