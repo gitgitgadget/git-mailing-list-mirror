@@ -1,85 +1,86 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A862857CA
-	for <git@vger.kernel.org>; Mon,  8 Dec 2025 18:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EFC285419
+	for <git@vger.kernel.org>; Mon,  8 Dec 2025 18:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765218429; cv=none; b=W0xw6zPsjtVijbfs4mELbCOdvvUk24Mw7Pec5GTPfG9B5ragwNdxWgZW9GHEM8RZYWaTY0ZF7J/IPFQr6fLkC800ZZU00Lc0jAuRo22+WViCTyu5HvnVgkg+tEqf5CT32n73wCRqXDqW+hqbgtjYQOxfRfjNhjQVXeMPMMrE1hA=
+	t=1765218438; cv=none; b=FI/cqLHeRxnwEie76OP8sU5qJqYnJvmOFdgEXK6FgiNXB9WT3mC74rYaKedIEZS/V+q6H5lWgyjT7dEEspyv30B6w5bbdz60w/0eF0v+6+MN4FTyGa3L6nnfJoprrvPUuSkLye386cVITW8kkov92K/c8suk5OT0XawPPi3HAxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765218429; c=relaxed/simple;
-	bh=TkmoGG/xwx2RavU6m9c+ADN8fWcC/H7GEZwka4leWiI=;
+	s=arc-20240116; t=1765218438; c=relaxed/simple;
+	bh=ZugDJtRp5Mg8BsrkbCFVA461SQQ49u7gipTUTEf5Wd8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZLQAD2E/Be1qp0nh+L8dHqrg8Zuf2NruJz+Pfh48+h4g9OTY5ESZ+0QhjSVC5eCnbMzHiXdbUSpB8JbDWMJcnnMqj/LassT+UIP3j2wcf2DmMW7MCxjGddOoxy9mTBAymD2HKFkypISW0wsnp10lcMxA4WYB1YCbIiCAgE6OBKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rfSGrQbA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kQ83y348; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=iaNNtoH0ZKfUNS6qbpYgw3ut4tWEgVAPd26/T+3CPqFdTV7aEmbTnBB0aG33DdnSFeT30GJAe4oSaIbCCjF86xLTOO1RUkDim3WdaWC4whW5nnIDekZG/egkRL+QXNmbYx9t1Zg3n6skvz2GUrnOP1exFZPgIeebpnOmIZDzabQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ow5O5l34; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XwAljCdv; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rfSGrQbA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kQ83y348"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3E78C1400049;
-	Mon,  8 Dec 2025 13:27:07 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ow5O5l34";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XwAljCdv"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 774471400080;
+	Mon,  8 Dec 2025 13:27:15 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 08 Dec 2025 13:27:07 -0500
+  by phl-compute-11.internal (MEProxy); Mon, 08 Dec 2025 13:27:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1765218427; x=1765304827; bh=/QB34SSJ4O
-	d9Db+SlqasxFh7tX2oq3JWvxq40q3erq8=; b=rfSGrQbAIKoQd00FYHhEsp7mtm
-	8xZMyYW4xZLNn9Y4jHCwEsREgh3XP7Ik7rUPDUNXb/wtiY/ypr/I69Y3jDbPuw5N
-	giaOY+tSSiuD6DMMILNRCTwhFZqpRJEAa7MdCRV2zH8hoD86xiiAlYLlunlI6NUI
-	VXkrjgt7D6VqC1u2+kivWZji5T7Pu0bKpxXCZ6vD0nzLVy/AF8KambouYjX1QiIP
-	4sqP6GEvj/I5dqdRBCX5b2blFy6XYPr7Kv4C8kQAaQ3SMcKvWTcsZ+cRoZ22zhEQ
-	kqf2Mv08oWWGfljGQIDTiiRJYfAgeH+9a2qo27h8qLJ3RC1jjWUWT+B2tuFQ==
+	:subject:to:to; s=fm1; t=1765218435; x=1765304835; bh=kw1UVjLIv8
+	FKh3H6FzgGWEgtsYXznnB/WTkJ7Bhw964=; b=ow5O5l34Bue4LcECVrfpOIe+Vb
+	rek4YYu5IN3hi0cdw1gYge0kFfDtqtOWzllxmr3rTyjoohG+C1lnjAQnBknsQZhR
+	4eSnH19WXTDUajKkQjns80pWmPyy4RwBRY5+b5jinuIueMrLyXitKY/u7awOVmkX
+	6vvCxre2VazRk7c2tmqF5Woe8/L1jsPTpZqZoN+cEmrVG3tIKKv96KH2F3AtZ/1x
+	TLM5VqK4Fp4oCTkiiU1cjZNbREU9cX8N2HRcX5NMmI1AxWC7zWOiLG9uUUiFygaU
+	2yjSSVHCNRgUVTmmpp6mQTHHbTDJlLtr/xjxxVEfL7UDULQ8yLVH2T4PzZtQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765218427; x=1765304827; bh=/QB34SSJ4Od9Db+SlqasxFh7tX2oq3JWvxq
-	40q3erq8=; b=kQ83y348LN4rEs1mmE3EXc9do6e8AjyFBrYzroWjehwZ/X8L6No
-	/UhxmLQgg8nIRcweHfAG/GHlq0yxhZ9Os4+chH4DFsxdWAWvPhVr6AIJmtz7zZqs
-	6OsDOxQ2+u1/uIWVf4DuASFlJLftbQJyEC2ROqXeOHL1I38nJG5OGU7ha0J4sksd
-	L6+ajtYI0LUwba3JxYW5tPko0ibJOr96HiWWeADGnd9jZWiKLc4g3ZQHMMd+/2gF
-	mTxSnd5UMfcdl+95Bsfi4EavhT+gPLtuxL7KhLEizlY3tx8Q9yrlXW3Kthuf8bl9
-	6QyZoXobWfcRF1E4uyc5lSSFKNRCbCII6cg==
-X-ME-Sender: <xms:exg3aRFmF_ptvb-ReVWrAgBroOhWEOGxhmO8db8wFZ5Ize47dhLhLg>
-    <xme:exg3aR1OaPq0C0S_E434AwlRs-Uml1TrLOB8sDcAs7QnAfdOPF2QZ-8ozsQeoM3_x
-    31-HE5QLHMS4W3VOZ7nLxvKDKs_u96358Fs5d0ZQQyCERfzlOeNzA>
-X-ME-Received: <xmr:exg3aZl69AIxqMoNis-seufzhBszwzHzp8orA0Nj8eRz3Vng4pdjIl7Ti0t4ubGmKr90YO42b5MZp3zxDvZx9NXwKo7Imrzg7rLrorOJrCQ>
+	1765218435; x=1765304835; bh=kw1UVjLIv8FKh3H6FzgGWEgtsYXznnB/WTk
+	J7Bhw964=; b=XwAljCdvI+L4Z0wiyXTrJk7O1alsgi1MOnxE32R1uzyjTS8JFNu
+	OAk49ipUKx2jIy+rx4Bf19F00DDCXDGAsw1xZpmZZZ1ZXDGT/KQr3VmwKegG+iWy
+	Fe+vbp5IO9iHjucvbfuFZ0mWMH2MTf+ufNDsUPI5LwcdeBN1vfPpXwVkO/Y29yn8
+	O8Tr2+SlR2yjCNP8A9yyb7GW06U2xHW3GQ4Wkjy5s82tJwEx+52PGlXgGZj1fjE4
+	wT4d2uqx66K3r5YW8jV/uUOzky/hvrihnRbA2n3R1PoPf0uND/e6aO3U4BKsbr6X
+	pdXRHePFjJyEoxzc5qUIb7bkUUobWqZClcA==
+X-ME-Sender: <xms:gxg3aaQYqOI7Nv1VoNCgMbdtUTiLx2FRk9hssaZzo_TzFZS5Gya_OA>
+    <xme:gxg3aWq8EpKIqKsNdTIxyBKdXwoR4XYkWne7NtKrqM1R4lzdwRbuFtiX5qjvPD_F0
+    djXBi8peCjr_mtw9qvjfiRWPQB1CQkS006Z4oPAUHn_x_xRBDobpg>
+X-ME-Received: <xmr:gxg3aQIIDEhPjSJeNnYys5kbSczxUBF4mfBZmSZ6dWC0o65n1XsKSLABWj4YA_FKkLq2GHBfhreCXqwisA8gSxHiBn714A-hfZc49JS29Pc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeegtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghk
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    ejtddtgeffkedujeejgeduhefghedtgfdtieduleeulefgueetheeludegueeuveenucev
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphgvfhhfse
-    hpvghffhdrnhgvth
-X-ME-Proxy: <xmx:exg3aR9mX9CL0ZUX9DrrzPyIxCUiQ_tdgmeGOMb6bHlJRWzhqMxebg>
-    <xmx:exg3aequ7ng1HQfqwaLAQLj3SNFghEfVXUz73w7HrekEAsFsHcoMmw>
-    <xmx:exg3aan9t3DeJFL8rpxszpIflFtht5GBn5Wa4yEKIestnxSl_5K3XA>
-    <xmx:exg3aVgYeqmv4UJgxrXsNaEkCwOdQY88StTM2lx7ER8un1E-OM6jYw>
-    <xmx:exg3aVKWJY2MKAL49REjxquvqP5bnGQ9BCddV4TarN57Si-nmd26Lx83>
+    pehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhesgh
+    hmrghilhdrtghomh
+X-ME-Proxy: <xmx:gxg3aRpfyh-yz2jaWS1Rz9hFPWFeHvhkh5p23VsYZDhZXZ8sX67ryw>
+    <xmx:gxg3aQyXqcfRcL9FCGU4-xjuaNeo9TN3DPBo1RRY_wOCtickh9mMCA>
+    <xmx:gxg3adNx9gs3igKXkre9CLys-lnJ-clwGH3DULoMGiGY2ltF1sjGrw>
+    <xmx:gxg3ad5Q78AINdTPc4-95Vc0B6A8bWQlgRFYTxNmnrblSzamlDzbRQ>
+    <xmx:gxg3aeIIOEyqhVps9Q_uLE80HCyCf76A-JoDXHqTjbeunuLhDCWWxs18>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Dec 2025 13:27:06 -0500 (EST)
+ 8 Dec 2025 13:27:14 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2c03c2b5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Dec 2025 18:27:05 +0000 (UTC)
-Date: Mon, 8 Dec 2025 19:27:01 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 4cba5a6a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Dec 2025 18:27:13 +0000 (UTC)
+Date: Mon, 8 Dec 2025 19:27:08 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/17] git-compat-util.h: introduce `u32_add()`
-Message-ID: <aTcYdebOuUfrAAJJ@pks.im>
+Subject: Re: [PATCH 13/17] midx-write.c: enumerate `pack_int_id` values
+ directly
+Message-ID: <aTcYfOZ4_GdIwM9b@pks.im>
 References: <cover.1765053054.git.me@ttaylorr.com>
- <776eb88905f53dd929e5b7cb23593976a2f1aad3.1765053054.git.me@ttaylorr.com>
+ <8288afd8cc40a56999353643f49c48d610e6b3aa.1765053054.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,25 +89,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <776eb88905f53dd929e5b7cb23593976a2f1aad3.1765053054.git.me@ttaylorr.com>
+In-Reply-To: <8288afd8cc40a56999353643f49c48d610e6b3aa.1765053054.git.me@ttaylorr.com>
 
-On Sat, Dec 06, 2025 at 03:31:28PM -0500, Taylor Blau wrote:
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 398e0fac4fa..a7aa5f05fc9 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -670,6 +670,14 @@ static inline int cast_size_t_to_int(size_t a)
->  	return (int)a;
->  }
->  
-> +static inline uint32_t u32_add(uint32_t a, uint32_t b)
-> +{
-> +	if (unsigned_add_overflows(a, b))
-> +		die("uint32_t overflow: %"PRIuMAX" + %"PRIuMAX,
-> +		    (uintmax_t)a, (uintmax_t)b);
-> +	return a + b;
-> +}
+On Sat, Dec 06, 2025 at 03:31:37PM -0500, Taylor Blau wrote:
+> Our `midx-write.c::fill_packs_from_midx()` function currently enumerates
+> the range [0, m->num_packs), and then shifts its index variable up by
+> `m->num_packs_in_base` to produce a valid `pack_int_id`.
+> 
+> Instead, directly enumerate the range:
+> 
+>     [m->num_packs_in_base, m->num_packs_in_base + m->num_packs)
+> 
+> , which are the original pack_int_ids themselves as opposed to the
+> indexes of those packs relative to the MIDX layer they are contained
+> within.
 
-We already use PRIu32 in our codebase, so why is the cast necessary?
+Sensible. I was confused a bit by the previous change because I couldn't
+quite spot the shift happening. I think this makes things a bit easier
+to read.
 
 Patrick
