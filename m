@@ -1,54 +1,54 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CAC269D18
-	for <git@vger.kernel.org>; Mon,  8 Dec 2025 18:26:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896B0269D18
+	for <git@vger.kernel.org>; Mon,  8 Dec 2025 18:26:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765218397; cv=none; b=SsRLktEVhjM0ffYbVGYiiVc7yPCMVXOyMSPH9X6Zms9JLZ/ThYxrFGsiF7G4Ig4GvjbJooPmdq1W2sXn2PI0yK8aJs2uxvWQLJBq6nbCBbeJkzCkv25jx64cjVukiX7Nb+gH30/tDj1NM514KXtr6f/6Pn2AuXZWgee/KTwc6go=
+	t=1765218405; cv=none; b=XeyeYKHuODUQyJ7tZZwQpAcPDS1WR6e1mXnTdnjx7eLOhGCj/C56w6EE4nOaifU4xNxGXpLuNSq1nAscg5PUz4sfict40tbV449otzAwM5gJRR6GoL8YBG03ocQM1mrJoCI3o+U+G33dLWANF7QDC6qMqXuk6fkTVYNLa0wkTaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765218397; c=relaxed/simple;
-	bh=qrsREevb2xyZaeH56+HtP9owl6TLaIFa2QBUgGLv9K8=;
+	s=arc-20240116; t=1765218405; c=relaxed/simple;
+	bh=OxRgO6KkOfNP8jVnw91qubvCzRa/lBJAvv90mQH56IU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZXD1c/XrP1WDAIkgFlXnDGt1d0q2Md8ZGUhpOcdDwI0PAdVf734cOuxWX8d3WOHKnYuTSbgQYEcBY5Nx0oGQlnPhrTedMcg8ll8hbhMPRmJBS885Yf+50z5MKRNY0LiSyhK5eELIeEZBxtDyTJbDoNHQEmd6pSmFn6SQ7vJULwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sFLQ8CA+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=soisV5Gb; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=bjLCDs18FXzX2aY/7FScI5fCCuY507GMf0sZJuRXzR4tzk30Rq/4o7lGJbFVkzMosRAq0CD1a4sJYfAiL2HNQyP1SNhf8a5RDD0DUJWNrCpOGjLur6nO0/BzSS3/KBBzZQElHC446EFCyr2i0jvTTvcrxN4R4kAsvVYUlTfic6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vlm7nCEL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XMCm22ml; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sFLQ8CA+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="soisV5Gb"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5C546EC056D;
-	Mon,  8 Dec 2025 13:26:34 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vlm7nCEL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XMCm22ml"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9746C1400049;
+	Mon,  8 Dec 2025 13:26:42 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 08 Dec 2025 13:26:34 -0500
+  by phl-compute-06.internal (MEProxy); Mon, 08 Dec 2025 13:26:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1765218394; x=1765304794; bh=zrTfR8oD69
-	4K4wphITzHgsPa+kq86cUmpirL8JyvjWI=; b=sFLQ8CA+VMhutRZRpaYRddYAui
-	qrbC691LXH4a54jbNlgb4XsC+XaMYbAMBuvrOIVgPfAJQd0e16MEwvLalVRocmI4
-	iMLiC/7pie7tM+IUgjQCy2MdeNnkXWcoQijmwJ/h9wGWf+NoUiCcthVZWnD8gamo
-	AxddnMcYeNWx8cKxK8UqLOEmOuxOSqY0VGc2vZE4ccmLGcgI0qzgw7KXUISypQhY
-	wCF77fthrOuvuqoAk9WPBp9MqtnM3n6t5pt7jidDs7+duP4nyigkI8TYjEpK93x9
-	dMnbMpMSgrt/dMZRdQM1aPTOUXK+SOR+ZeDNq5Pscr5Tjb75thsjHPOwNd0Q==
+	:subject:to:to; s=fm1; t=1765218402; x=1765304802; bh=6qlxNw4SFb
+	Wvl36a3R/Dc8GPIjL5ecn0SSaUkwh2aTk=; b=vlm7nCELHwVJ7GGEdk2e59g+Jd
+	70nbT8WPvglAW6mgdwHT+JNEHhOcWp/QgKjyU4lh0oBcqxDmRyGfX6+6q4VaawYk
+	vrjDs0Rhiy9su/Q12f1sxtYm/FkbLN0de1I/ascOwSD0O09IpYJkwxWJMWOYrsVa
+	accVjsSrcqDwfVqgq4LV+2u9TJsLkOFPk8Bdl5RfTCAU5UbI8KmLqvO86KSxXc/y
+	jCwp6qT1ssN3gLzWNd4aziN9fOAGCIuc1chrNsr1RywhCy50USJX2beq4FkG+v5o
+	ANFnost0yZlMDQqrOSconlxllyD1ZiKHZ7KNBw1xmDa8aqu/N7K5rNOetPFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765218394; x=1765304794; bh=zrTfR8oD694K4wphITzHgsPa+kq86cUmpir
-	L8JyvjWI=; b=soisV5Gb8GpAyZz5RogQ/yfdBcxfEX+LrPW9utNQykZhLo4ZGY5
-	wRGOpoWas8IEkLdlzl4kwL+i4tZIVNyQ3laNXqIZByJMcLQAgokpaTTOc6dXN8pA
-	vSl/LBck3e9t6MoWq5tgr4Gksb9a9xa+GmlFVo/ymnh0JCh+jQcr9+NIQMg7DwRG
-	mUYgn0EoPZ5PkJVm+MAa2s1XI0UaGI+U1gyEmCSgxRldyoGY+1FuweSill7dVkQw
-	xK75abx/ax1D3cOV4D9QIG8S4fkA6c4nkMATuBmvzBE0jCQ2xfgsn89nnZ59/95O
-	suFmmnsMph2Sv37IQ1Amk6LQlBCPdT190Yg==
-X-ME-Sender: <xms:Whg3acmlnrlOUIKKMeWdHHQd7nGdbtK9PZw8s9Ao_Y9tWt4pO_yoHg>
-    <xme:Whg3aSsT-M_gVy7e3I59wXO0mf1HHx5BGnif-tHDnbf8O3v1evMs43CYiYagVK5-Q
-    p2BN-61BtsxlF4XncyALxwt6ZEhvWtRZvEdTf5D7hdIwWkZeMWisg>
-X-ME-Received: <xmr:Whg3aS9ejwYzNZ1sVQaMBuxmCljwD1i5StZWXszq_7TwEfNa8FoP-kya251Vyikz6N9yPY5ZOCsQX3RMSOOzRci4F6BibIceZYIIuGM2LWw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeeflecutefuodetggdotefrod
+	1765218402; x=1765304802; bh=6qlxNw4SFbWvl36a3R/Dc8GPIjL5ecn0SSa
+	Ukwh2aTk=; b=XMCm22mlTLgBl2iGqo3beMDyaVLHtdk+7vTRPz5MARj20DHZ1ZL
+	95TcnPDBHUbeK8VCwOKg0KDyaHnAoHiDZLllf/A6mVkohDTNJtrX987fzsGKCBmi
+	+u75G8f7TzNRfrQYXZpWZVQj5511n4pKhiwN9NCiNruBDuuReJ2HDGoKHhRlu/8x
+	A00IM6H7ZsmQDVe7vRvREuJBrEunCWraGyEfY42JCLK2clYAj/nzVN+Bhgca7Okp
+	IcO6GxCIMFDRstKLIc5esFnTJiIpF/fR9A1oQl5Ch22paK7rR1PcuhpT8Bi92i8y
+	mB1s1BEa75LtEjcWSZuG3ffuEKwlZ4l1Qpw==
+X-ME-Sender: <xms:Yhg3aUvXupROBayrp2jHFryNuosxizPO0GFmf7713d7KGN70AvDN-w>
+    <xme:Yhg3aYXzS88B7kMC8vwwGqir9l4yFxyQV7FoRIl8GnXinmviDDN0nW4CGTI6d3luv
+    T1IyyxIeHEJQl-5n2AMWN6SO5qldiTnRCiApuL_Nj-yHkl6c6no>
+X-ME-Received: <xmr:Yhg3aYHAzvftamUIJnFaZKHp0orc1FoMCpxwud211zt9hdBcqhJ7fdKwJdGfWrqt9ak5rc6RF-bETo14FnKreKl2V9nBFf-KWM6oirE1dYg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeegtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
@@ -56,31 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeeflecutefuodetgg
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:Whg3aUN-nrRubMpZtJBgPkkPOO7y-fsJ2doeCBbCHjX7_KoPbxp8Gw>
-    <xmx:Whg3aYGxxQGMCasK5AW_c0gYZ0GdsNM3V4I8ghpkTJtDTWBMl5SOBA>
-    <xmx:Whg3aaTTjuPbUrYSFKUoe73GodaMW2nh7jCWuTwYD1BLoHv08r-nSw>
-    <xmx:Whg3adu8Xt-oEHlSZtQ2Ju_qTWJ-tscgRmw5dMYSsnNqQtFYX5mFkg>
-    <xmx:Whg3aQvKsBcaOfw6BhxLjLvRBVM8rgo6UVohZNDyVqYzG4dRCIZyMPqo>
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghp
+    thhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesgh
+    hmrghilhdrtghomh
+X-ME-Proxy: <xmx:Yhg3aS0HiR50OwBryEzoDer2h44uo7DorKJ0aSxJt92PA8aYNJAvuw>
+    <xmx:Yhg3aSM5XPXvmHgplYzwACyS14B0zOp-Pg5a99hpp1hNkZ5aNAnPSA>
+    <xmx:Yhg3aZ4f2l0A65fYq-Mj4-0Vw6-mxU2u7trdY8Y1V2iuJLCVjS-nag>
+    <xmx:Yhg3aU2yKG7IDqDolZxVAzS8EUdcDkgV8iLPUkPyjm91tO6cdgowcQ>
+    <xmx:Yhg3afVGzRkRgRNalYv7PsUIA4n3Q6nIwUpoIvvJ4fLijrq-0oPFuL1L>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Dec 2025 13:26:33 -0500 (EST)
+ 8 Dec 2025 13:26:41 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id eb12aeae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Dec 2025 18:26:32 +0000 (UTC)
-Date: Mon, 8 Dec 2025 19:26:27 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 31a81269 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Dec 2025 18:26:40 +0000 (UTC)
+Date: Mon, 8 Dec 2025 19:26:36 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 07/17] midx-write.c: don't use `pack_perm` when assigning
- `bitmap_pos`
-Message-ID: <aTcYU_yVYyXL9TXv@pks.im>
+Subject: Re: [PATCH 08/17] midx-write.c: introduce `struct write_midx_opts`
+Message-ID: <aTcYXJr_-IxPmC65@pks.im>
 References: <cover.1765053054.git.me@ttaylorr.com>
- <1fc359d9a98cdd61f6986fa1d9a1190f57dacb9b.1765053054.git.me@ttaylorr.com>
+ <47aae3bf2a83a2724aecd3314f8cc5d47e8013f1.1765053054.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,97 +88,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1fc359d9a98cdd61f6986fa1d9a1190f57dacb9b.1765053054.git.me@ttaylorr.com>
+In-Reply-To: <47aae3bf2a83a2724aecd3314f8cc5d47e8013f1.1765053054.git.me@ttaylorr.com>
 
-On Sat, Dec 06, 2025 at 03:31:19PM -0500, Taylor Blau wrote:
-> In midx_pack_order(), we compute for each bitampped pack the first bit
-
-s/bitampped/bitmapped/
-
-> to correspond to an object in that pack, along with how many bits were
-> assigned to object(s) in that pack.
-> 
-> Initially, each bitmap_nr value is set to zero, and each bitmap_pos
-
-I assume `bitmap_nr` is the number of bits, whereas `bitmap_pos` is the
-position of the first bit?
-
-> value is set to the sentinel BITMAP_POS_UNKNOWN. This is done to ensure
-> that there are no packs who have an unknown bit position but a somehow
-> non-zero number of objects (cf. `write_midx_bitmapped_packs()` in
-> midx-write.c).
-> 
-> Once the pack order is fully determined, midx_pack_order() sets the
-> bitmap_pos field for any bitmapped packs to zero if they are still
-> listed as BITMAP_POS_UNKNOWN.
-
-If so, it feels somewhat weird that we'd set the `bitmap_pos` to zero.
-But I guess it doesn't matter anyway, as I assume that the `bitmap_nr`
-would be zero anyway?
-
-Anyway, reading on.
-
-> However, we enumerate the bitmapped packs in order of `ctx->pack_perm`.
-
-Which is the "permutation between pack-int-ids from the previous
-multi-pack-index to the new one we are writing"'. So it's basically
-tracking which new packs correspond to the old packs.
-
-> This is fine for existing cases, since the only time the
-> `ctx->pack_perm` array holds a value outside of the addressable range of
-> `ctx->info` is when there are expired packs, which only occurs via 'git
-> multi-pack-index expire', which does not support writing MIDX bitmaps.
-> As a result, the range of ctx->pack_perm covers all values in [0,
-> `ctx->nr`), so enumerating in this order isn't an issue.
-> 
-> A future change necessary for compaction will complicate this further by
-> introducing a wrapper around the `ctx->pack_perm` array, which turns the
-> given `pack_int_id` into one that is relative to the lower end of the
-> compaction range. As a result, indexing into `ctx->pack_perm` through
-> this helper, say, with "0" will produce a crash when the lower end of
-> the compaction range has >0 pack(s) in its base layer, since the
-> subtraction will wrap around the 32-bit unsigned range, resulting in an
-> uninitialized read.
-> 
-> But the process is completely unnecessary in the first place: we are
-> enumerating all values of `ctx->info`, and there is no reason to process
-> them in a different order than they appear in memory. Index `ctx->info`
-> directly to reflect that.
-
-Fair. We do initialize the permutations like this:
-
-	ALLOC_ARRAY(ctx.pack_perm, ctx.nr);
-	for (size_t i = 0; i < ctx.nr; i++) {
-		if (ctx.info[i].expired) {
-			dropped_packs++;
-			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = PACK_EXPIRED;
-		} else {
-			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = i - dropped_packs;
-		}
-	}
-
-So obviously, the permutation will only ever be different in case we've
-got at least one dropped pack, and that only happens when we expire any
-packs. So the explanation matches.
-
-Of course it may be a bit more fragile now if we ever added a caller
-of this function that _does_ expire data. But we don't have any, so that
-enters the territory of overthinking things.
-
+On Sat, Dec 06, 2025 at 03:31:22PM -0500, Taylor Blau wrote:
 > diff --git a/midx-write.c b/midx-write.c
-> index 73d24fabbc6..c30f6a70d37 100644
+> index c30f6a70d37..b262631ae45 100644
 > --- a/midx-write.c
 > +++ b/midx-write.c
-> @@ -637,7 +637,7 @@ static uint32_t *midx_pack_order(struct write_midx_context *ctx)
->  		pack_order[i] = data[i].nr;
->  	}
->  	for (i = 0; i < ctx->nr; i++) {
-> -		struct pack_info *pack = &ctx->info[ctx->pack_perm[i]];
-> +		struct pack_info *pack = &ctx->info[i];
->  		if (pack->bitmap_pos == BITMAP_POS_UNKNOWN)
->  			pack->bitmap_pos = 0;
->  	}
+> @@ -1014,14 +1014,20 @@ static void clear_midx_files(struct odb_source *source,
+>  	strbuf_release(&buf);
+>  }
+>  
+> -static int write_midx_internal(struct odb_source *source,
+> -			       struct string_list *packs_to_include,
+> -			       struct string_list *packs_to_drop,
+> -			       const char *preferred_pack_name,
+> -			       const char *refs_snapshot,
+> -			       unsigned flags)
+> +struct write_midx_opts {
+> +	struct odb_source *source;
+> +
+> +	struct string_list *packs_to_include;
+> +	struct string_list *packs_to_drop;
+> +
+> +	const char *preferred_pack_name;
+> +	const char *refs_snapshot;
+> +	unsigned flags;
+> +};
+> +
+> +static int write_midx_internal(struct write_midx_opts *opts)
+>  {
+> -	struct repository *r = source->odb->repo;
+> +	struct repository *r = opts->source->odb->repo;
+>  	struct strbuf midx_name = STRBUF_INIT;
+>  	unsigned char midx_hash[GIT_MAX_RAWSZ];
+>  	uint32_t start_pack;
 
-The change looks simple enough.
+One might argue that parameters which _must_ be passed could be moved
+out of the structure and into the function signature, and as far as I
+understand, that would only be the `struct odb_source`. After all, we
+are talking about options, and a mandatory field is not really an option
+in my book. It also makes the interface at least a tiny bit more self
+documenting.
+
+Other than that this patch looks like a nice improvement to me.
+
+> @@ -1566,8 +1586,11 @@ int expire_midx_packs(struct odb_source *source, unsigned flags)
+>  	free(count);
+>  
+>  	if (packs_to_drop.nr)
+> -		result = write_midx_internal(source, NULL,
+> -					     &packs_to_drop, NULL, NULL, flags);
+> +		result = write_midx_internal(&(struct write_midx_opts) {
+> +					     .source = source,
+> +					     .packs_to_drop = &packs_to_drop,
+> +					     .flags = flags & MIDX_PROGRESS,
+> +					     });
+>  
+>  	string_list_clear(&packs_to_drop, 0);
+>  
+
+I think this syntax is not allowed in our codebase except for a test
+balloon just yet. See aso 9b2527caa4 (CodingGuidelines: document test
+balloons in flight, 2025-07-23):
+
+    since late 2024 with v2.48.0-rc0~20, we have test balloons for
+    compound literal syntax, e.g., (struct foo){ .member = value };
+    our hope is that no platforms we care about have trouble using
+    them, and officially adopt its wider use in mid 2026.  Do not add
+    more use of the syntax until that happens.
+
+> @@ -1774,8 +1797,10 @@ int midx_repack(struct odb_source *source, size_t batch_size, unsigned flags)
+>  		goto cleanup;
+>  	}
+>  
+> -	result = write_midx_internal(source, NULL, NULL, NULL, NULL,
+> -				     flags);
+> +	result = write_midx_internal(&(struct write_midx_opts) {
+> +				     .source = source,
+> +				     .flags = flags,
+> +				     });
+
+Same here.
 
 Patrick
