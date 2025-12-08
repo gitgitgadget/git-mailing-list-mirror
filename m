@@ -1,81 +1,120 @@
-Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D18C2AE78
-	for <git@vger.kernel.org>; Mon,  8 Dec 2025 14:41:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765204899; cv=none; b=hz5S4HvIuohXGw4eXV4ee9jT8pRjwPA0kKfPO9yvATQhsSu3PjULZ4ULwgG2IIlk5bazSm/eNEniJvk5vOMquViYsJQdJoksLGxsUnKWp858ke30BZDm0P9ZhFOTD66GCjnWisE8O8dWrfdH5/DvepOxwT6uFfZzrA+Cft5a9QI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765204899; c=relaxed/simple;
-	bh=Ww2Dwr4TcGa1Mf1snhuRFXwHfZjbgHgPjBawc80k2hM=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9ED770FE
+	for <git@vger.kernel.org>; Mon,  8 Dec 2025 15:48:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765208912; cv=pass; b=DTUlPWcCbbst3NpxgMZNHsi9dpXCODuwi8WdO9uHE/QyGmPcIVcdPxxooS8DoHM620ec6UZrhxVeMwXNPaVv1W+JB2SsbnYrwA9+twK5Z60yZph6UupNf1eREKs8k5D3uc/sG1vzDYhxe+jDaH1zoxihaHbLuRt3rlpmkE5kNNM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765208912; c=relaxed/simple;
+	bh=5aoFpud2vwxGObVZcuGgqMf+UsEyghrw1Qr0BLftPzI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=b5tb7hrFVXBHI6TqYVs1CC13B4r8HgKGDBeZiD3Sr2QM4NPkiDKxFXYKUdcd67nuiDNvYtuR0Es8pZFrsFVeBNenhHMrEjuxOlBzgHPmJ3RPhyreDLMAdwrp3mf+oaiza6B5Zkm1GVG0GQwJRAIDQTQjfy9Dxh4PS0hQooAO9nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=rsnpBqba; arc=none smtp.client-ip=95.215.58.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	 MIME-Version:Content-Type; b=fGBeDb5HZHqHSqDTgaUs78yE/yOUXkA6MzJIrJJNz4YW/hGrUn1OziGBbb5D5Ny4aS4U4z9/7bQwaEE2f12c+NWFJmIkOWhd1yVhIl81HMW4FhZtmy7J2KfGmHS6o3LH3thwMYj+Mg/iETcZELUvmrb37aXSr2hoccmdPIBwvXk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=fjvrM7iP; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="rsnpBqba"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1765204894;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=z0lYNZk1mv/x2fsua7RWQYSaf/QDN2+Z8+F75h9bz5Y=;
-	b=rsnpBqbaCwlVRo8XPSY1RSQevCELPiAQWFMTeHQHU9bsHL8Pdrg8ob3EaUMoWKdkrGrcl4
-	LibzZAp1aPIb0AAY62DMICK/BdwS+wYViVftIXuKg9aEc2KnnlICDuzYLGGVAk3s4QMkyv
-	tlkhuEstuBitmjSIj9WYhfDyqVMYqOA=
-From: Toon Claes <toon@iotcl.com>
-To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/2] Few fixes for cross-compiling with Meson
-In-Reply-To: <3tucvydzaelj2mngkocb75l52nssxkkdtt3dj4paviatd3uvnc@u2sy4vig7owz>
-References: <20251202-toon-cross-compile-v1-0-cabc8bce529f@iotcl.com>
- <3tucvydzaelj2mngkocb75l52nssxkkdtt3dj4paviatd3uvnc@u2sy4vig7owz>
-Date: Mon, 08 Dec 2025 15:41:22 +0100
-Message-ID: <874iq1vxwt.fsf@iotcl.com>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="fjvrM7iP"
+ARC-Seal: i=1; a=rsa-sha256; t=1765208895; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=LXGAaUNO9GgBhZWnHfaJW6Z2zOcoXrJCdOJxhzzzJzICaeSP14KauKZv2/1bB47lAV0UUu+iYYf6iOnINeV30nl7vK8iJdr7/Hs1MKnu0rPzX/e00nJ5u6cQ7IdOC5ILo8LE+JAPvW0iTZV3iXvdgGF22TonRzY2mr8nlY3buaU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1765208895; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=89aLRKw5vnK2udH0Nwlzg3H7InqpyLQLQ27gFC8mfq0=; 
+	b=B7OJphAv4T+jS7QDOhL9HlbCJUWxUJjRCFnW9Gbz7KuWHiJc/e7DybdTcFoPRYk4eU+DY984vNxoXV4gW3fWE+ieR/ujeiVMdPYptuMfFVoMZavX3IuF1znh57e1wP7SYB+0ZXhtyr8l9PCcfrue6gNAk92V0VK92cXHJfHz6GI=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765208895;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=89aLRKw5vnK2udH0Nwlzg3H7InqpyLQLQ27gFC8mfq0=;
+	b=fjvrM7iP9WffMitHRjDlE7NLH8yGAeaxOu7VMDUX1xuzxKREMdVTjbsZyRNFANPL
+	n2UgxHAYu+tQdr9EhAPBihXRS0ZAONOgqSTxd4M1QgJpCbtgSoBwO/PgJGL54NV6iv4
+	iPc/c7fbovFLgyohznvCTtgGPwLFda3+gmaxaYMM=
+Received: by mx.zohomail.com with SMTPS id 1765208892193641.37187600524;
+	Mon, 8 Dec 2025 07:48:12 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Emily Shaffer
+ <emilyshaffer@google.com>, Rodrigo Damazio Bovendorp
+ <rdamazio@google.com>, Jeff King <peff@peff.net>, Aaron Schrab
+ <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, Josh Steadmon
+ <steadmon@google.com>, Ben Knoble <ben.knoble@gmail.com>, Phillip Wood
+ <phillip.wood123@gmail.com>, Brandon Williams <bwilliams.eng@gmail.com>
+Subject: Re: [PATCH v5 4/7] submodule: add extension to encode gitdir paths
+In-Reply-To: <aTa6lr9AOPIZlw5M@pks.im>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20251119211030.2008441-1-adrian.ratiu@collabora.com>
+ <20251119211030.2008441-5-adrian.ratiu@collabora.com>
+ <aTLNwHpLUcy-WsZs@pks.im> <87v7ikeng2.fsf@collabora.com>
+ <xmqqqzt87dgj.fsf@gitster.g> <aTQanNSlj6VxDY-n@pks.im>
+ <xmqq8qffpnui.fsf@gitster.g> <87tsy1uz2q.fsf@collabora.com>
+ <aTa6lr9AOPIZlw5M@pks.im>
+Date: Mon, 08 Dec 2025 17:48:07 +0200
+Message-ID: <87ikehug94.fsf@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain
+X-ZohoMailClient: External
 
-Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
-
-> On Tue, Dec 02, 2025 at 11:48:07AM -0800, Toon Claes wrote:
->> I was cross-compiling for s390x.
+On Mon, 08 Dec 2025, Patrick Steinhardt <ps@pks.im> wrote:
+> On Mon, Dec 08, 2025 at 11:01:33AM +0200, Adrian Ratiu wrote:
+>> On Sun, 07 Dec 2025, Junio C Hamano <gitster@pobox.com> wrote:
+>> > Patrick Steinhardt <ps@pks.im> writes:
+>> >
+>> >> Maybe the right approach would be to tell users to never manually enable
+>> >> the extension and instead to provide a command that both:
+>> >>
+>> >>   - Persists the submodule gitdirs for any populated submodules in the
+>> >>     gitconfig.
+>> >>
+>> >>   - Enables the repsitory extension.
+>> >>
+>> >> If we had that then we could count on the submodule gitdirs to exist in
+>> >> the gitconfig, and if they don't we would die with an error message that
+>> >> indicates that the repository is broken, maybe even with a hint for the
+>> >> user on how to fix it.
+>> >
+>> > I personally like the simplicity of this approach.
+>> >
+>> > I haven't however thought about operational complexity, if one has
+>> > an existing user base that have been using a custom pathname munging
+>> > code that needs to be migrated to the new scheme.
+>> 
+>> The good news is that for all the real-world use cases I'm aware of,
+>> migration to the new scheme should just work.
+>> 
+>> The problem we're discussing here (automatic fallback vs requiring the
+>> gitdir to always exist + using a migration tool) does add a bit of
+>> operational complexity, however it might be manageable.
+>> 
+>> I have to see how this works in practice, especially with the users
+>> setting the config (likely I'll add an error to block that path) and the
+>> build-config to enable the extension by default (will likely run the
+>> migration tool automatically on existing repositories if enabled via the
+>> build-config).
+>> 
+>> I will attempt this approach in v6.
 >
-> Just to clarify, you mean Linux on IBM Z/LinuxOne, not 64bit ZOS/ZVM,
-> right?
+> One suggestion: it might be sensible to move auto-migration into a
+> subsequent patch series. That way we can focus on the general approach
+> of the new extension at first, and the potentially-bigger discussion
+> around whether or not to auto-migrate users can then be had separately.
 
-I'm sorry, I'm not aware of the correct terminology here.
+Hm, yes, I started implementing the feedback and the closer I get to v6,
+the more it feels like we should split this series in two or even three
+independent patches/series:
 
-If I run file(1) on the compiled binary, I'm getting:
+1. The base gitdir path extension and config infra, renamed as you
+   suggested, to be independent of the actual encoding.
+2. The encoding.
+3. The migration.
 
-    ELF 64-bit MSB pie executable, IBM S/390, version 1 (SYSV),
-    dynamically linked, interpreter /lib/ld64.so.1, for GNU/Linux 3.2.0
-
-And readelf(1) says:
-
-    ...
-    OS/ABI:                            UNIX - System V
-    ...
-    Machine:                           IBM S/390
-    ...
-
-And the toolchain used was installed from:
-
-    https://aur.archlinux.org/packages/s390x-z13-glibc-bleeding-edge-toolch=
-ain
-
-I hope that clarifies it?
-
---=20
-Cheers,
-Toon
+Let's see where this takes us. :)
