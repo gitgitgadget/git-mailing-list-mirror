@@ -1,93 +1,113 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FD126CE2B
-	for <git@vger.kernel.org>; Mon,  8 Dec 2025 16:04:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3D3EADC
+	for <git@vger.kernel.org>; Mon,  8 Dec 2025 16:34:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765209859; cv=none; b=DSJrS0jjMzJPQ5rencH8NpHiI5PJWEqDZVhnJwMskAf8KVzy0moUDkLhtyBZPHRnJMeXXt5uO0mTKejiqylOGAH0WTD9GD14wkxwEsESUst1LG+zF009ol78ozScKSJIuiHsupL3c/SqDR9Fj56UqsT6TzU2/DFsP7aThZHrS98=
+	t=1765211655; cv=none; b=UuvCJum5jgUpj07OzC72T9E+z0Fa+XzjT8Zy8uJJLr926W5Hk312IHNNNO+5XYROVJzgOzrmSgn4CAHl40jl/6GbdlUqV9J8iDFVz37i2zwWcbZ9OBEbTYa/T6TVhcuvwb64nFIyANuHKaQE7Zzcf/ADbr2VAnzTnMzS6X5Qqs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765209859; c=relaxed/simple;
-	bh=/x9NPjps5lA3adWVucrGVjvOrRMeDBWI9bWLmek7/00=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=PP8NuApg6zQo7RkVjbJGoLUsx0FL4SK6jAJdYMUOMonfFMKyZSfpHQVis5Je6CWv8AKcdUVZeFF9+a/8u4s+b/FWnVnq3FggKox/0ldTpDQErn7KEmkq7Y/6Rw7vOHzXZQX/Vxc2qjouNQwYGGBjIQB9JnizbH90gu8A9NAfk5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZN49mn1c; arc=none smtp.client-ip=209.85.128.43
+	s=arc-20240116; t=1765211655; c=relaxed/simple;
+	bh=ktXVPAX5d2nAVlVfpsHiqeoqeFy1hODC+yTpgpuWxkI=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=P/9TBX11+xnKkMIK5MCYvBQRY88fyklOHbYgkcCHU8m1NcAlJlV9rnoXXWh05ZbbxPlTjU98ZUmTk5nLvESY7LpAjjNUBecR7KJNlC9IlTRa4MpWqrcNTW2Ex29swAucZiHIjJhuuHqyBYcD56ZOonzITnQhVXJnFKzhjbAYCEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F8hWVmOk; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZN49mn1c"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4775ae77516so55535405e9.1
-        for <git@vger.kernel.org>; Mon, 08 Dec 2025 08:04:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F8hWVmOk"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-29853ec5b8cso59579965ad.3
+        for <git@vger.kernel.org>; Mon, 08 Dec 2025 08:34:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765209855; x=1765814655; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Qe3O6pDnKUyhr8btgT5h56v7Ph5e/s+AEKmeJNLIGTM=;
-        b=ZN49mn1cPauoaQZtU4pXLpC4PcsleLKie0viintLh3DjBBcxQfarJCN3+jGKHUxXKJ
-         ej70L1HJroY35GeGEF9qnvAnn6Dlvm88mgX0lJkvYOoXRcaH7sTU04+LUC/pMCOfKFtQ
-         EHB4IVuPYs0eFVKcZTTPGukk4CAXEl1gZ7DC1WViq7nH0yl+mvsc6uY8ukdlSbsNAIpW
-         WZd5dSd9g1lwWFGMKtxgBW+sApQ950ylNjShQZ3XtS4M9Tmf59qkfDpAnNVkcfG14CCt
-         VhpQ5l84bQ5BGCHKVTMy/anivylzg7kT7LtUqX+rHxfWV53htUAr1lo8knbYz2wj8dj6
-         xDPQ==
+        d=gmail.com; s=20230601; t=1765211653; x=1765816453; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UROU3eSBCr8PkHqh0lFNxKYCWf1SsL3GzxJ6/vm17vU=;
+        b=F8hWVmOklCFscjsg4XFJRLfdjm0Twtcm+S+YfQQJsnCdYXi/Eph6YroKmbQSlLOQah
+         DQK0uIetUOlsl5TOUrJdq3slPkB+++ZrmPrh6sk1gSqkQ2xJJD1fb3cbmDtRyyLKE+W/
+         WoNf2xdp7gg+jbx7lyRcNenzMGSZDRS84rwyaMwpHDMeqAbyG7DIvOy7ZsMxIKfY46Jx
+         MXir1JNn/ihAZ4a50hBjjLmmUPh8B9/d9l4FyyFP2UD/xDwG9TiuiR29Mi9au8VbMnrp
+         OsoPQ166hZKfWdODdV5YglkKKb9FYMEpFZDy8fWKTzFcWYLNUB8+rAyje8ewCGm6BMS0
+         qsFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765209855; x=1765814655;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Qe3O6pDnKUyhr8btgT5h56v7Ph5e/s+AEKmeJNLIGTM=;
-        b=EwHqtOMDMpRHtTAM8UXJg8r5OG53GyuJ6omgiXkzHUPysgTN5jaaJSYYwQIQmSDCou
-         BS2Y76ygdD7FY57CX9wlsI7M/bCllqCEBjCREAVi3baWLseISnhPOGVPYnjV4/mwaf7X
-         JI7MTRmlO59guLom0QPHawcZv6tlmMVd/o4g1QVlWx3u7rERcYpEkVah8H7TMBLjQOOP
-         vBdlnEx25XMG16LLQHArAjEnDqlqQxDaZaLfToQXd1V0XfoBBMg4xxBxjwTosa95Fyzu
-         jaWQYgdbLPSyIlHmYu0JgsSxVrgQQXvRs1lCuXQUQBXEdPXCdDyaujSzHwH8UCGgLfzu
-         +kxA==
-X-Forwarded-Encrypted: i=1; AJvYcCV6HmUXURo+bTXGSTfPmBCp7zmwwUHndd0jH7G/WwXSWxfQG4tJmnaGlYVi+OaS4mYlVSc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJ6MBvwDYyX+/5q2y8p+M+bPu01T/MsuXC6EL4AkMJdcFdGHZq
-	s60ytg5yNDOmG2wzqjWFACjl3imlbquIj3fYTMluPAvNEokdWOwx7zjHRBPMyw==
-X-Gm-Gg: ASbGncsqAT9S0W9HK+vkx/IzmsL5Vpm4k1LZ3kULA7Rl23apicJtmk7oVu+otVVu5Vb
-	28ZRNGQjNydjlNsJIsCNLCkmt3vCiHWEMZgkzmtPX748ucMlpH6aZ39NHfMcpnPKD1Y8yaaMZUx
-	pWyIbbzenBLko1ly4ecrD4DIWhtp6C+Fj4GvJ7ZtTTZqHnOH5n2/9/0pQWLMe3u8NzC5Mrc2QoR
-	US5MRGjc+fj+cJrRWLzgKBnsLtyxqU+m/j0TEyYsZdxXml5755hgfFIlxVMcWwZd+vBEbQJo3Xu
-	sq3zo66rp2bwK2U9o19jcYexe7K3NL6Fli+oLLMsHAYjjtuKPJygQhi4/r+aWxTQVSqoO19BqcC
-	DRMQcqy22I7GpjrHL/2exhUAQ7Uf/OMCwcwVKbwk9/FkUXqp5wmZuTTawNuQGecH+FTFS4D/RC0
-	/5SD80ibBLQuemN3qgHzdXqjaP/hWjl0uolx1tTey3mBNOVQetnjOAPho+yjGo6cQ=
-X-Google-Smtp-Source: AGHT+IHYPLu2REN+QOBZTRein4b27zTwvPiDFe5QDf2GgDi9kwT6WOnqXwEVMnCLy9OmU3vKT90PFA==
-X-Received: by 2002:a05:600c:5955:b0:45d:5c71:769a with SMTP id 5b1f17b1804b1-479cc3dea92mr56996845e9.26.1765209855182;
-        Mon, 08 Dec 2025 08:04:15 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42f7d331af5sm25443903f8f.31.2025.12.08.08.04.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Dec 2025 08:04:14 -0800 (PST)
-Message-ID: <b52e18c8-7533-4359-bb23-60cf25ca1694@gmail.com>
-Date: Mon, 8 Dec 2025 16:04:13 +0000
+        d=1e100.net; s=20230601; t=1765211653; x=1765816453;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UROU3eSBCr8PkHqh0lFNxKYCWf1SsL3GzxJ6/vm17vU=;
+        b=lzjfc+uLmhB4KvZBn5o+U7C57vzCgQ2B9e/z3Usu/iYJgmDlJNJGESUh4RbJ2XqamQ
+         ryfLc4fWp8/UCelNtFFmV5Cq4ac7QOTXLkwyGhwXhomsmKDtRbY8AZLi7OZDl8EpiNbK
+         p8I2cqcOTwYevQh2wyZKE4pk1m5lkjI38+lGDm8KvMpo1+bd9PHFMWcKKz7JreZgEh7j
+         CRREvuKP0qYHaL6F1gbzZEUqrr72WxPcgD4CZ+hXb1Ubmn6CygTdQ3FtP0QwhzDeY9rp
+         VsG7a1AFEud/tdh5QUc/0kWYgwf7RPCPv4mBXOcXUzBczgZPVRr+6m3g/xEMlAhRDTlU
+         2vQQ==
+X-Gm-Message-State: AOJu0Ywl2uideQWN0IuW/dVD7HnsMm44S3artx8N5MFSVBmjB7jnp2ZN
+	vmdThi0BaJf2m4RXteCruSfzz6KX3SIIUClKUUV9wwVBcWi6ohlogbPs
+X-Gm-Gg: ASbGncsR1/SoINpV4L32+lYvohhEc8FEWzWkuuerSD1GI5USfXlcaNTjXo7QJ/soFtb
+	aVO7J0WpP/3DcvRagBMEDrblVpBwkQUUoY2zNxS6MyuopWt/bCE4lHeF7o7sdosGAPid5h1eoXn
+	2/atTIjPnD5450lCkMbdfggnbf8XnNHYq/yI1avsCZ7heXMW00E77a5qSTm8TRq8Vgisu28S2Ak
+	ybo21GohcVlSZwYeUwTLahNKAMtsetVVHPoztYOGHWSxesJaB4stqM4p7nhSr8AILVmhf0uwqio
+	U2vgGQvpfKg/hSOCKbaLtWqS9L6D1YDI1hyWF3Mv8W5SITmg3m3mDMkhXZCMXPXBDx1ExicB60x
+	R6XkxArgL4kPfI4NitqdE0iG558wSVTePyVzHcbqchgZwUZUwP0C0j2FqmVZB5LOPQEGVQnQqac
+	3g+mO844CqvfVuC22O79FtMstb6p2SNhwpXMmgZTzIxVY=
+X-Google-Smtp-Source: AGHT+IGjIynw4A6lCWPxH3Fro5ueEeTbkiiUoccpDOEDwA/jMpfal46xkzmfoPHogGleOd8bkNbFqw==
+X-Received: by 2002:a05:7022:4285:b0:119:e569:f620 with SMTP id a92af1059eb24-11e032a8639mr6217115c88.25.1765211653398;
+        Mon, 08 Dec 2025 08:34:13 -0800 (PST)
+Received: from smtpclient.apple ([177.118.148.121])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11df76e2eefsm60684699c88.6.2025.12.08.08.34.11
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 08 Dec 2025 08:34:13 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: bug: `git pull --rebase` breaks in the presence of pushurls
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Kartik Agaram <ak@akkartik.com>, git@vger.kernel.org
-References: <896e4e13-5d2f-4c5c-ac32-2927dbff91a0@app.fastmail.com>
- <04cc0cc0-155e-422e-b723-b1115c918087@gmail.com>
-Content-Language: en-US
-In-Reply-To: <04cc0cc0-155e-422e-b723-b1115c918087@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.200.81.1.6\))
+Subject: Re: [PATCH] repo: add new flag --keys to git-repo-info
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <xmqqqzt6kkif.fsf@gitster.g>
+Date: Mon, 8 Dec 2025 13:33:59 -0300
+Cc: git@vger.kernel.org,
+ Patrick Steinhardt <ps@pks.im>
 Content-Transfer-Encoding: 7bit
+Message-Id: <5A4D4433-FD38-4BB0-81B6-3BAD33A30A74@gmail.com>
+References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
+ <xmqqqzt6kkif.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3864.200.81.1.6)
 
-On 08/12/2025 14:30, Phillip Wood wrote:
+
+> We do not need to say "Currently," but other than that the above is
+> very well written.  Easy to grok and to the point.
+
+Thanks!
+
+> Shouldn't "--keys" be explicitly marked incompatible with "--all"
+> and remaining keys in argc/argv[]?
+
+Yes, I'll work on that.
+
+> While there is no strong reason why anybody must use NUL-terminated
+> output format, simply because repo_info_fields[] contains no tokens
+> with strange byte values, but just as principle, shouldn't
 > 
-> Unfortunately I'm not sure there is an easy way to fix this.
+>    "git repo info --keys -z"
+> 
+> do what is naturally expected?
 
-Maybe we should skip the fork-point calculation if 
-remote.<branch>.pushurl or remote.pushDefault are set?
+Hmmm... Perhaps it's too much for this simple flag. `-z` is tied to
+--format here, and if we want to support -z we'll also need to 
+support --format.
 
-Thanks
+What about adding a "default" format for --format? This way, it
+would translate to:
 
-Phillip
+- keyvalue, when using info without --keys
+- table, when using structure
+- using puts, when using info with --keys
 
+Another solution, of course, would be aborting when --format, -z or
+--all are used with --keys.
