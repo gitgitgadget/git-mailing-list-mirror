@@ -1,89 +1,85 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA4A2EBBAF
-	for <git@vger.kernel.org>; Mon,  8 Dec 2025 12:41:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C4C3B8D59
+	for <git@vger.kernel.org>; Mon,  8 Dec 2025 13:26:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765197691; cv=none; b=QJ4g6iWoLhYf36ErPRO/kfyP4QXuvv0fqXj5ZpOtoyz/ovz3ZLAZSXczDXUzQ1YvrJX9DPQuRGCuMOLYHmDA/UAsWalxJicodMYXNnVgEwI5bIzcrKQurv+dyMtWTxJx7TRLBa0Sqmokq0pSFM+TpBrUzjvYfUVUZRR3PCrwMac=
+	t=1765200403; cv=none; b=Fba/8sMaf37yLSpXapz3R9qPtJ4sc0NhNneFv2Im72rWx5MZr2etbKxtCt2mIkAAPsI9KtQdfSnjj+P6eNOnbrfw6FxoM1x2k28MM7y7L7pJQZ6z21MuPMwWAdNbHkVB2fSHA+55fJYU0p1rR0XQGevlcX5t0C8q7JspNy+6Yp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765197691; c=relaxed/simple;
-	bh=SI7UUJ8WtWl4PPhmbgSvv9iQdVKHscacjFG6IhK/iho=;
+	s=arc-20240116; t=1765200403; c=relaxed/simple;
+	bh=EDGLZxNmBbb6r+xX8FwbDdcWR83P69lV+cgrQKNVT0w=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=n0Z7QQ8PTow7l6AMWaluz054Z+gjI7mfKVwrRBbTThR1n+7D61804iBvNtz3jg7w+0CFqaCV8vZd/pK8cwwviHCOPguxjtlrB46cqDNenbvan7JizKiVgl44VwPWuKJmknddIOcNf2AHCWoEuqSp/mxF5KM3NtLQa27MrXmRo+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hCRb2aTa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JRPQn567; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=U2+vDMNSkqddk4pukk1C20UHUGiLmidSibuxRVgU0Hwx02BHnvZfX1q9fH83Iys2gIDBZ8zORAoMyC7MEyg31t6BSsOhBJWf67czDs4s19Jhx91wemtaGqEbtldttERrvgQznrIUcUt59djPpkbdwrEuaMZRKJEuBdWXic0vTsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FLflD95F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mye6eubH; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hCRb2aTa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JRPQn567"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 305CD7A0113;
-	Mon,  8 Dec 2025 07:41:25 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 08 Dec 2025 07:41:25 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FLflD95F";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mye6eubH"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id EAC431D0017B;
+	Mon,  8 Dec 2025 08:26:40 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Mon, 08 Dec 2025 08:26:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1765197685; x=1765284085; bh=vOpNuLLXP8
-	MAiIWJ52JGI5GSyfkYj7OrmSI+dcTlR6k=; b=hCRb2aTawwV/maXTTwEqOZSAAL
-	QVKzXkc0q793CDZJDs4VuX+hdlnq8iE10U4gIZrU/s4JF9D1PjZ/AWgsFhVcKEAK
-	RRf6pkpgq2wpDbMgsdSKHfRSX6O70CGfVkIdOnh0DDIKYfmx7j7Kw8SCNYvbjXiM
-	HCP/vekSlyylXhmIF7A7gryaOpx/auQErBZh/uLcvnsMdSNnL9Uf4V99N+1rUIok
-	zjCVdhLPirVxaIZo7nUV0gQfD5CEOJ0G7esJUEkSDZ1fJmNO3EXpZeH2ZqBtG1A+
-	PcOoNrj7CO2p19bnddsiJYvPq9pGHu3WreI+4XKhtEODfbW3s6azDHRWOkfg==
+	:subject:to:to; s=fm3; t=1765200400; x=1765286800; bh=SmZ9GAiGj5
+	4pYr5b8uf9Y7McfXRW9nFSYiMs94OOq/o=; b=FLflD95FpWfpAh2HPxLDw4Z9By
+	DOYrFigOvvaYebXwt+WZroz/DT99f0qm0yDEPTZDn1i9jGRwcqCWlqo6TbYEBbcF
+	kPHuG/8lxEQp0R/Yyf8uxIixAsWeOM1GVleRuFLIj6nc62c4MAvrfxtJZRTAPqBG
+	AMksPTjuz9G6C79EAxTAMHNs3NZh7QAfYQFOOeJtMSZ0VutbMlTO+6rcxQmt0Z+F
+	Xhhh/XeC9owSbHxlUCFKsbAcnQ2Dl305hNvGkCkLGFdgI3dkmt7M3unk9YXW5lCX
+	QTPFCRBJlsjN8WwW/yM/c1nIH3XZR62qItnhGlyn9QTbcMNIjbIhWZ9TBTAA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765197685; x=1765284085; bh=vOpNuLLXP8MAiIWJ52JGI5GSyfkYj7OrmSI
-	+dcTlR6k=; b=JRPQn567SXQptkHu4oMyRlg63K8k97A1i0V/85uyS+eKVn2Zl1I
-	FF8QTzZRAYoS4Izddr350fIDjb5g4x66al1C9trtf+AkTlWZoYCA46tOLCpeX662
-	fbDDPgTws9TB9kwLnDhkQvdWiw3XxHDRG1ljc2oKXAVtMZGj4LR1u5X3WZy5rmFX
-	cZKnM+IY3ybowC5DNxXgNaUaNU2Ma4gFLHl+DUvW1bhqONHxSPDTy7r9rKNtCica
-	K6s+P1tNe6Af3Fm5SN12QWuMHhaNBCOyiWhjecW5AP6Ob9pGVwQDrxFgpvMN2th2
-	T8L/uH6FnBTg7G0k9HAcfzA1D7rIqFLrrtw==
-X-ME-Sender: <xms:dMc2aeECWkOjQ6jN0WbAQTk0xVSfbhhV6z68SQ12Mb3cBfYZkD_z-A>
-    <xme:dMc2aRlkI1DKPic3UtGR34TyBAAg7dUq_G6SVEWXpMYMziejdnIogA16sHJpioKJK
-    vm0JPxRuWcXMtVJ1psse9cfuo1BdsG_JlQ_wXgADBwYBSDng3ZW9A>
-X-ME-Received: <xmr:dMc2aabwT8sbb5f8P9tV81GaVwr9wSF0Tlh_lSkII5YKhNBNpLSQ0PQny8YN-gC4BPbIuNi7L3VzZYB71LFK1Rwgkd5c5f6aDw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieejudcutefuodetggdotefrod
+	1765200400; x=1765286800; bh=SmZ9GAiGj54pYr5b8uf9Y7McfXRW9nFSYiM
+	s94OOq/o=; b=Mye6eubHaJK7+fH6/krJx2MwkjRXw9s3hwxsJvM6fVrU2Pljst+
+	VItDYOLlYHaKbcRwsf67NZ+fxgcxRZRKvkyLnu8gcMSnt1Qc2AukxHu5hsX1dFL3
+	Kan645vxDN9EoeMJt8Zq3vwW45tMg+qR1kEJcIIqgIWepam73KE5Hlvn01sbVgDw
+	l9R7FvUi/GbxRwdj4rCdaWIwIVDhhslwEUGCYdLufvUVWHct9CgNgDTx0X7Y2thl
+	igj8wEbMdy+MqpUOIiSka21TSFLXtIO6Nrr1WXI2ddIMnwodKQHeDSqoy+OlhJoR
+	JjJU8zUhcwPdkEEottvDNNyEX4+L4pkiM4Q==
+X-ME-Sender: <xms:ENI2acIkdJjN1bF3NcCz4yo5UDSr8L3Ymf17oMHBnCH4jPwrVLuM0g>
+    <xme:ENI2aUlNFaqQXo4Ttn1imwuKY-_-y-39frjnOsxNnLQjR93k7jqDntSber7diWdN9
+    dl6Xge5BX1IjMpjlUDFnzE9JC7B-HSkrYuFLp91gxU6_J_JhFdqtA>
+X-ME-Received: <xmr:ENI2adLtuv_y957yQ42Z1RmavKXiSxExk5-6dQviwDT2sz12AHYtE8Fmo7tQWukr-ltESpu6ugrd0vRdRa3pZ7CMg6qYm-_-bA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieejlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpth
-    htoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthh
-    grshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:dMc2aeEI9r5QfGoyhNxPHStqZTTnGr3TybCw7KV2Vtuai-foBVzjhw>
-    <xmx:dMc2aTLC3O_Ec53vFSqAKRmr1QUtHu6m68ZYm9cSAS4mEaR8WZvJ7A>
-    <xmx:dMc2aRP73CuetongszrKNUIyD1rbYpoNeIcEtkdGV6UhQTlwETSPJg>
-    <xmx:dMc2ablUCJp7vLecwiVDheVlnhBtFhGSPx4PfVHKxjOqVySjQQ_EcA>
-    <xmx:dcc2aRYlFrNnSGj2LIJBoxE0omnTWKKVtsvs82vJP3jssMX5-H9Rx8mw>
+    gvrhhnpefgteejgeduveeuteeiudfhhfeguddtjefhjedvffelteelhfdtveejueehudff
+    ueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthhooh
+    hnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkhgrrh
+    hthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopegrnhguvghrshhksehm
+    ihhtrdgvughupdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:ENI2aZ69T5TDo5HD4xo4gXKx00ZUfnyxuNoaCfFiStIwqik_ZF8Kgg>
+    <xmx:ENI2aR3PJyvG5kOlalPN7pggNbwiBHxBJ06OqRTMZzqIUgkmXcHdMw>
+    <xmx:ENI2afezy0YEhTxkJj2x4596exDbDRhQYEbue9fzXLRG_9UrOXplnw>
+    <xmx:ENI2aXeO7UCtPWJwf56QgjCBlR-43KnWLpYa3DxKGVVn6Se07ygSng>
+    <xmx:ENI2aYuu55P6mpb3XjkkdBdEfqfxhk2ixZ4SvwiroUtHPHVvy1_JdmWX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Dec 2025 07:41:24 -0500 (EST)
+ 8 Dec 2025 08:26:39 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org,  "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
-  "Christian Couder" <christian.couder@gmail.com>,  "Elijah Newren"
- <newren@gmail.com>,  "Siddharth Asthana" <siddharthasthana31@gmail.com>
-Subject: Re: [PATCH 0/3] doc: replay: improvements like "mention no output
- on conflicts"
-In-Reply-To: <d2a72ba5-ac7c-490f-9f2c-6cf849e65180@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Mon, 08 Dec 2025 08:28:52 +0100")
-References: <CV_replay_conflict.101@msgid.xyz> <xmqq1pl6lzt6.fsf@gitster.g>
-	<d2a72ba5-ac7c-490f-9f2c-6cf849e65180@app.fastmail.com>
-Date: Mon, 08 Dec 2025 21:41:23 +0900
-Message-ID: <xmqqms3tkux8.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Anders Kaseorg <andersk@MIT.EDU>
+Subject: Re: [PATCH v2] last-modified: fix use of uninitialized memory
+In-Reply-To: <20251208-toon-big-endian-ci-v2-1-76b46763a597@iotcl.com> (Toon
+	Claes's message of "Mon, 08 Dec 2025 12:46:05 +0100")
+References: <20251128-toon-big-endian-ci-v1-1-80da0f629c1e@iotcl.com>
+	<20251208-toon-big-endian-ci-v2-1-76b46763a597@iotcl.com>
+Date: Mon, 08 Dec 2025 22:26:38 +0900
+Message-ID: <xmqqikehkstt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,33 +89,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> On Sun, Dec 7, 2025, at 22:58, Junio C Hamano wrote:
->> kristofferhaugsbakk@fastmail.com writes:
->>>[snip]
->>> base-commit: bdc5341ff65278a3cc80b2e8a02a2f02aa1fac06
->>
->> All looked sensible.
->>
->> The second one looked a bit sketchy, but that was the phrase used by
->> the log message for c4611130 (replay: add --contained to rebase
->> contained branches, 2023-11-24).
+> Changes in v2:
+> - Defined and used MEMZERO_ARRAY() macro.
+> - Fixed up title which used unexisting word
+> - Link to v1: https://lore.kernel.org/r/20251128-toon-big-endian-ci-v1-1-80da0f629c1e@iotcl.com
+
+Sorry, but hasn't the old one already been cooking in 'next'?
+
+> ---
+>  builtin/last-modified.c | 2 +-
+>  git-compat-util.h       | 1 +
+>  2 files changed, 2 insertions(+), 1 deletion(-)
 >
-> How should `--contained` be documented?
-
-The text you added uses exactly the phrase used by the log message,
-so the author of the feature apparently felt it is good enough ;-).
-
-It just felt that "contained in <revision-range>" is understandable
-enough.  For example, I am unsure if somebody who read the document
-can accurately answer the following question:
-
-    If you forked 7-commit series from v1.0, merged the early 3
-    commits to the 'master' branch, and merged the rest to the
-    'next' branch, is that branch contained in 'master..next'?  Or
-    it is not because the bottommost 3 commits are not part of
-    master..next?  If it is the former, is it because the topmost
-    commit (i.e., the commit pointed at by the branch reference) is
-    the only thing that counts, and it indeed is master..next?
-
+> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+> index b0ecbdc540..ac5387e861 100644
+> --- a/builtin/last-modified.c
+> +++ b/builtin/last-modified.c
+> @@ -327,7 +327,7 @@ static void process_parent(struct last_modified *lm,
+>  	if (!(parent->object.flags & PARENT1))
+>  		active_paths_free(lm, parent);
+>  
+> -	memset(lm->scratch->words, 0x0, lm->scratch->word_alloc);
+> +	MEMZERO_ARRAY(lm->scratch->words, lm->scratch->word_alloc);
+>  	diff_queue_clear(&diff_queued_diff);
+>  }
+>  
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 398e0fac4f..2b8192fd2e 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -726,6 +726,7 @@ static inline uint64_t u64_add(uint64_t a, uint64_t b)
+>  #define ALLOC_ARRAY(x, alloc) (x) = xmalloc(st_mult(sizeof(*(x)), (alloc)))
+>  #define CALLOC_ARRAY(x, alloc) (x) = xcalloc((alloc), sizeof(*(x)))
+>  #define REALLOC_ARRAY(x, alloc) (x) = xrealloc((x), st_mult(sizeof(*(x)), (alloc)))
+> +#define MEMZERO_ARRAY(x, alloc) memset((x), 0x0, st_mult(sizeof(*(x)), (alloc)))
+>  
+>  #define COPY_ARRAY(dst, src, n) copy_array((dst), (src), (n), sizeof(*(dst)) + \
+>  	BARF_UNLESS_COPYABLE((dst), (src)))
+>
+> ---
+> base-commit: bdc5341ff65278a3cc80b2e8a02a2f02aa1fac06
+> change-id: 20251126-toon-big-endian-ci-fe62bb361974
