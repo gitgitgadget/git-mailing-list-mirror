@@ -1,53 +1,53 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A01269D18
-	for <git@vger.kernel.org>; Mon,  8 Dec 2025 18:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CAC269D18
+	for <git@vger.kernel.org>; Mon,  8 Dec 2025 18:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765218362; cv=none; b=dIbRhPJuhgd/E5KJG9TCmcQeY98XE4+x5yeU7Oul1VIpjXA9HEoXX/KzKfvEfUykmDtQMQBV6frGZ7+bRpdFJ6Q4RYhUF6+ZbHJ7EWejWsvefzAJycT4wbtexy0SsionY9q/AkyhN0N73laXXKvDvqzwO9IgfnvYXsBbGi0bnV8=
+	t=1765218397; cv=none; b=SsRLktEVhjM0ffYbVGYiiVc7yPCMVXOyMSPH9X6Zms9JLZ/ThYxrFGsiF7G4Ig4GvjbJooPmdq1W2sXn2PI0yK8aJs2uxvWQLJBq6nbCBbeJkzCkv25jx64cjVukiX7Nb+gH30/tDj1NM514KXtr6f/6Pn2AuXZWgee/KTwc6go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765218362; c=relaxed/simple;
-	bh=QhiZ4K930B7/zCFxYktPwQqmpH9jweQHNkYYOG7q9Wk=;
+	s=arc-20240116; t=1765218397; c=relaxed/simple;
+	bh=qrsREevb2xyZaeH56+HtP9owl6TLaIFa2QBUgGLv9K8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GagzzyfxaNWh2kePsiJML3veIgtk4Pzf+AbPfn7YPz2GXnL2cY9FJ1Ht0/3VQE2DEllB3Cb0kQPBpq5ZGLss08CA55imRdURw2/FFN6N9TSkoTJXYYP1okITkpbFHPC8hgtoOxOn4nOehPXRBgVTrAOA7yc/0f1UJOci19h5FEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a03mw/5g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GqVBRSAQ; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZXD1c/XrP1WDAIkgFlXnDGt1d0q2Md8ZGUhpOcdDwI0PAdVf734cOuxWX8d3WOHKnYuTSbgQYEcBY5Nx0oGQlnPhrTedMcg8ll8hbhMPRmJBS885Yf+50z5MKRNY0LiSyhK5eELIeEZBxtDyTJbDoNHQEmd6pSmFn6SQ7vJULwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sFLQ8CA+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=soisV5Gb; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a03mw/5g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GqVBRSAQ"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4C9CDEC056D;
-	Mon,  8 Dec 2025 13:25:58 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sFLQ8CA+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="soisV5Gb"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5C546EC056D;
+	Mon,  8 Dec 2025 13:26:34 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 08 Dec 2025 13:25:58 -0500
+  by phl-compute-01.internal (MEProxy); Mon, 08 Dec 2025 13:26:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1765218358; x=1765304758; bh=mSaV0Mib8E
-	gi6IHKbUMtNLl12RBMVPeEkVkefmm9RH4=; b=a03mw/5gQaQXs/E1Q5IrIbrESd
-	VM1VmKLEOtyxaKVpDVE4U+LgdO4Pa3DI/RLmxw4RzP1jzYkw/PI9sc7zREHxv/p4
-	B6rQkEA2FQN/dWR6QIUqwf9Yhs68PQYerePdIHTIKN0Aeg42PKCYjiEMspgs87cW
-	VdS+k/3dptyW7mFXaC4otgloWj2kIwHGoBhNUnMPigbTBUblYTkB90c9wwuiucro
-	/Y1bDyFjd4IUo/rWlS+GZzM4B+sGSKo8sxVA6kA2ZqnB3oqPKuFLp/1uF5aElaLn
-	vwNaRfTTbXGxM2oP4E1iEmqkpwXgEvFsHApYOXdyxVUeduC9A+CSokpy8SfA==
+	:subject:to:to; s=fm1; t=1765218394; x=1765304794; bh=zrTfR8oD69
+	4K4wphITzHgsPa+kq86cUmpirL8JyvjWI=; b=sFLQ8CA+VMhutRZRpaYRddYAui
+	qrbC691LXH4a54jbNlgb4XsC+XaMYbAMBuvrOIVgPfAJQd0e16MEwvLalVRocmI4
+	iMLiC/7pie7tM+IUgjQCy2MdeNnkXWcoQijmwJ/h9wGWf+NoUiCcthVZWnD8gamo
+	AxddnMcYeNWx8cKxK8UqLOEmOuxOSqY0VGc2vZE4ccmLGcgI0qzgw7KXUISypQhY
+	wCF77fthrOuvuqoAk9WPBp9MqtnM3n6t5pt7jidDs7+duP4nyigkI8TYjEpK93x9
+	dMnbMpMSgrt/dMZRdQM1aPTOUXK+SOR+ZeDNq5Pscr5Tjb75thsjHPOwNd0Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765218358; x=1765304758; bh=mSaV0Mib8Egi6IHKbUMtNLl12RBMVPeEkVk
-	efmm9RH4=; b=GqVBRSAQ6KvLCpnbAUEgkvjAvEuWoqPmfJqjMsVMoIcxYjLT6HJ
-	D7bvFb8Xjm7ZgW2AfLAdtyzesj8pjhtqI8l0h588Y8L7Bt88ECMFfYHl71Y9mj2u
-	o0ddl4uBIdiIkSBSHvvCBV9EfiWLb2KiURQc7g3WhI15RDppUzpjHrS8AK9320e7
-	qJRcW4GJXOtZX3o232RWzc6cBZd2+sByCP7I3sm1tNC0gOJJZW7Pc83iEA2FEaom
-	VimYGzCNaUluKLmrVW6udgG7LSALoozPyBhUS48z80EfhSs89P10SUX3HhMH46ek
-	AZwic4iFP140Qw2wUpQdCeaA54RJa3qNn9g==
-X-ME-Sender: <xms:NRg3aY_WR52LgpJHjpYpRSGZY-SIV0AAWYP5V6hEu_VSjoUh9FMyKg>
-    <xme:NRg3aXm7W2vDt_S6MXXe61sP0FVAo_SL3bYwxbYbWIlDp5jQy4vRCyH2L2dceLMo8
-    qURrmdme8HK5Plks6ofa9Mu4Zz1zYrLS6wc2_2e0wngA8-xQm4TjkE>
-X-ME-Received: <xmr:NRg3aWUbHIX7NQAkpq3RQbIFY5iyAKKNbOg_yK1iAC9r4yOD5oGbFvcqMN6YukVwrHstLgdFJusdwHsiLA92oPj3nij4xnvmo3XMouitc5E>
+	1765218394; x=1765304794; bh=zrTfR8oD694K4wphITzHgsPa+kq86cUmpir
+	L8JyvjWI=; b=soisV5Gb8GpAyZz5RogQ/yfdBcxfEX+LrPW9utNQykZhLo4ZGY5
+	wRGOpoWas8IEkLdlzl4kwL+i4tZIVNyQ3laNXqIZByJMcLQAgokpaTTOc6dXN8pA
+	vSl/LBck3e9t6MoWq5tgr4Gksb9a9xa+GmlFVo/ymnh0JCh+jQcr9+NIQMg7DwRG
+	mUYgn0EoPZ5PkJVm+MAa2s1XI0UaGI+U1gyEmCSgxRldyoGY+1FuweSill7dVkQw
+	xK75abx/ax1D3cOV4D9QIG8S4fkA6c4nkMATuBmvzBE0jCQ2xfgsn89nnZ59/95O
+	suFmmnsMph2Sv37IQ1Amk6LQlBCPdT190Yg==
+X-ME-Sender: <xms:Whg3acmlnrlOUIKKMeWdHHQd7nGdbtK9PZw8s9Ao_Y9tWt4pO_yoHg>
+    <xme:Whg3aSsT-M_gVy7e3I59wXO0mf1HHx5BGnif-tHDnbf8O3v1evMs43CYiYagVK5-Q
+    p2BN-61BtsxlF4XncyALxwt6ZEhvWtRZvEdTf5D7hdIwWkZeMWisg>
+X-ME-Received: <xmr:Whg3aS9ejwYzNZ1sVQaMBuxmCljwD1i5StZWXszq_7TwEfNa8FoP-kya251Vyikz6N9yPY5ZOCsQX3RMSOOzRci4F6BibIceZYIIuGM2LWw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeeflecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -56,31 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeeflecutefuodetgg
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphgvfhhfse
-    hpvghffhdrnhgvth
-X-ME-Proxy: <xmx:NRg3aUGSUUqVV3sjunZUtkvGKtxUJHQuwaBx05kiTTo5whc39JW5sA>
-    <xmx:NRg3aadoI1WLpY9Fn4mksU2Tc0X7a8s19OykqJwRcGqIuhUNaTZXKA>
-    <xmx:NRg3adLyCWDO3JJPE3jVdkOmS7LFt3X8GCUGpPKSdcCE0bVihFjtHw>
-    <xmx:NRg3aXFXNiBRys8UiokaUXw2w_i1phM6ojrOAj_cpA9Vg8V21-48tA>
-    <xmx:Nhg3aQk6sFfBt2KLDZk33IC-oMofxoNEGJWXQJvzktFnAi1sVAysSor->
+    pehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:Whg3aUN-nrRubMpZtJBgPkkPOO7y-fsJ2doeCBbCHjX7_KoPbxp8Gw>
+    <xmx:Whg3aYGxxQGMCasK5AW_c0gYZ0GdsNM3V4I8ghpkTJtDTWBMl5SOBA>
+    <xmx:Whg3aaTTjuPbUrYSFKUoe73GodaMW2nh7jCWuTwYD1BLoHv08r-nSw>
+    <xmx:Whg3adu8Xt-oEHlSZtQ2Ju_qTWJ-tscgRmw5dMYSsnNqQtFYX5mFkg>
+    <xmx:Whg3aQvKsBcaOfw6BhxLjLvRBVM8rgo6UVohZNDyVqYzG4dRCIZyMPqo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Dec 2025 13:25:56 -0500 (EST)
+ 8 Dec 2025 13:26:33 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b2a3054b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Dec 2025 18:25:54 +0000 (UTC)
-Date: Mon, 8 Dec 2025 19:25:05 +0100
+	by mail (OpenSMTPD) with ESMTPSA id eb12aeae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Dec 2025 18:26:32 +0000 (UTC)
+Date: Mon, 8 Dec 2025 19:26:27 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/17] midx: split `get_midx_checksum()` by adding
- `get_midx_hash()`
-Message-ID: <aTcYAdJ6lNCST7PT@pks.im>
+Subject: Re: [PATCH 07/17] midx-write.c: don't use `pack_perm` when assigning
+ `bitmap_pos`
+Message-ID: <aTcYU_yVYyXL9TXv@pks.im>
 References: <cover.1765053054.git.me@ttaylorr.com>
- <d583a169f08eea9d750622c6e3cf79774a2a68e7.1765053054.git.me@ttaylorr.com>
+ <1fc359d9a98cdd61f6986fa1d9a1190f57dacb9b.1765053054.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,51 +89,97 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d583a169f08eea9d750622c6e3cf79774a2a68e7.1765053054.git.me@ttaylorr.com>
+In-Reply-To: <1fc359d9a98cdd61f6986fa1d9a1190f57dacb9b.1765053054.git.me@ttaylorr.com>
 
-On Sat, Dec 06, 2025 at 03:31:04PM -0500, Taylor Blau wrote:
-> When trying to print out, say, the hexadecimal representation of a
-> MIDX's hash, our code will do something like:
+On Sat, Dec 06, 2025 at 03:31:19PM -0500, Taylor Blau wrote:
+> In midx_pack_order(), we compute for each bitampped pack the first bit
+
+s/bitampped/bitmapped/
+
+> to correspond to an object in that pack, along with how many bits were
+> assigned to object(s) in that pack.
 > 
->     hash_to_hex_algop(get_midx_checksum(m),
->                       m->source->odb->repo->hash_algo);
+> Initially, each bitmap_nr value is set to zero, and each bitmap_pos
+
+I assume `bitmap_nr` is the number of bits, whereas `bitmap_pos` is the
+position of the first bit?
+
+> value is set to the sentinel BITMAP_POS_UNKNOWN. This is done to ensure
+> that there are no packs who have an unknown bit position but a somehow
+> non-zero number of objects (cf. `write_midx_bitmapped_packs()` in
+> midx-write.c).
 > 
-> , which is both cumbersome and repetitive. In fact, all but a handful of
-> callers to `get_midx_checksum()` do exactly the above. Reduce the
-> repetitive nature of calling `get_midx_checksum()` by having it return a
-> pointer into a static buffer containing the above result.
+> Once the pack order is fully determined, midx_pack_order() sets the
+> bitmap_pos field for any bitmapped packs to zero if they are still
+> listed as BITMAP_POS_UNKNOWN.
+
+If so, it feels somewhat weird that we'd set the `bitmap_pos` to zero.
+But I guess it doesn't matter anyway, as I assume that the `bitmap_nr`
+would be zero anyway?
+
+Anyway, reading on.
+
+> However, we enumerate the bitmapped packs in order of `ctx->pack_perm`.
+
+Which is the "permutation between pack-int-ids from the previous
+multi-pack-index to the new one we are writing"'. So it's basically
+tracking which new packs correspond to the old packs.
+
+> This is fine for existing cases, since the only time the
+> `ctx->pack_perm` array holds a value outside of the addressable range of
+> `ctx->info` is when there are expired packs, which only occurs via 'git
+> multi-pack-index expire', which does not support writing MIDX bitmaps.
+> As a result, the range of ctx->pack_perm covers all values in [0,
+> `ctx->nr`), so enumerating in this order isn't an issue.
 > 
-> For the handful of callers that do need to compare the raw bytes and
-> don't want to deal with an encoded copy (e.g., because they are passing
-> it to hasheq() or similar), introduce `get_midx_hash()` which returns
-> the raw bytes.
+> A future change necessary for compaction will complicate this further by
+> introducing a wrapper around the `ctx->pack_perm` array, which turns the
+> given `pack_int_id` into one that is relative to the lower end of the
+> compaction range. As a result, indexing into `ctx->pack_perm` through
+> this helper, say, with "0" will produce a crash when the lower end of
+> the compaction range has >0 pack(s) in its base layer, since the
+> subtraction will wrap around the 32-bit unsigned range, resulting in an
+> uninitialized read.
+> 
+> But the process is completely unnecessary in the first place: we are
+> enumerating all values of `ctx->info`, and there is no reason to process
+> them in a different order than they appear in memory. Index `ctx->info`
+> directly to reflect that.
 
-This is a welcome change indeed.
+Fair. We do initialize the permutations like this:
 
-> diff --git a/midx.h b/midx.h
-> index 7c7e0b59121..e188ffeb578 100644
-> --- a/midx.h
-> +++ b/midx.h
-> @@ -85,7 +85,8 @@ struct multi_pack_index {
->  #define MIDX_EXT_BITMAP "bitmap"
->  #define MIDX_EXT_MIDX "midx"
->  
-> -const unsigned char *get_midx_checksum(const struct multi_pack_index *m);
-> +const char *get_midx_checksum(const struct multi_pack_index *m) /* static buffer */;
-> +const unsigned char *get_midx_hash(const struct multi_pack_index *m);
->  void get_midx_filename(struct odb_source *source, struct strbuf *out);
->  void get_midx_filename_ext(struct odb_source *source, struct strbuf *out,
->  			   const unsigned char *hash, const char *ext);
+	ALLOC_ARRAY(ctx.pack_perm, ctx.nr);
+	for (size_t i = 0; i < ctx.nr; i++) {
+		if (ctx.info[i].expired) {
+			dropped_packs++;
+			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = PACK_EXPIRED;
+		} else {
+			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = i - dropped_packs;
+		}
+	}
 
-If I didn't have the context of this patch series I would be wondering
-what the actual difference between `get_midx_checksum()` and
-`get_midx_hash()` is. The way the functions are named seems to rather
-indicate that we talk about two different kinds of hashes, rather than
-two different ways to encode them.
+So obviously, the permutation will only ever be different in case we've
+got at least one dropped pack, and that only happens when we expire any
+packs. So the explanation matches.
 
-Would it maybe be preferable to call them `get_midx_checksum()` and
-`get_midx_checksum_hex()`? While at it, we could go even further and
-rename them to `midx_get_checksum()` and `midx_get_checksum_hex()` to
-conform to our modern best practices.
+Of course it may be a bit more fragile now if we ever added a caller
+of this function that _does_ expire data. But we don't have any, so that
+enters the territory of overthinking things.
+
+> diff --git a/midx-write.c b/midx-write.c
+> index 73d24fabbc6..c30f6a70d37 100644
+> --- a/midx-write.c
+> +++ b/midx-write.c
+> @@ -637,7 +637,7 @@ static uint32_t *midx_pack_order(struct write_midx_context *ctx)
+>  		pack_order[i] = data[i].nr;
+>  	}
+>  	for (i = 0; i < ctx->nr; i++) {
+> -		struct pack_info *pack = &ctx->info[ctx->pack_perm[i]];
+> +		struct pack_info *pack = &ctx->info[i];
+>  		if (pack->bitmap_pos == BITMAP_POS_UNKNOWN)
+>  			pack->bitmap_pos = 0;
+>  	}
+
+The change looks simple enough.
 
 Patrick
