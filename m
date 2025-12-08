@@ -1,210 +1,116 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5B0238C33
-	for <git@vger.kernel.org>; Mon,  8 Dec 2025 22:37:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E585270EAB
+	for <git@vger.kernel.org>; Mon,  8 Dec 2025 22:42:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765233473; cv=none; b=Z0J9XMR66vo9eq46rmy3Jp43I5/P4sFw9IaNgLtPsg/k9eeQSfcA4xeQbWPSFrUWo64EGdwtE+kOy5FAVwK1EsZm0yL+75nygym1wNUJCy6oeL4pNG3wjLRmvAj1pc26UK+euT5HnffG6SUF3PNSSLJKmtJNmQ2Tu5ShX37OQHA=
+	t=1765233781; cv=none; b=E7x/ERpaLeuV56GtAS88OTsD0o7S50WCPOILXnIsn462x5Y+pmtbKX5OnrvansCsJPZDp6z84VG7orQIjqdHkwCHx025/BUR1xArCEDAFy0DLNHfZ37ebaGvRoxoFBdsEbA+DIUxvduGMM4lkhXYWI+w3NtHdFC1qLVottRvCyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765233473; c=relaxed/simple;
-	bh=NRKrwEWAyuVDmsc8tUopWaU6UgPJVFkm3qrbU6qbCYY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Brf9QdLFUL0dNQ0HivcGOTSWbwtzKprzGI+n/aEKoiddIZ2OP8uula8/XrfecIviHR25t9AKGxxTqxML0aX0wNk3ZqM8xKDY4qZtnMJ+x0Ae749UicJ/kNerVXGmB1Qq3ycjhykuzKRSupM1B+eVgWhy2b9fwXSs9EnDNbVi3lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OVC83AJ6; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765233781; c=relaxed/simple;
+	bh=XZ+gdnXxm9Dj4pUdTf2WdUw6tca3deiWXfPv9zOWCGk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hgvmQ7UWkEdIuoevuTbakmcddZ1r5CwF8JMq4DHX/vULcDoMltoYjeZIgSwR+DZYgtI6U79ULVTGqn1h9EqOoEq3vyl1XY2W6UOK08O4KqeNGNVdy1fwaRP20rPzNp59IYu+P93tKps1v21TFujx8WBoZYPY0IdD6K+uWzGFLLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DZeg5i93; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YvnNM6ps; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OVC83AJ6"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7c6cc44ff62so4205701a34.3
-        for <git@vger.kernel.org>; Mon, 08 Dec 2025 14:37:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765233471; x=1765838271; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CR3+XieTG2kX2zEA+6qcRJUnag+3+w7RO0HBpS1c2lk=;
-        b=OVC83AJ6XPuMYfQtesFrEQiyTrTZ6UErcDjrWcmyD+eED2v5pvSk5M54g+PqCT90/B
-         sR0CcEibzeOMODx8n1z19Nv+F3iTsEPMxTY8s/JRyQ3ExUV0aXr45KSh5fKuDpwyEweV
-         sOK/N7sxJCfrSkyH5khCimgsNFo4FMt66ZUbB98OPftfCRwNugUEkBboxcEUH21oPsRl
-         2WfIfn7cB/ULb8jSauuGi6SFz4bgqT17E119NKk8lCfH2vxF4jP16OiQ9NmINyRTafC9
-         C5FuiN1TQ27YA+goW9g7PDfi+J46fhkSbTRFGOtTRqPz1X7wig7hSDO57JXUb29/deo5
-         8iqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765233471; x=1765838271;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CR3+XieTG2kX2zEA+6qcRJUnag+3+w7RO0HBpS1c2lk=;
-        b=hgVyauBMT8aWj4TQu9AN4HvtKAYs6IOVKZddSxpXhxJjqXzq43fj0wNjz14F3DXiTg
-         dbW6fab06KAIaRUFpcapO1p51zYyTOmAhgWu+/Hske9yvydVl466QqWX5gMnbCn85Xwd
-         VnvZo11NOW2sDPx6YIDfTgzjRuXtddAZRCgvxMQfOq43LWkdBTlN40s4fXgsIc4ki4l3
-         DS3cEferhJo7qBJtrKaDf5b36rlM0vOBUPq5mI3fxe13N4vs9ySFpRA9DgiALsZz1zTR
-         zwnWAxef9VMsjB3t8K8iEynbkcKp54xviYraw0FeMPjcbgUXMSFOHCnyhoE6g1wNSPAj
-         Inmg==
-X-Gm-Message-State: AOJu0YwTNVssN2lv7dMGhnHNqH7VbITDWQ4raW042cEPT50rGvdRRjD5
-	mI2xhizXJ9cEB9mGJPXYuxRh+rGiOd93YN4R8+3l4VyXZ92NC1kXCBMnadYLPg==
-X-Gm-Gg: ASbGncukg/CVfsRhIbyADVJubg9rGg2gDup6meBGCc6X0XFp2N7VqXd4K8d47SQgP3K
-	+IPRjHGnhjBebUkCsHD/B9o+Dfovxbms+eWRk9dLExpNfNMHBgAorVUTjjgSXrMItjI61WOm49n
-	7piXKBA9c0eVQ6I7ce2f9pWFrxGvVvP1BWArelt7v/Rd2SGu3cz7c4RTJSJGvmDj5e3DlnykTqA
-	zbDySu9/jJGwXHbYxQGG8im/TvdtevFCJzJ3ymejuiWD6ld0Yu/y1UOGDzZvMdcCLsll2tIkQyZ
-	YuEpfmKeYCQSqF9okrWM2OwyOvaMCbzeZ0rRsyaMuVDqlQ0uJ8umaIap4z6YUNXTDyiG3n12V4Z
-	sRoBYWPCYOdkUtZVwBrv39SJgENcCijav9l8FRSJDLOnR8wiUSeGpMNt+SRSxjGq5l/OgChTxTR
-	ySNiPW
-X-Google-Smtp-Source: AGHT+IHEBoYe6N8Bd+ULiCZe/ddUk8kShMfajPez2wBXq9E1W8mvC9V5ssXrB+paNw3/IN5zuXVpVw==
-X-Received: by 2002:a05:6830:3112:b0:7c7:586c:846c with SMTP id 46e09a7af769-7c9707fddf9mr5437064a34.19.1765233471261;
-        Mon, 08 Dec 2025 14:37:51 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7c95a91d96bsm10918476a34.8.2025.12.08.14.37.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Dec 2025 14:37:50 -0800 (PST)
-Date: Mon, 8 Dec 2025 16:37:47 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/8] odb: refactor parsing of alternates to be
- self-contained
-Message-ID: <yjpy5yitklzq5pyvrmpsd7wq3i55e53vhkt3f34bjguwbewqbz@rctteyqvvm7t>
-References: <20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im>
- <20251208-b4-pks-odb-alternates-via-source-v1-1-e7ebb8b18c03@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DZeg5i93";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YvnNM6ps"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9E9F1EC0422;
+	Mon,  8 Dec 2025 17:42:58 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Mon, 08 Dec 2025 17:42:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1765233778; x=1765320178; bh=FuUc9cJA/p
+	RJ16vE9AkPpsuxAY6ce9H8URpdIAo5YMI=; b=DZeg5i934DsiTZtk9iZuGVREAl
+	8NNj3VqmoMXbFPjHD9RUF1rsI9HQ/C/jUCvE/IQmMpr6yAMQYy8jr7mrL5FQ8+mm
+	Cs11wcSfpMQd49/QbPo/KrNnu99ttx+bUKtoigvguGq2n1IfX4qEypTybsXb+oAt
+	Wx2YBrjMUCcbFq7P3PNdgn17JqXHkwirzwW7nt+BN0OPTDvid6hfqxfnIOXy8s8B
+	3CzK8AV4UzJt/MHBihGhPwmeS8Igu0QevyAUyF893KxCGbLKJ4iYaMcQMZzSTOiU
+	flYrr+8QyINCOF0P5JxKtK+PvZiraX4PCwLiIk8WpSIr+rkp2Y+0dREjZeAQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765233778; x=1765320178; bh=FuUc9cJA/pRJ16vE9AkPpsuxAY6ce9H8URp
+	dIAo5YMI=; b=YvnNM6psW4EjgDNLSlXBwDeFBDTE+uCbu8ypSk8ppFF+KUCHtDR
+	LhUT6SJOf6GgwnIsK3csBd0aqccXN7tFOdK9q6BOMua7rMKSIo9RR5d4NHZ37rVV
+	i+m0bOmaMLlNeXk+Ema/262O3bJLtA1VKcAbVvTV5Q0b4nVpwebusfelVM0hAax2
+	xGNgod7pVS+Vcpi6W4CX8Gx2oLFi8w8BaG26664bICAJsO31nC0vWYBqzDIRs9ls
+	b0Q3LdRHTUvRWu4htzlV4AO+7/mIaESzZAoHzZiCfgUemgdhh+FFPm02FY7rGyCX
+	id8Yy8udLULZG62oWHoyi2I2JcP5F9pdLkA==
+X-ME-Sender: <xms:clQ3aSZ2hQzmVBqrxs8NXPiL8F4_HyhNhYyzXjtydsikQmDcXT4WSQ>
+    <xme:clQ3aZGzchOOR4WfzPBgLeB2JThb7EcjbuGFT7wK15vg8xiP6B1evJH2u0spkmEIC
+    PVcm3alObR_yOCT6xJrqOz86gu-pzbmrYSanJwpODfoQNcxMxk4>
+X-ME-Received: <xmr:clQ3aWwVmuX1BXkUmEw_NtNi_0pfgFQfr2oyiplDczg1bAaDw-IbhUxMxVCRqShWuwFCNT9i4KvCtcrgGoR1BOWovX_M2IQC1w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddujeeltdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepth
+    hoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtoheprghnuggvrhhskhesmhhithdrvgguuhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:clQ3abmWV30PZLgdjY13G1Bn82DB0Ctcsr9sNmHWegr4bh33NDdVjQ>
+    <xmx:clQ3afkxt9bK2g_qTSpmgY0fgMxaV9TmWnQTXr-edWxwPWCipxs_MA>
+    <xmx:clQ3adwbopExAsCok7SA0CZ8Ip3Isow9orG5kCs0JJhjtkOvl4CZmg>
+    <xmx:clQ3aUr75SukiazL8uv_jIR7gBMOsd0WCNxKi2BkvSWUGNdFpXPFmg>
+    <xmx:clQ3aZc8U9vY1ya7SljHMXATjRxb19y96l86ZpY_W69QWSao8-WwyzKp>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Dec 2025 17:42:57 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org,  Karthik Nayak
+ <karthik.188@gmail.com>,  Anders Kaseorg <andersk@mit.edu>
+Subject: Re: [PATCH] last-modified: fix bug caused by inproper initialized
+ memory
+In-Reply-To: <20251208201501.GA216526@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 8 Dec 2025 15:15:01 -0500")
+References: <20251128-toon-big-endian-ci-v1-1-80da0f629c1e@iotcl.com>
+	<20251128205514.GA605489@coredump.intra.peff.net>
+	<87bjk9w5yv.fsf@iotcl.com>
+	<20251208201501.GA216526@coredump.intra.peff.net>
+Date: Tue, 09 Dec 2025 07:42:56 +0900
+Message-ID: <xmqq5xaglhn3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251208-b4-pks-odb-alternates-via-source-v1-1-e7ebb8b18c03@pks.im>
+Content-Type: text/plain
 
-On 25/12/08 09:04AM, Patrick Steinhardt wrote:
-> Parsing of the alternates file and environment variable is currently
-> split up across multiple different functions and is entangled with
-> `link_alt_odb_entries()`, which is responsible for linking the parsed
-> object database sources. This results in two downsides:
-> 
->   - We have mutual recursion between parsing alternates and linking them
->     into the object database. This is because we also parse alternates
->     that the newly added sources may have.
-> 
->   - We mix up the actual logic to parse the data and to link them into
->     place.
-> 
-> Refactor the logic so that parsing of the alternates file is entirely
-> self-contained. Note that this doesn't yet fix the above two issues, but
-> it is a necessary step to get there.
+Jeff King <peff@peff.net> writes:
 
-Looking at the existing code, parse_alt_odb_entry() only reads a single
-entry at a time and relies on link_alt_odb_entries() to call it in a
-look to get all alternate entries. I agree that handling alternates
-parsing on a single file in one place is a bit nicer.
+>   git grep 'memset(.*0,.*\* \?sizeof'
+>
+> that's looking for memsets of "0" that also multiply by sizeof. Looks
+> like there are a few:
+>
+>   add-patch.c:    memset(hunk + 1, 0, (splittable_into - 1) * sizeof(*hunk));
+>   builtin/last-modified.c:        memset(lm->scratch->words, 0x0, lm->scratch->word_alloc * sizeof(eword_t));
+>   compat/simple-ipc/ipc-win32.c:  memset(ea, 0, NR_EA * sizeof(EXPLICIT_ACCESS));
+>   diff-delta.c:   memset(hash, 0, hsize * sizeof(*hash));
+>   hashmap.c:      memset(map->table, 0, map->tablesize * sizeof(struct hashmap_entry *));
+>   pack-revindex.c:                memset(pos, 0, BUCKETS * sizeof(*pos));
+>
+> The first one is an oddball, but the other five could use it. So if we
+> were to do a patch adding MEMZERO_ARRAY(), it would probably make sense
+> to convert those spots. I'd be OK either way.
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb.c | 70 ++++++++++++++++++++++++++++++++++++++-----------------------------
->  1 file changed, 40 insertions(+), 30 deletions(-)
-> 
-> diff --git a/odb.c b/odb.c
-> index dc8f292f3d..9785f62cb6 100644
-> --- a/odb.c
-> +++ b/odb.c
-> @@ -216,39 +216,50 @@ static struct odb_source *link_alt_odb_entry(struct object_database *odb,
->  	return alternate;
->  }
->  
-> -static const char *parse_alt_odb_entry(const char *string,
-> -				       int sep,
-> -				       struct strbuf *out)
-> +static void parse_alternates(const char *string,
-> +			     int sep,
-> +			     struct strvec *out)
->  {
-> -	const char *end;
-> +	struct strbuf buf = STRBUF_INIT;
->  
-> -	strbuf_reset(out);
-> +	while (*string) {
-> +		const char *end;
-> +
-> +		strbuf_reset(&buf);
-> +
-> +		if (*string == '#') {
-> +			/* comment; consume up to next separator */
-> +			end = strchrnul(string, sep);
-> +		} else if (*string == '"' && !unquote_c_style(&buf, string, &end)) {
-> +			/*
-> +			 * quoted path; unquote_c_style has copied the
-> +			 * data for us and set "end". Broken quoting (e.g.,
-> +			 * an entry that doesn't end with a quote) falls
-> +			 * back to the unquoted case below.
-> +			 */
-> +		} else {
-> +			/* normal, unquoted path */
-> +			end = strchrnul(string, sep);
-> +			strbuf_add(&buf, string, end - string);
-> +		}
->  
-> -	if (*string == '#') {
-> -		/* comment; consume up to next separator */
-> -		end = strchrnul(string, sep);
-> -	} else if (*string == '"' && !unquote_c_style(out, string, &end)) {
-> -		/*
-> -		 * quoted path; unquote_c_style has copied the
-> -		 * data for us and set "end". Broken quoting (e.g.,
-> -		 * an entry that doesn't end with a quote) falls
-> -		 * back to the unquoted case below.
-> -		 */
-> -	} else {
-> -		/* normal, unquoted path */
-> -		end = strchrnul(string, sep);
-> -		strbuf_add(out, string, end - string);
-> +		if (*end)
-> +			end++;
-> +		string = end;
-> +
-> +		if (!buf.len)
-> +			continue;
-> +
-> +		strvec_push(out, buf.buf);
+Thanks for making an excellent suggestion while I was away from the
+keyboard ;-)
 
-We parse entries in the exact same way as before, but now we read all
-entries into a strvec up front. Nice.
-
->  	}
->  
-> -	if (*end)
-> -		end++;
-> -	return end;
-> +	strbuf_release(&buf);
->  }
->  
->  static void link_alt_odb_entries(struct object_database *odb, const char *alt,
->  				 int sep, const char *relative_base, int depth)
->  {
-> -	struct strbuf dir = STRBUF_INIT;
-> +	struct strvec alternates = STRVEC_INIT;
->  
->  	if (!alt || !*alt)
->  		return;
-> @@ -259,13 +270,12 @@ static void link_alt_odb_entries(struct object_database *odb, const char *alt,
->  		return;
->  	}
->  
-> -	while (*alt) {
-> -		alt = parse_alt_odb_entry(alt, sep, &dir);
-> -		if (!dir.len)
-> -			continue;
-> -		link_alt_odb_entry(odb, dir.buf, relative_base, depth);
-> -	}
-> -	strbuf_release(&dir);
-> +	parse_alternates(alt, sep, &alternates);
-> +
-> +	for (size_t i = 0; i < alternates.nr; i++)
-> +		link_alt_odb_entry(odb, alternates.v[i], relative_base, depth);
-
-Now with this impletation we parse alternate entries up front and then
-iterate through each of them to link. Linking may still result in
-recursive alternate parsing if further alternates file are defined.
-
-Looks good so far.
-
--Justin
+Between MEMZERO_ARRAY() and CLEAR_ARRAY(), I am on the fence.
