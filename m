@@ -1,107 +1,99 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BD7322A1C
-	for <git@vger.kernel.org>; Tue,  9 Dec 2025 12:18:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6922A285418
+	for <git@vger.kernel.org>; Tue,  9 Dec 2025 16:03:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765282703; cv=none; b=elihLJpGSVx7dlJI/sQGZImLM0egdKIlMTjqyX8+YyTUPsgboHA3U7yZFlQAy8zMcNPsWWiSJjKOFSXCB1IX9uYjjgcHRbeR1Q/lhZ/u0aQzm079U2lRziPn6TPdoSz1ZR+ea84JBKtfq5P+q5QtvwpqiDDFAuFh/uJDTaHNtOM=
+	t=1765296209; cv=none; b=S+/Jee/lfAUmNC7iCfuTXfFKquD1O2rDA7EJ6QMx2DVCFgChykUZdiNwDD01QWPSV+y26h+bZOUk/QrWeANns8uuud3OJ3uB7BvHz78cpADXjKRu9SrUa/lJB5Tw+oGf1bMGlwwdUQHz1pqcpZTLFUoH1aHRZsfFvkrYonL2fwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765282703; c=relaxed/simple;
-	bh=pL8fuweUcC3urAfvFgu9mx1px9SBf3JyjuqkN6dP2+Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YjWWxCHcqnF2LstoO5AOUcUEW89IxocElTpYc7l3AuCRvR+oVHI4kITN+SzFWnNUpdxW42gsQGa5HU9yfs3IPxBoGz8t2/IpzhZcfj8ZvJD/oPuRqOL5I3K7sZaMys1xOWxL4860pYoc6UfYudtCazAjBuXX5yYzLEBqWp8hZAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hdu8x3p+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iXrgYE0B; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1765296209; c=relaxed/simple;
+	bh=Uw9HUlgwDiKPRcubAYg2Mk0J6SWw+u7WH3zaXDtUitY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZfAKFrKPt52lWuOYuysVsBO/XxWAJSHdt5gJjYKz0NGcXuYu5z4j5dby68hN1YG20PR0BmyZYcdSmUlRWOmC0N7T3O9PYSM+y/ecnxwtKsC8LOZV1kETSUuZeMku06esyHWHpFS4I01OqfH8vqX0vVo6uLBRyFLrLUxaWapQM54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ewdNnqim; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hdu8x3p+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iXrgYE0B"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6463814000C2;
-	Tue,  9 Dec 2025 07:18:08 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 09 Dec 2025 07:18:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1765282688; x=1765369088; bh=L7UImQp0cQ
-	HO9wLZRRk1d0957CvjAEu8+VrSyUZII2Q=; b=hdu8x3p+3kBVrODLDrVJGNZiIJ
-	LOMoX/OwryDxInu5iFgpPaIaouInBmtG1KkmQ7IFRuB5gwcsDzav9gbCx20Urcbt
-	IzIVCX/xBQdlsW4jht+Ixf3RZub66cUb7Y268hxQr/fnEoJYvaieXurWdZ72UXVx
-	LBy52jONrfqBmE3poPA4LxJ/S77rebJQl3VbPWrcXFh7991aRHbBN74uvWnm6rYq
-	hzpwvmo+oVB89lSyxN43F9R4NVgmUjxPey6r1gMQLAfrOWPfRZTtVz1KF78RCjB7
-	mx4jrvmuoiezrAAcj91rGMyHoAhl2j4sNPG2C2LQ+SWZtGzxwSGUu0Fc5b7g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765282688; x=1765369088; bh=L7UImQp0cQHO9wLZRRk1d0957CvjAEu8+Vr
-	SyUZII2Q=; b=iXrgYE0Bsm7s0yUqTCgyo5k6BFE2ihlO2y2js1gxMeZbivkldQa
-	LW48fQ058c/ACG2ctvnBbZ5Orhk3WrJa17r3cx090Mi0z2RTzStowjlWrNV4vuNg
-	3sR8dhx3mSiIyM9i6iOhYBruJKg8KypArNuORMCfxpwsbK9/fQSc/TvfHoo0NRsk
-	g1WRZ7mo0ZsV/1oh947yUgc42EEiWxj8z6+D3XRW6cblRaQ3ApjaA0m+1Y33X62n
-	JqxLAW577R8CdO4KzcSprevoYkGE5NSBEKBawzIWofiRDESrnNbynCia/5PfYikK
-	RiZ+PaRWLfCi0G1nEw/NYBEnbGY1MWXJlXw==
-X-ME-Sender: <xms:fxM4aTucm7PxKAs3iXzdQkteSg7HDQ1OwVmZEFN9YbLnYEKvHMfNAA>
-    <xme:fxM4aYLIc28NWKXb6UHFPAUGV6Xi9u8vB31TPPbMV0U-8CgSY4eQ0qnO4XwhYo1WX
-    GIZDxH9wzHoxh0Y-VbqeAlN0bnPoa7nzqWHh042l2CgVVO-t1KBkQ>
-X-ME-Received: <xmr:fxM4aQmGDFe8kooaQIzzRIdqvAz5GqzGN8K0gPhU-cTTIUKaxINIn0XBa2pRxeXkY_W5bGg3qKoZgAMgTZtc1cYRRwjm6vbfAw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleehfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghf
-    fhdrnhgvthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtoheprghnuggvrhhskhesmhhithdrvgguuhdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:fxM4aZKX-pKQBrlyGFiw_bT7Lo9PJ_-XkNzYdaGnOUsvyps8RVH1RQ>
-    <xmx:fxM4aV6E7XUBkZHQ-XALKbXp6yrkOk-2gz18vyXChSxzTbxY58ZNBA>
-    <xmx:fxM4ad3u5bRV1tjlyK3AH3h1xfB3YdGSepAPBGa_DK4VsmaXUs-czQ>
-    <xmx:fxM4abe4RYJOvJw-xFp4uxPzSkmnmUzNofCfXSAJZa_vhPO4eKgyLg>
-    <xmx:gBM4aUvoZDqsoI50UGq_yOd4KD3XG5oocP7yOynyjtjvTJqythEwnYa5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Dec 2025 07:18:07 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Karthik Nayak
- <karthik.188@gmail.com>,  Anders Kaseorg <andersk@MIT.EDU>
-Subject: Re: [PATCH v2] last-modified: fix use of uninitialized memory
-In-Reply-To: <871pl4vyd5.fsf@iotcl.com> (Toon Claes's message of "Tue, 09 Dec
-	2025 09:43:50 +0100")
-References: <20251128-toon-big-endian-ci-v1-1-80da0f629c1e@iotcl.com>
-	<20251208-toon-big-endian-ci-v2-1-76b46763a597@iotcl.com>
-	<xmqqikehkstt.fsf@gitster.g> <871pl4vyd5.fsf@iotcl.com>
-Date: Tue, 09 Dec 2025 21:18:06 +0900
-Message-ID: <xmqqpl8nkfwh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ewdNnqim"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-477b198f4bcso50880085e9.3
+        for <git@vger.kernel.org>; Tue, 09 Dec 2025 08:03:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765296206; x=1765901006; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=eM+FgVtc8awvQ6LhXr0zdgsT7fYkNCLu06cHj6DvpJA=;
+        b=ewdNnqimtG6EXHiVh82qjqgH+CKG5wpRCdB0FrN8jae3Oer5UjTWng0dOEbdg/8dm7
+         ksQ3Y6kqHfp2c0EKT4qHtWbnDQdSsCtP4G29Ugls3QcWoGb320CckV55y6RpwCGmVUn4
+         zMzq47TBVQvKnQuHFqjBYQDScQ5lYx6KKTCuycxfWteZbCiLP+ZJQ92D2tLRZqWovvbg
+         tcVe2z8Vh1RsSbCUIZHtR3s4wkUkg+ZQgT5chFScMb+rfMF4xfXniPNS1kwWpxn0EhaB
+         4rTJUzCHtwfQyW56zbpDZs2OVjGkP80sYoXgYfXLdyBwTYgB4Gxp+hF76uN8REDH5/U7
+         OG3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765296206; x=1765901006;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eM+FgVtc8awvQ6LhXr0zdgsT7fYkNCLu06cHj6DvpJA=;
+        b=vbMFY+NZd4y9zPBqX8KTyllG+4LRCtj0seN9PrXWXTwK8I3E7R9zBsZQwUWP7C3sko
+         N8NnPHpMkEbxMniQ6zP0/mwiIsi/HxqH/0khEaBOiblZuijbv0WVcsRMStPuSaRLi9Tk
+         0vcYI+sBsKiuAMKmNfLocJwBMJC4o9MW+qxNRAGLb2P8s15nCpsM11Dp/puMPwBmxYSl
+         0wJ9p5ll4ndGrS4lD6BKAx8f0C6hfiDV9WeLbGNenK4CeQs8U0pTkmE+bqKbmk6qNbyD
+         KltRkXEpjbADwHS7iI4p7cWAI3e9da6GUXDOzeod1kB2jknulXv10PuXqLqHRCi8B61d
+         jX2Q==
+X-Gm-Message-State: AOJu0YyTNfts9bFituaax7lBXWBjFznx20T4SKhmJpkdPTib+0pu2q1r
+	7WkwH9PwJlltYBBCV20dqSXinOQffVmfXWQw6cNW2SXec67kCprgi2dOzoeeyg==
+X-Gm-Gg: ASbGncuAID4vHWkLxzHeSlbzSIdPTZbb6n4a+vhWT1rqDUaibevtW4lMf0dv6kWd0H5
+	Tzehu/5jadSBIWpjM8PmA5leaeJmwTHMa+lT4JKYyLEhO1Sb39mNcT3UumrzhZ22pi9QUSO0bap
+	svTJeS4Wl4+CElaITeaYwyjYIETQmx/0yfEsupX/vO+kEAIWWeUuramssICNwsHFIASRui6zOiS
+	dtjKijTg67ujB1utRCpaRpJALpQgKvUsThtXPm7f9QDrS4uYW58Gjo8/smHONpKgti3b5WvH2vV
+	bj2muyKO87d8IRC1c9yWyxmzpAK44COW3pHVXqC4p35Wr18dX6qhD7wEp+cs/mAeCJ61HwWkYDr
+	xOkJHhLEgdWFIfrp+lWleKfHDTKaFRZ75CZs3q0mVrXnQC2DIdp9OBeE8laj3m5OFfm+y4dvxDi
+	InXr4BXjeVceKgIJ3PIxoQx2/LfDOpFxTILwSTRSlXkWJCPIOOXcBzeYJ9QWvihXg=
+X-Google-Smtp-Source: AGHT+IHCWTPmAQ139lJrLO97FzQ6jIK46lXFOgwIDRsN2zxO5GInVMIFKsdxOiVrdg+7mENnYYkuCA==
+X-Received: by 2002:a05:600c:d2:b0:479:3a86:dc1e with SMTP id 5b1f17b1804b1-4793a86dcc6mr76633145e9.36.1765296205445;
+        Tue, 09 Dec 2025 08:03:25 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42f7d331af5sm31058207f8f.31.2025.12.09.08.03.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Dec 2025 08:03:25 -0800 (PST)
+Message-ID: <e4ac43f7-f42d-4353-959b-7ab91890b7ea@gmail.com>
+Date: Tue, 9 Dec 2025 16:03:21 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: bug: `git pull --rebase` breaks in the presence of pushurls
+To: Kartik Agaram <ak@akkartik.com>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <896e4e13-5d2f-4c5c-ac32-2927dbff91a0@app.fastmail.com>
+ <04cc0cc0-155e-422e-b723-b1115c918087@gmail.com> <xmqqa4zsliim.fsf@gitster.g>
+ <67bcbcce-96cd-4bf9-826b-e52b3e09a5d5@app.fastmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <67bcbcce-96cd-4bf9-826b-e52b3e09a5d5@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Toon Claes <toon@iotcl.com> writes:
+On 09/12/2025 01:48, Kartik Agaram wrote:
+> Should `git push` perhaps only update refs/remotes/origin/master if push to all pushurls succeeds (with the same result)? It seems like that would fix this issue. Does it not work in other scenarios?
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Sorry, but hasn't the old one already been cooking in 'next'?
->
-> Okay, fine by me. Let's abandon this v2 then.
+While that would help in your example, I don't think that helps in 
+general as there is no guarantee that any of the push urls refer to the 
+same server as the pull url. If you set a single push url that pushes to 
+mirror in your example then "git pull --rebase" still drops the local 
+commit. I'm a bit confused by remote.pushDefault as if I set that to a 
+url rather than a remote then it does not update any remote tracking 
+refs. I had assumed it would behave the same as remote.<remote>.pushurl.
 
-Understood. I however agree with Patrick that rewriting
+Thanks
 
-    memset(ptr, '\0', sizeof(*ptr) * nr)
+Phillip
 
-to use CLEAR_ARRAY(), not limited to last-modified but everywhere in
-the codebase, may not be a bad idea.  It would be a good exercise to
-hone our Coccinelle skill ;-)
+
