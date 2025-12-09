@@ -1,73 +1,75 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79786236453
-	for <git@vger.kernel.org>; Tue,  9 Dec 2025 02:13:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C3829A1
+	for <git@vger.kernel.org>; Tue,  9 Dec 2025 02:14:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765246438; cv=none; b=J3f611EDfDaR0WyhjQKfdskbEE+WCAFI5jxel2G63b4pRj8gG6dyQSJM9BadCKSezJ6ZG9PyAu+8ofTL/8qGVcYV6p1ROCHfLpMMhJ3Od22PAz2YClgnTIaoc0ipkN3ReNgLVgv0Wk/vGs4QEytN80zZrvpvVEs6jl9xUI0HFXs=
+	t=1765246487; cv=none; b=tYD/XWP2JVaZ8LkkaosQNGtdFz2QxvgfyP5fqKuSOODiDdQ7YoGyzjamWuIBACiv2xW0rOLLIYxhDTY6LSTtk4uUkObOJ1OVb0dRPuJHHg4vN+kNBxsvhNljRep/lDiqgrBRAh/9rCJNA6H+hVJucSv446iG5qe0tb9o+RCNEsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765246438; c=relaxed/simple;
-	bh=lWTxSZp7AX84ePfJ3i3tNaFNWC5RhSdcWlu6gfS3M8g=;
+	s=arc-20240116; t=1765246487; c=relaxed/simple;
+	bh=6GKVGdBX4M6pRSrCZV8eArjhiFF1mVulPnUN5iFbJnc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HKnclVo8cv9iu42F+gzXsPGKk5GnsO53cylZsNiuMileUgw6FODxBFyVWH7IT2u0ny2PMN5CuempfprJ24PgunlAk+K+4hGWo9ELqpKVl6XFZg6FWT9jS1wemru7BdcUImdg7KZ9OdhkBzJUQkPPiHGWTOjyO4ag9R+Qn7cP8a0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=WO5EHsAX; arc=none smtp.client-ip=209.85.128.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=gj8IHxDpeKaqO5+sKeTh4ng4Rlu7PS3fZ37e1nP4M86sPzaoimtOfXX3DDxsznTNhOFAgyb/9ZRxXxe3UnRgs7qOClNzFYYoiVpIWO2oUUjAwNkT9L+SrcTbL/mpIMzHL0Ab19gTFmiFGF/dDsxsfIqlxZk5sADYgwJul7C5zKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=B2i3aiAE; arc=none smtp.client-ip=74.125.224.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="WO5EHsAX"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-78c5b5c1eccso5649757b3.1
-        for <git@vger.kernel.org>; Mon, 08 Dec 2025 18:13:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="B2i3aiAE"
+Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-6442e2dd8bbso3890058d50.0
+        for <git@vger.kernel.org>; Mon, 08 Dec 2025 18:14:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1765246435; x=1765851235; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1765246485; x=1765851285; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mVudD3i8H8+vahNmmQ0gBI9dMlqbtwoJC6kmTjTqkbM=;
-        b=WO5EHsAXtZ0f43bh/4R3sAbFHuqD8Phmt2q7glqHkLhfhrer45NSL6q5J2vWUqc2E6
-         r5vUI602ey806szVZpNyCAEMOTpNzcApeBm2ugNLYDytEME1y2FEMqbmq8xdAKBkN6kP
-         VfHQ1Rtn48gbCPwxnaQXML+J1ZMF9Oc6yN5fOr9LQ64nU/sHeR2yPZHefF2Ij+yAbU9s
-         5kM8qfdJjVPWr6S5cbAXZEv7bRCPXTqsxtScwvJAWBUmA2Zp5H45ZyKl3pTpbXGx9bcH
-         VA3xiWur/PQw/WKvn/KQtu3WchrFZC+gxqL+55gNrBELWDhwRxlSx1IVAVierG2Uovfh
-         T77g==
+        bh=ECJbCJkEIGHtjKSFH1FGX73A6n19eNWJePyau/QeaZM=;
+        b=B2i3aiAEv+nhanakWsXuP/UauEc+jPRLwqPCg72638DG5yRJlQTU/md6tJpzCF030k
+         NvraeZRCKLKYAdoR8Oa/PHAIL2ukfHlVOGi61P4o/ZIYeksV1Zfq5smemKAheiV5dm+W
+         tGJXUjuynZky3GOfMgLyumFnrllRSjB7Ra0r/tMnZ/dTAlfctrIb67uDHwoLlRmynTsk
+         qU8MzGvSAvUEDGn/+7dJncNptc12j0mCU+cz6HaEP4e1GCM+8zlvlxNsJESHWxb3cdWS
+         HHJSE4dQHiFuckkUT9UiPP+4marpDw1jiU5Dsddxqw18O0IdNOhZ52Jjqc8y/StY4zTQ
+         B2Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765246435; x=1765851235;
+        d=1e100.net; s=20230601; t=1765246485; x=1765851285;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mVudD3i8H8+vahNmmQ0gBI9dMlqbtwoJC6kmTjTqkbM=;
-        b=g6FN0MrKqmN8vg0VYoEoglXsssDhXi+iXVeuWujOmx2e5LAtnMY043S4QRczFIGOya
-         1Nv5rpG1dgs0+MyJPn+hz2Y/V5lenf4p+3OOr+5JAkew9I9/wHzCEPz4EWjoTETIV6c6
-         iwHf8x7Ij8MSjCotMBDvoDX3qUugY5S6lqKB0Zdwev5ZcrZCgUmqjB0FCrFHUrDDyVvP
-         BKSW3MhpmC8ITXlEvBd+efmISf/K4eZ56cs5un6rwyo5sqmAl6igdwUt8yfTSAmKhn+0
-         qjz2c3qaPH4vH3e3YzU96Aw46JiHazZ+Lp3BWqGO3JOw6+AspWfDIk9FrH3sRz7yv1kF
-         A9ag==
-X-Gm-Message-State: AOJu0YyNi9u4vS4pu/72Yezk7vwx0I/bSod6co/NkwuvfndnmKAgZ4ND
-	wZE3jhzB7/DmFt48VKlORmJNpfuHKBkLwXVmgFayLxzaC94aokaxAtMz0oG9SbYiBEI=
-X-Gm-Gg: ASbGncsrR42o63eIdRPnHhnmLSmBihIZBjFpYFtahpo9xP9yQVSwC3BfKNQwx67BG4+
-	OkUfGXiLku0T3vroh0VbUQ7ygYH0hxWF+4IqvoFUb/s+BkubyXBuAOfPKraFD23q/k75krlDPze
-	sAXyHZPinbLhFRZTGnOIx5DqAW0O6AHuwsBk+hI4ZN7hn/+BsbBxEGaYEwxMLioCiEFfPMlQczM
-	fj6TorHp6U2A1/KocGYbLvaDDFST3qbvYdHI7BsYuFlx5WziL4GsYy83Ls80xySc/dqQhrgA5Xk
-	ZAFV0x6YSXKusNaznPz+bvHC6CymkShl0JntEUrEI4MFkRVljdSCtNZ0lLQcDN+YY04Bk+hV0kP
-	cCQEyalDFVbHtjk/fGJyJFxf5jU3m5/mqAb1ea2Sx7wYahjUg8O6AAkkhFUju54ESffs9StkdMv
-	ZRTiBUrSK/utOMtfa19yAf5TG8P5cHnmoB1VUKpZvClv+4MyIx8WmMRi5/QJK6rxg+F207PbaBv
-	Z+DNaD95zUp4p+mIg==
-X-Google-Smtp-Source: AGHT+IGdMIIKeJXvMhMsaICrLBZwzQ1d/eMpK1e9gsi+CCFmJdbz4wt8Gbl6lkWtWM/q2oppYglNyg==
-X-Received: by 2002:a05:690c:e3ee:b0:786:5d0a:c273 with SMTP id 00721157ae682-78c5a952fd1mr13561687b3.23.1765246435538;
-        Mon, 08 Dec 2025 18:13:55 -0800 (PST)
+        bh=ECJbCJkEIGHtjKSFH1FGX73A6n19eNWJePyau/QeaZM=;
+        b=eki2jG0PA9gPb9Okuhn/tTl4fCuNAH14ukhuwv+U3vjTzrMH+9nRPWOBIqeEkAEiOh
+         YS/OZBWyU5ha/uwYEDs5j9UK4+ExHvB2Yj5rMBYBz4FxeOe8aPERYneEZaOYX9EAHH+P
+         WxH/h6iNahROMVhxNlh4OeOS3O1YGl9lRjJFKo9HiDQfBWNW8ynUkJnzLia0G+VJ+U36
+         /quWf6YsFZHnT/JHmcKzG9hkBdev2iQHz64+dGFgNt4JtXdTICimoLaGhCEJlB2KvkB5
+         1l5+SMdABLhuLV0yMM+ofP53nA90mxhF4YcvLbpIPoMrVW5eJeenx1qgRum2bjYFwr2s
+         R1FQ==
+X-Gm-Message-State: AOJu0YwTF1kK91ApKr1ZtIHR5PJ0n297p3X8Q5zUvwAo/mLP9Lh0UTFj
+	b8m/9zbgx5NckNSr9bdUJKFCsTKEMTxyH94/4GvFgOg32XZalJs3+LLZUMuz+nw2cj1WoFZHSxZ
+	WAe7nuiA=
+X-Gm-Gg: AY/fxX4ezuHTi8PiTyuM4VANtMmGL5M196iQZ7zK9kc9UJfMkPrw2CsZiEUWIlRkSEn
+	1opmaXlEO+eC64Xi5reBLCRYFIXtboae3w6k1bk+cWdMtALgWD6RyNZIEMedHe3rH213E55RSp/
+	E5vWE5YdpirIEKCaxe7UTrwrvU4vOQ5BP79i7TybkvVW8H7hpzBBZdsHpNdevLRAcqwjp1YfU2Z
+	kAKYkwuG8Ncp/Xc4KjwjvCP1MG7qR1NYHU7jQWf5Sp/d1ws56iVitJZ1Sh0r9ODUw0Q2dzNUqPD
+	Jr/KGLgaNBLthQzccrByW/o2pPDpT0OOXRHqum4DGQRBV5chjqNhhEw3m6uDpTLy06tfVZYSKgF
+	yEE0q8CoCTQNbhrBBXkYzJtW0CChMqgWb3B1oaqnpAzW2xJu33ZRw8dUSWkXwI6AakFVfOUQayA
+	6lEfAxzc6iHgxMaM6mMJl/Ig7QDSyLcwRLW0Jny2Z9JuHFz1PHVApf2+qE1Cu5Y3WPYqm9Lq0mY
+	0T5vfANdQ/RVuP8Ow==
+X-Google-Smtp-Source: AGHT+IH6qIbQb4Y8hlLjFXYCvCWXMRTt0kxiVee6+zYPTIfvhMs4PkYBHLbjIBS8Y/Cppn8hQk76yw==
+X-Received: by 2002:a05:690e:245a:b0:640:db91:33c4 with SMTP id 956f58d0204a3-6444e7678bemr7181060d50.18.1765246484690;
+        Mon, 08 Dec 2025 18:14:44 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78c3a6d889esm29422067b3.25.2025.12.08.18.13.55
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78c1b77925asm54802407b3.36.2025.12.08.18.14.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Dec 2025 18:13:55 -0800 (PST)
-Date: Mon, 8 Dec 2025 21:13:54 -0500
+        Mon, 08 Dec 2025 18:14:44 -0800 (PST)
+Date: Mon, 8 Dec 2025 21:14:43 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/17] git-compat-util.h: introduce `u32_add()`
-Message-ID: <aTeF4rn6h1gc6Kgl@nand.local>
+Subject: Re: [PATCH 13/17] midx-write.c: enumerate `pack_int_id` values
+ directly
+Message-ID: <aTeGE2qplVC+kE/c@nand.local>
 References: <cover.1765053054.git.me@ttaylorr.com>
- <776eb88905f53dd929e5b7cb23593976a2f1aad3.1765053054.git.me@ttaylorr.com>
- <aTcYdebOuUfrAAJJ@pks.im>
+ <8288afd8cc40a56999353643f49c48d610e6b3aa.1765053054.git.me@ttaylorr.com>
+ <aTcYfOZ4_GdIwM9b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,37 +78,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aTcYdebOuUfrAAJJ@pks.im>
+In-Reply-To: <aTcYfOZ4_GdIwM9b@pks.im>
 
-On Mon, Dec 08, 2025 at 07:27:01PM +0100, Patrick Steinhardt wrote:
-> On Sat, Dec 06, 2025 at 03:31:28PM -0500, Taylor Blau wrote:
-> > diff --git a/git-compat-util.h b/git-compat-util.h
-> > index 398e0fac4fa..a7aa5f05fc9 100644
-> > --- a/git-compat-util.h
-> > +++ b/git-compat-util.h
-> > @@ -670,6 +670,14 @@ static inline int cast_size_t_to_int(size_t a)
-> >  	return (int)a;
-> >  }
+On Mon, Dec 08, 2025 at 07:27:08PM +0100, Patrick Steinhardt wrote:
+> On Sat, Dec 06, 2025 at 03:31:37PM -0500, Taylor Blau wrote:
+> > Our `midx-write.c::fill_packs_from_midx()` function currently enumerates
+> > the range [0, m->num_packs), and then shifts its index variable up by
+> > `m->num_packs_in_base` to produce a valid `pack_int_id`.
 > >
-> > +static inline uint32_t u32_add(uint32_t a, uint32_t b)
-> > +{
-> > +	if (unsigned_add_overflows(a, b))
-> > +		die("uint32_t overflow: %"PRIuMAX" + %"PRIuMAX,
-> > +		    (uintmax_t)a, (uintmax_t)b);
-> > +	return a + b;
-> > +}
+> > Instead, directly enumerate the range:
+> >
+> >     [m->num_packs_in_base, m->num_packs_in_base + m->num_packs)
+> >
+> > , which are the original pack_int_ids themselves as opposed to the
+> > indexes of those packs relative to the MIDX layer they are contained
+> > within.
 >
-> We already use PRIu32 in our codebase, so why is the cast necessary?
+> Sensible. I was confused a bit by the previous change because I couldn't
+> quite spot the shift happening. I think this makes things a bit easier
+> to read.
 
-I don't think it is; we could easily write this as:
-
-    die("uint32_t overflow: %"PRIu32" + %"PRIu32, a, b);
-
-instead, but this matches the convention of other similar functions in
-the compat-util header.
-
-(It's possible that there is some reasoning here that using PRIuMAX
-really *is* necessary, but it isn't clear to me that's the case.)
+I'm glad that the end result was more pleasing. I have gone back and
+forth whether to enumerate [0, m->num_packs) and shift, or to enumerate
+the pack_int_ids directly, so it's helpful to know what style others
+prefer.
 
 Thanks,
 Taylor
