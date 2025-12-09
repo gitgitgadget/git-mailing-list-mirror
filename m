@@ -1,106 +1,90 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B932236E8
-	for <git@vger.kernel.org>; Tue,  9 Dec 2025 00:44:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C712FF151
+	for <git@vger.kernel.org>; Tue,  9 Dec 2025 01:41:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765241060; cv=none; b=KX4X7EXEAdTuT1kOui2FZavD6EJV0vkmVxf7BI6h6an90Hm6ShuWkktA480dnH+7HNR1gEYCJ2SJnCRk9qn3g2xvXQ7+iFTpgtk4Szgrp2eislK0h4tMSbXVCbJFzQGWT/vZ4x+McZX3pG9od/ih0hW7bLl2MyQ5sHqRKiTL08g=
+	t=1765244494; cv=none; b=CInzCIWwFXOVGecQN6H4L3Sob0xMzP4vh30uhiys803SyyWm5pXcs6zhYLvTxTasMw6KGiOJMHdT9XS25ysNcQDhTPYMHgkS86I0/igIvXzxg9w8Kt7tRRVAXnCGPxPdGVrpzeJuYbbYhiKtVAOINPUqmPMXkJzclvLlxDyw0F0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765241060; c=relaxed/simple;
-	bh=Yzx9BlscsXeedfFRgNSAqXz09TgzJTbvO+eb08CX1GI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dXB38bmEutRxZlHwQuHFJPF29jxfiwofb9zBcYFDZabZNzHxXxuoLFfk3cQiGLiFiPCMRS9YUYhkdgByizUxxJmVn76ZXiCaMqd6iQvvtu+qLP8iGc3EPQMyLzkQ+t8Lpar0NjxttgGUd+zddn86M9p7NRZbsyKGp7X7ALkTHdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YpTeFJcF; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765244494; c=relaxed/simple;
+	bh=7vs5Yp9k+cMiteRoj4IEQaiN3Bbm6CHh21oIVMgtNZs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UjTx54OQ8TjCDaNMDY1Xy0hfKOD+7v9+PR7UViZp5zalBzUOSskFmEQFwPV128Wx/nKGmOiJKeujrjfIYTIVF2oqAjBGvr7KzGUL7T+HNlAKd4nfXMXJkyShyvr4vEJxB4lzQzBeHUIvGc+0PAPLdVvx40YmuI8KtZ1QRuy/TSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ZHqU0BdN; arc=none smtp.client-ip=74.125.224.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YpTeFJcF"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5959b2f3fc9so5283013e87.2
-        for <git@vger.kernel.org>; Mon, 08 Dec 2025 16:44:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ZHqU0BdN"
+Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-640d0895d7cso6814735d50.1
+        for <git@vger.kernel.org>; Mon, 08 Dec 2025 17:41:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765241057; x=1765845857; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qj5uhrUO1gVnUrsk7PoItidc8h4rWSUm8VLWuRm6kA0=;
-        b=YpTeFJcFGCeSNWSi1oOgXLxmy7S8iOP5/u3YEUhNpXDS9wTGgcbp41tQe0/I1gFTH8
-         QEZ0/tIheGR9coCaXoFgJN7Y/5qucH9ZMYlP6o2cGCTbwFoEYYBear4uS+8qXgJbvi80
-         iX3G/6viuIzkyhGg+Wf63UcrJu/1iLbUs7LvmQWZ1LDVnzO+mRMgBudjfjMnOo/tsm+2
-         mgtUvWHmUp7iwxhZj0jSkBCE6Ci7wyWgdltUJXORqykcSbPD8jzCHsME5biVVXWU3MHd
-         QIr5XfHs8dlgx5HQi5tAlhsMInGanYylhP6aksk6X/sG/5dXzbEOqgbomNedTxeD2xlO
-         YGdw==
+        d=ttaylorr.com; s=google; t=1765244492; x=1765849292; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7vs5Yp9k+cMiteRoj4IEQaiN3Bbm6CHh21oIVMgtNZs=;
+        b=ZHqU0BdNf64BWCt49EYiTio4/lPiZQJpOHh02oQTOfIJeWzVW1qJyXMNxtiPirPrrJ
+         zjJOtCDWPMq5fV6eceM1D6Jn2rnZzjA/QUg+JYlGN3NJ2aS0E1JAvKap4RUUUoee9W7W
+         YC0AN89zQBo5wLwTnaBiYL49mgK+lwTny30CqdQLf6BRZr6Q9LNV2LgjXRy4Pz1GKyoA
+         Sm89CQBWcsD5CNp6TAr3wONe9SxhbYCX/XB4K2XfiIvI2ijwu23nlb+YG7UpyyHduQ8d
+         YkjmNwaBOAVpg/vr6iNB95A2F7Dp3HO5AoUiVl6ldNkyl6XhXxqHSCzJCoPwHvBz377V
+         kMlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765241057; x=1765845857;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=qj5uhrUO1gVnUrsk7PoItidc8h4rWSUm8VLWuRm6kA0=;
-        b=hQ3WWXURq9FNsnCpzBm0jDpHv2idTKH+e36DEVMUPJqXT4XRid4N2FufsI3g+B9B4u
-         V/5FgFZVSoUTtGHgJ6l5GeC6tR9z2G1RxlN8LTpaDOq9MwRxlWnW2ll0WH9qIs6mG83g
-         dK769N3gLzgkxxa4zM5rJiptexE/Pe/8h0fHoVJai9DAKz1ScC1XBrMTdVZVXu7cughd
-         jEv+tnPz+xsLAJtIOh1OgPuM0sMbbOunHjzihLxRFqTJjVWTD03SsNJAEspG6gPc69ha
-         RBKgNlbmcGG0PM4hP/xWiN59BUhSluDXbkTJPc1TwIW8IaEXi0qJoMdMBlgSvnKK/s7b
-         TktQ==
-X-Gm-Message-State: AOJu0Yyr4MYWuQLWYoN/a0R20YS3irw1SWD7z/1zdYkFmdYHudZeA074
-	XKLoOqFvfEhBQmXzA2x8crDKc2dzwLoUkB2iE9irj4zZEJ6a7ckCNunkbVIrZqslSv7aSrbxD1k
-	M9MsTLI6mVMhBmVdfTcOBnOp1l/i24tTcuw==
-X-Gm-Gg: ASbGncvpkmHBqGck9pd4NTQmKmC28YXHYrgsFpEJd3TxtuKiWMO5v1mPSJB2i0BDTQN
-	IefU/2oAGfmVLAaXRO4yGE+y7pD6B74ftU37a5ihZyYOFwI11x/+hFiCWlBZER/YOAsTsJhdLel
-	PccLwImqbzy/SYvI8C+ziCKphFOAOUtjL2R5EBQpS+k/e8El2VqWTaMZK7nd4VLqDyIghD/AGPW
-	dJjFTEf5HxEMWE3vXjps1LI8MndSJ0sRgR+I5dKagXb/7/s+vun9yBQ2w3QQx982V+vwEc90uxo
-	uOCblnAylKBfMhG144LEXOjD1jvPRWO2XUUkrE8CZqcMznOXjIIJ8LIiLhoixzIefeI=
-X-Google-Smtp-Source: AGHT+IGwZ0noPqKfrQ9OwB+zjuweN6LffWLiAxtZYbZ2q7XBdCAgtDKhRojaLlrr2buX5xLLVVJNOmXIHiul5cfsPY8=
-X-Received: by 2002:a05:6512:1248:b0:598:dea9:4f45 with SMTP id
- 2adb3069b0e04-598dea95066mr3211192e87.51.1765241056752; Mon, 08 Dec 2025
- 16:44:16 -0800 (PST)
+        d=1e100.net; s=20230601; t=1765244492; x=1765849292;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7vs5Yp9k+cMiteRoj4IEQaiN3Bbm6CHh21oIVMgtNZs=;
+        b=b4kh98yx3Lcz9ibk//xsCjBCZdsdHaMceBlxSI8o01h7eiyy/B4TV96gYztZWCAcs8
+         hafzqG66ZFbDhof7MYGD7C8bWXWpb5w7oJrN4oY59n6zsxi6GzAWEkIWogJcRQKMXQdR
+         5bzHA+KCB1T8Bxu7MQfN+jkzXtg1LRV/YMsFQHTm9thrKaFzw7XeAkAilfuy5Xxx+hgT
+         iCuWDO48mlFVO6rzNEl84e+r/W7BqJeq8+JJxHPrKPPu7IwlJjXrd+Vk5M2QjtkMd0M0
+         xRsIc5/1MDfX/UZquOWdoOp+j62dRYbkSrnr+47STV4UUxVfabAGHR4Tjl80CCWbVQ0h
+         caaA==
+X-Gm-Message-State: AOJu0Yyq2+EosfTACJkJ2+VbFGHos8M7rWlAYeRFee/+X2ZWpEOIw5iI
+	1bfa3hqhnK2SviCLwqTkh9JDyWOMJpQVckGqeB1RG7Ye6v7jj2YyglOndEds2PZxc7U=
+X-Gm-Gg: AY/fxX55fxgANGgAcQJoLuJpToD8FvgkiBQ9Bi3RW0yAP2ynyKt1FYucgofEraa6eSf
+	kuGVHlxbHDDp7NUFgyuS1nYUdrin0xKxBoEcVj/vM9wVRqTQGiUvVZ1i9goDYKu5qDS/xbagAzt
+	Sq6tXb4o/w+vvPqAei2/S7BcauhAYlb121HfnKtRI76ChpPUMLjaquK/1UfhFX0xpxNkzVjqvFH
+	U1Vd0nAapT+m+L+m4w0nsaqUOGGbqOHnlcH7WGy+Z+EjSU3kCfP1arr/0jYWoPOjAWoxBtNlxXD
+	kHUydl2dS0WnXJqIGAswbb/2aE9xYOZWMFL5Ih9Li8Jd0c7Ojs5lHxMUIaHg70Mjicq3aIeQs91
+	FRgAzt89GEwc2k/b+Hhyq9+nAHWv4VG9v93Z8/8ap2d58y8AkOFi3q6zZ6p7wtURAvocn99DuG2
+	h50rbLXiui6KKvytynksRHyU7sEIPkBd7hF9pSnoqfs4CPVhCpmclS3+COyCC3Z9TMSdcmqXdUe
+	ShapA4BzghgrW1pqA==
+X-Google-Smtp-Source: AGHT+IEoqWRs5CG+aCrqp4v8Of6L0X3c+nqM7VWcUdySA78APbMuoWIPt/D7CLeVbdwQ4H0NhffOCw==
+X-Received: by 2002:a53:c046:0:20b0:641:f5bc:6953 with SMTP id 956f58d0204a3-64464b42d34mr971382d50.36.1765244492033;
+        Mon, 08 Dec 2025 17:41:32 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 956f58d0204a3-6443f2abfe0sm5945906d50.1.2025.12.08.17.41.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Dec 2025 17:41:31 -0800 (PST)
+Date: Mon, 8 Dec 2025 20:41:25 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/17] midx: mark `get_midx_checksum()` arguments as const
+Message-ID: <aTd+RZpVxwRTM+1h@nand.local>
+References: <cover.1765053054.git.me@ttaylorr.com>
+ <8cd8f6e8420a52030f92166d5a20387183cdbb6b.1765053054.git.me@ttaylorr.com>
+ <aTcXKE9ZW2Um92n3@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251202-toon-cross-compile-v1-0-cabc8bce529f@iotcl.com>
- <3tucvydzaelj2mngkocb75l52nssxkkdtt3dj4paviatd3uvnc@u2sy4vig7owz> <874iq1vxwt.fsf@iotcl.com>
-In-Reply-To: <874iq1vxwt.fsf@iotcl.com>
-From: Carlo Arenas <carenas@gmail.com>
-Date: Mon, 8 Dec 2025 16:44:05 -0800
-X-Gm-Features: AQt7F2rFbfHAarqcpa2JUO37BRrWsPQVStyxfxEx_LbSgPC864Uon3XgQlLTMwg
-Message-ID: <CAPUEspjifD8MYp6UR4pE91OqcJQdFafpeG8zNo1kfdxhnch_3A@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Few fixes for cross-compiling with Meson
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aTcXKE9ZW2Um92n3@pks.im>
 
-On Mon, Dec 8, 2025 at 6:41=E2=80=AFAM Toon Claes <toon@iotcl.com> wrote:
+On Mon, Dec 08, 2025 at 07:26:45PM +0100, Patrick Steinhardt wrote:
+> On Sat, Dec 06, 2025 at 03:31:01PM -0500, Taylor Blau wrote:
+> > To make clear that the fucntion `get_midx_checksum()` does not do
 >
-> Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
->
-> > On Tue, Dec 02, 2025 at 11:48:07AM -0800, Toon Claes wrote:
-> >> I was cross-compiling for s390x.
-> >
-> > Just to clarify, you mean Linux on IBM Z/LinuxOne, not 64bit ZOS/ZVM,
-> > right?
->
-> I'm sorry, I'm not aware of the correct terminology here.
+> Nit: s/fucntion/functino
 
-IBM marketing doesn't make it easier, but yes IBM mainframes can run
-multiple OS, and I have to admit I was kind of surprised to read we
-had a working meson cross compilation for Z/OS, because I know that at
-least cmake has issues even building natively.
+s/functino/function, but otherwise ;-).
 
-> If I run file(1) on the compiled binary, I'm getting:
->
->     ELF 64-bit MSB pie executable, IBM S/390, version 1 (SYSV),
->     dynamically linked, interpreter /lib/ld64.so.1, for GNU/Linux 3.2.0
-
-So this is 64-bit Big Endian linux for the s390x architecture (likely
-compatible with z13 or higher CPUs)
-
-I happen to have one of those under the desk running RHEL9/s390x, so
-will be happy to test your crosscompiled binaries, assuming it is as
-simple as installing them somewhere and running something like `make
-test`
-
-Carlo
+Thanks,
+Taylor
