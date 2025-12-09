@@ -1,180 +1,109 @@
-Received: from mail-yw1-f193.google.com (mail-yw1-f193.google.com [209.85.128.193])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1411D88D7
-	for <git@vger.kernel.org>; Tue,  9 Dec 2025 05:08:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C17E79DA
+	for <git@vger.kernel.org>; Tue,  9 Dec 2025 06:23:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765256892; cv=none; b=A5fP4Sh50wvUGkQYUe9+Itqz0IM0SqzzmS3zR4xQjnElEkyhSKY9XOQn713teXpDcCy0rl0B+V75A8TZQPOyh5MMe41G8PynwV64yCRhA3LOjeyU3o8krnSvLeVi6ZpLU5ESwVoOfHbUvJBIpPyDhjzMBHDsy+9M6wjc/HQ2R+g=
+	t=1765261424; cv=none; b=ZXI+klDHrO0PcGEuwoQbCiQp3MqaQpop6HZUQ927k+3jeEVWAAJ2CTRKwbtGGL9MZ8shbiQxSNA9UsF4sYkhR14KHpzcRCKWmi1nXl438SCWFgwfdn691kJ4W6ls1iljvVcyJ/GXq33z7+HfmPOUWCWH3zTXTvEZFjihrJpwco4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765256892; c=relaxed/simple;
-	bh=4+ly0Nx8YmgJ7phm8+a8V2E2uXrFIAiSjSI0Aw4LjgU=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=YxhkjfBKrShxUJpA4B+xwrtrt7xmUp3cgtGX46pVc8W5Xf+Omi6DiWtaVl/htEz4MyWd5ZrxKpOcY4xmGrkBwdmZzUA2Y1XQTd5Sm567cGrx2/zCSHatB9JWJzTY33g5xho3chrOCXIEHhLC2rrYbPxoomVUHrAvZiD30OQVoxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KLopyWnV; arc=none smtp.client-ip=209.85.128.193
+	s=arc-20240116; t=1765261424; c=relaxed/simple;
+	bh=za7yF8GGrIhfeG/Owyp8avY5agXhnTl+EWltgwCSUqs=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=DSCtgcwMEprwKCBjEhxwctidvN9Q5HaHKS34AamlBGGZlq267nBcPMHq2HlX8xzKdYykOqwLoRSCypyc0zhGHOSQGs7c57rn9g4g1omSXLzewJpnU5KBNwiDAwDatxuHjigJC5Vo+2N76DWwsBdXs2ar3cuf8F0ZJC6VevpJcJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y8r5AptL; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KLopyWnV"
-Received: by mail-yw1-f193.google.com with SMTP id 00721157ae682-78c4aa7af99so20082497b3.0
-        for <git@vger.kernel.org>; Mon, 08 Dec 2025 21:08:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y8r5AptL"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-bc17d39ccd2so3080542a12.3
+        for <git@vger.kernel.org>; Mon, 08 Dec 2025 22:23:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765256889; x=1765861689; darn=vger.kernel.org;
-        h=mime-version:content-transfer-encoding:msip_labels:content-language
-         :accept-language:message-id:date:thread-index:thread-topic:subject
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4+ly0Nx8YmgJ7phm8+a8V2E2uXrFIAiSjSI0Aw4LjgU=;
-        b=KLopyWnVHEgJyK99hIRaCZApYnmtslczr4S0Hyk+HMx5Lo3jGSfOXpzzxuCz2vHPMz
-         yZwPLf0ew8LHD6hW8z1KWxlUUOpOP/5RISo0YIzg2mxQDAyCcBn3XOi6LooOdVNeFLQ5
-         kWFAbTA7tG/lncey0wsGtYyTXhAcTx1c/oTY3zo3UzJNVHEyv8CP4rxAi3mpDwMpdLb2
-         u5DyO4XP96CtD34ERw/PgbSZI63DujFbks0wzTF577WxcFx8DDZu0mM3o+hUmHnU2dTI
-         Vbpy3t5MkYy8YQ25EV6ckTCs5L+BBk7dwic9vvpd5Js3BVtTDh1oixrN5EA8+skVR2ff
-         Lq7Q==
+        d=gmail.com; s=20230601; t=1765261421; x=1765866221; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=eTkuJA5nPcso+GmbT3NsCXPULp34E6c3f2jhn5NO4O8=;
+        b=Y8r5AptLdsDM/7q4xQTE5v491zJxORRCoi7X4F7AC5DIQKQKY2GpwBuHKJJrSDPsZV
+         zID2VpOnM2WxQRzvWqSofPUTU6NxNk2aPuSFyEVIoj7tanDlA6YVJyN3/91pwceDwPeX
+         dJFYhrvqQbprutG0beS/mOkg1WdEjpW6rvvxSaEQEaeoBWwt8oOeLttOKp2Y7YuiPTdy
+         p5GcA8Gk5sLghg8uKU4hjq2wS4cKIjyi0cWEn5HRkWsYYt5X2ev7WVOIQEUwGnlEXrd6
+         IUUg/ByDjNafeMtQIEHIWSpdJg7F5uc/9Efz/7rAurUQKLufi+/oD4QxyHTZxh/M7ptV
+         o1dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765256889; x=1765861689;
-        h=mime-version:content-transfer-encoding:msip_labels:content-language
-         :accept-language:message-id:date:thread-index:thread-topic:subject
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1765261421; x=1765866221;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4+ly0Nx8YmgJ7phm8+a8V2E2uXrFIAiSjSI0Aw4LjgU=;
-        b=k6SMiS5gpQI2CGgmK/OmBbo4pGOO9Ie0Abo5TTh/zOsUzlR/n4NkdCVfFC+q9ATEfr
-         di+OR0HpnX25I1TC6zLXiNh0/0XapwcTLYjLp6XmNcrX/U5WgXuR2xCPzaAsyz8Dzt4l
-         g3SK5x/GpzOh/B2CnxEfXEnUNjoCZxJTQF4QFyM+Demwsv/mZtSzDo46XbttYBafflr5
-         VosqZWQCVbRwtGqXdYACQ75tZOg7wBa5JWEVZ3LrGG77M6zQiOb2PXIhEoxbJyO7DHjV
-         KsmIfJmL4LdLAYPynOXybiTS9lIcOMyf4Imhbx/G+kqgr2+vFyXiVGLkNoys7Kj0llvl
-         g1Gg==
-X-Gm-Message-State: AOJu0YzbPlPCzvXYtgKLluIAml6bHzALE9RY+aoRygH/QhnHjoauNzos
-	DAqUsZvVnl0sERPVcbTIiUqacf6Thz1uZj2X11j9wzkMAM9ZgNrBPFP9TpTM5ecz
-X-Gm-Gg: AY/fxX4yPYy6fF382R+qvkTpEa0EkUdMxVptIgFjTSWaStkeaEtxrWx0zQv7GY9bLWu
-	JmAgO0lul1WHxrv5c+9DbWuwymxa+Irpol510V59ViSRIWgHVXSumK5S69wl9vk8lFBUSWenxLP
-	pp3xHvmW9jDt6HGM+bR6yXKJffbZ+xwpt67MFIcbm7XopysVgZvQb9Lg1ATbg1fEQZYeiVQx1tn
-	tlUlEqRZaINs3ue3EzHotgUMfk5CNCtb/o2DW1qGLNbUsj6P2WEJXAgX2YFIbbpHct/OHx3TZY6
-	ZqaQNr9/JINHPHFbOpsAsCrP4eyVEz3g2OF185avgOPKu7ckvTGSKbcDJo5tOOGfLe1qYBECpos
-	9Z32tpT+J/q/1rfzW0YotdSHxQGmZenCZ9Ff8lyyLf6Wz5aBsLosxRAjHfmPZAZ6ROUADHIHe3i
-	Jsb4RroelQI2n013GeSewxYSHMV78gSOji68JcvvD8erVi10F62jofc+gCtpbZzYGmbJpgK4ofI
-	t1XcJGZ
-X-Google-Smtp-Source: AGHT+IFO0JDdjnoBJo0klC7JMO9sfd9/luGmkFnbsd5G8OecmY52KLtHgvBzH9i1hKKQ1nN9FE/6HA==
-X-Received: by 2002:a05:690e:24dc:b0:640:e021:ff79 with SMTP id 956f58d0204a3-6444e7b6632mr6007393d50.39.1765256889127;
-        Mon, 08 Dec 2025 21:08:09 -0800 (PST)
-Received: from DS0PR03MB7290.namprd03.prod.outlook.com ([2603:1036:5:36::5])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-78c5dc3330csm2809167b3.5.2025.12.08.21.08.07
-        for <git@vger.kernel.org>
+        bh=eTkuJA5nPcso+GmbT3NsCXPULp34E6c3f2jhn5NO4O8=;
+        b=ZtLhIVaOKlgsKP3mpN0rnk2jUyfHQYb7jwwqp18qhaWl58sFZjvHfdiaZU6Z3+CqhD
+         kN52cadiNxz8B8fVpRwJ6oNy4r6dM0oT/Ld19o04T0JE0ZJd8nmlmSS2+hfgCc4yWuAX
+         cROT7hDky7xYhy0s+uzRuQ6aRleR51Dz9wXneAu6bbJaB4XaTUyveVz1dEOn3jRmt9+W
+         QNxpLdNzqCSULZsRx8uvWhm9EnZALYQA8FozXB5O4OCtYaBNE/3BNWmX0vlFVI2SZVkJ
+         qXFIrGJ+vNooulmCTeZVVMgUYRTsZ0rrZKkTNAO7cTz43sae1ay8iJJSyVShsOhjgFj0
+         7wyQ==
+X-Gm-Message-State: AOJu0Ywb9NtoSVdpFysuCSxmegEKzahOCqd7nLAbEuQ8akelKSOcOIVP
+	dLaICXE0iH0pmnupntBlJQfxSZgsXb9tClHX5Ava/k49V369/frpamU8Eza0jg==
+X-Gm-Gg: ASbGncvu6Ap34w3BId2XyyO1a7IxU17+oQttpiX+XYTLVXjm7Nm6JIYVe7Mt0FhEeXy
+	yQH4zVbNF4rHE75Y0uvi4/wyr17/PMmqY33S+sQze7LraNe6Qi2Nu7JLenifhvlMKMp1OacPEDj
+	wa4tLg2qyIeceryQwPv+fV9S1fsg932phhFrusqOgy9lVN4D1FSZ3r144AGUzaJAFOqqltfEM28
+	2LEmbm58Axfy6WGNDqkBLtmsjgv/I/gzANi28B728OloQbgjEsUS26OGHds9ZU81iSDj59m8tkL
+	Wg932Pzy6uyV3l40Z92V9Bsm9j9R8BUrbZhN6zqMItSFqzMcCeRavmM6xj/u0N3hirXVN4M6rYE
+	0h2is5X7B1uupBcHrBhCEGsTSjWyf6o0zii64ldZi24XQWkDuwY30NjS9Sf4krZk2WYPk5sLGVo
+	89SjmDrs6HCQCScHBBRrPlvLRZNg==
+X-Google-Smtp-Source: AGHT+IFDCCA1Hxr2GoEmNmTFP6vWdWy82iVNoZfmhktaydu7EDLRoRiNku/5iWWpGXNr6fw7oP4mxw==
+X-Received: by 2002:a05:7022:b886:b0:11b:9386:a38d with SMTP id a92af1059eb24-11e032d3e2amr4734316c88.48.1765261421311;
+        Mon, 08 Dec 2025 22:23:41 -0800 (PST)
+Received: from [127.0.0.1] ([172.182.200.148])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11df7573508sm48158788c88.3.2025.12.08.22.23.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Dec 2025 21:08:08 -0800 (PST)
-From: Ryan Johnson <ryan.johnson.code@gmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: UX failure: SSH authentication failure diagnostics
-Thread-Topic: UX failure: SSH authentication failure diagnostics
-Thread-Index: AQHcaMjneoFPjyQXbkClfgbHeCI7bA==
-X-MS-Exchange-MessageSentRepresentingType: 1
-Date: Tue, 9 Dec 2025 05:08:06 +0000
-Message-ID:
-	<DS0PR03MB729012244C8A65D318FDC205A3A3A@DS0PR03MB7290.namprd03.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-Exchange-Organization-SCL: -1
-X-MS-TNEF-Correlator:
-X-MS-Exchange-Organization-RecordReviewCfmType: 0
-msip_labels:
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        Mon, 08 Dec 2025 22:23:40 -0800 (PST)
+Message-Id: <pull.2123.git.git.1765261419802.gitgitgadget@gmail.com>
+From: "Sam Bostock via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 09 Dec 2025 06:23:39 +0000
+Subject: [PATCH] doc: fix `update-ref` `symref-create` formatting
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Sam Bostock <sam@sambostock.ca>,
+    Sam Bostock <sam@sambostock.ca>
 
-When Git fails SSH authentication, the error message provides no indication=
-=0A=
-that Git may be using a different SSH client than the user expects.=0A=
-=0A=
-PROBLEM=0A=
-=0A=
-Multiple SSH implementations commonly coexist on a single system:=0A=
-=0A=
-=A0 Windows:=0A=
-=A0 =A0 - Windows OpenSSH: C:\Windows\System32\OpenSSH\ssh.exe=0A=
-=A0 =A0 - Git's bundled SSH: C:\Program Files\Git\usr\bin\ssh.exe=0A=
-=0A=
-=A0 macOS:=0A=
-=A0 =A0 - System SSH: /usr/bin/ssh=0A=
-=A0 =A0 - Homebrew SSH: /opt/homebrew/bin/ssh=0A=
-=0A=
-=A0 Linux:=0A=
-=A0 =A0 - System SSH: /usr/bin/ssh=0A=
-=A0 =A0 - Snap/Flatpak-packaged Git may bundle its own SSH=0A=
-=A0 =A0 - Alternative installations: /usr/local/bin/ssh=0A=
-=0A=
-These may use separate key stores and agents. On Windows, the system=0A=
-ssh-agent service is inaccessible to Git's bundled MSYS2 SSH.=0A=
-=0A=
-A user who runs:=0A=
-=0A=
-=A0 ssh -T git@github.com =A0 =A0# Works - uses one SSH binary=0A=
-=A0 git push =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # Fails - uses different SSH b=
-inary=0A=
-=0A=
-receives only:=0A=
-=0A=
-=A0 git@github.com: Permission denied (publickey).=0A=
-=A0 fatal: Could not read from remote repository.=0A=
-=0A=
-This error gives no indication that Git is using a different SSH binary tha=
-n=0A=
-the one the user just tested. The user has no reason to suspect this is the=
-=0A=
-cause. Debugging this issue typically costs hours of research.=0A=
-=0A=
-SOLUTION=0A=
-=0A=
-When SSH authentication fails, Git should:=0A=
-=0A=
-1. Print which SSH command it invoked:=0A=
-=0A=
-=A0 =A0 =A0Using SSH: /opt/homebrew/bin/ssh=0A=
-=0A=
-2. Detect if multiple ssh binaries exist in PATH or common locations. If so=
-:=0A=
-=0A=
-=A0 =A0 =A0Note: Multiple SSH clients detected on this system.=0A=
-=A0 =A0 =A0Git is using: C:\Program Files\Git\usr\bin\ssh.exe=0A=
-=A0 =A0 =A0Also found: =A0 C:\Windows\System32\OpenSSH\ssh.exe=0A=
-=A0 =A0 =A0=0A=
-=A0 =A0 =A0To use a different SSH client:=0A=
-=A0 =A0 =A0 =A0git config --global core.sshCommand "/path/to/preferred/ssh"=
-=0A=
-=0A=
-This diagnostic should only appear on authentication failure, not on succes=
-s.=0A=
-=0A=
-RATIONALE=0A=
-=0A=
-Git for Windows bundles MSYS2 tools for cross-platform consistency. Homebre=
-w=0A=
-and Snap/Flatpak may install SSH binaries that shadow or conflict with syst=
-em=0A=
-SSH. These are reasonable packaging decisions, but the resulting SSH client=
-=0A=
-mismatch is a known, common failure mode that produces no actionable=0A=
-diagnostic information.=0A=
-=0A=
-The fix is a one-line config change. The problem is that users have no way=
-=0A=
-to discover this without external research. Surfacing this information at=
-=0A=
-the point of failure would eliminate significant friction for beginners=0A=
-as well as veterans. Seasoned programmers and beginners alike complain abou=
-t=0A=
-UX failures like this one all the time. Considering your tool has become de=
--facto=0A=
-standard, you should take care of these problems. Dealing with this problem=
-=0A=
- is the responsibility of the tooling creators, not the users. Do not shunt=
-=0A=
-responsibility onto every user to sit and spend an entire day of research a=
-nd=0A=
-headache unraveling your poorly-communicated configuration nuances.=0A=
-=0A=
---=0A=
-Ryan=
+From: Sam Bostock <sam@sambostock.ca>
+
+`symref-create` should be followed `::`, not `:`. The lack of second
+colon (`:`) causes it to appear as regular text (`<p>`) instead of as a
+description list term (`<dt>`) in the HTML documentation.
+
+Signed-off-by: Sam Bostock <sam@sambostock.ca>
+---
+    doc: fix update-ref symref-create formatting
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2123%2Fsambostock%2Fpatch-1-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2123/sambostock/patch-1-v1
+Pull-Request: https://github.com/git/git/pull/2123
+
+ Documentation/git-update-ref.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/git-update-ref.adoc b/Documentation/git-update-ref.adoc
+index 9310ce9768..37a5019a8b 100644
+--- a/Documentation/git-update-ref.adoc
++++ b/Documentation/git-update-ref.adoc
+@@ -119,7 +119,7 @@ verify::
+ 	Verify <ref> against <old-oid> but do not change it.  If
+ 	<old-oid> is zero or missing, the ref must not exist.
+ 
+-symref-create:
++symref-create::
+ 	Create symbolic ref <ref> with <new-target> after verifying that
+ 	it does not exist.
+ 
+
+base-commit: bdc5341ff65278a3cc80b2e8a02a2f02aa1fac06
+-- 
+gitgitgadget
