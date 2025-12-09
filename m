@@ -1,181 +1,156 @@
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F802156661
-	for <git@vger.kernel.org>; Tue,  9 Dec 2025 17:31:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416532FF653
+	for <git@vger.kernel.org>; Tue,  9 Dec 2025 17:43:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765301474; cv=none; b=f+WkDHQdqZpYKtpTAUAv/KuE7BpW6J7ew3QnUyy6uKVhq79WX7yRNRPMXD/XrPo7Alnemz6Z20N/JUK/PJXkjyfR363UWZ2nIxs2SoRqdY3kHHP//nCy2USJOYPTwd96ktCT/bdKvcOljkWvoh6vjnDREmpC2feH33GaMguq280=
+	t=1765302235; cv=none; b=doDKWoSg1RVplyyfkAofwe33ExRf+f2m6CoEeLmeY3xNYfACUNtq6jRdrsuAcNarZQ5Ed9i/YGoqrEcpqdF/m/JLVBrd8tIlhC8sb3b8QtVr4oKjXSlMF/rH+YJfP137q1B7lO0OPkTr9FcWmm/auH6Y8f60Y0QeDsWW4sMvsyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765301474; c=relaxed/simple;
-	bh=+5uSpoRZJYZI5KR1NM1yUBCfaQYb2wGFqi8AVM0gw+g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kMY9G+pL2USuI/cMOo6l+lJRGS/zKntDbfTyPYSObvsGfwCQvJe75cNZeqrDt8gk7jitvnWeBOIrDez2didZYlTvWcxRGaTRujosKmxpl5wiw/CGDFO8VYSLhehCANLyiElDHTxFGMSMdbwAXRtiahKszbMaj9KMtnwCG/PeRuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vo+UjOmO; arc=none smtp.client-ip=209.85.160.48
+	s=arc-20240116; t=1765302235; c=relaxed/simple;
+	bh=DaHyLdYaWkHb+76ORrB20nKsuDBgrlhEvhpiJZTuucM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Fo3FQYR47zjJNKv78BPiiFKBtP594Ui8Y6gnPPhbkgCoLzhrGXKP4HtJrRHNM8hzcdXBcQdfem5mp/1X34LhDDKGiFAeuMZEf2Vzqla/eX5GlwcOxH3kvu0p4fen7vb2l7fBgJPbLR2S3zwwCFYHll3Y4MQmzdHPOx3M8Mx0v98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xz4/1XQX; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vo+UjOmO"
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-3e898ba2a03so4214539fac.0
-        for <git@vger.kernel.org>; Tue, 09 Dec 2025 09:31:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xz4/1XQX"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-343774bd9b4so4784182a91.2
+        for <git@vger.kernel.org>; Tue, 09 Dec 2025 09:43:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765301471; x=1765906271; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ca/GYBJyGFvb8KqBWNsHnCcJi134ggxZIqxir0T0k0w=;
-        b=Vo+UjOmOEBQmxJDyOxZdp2Eb4eSO2mbHhpMo4FTGakPP+O1XbWkt8dihJWY4yWNXVr
-         6j+NQgr6IvEYcczzD59ikU3HEf3FQIW2YrkVLKgKC0k4LWfNcI6DHyosIN+obpxwPpKe
-         uH04G9H8gM5brrQJbIqBbswHvsnJkWwGi7spiFqEqlGYvoNJpmNSSSgG/znOBApXLV/Q
-         Vm1zN/GjVwXl7VjrhlUQvqoya6ZIDVikjfJv62dqQAG7LLLlw5ek7+osFAi6cEdPqEKv
-         RMDsk3XU2UJIdXcFL7RgQJXX67ASfRN+riAW4Rle28bmX03htTGeaS1ZqiGwgMfuJm6l
-         7otQ==
+        d=gmail.com; s=20230601; t=1765302233; x=1765907033; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=y6OXO3X9eXS45ex8uO2HiSLWSl4nNTKrOybZ53uOsKA=;
+        b=Xz4/1XQXRqWhpOIrSbd+BTACPykUkFvKMi7M0wFn1J1iOeH0W2yPqEQudg3/OGFM6v
+         2foQCL32va3bbsESZfNQYwhjeW0VcHAY/A0RV4ZbbRNV9HV8lHFJJ/Hfx1LF3OtOVRKy
+         zOTltQCM2zwi/8nMEYHOVJFR7zIrg1k37uodbIIxBydXuT6JHg7nCFsZQYF94vv8GCBZ
+         gWs15bdgA3p5zR+oOizheb/KpuJJNnBwqih0ZtNFTRYpPwBOzCqIl8cjAsdwEKMB0zPt
+         8l8XdFiE/j8L3SiDk3dc47T9ZNDzOCyZL9Hylwp7/C15XPV1tnzvyNHRjbrlQkcM7Sar
+         dOJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765301471; x=1765906271;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ca/GYBJyGFvb8KqBWNsHnCcJi134ggxZIqxir0T0k0w=;
-        b=b8fv++3XA8Xw0r2IWDFCxV8QAP6Utjuq7M6JoVbGkxuzYQ1Ix+xDGTj2b1al7g2iMN
-         ESsJcyEJFEz8MCzDxD9c5cZ5bgJjCRKE45WQehWU0C0cHAhpHvgYhG8nSOoyVi5wo2kd
-         01F1q1hP3JVO2kZmD8jiMFSYvx81IRsEjLF2cYCZ7lQqHLQsOkx9rxxhRvoDThX/RKmu
-         Nt7iFf1QkJ4z8jzMbtaezpiULaZjfrYoNrRfBE4mHNlxBW4HEPkmY//XlvgRFpeDoWSF
-         7tYBTC3IebU9yoP8/rnTKBC2DE+vW9VWBpGzAyi1jnHpH1faW+oEQo8ic0eUGshmNfNe
-         VuTA==
-X-Gm-Message-State: AOJu0Yx656zPC0Z4C0TASxCFGzyJstDcVVBBJWX/5+X3KS0nB76xIUWL
-	Fg1e/ddBKJjxgaaM3qaakMVrgIZwbd2LK+z88x5NBeD2q4UsY4l4soX5EUShYA==
-X-Gm-Gg: AY/fxX4AH/gStOh4e/azMofMRsVDHbr3RVURrlg/bg7Aam4TWI1oE1uI5bqEbJhynsa
-	jVb+y/mWJ5U74xuRZymIvNhP/G1lrSnl82YwK8tZ+phGfa0vcY6/MRKPcNkYH1A/qQRrPdVccAn
-	qSFNTyY6/2CLnRTgo/jKhAmiGbxOFe7bX8x9H7fn+E3GZUSf+PO3Gp7Ec/Q4Q7w1arylJxj2GTa
-	qasZpmx/lpavutoNIpFEJqmf2Srd/CFqHeHQabkPHCaBmsl3jslCYGmtwvkmFGVzRpa3BLHBkUR
-	OkIVmYoWdKpWcUgHOBatWUzt5QO5tjLAzSXPcPUORwTcq2NQNn8EGqpTA3GclpE/2OyM9vTND3C
-	JyLgjjMJUITTXywT0zNqsPrJnl3vbcP7QxcYHxI9rK45wWEDHdzyYLQBbxZmb2fC62Z2/4I633M
-	oqCihz
-X-Google-Smtp-Source: AGHT+IEB/l4dyd22BfrUDQ6aeHZLsn4t0pyiTWBB3XthzL8pTByzcaO3Z5tRVYTmJjstw4qiTql9nA==
-X-Received: by 2002:a05:6870:241b:b0:3e8:8e56:6715 with SMTP id 586e51a60fabf-3f5440fdadamr5158313fac.53.1765301471404;
-        Tue, 09 Dec 2025 09:31:11 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3f50b510088sm11361841fac.11.2025.12.09.09.31.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Dec 2025 09:31:10 -0800 (PST)
-Date: Tue, 9 Dec 2025 11:31:05 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/8] odb: remove mutual recursion when parsing alternates
-Message-ID: <qhwjdvcilzbd7bpj64jwmxfwldlzge5w23bsgrz3yma4rtwlw6@6becwkk4u4vj>
-References: <20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im>
- <20251208-b4-pks-odb-alternates-via-source-v1-5-e7ebb8b18c03@pks.im>
+        d=1e100.net; s=20230601; t=1765302233; x=1765907033;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=y6OXO3X9eXS45ex8uO2HiSLWSl4nNTKrOybZ53uOsKA=;
+        b=MY8pn+HemWauoJ41exqJIebGP/JLhqldW13O279LMOc5KdEz5AjVSyJE6qhmTFjnqy
+         IScuIOjVbJ3uTy80I7Om4riWwbXb+OgDq1ohRbCG+oroAs/rII1pJ4xKc/ADTSfiVyUX
+         EUgbDxHGRrHSWxez415KntXg21GPPDfbj99eqVJwH9GUx8To5krKra1wr9yMuJ8TaxvI
+         NJzxdDFw2rnxajIlMNBTf1Lzs9FoLctiavmNrJx5ZHVHFjcR5m5ujam7VqwAF+C4ol5Y
+         pCqxmdIhxgIHwq0SA26lMUyCBNRhS1MK9TT4A0M10CaOnP6I66nNCQUYCQZbJZLtpKPr
+         J/oQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVhAIGJMsqxJadXUxJxPQnvP6iJMhld6FOw/PXBMz9PWSAdcCm+NSl0KfF81PoBxPmHBhI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyqCZMV2RW0ex5UVFMgh1w5b9umlXUlXAsYOt/MIuqHF3hkETFZ
+	R/0uW2nHJwxiF+DiSV11HaJpIWonBznudTcr2OQkhN4iSTBFkG707Ig2NlK+4iUcYxJ2Au+lfue
+	P/JezPGQ6MBDcZBixUajsJ7yBlWmKsco=
+X-Gm-Gg: AY/fxX4D7bX7q48KQogUfCjnFdPb5SzWZ5kB32yw7mS4OMsZoxf0NPbZt3U2wqkXi1U
+	3oJeLQJ2iCpfY+qmBxdicIai5bPmaDtVmHKrOsZNVsVxaGu8m1BaixZCWkPaVbb/9KUpIhAbarH
+	bRgX6EmI7mY+hbA78WucO5ulP/KV2FTtVv9LoC9w1//11ht7LzRKVFgdiynTNIfPZLEfHYR0bKx
+	O1kemU3RPMpJCoL36FUjFApGaJlP+crjtqxReCsloEh10uV/v4Z/8RhqylUwQeR1OjKzcKS8R4Z
+	ld0iDS8M6cn3Ut33jX6E1k3qDiGSkJsh1Ja8
+X-Google-Smtp-Source: AGHT+IHwwS6nvwlLeVJHkwZi6RLT++5itBXn4oZ/HFOq3TCVzJcM2DICDJk81PLl270hzF58XTEtP0wH4P/LpKqJPSY=
+X-Received: by 2002:a17:90b:2750:b0:349:9dc4:fa35 with SMTP id
+ 98e67ed59e1d1-349a2622069mr9533205a91.25.1765302233431; Tue, 09 Dec 2025
+ 09:43:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251208-b4-pks-odb-alternates-via-source-v1-5-e7ebb8b18c03@pks.im>
+References: <CABPp-BGLrVv=maEqhs=j9MmST-F=K=XN6gGqmd9Hox5QRDMiHg@mail.gmail.com>
+ <xmqqbjkw78jj.fsf@gitster.g> <CABPp-BG+2+vanKAS-cwAD2XZxwx=PPcu5OG58ys+8O7rfZEhug@mail.gmail.com>
+ <xmqq7bvk77lr.fsf@gitster.g> <CABPp-BEyMFiRdHoseTaYG9rUFO6Ta=dBG88CGRb3CfNf8aSAkg@mail.gmail.com>
+ <3fb47b15-ed43-4137-95f8-cee97ab5e44c@gmail.com> <xmqq7bvj5q8m.fsf@gitster.g>
+ <CABPp-BEVX85xZ7_1fSfW4-xJod13p2-HvQ-e5ga+m9-Sq7mbdw@mail.gmail.com>
+ <aS80z0DxAEBLba-M@pks.im> <CABPp-BFtx7-vLFbVqbHar=UZb1CGX5=ufMA4hrJRkSYuB14_Tw@mail.gmail.com>
+ <aTfVfenbwY685fDZ@pks.im>
+In-Reply-To: <aTfVfenbwY685fDZ@pks.im>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Date: Tue, 9 Dec 2025 09:43:41 -0800
+X-Gm-Features: AQt7F2q2sbXVl-PboxQJGy84NhYETKJ8oLqm5QQVb6HbsCRtjwOEfYwFr50bOTQ
+Message-ID: <CANiSa6hxjghKQMhURx8qC2t=+1gEE7p8YaHbWkg3rYOYa=poVg@mail.gmail.com>
+Subject: Re: [PATCH v6 00/11] Introduce git-history(1) command for easy
+ history editing
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Elijah Newren <newren@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, 
+	"D. Ben Knoble" <ben.knoble@gmail.com>, Sergey Organov <sorganov@gmail.com>, 
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Karthik Nayak <karthik.188@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 25/12/08 09:04AM, Patrick Steinhardt wrote:
-> When adding an alternative object database source we not only have to
-> consider the added source itself, but we also have to add _its_ sources
-> to our database. We implement this via mutual recursion:
-> 
->   1. We first call `link_alt_odb_entries()`.
-> 
->   2. `link_alt_odb_entries()` calls `parse_alternates()`.
-> 
->   3. We then add each parsed alternate via `odb_add_source()`.
-> 
->   4. `odb_add_source()` calls `link_alt_odb_entries()` again.
-> 
-> This flow is somewhat hard to follow, but more importantly it means that
-> parsing of alternates is somewhat tied to the recursive behaviour.
-> 
-> Refactor the function to remove the mutual recursion between adding
-> sources and parsing alternates. The parsing step thus becomes completely
-> oblivious to the fact that there is recursive behaviour going on at all.
-> Instead, the recursion is handled exclusively by `odb_add_source()`,
-> which now recurses with itself.
-> 
-> This refactoring allows us to move parsing of alternates into object
-> database sources in a subsequent step.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb.c | 60 +++++++++++++++++++++++++++---------------------------------
->  1 file changed, 27 insertions(+), 33 deletions(-)
-> 
-> diff --git a/odb.c b/odb.c
-> index 94cff19221..27f3c8e263 100644
-> --- a/odb.c
-> +++ b/odb.c
-> @@ -147,9 +147,8 @@ static bool odb_is_source_usable(struct object_database *o, const char *path)
->   * of the object ID, an extra slash for the first level indirection, and
->   * the terminating NUL.
->   */
-> -static void read_info_alternates(struct object_database *odb,
-> -				 const char *relative_base,
-> -				 int depth);
-> +static void read_info_alternates(const char *relative_base,
-> +				 struct strvec *out);
->  
->  static struct odb_source *odb_source_new(struct object_database *odb,
->  					 const char *path,
-> @@ -171,6 +170,7 @@ static struct odb_source *odb_add_source(struct object_database *odb,
->  					 int depth)
->  {
->  	struct odb_source *alternate = NULL;
-> +	struct strvec sources = STRVEC_INIT;
->  	khiter_t pos;
->  	int ret;
->  
-> @@ -189,9 +189,17 @@ static struct odb_source *odb_add_source(struct object_database *odb,
->  	kh_value(odb->source_by_path, pos) = alternate;
->  
->  	/* recursively add alternates */
-> -	read_info_alternates(odb, alternate->path, depth + 1);
-> +	read_info_alternates(alternate->path, &sources);
-> +	if (sources.nr && depth + 1 > 5) {
-> +		error(_("%s: ignoring alternate object stores, nesting too deep"),
-> +		      source);
-> +	} else {
-> +		for (size_t i = 0; i < sources.nr; i++)
-> +			odb_add_source(odb, sources.v[i], depth + 1);
-> +	}
+On Mon, Dec 8, 2025 at 11:53=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Fri, Dec 05, 2025 at 12:49:04AM -0800, Elijah Newren wrote:
+> > On Tue, Dec 2, 2025 at 10:50=E2=80=AFAM Patrick Steinhardt <ps@pks.im> =
+wrote:
+> > > Consequently I'm leaning more into the direction of doing nothing. It=
+'s
+> > > not really clear to me that this is a bug, and we still can introduce=
+ a
+> > > flag in the future that opts into the behaviour of rewriting relevant
+> > > branches. That behaviour certainly can be useful, but I'd claim that
+> > > it would be rather surprising to the user if that was the default.
+> >
+> > Well, as I stated above, this is basically copying what I view as the
+> > fundamental design mistake of git-rebase.  The many other points of
+> > feedback I had on this series (e.g. extended headers, reusing replay's
+> > walking, etc.) are things I could easily negotiate on; this one
+> > bothers me much, much more.  To me, it ruins the command and makes me
+> > feel it is unsuitable for inclusion in git; this is, after all, the
+> > kind of thing that made me decide to write yet another command to
+> > workaround such a flaw.  If the series is merged with this behavior,
+> > I'm going to be in the awkward position of feeling I need to actively
+> > recommend against its usage unless _and until_ we either
+> >
+> > (a) check that a commit is only part of one branch before proceeding,
+> > (b) always require the user to specify with a flag how to handle
+> > commits that happen to be part of multiple branches (even when a
+> > commit only happens to be part of one branch, in order to allow us to
+> > not bother checking whether it's part of more),
+> > or
+> > (c) rewrite all branches that contain the given commit by default
+> > (with an option to only rewrite the current one).
+> >
+> > That said, obviously the choice of whether the series is merged isn't
+> > up to me.  And maybe I'm in the minority, and others don't care about
+> > this issue at all.  But it's how I feel about it.
+>
+> I guess it's a matter of workflows and tastes, and there's never going
+> to be the one correct way of doing things. I don't think (b) is a good
+> option as it makes things more complex even for the simplest cases. But
+> I wouldn't be opposed to a combination of (a) and (b) if we can
+> implement (a) efficiently.
 
-Ok, prior to this, read_info_alternates() would not only parse the
-alternates file for the ODB source at hand, but also recursively parse
-and add alternates of alternates. Now, read_info_alternates() is only
-responsible for parsing a single alternates file at a time.
+FWIW, I agree with Elijah that (c) is the right end state. That's
+perhaps not surprising given that that's what jj has been doing for
+many years (as many of you know already, I'm one of the jj
+maintainers). I think it's very rare that we hear from users that they
+want to rewrite a commit and its descendants while leaving some of the
+descendants in place. We have a `jj duplicate` command they can use,
+but that won't move any bookmarks (branches) over. So if you have
+bookmark `foo` with descendant bookmarks `bar` and `baz` and you want
+to amend `foo` while moving `bar` over and keeping `baz` in place, the
+simplest way is probably to duplicate all the necessary commit
+(something like `jj duplicate -r main..bar`) and then manually move
+over `foo` and `bar`. That seems like such a rare use case that we
+haven't had a reason to make it simpler so far.
 
-Recursing into child alternates is now handled by odb_add_source(). IMO
-this is much easier to reason about and ultimately matches the previous
-behavior.
+Regarding performance of (a), I would think that walking all
+branches/tags until you reach the to-be-modified commit (or reach an
+older generation) can usually be done quickly enough, but obviously
+there are many others on this list who know that better than me :) But
+I have also heard that some Git repos have tens (hundreds?) of
+thousands of branches. Hopefully those refs are just on some server
+where users won't run `git history`.
 
->  
->   error:
-> +	strvec_clear(&sources);
->  	return alternate;
->  }
->  
-[snip]
-> @@ -622,13 +610,19 @@ int odb_for_each_alternate(struct object_database *odb,
->  
->  void odb_prepare_alternates(struct object_database *odb)
->  {
-> +	struct strvec sources = STRVEC_INIT;
-> +
->  	if (odb->loaded_alternates)
->  		return;
->  
-> -	link_alt_odb_entries(odb, odb->alternate_db, PATH_SEP, NULL, 0);
-> +	parse_alternates(odb->alternate_db, PATH_SEP, NULL, &sources);
-> +	read_info_alternates(odb->sources->path, &sources);
-> +	for (size_t i = 0; i < sources.nr; i++)
-> +		odb_add_source(odb, sources.v[i], 0);
-
-When preparing alternates, sources from the environment and alternates
-file are parsed first and then added. Adding sources is now handled
-explicitly and is responsible for add child alternates. Looks good.
-
--Justin
+>
+> Do we already have logic like this in git-replay(1)?
+>
+> Patrick
