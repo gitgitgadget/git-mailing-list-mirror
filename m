@@ -1,117 +1,107 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1741991CB
-	for <git@vger.kernel.org>; Tue,  9 Dec 2025 09:23:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BD7322A1C
+	for <git@vger.kernel.org>; Tue,  9 Dec 2025 12:18:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765272191; cv=none; b=RHOXjc4En3wy+SuRY0fYPL68ofwu7+47iV4nku7EfaESyHHtKHAZXwwLUtzUFXjURQYgvfo3cQFLeHyIRWuTsVRfFvpGbfs6OMcAEW0L26JdLw1wyFapcY9oV2WzOPrZAUbb1jXMTsm5yfg1OkBQ1G9+UwmL9utD6twfXY9QrU0=
+	t=1765282703; cv=none; b=elihLJpGSVx7dlJI/sQGZImLM0egdKIlMTjqyX8+YyTUPsgboHA3U7yZFlQAy8zMcNPsWWiSJjKOFSXCB1IX9uYjjgcHRbeR1Q/lhZ/u0aQzm079U2lRziPn6TPdoSz1ZR+ea84JBKtfq5P+q5QtvwpqiDDFAuFh/uJDTaHNtOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765272191; c=relaxed/simple;
-	bh=3Th54i3594aoSvYVzrM9nqNlZYZyiZB/S66UH6CU0ps=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cYJoO8uRdzaxvAXnnCn2+S5XOOlKp7/sJUXMzwPvV/bALkXHXIfUp5XEei7S5l2HWp1NMlpHoRyicpb12+DZ749qvA5k18d8Mom4YJEVJlhteC8Ra6NmQi5YPunOiV0RIRTQiGFF5UAfpuuOAfRdMr5J4fFVMbc88pPcEJ7Zi/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GbvxIpg3; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765282703; c=relaxed/simple;
+	bh=pL8fuweUcC3urAfvFgu9mx1px9SBf3JyjuqkN6dP2+Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YjWWxCHcqnF2LstoO5AOUcUEW89IxocElTpYc7l3AuCRvR+oVHI4kITN+SzFWnNUpdxW42gsQGa5HU9yfs3IPxBoGz8t2/IpzhZcfj8ZvJD/oPuRqOL5I3K7sZaMys1xOWxL4860pYoc6UfYudtCazAjBuXX5yYzLEBqWp8hZAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hdu8x3p+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iXrgYE0B; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GbvxIpg3"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7b8eff36e3bso8361731b3a.2
-        for <git@vger.kernel.org>; Tue, 09 Dec 2025 01:23:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765272187; x=1765876987; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3Th54i3594aoSvYVzrM9nqNlZYZyiZB/S66UH6CU0ps=;
-        b=GbvxIpg3c+wM6rgE3KWpveLv1ELxtNmInkQxPXspgS3akW5CuX6ZJTMa1UBvGLw5S6
-         wzVgXnIAxOuqxGDyAdEcyy4WQ72/0job10JzkRa6KWw6bXpY8ebVzXkGs3MDKf1ROnDl
-         5M0Okdjf9yAh3tNIKFjBmXlDI4KR1mw1ssb2I2cxqEWEtYFHVfqvFMQbUXvd23GaZoty
-         YPs/nUfmKIp/ZlbhwPRfrGEpP1T+yZKXc6USmXbX3aPjK6HR4Xb8liWKFtYHfFfq+LcE
-         qdRB/UzGaWgAwbhdQ+rJ/xlbe89pcBKQiGbVcb3eYoHWWugPl5WM1ZacHF3kLMsPloDi
-         /OTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765272187; x=1765876987;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=3Th54i3594aoSvYVzrM9nqNlZYZyiZB/S66UH6CU0ps=;
-        b=wkoPbiZMVCCHWn3Apyc3ZZ+TlmTjamo3MkMyWgd4x8O+SbZiy9mm63O9RbpdfD18Co
-         EeCeuKhGdYkg8NljfeF0DUSkz15YwC9f6nlgYY17UmGqMMUw/+YVYV4diTAo7/cAGud2
-         7nvu3vFTCX0Y2E6LXi7zTi6G6YmU7i1oP4ASHOBsSuHoed13LNONnTaL46ijqFatKv+K
-         dtieZn1avnmXBrunKpO4cVRoNLLn3wbNjJof02zH0OBZc8ytkviIwEWX7ewla+xACGZl
-         k3FhnWJoRo2UzeY9GUtOvVPbEpbaDGh38AbW790G02FAyaHYkJEoQfXDkeAwU+kgLFFA
-         s/1g==
-X-Gm-Message-State: AOJu0YxfVgPCFuQXrX+73MzU1Ah/r4CRHJFmW1nHt9gqck52wGUKeOwI
-	QjKuVrLOoD112QgKGZy5gU6fb68VFnv/piDeeh2tdCXz1isB7gg32sZ7OCXK1wB1QlWU3SXc4f3
-	haoGdbFXRMGkgj/4uWz43Oep6ArrfJDo=
-X-Gm-Gg: ASbGncv7o+Z71WzFISaIn9Rp1uf+FIi2ikdNdlknSIeIymlJApxDE4h0ePMynRwGuWI
-	ePcIXr3O2VFVN3zYCLyy8a7PncgDhLEcDRtNsG7IvCqSn2pAE5ZgJM+kO0m7v1SrkB1/GpCY/tI
-	OCId28kgmb8d93A5ps5cLkFICoVIn2NAFx0/l3wHWlhYwcsT0Qgg9mcca4aDJ2OM72glOdxLSja
-	wl3s9zZR+BBsfcAotHmELoUBB4tEXrorV1uQowIsHBMf/idfTcSWVDq/WzsMFdq5VgoJkO0
-X-Google-Smtp-Source: AGHT+IEAY0+dXKhSeqooBKKnekggMKCskt24EC/PyWTGNQFAwWVQLw+v0/mrPOQRroKEj8X2ga7/JqwEk/OUf8FxDr4=
-X-Received: by 2002:a05:7022:a82:b0:11d:f462:78ac with SMTP id
- a92af1059eb24-11e032949c3mr6840438c88.28.1765272186911; Tue, 09 Dec 2025
- 01:23:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hdu8x3p+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iXrgYE0B"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6463814000C2;
+	Tue,  9 Dec 2025 07:18:08 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 09 Dec 2025 07:18:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1765282688; x=1765369088; bh=L7UImQp0cQ
+	HO9wLZRRk1d0957CvjAEu8+VrSyUZII2Q=; b=hdu8x3p+3kBVrODLDrVJGNZiIJ
+	LOMoX/OwryDxInu5iFgpPaIaouInBmtG1KkmQ7IFRuB5gwcsDzav9gbCx20Urcbt
+	IzIVCX/xBQdlsW4jht+Ixf3RZub66cUb7Y268hxQr/fnEoJYvaieXurWdZ72UXVx
+	LBy52jONrfqBmE3poPA4LxJ/S77rebJQl3VbPWrcXFh7991aRHbBN74uvWnm6rYq
+	hzpwvmo+oVB89lSyxN43F9R4NVgmUjxPey6r1gMQLAfrOWPfRZTtVz1KF78RCjB7
+	mx4jrvmuoiezrAAcj91rGMyHoAhl2j4sNPG2C2LQ+SWZtGzxwSGUu0Fc5b7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765282688; x=1765369088; bh=L7UImQp0cQHO9wLZRRk1d0957CvjAEu8+Vr
+	SyUZII2Q=; b=iXrgYE0Bsm7s0yUqTCgyo5k6BFE2ihlO2y2js1gxMeZbivkldQa
+	LW48fQ058c/ACG2ctvnBbZ5Orhk3WrJa17r3cx090Mi0z2RTzStowjlWrNV4vuNg
+	3sR8dhx3mSiIyM9i6iOhYBruJKg8KypArNuORMCfxpwsbK9/fQSc/TvfHoo0NRsk
+	g1WRZ7mo0ZsV/1oh947yUgc42EEiWxj8z6+D3XRW6cblRaQ3ApjaA0m+1Y33X62n
+	JqxLAW577R8CdO4KzcSprevoYkGE5NSBEKBawzIWofiRDESrnNbynCia/5PfYikK
+	RiZ+PaRWLfCi0G1nEw/NYBEnbGY1MWXJlXw==
+X-ME-Sender: <xms:fxM4aTucm7PxKAs3iXzdQkteSg7HDQ1OwVmZEFN9YbLnYEKvHMfNAA>
+    <xme:fxM4aYLIc28NWKXb6UHFPAUGV6Xi9u8vB31TPPbMV0U-8CgSY4eQ0qnO4XwhYo1WX
+    GIZDxH9wzHoxh0Y-VbqeAlN0bnPoa7nzqWHh042l2CgVVO-t1KBkQ>
+X-ME-Received: <xmr:fxM4aQmGDFe8kooaQIzzRIdqvAz5GqzGN8K0gPhU-cTTIUKaxINIn0XBa2pRxeXkY_W5bGg3qKoZgAMgTZtc1cYRRwjm6vbfAw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleehfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghf
+    fhdrnhgvthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtoheprghnuggvrhhskhesmhhithdrvgguuhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:fxM4aZKX-pKQBrlyGFiw_bT7Lo9PJ_-XkNzYdaGnOUsvyps8RVH1RQ>
+    <xmx:fxM4aV6E7XUBkZHQ-XALKbXp6yrkOk-2gz18vyXChSxzTbxY58ZNBA>
+    <xmx:fxM4ad3u5bRV1tjlyK3AH3h1xfB3YdGSepAPBGa_DK4VsmaXUs-czQ>
+    <xmx:fxM4abe4RYJOvJw-xFp4uxPzSkmnmUzNofCfXSAJZa_vhPO4eKgyLg>
+    <xmx:gBM4aUvoZDqsoI50UGq_yOd4KD3XG5oocP7yOynyjtjvTJqythEwnYa5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 9 Dec 2025 07:18:07 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Anders Kaseorg <andersk@MIT.EDU>
+Subject: Re: [PATCH v2] last-modified: fix use of uninitialized memory
+In-Reply-To: <871pl4vyd5.fsf@iotcl.com> (Toon Claes's message of "Tue, 09 Dec
+	2025 09:43:50 +0100")
+References: <20251128-toon-big-endian-ci-v1-1-80da0f629c1e@iotcl.com>
+	<20251208-toon-big-endian-ci-v2-1-76b46763a597@iotcl.com>
+	<xmqqikehkstt.fsf@gitster.g> <871pl4vyd5.fsf@iotcl.com>
+Date: Tue, 09 Dec 2025 21:18:06 +0900
+Message-ID: <xmqqpl8nkfwh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAE7as+ZROO1GiEhXYga5Nqmrs5Xr=k9zsAiP2y0xzuny1ws+UQ@mail.gmail.com>
- <20251208201132.40186-1-belkid98@gmail.com> <CAE7as+Zka6J+du+V5zsHzc4eiH+Mzx=dQUnjuJz_Mhnk2RzOPA@mail.gmail.com>
-In-Reply-To: <CAE7as+Zka6J+du+V5zsHzc4eiH+Mzx=dQUnjuJz_Mhnk2RzOPA@mail.gmail.com>
-From: Bello Olamide <belkid98@gmail.com>
-Date: Tue, 9 Dec 2025 10:23:08 +0100
-X-Gm-Features: AQt7F2q2NB9MumXfzM6205x4FdpFGFwMqx2oogBqzQVru-3aN6NEFDrR7EquRwY
-Message-ID: <CAD=f0L8JMUxKBDFj+=v+HvEQ-TFM2ZxkZbkGSfhx4=3-PD=nCg@mail.gmail.com>
-Subject: Re: Outreachy intern: Request for the completion of this series
-To: Ayush Chandekar <ayu.chandekar@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im, shejialuo@gmail.com, 
-	christian.couder@gmail.com, usmanakinyemi202@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, 9 Dec 2025 at 01:30, Ayush Chandekar <ayu.chandekar@gmail.com> wrot=
-e:
->
->
->
-> On Tue, Dec 9, 2025 at 1:41=E2=80=AFAM Olamide Caleb Bello <belkid98@gmai=
-l.com> wrote:
-> >
-> >
-> > Hello Ayush,
-> > My name is Bello and I am an intern for the ongoing round of the Outrea=
-chy
-> > program for the project "Refactor in order to reduce Git's global state=
-".
-> >
-> > I would like to commend and appreciate you on your previous works done =
-with
-> > regards to the project. They provided enough guide for me in my bid to =
-continue
-> > where you stopped.
-> > I referenced this patch in my proposal as a part of the
-> > patches I would like to complete to kick start my internship.
-> > Please let me know if you will be okay with me completing this patch an=
-d
-> > submitting for review.
-> >
-> > Thanks
-> > Bello.
->
-> Hey Bello,
->
-> Thanks a lot for reaching out, and congratulations on your Outreachy inte=
-rnship!
->
-> You are absolutely welcome to complete the patch. I'm glad my previous wo=
-rk was helpful, and I wish you all the best!
->
-> Ayush:)
+Toon Claes <toon@iotcl.com> writes:
 
-Thank you
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Sorry, but hasn't the old one already been cooking in 'next'?
+>
+> Okay, fine by me. Let's abandon this v2 then.
 
-Bello.
+Understood. I however agree with Patrick that rewriting
+
+    memset(ptr, '\0', sizeof(*ptr) * nr)
+
+to use CLEAR_ARRAY(), not limited to last-modified but everywhere in
+the codebase, may not be a bad idea.  It would be a good exercise to
+hone our Coccinelle skill ;-)
