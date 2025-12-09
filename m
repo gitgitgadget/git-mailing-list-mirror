@@ -1,138 +1,110 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5DE2D879F
-	for <git@vger.kernel.org>; Tue,  9 Dec 2025 18:06:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC37291C1F
+	for <git@vger.kernel.org>; Tue,  9 Dec 2025 18:11:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765303574; cv=none; b=d3U3fsX2LybJOCmq4WIVQ/v/JQyr74SXbI0gYHrWWTx8r5Pqw04X8kDDMZ23rIm6nEXkP5NcoUucQT3jICo2jZA0ZjnhmskB5uMLwmd5Q1ZNfP8TOnbmr+sEysP3q3NakiMb0EQOBI9/jEdVLf4lW7Iur4C60LXtbPmsfFIJPyM=
+	t=1765303884; cv=none; b=MiqPrl7l7RHxvzplhCq7vI6gvnFBxmq0vdj71XqkS+fa0eVAmK8kRtEOL72HHLrlQUXNRAgf8EQdgZUQFJa2fI9HKgxfL7ahnjCy7nT9RJiDYA92B8zeWCRnx7NxO7DWwW91xnQFKdsJqqC7XSXB5b3Oj6kcD6GbYYShtTgL7r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765303574; c=relaxed/simple;
-	bh=eCvtGPG0Dk7trfoPwEh5V6JoZTHeczJEX1mTekuaRMY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O8z/TexD1hHqUKEjIzlGhfsbESJPotwlYqbmheDHuJe+MM4Um09ida2JrhACO7cHuIhfe+u4lDTNi0Xnej8CAydATtYilroou9Ud0INEVj6fhyUflooGI4Q0J23eJ2IquoagiDdpO9UmuBIIqwP/LZMMJAYE/kW6QYnfLKmUyxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lhnmvF10; arc=none smtp.client-ip=209.85.210.47
+	s=arc-20240116; t=1765303884; c=relaxed/simple;
+	bh=7Zv6hIxr4JuTzDNbzFfAFL+kYzX8YaGjdulWOb0qTRg=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=b0gQgIonHzt2Tyw4SzR9L/xlaG5nrWnsWGDMcBk7gPdfUkB8XNm9YRLAu6FCzHSyCCRoPWtljPCOoC/dyCBs0xNbJ4HefRY6HTD9j5KSQA0xFAEVpfRcdJhc5dtiuyz4SvrFxXH4mnd0wWp15B3CVLSp5ip3FVBobH12uS1p7vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EES7MHSu; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lhnmvF10"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-7c765f41346so3461928a34.3
-        for <git@vger.kernel.org>; Tue, 09 Dec 2025 10:06:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EES7MHSu"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-7a9c64dfa8aso4789469b3a.3
+        for <git@vger.kernel.org>; Tue, 09 Dec 2025 10:11:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765303572; x=1765908372; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CD2Xpg3L+JUUo8li2kKzLC6+wzJdhM/0VdM/PEvZKZk=;
-        b=lhnmvF10a5V6QH+QCxCnHc+EXBjgASg7xL26J8STfJ75TJvWmoGd0tZ0n40W/ym9HE
-         K7DffOua+KUfJGkBshtfj6zqoxQ2Y+1qcScgk3mQW42+trPhGHZEQTkPlp1kMM9tqPr+
-         exyqR4OaT178LghYnu3JWGKgj1tDIy49bBHea40KYhnCR8ANuuo/DQ35+ekFjMz53mAB
-         YcauagYi+DLFafw9w/cqpTHq3Qq25EkqvOAiyX4+iLvKAfsrjeati/ebbG8E+zhLTylH
-         5AlgR2igBU1w4B7Ek7Lk+Hq3FG17IayapOyRv6Ec15ASF+nQUa2ufU6BffW5CypzHGxI
-         pyQA==
+        d=gmail.com; s=20230601; t=1765303882; x=1765908682; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=hg1DHS0AsX2xSH0GYcSOwzjudJAeZ2Y7eh6UmTUNSoE=;
+        b=EES7MHSu0z/fruNii+jiwn3u7qLeBQwamdkFO7GSv2G4AyZmzn+BZezIM4nhLds8hZ
+         xvVicAE/2W1xoobYXkZ2b1QjBPzMINsnDwoMzDFEHggkuCA0IXZWIHjWscW14bfvVWoF
+         pjisgnLtVxzbfVxiIiomgvpaa3WMokSBRqXR7PWymSWJn7jK9TPMwo5o74MphjQ7MP22
+         AART4xTo6YFa0HgOV/slUuuhwFqnEkGaMlzCKml00jwzLuwSC9RzUj4crQqltGBaIk6j
+         ZgotNQEz2qr/oMvDl9/OPp2Jccg9CJOj+bZoW6sqlAxV9S9yX0X2tuoRbp4mZ/mxrrcp
+         EXug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765303572; x=1765908372;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CD2Xpg3L+JUUo8li2kKzLC6+wzJdhM/0VdM/PEvZKZk=;
-        b=BN2y3ktKkjQmbG7i2MqGOLpmTIlVNi16VMdyz+Yv9mA7/h5LCtNUBmqQEnc+xLlQIg
-         GsyuISl4hiH4ZfTqFiF6xutMQrzopVyk3MM+5mCV9YCpuqtsJ/xNJCimAxhje55D45TP
-         IgGzpaGidqv4DPLgOTbY5nicYzvORMPa6in+NfBP/IAXvTcQCzEQhAMjEzHW8fks2LT2
-         m4ffCP1Rxyf4SHxRnkrqOV/XEtFaQ6GQrGDfUJqj/5NnhWUIIpG+xMcQyZsh5rV4b6NG
-         AQdTiXfHz6T6NLUvGsg4axpEGoM0TR7/POyRNkeyXTzFS2vI7Jk3N1vrnvsYaRJWD6z0
-         0K6A==
-X-Gm-Message-State: AOJu0YxUc3gU8DE24E/H97snti8k7NTrcfRV4+UAMG9JDfiP9q6kNjiO
-	3WaLarD7a9yiOMUxGAeyWJBl1ncYB6XQK54cBkOI4M4dtryAyidltADHbPS2rw==
-X-Gm-Gg: ASbGncs/V/6jX4tt/urHx0WvCnrkUiQyk40KwfCDvWR97RhyzHvcEcXUaa5rcf4/85f
-	z0QciMnC1sRfQ2TVEO/gbqDtJox+t4+zQIkDlHOpqPZMxBKKfa9vWigfi64VYU64Uw3vOytpEea
-	pUf8sRHvboV+GtNqKqH7CwpQc3YouBD48uYVREqdXnvhC4ecmTgHDTiHRL8wfo5rN9GiWIVS1Ed
-	Y4JmOhCZNRurYsMLF4vDFof6GUYOuYllfDyQ12rUi9OihvfKpmtBib8Fvg+zSoy5q/NHDgAlC9s
-	D4OwRO5lABNtf+0HoubjXqtkg1I+V0CncSw9zeRJbXMP4siEMa/LS7huW6IYddbkdNlJGEUkc1t
-	6WIKDa6EEJf11sTok9Md7SY09CXfuZxYVr3BS/bTbxa/SOO65npIsaszSFXRZrOIFC6pImozU7N
-	E3Ms87
-X-Google-Smtp-Source: AGHT+IGRv9Xim846vSkcfUT0LrzAE/JB6YPI5qVYs2yaizwqlZ9+gf1SaRRFfFXEPOebBYB5pGFJDg==
-X-Received: by 2002:a05:6808:1687:b0:450:907:b523 with SMTP id 5614622812f47-4539ded8407mr4331024b6e.6.1765303572034;
-        Tue, 09 Dec 2025 10:06:12 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4537f6bc9d5sm8118214b6e.0.2025.12.09.10.06.11
+        d=1e100.net; s=20230601; t=1765303882; x=1765908682;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hg1DHS0AsX2xSH0GYcSOwzjudJAeZ2Y7eh6UmTUNSoE=;
+        b=uvqSC4EfwZVRjGEviavFvvO4mMI44FYaMq6X4mvmOV06hNBDhI0RRvEcEUIf5G/Chx
+         PRsePat3utrauiaIWPHPeT19JetchKf2VMXk2j82YZWPVA48OHuVeP5Gku18/bF3cEGQ
+         E6JNhQPPcR71whrN2NNjunYTnXmtjMqsV2AGkxzDmbAGmMYdpi3hnhrj8N2T9LeC6QlW
+         ReJVVyk86YwMWAsufZs/svsKq2IAVvv+6QMVOnjww+pRUzYd52M5UON+8X6/AgCkAd3J
+         /HARmdlj94xCPI/GGQbmDT7MksPpkOiSPZmGgDeIBC/jTakGENnEPOoLmxi92S4Kn2f+
+         ddiQ==
+X-Gm-Message-State: AOJu0Yy+PJcRMjx6lJqzaJSwnnvZ+OcH5oKSHQF7Q3H+70+ziwNsl2Lk
+	u/HUoAFpZFgFHj1lNgmAAfHoQSHQb+A8u3JTLptEc1qN9tex+i87cF/yCSOmfw==
+X-Gm-Gg: ASbGncvd3GbM9ZjeHCeWVG240/iEKNwuasM00voSvPOvPCN2J1pYancuP/HZaVn3kjt
+	0xr09RNnelTjjAhjutP5T/rNQQ7Mt9fryk8CpL6VLhxqDiIQsCV39XoP3WFNqWKLV5liPbc0fz6
+	2qhYygvOaE05aliAF+fA4uWIGKtYijIKSVSuD+/IXAPapPEzMgdD294LaCTacJWrVdyRdFqJCCS
+	2DHFc1Ir4HZfYLVwIostXKCJ/QnT0oDIoFEP2cEalRsptzMHm5W8PGjzNcrui3Wne0iT3fe1j5a
+	WG3WILcK9tLO51EYFN75GSttNDxRzAVBNHzUUeOHHWHbJ8kVcCzTexIbMzFpvt4ziG3zUHhOpjp
+	qpgqW42bWU2l6diUnzLKAYRJDiI1V8XCqi5Zk3PWKt+ECKp7DSe9Ush3Kqsr5dg1iM9fn8s19vB
+	wt+gB31maXtZJd
+X-Google-Smtp-Source: AGHT+IFYl44NZcgc7lYqparkLfvtdHoAmVmjPE3rAa4YUXNoXILlOXvCyFe5nfgkjw/zrE29Zqdnvg==
+X-Received: by 2002:a05:7022:6997:b0:119:e55a:9bf0 with SMTP id a92af1059eb24-11e031690cemr8304239c88.12.1765303882006;
+        Tue, 09 Dec 2025 10:11:22 -0800 (PST)
+Received: from [127.0.0.1] ([20.168.111.65])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11f283d465csm1484460c88.14.2025.12.09.10.11.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Dec 2025 10:06:11 -0800 (PST)
-Date: Tue, 9 Dec 2025 12:06:09 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/8] odb: resolve relative alternative paths when parsing
-Message-ID: <5lkaw3kfqzjt45jhomeb34cqu6nxigapmobtqrzpyoq7mh6655@3zgqsyfui23j>
-References: <20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im>
- <20251208-b4-pks-odb-alternates-via-source-v1-2-e7ebb8b18c03@pks.im>
- <kz2eftlrmaxpxjybhjwqlewy3dx44sdznimzs6reoqtev4qtox@hl3s2gxz3sk2>
- <aTfYBGr-0SIDinYF@pks.im>
+        Tue, 09 Dec 2025 10:11:21 -0800 (PST)
+Message-Id: <pull.2121.git.git.1765303880.gitgitgadget@gmail.com>
+From: "Samo =?UTF-8?Q?Poga=C4=8Dnik?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 09 Dec 2025 18:11:18 +0000
+Subject: [PATCH 0/2] shallow: handling fetch relative-deepen
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aTfYBGr-0SIDinYF@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Samo =?UTF-8?Q?Poga=C4=8Dnik?= <samo_pogacnik@t-2.net>
 
-On 25/12/09 09:04AM, Patrick Steinhardt wrote:
-> On Mon, Dec 08, 2025 at 08:09:30PM -0600, Justin Tobler wrote:
-> > On 25/12/08 09:04AM, Patrick Steinhardt wrote:
-> > > Parsing alternates and resolving potential relative paths is currently
-> > > handled in two separate steps. This has the effect that the logic to
-> > > retrieve alternates is not entirely self-contained. We want it to be
-> > > just that though so that we can eventually move the logic to list
-> > > alternates into the `struct odb_source`.
-> > 
-> > Naive question: is the intent here to eventually move alternate ODB
-> > sources under the primary ODB source? Or just to record the alternate
-> > dir info in the ODB source?
-> 
-> Not only the primary ODB source, but into ODB sources in general as
-> alternates are recursive by nature.
-> 
-> The problem I am trying to solve is that ODB sources may not even have a
-> filesystem-local directory, but the way we use alternates recursively
-> very much assumes they do. I don't want to treat "files" sources
-> specially though and only recursively add their alternates. Instead, I
-> want to move the logic of enumerating alternates into the source so that
-> every source can have a different way of enumerating them that may or
-> may not use the filesystem.
+When a shallowed repository gets deepened beyond the beginning of a merged
+branch, we may endup with some shallows, that are behind the reachable ones.
+Added test 'fetching deepen beyond merged branch' exposes that behaviour.
 
-Ah, that makes more sense now. Thanks for the explaination. :)
+On the other hand, it seems that equivalent absolute depth driven fetches
+result in all the correct shallows. That led to this proposal, which unifies
+absolute and relative deepening in a way that the same get_shallow_commits()
+call is used in both cases. The difference is only that depth is adapted for
+relative deepening by measuring equivalent depth of current local shallow
+commits in the current remote repo. Thus a new function get_shallows_depth()
+has been added and the function get_reachable_list() became redundant /
+removed.
 
-> > > Move the logic to resolve relative alternative paths into
-> > > `parse_alternates()`. Besides bringing us a step closer towards the
-> > > above goal, it also neatly separates concerns of generating the list of
-> > > alternatives and linking them into the object database.
-> > > 
-> > > Note that we ignore any errors when the relative path cannot be
-> > > resolved. This isn't really a change in behaviour though: if the path
-> > > cannot be resolved to a directory then `alt_odb_usable()` still knows to
-> > > bail out.
-> > > 
-> > > While at it, rename the function to `odb_add_source()` to more clearly
-> > > indicate what its intent is and to align it with modern terminology.
-> > 
-> > Alternates are indeed just additional ODB sources appended to the
-> > sources list. IIUC though, doesn't this function only add alternate
-> > sources? If so, maybe it would be better to use
-> > `odb_add_alternate_source()`?
-> 
-> Hm, yeah, I think you're right. We still have the recursive nature at
-> the end of this series, so let's call it accordingly.
+The get_shallows_depth() function also shares the logic of the
+get_shallow_commits() function, but it focuses on counting depth of each
+existing shallow commit. The minimum result is stored as
+'data->deepen_relative', which is set not to be zero for relative deepening
+anyway. That way we can allways summ 'data->deepen_relative' and 'depth'
+values, because 'data->deepen_relative' is always 0 in absolute deepening.
 
-On a semi-related note, part of me thinks it would be nice if alternate
-sources were a bit more first class in `struct object_database`. IOW,
-explicitly defining the primary and list of alternate sources
-separately. From the perspective of reading objects, having a single
-list of sources is nice, but when writing objects only the first source
-is used. This isn't too big of a deal, but certain operations like ODB
-trasactions will reorder the source list to change where objects get
-written to which feels a bit fragile to me. I guess another way to
-resolve this concern could be to change ODB transactions to use a
-separate mechanism though.
+Samo Pogačnik (2):
+  shallow: free local object_array allocations
+  shallow: handling fetch relative-deepen
 
--Justin
+ shallow.c             |   1 +
+ t/t5500-fetch-pack.sh |  24 +++++++
+ upload-pack.c         | 142 +++++++++++++++++++++++-------------------
+ 3 files changed, 103 insertions(+), 64 deletions(-)
+
+
+base-commit: f0ef5b6d9bcc258e4cbef93839d1b7465d5212b9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2121%2Fspog%2Ffix-fetch-deepen-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2121/spog/fix-fetch-deepen-v1
+Pull-Request: https://github.com/git/git/pull/2121
+-- 
+gitgitgadget
