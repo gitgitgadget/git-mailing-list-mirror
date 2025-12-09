@@ -1,112 +1,167 @@
-Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AAB17C9E
-	for <git@vger.kernel.org>; Tue,  9 Dec 2025 02:16:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069C017D2
+	for <git@vger.kernel.org>; Tue,  9 Dec 2025 02:34:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765246598; cv=none; b=Nd0K+svbX6wjIhl8iD1LAQyDvHFgDRtYN3agPK6dBCkQbY3VNpmdrprwSzKrkms2XSg6qvI3zUfvFUhZ8JyZcbGUNb0bHTYcWl/Nlt6Jc5Z5ax2gSghnTDUQh7M2Mp5jsFwG6pW0n28ZgCe8JiaAicvQLGjw5AfG9aUplWKwxkY=
+	t=1765247672; cv=none; b=SXURZNMNCIW/1HmiT4qeq66ah5WVa3wZ2Midh3fAdox6fzykmSu+UEmxA9kF7+8l9Kar1ybXVwVt7lAepieU1fUxTJ+v8UB6MTfxxXZOQFHZqBVv+aL49zwGLr4BGZYdMmUE4Dv8jVy51StzByU5KIDHE8mrPVisG4ry6PSF7as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765246598; c=relaxed/simple;
-	bh=oJaMLEOo37VmRs8wUWk0i79tfVhwFCurdN1i8wV4bGk=;
+	s=arc-20240116; t=1765247672; c=relaxed/simple;
+	bh=ME2eiRS9GDUvao/BRfgPeXkVwmDIGyD0gRm0W/rwN5Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BxVmHh6suE26TiWj7sNd2sXxTYwOdN8vdw4r1hocIu550oNkUJQb0k3UfW0Z/rezx8mue3c0UfxrHG4rSpUhXQKJ9DrXIr2w4TeFNQXeNEzNy/qCIn37aqk2KUmuup34tvkON2Isz6yphjNvDAIV4NY0HzX0ewStzjmWprdsUeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=LwT2U+/y; arc=none smtp.client-ip=74.125.224.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=jY6X/4zvSRteiE/lbbDIfiaRKjDNH1r60Tv0XBuO0LHYcWzJ0YwWZR3N+qAgFzu3czSGCRZOYUk7Flqp+o+Op0UXTHdbnGqYL0uXtUZLMkRw6pdaQSMeqNLJX/m9AwU8dVqS+VgKRrGRO/Qsg6Gohdm9ASua6lPTbSjfCCXDCYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NNnyq0RF; arc=none smtp.client-ip=209.85.160.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="LwT2U+/y"
-Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-6433f99eb15so4521789d50.3
-        for <git@vger.kernel.org>; Mon, 08 Dec 2025 18:16:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NNnyq0RF"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-3ed151e8fc3so3099213fac.2
+        for <git@vger.kernel.org>; Mon, 08 Dec 2025 18:34:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1765246596; x=1765851396; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1765247670; x=1765852470; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=sa26c+XnH0Xkn8W+Eb9c/ntyOONmxIeFf6RV9a5dEX8=;
-        b=LwT2U+/y5UqnrJhr/teNp0DcVKgsFOAS/1AG7UDUIP+LsnbaL9CVxLraA0U9Vc1HT4
-         2MoM4UZ2Y52/sX2ghv+Dco8pEK4w3zTfkbRKXyCFX7sd1u19Dzl0Ce3ouWEAitpSmNT+
-         RZO8OC+0t0vzDgXm2CdoUfhhWlDmqIiLq9zd5VLOe1tuuL9iaB3Ugc92olw2Y0ataW/X
-         /D8m/SCMNf4KvkJdWSLFquNoino8yQE1glSlDsChrpSryNkIxxLwiMLxyoF3XZACXRH/
-         0XizSc7VjnSthr8hvoPSYZPnuZF+i8LLExPIfRlWli88d/wLKtkrwBjg3H/9aI3tvTO5
-         aknQ==
+        bh=l48rAHhnd2rtaAyN499Mdebq7AgWNA0tf8QAQX77BNc=;
+        b=NNnyq0RFwqsl5ZR9fG2NpUKJGRRMQPxUwX8EhkgGBnvGLKEg0rlKflhqnFc91eT/0y
+         wOea4yEYht8ApDqV47YZht4Yk4eZULdqyaqJtTA4cjIIfQG4zDOluVgblLlXsHBQ+LLD
+         4AbNv7gedfaoPzc0rsDkdkcdY4y4+Df95tlcDR8BGPIEAlEY5nUMzdHzei35RZvuUaly
+         dJA7XVmSDFlGneHURY6jFjHhNCKOrOPcBCj1F30CuzWXDP5nDU8gkpSl71uTmC/o8Jaa
+         DT0YErEfF5yTC62YQVePteY7DzRfVOhhKBZE3w7dn+Y0pnJnbagxpwiFBb32eUF8WsW/
+         B80A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765246596; x=1765851396;
+        d=1e100.net; s=20230601; t=1765247670; x=1765852470;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sa26c+XnH0Xkn8W+Eb9c/ntyOONmxIeFf6RV9a5dEX8=;
-        b=CSQ6Jn1m0bR3Lppjq8ndjJLmY863NpRtHL7bLCtUNi3pl2V9tS4Ua4tOQbihYPpZ97
-         8IU1xcO1RVvvEl/FSCSxCDU1sS+b2PvS/Ee3+/jlHjWNBImTkevb7jl0mvFrdmewHZRC
-         JDM4mO4AFjmXVXB9c31sQQ/IDlDBdAeZx+MHyQV+ETLfFQfjeY61EgZbhWy5YK/uYh8s
-         q5BIxpcOcqP+z9ZBe2aWz6DVtViLpJRxDXxtmAJYU+XenpQJT70Zc2qN3h3gs//CZGlX
-         v+OBFZUhdb+coziR99ng0toYugJwUTzizFkPZDA+sSzntTKopRpg4fCu6YXKHk6LrUXY
-         nIog==
-X-Gm-Message-State: AOJu0Yyx/4E/QE74gApFZideViZuCFEnEzsfz0v0CRE6oSAouDV7sh1V
-	UWDJuJJ2iU9oaFji7Cv0Mtdwo/9iXERoAcwdTBlc7SaSz2FrrkY7+jkWgai6WtpqNLw=
-X-Gm-Gg: AY/fxX7WtulD3UXnL9AdIlG3gNsrkZk0eP4SQvqnVxna8zKlh90fffE8j0sDKp/mD3N
-	H1XbZ8Wwef9OYS4UqclVuffYceO51nEJOSOd2lqzLx/dBHmT4b4yLIRl6AT4p/n7Kxa48+Y0gtU
-	ErzAsUkNE9PlCxAnggowSXIXJUOk8BIBrVpQD7355Dufj8TJPbZDvoO0KmksnVPvZYySZJxyNGX
-	IiZFzG4+Y4HtVz+77kkNXQQGfDb8fofQHDv64dypbk5g9fcCb5vskcUcBIcuZxMPLhnKDYOkgPD
-	KdaNPnI7BmSio5m6+IgYz9nKH/0IX5yKFe7kVG3uoG3MU5LPw1BxWP/gkzFztGpUv3ZQf1M5ct/
-	t0ZHFVULcDbK4jFLyjLYILEKnm6tnFIiK4n/i/W/4ENv0F+AFFvjqjmUqTViwav0Qj6214K5x6Q
-	smQM7q5qNn2PxvhoxYGTqDxCX0/zKxh2kASTIDuo3GX6Iq9R6glfPu6crxEOYq2G2wiG33PIRRg
-	D82F8AqgLZmhh7Pnw==
-X-Google-Smtp-Source: AGHT+IHfBfTs0mMpbey6cqVzBI1Cf2y7M92x7NLG9rRBQH4PJOp2WLf4AYg3SaVkdkTzyo3nKocr8A==
-X-Received: by 2002:a05:690e:1912:b0:640:d255:2d75 with SMTP id 956f58d0204a3-6444e7afbb9mr7405326d50.48.1765246595952;
-        Mon, 08 Dec 2025 18:16:35 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-78c1b77c0f0sm53801257b3.29.2025.12.08.18.16.35
+        bh=l48rAHhnd2rtaAyN499Mdebq7AgWNA0tf8QAQX77BNc=;
+        b=AXdiew5+wyTItvDV/w07z3t9u77HhKMQl2NBSAF+crkOm+O20a0XDU/DOGl2AuXRRZ
+         8g0z4djAtILFr9+aqKJ8fK+oSiju1tbjV8rIQs9eWDsXCrTYwsy9yehqc8mX/XSzZx8N
+         9rAigLvvUem6z3pH8PSJroP4Usa4T8aFH8qD89B1DGWufTsGs3AnfCVtm8k+1oxvO99y
+         CfSxAw8nlQmGcHohDIv6z0keWfpJmvvF69jqz+5ud/z0Q5wvcLvu+put3U5bpHPs48tS
+         He9LRWCbWga/6F7+YdsC+RkFHXvldyuC5shDM593CH3I4kD1t1YywKKKk1Qh3mYQKd21
+         AUCw==
+X-Gm-Message-State: AOJu0YzC7WwehQKYzrwu7blVph+Gi9nV9mdqLz2wlWQjtcyDe7ri8VDp
+	CHDlrB+eflgGx2ZpaJXnWG7lsipp08EKYAFqlhfgbFiPURgvb4EIfpzO58jlxQ==
+X-Gm-Gg: ASbGncuhdaICdF0vKYLBDh99l8Hacc4J9kZ4sp8pCNAgGptiz+TvrtiJL0N5n5S9DFU
+	Houp5KsCiGhIkc6jyRifdiADq5GhntHDesFvFTwkJ9LmUl4ma6kVwaEIOjRJDNHXTdIEIO7BGvH
+	X2ZW//GVoI9ukz6NntlEnMuWq4Wy/jwTtPvYAhJskNS1lgRgKBFeJSxSv8gU3ViEYo8EXuYFnF1
+	aFNcT4vVKIK8xmyfdMs1GS70tvJU1wOpa59vaBKX4SX4VSIqcBgge+LLt+uBNOUKT20YmzgC9Q6
+	Xf/yp6UzHrE47KyGm0uhrG924BQxm38QX3R2gaAgffr/MEvzBP98ufW6TAZbjn+LveaQsjRG1MZ
+	hnw4+FkmzlYDoUHSlmHWSjOWbiDDRrnACIi+lUKGGBiXEuJHx4BwuFy4bUNVBf3keUB8/DuLUDb
+	utdSgW
+X-Google-Smtp-Source: AGHT+IHITkmVsTlCyiocEWFfOrErFbk+6134mCKGtVUdY28Ww4n25fiNoOwIQ1BCRMeJRE4wF9Y8eg==
+X-Received: by 2002:a05:6870:b493:b0:3e8:9d25:b40 with SMTP id 586e51a60fabf-3f543e025fcmr3971237fac.20.1765247669800;
+        Mon, 08 Dec 2025 18:34:29 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3f50aa34d4fsm9919681fac.5.2025.12.08.18.34.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Dec 2025 18:16:35 -0800 (PST)
-Date: Mon, 8 Dec 2025 21:16:34 -0500
-From: Taylor Blau <me@ttaylorr.com>
+        Mon, 08 Dec 2025 18:34:28 -0800 (PST)
+Date: Mon, 8 Dec 2025 20:34:25 -0600
+From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 15/17] t/helper/test-read-midx.c: plug memory leak when
- selecting layer
-Message-ID: <aTeGgqxVO4xcuk6y@nand.local>
-References: <cover.1765053054.git.me@ttaylorr.com>
- <43ef3d0013f1534c7ff8b1a7c4a17fb0c9b68684.1765053054.git.me@ttaylorr.com>
- <aTcYhKOIu7ebJ_xV@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/8] odb: move computation of normalized objdir into
+ `alt_odb_usable()`
+Message-ID: <cqrno3lfvbfrb6ieestagbs5avshs7znoumky2plvtc4tjye2a@onwb5vmtstbx>
+References: <20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im>
+ <20251208-b4-pks-odb-alternates-via-source-v1-3-e7ebb8b18c03@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aTcYhKOIu7ebJ_xV@pks.im>
+In-Reply-To: <20251208-b4-pks-odb-alternates-via-source-v1-3-e7ebb8b18c03@pks.im>
 
-On Mon, Dec 08, 2025 at 07:27:16PM +0100, Patrick Steinhardt wrote:
-> > @@ -36,8 +37,11 @@ static int read_midx_file(const char *object_dir, const char *checksum,
-> >  	if (checksum) {
-> >  		while (m && strcmp(get_midx_checksum(m), checksum))
-> >  			m = m->base_midx;
-> > -		if (!m)
-> > -			return 1;
-> > +		if (!m) {
-> > +			ret = error(_("could not find MIDX with checksum %s"),
-> > +				    checksum);
-> > +			goto out;
-> > +		}
-> >  	}
-> >
-> >  	printf("header: %08x %d %d %d %d\n",
->
-> We change the return code from 1 to -1, but that ultimately shouldn't
-> matter much.
+On 25/12/08 09:04AM, Patrick Steinhardt wrote:
+> The function `alt_odb_usable()` receives as input the object database,
+> the path it's supposed to determine usability for as well as the
+> normalized path of the main object directory of the repository. The last
+> part is derived by the function's caller from the object database. As we
+> already pass the object database to `alt_odb_usable()` it is redundant
+> information.
+> 
+> Drop the extra parameter and compute the normalized object directory in
+> the function itself.
+> 
+> While at it, rename the function to `odb_is_source_usable()` to align it
+> with modern terminology.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  odb.c | 27 +++++++++++++++------------
+>  1 file changed, 15 insertions(+), 12 deletions(-)
+> 
+> diff --git a/odb.c b/odb.c
+> index 3ffeece567..2513457a31 100644
+> --- a/odb.c
+> +++ b/odb.c
+> @@ -89,17 +89,20 @@ int odb_mkstemp(struct object_database *odb,
+>  /*
+>   * Return non-zero iff the path is usable as an alternate object database.
 
-Yeah; I think that returning negative values here makes more sense, and
-use of error() encourages that pattern, hence the change here.
+While we are here we could fix this typo: s/iff/if/
 
-> I'll stop reviewing here and will have a look at the remaining two
-> patches with some fresh eyes. But so far this was a nice read, thanks!
+>   */
+> -static int alt_odb_usable(struct object_database *o, const char *path,
+> -			  const char *normalized_objdir)
+> +static bool odb_is_source_usable(struct object_database *o, const char *path)
+>  {
+>  	int r;
+> +	struct strbuf normalized_objdir = STRBUF_INIT;
+> +	bool usable = false;
+> +
+> +	strbuf_realpath(&normalized_objdir, o->sources->path, 1);
+>  
+>  	/* Detect cases where alternate disappeared */
+>  	if (!is_directory(path)) {
+>  		error(_("object directory %s does not exist; "
+>  			"check .git/objects/info/alternates"),
+>  		      path);
+> -		return 0;
+> +		goto out;
+>  	}
+>  
+>  	/*
+> @@ -116,13 +119,17 @@ static int alt_odb_usable(struct object_database *o, const char *path,
+>  		kh_value(o->source_by_path, p) = o->sources;
+>  	}
+>  
+> -	if (fspatheq(path, normalized_objdir))
+> -		return 0;
+> +	if (fspatheq(path, normalized_objdir.buf))
+> +		goto out;
+>  
+>  	if (kh_get_odb_path_map(o->source_by_path, path) < kh_end(o->source_by_path))
+> -		return 0;
+> +		goto out;
+> +
+> +	usable = true;
+>  
+> -	return 1;
+> +out:
+> +	strbuf_release(&normalized_objdir);
+> +	return usable;
+>  }
+>  
+>  /*
+> @@ -164,13 +171,10 @@ static struct odb_source *odb_add_source(struct object_database *odb,
+>  					 int depth)
+>  {
+>  	struct odb_source *alternate = NULL;
+> -	struct strbuf tmp = STRBUF_INIT;
+>  	khiter_t pos;
+>  	int ret;
+>  
+> -	strbuf_realpath(&tmp, odb->sources->path, 1);
+> -
+> -	if (!alt_odb_usable(odb, source, tmp.buf))
+> +	if (!odb_is_source_usable(odb, source))
 
-Thanks for the review thus far! I look forward to your thoughts on the
-remainder of the series. In related news, I owe you some review on your
-'pks/skip-noop-rewrite' patches, which I hope to get to tomorrow.
+The normalized ODB path is only being used in alt_odb_usable() so
+relocating it inside that function make sense. Looks good.
 
-Thanks,
-Taylor
+-Justin
