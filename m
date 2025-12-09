@@ -1,168 +1,239 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B183054C7
-	for <git@vger.kernel.org>; Tue,  9 Dec 2025 19:35:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E72F2580DE
+	for <git@vger.kernel.org>; Tue,  9 Dec 2025 19:46:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765308939; cv=none; b=bqvoUEzcN091k0ZRSxKs/adOUx8S6UQdt6VIFCCooNijWwKEJIzjuw2kHF+B0mVNeIJtw9sllHf4/y7Q7wMFQ9F4X1E99CpzssojPKrrVQn2bSrNz9N90Bj7amxVO03OtSGUJs+3Bej0ccbP8TYONMq2BP4MCCCXUB4IbaJfZMY=
+	t=1765309603; cv=none; b=VG7D27V5gSp+tH2jkGFGrEmi4g4YyZpHzddek6tecuYAYzjw/WNQovhicUiGZ2zmf9JwOGCzDOr9Hzlk+HC2Z1P7FF5KrEhlbPsRtloABuYbf6+dNXntTN/f5UwGg0K4R/hceggb8HtdRhCT+3I0kNqh2qI2eLE7HEsFzTgUikU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765308939; c=relaxed/simple;
-	bh=zMszL/3kfjhQpj102f011sxwTiqipVKEmMmu0gGQKLU=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:Cc:
-	 In-Reply-To:Content-Type; b=X/OvEImcV/ieQSW0MKXMd1Fv3PSe0lXI1z80qDdnhPbbG6BGE5x3b6fmgrhmQGeoiqJHgk00USBW9HMVktZQvYe6dHnL08vRaqwAyKl+1Ntplgnhs/rycS6f4i7E1TOYIjpLPK0/gqx1AMJTLCYM1S5Ms7kNu7rW43dqFyuQ960=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=njuUAI2K; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1765309603; c=relaxed/simple;
+	bh=EHhMMr2qriIpkj/LwIh58wWsnRMXPZv0hnOGC0JCYys=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Pz/MTTmwmxV9rmoqHSut/8/FiejkC6ljhJpVc5C0PAvt9sH/mm5F/gfsIsLQTUKq+aBUwzCWE/VvXTXGPi5yfwC20rZtWo2YWf2haCPhfUfkICB0U13JL8OOGEIPHqGnNR1wqoNxOW2MABrdB1Hqylki1e23+6yzc1RxMKQExtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OaFPW5iB; arc=none smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="njuUAI2K"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1765308935; x=1765913735; i=l.s.r@web.de;
-	bh=AwQBIXWlmWm4cksCx0lvsFYHVREPSQGIMbWl7a0CZJk=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
-	 References:Cc:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=njuUAI2KrWQU6mKL1OgeXMNrLIknNReSTf6MzXdJg3mQLpJwV0+tCATbSD/HgfvT
-	 huDvWPhcUmVa7wfEjksE3Z0ooOHdbDup/Nw5AE4wvcofz/ZSQ2yGJMhRk0TrEPLS5
-	 hSsl5/r5R2hcO6ssPTtYIpfB0cSiwGA0UNF23vYJhzBqusqvENdYSl7GN2JrJxx/O
-	 gfi6Ugy0Mwq7ZqbIJhdVJeh4MtA6d4w6jbr8CwB1iMAcr8xjuxFM/YRJw2rJvZQ8s
-	 TLWSAQ/W93iD4Oh3m/9W2m0RVIdSFz1LSWf0tgChdEZhQ/iGD6MvveISuMg+F4KqQ
-	 qFI6+4rez39gTR5J5Q==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.27.139]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Myv72-1wG3Jk3gHa-00sKVy; Tue, 09
- Dec 2025 20:35:34 +0100
-Message-ID: <16efc726-34be-44f5-aa92-4e82b663ab3d@web.de>
-Date: Tue, 9 Dec 2025 20:35:34 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OaFPW5iB"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-ba2450aba80so3476418a12.1
+        for <git@vger.kernel.org>; Tue, 09 Dec 2025 11:46:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765309601; x=1765914401; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lIudtBc+2rsyabVma9mvzTwALxor3rWXq9/UTMsuE+g=;
+        b=OaFPW5iBYyeEVZyFMOR/S5qAx8SBXKFbSu+rJ4K8DdB4rQJassBtg8uycQUC7FM9ph
+         H5hMjtIpzvxW/tJfqpC0cAzhgP/qV8lOvbIu8EfjU2B2drTKSMhy9dryKnLQ3Vz733sb
+         TyQLE5ZjaoyQZwCfOWmu3+pEd21le3wpPZXsnhqb99lgEj/By67gZFfgFoOs9GfcU7Ny
+         1WdNL7lqz9I5Lp1jHxu2HjGjz+ZDvQ0yMnQppsu84jHfNJ18eTQx08CFPJ4YwFUETxn0
+         vKzzdDjL3rTdHnFg/ClOcAYog2uUZ17x5+OVi1p5wypTCs9AbV4bROXUDQpW9KnnVg7g
+         9SiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765309601; x=1765914401;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=lIudtBc+2rsyabVma9mvzTwALxor3rWXq9/UTMsuE+g=;
+        b=oY5ZHYBe0U38q6SPHLvaRxpOzuns62nLTsb6tljr4jX7q+TTxgH/j16keqHvbvpe7I
+         yOxiz0Hjd/77CU69m1I5kgiIQNd20TRFgZiKwm1dOThUnjIhJT5Lop4+a0m23NIG5WTz
+         D1T91/dMH4eGxBl6lqvlm0kJ6XSViy5HgJWmuS9CHE6QNWS3/HfrdmNXFiMnF0ylRn8k
+         65ovZ3jiEMJcQ9xebk4he3CfiCvFH/rAouWwxtPjsNpLdpdZrJ9PLgKTF+l+m7VLdEdv
+         nD6HfnkPTxBlQ+Xkor+ivbMYK4eCFOJmbQcRjsmOozGR3yG8F52QhW2EDCgMYrcVzFao
+         pCIA==
+X-Gm-Message-State: AOJu0YzcrvCJoG19ZDXYoQIsIZp3n0f9b7Z1We/znNAY3rc9FXQHqcd6
+	WUvcNk/o7W+l+gLnqwOZM6pHZyk2fKKuNtp5G/My9hsj/oYyAugE/wLc6ztqYQw4
+X-Gm-Gg: ASbGncuzLmcAwRSEg8xzmV92VSmUV/G1DyCVub/AMUGwiFBvB5E0/3xqwsbyANxZg+m
+	osfQf0KBdmzn/q4OEPE5Dpv8ZIfSAXajcJ5Lr0e5LptRx6Vc4RawuNCq6PRaZ1oX6+NjDCJCzYg
+	el26g7IS6EhfXwkq7AO6oaeMmAOmQsnWWU5c4E1wMw/dcm4JBIHmaI6uIF8RUDcZqlNzpg17VaS
+	I7QDL2pTYCUUbfagN3pdCw5h23P64o/Wkw2UQB3G2OHsAa7Y4l4xhbU5TbgS9/U152zYZDvYuIt
+	EEGK+VEtWkD2hN3tpgHHhxCZmAiPGZ0c4NYhMZZJRQghhKje4pqfAgI5Zatbr9M6GVOgEWIY6mK
+	2m/+OLnMwOgeqp1h5+IDkb0Uv8uqHhYA3+XHQYs8AD3xoF/dM4nvWnWb5chhG7UkxTHVYFpvxYL
+	rbITCoGwhjULjF2OeT59ac8Wnnk9/reyhsOm4mW5UFQ0FG5xMEjlBai6icKRvA
+X-Google-Smtp-Source: AGHT+IGTMTVuoS7aPyU0DgwJhN/lqNFrr2sS7U1NQL8dBz9S0NUI8cSNpBnaPv51Jxh2Ap217H06ew==
+X-Received: by 2002:a05:7301:3034:b0:2a4:7697:a835 with SMTP id 5a478bee46e88-2ac054968b9mr98697eec.14.1765309600946;
+        Tue, 09 Dec 2025 11:46:40 -0800 (PST)
+Received: from localhost.localdomain ([177.118.148.121])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2aba8395d99sm71077271eec.1.2025.12.09.11.46.39
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 09 Dec 2025 11:46:40 -0800 (PST)
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Subject: [PATCH v2 0/2] repo: add new flag --keys to git-repo-info
+Date: Tue,  9 Dec 2025 16:36:01 -0300
+Message-ID: <20251209194616.61620-1-lucasseikioshiro@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
+References: <20251207190532.67107-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH] config.mak.uname: use iconv from Homebrew on macOS
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-To: Git List <git@vger.kernel.org>
-References: <53690064-1c98-40e9-8b9a-7ba6bee63703@web.de>
-Content-Language: en-US
-Cc: Koji Nakamaru <koji.nakamaru@gree.net>
-In-Reply-To: <53690064-1c98-40e9-8b9a-7ba6bee63703@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:HcSCqPlsG1FN8j/2YIoMRImj+VobhiB59r4bidOJZXLL5sz6Urn
- GwgGTF77fheHHK5vWibRYjvv6VZJJmOE8AqpCYeRgWLdZdGdkTatT6DILORGfVv9pQIpLRO
- N7euw1A7zHY/pwCkX0qL8a2ipFPo/mxvJmqsqKTdI4T6XtXds06u3mQaeDF1QFxnOF7S9cH
- IuX02Cq2+Gi6oRwuTMzpA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:20BT4IEo0pE=;Qm+ODouvKUYx6GRKrf0UY98Va+6
- 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
+Content-Transfer-Encoding: 8bit
 
-The library function iconv(3) supplied with macOS versions 15.7.2
-(Sequoia) and 26.1 (Tahoe) is unreliable when doing conversions from
-ISO-2022-JP to UTF-8 in multiple steps; t3900 reports this breakage:
+Hi!
 
-  not ok 17 - ISO-2022-JP should be shown in UTF-8 now
-  not ok 25 - ISO-2022-JP should be shown in UTF-8 now
-  not ok 38 - commit --fixup into ISO-2022-JP from UTF-8
+This patch series adds a new flag --keys to git-repo-info. This new flag
+only prints the available keys, without printing the corresponding
+values.
 
-As a workaround, use libiconv from Homebrew, if available.
+The main change in this version is the compatibility with the flags -z
+and --format, allowing the keys to be printed following the
+null-terminated format.
 
-Helped-by: Koji Nakamaru <koji.nakamaru@gree.net>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- config.mak.uname | 7 +++++++
- 1 file changed, 7 insertions(+)
+This patch is based on top of master bdc5341ff6 (The sixth batch, 
+2025-12-05) with lo/repo-struct-z merged.
 
-diff --git a/config.mak.uname b/config.mak.uname
-index 1691c6ae6e..1b305e38c6 100644
-=2D-- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -182,6 +182,13 @@ ifeq ($(uname_S),Darwin)
-         endif
-         endif
-=20
-+	ifeq ($(shell test -d /opt/homebrew/opt/libiconv/ && echo y),y)
-+		ICONVDIR ?=3D /opt/homebrew/opt/libiconv
-+	endif
-+	ifeq ($(shell test -d /usr/local/opt/libiconv/ && echo y),y)
-+		ICONVDIR ?=3D /usr/local/opt/libiconv
-+	endif
-+
- 	BASIC_LDFLAGS +=3D -framework CoreServices
- endif
- ifeq ($(uname_S),SunOS)
-=2D-=20
-2.52.0
+Lucas Seiki Oshiro (2):
+  repo: add a default output format to enum output_format
+  repo: add new flag --keys to git-repo-info
+
+ Documentation/git-repo.adoc | 11 ++++++++++
+ builtin/repo.c              | 41 ++++++++++++++++++++++++++++++++++++-
+ t/t1900-repo.sh             | 33 +++++++++++++++++++----------
+ 3 files changed, 73 insertions(+), 12 deletions(-)
+
+Range-diff against v1:
+-:  ---------- > 1:  9eb2549806 repo: add a default output format to enum output_format
+1:  1b9b7dceb7 ! 2:  c5b7ba8824 repo: add new flag --keys to git-repo-info
+    @@ Metadata
+      ## Commit message ##
+         repo: add new flag --keys to git-repo-info
+     
+    -    Currently, if the user wants to find what are the available keys,
+    -    they need to either check the documentation or to ask to all the
+    -    key-value pairs by using --all.
+    +    If the user wants to find what are the available keys, they need to
+    +    either check the documentation or to ask for all the key-value pairs
+    +    by using --all.
+     
+         Add a new flag --keys for listing only the available keys without
+         listing the values.
+    @@ Documentation/git-repo.adoc: SYNOPSIS
+      --------
+      [synopsis]
+      git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]
+    -+git repo info --keys
+    ++git repo info --keys [--format=(default|nul) | -z]
+      git repo structure [--format=(table|keyvalue|nul) | -z]
+      
+      DESCRIPTION
+    @@ Documentation/git-repo.adoc: supported:
+      +
+      `-z` is an alias for `--format=nul`.
+      
+    -+`info --keys`::
+    -+List all the available keys, one per line.
+    ++`info --keys [--format=(default|nul) | -z]`::
+    ++	List all the available keys, one per line. The output format can be chosen
+    ++	through the flag `--format`. The following formats are supported:
+    +++
+    ++`default`:::
+    ++	output the keys one per line.
+    ++
+    ++`nul`:::
+    ++	similar to `default`, but using a NUL character after each value.
+     +
+      `structure [--format=(table|keyvalue|nul) | -z]`::
+      	Retrieve statistics about the current repository structure. The
+    @@ builtin/repo.c
+      
+      static const char *const repo_usage[] = {
+      	"git repo info [--format=(keyvalue|nul) | -z] [--all | <key>...]",
+    -+	"git repo info --keys",
+    ++	"git repo info --keys [--format=(default|nul) | -z]",
+      	"git repo structure [--format=(table|keyvalue|nul) | -z]",
+      	NULL
+      };
+    @@ builtin/repo.c: static int print_all_fields(struct repository *repo,
+      	return 0;
+      }
+      
+    -+static int print_keys(void)
+    ++static int print_keys(enum output_format format)
+     +{
+    ++	char sep;
+    ++
+    ++	switch (format) {
+    ++	case FORMAT_DEFAULT:
+    ++		sep = '\n';
+    ++		break;
+    ++	case FORMAT_NUL_TERMINATED:
+    ++		sep = '\0';
+    ++		break;
+    ++	default:
+    ++		die(_("--keys can only be used with --format=default or --format=nul"));
+    ++	}
+    ++
+     +	for (size_t i = 0; i < ARRAY_SIZE(repo_info_fields); i++) {
+     +		const struct field *field = &repo_info_fields[i];
+    -+		puts(field->key);
+    ++		printf("%s%c", field->key, sep);
+     +	}
+     +
+     +	return 0;
+    @@ builtin/repo.c: static int print_all_fields(struct repository *repo,
+      {
+     @@ builtin/repo.c: static int cmd_repo_info(int argc, const char **argv, const char *prefix,
+      {
+    - 	enum output_format format = FORMAT_KEYVALUE;
+    + 	enum output_format format = FORMAT_DEFAULT;
+      	int all_keys = 0;
+     +	int show_keys = 0;
+      	struct option options[] = {
+    @@ builtin/repo.c: static int cmd_repo_info(int argc, const char **argv, const char
+      	};
+      
+      	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
+    + 
+    ++	if (show_keys && (all_keys || argc))
+    ++		die(_("--keys cannot be used with a <key> or --all"));
+     +
+     +	if (show_keys)
+    -+		return print_keys();
+    ++		return print_keys(format);
+     +
+    - 	if (format != FORMAT_KEYVALUE && format != FORMAT_NUL_TERMINATED)
+    - 		die(_("unsupported output format"));
+    + 	if (format == FORMAT_DEFAULT)
+    + 		format = FORMAT_KEYVALUE;
+      
+     
+      ## t/t1900-repo.sh ##
+    @@ t/t1900-repo.sh: test_expect_success 'git repo info uses the last requested form
+      	git repo info --all >actual &&
+      	test_cmp expect actual
+      '
+    +@@ t/t1900-repo.sh: test_expect_success 'git repo info --all <key> aborts' '
+    + 	test_cmp expect actual
+    + '
+    + 
+    ++test_expect_success 'git repo info --keys --format=nul uses nul-terminated output' '
+    ++	git repo info --keys --format=default >default &&
+    ++	lf_to_nul <default > expect &&
+    ++	git repo info --keys --format=nul >actual &&
+    ++	test_cmp expect actual
+    ++'
+    ++
+    ++test_expect_success 'git repo info --keys aborts when using --format other than default or nul' '
+    ++	echo "fatal: --keys can only be used with --format=default or --format=nul" >expect &&
+    ++	test_must_fail git repo info --keys --format=keyvalue 2>actual &&
+    ++	test_cmp expect actual
+    ++'
+    ++
+    ++test_expect_success 'git repo info --keys aborts when requesting keys' '
+    ++	echo "fatal: --keys cannot be used with a <key> or --all" >expect &&
+    ++	test_must_fail git repo info --keys --all 2>actual_all &&
+    ++	test_must_fail git repo info --keys some.key 2>actual_key &&
+    ++	test_cmp expect actual_all &&
+    ++	test_cmp expect actual_key
+    ++'
+    + test_done
+-- 
+2.50.1 (Apple Git-155)
+
