@@ -1,53 +1,53 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41E7223339
-	for <git@vger.kernel.org>; Wed, 10 Dec 2025 06:28:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9771DF26E
+	for <git@vger.kernel.org>; Wed, 10 Dec 2025 06:28:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765348108; cv=none; b=ipdQtQmNuPFcl9ajcgMS4rcbrBeyvSgcUYtD7iMu58bImKfy9H5E3U46gEk8TzqdTrHDZnMYyhvTLBFPKaDmjBKuSqrgFg8jhiXSC+l6Q5qGCpYBY+bsZ7CBdkssB6isn+7HrxzRc7MbLKz4FH28tnXx02Yi6MvcF4qIDgFHlUs=
+	t=1765348113; cv=none; b=ZXyB6KE+UvxooArO6U2/hHNE1rD/bcwAwlsuenaDQH4qVjZLjSJOHIcTP7hhdSbbZSiOnWyL+3rtcdgGiP/BFLzgRuAyrkG/NUE87hiI1YwWgDc7Y1hUrYYGbc8xAwb85phv1MoxMEMMFKs6Rws66YOK/NUhzhibeIr6v0+yL/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765348108; c=relaxed/simple;
-	bh=pgfAEe9W5nTgYIMzz29fyigpZs6ayogHNmlBI9CZAnk=;
+	s=arc-20240116; t=1765348113; c=relaxed/simple;
+	bh=7H7MCY+bECOY7xoFLqdjyAeEC9dC0U7u8o55Hhkwk40=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Nxo5ZxbctCgCfzAsQjZyleoIA7awj1NRhB/HrxYF9qxEl0p8JzLgio1GbD9j6imvBU0rUZMEAzq0iPa7Z15hNd7V/7dcguDqLRHPjIjZ682CZCx62/31EQliVabqRhWst4Ge2uc5sZ9Wp/7AdZG2SF47EgNWNRh3rIyW1Z9ThaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TkLyLugY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EOa0dboJ; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=ckQhvTcR14yOI6ZBzT2c5aMJHFurA9FzRsAenbaR73VCfx/8FjjPPdMzANDrJv5WDdA6x++k6+WuOTNqVpfj1oYvOwplrv02b1/5SThSYTxpAzWxgbp0usrToRvOM+HfK5H29UeRHAcL03bUigFN2ShzFhDVYR+MQopQaFiTyuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T29WyOfg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lCoh7dLM; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TkLyLugY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EOa0dboJ"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id E0CA01D001B8;
-	Wed, 10 Dec 2025 01:28:24 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T29WyOfg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lCoh7dLM"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 37AFC7A011F;
+	Wed, 10 Dec 2025 01:28:30 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 10 Dec 2025 01:28:24 -0500
+  by phl-compute-06.internal (MEProxy); Wed, 10 Dec 2025 01:28:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1765348104; x=1765434504; bh=ZRRxbAqGuG
-	qrtmOu/0tpf7cPxM0yROeisbd6deJxZl0=; b=TkLyLugY0rttu3c/+00Mb7cHfU
-	lVMBEs3jnuhsafkRcWAZmyAOpTDv9tKOf/MSgp1y01MgGv1xyqFSZQSEKncrHjLt
-	f31kgGgIMjj8arufg6W74C5zAozzUX/qdHQknJei2bFxdLFisEj49R0BFZM9H9ZA
-	NXmVuCnIzm344wyuj9W/t2bKazxKUm0mPCTqMfkXVNbGtznSUNvCAqlxzEIy8tgr
-	zsSzbUvaCGDthHSLx7SKWfBBcaXgnPllENXQy3T9X/ufg12kjUuhOFy2S28xYd09
-	bLifUrrYjKiEkpUZL1jo1w37zVtZqgzKd09lVY5rrMqHtx+u2NBFRq6ADwFg==
+	:subject:to:to; s=fm1; t=1765348110; x=1765434510; bh=7z+GJ7Ob66
+	sxJEFGbwx5iFSghFppf/MzaCJD1FRZN8Q=; b=T29WyOfggGYxfEQFcJ520fgSqO
+	CaVcc1A2kGvTrmxOcuJi6/urYt5/m/CRtqGpVGsPN1wiDwi/4Kxfl9wMeLS9PRzi
+	NdGajC0RA2q1AdULjas7RrWoPOZMq7nvPcQCIA5a86sEw6wYf3wGxBoPuu+FDKpF
+	khJuhFcXqtH1kZ6uEq0xDJf6HoJA3bWXc0e7CKf8EL4rWhItHVGHHqEngGv49kFr
+	KvLjdS40d3zd3XcfWFWiLRpWPoJo0wwDD463lOcJ1guRofE2r7llv9r+Ppwq2b6r
+	S/jLvknlYZTQoisaba/pMOWtfo4401ULvfFMwgYLdQgb506UXzpk/nfahw1A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765348104; x=1765434504; bh=ZRRxbAqGuGqrtmOu/0tpf7cPxM0yROeisbd
-	6deJxZl0=; b=EOa0dboJXoIN9DLYihvTvXaDxpzH5OnSnBko7PZcSO2bkcrqYW2
-	cuMJ715FmhUVtVm1aI6XWQsq1TCVV0r3HrBYOTUZtvVe/D4dWqg1U6gx7R3MoTig
-	gx2elNtIMj+DIJatR9b2BS7/aW7FEuTj7/wuYv4AmTAw5wOexl6hrLZ2GViGk7Xw
-	wbBzTtPJOhalIrsCpnlFiValPgkXeT6Wo8YnQMbT6E90bqFImTiJpDkJCAeEJwqk
-	yuPp0hYouiVvULs4IE13X8e3iSILugZJN/WLtL1blvxn6PwT+qASGSo2NHUxs7GW
-	sGtb3RIrvcrko22e8e9RpB9LG5imkuGMTqg==
-X-ME-Sender: <xms:CBM5aZ88R3CLNbL9eYyAi-qNtEMYXWfMPWGn5rRtFTVNyx4PpP3xDA>
-    <xme:CBM5aTtJ82sULIKjlu2Y-DcAoLa5gh-GUWDNMu-CsqAeKytc9OtH_gpU99IDZR9GH
-    4Xoh68SJV1wSDmbrGnv64nYl-5cgk1p9JTh8HRTQhRl-pCH9a6Mpg>
-X-ME-Received: <xmr:CBM5aUomDmsvtZTZdisiBLevD7chJ-_ruYqZUsjYVivWX5rg05PA1MQYFfl5lst0ekQIvmEXh6yXFe-iqdRolfyE39tAi1CwZYZRnAHBh2QN>
+	1765348110; x=1765434510; bh=7z+GJ7Ob66sxJEFGbwx5iFSghFppf/MzaCJ
+	D1FRZN8Q=; b=lCoh7dLMtlbHLg5HNJKp24aiLcjk4rAGUSuC30uds6bIVtEoEok
+	s325US1Flke3iRimIKIu6/RbM/2pTazddeU/3pFgt5Kd1qsm1GPNU9VrrHGkR+KV
+	v97pGRotnRi93rCEbS8B47k9RmmXI5sWWbxdY7IKSzABIUKrm6+ZA0haPlB9nQQ7
+	5uYxeWYzLr8/GdBNWHN/nOvg/Vtpo+ZB4v8k0T5CejlpCQeUcK4HqNLtF3u2mYcZ
+	KCHtyDtXbPmm8aLmMiAWg5UbR56j/6qNYcDMMxF81WVQp4BY/5mcRSh4lNpmLFML
+	c59WTdjf1AlQuRjicurFaa3KEuWHqySb4Pw==
+X-ME-Sender: <xms:DhM5aS0lkwv5_IvFell6QnkuQaQBTXz6V3fGSTj2C6Cq83WvxF5mNA>
+    <xme:DhM5abHhHEUKqGkXSV9A3FmQc1boGPFnefH0K_30l6ELpEdLKb3msFFC2tOO6WK3A
+    Ll2LZh2npElMBvD0n0ALo2xqR4ncZOvvfcrTcGdMw5FAgZgFA-NOA>
+X-ME-Received: <xmr:DhM5aYgUhiH3X5azOqczWLWGoJlqwfGkGZk4j92obqZDwcE8ysujg3ovCGrBcxaVOI7Gqmp6MVzJLqRRxWxn2t8RGOCvfUAZxig3ioMqv5sa>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudejudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -56,28 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvudejudcutefuodetgg
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvg
-    hrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:CBM5aYkSf-vegywaA2bhE1YR8WlopfI7N0AaucpJFpTkzbBUaFMT2w>
-    <xmx:CBM5aQx41D255FLNLZvf_xNXq9Gbq9ghI4j12Cl5F3UWt3Aiim-Szw>
-    <xmx:CBM5aYnQ-ee0cAVLnupIx2xKY2BwZPJdwF3yJl1wwo1qhC6A0LGIPw>
-    <xmx:CBM5aReTmR5MZSf9-TNk6zfqOhtbcbV71KpntMh8uBHUEiNJHrfHog>
-    <xmx:CBM5aYupIHHziEcRp664daIn50kP5nWNo5JoaGjAJdYvmxrba7e5IOeY>
+    pehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:DhM5ae82w8HLynaLvbWvIA-ILqD4Rfh-qyPoVyUaOReyXGFM78hGdQ>
+    <xmx:DhM5aXqbk7Nd-tFHq-1-AZ6OGZ8hAqM9yvEcKaVCWvIA5m7ABDGorw>
+    <xmx:DhM5aV-6mNHhNvrulY8CJMPoR0n-dJNG73vNrcfolfPkx-vnZBQ3ZA>
+    <xmx:DhM5aTVnoYLHv_2PU8EAsUNGD_KtlyyaN6kPprJSBAbSWNiYq6qg3w>
+    <xmx:DhM5afnqi-RWWU55jiUQnvJW5MTYyAwvrWpzcooKiy3D93dih9EWsb7Y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Dec 2025 01:28:24 -0500 (EST)
+ 10 Dec 2025 01:28:29 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2c567327 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 10 Dec 2025 06:28:22 +0000 (UTC)
-Date: Wed, 10 Dec 2025 07:28:14 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 92321d48 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 10 Dec 2025 06:28:29 +0000 (UTC)
+Date: Wed, 10 Dec 2025 07:28:26 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/6] builtin/repo: humanise count values in structure
- output
-Message-ID: <aTkS_kBlNsnbPyP5@pks.im>
+Subject: Re: [PATCH 5/6] builtin/repo: add disk size info to keyvalue
+ stucture output
+Message-ID: <aTkTCplQuSX_Y3oG@pks.im>
 References: <20251209225820.2861276-1-jltobler@gmail.com>
- <20251209225820.2861276-3-jltobler@gmail.com>
+ <20251209225820.2861276-6-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,109 +86,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251209225820.2861276-3-jltobler@gmail.com>
+In-Reply-To: <20251209225820.2861276-6-jltobler@gmail.com>
 
-On Tue, Dec 09, 2025 at 04:58:16PM -0600, Justin Tobler wrote:
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index a69699857a..8fb728b3a5 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -266,6 +275,10 @@ static void stats_table_addf(struct stats_table *table, const char *format, ...)
->  	va_end(ap);
->  }
->  
-> +static const char *unit_k = "k";
-> +static const char *unit_M = "M";
-> +static const char *unit_G = "G";
-> +
->  static void stats_table_count_addf(struct stats_table *table, size_t value,
->  				   const char *format, ...)
->  {
-
-I would assume that these units should be translatable.
-
-> @@ -273,7 +286,26 @@ static void stats_table_count_addf(struct stats_table *table, size_t value,
->  	va_list ap;
->  
->  	CALLOC_ARRAY(entry, 1);
-> -	entry->value = xstrfmt("%" PRIuMAX, (uintmax_t)value);
-> +
-> +	if (value >= 1000000000) {
-> +		uintmax_t x = (uintmax_t)value + 5000000;
-> +		entry->value = xstrfmt("%" PRIuMAX ".%02" PRIuMAX,
-> +				       x / 1000000000,
-> +				       x % 1000000000 / 10000000);
-> +		entry->unit = unit_G;
-> +	} else if (value >= 1000000) {
-> +		uintmax_t x = (uintmax_t)value + 5000;
-> +		entry->value = xstrfmt("%" PRIuMAX ".%02" PRIuMAX,
-> +				       x / 1000000, x % 1000000 / 10000);
-> +		entry->unit = unit_M;
-> +	} else if (value >= 1000) {
-> +		uintmax_t x = (uintmax_t)value + 5;
-> +		entry->value = xstrfmt("%" PRIuMAX ".%02" PRIuMAX,
-> +				       x / 1000, x % 1000 / 10);
-> +		entry->unit = unit_k;
-> +	} else {
-> +		entry->value = xstrfmt("%" PRIuMAX, (uintmax_t)value);
-> +	}
->  
->  	va_start(ap, format);
->  	stats_table_vaddf(table, entry, format, ap);
-
-These units are decimal-based (1000), whereas in "parse.c" we have
-`get_unit_factor()` that is binary-based (1024). Arguably, it's
-"parse.c" that is wrong because "k" is generally decimal-based whereas
-"Ki" would be binary-based.
-
-Not quite sure what to do with this. For counts it _could_ be okay if we
-continue to use the wrong unit prefix. But as soon as we get to disk
-sizes we certainly should use the correct units, which would probably be
-KiB.
-
+On Tue, Dec 09, 2025 at 04:58:19PM -0600, Justin Tobler wrote:
 > diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
-> index 36a71a144e..55fd13ad1b 100755
+> index 0ae96e6bbf..a98c651f1d 100755
 > --- a/t/t1901-repo-structure.sh
 > +++ b/t/t1901-repo-structure.sh
-> @@ -10,21 +10,21 @@ test_expect_success 'empty repository' '
->  	(
->  		cd repo &&
->  		cat >expect <<-\EOF &&
-> -		| Repository structure | Value |
-> -		| -------------------- | ----- |
-> -		| * References         |       |
-> -		|   * Count            |     0 |
-> -		|     * Branches       |     0 |
-> -		|     * Tags           |     0 |
-> -		|     * Remotes        |     0 |
-> -		|     * Others         |     0 |
-> -		|                      |       |
-> -		| * Reachable objects  |       |
-> -		|   * Count            |     0 |
-> -		|     * Commits        |     0 |
-> -		|     * Trees          |     0 |
-> -		|     * Blobs          |     0 |
-> -		|     * Tags           |     0 |
-> +		| Repository structure | Value  |
-> +		| -------------------- | ------ |
-> +		| * References         |        |
-> +		|   * Count            |     0  |
-> +		|     * Branches       |     0  |
-> +		|     * Tags           |     0  |
-> +		|     * Remotes        |     0  |
-> +		|     * Others         |     0  |
-> +		|                      |        |
-> +		| * Reachable objects  |        |
-> +		|   * Count            |     0  |
-> +		|     * Commits        |     0  |
-> +		|     * Trees          |     0  |
-> +		|     * Blobs          |     0  |
-> +		|     * Tags           |     0  |
+> @@ -35,6 +35,37 @@ test_expect_success 'empty repository' '
+>  		git repo structure >out 2>err &&
+>  
+>  		test_cmp expect out &&
+> +		test_line_count = 0 err &&
+> +
+> +		cat >expect <<-\EOF &&
+> +		references.branches.count=0
+> +		references.tags.count=0
+> +		references.remotes.count=0
+> +		references.others.count=0
+> +		objects.commits.count=0
+> +		objects.trees.count=0
+> +		objects.blobs.count=0
+> +		objects.tags.count=0
+> +		objects.commits.inflated=0
+> +		objects.trees.inflated=0
+> +		objects.blobs.inflated=0
+> +		objects.tags.inflated=0
+> +		objects.commits.disk=0
+> +		objects.trees.disk=0
+> +		objects.blobs.disk=0
+> +		objects.tags.disk=0
+> +		EOF
+
+Do we maybe want to adapt the keys to be "inflated_size" and
+"disk_size"?
+
+> @@ -106,16 +137,12 @@ test_expect_success SHA1 'keyvalue and nul format' '
+>  		objects.tags.inflated=132
 >  		EOF
 >  
->  		git repo structure >out 2>err &&
+> -		git repo structure --format=keyvalue >out 2>err &&
+> +		git repo structure --format=keyvalue >out.raw 2>err &&
+>  
+> -		test_cmp expect out &&
+> -		test_line_count = 0 err &&
+> +		# Strip object disk usage from output due to platform variance.
+> +		grep -v "objects\..*\.disk=" out.raw >out &&
+>  
+> -		# Replace key and value delimiters for nul format.
+> -		tr "\n=" "\0\n" <expect >expect_nul &&
+> -		git repo structure --format=nul >out 2>err &&
+> -
+> -		test_cmp expect_nul out &&
+> +		test_cmp expect out &&
+>  		test_line_count = 0 err
+>  	)
+>  '
 
-It's a bit weird that this test here changes even though we don't even
-use any units. But I don't mind it too much.
+We could test disk sizes here test if we use git-rev-list(1) to compute
+disk size by type:
+
+    git rev-list --disk-usage HEAD --objects --filter=object:type=blob
+    git rev-list --disk-usage HEAD --objects --filter=object:type=commit
+    git rev-list --disk-usage HEAD --objects --filter=object:type=tag
+    git rev-list --disk-usage HEAD --objects --filter=object:type=tree
+
+The `--disk-usage` option also supports `--disk-usage=human`, which we
+can use in the next commit to verify that our computations are the same
+across git-rev-list(1) and git-repo(1).
 
 Patrick
