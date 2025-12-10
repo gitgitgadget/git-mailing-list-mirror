@@ -1,67 +1,66 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBD72D8DC8
-	for <git@vger.kernel.org>; Wed, 10 Dec 2025 09:51:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520C6271462
+	for <git@vger.kernel.org>; Wed, 10 Dec 2025 09:51:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765360290; cv=none; b=EWsNpgOH9x+MRC4wZP26AjJnccaVkvlF4g8RE2G3wihwqGD3CwibPkG9P9f0MahrL+/LoUYbbTk33zRVLzklyBh0X2ulg5NVHV/0gEyTAXefk2/fVjEY9kLdMTL9WyFkbtNZOsS68lExyWMV94IxxGWfANhQsy13kDvJe7Kcb1g=
+	t=1765360302; cv=none; b=KMNUTY8gXJ726ws04Ph9i3bN0jTH4p3pdMUFN+nX/ssgLbstUUgP2Wo6U+Ju2NqAUut7c3+02NOLO+1ZSBOBpqnL5gSbtidCqepvO+BPe6biEWIMfu4y+RvxZTNW4j7dX7zUn19kejU4rQV+UMO0h1b3kTBZR9NfwfPykZ+rRYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765360290; c=relaxed/simple;
-	bh=kgBlsuJxerP6Gj1NHkLCWUBlFvQEPLG53NJyxo5xcS8=;
+	s=arc-20240116; t=1765360302; c=relaxed/simple;
+	bh=Suwt5Isz8WZF3A+JLlxWGZ8As4lS9qQFPDf1KMY6Ebg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pH7qrppBOU6YAjefKC/izsz2v2F31orf+umw514OdZmkH0GARUCkTuw5CZdclyNvaMeedRxVilOTN4Q1ux1RI1FzEsY2gcGhw0Al0ARskUZjQBV33YAU9irtkDvRn1/UdmIf8lxlwXzDq55imVagUX70CyxIebbLxwWkjeEdD8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=feRIJL5C; arc=none smtp.client-ip=209.85.128.54
+	 In-Reply-To:Content-Type; b=Ko64mhVP6SjF8ZUI4euXZhItHYSbPfrSnrvojUQCBTR3Ijodp4C/r5l7UOsgbbRPza0Z/YE1o3TmbK9wXLQh+jNTTr2pZYTxiC8jIhijEJ0P+Orjz460CZOxY30X7dJPQjLIybRJaJ8acKzwxgn8ZrNKqNgYNhhttRemZzXyssc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PJ72Kix+; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="feRIJL5C"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-47775fb6cb4so55953575e9.0
-        for <git@vger.kernel.org>; Wed, 10 Dec 2025 01:51:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PJ72Kix+"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-42e2b80ab25so2693297f8f.1
+        for <git@vger.kernel.org>; Wed, 10 Dec 2025 01:51:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765360287; x=1765965087; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1765360298; x=1765965098; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=g+VqZ6EtCXD0EATHUtKufatqmDXl9s4WQ+fMe3FF0zg=;
-        b=feRIJL5C94oQXWXVHfA66dTjHiOgOPTHd0Ca9ubAmx9Ut5dc1QMWO2P3095EB/yNuI
-         aoVZjQ5zdEORu1j0LShfzzqjUuzOIqD2pFyZKB4HMLgjtWrDaacoEiyPi7m6Lp2Tsmnx
-         5mESw8unc1u/oyKfvZXz3m2IdwdhBpJbpOe761mIKnsuINIL+llmUbj83ZYl87p4GY+q
-         gb5hfbdUAwYCCka+h4eQbFx9FVDfvowt+sjr5uhii1afgyMS/tdR0lfMGevkSS15NsSi
-         yHp2kvqeJXoqaE6bxcMmEenBfAlOOWVT+pL8zotiLsFVpyHsRTrSAoZqTSBx6Je8C1L0
-         /Y4w==
+        bh=u4RbvdrRcoLJi0JhvhLsVmlqKtRcD32rC5r6s2v55tA=;
+        b=PJ72Kix+PK+gRL9oWc9MCcbl0esmBs0S/uOyBwkX4o+w4PH5Ff6a6r2JE5Q8F7yR3O
+         Ahkh0ePMoWnHTx5I/Ywh5Aeyd2Z9WtfM7Wi49O3bkaIZ4k3F6KAVBC1LRyaNTrZTDFeJ
+         /NTjkq0/MMetefVbU1Qsc9lsZs92qRM9A8eqYivcrj8v5CltW42u94EIPRXztkHOUfCd
+         yeSWuJVTo5BuqYEGGm3TdJHj5vtnZtS0966RP346FZCmZBc5AC/o+B3DgnjMe3S3eNZc
+         at2z//6UHUDo2pyJbxC4CkyhHo3gQyd5zR6/oubjSQyS7BCjMe93x5yXpDZWQy6Uyj8O
+         CjEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765360287; x=1765965087;
+        d=1e100.net; s=20230601; t=1765360298; x=1765965098;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=g+VqZ6EtCXD0EATHUtKufatqmDXl9s4WQ+fMe3FF0zg=;
-        b=EljqKEliHhQ4vz1QzmiKhHWF3jUyoxv5CuswYNf7Z0gBRcQX/NKkMIn5s1d0VaresE
-         FA42tswgeEcXU7A6IIyI7AWkIzbHbjWMMlSVfwTWKz/q2AzI3TPzAMSwA7jIWZvxI8K1
-         ENjI5DMc98DJ1zVbyhoB1lJsBbjhuXRMlk9bQMrBeok2UbcTbxjZpTvD88izrUOHWn+f
-         Sxb7LKgIxdsg0yyCay1km4gpEywv21pKojMc8ZcQiH9ICkSeGNnXMa8kyrdW7SGMKcHa
-         UCuRX3XZVh4F2GaqaE00dPGo4TsRTxftPWAeC64qRX1f3E4J6Xf2EWYBx4l4kE0gjlJr
-         AU8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCV0odKyFKn/6ES6+/dHPlPmJVu0Dzi5KzfN7lxeHwZCG17BumBEtwHPOaZZfp1kthKRqpo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyPEatQ27Y4fuabI4kgCttNMZJn468oiQHFFcZ74NeK9Zq52le1
-	c80HuLsPkcrnI/QOX1+AuxlgB6Gy7QkkmERqB1hj9jz+8puGd6H7pIQeb2c8fQ==
-X-Gm-Gg: ASbGnctfNORRntztqpjNT6BzInZAMd2JEerUIlqJVsUJLpRulF2wyZenQgIjsLJ1BeO
-	db7WZLSXDZT+5XJvvDgZJxO5UrBLGcFk8zP4nsCnuHN6vRAkaigW77xNqAraqXZM3yPjZ4mXCUr
-	f0ZpPvt1Hp1Unxpv0vc1AEdFuvF1n+lMo9tgYudFslQDWVZSJQPG5l8BxmV3zWlCmYqVrt/2XIR
-	HZcY47dXtP6oL3Ol259E/oDfVWIDTaXc9rW+zsePhyrQv7H2psT7Or4qnVsSUNaZ9fo8x0uW9Dt
-	XHefPVtNsP9Aic3qCSrB73L9U635hX1cWj2j44ZbUl0rkQqsUJIYuhAcvrW0ragTtFxP/0/qS+k
-	3IIdDPSS5BgE0ANvHzXd4QOlwqCxYhbKtzVmOG09BwUrEl+cWIHbj7Mzn70U7ljNe0r71RIr1oH
-	XkWyKEVLE+rznh5F/e3mZhUqaORzGl1oQG7K0vxIAkzDV4Zq69OLGuJN9lBDN9lqs=
-X-Google-Smtp-Source: AGHT+IFWxZIrqUb0yCcBLvRYuYrolGMwrZjwMLBfq6I+Cb7qB14lzaGuWp5m07QAaJkDtqSF2cPxrg==
-X-Received: by 2002:a05:600c:3151:b0:47a:814c:eea1 with SMTP id 5b1f17b1804b1-47a838534b1mr17213635e9.35.1765360287235;
-        Wed, 10 Dec 2025 01:51:27 -0800 (PST)
+        bh=u4RbvdrRcoLJi0JhvhLsVmlqKtRcD32rC5r6s2v55tA=;
+        b=vZj3D5eZ7b8TjneUVaV4azWr/3ZUlLxEt7ziBbIxsIbbP0eZZ4VvmvJMhwEljL5VCg
+         DCUZJxqBYr9doBcrQUgRbD8J/fcueNDlUuDPMak+9w+eMhhAZXi0LumY1xTatjLHRtFs
+         nYpylfBMJesmoNwhTQDer2bOkSjX/oLnCFC62yy9UbhnBMnwcuUzLkVyNqpakG2fQxwp
+         3A0d0F7eXCu3aT4QKjfjWyZ4sOxgzSuYDs1PjSuIweAAhsIQ8o9PftPwyYwlfkHD94vR
+         72LytsS5u/tkqSjzPyxR7Mv5206u3BWykVmLNvg+rXyemMn8C1H4GiQDLzlrOkYFgBx6
+         nc6Q==
+X-Gm-Message-State: AOJu0YzGqgvVrpaJ9SyyDBiM2LEVsgODKrkXIO45KnXdWbPVsQQSsHLY
+	MnE0OQHCrNeWkA3om37rcMhO0cuoxWkNfAoAMux6s/wbexoTYT0xFbHd
+X-Gm-Gg: AY/fxX73DAkEUGptSIY/Oi70PMXxTKBtREURfIuPrqRBSRRSfOYWTkbxaF1zj6UIk6I
+	ZGVFYZSvRuCCkN6HOdrwGMSiNssfsxVQWCi3QQmCf8WcX6jkrBVI2PFHuF5iUDXgI/73C7cqMlz
+	4YtSrxekLCS3nKY7xDVC+swc+zGNVD+Y6GEp1sgzpjpRJ0aw9KoC1enRcGoO191OBNQFSw5nHKm
+	rPk5x2opGjINiuk4ipoXBnLRz+jPDOck8pgzcwTZUBnDgGoP3xqdu9Z+8+7ssKk8w1DejlKD2cR
+	rv710XsjtaYeBe+MHWcLEQJs3j+EXlEqvHOh650BWC9YSiFYWozkhnTXfU3c1UoHw/S2GR0neao
+	hIcW7HvdAxozjic+XWPEn+5pAKw9mnRPcOwVtdUMvTnai7YxBqZFt1BrR2kRQy7xKF4awOz01Fi
+	IlW6mpgExETuKwex6vx1GspjVUxNV1M8JZQcI3+YXbGlwlAHrsFLRJWJnnAYyqvtc=
+X-Google-Smtp-Source: AGHT+IHwUol6AbigBJ/PkZzhpGKpbMWTLI4v6zPdST0UyqjMnEbIFHAukaRcJ8H9mWBavwMM4d94ow==
+X-Received: by 2002:a05:6000:2c11:b0:42b:3ab7:b8b8 with SMTP id ffacd0b85a97d-42fa39d2f5emr1820573f8f.25.1765360298414;
+        Wed, 10 Dec 2025 01:51:38 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a7da4885esm35810375e9.20.2025.12.10.01.51.25
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42f7cbfee50sm36484425f8f.14.2025.12.10.01.51.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Dec 2025 01:51:26 -0800 (PST)
-Message-ID: <74a705b5-bafe-4304-86ea-fd3873ae4fb4@gmail.com>
-Date: Wed, 10 Dec 2025 09:51:21 +0000
+        Wed, 10 Dec 2025 01:51:37 -0800 (PST)
+Message-ID: <48ba9303-45f4-43bf-a257-10d58474096c@gmail.com>
+Date: Wed, 10 Dec 2025 09:51:33 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,55 +69,144 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/3] doc: replay: improvements like "mention no output on
- conflicts"
-To: Junio C Hamano <gitster@pobox.com>,
- Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
+Subject: Re: [PATCH v6 11/11] builtin/history: implement "split" subcommand
+To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>, Sergey Organov <sorganov@gmail.com>,
+ =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>,
+ Martin von Zweigbergk <martinvonz@gmail.com>,
  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
- Elijah Newren <newren@gmail.com>,
- Siddharth Asthana <siddharthasthana31@gmail.com>, Toon Claes <toon@iotcl.com>
-References: <CV_replay_conflict.101@msgid.xyz> <xmqq1pl6lzt6.fsf@gitster.g>
- <d2a72ba5-ac7c-490f-9f2c-6cf849e65180@app.fastmail.com>
- <7d0201aa-905c-4da2-932d-47666c923875@gmail.com>
- <202f7015-1e7f-493e-bd82-474e5cefdf01@app.fastmail.com>
- <xmqqzf7ri7q7.fsf@gitster.g>
+ Elijah Newren <newren@gmail.com>, Karthik Nayak <karthik.188@gmail.com>
+References: <20251027-b4-pks-history-builtin-v6-0-407dd3f57ad3@pks.im>
+ <20251027-b4-pks-history-builtin-v6-11-407dd3f57ad3@pks.im>
+ <a27fce64-0d4c-4280-93e5-00cce812d1b2@gmail.com> <aS81GAuKV79x_V2K@pks.im>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqzf7ri7q7.fsf@gitster.g>
+In-Reply-To: <aS81GAuKV79x_V2K@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 09/12/2025 22:57, Junio C Hamano wrote:
-> "Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
-> 
->> On Mon, Dec 8, 2025, at 17:00, Phillip Wood wrote:
->> ...
->>> Maybe something like
->>>
->>>       Update all branches whose head commits are replayed. Requires
->>>       --onto.
+On 02/12/2025 18:51, Patrick Steinhardt wrote:
+> On Fri, Nov 21, 2025 at 02:31:14PM +0000, Phillip Wood wrote:
+>> On 27/10/2025 11:33, Patrick Steinhardt wrote:
+>>> +	* Construct the first commit. This is done by taking the original
+>>> +	* commit parent's tree and selectively patching changes from the diff
+>>> +	* between that parent and its child.
+>>> +	*/
+>>> +	repo_git_path_replace(repo, &index_file, "%s", "history-split.index");
+>>> +
+>>> +	read_tree_cmd.git_cmd = 1;
+>>> +	strvec_pushf(&read_tree_cmd.env, "GIT_INDEX_FILE=%s", index_file.buf);
+>>> +	strvec_push(&read_tree_cmd.args, "read-tree");
+>>> +	strvec_push(&read_tree_cmd.args, oid_to_hex(&parent_tree_oid));
+>>> +	ret = run_command(&read_tree_cmd);
 >>
->> Thanks for the suggestion, and nice catch with the `--onto`. Very
->> personally I don’t like involving “head” terminology. Both because of
->> personal biases[1] as well as introducing “head” as a noun in the doc
->> (now it just talks about `refs/heads/`).
+>> Why do we need to fork "read-tree" here rather than call unpack_trees()
+>> ourselves?
 > 
-> Yeah, I do not recall calling commit at the tip of a branch a "head
-> commit".
+> This is an artifact of how the `run_add_p()` interfaces work. They
+> unfortunately do not work on top of an in-memory index, but they work on
+> an on-disk index.
 
-We do talk about "branch heads" in our documentation and they point 
-commits. We also use "tip" when talking about the commit the branch 
-points to so maybe something like
-
-     Update all branches whose tip is replayed
-
-though I think it would be clearer if we could say "commit" somewhere as 
-that's what we're replaying. I find the concept of "contained branches" 
-rather obscure.
+Oh I see, but why does that mean we need to fork a subprocess rather 
+than writing the index to disc in this process?
 
 Thanks
 
 Phillip
+
+>>> [...]
+>>> +	/* We retain authorship of the original commit. */
+>>> +	original_message = repo_logmsg_reencode(repo, original_commit, NULL, NULL);
+>>> +	ptr = find_commit_header(original_message, "author", &len);
+>>> +	if (ptr)
+>>> +		original_author = xmemdupz(ptr, len);
+>>> +
+>>> +	ret = fill_commit_message(repo, &parent_tree_oid, &split_tree->object.oid,
+>>> +				  "", "split-out", &split_message);
+>>> +	if (ret < 0)
+>>> +		goto out;
+>>> +
+>>> +	ret = commit_tree(split_message.buf, split_message.len, &split_tree->object.oid,
+>>> +			  original_commit->parents, &out[0], original_author, NULL);
+>>> +	if (ret < 0) {
+>>> +		ret = error(_("failed writing split-out commit"));
+>>> +		goto out;
+>>> +	}
+>>
+>> Don't we have the same code for rewording a commit, maybe we should package
+>> this up into a shared helper function.
+> 
+> Hm, indeed, there's a bit of non-trivial logic here. I'll refactor this.
+> 
+>>> +static int cmd_history_split(int argc,
+>>> +			     const char **argv,
+>>> +			     const char *prefix,
+>>> +			     struct repository *repo)
+>>> +{
+>>> +	const char * const usage[] = {
+>>> +		GIT_HISTORY_SPLIT_USAGE,
+>>> +		NULL,
+>>> +	};
+>>> +	struct option options[] = {
+>>> +		OPT_END(),
+>>> +	};
+>>> +	struct oidmap rewritten_commits = OIDMAP_INIT;
+>>> +	struct commit *original_commit, *parent, *head;
+>>> +	struct strvec commits = STRVEC_INIT;
+>>> +	struct commit_list *from_list = NULL;
+>>> +	struct object_id split_commits[2];
+>>> +	struct pathspec pathspec = { 0 };
+>>> +	int ret;
+>>> +
+>>> +	argc = parse_options(argc, argv, prefix, options, usage, 0);
+>>> +	if (argc < 1) {
+>>> +		ret = error(_("command expects a revision"));
+>>> +		goto out;
+>>> +	}
+>>> +	repo_config(repo, git_default_config, NULL);
+>>> +
+>>> +	original_commit = lookup_commit_reference_by_name(argv[0]);
+>>> +	if (!original_commit) {
+>>> +		ret = error(_("commit to be split cannot be found: %s"), argv[0]);
+>>> +		goto out;
+>>> +	}
+>>> +
+>>> +	parent = original_commit->parents ? original_commit->parents->item : NULL;
+>>> +	if (parent && repo_parse_commit(repo, parent)) {
+>>> +		ret = error(_("unable to parse commit %s"),
+>>> +			    oid_to_hex(&parent->object.oid));
+>>> +		goto out;
+>>> +	}
+>>> +
+>>> +	head = lookup_commit_reference_by_name("HEAD");
+>>> +	if (!head) {
+>>> +		ret = error(_("could not resolve HEAD to a commit"));
+>>> +		goto out;
+>>> +	}
+>>> +
+>>> +	commit_list_append(original_commit, &from_list);
+>>> +	if (!repo_is_descendant_of(repo, head, from_list)) {
+>>> +		ret = error(_("split commit must be reachable from current HEAD commit"));
+>>> +		goto out;
+>>> +	}
+>>
+>> This is very similar to cmd_history_reword() up to this point. When we add
+>> the "drop" and "amend" subcommands they're going to want to do the same
+>> checks.
+>>
+>>> +	parse_pathspec(&pathspec, 0,
+>>> +		PATHSPEC_PREFER_FULL | PATHSPEC_SYMLINK_LEADING_PATH | PATHSPEC_PREFIX_ORIGIN,
+>>> +		prefix, argv + 1);
+>>
+>> This and calling split_commit() below are the only real differences with
+>> cmd_history_reword(), is it worth trying to share some more code between the
+>> two?
+> 
+> Yup, done.
+> 
+> Thanks!
+> 
+> Patrick
+> 
 
