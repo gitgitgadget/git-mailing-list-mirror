@@ -1,101 +1,367 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB3630AD05
-	for <git@vger.kernel.org>; Wed, 10 Dec 2025 15:24:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866A81DDC3F
+	for <git@vger.kernel.org>; Wed, 10 Dec 2025 15:32:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765380280; cv=none; b=MA7rDWjwXmhhAGEtaqq0TT25s8/wqBDE1SivWkhahlqMu0taGstuiU03MQOAz1OOnNQvI5vBV1OMgT8LzVio7ElRQdV6bxVYWya3HJSd24NYtlFHjYZ2PFZ4esT10dUSwQLakVyWbgZDTBspGt0gleX7JU/dfOldacb9tZzsnGY=
+	t=1765380764; cv=none; b=FNB0543NszQlBXbJWPIpTZ1ahl7Vxg4sqK4RuXl79CgDH3vziZx0rO694DIpR/mDkPaEhy3pn+FerZeO8Fv3fesMoFcg++IwRQaH6eZ4wf1WmLZzZ/2s3aKI0okW1JO4MAA1wg1D6Y7/OqnlTS9aD0fCVPVI4H1L7wbS+Ugpqa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765380280; c=relaxed/simple;
-	bh=8n4bUg+FAIiCM4/DNWovVjZLu/HmoJqt1U1naphvyyc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a41jOGdmVAC+WEjVPbpnm2A4/ZZXZdbOzUsmcG9PsPzsvQ0aBQKbHaa2s92fOi5lyYbG78zZZLtE2qWB53V6olfFd+xavbRdNIv+Ug2yfTKJ1lmLTT+k4WkmxHVY02Ksc4GayPe0nNdq6o5JkQYeIaS0eokMLJkZ0cw0KDX42lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ACE/qoy9; arc=none smtp.client-ip=209.85.210.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765380764; c=relaxed/simple;
+	bh=v7nzd9yo/KXTfKsbbRyRZ2CYrmFMs80nOVtfCngLb6k=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=RiVKdTCQppJHp3nmd7UxZFQ+kTO0WsWYJEkctxMSnj+pKANsGnHsv2gVx3pBNylN/2nHCSFaFWJOFF0EcBeqtc/QripBUeOBmvL8dDx4knSc707r4ws/KuC8rYQRkr3sroxTw7fDL6STr0y6SWBElMImWhOZ3HihJ6MvzVNtePI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=p5zeY1Z/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tBCs0nRS; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ACE/qoy9"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-7c6d3676455so3271401a34.2
-        for <git@vger.kernel.org>; Wed, 10 Dec 2025 07:24:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765380278; x=1765985078; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=F6KkTuWcTeDLbpRZoPxAHD1OMYUFEK2KlM/GyOPBAjY=;
-        b=ACE/qoy9S/Bxi7D78TwGBep7ooK3Xy5a+6rlR8cL97fID7GdfRUG7BEqxa5WU3dMtk
-         dJ29a5bM62StMzi7f0ZCzsJWm+rn75PJrJaPycJzaFJyowPQHYP07OZAnxsOao4ZXIme
-         z8NoRTQyDLSVOMaHiNGUVfT5EeFTaNtZPVtB9DCAKyAgbU4czjH4RvJtm+5QycHRqO7/
-         IgasTVkPbWtJc7/KZek4jX230U21mw7qKiTDSd8LWLHq6FXrcnO+lsYemh6gxbtGs+i5
-         ZRAEcaFsrkUnxAFivYUYU90it/IksgJ9O2z065b6Pv+5X0dCg9JpOTrknWRqnpjWNI+B
-         cG/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765380278; x=1765985078;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=F6KkTuWcTeDLbpRZoPxAHD1OMYUFEK2KlM/GyOPBAjY=;
-        b=NLX8qCIqo/nVrlJv3pahlzW1rlpP9u8yR05X2YRRc3dxJYL1wsbZE1B9pmzNRVIHGx
-         25x4Yaeel1fGYl6+++SfcwHRudA2kr+ZtVtry8grzbPbv/xXjCgXEf6B2YvNKFm4dCUP
-         kOXD9EbUDL3DhVSnWPSJSzZYbbWJpO2mIgiOl9ysp2OtD5Ua4M9Z6vkYBsYGdfPmmpwi
-         2PPjDGyTJh9epr7PJ7PKUg+FwARl0UbgojPkiNAvfAvns1+r0iTcL7usB+1T50xcosqp
-         ryVeG9Qu/eP4N0Q+9jt7P4lgKWkqWLkueCOgesAPzUbP7WZSL14JRwrjUyhXcJF08d/7
-         FZ2Q==
-X-Gm-Message-State: AOJu0YxfolNBTFd5oiZeNArgqyK3VreBpVqeheWLIEIeJGHmqeCfnPRx
-	igUqgtM1t9+TLFOeyKokmJgCKC36NTRaGT/NqaoL78HlnMVt6Zzc/VLlGq3tdA==
-X-Gm-Gg: ASbGncs97WE1gXtEysqQ3Kv8r6hl6EU7N1xwaqcXuRdXV/56HWBg1PzCT3fXws2a7tN
-	NYbfF568UDUYh1zGKEBelzZ9lG+YccrVFwQxkLTyZsbeLzJUozcp+TL8UN/nTYgl88Sa41+NH4c
-	YtvGzn/BMhp02l+DxxutW/WTEGckeLKVIEcuXM6bL+qZ68aCjrGC+mc19lKscG+p4OkL6yQbMmk
-	S4xaxmJmW8CYZRKHgsufJzBPkwJdnIRYhGKA2JUISxzqW1bxuzr8K+CwaEwgeYWV0zGTeSVKeEE
-	atj6fXaC2qZ7nV9OwJHC5OT+Tf1ha4/I0rTOjlfhl4dyFo3HkSEuc81BI5P+E4HLwV2jMT9sMT3
-	TUzGUjL2zNLtts769VnD28Xtndh0XzEIu7AV2ZiYEdTmRQpY5uQAsDI94BDqMc5PS2drUGCPK5R
-	ts/BH4CsnpaiNxilk=
-X-Google-Smtp-Source: AGHT+IE9Mw3Q7etd8k53ff9fkOJkgWkjk1YHZ6iWUQrKAPlDJpwg4Oncn6nuWOAGxuW9XaA3MfYCAw==
-X-Received: by 2002:a05:6830:909:b0:7ca:c7bb:e0a5 with SMTP id 46e09a7af769-7cacec38e40mr1439281a34.35.1765380278073;
-        Wed, 10 Dec 2025 07:24:38 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7c95acd8a60sm14626669a34.27.2025.12.10.07.24.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Dec 2025 07:24:37 -0800 (PST)
-Date: Wed, 10 Dec 2025 09:24:36 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 6/6] builtin/repo: add object disk size info to structure
- table
-Message-ID: <j4pc7xn4jjoyt3ay7clriz4kb2dz7toqluapt3xknm3gzlvitm@ge3ubr4eruw6>
-References: <20251209225820.2861276-1-jltobler@gmail.com>
- <20251209225820.2861276-7-jltobler@gmail.com>
- <aTkTGilv-xRRQVHA@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="p5zeY1Z/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tBCs0nRS"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9262C1400009;
+	Wed, 10 Dec 2025 10:32:40 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Wed, 10 Dec 2025 10:32:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1765380760;
+	 x=1765467160; bh=meV91VzBIT61zcmA7axb8t0Y9Yrqz4eBZzTGqhkpWyg=; b=
+	p5zeY1Z/UnAJdzUjfiW45XDngeionM9nfD33yhVIxUoQf/qFit/m9NPN/lTPz5hQ
+	0DwiUOmmQty2vm5ZeFCbw++zF1nI3M49awog4HIm4VSvelynvzlnDX6jNe/73+Gg
+	usK2CRafcDKMTpHI303amNd73GAV5s8pGT6EhglhbHLwxujDUrfhgOvpqa0XrGbM
+	BTmrpLdp/FNv/z/iiYGy90FhZtxdagxZ93ECZSU3uK322K5QVsAEcE0hVfa1uAJh
+	xRKHclsBfribW/w5lWvQ6E8IkRQTTAuiMNqcPKdwAl3EHRsLraUux/OGFqioPbNa
+	d4hnJ34M+UWnWNzBWPmjyQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765380760; x=
+	1765467160; bh=meV91VzBIT61zcmA7axb8t0Y9Yrqz4eBZzTGqhkpWyg=; b=t
+	BCs0nRSCMMvedHrV3VPFY0VjKPw/wfR3RsGwJP9/Ii3bwUmDcHajYq747/mTnkVO
+	vVKnVvaWsSw00PiPSN29YuwkZ71CFkyxXSmFTBGZPD/JdHna3dti/1QxrHdSF0j1
+	FM5lJb9/0skEjkFTXpI5hTjpc2Ka0OZj/pmIfKDNSPEC45g6H5f/raFTeBw7YtoL
+	3FoNVDQTszx+Ln2dgMhcJ/8neA3VbsCsdQbjVS8+/9HtmVkMYGSQUc4SuR5tiBpS
+	wQkbBwdzOJ8K6DP2U2kb5XDUQxEiSC3TlMdjfrH28hJ8eJ5ifgiMhEcyIdOk+djT
+	dtvTgUVGbL7ch9O7ZYBOg==
+X-ME-Sender: <xms:mJI5aX5FB9sMqAfCr6SctaxMOe5sRnk4v__nGH430Ts_gbpEdz9KMw>
+    <xme:mJI5aS5qQ_dif72A8jwN_S3Xd0gErlzRwBpxMXwNw5jl5eOKXd6FFOVQPvPZFT6JE
+    7NnA3NGch1OwnuXV58JbsqNeIfWYG1CuqaL6aeRhitPLDyFmrqPzg>
+X-ME-Received: <xmr:mJI5acF_ytNDbREzEuYWk4sd_JmXj3gCf4Ta-X32p3Jp09YL3kfHTL4kTB6nbDd_X6Itgne-oUA3pc7H2eGCdrrkPz7PEx3LwkZsbaMA1ZTo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdektdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhufffkfggtgfgjghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epteeuueehhffhiedtueehtddtieekfedtudehtdehfefhgeffveeggedthfehuedvnecu
+    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedv
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:mJI5aTQUxmcNf0P9thOCXd6r8BtfrTbcUBWl7gj7bgi-Rialzk2vKw>
+    <xmx:mJI5advPM8dHozGhvvk5JQGKJCABT65V5h2otqbVTLamCZaFtGRy4g>
+    <xmx:mJI5aawtSoPxE_-ZhuIBtzpQvPXO3oG9bTaz5t9nH42-k6k11Xv_jA>
+    <xmx:mJI5af6swqnQj6uYBj4m-DhRXvRMrEPWUOYaOp3wEmBdlYb0kjaz0w>
+    <xmx:mJI5aVroZYGw-6mvZXI60pRa1MPjae_26JQamSEwbsyk7yijlbEUjInU>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Dec 2025 10:32:39 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 412f6b74 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 10 Dec 2025 15:32:38 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 0/8] Refactor handling of alternates to work via sources
+Date: Wed, 10 Dec 2025 16:32:33 +0100
+Message-Id: <20251210-b4-pks-odb-alternates-via-source-v2-0-eb336815f9ab@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aTkTGilv-xRRQVHA@pks.im>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJKSOWkC/4WNywrCMBBFf6Vk7UgSrQ2u/A/pIo/RDmpTMjEop
+ f9uLLh2eS6Xc2bBmAhZHJtZJCzEFMcKetMIP9jxikChstBSt0rLA7g9TDeGGBzYe8Y02owMhSx
+ wfCaPYKQOpvPOBduKqpkSXui1Js595YE4x/Rei0V915/c/JcXBRKwQ+eMU8bL3an+t/QQ/bIsH
+ zY8innNAAAA
+X-Change-ID: 20251206-b4-pks-odb-alternates-via-source-802d87cbbda5
+In-Reply-To: <20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im>
+References: <20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im>
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>
+X-Mailer: b4 0.14.3
 
-On 25/12/10 07:28AM, Patrick Steinhardt wrote:
-> On Tue, Dec 09, 2025 at 04:58:20PM -0600, Justin Tobler wrote:
-> > diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
-> > index a98c651f1d..51820cc3f6 100755
-> > --- a/t/t1901-repo-structure.sh
-> > +++ b/t/t1901-repo-structure.sh
-> > @@ -107,7 +121,10 @@ test_expect_success SHA1 'repository with references and objects' '
-> >  		|     * Tags           |    132 B   |
-> >  		EOF
-> >  
-> > -		git repo structure >out 2>err &&
-> > +		git repo structure >out.raw 2>err &&
-> > +
-> > +		# Skip object disk sizes due to platform variance.
-> > +		strip_object_disk_usage out.raw >out &&
-> 
-> As mentioned, we can use git-rev-list(1) to compute the expected disk
-> sizes.
+Hi,
 
-Thanks, I'll give this a go. :)
+this patch series refactors how we handle alternate object directories
+so that the interface is structured around the object database source.
 
--Justin
+Next to being simpler to reason about, it also allows us to eventually
+abstract handling of alternates to use different mechanisms based on the
+specific backend used. In a world of pluggable object databases not
+every backend may use a physical directory, so it may not be possible to
+read alternates via "objects/info/alternates". Consequently, formats may
+need a different mechanism entirely to make this list available.
+
+Changes in v2:
+  - Rename `odb_add_source()` to `odb_add_alternates_recursive()` to
+    highlight that this function is recursive.
+  - Link to v1: https://lore.kernel.org/r/20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im
+
+Thanks!
+
+Patrick
+
+---
+Patrick Steinhardt (8):
+      odb: refactor parsing of alternates to be self-contained
+      odb: resolve relative alternative paths when parsing
+      odb: move computation of normalized objdir into `alt_odb_usable()`
+      odb: adapt `odb_add_to_alternates_file()` to call `odb_add_source()`
+      odb: remove mutual recursion when parsing alternates
+      odb: drop forward declaration of `read_info_alternates()`
+      odb: read alternates via sources
+      odb: write alternates via sources
+
+ odb.c | 307 ++++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 158 insertions(+), 149 deletions(-)
+
+Range-diff versus v1:
+
+1:  18b0d15865 = 1:  392036039f odb: refactor parsing of alternates to be self-contained
+2:  aaf9d4e162 ! 2:  0107d40816 odb: resolve relative alternative paths when parsing
+    @@ Commit message
+         cannot be resolved to a directory then `alt_odb_usable()` still knows to
+         bail out.
+     
+    -    While at it, rename the function to `odb_add_source()` to more clearly
+    -    indicate what its intent is and to align it with modern terminology.
+    +    While at it, rename the function to `odb_add_alternate_recursively()` to
+    +    more clearly indicate what its intent is and to align it with modern
+    +    terminology.
+     
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+    @@ odb.c: static struct odb_source *odb_source_new(struct object_database *odb,
+     -					     const char *dir,
+     -					     const char *relative_base,
+     -					     int depth)
+    -+static struct odb_source *odb_add_source(struct object_database *odb,
+    -+					 const char *source,
+    -+					 int depth)
+    ++static struct odb_source *odb_add_alternate_recursively(struct object_database *odb,
+    ++							const char *source,
+    ++							int depth)
+      {
+      	struct odb_source *alternate = NULL;
+     -	struct strbuf pathbuf = STRBUF_INIT;
+    @@ odb.c: static void link_alt_odb_entries(struct object_database *odb, const char
+      
+      	for (size_t i = 0; i < alternates.nr; i++)
+     -		link_alt_odb_entry(odb, alternates.v[i], relative_base, depth);
+    -+		odb_add_source(odb, alternates.v[i], depth);
+    ++		odb_add_alternate_recursively(odb, alternates.v[i], depth);
+      
+      	strvec_clear(&alternates);
+      }
+    @@ odb.c: struct odb_source *odb_add_to_alternates_memory(struct object_database *o
+      	 */
+      	odb_prepare_alternates(odb);
+     -	return link_alt_odb_entry(odb, dir, NULL, 0);
+    -+	return odb_add_source(odb, dir, 0);
+    ++	return odb_add_alternate_recursively(odb, dir, 0);
+      }
+      
+      struct odb_source *odb_set_temporary_primary_source(struct object_database *odb,
+3:  077480d200 ! 3:  8b918fec33 odb: move computation of normalized objdir into `alt_odb_usable()`
+    @@ odb.c: static int alt_odb_usable(struct object_database *o, const char *path,
+      }
+      
+      /*
+    -@@ odb.c: static struct odb_source *odb_add_source(struct object_database *odb,
+    - 					 int depth)
+    +@@ odb.c: static struct odb_source *odb_add_alternate_recursively(struct object_database *
+    + 							int depth)
+      {
+      	struct odb_source *alternate = NULL;
+     -	struct strbuf tmp = STRBUF_INIT;
+    @@ odb.c: static struct odb_source *odb_add_source(struct object_database *odb,
+      		goto error;
+      
+      	alternate = odb_source_new(odb, source, false);
+    -@@ odb.c: static struct odb_source *odb_add_source(struct object_database *odb,
+    +@@ odb.c: static struct odb_source *odb_add_alternate_recursively(struct object_database *
+      	read_info_alternates(odb, alternate->path, depth + 1);
+      
+       error:
+4:  f536d0afc3 = 4:  618bfedf22 odb: adapt `odb_add_to_alternates_file()` to call `odb_add_source()`
+5:  0930371378 ! 5:  50e93145e4 odb: remove mutual recursion when parsing alternates
+    @@ Commit message
+         Refactor the function to remove the mutual recursion between adding
+         sources and parsing alternates. The parsing step thus becomes completely
+         oblivious to the fact that there is recursive behaviour going on at all.
+    -    Instead, the recursion is handled exclusively by `odb_add_source()`,
+    +    The recursion is handled by `odb_add_alternate_recursively()` instead,
+         which now recurses with itself.
+     
+         This refactoring allows us to move parsing of alternates into object
+    @@ odb.c: static bool odb_is_source_usable(struct object_database *o, const char *p
+      
+      static struct odb_source *odb_source_new(struct object_database *odb,
+      					 const char *path,
+    -@@ odb.c: static struct odb_source *odb_add_source(struct object_database *odb,
+    - 					 int depth)
+    +@@ odb.c: static struct odb_source *odb_add_alternate_recursively(struct object_database *
+    + 							int depth)
+      {
+      	struct odb_source *alternate = NULL;
+     +	struct strvec sources = STRVEC_INIT;
+      	khiter_t pos;
+      	int ret;
+      
+    -@@ odb.c: static struct odb_source *odb_add_source(struct object_database *odb,
+    +@@ odb.c: static struct odb_source *odb_add_alternate_recursively(struct object_database *
+      	kh_value(odb->source_by_path, pos) = alternate;
+      
+      	/* recursively add alternates */
+    @@ odb.c: static struct odb_source *odb_add_source(struct object_database *odb,
+     +		      source);
+     +	} else {
+     +		for (size_t i = 0; i < sources.nr; i++)
+    -+			odb_add_source(odb, sources.v[i], depth + 1);
+    ++			odb_add_alternate_recursively(odb, sources.v[i], depth + 1);
+     +	}
+      
+       error:
+    @@ odb.c: static void parse_alternates(const char *string,
+     -	parse_alternates(alt, sep, relative_base, &alternates);
+     -
+     -	for (size_t i = 0; i < alternates.nr; i++)
+    --		odb_add_source(odb, alternates.v[i], depth);
+    +-		odb_add_alternate_recursively(odb, alternates.v[i], depth);
+     -
+     -	strvec_clear(&alternates);
+     -}
+    @@ odb.c: static void read_info_alternates(struct object_database *odb,
+      	strbuf_release(&buf);
+      	free(path);
+      }
+    +@@ odb.c: void odb_add_to_alternates_file(struct object_database *odb,
+    + 		if (commit_lock_file(&lock))
+    + 			die_errno(_("unable to move new alternates file into place"));
+    + 		if (odb->loaded_alternates)
+    +-			odb_add_source(odb, dir, 0);
+    ++			odb_add_alternate_recursively(odb, dir, 0);
+    + 	}
+    + 	free(alts);
+    + }
+     @@ odb.c: int odb_for_each_alternate(struct object_database *odb,
+      
+      void odb_prepare_alternates(struct object_database *odb)
+    @@ odb.c: int odb_for_each_alternate(struct object_database *odb,
+     +	parse_alternates(odb->alternate_db, PATH_SEP, NULL, &sources);
+     +	read_info_alternates(odb->sources->path, &sources);
+     +	for (size_t i = 0; i < sources.nr; i++)
+    -+		odb_add_source(odb, sources.v[i], 0);
+    ++		odb_add_alternate_recursively(odb, sources.v[i], 0);
+      
+     -	read_info_alternates(odb, odb->sources->path, 0);
+      	odb->loaded_alternates = 1;
+6:  be857d1b09 ! 6:  d397255cdb odb: drop forward declaration of `read_info_alternates()`
+    @@ odb.c: static bool odb_is_source_usable(struct object_database *o, const char *p
+     -	return source;
+     -}
+     -
+    --static struct odb_source *odb_add_source(struct object_database *odb,
+    --					 const char *source,
+    --					 int depth)
+    +-static struct odb_source *odb_add_alternate_recursively(struct object_database *odb,
+    +-							const char *source,
+    +-							int depth)
+     -{
+     -	struct odb_source *alternate = NULL;
+     -	struct strvec sources = STRVEC_INIT;
+    @@ odb.c: static bool odb_is_source_usable(struct object_database *o, const char *p
+     -		      source);
+     -	} else {
+     -		for (size_t i = 0; i < sources.nr; i++)
+    --			odb_add_source(odb, sources.v[i], depth + 1);
+    +-			odb_add_alternate_recursively(odb, sources.v[i], depth + 1);
+     -	}
+     -
+     - error:
+    @@ odb.c: static void read_info_alternates(const char *relative_base,
+     +	return source;
+     +}
+     +
+    -+static struct odb_source *odb_add_source(struct object_database *odb,
+    -+					 const char *source,
+    -+					 int depth)
+    ++static struct odb_source *odb_add_alternate_recursively(struct object_database *odb,
+    ++							const char *source,
+    ++							int depth)
+     +{
+     +	struct odb_source *alternate = NULL;
+     +	struct strvec sources = STRVEC_INIT;
+    @@ odb.c: static void read_info_alternates(const char *relative_base,
+     +		      source);
+     +	} else {
+     +		for (size_t i = 0; i < sources.nr; i++)
+    -+			odb_add_source(odb, sources.v[i], depth + 1);
+    ++			odb_add_alternate_recursively(odb, sources.v[i], depth + 1);
+     +	}
+     +
+     + error:
+7:  a811f6abd6 ! 7:  a39997318c odb: read alternates via sources
+    @@ odb.c: static void parse_alternates(const char *string,
+      
+      	strbuf_release(&buf);
+      	free(path);
+    -@@ odb.c: static struct odb_source *odb_add_source(struct object_database *odb,
+    +@@ odb.c: static struct odb_source *odb_add_alternate_recursively(struct object_database *
+      	kh_value(odb->source_by_path, pos) = alternate;
+      
+      	/* recursively add alternates */
+    @@ odb.c: void odb_prepare_alternates(struct object_database *odb)
+     -	read_info_alternates(odb->sources->path, &sources);
+     +	odb_source_read_alternates(odb->sources, &sources);
+      	for (size_t i = 0; i < sources.nr; i++)
+    - 		odb_add_source(odb, sources.v[i], 0);
+    + 		odb_add_alternate_recursively(odb, sources.v[i], 0);
+      
+8:  be62ab52ab ! 8:  082eb43b82 odb: write alternates via sources
+    @@ Commit message
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+      ## odb.c ##
+    -@@ odb.c: static struct odb_source *odb_add_source(struct object_database *odb,
+    +@@ odb.c: static struct odb_source *odb_add_alternate_recursively(struct object_database *
+      	return alternate;
+      }
+      
+    @@ odb.c: void odb_add_to_alternates_file(struct object_database *odb,
+     -		if (commit_lock_file(&lock))
+     -			die_errno(_("unable to move new alternates file into place"));
+     -		if (odb->loaded_alternates)
+    --			odb_add_source(odb, dir, 0);
+    +-			odb_add_alternate_recursively(odb, dir, 0);
+     +		fprintf_or_die(out, "%s\n", alternate);
+     +		if (commit_lock_file(&lock)) {
+     +			ret = error_errno(_("unable to move new alternates file into place"));
+    @@ odb.c: void odb_add_to_alternates_file(struct object_database *odb,
+     +	if (ret < 0)
+     +		die(NULL);
+     +	if (odb->loaded_alternates)
+    -+		odb_add_source(odb, dir, 0);
+    ++		odb_add_alternate_recursively(odb, dir, 0);
+      }
+      
+      struct odb_source *odb_add_to_alternates_memory(struct object_database *odb,
+
+---
+base-commit: bdc5341ff65278a3cc80b2e8a02a2f02aa1fac06
+change-id: 20251206-b4-pks-odb-alternates-via-source-802d87cbbda5
+
