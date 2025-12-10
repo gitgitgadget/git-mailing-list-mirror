@@ -1,129 +1,189 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EAF32ED148
-	for <git@vger.kernel.org>; Wed, 10 Dec 2025 14:25:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8173E248F69
+	for <git@vger.kernel.org>; Wed, 10 Dec 2025 14:58:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765376741; cv=none; b=s1YM5bz4l73osYWJBW/s/AvIE2eCezXaZYfGbo7KgKj6PzcCIZ3ZaRDRRJSNpC7k/3j4hw4E2GYPzdK1kosCEftAC9J+9D/nSY3nHIIMgai6GTLsJ+oeos5R78EfVFSMzkZ0oqB5RXp42CTRO4v8Nyeqfz2wH5HhLhyCmFczAIs=
+	t=1765378715; cv=none; b=LyDkB+nOobA9xcYwyoWV/WKhvGh+ej+G05IoC9D6e3ZJeYrduvor1DcvZshBbHae+wVB6ws/aM3djDvSRbFYb/YuskSxO5892lQDInWrbFlkle+WDsffF9lgd6AQTjauFYAn41AVVsPw3a+/5pkr8TorKVmRoq85iG8loyZjfQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765376741; c=relaxed/simple;
-	bh=46bW3qn1g6vAl9/aYrZdTcM971g+0MRtuEoJnRqFIQU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lgvO78ATpMafKynydpToenxlKGpF6oJEKHgIG2sTw9qOn8zS97MZFwzetd7N6VH4MwgrtfR06UaS2P8k/DnxYPaYF+FKuqQW6747do9508ILwC3m26Jeo+LmR7CxcSwDQLKVYJnINPYi1mESWk4zrIBQ/hXPeV7jp8K1XEFeyA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V5HvHKfb; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765378715; c=relaxed/simple;
+	bh=tDBH2j0jRBqB90Qh+1fmiBGSjWl0vISn4iJHgtjAods=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AY3XSeyET0WySC3pSfSb4Bz1VqzqVTz/cIcLcPsA8e8dhqbicMA2tLDYwr8bf1+/ewBwmFiFReBfugiNfjq5CDYkXRNr7YSrL+SXrn9GpBS4fUXodjvj8njnV/3oGtEL/oEGJRMyP0kaXa5KHhOP2jb1Rjn/OfiJxZbKXbKfq68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DVzH9wAK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EX10rL3L; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V5HvHKfb"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-47118259fd8so57837905e9.3
-        for <git@vger.kernel.org>; Wed, 10 Dec 2025 06:25:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765376738; x=1765981538; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iJ0aLk2Hw5crXebpcjiq80PNQ0Oa5JbYURT4nw+HVNc=;
-        b=V5HvHKfbM7QvJG0axuvZlibMccTastfTSQPWt1PsV7LOeNdg7ZevmkdZLzkLMN/Wy4
-         BxjQQxZZQz2KQWq7XtPHck44McffzwGJO9Fxloez+uR2PQ/9jRV94aKXrrU8e9snwzZr
-         gLlhetmD0epNIdEDMvANDj5BSAx1MEzjp16cUb4lzeXC0Ti2RZitcblKVHZipTMp8eX0
-         l9sgeWgLLn+e5kZvUi6TmhZe9vqMneg03+F4bEjULXgBNqmJkKu6rhYiHmXI5PdksgVD
-         qrnKwENb5UvGW0ONeCDuiBkc7HGnSRBJZrxzgKqOidQpHrCKcstQolqSrCPbHZ0iNYj2
-         /JwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765376738; x=1765981538;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iJ0aLk2Hw5crXebpcjiq80PNQ0Oa5JbYURT4nw+HVNc=;
-        b=p7Yz+Ag8ubpE+QqcJokLiJIuAmPBMaRqMGV0lE9ptEklDs58Tsj4fIvLznkqeVm75O
-         8RDFiZhwiD7CHjQ8+M9zK9aSmS8RJPpykZabpawdnrgYFcG7wleSjAlu8JXIAA9oOP8L
-         RbQlzOTHXloxRCgEtNdYAWaROMmABzTCS7rxJWSREJ1KvOR1tFL7AwU10yn2C7Cpuuc7
-         4M/zznv7vYdPYDxq/DJ/v50GfUuxD9F47jV8ltWKjU5xI33Xw1BPBSlOpy7Gfdb/QM1/
-         cgHN3fmmCqU/zKEG1VQdU/JfzuNoUde4TGeHuXRDSlFIDm8aa9WR7740doVkOyg+F43b
-         6n0A==
-X-Forwarded-Encrypted: i=1; AJvYcCW6BPYZ5UOqna7ClE885RdRThGyWDgDiq0C97lS5kWqppnWGjwvsDJD6BoUiIDnrpKd+i4=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz1zWf02K4Elr7lhMPwh5yQvSf1mYM4w+tDeopu3sY3qc/fUkKQ
-	C82+el7JSonQ35FPg+VwaymehDvFRE5z5jGp4M32usvzih3nP1ZKBEydXK57wA==
-X-Gm-Gg: ASbGncuOrDOaotZhwT11HvUMFArgUaJeOBdgPsUXmnQfeDFlStfz4tKLviUfEQiNjrJ
-	0AuxmB+n0ytnd5uFZLABZ0914Ze++/3r5dN1/eoEkkSlsfFt7FoUXk63gePNwtcvTRsgCbUCl6N
-	SMkbAaCnhFAZ26bI0sweAvYOplf5wU9D5fYGvUqJNdx6GSKdo53sjDR3huPHb6F8jc8FqRwGA/E
-	xMLS77O49haLQestgXqSUPCucQMbUrkRygch6/ZIJ2qZ7PKgBIi766MZZ7FtoOFkGrd8JuUmSxo
-	tZPKQykRwZ5AXVT14AFkihQbbn/EseR1Jp+Tohh3yRUmr9rDUUr0Xa/ZpVWjL41pf2Fm4+4Z+Fk
-	H7U6FYhUJIZ+/ZDiaKglJHNj5ibf146LP+fWdP5xqkEwX1D5YNwKmwuPjQCkm7UNY2VjRgeIyub
-	XMMZHok1oA86YoZD/3tGt7ATRbvZ5+gjJvlqmcOX+a1FqT7afdNOfFSzyaPWv+9xg=
-X-Google-Smtp-Source: AGHT+IE/vdyYoTdCbvx/uZ2WzFFAt0/Q4YHFSBl6kvwS02O3kWKE+I3OnTVD/YYb9CWZ/YRT/hClow==
-X-Received: by 2002:a05:600c:3489:b0:477:7658:572a with SMTP id 5b1f17b1804b1-47a837ac5f8mr25969585e9.20.1765376737910;
-        Wed, 10 Dec 2025 06:25:37 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a82d149ebsm44529395e9.2.2025.12.10.06.25.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Dec 2025 06:25:37 -0800 (PST)
-Message-ID: <61f61218-1945-4efe-961a-e6cb4ac8c6a9@gmail.com>
-Date: Wed, 10 Dec 2025 14:25:32 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DVzH9wAK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EX10rL3L"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9622E1400132;
+	Wed, 10 Dec 2025 09:58:31 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Wed, 10 Dec 2025 09:58:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1765378711; x=1765465111; bh=JVytq5atO2
+	+qqEiTY3pJHJPJQgF6uOgQzHAGB6TxHiY=; b=DVzH9wAKAEADiQw57LpLDN376+
+	c/dZIaAadGLUpnmAUxK+cccoYncXuPSGfAxyfINj/2aZh/AAME5VQuvODL8cRlUP
+	XbOPbaeROM7ej0cCz39Oe4Bke5f9qQ6axdWXPHdH7YVeBwCe/+42GARIcty7sfck
+	UAn7AwWpNpdI6OooIK8IMN1Irspz6H3ziDmY+hUcwGGU9gQO62mRdEecqRtZpKLh
+	js366elX3hixskTQxJYqq+EBkKo4yTmjGtKl4nur5ZnBNuSXWzH1+bWRuYgEWw1w
+	Ziq9iOaSAbJYMg/tCEuy5ou+4uWz6XF4TDg07CQAqDaCjxcGRhJy08m74LqQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765378711; x=1765465111; bh=JVytq5atO2+qqEiTY3pJHJPJQgF6uOgQzHA
+	GB6TxHiY=; b=EX10rL3LviqSG3OeQrT5DzUgE9dghKbR8YHeHiiFJX/lfgZt9xC
+	DO+qUEsilB5w7nnqBSzuQUsvV6o2pcHuRX49hEWlnK/zqyLJkJlrz/bg4SGI4P4P
+	+0ZYfe0VDC9mddd87KqnMlynq56x+Ap8c0YtdJiTNKJ8fyuGl/E3+wfOnhXedENV
+	U7Nad/hRZVNu/EgSZiUuT904S7BmzYSaZxK+IMKfX4GaeAGNQ39Ww57zULP+mDxM
+	pdfp4HihLLaH6o795PWIAFa4qkmDzEWsia25Z5T4K1W0GbNZhAe5AgMj7pQd7ZNW
+	XtZr8NXw0aS6uiXffBzkmEDJCZyqNoipX8g==
+X-ME-Sender: <xms:l4o5aQ6ztkqCqe6Ib6AZGvIBxAwbWfZhoZ8fahdWhL5yORKy2znS-g>
+    <xme:l4o5aYy3vUTMLhgrlvTM6u9omX747BLXRfZU36purxawtf-cw4Rt1mLQSDC4J_91U
+    rNngXQ7LaUz10JXW1kYp6MU8g2f3ypKOdEyUyTbu5S6Qq_J9hocBQ>
+X-ME-Received: <xmr:l4o5aXyB0fcA6LbxCgHyhxy8L9L8OqR7Jvp8DKNHP2H4wEIaqsg8e_QUMK6fvcMu7EHydU3gkh-OllSnx5T91_zqsvL93o1Yng>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdejfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkh
+    hsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:l4o5aQy0eiqDTm9z9Zxjd3kxNOgkRen8kaiY5u6b3YWbMqmZGtZujw>
+    <xmx:l4o5aRYuJ-w5w1aCp9fFhXIyjBLaWRiu97E65qCO-6D0JEy1MA6NVw>
+    <xmx:l4o5aRW9WlSYzU0glDXAyGEitcKu-mu6twd-ZSmwfTD_bqSPTNjxSg>
+    <xmx:l4o5afinGExjDzI-iVriiSrPQPzbBN4dSMc4UBHv1UzCBlMV8B7ckQ>
+    <xmx:l4o5aUAd8vIuzA7TXsbhzqoffLut5uJpibR1qsYAWI9knXfbWTCD8j0d>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Dec 2025 09:58:31 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>, Lucas Seiki Oshiro
+ <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH 5/6] builtin/repo: add disk size info to keyvalue
+ stucture output
+In-Reply-To: <20251209225820.2861276-6-jltobler@gmail.com> (Justin Tobler's
+	message of "Tue, 9 Dec 2025 16:58:19 -0600")
+References: <20251209225820.2861276-1-jltobler@gmail.com>
+	<20251209225820.2861276-6-jltobler@gmail.com>
+Date: Wed, 10 Dec 2025 23:58:29 +0900
+Message-ID: <xmqqikeegz8q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: bug: `git pull --rebase` breaks in the presence of pushurls
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kartik Agaram <ak@akkartik.com>, git@vger.kernel.org
-References: <896e4e13-5d2f-4c5c-ac32-2927dbff91a0@app.fastmail.com>
- <04cc0cc0-155e-422e-b723-b1115c918087@gmail.com> <xmqqa4zsliim.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqa4zsliim.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
+Justin Tobler <jltobler@gmail.com> writes:
 
+> -test_expect_success SHA1 'keyvalue and nul format' '
+> +test_expect_success SHA1 'keyvalue format' '
+>  	test_when_finished "rm -rf repo" &&
+>  	git init repo &&
+>  	(
+> @@ -106,16 +137,12 @@ test_expect_success SHA1 'keyvalue and nul format' '
+>  		objects.tags.inflated=132
+>  		EOF
+>  
+> -		git repo structure --format=keyvalue >out 2>err &&
+> +		git repo structure --format=keyvalue >out.raw 2>err &&
+>  
+> -		test_cmp expect out &&
+> -		test_line_count = 0 err &&
+> +		# Strip object disk usage from output due to platform variance.
+> +		grep -v "objects\..*\.disk=" out.raw >out &&
+>  
+> -		# Replace key and value delimiters for nul format.
+> -		tr "\n=" "\0\n" <expect >expect_nul &&
+> -		git repo structure --format=nul >out 2>err &&
+> -
+> -		test_cmp expect_nul out &&
+> +		test_cmp expect out &&
+>  		test_line_count = 0 err
+>  	)
+>  '
 
-On 08/12/2025 22:24, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> "git push" updates refs/remotes/origin/master when pushing to "mirror".
->>
->>> 8. Try to fix the problem:
->>>
->>>     git pull --rebase
->>
->> "git pull" tries to find the fork point between origin/master and master
->> which is the tip of master because "git push" just updated origin/master
->> to point to the same commit as master.
->>
->> Unfortunately I'm not sure there is an easy way to fix this. For now I'd
->> recommend doing
->>
->> 	git fetch && git rebase --no-fork-point
->>
->> instead of running "git pull --rebase".
-> 
-> Yeah, it is an integral part of "fetch" to update the
-> remote-tracking branches, so this is harder to fix.
-> 
-> It may be possible to stop doing the fork-point computation in the
-> "git rebase" phase, and instead do it _before_ we run "git fetch",
-> to figure out what part of our history needs to be transplanted on
-> top of the upstream, run "git fetch" (to let the tracking branches
-> updated), and then run "git rebase", telling it exactly what range
-> should be transplanted onto which commit to update the branch
-> currently checked out.  That would be a much larger change.
+This part has both textual and semantic conflicts with Lucas's "-z
+is a synonym for --format=nul" topic.  I think I resolved it
+correctly while improving the "munge expected output into expected
+NUL-terminated output" approach to "munge -z output into textual
+output and compare with textual expected output".  Please sanity
+check the result after I push it out, merged at 32f8d84b (Merge
+branch 'jt/repo-struct-more-objinfo' into seen, 2025-12-10)
 
-"git pull" already runs "git merge-base --fork-point" before it runs 
-"git fetch". The problematic reflog entry comes from a previous push 
-which pushes to a different server due to remote.<remote>.pushurl. 
-Because we've just successfully pushed the local branch the fork point 
-calculation thinks the remote tracking branch matches the local branch 
-and so excludes all the local commits when we rebase but we didn't push 
-it to the same server that we're fetching from. I wonder if we should 
-disable the fork point calculation when there is a pushurl set.
+Thanks.
 
-Thanks
+commit 32f8d84b5cfc5a5704e30fe4abc9d8755893179c
+Merge: 09bd4419e7 b8cacabfa5
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Wed Dec 10 20:41:31 2025 +0900
 
-Phillip
+    Merge branch 'jt/repo-struct-more-objinfo' into seen
+    
+    * jt/repo-struct-more-objinfo:
+      builtin/repo: add object disk size info to structure table
+      builtin/repo: add disk size info to keyvalue stucture output
+      builtin/repo: add inflated object info to structure table
+      builtin/repo: add inflated object info to keyvalue structure output
+      builtin/repo: humanise count values in structure output
+      builtin/repo: group per-type object values into struct
 
+diff --cc t/t1901-repo-structure.sh
+index df7d4ea524,51820cc3f6..31c77c4666
+--- a/t/t1901-repo-structure.sh
++++ b/t/t1901-repo-structure.sh
+@@@ -90,25 -148,18 +148,29 @@@ test_expect_success SHA1 'keyvalue form
+  		objects.trees.count=42
+  		objects.blobs.count=42
+  		objects.tags.count=1
++ 		objects.commits.inflated=9225
++ 		objects.trees.inflated=28554
++ 		objects.blobs.inflated=453
++ 		objects.tags.inflated=132
+  		EOF
+  
+- 		git repo structure --format=keyvalue >out 2>err &&
++ 		git repo structure --format=keyvalue >out.raw 2>err &&
+  
+- 		test_cmp expect out &&
+- 		test_line_count = 0 err &&
++ 		# Strip object disk usage from output due to platform variance.
++ 		grep -v "objects\..*\.disk=" out.raw >out &&
+  
+- 		# Replace key and value delimiters for nul format.
+- 		tr "\n=" "\0\n" <expect >expect_nul &&
+- 		git repo structure --format=nul >out 2>err &&
+- 
+- 		test_cmp expect_nul out &&
+++		test_cmp expect out &&
+ +		test_line_count = 0 err &&
+ +
+ +		# "-z", as a synonym to "--format=nul", participates in the
+ +		# usual "last one wins" rule.
+- 		git repo structure --format=table -z >out 2>err &&
+++		git repo structure --format=table -z >out.raw 2>err &&
+ +
+- 		test_cmp expect_nul out &&
+++		# Replace key and value delimiters for nul format.
+++		tr "\0\n" "\n=" <out.raw |
+++		grep -v "objects\..*\.disk=" >out &&
+++
++ 		test_cmp expect out &&
+  		test_line_count = 0 err
+  	)
+  '
