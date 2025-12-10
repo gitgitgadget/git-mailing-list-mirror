@@ -1,120 +1,129 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14506770FE
-	for <git@vger.kernel.org>; Wed, 10 Dec 2025 14:18:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EAF32ED148
+	for <git@vger.kernel.org>; Wed, 10 Dec 2025 14:25:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765376315; cv=none; b=SfxQwFuI7cyBgr2hGVJkoEzj4uXonA8mmXs8wi3Vo6ACJtd54G3R4bRXSvo0cNbokGQZjllTjxkloUyiLlNg73xw2kkgv0tFo/sRUhwm/nTe14malBgaGMXjWuvKC+3WsQVb8nqhZUmQR6/t1t2Ks6uiYG+sCCZPLqVq/kH6zlo=
+	t=1765376741; cv=none; b=s1YM5bz4l73osYWJBW/s/AvIE2eCezXaZYfGbo7KgKj6PzcCIZ3ZaRDRRJSNpC7k/3j4hw4E2GYPzdK1kosCEftAC9J+9D/nSY3nHIIMgai6GTLsJ+oeos5R78EfVFSMzkZ0oqB5RXp42CTRO4v8Nyeqfz2wH5HhLhyCmFczAIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765376315; c=relaxed/simple;
-	bh=cwo7Jv1Vaz/mj7xkldayRNKkMUrwSra9Pv+JCuRcEeo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aVYzINC834o9oSev0d8/moXNubo8NGFLgLQ8IBTavqv7Ub6AA+IYBvQY85Ue+SlunhY+9RfXOg2kJfI2wQCxWk528BRIRf+phGi8k2LBZgrKXIcwLwytb3a0wV1DWyLHyruGG/faYnw9tneKs8zg45m6w2I5m4QO+FiO7ciHdMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C7WqXkS8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z5IU+fzp; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1765376741; c=relaxed/simple;
+	bh=46bW3qn1g6vAl9/aYrZdTcM971g+0MRtuEoJnRqFIQU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=lgvO78ATpMafKynydpToenxlKGpF6oJEKHgIG2sTw9qOn8zS97MZFwzetd7N6VH4MwgrtfR06UaS2P8k/DnxYPaYF+FKuqQW6747do9508ILwC3m26Jeo+LmR7CxcSwDQLKVYJnINPYi1mESWk4zrIBQ/hXPeV7jp8K1XEFeyA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V5HvHKfb; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C7WqXkS8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z5IU+fzp"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 061BB14000B8;
-	Wed, 10 Dec 2025 09:18:32 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 10 Dec 2025 09:18:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1765376312; x=1765462712; bh=Jw+JQbQ2mJ
-	n6LVLekOriM4hWn80af8eRuNnw9GrXV+o=; b=C7WqXkS8tPVJsQPYJoaVHsIodo
-	sRR7LNQ7C68CBxcXkJf2Ly8iGqeXDIXSt8VF4sbYRS0iYgB5b3RanR2LNyqjG5/C
-	vni/aYRj9PW1bgARmWF9rN3HvdF+ltQU7Kh9b1sLvNChDlXbhaPE+dssaZT8Hx3j
-	RF60HvantT0vwdVBaIaomCSbT9myAedqn0lOJUCaJSoUIWg0Lgk1OXHV4aNpq7vO
-	DQyywT7P5/TModUjfzXrOhpU8dV/aeCSFVz15jivuSCDOcZrU8Ld/LVZZk49PHSR
-	A2YpowJCUZmp1Wc9phVCKuKLw7pi8qKsKTfS5lzVyzVlkI1Pestia4/uHMNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765376312; x=1765462712; bh=Jw+JQbQ2mJn6LVLekOriM4hWn80af8eRuNn
-	w9GrXV+o=; b=Z5IU+fzp2e4kliGivqyy48uAvCn9kzUcpfmc1WzIJkiqT7fa4Kj
-	x4uby9zrozscDObn0F8FBjuSqFDEmoZaj0jKjF08hYaF2Kfhbbx3+mCWc0R8N4dN
-	vHlZCrfFe6H0aKwqsHAP4gTAKGHI3oZsUghxZNisZr8pbfUmbuOgyQ0U20sSoAOu
-	r8XJuSsPOoXzLh9kR5dXFCt/gR/v0Q7MB+Ngqz6FV8KmUmhNUkkcLf5gVCye67ay
-	vmhihVARdBpL2LCr6xoYrEQ+eyH73Tv9vId7kQJC9Z4ThgZn2KLolKBGGl603EKS
-	BDTXRCmP+JpoyqnbgEY4d4uGEvKsouqS2jQ==
-X-ME-Sender: <xms:N4E5aW6EuuIpLg8dRFFqjr5vQOEber7KcsZT76Hi3k-20L1FojNttw>
-    <xme:N4E5aZ5UtgrwWqHwrG8xdqRIyopeSMJF-H46yZZASnuZI4PfXesAIMQHCYz9L8PJC
-    2mbzfS2XleK6mwsY7YP1yrU_FvLhMpUNu3YXBbApujc9QUHUCq_Pw>
-X-ME-Received: <xmr:N4E5acGJjo37ddWWhl_1yeUC2d4QxIeofi29IJAQbIAbKRk5KA_FdN4eW9pUEHpGVJWQN6pz9cuc6s1PtDNUMCximMoOhLpbxA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvvdeihecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepmhgrihhlsegsvgihvghrmhgrthhthhhirghsrdguvgdprhgt
-    phhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtph
-    htthhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehpshes
-    phhkshdrihhmpdhrtghpthhtohepmhgrrhhtihhnvhhonhiisehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:N4E5aRULGJKcdROKpvm7gysF3hiGd3JAr-SOH1YxAoynOG2r0cqGHA>
-    <xmx:N4E5aYXmUL4dOT8-xMMpIWoV-pcFQAS0QGdF0rXcYhKNxevYAX_87w>
-    <xmx:N4E5afKE3cKII0tGxVHVTiixYeIdu0p9y1TfjjwjwcUFBMMmirl6GQ>
-    <xmx:N4E5aQDc-O_MeDoNd8Osed7xiabA_rRUdTmrNYib3lkrFU0LtauK0w>
-    <xmx:OIE5aa_ZbBu6LXLVdOJPej8J_bMgN_tQKhP1qGr2_kPWQpJRV5r6RgW2>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Dec 2025 09:18:30 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Matthias Beyer <mail@beyermatthias.de>,  phillip.wood@dunelm.org.uk,
-  SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,  Patrick Steinhardt
- <ps@pks.im>,
-  Martin von Zweigbergk <martinvonz@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH RFC 00/11] Introduce git-history(1) command for easy
- history editing
-In-Reply-To: <a6efc710-4062-4955-8fe8-bb6d428a44c1@gmail.com> (Phillip Wood's
-	message of "Wed, 10 Dec 2025 11:34:20 +0000")
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
-	<CANiSa6gXbrZaMLVq-AAg38sm+7qgzn4w98WWowLtUHA2P+BdLw@mail.gmail.com>
-	<aKs3tqjE510MF0T-@pks.im> <aMsWL2cSoytbmRjA@szeder.dev>
-	<4m6rmefbv4hftclimitz5rp6yapswjtnjsxymrsdkuan4jbg3u@dm5jzdiq5cxz>
-	<bc01706e-b9cc-4cd4-953a-971a3ccd6c79@gmail.com>
-	<paqf2ko6kcm5qdcqxqz57qu6gjw3vf6boabjsryeugfnlzzb7z@4dzqo6jug6l2>
-	<a6efc710-4062-4955-8fe8-bb6d428a44c1@gmail.com>
-Date: Wed, 10 Dec 2025 23:18:29 +0900
-Message-ID: <xmqqms3qh13e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V5HvHKfb"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-47118259fd8so57837905e9.3
+        for <git@vger.kernel.org>; Wed, 10 Dec 2025 06:25:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765376738; x=1765981538; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iJ0aLk2Hw5crXebpcjiq80PNQ0Oa5JbYURT4nw+HVNc=;
+        b=V5HvHKfbM7QvJG0axuvZlibMccTastfTSQPWt1PsV7LOeNdg7ZevmkdZLzkLMN/Wy4
+         BxjQQxZZQz2KQWq7XtPHck44McffzwGJO9Fxloez+uR2PQ/9jRV94aKXrrU8e9snwzZr
+         gLlhetmD0epNIdEDMvANDj5BSAx1MEzjp16cUb4lzeXC0Ti2RZitcblKVHZipTMp8eX0
+         l9sgeWgLLn+e5kZvUi6TmhZe9vqMneg03+F4bEjULXgBNqmJkKu6rhYiHmXI5PdksgVD
+         qrnKwENb5UvGW0ONeCDuiBkc7HGnSRBJZrxzgKqOidQpHrCKcstQolqSrCPbHZ0iNYj2
+         /JwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765376738; x=1765981538;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iJ0aLk2Hw5crXebpcjiq80PNQ0Oa5JbYURT4nw+HVNc=;
+        b=p7Yz+Ag8ubpE+QqcJokLiJIuAmPBMaRqMGV0lE9ptEklDs58Tsj4fIvLznkqeVm75O
+         8RDFiZhwiD7CHjQ8+M9zK9aSmS8RJPpykZabpawdnrgYFcG7wleSjAlu8JXIAA9oOP8L
+         RbQlzOTHXloxRCgEtNdYAWaROMmABzTCS7rxJWSREJ1KvOR1tFL7AwU10yn2C7Cpuuc7
+         4M/zznv7vYdPYDxq/DJ/v50GfUuxD9F47jV8ltWKjU5xI33Xw1BPBSlOpy7Gfdb/QM1/
+         cgHN3fmmCqU/zKEG1VQdU/JfzuNoUde4TGeHuXRDSlFIDm8aa9WR7740doVkOyg+F43b
+         6n0A==
+X-Forwarded-Encrypted: i=1; AJvYcCW6BPYZ5UOqna7ClE885RdRThGyWDgDiq0C97lS5kWqppnWGjwvsDJD6BoUiIDnrpKd+i4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz1zWf02K4Elr7lhMPwh5yQvSf1mYM4w+tDeopu3sY3qc/fUkKQ
+	C82+el7JSonQ35FPg+VwaymehDvFRE5z5jGp4M32usvzih3nP1ZKBEydXK57wA==
+X-Gm-Gg: ASbGncuOrDOaotZhwT11HvUMFArgUaJeOBdgPsUXmnQfeDFlStfz4tKLviUfEQiNjrJ
+	0AuxmB+n0ytnd5uFZLABZ0914Ze++/3r5dN1/eoEkkSlsfFt7FoUXk63gePNwtcvTRsgCbUCl6N
+	SMkbAaCnhFAZ26bI0sweAvYOplf5wU9D5fYGvUqJNdx6GSKdo53sjDR3huPHb6F8jc8FqRwGA/E
+	xMLS77O49haLQestgXqSUPCucQMbUrkRygch6/ZIJ2qZ7PKgBIi766MZZ7FtoOFkGrd8JuUmSxo
+	tZPKQykRwZ5AXVT14AFkihQbbn/EseR1Jp+Tohh3yRUmr9rDUUr0Xa/ZpVWjL41pf2Fm4+4Z+Fk
+	H7U6FYhUJIZ+/ZDiaKglJHNj5ibf146LP+fWdP5xqkEwX1D5YNwKmwuPjQCkm7UNY2VjRgeIyub
+	XMMZHok1oA86YoZD/3tGt7ATRbvZ5+gjJvlqmcOX+a1FqT7afdNOfFSzyaPWv+9xg=
+X-Google-Smtp-Source: AGHT+IE/vdyYoTdCbvx/uZ2WzFFAt0/Q4YHFSBl6kvwS02O3kWKE+I3OnTVD/YYb9CWZ/YRT/hClow==
+X-Received: by 2002:a05:600c:3489:b0:477:7658:572a with SMTP id 5b1f17b1804b1-47a837ac5f8mr25969585e9.20.1765376737910;
+        Wed, 10 Dec 2025 06:25:37 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:658:8901:ced:8495:73eb:ebd6? ([2a0a:ef40:658:8901:ced:8495:73eb:ebd6])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a82d149ebsm44529395e9.2.2025.12.10.06.25.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Dec 2025 06:25:37 -0800 (PST)
+Message-ID: <61f61218-1945-4efe-961a-e6cb4ac8c6a9@gmail.com>
+Date: Wed, 10 Dec 2025 14:25:32 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: bug: `git pull --rebase` breaks in the presence of pushurls
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kartik Agaram <ak@akkartik.com>, git@vger.kernel.org
+References: <896e4e13-5d2f-4c5c-ac32-2927dbff91a0@app.fastmail.com>
+ <04cc0cc0-155e-422e-b723-b1115c918087@gmail.com> <xmqqa4zsliim.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqa4zsliim.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> Its mostly because I don't like too much magic and because I think being
->> explicit is always better than not.
->> 
->> So from my POV, I would expect "the simple case" to be "the simple CLI
->> call" and if I want the tool to do magic and "rewrite all the
->> things"^tm, that I would need to specify a flag for that.
->
-> Thanks, that's useful to know. I'd assumed rewriting all the branches 
-> descended from the rewritten commit was the natural thing do do but 
-> clearly not everyone thinks it is.
 
-It probably depends on the way one looks at the tool, as a building
-block (in which case less magic may be preferrable) or a complete
-solution for one part of workflow.  I probably fall into former camp
-more often than other people, but for this particular one, I tend to
-think it is less confusing if we moved all branch refs away from the
-commits that are obsoleted by rewriting/replaying.
+On 08/12/2025 22:24, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> "git push" updates refs/remotes/origin/master when pushing to "mirror".
+>>
+>>> 8. Try to fix the problem:
+>>>
+>>>     git pull --rebase
+>>
+>> "git pull" tries to find the fork point between origin/master and master
+>> which is the tip of master because "git push" just updated origin/master
+>> to point to the same commit as master.
+>>
+>> Unfortunately I'm not sure there is an easy way to fix this. For now I'd
+>> recommend doing
+>>
+>> 	git fetch && git rebase --no-fork-point
+>>
+>> instead of running "git pull --rebase".
+> 
+> Yeah, it is an integral part of "fetch" to update the
+> remote-tracking branches, so this is harder to fix.
+> 
+> It may be possible to stop doing the fork-point computation in the
+> "git rebase" phase, and instead do it _before_ we run "git fetch",
+> to figure out what part of our history needs to be transplanted on
+> top of the upstream, run "git fetch" (to let the tracking branches
+> updated), and then run "git rebase", telling it exactly what range
+> should be transplanted onto which commit to update the branch
+> currently checked out.  That would be a much larger change.
+
+"git pull" already runs "git merge-base --fork-point" before it runs 
+"git fetch". The problematic reflog entry comes from a previous push 
+which pushes to a different server due to remote.<remote>.pushurl. 
+Because we've just successfully pushed the local branch the fork point 
+calculation thinks the remote tracking branch matches the local branch 
+and so excludes all the local commits when we rebase but we didn't push 
+it to the same server that we're fetching from. I wonder if we should 
+disable the fork point calculation when there is a pushurl set.
+
+Thanks
+
+Phillip
+
