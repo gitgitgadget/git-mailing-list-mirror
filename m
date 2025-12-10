@@ -1,184 +1,123 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4848330146D
-	for <git@vger.kernel.org>; Wed, 10 Dec 2025 16:43:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EAE1326920
+	for <git@vger.kernel.org>; Wed, 10 Dec 2025 16:49:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765384989; cv=none; b=Sa+Sggcs0tH7vhzyOuS6yB1q5NugSjf8NX5OXUNBxK8vDsVG0+03NHJcNA5CLHVZR9npE+1Qcr2twoD1KbIJi2bdUHFiJKmz1+L/9PYJvNb0PbTUGoBTfrIxHQq6ply2/2jiytobh0ca8rYajzf2O+Zi9iezY6XIzyXGVzzfJw8=
+	t=1765385373; cv=none; b=R+KFbrppwuwmpJbLSyNLXzXaRWDXXH3hVN9WWSuF9HNTGlFMhaArDNEZoHScB6blkSw33nXYzCUweyYF4JX2aY+LMuD3NAgtwEb+n1n9OQVit1EJgN1SGAgELsO6kl5o7eK+qwupVFyeL1JNlhpy9Hvfs7vX+B7Em5mOjIwM62Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765384989; c=relaxed/simple;
-	bh=t72EbDWhXdJoJ0B7S1Ha8wRGKt2aUhkIlH1Zp7rwbRk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CBvE2V2WoyGxPmQ3MSNg2p4j3M5JXdrJffEmIJgfOHZUCJtu1xL/U+BD2bQfkeAc3kC6OArd9pu2qMySVtaf9z2mOcNf3YpC52CponbgeVW+W1Tx+RUjgHXtdbYuvQjjwFr6zcW3YSSFaQlmxj8tAL3wU00qAXXYX/2Nk8fqA20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=BKGf9uSv; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1765385373; c=relaxed/simple;
+	bh=IqrItFiVJSv3FgFB26+VPIa5Dz6smgBoTysd5B7b4FA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=n6xlLpzunnfV04cCxA3imqmFrWfeSLTME+I+DsjQSkJUV/+N/YRwKOV4ZCEP0A9GZ3QwTu6cotgK0sfvC1DbxeYOUTmqol/pSfvPNQzeVs/3H2buLBa80ECBS0bCFl9Gh65/Yv4kI9ug5UKHpBw0RnJcRD3fM9YKfcFqJgnCRQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UA+IGiem; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="BKGf9uSv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1765384977; x=1765989777; i=tboegi@web.de;
-	bh=Z0ygdS/H1bStm1Mn0RrpyMzoovhHFsdDK5iBR25iaf0=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=BKGf9uSvVBthGhHgqJRUF1QfwTvOjahhZ3uFHam6hKfS6wpLiO4/6Ke+Ad/8IZPh
-	 x8785vdzyfJHZ4YmdpK9EhRmIPW1VfeW0jvzXYudr6vVl5NmmGQyY23tGrAJwXvnI
-	 Pz3gKZbM0U//7LeKySYGe3XhOncHj7b33tS+Gzg7IBQ9TBbhZWA/OBMQsTlIavzdi
-	 iMRGBFh/3mUjjVTdklmDeb7ZXW6kZ+dsQZ3U3isl+zFROp5maCDLjYJe35Z/HmjSb
-	 4DdCPbEdc+WV9oshBYph0kjYdnMe8MUvoF91fCrlG81PGxRYtjg2sOzJnnqVRQ5nm
-	 cL+xh+9RDLLVirZeMQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([81.224.105.209]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MxYX5-1wDFlI15WD-00rbtZ; Wed, 10
- Dec 2025 17:42:57 +0100
-Date: Wed, 10 Dec 2025 17:42:56 +0100
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>, Koji Nakamaru <koji.nakamaru@gree.net>
-Subject: Re: [PATCH] config.mak.uname: use iconv from Homebrew on macOS
-Message-ID: <20251210164256.GA30949@tb-raspi4>
-References: <53690064-1c98-40e9-8b9a-7ba6bee63703@web.de>
- <16efc726-34be-44f5-aa92-4e82b663ab3d@web.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UA+IGiem"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3437c093ef5so59373a91.0
+        for <git@vger.kernel.org>; Wed, 10 Dec 2025 08:49:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765385370; x=1765990170; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=L4cMt2vcx7qCj/fzO6M61pTxpEePayDXFv9LkprtEuQ=;
+        b=UA+IGiemxT2WLS+XTq7kVKPS8R7O+XYP62jo6X/Z+sDR5Ycx+JPy7J0tAz3QVOPFhD
+         x4YfwCaidPbWrSOG0Vdx1f5Y7KEZYQ6HSQkwJwN7zhL/uRZEgx82MeLB07IDXeaVjx2B
+         819TNTk3D5glPdCBzNVMb2O6Lx52dMj/gVmv8tJ9Fuvd1IeenApbRCfGtUGUt1TltZvz
+         R9WYSPeytrNa+c0PSoPXpwBe58CV0NCaIzbLqijGrRLnaGjy2JV7081JMzM3tlfoM2Ti
+         q0muR8Cjl7HnpZjEdVpWxYRJ1l1rmkZX2l82NjaXaxg9XYl4AMtIj1/wkq1jF2Il1sDP
+         3scA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765385370; x=1765990170;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=L4cMt2vcx7qCj/fzO6M61pTxpEePayDXFv9LkprtEuQ=;
+        b=r8OzCRsh3BdtTA8guCgYhIm3UyMEwoieVcvVHENwmjSvaf6NpJHYmGmgmzwOcCMVcq
+         DH8YhhKmxpyNosmT4SYxu682a9I7HYF0bxUYtLHqlz5bUre2v/oK5GmyDw2p6DPm+A6K
+         WG8Iwd7RDMrvR9jZhSWnoRDtpntJY6LQ9ZfhYDoe12ZzGxyfQv45W0k4QOYmWW9O2yHF
+         tcy3TgAq1SeM2Ih18s1ImfiXYrbudAv/Yd5rbgTO7NTKt2dfHP9Ge+rGBfEuIjnCPpv8
+         6LBOOW8mgj1asgSvLaw7YCHVOewtgoWMFPrCSPZfxleIkNXMFlsKV9jJ70VGM2Vt99Jn
+         LN6A==
+X-Forwarded-Encrypted: i=1; AJvYcCWTG6SWS9U5EMfPuIm11IR1HTDVHJaTry06LTNmZYMwtElyHbNlWsPa3rD/vEdzSOvNylU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwtZvJ5KiijpZHSFTvimTtkP9pN63O1AAGyWZIrwEzfBS3BhCvW
+	x0/ri8X6dnlFaXpC3QqgtrvvIQKrXvR88MjGKNutsxhHJ12neeye2c1sUmpwl8ZMFUveKZEB/Vm
+	ztfuFKA3qLawrWQBXm3DKQWkOBaC36ZM=
+X-Gm-Gg: AY/fxX7a0qFDu47Ku7lmCqtLdtOdQ3i72+5hjd4wm0tNlkijVPEqizIx1qwMeD8rOwe
+	pwHwuhMfBiTyZ/DfjwTPkn5ABNf+uZl38MhoNbO3EJ7R2hfmI4hH0hGsqwe2CwWtZvuT5ceovLg
+	KnCUufyZKfNKpwHxYNUDzg/hTqFJjqpzAj6FKYYBw/SekXXGPNMfTlIT275C6b1IIYdqilFSl7U
+	t1PuuzOjKpbl0FnYun+Fm3RAtapyDnLk9TfEYy3/xDrpZI9BybRHbnRBZ4cnf5qj0tBcOuKgW4/
+	ug0HN1LAO7aKDTLfJu6nMN0yR9Ku6ObIj4Xn
+X-Google-Smtp-Source: AGHT+IEer0kmx0aKVgMYp91SyhBMo7HJpRkM4hKsjRGhYWZG+0JwsOYWBQM4Semag42cIZZB5cE/VZ6Icjw2UxGAyMk=
+X-Received: by 2002:a17:90b:2808:b0:343:6611:f21 with SMTP id
+ 98e67ed59e1d1-34a7285c257mr2801980a91.1.1765385369798; Wed, 10 Dec 2025
+ 08:49:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
+ <CANiSa6gXbrZaMLVq-AAg38sm+7qgzn4w98WWowLtUHA2P+BdLw@mail.gmail.com>
+ <aKs3tqjE510MF0T-@pks.im> <aMsWL2cSoytbmRjA@szeder.dev> <4m6rmefbv4hftclimitz5rp6yapswjtnjsxymrsdkuan4jbg3u@dm5jzdiq5cxz>
+ <bc01706e-b9cc-4cd4-953a-971a3ccd6c79@gmail.com> <paqf2ko6kcm5qdcqxqz57qu6gjw3vf6boabjsryeugfnlzzb7z@4dzqo6jug6l2>
+In-Reply-To: <paqf2ko6kcm5qdcqxqz57qu6gjw3vf6boabjsryeugfnlzzb7z@4dzqo6jug6l2>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Date: Wed, 10 Dec 2025 08:49:18 -0800
+X-Gm-Features: AQt7F2o3wjafVK4WfIxzck6UDxUxwkNQYCD4AoojzI6HJUxgJ4hESRlXy6UX4_E
+Message-ID: <CANiSa6hwaQ2zLsvw=uiJNgfVYAVp2RyQtgVeTevZ5NO5p2Xmgg@mail.gmail.com>
+Subject: Re: [PATCH RFC 00/11] Introduce git-history(1) command for easy
+ history editing
+To: Matthias Beyer <mail@beyermatthias.de>
+Cc: phillip.wood@dunelm.org.uk, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <16efc726-34be-44f5-aa92-4e82b663ab3d@web.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:jZYEtCEK3JPtXnu/L7Gf/C9BVInWwuCbRZSqCqjvsz3PIhvJ6WU
- Us/KQk/vc3un4gECSzZZRWIYoOZsqzbZtv6NVfdlpPfjKn2ymF9ZTRUVoz1s1p0JsDq05TH
- jPHCD6FencAHRcV9uvN3VtrRcwSfgcWsiIuYCsuOF2G9TnN34OrwGIndr2UqqdHab81M29N
- jL6t0DGZOpFLZQ//6ukOA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:VSo08ISTYYE=;2nNkNfxEaQahhV6FHL4YXSwI4LP
- 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
- 2NDqAZh1YznDBGyvLsyf2M43OPeVE
 
-On Tue, Dec 09, 2025 at 08:35:34PM +0100, Ren=E9 Scharfe wrote:
-> The library function iconv(3) supplied with macOS versions 15.7.2
-> (Sequoia) and 26.1 (Tahoe) is unreliable when doing conversions from
-> ISO-2022-JP to UTF-8 in multiple steps; t3900 reports this breakage:
->=20
->   not ok 17 - ISO-2022-JP should be shown in UTF-8 now
->   not ok 25 - ISO-2022-JP should be shown in UTF-8 now
->   not ok 38 - commit --fixup into ISO-2022-JP from UTF-8
->=20
-> As a workaround, use libiconv from Homebrew, if available.
->=20
-> Helped-by: Koji Nakamaru <koji.nakamaru@gree.net>
-> Signed-off-by: Ren=E9 Scharfe <l.s.r@web.de>
-> ---
->  config.mak.uname | 7 +++++++
->  1 file changed, 7 insertions(+)
->=20
-> diff --git a/config.mak.uname b/config.mak.uname
-> index 1691c6ae6e..1b305e38c6 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -182,6 +182,13 @@ ifeq ($(uname_S),Darwin)
->          endif
->          endif
-> =20
-> +	ifeq ($(shell test -d /opt/homebrew/opt/libiconv/ && echo y),y)
-> +		ICONVDIR ?=3D /opt/homebrew/opt/libiconv
-> +	endif
-> +	ifeq ($(shell test -d /usr/local/opt/libiconv/ && echo y),y)
-> +		ICONVDIR ?=3D /usr/local/opt/libiconv
-> +	endif
-> +
->  	BASIC_LDFLAGS +=3D -framework CoreServices
->  endif
->  ifeq ($(uname_S),SunOS)
-> --=20
-> 2.52.0
->=20
+On Wed, Dec 10, 2025 at 2:38=E2=80=AFAM Matthias Beyer <mail@beyermatthias.=
+de> wrote:
+>
+> Am Wed, Dec 10, 2025 at 09:58:13AM +0000, schrieb Phillip Wood:
+> > Hi Matthias
+> >
+> > On 03/12/2025 18:18, Matthias Beyer wrote:
+> > > Am Wed, Sep 17, 2025 at 10:12:31PM +0200, schrieb SZEDER G=C3=A1bor:
+> > >
+> > > > Let's suppose I have this piece of history, I'm on 'branch2', and I
+> > > > drop commit B.  Which commits will be rewritten and which branches
+> > > > will be repointed?
+> > > >
+> > > >     A---B---C---D   branch1
+> > > >              \   \
+> > > >               \   E---F   branch2
+> > > >                \       \
+> > > >                 \       G---H---I   branch3
+> > > >                  \
+> > > >                   J---K---L   branch4
+> > > >
+> > >
+> > > Just speaking as a user here, but my expectation in this scenario wou=
+ld
+> > > be that rewriting B would be denied by default here, as branch{1..4}
+> > > would be rewritten although I am at branch2.
+> > >
+> > > In the scenario at hand, I would expect that I can only rewrite G, H,=
+ I
+> > > while on branch 3 and J, K, L while on branch4 (without passing some
+> > > extra flags for "yes, please also rewrite the other branches").
+> >
+> > Is that because you have branches that you don't want to rewrite becaus=
+e
+> > they've been merged upstream or is there another reason?
 
-(Probaly a stupid question:) Does libiconv from homebrew provide UTF-8-MAC=
- ?
-And does t3910 pass ?
-
-I just realized that I am building against libiconv from mac ports,
-since years.
-Digging into the Makefile shows that we have a switch:
-NO_DARWIN_PORTS
-(and another one for FINK)
-Does it make sense to have a switch here as well ?
-
+I think that's a common reason even if it's not Matthias's reason.
+Perhaps one way of doing it would be to have a configurable set of ref
+patterns that are considered immutable. That's similar to what jj
+does, though we use a more general language for selecting revisions
+for it (https://docs.jj-vcs.dev/latest/config/#set-of-immutable-commits).
+I think that has been well received. As you might expect, the set of
+immutable revisions are respected by all commands.
