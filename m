@@ -1,141 +1,223 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8453B8D4B
-	for <git@vger.kernel.org>; Thu, 11 Dec 2025 09:29:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839FF201004
+	for <git@vger.kernel.org>; Thu, 11 Dec 2025 09:30:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765445393; cv=none; b=m21FBPNBjaZpMax1vurZrT6zQ/Phx9t7EOhWt23bIcismtVSp5b/6ydiKsY61zCH24Nm6nv80/AJNnyfOFBnZ3VUoZvBLSN3TioTgWOxh46yk/58d7+seVm3C9DGoFHojO2BLeXNhbU30skF1Ck/9JN9wZg7kGhPn0wDAoD7/0Q=
+	t=1765445421; cv=none; b=gQo3Fys14vE+uTlOnwICTShQG/FGtiZaeTlbJbFVAQrzyDgUOk1EZw7Ofy/M6Aw0rXXqT9qqJyluBNiXO7ntFY7EEBcnn7vCXNYVeuO5WfR/6oiUo8NABoMSrqo0H16J2NGYuRifGnkc9gBHB4c+MGtSVIX6O5fYSqYvBDFzCKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765445393; c=relaxed/simple;
-	bh=gKOfY8VBSBnflKd8c0zGWRziYLQXs/KVrYGx1MrKoAE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=teodmE6Lsm6oyrnBTbvoCH5e38v5cOa6bTgxEaLh1Plwzetk13VTykDX7W2/3cLX4/hTQX6WYPhw194i7TzMFrRk9wBIti4yKZbLIBC4E1jrTR8K83I1uJPDVsbQMYkMdawtDWR/3FVZXysvcWGJcYtk16Qaf9uwEKGFaSS6vRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NBiqBLg8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G7gEjnHf; arc=none smtp.client-ip=202.12.124.153
+	s=arc-20240116; t=1765445421; c=relaxed/simple;
+	bh=KjjKl6abPWQwlpceVbgIAfcXrMgohtgw5sgsGCBd2ZU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=mP97ODnjKZBYJiM4MJTz47LoLk9CGpuzpbsVJcwp8TCA4P3vwYbtOzUOe0zkf88wsqA2z5yo2VL/mA3Jqxuf/M+ni37aeeLRp/bYdy6IeffopegYlcgXGK3n6dYjKj5vctNn6+Hk/lEenS+ak7smC8/RFKRaP3hP6cWXxx6ftmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=s9QX6gns; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LNeGV0jb; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NBiqBLg8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G7gEjnHf"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8D4637A0126;
-	Thu, 11 Dec 2025 04:29:49 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 11 Dec 2025 04:29:49 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="s9QX6gns";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LNeGV0jb"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id B66771D0018D;
+	Thu, 11 Dec 2025 04:30:16 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Thu, 11 Dec 2025 04:30:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1765445389;
-	 x=1765531789; bh=owcOA5eQWbNJ9fynpITXlmKdFTYow3rdBhKyWnhQll0=; b=
-	NBiqBLg8KkUgJqs4TAYYDmWIP4zz/eB20vGC1ul8lOJeBqL+NTHDppTwn7cTvAqr
-	0A1KkGditwbhLLkeRJn6XSnJwVv5zwbwF6nKLVrqijord9EDjb9TWqTwM9EIbjI7
-	Vo00jktqfST5gacJJWz+9V8a7IsNJTlolNJn9xzbIBU4dnA4tQcD10wenFwvUTdR
-	nSb5PjP8/cOe4OYrr8cwhO66f5GUBix7HElZkn3RNFHaSplFQoyua9mbeQRM01ZL
-	8Xlji3WpC/yd+nkI4GgKOw1HKvMErz6UsZF0Hqp9MZU9k73W7CPlwWJ3xrrT0IFJ
-	cr7HGe7IM+EI1W2vMi+6hg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1765445416;
+	 x=1765531816; bh=FHnH82U0ADwL60wvqKuk/z9f8FEUubjqh2IBsPFsoms=; b=
+	s9QX6gns4q4v1YoJUkVHhzODLRFsG+bXUSvyePqno1vYzhjYv+r974rK53m+HVB1
+	Ic9LGG6vhL5++wGnh2x+3JXBqiY7ef2lQ/NFH2cGpZWCzmlIO5/hw+lasl7VJ3Ww
+	DQTGoF4wk2ZVhf1ud65GOt6oSmJTq0kyDcPC5iwJFqhPh7cnd/eQJkUZeXbSJQKZ
+	JDqfVLLe2pypgmVQilGpeTFlS+rjH1MYtuaYuJHkVGaSYKB6OitfcYuyKHP/ptev
+	gm/paWIlNl2n4O91uxmV7yXJ5jc8DebYVwbx9l36KVNIf8fQmoqqChbuzbmuTwjS
+	0ChIPYUh4I2su78pgFKA2A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765445389; x=
-	1765531789; bh=owcOA5eQWbNJ9fynpITXlmKdFTYow3rdBhKyWnhQll0=; b=G
-	7gEjnHfHmo0hBBRxDMJkbkjy4ihEZ/gbuRW2zNtBJ2bCVDoUtjayjtrTUX36Dr8M
-	LMbxpii3KdzGqcTN+/HJkkmgqSwHf0TKghCXyIiUTyF3RZ6Q8xEbeoToiJFNi1q8
-	Y3UaMcGJRDRz5x+Nn+9UuML6EwpajhN7j1UYU1EhGQl9qcZ7kBOdcJdYafrXOCKc
-	0L9SPeTnhv9NUCyHUSk2fmq5QtEqrCTVlmSAfLjNJ4yPNWTYobEKSUxAgobcWfWk
-	RX4AMCcz0+zeRDWiMVe/JEt2FYb8oOjGVxMZ70XAQkb4xzE3+vcRmKkJGh2VetE4
-	uh8dn/n7z6Ap+EhdFLvIA==
-X-ME-Sender: <xms:DY86afYZcfVcH3L8kTXwwyQ9P3V9lA2EYcgwYWN3_K22DMx7pTDadw>
-    <xme:DY86aV0JFRPc2Wp4_QBTZCvCW8_jYsMEMPQ2FZ-wpIgLDWfdggbi-qdt9A1FPI_PD
-    xDYOnWiq5GQbjOuYo0nA-_4uIoFDGSVpSYOCCR8S9ba_M17s8FbWg>
-X-ME-Received: <xmr:DY86afWSmILsTuPccrR_LfZj1_4xQCoEs44yzODDcDcEw2L5R8IU8ccAZ-KQ9LyKSsYBRBGYwyW4omvvgQWZbgDn1oo_QCBnmf2s9N06QXfp>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765445416; x=
+	1765531816; bh=FHnH82U0ADwL60wvqKuk/z9f8FEUubjqh2IBsPFsoms=; b=L
+	NeGV0jb9Ye27aJ1QCKsRQ9XrMGEZYgGPoeCi6R5NE1Feblqk1te78HwPVX0Mbc62
+	y/bKiJrWRiKH+/oj7aftVPL4Fq6GCc7BewXIMMAaBLT4MvC+BIkdPde/UJija0Rc
+	4LmvprCRIsLKNgNp+azlSKqINSnUM02HbvQEJX+xBBSaqtQB4MotxP7nCtZaoPM2
+	DTEb6Zum67VT1+9/JFMfzIMyrRbcHWn0RQxexQQJZ1DBmPI08AjaXt60V12oAxVE
+	R+AHhvgCvNP4C3uSmQgWCTj1xnOcy1KYrvWclLcoQ/4hZLlUzwefKHcxeA1vRmwe
+	2zFtUjzhEtQ4m34ZJpFpQ==
+X-ME-Sender: <xms:KI86aTZiV036FoF0m5EQgBmw3RzsS_d9abo-NTKfijeiC5lZl0D5fA>
+    <xme:KI86aZ1MC4ACqbRAuJcmEUES5X6ZmXGbJ50hYZtuJblzY9REX1b9gogsitfLGKzWZ
+    5i8ww77KK8ke-sImyQDM0QMzDxqa9hQbVMjRl9-2njIbu4RQlyg8g>
+X-ME-Received: <xmr:KI86aTW13qYYHryXivL_iAVegF-c-mPguT36-ajKWo85w5cuQSL1P86Mh0ZsjaKxtwKjDuDZzfLbtUibtYkFgal4hJ4yCJAOGECKEypmfTMP>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeelhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    hrpefhufffkfggtgfgjghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrd
-    guvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrgh
-X-ME-Proxy: <xmx:DY86afUzpYcCmsroOHYb3n03GptA-VwQRkF1OnnvCqqkh2oOqHfAhA>
-    <xmx:DY86aee4QvQQ8oIprATlZu-5xJiILK57hHdQMZf_PS9ZL_aD0gRdLQ>
-    <xmx:DY86aYXFDcTbp3cGjvPUi7CXtyHoMPU6_Js0HvcLcZBQ_vk1LAFNGg>
-    <xmx:DY86aXehwbMAVQxqVH4sZm-wYu2kOblgqhf9wsPNKFxJJYudP0BTRw>
-    <xmx:DY86aXRvFaCAh-XoRWPGytUutDO8lzp3GsahKUcCah_SgTehjsxTsnjc>
+    epteeuueehhffhiedtueehtddtieekfedtudehtdehfefhgeffveeggedthfehuedvnecu
+    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeef
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:KI86aTVJRw_QB-KLnIEhbBtp9q0S3qdIkwoQuxb7J4FufZNI3zZMZQ>
+    <xmx:KI86aSdFXWr8jgaML9BZyu6W9jZD-kY_N8cNO4YjwICIv4tyXW9FWw>
+    <xmx:KI86acX8XLIpwSCqy9U4V8bhKp9nR5ukoRKapZHIv5jFTM08FncKZg>
+    <xmx:KI86abenH8a-7NoNhGezO4hEPCs_lRkWp8c7CZRMVbOecwXnt25g4w>
+    <xmx:KI86abTmjT3Ss9IkX8ZD1ssXuq5ocuG6ugzk1wCTjhgNN9AMD31aNTAl>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Dec 2025 04:29:48 -0500 (EST)
+ 11 Dec 2025 04:30:15 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 736ab96d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Dec 2025 09:29:46 +0000 (UTC)
-Date: Thu, 11 Dec 2025 10:29:43 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 30d2f74f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Dec 2025 09:30:14 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 4/8] odb: adapt `odb_add_to_alternates_file()` to call
- `odb_add_source()`
-Message-ID: <aTqPBygCfm1hWtL-@pks.im>
-References: <20251210-b4-pks-odb-alternates-via-source-v2-0-eb336815f9ab@pks.im>
- <20251210-b4-pks-odb-alternates-via-source-v2-4-eb336815f9ab@pks.im>
- <aTpxB8gS7wG7rRJQ@szeder.dev>
+Subject: [PATCH v3 0/8] Refactor handling of alternates to work via sources
+Date: Thu, 11 Dec 2025 10:30:09 +0100
+Message-Id: <20251211-b4-pks-odb-alternates-via-source-v3-0-00e3f54d07ba@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aTpxB8gS7wG7rRJQ@szeder.dev>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACKPOmkC/43NTQ6CMBCG4auQrh3TH4HqynsYF50ySqNS0mKjI
+ dzdQqJxp8t3Mnm+kUUKjiLbFSMLlFx0vsuhVgWzrenOBK7JzSSXpZC8AtxAf4ngGwRzHSh0ZqA
+ IyRmI/h4sgeay0bVFbEzJMtMHOrnHMnE45m5dHHx4LotJzNc3rn/jSQAHqglRo9CWq33+X7sbm
+ +UkvzTB/9DkrKFSlRblaWvwo03T9AKIZb5FGwEAAA==
+X-Change-ID: 20251206-b4-pks-odb-alternates-via-source-802d87cbbda5
+In-Reply-To: <20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im>
+References: <20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im>
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>, 
+ =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+X-Mailer: b4 0.14.3
 
-On Thu, Dec 11, 2025 at 08:21:43AM +0100, SZEDER Gábor wrote:
-> On Wed, Dec 10, 2025 at 04:32:37PM +0100, Patrick Steinhardt wrote:
-> > When calling `odb_add_to_alternates_file()` we know to add the newly
-> > added source to the object database in case we have already loaded
-> > alternates. This is done so that we can make its objects accessible
-> > immediately without having to fully reload all alternates.
-> > 
-> > The way we do this though is to call `link_alt_odb_entries()`, which
-> > adds _multiple_ sources to the object database source in case we have
-> > newline-separated entries. This behaviour is not documented in the
-> > function documentation of `odb_add_to_alternates_file()`, and all
-> > callers only ever pass a single directory to it. It's thus entirely
-> > surprising and a conceptual mismatch.
-> > 
-> > Fix this issue by directly calling `odb_add_source()` instead.
-> 
-> OK, but:
-> 
-> > diff --git a/odb.c b/odb.c
-> > index e314f86c3b..d97e50fb61 100644
-> > --- a/odb.c
-> > +++ b/odb.c
-> > @@ -338,7 +338,7 @@ void odb_add_to_alternates_file(struct object_database *odb,
-> >  		if (commit_lock_file(&lock))
-> >  			die_errno(_("unable to move new alternates file into place"));
-> >  		if (odb->loaded_alternates)
-> > -			link_alt_odb_entries(odb, dir, '\n', NULL, 0);
-> > +			odb_add_source(odb, dir, 0);
-> 
->       CC odb.o
->   odb.c: In function ‘odb_add_to_alternates_file’:
->   odb.c:341:25: error: implicit declaration of function ‘odb_add_source’; did you mean ‘odb_find_source’? [-Werror=implicit-function-declaration]
->     341 |                         odb_add_source(odb, dir, 0);
->         |                         ^~~~~~~~~~~~~~
->         |                         odb_find_source
->   cc1: all warnings being treated as errors
->   make: *** [Makefile:2864: odb.o] Error 1
+Hi,
 
-Hrmpf, I only fixed this callsite in a later commit indeed.
+this patch series refactors how we handle alternate object directories
+so that the interface is structured around the object database source.
 
-> Note, that several commit messages also refer to this non-existing
-> function from the previous round.
+Next to being simpler to reason about, it also allows us to eventually
+abstract handling of alternates to use different mechanisms based on the
+specific backend used. In a world of pluggable object databases not
+every backend may use a physical directory, so it may not be possible to
+read alternates via "objects/info/alternates". Consequently, formats may
+need a different mechanism entirely to make this list available.
 
-True. Will fix both of these issues, thanks!
+Changes in v3:
+  - Fix commit messages that still refer to `odb_add_source()`.
+  - Fix intermediate commit that still refers to `odb_add_source()`.
+  - Link to v2: https://lore.kernel.org/r/20251210-b4-pks-odb-alternates-via-source-v2-0-eb336815f9ab@pks.im
+
+Changes in v2:
+  - Rename `odb_add_source()` to `odb_add_alternates_recursive()` to
+    highlight that this function is recursive.
+  - Link to v1: https://lore.kernel.org/r/20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im
+
+Thanks!
 
 Patrick
+
+---
+Patrick Steinhardt (8):
+      odb: refactor parsing of alternates to be self-contained
+      odb: resolve relative alternative paths when parsing
+      odb: move computation of normalized objdir into `alt_odb_usable()`
+      odb: stop splitting alternate in `odb_add_to_alternates_file()`
+      odb: remove mutual recursion when parsing alternates
+      odb: drop forward declaration of `read_info_alternates()`
+      odb: read alternates via sources
+      odb: write alternates via sources
+
+ odb.c | 307 ++++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 158 insertions(+), 149 deletions(-)
+
+Range-diff versus v2:
+
+1:  74d2596ef6 = 1:  4a85139a75 odb: refactor parsing of alternates to be self-contained
+2:  16d6e482d7 = 2:  1b16c0a164 odb: resolve relative alternative paths when parsing
+3:  16cce7f52e = 3:  ceb6e8494c odb: move computation of normalized objdir into `alt_odb_usable()`
+4:  b8a7138a51 ! 4:  99dbd11c48 odb: adapt `odb_add_to_alternates_file()` to call `odb_add_source()`
+    @@ Metadata
+     Author: Patrick Steinhardt <ps@pks.im>
+     
+      ## Commit message ##
+    -    odb: adapt `odb_add_to_alternates_file()` to call `odb_add_source()`
+    +    odb: stop splitting alternate in `odb_add_to_alternates_file()`
+     
+         When calling `odb_add_to_alternates_file()` we know to add the newly
+         added source to the object database in case we have already loaded
+    @@ Commit message
+         callers only ever pass a single directory to it. It's thus entirely
+         surprising and a conceptual mismatch.
+     
+    -    Fix this issue by directly calling `odb_add_source()` instead.
+    +    Fix this issue by directly calling `odb_add_alternate_recursively()`
+    +    instead.
+     
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+    @@ odb.c: void odb_add_to_alternates_file(struct object_database *odb,
+      			die_errno(_("unable to move new alternates file into place"));
+      		if (odb->loaded_alternates)
+     -			link_alt_odb_entries(odb, dir, '\n', NULL, 0);
+    -+			odb_add_source(odb, dir, 0);
+    ++			odb_add_alternate_recursively(odb, dir, 0);
+      	}
+      	free(alts);
+      }
+5:  2b2d4788bf ! 5:  b9300667a6 odb: remove mutual recursion when parsing alternates
+    @@ Commit message
+     
+           2. `link_alt_odb_entries()` calls `parse_alternates()`.
+     
+    -      3. We then add each parsed alternate via `odb_add_source()`.
+    +      3. We then add each alternate via `odb_add_alternate_recursively()`.
+     
+    -      4. `odb_add_source()` calls `link_alt_odb_entries()` again.
+    +      4. `odb_add_alternate_recursively()` calls `link_alt_odb_entries()`
+    +         again.
+     
+         This flow is somewhat hard to follow, but more importantly it means that
+         parsing of alternates is somewhat tied to the recursive behaviour.
+    @@ odb.c: static void read_info_alternates(struct object_database *odb,
+      	strbuf_release(&buf);
+      	free(path);
+      }
+    -@@ odb.c: void odb_add_to_alternates_file(struct object_database *odb,
+    - 		if (commit_lock_file(&lock))
+    - 			die_errno(_("unable to move new alternates file into place"));
+    - 		if (odb->loaded_alternates)
+    --			odb_add_source(odb, dir, 0);
+    -+			odb_add_alternate_recursively(odb, dir, 0);
+    - 	}
+    - 	free(alts);
+    - }
+     @@ odb.c: int odb_for_each_alternate(struct object_database *odb,
+      
+      void odb_prepare_alternates(struct object_database *odb)
+6:  3294336d85 = 6:  1e3a1fb081 odb: drop forward declaration of `read_info_alternates()`
+7:  55ba5815d4 = 7:  1d6a9b3c1b odb: read alternates via sources
+8:  225bcc37de ! 8:  79a053fb2b odb: write alternates via sources
+    @@ Commit message
+         allow us to have different logic for writing alternates depending on the
+         backend used.
+     
+    -    Note that after the refactoring we start to call `odb_add_source()`
+    -    unconditionally. This is fine though as we know to skip adding sources
+    -    that are tracked already.
+    +    Note that after the refactoring we start to call
+    +    `odb_add_alternate_recursively()` unconditionally. This is fine though
+    +    as we know to skip adding sources that are tracked already.
+     
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+
+---
+base-commit: bdc5341ff65278a3cc80b2e8a02a2f02aa1fac06
+change-id: 20251206-b4-pks-odb-alternates-via-source-802d87cbbda5
+
