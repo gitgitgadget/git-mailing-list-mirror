@@ -1,110 +1,106 @@
-Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF101B7903
-	for <git@vger.kernel.org>; Thu, 11 Dec 2025 14:16:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE7723185E
+	for <git@vger.kernel.org>; Thu, 11 Dec 2025 14:20:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765462614; cv=none; b=T41GWN4eMb9hj6y/W3GeyW2SFWfp3nr88fbNjKD1RrR1xf/WD2TNi+AsfzupPm+f/Vfqb3fE9AtBaVjsCkXix7IeaFn1tXERke8Phh4gWcbqKTJa8JoIek6hHrvzIKKzHqA+zvlnGUXJiJhTvTHn05zWn/mR6WkeJkK0fwKF2Js=
+	t=1765462860; cv=none; b=J67YToL2X6M4+fqcL+UxvkgcQih0H/LZTVgb6DjrhlmfhrjzddWagT6y8PtrXfizgDKz5MFMm8281qK1z0sI118A4Loph4/0LCPFh7YB2cCBA+lb72friEKwo5eT4P9ulplUpxzgncDiyu1cmf+zOOIUwLJrjdTJTER9Ltxrrpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765462614; c=relaxed/simple;
-	bh=1x9+KjRWbAqFCqZZ6HTLni4X6lBtFbxVyyq1GKTVl4w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=N54651HXqrMXZI8v+nzJn4ocTYaSvC/7IaU/wwWUG/jcmWIbq4+PlCVGh9kW3EyXH67zdqevtf4EOS3A4KFzB2371kQjb2ITnkcXl+0vYqHlyP8Vs3/T5P1J2D4gfgHZNJCCxUmWG/lhSzT9MKx0SiuQ1V26xSH4NnVdGZt3sMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=2gnNqNp2; arc=none smtp.client-ip=95.215.58.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1765462860; c=relaxed/simple;
+	bh=4yJeXsU6ZKG4kopyFoE/4D905OrFWcmC7tHnjod1c6g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jra0gyJMXhbTKT5KEKTB+Ft3ovuSl5jgBYJexvt7HzcaxusUZlJGpm8XgfUOLS1uFP0QSDO0h3Dk3T64S57O9cxmfE4UJ2+K514raXPBhD+c4Se3ydotvjYpS0wIOEyrYMH+cfGK66XGFocbrr22vPdon/DO1NxIz5eqAcbHj0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=T1tkUGzv; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="2gnNqNp2"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1765462609;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=41LFOfK3hPP+00NTRK/2wBkoBApwET4lS3fy9jkAbAk=;
-	b=2gnNqNp2KS5jlq0M9HoUghJENLxevZzyXtTvjVJrlf27rjFaTl6RjCJGaj6LVjRJXviw36
-	6mZSJ5w5Vw8kRVfZmDuYGr7DA6ZOmpQFCJ0xpf1mL5UpLQ81a29rKm89y12aMzGTEF5d4L
-	ltRTnQ+Nx0H2EvXoSSgzNQHaI6e935Q=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/2] builtin/gc: fix condition for whether to write
- commit graphs
-In-Reply-To: <20251211-odb-related-fixes-v2-1-bdf875ce51fc@pks.im>
-References: <20251211-odb-related-fixes-v2-0-bdf875ce51fc@pks.im>
- <20251211-odb-related-fixes-v2-1-bdf875ce51fc@pks.im>
-Date: Thu, 11 Dec 2025 15:16:36 +0100
-Message-ID: <87ecp1gl2z.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="T1tkUGzv"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=T8PxSykMCny3IBVbVp3QVaT0fZ7BldQ7cXON+PkY0cE=; b=T1tkUGzv7qYxXT2qxd0/Ovma4f
+	rLQVUyflOwa46JtwHdFJbh2co0kWjn203ZnJbXF+ohzchkul558yQj/Tf8Vx3lLvyPqvqOZllVIHD
+	gtYplkn8TdCo3FWBHywQohmJurwNM+WSDzGiBeGCmRZ9DJg9lWiSzpPikRXKMRIURKxkjRsdtluMp
+	36g3reRl/huyQQSXLLkla7okjro7MrjiCSgEYmZRW3sP/mXocGfyZk7EKH1lymWxtFIMwIyBWSn/J
+	JNKCBy9Q8QA+DqygyAGDtGd0UWPZ6e+8lDodgu7nz0dPTgvk34D1PFJqhxezFzrwBqI6JYBDLce56
+	MbOeXapQ==;
+Received: from [91.117.33.88] (helo=[192.168.1.138])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1vThXD-00BWUU-RT; Thu, 11 Dec 2025 15:20:47 +0100
+Message-ID: <e19246a7-40db-41d0-9cdf-817833123f45@igalia.com>
+Date: Thu, 11 Dec 2025 15:20:46 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/5] scalar: document config settings
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: gitster@pobox.com, ps@pks.im, atthewhughes934@gmail.com,
+ johannes.schindelin@gmx.de, Derrick Stolee <stolee@gmail.com>
+References: <pull.2010.git.1764195516.gitgitgadget@gmail.com>
+ <pull.2010.v2.git.1764607847.gitgitgadget@gmail.com>
+ <ac1627dbd94e3330117fbaeac2e2373104aef531.1764607847.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Henrique Ferreiro <hferreiro@igalia.com>
+In-Reply-To: <ac1627dbd94e3330117fbaeac2e2373104aef531.1764607847.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 12/1/25 5:50 PM, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <stolee@gmail.com>
+> 
+> Add user-facing documentation that justifies the values being set by
+> 'scalar clone', 'scalar register', and 'scalar reconfigure'.
 
-> The root cause of this memory leak is our use of `commit_list_append()`.
-> This function expects as parameters the item to append and the _tail_ of
-> the list to append. This tail will then be overwritten with the new tail
-> of the list so that it can be used in subsequent calls. But we call it
-> with `commit_list_append(parent->item, &stack)`, so we end up losing
-> everything but the new item.
->
-> This issue only surfaces when counting merge commits. Next to being a
-> memory leak, it also shows that we're in fact miscounting as we only
-> respect children of the last parent. All previous parents are discarded,
-> so their children will be disregarded unless they are hit via another
-> reference.
->
-> While crafting a test case for the issue I was puzzled that I couldn't
-> establish the proper border at which the auto-condition would be
-> fulfilled. As it turns out, there's another bug: if an object is at the
-> tip of any reference we don't mark it as seen. Consequently, if it is
-> reachable via any other reference, we'd count that object twice.
->
-> Fix both of these bugs so that we properly count objects without leaking
-> any memory.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/gc.c           |  8 +++++---
->  t/t7900-maintenance.sh | 25 +++++++++++++++++++++++++
->  2 files changed, 30 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 92c6e7b954..17ff68cbd9 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -1130,8 +1130,10 @@ static int dfs_on_ref(const struct reference *ref, void *cb_data)
->  		return 0;
->  
->  	commit = lookup_commit(the_repository, maybe_peeled);
-> -	if (!commit)
-> +	if (!commit || commit->object.flags & SEEN)
->  		return 0;
-> +	commit->object.flags |= SEEN;
-> +
->  	if (repo_parse_commit(the_repository, commit) ||
->  	    commit_graph_position(commit) != COMMIT_NOT_FROM_GRAPH)
->  		return 0;
-> @@ -1141,7 +1143,7 @@ static int dfs_on_ref(const struct reference *ref, void *cb_data)
->  	if (data->num_not_in_graph >= data->limit)
->  		return 1;
->  
-> -	commit_list_append(commit, &stack);
-> +	commit_list_insert(commit, &stack);
+Hi Derrick. I was planning to contribute a patch removing some config
+options so I'll take this opportunity to just discuss those here.
 
-commit_list_insert() prepends the commit to the beginning of the list,
-while commit_list_append() appends it at the end. Because the list is
-only used for counting, we don't care about the order. So this fix looks
-good to me.
+My motivation is that some of the options seem to be related to things
+other than performance and the list is huge, so I believe that some
+options don't belong to scalar.
 
-I also approve the other changes in this series.
+> +REQUIRED AND RECOMMENDED CONFIG
+> +-------------------------------
 
--- 
+There's no mention on which configs are required and which are
+recommended, and it looks like none are actually required so maybe just
+remove REQUIRED.
+
+> +am.keepCR=true::
+ > +core.logAllRefUpdates=true::
+ > +credential.https://dev.azure.com.useHttpPath=true::
+ > +http.sslBackend=schannel::
+
+These options are not related to performance. Why not keeping them out
+of scalar?
+
+> +core.autoCRLF=false::
+> +core.safeCRLF=false::
+ > +index.threads=true::
+
+These options just duplicate the default settings.
+
+> +feature.manyFiles=false::
+> +	This disables the "many files" optimizations grouped under this feature
+> +	config. The expectation is that all valuable optimizations are also set
+> +	explicitly by Scalar config, and any differences are intentional.
+
+I disagree with this reasoning. This thread was actually brought to my
+attention when working on setting manyFiles to true in scalar:
+https://github.com/git/git/pull/2125.
+
+Do you foresee any features that would apply to scalar but not to
+manyFiles? I'd even say that some scalar options could be moved to
+manyFiles instead, so that people that don't use scalar can benefit too.
+
 Cheers,
-Toon
+Henrique.
