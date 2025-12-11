@@ -1,110 +1,96 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-106118.protonmail.ch (mail-106118.protonmail.ch [79.135.106.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD302686A0
-	for <git@vger.kernel.org>; Thu, 11 Dec 2025 15:56:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759381EB19B
+	for <git@vger.kernel.org>; Thu, 11 Dec 2025 16:33:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.118
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765468584; cv=none; b=LQqmF29MCBkPrLbUKhDZqcIpcF+P7L7pjyXLLRGH04W2yveOFc18AMu6LPdO0xdvFLPDfV6cIEt+Xxrh+rD3/s37R2Wggv1Jq/JrEl2S3I2qqW9y2JxvAMKPNJnOhWwiY35zXLSuPi9BnDqhwj8DdXjVmwzEdmXIppbrVVZDbbc=
+	t=1765470798; cv=none; b=Jo1kn00cvbxGKj8soomH8UUl6MaFUrE15CDWedGxlBxuZLO6HF1VxQ0G28QDqa6CvcSGnVCWDxgo2QayGMujzrwsIKnlWjt/5Vzoo6FvfJMlz2mmedNW3P7o3zrJKfGSQRLou03+IfyfkRJ3Tmh7SBfDeI/nxDEEZOwkybN3Rpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765468584; c=relaxed/simple;
-	bh=rsd2meHtVkjH+WV88SpvTPP/e815EpgkTeHOzh/Nk00=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=KYW8nWvja9P4OeJmen81Fb2apOVuNQ8a/zKM46XqiHFVr9Tlyauh445M2i/lbccY8Vd3ZTCHsROkXT8SGW9sj39sKCCh/jQv+9c2dyJCDGz30sYMASt4PhYAnfRtXOP0fZJHEE26X2niG50IiH6dZIPgFohRlkBRTKHWdoXUH5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EWy9+Veo; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765470798; c=relaxed/simple;
+	bh=BuJfyl2IGIBVJHJfgADcbuE0JLlHoJRkLIeApo0bOG4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=mdTAN5IwL28E1ia5SEh1G/uybJmxN80grbUaILoXRxZKxeFmh35zsouUrtZcsCZxHC1Usi8qRUHtFos4n3unvXNirAYcHic/SliYSTLRCfcuTWyPmAVJuCLHJ1fRhQIkMwY0a/SI548YMvzn56bFVtDyEpLtWZj5wM0lMfoUDPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=X1tcRLwb; arc=none smtp.client-ip=79.135.106.118
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EWy9+Veo"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-42e2e167067so140327f8f.2
-        for <git@vger.kernel.org>; Thu, 11 Dec 2025 07:56:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765468581; x=1766073381; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QToZ3ysVtlzbBAh6bKrD9UMw2D7AuvNL2cRclAFWdt0=;
-        b=EWy9+Veoxnmi/1QYmmZKT2OVlyv/rq1QCoO4x2dBZm5xAlh7BgrwgGxI7tKAsy2IRg
-         B+1dB70G+oADMC4FRlRyULBOxYkVdxhMnW2MUxPpws8hy7GfFS1YAehP5QLJdt2sGVnZ
-         YGU5E9sg07r+yapfaSyqJVhe9Y6jHivz8ZEcfu5pgdwwCppbARv8T3Gnb3tknZLl9NwN
-         cp1Mom7LJBaad1+KUjgQIVBycth/Se2A4ZdlBeNCo6CC1ypgtV4kr1Npir7ONygHvmKk
-         uFdIt0wY/JHwqejjcbGLTsx9FUzo9MjRWFk6FN2B5W51u5b7TyC+BXcd4pQl2631/qFm
-         DEew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765468581; x=1766073381;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QToZ3ysVtlzbBAh6bKrD9UMw2D7AuvNL2cRclAFWdt0=;
-        b=ewf2JrppRLg55EZnFoaClm7XdNKrZuVtHezzTP5/M7yQ8RMqhJBER6iOBnJCeXVtCO
-         YjjyDEZ38mj1eG+Nnf2/1aV/6OQiiH9elVmhT+ErCt86DA2/pMt+jxAv3Z9RYvmwEoEv
-         uDor31kOiQ48jU5aQWbmAmoBIAMq1TbLKUOs5bb2U0EDIEiz+EIxiZKsbdAl8xAL+5JU
-         lxtntkNR0Nb1AF6Nl8CMhJt1j1d4de+x/rFvEBEc1y35P3sjuqyBx13Aw899chdM81Qv
-         elm5bMD5A+i5O2t6v+L9K7ZWj9GASk16sDSsjEJzA6t/NG9/V+98C57RzgDDdoAXjAB3
-         llAg==
-X-Forwarded-Encrypted: i=1; AJvYcCUIoE3fftvIEh0P7+0pQkyq+ewy7cZIKmwsDVpr08kHwEe4fgplq4KU660ERUxVOsDFY0w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwMu6oTtIwGpVCKq3QqjVWHrZGbIvTH5JkXZhAk/4cQ6r1EVuWt
-	iJQ638cmvFs/NRlNXu+R2aHyNaLSAweXuHGCW289pjEiW3F9szW7PYPc
-X-Gm-Gg: AY/fxX6DMZVNU+RvmimXZsmCTFB1Tculxcj1X7HrmQy+vZvgdDhafPppl30rg0Bhkir
-	IvRXVbWIthudIFzsKsEVJhPuLa7Gpj8O5L/ASmX7G4sKvY3NHo10ggpr6IH5eblUj5cfO/bw8zr
-	4k69kA9fb8cKFNicNenQUD6NGLZgkbPBFOdmD2vwxB73KUc3a+WBtAWIt6IBQOC3y+sCetD61qR
-	PETvlS7XiHJLtF1+rQ9acEEsx83ScjTAFqaQMzxWIjAUI3ouYxE6b2dTU/hnmnwfulLUafw3e7U
-	wF0uRqDltFTGbqtuLC62zy8YD8WdsQz3NG9aXvkN/fwZtEfXLvXszDfnIEkYLRGypb8a5tpchF0
-	4ckmgFuiUPi/a1jALTaRQWvM/VDpX5msC5xUzQ0ZxcJvIlRl+oZv9pURvh0K8AE5HaeG9A/mQxo
-	ykpE9RBPK4gVcQikmUb7UVl8BGHuCoFdNIn6FLyCucgx6R8/2J5nGqN39Cd4cwZmNVfA==
-X-Google-Smtp-Source: AGHT+IGOePONw90jYcoeeghK7MIdnKx+0DrM1/UhOlH0u57KhzL/jwfZ8GJhdO/0peuzA+0Skb3iwA==
-X-Received: by 2002:a05:6000:1c6:b0:42f:a990:96c0 with SMTP id ffacd0b85a97d-42fa99097e4mr3162795f8f.29.1765468581081;
-        Thu, 11 Dec 2025 07:56:21 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42fa8b85ff5sm7076616f8f.24.2025.12.11.07.56.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Dec 2025 07:56:20 -0800 (PST)
-Message-ID: <177a25f0-7292-4ee7-8a02-9c90a5979313@gmail.com>
-Date: Thu, 11 Dec 2025 15:56:17 +0000
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="X1tcRLwb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=adsnzicee5dvtllsp2h52nevwi.protonmail; t=1765470793; x=1765729993;
+	bh=BuJfyl2IGIBVJHJfgADcbuE0JLlHoJRkLIeApo0bOG4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=X1tcRLwbrpVuoiPRDOB0H9/qEwHajtxdEEyPuejp090gZdS4QKugsHT/bNOjx+H4Y
+	 TVOTTa6nL+nHrKe4MMSo9efxiyN5b+YVygjCAZGeB9qpTMfMSD9UKGPdWMx6ILjiqV
+	 LQdox/Z3D6Ze5vDfThYPA1kezxs+bN0jAvB6jEQ5tcwoL6AzI5QeeNlXKNmu4Z8eOw
+	 eLjnN5jNk4LFZ7ONu9CnTXGHgZRc3/HYiN/oyVxxVQAyVBh6dSSfZ33TBXkEH6C7xJ
+	 sjY0X/q+NSVwv96BG0fUE/jHcrm8hJqZ2f9or2eDNrBhkFGz37OInXI9Bjycstjtdp
+	 ++V8p1Asm9Bbw==
+Date: Thu, 11 Dec 2025 16:33:08 +0000
+To: Johannes Sixt <j6t@kdbg.org>
+From: Koutsouflakis Stefanos <koutsouflakis.stefanos@proton.me>
+Cc: Junio C Hamano <gitster@pobox.com>, "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC] reset --hard: warn before discarding staged content with no commit history
+Message-ID: <lVqXkS_Nc_hxtxMq3nevB6dCfPgh-qw9A6dLROQqGqN1_iqDONXeGQmp91hGmVTmaSIqGy5QVMC5OuzJmuULP-rUWcqBSv_L8pnLgPjoDsM=@proton.me>
+In-Reply-To: <d318c46c-fbc3-4e47-8c3f-165ca9a26225@kdbg.org>
+References: <a5wKtD6Tn0gzcba1IEUhukYnXPHxMwPq6puQKIPywmjNufi5vc6vX-v5BpPJ7qj_zZsuXF5FiS2gbpsurWmVjoWHtMm8A-kAbaZyjMfrTcs=@proton.me> <xmqqldj9g0pj.fsf@gitster.g> <0lbeTWjDGq8hINMi-lj65HLgAIlUNZe_tzANStd9xxHQqAyZaEnaA0yPzVeY_VcReQIKNjY7eBEUGwMGvlbZ-0W0QZpux22cIHnosa0eX_k=@proton.me> <d318c46c-fbc3-4e47-8c3f-165ca9a26225@kdbg.org>
+Feedback-ID: 140350232:user:proton
+X-Pm-Message-ID: f99d603622f1e94d3071df17a927ed231e24e085
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: bug: `git pull --rebase` breaks in the presence of pushurls
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kartik Agaram <ak@akkartik.com>, git@vger.kernel.org
-References: <896e4e13-5d2f-4c5c-ac32-2927dbff91a0@app.fastmail.com>
- <04cc0cc0-155e-422e-b723-b1115c918087@gmail.com> <xmqqa4zsliim.fsf@gitster.g>
- <61f61218-1945-4efe-961a-e6cb4ac8c6a9@gmail.com> <xmqqpl8lg0u3.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqpl8lg0u3.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 11/12/2025 03:21, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> "git pull" already runs "git merge-base --fork-point" before it runs
->> "git fetch". The problematic reflog entry comes from a previous push
->> which pushes to a different server due to remote.<remote>.pushurl.
-> 
-> Ah, of course.  fork-point heuristics with a repository you yourself
-> push into would not make all that sense, since you are in control
-> when and what to push there in the first place :/.
-> 
->> Because we've just successfully pushed the local branch the fork point
->> calculation thinks the remote tracking branch matches the local branch
->> and so excludes all the local commits when we rebase but we didn't push
->> it to the same server that we're fetching from. I wonder if we should
->> disable the fork point calculation when there is a pushurl set.
-> 
-> Tempting thought.  Or educate users with diagnoses and advise()?
+On Thursday, December 11th, 2025 at 14:34, Johannes Sixt <j6t@kdbg.org> wro=
+te:
 
-If we do that we'll also need to provide a way for the user to skip 
-using the fork point when pulling. At the moment I think there is way 
-for the user to turn it off.
+> Am 11.12.25 um 12:53 schrieb Koutsouflakis Stefanos:
+>=20
+> > On Wed, Dec 10, 2025 at 10:24=E2=80=AFPM Junio C Hamano gitster@pobox.c=
+om wrote:
+> >=20
+> > > The thinking has always been "'--hard' means what it says! HARD
+> > > removes things harder than other modes---there is [no] need to add
+> > > '--force' to it".
+> >=20
+> > I agree that "--hard" conveys serious intent. But I would argue
+> > there is a meaningful difference between "lose your uncommitted
+> > changes" and "lose your entire project".
+> >=20
+> > To be clear, I'm addressing a very narrow scenario:
+> > the user has run init on an existing codebase, staged files
+> > with git add, but has not yet made a first commit. Running
+> > reset --hard at this point destroys the entire project
+> > with no realistic recovery path. This is almost certainly
+> > never intentional.
+>=20
+> I would argue that bad "tutorials" and "recipes" are to blame. I have
+> seen far too many that casually suggest `git reset --hard` without
+> warning and in an easy to copy-and-paste format.
 
-Thanks
+Agreed. Many users copy-paste their way through Git or use commands
+they don't fully understand. That's not the ideal way to interact with=20
+Git, but they don't deserve do be punished.
+=20
+> That said, I have some sympathy for the case. Would it be palatable to
+> have `git reset --hard` refuse to do anything if the destination tree is
+> empty?
+>=20
+> -- Hannes
 
-Phillip
+Good point. Checking for an empty destination tree seems to be
+the better approach.=20
+Refusing to proceed (without providing the option of bypassing=20
+it with --force) also seems reasonable, maybe with a helpful=20
+message explaining the reason.=20
+On a second thought "--hard --force" is a bit redundant,=20
+like "rm -rf --really-delete".
+
+Thanks,
+Stefanos
