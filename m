@@ -1,89 +1,136 @@
-Received: from mail-108-mta26.mxroute.com (mail-108-mta26.mxroute.com [136.175.108.26])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69B21DF963
-	for <git@vger.kernel.org>; Thu, 11 Dec 2025 06:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.175.108.26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0863B8D47
+	for <git@vger.kernel.org>; Thu, 11 Dec 2025 06:19:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765433445; cv=none; b=oZthNkWKuQdoP20PQ8d15/9Cj6+9DyL9gySvwoaY0SGQNDQ48ASlkeDOpavyzuph4VmNklVraeXMed6dDxD83JdhSuX2gEvRAlNrfFOGTtDAs/W03GugNj1gD0bslnLwFPgMRPpA18QZbQkj8cUahR3xSXRFBTplMZP5vAFyws4=
+	t=1765433988; cv=none; b=XJ+/guPoYNYjwZOeVTZJFtOmafAiD6xsdzuKLfKd5qFiXD2GkX9kQx066YldkZD1eIV0dHTUB1tOJ9+IfEXDydoXoqef5Y1omE0fJYEMUyQxE8izTRuW5MYsKMWh07EoX3ID9uYZBPBVjQVS21aqpOr+5lQr6fqzfGSHRafGypY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765433445; c=relaxed/simple;
-	bh=zLYIz6reNTP3zUSa7leO9VYAXGRaV6LAwv9ltwij5N4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=TJW82A156oFo3ss+qoQ8nFpGj76sz/rZz35/psV+sLCX9C/uf32GcBrbzqcTmPf2pkP+ZmYvI29imwZ8XCxa4oOFDRO+NT8+TeHPT9OSkavNOajRrprQyhImJX4VjdyQXxK0TmYsknUA8iUxP7k2DSyiDLt96di88V927zJbHf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ashlesh.me; spf=none smtp.mailfrom=ashlesh.me; dkim=pass (2048-bit key) header.d=ashlesh.me header.i=@ashlesh.me header.b=O8JWzmAp; arc=none smtp.client-ip=136.175.108.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ashlesh.me
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ashlesh.me
+	s=arc-20240116; t=1765433988; c=relaxed/simple;
+	bh=xc83h/1qKGpR1p48XJ2B0suHDjWB3JuhkLYiA+P6UK8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oDG1bqgOzHiAhJkEADd9gd0O06U58IwcqnEGv7YcWuSKpTfzrUBCjpbx4bidwEqb7kDzhBEP6PcOqNco+XtXSgAAx6wd2iZpy6trSg9HbFxYnvyxlyBzWQyq4ZIUWgimaMQW5gQh1N3lXxaKfbKiqEHjAU8dxstMV20nU1VucPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Z3Yd+YeV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NtRo/zBx; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ashlesh.me header.i=@ashlesh.me header.b="O8JWzmAp"
-Received: from filter006.mxroute.com ([136.175.111.3] filter006.mxroute.com)
- (Authenticated sender: mN4UYu2MZsgR)
- by mail-108-mta26.mxroute.com (ZoneMTA) with ESMTPSA id 19b0c03d2510004eea.006
- for <git@vger.kernel.org>
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
- Thu, 11 Dec 2025 06:05:35 +0000
-X-Zone-Loop: a1f6b3e2094e194b5ca757bff4f08ddb00b02512859f
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ashlesh.me;
-	s=x; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:To:
-	Subject:MIME-Version:Date:Sender:Reply-To:Cc:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=nlvyeKyFEijuuqKHjpd08Wk1oZ2Pr14JAvClW9jdpLE=; b=O8JWzmApwYZ/p4JetAgnwtFNt7
-	nncj/ENsTKeuA2tX4cmS2D/9pp7HiUdCqxl6SZFFuRfCJUwjSIwSr/vtjEHin+1duYrpmWthG2Qll
-	iB/e52FrFc25VQNzpReYUWFTbczL6E2hnKidCIwKbaSj3MTtLWcJJ6Of85Ca4E3RRx4GypxdBO4Hn
-	s4b6t1fisKhTvLXCvs9WMHmo09U95FsAZ7sArqpU3C2YcTx850JxXb0hTEF9CCC8C2UdoLtsnhbS/
-	WUCUZIvgHzOpSwfxdP5teLo7yZiHfwmIm+tEN67Ng8zQho7ijE6Jc/z5FWmmew+XPPFU1Ksuq/O6W
-	UZ0Al8Wg==;
-Message-ID: <888e3dec-e279-47af-8a91-04a06f6eb0af@ashlesh.me>
-Date: Thu, 11 Dec 2025 11:35:11 +0530
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Z3Yd+YeV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NtRo/zBx"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7FECC1D00192;
+	Thu, 11 Dec 2025 01:19:44 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Thu, 11 Dec 2025 01:19:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1765433984; x=1765520384; bh=2KlvgwyHJw
+	vFWRAgeRac+OMVQ+lqhiLlPATTV+v+aw0=; b=Z3Yd+YeVRC5AFMGpLmvmd2DfLk
+	2TRvbe6Cl1pALGWLVqh9VMvwhn9HdD8yg3pXKa33elfmUAdfRKK2GMgkQonKyqPz
+	gAFzzBlSfk1mAvUFUyIt2Fn2tW0VfvPUKYIMd77aWK4azfb5ckWAgPrB9vPuyCLe
+	2Em1n/An8+jtp8mwo6eZZLgpuRajg1SHfqIYX3jTwfOdOSOkziYlXq33Hw7uOZS1
+	pNheRlrkl7Wlcsje4rXrBfCajY5khUPg2GM5OwOq5DYa1dtKokCDU6xC4YQi+eBV
+	ZGy45YGG5odd7Y/PlzmUqq12a9GeBQ1eBB60qtWbCIIJz7/SLM8uGliSE3gw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765433984; x=1765520384; bh=2KlvgwyHJwvFWRAgeRac+OMVQ+lqhiLlPAT
+	TV+v+aw0=; b=NtRo/zBx0fNetgFXSi87EvlCZSAkpIvwq4vT+rvoFYMeUpW459j
+	+SIaQ9OsuGG5SX5DCUCUMgppnBjVLLOt0z6xA3LdUMFtvanxq3IP7MFJjx7p60na
+	R4SfRJpV3vsThMydGaYVJwd/E+vvzZr5X03HKrQ3BiQ99xt5LRxK0mjTNd+TFtX8
+	JmLME26Nu6KM9D46OzYVQN8qXGmlBSxsxL8f1R9P/vYgiXtv3nYatSzUm+f3pGbG
+	35+lRUmLhYf3rWLjtlAQ7zXVk0uUiorcWpIp/bJFwVIwVzFfrWyCezo5LKSFa8iP
+	pwz5UdqAXJ3sLVTgcrw4+5BBLcSS573HVyg==
+X-ME-Sender: <xms:f2I6aXtJDTsaFFJWP9CwP2Vy1fUEcB47LINR-rJtZO6jWtRW26PYog>
+    <xme:f2I6af7C4i1f0qd0yP9uXtzB1i3z6zmclLJDlJpPTd1uVyOZEEe4ELV2gpkE5XyIJ
+    vetP1vj8ENMRDKdeDAxDuQkrhQjbOMUaKYU5y5bXZzxXTzginFY>
+X-ME-Received: <xmr:f2I6aYJCY382ikOs4qCO7gjz9F9pDXIWcDnWVDP90l_jouwraiuAztFjdYQ3d8MBiB-M1yAFum3VIY263hIee1YCxd9z4oBFwNvl5xzOCSyZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeehjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    ejtddtgeffkedujeejgeduhefghedtgfdtieduleeulefgueetheeludegueeuveenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:f2I6af6gpl99JD1ylRplOatHre4OIYfq7z_uDXPsiY8BJDkGfS1r9Q>
+    <xmx:f2I6abw7IIc3QQXkb7XacUWUke2VNHvRGM5JWuC4d5S5IQt9T0pXUQ>
+    <xmx:f2I6aTbYRaJAlsYMd1Nfe70g83IaAd6fpa380CgUh2RFyk0NAU-BDw>
+    <xmx:f2I6adScmGtsBysLLZc_dk3WQyYRGIb5qtWwcjUsjSP-DFXNTU7FMw>
+    <xmx:gGI6aQrcOsqfgRgbP_oVlFI02NyjSBWn2m030KEHe_DBBt3NFzlZjQF0>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 11 Dec 2025 01:19:43 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id bfdfde5d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Dec 2025 06:19:41 +0000 (UTC)
+Date: Thu, 11 Dec 2025 07:19:38 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] contrib/coccinelle: pass include paths to spatch(1)
+Message-ID: <aTpieqFoMmZiSzWS@pks.im>
+References: <20251210-toon-cocci-memzero-v1-0-ae916a79065b@iotcl.com>
+ <20251210-toon-cocci-memzero-v1-2-ae916a79065b@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] http.c: prompt for username on 403
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
- =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
- rsbecker@nexbridge.com
-References: <20251014144354.1457818-2-git@ashlesh.me>
- <aO7Aqooz-0ppbcMP@fruit.crustytoothpaste.net>
- <30639771-4999-45f4-a8d7-1ed4774ffd8e@ashlesh.me>
- <aPAg3gYwzA9fHCC3@fruit.crustytoothpaste.net>
- <79d2226c-b568-4385-a618-f0d3c06cd0a8@ashlesh.me>
- <aTjVenutFBprwrrz@fruit.crustytoothpaste.net>
- <37c3b31e-900e-4df0-ac30-284e71660487@ashlesh.me>
- <aTn0BOM07Lyphq_1@fruit.crustytoothpaste.net>
-Content-Language: en-US
-From: Ashlesh Gawande <git@ashlesh.me>
-In-Reply-To: <aTn0BOM07Lyphq_1@fruit.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authenticated-Id: info@ashlesh.me
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251210-toon-cocci-memzero-v1-2-ae916a79065b@iotcl.com>
 
+On Wed, Dec 10, 2025 at 02:13:02PM +0100, Toon Claes wrote:
+> In the previous commit a new coccinelle rule is added. But neiter
+> `make coccicheck` nor `meson compile coccicheck` did detect a case in
+> builtin/last-modified.c.
+> 
+> This case involves the field `scratch` in `struct last_modified`. This
+> field is of type `struct bitmap` and that struct has a member
+> `eword_t *words`. Both are defined in `ewah/ewok.h`. Now, while
+> builtin/last-modified.c does include that header (with the subdir in the
+> #include directive), it seems coccinelle does not process it. So it's
+> unaware of the type of `words` in the bitmap, and it doesn't recognize
+> the rule from previous commit that uses:
+> 
+>     type T;
+>     T *ptr;
+> 
+> Fix coccicheck by passing all possible include paths inside the Git
+> project so spatch(1) can find the headers and can determine the types.
+> 
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> ---
+>  Makefile                       | 2 +-
+>  contrib/coccinelle/meson.build | 6 ++++++
+>  2 files changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 6fc322ff88..46d07b2d52 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -981,7 +981,7 @@ SANITIZE_LEAK =
+>  SANITIZE_ADDRESS =
+>  
+>  # For the 'coccicheck' target
+> -SPATCH_INCLUDE_FLAGS = --all-includes
+> +SPATCH_INCLUDE_FLAGS = --all-includes $(addprefix -I ,compat ewah refs sha256 trace2 win32 xdiff)
 
-On 12/11/25 03:58, brian m. carlson wrote:
-> On 2025-12-10 at 12:30:27, Ashlesh Gawande wrote:
->> Oh, that http_code == 403 is my original proposal to prompt for
->> username/password on 403 (I did the diff on top of that instead of base).
->> But you pointed out that it would wipe out existing credentials. This is an
->> attempt to fix that by not prompting on 403 if git credentials are set.
->> So when credentials are provided through default netrc file (such that
->> http_auth.* are not set; git credential helper is not set) then we can still
->> get the prompt on 403.
-> As Randall said, I don't think it's a good idea to do this.  It's a
-> major change in how functionality works and it will probably break
-> users.
->
-> I did mention before that a better approach is to add a config to decide
-> whether to honour the netrc and I think that would be the right choice
-> here.  That lets people opt into different behaviour if they want it
-> (and, to be honest, I _do_ very much want to skip netrc for Git
-> credentials since I have similar problems as the ones you're describing)
-> and avoids breaking things for existing users.
+This feels weird to me. We never pass any of these includes to the
+compiler, either. So why should Coccinelle require them?
 
-Hmm, okay I understand. Yes probably good idea to skip netrc for Git 
-credentials.
-Thank you for your input Brian and Randall!
+Coming back to your example of `eword_t`, Git knows to always include
+"ewah/ewok.h", and that include is relative to the root directory of Git
+itself. And as the header doesn't have any includes itself, this cannot
+be the root cause, either.
 
+So I'm a bit puzzled why this patch would fix the observed issue.
+
+Patrick
