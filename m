@@ -1,90 +1,85 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0209F22E3E7
-	for <git@vger.kernel.org>; Thu, 11 Dec 2025 02:53:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DED263C9F
+	for <git@vger.kernel.org>; Thu, 11 Dec 2025 02:57:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765421591; cv=none; b=s6W85qJ8LRLwMChfA04MPAh9YdoFN5jqhYAnkOUc/d8vMjaa/GBYupr5ectkwtcipv7wNiWaouE/8piRgmUmQyaQa2OXVhpvOZA9ktpLOXMBFrITr01eqvWW2cRnc1ReNmGCbJcfgzCv2c/oPfrORP2s8J4fjPOifzTptlTK6WI=
+	t=1765421844; cv=none; b=hNfGLVPCqKUhFmw+RX+rsUzrHSTGzpmh4xVHBAip4Hqxzv8my8JKkBD8qmSb8NzJA3N4qrgTyvGE+okUPGAvpQ/ltx0xAflziKUSNTDmNvVl81nupqHrS5CzJtz3eIIYFnf/AawntJrYLfCCkW9Bn0Lhg59GMy6DjCgdpvDQeK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765421591; c=relaxed/simple;
-	bh=HrvhzLXVD0KzOZzAvkAPR7qzev4h03SdkTP+MDT7CN8=;
+	s=arc-20240116; t=1765421844; c=relaxed/simple;
+	bh=AZkUvh9vwyD4vnfqSeRgruhw7P4ozqB8r0jNltC+0Jg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=r9G/TjooOsR9RMdfwKSiWYBMiZilIV5G7jd8WO7aStSJIn9Df3vlxDfo07x7nCvwBc7tETtxy5iqevkY07fgRAF1HcFsO8QLBkaxC+Y5vtkfYRCfzykdbPNCSdBUjW3uoMyhXLu85J/e/hmpI0TuvINHhtaWNRufyFK5qzuQ+bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FYIMlzv+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gxOGSzwC; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=SB4SLEzlJ3Lu/EWJfpSKjnTLnZrbX96LDRpRo405dD3I0gI3XbP+XKkQP3CcpTObEQ/wUX4rmFqfHhwBeHgE0iIESlYgJEQ+sunKJnlphHdM8qopjkWO9MhYDOWhbdO50+nGA56kldLRdqT80P3c0M44MSOpO+7vwUQNi+Qfskg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D4/7+5kD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZjEJSUd4; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FYIMlzv+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gxOGSzwC"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1220C7A00B1;
-	Wed, 10 Dec 2025 21:53:09 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 10 Dec 2025 21:53:09 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D4/7+5kD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZjEJSUd4"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 763261D00112;
+	Wed, 10 Dec 2025 21:57:21 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 10 Dec 2025 21:57:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1765421588;
-	 x=1765507988; bh=QjTVaYnb0OdBy6ytEUE+3M8u4okNRL2AH/q7UZy4XQI=; b=
-	FYIMlzv+wKCftCY1ZYeld0UFIjNPJea4q9qp5dQYVa/aBSBmZ1Z3/xy/G89oDr5l
-	UIBxYNnhAxe6t8i7HoDnQ2i7B8h0V/yjTKWrT0s/WqV1pQCFbu9UrYrk33b4+6jY
-	jUByP0UR5SQE6melMpLf42vSdRbG/he79S4alG2Rtlxne7E4EyARe/NqSW9xbDIg
-	LyzTHsmJt9izyp9YTHmO2xTGqWLdlOfLm2nshIZ4UsVEN/X4IZMseOiJ18Xb07Cw
-	9kSIow9hVpoksxDB0Tz06FPpfXB8Awng3RbspQj4gJHF566BLEwODZ6M/cIxXCy2
-	ffxp6YFXk/3DEQcpQWEc1g==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1765421841; x=1765508241; bh=YAedg4UPGC
+	e9EP9wNYJGJiOb3LMl9eJY88emiT/3bFo=; b=D4/7+5kDHFm/U5IrrVSiKU/PUP
+	Qubl/TBBq6oWcuwEJ/ceX9mR2y3GWBYCBa/Sa7eMRxAD4NUbFPUjWz3ycCRfMXIS
+	VM7rlbPKScjixKWeVRDhadMJ3ScgPUV/H/xYiLUfHVWnnvKvhwEd4uWSUO+lRfN0
+	Gbj7weQKzlSw/mA7ZTm+24E0eWy5/PJtGz5bWpbPpYNBqvY85x1FMEV2gyOFwo+I
+	wBwraMcLivQcgyDmOMQbygWjsP6+7CJbj5r0WWuuGIiPchMCOZv86BLSS60MMnrQ
+	jItf9OpKBAwPNa60ociqmWAgCd8KMU4j7251EhnirX2mHx/7EtFu3JOMYgoQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765421588; x=
-	1765507988; bh=QjTVaYnb0OdBy6ytEUE+3M8u4okNRL2AH/q7UZy4XQI=; b=g
-	xOGSzwCtS3ZzPAla15zqlymIgzvaRDgUhXksgPMcHTHaxPK2c65Jrdyn9m0rY6sq
-	oxXT2IztEsCmdm96WjEUVLJNZVrD7M9jbmBvSw6TsrtFdywXzWpJ1xyvyb4ryv5a
-	kYeGMJcY/AqDSOFTmGanztr5twY2SqDSl7M4d8S3vuieSMKbs7xtsO2lGZ0ks4Sa
-	FBoiqRI3J2CCrSQNT2bvyhXRABJKtxOdLkaE02bo2iCfDKaX20M5FABUhqVTRsEb
-	s6clZ1cvASWP42hiXDDL37JhUNUwX6M+WES4CQ+cbmxDr/w1wyw/DZKO86cGuG5g
-	6/fuoRmBPV3pmZw4v2PFg==
-X-ME-Sender: <xms:FDI6aVuTUCMOlabnOdzAz5pJzBQJqq3G1FXBivwsfWVaIaUrsxSE0Q>
-    <xme:FDI6aVVmw0pfcBmBDKcTthhP38CBhUrKg7CT6dQG_GbdRTq5gOeC1aCSYCn9welms
-    F4ZiVuvZyf83Z95KR-ZcSnk3PcwfJ8Utm-69h8lJN3RJnI2ytNnzA>
-X-ME-Received: <xmr:FDI6aRGDkRIJjylmGaqWHtvRTMajjnMvHm7izIJyZAhC7YB1VJGYDGXI-MjQNbMgoqUe25nVd2g3MdGRQDnjhlf2Enn_CSsilg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeduhecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765421841; x=1765508241; bh=YAedg4UPGCe9EP9wNYJGJiOb3LMl9eJY88e
+	miT/3bFo=; b=ZjEJSUd44oRmny/XFj5Loe3tIwlIx48hlWyRq4T1mXkymKnbHIP
+	qqzpBj/cvr/gZ/MAhGStSYkk3NC+o9cCcDq4NDWjlFql4Kv6jE091OkBTXP30Vle
+	czF+aWVryz5du8mHddRvCfcBpXXCFwFdof05HNMdrMbK+p+GhGsnLmAmfF9Icbd/
+	pHh4AQa/DNA26uhIhk7t+dzCu+lcKp/cDG0IRNRuA/GNxrJnWqGd2Hx0BpaVk8/9
+	pooK5y4V4MUY8WCdxRLip/L2mG0BZIWJTop7EZzk5BoMbSVoafTgbCRnp0cJ5Adb
+	B16FAC6O4h0AJCSG3D9oAXzjYY/+g+M70Sw==
+X-ME-Sender: <xms:ETM6aUGaWlVPUMhlulqouhICQQUrujwgDOtGU4U2dJvcTv7dd8bWDA>
+    <xme:ETM6aUXURLMKXd5AWBiokXn_tAN9qkd7jISYTEaN8oYLQ6BY4fbXRkz8DWKGfgLgh
+    PoaR7ftu81ApW-t5ZD-fxyWYETpyuT7i3DjMcdcE2_ibKGPw_d8>
+X-ME-Received: <xmr:ETM6aTJtih4qoAeBy_XT6hUZ7hm6XkcWxRDMfDLHFgJfYbdv0b6mr_i_rUPrbtZANi5c9h037gXzmmCaR1a7DAX7apObDqaDqQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgedujecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtoheptg
-    grrhgvnhgrshesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepkhhojhhirdhnrghkrghmrghruhesghhrvggvrd
-    hnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:FDI6aX0-A7uNvbPtMwRMQVtvAxeLmk4sXKk43HK_liZ_1c1l3SySjA>
-    <xmx:FDI6aTOm18DGWHWf2bz7uFZxX_cqF5Vg0N-JpFm5AWpXp9P52YXOiQ>
-    <xmx:FDI6aW7vI1DB2yJvQlOhDZrHPVwY9SjFIq1SsJIsO_1j4rM-XGKk2A>
-    <xmx:FDI6ad0NC9wI8RziAvMPskKs9dq9CQG0sO9ycyLGVBQQmmPljayNpA>
-    <xmx:FDI6aU29viL_ORmSs74BQg33njGL3tMmll2BqsS8et6xiLNC-HhrXQk7>
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ETM6aU94Qz75wZciwszJbhVbEFxf-3JwRRRiHlrR0SychsNbgtkfhQ>
+    <xmx:ETM6aWJp5jhC9CvJx2JjfFAA71wHoBr-AUq6Dw7FS9ZkRe_dnL4AMw>
+    <xmx:ETM6aZk4t61akpuuHWme8rqdUTjBYRAL1dmVZFqNICSqgAA-i7E1bQ>
+    <xmx:ETM6aaOi0_YhR0y4aAmuZHqEk_1SBUWwreLXso0urN8B_XW7WJZ_cw>
+    <xmx:ETM6aepFFVXh6I0SMLWQyqfiXaJGCfGRXSmtvXlaHUoKC0hqnJau-kRo>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Dec 2025 21:53:08 -0500 (EST)
+ 10 Dec 2025 21:57:20 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,  Git
- List
- <git@vger.kernel.org>,  Koji Nakamaru <koji.nakamaru@gree.net>
-Subject: Re: [PATCH] config.mak.uname: use iconv from Homebrew on macOS
-In-Reply-To: <1b3509d7-e421-4136-a62c-de86213d65b2@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Wed, 10 Dec 2025 18:56:35 +0100")
-References: <53690064-1c98-40e9-8b9a-7ba6bee63703@web.de>
-	<16efc726-34be-44f5-aa92-4e82b663ab3d@web.de>
-	<qnb77j3b5m6rfbzr3qhmwalo5lha4gqslvzqsfuq6zur74ze7j@wqriu4w7wbzw>
-	<1b3509d7-e421-4136-a62c-de86213d65b2@web.de>
-Date: Thu, 11 Dec 2025 11:53:07 +0900
-Message-ID: <xmqq7buthgq4.fsf@gitster.g>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH 2/6] builtin/repo: humanise count values in structure
+ output
+In-Reply-To: <kf7vavs5yetooe6u2ygttzfriul4u5ywdnhtyksh2pbar4mpfz@orlg7ppajd7s>
+	(Justin Tobler's message of "Wed, 10 Dec 2025 09:10:29 -0600")
+References: <20251209225820.2861276-1-jltobler@gmail.com>
+	<20251209225820.2861276-3-jltobler@gmail.com>
+	<aTkS_kBlNsnbPyP5@pks.im>
+	<kf7vavs5yetooe6u2ygttzfriul4u5ywdnhtyksh2pbar4mpfz@orlg7ppajd7s>
+Date: Thu, 11 Dec 2025 11:57:19 +0900
+Message-ID: <xmqq1pl1hgj4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,81 +87,36 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-René Scharfe <l.s.r@web.de> writes:
+Justin Tobler <jltobler@gmail.com> writes:
 
->> Slightly off topic, but should another patch that adds a `NO_HOMEBREW`
->> Makefile flag similar to `NO_FINK` or `NO_APPLE_PORTS` be added to help
->> drive this?
+> On 25/12/10 07:28AM, Patrick Steinhardt wrote:
+>> On Tue, Dec 09, 2025 at 04:58:16PM -0600, Justin Tobler wrote:
+>> > diff --git a/builtin/repo.c b/builtin/repo.c
+>> > index a69699857a..8fb728b3a5 100644
+>> > --- a/builtin/repo.c
+>> > +++ b/builtin/repo.c
+>> > @@ -266,6 +275,10 @@ static void stats_table_addf(struct stats_table *table, const char *format, ...)
+>> >  	va_end(ap);
+>> >  }
+>> >  
+>> > +static const char *unit_k = "k";
+>> > +static const char *unit_M = "M";
+>> > +static const char *unit_G = "G";
+>> > +
+>> >  static void stats_table_count_addf(struct stats_table *table, size_t value,
+>> >  				   const char *format, ...)
+>> >  {
+>> 
+>> I would assume that these units should be translatable.
 >
-> Sounds like a it could be useful to someone.
+> Ya, you are right. I'll make units translatable in the next version.
 
-Hmph, how?  When you personally use fink or homebrew or whatever,
-but are building binaries for others?
-
-I am looking at relevant parts of Makefile
-
-# Define NO_FINK if you are building on Darwin/Mac OS X, have Fink
-# installed in /sw, but don't want GIT to link against any libraries
-# installed there.  If defined you may specify your own (or Fink's)
-# include directories and library directories by defining CFLAGS
-# and LDFLAGS appropriately.
-#
-# Define NO_DARWIN_PORTS if you are building on Darwin/Mac OS X,
-# have DarwinPorts installed in /opt/local, but don't want GIT to
-# link against any libraries installed there.  If defined you may
-# specify your own (or DarwinPort's) include directories and
-# library directories by defining CFLAGS and LDFLAGS appropriately.
-
-and notice that /opt/local/ is mentioned for DarwinPorts.  The patch
-that started this thread talks about defaulting ICONVDIR to that of
-Homebrew if available, but the new code checks /opt/homebrew and
-then /usr/local/ (and let it override it).  Should the log message
-be talking about DarwinPorts as well?
-
-
-    As a workaround, set the default libiconv location to
-    /opt/homebrew when the user has one from Homebrew, or
-    to /opt/local when the user has one from MacPorts.
-
-or something along the line?
-
-By the way, for macOS newbies (like me), I wonder if a patch like
-the attached may help?
+Whatever you do, please first consider reusing existing
+"human-readable numbers" helpers, like strbuf_humanise_bytes() used
+by the progress.c for showing throughput, before rolling your own
+variant like the above.
 
 Thanks.
-
-
------ >8 -----
-Subject: [PATCH] Makefile: help macOS novices by mentioning MacPorts
-
-Since Aug 2006, the DarwinPorts project renamed themselves as
-MacPorts.  Those who are not intimately familiar with the Opensource
-ecosystem around macOS from olden days, the name DarwinPorts may not
-ring a bell, even when they are using MacPorts.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git c/Makefile w/Makefile
-index 7e0f77e298..be027218a5 100644
---- c/Makefile
-+++ w/Makefile
-@@ -95,7 +95,8 @@ include shared.mak
- # and LDFLAGS appropriately.
- #
- # Define NO_DARWIN_PORTS if you are building on Darwin/Mac OS X,
--# have DarwinPorts installed in /opt/local, but don't want GIT to
-+# have DarwinPorts (which is an old name for MacPorts) installed
-+# in /opt/local, but don't want GIT to
- # link against any libraries installed there.  If defined you may
- # specify your own (or DarwinPort's) include directories and
- # library directories by defining CFLAGS and LDFLAGS appropriately.
-
-
-    
 
