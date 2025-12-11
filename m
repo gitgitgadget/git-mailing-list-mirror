@@ -1,53 +1,53 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DD42AD3D
-	for <git@vger.kernel.org>; Thu, 11 Dec 2025 03:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D46AFC0A
+	for <git@vger.kernel.org>; Thu, 11 Dec 2025 03:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765423304; cv=none; b=kUs5soOMJKGkQr+qCpHWBFvfWIWpbha5Wja7bHyzxeQ1vNYuugwPEgCx+Mu3sOqU58fy2YcIkarKIpJwSVlISNioviISu2HUiFIXRkLhbxx81AUA/mY3doMsCc9H0L52rgwl7mug6431GDa4MKxYjObfwxG3ovcdkDMI8WvgDoQ=
+	t=1765423468; cv=none; b=bLx8TafrnYIS97LCIplTC0ml5hVDU9OxOttYCH/LTxLU+yXxxXcnZagKvtu+f0vN+XoemWPwREK/dXlOOAaHz3xTM6Cyb0F0J9TjQPxlfHHhMIknFQzT1fxsMzi4gtV8FPssfYOe+yYz+LdRVekoMh1DhRqAbDQBLeHEKaoX9KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765423304; c=relaxed/simple;
-	bh=SrT83IHhImXn0mJX7rPj2YiISOMXeJaEhFQA0f2den4=;
+	s=arc-20240116; t=1765423468; c=relaxed/simple;
+	bh=7S4JUkkNyZaGTzOWnOf+zKs072iFMcqTgb87+DgC7ew=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uuld9ZEkNzHFEEbiDb9C6wfPLUkQ1WagqRykKz4wJ8AwUVtzjxUHTQBh3SxncwMG7AwMhTryGGx1QDS+cr/Feg+7SoAv5VpXRg+horEftkyC44x5T9VZoEaqkcJqPJEAlmh0mQ3OZLDhvfq2nUyEtMJ0lE4m58xmpjTUK4mX+y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aSmVlcMG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oVcKeBLj; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=aFCG+rKD1/eiYHz/vmdYHSZ1DAC0wHgPK+vvJiNG2aWhiIqQWyz9ywl7aUVEVlWBUYVRxJzq8tGGBXMP3NMiulL3NeMss8mKvGSppmDeONtZoDAOJCtxtn2hgtOy74Pw6z9R9Ln3XqnmHIUgoTQ8744dZ1/yb4hzqKfl7YLrnH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FzJ4j33Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VHPC7GMY; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aSmVlcMG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oVcKeBLj"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 19A827A0165;
-	Wed, 10 Dec 2025 22:21:42 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 10 Dec 2025 22:21:42 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FzJ4j33Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VHPC7GMY"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 481D87A0088;
+	Wed, 10 Dec 2025 22:24:26 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Wed, 10 Dec 2025 22:24:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1765423301; x=1765509701; bh=s2b1Hxq/fw
-	UraSYbiD8s5fX2TGxVt/9pvg9kD6WVaMc=; b=aSmVlcMGAj32kYXgkqPSiRGvr6
-	+a1EMydRLueFxqy65bT4RbbALbkMFreK3CDfAaUoJIwrwSUYKCjqaHP0Tam0DHbA
-	n3OtxLvf3nGhwrXj0Bcyo6g0l4HLjBRsHRvQg28spFUS72iOqgJ6jQxYJdSnOYJR
-	JTVFW+LvVjucW+wFMfaYKpUjCpj64NDhg/fovL0TgGiLf+ZUE54YA2TbtOoeXN/1
-	7uhIoXxN8m1/zqg2IR0dR1iuovENYMkn0x7ErGFkzyi7U0AFGbG6rP+Eo5uhGENo
-	jiJkWmcCmL8SbxsOZenm6kci+ZQOwJD2ndbD/masisSQ8EQvzVNh9m+xKCKQ==
+	:subject:to:to; s=fm3; t=1765423466; x=1765509866; bh=g2YkrCdVvB
+	77mVwwKjOogYFj/TKIOtWc3sFdyC18PDw=; b=FzJ4j33YMkY1GMT04qACHmkPZK
+	Q9WuGeQJl1XCTIksZu8+ahI6/7oVAGLG9sEB1m6nQE5VKG8YmfwfzMyTZ0ux9ZTb
+	2bpWeBb+gxn74SvM9GM2rC7paAhUAwe6FtNDn3OTX3XPvq+pXPm1SuPQwOT3Fwan
+	6SVzn9PTM3AhEYP9nzgFhzTRP/wAoWTIPZcuPiUWaU28Gb8NgMClrq0JN5rRyvBS
+	51u04r9n44ZvnBe+hzqxLOaRKQtlyal6DiAJF66E68QuudS8NtUuXLa0n+C68rjE
+	OkJF5kCxmN//IjEB/KKxt7YqAVYzZRb5wUp+AX2Gy8InQKSNeXhN3zuNkB0A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765423301; x=1765509701; bh=s2b1Hxq/fwUraSYbiD8s5fX2TGxVt/9pvg9
-	kD6WVaMc=; b=oVcKeBLjgTvz6+g3yrDyJ62kGgL++zOhmww89hQjfSbqzveUDUh
-	cppczmjhVF/p1zTVomKf8VOZWI1DeG6zGcZn5kYwbNgMEOyGHtFD14PuCGxh4I2z
-	JGPE7o93P+CQzoBCQgWUbYPALEObed3amIUlo9TFYMJlTjB/KF9QFkCZ6YOFpIJI
-	RBTjdug07wQJOxO+pazJIJ6un2aPN+hA961DHYJ0sV9exMuGL7jl93bLkOdcTZ48
-	LmtyBCVwb4QV6F72yUZj1Hbjhwzh642HulPqTQejelGfPgh74z0RL9FLER7p8w6Q
-	ltQ52uIn7cqGtHBPj20UvmLSKTrAh1i2X7A==
-X-ME-Sender: <xms:xTg6aWIJxTch7kW4XHyZ27obT2SLN8D_CIyph0UA8SlHy52vll8QZw>
-    <xme:xTg6aVLL2cpGwz1uJvrqX77K7a2YPHPXsxxTAdQkaB_-dl_Tv72Jz7kof6r1-4wLU
-    3ts0_mMI7_7jFMhm40dIhD03Khd5_Aiycj9iwpEsPHjc-ebBNwpnw>
-X-ME-Received: <xmr:xTg6abtL6QTHWsuCJoAVWT1vURfgiCzjeAosF4K932dXR7saamVMVcC-qvckhLk9_1z2ii1CkHV0Fxfagbx3ZFM4c8GDjbO-0A>
+	1765423466; x=1765509866; bh=g2YkrCdVvB77mVwwKjOogYFj/TKIOtWc3sF
+	dyC18PDw=; b=VHPC7GMYzjBQqeHt8MuYCBpZoequ5GSWLjClxEt/W8C0IEBfKGH
+	s6lfqBAOGefjoStQvvQe6uKEPidt+5jo+X4cXvjUf07EWc7gw5U2Uffi74pDuJoa
+	7d7ekQro0EAG6E7R9EUfpzZV2CpoFYPzgQPtej5HGlvSKjo6S04yIo3uf+4d7FSh
+	0lGcL/ac6oMmxUR01/xvn0rftgpSfhjB/D2KU3bdC+waBnNKjAQW1E4FsirZ+Y+H
+	evc0vu5oAIzzqTxPQxbUpXO5auD5ESxvrQNzUmMBRMEkRSx2Ukz4MkJxmwUHQvwr
+	vX/hgFANlu2jzlEpcMkYyBE1VVr1PT1EkPQ==
+X-ME-Sender: <xms:ajk6aUwowmghFHGHeuMv8ktBLxSd8tBoPLRiw0igv5Odh39RePauDg>
+    <xme:ajk6aftnwcpuRV7rZKtkRdS_UCBC0_i-n_eH_4hsGC2xR1E8R-MZ5GFUqdCEXdW8d
+    w32TRpsm3wkEeBgrDA7jLHzhdun_dZ7kPJqiASQeoOjuokVqCDN>
+X-ME-Received: <xmr:ajk6aTvQptE3OgVj6LjRgWrB6LLOue6q4M_mXl4FB4RTkS4VZ_L1pcMSjq1v-IiSG1ZgmSfN9py8WWYtsX2pnQByzGwdhHZnvA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgedvvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -55,31 +55,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgedvvdcutefuodetgg
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtoheprghksegrkhhkrghrthhikhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:xTg6aaRO44Q0Mu69ACgkzg2juvHWHBdJTXUGGa9UKabh-4XYrKEl3g>
-    <xmx:xTg6aZMJ4THrFXyUYUV6LcRVUY0qgFsSkeKCiTQlgLFHYIsso5udUQ>
-    <xmx:xTg6aXZzhQePHWlISS4PpILEcBnk-8YU1kIacTGX6q_LKoORrKWy7g>
-    <xmx:xTg6abxAQWbBncsqKxvVj_RK3K2eCDsFdLclSFBUCaD4CxbpP3hzAw>
-    <xmx:xTg6abNJH-3HEmB5ff2EXwKfVSyAlBWs_3exYPtHVUbgrbaKGO5T1kCh>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkohhuthhsohhufhhlrghkihhsrdhsthgvfhgrnhhosh
+    esphhrohhtohhnrdhmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:ajk6acMuSix-ksuBmDW6bJ0y25p_nutv2D49GFVoTZp_ZqMPkFQgMQ>
+    <xmx:ajk6aZ2WviFZ6cdi-gJt-x3LxQJ9TtVxN-RogjSCPM4pdk0X3ymKDQ>
+    <xmx:ajk6aQOwxKIVc_A0Fb0E2MhbIBsila_WZIP__EkXYLCdVPKbrP_Xkg>
+    <xmx:ajk6aR2teE4QqM4V3rSV1e4RxaPrAfqTw8OoNZTCHG49clLlUCkgxg>
+    <xmx:ajk6aWWe3Z8Had1PgJo_W5C7UAU1QyOmorAlAnZWRYI1LotmJ83j_oNx>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Dec 2025 22:21:41 -0500 (EST)
+ 10 Dec 2025 22:24:25 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Kartik Agaram <ak@akkartik.com>,  git@vger.kernel.org
-Subject: Re: bug: `git pull --rebase` breaks in the presence of pushurls
-In-Reply-To: <61f61218-1945-4efe-961a-e6cb4ac8c6a9@gmail.com> (Phillip Wood's
-	message of "Wed, 10 Dec 2025 14:25:32 +0000")
-References: <896e4e13-5d2f-4c5c-ac32-2927dbff91a0@app.fastmail.com>
-	<04cc0cc0-155e-422e-b723-b1115c918087@gmail.com>
-	<xmqqa4zsliim.fsf@gitster.g>
-	<61f61218-1945-4efe-961a-e6cb4ac8c6a9@gmail.com>
-Date: Thu, 11 Dec 2025 12:21:40 +0900
-Message-ID: <xmqqpl8lg0u3.fsf@gitster.g>
+To: Koutsouflakis Stefanos <koutsouflakis.stefanos@proton.me>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC] reset --hard: warn before discarding staged content with
+ no commit history
+In-Reply-To: <a5wKtD6Tn0gzcba1IEUhukYnXPHxMwPq6puQKIPywmjNufi5vc6vX-v5BpPJ7qj_zZsuXF5FiS2gbpsurWmVjoWHtMm8A-kAbaZyjMfrTcs=@proton.me>
+	(Koutsouflakis Stefanos's message of "Wed, 10 Dec 2025 15:01:36
+	+0000")
+References: <a5wKtD6Tn0gzcba1IEUhukYnXPHxMwPq6puQKIPywmjNufi5vc6vX-v5BpPJ7qj_zZsuXF5FiS2gbpsurWmVjoWHtMm8A-kAbaZyjMfrTcs=@proton.me>
+Date: Thu, 11 Dec 2025 12:24:24 +0900
+Message-ID: <xmqqldj9g0pj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,21 +87,14 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Koutsouflakis Stefanos <koutsouflakis.stefanos@proton.me> writes:
 
-> "git pull" already runs "git merge-base --fork-point" before it runs 
-> "git fetch". The problematic reflog entry comes from a previous push 
-> which pushes to a different server due to remote.<remote>.pushurl. 
+> When running "git reset --hard" in a repository where staged
+> content has never been committed, the staged files are lost. This
+> seems like a case where requiring --force could be helpful.
 
-Ah, of course.  fork-point heuristics with a repository you yourself
-push into would not make all that sense, since you are in control
-when and what to push there in the first place :/.
+The thinking has always been "'--hard' means what it says!  HARD
+removes things harder than other modes---there is need to add
+'--force' to it".
 
-> Because we've just successfully pushed the local branch the fork point 
-> calculation thinks the remote tracking branch matches the local branch 
-> and so excludes all the local commits when we rebase but we didn't push 
-> it to the same server that we're fetching from. I wonder if we should 
-> disable the fork point calculation when there is a pushurl set.
-
-Tempting thought.  Or educate users with diagnoses and advise()?
-
+So, I dunno.
