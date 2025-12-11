@@ -1,76 +1,103 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CA92BE7AB
-	for <git@vger.kernel.org>; Thu, 11 Dec 2025 04:00:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E952D7BF
+	for <git@vger.kernel.org>; Thu, 11 Dec 2025 05:01:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765425605; cv=none; b=M1+VHbCIkupr8UXTZQlKInjHofO+jtilyc73JVVKeM/FYfMjbdE+ZgkrDSDN8euzXmMKnoKkAeuuCc603t0OAppSDkcGlGN3c4BnK60DGvUnvI8gkHY4yn2aCStzp60mfm2EkChw9PUkonjPLqSiye2QKVr/40hZSR0jkQeFD0A=
+	t=1765429322; cv=none; b=jZmBgWySY6MPKKw6YZs09ALLTgtzIsrW/oFGiQt4sokxdkzNYmnTVrIxZq9TfAbimvqvQMNhpOmw5OjlFBeWWVXghMRiTsau74JD0O3GKVD8UTwqekU+T5pPeSjpIR3GVfOaJI5V3Fi9vqadgbxBmGmT/SP+BIbwSmYI3u4/83g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765425605; c=relaxed/simple;
-	bh=uEgBe0lA9f+wUe9hKPdkJ0K4Lx3FtldTU6EZGmWyiyw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Xb81vP/Af4SAMbk9t9livtfBC/FaEbYT/mZ5XDRiVs4u6DoFIdyzkyLJ7N50WXLgYAJg4fpUVHZs+UN7oCMz/FJSd2+fhkzP9qMXnsJ+Ee+efZecC9NgZH185nz7ub9AFAgYT92UOwtQxL6INrDdgI9mw2zI8cxI27+hINa8bOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8b2da4fb076so11057585a.2
-        for <git@vger.kernel.org>; Wed, 10 Dec 2025 20:00:03 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765425602; x=1766030402;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=6+03v1Rh8ofuNd97SAbfeXsdX7N7x+nz5ycIAxUxdZg=;
-        b=Bt0s1+zC4kkrfKyyEIqv9WVQh0dqm2XLe8i5cTDZDKFpcs17LgxesqlEyJRGdvNmUg
-         teGxYzPdgotQHLegzC4hAmbHipqy5UR1+rJ6HLVCCfsTNGDBfdJE7x/CbbThNA0tzbm0
-         nBzv3dBN5nyBwsIpl/Cyt3LXb70sNPv15jzKsHv/owftgUy3RqDMuVSbvMUV3Ya9b0hC
-         uwBLNGxn6EL/BP9q7Gl7UI2oxmHvOTRniapQdDv+KP2+LEp6NcB2IkfKEcQDmfArWx/0
-         q+JvKf+RxuARoWcOuTXLjbupNTIljK9CO12gVoQXa3H5tE1y/OEqqT7gtN5MgL1x5CdA
-         K4lQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX8HE8ECvrYZSJDNeG2SFuTQU0l49j17tnEjUf45/vh7PtB8ixV27InwMEJIlxHEOCI9QA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHY4A+Rl2n6xeLVqOuPJgjm2vVM3kC4j7C6FiARKi84Q3pQDOb
-	t4NXchdWDsNmyZh8vX/WfPeMh+BhzltH6iFKDE0dmdVQAbuTVwgY94vFoggHj/yRc6sUPjSNaKb
-	EeOfj5NnSlS4VaFAG7/0H1F3VRbs/Qr8=
-X-Gm-Gg: AY/fxX5n+pxQTGgtsFKXKm6JnI+W8xM5qYABlLzQ+c9vQEzqCMpZjkDFclvV3FKqwgV
-	FQI4MuQM1dBuLaI3VEawzv0haZ/BGbWesSTQ8t9EIm7pxbovOQ1GUfo4+YBGPKVkQLfSm+aXYTQ
-	B3fRpxh2gwnpaelQIOuG4ZZVSAwph1BZKv7WSbW4i9IMxpGOpS+OkM318jKkYR9tI+YSg/2vwF1
-	tahlQTv14s+91T1xlWz/go0at09Uq00+wjhKtRccP5EzbCOWIvwpteML0nJKkaqlnbdb5Con1Cz
-	uVZ0IGqBFfOyfaJ6z+65Mlh2w6k=
-X-Google-Smtp-Source: AGHT+IGjbddpJlv+WRAI4mv+XvSky/Uqt4gb0XUIGsrWKYu+vUG4vNj+dcvbehvBUPn8gkoETE0kmOBqslOC1Gsnu+w=
-X-Received: by 2002:ad4:5ba2:0:b0:87d:c7db:7897 with SMTP id
- 6a1803df08f44-88870288d5cmr15601936d6.2.1765425602128; Wed, 10 Dec 2025
- 20:00:02 -0800 (PST)
+	s=arc-20240116; t=1765429322; c=relaxed/simple;
+	bh=S4JtaQYSnwmI5TiGQ/R9YmnWzQcrzqsIYnVXg1gmVrg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZQYLt7mwkH2nfFVrwoKpln6LKteCJgVn/JkPk0U4UutESNe9+4pA1j0Vv2AvIqq/NZP5WtebuMXKo5tB7YLtXp1ehO6R56iPuS0bi+TgRonxD/7mIOUIZEEJ4ZvDuytEoxf/JUNJcvbB5KX/E8vF94b/B/7XMuyn1hfHHajZ1uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CfXladuf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mfzsv23q; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CfXladuf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mfzsv23q"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8C5EC1D00118;
+	Thu, 11 Dec 2025 00:01:58 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Thu, 11 Dec 2025 00:01:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1765429318; x=1765515718; bh=5GyzNAEY/u
+	Wno1O9gBpeiA/4VDx8yrV9fTRzE8YhhuM=; b=CfXladufIbashwncfLbjICtyUJ
+	aX5L/ORv9/sWvCQHvmHzpZ3RUREaff1oGDufzVMaOjuXaDWavDOxhBX7p96MZhtI
+	mCcfj0nSEFHqd+1Ue164ogP429NbieQf5u3oFqzYy/mHztz58gTDS3DMpaC6Jeh3
+	F3Dlms/K7fYUvvGGVki7gWy42rhw/l4UQgodvxD1/UiyXZej1THpOTFYol78/8h9
+	KhMLzBXNswHJ3+ckf9K+krdocTu0/5UIs+bKDTLoU2AENZc3Y1WRC+vDrQi2NOys
+	9Vb5rjUBHXZvZUqkjjYKasruPnzf/K6qUxXR0Gtt6l9+tWHlaAxBNxwYDpbg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765429318; x=1765515718; bh=5GyzNAEY/uWno1O9gBpeiA/4VDx8yrV9fTR
+	zE8YhhuM=; b=mfzsv23qcwjXuFpQ3FU5wYp/pV0RwJfnftEYgnk2mzxohAM2KFK
+	o9lZA0qa9hw/wx9Nt5De8RYPmgSuF2ET2Z8WzIWtGm6BDdZQu3Iu7p16MXuz93Nl
+	UucP/29DsluQ6TTjV4wH0zhdG5du7+WuBRtwebbAy3HPjoKlgfpFN0aDP/QYTwFz
+	0s9gHtIKTdLXqjvtlEM9RO3mgCUbOKj0LLnAD85wn1p7AZ+HB6OUqAJFmT1Iuhru
+	WU4rldDjTrQxTzLSBAmvvcAnCPz0m13zGlqCufSVRoN10q+i5lt2DbXtvCH1i0Vf
+	97Z4gYjjb9CuPSYf0zIQCUcOJM0SK0JjDmw==
+X-ME-Sender: <xms:RlA6aToZymSnvR4nVWgj6bF8Yfn8Zd3xZ1F9GTyvplIuI7rZqaiCHw>
+    <xme:RlA6aTp5wuJpkBD9IJJCi4EDPyJoWg08EVPPoVCYfRnhggvLDUEaqf4b59Rj3eKzp
+    kYzoU_nmcpZ0HAowdG_IVV5eWZqAHLNaAvbulHDZOGGcbBpsU8Fzw>
+X-ME-Received: <xmr:RlA6ad2veId2DFHJ7q20cC1r-ZkLR88yOyEbiCbgsYlEz-eFuwWBKqsBYSe_hm5wnGCwNdT2KKGsVzOe83MuUOmenmACgEkDW3OG8EaDZVOd>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeegvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    etudffveejleeljedutdejudegjeetkeeuudefhfduveekleekudeuudegvdehleenucff
+    ohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:RlA6aSC4-QkONHAJ6CxxF9Cyq_yzX0eTgPQk3rZxVdJrBQS8RsVyYQ>
+    <xmx:RlA6aVejBgLBXUVO7gnD9Fm69af4OukVvnLb7Rti90CrEY0MBsY4hw>
+    <xmx:RlA6aXihX3efVsQKdkX4X_2PwzjVu6SRa8q6XFUa9Z04tYlYk_lyiw>
+    <xmx:RlA6adpC_oSuYbnPqjty1RG4A87IVuymJQJq-MSYPGyooNzPi6ohyw>
+    <xmx:RlA6adaX_htPEBveKjvdJMCTjiWGe7vZ-zOMs7I8qSb6qeIHjTVZpSvP>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 11 Dec 2025 00:01:57 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 534c46cd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Dec 2025 05:01:55 +0000 (UTC)
+Date: Thu, 11 Dec 2025 06:01:52 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 0/8] Refactor handling of alternates to work via
+ sources
+Message-ID: <aTpQQNJyhdLpgKNg@pks.im>
+References: <20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im>
+ <20251210-b4-pks-odb-alternates-via-source-v2-0-eb336815f9ab@pks.im>
+ <5kulb5uk4uzn7gl4yhvnc4cnmqxzm2ngtezn5b5kkv33pgexmw@klqedekkink7>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <a5wKtD6Tn0gzcba1IEUhukYnXPHxMwPq6puQKIPywmjNufi5vc6vX-v5BpPJ7qj_zZsuXF5FiS2gbpsurWmVjoWHtMm8A-kAbaZyjMfrTcs=@proton.me>
- <xmqqldj9g0pj.fsf@gitster.g>
-In-Reply-To: <xmqqldj9g0pj.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 10 Dec 2025 22:59:51 -0500
-X-Gm-Features: AQt7F2oeXjoQUmxJKTVhHeNLZ7HnZF4drC4f--P89T48NuQ7RK0SKtJcBv45wtU
-Message-ID: <CAPig+cSep7+i2R-DDK+B6p6c3gy2Ehvm4U5N_PwSR-yZF3n1hA@mail.gmail.com>
-Subject: Re: [RFC] reset --hard: warn before discarding staged content with no
- commit history
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Koutsouflakis Stefanos <koutsouflakis.stefanos@proton.me>, 
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5kulb5uk4uzn7gl4yhvnc4cnmqxzm2ngtezn5b5kkv33pgexmw@klqedekkink7>
 
-On Wed, Dec 10, 2025 at 10:24=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
-> Koutsouflakis Stefanos <koutsouflakis.stefanos@proton.me> writes:
-> > When running "git reset --hard" in a repository where staged
-> > content has never been committed, the staged files are lost. This
-> > seems like a case where requiring --force could be helpful.
->
-> The thinking has always been "'--hard' means what it says!  HARD
-> removes things harder than other modes---there is need to add
-> '--force' to it".
+On Wed, Dec 10, 2025 at 02:00:39PM -0600, Justin Tobler wrote:
+> On 25/12/10 04:32PM, Patrick Steinhardt wrote:
+> > Changes in v2:
+> >   - Rename `odb_add_source()` to `odb_add_alternates_recursive()` to
+> >     highlight that this function is recursive.
+> >   - Link to v1: https://lore.kernel.org/r/20251208-b4-pks-odb-alternates-via-source-v1-0-e7ebb8b18c03@pks.im
+> 
+> Thanks the changes in the version look good to me.
 
-Presumably, you meant "there is *no* need" rather than "there is need".
+Thanks for your review!
+
+Patrick
