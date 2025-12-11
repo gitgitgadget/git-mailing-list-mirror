@@ -1,120 +1,282 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEFE1FECBA
-	for <git@vger.kernel.org>; Thu, 11 Dec 2025 07:21:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46C41E2606
+	for <git@vger.kernel.org>; Thu, 11 Dec 2025 08:46:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765437719; cv=none; b=eVD1al5Z7YNP7Aq2BA/gkZGas1wzY+Sv669xepM+xbcu/TV3y16yhQDhgMOrF58oGmQpQDI2HFLS9i2on6tgg0TRsNfXV+yu8WOiXaxWOqaleMXpz95Dpq8tMGwUtgnyGoeaUqk9nn4OSF86wKFWzNHcXeYOfBl/9yijDMTkXTE=
+	t=1765442780; cv=none; b=t4EXrxlZx3OYqAEmyDEC/s2tHe+7nbYM4SLIPgTdJ7vk+qeC/n8nH9ZVoAVrgZDSXjtlInVAc7UjgHmDtJpBUqqj8lx0PWKqzkBwZ1ZvWKmr48qw4m603qxb2TuM6v3SW7R6jByd6Fo3tEBlvctL+PckSaOY38Jy0cLBlZd9AQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765437719; c=relaxed/simple;
-	bh=feS3M/QLh3ZBvNp1pPHbdzgM03ad5AA69b4cEh1fLQo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hk/rF1Zp/tSQxNiD8U2rBRdQ/lRccbS5kerGX7dy5duLCEcPX3whNegzr5Dsdb5JRMYzaPsBw94WzFvBIAh51fYoa7YGR6FbJZ69KNLOgn4E7b+7efPhVARPq62bM3w1GwMsvdE7akUR24hUx7fBWuuDJmqTyv/JpHwVr/wRieg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fnr48HnT; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765442780; c=relaxed/simple;
+	bh=SELb0RdphtF+93O03feAW8zaG8uKvOuroP+EbLf5HIU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=azyOUUdi85GybG/LDjdezEwfUwi5xC8PBYQSHZFm3F/tNWehNgRCcY62dQhlgwxa2chfabRqnexd1EffXNjZQXAzDmWXcG2CzMDvKyl49LLwL3vy9ktRa4DCNhYaurWq595TeO9nRk5LVLXyfeewdF3HOgeRRSLOYMo9hYtSN28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PEcq7xJA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r50ZHKSz; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fnr48HnT"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4775e891b5eso2376885e9.2
-        for <git@vger.kernel.org>; Wed, 10 Dec 2025 23:21:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765437716; x=1766042516; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=kw4DrWIsr25/bx8K9YSqOq4Co5SleENjS1Xpkt8RL74=;
-        b=fnr48HnTwY2nvdiiP8qmPz6RtKGbHJbnwFgIhxoQLE7fXb0iTHURnsogjMmnM5JhGZ
-         Yu4r9XZbb61sUH0YWQ0P97C3DqGPGHiD4bFr79gd/AZWz3gGvzwc97PFm61gpaPI2MSI
-         alYIgcoz1wwEgaBq6P5Rkx/L0ZDY/OtbsSrlyFQ25VFx2d1u4YW2B8t6QvJCxSDk2gpB
-         nLzHCipGb51ljzusP0ngB1fPUSQM27K5bpkHyloPPXNSox6Imv0Gx19deBQs3IJYZDqD
-         Sww9JVym2aQamA+JiQ6AHXOJC5ymSXHMcDYYNNcxom0mH4SUqUVIVySDpMNyX1wSaLWR
-         Zh/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765437716; x=1766042516;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kw4DrWIsr25/bx8K9YSqOq4Co5SleENjS1Xpkt8RL74=;
-        b=eZAt7YVVXttyTUgsHEd73KUzOB3ZbHnwx0SimevLNq1WqSUiST8LzlC96LkkSKgHR6
-         NCZ8TDEoLmvDHoL85wQHFde+3LYGPS5gFe6gcPI2aH9G96ActYmMT7Sw1/3Y34QX2x63
-         r7jnjG2GmO3wKKbIbus0ydrCjCmkWcT2S54Mzm/QpO4a0kYWXhNJNsoJdW5Gxuk/bpAC
-         5mDgL5JZY/j2T1K8SFdnfV14a/YNlg6Q955b8iCvakVG79UYejkhwkOIDwhJ4l0t6Yda
-         OjEbArYacuuxpkIvr9itcGl+dyPODGCDtVmLASnNmMC6z+9s4HlG6np/i3bKst6XafIb
-         UP/g==
-X-Gm-Message-State: AOJu0YzkWRioQ6SJmYtqzTnEMOIxBEuUMJ6uUKAX7MT+LTn3jX2TDqLv
-	+fJJPP1q/t3RLjkRv5ULn600jUX07TqIw5JEnjod8DwOfPW+74s4DVsW
-X-Gm-Gg: ASbGncua+Tp2oIncqulvncZxnMyxfCEXo9ejvbN5Ku73s/iPnjRnixM4VfqS+d4incp
-	Myuku6PU4pwJaIBDKg6kA8aTEeT8YDBQRlR4QkoRcOjZuEX0ySrxgD6a841sc1plz8AiLNbWugx
-	bmekzo3l7dKhegRe9rmuoCS6f51lCVNcTyF2TT1aYwtKMAlB0PwKNvt+mufQzCb3vIW9gJAc87w
-	ji4mqP1Wb0NonfxQvX168ECjrQPok5QTYot081DfydEc/x+2CPxGLfaCYSSJ3Knxts+3sn5P+Lk
-	NVZNVScZSiFMHfhdCMts93Y9uEje+2SI1NEX+jMvcVqNVdvQZLheBAI6MuvBj/R2SgSB5wU7jdN
-	OQ3J9W1aV2AerZMxq7oA21zoN47olQitDio4PXXEShiORsGlWMnxybuAUHUVLhKYt/7bdmRGAHK
-	0p5TqcA5X0F4LooEci4HFv3Jbt8X6IazQiJAowpvrs
-X-Google-Smtp-Source: AGHT+IEcsM+U4vvMFkX85OblO7dGt2dm+yeQwywtS5xN9mJhVdBhCtxYQXvqnCbZxFckQyV29vSwLw==
-X-Received: by 2002:a05:600c:4e49:b0:477:7c7d:d9b7 with SMTP id 5b1f17b1804b1-47a837a27d0mr59817275e9.33.1765437715864;
-        Wed, 10 Dec 2025 23:21:55 -0800 (PST)
-Received: from localhost (84-236-78-152.pool.digikabel.hu. [84.236.78.152])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a89d8de82sm7453245e9.1.2025.12.10.23.21.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Dec 2025 23:21:55 -0800 (PST)
-Date: Thu, 11 Dec 2025 08:21:43 +0100
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 4/8] odb: adapt `odb_add_to_alternates_file()` to call
- `odb_add_source()`
-Message-ID: <aTpxB8gS7wG7rRJQ@szeder.dev>
-References: <20251210-b4-pks-odb-alternates-via-source-v2-0-eb336815f9ab@pks.im>
- <20251210-b4-pks-odb-alternates-via-source-v2-4-eb336815f9ab@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PEcq7xJA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r50ZHKSz"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id D6ACBEC0677;
+	Thu, 11 Dec 2025 03:46:15 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 11 Dec 2025 03:46:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1765442775; x=1765529175; bh=O7iW6CxPEl
+	66d753RKBLz2VKR/dyAsTZKTut2jTrXZ0=; b=PEcq7xJAfWDZnmDImTz2LIYvmb
+	z4he8/LhqqSk50b4vgt6syUX5ssL9FGWcsiITmBYtZmNYBB+MkaKhuT4DyDu9sk9
+	Tvtkxsgju2wdY4jIecp0lGR08Osqcz5x+eZzCLCbf4V2aF7Kdom6pqA0P+PBfDLi
+	zvELauqZFU5vVmv6pop7gmfxaQgtp1sxwUBfaLLiZOsTglAG0lLiCEHED5PhOhe3
+	o+2hdQ3UsKnhfwQYehliojg1F2O4bPNPIU1mGebIMCBEH5Mid6x01wo3tJ9rKBXC
+	oCqeYtGjbZbTAyWxmVGrbTpdc/wf40VDpRyinCRk4lvi9hQLW8EH45r5OPbQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765442775; x=1765529175; bh=O7iW6CxPEl66d753RKBLz2VKR/dyAsTZKTu
+	t2jTrXZ0=; b=r50ZHKSzubc7i9v6ppWMlioddgG5rVHusxgN2I7pu+tZyheNLUu
+	kyzUzCAJYtVVJADaLZKDvHQQ8vLfLIYGkKJ/f3SQ1ryUqGwGnZOr7rH1VomsPHzv
+	L3A3p6wUd+OUgWSOd5YKjVc/4SucZuDxahw/Ba51UEYaIwzPiRWm3/a4GnnVJnP0
+	YjWsKcjydZaDT68p6gJsQazb6Mgs/0KFVPuS3DEUAGGcjQ9RXcY7nLhqsr5w5uXH
+	e0Ki6GsLhbLZFLw7WUqfKsfC/K4x8Os3DplWVSwyduwIaINJjilxbf0na2qf0cE0
+	Bqwap8bV31B/kudRfK4Sro5o6u9jNURs+0A==
+X-ME-Sender: <xms:14Q6aRhF1DaKsE_V03B-sMj3MeR1-evHbh9ZL4RxkwqWiajTPueDcg>
+    <xme:14Q6ac7hwasfgaR260xolt5EOmXhfka5nwZxM28GBq1ytKvNGzbIlvZQFFFIcxJ3z
+    VhWr36ja5qJJS7WAK8Lwj6V8mH3c9r69K-jAvI6YBLR4RPco5v4>
+X-ME-Received: <xmr:14Q6aZbLZsPI1jU1Vt79zQu05dY33rad0IGOGvkipS8o46ihpStD_zsjyiVeTk417UEl7n18Y24GBLJNH5Lw3RBlpQU7UJB8ag>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeekjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtth
+    grhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:14Q6aR6dltVvbMrzCrYJlHWJOMHkWe4TqsFBN8auV1thRpJo-o7d-A>
+    <xmx:14Q6acCWB1MUdjSIIHbp2LwuMefn3liwOHz3aLTId_NwNWQajyfnSQ>
+    <xmx:14Q6aXcJqKgk96kv7NgG83MBD9VQ2ZSdn7gbCw8zu-X3-NmHoYt7qA>
+    <xmx:14Q6abI5-gkmAfnhH6QPy0HLi4ISA2gnMJ1wnFWczpsy85mBiP8J0A>
+    <xmx:14Q6adJQU6j8F3EOG1kupr9RB6LqHjK2dZe6e3M_6ekl9O8VYkC7Qx0y>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 11 Dec 2025 03:46:15 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/3] builtin/repack: avoid rewriting up-to-date MIDX
+In-Reply-To: <20251210-pks-skip-noop-rewrite-v2-0-f813a9e44f28@pks.im>
+	(Patrick Steinhardt's message of "Wed, 10 Dec 2025 13:52:17 +0100")
+References: <20251208-pks-skip-noop-rewrite-v1-0-430d52dba9f0@pks.im>
+	<20251210-pks-skip-noop-rewrite-v2-0-f813a9e44f28@pks.im>
+Date: Thu, 11 Dec 2025 17:46:13 +0900
+Message-ID: <xmqqsedhe78q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251210-b4-pks-odb-alternates-via-source-v2-4-eb336815f9ab@pks.im>
+Content-Type: text/plain
 
-On Wed, Dec 10, 2025 at 04:32:37PM +0100, Patrick Steinhardt wrote:
-> When calling `odb_add_to_alternates_file()` we know to add the newly
-> added source to the object database in case we have already loaded
-> alternates. This is done so that we can make its objects accessible
-> immediately without having to fully reload all alternates.
-> 
-> The way we do this though is to call `link_alt_odb_entries()`, which
-> adds _multiple_ sources to the object database source in case we have
-> newline-separated entries. This behaviour is not documented in the
-> function documentation of `odb_add_to_alternates_file()`, and all
-> callers only ever pass a single directory to it. It's thus entirely
-> surprising and a conceptual mismatch.
-> 
-> Fix this issue by directly calling `odb_add_source()` instead.
+This and Taylor's incremental part 3.2 have a slight conflict in
+that this topic factors away the logic to compute if we need
+recomputing MIDX while the other one tweaks with yet another flag.
 
-OK, but:
+My tentative resolution in 'seen' looks like the attached.  Sanity
+checking is very much appreciated.
 
-> diff --git a/odb.c b/odb.c
-> index e314f86c3b..d97e50fb61 100644
-> --- a/odb.c
-> +++ b/odb.c
-> @@ -338,7 +338,7 @@ void odb_add_to_alternates_file(struct object_database *odb,
->  		if (commit_lock_file(&lock))
->  			die_errno(_("unable to move new alternates file into place"));
->  		if (odb->loaded_alternates)
-> -			link_alt_odb_entries(odb, dir, '\n', NULL, 0);
-> +			odb_add_source(odb, dir, 0);
+Thanks.
 
-      CC odb.o
-  odb.c: In function ‘odb_add_to_alternates_file’:
-  odb.c:341:25: error: implicit declaration of function ‘odb_add_source’; did you mean ‘odb_find_source’? [-Werror=implicit-function-declaration]
-    341 |                         odb_add_source(odb, dir, 0);
-        |                         ^~~~~~~~~~~~~~
-        |                         odb_find_source
-  cc1: all warnings being treated as errors
-  make: *** [Makefile:2864: odb.o] Error 1
-
-Note, that several commit messages also refer to this non-existing
-function from the previous round.
-
+diff --cc midx-write.c
+index ce459b02c3,f2dbacef4c..66c125ccb0
+--- a/midx-write.c
++++ b/midx-write.c
+@@@ -1014,73 -1131,30 +1131,89 @@@ static void clear_midx_files(struct odb
+  	strbuf_release(&buf);
+  }
+  
+ +static bool midx_needs_update(struct multi_pack_index *midx, struct write_midx_context *ctx)
+ +{
+ +	struct strset packs = STRSET_INIT;
+ +	struct strbuf buf = STRBUF_INIT;
+ +	bool needed = true;
+ +
+ +	/*
+ +	 * Ignore incremental updates for now. The assumption is that any
+ +	 * incremental update would be either empty (in which case we will bail
+ +	 * out later) or it would actually cover at least one new pack.
+ +	 */
+- 	if (ctx->incremental)
+++	if (ctx->incremental || ctx->compact)
+ +		goto out;
+ +
+ +	/*
+ +	 * Otherwise, we need to verify that the packs covered by the existing
+ +	 * MIDX match the packs that we already have. The logic to do so is way
+ +	 * more complicated than it has any right to be. This is because:
+ +	 *
+ +	 *   - We cannot assume any ordering.
+ +	 *
+ +	 *   - The MIDX packs may not be loaded at all, and loading them would
+ +	 *     be wasteful. So we need to use the pack names tracked by the
+ +	 *     MIDX itself.
+ +	 *
+ +	 *   - The MIDX pack names are tracking the ".idx" files, whereas the
+ +	 *     packs themselves are tracking the ".pack" files. So we need to
+ +	 *     strip suffixes.
+ +	 */
+ +	if (ctx->nr != midx->num_packs + midx->num_packs_in_base)
+ +		goto out;
+ +
+ +	for (uint32_t i = 0; i < ctx->nr; i++) {
+ +		strbuf_reset(&buf);
+ +		strbuf_addstr(&buf, pack_basename(ctx->info[i].p));
+ +		strbuf_strip_suffix(&buf, ".pack");
+ +
+ +		if (!strset_add(&packs, buf.buf))
+ +			BUG("same pack added twice?");
+ +	}
+ +
+ +	for (uint32_t i = 0; i < ctx->nr; i++) {
+ +		strbuf_reset(&buf);
+ +		strbuf_addstr(&buf, midx->pack_names[i]);
+ +		strbuf_strip_suffix(&buf, ".idx");
+ +
+ +		if (!strset_contains(&packs, buf.buf))
+ +			goto out;
+ +		strset_remove(&packs, buf.buf);
+ +	}
+ +
+ +	needed = false;
+ +
+ +out:
+ +	strbuf_release(&buf);
+ +	strset_clear(&packs);
+ +	return needed;
+ +}
+ +
+- static int write_midx_internal(struct odb_source *source,
+- 			       struct string_list *packs_to_include,
+- 			       struct string_list *packs_to_drop,
+- 			       const char *preferred_pack_name,
+- 			       const char *refs_snapshot,
+- 			       unsigned flags)
++ static int midx_hashcmp(const struct multi_pack_index *a,
++ 			const struct multi_pack_index *b,
++ 			const struct git_hash_algo *algop)
+  {
+- 	struct repository *r = source->odb->repo;
++ 	return hashcmp(get_midx_hash(a), get_midx_hash(b), algop);
++ }
++ 
++ struct write_midx_opts {
++ 	struct odb_source *source;
++ 
++ 	struct string_list *packs_to_include;
++ 	struct string_list *packs_to_drop;
++ 
++ 	struct multi_pack_index *compact_from;
++ 	struct multi_pack_index *compact_to;
++ 
++ 	const char *preferred_pack_name;
++ 	const char *refs_snapshot;
++ 	unsigned flags;
++ };
++ 
++ static int write_midx_internal(struct write_midx_opts *opts)
++ {
++ 	struct repository *r = opts->source->odb->repo;
+  	struct strbuf midx_name = STRBUF_INIT;
+  	unsigned char midx_hash[GIT_MAX_RAWSZ];
+  	uint32_t start_pack;
+@@@ -1166,44 -1257,43 +1317,54 @@@
+  	else
+  		ctx.progress = NULL;
+  
+- 	ctx.to_include = packs_to_include;
++ 	if (ctx.compact) {
++ 		int bitmap_order = 0;
++ 		if (opts->preferred_pack_name)
++ 			bitmap_order |= 1;
++ 		else if (opts->flags & (MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP))
++ 			bitmap_order |= 1;
+  
+- 	for_each_file_in_pack_dir(source->path, add_pack_to_midx, &ctx);
++ 		fill_packs_from_midx_range(&ctx, bitmap_order);
++ 	} else {
++ 		ctx.to_include = opts->packs_to_include;
++ 		for_each_file_in_pack_dir(opts->source->path, add_pack_to_midx, &ctx);
++ 	}
+  	stop_progress(&ctx.progress);
+  
+- 	if (!packs_to_drop) {
+ -	if ((ctx.m && ctx.nr == ctx.m->num_packs + ctx.m->num_packs_in_base) &&
+ -	    !ctx.incremental &&
+ -	    !ctx.compact &&
+ -	    !(opts->packs_to_include || opts->packs_to_drop)) {
+ -		struct bitmap_index *bitmap_git;
+ -		int bitmap_exists;
+ -		int want_bitmap = opts->flags & MIDX_WRITE_BITMAP;
+ -
+ -		bitmap_git = prepare_midx_bitmap_git(ctx.m);
+ -		bitmap_exists = bitmap_git && bitmap_is_midx(bitmap_git);
+ -		free_bitmap_index(bitmap_git);
+ -
+ -		if (bitmap_exists || !want_bitmap) {
+ -			/*
+ -			 * The correct MIDX already exists, and so does a
+ -			 * corresponding bitmap (or one wasn't requested).
+ -			 */
+ -			if (!want_bitmap)
+ -				clear_midx_files_ext(opts->source, "bitmap",
+ -						     NULL);
+ -			result = 0;
+ -			goto cleanup;
+++	if (!opts->packs_to_drop) {
+ +		/*
+ +		 * If there is no MIDX then either it doesn't exist, or we're
+ +		 * doing a geometric repack. Try to load it from the source to
+ +		 * tell these two cases apart.
+ +		 */
+ +		struct multi_pack_index *midx = ctx.m;
+ +		if (!midx)
+ +			midx = midx_to_free = load_multi_pack_index(ctx.source);
+ +
+ +		if (midx && !midx_needs_update(midx, &ctx)) {
+ +			struct bitmap_index *bitmap_git;
+ +			int bitmap_exists;
+- 			int want_bitmap = flags & MIDX_WRITE_BITMAP;
+++			int want_bitmap = opts->flags & MIDX_WRITE_BITMAP;
+ +
+ +			bitmap_git = prepare_midx_bitmap_git(midx);
+ +			bitmap_exists = bitmap_git && bitmap_is_midx(bitmap_git);
+ +			free_bitmap_index(bitmap_git);
+ +
+ +			if (bitmap_exists || !want_bitmap) {
+ +				/*
+ +				 * The correct MIDX already exists, and so does a
+ +				 * corresponding bitmap (or one wasn't requested).
+ +				 */
+ +				if (!want_bitmap)
+- 					clear_midx_files_ext(source, "bitmap", NULL);
+++					clear_midx_files_ext(opts->source,
+++							     "bitmap", NULL);
+ +				result = 0;
+ +				goto cleanup;
+ +			}
+  		}
+ +
+ +		close_midx(midx_to_free);
+ +		midx_to_free = NULL;
+  	}
+  
+  	if (ctx.incremental && !ctx.nr) {
