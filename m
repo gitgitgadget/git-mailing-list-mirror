@@ -1,406 +1,149 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63346248880
-	for <git@vger.kernel.org>; Fri, 12 Dec 2025 02:10:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CCF1DE4CE
+	for <git@vger.kernel.org>; Fri, 12 Dec 2025 02:20:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765505423; cv=none; b=BPgB4qbswFRHPeFl/IfYEXfTwrt/zBz0wlpThFGziyf89nWvDQy9VUh6nVHun57snoFFMquOh5o9LXYV/c0+va8aMQPt6bwk76Us+MzvDsTV8sdDuAJpFLof0yFthpX2hemjQsjTpxNkBoGefnOQ8xCT8z9T6pQC1N47ED2H1cQ=
+	t=1765506031; cv=none; b=hxwZBTGk60pLLVbjTVEqABZgRheicWBB9W9UQvry/z+PqDJz5damGYd0Vgz7pIoQHge7j3Bj4Ftv42uWFl3ggGx8gMkFpeUtXFGf2LJU82q7Y4iV8va2uD+UKh/8czaKJse+QlMSl/5e/XPUaJ5TBhw6mOhXa9Nav+Z5StuTds8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765505423; c=relaxed/simple;
-	bh=NJALJXU+QSJJXSkMu5mmS1ECKN/VCucmqO1FW8ZBySI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KknC33uCyqfTX3AO5DLfhpBM3Pcm5LAaEKVE6ioWCEBorron0fbqVUeR7w/ungpvAg71jsjV9bshDJqQbMQ4hBN0RLyBlk1Oqa9nKL78o3qjO5W7x4/fFgJggAFUz6X/lXsNiA+KvVJkWceljQaQKFoOaMVjfia/C2zjF77uEgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PtfbjPlq; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765506031; c=relaxed/simple;
+	bh=2ndv+OMt6Ys5amhD7HWdH8UxpRJeqADBiQzy9Ogzrzo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dfbVPBSFYe+/Rdp2on0kTIr3XRu4++GSYPmySSJflItjtkQx08a3rB7WF/41MCdiCnO0aMid73oGX8KRuJS2MahovGsQ4n32ANPLQ6pZHac+nc4fa0Ip/ABVlCYnPorlnyN58SFq2DpGMCoja/GZTuE5JtN85RWerRJNLX6KmyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KZwS5OnD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aM44O4T9; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PtfbjPlq"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-29f2676bb21so1036635ad.0
-        for <git@vger.kernel.org>; Thu, 11 Dec 2025 18:10:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765505420; x=1766110220; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MED4UXclcTlitC/9lScY16o8F/K09XDRuu6jFcZCueA=;
-        b=PtfbjPlqrML8zIkeVqvpGKoAl7knwakJZ5ICquo4PHZJEk4Ujmu9tmWlCGslAHXrpP
-         n/aB9dlFiYrAzn5cdXSStPKkgTpaeGF7yHK2GNz4AVbb7sjug5hxBRQaSdYaOAtkcP41
-         NJS6UIsKitp9JW9Y51fLY6X2FzVKGAKy0H+tHz/9h4QhOsNuUO4UHgiUfab4XV3fEMFY
-         DhVhOEBa51vmt0XxffkHYnXnoO9tmi1y5M7Qt6OLt7SKu5Y1MoNsJZA2/u21E4mmKsfw
-         P7EROYpPukt7E34NoWCYHXTprjkHS9dAvHRRSzPSjiyUAIVvVoJNNMK8WYPEejE4NozT
-         Y5sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765505420; x=1766110220;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MED4UXclcTlitC/9lScY16o8F/K09XDRuu6jFcZCueA=;
-        b=FWkkpm+sP9elN6COOGWHg6e9++XcL8SHiDVooI+jQI30GtVBwNRo9VNr5pj4mLCGpy
-         24wHfS+sps9cb43hMF6DRS2+YgtLGFKO4ItQqIPDxg2qLM/khd/G6Y2taefpDlvQqj2X
-         2CwxnOLR8jQ2XZQtAwDvvkxAKL57SmR+uyyB9BO71dgH7Q7xz6W8d62Wut4EM0LAfofj
-         w9PK+M597W9pGf3b1UOac/4WdLl0oFA591XXMl/7cJwe/iRTSYIhzTdn61BySqN3K/rd
-         OjFEaAUpXryUM1w9s2ghfsBGPfknWcRyhweSVogNF86PrUsYvStNyWy58CqqruRYZyZ4
-         KH0Q==
-X-Gm-Message-State: AOJu0Ywg6pNnsB+KSILSX7s9o3c3Yyxe6C0hNs4S78DjYXGtVZ7cXjLR
-	CGJW70mx+RS5YCs1ujRa7++xyCHpSRw4XVOynQ6M/kdlSYTyuy+3Di8Lrn9uGg==
-X-Gm-Gg: AY/fxX4mjtp5nA3ZY50McgR8T7sCRwtRX4hp/XJZAcNuIsWbG3a/P/4RrUAaCXcILH3
-	dJr/LJ0R/y7xgzMDpSbHvMJu2pM+SSw3nD0GfSg6b4oltZfdsa/o8dXcP7PR5CitXj8KNPux+V2
-	9LQT4eQMhzCCJFulv/DmLnOd+DOTFsWbguKeX766jrDyzh3Ji3Glqq78pZj1AeoqMpiSHfOgcht
-	NR8qkmNr+5+H7FP5iZCsqTvWIBDWPDHmIwEbu5y7DipXVDWZX7UgHyLDbgDcH9Mwtw5C5qlKv7E
-	oyU5P0tsFHWz2bpNNARH0rAKCRfdOkyXhycnyOaT6XoaO9ijG/hC3qRDorKhUpQRoPECQqq42fN
-	/aIuGwghdjkrmQf32Nqu8AqcFZuRF0LQl2Sq5uFZ2ItjjvtjqS4nV20FbamQbSR7XLBPR1SyAUk
-	DffJm0PsHP2iz+l4G7EqHtRKfMQMUkc5rc
-X-Google-Smtp-Source: AGHT+IGGcxKsriiXyxUqwksT8+a8ggcJ4S8eUQiUtcesqiJY9sZYy6nFpWwZD2NaBU6R4GvAur+2pA==
-X-Received: by 2002:a17:902:c403:b0:295:39d9:8971 with SMTP id d9443c01a7336-29f23de599bmr5209135ad.1.1765505420262;
-        Thu, 11 Dec 2025 18:10:20 -0800 (PST)
-Received: from Fedora-Gink ([2405:201:c005:b959:acb7:a699:c03a:f9fa])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29ee9d36bf5sm36401095ad.24.2025.12.11.18.10.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Dec 2025 18:10:19 -0800 (PST)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: git@vger.kernel.org
-Cc: jayatheerthkulkarni2005@gmail.com
-Subject: [PATCH] Make pull.c match the structural conventions
-Date: Fri, 12 Dec 2025 07:39:30 +0530
-Message-ID: <20251212020930.11654-1-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.52.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KZwS5OnD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aM44O4T9"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AAED914000D1;
+	Thu, 11 Dec 2025 21:20:27 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Thu, 11 Dec 2025 21:20:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1765506027;
+	 x=1765592427; bh=gcj4kgZMeF8W6or8FVC/3YlDjkCFnE7kA6ph01QAXLs=; b=
+	KZwS5OnDkuVaDSDoGvKgQ+JJ10GwnjsUMvA5pSBHyv/gUR2VwYTQjzFUQTnLnRJ7
+	QhzZMyW7rScrG7nWzMTINTp0sdzNXcxqwDKYqENPxLj1dBO4To3YbPUtzplujA5v
+	0bOXObkVeVY1cOXzpxIIMX02lUv+FT4mjuc+ZAIMxIlsyTymdZvKdgPyzhcDzUoa
+	RcGWL8d+hG7h8/sC/HWM570DDaJVDdPpTQodqOBWkiIbyMyQjshH+5e5t0sXmJ1q
+	lOd0uEQVY4uV30x2T7hgEC3x6ZFttCbn1SGVA6rLkAtLGYB4gNoL0tsm4XS0QSZl
+	+H8h1W6x83qEnebTo9+n8g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765506027; x=
+	1765592427; bh=gcj4kgZMeF8W6or8FVC/3YlDjkCFnE7kA6ph01QAXLs=; b=a
+	M44O4T9geAI9+ENb7KVJ1pJwCjyJfusuPnK6gl4qxc6LJ03NC6IPGGRInjIYqfDL
+	ksYZVqi5LsV5cTbTw7QVwpQh6enYHv+Kam4iUfR3Fnzl5MH2G7XiJMLw19J6MaS8
+	lxqhzd/S/c56MUpUyo3sYGs/3pLYxwm5adO6tAx5DEnllvI4Ztgf9mR4TwboCZ1A
+	ZKDid4bWmE1TmB0iIEK4AC3LRTBbopRKtX/urxk8RLQHmN6TPbfc9RrV8dCD6wBQ
+	4TnjM9H4AHuAffVJ0gi/2c8q3Dxs/kqqcwmNm7/rQwsH7mJ8yxBQv6VPktanvTt7
+	JPCt+FumpwVODjv/hRgdw==
+X-ME-Sender: <xms:63s7aWpyRYhqyMDiiKiwmni3Wp7l9XGDNr6rMNeHaxSbdDRVMhFR7Q>
+    <xme:63s7abjZQevM_qzf7w_bfWIz21Wo-DY-2KJ_BB6_XOON817rFullF-jSKXNcpL2GQ
+    jFSLZ6cjqlaK9TIz1BEpyxRS_4NTCdcfMZgvsuW5RvpWSTVf7LGkQ>
+X-ME-Received: <xmr:63s7aTiWVz3M1n7IANkmMH9Pny5cnfx6RJCPC_nPoo7d_AlIXMlgk-Avve_F6LSByjkHW1G5qHWn1RA-iJKzCuZp9bbsdd80oQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieeliecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdprhgtph
+    htthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepkhhojhhirdhnrghkrghmrghruhesghhrvggvrd
+    hnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:63s7aRhwgmD6A7yRMDZOXnYX__tZGCwfkZkoI4GHuV6id9VnD67i5w>
+    <xmx:63s7aTIHdaOjPwQn8fCxXbGVhZXACDA3ED-DyEjAv6yB2WZ136foMA>
+    <xmx:63s7aQFWX7-JEJORPaC0g9cmVCDDh2nH9IIZGQKnh2ZZTbzDF2sKWg>
+    <xmx:63s7aXTMAaB6heFSCn6N91oaOnpOYXvr-T7vkMlguBxDiW8soDaG5w>
+    <xmx:63s7aZgT6mG68hnTsh4Xx5i38BzFymSbPK5QhF0SqIwpmphLC8pzGxPW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 11 Dec 2025 21:20:27 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Git List
+ <git@vger.kernel.org>,  Koji
+ Nakamaru <koji.nakamaru@gree.net>
+Subject: Re: [PATCH] config.mak.uname: use iconv from Homebrew on macOS
+In-Reply-To: <vxi7g67b322sre7ylkcfwujf3n34j3f5vtpl62zhrj4ds6f675@hyyh2rxhaib6>
+	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Thu, 11 Dec
+ 2025 03:17:03
+	-0800")
+References: <53690064-1c98-40e9-8b9a-7ba6bee63703@web.de>
+	<16efc726-34be-44f5-aa92-4e82b663ab3d@web.de>
+	<qnb77j3b5m6rfbzr3qhmwalo5lha4gqslvzqsfuq6zur74ze7j@wqriu4w7wbzw>
+	<1b3509d7-e421-4136-a62c-de86213d65b2@web.de>
+	<xmqq7buthgq4.fsf@gitster.g>
+	<vxi7g67b322sre7ylkcfwujf3n34j3f5vtpl62zhrj4ds6f675@hyyh2rxhaib6>
+Date: Fri, 12 Dec 2025 11:20:25 +0900
+Message-ID: <xmqq7buse906.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-The builtin sources follow a predictable structure, and pull.c departs
-from that pattern by arranging its option table in a way that disrupts
-the expected flow of the file. The irregular placement makes the file
-harder to read, breaks the visual rhythm shared by other builtins, and
-forces readers to jump around to understand how options are handled.
-The lack of consistency makes pull.c feel like an outlier rather than
-a peer alongside the other commands.
+Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
 
-A consistent layout helps readers rely on established mental models,
-so bringing pull.c into alignment improves clarity and makes the file
-easier to navigate and maintain.
+>> I am looking at relevant parts of Makefile
+>> 
+>> # Define NO_FINK if you are building on Darwin/Mac OS X, have Fink
+>> # installed in /sw, but don't want GIT to link against any libraries
+>> # installed there.  If defined you may specify your own (or Fink's)
+>> # include directories and library directories by defining CFLAGS
+>> # and LDFLAGS appropriately.
+>> #
+>> # Define NO_DARWIN_PORTS if you are building on Darwin/Mac OS X,
+>> # have DarwinPorts installed in /opt/local, but don't want GIT to
+>> # link against any libraries installed there.  If defined you may
+>> # specify your own (or DarwinPort's) include directories and
+>> # library directories by defining CFLAGS and LDFLAGS appropriately.
+>> 
+>> and notice that /opt/local/ is mentioned for DarwinPorts.  The patch
+>> that started this thread talks about defaulting ICONVDIR to that of
+>> Homebrew if available, but the new code checks /opt/homebrew and
+>> then /usr/local/ (and let it override it).  Should the log message
+>> be talking about DarwinPorts as well?
+>> 
+>>     As a workaround, set the default libiconv location to
+>>     /opt/homebrew when the user has one from Homebrew, or
+>>     to /opt/local when the user has one from MacPorts.
+>> 
+>> or something along the line?
+>
+> Since the original patch was only meant to help with Homebrew it
+> might not be worth mentioning the OTHER package managers IMHO.
 
-Pull.c, become structured like the other builtin/*.c files, keeping the
-option definitions where the reader naturally expects them and restoring
-the uniformity of the builtin command layout.
+Meaing that the original patch should have included only
+/opt/homebrew and we should drop the part about /opt/local?
 
-Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
----
+Or do you mean Homebrew may use /opt/local instead of /opt/homebrew
+and both parts of the original patch are needed to give coverage to
+different Homebrew installations?
 
-I was going through pull.c for a different bug hunt and found this out.
-I thought there must be some issue pulling the options table locally to main but
-git compiles and also passes the tests and also the CI/CD,
-so I can't say if this part was intentional or not.
+If the latter, perhaps we can say something in the proposed commit
+log message to explain having both /opt/{homebrew,local}/ is
+necessary (and why)?
 
- builtin/pull.c | 285 ++++++++++++++++++++++++-------------------------
- 1 file changed, 142 insertions(+), 143 deletions(-)
+>> By the way, for macOS newbies (like me), I wonder if a patch like
+>> the attached may help?
+>
+> Did I read that correctly and you had found yourself forced into
+> running macOS at least somewhere?
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 5ebd529620..97814edbc5 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -119,148 +119,6 @@ static int opt_show_forced_updates = -1;
- static const char *set_upstream;
- static struct strvec opt_fetch = STRVEC_INIT;
- 
--static struct option pull_options[] = {
--	/* Shared options */
--	OPT__VERBOSITY(&opt_verbosity),
--	OPT_PASSTHRU(0, "progress", &opt_progress, NULL,
--		N_("force progress reporting"),
--		PARSE_OPT_NOARG),
--	OPT_CALLBACK_F(0, "recurse-submodules",
--		   &recurse_submodules_cli, N_("on-demand"),
--		   N_("control for recursive fetching of submodules"),
--		   PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
--
--	/* Options passed to git-merge or git-rebase */
--	OPT_GROUP(N_("Options related to merging")),
--	OPT_CALLBACK_F('r', "rebase", &opt_rebase,
--		"(false|true|merges|interactive)",
--		N_("incorporate changes by rebasing rather than merging"),
--		PARSE_OPT_OPTARG, parse_opt_rebase),
--	OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
--		N_("do not show a diffstat at the end of the merge"),
--		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
--	OPT_PASSTHRU(0, "stat", &opt_diffstat, NULL,
--		N_("show a diffstat at the end of the merge"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU(0, "summary", &opt_diffstat, NULL,
--		N_("(synonym to --stat)"),
--		PARSE_OPT_NOARG | PARSE_OPT_HIDDEN),
--	OPT_PASSTHRU(0, "compact-summary", &opt_diffstat, NULL,
--		N_("show a compact-summary at the end of the merge"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU(0, "log", &opt_log, N_("n"),
--		N_("add (at most <n>) entries from shortlog to merge commit message"),
--		PARSE_OPT_OPTARG),
--	OPT_PASSTHRU(0, "signoff", &opt_signoff, NULL,
--		N_("add a Signed-off-by trailer"),
--		PARSE_OPT_OPTARG),
--	OPT_PASSTHRU(0, "squash", &opt_squash, NULL,
--		N_("create a single commit instead of doing a merge"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU(0, "commit", &opt_commit, NULL,
--		N_("perform a commit if the merge succeeds (default)"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU(0, "edit", &opt_edit, NULL,
--		N_("edit message before committing"),
--		PARSE_OPT_NOARG),
--	OPT_CLEANUP(&cleanup_arg),
--	OPT_PASSTHRU(0, "ff", &opt_ff, NULL,
--		N_("allow fast-forward"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU(0, "ff-only", &opt_ff, NULL,
--		N_("abort if fast-forward is not possible"),
--		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
--	OPT_PASSTHRU(0, "verify", &opt_verify, NULL,
--		N_("control use of pre-merge-commit and commit-msg hooks"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU(0, "verify-signatures", &opt_verify_signatures, NULL,
--		N_("verify that the named commit has a valid GPG signature"),
--		PARSE_OPT_NOARG),
--	OPT_BOOL(0, "autostash", &opt_autostash,
--		N_("automatically stash/stash pop before and after")),
--	OPT_PASSTHRU_ARGV('s', "strategy", &opt_strategies, N_("strategy"),
--		N_("merge strategy to use"),
--		0),
--	OPT_PASSTHRU_ARGV('X', "strategy-option", &opt_strategy_opts,
--		N_("option=value"),
--		N_("option for selected merge strategy"),
--		0),
--	OPT_PASSTHRU('S', "gpg-sign", &opt_gpg_sign, N_("key-id"),
--		N_("GPG sign commit"),
--		PARSE_OPT_OPTARG),
--	OPT_SET_INT(0, "allow-unrelated-histories",
--		    &opt_allow_unrelated_histories,
--		    N_("allow merging unrelated histories"), 1),
--
--	/* Options passed to git-fetch */
--	OPT_GROUP(N_("Options related to fetching")),
--	OPT_PASSTHRU(0, "all", &opt_all, NULL,
--		N_("fetch from all remotes"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU('a', "append", &opt_append, NULL,
--		N_("append to .git/FETCH_HEAD instead of overwriting"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU(0, "upload-pack", &opt_upload_pack, N_("path"),
--		N_("path to upload pack on remote end"),
--		0),
--	OPT__FORCE(&opt_force, N_("force overwrite of local branch"), 0),
--	OPT_PASSTHRU('t', "tags", &opt_tags, NULL,
--		N_("fetch all tags and associated objects"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU('p', "prune", &opt_prune, NULL,
--		N_("prune remote-tracking branches no longer on remote"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU('j', "jobs", &max_children, N_("n"),
--		N_("number of submodules pulled in parallel"),
--		PARSE_OPT_OPTARG),
--	OPT_BOOL(0, "dry-run", &opt_dry_run,
--		N_("dry run")),
--	OPT_PASSTHRU('k', "keep", &opt_keep, NULL,
--		N_("keep downloaded pack"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU(0, "depth", &opt_depth, N_("depth"),
--		N_("deepen history of shallow clone"),
--		0),
--	OPT_PASSTHRU_ARGV(0, "shallow-since", &opt_fetch, N_("time"),
--		N_("deepen history of shallow repository based on time"),
--		0),
--	OPT_PASSTHRU_ARGV(0, "shallow-exclude", &opt_fetch, N_("ref"),
--		N_("deepen history of shallow clone, excluding ref"),
--		0),
--	OPT_PASSTHRU_ARGV(0, "deepen", &opt_fetch, N_("n"),
--		N_("deepen history of shallow clone"),
--		0),
--	OPT_PASSTHRU(0, "unshallow", &opt_unshallow, NULL,
--		N_("convert to a complete repository"),
--		PARSE_OPT_NONEG | PARSE_OPT_NOARG),
--	OPT_PASSTHRU(0, "update-shallow", &opt_update_shallow, NULL,
--		N_("accept refs that update .git/shallow"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU(0, "refmap", &opt_refmap, N_("refmap"),
--		N_("specify fetch refmap"),
--		PARSE_OPT_NONEG),
--	OPT_PASSTHRU_ARGV('o', "server-option", &opt_fetch,
--		N_("server-specific"),
--		N_("option to transmit"),
--		0),
--	OPT_PASSTHRU('4',  "ipv4", &opt_ipv4, NULL,
--		N_("use IPv4 addresses only"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU('6',  "ipv6", &opt_ipv6, NULL,
--		N_("use IPv6 addresses only"),
--		PARSE_OPT_NOARG),
--	OPT_PASSTHRU_ARGV(0, "negotiation-tip", &opt_fetch, N_("revision"),
--		N_("report that we have only objects reachable from this object"),
--		0),
--	OPT_BOOL(0, "show-forced-updates", &opt_show_forced_updates,
--		 N_("check for forced-updates on all updated branches")),
--	OPT_PASSTHRU(0, "set-upstream", &set_upstream, NULL,
--		N_("set upstream for git pull/fetch"),
--		PARSE_OPT_NOARG),
--
--	OPT_END()
--};
--
- /**
-  * Pushes "-q" or "-v" switches into arr to match the opt_verbosity level.
-  */
-@@ -1008,7 +866,148 @@ int cmd_pull(int argc,
- 	int can_ff;
- 	int divergent;
- 	int ret;
--
-+	static struct option pull_options[] = {
-+		/* Shared options */
-+		OPT__VERBOSITY(&opt_verbosity),
-+		OPT_PASSTHRU(0, "progress", &opt_progress, NULL,
-+			N_("force progress reporting"),
-+			PARSE_OPT_NOARG),
-+		OPT_CALLBACK_F(0, "recurse-submodules",
-+			   &recurse_submodules_cli, N_("on-demand"),
-+			   N_("control for recursive fetching of submodules"),
-+			   PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
-+
-+		/* Options passed to git-merge or git-rebase */
-+		OPT_GROUP(N_("Options related to merging")),
-+		OPT_CALLBACK_F('r', "rebase", &opt_rebase,
-+			"(false|true|merges|interactive)",
-+			N_("incorporate changes by rebasing rather than merging"),
-+			PARSE_OPT_OPTARG, parse_opt_rebase),
-+		OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
-+			N_("do not show a diffstat at the end of the merge"),
-+			PARSE_OPT_NOARG | PARSE_OPT_NONEG),
-+		OPT_PASSTHRU(0, "stat", &opt_diffstat, NULL,
-+			N_("show a diffstat at the end of the merge"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU(0, "summary", &opt_diffstat, NULL,
-+			N_("(synonym to --stat)"),
-+			PARSE_OPT_NOARG | PARSE_OPT_HIDDEN),
-+		OPT_PASSTHRU(0, "compact-summary", &opt_diffstat, NULL,
-+			N_("show a compact-summary at the end of the merge"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU(0, "log", &opt_log, N_("n"),
-+			N_("add (at most <n>) entries from shortlog to merge commit message"),
-+			PARSE_OPT_OPTARG),
-+		OPT_PASSTHRU(0, "signoff", &opt_signoff, NULL,
-+			N_("add a Signed-off-by trailer"),
-+			PARSE_OPT_OPTARG),
-+		OPT_PASSTHRU(0, "squash", &opt_squash, NULL,
-+			N_("create a single commit instead of doing a merge"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU(0, "commit", &opt_commit, NULL,
-+			N_("perform a commit if the merge succeeds (default)"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU(0, "edit", &opt_edit, NULL,
-+			N_("edit message before committing"),
-+			PARSE_OPT_NOARG),
-+		OPT_CLEANUP(&cleanup_arg),
-+		OPT_PASSTHRU(0, "ff", &opt_ff, NULL,
-+			N_("allow fast-forward"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU(0, "ff-only", &opt_ff, NULL,
-+			N_("abort if fast-forward is not possible"),
-+			PARSE_OPT_NOARG | PARSE_OPT_NONEG),
-+		OPT_PASSTHRU(0, "verify", &opt_verify, NULL,
-+			N_("control use of pre-merge-commit and commit-msg hooks"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU(0, "verify-signatures", &opt_verify_signatures, NULL,
-+			N_("verify that the named commit has a valid GPG signature"),
-+			PARSE_OPT_NOARG),
-+		OPT_BOOL(0, "autostash", &opt_autostash,
-+			N_("automatically stash/stash pop before and after")),
-+		OPT_PASSTHRU_ARGV('s', "strategy", &opt_strategies, N_("strategy"),
-+			N_("merge strategy to use"),
-+			0),
-+		OPT_PASSTHRU_ARGV('X', "strategy-option", &opt_strategy_opts,
-+			N_("option=value"),
-+			N_("option for selected merge strategy"),
-+			0),
-+		OPT_PASSTHRU('S', "gpg-sign", &opt_gpg_sign, N_("key-id"),
-+			N_("GPG sign commit"),
-+			PARSE_OPT_OPTARG),
-+		OPT_SET_INT(0, "allow-unrelated-histories",
-+			    &opt_allow_unrelated_histories,
-+			    N_("allow merging unrelated histories"), 1),
-+
-+		/* Options passed to git-fetch */
-+		OPT_GROUP(N_("Options related to fetching")),
-+		OPT_PASSTHRU(0, "all", &opt_all, NULL,
-+			N_("fetch from all remotes"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU('a', "append", &opt_append, NULL,
-+			N_("append to .git/FETCH_HEAD instead of overwriting"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU(0, "upload-pack", &opt_upload_pack, N_("path"),
-+			N_("path to upload pack on remote end"),
-+			0),
-+		OPT__FORCE(&opt_force, N_("force overwrite of local branch"), 0),
-+		OPT_PASSTHRU('t', "tags", &opt_tags, NULL,
-+			N_("fetch all tags and associated objects"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU('p', "prune", &opt_prune, NULL,
-+			N_("prune remote-tracking branches no longer on remote"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU('j', "jobs", &max_children, N_("n"),
-+			N_("number of submodules pulled in parallel"),
-+			PARSE_OPT_OPTARG),
-+		OPT_BOOL(0, "dry-run", &opt_dry_run,
-+			N_("dry run")),
-+		OPT_PASSTHRU('k', "keep", &opt_keep, NULL,
-+			N_("keep downloaded pack"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU(0, "depth", &opt_depth, N_("depth"),
-+			N_("deepen history of shallow clone"),
-+			0),
-+		OPT_PASSTHRU_ARGV(0, "shallow-since", &opt_fetch, N_("time"),
-+			N_("deepen history of shallow repository based on time"),
-+			0),
-+		OPT_PASSTHRU_ARGV(0, "shallow-exclude", &opt_fetch, N_("ref"),
-+			N_("deepen history of shallow clone, excluding ref"),
-+			0),
-+		OPT_PASSTHRU_ARGV(0, "deepen", &opt_fetch, N_("n"),
-+			N_("deepen history of shallow clone"),
-+			0),
-+		OPT_PASSTHRU(0, "unshallow", &opt_unshallow, NULL,
-+			N_("convert to a complete repository"),
-+			PARSE_OPT_NONEG | PARSE_OPT_NOARG),
-+		OPT_PASSTHRU(0, "update-shallow", &opt_update_shallow, NULL,
-+			N_("accept refs that update .git/shallow"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU(0, "refmap", &opt_refmap, N_("refmap"),
-+			N_("specify fetch refmap"),
-+			PARSE_OPT_NONEG),
-+		OPT_PASSTHRU_ARGV('o', "server-option", &opt_fetch,
-+			N_("server-specific"),
-+			N_("option to transmit"),
-+			0),
-+		OPT_PASSTHRU('4',  "ipv4", &opt_ipv4, NULL,
-+			N_("use IPv4 addresses only"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU('6',  "ipv6", &opt_ipv6, NULL,
-+			N_("use IPv6 addresses only"),
-+			PARSE_OPT_NOARG),
-+		OPT_PASSTHRU_ARGV(0, "negotiation-tip", &opt_fetch, N_("revision"),
-+			N_("report that we have only objects reachable from this object"),
-+			0),
-+		OPT_BOOL(0, "show-forced-updates", &opt_show_forced_updates,
-+			 N_("check for forced-updates on all updated branches")),
-+		OPT_PASSTHRU(0, "set-upstream", &set_upstream, NULL,
-+			N_("set upstream for git pull/fetch"),
-+			PARSE_OPT_NOARG),
-+
-+		OPT_END()
-+	};
-+	
- 	if (!getenv("GIT_REFLOG_ACTION"))
- 		set_reflog_message(argc, argv);
- 
--- 
-2.52.0
-
+No, but I do look at CI output that includes macOS jobs every day.
