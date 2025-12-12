@@ -1,93 +1,87 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CCF1DE4CE
-	for <git@vger.kernel.org>; Fri, 12 Dec 2025 02:20:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDD62D77EA
+	for <git@vger.kernel.org>; Fri, 12 Dec 2025 03:24:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765506031; cv=none; b=hxwZBTGk60pLLVbjTVEqABZgRheicWBB9W9UQvry/z+PqDJz5damGYd0Vgz7pIoQHge7j3Bj4Ftv42uWFl3ggGx8gMkFpeUtXFGf2LJU82q7Y4iV8va2uD+UKh/8czaKJse+QlMSl/5e/XPUaJ5TBhw6mOhXa9Nav+Z5StuTds8=
+	t=1765509867; cv=none; b=nIlhYFw34V9kyPV6sl25wEVWFW4Ws8GcXJ7hGh4CSJoRMo8XQchSRHBrua6wbC7j9Xqu5HzwK8eQUWYBMuM9EAA4LDkfZj/GVWmuW1nzt5z5sQv6xNgbl2hvJS6HZWmGFnQ+5wAecMnZ82LDB8LrX4agEzWZl86YmqJKMkLQGQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765506031; c=relaxed/simple;
-	bh=2ndv+OMt6Ys5amhD7HWdH8UxpRJeqADBiQzy9Ogzrzo=;
+	s=arc-20240116; t=1765509867; c=relaxed/simple;
+	bh=dVxFGfe8tGSxM2sKSVI3tzvrIAhutUZoOxOgVm4e9E0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dfbVPBSFYe+/Rdp2on0kTIr3XRu4++GSYPmySSJflItjtkQx08a3rB7WF/41MCdiCnO0aMid73oGX8KRuJS2MahovGsQ4n32ANPLQ6pZHac+nc4fa0Ip/ABVlCYnPorlnyN58SFq2DpGMCoja/GZTuE5JtN85RWerRJNLX6KmyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KZwS5OnD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aM44O4T9; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=cI36TmxmotGCRStIBAOZiRGC1j++O6ZBN1yqjH6QzDDq7pz+392a21dd8ELT6Y3DOC+QAeAj9Tyf2/ln+5PhpBW5LBxqGuFCegAqxmV5b1hMdZxDQOrsgG4D+zq+jCvjQyZcY/WcUc5P8LqFvJBM7psXTvDOWWN8s5UK21nbZTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Olu6Cfts; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RB16DARM; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KZwS5OnD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aM44O4T9"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AAED914000D1;
-	Thu, 11 Dec 2025 21:20:27 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 11 Dec 2025 21:20:27 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Olu6Cfts";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RB16DARM"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EC8161400100;
+	Thu, 11 Dec 2025 22:24:09 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Thu, 11 Dec 2025 22:24:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1765506027;
-	 x=1765592427; bh=gcj4kgZMeF8W6or8FVC/3YlDjkCFnE7kA6ph01QAXLs=; b=
-	KZwS5OnDkuVaDSDoGvKgQ+JJ10GwnjsUMvA5pSBHyv/gUR2VwYTQjzFUQTnLnRJ7
-	QhzZMyW7rScrG7nWzMTINTp0sdzNXcxqwDKYqENPxLj1dBO4To3YbPUtzplujA5v
-	0bOXObkVeVY1cOXzpxIIMX02lUv+FT4mjuc+ZAIMxIlsyTymdZvKdgPyzhcDzUoa
-	RcGWL8d+hG7h8/sC/HWM570DDaJVDdPpTQodqOBWkiIbyMyQjshH+5e5t0sXmJ1q
-	lOd0uEQVY4uV30x2T7hgEC3x6ZFttCbn1SGVA6rLkAtLGYB4gNoL0tsm4XS0QSZl
-	+H8h1W6x83qEnebTo9+n8g==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1765509849; x=1765596249; bh=eoh0vhCAfn
+	FX+OxPJek2qS+Q//EJjglU8FB2W6JoFrE=; b=Olu6CftsW7VIeih24vEIsI+jRh
+	/S+EFyEsJjEhFOFfy5bhqy4IVY0iHsPLrT4jcREBtbstJxGFU4MPzhY/0S+XLNPg
+	yoAxyEXq2VbBfSiiWJB2BGaLXXgwh1C+J61jkGvo9XCZfzxpx77gGwLCZHDzLOXU
+	8ywvQFQNWY9DuZBkfrNZEfhXJ1cnJS/PrvydN41XETHqaWyvkTzMqMry0QIu1kjR
+	BfcBlaqlf1RivTwhNgadSb3jgNNRVWkczyK2Bc5eREzGDhIHT53TI8uPsUpAvz+9
+	bzRzCXHRpM5SyD5gNXw5ns8KeDtMesjMMJVSmtO68L4a3YHmY/MQC4TRJX1A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765506027; x=
-	1765592427; bh=gcj4kgZMeF8W6or8FVC/3YlDjkCFnE7kA6ph01QAXLs=; b=a
-	M44O4T9geAI9+ENb7KVJ1pJwCjyJfusuPnK6gl4qxc6LJ03NC6IPGGRInjIYqfDL
-	ksYZVqi5LsV5cTbTw7QVwpQh6enYHv+Kam4iUfR3Fnzl5MH2G7XiJMLw19J6MaS8
-	lxqhzd/S/c56MUpUyo3sYGs/3pLYxwm5adO6tAx5DEnllvI4Ztgf9mR4TwboCZ1A
-	ZKDid4bWmE1TmB0iIEK4AC3LRTBbopRKtX/urxk8RLQHmN6TPbfc9RrV8dCD6wBQ
-	4TnjM9H4AHuAffVJ0gi/2c8q3Dxs/kqqcwmNm7/rQwsH7mJ8yxBQv6VPktanvTt7
-	JPCt+FumpwVODjv/hRgdw==
-X-ME-Sender: <xms:63s7aWpyRYhqyMDiiKiwmni3Wp7l9XGDNr6rMNeHaxSbdDRVMhFR7Q>
-    <xme:63s7abjZQevM_qzf7w_bfWIz21Wo-DY-2KJ_BB6_XOON817rFullF-jSKXNcpL2GQ
-    jFSLZ6cjqlaK9TIz1BEpyxRS_4NTCdcfMZgvsuW5RvpWSTVf7LGkQ>
-X-ME-Received: <xmr:63s7aTiWVz3M1n7IANkmMH9Pny5cnfx6RJCPC_nPoo7d_AlIXMlgk-Avve_F6LSByjkHW1G5qHWn1RA-iJKzCuZp9bbsdd80oQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieeliecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765509849; x=1765596249; bh=eoh0vhCAfnFX+OxPJek2qS+Q//EJjglU8FB
+	2W6JoFrE=; b=RB16DARMGIMPbLI8Nn/QhvfkBdQSJLMexarqJPGVLvGELS8loP8
+	qiRqT5Hpw0gaMuaZZAcjIpx1HXHxyzf7VKlE8HfB8M4BkvWJEbJ8zNrEFRRRbD6h
+	RYvG/pgFWxiaJ6fsB64GXBSSUOd8VvDnAQZ/ViVPpER4tZHXai9ywye8urWo0XZZ
+	zbY2i3gMH7JUfyIfqMPnx0wb1A1i6GvRoWwIQ1uBboX7hyhZ+fFszSQFh79wJ4Vl
+	poymwf+dVT+n7B3rkZjljuAsMq+MX/nYUws3vlpPsNWNv0jJQnpjzKYNSuUSikEA
+	7t7fYE1wj9QVurvoioQepyP3a90wQx1myuQ==
+X-ME-Sender: <xms:2Yo7aRx86P46bo16Fyg_S_p-dFIX4K47fGGtpPk3Ao9ExbzetZEIMA>
+    <xme:2Yo7aYTAfH3erlWcygXlNQT1zLZP0rNT1BchmZMGlnWePjqvQA8c0lyNvdedB-oZ-
+    Kk48vqHlUZZ9SPLh9LddLFb-sAlJaifHgMHOcaTxdLbXSw6gk_cpQ>
+X-ME-Received: <xmr:2Yo7aQWeruIQWPvP9Jz7J5O5LVM_rAScXbpTmNlCKzvgvzwB_yjP6P7qUl-2dha1EVeuSkuiGpNft_gTp-QZfNcUA1oYczdKrg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdprhgtph
-    htthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepkhhojhhirdhnrghkrghmrghruhesghhrvggvrd
-    hnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:63s7aRhwgmD6A7yRMDZOXnYX__tZGCwfkZkoI4GHuV6id9VnD67i5w>
-    <xmx:63s7aTIHdaOjPwQn8fCxXbGVhZXACDA3ED-DyEjAv6yB2WZ136foMA>
-    <xmx:63s7aQFWX7-JEJORPaC0g9cmVCDDh2nH9IIZGQKnh2ZZTbzDF2sKWg>
-    <xmx:63s7aXTMAaB6heFSCn6N91oaOnpOYXvr-T7vkMlguBxDiW8soDaG5w>
-    <xmx:63s7aZgT6mG68hnTsh4Xx5i38BzFymSbPK5QhF0SqIwpmphLC8pzGxPW>
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehkoh
+    huthhsohhufhhlrghkihhsrdhsthgvfhgrnhhoshesphhrohhtohhnrdhmvgdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:2Yo7aSbUDUL62v4utAmlZbbF3-vksfUY1ECLm3OFE2ASnIb_5lh9kw>
+    <xmx:2Yo7ae2txsAEyBTiMsyHVQeUQokDjQeqOiNjQ32ucaflbiZimYuRYA>
+    <xmx:2Yo7achJ7b_JpWm3DuzB8pQBwGoRHej3AlDO9LxFYBW4rCbCeWL8Iw>
+    <xmx:2Yo7aaYtneTOqFYijzNIiEs6hQk2qLqfOSpM1ZQQF4cyb98LjBMmnQ>
+    <xmx:2Yo7aXFfdGXvzjiSpJiP6oT_amD219LMD9hISa9qQ1fqXXQbASR4Y93T>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Dec 2025 21:20:27 -0500 (EST)
+ 11 Dec 2025 22:24:09 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Git List
- <git@vger.kernel.org>,  Koji
- Nakamaru <koji.nakamaru@gree.net>
-Subject: Re: [PATCH] config.mak.uname: use iconv from Homebrew on macOS
-In-Reply-To: <vxi7g67b322sre7ylkcfwujf3n34j3f5vtpl62zhrj4ds6f675@hyyh2rxhaib6>
-	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Thu, 11 Dec
- 2025 03:17:03
-	-0800")
-References: <53690064-1c98-40e9-8b9a-7ba6bee63703@web.de>
-	<16efc726-34be-44f5-aa92-4e82b663ab3d@web.de>
-	<qnb77j3b5m6rfbzr3qhmwalo5lha4gqslvzqsfuq6zur74ze7j@wqriu4w7wbzw>
-	<1b3509d7-e421-4136-a62c-de86213d65b2@web.de>
-	<xmqq7buthgq4.fsf@gitster.g>
-	<vxi7g67b322sre7ylkcfwujf3n34j3f5vtpl62zhrj4ds6f675@hyyh2rxhaib6>
-Date: Fri, 12 Dec 2025 11:20:25 +0900
-Message-ID: <xmqq7buse906.fsf@gitster.g>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Koutsouflakis Stefanos <koutsouflakis.stefanos@proton.me>,
+  "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC] reset --hard: warn before discarding staged content with
+ no commit history
+In-Reply-To: <d318c46c-fbc3-4e47-8c3f-165ca9a26225@kdbg.org> (Johannes Sixt's
+	message of "Thu, 11 Dec 2025 13:22:30 +0100")
+References: <a5wKtD6Tn0gzcba1IEUhukYnXPHxMwPq6puQKIPywmjNufi5vc6vX-v5BpPJ7qj_zZsuXF5FiS2gbpsurWmVjoWHtMm8A-kAbaZyjMfrTcs=@proton.me>
+	<xmqqldj9g0pj.fsf@gitster.g>
+	<0lbeTWjDGq8hINMi-lj65HLgAIlUNZe_tzANStd9xxHQqAyZaEnaA0yPzVeY_VcReQIKNjY7eBEUGwMGvlbZ-0W0QZpux22cIHnosa0eX_k=@proton.me>
+	<d318c46c-fbc3-4e47-8c3f-165ca9a26225@kdbg.org>
+Date: Fri, 12 Dec 2025 12:24:07 +0900
+Message-ID: <xmqqzf7ocrhk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,55 +89,35 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
->> I am looking at relevant parts of Makefile
->> 
->> # Define NO_FINK if you are building on Darwin/Mac OS X, have Fink
->> # installed in /sw, but don't want GIT to link against any libraries
->> # installed there.  If defined you may specify your own (or Fink's)
->> # include directories and library directories by defining CFLAGS
->> # and LDFLAGS appropriately.
->> #
->> # Define NO_DARWIN_PORTS if you are building on Darwin/Mac OS X,
->> # have DarwinPorts installed in /opt/local, but don't want GIT to
->> # link against any libraries installed there.  If defined you may
->> # specify your own (or DarwinPort's) include directories and
->> # library directories by defining CFLAGS and LDFLAGS appropriately.
->> 
->> and notice that /opt/local/ is mentioned for DarwinPorts.  The patch
->> that started this thread talks about defaulting ICONVDIR to that of
->> Homebrew if available, but the new code checks /opt/homebrew and
->> then /usr/local/ (and let it override it).  Should the log message
->> be talking about DarwinPorts as well?
->> 
->>     As a workaround, set the default libiconv location to
->>     /opt/homebrew when the user has one from Homebrew, or
->>     to /opt/local when the user has one from MacPorts.
->> 
->> or something along the line?
+> Wouldn't the following slightly different scenario warrant a similar
+> safety net:
 >
-> Since the original patch was only meant to help with Homebrew it
-> might not be worth mentioning the OTHER package managers IMHO.
+>    git commit --allow-empty -m "Initial commit"
+>    git add .
+>    git reset --hard
 
-Meaing that the original patch should have included only
-/opt/homebrew and we should drop the part about /opt/local?
+Yes, I think everybody has lost new files not in an empty tree but
+more often (1) create a new file and add it, (2) make modifications
+to existing files, (3) compile, test, debug, get frustrated, and
+finally (4) decide to give up and start from scratch, with "reset
+--hard".  When (1) is much larger than (2), the sense of loss is
+big.
 
-Or do you mean Homebrew may use /opt/local instead of /opt/homebrew
-and both parts of the original patch are needed to give coverage to
-different Homebrew installations?
+> That said, I have some sympathy for the case. Would it be palatable to
+> have `git reset --hard` refuse to do anything if the destination tree is
+> empty?
 
-If the latter, perhaps we can say something in the proposed commit
-log message to explain having both /opt/{homebrew,local}/ is
-necessary (and why)?
+I doubt that special casing an empty tree would fly well.
 
->> By the way, for macOS newbies (like me), I wonder if a patch like
->> the attached may help?
->
-> Did I read that correctly and you had found yourself forced into
-> running macOS at least somewhere?
+It is tempting to special case removals, but then I sill am not sure
+it is good to do nothing and fail the command after determining that
+the operation is a common pitfall of removing a new file that
+appears nowhere else.  Unconditionally going interactive is a no-no.
 
-No, but I do look at CI output that includes macOS jobs every day.
+And I do not have any better ideas.  Other than just failing, that is.
+But that leads to nonsense combination "--hard --force", just as
+idiotic combination as "rm -f -i" :-/
