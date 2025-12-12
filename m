@@ -1,133 +1,128 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C379D2D2488
-	for <git@vger.kernel.org>; Fri, 12 Dec 2025 22:14:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5797A254AE1
+	for <git@vger.kernel.org>; Fri, 12 Dec 2025 22:36:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765577682; cv=none; b=Rn+JUif5+GVx5/P5ksbGoS5EPfUnHeXlDJvPOpJnHKvbFujEACVcX/gKFBBw/5HdKWe8UtJ0f790HAjO+Q3Cd4YHsIieSwGR/xZDCmApDhx1gJ1BWv7uWP9f+ev5pdzyvHZgOeTxZnapdua/RHGBgz4c/eERn2h8r/XPzQzgL+w=
+	t=1765578981; cv=none; b=Vkrd2vPTvYH9kokXfrCcQo9PDDrQI8GQseEs2/2e+NAcN+6SzSuj7XkjOL90GqK9DobcwE1sK96OdC60q0aBquO7SWwjacOEIE3BvauaOeKE/wwuK6PX/DdoerkiuDXgw6fl/p3PgXX2T97n1dQT9TM7G5Iu31CcmSHlRpoVG/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765577682; c=relaxed/simple;
-	bh=uV1deLpoxP/j6u4wwVLXo5QgVupSa0ipCiXOee0G9qw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H+WTVUL+wJtTkT7j702wNgfKgzYJTdH9goSM0NZv8cFe8n1IQfpg7GMBDomWeBUWjv+H0Cnd9PnZ5tqXIf8XAaH4nZUehLVz8D0UgdB4uvZBpPp8tUJz94+oDYQRQ0aR+krQRulikdDN01VNWHRCX6VsUAMPVfKHb6zkn6JpFWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HiLdYH6L; arc=none smtp.client-ip=209.85.214.173
+	s=arc-20240116; t=1765578981; c=relaxed/simple;
+	bh=N0ZgAFv215heWPpR+ZuquQMD9k8fThoFGPUEcuwj7ek=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iW6kjUgmzdyf6Fo9Waz1jjerZEAmYQWA8WRODztariQVjo07qspTf242be+AJj6gZ54FpvYZ8mvbKvtyrcrjzuscaJF8uYfzIgf5MaE9tcA9CVOx0iUWYHzscmP2OZw02jBoEA6kcEN+M4luL1f/Znig7uUHQshrpwGJ12VlREs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e+iWFPRj; arc=none smtp.client-ip=209.85.210.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HiLdYH6L"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-298287a26c3so20234255ad.0
-        for <git@vger.kernel.org>; Fri, 12 Dec 2025 14:14:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e+iWFPRj"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7cac8243bcdso1123712a34.3
+        for <git@vger.kernel.org>; Fri, 12 Dec 2025 14:36:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765577680; x=1766182480; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pSQAUopCobw+qrA4b980uwmPaiSYFV2PPXXwn+LgEqs=;
-        b=HiLdYH6L/r+ERA+PEiTWXt/+eCDnt7moOL+M4LTed6VA6ybdLobDrRu1X8fSkUflAr
-         XcPMgtXulzZZVgL6GxJIqt/h6ztXaYh9mxYF3BQEjNufkf6WjVZVzoEz4Sm4+il+gcbU
-         Mhi88kyj0szYR5Sui94XgIUSawjBjFVW70+wlIqVSPd3qjPmqxlW1/X/bIpjO4a068ff
-         qelGb0kcJbxYML3W6Gx7G6+wcDb5P6O0PX+SMapm1HpbmD0sxMQk37YpbQYXi+YRPQul
-         EzJQI6xEmeCtOzr1iW3L3nCEEwvmt32RI4cJAPaxnvJ9oSFTy98GFkPl+ZMnnQp03H7B
-         MRtw==
+        d=gmail.com; s=20230601; t=1765578979; x=1766183779; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DFcrFzwq3sGbb5MF5NzQBhY/U3anS7O5XjezDZgjzPM=;
+        b=e+iWFPRjfhecv5u74sUpq11RdFI22sxibFvAVMWK5Ua/1/hJzWvWlclTivz7C8p2TB
+         NdirpDj/mCJSv7VMb10W84tkncU/xcACyuOQFpAfeVgwYSsD7Bkhn/mp4kpIbeZsXunb
+         9A/gTSPPyxZTvuB0l1b+RsVevsddES6fVanpFHPXgd1G3Z1ZqAOJyPNbfWPONw/AgWuX
+         jIMUyhI/xtuKvvyg/7dc/bz2Wt9x0zw+rGfM1w8HKLxBUfy0S5h5xCKJWAbFPBVL+sf2
+         eh4Nhd14gDyfTv0Ov7o03/Hx0u9vMd10byB0U2FCTIkEJs3++IDhbWMsVkTC3KBavmOO
+         orbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765577680; x=1766182480;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=pSQAUopCobw+qrA4b980uwmPaiSYFV2PPXXwn+LgEqs=;
-        b=Tfi1mjlnrvHAbFkl01rGjvwR3OtP3Y+0Ml0Evhh5SYsSfGi5wbGzi2I6GsJiO222BD
-         f+iqqUa3LzYVkuVuURDzFwvHS/L+/FfLWz5LpNEiIqxDgFEhf9Mf6VCPAUacHLD/3NMZ
-         s7Z+vR3VXT1RqTJNuJ5LA6/db+d66csbi5bCjidEuB39ZYsN9oULq8DnMmrGniQsS2yb
-         +bNsDqxa5zVIWjc092yba6Hg8Qt3I9gQFEVyDPuYSoo+b1A4Gvcg3MDbwqeJEHxK0kAX
-         cPwHdAUlOW29dUWR6SphR115PQ2/3vnIdWPg8c7zvv9tSI9lS7jzaILVr4y++tb598vG
-         A/rQ==
-X-Gm-Message-State: AOJu0YyTFepe2XMgahbD0zLyXCrL5V1PqAEVjYYN9NtfHUDx9Z+HyGOa
-	V568hqhVFLWpg7smwrO+lxjWBybsebVhcJDva5aECYClLq1mOO+5G/ZY8omXhSBR195YgPPJEQj
-	WcCbkNWNAYiWvjtIiHwvOLfRjBfowD+x1pyD5YQU=
-X-Gm-Gg: AY/fxX7cRm52e6gxZzZLHlNBCHHQd663EbPFx3EbnVobSK7uo3uWmCC3dmWIzSfDk3e
-	iqaCvmUL2WFBSLLMLCjjxut0+JqAxJqN0Q48EkEcZvuOwNNz9xfoggf3k/o7CMUYDZy9JPdOrlB
-	/omUZZb5Q0dv7VWog5Eb7WbsNhYvI9QNykk8s6/c08WEN+aGDesqxlbpHDoAvx5xxMef6nJmEt1
-	kBU7NE5l/adLorq5J9Q9gBcSb5ElKLyr7CWfEXjr5LtsLKLMDN5e8Z055I594vapIM2aDu6J2Wj
-	waE0h0Y=
-X-Google-Smtp-Source: AGHT+IHNLzMNxVMX9UyiZsUqhGPbK9R3iY031yNsjwkTr1lNHWbBNP9YGQ+5LJ2yM4QNpzjvAThsnvwthUwc3rQa5sQ=
-X-Received: by 2002:a17:903:283:b0:294:ec7d:969c with SMTP id
- d9443c01a7336-29f23cc4649mr37817045ad.49.1765577679919; Fri, 12 Dec 2025
- 14:14:39 -0800 (PST)
+        d=1e100.net; s=20230601; t=1765578979; x=1766183779;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DFcrFzwq3sGbb5MF5NzQBhY/U3anS7O5XjezDZgjzPM=;
+        b=bHHdlpuJ5oKO0PBgjwFYz9aLr0EbM/ChkCsxMmlDXbIOE7pI3G4qyRXmCovQpHvobC
+         8Z6f3GxDA0yI6jsVwJcI4ALhgQ8wF5BQj9e7lPFmq+vurUZ1TfHEyKewhiAc2UrAIkyE
+         idsn4CWqHcUcj4S5z5EzaqBUKdGoczVjSAP+IDyaODqw0T9hIMi3y1NYfZl7+JVOqwr1
+         ikJLxko4QY5MB3A9Qe55+6Dd88n6whA450WL5mtxOhcsVMR2he9I6Egr3/Nn/gZPCJsq
+         AvQtDQFgiWfAIKYxjvfIVzXAGFCOjqdRKG3Iaet3xJWgcHdWtGwMQwin7K552PBzeymK
+         Xazg==
+X-Forwarded-Encrypted: i=1; AJvYcCWbvng+zMUE9M7usCccR+2gIUw+K4/EvBrm/LP4s01Q8ni/oqW3BMw+yBBF6WLuI9lCwMI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzjkXv6H2T9raqaCDQ9aGBGzcpFq4nu/BxSEN2n77dOJl9ijE2I
+	m+HacPeqB6u28cv407BpSPurXx3bcvC9uzUbmlW1uSC/7ZXW6/ECWjFZJlsV8w==
+X-Gm-Gg: AY/fxX6AbNdOXjuJFUnWN+e5Th8eVOz0ze0oBW6OWAlKLVD/NShYxj+3StRRe3SXcqh
+	BeU25ZP8y2vSi/hhtbS/f6/TVBmEzItPUNhxZo0mzYC6Hievht9A5YAFu4AbIRb56nuKxwRnul9
+	JJkKpypcCxamN1hzlGBuhrJYyE3UM7trVHjvNFvAb9RxRM6y+f37a4UdtRXVA3RqOerjL1N8Ij3
+	5o2rNqpv6q+Krbzn/ecgDiYsVBaWQGKow3wmlhcT0wGSVfVVw5sksDacpwgcYGInUHY3ajLzPDn
+	Sf5BbsKJSdyVZ9PaErBUrgSLMT3+CnAAx0snhPGPBtkKv3OyXfI4s58vztwGAxyiIoDpjC8PAvF
+	BO9ZtbES8Y+iFP3C9lRXv47opgBAUyu5/pn7PDbv/95hS8Ece+sWZACc5FptXt+yx5pJklOYZNW
+	xOv6lrrMbYur2WkQU=
+X-Google-Smtp-Source: AGHT+IHkwIxA86rUkjlcFJON+cC48tDqP0mYfLwOtKuZPwVZ9nDmiqDoodJ2qB9azJ7UaQEMET4cTg==
+X-Received: by 2002:a05:6808:3505:b0:450:d1ba:151b with SMTP id 5614622812f47-455ac87b97emr1618702b6e.29.1765578979339;
+        Fri, 12 Dec 2025 14:36:19 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7cadb1d0facsm4338586a34.3.2025.12.12.14.36.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Dec 2025 14:36:18 -0800 (PST)
+Date: Fri, 12 Dec 2025 16:36:15 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org, 
+	ps@pks.im
+Subject: Re: [PATCH 5/6] builtin/repo: add disk size info to keyvalue
+ stucture output
+Message-ID: <e5hsuevw5t37yt3zgp4hhtunusdyeg2lkph52pj4valpmlyrdt@7teicd67atbj>
+References: <20251209225820.2861276-1-jltobler@gmail.com>
+ <20251209225820.2861276-6-jltobler@gmail.com>
+ <xmqqikeegz8q.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <a5wKtD6Tn0gzcba1IEUhukYnXPHxMwPq6puQKIPywmjNufi5vc6vX-v5BpPJ7qj_zZsuXF5FiS2gbpsurWmVjoWHtMm8A-kAbaZyjMfrTcs=@proton.me>
-In-Reply-To: <a5wKtD6Tn0gzcba1IEUhukYnXPHxMwPq6puQKIPywmjNufi5vc6vX-v5BpPJ7qj_zZsuXF5FiS2gbpsurWmVjoWHtMm8A-kAbaZyjMfrTcs=@proton.me>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 12 Dec 2025 17:14:28 -0500
-X-Gm-Features: AQt7F2p7P8f1fiRgeIXHBe69phUmIdWc3Npiv7YA3rVJ-4E3K1ZrjpvoAQNH2go
-Message-ID: <CALnO6CC=JpKBwJbLDeBkEF5e3SnqzEXwNH_W3S5Bzhz3DD14MQ@mail.gmail.com>
-Subject: Re: [RFC] reset --hard: warn before discarding staged content with no
- commit history
-To: Koutsouflakis Stefanos <koutsouflakis.stefanos@proton.me>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqikeegz8q.fsf@gitster.g>
 
-On Wed, Dec 10, 2025 at 10:04=E2=80=AFAM Koutsouflakis Stefanos
-<koutsouflakis.stefanos@proton.me> wrote:
->
-> When running "git reset --hard" in a repository where staged content
-> has never been committed, the staged files are lost. This seems like a ca=
-se where requiring --force could be helpful.
->
-> Reproduction:
->
->     mkdir test && cd test
->     git init
->     echo "hello" > a.txt
->     git add .
->     git reset --hard
->
-> Result: a.txt is removed from both the index and working tree.
-> While the blob temporarily remains as a dangling object (recoverable
-> via "git fsck --lost-found" until garbage collection), this is not a
-> realistic safety net as the filename is lost and most users are
-> unaware of this recovery mechanism.
->
-> The most likely scenario is a user initializing a Git repository in an
-> existing project. They have a folder with files they've been working on,
-> run "git init", then "git add ." to stage everything. A mistyped or
-> misunderstood command later, their entire project is wiped out.
->
-> Proposed behavior:
->
-> When "git reset --hard" would discard staged content that does not
-> exist in any commit (i.e., the blob has no reachable reference),
-> print a warning and require confirmation or --force:
->
->     warning: the following staged files have never been committed
->     and will be permanently lost:
->         a.txt
->     use --force to proceed, or commit first
->
-> This would be consistent with Git's general trend toward safer
-> defaults.
->
-> Questions for discussion:
->
-> 1. Is this safety check worth the added complexity?
->
-> 2. Are there workflows where this would be annoying? (can't think of any =
-but I might be missing something).
->
-> I'm happy to work on a patch if there's interest.
->
-> Thanks,
-> Stefanos
->
+On 25/12/10 11:58PM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > -test_expect_success SHA1 'keyvalue and nul format' '
+> > +test_expect_success SHA1 'keyvalue format' '
+> >  	test_when_finished "rm -rf repo" &&
+> >  	git init repo &&
+> >  	(
+> > @@ -106,16 +137,12 @@ test_expect_success SHA1 'keyvalue and nul format' '
+> >  		objects.tags.inflated=132
+> >  		EOF
+> >  
+> > -		git repo structure --format=keyvalue >out 2>err &&
+> > +		git repo structure --format=keyvalue >out.raw 2>err &&
+> >  
+> > -		test_cmp expect out &&
+> > -		test_line_count = 0 err &&
+> > +		# Strip object disk usage from output due to platform variance.
+> > +		grep -v "objects\..*\.disk=" out.raw >out &&
+> >  
+> > -		# Replace key and value delimiters for nul format.
+> > -		tr "\n=" "\0\n" <expect >expect_nul &&
+> > -		git repo structure --format=nul >out 2>err &&
+> > -
+> > -		test_cmp expect_nul out &&
+> > +		test_cmp expect out &&
+> >  		test_line_count = 0 err
+> >  	)
+> >  '
+> 
+> This part has both textual and semantic conflicts with Lucas's "-z
+> is a synonym for --format=nul" topic.  I think I resolved it
+> correctly while improving the "munge expected output into expected
+> NUL-terminated output" approach to "munge -z output into textual
+> output and compare with textual expected output".  Please sanity
+> check the result after I push it out, merged at 32f8d84b (Merge
+> branch 'jt/repo-struct-more-objinfo' into seen, 2025-12-10)
 
-Perhaps useful for future readers who are looking for ways to recover
-the objects: https://blog.plover.com/prog/git-reset-disaster.html
+Thanks, this looks correct.
 
---=20
-D. Ben Knoble
+Just FYI, some of the test changes I made here are reverted in the next
+version since Patrick suggested a better way to test disk usage output.
+This should allow Lucas's changes to apply a bit more cleanly to this
+file.
+
+Thanks,
+-Justin
