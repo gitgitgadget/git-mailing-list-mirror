@@ -1,87 +1,91 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDD62D77EA
-	for <git@vger.kernel.org>; Fri, 12 Dec 2025 03:24:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5E930BF78
+	for <git@vger.kernel.org>; Fri, 12 Dec 2025 03:35:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765509867; cv=none; b=nIlhYFw34V9kyPV6sl25wEVWFW4Ws8GcXJ7hGh4CSJoRMo8XQchSRHBrua6wbC7j9Xqu5HzwK8eQUWYBMuM9EAA4LDkfZj/GVWmuW1nzt5z5sQv6xNgbl2hvJS6HZWmGFnQ+5wAecMnZ82LDB8LrX4agEzWZl86YmqJKMkLQGQ8=
+	t=1765510556; cv=none; b=W4SO7kiGMUYadnmhSBl2J0BW2EbA99aP1EJK9Mo6h1Ur88KZI84x34MMTOO0UM1Eqv5dTbPm8OUSTLX0zJ59xasDhQLgM/ejmHwYnu5v/FCFVVX5cOObi7dyy3PwVQW4KPtIKrMYM9rXRR5iq7Aqi4r1V+4QNdcHpIKeTHYWjtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765509867; c=relaxed/simple;
-	bh=dVxFGfe8tGSxM2sKSVI3tzvrIAhutUZoOxOgVm4e9E0=;
+	s=arc-20240116; t=1765510556; c=relaxed/simple;
+	bh=I9xfDpijpz6uMIJfwT4i6rd9DNnOC4Gi+JSib8g4Ho8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cI36TmxmotGCRStIBAOZiRGC1j++O6ZBN1yqjH6QzDDq7pz+392a21dd8ELT6Y3DOC+QAeAj9Tyf2/ln+5PhpBW5LBxqGuFCegAqxmV5b1hMdZxDQOrsgG4D+zq+jCvjQyZcY/WcUc5P8LqFvJBM7psXTvDOWWN8s5UK21nbZTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Olu6Cfts; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RB16DARM; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=NczJMKO7WCkGmp8fNWWJe/E5tqgzYQ4Xpc2F/GnotgWXVc+W1vUYQhVSgPoE0dCfSZU3+bAk2oZzBulevoms6EfrvoEUUbXhJku5i8rK+8kHbvORjmto6mCBUosyXmLvAdP7aMh+/PftKF5cwK+enmjDHU6ELuXl9pdZGp6UcBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W7oYvAAz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=poBx+qOj; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Olu6Cfts";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RB16DARM"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EC8161400100;
-	Thu, 11 Dec 2025 22:24:09 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W7oYvAAz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="poBx+qOj"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 947C8EC03D5;
+	Thu, 11 Dec 2025 22:35:50 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 11 Dec 2025 22:24:09 -0500
+  by phl-compute-06.internal (MEProxy); Thu, 11 Dec 2025 22:35:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1765509849; x=1765596249; bh=eoh0vhCAfn
-	FX+OxPJek2qS+Q//EJjglU8FB2W6JoFrE=; b=Olu6CftsW7VIeih24vEIsI+jRh
-	/S+EFyEsJjEhFOFfy5bhqy4IVY0iHsPLrT4jcREBtbstJxGFU4MPzhY/0S+XLNPg
-	yoAxyEXq2VbBfSiiWJB2BGaLXXgwh1C+J61jkGvo9XCZfzxpx77gGwLCZHDzLOXU
-	8ywvQFQNWY9DuZBkfrNZEfhXJ1cnJS/PrvydN41XETHqaWyvkTzMqMry0QIu1kjR
-	BfcBlaqlf1RivTwhNgadSb3jgNNRVWkczyK2Bc5eREzGDhIHT53TI8uPsUpAvz+9
-	bzRzCXHRpM5SyD5gNXw5ns8KeDtMesjMMJVSmtO68L4a3YHmY/MQC4TRJX1A==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1765510550;
+	 x=1765596950; bh=Hvcc9rFEwhUgN53fM6MJOCdLB3/3id01KyxbC9YZDxo=; b=
+	W7oYvAAzusCWSBl0NVEGMcigHz34FQNPx2HmIZhPXzp3euKP3NOyrr8v5haaWpeS
+	pPrqUsqzwK4mXaSt0bBP0Xa5VH5yi5yC+hAo7oSUZ22xd2jo8YOPe11V9m/EDX5K
+	6UmbSbUz7tmPY/yMNqDptBY+AKzn6fE0q3/UR4WnkispjuqYShuj8BimuzF9ssFn
+	9jd0WC/MAzf4i6e3acjFnXxfsxozaOnJTtt4aOpfMbMHe+dzkW/pj258l+gCGJ0r
+	tysbLRaPUE7TrscvuqRbybYgaDyMXVhIRGXBTCHt2wP8cHLMPZVNcdDWmxeuduv7
+	VuwLibtFXfsYAxqhmVfG8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765509849; x=1765596249; bh=eoh0vhCAfnFX+OxPJek2qS+Q//EJjglU8FB
-	2W6JoFrE=; b=RB16DARMGIMPbLI8Nn/QhvfkBdQSJLMexarqJPGVLvGELS8loP8
-	qiRqT5Hpw0gaMuaZZAcjIpx1HXHxyzf7VKlE8HfB8M4BkvWJEbJ8zNrEFRRRbD6h
-	RYvG/pgFWxiaJ6fsB64GXBSSUOd8VvDnAQZ/ViVPpER4tZHXai9ywye8urWo0XZZ
-	zbY2i3gMH7JUfyIfqMPnx0wb1A1i6GvRoWwIQ1uBboX7hyhZ+fFszSQFh79wJ4Vl
-	poymwf+dVT+n7B3rkZjljuAsMq+MX/nYUws3vlpPsNWNv0jJQnpjzKYNSuUSikEA
-	7t7fYE1wj9QVurvoioQepyP3a90wQx1myuQ==
-X-ME-Sender: <xms:2Yo7aRx86P46bo16Fyg_S_p-dFIX4K47fGGtpPk3Ao9ExbzetZEIMA>
-    <xme:2Yo7aYTAfH3erlWcygXlNQT1zLZP0rNT1BchmZMGlnWePjqvQA8c0lyNvdedB-oZ-
-    Kk48vqHlUZZ9SPLh9LddLFb-sAlJaifHgMHOcaTxdLbXSw6gk_cpQ>
-X-ME-Received: <xmr:2Yo7aQWeruIQWPvP9Jz7J5O5LVM_rAScXbpTmNlCKzvgvzwB_yjP6P7qUl-2dha1EVeuSkuiGpNft_gTp-QZfNcUA1oYczdKrg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjedtkecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765510550; x=
+	1765596950; bh=Hvcc9rFEwhUgN53fM6MJOCdLB3/3id01KyxbC9YZDxo=; b=p
+	oBx+qOj+IP0TMavKfk/nFjVUr6AhyzrPpV4I1cbF8rG4JItkiwrwZZDh3n090SF3
+	jqljBk3GtWJVE+f+SIOEcSLNKT5ig3jdyGWkabsCK/7DE6O5MLgXHBBdUB61RuqW
+	XsFC0KAv0qCZtnir40UUO36lcr2mKTMT1hU1kmeBbe7t/HjBVc0gB6m3y6fZyPfU
+	TFtfdzGIVmb2JXeTzDtwd+sKW0yJBDpqFnvHTAYqGlQDFu47CPCPM3TUqIw0KWWf
+	4thttPjSyCfB/dQN5cpeDJLtJpASnmWdYEhLVnoXmZudIVrcAiA3UFxy1y+8X6uD
+	w8Di+q8q1QhYoh4K5G4og==
+X-ME-Sender: <xms:lo07aZqSv17wqXiKjXbu73OwTlmn8TVnSsvmIZETq9G2GIzsDs9yhQ>
+    <xme:lo07aSiubEIGoKF-KnxHCszwGgzRNKWN5PQ3ZEt9O56StyIn5JvWqbmEf1jV9cdjS
+    s5q70LT0qhuW_mkVHfooJXgcpfpjpkBp8_8AbZxzmSJmbaG6FOt>
+X-ME-Received: <xmr:lo07aeipsMz9cT-Scr93QnRoo6bNfcPl1wuJHnvLquQBeH_X9TWKpjEqMg-0lqkM-kfNgN28q9I62p9t_4I7gi2gL8LosyQpUg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeduudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehkoh
-    huthhsohhufhhlrghkihhsrdhsthgvfhgrnhhoshesphhrohhtohhnrdhmvgdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:2Yo7aSbUDUL62v4utAmlZbbF3-vksfUY1ECLm3OFE2ASnIb_5lh9kw>
-    <xmx:2Yo7ae2txsAEyBTiMsyHVQeUQokDjQeqOiNjQ32ucaflbiZimYuRYA>
-    <xmx:2Yo7achJ7b_JpWm3DuzB8pQBwGoRHej3AlDO9LxFYBW4rCbCeWL8Iw>
-    <xmx:2Yo7aaYtneTOqFYijzNIiEs6hQk2qLqfOSpM1ZQQF4cyb98LjBMmnQ>
-    <xmx:2Yo7aXFfdGXvzjiSpJiP6oT_amD219LMD9hISa9qQ1fqXXQbASR4Y93T>
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfffhgefgheeuffejveehlefhvdfgteeijeeuleehffefvdelheehtdeukeek
+    tdfhnecuffhomhgrihhnpegrphhplhgvrdgtohhmpdhgihhthhhusgdrtghomhenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghr
+    sehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuth
+    dprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihth
+    hoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepkhhojhhirdhnrghkrghmrghruhes
+    ghhrvggvrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:lo07aQjyXzelzRelCHzQDdc8whwqIc29XA79N-EYMikb2UeexepX0g>
+    <xmx:lo07aWL6wgs5oJ4ytRl7cF8Qm9Iuj_Ky6Z9lOl8w-C0huGuSVxM8LQ>
+    <xmx:lo07aXEBTQGxZkOyMNKYrE0mbxLpXI3iQR_f7eIR1J3aKa_QvIu8tg>
+    <xmx:lo07aSRremVZacLeUDJEj-F1HgY9_AP9UqPfp8HFwAVRlDaUpeT2KA>
+    <xmx:lo07aX-Uac-zCSYeN91Sk-uG7KQiEjgN49uruBeDLX2DWETGjQoXextX>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Dec 2025 22:24:09 -0500 (EST)
+ 11 Dec 2025 22:35:49 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Koutsouflakis Stefanos <koutsouflakis.stefanos@proton.me>,
-  "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC] reset --hard: warn before discarding staged content with
- no commit history
-In-Reply-To: <d318c46c-fbc3-4e47-8c3f-165ca9a26225@kdbg.org> (Johannes Sixt's
-	message of "Thu, 11 Dec 2025 13:22:30 +0100")
-References: <a5wKtD6Tn0gzcba1IEUhukYnXPHxMwPq6puQKIPywmjNufi5vc6vX-v5BpPJ7qj_zZsuXF5FiS2gbpsurWmVjoWHtMm8A-kAbaZyjMfrTcs=@proton.me>
-	<xmqqldj9g0pj.fsf@gitster.g>
-	<0lbeTWjDGq8hINMi-lj65HLgAIlUNZe_tzANStd9xxHQqAyZaEnaA0yPzVeY_VcReQIKNjY7eBEUGwMGvlbZ-0W0QZpux22cIHnosa0eX_k=@proton.me>
-	<d318c46c-fbc3-4e47-8c3f-165ca9a26225@kdbg.org>
-Date: Fri, 12 Dec 2025 12:24:07 +0900
-Message-ID: <xmqqzf7ocrhk.fsf@gitster.g>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Koji Nakamaru <koji.nakamaru@gree.net>
+Subject: Re: [PATCH] config.mak.uname: use iconv from Homebrew on macOS
+In-Reply-To: <5308d067-6c3c-4694-a30d-86a561704e6c@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Thu, 11 Dec 2025 15:34:00 +0100")
+References: <53690064-1c98-40e9-8b9a-7ba6bee63703@web.de>
+	<16efc726-34be-44f5-aa92-4e82b663ab3d@web.de>
+	<aTn92yqtSDyVoLgh@fruit.crustytoothpaste.net>
+	<xmqqecp1hhi7.fsf@gitster.g> <xmqqfr9he3v7.fsf@gitster.g>
+	<5308d067-6c3c-4694-a30d-86a561704e6c@web.de>
+Date: Fri, 12 Dec 2025 12:35:48 +0900
+Message-ID: <xmqqv7iccqy3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,35 +93,42 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Johannes Sixt <j6t@kdbg.org> writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> Wouldn't the following slightly different scenario warrant a similar
-> safety net:
+> On 12/11/25 10:59 AM, Junio C Hamano wrote:
+>> 
+>> Does anybody know if a purely vanilla installation of macOS, without
+>> any third-party software collection like homebrewk, is supposed to
+>> be even serviceable?  That is, if somebody at Apple builds a version
+>> of Git that they ship themselves (they do, don't they?), can they
+>> untar the latest tarball on a vanilla macOS box, type "make test",
+>> and expect it to pass?
 >
->    git commit --allow-empty -m "Initial commit"
->    git add .
->    git reset --hard
+> It seems so.  https://opensource.apple.com/releases/ points to
+> https://github.com/apple-oss-distributions/Git.  The latest tag is close
+> to v2.50.1:
+>
+> $ git diff --stat -w v2.50.1 Git-155:src/git ':(exclude)*.git*'
+>  Documentation/fsck-msgids.adoc                   | 12 ------------
+>  Makefile                                         |  1 +
+>  attr.c                                           | 11 +++++++++++
+>  builtin/help.c                                   |  3 +--
+>  config.c                                         | 13 +++++++++++++
+>  config.h                                         |  3 +++
+>  generate-python.sh                               |  2 ++
+>  git-mergetool--lib.sh                            |  6 ++++--
+>  git-svn.perl                                     | 30 ++++++++++++++++++++++++++++++
+>  http.c                                           |  2 ++
+>  perl/header_templates/runtime_prefix.template.pl | 25 +++++++++++++++++++++++++
+>  sha1collisiondetection                           |  1 -
+>  t/t4014-format-patch.sh                          |  3 +--
+>  t/test-lib.sh                                    |  3 +++
+>  usage.c                                          | 20 ++++++++++++++++++++
+>  15 files changed, 116 insertions(+), 19 deletions(-)
+>
+> Their top-level Makefile sets NO_GETTEXT, NO_FINK and NO_DARWIN_PORTS.
 
-Yes, I think everybody has lost new files not in an empty tree but
-more often (1) create a new file and add it, (2) make modifications
-to existing files, (3) compile, test, debug, get frustrated, and
-finally (4) decide to give up and start from scratch, with "reset
---hard".  When (1) is much larger than (2), the sense of loss is
-big.
-
-> That said, I have some sympathy for the case. Would it be palatable to
-> have `git reset --hard` refuse to do anything if the destination tree is
-> empty?
-
-I doubt that special casing an empty tree would fly well.
-
-It is tempting to special case removals, but then I sill am not sure
-it is good to do nothing and fail the command after determining that
-the operation is a common pitfall of removing a new file that
-appears nowhere else.  Unconditionally going interactive is a no-no.
-
-And I do not have any better ideas.  Other than just failing, that is.
-But that leads to nonsense combination "--hard --force", just as
-idiotic combination as "rm -f -i" :-/
+Thanks.
