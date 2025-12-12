@@ -1,118 +1,134 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD102FB63D
-	for <git@vger.kernel.org>; Fri, 12 Dec 2025 16:46:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A332F6167
+	for <git@vger.kernel.org>; Fri, 12 Dec 2025 18:04:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765557994; cv=none; b=isb/cYzrwoYEz7pzejFBjK8lt3aAFZFo/9ELOOKEeHbBfl7+HTpxF5HiJ2ysqBGBrGI2GZGVJbFDQkCn/NH8OtlAzzZstktQT63a+DFq9hwiKCbyB+8G2ttKlvCynusJ9OcoJc1pjB95Z8P8gAWsFGtW2tTj8eeJhqx1KD4BLnk=
+	t=1765562646; cv=none; b=t4cfuoFPY5tPMTSGKlw3+KyRdo+7BQxCKOjzzF7ITf+wMyxtj1wg9JLeySShC2yGPD3THh/pIf1gIf5FaDB/Qm+DldlJ5eWu8ksuF8P/rdwM87ws1G8y6R3HvS/nxMGbIqGIJ2cNKfBObgiz82dWSWAPY4ySCUfjb7SNnXPBt9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765557994; c=relaxed/simple;
-	bh=itMESI1ctEEkRk/NVk1zqlzpmiMqGmmMb0cTKsQlM9Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CYjfSjxXzVZsi0nQrrufqXmpWT+wUVysPGetmaI/u9BleVSe2Z/1uKjBKrScp2gYbDOn048xCgXxarkX5SLxIOmbRENSkmV2msS8RnWvLVvTIzL2i6fFv0RhG0gaIdz+aU8jm+LMad/ZqOSW+rjLvINtt3JIMgwYwM0aGcNGHgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ASfnVTcF; arc=none smtp.client-ip=209.85.160.43
+	s=arc-20240116; t=1765562646; c=relaxed/simple;
+	bh=T7PfFszL2lgvebItpAapq+dN4S4UYgQ34hnMKHiSt/k=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=pUZoDn+8yMPeaAQCZjY8camFkRw5hTsgczGL3iTg1EfDjeKOAaownEYtolLT6qBafJ0gidS/0WJfmhA3O0A0J7AJLLXxXRna3j9LHOcQM7H/w1WD+WPPTTOZK/GjjjyDUftDmpvOYBod8AInW5aUb1ezRnV+DMRqmhBEvbKnsVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DGWj5FG5; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ASfnVTcF"
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-3e12fd71984so1033890fac.2
-        for <git@vger.kernel.org>; Fri, 12 Dec 2025 08:46:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DGWj5FG5"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b735487129fso261986366b.0
+        for <git@vger.kernel.org>; Fri, 12 Dec 2025 10:04:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765557992; x=1766162792; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=022Twa6Ng9hGnd9WO1/fWl1rJGSb8H+dG6W33bkSLjw=;
-        b=ASfnVTcFLmN0WPlE1uCeK955RYAHDwuNPDiPZPGQYPHuwq7mCYo0YKTsy6E5NqQSQG
-         2vNulEnhpyD6t8NE+CKbt5EMPZ1/JJTOs+G9KU0TOSOnXVsFSrtrDePIc+gUaHr6M+CR
-         CGhSi0YxIrwSHZlTL/SgsUfvuL+Ys7Pwe0SVwBQ5d73CaoG/aFBrNcyVkBjwE07hRwPk
-         bHSwuJxMWiAAREQySoHO1mGO+x/VBrf+QcbLEv1pcF85YBedPVRL0gdLep9hYm+IrR/u
-         HnjBzCjunYJWrxjUIlpQIqqRTrLwYL0QVA8WavXUmjOZaoSP0FHyTkettVYBEbUFeCS4
-         UF/g==
+        d=gmail.com; s=20230601; t=1765562643; x=1766167443; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DU3q3tR+Joh8KiADOm4LiaxDKu6ES/9FIjV0E+gDelU=;
+        b=DGWj5FG5WRPHve/w92wGUjLIvEG+x1oY6o4DV+8UPtPRFgRRdmGBxOQnfajRTDnrrY
+         /eZiKMvPHLXdZuV+NwOQH1uuzgmFE/S+ZQytZFIS0bfBWQ78rCCIp6HdUG3ZWWrxR8OJ
+         B4Fj6Iu2KR6n8rk0gKTLxIaQO640OOBaDnU902uWXdh03KHhcFcoDyfCQ7w1sQUPOF13
+         pd+uvHDZf7l46zmL8maT7TimL24Wy4O+NxLvJYKb/jZqP+bsZrW82YwKjriy8UNqB1b8
+         4EivyPvaqezaXnhXMKqxfMv1KE6yCQ3ZR8SG/m7Zpx7MyOJ9duNgotqST9KN+jZfXJCG
+         S2Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765557992; x=1766162792;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=022Twa6Ng9hGnd9WO1/fWl1rJGSb8H+dG6W33bkSLjw=;
-        b=VajnNqTmePY9LevuYwBBbQm21aHPzNDd6yGf1hVSXHgvQjyM8gB62fMbBtm1DRPlkn
-         C3kJ5D2f6rx1YYmdZ8EJr1RyXRgnP9E/iqDUpYimUOmtOBv4zFy8scP+Mu8bNtWZBE9C
-         ZhqjQ/c4sKFahG2GveV+/+t7fGQgHe3F8tSzDnArBc7fjzxcVyCqe7qNBKnz5lOyULhm
-         i+IKT5E60E06a/lYF9iZYPKt5O+Nfk6rEPhxiR8Snjye/uNpTRgCk0raQRqTD1MAO+0J
-         R6aRjA95AQRd98qkZ01/nKOT+Qj/dfUHiR1eX+hiNaI6MIfIjxK5sqO4ZsC6VTZEnkyd
-         HubQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX14uTmGU3lNDfIL57cDgtk+pVrMoTRuI9AI2vwMcTH4J4+VwriYp9OyWDqkYOuunWR/+Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxIDQKYWiEX2G2FILlgUYWOioJc4CVCvTQvkUcBeZd2Sqq5V3qD
-	BP5Ktz/V6avhMgIvZoFPrbb0ekVx4tHSN9Linrvb7+RoxJ/3hMrqV5KTv9Y3/Q==
-X-Gm-Gg: AY/fxX7VxdkF5QuxirG1Jspj78jQJlR/wEo4wdL/z6CK8tgWb+MtGzUxr+3OsRiPxXZ
-	jDdwfPNZxSjq1VA0y/SysXRhtRFxPrmhCeFGJzZurZQl4tU9jtMZ4uYqMVsNtsq73BeKcy0ZhW8
-	y0QBROVyN2pZd/PQBhULFa2w4IEWcrh6m1B9lsEP7f20l4Bp1ctX6GwjaCym512sWyI8bQYvgG/
-	Xjjb0ikTWn+9OEF3BtgrDiAL0YsgzJZJwMLTDR9o/KTjGgadUx/08Y91+EDzyhCYyIIEXYGShv/
-	5Wy2aG4okex1GawoupluI5meetPcfnzH+L1QIS9GVn7XvZSMW/jJqonSgf2DQb78UbpamX84fag
-	elP4KqcNDs5zg4f3D1+7idFEOokG8InGKBLyh8IJw1iM3vp01pqiYApfmh72ifMPmEkvryudkOS
-	wYkP7TfuVuCVmibmE=
-X-Google-Smtp-Source: AGHT+IGMk7PUB+RMwCuGGtzEUM2RP/BZ109bSGSWGUGycrVoLwh2Xz7dOiqqQMFroyqa4JQnZXNL6w==
-X-Received: by 2002:a05:6820:1c89:b0:659:9a49:9008 with SMTP id 006d021491bc7-65b45257edcmr1240894eaf.53.1765557992126;
-        Fri, 12 Dec 2025 08:46:32 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-65b360ef040sm3121626eaf.13.2025.12.12.08.46.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Dec 2025 08:46:31 -0800 (PST)
-Date: Fri, 12 Dec 2025 10:46:28 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 2/6] builtin/repo: humanise count values in structure
- output
-Message-ID: <epw5bctnxs7gpcg733qqtf2jxmsknntuylbqxt3xngs5zj7htn@zltxezklckge>
-References: <20251209225820.2861276-1-jltobler@gmail.com>
- <20251209225820.2861276-3-jltobler@gmail.com>
- <aTkS_kBlNsnbPyP5@pks.im>
- <kf7vavs5yetooe6u2ygttzfriul4u5ywdnhtyksh2pbar4mpfz@orlg7ppajd7s>
- <xmqq1pl1hgj4.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1765562643; x=1766167443;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DU3q3tR+Joh8KiADOm4LiaxDKu6ES/9FIjV0E+gDelU=;
+        b=QEGV5kVRuXz+p8YLz1ncOMp9VSkOvhRqyVR1akaPn+M1eAio+7mk1nbDNbJ91Tu5Up
+         WZ/pLrR0NIoxHsH1ZrlkJ1aunQ0+em2AiG4KbGt7RWCOCdny90nCLebJafJFPE6lpF6D
+         VXyqTRphr5SRbUrM2fyG5XZ9i0NGwfuHnBU1oN5DCmBt1JYjFRSzWO+LeYqWf3ZgYLIr
+         FYHDAdHyrWGz4HhCfZ7itD7SSQ2TXvnmwtKT9HH/o04oGjpqbRQx57px7cVrUitrjdh6
+         4TuotNqYaUE2ZJ3lShlPxNs9YpT1QmLMaKJ6lCPD3pnD8zTozZoVINTXqxnQcEkiWXKr
+         iKPQ==
+X-Gm-Message-State: AOJu0YxifIRP1/BHMPoCxyCOMt18vaoT9y/Sp5k/ziXX6cE4p2UtyNlI
+	t7jCtud4ZLnPPOTitO3Y37obsY+6KwIKKH7ycrnlbkVoFi8X2vubnL7ZMzz75g==
+X-Gm-Gg: AY/fxX5C118MLbYqrjrQDwLlFLdTCK1/P9K7JmBvILNvdc/jT/liGtYWGxaIohrfVTP
+	38Y3hbgShdu4sME7AbLp2C+hWqd+QBuglNu9rNXCp6ZI8e51uJgXXiqNbaZKMEuI0neb7/zPcvY
+	5P0NZJEIhk26V2teqqFJZ2BFv8ta/+ysu6JmZNbpGcfOy56wHI/o91hzEOAEnv+xmOc6Q3nkcL8
+	4rwHxlxU9Zv4OQhotsGc6F0cthSjtlKUsDHw4tVWL+gr7d0r8q6QKr6IAunjGi97d04GdlOdj8D
+	45ZSJGZ1mfkWtzO/aDKXzviVYImkdSZsS6ceikEdar+6+UsnuVrAuuPyaKKgtP+2ovms/m+gEj+
+	0pzhCptgvMoNxcQ+ScJRcH5MNOAp5SNeB5XOa7nFvo/kgO9p0Rk22RNbQOuzUDvUsuodr2Sn5el
+	ylXHx8xxNKpGcCyOtwtComWV0=
+X-Google-Smtp-Source: AGHT+IEmkF794dK8PGUFRZi30oUi+JrK1F6MGAnTFl1WiP3gyj/vMFMBVB/k6YujoLI8h9QS+AMIAQ==
+X-Received: by 2002:a17:906:ef03:b0:b79:b910:fd45 with SMTP id a640c23a62f3a-b7d238bb08emr309082866b.38.1765562642496;
+        Fri, 12 Dec 2025 10:04:02 -0800 (PST)
+Received: from [10.29.112.243] ([193.204.167.189])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6498210fcf6sm5803400a12.27.2025.12.12.10.04.01
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 Dec 2025 10:04:02 -0800 (PST)
+Message-ID: <3742e7de-7d88-4e77-b711-9fed867a8c23@gmail.com>
+Date: Fri, 12 Dec 2025 19:04:00 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq1pl1hgj4.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+From: Luca Balsanelli <lucabalsanelli@gmail.com>
+Subject: Different behaviour for --find-renames between git diff and git
+ merge?
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 25/12/11 11:57AM, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
-> 
-> > On 25/12/10 07:28AM, Patrick Steinhardt wrote:
-> >> On Tue, Dec 09, 2025 at 04:58:16PM -0600, Justin Tobler wrote:
-> >> > diff --git a/builtin/repo.c b/builtin/repo.c
-> >> > index a69699857a..8fb728b3a5 100644
-> >> > --- a/builtin/repo.c
-> >> > +++ b/builtin/repo.c
-> >> > @@ -266,6 +275,10 @@ static void stats_table_addf(struct stats_table *table, const char *format, ...)
-> >> >  	va_end(ap);
-> >> >  }
-> >> >  
-> >> > +static const char *unit_k = "k";
-> >> > +static const char *unit_M = "M";
-> >> > +static const char *unit_G = "G";
-> >> > +
-> >> >  static void stats_table_count_addf(struct stats_table *table, size_t value,
-> >> >  				   const char *format, ...)
-> >> >  {
-> >> 
-> >> I would assume that these units should be translatable.
-> >
-> > Ya, you are right. I'll make units translatable in the next version.
-> 
-> Whatever you do, please first consider reusing existing
-> "human-readable numbers" helpers, like strbuf_humanise_bytes() used
-> by the progress.c for showing throughput, before rolling your own
-> variant like the above.
+Hi,
 
-Ya, I originally looked into using strbuf_humanise_bytes(), but went a
-different direction due do how I wanted to align the values and unit
-prefixes in the table output. In the next version though, I'm trying to
-split out and reuse some of the same logic to avoid the duplication.
+   I'm scratching my head to understand why on the following case `git 
+diff` and `git merge` give a different interpretation about a rename.
 
--Justin
+    git switch master
+    touch aaa
+    git add aaa
+    git commit -m 'aaa'
+
+    git switch -c branch
+    echo -en 'A\nB\nC\n' > aaa
+    git add aaa
+    git commit -m 'A\nB\nC\n > aaa'
+
+    git switch master
+    echo -en 'A\nB\n' > aaa
+    mkdir dir
+    mv aaa dir/
+    git add aaa dir/
+    git commit -m 'A\nB\n > aaa -> dir/'
+
+The `|merge.renames` config variable is true. Changing `git diff 
+--find-renames=50%` (the default) or `git merge -s ort -X 
+find-renames=50%` ||to something lower does not change the following.
+|
+
+`git diff` prints
+
+    diff --git a/aaa b/dir/aaa
+    similarity index 71%
+    rename from aaa
+    rename to dir/aaa
+    index bbd2b90..986ad36 100644
+    --- a/aaa
+    +++ b/dir/aaa
+    @@ -1,4 +1,3 @@
+      A
+      B
+    -C
+
+     that is the similarity index is 71% and it detects the rename.
+
+`git merge branch`, instead, gives
+
+    CONFLICT (modify/delete): aaa deleted in HEAD and modified in
+    branch.  Version branch of aaa left in tree.
+    Automatic merge failed; fix conflicts and then commit the result
+
+Why it is that? I always supposed that the rename detection was the same 
+for `git diff`, `git merge`. Reading the documentation I do not find any 
+hint why `git diff` and `git merge` are behaving differently.
+
+Thanks,
+
+Luca Balsanelli
+
