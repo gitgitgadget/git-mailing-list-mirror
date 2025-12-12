@@ -1,144 +1,326 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2603191B1
-	for <git@vger.kernel.org>; Fri, 12 Dec 2025 10:40:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D843C38
+	for <git@vger.kernel.org>; Fri, 12 Dec 2025 12:37:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765536052; cv=none; b=s87/xteE9jZNIjgv/qKVVP5vcDLpnKvHvQGFy2zA0PlpWoiD+MVK9Mwkc3meob3JXDr37ll9HR5sTpieNzS6THj1fca2Vo5l1fwhy161NV1M+/0Wh8jkLWFFFBopbrUT+NVz/Vkn8nLExDecox8NX6mKHOG52F2H3XSL7Ugil28=
+	t=1765543026; cv=none; b=Gjx8GpHsmVFXBQF2Z4C0ffLItQxgiwt125dHlgyM13wIAGCctIf/8/wH7ZHLB9VeQOCbUZ9FdLnvONzaF7JkatQbAQyFL/zinSbgyUdxdMcw8wI/bc1zaiKoK1Jl7eZRnBv09VKkiUiJ/dp9ri0O5zKPURRoJAiuXPKb1urWMlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765536052; c=relaxed/simple;
-	bh=E+hrNEaHhbMJPWqqGqN01+wnJDkv2PE1Zh9G4Y9FYJ8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=GnD2un+lTaNObaSb+U2CeVDkIFXgnaI7oZYvdqy/e93QADG4wZ8TrqXUZpApS7eijewxQVE37UZ/vUvchtqLTm9Pz66UWNyG1/UUzc6czggS4ok6Uz0JsIOJJrjzpeeNvTCdbkRzuKhbUoe+NTz8yh7dfawOG4ElTy/lkAB7FdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=VOO6gQ0H; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1765543026; c=relaxed/simple;
+	bh=3wcqqt9hs20xln+M7cjiKVZh8DdmG5XMDfFZyqLuf/E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qRY/M+blFrBjEUzv14PppSx44h3mqdXTN1WABVZXyHEgaZCIoFxG8mpqE8DL2QzDTrUjSYIjf2BtgCEtRVclTS+1nEFVgwqNYYFtydZOo/HfRzSrVMocqZlm5mXdIBnnDuKTBXRThGkPX0/sSGmpi/lTTq8CYqpjYEGmInwvMck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com; spf=pass smtp.mailfrom=shopify.com; dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b=TWO5EbJC; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shopify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="VOO6gQ0H"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1765536041; x=1766140841; i=l.s.r@web.de;
-	bh=x9yWqgyPgL0yjhvfCYVcDJqVsSCbuANt6ZaTTXQyVhU=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
-	 References:In-Reply-To:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=VOO6gQ0HH5DN2QvCp18ZG3mLN/fybLMMOek5ogYwPQ3MZHlJ8biUvK8Uj7WphsZL
-	 Sp8SArWB7IdSWsYawGSs8U1rqtVl+qJt0EXHpPMFGtCe61+afBsKhOw+KtxBQqUAc
-	 oUF+wJPRyyHe/2D1Z2F8X9WnpNf3wxWNdfK/nXT8LJsOgDyLh1xzOrEDaQYB+gB2h
-	 925oeuG7fTAVQflUP0+4mR+0au0T2a9rjFvIJdKVOezPYtprFOMLcfXZ4bXDL3wOE
-	 DQ3sS+UeRaGTUpUp/HuerqBTG8jsfJNqQN+i/Ciy8R98Xl5YJHEwjmGTm2BJ0gUJ8
-	 jHI2aIWMYCWqxt251g==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.27.139]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N6JxT-1w4shk1Ttx-010MQr for
- <git@vger.kernel.org>; Fri, 12 Dec 2025 11:40:41 +0100
-Message-ID: <422eb238-5c75-4629-86d4-1a3c1ba2521c@web.de>
-Date: Fri, 12 Dec 2025 11:40:41 +0100
+	dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b="TWO5EbJC"
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5958232f806so1318413e87.0
+        for <git@vger.kernel.org>; Fri, 12 Dec 2025 04:37:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=shopify.com; s=google; t=1765543022; x=1766147822; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SZWYKLAZ+1oXjTdohoeP+xDGdlLbR2geaWPkPGpeHss=;
+        b=TWO5EbJCPqznkeEslni6YF03WvTXvdxNhxZ0thFcPisKOGNPI4XURsdXWvZl0s5rTB
+         w0NnqBjV/ZjlSC+FRKgrIeGaNOX3EGH5gbluKongO6QEcu+/XGZ3OUqQjajSaOa41nbP
+         +tQ1hh362bMuP8NGmMPaZaPoIAUXU6QJZuTAs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765543022; x=1766147822;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=SZWYKLAZ+1oXjTdohoeP+xDGdlLbR2geaWPkPGpeHss=;
+        b=pSbcaz3Rr9Es+mEy7vNDzc6Hyj8YPKQi+ruU15DVhLicSmmqO5iK21aCJ32FZNC2Hn
+         gfFd8KCJH31ppgPNpqmBFUc961HtqoVF4aQl7hqAJJbm0KQ3S8zYhtOhcz1+wIS1Qa4k
+         UntYQIXYSMQ8607tGEdRyi5iwmFj3cpFi6UEPF5qiHDkHOqNxRMw7v4ChDI6XRx2wufY
+         82/f3OdoAftZSKOobOJB+KYCyrHhrd8dskFrjnJznYwFGqy0UlAHkpk6QfpmRfoVM8Xj
+         P6X9tlxILiIUifYNu9rpdYSisIe/727lmotUsiTe/s2d3/XWIRaeqV7ca38m58GMP+l5
+         8PQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUWSQZesQ+rdKyMsA5K2f35p0EYthJIsWThxXrVFg6zWBJe9/pXk4IiahAbLQuZd4DTamA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzuGb/aADTLiNVzUjtvBI3HbTazspYHc5N92QM0gXsePsDCRcBX
+	M3QkJc52KZU9OqZrNSUG3nwZ5LOVA4Qp5cAG2sKBeI4kymbkorp2h0UWf+yXF9k73x9SW8gTPKj
+	Cr4L/SaP5PC6fiRTjAzDS9J5tAgqilkrXGOtWI1hxyA==
+X-Gm-Gg: AY/fxX5rSzXlCIbIl6sbA4kqOePa6jsKqRc3AZkSq4Esllp+wBiwMOVjttKdi+fpIZP
+	HNOA2AUJ1Gc55Kbc6dm2ABe6f3xXsMFkJYGA2TeXJL58A7SaE/YkZcpbSNjisXhkYQcGKKQSVhY
+	2uFh1UfpEarSnCBCR9THZYrn+morYJVxoXZOL0eF+FkJoE9EDFdDRH7bPF7xb/o42mdaA/Yrx5w
+	ugGFFVysLAXhQ5lxyIbxEabS4ZdMBH0bDjrhOigx/NWPKd0H+8KbciCcTP5eh7NnwCxcnIWmN4O
+	8g==
+X-Google-Smtp-Source: AGHT+IE2GPQ47YVUY8iOy2VUSLJU7s9NW0/o8Qtgel3rZlrnHr/nU4tfG5yDtxbd+ToqNU/Qk5lSQm8wiqULgtO/YIo=
+X-Received: by 2002:a05:6512:31ce:b0:595:7f64:fb7b with SMTP id
+ 2adb3069b0e04-598faa075bdmr714635e87.16.1765543020563; Fri, 12 Dec 2025
+ 04:37:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: t3900 failure on macOS, iconv(3) broken?
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-To: Git List <git@vger.kernel.org>
-References: <53690064-1c98-40e9-8b9a-7ba6bee63703@web.de>
-Content-Language: en-US
-In-Reply-To: <53690064-1c98-40e9-8b9a-7ba6bee63703@web.de>
-Content-Type: text/plain; charset=UTF-8
+References: <pull.2008.git.1764160227.gitgitgadget@gmail.com>
+ <ae0087cd1c7fbb6b748d6767b476c1bd1a19996f.1764160227.git.gitgitgadget@gmail.com>
+ <aTitfzeb7J8TUTYQ@nand.local>
+In-Reply-To: <aTitfzeb7J8TUTYQ@nand.local>
+From: Vaidas Pilkauskas <vaidas.pilkauskas@shopify.com>
+Date: Fri, 12 Dec 2025 14:36:49 +0200
+X-Gm-Features: AQt7F2qczJHNdDkmsKldbc2iXuIGnjeTSmxAt15m7uT_xticMfsE2mWuVNU6jFg
+Message-ID: <CAGjQmDOCeYMvvuct2ZkOJKhzpuSH6qqnWMDCbZ2OwcxQ_2DfpQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] http: add support for HTTP 429 rate limit retries
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Vaidas Pilkauskas via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:agNZmoQM0NBtB4aR/vcSGuR82qAW/JObI0vnfgsHe1EQiczpCZw
- XzVMhDiIMPvEuBec5CQw4kNpQKqKTseSgz4X89OwpytxgrlWWYXoV1BHBIXKkEA58jqr3iM
- U2IO0LPktdhNVGQs4KFc+Royr5RwzQyAEjNR/vhTHVn5c8lVFAk+Xwg8UNOtZ7vTpYdCjnK
- QJk9Bz2z45ky8VwS+/uBQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:w0AOdrYseC4=;AuIn27m32nsZFjaQDTu5EEFlL9X
- 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
 
-On 12/8/25 11:59 PM, Ren=C3=A9 Scharfe wrote:
->=20
-> I only noticed now because I used to compile with NO_ICONV for some
-> reason.
-Nope, NO_ICONV does not work on macOS because compat/precompose_utf8.c
-references reencode_string_iconv() and there's no (easy) way to disable
-PRECOMPOSE_UNICODE.  I actually used ICONVDIR before, had forgotten
-about it, got confused about it after deleting my config.mak and my
-backup copy didn't set ICONVDIR, either.  Odd.  Anyway, just wanted to
-correct the false impression that compiling with NO_ICONV on macOS would
-be possible without source changes.
+On Wed, Dec 10, 2025 at 1:15=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrote=
+:
+> > +/*
+> > + * Sleep for the specified number of seconds before retrying.
+> > + */
+> > +static void sleep_for_retry(long retry_after)
+> > +{
+> > +     if (retry_after > 0) {
+> > +             unsigned int remaining;
+> > +             warning(_("rate limited, waiting %ld seconds before retry=
+"), retry_after);
+> > +             remaining =3D sleep(retry_after);
+>
+> What should we do if there are other active request slots? It has been a
+> couple of years since I have looked at Git's HTTP code, but I imagine
+> that we should be able to continue processing other requests while
+> waiting for the retry-after period to elapse here.
 
-Ren=C3=A9
+This is a very good catch - I'll rewrite this to a non-blocking wait.
 
+Thanks for the review, Taylor, I'll work to address this and other
+comments in the next version of the patch.
+
+On Wed, Dec 10, 2025 at 1:15=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> On Wed, Nov 26, 2025 at 12:30:25PM +0000, Vaidas Pilkauskas via GitGitGad=
+get wrote:
+> > Retry behavior is controlled by three new configuration options:
+> >
+> >   * http.maxRetries: Maximum number of retry attempts (default: 0,
+> >     meaning retries are disabled by default). Users must explicitly
+> >     opt-in to retry behavior.
+> >
+> >   * http.retryAfter: Default delay in seconds when the server doesn't
+> >     provide a Retry-After header (default: -1, meaning fail if no
+> >     header is provided). This serves as a fallback mechanism.
+> >
+> >   * http.maxRetryTime: Maximum delay in seconds for a single retry
+> >     (default: 300). If the server requests a delay exceeding this
+> >     limit, Git fails immediately rather than waiting. This prevents
+> >     indefinite blocking on unreasonable server requests.
+> >
+> > All three options can be overridden via environment variables:
+> > GIT_HTTP_MAX_RETRIES, GIT_HTTP_RETRY_AFTER, and
+> > GIT_HTTP_MAX_RETRY_TIME.
+>
+> This is great information, and I am glad that it is written down in
+> http.adoc so that it shows up in git-config(1). I think that it's fine
+> to omit this level of detail from the commit message, since it
+> duplicates information from the authoritative source on configuration
+> knobs.
+>
+> It might be reasonable to say something like:
+>
+>     Retry behavior is controlled by three new configuration options
+>     (http.maxRetries, http.retryAfter, and http.maxRetryTime) which are
+>     documented in git-config(1).
+>
+> or something.
+>
+> > diff --git a/http-push.c b/http-push.c
+> > index d86ce77119..a602a302ec 100644
+> > --- a/http-push.c
+> > +++ b/http-push.c
+> > @@ -716,6 +716,10 @@ static int fetch_indices(void)
+> >       case HTTP_MISSING_TARGET:
+> >               ret =3D 0;
+> >               break;
+> > +     case HTTP_RATE_LIMITED:
+> > +             error("rate limited by '%s', please try again later", rep=
+o->url);
+> > +             ret =3D -1;
+>
+> Other strings in this file aren't marked for translation, but I think
+> we can/should mark this one like so:
+>
+>     error(_("rate limited by %s ..."), repo->url);
+>
+> > diff --git a/http.c b/http.c
+> > index 41f850db16..212805cad5 100644
+> > --- a/http.c
+> > +++ b/http.c
+> > @@ -22,6 +22,7 @@
+> >  #include "object-file.h"
+> >  #include "odb.h"
+> >  #include "tempfile.h"
+> > +#include "date.h"
+> >
+> >  static struct trace_key trace_curl =3D TRACE_KEY_INIT(CURL);
+> >  static int trace_curl_data =3D 1;
+> > @@ -149,6 +150,14 @@ static char *cached_accept_language;
+> >  static char *http_ssl_backend;
+> >
+> >  static int http_schannel_check_revoke =3D 1;
+> > +
+> > +/* Retry configuration */
+> > +static long http_retry_after =3D -1; /* Default retry-after in seconds=
+ when header is missing (-1 means not set, exit with 128) */
+> > +static long http_max_retries =3D 0; /* Maximum number of retry attempt=
+s (0 means retries are disabled) */
+> > +static long http_max_retry_time =3D 300; /* Maximum time to wait for a=
+ single retry (default 5 minutes) */
+>
+> These comments should be OK to drop, the variables indicate what Git
+> configuration they correspond to (e.g., http_retry_after ->
+> http.retryAfter), so git-config(1) is the authoritative source for
+> documentation here.
+>
+> > @@ -257,6 +267,47 @@ static size_t fwrite_wwwauth(char *ptr, size_t elt=
+size, size_t nmemb, void *p UN
+> >               goto exit;
+> >       }
+> >
+> > +     /* Parse Retry-After header for rate limiting */
+> > +     if (skip_iprefix_mem(ptr, size, "retry-after:", &val, &val_len)) =
+{
+>
+> Makes sense, though I wonder if we should rename this function, since
+> fwrite_wwwauth is now doing more than just handling WWW-Authenticate
+> headers.
+>
+> Perhaps we should have a single top-level function that is registered as
+> our CURLOPT_HEADERFUNCTION that dispatches calls to header-specific
+> functions? Otherwise the actual parsing of the Retry-After header looks
+> good to me.
+>
+> > @@ -1422,6 +1488,10 @@ void http_init(struct remote *remote, const char=
+ *url, int proactive_auth)
+> >       set_long_from_env(&curl_tcp_keepintvl, "GIT_TCP_KEEPINTVL");
+> >       set_long_from_env(&curl_tcp_keepcnt, "GIT_TCP_KEEPCNT");
+> >
+> > +     set_long_from_env(&http_retry_after, "GIT_HTTP_RETRY_AFTER");
+> > +     set_long_from_env(&http_max_retries, "GIT_HTTP_MAX_RETRIES");
+> > +     set_long_from_env(&http_max_retry_time, "GIT_HTTP_MAX_RETRY_TIME"=
+);
+> > +
+>
+> The configuration handling and overrides look good to me.
+>
+> > @@ -2253,19 +2330,36 @@ static int update_url_from_redirect(struct strb=
+uf *base,
+> >       return 1;
+> >  }
+> >
+> > +/*
+> > + * Sleep for the specified number of seconds before retrying.
+> > + */
+> > +static void sleep_for_retry(long retry_after)
+> > +{
+> > +     if (retry_after > 0) {
+> > +             unsigned int remaining;
+> > +             warning(_("rate limited, waiting %ld seconds before retry=
+"), retry_after);
+> > +             remaining =3D sleep(retry_after);
+>
+> What should we do if there are other active request slots? It has been a
+> couple of years since I have looked at Git's HTTP code, but I imagine
+> that we should be able to continue processing other requests while
+> waiting for the retry-after period to elapse here.
+>
+> > @@ -2302,7 +2396,54 @@ static int http_request_reauth(const char *url,
+> >                       BUG("Unknown http_request target");
+> >               }
+> >
+> > -             credential_fill(the_repository, &http_auth, 1);
+> > +             if (ret =3D=3D HTTP_RATE_LIMITED) {
+>
+> Should handling the retry behavior be moved into a separate function? I
+> think that http_request_reauth() might be clearer if it read:
+>
+>     if (ret =3D=3D HTTP_RATE_LIMITED)
+>       apply_rate_limit(...); /* presumably with a better name */
+>     else
+>       credential_fill(...);
+>
+> , and likewise, should we rename this function as it is no longer just
+> re-authenticating HTTP requests?
+>
+> > diff --git a/t/t5584-http-429-retry.sh b/t/t5584-http-429-retry.sh
+> > new file mode 100755
+> > index 0000000000..8bcc382763
+> > --- /dev/null
+> > +++ b/t/t5584-http-429-retry.sh
+> > @@ -0,0 +1,429 @@
+> > +#!/bin/sh
+> > +
+> > +test_description=3D'test HTTP 429 Too Many Requests retry logic'
+> > +
+> > +. ./test-lib.sh
+> > +
+> > +. "$TEST_DIRECTORY"/lib-httpd.sh
+> > +
+> > +start_httpd
+> > +
+> > +test_expect_success 'setup test repository' '
+> > +     test_commit initial &&
+> > +     git clone --bare . "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+> > +     git --git-dir=3D"$HTTPD_DOCUMENT_ROOT_PATH/repo.git" config http.=
+receivepack true
+> > +'
+> > +
+> > +test_expect_success 'HTTP 429 with retries disabled (maxRetries=3D0) f=
+ails immediately' '
+> > +     write_script "$HTTPD_ROOT_PATH/one-time-script" <<-\EOF &&
+> > +     printf "Status: 429 Too Many Requests\r\n"
+> > +     printf "Retry-After: 1\r\n"
+> > +     printf "Content-Type: text/plain\r\n"
+> > +     printf "\r\n"
+> > +     printf "Rate limited\n"
+> > +     cat "$1" >/dev/null
+> > +     EOF
+>
+> To avoid having to write this script multiple write, you can write it as
+> a separate script in t/lib-httpd and then make sure to list it in
+> prepare_httpd() (from t/lib-httpd.sh).
+>
+> You can then list it in the apache.conf in the same directory and invoke
+> it however you like. If you need to take in arguments to the script
+> (e.g., to change the Retry-After value), you can use a ScriptAliasMatch
+> instead of a normal ScriptAlias to pass in extra parameters from the URL.
+>
+> The one-time-script mechanism here will cause the test harness to delete
+> the script after its first (and only) use, which can be useful for some
+> cases but I suspect is not necessary for all of these tests.
+> > +
+> > +     # Set maxRetries to 0 (disabled)
+> > +     test_config http.maxRetries 0 &&
+> > +     test_config http.retryAfter 1 &&
+> > +
+> > +     # Should fail immediately without any retry attempt
+> > +     test_must_fail git ls-remote "$HTTPD_URL/one_time_script/repo.git=
+" 2>err &&
+> > +
+> > +     # Verify no retry happened (no "waiting" message in stderr)
+> > +     ! grep -i "waiting.*retry" err &&
+>
+> test_grep can be helpful when reading the output of test failures, since
+> it dumps the contents of the file it was searching. Just make sure to
+> write "test_grep !" instead of "! test_grep" (there are a few such
+> instances of the latter that I just wrote patches to clean up).
+>
+> "! test_grep" isn't *wrong* per-se, but it will pollute the test output
+> with "couldn't find xyz in abc".
+>
+> I skimmed through the the remainder of the tests since I imagine that
+> they will change substantially after writing the script out explicitly
+> instead of using one-time-script, so I'll hold off on reviewing that
+> portion in more detail until then.
+>
+> Thanks,
+> Taylor
