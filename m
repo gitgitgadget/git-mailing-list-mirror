@@ -1,135 +1,108 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD5F1EF0B9
-	for <git@vger.kernel.org>; Fri, 12 Dec 2025 14:09:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232602749E6
+	for <git@vger.kernel.org>; Fri, 12 Dec 2025 14:48:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765548560; cv=none; b=jRZHRvNY38pJjSMJIVNHsyVMXkIxYDJqJ1Jm5g4QkWkY6ubg0B9jDKm65JUVLRl+vIpEJqEr54xGfeq///8FLjhgjyfQuFT0R9jKJQ5vVZ9UVKEP3mdvh1I62zosgcWbFkplKqixHqP2Lf5hI9Ac3iBNr5KOZ8ccJiX2ayNxr0o=
+	t=1765550939; cv=none; b=cZvecLGOxJx40mP7Xe+s70rqZeAjugXHOJD8ZlPZ8JxfHhY2pyhEEINr0Cz/i+blogURz2ethVVrEY8ezFxlDg4/wBcNNxz6RlvkCqLki7aVhK8j00DdmDVCpmJ/3X8d6JMtGAtURIbvO9WSGxqdbWjmuKLyD1Nr5egbYBIT1K8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765548560; c=relaxed/simple;
-	bh=9/BwugOuEIhIF1JerAuuB8Pt+mm1aF9ocXWAqa9mUQ8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=FWVsT1p/KcbeTqaMA2GRkEDwxYxAvkfKi0nP4p8y7Ub/xYLmGM6KYQC56/OSsWOU2fTHz9NA3vD3Ry1d1w+YfW8yVC6tni8zjT52Gb+lCJIVF1va54xucJARdHYB5NE3NDtVAFCQZc4HxT8v6KxcBsKy053kW9Iyf54s71rv5Y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=VY0dgUeJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rrAGALFv; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1765550939; c=relaxed/simple;
+	bh=lef7OheMlLy7RjsSFzSEdppqwfkR/wmhUZvgEzT6tuo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=M0F/PqcWeDFiyQ2j+Z/yXmNwQY5BGDV7WO4evzM/dEAJlwfg1i01yr/ktkGrXjxV1fs8NiC29qrxvam+C+guYlMQ3Ojc9FCUpJk5BzSmOqlQW0BZcphj0v3i6HjG8SwrW5qilhRuypBX6mUkbTZ2adZ2L8KbzunjjzIQcG35WcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MnUdWygY; arc=none smtp.client-ip=209.85.160.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="VY0dgUeJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rrAGALFv"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id D71081D00141;
-	Fri, 12 Dec 2025 09:09:16 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Fri, 12 Dec 2025 09:09:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1765548556;
-	 x=1765634956; bh=REhHhpwI5CpdGOJGl+LwydlJbIQAJL5I9/o+mWgN4Fc=; b=
-	VY0dgUeJNrZRSJnSstW6oqeqRLBm9kvQ7TTdIUtznIzfGY5sPL7kl4M6Eu9TgZcN
-	RFmPZd5Npbl9NWC53VOK3sY3xBSH15K2otFZLFOHty+ZgkwczduZZRaopZyB1J94
-	yfBTpuaobBYAjIDfqqecvx3ngs+AWuSE1U+/a6dc1P2EAf14xJxUlGjdSjD3lvYJ
-	yy5SFJCzTINots44e9HNIX6jDbKKD8TDwFQwG0GJ6+m59GY3006QBZgQ2k3yiCUz
-	AQWVShAI1y90ts7t3EUafyDpH1tpLXf7nIsQmpYgbRzQjJ1MezW9RZRtMh7Rd9ow
-	GGOuB9/MrjxJ86zQz0qMVA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765548556; x=
-	1765634956; bh=REhHhpwI5CpdGOJGl+LwydlJbIQAJL5I9/o+mWgN4Fc=; b=r
-	rAGALFvLmlZo9i/lZsrUsMuCZJmvC/rttpxQie7BkLO1ffSEDP+B6Uc2csfKIF2n
-	Sde+D8ek+g+DDVKrUO2JLBoakzTryV/UVBWFnQc9a/Ry3S/NmgpGsmYLxn9Dlcye
-	0FfHPxszY3Mhel6DExmo2VyEMn8rSqkewVpoyrICH3EskEM7UxQgYASpF1i1ADuE
-	PTuIg676CIuF2B7f7VOkJ7iZWgfdfWC+3ape3ozKGl2GCxnzRApxnVX5EyxQj9jr
-	I17Gu3gQR5uNliqPKEf7jSm03bDPjZIVXRs/A04UooRQvkGEpCmiHstS43K23pm8
-	hUJMM3dgaj/M9IF2t8DfQ==
-X-ME-Sender: <xms:DCI8aRfDpphRqxJTEW_BbPyUfAc5aGTgUfAPUjrqPD0YsDeOkPtVi9U>
-    <xme:DCI8aaCOCnmCTfsKenwNI9eybja5j3ZhcpIKqCLaFHOFvjtgYQqXs1_6idIu8pLCS
-    eluUXxSLjCprZoDQCNJbyxEAA7spwdQ2rCTUInzmS9Ay_bv-H-pWg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeefkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertd
-    ertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
-    ftrfgrthhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefg
-    iefgfeekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
-    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjrg
-    ihrghthhgvvghrthhhkhhulhhkrghrnhhivddttdehsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:DCI8aXaFrCHVSByM01hWWoOuf-zjXuSs77ONO9i3YShcc-eFNcE7gw>
-    <xmx:DCI8aeJa75u7UyvpttPfUpMRc5SgRnkACGzjC2BL8zg6C-bESG7RCQ>
-    <xmx:DCI8adA5Sp8ATs_dJlz-d5Q5sA7ZpvDXfkFur-olsWL_Q-9Er20viQ>
-    <xmx:DCI8abr-3DhYf9iH5cQKr6tsQJAWmS5Hy38QCvcaRoCgI2oFHA8alA>
-    <xmx:DCI8aUXL-eYq9wdOuqKBhAeIUdQQqCoADjXZNgYkoq7IZ-6slZNsSuwD>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 942CA1EA0066; Fri, 12 Dec 2025 09:09:16 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MnUdWygY"
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4ed75832448so16246101cf.2
+        for <git@vger.kernel.org>; Fri, 12 Dec 2025 06:48:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765550937; x=1766155737; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vlWjCK4Q3r8BXZXRxQlLqiLfkWaPLU+3rwfdYTJ4SbU=;
+        b=MnUdWygYBQxyPdNZllgzNc8F2ffuRi+9ySY1dh+j8iBRcKF5z7qPw6avqrssDPFEYV
+         uOUiYGCvhaFIz4N224IJA/UfTl0a14W0jkM6FttcbZBmGLjBYjNS2tMQVgDdQZpb3xGF
+         LAxDvqgqehPARfGdyAYvza9wz62A1++W3EvH0clUfyZ1bcwAQXacMeyJV3+Xd00FS5Op
+         GXfn4lqkMiiERzxNrv7wDDfKDNy367oE+egHF8KQO9mxUC67fSvmLbKElRjkNDMUYCPP
+         eH4QBnuBwYZGl/GWbQS6vtnrnt/wSoNujNtH0HOCqTas4JuXHnxtfsurHk6Vm+gIhMqn
+         1IGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765550937; x=1766155737;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=vlWjCK4Q3r8BXZXRxQlLqiLfkWaPLU+3rwfdYTJ4SbU=;
+        b=eRkDzP+7+rGHXQ9rLNhLxj8tmdZmo730b5KxkLBL9QVEpj9MgsbBs51QWJI1lApr1u
+         ik18eBjjoLu7/gPCYNZ+7EqPsyeMjZvVxvT1r+JrRdq0gKB3oh8FcGRYslobr6W2lZnW
+         Q0jxdeT4TW5QaCnghcMqorcU/1TK2z+JHo4qCs28hxaPs0nXLeCTNbE/h101aBxxGyzq
+         5gHfzbAUcalMrFLOFiYJTpcVKUXw1RZE0uNj67C79iXy77GJ/gPgseGjeTHou374TYWr
+         KxH13JXNILT9Z7RJNS1rbb2zB2Sbey/3SyouteA+Ejp8ZWcVXCs/BG4dJ6OplkERCTQ+
+         0ZBg==
+X-Forwarded-Encrypted: i=1; AJvYcCUGOJD3QamVgYY7XW1xoQrQiWL9I1giR7DBxc2PDD2Sji9+To+1s99Dci8hU3UPfp+Rf7I=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzHyFxQIumsjrMX3vEgvWZ2FbJXd6FlP6pVZocYNlwpvKKk4eaG
+	dvPVrV7FksikGFZ7JxoMamVciVeWjfFS5MoIwqJXzPBHlrjGJB4Lhn46v9GzdZlcctfI81lPt4S
+	0ujot2mmOayTezfrurt8qlxiVn2BFS30=
+X-Gm-Gg: AY/fxX6OrR/ZRa4jqjrbWJRKUIrVpHbvu8Y7WyMLhyaxwOzcEw0trRwjWG1aGHt9Ecf
+	KByCVibT8BEgutQrteftX8a+7cMXvgiSpNlui8bdULVlfyXju7NtKP8kuLVbYfCSpkOYQYNuTKw
+	s02H3qeH035rgBpU/fIQCx427KcXgWo6SXMTbTS+9lnFwVv2pG0cs1GBD/LlKo37++3/QPBUPAi
+	DOvUsdnCXVfEQ3jOjHTYX0GErW0DoYWcG0hXtxyZTI5txve7pI29o0KMqkVKTqVtWByBkHlVEo2
+	BAUqmk0pmbGPyHwsd7SzZP+GU1Au
+X-Google-Smtp-Source: AGHT+IF3Iu2/NFRyl/JocWtAWZj9QFeMcuW9vBgKxBctcPZ/i2/RWLz7604ftPNZe7L96SaEVRIfJHbtxGYkRBVCjm0=
+X-Received: by 2002:a05:622a:544a:b0:4ed:5ed:2527 with SMTP id
+ d75a77b69052e-4f1d047a17bmr24414291cf.3.1765550936709; Fri, 12 Dec 2025
+ 06:48:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AlEAuNDsVKz3
-Date: Fri, 12 Dec 2025 15:08:55 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "JAYATHEERTH K" <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org
-Message-Id: <52483794-bdba-44b8-9222-761184ecea95@app.fastmail.com>
-In-Reply-To: <xmqqikeccnhx.fsf@gitster.g>
 References: <20251212020930.11654-1-jayatheerthkulkarni2005@gmail.com>
- <xmqqikeccnhx.fsf@gitster.g>
+ <xmqqikeccnhx.fsf@gitster.g> <52483794-bdba-44b8-9222-761184ecea95@app.fastmail.com>
+In-Reply-To: <52483794-bdba-44b8-9222-761184ecea95@app.fastmail.com>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Fri, 12 Dec 2025 20:18:45 +0530
+X-Gm-Features: AQt7F2q1ZWLIS3hPkYeo1EOZeXHZ5ZsXqUTrTolyxvPTVBoMnBThSpwtHo_IKyI
+Message-ID: <CA+rGoLeO1P9DLNVgiQJ0=nAQEgt=W+jgKM6XZ9TSipMdPxAjNA@mail.gmail.com>
 Subject: Re: [PATCH] Make pull.c match the structural conventions
-Content-Type: text/plain; charset=utf-8
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 12, 2025, at 05:50, Junio C Hamano wrote:
-> K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 >
->> The builtin sources follow a predictable structure, and pull.c departs
->> from that pattern by arranging its option table in a way that disrupts
->> the expected flow of the file. The irregular placement makes the file
->> harder to read, breaks the visual rhythm shared by other builtins, and
->> forces readers to jump around to understand how options are handled.
->> The lack of consistency makes pull.c feel like an outlier rather than
->> a peer alongside the other commands.
->>
->> A consistent layout helps readers rely on established mental models,
->> so bringing pull.c into alignment improves clarity and makes the file
->> easier to navigate and maintain.
->>
->> Pull.c, become structured like the other builtin/*.c files, keeping t=
-he
->> option definitions where the reader naturally expects them and restor=
-ing
->> the uniformity of the builtin command layout.
+> I=E2=80=99ve seen some commit messages in the last few months that have t=
+oo many
+> adjectives. I=E2=80=99ve never seen that style before.
 >
->
-> The above is, what should we say, overhyped?  I do not know an
-> appropriate phrase, but there are subjective judgements without
-> backing it up with exactly which pattern the code "departs from".
->
-> In other words, too many adjectives, so little substance.
 
-I=E2=80=99ve seen some commit messages in the last few months that have =
-too many
-adjectives. I=E2=80=99ve never seen that style before.
+Ahh, well
+I had this format saved from Junio
+---
+First line should be an order (Not added but add) and then give a line
+empty space.
 
->
-> I expected something a lot more than a simple change that can be
-> summarized a lot more concisely, like
->
->     Unless there are good reasons, it is customary to have the
->     options[] array given to parseopt API in the function scope,
->     not in the file scope.
->
->     Make builtin/pull.c:cmd_pull() to follow that convention.
->
-> or something.
+Then
+- Give an observation on how the current system works in the
+   present tense (so no need to say "Currently X is Y", or
+   "Previously X was Y" to describe the state before your change;
+   just "X is Y" is enough), and discuss what you perceive as a
+   problem in it.
+
+ - Propose a solution (optional---often, problem description
+   trivially leads to an obvious solution in reader's minds).
+
+ - Give commands to the codebase to "become like so".
+---
+
+I tried to force this format here too
+That caused a lot of adjective issues.
+The patch above is just a copy and a paste
+and I get why the commit message felt the way it did.
+
+Thank you
+- Jayatheerth
