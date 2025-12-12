@@ -1,70 +1,70 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E73E2580EE
-	for <git@vger.kernel.org>; Fri, 12 Dec 2025 15:15:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A089B30EF6D
+	for <git@vger.kernel.org>; Fri, 12 Dec 2025 15:15:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765552534; cv=none; b=pD6eUezgUhclB2D2o6hCglQkyZ0JZ1w0DLhoNyIi6dggsKFJYnajknO0mU8e8Q4dHHBEfXFiSh86E3InCDQ38P6wqt8i/e/zmk/BBCzMnLlWmA6z6+Oac21MxFTDGVdlcwYSJfQninJuYxrQvU26ZtarqKkR3PgkhKfGHKtghs0=
+	t=1765552536; cv=none; b=galUPwW+o9ecaEgy4tjjBft0XKSfb8UHeA7f9R21eDP6Y4EIxiXjjSqHYE3SdjrqCbYUVOP+8Gx6KGAtB55WLWesX6Nu6ekZmI3+ILeko+3l3bmHsqfsGwJFwF0f9CUW1dL0wNUOsnDmaTIts8ED+KZb5fJB3qeHz7eH37fOgaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765552534; c=relaxed/simple;
-	bh=UrjtDdIAdUla8MpnFW+cN7qhFw3RA3md0ZZZH/g1Lm4=;
+	s=arc-20240116; t=1765552536; c=relaxed/simple;
+	bh=hO3GyoCw8ijyYE4uhmsOKIxwoaWr/b0eh1Ax1zhJbWI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=cEYDwD0vgCz6HNULNxCuNho7MCkQ/JpaFQ2HwGzwsPxk3oUnOgKmdGzbDCAEyEuetF8C4ErqSWXkvZXfsRsa+XqedM8C06vo+yk8war97OhJau/WKTAlzYSNU33S8WccV7CGm3WD7jvUPpZoObtDIFRhDB0TtqwcyLlgCEpOlaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O0IG/WyL; arc=none smtp.client-ip=209.85.210.181
+	 MIME-Version:To:Cc; b=FZqgRtSobdljyDYGXhtHRnbwg1kS+pEetTZJIqHijS5iYDqMeyTqN8+B2cKQg9RgD7SxzYt5Q80bXIwmdYZWtyieApCNhb4Rueow3My7Wr+yOvNVIWTxIovq2AkAzjwYJYxqjziqZhkeVZgoZY1ZrYA0IlGH1l40fv/N7xoMSuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ffb+ozDI; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O0IG/WyL"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-7bb710d1d1dso1816505b3a.1
-        for <git@vger.kernel.org>; Fri, 12 Dec 2025 07:15:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ffb+ozDI"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-bd1ce1b35e7so944105a12.0
+        for <git@vger.kernel.org>; Fri, 12 Dec 2025 07:15:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765552532; x=1766157332; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1765552533; x=1766157333; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qKegBShAPoHnYsRBIHKLX32o9FVxE+P6G7+/pdhLSHo=;
-        b=O0IG/WyLCgoA5xupaokhvRWbCC13fS1fKUxu8zsT+JtIOBplT8BTrYdtTmUStGtyr0
-         GaEY5E4RZrhwgAiPtJnOOayOU3DJpjpGB43GZPB/bZBPmEvWE3xC3PLjHZ0QiQaSEE+6
-         62qyvATOpSKH9UhYTgQBHnWwGCgL3Q6SWNmSkzqmHoVrkmr98iw2Rr8txp754MN3gRPs
-         eVJeiRGqAPHKnmDG1JdagIjSy3H0wzymtzUpHYACKgA/kQQSAMrdYG6j/knXFUN0qncG
-         DvPAZrh9ZkzrbhGrPsdHL/T7ff2qP8MjOL80BWdk35AWqrHYhYX07RPKQ5IBfw0U90Ox
-         xkug==
+        bh=Q9G+zKuRusJLjFF7h5yeLt5PUD3oiwMkuqHFQPZOwjo=;
+        b=Ffb+ozDIfl0JKXzLQ1KTOnX4RggVAM8vCWzfDjaKnRN31OvUPF0ttS937EOLuDkG6W
+         AWCuMshHWLtiHAEN/5emVBZPNBFgNwaNY5lCtaKYtHn0rouY8qHpNRTWwUAr9uNc4clS
+         e9keEeJ+Bc07X8bLLx32kqIaVuxSshdKe1QI+ZhOuzIwt78L8QhQshAXxPv89jaKU/pE
+         vTXVr6fEi5wTQ+yLLY3yi7hvrzi2FaorpSocPFwdvGeCb7wvcTUUo6smTwQ+N7/4UE/Z
+         EPrFB+weZFv0UGJra81Z/mbtk45u6afq+clNLvFN9KxXDWY089eApEwzF+uEEgec0sU0
+         MDvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765552532; x=1766157332;
+        d=1e100.net; s=20230601; t=1765552533; x=1766157333;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=qKegBShAPoHnYsRBIHKLX32o9FVxE+P6G7+/pdhLSHo=;
-        b=V9HOvX6SkkqnAAnpMOZl7ZlkJhowaeflVzcLpbgfy0qbGCpp0JgOG83Yfa+9HQEXuf
-         d3rzZmsZni7pTFEzlOTbKi79Buyt0sq/MMt7bjhto7YG1QaprqBsod1LG8RuDWX2TGIp
-         35i3ZpuQajFrv7qsCfh5DGAY3YIR8XO9nbAxPi2BInrsFu12JwgncqiFoHbGcFGbAFyx
-         31cPKuY9Z6NxjJzBIFfpUkPKp9BjKPWwMsC7s01+PBtRsYM072dRH/BvJVAMhAofCHcl
-         hmpi+GO1ZYhMEi4VsUp8c3Ye5BtTouLweGriiJgr/6QJ4VNZCFiyJf8omZJorvi+t0Hi
-         +TBQ==
-X-Gm-Message-State: AOJu0Yy/gQdsTf74S9HqorRQgITx3bYb9Y65uQ/4s+ZAhd3ufU8gQuGR
-	lNJt29xf07ayGJo56W17gApW6a82/4w8st7Ztt77ggMGlxLBzIjhXUIiGululw==
-X-Gm-Gg: AY/fxX5t5dXty2sUc8uQglOQ3lKbO8zK4M8fk+jI7STvVSqW2l9OT4CjWEkIcEPypx4
-	9Akzr3b6P/+lmwycAglCgkIDhYzhOVL/YdhuzJMvdQ6AHpNA813IV4nV8QvV0C7KH/dfSJCN8IW
-	TdMonC+5/zJhvzsfEo5OElslyNpFsSL6pClHCQONoFPq4pQeoANOZIWuJ4Wwd2u4FC4gmnOU3KP
-	YFH6CNX3kq99wbTZK8eBwaUhmKJ4cKGtBEFJg0a8Hgscfyz9JndJhejfXiJAQ/Bat2ZxJ3RwxrW
-	3zenIS5fj11hZDqFAQDDOQjdfzewttcJ4eweVRI3mmK74tC+4oB19DM5ms9xC9Mouc1EfRuazYn
-	Dp7/dsGCOTCshR9fwj6UcKP6XtE3vnvp1ypOsE/ClegcmgpTKWBr+ZpAQe+unyHJbGWj9damPgn
-	c27S5GHJNTN98xWirGopV3FUke
-X-Google-Smtp-Source: AGHT+IHfOSaP+pfaUM3CR1q1+B7a24M4CXs5qbZw5Gjk1PVg6nHETCwD5USpNBWcF8QuhkJpmySY8Q==
-X-Received: by 2002:a05:7022:f509:b0:119:e56b:c752 with SMTP id a92af1059eb24-11f34c2600bmr1373781c88.23.1765552531819;
-        Fri, 12 Dec 2025 07:15:31 -0800 (PST)
+        bh=Q9G+zKuRusJLjFF7h5yeLt5PUD3oiwMkuqHFQPZOwjo=;
+        b=ONJx011BmUrlZInVSTcWfEY6CmuFykogEexhxbJ/DoaiWA7YNGcXcsw+3+PCDbSMYw
+         jqDNPfMtYXmJFu/ZdKv3j63xQ3XV/l7D1xX0r83pGQxFEOEgufYfVvpB8S2sBvHEgQfN
+         zIUjwtJnkBQhQB5vQIR53AbO+aRJEzmczR93kZZQGnWNC+s7+2+aeWdsdiM9natEJPAq
+         Dx3qw4HvEdIyapayuULtC+4Ga735aQRFKT6rODSF5yzb+aZ/9WDpJwAi+G9sBEOiPJ67
+         OJK1FRdx1PBcl7jGT0/bkdcR8qJrbH3feg95/GTx+H/uifToLa1BrxTg1nQwH+nS0ExM
+         1YzA==
+X-Gm-Message-State: AOJu0YzYUMUdXwQ4Zi+YDCoOwQ1xWBOYu4uGxRCvrRTgXj7IoRilnI39
+	ZXDpmomgnAn3tClYHwwv7xbsVrZ37u6dkTaSTHUGoK6WGGbn42y2B+1m0lUujb4K
+X-Gm-Gg: AY/fxX44oUsRfg6jzr6hOQhAnI8ebrbwPcrs1+Ebm7iiKr/ORch/uKcrFGZewKHpgP4
+	smv+V6qgXQcrwimsPRtYKAAG/wLLExT5NmvRmpMdBIddLuvIN4IixWGYA6J1Y07KJs4W1zt6Ng0
+	HO3Hb7Abjg+tsyJAfgZdmFziIGMqH08zPxaag2ihWuzOfUbLYjt3wkuRtmsGb2lZ6aupFhp/MoY
+	txEoZ1Eg2qOsrEYV/VEjMlamJFQao9/YQmhs7hAUaymcBcmg6Thr2fAaQWKiHSPg91+QjEqS0lN
+	yLvLucagVykDgtdq8WWGDLgHlMIwHuwShyBrFTA7uXLXP3tIQtc50MfDG6Siog+eUFkzzPXjhDe
+	qJQ8BejuZodTrZE3Whv5XLWcvzLBKgbs0DSkDhsX5tQemGtgRfTXMLtn++q6NJKbicXChB7ZMMB
+	xS628Gri4Tyv1LUw==
+X-Google-Smtp-Source: AGHT+IG0Ib6fga9UIDuSrC15kW16BvQl3nOn8KvMgUG0DzUkuNgGQ2Guv3/B+s+ixcFVIkGfkET6+w==
+X-Received: by 2002:a05:7301:5505:b0:2a7:6a9:ef89 with SMTP id 5a478bee46e88-2ac2f86de22mr1352182eec.7.1765552533167;
+        Fri, 12 Dec 2025 07:15:33 -0800 (PST)
 Received: from [127.0.0.1] ([172.182.212.53])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11f2e1bb2f4sm17984814c88.3.2025.12.12.07.15.30
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ac342eeaaasm3291655eec.6.2025.12.12.07.15.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Dec 2025 07:15:31 -0800 (PST)
-Message-Id: <7a2f919d7c610ce7c9e93682884212ebee34d9b5.1765552528.git.gitgitgadget@gmail.com>
+        Fri, 12 Dec 2025 07:15:32 -0800 (PST)
+Message-Id: <573929ecdb950e3c3e862f14c59ed5a544b8b6ca.1765552528.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2010.v3.git.1765552528.gitgitgadget@gmail.com>
 References: <pull.2010.v2.git.1764607847.gitgitgadget@gmail.com>
 	<pull.2010.v3.git.1765552528.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 12 Dec 2025 15:15:24 +0000
-Subject: [PATCH v3 1/5] scalar: annotate config file with "set by scalar"
+Date: Fri, 12 Dec 2025 15:15:25 +0000
+Subject: [PATCH v3 2/5] scalar: use index.skipHash=true for performance
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,106 +86,56 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-A repo may have config options set by 'scalar clone' or 'scalar
-register' and then updated by 'scalar reconfigure'. It can be helpful to
-point out which of those options were set by the latest scalar
-recommendations.
+The index.skipHash config option has been set to 'false' by Scalar since
+4933152cbb (scalar: enable path-walk during push via config, 2025-05-16)
+but that commit message is trying to communicate the exact opposite:
+that the 'true' value is what we want instead. This means that we've
+been disabling this performance benefit for Scalar repos
+unintentionally.
 
-Add "# set by scalar" to the end of each config option to assist users
-in identifying why these config options were set in their repo. Use a new
-helper method to simplify the two callsites.
+Fix this issue before we add justification for the config options set in
+this list.
 
-Co-authored-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Oddly, enabling index.skipHash causes a test issue during 'test_commit'
+in one of the Scalar tests when GIT_TEST_SPLIT_INDEX is enabled (as
+caught by the linux-test-vars build). I'm fixing the test by disabling
+the environment variable, but the issue should be resolved in a series
+focused on the split index.
+
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- scalar.c          | 24 +++++++++++++++++-------
- t/t9210-scalar.sh |  3 +++
- 2 files changed, 20 insertions(+), 7 deletions(-)
+ scalar.c          | 2 +-
+ t/t9210-scalar.sh | 4 ++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/scalar.c b/scalar.c
-index f754311627..1c7bd1a8f8 100644
+index 1c7bd1a8f8..55b8542770 100644
 --- a/scalar.c
 +++ b/scalar.c
-@@ -19,6 +19,7 @@
- #include "help.h"
- #include "setup.h"
- #include "trace2.h"
-+#include "path.h"
- 
- static void setup_enlistment_directory(int argc, const char **argv,
- 				       const char * const *usagestr,
-@@ -95,7 +96,17 @@ struct scalar_config {
- 	int overwrite_on_reconfigure;
- };
- 
--static int set_scalar_config(const struct scalar_config *config, int reconfigure)
-+static int set_scalar_config(const char *key, const char *value)
-+{
-+	char *file = repo_git_path(the_repository, "config");
-+	int res = repo_config_set_multivar_in_file_gently(the_repository, file,
-+							  key, value, NULL,
-+							  " # set by scalar", 0);
-+	free(file);
-+	return res;
-+}
-+
-+static int set_config_if_missing(const struct scalar_config *config, int reconfigure)
- {
- 	char *value = NULL;
- 	int res;
-@@ -103,7 +114,7 @@ static int set_scalar_config(const struct scalar_config *config, int reconfigure
- 	if ((reconfigure && config->overwrite_on_reconfigure) ||
- 	    repo_config_get_string(the_repository, config->key, &value)) {
- 		trace2_data_string("scalar", the_repository, config->key, "created");
--		res = repo_config_set_gently(the_repository, config->key, config->value);
-+		res = set_scalar_config(config->key, config->value);
- 	} else {
- 		trace2_data_string("scalar", the_repository, config->key, "exists");
- 		res = 0;
-@@ -178,14 +189,14 @@ static int set_recommended_config(int reconfigure)
- 	char *value;
- 
- 	for (i = 0; config[i].key; i++) {
--		if (set_scalar_config(config + i, reconfigure))
-+		if (set_config_if_missing(config + i, reconfigure))
- 			return error(_("could not configure %s=%s"),
- 				     config[i].key, config[i].value);
- 	}
- 
- 	if (have_fsmonitor_support()) {
- 		struct scalar_config fsmonitor = { "core.fsmonitor", "true" };
--		if (set_scalar_config(&fsmonitor, reconfigure))
-+		if (set_config_if_missing(&fsmonitor, reconfigure))
- 			return error(_("could not configure %s=%s"),
- 				     fsmonitor.key, fsmonitor.value);
- 	}
-@@ -197,9 +208,8 @@ static int set_recommended_config(int reconfigure)
- 	if (repo_config_get_string(the_repository, "log.excludeDecoration", &value)) {
- 		trace2_data_string("scalar", the_repository,
- 				   "log.excludeDecoration", "created");
--		if (repo_config_set_multivar_gently(the_repository, "log.excludeDecoration",
--						    "refs/prefetch/*",
--						    CONFIG_REGEX_NONE, 0))
-+		if (set_scalar_config("log.excludeDecoration",
-+					    "refs/prefetch/*"))
- 			return error(_("could not configure "
- 				       "log.excludeDecoration"));
- 	} else {
+@@ -160,7 +160,7 @@ static int set_recommended_config(int reconfigure)
+ 		{ "credential.validate", "false", 1 }, /* GCM4W-only */
+ 		{ "gc.auto", "0", 1 },
+ 		{ "gui.GCWarning", "false", 1 },
+-		{ "index.skipHash", "false", 1 },
++		{ "index.skipHash", "true", 1 },
+ 		{ "index.threads", "true", 1 },
+ 		{ "index.version", "4", 1 },
+ 		{ "merge.stat", "false", 1 },
 diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
-index bd6f0c40d2..43c210a23d 100755
+index 43c210a23d..923c243c13 100755
 --- a/t/t9210-scalar.sh
 +++ b/t/t9210-scalar.sh
-@@ -210,6 +210,9 @@ test_expect_success 'scalar reconfigure' '
- 	GIT_TRACE2_EVENT="$(pwd)/reconfigure" scalar reconfigure -a &&
- 	test_path_is_file one/src/cron.txt &&
- 	test true = "$(git -C one/src config core.preloadIndex)" &&
-+	test_grep "preloadIndex = true # set by scalar" one/src/.git/config &&
-+	test_grep "excludeDecoration = refs/prefetch/\* # set by scalar" one/src/.git/config &&
-+
- 	test_subcommand git maintenance start <reconfigure &&
- 	test_subcommand ! git maintenance unregister --force <reconfigure &&
+@@ -246,6 +246,10 @@ test_expect_success 'scalar reconfigure --all with includeIf.onbranch' '
+ '
  
+ test_expect_success 'scalar reconfigure --all with detached HEADs' '
++	# This test demonstrates an issue with index.skipHash=true and
++	# this test variable for the split index. Disable the test variable.
++	sane_unset GIT_TEST_SPLIT_INDEX &&
++
+ 	repos="two three four" &&
+ 	for num in $repos
+ 	do
 -- 
 gitgitgadget
 
