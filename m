@@ -1,108 +1,91 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232602749E6
-	for <git@vger.kernel.org>; Fri, 12 Dec 2025 14:48:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05E64A01
+	for <git@vger.kernel.org>; Fri, 12 Dec 2025 15:01:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765550939; cv=none; b=cZvecLGOxJx40mP7Xe+s70rqZeAjugXHOJD8ZlPZ8JxfHhY2pyhEEINr0Cz/i+blogURz2ethVVrEY8ezFxlDg4/wBcNNxz6RlvkCqLki7aVhK8j00DdmDVCpmJ/3X8d6JMtGAtURIbvO9WSGxqdbWjmuKLyD1Nr5egbYBIT1K8=
+	t=1765551679; cv=none; b=QD1Koy8b1ZiY8tB2NUK0jr2q3k5Msw/sDSuvHzau6IUBmmaXOiJ7WM4aYIuy4wc9G8vcSMvKzTOFZ+g4jSC5gW8orhUJ0wZSW4n09lxB7+xeKkExCSwLmeKRE2WODcqei14Jdd00Fp2KX800un2BIBe8xVkJN9CjOYCSyqjuPG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765550939; c=relaxed/simple;
-	bh=lef7OheMlLy7RjsSFzSEdppqwfkR/wmhUZvgEzT6tuo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=M0F/PqcWeDFiyQ2j+Z/yXmNwQY5BGDV7WO4evzM/dEAJlwfg1i01yr/ktkGrXjxV1fs8NiC29qrxvam+C+guYlMQ3Ojc9FCUpJk5BzSmOqlQW0BZcphj0v3i6HjG8SwrW5qilhRuypBX6mUkbTZ2adZ2L8KbzunjjzIQcG35WcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MnUdWygY; arc=none smtp.client-ip=209.85.160.177
+	s=arc-20240116; t=1765551679; c=relaxed/simple;
+	bh=WVesdPb66V7wwWNtOTueAl599KhvEQpBGwOFNLUibjc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hKwnYRMiPbKYLm3i6tbvDT9aLjj7WZQ7UQoCPKV8Ol4erNEr9W4U2PTKPULPO9YoLztgwFkpdZpxsSNyl+rpaRYUrFF80Q+aQfO+5BeBi8nPr1sL9M5bHLtP9QpWrWoUULmoliNzGOUkbvRwHwtXOHE2aqJkuAWIvX5MfodkPK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LsB8xyRF; arc=none smtp.client-ip=209.85.167.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MnUdWygY"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4ed75832448so16246101cf.2
-        for <git@vger.kernel.org>; Fri, 12 Dec 2025 06:48:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LsB8xyRF"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-455af5758fdso369067b6e.1
+        for <git@vger.kernel.org>; Fri, 12 Dec 2025 07:01:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765550937; x=1766155737; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vlWjCK4Q3r8BXZXRxQlLqiLfkWaPLU+3rwfdYTJ4SbU=;
-        b=MnUdWygYBQxyPdNZllgzNc8F2ffuRi+9ySY1dh+j8iBRcKF5z7qPw6avqrssDPFEYV
-         uOUiYGCvhaFIz4N224IJA/UfTl0a14W0jkM6FttcbZBmGLjBYjNS2tMQVgDdQZpb3xGF
-         LAxDvqgqehPARfGdyAYvza9wz62A1++W3EvH0clUfyZ1bcwAQXacMeyJV3+Xd00FS5Op
-         GXfn4lqkMiiERzxNrv7wDDfKDNy367oE+egHF8KQO9mxUC67fSvmLbKElRjkNDMUYCPP
-         eH4QBnuBwYZGl/GWbQS6vtnrnt/wSoNujNtH0HOCqTas4JuXHnxtfsurHk6Vm+gIhMqn
-         1IGw==
+        d=gmail.com; s=20230601; t=1765551677; x=1766156477; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8+G2LsNbu93OWaNDtBlRcIBWX16WrBaSl8Mp899t1fk=;
+        b=LsB8xyRFjMb3WBYLJFX8NBLJLpnpMy1RKaXd0oPhy3enH7wUxev6rGqkNXbD14lEeC
+         /6yy+pWm8BVKmb7Az9uHHSebTdt2a8B1Yn8je9CN0RpLxh8qnIR/sH4wTOBZ0HYq7AtT
+         f1qztZHw2j2MuxNpZ7kkC3qlQpl94wFCYJXbQ0NaAr2u5DNIiC8LAjhOLM4B1WooTU8x
+         K1RLz9hfR34QwpJD8MWumxbBJb53n+NirLs6mY+xoGdMaizWob+c6YFA4a4MF/b8sINo
+         W6qVqIYda4PMYI7n5smegIHCKCSPAgI0sRVUFa6IG3vpM2YnXuUwUXFkaBooCC8/l8/V
+         qFdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765550937; x=1766155737;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=vlWjCK4Q3r8BXZXRxQlLqiLfkWaPLU+3rwfdYTJ4SbU=;
-        b=eRkDzP+7+rGHXQ9rLNhLxj8tmdZmo730b5KxkLBL9QVEpj9MgsbBs51QWJI1lApr1u
-         ik18eBjjoLu7/gPCYNZ+7EqPsyeMjZvVxvT1r+JrRdq0gKB3oh8FcGRYslobr6W2lZnW
-         Q0jxdeT4TW5QaCnghcMqorcU/1TK2z+JHo4qCs28hxaPs0nXLeCTNbE/h101aBxxGyzq
-         5gHfzbAUcalMrFLOFiYJTpcVKUXw1RZE0uNj67C79iXy77GJ/gPgseGjeTHou374TYWr
-         KxH13JXNILT9Z7RJNS1rbb2zB2Sbey/3SyouteA+Ejp8ZWcVXCs/BG4dJ6OplkERCTQ+
-         0ZBg==
-X-Forwarded-Encrypted: i=1; AJvYcCUGOJD3QamVgYY7XW1xoQrQiWL9I1giR7DBxc2PDD2Sji9+To+1s99Dci8hU3UPfp+Rf7I=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzHyFxQIumsjrMX3vEgvWZ2FbJXd6FlP6pVZocYNlwpvKKk4eaG
-	dvPVrV7FksikGFZ7JxoMamVciVeWjfFS5MoIwqJXzPBHlrjGJB4Lhn46v9GzdZlcctfI81lPt4S
-	0ujot2mmOayTezfrurt8qlxiVn2BFS30=
-X-Gm-Gg: AY/fxX6OrR/ZRa4jqjrbWJRKUIrVpHbvu8Y7WyMLhyaxwOzcEw0trRwjWG1aGHt9Ecf
-	KByCVibT8BEgutQrteftX8a+7cMXvgiSpNlui8bdULVlfyXju7NtKP8kuLVbYfCSpkOYQYNuTKw
-	s02H3qeH035rgBpU/fIQCx427KcXgWo6SXMTbTS+9lnFwVv2pG0cs1GBD/LlKo37++3/QPBUPAi
-	DOvUsdnCXVfEQ3jOjHTYX0GErW0DoYWcG0hXtxyZTI5txve7pI29o0KMqkVKTqVtWByBkHlVEo2
-	BAUqmk0pmbGPyHwsd7SzZP+GU1Au
-X-Google-Smtp-Source: AGHT+IF3Iu2/NFRyl/JocWtAWZj9QFeMcuW9vBgKxBctcPZ/i2/RWLz7604ftPNZe7L96SaEVRIfJHbtxGYkRBVCjm0=
-X-Received: by 2002:a05:622a:544a:b0:4ed:5ed:2527 with SMTP id
- d75a77b69052e-4f1d047a17bmr24414291cf.3.1765550936709; Fri, 12 Dec 2025
- 06:48:56 -0800 (PST)
+        d=1e100.net; s=20230601; t=1765551677; x=1766156477;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8+G2LsNbu93OWaNDtBlRcIBWX16WrBaSl8Mp899t1fk=;
+        b=GP2pHzr0UbE00dkMx7cRS1X0Vjmlt2vB4Knyu+nCKQvZD3VDLHoQU5hKyattvfRsyq
+         ZmojNNEYEKG6F1ZNtog4opwXuPTm+GgKs+PApTNcNYYbtB5xp+a/mGZzF3YS3r02vPlW
+         2OnrYlHa/iuDRd+Avr0d9EbEfbGqyWgR2aId9mRawOYbIrTBF8DH0BOLetGLSekZ00OK
+         cooQ5CtkmJ0kCOqH/1hVOk2wZio2GpYfkywHO1TPYRtxvHij/sucD0PhFgAAPje5ZH0U
+         wUjotnfj45vLF/05L2cQTRwExHJUMa8n4WSJuLyZCaCC7Xr4Y7vGFlmFeSc70LF2XoM1
+         c/Lw==
+X-Gm-Message-State: AOJu0YyC4sv7EFD5fyGoB420mU8ltemBJEbog9+usK5dMlYfXcSvns1h
+	kyEuO2su0I9NK020jg1l9dEuYVNnso7/Kbqk759SETb7Hc3iAkwl8JZNWhKkow==
+X-Gm-Gg: AY/fxX6tePGs6OY6VsOb35PYHZ+R/GTDuGNX40qITmPLpBuO9VYex2l4o0+K/IaujBC
+	A/VwsIbYJ7A/77B1rQVaktKAhVEdsz/OwzlqWG+ofM+pd+y58jcraFkHli6VAmMWP8VaEfcOZn8
+	IAXjLuyg+kH454vJad45WbBSfbO7VVjGGx8N0OQ8kYh8LL/0Np1YUGvjYroZLRXG3lz8FQwz/xW
+	yFlEEZZwl/4KZlnQTXHNABuBsPScpYExU/Lc5MJNZ1wHDGIO6wxdR6BngMDlyyxCe5NBP0h3TkM
+	5fmQVbBjja94d1Xb5mH4Hsp2V36w71LSeL8XsdHc5D2Tb5tFi8/hYpJZicTyQ+uCL/dRX/dUcLZ
+	u9s5zny1nvGCQRZ2Tz3sAo8mc/kJJFIeDDzilqMbvq7UTe5CsolbR5S20wLFMWUYnMQK5zAsAtp
+	Aki1eX
+X-Google-Smtp-Source: AGHT+IFoX7bWxi2PG3hHVbl8XkTFQ4SNQdYmK8ooTvEYFyeSF3b8rcPZYFql/FPeR0gz6Ib+FKpD8Q==
+X-Received: by 2002:a05:6808:3505:b0:43b:252e:f793 with SMTP id 5614622812f47-455ac951413mr832052b6e.36.1765551676048;
+        Fri, 12 Dec 2025 07:01:16 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-45598cf2becsm2589390b6e.13.2025.12.12.07.01.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Dec 2025 07:01:15 -0800 (PST)
+Date: Fri, 12 Dec 2025 09:01:11 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 0/2] Some random object database related fixes
+Message-ID: <eerya3xfsrf3nb5onk6b2nefaj2ghsu3v3rhtijijht7r77rxt@chqmu6gmhq3f>
+References: <20251205-odb-related-fixes-v1-0-ef4250abb584@pks.im>
+ <20251211-odb-related-fixes-v2-0-bdf875ce51fc@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251212020930.11654-1-jayatheerthkulkarni2005@gmail.com>
- <xmqqikeccnhx.fsf@gitster.g> <52483794-bdba-44b8-9222-761184ecea95@app.fastmail.com>
-In-Reply-To: <52483794-bdba-44b8-9222-761184ecea95@app.fastmail.com>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Fri, 12 Dec 2025 20:18:45 +0530
-X-Gm-Features: AQt7F2q1ZWLIS3hPkYeo1EOZeXHZ5ZsXqUTrTolyxvPTVBoMnBThSpwtHo_IKyI
-Message-ID: <CA+rGoLeO1P9DLNVgiQJ0=nAQEgt=W+jgKM6XZ9TSipMdPxAjNA@mail.gmail.com>
-Subject: Re: [PATCH] Make pull.c match the structural conventions
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251211-odb-related-fixes-v2-0-bdf875ce51fc@pks.im>
 
->
-> I=E2=80=99ve seen some commit messages in the last few months that have t=
-oo many
-> adjectives. I=E2=80=99ve never seen that style before.
->
+On 25/12/11 08:19AM, Patrick Steinhardt wrote:
+> Changes in v2:
+>   - Drop the first commit that regards geometric repacking with promisor
+>     remotes. As it turns out my assertion was wrong: geometric repacks
+>     do and have to consider promisors, but they will fail to handle
+>     them. This is a bigger topic to fix though, so I'll rather want to
+>     move this into a separate patch series.
+>   - Tighten tests a bit for the commit-graph generation.
+>   - Stop referring to a "subsequent" commit that doesn't exist.
+>   - Link to v1: https://lore.kernel.org/r/20251205-odb-related-fixes-v1-0-ef4250abb584@pks.im
 
-Ahh, well
-I had this format saved from Junio
----
-First line should be an order (Not added but add) and then give a line
-empty space.
+The change is this version look good to me.
 
-Then
-- Give an observation on how the current system works in the
-   present tense (so no need to say "Currently X is Y", or
-   "Previously X was Y" to describe the state before your change;
-   just "X is Y" is enough), and discuss what you perceive as a
-   problem in it.
-
- - Propose a solution (optional---often, problem description
-   trivially leads to an obvious solution in reader's minds).
-
- - Give commands to the codebase to "become like so".
----
-
-I tried to force this format here too
-That caused a lot of adjective issues.
-The patch above is just a copy and a paste
-and I get why the commit message felt the way it did.
-
-Thank you
-- Jayatheerth
+-Justin
