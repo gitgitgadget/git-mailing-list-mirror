@@ -1,162 +1,135 @@
-Received: from mail-qt1-f193.google.com (mail-qt1-f193.google.com [209.85.160.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115BE1EF0B9
-	for <git@vger.kernel.org>; Fri, 12 Dec 2025 14:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD5F1EF0B9
+	for <git@vger.kernel.org>; Fri, 12 Dec 2025 14:09:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765548382; cv=none; b=vBWdQYVK9KL1e5w7ml9VylatHkcs+aoVL0jn7RSdRtqeZgG+c+bOzCbSPxM7euevaQsxV2Y5Eegear7vHRbxE9v8R44UuQyc0jdROACqAdaPqrfH+Jw9Ygk5+UUfki8hqqEoKFRFB/Phw6wax/+OkP4q563iwvCqksc78Lyb6D0=
+	t=1765548560; cv=none; b=jRZHRvNY38pJjSMJIVNHsyVMXkIxYDJqJ1Jm5g4QkWkY6ubg0B9jDKm65JUVLRl+vIpEJqEr54xGfeq///8FLjhgjyfQuFT0R9jKJQ5vVZ9UVKEP3mdvh1I62zosgcWbFkplKqixHqP2Lf5hI9Ac3iBNr5KOZ8ccJiX2ayNxr0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765548382; c=relaxed/simple;
-	bh=FHkHXmVRrdBhb6YmAz/HPwLpRM7aiq3FcfdXlG1tAMw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EwsmflQeL8suG3DwH5gs5mIEQIOM/i1hyF+8ma2B/ewRPQIGkrYWuLkd4dMVKhEYduenvR4fH5y/BYpoHMs6v9vENLB0QhDYW4C+lTfpmQ55j4wIxsGRCyl1pYcTaSOWKfsP8aorwL8nwon00ymdJJ3CoOmdbjBmxSgRbGp/G+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gQW4Ur3q; arc=none smtp.client-ip=209.85.160.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765548560; c=relaxed/simple;
+	bh=9/BwugOuEIhIF1JerAuuB8Pt+mm1aF9ocXWAqa9mUQ8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=FWVsT1p/KcbeTqaMA2GRkEDwxYxAvkfKi0nP4p8y7Ub/xYLmGM6KYQC56/OSsWOU2fTHz9NA3vD3Ry1d1w+YfW8yVC6tni8zjT52Gb+lCJIVF1va54xucJARdHYB5NE3NDtVAFCQZc4HxT8v6KxcBsKy053kW9Iyf54s71rv5Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=VY0dgUeJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rrAGALFv; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gQW4Ur3q"
-Received: by mail-qt1-f193.google.com with SMTP id d75a77b69052e-4ee2014c228so9267251cf.2
-        for <git@vger.kernel.org>; Fri, 12 Dec 2025 06:06:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765548380; x=1766153180; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eFE4R1YFzZ/aJuuhrCOysu2HuGafSZEIlF8lq447fWg=;
-        b=gQW4Ur3qm6jJ1OgGK9eNApaqftVrEgtdAcS883vbVQHFsD+kHFYpH+nI0hp59p4eqE
-         85G+/VnJPLvCsn+2ft67dIS45BlnH3njwFMtAczamTLsvluiNqXcqAozAg9GAxQRo+fS
-         hapemS+br+/2qFNQscN9/eiuyhKSSLUHhacJiVE60RuKxM3Qm07jRnutmeCOYdGMyA1P
-         EFdJVjs9O71DwrJACKrj5NifkZhACTa60j9fuz7qfITaCipr5g4zvi0/mbMIoVV/xjIV
-         G+XU8vlzaOVZWManHRSKHwF40vmNhXiuqGHaH4Z0/r1rSBHqFxWIj7WV26Zw6IP5/BQW
-         kl9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765548380; x=1766153180;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eFE4R1YFzZ/aJuuhrCOysu2HuGafSZEIlF8lq447fWg=;
-        b=a/nxLYKTbD2b5qKL32GvZgSGM80HQRwu+qy71j/3QRJvIEq2ER387+P74VTwYxZOGT
-         APL+zB+k6IJSwbriVK9H1rI/eE1lYibkxf090upA/UMKI5twQjvPCO3GCZvZhDSxxL2U
-         zV1XiBtaa6PZynsEjFzVEry/qQTlCwPDbQ45anx9o4UH7fUGISisYkEYmR0WjDu947a4
-         K7prCOfXv43wurn181va0c7ybLZ3oLNR8aHlf+vNvQ+MQamrIZoDS7Kh0xVM97IAAeY4
-         el3so8hh7V8pShHx15CK3ra8c0X9Mht+im7LKlqyL7/CtGdWGBStmQuHyIcw29Kw196m
-         bO9g==
-X-Forwarded-Encrypted: i=1; AJvYcCVRqUgZMo8WcIDMyU66DzowZUphQ/yLRkyO/udvkYZPKR4JsMiCOM+rKMyaBtwKUVFnEuY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxPT37u7uVWPd3dOua93CEPns4+SvS7t+a7RzyBQcVaqD7Fz5ex
-	IEr6VFEhVelovkn3x7pb5Uv3Ygm5RNs/L3Yk4qdl/XD5XeQJST80Qqgp
-X-Gm-Gg: AY/fxX5MhMEdmOmY69ZUaKFqoe1qCdGhiouKOaAjTmRv3UyedXHgcbV5+hCDMKzfOv9
-	IsTzTPC6egQf2z/Y185rDUu3vBh2QMvdlFE6WYZKLnxiwHv8yBq6u+6WZsbPk8siyWKY+h6Ph5D
-	Ud1a9NxHpTqsvNWMmRz2Tn8qdAkhhuPZtIiZ7GKA5AiKlIpz/kghbcHeyGCV6/uBc4nM8MjmaMd
-	omrErirI5Hz1DjSPPIC9IYKG9/IRxdgUerqwlI7akNiGj8VQ2MDqcN/qio1GF2ibET7+gGF5GQl
-	8yXy4Gtbl1JnU+QFzxJtH7BIcYiDn0Ve3RtDBtqJzggOKyE24cCpp8YMthZuLEb5npkmVQIS7An
-	9DjCH6phLzwqXfzQ6pbh2AVY1vkAv5upYjfVzR5A+k6dexDNlbyTpwE5CcMqHSMrKCjflgrAM6g
-	TRB6CiSB4Fu6AYla3ttY0kVTKzNbAiFnBpZevSq8faGfHeL6UMJOH/uS9Cxg==
-X-Google-Smtp-Source: AGHT+IE1RZFrEjrqgjbcHtOEHzInOXN+Uxgw0jcWT/h+6a+3kMT40Ov6PJKOWPswgd2gLmY0R1i6/w==
-X-Received: by 2002:a05:622a:1f87:b0:4ee:5fc:43da with SMTP id d75a77b69052e-4f1d0473f8amr27073071cf.11.1765548379604;
-        Fri, 12 Dec 2025 06:06:19 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8bab5d3e14csm465675585a.46.2025.12.12.06.06.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Dec 2025 06:06:19 -0800 (PST)
-Message-ID: <e1d51a8f-582f-425e-9682-c93411b4d090@gmail.com>
-Date: Fri, 12 Dec 2025 09:06:18 -0500
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="VY0dgUeJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rrAGALFv"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id D71081D00141;
+	Fri, 12 Dec 2025 09:09:16 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Fri, 12 Dec 2025 09:09:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1765548556;
+	 x=1765634956; bh=REhHhpwI5CpdGOJGl+LwydlJbIQAJL5I9/o+mWgN4Fc=; b=
+	VY0dgUeJNrZRSJnSstW6oqeqRLBm9kvQ7TTdIUtznIzfGY5sPL7kl4M6Eu9TgZcN
+	RFmPZd5Npbl9NWC53VOK3sY3xBSH15K2otFZLFOHty+ZgkwczduZZRaopZyB1J94
+	yfBTpuaobBYAjIDfqqecvx3ngs+AWuSE1U+/a6dc1P2EAf14xJxUlGjdSjD3lvYJ
+	yy5SFJCzTINots44e9HNIX6jDbKKD8TDwFQwG0GJ6+m59GY3006QBZgQ2k3yiCUz
+	AQWVShAI1y90ts7t3EUafyDpH1tpLXf7nIsQmpYgbRzQjJ1MezW9RZRtMh7Rd9ow
+	GGOuB9/MrjxJ86zQz0qMVA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765548556; x=
+	1765634956; bh=REhHhpwI5CpdGOJGl+LwydlJbIQAJL5I9/o+mWgN4Fc=; b=r
+	rAGALFvLmlZo9i/lZsrUsMuCZJmvC/rttpxQie7BkLO1ffSEDP+B6Uc2csfKIF2n
+	Sde+D8ek+g+DDVKrUO2JLBoakzTryV/UVBWFnQc9a/Ry3S/NmgpGsmYLxn9Dlcye
+	0FfHPxszY3Mhel6DExmo2VyEMn8rSqkewVpoyrICH3EskEM7UxQgYASpF1i1ADuE
+	PTuIg676CIuF2B7f7VOkJ7iZWgfdfWC+3ape3ozKGl2GCxnzRApxnVX5EyxQj9jr
+	I17Gu3gQR5uNliqPKEf7jSm03bDPjZIVXRs/A04UooRQvkGEpCmiHstS43K23pm8
+	hUJMM3dgaj/M9IF2t8DfQ==
+X-ME-Sender: <xms:DCI8aRfDpphRqxJTEW_BbPyUfAc5aGTgUfAPUjrqPD0YsDeOkPtVi9U>
+    <xme:DCI8aaCOCnmCTfsKenwNI9eybja5j3ZhcpIKqCLaFHOFvjtgYQqXs1_6idIu8pLCS
+    eluUXxSLjCprZoDQCNJbyxEAA7spwdQ2rCTUInzmS9Ay_bv-H-pWg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeefkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertd
+    ertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecugg
+    ftrfgrthhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefg
+    iefgfeekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhm
+    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjrg
+    ihrghthhgvvghrthhhkhhulhhkrghrnhhivddttdehsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:DCI8aXaFrCHVSByM01hWWoOuf-zjXuSs77ONO9i3YShcc-eFNcE7gw>
+    <xmx:DCI8aeJa75u7UyvpttPfUpMRc5SgRnkACGzjC2BL8zg6C-bESG7RCQ>
+    <xmx:DCI8adA5Sp8ATs_dJlz-d5Q5sA7ZpvDXfkFur-olsWL_Q-9Er20viQ>
+    <xmx:DCI8abr-3DhYf9iH5cQKr6tsQJAWmS5Hy38QCvcaRoCgI2oFHA8alA>
+    <xmx:DCI8aUXL-eYq9wdOuqKBhAeIUdQQqCoADjXZNgYkoq7IZ-6slZNsSuwD>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 942CA1EA0066; Fri, 12 Dec 2025 09:09:16 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] scalar: document config settings
-To: Henrique Ferreiro <hferreiro@igalia.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, ps@pks.im, atthewhughes934@gmail.com,
- johannes.schindelin@gmx.de
-References: <pull.2010.git.1764195516.gitgitgadget@gmail.com>
- <pull.2010.v2.git.1764607847.gitgitgadget@gmail.com>
- <ac1627dbd94e3330117fbaeac2e2373104aef531.1764607847.git.gitgitgadget@gmail.com>
- <e19246a7-40db-41d0-9cdf-817833123f45@igalia.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <e19246a7-40db-41d0-9cdf-817833123f45@igalia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-ThreadId: AlEAuNDsVKz3
+Date: Fri, 12 Dec 2025 15:08:55 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "JAYATHEERTH K" <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <52483794-bdba-44b8-9222-761184ecea95@app.fastmail.com>
+In-Reply-To: <xmqqikeccnhx.fsf@gitster.g>
+References: <20251212020930.11654-1-jayatheerthkulkarni2005@gmail.com>
+ <xmqqikeccnhx.fsf@gitster.g>
+Subject: Re: [PATCH] Make pull.c match the structural conventions
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 12/11/2025 9:20 AM, Henrique Ferreiro wrote:
-> On 12/1/25 5:50 PM, Derrick Stolee via GitGitGadget wrote:
->> From: Derrick Stolee <stolee@gmail.com>
+On Fri, Dec 12, 2025, at 05:50, Junio C Hamano wrote:
+> K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+>
+>> The builtin sources follow a predictable structure, and pull.c departs
+>> from that pattern by arranging its option table in a way that disrupts
+>> the expected flow of the file. The irregular placement makes the file
+>> harder to read, breaks the visual rhythm shared by other builtins, and
+>> forces readers to jump around to understand how options are handled.
+>> The lack of consistency makes pull.c feel like an outlier rather than
+>> a peer alongside the other commands.
 >>
->> Add user-facing documentation that justifies the values being set by
->> 'scalar clone', 'scalar register', and 'scalar reconfigure'.
-> 
-> Hi Derrick. I was planning to contribute a patch removing some config
-> options so I'll take this opportunity to just discuss those here.
-> 
-> My motivation is that some of the options seem to be related to things
-> other than performance and the list is huge, so I believe that some
-> options don't belong to scalar.
-> 
->> +REQUIRED AND RECOMMENDED CONFIG
->> +-------------------------------
-> 
-> There's no mention on which configs are required and which are
-> recommended, and it looks like none are actually required so maybe just
-> remove REQUIRED.
+>> A consistent layout helps readers rely on established mental models,
+>> so bringing pull.c into alignment improves clarity and makes the file
+>> easier to navigate and maintain.
+>>
+>> Pull.c, become structured like the other builtin/*.c files, keeping t=
+he
+>> option definitions where the reader naturally expects them and restor=
+ing
+>> the uniformity of the builtin command layout.
+>
+>
+> The above is, what should we say, overhyped?  I do not know an
+> appropriate phrase, but there are subjective judgements without
+> backing it up with exactly which pattern the code "departs from".
+>
+> In other words, too many adjectives, so little substance.
 
-You're absolutely right. Good eye! I started this documentation before
-going back and removing the "required" configs.
- 
->> +am.keepCR=true::
->> +core.logAllRefUpdates=true::
->> +credential.https://dev.azure.com.useHttpPath=true::
->> +http.sslBackend=schannel::
-> 
-> These options are not related to performance. Why not keeping them out
-> of scalar?
-> 
->> +core.autoCRLF=false::
->> +core.safeCRLF=false::
->> +index.threads=true::
-> 
-> These options just duplicate the default settings.
+I=E2=80=99ve seen some commit messages in the last few months that have =
+too many
+adjectives. I=E2=80=99ve never seen that style before.
 
-We did find that index.threads=true gives something more when explicitly
-set, so there is currently value in keeping it explicit.
-
-The CRLF configs are sometimes set globally on Windows systems, but we
-want the local repository to override those global settings for
-performance reasons.
- 
->> +feature.manyFiles=false::
->> +    This disables the "many files" optimizations grouped under this feature
->> +    config. The expectation is that all valuable optimizations are also set
->> +    explicitly by Scalar config, and any differences are intentional.
-> 
-> I disagree with this reasoning. This thread was actually brought to my
-> attention when working on setting manyFiles to true in scalar:
-> https://github.com/git/git/pull/2125.
-> 
-> Do you foresee any features that would apply to scalar but not to
-> manyFiles? I'd even say that some scalar options could be moved to
-> manyFiles instead, so that people that don't use scalar can benefit too.
-
-I suppose that the default reason is that registering a repo with Scalar
-already enables some config in an "indirect" way and having it rely on
-features.manyFiles would be another layer of indirection.
-
-The historical reason is that we initially didn't want changes to the
-features.* config settings to automatically be assigned to Scalar. I
-think this is more important on the features.experimental side, as
-the intention of features.manyFiles is very similar to the intention of
-cloning/registering with Scalar.
-
-For now, I'm going to leave this as-is, because we have enough changes
-to the config settings and documentation. You can submit a change on top
-of this one to demonstrate the value of setting features.manyFiles=true
-and how that impacts the code in its new shape.
-
-Thanks,
--Stolee
-
+>
+> I expected something a lot more than a simple change that can be
+> summarized a lot more concisely, like
+>
+>     Unless there are good reasons, it is customary to have the
+>     options[] array given to parseopt API in the function scope,
+>     not in the file scope.
+>
+>     Make builtin/pull.c:cmd_pull() to follow that convention.
+>
+> or something.
