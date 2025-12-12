@@ -1,147 +1,140 @@
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE421ACEDE
-	for <git@vger.kernel.org>; Fri, 12 Dec 2025 20:40:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6A227056D
+	for <git@vger.kernel.org>; Fri, 12 Dec 2025 21:29:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765572030; cv=none; b=iFYoJHNKrgI9/+3bO7Fs6uEGPmxzw3bUQzBiez3EFVCpltxhP2lxqTofoBlwXcBJBnk7DKZbFN6QWgtYskZLk8DMil8RNrEvZ/BOMQf8q1APX/CCloYmuTpC2c0Cra0OMBcOm06To1+fH9pITmgbxjzyzG4P33qdHfKdF1EfF10=
+	t=1765574976; cv=none; b=rF9OQdYh8eWRk2ZNkxujuHDfbdnHLObXlCD8IMu4HYRR4mZelvCNGJKcUxHjnX33q1bxfS25sLGh8nJq/PQa4lylk5ndlrGQIQMud82Z7hdDY9e5MAP0mv+Gs3wAXJiNzjM1VEF/ezCUfcr+MLzWUPUnDmmaTsVpYENs7mK7K90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765572030; c=relaxed/simple;
-	bh=1lsWmlKKEVPxNNIUZT9r87OIGtUWwbLt3jj06EQTbD4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K7tECyrwuMuersous8TTDtKe4bzXEOKRutyf/MttcXOA3usrVROGZqC6UDpUPSATGxJF3Otur8O2BDX6xJTwF8ykPSkgl975PIR42gy5/O1EHr7kA6/XhMsbEDqeo35MH6oI+EC1Frsjisj10fp0DobYIbnN+TzXmTW7J71vTiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g7g/NQ/N; arc=none smtp.client-ip=209.85.160.46
+	s=arc-20240116; t=1765574976; c=relaxed/simple;
+	bh=bb29JC8iepPdmi6S3PkOvVxCbDx2zC0T7GByw9+7Vmk=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qev1IshVdxGW6894gcmHJIU4cZdj0K0dDiKz21RnptAOkwuWxU2lcrTCusOcfckbEO1dBZW/JM1INnHXsBRfq6EOAe8Gya/BjO+egvBeacpWwHhZQmetqa60QNp0cgXNWqWAJbFIQRXrHpkcpftyEt0Jj+gUciuUY9P0M4fR1DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gVgc6qDg; arc=none smtp.client-ip=209.85.217.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g7g/NQ/N"
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-3e12fd71984so1212224fac.2
-        for <git@vger.kernel.org>; Fri, 12 Dec 2025 12:40:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gVgc6qDg"
+Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-5e5697a2cfcso584017137.2
+        for <git@vger.kernel.org>; Fri, 12 Dec 2025 13:29:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765572028; x=1766176828; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=h7XL4NGguulp7IVOJRrfYOOjWxbf71pTERliPEhtHRM=;
-        b=g7g/NQ/N3afLvljrVy+4f5mTfPr0lkZpu2O3VtOx7QfbELTuenjk636JQc/KTDWEBg
-         Vnr8PpO71OCFfYYtSeYpFo0nxvvagMcMSpXTFngDYcrCxq+pv5pmgD7uieSpeZB7oiiq
-         Nikhv2hgy72cfMTfzPCCj3xdqpCFxr3n8P4YcwLu2eW12H4kBdBs3D4k9TkHOfEqaZ44
-         W+R0B4dxyJKCtR4+cCbs+rRhKoIVOznyC15b+YsubMZZv3pYHvrLI0ULllO4Hwb1q3yx
-         6JT+wpHSO5tUGhc5SUisMPyC++pOjYtUNFhr29sbBQPo4O2MSv1iU0rhNGjsnEhRCqxN
-         6xKA==
+        d=gmail.com; s=20230601; t=1765574973; x=1766179773; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uF7l80fa+XHo7dv+YbFgRfQhrUTvsuNtyzYN2sqM2yc=;
+        b=gVgc6qDgr/IZPPr7oFIrJouOgsYwxu/WLEU+eE8TND/0zcrbX4H83trDrPm+ekgo9X
+         craRb11qzVuASOK+T+oA8ITi8IpbZgLSLg8XsBM/rVNx9bU38JjGYNAfpYMm+LEidc3e
+         ST43A8dycf+7QhSpXTwHfQOruc+ngeW0aigBVKAQGQoEkHfsZ4tAwzBShacds1oanUdM
+         zvD4jD5WRmdoCyk/1PD/k4qiNuLgXKXUiBrmwUGQ2hjSbrM8VhkO/birQFaFb/gJR5wN
+         pJA1m9jabICiDnA/HmWcV1xPnWYmqktUqFjdFpTiHkqDQY/G1RvaZbCBGIrlgjyRZaDC
+         pdRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765572028; x=1766176828;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=h7XL4NGguulp7IVOJRrfYOOjWxbf71pTERliPEhtHRM=;
-        b=bRmdcqn38ihvcaYIjXanYzRcL6/eDRnhed5kFUuAPQxKcik/dqxFCw2/W7sySjGg0Y
-         U5wQEHB0x74ZnBcX9sFtzyUuCHGpslmu1OYfEe03Q939r6KQYegakPdLn0GIbdtOJYjY
-         kkm7FRyB3BlSHj7cYtpE97eyjNuq13cOR6gUbQSuoQKrQrlt1qEYs6U/UEuxyy6wKl/q
-         udOHCWKrVtxeMTDuICiJ91mSoTnshS0bp1hKKORd7q9tTo7JWRNqtyCbnVVjaax6FiHi
-         TU/7UsmZhataZ5PM6YlEDJl1wZtqV8OqL15NHYe+qCG3+Zpaoc8/+Ab/LfTyZPopG0+s
-         mX+A==
-X-Gm-Message-State: AOJu0YxLd/IjSkmjFt2+8AJR55KFG+k4NFftzTWYPjPi6PEn3bfG9Frj
-	QyY72cIlHzthfOnCwLQtOh5mEK6uzwxyr1gTmiwF4drMBY/mJbVoK8BFbuZ0Rw==
-X-Gm-Gg: AY/fxX7BS/Qos48x/407i4OR0E1Zh+Tu2EjEhuvixwIF9MhDIni8AsSlgNuF9qTwFEP
-	0QWr+L9RzEHGpXWIjKJcEDM1nXtmX4C643gbROa08R0RPA43Y908y0ZKKeRat+rh5OMK7236sn7
-	5YLq5jGXR9TOn/cw2gqkeEkrCEHKcjKyCJLiHuaAyUcENZZq1KhbsFGWKUVjQ6QZuYzmMX/vDvr
-	Z0pdki3soCUa2MA+t03vaVfF07OtxTtji9+4us9H9jJhZKHsEuWslMQVCZqSOU4PRK1ViKmF27t
-	Kn/dQ13Sp0NYqG73uf+of8pxGq1Cutc0P/q8g/TaeQSI85WzRNrOUIykJCoSIJaRwHtVOeGiA3h
-	H1SZx1G5tOXpFXQ2Iw0piTyGo8c0dnT7qs89xXBFtLiK9mcRgEMrqIEhCm80kHXjS0Tse7CPW4F
-	5AiNmPbrqlHpmReLk=
-X-Google-Smtp-Source: AGHT+IHnQLSAmyWVf71pGvGf670czHDJmgmrfVj5XS/33ECSs/CogvERD3lHW69JLCuit95zFmLhTw==
-X-Received: by 2002:a05:6870:a10a:b0:3eb:7a44:744c with SMTP id 586e51a60fabf-3f5f87420ddmr1645187fac.21.1765572028113;
-        Fri, 12 Dec 2025 12:40:28 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3f614b7c66fsm34817fac.3.2025.12.12.12.40.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Dec 2025 12:40:27 -0800 (PST)
-Date: Fri, 12 Dec 2025 14:40:24 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/6] builtin/repo: add disk size info to keyvalue
- stucture output
-Message-ID: <54kuvik2ecbkygjp57osmqjxiy7xtyjeffbzavuxbhuvta2oc5@mkqufah7cb3z>
-References: <20251209225820.2861276-1-jltobler@gmail.com>
- <20251209225820.2861276-6-jltobler@gmail.com>
- <aTkTCplQuSX_Y3oG@pks.im>
+        d=1e100.net; s=20230601; t=1765574973; x=1766179773;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uF7l80fa+XHo7dv+YbFgRfQhrUTvsuNtyzYN2sqM2yc=;
+        b=OuqdBm7X0PUTEuEBByWXY29Y0Sdj9yjdXtnQ8zM+gLYKCKkhzQkXq8gDu9f+UCPkO0
+         UerzKYv5Y3MmJUCbS0jsi7FStd5fMenPj2fSJ2pMzpPriV3J2bs1pE5oMik6BgWDO+HD
+         QxgZR4SjbVTCUNqgA53HloiImQDf11QIJzoJe1xepbjYNSZ3AQlam+YKJ8gyJoVzl3J+
+         zjWXWdTKd8FSSV3XUYelUm9jGPDWGLQaLk6q997jVsYRiWxnM5qn34OgdCLSl9UIH9In
+         AbrKT7mhwAXhg+rX2qTyBuzpcUHaBUOsHGlHjNeImFruC5UHvjl6MeZZBjmomHjzur8b
+         Pnpg==
+X-Gm-Message-State: AOJu0YwPFfGz403QnAHvijtI3ynyUeKScJRKC4st2/YtaQQXzTtc3met
+	Ks3WxpT2pbjXf120Ihz0oYO+NM1HWPpX+qJPF7BwxN9eNv3sQ9+OWrBl12xOfy4XkYLXf/0seEm
+	YsUqJ2rEglvpfOSrW8WY939O+iImnTIE1lH2PjtI=
+X-Gm-Gg: AY/fxX60ADhoaEpso3SDhiB4JVhS8R0jp6TSZIcuvVokJdm2EGAhOQQoezk7mwfjhKJ
+	tjIms3NxvVtOgslXzVIZIcetFvVOfe9/yl7H0tUoaXl71REP6fHTN1i/5MV/MG7kxrlgv/VmhC+
+	tCoTGz7iJnUSZUD7SH0iv1ibqrL786o0YKG39NoRozZbPFgspJ64cnLCQTaH9bj3zTF5RU0Pmpp
+	D6eTESTK4QoE3fiYZVmP7bwBX4F0QH3IKnYhw3WFyqeLSqUksJgsFGYcvY8/L2Kh6wca77DPeN9
+	ZwzCQ9RajSd7rI4VwQNFrmgBhyqQSQ==
+X-Google-Smtp-Source: AGHT+IF4eVvGGE28owTqz1PChhoZa4a7vNS1cllar3/9Ka4vc2nSraVhvnRTfNIKP8nxgJCjHRkxtUo6YoV1fzER02M=
+X-Received: by 2002:a05:6102:441c:b0:5dd:f9c2:5533 with SMTP id
+ ada2fe7eead31-5e8277e5e76mr1362260137.30.1765574973332; Fri, 12 Dec 2025
+ 13:29:33 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 12 Dec 2025 15:29:32 -0600
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 12 Dec 2025 15:29:32 -0600
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqwm2uh7gs.fsf@gitster.g>
+References: <xmqqfr9jjrci.fsf@gitster.g> <CAOLa=ZTeEEntiQdCnDd6B8a_ppJrrZqdURhQJV=bNktnp0JqMw@mail.gmail.com>
+ <xmqqjyyvi743.fsf@gitster.g> <CAOLa=ZTAdpRurHGiBj2rQhtBJxuWPz4__2Q1LgJ4rC2qAdL=0g@mail.gmail.com>
+ <xmqqwm2uh7gs.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aTkTCplQuSX_Y3oG@pks.im>
+Date: Fri, 12 Dec 2025 15:29:32 -0600
+X-Gm-Features: AQt7F2rWmYNXinyHp4i9f7VVqHz2WWSUPE36WPvtLRV_0WJJAvmMT7DJlNTiNIY
+Message-ID: <CAOLa=ZRfhKMnnb-4n19Vy0kzBc3QV0df05WNur1_OFa40YssAA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2025, #02)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000001c36390645c7f567"
 
-On 25/12/10 07:28AM, Patrick Steinhardt wrote:
-> On Tue, Dec 09, 2025 at 04:58:19PM -0600, Justin Tobler wrote:
-> > @@ -106,16 +137,12 @@ test_expect_success SHA1 'keyvalue and nul format' '
-> >  		objects.tags.inflated=132
-> >  		EOF
-> >  
-> > -		git repo structure --format=keyvalue >out 2>err &&
-> > +		git repo structure --format=keyvalue >out.raw 2>err &&
-> >  
-> > -		test_cmp expect out &&
-> > -		test_line_count = 0 err &&
-> > +		# Strip object disk usage from output due to platform variance.
-> > +		grep -v "objects\..*\.disk=" out.raw >out &&
-> >  
-> > -		# Replace key and value delimiters for nul format.
-> > -		tr "\n=" "\0\n" <expect >expect_nul &&
-> > -		git repo structure --format=nul >out 2>err &&
-> > -
-> > -		test_cmp expect_nul out &&
-> > +		test_cmp expect out &&
-> >  		test_line_count = 0 err
-> >  	)
-> >  '
-> 
-> We could test disk sizes here test if we use git-rev-list(1) to compute
-> disk size by type:
-> 
->     git rev-list --disk-usage HEAD --objects --filter=object:type=blob
->     git rev-list --disk-usage HEAD --objects --filter=object:type=commit
->     git rev-list --disk-usage HEAD --objects --filter=object:type=tag
->     git rev-list --disk-usage HEAD --objects --filter=object:type=tree
-> 
-> The `--disk-usage` option also supports `--disk-usage=human`, which we
-> can use in the next commit to verify that our computations are the same
-> across git-rev-list(1) and git-repo(1).
+--0000000000001c36390645c7f567
+Content-Type: text/plain; charset="UTF-8"
 
-So, I'm not sure we can use git-rev-list(1) in the manner suggested
-above. It looks like user-specified objects are always included in the
-output. When using "HEAD" this means the referenced object will always
-be included regardless of the filter used. In practice, this means
-reported disk-usage when filtering by trees or blobs will likely be
-inflated by objects not specified by the filter. As far as I am aware,
-there is not a way to suppress user-specified objects in git-rev-list(1)
-output.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I am somewhat curious if always including user-specified objects in
-git-rev-list(1) output regardless of the specified filter is
-intentional. Looking at git-rev-list(1) --filter documentation:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>>>>>  Expecting a (hopefully small and final) reroll.
+>>>>>  cf. <CAOLa=ZQ-O7V9qHbgeuQ78R1bHGDmGEM6fP5Kr9aC0AfvSF8MZA@mail.gmail.com>
+>>>>>  source: <20251121-fix-tags-not-fetching-v8-0-23b53a8a8334@gmail.com>
+>>>>
+>>>> The only change needed from the last review was a typo. I think we should be
+>>>> good as is.
+>>>
+>>> Meaning that we prefer to leave the typo in, or just we won't die
+>>> with a known typo?
+>>
+>> The typo was in a comment in the tests, so I thought it wasn't worth
+>> re-rolling, but happy to do so.
+>
+> I went back to the discussion to find that single typo and tweaked
+> it myself in my tree, so no need to resend.
+>
+> Thanks.
+>
+>
+> diff --git c/t/t5510-fetch.sh w/t/t5510-fetch.sh
+> index a1ca4e1ac7..ce1c23684e 100755
+> --- c/t/t5510-fetch.sh
+> +++ w/t/t5510-fetch.sh
+> @@ -1628,7 +1628,7 @@ test_expect_success "backfill tags when providing a refspec" '
+>  	    test_commit fetch-me
+>  	) &&
+>
+> -	# The "history" tag is backfilled eventhough we requested
+> +	# The "history" tag is backfilled even though we requested
+>  	# to only fetch HEAD
+>  	git -C target fetch origin HEAD:branch &&
+>  	git -C target tag -l >actual &&
 
-  The form --filter=object:type=(tag|commit|tree|blob) omits all objects
-  which are not of the requested type.
+Thanks for handling it. This looks good to me :)
 
-doesn't indicate this limitation. From looking at the code in
-list-objects-filter.c:list_objects_filter__filter_object() though, it
-does somewhat seem like this behavior is intentional.
+--0000000000001c36390645c7f567
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 5d484d03aa218bdb_0.1
 
-Regardless, in the tests I can hack around this problem by using
-something like:
-
-  $ git cat-file --batch-check='$(objectsize:disk)' --batch-all-objects \
-    --filter=object:type=tree | awk '{ sum += $1 } END { print sum }'
-
-to add up the sizes by object type. This doesn't really leave me a great
-way to verify the human-readable values in the table output though. I
-may just continue to omit those values from the test like I already do
-in the next patch.
-
--Justin
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1rOGlUb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNEF5Qy85SGE2L1BucENpNkpiYVpZUVhWVnFIYUJ5VgpleHpxQ1pIeW0r
+WHoxdFZQQW9tS056NWtRN3FpazI4QVl0bjRmbXZQNmRXV05Td3RGVThOUk5GdG1JaVhnZjB5CkZT
+MGxVZDR1eHY3S2R4S0o0aFFPM05idThocU8vNHk1K0tTRXA3VEFsMkJCZ1l6WWc0TFNscGZBMHdK
+RTZHengKL0tXMHBTYXRIbFVDWG5LWlI3OEVGVGNBWmhraXRDNXM4ai9oWGMyS2N5UURNanRhZEkx
+U0xKMTNScGhiQ3RSbwpjNE4zY0lsS0o2TnBpdy82WXhHeE51VktTeUwwbGFZMUVjYWt1bHlDVi92
+QVNmbEpVTitRV3UwcTFVd1kzUHQwClJzVGIvNUErZFZGN0NId0VDb0I5ZjlFNDdFOVppeHFwZ1NN
+RWZWVmpjOUx2RnlqemZzTGU3SWl3aUcvakl1M2MKTWViMnVHME9wTVloR0lSMVZkanUreXI1Zlpw
+UFBlOXhZNm9ib3ZnQmxPL2hnT0k0N1FTTDBwQUZSWm1BZklDTQpGS29jd2o3SkEva3dDd0pheDl1
+TVZFTEt3Y0g1NzNsNVRYMmUza0RkQ3lCZzFLbVQ4czdwMlVXWXY4UCtGYjNiCkFud1RBOXYyOFNv
+RktycE14cDZQdVk3YkZ5b29KaGMxSGtyUEhnQT0KPVNSWmQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000001c36390645c7f567--
