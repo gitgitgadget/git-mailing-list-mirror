@@ -1,69 +1,70 @@
-Received: from mail-pg1-f194.google.com (mail-pg1-f194.google.com [209.85.215.194])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFDC258ED5
-	for <git@vger.kernel.org>; Fri, 12 Dec 2025 15:15:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E73E2580EE
+	for <git@vger.kernel.org>; Fri, 12 Dec 2025 15:15:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765552533; cv=none; b=b9Kt+VdA11X0fzfXlUZrQUztJ273Uuo3NRlT26BWzpSOfKDEjzxMYLIpN9mi4/FsPOkYoEYmFgTUhxJWki5MHpUBFzIRHiZjVvbJI5yKRauf5WZ1NuzA92zqsfHlYbrpmbunxgfQaGo9GB9+4UTj7EW9s+TgITlFoAeMJsRo5k0=
+	t=1765552534; cv=none; b=pD6eUezgUhclB2D2o6hCglQkyZ0JZ1w0DLhoNyIi6dggsKFJYnajknO0mU8e8Q4dHHBEfXFiSh86E3InCDQ38P6wqt8i/e/zmk/BBCzMnLlWmA6z6+Oac21MxFTDGVdlcwYSJfQninJuYxrQvU26ZtarqKkR3PgkhKfGHKtghs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765552533; c=relaxed/simple;
-	bh=lcdhcIRB8RjjBnCDVwx094qop3+BD/Igt612Zmjzs+Y=;
+	s=arc-20240116; t=1765552534; c=relaxed/simple;
+	bh=UrjtDdIAdUla8MpnFW+cN7qhFw3RA3md0ZZZH/g1Lm4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=HeFSQckodq1uwsvpxKIV7hQ5iUhh9NDsNDSWc43O8iWgkfaXEKAoUqcWtfxgXIBtpJ700OfK3HZZ7r6u8MdITVkYwVaM053OxBBGdHpEcCyPA6xu1/QwPuGDfUEP0e7PTmG0MeFhVn8AFv0OtfJS+4koXUlJWM9+gS5vcS60yTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XxIOEtAF; arc=none smtp.client-ip=209.85.215.194
+	 MIME-Version:To:Cc; b=cEYDwD0vgCz6HNULNxCuNho7MCkQ/JpaFQ2HwGzwsPxk3oUnOgKmdGzbDCAEyEuetF8C4ErqSWXkvZXfsRsa+XqedM8C06vo+yk8war97OhJau/WKTAlzYSNU33S8WccV7CGm3WD7jvUPpZoObtDIFRhDB0TtqwcyLlgCEpOlaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O0IG/WyL; arc=none smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XxIOEtAF"
-Received: by mail-pg1-f194.google.com with SMTP id 41be03b00d2f7-c03eb31db80so916767a12.2
-        for <git@vger.kernel.org>; Fri, 12 Dec 2025 07:15:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O0IG/WyL"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-7bb710d1d1dso1816505b3a.1
+        for <git@vger.kernel.org>; Fri, 12 Dec 2025 07:15:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765552531; x=1766157331; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1765552532; x=1766157332; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tjRs6Km6Lhelpgs+U3xFon6GIe9a/MRcqhjeZQNh35U=;
-        b=XxIOEtAFSJWbkn4gWdNnEU+l3qUOkPKX5dx97apBO/gufG1MsZany4EhINLP4FrWiJ
-         2OkE+Aw0OV57vooBYyoPRsmyErQ7GbP6ScT/Ly8QYKz5qG1LTfwGOEch/n8KvoBF1BJz
-         GJQ9yscATXxu24180gdhwLcdOV6suRRQGEWXAWhTbavdWjNpwgMenuKCTiLqvyyL7HD+
-         w/+fhdepp7/8UJLpxJEAshPOBCHR6hboKyJtaH7qhAAixN4i2xP3gLGndQ4R9pQ/LfIa
-         dp8KbB4FUupXJQ/lA6wdnftkuPgvgf5KujSTvOa2Lrqd9Ju9vGCllHEykhhR3W/Gb/+u
-         n/Qg==
+        bh=qKegBShAPoHnYsRBIHKLX32o9FVxE+P6G7+/pdhLSHo=;
+        b=O0IG/WyLCgoA5xupaokhvRWbCC13fS1fKUxu8zsT+JtIOBplT8BTrYdtTmUStGtyr0
+         GaEY5E4RZrhwgAiPtJnOOayOU3DJpjpGB43GZPB/bZBPmEvWE3xC3PLjHZ0QiQaSEE+6
+         62qyvATOpSKH9UhYTgQBHnWwGCgL3Q6SWNmSkzqmHoVrkmr98iw2Rr8txp754MN3gRPs
+         eVJeiRGqAPHKnmDG1JdagIjSy3H0wzymtzUpHYACKgA/kQQSAMrdYG6j/knXFUN0qncG
+         DvPAZrh9ZkzrbhGrPsdHL/T7ff2qP8MjOL80BWdk35AWqrHYhYX07RPKQ5IBfw0U90Ox
+         xkug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765552531; x=1766157331;
+        d=1e100.net; s=20230601; t=1765552532; x=1766157332;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=tjRs6Km6Lhelpgs+U3xFon6GIe9a/MRcqhjeZQNh35U=;
-        b=IwqU6mi9D4HYvaqHEqSI/FD3Aw5YvDnMp90w9WTNfv+Qu4NlsIULjiaeMbi5Mug9ku
-         Ks/Ha2xxhvTcljw01iRA8Q1AAE/PityT2gp1VMpUDxHT9Wjv0chZy6C3/YIVfdVWEI5a
-         U0cxbuNKn6gUUgPUoSAWom0a6kBEuvI6FXlzZjULNN66awPyUJeh1kEwGhkt7HH0XIsX
-         RxN6c8MRiUK05QX3+tF9UkzUiFdnbTRn2CN91PTh4m/KPwVG6wwSIUFpq6ggieCniiJ8
-         Bb3O2SKOmwV/heuufNH+8Q4UcN59rKlAAyqRpP16A6C3mlu+BkoQEWF7bM0z11gAbJGw
-         FbfA==
-X-Gm-Message-State: AOJu0Yx8iWPpGSuNiBOZo26+kyOGcu1g140NXuuwZy+HacI5/XCLr2RC
-	KOTcOAbkwR76ZGIMnkVl4TZ8o9AQ79UHIgd3DkHLSBla+N9JRnVv2lSpa4waWFSu
-X-Gm-Gg: AY/fxX59w/JzhpAuHb2292A9tTX5PKcmEU45W9mUzxCekVjQXBhuTZdn1DPQ69v+/cg
-	hqIfFZMQ4MExxusSiRG/6Lu6sdrV261KptZMcwUqsOIl4E38x33nqMQxwiU68w1ce+diJOpAaqY
-	yBvu6XrhttuIdEsmlGLfG62xIJmcYpdt2E+a7HAm3Qxqof5R9LiNv+1xu4j+n9LSIONRjSbYOss
-	cHYepOeN0f9cv/8FVkqZAEZwiG6fd+hEm8vAKk4oif2JOa6z3ayjAFwRhagxJWkn/ks9rhH7vD+
-	PhJKuPWz1JgbfBtCuH9mUiC60Z3oPY5WxuMfODECutLS1FJgJEX3tTxc+KpRmFWahWudQi21d7A
-	ZkoRoY1rdIfVp4k27JP9rmzNlzn1jKF3lO5juktfX4bixZR+joEB7ak8UaHl4XrvpE5BjIG87hX
-	e9+s71ynvSKU9BQA==
-X-Google-Smtp-Source: AGHT+IFeimHTtJ+Vq8ZkQ3rX9Zwtm6A19OZeuwch9En3fXnXjSmASaXlPBK1qsIqkvmKTxxgxXF88g==
-X-Received: by 2002:a05:693c:40d5:b0:2a4:4e54:dc69 with SMTP id 5a478bee46e88-2ac30147f5cmr1684469eec.38.1765552530202;
-        Fri, 12 Dec 2025 07:15:30 -0800 (PST)
+        bh=qKegBShAPoHnYsRBIHKLX32o9FVxE+P6G7+/pdhLSHo=;
+        b=V9HOvX6SkkqnAAnpMOZl7ZlkJhowaeflVzcLpbgfy0qbGCpp0JgOG83Yfa+9HQEXuf
+         d3rzZmsZni7pTFEzlOTbKi79Buyt0sq/MMt7bjhto7YG1QaprqBsod1LG8RuDWX2TGIp
+         35i3ZpuQajFrv7qsCfh5DGAY3YIR8XO9nbAxPi2BInrsFu12JwgncqiFoHbGcFGbAFyx
+         31cPKuY9Z6NxjJzBIFfpUkPKp9BjKPWwMsC7s01+PBtRsYM072dRH/BvJVAMhAofCHcl
+         hmpi+GO1ZYhMEi4VsUp8c3Ye5BtTouLweGriiJgr/6QJ4VNZCFiyJf8omZJorvi+t0Hi
+         +TBQ==
+X-Gm-Message-State: AOJu0Yy/gQdsTf74S9HqorRQgITx3bYb9Y65uQ/4s+ZAhd3ufU8gQuGR
+	lNJt29xf07ayGJo56W17gApW6a82/4w8st7Ztt77ggMGlxLBzIjhXUIiGululw==
+X-Gm-Gg: AY/fxX5t5dXty2sUc8uQglOQ3lKbO8zK4M8fk+jI7STvVSqW2l9OT4CjWEkIcEPypx4
+	9Akzr3b6P/+lmwycAglCgkIDhYzhOVL/YdhuzJMvdQ6AHpNA813IV4nV8QvV0C7KH/dfSJCN8IW
+	TdMonC+5/zJhvzsfEo5OElslyNpFsSL6pClHCQONoFPq4pQeoANOZIWuJ4Wwd2u4FC4gmnOU3KP
+	YFH6CNX3kq99wbTZK8eBwaUhmKJ4cKGtBEFJg0a8Hgscfyz9JndJhejfXiJAQ/Bat2ZxJ3RwxrW
+	3zenIS5fj11hZDqFAQDDOQjdfzewttcJ4eweVRI3mmK74tC+4oB19DM5ms9xC9Mouc1EfRuazYn
+	Dp7/dsGCOTCshR9fwj6UcKP6XtE3vnvp1ypOsE/ClegcmgpTKWBr+ZpAQe+unyHJbGWj9damPgn
+	c27S5GHJNTN98xWirGopV3FUke
+X-Google-Smtp-Source: AGHT+IHfOSaP+pfaUM3CR1q1+B7a24M4CXs5qbZw5Gjk1PVg6nHETCwD5USpNBWcF8QuhkJpmySY8Q==
+X-Received: by 2002:a05:7022:f509:b0:119:e56b:c752 with SMTP id a92af1059eb24-11f34c2600bmr1373781c88.23.1765552531819;
+        Fri, 12 Dec 2025 07:15:31 -0800 (PST)
 Received: from [127.0.0.1] ([172.182.212.53])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ac190acd01sm16265053eec.1.2025.12.12.07.15.29
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11f2e1bb2f4sm17984814c88.3.2025.12.12.07.15.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Dec 2025 07:15:29 -0800 (PST)
-Message-Id: <pull.2010.v3.git.1765552528.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2010.v2.git.1764607847.gitgitgadget@gmail.com>
+        Fri, 12 Dec 2025 07:15:31 -0800 (PST)
+Message-Id: <7a2f919d7c610ce7c9e93682884212ebee34d9b5.1765552528.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2010.v3.git.1765552528.gitgitgadget@gmail.com>
 References: <pull.2010.v2.git.1764607847.gitgitgadget@gmail.com>
+	<pull.2010.v3.git.1765552528.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 12 Dec 2025 15:15:23 +0000
-Subject: [PATCH v3 0/5] Audit and document Scalar config
+Date: Fri, 12 Dec 2025 15:15:24 +0000
+Subject: [PATCH v3 1/5] scalar: annotate config file with "set by scalar"
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,181 +81,111 @@ Cc: gitster@pobox.com,
     johannes.schindelin@gmx.de,
     Matthew Hughes <matthewhughes934@gmail.com>,
     Henrique Ferreiro <hferreiro@igalia.com>,
+    Derrick Stolee <stolee@gmail.com>,
     Derrick Stolee <stolee@gmail.com>
 
-In September [1], we discussed that the Scalar config options could use some
-documented justification as well as some comments to the config file that
-they were set by Scalar. I was then immediately distracted by other work
-things and am finally here with a series to do just that.
+From: Derrick Stolee <stolee@gmail.com>
 
-[1]
-https://lore.kernel.org/git/ffa61066-7004-48dd-9096-85b305373bc7@gmail.com/
+A repo may have config options set by 'scalar clone' or 'scalar
+register' and then updated by 'scalar reconfigure'. It can be helpful to
+point out which of those options were set by the latest scalar
+recommendations.
 
-I have indeed used Patrick's idea to add '# set by scalar' to each line
-added by Scalar, it took a little more work for all the kinds of config set.
-I made myself a co-author.
+Add "# set by scalar" to the end of each config option to assist users
+in identifying why these config options were set in their repo. Use a new
+helper method to simplify the two callsites.
 
-While working to justify each config option, I found some stale or incorrect
-config options. I also relaxed the override setting in most cases which gave
-me an opportunity to alphabetize the settings.
+Co-authored-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+ scalar.c          | 24 +++++++++++++++++-------
+ t/t9210-scalar.sh |  3 +++
+ 2 files changed, 20 insertions(+), 7 deletions(-)
 
-There was at least one case (I'm thinking of core.fscache here) where the
-config doesn't even exist in core Git, but instead in Git for Windows. We'll
-need to adjust in that fork to reinclude it in the right place.
-
-
-Updates in V2
-=============
-
- * The config-setting code is simplified somewhat.
- * Use 'sane_unset' instead of 'export' in test.
- * Documentation is improved for typos, grammar, and clarity.
-
-
-Updates in V3
-=============
-
- * Updated method names when setting recommended config.
- * Updated documentation section title now that nothing is "required".
- * Made distinction for index.threads=true as explicit setting.
- * Added documentation for log.exludeDecoration.
-
-Thanks, -Stolee
-
-Derrick Stolee (5):
-  scalar: annotate config file with "set by scalar"
-  scalar: use index.skipHash=true for performance
-  scalar: remove stale config values
-  scalar: alphabetize and simplify config
-  scalar: document config settings
-
- Documentation/scalar.adoc | 164 ++++++++++++++++++++++++++++++++++++++
- scalar.c                  |  93 +++++++++++----------
- t/t9210-scalar.sh         |  25 +++---
- 3 files changed, 231 insertions(+), 51 deletions(-)
-
-
-base-commit: 6ab38b7e9cc7adafc304f3204616a4debd49c6e9
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2010%2Fderrickstolee%2Fscalar-config-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2010/derrickstolee/scalar-config-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/2010
-
-Range-diff vs v2:
-
- 1:  639ff98c44 ! 1:  7a2f919d7c scalar: annotate config file with "set by scalar"
-     @@ scalar.c: struct scalar_config {
-       	int overwrite_on_reconfigure;
-       };
-       
-     -+static int set_config_with_comment(const char *key, const char *value)
-     +-static int set_scalar_config(const struct scalar_config *config, int reconfigure)
-     ++static int set_scalar_config(const char *key, const char *value)
-      +{
-      +	char *file = repo_git_path(the_repository, "config");
-      +	int res = repo_config_set_multivar_in_file_gently(the_repository, file,
-     @@ scalar.c: struct scalar_config {
-      +	return res;
-      +}
-      +
-     - static int set_scalar_config(const struct scalar_config *config, int reconfigure)
-     ++static int set_config_if_missing(const struct scalar_config *config, int reconfigure)
-       {
-       	char *value = NULL;
-     + 	int res;
-      @@ scalar.c: static int set_scalar_config(const struct scalar_config *config, int reconfigure
-       	if ((reconfigure && config->overwrite_on_reconfigure) ||
-       	    repo_config_get_string(the_repository, config->key, &value)) {
-       		trace2_data_string("scalar", the_repository, config->key, "created");
-      -		res = repo_config_set_gently(the_repository, config->key, config->value);
-     -+		res = set_config_with_comment(config->key, config->value);
-     ++		res = set_scalar_config(config->key, config->value);
-       	} else {
-       		trace2_data_string("scalar", the_repository, config->key, "exists");
-       		res = 0;
-     +@@ scalar.c: static int set_recommended_config(int reconfigure)
-     + 	char *value;
-     + 
-     + 	for (i = 0; config[i].key; i++) {
-     +-		if (set_scalar_config(config + i, reconfigure))
-     ++		if (set_config_if_missing(config + i, reconfigure))
-     + 			return error(_("could not configure %s=%s"),
-     + 				     config[i].key, config[i].value);
-     + 	}
-     + 
-     + 	if (have_fsmonitor_support()) {
-     + 		struct scalar_config fsmonitor = { "core.fsmonitor", "true" };
-     +-		if (set_scalar_config(&fsmonitor, reconfigure))
-     ++		if (set_config_if_missing(&fsmonitor, reconfigure))
-     + 			return error(_("could not configure %s=%s"),
-     + 				     fsmonitor.key, fsmonitor.value);
-     + 	}
-      @@ scalar.c: static int set_recommended_config(int reconfigure)
-       	if (repo_config_get_string(the_repository, "log.excludeDecoration", &value)) {
-       		trace2_data_string("scalar", the_repository,
-     @@ scalar.c: static int set_recommended_config(int reconfigure)
-      -		if (repo_config_set_multivar_gently(the_repository, "log.excludeDecoration",
-      -						    "refs/prefetch/*",
-      -						    CONFIG_REGEX_NONE, 0))
-     -+		if (set_config_with_comment("log.excludeDecoration",
-     ++		if (set_scalar_config("log.excludeDecoration",
-      +					    "refs/prefetch/*"))
-       			return error(_("could not configure "
-       				       "log.excludeDecoration"));
- 2:  10e9548955 = 2:  573929ecdb scalar: use index.skipHash=true for performance
- 3:  8783db6153 = 3:  85b499a616 scalar: remove stale config values
- 4:  edc0254770 = 4:  c30ffc87dc scalar: alphabetize and simplify config
- 5:  ac1627dbd9 ! 5:  f062b0e077 scalar: document config settings
-     @@ Documentation/scalar.adoc: delete <enlistment>::
-       	This subcommand lets you delete an existing Scalar enlistment from your
-       	local file system, unregistering the repository.
-       
-     -+REQUIRED AND RECOMMENDED CONFIG
-     -+-------------------------------
-     ++RECOMMENDED CONFIG VALUES
-     ++-------------------------
-      +
-      +As part of both `scalar clone` and `scalar register`, certain Git config
-      +values are set to optimize for large repositories or cross-platform support.
-     @@ Documentation/scalar.adoc: delete <enlistment>::
-      +
-      +index.threads=true::
-      +	This tells Git to automatically detect how many threads it should use
-     -+	when reading the index due to the default value of `core.preloadIndex`,
-     -+	which enables parallel index reads.
-     ++	when reading the index due the default value of	`core.preloadIndex`,
-     ++	which enables parallel index reads. This explicit setting also enables
-     ++	`index.recordOffsetTable=true` to speed up parallel index reads.
-      +
-      +index.version=4::
-      +	This index version adds compression to the path names, reducing the size
-      +	of the index in a significant way for large repos. This is an important
-      +	performance boost.
-      +
-     ++log.excludeDecoration=refs/prefetch/*::
-     ++	Since Scalar enables background maintenance with the `incremental`
-     ++	strategy, this setting avoids polluting `git log` output with refs
-     ++	stored by the background prefetch operations.
-     ++
-      +merge.renames=true::
-      +	When computing merges in large repos, it is particularly important to
-      +	detect renames to maximize the potential for a result that will validate
-     @@ Documentation/scalar.adoc: delete <enlistment>::
-       SEE ALSO
-       --------
-       linkgit:git-clone[1], linkgit:git-maintenance[1].
-     +
-     + ## scalar.c ##
-     +@@ scalar.c: static int have_fsmonitor_support(void)
-     + 
-     + static int set_recommended_config(int reconfigure)
-     + {
-     ++	/*
-     ++	 * Be sure to update Documentation/scalar.adoc if you add, update,
-     ++	 * or remove any of these recommended settings.
-     ++	 */
-     + 	struct scalar_config config[] = {
-     + 		{ "am.keepCR", "true" },
-     + 		{ "commitGraph.changedPaths", "true" },
-
+diff --git a/scalar.c b/scalar.c
+index f754311627..1c7bd1a8f8 100644
+--- a/scalar.c
++++ b/scalar.c
+@@ -19,6 +19,7 @@
+ #include "help.h"
+ #include "setup.h"
+ #include "trace2.h"
++#include "path.h"
+ 
+ static void setup_enlistment_directory(int argc, const char **argv,
+ 				       const char * const *usagestr,
+@@ -95,7 +96,17 @@ struct scalar_config {
+ 	int overwrite_on_reconfigure;
+ };
+ 
+-static int set_scalar_config(const struct scalar_config *config, int reconfigure)
++static int set_scalar_config(const char *key, const char *value)
++{
++	char *file = repo_git_path(the_repository, "config");
++	int res = repo_config_set_multivar_in_file_gently(the_repository, file,
++							  key, value, NULL,
++							  " # set by scalar", 0);
++	free(file);
++	return res;
++}
++
++static int set_config_if_missing(const struct scalar_config *config, int reconfigure)
+ {
+ 	char *value = NULL;
+ 	int res;
+@@ -103,7 +114,7 @@ static int set_scalar_config(const struct scalar_config *config, int reconfigure
+ 	if ((reconfigure && config->overwrite_on_reconfigure) ||
+ 	    repo_config_get_string(the_repository, config->key, &value)) {
+ 		trace2_data_string("scalar", the_repository, config->key, "created");
+-		res = repo_config_set_gently(the_repository, config->key, config->value);
++		res = set_scalar_config(config->key, config->value);
+ 	} else {
+ 		trace2_data_string("scalar", the_repository, config->key, "exists");
+ 		res = 0;
+@@ -178,14 +189,14 @@ static int set_recommended_config(int reconfigure)
+ 	char *value;
+ 
+ 	for (i = 0; config[i].key; i++) {
+-		if (set_scalar_config(config + i, reconfigure))
++		if (set_config_if_missing(config + i, reconfigure))
+ 			return error(_("could not configure %s=%s"),
+ 				     config[i].key, config[i].value);
+ 	}
+ 
+ 	if (have_fsmonitor_support()) {
+ 		struct scalar_config fsmonitor = { "core.fsmonitor", "true" };
+-		if (set_scalar_config(&fsmonitor, reconfigure))
++		if (set_config_if_missing(&fsmonitor, reconfigure))
+ 			return error(_("could not configure %s=%s"),
+ 				     fsmonitor.key, fsmonitor.value);
+ 	}
+@@ -197,9 +208,8 @@ static int set_recommended_config(int reconfigure)
+ 	if (repo_config_get_string(the_repository, "log.excludeDecoration", &value)) {
+ 		trace2_data_string("scalar", the_repository,
+ 				   "log.excludeDecoration", "created");
+-		if (repo_config_set_multivar_gently(the_repository, "log.excludeDecoration",
+-						    "refs/prefetch/*",
+-						    CONFIG_REGEX_NONE, 0))
++		if (set_scalar_config("log.excludeDecoration",
++					    "refs/prefetch/*"))
+ 			return error(_("could not configure "
+ 				       "log.excludeDecoration"));
+ 	} else {
+diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
+index bd6f0c40d2..43c210a23d 100755
+--- a/t/t9210-scalar.sh
++++ b/t/t9210-scalar.sh
+@@ -210,6 +210,9 @@ test_expect_success 'scalar reconfigure' '
+ 	GIT_TRACE2_EVENT="$(pwd)/reconfigure" scalar reconfigure -a &&
+ 	test_path_is_file one/src/cron.txt &&
+ 	test true = "$(git -C one/src config core.preloadIndex)" &&
++	test_grep "preloadIndex = true # set by scalar" one/src/.git/config &&
++	test_grep "excludeDecoration = refs/prefetch/\* # set by scalar" one/src/.git/config &&
++
+ 	test_subcommand git maintenance start <reconfigure &&
+ 	test_subcommand ! git maintenance unregister --force <reconfigure &&
+ 
 -- 
 gitgitgadget
+
