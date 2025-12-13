@@ -1,128 +1,116 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608CA1B0437
-	for <git@vger.kernel.org>; Sat, 13 Dec 2025 13:48:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C0F217F33
+	for <git@vger.kernel.org>; Sat, 13 Dec 2025 14:03:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765633704; cv=none; b=XfxO8CQZMUmffYjbEHHjQ6t0+ZtRabbpEqDJ5ly2r+m9UCwcRkXx8cww0PkPJflJYTmV9fIq6mdVj0QkZLzv86EOhwA1GsI7Itu/oY9yLEJXMowd3dgz9imzqSiRrhXFXajomkrXo3Fs9BAvLy/HVrKjtnLXJfcqx/piKHChznU=
+	t=1765634599; cv=none; b=akMOzz+RvUIyBDx2+tZo7k5vZX50NCHfB+3AZKGZqqB4Yy16MHM3DHD6CLhkY1cYLASRKOheG3PIQfdfZQ4epEjG3f3UV0wWaoder1rbMtAk3lih1gc+qqrCjzbqyaKHRUzVs3LjmecEFtdFXP7CkAz6/0tLe0wYoDM8zLxng4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765633704; c=relaxed/simple;
-	bh=tlMrolXxwTPKxw7YhUhBYpNlbZLwGZvoUY7c+aOHQwE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTDs1DZ6KfVMsdJ7bl5471fqVmwY443MzsfAZzEpGxMvsWzRIpnL5ocpGkZSE13/UarNRLJawKqcVTtXDb0uICzFdU02XdXHQSuE+ZA+timn2Y5ECl6McGgW38CLaXMKxQ919bHlJRh9KyEDscsqkOh8Q3TmBZ46lQO8NHPg51s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=T6B8qQRt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t1JLXtEn; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1765634599; c=relaxed/simple;
+	bh=DJ449pYfG8BxH87nbu9u3J4qgPA5sO9rMhffSmFgYLU=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=fAZWvmwdUtfP9+8QB45ULi5GQWbZRLyL3IGjYIir5YVB8k1zulJCWnecbBq/GN0vT/hzlFvV0ZI3qsCBGUyI1OUCnT5FlmLh2WxPvaPLKwdlZmI4RpnZLMW/reYd8XF4lqqcA04NGnukk8rwmORCX9nWZ4nsZo/ebrNtv4GF1vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=maO//y6f; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="T6B8qQRt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t1JLXtEn"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 85DC97A0050;
-	Sat, 13 Dec 2025 08:48:20 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Sat, 13 Dec 2025 08:48:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1765633700; x=
-	1765720100; bh=2xIVmzt10exjDcl7oS9hanNiwT6MpykfJfWLZ9j9DwA=; b=T
-	6B8qQRtjRPU8drTflk4f07TuQ3eVcqLp2hC34yO/kuoypDYBwq216qysmPcw38kd
-	kC+OMps9TxOl7g41DYInfZIciA7l/nLFoEosmFxEPtT9JGLiVq0Ns3iS+jeBHr4b
-	vGa8V9fi6nH275PIDzMKQR0sObikw5Ogfv5Jcs37szblRYt+gG7cQsyU6oKiiF8X
-	eA3hpJYy31PA7EBsxEn055ONHfnIW5M89uk+Wv1tymqj49b4Po3RmuWH034VMpgW
-	XzyAeK86W6O45WgdFfyKPG4QJfRiDh52W1Z1QvFpoZ/Ri7rjbXrtZhSkNwpbjV5M
-	JovtQygjymrIN1xwNHDlQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1765633700; x=1765720100; bh=2
-	xIVmzt10exjDcl7oS9hanNiwT6MpykfJfWLZ9j9DwA=; b=t1JLXtEnjJYS04VWI
-	zDQxS69w41j0Tt0sv0wizr2LONo570NCUcQjNwlrexP4GiJm6Vpq3AX2z/2YMPO5
-	njGQMS7Huz5FbZrAt9ENu4NT4VEp7JJJkPET6nBLMCkxgUYwhkihNhkBgeQUOQjJ
-	Ddamrx2AcHy/iNbqnsDpPkCd3LKlMrenlmrxGziqwnPirW4vBgYcJ9md9TR9WN7+
-	aN0ygP4POPrIKipvcb32A1KXoM7qyrviliFmku7n3zHYNhemvunBbT3O0lJurHBB
-	DG1H5vjBROsGnJxfWkXxILHXtqXQv1+zX1lDOeaGs+HRey9f7VM2EEne4DmhDfwG
-	HwSIg==
-X-ME-Sender: <xms:pG49aQqOLMkDDpjBIaO-W72MsDIsDBxtVyf3qn2TOUNivZynCbw10q8>
-    <xme:pG49aXXkfNupf7AF4NZVQ6TjgbSa0Bh9_YFqczwc65NRQCWZPXxjLtH6AWuSbN-Gh
-    D583tYeVQFNKj37BOEcQfkJQ9_HDGnWJd46POrScMfmjfSWpu6EyQ>
-X-ME-Received: <xmr:pG49aTY4_wJ_cCPd6Odvq-KKKv9QX4YwqfcJICiGL3HSkGC6DBCDHhGxGZ3OVDU4D954Ny5auMm5EslGl3CtzywrC6fuIMaO8418Q28>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefuddvvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
-    cuvffnffculdefhedmnecujfgurhephffvvefufffkofgjfhgggfestdekredtredttden
-    ucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
-    gtohhmnecuggftrfgrthhtvghrnhepfeehteekfedtieffvdejteeutefhuefgtefgtdev
-    hefhveffuefftdehiedtfedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
-    ihhlrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptghouggvsehk
-    hhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdho
-    rhhgrdhukhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilh
-    drtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthho
-    pehsihguughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:pG49acfSQIvuLGpuq6tuvlZpHyN7OWFRdzBYu4IvqZA04Nkar-F8Pw>
-    <xmx:pG49aV3kRt1U5RtbIizZjGbYOMZPwKcyPjNcIReAdUtd_HhNPKLk3Q>
-    <xmx:pG49abLEf6J7WCwLKPmQ4j_hP9hOHHCZiuCx8vnricKRzqenbl420A>
-    <xmx:pG49acFpwz4qbsYQYr87dPPHsFLQrB7VjY69Z3PdPe3pjDgv_E420Q>
-    <xmx:pG49aTng0vQhc683q4OfTs75DnNbRulGnRIvlirA9-PeMdW8WMf1p0la>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 13 Dec 2025 08:48:18 -0500 (EST)
-From: kristofferhaugsbakk@fastmail.com
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	git@vger.kernel.org,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	christian.couder@gmail.com,
-	newren@gmail.com,
-	Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: [PATCH v2 3/3] doc: replay: link section using markup
-Date: Sat, 13 Dec 2025 14:46:58 +0100
-Message-ID: <V2_link_OUTPUT_section.132@msgid.xyz>
-X-Mailer: git-send-email 2.52.0.10.g08704017180
-In-Reply-To: <V2_CV_replay_conflict.12f@msgid.xyz>
-References: <CV_replay_conflict.101@msgid.xyz> <V2_CV_replay_conflict.12f@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="maO//y6f"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-78c6a53187dso22814077b3.2
+        for <git@vger.kernel.org>; Sat, 13 Dec 2025 06:03:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765634597; x=1766239397; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DJ449pYfG8BxH87nbu9u3J4qgPA5sO9rMhffSmFgYLU=;
+        b=maO//y6fIf++mAVFMWSEq2X8zvNAI2ihFdkqW59lUwmAJEUsn7lmoynhx8Fvrv4VHy
+         p7gbrLRY1o3MuUJrjs+2f+09wi6mHYngCPHFvHjClEBNL8io5L6aLy2PjNWZUjpgb6wj
+         WNb8g0+sCzMUpZFA6zwi/rpANhkHRMWL1BU2vNG1sp8lzI7F9sb1Cu0JIsU5CzryZO2M
+         kL3TbZJ0PGOZ1ILpubkqe4YHx9gBL3W6w4LO2l2jPVhyGfNC7baY8QGhAVlTPD2jujDF
+         2mo/b0bQ69gCubtRQNTT3lQjOiyOj5WmiKDFEJJrlt1U/R/mTKqW8hbPzwHsIc1COTWc
+         IiAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765634597; x=1766239397;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=DJ449pYfG8BxH87nbu9u3J4qgPA5sO9rMhffSmFgYLU=;
+        b=MHnh8BUtCfWqnL8GG3mvGBqt/MQbm1pS6rJtj8msLzHgkGWBWlBnMgWb2s2p5m5EfV
+         8aTWEcCe2aTk2lvSrkqrlJmXml8mfpyDvdeGNVTsRMqmaXzbqjuCx7D7Srelz08BQwCG
+         chWVqzHjUBbUNiMhhBIHCgVbQqlx6vtvTL234OrphZfCLIuzb1li4A22j0X8m9EUplhn
+         uKFlTkzbcRUDSEtT7Z3dw55FQTh7qY/LI2tD9jzDmqV8w7L18RuWAX98THTmKFiATQ1/
+         XkshkNSKdrc3vuud4Vwe1MbPFO4wyHUbI7PqKS6JzW5uc4Vqtc3XsCSDZZclsCWD35jv
+         qUnQ==
+X-Gm-Message-State: AOJu0YxRCwNUd0KXrF7k2pa3u3XWcNIMW9nn/LmT3d2xZPJEyjjsPKrp
+	SyBzrgGGv14Ebu16d7IVeCUI4j1ABav8DIZwtXTYFrG4vMV2AMMjscEL
+X-Gm-Gg: AY/fxX4VpPWRa8J5C3nG6jUdKYmgjP+kJa3x1lI5QMG598RKZRNGqhGaqVxVAKSM+dK
+	f52dyEmrZxe+StfYypqHC1UBuNJ+IM1RSSlfzd6T6rFJREsYI5Ea+BDBftvfpLETBBy7HdYkPMU
+	itABdKNdPgQFzf8YMaHYFdG3vuhLgAwJHt3mfwH37eCybGKigiRYKczKn4cz15JlVTGcXlG1rKf
+	i/3qtq3ZSG64zMwQ5bXRO1kcwuagiINcWXBfsmJ1duuPaejltqt+oQt788R0ScpRCOW7eP5wzEc
+	PfWu0tWl1HS48VoQU5I/8qKGQdJX0JGllhQc8IPbDWPTY9FbD7QDLHtfn0ikg7YKuqQrb5WYW1o
+	iS1J5TRS+1fLaWwaUrP0rGa7meM3+/59sQstjdaEqldm+jqIPdNPv/8+YUN9tr/YmativHlvf5R
+	p4NN4QNBH7mp942GhrKEKfku4cl5zMot3HvgMBX3BoAVZD864+8A==
+X-Google-Smtp-Source: AGHT+IFMu2/hNMaQ6cDNAE7bfXy/5be5LBpOb/J/8kl/YgJfKRj8quMghFOjC8QhVE7oJkCJjx4Wlg==
+X-Received: by 2002:a05:690e:4289:10b0:63e:3994:4ae3 with SMTP id 956f58d0204a3-645555fcadamr2929355d50.41.1765634596840;
+        Sat, 13 Dec 2025 06:03:16 -0800 (PST)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:69ef:b975:8a72:4646])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-78e748ef7b5sm7490347b3.14.2025.12.13.06.03.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 13 Dec 2025 06:03:16 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v6 00/10] Add submodulePathConfig extension and gitdir encoding
+Date: Sat, 13 Dec 2025 09:03:06 -0500
+Message-Id: <34DD8798-5C69-4092-B6C9-6609E688FBE8@gmail.com>
+References: <20251213080817.347922-1-adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+ Rodrigo Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>,
+ Junio C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>,
+ Jonathan Nieder <jrnieder@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+ Josh Steadmon <steadmon@google.com>,
+ Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20251213080817.347922-1-adrian.ratiu@collabora.com>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+X-Mailer: iPhone Mail (21F90)
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- Documentation/git-replay.adoc | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> Le 13 d=C3=A9c. 2025 =C3=A0 03:09, Adrian Ratiu <adrian.ratiu@collabora.co=
+m> a =C3=A9crit :
+>=20
+> =EF=BB=BFHello everyone,
+>=20
+> For those new to the series, we're implementing a submodule gitdir
+> extension which allows us to have a unified way to determine gitdirs
+> and do things like encode submodule paths to avoid FS conflicts.
 
-diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
-index 1e2469b9034..22fd1b271af 100644
---- a/Documentation/git-replay.adoc
-+++ b/Documentation/git-replay.adoc
-@@ -19,7 +19,7 @@ the working tree and the index untouched. By default, updates the
- relevant references using an atomic transaction (all refs update or
- none). Use `--ref-action=print` to avoid automatic ref updates and
- instead get update commands that can be piped to `git update-ref --stdin`
--(see the OUTPUT section below).
-+(see the <<output,OUTPUT>> section below).
- 
- THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
- 
-@@ -67,6 +67,7 @@ The default mode can be configured via the `replay.refAction` configuration vari
- 
- include::rev-list-options.adoc[]
- 
-+[[output]]
- OUTPUT
- ------
- 
--- 
-2.52.0.10.g08704017180
+Hi there, I admit I haven=E2=80=99t followed this series closely. I use subm=
+odules quite a bit but haven=E2=80=99t yet peered into the depths of the imp=
+lementation.
 
+I read over the documentation changes in this series, and it=E2=80=99s not c=
+lear to me how or why I would use this new feature (I don=E2=80=99t mean the=
+re=E2=80=99s no benefit! Just that I=E2=80=99m having a hard time parsing it=
+ out.). By =E2=80=9Chow=E2=80=9D I mean: I can see how to set config and run=
+ the migrator; what does that unlock for me to now go and do?
+
+Does one of the previous cover letters explain how this is useful to submodu=
+le users? If so which, and perhaps the docs could also contain a =E2=80=9Che=
+re=E2=80=99s when/why you might want this extension enabled and what it allo=
+ws you to do=E2=80=9D?
+
+Or maybe this is meant to be not too user-facing, in which case I=E2=80=99m c=
+urious who would turn this on and why still :)
+
+Again, I am mostly curious, so please don=E2=80=99t read this as an attempt t=
+o hold the series hostage! :)
+
+Best,
+Ben=
