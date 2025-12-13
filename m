@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910DF28C00C
-	for <git@vger.kernel.org>; Sat, 13 Dec 2025 08:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7141C2957B6
+	for <git@vger.kernel.org>; Sat, 13 Dec 2025 08:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765613366; cv=pass; b=FF+iZmFHybRlT9IgNnbjJXFm9bGX39MC+uAP+XWf5WhoOEPekqV0V7qv8mt3/tYRvve3/gig9WGPE/M2LDZHh4w3DEfqVr8cfKTCLoBDyAkGgmjCddrf7/edLfgTzQB4bEkKG9JN4ebzKWD6jXIfPKZLuXGZqvQ3xOKqwyeJjkY=
+	t=1765613369; cv=pass; b=JpKd2dhb4cm6rLEY97RAdSHgWArUx1cYoOvYw5tL6aIsOxJPXuXatq9xat4wNh8sSXYCJVQ+WVecVQDHOba0DLhv71Q8ZFO7ahdAhQfQShhLFD5y86K4SWe+3Oux8Ak3sgaStjwprEpjjTxJBxnSQ1UC33Jx/KYrr0h6Rx3Nbr8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765613366; c=relaxed/simple;
-	bh=Qfx1Rnm7GpplwUy5m4ziyegudzIAkfjwUgGHu147xyc=;
+	s=arc-20240116; t=1765613369; c=relaxed/simple;
+	bh=QJgV2UyL958Of8apcX4wsdEMpKRAJHL033E4n59c6RM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hQ770nSx4Oz6eVAkI54q68dvDZqy0zUELvZjQmLsfAq/mbYPwuPkU0WFlIQYwwFVkLWWkBHHPMFM9ylXEz3jxZnsFVHRZnIQzQv5nrv8FRrYJdWiD5UxiE44/l7xs+Y8BBgiYt16ou1zpBiCysEwkRrtLCOfRkQ+rDeQ3YLESRA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=gZ5K+UHM; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=bxPul8iMiJKhxD41ihE2sJX/c/Z6Q01MVZlNLG9WDBUP8vcbE+NjQiedW+bGSTI+qQyK66bqyv2LXdT+RCXZ+OZjAtyhKEIu/8o0LoUd8X0V3yBTnYf2JXVkqauPLh64/WZjNAlevJL7XcrxlcyyAxkOywJqMD1wPHjTUXyjIlw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=cDMwmq+j; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="gZ5K+UHM"
-ARC-Seal: i=1; a=rsa-sha256; t=1765613349; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="cDMwmq+j"
+ARC-Seal: i=1; a=rsa-sha256; t=1765613353; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=WcvH1OZVAiR9PXbUioR+YD/iqIL2s7k9+DH4edpT3YZ2UhIXR1pdwoBdLEixhtErbn+VE4HgZDYXjdgoqisJH72UqwxCIkUZCBb1Amy2uIvSNdjvIH2xLoOcUrZhM3S8sOyhnloQ+3M9BH3E9YAmfST8spwe60+v/hBLWlgf/f0=
+	b=HeHhyjqPBKrwIFGUDIfX4gMVYRKs41YyJdw/HfktmZQFi/8rh9WqBrOIb6/mrf4BzBIvuI1HuXekzREmOWaAv+WcNyarYTcBfFX/Nn1oK36q4m/1HPmuqH7xci0ZxJMDJKO016F51Dd9Cmp4VUJAcpsygCU0baJN7WqTrdXRUFA=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1765613349; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=pEE5RS7psOhkVoF10TFoiPE8vL1kbNtoCVtDnU32xWw=; 
-	b=RFkSANeov1pOoHUbKEhLHcRRw/gF4sLqM0lG6EqxpnPtju5Wv4wprTtpvz9n5lPaU4bdT5atpu+bQ8oUb+TCpBL5aU7lP9OaF0Yj631ghm3MsjzxZAoWHqQxOZY40gjU2Y0z7rQYKLKFFcDg78CH7Efz3BUhyMmZRn6LpehywXw=
+	t=1765613353; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=qnt1kuVB1VrFj8o2KLoqQKzDaBFzoEufyIe5WcQlJfI=; 
+	b=lmNYQ0PID595CwyPrSvu+4iVH2eTjeWMn9UVASAQymCbvZ27iQsnpI93GuoE65zM2lLZNx8uQjI+eqVncae5YazklwSLRhYeArBvSSo+LmnTrbrH/QkNpfO7IZwSPAZHTE7EplXjcAwy9IQM8Ta9wYT02Bcb6Iv8LMTj3Sr8EYw=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765613349;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765613353;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=pEE5RS7psOhkVoF10TFoiPE8vL1kbNtoCVtDnU32xWw=;
-	b=gZ5K+UHML8MI5uUBqbpiiM6+PHT/gCAUIPUw8b0xY2F9NFctSZivu+ZADSszSIUL
-	pOZRWb0aXDxUn/8QjHBgl3300gxYn5/DjsMFuv83gGAaFIr7nr+IHMl5DfIBqffo/K/
-	zPedNcW7c7v+dncTqAaxXB8yIJ9YGhSZ2uPXgkNE=
-Received: by mx.zohomail.com with SMTPS id 176561334716738.02110745731807;
-	Sat, 13 Dec 2025 00:09:07 -0800 (PST)
+	bh=qnt1kuVB1VrFj8o2KLoqQKzDaBFzoEufyIe5WcQlJfI=;
+	b=cDMwmq+jlChbpkbQFqAENkCdfIo4oPnls2NLKTDNjAO5mLVAgLzKNl7FZHhrIscG
+	Fjsj3VQEkFgswTHITWDH5TdleYYApzkEsLbypfKKt5xdSgQY5lvP3ypM/qQJs5IWz/S
+	hZR3/L2bEO4R2O7F7TDAeMqFYvvA9DsxQgy3OMC0=
+Received: by mx.zohomail.com with SMTPS id 176561335085318.805980958704026;
+	Sat, 13 Dec 2025 00:09:10 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -49,9 +49,9 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v6 05/10] submodule: allow runtime enabling extensions.submodulePathConfig
-Date: Sat, 13 Dec 2025 10:08:11 +0200
-Message-ID: <20251213080817.347922-6-adrian.ratiu@collabora.com>
+Subject: [PATCH v6 06/10] submodule--helper: add gitdir migration command
+Date: Sat, 13 Dec 2025 10:08:12 +0200
+Message-ID: <20251213080817.347922-7-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251213080817.347922-1-adrian.ratiu@collabora.com>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
@@ -65,149 +65,155 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-This adds the ability to enable the new extension via a runtime
-config to avoid having to enable it in each repo configuration.
+Manually running
+"git config submodule.<name>.gitdir .git/modules/<name>"
+for each submodule can be impractical, so add a migration command to
+submodule--helper to automatically create configs for all submodules
+as required by extensions.submodulePathConfig.
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
+The command calls create_default_gitdir_config() which validates the
+gitdir paths before adding the configs.
+
 Suggested-by: Junio C Hamano <gitster@pobox.com>
+Suggested-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- Documentation/config/extensions.adoc       |  2 +
- builtin/submodule--helper.c                |  8 +++-
- submodule.c                                |  4 +-
- submodule.h                                |  2 +
- t/t7425-submodule-gitdir-path-extension.sh | 46 ++++++++++++++++++++++
- 5 files changed, 59 insertions(+), 3 deletions(-)
+ Documentation/config/extensions.adoc       |  6 ++-
+ builtin/submodule--helper.c                | 58 ++++++++++++++++++++++
+ t/t7425-submodule-gitdir-path-extension.sh | 34 +++++++++++++
+ 3 files changed, 96 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/config/extensions.adoc b/Documentation/config/extensions.adoc
-index 6ce1dcc98b..929e4e1bf1 100644
+index 929e4e1bf1..63c8727c3b 100644
 --- a/Documentation/config/extensions.adoc
 +++ b/Documentation/config/extensions.adoc
-@@ -77,6 +77,8 @@ submodulePathConfig:::
- 	If enabled, the submodule.<name>.gitdir config is the single source of
- 	truth for submodule gitdir paths and is always set for new submodules.
- 	Git will error if a module does not have submodule.<name>.gitdir set.
-+	This extension can also be enabled as a global runtime config, with
-+	the local repository config having precedence (overwrites it).
+@@ -80,8 +80,10 @@ submodulePathConfig:::
+ 	This extension can also be enabled as a global runtime config, with
+ 	the local repository config having precedence (overwrites it).
  	Existing pre-extension submodules need to be migrated by adding the
- 	missing config entries. This is done manually for now, e.g. for each
- 	submodule: "git config submodule.<name>.gitdir .git/modules/<name>".
+-	missing config entries. This is done manually for now, e.g. for each
+-	submodule: "git config submodule.<name>.gitdir .git/modules/<name>".
++	missing config entries. This can be done manually, e.g. for each
++	submodule: "git config submodule.<name>.gitdir .git/modules/<name>",
++	or via the "git submodule--helper migrate-gitdir-configs" command
++	which iterates over all submodules and attempts to migrate them.
+ 
+ worktreeConfig:::
+ 	If enabled, then worktrees will load config settings from the
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 699ac32004..2b5b4f575b 100644
+index 2b5b4f575b..458dc863df 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -466,7 +466,8 @@ static void create_default_gitdir_config(const char *submodule_name)
- 	struct strbuf gitdir_path = STRBUF_INIT;
+@@ -1270,6 +1270,63 @@ static int module_gitdir(int argc, const char **argv, const char *prefix UNUSED,
+ 	return 0;
+ }
  
- 	/* The config is set only when extensions.submodulePathConfig is enabled */
--	if (!the_repository->repository_format_submodule_path_cfg)
-+	if (!the_repository->repository_format_submodule_path_cfg &&
-+	    !submodule_path_config_enabled)
- 		return;
- 
- 	repo_git_path_append(the_repository, &gitdir_path, "modules/%s", submodule_name);
-@@ -3483,7 +3484,7 @@ static void die_on_repo_without_commits(const char *path)
- static int module_add(int argc, const char **argv, const char *prefix,
- 		      struct repository *repo UNUSED)
- {
--	int force = 0, quiet = 0, progress = 0, dissociate = 0;
-+	int force = 0, quiet = 0, progress = 0, dissociate = 0, path_cfg_ext = 0;
- 	struct add_data add_data = ADD_DATA_INIT;
- 	const char *ref_storage_format = NULL;
- 	char *to_free = NULL;
-@@ -3517,6 +3518,9 @@ static int module_add(int argc, const char **argv, const char *prefix,
- 
- 	argc = parse_options(argc, argv, prefix, options, usage, 0);
- 
-+	if (!repo_config_get_bool(the_repository, "extensions.submodulepathconfig", &path_cfg_ext))
-+		submodule_path_config_enabled = path_cfg_ext;
++static int module_migrate(int argc UNUSED, const char **argv UNUSED,
++			  const char *prefix UNUSED, struct repository *repo)
++{
++	struct strbuf module_dir = STRBUF_INIT;
++	DIR *dir;
++	struct dirent *de;
 +
- 	if (!is_writing_gitmodules_ok())
- 		die(_("please make sure that the .gitmodules file is in the working tree"));
- 
-diff --git a/submodule.c b/submodule.c
-index 85ca7ea0fb..5752909999 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -32,6 +32,8 @@
- #include "read-cache-ll.h"
- #include "setup.h"
- 
-+int submodule_path_config_enabled;
++	if (repo_config_set_gently(repo, "core.repositoryformatversion", "1"))
++		die(_("could not set core.repositoryformatversion to 1. "
++		      "Please enable it for migration to work, for example: "
++		      "git config core.repositoryformatversion 1"));
 +
- static int config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
- static int initialized_fetch_ref_tips;
- static struct oid_array ref_tips_before_fetch;
-@@ -2575,7 +2577,7 @@ void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
- 	int ret;
- 
- 	/* If extensions.submodulePathConfig is disabled, continue to use the plain path */
--	if (!r->repository_format_submodule_path_cfg) {
-+	if (!r->repository_format_submodule_path_cfg && !submodule_path_config_enabled) {
- 		repo_git_path_append(r, buf, "modules/%s", submodule_name);
- 		if (validate_submodule_git_dir(buf->buf, submodule_name) < 0)
- 			die(_("refusing to create/use '%s' in another submodule's "
-diff --git a/submodule.h b/submodule.h
-index b10e16e6c0..c15630bf26 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -172,4 +172,6 @@ void absorb_git_dir_into_superproject(const char *path,
-  */
- int get_superproject_working_tree(struct strbuf *buf);
- 
-+extern int submodule_path_config_enabled;
++	if (repo_config_set_gently(repo, "extensions.submodulePathConfig", "true"))
++		die(_("could not enable submodulePathConfig extension. It is required "
++		      "for migration to work. Please enable it in the root repo: "
++		      "git config extensions.submodulePathConfig true"));
 +
- #endif
++	repo->repository_format_submodule_path_cfg = 1;
++
++	repo_git_path_append(repo, &module_dir, "modules/");
++
++	dir = opendir(module_dir.buf);
++	if (!dir)
++		die(_("could not open '%s'"), module_dir.buf);
++
++	while ((de = readdir(dir))) {
++		struct strbuf gitdir_path = STRBUF_INIT;
++		char *key;
++		const char *value;
++
++		if (is_dot_or_dotdot(de->d_name))
++			continue;
++
++		strbuf_addf(&gitdir_path, "%s/%s", module_dir.buf, de->d_name);
++		if (!is_git_directory(gitdir_path.buf)) {
++			strbuf_release(&gitdir_path);
++			continue;
++		}
++		strbuf_release(&gitdir_path);
++
++		key = xstrfmt("submodule.%s.gitdir", de->d_name);
++		if (!repo_config_get_string_tmp(repo, key, &value)) {
++			/* Already has a gitdir config, nothing to do. */
++			free(key);
++			continue;
++		}
++		free(key);
++
++		create_default_gitdir_config(de->d_name);
++	}
++
++	closedir(dir);
++	strbuf_release(&module_dir);
++
++	return 0;
++}
++
+ struct sync_cb {
+ 	const char *prefix;
+ 	const char *super_prefix;
+@@ -3654,6 +3711,7 @@ int cmd_submodule__helper(int argc,
+ 		NULL
+ 	};
+ 	struct option options[] = {
++		OPT_SUBCOMMAND("migrate-gitdir-configs", &fn, module_migrate),
+ 		OPT_SUBCOMMAND("gitdir", &fn, module_gitdir),
+ 		OPT_SUBCOMMAND("clone", &fn, module_clone),
+ 		OPT_SUBCOMMAND("add", &fn, module_add),
 diff --git a/t/t7425-submodule-gitdir-path-extension.sh b/t/t7425-submodule-gitdir-path-extension.sh
-index 5d52a289f8..2f198bff82 100755
+index 2f198bff82..b7f0e8cdf4 100755
 --- a/t/t7425-submodule-gitdir-path-extension.sh
 +++ b/t/t7425-submodule-gitdir-path-extension.sh
-@@ -135,4 +135,50 @@ test_expect_success 'fetch mixed submodule changes and verify updates' '
+@@ -181,4 +181,38 @@ test_expect_success 'runtime config extensions.submodulePathConfig on existing r
  	)
  '
  
-+test_expect_success 'runtime config extensions.submodulePathConfig on new repo' '
-+	git config --global extensions.submodulePathConfig true &&
-+	git init -b main runtime-test-new-repo &&
-+	(
-+		cd runtime-test-new-repo &&
++test_expect_success 'submodule--helper migrates legacy modules' '
++	git init sm-repo-1 &&
++	test_commit -C sm-repo-1 initial-1 &&
++	git init sm-repo-2 &&
++	test_commit -C sm-repo-2 initial-2 &&
 +
-+		git init -b main sub &&
-+		test_commit -C sub sub-initial &&
-+
-+		git submodule add ./sub sub &&
-+
-+		# Verify that the gitdir config was created correctly
-+		git config submodule.sub.gitdir > actual &&
-+		echo ".git/modules/sub" > expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'runtime config extensions.submodulePathConfig on existing repo' '
-+	# create a repo with the extension disabled then enable it
++	# ensure the global config is disabled so we can actually test migration
 +	git config --global extensions.submodulePathConfig false &&
-+	git init -b main runtime-test-existing-repo &&
++
++	git init -b main migrate-test &&
 +	(
-+		cd runtime-test-existing-repo &&
++		cd migrate-test &&
 +
-+		git init -b main sub &&
-+		test_commit -C sub sub-initial &&
++		git submodule add ../sm-repo-1 sub1 &&
++		git submodule add ../sm-repo-2 sub2 &&
++		test_commit add-submodules &&
 +
-+		git submodule add ./sub sub &&
++		# gitdir configs should not exist
++		test_must_fail git config submodule.sub1.gitdir &&
++		test_must_fail git config submodule.sub2.gitdir &&
 +
-+		# gitdir should not exist for this repo: it must be migrated
-+		test_must_fail git config submodule.sub.gitdir
-+	) &&
-+	git config --global extensions.submodulePathConfig true &&
-+	(
-+		cd runtime-test-existing-repo &&
++		git submodule--helper migrate-gitdir-configs &&
 +
-+		git submodule add ./sub sub2 &&
++		# gitdir configs must exist after migration
++		git config submodule.sub1.gitdir >actual &&
++		echo ".git/modules/sub1" >expect &&
++		test_cmp expect actual &&
 +
-+		# gitdir should exist after enabling the global config
-+		git config submodule.sub2.gitdir > actual &&
-+		echo ".git/modules/sub2" > expect &&
++		git config submodule.sub2.gitdir >actual &&
++		echo ".git/modules/sub2" >expect &&
 +		test_cmp expect actual
 +	)
 +'
