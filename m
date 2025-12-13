@@ -1,41 +1,41 @@
 Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7141C2957B6
-	for <git@vger.kernel.org>; Sat, 13 Dec 2025 08:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A59128727F
+	for <git@vger.kernel.org>; Sat, 13 Dec 2025 08:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765613369; cv=pass; b=JpKd2dhb4cm6rLEY97RAdSHgWArUx1cYoOvYw5tL6aIsOxJPXuXatq9xat4wNh8sSXYCJVQ+WVecVQDHOba0DLhv71Q8ZFO7ahdAhQfQShhLFD5y86K4SWe+3Oux8Ak3sgaStjwprEpjjTxJBxnSQ1UC33Jx/KYrr0h6Rx3Nbr8=
+	t=1765613370; cv=pass; b=M6+SIIlDfghJ/4bNlzo2Foa7Gzgw0waPEY73qgBR9rZ3+lBh94Ng0eVpuDxuMnG7KV7Sm/8/30si1PVEXau5EPjfvJP0RyKnolf8f3Z/upKlNc0ZR8OpVzKnyoT5YJ2eXvo7VrNc/ypFb+NVEkvZeRlmqVicEOIvcrzbGKRd0cc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765613369; c=relaxed/simple;
-	bh=QJgV2UyL958Of8apcX4wsdEMpKRAJHL033E4n59c6RM=;
+	s=arc-20240116; t=1765613370; c=relaxed/simple;
+	bh=Dsp10BViORKUocAaol8JwCYHBjkMiWZMLR8mm+JeWEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxPul8iMiJKhxD41ihE2sJX/c/Z6Q01MVZlNLG9WDBUP8vcbE+NjQiedW+bGSTI+qQyK66bqyv2LXdT+RCXZ+OZjAtyhKEIu/8o0LoUd8X0V3yBTnYf2JXVkqauPLh64/WZjNAlevJL7XcrxlcyyAxkOywJqMD1wPHjTUXyjIlw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=cDMwmq+j; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=qWyiPKti//kFEPvqOFyXkPFX6PJeCVNlZu+WwiKpexd21zU1Pjp7n5DeYZqH3y1bHdKZXiEFyo+Sc4GVA8JZOAbzpv3kQfXsmusRMNGA91gY6FI3NrgMnA0ZEirtdL07nQLO+yeGcwMfQ5JRGE3AFFmR2FzHYJjfbaGmLzME26c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=T7cRONyf; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="cDMwmq+j"
-ARC-Seal: i=1; a=rsa-sha256; t=1765613353; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="T7cRONyf"
+ARC-Seal: i=1; a=rsa-sha256; t=1765613355; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=HeHhyjqPBKrwIFGUDIfX4gMVYRKs41YyJdw/HfktmZQFi/8rh9WqBrOIb6/mrf4BzBIvuI1HuXekzREmOWaAv+WcNyarYTcBfFX/Nn1oK36q4m/1HPmuqH7xci0ZxJMDJKO016F51Dd9Cmp4VUJAcpsygCU0baJN7WqTrdXRUFA=
+	b=mmdQUBlN/KxunpcqHG1ks8pIVNoHrgRHk+1qdH1FhApppfUCU25lyCe+7Ezf3cQFRUPkV+wp5RwZet1zEScaKWr0FHMDGAZE0GNvD9K7mMOCcu8Ny2s0/kx4KG88uFQV46JqcbNFDmGlajjhRH9uURFlnFmH4KwtV4kxHs54318=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1765613353; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=qnt1kuVB1VrFj8o2KLoqQKzDaBFzoEufyIe5WcQlJfI=; 
-	b=lmNYQ0PID595CwyPrSvu+4iVH2eTjeWMn9UVASAQymCbvZ27iQsnpI93GuoE65zM2lLZNx8uQjI+eqVncae5YazklwSLRhYeArBvSSo+LmnTrbrH/QkNpfO7IZwSPAZHTE7EplXjcAwy9IQM8Ta9wYT02Bcb6Iv8LMTj3Sr8EYw=
+	t=1765613355; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=6tL2I7roLPNU+zsghwkt1hlH4utinv4q5aG2Oe5MF+k=; 
+	b=MlfOt3oCfYLZ69XEPIPxua/1Whj4kXisct8zlGqse0yO6xZt3WEEVpw1S69NJ+kiqPZVJVVRIWcZMT91hupi129o/5P1Q0LxU0bimfw7EeiJcXMn+w+ffl3rxihW9kl6L80CSLAjwff6JyWYmiiWINCYnIQibfLhmCeHGenS0vw=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765613353;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765613355;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=qnt1kuVB1VrFj8o2KLoqQKzDaBFzoEufyIe5WcQlJfI=;
-	b=cDMwmq+jlChbpkbQFqAENkCdfIo4oPnls2NLKTDNjAO5mLVAgLzKNl7FZHhrIscG
-	Fjsj3VQEkFgswTHITWDH5TdleYYApzkEsLbypfKKt5xdSgQY5lvP3ypM/qQJs5IWz/S
-	hZR3/L2bEO4R2O7F7TDAeMqFYvvA9DsxQgy3OMC0=
-Received: by mx.zohomail.com with SMTPS id 176561335085318.805980958704026;
-	Sat, 13 Dec 2025 00:09:10 -0800 (PST)
+	bh=6tL2I7roLPNU+zsghwkt1hlH4utinv4q5aG2Oe5MF+k=;
+	b=T7cRONyfOf0Tgon7d5N/Ymr2hDQ7Vu3h0TvWlQbgdHf94BKWgZDi8OyRaUkyL9nV
+	bAHxTPvFTopuhP0zEXkD2BQJkBpkRncCRYwQCngW6ugDiU+ZXR3cYol27WFC3XrYrz5
+	G87VXRKXmHB9KbhM75YTNywax4wRzJtvC8NPnv/4=
+Received: by mx.zohomail.com with SMTPS id 1765613354540312.01626057263627;
+	Sat, 13 Dec 2025 00:09:14 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -49,9 +49,9 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v6 06/10] submodule--helper: add gitdir migration command
-Date: Sat, 13 Dec 2025 10:08:12 +0200
-Message-ID: <20251213080817.347922-7-adrian.ratiu@collabora.com>
+Subject: [PATCH v6 07/10] builtin/credential-store: move is_rfc3986_unreserved to url.[ch]
+Date: Sat, 13 Dec 2025 10:08:13 +0200
+Message-ID: <20251213080817.347922-8-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251213080817.347922-1-adrian.ratiu@collabora.com>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
@@ -65,160 +65,83 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Manually running
-"git config submodule.<name>.gitdir .git/modules/<name>"
-for each submodule can be impractical, so add a migration command to
-submodule--helper to automatically create configs for all submodules
-as required by extensions.submodulePathConfig.
+is_rfc3986_unreserved() was moved to credential-store.c and was made
+static by f89854362c (credential-store: move related functions to
+credential-store file, 2023-06-06) under a correct assumption, at the
+time, that it was the only place using it.
 
-The command calls create_default_gitdir_config() which validates the
-gitdir paths before adding the configs.
+However now we need it to apply URL-encoding to submodule names when
+constructing gitdir paths, to avoid conflicts, so bring it back as a
+public function exposed via url.h, instead of the old helper path
+(strbuf), which has nothing to do with 3986 encoding/decoding anymore.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Suggested-by: Patrick Steinhardt <ps@pks.im>
+This function will be used in subsequent commits which do the encoding.
+
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- Documentation/config/extensions.adoc       |  6 ++-
- builtin/submodule--helper.c                | 58 ++++++++++++++++++++++
- t/t7425-submodule-gitdir-path-extension.sh | 34 +++++++++++++
- 3 files changed, 96 insertions(+), 2 deletions(-)
+ builtin/credential-store.c | 7 +------
+ url.c                      | 6 ++++++
+ url.h                      | 7 +++++++
+ 3 files changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/config/extensions.adoc b/Documentation/config/extensions.adoc
-index 929e4e1bf1..63c8727c3b 100644
---- a/Documentation/config/extensions.adoc
-+++ b/Documentation/config/extensions.adoc
-@@ -80,8 +80,10 @@ submodulePathConfig:::
- 	This extension can also be enabled as a global runtime config, with
- 	the local repository config having precedence (overwrites it).
- 	Existing pre-extension submodules need to be migrated by adding the
--	missing config entries. This is done manually for now, e.g. for each
--	submodule: "git config submodule.<name>.gitdir .git/modules/<name>".
-+	missing config entries. This can be done manually, e.g. for each
-+	submodule: "git config submodule.<name>.gitdir .git/modules/<name>",
-+	or via the "git submodule--helper migrate-gitdir-configs" command
-+	which iterates over all submodules and attempts to migrate them.
+diff --git a/builtin/credential-store.c b/builtin/credential-store.c
+index b74e06cc93..bc1453c6b2 100644
+--- a/builtin/credential-store.c
++++ b/builtin/credential-store.c
+@@ -7,6 +7,7 @@
+ #include "path.h"
+ #include "string-list.h"
+ #include "parse-options.h"
++#include "url.h"
+ #include "write-or-die.h"
  
- worktreeConfig:::
- 	If enabled, then worktrees will load config settings from the
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 2b5b4f575b..458dc863df 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1270,6 +1270,63 @@ static int module_gitdir(int argc, const char **argv, const char *prefix UNUSED,
- 	return 0;
+ static struct lock_file credential_lock;
+@@ -76,12 +77,6 @@ static void rewrite_credential_file(const char *fn, struct credential *c,
+ 		die_errno("unable to write credential store");
  }
  
-+static int module_migrate(int argc UNUSED, const char **argv UNUSED,
-+			  const char *prefix UNUSED, struct repository *repo)
+-static int is_rfc3986_unreserved(char ch)
+-{
+-	return isalnum(ch) ||
+-		ch == '-' || ch == '_' || ch == '.' || ch == '~';
+-}
+-
+ static int is_rfc3986_reserved_or_unreserved(char ch)
+ {
+ 	if (is_rfc3986_unreserved(ch))
+diff --git a/url.c b/url.c
+index 282b12495a..adc289229c 100644
+--- a/url.c
++++ b/url.c
+@@ -3,6 +3,12 @@
+ #include "strbuf.h"
+ #include "url.h"
+ 
++int is_rfc3986_unreserved(char ch)
 +{
-+	struct strbuf module_dir = STRBUF_INIT;
-+	DIR *dir;
-+	struct dirent *de;
-+
-+	if (repo_config_set_gently(repo, "core.repositoryformatversion", "1"))
-+		die(_("could not set core.repositoryformatversion to 1. "
-+		      "Please enable it for migration to work, for example: "
-+		      "git config core.repositoryformatversion 1"));
-+
-+	if (repo_config_set_gently(repo, "extensions.submodulePathConfig", "true"))
-+		die(_("could not enable submodulePathConfig extension. It is required "
-+		      "for migration to work. Please enable it in the root repo: "
-+		      "git config extensions.submodulePathConfig true"));
-+
-+	repo->repository_format_submodule_path_cfg = 1;
-+
-+	repo_git_path_append(repo, &module_dir, "modules/");
-+
-+	dir = opendir(module_dir.buf);
-+	if (!dir)
-+		die(_("could not open '%s'"), module_dir.buf);
-+
-+	while ((de = readdir(dir))) {
-+		struct strbuf gitdir_path = STRBUF_INIT;
-+		char *key;
-+		const char *value;
-+
-+		if (is_dot_or_dotdot(de->d_name))
-+			continue;
-+
-+		strbuf_addf(&gitdir_path, "%s/%s", module_dir.buf, de->d_name);
-+		if (!is_git_directory(gitdir_path.buf)) {
-+			strbuf_release(&gitdir_path);
-+			continue;
-+		}
-+		strbuf_release(&gitdir_path);
-+
-+		key = xstrfmt("submodule.%s.gitdir", de->d_name);
-+		if (!repo_config_get_string_tmp(repo, key, &value)) {
-+			/* Already has a gitdir config, nothing to do. */
-+			free(key);
-+			continue;
-+		}
-+		free(key);
-+
-+		create_default_gitdir_config(de->d_name);
-+	}
-+
-+	closedir(dir);
-+	strbuf_release(&module_dir);
-+
-+	return 0;
++	return isalnum(ch) ||
++		ch == '-' || ch == '_' || ch == '.' || ch == '~';
 +}
 +
- struct sync_cb {
- 	const char *prefix;
- 	const char *super_prefix;
-@@ -3654,6 +3711,7 @@ int cmd_submodule__helper(int argc,
- 		NULL
- 	};
- 	struct option options[] = {
-+		OPT_SUBCOMMAND("migrate-gitdir-configs", &fn, module_migrate),
- 		OPT_SUBCOMMAND("gitdir", &fn, module_gitdir),
- 		OPT_SUBCOMMAND("clone", &fn, module_clone),
- 		OPT_SUBCOMMAND("add", &fn, module_add),
-diff --git a/t/t7425-submodule-gitdir-path-extension.sh b/t/t7425-submodule-gitdir-path-extension.sh
-index 2f198bff82..b7f0e8cdf4 100755
---- a/t/t7425-submodule-gitdir-path-extension.sh
-+++ b/t/t7425-submodule-gitdir-path-extension.sh
-@@ -181,4 +181,38 @@ test_expect_success 'runtime config extensions.submodulePathConfig on existing r
- 	)
- '
+ int is_urlschemechar(int first_flag, int ch)
+ {
+ 	/*
+diff --git a/url.h b/url.h
+index 2a27c34277..e644c3c809 100644
+--- a/url.h
++++ b/url.h
+@@ -21,4 +21,11 @@ char *url_decode_parameter_value(const char **query);
+ void end_url_with_slash(struct strbuf *buf, const char *url);
+ void str_end_url_with_slash(const char *url, char **dest);
  
-+test_expect_success 'submodule--helper migrates legacy modules' '
-+	git init sm-repo-1 &&
-+	test_commit -C sm-repo-1 initial-1 &&
-+	git init sm-repo-2 &&
-+	test_commit -C sm-repo-2 initial-2 &&
++/*
++ * The set of unreserved characters as per STD66 (RFC3986) is
++ * '[A-Za-z0-9-._~]'. These characters are safe to appear in URI
++ * components without percent-encoding.
++ */
++int is_rfc3986_unreserved(char ch);
 +
-+	# ensure the global config is disabled so we can actually test migration
-+	git config --global extensions.submodulePathConfig false &&
-+
-+	git init -b main migrate-test &&
-+	(
-+		cd migrate-test &&
-+
-+		git submodule add ../sm-repo-1 sub1 &&
-+		git submodule add ../sm-repo-2 sub2 &&
-+		test_commit add-submodules &&
-+
-+		# gitdir configs should not exist
-+		test_must_fail git config submodule.sub1.gitdir &&
-+		test_must_fail git config submodule.sub2.gitdir &&
-+
-+		git submodule--helper migrate-gitdir-configs &&
-+
-+		# gitdir configs must exist after migration
-+		git config submodule.sub1.gitdir >actual &&
-+		echo ".git/modules/sub1" >expect &&
-+		test_cmp expect actual &&
-+
-+		git config submodule.sub2.gitdir >actual &&
-+		echo ".git/modules/sub2" >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
+ #endif /* URL_H */
 -- 
 2.51.2
 
