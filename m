@@ -1,162 +1,199 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47DD1E1E0B
-	for <git@vger.kernel.org>; Sat, 13 Dec 2025 01:46:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302A742AA6
+	for <git@vger.kernel.org>; Sat, 13 Dec 2025 01:57:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765590396; cv=none; b=FlOeQBDwUOr+0eVMba3LMa8FLl6SRZENAkXnSYOsNeXobhM9QTdK1MoIP7YVNVQLq3Ro35K0IkwjujbYDGks1tfxOYtA9it/Y0ZpuAANDTQP+PonMpe8pBcFb2fZoqXP9kxy3dJScFmCKOyfaJWRy1C1tproqkjJ+62c9z6UVls=
+	t=1765591040; cv=none; b=JtL/mIU4ggCXS0icbf4JXIANuPvwcJMiYKVHV6/nOOavUnGxWXnX9Fd/mAGGn9dmBtIieTgFE70q6LS0AXNwrS0q4fxmtdx1fYd5ku2z0uS7juOAYkTHjpv1sAf7ZuRFC7GmPIJfJZJNn4j8Dp7zOO3US5WuEKTTtjFi/92GYpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765590396; c=relaxed/simple;
-	bh=zHYu8ljGmAAdFpBnbXcts8PoMB74OUgDQEtMV/E5lFg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hOgt1p13vSR8AGK1/2+YenC3c7BnQhu5HzGajjr6h23RQNWLFHNl3L6C/iXtMquy5FfnAMt7+nJH6xTljvfMYx9hkx+bNp5MdcWlTocF43pfntdOMesg7aKdRPxecubPcB248v6mE3NRBd2Fhv6CzFQ3qfbd1yJLXY4UGCmvxRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lV5qEwjZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Adq4GInq; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1765591040; c=relaxed/simple;
+	bh=sNx9dbUG/PDvSNIVqPAdmJwDavml2vNUlD15/uJ6Qqk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=e0QEnRgcMccmvZVps1DC/5CbFK/JWB8srjJaJ7O9wM5dsF3PFbRgqOPG4paprdYUqTLyp7qIKf+SXijIAp78fFU7wwSae22J+xm5Jt0eOrwRu7eRkHVMqZKnSrq0rcGlpJClYbNc557N+RGTeMOiioMzlQs25YtqA5P2qC5bRoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=admqCsIL; arc=none smtp.client-ip=209.85.161.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lV5qEwjZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Adq4GInq"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id D5261EC0019;
-	Fri, 12 Dec 2025 20:46:33 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 12 Dec 2025 20:46:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1765590393; x=
-	1765676793; bh=WcwWKgPeRUEtL2AplD8CSV6AdPsl+F4TKOJ94U00fnI=; b=l
-	V5qEwjZ4lHvKGmp3tMIVK8tEmJiRfv/lSQWeqiStFkW/abAvWFtbt3pBLSYz2/cS
-	5rGHduDZ4ueiQ3D0+1YoiRtR3Rb9dEWmZg0J1oS03yMho0fRwYyk7NJ4Z1x+dhGO
-	n+RdbtMM4Grnnsx7zQ/e0Q1s6WVXQvP4KlfMh/HQICWhm5zWnC/NAnGwNgyIVdev
-	ijfM8MK2ehfmljKI3Mh2d+9L9JHViaHYuLnUy7B27m1qIfkQjhu3XpzQFXrDA8XV
-	o1ueKEfx892cnj4JewSK4Rhx7183mSmzEke7eNZLDYX7TM6RI/WSBTDrLTZAV0Fm
-	/BwKz9OnYa8582kXa68lg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1765590393; x=1765676793; bh=W
-	cwWKgPeRUEtL2AplD8CSV6AdPsl+F4TKOJ94U00fnI=; b=Adq4GInqCaU13qfc9
-	BszhN6fwniTwqdDXx9U7lJW1IldqKE8XzwiebETJxCi9cznGsyov/bK4KJIiEc5T
-	v3aI0ztiWKSZV0/DCrl+n4k1oI2SQeqHY+rxFtr9DBjc4E95V/oWnpzK4JRjgZAl
-	0XcmgC9ozg3sYAGY7f3A2tlhGxDmAr/xBg6Lokoj7WNJpg7ahWKVJ+O20kJSLRVZ
-	+xAYroTJ7z9IeCZ2w6hCQh80b1xvqmPUhbu729gnIxyye3jhYQwpnQP0xoCbi8at
-	XFWCfGZ5G0Vkk50HYq07RsFjnuWHivkH3nv41Ig7w5MrvG5jAjv8UOYVIp0aS6T/
-	kCLMQ==
-X-ME-Sender: <xms:ecU8ae8Ffcp0zA7_E__4gmwQvGLfjk6oq4Xhx7pDaQ0iMAWv2ccYRg>
-    <xme:ecU8aWI4tva6B2cQfubD7UU8WJrzCy6RamSk0iDizoF44vWdhMLADTwoElkoe9BRT
-    bDvJo7ZYM_0kR2idLSlFgb8o10yBxQZmMKmWyJSoqj-45b5rmp9Gg>
-X-ME-Received: <xmr:ecU8aRYWFO0vsqOmG8_iLGcaPtKWbFnbX-7ZhzDyQQ2b_mPjCCMUJ8U9P0WdDIdboAdsSY7o_NplcerW3OD9f7wilkrbZxV6Tg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleejjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpedvffelhfeutefgkeettdfhudelffduteelfeeiueelhfdvudeiueekhfdtvddu
-    keenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:ecU8aQKvd1aMGMec1TTmo5kNBdk77-EC0Yy3w64F46QJ_agqKZFACg>
-    <xmx:ecU8aXDLatRiC-da2osUfZjat3eZ85qh8vvIc-Hc5zzn9_pTPKo7tw>
-    <xmx:ecU8adq_EBo22lyDDjf6QxD2zKxHLJKS6NaWw9RA30srVR0ZlHZICw>
-    <xmx:ecU8aaiVSnx6QaK3Jl93zL6txAozZakR35l-hKPQVBuAQqkLYH5aNQ>
-    <xmx:ecU8aZxZVGuoYQZy9-I84G-qKpX3R25lTd3si3YSd4nC5uqGHrfaBijK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Dec 2025 20:46:33 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Toon Claes <toon@iotcl.com>
-Subject: [PATCH 2/2] cocci: use MEMZERO_ARRAY() a bit more
-Date: Sat, 13 Dec 2025 10:46:28 +0900
-Message-ID: <20251213014628.3380826-3-gitster@pobox.com>
-X-Mailer: git-send-email 2.52.0-357-gead5eaf5b3
-In-Reply-To: <20251213014628.3380826-1-gitster@pobox.com>
-References: <20251213014628.3380826-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="admqCsIL"
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-6597a87048bso1039815eaf.1
+        for <git@vger.kernel.org>; Fri, 12 Dec 2025 17:57:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765591038; x=1766195838; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oxm4Yl5YmRYlbAHtuDgS6LF5ajWHzWfeCp8mo80Rig8=;
+        b=admqCsILpV4hcyaiyxje308E4TyEn3i8vtjX/6XG6p1Exyacq6MdLiW61nfaKVnxeJ
+         NWqdB47dda39rQzzfXl+1T7Op2rBOQWHyzfXFxejPpidKGYa0B6V0qysjTrX8ZE/QxHa
+         /ByUXO0/yGhyauVf4w13ASc+LdvSj9Zp/BWWOi9j5CEJ3K92Uc2EN18KK2l1NgauzJZB
+         u5bh+6y4+8L/9Cioof6dGcfwnwOtiVvhOtIIzGF1ziQKE+apOvg9b+FHHsIa9JNN3KFL
+         6ZLYVZb+e/D+VufWs4MD4D6dalTY+juyyjYLm5sT/E4SFXl4xNe2y2UHCQ0cxLNM3GPC
+         zVqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765591038; x=1766195838;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=oxm4Yl5YmRYlbAHtuDgS6LF5ajWHzWfeCp8mo80Rig8=;
+        b=W7BzTV4MjP/ZJ+brf63k9JWvMzghjRV7acXgZxlfgv3iFQFQGdJK/+x5s/cp+XlYBq
+         apBeM6nI2Pb/27VBByLtjir1cqgpNwmooZ4OTfEzYJbsAhDXwrKIQ2I3nww+EIZBHuGO
+         T4fEELCUS9HLHcqm7cOMfQrX3X2BUEeXdQ6I205eebbb9zzpr7WnNoFaMR5+2TvDHts4
+         eRtYv8nmVQTO5Mq27ZfYkehh3Z+POKILQS2zIbmo2mMpkh6ufxM2R/bSLu2YaTsN6sg5
+         c8WFkkrz3FQrrKDFD887UJo8cdFdj8TMJkmCfPFOuq+CA6NRLrbtLXw+tpPirsziDthb
+         K60A==
+X-Gm-Message-State: AOJu0YzCysiCrXVaM2bS2eERVoHhG3988lzXk/ZZS2YtkwW5KVh5w7ty
+	ckG1F4g23FrB71VC1dEchF+Q1nQwVdVv9vruwhn7N1v4X0oCVCwyOUqDzCDeVUTtdOUh1C54bz7
+	BHm/I3UDKqkX5HrnaHkm8y5pwvv2oSRU=
+X-Gm-Gg: AY/fxX6ESXYMuLLFs2AmGvJKhdKV7QyeSrk41vIjE3P9mbwnVDYaMhUVpIGCzV4a3TU
+	wj7npe2Xxwn34LP098tKqMIJDEm4G3ussiUj7p+Bgu4dGsTGx913T6pxHhE1B1KiO6UecSZBtg8
+	lRNe+YIysZx7UNRNDTL2ET2WFSheYyJ0vFWsKBLquVHH17Wz5ERlusr9OABpwyxZGPh7v2v2A5m
+	hB8HnhlMlvJPktw+nB89cwEOEOSPk9/6484ZGHZV3vot2GQU3AS2h22Hz24krylFGLPAr7wNuF2
+	Ku1j1FypMq2onc+YHgufLupGZG7E
+X-Google-Smtp-Source: AGHT+IGYZnXiecdwh3L5a0clF0P/tyduYysRmDX15+IQTNj/vrmDhCMJwBvlQN9vwVNpFiL4NGGf4Sl9wd/UlVnUSQs=
+X-Received: by 2002:a05:6820:2d9b:20b0:659:9a49:8e33 with SMTP id
+ 006d021491bc7-65b37faab4emr3072447eaf.37.1765591038073; Fri, 12 Dec 2025
+ 17:57:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <3742e7de-7d88-4e77-b711-9fed867a8c23@gmail.com>
+In-Reply-To: <3742e7de-7d88-4e77-b711-9fed867a8c23@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 12 Dec 2025 17:57:07 -0800
+X-Gm-Features: AQt7F2rrt2WqkVyvi6tmXI9nOaF8uLC__GGIThkwENwqAh1XzLiZdnkRNiy44AE
+Message-ID: <CABPp-BH80R4LJDRKQnPmh5Am_HAcCgxWiA8vRoN8LgLRUMz+JQ@mail.gmail.com>
+Subject: Re: Different behaviour for --find-renames between git diff and git merge?
+To: Luca Balsanelli <lucabalsanelli@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Existing code in files that have been fairly stable trigger the
-"make coccicheck" suggestions due to the new check.
+On Fri, Dec 12, 2025 at 10:06=E2=80=AFAM Luca Balsanelli
+<lucabalsanelli@gmail.com> wrote:
+>
+> Hi,
+>
+>    I'm scratching my head to understand why on the following case `git
+> diff` and `git merge` give a different interpretation about a rename.
 
-Rewrite them to use MEMZERO_ARRAY()
+I don't see any difference...
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diffcore-delta.c    | 4 ++--
- linear-assignment.c | 4 ++--
- shallow.c           | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+>     git switch master
+>     touch aaa
+>     git add aaa
+>     git commit -m 'aaa'
+>
+>     git switch -c branch
+>     echo -en 'A\nB\nC\n' > aaa
+>     git add aaa
+>     git commit -m 'A\nB\nC\n > aaa'
+>
+>     git switch master
+>     echo -en 'A\nB\n' > aaa
+>     mkdir dir
+>     mv aaa dir/
+>     git add aaa dir/
+>     git commit -m 'A\nB\n > aaa -> dir/'
+>
+> The `|merge.renames` config variable is true. Changing `git diff
+> --find-renames=3D50%` (the default) or `git merge -s ort -X
+> find-renames=3D50%` ||to something lower does not change the following.
+> |
+>
+> `git diff` prints
 
-diff --git a/diffcore-delta.c b/diffcore-delta.c
-index ba6cbee76b..2de9e9ccff 100644
---- a/diffcore-delta.c
-+++ b/diffcore-delta.c
-@@ -56,7 +56,7 @@ static struct spanhash_top *spanhash_rehash(struct spanhash_top *orig)
- 			     st_mult(sizeof(struct spanhash), sz)));
- 	new_spanhash->alloc_log2 = orig->alloc_log2 + 1;
- 	new_spanhash->free = INITIAL_FREE(new_spanhash->alloc_log2);
--	memset(new_spanhash->data, 0, sizeof(struct spanhash) * sz);
-+	MEMZERO_ARRAY(new_spanhash->data, sz);
- 	for (i = 0; i < osz; i++) {
- 		struct spanhash *o = &(orig->data[i]);
- 		int bucket;
-@@ -135,7 +135,7 @@ static struct spanhash_top *hash_chars(struct repository *r,
- 			      st_mult(sizeof(struct spanhash), (size_t)1 << i)));
- 	hash->alloc_log2 = i;
- 	hash->free = INITIAL_FREE(i);
--	memset(hash->data, 0, sizeof(struct spanhash) * ((size_t)1 << i));
-+	MEMZERO_ARRAY(hash->data, ((size_t)1 << i));
- 
- 	n = 0;
- 	accum1 = accum2 = 0;
-diff --git a/linear-assignment.c b/linear-assignment.c
-index 5416cbcf40..97b4f75058 100644
---- a/linear-assignment.c
-+++ b/linear-assignment.c
-@@ -20,8 +20,8 @@ void compute_assignment(int column_count, int row_count, int *cost,
- 	int i, j, phase;
- 
- 	if (column_count < 2) {
--		memset(column2row, 0, sizeof(int) * column_count);
--		memset(row2column, 0, sizeof(int) * row_count);
-+		MEMZERO_ARRAY(column2row, column_count);
-+		MEMZERO_ARRAY(row2column, row_count);
- 		return;
- 	}
- 
-diff --git a/shallow.c b/shallow.c
-index d9cd4e219c..c20471cd7e 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -713,7 +713,7 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
- 
- 	if (used) {
- 		int bitmap_size = DIV_ROUND_UP(pi.nr_bits, 32) * sizeof(uint32_t);
--		memset(used, 0, sizeof(*used) * info->shallow->nr);
-+		MEMZERO_ARRAY(used, info->shallow->nr);
- 		for (i = 0; i < nr_shallow; i++) {
- 			const struct commit *c = lookup_commit(the_repository,
- 							       &oid[shallow[i]]);
-@@ -782,7 +782,7 @@ static void post_assign_shallow(struct shallow_info *info,
- 
- 	trace_printf_key(&trace_shallow, "shallow: post_assign_shallow\n");
- 	if (ref_status)
--		memset(ref_status, 0, sizeof(*ref_status) * info->ref->nr);
-+		MEMZERO_ARRAY(ref_status, info->ref->nr);
- 
- 	/* Remove unreachable shallow commits from "theirs" */
- 	for (i = dst = 0; i < info->nr_theirs; i++) {
--- 
-2.52.0-357-gead5eaf5b3
+Actually, it doesn't; more on that below...
 
+>
+>     diff --git a/aaa b/dir/aaa
+>     similarity index 71%
+
+Did you not follow your own recipe?  Maybe you inserted an extra space
+or left off the 'n' in 'echo -en' when you ran this?  The number
+should have been 66%.
+
+>     rename from aaa
+>     rename to dir/aaa
+>     index bbd2b90..986ad36 100644
+>     --- a/aaa
+>     +++ b/dir/aaa
+>     @@ -1,4 +1,3 @@
+>       A
+>       B
+>     -C
+>
+>      that is the similarity index is 71% and it detects the rename.
+
+At this point, if you actually run `git diff` you see the following:
+
+$ git diff
+$
+
+i.e. nothing.  I suspect you gave `git diff` additional arguments but
+didn't tell us.  Let's look at a few options:
+
+$ git diff master~1 master
+diff --git a/aaa b/aaa
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/dir/aaa b/dir/aaa
+new file mode 100644
+index 0000000..35d242b
+--- /dev/null
++++ b/dir/aaa
+@@ -0,0 +1,2 @@
++A
++B
+$
+
+So, on master, aaa was deleted, and dir/aaa was added.
+
+$ git diff master~1 branch
+diff --git a/aaa b/aaa
+index e69de29..b1e6722 100644
+--- a/aaa
++++ b/aaa
+@@ -0,0 +1,3 @@
++A
++B
++C
+$
+
+On branch, aaa was modified.
+
+$ git diff branch master
+diff --git a/aaa b/dir/aaa
+similarity index 66%
+rename from aaa
+rename to dir/aaa
+index b1e6722..35d242b 100644
+--- a/aaa
++++ b/dir/aaa
+@@ -1,3 +1,2 @@
+ A
+ B
+-C
+$
+
+So, only if you diff the endpoints of the two branches do you see a
+rename; if you look from the merge base to either branch, there isn't
+one.
+
+> `git merge branch`, instead, gives
+>
+>     CONFLICT (modify/delete): aaa deleted in HEAD and modified in
+>     branch.  Version branch of aaa left in tree.
+>     Automatic merge failed; fix conflicts and then commit the result
+
+Yes, this exactly matches what diff showed above -- on HEAD (master),
+'aaa' was deleted, and on branch, 'aaa' was modified.
+
+> Why it is that? I always supposed that the rename detection was the same
+> for `git diff`, `git merge`. Reading the documentation I do not find any
+> hint why `git diff` and `git merge` are behaving differently.
+
+Hope that helps...
