@@ -1,96 +1,89 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0B9632
-	for <git@vger.kernel.org>; Sun, 14 Dec 2025 23:20:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED3A30BB84
+	for <git@vger.kernel.org>; Sun, 14 Dec 2025 23:27:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765754402; cv=none; b=t+gniHseTchErA5lURkeQRF4h6UsNdGU2fSzK5/B3tdkYwZim69t97WAqHLQQU6oYO6Jnz7aj9sz2GX4yQWLRQwFfv9OD7wKPJlgz5nxOFn++DBA09OwUQpLY52nLriQvETeXiwKof1HiBN6tEKI3uA15S61wTo+hHC1qt2Qfgc=
+	t=1765754836; cv=none; b=VbgcFlFZvh0S1bHj4Q6SebhxnopaFKMTki7OA2YlKY/HYtA0Ih9Z5+wCLgstHQ5eGGhPWZ4rhQydWlcVed3a7oDKuPstaeqIDYJ74mPiYsUj9xsbLIuxamh9tw7sf4b5SEBfZWQjNp3xZJkPqyWynupAsv+l4aOaFtwx+y53p48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765754402; c=relaxed/simple;
-	bh=I0JPGjN/q359r0xBFyBE/UaAgFZ5ehyz5nxtr/tuI60=;
+	s=arc-20240116; t=1765754836; c=relaxed/simple;
+	bh=Ak6eJ6Mfyc4KGqmuiYyPRUJjQwJMFb0RkBRbPb3EwOQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UFhw0f75VY1+8liUO6eKeaXA4VBr60hAFdvSKP9B5I/Yf+ZXm187+Oe9h1RGknBsycMpvp+IC3IlHiItsclInJpYR6djbwZ4bvJghy0gILQOFLdsrz/vFJ56oYL/PhlYdB+o5OL9AaETn/n/eB9af2cv+lmeUZLIKc1YHxuxTPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PQWefBbR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RbHfoc6k; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=k2x8hFy4spsOQ3IE9wtDM6znV6gt50IRDZA7btvU0JSAJ2OVDNvvS2Sebt8rFEY6u6e7qnKUGia0gsvSVnEmrT/QBa34M4nDvHWyQYruO7f6GlVivf7du1p/llj95hxp61P5HsKfqYOFk6hoh95Z0DF2Tu5nGHPfj1Lz8T3qrW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Id38epe/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=igDys4yF; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PQWefBbR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RbHfoc6k"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8A7707A0074;
-	Sun, 14 Dec 2025 18:19:59 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Id38epe/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="igDys4yF"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0D01C1D00017;
+	Sun, 14 Dec 2025 18:27:14 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Sun, 14 Dec 2025 18:19:59 -0500
+  by phl-compute-06.internal (MEProxy); Sun, 14 Dec 2025 18:27:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1765754399;
-	 x=1765840799; bh=9ns8eJaC8O/WCjzXZwn/yPnIsHllD+6IhYR+iNJ7Caw=; b=
-	PQWefBbRlVLkIb1DwKAypEBcf9GJwgtY7iwlnfKjw2gYwOPvDas7SadST9431+Yx
-	052d+Fe7B3q4WeBmuuuw5PKX1Nq0yU5/cdWlDbCQHOJS5T9+RgUdE/osPsjM+L0h
-	TuV0Ok6tuwTo1W/jjx7XPwPyM/4WBIx/HswFSkBnJHsxewqIh2x9N2B9w2aentK8
-	PpFdLuPZ5qX3cCgzOu1m2w/6uj8w21B+6UHf4joidgWrulI7mPJlZeyBhDbuB0/3
-	1oIrd2aQ9OLXja62hVpc94EBnUsGorwDZN4n1ITHHW9vaaTd39YmZYjailjO6iSo
-	zPtWmdiJPpVkMTEyqKsXyw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1765754833; x=1765841233; bh=+Q344E0KEh
+	I+bvFMOJeCK1Ml+RqX+91HlyNc4Z4nshA=; b=Id38epe/DQIV42xMz3JtSsJDNU
+	LScj9c3suW28/Wq+x1Wx33eeQ4lytBzrXaB4qKxqrRNdiYmIjL873+1HU9/U4Pxc
+	NxKsj31d0sWpkxCz9gSm8kasTIXXzODjb34CTeTZZ86buNXhe0eLxajeyB0g8r+x
+	DBYyDnINH3136Zm/xLK2UKeCtHGp3BY580AMRuuAbWbwDglRsJfTfx/aI6L0qoOc
+	YfFuvMlgZSRQkIVKCS9srOhBr+5YqxAvK2CKNnPepNwoWCs09Sx4Y2jxAU8qRqBf
+	2DuDCry3JhadO530XGBYXC2TqvulIURvoHZ5cytcAF03frX4tPshjmv/50Ig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765754399; x=
-	1765840799; bh=9ns8eJaC8O/WCjzXZwn/yPnIsHllD+6IhYR+iNJ7Caw=; b=R
-	bHfoc6kQ4vrKAhvyv/TUFSIiufGdWKbftcGjcadnghlnLdGZGWwrrjZhYtP2iHl0
-	WfxnL/Ydy7P1tnuJXtXW4S+SVYEubeTf/Y1xYqkDnQwDZLSuXS2qkVI9M8hUPdS+
-	z+o3nF6bhmQ3EUd94m/H94RnMmXHDYvpZj87PKk+L+cBIRhHoxiHbeObbCzC60Vu
-	7pxIawd2sGMwj6uaEzzwms97E6kH3C5qkW4A1T1bVZMeq5B843uLry7fDskidDGL
-	1CVjBPXv53AR2odtHgCneEWrtRQ4VGEz+rNSohzES0awTeYmEbGLGF6x4Lm7GEka
-	NyqycjSQwQNw6VFRYFBzA==
-X-ME-Sender: <xms:H0Y_aWXRUMTWQq42fmbaUlTKBS8C--qUDtclEimg-kbPcp_52OUWZA>
-    <xme:H0Y_aRrhDmByGdEttOYw9PbvnDc2M73uGd692FijasEkds8cLgRvBYwdM3KcIcM6-
-    Ngwfn0AMKnEnEUKvPZN9UXJPa_Z7kfcTgWN77qkgpnestPUJxntdg>
-X-ME-Received: <xmr:H0Y_aQnyF-jRQInyXgUGMrkjMAT2uxLqHzkxG49BPrF4wB4b_Q0MQEVSxHE2HXsiSjZkhih4Ypb8r5FwVr5dZavh2lnMLQXOwg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefhedvfecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765754833; x=1765841233; bh=+Q344E0KEhI+bvFMOJeCK1Ml+RqX+91HlyN
+	c4Z4nshA=; b=igDys4yFtS4vMrFaYaGpuNog7tCAYwHQXWCmGAaP/wX+B9wvsVT
+	b1gu+z3EBQivPq6SDOzCsTfAkiwzo43EwUynLTiRNxc3n27JzbcdtNcx7NwO/Ywy
+	hSaww6cytPRtPAcgro7XWbyjSbUY/H2nTW29KvufD92rLp/+OriJg22FDZ400TZQ
+	txhkzYqGk6uUApld9ZMO4+4bE2kesGwLKqd03hoTSaeSBGfGmsx2k1eSoDwDD7Me
+	5B0B1syPy9VI4waVIFVkAc1eC48MMyrcsjdjKnnkMVCVSoTO19FCFzn8hNZNXg3d
+	1Jn/F2v+VRqNs8mKuQafTBg3EiDGiZIavng==
+X-ME-Sender: <xms:0Uc_aTJ647H9rk4eJQd-RvcLO-B36qu0sCWqZggeC55urIDz-eJG2w>
+    <xme:0Uc_aeKz6oIpVhslLs6olTrAoHD4uAjjJJYqHF76pI6VsoW-cJZgEtYro7TYSMqoZ
+    RqVz88WHSvJ2tMG2pH7H5075dsyQtS405u-TfxDxwHn-Q2Si_LwTQ>
+X-ME-Received: <xmr:0Uc_aQuxzdlB50fChJYXjNdhKSjhcW92UmuSS7Jj29610QNJVenFgCow9ORBEAsO85ykGvnBsSaZ-bSaJ_wXFsxnUsfgTdSCMA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefhedvhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepth
-    gsohgvghhiseifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdprhgtphhtth
-    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphht
-    thhopehkohhjihdrnhgrkhgrmhgrrhhusehgrhgvvgdrnhgvthdprhgtphhtthhopeihtg
-    hhihhnrdhmrggtvhhimhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:H0Y_aZ1B27iGCL_LV2h3Yks4apIRwXCi7YRleVjzGhQj925m5kDNJQ>
-    <xmx:H0Y_aVSMSH3xLxTCv1urJ91JqwIT-XEKbfpYlKq6VusVjIJH2ZBw-A>
-    <xmx:H0Y_aaw1H5ynQyvDXVeFyj4Kc0aZ2gnA5GAOsN1fTqhSCYFl23n1rA>
-    <xmx:H0Y_adCy1ah3gwm3otduAET0j_ZVh60heFIVCUvTbtFt0grwP60OVA>
-    <xmx:H0Y_aaY36vOV5LhRRHJ8JIECkGcNafF5qRCxh_bWomTMMX2bCXbcXlkQ>
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkohhuthhsohhufhhlrghkihhsrdhsthgvfhgrnhhosh
+    esphhrohhtohhnrdhmvgdprhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:0Uc_abRR6CI3y3XE580g9hS8PRAnEBvqP1Y0vOkBw8tNCC6DM1fhWw>
+    <xmx:0Uc_aWO3g61MZYnkUCfqOtqCOJcPf9ED7GNUwdISCfUlJqNwIEJBJA>
+    <xmx:0Uc_aQZVsm_IDN8DkWA_3BKML3gr1lH6T_YhuxnrtqB8tULlTjaB4A>
+    <xmx:0Uc_aQyrxOTW759Bbx3QE2_-7IWRaCxxLDz9ziEIYMcGsA8EXBStzw>
+    <xmx:0Uc_aWdlYQIsq7ltH01yOTtDaJcDogfZzkIDv2YSnx4vC2WlJlwMCeK6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 14 Dec 2025 18:19:58 -0500 (EST)
+ 14 Dec 2025 18:27:13 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,  Git List
- <git@vger.kernel.org>,
-  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,  "brian m
- . carlson"
- <sandals@crustytoothpaste.net>,  Koji Nakamaru <koji.nakamaru@gree.net>,
-  Yee Cheng Chin <ychin.macvim@gmail.com>
-Subject: Re: [PATCH v2 1/2] Makefile: add NO_HOMEBREW
-In-Reply-To: <435e4190-6c46-4404-b769-234f704f608a@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Sun, 14 Dec 2025 12:13:45 +0100")
-References: <53690064-1c98-40e9-8b9a-7ba6bee63703@web.de>
-	<fe00aa37-e929-4ca6-ac23-84a693a48bc6@web.de>
-	<20251214064544.GA26358@tb-raspi4> <xmqqecoxa645.fsf@gitster.g>
-	<435e4190-6c46-4404-b769-234f704f608a@web.de>
-Date: Mon, 15 Dec 2025 08:19:57 +0900
-Message-ID: <xmqq1pkwabxe.fsf@gitster.g>
+To: Koutsouflakis Stefanos <koutsouflakis.stefanos@proton.me>
+Cc: Johannes Sixt <j6t@kdbg.org>,  "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC] reset --hard: warn before discarding staged content with
+ no commit history
+In-Reply-To: <Ai2bA2Zt8bsexgQEIKg1vK7-SNNhTlsmmFp_gOJp8IKX9dJME7UC97EtqRhAUfD00sFmqRdHg9xgGW82rikrLIDUIswrUPr3RKm-LQgGuNY=@proton.me>
+	(Koutsouflakis Stefanos's message of "Sun, 14 Dec 2025 13:29:54
+	+0000")
+References: <a5wKtD6Tn0gzcba1IEUhukYnXPHxMwPq6puQKIPywmjNufi5vc6vX-v5BpPJ7qj_zZsuXF5FiS2gbpsurWmVjoWHtMm8A-kAbaZyjMfrTcs=@proton.me>
+	<xmqqldj9g0pj.fsf@gitster.g>
+	<0lbeTWjDGq8hINMi-lj65HLgAIlUNZe_tzANStd9xxHQqAyZaEnaA0yPzVeY_VcReQIKNjY7eBEUGwMGvlbZ-0W0QZpux22cIHnosa0eX_k=@proton.me>
+	<d318c46c-fbc3-4e47-8c3f-165ca9a26225@kdbg.org>
+	<xmqqzf7ocrhk.fsf@gitster.g>
+	<Ai2bA2Zt8bsexgQEIKg1vK7-SNNhTlsmmFp_gOJp8IKX9dJME7UC97EtqRhAUfD00sFmqRdHg9xgGW82rikrLIDUIswrUPr3RKm-LQgGuNY=@proton.me>
+Date: Mon, 15 Dec 2025 08:27:12 +0900
+Message-ID: <xmqqwm2o8x0v.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,53 +91,40 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-René Scharfe <l.s.r@web.de> writes:
+Koutsouflakis Stefanos <koutsouflakis.stefanos@proton.me> writes:
 
-> Sounds useful, but before this can become a documented feature it
-> deserves more research and refinement.  The current code uses what it
-> can find in an ad-hoc manner, and the patches just extend this behavior
-> to libiconv.  A user-settable HOMEBREW_PREFIX would require a more
-> principled approach, so that overriding it affects the search for
-> gettext and libiconv.
+> On Friday, December 12th, 2025 at 05:25, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> I doubt that special casing an empty tree would fly well.
+>
+> I might be missing something, could you say more about 
+> what makes this problematic? 
 
-Oh, that is so true (but the specifics in macOS details is a bit
-beyond my depth :/).
+Inconsistency.
 
-> I guess that would look like this in config.mak.uname:
->
-> ifeq ($(uname_S),Darwin)
-> ifeq ($(uname_M),arm64)
-> 	HOMEBREW_PREFIX = /opt/homebrew
-> else
-> 	HOMEBREW_PREFIX = /usr/local
-> endif
-> 	USE_HOMEBREW_GETTEXT = IfAvailable
-> 	USE_HOMEBREW_MSGFMT = IfAvailable
-> 	USE_HOMEBREW_LIBICONV = IfAvailable
-> endif
->
-> ... and in Makefile:
->
-> ifndef NO_HOMEBREW
-> ifdef HOMEBREW_PREFIX
-> ifdef USE_HOMEBREW_GETTEXT
-> 	# magic!
-> endif
-> ifdef USE_HOMEBREW_MSGFMT
-> 	# more magic!
-> endif
-> ifdef USE_HOMEBREW_LIBICONV
-> ifeq ($(shell test -d $(HOMEBREW_PREFIX)/opt/libiconv && echo y),y)
-> 	ICONVDIR ?= $(HOMEBREW_PREFIX)/opt/libiconv
-> endif
-> endif
-> endif
->
-> Perhaps the magic parts just need to check for the existence of
-> $(HOMEBREW_PREFIX)/opt/gettext and use that, but the current code is
-> more complicated for some reason.
->
-> René
+Treating "newly added files" specifically is making the behaviour
+inconsistent with others already, but doing so only when you haven't
+created a commit or after doing "checkout/switch --orphan", which is
+essentially what special-casing an empty tree case is about, makes
+it even more inconsistent.
+
+> If it is about breaking existing workflows: any script that 
+> automates either of the two use-cases discussed would be relying 
+> on behavior that is almost certainly unintended.
+
+I do not think that is the reason for "special casing an empty tree
+would not fly well", but I have to say your view is too narow.  I do
+rely on "reset --hard && clean -f -x" working in order to make the
+working tree spiffy clean, and I somehow doubt I am in the minority.
+And "reset --hard" MUST not fail in such a case.
+
+> Such scripts 
+> would fail, but without data loss, and give authors a clear 
+> signal to fix a likely bug. 
+
+And most authors will consider the "bug" to be fixed is in the
+degraded behaviour of "reset --hard". that does not do what is
+written on the label  Then what?
+
