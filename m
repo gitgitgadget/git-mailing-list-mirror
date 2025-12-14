@@ -1,144 +1,243 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB7D1DE4E1
-	for <git@vger.kernel.org>; Sat, 13 Dec 2025 18:45:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD721E3DED
+	for <git@vger.kernel.org>; Sun, 14 Dec 2025 06:45:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765651529; cv=none; b=FWab2xquTpM+mWcy7U0xhR6Bd2+pGN/zy+jF6eOYE1gEZnxYBMQFF9fGfouPkpFJwdYq8ouyVBh3xc5vPIwE7cs1cbQFg+Ra6pd+oT1vieSCQEs/l43RLCXosjgpPTdMnM2Cyg2OtPAwHCdQzJxBUUz/aTOGmPq7xgZKuG4O9fY=
+	t=1765694759; cv=none; b=qtJU/2yZ43V6V1w1LlzTgR6J2hDMg/b8E+lvrbL62nbciTPxYYKGtIIjJvDVmDYzjY39M3D5t++lu55Zltyft9vrMTqQipmefAh7wuAW0PVBOg1ddv4I49ba7X5S8OzHIFMMRaSqWdNwG7u/JujWNn0ZZ9B7/GooKXPvOLaWfBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765651529; c=relaxed/simple;
-	bh=+xs8C0um8ytH2YpfXa2h+JqCgW+jBcEs+uX3yawqFqw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=tVrTdwrYhJshbB8RlAcsueGY56AZe6Ypw3q+MBI6mCSCGXFtSXI5kYvnRI0W3INmAx7Qg90RMTix2dj1avWpDqEygW6ZgHiQlRf3jNEjvIc1XAEzUl7I/5bAfDuOlVcMTd0DiFJtfcAMEQq7OfNT5JQ7HLAQGnkUIvbVeBQLnIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=Xzoyktka; arc=none smtp.client-ip=212.227.15.3
+	s=arc-20240116; t=1765694759; c=relaxed/simple;
+	bh=qNPkEAAWajD3zUN6PjvI/VM/1s6T/6LWvaSGgQ2WbPc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jISfvekIGwf6HwOQk8gRaIp5k1Y27e1k7Z74r6Yj0zmUkbZp7SDMUXqzionHFaUx7Ctb5WGGna8K7YJSU3rTx+jpdQ7Ta7GIJswZeslbeyfaOL9lCVrPRL6JoqS+UUXy/9SvoCOVM5q1ceYcjQq2xtkbONMNX0ayKDI3sQDab10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=REyVg/pN; arc=none smtp.client-ip=212.227.17.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="Xzoyktka"
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="REyVg/pN"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1765651525; x=1766256325; i=l.s.r@web.de;
-	bh=e6KLsigP9huAbDvFoq6Jl+NKqbMl+BXYmPtBlpZktDY=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=XzoyktkaRzgD6AkTsYuCUc7x0cD29ggvw+c/uglQPqAu50bdiQgEXZ37V6I1TktD
-	 6vzoy8suxD9/+ncB6XO78mowpoVg1V5o+cH6WvtzHM8sD6vLoFXkOysWt18Ma/ag0
-	 QoCvy2+D7vAZT7mY+bbVzol8AP52s9Mj4s6wLNovRBybV31xV8atizT6btJgCLg6z
-	 4/am6RdneG3eODqdLXj+1AqC/8j8L0ozgN/Kc/JX8Ocl7W9gMf7BaryJXKKqkgv3/
-	 I1m1mP9vRVyc10238FiU6wKWwn/5wdv5ICBSxdLuS/B58OCH2j310Ztg25PZo+1RM
-	 CSf/XMTXWJtwbWEtIA==
+	s=s29768273; t=1765694745; x=1766299545; i=tboegi@web.de;
+	bh=9mvqfP82qGPeMTEhab7GEjaECFt+EOiVYtdnTAmLJ4Q=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=REyVg/pNxQR3w2YYU/VT1RGWikmvNGyn/YhkkSG8EiLY3ne08i4cmegd8Q35TIcD
+	 MtmgJAqHenisOrkjPcihdzPpZ6zYnl+Y1/2TRZoxRMMmfYH2aF6HhMAavgeB8pTtU
+	 wHwDE3Jaie2KwFCUXqg9qUOdCWvSXgoXDrcMjkO46siKk3jqGLcmGx2KXg48M227r
+	 1r3jdcnRGhIhmTK8QsiyOd3APoAW/8TzQ/q708Qqbmq5EgleXPmJkd9rN3FfvdpHo
+	 vydO27kxRfkhoTMV7AegV1vg6EZXT/mesggsFi4osU4PuSdrqhYJeLGfFeFsSrSrT
+	 i61TbN8Fa/nBDPlylA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.27.139]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MRF3I-1vgdgf2nhs-00YtdJ; Sat, 13
- Dec 2025 19:45:25 +0100
-Message-ID: <8cf62607-5fcc-4b7a-8811-9046b7c3e7d7@web.de>
-Date: Sat, 13 Dec 2025 19:45:25 +0100
+Received: from localhost ([81.224.105.209]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M9qhD-1vPQWy384L-000dfh; Sun, 14
+ Dec 2025 07:45:45 +0100
+Date: Sun, 14 Dec 2025 07:45:44 +0100
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>,
+	Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= <carenas@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Koji Nakamaru <koji.nakamaru@gree.net>,
+	Yee Cheng Chin <ychin.macvim@gmail.com>
+Subject: Re: [PATCH v2 1/2] Makefile: add NO_HOMEBREW
+Message-ID: <20251214064544.GA26358@tb-raspi4>
+References: <53690064-1c98-40e9-8b9a-7ba6bee63703@web.de>
+ <fe00aa37-e929-4ca6-ac23-84a693a48bc6@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: What's cooking in git.git (Dec 2025, #03)
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq4ipwc7y2.fsf@gitster.g>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqq4ipwc7y2.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:LGSFFznCVeWhC43lbAAaV9JJO5B6cwnm/P/G4p0NnrUmq88htke
- f778z6VxE/rF718Qh8kw+PZ2MRd5g4oxoI9vSfuDblrIblD3Kz+w+lqS1a9APughYkPZwpV
- elTkhjresT1SfpKyS3ABlu249GPFWultP3s1jchlWAmhl7mRY8lU0JkfVG0pDjfth0aQ6ef
- G20VrNu10iInw9/Ao0tUg==
+In-Reply-To: <fe00aa37-e929-4ca6-ac23-84a693a48bc6@web.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:9+wiTZaVsgQSTQEEyZt76uPtvij6MbzjJdzCcNz6fuPHbnMc0vL
+ EUawZHQfAXM4BK06GixPMLtEe1Gt2qrkjkfLGX0vX7SyZyplDSxhqgfawOy37hU38IiT1Gh
+ 0QFuuMpuJXo5i5eSqVbCAuV+BE4W2X7uR+N3JKCFgxn2ZXIviT8iSNzdlcdM6l9s2THR2Mq
+ LMnCpJEL5Z+iOxym2QCSA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:TtRjI5i+Qe4=;eBaj86UWAkOxmG7bjFZe21SiW4F
- 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
+UI-OutboundReport: notjunk:1;M01:P0:KI9VRFN6ybY=;/jsJBM/FsmHF2Ks0Hrac0YgeoEZ
+ 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
+ /3WjxA0y89H2YFM4h9h0cInJ7F6T32OnWeD62R
 
-On 12/12/25 11:26 AM, Junio C Hamano wrote:
-> * rs/macos-iconv-workaround (2025-12-09) 1 commit
->  - config.mak.uname: use iconv from Homebrew on macOS
+On Sat, Dec 13, 2025 at 07:42:38PM +0100, Ren=E9 Scharfe wrote:
+> Allow disabling the use of Homebrew on macOS, or Linux for that matter,
+> like we already do for other package sources, MacPorts and Fink in
+> particular.  This is useful for packagers, or anyone else who wants to
+> control dependencies.
+
+Good.
 >=20
->  Workaround that "iconv" shipped as part of macOS, which is broken
->  handling ISO-2022 encoded strings.
+> Suggested-by: Carlo Marcelo Arenas Bel=F3n <carenas@gmail.com>
+> Suggested-by: Torsten B=F6gershausen <tboegi@web.de>
+> Signed-off-by: Ren=E9 Scharfe <l.s.r@web.de>
+> ---
+>  Makefile         | 17 +++++++++++++++++
+>  config.mak.uname | 11 +++++------
+>  2 files changed, 22 insertions(+), 6 deletions(-)
 >=20
->  Will merge to 'next'?
->  source: <16efc726-34be-44f5-aa92-4e82b663ab3d@web.de>
-Not, yet, please.  Just sent v2 which adds NO_HOMEBREW.
+> diff --git a/Makefile b/Makefile
+> index 6fc322ff88..dbd2760d18 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -100,6 +100,9 @@ include shared.mak
+>  # specify your own (or DarwinPort's) include directories and
+>  # library directories by defining CFLAGS and LDFLAGS appropriately.
+>  #
+> +# Define NO_HOMEBREW if you have Homebrew and don't want Git to link
+> +# against libraries installed by it.
+> +#
+Good
+>  # Define NO_APPLE_COMMON_CRYPTO if you are building on Darwin/Mac OS X
+>  # and do not want to use Apple's CommonCrypto library.  This allows you
+>  # to provide your own OpenSSL library, for example from MacPorts.
+> @@ -1692,6 +1695,20 @@ ifeq ($(uname_S),Darwin)
+>  	PTHREAD_LIBS =3D
+>  endif
+> =20
+> +ifndef NO_HOMEBREW
+> +        ifdef HOMEBREW_PREFIX
 
-Ren=C3=A9
+Question from a homebrew newbie, kind of:
+Where do the HOMEBREW_PREFIX (and other HOMEBREW...) come from,
+and what do they do ?
 
+Running
+git grep HOMEBREW
+gives
+ci/install-dependencies.sh:     export HOMEBREW_NO_AUTO_UPDATE=3D1 HOMEBRE=
+W_NO_INSTALL_CLEANUP=3D1
+
+Whould it make sense to have a few words here as a comment ?
+
+> +		BASIC_CFLAGS +=3D -I$(HOMEBREW_PREFIX)/include
+> +		BASIC_LDFLAGS +=3D -L$(HOMEBREW_PREFIX)/lib
+> +        endif
+> +        ifdef HOMEBREW_GETTEXT_PREFIX
+> +		BASIC_CFLAGS +=3D -I$(HOMEBREW_GETTEXT_PREFIX)/include
+> +		BASIC_LDFLAGS +=3D -L$(HOMEBREW_GETTEXT_PREFIX)/lib
+> +        endif
+> +        ifdef HOMEBREW_MSGFMT
+> +		MSGFMT =3D $(HOMEBREW_MSGFMT)
+> +        endif
+> +endif
+> +
+>  ifdef NO_LIBGEN_H
+>  	COMPAT_CFLAGS +=3D -DNO_LIBGEN_H
+>  	COMPAT_OBJS +=3D compat/basename.o
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 1691c6ae6e..a6521575ee 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -153,10 +153,10 @@ ifeq ($(uname_S),Darwin)
+>  	# `brew link --force gettext`, should be obsolete as of
+>  	# https://github.com/Homebrew/homebrew-core/pull/53489
+>          ifeq ($(shell test -d /usr/local/opt/gettext/ && echo y),y)
+> -		BASIC_CFLAGS +=3D -I/usr/local/include -I/usr/local/opt/gettext/inclu=
+de
+> -		BASIC_LDFLAGS +=3D -L/usr/local/lib -L/usr/local/opt/gettext/lib
+> +		HOMEBREW_PREFIX =3D /usr/local
+> +		HOMEBREW_GETTEXT_PREFIX =3D /usr/local/opt/gettext
+>                  ifeq ($(shell test -x /usr/local/opt/gettext/bin/msgfmt=
+ && echo y),y)
+> -			MSGFMT =3D /usr/local/opt/gettext/bin/msgfmt
+> +			HOMEBREW_MSGFMT =3D /usr/local/opt/gettext/bin/msgfmt
+>                  endif
+>  	# On newer ARM-based machines the default installation path has change=
+d to
+>  	# /opt/homebrew. Include it in our search paths so that the user does =
+not
+> @@ -166,10 +166,9 @@ ifeq ($(uname_S),Darwin)
+>  	# add gettext. The issue was fixed more than three years ago by now, a=
+nd at
+>  	# that point there haven't been any ARM-based Macs yet.
+>          else ifeq ($(shell test -d /opt/homebrew/ && echo y),y)
+> -		BASIC_CFLAGS +=3D -I/opt/homebrew/include
+> -		BASIC_LDFLAGS +=3D -L/opt/homebrew/lib
+> +		HOMEBREW_PREFIX =3D /opt/homebrew
+>                  ifeq ($(shell test -x /opt/homebrew/bin/msgfmt && echo =
+y),y)
+> -			MSGFMT =3D /opt/homebrew/bin/msgfmt
+> +			HOMEBREW_MSGFMT =3D /opt/homebrew/bin/msgfmt
+>                  endif
+>          endif
+> =20
+> --=20
+> 2.52.0
+>=20
