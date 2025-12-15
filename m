@@ -1,111 +1,133 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2261D516C
-	for <git@vger.kernel.org>; Mon, 15 Dec 2025 08:14:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3021CF7D5
+	for <git@vger.kernel.org>; Mon, 15 Dec 2025 08:21:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765786466; cv=none; b=aaJKgWL9Mv5UwsNpUjn1A/FUeiRIXIHEmnSV2xL2/yqC2x6npJyiXWzEZ3XdqWMf6dG5NYmMNuG1ZK8+5aqwdD11P3Mw0boakCA4jI+V2tQwhE6aHs2oaox3wTlrqfTs36a3TY5zMGhMYGzamGqOthQ5cHOOnJuMt/jNbmpltG0=
+	t=1765786872; cv=none; b=gzrBpevXrDane2yc4DzJuoDCTDT5fin+QDnSilKfYJOgVgqMWjdK270aFATLv4KnLbnYbWa8+dtovNGPFiOCCa/p2Gn50/IPQur30zwy9tfrWbXJSYvRdVTe0RH/Qv1V7PhG23N4GmAzxE085VqGVFlDslmwhKIJYDNUl6i9/So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765786466; c=relaxed/simple;
-	bh=/7iCO1nHsKQgNImTtROFeznyez/3epIT3pc33cnj/NE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I6EfAbHW9M7pwPvOZmzQDvVB0lnp+R+KMOAVLRvclluyNqVMu4pVVMQM7qWWMJPBf8Sz8Q1DrI256sfVVRVhQrDp74QAxw6TsHejOEPcUxPRTT80/tYRNjN0d92Ot9GTVvZh8uczraSl9mJZ/3+jlSJl6lZ2tshgSNZIQgTiixM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=AFcZc7h4; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1765786872; c=relaxed/simple;
+	bh=q/qlMVhwON5xne0cGuky6l1XwtpgZXHLg9TzCuAMRuw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=odroKI9Rd5TBwBRcWN8QemtLBlhT1EaKol8+rUAr0f4YjNh6uTTk0yZsJKyD43JDhhHNtS4ehQ1hrHGBlj03vLz7v1BdtKX8F0q1BvjT2g2J9iTzIngSe5qGWvubWGBHl2JR2rtXmQUzX0js7FZKgel+mnbrqYQE9trVwa/So/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SWGzNI/n; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nQ5aKKo6; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="AFcZc7h4"
-Received: (qmail 361297 invoked by uid 109); 15 Dec 2025 08:07:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/7iCO1nHsKQgNImTtROFeznyez/3epIT3pc33cnj/NE=; b=AFcZc7h4JY1dSQtIkoBMaDFfMv0lD5reE9I+6z4x1qofgC3cJIs+Do/mgEP7ERjBzDE+luEmSKTYfFzgXHdMWNL92HTiZTA6jbKzrKgRn8gcDSKMbOy/EsWAc6d46/KvbbRhvDnhUS42eAb2zG0p+iIu09JfkZyWcYwe0RxyYtzG6SmGNcxtU+Pg56LUpyJCvXbueKYaALXEkhSJ0gp4yWMNNFinag+SkbdrGrQjdmqFvThzQAkKerNXYajB5S9gZqu7OOCngdGB4zBbwsaTK/P2xo68y5Xur39Z9Ul0mlpXXA/3OxeOUMX6wial7aLPiKg9VlxkRsuLEuAG+LvLYA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 15 Dec 2025 08:07:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 480535 invoked by uid 111); 15 Dec 2025 08:07:41 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 15 Dec 2025 03:07:41 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 15 Dec 2025 03:07:36 -0500
-From: Jeff King <peff@peff.net>
-To: jim.cromie@gmail.com
-Cc: Jason Baron <jbaron@akamai.com>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	gregkh@linuxfoundation.org, ukaszb@chromium.org,
-	louis.chauvet@bootlin.com
-Subject: Re: [PATCH v6 00/31] drm/dyndbg: Fix dynamic debug classmap
- regression
-Message-ID: <20251215080736.GA809641@coredump.intra.peff.net>
-References: <20251118201842.1447666-1-jim.cromie@gmail.com>
- <76038c97-39ca-4672-adc0-4e8fe0e39fc8@akamai.com>
- <CAJfuBxxFWD0rEjm-va+Bjmf-m2nfOD_+ZEqKy22WX6QdugQCUw@mail.gmail.com>
- <5b3d492c-7037-45a5-a001-0064f14d5f81@akamai.com>
- <CAJfuBxzW6TMmdS74ZPfPSe1w6S=oO17WYZc-Jgn_et=-Muw05A@mail.gmail.com>
- <20251214195420.GA791422@coredump.intra.peff.net>
- <CAJfuBxx-_Z_hCoqdj2Lma7oP6LhCM6Pz=afe2P=wKO41T7R3mA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SWGzNI/n";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nQ5aKKo6"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 630227A0009;
+	Mon, 15 Dec 2025 03:21:08 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Mon, 15 Dec 2025 03:21:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1765786868; x=1765873268; bh=IJJIKubGzz
+	UATreLZrn7uUUROzQhneKLq7CWyeoJAWg=; b=SWGzNI/npiik88P5wKp+iZ2ni/
+	NRWRAdw28CbPvr4Gr+s6iTj9/xQm1EpiLpF6jW0aFjQgk8GGiWeGeN+ul3bqLCq6
+	+gh3dP2CMKc+6nAYbcEJchhsXfDIsgpsfVgB+ZNy3y8rnIxo+ihR0hAKcqS89Ul9
+	74m211zIF06akXfiQL/qlmjD0xyojbnhKyXCTfknXoc5G3JPp78N5tA2mH8OGtBO
+	LDI8gl45ZCzcpNUeSBwe2LnfiqKFf100G0d1Sa0IGyUgwurYMjNvc4LdVR6i8wjC
+	86Hjz60z5xriGLZUaQ4Lw3MS51E3IzyyAmZBfzc8P7Xt7my1bLc6bhLUZ9Sg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765786868; x=1765873268; bh=IJJIKubGzzUATreLZrn7uUUROzQhneKLq7C
+	WyeoJAWg=; b=nQ5aKKo6QFz/5h+J+T6w7oPHUlf5WDmMIw4E1NQMPIU5gF49/fB
+	pKsYM48eYR4lGzO2V1SbxCA/EqBCu4L9qv5BETK4errbDIyxKJHyN3+0uStRMV+5
+	NPx5j3JFFGjW9LJGPE0tR7RJWB+M+dWpQn5Q14e1XG2Q591pWl045E1FvCRiRAu6
+	codVE4r8vwrylS9XqYJatq4SXHgbj4GvCqk1vps1/nQciKvOrmbvzdf7nc1mt4xh
+	lnqMPWGsVpuy2xJ/WcbVUBTE4yoZbwQuc2zfKZZDsKv1m1fABmjPuDsrTGYu7a27
+	zLtm9p4ZKUWbPuHx5X+yza5hJtHeBzt74IA==
+X-ME-Sender: <xms:88Q_ablszEzZ4rqSCqiI29v9s0ebzAx_KOQxy_mLdvQV-ziLmgYVsQ>
+    <xme:88Q_aV1Bc2gufYfX0TVrMu6L1NWJUdQUMJYxvO6NCU3V10lOH7s_aAWAkjlQ189P-
+    WqBd1i9Kj3IFgViNjCarTZ7EycG9-3ljBJpA0YJq0AeHarJYKVXtLc>
+X-ME-Received: <xmr:88Q_aWpwcluoMwoDqDmrtwdEButEahDxW_HiSYsKuxx74C4ws8eu7PZSKW9V9vaEgKCeYkBZZbLQN8P65yxMMkMuPNO2_Dle3g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefieefudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:88Q_aScnkSd0lrkU6hoyZvIj-tbqTfgHUPwQkVFp94be7Z8QP0xmpw>
+    <xmx:88Q_aVrrL9lLXykLkM03V-vo4IxC0agV7BzBU5gD5hkzMfqZ6DN0sQ>
+    <xmx:88Q_aTFfaNhtOlGTmhxu_cPWsKq_86m62ypfofvC8--W_IPfJVBqDQ>
+    <xmx:88Q_aVuhDbElgMaVBp6LRbO1SIaGjQnrvcClwPiJuftKLX01uxP9ng>
+    <xmx:9MQ_abEro76Q2FuWf35kW3sjNqnhWKRq0urQjMTA9VFJjQ2LNrHfgWKN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Dec 2025 03:21:07 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v2 2/7] strbuf: split out logic to humanise byte values
+In-Reply-To: <20251212223644.3090879-3-jltobler@gmail.com> (Justin Tobler's
+	message of "Fri, 12 Dec 2025 16:36:39 -0600")
+References: <20251209225820.2861276-1-jltobler@gmail.com>
+	<20251212223644.3090879-1-jltobler@gmail.com>
+	<20251212223644.3090879-3-jltobler@gmail.com>
+Date: Mon, 15 Dec 2025 17:21:06 +0900
+Message-ID: <xmqqh5ts88b1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAJfuBxx-_Z_hCoqdj2Lma7oP6LhCM6Pz=afe2P=wKO41T7R3mA@mail.gmail.com>
+Content-Type: text/plain
 
-On Mon, Dec 15, 2025 at 11:52:38AM +1300, jim.cromie@gmail.com wrote:
+Justin Tobler <jltobler@gmail.com> writes:
 
-> using the mbox.gz from your link, I get a different failure, this time
-> on patch 11
-> [...]
-> jimc@frodo:~/projects/lx/linux.git$ gunzip
-> ~/Downloads/PATCH-v6-00-31-drm-dyndbg-Fix-dynamic-debug-classmap-regression.mbox.gz
-> gzip: /home/jimc/Downloads/PATCH-v6-00-31-drm-dyndbg-Fix-dynamic-debug-classmap-regression.mbox
-> already exists; do you wish to overwrite (y or n)? y
-> jimc@frodo:~/projects/lx/linux.git$ git am --empty=drop
+> +char *strbuf_humanise_bytes_value(struct strbuf *buf, off_t bytes, unsigned flags)
+>  {
+> +	int humanise_rate = flags & STRBUF_HUMANISE_RATE;
+> +
+>  	if (bytes > 1 << 30) {
+> +		strbuf_addf(buf, "%u.%2.2u", (unsigned)(bytes >> 30),
+>  			    (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
+> +		/* TRANSLATORS: IEC 80000-13:2008 gibibyte/second and gibibyte */
+> +		return humanise_rate ? xstrfmt(_("GiB/s")) : xstrfmt(_("GiB"));
+> ...
+> }
+>  void strbuf_humanise_bytes(struct strbuf *buf, off_t bytes)
+>  {
+> -	strbuf_humanise(buf, bytes, 0);
+> +	char *unit = strbuf_humanise_bytes_value(buf, bytes, 0);
+> +	strbuf_addf(buf, " %s", unit);
+> +	free(unit);
+>  }
 
-Ah, that is the difference: you are applying directly from the
-downloaded mbox file, whereas I picked out the messages using mutt.
+The old "strbuf-humanise" used to treat the whole "<number> <unit>",
+e.g., _("%u.%2.2u GiB"), as a single thing to be translated.
+However, the new code requires that in all languages:
 
-The mbox provided by lore is generally in the order the messages were
-received, which does not necessarily correspond to the order they were
-sent, or the rfc822 dates, or the subject lines. But "git am" does not
-do any sorting; it applies the messages in the order it finds them in
-the input mbox. So you get out-of-order patch application.
+ - Decimal point in number MUST be "." (don't some Europeans prefer
+   comma instead?);
 
-There's another possible gotcha, as well. The mbox for the thread will
-contain other non-patch messages like the cover letter and any review
-responses. Adding --empty=drop as you did will generally skip past
-those, but not always. If somebody responds and says "Maybe do it like
-this" with an inline patch, then "git am" will pick up that patch, too!
+ - Number MUST come before the unit;
+
+ - Between the number and the unit, there has to be one and only one
+   SP.
+
+All of which could be a severe regression from localization's point
+of view.
+
+The first point among the above three can relatively easily
+remedied.  It is a bit more involved, but it is possible to fix the
+other two, too.
 
 
-It worked for me because when I picked the patches out of the thread in
-mutt, it showed them sorted by rfc822 date header and used that same
-ordering to dump them to the new, filtered mbox. And of course I
-manually decided on which messages were part of the patch series and
-excluded the rest (based on subject lines).
 
-It would probably be possible to teach "git am" to sort by date header,
-but that's not always right, either (you could have a local series with
-out-of-order author dates due to rebasing). You could use the subject
-lines as heuristics, if you know that the sender didn't use any exotic
-format-patch options. So there are probably some heuristics at play.
 
-And none of those ideas helps with the selection problem, which is
-another heuristics ball of wax.
 
-Fortunately, I think b4 has melted that wax for us already (OK, maybe
-I'm losing the metaphor). If you do:
-
-  b4 mbox https://lore.kernel.org/lkml/20251118201842.1447666-1-jim.cromie@gmail.com/
-
-you'll get that unordered mbox again. But if you use the "am" command:
-
-  b4 am https://lore.kernel.org/lkml/20251118201842.1447666-1-jim.cromie@gmail.com/
-
-it figures everything out and gives you the clean series in an mbox. It
-also knows how to pick the latest version of the series (your v6 is in
-its own thread here, but if it were in a thread with v1..v5, you again
-get into another message-selection problem).
-
--Peff
