@@ -1,194 +1,605 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872E2313273
-	for <git@vger.kernel.org>; Mon, 15 Dec 2025 20:45:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E9A32720F
+	for <git@vger.kernel.org>; Mon, 15 Dec 2025 20:56:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765831535; cv=none; b=NL5t1qA+DHx66Izfe9/sgLefU5RGecR/oRI6BH8EZL8Y49/VolKszK7kkADK1xCv6pnAcJSSxD/jyjAjQ+f6wMnZWaSztTOFLrIuchXEs6f7l2BZml3YSoLTEa5vssX1ov1+VIPHP1zHzqDJeMku+Wsz/V0HEz1e9EawEZrVq1Y=
+	t=1765832217; cv=none; b=tTKNPdlyqCMyAwnXOfDfk6+1r9Ig+gCbMicY/PHGJy4sCvFtNY2EpxcIySUNnpBfLDrPoyr/yMv+16M8pmxfT7Xysyf1/44bEQ4BraR+0I1495uGElEPOmXJIYHl17vPa5ZYmUY52jd9COZ01SRheLQtwLaynKWA+57ewi9g/SQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765831535; c=relaxed/simple;
-	bh=sFpkTPF+NMUYKHYp8JOb9G6pDaYcCmVLsufEU0PMv2k=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=JTNjTdvWX+F7kqLXdVQGDdIssGF66AjerfIFohsqd80VKk1tsafajNosStZPSSOtjVnT3uKACbOSVYN1Tuj3n7Kg/GIa8vQNcAG4i8aNy2olIhAviw5CURDOqZz4K1COR5SPI6pmxUDFDtgD0IzOtMyaCJleijy19t9je2pOWsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=DuJJXODC; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1765832217; c=relaxed/simple;
+	bh=irKMW7y3SwwgbY1Lapr+494yGbqPZK82aSbiy0Shv5g=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=K/hRjT+/P+pqHzWZsIkh5pzcI/GKuIU2BH+5RdJtM38F8S3v88EeHyoJttAhe5qfmMu2XY175nCIWOb6Ikc0EZGxuCv3k3W/CtLB7XQwUVGDkmi+aFYdf0a5tynldCCpM3vj+MHKVQMMjCnJ4rqjCmENhsRyDwOrquFh4Zxon8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mPJZa56C; arc=none smtp.client-ip=209.85.160.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="DuJJXODC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1765831525; x=1766436325; i=tboegi@web.de;
-	bh=LEGtvqrbxzzOdvO2dZlf04IbxeaS9NUHQILENNpt8J0=;
-	h=X-UI-Sender-Class:From:To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=DuJJXODC4xhQvM6BMlq5ALmJVIRLln9FBFXtPSwSnPgCyo2mBwa5lP5IdlF5NwVa
-	 Mx5Fl+QUZEQf/K6w4vNcptm4FINM7BqO3z277KqcMwy1GxsnDlPgbp1uQZysEasuI
-	 ODtgHw7sQkgjWtjvPDNYyneJqSgyG4C6T++3edYTO3zTaF7DvZFdiB9WLPKzZcmuJ
-	 PfayIe+1QaJNQASLX0ZUeXN5N+4twx85Ldr+yl3MDFxU1Ogz0QSxjbIi8e4j8710N
-	 wNIjwoEOqYxv2lk/W2njoZnF2/nKERpnDviJDo0UK1aIsrSfy3PJXPaQidxQmkaEH
-	 qtyEd9jNbS4g8HfV/Q==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from susi ([81.224.105.209]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N5Ug4-1w2otL2ncI-013NGa; Mon, 15
- Dec 2025 21:45:25 +0100
-From: tboegi@web.de
-To: tboegi@web.de,
-	git@vger.kernel.org,
-	l.s.r@web.de
-Subject: [PATCH v0 3/3] config.mak.uname: Activate ICONV_RESTART_RESET if needed
-Date: Mon, 15 Dec 2025 21:45:24 +0100
-Message-ID: <20251215204524.1946518-1-tboegi@web.de>
-X-Mailer: git-send-email 2.50.0.rc0.46.g7014b55638.dirty
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mPJZa56C"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-3e12fd71984so2939926fac.2
+        for <git@vger.kernel.org>; Mon, 15 Dec 2025 12:56:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765832213; x=1766437013; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HJRdJGGW+NaPW59jPicgpmn/u4zU0SBNp52xAztjehQ=;
+        b=mPJZa56CpqfjExSn17jYp1CBVmmXoNsSElFbp0gK2D1MtPHD4BMglS+dUoI99nle3v
+         y2Lb7P9JIdPBJmE6p94ph8WnLujITMmUPDnrj3S5WS8LXPPPnDlqwW4PRIUYJ/r7fiOe
+         7TD9hdshabR/jR4rJx4ypURypmJqA2CdFfj/S/tUffigRfVr1D9CeLJz+xSa4+nx60/0
+         H3N0xnT0d/lLz5ceYHTwav7j3yMPVCoPUxcezIFgOOrsRjq+nuE7EqHWx2zX7rAEas32
+         ZfdEIsdemfewnooFi2A0CfB10gio7A5p8oMxTqCMedNqbxzIV0jc4LoTC7pUg8+KIAdJ
+         44Qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765832213; x=1766437013;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=HJRdJGGW+NaPW59jPicgpmn/u4zU0SBNp52xAztjehQ=;
+        b=cRHyl0csETpPHOVckUa1Ydm4oEwTpQst/7NrDbprXhnyfIKTyYp5wmseVMzVnoN91x
+         k/zZbPtbYr/Ex+aojkVWPojK6HW3V+jQe3iXnh73Know6IInmM5T96gC06WsetF4YWbo
+         oApFBb8K2Ykn4D407tnH1qo6/Oca+mUAQ+92jCUOBLj1MQ/UAhLTnZM6v3PEUzRlZcmJ
+         6+8lsZA3KodnfA1qpVhV8u9Dav4KAC9taJApMj5RIMbUP3u8C3Rj4Y3SmXC26PTHJj1A
+         bdKdvDXPwy3FVJHPoYhgd6woF93sRxP5fUS2f3WTb5uRWz3CGyIwKstoKCuTNXsfXxW2
+         iW4g==
+X-Gm-Message-State: AOJu0YyoOf8olLnw89JEWfqkaaJ57QGmuhKfJAV+kKuhTs69xxgzS0Re
+	bPnXQWixkbJSCFWXX4Ovyygn1pOhqi5WM2vtLdCZLkR/QUjVCLOywtyMnOWMTg==
+X-Gm-Gg: AY/fxX7Yj1+ila6snUYul9srTYz5u9DL/1aXk+f8z/VNojp0H/J47/meI3Xy8gBSqZP
+	WHXaMv9OogHKiZJyh+GvoGXJ5DyhApQTvHBURwu7uB+ErvTmqmbkjn6mVzLzMC3L3CfW3l3UKGZ
+	pGvdW+Ujd6dDBH60BLtYaML0H+HkijCsfu7eK4MvZnXFdVBZHZBu6Mn9XE3Jx9gti6hHv6eXd3Y
+	IVQPGYo3kuRUEhR5vsLYk1Zn8QA05Z2v6xJfHFq6nPfIRwLH8ZpmETc+JAX3iJVqs6j1lGw5Y9U
+	kj4pe+nfMxROIAi1V5B32KL1YzyKCCcVGwn04Fmt4E3mQCiX1lzGVNpmSMP28uvF8TCBwaiK9VB
+	Etos6KgdI6detIzZe2l9yJnYdibM6VggP2/36YktpMMFtoZss6oaBUSl84B4w3gahp9GPkJwyfE
+	XT6HgBKQr3JJ168BJS9QurxaxFNApz/w==
+X-Google-Smtp-Source: AGHT+IEglOMkLduqIzbQ8oh3SGO/PKLqPHC1ypPxCB7OdXhJVUnKXB0kvdkdmviNSm9bIyCNxZ5zjA==
+X-Received: by 2002:a05:6820:994:b0:65b:35fe:433d with SMTP id 006d021491bc7-65b45299acemr5932837eaf.66.1765832213046;
+        Mon, 15 Dec 2025 12:56:53 -0800 (PST)
+Received: from denethor.localdomain ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-65b360f0f4fsm8778898eaf.14.2025.12.15.12.56.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Dec 2025 12:56:52 -0800 (PST)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	gitster@pobox.com,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v3 0/7] builtin/repo: add object size info to structure output
+Date: Mon, 15 Dec 2025 14:56:32 -0600
+Message-ID: <20251215205639.2700270-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.52.0.209.ge85ae279b0
+In-Reply-To: <20251212223644.3090879-1-jltobler@gmail.com>
+References: <20251212223644.3090879-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:LezjmzFGtlHpSQ8QSgBn1eTts+yLK89eZn7Q/UXmv9xuekk+EEz
- nDRdvtHerSjN7ObDJCagEOt3IK4Rs7V91mHn4m/w27foAiZZc9h2RtJmsHmcyU+U2vxg5u4
- yUIOzGqAQ8oJLRecYsnE7ARZip6xKZPWqeBm1Z4xpKnhUxs4Fst+8RImStoDSZlExrg9LDo
- 8CX+1ghIVLRtD/VaRxk1w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:g4HtDikwcRM=;7u7RdcLFMP5f7FVeIuC+f+oRKjy
- 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
+Content-Transfer-Encoding: 8bit
 
-From: Torsten B=C3=B6gershausen <tboegi@web.de>
+Greetings,
 
-utf8.c needs a tweak when calling the iconv library shipped with later
-macOS versions (14,15):
-'#define ICONV_RESTART_RESET' is needed, or
-'BASIC_CFLAGS +=3D -DICONV_RESTART_RESET' in Makefile language.
+This patch series extends the recently introduced "structure" subcommand
+for git-repo(1) to collect object size information. More specifically,
+it shows total inflated and disk sizes of objects by object type. The
+aim to provide additional insight that may be useful to users regarding
+the structure of a repository.
 
-The tweak is not needed when Git is linked against iconv from
-Fink or MacPorts or homebrew.
-Neither when Git is compiled under older macOS versions.
+In addition to this change, this series also updates the table output
+format to downscale larger output values along with the appropriate unit
+prefix. This is done to make table output more human friendly. The
+keyvalue and nul output formats are left the same since they are
+intended more for machine parsing.
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-=2D--
- config.mak.uname | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Changes in V3:
+- Address potential localization regression by making the downscaled
+  number format string also translatable. Also make the format string
+  for how the values and unit prefixes are displayed via
+  `strbuf_humanise_{bytes,rate}()` translatable to be more flexible.
+- `strbuf_humanise_{bytes,count}_value()` has been renamed to
+  `humanise_{bytes,count}()` and updated to provide both the value and
+  unit prefix as separate strings.
+- Unit prefix strings are no longer allocated and instead constant.
+- The humanise flags are now defined in an enum.
+- Instead of using `OBJECT_INFO_FOR_PREFETCH`,
+  `OBJECT_INFO_SKIP_FETCH_OBJECT` and `OBJECT_INFO_QUICK` are used
+  explicitly.
+- Tests now use git-rev-list(1) to verify disk size info.
 
-diff --git a/config.mak.uname b/config.mak.uname
-index 44252dabcc..b76a51e22b 100644
-=2D-- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -174,9 +174,11 @@ ifeq ($(uname_S),Darwin)
-=20
-         ifeq ($(shell test -d /usr/local/opt/libiconv/ && echo y),y)
- 		HOMEBREW_ICONVDIR =3D /usr/local/opt/libiconv
-+		HAS_GOOD_ICONV =3D Yes
-         endif
-         ifeq ($(shell test -d /opt/homebrew/opt/libiconv/ && echo y),y)
- 		HOMEBREW_ICONVDIR =3D /opt/homebrew/opt/libiconv
-+		HAS_GOOD_ICONV =3D Yes
-         endif
-=20
- 	# The builtin FSMonitor on MacOS builds upon Simple-IPC.  Both require
-@@ -193,12 +195,14 @@ ifeq ($(uname_S),Darwin)
- 		ifeq ($(shell test -d /sw/lib && echo y),y)
- 			BASIC_CFLAGS +=3D -I/sw/include
- 			BASIC_LDFLAGS +=3D -L/sw/lib
-+			HAS_GOOD_ICONV =3D Yes
- 		endif
- 	endif
- 	ifndef NO_DARWIN_PORTS
- 		ifeq ($(shell test -d /opt/local/lib && echo y),y)
- 			BASIC_CFLAGS +=3D -I/opt/local/include
- 			BASIC_LDFLAGS +=3D -L/opt/local/lib
-+			HAS_GOOD_ICONV =3D Yes
- 		endif
- 	endif
- 	ifndef NO_APPLE_COMMON_CRYPTO
-@@ -206,6 +210,12 @@ ifeq ($(uname_S),Darwin)
- 		APPLE_COMMON_CRYPTO =3D YesPlease
- 		COMPAT_CFLAGS +=3D -DAPPLE_COMMON_CRYPTO
- 	endif
-+	ifndef HAS_GOOD_ICONV
-+		ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" -ge 20 &=
-& echo 1),1)
-+		# utf8.c needs a tweak when using iconv from os
-+			BASIC_CFLAGS +=3D -DICONV_RESTART_RESET
-+		endif
-+	endif
- 	PTHREAD_LIBS =3D
- endif
- ifeq ($(uname_S),SunOS)
-=2D-=20
-2.50.0.rc0.46.g7014b55638.dirty
+Changes in V2:
+- Factor out and reuse existing logic from strbuf_humanise() to handle
+  downscaling values and determining the appropriate unit prefix
+  separately. This enables more control over how exactly the values are
+  written to the structure output table which is useful for alignment
+  reasons. I'm not how about the interface used in patch 2. Feedback is
+  most welcome.
+- In the previous version, when checking object size on a missing object
+  we would die. Instead we now ignore missing objects. This allows the
+  structure command to work on partial clones.
+- disk/inflated keyvalue names renamed to disk_size/inflated_size.
+- Unit prefixes are marked for translation.
+- The test for keyvalue disk size values are updated to check against
+  real expected values instead of skipping. Table output tests still
+  skip verifing human-readable values though.
+
+Thanks,
+-Justin
+
+Justin Tobler (7):
+  builtin/repo: group per-type object values into struct
+  strbuf: split out logic to humanise byte values
+  builtin/repo: humanise count values in structure output
+  builtin/repo: add inflated object info to keyvalue structure output
+  builtin/repo: add inflated object info to structure table
+  builtin/repo: add disk size info to keyvalue stucture output
+  builtin/repo: add object disk size info to structure table
+
+ Documentation/git-repo.adoc |   2 +
+ builtin/repo.c              | 175 ++++++++++++++++++++++++++++++------
+ strbuf.c                    |  93 ++++++++++++-------
+ strbuf.h                    |  25 ++++++
+ t/t1901-repo-structure.sh   | 113 +++++++++++++++--------
+ 5 files changed, 311 insertions(+), 97 deletions(-)
+
+Range-diff against v2:
+1:  be14de68f6 = 1:  be14de68f6 builtin/repo: group per-type object values into struct
+2:  5ca6f9b708 ! 2:  1fa33f5906 strbuf: split out logic to humanise byte values
+    @@ Commit message
+         the git-repo(1) "structure" subcommand will be shown in a more
+         human-readable format with the appropriate unit prefixes. For this
+         usecase, the downscaled values and unit prefixes must be handled
+    -    separately to ensure proper column alignment. Refactor strbuf_humanise()
+    -    to instead append the downscaled byte value to the buffer only and
+    -    return the appropriate unit prefix string.
+    +    separately to ensure proper column alignment.
+    +
+    +    Split out logic from strbuf_humanise() to downscale byte values and
+    +    determine the corresponding unit prefix into a separate humanise_bytes()
+    +    function that provides seperate value and unit strings.
+     
+         Signed-off-by: Justin Tobler <jltobler@gmail.com>
+     
+    @@ strbuf.c: void strbuf_addstr_urlencode(struct strbuf *sb, const char *s,
+      
+     -static void strbuf_humanise(struct strbuf *buf, off_t bytes,
+     -				 int humanise_rate)
+    -+char *strbuf_humanise_bytes_value(struct strbuf *buf, off_t bytes, unsigned flags)
+    ++void humanise_bytes(off_t bytes, char **value, const char **unit,
+    ++		    unsigned flags)
+      {
+    -+	int humanise_rate = flags & STRBUF_HUMANISE_RATE;
+    ++	int humanise_rate = flags & HUMANISE_RATE;
+     +
+      	if (bytes > 1 << 30) {
+     -		strbuf_addf(buf,
+    @@ strbuf.c: void strbuf_addstr_urlencode(struct strbuf *sb, const char *s,
+     -					/* TRANSLATORS: IEC 80000-13:2008 gibibyte/second */
+     -					_("%u.%2.2u GiB/s"),
+     -			    (unsigned)(bytes >> 30),
+    -+		strbuf_addf(buf, "%u.%2.2u", (unsigned)(bytes >> 30),
+    - 			    (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
+    +-			    (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
+    ++		*value = xstrfmt(_("%u.%2.2u"), (unsigned)(bytes >> 30),
+    ++				 (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
+     +		/* TRANSLATORS: IEC 80000-13:2008 gibibyte/second and gibibyte */
+    -+		return humanise_rate ? xstrfmt(_("GiB/s")) : xstrfmt(_("GiB"));
+    ++		*unit = humanise_rate ? _("GiB/s") : _("GiB");
+      	} else if (bytes > 1 << 20) {
+     -		unsigned x = bytes + 5243;  /* for rounding */
+     -		strbuf_addf(buf,
+    @@ strbuf.c: void strbuf_addstr_urlencode(struct strbuf *sb, const char *s,
+     -					_("%u.%2.2u MiB/s"),
+     -			    x >> 20, ((x & ((1 << 20) - 1)) * 100) >> 20);
+     +		unsigned x = bytes + 5243; /* for rounding */
+    -+		strbuf_addf(buf, "%u.%2.2u", x >> 20,
+    -+			    ((x & ((1 << 20) - 1)) * 100) >> 20);
+    ++		*value = xstrfmt(_("%u.%2.2u"), x >> 20,
+    ++				 ((x & ((1 << 20) - 1)) * 100) >> 20);
+     +		/* TRANSLATORS: IEC 80000-13:2008 mebibyte/second and mebibyte */
+    -+		return humanise_rate ? xstrfmt(_("MiB/s")) : xstrfmt(_("MiB"));
+    ++		*unit = humanise_rate ? _("MiB/s") : _("MiB");
+      	} else if (bytes > 1 << 10) {
+     -		unsigned x = bytes + 5;  /* for rounding */
+     -		strbuf_addf(buf,
+    @@ strbuf.c: void strbuf_addstr_urlencode(struct strbuf *sb, const char *s,
+     -					_("%u.%2.2u KiB/s"),
+     -			    x >> 10, ((x & ((1 << 10) - 1)) * 100) >> 10);
+     +		unsigned x = bytes + 5; /* for rounding */
+    -+		strbuf_addf(buf, "%u.%2.2u", x >> 10,
+    -+			    ((x & ((1 << 10) - 1)) * 100) >> 10);
+    ++		*value = xstrfmt(_("%u.%2.2u"), x >> 10,
+    ++				 ((x & ((1 << 10) - 1)) * 100) >> 10);
+     +		/* TRANSLATORS: IEC 80000-13:2008 kibibyte/second and kibibyte */
+    -+		return humanise_rate ? xstrfmt(_("KiB/s")) : xstrfmt(_("KiB"));
+    ++		*unit = humanise_rate ? _("KiB/s") : _("KiB");
+      	} else {
+     -		strbuf_addf(buf,
+     -				humanise_rate == 0 ?
+    @@ strbuf.c: void strbuf_addstr_urlencode(struct strbuf *sb, const char *s,
+     -					/* TRANSLATORS: IEC 80000-13:2008 byte/second */
+     -					Q_("%u byte/s", "%u bytes/s", bytes),
+     -				(unsigned)bytes);
+    -+		strbuf_addf(buf, "%u", (unsigned)bytes);
+    -+		return humanise_rate ?
+    ++		*value = xstrfmt(_("%u"), (unsigned)bytes);
+    ++		*unit = humanise_rate ?
+     +			       /* TRANSLATORS: IEC 80000-13:2008 byte/second */
+    -+			       xstrfmt(Q_("byte/s", "bytes/s", bytes)) :
+    ++			       Q_("byte/s", "bytes/s", bytes) :
+     +			       /* TRANSLATORS: IEC 80000-13:2008 byte */
+    -+			       xstrfmt(Q_("byte", "bytes", bytes));
+    ++			       Q_("byte", "bytes", bytes);
+      	}
+      }
+      
+    ++static void strbuf_humanise(struct strbuf *buf, off_t bytes, unsigned flags)
+    ++{
+    ++	char *value;
+    ++	const char *unit;
+    ++
+    ++	humanise_bytes(bytes, &value, &unit, flags);
+    ++	strbuf_addf(buf, _("%s %s"), value, unit);
+    ++	free(value);
+    ++}
+    ++
+      void strbuf_humanise_bytes(struct strbuf *buf, off_t bytes)
+      {
+    --	strbuf_humanise(buf, bytes, 0);
+    -+	char *unit = strbuf_humanise_bytes_value(buf, bytes, 0);
+    -+	strbuf_addf(buf, " %s", unit);
+    -+	free(unit);
+    - }
+    + 	strbuf_humanise(buf, bytes, 0);
+    +@@ strbuf.c: void strbuf_humanise_bytes(struct strbuf *buf, off_t bytes)
+      
+      void strbuf_humanise_rate(struct strbuf *buf, off_t bytes)
+      {
+     -	strbuf_humanise(buf, bytes, 1);
+    -+	char *unit = strbuf_humanise_bytes_value(buf, bytes, STRBUF_HUMANISE_RATE);
+    -+	strbuf_addf(buf, " %s", unit);
+    -+	free(unit);
+    ++	strbuf_humanise(buf, bytes, HUMANISE_RATE);
+      }
+      
+      int printf_ln(const char *fmt, ...)
+    @@ strbuf.h: void strbuf_addbuf_percentquote(struct strbuf *dst, const struct strbu
+       */
+      void strbuf_add_percentencode(struct strbuf *dst, const char *src, int flags);
+      
+    -+#define STRBUF_HUMANISE_RATE 1 << 0
+    ++enum humanise_flags {
+    ++	/*
+    ++	 * Use rate based unit prefixes for humanised values.
+    ++	 */
+    ++	HUMANISE_RATE = (1 << 0),
+    ++};
+     +
+     +/**
+    -+ * Append the given byte size as a human-readable string that is downscaled by
+    -+ * some factor. A string with the corresponding unit prefix is returned
+    -+ * separately.
+    ++ * Converts the given byte size into a downscaled human-readable value and
+    ++ * corresponding unit prefix as two separate strings.
+     + */
+    -+char *strbuf_humanise_bytes_value(struct strbuf *buf, off_t bytes, unsigned flags);
+    ++void humanise_bytes(off_t bytes, char **value, const char **unit,
+    ++		    unsigned flags);
+     +
+      /**
+       * Append the given byte size as a human-readable string (i.e. 12.23 KiB,
+3:  2efc3533ef ! 3:  8f09f6358e builtin/repo: humanise count values in structure output
+    @@ builtin/repo.c: struct stats_table {
+       */
+      struct stats_table_entry {
+      	char *value;
+    -+	char *unit;
+    ++	const char *unit;
+      };
+      
+      static void stats_table_vaddf(struct stats_table *table,
+    @@ builtin/repo.c: static void stats_table_vaddf(struct stats_table *table,
+      
+      static void stats_table_addf(struct stats_table *table, const char *format, ...)
+     @@ builtin/repo.c: static void stats_table_count_addf(struct stats_table *table, size_t value,
+    - 				   const char *format, ...)
+    - {
+    - 	struct stats_table_entry *entry;
+    -+	struct strbuf buf = STRBUF_INIT;
+      	va_list ap;
+      
+      	CALLOC_ARRAY(entry, 1);
+     -	entry->value = xstrfmt("%" PRIuMAX, (uintmax_t)value);
+    -+
+    -+	entry->unit = strbuf_humanise_count_value(&buf, value);
+    -+	entry->value = strbuf_detach(&buf, NULL);
+    ++	humanise_count(value, &entry->value, &entry->unit);
+      
+      	va_start(ap, format);
+      	stats_table_vaddf(table, entry, format, ap);
+    @@ builtin/repo.c: static void stats_table_print_structure(const struct stats_table
+      		strbuf_addstr(&buf, " |");
+      		printf("%s\n", buf.buf);
+      	}
+    -@@ builtin/repo.c: static void stats_table_clear(struct stats_table *table)
+    - 
+    - 	for_each_string_list_item(item, &table->rows) {
+    - 		entry = item->util;
+    --		if (entry)
+    -+		if (entry) {
+    - 			free(entry->value);
+    -+			free(entry->unit);
+    -+		}
+    - 	}
+    - 
+    - 	string_list_clear(&table->rows, 1);
+     
+      ## strbuf.c ##
+     @@ strbuf.c: void strbuf_addstr_urlencode(struct strbuf *sb, const char *s,
+      	strbuf_add_urlencode(sb, s, strlen(s), allow_unencoded_fn);
+      }
+      
+    -+char *strbuf_humanise_count_value(struct strbuf *buf, size_t value)
+    ++void humanise_count(size_t count, char **value, const char **unit)
+     +{
+    -+	if (value >= 1000000000) {
+    -+		uintmax_t x = (uintmax_t)value + 5000000; /* for rounding */
+    -+		strbuf_addf(buf, "%" PRIuMAX ".%02" PRIuMAX,
+    -+			    x / 1000000000, x % 1000000000 / 10000000);
+    -+		return xstrfmt(_("G"));
+    -+	} else if (value >= 1000000) {
+    -+		uintmax_t x = (uintmax_t)value + 5000; /* for rounding */
+    -+		strbuf_addf(buf, "%" PRIuMAX ".%02" PRIuMAX,
+    -+			    x / 1000000, x % 1000000 / 10000);
+    -+		return xstrfmt(_("M"));
+    -+	} else if (value >= 1000) {
+    -+		uintmax_t x = (uintmax_t)value + 5; /* for rounding */
+    -+		strbuf_addf(buf, "%" PRIuMAX ".%02" PRIuMAX,
+    -+			    x / 1000, x % 1000 / 10);
+    -+		return xstrfmt(_("k"));
+    ++	if (count >= 1000000000) {
+    ++		size_t x = count + 5000000; /* for rounding */
+    ++		*value = xstrfmt(_("%u.%2.2u"), (unsigned)(x / 1000000000),
+    ++				 (unsigned)(x % 1000000000 / 10000000));
+    ++		*unit = _("G");
+    ++	} else if (count >= 1000000) {
+    ++		size_t x = count + 5000; /* for rounding */
+    ++		*value = xstrfmt(_("%u.%2.2u"), (unsigned)(x / 1000000),
+    ++				 (unsigned)(x % 1000000 / 10000));
+    ++		*unit = _("M");
+    ++	} else if (count >= 1000) {
+    ++		size_t x = count + 5; /* for rounding */
+    ++		*value = xstrfmt(_("%u.%2.2u"), (unsigned)(x / 1000),
+    ++				 (unsigned)(x % 1000 / 10));
+    ++		*unit = _("k");
+     +	} else {
+    -+		strbuf_addf(buf, "%" PRIuMAX, (uintmax_t)value);
+    -+		return NULL;
+    ++		*value = xstrfmt(_("%u"), (unsigned)count);
+    ++		*unit = NULL;
+     +	}
+     +}
+     +
+    - char *strbuf_humanise_bytes_value(struct strbuf *buf, off_t bytes, unsigned flags)
+    + void humanise_bytes(off_t bytes, char **value, const char **unit,
+    + 		    unsigned flags)
+      {
+    - 	int humanise_rate = flags & STRBUF_HUMANISE_RATE;
+     
+      ## strbuf.h ##
+    -@@ strbuf.h: void strbuf_add_percentencode(struct strbuf *dst, const char *src, int flags);
+    -  */
+    - char *strbuf_humanise_bytes_value(struct strbuf *buf, off_t bytes, unsigned flags);
+    +@@ strbuf.h: enum humanise_flags {
+    + void humanise_bytes(off_t bytes, char **value, const char **unit,
+    + 		    unsigned flags);
+      
+     +/**
+    -+ * Append the given count value as a human-readable string that is downsacled by
+    -+ * some factor. A string with the corresponding unit prefix is returned
+    -+ * separately.
+    ++ * Converts the given count into a downscaled human-readable value and
+    ++ * corresponding unit prefix as two separate strings.
+     + */
+    -+char *strbuf_humanise_count_value(struct strbuf *buf, size_t value);
+    ++void humanise_count(size_t count, char **value, const char **unit);
+     +
+      /**
+       * Append the given byte size as a human-readable string (i.e. 12.23 KiB,
+4:  627b8bf025 ! 4:  3f4eabe94f builtin/repo: add inflated object info to keyvalue structure output
+    @@ builtin/repo.c: static int count_objects(const char *path UNUSED, struct oid_arr
+     +		oi.sizep = &inflated;
+     +
+     +		if (odb_read_object_info_extended(data->odb, &oids->oid[i], &oi,
+    -+						  OBJECT_INFO_FOR_PREFETCH) < 0)
+    ++						  OBJECT_INFO_SKIP_FETCH_OBJECT |
+    ++							  OBJECT_INFO_QUICK) < 0)
+     +			continue;
+     +
+     +		inflated_total += inflated;
+5:  14f4983e1d ! 5:  85d1052100 builtin/repo: add inflated object info to structure table
+    @@ builtin/repo.c: static void stats_table_count_addf(struct stats_table *table, si
+     +				  const char *format, ...)
+     +{
+     +	struct stats_table_entry *entry;
+    -+	struct strbuf buf = STRBUF_INIT;
+     +	va_list ap;
+     +
+     +	CALLOC_ARRAY(entry, 1);
+    -+
+    -+	entry->unit = strbuf_humanise_bytes_value(&buf, value,
+    -+						  STRBUF_HUMANISE_COMPACT);
+    -+	entry->value = strbuf_detach(&buf, NULL);
+    ++	humanise_bytes(value, &entry->value, &entry->unit, HUMANISE_COMPACT);
+     +
+     +	va_start(ap, format);
+     +	stats_table_vaddf(table, entry, format, ap);
+    @@ builtin/repo.c: static void stats_table_setup_structure(struct stats_table *tabl
+      static void stats_table_print_structure(const struct stats_table *table)
+     
+      ## strbuf.c ##
+    -@@ strbuf.c: char *strbuf_humanise_bytes_value(struct strbuf *buf, off_t bytes, unsigned flag
+    - 		return humanise_rate ? xstrfmt(_("KiB/s")) : xstrfmt(_("KiB"));
+    +@@ strbuf.c: void humanise_bytes(off_t bytes, char **value, const char **unit,
+    + 		*unit = humanise_rate ? _("KiB/s") : _("KiB");
+      	} else {
+    - 		strbuf_addf(buf, "%u", (unsigned)bytes);
+    -+		if (flags & STRBUF_HUMANISE_COMPACT)
+    -+			return humanise_rate ?
+    -+				       xstrfmt(_("B/s")) :
+    -+				       xstrfmt(_("B"));
+    - 		return humanise_rate ?
+    - 			       /* TRANSLATORS: IEC 80000-13:2008 byte/second */
+    - 			       xstrfmt(Q_("byte/s", "bytes/s", bytes)) :
+    + 		*value = xstrfmt(_("%u"), (unsigned)bytes);
+    +-		*unit = humanise_rate ?
+    +-			       /* TRANSLATORS: IEC 80000-13:2008 byte/second */
+    +-			       Q_("byte/s", "bytes/s", bytes) :
+    +-			       /* TRANSLATORS: IEC 80000-13:2008 byte */
+    +-			       Q_("byte", "bytes", bytes);
+    ++		if (flags & HUMANISE_COMPACT)
+    ++			*unit = humanise_rate ? _("B/s") : _("B");
+    ++		else
+    ++			*unit = humanise_rate ?
+    ++					/* TRANSLATORS: IEC 80000-13:2008 byte/second */
+    ++					Q_("byte/s", "bytes/s", bytes) :
+    ++					/* TRANSLATORS: IEC 80000-13:2008 byte */
+    ++					Q_("byte", "bytes", bytes);
+    + 	}
+    + }
+    + 
+     
+      ## strbuf.h ##
+    -@@ strbuf.h: void strbuf_addbuf_percentquote(struct strbuf *dst, const struct strbuf *src);
+    -  */
+    - void strbuf_add_percentencode(struct strbuf *dst, const char *src, int flags);
+    - 
+    --#define STRBUF_HUMANISE_RATE 1 << 0
+    -+#define STRBUF_HUMANISE_RATE	1 << 0
+    -+#define STRBUF_HUMANISE_COMPACT 1 << 1
+    +@@ strbuf.h: enum humanise_flags {
+    + 	 * Use rate based unit prefixes for humanised values.
+    + 	 */
+    + 	HUMANISE_RATE = (1 << 0),
+    ++	/*
+    ++	 * Use compact "B" unit prefixes instead of "byte/bytes" for humanised
+    ++	 * values.
+    ++	 */
+    ++	HUMANISE_COMPACT = (1 << 1),
+    + };
+      
+      /**
+    -  * Append the given byte size as a human-readable string that is downscaled by
+     
+      ## t/t1901-repo-structure.sh ##
+     @@ t/t1901-repo-structure.sh: test_expect_success 'empty repository' '
+6:  dc9e82889f ! 6:  e9fa9babec builtin/repo: add disk size info to keyvalue stucture output
+    @@ builtin/repo.c: static int count_objects(const char *path UNUSED, struct oid_arr
+     +		oi.disk_sizep = &disk;
+      
+      		if (odb_read_object_info_extended(data->odb, &oids->oid[i], &oi,
+    - 						  OBJECT_INFO_FOR_PREFETCH) < 0)
+    + 						  OBJECT_INFO_SKIP_FETCH_OBJECT |
+    +@@ builtin/repo.c: static int count_objects(const char *path UNUSED, struct oid_array *oids,
+      			continue;
+      
+      		inflated_total += inflated;
+    @@ t/t1901-repo-structure.sh: test_description='test git repo structure'
+      . ./test-lib.sh
+      
+     +object_type_disk_usage() {
+    -+	git cat-file --batch-check='%(objectsize:disk)' --batch-all-objects \
+    -+		--filter=object:type=$1 | awk '{ sum += $1 } END { print sum }'
+    ++	git rev-list --all --objects --disk-usage --filter=object:type=$1 \
+    ++		--filter-provided-objects
+     +}
+     +
+      test_expect_success 'empty repository' '
+7:  213b19dc7f ! 7:  df542c7bdf builtin/repo: add object disk size info to structure table
+    @@ Commit message
+         git-repo(1) structure command to display the total object disk usage by
+         object type.
+     
+    -    Since disk size may vary between platforms, tests do not validate actual
+    -    values and only check that size info is printed in an empty repository.
+    -
+         Signed-off-by: Justin Tobler <jltobler@gmail.com>
+     
+      ## builtin/repo.c ##
+    @@ builtin/repo.c: static void stats_table_setup_structure(struct stats_table *tabl
+      static void stats_table_print_structure(const struct stats_table *table)
+     
+      ## t/t1901-repo-structure.sh ##
+    -@@ t/t1901-repo-structure.sh: object_type_disk_usage() {
+    - 		--filter=object:type=$1 | awk '{ sum += $1 } END { print sum }'
+    - }
+    +@@ t/t1901-repo-structure.sh: test_description='test git repo structure'
+    + . ./test-lib.sh
+      
+    -+strip_object_disk_usage() {
+    -+	awk '
+    -+		/^\|   \* Disk size/ { skip=1; next }
+    -+		skip && /^\|     \* / { next }
+    -+		skip && !/^\|     \* / { skip=0 }
+    -+		{ print }
+    -+	' $1
+    -+}
+    + object_type_disk_usage() {
+    +-	git rev-list --all --objects --disk-usage --filter=object:type=$1 \
+    +-		--filter-provided-objects
+    ++	disk_usage_opt="--disk-usage"
+    ++
+    ++	if [ "$2" = "true" ]; then
+    ++		disk_usage_opt="--disk-usage=human"
+    ++	fi
+     +
+    ++	if [ "$1" = "all" ]; then
+    ++		git rev-list --all --objects $disk_usage_opt
+    ++	else
+    ++		git rev-list --all --objects $disk_usage_opt \
+    ++			--filter=object:type=$1 --filter-provided-objects
+    ++	fi
+    + }
+    + 
+      test_expect_success 'empty repository' '
+    - 	test_when_finished "rm -rf repo" &&
+    - 	git init repo &&
+     @@ t/t1901-repo-structure.sh: test_expect_success 'empty repository' '
+      		|     * Trees          |    0 B |
+      		|     * Blobs          |    0 B |
+    @@ t/t1901-repo-structure.sh: test_expect_success 'empty repository' '
+      
+      		git repo structure >out 2>err &&
+     @@ t/t1901-repo-structure.sh: test_expect_success SHA1 'repository with references and objects' '
+    + 		# Also creates a commit, tree, and blob.
+    + 		git notes add -m foo &&
+    + 
+    +-		cat >expect <<-\EOF &&
+    ++		cat >expect <<-EOF &&
+    + 		| Repository structure | Value      |
+    + 		| -------------------- | ---------- |
+    + 		| * References         |            |
+    +@@ t/t1901-repo-structure.sh: test_expect_success SHA1 'repository with references and objects' '
+    + 		|     * Trees          |  15.81 MiB |
+    + 		|     * Blobs          |  11.68 KiB |
+      		|     * Tags           |    132 B   |
+    ++		|   * Disk size        | $(object_type_disk_usage all true) |
+    ++		|     * Commits        | $(object_type_disk_usage commit true) |
+    ++		|     * Trees          | $(object_type_disk_usage tree true) |
+    ++		|     * Blobs          |  $(object_type_disk_usage blob true) |
+    ++		|     * Tags           |    $(object_type_disk_usage tag) B   |
+      		EOF
+      
+    --		git repo structure >out 2>err &&
+    -+		git repo structure >out.raw 2>err &&
+    -+
+    -+		# Skip object disk sizes due to platform variance.
+    -+		strip_object_disk_usage out.raw >out &&
+    - 
+    - 		test_cmp expect out &&
+    - 		test_line_count = 0 err
+    + 		git repo structure >out 2>err &&
+
+base-commit: e85ae279b0d58edc2f4c3fd5ac391b51e1223985
+-- 
+2.52.0.209.ge85ae279b0
 
