@@ -1,112 +1,117 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FC32D0C9D
-	for <git@vger.kernel.org>; Mon, 15 Dec 2025 16:26:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765816000; cv=none; b=N+TvharpJKrXvND9/QAclWSZb+auWBdSGXpxfDzYJZYr7I3Cemwn+CTqSL881BFs39i/4QW1VBQKs38yUkp6Sq/G1iEEwUWxuIC3584YFDeuySTonsLv3F6/pedb/c+syCAYXenPZPgB9PtspS5bitenstUgRPTC635IgvrmHTo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765816000; c=relaxed/simple;
-	bh=KzOlVfwXcgVsU2XN89EDX17/fg3XjWjH9z1c+2ssRNk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XODceI9dyc+43RnIw278H7CDTenEGJbdQA5DgXMG9zDG56cRVpvSUlSlNInYHu+ccZaEbfpXIPOIjEgQP75gmed7VfhHPHIuaUgXpmH6MAHQNG1goe3tIpXEj79a2J/Wp2eUxGpiNIO3hbxFU3CwwezMo9WGK+inwuWewgSKeLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DixNRMrl; arc=none smtp.client-ip=209.85.210.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942512ECE9E
+	for <git@vger.kernel.org>; Mon, 15 Dec 2025 16:29:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765816163; cv=pass; b=rRLpL25o9NDxO07yK5jCbxJ+fSEA87r8sTbsSQHpreBxnSbeWz1Xwk5NYJYuwGrR1x+deUQN0o2VMGxfdKqpSGQM68lg2mxGGe/gq5FI2NfH2GQLCk18mNO4T5vFJpJGmwsmnOaPYbv+zbm1dZxLFWGxMV2H5/RvG/gzNWlP5UU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765816163; c=relaxed/simple;
+	bh=GzbTgiDEDuhiG97hYCGFwOjAaid/ZjtOn2b2tCe3n2o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NKYkOp76pOCYq+qBkHmm1a0FVMmTy7aE3u//Ez+6x8yWPIT0MeRhrkiffguiMKKFNWqNgqjzDvRjLQlfP+Zw9bHTOJyXkM1cIDYG6m5jA6OBeoCbh++wt0ygWlX80AqAu0/8WmNDabaqBuTtDNePgRUmt8Bjog2MNoVt0hQ1KBE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=FYncMJkS; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DixNRMrl"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7cae2330765so2466155a34.0
-        for <git@vger.kernel.org>; Mon, 15 Dec 2025 08:26:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765815998; x=1766420798; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lzrQnsJHO8lGugHpbzDXQqi/enNrOIRdjnS/W9LbEjE=;
-        b=DixNRMrl8U0Wa0sIy+hNslymQ4Op08lUYUmIx2akIAQWJ2WaLxQ5K40a1xnbY0I/l7
-         sGtTEt2PUW+0cZvmrdDZWQ0BtyhKoCkW2rfyFljt9Y4DBFJigQ69dGcX2IoFPjJXLrE4
-         gCCPgF4DpW3W33Xofz/qnWh6jR6H+5k2OSyoUOfUl8g9QV+g21BXqveSuTZ5gjS3faTt
-         hy3JvNt8UaSj7iL1a/hf0Np3QU16q9Gk1nHSt7FtrVHBKO5h7yfwF5DRi8NBmrtNTSpg
-         1j1+VRyjK+r4kydJvplLTczBFbkJkED4P9QBeVTxBw5G29twDd9mNRZCnmnBk3fJnMrQ
-         65Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765815998; x=1766420798;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lzrQnsJHO8lGugHpbzDXQqi/enNrOIRdjnS/W9LbEjE=;
-        b=m7tTc4jcdUY+8kG9osyP+B+By/3paTrKLZ9YGFX6qKn1YgO2EoL2yqzMN7agEjZzHM
-         WiVbfPy08GzDzIQAkDSTUhPuZAY0sWVG6IQ2el07RY9Py8sd34hGW/DJYBoxILOS7NNb
-         2emDVghDz0zpGzol6DuDLw3kXVRtQ9O8XhmSEFE2v0Vfik+ireGFXOGXRG06RuswKJ1a
-         +9T/bOFtx6oL+OszILYFCHD+rxuwtryHqw924PPRS/6QFs3wGGsxEOghgEZ44TrkRYMH
-         DWcl0pK8/RyMPQpoE93FVksrTpfTwJUC/AM3UapDKoSkvzkhflCFUySJ8f+Co2khtiit
-         nXig==
-X-Gm-Message-State: AOJu0Yx1tX9d4AogDTUdF9pKlPZbTHCRgAz7vdO22EMc5tyN3ys46VnD
-	qrMvoSKBoX/0y0fcq9AbpKHk1MGMk2lFrDKCM+TP3dHFhlklBbAN9KfC
-X-Gm-Gg: AY/fxX5RmP3Ytdpgy4KkLpp0AeQiecQ0iVcmrYIhhxtC5KtJL6WBgN9QzLuehouSQ6/
-	vySQzEceHXyKOYUPTiq4KoS8x/EK1aesdcIG3LN18oigzP2Kqba67Jq0MP6W0aUdYP7c8HGWCyI
-	GXv8xgTIimVsBkFXtPUT6BXnmdGuWwJIGVJkEBVRbB7nLPW0rH82EuLUeE9kIwZkHyfF0+jqdVo
-	71LcxcuEgkMp/DIMqia9UzYd/QCZA3LUowXOR/g9F74wsKfav3sDzRgi4h52Js0whx5h2PTFWIS
-	ez8zt/BazdtBQYdjMB9RERCaR0m6uvhqUHcGD69//Je+4dcG6RndlR70S1BcFz100WEWfX2x0/1
-	3uRmYPT6JbBSXq+Xy6Kw9KKVMX5ZTu/9JtSxjGu4HOlDPXdTGKwgiE7w/STVEspxrbOSnCzPKWM
-	nFINnq
-X-Google-Smtp-Source: AGHT+IH8gQzdeeY5e3C6QnFiTnXiuDM9a/SuDY30S40VeqFvi81qSywvfXo/mtdI9hoXHeD137Xx0A==
-X-Received: by 2002:a4a:b5c6:0:b0:659:9a49:8e35 with SMTP id 006d021491bc7-65b37fcbf4bmr5865730eaf.39.1765815997818;
-        Mon, 15 Dec 2025 08:26:37 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3f614ded1b3sm4481668fac.10.2025.12.15.08.26.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Dec 2025 08:26:37 -0800 (PST)
-Date: Mon, 15 Dec 2025 10:26:36 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v2 2/7] strbuf: split out logic to humanise byte values
-Message-ID: <qi2ealcgo5lwjjhx3m3acc7mukwaaxeblnbu7fmyw3gqvu3wvt@hqdatbug7s6b>
-References: <20251209225820.2861276-1-jltobler@gmail.com>
- <20251212223644.3090879-1-jltobler@gmail.com>
- <20251212223644.3090879-3-jltobler@gmail.com>
- <aT-dppZm8TsibzyZ@pks.im>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="FYncMJkS"
+ARC-Seal: i=1; a=rsa-sha256; t=1765816145; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=LI/Gc2Gl4ZyaIQjLOrtPuAH70BxKaDDqSLnAQqvefwRvbuydnvjte/WO8wDbUDES9njL17FO883+3lK3pT0OfVDrg0Acab3oVTmsqrzjzYidmpn5EntLIApneiwqhdCNOUG5XDOqBqtrInXPX1PN1+7nTpPe+SPX2aYN3YG7SdE=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1765816145; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=h5wm5ybQ2XRjLN2nLMR0oMJqJiN9A0bN9iRV9tyG5Jk=; 
+	b=S7Iw2wvprrjv8mzMtw3+uNqudfRDjNme04zhXl4QRzB+fI7aKfUNCQMG0/0vh9ePPWb6YI34b9wIBxX/kBSkvbDAyf/EYtpFatdp5T2dg6LpFcji6uxef4oiD8PfEQWMliGdM1mHBF2pHhq1XfRZGOmdxmHwE/LPp5PgqSY9mSg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765816145;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=h5wm5ybQ2XRjLN2nLMR0oMJqJiN9A0bN9iRV9tyG5Jk=;
+	b=FYncMJkSHgYCH5y190enthy8jtwDCXHAsmDMjlKGrNRMYiPZbNI3Bf/m9kWhhm8i
+	akZWtm9ylm6kCWVhHa+rMkLWT4RqF01wiv4+E4FEdWgme5M8OWaSr/V9a5q9AvjzD7r
+	DPPnptc7AUWoB6yyI2EUnvYA79UdtdjBUB/SJcBw=
+Received: by mx.zohomail.com with SMTPS id 1765816142863800.6662817528367;
+	Mon, 15 Dec 2025 08:29:02 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio
+ C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan
+ Nieder <jrnieder@gmail.com>, Patrick Steinhardt <ps@pks.im>, Josh Steadmon
+ <steadmon@google.com>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v6 00/10] Add submodulePathConfig extension and gitdir
+ encoding
+In-Reply-To: <34DD8798-5C69-4092-B6C9-6609E688FBE8@gmail.com>
+References: <20251213080817.347922-1-adrian.ratiu@collabora.com>
+ <34DD8798-5C69-4092-B6C9-6609E688FBE8@gmail.com>
+Date: Mon, 15 Dec 2025 18:28:56 +0200
+Message-ID: <87pl8flnef.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aT-dppZm8TsibzyZ@pks.im>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
 
-On 25/12/15 06:33AM, Patrick Steinhardt wrote:
-> On Fri, Dec 12, 2025 at 04:36:39PM -0600, Justin Tobler wrote:
+On Sat, 13 Dec 2025, Ben Knoble <ben.knoble@gmail.com> wrote:
+>> Le 13 d=C3=A9c. 2025 =C3=A0 03:09, Adrian Ratiu <adrian.ratiu@collabora.=
+com> a =C3=A9crit :
+>>=20
+>> =EF=BB=BFHello everyone,
+>>=20
+>> For those new to the series, we're implementing a submodule gitdir
+>> extension which allows us to have a unified way to determine gitdirs
+>> and do things like encode submodule paths to avoid FS conflicts.
 >
-> All branches use `xstrfmt()` with strings that are essentially
-> constants, except for the translation part. So isn't it possible to drop
-> all these allocations and have the function return a `const char *`
-> instead?
+> Hi there, I admit I haven=E2=80=99t followed this series closely. I use s=
+ubmodules quite a bit but haven=E2=80=99t yet peered into the depths of the=
+ implementation.
+>
+> I read over the documentation changes in this series, and it=E2=80=99s no=
+t clear to me how or why I would use this new feature (I don=E2=80=99t mean=
+ there=E2=80=99s no benefit! Just that I=E2=80=99m having a hard time parsi=
+ng it out.). By =E2=80=9Chow=E2=80=9D I mean: I can see how to set config a=
+nd run the migrator; what does that unlock for me to now go and do?
+>
+> Does one of the previous cover letters explain how this is useful to subm=
+odule users? If so which, and perhaps the docs could also contain a =E2=80=
+=9Chere=E2=80=99s when/why you might want this extension enabled and what i=
+t allows you to do=E2=80=9D?
+>
+> Or maybe this is meant to be not too user-facing, in which case I=E2=80=
+=99m curious who would turn this on and why still :)
+>
+> Again, I am mostly curious, so please don=E2=80=99t read this as an attem=
+pt to hold the series hostage! :)
 
-Ya, that would indeed be better. Will fix.
+It's perfectly ok to ask, no problem. :)
 
-> > diff --git a/strbuf.h b/strbuf.h
-> > index a580ac6084..a5e3ab0cb4 100644
-> > --- a/strbuf.h
-> > +++ b/strbuf.h
-> > @@ -367,6 +367,15 @@ void strbuf_addbuf_percentquote(struct strbuf *dst, const struct strbuf *src);
-> >   */
-> >  void strbuf_add_percentencode(struct strbuf *dst, const char *src, int flags);
-> >  
-> > +#define STRBUF_HUMANISE_RATE 1 << 0
-> 
-> I think nowadays it's a bit more common to use an enum, and I think we
-> should also document what the flag does:
-> 
->     enum strbuf_humanise_flags {
->         /*
->          * Frobnicate the string.
->          */
->         STRBUF_HUMANISE_RATE = (1 << 0),
->     };
+This series is for the minority of users who either:
 
-Will do.
+1. Encounter errors like the following in submodule.c:
+   die(_("refusing to create/use '%s' in another submodule's "...)
 
--Justin
+   These errors can happen due to a number of factors, like
+   case-insensitive filesystems or submodule layouts.
+
+2. Need to specify non-standard gitdir repository paths, different from
+   the currently hardcoded .git/modules/<plain-name> location.
+
+   With this series, the gitdir config becomes the unified way to
+   set/get the gitdir paths, so you can move them around as needed.
+   It also helps other git implementations who don't need to exactly
+   match git's behaviour: the config becomes the standard interface.
+
+If you are not in one of the two above cases, then there is no reason to
+enable this and it won't affect you.
+
+Hope this is clear, maybe we could spell it out better in the
+documentation (suggestions welcome btw) or even tell users in the error
+messages to enable this extension.
