@@ -1,67 +1,67 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBFE32AAC4
-	for <git@vger.kernel.org>; Mon, 15 Dec 2025 10:10:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7ABC32D0C0
+	for <git@vger.kernel.org>; Mon, 15 Dec 2025 10:13:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765793432; cv=none; b=kimBPKMGkciovfDqoKir230XiuNNm9+BZFC0qN3Ww9Veg4iXhGsg/pwx1TjKRAaYT+zxjJ7kC5iOzPtdcXGNmrHvlsFwJ+fZaFkuUY7mojvNCJykFxeOj1h6RFBncexGWYVp/j+mV3YuplzuHBw150fqlgRiyKbfTnneDEJLbNw=
+	t=1765793604; cv=none; b=odLNZK8YArFYu0vzz7ACWmGkSPc3rYcFIpJEMZ0qnmBikIytdVc24NrWI4rt7QWmk2s4LPreBzwQQnwGrQ4QcGOiVu5zRIaqQOB4PW3B5tC6yOFaB7G3I2e+brJReQhiIZE+6HkjsknrT+F4wnNopyfBIgW2u6TMKK1Ise95T1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765793432; c=relaxed/simple;
-	bh=pgXviGSbpzJ4gHVX5VwISBaBRLwUiB6HxeZUQj+JuTI=;
+	s=arc-20240116; t=1765793604; c=relaxed/simple;
+	bh=t/O/Vdu6OffwL8cqc44V7t/4WwTzJKheMnDrzKVeNbg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JEzVwqEd0a75Srz7lKU7CK2byzyBFXIGpPahL0fagZaMSf0o/3QQbIQ50sIUGGkOCWmMVtIUtGB2jp10lW37tMm0Kyu0FgPhzY86YrWSO1rckgbAQg6ObwHo9RR2nxb6K5NdhCmG08MY5INVB7440Eo4Qchiyty5V1ivG7Q/nv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LN/zNwuc; arc=none smtp.client-ip=209.85.128.51
+	 In-Reply-To:Content-Type; b=uDO/GiN80MMYzp4SOd3XHAnPuHnuGd7O+DweiQXrZfx0gv+IM/Nk/v6jmQvqla+AeiZ9E3LAhk6Bk2u6MnO1hDNqwTDSYzPB9WV37IV61hCi7J/rcNmRamMgEp1pvJO6w/rCRv0/lhJGgQ/W40M4PLb1z7nO6ZxOKxh5/xpoQXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hd6Z3p7Q; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LN/zNwuc"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4779cb0a33fso39741245e9.0
-        for <git@vger.kernel.org>; Mon, 15 Dec 2025 02:10:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hd6Z3p7Q"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-477a219dbcaso28468845e9.3
+        for <git@vger.kernel.org>; Mon, 15 Dec 2025 02:13:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765793429; x=1766398229; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1765793597; x=1766398397; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mt37nwi6GFUEVpEduVk777wKL4qObHzJsQ/JO93yoUU=;
-        b=LN/zNwucVEmPAR1AerTZFHyNyGsBQZeIWCl3nuHjn+fE+SD/fJGJ7O7mSsODUdCai7
-         gGfTtoDjuR5r8GgSxQES0ycN1XyzAce2MiEVvfJNUyaaxND4INHcUjY/ivrGPtvEV7lB
-         tR0iWXe1IAQB04HGANr56e3WAHAkgZAmVZiD+VRdsBBZFmAWsUehJLf8h9QR+Af3YpKo
-         vbgsAYJZ2mhl8nIqFliqJB56xdJa4cM+Q05DcHg3rqICrCkhnuBrAKEhsDHjkdQqJGVl
-         R+ueNsslY6J3u3jXYjEPzR4l+ZlTgv0eT2wVKX1nvq2Faffm07WhYzH68h+wpCPRQR9y
-         IQ3Q==
+        bh=9BrgOzLeUWf4Fw/G2Fo5s+1qI1BELzBgGqOIq7jCSqU=;
+        b=hd6Z3p7Qzv0RjeCj8n2rqpBloUB27bukpiw22khbuVItlrnZcMZPrkeBmijKCjCbwB
+         HLHLTmnBZUka77Rl0+Qer5f1K9CQDSxVTJuTtd6VGzqkaBU2FycYI+1+YY6uZrMYCO1/
+         SDK0YewWVstcHPy7jViPvSA9sEawi+f9Li3DHASOvw2r4bh0j+F51NJVzXcNnH7BUkNB
+         oNmwb14Ev6qRWJFw0nTSvWJMd0hOmlXR6KjhdGSCsx1AAj/g94xdlsSjm6SuQirybzas
+         JXqQQJgABGzgBGV4CsRxVv5HC2fYqiQ51fVES0l4kFdn/+HA2OJTjmhoZN4HF0KIiuQz
+         lMFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765793429; x=1766398229;
+        d=1e100.net; s=20230601; t=1765793597; x=1766398397;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Mt37nwi6GFUEVpEduVk777wKL4qObHzJsQ/JO93yoUU=;
-        b=dEn9mSbE2UMBpq0+2ksdKC2M6HKyNmF22NbpAV7AACdA+ydfZppbTB7Sp1kTPMarmS
-         opBhv6+G2toGs0GHclCUKIN13w6QJhPAqcBf4vk5DXmDAAnULDYcExQd8yU9CvD3GRX2
-         jua4zH37lnf2xy7alBxlIZXkw/1hK8quLlpndMEetYcrX3WsX7OfwMslLAAh5+sUD7g3
-         Ht7mZG+cumNnWIwYJYAN4i6Riq99lpYoD5ofu1W7Z/FlQmjJumdpyKH604DC0IPJrIqX
-         64pL0SQ29nqJVReq8bGJtOl0Rxmpux6+8XBAIJcYOevHHIcDui8Je5sQRr2Vk7BC5QMZ
-         cYpg==
-X-Forwarded-Encrypted: i=1; AJvYcCW9nJRO/yz6/o6gBiHwp31H/roFIeZpMf5NecJc3y0D0XGk4aVPv7yYoh82k/Ci7W6zDWM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw+bHrsFGFZd5mKPu8nNufak5kr4lS2sa3KHLMp6BwiYfBipnTT
-	P81s8gL9xbLtRNEVFeWsadXg4xpVzl5z58/E3I6QVQGH1vGViobr05lj
-X-Gm-Gg: AY/fxX65ropyBMOEfVmPV57D/qpxMQ5t1BZIvB7dyakDT5fLtjyl2XBKJJnybTkmRfh
-	LO+zhjzxL2bjVw78vmbjjG6i7IT6xugpEAao7dvgmbkYIiUHkJHmU0Rv7qoauR9r8dAk/vnFy1K
-	5S/qpmGaIK9lA+W129vtLN69p3rNv2pb2pxL/MYCZg59cvd69frcReXCsjZDfBYpr28WTcKxsLV
-	tIzTiKxXCoJij4nYET6b9OxdYyf75WHWOFYjTq7xqDrlGKzuDKgIjsI0ZrCs3ywkZSNtfiabRz7
-	1UiYt3ywr3UOLdbotqJghDKUmODF2GzIeZjld+4UxBeFGVDUlShwdRtQDF9WamqeBI77CWiITEy
-	YkKlUkIs8G255zFXAfi1vxCOheMZVjwhLiO/YMf7X5N9a38Y5YqGjjrqClj7B30wS5TqyqkMLaH
-	iPzV76KNEBFxrWlsAmPRhFFyQdGhPXNOQf+uEdhoBjewi950K9Ri7GkGSuxEzZ924Dcw==
-X-Google-Smtp-Source: AGHT+IF5K7Apu2nwRjCX0tWcmk+DN8pfhUjnBItggY9B2vkX9MAd6e2f3yQS07XPogekVGV+Jdgm1w==
-X-Received: by 2002:a05:600c:3f18:b0:477:93f7:bbc5 with SMTP id 5b1f17b1804b1-47a992e2ed8mr54828845e9.10.1765793428473;
-        Mon, 15 Dec 2025 02:10:28 -0800 (PST)
+        bh=9BrgOzLeUWf4Fw/G2Fo5s+1qI1BELzBgGqOIq7jCSqU=;
+        b=F9kbWHK1ul2CAuCTaig6y7nL0j/TiZ/yFkTVygoPI4fauuS9Rdnu+kTPcb9z9NUfMY
+         nEWb3lsVPrBcZVFmJqoo3Y78upNptRuz7xj2dVti/FD7MPX23RAW/gt8sHp+ws3G3zte
+         fEQBWhEDg+HHPV3t61kRrPPHS+WdxwZRnCtOctqYuxjCtbJhXRTW4+I7nVyrdufovXG1
+         JfdGaApEwq1rNcRAC7p2jToevMojoM0QVP+7cu8pYcG3oSjGD2cgo7C7WLWESkE0Mn0u
+         249IVs0tT0NE8YcTGWZuVbv0YgSeQfs6XciNU6hBH2Q+VAiTboe1sUF+SmvA+oUeSgjk
+         HX2w==
+X-Forwarded-Encrypted: i=1; AJvYcCVYaHJraBTOJyXufPEHP5rU3QvaMSkvuo+Y0WQ8xxNfxX9IrcNG/DefuGqj7+Ybs3s0sIw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw32R5vLybQiwBe363cyquYRjwYyx2+8sZYBqlff4H60KjxNg1t
+	UjVcKxLkI18O1+CDSlx0Cr/o3KG/iGnOaS6NhKyEuXo5wkH+M2mzd/Ej
+X-Gm-Gg: AY/fxX6Ui8fntBTvqhc4b/nciImxo0PMthJvNVQCwkcLaRgfuHh4TAqVTQ0N4PS9koE
+	deh31uUtTW0tU7QkdYdyQlcKLW5xZFHwmJKZr3qceIbvxGfGHEfMUSTFAgn1QmCTsIXPTSEelIc
+	9m2b5yP+Ycc1X8yNvT5Uw21S8b1y7X6QNKU1usT8IySeJM17n/up6csrKUrm0vtyDiCufrmf6s+
+	1Nf04qbBIh1B2q7R5ojsPRaTY1J7RJXad6ZC3n3ZxswtMtkvIPHjlnoZzoQfGNkaCveKcKoJcwz
+	EVkWQqzOFJivXDapdRdYMEvdPLTui4WZtuLaoN3Bg2ydDnRPxoJeK3yAN26KNJV7xB/ZOj9n9lH
+	TGbfyhnsEktFgcpdlN4bIcXIOCTdzUhrMbNGZNVCe42N3rPQnMarlLemanfP9VV6B/hE/VRcYdb
+	2lFi7G4U5Bkb9hFYmTrkYObSp9W5Wnpb5NXaUEn8MWFcH29YSz7vk56UzLQ5HAhpx7jg==
+X-Google-Smtp-Source: AGHT+IHdpNLRQeDMWeQkJDE313MJ2OAqaLcUeEt5XijgBIn7zyb4ruPgvATc0BQDWkwKyGUKMjZEyg==
+X-Received: by 2002:a05:600c:4e09:b0:477:9c73:267f with SMTP id 5b1f17b1804b1-47a8f914a25mr118755465e9.33.1765793597414;
+        Mon, 15 Dec 2025 02:13:17 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a8f6f118esm69074165e9.3.2025.12.15.02.10.27
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a8f8d9d63sm181128145e9.9.2025.12.15.02.13.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Dec 2025 02:10:27 -0800 (PST)
-Message-ID: <a017e50f-7c8f-461f-8627-2fd1445d29f6@gmail.com>
-Date: Mon, 15 Dec 2025 10:10:27 +0000
+        Mon, 15 Dec 2025 02:13:16 -0800 (PST)
+Message-ID: <8fa21ce8-1e02-419f-b82a-0e4a41f7e2d8@gmail.com>
+Date: Mon, 15 Dec 2025 10:13:16 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,61 +70,135 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] replay: move onto NULL check before first use
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, git@vger.kernel.org
-Cc: Siddharth Asthana <siddharthasthana31@gmail.com>
-References: <3d83161b-ec34-404a-bb0e-bf4da7ac1db5@app.fastmail.com>
- <9db2b913-b5d6-4617-b079-b4612eaa2b97@web.de>
+Subject: Re: [PATCH v2 0/3] doc: replay: improvements like "mention no output
+ on conflicts"
+To: kristofferhaugsbakk@fastmail.com, Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org,
+ Phillip Wood <phillip.wood@dunelm.org.uk>, christian.couder@gmail.com,
+ newren@gmail.com, Siddharth Asthana <siddharthasthana31@gmail.com>
+References: <CV_replay_conflict.101@msgid.xyz>
+ <V2_CV_replay_conflict.12f@msgid.xyz>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <9db2b913-b5d6-4617-b079-b4612eaa2b97@web.de>
+In-Reply-To: <V2_CV_replay_conflict.12f@msgid.xyz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 11/12/2025 17:56, René Scharfe wrote:
-> cmd_replay() aborts if the pointer "onto" is NULL after argument
-> parsing, e.g. when specifying a non-existing commit with --onto.
-> 15cd4ef1f4 (replay: make atomic ref updates the default behavior,
-> 2025-11-06) added code that dereferences this pointer before the check.
-> Switch their places to avoid a segmentation fault.
+On 13/12/2025 13:46, kristofferhaugsbakk@fastmail.com wrote:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> 
+> Explicitly say that conflicts do not give any output. I found this a bit
+> confusing with the current doc since I am used to other commands
+> complaining loudly.
+> 
+> § Changes in v2
+> 
+> Patch 2/3: improve `--contained` and mention that it requires `--onto`.
 
-This fixes the regression nicely. There is a preexisting bug that we 
-treat an invalid --onto argument the same as a missing argument but that 
-can be fixed separately.
+The new text looks good, I don't really understand the commit message 
+but the intent of the change is clear enough.
 
-Thanks
+Thanks for improving the documentation
 
 Phillip
 
-> Reported-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
->   builtin/replay.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+> Kristoffer Haugsbakk (3):
+>    doc: replay: mention no output on conflicts
+>    replay: improve --contained and add to doc
+>    doc: replay: link section using markup
 > 
+>   Documentation/git-replay.adoc | 11 ++++++++++-
+>   builtin/replay.c              |  2 +-
+>   2 files changed, 11 insertions(+), 2 deletions(-)
+> 
+> Interdiff against v1:
+> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+> index 04944a5fa23..22fd1b271af 100644
+> --- a/Documentation/git-replay.adoc
+> +++ b/Documentation/git-replay.adoc
+> @@ -43,7 +43,8 @@ point at the tip of the resulting history. This is different from `--onto`,
+>   which uses the target only as a starting point without updating it.
+>   
+>   --contained::
+> -	Advance all branches contained in <revision-range>.
+> +	Update all branches that point at commits in
+> +	<revision-range>. Requires `--onto`.
+>   
+>   --ref-action[=<mode>]::
+>   	Control how references are updated. The mode can be:
 > diff --git a/builtin/replay.c b/builtin/replay.c
-> index 507b909df7..64ad2f0f04 100644
+> index 6606a2c94bc..9e5ad64cad6 100644
 > --- a/builtin/replay.c
 > +++ b/builtin/replay.c
-> @@ -454,6 +454,9 @@ int cmd_replay(int argc,
->   	determine_replay_mode(repo, &revs.cmdline, onto_name, &advance_name,
->   			      &onto, &update_refs);
->   
-> +	if (!onto) /* FIXME: Should handle replaying down to root commit */
-> +		die("Replaying down to root commit is not supported yet!");
-> +
->   	/* Build reflog message */
->   	if (advance_name_opt)
->   		strbuf_addf(&reflog_msg, "replay --advance %s", advance_name_opt);
-> @@ -472,9 +475,6 @@ int cmd_replay(int argc,
->   		}
->   	}
->   
-> -	if (!onto) /* FIXME: Should handle replaying down to root commit */
-> -		die("Replaying down to root commit is not supported yet!");
-> -
->   	if (prepare_revision_walk(&revs) < 0) {
->   		ret = error(_("error preparing revisions"));
->   		goto cleanup;
+> @@ -377,7 +377,7 @@ int cmd_replay(int argc,
+>   			   N_("revision"),
+>   			   N_("replay onto given commit")),
+>   		OPT_BOOL(0, "contained", &contained,
+> -			 N_("advance all branches contained in revision-range")),
+> +			 N_("update all branches that point at commits in <revision-range>")),
+>   		OPT_STRING(0, "ref-action", &ref_action,
+>   			   N_("mode"),
+>   			   N_("control ref update behavior (update|print)")),
+> Range-diff against v1:
+> 1:  b9ec24c8b8f = 1:  b9ec24c8b8f doc: replay: mention no output on conflicts
+> 2:  02a80ee87b5 ! 2:  27bf2ac7a0b doc: replay: document --contained
+>      @@ Metadata
+>       Author: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>       
+>        ## Commit message ##
+>      -    doc: replay: document --contained
+>      +    replay: improve --contained and add to doc
+>       
+>      -    Copy the text from `replay_options` in `builtin/replay.c`.
+>      +    There is no documentation for `--contained`.
+>       
+>      +    Start by copying the text from `replay_options` in `builtin/
+>      +    replay.c`. But some people think that the existing text is a
+>      +    bit unclear; what does it mean for a branch to be contained
+>      +    in a revision range? Let’s include the implied commits here:
+>      +    the branches that point at commits in the range.
+>      +
+>      +    Also use “update” instead of “advance”. “Update” is the verb
+>      +    commonly used in this context.
+>      +
+>      +    Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>      +    Helped-by: Junio C Hamano <gitster@pobox.com>
+>           Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>       
+>      +
+>      + ## Notes (series) ##
+>      +    v2:
+>      +
+>      +    Don’t just copy `--contained` over. Improve it on both sites after discussing
+>      +    with reviewers.
+>      +
+>      +    Also mention that `--onto` is required.
+>      +
+>        ## Documentation/git-replay.adoc ##
+>       @@ Documentation/git-replay.adoc: The history is replayed on top of the <branch> and <branch> is updated to
+>        point at the tip of the resulting history. This is different from `--onto`,
+>        which uses the target only as a starting point without updating it.
+>        
+>       +--contained::
+>      -+	Advance all branches contained in <revision-range>.
+>      ++	Update all branches that point at commits in
+>      ++	<revision-range>. Requires `--onto`.
+>       +
+>        --ref-action[=<mode>]::
+>        	Control how references are updated. The mode can be:
+>        +
+>      +
+>      + ## builtin/replay.c ##
+>      +@@ builtin/replay.c: int cmd_replay(int argc,
+>      + 			   N_("revision"),
+>      + 			   N_("replay onto given commit")),
+>      + 		OPT_BOOL(0, "contained", &contained,
+>      +-			 N_("advance all branches contained in revision-range")),
+>      ++			 N_("update all branches that point at commits in <revision-range>")),
+>      + 		OPT_STRING(0, "ref-action", &ref_action,
+>      + 			   N_("mode"),
+>      + 			   N_("control ref update behavior (update|print)")),
+> 3:  ca83b00343d = 3:  4e851fdff34 doc: replay: link section using markup
+> 
+> base-commit: bdc5341ff65278a3cc80b2e8a02a2f02aa1fac06
 
