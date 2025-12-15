@@ -1,113 +1,91 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1577522F177
-	for <git@vger.kernel.org>; Sun, 14 Dec 2025 23:52:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACD3255F5E
+	for <git@vger.kernel.org>; Mon, 15 Dec 2025 01:22:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765756349; cv=none; b=OcRFuqQWsJ6nQnsIB6ANyPlrJH9gulRcumk7HUYjzG8507AslezIb8PNv1HMHqmdkEJGgT6OF5mhPyI+jglEDCqwpnzkyVFxYBIYYNtz5gXjGgSKMRsYnzjU4+c5RizeiWFZ3UVHnc3qKP5T892CAdCnLGuqXiAyVRy1HqG8KFw=
+	t=1765761734; cv=none; b=mhZEdp2tinw8/OBL/ZCbdOrQDJXgk4l6bXki2+Pvi2DSgms0yEsezbdsqnMGmJahqmCDqhDxUw3M3aySuxanZyK8eX2z0OAbfsK05BM0mqZMS/Vd9pU2dryJMKiANkElcdcY63EZWWMHMW2mu/6EXbaC7AcFza7FuEOxCbKTEos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765756349; c=relaxed/simple;
-	bh=wpw+aU/6TafZPWZUHlNj0zKRPiu9H31s/Zzn9WJ5SNY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B30H89+KMD1yk8Dbc3AV99E1t0prDTLSaKmnulhCGnzjudjqZMA8/TrirtQEZCjWrIRlqT79T1cM8JNju5PAiThpC7Ox34sCRU9VGtT6skzfO/Ce9mfv/jJ+Hnac/R4UQIXByjQpMvoeEGrC/VHpdEo2kR0i9r5UD9MM1vnUq8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PUnzJHKO; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765761734; c=relaxed/simple;
+	bh=FZEQWCPpSQmTeHcyt2hg0VUyn9/NHmiMejya/gLj/U8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mPjR8UHWL2Nx1XjC/0Z8SaZQhKzy8i9rh0+tdC3GqX96tfiBqtHGM59jf6lB5if0VFuYCds/h6zvEWY/wlj1GsgV+YAO8bQsc2RO2umRbw/EcqxxS56dt4Xswv3epBC0wfulyZGDNgNUi8J6McNmLT1Ex8diAnTlCXkuelmLWhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=uuN6CY2J; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PUnzJHKO"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2a0d5c365ceso8656005ad.3
-        for <git@vger.kernel.org>; Sun, 14 Dec 2025 15:52:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765756347; x=1766361147; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HJ9TezuN1J5gZsgdlKXCsvbMAIJptY/Gxj8tvXFjUQE=;
-        b=PUnzJHKOrzGJFbyTnb/glN2VVkF23AeEAbjiIr/CdlznvMT9KIKni8+1VMEiE7LBjj
-         3h1/OSz9RndVIrwhTX3wFJERDEdYkWE0jVrjC8560wTDZ2wKWU4QfobauKmkAIOyXt2/
-         Cl1+jNB5TV0pfVmMI+r2C1pRgLZkNkJsTNE+5o8OneiMerYzWjaDrPPZzVvcA+8y+sn3
-         5ZbmygCzTTPLADEjxXvaUCL9+UzOWbaKUpLGShAIoL7mpyvcHRLBX01+ZmPQzJpjRPhF
-         weQFdm5QsAgkxTLdfBrmSJy1qWJJyDIdJ494jEdUiXFOktb1nPpGht46VjACpOT5WXTb
-         IC6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765756347; x=1766361147;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HJ9TezuN1J5gZsgdlKXCsvbMAIJptY/Gxj8tvXFjUQE=;
-        b=Ywux4XDx/i94MEgFQXcm0EAS7mMDPFhzB4j/HxUcNoJ1l3xo0UoEpirD3WrXmkSDEM
-         GgDCnna2RbF2LwDgksmJx5Ab51NGucZNmZCSgqYxJPuoEIBcPFYXuiib8WFu32jGEa43
-         L0QejrFuXIZ4Pz08/Z3iJm4SYaAU7unkQR24oU8Q+zRoHObLiw/a53fK5kwwJmpjJK1Q
-         quyjjQg5RL73JEidDOnMNfqPF9ydxktjqr2r7Qc+1VPMdSiWb7WFXLVNEN+MKbTJoyls
-         2LxL1RI87skBS6vxMiz7zaPAKi5facP1npeNUKY9xvIWIVM5XncZG9fAHuZRuqRGsNvU
-         naiw==
-X-Forwarded-Encrypted: i=1; AJvYcCVsrAd0IHydzeAAsnnpSeu9Z//GeAG+gHLubqfREMqqIv4xEblKp6f5FTCG4G34DwrHw0k=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxAEjNxYKiue6FIocB+GJNpEZ+EM1KIjUheO3h319CgiMcyPVh1
-	dN6Vt7KqtIz0lAKYhpS5l46oI6h2JYw2VKsFz9umSXehmIod2DjeD0dvixnoZQ==
-X-Gm-Gg: AY/fxX4iMj5hpa6tY0xn2PXCfQhn4md6MyP7Bito+3JXVLMLigWutI2e2WV2zXSFFE5
-	RE7OIiUYGV646E0DhensPYeiuZO6XZgI7oqZu9/4+FWS1XV0/Y1026KSCS1TdXSw1YgnQ3BOFWr
-	2/Sul1EX75nzbIDsS6i9bm0BSvgs0hYTTZPSMX5psviJ5yKbzyBwgF0TZgF4dxtZipZ3DAg4mTw
-	Um0GuBBvJCepHYS1cBi+Tc405dhI0ksiEK5icVO3pPD7bga/lu8zseP2wYsvZNFjilwQNWRbvrI
-	Zya6GLuhAtHoaH60F77f8T0AfdFjhAIsUznanN0Y5BOo6yfl+YJoUR7qkYilYqR4kR4T9r1JL9K
-	+xTcEmVT50R2XZLJUKVdtO5ZoZ4gXOOhRvY3mPSjfJmC2B/tNTjX4pmzdfaZeEuGAKTxm
-X-Google-Smtp-Source: AGHT+IGchrW5Z99m/4ViuMBRJp36CLS+ld3vX4ybw+LPl48FZqXzfo8QASTsEYFSeWjm1T7SopULOA==
-X-Received: by 2002:a17:902:d2c7:b0:2a0:e94e:5df6 with SMTP id d9443c01a7336-2a0e94e5ebemr15460085ad.50.1765756347009;
-        Sun, 14 Dec 2025 15:52:27 -0800 (PST)
-Received: from fedora ([2601:646:8081:3770::d056])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a0e96df1c9sm13528125ad.39.2025.12.14.15.52.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Dec 2025 15:52:26 -0800 (PST)
-From: Collin Funk <collin.funk1@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="uuN6CY2J"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1765761725;
+	bh=FZEQWCPpSQmTeHcyt2hg0VUyn9/NHmiMejya/gLj/U8=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=uuN6CY2JhjAqxYAX1GjIQX/je9mnoQJfOQuE8X1mQxDfQOlDSRFbBFSZ2zD2NRGbx
+	 qygc/ckZK29nF66tR9hXjwmqw39436Vn6aNFvg5FcwX7D6rRBKVObEpM82l+o+5IKf
+	 y7Oplcxuk2f+VzqHl5Cb5+Fo6dNTWgdAVV21crICM3khYP8TEnJb1rEDgonn3vnqmg
+	 /hAVZlCcko7hRm1clVxN1ZswyWL63Kc7zAywJIn1nqnvareSYRnnoz3S+qWmkTC7jm
+	 V0vS/EP3es2S7VBUyOna+8EYoGXdv+hDTDDDE+5MM9F0CMCpDPPRtKS3Y7QGHJ1OF+
+	 lB2Fm/m4lPHReg32bGuDJU9UdFnijYLEGR6jcgiU1DSCv3oYrOeTO+JFvAkNuZYEVY
+	 9VciqcPsyNrU2URavjCRcp+lVIzvofoV+Po1fSTgvRVIuzXyWFSnBLXEQNpB3uS2l+
+	 oGzCD/KgDgoOSvEO//LtSC+FEOzRcIKSn1tKeJVBX4LNQ9TDsXx
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:1324:2c20:62f5:889d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 268032008B;
+	Mon, 15 Dec 2025 01:22:05 +0000 (UTC)
+Date: Mon, 15 Dec 2025 01:22:03 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,  Stefan
- Haller
- <lists@haller-berlin.de>,  Git <git@vger.kernel.org>
+Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+	Stefan Haller <lists@haller-berlin.de>, Git <git@vger.kernel.org>
 Subject: Re: Would it make sense to add a commit.signOff config?
-In-Reply-To: <xmqqsedc8w7k.fsf@gitster.g>
+Message-ID: <aT9iu9He3yJ3npWX@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+	Stefan Haller <lists@haller-berlin.de>, Git <git@vger.kernel.org>
 References: <86c5d40d-5a06-4a69-90d8-a737685b0536@haller-berlin.de>
-	<aT7lkXl65-TBIsRS@Carlos-MacBook-Air.local>
-	<xmqqsedc8w7k.fsf@gitster.g>
-Date: Sun, 14 Dec 2025 15:52:25 -0800
-Message-ID: <87zf7k39l2.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <aT7lkXl65-TBIsRS@Carlos-MacBook-Air.local>
+ <xmqqsedc8w7k.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="w65js0Vrwli0171/"
+Content-Disposition: inline
+In-Reply-To: <xmqqsedc8w7k.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--w65js0Vrwli0171/
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
->
->> this was discussed recently[0] and the point that was made is that SOA a=
-re
->> meant to be relevant mainly in open source contexts and should be explic=
-itly
->> given.
->>
->> Carlo
->>
->> [0] https://lore.kernel.org/git/xmqq4iwvfx8s.fsf@gitster.g/
->
+On 2025-12-14 at 23:44:47, Junio C Hamano wrote:
 > Thanks for a spelunking starter.
->
+>=20
 > Perhaps we should resurrect a proposed patch from 2020 (which no
 > longer apply cleanly, but quoted to show what the additinoal text
 > said).
->
+>=20
 > https://lore.kernel.org/git/xmqqpnfw8gyn.fsf@gitster-ct.c.googlers.com/
->
+>=20
 > to save time from potential contributors?  I do not want to see new
 > contributors feeling they wasted their time after putting their
 > effort.
 
-Sounds like a good idea to me since it has come up a few times and, at
-least from that thread, there is wide agreement it shouldn't be added.
+I think this would be a fine approach or we could add an entry in the
+Git FAQ (or both).  I agree that this is something that comes up
+frequently and writing it down in a more visible way would be kinder to
+users and mailing list participants.
 
 > diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
 > index ced5a9beab..1909551087 100644
@@ -123,11 +101,26 @@ least from that thread, there is wide agreement it shouldn't be added.
 > +log message ends with a SoB by person X but it is very plausible
 > +that it was done by inertia without person X really intending to
 > +certify what DCO says, and the SoB is meaningless." to more
+
+I think the period should be replaced here by a comma since the
+quotation is part of a larger sentence.
+
 > +publicized ways to add SoB automatically, Git does not (and will not)
 > +have a configuration variable to enable it by default.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-I think it is a bit more clear to just write "Signed-off-by" instead of
-using the abbreviation SoB. That isn't used elsewhere, as far as I can
-tell.
+--w65js0Vrwli0171/
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Collin
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.8 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaT9iuwAKCRB8DEliiIei
+gbjcAQDT4aMjWXunWEu7rYQw0aVmgG+bcaF1y/GuTfz+GWsoNAEA4a6OWmdXMVby
+3dqhquWh33n7JQ7EOkY9+Jpf3xURGw8=
+=jeWG
+-----END PGP SIGNATURE-----
+
+--w65js0Vrwli0171/--
