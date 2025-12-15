@@ -1,65 +1,66 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-qk1-f193.google.com (mail-qk1-f193.google.com [209.85.222.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F292030F922
-	for <git@vger.kernel.org>; Mon, 15 Dec 2025 14:02:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D63B34DB77
+	for <git@vger.kernel.org>; Mon, 15 Dec 2025 14:33:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765807335; cv=none; b=pqmpu9FjcAIKo/U028WlbzS+3uc/WUW1Gmcp3lH1ZlqJL67j5n6aKe5Ub0puHeEtdgUfMJf+WjcujXNbG9ZwrDKyjQqsoxQP0Fy2WTwfRnVxZsgWon6Qw0s0Dvq6aN49bpGLpgM+UiL6lCzPtgjpJ/7C0NtcRrW8ftXCkn8yf+E=
+	t=1765809240; cv=none; b=vGaR5gOQDh66M48V3s/6NvPndWqIYNC3QEQc9iNc9WDr4bVPC9vTA+fMQxq08iJfhoyTzngr4t8o9rub2nZK2LvkqOQEl6VfmgYUZ/eov5fxzGsrJfRiTczulrJoQVWZRH4YB3Y7kZerXwM7+Gn2z03uNCbIvLRM9XEH11X1i2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765807335; c=relaxed/simple;
-	bh=Te5iWPfzki1yGsKn11nWqMPrMwj4rZwbIYS978mcw+8=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=MutliYWzY/vAX0bZPXLSeNV2jLMqiDkn/4RE4XElGV0+dhvRGeNmrU6n2AJFhwqjVtcrUPhW69hjYnk6ZboLTR+S/tihXK3oJycPnXet43MYlhOFmz9FLm97aoNsR7Sx8kaY8ullY+qNqR+6aVZXyi/zww9NrGA4h9ygBwXzy8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YICEx1EP; arc=none smtp.client-ip=209.85.167.51
+	s=arc-20240116; t=1765809240; c=relaxed/simple;
+	bh=Y0PQANnMvmye5omo7f7oCedr5b8LCP8uhLQ5kYKNHJo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CLd+ohFUNIXCFBa6Td4EASXZ0STnm/nH0Vv7jFNyV6gJAKGWBvFVstC5KAYkRbLwTlb2sDma8SVL58yrv9aURH5sL/xGjI8uZGvEHsPNtJ38UPZNc2Du3TwFNdK64Y5LvzNyT8slHvDS9BJzPgNx77BT5lSftE5ZA+7Zb4lpYJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=krcVC36m; arc=none smtp.client-ip=209.85.222.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YICEx1EP"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-598f81d090cso3815732e87.2
-        for <git@vger.kernel.org>; Mon, 15 Dec 2025 06:02:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="krcVC36m"
+Received: by mail-qk1-f193.google.com with SMTP id af79cd13be357-8b2d56eaaceso389057185a.0
+        for <git@vger.kernel.org>; Mon, 15 Dec 2025 06:33:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765807332; x=1766412132; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xm9s6gpHKe6VYgosg36YETQ672zDCoThPhsw/Z1dNGU=;
-        b=YICEx1EP8H+ldrd9A500iVsUZVD4OdVeBRZh6jCGPHgL7fPzHaA8c/i0XiWgpeaKbq
-         kNNdNKwvRf3T/RuRbFC3H7lTXYTB+8sVMXXXU7y6RToWA0rQ6CdtFQkK16r1eVomXDBh
-         N1pDl1UEl6sTyO+CjBXs+/ZcrF5wMmJteBLRkG4PUqtPRyW8SUz6sPbRuozlOF+nd0hb
-         Klj1OlNRLSi/hMTCe2oxtPhujsdOj+Bb1jhFhtTvX9rZd9ZjS0qAqyX+DFJ2oxCcpqWh
-         vZLP4Im98dcS72xjJrAbAoRQS3T0OKE8ZW4eIaGUX/aCbHU52BODuZScLLZ/g6+3BSSq
-         s9qw==
+        d=gmail.com; s=20230601; t=1765809238; x=1766414038; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EN4dTFKsEG2eMs/UU3z8D04Avcr9VRkWa75SBYWKduA=;
+        b=krcVC36mEAyyslJ6x+wGFazvvnybZCyVVlK7gZagcPigm8Q1wKnbRUvqlxVQduubwe
+         B6X/wmE/jDshHpt2y3KTbMFs91y2fTq7D3b6yfLOgskcnTccaqo7vUCt/a310Mew2Tpv
+         6Eu15UtHTzBD948/ecT4HIJzJtoZ7DSYSnDXLuRB9/ziMnlUsXg+E93JnoZ9tuRszcCD
+         FXKpRXg71BlmgPEeAopqiPNYBU0MqQxe2p2pbg0yfbmQ9SobRMmtJ7HwnGMAvdIASasq
+         4aAFFxU+++ROkfvd2ttTs3M0P1KpFWmOTwT5k+U6H5he59H79sTPOH5Pdzka5KkEiPbR
+         uRPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765807332; x=1766412132;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xm9s6gpHKe6VYgosg36YETQ672zDCoThPhsw/Z1dNGU=;
-        b=WuF2LqhCtQ3RggPTjnfrDCtZDJQ3pihrNc4E0d8oXDE5TaP9K4OYSusqxQ5wa4UYkI
-         nn0F7Lf88W/HaZ6MTvbMVUyTrHpeWPmZC8jhhFcDqZW5wPCICBLs1msqKyy9Qoc8SmKn
-         eJ7MrDx+nj0G6dNkp17ax66oGeSKCdrhA9QXykFZ8ab5xtKWOUAGiUAOhxhYFHU2MA7d
-         38M8Lnr0fydvjvCo7bwzgEzNLKpGWVe3eKVG4DzqvJTLi6dvowxNDGjlV/5geOBM2b8z
-         O9y6hPjgQ6WHjyY8BXp6I54VEXF32eB2XQqou4LvO2X9iKl/LlnJoiTaPEN/l9Qa8EeE
-         +GJg==
-X-Gm-Message-State: AOJu0YyaDpXurAVcIcJO1hfSSobOIJxAvO1Jk73vaV7bFuhOpaGjO5Bw
-	2jTGvJqQFvNvkQM9CkK6c4ngElgNElOXRzlbF+tPrEHyjAHGrkzMq9lJmqiXqg==
-X-Gm-Gg: AY/fxX4yW8XAN90Av44u/76YVkS4XVoI4/g8APiAfBbLKGZS64gnm5N70MjnYNC6Er5
-	DXe6kgwP/iCSnm4OZ+DWoxuM7gm5ECkQlGxS9u9cdkY9Dp9jrXS5xEk8RHOsLZttkYbQsbu1j4j
-	MIksbJ/dyoZSoyekt6cTidLQ08lJDTH13Y46F0NUNkSpBncugwLenrs3tUUQHth8ANbAKywBI9n
-	qGNavKThymmSQEXq8gCk5aRcg/ygbvVdxu0iMvsFYtF74H6nrSVFJGDW3kLvaigsLNh92VBJmZy
-	OFCNOZr8ayyrD6IsIcDI05BjU1iQDUzqqwaeOC0f/k8Tq0t0lJvZgU3jxfQVd+GlTFR+ugUby5f
-	i2jD9foWNWUFuOK6l9i6IvwuWJnzAbApsXUTs7qUeZjp3tAi5WUuwwl7zPHKI0AFlUFOFBTv3DX
-	n2xsj9BEppQo5deGsr9xj552s=
-X-Google-Smtp-Source: AGHT+IG2BgzqmiIJs+XGbpnHkIsRPIwrZVo/78e2TKJ1+qU6RKvU2+Dq7Fi7nIjygL6QRo74OX8C8g==
-X-Received: by 2002:a05:6512:3d87:b0:594:4b7f:f946 with SMTP id 2adb3069b0e04-598faa71163mr3637107e87.33.1765807331637;
-        Mon, 15 Dec 2025 06:02:11 -0800 (PST)
-Received: from [10.29.112.243] ([193.204.167.189])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-598f2f3efdasm5539648e87.32.2025.12.15.06.02.10
+        d=1e100.net; s=20230601; t=1765809238; x=1766414038;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EN4dTFKsEG2eMs/UU3z8D04Avcr9VRkWa75SBYWKduA=;
+        b=MtKeXBBSyfiztxXELibGxfxlJhlRwtXhLUHaiM5RRKw2h7G12Bd/voAvcNdN52Dgpx
+         47zpenxzHB9gu8Ch0fVISv2mbXeE4Kv2emEHY4jotz+1EC8ZTOmzSXIoLulIhvccORFl
+         09hDoH1Ws94acXPV4iNLoeaz+RWIhpBWqLp46Ada/Q2smu5tShDtHPA8Y/3Z1TnDv6fD
+         iXsulCIpoUF5sdmJtmnwyKx1pDv2/aU8XMSJzcbCr0sIXh/HQlABHsBDraxprMsVbP8b
+         DgbEyL7Phi+ilvlCE1Qls1WXDm4lWBOfOXnsUg5gYV4buxgCuSWOY2H+ZBELhlekJjNN
+         gtCg==
+X-Gm-Message-State: AOJu0YwqORzdJc1X8yhhonSehV7Hyb0PKapTagutEgCkCjC78OuqxWdZ
+	P0m7sMHDU81FPpUPBAzI1Z8Jzm+fuql+m4u79N8ONHxK3FzfI+OWMwNn
+X-Gm-Gg: AY/fxX4Wn+u/vjg+5UPfJ7y0Ky67J/NCn/ZfAy5WKp5nEmgBuIGRR40qpK7UHDjetnR
+	K1guOr8ZML5YZ2EYBw1ri4LtOgHhdTvlNCfRhzRl2eSIJc9r8NKdwUcgPSnaPnqiGskIxVjIrd7
+	lnO50czShk0aLa2UwtpjK9qqWM2MQzasatlVX0YdvP2UBNHen/H5xoOO57ljpfLMWIqNXhrb1Dy
+	94zabAQCoj8IWFfhHV65Dm/3oeIph9HGs0v5VoM4zqYLHuFIeb+DfJpJPnDT8MoImYet5M0xYIk
+	AVhIZiYW0QMeOOEO+bIZTrSh27zZ9ZG9ie7NOpbf6sM1EMFbpdeSCfd1hpU49+BwtV2TM5UbanO
+	jU3ue5rf+Jw/BRituwMwO8hd+y5IYpXPdRHzI0zJLR0jxupqS3ZWjkaoblsTbCG02iQAwtKlXZ3
+	cuE+RocyqsNx2nE0kNj9cAVxkoTBc1j//LfN5MUJpLy5ztDlvW7kgt+DsCig==
+X-Google-Smtp-Source: AGHT+IG0HcUcIrSK+KoM3N0Mb7503NlUtDSpgiZkM+JzXoZQMP1L3kKsHy5/RZ2abiMjVni1s2jtvw==
+X-Received: by 2002:a05:620a:4686:b0:8b2:f3f4:2b44 with SMTP id af79cd13be357-8bb3b37019dmr1479761485a.83.1765809236448;
+        Mon, 15 Dec 2025 06:33:56 -0800 (PST)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8bab5c3bd4bsm1083824385a.32.2025.12.15.06.33.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Dec 2025 06:02:11 -0800 (PST)
-Message-ID: <d7135cd2-e577-4f96-8142-cd9c7cd6995d@gmail.com>
-Date: Mon, 15 Dec 2025 15:02:09 +0100
+        Mon, 15 Dec 2025 06:33:55 -0800 (PST)
+Message-ID: <ee4acbe5-5efb-4bd2-a361-dc7f183b4f41@gmail.com>
+Date: Mon, 15 Dec 2025 09:33:55 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,183 +68,50 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Luca Balsanelli <lucabalsanelli@gmail.com>
-Subject: Re: Different behaviour for --find-renames between git diff and git
- merge?
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org
-References: <3742e7de-7d88-4e77-b711-9fed867a8c23@gmail.com>
- <CABPp-BH80R4LJDRKQnPmh5Am_HAcCgxWiA8vRoN8LgLRUMz+JQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/5] Audit and document Scalar config
+To: Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, atthewhughes934@gmail.com,
+ johannes.schindelin@gmx.de, Matthew Hughes <matthewhughes934@gmail.com>,
+ Henrique Ferreiro <hferreiro@igalia.com>
+References: <pull.2010.v2.git.1764607847.gitgitgadget@gmail.com>
+ <pull.2010.v3.git.1765552528.gitgitgadget@gmail.com>
+ <xmqqecozb6rl.fsf@gitster.g>
 Content-Language: en-US
-In-Reply-To: <CABPp-BH80R4LJDRKQnPmh5Am_HAcCgxWiA8vRoN8LgLRUMz+JQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqecozb6rl.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 13/12/25 02:57, Elijah Newren wrote:
-> On Fri, Dec 12, 2025 at 10:06 AM Luca Balsanelli
-> <lucabalsanelli@gmail.com> wrote:
->> Hi,
+On 12/12/2025 6:49 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> Updates in V3
+>> =============
 >>
->> I'm scratching my head to understand why on the following case `git
->> diff` and `git merge` give a different interpretation about a rename.
-> I don't see any difference...
+>>  * Updated method names when setting recommended config.
+>>  * Updated documentation section title now that nothing is "required".
+>>  * Made distinction for index.threads=true as explicit setting.
+>>  * Added documentation for log.exludeDecoration.
+> 
+> Looking good.
+> 
+>>       +index.threads=true::
+>>       +	This tells Git to automatically detect how many threads it should use
+>>      -+	when reading the index due to the default value of `core.preloadIndex`,
+>>      -+	which enables parallel index reads.
+>>      ++	when reading the index due the default value of	`core.preloadIndex`,
+>>      ++	which enables parallel index reads. This explicit setting also enables
+>>      ++	`index.recordOffsetTable=true` to speed up parallel index reads.
+> 
+> I understood the previous "due to" version (from the middle school
+> English class I took eons ago), but not the updated one.
+> 
+> Other than that, there weren't anything iffy in the new version.
+> Will replace.  Thanks.
 
-Sorry, my email was not clear. There is still something that is not 
-convincing me though. I will reformulate my question at the end, after I 
-reply 'inline' to all the (true) considerations. I consider myself 
-decently educated on git, but probably I still miss some understanding 
-of the merge procedure.
+Indeed, I don't know how I dropped that "to".
 
->> git switch master
->> touch aaa
->> git add aaa
->> git commit -m 'aaa'
->>
->> git switch -c branch
->> echo -en 'A\nB\nC\n' > aaa
->> git add aaa
->> git commit -m 'A\nB\nC\n > aaa'
->>
->> git switch master
->> echo -en 'A\nB\n' > aaa
->> mkdir dir
->> mv aaa dir/
->> git add aaa dir/
->> git commit -m 'A\nB\n > aaa -> dir/'
->>
->> The `|merge.renames` config variable is true. Changing `git diff
->> --find-renames=50%` (the default) or `git merge -s ort -X
->> find-renames=50%` ||to something lower does not change the following.
->> |
->>
->> `git diff` prints
-> Actually, it doesn't; more on that below...
-
-I forgot to specify that I was intending to diff the two heads, that is 
-`master` and `branch`. So it was
-
-git switch master
-
-git diff branch
-
->> diff --git a/aaa b/dir/aaa
->> similarity index 71%
-> Did you not follow your own recipe? Maybe you inserted an extra space
-> or left off the 'n' in 'echo -en' when you ran this? The number
-> should have been 66%.
-
-I don't know what I did but there were additional newlines. So, yes, the 
-similarity index is 66% (which is still above to the default 50% to 
-detect renames for both `git diff` and `git merge`).
-
->> rename from aaa
->> rename to dir/aaa
->> index bbd2b90..986ad36 100644
->> --- a/aaa
->> +++ b/dir/aaa
->> @@ -1,4 +1,3 @@
->> A
->> B
->> -C
->>
->> that is the similarity index is 71% and it detects the rename.
-> At this point, if you actually run `git diff` you see the following:
->
-> $ git diff
-> $
->
-> i.e. nothing. I suspect you gave `git diff` additional arguments but
-> didn't tell us. Let's look at a few options:
->
-> $ git diff master~1 master
-> diff --git a/aaa b/aaa
-> deleted file mode 100644
-> index e69de29..0000000
-> diff --git a/dir/aaa b/dir/aaa
-> new file mode 100644
-> index 0000000..35d242b
-> --- /dev/null
-> +++ b/dir/aaa
-> @@ -0,0 +1,2 @@
-> +A
-> +B
-> $
->
-> So, on master, aaa was deleted, and dir/aaa was added.
->
-> $ git diff master~1 branch
-> diff --git a/aaa b/aaa
-> index e69de29..b1e6722 100644
-> --- a/aaa
-> +++ b/aaa
-> @@ -0,0 +1,3 @@
-> +A
-> +B
-> +C
-> $
->
-> On branch, aaa was modified.
->
-> $ git diff branch master
-> diff --git a/aaa b/dir/aaa
-> similarity index 66%
-> rename from aaa
-> rename to dir/aaa
-> index b1e6722..35d242b 100644
-> --- a/aaa
-> +++ b/dir/aaa
-> @@ -1,3 +1,2 @@
-> A
-> B
-> -C
-> $
->
-> So, only if you diff the endpoints of the two branches do you see a
-> rename; if you look from the merge base to either branch, there isn't
-> one.
-
-Yes, the above is all true. As I said above, I forgot to specify the 
-argument: `git switch master; git diff branch`.
-
->> `git merge branch`, instead, gives
->>
->> CONFLICT (modify/delete): aaa deleted in HEAD and modified in
->> branch. Version branch of aaa left in tree.
->> Automatic merge failed; fix conflicts and then commit the result
-> Yes, this exactly matches what diff showed above -- on HEAD (master),
-> 'aaa' was deleted, and on branch, 'aaa' was modified.
->
->> Why it is that? I always supposed that the rename detection was the same
->> for `git diff`, `git merge`. Reading the documentation I do not find any
->> hint why `git diff` and `git merge` are behaving differently.
-> Hope that helps...
-
-I would expect that `git merge branch` would detect a rename and the 
-conflict resolved automatically. The 'ort' strategy (the default one), 
-"can detect and handle merges involving renames." and the default 
-similarity threshold is the same for `git diff` and `git merge`. I 
-understand that the merge procedure involves finding a merge base, but 
-still the rename should be detected between the two heads.
-
-I was reading commit `90d43b07687fdc51d1f2fc14948df538dc45584b` of the 
-git source code (which I found using `git log --grep '--rename-empty'`). 
-It says (among other things)
-
-This patch lets callers specify whether or not they interested in
-using empty files as rename sources and destinations. The default is
-"yes", keeping the original behavior. It works by detecting the
-empty-blob sha1 for rename sources and destinations.
-
-It is related, but I don't think it is relevant to this specific case. 
-Even though the `git diff master~1 master` doesn't detect the rename 
-(the content changed too much compared to the empty file or one was 
-empty (although it says it defaults to include empty files as rename 
-source or destinarion)), the rename should be detected between the two 
-heads, even when merging. I tried to read at 'git/diffcore-rename.c' but 
-I'm not very good at C and it would require me a great effort to fully 
-understand it.
-
-So, why `git merge branch` is not detecting the rename and not resolving 
-the conflict automatically? Does it use a different diff machinery 
-compared to `git diff`?
+Thanks,
+-Stolee
 
