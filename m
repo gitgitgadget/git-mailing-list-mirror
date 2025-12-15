@@ -1,85 +1,115 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B7C320382
-	for <git@vger.kernel.org>; Mon, 15 Dec 2025 17:52:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DFD1DF75B
+	for <git@vger.kernel.org>; Mon, 15 Dec 2025 20:05:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765821125; cv=none; b=SAf0rQSb0rWUgm5THd9JAWk5TJNltE+m2gNJrxrnSgmUGFb95mf/7/K329IAuzgrZ/8a/gqcsnHvPr9Y1Sa15RUdFsCodtt2XIKDyugp54p8fjoTdFEpCzx3rN6l48cCST67xZnDh/lPv9UZhleoQ6GRmkK559On+tGozsUpgd0=
+	t=1765829130; cv=none; b=ka9OP+aMUE/s+ST9GnzIG+u12qjjUoSAzO/7dHQzE/fsCSCH7Hkb61q3rSf7603ein6zz78Hh92jPp0wybCaYe6lqZ7ao0YDn6LQWS2Q1a996CJFze0SJC4OQFu+KKmZ5nhMDaARlUc/vzXy2E5JZcMUoBJ6s3BtGoXx6dyDsQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765821125; c=relaxed/simple;
-	bh=DmN75eLvNUeDJ8J36KJGwWQSWHBUGd7qOvOINwma0gY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=N8Plt7Clo3F8rQqeVOIldT3lcekbOxbqKPp6x5JnE3X2PC2jaMPJ03+1SIoAvrxzxMTceccl4d5Xo/6k0zH1ybToVHy5RQhzCLfD9v5f2NIELQtY6foTu1UleV/2h7tYCJcWDE7I0U4jyl43mODA64XhSEWTMR3ASv9WdrtOGIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1765829130; c=relaxed/simple;
+	bh=Zvoe34S+Dz72gegJiCOua5fVRvBwwzeDjW0ivyWpccg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Tq5NlORdgCKm81ayPVSeQgQeyVHCKrXXgdVcV4GidIwi4L+vuRC5++LK13JgVAa+T5KkiZcNJ4fZmW9EQpD758SKMtgdmBiNOaRtHWw2tFp8skEG2dSayWltlP7YvpiNlI3nh+s8yDWLvWOyjHI9wp4MfAykiE5TBeieFFYeMQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FQNVofOK; arc=none smtp.client-ip=209.85.210.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-8887165aaabso6297496d6.1
-        for <git@vger.kernel.org>; Mon, 15 Dec 2025 09:52:03 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FQNVofOK"
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-7c7660192b0so2786992a34.0
+        for <git@vger.kernel.org>; Mon, 15 Dec 2025 12:05:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765829127; x=1766433927; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=g691Iju60N3k0dqg5oNDPVwTYF7nfEnsjoWkChUfofM=;
+        b=FQNVofOKiGbOohOfGYGAfHjVJoTKpkN7vSCfMuggGQCq3TyXqtM+t2b5BmKdVr49RW
+         9nxYwUPpEecsg+kV6dNe83xEGe15MhRIyKMa2v+lFVRSF3HJYYyzFLlz1l6syO70zRm1
+         CXJutMip0zL1nxk3Y/Cm8fX1jfEGQ7mhCH+TZArGsA5r5W4veTirLB7d6PU/eL1Wp5kT
+         CsJYLhPz3jOXwinZBPUM6AlyM5oBO7M2EiqWodhuJUc/mJyT3OAdOWbOBvAgyKlbD+PI
+         uP5CQ790Cb3A/3FcuXHQKmyxBuBU/Il2onStx7+I1OISrqcQR253KvdJcA2D3TRbl7Wn
+         T9eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765821122; x=1766425922;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=5LOWWiC2wdP5B1dWzuiblxhDd8U1LZ4RBgq2vlkFMag=;
-        b=Klp5HzbHma1ndbPT4ZwqFJiFNUPiXYbyhB5E0VznZM8pjazqJYXX6R4Uewqqo/29FI
-         wqZR7ppi3d1+PPurjy8tDBsohCD9lRB6I4qRo7+YxYKjh1nSJ1eBDU7jvD02x2X6Ffz0
-         kp/1JgQyWzvP1FUf13LPI3YytEmOIqqjoa/DoDLnqWgzA++16csMYyX9xsrcGs0DXwp0
-         IHEBAQFdcXjddg0s7mxRp7DF9HM0POwOj+qsrq1qUf0gwskGfyYhIu5p/OcjpDZc7JZr
-         FG07FPGuBTcbUYhS27Yyhc3pPRoXUESd4P2eJKmSSPeOn8nPOqNEHXmRMdwsHA/219TB
-         9Trg==
-X-Forwarded-Encrypted: i=1; AJvYcCX5264mqqb79q2mxLzSAlxGSzfD0xERot6DGhYjyE60ioLOC8Zy+HP6RDFA1QPOGpsT3ug=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQW0XHD1cL5edKYhMN4I2le2Ov0NpUp8VmRB6skqc9tAoyl1da
-	GkfMq3WId9qlVvWTFKj4+37fnfn5vfm7nl2hRpp5WZD4aJPjQb39YLvHK3SJgF3KV6xk5hr4qNE
-	zGNrYyjkms8rrux+vFI80j+0vx5L+btc=
-X-Gm-Gg: AY/fxX7gZMxuKhZ3g/wyCsjIkTTxWhhEKtkDYCV3agy27EfTCsL9agyqe7ipG6jKM4I
-	Zl7VN33L6a3adbHxlp2ePlfR7F99lL/taqj/Lu7zG+7h9LJN/SZiZwMrhkUvnCayHUfGlH7aa+K
-	QOPPZa2hGqmYBTsWzI7NAIb6AxFhDP1xFk7NEuJkVqGc33lQKyAPzob8l+UocWPLPa43PL16f+v
-	poY0JOVaBq6lrR83kkl6JcVwwfAhg1yALKx8veg0OO3xhADH1bnMktTb8a7Aohl6eXW+UQ=
-X-Google-Smtp-Source: AGHT+IFicRZkZukvoPgEuhs/hTzNp4FrwZg1NPEYQHpqLtrfuycVtaeaaVlRB957j3FTLs1954uMN5F6nfkMqYjBpsQ=
-X-Received: by 2002:a05:6214:c42:b0:880:4bab:466f with SMTP id
- 6a1803df08f44-8887e004782mr145193046d6.0.1765821122288; Mon, 15 Dec 2025
- 09:52:02 -0800 (PST)
+        d=1e100.net; s=20230601; t=1765829127; x=1766433927;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g691Iju60N3k0dqg5oNDPVwTYF7nfEnsjoWkChUfofM=;
+        b=FT69gKTxyv+Ifa0+zfH6Z9A51wSkci0vHaMXMulZ9H9vs7DXCs6yIb0WxzD+5dwYEq
+         TcVLiu4YwRsNvu2amdgtNF/RFdyoYP+i4wu9SXBMpWg7WBOkOqr6vit7wuXJZg4EH4t/
+         E5WDQj9LUiQPio5o8DcJCB/ERSSdGYjiqitsIgyl+p675r0R5WAYbbR+P9B6Uj4LyAC9
+         zTluDW6KVVb1mgYcSGSbJfWATP7WP5kJsOj2cEdo+7zUTAI3g7eFXy9UtEKNzE1TDTHK
+         ++8uSHyAMvdvicegYpQXajzjjvjbxBMMrwk5l/HnGQ2WQNNi41QF4dUYy7DsyK6nsqpS
+         3x2A==
+X-Gm-Message-State: AOJu0Yy0EW803ZmPFeHVCZSgYgb/StMbbEerIK7aVi3bCgkUXr3OTe9S
+	YVvZBCV6GZ+VunlzsL+0pS4+BIBfAr40ugdwWtmQTyLBiGdKtlf5aT6QJerYHw==
+X-Gm-Gg: AY/fxX5IZyo3doxuYbd8/akD8In6ebDoD461kenKbF5bKfSsLRzm2+qIr/CCkTQfHy1
+	KyMlvxKrbH3hJV6ffwpuluFaD7IolrfZtswBtGZSnJOg0iLvMQvxxSmZYgkUZa8eNwEfV4QNwfW
+	hFB/YxolLrUu6MCiAM0tKvrR/qa0SqHF6dM1xyojhkMtRLOQztCkx79nx+4VyZsfQzUh8Bjswmt
+	EtoYgjbW2zfozW7hAgrjRS5jDQEJfEiFF4DZyUasU2FlDAMPZdRVv5DKj3NC/zey9jubxLdsCPo
+	se9oPqcW/cgdpp9iyJnOvuvw628zxS60FCVPRHVuRT0xQvqv6sur+JSDlMv0eklOZ5JX4wx6+fn
+	0OyrFoptUo1KQ5RBk9mmUuZJ+/1dy7StvVSyX9a2s29X/3nsdMN8x1SywL+u8j5OoMh6ZUWyz+L
+	l2De+j0MAUR1tF9ya3fVQ=
+X-Google-Smtp-Source: AGHT+IFAhg4Ng91O9KhlsSU+1GCwlyh89I+O45iDbiUqbWf+WCYujnmv3u9edbPg6q+B5OWYRCFgpA==
+X-Received: by 2002:a05:6808:5182:b0:44d:a6a8:1b5f with SMTP id 5614622812f47-455ac86056amr5440073b6e.24.1765829127309;
+        Mon, 15 Dec 2025 12:05:27 -0800 (PST)
+Received: from denethor.localdomain ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-45598b992d6sm7251353b6e.7.2025.12.15.12.05.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Dec 2025 12:05:26 -0800 (PST)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH] docs: clarify git-rev-list(1) --filter behavior
+Date: Mon, 15 Dec 2025 14:05:12 -0600
+Message-ID: <20251215200512.2694155-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.52.0.209.ge85ae279b0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALnO6CCu7A7mkLy==K9a-u-z0kYBKLiyBz+Qq8c7PWLHO-YuNw@mail.gmail.com>
- <CAPig+cSctvQoCNvQqrsLjzLQBc7H9u2hpxeBHE19_AQsup+kFQ@mail.gmail.com> <aUApKxjYHMPHNIac@pks.im>
-In-Reply-To: <aUApKxjYHMPHNIac@pks.im>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 15 Dec 2025 12:51:50 -0500
-X-Gm-Features: AQt7F2rOlVvymx9Bb_r5qI0R3_C16aJMKxmss95PTvHyg_FLMBnck-Cz-Up3eGw
-Message-ID: <CAPig+cTrLkEPGb=7dU1pnB9ir+vMaJ2W=J3R6+9kLuHkubtS_g@mail.gmail.com>
-Subject: Re: meson -Drust=enabled fails on macOS without GNU sed
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>, Git <git@vger.kernel.org>, 
-	Ezekiel Newren <ezekielnewren@gmail.com>, Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Dec 15, 2025 at 10:28=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
-te:
-> On Fri, Dec 12, 2025 at 03:32:30PM -0500, Eric Sunshine wrote:
-> > On Fri, Dec 12, 2025 at 3:01=E2=80=AFPM D. Ben Knoble
-> > <ben.knoble+github@gmail.com> wrote:
-> > > I think it's due to e509b5b8be (rust: support for Windows, 2025-10-15=
-)
-> > > [relevant folks CC'd], where we assume sed can take "-s" (which AFAIC=
-T
-> > > is a GNU extension). But perhaps "-n" was intended with a "p" flag on
-> > > the substitution?
-> >
-> > Yup, that's a strange one. Indeed:
-> >
-> >     sed -n 's/^host: \(.*\)$/\1/p'
-> >
-> > would be the correct way to do it, while also being compatible with
-> > BSD-lineage `sed` (such as `sed` on macOS).
->
-> Ah, indeed. Would one of you want to turn this into a patch?
+When using the --filter option for git-rev-list(1), objects that are
+explicitly provided ignore filters and are always printed unless the
+--filter-provided-objects option is also specified. Clarify this
+behavior in the documentation.
 
-I'm not likely to have the time, presently. Ben is welcome to attack
-the task if he desires.
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+
+Greetings,
+
+This small documentation update is in response to discussion from [1].
+
+Thanks,
+-Justin
+
+[1]: <aT-djS-TrQJxxV8i@pks.im>
+
+---
+ Documentation/rev-list-options.adoc | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
+index d9665d82c8..453ec59057 100644
+--- a/Documentation/rev-list-options.adoc
++++ b/Documentation/rev-list-options.adoc
+@@ -983,7 +983,9 @@ to name units in KiB, MiB, or GiB.  For example, `blob:limit=1k`
+ is the same as 'blob:limit=1024'.
+ +
+ The form `--filter=object:type=(tag|commit|tree|blob)` omits all objects
+-which are not of the requested type.
++which are not of the requested type. Note that explicitly provided objects
++ignore filters and are always printed unless `--filter-provided-objects` is
++also specified.
+ +
+ The form `--filter=sparse:oid=<blob-ish>` uses a sparse-checkout
+ specification contained in the blob (or blob-expression) _<blob-ish>_
+
+base-commit: d8af7cadaa79d5837d73ec949e10b57dedb43e9b
+-- 
+2.52.0.209.ge85ae279b0
+
