@@ -1,250 +1,111 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4046B328B5D
-	for <git@vger.kernel.org>; Mon, 15 Dec 2025 07:36:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2261D516C
+	for <git@vger.kernel.org>; Mon, 15 Dec 2025 08:14:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765784221; cv=none; b=m7QnWr3qAjnPlO10o++FkBIXL8KgdYdEY9aeA58xUuQQpMamjLC0ow4PgSBHSAGdeGKHRjvFfkNgyWPQHyGL5WQvtFedg51azdgEWZIVZdn3whxJWp54IdXPdqnEWRiPssir3ZFqjIDZ6RdqZ2SE4jZDOm7G7Dx6YbWHkP91M5M=
+	t=1765786466; cv=none; b=aaJKgWL9Mv5UwsNpUjn1A/FUeiRIXIHEmnSV2xL2/yqC2x6npJyiXWzEZ3XdqWMf6dG5NYmMNuG1ZK8+5aqwdD11P3Mw0boakCA4jI+V2tQwhE6aHs2oaox3wTlrqfTs36a3TY5zMGhMYGzamGqOthQ5cHOOnJuMt/jNbmpltG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765784221; c=relaxed/simple;
-	bh=mhSCmOEUeOo55BR3kus3J467JuqZWUwqhHn2Va3aQ9Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=q5wLK05EMpGAYybofxMeiWGtzuz2ZAk2qhKaaz5rhaJx7RGVOO0OFBr07mBAjBClnV7WmvW2AZ7UYRlb8WPo0MA9kA5mKqDM5QptxGVql0EKeo2E5d1y2TjyXNFK57UkzeHVW/nX1DecoHlFuUZP33uu6vMEcBHasUg7fzUS5/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lXvtGzRQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZTYM7XdF; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1765786466; c=relaxed/simple;
+	bh=/7iCO1nHsKQgNImTtROFeznyez/3epIT3pc33cnj/NE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I6EfAbHW9M7pwPvOZmzQDvVB0lnp+R+KMOAVLRvclluyNqVMu4pVVMQM7qWWMJPBf8Sz8Q1DrI256sfVVRVhQrDp74QAxw6TsHejOEPcUxPRTT80/tYRNjN0d92Ot9GTVvZh8uczraSl9mJZ/3+jlSJl6lZ2tshgSNZIQgTiixM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=AFcZc7h4; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lXvtGzRQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZTYM7XdF"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id A640CEC00A6
-	for <git@vger.kernel.org>; Mon, 15 Dec 2025 02:36:55 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Mon, 15 Dec 2025 02:36:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1765784215;
-	 x=1765870615; bh=5EpXMpxY8iEZe42wEkIfhOKJAKRENMf7NpMIaAi97gs=; b=
-	lXvtGzRQwXswHGjK1zblzyZAKybzPrNFHSV8eQxUtR9OYOVcXZLbUvxEZQ1fg9bS
-	lrcnxHiIufybhm3ddWYhQL90ewz+lpSHltBqLEMw2f9Kjf299TioIQbgn1C/nbuN
-	QkdpvUkK2g7L6fix2kTXLo+aIhUELnSkyp8gD+t8geuHIxgU2u16xMEo8AfUCKk+
-	Ct3V0PE3G36QcJs0gXISxHdoDxBYfHWFNFquVvwgvLivUrT2pfhuUgwG3wOY5Lir
-	ulN/VUlcvlZbVnljjBt4nvsZ9zIb1jS7thPD6TfCeF4el5V/c5/z8NALo5xeag/Z
-	z7NSvhwnEIEpuFW4toaIgg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765784215; x=
-	1765870615; bh=5EpXMpxY8iEZe42wEkIfhOKJAKRENMf7NpMIaAi97gs=; b=Z
-	TYM7XdFEAeOmoCe9h8P+RfEXoG2kvna+IG6MRr58jle2DL3IcMxJHFQWSW8YelD5
-	9IKPLJiNWbVnfmgtR+rV74hiUHr2T42Y3JjETYO6T/+3X0T9Ng/eLwNwYXW9n8iM
-	jeldb1koxKauJ61+3JZQ6npe4M8XMVWiaDkFTpovMrNBdhQn9IjZ8PEfbJjEDqSU
-	dzcZDL2IWeTU9NGr+E7Lyxu/qQqb4sLcihbp9a2ia5LgNBqDnZlRZB40jgTO9XnR
-	FxscnY2IEPZpPBavFlyvGWeFhEsgjwJRQUcwwxf/65msn8WYaV9LVhVpVo9okN+t
-	ezqSMkYpdmI3sabSwbWSA==
-X-ME-Sender: <xms:l7o_aU0agY5Aq8D9UKQ0d7qz0oEqUxCf33dfKAlZp9rFpVeVeN5n2w>
-    <xme:l7o_aWB1NVaeDBqhzuiXbfVXnI_Xw00YuWDTJ71KV7oOyAYu6ymK-HbXhCAuS_pUw
-    C4LBk9F_udLXMyXFgRSab5tvBBWgxGWNX7a-mJjd_orLA9xImJQ0A>
-X-ME-Received: <xmr:l7o_aSil2axsjJ2U_ZYTZ6yOIOkOHC0ciE5Jw7_qsZKhwIqY0iJzG1fEbTyeU8DxEQSLla-CKcfpR-nfL_P5dHwRVaE-T0WZdEl5aXAs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefiedvvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
-    ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelte
-    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedupdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhg
-X-ME-Proxy: <xmx:l7o_aS_DYnyvHVZebeP9IjCsGP0MoMyAwaK59zhXMm_YJAJxTWh_0Q>
-    <xmx:l7o_aW9K4gPBDsWeH9xRPm_ESyZxa2BWdlk18oC8FzppR2V7fC3B3g>
-    <xmx:l7o_aTBYOJj7Duza8wVvelIcbE0q4MhdultLr6tBULDPM_TxHW7PnA>
-    <xmx:l7o_aey1d2oM_gKCMZGQZR7HA9hrZzoZ54JrIZQyY3qTgi0Usr054w>
-    <xmx:l7o_aWE82s17TbF9Nx902Z_4YxnwEQsAtaSg6Mbf9otwFg4y8wTT-jtY>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 15 Dec 2025 02:36:55 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 47fdb2c0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Mon, 15 Dec 2025 07:36:54 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 15 Dec 2025 08:36:29 +0100
-Subject: [PATCH 10/10] packfile: move MIDX into packfile store
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="AFcZc7h4"
+Received: (qmail 361297 invoked by uid 109); 15 Dec 2025 08:07:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/7iCO1nHsKQgNImTtROFeznyez/3epIT3pc33cnj/NE=; b=AFcZc7h4JY1dSQtIkoBMaDFfMv0lD5reE9I+6z4x1qofgC3cJIs+Do/mgEP7ERjBzDE+luEmSKTYfFzgXHdMWNL92HTiZTA6jbKzrKgRn8gcDSKMbOy/EsWAc6d46/KvbbRhvDnhUS42eAb2zG0p+iIu09JfkZyWcYwe0RxyYtzG6SmGNcxtU+Pg56LUpyJCvXbueKYaALXEkhSJ0gp4yWMNNFinag+SkbdrGrQjdmqFvThzQAkKerNXYajB5S9gZqu7OOCngdGB4zBbwsaTK/P2xo68y5Xur39Z9Ul0mlpXXA/3OxeOUMX6wial7aLPiKg9VlxkRsuLEuAG+LvLYA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 15 Dec 2025 08:07:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 480535 invoked by uid 111); 15 Dec 2025 08:07:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 15 Dec 2025 03:07:41 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 15 Dec 2025 03:07:36 -0500
+From: Jeff King <peff@peff.net>
+To: jim.cromie@gmail.com
+Cc: Jason Baron <jbaron@akamai.com>, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	gregkh@linuxfoundation.org, ukaszb@chromium.org,
+	louis.chauvet@bootlin.com
+Subject: Re: [PATCH v6 00/31] drm/dyndbg: Fix dynamic debug classmap
+ regression
+Message-ID: <20251215080736.GA809641@coredump.intra.peff.net>
+References: <20251118201842.1447666-1-jim.cromie@gmail.com>
+ <76038c97-39ca-4672-adc0-4e8fe0e39fc8@akamai.com>
+ <CAJfuBxxFWD0rEjm-va+Bjmf-m2nfOD_+ZEqKy22WX6QdugQCUw@mail.gmail.com>
+ <5b3d492c-7037-45a5-a001-0064f14d5f81@akamai.com>
+ <CAJfuBxzW6TMmdS74ZPfPSe1w6S=oO17WYZc-Jgn_et=-Muw05A@mail.gmail.com>
+ <20251214195420.GA791422@coredump.intra.peff.net>
+ <CAJfuBxx-_Z_hCoqdj2Lma7oP6LhCM6Pz=afe2P=wKO41T7R3mA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251215-b4-pks-pack-store-via-source-v1-10-433aac465295@pks.im>
-References: <20251215-b4-pks-pack-store-via-source-v1-0-433aac465295@pks.im>
-In-Reply-To: <20251215-b4-pks-pack-store-via-source-v1-0-433aac465295@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJfuBxx-_Z_hCoqdj2Lma7oP6LhCM6Pz=afe2P=wKO41T7R3mA@mail.gmail.com>
 
-The multi-pack index still is tracked as a member of the object database
-source, but ultimately the MIDX is always tied to one specific packfile
-store.
+On Mon, Dec 15, 2025 at 11:52:38AM +1300, jim.cromie@gmail.com wrote:
 
-Move the structure into `struct packfile_store` accordingly. This
-ensures that the packfile store now keeps track of all data related to
-packfiles.
+> using the mbox.gz from your link, I get a different failure, this time
+> on patch 11
+> [...]
+> jimc@frodo:~/projects/lx/linux.git$ gunzip
+> ~/Downloads/PATCH-v6-00-31-drm-dyndbg-Fix-dynamic-debug-classmap-regression.mbox.gz
+> gzip: /home/jimc/Downloads/PATCH-v6-00-31-drm-dyndbg-Fix-dynamic-debug-classmap-regression.mbox
+> already exists; do you wish to overwrite (y or n)? y
+> jimc@frodo:~/projects/lx/linux.git$ git am --empty=drop
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- midx.c     | 14 +++++++-------
- odb.c      |  8 +-------
- odb.h      |  7 -------
- packfile.c | 12 ++++++++----
- packfile.h |  3 +++
- 5 files changed, 19 insertions(+), 25 deletions(-)
+Ah, that is the difference: you are applying directly from the
+downloaded mbox file, whereas I picked out the messages using mutt.
 
-diff --git a/midx.c b/midx.c
-index dbb2aa68ba..fa7a7e5d13 100644
---- a/midx.c
-+++ b/midx.c
-@@ -96,7 +96,7 @@ static int midx_read_object_offsets(const unsigned char *chunk_start,
- struct multi_pack_index *get_multi_pack_index(struct odb_source *source)
- {
- 	packfile_store_prepare(source->packfiles);
--	return source->midx;
-+	return source->packfiles->midx;
- }
- 
- static struct multi_pack_index *load_multi_pack_index_one(struct odb_source *source,
-@@ -709,12 +709,12 @@ int prepare_multi_pack_index_one(struct odb_source *source)
- 	if (!r->settings.core_multi_pack_index)
- 		return 0;
- 
--	if (source->midx)
-+	if (source->packfiles->midx)
- 		return 1;
- 
--	source->midx = load_multi_pack_index(source);
-+	source->packfiles->midx = load_multi_pack_index(source);
- 
--	return !!source->midx;
-+	return !!source->packfiles->midx;
- }
- 
- int midx_checksum_valid(struct multi_pack_index *m)
-@@ -803,9 +803,9 @@ void clear_midx_file(struct repository *r)
- 		struct odb_source *source;
- 
- 		for (source = r->objects->sources; source; source = source->next) {
--			if (source->midx)
--				close_midx(source->midx);
--			source->midx = NULL;
-+			if (source->packfiles->midx)
-+				close_midx(source->packfiles->midx);
-+			source->packfiles->midx = NULL;
- 		}
- 	}
- 
-diff --git a/odb.c b/odb.c
-index f159fbdd99..902251f9ed 100644
---- a/odb.c
-+++ b/odb.c
-@@ -1078,14 +1078,8 @@ struct object_database *odb_new(struct repository *repo,
- void odb_close(struct object_database *o)
- {
- 	struct odb_source *source;
--
--	for (source = o->sources; source; source = source->next) {
-+	for (source = o->sources; source; source = source->next)
- 		packfile_store_close(source->packfiles);
--		if (source->midx)
--			close_midx(source->midx);
--		source->midx = NULL;
--	}
--
- 	close_commit_graph(o);
- }
- 
-diff --git a/odb.h b/odb.h
-index c97b41c58c..300c3c0c46 100644
---- a/odb.h
-+++ b/odb.h
-@@ -54,13 +54,6 @@ struct odb_source {
- 	/* Should only be accessed directly by packfile.c and midx.c. */
- 	struct packfile_store *packfiles;
- 
--	/*
--	 * private data
--	 *
--	 * should only be accessed directly by packfile.c and midx.c
--	 */
--	struct multi_pack_index *midx;
--
- 	/*
- 	 * Figure out whether this is the local source of the owning
- 	 * repository, which would typically be its ".git/objects" directory.
-diff --git a/packfile.c b/packfile.c
-index 0e4c63e11d..097dd8d85d 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -990,7 +990,8 @@ static void prepare_pack(const char *full_name, size_t full_name_len,
- 	size_t base_len = full_name_len;
- 
- 	if (strip_suffix_mem(full_name, &base_len, ".idx") &&
--	    !(data->source->midx && midx_contains_pack(data->source->midx, file_name))) {
-+	    !(data->source->packfiles->midx &&
-+	      midx_contains_pack(data->source->packfiles->midx, file_name))) {
- 		char *trimmed_path = xstrndup(full_name, full_name_len);
- 		packfile_store_load_pack(data->source->packfiles,
- 					 trimmed_path, data->source->local);
-@@ -1087,8 +1088,8 @@ struct packfile_list_entry *packfile_store_get_packs(struct packfile_store *stor
- {
- 	packfile_store_prepare(store);
- 
--	if (store->source->midx) {
--		struct multi_pack_index *m = store->source->midx;
-+	if (store->midx) {
-+		struct multi_pack_index *m = store->midx;
- 		for (uint32_t i = 0; i < m->num_packs + m->num_packs_in_base; i++)
- 			prepare_midx_pack(m, i);
- 	}
-@@ -2094,7 +2095,7 @@ static int find_pack_entry(struct packfile_store *store,
- 	struct packfile_list_entry *l;
- 
- 	packfile_store_prepare(store);
--	if (store->source->midx && fill_midx_entry(store->source->midx, oid, e))
-+	if (store->midx && fill_midx_entry(store->midx, oid, e))
- 		return 1;
- 
- 	for (l = store->packs.head; l; l = l->next) {
-@@ -2454,6 +2455,9 @@ void packfile_store_close(struct packfile_store *store)
- 			BUG("want to close pack marked 'do-not-close'");
- 		close_pack(e->pack);
- 	}
-+	if (store->midx)
-+		close_midx(store->midx);
-+	store->midx = NULL;
- }
- 
- struct odb_packed_read_stream {
-diff --git a/packfile.h b/packfile.h
-index 2fb87a26d6..fb832a33e3 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -100,6 +100,9 @@ struct packfile_store {
- 		unsigned flags;
- 	} kept_cache;
- 
-+	/* The multi-pack index that belongs to this specific packfile store. */
-+	struct multi_pack_index *midx;
-+
- 	/*
- 	 * A map of packfile names to packed_git structs for tracking which
- 	 * packs have been loaded already.
+The mbox provided by lore is generally in the order the messages were
+received, which does not necessarily correspond to the order they were
+sent, or the rfc822 dates, or the subject lines. But "git am" does not
+do any sorting; it applies the messages in the order it finds them in
+the input mbox. So you get out-of-order patch application.
 
--- 
-2.52.0.351.gbe84eed79e.dirty
+There's another possible gotcha, as well. The mbox for the thread will
+contain other non-patch messages like the cover letter and any review
+responses. Adding --empty=drop as you did will generally skip past
+those, but not always. If somebody responds and says "Maybe do it like
+this" with an inline patch, then "git am" will pick up that patch, too!
 
+
+It worked for me because when I picked the patches out of the thread in
+mutt, it showed them sorted by rfc822 date header and used that same
+ordering to dump them to the new, filtered mbox. And of course I
+manually decided on which messages were part of the patch series and
+excluded the rest (based on subject lines).
+
+It would probably be possible to teach "git am" to sort by date header,
+but that's not always right, either (you could have a local series with
+out-of-order author dates due to rebasing). You could use the subject
+lines as heuristics, if you know that the sender didn't use any exotic
+format-patch options. So there are probably some heuristics at play.
+
+And none of those ideas helps with the selection problem, which is
+another heuristics ball of wax.
+
+Fortunately, I think b4 has melted that wax for us already (OK, maybe
+I'm losing the metaphor). If you do:
+
+  b4 mbox https://lore.kernel.org/lkml/20251118201842.1447666-1-jim.cromie@gmail.com/
+
+you'll get that unordered mbox again. But if you use the "am" command:
+
+  b4 am https://lore.kernel.org/lkml/20251118201842.1447666-1-jim.cromie@gmail.com/
+
+it figures everything out and gives you the clean series in an mbox. It
+also knows how to pick the latest version of the series (your v6 is in
+its own thread here, but if it were in a thread with v1..v5, you again
+get into another message-selection problem).
+
+-Peff
