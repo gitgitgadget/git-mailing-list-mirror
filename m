@@ -1,129 +1,207 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A67146A66
-	for <git@vger.kernel.org>; Mon, 15 Dec 2025 23:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305DF33EB13
+	for <git@vger.kernel.org>; Mon, 15 Dec 2025 23:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765842636; cv=none; b=VC7kXGPuLPHM2NB449xqfcWKzO4D0n5bivfZVGpfE3oIDWYAz6lCYKB2vlf+VKceRpEMmheWqbsHI8npmNxYG/Ch8YoKgDM1PKbwp1sG+6CriQHt+JgekpkvqZGpxEPyZJwc0k4l3QVAy5LfxRyv/yJ20D0BNyewC7R9odMPpA8=
+	t=1765842639; cv=none; b=SG1osCG/NedpilIlSQ+rnODZWJwnnbtG5ZJXIPDE5odhutorTn1W/t82727RdQUf5/D2QgEEEg9wogFP6cbe9sUEBzXO5GyAM5dE6mJCmbTCW/8i3rSrmTzNGLwSNdLfajPxK4Gsj/WEDNP2aSxkP+FZlC12JvK8vE+7BHDHBX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765842636; c=relaxed/simple;
-	bh=rwPint/2Ap/AnA3xqvVqYEZhErtvvmAdyUHKUBU+ITc=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Z3rvQCPn/D2B1/AU4fDowQ7YSIKObS1H1KyTmTcok1Ag5je2i3m2HYC5z7JA/r4KpqdbD6Bz9b05FG09GnO89vnLQQACPG7c9fYXfKtJf/4ThSczuM9yq/YHhQ9ScqpKxARMKZ/+BjMnY4ytMUbY3M0J0kV6qMc5H282C6a3Os0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Vrj/KeLh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KtrtmIS7; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1765842639; c=relaxed/simple;
+	bh=sfLfyG2I/lsFcQl8Du+zITqanWb/19fWDm9IP/jaoCA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QNOjpmvtni48PAQWMhdeWNz+SIBHgGJyX0kAOfJ9BktAwT5RsNOrcSMK5I0JOoQpmqWYxr4sKsgpsJA0JyTKqd3KJpgx4I5DbwPqWa20I8l3YIgmAbGIBIc2ypvWs5ET66AoV0e9/4yDOOc1Fjm1Mimk4xLwgOEZmoeGyc0O+Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AIqwjLfo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JD4XjT+Y; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Vrj/KeLh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KtrtmIS7"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1B61C7A024E;
-	Mon, 15 Dec 2025 18:50:34 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Mon, 15 Dec 2025 18:50:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1765842633;
-	 x=1765929033; bh=a2ywqidEkJD+S7q2BCH+0bhHwH9g7+qQ+CYbupLBz90=; b=
-	Vrj/KeLhUrA7zEnEgGRqK94DasP3QeMAWQ85FnV5XBuPcnQMe70tzm+binurB7bx
-	ZIWziEU0j3U36u6TuQ415iNYQEcqDhnMKZ4RUwH4PAzgmDTvHl4QDwq/POB1k7Ex
-	ZGAZkST5eQcSUx3zxTJTFe1oc+XqZpCbGPvN4A4fO+j0oh9VKnLGZXII+kZEeZtK
-	K80cDraGyqosbQcGIfWklgQJ/xs9AZTDXVqaNZ0oCdhI0qm7nqfHS8conExJXSUL
-	S8ilOoxS33ytBoLjWAtWKvIa3CLcqRcqcxLh73QMH4p7lb3LHiXkcAk74Dm6nQiH
-	3Ni1Tr3JUo3Gl++YXPgftA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AIqwjLfo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JD4XjT+Y"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 606897A020C;
+	Mon, 15 Dec 2025 18:50:36 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Mon, 15 Dec 2025 18:50:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1765842636; x=1765929036; bh=ej+CIImt7S
+	ef8skWG/F0/TFhTz63dFGAEOoYfZLOSFg=; b=AIqwjLfo7ChAXq4W6ZRXJYyRv4
+	qTVxz3AuUX+U0uFVrTBRCEgjNE4irvpseRD4ObOOlURvOf0hod6LCiwYmTvmbpB0
+	6Wqq/n3JCx5rimV7Z3QSaOklifIysIBJuJTmsi09JeYEb1afplYBphOMy9CIbiwE
+	Jky9yBHmcbXmDO+K42RFwUh1JMEidaGc2wmEHAdfp+yZe0VdjuVkouK5W+qJ9Z7g
+	S3Bj0iB/x40re7ub6glYUW5yLMG9DXaQYKaJfv7Nd71fv4xwwXkmBHaoxGCH1ueL
+	BtTqDXCRFPGE888d0T+RaJGCbtE3z4d+eaBvjGGEtBAQt3bx+b7CuzngP/fQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765842633; x=
-	1765929033; bh=a2ywqidEkJD+S7q2BCH+0bhHwH9g7+qQ+CYbupLBz90=; b=K
-	trtmIS7fno2k6XEVMPkxluXi5Kz7sZcLUqx5Gzv2toL/MQC+Aqmt+ZYcZpS8+/iJ
-	GQT932Xy/uvtKlfWZWNsk1VI+Vh39t+DlgnJ5Hyv5aalVKE9CdU3/wSwVeXV5sBa
-	c1jYA3jIdDrVOlzO11OJYhRYOanPNayqOHPepFlosjZRxZmgHklByDqw6F5hHWkI
-	wktCAnzknC56yGmnuBe6QiS04opoNS6ckxOwIFg27nY7wDJ8CueIJguSEps7xtgl
-	s8cmYZlfVPlKKf0jJpkalCA1MgupcnqYUj1Cm4Q6ySO73yoewIFbWxCXPYU4dtd7
-	Z7/+opS9QZYr2hmiEXjiQ==
-X-ME-Sender: <xms:yZ5AaRTOi3xEaZ-1is4OmN_5bIR7aL1lZNEXZhxRiAj5nA4tF_F_E18>
-    <xme:yZ5AaVmKq9DUvm3alHiTks2x92ShmW7mrATPL5U9G50eHNNBiYN9-6yyUalfBzcXO
-    ULafCQpXXp9dYmsysQW7A9g2MJMydk6ohNNCgXyQwfpeh_P-58I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefkedujecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765842636; x=1765929036; bh=ej+CIImt7Sef8skWG/F0/TFhTz63dFGAEOo
+	YfZLOSFg=; b=JD4XjT+YyvMdzvCtSXIlc+p+akRy/K56mRluffqhrSIjjC7Jtas
+	zgaaDRuDI1SFUbAWLDgZLgGK8q13nPMaN5FyXze3BW1yQsj0WcyGynUX8B9GeD72
+	o2VHfTuinAiP4GYXqKF4XByYISXVMQZLL4GiSz8YsxaFXIkXS/Rb1wX/wC2+HOeW
+	ym9hg0iq8/7G2p2Hgxpci/3NqjqmptRUwsErgTHUrhICuqQQKuwVYXGhFsD+tAhi
+	29gyeGl4tgI2DJnR+4fSR0lZ5VfiyXIIRPrQkRk4C/+OMuzybvS3Cf7ebtIWwtHv
+	eeVLezEf/Loc6YhlqUIA43Ozk+UAolOVlzA==
+X-ME-Sender: <xms:zJ5AaffDLRAdwKgxjaSJhTHdrVO86dwH6EsUJ-6mLhUOM_9F13rQ1g>
+    <xme:zJ5AafxnKkmGA-EAp_NCW_yJFQkSRQDpxxH9NasvUYnZVsK4ByVuc_fjRwtZw5Scs
+    SWBS5TQvwCnXPQ3Avl0RebhrQLZwDHHUGgtTAVhPIhy6KPWip7DMgU>
+X-ME-Received: <xmr:zJ5AaVG86n3Be5G2gZa4Md6u4H5x33D9wlYmJrPzGBxv-5phfd0_LRU2bscPEX5au4WmQ-fvxrsebECd23E2dEvNfvCaPuJftQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefkedukecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeegtdejieetgefh
-    uedtuedttdeigfdvgeetkedtuedtudfgkeeluefgleetffejffenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepiedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrihhlsegsvgihvghrmhgrthhthhhirghs
-    rdguvgdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrd
-    hukhdprhgtphhtthhopehmrghrthhinhhvohhniiesghhmrghilhdrtghomhdprhgtphht
-    thhopehsiigvuggvrhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesph
-    hkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:yZ5AaRTa-gxyyR_Ei56lOHBlzsVAb8yTcwlL3yfCnohwMcKdW5c37w>
-    <xmx:yZ5AaVvxXNgdGdgJxYS-IE1fM7t8l2cjqxW-6SAAgcW3k7dREDwCvQ>
-    <xmx:yZ5AaV38Vhj72AvCVugDDJ4AaoT6cEsoZSrUm45S0qP1oj7yS9PUTQ>
-    <xmx:yZ5AaeUFT85c3FkQUTfzWzy1h9qHE235qd0cHDeBFDFr6gFyYAnmdQ>
-    <xmx:yZ5AaZp743mhkj2Ojenc3__U7J-eo6tmpawaDOnQw8h-YaC6U3yJ1LNt>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 3A3771EA0066; Mon, 15 Dec 2025 18:50:33 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:zJ5AaTwqEAj_BmtQgtTPOh4OdqQv-cfXQksLj9FndRIjuw3nG8bMBA>
+    <xmx:zJ5AaWsxujoyM7aSgjQQ73INWonyMPbcXrEumGqt8hKu-sVLgvzxCA>
+    <xmx:zJ5AaQ1APCqKgoL1qSM-eP2bRWtpRie7e1uQcPZy9uOgsqPfx9HxEQ>
+    <xmx:zJ5AaR_aW4oTPdyD3GeNIfX5szzFkERuQxFh16ssPcQ9d0-0uAhqpg>
+    <xmx:zJ5AaVsZcQkyMXmle0fLcJfHYBziAdQy_jDTOCDrwC2z7Bho_SLBH3r2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Dec 2025 18:50:35 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2] replay: drop commits that become empty
+In-Reply-To: <9a81644a0ec670261a85c155fa32e5a1f4576ef4.1765793254.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Mon, 15 Dec 2025 10:07:37 +0000")
+References: <8a2a1215306452147cc7b803530ab2429bf57f15.1764260150.git.phillip.wood@dunelm.org.uk>
+	<9a81644a0ec670261a85c155fa32e5a1f4576ef4.1765793254.git.phillip.wood@dunelm.org.uk>
+Date: Tue, 16 Dec 2025 08:50:34 +0900
+Message-ID: <xmqqpl8f719x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Ate3QFRcz-LV
-Date: Tue, 16 Dec 2025 00:50:12 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Matthias Beyer" <mail@beyermatthias.de>,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Cc: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
- "Patrick Steinhardt" <ps@pks.im>,
- "Martin von Zweigbergk" <martinvonz@gmail.com>, git@vger.kernel.org
-Message-Id: <efe4cbc5-bad5-4ded-9f65-1326cc102543@app.fastmail.com>
-In-Reply-To: 
- <paqf2ko6kcm5qdcqxqz57qu6gjw3vf6boabjsryeugfnlzzb7z@4dzqo6jug6l2>
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
- <CANiSa6gXbrZaMLVq-AAg38sm+7qgzn4w98WWowLtUHA2P+BdLw@mail.gmail.com>
- <aKs3tqjE510MF0T-@pks.im> <aMsWL2cSoytbmRjA@szeder.dev>
- <4m6rmefbv4hftclimitz5rp6yapswjtnjsxymrsdkuan4jbg3u@dm5jzdiq5cxz>
- <bc01706e-b9cc-4cd4-953a-971a3ccd6c79@gmail.com>
- <paqf2ko6kcm5qdcqxqz57qu6gjw3vf6boabjsryeugfnlzzb7z@4dzqo6jug6l2>
-Subject: Re: [PATCH RFC 00/11] Introduce git-history(1) command for easy history
- editing
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-On Wed, Dec 10, 2025, at 11:37, Matthias Beyer wrote:
->>[snip]
->>
->> Is that because you have branches that you don't want to rewrite because
->> they've been merged upstream or is there another reason? If we start
->> rewriting multiple branches we should probably check that we're not
->> rewriting something that has been merged upstream but if I rewrite a commits
->> that's an ancestor of several branches it would be very helpful to rewrite
->> them all at the same time to keep them in sync.
+Phillip Wood <phillip.wood123@gmail.com> writes:
+
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> Its mostly because I don't like too much magic and because I think being
-> explicit is always better than not.
+> If the changes in a commit being replayed are already in the branch
+> that the commits are being replayed onto then "git replay" creates an
+> empty commit. This is confusing because the commit message no longer
+> matches the contents of the commit. Drop the commit instead. Commits
+> that start off empty are not dropped. This matches the behavior of
+> "git rebase --reapply-cherry-pick --empty=drop" and "git cherry-pick
+> --empty-drop".
 
-That the first thing here is not magic but the other thing is seems
-arbitrary:
+OK.  Maybe it is just me but "onto then" -> "onto," would flow the
+sentence better?
 
-1. Change these commits, i.e. make new commits and all their descendants
-2. Update all branches that point at the commits that have now been
-   replaced
+> If a branch points to a commit that is dropped it will be updated to
+> point to the last commit that was not dropped. This can been seen
 
-These two feel conceptually similar to me in terms of complexity, and
-neither of them are magical.
+If one thinks about it, it is the only natural behaviour to use the
+last surviving commit to point the branch at.  Thanks for spelling
+it out so clearly.
 
->
-> So from my POV, I would expect "the simple case" to be "the simple CLI
-> call" and if I want the tool to do magic and "rewrite all the
-> things"^tm, that I would need to specify a flag for that.
+BTW, "can been seen" -> "can be seen" (will amend locally).
+
+> in the new test where "topic1" is updated to point to the rebased
+> "C" as "F" is dropped because it is already upstream. While this is
+> a breaking change "git replay" is marked as experimental to allow
+> improvements like this that change the behavior.
+
+Again maybe it is just me, but I'd prefer to see a comma after "a
+breaking change" to flow the sentence better.
+
+> Helped-by: Elijah Newren <newren@gmail.com>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+> ...
+> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+> index dcb26e8a8e8..96a3a557bf3 100644
+> --- a/Documentation/git-replay.adoc
+> +++ b/Documentation/git-replay.adoc
+> @@ -59,7 +59,9 @@ The default mode can be configured via the `replay.refAction` configuration vari
+>  	be passed, but in `--advance <branch>` mode, they should have
+>  	a single tip, so that it's clear where <branch> should point
+>  	to. See "Specifying Ranges" in linkgit:git-rev-parse[1] and the
+> -	"Commit Limiting" options below.
+> +	"Commit Limiting" options below. Any commits in the range whose
+> +	changes are already present in the branch the commits are being
+> +	replayed onto will be dropped.
+
+OK.
+
+> diff --git a/replay.c b/replay.c
+> index 13983dbc566..2864c213993 100644
+> --- a/replay.c
+> +++ b/replay.c
+> @@ -88,12 +88,12 @@ struct commit *replay_pick_regular_commit(struct repository *repo,
+>  					  struct merge_result *result)
+>  {
+>  	struct commit *base, *replayed_base;
+> -	struct tree *pickme_tree, *base_tree;
+> +	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
+>  
+>  	base = pickme->parents->item;
+>  	replayed_base = mapped_commit(replayed_commits, base, onto);
+>  
+> -	result->tree = repo_get_commit_tree(repo, replayed_base);
+> +	replayed_base_tree = repo_get_commit_tree(repo, replayed_base);
+>  	pickme_tree = repo_get_commit_tree(repo, pickme);
+>  	base_tree = repo_get_commit_tree(repo, base);
+>  
+> @@ -103,13 +103,17 @@ struct commit *replay_pick_regular_commit(struct repository *repo,
+>  
+>  	merge_incore_nonrecursive(merge_opt,
+>  				  base_tree,
+> -				  result->tree,
+> +				  replayed_base_tree,
+>  				  pickme_tree,
+>  				  result);
+>  
+>  	free((char*)merge_opt->ancestor);
+>  	merge_opt->ancestor = NULL;
+>  	if (!result->clean)
+>  		return NULL;
+> +	/* Drop commits that become empty */
+> +	if (oideq(&replayed_base_tree->object.oid, &result->tree->object.oid) &&
+> +	    !oideq(&pickme_tree->object.oid, &base_tree->object.oid))
+> +		return replayed_base;
+>  	return replay_create_commit(repo, result->tree, pickme, replayed_base);
+>  }
+
+OK, that is straight-forward.  Instead of overriding the
+result->tree upfront, we try the same using a temporary
+replayed_base_tree, and that allows us to see if the resulting tree
+computed by merge_incore matches.  Only when it made a non-empty
+change, we proceed to create a new commit.
+
+> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+> index cf3aacf3551..9d4b0dd1a77 100755
+> --- a/t/t3650-replay-basics.sh
+> +++ b/t/t3650-replay-basics.sh
+> @@ -25,6 +25,8 @@ test_expect_success 'setup' '
+>  	git switch -c topic3 &&
+>  	test_commit G &&
+>  	test_commit H &&
+> +	git switch -c empty &&
+> +	git commit --allow-empty --only -m empty &&
+
+The use of "--only" here is a bit curious.  As there is no change
+between the index and the commit our "empty" branch points at,
+wouldn't it be unnecessary?  The option, together with --allow-empty,
+would only matter if you did
+
+	git switch -c empty &&
+	modify blah &&
+	git add blah &&
+	git commit --allow-empty --only -m empty
+
+because without --only, the changes to blah will be taken.
