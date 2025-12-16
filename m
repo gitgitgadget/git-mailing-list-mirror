@@ -1,145 +1,210 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31F83557E6
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 13:29:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C053A1E8F
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 14:19:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765891746; cv=none; b=f18z+V4Znz9/IHKyESJJIwOsq3mo+f/E048EyphNb2EbzbnDzUiTAQjx+LROuXp4SwrsAMAK51vwYuV/CuKNv6WVh23VzP0IJQOn0vfPVc/t4oRjqiWjuiqU669nC3GdqIihCIz/pVpbhBPwiePvbIbFMy4kGg8zotZz6RN+GlA=
+	t=1765894758; cv=none; b=rR4pcBU4BNqI+krMt+1AnnLWsppaoIPVfTFjEhNW+8rSSyLloE+RQVvqphawXqBUoxx6b2yRUMkv/1qQjHA9761miHpHhx2r7eu65dlQFBrR+4q1rxG+rYK3hTaz/xScTkp276QmfPqwiptYEAH+zno8b/8EYzG3ZsoUdqDEuOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765891746; c=relaxed/simple;
-	bh=bRrRtfQ7NROusaAukjI4mDMS+e6JsmO6sbf/wOZcdy4=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=E/Yds2s1sZAZ+CPcQr8O12PL7RvrGRqq+ND46/q4sm+wdUhSeqQCtE4fUXEhJz+BOh/RRn4gam0Y5DGPB3GSQPF9uRaSMPGPwtNsa4zb1P7aF1XhATwmrLbqiKAyYvSapowAAZFFtKqQg13otZ3EVpPVvqAuLdskxT6mkcESMNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hlSDGgpA; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1765894758; c=relaxed/simple;
+	bh=ZQHd1fV/rp1gqJS67f7VdjUulS1yFuDt+/6RUerrKnc=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=QLu4Tjo99PXhn0f/FGwuU7OH+9k0M3PPskgeQyvrn3C2UTJKFcVvZCMNC09QGJKMdjvXEdzb/1cpfpSicGtHSywxy+QE3hAevR+JWCTjUNhedl6EB7aD02SWPrKsv4eNLPJtuv8RRsy4UvNFbKVp+1d0U8s9yOP2Z9avHihmSxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ehNS4RmO; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hlSDGgpA"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-47a95efd2ceso25597555e9.2
-        for <git@vger.kernel.org>; Tue, 16 Dec 2025 05:29:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ehNS4RmO"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-477bf34f5f5so35232305e9.0
+        for <git@vger.kernel.org>; Tue, 16 Dec 2025 06:19:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765891743; x=1766496543; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bRrRtfQ7NROusaAukjI4mDMS+e6JsmO6sbf/wOZcdy4=;
-        b=hlSDGgpAJSQF0Y72AG1ZNywqgqTKi0mRCIcJQctDMBLwvQ8uAzMlVj6HyDXny3ybAh
-         jyj7Ak3/gPMEBjSZ8S/uNBaibxpCyJeAc6Xcu4JjRUBX6WjbG1qoSSfKdzaw4NV3DRfm
-         Qd8ibW5c2JkwX/ZGgiBZlehry3UUaA4JBTiCZs5Mp6rZSJ9VW5x2Mn8s1FdPwmWJ1mut
-         5fxyz3D9dRUPRFXbmSuJJ+icfMUQZvqnGADNCE+81puvOvl9V1j1l47Oh97xI0Of/MSP
-         Sv0rz8TExMtWLJ9xOAtTrUfWvz3fkk2hOg18/pVNGOKxiV+XZdWqVbMsVRzvJbQav7kx
-         0hvw==
+        d=gmail.com; s=20230601; t=1765894754; x=1766499554; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=P0k8ygzW7rTZrEOdEKoByN+gKpE4kMLNDBygQG0zFpM=;
+        b=ehNS4RmOeD2vWhx904xnXZa6LexWYayJBCKBP7/M4OPHoHi5nF+jSUvA9Y7UweWC5R
+         ucABFh6KUIhg1k2zBZ/z0uOgQpOsT0tntJwVUKjqcU1/fOqUf0YjUiRJOD+K2uiPctVM
+         nEhB4VU/OLv3p06XMSnZRC6UXM2Q6xUFRjLQis5HblkjCg1A33FKq5KfhtOVdgjcLT9F
+         3q0Bg0DWOTH5gPMKGTwKeSQVcAeNoEnZhAhmRUQdpM3V6pcovPxZJQp+gDnkYdHtAPRu
+         MjyrH0IYU10aZKgtHCPYy73PLfOWHpKQuYfWjKUgo0TXMIYjYvzLsoqQQJ4KqVJNu2EN
+         3J8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765891743; x=1766496543;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=bRrRtfQ7NROusaAukjI4mDMS+e6JsmO6sbf/wOZcdy4=;
-        b=njN92a17Zbsd8nwJTq6/+iZ0kIjIuuUnd2dRVZJgAyzsMJWvceBE2p01mkFKFa1XcW
-         qXvChpKzztko7HyafRH8pi/V5232e3cqgZS7DIwp9DnFwld6iH84ErnLj0Zzz8rkgjKl
-         MtSwcOfXFX2ZOiX72fBt9Fmg6UOFWJoImRY9JUfJi7QWVq5pgIzfpIrwB1QERIUrJIUx
-         +9AUXNMh5MYUoVPZjgkh64SqB/Usro4zWmYDrA0IpKl6yKQEGE/tkZjq8KMIyJHjcp8q
-         eOUNFhns/6rgKYBWSGeYALRiLRQNE7JmjSLCsFcocjKsamijU3H4wSCA+9i2Xf6LMOuF
-         Au8A==
-X-Gm-Message-State: AOJu0YyV55N9umBm+TjMWIqcXop3ODbKGZxsE1MEbxrijsiaBLNROatl
-	C3UoCSz4kdoVfuYcXDLcfAZjwTHnEL6ijCXj5eGM2RKdrMNLfrxTnMNOzcBY9ACB
-X-Gm-Gg: AY/fxX40m7KckR7emEBrxxvegY3eOrDqIv+H2pHt5uujA3D7uUTP/zqoyN5EZouIA/E
-	omK84G8lIZ4hXFOWrf2dU+9Mb+CuWkl2n1Oj/BJDjEaIHcillQcHyfUBpMCssjzu6GQ9UHRFPv3
-	0cKVKHwennfZqZ5rLGq3MM/p9dbeqkUoCM33BeuxxRhGNyb4fdedZVDoLau5oDc++XMEso6zLa4
-	FYIgkSXCRKizFWI+2VzhfxlX29l491CWsQ+ocmceOMoXeWZccd5hPdmJ8ZwMFcW/G9dl/cXAgKc
-	u3pFxptGmti0Go6zeFvgfNLtJLXdXJ3yysAjvQNK7Ajw2j/MymIJLbTqzHMqU0Unb3X84OFOT1U
-	W3U08vDmvB5U8CxBWL08JISZtg4LSIUBriTRY8ArUMANkI8Hs6Tpke6JuJ0HSZSHHNjB4xK7pWe
-	fS+o1A2likLgemWT49rtg=
-X-Google-Smtp-Source: AGHT+IHzRkYarOaYnnFR6ZzYpxsw62LzyJAZW9ny/NW5G6Y20bvvd2P8qkIxe/++E+CqrI2QVHmetg==
-X-Received: by 2002:a05:600c:470e:b0:471:13fa:1b84 with SMTP id 5b1f17b1804b1-47a8f8c0527mr166675925e9.12.1765891742372;
-        Tue, 16 Dec 2025 05:29:02 -0800 (PST)
-Received: from pop-os ([2c0f:2a80:a8c:b510:40ef:64e2:e26:b9d2])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a8f38a4b7sm244740515e9.3.2025.12.16.05.29.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Dec 2025 05:29:01 -0800 (PST)
-Date: Tue, 16 Dec 2025 14:28:59 +0100
-From: Bello Caleb Olamide <belkid98@gmail.com>
-To: git@vger.kernel.org
-Cc: christiancouder@gmail.com, usmanakinyemi202@gmail.com
-Subject: [Outreachy] - Week 1
-Message-ID: <aUFem8vqUFCS/4NU@pop-os.localdomain>
+        d=1e100.net; s=20230601; t=1765894754; x=1766499554;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=P0k8ygzW7rTZrEOdEKoByN+gKpE4kMLNDBygQG0zFpM=;
+        b=RhusWFJqrFM+kJ5LJE0G+IGKVSkhagOb3SD5qXzMEjKdwL7AJ+fOezS+m+U5S8u93P
+         WpYhts7p6Y1US/8UJfQ2kJdXoxV+CZ9QW5JeSPVnU97gEIu3E+HRIzJ5a+2DNPGBKA2Q
+         I8T3GPVYavI77PdUCMCxeIx8NeBaKRzvZvt18rwooM8ONtRYl3b4ZqKQNlusgui4y39a
+         LxO2Y2paVGX8pQMlcqsSIkcQmhtMzsDPtnmA3xjLwz5szGMAKr4oRTp6tngQQdLZpS25
+         Xrwh5xFHJc4Pe8ZC1hxmW0umCXybcgkyeO6Aw4YTX8eoQkPdIncnTNv/mMwUYmJA0t9L
+         0mBw==
+X-Gm-Message-State: AOJu0YwIUVWAaG4p+E+IzFsmJzybbtkp0RKndwIJMi142QMrOd4VLtkk
+	NvPtFXFU/oEFzbPPh89pYgELQsV3KW5zWRD86o0I+G0nvJ45J5EWcTV9
+X-Gm-Gg: AY/fxX623h9p6D7I7HO6Tvc+KKAFsAgVQUwamZOod7j6YUYand3sAwth+aD7Mz+WkB6
+	MCuO2jlRvznPTF1HScChH/Ulbp2ZIE8XMIxzM6+NUjj4s5FmVgplE8OVNCXRV9ohchmVYNISyKC
+	rHlvABa19tHDTnDzDRbJtLJH1J0CnNOjE0NmSoMVYWi5euPnjrPnsI7oPbx4ET3HlC0fOHaE1ky
+	FBMlZ+KshUnzR93Mh/gDWgY8pZy6cysric6pgIk5n4Y8GS+tw2WcVo13rVDNP5so2jyBQQQB+BV
+	KF+HUSrrYyjGpo9EitEdqK0kDVmnEvBx0cV2CJAsEC6q8OxO9Av3dXIwkcrHt8IjeioF2oSJ3wi
+	tMRg8d9t0bFaF8BFnLKyPbZ5mhZLxlOJbSnisoq4YuyUdp/gal+swGK2HN/4WmXVcXAVrNCF8nZ
+	0bTEqZcUyIIIF4LGZr/bOOV0eJyQaiinnbdeSJFgMUuT14BCALzm4JrmREaaoqLhfZnw==
+X-Google-Smtp-Source: AGHT+IFX6xbKNzlWsBTRMCpQ8IIsw6ilFDI61GmFsOVsTwUjxKi7i0iiC9GnY5NXapVVHm0rpVsrKg==
+X-Received: by 2002:a05:600c:c0d5:b0:47a:9560:ec28 with SMTP id 5b1f17b1804b1-47a9560ef40mr83188715e9.13.1765894753673;
+        Tue, 16 Dec 2025 06:19:13 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a8f6e58c1sm241208985e9.12.2025.12.16.06.19.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Dec 2025 06:19:12 -0800 (PST)
+Message-ID: <80477d23-eed3-4a99-be97-f692bc36095e@gmail.com>
+Date: Tue, 16 Dec 2025 14:19:11 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] replay: drop commits that become empty
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+References: <8a2a1215306452147cc7b803530ab2429bf57f15.1764260150.git.phillip.wood@dunelm.org.uk>
+ <9a81644a0ec670261a85c155fa32e5a1f4576ef4.1765793254.git.phillip.wood@dunelm.org.uk>
+ <xmqqpl8f719x.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqpl8f719x.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Week 1: Onboarding, Communication, and Choosing My First Issue
-Repository: https://gitlab.com/Cloobtech/git
+On 15/12/2025 23:50, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> If the changes in a commit being replayed are already in the branch
+>> that the commits are being replayed onto then "git replay" creates an
+>> empty commit. This is confusing because the commit message no longer
+>> matches the contents of the commit. Drop the commit instead. Commits
+>> that start off empty are not dropped. This matches the behavior of
+>> "git rebase --reapply-cherry-pick --empty=drop" and "git cherry-pick
+>> --empty-drop".
+> 
+> OK.  Maybe it is just me but "onto then" -> "onto," would flow the
+> sentence better?
 
-Bello Olamide
-·
-Dec 12, 2025
-·
-3 min read
+I agree it reads better with a comma here and in the second paragraph, 
+I'll re-roll
 
+Thanks
 
-The Outreachy internship officially kicked off this week, and the past few days have been a blend of onboarding activities, community interactions, and diving straight into my project on reducing Git’s global state. It has been exciting, occasionally overwhelming, but overall a very fulfilling start.
+Phillip
 
-Settling Into the Outreachy Community
+>> If a branch points to a commit that is dropped it will be updated to
+>> point to the last commit that was not dropped. This can been seen
+> 
+> If one thinks about it, it is the only natural behaviour to use the
+> last surviving commit to point the branch at.  Thanks for spelling
+> it out so clearly.
+> 
+> BTW, "can been seen" -> "can be seen" (will amend locally).
+> 
+>> in the new test where "topic1" is updated to point to the rebased
+>> "C" as "F" is dropped because it is already upstream. While this is
+>> a breaking change "git replay" is marked as experimental to allow
+>> improvements like this that change the behavior.
+> 
+> Again maybe it is just me, but I'd prefer to see a comma after "a
+> breaking change" to flow the sentence better.
+> 
+>> Helped-by: Elijah Newren <newren@gmail.com>
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> ---
+>> ...
+>> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+>> index dcb26e8a8e8..96a3a557bf3 100644
+>> --- a/Documentation/git-replay.adoc
+>> +++ b/Documentation/git-replay.adoc
+>> @@ -59,7 +59,9 @@ The default mode can be configured via the `replay.refAction` configuration vari
+>>   	be passed, but in `--advance <branch>` mode, they should have
+>>   	a single tip, so that it's clear where <branch> should point
+>>   	to. See "Specifying Ranges" in linkgit:git-rev-parse[1] and the
+>> -	"Commit Limiting" options below.
+>> +	"Commit Limiting" options below. Any commits in the range whose
+>> +	changes are already present in the branch the commits are being
+>> +	replayed onto will be dropped.
+> 
+> OK.
+> 
+>> diff --git a/replay.c b/replay.c
+>> index 13983dbc566..2864c213993 100644
+>> --- a/replay.c
+>> +++ b/replay.c
+>> @@ -88,12 +88,12 @@ struct commit *replay_pick_regular_commit(struct repository *repo,
+>>   					  struct merge_result *result)
+>>   {
+>>   	struct commit *base, *replayed_base;
+>> -	struct tree *pickme_tree, *base_tree;
+>> +	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
+>>   
+>>   	base = pickme->parents->item;
+>>   	replayed_base = mapped_commit(replayed_commits, base, onto);
+>>   
+>> -	result->tree = repo_get_commit_tree(repo, replayed_base);
+>> +	replayed_base_tree = repo_get_commit_tree(repo, replayed_base);
+>>   	pickme_tree = repo_get_commit_tree(repo, pickme);
+>>   	base_tree = repo_get_commit_tree(repo, base);
+>>   
+>> @@ -103,13 +103,17 @@ struct commit *replay_pick_regular_commit(struct repository *repo,
+>>   
+>>   	merge_incore_nonrecursive(merge_opt,
+>>   				  base_tree,
+>> -				  result->tree,
+>> +				  replayed_base_tree,
+>>   				  pickme_tree,
+>>   				  result);
+>>   
+>>   	free((char*)merge_opt->ancestor);
+>>   	merge_opt->ancestor = NULL;
+>>   	if (!result->clean)
+>>   		return NULL;
+>> +	/* Drop commits that become empty */
+>> +	if (oideq(&replayed_base_tree->object.oid, &result->tree->object.oid) &&
+>> +	    !oideq(&pickme_tree->object.oid, &base_tree->object.oid))
+>> +		return replayed_base;
+>>   	return replay_create_commit(repo, result->tree, pickme, replayed_base);
+>>   }
+> 
+> OK, that is straight-forward.  Instead of overriding the
+> result->tree upfront, we try the same using a temporary
+> replayed_base_tree, and that allows us to see if the resulting tree
+> computed by merge_incore matches.  Only when it made a non-empty
+> change, we proceed to create a new commit.
+> 
+>> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+>> index cf3aacf3551..9d4b0dd1a77 100755
+>> --- a/t/t3650-replay-basics.sh
+>> +++ b/t/t3650-replay-basics.sh
+>> @@ -25,6 +25,8 @@ test_expect_success 'setup' '
+>>   	git switch -c topic3 &&
+>>   	test_commit G &&
+>>   	test_commit H &&
+>> +	git switch -c empty &&
+>> +	git commit --allow-empty --only -m empty &&
+> 
+> The use of "--only" here is a bit curious.  As there is no change
+> between the index and the commit our "empty" branch points at,
+> wouldn't it be unnecessary?  The option, together with --allow-empty,
+> would only matter if you did
+> 
+> 	git switch -c empty &&
+> 	modify blah &&
+> 	git add blah &&
+> 	git commit --allow-empty --only -m empty
+> 
+> because without --only, the changes to blah will be taken.
 
-On the first day, I was invited to the Outreachy community space on Zulip, where interns can ask questions, interact with the program committee, and connect with fellow interns. It was comforting seeing other people who were just as excited and nervous as I was.
-
-Later, I also received an invitation to a GitLab Slack workspace that included my mentors and several Git maintainers. This has become our main space for day-to-day collaboration and technical discussions.
-
-Syncing With My Mentors & Setting Up Communication
-
-I emailed my mentors, Christian Couder and Usman Akinyemi, on Day 1 to introduce myself formally and discuss our preferred communication channels. We agreed to use GitLab as the primary platform to host my working branches, track progress, and prepare merge requests.
-
-With this settled, I set up my GitLab remotes and ensured I could push branches and create a public mirror of my work.
-
-Starting the Project: Identifying My First Issue
-
-I didn’t waste any time getting into the technical part of the project. After reviewing previous contributions, I decided to begin with an earlier patch series, done by Ayush Chandekar, that attempted to move the git_attributes_file global variable out of environment.c and into struct repository.
-
-Link to the discussion can be seen below
-
-https://lore.kernel.org/git/20250309153321.254844-1-ayu.chandekar@gmail.com/
-
-The earlier approach, after moving the git attributes_file into struct repo-setting, proposed passing struct repository *repo through the functions of the attributes subsystem. However, Junio Hamano observed that this design could be improved. His suggestion was insightful:
-
-Instead of accessing git_attributes_file through the repository struct, it should be reached via struct index_state.
-
-This is because:
-
-An index already knows its repository
-
-A repository may have multiple indexes
-
-The attributes subsystem already passes struct index_state down most of its call chain
-
-This results in a cleaner and more consistent API
-
-This design conversation made an excellent starting point for me to understand the trade-offs in Git’s architecture and why reducing global state requires careful restructuring rather than simple variable relocation.
-
-Early Challenges & Mentor Support
-
-While pushing my first branch, I ran into an unexpected issue: GitLab didn’t show the “Merge Request” banner I was expecting.
-
-After some confusion, my mentor stepped in and pointed out that I had pushed to the wrong remote, he however pointed out that this wasn't a fault of mine because that was the URL I was provided with initially. He provided the correct GitLab URL:
-
-https://gitlab.com/gitlab-org/git/
-
-Once I updated the remote and pushed my branch to the right place, everything worked smoothly. This was a small moment, but it reminded me how helpful it is to have mentors who respond quickly and guide me in the right direction.
-
-Closing Thoughts
-
-Overall, Week 1 has been a strong start. I’ve settled into the community, clarified communication channels, chosen the first issue to work on, and begun studying the surrounding code and previous attempts.
-
-So that’s my Week 1 experience.
-
-Catch you all in week2 :)
-
----
-
-This email is cross-posted from my blog: [https://cloobtech.hashnode.dev/week-1-onboarding-communication-and-choosing-my-first-issue]
