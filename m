@@ -1,175 +1,145 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB553B1D33
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 13:15:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31F83557E6
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 13:29:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765890918; cv=none; b=fULDfam/S3c8aNGlbPhTH17jdTLI/50fr4k+jP/n7rbFPq+zNpkWda69EY6IhvF6EmxmKTMATpVCenh/ZaEjZbcsmSXN2k6C9r+MO43Ki0eSP8yhkN6xWoujRBxFg1ot57A2w/TGAwCgokZM2At74c48kF/LvVi8Pb7X/y2ZEeo=
+	t=1765891746; cv=none; b=f18z+V4Znz9/IHKyESJJIwOsq3mo+f/E048EyphNb2EbzbnDzUiTAQjx+LROuXp4SwrsAMAK51vwYuV/CuKNv6WVh23VzP0IJQOn0vfPVc/t4oRjqiWjuiqU669nC3GdqIihCIz/pVpbhBPwiePvbIbFMy4kGg8zotZz6RN+GlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765890918; c=relaxed/simple;
-	bh=YJOIbs1KNBUcb10oHbJ7cPcqIHwElIum1pwG+UHQAZU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SOFX+SlJJY1l3KcWPGEj27E++UBSzfDv221AuGk0R4tvbFwOiuEHoRbkR16j7atHNne4gdh9djKuTFPB+qt/+o+/oVD655XDyb5+rlGr4mNz48FvF8SO4bsTNaA+nAmKdE+No+ZV/ie3ZXTbwUKz+De6y/GrZYu4/Ddqnks+H1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YvWoOD6d; arc=none smtp.client-ip=209.85.218.42
+	s=arc-20240116; t=1765891746; c=relaxed/simple;
+	bh=bRrRtfQ7NROusaAukjI4mDMS+e6JsmO6sbf/wOZcdy4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=E/Yds2s1sZAZ+CPcQr8O12PL7RvrGRqq+ND46/q4sm+wdUhSeqQCtE4fUXEhJz+BOh/RRn4gam0Y5DGPB3GSQPF9uRaSMPGPwtNsa4zb1P7aF1XhATwmrLbqiKAyYvSapowAAZFFtKqQg13otZ3EVpPVvqAuLdskxT6mkcESMNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hlSDGgpA; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YvWoOD6d"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b727f452fffso151567366b.1
-        for <git@vger.kernel.org>; Tue, 16 Dec 2025 05:15:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hlSDGgpA"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-47a95efd2ceso25597555e9.2
+        for <git@vger.kernel.org>; Tue, 16 Dec 2025 05:29:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765890915; x=1766495715; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Tqg3u0hWMAmXEhbQCyDFUmERVZyYdcSq8LsnOV0BSo4=;
-        b=YvWoOD6dq1wh3ZHNOOm7si89RNTfAL1vrB1QmDjAUqKXBFJaRhZ+7BQyhCJ+XHFmZB
-         FdMZ0gGQrw1G9piwY5H53P8FjxSdRWa8eZu3YdDH2ETtWc/eoR5rZgWIRTYsSjOt90xO
-         phjKQBSd3C5Q2WJn7lQOqN3nSiBY3hohG2Wv7ig2ZjpSCh7qIWznlA1376xhI5iRhBcB
-         veMtcKQnOl1KJwMdLcM+qlyA/JASLSNm6lXQMwm++uizyxZeFxjAKH8Zqf8CdYW2sY0r
-         j2/7+6xyAAz53TNFsGQ6YdS2tW9ivs8defDBNrfx9d1QScgD+NzNNAiti+158+4iKICS
-         13Vw==
+        d=gmail.com; s=20230601; t=1765891743; x=1766496543; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bRrRtfQ7NROusaAukjI4mDMS+e6JsmO6sbf/wOZcdy4=;
+        b=hlSDGgpAJSQF0Y72AG1ZNywqgqTKi0mRCIcJQctDMBLwvQ8uAzMlVj6HyDXny3ybAh
+         jyj7Ak3/gPMEBjSZ8S/uNBaibxpCyJeAc6Xcu4JjRUBX6WjbG1qoSSfKdzaw4NV3DRfm
+         Qd8ibW5c2JkwX/ZGgiBZlehry3UUaA4JBTiCZs5Mp6rZSJ9VW5x2Mn8s1FdPwmWJ1mut
+         5fxyz3D9dRUPRFXbmSuJJ+icfMUQZvqnGADNCE+81puvOvl9V1j1l47Oh97xI0Of/MSP
+         Sv0rz8TExMtWLJ9xOAtTrUfWvz3fkk2hOg18/pVNGOKxiV+XZdWqVbMsVRzvJbQav7kx
+         0hvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765890915; x=1766495715;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Tqg3u0hWMAmXEhbQCyDFUmERVZyYdcSq8LsnOV0BSo4=;
-        b=b6cdgl/RzJA47YMIMx9K/bYEOdwTowVW/Io0puPxOqmwg+eXlM6Zi7A2Gy3Ic+g80r
-         b+b4Qs3Rsp/851/z/TLTksxsfdTPzx67Fpj9Bl6Rc5AjYqJFhYvpCb+/nBUg7tZykCc8
-         vsp/wy8pU+05tBazwTBUjJjxh5zDRex5wdm7xNr91nKJO0+AuYa78I8MLRYidVk2IcGB
-         ybSbDAB6hTL4SzOFp8L74RIMeawsg57fWT+WLZ4K3+0FNhCd+Rg2qCSz+8Mlp79AuOQx
-         EvhK8+6AzCoMIx0eioltHEZBXXHYNF/6iAuWN8qOT3oMisahNVNfRbgEewKcRj5HbRFl
-         N/Ew==
-X-Gm-Message-State: AOJu0Yx2QSJ4iYdob57KLwdOTHQXedN8xGPtI79dE/VK3cjRVvtc5IBK
-	7XCdFItCD3NH3MXwzYlJEmS9KCYZ1kYhf/485XpAnHvGKn6cVaHgkkwK
-X-Gm-Gg: AY/fxX67pBkYqMGrZiZ/GNp6gCefndKU6PiaOFvNPxkxCSYUEFxFDFVWUyPhCsZqjRE
-	9Ia35ag+xjI35u1opPOQVSBEfdVCCfPYuNOdkyNWoEG/DXpBAQm/Q+Inz+VR5UcRTMzbtoMFfRy
-	qZ1N+HlKDVAr9wNH1qjPuxqFCemPBEElpbpfsfR08zul4M5j23of4AIj39uprBYOyQicTFRzwhw
-	WDCYvnPFqIWb/dMgnO137SeGEpsnlsfEUebHznvcLwwy6N0XPcoOsUjw5IEFXoqlsKjfj9eAmFq
-	YWMhJt15b3AnpKA7VJ26ij9ly2NkD5MdHHrmHd0E95buP9jDZ0iJ/qSIJ3KbOcLXAXN1xwLCT2+
-	sPg7beZGh6pZSbY8arAYC/Fc25xQa0fE95wb60kT96QX3iq/qMadJBxUmYJM5suP+2bGn7j0qcs
-	rPF6XpeT15wsE0T45CjJjmYtc=
-X-Google-Smtp-Source: AGHT+IEJOMU+eQKag2ecg2/xhUKjvbEV0IQs+NtsZ+7u19ClvGCgNL4f/Me9hyg4ZSV1/Br3AOFXLQ==
-X-Received: by 2002:a17:907:1dc7:b0:b7d:266a:772c with SMTP id a640c23a62f3a-b7d266aaa99mr1064042466b.21.1765890915175;
-        Tue, 16 Dec 2025 05:15:15 -0800 (PST)
-Received: from [10.29.112.243] ([193.204.167.189])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b7cfa29e060sm1723832866b.2.2025.12.16.05.15.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Dec 2025 05:15:14 -0800 (PST)
-Message-ID: <61700785-5421-4fa8-8277-c0837b09a737@gmail.com>
-Date: Tue, 16 Dec 2025 14:15:08 +0100
+        d=1e100.net; s=20230601; t=1765891743; x=1766496543;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=bRrRtfQ7NROusaAukjI4mDMS+e6JsmO6sbf/wOZcdy4=;
+        b=njN92a17Zbsd8nwJTq6/+iZ0kIjIuuUnd2dRVZJgAyzsMJWvceBE2p01mkFKFa1XcW
+         qXvChpKzztko7HyafRH8pi/V5232e3cqgZS7DIwp9DnFwld6iH84ErnLj0Zzz8rkgjKl
+         MtSwcOfXFX2ZOiX72fBt9Fmg6UOFWJoImRY9JUfJi7QWVq5pgIzfpIrwB1QERIUrJIUx
+         +9AUXNMh5MYUoVPZjgkh64SqB/Usro4zWmYDrA0IpKl6yKQEGE/tkZjq8KMIyJHjcp8q
+         eOUNFhns/6rgKYBWSGeYALRiLRQNE7JmjSLCsFcocjKsamijU3H4wSCA+9i2Xf6LMOuF
+         Au8A==
+X-Gm-Message-State: AOJu0YyV55N9umBm+TjMWIqcXop3ODbKGZxsE1MEbxrijsiaBLNROatl
+	C3UoCSz4kdoVfuYcXDLcfAZjwTHnEL6ijCXj5eGM2RKdrMNLfrxTnMNOzcBY9ACB
+X-Gm-Gg: AY/fxX40m7KckR7emEBrxxvegY3eOrDqIv+H2pHt5uujA3D7uUTP/zqoyN5EZouIA/E
+	omK84G8lIZ4hXFOWrf2dU+9Mb+CuWkl2n1Oj/BJDjEaIHcillQcHyfUBpMCssjzu6GQ9UHRFPv3
+	0cKVKHwennfZqZ5rLGq3MM/p9dbeqkUoCM33BeuxxRhGNyb4fdedZVDoLau5oDc++XMEso6zLa4
+	FYIgkSXCRKizFWI+2VzhfxlX29l491CWsQ+ocmceOMoXeWZccd5hPdmJ8ZwMFcW/G9dl/cXAgKc
+	u3pFxptGmti0Go6zeFvgfNLtJLXdXJ3yysAjvQNK7Ajw2j/MymIJLbTqzHMqU0Unb3X84OFOT1U
+	W3U08vDmvB5U8CxBWL08JISZtg4LSIUBriTRY8ArUMANkI8Hs6Tpke6JuJ0HSZSHHNjB4xK7pWe
+	fS+o1A2likLgemWT49rtg=
+X-Google-Smtp-Source: AGHT+IHzRkYarOaYnnFR6ZzYpxsw62LzyJAZW9ny/NW5G6Y20bvvd2P8qkIxe/++E+CqrI2QVHmetg==
+X-Received: by 2002:a05:600c:470e:b0:471:13fa:1b84 with SMTP id 5b1f17b1804b1-47a8f8c0527mr166675925e9.12.1765891742372;
+        Tue, 16 Dec 2025 05:29:02 -0800 (PST)
+Received: from pop-os ([2c0f:2a80:a8c:b510:40ef:64e2:e26:b9d2])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a8f38a4b7sm244740515e9.3.2025.12.16.05.29.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Dec 2025 05:29:01 -0800 (PST)
+Date: Tue, 16 Dec 2025 14:28:59 +0100
+From: Bello Caleb Olamide <belkid98@gmail.com>
+To: git@vger.kernel.org
+Cc: christiancouder@gmail.com, usmanakinyemi202@gmail.com
+Subject: [Outreachy] - Week 1
+Message-ID: <aUFem8vqUFCS/4NU@pop-os.localdomain>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Different behaviour for --find-renames between git diff and git
- merge?
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org
-References: <3742e7de-7d88-4e77-b711-9fed867a8c23@gmail.com>
- <CABPp-BH80R4LJDRKQnPmh5Am_HAcCgxWiA8vRoN8LgLRUMz+JQ@mail.gmail.com>
- <d7135cd2-e577-4f96-8142-cd9c7cd6995d@gmail.com>
- <CABPp-BH1qgQNHJzJZ05Ckru2PdYxRnWfQ3xVPrqGG5F56bX1aw@mail.gmail.com>
-Content-Language: en-US
-From: Luca Balsanelli <lucabalsanelli@gmail.com>
-In-Reply-To: <CABPp-BH1qgQNHJzJZ05Ckru2PdYxRnWfQ3xVPrqGG5F56bX1aw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-On 16/12/25 01:57, Elijah Newren wrote:
->> Even though the `git diff master~1 master` doesn't detect the rename
->> (the content changed too much compared to the empty file or one was
->> empty (although it says it defaults to include empty files as rename
->> source or destinarion)), the rename should be detected between the two
->> heads, even when merging. I tried to read at 'git/diffcore-rename.c' but
->> I'm not very good at C and it would require me a great effort to fully
->> understand it.
->>
->> So, why `git merge branch` is not detecting the rename and not resolving
->> the conflict automatically? Does it use a different diff machinery
->> compared to `git diff`?
-> Merging never diffs the endpoints, and shouldn't either.  It basically
-> does two diffs, each from the merge-base to the end-point in question.
->
-> If you only diffed the endpoints, and one side renamed file A->B, how
-> do you differentiate between A->B and B->A?  In other words, you may
-> know there was a rename, but you can't tell what it was renamed from
-> and which filename should be the final one.  You can only tell if you
-> look at the merge-base and determine that the file started out named
-> as A, and thus that B should be the final name.
->
-> If you only diffed the endpoints, and one side renamed file A->B,
-> while the other side renamed A->C, you'd be misled into thinking this
-> was a normal rename (you'd only see e.g. B->C) and be unaware of the
-> conflict, which is problematic.
->
-> If you only diffed the endpoints, and one side renamed file A->B,
-> while the other side renamed C->B, by diffing the endpoints you can't
-> even tell there's a rename; you simply have a file named B that was
-> totally rewritten.  But it gets subtly worse in special cases that
-> might really confuse end users: if they modified A or C on the sides
-> of history that didn't rename those files, those changes would not be
-> propagated and combined with the ultimate B, and they'd be left to
-> pick up the pieces and try to combine things.
->
-> Further, it's just semantically wrong to diff the endpoints because of
-> the underlying concept of a 3-way merge: If you were merging D & E and
-> simply diffed D & E to do so, you won't know whether differing lines
-> were added or removed by recent commits.  For example, you might
-> notice an "import" or "include" statement that one side has that the
-> other doesn't.  But did one side add that import statement?  Or did
-> the other side remove it?  You can't tell by looking at the endpoints;
-> you have to compare the endpoints to the merge-base to find out which
-> things were added or removed.  So, fundamentally, a 3-way merge thinks
-> in terms of diffing the merge-base to the endpoints, not diffing the
-> endpoints.
->
->
-> So, in summary, no, merge does not use a different diff machinery.
-> You are just diffing the wrong commits to see what it sees.  Combine
-> that with the fact that you have a funny special case where both sides
-> drastically change the file in a way where the new versions happen to
-> be similar to each other while not similar to the original, causes the
-> behavior you are seeing.
+Week 1: Onboarding, Communication, and Choosing My First Issue
+Repository: https://gitlab.com/Cloobtech/git
 
-Thank you. I understand.
+Bello Olamide
+·
+Dec 12, 2025
+·
+3 min read
 
-Moreover, deepening the rename topic actually made me forget something 
-about the merge topic. In fact, even if the rename was detected in some 
-way or even if I didn't rename one side at all, the `git merge branch` 
-would still be unable to resolve the conflict automatically, since both 
-were modified in different ways, even if in similar ways. But similarity 
-is not enough. This confounded me.
 
-In the following example, I start from an empty file and I modify it on 
-one side of the history and move (rename) it on the other side. The 
-rename between `branch` and the merge base is detected. So, can you tell 
-me why in the following case the rename is not detected during the merge?
+The Outreachy internship officially kicked off this week, and the past few days have been a blend of onboarding activities, community interactions, and diving straight into my project on reducing Git’s global state. It has been exciting, occasionally overwhelming, but overall a very fulfilling start.
 
-    git switch -c master root
+Settling Into the Outreachy Community
 
-    touch aaa
-    git add aaa
-    git commit -m 'aaa'
+On the first day, I was invited to the Outreachy community space on Zulip, where interns can ask questions, interact with the program committee, and connect with fellow interns. It was comforting seeing other people who were just as excited and nervous as I was.
 
-    git switch -c branch
-    echo -ne 'A\nB\nC\n' > aaa
-    git add aaa
-    git commit -m 'A\nB\nC\n > aaa'
+Later, I also received an invitation to a GitLab Slack workspace that included my mentors and several Git maintainers. This has become our main space for day-to-day collaboration and technical discussions.
 
-    git switch master
-    mkdir dir
-    mv aaa dir/
-    git add aaa dir/
-    git commit -m 'aaa -> dir/'
+Syncing With My Mentors & Setting Up Communication
 
-    git merge --no-edit branch
+I emailed my mentors, Christian Couder and Usman Akinyemi, on Day 1 to introduce myself formally and discuss our preferred communication channels. We agreed to use GitLab as the primary platform to host my working branches, track progress, and prepare merge requests.
 
-Sorry if I'm pedant and thank you in advance.
+With this settled, I set up my GitLab remotes and ensured I could push branches and create a public mirror of my work.
 
+Starting the Project: Identifying My First Issue
+
+I didn’t waste any time getting into the technical part of the project. After reviewing previous contributions, I decided to begin with an earlier patch series, done by Ayush Chandekar, that attempted to move the git_attributes_file global variable out of environment.c and into struct repository.
+
+Link to the discussion can be seen below
+
+https://lore.kernel.org/git/20250309153321.254844-1-ayu.chandekar@gmail.com/
+
+The earlier approach, after moving the git attributes_file into struct repo-setting, proposed passing struct repository *repo through the functions of the attributes subsystem. However, Junio Hamano observed that this design could be improved. His suggestion was insightful:
+
+Instead of accessing git_attributes_file through the repository struct, it should be reached via struct index_state.
+
+This is because:
+
+An index already knows its repository
+
+A repository may have multiple indexes
+
+The attributes subsystem already passes struct index_state down most of its call chain
+
+This results in a cleaner and more consistent API
+
+This design conversation made an excellent starting point for me to understand the trade-offs in Git’s architecture and why reducing global state requires careful restructuring rather than simple variable relocation.
+
+Early Challenges & Mentor Support
+
+While pushing my first branch, I ran into an unexpected issue: GitLab didn’t show the “Merge Request” banner I was expecting.
+
+After some confusion, my mentor stepped in and pointed out that I had pushed to the wrong remote, he however pointed out that this wasn't a fault of mine because that was the URL I was provided with initially. He provided the correct GitLab URL:
+
+https://gitlab.com/gitlab-org/git/
+
+Once I updated the remote and pushed my branch to the right place, everything worked smoothly. This was a small moment, but it reminded me how helpful it is to have mentors who respond quickly and guide me in the right direction.
+
+Closing Thoughts
+
+Overall, Week 1 has been a strong start. I’ve settled into the community, clarified communication channels, chosen the first issue to work on, and begun studying the surrounding code and previous attempts.
+
+So that’s my Week 1 experience.
+
+Catch you all in week2 :)
+
+---
+
+This email is cross-posted from my blog: [https://cloobtech.hashnode.dev/week-1-onboarding-communication-and-choosing-my-first-issue]
