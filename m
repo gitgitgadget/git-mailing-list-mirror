@@ -1,83 +1,90 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9963922D7B0
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 01:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1E523C503
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 01:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765847982; cv=none; b=Hg4VP7229NCnTsbf18ahZb8U7vVFNlYJHwmNQM/oTldjeooOS+R3Ghi0QkJmd74gNKIGS9lByQMW43YsnB3jNqQ3n8YFqj+HmGsP1cq8JAcwPXOY/W/9A0RSI5BIcSORbVMPqbOC8G7jS0ELuHtcTT2NY3DMjY9MbspSd9bqs6Y=
+	t=1765848010; cv=none; b=CrGUcynaF/z+Ki/J/sHEKsZ98tV0E5wYE1KohuP09MC4EGhjcomhhodo8VBLZLx/Q+M2juggByp9ISiUOpL8pMidxbZ/R1WYqXu6SvQTapsKDZVhukHPNSdZMmMUEsI+v/yDtd4No8Avyb83MIo/vAlPBbvYCBmPPv/5eJoZoNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765847982; c=relaxed/simple;
-	bh=pkFzLsFUAXp/fgUny3JRIiY0xXmxt6qIOT9lXTPuzFc=;
+	s=arc-20240116; t=1765848010; c=relaxed/simple;
+	bh=QPZqQ6pQxG/uh45R7u623hA8JUAPYet+3B3rGR5Usgo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SkkG8oFoeaKSmrEfjjyhWO2EtjMgqyAcyQd2fEr0sKn5fl8FTdy3UuLasnJNbM3j1ejQpv42fhaBeizq+dX2981EvJEeh4MmC4gJpBFiLCbLGySjmeYalXFDAh8uWP1NNlGjE9I8TPBh0eZH2vkPEFpgthY2E0fVcEei296T5pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ScePyRZy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DlMk1HEU; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=DPN1UEMWKvGXjptqxqUshvFAjo/V/13LkQ6McwpN+moXOLxJ7I0P/MVPdjgpnY8YHN7SLmRDgMYf1wC88Od6wfbBN80VuoAHjrfVWVsq1kW2ifyY5xRYmK3GgQV8fBp46IiH3vSmFTQMnwLqfCaYEtOxh9I62jz6cjNm3fdebVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lobw/l5m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gStEgYX8; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ScePyRZy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DlMk1HEU"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AC7D07A01E4;
-	Mon, 15 Dec 2025 20:19:39 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Mon, 15 Dec 2025 20:19:39 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lobw/l5m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gStEgYX8"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CD3557A0183;
+	Mon, 15 Dec 2025 20:20:06 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 15 Dec 2025 20:20:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1765847979; x=1765934379; bh=zmPALl9RLd
-	CUlcjI/dMhQ0NOSMq30/UmLrK/KTD2r3A=; b=ScePyRZyfsaU5LJSF9/2zQOQM0
-	y+wEXVGPWGrVFnOkvODiX1sEToQiJCynrLSn6IryqAaD7wytWZECNacPOp7+W0qE
-	2oR/FXpPHC817n8THvjIfC7aYtt1sTcZOw+xJYFYf2HxXaHdMlopUSBujHWEOf9X
-	H9KU45DqpO2f7f/cZ6A7+E8caFLgZQ4kKpFedmoxCTfHHv8MduanA0l9GZKTK/zK
-	yveisMYTmqnbtPXVx3Mn2opl3NjqcnttL68JwKZgoY2AW5xvceor1vocCdSflj5p
-	Dc1KFg7CNevi/z05wZZZ5p45qFFAdgaJCmpTqVFCe+Ae+TZesAQrWSAVKreQ==
+	:subject:to:to; s=fm3; t=1765848006; x=1765934406; bh=64byxyMi33
+	6KnjCy+FV6muXEQfXyOxSaI988A3YUNbM=; b=Lobw/l5m+FG7B2ismjYsR7R3Xc
+	C9EY1YIjOl7WXEhpRGMqWpvX/iS1FyHafHNvwTkc0955g7V3mcvvOFfz0NXt4dR3
+	QQJwzEeYlK2TROX6ZtJMZX7Tzy3C3mg+EiaRZoyPHdAU2WmiUDfSGaF3bB9ImoRT
+	2d4nw7xevHLAxemUoL3xXcTvkkJ3DYL5k6xf97O0QMddmXJNjRIAT5jmInqCxXU+
+	Ds/xTx6o90k1wI+ULs+6hisx0MCMBPduSdi4hc9tEL3jP9EqGBCuHcXYYFTKrnfa
+	POBB7GpGuBliE80/p6QHmWZldxIECZwXnvBwy4Z1g85q53NopK47+11ZLhtw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765847979; x=1765934379; bh=zmPALl9RLdCUlcjI/dMhQ0NOSMq30/UmLrK
-	/KTD2r3A=; b=DlMk1HEUpaZSlu1ljmUvtxxBigSo7FtqN02FcIDo/+zRmB+Govt
-	gwrpYgp/0yebDBgckplmUB7dY/gNUmKlqmiv0I3UqkkBG2lWOxrtg1I3zCWQIeUB
-	P1Zz1qOV+jPZsnrvYFbpSpLz3ii2naCjVbRM4ycb3CHW5wfqdqW+bL3akGMX94Vs
-	kWKHDTq2dXynLGabwEpepa4hUwEaaPLyZLkIsVOzW6KNIhhaCOFHpney1tmdiiEB
-	Eqoifx77BaUV3+G4tmwKy92btH124UPtIjkECYAwIkOkM5zLczZV7HTQz+71rO8b
-	yW95CtyAKUTXvxBz75pNwOLt+M+3mE8KYKA==
-X-ME-Sender: <xms:q7NAaXOt2Rwyu0LPxgwRMQR_l0XskbR_VGsmSePJuM1u8YK8XeRAdg>
-    <xme:q7NAaY_stt0MT5PbReaoeI_8KJZGYoXINO09DQlXjZG1RqLT5YOtgZ79GrO_3kxIT
-    saTbX8eHcoMA6H61Jt8ZlxEyz1uVkIjxi3y4OwPU3s7L3C0hhBdETE>
-X-ME-Received: <xmr:q7NAabRAKUMc37opq4KKGa2ke9MiH5QBNgev5j9N9vJGRpaRZV0ujWxvqT1u8J4iJ_6YzohKxI4KH7_sXn3A5rh9mEgsxMRNmQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefkeefiecutefuodetggdotefrod
+	1765848006; x=1765934406; bh=64byxyMi336KnjCy+FV6muXEQfXyOxSaI98
+	8A3YUNbM=; b=gStEgYX8t+LWXwP1wosOBxV+2GazkYH3t26nNb1zIXQWVz5cyN4
+	iUQiX4ocVatd00ZtNlJgFSQovQxIquKUIZDPyA978wybRcfg5yn1nrSfF68tg+Jm
+	DNuw+znyu7igfNz3zr7DEn1k370KlHWB8f/cAZzVmwLZPDFYmCQ6shnjHlxlfWL0
+	wa0viYKriW+usT7ZBoUutHoIBdPjSU5SEFzN7IFpz/AyxbwormuRbXXiG/GzVbfy
+	6MIhnojbh2OKA5eY5R4TLHCPSVLXGMRT9pYGT7Kx4qnRFEqYGLR2ZI80QN/YmXHa
+	2nNicxTo9yEmn0EFB9MaUP6jbRJM4mNXNyQ==
+X-ME-Sender: <xms:xrNAaarL2wAKHaZ-QK2VOlym8kNu4TwOsfWTj5_3Wwg9AundPVu7HA>
+    <xme:xrNAafhZdR73q2Atr6MeS5jRjt0TLWQ4MX0gFi1MFWB5L4NzuHefxuZKkvMmnTHsq
+    EwSgoOvCalQuWnDPBkQBXemLUXPncmQ8YN3VaBkpc-qy-ehAhQ1WA>
+X-ME-Received: <xmr:xrNAaXixfgpb8pYTcWISyOlgwAl-qdPRyx1-70kTa3S3iVpMMo9O8WRCGHqZcPiyZyaaQ9UPUZdubRMke18PEarJVfSly-xJ8A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefkeefhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
-    khhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:q7NAaalSwj84lYtGBInnV2SDsID_RKs7FWZP-0-E9fyHbhsIqkrIog>
-    <xmx:q7NAabQ9DisqJo_d8cJtHk1mTYMvaA8Fi6tzh2sHjmsZOR14tgfPew>
-    <xmx:q7NAaYNLBmkeYOR9ZGI1XkD1TyZaJoboVEbxeunnr3b2sfOufYHK4g>
-    <xmx:q7NAaUXsNB73qhxLZ0YoUoj7BEW8xVOZW6b8IfIa5GQAGBsF8wVQ6A>
-    <xmx:q7NAaezPbByp74lifvjCy9pz-gQPV8UBsB7UmD7s_A3RAQF8bWr4RVwM>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
+    htvgdrnhgvthdprhgtphhtthhopegtrghrvghnrghssehgmhgrihhlrdgtohhmpdhrtghp
+    thhtoheplhhishhtsheshhgrlhhlvghrqdgsvghrlhhinhdruggvpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:xrNAaViKpHvZg6woRsD_YG8k96aNjIai-gn9LYrhga_8ZPQqSdt2LA>
+    <xmx:xrNAaXK0j4eeVBGicFWvw6U0s5Zp2TZOmLOif6594C1l5HqGhTv59A>
+    <xmx:xrNAaUGaYg0a5Wk7IqcvqDF3F99ZHysO7cmrRsQKpliU0VnosicktQ>
+    <xmx:xrNAabRbtzE4swDsWq4Q3I76IB6hSosC7buyf9lgENllSD3hxpGdWw>
+    <xmx:xrNAac_UpqcO1m6Ph7pCDtyWaWT7zy3FAqjkO-hNjNKapaGhULL0pOzm>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Dec 2025 20:19:39 -0500 (EST)
+ 15 Dec 2025 20:20:05 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v3 2/7] strbuf: split out logic to humanise byte values
-In-Reply-To: <20251215205639.2700270-3-jltobler@gmail.com> (Justin Tobler's
-	message of "Mon, 15 Dec 2025 14:56:34 -0600")
-References: <20251212223644.3090879-1-jltobler@gmail.com>
-	<20251215205639.2700270-1-jltobler@gmail.com>
-	<20251215205639.2700270-3-jltobler@gmail.com>
-Date: Tue, 16 Dec 2025 10:19:38 +0900
-Message-ID: <xmqqms3j5il1.fsf@gitster.g>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,  Stefan
+ Haller
+ <lists@haller-berlin.de>,  Git <git@vger.kernel.org>
+Subject: Re: Would it make sense to add a commit.signOff config?
+In-Reply-To: <aUCLz1wTOwilflAD@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Mon, 15 Dec 2025 22:29:35 +0000")
+References: <86c5d40d-5a06-4a69-90d8-a737685b0536@haller-berlin.de>
+	<aT7lkXl65-TBIsRS@Carlos-MacBook-Air.local>
+	<xmqqsedc8w7k.fsf@gitster.g>
+	<aT9iu9He3yJ3npWX@fruit.crustytoothpaste.net>
+	<xmqqldj48pyl.fsf@gitster.g>
+	<aUCLz1wTOwilflAD@fruit.crustytoothpaste.net>
+Date: Tue, 16 Dec 2025 10:20:04 +0900
+Message-ID: <xmqqike75ikb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,34 +94,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Justin Tobler <jltobler@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> +		*value = xstrfmt(_("%u"), (unsigned)bytes);
+> On 2025-12-15 at 01:59:46, Junio C Hamano wrote:
+>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>> 
+>> > I think this would be a fine approach or we could add an entry in the
+>> > Git FAQ (or both).  I agree that this is something that comes up
+>> > frequently and writing it down in a more visible way would be kinder to
+>> > users and mailing list participants.
+>> 
+>> Something like this, then?
+>
+> Yup, that looks good to me.
 
-Does this "%u" need translation?
-
-I very much doubt it, but if it did, this does need TRANSLATORS
-comment.
-
-> +		*unit = humanise_rate ?
-> +			       /* TRANSLATORS: IEC 80000-13:2008 byte/second */
-> +			       Q_("byte/s", "bytes/s", bytes) :
-> +			       /* TRANSLATORS: IEC 80000-13:2008 byte */
-> +			       Q_("byte", "bytes", bytes);
->  	}
->  }
->  
-> +static void strbuf_humanise(struct strbuf *buf, off_t bytes, unsigned flags)
-> +{
-> +	char *value;
-> +	const char *unit;
-> +
-> +	humanise_bytes(bytes, &value, &unit, flags);
-> +	strbuf_addf(buf, _("%s %s"), value, unit);
-
-This definitely needs the TRANSLATORS comment to tell what is going on.
-
-> +	free(value);
-> +}
-
-
+Thanks.
