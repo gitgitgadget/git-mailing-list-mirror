@@ -1,93 +1,92 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BE324A058
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 00:29:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CF93C38
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 00:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765844946; cv=none; b=EQiR8hGWWozOQWp3kSTbDHt5O3cGH05G4ctj5sqdCTSToAvVjvvRXx2bFmbQEoouMWaFgcUEpBBUHcHOYpj8I6ZvF1ssSS+wgzPQzRlJHGXfTRx7EAYtyMY+K/u9Beg4k4TDRyABV9KJVKiLxFuGaMl9dW+KH2EOpb79FqIz/30=
+	t=1765845564; cv=none; b=tqm1LJs0rKxaB903OLyq5Ce6SK8YCIt3ajEb4Vz/J5iKAop5e7cRIpBu2WTblnfZkYZrDGQBRSFdoMDvbo/Avtj0TbaUm4FPLjDmaRCmrS0DXiLJe4yhby3jiyiWrpsdaL83IQviJ99mc1fNjdpk1JNaOMPFb1Cs9XiKjjXVygw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765844946; c=relaxed/simple;
-	bh=+cT0EcKFRVnaqsyuLfiFmPQy6wHn7OD5qJ5KVFCWWEY=;
+	s=arc-20240116; t=1765845564; c=relaxed/simple;
+	bh=7Klou/AxkL+rHq76KI7bzMSpV8vK1dQ0kMjYw8RLZnE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dk/EqHvf4E3R2tJ/moLA+dptFRoq1lei2EhnHn3jnbeV6LOlmivkcfwOCXcY4UpMmG1Vl65tzQ5ZzxC3LGS5AVAiVAFpx6wO3hQxvij0jTBhC1XSYkzFZAPKoeFHyHTH1AwSxGqZ+sBVagf56BB3qx2ctj86jaQ3vszirabwmcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FjFtPQi+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EIdOj7ko; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=ZOJazLobKXFk2CvHS245/VrjAWHKaI6LNk6ckhWkGq+tbrFz260XCNiwxtHsazyfQlXDuQQh/iT7OE6QsBk6CbiSPC5iXxuyMSnhyaMCYVxTQzoMTei7d57fAF6UkFvapMhTmVhXdqz9iE2neo4p3z/bkoSKFPo8JLjgHmUJd+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LwWFdg3x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JJ1dyD5p; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FjFtPQi+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EIdOj7ko"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id A4F751D000F9;
-	Mon, 15 Dec 2025 19:29:02 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LwWFdg3x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JJ1dyD5p"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0D6C67A019E;
+	Mon, 15 Dec 2025 19:39:21 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 15 Dec 2025 19:29:02 -0500
+  by phl-compute-01.internal (MEProxy); Mon, 15 Dec 2025 19:39:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1765844942;
-	 x=1765931342; bh=j70aP8gY7PQE74T8P2cJWftvy9GZtacsa2c/TxlWnaY=; b=
-	FjFtPQi+Pl6aG5VqCiMYJjPj1Xsn60K4db30rfSDHKrJZGexhZxyTFBhwo4oOoTv
-	KMe93C4uuy3UTbIcBHHyt9ohAlEz+A2IBiAf4lDKo2WL7kmTDO16Xp3OpRVwO/TX
-	69iCiHvjPbeXwoI9wDvGDIn9dck8W5XqNNpap2FIM2Ntj5ojglsgNzUxF/Caoju2
-	E7FrAHhuSdmsZJ/gsvAN2sE9dkLY//cP2/XVy3MLWO7uo277OBKpp2udyvBzTyLY
-	ZnI3PPMZVWBsVWchK+0jCUXdOzUIfuW4SSeOHjWrYcVUpsu5aiAjlvgvMXPFI2TM
-	HosXCZE52bVblPlGnntvDA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1765845560; x=1765931960; bh=IvYJrPzBac
+	7cZcg8PYQBBE0IyVuJpKYFVkFxjt1erp8=; b=LwWFdg3xE8sgwgAmc7mwN7ffp3
+	s7IpezBHicSQlNNT3e4/q71a+NL++3e0oOdWyw6XtPJ5tBmDTdfdgsnN7zvBU8sJ
+	dBVpTUEJN3x7RWtw6IyyfeBiS6r0HfeX6afQTbwMptNfdVtJnpna6FzSG0bhiB/f
+	HNFA9n7ulmET5DFsIcLFVubO5DAv2ZcBM22orvZQNOjuOld/Gqwjv+nByhbpPQfk
+	CXWK6/q45Yqb6nOxntj490SlhO0ONAKcWjq6Bchzl5SJm+tXvhqtymMptznTAXBE
+	CzVF48KBRZ7qXdWFcAPHzx6XipPwZUsW4ZfFQJ4nDUgAPlEa1YxBcRIn+2zA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765844942; x=
-	1765931342; bh=j70aP8gY7PQE74T8P2cJWftvy9GZtacsa2c/TxlWnaY=; b=E
-	IdOj7koiTcU/7kGmATWEhGY02lZrkzY1nTp2WlzIDu7pOFrkl3fFXWPl+2JNDnMJ
-	sBecGLtII2S3DdqUtCRe9irJTCuEvscHSuMpeCamOV1tjJBkHtwHEbH95ByniShk
-	qjSqDynEI0vWF2UnhqVCH0aZZRUl/l941YJx79eLD80k8SOXVN+EhNcLxObxztj0
-	SwkYsvY+tOPoVFBNaRUscy4z94VBMCBcNtafeabXlRyAsunKROFZyvR+IuG59rms
-	KD7kdf2BSd5FkMLUsE5N4W9LQ1KgE03eyRG77+SqPTfqrix6VmZAfbLduDoNNI7w
-	xe4p/ycsyTOSYHop4Uqow==
-X-ME-Sender: <xms:zqdAaaa8Fu5Mpdqsu-_8VFSTITNF7QIp8dnmtHeHMMBYfszZqgreAg>
-    <xme:zqdAaeHk4jjiR7IuGl-bgU-qZshX1hNmDkHsEnIhL6-Zngd6egXS7iWN9pzQ3aiYH
-    fL6Y6hiX0RJEabGDmjW8AifdbZ7nBqPdyk40o0UknHjAnbnEUxTNw>
-X-ME-Received: <xmr:zqdAaTJuXnewamAYZziUgi4vv4l9NW-WUkZRCl6tM4whdNPrn37zCQ9A4GnznVuS7ZNg5gUsYJ_69SrIqVaNUblwky8ROaBIhw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefkedvhecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765845560; x=1765931960; bh=IvYJrPzBac7cZcg8PYQBBE0IyVuJpKYFVkF
+	xjt1erp8=; b=JJ1dyD5pB73zhfrEHiv0T1FJ0u2lNGBfQEO/StaIBpJxjKRq+3F
+	T85xpcoy3A1SYIjSbasMx0JE0BAwLtEMk/f8FTM/Hw3U4pp8MukO/YnqdmC1tBrg
+	3iAIZfBpHLZCxoHA6W5xsPfzpdd6I8DnasRBDJD1rtsraEptZ5+iGA0GhcVpWvpf
+	tz7GVnG4DY5IuJFGVzQ6D0G5ef85amXlc0CUWx/yA2m6MMpcPtxeYwu4xU0wWIH3
+	+YgOxfkL3eSKmwRyuvZTgFebUhud3JqcLDMXwL623AW4oZxg7vrIIVOYPpHNsexL
+	QRpzKxIE3dxJCtxjb+UIi8DG494hmGZtKfw==
+X-ME-Sender: <xms:OKpAaeEn1-MTnGQu2Ca71_YyHjTg9dBgaNEPPzkpyFx5-tkjDJd8nQ>
+    <xme:OKpAaR4BkGTGYikAKEhi2YdIYYnzq2U6qxOxv68hXKpQ_h6tfEfKuwlzt-deNYwqa
+    1MqXTLnERFiwx0PTrVIMw2R9Ef0NHDJgCAg0yBh_XW4M6n4_pjb-Q>
+X-ME-Received: <xmr:OKpAabxCF8WlAfFSFl65zl7bXCqfTxRolFM-KsyWeR4mxMweSD9az1M2CGBhfgU6hCLj6s3vLLIyJNax1P4jqVS_d5dBcrXf_A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefkedvjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhn
-    vghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehsih
-    guughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:zqdAaRM3m-6ebaGV65cH3SXrPxoASgcYazJi1BwRR9nsmdDGbnkE3g>
-    <xmx:zqdAabng77421jIYtf8eDiCW3tdDNkS-5-On7knFYhFN1Vd3pc9bqA>
-    <xmx:zqdAad7f_fbSptzG-IVMvaJrojQikylogBgEjzhJpyuDppr09LDKDA>
-    <xmx:zqdAaX2DbrkMBYTCNKuTNgPRP9JBJ58tL8O6kMxKEH-Y-FNTMnL_jg>
-    <xmx:zqdAaSU0cyu1povt9K8qgA6LpoBCtdarJc8p5DQZghCnmaaxTk31yxLf>
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtth
+    hopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
+    gtphhtthhopegrthhthhgvfihhuhhghhgvshelfeegsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpth
+    htohepmhgrthhthhgvfihhuhhghhgvshelfeegsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohephhhfvghrrhgvihhrohesihhgrghlihgrrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:OKpAaYMHuWs9sHNM3ap43C0cbpknV6ptP8QEuHGnFaTl1KTS6iWAPw>
+    <xmx:OKpAaZkUzCICaVcnjdXfLLDsIYTIE2raMcViP59I-yNW4p5YVHCxOQ>
+    <xmx:OKpAaVTxE-hcXHn_uE8VBv_vVpW3USM72O-p_C9pr69WbPb-N0SNAg>
+    <xmx:OKpAaQU1xtU50J_-P4fS5tAQIYVwyox62M2VJ00ef-r57j1L9L_q1w>
+    <xmx:OKpAaduICJJcoPl-Zrhi-T-8Xmj9Lswe2R9IPxchIy-z8TW7SUg7kTfQ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Dec 2025 19:29:01 -0500 (EST)
+ 15 Dec 2025 19:39:20 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>,  git@vger.kernel.org,
-  "Christian Couder" <christian.couder@gmail.com>,  "Elijah Newren"
- <newren@gmail.com>,  "Siddharth Asthana" <siddharthasthana31@gmail.com>
-Subject: Re: [PATCH v2 0/3] doc: replay: improvements like "mention no
- output on conflicts"
-In-Reply-To: <bf3f3633-5d0d-4fa4-9706-d99e32a3f91d@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Mon, 15 Dec 2025 12:59:07 +0100")
-References: <CV_replay_conflict.101@msgid.xyz>
-	<V2_CV_replay_conflict.12f@msgid.xyz>
-	<8fa21ce8-1e02-419f-b82a-0e4a41f7e2d8@gmail.com>
-	<bf3f3633-5d0d-4fa4-9706-d99e32a3f91d@app.fastmail.com>
-Date: Tue, 16 Dec 2025 09:29:00 +0900
-Message-ID: <xmqqa4zj6zhv.fsf@gitster.g>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  ps@pks.im,  atthewhughes934@gmail.com,
+  johannes.schindelin@gmx.de,  Matthew Hughes <matthewhughes934@gmail.com>,
+  Henrique Ferreiro <hferreiro@igalia.com>
+Subject: Re: [PATCH v3 0/5] Audit and document Scalar config
+In-Reply-To: <ee4acbe5-5efb-4bd2-a361-dc7f183b4f41@gmail.com> (Derrick
+	Stolee's message of "Mon, 15 Dec 2025 09:33:55 -0500")
+References: <pull.2010.v2.git.1764607847.gitgitgadget@gmail.com>
+	<pull.2010.v3.git.1765552528.gitgitgadget@gmail.com>
+	<xmqqecozb6rl.fsf@gitster.g>
+	<ee4acbe5-5efb-4bd2-a361-dc7f183b4f41@gmail.com>
+Date: Tue, 16 Dec 2025 09:39:19 +0900
+Message-ID: <xmqq5xa76z0o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,114 +94,28 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> On Mon, Dec 15, 2025, at 11:13, Phillip Wood wrote:
->> On 13/12/2025 13:46, kristofferhaugsbakk@fastmail.com wrote:
->>> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>>
->>> Explicitly say that conflicts do not give any output. I found this a bit
->>> confusing with the current doc since I am used to other commands
->>> complaining loudly.
->>>
->>> § Changes in v2
->>>
->>> Patch 2/3: improve `--contained` and mention that it requires `--onto`.
->>
->> The new text looks good, I don't really understand the commit message
->> but the intent of the change is clear enough.
->>
->> Thanks for improving the documentation
+>>>      -+	which enables parallel index reads.
+>>>      ++	when reading the index due the default value of	`core.preloadIndex`,
+>>>      ++	which enables parallel index reads. This explicit setting also enables
+>>>      ++	`index.recordOffsetTable=true` to speed up parallel index reads.
+>> 
+>> I understood the previous "due to" version (from the middle school
+>> English class I took eons ago), but not the updated one.
+>> 
+>> Other than that, there weren't anything iffy in the new version.
+>> Will replace.  Thanks.
 >
-> Thank you. But I’m not glad that the commit message is not clear. I
-> would need some guidance on how to write it because it seems clear to
-> me. Something with my brain state I guess.
+> Indeed, I don't know how I dropped that "to".
 
-They are already in 'next', but let's see if there are pain points.
+Will locally amend, then.  Also on the same line, "value of
+`core.preloadIndex`" has a tab (instead of a space) after `of`,
+which looked funny.
 
-commit 8467c95419acaa826a6c1ca0db0f36a3fd614ae4
-Author: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Date:   Sat Dec 13 14:46:56 2025 +0100
+I wonder if there a need for a new whitespace error class that spots
+a HT at the 7th column and has non-whitespace characters on both
+sides.  #leftoverbits
 
-    doc: replay: mention no output on conflicts
-    
-    Some commands will produce output on stderr if there are conflicts, but
-    git-replay(1) is completely silent. Explicitly spell that out.
-    
-    Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-Looks clear enough to me.
-
-
-commit 03d7c9c457ba68f28269dcd607b9026ea6c6c9c8
-Author: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Date:   Sat Dec 13 14:46:57 2025 +0100
-
-    replay: improve --contained and add to doc
-    
-    There is no documentation for `--contained`.
-    
-    Start by copying the text from `replay_options` in `builtin/
-    replay.c`. But some people think that the existing text is a
-    bit unclear; what does it mean for a branch to be contained
-    in a revision range? Let’s include the implied commits here:
-    the branches that point at commits in the range.
-    
-    Also use “update” instead of “advance”. “Update” is the verb
-    commonly used in this context.
-    
-    Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-    Helped-by: Junio C Hamano <gitster@pobox.com>
-    Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-As to the title, "improve --contained" hinted me there is some code
-changes for behaviour, but there isn't, so that part may have been a
-bit misleading.  "improve short-help of --contained and add to doc",
-perhaps.
-
-I think the problem people found in the second paragraph is because
-it is so unclear what it is talking about if you read it without
-looking at the patch text.  You started from the existing "advance
-all branches contained in revision-range", taken from the existing
-short-help in replay_options[].  But without seeing that "branches
-contained" text, it is natural that readers find it hard to judge
-the validity of "But some people think that..." claim themselves.
-
-If I were writing this (but I will not rewind 'next' to do so),
-I'd say something like:
-
-    replay: improve the help of the `--contained` option and document it
-
-    "git replay -h" explains "--contained" as
-
-	advance all branches contained in revision-range
-
-    but it may be unclear when exactly a branch is contained in a
-    revision range.  Because the command updates a branch that
-    points at a commit that gets rewritten to point at the result of
-    the rewrite, "update branches that point at commits in the
-    range" says what we want to say more clearly and concisely.
-
-    The "--contained" option has no description in "git replay"
-    documentation.  Use the improved phrase there, too.
-
-probably.  In any case, it is a good exercise to see if the proposed
-log message can be easily understood without looking at the code
-change.
-
-
-commit 9ba08b30a117e6925a9e5e87c92b37de7396d3a4
-Author: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Date:   Sat Dec 13 14:46:58 2025 +0100
-
-    doc: replay: link section using markup
-    
-    Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-Looking good.
