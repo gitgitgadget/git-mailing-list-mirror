@@ -1,149 +1,126 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A67023EA81
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 00:57:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2A9C8E6
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 01:13:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765846673; cv=none; b=nlSYa0WIczpwy6RdwgIz6rzlxFdVASwex2Vj91xVWxCh/jy4Owc/kWABsDAj250GAukZ6itCg/eTlcNfUYV/gJ/mEBtyUzf94Z72CMmCuNcaz+UlMbWRCUvTYpBtWsUvWdMvs6HLDIJw6ONwWO55FL9qkbdZoLMeuEf4Jy7iwVo=
+	t=1765847607; cv=none; b=ntp2kRDNTEMWZfwJYEWHHu4STKsKp93xQMNkqrMhh0/5GkpLqw+3YHmHKXQJ6Gkq76VKMu4BWjOAeFk6yKPScladXLqUSpayB53v6aJCDyYsFioouDI3ucilOezXMcu9cgZ/Ua/JPwaLY49tSB64UZe1G2ZdBGbffA+cpNoN9Bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765846673; c=relaxed/simple;
-	bh=ypU6ujlOykUcfV8kybdBHJfhxH2J1iANedcr6UdViw8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tHEjvuM97pbkMGyUmETESzPxnESt/S7ePoFeHjolaI35mnjP6EHsW54yrkgTFwq4dWIY2EXVKoqP1ddh0yg0llmNPIcHNfpFDX2wzhXWLa93oGZ+ChYoi6AszgvaCjVC4C4t+H+l00IpDi1FqvMZAdMqTTY6+5PyYOU1QZzEXHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B4zvXwDN; arc=none smtp.client-ip=209.85.161.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765847607; c=relaxed/simple;
+	bh=P9Qw+BILvbLWen0ZqlgPs9lXdQNrZ9SVMLFr7dPYvNs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Lm59tn28CknwvuxloeO4Mzx9t8MMsfvoPHWleYUSS84qnkJdpVzt3UpTMHYEUm+YRFwbe8SYVcFoGHUGMgAIkL8AgKiuP472C19PLseDYmMDoHHICZvwyA629qHBam5EaRQKd40Orcy8OrqTW3SfbDn62HDn1bW4dXk1jvAAn24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jNnkl5Vd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vCwI1FMT; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B4zvXwDN"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-657490df6f3so2334756eaf.2
-        for <git@vger.kernel.org>; Mon, 15 Dec 2025 16:57:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765846669; x=1766451469; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aPP1sW+knwwjLsecwRNbFNPYMluKCxNZGwpf3CiIHW8=;
-        b=B4zvXwDN6ovu1olb8OjTJViLQ2BVK1NHLxbCmJpNbGFrFrTbQJ6WWV6rz8awfLjFJg
-         uzzPJxSU1E8X6R0uJYIYa9o8ICr6aK8zQ/v19sltckR0B6sZrsl4TwMrNCVL8G7RqC2Y
-         FEeHjBe8TVCWzTxFqGcTKrilp7lnMkic5V7DrIgxZw1QfjCwA4DggQXtW6BROZ14+d7r
-         cu3F8+l0/EiMe47s4JHmLmaAnoGgzTD+SyslHdPdUbU8SSIkshdrsSkp4xPcG+lV/qqM
-         NhagSVbL5wsphiFxU0Rrnof4HECi8Aw063hbwguXXm4BtxstiXDHt6ySPuHSBBT89k5O
-         qcNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765846669; x=1766451469;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=aPP1sW+knwwjLsecwRNbFNPYMluKCxNZGwpf3CiIHW8=;
-        b=UrvCyoZlM8XkIbyt0p/KSPLGRZ+iDrJm+GFttms6yELl/N6yLJYEHURrrcu7SmK5j8
-         1jWxsGBIbS7jOZdWpITvqiPkeEDTJzthyXWiF5c0o2oK7EXcHXCHhzRyYUCoWQxEyZ2J
-         DlFUnWBdCylash0jXnNDGHY6We9/Iqq0pFVBf/upKFV1VPyk4I7TiIl0kN9L657Bra0u
-         f906zqjbBJ95QrypNff5aND1FBdQ9IAPuozCCNp/nRQrEENVlerGQFCLYY4bEu76lXkr
-         qOCkIgTUA1NDGxwLMv/aAd2DWk5TOEiXGB2wiD7pKgNZfcfsvCQuJ1pQk9PsqQ7kmOfI
-         DZRg==
-X-Gm-Message-State: AOJu0YxFCJKwydod18Asac1ATthEja/VUFlfftKdrH4rdqjyQZ91LBrv
-	PtWx61WwVWmzX5Moo/kVNLVcRfvdPnmMjx2DDZmb2dyiI6Kj7gBEE2rjm9+OLUqIPCb3FGv5I6A
-	T8ad27U97m/Jvpl1PKJXThhj8xq7xF+U=
-X-Gm-Gg: AY/fxX5EgryBHE3ml1tRO5mHgapej82EEVzZREK5eGqaNh4SLPwVSvOhrUuQhcX8tqJ
-	i/cdR7SB8rNUhYYQVMs7/A3OYAiWKOwP2NUDRALbJ6s+p6yV5VDGSpSuzgS44KcRHstCX0WJPUN
-	JPB/WNWoD6f07poHlYSTvD78g0KsAJzFBbeZoYsyazvJWq56oZHZIQ5hPPa4Uk1BTOalWpd6bKs
-	0pvkm1HJJRN69PqaoUmRHmPSQ3AqL3hnoVtkpsawV1/eJlkWnLx+Dz6RGLW/iU8vBtkMXItZJCE
-	/7bUTG/iE/nc14Yq7zyZFM86hJfW
-X-Google-Smtp-Source: AGHT+IG1wVEASBI9+ZNZ3VHUOBn0NLN0uQylkjNWyEtpHlC6WTJr9v3FFAu8G4XWxNVln0ZJ+kSmATI3zEKu+JvR/Q4=
-X-Received: by 2002:a05:6820:1b09:b0:659:9a49:8ffc with SMTP id
- 006d021491bc7-65b45257f44mr5402756eaf.41.1765846669013; Mon, 15 Dec 2025
- 16:57:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jNnkl5Vd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vCwI1FMT"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 77E9A1D00140;
+	Mon, 15 Dec 2025 20:13:24 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 15 Dec 2025 20:13:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1765847604; x=1765934004; bh=dElC7KJgmX
+	5FYnFbgWND1+Iv69YvphthLez5YTBcknE=; b=jNnkl5Vd3UlhhkktxkqFYBZWyg
+	q/wJtJencyu7mIdvEivozc9JyFfPwtGK/lFb1/2+ubjekkTt4q8Iln0yjDZSW+2W
+	xZb+IXIm0St0Q+VSDiBSK6V/T5vV8bRoGp3OJAXTMyR3TpP7sWRHu6m5ASOwBB3z
+	pUgdGsRjz4vlioY25g50qvu+tAnOTOr1ryHOEQ0S+asq/3/EIBIv9Aqx/Q/Ae1F9
+	nhvEiPH05Mo2cTT1taRPYUEIKYXNRc8v0jEkwzQt1FuMp20kqMTYlh9gw1WWSNpa
+	fHDIUOq6icqbN4jE6XgG7a4oc1zT71wF2oarV04Sczr+z4qUY7DkEtEZQLpA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765847604; x=1765934004; bh=dElC7KJgmX5FYnFbgWND1+Iv69YvphthLez
+	5YTBcknE=; b=vCwI1FMTc79n4zmIGon5x2ql9PnVcWfvvK8fjvxyF8d1o3GL/Fi
+	XXEJNUG/lv0ZM19oyT0V2bnmoha2RwC996e+G2kYmWrcvPSJZvtFfJpF4Hbi6Zdo
+	ksoAEDssNqbCVaBDfxWX06LmW8FtXSpThlOjrX6tvqXKhaMjN7Ax7tN7DKFCbzGK
+	4yu1X6cyCdsAdLCDJaKQSJXSSEppNt7cxLqVlV7oNJ1tDSAQd3lkaq2G3RZg+eLh
+	XEPrSpGrg/FsIK68Ctpy+b3XhctMSybRgNTlsq6Rz7P/kWGwWb7f3cNNXHZhRPLr
+	4aOkT1lx0LYYuuW8Yq6lEcreYG4gdg9BRTg==
+X-ME-Sender: <xms:NLJAaWYMh8FhRzVK8F_pqXR2LdylTyJVPCJI1Cq81GYEpS8xXRsS9g>
+    <xme:NLJAaQas2gCdLwBcPWSQ35WgMT2EQdp-JFI81ZkJ9hCH0CwvXcBO7CnuZiffJoGD7
+    jViv0YLCznWUHWNSgtxqmU8S9aDXOVoD6aIbrNR4XzCJg0sEud7>
+X-ME-Received: <xmr:NLJAaV-wGguxtp1EXYJ5XFwYiISLIIorRGhFaYPbj7ecPTiP0dNvtQPQsYZUYbWeRM7bp46drdl7hJe5MTnBuqG3wyTiYIQgJw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefkeefgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:NLJAaXiAhockaQfyf23QErYXF5oaV2McN-tmXNi1vF_YpWxZiJBVcQ>
+    <xmx:NLJAade4kbdCKNz9RGLHdgSqpmG1tjAayw8gdJwOJz-AQBFsxp8rjw>
+    <xmx:NLJAaWor5zttds9CaQ-iKnKVH3Tc2HgC8BHBVbhZ3OO6fCBix-BNAw>
+    <xmx:NLJAaaDLEawkt9Ic_NC-PV2ZiP40DSHsE8ShO5X3MQ-J-q7Mmd_mgw>
+    <xmx:NLJAaVdjGwaW2hmk-hgzTXkjj2LeSaNXibPOzQUS9bzquSaQs8C2pLAr>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Dec 2025 20:13:23 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH] docs: clarify git-rev-list(1) --filter behavior
+In-Reply-To: <20251215200512.2694155-1-jltobler@gmail.com> (Justin Tobler's
+	message of "Mon, 15 Dec 2025 14:05:12 -0600")
+References: <20251215200512.2694155-1-jltobler@gmail.com>
+Date: Tue, 16 Dec 2025 10:13:22 +0900
+Message-ID: <xmqqwm2n5ivh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <3742e7de-7d88-4e77-b711-9fed867a8c23@gmail.com>
- <CABPp-BH80R4LJDRKQnPmh5Am_HAcCgxWiA8vRoN8LgLRUMz+JQ@mail.gmail.com> <d7135cd2-e577-4f96-8142-cd9c7cd6995d@gmail.com>
-In-Reply-To: <d7135cd2-e577-4f96-8142-cd9c7cd6995d@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 15 Dec 2025 16:57:37 -0800
-X-Gm-Features: AQt7F2pV489-bFUpdd2pSZ3X9c_STaYbetoIYU1iEG3skTDLSgdJwnwiFc5MCQs
-Message-ID: <CABPp-BH1qgQNHJzJZ05Ckru2PdYxRnWfQ3xVPrqGG5F56bX1aw@mail.gmail.com>
-Subject: Re: Different behaviour for --find-renames between git diff and git merge?
-To: Luca Balsanelli <lucabalsanelli@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Dec 15, 2025 at 6:02=E2=80=AFAM Luca Balsanelli
-<lucabalsanelli@gmail.com> wrote:
+Justin Tobler <jltobler@gmail.com> writes:
+
+> When using the --filter option for git-rev-list(1), objects that are
+> explicitly provided ignore filters and are always printed unless the
+> --filter-provided-objects option is also specified. Clarify this
+> behavior in the documentation.
 >
-> On 13/12/25 02:57, Elijah Newren wrote:
-> > On Fri, Dec 12, 2025 at 10:06=E2=80=AFAM Luca Balsanelli
-> > <lucabalsanelli@gmail.com> wrote:
-[...]
-> I would expect that `git merge branch` would detect a rename and the
-> conflict resolved automatically. The 'ort' strategy (the default one),
-> "can detect and handle merges involving renames." and the default
-> similarity threshold is the same for `git diff` and `git merge`. I
-> understand that the merge procedure involves finding a merge base, but
-> still the rename should be detected between the two heads.
-
-No, it should only detect renames between the merge-base and the
-heads.  The merge machinery should not diff the two heads directly;
-that goes against how 3-way diff works.
-
-[...]
-> Even though the `git diff master~1 master` doesn't detect the rename
-> (the content changed too much compared to the empty file or one was
-> empty (although it says it defaults to include empty files as rename
-> source or destinarion)), the rename should be detected between the two
-> heads, even when merging. I tried to read at 'git/diffcore-rename.c' but
-> I'm not very good at C and it would require me a great effort to fully
-> understand it.
+> Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> ---
 >
-> So, why `git merge branch` is not detecting the rename and not resolving
-> the conflict automatically? Does it use a different diff machinery
-> compared to `git diff`?
+> Greetings,
+>
+> This small documentation update is in response to discussion from [1].
+>
+> Thanks,
+> -Justin
+>
+> [1]: <aT-djS-TrQJxxV8i@pks.im>
+>
+> ---
+>  Documentation/rev-list-options.adoc | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
+> index d9665d82c8..453ec59057 100644
+> --- a/Documentation/rev-list-options.adoc
+> +++ b/Documentation/rev-list-options.adoc
+> @@ -983,7 +983,9 @@ to name units in KiB, MiB, or GiB.  For example, `blob:limit=1k`
+>  is the same as 'blob:limit=1024'.
+>  +
+>  The form `--filter=object:type=(tag|commit|tree|blob)` omits all objects
+> -which are not of the requested type.
+> +which are not of the requested type. Note that explicitly provided objects
+> +ignore filters and are always printed unless `--filter-provided-objects` is
+> +also specified.
 
-Merging never diffs the endpoints, and shouldn't either.  It basically
-does two diffs, each from the merge-base to the end-point in question.
+The above documents the status quo correctly, so let's queue, but it
+is unfortunate that we need an extra option to do this.
 
-If you only diffed the endpoints, and one side renamed file A->B, how
-do you differentiate between A->B and B->A?  In other words, you may
-know there was a rename, but you can't tell what it was renamed from
-and which filename should be the final one.  You can only tell if you
-look at the merge-base and determine that the file started out named
-as A, and thus that B should be the final name.
-
-If you only diffed the endpoints, and one side renamed file A->B,
-while the other side renamed A->C, you'd be misled into thinking this
-was a normal rename (you'd only see e.g. B->C) and be unaware of the
-conflict, which is problematic.
-
-If you only diffed the endpoints, and one side renamed file A->B,
-while the other side renamed C->B, by diffing the endpoints you can't
-even tell there's a rename; you simply have a file named B that was
-totally rewritten.  But it gets subtly worse in special cases that
-might really confuse end users: if they modified A or C on the sides
-of history that didn't rename those files, those changes would not be
-propagated and combined with the ultimate B, and they'd be left to
-pick up the pieces and try to combine things.
-
-Further, it's just semantically wrong to diff the endpoints because of
-the underlying concept of a 3-way merge: If you were merging D & E and
-simply diffed D & E to do so, you won't know whether differing lines
-were added or removed by recent commits.  For example, you might
-notice an "import" or "include" statement that one side has that the
-other doesn't.  But did one side add that import statement?  Or did
-the other side remove it?  You can't tell by looking at the endpoints;
-you have to compare the endpoints to the merge-base to find out which
-things were added or removed.  So, fundamentally, a 3-way merge thinks
-in terms of diffing the merge-base to the endpoints, not diffing the
-endpoints.
-
-
-So, in summary, no, merge does not use a different diff machinery.
-You are just diffing the wrong commits to see what it sees.  Combine
-that with the fact that you have a funny special case where both sides
-drastically change the file in a way where the new versions happen to
-be similar to each other while not similar to the original, causes the
-behavior you are seeing.
