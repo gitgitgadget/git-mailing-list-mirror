@@ -1,92 +1,93 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CF93C38
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 00:39:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C02282866
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 00:53:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765845564; cv=none; b=tqm1LJs0rKxaB903OLyq5Ce6SK8YCIt3ajEb4Vz/J5iKAop5e7cRIpBu2WTblnfZkYZrDGQBRSFdoMDvbo/Avtj0TbaUm4FPLjDmaRCmrS0DXiLJe4yhby3jiyiWrpsdaL83IQviJ99mc1fNjdpk1JNaOMPFb1Cs9XiKjjXVygw=
+	t=1765846393; cv=none; b=C4lhJ8P8WtkPz0ZiEGJjXq+UMj+0ORjVOWNWXqPOmkiFhl36ZRtYnW2ahvBV2MEHKBlRcpdU148AwvpDIiRsllKzAYFk1oxJ+4V1FXc59tXLbI+FZbO9xR/XrpPXCeqgtP7leThKPdWNPIP4qiDCOBW2oKm6Rwt7uk+AVdBP5zI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765845564; c=relaxed/simple;
-	bh=7Klou/AxkL+rHq76KI7bzMSpV8vK1dQ0kMjYw8RLZnE=;
+	s=arc-20240116; t=1765846393; c=relaxed/simple;
+	bh=BNdR9CVJhI65PRnQv8VwA2oVjGQ303LV6095iejd9/M=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZOJazLobKXFk2CvHS245/VrjAWHKaI6LNk6ckhWkGq+tbrFz260XCNiwxtHsazyfQlXDuQQh/iT7OE6QsBk6CbiSPC5iXxuyMSnhyaMCYVxTQzoMTei7d57fAF6UkFvapMhTmVhXdqz9iE2neo4p3z/bkoSKFPo8JLjgHmUJd+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LwWFdg3x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JJ1dyD5p; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=ZU7LElljAuUl7uu2za2tWWGBWtdK+LofVSaOVRHnZMHnZFbeUp4n36iy3GPTKmwrMwe1EoQoM6PRXtnHaxCmO81Ds8b0ys61UW5vIXkpAVHTvLmSu4UU4dU5zG+o7VSqsP9eP3j98rhwhPN87l9bFdae0uy7y/yfaUrfs7Sus5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QqPwMgP4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rlKfUX40; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LwWFdg3x";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JJ1dyD5p"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0D6C67A019E;
-	Mon, 15 Dec 2025 19:39:21 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 15 Dec 2025 19:39:21 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QqPwMgP4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rlKfUX40"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 26A561D000B0;
+	Mon, 15 Dec 2025 19:53:10 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 15 Dec 2025 19:53:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1765845560; x=1765931960; bh=IvYJrPzBac
-	7cZcg8PYQBBE0IyVuJpKYFVkFxjt1erp8=; b=LwWFdg3xE8sgwgAmc7mwN7ffp3
-	s7IpezBHicSQlNNT3e4/q71a+NL++3e0oOdWyw6XtPJ5tBmDTdfdgsnN7zvBU8sJ
-	dBVpTUEJN3x7RWtw6IyyfeBiS6r0HfeX6afQTbwMptNfdVtJnpna6FzSG0bhiB/f
-	HNFA9n7ulmET5DFsIcLFVubO5DAv2ZcBM22orvZQNOjuOld/Gqwjv+nByhbpPQfk
-	CXWK6/q45Yqb6nOxntj490SlhO0ONAKcWjq6Bchzl5SJm+tXvhqtymMptznTAXBE
-	CzVF48KBRZ7qXdWFcAPHzx6XipPwZUsW4ZfFQJ4nDUgAPlEa1YxBcRIn+2zA==
+	:subject:to:to; s=fm3; t=1765846390; x=1765932790; bh=/T1kIA7v7Z
+	dtlKABO/Y8rQseLIaKRlnPyfAhP3ufYHs=; b=QqPwMgP4kKEqUsXbNie2cUccTJ
+	MtZ3DDY/mk6BEVm+VsqLjj46qNgOpXGDCqzOXlF/Gcr6yIqY2cyOZBoovBs/5D8E
+	G2oHunC2U/E21QwlRiBE0nwSGUjfQXhi8B0OrM51L2DThC0WrrY4hC/Fn91J6YRn
+	vi0phSZaqLxgh2XetEfuSEzwngutvqF5zAvrvHbm5XBthPpPz3Xz7BeEM18agkJW
+	ccy0Cpd8L9GQUpDvD+iP18vkiqikxaBvdOkgbPZ9FAGKN7/NE8olnApYqMOP5jrS
+	HD4KCG5lqd7VfFWFrGy7Bk6ShygXVDbzB+JoqbkTSUQC0vi2WKg4GJm0f33A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765845560; x=1765931960; bh=IvYJrPzBac7cZcg8PYQBBE0IyVuJpKYFVkF
-	xjt1erp8=; b=JJ1dyD5pB73zhfrEHiv0T1FJ0u2lNGBfQEO/StaIBpJxjKRq+3F
-	T85xpcoy3A1SYIjSbasMx0JE0BAwLtEMk/f8FTM/Hw3U4pp8MukO/YnqdmC1tBrg
-	3iAIZfBpHLZCxoHA6W5xsPfzpdd6I8DnasRBDJD1rtsraEptZ5+iGA0GhcVpWvpf
-	tz7GVnG4DY5IuJFGVzQ6D0G5ef85amXlc0CUWx/yA2m6MMpcPtxeYwu4xU0wWIH3
-	+YgOxfkL3eSKmwRyuvZTgFebUhud3JqcLDMXwL623AW4oZxg7vrIIVOYPpHNsexL
-	QRpzKxIE3dxJCtxjb+UIi8DG494hmGZtKfw==
-X-ME-Sender: <xms:OKpAaeEn1-MTnGQu2Ca71_YyHjTg9dBgaNEPPzkpyFx5-tkjDJd8nQ>
-    <xme:OKpAaR4BkGTGYikAKEhi2YdIYYnzq2U6qxOxv68hXKpQ_h6tfEfKuwlzt-deNYwqa
-    1MqXTLnERFiwx0PTrVIMw2R9Ef0NHDJgCAg0yBh_XW4M6n4_pjb-Q>
-X-ME-Received: <xmr:OKpAabxCF8WlAfFSFl65zl7bXCqfTxRolFM-KsyWeR4mxMweSD9az1M2CGBhfgU6hCLj6s3vLLIyJNax1P4jqVS_d5dBcrXf_A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefkedvjecutefuodetggdotefrod
+	1765846390; x=1765932790; bh=/T1kIA7v7ZdtlKABO/Y8rQseLIaKRlnPyfA
+	hP3ufYHs=; b=rlKfUX40v39d9zhkdW5+yVaOEqY0r/fXsydZFv91qF9TwM4KgZO
+	1vWM7dxNhHcZm7o4HWneg5cv+u9p5wZgqVli/NfJ71lMnaNiBhCIVfpx6RSJenJ3
+	e9mHYm6WdHZknurl/i7qO+Cz3EgYJdwzpWhzlQwc/d18fwRcxDHOcQourm1RNDHu
+	/4h8BltBHqYr2YCKkRhjwNtF5J6oR4Ubb4ZSxsK8pitlQ2rZWJv/MkpOawWOicgC
+	Sl3rqLf4FaVASAHWohIQOKFu/Xy1nqk95AaL2JFGk4Qn2ZfHUrRIezQKSZuX6SZs
+	PMB8dRjKeRIfnG9vFAg0iUC7eWiCkzWPc9A==
+X-ME-Sender: <xms:da1AaSGvAaUDrisZUBOryLlZwESliIlVtutwibzC-OkVUI9jpCDRcw>
+    <xme:da1AafKhrJI_pkg_uv8cMxHUmkiP-MGlPSebm97YKTo5RmfujCDkk68-ya8BocjdO
+    C_Aw24SM-onihZLfpGdFUcWvK4uofwAqxGQAfxQR7MERZEghvlu>
+X-ME-Received: <xmr:da1AaXiZaXwoIdpnFzmcwZ8BT9efHPA43gyLBSLcROVS6xpPuB-aERzY0xesd25YS_DEMNObk5pAs86v6EMkuro2JUZqDwrZmg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefkeeftdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
-    gtphhtthhopegrthhthhgvfihhuhhghhgvshelfeegsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpth
-    htohepmhgrthhthhgvfihhuhhghhgvshelfeegsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohephhhfvghrrhgvihhrohesihhgrghlihgrrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:OKpAaYMHuWs9sHNM3ap43C0cbpknV6ptP8QEuHGnFaTl1KTS6iWAPw>
-    <xmx:OKpAaZkUzCICaVcnjdXfLLDsIYTIE2raMcViP59I-yNW4p5YVHCxOQ>
-    <xmx:OKpAaVTxE-hcXHn_uE8VBv_vVpW3USM72O-p_C9pr69WbPb-N0SNAg>
-    <xmx:OKpAaQU1xtU50J_-P4fS5tAQIYVwyox62M2VJ00ef-r57j1L9L_q1w>
-    <xmx:OKpAaduICJJcoPl-Zrhi-T-8Xmj9Lswe2R9IPxchIy-z8TW7SUg7kTfQ>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduvddpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheprggurhhirghnrdhrrghtihhusegtohhllhgrsghorh
+    grrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvmh
+    hilhihshhhrghffhgvrhesghhoohhglhgvrdgtohhmpdhrtghpthhtoheprhgurghmrgii
+    ihhosehgohhoghhlvgdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpd
+    hrtghpthhtoheprggrrhhonhesshgthhhrrggsrdgtohhmpdhrtghpthhtohepjhhrnhhi
+    vgguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:da1AaVllJpZdmJcyGoqMazJt5pUbc_OI_0Aqpr6b0gA1XASDspKW3g>
+    <xmx:da1AaWWz_U8KLtHR-6kUrsFe9p8D45DG96o4BQ_Gn6Tr3VouYuJ5Pg>
+    <xmx:da1AaavxTCBAw6Fa_zYNxsO89_i24tw1CMpQYViRBclH7_egUU1NTQ>
+    <xmx:da1AaZ6VH78zKO4M721hhTk9-zVe2kZ_B0gHij-xFk1zwZAVfrKLjg>
+    <xmx:dq1AaWjsKtgO3Th0K7GjzVlHh-KTNGjjQYuRnoG2PQJ5sYD33-FRGXKR>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Dec 2025 19:39:20 -0500 (EST)
+ 15 Dec 2025 19:53:09 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  ps@pks.im,  atthewhughes934@gmail.com,
-  johannes.schindelin@gmx.de,  Matthew Hughes <matthewhughes934@gmail.com>,
-  Henrique Ferreiro <hferreiro@igalia.com>
-Subject: Re: [PATCH v3 0/5] Audit and document Scalar config
-In-Reply-To: <ee4acbe5-5efb-4bd2-a361-dc7f183b4f41@gmail.com> (Derrick
-	Stolee's message of "Mon, 15 Dec 2025 09:33:55 -0500")
-References: <pull.2010.v2.git.1764607847.gitgitgadget@gmail.com>
-	<pull.2010.v3.git.1765552528.gitgitgadget@gmail.com>
-	<xmqqecozb6rl.fsf@gitster.g>
-	<ee4acbe5-5efb-4bd2-a361-dc7f183b4f41@gmail.com>
-Date: Tue, 16 Dec 2025 09:39:19 +0900
-Message-ID: <xmqq5xa76z0o.fsf@gitster.g>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: Ben Knoble <ben.knoble@gmail.com>,  git@vger.kernel.org,  Emily Shaffer
+ <emilyshaffer@google.com>,  Rodrigo Damazio Bovendorp
+ <rdamazio@google.com>,  Jeff King <peff@peff.net>,  Aaron Schrab
+ <aaron@schrab.com>,  Jonathan Nieder <jrnieder@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Josh Steadmon <steadmon@google.com>,  Phillip
+ Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v6 00/10] Add submodulePathConfig extension and gitdir
+ encoding
+In-Reply-To: <87pl8flnef.fsf@gentoo.mail-host-address-is-not-set> (Adrian
+	Ratiu's message of "Mon, 15 Dec 2025 18:28:56 +0200")
+References: <20251213080817.347922-1-adrian.ratiu@collabora.com>
+	<34DD8798-5C69-4092-B6C9-6609E688FBE8@gmail.com>
+	<87pl8flnef.fsf@gentoo.mail-host-address-is-not-set>
+Date: Tue, 16 Dec 2025 09:53:08 +0900
+Message-ID: <xmqq1pkv6ydn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,26 +97,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Derrick Stolee <stolee@gmail.com> writes:
+Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 
->>>      -+	which enables parallel index reads.
->>>      ++	when reading the index due the default value of	`core.preloadIndex`,
->>>      ++	which enables parallel index reads. This explicit setting also enables
->>>      ++	`index.recordOffsetTable=true` to speed up parallel index reads.
->> 
->> I understood the previous "due to" version (from the middle school
->> English class I took eons ago), but not the updated one.
->> 
->> Other than that, there weren't anything iffy in the new version.
->> Will replace.  Thanks.
+> 1. Encounter errors like the following in submodule.c:
+>    die(_("refusing to create/use '%s' in another submodule's "...)
 >
-> Indeed, I don't know how I dropped that "to".
+>    These errors can happen due to a number of factors, like
+>    case-insensitive filesystems or submodule layouts.
+>
+> 2. Need to specify non-standard gitdir repository paths, different from
+>    the currently hardcoded .git/modules/<plain-name> location.
 
-Will locally amend, then.  Also on the same line, "value of
-`core.preloadIndex`" has a tab (instead of a space) after `of`,
-which looked funny.
+Unlike 1. that hints where the need might come from (e.g., the
+mention of case insensitivity), 2. has no hint on why one may want
+to use "non-standard gitdir", which is better than nothing but
+probably still not helpful enough.
 
-I wonder if there a need for a new whitespace error class that spots
-a HT at the 7th column and has non-whitespace characters on both
-sides.  #leftoverbits
+Perhaps giving a concrete example or two in the documentation may
+help?  "Imagine you have submodule X at path P on the master branch,
+and then you want to add another submodule Y at path Q on a separate
+branch that does not have the submodule X yet.  If path P and path Q
+overlaps THIS WAY, then THIS AND THAT BAD THINGS HAPPEN.  This feature
+lets users work this around by DOING THIS AND THAT".
 
+> If you are not in one of the two above cases, then there is no reason to
+> enable this and it won't affect you.
+>
+> Hope this is clear, maybe we could spell it out better in the
+> documentation (suggestions welcome btw) or even tell users in the error
+> messages to enable this extension.
+
+Absolutlely.  Developers answering questions only here will waste
+the brain cycles spent while coming up with the answer, so please do
+document what audiences the feature is meant to help.
