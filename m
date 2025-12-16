@@ -1,110 +1,157 @@
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F3434029C
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 14:37:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BCE39FD9
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 14:41:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765895823; cv=none; b=lRLJs27WTpIUChjjsYu3a1iaSqyGtW1woSYyzT8oQOWz/J7m3seb4sCz6BXvJ0jwylU8j5EkFHdH6Qesg0H5w5up1LcyJEAwdqlb7dhWFn1Q0+I4KADT1aNU7hjH53KJjnT6cOxMJ8EkhhNjTvKM4yMTnpgYRUZMkzisucAYTvs=
+	t=1765896114; cv=none; b=e2vcCwy+LM7Lzx6JaJ4iHOtIMlvPO2YrT5PWFgTzUZzM94s4J+8X/e0L5MSvdDsG86gmKmbxs/GibIbu2mRMoYYamX30hePxQhRcezfjI7cz4PSKo4lZjPLlx4sthwFjeN7NlOGoTRK7IicXFcQyIGHqG/PXNxrEkZKscsB0C5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765895823; c=relaxed/simple;
-	bh=Givq0dKCsi3ZfLagWH9emOp501JXGFAzaBE3XhPUfz4=;
+	s=arc-20240116; t=1765896114; c=relaxed/simple;
+	bh=k6x+H2cdmi63tQrtgPVN2HK1Gm7YAbL+jTtcKYC6ON4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FylwzEbTxXg7vFL/f/uLbynGsl15bJ0ig8NQ7lVYUduWPTpNRTnDZINpWaotRgVAGvp07aSjlFpF48++6uos2xtrEFxi3NqyjjcP2AZYcH5rsWtTQruGlavSTdPjYSmcrCmXBKE2lfTRQr30VLEW6QdReBG/NefEp250KYP/Bu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P7/AqGGu; arc=none smtp.client-ip=209.85.161.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=TENTzF3yekze0G+VqABBTDGupUlotFeXiA62lP0rxdCrXR1GqJns86F29jwJMrDWbZ5m7lBZ51BBNPTrWBcKZ3mKlSWlVOZw1fbz3VjSugB5CISnhFNc4TbDt+zd30N9HogQJ3sLJ0MKNbndEbXbxCX5Hn027upfub/2RqAAOnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iMWl3YH6; arc=none smtp.client-ip=209.85.210.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P7/AqGGu"
-Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-657523b5db0so1400614eaf.2
-        for <git@vger.kernel.org>; Tue, 16 Dec 2025 06:37:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iMWl3YH6"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7c6da42fbd4so2438016a34.1
+        for <git@vger.kernel.org>; Tue, 16 Dec 2025 06:41:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765895820; x=1766500620; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dgmE4xo26OphsSg5R0Y0gi3EqQKo6tD97MPoghMAwKw=;
-        b=P7/AqGGuQauA2WxthEYxGRc5Ys3q4ttyR0UBt/9zMuRBa0NqGGW+h2GyveZDsecrVp
-         iY6EpOqbjHExYyhnUNLNIeNPMibgI0SToBXTdt1pPdZfrqDf/jml3gNM0Am46JvI6tym
-         BQphFowevWCCLoOD73dCHHzjpbyLRCpsr6ks/wukMc+HSquMJ6sXX4W7NSCyPudr/+o3
-         tprNCoqZYlarLNce78skD8LR6DtwPiNCUMT9cd96V4zFDNDi+bwpS5+R7hjc/PqX4qsD
-         1XrcG5vF9ByKJh5TS7pPyShQSnz7fyHoIV0Jqa96cITPeZLlyRorGi40QKYw38Vh0sdv
-         DJBQ==
+        d=gmail.com; s=20230601; t=1765896109; x=1766500909; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=HXC1zTl+didUYwY0HBVLhJVwrj873NlobIJF0eUahEA=;
+        b=iMWl3YH6W1bnmfrEWWK7Qm/qCw9EY6OeLcVqMXVLzJCuauLv4vVpoIpJCPvi0k5uCP
+         9Mb5S449uONIBiaExIJNKgJYNg1XMrZooUlU9AYx2Tzw1o3IC3CGvZvHkSxtAZHDV2WP
+         zmO1IeNXt6vSGlbCFJ2udHe1/FOy+JGXZcFzy5eohMQkJO1EuOEK6D1H1xtv/H2rUIAc
+         hoDce7OaEBxgARGJ7pPDM8ffPm3NAeKosTqZgDIfH+Q3k6CdPfEyC7WznXrdYOb4vvOt
+         G7j2vMjM3zj7b48on2CfX7EzHCkRQJai5Tnz4ZXjNDalKhArAyn6rCV+UTNyXeDu/Zuj
+         rLJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765895820; x=1766500620;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dgmE4xo26OphsSg5R0Y0gi3EqQKo6tD97MPoghMAwKw=;
-        b=JFMzFhHX+sZUpYDH/JNm7i2LPEUNGJhgksWOnwQqK3xdrUH5VnyypOwGc3JUp+fyxw
-         YULqMr8+80GsF+sfLgjkk5/S0/wCEleMHHZR78g33Ck2WnbleXXCgZmSUbSHGUz6y+bP
-         Osk114KekrFkYbbxO027h9llrUlYkyQoyg5P1ori9DXW994ViEUe6e6P77ijkJ10XIzZ
-         bMPFDx87VNCQGsEulyRY6A1lnZqIU1qJMgPyVHV4ShBppW+REMVxNDeQcUmEM/KbVnYc
-         E3V3l0DjF9EhR2HdXm4vpDZZcX3kbbBEZOEMs+dX8feMFZFk/hreGnXQCmZVPJnzq70w
-         norQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVqJavnZiFR1T37BdkPeREleVXBU83L2YoDQHH93YA21nq5240VTNcz5xFF8OXH+Ue3fcM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyuWteSR+YAQ6+J9kBtI6MOdi/1oeRrfsVrzmY7mKJkL6OKdu7S
-	fnoGLDk3L8XhUKlmj5ty5IH2ecHPv8R2iDqVpjWNgVTeZIqnWYXCotCJ/6xTXw==
-X-Gm-Gg: AY/fxX7VLaIjm9974IWTqHOwrIcXZne4g8NSDaFxASlzV1/m1B5VhXYP1Hdfzc1ooVl
-	yRmFpqbdfbkwgoYOd1n1F+YCkyAsU9ctiXFX9eCJZ4C4yHZWHOdfAqjlzit8Q+AGTUHX/nuksrF
-	3KUK0Jqf+M0BUkeB9qCmQ3svzY7Efy4jTiSohasA3ny2FfhH3RWEuCAeSkK/YassX7J0eAiC3nA
-	hegWDLCpslPoMF2ZIZ0IdW1JsGmSexLPd2/jg8IoYyfwVkmldDl8a3cva0QJ+dLO9bI7gvzY7+u
-	Yfb+3IoIitIY2Bc71Q0jsVP0rNZjMRnyScIV8vBYUa/boe+I37D0le3uzskQLfRnQ7/V1z6kwKS
-	T6ozWmrV//Gw80g2HE7HGQOPJ6vdst5o2fk85q4AKYpQsEIBaOpVoL5/oEr+8J2KF677trSpoHB
-	hvBkSu
-X-Google-Smtp-Source: AGHT+IFpVcUmXsi9lqQbIvhgVBcoX5bVMHfXSS18BhFSXNd55OhwcM1FIUvJwmHPTQiuBFTbDzzuuw==
-X-Received: by 2002:a05:6820:1892:b0:659:9a49:8de3 with SMTP id 006d021491bc7-65b4519161fmr6976051eaf.37.1765895819895;
-        Tue, 16 Dec 2025 06:36:59 -0800 (PST)
+        d=1e100.net; s=20230601; t=1765896109; x=1766500909;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HXC1zTl+didUYwY0HBVLhJVwrj873NlobIJF0eUahEA=;
+        b=cvcaXn0wnsm1VXUCIarEZBy9YMNsEMU53GJjnRG8gzmVgroXiIUl0W/kVGq4XuooFb
+         HrDjGpRPqairLlJBdM/QDhaXNdw54snDG0JPqlRKI/OETq6/8jg2jzBMohIASkDv8RUZ
+         jpF9UQuVMATs8RfasVc8dEVxO4FjqaKSBUE0HqzJeULOaluc5ZE/7DtgoZHC+4hKDwbF
+         yBtu6UhOAIObYFpwXIWMUJrtbeLmhnIsAJk5rRpbUEtuEhBLrfnZUxyvZstMxMB11uom
+         1YDt+GuGLXkLSGKaUnrXRaDHp2C1RRCa42ED6/NOqF8b1Md9vSVorK3L8Y8EY3HI2cql
+         u8fg==
+X-Forwarded-Encrypted: i=1; AJvYcCXWBaut392S03AESX+GdeUmlssbOXhMyBYQR07k5Ja7PTPKS7Y9XCHcNKvhNq/Z8rXhFAs=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyz/YE4CtXVCLUi37AnElVKf8KLATYp2NYVLiqv8OC9V6fN2Nfa
+	1LVZWrLKQFGzWFCaVrYrofC3R4Pg5BcbbIGt7n7GUS7xrfylIsdnAM4i
+X-Gm-Gg: AY/fxX6LPd+iIoemQihOKnUf2VZGIzI71FiCfm0F32E/Ga5umjpt2xiRsstD4d42MdG
+	fDqdTa2zjAdUOU4YZfjEYviRLj3Bcqo6tPd356hV5FEPl6h6GavKjnVeHB2HCk2QvGb+ui5mZIC
+	WirwVsTGuv6W/GZ9d5o9JUjlAmwEp7S0RcUWsp0rWoyJpbUvhRig7yPDg8iNWGK2ZujkYnAGxAD
+	vLUyEb0PJiYXD6rTlB9f4LvcvxtQhPuL/E/GZDdvwUZdEj34wbkawtTds6b84QjYDufBYGISdXC
+	+Dwo0fRSMyUt2CbAYT2b1c6RNc0WPlHtNftB+oaMJmqgterS36hRmbQ44DcYzyJyEnT/YVdjjVP
+	jvAl6Lsbvxie2kx+X5sCGoHhqgQzii5dSj+3l+3k5Wp3mGey/ANrWX1S14x6rQsxw2HXo7sUyq4
+	YIMDhi
+X-Google-Smtp-Source: AGHT+IGUsxQQTrBkkMfpX1CZk/os/ST9Zno6xfof/DLaqAokFhafJrIoNXYZ2QKppvKqJEB8g1bDMA==
+X-Received: by 2002:a05:6830:3c1:b0:7ca:f1fa:e9d7 with SMTP id 46e09a7af769-7caf1faea5fmr7393799a34.16.1765896109388;
+        Tue, 16 Dec 2025 06:41:49 -0800 (PST)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3f614be6be3sm6571231fac.7.2025.12.16.06.36.59
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7cadb010476sm11494948a34.0.2025.12.16.06.41.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Dec 2025 06:36:59 -0800 (PST)
-Date: Tue, 16 Dec 2025 08:36:56 -0600
+        Tue, 16 Dec 2025 06:41:49 -0800 (PST)
+Date: Tue, 16 Dec 2025 08:41:48 -0600
 From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] docs: clarify git-rev-list(1) --filter behavior
-Message-ID: <xnstt6myzzfyq65w73xuqg7cfso3bdw6tw33shrery4e4gi2zy@pfxq2pjmb2hm>
-References: <20251215200512.2694155-1-jltobler@gmail.com>
- <xmqqwm2n5ivh.fsf@gitster.g>
- <aUEUfQDJyPf6Mhtw@pks.im>
+To: Jiang Xin <worldhello.net@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, ps@pks.im, 
+	Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2 2/7] strbuf: split out logic to humanise byte values
+Message-ID: <z7fuww4wnfpt5m7rojixyp3atejopjr623bi7o7snplas7dgsg@yktwdifek23m>
+References: <20251209225820.2861276-1-jltobler@gmail.com>
+ <20251212223644.3090879-1-jltobler@gmail.com>
+ <20251212223644.3090879-3-jltobler@gmail.com>
+ <CANYiYbE3Tx6B5L5rEoDue7hTYzFGxw_qA-MRpC9RSxQ7HRczaw@mail.gmail.com>
+ <xmqqqzsv3uus.fsf@gitster.g>
+ <CANYiYbExjGoCw4n92a75xtREE_EhjEySVSmk=NwJd3GoMAoVLg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aUEUfQDJyPf6Mhtw@pks.im>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CANYiYbExjGoCw4n92a75xtREE_EhjEySVSmk=NwJd3GoMAoVLg@mail.gmail.com>
 
-On 25/12/16 09:12AM, Patrick Steinhardt wrote:
-> On Tue, Dec 16, 2025 at 10:13:22AM +0900, Junio C Hamano wrote:
-> > > diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-> > > index d9665d82c8..453ec59057 100644
-> > > --- a/Documentation/rev-list-options.adoc
-> > > +++ b/Documentation/rev-list-options.adoc
-> > > @@ -983,7 +983,9 @@ to name units in KiB, MiB, or GiB.  For example, `blob:limit=1k`
-> > >  is the same as 'blob:limit=1024'.
-> > >  +
-> > >  The form `--filter=object:type=(tag|commit|tree|blob)` omits all objects
-> > > -which are not of the requested type.
-> > > +which are not of the requested type. Note that explicitly provided objects
-> > > +ignore filters and are always printed unless `--filter-provided-objects` is
-> > > +also specified.
-> > 
-> > The above documents the status quo correctly, so let's queue, but it
-> > is unfortunate that we need an extra option to do this.
+On 25/12/16 02:18PM, Jiang Xin wrote:
+> On Tue, Dec 16, 2025 at 12:37 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Jiang Xin <worldhello.net@gmail.com> writes:
+> >
+> > > On Sat, Dec 13, 2025 at 6:37 AM Justin Tobler <jltobler@gmail.com> wrote:
+> > >> +               return humanise_rate ?
+> > >> +                              /* TRANSLATORS: IEC 80000-13:2008 byte/second */
+> > >> +                              xstrfmt(Q_("byte/s", "bytes/s", bytes)) :
+> > >> +                              /* TRANSLATORS: IEC 80000-13:2008 byte */
+> > >> +                              xstrfmt(Q_("byte", "bytes", bytes));
+> > >
+> > > We have already defined "byte" as a 10n string without plural forms in the
+> > > file "t/helper/test-simple-ipc.c" via commit 36a7eb6876 (t0052: add simple-ipc
+> > > tests and t/helper/test-simple-ipc tool, 2021-03-22 10:29:48 +0000).
+> > >
+> > >     OPT_STRING(0, "byte", &bytevalue, N_("byte"), N_("ballast character")),
+> > >
+> > > The newly introduced usage of "byte" is now marked as having a plural form
+> > > (via Q_("byte", "bytes", bytes)), which causes a conflict. This results in make
+> > > pot failing with the following error:
+> > >
+> > >     msgcat: msgid 'byte' is used without plural and with plural.
+> > >
+> > > This happens because gettext requires that a given msgid be treated
+> > > consistently—either exclusively as a singular string or as part of a plural
+> > > construct—but not both.
+> > >
+> > > To resolve this conflict, we can unmark the singular "byte" in
+> > > t/helper/test-simple-ipc.c, allowing it to reuse the translation from the
+> > > plural-form definition of "byte".
+> >
+> > I learned a new thing today and am happy :).
+> >
+> > But how does one "unmark" the singular "byte" there, exactly?
+> >
+> > Would something like this ...
+> >
+> >      OPT_STRING(0, "byte", &bytevalue, Q_("byte", "bytes", 1), N_("ballast character")),
+> >
+> > ... a good idea, to "mark" it as a countable noun that has a plural
+> > form?
+> >
+> > Or did you mean that we can simply drop N_() around it, i.e.,
+> > N_("byte") -> "byte", to discard the i18n, because it merely is a
+> > test helper?
 > 
-> True. I didn't feel comfortable to change the default to also filter
-> provided objects when I discovered that we don't, hence the new option.
-> It's not great though as it certainly is surprising behaviour, but I'm
-> not sure whether we can really change it without breaking existing
-> users. Oh, well...
+> I prefer dropping N_() for "byte" in "t/helper/test-simple-ipc.c", and
+> the i18n for the test helper will continue to work as before if we also
+> mark the plural-form of "byte" in this patch series. (i.e., drop the N_()
+> for "byte" in the test helper in this patch.)
+> 
+> This is because N_() is a macro that does not invoke any gettext
+> function, only returns msgid as in gettext.h:
+> 
+>     #define N_(msgid) msgid
+> 
+> And the actual translation for the msgid (the argh field of an option)
+> occurs later by calling:
+> 
+>     opts->argh ? _(opts->argh) : _("...")
+> 
+> in "parse-options.c".
+> 
+> However, replacing N_() with Q_() would cause the string to be
+> processed by gettext twice: once at runtime via Q_(), and again
+> when _(opts->argh) is evaluated.
 
-Out of curiousity, are there any known use-cases where a user _would_
-want the provided objects printed along with the filtered ones? From my
-naive perspective it almost doesn't even sound useful and appears to
-just be a sharp edge. This maybe not worthing worrying too much about
-though.
+Thanks both! This thread has been very informative. In the version I'll
+go ahead and drop the N_() here for this patch. :)
 
 -Justin
