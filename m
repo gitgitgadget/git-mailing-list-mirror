@@ -1,210 +1,248 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C053A1E8F
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 14:19:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CED3203A5
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 14:19:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765894758; cv=none; b=rR4pcBU4BNqI+krMt+1AnnLWsppaoIPVfTFjEhNW+8rSSyLloE+RQVvqphawXqBUoxx6b2yRUMkv/1qQjHA9761miHpHhx2r7eu65dlQFBrR+4q1rxG+rYK3hTaz/xScTkp276QmfPqwiptYEAH+zno8b/8EYzG3ZsoUdqDEuOU=
+	t=1765894801; cv=none; b=MQBAmBBCVtKyOdROwfA4dx0CUMesjaO1ueFMGg9cHxEGUUOFu3Dp3djzTYZjvvnOk13PbvS2DpaFYBDmzqf41s8pA8Z5Ey2OEZwqrclzFyvcTffjlc4QT1XOyYYs1XYB7BGoDXjgEn/5ZvsstfZhMnRL/LnJxTRE7S9Kf3v03hQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765894758; c=relaxed/simple;
-	bh=ZQHd1fV/rp1gqJS67f7VdjUulS1yFuDt+/6RUerrKnc=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=QLu4Tjo99PXhn0f/FGwuU7OH+9k0M3PPskgeQyvrn3C2UTJKFcVvZCMNC09QGJKMdjvXEdzb/1cpfpSicGtHSywxy+QE3hAevR+JWCTjUNhedl6EB7aD02SWPrKsv4eNLPJtuv8RRsy4UvNFbKVp+1d0U8s9yOP2Z9avHihmSxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ehNS4RmO; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1765894801; c=relaxed/simple;
+	bh=skJkn8SSCWGWGePr4heq9mjrPDoLDxc8ZG1N6qSldOk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=TBbx3HXxU+AYTRbFWonyvQrgSkgaDOc6j/vKDqUefCaAMGTsfVNAEGU7xMOWptl7CcZ2vPK8dScHOL/B4WJb5032Svzi+rWq8llVW17pHlCGZDbpHz4EM2BdJ7cJg4JsVlc9TCJtE7WLORqHqpIrya2FwPr+yOF9mcot1cqQek8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HBPRVArC; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ehNS4RmO"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-477bf34f5f5so35232305e9.0
-        for <git@vger.kernel.org>; Tue, 16 Dec 2025 06:19:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HBPRVArC"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-477a2ab455fso50471915e9.3
+        for <git@vger.kernel.org>; Tue, 16 Dec 2025 06:19:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765894754; x=1766499554; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=P0k8ygzW7rTZrEOdEKoByN+gKpE4kMLNDBygQG0zFpM=;
-        b=ehNS4RmOeD2vWhx904xnXZa6LexWYayJBCKBP7/M4OPHoHi5nF+jSUvA9Y7UweWC5R
-         ucABFh6KUIhg1k2zBZ/z0uOgQpOsT0tntJwVUKjqcU1/fOqUf0YjUiRJOD+K2uiPctVM
-         nEhB4VU/OLv3p06XMSnZRC6UXM2Q6xUFRjLQis5HblkjCg1A33FKq5KfhtOVdgjcLT9F
-         3q0Bg0DWOTH5gPMKGTwKeSQVcAeNoEnZhAhmRUQdpM3V6pcovPxZJQp+gDnkYdHtAPRu
-         MjyrH0IYU10aZKgtHCPYy73PLfOWHpKQuYfWjKUgo0TXMIYjYvzLsoqQQJ4KqVJNu2EN
-         3J8w==
+        d=gmail.com; s=20230601; t=1765894797; x=1766499597; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dW4Hl2Bf7JER+cznaOMfBNVx9tyO6Sy56wIcnolmf3g=;
+        b=HBPRVArCMUaX1/ZYAVMd3TO2b10LpRQxM3olvV3Jvp0mmRB5tDJ3BT7A4aibtkkVIX
+         KvpaLmF+yip1Xuu4bXksBIjwaiKRgUF4srMVUuk74JWY44hWB0HRCNaV2wOZO1mc875y
+         0kVQCFuaB9UGYqpiXprf49SFbiwjqAh2vThfcD3CC291NEy3Q1/6DdgkyPze4HLY3Z0k
+         c7sZ82sejcckONWzsCxmNCrgbRYGFeZ2QtvQ/1vW35whEj2j4xbk+BNv2CBbL/7LmL4U
+         QVkmlSztN+2ZEco8xPDr0ZQ1xqesMm+lqgFSBYlKm3Nt30jM5SayrTAdQSi+BRRKK8Uw
+         LFaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765894754; x=1766499554;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=P0k8ygzW7rTZrEOdEKoByN+gKpE4kMLNDBygQG0zFpM=;
-        b=RhusWFJqrFM+kJ5LJE0G+IGKVSkhagOb3SD5qXzMEjKdwL7AJ+fOezS+m+U5S8u93P
-         WpYhts7p6Y1US/8UJfQ2kJdXoxV+CZ9QW5JeSPVnU97gEIu3E+HRIzJ5a+2DNPGBKA2Q
-         I8T3GPVYavI77PdUCMCxeIx8NeBaKRzvZvt18rwooM8ONtRYl3b4ZqKQNlusgui4y39a
-         LxO2Y2paVGX8pQMlcqsSIkcQmhtMzsDPtnmA3xjLwz5szGMAKr4oRTp6tngQQdLZpS25
-         Xrwh5xFHJc4Pe8ZC1hxmW0umCXybcgkyeO6Aw4YTX8eoQkPdIncnTNv/mMwUYmJA0t9L
-         0mBw==
-X-Gm-Message-State: AOJu0YwIUVWAaG4p+E+IzFsmJzybbtkp0RKndwIJMi142QMrOd4VLtkk
-	NvPtFXFU/oEFzbPPh89pYgELQsV3KW5zWRD86o0I+G0nvJ45J5EWcTV9
-X-Gm-Gg: AY/fxX623h9p6D7I7HO6Tvc+KKAFsAgVQUwamZOod7j6YUYand3sAwth+aD7Mz+WkB6
-	MCuO2jlRvznPTF1HScChH/Ulbp2ZIE8XMIxzM6+NUjj4s5FmVgplE8OVNCXRV9ohchmVYNISyKC
-	rHlvABa19tHDTnDzDRbJtLJH1J0CnNOjE0NmSoMVYWi5euPnjrPnsI7oPbx4ET3HlC0fOHaE1ky
-	FBMlZ+KshUnzR93Mh/gDWgY8pZy6cysric6pgIk5n4Y8GS+tw2WcVo13rVDNP5so2jyBQQQB+BV
-	KF+HUSrrYyjGpo9EitEdqK0kDVmnEvBx0cV2CJAsEC6q8OxO9Av3dXIwkcrHt8IjeioF2oSJ3wi
-	tMRg8d9t0bFaF8BFnLKyPbZ5mhZLxlOJbSnisoq4YuyUdp/gal+swGK2HN/4WmXVcXAVrNCF8nZ
-	0bTEqZcUyIIIF4LGZr/bOOV0eJyQaiinnbdeSJFgMUuT14BCALzm4JrmREaaoqLhfZnw==
-X-Google-Smtp-Source: AGHT+IFX6xbKNzlWsBTRMCpQ8IIsw6ilFDI61GmFsOVsTwUjxKi7i0iiC9GnY5NXapVVHm0rpVsrKg==
-X-Received: by 2002:a05:600c:c0d5:b0:47a:9560:ec28 with SMTP id 5b1f17b1804b1-47a9560ef40mr83188715e9.13.1765894753673;
-        Tue, 16 Dec 2025 06:19:13 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a8f6e58c1sm241208985e9.12.2025.12.16.06.19.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Dec 2025 06:19:12 -0800 (PST)
-Message-ID: <80477d23-eed3-4a99-be97-f692bc36095e@gmail.com>
-Date: Tue, 16 Dec 2025 14:19:11 +0000
+        d=1e100.net; s=20230601; t=1765894797; x=1766499597;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dW4Hl2Bf7JER+cznaOMfBNVx9tyO6Sy56wIcnolmf3g=;
+        b=iAFqa2AHeBJEt6UeQNPF5O0vUFPE2/u1Y8L0IiKnORb3OeokgIGIIfE1Rcmo+UKdrx
+         7LPhPD/WNaEiPKcVuXkXhhVpFF8aCWF2YAKPG/U5qVhGUsiDJrvUNEmtxRMeN6I/yd0i
+         qRm5F+tHV75YNopFEZtvUmlBUK9BuyWiBWSjdl+t5+pZ15dQZ5PNZ+0OoUgphQ8OsoJk
+         sLohDtCRZhiRQF/NTyM+n9BvgJ+JFMyuiEztgNjlzVmLYX96ZJQa06VMmkj9b8OgUBqX
+         4qjCOeoNllen1VgyyzAERoIwhHPTIpQpYJEpwYfHV4AHObhz2w7ntz6LRXEw0wL29CGz
+         GkvQ==
+X-Gm-Message-State: AOJu0YyRSnnSXe3AgozBIP770qh6/6A2XJlAAJ42mrcs9C8kXIg7Pl/m
+	wcr427yFsHewY9hfRZg0qzf9UmemMwCAt7adVCLalB+6gl45bIwVlvPl8JX49g==
+X-Gm-Gg: AY/fxX6xuFnfqma7DHMn7MyFhL8H8c1GxI/WvrAx5CVCg1CViJLT5IR83mRZNfIXSGU
+	EIUQVbPNgk8oICulCFKXr7Vp7yN35wbVJGZUepNrXsHnGM+ObRuXcrkBMFz3BF/WpWgYDX06HHe
+	I/PTJ9kkQhtGLIGNmsnVtuzSbrL8uK2yesWGWWmbWWyIDflDzpSA16wlL5v3kk6s/CMCoFbGWPu
+	ckJ9V9nXgPTCSWtGX167Rx+NcWWxfX4X+BjiBZmH/hx/+rdk1AArPIFezNFeCJDHf54z5PwJCJJ
+	AM11ELoPBGT+FmMdnaXBF1/Mp8yS6ctiqSWAqAbMyZQvNVZubCcrgKeNbVqLkQhzbgA6951uyyW
+	q3itutxeyqOaQ2NPiyqRNDqsuGPKmetaF3QeV1ymzu5DtSf3f9Iy+TVqiX7Ce687O3IZV6dEdSC
+	n2vK/ITRzhkOjFuAgpDUveKzBUkg==
+X-Google-Smtp-Source: AGHT+IGJAbnK/z5wSXmCUC8c+efYJ19Yihi92SdmDSJRki6LuN6L8mvSgjb84eeH44sPoH8o/WFQNQ==
+X-Received: by 2002:a05:600c:4f84:b0:475:dd89:acb with SMTP id 5b1f17b1804b1-47a8f904528mr157520275e9.22.1765894797418;
+        Tue, 16 Dec 2025 06:19:57 -0800 (PST)
+Received: from berwick ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47bd90e99e6sm11954465e9.2.2025.12.16.06.19.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Dec 2025 06:19:56 -0800 (PST)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v3] replay: drop commits that become empty
+Date: Tue, 16 Dec 2025 14:19:43 +0000
+Message-ID: <73ba74b8a2e7aaa625e6f0689a9f900ceebaaa03.1765894781.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.52.0.362.g884e03848a9
+In-Reply-To: <8a2a1215306452147cc7b803530ab2429bf57f15.1764260150.git.phillip.wood@dunelm.org.uk>
+References: <8a2a1215306452147cc7b803530ab2429bf57f15.1764260150.git.phillip.wood@dunelm.org.uk>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] replay: drop commits that become empty
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-References: <8a2a1215306452147cc7b803530ab2429bf57f15.1764260150.git.phillip.wood@dunelm.org.uk>
- <9a81644a0ec670261a85c155fa32e5a1f4576ef4.1765793254.git.phillip.wood@dunelm.org.uk>
- <xmqqpl8f719x.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqpl8f719x.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 15/12/2025 23:50, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> If the changes in a commit being replayed are already in the branch
->> that the commits are being replayed onto then "git replay" creates an
->> empty commit. This is confusing because the commit message no longer
->> matches the contents of the commit. Drop the commit instead. Commits
->> that start off empty are not dropped. This matches the behavior of
->> "git rebase --reapply-cherry-pick --empty=drop" and "git cherry-pick
->> --empty-drop".
-> 
-> OK.  Maybe it is just me but "onto then" -> "onto," would flow the
-> sentence better?
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-I agree it reads better with a comma here and in the second paragraph, 
-I'll re-roll
+If the changes in a commit being replayed are already in the branch
+that the commits are being replayed onto, then "git replay" creates an
+empty commit. This is confusing because the commit message no longer
+matches the contents of the commit. Drop the commit instead. Commits
+that start off empty are not dropped. This matches the behavior of
+"git rebase --reapply-cherry-pick --empty=drop" and "git cherry-pick
+--empty-drop".
 
-Thanks
+If a branch points to a commit that is dropped it will be updated
+to point to the last commit that was not dropped. This can be seen
+in the new test where "topic1" is updated to point to the rebased
+"C" as "F" is dropped because it is already upstream. While this is
+a breaking change, "git replay" is marked as experimental to allow
+improvements like this that change the behavior.
 
-Phillip
+Helped-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+Changes since v2:
 
->> If a branch points to a commit that is dropped it will be updated to
->> point to the last commit that was not dropped. This can been seen
-> 
-> If one thinks about it, it is the only natural behaviour to use the
-> last surviving commit to point the branch at.  Thanks for spelling
-> it out so clearly.
-> 
-> BTW, "can been seen" -> "can be seen" (will amend locally).
-> 
->> in the new test where "topic1" is updated to point to the rebased
->> "C" as "F" is dropped because it is already upstream. While this is
->> a breaking change "git replay" is marked as experimental to allow
->> improvements like this that change the behavior.
-> 
-> Again maybe it is just me, but I'd prefer to see a comma after "a
-> breaking change" to flow the sentence better.
-> 
->> Helped-by: Elijah Newren <newren@gmail.com>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->> ...
->> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
->> index dcb26e8a8e8..96a3a557bf3 100644
->> --- a/Documentation/git-replay.adoc
->> +++ b/Documentation/git-replay.adoc
->> @@ -59,7 +59,9 @@ The default mode can be configured via the `replay.refAction` configuration vari
->>   	be passed, but in `--advance <branch>` mode, they should have
->>   	a single tip, so that it's clear where <branch> should point
->>   	to. See "Specifying Ranges" in linkgit:git-rev-parse[1] and the
->> -	"Commit Limiting" options below.
->> +	"Commit Limiting" options below. Any commits in the range whose
->> +	changes are already present in the branch the commits are being
->> +	replayed onto will be dropped.
-> 
-> OK.
-> 
->> diff --git a/replay.c b/replay.c
->> index 13983dbc566..2864c213993 100644
->> --- a/replay.c
->> +++ b/replay.c
->> @@ -88,12 +88,12 @@ struct commit *replay_pick_regular_commit(struct repository *repo,
->>   					  struct merge_result *result)
->>   {
->>   	struct commit *base, *replayed_base;
->> -	struct tree *pickme_tree, *base_tree;
->> +	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
->>   
->>   	base = pickme->parents->item;
->>   	replayed_base = mapped_commit(replayed_commits, base, onto);
->>   
->> -	result->tree = repo_get_commit_tree(repo, replayed_base);
->> +	replayed_base_tree = repo_get_commit_tree(repo, replayed_base);
->>   	pickme_tree = repo_get_commit_tree(repo, pickme);
->>   	base_tree = repo_get_commit_tree(repo, base);
->>   
->> @@ -103,13 +103,17 @@ struct commit *replay_pick_regular_commit(struct repository *repo,
->>   
->>   	merge_incore_nonrecursive(merge_opt,
->>   				  base_tree,
->> -				  result->tree,
->> +				  replayed_base_tree,
->>   				  pickme_tree,
->>   				  result);
->>   
->>   	free((char*)merge_opt->ancestor);
->>   	merge_opt->ancestor = NULL;
->>   	if (!result->clean)
->>   		return NULL;
->> +	/* Drop commits that become empty */
->> +	if (oideq(&replayed_base_tree->object.oid, &result->tree->object.oid) &&
->> +	    !oideq(&pickme_tree->object.oid, &base_tree->object.oid))
->> +		return replayed_base;
->>   	return replay_create_commit(repo, result->tree, pickme, replayed_base);
->>   }
-> 
-> OK, that is straight-forward.  Instead of overriding the
-> result->tree upfront, we try the same using a temporary
-> replayed_base_tree, and that allows us to see if the resulting tree
-> computed by merge_incore matches.  Only when it made a non-empty
-> change, we proceed to create a new commit.
-> 
->> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
->> index cf3aacf3551..9d4b0dd1a77 100755
->> --- a/t/t3650-replay-basics.sh
->> +++ b/t/t3650-replay-basics.sh
->> @@ -25,6 +25,8 @@ test_expect_success 'setup' '
->>   	git switch -c topic3 &&
->>   	test_commit G &&
->>   	test_commit H &&
->> +	git switch -c empty &&
->> +	git commit --allow-empty --only -m empty &&
-> 
-> The use of "--only" here is a bit curious.  As there is no change
-> between the index and the commit our "empty" branch points at,
-> wouldn't it be unnecessary?  The option, together with --allow-empty,
-> would only matter if you did
-> 
-> 	git switch -c empty &&
-> 	modify blah &&
-> 	git add blah &&
-> 	git commit --allow-empty --only -m empty
-> 
-> because without --only, the changes to blah will be taken.
+ - added a couple of commas to the commit message as suggested by Junio
+
+Changes since v1:
+
+ - modified test to update refs as suggested by Elijah. I've kept
+   --ancestry-path --branches rather than switching to --contained as
+   I think it is useful to have test coverage for those options and it
+   means we can check that empty commits are dropped with out replying
+   on --contained working.
+
+This patch is based on ps/history
+
+I think dropping commits that become empty is the sensible default,
+if it turns out that some users are relying on the current behavior
+we can add an option to retain the empty commits.
+
+Base-Commit: d37c42ea661434c347d2047f01b338341099fa60
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Freplay-drop-commits-that-become-empty%2Fv3
+View-Changes-At: https://github.com/phillipwood/git/compare/d37c42ea6...73ba74b8a
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/replay-drop-commits-that-become-empty/v3
+
+ Documentation/git-replay.adoc |  4 +++-
+ replay.c                      | 10 +++++++---
+ t/t3650-replay-basics.sh      | 21 +++++++++++++++++++++
+ 3 files changed, 31 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
+index dcb26e8a8e8..96a3a557bf3 100644
+--- a/Documentation/git-replay.adoc
++++ b/Documentation/git-replay.adoc
+@@ -59,7 +59,9 @@ The default mode can be configured via the `replay.refAction` configuration vari
+ 	be passed, but in `--advance <branch>` mode, they should have
+ 	a single tip, so that it's clear where <branch> should point
+ 	to. See "Specifying Ranges" in linkgit:git-rev-parse[1] and the
+-	"Commit Limiting" options below.
++	"Commit Limiting" options below. Any commits in the range whose
++	changes are already present in the branch the commits are being
++	replayed onto will be dropped.
+ 
+ include::rev-list-options.adoc[]
+ 
+diff --git a/replay.c b/replay.c
+index 13983dbc566..2864c213993 100644
+--- a/replay.c
++++ b/replay.c
+@@ -88,12 +88,12 @@ struct commit *replay_pick_regular_commit(struct repository *repo,
+ 					  struct merge_result *result)
+ {
+ 	struct commit *base, *replayed_base;
+-	struct tree *pickme_tree, *base_tree;
++	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
+ 
+ 	base = pickme->parents->item;
+ 	replayed_base = mapped_commit(replayed_commits, base, onto);
+ 
+-	result->tree = repo_get_commit_tree(repo, replayed_base);
++	replayed_base_tree = repo_get_commit_tree(repo, replayed_base);
+ 	pickme_tree = repo_get_commit_tree(repo, pickme);
+ 	base_tree = repo_get_commit_tree(repo, base);
+ 
+@@ -103,13 +103,17 @@ struct commit *replay_pick_regular_commit(struct repository *repo,
+ 
+ 	merge_incore_nonrecursive(merge_opt,
+ 				  base_tree,
+-				  result->tree,
++				  replayed_base_tree,
+ 				  pickme_tree,
+ 				  result);
+ 
+ 	free((char*)merge_opt->ancestor);
+ 	merge_opt->ancestor = NULL;
+ 	if (!result->clean)
+ 		return NULL;
++	/* Drop commits that become empty */
++	if (oideq(&replayed_base_tree->object.oid, &result->tree->object.oid) &&
++	    !oideq(&pickme_tree->object.oid, &base_tree->object.oid))
++		return replayed_base;
+ 	return replay_create_commit(repo, result->tree, pickme, replayed_base);
+ }
+diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+index cf3aacf3551..9d4b0dd1a77 100755
+--- a/t/t3650-replay-basics.sh
++++ b/t/t3650-replay-basics.sh
+@@ -25,6 +25,8 @@ test_expect_success 'setup' '
+ 	git switch -c topic3 &&
+ 	test_commit G &&
+ 	test_commit H &&
++	git switch -c empty &&
++	git commit --allow-empty --only -m empty &&
+ 	git switch -c topic4 main &&
+ 	test_commit I &&
+ 	test_commit J &&
+@@ -106,6 +108,25 @@ test_expect_success 'using replay on bare repo to perform basic cherry-pick' '
+ 	test_cmp expect result-bare
+ '
+ 
++test_expect_success 'commits that become empty are dropped' '
++	# Save original branches
++	git for-each-ref --format="update %(refname) %(objectname)" \
++		refs/heads/ >original-branches &&
++	test_when_finished "git update-ref --stdin <original-branches &&
++		rm original-branches" &&
++	# Cherry-pick tip of topic1 ("F"), from the middle of A..empty, to main
++	git replay --advance main topic1^! &&
++
++	# Replay all of A..empty onto main (which includes topic1 & thus F
++	# in the middle)
++	git replay --onto main --branches --ancestry-path=empty ^A \
++		>result &&
++	git log --format="%s%d" L..empty >actual &&
++	test_write_lines >expect \
++		"empty (empty)" "H (topic3)" G "C (topic1)" "F (main)" "M (tag: M)" &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'replay on bare repo fails with both --advance and --onto' '
+ 	test_must_fail git -C bare replay --advance main --onto main topic1..topic2 >result-bare
+ '
+
+Range-diff against v2:
+1:  9a81644a0ec ! 1:  73ba74b8a2e replay: drop commits that become empty
+    @@ Commit message
+         replay: drop commits that become empty
+     
+         If the changes in a commit being replayed are already in the branch
+    -    that the commits are being replayed onto then "git replay" creates an
+    +    that the commits are being replayed onto, then "git replay" creates an
+         empty commit. This is confusing because the commit message no longer
+         matches the contents of the commit. Drop the commit instead. Commits
+         that start off empty are not dropped. This matches the behavior of
+         "git rebase --reapply-cherry-pick --empty=drop" and "git cherry-pick
+         --empty-drop".
+     
+    -    If a branch points to a commit that is dropped it will be updated to
+    -    point to the last commit that was not dropped. This can been seen
+    +    If a branch points to a commit that is dropped it will be updated
+    +    to point to the last commit that was not dropped. This can be seen
+         in the new test where "topic1" is updated to point to the rebased
+         "C" as "F" is dropped because it is already upstream. While this is
+    -    a breaking change "git replay" is marked as experimental to allow
+    +    a breaking change, "git replay" is marked as experimental to allow
+         improvements like this that change the behavior.
+     
+         Helped-by: Elijah Newren <newren@gmail.com>
+-- 
+2.52.0.362.g884e03848a9
 
