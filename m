@@ -1,91 +1,89 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4289E2E1758
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 02:29:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2C031A04F
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 04:37:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765852166; cv=none; b=F70YgkIEqfEPOA+jo9piwbzsPmGn3Q7Bh9vvPE+oi1RZ4EQL92dEojTj7v0PswjoF5KXf430TlLqzbKKAPtIq+HyiahT6pW3HRK6KcVUGtO8ahmnqaD+R1p70L1WTH1QvNHdp9yLltwGX9qcRWhc+jefgREmURRtNR8gRJIQcsg=
+	t=1765859863; cv=none; b=uQX/IAZqe5AyDnD+3EA7Z0GWmED38PqsIXLF0VPFAjLReSaJ56k3pdz1HZCyUGFhKuYyfJuK/eD6pMDHwcvx1OddYEkydqL0r6gi8zvXNlrisdEpb6APDxJIyUbSyawxb5Nq4Zc8+VqdyCXnw6DdduhJlCGLDcluFlIR8bNd3us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765852166; c=relaxed/simple;
-	bh=/87B3Z+Wv9GBDHvv2Naw1bDt1UVDh4JTHfAjiTxhInk=;
+	s=arc-20240116; t=1765859863; c=relaxed/simple;
+	bh=vuuH+qMXPewTP/XsbcOHhP2SLLHep9cQoX/q5tP6sKE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=W3ma9988NtZiAqoGRaq1XaYDATsWtzLJVKhZoqfBQHbq7r+sChQUFnZ/Tdk4MOqPxBd9WnEkhvtnGIIytLDmfVViULYwdjRpvY327RzZ4IZpid1XVsq6/2hRRedlysC6AYBdNcSdUuNoM45AHFa/8PH6QawPiRgvRsrXkoj6Xnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IHQbzJgr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xmy3MLLj; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=cLiRmgMxAuW0/vvdq3Onl/TwbmpOGBV3wtssIeQRmnP3gCNRCCsQrkmn77FufnStzmGSgj1ZNb8w9g1KKfQgc7O8G46Xgsx8td5Xwt9xAQHAOe8qMnbB9oFTRtA2N+FB7EaX9awMiyLtw+MVnt9Z505yMo3+mPa+271oD3cFxA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FoqWCBu5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ToIsHJ0U; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IHQbzJgr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xmy3MLLj"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2D1747A01CB;
-	Mon, 15 Dec 2025 21:29:22 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FoqWCBu5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ToIsHJ0U"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C51227A018E;
+	Mon, 15 Dec 2025 23:37:33 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Mon, 15 Dec 2025 21:29:22 -0500
+  by phl-compute-08.internal (MEProxy); Mon, 15 Dec 2025 23:37:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1765852162; x=1765938562; bh=+Dubc4UvwR
-	0TxGxiYTLqqpTQ285y+ihqvqkCGGQ9mqI=; b=IHQbzJgr3fHER3sZJunVyMVsax
-	xd5NCun40DYfEKRB4Vnq93pvBjoUiyT8/dzq1DrKhzQ/EH/GZCOgTs7b7xG5mR36
-	rHNIZxKJvFOEYS0pAkzKwgUlPWPVlzYb5UTnd+DACdhlxHq2ru/OmrGsaUXRXrrO
-	GB54BUGknYUYJ/T9K4t9ZT0fKW7DO5wcHGeyAJXKLPlxITGdqHX59BB6XF3xB6rc
-	3QOSpj9xEwm9ZY4gmc/JV/SOYPIP1N82+9LOg7v9/BVc90t9mcYAcbkDkrf53TPZ
-	Ju81ZUV5NDUFz4DwgYKIvKTv/x016xkte7Z8cZGIQd44WkMF/ZQSzXfUcYrw==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1765859853;
+	 x=1765946253; bh=038zaJIa4b0AryKzldLPNFR2IDuEUB20a7rAkcPJSD8=; b=
+	FoqWCBu5NIWOMYZQ0iyvCkHlhBQsQfOILStnuQyRpQezD9Z8dVGCmp3xCUHccQvH
+	ma6sBNzWUeTGUlh9976gcwAYzlR+naQlRDC4GN478GkhXs98DKIUvjdxf3FJgVIq
+	+iSclDLDjbayfuxnIXQkHP7kkamv7aF8CW9+PiarOKSYu3+CBpEsR296JZcbq7xe
+	zTQutN2I550a7IUWM1VMsRNJmuqRRQKhxC65jn02m+8sH31wqKk7T4sKa2rBY+Oa
+	kq7o0dVVn1ceXLz2XXFCXOtdHnIPjEDUk1KniwuuosrJqmpHC8mCOs7FQr7xCfsd
+	DAEtEQRKmHidAbgOZBqt3g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765852162; x=1765938562; bh=+Dubc4UvwR0TxGxiYTLqqpTQ285y+ihqvqk
-	CGGQ9mqI=; b=xmy3MLLjVDvhfASTYALXvU4MMEpQwr7Z3nIRD/mxI8N+/+slUBq
-	rBzX9F8qlT4+d8YsT3F4rLFIVf5h6LUXJGrXrrR7hR8uFGynqkcd6wMlGEcMAmnt
-	23kzUgYyGX8xf40rlLlz/6+D4Pi0blCEYGfaBbtnL5fxBo0MzPgnh1zUxJddw5UE
-	EdcQvagHRrJ+x3w4eX0azSBnhxtkI9fLqMkUNV4/0XP60kMmKnvc4kD5hZlwcYkH
-	F0npKqYmehym02PQ/nNERnjsigRgDcYslSQaMM6qrk5z0GahgpimSEJFJhiaLXbV
-	iSn5RGELjgqGVAkdiXWM91204m+z+mDLd4w==
-X-ME-Sender: <xms:AcRAaaft-x_nIHexESjfG1PQNbpmse6ttPOHhZq8xmvm03JGcOugkA>
-    <xme:AcRAaX57LdXzV1HNfF4UjtWLqS00UDzKCfEGzqCFNtD_v2B3ow27zucTU3BBbhawB
-    jlDGGdPpP2MC8l9sfWLdhmgFZmMPmDkfdva0Y9E2kk7L5ESy9GI>
-X-ME-Received: <xmr:AcRAaVUjPAZa25aoYGydg-Pa1in0SEbp6QOGdptDs9qtvIYLD76TlLYkQvjmMXbshJKFes_6wS4LkpJD7sjojBHThqbdWygHIg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefkeeglecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765859853; x=
+	1765946253; bh=038zaJIa4b0AryKzldLPNFR2IDuEUB20a7rAkcPJSD8=; b=T
+	oIsHJ0UWJf7CQ+K7NxpjqgKMvwODuMTbER6tBn6WgF2S70w2AR9hUJejzlL+2mOb
+	w/7uzDYNZTl2ILQBUc/zzLBONIeiJISnLt1jwGW2ZWrbHefu89vjY1Hu/m6g4ix2
+	+n/DZ4AOEbnknHeYx+/4w4X77V3h7G8E+gDGOkLCvtNi/ghVKkG7GfdhN7KYN2TW
+	Ev0C7YV0mUnGl1C28LfN3ADFELPcYItYcoTxWa0ArcRJeoQWOq705CoE7L6yqGSl
+	NB+xUYGu550T+klOc7onS/s7mvrNXgUJF7Lvcd2Zb0EnxgXjl6IMzfeEbbLveczv
+	UOKCCSXM+8mGqEIZv2uEA==
+X-ME-Sender: <xms:DeJAabz7ydoH5zrkTi5K04dGfwdnMDu8UYjFR2LZy6Ye5MWzo25rjw>
+    <xme:DeJAaW9Y7LAnkZxp0LVeKs7KW-F7HO8DAuxc_2kHMvaD2PMpdIqUQk9hpP9-4Bp4M
+    PHh0ef4jHlTHLAc3VDqdUleHrpIMcl1_OUuvQ96HvyUWsG_8JLbHA>
+X-ME-Received: <xmr:DeJAafK7LL3G4TmPEl0cAD_g9kuEIlGuxhhSF7EXBxI2liyjU7prStugey1Tf5B4IrVzi0jUnPHjwEhcYP2BoIF72HHB-sF8VQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefkeejhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtth
-    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphht
-    thhopegtrghrvghnrghssehgmhgrihhlrdgtohhmpdhrtghpthhtoheplhhishhtsheshh
-    grlhhlvghrqdgsvghrlhhinhdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:AcRAae7YotvhElAwZmKWUoBGM0Tei42ehUVS6MEcMZxjCGYAsk6OuA>
-    <xmx:AcRAaYoAGpl3K-Elxzx4kXbz2m4fl_43Uyrk83563aAjE7T5Fnn0pw>
-    <xmx:AcRAaZlV9kb3cqDkghIEokxJRJRn33VMFhyfJ4cu2abb2SL5hhsNCw>
-    <xmx:AcRAacNe3iwKJcqcQo4Cd_XVfmpv_2UekHE8-h2SriJtlN4PhBIRFQ>
-    <xmx:AsRAaYZFv5pp3r3VBXbrmcxyLkP6oY5wm8ILz4S94OEKvIjoCFmtQNee>
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepfihorhhlughhvghllhhordhnvghtsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhksh
+    drihhmpdhrtghpthhtohepjhgvfhhfhhhoshhtsehmihgtrhhoshhofhhtrdgtohhmpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:DeJAacfh7L-4ZAYH13Li2YLJBXSipa6ECf1WWoOfStROuLuGnAULfw>
+    <xmx:DeJAae-6nqY2AnCK1VtSoOZTQzybmAzYuzmVaRUdqHER-bdTD5M-HA>
+    <xmx:DeJAaZpwDLPpjFc39YYK79aS7Lg4BuA5Mi9cWGtDYDImzReqEZvIHQ>
+    <xmx:DeJAaTDEdtEpnN7Qa6POKWnFtZWUtQPO2zvZlL7Jz5L-9PRZjkVBHA>
+    <xmx:DeJAabFQpyC1-wmAWgOONF89umYQUNc578fKQExd5r-sJxkfXP4BF8g2>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Dec 2025 21:29:21 -0500 (EST)
+ 15 Dec 2025 23:37:33 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Carlo Marcelo Arenas
- =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,  Stefan Haller
- <lists@haller-berlin.de>,  Git
- <git@vger.kernel.org>
-Subject: Re: Would it make sense to add a commit.signOff config?
-In-Reply-To: <CABPp-BGCwjTBEi4wkg=065QofiO9ZL+9XVCCcTiHriXqgH1Szw@mail.gmail.com>
-	(Elijah Newren's message of "Mon, 15 Dec 2025 16:17:21 -0800")
-References: <86c5d40d-5a06-4a69-90d8-a737685b0536@haller-berlin.de>
-	<aT7lkXl65-TBIsRS@Carlos-MacBook-Air.local>
-	<xmqqsedc8w7k.fsf@gitster.g>
-	<aT9iu9He3yJ3npWX@fruit.crustytoothpaste.net>
-	<xmqqldj48pyl.fsf@gitster.g>
-	<CABPp-BGCwjTBEi4wkg=065QofiO9ZL+9XVCCcTiHriXqgH1Szw@mail.gmail.com>
-Date: Tue, 16 Dec 2025 11:29:20 +0900
-Message-ID: <xmqqwm2n40sf.fsf@gitster.g>
+To: Jiang Xin <worldhello.net@gmail.com>
+Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org,  ps@pks.im,
+  Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2 2/7] strbuf: split out logic to humanise byte values
+In-Reply-To: <CANYiYbE3Tx6B5L5rEoDue7hTYzFGxw_qA-MRpC9RSxQ7HRczaw@mail.gmail.com>
+	(Jiang Xin's message of "Tue, 16 Dec 2025 10:26:10 +0800")
+References: <20251209225820.2861276-1-jltobler@gmail.com>
+	<20251212223644.3090879-1-jltobler@gmail.com>
+	<20251212223644.3090879-3-jltobler@gmail.com>
+	<CANYiYbE3Tx6B5L5rEoDue7hTYzFGxw_qA-MRpC9RSxQ7HRczaw@mail.gmail.com>
+Date: Tue, 16 Dec 2025 13:37:31 +0900
+Message-ID: <xmqqqzsv3uus.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,34 +91,55 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Elijah Newren <newren@gmail.com> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
->> diff --git c/Documentation/signoff-option.adoc w/Documentation/signoff-option.adoc
->> index cddfb225d1..0b869dfbe4 100644
->> --- c/Documentation/signoff-option.adoc
->> +++ w/Documentation/signoff-option.adoc
->> @@ -16,3 +16,15 @@ endif::git-commit[]
->>  +
->>  The `--no-signoff` option can be used to countermand an earlier `--signoff`
->>  option on the command line.
->> ++
->> +As it makes it harder to argue against one who tells the court "the
->> +log message of the commit ends with a Signed-off-by trailer by person
->> +X, but it is very plausible that it was done by inertia without person
->> +X really intending to certify what DCO says, hence the Signed-off-by
->> +trailer is meaningless", if we add more publicized ways to add
->> +sign-off automatically, Git does not (and will not) have a
->> +configuration variable to enable the `--signoff` command line option
->> +it by default.
->> ++
->> +There exists `format.signoff`, but that is a historical mistake, and
->> +it is not an excuse to pile on more mistakes of the same kind on top.
+> On Sat, Dec 13, 2025 at 6:37 AM Justin Tobler <jltobler@gmail.com> wrote:
+>> +               return humanise_rate ?
+>> +                              /* TRANSLATORS: IEC 80000-13:2008 byte/second */
+>> +                              xstrfmt(Q_("byte/s", "bytes/s", bytes)) :
+>> +                              /* TRANSLATORS: IEC 80000-13:2008 byte */
+>> +                              xstrfmt(Q_("byte", "bytes", bytes));
 >
-> This feels like it's missing context (it'll take the reader a while to
-> figure out why the paragraphs are there and that the two are related),
+> We have already defined "byte" as a 10n string without plural forms in the
+> file "t/helper/test-simple-ipc.c" via commit 36a7eb6876 (t0052: add simple-ipc
+> tests and t/helper/test-simple-ipc tool, 2021-03-22 10:29:48 +0000).
+>
+>     OPT_STRING(0, "byte", &bytevalue, N_("byte"), N_("ballast character")),
+>
+> The newly introduced usage of "byte" is now marked as having a plural form
+> (via Q_("byte", "bytes", bytes)), which causes a conflict. This results in make
+> pot failing with the following error:
+>
+>     msgcat: msgid 'byte' is used without plural and with plural.
+>
+> This happens because gettext requires that a given msgid be treated
+> consistently—either exclusively as a singular string or as part of a plural
+> construct—but not both.
+>
+> To resolve this conflict, we can unmark the singular "byte" in
+> t/helper/test-simple-ipc.c, allowing it to reuse the translation from the
+> plural-form definition of "byte".
 
-Very true.  It may be sufficient to leave this part unmodified,
-keep the updates to gitfaq document, and do nothing else.
+I learned a new thing today and am happy :).
 
+But how does one "unmark" the singular "byte" there, exactly?
+
+Would something like this ...
+
+     OPT_STRING(0, "byte", &bytevalue, Q_("byte", "bytes", 1), N_("ballast character")),
+
+... a good idea, to "mark" it as a countable noun that has a plural
+form?
+
+Or did you mean that we can simply drop N_() around it, i.e.,
+N_("byte") -> "byte", to discard the i18n, because it merely is a
+test helper?
+
+Punting is fine in this case, but in case a similar situation arises
+in real code, it would be better to establish a pattern we can
+follow.
+
+Thanks.
