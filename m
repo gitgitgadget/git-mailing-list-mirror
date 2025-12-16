@@ -1,53 +1,53 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBA030E827
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 08:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFB831BC8F
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 08:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765872520; cv=none; b=Wm31BFRmV7yxTgz8Y3YOeYoP0z7xeJ1+/jsKQm/mDJQtuqw+9RyfdPNaFenFqCjb9x6ht8MxzU7Eu5o3dtngisqzRu/14YkQyeFoeE0jwoVE9b7zoE9o+261Fo/KPFNUwNueq3yHV13qpd6njoskJwauNUlxaOhVsMvQN66bs+E=
+	t=1765872523; cv=none; b=TDC+leLMqLeTNX/yQCFwo8RR0zeqc7l1rHRe1nTF279MhD52LeJ6KccQr8yyQngbP3hEXhWaHmM3dvIvDt8j8BxECEb7/xnKP6Q/+pG4T1vBWnzRrsA2eqqIAA41/ZX9DqKeS9fN/VVnrQrU9yuAllEtz0y0nxAaee5lvrb/8LM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765872520; c=relaxed/simple;
-	bh=z+FJEtXs19DzNVYpHLMFhm2HjdWwhkw16yqD0/axl7o=;
+	s=arc-20240116; t=1765872523; c=relaxed/simple;
+	bh=xHqVaRe/6/Q2em3LG5imyK4g3FRpUmZ/hG0E8WkhWBc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ocmzt5x4lyOb/uwjFzAMqNr4pUQOSlaNO0ZNr659Ur0ahUeT+gi5ZBDGMxHuPXdMzPOs2DhUZOPf9rS31cCfIDqFB3vJvWckZehv49gzdopk9sk5CCl6SfzA29PIUYXkmCkREcF6XcDw4KawqnFgvrCA95x2YWSjm1ufY4+6CS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=meu5yAZU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=y8mjPtTE; arc=none smtp.client-ip=202.12.124.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=BJDiiDzi23uWwGWcJNIbqvTzowkR6b/BUVbdN+LDfa6dtBpUXBKOrVEcPmLJgwjhp9I9sKGLPLy8x2a01rqHCKHw5JLwWG3cQRQqdpL/Vq9xcpQzbBR4qaqL5/TW/tbn5rS19TA/8V5zQDO6gmy7bWWSnmsfwUWmUs85PVXVCmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aB+JPYtJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ycBO4wtT; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="meu5yAZU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="y8mjPtTE"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2EC091D00117;
-	Tue, 16 Dec 2025 03:08:34 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aB+JPYtJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ycBO4wtT"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7296E1D000FB;
+	Tue, 16 Dec 2025 03:08:38 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 16 Dec 2025 03:08:34 -0500
+  by phl-compute-08.internal (MEProxy); Tue, 16 Dec 2025 03:08:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1765872514; x=1765958914; bh=S95Klae1c/
-	dQudYsa0pfGihV1iUnryVIQaQi+k8yXl0=; b=meu5yAZUSEfBDz2ZxjMra62+B5
-	lxHy40EnD+hoRZ5kArpywVUd7mED3RFIeX8ouUpHZrBnj7Imvi0CxgNBdt3aapyY
-	mMCwpb+W+CJR7mEcLLBieFNYdHiQS6rgB4f114qR2Kw+jAVnAcHV7/5BuPNLD3Xd
-	g6LnKoNG3ve4P1mXY8VwReNyUXzRu32Iiu43ACPfcwmlOpL8gp2R6IDEBmlh2bNx
-	noEPgFmc1zRrfbAvSTn8X1egRqyWc/7yJjbl/DvzujWuKEX8mIBI6kI+v6UvPXck
-	lU9YKCes1GZJm/QwhVLpSKwLVt9YcySggJQ0SbMJsH26whHPO+MyTlUNT3TQ==
+	:subject:to:to; s=fm1; t=1765872518; x=1765958918; bh=syR8kByCoo
+	u/Qdo65P3vixgUiKgYg+CTVAAIJ+O04Ag=; b=aB+JPYtJCSs56tE4uFq+Yc9Wvx
+	tMTeJBGhXvIe656aQeGu53bWJV8ogE1plGR4adWXqLhZoipvYjuf5GMusYahvYZT
+	MhZPEOMnEQ95VTaqPA8ZRmVVB/7WOtenvvMw1MtlXMlZaraT98D0MHMy1I+BKzu+
+	A2M15sWsV9eUyJshYRWWZmRLwLbSOYO9dVBTJtJ9Fo8CELJikvfPg0iCIC3m7I+k
+	n96ndjTRTVKCGr+0X+/zim2G87aL/tTj7NktIh84RXpgAPepdnf1lw/LiNh9BuWV
+	5crDs6AV7/1YehqlTTRgzxYWKryD4UaNafwQNfm9or446GTJs8IY8R1aB+xg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765872514; x=1765958914; bh=S95Klae1c/dQudYsa0pfGihV1iUnryVIQaQ
-	i+k8yXl0=; b=y8mjPtTE70gDEqFixdgmFFwevMzAbM5bpuhTzAfUu7MHRWchNYz
-	cnufRIIdohd/DilX7w1bermkDRxd8J8a7QLzRe74oU5d/NJni+ISJ9Rs9q4CSW8b
-	kxCEr9HFJcHR+7D1aUc5dluuM31VT7s9UNue7LZcUu02KY/6FS8xeuekL1/ZEfhE
-	jpw9GI4MQlZ07naUI6/KkdRXOxgFfz8mOB8sR9ffVeXtBjINBPvxGzu4Id0OJnbQ
-	9EE/lHQa8pLKIHouJH00w6njtWDLZWtu4224W1FDExfkSKU4ipeBneC+A2Vhn+Y2
-	5jTXhSbsItnKph3zUbt29rDeLJww0jzD4qA==
-X-ME-Sender: <xms:gRNBaSSgP1yiC0bzVFf41wcPh0_uP_wJdyw7XrCEVj5G97JNulYYzA>
-    <xme:gRNBaUVu88HV872JhOMG-fqqbNXCQR5jfSdqYLhkUEBnKh9jWuIN_nLwrm6voIecb
-    CGMAKY8O0zraUgehJ47QwqNXDR3y01A-iHQWXOBOnXwaUZ5K5Br_w>
-X-ME-Received: <xmr:gRNBaUQq-jp1YsItK3nrH1QsHMcgfoo3G0n8N6nAvksjC-87n1bYhoHCukK5Rdmn10921VKxQ_32fHgNaSue2zQE8PysN6wDTSfYGMiUNw>
+	1765872518; x=1765958918; bh=syR8kByCoou/Qdo65P3vixgUiKgYg+CTVAA
+	IJ+O04Ag=; b=ycBO4wtThsmRddLnJ9CckhgcVH/0hTEDFa2m3aeDUc/G9WZZba/
+	Y1p+ucR3GsYkhfsQsz0dOx5/9BJFgUgRJDMD9Q9EbxenqjtsuqNscUEawURiWWBF
+	VdNVu+an5Rtt7JpRmqw3DTGRXism9/8GKPSkPwSjAJY0gVd2bUJtK9Tr4qjkPozx
+	X5IpbSxHaEM8TVIw55Hnney8SjGYf/55Mm4uLmkbIY6ZB99UKzp7TqhTHX7utXwm
+	2rstvRajDWdPn9PUZMVFxcyPWc1KrMUhsScTjW6mBERFrOTjbQAVVpHFGq3ISLvC
+	lXVuOxacfOriSWHIQLBJ/Wbo4r6UYe144kg==
+X-ME-Sender: <xms:hhNBaaGR6HLypFtK9GeLWMlc__BYYIpt_Zd1QTfyeVW4u2NVWYFSLA>
+    <xme:hhNBaX6OFDZU2gFgXYE8CDWV_-WllL2hJQMaXebDIfKMrzffsZc317eE7RrNAL1cA
+    dNkzmefy-kIedA0eMSCDXlnHFrRvt3m2kFpvZM6ZP0foP2EL--Yvw>
+X-ME-Received: <xmr:hhNBaYkYlJLZWDAefOvnpSrtIvcbB_Tkkc6fJYtX9pNEzfcxpsbuHRWADC-QAv8UvY6SBCZNyTmhq26_zLslnWXO7mDC4lJHv2915ntoTA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefleduhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -56,26 +56,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefleduhecutefuodetgg
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    oheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhl
-    rggsohhrrgdrtghomhdprhgtphhtthhopehruggrmhgriihiohesghhoohhglhgvrdgtoh
-    hmpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghmihhlhihshhgrfh
-    hfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprd
-    ifohhougduvdefsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:gRNBaU0Yov3pxY9iu51AWoUECWSG7sbeWa8clyoe6M8d7z7mPy3Y1w>
-    <xmx:gRNBacde8yhoMIXBhW0qJtt7oI3AUg05wtWPbBpBZ2a7xB8-EIGgqg>
-    <xmx:gRNBaUOcPOFTPxcROW1M8Uu5rozJvWFq-BpQ2_wZIS1W2wcIaUCt8w>
-    <xmx:gRNBaYUjtxbd05d92RegNQ7Ag7-Azd4WltAJdyRldm9SdUXE1gk14Q>
-    <xmx:ghNBaaUHui8PmH3cYIuaBmO3CtNCERhDmUrQGo7bnz4FrE7Ch4jw1mbp>
+    ohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopegsvghnrdhknh
+    hosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhes
+    tgholhhlrggsohhrrgdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghugh
+    hssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesgh
+    hmrghilhdrtghomhdprhgtphhtthhopegvmhhilhihshhhrghffhgvrhesghhoohhglhgv
+    rdgtohhmpdhrtghpthhtoheprhgurghmrgiiihhosehgohhoghhlvgdrtghomhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:hhNBaa6J2hPL93Qc__GW1MoUrecfx0qFdIy29VY8s5aMxHwIHPk0YA>
+    <xmx:hhNBaRTLRPiny4aCUZsejc6oe3DykR_ERQnkNXKMzj-Ofo1BdHYb0A>
+    <xmx:hhNBaQznMOu_Ovorn17ZsZBkHmxc08nWYaWEeKVQWVrqZOUCBAXIDA>
+    <xmx:hhNBaRqRNw7Y1rMErCWSpxGRTP3gE86B31gVJiwG-8KcjCkX-Ikvrg>
+    <xmx:hhNBaeJ57yPDgjcXjabD5FYPC1u-Ny8sfveP1xi6kjlnEgVKiojMMK_C>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Dec 2025 03:08:32 -0500 (EST)
+ 16 Dec 2025 03:08:36 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a5194a5b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 16 Dec 2025 08:08:30 +0000 (UTC)
-Date: Tue, 16 Dec 2025 09:08:22 +0100
+	by mail (OpenSMTPD) with ESMTPSA id dead1b0f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 16 Dec 2025 08:08:36 +0000 (UTC)
+Date: Tue, 16 Dec 2025 09:08:33 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Adrian Ratiu <adrian.ratiu@collabora.com>
 Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
@@ -86,11 +86,11 @@ Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v4 03/11] hook: provide stdin via callback
-Message-ID: <aUETdm_-JnL78s8o@pks.im>
+Subject: Re: [PATCH v4 05/11] transport: convert pre-push to hook API
+Message-ID: <aUETgWJ5DJaEpugO@pks.im>
 References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
  <20251204141535.1986263-1-adrian.ratiu@collabora.com>
- <20251204141535.1986263-4-adrian.ratiu@collabora.com>
+ <20251204141535.1986263-6-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -99,31 +99,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251204141535.1986263-4-adrian.ratiu@collabora.com>
+In-Reply-To: <20251204141535.1986263-6-adrian.ratiu@collabora.com>
 
-On Thu, Dec 04, 2025 at 04:15:27PM +0200, Adrian Ratiu wrote:
-> diff --git a/hook.h b/hook.h
-> index 11863fa734..51cab785ea 100644
-> --- a/hook.h
-> +++ b/hook.h
-> @@ -37,6 +38,43 @@ struct run_hooks_opt
->  	 * Path to file which should be piped to stdin for each hook.
->  	 */
->  	const char *path_to_stdin;
-> +
-> +	/**
-> +	 * Callback used to incrementally feed a child hook stdin pipe.
-> +	 *
-> +	 * Useful especially if a hook consumes large quantities of data
-> +	 * (e.g. a list of all refs in a client push), so feeding it via
-> +	 * in-memory strings or slurping to/from files is inefficient.
-> +	 * While the callback allows piecemeal writing, it can also be
-> +	 * used for smaller inputs, where it gets called only once.
-> +	 *
-> +	 * Add hook callback initalization context to `feed_pipe_ctx`.
-> +	 * Add Hook callback internal state to `feed_pipe_cb_data`.
+On Thu, Dec 04, 2025 at 04:15:29PM +0200, Adrian Ratiu wrote:
+> diff --git a/transport.c b/transport.c
+> index c7f06a7382..047f2cefba 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -1316,65 +1316,71 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
+[snip]
+> -	if (start_command(&proc)) {
+> -		finish_command(&proc);
+> -		return -1;
+> +	switch (r->status) {
+> +	case REF_STATUS_REJECT_ALREADY_EXISTS:
+> +	case REF_STATUS_REJECT_FETCH_FIRST:
+> +	case REF_STATUS_REJECT_NEEDS_FORCE:
+> +	case REF_STATUS_REJECT_NODELETE:
+> +	case REF_STATUS_REJECT_NONFASTFORWARD:
+> +	case REF_STATUS_REJECT_REMOTE_UPDATED:
+> +	case REF_STATUS_REJECT_SHALLOW:
+> +	case REF_STATUS_REJECT_STALE:
+> +	case REF_STATUS_UPTODATE:
+> +		return 0; /* skip refs which won't be pushed */
+> +	default:
+> +		break;
+>  	}
+>  
+> -	sigchain_push(SIGPIPE, SIG_IGN);
+> +	if (!r->peer_ref)
+> +		return 0;
+>  
+> -	strbuf_init(&buf, 256);
+> +	strbuf_reset(&data->buf);
+> +	strbuf_addf(&data->buf, "%s %s %s %s\n",
+> +		    r->peer_ref->name, oid_to_hex(&r->new_oid),
+> +		    r->name, oid_to_hex(&r->old_oid));
+>  
+> -	for (r = remote_refs; r; r = r->next) {
+> -		if (!r->peer_ref) continue;
+> -		if (r->status == REF_STATUS_REJECT_NONFASTFORWARD) continue;
+> -		if (r->status == REF_STATUS_REJECT_STALE) continue;
+> -		if (r->status == REF_STATUS_REJECT_REMOTE_UPDATED) continue;
+> -		if (r->status == REF_STATUS_UPTODATE) continue;
 
-Tiniest nit just to prove that I'm somewhat paying attention:
-s/Hook/hook/. This definitely doesn't warrant a reroll.
+The new code looks a lot nicer in my opinion. But one thing I wonder
+about is how these statements translate to the above switch statement.
+We ignore a lot more `status` values now compared to previously, and
+the reason for this is never explained.
+
+Am I missing anything obvious?
 
 Patrick
