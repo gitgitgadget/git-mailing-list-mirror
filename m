@@ -1,53 +1,53 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85112E413
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 09:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44B954652
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 09:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765876168; cv=none; b=SBptj5hUALnQ/VseWujrsLgKhQBHOpUqwhbYksK31Xj7SSf3LJwC/fCVKPx+VcHfNDWvb8ty0U4qZ0caXOZ4jaRlnG4HsNFkuEZqV0MMQDeu5ye3mEOdhZCrlVX7bcc5VtHTT8ENmdxoupoYBTRXnL8RnONLRYBwHtfh/eK7ALQ=
+	t=1765876187; cv=none; b=FELffzf9T6zdqHTigDrwZODxexD8IsQGCnrCaABFn8Gt8+QFTBMWQd2XBPgw3yVxMG9POtORseiLUaibGCtQRiuvOYEluCHuCD6R1VBoalF/j/QvpBGE3JSf5QKLFnwe2eRDgwHctsSEqAuCyf1ETrkaojx4DJVocbz6uMhHZ9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765876168; c=relaxed/simple;
-	bh=Co6nzye0TQky7swkzgftn/6kMx1JuUfCS58+Oaxi+Xw=;
+	s=arc-20240116; t=1765876187; c=relaxed/simple;
+	bh=uvpJDGTN9QtXPpl5LYyg9plZLO2KT2fXLO3FFB3hJhs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TjAyFBp5ijWnWSvOPW7myIXzP0u5wrN34/U/ZtogJ7IcM1GzXv9UVaQUOsIS/tC8IAmoGT59yarsGQzrkV9Zg4RBQvd/ZPQLoB4EpGsFTc7eKjTC5EL2cyoXriwUJ9fc9/aJ5stsdf3uWfn0Iu3RqkvLE7SkoNG464vtL4qEp5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=W0xVjJ/5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VisXtrk1; arc=none smtp.client-ip=202.12.124.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=RUjhaBTe7+ekaLLRx2SCHQz+j2/U0CpEnrW9Kto82k5B4GjBAh+6h+m3GYNSlXP+QaWOvlaEbeOOcHyUfU7ipk2EBRXYlJoKLfdpNr2YTAlYp7P6iGC9Xq8atiB3kPzt5vTx7aP3H3wxxmwW4g+J3FFs6znW59KAEPJEx8oW/fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nNEw6Qmt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XwHxxUN7; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="W0xVjJ/5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VisXtrk1"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E67867A017D;
-	Tue, 16 Dec 2025 04:09:24 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nNEw6Qmt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XwHxxUN7"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B40D17A018B;
+	Tue, 16 Dec 2025 04:09:44 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 16 Dec 2025 04:09:25 -0500
+  by phl-compute-09.internal (MEProxy); Tue, 16 Dec 2025 04:09:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1765876164; x=1765962564; bh=j1Py5QTrtq
-	RIFVzQh+ChNbR1gNZwHR+rJovmrSnAtog=; b=W0xVjJ/5yW8/OaMslJ4lRQb3fD
-	AEW8aWaqtW8n/fF3A0aMEJMhRygwDnOa9R3X/U4dEn8qTvFgydlGOl0eekx2jfYo
-	BqAGDjn76cWqlbFtHKUEmFQm0t9k0wxoj88rU0zHavx26QcGJ4EBzw8/MwJU38P6
-	K8zxNArtP4DQKnNWIyxYofKT1a5auBNZYhRA3iX5bicCxzl8lcQq9TY5mG9nrzJh
-	ljETOsbJ0XoM3pp3I4QapTNjXnTOVcjXvX0/CuvNn2yyZrbgVUquIdCVXkLSfeHp
-	CLEBE7vUGHSFvwG20SVixN0ihzc5FgCZkvEzxw5Rlditax7LmckjGeo6LJvg==
+	:subject:to:to; s=fm1; t=1765876184; x=1765962584; bh=CiVTriSYyu
+	YGAJzjgvfmOwTwVBjJJnqPKZIbXxbGu6E=; b=nNEw6QmtRR/yZwgWqd336/+lN3
+	Rw0/0hrUXmxmJdiNPQYhPPSB44l1dq4DD2UqeDfzDSBOIXCpXO8QcKLIdkCMjKB4
+	4KkB55EbhELdCjreCRx/hGvwlnO6EvSdEICCgs3WKZeTGWfERgzE4XvXsymRcUne
+	xe3veDCqILZlyJG9Ja2pQS9y8kHr7650Mjt1hTvQOgk8MXTSkzudnVr4cth422z1
+	vJCGRGkDBWXGZfrHU/cUuewL1vrvo9yUaikDaUQ1NeyCA8X1WdtLWCbJFePTtRp1
+	w0xHKGIRpQbLrSUsVQgV5WasQNFW07r7jSnpMLaEt5dnI7ZSlBIp/pfmgWFg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765876164; x=1765962564; bh=j1Py5QTrtqRIFVzQh+ChNbR1gNZwHR+rJov
-	mrSnAtog=; b=VisXtrk1J5Q5P54Th99XZY35lEL58yR9bmF+/ZM6Gbfkz/VcF09
-	eIVUQmObef1spTKi00knRVSR7n2KeLvH5gsy5MPabCTcMSmgVz6vBfrq+3aM03tS
-	Z7elWkRpCsQecWdbOc2ZAq9pKj+y3F7Q53UGjKkdoKgOEnBazWBsUaywq1aHzpz6
-	BxEAXuzaX90UEdNFYbRLKIOwBoppxxX8qYc8hlx8IS9kNlCNkNr4hTiPxuxlPKw0
-	oh+2grX9E99ez27DjsjAj52L5d6CaiGtD2lCYMWjCVCJ5vX1CNZrdME34Yvh+x3x
-	9Nf7/78C0+IRszGCITxWIyRghi1ZgEvy16w==
-X-ME-Sender: <xms:xCFBaYxJJIn0z3D0w7n2bTHPMutPzYfDU71QDmeYc24ll7J_ENTzww>
-    <xme:xCFBaSS4KgxbFad6bPIG8BBhjFBLPi3m758eQh4nsLt5IPN9Or4G7FXjn_USjU4op
-    YMXYYvq19H8O5djywaT_kHMgZnYSfSQDVj768M0McGnL5kVWt2v>
-X-ME-Received: <xmr:xCFBaX-1Gb0A_e1-euq0TxUb9OA3N2pjTTUt6eHkenzfc-3Iez6rzU_TN2kmqqdm7MWY-idS4XVsTJgH3Goqi3KMArHjPv8nIeceZmbVeA>
+	1765876184; x=1765962584; bh=CiVTriSYyuYGAJzjgvfmOwTwVBjJJnqPKZI
+	bXxbGu6E=; b=XwHxxUN7IFqkAvtRY9oc8wldiO36T3/lqSwJvY/AAoinmE88AxL
+	MbKzNsRLYEhPXE+QkOEUxJINVekYYHhMULEbJXFP5YmT/duWs/54WWnqNNb/um2T
+	zHSB6piF8duyYSqyqu23M1VW+LLCDa+56XnWZ18sGwLFQTOaV11UhC/h5I2vY4jk
+	20F9b5x0F/egIb5RusoxMj8X77/M0V39OK/0KSuOK6cNwLDKVh1kyHnQXIssL0Js
+	ymh0QJ30anPe8a7dSM7ELItogHZOozW7cXmtm1UYBS25cTe+VMQflFdrQ+BaKQQP
+	KoRHEUHrdn5y7gc4rGjJqHA/XnL4x0sB1uQ==
+X-ME-Sender: <xms:2CFBad3qmMBxvLqxacCxWxzj5feVddzr1QX1Yi_ar8gcy1U7dANPxg>
+    <xme:2CFBacSeTFA9KHAElWBiRuA4NkTQeKh3Em9FlDif_YLOR8zIiVeGjae-XX-rA-th6
+    ARVtJzVG1FkZ84hcMhq5VIDbEMq0svZfNXsEJ1cHOVIEzvOjV-ltQ>
+X-ME-Received: <xmr:2CFBaZdzbuW49BrOIlhnH-cVeZEZtdgv22J844LHJKvRAci9HR6AARX1fzQEnB49lFIsVoSTQQq3N6jWy3dB4Daw-waS7XYjizsYEgMS0A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefledvkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -55,30 +55,42 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefledvkecutefuodetgg
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:xCFBaRqq8Dcu4_27RowokL7Nf1Y7jh1pUqnDEbluBXLPAuiMfcEvEA>
-    <xmx:xCFBaclGClAEjML950BphAY3Ivl3_xrOFjDrYAzEt4lbNqkeXpqitQ>
-    <xmx:xCFBaQKl3HzuW-l5PIIjmKmrzM0YGWei20l7LRC4HDCU00JtiJYp2A>
-    <xmx:xCFBaZzAnhu2HngIKSg2sqrGMO-Ya76qqnnbgenSZbXPO8-ZrZOBgA>
-    <xmx:xCFBaUj9J7IckfIEjQ6qthxedkvXukG9dDpif4Nc2GlvvjQZ9aOX50KY>
+    drihhmpdhnsggprhgtphhtthhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegvmhhilhihshhhrghffhgvrh
+    esghhoohhglhgvrdgtohhmpdhrtghpthhtohepjhhrnhhivgguvghrsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtoheprhgurghmrgiiihhosehgohhoghhlvgdrtghomhdprhgtphhtth
+    hopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphhhihhllhhi
+    phdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:2CFBaVdnjc-4yfEWq4y_uekrIvCtEo_ABeQfgaNRk4mxJXEXGfHdMA>
+    <xmx:2CFBab1tjxe26RSN3P68p0V1COpLJTfX7UkF4p5CMB81xkI-_52FPQ>
+    <xmx:2CFBaV9ayutx7gDJS2aWB2DcBTxEJIk4iBTT01kESwLNXaqtuCfm4Q>
+    <xmx:2CFBaY7vuLMvmEejgIaXGniimHHFHwXU6zEo5epY47EtZLdtd-hlvA>
+    <xmx:2CFBaSVbxLIPl2um3U2AigIXZymUsx8RkrEt2MqMcBr7_YC3MPAqK0ec>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Dec 2025 04:09:24 -0500 (EST)
+ 16 Dec 2025 04:09:42 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 35b0adf4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 16 Dec 2025 09:09:22 +0000 (UTC)
-Date: Tue, 16 Dec 2025 10:09:14 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 84f7dd04 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 16 Dec 2025 09:09:41 +0000 (UTC)
+Date: Tue, 16 Dec 2025 10:09:38 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 03/10] packfile: refactor kept-pack cache to work with
- packfile stores
-Message-ID: <aUEhusU3iu6TjF16@pks.im>
-References: <20251215-b4-pks-pack-store-via-source-v1-0-433aac465295@pks.im>
- <20251215-b4-pks-pack-store-via-source-v1-3-433aac465295@pks.im>
- <6sverdiyw6y4k5yiocp2v7yhogfvfpmajyiujbmfhzd3n3gb72@wni25ru2m236>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Aaron Schrab <aaron@schrab.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v6 02/10] submodule: always validate gitdirs inside
+ submodule_name_to_gitdir
+Message-ID: <aUEh0tqUra-Y_yZd@pks.im>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20251213080817.347922-1-adrian.ratiu@collabora.com>
+ <20251213080817.347922-3-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,47 +99,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6sverdiyw6y4k5yiocp2v7yhogfvfpmajyiujbmfhzd3n3gb72@wni25ru2m236>
+In-Reply-To: <20251213080817.347922-3-adrian.ratiu@collabora.com>
 
-On Mon, Dec 15, 2025 at 03:56:25PM -0600, Justin Tobler wrote:
-> On 25/12/15 08:36AM, Patrick Steinhardt wrote:
-> > diff --git a/packfile.h b/packfile.h
-> > index 33cc1c1654..701a3b4946 100644
-> > --- a/packfile.h
-> > +++ b/packfile.h
-> > @@ -210,6 +210,19 @@ struct packed_git *packfile_store_load_pack(struct packfile_store *store,
-> >  int packfile_store_freshen_object(struct packfile_store *store,
-> >  				  const struct object_id *oid);
-> >  
-> > +enum kept_pack_type {
-> > +	KEPT_PACK_ON_DISK = (1 << 0),
-> > +	KEPT_PACK_IN_CORE = (1 << 1),
-> > +};
+On Sat, Dec 13, 2025 at 10:08:08AM +0200, Adrian Ratiu wrote:
+> Move the ad-hoc validation checks sprinkled across the source tree,
+> after calling submodule_name_to_gitdir() into the function proper,
+> which now always validates the gitdir before returning it.
 > 
-> Looks like while we are here we are renaming some existing flags and
-> storing them in an enum instead. Makes sense, but maybe we should also
-> explicitly mention this in the commit message since much of the fallout
-> in the diff relates to this change.
-
-Fair, will add to the message.
-
-> > +
-> > +/*
-> > + * Retrieve the cache of kept packs from the given packfile store. Accepts a
-> > + * combination of `kept_pack_type` flags. The cache is computed on demand and
-> > + * will be recomputed whenever the flags change.
-> > + */
-> > +struct packed_git **packfile_store_get_kept_pack_cache(struct packfile_store *store,
-> > +						       unsigned flags);
+> This simplifies the API and helps to:
+> 1. Avoid redundant validation calls after submodule_name_to_gitdir().
+> 2. Avoid the risk of callers forgetting to validate.
+> 3. Ensure gitdir paths provided by users via configs are always valid
+>    (config gitdir paths are added in a subsequent commit).
 > 
-> Now the kept cache is accessed through the packfile store instead of the
-> repository. Make sense.
-> 
-> Since we are also changing the name from `kept_pack_cache()`, there are
-> some comments in "packfile.h" that are now outdated. We may want to
-> update them here.
+> The validation function can still be called as many times as needed
+> outside submodule_name_to_gitdir(), for example we keep two calls
+> which are still required, to avoid parallel clone races by re-running
+> the validation in builtin/submodule-helper.c.
 
-Ah, indeed, thanks for catching! I've made the changes locally, but will
-hold off sending them until I've got more feedback.
+Yup, this looks obviously correct now as the sites where we remove calls
+to `validate_submodule_git_dir()` are all sites where we call
+`submodule_name_to_gitdir()` immediately before.
 
 Patrick
