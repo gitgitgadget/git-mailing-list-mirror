@@ -1,178 +1,317 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A9E3396E6
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 19:12:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E32629B8E5
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 19:35:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765912325; cv=none; b=YkrenqkMH3COXw41RlpzO6y3oT4vPn66tc3BeUfrITvlzj+hd/aXujSXMFUh7iTK5I3vWlPoNRSKSXB76A2O3bd1ydSfXCM3g5eGWp1sOr9RYLURDDJiDep9RJipGVn4WmpK9nZRUw3gT0XHPvQME8VQvJZuuVxlvmm8ghJCVOA=
+	t=1765913725; cv=none; b=Eo9SNvKrKKytgWfWSVxyHoyaJrnIE6nGZnTGLyaaNNrMp5hp6KTMKvr1MwutQI8Z0CO5ryynAXRQfDhtS/eJA8vVvXufiUlZ2U5hGK3gJXGKw14ltVqlttWNRKNuTO07mR7m9AHzA5sZweKkr/8sprbM15R3hPJLfh8Kb4mUwI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765912325; c=relaxed/simple;
-	bh=bHPFEYZm5l97Dkib8MEdyGjBQRGsqkn1qeIop2jJpQs=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=aWwUWrp3y/Vsg/EwFiBfQWYwCQ3nGW0+7tNAvK2Dg8EY7PKo852dwAzNkS+mm3a+/6SfBf5dLWNBbQbu5zHbGzSaw3C66trbEiBYH39ah/W0UlckctM61w0+mQEMSeTCWEom8klGT6/QJSP/8/nOP1CLHsSDo/DdUciX9tIF01Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=O1Fv4J2g; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1765913725; c=relaxed/simple;
+	bh=HzBT+ENURFC6k7yL65AH0QUMGEcHNroiiCcKm0lKsJw=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=Lip3WkJJgJ5D4Mx2XDrvUNDFDZezuIK1F011BYqPXwzfWz2TbY+0wWDShvLWVMQiL49IM49RViiObtzfzukMusoscusHY1FBCogUY64etWako8RBSvgCMi+4w23ZCfxw11sDU+X90awGC0xtQakrUgqz+dp0bmMafotDIdQHXjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=Wvu/1915; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="O1Fv4J2g"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1765912320; x=1766517120; i=l.s.r@web.de;
-	bh=W+EraQt9ufmDHaAbfVU+GgKxNYbDITITJq5lqTjUASA=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
-	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="Wvu/1915"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1765913707; x=1766518507;
+	i=johannes.schindelin@gmx.de;
+	bh=7SkdVJiEron3OI9j9LkmkRPa9GFR/f+m/GU19S6OVEg=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=O1Fv4J2gs9n8TWw23C/DM+7OCT+u8YFc+IHnim23+3ls8O/EoH6uO2QxIIF3g7lK
-	 lSjIntQ4kmTd2UMFT8h1SipikMbKvpad2bVROYa1vWq/Tco5lKiCKLp6LQdMcHF+H
-	 Nd53pzTuWsBBacGB3lsTRDxHxQT4bUKZfJPmF8O8QQ4MfavnhvfOl+SX24CORWygA
-	 kdPyBqT8j9dbgI5WGaQbc8ltlw61fMO9WWLcozh2YZC9ndz0Bv2Pvz00kphMD6Iri
-	 T8k7pHP675Azws+WFROLJiifzmnu3BAyd52jdLPGZfeolLx4vqFH4Zzff8U/7asmw
-	 4cjnVestC8WVNaUo6g==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.27.139]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MlsKH-1wDgWZ1OPz-00okKE; Tue, 16
- Dec 2025 20:12:00 +0100
-Message-ID: <d2f033fc-222a-4fe8-8d24-6501e6f7a4c3@web.de>
-Date: Tue, 16 Dec 2025 20:11:59 +0100
+	b=Wvu/1915YATRM5Ggia+Qmvk0KRDo7mnEPYBpfC4ihsGTrjAGE72UP+g+nHxAdLNu
+	 iiT49jSgpFe6FITieCAEm5GLl50aKTU9O3ZfQ5Pe5muZ7aH8Ro2hDV0mg/nKS2Hck
+	 9Ag9CNF22cwwoeZY4sz08OKTx+5F9c4xazLZoh8+b2PpPywAHrH6qNgPY9Os6l9tp
+	 1obBC7opafWN63qRp13nHIgQRMvaiZAKOTYYx+/uZgNnCCXrJnk/m8ZVZec+iaAWR
+	 1aXWY7HkntNHJo3TSIeRGE0C1RAIpXRn+GtDR+csZY3GgNYrBXsUHTSy37e9XgN7F
+	 V8OMoiHZSASC79wJWA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.212.212]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQMuX-1vIAg73sy9-00WY66; Tue, 16
+ Dec 2025 20:35:07 +0100
+Date: Tue, 16 Dec 2025 20:35:05 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>, 
+    Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v3 00/10] Prepare Git's test suite for symbolic link
+ support on Windows
+In-Reply-To: <xmqq345a46b1.fsf@gitster.g>
+Message-ID: <af386607-127c-9acd-6d08-89380c1df570@gmx.de>
+References: <pull.2009.v2.git.1764946945.gitgitgadget@gmail.com> <pull.2009.v3.git.1765885577.gitgitgadget@gmail.com> <xmqq345a46b1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] macOS: make Homebrew use configurable
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-To: Git List <git@vger.kernel.org>
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
- =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
- "brian m . carlson" <sandals@crustytoothpaste.net>,
- Koji Nakamaru <koji.nakamaru@gree.net>,
- Yee Cheng Chin <ychin.macvim@gmail.com>
-References: <53690064-1c98-40e9-8b9a-7ba6bee63703@web.de>
- <98695ef0-b6bc-4929-8581-2ecb894cd604@web.de>
-Content-Language: en-US
-In-Reply-To: <98695ef0-b6bc-4929-8581-2ecb894cd604@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:lTOpOt9G7wQH3SCwRQ9elV6lKLllvP338n+SBfS4jrl3eyn3r3u
- smSuhXZpITXHvp0vMLPMOHFeKyXNAMZwozjjGvz62zDikdU95PdHjsS7//RnaFPkC68+9XW
- j77KkKeD0Z/lt4KG1vIlp67YuTqAzfmqCFcAOdJXyEOR96JT8C9lbU83T1kCJDaKtpPGI9w
- wdSAwCzr026DU3wq8Z0TQ==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Eln65n++qv7q5lzlcHDCqu1DeuaigsYXS1tpdQB2mMNwxTd0uYl
+ geWx/WUzLHP0XGy7KVMQApYOP1/RPEFHqNR0vakqR9gtyzy753G3yUjrNQ1CAEga8I/4mu9
+ ur2Z6HXXYKQbt/czAz99qp0Dnp6wXj7nLnv/7/H/TqtcOYSoMVvlBJiMowB9s1DUU2RjdHT
+ IUeAJM3G/OuZRPaOVW1YQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:SE8r25ZLaqg=;QdVcRkOSNQIhok9uZ0Jzjv2AU0M
- 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
+UI-OutboundReport: notjunk:1;M01:P0:1IAbQwxzn34=;Qjx2/7Se5Sn03BDLHGiaK2S+f22
+ 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
+Content-Transfer-Encoding: quoted-printable
 
-On 12/16/25 7:53 PM, Ren=C3=83=C2=A9 Scharfe wrote:
-> On macOS we opportunistically use Homebrew-installed versions of
-> gettext(3) and msgfmt(1).  Make that behavior configurable by providing
-> make variables to disable Homebrew usage (NO_HOMEBREW), to allow using a
-> non-default installation location (HOMEBREW_PREFIX), and to control the
-> use of the individual items (USE_HOMEBREW_GETTEXT, USE_HOMEBREW_MSGFMT).
+Hi Junio,
+
+On Tue, 16 Dec 2025, Junio C Hamano wrote:
+
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >=20
-> Precisely Link the gettext keg (the opt/gettext subdirectory) instead of
-> risking to link random other Homebrew-installed libraries as well.
+> > It has been a minute or three since the time when Windows versions wit=
+hout
+> > symbolic link support were common, therefore there are plans to turn o=
+n that
+> > support in the MSYS2 runtime on these Windows versions by default, see
+> > https://github.com/msys2/msys2-runtime/pull/114 for more details about=
+ this.
+> >
+> > To prepare for this, I am working toward upstreaming Git for Windows' =
+own
+> > support for symbolic links. And to prepare for that, in turn, I am her=
+eby
+> > contributing preemptively the fixes required to eventually let Git's t=
+est
+> > suite pass when both MSYS2 runtime and Git support symbolic links.
+> >
+> > As a bonus, this patch series also contains fixes for the Perl tests (=
+which
+> > were broken for a few years, unnoticed because the CI runs need to sav=
+e on
+> > runtime and therefore skip the Perl tests because the consume a lot of
+> > time).
 >=20
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
->  Makefile         | 28 ++++++++++++++++++++++++++++
->  config.mak.uname | 28 ++++++----------------------
->  2 files changed, 34 insertions(+), 22 deletions(-)
+> Great to hear a good news.
+
+FWIW this was part of v1 already:
+https://lore.kernel.org/git/2d329837e34a88cfe28be728fe24bb5a2c6a9752.17644=
+40906.git.gitgitgadget@gmail.com/
+
 >=20
-> diff --git a/Makefile b/Makefile
-> index cf3f4b585f..a97e9e4d7d 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -100,6 +100,18 @@ include shared.mak
->  # specify your own (or DarwinPort's) include directories and
->  # library directories by defining CFLAGS and LDFLAGS appropriately.
->  #
-> +# Define NO_HOMEBREW if you don't want to use libraries and commands
-> +# installed by Homebrew.
-> +#
-> +# Define HOMEBREW_PREFIX if you have Homebrew installed in a non-defaul=
-t
-> +# location on macOS or on Linux and want to use it.
-> +#
-> +# Define USE_HOMEBREW_GETTEXT to link against the gettext library
-> +# installed by Homebrew, if present.
-> +#
-> +# Define USE_HOMEBREW_MSGFMT to use the msgfmt command installed by
-> +# Homebrew to compile message catalogs during build, if present.
+> > Changes since v2:
+> >
+> >  * Polished commit messages.
+> >  *=20
 
-Do we even need these fine-grained USE_ variables?
+That was just an oversight: GitHub continues enumerations on the next
+line.
 
-Ren=C3=A9
+> > Changes since v1:
+> > ...
+>=20
+> Curious what the second bullet point was ;-)
+>=20
+> The step [6/10] somehow did not make the list.
 
+Strange. I found a bounce, with this incredibly illuminating message:
+
+	Message rejected. For more information, go to https://support.google.com/=
+mail/answer/69585
+
+That's it. That's the entire message. If you can make any sense of this,
+I'd be quite interested to learn something new.
+
+> I can reconstruct it
+
+... by fetching from the tag that is mentioned in the cover letter. That's
+what Git is really good at, after all, fetching code changes.
+
+> by looking at the range-diff below (i.e., no content changes, just
+> removal of bunch of lines from the proposed log message and credit
+> for Patrick),
+
+... which suggests that I simply made a rebasing mistake and accidentally
+dropped the credit, and did not notice it in the range-diff because I had
+been staring at the diffs for too long. That's exactly what happened,
+please reuse the version from v2.
+
+Ciao,
+Johannes
+
+> but it briefly made me wonder if steps 6-10 from posted version left
+> your repository a bit prematurely and they wanted to have a bit more
+> work on them, to be described on the empty bullet point (*) line above.
+>=20
+> In any case, thanks for updates.  I didn't see anything wrong in
+> what was shown in the range diff for [01-05/10].  Will replace what
+> has been queued.
+>=20
+> > Range-diff vs v2:
+> >
+> >   1:  2d329837e3 =3D  1:  2d329837e3 t9700: accommodate for Windows pa=
+ths
+> >   2:  b97afa9a5c =3D  2:  b97afa9a5c apply: symbolic links lack a "tru=
+stable executable bit"
+> >   3:  96e279f50e !  3:  f42a2f14bc mingw: special-case `open(symlink, =
+O_CREAT | O_EXCL)`
+> >      @@ Commit message
+> >           non-existent file and create it when given above-mentioned f=
+lags.
+> >      =20
+> >           Git expects the `open()` call to fail, though. So let's add =
+yet another
+> >      -    work-around to pretend that Windows behaves like Linux.
+> >      +    work-around to pretend that Windows behaves according to POS=
+IX, see:
+> >      +    https://pubs.opengroup.org/onlinepubs/007904875/functions/op=
+en.html#:~:text=3DIf%20O_CREAT%20and%20O_EXCL%20are,set%2C%20the%20result%=
+20is%20undefined.
+> >      =20
+> >           This is required to let t4115.8(--reject removes .rej symlin=
+k if it
+> >           exists) pass on Windows when enabling the MSYS2 runtime's sy=
+mbolic link
+> >   4:  9639e04ac6 =3D  4:  70237394c6 t0001: handle `diff --no-index` g=
+racefully
+> >   5:  3db0599d91 !  5:  0d371ee552 t0301: another fix for Windows comp=
+atibility
+> >      @@ Commit message
+> >      =20
+> >           Just like 0fdcfa2f9f5 (t0301: fixes for windows compatibilit=
+y,
+> >           2021-09-14) explained, we should not call `mkdir -m<mode>` i=
+n the test
+> >      -    suite because that would fail on Windows (because Windows ha=
+s a much
+> >      -    more powerful permission system that cannot be mapped into t=
+he simpler
+> >      -    user/group/other read/write/execute model).
+> >      +    suite because that would fail on Windows.
+> >      =20
+> >           There was one forgotten instance of this which was hidden by=
+ a `SYMLINK`
+> >           prerequisite. Currently, this prevents this test case from b=
+eing
+> >   6:  f2da7d4d50 !  6:  91bd72062c t0600: fix incomplete prerequisite =
+for a test case
+> >      @@ Commit message
+> >           However, the `preferSymlinkRefs` feature is not supported on=
+ Windows,
+> >           therefore this test case needs the `MINGW` prerequisite, too=
+.
+> >      =20
+> >      -    There's a couple more cases where we set this config key:
+> >      -
+> >      -      - In a subsequent test in t0600, but there we explicitly s=
+et it to
+> >      -        "false". So this would naturally be supported by Windows=
+.
+> >      -
+> >      -      - In t7201 we set the value to `yes`, but we never verify =
+that the
+> >      -        written reference is a symbolic link in the first place.=
+ I guess
+> >      -        that we could rather remove setting the configuration va=
+lue here, as
+> >      -        we are about to deprecate support for symrefs via symbol=
+ic links in
+> >      -        the first place. But that's certainly outside of the sco=
+pe of this
+> >      -        patch.
+> >      -
+> >      -      - In t9903 we do the same, but likewise, we don't check wh=
+ether the
+> >      -        written file is a symbolic link.
+> >      -
+> >      -    Therefore this seems to be the only instance where the tests=
+ actually
+> >      -    need to be adapted.
+> >      -
+> >      -    Helped-by: Patrick Steinhardt <ps@pks.im>
+> >           Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.=
+de>
+> >      =20
+> >        ## t/t0600-reffiles-backend.sh ##
+> >   7:  ea74e678f9 =3D  7:  c2d3212f11 t1006: accommodate for symlink su=
+pport in MSYS2
+> >   8:  1619ea4a3b =3D  8:  03ff6d756d t1305: skip symlink tests that do=
+ not apply to Windows
+> >   9:  807bb679cd =3D  9:  4ab6aaf2cf t6423: introduce Windows-specific=
+ handling for symlinking to /dev/null
+> >  10:  945306b5d4 =3D 10:  5f056902df t7800: work around the MSYS path =
+conversion on Windows
+>=20
+>=20
