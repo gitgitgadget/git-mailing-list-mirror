@@ -1,82 +1,129 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E93347C6
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 07:52:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBA030E827
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 08:08:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765871527; cv=none; b=VusdYY6uoUVD948eRo0eeddm/oCKeRjS/vu6vex6lSc56kXHn49e73yOpADD05stEUc7CUbnpwSxwBJzz/s+Hixbewls+aanSQTBn7d7J+vZfmiR4VAbyw2f1iX1/Bi6NB5ns1c8fzGYaVnXmOL6021Z4LqP/nAWTRa0Pwrw5GQ=
+	t=1765872520; cv=none; b=Wm31BFRmV7yxTgz8Y3YOeYoP0z7xeJ1+/jsKQm/mDJQtuqw+9RyfdPNaFenFqCjb9x6ht8MxzU7Eu5o3dtngisqzRu/14YkQyeFoeE0jwoVE9b7zoE9o+261Fo/KPFNUwNueq3yHV13qpd6njoskJwauNUlxaOhVsMvQN66bs+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765871527; c=relaxed/simple;
-	bh=jjTMJLZ1cPpm06ilo/HqjiZ2Z7yKfnihsU7E9sPKnYQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Yq1vKhzw6LSUNcKKwh4KrONcIweIb6U3Aka/iPh9Xy9VMKlO613EFTXpDHz7Lj06gZsrXHwgdvPGT4u9jPyIv6L+qFqBO2k5nxiPPs4hLizZ4i/uo38dtrMy5JW50mws50qMSUmh3y62mxpPGBvxBOa+/Q9wKqmfNpJcqCyjCd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp1.bon.at (unknown [192.168.181.104])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4dVp405nnSz7TLs9
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 08:10:40 +0100 (CET)
-Received: from [192.168.0.103] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4dVp3p6QqkzRpKY;
-	Tue, 16 Dec 2025 08:10:30 +0100 (CET)
-Message-ID: <be069975-8b0f-4915-8c50-0dcbf6efb142@kdbg.org>
-Date: Tue, 16 Dec 2025 08:10:30 +0100
+	s=arc-20240116; t=1765872520; c=relaxed/simple;
+	bh=z+FJEtXs19DzNVYpHLMFhm2HjdWwhkw16yqD0/axl7o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ocmzt5x4lyOb/uwjFzAMqNr4pUQOSlaNO0ZNr659Ur0ahUeT+gi5ZBDGMxHuPXdMzPOs2DhUZOPf9rS31cCfIDqFB3vJvWckZehv49gzdopk9sk5CCl6SfzA29PIUYXkmCkREcF6XcDw4KawqnFgvrCA95x2YWSjm1ufY4+6CS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=meu5yAZU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=y8mjPtTE; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="meu5yAZU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="y8mjPtTE"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2EC091D00117;
+	Tue, 16 Dec 2025 03:08:34 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 16 Dec 2025 03:08:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1765872514; x=1765958914; bh=S95Klae1c/
+	dQudYsa0pfGihV1iUnryVIQaQi+k8yXl0=; b=meu5yAZUSEfBDz2ZxjMra62+B5
+	lxHy40EnD+hoRZ5kArpywVUd7mED3RFIeX8ouUpHZrBnj7Imvi0CxgNBdt3aapyY
+	mMCwpb+W+CJR7mEcLLBieFNYdHiQS6rgB4f114qR2Kw+jAVnAcHV7/5BuPNLD3Xd
+	g6LnKoNG3ve4P1mXY8VwReNyUXzRu32Iiu43ACPfcwmlOpL8gp2R6IDEBmlh2bNx
+	noEPgFmc1zRrfbAvSTn8X1egRqyWc/7yJjbl/DvzujWuKEX8mIBI6kI+v6UvPXck
+	lU9YKCes1GZJm/QwhVLpSKwLVt9YcySggJQ0SbMJsH26whHPO+MyTlUNT3TQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765872514; x=1765958914; bh=S95Klae1c/dQudYsa0pfGihV1iUnryVIQaQ
+	i+k8yXl0=; b=y8mjPtTE70gDEqFixdgmFFwevMzAbM5bpuhTzAfUu7MHRWchNYz
+	cnufRIIdohd/DilX7w1bermkDRxd8J8a7QLzRe74oU5d/NJni+ISJ9Rs9q4CSW8b
+	kxCEr9HFJcHR+7D1aUc5dluuM31VT7s9UNue7LZcUu02KY/6FS8xeuekL1/ZEfhE
+	jpw9GI4MQlZ07naUI6/KkdRXOxgFfz8mOB8sR9ffVeXtBjINBPvxGzu4Id0OJnbQ
+	9EE/lHQa8pLKIHouJH00w6njtWDLZWtu4224W1FDExfkSKU4ipeBneC+A2Vhn+Y2
+	5jTXhSbsItnKph3zUbt29rDeLJww0jzD4qA==
+X-ME-Sender: <xms:gRNBaSSgP1yiC0bzVFf41wcPh0_uP_wJdyw7XrCEVj5G97JNulYYzA>
+    <xme:gRNBaUVu88HV872JhOMG-fqqbNXCQR5jfSdqYLhkUEBnKh9jWuIN_nLwrm6voIecb
+    CGMAKY8O0zraUgehJ47QwqNXDR3y01A-iHQWXOBOnXwaUZ5K5Br_w>
+X-ME-Received: <xmr:gRNBaUQq-jp1YsItK3nrH1QsHMcgfoo3G0n8N6nAvksjC-87n1bYhoHCukK5Rdmn10921VKxQ_32fHgNaSue2zQE8PysN6wDTSfYGMiUNw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefleduhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    oheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopegrughrihgrnhdrrhgrthhiuhestgholhhl
+    rggsohhrrgdrtghomhdprhgtphhtthhopehruggrmhgriihiohesghhoohhglhgvrdgtoh
+    hmpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghmihhlhihshhgrfh
+    hfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprd
+    ifohhougduvdefsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:gRNBaU0Yov3pxY9iu51AWoUECWSG7sbeWa8clyoe6M8d7z7mPy3Y1w>
+    <xmx:gRNBacde8yhoMIXBhW0qJtt7oI3AUg05wtWPbBpBZ2a7xB8-EIGgqg>
+    <xmx:gRNBaUOcPOFTPxcROW1M8Uu5rozJvWFq-BpQ2_wZIS1W2wcIaUCt8w>
+    <xmx:gRNBaYUjtxbd05d92RegNQ7Ag7-Azd4WltAJdyRldm9SdUXE1gk14Q>
+    <xmx:ghNBaaUHui8PmH3cYIuaBmO3CtNCERhDmUrQGo7bnz4FrE7Ch4jw1mbp>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 16 Dec 2025 03:08:32 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a5194a5b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 16 Dec 2025 08:08:30 +0000 (UTC)
+Date: Tue, 16 Dec 2025 09:08:22 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Adrian Ratiu <adrian.ratiu@collabora.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v4 03/11] hook: provide stdin via callback
+Message-ID: <aUETdm_-JnL78s8o@pks.im>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+ <20251204141535.1986263-1-adrian.ratiu@collabora.com>
+ <20251204141535.1986263-4-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Would it make sense to add a commit.signOff config?
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
- =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
- Stefan Haller <lists@haller-berlin.de>, Git <git@vger.kernel.org>,
- Elijah Newren <newren@gmail.com>
-References: <86c5d40d-5a06-4a69-90d8-a737685b0536@haller-berlin.de>
- <aT7lkXl65-TBIsRS@Carlos-MacBook-Air.local> <xmqqsedc8w7k.fsf@gitster.g>
- <aT9iu9He3yJ3npWX@fruit.crustytoothpaste.net> <xmqqldj48pyl.fsf@gitster.g>
- <CABPp-BGCwjTBEi4wkg=065QofiO9ZL+9XVCCcTiHriXqgH1Szw@mail.gmail.com>
- <xmqqwm2n40sf.fsf@gitster.g>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <xmqqwm2n40sf.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251204141535.1986263-4-adrian.ratiu@collabora.com>
 
-Am 16.12.25 um 03:29 schrieb Junio C Hamano:
-> Elijah Newren <newren@gmail.com> writes:
-> 
->>> diff --git c/Documentation/signoff-option.adoc w/Documentation/signoff-option.adoc
->>> index cddfb225d1..0b869dfbe4 100644
->>> --- c/Documentation/signoff-option.adoc
->>> +++ w/Documentation/signoff-option.adoc
->>> @@ -16,3 +16,15 @@ endif::git-commit[]
->>>  +
->>>  The `--no-signoff` option can be used to countermand an earlier `--signoff`
->>>  option on the command line.
->>> ++
->>> +As it makes it harder to argue against one who tells the court "the
->>> +log message of the commit ends with a Signed-off-by trailer by person
->>> +X, but it is very plausible that it was done by inertia without person
->>> +X really intending to certify what DCO says, hence the Signed-off-by
->>> +trailer is meaningless", if we add more publicized ways to add
->>> +sign-off automatically, Git does not (and will not) have a
->>> +configuration variable to enable the `--signoff` command line option
->>> +it by default.
->>> ++
->>> +There exists `format.signoff`, but that is a historical mistake, and
->>> +it is not an excuse to pile on more mistakes of the same kind on top.
->>
->> This feels like it's missing context (it'll take the reader a while to
->> figure out why the paragraphs are there and that the two are related),
-> 
-> Very true.  It may be sufficient to leave this part unmodified,
-> keep the updates to gitfaq document, and do nothing else.
-Please do leave a pointer here. People who want to automate --signoff do
-not visit gitfaq, but will search in the command's manual page.
+On Thu, Dec 04, 2025 at 04:15:27PM +0200, Adrian Ratiu wrote:
+> diff --git a/hook.h b/hook.h
+> index 11863fa734..51cab785ea 100644
+> --- a/hook.h
+> +++ b/hook.h
+> @@ -37,6 +38,43 @@ struct run_hooks_opt
+>  	 * Path to file which should be piped to stdin for each hook.
+>  	 */
+>  	const char *path_to_stdin;
+> +
+> +	/**
+> +	 * Callback used to incrementally feed a child hook stdin pipe.
+> +	 *
+> +	 * Useful especially if a hook consumes large quantities of data
+> +	 * (e.g. a list of all refs in a client push), so feeding it via
+> +	 * in-memory strings or slurping to/from files is inefficient.
+> +	 * While the callback allows piecemeal writing, it can also be
+> +	 * used for smaller inputs, where it gets called only once.
+> +	 *
+> +	 * Add hook callback initalization context to `feed_pipe_ctx`.
+> +	 * Add Hook callback internal state to `feed_pipe_cb_data`.
 
--- Hannes
+Tiniest nit just to prove that I'm somewhat paying attention:
+s/Hook/hook/. This definitely doesn't warrant a reroll.
 
+Patrick
