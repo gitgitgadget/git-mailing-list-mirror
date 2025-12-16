@@ -1,111 +1,126 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C862C11F9
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 02:26:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4289E2E1758
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 02:29:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765851984; cv=none; b=Hh8jVNadWl6Y4AAZy2q5c7B2VB3qc/QAomLcH6Qmrjicih+5/oUyyV2cOMvuu8p1DNbVwyu4nVEnaCQdyVgL6BmWSK/rpMD9fN+49zxI9/qAUBKsqf6eEKRGlMtXLK+kzk/LD7GCCp+epeCHrI9P8VNWfNe+t+2GPWPH6zh1QVo=
+	t=1765852166; cv=none; b=F70YgkIEqfEPOA+jo9piwbzsPmGn3Q7Bh9vvPE+oi1RZ4EQL92dEojTj7v0PswjoF5KXf430TlLqzbKKAPtIq+HyiahT6pW3HRK6KcVUGtO8ahmnqaD+R1p70L1WTH1QvNHdp9yLltwGX9qcRWhc+jefgREmURRtNR8gRJIQcsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765851984; c=relaxed/simple;
-	bh=lwrjBhhMyLqzhXqohpziAQgOgE7YdYszQsDrfAdOI9s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=To9U9tXH7b1YjFkdYiXpFdlmquqg1oFgiu8cCMjtS8J4k8Tro4/euF87hnVRQoEfqud/GvXdnqdJa4+TqkjApwO8eoGyiWEJEyjmc+NNiLjkg6Yf6tBgDFe21YMzDJkDNIYjEC7wmQoA0rg74rqOk+o8limgwBFQHYpir0Udhnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TtN8uRUJ; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765852166; c=relaxed/simple;
+	bh=/87B3Z+Wv9GBDHvv2Naw1bDt1UVDh4JTHfAjiTxhInk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=W3ma9988NtZiAqoGRaq1XaYDATsWtzLJVKhZoqfBQHbq7r+sChQUFnZ/Tdk4MOqPxBd9WnEkhvtnGIIytLDmfVViULYwdjRpvY327RzZ4IZpid1XVsq6/2hRRedlysC6AYBdNcSdUuNoM45AHFa/8PH6QawPiRgvRsrXkoj6Xnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IHQbzJgr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xmy3MLLj; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TtN8uRUJ"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-78e7cfd782aso17848797b3.0
-        for <git@vger.kernel.org>; Mon, 15 Dec 2025 18:26:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765851982; x=1766456782; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dYGagyuVlPBcJAX/7Hj4ZRcFWcBRUrF+e1mAds2mpEI=;
-        b=TtN8uRUJ8f1zyunXAm6HbQUkWx7MLcBbtoGrsjkCcry9TS3HiwBahcKgy2PeQ71FT8
-         Cpi1XpT5yU8h0Pyj23xuWRMEF9lZ8SfDUVluzw5axGpxJHGZHer6/V7z9iPdkjumFL8/
-         e+CCPjKjpQqiCdjFYNNMICC5l5Bri/UC9b2l1jhphfWa8KbxulcbpJOuRM+8z9V50TYD
-         yPjsCAKlg0IYSWvxxjTUJWmgKjYYImXtNF9KnPgl+mtAYOzjxJskBAcqwK1i7c92kTy0
-         WO4CYsfdX5VUB7WrcwxWGWgIp6YsWlkto+evWXp989z/rRJYQ9exdr4s6FiCl95vXJDV
-         zGMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765851982; x=1766456782;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=dYGagyuVlPBcJAX/7Hj4ZRcFWcBRUrF+e1mAds2mpEI=;
-        b=GKfApMZNuiHNPL5KffH4jQqECM38SwmIEtICK7zKGjAc1UDxgPJ4NrA2P91nc5Yr28
-         1wmV+j6fM7sFfkQ3TF0KEqmcSj2u00SeCDVsvCMw7Sn9naSvp/yPTZ3VAHxkcNtRuVcH
-         fmrmqJfywRPwUoCAOlu03fT0aRvGlMOPliTW70kuaINKxOmnFgSvAo1c5uIDVAeFXWNS
-         ILkh4Hznv/84JHHsF95z+/jUDljMCvsrGJPZ3jc1NJMu/nt0GiBmaP4rdzl1qC6ZiMUe
-         R7D4DWajW0z0DVO0tB3LGTMqdtSigtyQEcxWvF0SwciKlaUK9NnV6ZELMaYn18FPFrGY
-         ZFyg==
-X-Gm-Message-State: AOJu0YzYrlavUSqdgiakCVd9hV1ZzJ0PM5WpRhv8bDPGgNwW/nxkzkgg
-	0bryroyWUfmi+EkxwfXeueE+T904xu7yHZNrlBM4SpIHUBRe+qGa/b0B8f9ZYD1EKq4b2zhgJH0
-	MrByB8Nou5JdC5+UPXDQnfJ99ycd2bz4=
-X-Gm-Gg: AY/fxX7MKbZiV5i2o8GbmJ7amJYRcCd9OvvkYqHw3HWmeEnnZdYis53YyBBGa7q7aJE
-	mMSktbnH0In/C1PuxRVhFE6JBsZmeKf2+bJPewurWaJkMWjXU/7bd+cazFCUq8qVw4xoaWpr/YC
-	/mcPwHW9fYsyVRCV5IkfbhS8WN09Ux7OLAf0HnLBGP9Epf6btMLT58th0R8/Ha7uYdOXB5m04MJ
-	QjohhMjc/S1WL/Q3f+tWTC8gMGWkt6i7CA4LndllLg4NFhcXbhmLXHpKe7zKd4NUXEzt/WPY0vx
-	w25vb+yOJ6UlnVH8U0zwneWpuat5w54NlHy6XEXYa3dNmeB2AcOdoMtFNF0TQ+y36N+/ghTMQ9P
-	DjcWwvg==
-X-Google-Smtp-Source: AGHT+IEIwoQxgTyDczYr1evlq1SsYH7Q632rIdwBWW2NZxbTiHI5/nRtz7/vrmpin8r6YyIQBR4sE7UUPBshCi+WhxE=
-X-Received: by 2002:a05:690e:dc5:b0:644:60d9:750f with SMTP id
- 956f58d0204a3-64555680d70mr8176893d50.95.1765851981780; Mon, 15 Dec 2025
- 18:26:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IHQbzJgr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xmy3MLLj"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2D1747A01CB;
+	Mon, 15 Dec 2025 21:29:22 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Mon, 15 Dec 2025 21:29:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1765852162; x=1765938562; bh=+Dubc4UvwR
+	0TxGxiYTLqqpTQ285y+ihqvqkCGGQ9mqI=; b=IHQbzJgr3fHER3sZJunVyMVsax
+	xd5NCun40DYfEKRB4Vnq93pvBjoUiyT8/dzq1DrKhzQ/EH/GZCOgTs7b7xG5mR36
+	rHNIZxKJvFOEYS0pAkzKwgUlPWPVlzYb5UTnd+DACdhlxHq2ru/OmrGsaUXRXrrO
+	GB54BUGknYUYJ/T9K4t9ZT0fKW7DO5wcHGeyAJXKLPlxITGdqHX59BB6XF3xB6rc
+	3QOSpj9xEwm9ZY4gmc/JV/SOYPIP1N82+9LOg7v9/BVc90t9mcYAcbkDkrf53TPZ
+	Ju81ZUV5NDUFz4DwgYKIvKTv/x016xkte7Z8cZGIQd44WkMF/ZQSzXfUcYrw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1765852162; x=1765938562; bh=+Dubc4UvwR0TxGxiYTLqqpTQ285y+ihqvqk
+	CGGQ9mqI=; b=xmy3MLLjVDvhfASTYALXvU4MMEpQwr7Z3nIRD/mxI8N+/+slUBq
+	rBzX9F8qlT4+d8YsT3F4rLFIVf5h6LUXJGrXrrR7hR8uFGynqkcd6wMlGEcMAmnt
+	23kzUgYyGX8xf40rlLlz/6+D4Pi0blCEYGfaBbtnL5fxBo0MzPgnh1zUxJddw5UE
+	EdcQvagHRrJ+x3w4eX0azSBnhxtkI9fLqMkUNV4/0XP60kMmKnvc4kD5hZlwcYkH
+	F0npKqYmehym02PQ/nNERnjsigRgDcYslSQaMM6qrk5z0GahgpimSEJFJhiaLXbV
+	iSn5RGELjgqGVAkdiXWM91204m+z+mDLd4w==
+X-ME-Sender: <xms:AcRAaaft-x_nIHexESjfG1PQNbpmse6ttPOHhZq8xmvm03JGcOugkA>
+    <xme:AcRAaX57LdXzV1HNfF4UjtWLqS00UDzKCfEGzqCFNtD_v2B3ow27zucTU3BBbhawB
+    jlDGGdPpP2MC8l9sfWLdhmgFZmMPmDkfdva0Y9E2kk7L5ESy9GI>
+X-ME-Received: <xmr:AcRAaVUjPAZa25aoYGydg-Pa1in0SEbp6QOGdptDs9qtvIYLD76TlLYkQvjmMXbshJKFes_6wS4LkpJD7sjojBHThqbdWygHIg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefkeeglecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtth
+    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphht
+    thhopegtrghrvghnrghssehgmhgrihhlrdgtohhmpdhrtghpthhtoheplhhishhtsheshh
+    grlhhlvghrqdgsvghrlhhinhdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:AcRAae7YotvhElAwZmKWUoBGM0Tei42ehUVS6MEcMZxjCGYAsk6OuA>
+    <xmx:AcRAaYoAGpl3K-Elxzx4kXbz2m4fl_43Uyrk83563aAjE7T5Fnn0pw>
+    <xmx:AcRAaZlV9kb3cqDkghIEokxJRJRn33VMFhyfJ4cu2abb2SL5hhsNCw>
+    <xmx:AcRAacNe3iwKJcqcQo4Cd_XVfmpv_2UekHE8-h2SriJtlN4PhBIRFQ>
+    <xmx:AsRAaYZFv5pp3r3VBXbrmcxyLkP6oY5wm8ILz4S94OEKvIjoCFmtQNee>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Dec 2025 21:29:21 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Carlo Marcelo Arenas
+ =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,  Stefan Haller
+ <lists@haller-berlin.de>,  Git
+ <git@vger.kernel.org>
+Subject: Re: Would it make sense to add a commit.signOff config?
+In-Reply-To: <CABPp-BGCwjTBEi4wkg=065QofiO9ZL+9XVCCcTiHriXqgH1Szw@mail.gmail.com>
+	(Elijah Newren's message of "Mon, 15 Dec 2025 16:17:21 -0800")
+References: <86c5d40d-5a06-4a69-90d8-a737685b0536@haller-berlin.de>
+	<aT7lkXl65-TBIsRS@Carlos-MacBook-Air.local>
+	<xmqqsedc8w7k.fsf@gitster.g>
+	<aT9iu9He3yJ3npWX@fruit.crustytoothpaste.net>
+	<xmqqldj48pyl.fsf@gitster.g>
+	<CABPp-BGCwjTBEi4wkg=065QofiO9ZL+9XVCCcTiHriXqgH1Szw@mail.gmail.com>
+Date: Tue, 16 Dec 2025 11:29:20 +0900
+Message-ID: <xmqqwm2n40sf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251209225820.2861276-1-jltobler@gmail.com> <20251212223644.3090879-1-jltobler@gmail.com>
- <20251212223644.3090879-3-jltobler@gmail.com>
-In-Reply-To: <20251212223644.3090879-3-jltobler@gmail.com>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Tue, 16 Dec 2025 10:26:10 +0800
-X-Gm-Features: AQt7F2pCvdwll1jEaYgyW1vU7h-cq_XgGzaaA8R-ut-vtbXhLSSuGgiIyoIJCkw
-Message-ID: <CANYiYbE3Tx6B5L5rEoDue7hTYzFGxw_qA-MRpC9RSxQ7HRczaw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/7] strbuf: split out logic to humanise byte values
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com, 
-	Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sat, Dec 13, 2025 at 6:37=E2=80=AFAM Justin Tobler <jltobler@gmail.com> =
-wrote:
-> +               return humanise_rate ?
-> +                              /* TRANSLATORS: IEC 80000-13:2008 byte/sec=
-ond */
-> +                              xstrfmt(Q_("byte/s", "bytes/s", bytes)) :
-> +                              /* TRANSLATORS: IEC 80000-13:2008 byte */
-> +                              xstrfmt(Q_("byte", "bytes", bytes));
+Elijah Newren <newren@gmail.com> writes:
 
-We have already defined "byte" as a 10n string without plural forms in the
-file "t/helper/test-simple-ipc.c" via commit 36a7eb6876 (t0052: add simple-=
-ipc
-tests and t/helper/test-simple-ipc tool, 2021-03-22 10:29:48 +0000).
+>> diff --git c/Documentation/signoff-option.adoc w/Documentation/signoff-option.adoc
+>> index cddfb225d1..0b869dfbe4 100644
+>> --- c/Documentation/signoff-option.adoc
+>> +++ w/Documentation/signoff-option.adoc
+>> @@ -16,3 +16,15 @@ endif::git-commit[]
+>>  +
+>>  The `--no-signoff` option can be used to countermand an earlier `--signoff`
+>>  option on the command line.
+>> ++
+>> +As it makes it harder to argue against one who tells the court "the
+>> +log message of the commit ends with a Signed-off-by trailer by person
+>> +X, but it is very plausible that it was done by inertia without person
+>> +X really intending to certify what DCO says, hence the Signed-off-by
+>> +trailer is meaningless", if we add more publicized ways to add
+>> +sign-off automatically, Git does not (and will not) have a
+>> +configuration variable to enable the `--signoff` command line option
+>> +it by default.
+>> ++
+>> +There exists `format.signoff`, but that is a historical mistake, and
+>> +it is not an excuse to pile on more mistakes of the same kind on top.
+>
+> This feels like it's missing context (it'll take the reader a while to
+> figure out why the paragraphs are there and that the two are related),
 
-    OPT_STRING(0, "byte", &bytevalue, N_("byte"), N_("ballast character")),
+Very true.  It may be sufficient to leave this part unmodified,
+keep the updates to gitfaq document, and do nothing else.
 
-The newly introduced usage of "byte" is now marked as having a plural form
-(via Q_("byte", "bytes", bytes)), which causes a conflict. This results in =
-make
-pot failing with the following error:
-
-    msgcat: msgid 'byte' is used without plural and with plural.
-
-This happens because gettext requires that a given msgid be treated
-consistently=E2=80=94either exclusively as a singular string or as part of =
-a plural
-construct=E2=80=94but not both.
-
-To resolve this conflict, we can unmark the singular "byte" in
-t/helper/test-simple-ipc.c, allowing it to reuse the translation from the
-plural-form definition of "byte".
-
---
-Jiang Xin
