@@ -1,145 +1,84 @@
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5E512F5A5
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 19:48:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D16F21D3CD
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 20:15:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765914535; cv=none; b=ll9U5kbv2cm3yKwx+g4wH3atoIGuE001ZlBs8sdpqxHoHEs2EIg+jOMD5CUVf2qpp/nhlbHyuUA0viUTweoAO4OcA6RqVB4vkkHDPtw74PkrJUK0tqfTTjZ8+7OU9jXLDgBbaInxEoYdlqgZbTWd1rHfwEmkediP3hnuJsTKj7Q=
+	t=1765916118; cv=none; b=GxxoTVyC1/9/WIdliLEGWdiXqtez6W0KuA4Kk1LMSQ+yOX+GjSnSsf2tejgxKzoGmQeqEWn3mAmrCeYiURnV9yOgGRzzWBMR7MdgWYvzyF1Qq/XccQL0F6tYf/3YzJQjqbm6CgendFdoM2EiQbKpCE3KMbKOYUwPP6P90X0sWdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765914535; c=relaxed/simple;
-	bh=rzJkk4dlXGp6Carp14aEe/xsseMzSx7yi15cS7KS1Q8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UhbwNUTu7NMyKexO8lgZiH+rHos0JGTHyFn5y+IUAn0m824mHe9BiX0gkffp09m01PUNB/SOXpCVvV17kxzP2B3RaGRLzFx9ookeLdbfIIyW16lQrLKp/mqrpntag5BdO5OjSG7GG74cSjxkOjADh7gVgT6O8guqEkPYfgWlKCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N9ER8F/p; arc=none smtp.client-ip=209.85.167.182
+	s=arc-20240116; t=1765916118; c=relaxed/simple;
+	bh=gxclEqbtjB+NAIThFipDAjpwgUUObpijOt54SWWKVqk=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rzgO6QMsMGBsG9oPwqmlOAb3jXYNprtmQ1nr1a5X/yATu1Ko17qVUOi27/++yeHCziUmyhlVcSf5uJKvpYnbkENuyxSJD/9yizdQM8M9hbF9aqAPOpw8qKE76vsd28zXyFel8dNQqhUFK1utRqWj8yzu4NxEE7IqtpKp6/MZgEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YOk8VXG4; arc=none smtp.client-ip=209.85.128.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N9ER8F/p"
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-45391956bfcso4077622b6e.3
-        for <git@vger.kernel.org>; Tue, 16 Dec 2025 11:48:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YOk8VXG4"
+Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-4790f0347bfso4558945e9.1
+        for <git@vger.kernel.org>; Tue, 16 Dec 2025 12:15:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765914533; x=1766519333; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Lb/WDzrj6VRJVpGLqGrBTfOKxRXoj3DbBQJmn2EFIkQ=;
-        b=N9ER8F/puGqTdMLFzrQNgzh7pUBU/BtDzM/2xAoRNYAl2mdUhuAlwQtPNYMMKdaUe7
-         oThf1M9VZx5QvV/yhTcR8Oq7W0DoiwSPsxUhWclcZfpbWZ5sUSX46DYF6EREO9FF1OVI
-         B4tNs1OiUYqhwXQ4UV0HbnkEuDJmhdX2Jt1bHL0YPZZTky+uLQVrxwTjnepWcPtTuud2
-         KJNPedUCI9pb8tOlSRwJVlEpEEqupYDsX4RJ8ZOmQKSeC/+rCHMm72U/zWhnxpbAcIol
-         0ftU29qKzPPZbawq5zb2HQwySIGkrscX//GkLx9U81XDsli4huEBMAXxsrADHXeDmO8E
-         Qogg==
+        d=gmail.com; s=20230601; t=1765916116; x=1766520916; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=gxclEqbtjB+NAIThFipDAjpwgUUObpijOt54SWWKVqk=;
+        b=YOk8VXG4sgm9uu2QK0YTliFqwCZTGiTIAZNEBNdzBgfP2w7ZV2NaksXtbVQSzGgcW0
+         mGgodKCh2TFRExROobTcTqRd6RkSgA5t+TmHd4PdkL0/wnLLgC8VJe0/b0vPObJIrJ22
+         AkMgr2f1eN2VC18T0pNpWJmGRp4tB3dykAyP3kekUQpBFgSmHzfOfennfzNi30ZXF7TW
+         SVmaHHtyZA37/FP9uWER1NJoAwrwKdUw63NRLc7oyLWNAjXv2Qyj0SQdgy915u0Gv24X
+         hIM+sDzmtUszq23ptDllxjlKJC1TcHDa6Vx9ZenmwnHDIJbmqUBfhKOLx7nZIwmRaCZy
+         6r0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765914533; x=1766519333;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Lb/WDzrj6VRJVpGLqGrBTfOKxRXoj3DbBQJmn2EFIkQ=;
-        b=QFYOoqU2fYU3ILXCJDV6dU5381zsqmTdnRNxMb2s79ztgkxOP6sb1J42jLwfGktYGg
-         PmxoGPNai1yPp7mpi3gqPKBVmDKrzYS6lHOE5NxEpu+iTajTK+/tVVvdVmBlVOfW7GBf
-         TaQbeg2d9At6toourL0mwV/OLzpTTTDM42/YaqofAEaK1rE7c9Iv1VTVls34Yb4rir7G
-         5HYOiuZ2NyAubaLZRli/etA8/uoAS69iVOfKYHIxvep9C6ayzhjL+XvetBN8zLD3BIhz
-         3WsTZ46Ki9Ll5x1YVNFAlw0+XFFU16jc7L/6kmUZ1+ZpROC3U3BIWAUNj0YoY5JvoTjw
-         YsiQ==
-X-Gm-Message-State: AOJu0Yzv0KjdI58bdS7d9sM0RIVp8l1Zv/l3+g29xGeNGv/Oqasp1ic3
-	aNllT+Moi/EeH7AtBqlw2V9kegDxm5Ib+pH8TF4Vt5XPiL6lFPgBxh8dZmt85G4DyTE90kzGg9j
-	hdwnP+MJZB1zmf39Rhv8LDXuB/VieNNhpbQ==
-X-Gm-Gg: AY/fxX7Gf20UAiDMiZ7zdZCQ4QZ3i0ywrGLAE0hu1gKk/td+DvA/1vushdWNe4D70cw
-	eExr0GgxRtN5iSu/8AOpUivZIJuhfhCvsFEYtkzSNJUz4JyIFiG3CACaGDlMjhTOwRP9EicnJwS
-	cBRo5maDn8MdYWbp/wyPlFNJgg0qlx1kNRJVB13PPpbF+4E46y1Q/OjzdtAAjnWT5ObeBL9nFZI
-	wnKkaLIPxq9V1OQ4b9FbKdPsMqFhzuK4Ctf8QoNKlczjEl0MdRz86+CIAeBxlQtOTTYaUzHxolV
-	UgZL4H6liCSmArV29RblJLQ4BnO/
-X-Google-Smtp-Source: AGHT+IG1gdgRz7Q0uAqtG3sqoifmIlgTnHDh952YCIxsG+tuDPnMnCHq2A0vbs3VIDKlBHvxipYeoLvFk9DcQACn0cY=
-X-Received: by 2002:a05:6820:1505:b0:65b:34e8:bab2 with SMTP id
- 006d021491bc7-65b452ab111mr7491621eaf.73.1765914533003; Tue, 16 Dec 2025
- 11:48:53 -0800 (PST)
+        d=1e100.net; s=20230601; t=1765916116; x=1766520916;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gxclEqbtjB+NAIThFipDAjpwgUUObpijOt54SWWKVqk=;
+        b=siRZnYaNLKLNo23eCEY1W84lC6fuQA4hW17Ip27U1TzgjW6WUbr8SFcwtO++dFh0QZ
+         VTXB1jLVsARjL1NCgQ1QOkN1dog950aTbSq8EGau3rUNrIeAmpiJvzhftxXzp+Xs3W/8
+         vKFwghLInsTsM3GY6twRO25oIf/ZuNfT3tlvvB7Dc8/Wpzl9BJpD/WM2ey7bz1Ug987K
+         6+DUWJVmCy6W2dA/0a3fsHEAd4cnUhPLAik+aiVsYgXFbBDwmgp+lElD11vvfbwnOW0X
+         9lT18u8BRUPne7897lAX/M9G4iGbO7ETRKx5PK3skiaiPEp4Sipd1mt6lF05nIbp0rRN
+         lc5A==
+X-Forwarded-Encrypted: i=1; AJvYcCWNsJIfsU9Vimh1wDmfGVWJgX1ZToKm2wekIs7iSZ1YiErHgZoe8RFSRzT6urt3KhKeTI8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy6kUP13mouUAh2QVpLL67f/BK5PCHMDMVAP2h/2fSxes2yEfaw
+	kiI3+GdWnAxTUcfrm0frm0jUsU7HixMln21WEs7BnmN30bBEwwIbjXqqpQedFydkJ9CeqQ==
+X-Gm-Gg: AY/fxX5QndXV+KfWfA1ba+n2+Xw5uwCndr4clnwS/d12IeoDVyMOMDBA1JxslSlOrdW
+	qWmZjAIZUZFp+RHKKwRD6OpfepRoWjF7MXxU0utT0d1SsQ2PdZRDUH4fBlngX05Xgenv4rmTto1
+	UT7LNhiPaOZwW3cOLxY5FqRfkTpA5cvHkLsM846iFZxZO1D4qVXkV06vdT/1O1Y/rit/JRSgbj8
+	qKjB6CxtqS9IdPlK0qpRtFGcEGFxlz2f8zBi386xlfZlqrFCYHKmu3VtYQCsTYhz2sxWyhfm1uk
+	SuYBJH7QgAXRo37jP1Kr3UX3B+xxNFBgbmkuQNZx4phVBeg3e68O7iZrSDLkpY5p7ZAiFEFFG+z
+	u77MBM7g2mUEGjFPKx4EEawpwe9UgtBqcpKL+6xkFiHWCI1KGi+U60NPxKAWeylbcGBcaNvAW8p
+	+Dp4k5CH9GxpLTgWA=
+X-Google-Smtp-Source: AGHT+IGWRro//4H3e+XQoJEHt07SxBVxcm2P8utSvGy8SfnmKRM7+JqPwqJha6f+BTPCDVYla5aAqA==
+X-Received: by 2002:a05:600c:8119:b0:45f:2c33:2731 with SMTP id 5b1f17b1804b1-47a8f89bc15mr91942985e9.2.1765916115464;
+        Tue, 16 Dec 2025 12:15:15 -0800 (PST)
+Received: from desktop ([194.127.199.104])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47bd992b915sm15143355e9.11.2025.12.16.12.15.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Dec 2025 12:15:14 -0800 (PST)
+Date: Tue, 16 Dec 2025 20:15:12 +0000
+From: Matthew Hughes <matthewhughes934@gmail.com>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+	git@vger.kernel.org
+Subject: Re: [PATCH] config: document 'gui.GCWarning'
+Message-ID: <vglmz6lyxgnvmzfu2hysahds7n7tqewxt46vnupxm4z22z5gtm@ay43veirqo4o>
+References: <20251208190400.64920-1-matthewhughes934@gmail.com>
+ <ded2184e-595c-46f3-bba7-1bb574c2964c@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqldj48pyl.fsf@gitster.g> <xmqqv7i62r6w.fsf@gitster.g>
-In-Reply-To: <xmqqv7i62r6w.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 16 Dec 2025 11:48:41 -0800
-X-Gm-Features: AQt7F2pIkbu2ibnm_Jzf7ygABJERgUAlkRZyxoE6LMpmI1Z7-W1-1BdoJKbGpn0
-Message-ID: <CABPp-BFgRLo66P49dzgaS0TCbTKtA9J_Fw17QWQUhsLoFXeLnw@mail.gmail.com>
-Subject: Re: [PATCH v2] commit: document that $command.signoff will not be added
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ded2184e-595c-46f3-bba7-1bb574c2964c@app.fastmail.com>
 
-On Tue, Dec 16, 2025 at 10:54=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Every now and then we see this coming up on the list.  Let's help
-> new contributors who are not aware of past discussions by clearly
-> documenting our past consensus.
->
-> Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Helped-by: Elijah Newren <newren@gmail.com>
-> Helped-by: Johannes Sixt <j6t@kdbg.org>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  * The text is from Elijah and Johannes this round; I am merely
->    playing a copybot.
+On Mon, Dec 08, 2025 at 08:20:07PM +0100, Kristoffer Haugsbakk wrote:
+> Apparently this is a continuation from here https://lore.kernel.org/git/jcqsqytuxpqwn3yhpz7fxucbuuf635q3jfgkjzauxwhrkhl7gg@g42r5kwwoknd/
 
-The text was derived from what you wrote, though...
-
->  Documentation/gitfaq.adoc         | 19 +++++++++++++++++++
->  Documentation/signoff-option.adoc |  4 ++++
->  2 files changed, 23 insertions(+)
->
-> diff --git c/Documentation/gitfaq.adoc w/Documentation/gitfaq.adoc
-> index f2917d142c..0e40befb77 100644
-> --- c/Documentation/gitfaq.adoc
-> +++ w/Documentation/gitfaq.adoc
-> @@ -83,6 +83,25 @@ Windows would be the configuration `"C:\Program Files\=
-Vim\gvim.exe" --nofork`,
->  which quotes the filename with spaces and specifies the `--nofork` optio=
-n to
->  avoid backgrounding the process.
->
-> +[[sign-off]]
-> +Why not have `commit.signoff` and other configuration variables?::
-> +       Git intentionally does not (and will not) provide a
-> +       configuration variable, such as `commit.signoff`, to
-> +       automatically add `--signoff` by default.  The reason is to
-> +       protect the legal and intentional significance of a sign-off.
-> +       If there were more automated and widely publicized ways for
-> +       sign-offs to be appended, it would become easier for someone
-> +       to argue later that a "Signed-off-by" trailer was just added
-> +       out of habit or by automation, without the committer's full
-> +       awareness or intent to certify their agreement with the
-> +       Developer Certificate of Origin (DCO) or a similar statement.
-> +       This could undermine the sign-off=E2=80=99s credibility in legal =
-or
-> +       contractual situations.
-> ++
-> +There exists `format.signoff`, but that is a historical mistake, and
-> +it is not an excuse to pile on more mistakes of the same kind on top.
-> +
-> +
->  Credentials
->  -----------
->
-> diff --git c/Documentation/signoff-option.adoc w/Documentation/signoff-op=
-tion.adoc
-> index cddfb225d1..9a80d60f1b 100644
-> --- c/Documentation/signoff-option.adoc
-> +++ w/Documentation/signoff-option.adoc
-> @@ -16,3 +16,7 @@ endif::git-commit[]
->  +
->  The `--no-signoff` option can be used to countermand an earlier `--signo=
-ff`
->  option on the command line.
-> ++
-> +Git does not (and will not) have a configuration variable to enable
-> +the `--signoff` command line option by default; see the
-> +`commit.signoff` entry in the gitfaq for more details.
-
-I like Johannes' edits to the text I had; this commit looks good to me.
+Indeed, thanks for linking that. Full context for the sake of anyone else: the
+patchset linked above is replaced by: https://lore.kernel.org/git/pull.2010.git.1764195516.gitgitgadget@gmail.com/,
+except for this patch which is stand-alone.
