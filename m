@@ -1,72 +1,72 @@
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE88233342C
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 17:39:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E045429B8FE
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 17:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765906762; cv=none; b=Df73dN7+HAueCCdn3QGSgVDSCgech7TBbjeHkqo6wD7a++KJot+wPTjiFVx9M1AStG+lBeRmOiNIs6ltu13fhdH70EuRtNPFF0Or/u61pfraxLQDgihzp9Iteftjnu1YrVqLhM85JAyL95INKt3An6I34fvy+Tv0/PQEG6GQuSQ=
+	t=1765906765; cv=none; b=bx1Y6lpAuLY8JWYc6fY5qHBUUrrbxHS2zI5o9lwq4AP/dS7TvzNZUXV0g3nlmpU7MdnNbqcK5NKC4OO6S/u6U9hfNKj0qAeyQiWmXxVZO67iMC8ohUAndWIgTECLfdhNdzfyMMtMV6x09Xv+Lh5fbTsdpDuSZwsosiiQzq2kkGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765906762; c=relaxed/simple;
-	bh=FAzlIEAg7lji6To9KspyUTQzrdmO+gQT3sJyA/dwjCo=;
+	s=arc-20240116; t=1765906765; c=relaxed/simple;
+	bh=lbAuWkGQQIZIOLvu4WlP1Am3TLV3ukHwGKphqz2g8NY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CIgeswPcAH1r8AducnS6GwoSTxqSEEU+gUcSTTIachBFitdwZk2Zjf7DvQc5AyOQpqemEF/cFyUvJ8x/oADR88LzaalUszPho1j1gj2X+V20v0Rd8dr8AXJSpVeCZm6rVqhAG1pW3Rfee0m5ir62PuFueO0DAjQ0YD53LRryKCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FqaWclbT; arc=none smtp.client-ip=209.85.161.46
+	 MIME-Version; b=SJA5ECuOdB4jpH5e69HF593Cb8GZ4zuO9SpXC8RbvgUzhRODenU1Nx6tJVqihQ742EX9lmQCgQnzS154jrCC/UOVNIRCw2P5S41vmJBwBqCuy7gM0oAbc4T3T86/G9r3g2R//qrgxubiAR1SC0OvT+7Lh//HGqEWskGsd+SNT/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EHdfUcCW; arc=none smtp.client-ip=209.85.160.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FqaWclbT"
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-6575e760f06so1498937eaf.0
-        for <git@vger.kernel.org>; Tue, 16 Dec 2025 09:39:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EHdfUcCW"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-3f551ad50d1so1761956fac.0
+        for <git@vger.kernel.org>; Tue, 16 Dec 2025 09:39:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765906759; x=1766511559; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1765906760; x=1766511560; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dkH+fsxdsr3rwTGKJkwYTnUv+u8jviY9EE0qRaSNVKo=;
-        b=FqaWclbTQXSyTDbuNjtHgFUWtShBoTUNYvNzMk9UIi5mYGQhudSwCHodlB9GT6iwxs
-         bUmVMHUg7jamJI0phFNw+7DT2QpR6R2ie/mxTrpByn9fzsN4531pdwK4GmuPZBAu6HRE
-         e7YnX2fCg/y8bnOFKBAvCebuzz+aUGVquJUHjISBx6ydVndGNaL9ouMRkIqSsYuYTKZ7
-         DaAWMf4WKgDQX+AlNffQSFoDS3YIJ+VIaxokq8+C6cUaYdxIXsdJNJ8o4fRVfddCZQmS
-         yVutsQ2wj5Y/5xKRshpPaguunIr49FPa713VjPJI5wigZ/0pyfx0ufs6o4N9kA73Hmc3
-         dB8A==
+        bh=597qRwArHUV73rYg4v0XUL1bN4CGcDd9jlULQOCXCUY=;
+        b=EHdfUcCWnasPk69Ewtz/JwkRZ3eRhrMF/4Cs72mx947pHbnnhabIEgSueeBNXwj5NZ
+         XITs+uUbrc5uWeH0rXBKTDEaNrcAv6MPPtgJ2Z5V0ltvkktQ/vPkWd8xkGlaf0sDbKfc
+         0KMLBqqorc7RNikYAAMWcDUl5qeiUIDe8Yjpf7/K4Z6d8in6M6u1bLe2cxgmPAdY8g5z
+         j05j/uza2uYGPTfP47z4vxtEPN19pvf8KbrB+fyeuNqRYuqnYgYhpp5D+1yOMHHKiM4l
+         lKr1n/CdL4Q2Q16YAkkX9hMLGvEG8xUbAB7rqDsNUdBY0VYH4j6u5qbJ6mBUqVpnrog1
+         zF0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765906759; x=1766511559;
+        d=1e100.net; s=20230601; t=1765906760; x=1766511560;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=dkH+fsxdsr3rwTGKJkwYTnUv+u8jviY9EE0qRaSNVKo=;
-        b=A5N4o9MNXW4e2A8QVKk5HMseoHmtBAacVzcGonz9MEMIs1Ls1i0gFe0/8tdvVWzZli
-         5kVmyUUe3o7VLDQRwU/0ztfw2xpIS7JLSUJnNO8dsybmB1sh+Ek4oNQM5lvPAmER/1OE
-         HWjAx0IWxurve9Xa7xXYu+xCjs7oPBg1l+w00G/uzdKkEkfj1HhYtxfGrxTgF0CUVOkZ
-         3KPIKQNFq4c9v8MoYUnLaMk6TKCUaCGNzd5eSON7sqXI+HLfkHSwjthWx01v87yLD2Zg
-         fg2z0+F9Lq3cVxkP2+Akb+Ph7l+Rj0t743RO4dnirvI3HRH44CjOCdB6RhMh/8kOUvit
-         NVJQ==
-X-Gm-Message-State: AOJu0YwOLY7YPMa4MWcAEob0v58vFLlHe9eew/utNF0kOjORlTuE+6m7
-	akU4eBBfNWRbPTC9iL7MK0F8dP5jODUsh5Pm4/V0fnn8peO29TqOexpKUc9ONw==
-X-Gm-Gg: AY/fxX75XX1YiRmNQABcOxDk4pd9l6gkN+ieAbBJ3maLyiDuy4IshVwTuoQAo9bvCUU
-	2N3+m9BZIj02Te8T5PVUWrMCsNTaQV5eOAiKQEGf9Nr8rsMxI2GEdd/ca0bhGKOTmkdYCXmzM0B
-	05i4q4vZaq2U9DgsNGpONaTHUiTV5MAvNDSWovqjX817Ljo/vxOH6m54M7aO+wPqJ54xemtiRaX
-	ZvFMTbsU/nzhdwm+Ovd9Zo7jWsh206YneNIJWQc0yyMsC+XSJ/7CvpvHu50D8r6hacEUb3yVomi
-	X6EUk7kHjdLriM1+Kz+evdVK2HKZuw4w0R6pVwMg8hgZpnyp1Gzu0pV7ejqgWfZudefPZCFlEXU
-	bI+TpWzlmcnYG8XNy90KjUr7HyVa3rYCeXAJqacoXEAfkEtaW95l/q85sDx+4qPx0MorCR62GQy
-	T0r07IKUPqMD6J3S2UH04=
-X-Google-Smtp-Source: AGHT+IELfrAWl9U9Cn4/4U5UXGpRB66Q9nqI7UfmKkC4PZL6AUdVsOuy4hpVlDg08dGUf87mcbwnlg==
-X-Received: by 2002:a05:6820:6acf:b0:659:9a49:8e82 with SMTP id 006d021491bc7-65b452bff9cmr5248904eaf.82.1765906759448;
-        Tue, 16 Dec 2025 09:39:19 -0800 (PST)
+        bh=597qRwArHUV73rYg4v0XUL1bN4CGcDd9jlULQOCXCUY=;
+        b=EK7HjLthufPScWnf+wKV4Glp2Q3zrrnak/Y27Mwfqgcrxtxz9BwSpaULk/sXDYBlPS
+         bc09vsU8A6aPWTDztxHpsJJy1ATR/7M+wKhX3OhWKptwkBi0gFRF/nl03VWTZGRETHha
+         HN9Tn4JXAfuCpyyZJf1wjNeZ0+ot3ej/N1TdGNM5TXxqGref738LWzajIGwoInqMATXe
+         YiSJEOOIHiD4T5MJ4ZFcMrIjFdEvWejN+6JFdkwuJ4C/utPljmV6JnkgM+xNdVtUvJ8C
+         ZZhyar4YQDLBvphwNMju4RI5iyVQmQju3m5bMJZw7NRN9KHBh/s2Ga5U6p7aOfH59V+K
+         my6Q==
+X-Gm-Message-State: AOJu0YyQp0B879BAZUB8fvz40p9mPmMqKf2ZOvoY8qUuIc+Qjj0Knzvp
+	p/+FbRDC/DrYgWKds+xVsX7cyWBdfo0eUXfc7FgFYzMoZYqsrvgN1HwVWv2TkA==
+X-Gm-Gg: AY/fxX6XAPu4M8TJMj4HccuR4kIj6y/m8Vy+e5KYB/OpQ0UrTJ/QhMIwjl6s0r9aaX7
+	/B133HrNPUHOLPF3KsesUS+/vjvzyn/N2LeXwK7crZWVztOP9uePIfjJBotukJymRWQb4qcxRGo
+	ycZsJdNc9UauBDy62zuevqwTYew9ma2nDRRtXbTPThTT+6XcyClmoQBsvlgJNdZNuoL5qDpo3Hr
+	OKxZSEOtY8OeYhMjtHsWY4wWKxRBcWSJF39mpsxd/Q4DDaAllzNqG4HmTKozKKflM+dpclK/RPh
+	GbrcqfdgFi/nGhGgHz/GSf+r0kKAykcAWXI56jymJnoRB+vESZ5gIEWb9Wv48svmD7xGicQ4+Oh
+	Ks3dlDHL0QPX4nrW2rMXuggBEx4xKUq+8Wui+uAKMq4QBrakksLa2aJWxRcGJ2++ZtIQvIGeQFN
+	Eqsg/P4xFhfb6lYhGMQ+g=
+X-Google-Smtp-Source: AGHT+IHrnfcHsn0t1oSnDTEamT8U+9zYDHheM20iAyFlArd0QSed2h/S+ZK/Gm3A0kMW899Mk1Q5Ew==
+X-Received: by 2002:a05:6871:b07:b0:3ec:41eb:6e48 with SMTP id 586e51a60fabf-3f5f890fb0fmr7350274fac.40.1765906760486;
+        Tue, 16 Dec 2025 09:39:20 -0800 (PST)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3f614ded1b3sm6438462fac.10.2025.12.16.09.39.18
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3f614ded1b3sm6438462fac.10.2025.12.16.09.39.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Dec 2025 09:39:18 -0800 (PST)
+        Tue, 16 Dec 2025 09:39:19 -0800 (PST)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	gitster@pobox.com,
 	worldhello.net@gmail.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v4 6/7] builtin/repo: add disk size info to keyvalue stucture output
-Date: Tue, 16 Dec 2025 11:38:41 -0600
-Message-ID: <20251216173842.3357832-7-jltobler@gmail.com>
+Subject: [PATCH v4 7/7] builtin/repo: add object disk size info to structure table
+Date: Tue, 16 Dec 2025 11:38:42 -0600
+Message-ID: <20251216173842.3357832-8-jltobler@gmail.com>
 X-Mailer: git-send-email 2.52.0.209.ge85ae279b0
 In-Reply-To: <20251216173842.3357832-1-jltobler@gmail.com>
 References: <20251215205639.2700270-1-jltobler@gmail.com>
@@ -79,140 +79,110 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Similar to a prior commit, extend the keyvalue and nul output formats of
-the git-repo(1) structure command to additionally provide info regarding
-total object disk sizes by object type.
+Similar to a prior commit, update the table output format for the
+git-repo(1) structure command to display the total object disk usage by
+object type.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- Documentation/git-repo.adoc |  1 +
- builtin/repo.c              | 18 ++++++++++++++++++
- t/t1901-repo-structure.sh   | 11 ++++++++++-
- 3 files changed, 29 insertions(+), 1 deletion(-)
+ builtin/repo.c            | 13 +++++++++++++
+ t/t1901-repo-structure.sh | 31 ++++++++++++++++++++++++++++---
+ 2 files changed, 41 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 287eee4b93..861073f641 100644
---- a/Documentation/git-repo.adoc
-+++ b/Documentation/git-repo.adoc
-@@ -51,6 +51,7 @@ supported:
- * Reference counts categorized by type
- * Reachable object counts categorized by type
- * Total inflated size of reachable objects by type
-+* Total disk size of reachable objects by type
- 
- +
- The output format can be chosen through the flag `--format`. Three formats are
 diff --git a/builtin/repo.c b/builtin/repo.c
-index b73cfd975b..0ed41bf9d4 100644
+index 0ed41bf9d4..a071d2fdfe 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -214,6 +214,7 @@ struct object_values {
- struct object_stats {
- 	struct object_values type_counts;
- 	struct object_values inflated_sizes;
-+	struct object_values disk_sizes;
- };
+@@ -324,6 +324,7 @@ static void stats_table_setup_structure(struct stats_table *table,
+ 	struct ref_stats *refs = &stats->refs;
+ 	size_t inflated_object_total;
+ 	size_t object_count_total;
++	size_t disk_object_total;
+ 	size_t ref_total;
  
- struct repo_structure {
-@@ -462,6 +463,15 @@ static void structure_keyvalue_print(struct repo_structure *stats,
- 	printf("objects.tags.inflated_size%c%" PRIuMAX "%c", key_delim,
- 	       (uintmax_t)stats->objects.inflated_sizes.tags, value_delim);
- 
-+	printf("objects.commits.disk_size%c%" PRIuMAX "%c", key_delim,
-+	       (uintmax_t)stats->objects.disk_sizes.commits, value_delim);
-+	printf("objects.trees.disk_size%c%" PRIuMAX "%c", key_delim,
-+	       (uintmax_t)stats->objects.disk_sizes.trees, value_delim);
-+	printf("objects.blobs.disk_size%c%" PRIuMAX "%c", key_delim,
-+	       (uintmax_t)stats->objects.disk_sizes.blobs, value_delim);
-+	printf("objects.tags.disk_size%c%" PRIuMAX "%c", key_delim,
-+	       (uintmax_t)stats->objects.disk_sizes.tags, value_delim);
+ 	ref_total = get_total_reference_count(refs);
+@@ -358,6 +359,18 @@ static void stats_table_setup_structure(struct stats_table *table,
+ 			      "    * %s", _("Blobs"));
+ 	stats_table_size_addf(table, objects->inflated_sizes.tags,
+ 			      "    * %s", _("Tags"));
 +
- 	fflush(stdout);
++	disk_object_total = get_total_object_values(&objects->disk_sizes);
++	stats_table_size_addf(table, disk_object_total,
++			      "  * %s", _("Disk size"));
++	stats_table_size_addf(table, objects->disk_sizes.commits,
++			      "    * %s", _("Commits"));
++	stats_table_size_addf(table, objects->disk_sizes.trees,
++			      "    * %s", _("Trees"));
++	stats_table_size_addf(table, objects->disk_sizes.blobs,
++			      "    * %s", _("Blobs"));
++	stats_table_size_addf(table, objects->disk_sizes.tags,
++			      "    * %s", _("Tags"));
  }
  
-@@ -536,13 +546,16 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
- 	struct count_objects_data *data = cb_data;
- 	struct object_stats *stats = data->stats;
- 	size_t inflated_total = 0;
-+	size_t disk_total = 0;
- 	size_t object_count;
- 
- 	for (size_t i = 0; i < oids->nr; i++) {
- 		struct object_info oi = OBJECT_INFO_INIT;
- 		unsigned long inflated;
-+		off_t disk;
- 
- 		oi.sizep = &inflated;
-+		oi.disk_sizep = &disk;
- 
- 		if (odb_read_object_info_extended(data->odb, &oids->oid[i], &oi,
- 						  OBJECT_INFO_SKIP_FETCH_OBJECT |
-@@ -550,24 +563,29 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
- 			continue;
- 
- 		inflated_total += inflated;
-+		disk_total += disk;
- 	}
- 
- 	switch (type) {
- 	case OBJ_TAG:
- 		stats->type_counts.tags += oids->nr;
- 		stats->inflated_sizes.tags += inflated_total;
-+		stats->disk_sizes.tags += disk_total;
- 		break;
- 	case OBJ_COMMIT:
- 		stats->type_counts.commits += oids->nr;
- 		stats->inflated_sizes.commits += inflated_total;
-+		stats->disk_sizes.commits += disk_total;
- 		break;
- 	case OBJ_TREE:
- 		stats->type_counts.trees += oids->nr;
- 		stats->inflated_sizes.trees += inflated_total;
-+		stats->disk_sizes.trees += disk_total;
- 		break;
- 	case OBJ_BLOB:
- 		stats->type_counts.blobs += oids->nr;
- 		stats->inflated_sizes.blobs += inflated_total;
-+		stats->disk_sizes.blobs += disk_total;
- 		break;
- 	default:
- 		BUG("invalid object type");
+ static void stats_table_print_structure(const struct stats_table *table)
 diff --git a/t/t1901-repo-structure.sh b/t/t1901-repo-structure.sh
-index b18213c660..dd17caad05 100755
+index dd17caad05..1b68525079 100755
 --- a/t/t1901-repo-structure.sh
 +++ b/t/t1901-repo-structure.sh
-@@ -4,6 +4,11 @@ test_description='test git repo structure'
- 
+@@ -5,8 +5,20 @@ test_description='test git repo structure'
  . ./test-lib.sh
  
-+object_type_disk_usage() {
-+	git rev-list --all --objects --disk-usage --filter=object:type=$1 \
-+		--filter-provided-objects
-+}
+ object_type_disk_usage() {
+-	git rev-list --all --objects --disk-usage --filter=object:type=$1 \
+-		--filter-provided-objects
++	disk_usage_opt="--disk-usage"
 +
- test_expect_success 'empty repository' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
-@@ -91,7 +96,7 @@ test_expect_success SHA1 'keyvalue and nul format' '
- 		test_commit_bulk 42 &&
- 		git tag -a foo -m bar &&
++	if test "$2" = "true"
++	then
++		disk_usage_opt="--disk-usage=human"
++	fi
++
++	if test "$1" = "all"
++	then
++		git rev-list --all --objects $disk_usage_opt
++	else
++		git rev-list --all --objects $disk_usage_opt \
++			--filter=object:type=$1 --filter-provided-objects
++	fi
+ }
  
--		cat >expect <<-\EOF &&
-+		cat >expect <<-EOF &&
- 		references.branches.count=1
- 		references.tags.count=1
- 		references.remotes.count=0
-@@ -104,6 +109,10 @@ test_expect_success SHA1 'keyvalue and nul format' '
- 		objects.trees.inflated_size=28554
- 		objects.blobs.inflated_size=453
- 		objects.tags.inflated_size=132
-+		objects.commits.disk_size=$(object_type_disk_usage commit)
-+		objects.trees.disk_size=$(object_type_disk_usage tree)
-+		objects.blobs.disk_size=$(object_type_disk_usage blob)
-+		objects.tags.disk_size=$(object_type_disk_usage tag)
+ test_expect_success 'empty repository' '
+@@ -35,6 +47,11 @@ test_expect_success 'empty repository' '
+ 		|     * Trees          |    0 B |
+ 		|     * Blobs          |    0 B |
+ 		|     * Tags           |    0 B |
++		|   * Disk size        |    0 B |
++		|     * Commits        |    0 B |
++		|     * Trees          |    0 B |
++		|     * Blobs          |    0 B |
++		|     * Tags           |    0 B |
  		EOF
  
- 		git repo structure --format=keyvalue >out 2>err &&
+ 		git repo structure >out 2>err &&
+@@ -58,7 +75,10 @@ test_expect_success SHA1 'repository with references and objects' '
+ 		# Also creates a commit, tree, and blob.
+ 		git notes add -m foo &&
+ 
+-		cat >expect <<-\EOF &&
++		# The tags disk size is handled specially due to the
++		# git-rev-list(1) --disk-usage=human option printing the full
++		# "byte/bytes" unit prefix instead of just "B".
++		cat >expect <<-EOF &&
+ 		| Repository structure | Value      |
+ 		| -------------------- | ---------- |
+ 		| * References         |            |
+@@ -79,6 +99,11 @@ test_expect_success SHA1 'repository with references and objects' '
+ 		|     * Trees          |  15.81 MiB |
+ 		|     * Blobs          |  11.68 KiB |
+ 		|     * Tags           |    132 B   |
++		|   * Disk size        | $(object_type_disk_usage all true) |
++		|     * Commits        | $(object_type_disk_usage commit true) |
++		|     * Trees          | $(object_type_disk_usage tree true) |
++		|     * Blobs          |  $(object_type_disk_usage blob true) |
++		|     * Tags           |    $(object_type_disk_usage tag) B   |
+ 		EOF
+ 
+ 		git repo structure >out 2>err &&
 -- 
 2.52.0.209.ge85ae279b0
 
