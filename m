@@ -1,132 +1,117 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C44D21D3C0
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 01:21:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91181155C97
+	for <git@vger.kernel.org>; Tue, 16 Dec 2025 01:36:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765848095; cv=none; b=o5t5r/F0BXY722QfSmBl4bGckkGbTVEvfRZdn42J5MrACjNnym4acw80qKzjuXLct+rcKcXuzcoQTzXpIRuorp9x9N1p016bNGu0dDkgPQrVPr7M03VnC5+tjyM84+2LWgUBJAixEclbiw4pATPQ47PnDxFoSP5YK6a8/UFVGG4=
+	t=1765848975; cv=none; b=OtYSdyc+U0+Etx21SggaTi7ZEX6Na2MtrI7oCmpEWIIkIbqFv2oUfX6Diu2QzRkHxRhp8JrojXnSkfWwr4FKtKfLEO1F+3nHj39/lwjhqGCWVzo+KXRc3SzAYJkGdSob4i8FeTc3AFsbnzMnfeSMJwuJLGcYv5bc6y4K0Id6Dsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765848095; c=relaxed/simple;
-	bh=6p/v60MRJ3VGRueOw+0hDcID+MaOiMwp19p2bd54CrE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DXyLIHzt+ssyNqI5jQ+rAXcEacQ9TTwAey/B493M1I+RuAswY0TY3ZOvC1b+aHpnq70u8E4ESmQTBNKt9tphUYo4IjaVG0f8jyPBG3/SsJYWKG5Xfw/eJAc8DY7sfbUKHt7qlLJN5aGGwBYixEOM0Ym872Nc/KQzjiFR4/XM7pU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fPEa0BB1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R+DwdzNf; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1765848975; c=relaxed/simple;
+	bh=aBM+MSzCluRQSU+yrJCXju1/s2XLSvrCd+Gfns2spDc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UU26Nky4HqjsRHT0JAIhQVUkKNpZRgVMTsYphojAXJPLouuVG/rx9EUMNTqfThj7PV83S+DcICjJliK8BX4Paa09PEcYZHFOcLVjTyRqYRwsOKaCyTHjEGZABvXYqVgraLejFYOOH2Ywq7r7WgkIP3lx+PNCv3GUJfXhJrMbAHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bXHPR27y; arc=none smtp.client-ip=209.85.210.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fPEa0BB1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R+DwdzNf"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4348E7A01D9;
-	Mon, 15 Dec 2025 20:21:33 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Mon, 15 Dec 2025 20:21:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1765848093;
-	 x=1765934493; bh=Tk3a2Zd3Geg/N8EIIDE+Um/Ruj5HMxVZ7KUVOzUDVro=; b=
-	fPEa0BB1e4ozFkiB5WjaomHYLcga1qip/xC7zeJfJ+VTUrc4uysbC791fP7atLLk
-	l5JEg6CLt42VYoYTAkk6Yx7CbvF/b5RMqAGMZW/wxqjPWsaYcoG09WIx8aKYO5jz
-	EmQkic8dfh9bOp+r0+FxiieKRtBhb6+Wbdh8fEd8gPxJ5krdpZaL2/c7ihMqSkyl
-	Z7SFcEr07n9kGZFzOUIETqWSZ5GfuWfe9ZSaVAtgabL5iA9875TZu8aB3iDLSHKI
-	P6coP/qurnhkqVz9mkAERnltztxrATkCSl9DAN1BMXiclrhw6jxZyZGNKDsBBIiH
-	+CrFab8zjzh6M2brtdKV2g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765848093; x=
-	1765934493; bh=Tk3a2Zd3Geg/N8EIIDE+Um/Ruj5HMxVZ7KUVOzUDVro=; b=R
-	+DwdzNfzDZWBxe8BBf7AMWdUAUH6wcDk7XQkr0OLGRZhxkMOpyVdR0taKDwwWgT+
-	C3RTWoUHTPv/z97n/4PB2eqZvI8mwdZqMKv3N31z2RA5y0mQ+RrjR0kAO6o3lF6Y
-	HPOk4D6Rhr63xTdeI88Zgjx3eYLHvlBcnGjH0QCE4KidJJ+jVCRV531ugJlUsJVb
-	crYOHZgxLuEdBo/38q595TgdP4bRqAiE0Cv90deCXqXv071Vt/EEXLT13uqUYWky
-	wZGuBe/JHv3iCwu9cqUh/WFwJWC4xhdFbo+5OH4kEV7bo+Qkl90C8NqNSmXcB66C
-	HCjyB1jnaR+KOaKnKP5FA==
-X-ME-Sender: <xms:HbRAaQILqBqqYehDzjhmxmX5nUNhOn3vHlROHMJZ187JRpSNvKjVsw>
-    <xme:HbRAaXI8d5idDBzg_xAPpIhHZ_tXpjspdeBj7lXPj5c0RO5jff8BVSk7PSILU4oyy
-    2N-EK5EJfZKWu7-ezdJKsqc3iDvxpgaEn9MTOugd5l8W5ntcJg>
-X-ME-Received: <xmr:HbRAaVs2FQ6jYWo-nsnKIhbYiKRUtJSfSvfJAFuUSG7E2P9cH9iDuhRvzosmhue3WbtfeKyjrox-0dnzPOocR17m8Yny98hyqQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefkeefhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgfgsehtkeertd
-    dtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevle
-    fgkeefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsiigvuggv
-    rhdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvg
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:HbRAacT04eycHPs29YI1n0IySIDlzRLMXijuth-h1J6kJMAjIz6XlQ>
-    <xmx:HbRAaTOFDihtJk7AsNCiwu0C80Cpl0MVfwHqVCM-1gpirMMErYrlKg>
-    <xmx:HbRAaZbWdG0NKoAitA_H-LbNc7LRulFTbwoYhGKnz3QlKdfm80pCdA>
-    <xmx:HbRAaVw1vQFU1KC5zqRkIX5cC6HiQEHibH9Sl37tGUV18Bd_A9ej_Q>
-    <xmx:HbRAaba5D3LXAOIaQX_Zty4D1yEVHi9MFBN8-TtYZgfeSwe0LwAf_G7z>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Dec 2025 20:21:32 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Git List
- <git@vger.kernel.org>
-Subject: Re: [PATCH RESEND] diff-files: fix copy detection
-In-Reply-To: <aUCTdUMKslSo3XR9@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
- =?utf-8?Q?=22's?= message of "Tue,
-	16 Dec 2025 00:02:13 +0100")
-References: <4b06a448-0935-4f2a-9061-238c7cc800c3@web.de>
-	<aUCTdUMKslSo3XR9@szeder.dev>
-Date: Tue, 16 Dec 2025 10:21:31 +0900
-Message-ID: <xmqqecov5ihw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bXHPR27y"
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-7c76607b968so1842779a34.3
+        for <git@vger.kernel.org>; Mon, 15 Dec 2025 17:36:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765848971; x=1766453771; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JZg22tRM/+xKu1P20BqZtCq8nIEFwMlrHD43SlZQ8eY=;
+        b=bXHPR27yodFbM61rxh2wj3FxUQq22AzDK+ft94fv53QjyClgbWbiX1c1/HeAQPnc+D
+         NYoTO2IxezHHidE/Mt/LR3wGb6LW4vf/XakOVPmY4RQMk6jfpoJjUuYyFhbA/c7M574L
+         NrCEV0WaSa8tVOh4HmIM8q0C6cbivR6pDVtqaDXVVp+vYfLadhRPGm+Ok322LI9szRRa
+         zXslKyNmNDKH7f46OQSszmtBrb5W7xE6CQoZYTetVQIAeXq4eE43RudBAcBUQZzwe/PH
+         rU0joZGhLCclJ213MfP4p4h5ySH8ejs0QLTssKe8FFeHGNy0vpy9tr3AVv42JgiJijoA
+         qUoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765848971; x=1766453771;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JZg22tRM/+xKu1P20BqZtCq8nIEFwMlrHD43SlZQ8eY=;
+        b=qh84RmQW0rXJAwM6w16CGkm3PdbBVsh0K+NyyQXjSglHhAWXjiSBpccEfjxrbGObQV
+         Dcaw/3aUgp2dFpcmNr3rqfl5e1nCeODPbotWOtZiWhhU7v4E7n6TIaUMq2XLHsZP7ygv
+         bsdHKyJGywFUWD9Xbfg2OdUAf6VRgAfg7QhJy7c/c2vGv7VkYxq+Up1CYB+6aQr78ovb
+         qplnlrJIquHSn4zKSlIK/IT7tztPaZaGw7maaO5/uIzxMrcMFUulXX/SorhV2AgBIzAB
+         KvVV+eI3RTNlc30L+7ipOxqU2cbZ59sBbUMwI3ceD9iJLMQw/lHbnEsiwT25x4GY7uPX
+         6ApQ==
+X-Gm-Message-State: AOJu0YwcN9ArdnWAJ1+40Qak0dRsQcmSkj5z2I8UL7FFu4QIC0aYPTuP
+	93h5y/Z8E0V1pcNNZ8OTuL/TioklwRB4nE/OWp5gBjd56A+kHNbdkO2O
+X-Gm-Gg: AY/fxX4idFj8ZVPGl297IwFY0zuznRPF3U9pK/V3bfGcVuJntoy7h70vKhfKPv96rVE
+	ChP+3uWQ7zlUN4ZGeOBSVPoeWHgOVoQLzv0e80fXYOjOKh5WiU8zLUvrumW85E9xBZ+UOF3S6TH
+	TxaDffXuP2x3yVkMl3bhkweM3NfhyU10lywCpxKWrdEf25Ws5u51MbjcrPILtwYJBQ7hJGoZl9c
+	qyWArXxL+0fr+2QNzL1JVhr5F4ICBhWx34wvOv5pHjuXyGuaKDhdK/kOek+Vtdu2Ku5X5N/lKjw
+	wNes6gRfrCPJa38bHfYzbpUW6teW5wy7wJ61608J5N1Ehf0mxWzPwGD5yid7e2pvz74PFMWEBWm
+	eP4ulclSkuVlKtfrqorGuxPWdW8ttO0DBgMLA7Mr7GeNPrHmr2SFjV2QdjO6f62kDo6JM89Twr1
+	c8aAkV
+X-Google-Smtp-Source: AGHT+IESwmKOQfLsoUhyNh1JOKNlNyxvuMj6T+b4v+wzcgokZAUnjpv0yAgmAA/dfzxtmTWI2BuQsw==
+X-Received: by 2002:a05:6830:25c2:b0:7c9:5e2e:297d with SMTP id 46e09a7af769-7cae82ebc6fmr7387449a34.3.1765848971387;
+        Mon, 15 Dec 2025 17:36:11 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7cadb3261bfsm10351663a34.25.2025.12.15.17.36.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Dec 2025 17:36:11 -0800 (PST)
+Date: Mon, 15 Dec 2025 19:36:10 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH v3 2/7] strbuf: split out logic to humanise byte values
+Message-ID: <lftfcdnv7cn6ajrkjiim3z2ympvlfmlvtfco3x2wwpknytorif@3uutxricxy5d>
+References: <20251212223644.3090879-1-jltobler@gmail.com>
+ <20251215205639.2700270-1-jltobler@gmail.com>
+ <20251215205639.2700270-3-jltobler@gmail.com>
+ <xmqqms3j5il1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqms3j5il1.fsf@gitster.g>
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+On 25/12/16 10:19AM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > +		*value = xstrfmt(_("%u"), (unsigned)bytes);
+> 
+> Does this "%u" need translation?
+> 
+> I very much doubt it, but if it did, this does need TRANSLATORS
+> comment.
 
-> On Sun, Dec 14, 2025 at 04:57:06PM +0100, René Scharfe wrote:
->> Fix copy detection by queuing up-to-date and skip-worktree entries using
->> diff_same().
->
->> diff --git a/diff-lib.c b/diff-lib.c
->> index 8e624f38c6..5307390ff3 100644
->> --- a/diff-lib.c
->> +++ b/diff-lib.c
->
->> @@ -272,8 +276,10 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
->>  		if (!changed && !dirty_submodule) {
->>  			ce_mark_uptodate(ce);
->>  			mark_fsmonitor_valid(istate, ce);
->> -			if (!revs->diffopt.flags.find_copies_harder)
->> -				continue;
->> +			if (revs->diffopt.flags.find_copies_harder)
->> +				diff_same(&revs->diffopt, newmode,
->> +					  &ce->oid, ce->name);
->
-> Junio, this patch should be queued on top of 38f88051da
-> (diff-index: don't queue unchanged filepairs with diff_change(),
-> 2025-11-30), because diff_same() was introduced in that commit.
+Ya, I don't think one should be necessary. Will remove in the next
+version.
 
-Very true.  Thanks.
+I think I made the same mistake in humanise_count() in a later patch.
+I'll also adjust it there.
 
->
->   ~/src/git ((7077c385f9...) %)$ git log --oneline -1
->   7077c385f9 (HEAD) diff-files: fix copy detection
->   ~/src/git ((7077c385f9...) %)$ make diff-lib.o
->       CC diff-lib.o
->   diff-lib.c: In function ‘run_diff_files’:
->   diff-lib.c:231:33: error: implicit declaration of function ‘diff_same’; did you mean ‘diff_free’? [-Werror=implicit-function-declaration]
->     231 |                                 diff_same(&revs->diffopt, ce->ce_mode,
->         |                                 ^~~~~~~~~
->         |                                 diff_free
->   cc1: all warnings being treated as errors
->   make: *** [Makefile:2862: diff-lib.o] Error 1
+> 
+> > +		*unit = humanise_rate ?
+> > +			       /* TRANSLATORS: IEC 80000-13:2008 byte/second */
+> > +			       Q_("byte/s", "bytes/s", bytes) :
+> > +			       /* TRANSLATORS: IEC 80000-13:2008 byte */
+> > +			       Q_("byte", "bytes", bytes);
+> >  	}
+> >  }
+> >  
+> > +static void strbuf_humanise(struct strbuf *buf, off_t bytes, unsigned flags)
+> > +{
+> > +	char *value;
+> > +	const char *unit;
+> > +
+> > +	humanise_bytes(bytes, &value, &unit, flags);
+> > +	strbuf_addf(buf, _("%s %s"), value, unit);
+> 
+> This definitely needs the TRANSLATORS comment to tell what is going on.
+
+Ok, will do in the next version. Thanks :)
+
+-Justin
