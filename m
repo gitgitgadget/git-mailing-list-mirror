@@ -1,95 +1,112 @@
-Received: from mail-wr1-f68.google.com (mail-wr1-f68.google.com [209.85.221.68])
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2541535A92C
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 14:47:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B76264A86
+	for <git@vger.kernel.org>; Wed, 17 Dec 2025 16:10:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765982855; cv=none; b=m6g5bA57jd9k/t7QvxH/SIIb51yoDvETSBlgbAxND70HbUetQcmR/IhwhXAf6nA3bwCZLlcicuH+putXvISCXdofNqjcyIs9U2bwK65ajS7t5vyzSXI58VZxDHa8xYIvOyXHgiUVzICEjLsoswYK7L+IRoyoi0R6Wlhtdnz0QVg=
+	t=1765987849; cv=none; b=DrwiG7cmEBZoGG/yHSu21pmcUxQCHy1Co6ArzHpB42K0RzhncHrliuPeKzg4Ao4zLnwIC4MIowED/WEDe//YbuCTAY4yQErxCB1wCUa2JTOshhN0uGmWdMF5JctkNrz0bDPO9Xtacv7MCJIiP7g31Uv6TWFmdinIo4dzKdwts8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765982855; c=relaxed/simple;
-	bh=vOl+A+eBjj9VHwIP96x3MhBZ2iwkcua6g7ezdfzB1o0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=T8hXY6D0mpV6Ch1DacktQDT3fzCXBWpdF+ZW1PN/QsrOcXux36GqnAZ2TOUiyLoqCs3AZt0h2528L+PIBRg7mF/DlDiuKvQKKz4gWIWNJk+cviUXyT9BB/TpSJ+g4Qz/24SafaKz6FWRkJ2EnpN5LjScGZN68WcV++O3HON94pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nc8Kz+3B; arc=none smtp.client-ip=209.85.221.68
+	s=arc-20240116; t=1765987849; c=relaxed/simple;
+	bh=pah1hC1eWB/o09RzKJ0Mzn/xK18SLFMBS1cHXqTX8ZQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HZkFvEblqlR6r8q01oOLS5EgVJIy7BRuOgAIQVIXZuoJADvqiS4IZ95TE3zavGA7ehObjMihh49FWgP2AXgMyUD27jGE67kToDP4aFSxgIiF5OoTCVprqkAwn7+ThAeHNKQ0Nd186THSJxFTHGx3UhoGEn1+eM9hjJbd32I35Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kJch0SQV; arc=none smtp.client-ip=209.85.210.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nc8Kz+3B"
-Received: by mail-wr1-f68.google.com with SMTP id ffacd0b85a97d-42fbc305914so3823362f8f.0
-        for <git@vger.kernel.org>; Wed, 17 Dec 2025 06:47:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kJch0SQV"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7c7533dbd87so5070614a34.2
+        for <git@vger.kernel.org>; Wed, 17 Dec 2025 08:10:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765982852; x=1766587652; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=N1SuxeISphEZv7hErQ8b0Bng64hHupseYnd8MsJR2Zs=;
-        b=Nc8Kz+3BX+3uha5HjeUUQTEechvFmhZq2sEHV8rA/dgjR61ghaJqPSE6Ya8BDSA8Al
-         nDSEotdNRlHIu/0jQnlqMtDjqtkacMcioDzXXOlOHPwdOnE9rdQ+z4bkurtv1Ddm3eL0
-         KOVu/KKoMkVYM+djr241MgqWe9BTGS2dfpA2CyQJav8nvkaowawBFIMH/ExMa0jxYMld
-         iZ2sBVM+gtDhSuHu8uNIpo1PjvVCt0PQ7pd3NsGmQmZdda36i8tXdQP1nS0HbMs+lhPA
-         opOxIXdYXdghRlBGHOhh55Dpit8HpFKnDF5cqH6w6libk4+rXdmRlr9toTFmPUIb/h6v
-         +sBA==
+        d=gmail.com; s=20230601; t=1765987844; x=1766592644; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=X2xzA0duV9/QGvAaoVzf72xLaXPaxcfOyMhPPDMfVNk=;
+        b=kJch0SQVsbngNBs7cWrmtFjbKydHF/fcrm2EohOeoPaTpxf+GgHfjvbyKFaKmJF9X0
+         3tb6NTYBo1ZJCqa/53Z0vglJS9T2yltsVVIYRIfZ3fm8xUyaUCb0TM7eRj8LxqpGVbNJ
+         VauVxEOzj44J7+7L0hhGHQyEt8DUoGH9W2MwN4UknB+eD/joOuywlk51A8TsdGwqVkpe
+         LZ9GCqWx1Wz67SIS2MnMlBNImc55s1TfnGTQngDBcz1oCOc4QiLI1VkZua7Sf4tzsENu
+         +Ta5KEfcTwL4oxXXTnx3IMI8P7Agu+Xt68CjC+eZlQaeCNzGAs4qwH6VEV8pjcjvgxoC
+         ABlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765982852; x=1766587652;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=N1SuxeISphEZv7hErQ8b0Bng64hHupseYnd8MsJR2Zs=;
-        b=HvEJZln1nv+s5yv1YbB5+iO1jFjImvFKIcZvz/4TJ4rnKwFsCmIDdfemJHlkLDOuw8
-         Ef5p28lh1Per8IiqTx1vsKfHuIllETys6t/Uzpf+Lx5VGW80XGAaMzAXSl5IGNNAzzqh
-         5a67Xv9F0/yd9F6n+VIW2AeRzyaygluB82Py47CD4/58X1hh4D/JY/Nl6mJP6jYLEwzI
-         Ndt8gkdAD9XIRxE8xoZH492TSY+TIFr8QcT6OPpwqFGSfrY0ppjZZ4pkk2nshn7g+iNK
-         iIAwV3/qk/21cpnTONdjsUvfHXe1CnXA1+bZYZ/N05ceUxetWGpvt9gA/VqMj0bFgAtz
-         wXjw==
-X-Gm-Message-State: AOJu0YyQf6HRp+9A5JuEXkqdYy2/qRMMG9nYqtgU+6BFpvVddcs+yTUd
-	4nrcQd0juDmvBO0mZNXCFnXbXPE6JqIgNQ3/1qH5DeFayAVtQV9qY+wzzdeAPnl8
-X-Gm-Gg: AY/fxX4poH4WjH16aPJwV5kzFbhCHRQb5swVadI72YPnYsmegsQuzdK8JrvcwxFx9iz
-	r9Gb1fQYrA8Ftj0lg9+txlOqN6ux56AEVLyDLAblLPG8/RK5WtRlOJIgD1p6gyMgokVj15VI3JG
-	vOzc/5j2M59Hl/iFPwT9y2UH9jR8sLabgzIsGa7kQ4iLhCMOHM7Zo1VH+YlVB3G5mcdvMhYViLe
-	WWe1mCEFfb/jfLshSR5RmNNqoTVMHMEvVxNhGmsBagUWJsHowMmhmq22/qmP9HRXVvOoTxphDGM
-	m0CQwW5xM/6uJNQMXPSgW08ddFzv33LFKWMGf3nKgBDY9Hdt1X3XPQI/wMA0QdiQ9I1jLV+B0cW
-	J+pf5G9ehuS2uKSbK4ouaNbKeO1m+hSGdTeIicViBj4VdAlz7lEqXkM/9a81EznGxD+MUkpY7mh
-	5wHgTtFGugyxGQ8TILgSJb935SzJX5SKmLoLTAB+YABEnWfIggoSU0UqiTgfkyirrxGw==
-X-Google-Smtp-Source: AGHT+IFKhTRVolbfV9yM/z6hepAAyO7RigvOmeocd5bHlDoZ4KFQUqHlMgJmoYNScSNJZ5IM4C4uUQ==
-X-Received: by 2002:a5d:584e:0:b0:431:327:5dcc with SMTP id ffacd0b85a97d-43103276018mr7926332f8f.43.1765982852303;
-        Wed, 17 Dec 2025 06:47:32 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4310adf6fc1sm4681101f8f.40.2025.12.17.06.47.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Dec 2025 06:47:31 -0800 (PST)
-Message-ID: <fe18c90c-ec6a-42e4-a6e6-30623482d7f7@gmail.com>
-Date: Wed, 17 Dec 2025 14:47:31 +0000
+        d=1e100.net; s=20230601; t=1765987844; x=1766592644;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=X2xzA0duV9/QGvAaoVzf72xLaXPaxcfOyMhPPDMfVNk=;
+        b=MNZ++dTSIaJ+J+9UwRfndI3KRe8Leo1I4gcmO16XTHqYXuGU9b08MNN+4khlWCyEwj
+         BeYb3Qa1q0BsmPjTBil/+SOsPyjAmuBHco6n5rwdtKQIPG8xEn4rlsJoDzViJa2zNIcS
+         Jorn0RN+Hqo2zPAi7sxpGyc0xhZqqA3+K0PwMdu8Zgd7w4EsAiqWiZoxw7poUDr4xBMu
+         GCyXXj2AVTkq1o7DTM6EEKR+9Po2ViyFKEEzyMs/H/kp1tRsQOn9C8LPfIKZNK/PdN3r
+         ylKnwJzzQFln+RK3aCr+qOBZHJIN0AmxBVFeWgHliwzkQqto5bkjqvy4T6ecpQMvPCKm
+         87gw==
+X-Gm-Message-State: AOJu0Yzi0Ztw5dQcgeJpeSvUfHz/gsceaQ7mV6mOOZvGV3EaQ5HWJRoC
+	IRYg7078eD9r0DTpZNPuvZCl3BMjaPWPkvRTpHiecBNzITOTQjaWBNnU
+X-Gm-Gg: AY/fxX4QFoBS6VxstpaJJw9fkeOwF5LBsNtbzwgosvmwnbUBCvoi9w36H5Qj6a+W1iE
+	XNMIG5vWufFMefxsbuMnN2INRnJfig3vum/WVvZwNADAxz7jluAApDLspeyidYuY+62VdUQ00lu
+	MTBO7fY49FUum+UCuQ8K0Uj2/PAO/DMzLbipCjXQc4mNtdE/LGX6Kg7nnHRJmHCMl0gcIKzWAom
+	N/KKGnEb4eb9HMSPNDtGJTLp0aKci5pgxWWrui1vEdAdZh52tmqAJPxCSNuO31eAeZOmczkCwMu
+	TuYEIyJnzQjeYinqDbeqij1bj1pOyTtEWEdRA5WQ1zRqYVG6Uu0OlkS946Cwzc3y/Y5V+ERL8UA
+	Vk2oXWPH8WlMu5xjzjYLBFqw51i4LsmX9zuPdAVPDCEb1uSvv5op7oaYU0r5qJqHKTaMnSA6DVG
+	wd+Eqq
+X-Google-Smtp-Source: AGHT+IHEzRruxVqT9bu8Pvh8H6FGPtiXRC8Z+PCAbDOiPi42VUsCNpHhDcLjyEwLbZN41qCQKc4E6Q==
+X-Received: by 2002:a05:6830:2b25:b0:7c7:5349:4e31 with SMTP id 46e09a7af769-7cae835db3cmr11188642a34.21.1765987844376;
+        Wed, 17 Dec 2025 08:10:44 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7cadb1d1d71sm13561806a34.2.2025.12.17.08.10.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Dec 2025 08:10:44 -0800 (PST)
+Date: Wed, 17 Dec 2025 10:10:43 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, gitster@pobox.com, worldhello.net@gmail.com
+Subject: Re: [PATCH v4 4/7] builtin/repo: add inflated object info to
+ keyvalue structure output
+Message-ID: <ygljaf4o7mgsvzz6upybtj3fslpdk7a5j3jz3lxjhho4is5cjf@o22or2lcvhep>
+References: <20251215205639.2700270-1-jltobler@gmail.com>
+ <20251216173842.3357832-1-jltobler@gmail.com>
+ <20251216173842.3357832-5-jltobler@gmail.com>
+ <aUJVyHOCsCjjazB-@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3] replay: drop commits that become empty
-To: Elijah Newren <newren@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org
-References: <8a2a1215306452147cc7b803530ab2429bf57f15.1764260150.git.phillip.wood@dunelm.org.uk>
- <73ba74b8a2e7aaa625e6f0689a9f900ceebaaa03.1765894781.git.phillip.wood@dunelm.org.uk>
- <CABPp-BHH2NaLc9tFmO1hKcY4O6jZJU05+65viR1T_yBaarCwrA@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CABPp-BHH2NaLc9tFmO1hKcY4O6jZJU05+65viR1T_yBaarCwrA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aUJVyHOCsCjjazB-@pks.im>
 
-On 16/12/2025 16:36, Elijah Newren wrote:
+On 25/12/17 08:03AM, Patrick Steinhardt wrote:
+> On Tue, Dec 16, 2025 at 11:38:39AM -0600, Justin Tobler wrote:
+> > diff --git a/builtin/repo.c b/builtin/repo.c
+> > index 9c61bc3e17..e207108346 100644
+> > --- a/builtin/repo.c
+> > +++ b/builtin/repo.c
+> > @@ -495,20 +508,39 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
+> >  {
+> >  	struct count_objects_data *data = cb_data;
+> >  	struct object_stats *stats = data->stats;
+> > +	size_t inflated_total = 0;
+> >  	size_t object_count;
+> >  
+> > +	for (size_t i = 0; i < oids->nr; i++) {
+> > +		struct object_info oi = OBJECT_INFO_INIT;
+> > +		unsigned long inflated;
+> > +
+> > +		oi.sizep = &inflated;
+> > +
+> > +		if (odb_read_object_info_extended(data->odb, &oids->oid[i], &oi,
+> > +						  OBJECT_INFO_SKIP_FETCH_OBJECT |
+> > +							  OBJECT_INFO_QUICK) < 0)
 > 
-> I'm also curious if you are keeping the "--only" in the testcase
-> intentionally, or overlooked that part of Junio's feedback.
+> Tiny nit: there seems to be an extra tab here. This really is only worth
+> fixing if you intend to reroll anyway.
 
-Oh, well spotted I'd forgotten to reply to that, thanks for pointing it out
+I had that initially, but it was failing the check_style CI job so I
+just opted to what clang format wanted. I can change it though if I sent
+another version. I haven't quite figured out the best way to wrap long
+lines.
 
-Thanks
-
-Phillip
-
+-Justin
