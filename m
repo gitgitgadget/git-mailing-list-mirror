@@ -1,85 +1,83 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CE81F4174
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 04:47:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B71927462
+	for <git@vger.kernel.org>; Wed, 17 Dec 2025 05:02:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765946869; cv=none; b=Dh7Vw/oIsIhbiMU3vQYf9BoM//om1H7/nPPvFWJO1KxT8hf8rk/e0Uh/GTXAPKslFGt60fKkgW6AdyAkAs6BET9cTcnlSlhofOz4I/VZbSkYYnm9znZit5BfvXqFSPDIKSX67uUHAuutp5RQ5YGfTZ1fOtoHTFDGgLFsCYFs4Hs=
+	t=1765947740; cv=none; b=tf3YLG9XKOwFsbNLMvGnCrOm08IBgXkRfEaj9FmEIee5K+w/mbmpFNTo+du1ySBtyooSjQ05guJGLx5jHBQj9hYMvnL1i9X44NbKueBWsdh5HSpU3sM+XITTtzQ1okhqjmTtFeQvYmUbJG2OZs5wQsZ+B0EYdKXuN9AR/Zv3BuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765946869; c=relaxed/simple;
-	bh=xhw4VisYpRUvEt8lFsm4MeSgehCsMiHj9jlNN58Otpg=;
+	s=arc-20240116; t=1765947740; c=relaxed/simple;
+	bh=U41aJiG5oV903XD2OtCgdaNyUtZtiWgwf7QyatBsXLs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GWBIRd1j1eV+a5N5ui58vA6mxzyKjnbbzDOylLDYZmqOylRtqlF+FlIXEfIgUFfpN8VSAPR1HO45G22ngUC01EiJ+Vj7kJiDlldMn7nDkWk60LGTvBhvw/4iKFoFjfZ1nOJUk+Uu+Lze08T/7QK6aQl0gd7h37l062+oKWDFwI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fRDmTKvQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=snTwnAqo; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=Ev+iOC3QebE6Srem/Qg83z7lMuV1F0ZcAfVEnc60+8FKfiUmDq33RYkWQuLRvyFWlDX4i8ydaKAt621kEl+aIG1qdEsPe+1KuP4bLgz1iVmWEP3bAIfCBp61BwOzKR+zIdaQJAJvazY7eknBdSAI79mGMRvDtRKcS/I889J0FZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YH9I9Db0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DuL3nDsx; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fRDmTKvQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="snTwnAqo"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YH9I9Db0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DuL3nDsx"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2BE391400150;
-	Tue, 16 Dec 2025 23:47:46 -0500 (EST)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 253C01400228;
+	Wed, 17 Dec 2025 00:02:17 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 16 Dec 2025 23:47:46 -0500
+  by phl-compute-01.internal (MEProxy); Wed, 17 Dec 2025 00:02:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1765946866; x=1766033266; bh=xhw4VisYpR
-	UvEt8lFsm4MeSgehCsMiHj9jlNN58Otpg=; b=fRDmTKvQFvpg1kQf49mwXJv2Iz
-	7lqBr+YkbLWBNHpk97T6xhX8O0ZIK+XPMz8ogXERgmQb0HuCtfAbblG0co3C9fcG
-	e9f9xTXK6Y0PzGGTv/UEvhJb4faALBjnoMuj15CghjkN4f3j5p/hp1O2Y5+4YDli
-	vzFN8amPSiY7zijM3zSl/AZWx6r49m7JonJF4uXDuI3jpC/nsbRS97/Bb0DaCogm
-	oAyXE2ia6SXc+q/xEkmOKaCysr9ShacZ4kRp4LX5Oh/ogNUDB/407qbRTy054YhU
-	MpOrBqN87B9FR6OlNwy8dVgAH6ogcmwPbJOaQlOsKK7wCkqKESHegG6Y65sg==
+	:subject:to:to; s=fm3; t=1765947737; x=1766034137; bh=m1I+GzW1Zy
+	+Twzb6BoH3ZUCW3Z9pA4dUAasmErSGrEE=; b=YH9I9Db0NgYDe02A3+AXqu/S8S
+	wNBK9esItGlpJc2yKPqnvn655t8A6Vv35BRqR5rWtqCAe85Y68IAf8G8/obhE/yv
+	ESEJAzLbdIhVmwDkB8ic5zZLC3XxKruDXDj+SHUgeY6viy11pSDLccAz7awSlyZ1
+	K50qiOkerfksbp1SGtfod7QaxcjytP5YmJ0dGv2LrAnRiiR1X78+VNavd7eVZZ+R
+	UA/ZV96sK7ilvcWuUNvAEf/3jGa60iSg2jOFYhrji41Qa5LpFHqriqywIHcYfADr
+	1rfA/SlB/l/tWlzFqRLnfltbeNOaPa5QcK1nWmp5/YgHxqrwA2TPmmrzkdXg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1765946866; x=1766033266; bh=xhw4VisYpRUvEt8lFsm4MeSgehCsMiHj9jl
-	NN58Otpg=; b=snTwnAqoOxVcKDLYF0u21zzPyktDkHAT+PuoGfHxhwuKVpkHJin
-	+Ns1mOB5JfNAboNY7Foo6Ouy+nMOXkbsYcpN3tOyBCBqEpY/lpwq0dIlMNalZkJI
-	rp3WjhR2MnDRBPXac/jbDT8EwSp1JfZv1UHlaxAmyNVDnsQ9gZgehcdXpdLbTcVO
-	kv5il7ePRnhhViNQsoIcssJ3d2m1yWekIpkbZhY34OF110DDjM+/HqPCpTqEPkuS
-	iYXpq2tAzMvhW4iGqPD9TXoNkhPQGcYF93aiyyRFSeCML3kxRy5S5dgg05q3piHQ
-	zCmYNh8hzr4QHxqF7pYwLz+eG52EpGhFZIA==
-X-ME-Sender: <xms:8TVCaY6ry13nGk-6_w9CtrmJKnqWTv1XxznfXiKDpbgRnez3LxCMGw>
-    <xme:8TVCaQyG7lHaJxmquvqU1_r4szxABL_OahBxlQXZbYbIYP17oug0IWhW4NDdOX-Fj
-    DMM_W_ISdp-V-O66KU8SlzaW9PuHPki4YekzHIF58FJld0_HIs8wPc>
-X-ME-Received: <xmr:8TVCafxtIM2e9ftM36hfXtCbrLTb1XrvLUGKUaiRXB_d_gfvFcMmt0a7QcNrJUBnH5pxgPbVYELpeVd2Cp2CwvcZewVZPbQYnw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegudeifecutefuodetggdotefrod
+	1765947737; x=1766034137; bh=m1I+GzW1Zy+Twzb6BoH3ZUCW3Z9pA4dUAas
+	mErSGrEE=; b=DuL3nDsxoHPhqxIkBgvks3Zpl1LmgI1j6bEiCku7Wxh7Luh8rGH
+	++fInBXpRWKMc+gD/O1yHGFbVBlt6C4FXNZXpRaf8qXkKSeUxvNc0zZDv5EM5iuH
+	sB0QKf489TN+c+Hhc3pfYt8MPm/pfBK7L5PDl7CldsfqN+ij1U6MDetiSaXqtZOJ
+	/qPRUmKElZFJWE8uRL0y2e+r2vmaf2g9IIUkhnNcX9ZNvTlN4HiT055Nod8DCTbh
+	o5SvAU/oI5+tonwitlgCofnre5MMj5m5ozw2lkdyUejMIq3sQhTw96sSBGIZzZvy
+	2zYbDvGEXNJW0GUSfSyyfODoc9nvUQPmTHw==
+X-ME-Sender: <xms:WDlCaVhnG8IadNJcTTxa0KIjqtS-nBSV79gl2LBVm5J2-K5QfO05lw>
+    <xme:WDlCaRDR0jyPvqrrV5hsJaDTLhSoo83YEQ66L3t1utZf3z-XJZGlfjaaEUcy5TSdc
+    PpM3zM6P5_r8o4gS33W5TMB3FTE-qPPfj0H_sQXkuWYpH1pQX0p0g>
+X-ME-Received: <xmr:WDlCaaFxQVYpcsOs2G_TOLNrqpE7fwGLEuuI_-QOUMLV3LK5ocW7ZBY5h-uP0-QTOTxS2cnzKIcPtzkNTsy2mWYmCPeVZJMLAw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegudeijecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjheitheskhgu
-    sghgrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
-    hsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:8TVCaYxmkOvdy0s7dlSAXeGWNU9OS0o1HDlMkvKfQHqINWLvSaAbVw>
-    <xmx:8TVCaZYuwy6f2H9nBi14iTO_sya4ZMuWCZR3F8RoNy1NaoAUB4iGEA>
-    <xmx:8TVCaZXzOU8aMU4rOEyapF5oSCswpg8bnu9kW3hlFhXzM00XzYnZ9g>
-    <xmx:8TVCaXjcGeZI5EvJCbmF8yH7HGMAL4k6Pjqeq7M9tMBmdNHLRh9wSw>
-    <xmx:8jVCacOzoVpgxIStStaeWVqSO8NsiIwV1W-kp5gK9iZzK-YlYNwJX-AL>
+    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
+    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprghplh
+    grthhtnhgvrhesnhhvihguihgrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:WDlCaZIVgL3ZvU8OYhdh_DHgQb38jUYlLDnaLUIf08GjDn0MbP0i3g>
+    <xmx:WDlCaemQw-7E4FRl6gDtSEcGUlOQxwnxcsPtF5yNT39fuSJCmoxhSw>
+    <xmx:WDlCaRRX2FD5KuHZ82G-h_1evKothVL4H2WAI7ubgz1XrWtMhSCxdQ>
+    <xmx:WDlCaQIftPAJhAMYAj1hMjAW3Nc4mAT9TzWAjGA6AFjDXobszEHcMw>
+    <xmx:WTlCaQIvpwHMiZet7W8CKE8dU12fM3YfzgqRcg07PvPo8Xae58hPtFOs>
 Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Dec 2025 23:47:45 -0500 (EST)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 17 Dec 2025 00:02:15 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Sixt <j6t@kdbg.org>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2] commit: document that $command.signoff will not be
- added
-In-Reply-To: <CABPp-BFgRLo66P49dzgaS0TCbTKtA9J_Fw17QWQUhsLoFXeLnw@mail.gmail.com>
-	(Elijah Newren's message of "Tue, 16 Dec 2025 11:48:41 -0800")
-References: <xmqqldj48pyl.fsf@gitster.g> <xmqqv7i62r6w.fsf@gitster.g>
-	<CABPp-BFgRLo66P49dzgaS0TCbTKtA9J_Fw17QWQUhsLoFXeLnw@mail.gmail.com>
-Date: Wed, 17 Dec 2025 13:47:44 +0900
-Message-ID: <xmqqike53ea7.fsf@gitster.g>
+To: Aaron Plattner <aplattner@nvidia.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Dec 2025, #03)
+In-Reply-To: <93afac3c-c532-4183-a1fd-7e2322ee912f@nvidia.com> (Aaron
+	Plattner's message of "Tue, 16 Dec 2025 16:09:30 -0800")
+References: <xmqq4ipwc7y2.fsf@gitster.g>
+	<93afac3c-c532-4183-a1fd-7e2322ee912f@nvidia.com>
+Date: Wed, 17 Dec 2025 14:02:14 +0900
+Message-ID: <xmqqecot3dm1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,12 +87,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Elijah Newren <newren@gmail.com> writes:
+Aaron Plattner <aplattner@nvidia.com> writes:
 
-> I like Johannes' edits to the text I had; this commit looks good to me.
+> On 12/12/25 2:26 AM, Junio C Hamano wrote:
+>> * ap/packfile-promisor-object-optim (2025-12-08) 2 commits
+>>   - packfile: skip hash checks in add_promisor_object()
+>>   - object: apply skip_hash and discard_tree optimizations to unknown blobs too
+>> 
+>>   The code path that enumerates promisor objects have been optimized
+>>   to skip pointlessly parsing blob objects.
+>> 
+>>   Comments?
+>>   source: <20251209014900.402637-1-aplattner@nvidia.com>
+> Jeff King said v2 of the patch looked good to him but recommended 
+> splitting it into two changes. I don't know if he wanted to review v3 or 
+> if he was okay with it based on his comments on v2. The only differences 
+> in v3 are the commit count and descriptions.
 
-If you liked the final result, it probably should not matter much,
-but I cannot tell if you are (obliquely) pointing out that I failed
-to grab and apply Johannes's edit or if you are doubly agreeing with
-the resulting text in the message you are responding to.
+v3 did not have links back to previous iterations, and
+
+https://lore.kernel.org/git/?q=s%3A%22improve+--exclude-promisor-objects+performance%22
+
+does not even show v1 or v2 (understandable if the topic was
+retitled, which is not a bad thing, but makes it harder to find the
+previous discussions in a case like this).  So as far as whoever
+wrote the entry in the "What's cooking" report you quoted was
+concerned, what [*] showed
+
+ * https://lore.kernel.org/git/20251209014900.402637-1-aplattner@nvidia.com/
+
+was everything known about the topic, which unfortunately had no
+supporting comments.
+
+Is this
+
+  https://lore.kernel.org/git/20251206002014.2066644-1-aplattner@nvidia.com/
+
+which I found in
+
+  https://lore.kernel.org/git/?q=f%3Aaplattner%40nvidia.com
+
+the v2 discussion?  We are lucky that you are not as prolific as
+some contributors, for whom an author-name search would have found
+way too many messages ;-)
+
+I can see that the end result of applying the v3 patches match what
+was in v2, and v3 separates along the lines Peff suggested in his
+
+  https://lore.kernel.org/git/20251208202812.GC216526@coredump.intra.peff.net/
+
+so that's an endorsement enough, I guess ;-).
+
+Let's mark the topic for 'next', then.  Thanks.
 
