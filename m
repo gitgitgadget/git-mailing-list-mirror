@@ -1,61 +1,61 @@
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40253370FA
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 17:54:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4877346A11
+	for <git@vger.kernel.org>; Wed, 17 Dec 2025 17:54:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765994052; cv=none; b=eW0nDFm+NmYMnRwwQR6DDBX/EMcGHM0L+k62iJNBAbBxqLPmmOiV6Z+j9f42nCB28eq848XhcdkHsCpL8VUImXNzV+mVaDulvP3Ct4BSF48mVIBo550dDe7fHtvgrWLNLh4sbckjT3s6TJwLF+SrpUnhZtz1/lBN6HY6YhJCRKY=
+	t=1765994054; cv=none; b=LhfJ/wPi/8Y9o1roNn9inlUW0iudR9KJZhyYqqZT9T+UyToyQrGFkFDkWchhjRzHLrsIVWAPUszMQytsw8B//u/fyd/L6vf7yEWv8dZj5ZkpF+YVQBrJrv1KtZ9IKcUPTEjsbukZ4PqL4ZK2xJCGJtNQCISbvD7OqzHEVKXf2Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765994052; c=relaxed/simple;
-	bh=fxdRF0i1f/4Kp0/k0SdtxwOagz2Mqwmkkn1pnd2xdGY=;
+	s=arc-20240116; t=1765994054; c=relaxed/simple;
+	bh=7suO+1T27A8Y2GCBxwDJv7kbwRB69NaNiJnJ3F+1Gvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kGpIrf0ZHPt6BBZkQ7S8h97Ustj7i+iMv9wRzut5V9Mj/1t5hh3QG0PXqKbH7BLCCpGr/LIDRooIpXu4g/+R08LF9XkvqVJ5lNLl93k3jMpSId40+8tbKfTuUchGwEK8j+d4u0wAYdxBKknQRE/dyOdm3SRr2xt5gP+hVgfmGZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AnWPrvvZ; arc=none smtp.client-ip=209.85.160.52
+	 MIME-Version; b=pN8gnflKm3a6XYrzVtyXXBJaAtJfeIelq++bnm6a7GfQX2CtsN1k5ghOTE81i1XrU4DkMTXPp1ImE5TQNiPusGFRCQHZuVd+aGE5wcSuykW184ynuDwJW40PRoyq6rkWZJRFhkgrEYHW+83NBnp5IX4dG4/XxbmrVzNMZ28wMM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tl6yeGxn; arc=none smtp.client-ip=209.85.160.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AnWPrvvZ"
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-3ec4d494383so4300867fac.3
-        for <git@vger.kernel.org>; Wed, 17 Dec 2025 09:54:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tl6yeGxn"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-3e7f68df436so651680fac.1
+        for <git@vger.kernel.org>; Wed, 17 Dec 2025 09:54:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765994049; x=1766598849; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1765994050; x=1766598850; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5h0FWefyV+RQwHB8kM95WAB2YifbyvJsEyRj9TgMRFY=;
-        b=AnWPrvvZ1qn4YjIkkWgUh9qmWATE6Vn+lsJiRRkq9lCL575lerSOAGHPUO7D508SFb
-         /RxQ1uX7M0fqJHT2/Fgffil18bOtXNt4/BSnDnRBaxhUK0MKi+nAReagkpS4Cj2my888
-         5uJBQ3gzO2wEm8O3IygjvZGlEFRK5dDpf9SfAFPDQVrFYxJuTlWaMXssRj5Ws+tGVnV7
-         hqv75Ujyn0qU2mN4m/Ca2sftteIZZpNjwlgZuegzYJ2NfqXnF7nIECxslbyzpmYszDZ8
-         plJ7Jgy5OhIkjmS3nFlhkfksxK4boJSzqYKcq6isbvUsnKz5Tn0I620SRxxgwqMcoAAr
-         ulCA==
+        bh=O1B3yY9phpggNGMmspn7nQ+0SsszENxO/S+nWx84C40=;
+        b=Tl6yeGxnj5pIaKN5cGfF8bxPjr2dIqKUGKGQ7dZ6mS/VnjY8f2StteJ2KByMcErnlY
+         IJKEff/yKY6QyxrrqnBmu7iqpvdJPUo+V2dR449e48d2qmYil9/wdpij5yous/VwrYLR
+         HGIiONO1LY3qK5g3p9q5FZKBCDfJnckDX1Er1QtWjl5lHfWhYrXPsIUqV/NkWwQ+g+zj
+         Y1HHDvHjvkzqWk22RR/IFExUAfbUHe3XxG4Dh3EWAh2e6mXeWS9BpIYSscR6jmrz1ydP
+         0lLpZkzkd3VVSmMYjSdnHKiVrOAU/YkMqBZdjMeCleOAqN71lK2qXC6E0u1Fqob9WuTT
+         4a/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765994049; x=1766598849;
+        d=1e100.net; s=20230601; t=1765994050; x=1766598850;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=5h0FWefyV+RQwHB8kM95WAB2YifbyvJsEyRj9TgMRFY=;
-        b=cUzDWv8zYriTy/AwHgPoTzNoLelqujiPQv57w/FN+1SUBkGf+hLE6H4hYdWfaedkWl
-         esz8szuAx60Yt9Y313AcK26DBT0ZKPwl+TIwC6UV4V+EHoFVP/oYDq6HCdwJunyBhMVt
-         8IvT8NvjrgkhusEPXKPiuCzxX4RFYuokVCtxKMe2AV8W31ccJ+ttSKhwoOgu7g6gwvz6
-         vIK8FNGPdxBBTMk/WhzNVHrejObGBYO21L7VYLbR57xhBQWh7pyqtcVI7OxIj2b+Pul/
-         nqSjfwL5J7Q9V/Q49zcpQ6Dn9dHpviL73EprujGQVFVsu/ysmkNadl5nhmiwF9dw5Cu4
-         VShw==
-X-Gm-Message-State: AOJu0YzBXGfprlhiKtA9fgajNNVsktehh322aYL10fDUEU1p1XEqVWx3
-	WhGn9ol8f1egzF8eEaIkw9JnE+20mYmYtdON6Qm0Ot4KKlsAwpxcDPGfMepYqQ==
-X-Gm-Gg: AY/fxX4o6+I9S6EgLfz7cRg804vM/HdcA7YgNxNxuJTngboP5i2iAMkta0MqmTbieah
-	s1U6uLkpmTB/oC6YmvjftloGpRX+7emrcrb+zoXHDH208IklypGMSTMrZvd7SBuOS7NEdMBZn2e
-	7jseJU108PUCXGXAQROBK3S7C0LeCNWHJWAOfekQ2aKwFpXCbXJtiH1xguY+TJwDP1gUnYJjL+m
-	yEMRFwbS/MQATh6SSb4NfpKcIlV8meeHD99G2eFNRw8bM2mK+ob4VGoh1YKcAtJsFbWD/3CsdBA
-	aFfU+8R5S26ru3js0a67PoPsxCoBu9axLUb7TzUUo/fpu8UlamnriBkvGvlWUwOPw01G4+vzLbI
-	As1UT1FW8GBTfeYETM1onQ2VFyK8TRZ6XctKuGjTqoF0o/cryfEaQN706gmbtsq8pr3ET0BzLkR
-	ZIs152SaEuTzp8/fxNOmg=
-X-Google-Smtp-Source: AGHT+IGpIdh3flgCmAgcXhz8IRHJclkvuC7TugMmDv25fWRlcz3rxuTkeKYLIJQyyQ+tlPFNqzNXwQ==
-X-Received: by 2002:a05:6870:890b:b0:3ec:3f3e:b61c with SMTP id 586e51a60fabf-3f5f8ca0a4fmr9530872fac.46.1765994049344;
-        Wed, 17 Dec 2025 09:54:09 -0800 (PST)
+        bh=O1B3yY9phpggNGMmspn7nQ+0SsszENxO/S+nWx84C40=;
+        b=sHTWDKAcZkeZ+BsXKmkFY6xkeSPIggKEmrAkyXmsWIHzpDPZn2C1HN4kF2rjENYqx4
+         hCh8X1tW2neINSYxZ3R/BgObx2dKbyvHcHwXANB2458T6BO4L3V6Lu7/u7BUUYAkswHz
+         wTS+zbBxU55rRUUt5/5EMtCD2c+NmVdZuBOQbG+vMXspZw6YY6u7l0Ry0LmS0t4TSeFS
+         VK/RZiMhbUB8Q1DXNhEzS1i6M8Jc3ufkp7saWVs42Z8fs/nTajYj2oY209OlM+fp5cwV
+         DYWLdrGRpMuDhqc0CINFOJMcEXmlD47e2RlsoZvOy7Vnpp9hHv09a1b3kLcs5QXUQASm
+         iMqA==
+X-Gm-Message-State: AOJu0YyePQzvVbEVEfNR5DgcrR8kAdL3zsU2Ui4JMByWRtgzTNsn3kqL
+	RTb1WdlCPoecdjccwVSqQdlC3+UpoX36DLJ6AKVOP7qylMdOcywxujYzT65P+Q==
+X-Gm-Gg: AY/fxX4tXqMeVlxTlgk0PWs3SiXLfCx/gveLrpgGhDGT5qoosam9HeJrJbek8hlOjoJ
+	+hzTyrnX1Cz4KrZOMWoCFLx1D2pPv2EwfNi6r65Tx5aEfE+cTdaQ04bef+j29A4pU8O+rumRviC
+	ATkjizX0m04sulLFbtygDTHnl9WsmeBeSgfjjR/I9Gidfc+hgpoj44/HGbfm3BRSgEWk8KrcxO6
+	OHIGrlIxzjxxSV88RChNCQPrHHOK4wOnzfjNZypqv8QkUA/RePj/9kjEjC2wTSHuodH24QLfGTP
+	SaOkl5yBwITng78U/cbdoorjZeCNs1CK+I3DtgG1f1tvJmYClReQ7FyKLv3m9lWxukd+Jr53VSf
+	VTjSGNh73iUA3w+RrmtavZJHQ5E2UbgpjVxk7DCC2BLsSYojTWHbsJ1yJqHTaChWInxtIzlcfVO
+	N3oClXNiXOelCoqAHhSRU=
+X-Google-Smtp-Source: AGHT+IHFJQQG02aXqkt9t880y8J8l0Xc1YmhiqprujcAoX1m4NTNCQnwW9l3geOIrzqNY6FxN6W9gg==
+X-Received: by 2002:a05:6870:239d:b0:3e8:9bc9:f74 with SMTP id 586e51a60fabf-3fa168f9b59mr152087fac.9.1765994050003;
+        Wed, 17 Dec 2025 09:54:10 -0800 (PST)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3fa17f4b879sm20058fac.14.2025.12.17.09.54.08
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3fa17f4b879sm20058fac.14.2025.12.17.09.54.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 17 Dec 2025 09:54:09 -0800 (PST)
 From: Justin Tobler <jltobler@gmail.com>
@@ -64,9 +64,9 @@ Cc: ps@pks.im,
 	gitster@pobox.com,
 	worldhello.net@gmail.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v5 1/7] builtin/repo: group per-type object values into struct
-Date: Wed, 17 Dec 2025 11:53:58 -0600
-Message-ID: <20251217175404.37963-2-jltobler@gmail.com>
+Subject: [PATCH v5 2/7] strbuf: split out logic to humanise byte values
+Date: Wed, 17 Dec 2025 11:53:59 -0600
+Message-ID: <20251217175404.37963-3-jltobler@gmail.com>
 X-Mailer: git-send-email 2.52.0.209.ge85ae279b0
 In-Reply-To: <20251217175404.37963-1-jltobler@gmail.com>
 References: <20251216173842.3357832-1-jltobler@gmail.com>
@@ -79,121 +79,170 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The `object_stats` structure stores object counts by type. In a
-subsequent commit, additional per-type object measurements will also be
-stored. Group per-type object values into a new struct to allow better
-reuse.
+In a subsequent commit, byte size values displayed in table output for
+the git-repo(1) "structure" subcommand will be shown in a more
+human-readable format with the appropriate unit prefixes. For this
+usecase, the downscaled values and unit strings must be handled
+separately to ensure proper column alignment.
+
+Split out logic from strbuf_humanise() to downscale byte values and
+determine the corresponding unit prefix into a separate humanise_bytes()
+function that provides seperate value and unit strings.
+
+Note that the "byte" string in "t/helper/test-simple-ipc.c" is unmarked
+for translation here so that it doesn't conflict with the newly defined
+plural "byte/bytes" translation and instead uses it.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- builtin/repo.c | 42 +++++++++++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ strbuf.c                   | 74 ++++++++++++++++++++------------------
+ strbuf.h                   | 14 ++++++++
+ t/helper/test-simple-ipc.c |  7 +++-
+ 3 files changed, 60 insertions(+), 35 deletions(-)
 
-diff --git a/builtin/repo.c b/builtin/repo.c
-index 2a653bd3ea..a69699857a 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -202,13 +202,17 @@ struct ref_stats {
- 	size_t others;
- };
+diff --git a/strbuf.c b/strbuf.c
+index 6c3851a7f8..349ee9727a 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -836,47 +836,53 @@ void strbuf_addstr_urlencode(struct strbuf *sb, const char *s,
+ 	strbuf_add_urlencode(sb, s, strlen(s), allow_unencoded_fn);
+ }
  
--struct object_stats {
-+struct object_values {
- 	size_t tags;
- 	size_t commits;
- 	size_t trees;
- 	size_t blobs;
- };
+-static void strbuf_humanise(struct strbuf *buf, off_t bytes,
+-				 int humanise_rate)
++void humanise_bytes(off_t bytes, char **value, const char **unit,
++		    unsigned flags)
+ {
++	int humanise_rate = flags & HUMANISE_RATE;
++
+ 	if (bytes > 1 << 30) {
+-		strbuf_addf(buf,
+-				humanise_rate == 0 ?
+-					/* TRANSLATORS: IEC 80000-13:2008 gibibyte */
+-					_("%u.%2.2u GiB") :
+-					/* TRANSLATORS: IEC 80000-13:2008 gibibyte/second */
+-					_("%u.%2.2u GiB/s"),
+-			    (unsigned)(bytes >> 30),
+-			    (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
++		*value = xstrfmt(_("%u.%2.2u"), (unsigned)(bytes >> 30),
++				 (unsigned)(bytes & ((1 << 30) - 1)) / 10737419);
++		/* TRANSLATORS: IEC 80000-13:2008 gibibyte/second and gibibyte */
++		*unit = humanise_rate ? _("GiB/s") : _("GiB");
+ 	} else if (bytes > 1 << 20) {
+-		unsigned x = bytes + 5243;  /* for rounding */
+-		strbuf_addf(buf,
+-				humanise_rate == 0 ?
+-					/* TRANSLATORS: IEC 80000-13:2008 mebibyte */
+-					_("%u.%2.2u MiB") :
+-					/* TRANSLATORS: IEC 80000-13:2008 mebibyte/second */
+-					_("%u.%2.2u MiB/s"),
+-			    x >> 20, ((x & ((1 << 20) - 1)) * 100) >> 20);
++		unsigned x = bytes + 5243; /* for rounding */
++		*value = xstrfmt(_("%u.%2.2u"), x >> 20,
++				 ((x & ((1 << 20) - 1)) * 100) >> 20);
++		/* TRANSLATORS: IEC 80000-13:2008 mebibyte/second and mebibyte */
++		*unit = humanise_rate ? _("MiB/s") : _("MiB");
+ 	} else if (bytes > 1 << 10) {
+-		unsigned x = bytes + 5;  /* for rounding */
+-		strbuf_addf(buf,
+-				humanise_rate == 0 ?
+-					/* TRANSLATORS: IEC 80000-13:2008 kibibyte */
+-					_("%u.%2.2u KiB") :
+-					/* TRANSLATORS: IEC 80000-13:2008 kibibyte/second */
+-					_("%u.%2.2u KiB/s"),
+-			    x >> 10, ((x & ((1 << 10) - 1)) * 100) >> 10);
++		unsigned x = bytes + 5; /* for rounding */
++		*value = xstrfmt(_("%u.%2.2u"), x >> 10,
++				 ((x & ((1 << 10) - 1)) * 100) >> 10);
++		/* TRANSLATORS: IEC 80000-13:2008 kibibyte/second and kibibyte */
++		*unit = humanise_rate ? _("KiB/s") : _("KiB");
+ 	} else {
+-		strbuf_addf(buf,
+-				humanise_rate == 0 ?
+-					/* TRANSLATORS: IEC 80000-13:2008 byte */
+-					Q_("%u byte", "%u bytes", bytes) :
+-					/* TRANSLATORS: IEC 80000-13:2008 byte/second */
+-					Q_("%u byte/s", "%u bytes/s", bytes),
+-				(unsigned)bytes);
++		*value = xstrfmt("%u", (unsigned)bytes);
++		*unit = humanise_rate ?
++			       /* TRANSLATORS: IEC 80000-13:2008 byte/second */
++			       Q_("byte/s", "bytes/s", bytes) :
++			       /* TRANSLATORS: IEC 80000-13:2008 byte */
++			       Q_("byte", "bytes", bytes);
+ 	}
+ }
  
-+struct object_stats {
-+	struct object_values type_counts;
++static void strbuf_humanise(struct strbuf *buf, off_t bytes, unsigned flags)
++{
++	char *value;
++	const char *unit;
++
++	humanise_bytes(bytes, &value, &unit, flags);
++
++	/*
++	 * TRANSLATORS: The first argument is the number string. The second
++	 * argument is the unit string (i.e. "12.34 MiB/s").
++	 */
++	strbuf_addf(buf, _("%s %s"), value, unit);
++	free(value);
++}
++
+ void strbuf_humanise_bytes(struct strbuf *buf, off_t bytes)
+ {
+ 	strbuf_humanise(buf, bytes, 0);
+@@ -884,7 +890,7 @@ void strbuf_humanise_bytes(struct strbuf *buf, off_t bytes)
+ 
+ void strbuf_humanise_rate(struct strbuf *buf, off_t bytes)
+ {
+-	strbuf_humanise(buf, bytes, 1);
++	strbuf_humanise(buf, bytes, HUMANISE_RATE);
+ }
+ 
+ int printf_ln(const char *fmt, ...)
+diff --git a/strbuf.h b/strbuf.h
+index a580ac6084..698b3cc4a5 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -367,6 +367,20 @@ void strbuf_addbuf_percentquote(struct strbuf *dst, const struct strbuf *src);
+  */
+ void strbuf_add_percentencode(struct strbuf *dst, const char *src, int flags);
+ 
++enum humanise_flags {
++	/*
++	 * Use rate based units for humanised values.
++	 */
++	HUMANISE_RATE = (1 << 0),
 +};
 +
- struct repo_structure {
- 	struct ref_stats refs;
- 	struct object_stats objects;
-@@ -281,9 +285,9 @@ static inline size_t get_total_reference_count(struct ref_stats *stats)
- 	return stats->branches + stats->remotes + stats->tags + stats->others;
- }
++/**
++ * Converts the given byte size into a downscaled human-readable value and
++ * corresponding unit as two separate strings.
++ */
++void humanise_bytes(off_t bytes, char **value, const char **unit,
++		    unsigned flags);
++
+ /**
+  * Append the given byte size as a human-readable string (i.e. 12.23 KiB,
+  * 3.50 MiB).
+diff --git a/t/helper/test-simple-ipc.c b/t/helper/test-simple-ipc.c
+index 03cc5eea2c..442ad6b16f 100644
+--- a/t/helper/test-simple-ipc.c
++++ b/t/helper/test-simple-ipc.c
+@@ -603,7 +603,12 @@ int cmd__simple_ipc(int argc, const char **argv)
+ 		OPT_INTEGER(0, "bytecount", &cl_args.bytecount, N_("number of bytes")),
+ 		OPT_INTEGER(0, "batchsize", &cl_args.batchsize, N_("number of requests per thread")),
  
--static inline size_t get_total_object_count(struct object_stats *stats)
-+static inline size_t get_total_object_values(struct object_values *values)
- {
--	return stats->tags + stats->commits + stats->trees + stats->blobs;
-+	return values->tags + values->commits + values->trees + values->blobs;
- }
+-		OPT_STRING(0, "byte", &bytevalue, N_("byte"), N_("ballast character")),
++		/*
++		 * The "byte" string here is not marked for translation and
++		 * instead relies on translation in strbuf.c:humanise_bytes() to
++		 * avoid conflict with the plural form.
++		 */
++		OPT_STRING(0, "byte", &bytevalue, "byte", N_("ballast character")),
+ 		OPT_STRING(0, "token", &cl_args.token, N_("token"), N_("command token to send to the server")),
  
- static void stats_table_setup_structure(struct stats_table *table,
-@@ -302,14 +306,18 @@ static void stats_table_setup_structure(struct stats_table *table,
- 	stats_table_count_addf(table, refs->remotes, "    * %s", _("Remotes"));
- 	stats_table_count_addf(table, refs->others, "    * %s", _("Others"));
- 
--	object_total = get_total_object_count(objects);
-+	object_total = get_total_object_values(&objects->type_counts);
- 	stats_table_addf(table, "");
- 	stats_table_addf(table, "* %s", _("Reachable objects"));
- 	stats_table_count_addf(table, object_total, "  * %s", _("Count"));
--	stats_table_count_addf(table, objects->commits, "    * %s", _("Commits"));
--	stats_table_count_addf(table, objects->trees, "    * %s", _("Trees"));
--	stats_table_count_addf(table, objects->blobs, "    * %s", _("Blobs"));
--	stats_table_count_addf(table, objects->tags, "    * %s", _("Tags"));
-+	stats_table_count_addf(table, objects->type_counts.commits,
-+			       "    * %s", _("Commits"));
-+	stats_table_count_addf(table, objects->type_counts.trees,
-+			       "    * %s", _("Trees"));
-+	stats_table_count_addf(table, objects->type_counts.blobs,
-+			       "    * %s", _("Blobs"));
-+	stats_table_count_addf(table, objects->type_counts.tags,
-+			       "    * %s", _("Tags"));
- }
- 
- static void stats_table_print_structure(const struct stats_table *table)
-@@ -389,13 +397,13 @@ static void structure_keyvalue_print(struct repo_structure *stats,
- 	       (uintmax_t)stats->refs.others, value_delim);
- 
- 	printf("objects.commits.count%c%" PRIuMAX "%c", key_delim,
--	       (uintmax_t)stats->objects.commits, value_delim);
-+	       (uintmax_t)stats->objects.type_counts.commits, value_delim);
- 	printf("objects.trees.count%c%" PRIuMAX "%c", key_delim,
--	       (uintmax_t)stats->objects.trees, value_delim);
-+	       (uintmax_t)stats->objects.type_counts.trees, value_delim);
- 	printf("objects.blobs.count%c%" PRIuMAX "%c", key_delim,
--	       (uintmax_t)stats->objects.blobs, value_delim);
-+	       (uintmax_t)stats->objects.type_counts.blobs, value_delim);
- 	printf("objects.tags.count%c%" PRIuMAX "%c", key_delim,
--	       (uintmax_t)stats->objects.tags, value_delim);
-+	       (uintmax_t)stats->objects.type_counts.tags, value_delim);
- 
- 	fflush(stdout);
- }
-@@ -473,22 +481,22 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
- 
- 	switch (type) {
- 	case OBJ_TAG:
--		stats->tags += oids->nr;
-+		stats->type_counts.tags += oids->nr;
- 		break;
- 	case OBJ_COMMIT:
--		stats->commits += oids->nr;
-+		stats->type_counts.commits += oids->nr;
- 		break;
- 	case OBJ_TREE:
--		stats->trees += oids->nr;
-+		stats->type_counts.trees += oids->nr;
- 		break;
- 	case OBJ_BLOB:
--		stats->blobs += oids->nr;
-+		stats->type_counts.blobs += oids->nr;
- 		break;
- 	default:
- 		BUG("invalid object type");
- 	}
- 
--	object_count = get_total_object_count(stats);
-+	object_count = get_total_object_values(&stats->type_counts);
- 	display_progress(data->progress, object_count);
- 
- 	return 0;
+ 		OPT_END()
 -- 
 2.52.0.209.ge85ae279b0
 
