@@ -1,127 +1,134 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0F9336ED1
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 08:17:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765959480; cv=pass; b=NBXbom4oqNm/BujssEZvMuDzhxyFKxLUfTga6qQzOCwuI30+0yEZy6zK2yV9jCLDFduzshSJF2sf5HVylKycpu7Kuc3jLuiHf5pQy/qIst+/bOlt1muEJotjuinPtiz+gN+TrnvE1JxuL1My1Bm7PxUrd6gc8kmj/M/tzmYI3uU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765959480; c=relaxed/simple;
-	bh=KufPV2JN3ABOcJySw1Q2YBwQkhrD4CtbWKkxeNXRmZk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=duA5OtIzkwKQUGqTmSlYtscWWXYfZcwyrjQVy+abCXpWcfxNcxUw2ZoflpFZCb+V5kcKGmsQYkpk0gaEGooSLa+MMxr8hJ60dZkW13f/alHw100iVBM2fBoH2ye2Aj++s6jVYIjBB67PLFwe1F1b0DhyVCOXYG4O/PrP+uJHehA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=MRImS2Ga; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6630E278E5D
+	for <git@vger.kernel.org>; Wed, 17 Dec 2025 08:57:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765961831; cv=none; b=CW2Sayj6HvSfqe2I1ArThZQ3GA/2RSWe3U3zWQcKnqJZ5+elUzQFW/NK7SNwkkA2HwqkVQsTPkD8nXHSUuFjoE4IdNkgtL+S3VCQcG02WupcvjjNQOiGmHOP6yZeLtr2hrff6CGKzDLd/YizGllJj9gT5AV0SqmpJcDDMUP8vdA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765961831; c=relaxed/simple;
+	bh=D5hNvOOkgUb5Lmgu5SuGAHiLKipmnKiDZJLJNbqe1PM=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=q9YIKQFCisTllskKDLUxqgE/4VmGKc9GPzyjk4PyWB07GPUCO02YVx95DxGa1xdJhfcJYbm45sLHf6e6amGNMQ+qj5SiwPeM1R31qKfRzRo3Skd5q7XQn4jKp2zCH46hfztu785rSaVRB35l9OPyDHr4cijan8ey5eJGZQoYZvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=dPg3Hc2k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MZlCi4/p; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="MRImS2Ga"
-ARC-Seal: i=1; a=rsa-sha256; t=1765959461; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=SY/wTO3ArTHIrR4naxZUu1UyztMyJLwK9vfMQgYFO881tUv1FX6p2aK70rsRhLPA0GDKemUBJrZ4846XrUqoxy8Q/iH1cZ9pSUZoPm53EOQ0oW8P9CoeOSCQ63VsPtJv1d5ZySu7oqPpkllYLH/DVs5vYOwdskjxkre+iMQ3SbQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1765959461; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=alLpwT5VANFgZiH+ZH4bsw3OZeQm0/wDtqOBvDfWrzU=; 
-	b=GPBQVM5G+p/Sc1/XLbUv9kMiS5FRHbhztGEaCbtHCeCy/oKvFPrRIxzexn+p0Ct2nCMePZxeuvL6ua57zKxKbDD2Qx15Gs9Yi7dSr01CcBI0j0Ahm1ZKg7YaE3pkgHXa88wMtd9BVGJFkvXyZ7vQGPGC9lwWFqm7yCDx79OEs1U=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
-	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765959461;
-	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=alLpwT5VANFgZiH+ZH4bsw3OZeQm0/wDtqOBvDfWrzU=;
-	b=MRImS2GaVfKEozejyIJl1/5Y1t7bBd5w87AsEopbnQSbPBrXlYjpv+5aJTanBY6f
-	2Y7ykkZ3zg+eL7jRc2/occXNGNVnbXcmSeovA2NhhD3orpGFywGv8o7a7iqGYG8e/Br
-	sohbTcRv9f0l1ouj03nYTtZN3LPiwd7vDZcQUqc8=
-Received: by mx.zohomail.com with SMTPS id 1765959460064815.4596330954465;
-	Wed, 17 Dec 2025 00:17:40 -0800 (PST)
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
- Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio
- C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>, Jonathan
- Nieder <jrnieder@gmail.com>, Patrick Steinhardt <ps@pks.im>, Ben Knoble
- <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v6 00/10] Add submodulePathConfig extension and gitdir
- encoding
-In-Reply-To: <dymehf7vjf6winlsezdzbdiboo7d74wezoopwkyc67ckra7oe2@5ruvpsgjpbea>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20251213080817.347922-1-adrian.ratiu@collabora.com>
- <dymehf7vjf6winlsezdzbdiboo7d74wezoopwkyc67ckra7oe2@5ruvpsgjpbea>
-Date: Wed, 17 Dec 2025 10:17:33 +0200
-Message-ID: <87bjjxed42.fsf@collabora.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="dPg3Hc2k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MZlCi4/p"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 93AAB14001FF;
+	Wed, 17 Dec 2025 03:57:08 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Wed, 17 Dec 2025 03:57:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1765961828;
+	 x=1766048228; bh=lk1lG4WYMsoLgAkiDKw2D5uKQ4GJ4Y4nzJW03bUyhoQ=; b=
+	dPg3Hc2kFwmhzW/H5UZR9sjgM3SWKaYcZ8DK8nxkTEua6oiOOz/j1mRrbnPQRsZG
+	0N7F+vLeL2anAZmSDNcZijRLRqAC3/FrJSzfEXBMsMzYVSlWHCh8SpWi+1eP3O1x
+	PUft0nhBoM4qnAbIjKccRmRs3BWOP88MO3pie3I0LMTFVyBx82ORy+uPSz5Sp+hU
+	S0yq2BL2C/GGJg8u7tsBpi0G673Oox9CAQ11t6ctP21Ttad9ftAhjLKSXGmS0M88
+	j4XwAYa3JSk39uLQSw5TOPwi2x+jAjreiSqKPzX/fMW0ZolJK+qHPwyYmEhdFCef
+	00HU38MFuIeJGHOad3rBQg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1765961828; x=1766048228; bh=l
+	k1lG4WYMsoLgAkiDKw2D5uKQ4GJ4Y4nzJW03bUyhoQ=; b=MZlCi4/pCs1mZ9gbG
+	i6K8wFjGHZlSzB3xwxA/Qa8x/WBnvb/prjwQnsMvABL5AnBLNlh/5M1aotQM+afH
+	rEgFtEPv5uWWpX4CBsfJ78OXh+opq/GY7DVZPxqLPJlzDleyqIq3rZ5UAN0vRNBo
+	Dsdm+cgY0Ip86cyKbFmZ1OKFi/LulGH0cWnweJLyzMnr4+3zshYLGO0NJgbnr2Wp
+	C/n3U+9OrlSRZWSw0jDR/yYazM81sSeRy7/+p+vj/qYKKMMZuS/TJ1rXruzbfeyv
+	OOPmMsJGYJje0m64O2srZOVDjBKu+5EigFPmB/IabdCNPZ3qUGEDbBdl5mzBG/nX
+	cgOQQ==
+X-ME-Sender: <xms:ZHBCaelHP8Kc6L2elnBsgmO0ZysG-P1wNP3SHewp8exThKrTDBTXSDI>
+    <xme:ZHBCaQrI58OMOhVT-VdWpIt328F45qb9PtkMuc3A_VzH8UAIOvJkFXpB1IbHUgSQ1
+    PrgzvNpl-Q3w-KRvkN-5M_jkd6Ju0Iis5l1X9LNpW6HLGlI-xqXBQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegvddugecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthho
+    fhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkh
+    hksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdfhffeghedtgfet
+    udejleelledvhfdvtdefheeghfelveefhefgtefftefftdffnecuffhomhgrihhnpeifrg
+    hlvggvughkhhgrnhdrnhgrmhgvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
+    grihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgt
+    phhtthhopehsihhmohhnrdhrihgthhhtvghrsehhohhghihrohhsrdguvgdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:ZHBCaVR7f8GhQXOroM8_CnITd2-5DTcD3dYiX1tx8NZmjlerS3oV1w>
+    <xmx:ZHBCactDX51O7wMcyFsFwoeipV4Furlqqu9i0PtCx3xHZP64jvyQSQ>
+    <xmx:ZHBCaSa9Ygud3vcSTtmRi_ER0u6gAji_DojFbckEU3DzQapfgbMt5g>
+    <xmx:ZHBCaZuYmn-vDqOHh91gx_y3aV1sG317FGCMB62Sh9Qh8z-_7H5XEQ>
+    <xmx:ZHBCacl_8n8DCC215fQDsgtCdqRLK4CPDIONlY8NF-lGj_PbLed6dyaF>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 4A3981EA0066; Wed, 17 Dec 2025 03:57:08 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ZohoMailClient: External
+X-ThreadId: Ah6w9HIwkd0F
+Date: Wed, 17 Dec 2025 09:56:48 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Simon Richter" <Simon.Richter@hogyros.de>, git <git@vger.kernel.org>
+Message-Id: <c0a51f7f-2c3e-43b1-9e0b-668a450b0348@app.fastmail.com>
+In-Reply-To: <0e1e168e-e90c-4aba-a474-50d0df75a8e7@hogyros.de>
+References: <0e1e168e-e90c-4aba-a474-50d0df75a8e7@hogyros.de>
+Subject: Re: rebasing on top of reformatted branch
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 16 Dec 2025, Josh Steadmon <steadmon@google.com> wrote:
-> On 2025.12.13 10:08, Adrian Ratiu wrote:
->> Hello everyone,
->> 
->> For those new to the series, we're implementing a submodule gitdir
->> extension which allows us to have a unified way to determine gitdirs
->> and do things like encode submodule paths to avoid FS conflicts.
+On Wed, Dec 17, 2025, at 07:33, Simon Richter wrote:
+> I need to rebase a branch on top of a version that has had automatic
+> formatting applied.
 >
-> I'm afraid I've gotten a bit lost with this series. IIUC, we no longer
-> try to encode submodule gitdirs by default, instead we do this only if
-> we detect a conflict with an existing gitdir. However, in all of my
-> local testing, I have been unable to produce a conflict that triggers
-> this encoding. Instead, everything hits the error:
->   "fatal: A git directory for 'nested%2fsub' is found locally with remote(s):"
-> from `builtin/submodule--helper.c:3389`.
+> My usual approach for this is to create an empty extra commit after the
+> branch point, then filter-branch all the commits on my branch with the
+> same automatic formatting, then continue rebasing. Because the filter =
+is
+> applied to the tree, no three-way merges are performed, avoiding the
+> conflicts.
 >
-> This happens regardless of the setting of
-> `extensions.submodulepathconfig` in either the repo's local config, or
-> my user config.
->
-> My testing setup has been as follows:
-> * Using our locally-built Git with our downstream patch of [1] included:
->   * create a repo "sub"
->   * create a repo "super"
->   * In "super":
->     * mkdir nested
->     * git submodule add ../sub nested/sub
->     * Verify that the submodule's gitdir is .git/modules/nested%2fsub
-> * Using a build of git from upstream `next` plus this series:
->   * git config set --global extensions.submodulepathconfig true
->   * git clone --recurse-submodules super super2
->   * create a repo "nested%2fsub"
->   * In "super2":
->     * git submodule add ../nested%2fsub
->
-> At this point I'd expect the collision detection / encoding to take
-> effect, but instead I get the error listed above.
+> Is there a way to automate this in a nicer way, especially if I have
+> multiple branches that need to be rebased in this way?
 
-This is a good test case, thanks, I will add something very similar to
-t7425-submodule-gitdir-path-extension.sh in v7.
+I haven=E2=80=99t tried it but git-test from git-branchless should be ab=
+le to
+solve this.[1][2]
 
-Please wait for v7, where I will fix the global config, then you can
-retry the steps above.
+> > git-branchless=E2=80=99s git test command offers a solution to quick=
+ly run
+> > formatters, etc., on an entire stack of commits without causing merge
+> > conflicts.
+> > [...]
+> >     git test run --exec 'cargo fmt --all' --strategy worktree --jobs=
+ 8
 
-Just one important thing to look out for:
+That sounded great to me when I first read it (to transform the trees
+per snapshot). *Obvious in hindsight* considering the trend of
+autoformatters in various languages.
 
-Existing submodules will _not_ get their submodule.<name>.gitdir
-automatically created when enabling the extension, so you will get
-errors like "gitdir does not exist" after enabling the extension.
+=F0=9F=94=97 1: https://blog.waleedkhan.name/formatting-a-commit-stack/
+=E2=80=A0 2: Not to be confused with some git-test(1) scripts that run t=
+ests per
+     commit in a revision range and store failure/success
 
-Those are expected and I assume you already got errors like those.
+I uninstalled git-branchless because it created so many weird refs and
+hooks and I didn=E2=80=99t understand the overarching goal of the command
+suite. I still have hooks like this laying around. :)
 
-The gitdirs can be created manually, for example:
-git config submodule.<name>.gitdir .git/modules/<name>
+    #!/bin/sh
+    ## START BRANCHLESS CONFIG
 
-Or they can all be created automatically:
-git submodule--helper migrate-gitdir-configs
-
-When running the migration command in a repo containing submodules, it
-will also enable the extension in the super repo config, in addition to
-creating all the submodule gitdirs configs, so running just that single
-command should be enough.
-
-Hope this all makes sense and happy to answer any questions,
-Adrian
+    # This hook has been uninstalled.
+    # Run `git branchless init` to reinstall.
+    ## END BRANCHLESS CONFIG
