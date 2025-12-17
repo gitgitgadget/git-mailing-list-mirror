@@ -1,69 +1,69 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7E6397D32
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 14:09:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3527039A116
+	for <git@vger.kernel.org>; Wed, 17 Dec 2025 14:09:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765980552; cv=none; b=fCU4EdilqKHzoIxmkH1JPHOtgm99rxCI8gwLJtjxov/uMH0Wm5bulAGPDtcHk7kkRGl0jKih4srsQzMxJ/7ggk9A62wEvtLbyHlC+XCpWR6OmXjWrXcuxY9S2x+kh2Bw/6AIxgKWWopA5tLrW1odHNsnDtxj1sVnfdr+HDacxAA=
+	t=1765980555; cv=none; b=VK0Bv2lCdinHlMtymyGGUoHbdPdHthwmOdq2RthvxdUgBnNBNrQayvvT1DkCCLA04iFr0WUo/DuzqL72bErRToU7YHsOZIbzLFlK5RAFUmtv6HvV1dHVPXx7E+TzwaPxaYD1udqZKyh90La7Cl0bgm5RrCys/fjQxebFtj/djOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765980552; c=relaxed/simple;
-	bh=zd1Z+1UAXorBfHKXCkOG+qF62mOQHqKxlwGHiyjqSzI=;
+	s=arc-20240116; t=1765980555; c=relaxed/simple;
+	bh=eva4AZY4iNxlWW8SJAvEuUVq8JZ0no2gf/OB8YEVIQI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=uXL97BscgNuCEr/5RdbWYb2m1HG2SKJS/8VBkA+I1wCOadmhpJ9brkHK5kbabAuQ/duHBLeuE6MF27rU2dutl/GJQwBnGzSYeO8ax3MWfdRD+CPyoSjBhG79Lo5cLWDr2sc2N5/i/osM+5qREx+dKw4Mse6+IPVBlQe9Xt46wfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aEjaeUyp; arc=none smtp.client-ip=209.85.222.169
+	 MIME-Version:To:Cc; b=VO64zdsjDo91jq0s1sugrdrEd0dSbRiviDIWQHs2IfKcquvNnAyvlcmtDh45wtLyojWtI4u6K51CdFMb/BbpRgBD1kyGSFdgWF4yI2Ssmp2EgNGpcCkQxnoYLlUOtsh9uJooA11O8/EIlbbSk1hB8o3Q60FAYclapYihPjz9yR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VC5GmrgM; arc=none smtp.client-ip=209.85.219.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aEjaeUyp"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8b1e54aefc5so513892185a.1
-        for <git@vger.kernel.org>; Wed, 17 Dec 2025 06:09:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VC5GmrgM"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-88860551e39so50665866d6.3
+        for <git@vger.kernel.org>; Wed, 17 Dec 2025 06:09:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765980547; x=1766585347; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1765980553; x=1766585353; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hXrdBJcx9SPN5UpIGqhbNa2l3FDpMziKoxgdqPIeMt0=;
-        b=aEjaeUypB6DZmiQCIAfB3PAukMllsrt+jJ2F7GLdEnlx0Gh3qgMSoNwW8Wjd5wktXX
-         md3lQ8CT3DicYYFyBn0OaSAx/iAe4A0gxJ+0nQ86vMSXivdThqLmGgStZfZqKawG2sCq
-         C/NG/n0eBDrXOoLNlTbIec/xJY1+rqDuQNlwoTdpA03PH02ppqhH47s/djsq2K4Ffgr3
-         iH2I9mL9NIqE/Qg/DEaoPRkxYLJAqibNrEJe4dWUhvqtT9y5S39onuuomw6TYHyrrVHI
-         FOuwzAWiSg+QEgsjJGIRspMRE3Jg161YePV3daak3ez2SqUlMpxhoZ3DeKppNr8yuWhg
-         PJ5w==
+        bh=N9CWEOi4hD4ipi8mZnom2/dXIxwydGgeZyBlUQ5lN1Q=;
+        b=VC5GmrgMvSm5SM/biopw8XnXvkq/Bw+W4sqSrxEA4Gyojp0cETGoUAvqVSC1LSD+El
+         pKCJC4HBZg3/iDOryOtaEyxk/0YRBICwfqxl/mYOf5HpZViwPQRQ+ZX4BABEYheESjdV
+         54Z/oNgQD7uLjRi+s6tBmQ1uU1qsWC4tPoRMb2qTVub51zpwdC0jioi7uWTaBFHq1Ul1
+         iHSOlOtiNzb6R/fxTWkQHcUMlctpwEFxejmUEYG9LuAqMib3wBwsFRVzzycDSGNZC+CX
+         pZDq05Hq+P1AB07Jb0ch1oSl3vI/IQ41S6mU2mvRqGcUErnxTOqBRoIJAg2gu4BwxV1f
+         GwjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765980547; x=1766585347;
+        d=1e100.net; s=20230601; t=1765980553; x=1766585353;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=hXrdBJcx9SPN5UpIGqhbNa2l3FDpMziKoxgdqPIeMt0=;
-        b=foxI5GrT2hyuHUXc6LkMpvBXC/aUZq8yYzVOP1MjvA2RhMIOyDL6nXVbc0b5dX2XQc
-         v16WEvs2wvWXfkl2gCVvlnFKfuE3bMCr5zRwZJztpx/DWxgKw8ks/X83sR0rx63dBhhI
-         ayHKICAtB+nE2i1xy2UNzUunDjNf+eu1VZu+Ib0Oe14PgJXjwHO/dGy7ppeWZlKAihTP
-         QEsIUqOmFM9BPWs7qjynjcn0kl1bEaSyL8ESTkCaazUp4BUdoVNbLvU7qxHI3d0e9aFk
-         5EdkFsuCJ9KrsslZ8p9FNpMzX9+Vk6vAja96Hxp1t0RkmyGTj3V8ajUA6/OCjh38tPzi
-         Xm6Q==
-X-Gm-Message-State: AOJu0Yz3xg8rFTv7QST329RNf7/29UBTa8wYgwixjIBg1ouD6RHb874+
-	jsDKrO7AgaSmNXvW0+6Y4NbyNepxCOyCj7ooBrzTPXSOV4Jr1P2BaRiDhkeTy9Be
-X-Gm-Gg: AY/fxX7jisVOGiNUWH4fltLwLR/wrwa20EOwZdaHzUvpasb1HJlBigjrbgIVhaFnP44
-	cHhj5sku4xW0awyJa1eu/STtC8seQAI5wJ/WlWFDd8nXLSAZuz30L07mbiN9sJQRnFfSFAmg+kF
-	VDvzRICMDllXlg0HjInk0D7uw3iCIICYd/GHvjDHZvEqdPnQhZQL/5gyawYv4WMT9YsS0/4oeh2
-	DokIoUqk2RRKyCGS5hwKc2TYYSYnsY2bHYyPCwo8STJY8N2Jo5/1TQX45yGhuFmxK25ilPyLRTw
-	PKPs3EUVimr2SFf/7Wdf3tQrQvzjK0Vrokvl1hlk9h/8Zzt6HyZlKD2iDrPNQhsOJt4nmX54Ef9
-	GIsH13cwa+KWxBYVKIL2joYj3OsI2aPnIvU02+JVKxNnlJioHCDf4YxYKVn8/Zu85YKcpjQU7oq
-	2kBosuHTJOv5w=
-X-Google-Smtp-Source: AGHT+IHdI8F4TvM1wHY5dFcmsAFU3IL4Jip1EW07iGkDJmKvBnOo8379s9ekup8EY2D2XwL+KzMjow==
-X-Received: by 2002:a05:620a:6919:b0:8b2:5cdd:6a16 with SMTP id af79cd13be357-8bb3b3708d5mr2439341985a.82.1765980546685;
-        Wed, 17 Dec 2025 06:09:06 -0800 (PST)
+        bh=N9CWEOi4hD4ipi8mZnom2/dXIxwydGgeZyBlUQ5lN1Q=;
+        b=kw43Jv7Y6D0986Vllhg0HHQ93vSXIyAlRmmVu53xZWSjwSxKzZWefaXIvzMCu3IcCj
+         ZTyf7YPVAKsW6NzXU2zVEtHVMDaUtt5oOVvi6LehSKePnPYlCv6KS9+s45K1UGZ91xiY
+         mHrOZHelEw+00/9tdf2vWaflvGiiPDCQ5urK7ou2wv0RQ0OS+FyT9NXqYJAS7Pv+pmYW
+         6iDK+PXk5p6oSqd3MyM6pmPolPhotke3Ef/M+TLzueXs/PfAoRsOh9lRqgBl9AzUHdId
+         pdZNBr2xiOEQYnfhA43MkxYKnJSf29IMWQ7AnibJq/InM+qgH43L1ojiFzyVl/dIzkjw
+         nDLA==
+X-Gm-Message-State: AOJu0Yzgo/qY2QjBZKjDrwb5xo+fX2GzvgZy5OAOoB1dWGpFfGKFHrM/
+	7PjFORyYAiGV2EXM7kEuUpM5KnbLlqtIouxHuGB6G6BIWh8QgxsIGgn3hrizJLpp
+X-Gm-Gg: AY/fxX5D27FGQp9nw5drhj4046K+7ypNJiR5GOjyIPVAQKx7XyAv4UZ6tdtjAE9zKdk
+	gRDYO1diRNVUr6pBXVc3oaYuwJra7Ec9DOwpm/7/Eiv2GzgH9eYsCAVcW6xHkOrk7R4/20fqprr
+	3LfPe4EYa6MP9rBtEOqRI1mSWMkejED4KFrfkxVKhDHeR38g+zRS+NPPTjdFmBR6UkKRQx3JEzk
+	EOhNDbtBmWAx35gQMpJpmd7jaVDYBWGqlh0BCPFx4ORYSamnDJN++4CpX6dRZIyYrk5+oUlm+r+
+	EKba8YMVuLA3dPPoyWRREynbATKNSSJL3EIsoWYZMGhcqjkqDnPA6zeMg+P/B4Ha92mxPv7QmZd
+	1K6GwiVIzVy9hzs67jhWWGBfDR7DNH41Vh/2qFIiBdRD+WVm1lVzZhgP3PRA84rPWyK0EqbSQJB
+	VQMmtGH9k8bdujpcwpDnQoLw==
+X-Google-Smtp-Source: AGHT+IHtzpmu1YKcHc0s/IzL+j4U1xi4tKZ7SA4dufEtCzHjenVoKI6dzxMJDK5GB/+uuWpJJbn2Rw==
+X-Received: by 2002:a05:6214:3203:b0:880:4b27:1888 with SMTP id 6a1803df08f44-8887e16bb44mr256603896d6.3.1765980550262;
+        Wed, 17 Dec 2025 06:09:10 -0800 (PST)
 Received: from [127.0.0.1] ([48.214.53.69])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8be31c76507sm407015885a.48.2025.12.17.06.09.05
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88993b4204asm96322526d6.7.2025.12.17.06.09.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Dec 2025 06:09:05 -0800 (PST)
-Message-Id: <25313cea76e059d01a0607d0d5291b62011f4526.1765980535.git.gitgitgadget@gmail.com>
+        Wed, 17 Dec 2025 06:09:09 -0800 (PST)
+Message-Id: <5cb3b10500339fec403b84e30721e4f6a68e42f6.1765980535.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
 References: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
 From: "Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 17 Dec 2025 14:08:45 +0000
-Subject: [PATCH 08/18] mingw: change default of `core.symlinks` to false
+Date: Wed, 17 Dec 2025 14:08:48 +0000
+Subject: [PATCH 11/18] mingw: support renaming symlinks
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,53 +79,96 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Karsten Blees <blees@dcon.de>
 
-Symlinks on Windows don't work the same way as on Unix systems. For
-example, there are different types of symlinks for directories and
-files, and unless using a recent-ish Windows version in Developer Mode,
-creating symlinks requires administrative privileges.
+Older MSVCRT's `_wrename()` function cannot rename symlinks over
+existing files: it returns success without doing anything. Newer
+MSVCR*.dll versions probably do not share this problem: according to CRT
+sources, they just call `MoveFileEx()` with the `MOVEFILE_COPY_ALLOWED`
+flag.
 
-By default, disable symlink support on Windows. That is, users
-explicitly have to enable it with `git config [--system|--global]
-core.symlinks true`; For convenience, `git init` (and `git clone`)
-will perform a test whether the current setup allows creating symlinks
-and will configure that setting in the repository config.
-
-The test suite ignores system / global config files. Allow
-testing *with* symlink support by checking if native symlinks are
-enabled in MSYS2 (via setting the special environment variable
-`MSYS=winsymlinks:nativestrict` to ask the MSYS2 runtime to enable
-creating symlinks).
-
-Note: This assumes that Git's test suite is run in MSYS2's Bash, which
-is true for the time being (an experiment to switch to BusyBox-w32
-failed due to the experimental nature of BusyBox-w32).
+Avoid the `_wrename()` call, and go with directly calling
+`MoveFileEx()`, with proper error handling of course.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ compat/mingw.c | 38 ++++++++++++++++----------------------
+ 1 file changed, 16 insertions(+), 22 deletions(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 26e64c6a5a..0fe00a5b70 100644
+index b1cc30d0f1..55f0bb478e 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -2862,6 +2862,15 @@ static void setup_windows_environment(void)
- 		if (!tmp && (tmp = getenv("USERPROFILE")))
- 			setenv("HOME", tmp, 1);
- 	}
-+
-+	/*
-+	 * Change 'core.symlinks' default to false, unless native symlinks are
-+	 * enabled in MSys2 (via 'MSYS=winsymlinks:nativestrict'). Thus we can
-+	 * run the test suite (which doesn't obey config files) with or without
-+	 * symlink support.
-+	 */
-+	if (!(tmp = getenv("MSYS")) || !strstr(tmp, "winsymlinks:nativestrict"))
-+		has_symlinks = 0;
- }
+@@ -2275,7 +2275,7 @@ int mingw_accept(int sockfd1, struct sockaddr *sa, socklen_t *sz)
+ int mingw_rename(const char *pold, const char *pnew)
+ {
+ 	static int supports_file_rename_info_ex = 1;
+-	DWORD attrs, gle;
++	DWORD attrs = INVALID_FILE_ATTRIBUTES, gle;
+ 	int tries = 0;
+ 	wchar_t wpold[MAX_PATH], wpnew[MAX_PATH];
+ 	int wpnew_len;
+@@ -2286,15 +2286,6 @@ int mingw_rename(const char *pold, const char *pnew)
+ 	if (wpnew_len < 0)
+ 		return -1;
  
- static void get_current_user_sid(PSID *sid, HANDLE *linked_token)
+-	/*
+-	 * Try native rename() first to get errno right.
+-	 * It is based on MoveFile(), which cannot overwrite existing files.
+-	 */
+-	if (!_wrename(wpold, wpnew))
+-		return 0;
+-	if (errno != EEXIST)
+-		return -1;
+-
+ repeat:
+ 	if (supports_file_rename_info_ex) {
+ 		/*
+@@ -2370,13 +2361,22 @@ repeat:
+ 		 * to retry.
+ 		 */
+ 	} else {
+-		if (MoveFileExW(wpold, wpnew, MOVEFILE_REPLACE_EXISTING))
++		if (MoveFileExW(wpold, wpnew,
++				MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED))
+ 			return 0;
+ 		gle = GetLastError();
+ 	}
+ 
+-	/* TODO: translate more errors */
+-	if (gle == ERROR_ACCESS_DENIED &&
++	/* revert file attributes on failure */
++	if (attrs != INVALID_FILE_ATTRIBUTES)
++		SetFileAttributesW(wpnew, attrs);
++
++	if (!is_file_in_use_error(gle)) {
++		errno = err_win_to_posix(gle);
++		return -1;
++	}
++
++	if (attrs == INVALID_FILE_ATTRIBUTES &&
+ 	    (attrs = GetFileAttributesW(wpnew)) != INVALID_FILE_ATTRIBUTES) {
+ 		if (attrs & FILE_ATTRIBUTE_DIRECTORY) {
+ 			DWORD attrsold = GetFileAttributesW(wpold);
+@@ -2388,16 +2388,10 @@ repeat:
+ 			return -1;
+ 		}
+ 		if ((attrs & FILE_ATTRIBUTE_READONLY) &&
+-		    SetFileAttributesW(wpnew, attrs & ~FILE_ATTRIBUTE_READONLY)) {
+-			if (MoveFileExW(wpold, wpnew, MOVEFILE_REPLACE_EXISTING))
+-				return 0;
+-			gle = GetLastError();
+-			/* revert file attributes on failure */
+-			SetFileAttributesW(wpnew, attrs);
+-		}
++		    SetFileAttributesW(wpnew, attrs & ~FILE_ATTRIBUTE_READONLY))
++			goto repeat;
+ 	}
+-	if (gle == ERROR_ACCESS_DENIED &&
+-	       retry_ask_yes_no(&tries, "Rename from '%s' to '%s' failed. "
++	if (retry_ask_yes_no(&tries, "Rename from '%s' to '%s' failed. "
+ 		       "Should I try again?", pold, pnew))
+ 		goto repeat;
+ 
 -- 
 gitgitgadget
 
