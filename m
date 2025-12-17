@@ -1,87 +1,85 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757FC33064A
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 23:39:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31357D07D
+	for <git@vger.kernel.org>; Wed, 17 Dec 2025 23:49:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766014786; cv=none; b=IJSsLb+3zrhBAZiv2PIoT0blo2CKSeFemsC0jgE1lCQ4U2WMeKgyimgVNEYrDYSiRnq61a2n4FmyQwLe8MbC3VC37luRI+GIxSmVH6IpPVsFkKczmzHyAOk6r5djzqW0h23ZnGH8g+qB24h8osjb+KW8976uEDMlfm2Z6mv0hzg=
+	t=1766015361; cv=none; b=CikB6ax4sxzTLLtltFWuZNdJUR/RNqmoLKkQPjVj0ZUrfeiVRPynKS5D5PJr5Gc1LORcriK7R9AKnrvCir1j1pIppJKiSX1m4eudNLTdJpJAaGwqtbKhaEZXcqfKirY6v1kzD+xadt85Rf7m/TgQOqaKsSSbESOIXPrkMwHjl2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766014786; c=relaxed/simple;
-	bh=M6qu951JOPlVntl91pYdFiVc/ua0gxbE+7cEvEvn330=;
+	s=arc-20240116; t=1766015361; c=relaxed/simple;
+	bh=WsMRsENp0U8zMU8nth+0tncP2HXqwMAQzqr+emWTLgE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ASAhyJDbofmwl8z8K4HNkNo2NStb7icgVCu721l7Yiod0RpOVMzyyREycXCZKHmYPtNMhWVEp3YxeemdFd+3/DjtUpkDXoUIg96MG9YkUHKCHP5NnuDI3Y7fGG7fDR8LD1PHRpR2vQccuG95wmbg2XTTF6G6aKmyEq4hYzAtu8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Mq52N9/R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZdALH4Cb; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=d+PIwY/MCYN6T2fTYMWU14HQf88lBA7WQ0XLidjIS8A5x/FRh3rwnAneYf0K+FDoG8GmMiZBuMvt7X38UtnLF4Rrp2WwUNDflMf0279xRt46hoZFTlqNytk7WtiOLZrU7zOUR3WfPqt9DCzf1V/nrAwyqVKyLup+9aGUrUsSkyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TExQcb53; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ELVYar5a; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Mq52N9/R";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZdALH4Cb"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 80942EC012B;
-	Wed, 17 Dec 2025 18:39:42 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TExQcb53";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ELVYar5a"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 257FB1400138;
+	Wed, 17 Dec 2025 18:49:19 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 17 Dec 2025 18:39:42 -0500
+  by phl-compute-12.internal (MEProxy); Wed, 17 Dec 2025 18:49:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1766014782; x=1766101182; bh=SgduUQ9DLH
-	+3/KzxmrVPhCO0gnyznC0geYvMwrd4M7s=; b=Mq52N9/RhoW9u9HkAfHfWKcujU
-	K8gMPi8C3ZihEZAObKTyGbphLedmUY3p43Y3Vz3OIAkDilojCVepP79f/FQgsMM+
-	hEA+M7ssla2zBzBRq5e6RAhsp9TbJuYHgpS2z14eJe0ZimBL8o4WXLqz3n93bEDd
-	yPU1usV3s48lltygY+P0IITYj1+Iwp+HbHI4jT9qXP7IJQaKUwv4LJUTCYpTGtFy
-	03AWRPSeoTL7wV+XPNvWMQuzl5Imr/xgJ3r0U/McGXypTYMVUNXPx6jB0r/nbpwD
-	reUWcrGbv28arajADF6G/3svgD4QKVizPrwg5ZQpDTtXEYAYso96EMsSiCqA==
+	:subject:to:to; s=fm3; t=1766015359; x=1766101759; bh=jBTWF8TpL5
+	Pf4erNEsb2zM45Q/tI1xLY+zJvHRkw618=; b=TExQcb53A2O07+8zHQlqCD2x+u
+	B519aDrDzdo3sngmKYYVF+vt9DkVaIVlr4iaZrovmVnsDVlbIApHmVIy1tJ8Ey9U
+	fpHCPgY25tzSwAZ9EapPk4GbIdTSNqme68bwj3keCT5NFJevZfJHn+4GwRidRNQk
+	iXy/L5Payf3gqOuGydL5YECy/OEIgjBrXSYvDx03icXVL7RX5MK27Asn5NL3ssg0
+	MlShGrM+cIqAk/7TM76RwxTTZp8ajCm1fXNSaXKDtUG9SSuuPP1uoq1lK+LAlfT0
+	9PPQC59XFNjFoa9uFNPs8OnBGX0Tf+/cFkKme8Rf7cAAMAl3RdNkmTiYwFzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766014782; x=1766101182; bh=SgduUQ9DLH+3/KzxmrVPhCO0gnyznC0geYv
-	Mwrd4M7s=; b=ZdALH4Cb1CacSpyElI/M26WbWuEWsoWz9BMV4f1Tk4hJiUi+fVo
-	ANVyXUbXorVFkBA2PfDlz1gsBXmwk2P4hBOerifWHZ0rJ1oqcqbrglEie9Y2S/0F
-	h0PsbhiUVnIVikgOe7CbkWHFCg+qbjYdvjQY/8hRpHwtgyxBHdq/qvpgNJfzjhoc
-	9cv9pwSFTv4YL9hhl2p3JeLEQgqcKfm290XDbJS+/Rk/qtTn7md88wh0GluBGFGf
-	FyXmpBp1gwU3QgwfJzytY5zXdH5zp9MFTheMSMPO3JNMJv7d3Y7JfDCI4SSTeRWs
-	WS1MWseWc9gUjQjEyzLd6TZ1MswovQP9u7g==
-X-ME-Sender: <xms:Pj9DaRCAD30euwpD6ZqnsFWISPi3J1cI9fVNwvkuE2AIznaHwiaPUw>
-    <xme:Pj9DaWbNlDZEr6ld2N9j8-6kw3sRiltaaqxYMXlQ8Y7zTlP9Nfr-tRTP6ONeIAVGW
-    DI2JWSOXREp4C43ESkCY9OoLm9_Q7v95qSYF_G_cBPW6bUjbSpB-g>
-X-ME-Received: <xmr:Pj9DaU6r_16SYjf_Shyo5_UZLGmnJXPk0x1n19kDSeALBZqru9znTrjset8Z78Y95QBYumiHiUk0qqQmItEydBx5aKK_88edGw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegfeeltdcutefuodetggdotefrod
+	1766015359; x=1766101759; bh=jBTWF8TpL5Pf4erNEsb2zM45Q/tI1xLY+zJ
+	vHRkw618=; b=ELVYar5aM/WrWGX20JNDyOLgbX6MsDwHrMF1L9Mn+k4gahF2XUO
+	h4nPBDVn6JoYRlDHZ4WZh31E/MHP9fc2Ht2i9KVQl+mWuljPuMlJ2amMtv/QoaTG
+	NVjg9w3o7rZ7cVHRzTOSwen8e5F0E8vGLV/II1pnBVdLd8AgBhffvrKBDJEjszz4
+	3ds0BgztvCIl+a6lFt3K0a3Ob33saANP2r30Y5ekmzue9FW9h+OsxmwxXEg21pnf
+	vVk+eYTIEi4MkeiLLyY+k9gapqvY7f0ELCH4T7afHYOK16HsX9iWyCIuAOMTYpJ5
+	/vjik29d/M6CpQmOPT2Kb/85qbcGGJj1bgg==
+X-ME-Sender: <xms:f0FDaeNYvnV9A1uCXp-Ma2v0WItZgbgFd9TaSfku6-agBH8Z_pXoHQ>
+    <xme:f0FDaT-LWlTK47vg596E8K3XLBYTDKs_nlgKIdcm7D-QuQucTxw6zuSLdXoKpPyGs
+    fC0w6P2yqoAWHpIYWaGSpSZjZifU5j9lIbUURvgr-Ju7Otz1SCx9w>
+X-ME-Received: <xmr:f0FDaaTxpbGDdaSqcklEMBtebfCzmrYWLn-WhUZNbe7SWWmjqEgF7urY-Jo3sr51cIVBB8lGqESImsUvpOQVcTRHcRmzuX5yCQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegfeelvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepsg
-    hlvggvshesuggtohhnrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:Pj9DaXYuTTyaDio0wF1Y2ESszGKX0koKLzggtLHnxRd3GDCl6Vv5iQ>
-    <xmx:Pj9DaTiJeGIVIHfbPE4a1mKrzeAfwyBp3jLtYqAlc2j8U4jUvCHUuQ>
-    <xmx:Pj9DaY8WN0wIJGoMGxCinbaVfyd26SxxdLYSiaZlPXAKQVSePUBEyQ>
-    <xmx:Pj9DaepcxhUh4PHov0IZaVcQLo_YzopQOZh2vI7xSSaTydJzW2rVMg>
-    <xmx:Pj9DaXxCEWxGdLTKEP54L9CaHTjNu9gDK2egWbl5B4mCsieq8i5nsEiG>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:f0FDadlIEY_eeVaGNLXZ141AXD-An76SfhhnEFrDWEXzIsP4n9IHsg>
+    <xmx:f0FDaSQwHHWBGclsvrm83C1eCRc663UobL_hd2zydfzXn25O1Zgy5A>
+    <xmx:f0FDaTMlBxgmQfJSa7pXuVh3NBvy_L_LphEXtTGH9zN1lheLJQQt6A>
+    <xmx:f0FDaTW8ZbN_ZZWlF8bcux3gGpGtuGJDkV7qFX60FKtztzoF1sKMjg>
+    <xmx:f0FDadwMZpwC4Hn-DrnfG65uuncOOZTsgTuAzsiPwxoAKNAvKIMMm--v>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Dec 2025 18:39:41 -0500 (EST)
+ 17 Dec 2025 18:49:18 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>,
-  Karsten Blees <blees@dcon.de>
-Subject: Re: [PATCH 4/5] strbuf_readlink(): support link targets that exceed
- PATH_MAX
-In-Reply-To: <db1feb2293d20532f9468ab63ede43d4fc620203.1765899229.git.gitgitgadget@gmail.com>
-	(Karsten Blees via GitGitGadget's message of "Tue, 16 Dec 2025
-	15:33:48 +0000")
-References: <pull.2017.git.1765899229.gitgitgadget@gmail.com>
-	<db1feb2293d20532f9468ab63ede43d4fc620203.1765899229.git.gitgitgadget@gmail.com>
-Date: Thu, 18 Dec 2025 08:39:40 +0900
-Message-ID: <xmqqy0n0znib.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2] replay: drop commits that become empty
+In-Reply-To: <d54c50ef-9d6c-498c-aca3-ed4461733190@gmail.com> (Phillip Wood's
+	message of "Wed, 17 Dec 2025 14:45:54 +0000")
+References: <8a2a1215306452147cc7b803530ab2429bf57f15.1764260150.git.phillip.wood@dunelm.org.uk>
+	<9a81644a0ec670261a85c155fa32e5a1f4576ef4.1765793254.git.phillip.wood@dunelm.org.uk>
+	<xmqqpl8f719x.fsf@gitster.g>
+	<d54c50ef-9d6c-498c-aca3-ed4461733190@gmail.com>
+Date: Thu, 18 Dec 2025 08:49:17 +0900
+Message-ID: <xmqqtsxozn2a.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,52 +89,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> From: Karsten Blees <blees@dcon.de>
+>> 	git commit --allow-empty --only -m empty
+>> 
+>> because without --only, the changes to blah will be taken.
 >
-> The `strbuf_readlink()` function refuses to read link targets that
-> exceed PATH_MAX (even if a sufficient size was specified by the caller).
->
-> As some platforms (*cough* Windows *cough*) support longer paths, remove
-> this restriction (similar to `strbuf_getcwd()`).
->
-> Signed-off-by: Karsten Blees <blees@dcon.de>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  strbuf.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
+> I've got into the habit of always adding "--only" when I want to create 
+> an empty commit in case there are staged changes. I don't really like 
+> "--allow-empty" as I've never wanted to create commit that might or 
+> might not be empty - either I want to create an empty commit in which 
+> case I don't want to commit any staged changes, or I want the commit to 
+> fail if there are no staged changes). I can remove it if you want.
 
-We've been bitten before by platforms that sets PATH_MAX too low
-(i.e., lower than what they comfortably support), so this is a
-welcome change.
+Being explicit when you are unsure is good, but in this script I
+think we should be very sure that the index matches HEAD, so I would
+consider that the only effect of the use of the "--only" here is to
+puzzle readers.
 
-> diff --git a/strbuf.c b/strbuf.c
-> index 44a8f6a554..fa4e30f112 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -566,8 +566,6 @@ ssize_t strbuf_write(struct strbuf *sb, FILE *f)
->  	return sb->len ? fwrite(sb->buf, 1, sb->len, f) : 0;
->  }
->  
-> -#define STRBUF_MAXLINK (2*PATH_MAX)
-> -
->  int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
->  {
->  	size_t oldalloc = sb->alloc;
-> @@ -575,7 +573,7 @@ int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
->  	if (hint < 32)
->  		hint = 32;
->  
-> -	while (hint < STRBUF_MAXLINK) {
-> +	for (;;) {
->  		ssize_t len;
->  
->  		strbuf_grow(sb, hint + 1);
-
-I briefly wondered if this would cause us loop infinitely on a truly
-broken platform, where readlink() somehow keeps returning negative,
-but we only retry when we got ERANGE (which can be seen several
-lines below the postimage of hte patch), so we should be safe.
+A comment "# force an empty commit by including no paths" before the
+command would work to help unpuzzle readers, though ;-)
 
 Thanks.
+
