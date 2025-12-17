@@ -1,69 +1,70 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8150C39B6A9
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 14:09:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F2339B6AB
+	for <git@vger.kernel.org>; Wed, 17 Dec 2025 14:09:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765980559; cv=none; b=AR0GIFouLHppZFSi1SSC89yesnlOwz2N/lvn1HhfhRVPPgBTR0U3oUwcKDSsLPj7QLZ2UXwN1y289FPwXaIQE6DvwIgrCSXwuANoL/v45A9a0AusGigoK3Gc+CkOKnNj1fWadPSXAeux/ultfkbK0fYKTa+JQE2hvAJ0DJGwqvQ=
+	t=1765980559; cv=none; b=Zrhu5TbnGzY7FQYmSDbybK8EUeFVLSvyslVQaduO/Mh0f+ozIYVBzw/6jLhAnxD8FNKVowe+4qbkCRradpMlqspaE0eyDyWaGRlberJpM5paiLGwhBD4qWubgLqPRE9iPDQIN+2Q0NM5A9/TjP7hdTn770DAVa5Bhz1FCKZQWhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1765980559; c=relaxed/simple;
-	bh=q3DNDMh9/qJUjjY5pv0PHw0sf+kroMagZgpFoBwGMts=;
+	bh=wFSR6Rk71gAtyojD8RqwF/PD84ovfF/ZjNsswVjP9qw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=WheLMlJrh76k0+A0VjCJTiMUaGTF55Uwy0od1XJXBjCV3K7uTHLYMfxHLhLhL1YSwRa2yCgYJYabq4AW3ywktqnp20IAakt3zYsU9iyXem4mEfoUEmWuQTHh67Y8wq9E574ppACxr8gP42ysYHm0fY3cPz51OpSIbcg5E4wGN8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qj1v/0/7; arc=none smtp.client-ip=209.85.222.181
+	 MIME-Version:To:Cc; b=iDeZ79DbR4hhx4BJE6Fvj3Q3FwYO81vcN8+PqRaJa8PcOrz0vB+irohj0csAHCVRVOqqc8QCma8OcVqbgpJ2p6jNTw/ktTA+YvqATTWrFZ0qcPXw328LEv6hZqadAIgzoSlJJF+BXsPyLt6aumJA+htaGJz0XjS5DPv5IKjlaag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GLMzLlNY; arc=none smtp.client-ip=209.85.221.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qj1v/0/7"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8b2ea5a44a9so625686185a.0
-        for <git@vger.kernel.org>; Wed, 17 Dec 2025 06:09:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GLMzLlNY"
+Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-56021f047d6so668069e0c.0
+        for <git@vger.kernel.org>; Wed, 17 Dec 2025 06:09:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765980555; x=1766585355; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1765980556; x=1766585356; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=izkttAH5zNBYKvJYgE53eO1RDyZrt/oG52ZVOc4EuiM=;
-        b=Qj1v/0/7VYqXQeueN2lwqeRJyz/mB4J+chsFKmd2DJd53OBTjTArTXBWFlrLWUvOfo
-         A1xvUycAK0cTc1UmG4OZgB3Fid3m5EL/k2HCO+JF2oeO/O7BkadZIwshETza91NXtCLF
-         +1T5kLPB3AWNmXKJrwjPQLvFrlf7eeY3KkvoPNKkBTeuCJvy4ra8LMMPuvK4kNcaA0x/
-         iZEbkW68V/WjiXE5mi/+4omJx49RpS1G+d4r5OEj7f0ARqUaeOxoMct14PBYctxpxPhe
-         V3tXeVu0ll5PF4DV49E5b9I4/rCispcrALGhAwpa6PiFZgA2eOX7XU39HIbY8N2EaThA
-         1zOA==
+        bh=RKGA29E6LtFw+asXRELFXA2cgcqmWvZxt//K4Wuj6e4=;
+        b=GLMzLlNYZEF2NI5e6EmoH/Y3tJBQ+Elyb8xpj1iMf5lUufCVBDgfzyMLHyTlH8vhgi
+         1ME0rIPS/EvVreFjRZjskB6kTsP4XbqdjMFszRfGligjyCJ5ecypcP4MR1190AgZ6fU1
+         YCLDzVnQ4lV/iD7ZWcvSmE/zscnOdAsBhTA5JgY2qvkAL6tp3HEUFBRl8hbjNXEL0IP1
+         nWWePeW9fjrpn4bSN8BsoQ6vzNvMit3/uW48GKGBzdijTtmgGRy8jFDygDKomi1jXMnx
+         04mtaP/8wCQ2q5mar2+gblHl+OMq7B2lb9hG9jn7Gy3yTionulwQFiMYuVSlLkhSyxUQ
+         EIGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765980555; x=1766585355;
+        d=1e100.net; s=20230601; t=1765980556; x=1766585356;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=izkttAH5zNBYKvJYgE53eO1RDyZrt/oG52ZVOc4EuiM=;
-        b=hF8omxRBzDdEwEYVCPefaUxHU0lPcXWDwlgywCVHdzk4GU37gk2XbSF9+XDfSg7xev
-         7quBWm8tJ9Nuu7fTNXi/amhr264VRTkPleRqk2LYakRBzuwKe45s9P8WXWtSQ0cxmn6M
-         LB/b/HKsEePnCWXpWYNjxGduR5trGOtX2ysXk119lYGc8DtDt7siek4cTio6LjMnVQBJ
-         jMm/woKZDVEHmBI29QieT9ICdb2T3x6TbAERNsDLQR98UXxwSO15TT+S9vIUFCsWz2B5
-         7+vPIOSp4GydYkLvPysWAdtaLQULlHHzfHY1S+E2c8EDqa8fPR39bxKxzLl7YMKaA5+S
-         A8Gw==
-X-Gm-Message-State: AOJu0YxXtZdxYY6xy3Gw704HyUbLqZ5LmbgdclUXGfkDpmpXZIiOf+RS
-	bV1OIi9EjL64M/cS8bbsZnwRSNmIIcTPLVIBKdmlI0iJYAWvkQd9ImOr7XwJ7pzn
-X-Gm-Gg: AY/fxX6doedJb64FIcgtEHL+YgkuQhELTieJLFXTuVAbOoEGtFrzgcCYVoT5aMSYmlO
-	vSm6UrXZ3aD5DDUbbZc4vt6C7qYw19Maaw60AkYo2kO/ydHEg/XY/3o1rftzp9fF8vkllqDic88
-	tZjYko8Kn2Q2FzAleg9E3cTDmy+uKbhU8Ra8Zem0fA4rqVy0CE/iyUgvTsIe4lK7PWuhLt/Iesz
-	n4T6Qf9sKyYZ82e3fQaerq2WzJ5ZOW+flNpmQdtgS/oHhMHbIWHx+M3XD3Uc9j0eaH9ECiMmOmV
-	kCqZXcQxEPxISqFNbim+R9i1PNo7Jlae8HEpezlNnQvchUGUgL+arb7D0nwM8u1lc98ldEGKniJ
-	29IALZGGc7ONzQi8y9YTIgHPJ58DM+xCgAAKdlGIklFcxulqiX5xV6n5ibPDV0ebb36wUHqssMX
-	M/sNKKX9ITh3w=
-X-Google-Smtp-Source: AGHT+IGjF/PgZ8BXFY6shlWTE32ZQq+GEF+AwEcQCsFHxygLtexRlWYGUkKwZ+Rx9wlXL35+jft/EQ==
-X-Received: by 2002:a05:620a:700a:b0:8a3:1b83:1025 with SMTP id af79cd13be357-8bb3a38a363mr2647023985a.73.1765980555014;
-        Wed, 17 Dec 2025 06:09:15 -0800 (PST)
+        bh=RKGA29E6LtFw+asXRELFXA2cgcqmWvZxt//K4Wuj6e4=;
+        b=vDL8OlLAczBuD6/989o64hrmuA4aQfpgvOGTZ+RU02aSL9ZgpH1yLwtO0CiE/877Je
+         BGj1uOk6hsRC0O14b0vzcs9O/4MACRQFVfZiBeqQxoGml8T0o0LlFlGsnXzbPXIo8bgA
+         GnD6d/T84w1IQErp+pVd9tJCv71aUaOGs4OiRPI7r6dWPnQzbgodb20A4KLgzMC+PufD
+         AopcVQ3nMGhwNaVojOrjef3lPrg7Ai+DBYxRIlPHIIlAPvAc/7xzV76VegdOt4YhJtnv
+         p+P9nwsUFWC1OTil9hR6sUOKQACQKWMesWG1LE8p6tzFVlY0Z4m+P1SzE+grTu4OqnTo
+         LVDQ==
+X-Gm-Message-State: AOJu0Yw6t6t+nDBgcS+UCWZBPKhNT8zJPiQNbOwV91OnDhYSFR3IfjzU
+	D/9AjLKjXug8/DZeFNinDA8tDwYmulNOhdlxIydIV0LsswxmWxrTjEl4rd6kPzNn
+X-Gm-Gg: AY/fxX5XdGWl+eCax8rOJN8xvWUF2/xB2+LyMkfCVuZQDN4WQ1VqFUugFaw6HMtvibw
+	NtVg7z+JLKySUIIkYkMBytGy8PSWpKSBMF6ZhCEF3rPock9KthaSkgODiJj5kSacSEKdn5FlZ74
+	hxoe3BnT/v20+yiya0RnJ+Y1NFaQA0tzJPDWY4lIyJJ09tReKSjwgxdy975kv805D7styLGdnyZ
+	hDpe3dY/enHR71Gc3Ee5BJ7QcSuR/+uoMDhG2a4H0/lbGeJT1Ev+iZePU7jyC9x30wwFVIuVfpU
+	AccMdppsl0CSLYQlYjHxdGHjggVtw1iLzXHUK8G27NTdsOPriYyg/mfD8hMgRCTFMEspt8ElF2Y
+	ZMyqlUTxoUcxqsuwLUEFI4zRU3DPGr2OAvFRZuV54jBre1kMwiA8LIBfiRGblatNr9PLpE6AWqG
+	oh8ALpzDt7O5A=
+X-Google-Smtp-Source: AGHT+IHAMxnVitVqWYHNU9RziiSQ256Q1RfdC/3XeozyKRp+/ZfygVhfKa8H8n0MHNCGqv70E2FrLw==
+X-Received: by 2002:a05:6122:2a13:b0:55b:113f:7e08 with SMTP id 71dfb90a1353d-55fed56db2fmr4674191e0c.2.1765980556082;
+        Wed, 17 Dec 2025 06:09:16 -0800 (PST)
 Received: from [127.0.0.1] ([48.214.53.69])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8be30d86914sm396453485a.17.2025.12.17.06.09.14
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88993b4203fsm99448496d6.1.2025.12.17.06.09.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Dec 2025 06:09:14 -0800 (PST)
-Message-Id: <8fef8220f4d60b48358882fbc961c4604eab3abf.1765980535.git.gitgitgadget@gmail.com>
+        Wed, 17 Dec 2025 06:09:15 -0800 (PST)
+Message-Id: <1dd5f9d6cdad0f9a1fb8139274c99df008dd03ad.1765980535.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
 References: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
 From: "Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 17 Dec 2025 14:08:50 +0000
-Subject: [PATCH 13/18] mingw: implement `readlink()`
+Date: Wed, 17 Dec 2025 14:08:51 +0000
+Subject: [PATCH 14/18] mingw: implement basic `symlink()` functionality (file
+ symlinks only)
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,74 +80,81 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Karsten Blees <blees@dcon.de>
 
-Implement `readlink()` by reading NTFS reparse points via the
-`read_reparse_point()` function that was introduced earlier to determine
-the length of symlink targets. Works for symlinks and directory
-junctions. If symlinks are disabled, fail with `ENOSYS`.
+Implement `symlink()`. This implementation always creates _file_
+symlinks (remember: Windows discerns between symlinks pointing to
+directories and those pointing to files). Support for directory symlinks
+will be added in a subseqeuent commit.
+
+This implementation fails with `ENOSYS` if symlinks are disabled or
+unsupported.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
  compat/mingw-posix.h |  3 +--
- compat/mingw.c       | 24 ++++++++++++++++++++++++
- 2 files changed, 25 insertions(+), 2 deletions(-)
+ compat/mingw.c       | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 2 deletions(-)
 
 diff --git a/compat/mingw-posix.h b/compat/mingw-posix.h
-index 0939feff27..896aa976b1 100644
+index 896aa976b1..2d989fd762 100644
 --- a/compat/mingw-posix.h
 +++ b/compat/mingw-posix.h
 @@ -121,8 +121,6 @@ struct utsname {
   * trivial stubs
   */
  
--static inline int readlink(const char *path UNUSED, char *buf UNUSED, size_t bufsiz UNUSED)
+-static inline int symlink(const char *oldpath UNUSED, const char *newpath UNUSED)
 -{ errno = ENOSYS; return -1; }
- static inline int symlink(const char *oldpath UNUSED, const char *newpath UNUSED)
- { errno = ENOSYS; return -1; }
  static inline int fchmod(int fildes UNUSED, mode_t mode UNUSED)
-@@ -197,6 +195,7 @@ int setitimer(int type, struct itimerval *in, struct itimerval *out);
+ { errno = ENOSYS; return -1; }
+ #ifndef __MINGW64_VERSION_MAJOR
+@@ -195,6 +193,7 @@ int setitimer(int type, struct itimerval *in, struct itimerval *out);
  int sigaction(int sig, struct sigaction *in, struct sigaction *out);
  int link(const char *oldpath, const char *newpath);
  int uname(struct utsname *buf);
-+int readlink(const char *path, char *buf, size_t bufsiz);
++int symlink(const char *target, const char *link);
+ int readlink(const char *path, char *buf, size_t bufsiz);
  
  /*
-  * replacements of existing functions
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 5d2a8c247c..b407a2ac07 100644
+index b407a2ac07..8d366794c4 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -2698,6 +2698,30 @@ int link(const char *oldpath, const char *newpath)
+@@ -2698,6 +2698,34 @@ int link(const char *oldpath, const char *newpath)
  	return 0;
  }
  
-+int readlink(const char *path, char *buf, size_t bufsiz)
++int symlink(const char *target, const char *link)
 +{
-+	WCHAR wpath[MAX_PATH];
-+	char tmpbuf[MAX_PATH];
++	wchar_t wtarget[MAX_PATH], wlink[MAX_PATH];
 +	int len;
-+	DWORD tag;
 +
-+	if (xutftowcs_path(wpath, path) < 0)
++	/* fail if symlinks are disabled or API is not supported (WinXP) */
++	if (!has_symlinks) {
++		errno = ENOSYS;
++		return -1;
++	}
++
++	if ((len = xutftowcs_path(wtarget, target)) < 0
++			|| xutftowcs_path(wlink, link) < 0)
 +		return -1;
 +
-+	if (read_reparse_point(wpath, TRUE, tmpbuf, &len, &tag) < 0)
-+		return -1;
++	/* convert target dir separators to backslashes */
++	while (len--)
++		if (wtarget[len] == '/')
++			wtarget[len] = '\\';
 +
-+	/*
-+	 * Adapt to strange readlink() API: Copy up to bufsiz *bytes*, potentially
-+	 * cutting off a UTF-8 sequence. Insufficient bufsize is *not* a failure
-+	 * condition. There is no conversion function that produces invalid UTF-8,
-+	 * so convert to a (hopefully large enough) temporary buffer, then memcpy
-+	 * the requested number of bytes (including '\0' for robustness).
-+	 */
-+	memcpy(buf, tmpbuf, min(bufsiz, len + 1));
-+	return min(bufsiz, len);
++	/* create file symlink */
++	if (!CreateSymbolicLinkW(wlink, wtarget, 0)) {
++		errno = err_win_to_posix(GetLastError());
++		return -1;
++	}
++	return 0;
 +}
 +
- pid_t waitpid(pid_t pid, int *status, int options)
+ int readlink(const char *path, char *buf, size_t bufsiz)
  {
- 	HANDLE h = OpenProcess(SYNCHRONIZE | PROCESS_QUERY_INFORMATION,
+ 	WCHAR wpath[MAX_PATH];
 -- 
 gitgitgadget
 
