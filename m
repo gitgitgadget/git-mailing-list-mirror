@@ -1,69 +1,70 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9C839B6CF
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 14:09:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B2239B6D4
+	for <git@vger.kernel.org>; Wed, 17 Dec 2025 14:09:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765980561; cv=none; b=l954FM8UxZFo8ndHUohvWKQUCUTe37hw0un2/ZknieiBjcU+pdwxzzMGjXlDstDNrFT1q5/olVP81/sI+4a8YkLRva56jHfgdzXGPIUUD3ZtbLx6ON3Tj68GbYvvpH/+Wdckru89gsROymCsVwUIXpSs//hVlHrTQX8XQepEQ0Y=
+	t=1765980561; cv=none; b=VGiZtYSY2u4zOuVvNEQpVepiZlMCaYOTl4bBW/SzvcNvO4Ir0PttG6fiVUSXDPgJ+ILOacGH5Ew3wcDIZvF8sCkgOTNmhIhO8iR9t+yfuaqn8c0B8kD9wNcxK+MK5zBQYPV+9iovXO+FMbW0iJciv3C4PWmvtmlwszXLASIHx7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1765980561; c=relaxed/simple;
-	bh=EVKS2OVYJGUwM438PczPWJ3bngTswkZv2NqTkRMMeR0=;
+	bh=9b46Mb73Y7Zax/2EZe/Iej8RoGP33qNmU+9tzgvST2Q=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Q1hw8pqpxJlRB7gPuyShh99OyHUVAFrx19002qmoMkrm6DbcrKnZTu+1HxTX8hbuSwqITqxIVQd7DDFvOoVoF4TVZ752FLd+tb1w5n0SxEEKbPSFCUF2J6VqMuT5H2UClcR6gSbLcRfGtlirmAs12CrQRKGWAjKg8IcZHoegLPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZIOQKdc2; arc=none smtp.client-ip=209.85.222.175
+	 MIME-Version:To:Cc; b=MqNVmTHtBxd7J1LTsBCb164E75D+ZYCReC/EtM4SYyp6eIU6V5Ed2U+EaKFHP/gaFcmAAby64D9jbegJF711uFw/wV4Axb2e+vs2XzdyHVlpLkCkTj/fjJvVfUbccCFl18bac/RHFqOEPmGtYb3Uf90EJhpiCrjyJEsrIBP9xLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nsc1CU+1; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZIOQKdc2"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-8b2627269d5so591921985a.2
-        for <git@vger.kernel.org>; Wed, 17 Dec 2025 06:09:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nsc1CU+1"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8ba3ffd54dbso812331785a.1
+        for <git@vger.kernel.org>; Wed, 17 Dec 2025 06:09:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765980557; x=1766585357; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1765980559; x=1766585359; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1bbfbdfaKP+u+6yftgOzJJhA9NKGv3sSeyTEF4yPudw=;
-        b=ZIOQKdc2ngQW2XFocvxOBnpRKNc1fMmm8ue14BZoK8fivgEtvLNroQAlA8dS2op5+g
-         +d6X/hhia/k2LRbq7T18d9DWpZBcXRJp7QdPIBzEXsYl5Z73TsQBS8fumKFH5vRye974
-         0GrBHH73v4vm9U2NtW6x4u5iFCl1e3hJQ0lMH5tB8uj6RDsw/Ft1OCod4UQ0eJLvPMhy
-         dMh7c5Gq/xgrNxw/ElHcREvAfCvOXk5MHoGwto/wfhdUAZgNk+lXVLl6JiOnviAbeuu3
-         0IzPZ9KjBFiKwH/ev2/5rGgnqhCbinxAX5lyFCwuNuCUaEadsKVXA1SlRiPTo/vgkEJh
-         Kz6w==
+        bh=zV8OzHSFcIceZz+YHEpJtwlUrOcMv4E5jGSHlfDr+Jo=;
+        b=Nsc1CU+1EKJeXsfARAOUNxdVLjC0Lk+pOzbxEs0wKylsqfsE9HXmmFcowl78J3ZtEO
+         ZSHj6AMK+wdLzhqqy5wBNrvQbU1+TKFZhKLnX3Cb1KOTBJtr38Cl1IWuAtdNv6zoYNR/
+         AfHuK/LdUjTZ53pJxL3cMKbsNfu01MY3YLLcp+e9LDiC4ruJKkVUh0ywZiQ/NkUeC0aE
+         onetAh3+VgkIg7YQVTeqqhzVP4AKwQxQgLg6KyW0SiYm0tcQuU9iIaJTzxrr94fC9BA0
+         URlEzKTfzcWKaRmTVfAt89alu3Blz2bMA9aO1GuwrZPIHAYdOtYegbqaBR3RMpI55dlG
+         +iiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765980557; x=1766585357;
+        d=1e100.net; s=20230601; t=1765980559; x=1766585359;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=1bbfbdfaKP+u+6yftgOzJJhA9NKGv3sSeyTEF4yPudw=;
-        b=bce9gtMdcEnrR2dhs2T/cfr0GEgY93l4H2Uv7AO6WSu8E/CBijsuFEEtHjVDKF6sTn
-         vX2CMLF6A9wCDLS6lRQTgvCUwJcyrs7X2B+ZM1+pAGo3Q6Nv/EQZnvU3Cwhk9VYxcDSV
-         6Lysgz1vFaLAit6u3rel0GbajjTtKgRTSD+c5o1QTiwCrpSA4jnhnbQ6IOg7aOSavS6q
-         LcYMOnLqTkjoOoC6L3uOoz+NVjF4YNdpe67hyn+nUOD4FKvwJqt5lir+PD5Ibtdn6wwl
-         WytfvGoKvOrhbqDrzlFvkPdu14l1GoXgRGNhKCC/5VZFvti7vhHekg+TkOXE3oXnjTx5
-         duQg==
-X-Gm-Message-State: AOJu0Yx6f2YmY0rzNGoKC0dSDpf+64jdyngNBPXLdM+mHmDhrMiwlXm9
-	TsQ7DhZNIKREFo4aiBj9EkZfyYIOYBrO/A/8rS1tvIzzypqbjN1SE7miFg0dEQBQ
-X-Gm-Gg: AY/fxX482vdMg4EQwR5pVhOIYPfNxf1VeKZX4AE2DQY2xJINua6PmZmbPEHt6ARSzya
-	X5fe7nvocYT0uOcZrHNe312For7wp1LV0GNftswkY07CK6uE8SeshmXrNbxm4jnLpoH+3L/Mq2l
-	WP0LCK/B7zl+S95P5Q50t4MEuL3QDu/P5FLtEZwt6wjmYqv70O4yudYyPfKoLB/DeDcJB0iAlIC
-	ouX4ErhmoReGkclM8b9lDDqopie1+mdPqCYRrU2kAWydfqzqFrVcwOGW8SD7RVLP/Ztd/og8+l6
-	1+vXoUYo8pxyS3YdiNa7GxYHhTeYiwM62Hqcvnur5iltJV1prMSL5LePHmHDLSvRjaknCE2TO4A
-	xfy/5+lY3x7p8hjnZO23uG91PAHEvs8fYO2W9NOfYG4lpLiIUBtl+48JSCTYU4nLOhkshZPh63g
-	NG33CvfvF6hZE=
-X-Google-Smtp-Source: AGHT+IGSWGFH7KZz7sVN+jOzoTytz+yT97QDUphzTLmrK2gQH2lgCtQOeNMwE+/7NYMo37SON2NGLg==
-X-Received: by 2002:a05:620a:1929:b0:8b2:64b1:692c with SMTP id af79cd13be357-8bb39faf665mr2601724185a.29.1765980557201;
-        Wed, 17 Dec 2025 06:09:17 -0800 (PST)
+        bh=zV8OzHSFcIceZz+YHEpJtwlUrOcMv4E5jGSHlfDr+Jo=;
+        b=M9V/G2ryVDEevi+eMQuSv4KFOZdja65hZicndcWGb4SB47fEa5W89IOPY+p7oPTtOV
+         gKNkM8qdTwSCM8ZmVd7CQMskajK1B9XH59dzqj6RWtcExy0jU+QZU6v18gIM01D2tk6X
+         U47U3FNj1UmfJKhOyendPKA/Ib9pIWrwyLcmd6MWUlfKoqGDFQ9aRwo15MByqfQSxSNo
+         ruJDVR2nlW/VtVdHy69PePlN6wuwBJ8FbboeOiyAjUmuAMdxx623C7gjOWwEPnyu6v9b
+         1sc0Pcko8InsfuPLb/lYY9HZjukYfuCC3hnt4zZnqjrRxm7jolMR0a1wxrO1JjGMObb0
+         LsJg==
+X-Gm-Message-State: AOJu0YwnuUrcZBL4j4SP6zsz7xAzGvl/q3NAqUj44OB1ht3dUgQX4TSt
+	cKC6TxrtPn5fkR8g2sWJSGt+ueasx2AzOQHEfQH0lT+AeNzwrmmgf18V1xkWqa5o
+X-Gm-Gg: AY/fxX5czxuObA6hXknWdUIe5qkX41lrlGYo8pwgDoh8gMbnq/vdNoKcD6acqT2eDJx
+	zEDJNUwKqtKXTPMteQadIWvg1h4uFfPz8u8+28Kv8LZpOTSV04gbXWEimsbIFGIKML+L/y2cec/
+	2VLtJkgug5FYPBvfJgOpOcPEMENrSrpUQCG9zV8Ta46K1zMlVE0eivMy11WuFaWdTLP/As+ny7e
+	SMiUYhojbwWjCQK2mnq6HOc0qHm4VSIDe1BA/beun8IMMY8h2/RWHglTj+haJds3HH9HLreDucZ
+	t41Xek35F03Vw5oiI2B+Lm/IxBrgv2sV/VAQlY/MJ6TJIjM/Kam8Ychdj2onvQ4S87zhzPocluO
+	hdr1IZajbd75YLM2u6l+bWR6jfXlNhW5ZELlQ7aksV2/MdzhgP5pWXjNp3ZU+ZFD3dlQjiKy9zl
+	dMsVT1E+xi/0c=
+X-Google-Smtp-Source: AGHT+IG6I2dm4mLdDJSbKfcPbgVWsom/hkvIX14dvN48vCOTTqEjM3JZjPL1AYdm3Y/3DHzuILyykg==
+X-Received: by 2002:a05:620a:2952:b0:8b9:fa6f:7ea0 with SMTP id af79cd13be357-8bb3a3927f4mr2640888485a.87.1765980558509;
+        Wed, 17 Dec 2025 06:09:18 -0800 (PST)
 Received: from [127.0.0.1] ([48.214.53.69])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8be31b669e9sm403046785a.37.2025.12.17.06.09.16
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8be58b338d6sm317290985a.36.2025.12.17.06.09.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Dec 2025 06:09:16 -0800 (PST)
-Message-Id: <7b6dbc73f74e2fb6539034ab54f8d1a098d398da.1765980535.git.gitgitgadget@gmail.com>
+        Wed, 17 Dec 2025 06:09:17 -0800 (PST)
+Message-Id: <d3b89c29b01e5ed19b40f45714b3a1db800afa5d.1765980535.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
 References: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
-From: "Karsten Blees via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 17 Dec 2025 14:08:52 +0000
-Subject: [PATCH 15/18] mingw: add support for symlinks to directories
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 17 Dec 2025 14:08:53 +0000
+Subject: [PATCH 16/18] mingw: try to create symlinks without elevated
+ permissions
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,232 +76,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Karsten Blees <blees@dcon.de>
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-From: Karsten Blees <blees@dcon.de>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Symlinks on Windows have a flag that indicates whether the target is a
-file or a directory. Symlinks of wrong type simply don't work. This even
-affects core Win32 APIs (e.g. `DeleteFile()` refuses to delete directory
-symlinks).
+As of Windows 10 Build 14972 in Developer Mode, a new flag is supported
+by `CreateSymbolicLink()` to create symbolic links even when running
+outside of an elevated session (which was previously required).
 
-However, `CreateFile()` with FILE_FLAG_BACKUP_SEMANTICS does work. Check
-the target type by first creating a tentative file symlink, opening it,
-and checking the type of the resulting handle. If it is a directory,
-recreate the symlink with the directory flag set.
+This new flag is called `SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE`
+and has the numeric value 0x02.
 
-It is possible to create symlinks before the target exists (or in case
-of symlinks to symlinks: before the target type is known). If this
-happens, create a tentative file symlink and postpone the directory
-decision: keep a list of phantom symlinks to be processed whenever a new
-directory is created in `mingw_mkdir()`.
+Previous Windows 10 versions will not understand that flag and return
+an `ERROR_INVALID_PARAMETER`, therefore we have to be careful to try
+passing that flag only when the build number indicates that it is
+supported.
 
-Limitations: This algorithm may fail if a link target changes from file
-to directory or vice versa, or if the target directory is created in
-another process. It's the best Git can do, though.
+For more information about the new flag, see this blog post:
+https://blogs.windows.com/buildingapps/2016/12/02/symlinks-windows-10/
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 164 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 164 insertions(+)
+ compat/mingw.c | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 8d366794c4..59a32e454e 100644
+index 59a32e454e..3e2110a87a 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -296,6 +296,131 @@ int mingw_core_config(const char *var, const char *value,
- 	return 0;
+@@ -331,6 +331,8 @@ static const wchar_t *make_relative_to(const wchar_t *path,
+ 	return out;
  }
  
-+static inline int is_wdir_sep(wchar_t wchar)
-+{
-+	return wchar == L'/' || wchar == L'\\';
-+}
++static DWORD symlink_file_flags = 0, symlink_directory_flags = 1;
 +
-+static const wchar_t *make_relative_to(const wchar_t *path,
-+				       const wchar_t *relative_to, wchar_t *out,
-+				       size_t size)
-+{
-+	size_t i = wcslen(relative_to), len;
-+
-+	/* Is `path` already absolute? */
-+	if (is_wdir_sep(path[0]) ||
-+	    (iswalpha(path[0]) && path[1] == L':' && is_wdir_sep(path[2])))
-+		return path;
-+
-+	while (i > 0 && !is_wdir_sep(relative_to[i - 1]))
-+		i--;
-+
-+	/* Is `relative_to` in the current directory? */
-+	if (!i)
-+		return path;
-+
-+	len = wcslen(path);
-+	if (i + len + 1 > size) {
-+		error("Could not make '%ls' relative to '%ls' (too large)",
-+		      path, relative_to);
-+		return NULL;
-+	}
-+
-+	memcpy(out, relative_to, i * sizeof(wchar_t));
-+	wcscpy(out + i, path);
-+	return out;
-+}
-+
-+enum phantom_symlink_result {
-+	PHANTOM_SYMLINK_RETRY,
-+	PHANTOM_SYMLINK_DONE,
-+	PHANTOM_SYMLINK_DIRECTORY
-+};
-+
-+/*
-+ * Changes a file symlink to a directory symlink if the target exists and is a
-+ * directory.
-+ */
-+static enum phantom_symlink_result
-+process_phantom_symlink(const wchar_t *wtarget, const wchar_t *wlink)
-+{
-+	HANDLE hnd;
-+	BY_HANDLE_FILE_INFORMATION fdata;
-+	wchar_t relative[MAX_PATH];
-+	const wchar_t *rel;
-+
-+	/* check that wlink is still a file symlink */
-+	if ((GetFileAttributesW(wlink)
-+			& (FILE_ATTRIBUTE_REPARSE_POINT | FILE_ATTRIBUTE_DIRECTORY))
-+			!= FILE_ATTRIBUTE_REPARSE_POINT)
-+		return PHANTOM_SYMLINK_DONE;
-+
-+	/* make it relative, if necessary */
-+	rel = make_relative_to(wtarget, wlink, relative, ARRAY_SIZE(relative));
-+	if (!rel)
-+		return PHANTOM_SYMLINK_DONE;
-+
-+	/* let Windows resolve the link by opening it */
-+	hnd = CreateFileW(rel, 0,
-+			FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
-+			OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
-+	if (hnd == INVALID_HANDLE_VALUE) {
-+		errno = err_win_to_posix(GetLastError());
-+		return PHANTOM_SYMLINK_RETRY;
-+	}
-+
-+	if (!GetFileInformationByHandle(hnd, &fdata)) {
-+		errno = err_win_to_posix(GetLastError());
-+		CloseHandle(hnd);
-+		return PHANTOM_SYMLINK_RETRY;
-+	}
-+	CloseHandle(hnd);
-+
-+	/* if target exists and is a file, we're done */
-+	if (!(fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-+		return PHANTOM_SYMLINK_DONE;
-+
-+	/* otherwise recreate the symlink with directory flag */
-+	if (DeleteFileW(wlink) && CreateSymbolicLinkW(wlink, wtarget, 1))
-+		return PHANTOM_SYMLINK_DIRECTORY;
-+
-+	errno = err_win_to_posix(GetLastError());
-+	return PHANTOM_SYMLINK_RETRY;
-+}
-+
-+/* keep track of newly created symlinks to non-existing targets */
-+struct phantom_symlink_info {
-+	struct phantom_symlink_info *next;
-+	wchar_t *wlink;
-+	wchar_t *wtarget;
-+};
-+
-+static struct phantom_symlink_info *phantom_symlinks = NULL;
-+static CRITICAL_SECTION phantom_symlinks_cs;
-+
-+static void process_phantom_symlinks(void)
-+{
-+	struct phantom_symlink_info *current, **psi;
-+	EnterCriticalSection(&phantom_symlinks_cs);
-+	/* process phantom symlinks list */
-+	psi = &phantom_symlinks;
-+	while ((current = *psi)) {
-+		enum phantom_symlink_result result = process_phantom_symlink(
-+				current->wtarget, current->wlink);
-+		if (result == PHANTOM_SYMLINK_RETRY) {
-+			psi = &current->next;
-+		} else {
-+			/* symlink was processed, remove from list */
-+			*psi = current->next;
-+			free(current);
-+			/* if symlink was a directory, start over */
-+			if (result == PHANTOM_SYMLINK_DIRECTORY)
-+				psi = &phantom_symlinks;
-+		}
-+	}
-+	LeaveCriticalSection(&phantom_symlinks_cs);
-+}
-+
- /* Normalizes NT paths as returned by some low-level APIs. */
- static wchar_t *normalize_ntpath(wchar_t *wbuf)
- {
-@@ -479,6 +604,8 @@ int mingw_mkdir(const char *path, int mode UNUSED)
- 	if (xutftowcs_path(wpath, path) < 0)
- 		return -1;
- 	ret = _wmkdir(wpath);
-+	if (!ret)
-+		process_phantom_symlinks();
- 	if (!ret && needs_hiding(path))
- 		return set_hidden_flag(wpath, 1);
- 	return ret;
-@@ -2723,6 +2850,42 @@ int symlink(const char *target, const char *link)
+ enum phantom_symlink_result {
+ 	PHANTOM_SYMLINK_RETRY,
+ 	PHANTOM_SYMLINK_DONE,
+@@ -381,7 +383,8 @@ process_phantom_symlink(const wchar_t *wtarget, const wchar_t *wlink)
+ 		return PHANTOM_SYMLINK_DONE;
+ 
+ 	/* otherwise recreate the symlink with directory flag */
+-	if (DeleteFileW(wlink) && CreateSymbolicLinkW(wlink, wtarget, 1))
++	if (DeleteFileW(wlink) &&
++	    CreateSymbolicLinkW(wlink, wtarget, symlink_directory_flags))
+ 		return PHANTOM_SYMLINK_DIRECTORY;
+ 
+ 	errno = err_win_to_posix(GetLastError());
+@@ -2846,7 +2849,7 @@ int symlink(const char *target, const char *link)
+ 			wtarget[len] = '\\';
+ 
+ 	/* create file symlink */
+-	if (!CreateSymbolicLinkW(wlink, wtarget, 0)) {
++	if (!CreateSymbolicLinkW(wlink, wtarget, symlink_file_flags)) {
  		errno = err_win_to_posix(GetLastError());
  		return -1;
  	}
-+
-+	/* convert to directory symlink if target exists */
-+	switch (process_phantom_symlink(wtarget, wlink)) {
-+	case PHANTOM_SYMLINK_RETRY:	{
-+		/* if target doesn't exist, add to phantom symlinks list */
-+		wchar_t wfullpath[MAX_PATH];
-+		struct phantom_symlink_info *psi;
-+
-+		/* convert to absolute path to be independent of cwd */
-+		len = GetFullPathNameW(wlink, MAX_PATH, wfullpath, NULL);
-+		if (!len || len >= MAX_PATH) {
-+			errno = err_win_to_posix(GetLastError());
-+			return -1;
-+		}
-+
-+		/* over-allocate and fill phantom_symlink_info structure */
-+		psi = xmalloc(sizeof(struct phantom_symlink_info)
-+			+ sizeof(wchar_t) * (len + wcslen(wtarget) + 2));
-+		psi->wlink = (wchar_t *)(psi + 1);
-+		wcscpy(psi->wlink, wfullpath);
-+		psi->wtarget = psi->wlink + len + 1;
-+		wcscpy(psi->wtarget, wtarget);
-+
-+		EnterCriticalSection(&phantom_symlinks_cs);
-+		psi->next = phantom_symlinks;
-+		phantom_symlinks = psi;
-+		LeaveCriticalSection(&phantom_symlinks_cs);
-+		break;
-+	}
-+	case PHANTOM_SYMLINK_DIRECTORY:
-+		/* if we created a dir symlink, process other phantom symlinks */
-+		process_phantom_symlinks();
-+		break;
-+	default:
-+		break;
-+	}
- 	return 0;
+@@ -3523,6 +3526,24 @@ static void maybe_redirect_std_handles(void)
+ 				  GENERIC_WRITE, FILE_FLAG_NO_BUFFERING);
  }
  
-@@ -3424,6 +3587,7 @@ int wmain(int argc, const wchar_t **wargv)
++static void adjust_symlink_flags(void)
++{
++	/*
++	 * Starting with Windows 10 Build 14972, symbolic links can be created
++	 * using CreateSymbolicLink() without elevation by passing the flag
++	 * SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE (0x02) as last
++	 * parameter, provided the Developer Mode has been enabled. Some
++	 * earlier Windows versions complain about this flag with an
++	 * ERROR_INVALID_PARAMETER, hence we have to test the build number
++	 * specifically.
++	 */
++	if (GetVersion() >= 14972 << 16) {
++		symlink_file_flags |= 2;
++		symlink_directory_flags |= 2;
++	}
++
++}
++
+ #ifdef _MSC_VER
+ #ifdef _DEBUG
+ #include <crtdbg.h>
+@@ -3558,6 +3579,7 @@ int wmain(int argc, const wchar_t **wargv)
+ #endif
  
- 	/* initialize critical section for waitpid pinfo_t list */
- 	InitializeCriticalSection(&pinfo_cs);
-+	InitializeCriticalSection(&phantom_symlinks_cs);
+ 	maybe_redirect_std_handles();
++	adjust_symlink_flags();
  
- 	/* set up default file mode and file modes for stdin/out/err */
- 	_fmode = _O_BINARY;
+ 	/* determine size of argv and environ conversion buffer */
+ 	maxlen = wcslen(wargv[0]);
 -- 
 gitgitgadget
 
