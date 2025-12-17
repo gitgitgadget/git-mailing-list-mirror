@@ -1,109 +1,174 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010043.outbound.protection.outlook.com [52.101.193.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C312823182D
-	for <git@vger.kernel.org>; Tue, 16 Dec 2025 23:23:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765927388; cv=none; b=BGilYe5jWls4zcq+cvdw/h405hdKNQ3FgmZhfHkb9zdqlPsSAQJkarYAtSpAGOzUUWKSy39WTRbDemhLHJF44UhNOnY6Zemrc6U0UA6KeWQgXy3wTYmR3B/KuNQ+PxxzGf5S4oZYVrWfJnCxw5f91Am1zG8hytKGLx1Dv90xsgU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765927388; c=relaxed/simple;
-	bh=cF8pg9dgOeZQ4l1PzXIvixeEeSkkri9gA3iWlZMF5lw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JHB2oxP2hrUWZrjcutB8TBNHhsd7TaJ2/mm/+NxwQTbZ42JoiRQdmCVfl0hT3/vJcl/5seLR3/eYFy0ikpozhFLDSHx16HvNMPP9wNZo/TZhRmS0p6se5zjRWD4dxtov/NSRNIp9hGPvX53ammKeriyfbqqTJVvIZSiB9SaxItY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=zxyvTmMY; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CFA1D6AA
+	for <git@vger.kernel.org>; Wed, 17 Dec 2025 00:09:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765930176; cv=fail; b=Q9JxhrG3kEiiyKioXWNEqx5jGiuEDJTX+T7t8jvSdg0uzsbPU3HKnG7USNMBkdQK2WRmN/Me3ytSQzwDuA1cE69jYnoJt42itrUERdq2Ulo0IDDss8CPRgoto/RYdhYE0rWYzJIFGvd06c8x867nX98QKcpvxUP/Rk+kViqhUoA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765930176; c=relaxed/simple;
+	bh=T+mcnnt9ef2Hehosa0x21C4gj2TRsIjRwL9nu6EKW9Y=;
+	h=Message-ID:Date:Subject:To:References:Cc:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=pwzW9HBA4mnQgDapBRarbS2aetF0xY2U3DvaGzf7Sg9RZptnj7sld3vsd4YBuRxUpunTGGq7s/s1EGYiqmFDD0UlhROLAQ+8BVdjTeYs0nyHjuDaguARIE4mSckUsnMrAkFEEsV6+OZk2SRIc2Y1zM8dluOZolv78CCoIm95znU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ZWFAjrz7; arc=fail smtp.client-ip=52.101.193.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="zxyvTmMY"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-29e0753e5d8so41785ad.1
-        for <git@vger.kernel.org>; Tue, 16 Dec 2025 15:23:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1765927386; x=1766532186; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aGO+I9JxBSAvM6c936+Xi+Ls/8rQ1aF6LGOkY+yfIOE=;
-        b=zxyvTmMY25Y+1T7vjds/Xmj4OFjKyK1dJVS+x/2yxRGpIZWDYmvt5zivInyyEB/fy5
-         8w5Igr14ZbhiIWTdf+w38RWoWgCFG5o0sxKUiX4oKASzdTST/MJkXiyN7hxDJXX8RYDO
-         QU8+0hm1iJY8x9qBeJVXmjU/CJtRHd7binoCIYp11Nfyx7+CqYEohamGvznQrwzh01DD
-         yRAiQ/JyTs848Kz4AVrdMCmTDD2+UssaYAih8t6fJx2C+xrYAOFya8loI+Jii4Dc5+kK
-         PCPZ2n85e3J93r1tJbU0Z2KCK2vE3I64fP4pwNNQ3/NMjZVXK28sGWbmm5cMpSD+Y7Ji
-         5rXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765927386; x=1766532186;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aGO+I9JxBSAvM6c936+Xi+Ls/8rQ1aF6LGOkY+yfIOE=;
-        b=ce3H9c2gNC9GhttTA0tRdQOggpbhHRKRmZquFgEJgImhpGk9bpEFaf0ZyJzU31P9go
-         A+AaUZsdbjgYUTTgu1SAgIKfzj+LsnvaDhR6bsjUMgVq7NP5hZaH9oiUg10LI/POTs/+
-         tJBvT8UrsWu3qG/Ej+ltdxjfkJrownf5AnsK6H+j9bWVdJaJSdjleYb26LDGt1/iLNl4
-         7BnzGZCnilPvVmz/GHRQq6qQ8gVHSYjbBG88v3WmJ3RxNOSMMWp8y+NZApOiJ5NL55YE
-         Ammm+mS1AVwWQcki4U6VoBvOQR4DCi2/PY9FFXuNHL6PrbPk1YYJkSr/Nq1k0S9ubjm1
-         7lew==
-X-Gm-Message-State: AOJu0YwFthde+Jx8gcgcdSX/tdT0B72nTSVjBkDIE/px/WLmKSbBwXgG
-	xJzIMkN5eX2WsN2jkBygoN/IEC4QNc1Yoon+3UAf9EiD5hFY6y438SeyTro4bFtumA==
-X-Gm-Gg: AY/fxX6/gslGeFVgGtDfxX5CMz15SjgN3XN+U2c0ccX+O6YJfeTfih58DaVMyUkY95N
-	T+Ond4ZZq4JRtn6OrittSa1o0SSyBKBZ9EUXdpEmfH8J6ER0HoNgcNkHH1Jlcezc5yqRSTG/wvb
-	iYWmUQ4rcAV1OPSVCtfvu30xzE2h4uZxxOAn1QKPSk0e0alduzwL0k0ue/u2azLXZMlZzCgF/aB
-	1iVVjQrjsRv7ADOiU2k2t5za7M9xf5mDwa4V/mKyeUfVTYCWM2QtmoLgldYBfaZLR/IB4P/hl7e
-	tIxdDBl19BQAffaTt/05q20SgfNbt9cAxbgCmlle5j8XwiTytP2QW7aF4341ZytLAI+eflw5HF2
-	2z6ZU2yjWngOEKJZzf9jg59aRP/X5WPdODBl9C/rhQCR4RT0d3Q5YoEtw87JSKK7mwMUCx1hPI3
-	Ua3N8WI4CLtM1iWNBTbwfYWNeaJj6W/tokoQBibZYCfUY7THaLNSd1zUQ=
-X-Google-Smtp-Source: AGHT+IEqUh9ay9nQgccAUMi8UdGh54KqqTZgySXTl+HXBQedqDf4LeNxOWQUQNpGTU6FHq1fbBkoyw==
-X-Received: by 2002:a05:7023:a8c:b0:120:5719:1851 with SMTP id a92af1059eb24-1205c61ac00mr14616c88.15.1765927385068;
-        Tue, 16 Dec 2025 15:23:05 -0800 (PST)
-Received: from google.com ([2a00:79e0:2f0b:6:33c6:d628:8813:d90a])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ae4f0546b8sm1773612eec.31.2025.12.16.15.23.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Dec 2025 15:23:04 -0800 (PST)
-Date: Tue, 16 Dec 2025 15:22:59 -0800
-From: Josh Steadmon <steadmon@google.com>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, 
-	Rodrigo Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
-	Aaron Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Ben Knoble <ben.knoble@gmail.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v6 04/10] submodule: introduce
- extensions.submodulePathConfig
-Message-ID: <y7hfbq37mh2a6rnwvycul2e3fhxl7bljkdlukdpl3obgg57u3p@vgdsj2wo5nab>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Adrian Ratiu <adrian.ratiu@collabora.com>, git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, 
-	Rodrigo Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
-	Aaron Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Ben Knoble <ben.knoble@gmail.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>
-References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
- <20251213080817.347922-1-adrian.ratiu@collabora.com>
- <20251213080817.347922-5-adrian.ratiu@collabora.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ZWFAjrz7"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=W9ZEeGXfasuFldg0QF5H+fDn4XXcaeT6EDw7fkNtmLfgOoQSTNqBfcL8FUFZGF8TD7BErHFaNjE9mdLr+hb7DaKeLhyhQ17iqntQx26buGvKTWorP9dAowJArjaot2jkOS+AWU4WJtRtCZOivdspkMcO1vlDndqbzb/f1Ig3j1YWYekFjxbNSe3AFgyq+FvKp9OJx48lvZdLd3gQ+k8XxNb4fVcSEz1MzqC3Y39QqxREuKZqPvwrmwIkllkjINhIy/07BRY9Yx6JETfTvdZDM4q2+XKGKBgczVf11LpCFVUvJOMgUeRf3kVGDAdK8u7/F6qsYuLBETApbVX1GrQtQg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZCKBm+ktlAHjWuApM4foUU5PJL6EcUd3hLBMCkV1JOA=;
+ b=Ey7YkJKuY47oJt/CqrgGAD/nkR4LwRKTUOcUYfAZH0Ds8NuDbTaVmS3o09NHvgECSAeagvP6JItcCqvIVuadPqI3aZ7aNcpJhRVJTLdMi0aYQvp+tvzboS9N3hxBOlMMP9ULZ121W/L/HUOHIclLeCKXCejdeAutT6LlNk479iab5/bz9hl7jPCa5ykY1hheHyla411Xxf+2+gPjGEvGKTU2Lvn4iwA/1M5r0pHqqI44jQTDzj94cr7pJdj5PVe14CIi9hGh9QJF3uohrBQ2ZvpCw1l8UR9woRcH7tFHNTtfdCZvW2IQ4i80g+7KO9j7ZQP1ul6ICa64B8NdXssALQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZCKBm+ktlAHjWuApM4foUU5PJL6EcUd3hLBMCkV1JOA=;
+ b=ZWFAjrz7YMdFByxZC1j6vDzXK5QcNqIk7DQgCCzURGfCA2nT7jHzaCn6JkqHNkXWZJSsBjoup07DW5+lQHOAZE+uUoCKYWdyBZxAxPrk65wOCZrK/1nS12bPeRxa34liNNwDJSLT1pRfwP7cXoXUY/ON0xEjfmxJExwWE7nIxibP8gOV6z540S9vyBSCwWgtc+0Py6nlCA+26WRXA/p0Qqhhikx3FRFeFtPjFnJoiwMUOFpGmr100SBIzBNBwzEoFU2L8ecLwDRe0/btYGsrnK1bDvqY+ddpx8wX3n1hiaD+zZ/cV699Gu4D1uk6oUcg1krZTWVVsPRmNFA0tpDTRw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BN9PR12MB5305.namprd12.prod.outlook.com (2603:10b6:408:102::5)
+ by CH8PR12MB9744.namprd12.prod.outlook.com (2603:10b6:610:27a::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.13; Wed, 17 Dec
+ 2025 00:09:33 +0000
+Received: from BN9PR12MB5305.namprd12.prod.outlook.com
+ ([fe80::e7a3:9531:f0c9:bd7f]) by BN9PR12MB5305.namprd12.prod.outlook.com
+ ([fe80::e7a3:9531:f0c9:bd7f%7]) with mapi id 15.20.9434.001; Wed, 17 Dec 2025
+ 00:09:32 +0000
+Message-ID: <93afac3c-c532-4183-a1fd-7e2322ee912f@nvidia.com>
+Date: Tue, 16 Dec 2025 16:09:30 -0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: What's cooking in git.git (Dec 2025, #03)
+To: Junio C Hamano <gitster@pobox.com>
+References: <xmqq4ipwc7y2.fsf@gitster.g>
+Content-Language: en-US
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+From: Aaron Plattner <aplattner@nvidia.com>
+In-Reply-To: <xmqq4ipwc7y2.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ2PR07CA0022.namprd07.prod.outlook.com
+ (2603:10b6:a03:505::24) To BN9PR12MB5305.namprd12.prod.outlook.com
+ (2603:10b6:408:102::5)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251213080817.347922-5-adrian.ratiu@collabora.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN9PR12MB5305:EE_|CH8PR12MB9744:EE_
+X-MS-Office365-Filtering-Correlation-Id: cd281963-e423-4094-ed0f-08de3d008dc2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|10070799003|1800799024|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?Yk5qTFVqMjZGbFRubFRrVndxZVhVeUFheFNxRVNwWGdWU1NkRk1VbW9wQklZ?=
+ =?utf-8?B?eVU4SkZ1YUYrV3JWTzBOVml1TStlOWg3Wk8zVUt5aS8wWHJHdGtKN0ljRmxM?=
+ =?utf-8?B?QXlMK1FNM01vYnVFM21IZDc0VFFjclB4eGJJY2hST3lYNUN0ekprcnFZRVdQ?=
+ =?utf-8?B?TzBxMFZyOWJrMGpWQlBaWWkxMFIxUFFRU2hMTFpXT0IwSE5rMnlKaGl5eXJl?=
+ =?utf-8?B?QkRMSTdDd0dwMWNWLzNZcklWdXNHVkgrMUVZNUFoSys4M3FGTFhYTTRNMmc1?=
+ =?utf-8?B?VmtEVkVBa1c4TTJ3UkZDSWRMNmtJSGVSU0FmTHNuR2dFdUk2LzROOVVLU1hs?=
+ =?utf-8?B?bER5Wm5LRk5WOGFnOWlBVktmRmV3VUVRMUJ5ZzRUU3Z3dk1GcGJzVjJxckVl?=
+ =?utf-8?B?N3BPTHBsN0FLTTA2ZlBlUFYvOExBTkVjYTFNYnhldGRHSlppU243QnB6THhI?=
+ =?utf-8?B?SXM1VzZVUGhkbXRrTDQwTkpFeGdpZDVyNU9CWE5KM1VUUG5HOXVZVGdDWmhx?=
+ =?utf-8?B?eWUrSHdaRVFRRXJmV3g5ZVlQWFZkaEg5MXFKTTdxRm5uRnhhSExXSlJGUDEy?=
+ =?utf-8?B?UFA0Mm9kWFpxS0ZNRzRGWVBkZXM4d0M3LytnbThLWUdOaGovQmZrSGU4MHJ3?=
+ =?utf-8?B?b2hEUmt6aFFQYm0rckZkRzJKb0dGK1dHdU9PSWxELzQrYjhad2VTV0ZVQ0xp?=
+ =?utf-8?B?WTdMT29nOWVNVE9zSEc0R0pyY2FGMm1TRVptaVV4azV2TlJOWDhrMG42dTlL?=
+ =?utf-8?B?UlZibGp2Vy9wZUpkYjZjOXpMYmdHbHkvK1JKOWR6bGFrR2x2aS9na2NvK3Ba?=
+ =?utf-8?B?SGFPZlJVL0liQ1QwV081N3ZmdGl0QjE4VTNOaGlVa3pEelZJQ2xkREtRQUQ1?=
+ =?utf-8?B?WlE5U0JUZE5URWV4VnJQL0hUYXhOSnEzcUZkakVWSTlQWmFQUU1ZNnFHK0Vs?=
+ =?utf-8?B?cEwrK0poMGdPVmdxWCtJS1U5a0orb1Z3WG0rcDFmdVFmSHdZWEVSWFFnRm1v?=
+ =?utf-8?B?U1h2NFYrS3lIeGM3TEx3UTM0VVcvakgrQmZTV1VFWi95L2dzeHNQQzRkSlRF?=
+ =?utf-8?B?SDNpVjd5ZXNsS1BIekt5RXU4L1VzVG1YejZZOVd5STdRTXVnQ2NJaDREWjlx?=
+ =?utf-8?B?b2NCaitRWXk0b3IvbjFRTm9oMTRDMHlmVkUxWnBZWkdPUjJWZzU0TFNnMVlz?=
+ =?utf-8?B?MmZJMS9BelZzUnNYUEhESGZxNS8zMDVvZytNRjZzY2NGbzNoVGI3VGdpWDA1?=
+ =?utf-8?B?MGR1QU1QOG9WUVZCYk1YYld3N0VrUHBwZHhEMUozc2VkaVpqbEtGMFl2YlRS?=
+ =?utf-8?B?eStOZ1hhZ1dDcFI4R0pYWlVid3Q0eFpUTUh5RDU4TFBZVXV2dElIaHkxT285?=
+ =?utf-8?B?cVN4dmVtWndodjlkaDZydVZaWWhGQ3NrWmt4VTVaalpwaCtVNkIyemJUbXJO?=
+ =?utf-8?B?K1lhZW9IK3ZaN3J3ck1RdG1xZXhvRmhvSVM5Sm1PcU14aEhEYVpvUFRNUXV4?=
+ =?utf-8?B?eWRTQ0M5ZGNadHVWQmxWQ09qOVlMNlVOQ1E5bTl0aVZRUEUydTN1M251WnV2?=
+ =?utf-8?B?RytpT2h6a2FZdVh4RnE2Y1B3ZWxpblNBYkl4bk5EaDUrM3hNNkt3UkFCLzF3?=
+ =?utf-8?B?S1lVZ3I5QkdIQkNEMDNLL2xOcWpwSFpHM1NFNVA2cHpqbnVjSUdiYUNybXQ3?=
+ =?utf-8?B?bk5JK0g5blVUZWtFZWl2bGJWTzNrNnF1NUNaUG5kUDErUDUyZTJoTXFhQnJ3?=
+ =?utf-8?B?QWFnV3dMRFVnN1ZDSkJEc0RSVnhzdWs1b3hlOGJsMDI3b2lkQWRxZkdmandp?=
+ =?utf-8?B?RFE5ZS9hLzc2WEhGbExoMlRxWGttMHQyd0VwZnROS2UwV1V6TnZyZ3lIbk0z?=
+ =?utf-8?B?YlRPNWxHR25PVSt2bGpCWWlLUkRTd003eFVBaXdyRGpDY2R5TVFDQ3UzcmRZ?=
+ =?utf-8?Q?9Z5AUxcfnirtUBIz/9h+EEdzinpLiCAj?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR12MB5305.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(10070799003)(1800799024)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?OWczSVRhN3h2bXFFQm93aDV4VWZiM1lhalFuQXNLbkN0cUJsVE5MKzVrMGow?=
+ =?utf-8?B?V1pUbnJkVlhUaXJBQnVaMEpOd1pwd0MzelFtMDREYmlwUE5YTVU5WjlUbDdF?=
+ =?utf-8?B?QVJOOU5wZTd2emFOTFpiQkFsMjBUQkFBMCtQYWE5ZkVnQkUrRFpBUTRKN3JR?=
+ =?utf-8?B?K0dqMGF0SW4wS3oyQVY2QWFZNWQ4TW4xd2FYeVNEYzdRcnVwTXcvdkV3NG0y?=
+ =?utf-8?B?Sk81TlNPeGU4dVF2SCthYURxN0JEMmRQR0ZWZTdIdXBqT3p3VkJBb1hCcGFt?=
+ =?utf-8?B?ZlhaZnRZNVczU2kyTlh4T0FxY2oxZVlVVmc5MFdjUW5MSzdHZFlPSGxGTmR2?=
+ =?utf-8?B?c1IxRWNMbTAvc3lzZUw0cWdJTHZUVmxDeGhoakdvZ0l4VTZrK0I0L0wyd2ll?=
+ =?utf-8?B?c1FtZzFLL2VLZVhnbnhBdjlsQTFSWEFKVGw3Yzd3THorY0N1QzZ6WFpsZ3d5?=
+ =?utf-8?B?TE1SNml3Y0FwSlBFZ00wZUJGQ01MQmRmQWR1QzJ2eGhXQ2xMbkNFZHdrU0tV?=
+ =?utf-8?B?cXZsYysyTHl3L1BSUzc3aXFoNk1uTUkwcTNQOC9rekJkcFEzN3g1Y2t4SS9N?=
+ =?utf-8?B?VkNQVjZ2MzJCVDgxdjNiRCtTWHBLQWJVUnlOUXp1ckRLZEFHRkhzdXptVGNU?=
+ =?utf-8?B?VzNVVGlEc2oyeFJNcDdzTFV5ZEl3c2RFWmVXSEswUW53aW54K25HVFFzOUhm?=
+ =?utf-8?B?MTBYaXhaWXNoMlRvWVYvNjBSRmYzRk5CcmZkeDZtNm9HY2VSUUZkdTJXUEhs?=
+ =?utf-8?B?cS9MOVN4Z3hrbXZKYll3aUtFTkRTNDEvclVCYmxLRWIvY0RZODFtbDhhQWt1?=
+ =?utf-8?B?dXMwZWYvYk01MWVNQmJqZVVZa1I4VXZUVS82dnA3Tyt0WEprOGZsWDZJL041?=
+ =?utf-8?B?bnFWZUg0OHVYT2t6aTArMWFoVzhURWtsWGpQQ3Z2RHVmaUR5STQ5WXc1YzRs?=
+ =?utf-8?B?NUU0UkNrdmJEN0d3Uzc2MUlTa2NrVDJTakZva2R2M0ZFVm5IOVBQbVBZYWFh?=
+ =?utf-8?B?bDk2cGhobENjSXEvNDM5RndNZGlLckNIY1NJMmh0VnUrY2hLQkFGbG16bmNp?=
+ =?utf-8?B?NkJJamZuSUthOXpOYVU3VTR6akorb3NlaGdWRjhsRndjU2FBSDZUeDhydVBu?=
+ =?utf-8?B?SlZPVnM2cHpWUzhabzZScGE2SEVnVHlpSWh1TGVSN3JpaCtlZnhwQjlDcFdO?=
+ =?utf-8?B?M2NBcEYzdjhpS3hIbEtiMXNGZEFUQTRtTUVrWjVwUWp2SkZSa1M5SHRvVFEw?=
+ =?utf-8?B?WUpjcGRCbXNUQ2lpU1J6dTA2V1ZDMUlhNzdpMFN1VDRnN1RZRCtzS1dkRFNE?=
+ =?utf-8?B?RERtN1dMT0xLS0xYZW1la2Q5TjdqL0ttODZXTEY5RTdmbGYvTDUyKzk5QkUz?=
+ =?utf-8?B?NVRTY0tKTGdZYTdnN3JDVUFCTVpySXRvNFErYWlQOGNDNE96RDMwVXFOVFhC?=
+ =?utf-8?B?RlpKcFN3MVdmWk1vZVdibEZXZEdNVFdMbUtmM1pVeTRSaThsQm5mZ1BieHZR?=
+ =?utf-8?B?N3l6VmtEMjcyU3BJYWdQVGFobkdQTmp1Q3kxZmNwcDlHRVA1L0kzSWNyNG54?=
+ =?utf-8?B?cVFFVy90Q25rZTYvRGh5eTgvQWNXZjFTWnZBZ1FmUjhKejlUQk5ZazhJbXNq?=
+ =?utf-8?B?UUxWWUlNQkMvbFlRQkJUZCtvVXFWcjJSNlpubzRCNmFyNEwwWkc3bis2YzlN?=
+ =?utf-8?B?Z0U1a3o5c2lpYWwrZkZFTDVVUnVXK3lrTEt5RU5hNndBbHpRUWdYQlJWQkRG?=
+ =?utf-8?B?MGVjcEV2R3FGM1JBNmZRdmtQcStEL2xyK28vUHJuQlhELzhKQVZlMDcweDdy?=
+ =?utf-8?B?WHBuUEYwWkpuUkpGVlBqamVJUUNDWWQxL0F3elFPV1o0V3FtUTlrdHBESWd3?=
+ =?utf-8?B?RktWZkFoMU14bjdqYXJDN0txMWVQUW8xbWE3S3M3Z1Jjd01DOUlCSmhEeEtT?=
+ =?utf-8?B?eEJGWis1dURRcDlGeEFWYWlidUViZjRlQW1wRGp6WUJqVkNpSllHYW5hVUxq?=
+ =?utf-8?B?SmNTQVJtVkovcmYrWVpJOTZLL2MwcnlMd1RmZ250SGk3SzBOTTVLTU5EYjVl?=
+ =?utf-8?B?azhkbHNocGdSVkZGODJwbHY4M0FIMTBqcGhSWTdhK1JqYXFGSzgzeEVWblNm?=
+ =?utf-8?B?WDcrV3B6WVNOYXZmQnZoSkxUaDRlV21qVUhPamZZNlVCNyttZmRWWnZ4U0dn?=
+ =?utf-8?Q?Nj5TkONwNicMch4oO7cfLm0=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cd281963-e423-4094-ed0f-08de3d008dc2
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR12MB5305.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Dec 2025 00:09:32.3687
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6jRr3P9UsIxIZQ+lYHVZlXFJ9il8gV3lVP/PoTpEFx4YhHKZieKobfWjtesQ38xjctV922JNhmleDbqQgmI+9A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH8PR12MB9744
 
-On 2025.12.13 10:08, Adrian Ratiu wrote:
-> The idea of this extension is to abstract away the submodule gitdir
-> path implementation: everyone is expected to use the config and not
-> worry about how the path is computed internally, either in git or
-> other implementations.
+On 12/12/25 2:26 AM, Junio C Hamano wrote:
+> * ap/packfile-promisor-object-optim (2025-12-08) 2 commits
+>   - packfile: skip hash checks in add_promisor_object()
+>   - object: apply skip_hash and discard_tree optimizations to unknown blobs too
 > 
-> With this extension enabled, the submodule.<name>.gitdir repo config
-> becomes the single source of truth for all submodule gitdir paths.
+>   The code path that enumerates promisor objects have been optimized
+>   to skip pointlessly parsing blob objects.
 > 
-> The submodule.<name>.gitdir config is added automatically for all new
-> submodules when this extension is enabled.
-> 
-> Git will throw an error if the extension is enabled and a config is
-> missing, advising users how to migrate. Migration is manual for now.
+>   Comments?
+>   source: <20251209014900.402637-1-aplattner@nvidia.com>
+Jeff King said v2 of the patch looked good to him but recommended 
+splitting it into two changes. I don't know if he wanted to review v3 or 
+if he was okay with it based on his comments on v2. The only differences 
+in v3 are the commit count and descriptions.
 
-This part doesn't seem accurate in my testing. When cloning a project
-with `--recurse-submodules` and with the extension enabled globally, the
-resulting .git/config does not include gitdir configs for any of the
-cloned submodules, yet no error occurs.
+-- Aaron
