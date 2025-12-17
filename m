@@ -1,69 +1,70 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F3233B6F8
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 14:23:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15602D836D
+	for <git@vger.kernel.org>; Wed, 17 Dec 2025 14:23:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765981428; cv=none; b=s2yUhueVa/s6D4vmvnPbegn+oHXLBm0qZTIlK9n+kITN/yxwXLbW1llkCf+Bta2im5sOWxLlvZCMYinPJi0Rrck5w/f1BSL0COeAmYgibvJ7O1vDUz/Ar6o1Eri5VVC09yb4YXd+KhnzyZ7EhE438DlUkeiPgNOtpvewut7dxLo=
+	t=1765981429; cv=none; b=lH7BPLyMMakdNMCfhc+iwKbhNVWZym4WS5k+UKPqZcE/5xZqJSW1IlRcAAHx/N0aXFdBx4dBiKgBJUZqLP41yhJDF/lVJ7Hm+n6CDbPtIv0hgVNJrOQ3wNhoip+x5NUUWtFPl+/+dAYCXV/GP/eYQ0EuA74YgqeoexPTsiQOghI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765981428; c=relaxed/simple;
-	bh=6PzTJmj6A6lo1jIYMQE4WYAbI+pjt7UTAzZW9D5fAsE=;
+	s=arc-20240116; t=1765981429; c=relaxed/simple;
+	bh=VsGZs1xc4VMuqI6TwlDDW4zdJbePs7Z4NdHSs1eLHFw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=cZWgVVWQW0Gx/ceqXA64BSpoYoSryqBHOUMtKaqmZRmw1Yu/Gs0medqfiIzveyjFRKat3V6bIA8yjibCHjH+3NMV6UhYVWz6PWeaZhL4jqm491UoPxK9qxep69GnAWW3R7c+WSr0lYP05p6mArsRsMwrXyaMrM+nMYSaBEETgx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IDEr+Uyo; arc=none smtp.client-ip=209.85.222.180
+	 MIME-Version:To:Cc; b=L5x4+kzhwKqWOUD0Ncp+tRPlJUfTQDBnTmG4+UXfBA6KEUQzwrpEqOwaBfPK6wX8FCdfe+QjS2wVdI4jzhAQULud8m9VEqz2raAQgidzy6b9UUHHHXFrjG9lnqYZTVCOhmEs44hlGmBmz3OGKQX3wMybJ34TX13LTG8lNHgpD7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hZagwsVI; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IDEr+Uyo"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8b2ec756de0so638241185a.3
-        for <git@vger.kernel.org>; Wed, 17 Dec 2025 06:23:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hZagwsVI"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8ba3ffd54dbso814025085a.1
+        for <git@vger.kernel.org>; Wed, 17 Dec 2025 06:23:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765981425; x=1766586225; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1765981426; x=1766586226; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=N34ipN4nQbRD6osBR9wR6a8278ZIWq1elVsx5wO03cc=;
-        b=IDEr+Uyotmnt8JCD1SxGOVAyxiqdLSD49xJFod+pAvz2XaC5KryQeAq6uEPLuWUN+3
-         k2OHTopJEQMeY+LwGi1d6VBNtmLu/gi1z9OIkzjPa0+7GPX0qJoU8nRNT3Ibr/pZSF9B
-         IdjJQ0XwzCCSKZzFe6lH9XNgf1+ovlkrZ+2HYWtLFHyNa/J1ZjXBnkPSgwfS5MjB6734
-         yvgx/VqZChWuwdT0mGFBtVLRaK3YONsOOjdKMm/GHTDKdOh636q5Dt3Clnzn8mY+5OWo
-         2hDLXuTWMIXQLf0fhskzGo5px1P6tN+PwvYi9W0S/ArZqTMD6EPCgGhH9YAJJbqTBWT5
-         ILmA==
+        bh=6ytsUbO1xNh5qa25u/Ghm8+Up5uA4i9FvBDQ2IaMIyM=;
+        b=hZagwsVI2dCJxsVr6C7eBsz647Y8k1tIQmrDEEI/UE/sNkORbvXqSHEC6gU8OZExPI
+         J4rtnuJ0+bl3TJFlVpaBC5rH42wXvM/eIxBbGMh1IXeiME0iktZkfE+dWp5QvIkmqJGz
+         YgpHCTRM3nwNB+pQ5kIruy58yFsbLOO2PS3Qdn9osywJS+O76Es+nbSJX6IvllYiFtuD
+         zHGaXYLaikQ3QXIN6HQ8+WlweEfqB2uxchbpiB/f9ySiAMlE9sw6eapW+3ncM5iXy/58
+         abr2kUJZ25jU2XlHeLedteUae6ZpEx8uj1JP8sTopTdsSf6VtzmxqtiZRWrwAb5B80fw
+         vEGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765981425; x=1766586225;
+        d=1e100.net; s=20230601; t=1765981426; x=1766586226;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=N34ipN4nQbRD6osBR9wR6a8278ZIWq1elVsx5wO03cc=;
-        b=Q009+fzTGWMeRNb7lurxMgJXmOxLgWI3MnLjh03jATEye64TauI23yIYrZe7aa5lOy
-         kWe+Py8z4MKm2Gu0xxrPCN8/BpSEvI4wOyISwnzi4S8zCZeBuaasWrlXBbf0jkOHdjI1
-         4ja1uvYY5XDP9DTZNhVJPZAXwQpjTFifPkng6MU3IexCMENPmt6MXS9I/k7J9NKpsMA4
-         1UtKalNMo15aLEkGtGQBNH8J1LB7PZ2G2k4D0ZUar5atz+ojdJhuVqsVQ1qzO+2KUuEH
-         94gceiC3+sjmbLg/r8KefrUc7kgpWYmodx7FxuY6P8lo1gA6bh6Pg4lYkaRKWR8391Ii
-         ZJ3A==
-X-Gm-Message-State: AOJu0Yx9+Z3caLI9jEVec4dC8HcCQv3QBr2VO4B5oyN7lz2qLMPzETVR
-	cw/LhCu8BfXHcayQ+9nLeWv8M3mo7GkOOpMHivnKmTDKC0rhmNWJbuL9Lys9LzcSnKQ=
-X-Gm-Gg: AY/fxX6uv2wguJPw36JxC8eMUMR/FUjnOJwVZiIVJ6bct/cpRLUMNlH+H4Gefx13enU
-	RtWLAhs/f2q9SM6XUC8QLuv6YfNyHZnLxG4na/9i4/EoS2eqaOdCa1AO3qtubpacvB7jdiZGjkd
-	R4s/8uY1BfuNgUViIMqUP5XWIvf1dGOLWS/J87clNd4ShwlWKt6gNoovkft7cgpEszKn2H+pQvh
-	kAWLec/HAnXmPm+AAr8vHGXzjGE577XM8LQjZS+rHUm3rFc/PBmE+M49ZuRZ4uOdwhSlP2ST2WC
-	1acnTAcgyW1rM3ZNbN/Ta2H5DGusN0khTg+34wyTPXzCBAH9khe8qM2TsDVaWfQH3/XC2s/OyqG
-	LASN3IkYBfq998VPIP/ygFIRHe9yZk6ef6P2sk3j+z0mqefJLC9F3PA1L4lH8IsdBVC7COtPzxJ
-	uyskE38X4F2hxxWQ==
-X-Google-Smtp-Source: AGHT+IFLT2M9de8yplorWDK1d8QputKIzEcditeqfX2F5JAF748DEB7GLRElKHxX0/yMjb4FrnvyOw==
-X-Received: by 2002:a05:620a:40ca:b0:8b2:d72d:e41c with SMTP id af79cd13be357-8bb399d8ee4mr2579733085a.5.1765981424815;
-        Wed, 17 Dec 2025 06:23:44 -0800 (PST)
+        bh=6ytsUbO1xNh5qa25u/Ghm8+Up5uA4i9FvBDQ2IaMIyM=;
+        b=VweYhfqW7ZrpKUDgYtOlggq6GSDnXPQfKiaXZkcE1boONcXa8vUl+PBJGAwT7zmDB6
+         bvYJ5YmmMth6pGS6yw8pzbeRiXBBJj8kaeYAmTQnUlwBcNPIwLqmv6IxnLTPppgnAWHC
+         HGd6IpX22rADSFKHI8g+sjJsL0ZqssJnVH9DndK0iTquFwsyFz/qRzaUGEx3W1YS6U4V
+         /3M0YXwx8J9xZPS0SmOPK5b86vvzTv8OurUVCf9RvWt8MuXlYIiKT4lqe1qce6P45xN7
+         3e5mhVFXY3aHnmpqeAhXQV7Vfvo9u4S5eUNNe2WEPOJGsW66Dw8+wDtt/yWg04vNaFy7
+         EfNQ==
+X-Gm-Message-State: AOJu0YxtkSVjc6XjIbR/X8kNluP6XHcXk2lI4ZS7/MfQKIJBjzJFBzUZ
+	rWBxrgJ/xdB8JxLQ3h0ahgidXWLuZmgEjKbHFxQSpSwl+lkuNQgcZxmnVOJLwfz0xd8=
+X-Gm-Gg: AY/fxX4r+qFa74IpovwbjPBI3pBavllBJTPAuN+GisKgNOmQPgU6c+mYOX/0nOocLqf
+	e8V/P4c7VsxaAg+m1fsEIo9o9YdPhlfXMptS//9p2zEzUESXXof+FnHYCqqkZSq8DtGM0IqOG2b
+	0RM0Oe/ocZhaCaZe6FGiW+cl0SG9YKzgEdtVjGa91Q6Cl+lmIrGmCj3lzY4Noz5r377vJyw4U2e
+	91eUolInbMu90DmJkd4LoZDFccc8YkcZqoo1edV87TBLwcTqziSXzJ7SYCXogu696yAoPcWVkSN
+	alZwzaTW3NOMfMisquPAbT/x7DJ0OK4nBEUvvN2fzU+6D7m+p8tMxl+6qUBYqmoQgvBTA2fPlcv
+	TlsOzfXnrp3T1zLlaASAgOI9fPup3RRjg8Pww5gegdKdL96wP5gfEgUiRgqQcdTKmUpsEbBnVmh
+	vQS3ZBDZdLshFrPg==
+X-Google-Smtp-Source: AGHT+IHh4IcU0F9pwRi8IxhZRwEdm0GOiEV+wUZelNysHx1bqtdLJ+557oK7dCVKuJH0dmaNNAiYCA==
+X-Received: by 2002:a05:620a:1922:b0:8a3:cd9e:e3fd with SMTP id af79cd13be357-8bb398d81bdmr2212677685a.9.1765981426134;
+        Wed, 17 Dec 2025 06:23:46 -0800 (PST)
 Received: from [127.0.0.1] ([135.232.201.88])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8be31b676besm419678085a.45.2025.12.17.06.23.43
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8be30d86a2dsm411105885a.15.2025.12.17.06.23.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Dec 2025 06:23:43 -0800 (PST)
-Message-Id: <pull.1853.v2.git.1765981422.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1853.git.1736878772.gitgitgadget@gmail.com>
+        Wed, 17 Dec 2025 06:23:45 -0800 (PST)
+Message-Id: <8d7047655933592939dd1395f5b1ead595cee4ee.1765981422.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1853.v2.git.1765981422.gitgitgadget@gmail.com>
 References: <pull.1853.git.1736878772.gitgitgadget@gmail.com>
+	<pull.1853.v2.git.1765981422.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 17 Dec 2025 14:23:38 +0000
-Subject: [PATCH v2 0/4] Sanitize sideband channel messages
+Date: Wed, 17 Dec 2025 14:23:39 +0000
+Subject: [PATCH v2 1/4] sideband: mask control characters
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,191 +79,100 @@ Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
     Phillip Wood <phillip.wood123@gmail.com>,
     Andreas Schwab <schwab@linux-m68k.org>,
     Ondrej Pohorelsky <opohorel@redhat.com>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
     Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Git's sideband channel passes server output directly to the client terminal
-without sanitization. This includes progress messages, error output, and
-diagnostics from remote hooks during clone, fetch, and push operations.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This creates an ANSI escape sequence injection vulnerability (CWE-150
-[https://cwe.mitre.org/data/definitions/150.html]). A malicious or
-compromised server can corrupt terminal state, obscure information, or
-inject characters into the terminal's input buffer. The client has no
-mechanism to distinguish between legitimate output and attack sequences.
+The output of `git clone` is a vital component for understanding what
+has happened when things go wrong. However, these logs are partially
+under the control of the remote server (via the "sideband", which
+typically contains what the remote `git pack-objects` process sends to
+`stderr`), and is currently not sanitized by Git.
 
-This series fixes the vulnerability by sanitizing control characters in the
-sideband output. ANSI color sequences (SGR codes) pass through by default,
-since server-side hooks exist that use these for visibility (e.g.
-https://github.com/kikeonline/githook-explode). By default, all other
-control characters are rendered in caret notation (e.g., ESC becomes ^[).
+This makes Git susceptible to ANSI escape sequence injection (see
+CWE-150, https://cwe.mitre.org/data/definitions/150.html), which allows
+attackers to corrupt terminal state, to hide information, and even to
+insert characters into the input buffer (i.e. as if the user had typed
+those characters).
 
-Users who need different behavior get configuration options:
-sideband.allowControlCharacters provides an escape hatch for environments
-that require raw passthrough. The defaults are secure.
+To plug this vulnerability, disallow any control character in the
+sideband, replacing them instead with the common `^<letter/symbol>`
+(e.g. `^[` for `\x1b`, `^A` for `\x01`).
 
-Note: This series applies cleanly on v2.47.3.
+There is likely a need for more fine-grained controls instead of using a
+"heavy hammer" like this, which will be introduced subsequently.
 
-Changes since v1:
+Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ sideband.c                          | 17 +++++++++++++++--
+ t/t5409-colorize-remote-messages.sh | 12 ++++++++++++
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
- * Applied the suggestions by Phillip and brian.
- * Rebased onto v2.47.3.
- * Added more categories of ANSI Escape sequences that can be enabled (but
-   that are off by default because they could be used to hide information).
-
-Johannes Schindelin (4):
-  sideband: mask control characters
-  sideband: introduce an "escape hatch" to allow control characters
-  sideband: do allow ANSI color sequences by default
-  sideband: add options to allow more control sequences to be passed
-    through
-
- Documentation/config.txt            |   2 +
- Documentation/config/sideband.txt   |  24 +++++
- sideband.c                          | 148 +++++++++++++++++++++++++++-
- t/t5409-colorize-remote-messages.sh |  68 +++++++++++++
- 4 files changed, 240 insertions(+), 2 deletions(-)
- create mode 100644 Documentation/config/sideband.txt
-
-
-base-commit: a52a24e03c8c711f1d5e252fba78f9276908129b
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1853%2Fdscho%2Fsanitize-sideband-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1853/dscho/sanitize-sideband-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1853
-
-Range-diff vs v1:
-
- 1:  f7fb7a3833 ! 1:  8d70476559 sideband: mask control characters
-     @@ Commit message
-          There is likely a need for more fine-grained controls instead of using a
-          "heavy hammer" like this, which will be introduced subsequently.
-      
-     +    Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       ## sideband.c ##
-     @@ sideband.c: void list_config_color_sideband_slots(struct string_list *list, cons
-      +			strbuf_addch(dest, *src);
-      +		else {
-      +			strbuf_addch(dest, '^');
-     -+			strbuf_addch(dest, 0x40 + *src);
-     ++			strbuf_addch(dest, *src == 0x7f ? '?' : 0x40 + *src);
-      +		}
-      +	}
-      +}
-     @@ t/t5409-colorize-remote-messages.sh: test_expect_success 'fallback to color.ui'
-      +	printf "error: Have you \\033[31mread\\033[m this?\\n" >&2
-      +	exec "$@"
-      +	EOF
-     -+	test_config_global uploadPack.packObjectshook ./color-me-surprised &&
-     ++	test_config_global uploadPack.packObjectsHook ./color-me-surprised &&
-      +	test_commit need-at-least-one-commit &&
-      +	git clone --no-local . throw-away 2>stderr &&
-      +	test_decode_color <stderr >decoded &&
- 2:  14c612c69a ! 2:  2615abd8c5 sideband: introduce an "escape hatch" to allow control characters
-     @@ Commit message
-          To help with those use cases, give users a way to opt-out of the
-          protections: `sideband.allowControlCharacters`.
-      
-     +    Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       ## Documentation/config.txt ##
-     @@ sideband.c: void list_config_color_sideband_slots(struct string_list *list, cons
-       ## t/t5409-colorize-remote-messages.sh ##
-      @@ t/t5409-colorize-remote-messages.sh: test_expect_success 'disallow (color) control sequences in sideband' '
-       	EOF
-     - 	test_config_global uploadPack.packObjectshook ./color-me-surprised &&
-     + 	test_config_global uploadPack.packObjectsHook ./color-me-surprised &&
-       	test_commit need-at-least-one-commit &&
-      +
-       	git clone --no-local . throw-away 2>stderr &&
- 3:  a26c4ed6ce ! 3:  44585ba1f4 sideband: do allow ANSI color sequences by default
-     @@ Commit message
-          to the terminal, and `sideband.allowControlCharacters` to override that
-          behavior.
-      
-     -    However, some `pre-receive` hooks that are actively used in practice
-     -    want to color their messages and therefore rely on the fact that Git
-     -    passes them through to the terminal.
-     +    However, as reported by brian m. carlson, some `pre-receive` hooks that
-     +    are actively used in practice want to color their messages and therefore
-     +    rely on the fact that Git passes them through to the terminal, even
-     +    though they have no way to determine whether the receiving side can
-     +    actually handle Escape sequences (think e.g. about the practice
-     +    recommended by Git that third-party applications wishing to use Git
-     +    functionality parse the output of Git commands).
-      
-          In contrast to other ANSI escape sequences, it is highly unlikely that
-          coloring sequences can be essential tools in attack vectors that mislead
-          Git users e.g. by hiding crucial information.
-      
-          Therefore we can have both: Continue to allow ANSI coloring sequences to
-     -    be passed to the terminal, and neutralize all other ANSI escape
-     -    sequences.
-     +    be passed to the terminal by default, and neutralize all other ANSI
-     +    Escape sequences.
-      
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-     @@ Documentation/config/sideband.txt
-      +	this config setting to override this behavior:
-      ++
-      +--
-     ++	default::
-      +	color::
-      +		Allow ANSI color sequences, line feeds and horizontal tabs,
-      +		but mask all other control characters. This is the default.
-     @@ sideband.c: static struct keyword_entry keywords[] = {
-      -static int allow_control_characters;
-      +static enum {
-      +	ALLOW_NO_CONTROL_CHARACTERS = 0,
-     -+	ALLOW_ALL_CONTROL_CHARACTERS = 1,
-     -+	ALLOW_ANSI_COLOR_SEQUENCES = 2
-     ++	ALLOW_ANSI_COLOR_SEQUENCES = 1<<0,
-     ++	ALLOW_DEFAULT_ANSI_SEQUENCES = ALLOW_ANSI_COLOR_SEQUENCES,
-     ++	ALLOW_ALL_CONTROL_CHARACTERS = 1<<1,
-      +} allow_control_characters = ALLOW_ANSI_COLOR_SEQUENCES;
-       
-       /* Returns a color setting (GIT_COLOR_NEVER, etc). */
-     @@ sideband.c: static int use_sideband_colors(void)
-      +		if (git_config_get_string_tmp("sideband.allowcontrolcharacters",
-      +					      &value))
-      +			; /* huh? `get_maybe_bool()` returned -1 */
-     ++		else if (!strcmp(value, "default"))
-     ++			allow_control_characters = ALLOW_DEFAULT_ANSI_SEQUENCES;
-      +		else if (!strcmp(value, "color"))
-      +			allow_control_characters = ALLOW_ANSI_COLOR_SEQUENCES;
-      +		else
-     @@ sideband.c: void list_config_color_sideband_slots(struct string_list *list, cons
-      +	 * Valid ANSI color sequences are of the form
-      +	 *
-      +	 * ESC [ [<n> [; <n>]*] m
-     ++	 *
-     ++	 * These are part of the Select Graphic Rendition sequences which
-     ++	 * contain more than just color sequences, for more details see
-     ++	 * https://en.wikipedia.org/wiki/ANSI_escape_code#SGR.
-      +	 */
-      +
-      +	if (allow_control_characters != ALLOW_ANSI_COLOR_SEQUENCES ||
-     @@ sideband.c: static void strbuf_add_sanitized(struct strbuf *dest, const char *sr
-      +			n -= i;
-      +		} else {
-       			strbuf_addch(dest, '^');
-     - 			strbuf_addch(dest, 0x40 + *src);
-     + 			strbuf_addch(dest, *src == 0x7f ? '?' : 0x40 + *src);
-       		}
-      
-       ## t/t5409-colorize-remote-messages.sh ##
-     @@ t/t5409-colorize-remote-messages.sh: test_expect_success 'fallback to color.ui'
-      +	printf "error: Have you \\033[31mread\\033[m this?\\a\\n" >&2
-       	exec "$@"
-       	EOF
-     - 	test_config_global uploadPack.packObjectshook ./color-me-surprised &&
-     + 	test_config_global uploadPack.packObjectsHook ./color-me-surprised &&
-      @@ t/t5409-colorize-remote-messages.sh: test_expect_success 'disallow (color) control sequences in sideband' '
-       
-       	git clone --no-local . throw-away 2>stderr &&
- -:  ---------- > 4:  fe109cd331 sideband: add options to allow more control sequences to be passed through
-
+diff --git a/sideband.c b/sideband.c
+index 02805573fa..fc1805dcf8 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -65,6 +65,19 @@ void list_config_color_sideband_slots(struct string_list *list, const char *pref
+ 		list_config_item(list, prefix, keywords[i].keyword);
+ }
+ 
++static void strbuf_add_sanitized(struct strbuf *dest, const char *src, int n)
++{
++	strbuf_grow(dest, n);
++	for (; n && *src; src++, n--) {
++		if (!iscntrl(*src) || *src == '\t' || *src == '\n')
++			strbuf_addch(dest, *src);
++		else {
++			strbuf_addch(dest, '^');
++			strbuf_addch(dest, *src == 0x7f ? '?' : 0x40 + *src);
++		}
++	}
++}
++
+ /*
+  * Optionally highlight one keyword in remote output if it appears at the start
+  * of the line. This should be called for a single line only, which is
+@@ -80,7 +93,7 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+ 	int i;
+ 
+ 	if (!want_color_stderr(use_sideband_colors())) {
+-		strbuf_add(dest, src, n);
++		strbuf_add_sanitized(dest, src, n);
+ 		return;
+ 	}
+ 
+@@ -113,7 +126,7 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+ 		}
+ 	}
+ 
+-	strbuf_add(dest, src, n);
++	strbuf_add_sanitized(dest, src, n);
+ }
+ 
+ 
+diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
+index 516b22fd96..f4712f4161 100755
+--- a/t/t5409-colorize-remote-messages.sh
++++ b/t/t5409-colorize-remote-messages.sh
+@@ -99,4 +99,16 @@ test_expect_success 'fallback to color.ui' '
+ 	grep "<BOLD;RED>error<RESET>: error" decoded
+ '
+ 
++test_expect_success 'disallow (color) control sequences in sideband' '
++	write_script .git/color-me-surprised <<-\EOF &&
++	printf "error: Have you \\033[31mread\\033[m this?\\n" >&2
++	exec "$@"
++	EOF
++	test_config_global uploadPack.packObjectsHook ./color-me-surprised &&
++	test_commit need-at-least-one-commit &&
++	git clone --no-local . throw-away 2>stderr &&
++	test_decode_color <stderr >decoded &&
++	test_grep ! RED decoded
++'
++
+ test_done
 -- 
 gitgitgadget
+
