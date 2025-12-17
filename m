@@ -1,110 +1,117 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D309B369995
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 13:51:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48B9396DAF
+	for <git@vger.kernel.org>; Wed, 17 Dec 2025 14:08:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765979483; cv=none; b=gLxoP13wZAHJ6vlx3rnocahejBLmB3v3FCnGr4lQ3GeaLdJWhQ5kOHdDlGKGC7XlMlbH1HltxGbaP59nQS7lcAsk+3ygk1U//2m3MWOJigyaIRjwgbSDl/XGNcfGRVKE9tQy2x+TR7l6LQpNjRG0Ov1WIGABzxSLaWfbxYUpCGo=
+	t=1765980540; cv=none; b=QobK5hfTm899KI8i3b6hvYyuP7ZhORMgCINF7j5zBCs82AWrfJpSbceeiKhD7qHkbKbX3Z22ybpnRb49IttS1pTOY+ANUMobecE8TbXA/4glRA3ip/SaZvwaY4GkqaJWiydoV3hIkq+2dMjV6Ms+qoT9FajA8rYwpw48sm+NSgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765979483; c=relaxed/simple;
-	bh=3UfKwy7qiCAplMZ6gglb6rFlS+u4w0qoCdU4r1A/ums=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mYnG7/LwTX/8AAUeGcnld1rJEHaWFtaFGYnMDG2HK5Mjmwu/+hCJevhh1lre8Irt+NAkkWMaVGR4crmZfGBojg0UCJYKsLN1si18MHJIQS6eFFJKMc6+cKKOSvyS0d5HEoTKeDEIj0J5ie75/Ff6xZG3gkBw+zo0kgqGHDnKUVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp2.bon.at (unknown [192.168.181.105])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4dWZvh6Wpbz7QjwB
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 14:51:12 +0100 (CET)
-Received: from [192.168.0.103] (unknown [93.83.142.38])
-	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4dWZvW5J7QzRqq5;
-	Wed, 17 Dec 2025 14:51:03 +0100 (CET)
-Message-ID: <7bde8cd7-7487-4270-98e5-ab598b0a91d1@kdbg.org>
-Date: Wed, 17 Dec 2025 14:51:03 +0100
+	s=arc-20240116; t=1765980540; c=relaxed/simple;
+	bh=cl3ViytIKWCmUq+HjuRF09O+9RCAg8DMo5/FJ0c++3g=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Aup7hx3s2BHwiMuTUB6rj6mRVmoxaepa5hTgl3GlKcmzuM9HZV+OpdfriVI3tmnBYKCm3eAlfN5eNU0oyw29q6L566rIjxvbeFnsBrvTC1j1nVr8ckqzjl5iaiZDChLDV7wdszoZP9jEIAClxdE+nQJzgw+yq5WCVL//oacuyC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ks15W024; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ks15W024"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4ee1879e6d9so68119821cf.1
+        for <git@vger.kernel.org>; Wed, 17 Dec 2025 06:08:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765980537; x=1766585337; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=RZComgySZP9yokB0Um4W1PzWsTJh6eCnMZ3qMeMTXZ4=;
+        b=Ks15W024bYfAxLUiUhbafciPLiXyZ0G64KMhxpaPcrt0wc9gNcQl5G9IbMstGaEGeG
+         OlFUOF37ViREMZ9UKyNCxjU3BaF2TOeu4hkWKQTPxJVNRM/aCBoL88NJv1Shny+t9oxK
+         qkOf7nPuuisQlVuwutOSI9MbTIJCO2uD6Jnzamcsd4+SLsK/Oh2gtN/q78GiFMqa1x5E
+         q1Cfy93qQ6QY2mfPn+7aT9owVmtDslmK9eF5WYPR+NpGJipFRWJw4nyazx8C+2tsgDT6
+         SDz6ZUO74S4qQaQR82vr/spE/qncKLtUQgWllPpt+F3qtqoQmwvuYwZu5EEG2zP2qdMK
+         Jqvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765980537; x=1766585337;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RZComgySZP9yokB0Um4W1PzWsTJh6eCnMZ3qMeMTXZ4=;
+        b=nxgUOb8i9TPgcYGpxP+Vik/wun55M5gtsZ8iXu/ObKgNe7YOJxvTEU/XVBN1uLfIIg
+         B9c2o83RtOr4d9DG3nF4BEdN5jY9dX2GM3GS03XRklzaNe4vBHeiWUllGPaTiEUpZKeC
+         um3QXfMW2wM2t7Ajn/fsuMNSNtlUYflgw5OEnXM/utUBzP3xjUgtx6ACbWXyfFtHFVme
+         OnFFJrKsVWMnxO+CV1Xm8O7hxP5ewpMZObB3Fd2U/oT9galX1P1iQ868+VxjB1shWXbM
+         FOUh8DSHczI9jjG1juoq8PuUOLK6qz9rDlqc4NMArb31dOXEte5DXOE6MuyMC/6GGjgw
+         xeXw==
+X-Gm-Message-State: AOJu0YxZ1aHVqLp9xcU8v0xpX1X/SklPtY+1dkVzTsz/vbWCHWnmJqSS
+	dpxhIjTzqyJJ1+ToGarvYQCZ3bPovq3bvXC71qp97eFMdJGb207Kalgs+65q+kOO
+X-Gm-Gg: AY/fxX4KgKGonCL3BUDw3+ELdR7aHcSDTfdl9sA2QZ6fsSIzfTbsXg4l+LhcqP7mxL8
+	MKnxMLv4MH0QyqVAannGDPkWMxShoXBTOjVmU0paElUoHzEimQ3+brxlm4vdAChPFWs9tDOdAsY
+	0uZ6bomYG9MO3pGocR+YVywWxSmFhmV9xAj9v/fF6PON5pmlXFRDX5hDp6d4p5uJzpA0hdCewq4
+	GKZSDIn6OOGC5e+eLqZS0XhMKZMJmPPAtW/grLhHv8xFbXja/MdMhDpP7Jqb9s3EpRw8+vFG4hJ
+	qOulD363Po7tXnVLQek1IKn3qD+5HiIZdsURiHZ1veAK4+07EZvS/jGZ26nTk0BEoibOkO0knTb
+	JNoPfEPLEgMGAuHBDM+XN8A3ULqQF1vdDLSmVNBPq8pLq7GHvh5OevdH8ENzGofFbhPGysJn6YA
+	nbWSLxdAcpJj8=
+X-Google-Smtp-Source: AGHT+IGehcyoXjMw5gZzSRdbTWq3A6fEC9zExL1retRWsrtmRrNP9W3qjikDqU10hmmdbJwzyKORrg==
+X-Received: by 2002:a05:622a:1455:b0:4f1:cbdc:28 with SMTP id d75a77b69052e-4f1d05aed11mr241305121cf.52.1765980536973;
+        Wed, 17 Dec 2025 06:08:56 -0800 (PST)
+Received: from [127.0.0.1] ([48.214.53.69])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4f345c52c49sm35592921cf.24.2025.12.17.06.08.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Dec 2025 06:08:56 -0800 (PST)
+Message-Id: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 17 Dec 2025 14:08:37 +0000
+Subject: [PATCH 00/18] Support symbolic links on Windows
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] commit: document that $command.signoff will not be
- added
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren <newren@gmail.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-References: <xmqqldj48pyl.fsf@gitster.g> <xmqqv7i62r6w.fsf@gitster.g>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <xmqqv7i62r6w.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Am 16.12.25 um 19:54 schrieb Junio C Hamano:
-> Every now and then we see this coming up on the list.  Let's help
-> new contributors who are not aware of past discussions by clearly
-> documenting our past consensus.
-> 
-> Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Helped-by: Elijah Newren <newren@gmail.com>
-> Helped-by: Johannes Sixt <j6t@kdbg.org>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  * The text is from Elijah and Johannes this round; I am merely
->    playing a copybot.
-> 
->  Documentation/gitfaq.adoc         | 19 +++++++++++++++++++
->  Documentation/signoff-option.adoc |  4 ++++
->  2 files changed, 23 insertions(+)
-> 
-> diff --git c/Documentation/gitfaq.adoc w/Documentation/gitfaq.adoc
-> index f2917d142c..0e40befb77 100644
-> --- c/Documentation/gitfaq.adoc
-> +++ w/Documentation/gitfaq.adoc
-> @@ -83,6 +83,25 @@ Windows would be the configuration `"C:\Program Files\Vim\gvim.exe" --nofork`,
->  which quotes the filename with spaces and specifies the `--nofork` option to
->  avoid backgrounding the process.
->  
-> +[[sign-off]]
-> +Why not have `commit.signoff` and other configuration variables?::
-> +	Git intentionally does not (and will not) provide a
-> +	configuration variable, such as `commit.signoff`, to
-> +	automatically add `--signoff` by default.  The reason is to
-> +	protect the legal and intentional significance of a sign-off.
-> +	If there were more automated and widely publicized ways for
-> +	sign-offs to be appended, it would become easier for someone
-> +	to argue later that a "Signed-off-by" trailer was just added
-> +	out of habit or by automation, without the committer's full
-> +	awareness or intent to certify their agreement with the
-> +	Developer Certificate of Origin (DCO) or a similar statement.
-> +	This could undermine the sign-off’s credibility in legal or
-> +	contractual situations.
-> ++
-> +There exists `format.signoff`, but that is a historical mistake, and
-> +it is not an excuse to pile on more mistakes of the same kind on top.
+This finally upstreams Git for Windows' support for Windows' branch of
+symbolic links, which has been maturing since 2015. It is based off of
+js/prep-symlink-windows.
 
-I feel that we should s/pile on/pile/, but I am not a native speaker.
+Bill Zissimopoulos (1):
+  mingw: compute the correct size for symlinks in `mingw_lstat()`
 
-This patch looks good with or without this change.
+Johannes Schindelin (3):
+  mingw: try to create symlinks without elevated permissions
+  mingw: emulate `stat()` a little more faithfully
+  mingw: special-case index entries for symlinks with buggy size
 
-> +
-> +
->  Credentials
->  -----------
->  
-> diff --git c/Documentation/signoff-option.adoc w/Documentation/signoff-option.adoc
-> index cddfb225d1..9a80d60f1b 100644
-> --- c/Documentation/signoff-option.adoc
-> +++ w/Documentation/signoff-option.adoc
-> @@ -16,3 +16,7 @@ endif::git-commit[]
->  +
->  The `--no-signoff` option can be used to countermand an earlier `--signoff`
->  option on the command line.
-> ++
-> +Git does not (and will not) have a configuration variable to enable
-> +the `--signoff` command line option by default; see the
-> +`commit.signoff` entry in the gitfaq for more details.
+Karsten Blees (14):
+  mingw: don't call `GetFileAttributes()` twice in `mingw_lstat()`
+  mingw: implement `stat()` with symlink support
+  mingw: drop the separate `do_lstat()` function
+  mingw: let `mingw_lstat()` error early upon problems with reparse
+    points
+  mingw: teach dirent about symlinks
+  mingw: factor out the retry logic
+  mingw: change default of `core.symlinks` to false
+  mingw: add symlink-specific error codes
+  mingw: handle symlinks to directories in `mingw_unlink()`
+  mingw: support renaming symlinks
+  mingw: allow `mingw_chdir()` to change to symlink-resolved directories
+  mingw: implement `readlink()`
+  mingw: implement basic `symlink()` functionality (file symlinks only)
+  mingw: add support for symlinks to directories
 
--- Hannes
+ compat/mingw-posix.h  |   6 +-
+ compat/mingw.c        | 635 ++++++++++++++++++++++++++++++++----------
+ compat/win32.h        |   6 +-
+ compat/win32/dirent.c |   5 +-
+ read-cache.c          |  11 +
+ 5 files changed, 507 insertions(+), 156 deletions(-)
 
+
+base-commit: 6f6fe02f5fe587ec9788f8a5a34281949d7b2ca1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2018%2Fdscho%2Fsymlinks-next-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2018/dscho/symlinks-next-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2018
+-- 
+gitgitgadget
