@@ -1,73 +1,72 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B76264A86
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 16:10:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F52935503E
+	for <git@vger.kernel.org>; Wed, 17 Dec 2025 17:50:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765987849; cv=none; b=DrwiG7cmEBZoGG/yHSu21pmcUxQCHy1Co6ArzHpB42K0RzhncHrliuPeKzg4Ao4zLnwIC4MIowED/WEDe//YbuCTAY4yQErxCB1wCUa2JTOshhN0uGmWdMF5JctkNrz0bDPO9Xtacv7MCJIiP7g31Uv6TWFmdinIo4dzKdwts8o=
+	t=1765993808; cv=none; b=c7VNZt1+EdExgRqk9yYeznwH+O2ibHO7zvEWl3cv1w6FReD0LLrMdgC/ecG3/txwm+GlpTdgwVI3oY8LczohRL32TWTNA2Hr7uwQW4UWx3NdvoetuK6txbCEWDqPRsQy8BHI5kEOwFR4NGVImfbkpdNgJ9xrwMmkGRkFE/A9RPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765987849; c=relaxed/simple;
-	bh=pah1hC1eWB/o09RzKJ0Mzn/xK18SLFMBS1cHXqTX8ZQ=;
+	s=arc-20240116; t=1765993808; c=relaxed/simple;
+	bh=YYw5Y+nkXcfCNdVaCq0JQt+k92E/CKx9dqmLY+AIjRU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HZkFvEblqlR6r8q01oOLS5EgVJIy7BRuOgAIQVIXZuoJADvqiS4IZ95TE3zavGA7ehObjMihh49FWgP2AXgMyUD27jGE67kToDP4aFSxgIiF5OoTCVprqkAwn7+ThAeHNKQ0Nd186THSJxFTHGx3UhoGEn1+eM9hjJbd32I35Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kJch0SQV; arc=none smtp.client-ip=209.85.210.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=sDc7O2zRNjERlJM7MYr84phDi/646a1o9sAuE/e7Mk1qv9N4jYFRoqknRQx9cWatXpc7pxlTLcQxxqz9/IqM0SfcsoOg4W6Yo9oJaspyN/KVHPaJNzMi+6aw4eUO5eqmx4jswvaoILRcJHyNsZrdAUZrdAUFjNVGw3iTAJetO8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PQxDO/9q; arc=none smtp.client-ip=209.85.160.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kJch0SQV"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7c7533dbd87so5070614a34.2
-        for <git@vger.kernel.org>; Wed, 17 Dec 2025 08:10:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PQxDO/9q"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-3e37ad3d95aso4392221fac.3
+        for <git@vger.kernel.org>; Wed, 17 Dec 2025 09:50:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765987844; x=1766592644; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1765993803; x=1766598603; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=X2xzA0duV9/QGvAaoVzf72xLaXPaxcfOyMhPPDMfVNk=;
-        b=kJch0SQVsbngNBs7cWrmtFjbKydHF/fcrm2EohOeoPaTpxf+GgHfjvbyKFaKmJF9X0
-         3tb6NTYBo1ZJCqa/53Z0vglJS9T2yltsVVIYRIfZ3fm8xUyaUCb0TM7eRj8LxqpGVbNJ
-         VauVxEOzj44J7+7L0hhGHQyEt8DUoGH9W2MwN4UknB+eD/joOuywlk51A8TsdGwqVkpe
-         LZ9GCqWx1Wz67SIS2MnMlBNImc55s1TfnGTQngDBcz1oCOc4QiLI1VkZua7Sf4tzsENu
-         +Ta5KEfcTwL4oxXXTnx3IMI8P7Agu+Xt68CjC+eZlQaeCNzGAs4qwH6VEV8pjcjvgxoC
-         ABlw==
+        bh=JuxNxvvW6jkxJcP2r0+ExzZbu3KRYcC/JW+Duh0umbs=;
+        b=PQxDO/9qkKQRqqyQ/bF3JMM2M2yW0EeOLKs1vTeIOfyNX082Tsde8wDa7wTr+vijEE
+         6ypgHy49v6Kisqu8o5FIajm5pxUWFMQOLYcBpA5gZlz3nZgvbkn/udrLjRzrH/3XXC4L
+         KnZwA/gRqlyQ18VUtoOpSQe6ipAaigJjc0XFReDIDwaKqDzjM74FCvVZyP9gaRnBqeHp
+         0ha3ARwQJgz0bKtIGYIyQI3l1XC8rB/uCrgn7d0I0j9Bkayzzg4R6UKos3tDrDe22MYQ
+         4wUXtKu1Hclke0sZDH71ZDDljun/r4PJotXOki+qx4vVxsvSqzJk2q0J4C4HgOl67rOF
+         fA6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765987844; x=1766592644;
+        d=1e100.net; s=20230601; t=1765993803; x=1766598603;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=X2xzA0duV9/QGvAaoVzf72xLaXPaxcfOyMhPPDMfVNk=;
-        b=MNZ++dTSIaJ+J+9UwRfndI3KRe8Leo1I4gcmO16XTHqYXuGU9b08MNN+4khlWCyEwj
-         BeYb3Qa1q0BsmPjTBil/+SOsPyjAmuBHco6n5rwdtKQIPG8xEn4rlsJoDzViJa2zNIcS
-         Jorn0RN+Hqo2zPAi7sxpGyc0xhZqqA3+K0PwMdu8Zgd7w4EsAiqWiZoxw7poUDr4xBMu
-         GCyXXj2AVTkq1o7DTM6EEKR+9Po2ViyFKEEzyMs/H/kp1tRsQOn9C8LPfIKZNK/PdN3r
-         ylKnwJzzQFln+RK3aCr+qOBZHJIN0AmxBVFeWgHliwzkQqto5bkjqvy4T6ecpQMvPCKm
-         87gw==
-X-Gm-Message-State: AOJu0Yzi0Ztw5dQcgeJpeSvUfHz/gsceaQ7mV6mOOZvGV3EaQ5HWJRoC
-	IRYg7078eD9r0DTpZNPuvZCl3BMjaPWPkvRTpHiecBNzITOTQjaWBNnU
-X-Gm-Gg: AY/fxX4QFoBS6VxstpaJJw9fkeOwF5LBsNtbzwgosvmwnbUBCvoi9w36H5Qj6a+W1iE
-	XNMIG5vWufFMefxsbuMnN2INRnJfig3vum/WVvZwNADAxz7jluAApDLspeyidYuY+62VdUQ00lu
-	MTBO7fY49FUum+UCuQ8K0Uj2/PAO/DMzLbipCjXQc4mNtdE/LGX6Kg7nnHRJmHCMl0gcIKzWAom
-	N/KKGnEb4eb9HMSPNDtGJTLp0aKci5pgxWWrui1vEdAdZh52tmqAJPxCSNuO31eAeZOmczkCwMu
-	TuYEIyJnzQjeYinqDbeqij1bj1pOyTtEWEdRA5WQ1zRqYVG6Uu0OlkS946Cwzc3y/Y5V+ERL8UA
-	Vk2oXWPH8WlMu5xjzjYLBFqw51i4LsmX9zuPdAVPDCEb1uSvv5op7oaYU0r5qJqHKTaMnSA6DVG
-	wd+Eqq
-X-Google-Smtp-Source: AGHT+IHEzRruxVqT9bu8Pvh8H6FGPtiXRC8Z+PCAbDOiPi42VUsCNpHhDcLjyEwLbZN41qCQKc4E6Q==
-X-Received: by 2002:a05:6830:2b25:b0:7c7:5349:4e31 with SMTP id 46e09a7af769-7cae835db3cmr11188642a34.21.1765987844376;
-        Wed, 17 Dec 2025 08:10:44 -0800 (PST)
+        bh=JuxNxvvW6jkxJcP2r0+ExzZbu3KRYcC/JW+Duh0umbs=;
+        b=nx75/lN2ltusxkIV8105BnneFT6PrbWMGTp+V5kzKlImqKp30wtTUvm2gMauu4ZuO7
+         8J2X4oImIJuYdIxqZGmken9oNdRAktQgGcelF/9EiCNp37mOm9SFhF7+ucWbc0ST85hs
+         gsozzkM+hsjIJQSCozyhx9AwIBEWeJ37flzkdvrrlIoaKRF1pf0mA0cpnFaMfmKtSP+q
+         KW+0BHGlM/ma2Tk9mtyHgPayByr8ds490nWsdsqfJwlBJc/MarV1KxzDAFBOGdBVLtI5
+         BRdvJHTqmVLkOA6ZhpJMGre+ULoSDHgN6JovboWhU5SsyfKw7rzEk6VPFhfuOpyl02yM
+         tmhw==
+X-Gm-Message-State: AOJu0YyI0zgtpFE8GbbMf5aO1wObXjCMsj+x+TcwHoaxYe8ZHTotfAqb
+	j7FHvu6J8BQyFUf2Ps7JwHWGQMFTZ3Ad8OPnY10pyBvMD9j3t9F1H/Xd
+X-Gm-Gg: AY/fxX4s+/s7fgOtRV6khH+BITmsouuHz53hgQQ37HTizKDq4RwtRH/Jn5O4kaNNx4u
+	t+9+vPmE3Ot4+WIXXijfMCNTZF0Ep46tBN0fKyEqOguuzLEDd1r5RAnEWWqrzPU6OppbAnoSSlu
+	Fv516/9z+lEDPyGObNEs2A9g2qsBU4itXFw4QVzoqSXp5IsHaDVipxHMs6Oe/gj+ub0g8yO/KTw
+	VK44Yiq09wanJ4oNchpqXJrqVELD4qHvhAbOPKHipF+MesB0TgWBEU6PnebcvMqwBhEJV2Koiv1
+	KOldMnpUiTQ61orWebKH4XtwIMN5ohr2tRaNLHVuSNw7RSbIY/OAWzpbh0NF4oeo27xAvEuT/Ax
+	Liz//t5GFQB0btNstnt6QfAfhBLnHufjGRVn77Fg35sOZVaq1+gQk83R5WsM8QKC8F4aqQr86DQ
+	j6xoPf
+X-Google-Smtp-Source: AGHT+IGhCrkx1xEm5bb8vMbTU3Z8XGl/2OWS10UnCy+DJydgwjP5Xtterg3ova6zKsIxeMBgLu8tcA==
+X-Received: by 2002:a05:6820:c96:b0:659:9a49:8e97 with SMTP id 006d021491bc7-65b451875ddmr8457817eaf.27.1765993802808;
+        Wed, 17 Dec 2025 09:50:02 -0800 (PST)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7cadb1d1d71sm13561806a34.2.2025.12.17.08.10.43
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-65cff11ef36sm14620eaf.6.2025.12.17.09.50.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Dec 2025 08:10:44 -0800 (PST)
-Date: Wed, 17 Dec 2025 10:10:43 -0600
+        Wed, 17 Dec 2025 09:50:02 -0800 (PST)
+Date: Wed, 17 Dec 2025 11:49:59 -0600
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, gitster@pobox.com, worldhello.net@gmail.com
-Subject: Re: [PATCH v4 4/7] builtin/repo: add inflated object info to
- keyvalue structure output
-Message-ID: <ygljaf4o7mgsvzz6upybtj3fslpdk7a5j3jz3lxjhho4is5cjf@o22or2lcvhep>
+Subject: Re: [PATCH v4 0/7] builtin/repo: add object size info to structure
+ output
+Message-ID: <4zhiuhpvik5w2vgawepbvqfsfukkixjk7ht6ixvzhjfbu4wtzz@tqljiqujmy47>
 References: <20251215205639.2700270-1-jltobler@gmail.com>
  <20251216173842.3357832-1-jltobler@gmail.com>
- <20251216173842.3357832-5-jltobler@gmail.com>
- <aUJVyHOCsCjjazB-@pks.im>
+ <aUJVzVp9VB7tDfA-@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,37 +75,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aUJVyHOCsCjjazB-@pks.im>
+In-Reply-To: <aUJVzVp9VB7tDfA-@pks.im>
 
 On 25/12/17 08:03AM, Patrick Steinhardt wrote:
-> On Tue, Dec 16, 2025 at 11:38:39AM -0600, Justin Tobler wrote:
-> > diff --git a/builtin/repo.c b/builtin/repo.c
-> > index 9c61bc3e17..e207108346 100644
-> > --- a/builtin/repo.c
-> > +++ b/builtin/repo.c
-> > @@ -495,20 +508,39 @@ static int count_objects(const char *path UNUSED, struct oid_array *oids,
-> >  {
-> >  	struct count_objects_data *data = cb_data;
-> >  	struct object_stats *stats = data->stats;
-> > +	size_t inflated_total = 0;
-> >  	size_t object_count;
-> >  
-> > +	for (size_t i = 0; i < oids->nr; i++) {
-> > +		struct object_info oi = OBJECT_INFO_INIT;
-> > +		unsigned long inflated;
-> > +
-> > +		oi.sizep = &inflated;
-> > +
-> > +		if (odb_read_object_info_extended(data->odb, &oids->oid[i], &oi,
-> > +						  OBJECT_INFO_SKIP_FETCH_OBJECT |
-> > +							  OBJECT_INFO_QUICK) < 0)
+> On Tue, Dec 16, 2025 at 11:38:35AM -0600, Justin Tobler wrote:
+> > Changes in V4:
+> > - Unmark "byte" string in "t/helper/test-simple-ipc.c" for translation
+> >   to avoid conflict with translated plural "byte/bytes" string.
+> > - Remove some unnecessary translations and add comments to clarify some
+> >   of the added translations.
+> > - Some small changes to the tests in patch 7.
 > 
-> Tiny nit: there seems to be an extra tab here. This really is only worth
-> fixing if you intend to reroll anyway.
+> I had a last tiny nit that doesn't warrant a reroll on its own. Other
+> than that this series looks great to me now. Thanks!
 
-I had that initially, but it was failing the check_style CI job so I
-just opted to what clang format wanted. I can change it though if I sent
-another version. I haven't quite figured out the best way to wrap long
-lines.
+Junio also had some small comments. I'll go ahead a send another
+version. Thanks for the review. :)
 
 -Justin
