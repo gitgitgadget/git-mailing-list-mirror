@@ -1,400 +1,203 @@
-Received: from 7.mo576.mail-out.ovh.net (7.mo576.mail-out.ovh.net [46.105.50.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D647B3E1
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 14:10:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.105.50.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEE9366563
+	for <git@vger.kernel.org>; Wed, 17 Dec 2025 14:18:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765980638; cv=none; b=rrZB8oC67DQzhL/1yWEOrwHWseXdKI4hULuXVHIBcFyeXz0yLs7yMiHeOCOTrg9rEn72SJBW7WKa8a8blQw6xKKQD7DBMhnrhaE3pB5fSAOz0yOMsA2Gnd3HXCo3iVxoTHhrUnsxvIJU1raBbmoiWSpMN7EiAEADtTDp7NBQs5k=
+	t=1765981131; cv=none; b=fM8CfsMGgArlNfO6YvU7r36w7JAhkVeUNsOYnZz/BjukTZVo99Q1HEacGDVSAlwojJBxT6rz+IL5hdL/UOAm8J2arb9ZxHKjr3aj6QU7qLE1pvJBtuSqasMsuaGJOXyZdcIeb3NwAIbqmVnN+qCVambIhY2LvkkrS4ocJRTrULk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765980638; c=relaxed/simple;
-	bh=J3sKRPu5IqFS4w0dNAzuxBDjWWON+7M+J5kEXU3RMMc=;
-	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:References:
-	 From:In-Reply-To; b=BqT4AtOjUl3JGP0AxAf3Fm9AFsMHUWcJkaZUCal+76vtHR8se9Q5JHwSH4AlX6KGbKTaKxmcQNnK3ixoFt5zSYtHw+1OOHTadGBxuups5/I49b2t0pUSLIUDkHtwK7IAodGOH8uxNsLW+T+WTk4suxntc/okf6fjobNNX/TfRmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=scantech.com; spf=pass smtp.mailfrom=scantech.com; dkim=pass (2048-bit key) header.d=scantech.com header.i=@scantech.com header.b=oW/PD9fl; arc=none smtp.client-ip=46.105.50.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=scantech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scantech.com
+	s=arc-20240116; t=1765981131; c=relaxed/simple;
+	bh=aYqwYI6xm/L1UUqZDqQ1jbpYB/XUS7Zr/ZWZCbKkMqE=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=jNYsGwkg9VY209wLK69AzoarOEbs7WuVymh+54qlJQEFFY6CT9UiCwdyCXJ47ji8HFzH55W+JJoC/IUTAbthYlO4ohaCAXjnjwozz4iyZ7HlHeGfZc5SyjvjAWtPY/URxRc13H+sGUYTpSgfTybmwb5BT92J61NieYVKWsU9DE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H/MMfRgj; arc=none smtp.client-ip=209.85.160.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=scantech.com header.i=@scantech.com header.b="oW/PD9fl"
-Received: from director10.ghost.mail-out.ovh.net (unknown [10.109.254.71])
-	by mo576.mail-out.ovh.net (Postfix) with ESMTP id 4dWZnJ11bXz5wnB
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 13:45:40 +0000 (UTC)
-Received: from ghost-submission-7d8d68f679-lqls4 (unknown [10.110.118.225])
-	by director10.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 6F11FC0FA3;
-	Wed, 17 Dec 2025 13:45:39 +0000 (UTC)
-Received: from scantech.com ([37.59.142.98])
-	by ghost-submission-7d8d68f679-lqls4 with ESMTPSA
-	id lqErEQO0Qmmn3wgALwElvw
-	(envelope-from <jean-noel.avila@scantech.com>); Wed, 17 Dec 2025 13:45:39 +0000
-Authentication-Results:garm.ovh; auth=pass (GARM-98R002cdf0975a-eed4-4be7-a53b-cb367fbc7195,
-                    55C39F18C8501933CD2E96577179C67B8CC366AD) smtp.auth=jean-noel.avila@scantech.com
-X-OVh-ClientIp:141.255.129.53
-Content-Type: multipart/mixed; boundary="------------Lr2GJkNTpe0e0s4Cp93x01GR"
-Message-ID: <876ee36d-610b-4df6-9297-96b38f106c6c@scantech.com>
-Date: Wed, 17 Dec 2025 14:45:38 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H/MMfRgj"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-3ec41466a30so525124fac.0
+        for <git@vger.kernel.org>; Wed, 17 Dec 2025 06:18:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765981128; x=1766585928; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fbor7xugcrZYAj6xj4bt2y4TuIvHm79sduO1ZeNSm1c=;
+        b=H/MMfRgjhLIJj+H5yky9nz+DpO5RfCb2WHFV7h48FJ6dB0CDeavJ1h4ehcUijXCITL
+         0HNx9yCTVEy3nsaIqnKNIvMqjWfg4X86FC5GuIKQYwmD360T84gBfPS+bC205H5Vm3Jp
+         WnpCx449si13oLxfBHUeZxs4z5FEo31wxDhsIxvKa/yTHhTMhZqcQHEHNClQuBrFiQ8k
+         /DEnmu3AxbXycoMRjqrUT6H/EK7T1UgsSKSWF4B1J50iK5yhIBuRYeyz3boZPinD21Rl
+         Q7z//ElDCImlj1TPeP9cVzmdHT3CvDpCdOK3Giu3t5lq7P5Ktno3j9I3rSobelItO2ft
+         k3HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765981128; x=1766585928;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=fbor7xugcrZYAj6xj4bt2y4TuIvHm79sduO1ZeNSm1c=;
+        b=lK+050M2+8nhiNqCdvW5GI96b23WlngqjfJs/su6N8TIaWDjTMEH9U6bFcfaBM05cm
+         q9Ztic2v0Gs06LOpIMvBcFOXKhkV/3Ieqq8jR1sE2XDLIMWmIQsny1mAkEtvHMTiL45r
+         tMQh0A0pYJ2hSwYWkBslMZ7j9faHyL2eRgVu0bMelnSg7xXkgJgkyMqX2HYFH81oTdOo
+         BhFjAHtEOpUyuZAP1ostHA4hJKMkowSZCFsHJvDfPiIsSbQYflm78UDAw9mQxV2D6kGo
+         VG/pUmxz1aaxYCplHZPU674yd9u9+A2ZAAUkZ7V+LMEp035zcfDuFFq1VK19BRjTknMr
+         ZDBQ==
+X-Gm-Message-State: AOJu0YwN4HFPjBYviqVa31pMht6J6OwzxTKQ/PTS+GkvdtkrkClZrBTj
+	gWgwCE9myde3SkrVqYbcXDPm2JHhcWK2naAhSO2hzfWw9bgeNbJobMRQrFxUJyc6
+X-Gm-Gg: AY/fxX6evEDjLFvkyl6FCxBI6O8LHMnYIIZE9DLtq11Gh1gDA5a4Nfqp1K7BqhwB1BL
+	UuD73TXxXTdXdmHe0fY41OcvqV0wmBBAZ7UeF7ZnhhDMWsJh4+oLJhE6dSj6JkmxfiAxR8Fg6IV
+	AwiFGfnumi1ExwGvrTHBEvJBouc4If3f7PUznr0n32RJyM/6XCG4mbGFxkOb0I8utqOlRuYBayj
+	TTuTMfoqidkBNdGLfrCgj+Wb4r/pbR2G7nzC6TytN0xdq5vQ+1ryWhhmf1wmxpjENFxLFqX5MZ0
+	DpZ5IM6m2NXC8lt533rkqsQhgFcM8sjlOqBd9/bJGRJ/tGaM4DlxyCrtrh16pIHeipX0KVyNZEy
+	olJ3BmFmkAQFV0oEMCks1uiW2v+1ymwC7pOgjBpnRHF+DQVIgAqoHajdVEQq8qWfO+FL8xafp+k
+	l0BDq9/2Kr+z2l
+X-Google-Smtp-Source: AGHT+IEzInrL5h2h+1glLRzgwgCUo2iPa/7H/oCZI0RgLNT9oUv5KT+5oZVVvQlg08vhsUOnOEj3Sw==
+X-Received: by 2002:a05:6870:a0ad:b0:3f5:4ef1:44b8 with SMTP id 586e51a60fabf-3f5dfa3e622mr11994042fac.12.1765981128242;
+        Wed, 17 Dec 2025 06:18:48 -0800 (PST)
+Received: from [127.0.0.1] ([135.119.38.57])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-3f614beda5asm8299568fac.8.2025.12.17.06.18.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Dec 2025 06:18:47 -0800 (PST)
+Message-Id: <pull.2009.v4.git.1765981126.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2009.v3.git.1765885577.gitgitgadget@gmail.com>
+References: <pull.2009.v3.git.1765885577.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 17 Dec 2025 14:18:36 +0000
+Subject: [PATCH v4 00/10] Prepare Git's test suite for symbolic link support on Windows
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] doc: flock of small fixes to various documentation files
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Josh Soref <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.2016.git.1765830229824.gitgitgadget@gmail.com>
- <031d7b41-b6d3-450c-925e-cddaf2e7aa85@app.fastmail.com>
-From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jean-noel.avila@scantech.com>
-Content-Language: fr
-In-Reply-To: <031d7b41-b6d3-450c-925e-cddaf2e7aa85@app.fastmail.com>
-X-Ovh-Tracer-Id: 12971211354284089083
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFTVaePVn2hZRlnX7CC8VNPbAMaVqUyb3OhfXfgcEjCeC/PK32YWxuM934YZuP+uhBll0HW9LiwCz/NoK/FWifhVEl6pilNPKNCHBNNBf5KndsD/5L4R+c2FGZzXNt5DOt2n8cnG4efqXmZ36Oi14SFxHlkN26i0mqI5UhCm1X+/4cD84IELzTlcLRtAfYVemaMihB8WafjSi71zxjgiTvfi3EtTurIxJQEs39lxWCND5qXr+UiUl9wnACUTLdUUfAYt69YkPU396yic2ruAD74XbON4gBeKdQVG+uGFbVIZGgkxy4ewezQ1ENqJwLa2q5Y7VbKUR4HTHeENpx/rihvH3hLAUbr8abYJwjFd/w0JZLOPXBR15baugxjto+RgN0p8hKfoqds5WRsStMAvZf+0gwtEcyAjcCmHhcANiC5502zuAjIvTp8aJO3OcDAt6VCiucXIQN75BZ+hgk1O6EXnqBh2S9ckGmBM547GQ/IHIgft16Br0yqTkWibIPdourwdTCteLP2MyJN/kA2+TwdtakjymzGHpNOY4nl/p77kg1aRHt0LILVjPLvIgaYphL5Y3GtbbjAO01vBnEJk26V6ndtiOD4u4azNXLyUcegNWTjCftCJI3KfRFgXFEFeFDq7Srmbc9IMY8/50sh7/Sj8ffQLvd1koMc/NhBCza+lg
-DKIM-Signature: a=rsa-sha256; bh=vkOrf8DPRKBSLzQgjVuY2tWElbonelfVxAtPJkHJBJY=;
- c=relaxed/relaxed; d=scantech.com; h=From; s=ovhmo3875056-selector1;
- t=1765979140; v=1;
- b=oW/PD9flINJIXwhkDubyVh/e51d/yEjaXLZ3eV3sz0+6JxxDHTuq+u5j36hUdIcjBxK3KIjl
- PCWPjGvv8HVmAuBt8WIIco4IaZUxOfb1Lvqdvh7jq6d3+MCg/0zaoI117vElN0/MKF9NCzIY39h
- 5xrR/CI1hvKaoHEN+sLKIi2sXjNB5qYqvzUDSvjWms/IRwdCz+E9xjpa9mV+YUOgKTZFqsat9lm
- bT+O6hHAGRBllq6rnslUCozsA2pDbAdZsLo9vd/kbpIrTl6TLD54azmrcCHxYEvWg4FZArIznPA
- 7PJGxi6EFCPaDMzUiDxHNM0TPyS2kKB87pqMAcxeHlSDA==
+To: git@vger.kernel.org
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This is a multi-part message in MIME format.
---------------Lr2GJkNTpe0e0s4Cp93x01GR
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Git for Windows has supported symbolic links for quite some time: In
+https://github.com/git-for-windows/git/pull/156, this support was introduced
+already into Git for Windows v2.4.2.windows.1 in May 2015.
 
-Le 15/12/2025 à 23:50, Kristoffer Haugsbakk a écrit :
->> [PATCH] doc: flock of small fixes to various documentation files
-> 
-> This doesn’t say much.
-> 
+However, the Git for Windows CI never ran the test suite with symbolic link
+support because the MSYS2 runtime (i.e. the POSIX emulation layer required
+to run Git's test suite because the latter is written in Unix shell script)
+does not support symbolic links right out of the box. This is for historical
+reasons: Symbolic link support was introduced in Windows 7, where these
+links could only be created by administrators by default, and it took until
+Windows 10 Build 14972 that at least in Developer Mode, non-administrators
+would be permitted to create them.
 
-Yes, this is a set of disparate changes, except that they all relate to
-documentation.
+The MSYS2 runtime does have some sort of support for symbolic links,
+although with caveats: seeing as it expects the inputs as Unix-like paths,
+but the outputs need to be Win32 symbolic links pointing to Win32 paths,
+some normalization has to be performed in the process. This leads to
+sometimes surprising behavior e.g. when a link target like a/b/.. is
+normalized to a.
 
-> On Mon, Dec 15, 2025, at 21:23, Jean-Noël Avila via GitGitGadget wrote:
->> From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
->>
->> While translating the Git documentation into French, I noticed several small
->> issues in various files. This commit addresses these issues to improve the
->> overall quality and consistency of the documentation.
-> 
-> This paragraph doesn’t add any relevant information. The following
-> bullet list would be fine on its own. That it was stumbled upon while
-> doing X is typical below the three-dash/hyphen line info.
+It has been a minute or three since the time when Windows versions without
+symbolic link support were common, therefore there are plans to turn on that
+support in the MSYS2 runtime on these Windows versions by default, see
+https://github.com/msys2/msys2-runtime/pull/114 for more details about this.
 
-True, will remove.
+To prepare for this, I am working toward upstreaming Git for Windows' own
+support for symbolic links. And to prepare for that, in turn, I am hereby
+contributing preemptively the fixes required to eventually let Git's test
+suite pass when both MSYS2 runtime and Git support symbolic links.
 
-> 
-> Any code/doc change aims to improve the overall quality.
-> 
->>  * enforce consistent imperative mood in option descriptions
->>  * lighten wording in several places for clarity
->>  * add missing parameters
->>  * fix minor asciidoc markup issues
-> 
-> I also use bullet-list commits sometimes. (And it’s cousin: “Let’s
-> also...”) But this commit does two things:
-> 
-> • Change prose: imperative mood, lighten wording
-> • Fix mistakes source formatting:
->   • Correct markup
->   • Add missing paren
->   • Split up markup of options: `-f`/`--force`
->   • Weird indent
-> 
-> Could this fruitfully be split into at least two commits?
-> 
-> I just think these are two different categories.
+As a bonus, this patch series also contains fixes for the Perl tests (which
+were broken for a few years, unnoticed because the CI runs need to save on
+runtime and therefore skip the Perl tests because the consume a lot of
+time).
 
-For me these changes are so straightforward that splitting/grouping
-seemed overkill. But, I understand your point. Style vs. pure formatting
-is a good approach, even if here the style is not about the approach to
-writing the documentation.
+Changes since v3:
 
-> 
-> Is that just an academic concern? Well, in my experience it is very
-> pleasant to pickaxe through a snippet of text, stumble upon clearly
-> marked commits like
-> 
-> • Use USA spelling
-> • Fix articles (the/a/an)
-> • *: typos
-> 
-> and just race past them. Because I am looking for the original
-> motivation for some phrasing (say), typos and missing articles and all,
-> and these commits are simple to bunny hop. But here, fixing a missing
-> parentheses is mixed together with
-> 
->     Replace: less than `<n>`, where `<n>` represents a number of bytes,
->     With: less than `<n>` bytes
-> 
-> And now I might have to pause and think which implicated change this is
-> about for my purposes; a subjective-but-good change or a
-> fix-objective-mistake change. Because that matters when I want to know
-> why the text is phrased in a certain way.
-> 
+ * Re-added the credits to Patrick's research that was accidentally dropped
+   from the commit message of "t0600: fix incomplete prerequisite for a test
+   case"
 
-OK, will split in two.
+Changes since v2:
 
->>
->> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
->> ---
->>     doc: flock of small fixes to various documentation files
->>
->> Published-As:
->> https://github.com/gitgitgadget/git/releases/tag/pr-2016%2Fjnavila%2Fdoc_small_fixups-v1
->> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git
->> pr-2016/jnavila/doc_small_fixups-v1
->> Pull-Request: https://github.com/gitgitgadget/git/pull/2016
->>
->>  Documentation/git-checkout.adoc   |  2 +-
->>  Documentation/git-rebase.adoc     |  2 +-
->>  Documentation/git-repack.adoc     |  6 +++---
->>  Documentation/git-send-email.adoc | 26 +++++++++++++-------------
->>  Documentation/git-worktree.adoc   |  2 +-
->>  5 files changed, 19 insertions(+), 19 deletions(-)
->>
->> diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
->> index 6f281b298e..43ccf47cf6 100644
->> --- a/Documentation/git-checkout.adoc
->> +++ b/Documentation/git-checkout.adoc
->> @@ -509,7 +509,7 @@ ARGUMENT DISAMBIGUATION
->>  -----------------------
->>
->>  When you run `git checkout <something>`, Git tries to guess whether
->> -`<something>` is intended to be a branch, a commit, or a set of file(s),
->> +_<something>_ is intended to be a branch, a commit, or a set of file(s),
->>  and then either switches to that branch or commit, or restores the
->>  specified files.
-> 
-> Correct markup since this is a `synopsis` document. Good.
-> 
->>
->> diff --git a/Documentation/git-rebase.adoc
->> b/Documentation/git-rebase.adoc
->> index 9742833ebe..e177808004 100644
->> --- a/Documentation/git-rebase.adoc
->> +++ b/Documentation/git-rebase.adoc
->> @@ -87,7 +87,7 @@ of the to-be-rebased branch. However, `ORIG_HEAD` is
->> not guaranteed to still
->>  point to that commit at the end of the rebase if other commands that
->> change
->>  `ORIG_HEAD` (like `git reset`) are used during the rebase. The
->> previous branch
->>  tip, however, is accessible using the reflog of the current branch
->> (i.e. `@{1}`,
->> -see linkgit:gitrevisions[7].
->> +see linkgit:gitrevisions[7]).
-> 
-> Add missing end-paren. Good.
-> 
-> *Could* maybe also replace the comma with a semicolon?
-> 
->     i.e. `@{1}`; see ...
-> 
->>
->>  TRANSPLANTING A TOPIC BRANCH WITH --ONTO
->>  ----------------------------------------
->> diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
->> index d12c4985f6..673ce91083 100644
->> --- a/Documentation/git-repack.adoc
->> +++ b/Documentation/git-repack.adoc
->> @@ -77,14 +77,14 @@ to the new separate pack will be written.
->>  	Only useful with `--cruft -d`.
->>
->>  --max-cruft-size=<n>::
->> -	Overrides `--max-pack-size` for cruft packs. Inherits the value of
->> +	Override `--max-pack-size` for cruft packs. Inherits the value of
->>  	`--max-pack-size` (if any) by default. See the documentation for
->>  	`--max-pack-size` for more details.
-> 
-> Imperative mood.
-> 
->>
->>  --combine-cruft-below-size=<n>::
->>  	When generating cruft packs without pruning, only repack
->> -	existing cruft packs whose size is strictly less than `<n>`,
->> -	where `<n>` represents a number of bytes, which can optionally
->> +	existing cruft packs whose size is strictly less than `<n>`
->> +	bytes, which can optionally
->>  	be suffixed with "k", "m", or "g". Cruft packs whose size is
->>  	greater than or equal to `<n>` are left as-is and not repacked.
->>  	Useful when you want to avoid repacking large cruft pack(s) in
-> 
-> Here drop a wordy “where `<n>` represents a number of bytes” clause in
-> favor of just “<n> bytes”.
-> 
->> diff --git a/Documentation/git-send-email.adoc
->> b/Documentation/git-send-email.adoc
->> index 263b977353..cdaf421cda 100644
->> --- a/Documentation/git-send-email.adoc
->> +++ b/Documentation/git-send-email.adoc
->> @@ -208,7 +208,7 @@ Sending
->>  	for your own case. Default is the value of `sendemail.smtpEncryption`.
->>
->>  --smtp-domain=<FQDN>::
->> -	Specifies the Fully Qualified Domain Name (FQDN) used in the
->> +	Specify the Fully Qualified Domain Name (FQDN) used in the
->>  	HELO/EHLO command to the SMTP server.  Some servers require the
->>  	FQDN to match your IP address.  If not set, `git send-email` attempts
->>  	to determine your FQDN automatically.  Default is the value of
-> 
-> Imperative mood.
-> 
->> @@ -245,7 +245,7 @@ a password is obtained using linkgit:git-credential[1].
->>  	Disable SMTP authentication. Short hand for `--smtp-auth=none`.
->>
->>  --smtp-server=<host>::
->> -	If set, specifies the outgoing SMTP server to use (e.g.
->> +	Specify the outgoing SMTP server to use (e.g.
->>  	`smtp.example.com` or a raw IP address).  If unspecified, and if
->>  	`--sendmail-cmd` is also unspecified, the default is to search
->>  	for `sendmail` in `/usr/sbin`, `/usr/lib` and `$PATH` if such a
->> @@ -258,7 +258,7 @@ command names.  For those use cases, consider using
-> 
-> Imperative mood and drop “If set”.
-> 
-> We can see in the resulting file that many commands use this “Specify”
-> start. Not a mix of “Specify” and “If set, ...”.
-> 
-> Although see also the positive/negative options that start with “If this
-> is set,”. Maybe unrelated to this change, but maybe they could be
-> rephrased with less “if set” ceremony. Relevant:
-> 
-> https://lore.kernel.org/git/xmqqcyct1mtq.fsf@gitster.g/
-> 
+ * Polished commit messages.
 
-Not the purpose of this commit, but maybe, it would make sense to stress
-out that the first sentence for explaining an option should describe
-bluntly its positive action expressed in imperative mood, with no
-ceremony. After this first sentence, the negative equivalient, more
-context, more precision or use cases can be described.
+Changes since v1:
 
->> `--sendmail-cmd`
->>  instead.
->>
->>  --smtp-server-port=<port>::
->> -	Specifies a port different from the default port (SMTP
->> +	Specify a port different from the default port (SMTP
-> 
-> Same.
-> 
->>  	servers typically listen to smtp port 25, but may also listen to
->>  	submission port 587, or the common SSL smtp port 465);
->>  	symbolic port names (e.g. `submission` instead of 587)
->> @@ -266,7 +266,7 @@ instead.
->>  	`sendemail.smtpServerPort` configuration variable.
->>
->>  --smtp-server-option=<option>::
->> -	If set, specifies the outgoing SMTP server option to use.
->> +	Specify the outgoing SMTP server option to use.
-> 
-> Same.
-> 
->>  	Default value can be specified by the `sendemail.smtpServerOption`
->>  	configuration option.
->>  +
->> @@ -277,7 +277,7 @@ must be used for each option.
->>  --smtp-ssl::
->>  	Legacy alias for `--smtp-encryption ssl`.
->>
->> ---smtp-ssl-cert-path::
->> +--smtp-ssl-cert-path <path>::
->>  	Path to a store of trusted CA certificates for SMTP SSL/TLS
->>  	certificate validation (either a directory that has been processed
->>  	by `c_rehash`, or a single file containing one or more PEM format
-> 
-> Add parameter. Makes sense.
-> 
->> @@ -347,11 +347,11 @@ Automating
->>  --no-to::
->>  --no-cc::
->>  --no-bcc::
->> -	Clears any list of `To:`, `Cc:`, `Bcc:` addresses previously
->> +	Clear any list of `To:`, `Cc:`, `Bcc:` addresses previously
->>  	set via config.
-> 
-> Imperative mood.
-> 
->>
->>  --no-identity::
->> -	Clears the previously read value of `sendemail.identity` set
->> +	Clear the previously read value of `sendemail.identity` set
-> 
-> Ditto. And these two look like the only relevant `--no` options. So this
-> looks consistent.
-> 
->>  	via config, if any.
->>
->>  --to-cmd=<command>::
->> @@ -510,12 +510,12 @@ have been specified, in which case default to `compose`.
->>  	Currently, validation means the following:
->>  +
->>  --
->> -		*	Invoke the sendemail-validate hook if present (see linkgit:githooks[5]).
->> -		*	Warn of patches that contain lines longer than
->> -			998 characters unless a suitable transfer encoding
->> -			(`auto`, `base64`, or `quoted-printable`) is used;
->> -			this is due to SMTP limits as described by
->> -			https://www.ietf.org/rfc/rfc5322.txt.
->> +* Invoke the sendemail-validate hook if present (see linkgit:githooks[5]).
->> +* Warn of patches that contain lines longer than
->> +  998 characters unless a suitable transfer encoding
->> +  (`auto`, `base64`, or `quoted-printable`) is used;
->> +  this is due to SMTP limits as described by
->> +  https://www.ietf.org/rfc/rfc5322.txt.
->>  --
-> 
-> Non-functional change it seems. This looks better in the source. 2–3
-> tabs were not needed here.
-> 
+ * Fixed a grammar issue.
+ * Using cmp rather than skipping the comparison (thanks Junio).
+ * Extended a commit message to explain that it covers all the cases where
+   core.preferSymlinkRefs needs special care.
 
-It turns out the tool to translate the manpages Po4a also dislikes (i.e.
-does not interpret correctly) the tabs.
+Johannes Schindelin (10):
+  t9700: accommodate for Windows paths
+  apply: symbolic links lack a "trustable executable bit"
+  mingw: special-case `open(symlink, O_CREAT | O_EXCL)`
+  t0001: handle `diff --no-index` gracefully
+  t0301: another fix for Windows compatibility
+  t0600: fix incomplete prerequisite for a test case
+  t1006: accommodate for symlink support in MSYS2
+  t1305: skip symlink tests that do not apply to Windows
+  t6423: introduce Windows-specific handling for symlinking to /dev/null
+  t7800: work around the MSYS path conversion on Windows
 
->>  +
->>  Default is the value of `sendemail.validate`; if this is not set,
->> diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
->> index f272f79783..d74ad7b0e9 100644
->> --- a/Documentation/git-worktree.adoc
->> +++ b/Documentation/git-worktree.adoc
->> @@ -104,7 +104,7 @@ associated with a new unborn branch named _<branch>_ (after
->>  passed to the command. In the event the repository has a remote and
->>  `--guess-remote` is used, but no remote or local branches exist, then the
->>  command fails with a warning reminding the user to fetch from their remote
->> -first (or override by using `-f/--force`).
->> +first (or override by using `-f`/`--force`).
-> 
-> Fix inline-verbatim since you are quoting two options/switches. So the
-> `/` does not go inside the (`). Good.
-> 
->>
->>  `list`::
->>
->>
->> base-commit: d8af7cadaa79d5837d73ec949e10b57dedb43e9b
->> --
->> gitgitgadget
-> 
-> `doc-diff` also looks good.
-> 
+ apply.c                             |  2 +-
+ compat/mingw.c                      | 14 ++++++++++++++
+ t/t0001-init.sh                     |  6 +++++-
+ t/t0301-credential-cache.sh         |  3 ++-
+ t/t0600-reffiles-backend.sh         |  2 +-
+ t/t1006-cat-file.sh                 | 24 +++++++++++++++++-------
+ t/t1305-config-include.sh           |  4 ++--
+ t/t6423-merge-rename-directories.sh |  9 +++++++--
+ t/t7800-difftool.sh                 |  8 ++++----
+ t/t9700/test.pl                     |  9 +++++++--
+ 10 files changed, 60 insertions(+), 21 deletions(-)
 
---------------Lr2GJkNTpe0e0s4Cp93x01GR
-Content-Type: text/vcard; charset=UTF-8; name="jean-noel_avila.vcf"
-Content-Disposition: attachment; filename="jean-noel_avila.vcf"
-Content-Transfer-Encoding: base64
 
-YmVnaW46dmNhcmQNCmZuO3F1b3RlZC1wcmludGFibGU6SmVhbi1Obz1DMz1BQmwgQXZpbGEN
-Cm47cXVvdGVkLXByaW50YWJsZTpBdmlsYTtKZWFuLU5vPUMzPUFCbA0Kb3JnOlNjYW50ZWNo
-IFMuQS4NCmFkcjtxdW90ZWQtcHJpbnRhYmxlOlNhdm9pZSBUZWNobm9sYWMgQlAgMjQ0OztC
-PUMzPUEydGltZW50IEFuZHJvbT1DMz1BOGRlIC0gMTA4IEF2ZW51ZSBkdSBMYWMgTD1DMz1B
-OW1hbiA7IExBIE1PVFRFIFNFUlZPTEVYOzs3MzI5MDtGcmFuY2UNCmVtYWlsO2ludGVybmV0
-OmplYW4tbm9lbC5hdmlsYUBzY2FudGVjaC5jb20NCnRpdGxlOkVtYmVkZGVkIHN5c3RlbXMg
-bWFuYWdlcg0KdGVsO3dvcms6KzMzIDQ3OSAyNSA1NCA1MA0KdGVsO2NlbGw6KzMzIDYzMyAw
-NCA2NCAxOA0KeC1tb3ppbGxhLWh0bWw6RkFMU0UNCnVybDpodHRwOi8vd3d3LnNjYW50ZWNo
-LmNvbQ0KdmVyc2lvbjoyLjENCmVuZDp2Y2FyZA0KDQo=
+base-commit: 9a2fb147f2c61d0cab52c883e7e26f5b7948e3ed
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2009%2Fdscho%2Fprepare-the-test-suite-for-symlink-support-on-windows-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2009/dscho/prepare-the-test-suite-for-symlink-support-on-windows-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/2009
 
---------------Lr2GJkNTpe0e0s4Cp93x01GR--
+Range-diff vs v3:
+
+  1:  2d329837e3 =  1:  2d329837e3 t9700: accommodate for Windows paths
+  2:  b97afa9a5c =  2:  b97afa9a5c apply: symbolic links lack a "trustable executable bit"
+  3:  f42a2f14bc =  3:  f42a2f14bc mingw: special-case `open(symlink, O_CREAT | O_EXCL)`
+  4:  70237394c6 =  4:  70237394c6 t0001: handle `diff --no-index` gracefully
+  5:  0d371ee552 =  5:  0d371ee552 t0301: another fix for Windows compatibility
+  6:  91bd72062c !  6:  7b233c2d40 t0600: fix incomplete prerequisite for a test case
+     @@ Commit message
+          However, the `preferSymlinkRefs` feature is not supported on Windows,
+          therefore this test case needs the `MINGW` prerequisite, too.
+      
+     +    There's a couple more cases where we set this config key:
+     +
+     +      - In a subsequent test in t0600, but there we explicitly set it to
+     +        "false". So this would naturally be supported by Windows.
+     +
+     +      - In t7201 we set the value to `yes`, but we never verify that the
+     +        written reference is a symbolic link in the first place. I guess
+     +        that we could rather remove setting the configuration value here, as
+     +        we are about to deprecate support for symrefs via symbolic links in
+     +        the first place. But that's certainly outside of the scope of this
+     +        patch.
+     +
+     +      - In t9903 we do the same, but likewise, we don't check whether the
+     +        written file is a symbolic link.
+     +
+     +    Therefore this seems to be the only instance where the tests actually
+     +    need to be adapted.
+     +
+     +    Helped-by: Patrick Steinhardt <ps@pks.im>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## t/t0600-reffiles-backend.sh ##
+  7:  c2d3212f11 =  7:  31ed59481c t1006: accommodate for symlink support in MSYS2
+  8:  03ff6d756d =  8:  37f9614ef5 t1305: skip symlink tests that do not apply to Windows
+  9:  4ab6aaf2cf =  9:  e604ace822 t6423: introduce Windows-specific handling for symlinking to /dev/null
+ 10:  5f056902df = 10:  6caf8bf0b1 t7800: work around the MSYS path conversion on Windows
+
+-- 
+gitgitgadget
