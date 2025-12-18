@@ -1,151 +1,89 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4753BB44
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 02:41:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7F9224B1B
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 02:50:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766025662; cv=none; b=ruW+LOV+z9OrVJv6s8rtJmwKL1hn4oMN0jcbdHwcupopCnDRd4dFqG6C1+9zW3Tn0usM8olBE4nPX98hUo6F1DBv4KBXCWeCZ2TWH54gVs84OSHzJt7tM5/s4R+jPGW9xs8vA2jb9pTfW29RyjhLilgGQzj7rLS4gddS58DgM2w=
+	t=1766026202; cv=none; b=B/PYo92gQW/Kgw6KLmM35KHZg1w1TP69r98LuyUNHDtw+dTFXrk6KTwreRbcCijCvn2WoVHDsQMVT8/e2X9A9XHuqHoznUKfHIT1lVCE9xpnhaCsXUy48NHoARGUnVTvFRfpcdiacgLuBUuczGu9r8U0UGPpmVHO4d12bvaHQ/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766025662; c=relaxed/simple;
-	bh=a1ExUuh6gNMMeQVsfAQ3E9J/wILMVn23LHPmBZFAdAg=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=P5irNpMCVBtvS5kcTX4g8UXp/EpjetLF/zC9OMWc3NGOnPq16YvIa5GarG0CueX3HWSe9niGp+Y7d+0RguQwRSTJZpFXfAnK8oqk7L4b7kgITvHabCq3mrGft0rvxKyHDX3h16tMObqZhvMl4o6ecgfms1hKCqbyb5lOFbs0EGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ETvPCnWM; arc=none smtp.client-ip=209.85.215.176
+	s=arc-20240116; t=1766026202; c=relaxed/simple;
+	bh=lpYgjFiOsWO2hD34LBsEyZYYuVcCVSP3sRe+KCJmjkM=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=FRlKWVB9zgUSX0s8NoJkq37XhdymDODJFvcP7dfY/U4NWV5p914goiVVasTx12IbvvJ7MgkgZ5tTMtODSpHoPpJlctcBdpXGdGVt3FGRtHvsZbuaxV+zRmxgPoFhpkBEcfAwN9QeEal7wqx1ZWRSnyavY7Y2ulmUXHmjJQUOpoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JhFOoPvo; arc=none smtp.client-ip=74.125.224.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ETvPCnWM"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c1cf2f0523eso110942a12.3
-        for <git@vger.kernel.org>; Wed, 17 Dec 2025 18:41:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JhFOoPvo"
+Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-6432842cafdso137927d50.2
+        for <git@vger.kernel.org>; Wed, 17 Dec 2025 18:50:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766025660; x=1766630460; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=a8AzCVCl9P/xOtThbMxXBfuCsNvFYI7nEm7ADWTOVjk=;
-        b=ETvPCnWMyNNpz9n1WtulCQ1mir1nT5xOSRl29PGTOeeuBuHsQZaIpOW/Y1hJ+ExlvF
-         uveG+hOaCrnrLcgYZc/BhlFq0JIhD7yxoSQG+DcUKgxKhZGcgR4bukigTTwvdE03MzKa
-         OtbiRxZNDyXyf4Og44vHvesxEpFGfKfxt8QWKs/i1+ygT5nr3lc6mrPFaimZ1nDvOzbT
-         AgC8A2pQDtWf88Nx5BMWQ4PNs3Kka9YG8FVOwJAH0NxG8+SNqBgqXfESd3mhXvUdhvOM
-         Qz+pUiZ5vFg3HjOEObjwQ8mGQF80l5GH1pg+yPyAEXXcLPn/qdBWPQMPX3WCbH4IJJ64
-         MwjA==
+        d=gmail.com; s=20230601; t=1766026199; x=1766630999; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lpYgjFiOsWO2hD34LBsEyZYYuVcCVSP3sRe+KCJmjkM=;
+        b=JhFOoPvoAeWOv80wFs2oM34ymJsmMgZ5Xv8Nw8oyeX9gYQIntiDxaClNz3owy9P0rE
+         bug6IQNZS/9yghr5NnlqoMenegfmaBhXPkx6gTxRfeTUn5rlViFXaBG8a5eijRnSwL+L
+         Leb1uotcZBWFVHfJGB+4ttsUq3H3py7GjYxXZm7NqmzMN+GrSrooAqr05zbBdtC4N3fh
+         tlw1FdunvIlnlVQVU/sIinYsVqIBmih18RjeSkrH9+c27gXIuRjhB23URvJ+frN8yiR/
+         CrjKNyej+1sQslNiFhkviFn+dOI9fOf9A3GwYvmabbm2BwOurvxeLbnABBPAPbvDjZO3
+         RR7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766025660; x=1766630460;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a8AzCVCl9P/xOtThbMxXBfuCsNvFYI7nEm7ADWTOVjk=;
-        b=hK03rR9PhgFLghVwmm1PaEdynjAx/WTyOLYLAhd/UmzTJJyKscpznkVW/g/JJRDsWa
-         H4SJv3FgfzrtELvSjy6fPppinFQERcDHOqqsU9kha2jRvJ6jB2zsCu/kopy44HrP05GO
-         kSINe+zPJnRZVdK1DfCuAYaDeJHqs/7fsEwKdKM6OF5iAXbZyYNp17oXD4dvqt+BjPjM
-         bUQqf+igflQrzrW4KvM6nmObg1koELGyUVfgPdtSVh+P14sPobrYI3u7W+in9EWbJwcE
-         ta54lZ7UwPW7JkJxFN1bB6S104SRLi9Ey+2nlubiB6OSodQIr+G5T2t1pU8ZkJcEWtgh
-         jWXw==
-X-Gm-Message-State: AOJu0Yz9CckS6yGGgYGKpV0NFCmD/BrNyDt9V4E1ctHFa599xfec3lMz
-	LLtnJwusutPkyjYZAa10oOpIPtqcie57RZFGI+Jjt1dki/cl2urPgyTJLsi6v0v5
-X-Gm-Gg: AY/fxX4Yw2jqrmSSWtWYWXn4+2LNeBSCAsKpgKqQaQFUSvOOdNjkqq1ywhwcn8H/Gmw
-	hB/WzpyQo2PlzDk23oEjWI+9l6DYcYR9jJbCPxm+s7+rMFqbIMnmInOVW6SCo9QI2ww1deSiKPq
-	BAHHRuZDxqbAXILdYkmBkdMrsp6Om5dXJeoNwLSZKjf+ifBCvoTWscfr/6sZtBxPTLVCqji0gr0
-	KcT8oI5oSE7By4MRabgQDBaPqthPhMoozdO5A1WVqDYBBPtfe6n9rsrlRFh2vRv38dBMH5ST77Z
-	uIklxfMDkEa4t/MwgE9mycnBMlFNxChPXC8NUhP05L0vuKgt/Knr0NNOhaDs908+iUUVepFTYGJ
-	kM3yTONNFxNlIfbMNiZVVihECtGTsmdIfZFwcQrR+e00gwTMroXHZZZX3s9ykJ+LtBuo7f6FjcQ
-	1umO2kQWOEUfFs
-X-Google-Smtp-Source: AGHT+IHO27g99PyjUZOpHYcxWieVa0kI3clC+C4wiwT0aDjRsSNpMFOdXIONgxE53FWJu7haBMiVSw==
-X-Received: by 2002:a05:7301:122:b0:2a4:3592:c612 with SMTP id 5a478bee46e88-2ac303ca513mr11242175eec.35.1766025659739;
-        Wed, 17 Dec 2025 18:40:59 -0800 (PST)
-Received: from [127.0.0.1] ([172.182.212.2])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b04e58d061sm1193357eec.4.2025.12.17.18.40.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Dec 2025 18:40:59 -0800 (PST)
-Message-Id: <pull.2129.git.git.1766025658413.gitgitgadget@gmail.com>
-From: "AZero13 via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 18 Dec 2025 02:40:58 +0000
-Subject: [PATCH] fsm-listen-darwin: free corefoundation paths
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1766026199; x=1766630999;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=lpYgjFiOsWO2hD34LBsEyZYYuVcCVSP3sRe+KCJmjkM=;
+        b=qJZqEER+94lNMjyLxUUorKmbGyglvnGE5ebav1osS2S8Dpo09vzczjczdwAS65ckqe
+         YK+R4CY3D/jUpur6ohTNDCPj2tc1xQGkADkRidrCoGyK41Xh5SQcefn2XAZRHF26iChD
+         NwyrYc8QYvXGNsOGC82MZwOBsrldBPCLJxjc8J5m9UE2CbCjU5L0ntNDauUqFKwAHA4A
+         kbo9K3ceWIZEkZZsyIS9ywZZEeWRWxjYX0E36NJ6P/6GlVXFcZw416aQDgi/Tb9I+B8n
+         f+juYSpR8zuhZjBxJvuxlpZIaP5NovPE11yuAyj/4pAgZyvBkcSqGOVqBnQ904EjarkI
+         cHWQ==
+X-Gm-Message-State: AOJu0YyqUrYArp/bWANXj+FnhF/DeDr7SNSgNzRSbQrbsNgeP917TWID
+	fNDYVtjzHPPQFeoXM707qfjazVULtr8DGdI7LmTp5nDHn57G17Vhsxyq/LHnrw==
+X-Gm-Gg: AY/fxX7WEWHyhex8vVCJgk86xkOyT9JwwJ4phYatXqoVWkSiP/d83fRVqNXZkgLju4m
+	EZXrISv2am8BWJmRKo2gOSdGTVDyGMB1ucIvjnuL5cPuYiObLfhRNC2lHEhigAZHT+XaaNZzTEB
+	QmJ7pibhLjyXxGamlbB0/KiamImvkZfAszAh59GmNbT+0pJN3eqzb8JiQQbaB0OTdni+AxEYtgu
+	sXtsrb+alG2cFw1cAqSOiF0j21uJWFLBl4ZXYEazUQRW3pYsU/2f5yBndQWyvPSUrJgps8LLu44
+	p5UByccDZddD0kZopJr9TS7GRJyfc0mYu+gUPixjA9teXSvEt7Ho1rK6dewgtI2tjaBsRHehSuQ
+	ClQvqLwsWviK/cCA4/8hH/gEk5plDf134ieEyGUojck1WWDk26idbGzK+Op+FOzJPv6fH/SImgU
+	kFHWAq6HE/wdTuqxSjQvK0+0fK08uLsQHWtiwEZjo=
+X-Google-Smtp-Source: AGHT+IFrpszb13v3CrqFdIW3duONAsmBMWtqSzEbowg0wzZIHMzPOQ0wa5gx0MeKu7G5Ie07WKHqkw==
+X-Received: by 2002:a53:a105:0:b0:645:53d0:2d20 with SMTP id 956f58d0204a3-6455564ea0bmr11111091d50.62.1766026199297;
+        Wed, 17 Dec 2025 18:49:59 -0800 (PST)
+Received: from smtpclient.apple ([2605:a601:90a8:8b00:5982:24ab:62e1:eea6])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-646636f793asm511178d50.6.2025.12.17.18.49.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Dec 2025 18:49:58 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: AZero13 <gfunni234@gmail.com>,
-    AZero13 <gfunni234@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH 10/18] mingw: handle symlinks to directories in `mingw_unlink()`
+Date: Wed, 17 Dec 2025 21:49:47 -0500
+Message-Id: <20488887-14B7-4471-9241-9CDBC3EAB2E8@gmail.com>
+References: <282aba42e8aeed336318614523ff8b36d3131e5f.1765980535.git.gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>,
+ Karsten Blees <blees@dcon.de>
+In-Reply-To: <282aba42e8aeed336318614523ff8b36d3131e5f.1765980535.git.gitgitgadget@gmail.com>
+To: Karsten Blees via GitGitGadget <gitgitgadget@gmail.com>
+X-Mailer: iPhone Mail (21F90)
 
-From: AZero13 <gfunni234@gmail.com>
 
-They are not freed even though they should be.
+> Le 17 d=C3=A9c. 2025 =C3=A0 09:17, Karsten Blees via GitGitGadget <gitgitg=
+adget@gmail.com> a =C3=A9crit :
+>=20
+> =EF=BB=BFFrom: Karsten Blees <blees@dcon.de>
+>=20
+> The `_wunlink()` and `DeleteFileW()` functions refuse to delete symlinks
+> to directories on Windows; The error code woutl be `ERROR_ACCESS_DENIED`
 
-Signed-off-by: Greg Funni <gfunni234@gmail.com>
----
-    fsm-listen-darwin: free corefoundation paths
-    
-    They are not freed even though they should be.
-    
-    Signed-off-by: Greg Funni gfunni234@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2129%2FAZero13%2Ffixs-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2129/AZero13/fixs-v1
-Pull-Request: https://github.com/git/git/pull/2129
-
- compat/fsmonitor/fsm-darwin-gcc.h    |  2 ++
- compat/fsmonitor/fsm-listen-darwin.c | 14 ++++++++++++++
- 2 files changed, 16 insertions(+)
-
-diff --git a/compat/fsmonitor/fsm-darwin-gcc.h b/compat/fsmonitor/fsm-darwin-gcc.h
-index 3496e29b3a..8b4bc3a5bc 100644
---- a/compat/fsmonitor/fsm-darwin-gcc.h
-+++ b/compat/fsmonitor/fsm-darwin-gcc.h
-@@ -40,6 +40,7 @@ typedef const FSEventStreamRef ConstFSEventStreamRef;
- typedef unsigned int CFStringEncoding;
- #define kCFStringEncodingUTF8 0x08000100
- 
-+typedef const void *CFTypeRef;
- typedef const struct __CFString *CFStringRef;
- typedef const struct __CFArray *CFArrayRef;
- typedef const struct __CFRunLoop *CFRunLoopRef;
-@@ -76,6 +77,7 @@ CFStringRef CFStringCreateWithCString(void *allocator, const char *string,
- 				      CFStringEncoding encoding);
- CFArrayRef CFArrayCreate(void *allocator, const void **items, long long count,
- 			 void *callbacks);
-+void CFRelease(CFTypeRef cf);
- void CFRunLoopRun(void);
- void CFRunLoopStop(CFRunLoopRef run_loop);
- CFRunLoopRef CFRunLoopGetCurrent(void);
-diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
-index 43c3a915a0..149c310433 100644
---- a/compat/fsmonitor/fsm-listen-darwin.c
-+++ b/compat/fsmonitor/fsm-listen-darwin.c
-@@ -455,6 +455,13 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
- failed:
- 	error(_("Unable to create FSEventStream."));
- 
-+	if (data->cfar_paths_to_watch)
-+		CFRelease(data->cfar_paths_to_watch);
-+	if (data->cfsr_gitdir_path)
-+		CFRelease(data->cfsr_gitdir_path);
-+	if (data->cfsr_worktree_path)
-+		CFRelease(data->cfsr_worktree_path);
-+
- 	FREE_AND_NULL(state->listen_data);
- 	return -1;
- }
-@@ -476,6 +483,13 @@ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
- 		FSEventStreamRelease(data->stream);
- 	}
- 
-+	if (data->cfar_paths_to_watch)
-+		CFRelease(data->cfar_paths_to_watch);
-+	if (data->cfsr_gitdir_path)
-+		CFRelease(data->cfsr_gitdir_path);
-+	if (data->cfsr_worktree_path)
-+		CFRelease(data->cfsr_worktree_path);
-+
- 	if (data->dq)
- 		dispatch_release(data->dq);
- 	pthread_cond_destroy(&data->dq_finished);
-
-base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
--- 
-gitgitgadget
+Casually reading; spotted =E2=80=9Cwoutl.=E2=80=9D Presumably would?=
