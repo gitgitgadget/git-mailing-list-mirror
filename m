@@ -1,63 +1,64 @@
-Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7F9224B1B
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 02:50:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D95D1F30C3
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 02:56:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766026202; cv=none; b=B/PYo92gQW/Kgw6KLmM35KHZg1w1TP69r98LuyUNHDtw+dTFXrk6KTwreRbcCijCvn2WoVHDsQMVT8/e2X9A9XHuqHoznUKfHIT1lVCE9xpnhaCsXUy48NHoARGUnVTvFRfpcdiacgLuBUuczGu9r8U0UGPpmVHO4d12bvaHQ/Y=
+	t=1766026576; cv=none; b=NEgbc2S1zKDpuig36T+dBPwnjWgBhZKDaLzLWFVmAFYcKpv8yD7KjUv0PXADC1uJ2i/910/DNeCejyXsiHgh/YX7kfckUS28ZuBCo4d/zAlQVNWp1kQxAaM7rXfEGFBl5D21wiVPx3Jb3R70zAEWd+MSpP/ewrwgI1L5HmhHyaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766026202; c=relaxed/simple;
-	bh=lpYgjFiOsWO2hD34LBsEyZYYuVcCVSP3sRe+KCJmjkM=;
+	s=arc-20240116; t=1766026576; c=relaxed/simple;
+	bh=JHxbIEB9LamVuVyneKz9rqUZNfIrl0d6uMUpDJ7nVM0=;
 	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=FRlKWVB9zgUSX0s8NoJkq37XhdymDODJFvcP7dfY/U4NWV5p914goiVVasTx12IbvvJ7MgkgZ5tTMtODSpHoPpJlctcBdpXGdGVt3FGRtHvsZbuaxV+zRmxgPoFhpkBEcfAwN9QeEal7wqx1ZWRSnyavY7Y2ulmUXHmjJQUOpoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JhFOoPvo; arc=none smtp.client-ip=74.125.224.47
+	 Cc:In-Reply-To:To; b=qFiEkcPPLkE7ZiS4K4CTTuQ5AEGaTTOHe+cOiFwMBwOxbPbNerZgx7ZiP6W/YRbgluik/NoRsPio8sPJp8zYXSfaHzQ+3t6LulxPtffXGsHhY3ATHV71vmgM7KyoaoktYJDBnT2w/xmtYiu+OJKZrfytvQCuOuvABnp0MGcc5fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ti3c4gCU; arc=none smtp.client-ip=209.85.128.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JhFOoPvo"
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-6432842cafdso137927d50.2
-        for <git@vger.kernel.org>; Wed, 17 Dec 2025 18:50:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ti3c4gCU"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-787eb2d8663so2099877b3.0
+        for <git@vger.kernel.org>; Wed, 17 Dec 2025 18:56:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766026199; x=1766630999; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1766026573; x=1766631373; darn=vger.kernel.org;
         h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
          :from:content-transfer-encoding:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lpYgjFiOsWO2hD34LBsEyZYYuVcCVSP3sRe+KCJmjkM=;
-        b=JhFOoPvoAeWOv80wFs2oM34ymJsmMgZ5Xv8Nw8oyeX9gYQIntiDxaClNz3owy9P0rE
-         bug6IQNZS/9yghr5NnlqoMenegfmaBhXPkx6gTxRfeTUn5rlViFXaBG8a5eijRnSwL+L
-         Leb1uotcZBWFVHfJGB+4ttsUq3H3py7GjYxXZm7NqmzMN+GrSrooAqr05zbBdtC4N3fh
-         tlw1FdunvIlnlVQVU/sIinYsVqIBmih18RjeSkrH9+c27gXIuRjhB23URvJ+frN8yiR/
-         CrjKNyej+1sQslNiFhkviFn+dOI9fOf9A3GwYvmabbm2BwOurvxeLbnABBPAPbvDjZO3
-         RR7A==
+        bh=cWI1fRdzuTdP22WfHUcwZP6BjvdNRW9yuGJxEe+n9u8=;
+        b=Ti3c4gCUP24AVAeJ1hNg/Jtu1bCeXgt1Mfu/1vgQwGV1MHh9prwgHBDP1JmjgSm9At
+         tyrTN6Iev3ycP3jqbL9/mZlhLz28bRs7mkgThkotFJ6jd4jqDMNlu6Zf2+WeogYywIlo
+         cfbacIS34recPKi47RkZ5V8OCePCqDNTH2GRJbY7tWFUiF2T30T6Jp/IhfMCwSLFAthu
+         hVLKaup1RWPPy3wULnQ4R2LlyW75M9mkDqlov77t2j9HDorsgYreRM3CE5zYX5ahVMAU
+         DDBL9GNJNYcRHuZRSMViSmsHdQQXappRRfdDCCo6G6F2ucm61NUfiv+2zbd4V59m2Tzw
+         d1mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766026199; x=1766630999;
+        d=1e100.net; s=20230601; t=1766026573; x=1766631373;
         h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
          :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=lpYgjFiOsWO2hD34LBsEyZYYuVcCVSP3sRe+KCJmjkM=;
-        b=qJZqEER+94lNMjyLxUUorKmbGyglvnGE5ebav1osS2S8Dpo09vzczjczdwAS65ckqe
-         YK+R4CY3D/jUpur6ohTNDCPj2tc1xQGkADkRidrCoGyK41Xh5SQcefn2XAZRHF26iChD
-         NwyrYc8QYvXGNsOGC82MZwOBsrldBPCLJxjc8J5m9UE2CbCjU5L0ntNDauUqFKwAHA4A
-         kbo9K3ceWIZEkZZsyIS9ywZZEeWRWxjYX0E36NJ6P/6GlVXFcZw416aQDgi/Tb9I+B8n
-         f+juYSpR8zuhZjBxJvuxlpZIaP5NovPE11yuAyj/4pAgZyvBkcSqGOVqBnQ904EjarkI
-         cHWQ==
-X-Gm-Message-State: AOJu0YyqUrYArp/bWANXj+FnhF/DeDr7SNSgNzRSbQrbsNgeP917TWID
-	fNDYVtjzHPPQFeoXM707qfjazVULtr8DGdI7LmTp5nDHn57G17Vhsxyq/LHnrw==
-X-Gm-Gg: AY/fxX7WEWHyhex8vVCJgk86xkOyT9JwwJ4phYatXqoVWkSiP/d83fRVqNXZkgLju4m
-	EZXrISv2am8BWJmRKo2gOSdGTVDyGMB1ucIvjnuL5cPuYiObLfhRNC2lHEhigAZHT+XaaNZzTEB
-	QmJ7pibhLjyXxGamlbB0/KiamImvkZfAszAh59GmNbT+0pJN3eqzb8JiQQbaB0OTdni+AxEYtgu
-	sXtsrb+alG2cFw1cAqSOiF0j21uJWFLBl4ZXYEazUQRW3pYsU/2f5yBndQWyvPSUrJgps8LLu44
-	p5UByccDZddD0kZopJr9TS7GRJyfc0mYu+gUPixjA9teXSvEt7Ho1rK6dewgtI2tjaBsRHehSuQ
-	ClQvqLwsWviK/cCA4/8hH/gEk5plDf134ieEyGUojck1WWDk26idbGzK+Op+FOzJPv6fH/SImgU
-	kFHWAq6HE/wdTuqxSjQvK0+0fK08uLsQHWtiwEZjo=
-X-Google-Smtp-Source: AGHT+IFrpszb13v3CrqFdIW3duONAsmBMWtqSzEbowg0wzZIHMzPOQ0wa5gx0MeKu7G5Ie07WKHqkw==
-X-Received: by 2002:a53:a105:0:b0:645:53d0:2d20 with SMTP id 956f58d0204a3-6455564ea0bmr11111091d50.62.1766026199297;
-        Wed, 17 Dec 2025 18:49:59 -0800 (PST)
+        bh=cWI1fRdzuTdP22WfHUcwZP6BjvdNRW9yuGJxEe+n9u8=;
+        b=EpdhK9aikHNstgmFwIG5kH1exrjLfSEuG/3X2z2ZlubVE4CYVSi199OWE9lYCnufFf
+         09CINyH0Q0euIH8G9OZO0CX9MFQ/WMCi6P7NNgke/OmyAgFfZWxvqdbgdr4tfDgas7Ny
+         tzPm/8lcZTxNMaAyJ7d79EveQn8O48miBgrebNeV3+bgKwItB+zpDMWjXrNlQWriTeWK
+         pISWIfbcdUHZj4kFoaPoUNVbFUyNrsX7ORuXVU4izrh8A7a0iK7S9TgWsv5D4ZMeayB1
+         PjNcnFmyGqsCBJ5o/mgb4bMCzhFi8s6l+Im5qPW6tM1VzThUP31lUOV8KJxd/8gEFiJ7
+         ZJgg==
+X-Forwarded-Encrypted: i=1; AJvYcCWYAjm/xrCiohS81FRkrZGnWeTtujwyYfuBNIssbNu+10VuYg5H5srLBN4Q5n6a8O7BVXA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxOsW5QaeWa5O6c9Xhc86tyAWyTM13vEErFXkSyPB7yDV2zPpeq
+	5rGbgxaPWvsIKBcJFtx1QfWaoA3vqIeX1+xvEuUyrEnHQBhKG576nxZf
+X-Gm-Gg: AY/fxX4p2aSfrkQ7G4gQcwfYtp2bd6orjMYbNIINsJi+XoyAc21HoaW/GbdhCDxVPEV
+	42D9Hh5dmPrZ0ZH2K7paiuMQ5g/PZYOgQNtSmzliiadMys8sDRQ9hKLCs5jH1XiMyuf1NGQi+BT
+	/+ThVwmtJG/Cf2PNd9lu+JrgeK/amdquIPU4brdAvSWSsCSUAFXManbn+bEWsi0+ii8pXjVZc/I
+	ZYWmVQLgOm0bY1RDn7ochXdU3dz1rhgCsuEHkCzu1SGrEvy4z9b4UKlA3TJz3TkLhJzg8tclgvX
+	zxPXRC+Ym8Cwo96ieA0QI86E2GHtVot7jV0QOohEj3XSjle/sqBsT50b2ra4bXI3F1oAPDJu8+4
+	VgYOzr2+JKUhss1lFIcfhkStEYDCy0wDMtquqmGB0JoEEYEqpU/4zoR0eZkd/zhW2wlbQg0bZWc
+	YEnoHzC9HukHtYVwUdsBgMwyW28MunpdYp1rhZyK0=
+X-Google-Smtp-Source: AGHT+IEbQF+7mcyFm7x9ZZAmOaaEI2aNtXV7SExmKjyRllkLo3Vh3T1qZHPsRc/xejFrfqArQ+NDEA==
+X-Received: by 2002:a05:690c:4b06:b0:787:c948:2040 with SMTP id 00721157ae682-78fa5abf3f2mr15050757b3.16.1766026573532;
+        Wed, 17 Dec 2025 18:56:13 -0800 (PST)
 Received: from smtpclient.apple ([2605:a601:90a8:8b00:5982:24ab:62e1:eea6])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-646636f793asm511178d50.6.2025.12.17.18.49.58
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-78fa7266a1fsm3639837b3.32.2025.12.17.18.56.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Dec 2025 18:49:58 -0800 (PST)
+        Wed, 17 Dec 2025 18:56:13 -0800 (PST)
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 From: Ben Knoble <ben.knoble@gmail.com>
@@ -67,23 +68,66 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH 10/18] mingw: handle symlinks to directories in `mingw_unlink()`
-Date: Wed, 17 Dec 2025 21:49:47 -0500
-Message-Id: <20488887-14B7-4471-9241-9CDBC3EAB2E8@gmail.com>
-References: <282aba42e8aeed336318614523ff8b36d3131e5f.1765980535.git.gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>,
- Karsten Blees <blees@dcon.de>
-In-Reply-To: <282aba42e8aeed336318614523ff8b36d3131e5f.1765980535.git.gitgitgadget@gmail.com>
-To: Karsten Blees via GitGitGadget <gitgitgadget@gmail.com>
+Subject: Re: meson -Drust=enabled fails on macOS without GNU sed
+Date: Wed, 17 Dec 2025 21:56:02 -0500
+Message-Id: <69EAE286-A7E8-43CE-A503-FAC707541244@gmail.com>
+References: <aUApKxjYHMPHNIac@pks.im>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+ "D. Ben Knoble" <ben.knoble+github@gmail.com>, Git <git@vger.kernel.org>,
+ Ezekiel Newren <ezekielnewren@gmail.com>,
+ Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <aUApKxjYHMPHNIac@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
 X-Mailer: iPhone Mail (21F90)
 
 
-> Le 17 d=C3=A9c. 2025 =C3=A0 09:17, Karsten Blees via GitGitGadget <gitgitg=
-adget@gmail.com> a =C3=A9crit :
+> Le 15 d=C3=A9c. 2025 =C3=A0 10:28, Patrick Steinhardt <ps@pks.im> a =C3=A9=
+crit :
 >=20
-> =EF=BB=BFFrom: Karsten Blees <blees@dcon.de>
->=20
-> The `_wunlink()` and `DeleteFileW()` functions refuse to delete symlinks
-> to directories on Windows; The error code woutl be `ERROR_ACCESS_DENIED`
+> =EF=BB=BFOn Fri, Dec 12, 2025 at 03:32:30PM -0500, Eric Sunshine wrote:
+>>> On Fri, Dec 12, 2025 at 3:01=E2=80=AFPM D. Ben Knoble
+>>> <ben.knoble+github@gmail.com> wrote:
+>>> I think it's due to e509b5b8be (rust: support for Windows, 2025-10-15)
+>>> [relevant folks CC'd], where we assume sed can take "-s" (which AFAICT
+>>> is a GNU extension). But perhaps "-n" was intended with a "p" flag on
+>>> the substitution?
+>>>=20
+>>> I've been building with Rust enabled on Gentoo now for a minute and
+>>> haven't hit any issues, but that's perhaps because the command is
+>>> running with "-s" and not working as intended (yet still producing the
+>>> expected results).
+>>>=20
+>>> The relevant snippet is this (reformatted slightly by GMail, apologies):=
 
-Casually reading; spotted =E2=80=9Cwoutl.=E2=80=9D Presumably would?=
+>>>=20
+>>> case "$(cargo -vV | sed -s 's/^host: \(.*\)$/\1/')" in
+>>>  *-windows-*) LIBNAME=3Dgitcore.lib;;
+>>>  *) LIBNAME=3Dlibgitcore.a;;
+>>> esac
+>>>=20
+>>> but "cargo -vV" produces something like
+>>>=20
+>>> cargo 1.89.0 (c24e10642 2025-06-23)
+>>> [...]
+>>> host: x86_64-apple-darwin
+>>>=20
+>>> (on my older system, on which I haven't tried the build; the failure
+>>> is on my newer system with close-enough-to-the-same output). I'm sure
+>>> you can see why I don't understand why we need GNU's "-s" ("consider
+>>> files as separate rather than as a single, continuous long stream")
+>>> here?
+>>=20
+>> Yup, that's a strange one. Indeed:
+>>=20
+>>    sed -n 's/^host: \(.*\)$/\1/p'
+>>=20
+>> would be the correct way to do it, while also being compatible with
+>> BSD-lineage `sed` (such as `sed` on macOS).
+>=20
+> Ah, indeed. Would one of you want to turn this into a patch?
+>=20
+> Thanks for the report!
+>=20
+> Patrick
+
+Work is ugly this week. I hope to send a patch this weekend.=20=
