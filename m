@@ -1,250 +1,154 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F392D8DB0
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 06:55:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA1D2BDC28
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 06:57:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766040958; cv=none; b=b2YjTZWY+UDsnHixHwgHC0mfnQyM+/UyzQgTB4nzWfL4O6WkwnAAMMdB1LjrRuHwxk88C3fLBYcBpU6Aiw9WQTh9b3EucmwD87gtQwfl5BY6oAN08gK6iCPwTdsMrS3vrQnLFlFTtoYBNpGnctP9uaAOxkYqxgDRTjAcVA3fgS4=
+	t=1766041071; cv=none; b=uzxyQM2GCUjWgfsPFd1tTrlEAV7RtP8xgmVyRczRWi82Wk1UYYpvGjd6ohSxAoT8rFXtlmTAiOUDzsB2Kcr9cYJiGv1fvkMSJOtShN4vXBdVRBmSFVzw1QcPlkb4PtD9/8nOlCjuTKEQMka4c0J4eH2dThYzjYoJKKpP0IboJIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766040958; c=relaxed/simple;
-	bh=agTNb2DTmYJtXxMH9NM5CdGtaih6noEA68avP0NJ7CM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KaNn9yCnOuVsFKQyOmUIa2ZkslL+2Bem1V8hbjNwQNEdoZFb/YRdWJ9BjuDiE6DKilCVxb/LTEYSZwDoElHTRzuU4ENOgT1dBZypmv21QgyuaX2D6i2/n1+EQHH3R8Le7qEf2IpZjAEMLSwJy11HjpwUT9FXZ1OkPL2lFRtwIkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hvmrykrG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FT1BPSkm; arc=none smtp.client-ip=202.12.124.158
+	s=arc-20240116; t=1766041071; c=relaxed/simple;
+	bh=YiAF/+qzOewJ+5qPD1HSmFLv21yYQ2P/vD7AXL3bOmc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VlNry1UIt6SBVZYW8qxpBnFLyk9rAkTAqw/v5zMef+XNEabLRtu2DHbIpiglOoTGKHBPr8lS+PiUqjgosl6t4zMBWhh036T4kPV1maCTFHVwbdI40zxopJbWA3mbEHzm5jzVyZIFGSvjLwx9z+o8KNnHUa22HFvWH/oJMPq/fJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=o7/EleH3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FQ0hwolE; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hvmrykrG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FT1BPSkm"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="o7/EleH3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FQ0hwolE"
 Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5ED8C7A019E;
-	Thu, 18 Dec 2025 01:55:56 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 18 Dec 2025 01:55:56 -0500
+	by mailfout.stl.internal (Postfix) with ESMTP id AFAA31D0009A;
+	Thu, 18 Dec 2025 01:57:48 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Thu, 18 Dec 2025 01:57:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1766040956;
-	 x=1766127356; bh=pVBnFeMQa/I720PmasXUFUlUTk9LJFvp0S4tN/qhT3I=; b=
-	hvmrykrGOqHc/Yfaw/mXn7q7epTrXf8gLF06pfmobzcBOaNxUq3lcl+smqCO/ERN
-	Ek1R4X7jXOmheIr7ysvT8qeT0W86RQdTSQEFF2nEzQqHchBjAXlUG3xZ2ScHnk5E
-	/KB4mlneaxedA/3uxP1KUC4oVCVpEsO/E9KLGiS6YYCLl03OZw1aWSY5w10f9UkI
-	BQvSHam+75BUPSHW7zozGW/njQiuH4aFcBqagiRC9QtgbdyfRBuXSTeYc6lSW3Og
-	YcRwaN991PmjZAQXIENqds74geH/3JqipXeRZn+GErRu1ikPETyP/EYePiqn8tuB
-	tULjO1wFbZUs5fRlA7fCAg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1766041068;
+	 x=1766127468; bh=8hFGoIsU5e7FO/5o55gJ1TzrjnPE1TxZt1LVoBTnTHo=; b=
+	o7/EleH3Wb/9z/ADup+o+5meugDIpLMu46IuAAjljlBYe/DovuZmClBpVBiOmKLD
+	ZxnzPF2t1p17TFx82gp8hlndluar5H1El94Dys6CiX5cmLZmtpgkxzBrjNIIR42k
+	D4ACRvCQR1sRv+EyEbJgHtEUycEwjMtCQnBTYQsebztxksjHON68i65OCoALXqzz
+	vTKqo6HsgbWsnAIGReLYXRCljZbYoR4J+cJOLdWB4VKvVXr5fONb9FfJZQRgMjkN
+	Z0Z7dYC04f9ldv4vTE8hMhh/PqMEY4jE1rbyOK8vgXrnbh+9X0mQDWzIBv10BsQR
+	lLj8y2EEHR/ItgF6oW9EHg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766040956; x=
-	1766127356; bh=pVBnFeMQa/I720PmasXUFUlUTk9LJFvp0S4tN/qhT3I=; b=F
-	T1BPSkmvXO0a/KR4DKTUiMNiN7j3r32sWurUktgvjMpnKzqWUPjK5dBW0xHD04Ms
-	5Yc/kAmfS1s2hHrixRy7r0VTmgYTSHxr8v4YEgabqVIcUvoHgXigB3u3o/jqyg9+
-	HhNSpsk/0UJWWIa5XEkBVaayv4QDRvKz4sX68Rx6ut2nAtIHDgD80z+iXSQwHEp1
-	/kYtO2ROsYoptKJTJZW0n5gplXEvcUah+w7vF7NW5aw+lzHfpmLFcKUCyMIT8pTv
-	yCKw1kvzqM4ckklRQvCdyUWAp/ahX8d2U8JaKumzLMDC7KkUd+4fsaVFfO9y7E8Q
-	WdqDtFWTHiLOzQt5QPdCA==
-X-ME-Sender: <xms:fKVDac6xweYQ_HsB-bhRMCH8nOK6JDs6ZcyHPyCD04mT1WPXIfkB1g>
-    <xme:fKVDaT5os6y0z1QHgv17zcNrqNQBB8poW3kpAW9kiQLzIxtu20sXLIORQevYKh2JG
-    wwPhQN6U8Mr3K6UhkgpaKl-ynloCGROFW35Tu-WPCziblLhQ9jERw>
-X-ME-Received: <xmr:fKVDaZEMfMlp9q0TBYfEYCFmAhTizJHnc6DGReSzb3UbFBWpB2z4KO4oAHtGMgYoI_T_9KYkeJnPQQv29XUPAQvhNpLYz0MT-DetRqa9Lg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766041068; x=
+	1766127468; bh=8hFGoIsU5e7FO/5o55gJ1TzrjnPE1TxZt1LVoBTnTHo=; b=F
+	Q0hwolELd/wOOl/JCeFsAPPO45LuvUkidNb3zepAttvWfw35vycd9GU/JYLyS0S0
+	H/+vQU1UCitPLQ/2DZCYD6YPY9V0zcn+aPc5LMxkyyABrYMJZ+YeN1NEvElThnFw
+	WHUZgRBBn+08YiLEM36SXEnMWN5xtaBoF2qKoYpSEJ3g6v1jm2v2btmGKEO3eJGe
+	5p6cv/iIH9MmBIMgF9IExg2MWNgjBGw51ywxLegRNrYWFHnIxJZJkefZBeaikgaw
+	vc+m8V/H1hesqnNQ0vvv/v54wLgR9gHU71nA0IPAAvKvpszNXnmed0QeZarcj9cs
+	rB9kUiXtm7f8yATtqRzUQ==
+X-ME-Sender: <xms:7KVDaQh4ggLoG3dn-Etdx_8uTe2uzbiiKx4Pz7f3PrBKVAKgd7p9IQ>
+    <xme:7KVDacuMNdjCit3-yKjWsNpwpYIQTVhgGKCz4OnBwkQNieWTltWCrHw7rwtZzJyTC
+    owwUj-ZFV0I-V59GZhQ9mMdofMA0LCKDd0JQuGoJQ-KJ2ktHJ4HDg>
+X-ME-Received: <xmr:7KVDaR6vMkm8NvHAt5vKYar7kJYtyWfL_8XX4KtXs1cS8mnN0kiK3ixM2B_16IIEXFbTD5ZTTTBNNnASfECqlXDqh_g8awxSPa84RTd2ug>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggeejiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepgeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslh
-    gvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:fKVDacToobhJl4u05oxw34jVEDYaA9KW-E2PXWZgA4woUSa3ng1AZw>
-    <xmx:fKVDaSuxhoryMEynPPDYJuykicPQ5BFErUKTDNX8p4p8mxRQx-BSvA>
-    <xmx:fKVDabz8wTmaFpMxeID-ZeEw1BPSXpEs4EdSVtoFW-YNhAJntYaLDw>
-    <xmx:fKVDac42jsGiQWqAGZBnQPktmnPtoVx0b1AXCaLdAW7YPRyWT68pyQ>
-    <xmx:fKVDaaqZguhrQigL9CD6YkAkOtUX64A-iVDAIPyMAZ-pmqrNep6Cxp6s>
+    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepsggvnhdrkhhnohgslhgvodhgihhthhhusgesghhmrghilhdrtghomhdprhgtphhtth
+    hopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhh
+    ihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghl
+    ihhnsehgmhigrdguvgdprhgtphhtthhopegviigvkhhivghlnhgvfihrvghnsehgmhgrih
+    hlrdgtohhm
+X-ME-Proxy: <xmx:7KVDaYPzfgt37GKwtTt81VOe-3JLBJXxD36W9V-JK1i-gt1y7Ue_RA>
+    <xmx:7KVDafsvD3GDLtoQsAlYWBVfw80giim6SBpwiYdB6_nSr70bOYlJ2w>
+    <xmx:7KVDabYOJz16FyC0fMLmjgPerIH_hd-BDljHFwvVRklgHRJSvuyoEA>
+    <xmx:7KVDaRw-qZKnNwFL_hSd7ath4ij9jXtKSKTGZ-8uv6X8-SxJRp2HiQ>
+    <xmx:7KVDaW9P7lqO3XHXZ2bHPIzV-fzkg1Tp4vwf5fwGf7N4hY8rsn67zg_H>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Dec 2025 01:55:55 -0500 (EST)
+ 18 Dec 2025 01:57:47 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7a40cbc8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 18 Dec 2025 06:55:55 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 27a6ce1b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 18 Dec 2025 06:57:46 +0000 (UTC)
+Date: Thu, 18 Dec 2025 07:57:42 +0100
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 18 Dec 2025 07:55:29 +0100
-Subject: [PATCH v2 10/10] packfile: move MIDX into packfile store
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	"D. Ben Knoble" <ben.knoble+github@gmail.com>,
+	Git <git@vger.kernel.org>, Ezekiel Newren <ezekielnewren@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: meson -Drust=enabled fails on macOS without GNU sed
+Message-ID: <aUOl5h-13jMOPJhD@pks.im>
+References: <aUApKxjYHMPHNIac@pks.im>
+ <69EAE286-A7E8-43CE-A503-FAC707541244@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251218-b4-pks-pack-store-via-source-v2-10-62849007ce21@pks.im>
-References: <20251218-b4-pks-pack-store-via-source-v2-0-62849007ce21@pks.im>
-In-Reply-To: <20251218-b4-pks-pack-store-via-source-v2-0-62849007ce21@pks.im>
-To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <69EAE286-A7E8-43CE-A503-FAC707541244@gmail.com>
 
-The multi-pack index still is tracked as a member of the object database
-source, but ultimately the MIDX is always tied to one specific packfile
-store.
+On Wed, Dec 17, 2025 at 09:56:02PM -0500, Ben Knoble wrote:
+> 
+> > Le 15 déc. 2025 à 10:28, Patrick Steinhardt <ps@pks.im> a écrit :
+> > 
+> > ﻿On Fri, Dec 12, 2025 at 03:32:30PM -0500, Eric Sunshine wrote:
+> >>> On Fri, Dec 12, 2025 at 3:01 PM D. Ben Knoble
+> >>> <ben.knoble+github@gmail.com> wrote:
+> >>> I think it's due to e509b5b8be (rust: support for Windows, 2025-10-15)
+> >>> [relevant folks CC'd], where we assume sed can take "-s" (which AFAICT
+> >>> is a GNU extension). But perhaps "-n" was intended with a "p" flag on
+> >>> the substitution?
+> >>> 
+> >>> I've been building with Rust enabled on Gentoo now for a minute and
+> >>> haven't hit any issues, but that's perhaps because the command is
+> >>> running with "-s" and not working as intended (yet still producing the
+> >>> expected results).
+> >>> 
+> >>> The relevant snippet is this (reformatted slightly by GMail, apologies):
+> >>> 
+> >>> case "$(cargo -vV | sed -s 's/^host: \(.*\)$/\1/')" in
+> >>>  *-windows-*) LIBNAME=gitcore.lib;;
+> >>>  *) LIBNAME=libgitcore.a;;
+> >>> esac
+> >>> 
+> >>> but "cargo -vV" produces something like
+> >>> 
+> >>> cargo 1.89.0 (c24e10642 2025-06-23)
+> >>> [...]
+> >>> host: x86_64-apple-darwin
+> >>> 
+> >>> (on my older system, on which I haven't tried the build; the failure
+> >>> is on my newer system with close-enough-to-the-same output). I'm sure
+> >>> you can see why I don't understand why we need GNU's "-s" ("consider
+> >>> files as separate rather than as a single, continuous long stream")
+> >>> here?
+> >> 
+> >> Yup, that's a strange one. Indeed:
+> >> 
+> >>    sed -n 's/^host: \(.*\)$/\1/p'
+> >> 
+> >> would be the correct way to do it, while also being compatible with
+> >> BSD-lineage `sed` (such as `sed` on macOS).
+> > 
+> > Ah, indeed. Would one of you want to turn this into a patch?
+> > 
+> > Thanks for the report!
+> > 
+> > Patrick
+> 
+> Work is ugly this week. I hope to send a patch this weekend. 
 
-Move the structure into `struct packfile_store` accordingly. This
-ensures that the packfile store now keeps track of all data related to
-packfiles.
+Thanks! Let me know in case you don't get to it and I'll be happy to
+send a patch myself.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- midx.c     | 14 +++++++-------
- odb.c      |  8 +-------
- odb.h      |  7 -------
- packfile.c | 12 ++++++++----
- packfile.h |  3 +++
- 5 files changed, 19 insertions(+), 25 deletions(-)
-
-diff --git a/midx.c b/midx.c
-index dbb2aa68ba..fa7a7e5d13 100644
---- a/midx.c
-+++ b/midx.c
-@@ -96,7 +96,7 @@ static int midx_read_object_offsets(const unsigned char *chunk_start,
- struct multi_pack_index *get_multi_pack_index(struct odb_source *source)
- {
- 	packfile_store_prepare(source->packfiles);
--	return source->midx;
-+	return source->packfiles->midx;
- }
- 
- static struct multi_pack_index *load_multi_pack_index_one(struct odb_source *source,
-@@ -709,12 +709,12 @@ int prepare_multi_pack_index_one(struct odb_source *source)
- 	if (!r->settings.core_multi_pack_index)
- 		return 0;
- 
--	if (source->midx)
-+	if (source->packfiles->midx)
- 		return 1;
- 
--	source->midx = load_multi_pack_index(source);
-+	source->packfiles->midx = load_multi_pack_index(source);
- 
--	return !!source->midx;
-+	return !!source->packfiles->midx;
- }
- 
- int midx_checksum_valid(struct multi_pack_index *m)
-@@ -803,9 +803,9 @@ void clear_midx_file(struct repository *r)
- 		struct odb_source *source;
- 
- 		for (source = r->objects->sources; source; source = source->next) {
--			if (source->midx)
--				close_midx(source->midx);
--			source->midx = NULL;
-+			if (source->packfiles->midx)
-+				close_midx(source->packfiles->midx);
-+			source->packfiles->midx = NULL;
- 		}
- 	}
- 
-diff --git a/odb.c b/odb.c
-index f159fbdd99..902251f9ed 100644
---- a/odb.c
-+++ b/odb.c
-@@ -1078,14 +1078,8 @@ struct object_database *odb_new(struct repository *repo,
- void odb_close(struct object_database *o)
- {
- 	struct odb_source *source;
--
--	for (source = o->sources; source; source = source->next) {
-+	for (source = o->sources; source; source = source->next)
- 		packfile_store_close(source->packfiles);
--		if (source->midx)
--			close_midx(source->midx);
--		source->midx = NULL;
--	}
--
- 	close_commit_graph(o);
- }
- 
-diff --git a/odb.h b/odb.h
-index c97b41c58c..300c3c0c46 100644
---- a/odb.h
-+++ b/odb.h
-@@ -54,13 +54,6 @@ struct odb_source {
- 	/* Should only be accessed directly by packfile.c and midx.c. */
- 	struct packfile_store *packfiles;
- 
--	/*
--	 * private data
--	 *
--	 * should only be accessed directly by packfile.c and midx.c
--	 */
--	struct multi_pack_index *midx;
--
- 	/*
- 	 * Figure out whether this is the local source of the owning
- 	 * repository, which would typically be its ".git/objects" directory.
-diff --git a/packfile.c b/packfile.c
-index 0e4c63e11d..097dd8d85d 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -990,7 +990,8 @@ static void prepare_pack(const char *full_name, size_t full_name_len,
- 	size_t base_len = full_name_len;
- 
- 	if (strip_suffix_mem(full_name, &base_len, ".idx") &&
--	    !(data->source->midx && midx_contains_pack(data->source->midx, file_name))) {
-+	    !(data->source->packfiles->midx &&
-+	      midx_contains_pack(data->source->packfiles->midx, file_name))) {
- 		char *trimmed_path = xstrndup(full_name, full_name_len);
- 		packfile_store_load_pack(data->source->packfiles,
- 					 trimmed_path, data->source->local);
-@@ -1087,8 +1088,8 @@ struct packfile_list_entry *packfile_store_get_packs(struct packfile_store *stor
- {
- 	packfile_store_prepare(store);
- 
--	if (store->source->midx) {
--		struct multi_pack_index *m = store->source->midx;
-+	if (store->midx) {
-+		struct multi_pack_index *m = store->midx;
- 		for (uint32_t i = 0; i < m->num_packs + m->num_packs_in_base; i++)
- 			prepare_midx_pack(m, i);
- 	}
-@@ -2094,7 +2095,7 @@ static int find_pack_entry(struct packfile_store *store,
- 	struct packfile_list_entry *l;
- 
- 	packfile_store_prepare(store);
--	if (store->source->midx && fill_midx_entry(store->source->midx, oid, e))
-+	if (store->midx && fill_midx_entry(store->midx, oid, e))
- 		return 1;
- 
- 	for (l = store->packs.head; l; l = l->next) {
-@@ -2454,6 +2455,9 @@ void packfile_store_close(struct packfile_store *store)
- 			BUG("want to close pack marked 'do-not-close'");
- 		close_pack(e->pack);
- 	}
-+	if (store->midx)
-+		close_midx(store->midx);
-+	store->midx = NULL;
- }
- 
- struct odb_packed_read_stream {
-diff --git a/packfile.h b/packfile.h
-index 08a666d538..92baf8ee88 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -101,6 +101,9 @@ struct packfile_store {
- 		unsigned flags;
- 	} kept_cache;
- 
-+	/* The multi-pack index that belongs to this specific packfile store. */
-+	struct multi_pack_index *midx;
-+
- 	/*
- 	 * A map of packfile names to packed_git structs for tracking which
- 	 * packs have been loaded already.
-
--- 
-2.52.0.351.gbe84eed79e.dirty
-
+Patrick
