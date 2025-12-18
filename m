@@ -1,65 +1,69 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B931C3570CB
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 15:26:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68D5357A50
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 15:49:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766071571; cv=none; b=Zuovn85kuyJ7jPp815YJBjtsfNzIU+EN63uNojgbQ0rpSruhNaGmOkLDU2it5dbQtTAtytJj/uy/C+j2p+u/Eh4MoKSGooH4mMHetA5ygmNXdH6KxFFjM6wNdAHK7hXEHVFhQTlSYdP8vmSInxXPjz0stVySUOn2eu7kyTenbnQ=
+	t=1766072957; cv=none; b=WGSCjv4kcsmfItAk2v40aAf1U33kwWpOnxOy/kGjsB1WJj5xCLDYSI+f0a9zGhw+gvJH/XGfDQpE4IhQATAz+77GFnmAEyBkfEdBn02ElhrxDJIjyZeKFEFljyXITaCb+hIYcTZ7x/Q/qYnfY1YAn2idSn7dHfEM8BoPHlCXzpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766071571; c=relaxed/simple;
-	bh=fq38c43TIZR77A71Du6tjgtFzDo5PVBdHHEjECtnoNM=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=X5jfKhkh2ee/rtAGr4QyB416gsxfCR0AisUMQMK/uRGJFaytskvHQaj/mtQDo7E7tDfF/1RCfqzZe6AbFpo0RHXf+8h0t7dmu30lRjiSP/4fOovx4Vy6aoiyUw6WozBFlZFhOhIM4NpBEN5P/rdtp6PPGHPShYJ9/M0puPl1Ah8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MyTJdjdc; arc=none smtp.client-ip=209.85.210.181
+	s=arc-20240116; t=1766072957; c=relaxed/simple;
+	bh=XJ1he3MqMQ5RTyC3hZVsNcVmLXfRwFdh4fIm7+3kXD4=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=adpA/fvXMBEIV+6JylkMHdybt80eS7N5IEFDKGfi2Wmyhncyz5rsDsPjjXvRJ68DpV/V8jQHmrLOCJ7oaZao6/1M54W1J3idKTU/wexnGzph8AIR3woXLiwQfO/i1uYahMCRWWN5sqU2MgzJlTmZceQy+iSMapWKz6WGUwUeipk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mxQOIzs0; arc=none smtp.client-ip=209.85.161.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MyTJdjdc"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-7f121c00dedso1002952b3a.0
-        for <git@vger.kernel.org>; Thu, 18 Dec 2025 07:26:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mxQOIzs0"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-6575e760f06so247183eaf.0
+        for <git@vger.kernel.org>; Thu, 18 Dec 2025 07:49:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766071567; x=1766676367; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1766072953; x=1766677753; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2cVRiq0+eBNhVmCaSAArf1DkiVVVDofu2FHwUZ2Iu4w=;
-        b=MyTJdjdcRHep6bmr1MEBxVYwDTkB7TS0OaciBtrKmzTH49Weq/Fz4Uv/qzG2p/oBv4
-         AkslNxxvdYLjDPs6T+/gxXQNRm0cCJzw8tRcG3MqxCe8rjblxE0pzKXgoUjSXRf6IFCr
-         yiRePn0Rd3RitXH45CpHEfVqK3Jn7NbhlNcQiBwboWY8TzQdTeLGUDgmlr1Djk7axGAP
-         djbxeH6gB1lZYvOXbXnDXFmyc3nQ24bpyQC4O1XtoafMPMuj9YwQeCVmPaQOMDbs6k9g
-         Fmkulj5ZUN13iqNBj4CYGh7TI3RcUCil2NcwXq36mpf3FSH+wc+oQa0XR+trsO2Jgatt
-         6K3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766071567; x=1766676367;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2cVRiq0+eBNhVmCaSAArf1DkiVVVDofu2FHwUZ2Iu4w=;
-        b=e6bYmz52kzudk04MLV4tLyeOvX2cPTTxl2vnJ02yLBUwtP55MM7oGmWLFcpvqGn4pe
-         Q5zCIGtFQgTPBD7aMLGCQ4LXQoMNxG8PZApSNGrgRvkuPwD6s90VpULn9Tj99EmOq1Pu
-         GSXhGCz53ndFAreAvJIeVJ8W+K/dLF9B2QD58/4CliycJ1x8qfKQYi9+muRZsyXO8VbU
-         9CuQ3MIhM+idpP14fPfQ4aEOnLzsmW93qu8hadSdQ6nMJWJS+WmxJTsReR6/ZJb3TtAD
-         AYt61FxJOYvW0K4OwQxTQLQIbZ5772DyTwHaz5u0VsA9JeK5SFvacp56929utmalb6ky
-         dxrA==
-X-Gm-Message-State: AOJu0Yw7u4d0QccilOrlCRWI9dWM3tQdbBexxXbjm0tb2CiNYfUJbwiw
-	tXdL+RRCrvid0KgPDXE6q7C71WgvBitl3IKErjLE5AByY5ZKw1gpvqmGif4yJQ==
-X-Gm-Gg: AY/fxX59zQfJEtEsIjQ7i3Zqv5Z22eVrO4P2qeebBvt0NQAS+VMYwWyTOkPHqBy8vvt
-	FJY+npAFlGsigyNLDPJk9zut5NvEApNPgDz9vEme4pBqstfaWy5b4aKc4Wwf2dV4sC3K8P/xIVj
-	bXbfPyBYoQg7Ki6kwBnj+sQpbFKkUpHw4ZY0Tr6C7SeeymiTgHXk/tr5gW9K/mY32fOcjCpHmCu
-	Ut8wIKYNkblCuAh1BJfhqGM+2hZVmujQLaM8dQiJeWMpXF+E4ZhC626VsM8U0Jy7XT8mJ2G2M9y
-	rQJlcfVSYyq0VFrbT8J0JUcyuNkXNlhycvADS1rVZsi8wJLDkVC8fFj4h79RRzNIcyBMTm7QfSu
-	m7gsjvPX/f2p0UUdhG8KeLs8TULXI6+K1JLB1A8bUelG/ggKLPMIKaMWfEqRKJJc5MwxByxHeTX
-	OEL/+Um9ASC7xC
-X-Google-Smtp-Source: AGHT+IE2iAux5lwREGEmCC+G68D4CQAN3U+ZvpMzEl20WMokgZ9fww/INE36NUB4Z/Sp0X2VoXswug==
-X-Received: by 2002:a05:6a00:451b:b0:7ef:d070:df1e with SMTP id d2e1a72fcca58-7f667447776mr22033746b3a.3.1766071567282;
-        Thu, 18 Dec 2025 07:26:07 -0800 (PST)
-Received: from [127.0.0.1] ([52.225.29.104])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7fe1456c6cfsm2957500b3a.57.2025.12.18.07.26.06
+        bh=1j7qoULymeFi8QCSnvpahsE/ZXn3nyC0RIz7iD+oZhM=;
+        b=mxQOIzs0DV519HNtdnAInhNo307PE2vbz/vBoJCbM/2VbBw7G0D2X052sRpYAiokWN
+         /jv6BRfIqOjO+vibaNxD9NmiVlzTMsh8FMsfPa4o8YTy0lDLOFmfVdzei21xgOnXmamz
+         3fFYY5hRHKgqgNgKhMD6niM1LRLc936qsZN8aR6VzRoVAvlRWr0QxRnJF7e/tY+18p5v
+         uEoQVY0FDtefDDJQ+UUrAAdpKpp5SVvXVQSQXp+XuT/QqyeU+nfR+TOgcw3bTrU+evBc
+         lBAfMYE8yBTfJJ/IZKSP1i6bE4sFYOvkhcom9AAO6kcj4VSfe1ZDikdBfOatBlC8VDRp
+         x1EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766072953; x=1766677753;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=1j7qoULymeFi8QCSnvpahsE/ZXn3nyC0RIz7iD+oZhM=;
+        b=Tlytcm9XaXsw8s4Q0Z4imYFgfF0oBxrgiQzTW5WDl178F3t/TeEkmZVhxuKLKaaDlR
+         hCJObw1z/PbRhW7lNxQpKLHQZdoavNKM3E+LF9RNJxrTnaxSjmO1Fo8LnFKAWRIcBop6
+         vl8FUpaTT2qws/ZGQtpnEFBS/TBwHxw0JPdbL82dvN0K7oLKCh0sMEpfOwJ38NTf3ZZB
+         6lU9PSHyNSb+3/R3VObOPmFpYffegwq1WnyiNbmiZmAivJaq0zEY/sqLEfzfiSqh3kT7
+         mIbb72XOF/1h9qJWlsuAiJ0fGjduy/1xzf78HJk3pzDHwmAW8B2ZrZc2r+skw8ZXIrIk
+         fZYw==
+X-Gm-Message-State: AOJu0YzuclpvE9FNHYoAWFnMkhV1Iqt5WVcNjJ8Rh/e0nLJsTbcckSXR
+	ABYA3TK452/FiPi74VIxkwyb7OvgG0oJkWlCM6Q6j4svJUyMW/JER2MtJtLqSQ==
+X-Gm-Gg: AY/fxX6GfMPmNBePSJ+DApLs5m9Q3JyVXTzTdEdpDO9rZky7InIA8h2V7P9mrarL8PU
+	QlKGdNLp8vV7ZuIkGQ1+7pXaqHT4vBDob/OHINKNTugutpYCc9+L1xfAqG8WsCiCSlXaYLbB7I5
+	AvWa0Yj0meDjARGVOtn0Pkb0OMHioB95eh0feV+tZzF2WSdP17l66+jExZ491WvxbVdq1ZGjGoR
+	t/vddP3OYX6VrYerUmSyyn7c65kFJu+ZjDd5Gn1g9r17KvJLvNnlUMPM5fh+cVk/hFgoR7EVgG+
+	RHl7SO+yHy6njTlkiMfxLuVuQlPISfoMGV2jlPI8I68BrBlG0uBtodRaUm6tuT2lfJw0xcKkS9o
+	sSNc/RWp/D3PE2JlzB5CX6eVPU8nZcaZ9pDm/VS+/E2AbHQ/3loOYW8fnNAyNvy6J9+sLZLDWV6
+	BgClam20TLAHtfqQ==
+X-Google-Smtp-Source: AGHT+IGNXf6mh/VsAeFOQk619ZBw/wWlkZ+U0MI/ojjtqZLRUzyHVT54Cs27utYfB+4xC0fFFKdI5A==
+X-Received: by 2002:a05:6820:229c:b0:659:9a49:8e53 with SMTP id 006d021491bc7-65b451c5358mr9359633eaf.35.1766072953279;
+        Thu, 18 Dec 2025 07:49:13 -0800 (PST)
+Received: from [127.0.0.1] ([52.173.163.130])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-65cff2643a3sm1254662eaf.17.2025.12.18.07.49.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Dec 2025 07:26:06 -0800 (PST)
-Message-Id: <pull.2132.git.git.1766071566022.gitgitgadget@gmail.com>
+        Thu, 18 Dec 2025 07:49:12 -0800 (PST)
+Message-Id: <pull.2132.v2.git.git.1766072952115.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2132.git.git.1766071566022.gitgitgadget@gmail.com>
+References: <pull.2132.git.git.1766071566022.gitgitgadget@gmail.com>
 From: "AZero13 via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 18 Dec 2025 15:26:06 +0000
-Subject: [PATCH] repository: cache->squash_msg is freed twice
+Date: Thu, 18 Dec 2025 15:49:12 +0000
+Subject: [PATCH v2] repository: remove duplicate free of cache->squash_msg
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,7 +84,7 @@ However, this is still a mistake that must be rectified.
 
 Signed-off-by: Greg Funni <gfunni234@gmail.com>
 ---
-    repository: cache->squash_msg is freed twice
+    repository: remove duplicate free of cache->squash_msg
     
     Thankfully, it is set to NULL, so no security consequences.
     
@@ -88,9 +92,23 @@ Signed-off-by: Greg Funni <gfunni234@gmail.com>
     
     Signed-off-by: Greg Funni gfunni234@gmail.com
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2132%2FAZero13%2Ftwice-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2132/AZero13/twice-v1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2132%2FAZero13%2Ftwice-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2132/AZero13/twice-v2
 Pull-Request: https://github.com/git/git/pull/2132
+
+Range-diff vs v1:
+
+ 1:  35d0606190 ! 1:  ac2abd592d repository: cache->squash_msg is freed twice
+     @@ Metadata
+      Author: Greg Funni <gfunni234@gmail.com>
+      
+       ## Commit message ##
+     -    repository: cache->squash_msg is freed twice
+     +    repository: remove duplicate free of cache->squash_msg
+      
+          Thankfully, it is set to NULL, so no security consequences.
+          However, this is still a mistake that must be rectified.
+
 
  repository.c | 1 -
  1 file changed, 1 deletion(-)
