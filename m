@@ -1,133 +1,225 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D95D1F30C3
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 02:56:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A228B2264C0
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 02:57:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766026576; cv=none; b=NEgbc2S1zKDpuig36T+dBPwnjWgBhZKDaLzLWFVmAFYcKpv8yD7KjUv0PXADC1uJ2i/910/DNeCejyXsiHgh/YX7kfckUS28ZuBCo4d/zAlQVNWp1kQxAaM7rXfEGFBl5D21wiVPx3Jb3R70zAEWd+MSpP/ewrwgI1L5HmhHyaU=
+	t=1766026656; cv=none; b=FDErivMyj7l74Cl7hROs8nbNIuwGHaKEm7hOxjzobhXkFoBP4uHBIFAULGGo1MLZ5bl21a+lTdEqzlg6FDKRleAFkdrX30jd4Qu+kaQcMMfrx0T+W1PkT+z+hgZ3+n+1zDb7QtGOEFhgQJ3+qSbr5feEG4QeM9uK+g3IuK2gBlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766026576; c=relaxed/simple;
-	bh=JHxbIEB9LamVuVyneKz9rqUZNfIrl0d6uMUpDJ7nVM0=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=qFiEkcPPLkE7ZiS4K4CTTuQ5AEGaTTOHe+cOiFwMBwOxbPbNerZgx7ZiP6W/YRbgluik/NoRsPio8sPJp8zYXSfaHzQ+3t6LulxPtffXGsHhY3ATHV71vmgM7KyoaoktYJDBnT2w/xmtYiu+OJKZrfytvQCuOuvABnp0MGcc5fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ti3c4gCU; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1766026656; c=relaxed/simple;
+	bh=jWk1AADiKgrRVDPEXeSrrwe1y5PwszT71E49NjFuKdc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YMJssAqQyptjA5qO92aaqMvqBwJTNPb6wZ5tFH/xvqENn9zUL9JqwGu1Jk+/yshjL0RxF4cE2EvafmkE8Fur9DKq13O0Dw6LlulMpixM9a0keMBuCJHWvDRZ42jnYDDLj4b8+aPDPuI/whgLSLxWb5GWmcnEqNCF/yRpAYVMKqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VFDh/UI9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pv1VliLb; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ti3c4gCU"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-787eb2d8663so2099877b3.0
-        for <git@vger.kernel.org>; Wed, 17 Dec 2025 18:56:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766026573; x=1766631373; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cWI1fRdzuTdP22WfHUcwZP6BjvdNRW9yuGJxEe+n9u8=;
-        b=Ti3c4gCUP24AVAeJ1hNg/Jtu1bCeXgt1Mfu/1vgQwGV1MHh9prwgHBDP1JmjgSm9At
-         tyrTN6Iev3ycP3jqbL9/mZlhLz28bRs7mkgThkotFJ6jd4jqDMNlu6Zf2+WeogYywIlo
-         cfbacIS34recPKi47RkZ5V8OCePCqDNTH2GRJbY7tWFUiF2T30T6Jp/IhfMCwSLFAthu
-         hVLKaup1RWPPy3wULnQ4R2LlyW75M9mkDqlov77t2j9HDorsgYreRM3CE5zYX5ahVMAU
-         DDBL9GNJNYcRHuZRSMViSmsHdQQXappRRfdDCCo6G6F2ucm61NUfiv+2zbd4V59m2Tzw
-         d1mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766026573; x=1766631373;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=cWI1fRdzuTdP22WfHUcwZP6BjvdNRW9yuGJxEe+n9u8=;
-        b=EpdhK9aikHNstgmFwIG5kH1exrjLfSEuG/3X2z2ZlubVE4CYVSi199OWE9lYCnufFf
-         09CINyH0Q0euIH8G9OZO0CX9MFQ/WMCi6P7NNgke/OmyAgFfZWxvqdbgdr4tfDgas7Ny
-         tzPm/8lcZTxNMaAyJ7d79EveQn8O48miBgrebNeV3+bgKwItB+zpDMWjXrNlQWriTeWK
-         pISWIfbcdUHZj4kFoaPoUNVbFUyNrsX7ORuXVU4izrh8A7a0iK7S9TgWsv5D4ZMeayB1
-         PjNcnFmyGqsCBJ5o/mgb4bMCzhFi8s6l+Im5qPW6tM1VzThUP31lUOV8KJxd/8gEFiJ7
-         ZJgg==
-X-Forwarded-Encrypted: i=1; AJvYcCWYAjm/xrCiohS81FRkrZGnWeTtujwyYfuBNIssbNu+10VuYg5H5srLBN4Q5n6a8O7BVXA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxOsW5QaeWa5O6c9Xhc86tyAWyTM13vEErFXkSyPB7yDV2zPpeq
-	5rGbgxaPWvsIKBcJFtx1QfWaoA3vqIeX1+xvEuUyrEnHQBhKG576nxZf
-X-Gm-Gg: AY/fxX4p2aSfrkQ7G4gQcwfYtp2bd6orjMYbNIINsJi+XoyAc21HoaW/GbdhCDxVPEV
-	42D9Hh5dmPrZ0ZH2K7paiuMQ5g/PZYOgQNtSmzliiadMys8sDRQ9hKLCs5jH1XiMyuf1NGQi+BT
-	/+ThVwmtJG/Cf2PNd9lu+JrgeK/amdquIPU4brdAvSWSsCSUAFXManbn+bEWsi0+ii8pXjVZc/I
-	ZYWmVQLgOm0bY1RDn7ochXdU3dz1rhgCsuEHkCzu1SGrEvy4z9b4UKlA3TJz3TkLhJzg8tclgvX
-	zxPXRC+Ym8Cwo96ieA0QI86E2GHtVot7jV0QOohEj3XSjle/sqBsT50b2ra4bXI3F1oAPDJu8+4
-	VgYOzr2+JKUhss1lFIcfhkStEYDCy0wDMtquqmGB0JoEEYEqpU/4zoR0eZkd/zhW2wlbQg0bZWc
-	YEnoHzC9HukHtYVwUdsBgMwyW28MunpdYp1rhZyK0=
-X-Google-Smtp-Source: AGHT+IEbQF+7mcyFm7x9ZZAmOaaEI2aNtXV7SExmKjyRllkLo3Vh3T1qZHPsRc/xejFrfqArQ+NDEA==
-X-Received: by 2002:a05:690c:4b06:b0:787:c948:2040 with SMTP id 00721157ae682-78fa5abf3f2mr15050757b3.16.1766026573532;
-        Wed, 17 Dec 2025 18:56:13 -0800 (PST)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:5982:24ab:62e1:eea6])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-78fa7266a1fsm3639837b3.32.2025.12.17.18.56.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Dec 2025 18:56:13 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VFDh/UI9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pv1VliLb"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id BFB1AEC016D;
+	Wed, 17 Dec 2025 21:57:32 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Wed, 17 Dec 2025 21:57:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1766026652; x=1766113052; bh=i6nW+KjEck
+	3wZQdgaUqrMzlbaFbG/ci0qPoSE59HrWU=; b=VFDh/UI9Js+1slbR5conOJE9uS
+	aSL565BI7/0Cn2aDGfQPF9ADUT7sDawrwDY8E7raDbJ6IAih3B49v220UuXNONq4
+	HDhfvskbiTLZ6mbNTs9aTj8kjlX36eUfmpMl78Q+xQlXbRqvdr6jqmd0Xcn/icWf
+	LSFjo8hZhmyo0DmiXy4URJc3CqfhoouIIcS8W2KGS9eLWEPYpsyBAfCbkpc9RYF9
+	TXprbfujk19+Oagrf8FIbCdpcU8iixKKBdaPEg3daQImb5ke4NqPdXkOUK30enzs
+	AmWIlurCuMZyLL7UeVcm7Et9irRr6rXB3j4EGRDlAVOn1FaYZzjx4mS6018w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1766026652; x=1766113052; bh=i6nW+KjEck3wZQdgaUqrMzlbaFbG/ci0qPo
+	SE59HrWU=; b=pv1VliLbo9xrdON0hNCYnM/2LQPZFwida2WOdGcfXGnYthQlX1t
+	50Wka4cxlXgEgxT3fu9uA1cyjxNMld1L1HLSg2ZNnTVSCZGJ6sdUPpCmqjv56Ec3
+	rzGr/bKuJavHgy9WU2u3NJw5dFR3Ec7oqhmfqySNzUh23OQLcCze1OErPnjj+yqr
+	SizUb+yuhhqHIqwSEP/A5uNmI8NV6NJr5HlfJozLn8MRlqepWeHN2uBHu6bLtHgr
+	HhwJCFsjVqeKjv0YYBXXgoeukCU48F4P7mzDM0LKc23uMpEcpR9wIpPU14EcdF9q
+	phNB2bfAItkzLwZijbfrXSKRzdVuk6NLbJg==
+X-ME-Sender: <xms:nG1DaVL6tZyz42XFG7h639xhoauxV58_ALnxN94GI0eUnoBz3pSJrw>
+    <xme:nG1DaYIBKHuMM2BOULv96kI0007cnpdcU1grx5K9wkDrU2nAWVFTXBQwiDUGwgFCA
+    CqklH_gXGYYEQX00TzMFBLP9loXLJolBnJzuHavQq_M93gYfhyP4w>
+X-ME-Received: <xmr:nG1DaSt-Je-FFc0wgB_xWkIjxkEy6kpn-Gz0jsPMUme98FITO54hfr19tMd1dhjNStakV0AvMUVREFVFB_aJaIVntCaOnoxpBw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggedvlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeduledvteegfffhledvgeekgfduueehlefguddutddutedvieeljeethfejleef
+    tdenucffohhmrghinhepohgsjhgvtghtqdhfihhlvgdrtgifpdhouggsrdgtfidpphgrtg
+    hkfhhilhgvrdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpd
+    hmohguvgepshhmthhpohhuthdprhgtphhtthhopegrphhlrghtthhnvghrsehnvhhiughi
+    rgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:nG1DaVRoFfV7Cyj67WNNo6i9va_o5Z4p9hxQV2NBf5V6fClE-MyIPA>
+    <xmx:nG1DaYMZikiW_cHVUOaR2EvvFpjETjdc-0IViBFcpnccxiJ0N2OCyA>
+    <xmx:nG1DaabcEmOe_o9uTza-PCGtKMdVjKVtYIgmQQjGP0SCPNEyTnDPDA>
+    <xmx:nG1DaSwqOAZOn-hulzXd70uxX_I6AW8OIPYs9auQxNo378HLQ7zyrA>
+    <xmx:nG1DadyBrfKYqb45-Lhm6faUP714BQMZVbCXnLyI2T94OZmzDeqRiprd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 17 Dec 2025 21:57:32 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aaron Plattner <aplattner@nvidia.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: What's cooking in git.git (Dec 2025, #03)
+In-Reply-To: <f4ba7e89-4717-4b36-921f-56537131fd69@nvidia.com> (Aaron
+	Plattner's message of "Wed, 17 Dec 2025 12:26:58 -0800")
+References: <xmqq4ipwc7y2.fsf@gitster.g>
+	<f4ba7e89-4717-4b36-921f-56537131fd69@nvidia.com>
+Date: Thu, 18 Dec 2025 11:57:30 +0900
+Message-ID: <xmqqtsxoxzs5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: meson -Drust=enabled fails on macOS without GNU sed
-Date: Wed, 17 Dec 2025 21:56:02 -0500
-Message-Id: <69EAE286-A7E8-43CE-A503-FAC707541244@gmail.com>
-References: <aUApKxjYHMPHNIac@pks.im>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
- "D. Ben Knoble" <ben.knoble+github@gmail.com>, Git <git@vger.kernel.org>,
- Ezekiel Newren <ezekielnewren@gmail.com>,
- Johannes Schindelin <johannes.schindelin@gmx.de>
-In-Reply-To: <aUApKxjYHMPHNIac@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain
+
+Aaron Plattner <aplattner@nvidia.com> writes:
+
+> I'm pretty sure the problem is when do_oid_object_info_extended() 
+> substitutes the blank oi here:
+>
+> 	if (!oi)
+> 		oi = &blank_oi;
+>
+> and then packfile_store_read_object_info() compares it to its own local 
+> blank oi:
+>
+> 	static struct object_info blank_oi = OBJECT_INFO_INIT;
+
+Ahh, that's an unusual mistake.
+
+The following was done on top of 'seen', but would it help?  We
+shouldn't have to use the stand-in "blank" thing to begin with.
+
+Besides, explicitly handling the NULL case would reduce the
+potential chance of errors that somebody accidentally writes into
+blank_oi, making its contents dirty.
 
 
-> Le 15 d=C3=A9c. 2025 =C3=A0 10:28, Patrick Steinhardt <ps@pks.im> a =C3=A9=
-crit :
->=20
-> =EF=BB=BFOn Fri, Dec 12, 2025 at 03:32:30PM -0500, Eric Sunshine wrote:
->>> On Fri, Dec 12, 2025 at 3:01=E2=80=AFPM D. Ben Knoble
->>> <ben.knoble+github@gmail.com> wrote:
->>> I think it's due to e509b5b8be (rust: support for Windows, 2025-10-15)
->>> [relevant folks CC'd], where we assume sed can take "-s" (which AFAICT
->>> is a GNU extension). But perhaps "-n" was intended with a "p" flag on
->>> the substitution?
->>>=20
->>> I've been building with Rust enabled on Gentoo now for a minute and
->>> haven't hit any issues, but that's perhaps because the command is
->>> running with "-s" and not working as intended (yet still producing the
->>> expected results).
->>>=20
->>> The relevant snippet is this (reformatted slightly by GMail, apologies):=
 
->>>=20
->>> case "$(cargo -vV | sed -s 's/^host: \(.*\)$/\1/')" in
->>>  *-windows-*) LIBNAME=3Dgitcore.lib;;
->>>  *) LIBNAME=3Dlibgitcore.a;;
->>> esac
->>>=20
->>> but "cargo -vV" produces something like
->>>=20
->>> cargo 1.89.0 (c24e10642 2025-06-23)
->>> [...]
->>> host: x86_64-apple-darwin
->>>=20
->>> (on my older system, on which I haven't tried the build; the failure
->>> is on my newer system with close-enough-to-the-same output). I'm sure
->>> you can see why I don't understand why we need GNU's "-s" ("consider
->>> files as separate rather than as a single, continuous long stream")
->>> here?
->>=20
->> Yup, that's a strange one. Indeed:
->>=20
->>    sed -n 's/^host: \(.*\)$/\1/p'
->>=20
->> would be the correct way to do it, while also being compatible with
->> BSD-lineage `sed` (such as `sed` on macOS).
->=20
-> Ah, indeed. Would one of you want to turn this into a patch?
->=20
-> Thanks for the report!
->=20
-> Patrick
 
-Work is ugly this week. I hope to send a patch this weekend.=20=
+ object-file.c |  8 ++++----
+ odb.c         | 29 +++++++++++++----------------
+ packfile.c    |  3 +--
+ 3 files changed, 18 insertions(+), 22 deletions(-)
+
+diff --git c/object-file.c w/object-file.c
+index af1c3f972d..6280e42f34 100644
+--- c/object-file.c
++++ w/object-file.c
+@@ -426,7 +426,7 @@ int odb_source_loose_read_object_info(struct odb_source *source,
+ 	unsigned long size_scratch;
+ 	enum object_type type_scratch;
+ 
+-	if (oi->delta_base_oid)
++	if (oi && oi->delta_base_oid)
+ 		oidclr(oi->delta_base_oid, source->odb->repo->hash_algo);
+ 
+ 	/*
+@@ -437,13 +437,13 @@ int odb_source_loose_read_object_info(struct odb_source *source,
+ 	 * return value implicitly indicates whether the
+ 	 * object even exists.
+ 	 */
+-	if (!oi->typep && !oi->sizep && !oi->contentp) {
++	if (!oi || (!oi->typep && !oi->sizep && !oi->contentp)) {
+ 		struct stat st;
+-		if (!oi->disk_sizep && (flags & OBJECT_INFO_QUICK))
++		if ((!oi || !oi->disk_sizep) && (flags & OBJECT_INFO_QUICK))
+ 			return quick_has_loose(source->loose, oid) ? 0 : -1;
+ 		if (stat_loose_object(source->loose, oid, &st, &path) < 0)
+ 			return -1;
+-		if (oi->disk_sizep)
++		if (oi && oi->disk_sizep)
+ 			*oi->disk_sizep = st.st_size;
+ 		return 0;
+ 	}
+diff --git c/odb.c w/odb.c
+index 01a9d2e70f..8278ef39a0 100644
+--- c/odb.c
++++ w/odb.c
+@@ -680,34 +680,31 @@ static int do_oid_object_info_extended(struct object_database *odb,
+ 				       const struct object_id *oid,
+ 				       struct object_info *oi, unsigned flags)
+ {
+-	static struct object_info blank_oi = OBJECT_INFO_INIT;
+ 	const struct cached_object *co;
+ 	const struct object_id *real = oid;
+ 	int already_retried = 0;
+ 
+-
+ 	if (flags & OBJECT_INFO_LOOKUP_REPLACE)
+ 		real = lookup_replace_object(odb->repo, oid);
+ 
+ 	if (is_null_oid(real))
+ 		return -1;
+ 
+-	if (!oi)
+-		oi = &blank_oi;
+-
+ 	co = find_cached_object(odb, real);
+ 	if (co) {
+-		if (oi->typep)
+-			*(oi->typep) = co->type;
+-		if (oi->sizep)
+-			*(oi->sizep) = co->size;
+-		if (oi->disk_sizep)
+-			*(oi->disk_sizep) = 0;
+-		if (oi->delta_base_oid)
+-			oidclr(oi->delta_base_oid, odb->repo->hash_algo);
+-		if (oi->contentp)
+-			*oi->contentp = xmemdupz(co->buf, co->size);
+-		oi->whence = OI_CACHED;
++		if (oi) {
++			if (oi->typep)
++				*(oi->typep) = co->type;
++			if (oi->sizep)
++				*(oi->sizep) = co->size;
++			if (oi->disk_sizep)
++				*(oi->disk_sizep) = 0;
++			if (oi->delta_base_oid)
++				oidclr(oi->delta_base_oid, odb->repo->hash_algo);
++			if (oi->contentp)
++				*oi->contentp = xmemdupz(co->buf, co->size);
++			oi->whence = OI_CACHED;
++		}
+ 		return 0;
+ 	}
+ 
+diff --git c/packfile.c w/packfile.c
+index ce6716fbea..3ffd6c7240 100644
+--- c/packfile.c
++++ w/packfile.c
+@@ -2132,7 +2132,6 @@ int packfile_store_read_object_info(struct packfile_store *store,
+ 				    struct object_info *oi,
+ 				    unsigned flags UNUSED)
+ {
+-	static struct object_info blank_oi = OBJECT_INFO_INIT;
+ 	struct pack_entry e;
+ 	int rtype;
+ 
+@@ -2143,7 +2142,7 @@ int packfile_store_read_object_info(struct packfile_store *store,
+ 	 * We know that the caller doesn't actually need the
+ 	 * information below, so return early.
+ 	 */
+-	if (oi == &blank_oi)
++	if (!oi)
+ 		return 0;
+ 
+ 	rtype = packed_object_info(store->source->odb->repo, e.p, e.offset, oi);
+
+
