@@ -1,54 +1,54 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31357D07D
-	for <git@vger.kernel.org>; Wed, 17 Dec 2025 23:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F58EAC7
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 00:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766015361; cv=none; b=CikB6ax4sxzTLLtltFWuZNdJUR/RNqmoLKkQPjVj0ZUrfeiVRPynKS5D5PJr5Gc1LORcriK7R9AKnrvCir1j1pIppJKiSX1m4eudNLTdJpJAaGwqtbKhaEZXcqfKirY6v1kzD+xadt85Rf7m/TgQOqaKsSSbESOIXPrkMwHjl2k=
+	t=1766016007; cv=none; b=CeQCuugBzXhpbgVShQ3jeKU3q6dXfKA8UEYLyanXw7421fNCTRSiBY6tM3UxfFQe5gq2W0D/3FHjVNxUueHwWwkw1Kj/qiHCN8wQGEF1WSYpzUM9JJS0QnVQ00k/5kAJboe2XAVOItlIoBRVAQ9NQDXVIg4bSGiYv0qCnBbm3PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766015361; c=relaxed/simple;
-	bh=WsMRsENp0U8zMU8nth+0tncP2HXqwMAQzqr+emWTLgE=;
+	s=arc-20240116; t=1766016007; c=relaxed/simple;
+	bh=dtyvo9gd8K8670rAOIAuG5KxTvSBbX0cw+zQBwiWU04=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=d+PIwY/MCYN6T2fTYMWU14HQf88lBA7WQ0XLidjIS8A5x/FRh3rwnAneYf0K+FDoG8GmMiZBuMvt7X38UtnLF4Rrp2WwUNDflMf0279xRt46hoZFTlqNytk7WtiOLZrU7zOUR3WfPqt9DCzf1V/nrAwyqVKyLup+9aGUrUsSkyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TExQcb53; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ELVYar5a; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=Aw8jT3+wkmOOEG40Fxhc2IjzY98aq28GDRVi0k4BZfRaIFww3lI5bkWcyPq44klnYzTpj1AD+gdg/adE+6Bu+HJAheEPlIVVnEGKP2pCWvYhbl9fDMUbO2Atp03OYhgoay80u5F5rDO9ZpNZf4M+l+bsudTtjxxvJrg0NGz2Tiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=R0lRMd5C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LPALtJi6; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TExQcb53";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ELVYar5a"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 257FB1400138;
-	Wed, 17 Dec 2025 18:49:19 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Wed, 17 Dec 2025 18:49:19 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="R0lRMd5C";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LPALtJi6"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7B5A714001BB;
+	Wed, 17 Dec 2025 19:00:04 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 17 Dec 2025 19:00:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1766015359; x=1766101759; bh=jBTWF8TpL5
-	Pf4erNEsb2zM45Q/tI1xLY+zJvHRkw618=; b=TExQcb53A2O07+8zHQlqCD2x+u
-	B519aDrDzdo3sngmKYYVF+vt9DkVaIVlr4iaZrovmVnsDVlbIApHmVIy1tJ8Ey9U
-	fpHCPgY25tzSwAZ9EapPk4GbIdTSNqme68bwj3keCT5NFJevZfJHn+4GwRidRNQk
-	iXy/L5Payf3gqOuGydL5YECy/OEIgjBrXSYvDx03icXVL7RX5MK27Asn5NL3ssg0
-	MlShGrM+cIqAk/7TM76RwxTTZp8ajCm1fXNSaXKDtUG9SSuuPP1uoq1lK+LAlfT0
-	9PPQC59XFNjFoa9uFNPs8OnBGX0Tf+/cFkKme8Rf7cAAMAl3RdNkmTiYwFzQ==
+	:subject:to:to; s=fm3; t=1766016004; x=1766102404; bh=F/QHOjX+3Y
+	LegIXt8JOCZme5ioni2GrMxTilTjn9FsQ=; b=R0lRMd5CZ1tj00q8d70vvmrTPi
+	+p0iVRqMn/wd29qOB2opRfou7AsiCcswXDT7A+aPHUwWR++Swi+EY/l/r80CJwkc
+	dKwFiP4gEGUivarnTlmHMriBRrSDt5nPi9eHEymTm7v0VY2tafbI+3G0adgcAxri
+	uYEkOlz/kATCTNEcc9IG4PK+x4fvj8hASrieI/vjy1aL9oDwbrZHJGXmuvETxEHI
+	jqOzP7mHWHL+sg4mmjX300t666iwNGdvw51rzhlBYnUZplD7g/KDQvmd1V4zlG6i
+	+3VLYlvEPljwWl4mRqAmNemljlEzIkXNeUnq/v0BLqb2A2e0zGKY6OZ0nQbg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766015359; x=1766101759; bh=jBTWF8TpL5Pf4erNEsb2zM45Q/tI1xLY+zJ
-	vHRkw618=; b=ELVYar5aM/WrWGX20JNDyOLgbX6MsDwHrMF1L9Mn+k4gahF2XUO
-	h4nPBDVn6JoYRlDHZ4WZh31E/MHP9fc2Ht2i9KVQl+mWuljPuMlJ2amMtv/QoaTG
-	NVjg9w3o7rZ7cVHRzTOSwen8e5F0E8vGLV/II1pnBVdLd8AgBhffvrKBDJEjszz4
-	3ds0BgztvCIl+a6lFt3K0a3Ob33saANP2r30Y5ekmzue9FW9h+OsxmwxXEg21pnf
-	vVk+eYTIEi4MkeiLLyY+k9gapqvY7f0ELCH4T7afHYOK16HsX9iWyCIuAOMTYpJ5
-	/vjik29d/M6CpQmOPT2Kb/85qbcGGJj1bgg==
-X-ME-Sender: <xms:f0FDaeNYvnV9A1uCXp-Ma2v0WItZgbgFd9TaSfku6-agBH8Z_pXoHQ>
-    <xme:f0FDaT-LWlTK47vg596E8K3XLBYTDKs_nlgKIdcm7D-QuQucTxw6zuSLdXoKpPyGs
-    fC0w6P2yqoAWHpIYWaGSpSZjZifU5j9lIbUURvgr-Ju7Otz1SCx9w>
-X-ME-Received: <xmr:f0FDaaTxpbGDdaSqcklEMBtebfCzmrYWLn-WhUZNbe7SWWmjqEgF7urY-Jo3sr51cIVBB8lGqESImsUvpOQVcTRHcRmzuX5yCQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegfeelvdcutefuodetggdotefrod
+	1766016004; x=1766102404; bh=F/QHOjX+3YLegIXt8JOCZme5ioni2GrMxTi
+	lTjn9FsQ=; b=LPALtJi6/pXBmLii8QMHivMOi/w6ZSrwEArrV+SvmTaZLNHPgSY
+	1N4Ry2GhWEfK5GH1YCj5MF+aqHQr/Lj6xVsCDB5EvyDTnLeskvm5QyorBNV5jgjc
+	94DSLPKQOJnfEqKo69JCFDpeCJE62rSmol+6onQNwOdlcyqCWBBrlNDfoauajNrh
+	2KGdQvnBX+oAXejO4RLLTDqiDjztmF7mHCurUeDSahLOgzRMKhA5Y6+3ahOhfNl/
+	dLS80P6PEgfQNkJf+U9Z0dLyPObb+kT2jr6Q2jhG2GP9u6B+uF70umy3R9DgNXuM
+	SxlFIvqkw/53a+4FgR1xWIT7MBmYQb28XUQ==
+X-ME-Sender: <xms:BERDadzGBPeC02hV9Tr3gT6MKAQI4oA_qtAU6aAuE2Vl1zoxw9B37w>
+    <xme:BERDaUQUsfUgvx1eB6jAE1B2SokhYNG8S5TvqRrYuLi_mXGxqPCVJqn39ngD1HtGP
+    9g5tl6A0xPcKgZMXc7etdTg4l-F98TcsvVW9Cwn_7ty02Ngnd8u1g>
+X-ME-Received: <xmr:BERDacXGNMmhrbnx3GgkpVxhz4I_mJsjXYy7Z_qLUggsPSmHDbtCIYe558m-jG1DxkIybgT44D-Yj_NUeV4toQTwpW0xVYCiRA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegfeelgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
@@ -56,30 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegfeelvdcutefuodetgg
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
     htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:f0FDadlIEY_eeVaGNLXZ141AXD-An76SfhhnEFrDWEXzIsP4n9IHsg>
-    <xmx:f0FDaSQwHHWBGclsvrm83C1eCRc663UobL_hd2zydfzXn25O1Zgy5A>
-    <xmx:f0FDaTMlBxgmQfJSa7pXuVh3NBvy_L_LphEXtTGH9zN1lheLJQQt6A>
-    <xmx:f0FDaTW8ZbN_ZZWlF8bcux3gGpGtuGJDkV7qFX60FKtztzoF1sKMjg>
-    <xmx:f0FDadwMZpwC4Hn-DrnfG65uuncOOZTsgTuAzsiPwxoAKNAvKIMMm--v>
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:BERDaeatyQJtWNw8TEh-oFFbth9u78nZNhvWkPn8O_ymdJ41Fp2S2g>
+    <xmx:BERDaa3kZNPN6zSaERzP3xdpubOl1QlPYIcxei3j939VYCY8T2b6lA>
+    <xmx:BERDaYgZe8vx9w3LHj-O-4hkY7te3jWXvpva2zb53K50eK2i4zyJlg>
+    <xmx:BERDaWYipT3ElK2eZl9FfKb9-BE-onTTXS387ZUOXbh136SZpzj8QA>
+    <xmx:BERDaRuZSZ4adRzYP7mOIi3aP1vJti9Pt6TKjsvYibV4xhGL89QUpGBi>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Dec 2025 18:49:18 -0500 (EST)
+ 17 Dec 2025 19:00:03 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2] replay: drop commits that become empty
-In-Reply-To: <d54c50ef-9d6c-498c-aca3-ed4461733190@gmail.com> (Phillip Wood's
-	message of "Wed, 17 Dec 2025 14:45:54 +0000")
-References: <8a2a1215306452147cc7b803530ab2429bf57f15.1764260150.git.phillip.wood@dunelm.org.uk>
-	<9a81644a0ec670261a85c155fa32e5a1f4576ef4.1765793254.git.phillip.wood@dunelm.org.uk>
-	<xmqqpl8f719x.fsf@gitster.g>
-	<d54c50ef-9d6c-498c-aca3-ed4461733190@gmail.com>
-Date: Thu, 18 Dec 2025 08:49:17 +0900
-Message-ID: <xmqqtsxozn2a.fsf@gitster.g>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 00/18] Support symbolic links on Windows
+In-Reply-To: <pull.2018.git.1765980535.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Wed, 17 Dec 2025 14:08:37
+	+0000")
+References: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
+Date: Thu, 18 Dec 2025 09:00:01 +0900
+Message-ID: <xmqqpl8czmke.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,26 +87,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
->> 	git commit --allow-empty --only -m empty
->> 
->> because without --only, the changes to blah will be taken.
->
-> I've got into the habit of always adding "--only" when I want to create 
-> an empty commit in case there are staged changes. I don't really like 
-> "--allow-empty" as I've never wanted to create commit that might or 
-> might not be empty - either I want to create an empty commit in which 
-> case I don't want to commit any staged changes, or I want the commit to 
-> fail if there are no staged changes). I can remove it if you want.
+> This finally upstreams Git for Windows' support for Windows' branch of
+> symbolic links, which has been maturing since 2015. It is based off of
+> js/prep-symlink-windows.
 
-Being explicit when you are unsure is good, but in this script I
-think we should be very sure that the index matches HEAD, so I would
-consider that the only effect of the use of the "--only" here is to
-puzzle readers.
+The three topics taken together touch 19 paths in total, about a
+half of which are t/ test files.
 
-A comment "# force an empty commit by including no paths" before the
-command would work to help unpuzzle readers, though ;-)
+I've read the changes to generic parts (i.e., outside compat/) and
+saw nothing questionable.  Very nicely done.
 
 Thanks.
 
+ apply.c                             |   2 +-
+ compat/mingw-posix.h                |   6 +-
+ compat/mingw.c                      | 667 +++++++++++++++++++++++++++---------
+ compat/win32.h                      |   6 +-
+ compat/win32/dirent.c               |   5 +-
+ environment.c                       |   4 +-
+ environment.h                       |   2 +
+ lockfile.c                          |   4 +-
+ read-cache.c                        |  11 +
+ setup.c                             |   2 +-
+ strbuf.c                            |  10 +-
+ t/t0001-init.sh                     |   6 +-
+ t/t0301-credential-cache.sh         |   3 +-
+ t/t0600-reffiles-backend.sh         |   2 +-
+ t/t1006-cat-file.sh                 |  24 +-
+ t/t1305-config-include.sh           |   4 +-
+ t/t6423-merge-rename-directories.sh |   9 +-
+ t/t7800-difftool.sh                 |   8 +-
+ t/t9700/test.pl                     |   9 +-
+ 19 files changed, 585 insertions(+), 199 deletions(-)
