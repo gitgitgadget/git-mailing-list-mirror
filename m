@@ -1,145 +1,150 @@
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8AA1F09A8
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 03:43:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4924C7260D
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 03:45:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766029430; cv=none; b=gepWbRa/MVLP1XruvIRb5k0P+dCnhOUeE73zfYgSAjSJnU4R9ZCS05lE5asKjc0hjAzvU56/D74h//LUcX3pdylg58fnPo1McIYV2TspA7b+GplsUxc2GM9zO+6fbe+kLhrmIVjnSBzDxv4yL86ryOA8gRnlUsr4D6O9Q+BLxD4=
+	t=1766029534; cv=none; b=BtnXxklPdCjUZbgrtGEYnORJ8r9dnJMiKfZFjGIoR5k55WbDGR63h+R08weloRxK0TxxCAWqx0jlQa5wx/PwrobblQhSTWDFuTMgS9573EmVydvxOeGFBvwDsLBlKP6siVjCd4LGn7xD6bEeWjwTGifK1LRIMhLpkO+f1kC5Enw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766029430; c=relaxed/simple;
-	bh=9Gk8XcOc2B7lyw7zUSjJCEYyspZk+j8ZO9rTMz1FGNY=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=QlW2D8SrOc+MCpbDdEGWAHpqw+uriMLoliz2qjBJcpiRs6XvcyKAZFtUeGcNnoc1S+v7Ed6anDX6M2HTV8fP/QQfbXu/WV6RpCVPQzFBi8pwB65Bq0LP9x7A3pWYs5hVS2bKQDKh9t+rvG0RknGn25XwDhZjG2kox+jRxYd5x9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VtrW/qr7; arc=none smtp.client-ip=74.125.224.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1766029534; c=relaxed/simple;
+	bh=So5s03ArDmKYDb5gOic9ABygAv8AHxR4yTVYZle7kLc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Nx2OTU8JOQazn+Wza15Yk+51M0Rj4N2CaYVAHB4/Ey3E25h1jJTQwNmiOpUpSuCZc8njcCtx+Df8eM99A9IfQl8iRobWSf1ZWTAgThtfsYwOolR4slvCEUNyOpU/JhMj8He2azvaKUrxt2F7lWzv3Df5lKjEEhNZPxZtljd9B/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HlgtUSG4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OIWKnu8/; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VtrW/qr7"
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-644795bf5feso186541d50.2
-        for <git@vger.kernel.org>; Wed, 17 Dec 2025 19:43:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766029427; x=1766634227; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Lek4t3gXzPVk+KIdfZq1qSHgbD9dOXit/2yuojU4a4s=;
-        b=VtrW/qr7wIYD/lF6XfTbnDEIhDZ4qnDG6Jhs17gHV8+oTIHWpTf81jDfAA06QOLcHj
-         wfSCFmg1e7fTtMWSnd2rDEmOcUuTf7Z1X21a40v8oSgIM7qnjjAf+g3XyMe5yWvsEj6F
-         W5J8ksqadAUsHQyYXOUld2UExD/F8jbPdvT7Yyh21C49LWfCYntrePk2ZrkOTeU7rjmf
-         IcywUN5I3JFBqIMNaYqtTFWWoaznNdzddwHY+nDHhHh5LZWAM/tmlgs1M3hWdWuUen6F
-         oGXUSlOIJXyO23N6IzQpAPQxkpX8Tf/RH4HqRjYynQPi6Tt/By1aJ6T1dJxPg8Ay8ZDl
-         Q2ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766029427; x=1766634227;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Lek4t3gXzPVk+KIdfZq1qSHgbD9dOXit/2yuojU4a4s=;
-        b=EanFwijxbEwbEDLniBlf3TS4m88dwbqAFsFeEqaLMsKOMFpR9aG0sOJ2IqKZbl0ET4
-         W6/mFEr6Gsii1vafN7AyikZEknFNyfhxxLRijSMs+LbCR1zx43SQlZB6gctR8pQZMk9W
-         UiuEkPbeQoL+FkBJ2YnpYXyu+zAG0hmEgrE9dxV/2fym9TetTyttrmTS2wO8xSNEM9rI
-         pznpfoHLvVuU4Oj0AYMgP7gp2VayfMEVHApO0V1Gh+u6ojPZ+FhkZiBFeDPuvffzd9Wf
-         datplLW/iWfghi/aAZDsxfZxw0b+3xzAj+bRzY7pXrpy0S8w1fH2z2GLd4/+1J5O4Qxy
-         emWQ==
-X-Gm-Message-State: AOJu0YzcR8Wue7nrLdFi7CD55nyqZPnxvfDEfl3uCHq3BVcAdjFMbO2s
-	k94jE22Qa8duSk9iQMVUS+BslTIpplskRcgveDGU7oPWbouqoCi23pMT
-X-Gm-Gg: AY/fxX5CUxIsMp7UOC9FytZYz6e3OmxieKe2616WAjhWSMvYFekWRvWd0cI2zQQEtJh
-	qUNWGyRbY2ZQ+/hVhZrYI1Q/4+TKSRWVwEgcNmRGd6g9Skq5sP8HIY+y/2ySFw88TV0N8EyoyG+
-	0HkDIDnm+q0pwHOU7YbGdWnXpguNAjXerNctzW9gJ/0g8VU32lJ5cNSz5064YUHXDoMSXW7WiXI
-	6QVU9BKGcOuxGuk5xU662nUKDCzLl4NBJuAc/Jo4DtksIqjCgrjd5ky7adgLX6oMAUtGDxbJNqR
-	5cphBj+gv/t9RONvhEIdMG5MbLcYtcM9FHc/KiJCL/aINeDRpBe6dwZMIm24M5QFAah3EPuR7qz
-	FXjzbXPJX+Mvic4IBhlgmJ09HvwYczZ/X3ZEZnIe9Zqe3JyYFvLDLJIdXYrRIWdANE1QbZ2xKGH
-	mMGBGsDXjKfgrV8a5ZAnSg4dMxGXIog0IvdEkkMQIBNR4Jcb54bw==
-X-Google-Smtp-Source: AGHT+IHei6GtOBp/R/Um8T//B8bB4HzN3ZsihoJnlEv8sUwhCpJbz+G3rYHe4bhWTcRwAkHn8B2BVw==
-X-Received: by 2002:a05:690e:11c6:b0:641:ffaa:4eda with SMTP id 956f58d0204a3-645556634f3mr16523070d50.74.1766029427244;
-        Wed, 17 Dec 2025 19:43:47 -0800 (PST)
-Received: from smtpclient.apple ([2605:a601:90a8:8b00:5982:24ab:62e1:eea6])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-646636e86ccsm566713d50.5.2025.12.17.19.43.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Dec 2025 19:43:46 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HlgtUSG4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OIWKnu8/"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5A63614002EC;
+	Wed, 17 Dec 2025 22:45:31 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 17 Dec 2025 22:45:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1766029531; x=1766115931; bh=mUsU+gApcd
+	EcIYk+GPgZSPZ95mWAnawqqSTULa24/tA=; b=HlgtUSG4hq3xmEOeZmphnCJzfU
+	6Ej2d/WOVLUWkhV/jCW57axjo2ArVOxhO+zjttBzyjMtueN7TukIsgJKzhBACxXr
+	dxXVHVbHonBO/1q+aTTJKUeXO24UsRkcJ9fthocrT1axk0OA6itg2YSnJF85PMe4
+	+NzvUN0apzI39y4/KiiK5E4k85SUaWGAfDB1vUr7GxJ8X+G7MAZEqWE8wCX9S3bL
+	8UcdJ3mY7S+q+5wbBGwUbY53RStJiyxCwXndKdNZXY2TM2dlKAOeek1oUfQYom59
+	zKWCj3+q43EgMvLsJj/G/6p5RJ6QoVl3LJ4F54yN9Hn5kaVdOH7YiRamOYXg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1766029531; x=1766115931; bh=mUsU+gApcdEcIYk+GPgZSPZ95mWAnawqqST
+	ULa24/tA=; b=OIWKnu8//gNkdFteRxdbhfxPiZAzZC8bNBPvtGrQMRjHpZKnkKR
+	vOYo9vp8LyHVFRdRpjV24TcXhdRLJ5RAZqzUVaaKoHXPLn3VFMR2xhTDRTUiCQKo
+	vImRv8Es+ZSrbjusUxarOR2Z96MieyPoxDGBIV9He9cIOuS1l3fpOk0ymxapomSX
+	E9tpCCBO+OVEGZTn6J48iZQ+LD1sHh9pcA2X0mLGOZppTQ1e+iO3EfRissGfBPAC
+	vj30HG9GMZnRKpQpU9tA14nUfpHuWZLylno6ZTe3PmLR4UF2QfGttlqFfxX9H1Bn
+	lqHhsqM/VlUOUtpPW1c2+UJXQi5rKaWfhyw==
+X-ME-Sender: <xms:23hDaUJiZWdXo3FxqVmjRhvUUV5Twwyy2TfztNt-Eu_If8mxMPAAMQ>
+    <xme:23hDabLieFCLZaDr0zUT5SgV6dK7ZG7ovhUtJraZooAsDIKQ0QZxO7FN0HqomJadD
+    iQXZAG3VG7BpIn2YzcgF6LD5OMUwus8Ltyi2ondjJ518D8INK1cYUU>
+X-ME-Received: <xmr:23hDaZt_JqWMFpLaF1cBKCtVso_4gBMTJlKhLXB1Wx9nGjOk8yoMK0t60hnVL9r3RM5PfEVraTDatFsdi6LE9CZsT5yW0doQ3w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggeefjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeffieetueejveefheduvdejudffieejgeefhfdtvdekfeejjeehtdegfefgieej
+    tdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgfhhunhhnihdvfeegsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:23hDaQSlDc5T2qY1AlaX3GZBfxEJmql8OJzTUNUfqpjvKwCkdkzubw>
+    <xmx:23hDaXMQAkO6sOmbk4_kanePvqYwl87ojj3GfCJFkuEubE7wRtkaqQ>
+    <xmx:23hDadagQpUfTmM_gbFNyFmORbM_I3gMWw-lVQ1D9tLIJnP-IIEIMw>
+    <xmx:23hDaZzSEctqOCqOr0L-zrh8SMz_xQqS2cnWIaQ2WrM8bWV7n7B-Jg>
+    <xmx:23hDaZMVkOp5l9Bs5epJWU1fxOOJblEg57FAfv41sx8iYCVsJgkpWUfO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 17 Dec 2025 22:45:30 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "AZero13 via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  AZero13 <gfunni234@gmail.com>
+Subject: Re: [PATCH] open: check fd_flags value before calling fcntl
+In-Reply-To: <pull.2131.git.git.1766027643744.gitgitgadget@gmail.com> (AZero's
+	message of "Thu, 18 Dec 2025 03:14:03 +0000")
+References: <pull.2131.git.git.1766027643744.gitgitgadget@gmail.com>
+Date: Thu, 18 Dec 2025 12:45:29 +0900
+Message-ID: <xmqqldj0xxk6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v6 00/10] Add submodulePathConfig extension and gitdir encoding
-Date: Wed, 17 Dec 2025 22:43:36 -0500
-Message-Id: <351D4D02-AF90-4209-85D6-6C3C80C99C8A@gmail.com>
-References: <87pl8flnef.fsf@gentoo.mail-host-address-is-not-set>
-Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
- Rodrigo Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>,
- Junio C Hamano <gitster@pobox.com>, Aaron Schrab <aaron@schrab.com>,
- Jonathan Nieder <jrnieder@gmail.com>, Patrick Steinhardt <ps@pks.im>,
- Josh Steadmon <steadmon@google.com>,
- Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <87pl8flnef.fsf@gentoo.mail-host-address-is-not-set>
-To: Adrian Ratiu <adrian.ratiu@collabora.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+"AZero13 via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Le 15 d=C3=A9c. 2025 =C3=A0 11:29, Adrian Ratiu <adrian.ratiu@collabora.co=
-m> a =C3=A9crit :
->=20
-> =EF=BB=BFOn Sat, 13 Dec 2025, Ben Knoble <ben.knoble@gmail.com> wrote:
->>>> Le 13 d=C3=A9c. 2025 =C3=A0 03:09, Adrian Ratiu <adrian.ratiu@collabora=
-.com> a =C3=A9crit :
->>>=20
->>> =EF=BB=BFHello everyone,
->>>=20
->>> For those new to the series, we're implementing a submodule gitdir
->>> extension which allows us to have a unified way to determine gitdirs
->>> and do things like encode submodule paths to avoid FS conflicts.
->>=20
->> Hi there, I admit I haven=E2=80=99t followed this series closely. I use s=
-ubmodules quite a bit but haven=E2=80=99t yet peered into the depths of the i=
-mplementation.
->>=20
->> I read over the documentation changes in this series, and it=E2=80=99s no=
-t clear to me how or why I would use this new feature (I don=E2=80=99t mean t=
-here=E2=80=99s no benefit! Just that I=E2=80=99m having a hard time parsing i=
-t out.). By =E2=80=9Chow=E2=80=9D I mean: I can see how to set config and ru=
-n the migrator; what does that unlock for me to now go and do?
->>=20
->> Does one of the previous cover letters explain how this is useful to subm=
-odule users? If so which, and perhaps the docs could also contain a =E2=80=9C=
-here=E2=80=99s when/why you might want this extension enabled and what it al=
-lows you to do=E2=80=9D?
->>=20
->> Or maybe this is meant to be not too user-facing, in which case I=E2=80=99=
-m curious who would turn this on and why still :)
->>=20
->> Again, I am mostly curious, so please don=E2=80=99t read this as an attem=
-pt to hold the series hostage! :)
->=20
-> It's perfectly ok to ask, no problem. :)
->=20
-> This series is for the minority of users who either:
->=20
-> 1. Encounter errors like the following in submodule.c:
->   die(_("refusing to create/use '%s' in another submodule's "...)
->=20
->   These errors can happen due to a number of factors, like
->   case-insensitive filesystems or submodule layouts.
->=20
-> 2. Need to specify non-standard gitdir repository paths, different from
->   the currently hardcoded .git/modules/<plain-name> location.
->=20
->   With this series, the gitdir config becomes the unified way to
->   set/get the gitdir paths, so you can move them around as needed.
->   It also helps other git implementations who don't need to exactly
->   match git's behaviour: the config becomes the standard interface.
->=20
-> If you are not in one of the two above cases, then there is no reason to
-> enable this and it won't affect you.
->=20
-> Hope this is clear, maybe we could spell it out better in the
-> documentation (suggestions welcome btw) or even tell users in the error
-> messages to enable this extension.
+> From: AZero13 <gfunni234@gmail.com>
+>
+> Otherwise, fcntl can be called with invalid fd_flags.
 
-Thanks! That helped, and I am not in either case ;) I agree with Junio=E2=80=
-=99s downthread points about docs.=
+This somehow feels mischaracterised.  The intent of the code is
+already to check the current flags value using getfd and or-in the
+cloexec bit to call setfd.  What this patch fixes is to handle
+a failed getfd case correctly.
+
+    Subject: git_open_cloexec(): handle failing F_GETFD
+
+    Before using F_SETFD to add in fd_cloexec bit, the code uses
+    F_GETFD to see the current set of flags.  As it does not pay
+    attention to potential failures, F_SETFD may be called with a
+    set of invalid fcntl bits.
+
+    Continue without calling F_SETFD and behave the same way as the
+    case where F_SETFD failed, when the initial F_GETFD failed.
+
+or something like that, perhaps?
+
+> Signed-off-by: Greg Funni <gfunni234@gmail.com>
+
+The in-body "From: AZer..." line we see above should say "From: Greg..."
+instead.  Set "git config set user.name 'Greg Funni'" in the repository
+you use to contribute to this project, amend the commit so that it will
+record "Greg..." instead of "AZer..." as its author, and force push
+to GGG and tell GGG to send out the email, perhaps?
+
+> ---
+>     open: check fd_flags value before calling fcntl
+>     
+>     Otherwise, fcntl can be called with invalid fd_flags.
+>     
+>     Signed-off-by:Greg Funni gfunni234@gmail.com
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2131%2FAZero13%2Ffixopen-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2131/AZero13/fixopen-v1
+> Pull-Request: https://github.com/git/git/pull/2131
+>
+>  compat/open.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/compat/open.c b/compat/open.c
+> index 37ae2b1aeb..b313bcd364 100644
+> --- a/compat/open.c
+> +++ b/compat/open.c
+> @@ -44,8 +44,8 @@ int git_open_cloexec(const char *name, int flags)
+>  
+>  		if (!o_cloexec && 0 <= fd && fd_cloexec) {
+>  			/* Opened w/o O_CLOEXEC?  try with fcntl(2) to add it */
+> -			int flags = fcntl(fd, F_GETFD);
+> -			if (fcntl(fd, F_SETFD, flags | fd_cloexec))
+> +			int fd_flags = fcntl(fd, F_GETFD);
+> +			if (fd_flags < 0 || fcntl(fd, F_SETFD, fd_flags | fd_cloexec))
+>  				fd_cloexec = 0;
+>  		}
+>  	}
+>
+> base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
