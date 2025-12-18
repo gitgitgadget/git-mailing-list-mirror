@@ -1,149 +1,166 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183052EACF9
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 08:06:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9412428371
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 08:07:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766045170; cv=none; b=izRgwpdtRAPapKQqL6k6I/0cV+MSitkT0LASNjnea4TjBvOpK6bYmrvArsYcz3QZhnkaYhNu31Rbm7X19C1urMcNxxI+Ha6RiPOR4VhErtyNSbZFi+ZjVGi8qu/5ixWbFrXXHXVhpGAq1wTDhGzZgrhrT5ZvjaPJzPJGJ/l9W3s=
+	t=1766045259; cv=none; b=luqetd+mUbwBTKzqLAmgTPbGa9OZrZ6U3mPOBmEPzlvEvT4BgvyxgXT2/TUUAbPo05baBg9lFbCHCXW0xxmhe0jcPnkqxORSAHCWifbTjy/t7ygmTh7cJxQoRlGD04RnTRpIda8QA3i4+jlVN/buiKT2XVwcLEsClLVhN6+1qSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766045170; c=relaxed/simple;
-	bh=aS9dRi3utZdfbaUFwWaRwEXMXaRDzZZUD92jcfljAqI=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=YboMtX0iFulNbcMiTJsyrZ3+JakYOv1BCI08Jxrl2lKSokL6TGKcis4xfXZ5ll8gpO7YECjWNFlHHM1f8vOn/q5uJ1/8VP7lelO1p7/46bZGeeHI9lf1ZKNCo84Q1uUh0w9FwjLdneA5fLXZg03AH78gsYWu3KLZxxKyzi1FlrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Ssriql+U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lj/BT9XZ; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1766045259; c=relaxed/simple;
+	bh=Nl2qXgHjP72HJv2B27CZJ9/aq5ksm7xaGZjFr7XgX4U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S6a8oOoxfzaKb0ZojenSnHSvmiNHbGslzxcgT1BpqBTlukA61opiVD888FnGa4FxjGByWlzK0y6WibosXcbLiIG6BgIdiAtdvdF9xLzaY1APzkegbIYxi64SW3YTqnm/xOXu0O2ABH/l9btj5Inzzp+zHhnPb5fvvF1U7lNBtPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MU3i6g4z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T4kCFnqq; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Ssriql+U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lj/BT9XZ"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2D26A1400230;
-	Thu, 18 Dec 2025 03:06:05 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Thu, 18 Dec 2025 03:06:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1766045165;
-	 x=1766131565; bh=WbwEmq7W4AhyEWJIymCic4ZkcK9cE5ZwRBP+Dfi044c=; b=
-	Ssriql+USLUtGkcMHgOEgs3pEqWV3fhbUuOPAb4WaxOziPrN3XN8ayOVKfOaj5SC
-	E9E6V4AeCH+aMt0HCH9bmg4KPXkJqnosfXaBxkUbyOKdY6Szwwe76h/1NTRDuZRb
-	yUoFMJ0frGJVt2WLe1q4x+FTuDiZPEW+SKP/S5DhTsi9gpDtLATincAlqm1wBSmN
-	1lwy8aRi9B7sNtxHrjxn+iciEyj4/MX+HumRABEnz8iatS2z45g5UGQTjTK/rsUc
-	X3P/bIdA57euYqzf71yAR50HHC95oQxLJEOIU57H6D595W1yGN+T4ROIGrgHa0Lo
-	MxsaDTkn6QUxqLkEDGDgag==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MU3i6g4z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T4kCFnqq"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id B2A031D000BD;
+	Thu, 18 Dec 2025 03:07:36 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Thu, 18 Dec 2025 03:07:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1766045256; x=1766131656; bh=gYLOL6b6FZ
+	C360WMWVe5Wy+TT+Xza2xQ9cGKhs2L0Fo=; b=MU3i6g4z3qorfYKHSXyzkkc/jM
+	RAUAlKJ2f4jiY8VbGBnutforx5vyhFV/P34Bms1eZxg0I+ngvgoXjIrvJ+PzFEb4
+	rdL3BvEbf2b0JNgSD3rFZNuIY62wGywB/peMDf2/RVwid1RUf1fXTnY1iKJ0vecI
+	8BNAz8b5KUrTbbklILwlDKRBVIq+fT3Arqg3FxbbOVlerORrvnSvr8amQHeZkPRI
+	264RkZUA9O9rVjCHRdic/RUdKrhpbhG5q08kbs61sKQ+xQgwAkH7x67VBZFfExSK
+	8R+2lFhBps0eTVphYlETILxeMm8utM4ouBaR04ruv0a68JX9W2rvSHMVc5Bw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1766045165; x=1766131565; bh=W
-	bwEmq7W4AhyEWJIymCic4ZkcK9cE5ZwRBP+Dfi044c=; b=Lj/BT9XZUJq/4yH3S
-	Xys0JAUNmvgbim/wbnBgEQvQ2UgGGlfZuzFZxrIkUb+QPOygGrud7I1Bh6N3OYEy
-	f7OECZSEWFyWslyNRua81uOm4l0a3UdMhjfAgpeAApNkMPUElRhPt5RgKU/5E3Hl
-	EDZPzhqeGHngXtqIa4L6P8wDxACHB+byCjkE3dUwtVxFHgCfEWtwhT+ImMblkolr
-	+0ZXxq+NXAszKyeveRnfUC7n8vpfzTBdZ0STfHAxmEOxJ3vrix/4TeOZfq6Kg+Ft
-	WLArXWaKswyL47vhf2u+mV0t7MlyI2nd5uk75ABfkNBjUu2WMjYbjCdVsGDcp/1e
-	B7h3g==
-X-ME-Sender: <xms:7bVDaSvzIxEjFEGeE60K0R0DD8JTrp5d3U4pQ49edb4dxnAzgpDXc98>
-    <xme:7bVDaST_-emmTLqFi6FzaZ6FA-Lg46GrLKHT4bDQNs962GbIdZTLJxwBNbCYaCxl2
-    194SRggzyGQjpeym1YDbnwdbz8t01dZvPHAn4eNjuvQZ96QS6WN5w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggeeklecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1766045256; x=1766131656; bh=gYLOL6b6FZC360WMWVe5Wy+TT+Xza2xQ9cG
+	Khs2L0Fo=; b=T4kCFnqqiFQf9RYc4Q7F/FrMPnzD4wRoxouq3FHsgPXRDw7smPh
+	HGDo3LdDVv2fUG3YOc4fsFqYUdCj0xPeAsx/TLqa7SqO7BtNLmZt65hxpyefQ6Ry
+	6jDPCCLFHQuuwfvsHCBS3X44SXCqfU3Qi/rzNh6+d1luSQpKe7jaBlaMIbCE2aAX
+	3a0gpAxSy8gH3hC1tW051iWkq5QKeuakR8PbSoc01Mzmlb0gy5c+mzL3Cied0kDB
+	oeFkxm2diYCM36hmw8ngZwT4uh6sMwOJzU+mCxlCvDp2P54+TAMlEorDX66I2rN1
+	erobXHS2fyHzgHO7s7Om5gAyhCX6fsijI9g==
+X-ME-Sender: <xms:SLZDaX411VqgrLoqES2nlWTlFJjb-H3TIpI_FuP0vIGh1Rz4XL8Z_Q>
+    <xme:SLZDab_1Z13sC6alzmdLaih4ts70rrhinioa3Jx8Yd-qqquBvsEx6h3s5UikshsIL
+    HnZ9XW6puO1-YNobAmLMayqkUSwyiz-snnQl3csA020Ef9YH49C>
+X-ME-Received: <xmr:SLZDaUr6re36hB0RUZaByfQFPlxcwsDMlAK7jDB8s5ZesaSZrRXId9pb2jcWh6wb9yXy05F4fMXqxsgDvKC96T7TBl1rZQOS667dHWbIZQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggeeltdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthho
-    fhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkh
-    hksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdfgffettedulefh
-    feekheetgfegfeejveeikeeffeeikeekhfevieeltdekgfeunecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdr
-    tghomhdprhgtphhtthhopehjvggrnhdqnhhovghlrdgrvhhilhgrsehstggrnhhtvggthh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:7bVDaeoZ5J4V7BhENFzLTbKnoCuZKjCbpTo-fY_U1uWXC53kLNV3aQ>
-    <xmx:7bVDaUbI6U7FrboMfJUk6bz4so0oE_4scPLuuBhillaLiVnq4yjfFg>
-    <xmx:7bVDaWSlYmIzDtNUDfYCvK2DIpljUXq9b5UoJrBvoz_k1GE4ilwEqw>
-    <xmx:7bVDab7EWb9blnEwG0rPl0SaaaIVXxx4ceyraXCp99qR4I2VGFiq6g>
-    <xmx:7bVDaXfc79MMHzOUwHlzHU7tSBJK5cv1F0UdSaMmVYfIlmgiRsYIeUV3>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 0BE161EA0066; Thu, 18 Dec 2025 03:06:05 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    elkeevvdelteekkedtgeejjeegheeuffefhedvueeitefhieeiffdtfffggefhueenucff
+    ohhmrghinheplhhotghkrdhpihgunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepkedpmhho
+    uggvpehsmhhtphhouhhtpdhrtghpthhtohepphgruhhlohdrtggrshgrrhgvthhtohessh
+    hhohhpihhfhidrtghomhdprhgtphhtthhopehptggrshgrrhgvthhtohesghhmrghilhdr
+    tghomhdprhgtphhtthhopehtsghovghgihesfigvsgdruggvpdhrtghpthhtohepsggvnh
+    drkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
+    nhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtghhithhgrggu
+    ghgvthesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:SLZDaUorE9_J4OgS15Kqo3NB4qlyKcmnJiY8ex_07NeWqeTJKVupyA>
+    <xmx:SLZDaf14hHCJbmVJepdvrwjYLCYlBc8nGGKO2NgQR1nU9ltm5WR2hA>
+    <xmx:SLZDaaHPDr2YoJrprl7OAbcGbgAtK8NXjhf9-K3CGFOKYgm_MmfmUQ>
+    <xmx:SLZDaSFeCFfleIYKuHN3256XQ9ye6lqp5scmh1mWIeK7fX0h1R9AFQ>
+    <xmx:SLZDaZqx8R3klFp_A1wup8593d2l3NcAdAIBkmkde30Suf6kzqUFy5WF>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 18 Dec 2025 03:07:35 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 96434458 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 18 Dec 2025 08:07:33 +0000 (UTC)
+Date: Thu, 18 Dec 2025 09:07:25 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Paulo Casaretto via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>,
+	"Paulo Casaretto (Shopify)" <paulo.casaretto@shopify.com>,
+	Paulo Casaretto <pcasaretto@gmail.com>
+Subject: Re: [PATCH v2] lockfile: add PID file for debugging stale locks
+Message-ID: <aUO2Pb5JQ678ELCf@pks.im>
+References: <pull.2011.git.1764688047077.gitgitgadget@gmail.com>
+ <pull.2011.v2.git.1765997966593.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A7cBr0QabPqZ
-Date: Thu, 18 Dec 2025 09:05:44 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jean-noel.avila@scantech.com>,
- "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Message-Id: <843711d8-00c5-4747-972e-e705e14d85b4@app.fastmail.com>
-In-Reply-To: <876ee36d-610b-4df6-9297-96b38f106c6c@scantech.com>
-References: <pull.2016.git.1765830229824.gitgitgadget@gmail.com>
- <031d7b41-b6d3-450c-925e-cddaf2e7aa85@app.fastmail.com>
- <876ee36d-610b-4df6-9297-96b38f106c6c@scantech.com>
-Subject: Re: [PATCH] doc: flock of small fixes to various documentation files
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.2011.v2.git.1765997966593.gitgitgadget@gmail.com>
 
-On Wed, Dec 17, 2025, at 14:45, Jean-No=C3=ABl Avila wrote:
-> Le 15/12/2025 =C3=A0 23:50, Kristoffer Haugsbakk a =C3=A9crit=C2=A0:
->>[snip]
->>
->> Could this fruitfully be split into at least two commits?
->>
->> I just think these are two different categories.
->
-> For me these changes are so straightforward that splitting/grouping
-> seemed overkill. But, I understand your point. Style vs. pure formatti=
-ng
-> is a good approach, even if here the style is not about the approach to
-> writing the documentation.
->
->>
->> Is that just an academic concern? Well, in my experience it is very
->> pleasant to pickaxe through a snippet of text, stumble upon clearly
->> marked commits like
->>
->> =E2=80=A2 Use USA spelling
->> =E2=80=A2 Fix articles (the/a/an)
->> =E2=80=A2 *: typos
->>
->> and just race past them. Because I am looking for the original
->> motivation for some phrasing (say), typos and missing articles and al=
-l,
->> and these commits are simple to bunny hop. But here, fixing a missing
->> parentheses is mixed together with
->>
->>     Replace: less than `<n>`, where `<n>` represents a number of byte=
-s,
->>     With: less than `<n>` bytes
->>
->> And now I might have to pause and think which implicated change this =
-is
->> about for my purposes; a subjective-but-good change or a
->> fix-objective-mistake change. Because that matters when I want to know
->> why the text is phrased in a certain way.
->>
->
-> OK, will split in two.
+On Wed, Dec 17, 2025 at 06:59:26PM +0000, Paulo Casaretto via GitGitGadget wrote:
+> diff --git a/lockfile.c b/lockfile.c
+> index 1d5ed01682..4ee215374a 100644
+> --- a/lockfile.c
+> +++ b/lockfile.c
+> @@ -71,19 +74,117 @@ static void resolve_symlink(struct strbuf *path)
+>  	strbuf_reset(&link);
+>  }
+>  
+> +/*
+> + * Lock PID file functions - write PID to a foo-pid.lock file alongside
+> + * the lock file for debugging stale locks. The PID file is registered
+> + * as a tempfile so it gets cleaned up by signal/atexit handlers.
+> + *
+> + * Naming: For "foo.lock", the PID file is "foo-pid.lock" (not "foo.lock.pid").
+> + * This avoids collision with the refs namespace.
+> + */
 
-Thanks. Your consideration of this point is enough for me. Appreciated.
+This neatly solves the issue that alternative implementations of Git
+wouldn't know to handle this new PID file. They already ignore every
+file that ends with ".lock", so of course they would also ignore these
+new PID files.
 
->>[snip]
->>
->
-> Not the purpose of this commit, but maybe, it would make sense to stre=
-ss
-> out that the first sentence for explaining an option should describe
-> bluntly its positive action expressed in imperative mood, with no
-> ceremony. After this first sentence, the negative equivalient, more
-> context, more precision or use cases can be described.
+But unfortunately this doesn't solve the other issue, which is that we
+now have a new restriction: you now cannot have two references "foo" and
+"foo-pid" and modify them in the same transaction. Granted, this is a
+very specific situation, and I doubt that 99.9% of all users would ever
+hit this restriction. But regardless of that I'm worried about the 0.1%
+that _do_ hit this restriction now. So I'm afraid that this proposed
+naming schema isn't going to work, which raises the question whether
+there are any other alternative naming schemas that could.
 
-That sounds excellent.
+We could (I'm not saying we should!) do some gross stuff here. For
+example, refnames are not allowed to contain some specific characters in
+their names: ":?[\\^~ \t*" are all characters that are forbidden to
+exist in a refname. So in theory, we could call the lockfile for example
+"foo:pid.lock":
 
->[snip]
+  - We know that no reference "foo:pid" should exist because it contains
+    a forbidden character.
+
+  - We know that all alternative implementations should ignore it due to
+    the ".lock" suffix.
+
+Note the "should" in both cases. I'd consider any implementation that
+doesn't honor these "shoulds" to be buggy, but that doesn't mean that
+there are no buggy implementations.
+
+In any case though, this may be a possible way forward if we really want
+to also cover loose references. Whether we should is a different
+question though, and I'm not too sure about it myself:
+
+  - It will regress performance of the "files" reference backend as
+    every ref update now needs to write two files instead of one.
+    Writing many references is already the worst-case scenario for this
+    backend because each reference requires a separate file, and we make
+    it even worse by making it two files.
+
+  - We now have not only one file that would block future updates, but
+    two. This increases the likelihood that a crash or forced shutdown
+    will leave behind stale garbage.
+
+That being said, I also see the potential upside, which is that it now
+becomes a bit easier to recover from crashes/forced shutdowns. But in
+any case I think that this needs to be opt-in, not opt-out.
+
+Patrick
