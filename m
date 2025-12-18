@@ -1,80 +1,80 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151A83254AF
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 06:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E142D6407
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 06:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766040948; cv=none; b=n1I90+vzxUkeThQSqlio1qoqXgu84gkC2YNnaAZ9xvSRGOIx4bZbdzNlFl+JIWadI5swt7vCG2AReOuUsprO9fTwT9E0YZxD61AGN7DaHGYWtaIgW9HAz1fMR/a4IxtTi31kH+k4b15jAF4gim2VUSHCYz/zH8/c/mTgqc67Cso=
+	t=1766040950; cv=none; b=qzpLK5nWYhPdjSu8XmwInW7CrKnDP8v+lN5zJqBCR2ccxz3NLzelVDYhu2Ene2XDJ2KuiuET1L3RI2cR4wu+xhQtNGgU5QwxXhbrm4bSqGibU6mn2/4JDmUTsZLp6qQUA5m+VTgq942cGkAb3kMhaH2FbbR0AknnX7jHp9aArns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766040948; c=relaxed/simple;
-	bh=iNFz8XUyJ3OrS59wMxcSF2egjHk+ymnFGmP9a3RLdsE=;
+	s=arc-20240116; t=1766040950; c=relaxed/simple;
+	bh=yiq8G34pyar6cvTytkgxeB/0/Um2/KUJauGLSSz4fEM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=J6VUYbhM72DyuqkjOmerdvifFUZy1vkfuGg0t/IEJJkhphCFXxxfZ0SY2nB677cvXn/iCf5Xe28oC8T9+UmdA02XS7+YsWeNueB5wBrmvgnP2uDBSM3CipjL5PaPPN2/cKLg1LWUdtR2gccTW+M6FNXX9MjU9NnyQ2xhTABC1do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NxWM0Evj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h0/bFkHk; arc=none smtp.client-ip=202.12.124.158
+	 In-Reply-To:To:Cc; b=U54wHa/nKSmgDDRMo0Ov9fPO8VJ4dYYyZJRYwc6LsplAtp+YNUpXimq0Z0RDWWKjcEoZd6k9WroEPigT+q/nEuD9xbXXy+DI2XZZ/ugib7fs+RTNAdr3BCayPQqcmkI8Wh45w0kE/WnwQE6PR2sk245f2oipv+4LvfOJETknnPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aqjPcnbu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Iq0S0drm; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NxWM0Evj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h0/bFkHk"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 20FF87A019E;
-	Thu, 18 Dec 2025 01:55:45 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aqjPcnbu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Iq0S0drm"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 30CC97A016A;
+	Thu, 18 Dec 2025 01:55:48 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 18 Dec 2025 01:55:45 -0500
+  by phl-compute-04.internal (MEProxy); Thu, 18 Dec 2025 01:55:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1766040944;
-	 x=1766127344; bh=Y6/NdNeuE8Yt0snVGB3xwbZPOQ00ikrs/RwpjvdO4QQ=; b=
-	NxWM0EvjNeQlH18p0hl1gmqKLgc0lWD7/bPvtczKKeyboqw5b7KQV29Rsgr6yL4Q
-	/Mh9iWPCqKoeBrR79QR2rRDkwawwymrKaIlq2tMzjWultvkZwoNKm6Edd1xGFyUR
-	ZDZc3ZVfETAywbabUV/9jELzH/ZQEpZJxn+HO8gdhUCus0/RFoWFmIWYmgOM1kPb
-	ANwcO/rD0uGoL4fqW6D3qa95ukhIT8gj//yRWm8YfxcTds3J/2ha7fyg9rOuFcn4
-	RebkqQQHyeJvVf4PGHpwAs5TvVKBV/NJtescc8T1xdSmSd/93aXXV2+fPmROMh//
-	nYlfZnxRCB3KrE0ZVtF/Vw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1766040948;
+	 x=1766127348; bh=OVgoSiO4WeAhVVVmv0bSYc8Lkzq0fgjt4oJ61cqJyzM=; b=
+	aqjPcnbu7brMof9Jm3O/O/QXdJp2BW9qhbdDV9wThijVWxAljaz+u0arfPvPGKIP
+	DwYP9CYG/DKyuKwCMh6Ct5tjHYiHTsh5anV2kYHVMfhuCvWg9h4hQIYIBCNbaAD0
+	0X96tCYvtY1+nBDEqJWDcssk0mEwHsNsVeqNB4hz3JvIOasFv+hWIsocNhex6GgR
+	G9tXcGDNvXE5uvo7Js0HkmKRZMt2F/Kr4Izp9jDE+0sV6GDv0Wsv5yfBjgBhEn8e
+	4I2TVX1yIw0mcCCD4qPgvFb7Vvlcrf2TG7pm25dk/YFCY7a5CxyF1mM18pGx0STf
+	7GReY3ICd9Codw3BdXB/FA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766040944; x=
-	1766127344; bh=Y6/NdNeuE8Yt0snVGB3xwbZPOQ00ikrs/RwpjvdO4QQ=; b=h
-	0/bFkHk1+73+eramP1hS7jwvvMWmpSZGlloifXieWunfIQ9QF4sLbTFjzu8xke0w
-	1QSMPrPHKf443iOyD1plIEi8ZGS0fuoKYJKoL7Z4fluASHn4xE5Vb5UIWlQ4Rpnn
-	rDHE89ZL1iaP2GPaGXhUBJI0zhv1baIWM80GwAET8CmXjHK5k9IQ/czy25UIqn1Y
-	QU6DLMCgTNQxPoJGlr/Zk4iPsG0BUEClVV9x6jnUOehu/Yg5cikmtnuBLPFuPs23
-	EFTA1BLRbz+Fudplv9gEXpzwtNwZ9XP6sQOlwMpdifLP9VQLwm6wZa1FN/kjLINw
-	ey3/InGnhNKLcBe4yHEHg==
-X-ME-Sender: <xms:cKVDaTHAl6g5Gif0awiqKa3Gu-U2VEmLOotIbllxveWvjyn2tABaZA>
-    <xme:cKVDaWV6CKPOavfXfW80GY0Ci2QhgpCZ1PfpFPR0VEDTcL6y98TEspJx0eCVEPb28
-    0JBIuVrPj3aKhFkd3aIDOxGpiO7Xv3uf44QZ9oPTTk32Gc0Ih98AQ>
-X-ME-Received: <xmr:cKVDaSzR96f4lWUChMXUXy6gU7bF62n_pnJH0LxR9FzrBGZ_oHZa5RKcM6u9KaSWqJDk2xcZN6oax5OYcvBcvb7bB6Vsb-EA8RIX31oOfQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766040948; x=
+	1766127348; bh=OVgoSiO4WeAhVVVmv0bSYc8Lkzq0fgjt4oJ61cqJyzM=; b=I
+	q0S0drmKvsQZVFthhsVelQguDGRo/QObOjC21XRbKLOgMtHRV/ZdxrVqUCQL4DmD
+	ebRQ8zDpy+jVUoDjPj11KiErHG61aFuIj+LQ1BOspuKrkxS6oJSDwijJ4DPxRzKL
+	j/0dSsKOcR9O+z1uKIwm9vrOVwsaDnjZ6fiipE03Aa3xGgOczMhx26RU+Oq0KaFq
+	2VTu+oAEx7MtiQ2AhZwz5Ey5LYoPJzE08wz4KJb19gqAcPE+i3GZ+yNpxSPsDASi
+	NZSS6SA9nfT4gQLm5E0bEJVL2lOFHPnqcjPz1Cyt6vo3dsQ5af47318bqfyFS0O1
+	peQZnwedativmtnmVOlWA==
+X-ME-Sender: <xms:c6VDaVx7fnCEMgrowGqCMcrnXXiN5FFgCcq5MI1_eij0t0xwi_bRVA>
+    <xme:c6VDabTNEuKIMEiREtonS_Ciz7Jk59b6c20sGKQ7FLr3q9cCXdH2LzXYT7yw5B67P
+    X-CPmoYjI2pfeyQkrKloN2VFuPR-L8G65t-69B0PmaLIy6c73TA>
+X-ME-Received: <xmr:c6VDac9DChWcjoosncd3FfJ2v8Rkqfwh9OvxpTbdTh4rB5ifl_pVPcPfovLyF1twNGN3at_LgDoaAc0YpPWls0Dl2rPjlssf7FABXP008A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggeejiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslh
-    gvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:cKVDacPg204zidY96z1_Y39AqDVYE5ie1-WgsZVn1432iM_S4XDpkA>
-    <xmx:cKVDab5iGFe1E7hheGqPsL6AjqTOMbD9Mo6KHNe0L4X70pASdIDjYA>
-    <xmx:cKVDaVOq2GakSMK6T3BhGWBKQMsuXQHDvEF-q4D2QTGpB3TsKxDPFQ>
-    <xmx:cKVDaRnKX03x3RaNe6nu9PW692sr9uKMjnGBanwHVC6XUpVqEPVsNw>
-    <xmx:cKVDaT2WQ0F-lYy59cx645SfgINGomRp7eWAVL_rJY-S4v-U1XMFTsMW>
+    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:c6VDaSoi-Vo4g2IAU6OSY5JAVLOj05Upw8VaDxDTFotf6B72L6a1vQ>
+    <xmx:c6VDaZnFQ2XJHr1PT_N5dvI7LK8Mf-WfaCyyQ6lQLsV5t7-6wb5hVA>
+    <xmx:c6VDaZKDBnbuvYHMKCoeiLjC_4XVJjvSqNftNVg0Soe8qT9mPh3ArQ>
+    <xmx:c6VDaezjJ93eDbX2VFK4t644c1eRAkaF6l9BhHgwC9XS35J-sUopVQ>
+    <xmx:dKVDaRjMxIY9FpPOHMAt15Ca9mYc4EPwTTKoajLaGCgeDLEopxXRD1Xd>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Dec 2025 01:55:44 -0500 (EST)
+ 18 Dec 2025 01:55:47 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 160c9c19 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 18 Dec 2025 06:55:43 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 73673cef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 18 Dec 2025 06:55:46 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 18 Dec 2025 07:55:25 +0100
-Subject: [PATCH v2 06/10] packfile: only prepare owning store in
- `packfile_store_get_packs()`
+Date: Thu, 18 Dec 2025 07:55:26 +0100
+Subject: [PATCH v2 07/10] packfile: only prepare owning store in
+ `packfile_store_prepare()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,46 +83,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251218-b4-pks-pack-store-via-source-v2-6-62849007ce21@pks.im>
+Message-Id: <20251218-b4-pks-pack-store-via-source-v2-7-62849007ce21@pks.im>
 References: <20251218-b4-pks-pack-store-via-source-v2-0-62849007ce21@pks.im>
 In-Reply-To: <20251218-b4-pks-pack-store-via-source-v2-0-62849007ce21@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.3
 
-When calling `packfile_store_get_packs()` we prepare not only the
-provided packfile store, but also all those of all other sources part of
-the same object database. This was required when the store was still
-sitting on the object database level. But now that it sits on the source
-level it's not anymore.
+When calling `packfile_store_prepare()` we prepare not only the provided
+packfile store, but also all those of all other sources part of the same
+object database. This was required when the store was still sitting on
+the object database level. But now that it sits on the source level it's
+not anymore.
 
-Adapt the code so that we only prepare the MIDX of the provided store.
-All callers only work in the context of a single store or call the
-function in a loop over all sources, so this change shouldn't have any
-practical effects.
+Refactor the code so that we only prepare the single packfile store
+passed by the caller. Adapt callers accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- packfile.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ builtin/grep.c | 14 ++++++++------
+ packfile.c     | 19 +++++--------------
+ 2 files changed, 13 insertions(+), 20 deletions(-)
 
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 4855b871dd..5b8b87b1ac 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1213,12 +1213,14 @@ int cmd_grep(int argc,
+ 		 */
+ 		if (recurse_submodules)
+ 			repo_read_gitmodules(the_repository, 1);
+-		/*
+-		 * Note: `packfile_store_prepare()` prepares stores from all
+-		 * sources. This will be fixed in a subsequent commit.
+-		 */
+-		if (startup_info->have_repository)
+-			packfile_store_prepare(the_repository->objects->sources->packfiles);
++
++		if (startup_info->have_repository) {
++			struct odb_source *source;
++
++			odb_prepare_alternates(the_repository->objects);
++			for (source = the_repository->objects->sources; source; source = source->next)
++				packfile_store_prepare(source->packfiles);
++		}
+ 
+ 		start_threads(&opt);
+ 	} else {
 diff --git a/packfile.c b/packfile.c
-index a0225cb2cb..c46d53b75d 100644
+index c46d53b75d..23d8f7cb93 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1092,10 +1092,8 @@ struct packfile_list_entry *packfile_store_get_packs(struct packfile_store *stor
- {
- 	packfile_store_prepare(store);
+@@ -1063,16 +1063,11 @@ static int sort_pack(const struct packfile_list_entry *a,
  
--	for (struct odb_source *source = store->source->odb->sources; source; source = source->next) {
--		struct multi_pack_index *m = source->midx;
--		if (!m)
--			continue;
-+	if (store->source->midx) {
-+		struct multi_pack_index *m = store->source->midx;
- 		for (uint32_t i = 0; i < m->num_packs + m->num_packs_in_base; i++)
- 			prepare_midx_pack(m, i);
- 	}
+ void packfile_store_prepare(struct packfile_store *store)
+ {
+-	struct odb_source *source;
+-
+ 	if (store->initialized)
+ 		return;
+ 
+-	odb_prepare_alternates(store->source->odb);
+-	for (source = store->source->odb->sources; source; source = source->next) {
+-		prepare_multi_pack_index_one(source);
+-		prepare_packed_git_one(source);
+-	}
++	prepare_multi_pack_index_one(store->source);
++	prepare_packed_git_one(store->source);
+ 
+ 	sort_packs(&store->packs.head, sort_pack);
+ 	for (struct packfile_list_entry *e = store->packs.head; e; e = e->next)
+@@ -2098,15 +2093,11 @@ static int find_pack_entry(struct repository *r,
+ {
+ 	struct odb_source *source;
+ 
+-	/*
+-	 * Note: `packfile_store_prepare()` prepares stores from all sources.
+-	 * This will be fixed in a subsequent commit.
+-	 */
+-	packfile_store_prepare(r->objects->sources->packfiles);
+-
+-	for (source = r->objects->sources; source; source = source->next)
++	for (source = r->objects->sources; source; source = source->next) {
++		packfile_store_prepare(r->objects->sources->packfiles);
+ 		if (source->midx && fill_midx_entry(source->midx, oid, e))
+ 			return 1;
++	}
+ 
+ 	for (source = r->objects->sources; source; source = source->next) {
+ 		struct packfile_list_entry *l;
 
 -- 
 2.52.0.351.gbe84eed79e.dirty
