@@ -1,112 +1,129 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6622E7BD2
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 07:32:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A11139579
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 08:03:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766043131; cv=none; b=PXg6Y9GQzQReN1PIKCRYtH/149Q8UQ/T7vLhJI7+ZeRbPjEMU428hsuvyrVVbcxGQEsbmExn3NYOL6liTb+MkThENpX8eIoJNW85bzvO6LodSPKvYfYa3ZH5lU5VaRoqhe3uec4Khwvq0W+irFMkY+CcHb7M1n4v2ycXYHPPYWQ=
+	t=1766045004; cv=none; b=e3VHNAluVEuOaiUHKFD6uNUm5D6YtEJEjDak8gnv1BbY113z9Ga1FEe10Tay9mMeC3QnplulPTXQ/OcKBGQC5XaKndKm71lCHPhDCaUPGd3ZnvaQhpBvZWAAeAvXlZRdseotq0IUw7YjLfGVePkj7/smXykYE8qcM1EAoB13TgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766043131; c=relaxed/simple;
-	bh=wepG5riJVif5Df8+XEC82aBjuoMAPXK+Vcic6WpdMFQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IAr3FwVdnMURiqP3raU1ZR8/BiB4zZgZY1EEd2q93BQvBcnKd0m2VJzjaFUC4JGd5s3ZGO6eEISdAgIpmAlVYrq82maQcx5TChNrET+fo9kzhViSvbttcOoadMP8FaLYQlD149jjWHKXvcCuumJ5mJBtxCU8RgIZnME7U+shb1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JhGGgBb9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IlXEl6T7; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1766045004; c=relaxed/simple;
+	bh=FoAQOT3+oHlXl2mhG0n3D3SQX2KkvafzGnZz7VPkkgc=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=T+OJgA0i8sXxHirVuynix+ntbj97eYC4JRdPeDXvKxzBSXhdOu/TDso3J6/JIW7QljjKu2j2/q1PdpS5cnGS937m9Rs9Dc/ylwwKdySBAb5wSsdVgAOwKfyTBP9G1MXyNC3pCmhiGvMmCNhf3eqjxbiC/pTufvyeG77VptIrVpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=cSpXS0Zj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SK8xDWSQ; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JhGGgBb9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IlXEl6T7"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5F557EC0032;
-	Thu, 18 Dec 2025 02:32:04 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 18 Dec 2025 02:32:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1766043124; x=1766129524; bh=Zmu6OMC3kS
-	5prYFotUhSHvVj53ipmfwRJcsUDGccMTA=; b=JhGGgBb9JcbLyXTxs6+vx1ENJV
-	eEZFJqlzYlNJTtIosNiMxPQWbIJNLHQgYxdNB0kTJbGYGTBbJP7meyt2lYW438xm
-	ukOBdCafCCqTqrtvUS7RfJNZyvVIFryg0PMpy3YCqj6p5vMo1uDJv/PaKvbCvhvd
-	SnOdUppNEeZLZpT09UJ8P6cClz8B4o+7XMdGXSp7rguI571ywXHghbGr33LTtJp8
-	IMgUBQ/WAR+iGTRF+vs3tnt9rLfNCHKHnZGHmYS+S8KJxne8M4bzniCyzeyGLRUj
-	+lV+9jTK858TjnLtNzKsyX0BuNjm5rTQ+gGrps9raHFvLXMvHMu5doAZMjQg==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="cSpXS0Zj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SK8xDWSQ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 976DDEC01E1;
+	Thu, 18 Dec 2025 03:03:21 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Thu, 18 Dec 2025 03:03:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1766045001;
+	 x=1766131401; bh=QILmK68S9zzEskdqYkPNvpLCoKjSpRijy6NP35aUbUk=; b=
+	cSpXS0Zj678OT00t/k3OCS93tPtYhYWztHnssBLwm+8Jf3UT9PS/B3bZIPfurEBy
+	+OvmiiTMqg2RaO5B4J2mWqfOI+me3v1hTm4R5sH+ZqgJrEoYU+ImFLAprupJeRmk
+	QfCmibj9n3moMxMhavpBBwNBHwJ+F1+YTJ4IlIhEunTo5pHuERwitA7TwAHQDrA5
+	NvHeXWUBgAAGd1M4BsOQUgczN1Rqhv5Y/6y0wOrTJRruFqllARNkWxu8Shs96vwp
+	lkvqdE9eZ2JKEboNMdT9vZ6dKWjC6r2/EsD1dW4jxR0dAW7TEE0TdUHMRtMIjxHv
+	TUVn1YKpeZJ9hjgVgECe8Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766043124; x=1766129524; bh=Zmu6OMC3kS5prYFotUhSHvVj53ipmfwRJcs
-	UDGccMTA=; b=IlXEl6T7TIjXzDM+EkwcvG4vux7t/VehqdWH9uPhW1Nid7YvzSJ
-	P2+a2fK9ESUfFaf2eixvpQ76/RRMnCLsyH/xpxL/tT03lV5QpNqN6wwcT1k0pI72
-	SjemuTlGMG2UKuh6Vs9OY87FKJxITLt8wS5jWYseEvQSdaAia1RmMTTTXG/N7roT
-	FGyjs3Sbi5V9Ft0obROIQOe4XxX8BsUpWlVLIJn7zlHeug2wCGsDUP2NSH/6abD6
-	GiESAEk/1yVmSmGHpIO+ypSABTd3gpf02bYzilJsSTqw4ZwuGmBAFVa/qNbMu94V
-	WSnRIAIrFih/t7TOymX8XMl3MD26mBsosKQ==
-X-ME-Sender: <xms:9K1DaR7x2R9LOGg70pv8dHdy6XqEDapmpb3lBo1zcHD0Y3vcNOL6oA>
-    <xme:9K1DaV5eQw33-s8z-uW1eXijinUyp4fdmwxCAIXZU-KmhaZgQftNWpy9NVE1obU4p
-    IiSUVxxZzUB0Lp3pyBH3P2x-CHYwVANnlj93UqLqvK9qWjO1AniXA>
-X-ME-Received: <xmr:9K1DadevCR0p8yjevQAF_Poc0VzeRrEjih_cxNyHUvBSe0zaOvXtOEt4AOWXJ7l1J60pHcNML2qGPu5ngsP2d8P95piuREmiOw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggeekvdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766045001; x=
+	1766131401; bh=QILmK68S9zzEskdqYkPNvpLCoKjSpRijy6NP35aUbUk=; b=S
+	K8xDWSQyDe4cjCq5/EUz+g/bAmTCoBjKCwTS9DLK8vkQlThYRheOAY5lzLXWLjBW
+	3ufsddc3WoR72OvUEF36ysUAMVQLHGsD2RoT1mjoFByCV02iv0k+S6yLqMhqzCGo
+	iVFGHWlXC1yLnKWFaGeHqgktGp1gMOQT+GMAcyhtTTJf0uwMDJwLGQ93cD4mjROX
+	AeXvMI5M31n83BFLUenKh2LyYu/2FgmuFz0jwm0G8WFyrRcNsRZvxvaqaOEemD7w
+	67hDzJsjGWy3vei54Zc90n77s+BBQwyD5WPA+Zc7QR2XGlmhBHpqlfV5w7on/ni1
+	G4Jlx15+sSYxh1kZ8Iehw==
+X-ME-Sender: <xms:SbVDaf8ata5Pw04NDngdALPuqRecjk4Dt9PPV3Ftf8qDTLGz_WHFS3Y>
+    <xme:SbVDaWhsAPpJQVahqd7gIdbZN744uwznhzaNIOa_89jiLGunv8ZM_FLTM-NpqYbmI
+    KReGcLie68eTl4NvX0ETapDQaWJhJWLqXuUk71ZzyWU5VIQwvb6-g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggeeklecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrphhlrghtthhnvghrsehnvhhi
-    ughirgdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:9K1DaZAWb3Z-I1WNcshItWhfOmuU37SQmiIOSVtOc6YCXFkTeMET4A>
-    <xmx:9K1DaQ8xk5UiyAyFdKzSLnEroIlWsNcc1kmc2eO5Aw85zmjpACHY1A>
-    <xmx:9K1DaUKrKXg2hDXak5Jt9aTnvbS9vyCE-lqO1PeIrmP8ChgDu4iwTQ>
-    <xmx:9K1DaZhKXj6xWpayOmYP6fdmCQ8q-jwHWv4Xly6HCYhIqs583E7yMg>
-    <xmx:9K1Daej0lMHYLR8HuxJB0f9_CZIgiGmOwJoIazWj4LJmQSN2RTHh5oZc>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Dec 2025 02:32:03 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Aaron Plattner <aplattner@nvidia.com>
-Subject: Re: [PATCH 4/8] packfile: always populate pack-specific info when
- reading object info
-In-Reply-To: <20251218-b4-pks-odb-read-object-info-improvements-v1-4-81c8368492be@pks.im>
-	(Patrick Steinhardt's message of "Thu, 18 Dec 2025 07:28:14 +0100")
-References: <20251218-b4-pks-odb-read-object-info-improvements-v1-0-81c8368492be@pks.im>
-	<20251218-b4-pks-odb-read-object-info-improvements-v1-4-81c8368492be@pks.im>
-Date: Thu, 18 Dec 2025 16:32:02 +0900
-Message-ID: <xmqqcy4cxn2l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeehudfgvefgfefg
+    ffdvhfffvdevveegheehudetvdfgueffjeevjedugeevfedvfeenucffohhmrghinhepkh
+    gvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+    lhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
+    gtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pegrphhlrghtthhnvghrsehnvhhiughirgdrtghomhdprhgtphhtthhopehpshesphhksh
+    drihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:SbVDaTmCPVyjwqCKXbOE8KdA-gL9PQ79xR6NnHWXV7apmAwyaJsQfg>
+    <xmx:SbVDaUq229zn8FfFK1rFyIs8wVTJPIGpTibcLyp7VALKiRkPYG4bpQ>
+    <xmx:SbVDaUFPzFRAjPniRKPgeXexFYKU1l8IB9Etq05J8tI0GjTGljEKOA>
+    <xmx:SbVDaYxytGbG2cwMG1k8Cowr4xuWko3wAEW3a_Gtrs3MKjSNwwQCGQ>
+    <xmx:SbVDabPIrBWcx7dCoVM43Pduvr6JeisRNb4bHJSUsV2fKQojQilUOLAN>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 6BCFB1EA0068; Thu, 18 Dec 2025 03:03:21 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: AVz_chKN6izs
+Date: Thu, 18 Dec 2025 09:02:59 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Aaron Plattner" <aplattner@nvidia.com>,
+ "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Cc: "Patrick Steinhardt" <ps@pks.im>
+Message-Id: <0e860421-8f8c-4bf9-8ad8-82fe269a7a9d@app.fastmail.com>
+In-Reply-To: <a31e054e-0eb2-48b9-a802-3592a737d1e3@nvidia.com>
+References: <xmqqpl8cxy0j.fsf@gitster.g>
+ <a31e054e-0eb2-48b9-a802-3592a737d1e3@nvidia.com>
+Subject: Re: [PATCH] odb: do not use "blank" substitute for NULL
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Dec 18, 2025, at 05:51, Aaron Plattner wrote:
+>>[snip]
+>> By explicitly handling NULL input, we no longer have to worry about
+>> it.
+>
+> This reasoning makes sense to me.
+>
+> Would it make sense to add a
+>
+> Fixes: 385e18810f10 ("packfile: introduce function to read object info
+> from a store")
+>
+> line?
 
-> @@ -2148,8 +2162,13 @@ int packfile_store_read_object_info(struct packfile_store *store,
->  	 * We know that the caller doesn't actually need the
->  	 * information below, so return early.
->  	 */
-> -	if (oi == &blank_oi)
-> +	if (oi == &blank_oi) {
-> +		oi->whence = OI_PACKED;
-> +		oi->u.packed.offset = e.offset;
-> +		oi->u.packed.pack = e.p;
-> +		oi->u.packed.type = PACKED_OBJECT_TYPE_UNKNOWN;
+This project typically does not use that trailer/tag. Only trailers that
+attribute people are recommended. There are exceptions, like some
+recent usages of
 
-It cannot be seen as it is before the precontext, but if blank_oi is
-still a function scope static that is initialized only once by
-assigning OBJECT_INFO_INIT, this will leave a timg bomb waiting to
-go off, as it violates the "blank"-ness promise for the next caller
-of this function who calls NULL in oi.
+    Best-viewed-with: <option to git-log(1)/git-show(1)>
 
-I'd prefer we fix this nonsense "we only declared a function scope
-static, but without actually using it for anything, other than to
-compare its address with the caller supplied parameter" well before
-this step.
+If a commit fixes some other commit it might be referenced somewhere in
+the message text.
+
+Commits are referenced with:[1]
+
+     git show -s --pretty=3Dreference <commit>
+
+The maintainer uses `--abbrev=3D8` (simplified):[2]
+
+    git show --date=3Dshort -s --abbrev=3D8 --pretty=3D'format:%h (%s, %=
+ad)' "$1"
+
+=E2=80=A0 1: Documentation/SubmittingPatches
+[2]: https://lore.kernel.org/git/xmqq34j5h7v9.fsf@gitster.g/
+
+>[snip]
