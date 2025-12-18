@@ -1,81 +1,80 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22AA322B7E
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 06:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33FB3218A6
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 06:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766039324; cv=none; b=DHQsjUFhu1kAvbD8THB4aCC5yotl7yBOcGImHCQrNlxXv4vvU/odr3eTY5ZPoEDtJO2GsyZi4ILQnMGSWz0a3r9tmnB2nqTfZBCg9XP9JYPq5faShm+3h2NPFsI8RGUVFueEuTowDIpz2YlDbxov7RhutcDm11rwyCk3+ks/e9M=
+	t=1766039327; cv=none; b=edfjwcwX5EZo2oTMjZTf4iQZ5cdcG2tMCipxg0v9GP1l3J9pim9xLxPf/ZaGsI7sRlcDNsCVeUrDlB7X8+QFcHDkjgGUeALZtnfCmGjo62Q8LJj48qjOXGCyeDciNk8yY0u8yC9UW0T8SPvCWntJLR2HNF+LkHWCUrmejOT7zqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766039324; c=relaxed/simple;
-	bh=PHj4AQNcEZQygbdAoLifKggQekMoZ+i1UC05epRUQFM=;
+	s=arc-20240116; t=1766039327; c=relaxed/simple;
+	bh=DDXGsA7OHE5nUL6fHZVn/vPw8eGg4KXNNxjIhOi0oG4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JFdXTqTSRFirfE3mriW3qwsPoPudkOGmfb+l1bbVRkaO0oAZqNIpIzoXha4qTEkbNWQKPo8uvVwPahJq7C6AiXAANuPK/1ljkXNO7kyPnKB2a9C98J+UcA8zMNg7uTjMyuhi9dzmur1saBo4ODcI3z/rbBkIUce6fw87l/zd5Lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UOx68HK+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=u9K3R9qy; arc=none smtp.client-ip=202.12.124.157
+	 In-Reply-To:To:Cc; b=OmweT9mBAhjYtPj1ftLyzDc5rR8a5BNxn2WmvA3Rf+Piyot94KnyHniN8PV+zNoClnRWugSZOOZDS7tEh88kBW+AGZfJOqAKgOXh3VOjNhVjoDX2WN3JzhdNZ0068DxMa2XlhP+QwIvqdc8FsI0sDQ+9NrfOOoBGhpbBaQJyGfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vQLzjaor; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ccd8NGyI; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UOx68HK+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="u9K3R9qy"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DE94A7A0177;
-	Thu, 18 Dec 2025 01:28:41 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vQLzjaor";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ccd8NGyI"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 24F1D7A0177;
+	Thu, 18 Dec 2025 01:28:45 -0500 (EST)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 18 Dec 2025 01:28:41 -0500
+  by phl-compute-02.internal (MEProxy); Thu, 18 Dec 2025 01:28:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1766039321;
-	 x=1766125721; bh=tVIVzWZnn/lwRk0ruzwOiVlcqvSnggAA5Re/f4Rcq+s=; b=
-	UOx68HK+7sL7FNnMNBajM5lnvC759oK/oFJXFnn9NV79BirYMnV0ssbrYRM/LE6v
-	QdmXeR5cCBUacQnBuRCSiWQ9JRa5FRIYwo9RBJtRM1OJ23z57XqiX3Z9E+7QBnLf
-	3yxzj73IZUEhn7wCEwLLP4rXDv1R1p2sWvBtGwU2G1DXwHfucrupr2MjOTnT1bkv
-	gLn1it6xnsRqiz4vgVuXxORey8QzpblG0ajKpw62Y9V5e3C839VAdWDacXHRauz5
-	LBopNkvU1pe1Ik04Cdg5JL4GmceDwq/zil+i2q/txjafC70StrLIjAi9z823zPZx
-	fmOk7qTJqy0DsswoCdmdew==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1766039325;
+	 x=1766125725; bh=mTUj+PbxbuIYeyyPCPuuJPYrJHjuEsmGG8QChZ4zfsc=; b=
+	vQLzjaorViiWSZGBaehXLxmd9ttCYNBIho4yp9kOfzIfE0UOWmr4em89NnEBOLJ2
+	9Khu7qC54qBIk8DV7cyRX+9Wt9BYABa9w9pFScQ7g0p1hXNidrdLhwnqKIETeDif
+	5LJAkrc0jpX2EP8ZoouNi9bUHGXe61I2lNi0qP+09N9c4IwHstDd6li37gzuSBSq
+	gS/aAshPGzITsAtTRF0I4pRcfUIQy3PWkRuwXosH/2PfV0165JYUbeiEWDSkRCyd
+	3fUehDpJ0LUpIHvcDpzaiXRISeVjQW4/3ZVYN56tP3cPeBy0J1STGaetJDJHuh3F
+	Xx3OyQOCOQqhomyynOjGiA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766039321; x=
-	1766125721; bh=tVIVzWZnn/lwRk0ruzwOiVlcqvSnggAA5Re/f4Rcq+s=; b=u
-	9K3R9qydesrK9/OeYU7PfoHyf+ysL1iZPqmwHjGPUb05PY9Fd5Sfu7jDlf8GThOu
-	1DJpsS7ak/sZUvwGNb0ke7neR14pl2/FfUFWk1cfkiI79plllR3fnwLlemUu6gx1
-	kauXe6ACvdwftdHkt/w9ahKvMOIFYQg8rZs18bocGwDzTwdCJp7dOqaii6FjVRcO
-	YgOFUzdaM3421tmTSSH9mDHFIWSPdJboOef/heqM3A2aRFKdGf+ub3Ergjlpft7X
-	GCk9DIOJvvHRVozhfVIyB+38DFobACByqzx9Z9dJDleNqPpt/CEn4PHnz19O8PM6
-	TQRKT74mD8GS5hpwN+efg==
-X-ME-Sender: <xms:GZ9DaXXN8JcY0-J84vvwYr9zssDLEW72Bepj2X6Vw_laeOETMaR3tg>
-    <xme:GZ9DaXCQzJnn6SY88MGr8yXJNgzDHq8k1RNKWk3B1Ro9yXruCJBsf8iiRHcZeaFzi
-    lKTqWo0aVpRkc1OVwprmraGLQaAPbnskuCNRzuP6uiJXtQlct8pVQ>
-X-ME-Received: <xmr:GZ9DaQwonMH0AzfZys_FFlSnQvTwEIydcABxnSinv9_ZEa8Fa3ls9hpLR2iYfA9oAfXz2EgiyPXSyZPX-GRPoY7NbRF4P4DHZ6kS-ZuXQA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766039325; x=
+	1766125725; bh=mTUj+PbxbuIYeyyPCPuuJPYrJHjuEsmGG8QChZ4zfsc=; b=c
+	cd8NGyIp6vkLbjZ5FVHkdUDv6gGA4llEFCiSb8eHHPCnExCr7O4M5MrQ33w70Qcz
+	0hpGpy8H5OnU97v3Y3RDq6GR9/XnffOLBCwuRoTOxo1wPvK0v6V926cUkP8ZB0rV
+	teS++flzkV9VDceVyi72R6xDZ2kXfYPikKGe0iNC5bZj21Fxg5HkQyt4EyvRqRsf
+	UeS2+oUXwoTd7IXCFiohukZxKNLpjdI2AHi9bsKqioJzBaIsXrOGpJd5axyq0/BG
+	Z5HF7AwFatt90pggCVXAXxWqXLVICocic/E7A/px/zrgh2h3kJZ/LFzk3KCrVy+p
+	adfxzbVQGllb+Tc87XOWQ==
+X-ME-Sender: <xms:HJ9DaXtPBgZTXQxaIWrVXK0YeT44Zgnpr9DrsFek-5-9a-xsg9rCmQ>
+    <xme:HJ9Daf5QTt0HCf0seDZ0VODMWvfRmsxfDfVXE6jDdh0tbeEFyfevm5oIqltPrwQbM
+    uc_pEp0-5rUbQ63SgZ9R-ScIc8Z9ySNzvhjDm_lgL7okzZ3UqzYXg>
+X-ME-Received: <xmr:HJ9DaYK4wrmvFNuXw3IAFxS2U1Rfj4kKOffAe1L3thJmG28zG9HJ-z6qbBHjYCZukTuEZJMAijBeT8fdssB-HCW8gkfWE4Hfu0Euon9yHQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggeejtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhfffugggtgffkfhgjvfevofesthekredtredtjeenucfhrhhomheprfgrthhrihgt
+    hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epfefhueegleehfeejkedtffehvdfhvdetfefgtdduffduveevteegueeutdekhfegnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
+    vehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprghplhgrthhtnhgvrhesnhhvihguihgr
-    rdgtohhm
-X-ME-Proxy: <xmx:GZ9DacBYUve2aZlV61QWKrOUQ0GkvhH9dwPBAuO-qguXN9gVuNDnPA>
-    <xmx:GZ9DaVbFLQX6-vktVsIVd9QY8IVboyIEsURGYsv6hEL__wCFHDe3QA>
-    <xmx:GZ9DacjKod0_JVBly_pGRdySWYyu8D4K6P6fyq6NOm5HnvYmfVOtFA>
-    <xmx:GZ9Daf4QRoi5RrpCKN70VUYl9ag_Z88Fx94HZp31Dk1vo41674tk8A>
-    <xmx:GZ9DabqvpzrfW-SzsAuGRYXK0jIIsj-pu55aRb1N_0Ah7-Yab32snZ5V>
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegrphhlrghtthhnvg
+    hrsehnvhhiughirgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhg
+X-ME-Proxy: <xmx:HJ9Daf7eT8Z0aflUufDsWtJGJvmcoOvX4h1SFjLalbw2UAGAJ1sSrA>
+    <xmx:HJ9Dabyh43KVWEp6d1R-MPquSbxsamzWJizCmAEK9joFLppFRqoa8g>
+    <xmx:HJ9DaTZGHJoesv4spJaYLaaXIFHRmkvTTYsJU68efJkWu8b1cVvfYA>
+    <xmx:HJ9DadRyuQAJYegpQBsAmjetn9eSf9ZOeAoA8G75YKDZfQws_eQJHA>
+    <xmx:HZ9DabhWeqUVjJLWYXHpzfwAXM5kVfg34cr0qCnOEgrVSBpRnf1jxE4C>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Dec 2025 01:28:40 -0500 (EST)
+ 18 Dec 2025 01:28:44 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 184b3395 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 18 Dec 2025 06:28:40 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 5661d110 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 18 Dec 2025 06:28:43 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 18 Dec 2025 07:28:16 +0100
-Subject: [PATCH 6/8] packfile: skip unpacking object header for disk size
- requests
+Date: Thu, 18 Dec 2025 07:28:17 +0100
+Subject: [PATCH 7/8] packfile: fix short-circuiting of empty requests
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,8 +82,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20251218-b4-pks-odb-read-object-info-improvements-v1-6-81c8368492be@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251218-b4-pks-odb-read-object-info-improvements-v1-7-81c8368492be@pks.im>
 References: <20251218-b4-pks-odb-read-object-info-improvements-v1-0-81c8368492be@pks.im>
 In-Reply-To: <20251218-b4-pks-odb-read-object-info-improvements-v1-0-81c8368492be@pks.im>
 To: git@vger.kernel.org
@@ -92,63 +91,77 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  Aaron Plattner <aplattner@nvidia.com>
 X-Mailer: b4 0.14.3
 
-While most of the object info requests for a packed object require us to
-unpack its headers, reading its disk size doesn't. We still unpack the
-object header in that case though, which is unnecessary work.
+When reading object information from the packfile store we have logic
+that tries to bail out early on empty requests. This is supposed to be a
+performance optimization so that we don't even have to unpack the object
+header stored in the packfile.
 
-Skip reading the header if only the disk size is requested. This leads
-to a small speedup when reading disk size, only. The following benchmark
-was done in the Git repository:
+This optimization doesn't work though: we compare the passed-in object
+info pointer with the pointer of an on-stack variable, which of course
+cannot ever become true. This issue was introduced via d9f517d051
+(object-file: split out functions relating to object store subsystem,
+2025-04-15): before this commit, we checked whether the passed-in object
+info was a `NULL` pointer, and if so, we set it to point to `blank_oi`
+instead. The commit then split up these the logic so that we continue to
+set up `blank_oi` in `do_oid_object_info_extended()`, but then do the
+check in `packfile_store_read_object_info()`. But even before that
+commit the logic was only partially working, as it could very well be
+that callers pass a blank object info themselves.
 
-    Benchmark 1: ./git rev-list --disk-usage HEAD (rev = HEAD~)
-      Time (mean ± σ):     105.2 ms ±   0.6 ms    [User: 91.4 ms, System: 13.3 ms]
-      Range (min … max):   103.7 ms … 106.0 ms    27 runs
+Fix this bug by introducing a new `object_info_is_blank_request()`
+helper, which simply verifies that none of the contained request
+pointers are populated.
 
-    Benchmark 2: ./git rev-list --disk-usage HEAD (rev = HEAD)
-      Time (mean ± σ):      96.7 ms ±   0.4 ms    [User: 86.2 ms, System: 10.0 ms]
-      Range (min … max):    96.2 ms …  98.1 ms    30 runs
-
-    Summary
-      ./git rev-list --disk-usage HEAD (rev = HEAD) ran
-        1.09 ± 0.01 times faster than ./git rev-list --disk-usage HEAD (rev = HEAD~)
-
+Reported-by: Aaron Plattner <aplattner@nvidia.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- packfile.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ odb.h      | 10 ++++++++++
+ packfile.c |  3 +--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
+diff --git a/odb.h b/odb.h
+index afae5e5c01..b869c054c1 100644
+--- a/odb.h
++++ b/odb.h
+@@ -353,6 +353,16 @@ struct object_info {
+ 	} u;
+ };
+ 
++/*
++ * Given an object info structure, figure out whether any of its request
++ * pointers are populated.
++ */
++static inline bool object_info_is_blank_request(struct object_info *oi)
++{
++	return !oi->typep && !oi->sizep && !oi->disk_sizep &&
++		!oi->delta_base_oid && !oi->contentp;
++}
++
+ /*
+  * Initializer for a "struct object_info" that wants no items. You may
+  * also memset() the memory to all-zeroes.
 diff --git a/packfile.c b/packfile.c
-index c141b8a7b1..d2ae2432eb 100644
+index d2ae2432eb..ce83e77899 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1586,7 +1586,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
- 	struct pack_window *w_curs = NULL;
- 	unsigned long size;
- 	off_t curpos = obj_offset;
--	enum object_type type;
-+	enum object_type type = OBJ_NONE;
+@@ -2157,7 +2157,6 @@ int packfile_store_read_object_info(struct packfile_store *store,
+ 				    struct object_info *oi,
+ 				    unsigned flags UNUSED)
+ {
+-	static struct object_info blank_oi = OBJECT_INFO_INIT;
+ 	struct pack_entry e;
  	int ret;
  
- 	/*
-@@ -1598,7 +1598,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
- 						      &type);
- 		if (!*oi->contentp)
- 			type = OBJ_BAD;
--	} else {
-+	} else if (oi->sizep || oi->typep || oi->delta_base_oid) {
- 		type = unpack_object_header(p, &w_curs, &curpos, &size);
- 	}
- 
-@@ -1662,6 +1662,9 @@ int packed_object_info(struct repository *r, struct packed_git *p,
- 	oi->u.packed.pack = p;
- 
- 	switch (type) {
-+	case OBJ_NONE:
-+		oi->u.packed.type = PACKED_OBJECT_TYPE_UNKNOWN;
-+		break;
- 	case OBJ_REF_DELTA:
- 		oi->u.packed.type = PACKED_OBJECT_TYPE_REF_DELTA;
- 		break;
+@@ -2168,7 +2167,7 @@ int packfile_store_read_object_info(struct packfile_store *store,
+ 	 * We know that the caller doesn't actually need the
+ 	 * information below, so return early.
+ 	 */
+-	if (oi == &blank_oi) {
++	if (object_info_is_blank_request(oi)) {
+ 		oi->whence = OI_PACKED;
+ 		oi->u.packed.offset = e.offset;
+ 		oi->u.packed.pack = e.p;
 
 -- 
 2.52.0.351.gbe84eed79e.dirty
