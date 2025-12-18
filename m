@@ -1,104 +1,139 @@
-Received: from mail-pg1-f193.google.com (mail-pg1-f193.google.com [209.85.215.193])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380AE155CB3
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 23:02:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DE9287518
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 23:03:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766098972; cv=none; b=mJrlQI01pFCwrcrHdncjbLoUZZkmZ9jo66CKZdyDlQiGTjuguBJOzkC+JujZZ6dw0tstnWNuumAZXZnWk3MXk/1K9Utj8viztkGDp+epdJXsQm15eqqWCYOwyCAcSUBrzRlbLGmivYdnikHQmlpj+IN4qW080sLPoR1Dy6U9/R4=
+	t=1766099005; cv=none; b=hO4cjK4BfeEpz54UF1sWfjkZV5HO3ZwntlqhvA8lO4JfCWD5bt/8tQ6EWLYgGdnRd+g6dpL2mDOPXujJR4sUKDYDyF/qcm5UQw6mldTi7KwvDBpluvBtqLVV9C3AlaCEU0sBIeYoD6kFeZ4gz5TG77paMXRUPArDoUjCBAmjXbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766098972; c=relaxed/simple;
-	bh=tYgjUoghpLoJbh+YO1/j57nN6xArO4v5DlJZSu0yf04=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=Q8wvfFQEpHVo097LXlLEYz100mA1OOnXKbFc/3nDYDD/V7gFshgdbMstKUKkXLZxeTVTE1YvLCpdqay415YSPU+0c0U+7d/EFKu7v98HMyxlxdV/Ohez5c4JkWzTGe9S3kNIEINf6wm0W2WZXua9ijem80GutkjhdiVuiB3B170=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SRIBNc1/; arc=none smtp.client-ip=209.85.215.193
+	s=arc-20240116; t=1766099005; c=relaxed/simple;
+	bh=rGj2H/RVIqWgesJ0g/v/a9Q9MLJUHZ4N8M5eIPdVge8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=njTQ/oajja7qMaWKI4+6ho1GDOmWKvmHFI3NcB1cqzrv0nEJg5G3nVk3DFBUUr38UHmBbP52hYuegtqkq2MUR7hBynbJMwVVk+jgq6CfCunj325QvTL+qQ1Ya9xxHhSVvl9/XYLL6xU3i4FdJ4lyr9vY2VAylUHaB8lidbNHBSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RT0N9Bav; arc=none smtp.client-ip=209.85.216.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SRIBNc1/"
-Received: by mail-pg1-f193.google.com with SMTP id 41be03b00d2f7-bd1b0e2c1eeso871572a12.0
-        for <git@vger.kernel.org>; Thu, 18 Dec 2025 15:02:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RT0N9Bav"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-34abc7da414so1046700a91.0
+        for <git@vger.kernel.org>; Thu, 18 Dec 2025 15:03:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766098970; x=1766703770; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1766099003; x=1766703803; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iDB/ieiXiId8bjClBt4HCzk1198fJ6h4b4op/jXE0yw=;
-        b=SRIBNc1/oSkHOXoPLwkzZDJ1W4lLNna/SQQuZVxYb6B+YE9DPLmJZGwCJDF51JWle9
-         4Zhwf0703teQ/49B0gua1fCfB/hbKPdqUSg9nG0IAXCDhTCQiSOBw4zUqOcGHHtORg26
-         L3Mc780uvOBrybtYSjtTFg6sBDmBGba2qg/J1dtAcTOIDlF+KzygWWwGyzsulXrIRE5/
-         7z49DFIuoT8nb8CalIZZicmp6/f16ec9fIVu/oYUjbxkvS4lCNq8Do+AtMfRGkMXggV3
-         pz/YjNHy2Eueo6alCY78x6nypkDqPLY/EwFIOP1DWG79fI3ecnZoBtUtxr2VxjRp0eed
-         vpKw==
+        bh=SxRLfXSVt7UVlO1gEaYb1lyqgYiVuQ6tzqikWm5GtnQ=;
+        b=RT0N9Bav+gz/gO3JEqc0lEpdWnvb3kCgoJ8pPzH3eQXO67JYbhb+5cS7N+HAbK+Igw
+         /OXMJoFobePq1j2IYmSJh4dIhsi+1HZ8JdiL5I6Ax7oJZ6AK0jq2EWVjCHEv12L4OTrZ
+         CwuZ+jLHr+Tj8xFmYNi9RyoDeSY7Fr3bd6NjGhsMLnzRltjZrAKWHCtVJbg4Q8e//DV4
+         LoZZ30r0JoIRIJMu90iVa03t9vWI2lhAoXr71JI9fPmCtlKNjLF15RELs6Xo32eotzAh
+         QEX89Rb/AY7kmpJJp2osZxbJHOeoKiCDzGt6p2Qu8gwB5hqSOjEkrTOv8JZQIkIBoYPR
+         dNOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766098970; x=1766703770;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iDB/ieiXiId8bjClBt4HCzk1198fJ6h4b4op/jXE0yw=;
-        b=kXhHtxHyov1dw6hxJ+NY7zI8kt0jf/ND8Nv7WmdZdZUOV+TmYT/qkaINApVPdftzPQ
-         2Rns2lK0YKOiCbFXebbS5DKGXWarouBmPAHm71Gjey3CauWgA75hhdGICk1PmaX0JDkL
-         zaHV6OyTgUQ8TewddE9QLiKJEbny1FRIDvv5du36jLpLDFPq9NSBvryMFQRCk4G4Wxd8
-         HvFrTqTsAbgrC1/l275VQ1Bq/TGicaJOWnWIMeDRIdMo3X8lZtNZf7XvmMb86hJZRgU6
-         BiR78ASG1CIcLWIzAVexvkSmgutwb1iuWbgk234/b1nOjnnamzdS8tWVbVbLVgI74sZv
-         vvXg==
-X-Gm-Message-State: AOJu0YwM8ktvyqNMIR5eWRI/zb8ZC4GOU6zwm84gnSj80bVNMmOgOpzw
-	1DIgx7KXgl3M/7014v4ByfM7eJ/TMiEs3ELgHr3b/30LUX9ltFU+dk0eo0W88/juX3E=
-X-Gm-Gg: AY/fxX7nJVQ75s83PoPuteIPotfNr8TV2sAwLD3S8hUCwhvyBW6VNl02DnocTDlv+VO
-	KaaD06tepKTiqNeaUuANNnxWbsqH2yNDY4pJNzfwpyx4J7MgHT0R3NCnAi2fEsW0b92bNbXSuA1
-	uFYMp4mtRa0d8Q9zo+5D1NaPcRwX6Qyvxhcv/KUYwuoMVEBENkcEK1i5EDm5JP/9iD4Z3QnzE+7
-	Hv9DeXaRBa9KNUd+BQgoB6mGhXfj3Te/1CLGKBySuJwdvPUb3UYrRmqussQQ+1FQ2uyYQ9p+lwT
-	xsOu8GRfIULYweapLsmh4zUL+u4RGcihOgts3cfWgPDS63Ywqc18D98zYXVtawuhI1tVjr1IaAA
-	fXoyxobBYZU+SmsdZ5TG4Dn2F4i9m9QevYOQ0VsGk4PLHsWA31SHqR5E2lZJYjBMRVMSeqTm+ji
-	opaMkuzdN0sXGD/VeKnt7A9IMr+6KxP8whJZpXrYUs
-X-Google-Smtp-Source: AGHT+IFiH5gh+ODG3OWjYMd0Dlm2lX5xTKajR7QliO69qLLyyLfPnBznbxhI2hGNLLfSZXgAg1/9ww==
-X-Received: by 2002:a05:7022:61a2:b0:119:e569:f61b with SMTP id a92af1059eb24-121722ac5f3mr999321c88.20.1766098970181;
-        Thu, 18 Dec 2025 15:02:50 -0800 (PST)
-Received: from smtpclient.apple ([191.181.59.93])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121724de268sm1671101c88.8.2025.12.18.15.02.48
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Dec 2025 15:02:49 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
+        d=1e100.net; s=20230601; t=1766099003; x=1766703803;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=SxRLfXSVt7UVlO1gEaYb1lyqgYiVuQ6tzqikWm5GtnQ=;
+        b=hium/2fH0UzSrYpU14agBFayPkBHhvymS3p5md9e5zd+i48v/VYp/iKaDyxQR8tTSm
+         v/vAwQzkS/U/QkiSmMY57ofzlTvzjFz0zn8gkgY7yWqb7YvebSIfMmCksSXheYySWUIf
+         /xRNtSeXst6hXZ+4wlQAMHCGNsyVvbrx0j5Y2IRpIwufErBTMmDQ8128hjzSUXFEiHdm
+         W+HMfKQ8CV3h+lCU+5b41MhBm2DWw3A+kKez1gD+NQ+D4ULy3AAizdfyibJudyC3SR2b
+         KBY77n67PpQINERDWcveXkGfJZ8XMMuPWuEz2aOD5rhDrLivltarbQgO2RCI/YIWR2/A
+         mU/Q==
+X-Gm-Message-State: AOJu0YxrrKxKoK2ZsuL9KGrPbL9hUQZMjE5vD8Wf3B1LxdixZ8NvI7ip
+	hj6SHSf5h/tTi9JMkAbxURV8ih4SrrJ77U564uddHA3dlphGwkbXZgZltwiuoQNc7UyHpl3UiCW
+	u3AwR10e+kaqWHHt7CXBluX0f/ef65WI=
+X-Gm-Gg: AY/fxX6tDoCIq6MmemtC7Mm82XBWMANx7sj/lUeRIFK+FmHvpLnBh1QGKhCK/pp2EoX
+	ItHw6ezvS2YfbMpXrGxHG0ZNaGOz8YLwLRAiWEvVvSEmqGYMDaHg1aiwBgdQaW9Qw0AuisAlP6D
+	a1cCn53LqfeoOFFBW8QFxGrfiBL0akhR8DUm5UAF9+/ZxlrX/tK05kCc2McYrIMThcxieSEUFVe
+	5JRolAKLLb/qjFEi1JboqZPj/CMzVpekqaENHSjNRI4x/PskUsdvWWOy95S8pjMZzMIoeprVUBx
+	kkD/SDc=
+X-Google-Smtp-Source: AGHT+IEYwADsgRMWZHnKV4oYS8hox9uM+iMue1w0pEuIia3Kzt9O8ZvVrD3IzFXiMt6aTaqyPcVenUkI97a0C1g6lC8=
+X-Received: by 2002:a17:90b:134d:b0:34c:aba2:dd95 with SMTP id
+ 98e67ed59e1d1-34e921c700emr749720a91.26.1766099003365; Thu, 18 Dec 2025
+ 15:03:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [PATCH v2 3/3] repo: add -z as an alias for --format=nul to
- git-repo-structure
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <xmqqh5txfv7b.fsf@gitster.g>
-Date: Thu, 18 Dec 2025 20:02:41 -0300
-Cc: git@vger.kernel.org,
- jltobler@gmail.com,
- ps@pks.im
+MIME-Version: 1.0
+References: <AM0PR02MB44500013C2F28CBBD99A113EB3A1A@AM0PR02MB4450.eurprd02.prod.outlook.com>
+ <CALnO6CBt7Z9bRhOzci8S+QndYUQUEszYHxfqHqiHkTXQ67ptsg@mail.gmail.com> <AM0PR02MB44504189178BAD0CB6FA71C7B3AFA@AM0PR02MB4450.eurprd02.prod.outlook.com>
+In-Reply-To: <AM0PR02MB44504189178BAD0CB6FA71C7B3AFA@AM0PR02MB4450.eurprd02.prod.outlook.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 18 Dec 2025 18:03:12 -0500
+X-Gm-Features: AQt7F2rj2mYVlPZyY2qkCoXjhQtCuKhHyVnH2xtxJYXDrCUtYTZPcPjVCrCz2z0
+Message-ID: <CALnO6CBEYaOrqiWTe1HVH=0qEHa=M0CrYwtW68Pe9bMSiXG-5g@mail.gmail.com>
+Subject: Re: Color remote repository part of a remote branch "pink" instead of
+ red. I.E: [Feature Request] Mixed coloring for remote refs in git log --graph --all
+To: Skybuck Flying <skybuck2000@hotmail.com>
+Cc: Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <5240C85D-7587-4042-AA75-58356BCFF351@gmail.com>
-References: <20251130203456.28437-1-lucasseikioshiro@gmail.com>
- <20251204210843.79411-1-lucasseikioshiro@gmail.com>
- <20251204210843.79411-4-lucasseikioshiro@gmail.com>
- <xmqqh5txfv7b.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
 
-Hi, Junio!
+[Back on list; please keep it CC'd]
 
-> * Instead of munging the expected file so that it contains a NUL,
->   and compare the actual output with it, munge the NUL terminated
->   outout to make it text and compare with the expected file in text
->   format.
+On Sat, Dec 13, 2025 at 7:35=E2=80=AFAM Skybuck Flying <skybuck2000@hotmail=
+.com> wrote:
+>
+> On Thu, Dec 11, 2025 at 4:46=E2=80=AFAM Skybuck Flying <skybuck2000@hotma=
+il.com> wrote:
+> >
+> > git log --graph --all would show something like:
+> >
+> > X:\Vite\Repository\LocalControl>git log --graph --all
+> > * commit c2234c6162cae9e7bfe5013a76b6c381092046fb (origin/Branch/Featur=
+e/Delphi/SystemPromptUpdateForTestingUsingFreePascalCompiler, Repository/Br=
+anch/Feature/Delphi/SystemPromptUpdateForTestingUsingFreePascalCompiler)
+> > | Author: Skybuck Flying <skybuck2000@hotmail.com>
+> > | Date:   Thu Dec 11 10:15:51 2025 +0100
+> > |
+> > |     SystemPrompt.md +FPC testing, +common/types uses.
+> > |
+> > |     SystemPrompt.md updated for:
+> > |     + Use FPCUnit for testing with Free Pascal Compiler.
+> > |     + Special directives for common/types imports/uses clausules.
+> >
+> > origin is a remote (the github remote)
+> > Repository is also a remote (locally on my disk).
+> >
+> > Both branches are in red:
+> > origin/Branch/Feature/Delphi/SystemPromptUpdateForTestingUsingFreePasca=
+lCompiler
+> > Repository/Branch/Feature/Delphi/SystemPromptUpdateForTestingUsingFreeP=
+ascalCompiler
+> >
+> > There is the possibility when creating branches in all kinds of ways of=
+ accidently naming it the same as the remote, so it's not really a remote, =
+but it's just some kind of branch name with happens to have the same remote=
+ name.
+> >
+> > Maybe these remote branch names are just one string and the difference =
+don't matter or maybe it does matter, I think it does matter, if it does ma=
+tter/stored differently then the idea is to:
+> >
+> > Allow mixed colors in these remote branches.
+> >
+> > So the origin part becomes pink.
+> > So the Repository part becomes pink.
+>
+> "
+> Perhaps try configuring color.decorate.branch or color.decorate.remoteBra=
+nch?
+> "
+>
+> Hi,
+>
+> I haven't tried yet, the AI said it colors everything ? (in other words s=
+eperate/mixed colors not possible ?) hmmm..
 
-Ok! I'll do that in the next version.
+Indeed, it seems I misread your use case. I don't know of a way to
+color the "remote" in remote-tracking branches (partly probably
+because that remote prefix can be changed by changing the fetch
+refspec). Sorry!
 
-> * I see your -z output is "<key> LF <value> NUL", but was there a
->   particular reason why "<key> NUL <value> NUL" was not chosen?
-
-This was a suggestions by Phillip Wood [1]. We've chosen this format
-following the format of git-config.
-
-[1] =
-https://lore.kernel.org/git/223c7cbd-610e-49e2-90e2-5914cbc0f1d7@gmail.com=
-/
-
+--=20
+D. Ben Knoble
