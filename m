@@ -1,140 +1,151 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6FD2C327D
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 02:22:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4753BB44
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 02:41:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766024547; cv=none; b=a05EQsxclh2VkeO6L3y5IST1rrlDc+uPtoAtuQmQkX5IyMIQE8fbEKfbRSXC3Lt+sernPC4KgEmZ53w6Sf1qKvSzt2uElavJwse4CoTYtThqMe6GKun1PYadACQi+u5/KmcA0aSkp89VXBSjtSIwQoM0rLdK+1FG9sYUsPi56J8=
+	t=1766025662; cv=none; b=ruW+LOV+z9OrVJv6s8rtJmwKL1hn4oMN0jcbdHwcupopCnDRd4dFqG6C1+9zW3Tn0usM8olBE4nPX98hUo6F1DBv4KBXCWeCZ2TWH54gVs84OSHzJt7tM5/s4R+jPGW9xs8vA2jb9pTfW29RyjhLilgGQzj7rLS4gddS58DgM2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766024547; c=relaxed/simple;
-	bh=kmUYtkRZlz19g+WnX4Oyp9aOAkeY89efcQ941XVrWyQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bGDeRlEAbpoaBWuoR5XnIvehQvuWdRsCVkY5FxQ4vyPMkjJpr1QBis5O+B0a490ui3duJIG/T9JfpxLdi5Woyvs4/mxTtckf2R7SutJgL/toKXLAiaBYNQR3RS4yE16GDCCAOKWjVtrXtEYOBkUSvfrPJO7d1FmcRdXaADMu9R0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nCLPC21m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BiFZK9EJ; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1766025662; c=relaxed/simple;
+	bh=a1ExUuh6gNMMeQVsfAQ3E9J/wILMVn23LHPmBZFAdAg=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=P5irNpMCVBtvS5kcTX4g8UXp/EpjetLF/zC9OMWc3NGOnPq16YvIa5GarG0CueX3HWSe9niGp+Y7d+0RguQwRSTJZpFXfAnK8oqk7L4b7kgITvHabCq3mrGft0rvxKyHDX3h16tMObqZhvMl4o6ecgfms1hKCqbyb5lOFbs0EGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ETvPCnWM; arc=none smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nCLPC21m";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BiFZK9EJ"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9F6E6140020F;
-	Wed, 17 Dec 2025 21:22:24 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 17 Dec 2025 21:22:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1766024544; x=1766110944; bh=z9BSniiiY3
-	zmTvz30D3s+CLBpqwtVU5yBJBwfFbwlPc=; b=nCLPC21mfvEG2dSro8Vr2VyuhS
-	d+R9Z9v8N4bd5uPXz+WUW8/ulwe+QNcJsmNayEkhRc0uB25ZT2j8PPZJsakaYIgR
-	1UMxtQgQfFIpMdHMQrbsgBMiB10aedDj1+0VMPuzTK3CWvc2FK9BW8E2b2O8lJxq
-	fk7Xt3uLZF1wxIraj4NRRZSiCeCD08H5nOnXgMVVqn76vcBmOxTUpX5ni45BlYQL
-	kqCP34lcZJTvn/ZI6SveausncHQ3YvJSLlPBHZmPZAC9D2fiduxkpQdfDDfht7MM
-	sQ+ryuJTJxLBjfxMEbmGPupC1vDOut9GnEE/r54tnpt0AHQhdpGqvesn8VTA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766024544; x=1766110944; bh=z9BSniiiY3zmTvz30D3s+CLBpqwtVU5yBJB
-	wfFbwlPc=; b=BiFZK9EJ3ndDu2XODIXVHJrJFkWY3/xJ5ivRqOYiD9DkVvXgdsm
-	hCMyHx/dLKHK8VOWi7Xjf28iVP3YeJMCvNGJ6jnscOp9CeYjWJQvf+D4FQawepkj
-	kH21Xz2/bjjZwIBNEQyN6VBlUMzhT5XGiwyTpCrYqPeolzc8U9l/s3nI5RFhHRTF
-	aSoVr0XMsmkq7tH/9jpWVL2DArb2NeX8alvPMDxD98DKr9Tp3oywAl4KSMlAdV6v
-	doTQZ2Q8dv3iqhcHmj1J1qXkcH6gH3yr4PxhJeS+PC+27dBy9kKTvNEhIjV3sCxQ
-	rsSeLSiNKf8mPvph7uiqirb3oVfiu0TtHXw==
-X-ME-Sender: <xms:YGVDacK2tsKKbdjTQiEt8bWFC4ZpA1dO0-vBuVzUgrlpMCMI3TMVcQ>
-    <xme:YGVDabMXP1XcAnk_2Hae1yjNuc5YbpYIVp8mYQGV5hK7dibHu2otBNj9QCUwUwX9g
-    bwa_NU6jW57JXM9IdheLpCAf3WUrs7ozQM1iomSQMsTXc34ra7U_w>
-X-ME-Received: <xmr:YGVDaS6nuKEve0YeZhYLrcKRs8pFvrEsctRa5va7R2kXTjwqUGQiJ0luSVs7wYzNrpneZoQtfuKA7sMZtP2HaRzp2No69Bl4yQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggedvfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpefhteegveelvdevkeegveetvdfgheffveeivefgffduveetfeetiefgveffteet
-    udenucffohhmrghinhepvhgrrhhirggslhgvfihouhhluggsvghnvggtvghsshgrrhihrd
-    dqihhtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
-    ghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpe
-    hsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
-    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphht
-    thhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epshgthhifrggssehlihhnuhigqdhmieekkhdrohhrghdprhgtphhtthhopehophhohhho
-    rhgvlhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhih
-    hnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:YGVDaV6gIzl0fBnEk4DAuS4DXf8aMvaebmIOVmSjmYnxFVtKaCaFew>
-    <xmx:YGVDaYFKJtluPPCcXmvod4tCJW-40kwOf8UmfolKlPSR_sKIgZNZrw>
-    <xmx:YGVDadWc4UlyMllRGU7o-89vbZy_RaUcjwWKKNLPiPMxV5pZvPPICg>
-    <xmx:YGVDaUV1FvWGhOPuDKID1z4jvY90EMwHYh05zVs7PXTxid4ET38t-Q>
-    <xmx:YGVDaU8MGBncDpVYpNe7XL4vOo72hd00mO0KX4Hw-DWpLKN58-XXaZ_r>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Dec 2025 21:22:23 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Andreas Schwab
- <schwab@linux-m68k.org>,  Ondrej Pohorelsky <opohorel@redhat.com>,
-  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 2/4] sideband: introduce an "escape hatch" to allow
- control characters
-In-Reply-To: <2615abd8c5d5c55486cf5885c47e09e52fad61b8.1765981422.git.gitgitgadget@gmail.com>
-	(Johannes Schindelin via GitGitGadget's message of "Wed, 17 Dec 2025
-	14:23:40 +0000")
-References: <pull.1853.git.1736878772.gitgitgadget@gmail.com>
-	<pull.1853.v2.git.1765981422.gitgitgadget@gmail.com>
-	<2615abd8c5d5c55486cf5885c47e09e52fad61b8.1765981422.git.gitgitgadget@gmail.com>
-Date: Thu, 18 Dec 2025 11:22:22 +0900
-Message-ID: <xmqqy0n0y1ep.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ETvPCnWM"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c1cf2f0523eso110942a12.3
+        for <git@vger.kernel.org>; Wed, 17 Dec 2025 18:41:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766025660; x=1766630460; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=a8AzCVCl9P/xOtThbMxXBfuCsNvFYI7nEm7ADWTOVjk=;
+        b=ETvPCnWMyNNpz9n1WtulCQ1mir1nT5xOSRl29PGTOeeuBuHsQZaIpOW/Y1hJ+ExlvF
+         uveG+hOaCrnrLcgYZc/BhlFq0JIhD7yxoSQG+DcUKgxKhZGcgR4bukigTTwvdE03MzKa
+         OtbiRxZNDyXyf4Og44vHvesxEpFGfKfxt8QWKs/i1+ygT5nr3lc6mrPFaimZ1nDvOzbT
+         AgC8A2pQDtWf88Nx5BMWQ4PNs3Kka9YG8FVOwJAH0NxG8+SNqBgqXfESd3mhXvUdhvOM
+         Qz+pUiZ5vFg3HjOEObjwQ8mGQF80l5GH1pg+yPyAEXXcLPn/qdBWPQMPX3WCbH4IJJ64
+         MwjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766025660; x=1766630460;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a8AzCVCl9P/xOtThbMxXBfuCsNvFYI7nEm7ADWTOVjk=;
+        b=hK03rR9PhgFLghVwmm1PaEdynjAx/WTyOLYLAhd/UmzTJJyKscpznkVW/g/JJRDsWa
+         H4SJv3FgfzrtELvSjy6fPppinFQERcDHOqqsU9kha2jRvJ6jB2zsCu/kopy44HrP05GO
+         kSINe+zPJnRZVdK1DfCuAYaDeJHqs/7fsEwKdKM6OF5iAXbZyYNp17oXD4dvqt+BjPjM
+         bUQqf+igflQrzrW4KvM6nmObg1koELGyUVfgPdtSVh+P14sPobrYI3u7W+in9EWbJwcE
+         ta54lZ7UwPW7JkJxFN1bB6S104SRLi9Ey+2nlubiB6OSodQIr+G5T2t1pU8ZkJcEWtgh
+         jWXw==
+X-Gm-Message-State: AOJu0Yz9CckS6yGGgYGKpV0NFCmD/BrNyDt9V4E1ctHFa599xfec3lMz
+	LLtnJwusutPkyjYZAa10oOpIPtqcie57RZFGI+Jjt1dki/cl2urPgyTJLsi6v0v5
+X-Gm-Gg: AY/fxX4Yw2jqrmSSWtWYWXn4+2LNeBSCAsKpgKqQaQFUSvOOdNjkqq1ywhwcn8H/Gmw
+	hB/WzpyQo2PlzDk23oEjWI+9l6DYcYR9jJbCPxm+s7+rMFqbIMnmInOVW6SCo9QI2ww1deSiKPq
+	BAHHRuZDxqbAXILdYkmBkdMrsp6Om5dXJeoNwLSZKjf+ifBCvoTWscfr/6sZtBxPTLVCqji0gr0
+	KcT8oI5oSE7By4MRabgQDBaPqthPhMoozdO5A1WVqDYBBPtfe6n9rsrlRFh2vRv38dBMH5ST77Z
+	uIklxfMDkEa4t/MwgE9mycnBMlFNxChPXC8NUhP05L0vuKgt/Knr0NNOhaDs908+iUUVepFTYGJ
+	kM3yTONNFxNlIfbMNiZVVihECtGTsmdIfZFwcQrR+e00gwTMroXHZZZX3s9ykJ+LtBuo7f6FjcQ
+	1umO2kQWOEUfFs
+X-Google-Smtp-Source: AGHT+IHO27g99PyjUZOpHYcxWieVa0kI3clC+C4wiwT0aDjRsSNpMFOdXIONgxE53FWJu7haBMiVSw==
+X-Received: by 2002:a05:7301:122:b0:2a4:3592:c612 with SMTP id 5a478bee46e88-2ac303ca513mr11242175eec.35.1766025659739;
+        Wed, 17 Dec 2025 18:40:59 -0800 (PST)
+Received: from [127.0.0.1] ([172.182.212.2])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b04e58d061sm1193357eec.4.2025.12.17.18.40.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Dec 2025 18:40:59 -0800 (PST)
+Message-Id: <pull.2129.git.git.1766025658413.gitgitgadget@gmail.com>
+From: "AZero13 via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 18 Dec 2025 02:40:58 +0000
+Subject: [PATCH] fsm-listen-darwin: free corefoundation paths
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: AZero13 <gfunni234@gmail.com>,
+    AZero13 <gfunni234@gmail.com>
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+From: AZero13 <gfunni234@gmail.com>
 
-> diff --git a/Documentation/config/sideband.txt b/Documentation/config/sideband.txt
-> new file mode 100644
-> index 0000000000..3fb5045cd7
-> --- /dev/null
-> +++ b/Documentation/config/sideband.txt
-> @@ -0,0 +1,5 @@
-> +sideband.allowControlCharacters::
-> +	By default, control characters that are delivered via the sideband
-> +	are masked, to prevent potentially unwanted ANSI escape sequences
-> +	from being sent to the terminal. Use this config setting to override
-> +	this behavior.
+They are not freed even though they should be.
 
-Two thoughts.
+Signed-off-by: Greg Funni <gfunni234@gmail.com>
+---
+    fsm-listen-darwin: free corefoundation paths
+    
+    They are not freed even though they should be.
+    
+    Signed-off-by: Greg Funni gfunni234@gmail.com
 
- - Users may want to say "I trust this remote host" or "I trust this
-   remote repository".  For that, something similar to what we do to
-   `http.variable` to allow `http.<url>.variable` to take precedence
-   over `http.variable` would be necessary.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2129%2FAZero13%2Ffixs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2129/AZero13/fixs-v1
+Pull-Request: https://github.com/git/git/pull/2129
 
- - It may no longer matter but a remote repository that may send
-   messages as strings encoded in ISO/IEC 2022 would need to set
-   this, merely to make the messages human-readable.  There may be
-   other reasons the trusted repositories want to send "escape
-   sequences".
+ compat/fsmonitor/fsm-darwin-gcc.h    |  2 ++
+ compat/fsmonitor/fsm-listen-darwin.c | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-It might even be a good idea to make the default setting of this
-variable "allow", except for the initial connections to repositories
-(i.e., "git clone $URL", and "git fetch/ls-remote $URL" with an
-explicit $URL without using a nickname recorded in our .git/config),
-as visiting a potentially malicious remote repository you are not
-familiar with may not be uncommon, and users may deserve protection
-over inconvenience.
+diff --git a/compat/fsmonitor/fsm-darwin-gcc.h b/compat/fsmonitor/fsm-darwin-gcc.h
+index 3496e29b3a..8b4bc3a5bc 100644
+--- a/compat/fsmonitor/fsm-darwin-gcc.h
++++ b/compat/fsmonitor/fsm-darwin-gcc.h
+@@ -40,6 +40,7 @@ typedef const FSEventStreamRef ConstFSEventStreamRef;
+ typedef unsigned int CFStringEncoding;
+ #define kCFStringEncodingUTF8 0x08000100
+ 
++typedef const void *CFTypeRef;
+ typedef const struct __CFString *CFStringRef;
+ typedef const struct __CFArray *CFArrayRef;
+ typedef const struct __CFRunLoop *CFRunLoopRef;
+@@ -76,6 +77,7 @@ CFStringRef CFStringCreateWithCString(void *allocator, const char *string,
+ 				      CFStringEncoding encoding);
+ CFArrayRef CFArrayCreate(void *allocator, const void **items, long long count,
+ 			 void *callbacks);
++void CFRelease(CFTypeRef cf);
+ void CFRunLoopRun(void);
+ void CFRunLoopStop(CFRunLoopRef run_loop);
+ CFRunLoopRef CFRunLoopGetCurrent(void);
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+index 43c3a915a0..149c310433 100644
+--- a/compat/fsmonitor/fsm-listen-darwin.c
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -455,6 +455,13 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ failed:
+ 	error(_("Unable to create FSEventStream."));
+ 
++	if (data->cfar_paths_to_watch)
++		CFRelease(data->cfar_paths_to_watch);
++	if (data->cfsr_gitdir_path)
++		CFRelease(data->cfsr_gitdir_path);
++	if (data->cfsr_worktree_path)
++		CFRelease(data->cfsr_worktree_path);
++
+ 	FREE_AND_NULL(state->listen_data);
+ 	return -1;
+ }
+@@ -476,6 +483,13 @@ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
+ 		FSEventStreamRelease(data->stream);
+ 	}
+ 
++	if (data->cfar_paths_to_watch)
++		CFRelease(data->cfar_paths_to_watch);
++	if (data->cfsr_gitdir_path)
++		CFRelease(data->cfsr_gitdir_path);
++	if (data->cfsr_worktree_path)
++		CFRelease(data->cfsr_worktree_path);
++
+ 	if (data->dq)
+ 		dispatch_release(data->dq);
+ 	pthread_cond_destroy(&data->dq_finished);
 
-But once the user establishes a working relationship with a remote
-repository, would it be a lot more common to trust the contents
-there than be on the lookout that the repository may spew bad
-strings of bytes at your standard error stream, I have to wonder.
+base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
+-- 
+gitgitgadget
