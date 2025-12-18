@@ -1,91 +1,94 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035B81EF36E
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 01:33:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6FD2C327D
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 02:22:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766021617; cv=none; b=Cl5JhFvWZJgZ5ZInk1HpPIfeYjB2kPIRmy8Ru4OPH+rH0SGvpAd4o2kJd2k6oeWcTyzr9dyvFc2KB6F2ZMBZATZrG4TtdvNFCQo33jX05INAZzd77R2xbiG916289+YRvyzszAtNu+KEtX7CoznyDElIv+TkhvPwX/XphW0a/6I=
+	t=1766024547; cv=none; b=a05EQsxclh2VkeO6L3y5IST1rrlDc+uPtoAtuQmQkX5IyMIQE8fbEKfbRSXC3Lt+sernPC4KgEmZ53w6Sf1qKvSzt2uElavJwse4CoTYtThqMe6GKun1PYadACQi+u5/KmcA0aSkp89VXBSjtSIwQoM0rLdK+1FG9sYUsPi56J8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766021617; c=relaxed/simple;
-	bh=wyL+PwBpuCP9LbnAy6Zx3ZwVp9M+wJqlNBgx/bSr7XU=;
+	s=arc-20240116; t=1766024547; c=relaxed/simple;
+	bh=kmUYtkRZlz19g+WnX4Oyp9aOAkeY89efcQ941XVrWyQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=I2VHv9a6fqTNej9ir4Usixad+8Xa3G1Pl/fXJnBy12KSRMQp6R4sWt6kHWQ6LBJIxEKv7Rtt8F+2DizXtewb8N0Z9lQ9rojOV9WdyITecpXYPpTjdXmRRiAa3SeiMZYMfyfUX7/lJGBMNeFrWW1A3jEYuh5xNJ89878mVeuFwUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kOWvkze/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ihgx7g9q; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=bGDeRlEAbpoaBWuoR5XnIvehQvuWdRsCVkY5FxQ4vyPMkjJpr1QBis5O+B0a490ui3duJIG/T9JfpxLdi5Woyvs4/mxTtckf2R7SutJgL/toKXLAiaBYNQR3RS4yE16GDCCAOKWjVtrXtEYOBkUSvfrPJO7d1FmcRdXaADMu9R0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nCLPC21m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BiFZK9EJ; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kOWvkze/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ihgx7g9q"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0216DEC011C;
-	Wed, 17 Dec 2025 20:33:34 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nCLPC21m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BiFZK9EJ"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9F6E6140020F;
+	Wed, 17 Dec 2025 21:22:24 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 17 Dec 2025 20:33:34 -0500
+  by phl-compute-05.internal (MEProxy); Wed, 17 Dec 2025 21:22:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1766021613; x=1766108013; bh=jn+6cITbpj
-	oC4BzEKuLDaq3o4IzQHMOvVnNZKvoA3TE=; b=kOWvkze/+fkGYHlgps84XC30eT
-	WDfIdA3kDLa5OHIC6A+XMddYrLOiaiO8MdPBcn2SASl5ECHqjYRATpz2G6wYya1B
-	I29iosmcx35bPn1feVWvM57GXADRw844/bAifAbi5ccl+/eiKuAsRLuBAA/sf5Vh
-	MukkxJgHQ/15jl+5nbfLBjlV0r/xxFvSsG8Pl3FJBGc6wAZftkn9Mtw0OPucG+Tw
-	5PMHv+7A4zjF+cONrQ0X1XfL0NYT4QCFuP/gSx1xCDnQIzN3brMYCvQXW27qjdug
-	55MlItJORVELfayPFhZBkjdZ7vUrGwAKtkt+NPIEBVaerJoaDfZqqZUVf1YQ==
+	:subject:to:to; s=fm3; t=1766024544; x=1766110944; bh=z9BSniiiY3
+	zmTvz30D3s+CLBpqwtVU5yBJBwfFbwlPc=; b=nCLPC21mfvEG2dSro8Vr2VyuhS
+	d+R9Z9v8N4bd5uPXz+WUW8/ulwe+QNcJsmNayEkhRc0uB25ZT2j8PPZJsakaYIgR
+	1UMxtQgQfFIpMdHMQrbsgBMiB10aedDj1+0VMPuzTK3CWvc2FK9BW8E2b2O8lJxq
+	fk7Xt3uLZF1wxIraj4NRRZSiCeCD08H5nOnXgMVVqn76vcBmOxTUpX5ni45BlYQL
+	kqCP34lcZJTvn/ZI6SveausncHQ3YvJSLlPBHZmPZAC9D2fiduxkpQdfDDfht7MM
+	sQ+ryuJTJxLBjfxMEbmGPupC1vDOut9GnEE/r54tnpt0AHQhdpGqvesn8VTA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766021613; x=1766108013; bh=jn+6cITbpjoC4BzEKuLDaq3o4IzQHMOvVnN
-	ZKvoA3TE=; b=Ihgx7g9qtuh62SQMBS7dIj6LXNt1I33ZkGveiHdPxS6GCTyjs/b
-	YtKIylXMb/JMFNYetXyUya6ibof7OehzGmPZ1JJIFMhDjq8UCH7JoiRbeSkZTp+R
-	RfwMEuQOlHTEl5BxQS7+nmUw3i11MmI2DgWiFLlzt7bbonenDFLLTVLvFjb9fdaO
-	t1e01NV6rouSaDliDa4/bOIPlOQRxSrFclkp0gx53LyzrIhsTq2ja+axeKzbNAYF
-	mRqiTH6kWMBWqkX7WA1IBY3WV+sWUc4QEQhxbw9a1nndhIsKrElnMEj7CjXGeRRa
-	hremOhbfWULCkPvVY6CSnawIE8jgG8Ra5hA==
-X-ME-Sender: <xms:7VlDaZZqojLBmBcGss9pFszT8WHZbS4Sa7eEkJf2buFRsEhckYNC4w>
-    <xme:7VlDaS8G5gN23LPgpTghk1jdZdYhD4fLSaBq9cDas5B0Fo5EMjdchx5AOFWgPiLpc
-    ZM1CFl26dGmss976fB5ST04G5ztEVd2buXyMhdZO4Lf5XyDNFSiWQ>
-X-ME-Received: <xmr:7VlDafmw8E6Mpx63pJ5auCGg6_F1bEIxKsuRJTh73VH6ynWNGNmQFQMaXHBCgwPfnzo0MZm5UpZTbDkZFhpdXD62Q_0AtBI_IQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggedufecutefuodetggdotefrod
+	1766024544; x=1766110944; bh=z9BSniiiY3zmTvz30D3s+CLBpqwtVU5yBJB
+	wfFbwlPc=; b=BiFZK9EJ3ndDu2XODIXVHJrJFkWY3/xJ5ivRqOYiD9DkVvXgdsm
+	hCMyHx/dLKHK8VOWi7Xjf28iVP3YeJMCvNGJ6jnscOp9CeYjWJQvf+D4FQawepkj
+	kH21Xz2/bjjZwIBNEQyN6VBlUMzhT5XGiwyTpCrYqPeolzc8U9l/s3nI5RFhHRTF
+	aSoVr0XMsmkq7tH/9jpWVL2DArb2NeX8alvPMDxD98DKr9Tp3oywAl4KSMlAdV6v
+	doTQZ2Q8dv3iqhcHmj1J1qXkcH6gH3yr4PxhJeS+PC+27dBy9kKTvNEhIjV3sCxQ
+	rsSeLSiNKf8mPvph7uiqirb3oVfiu0TtHXw==
+X-ME-Sender: <xms:YGVDacK2tsKKbdjTQiEt8bWFC4ZpA1dO0-vBuVzUgrlpMCMI3TMVcQ>
+    <xme:YGVDabMXP1XcAnk_2Hae1yjNuc5YbpYIVp8mYQGV5hK7dibHu2otBNj9QCUwUwX9g
+    bwa_NU6jW57JXM9IdheLpCAf3WUrs7ozQM1iomSQMsTXc34ra7U_w>
+X-ME-Received: <xmr:YGVDaS6nuKEve0YeZhYLrcKRs8pFvrEsctRa5va7R2kXTjwqUGQiJ0luSVs7wYzNrpneZoQtfuKA7sMZtP2HaRzp2No69Bl4yQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggedvfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    mhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehtsghovghgihesfigvsgdruggvpdhrtghpthht
-    ohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehprghulhhordgtrghsrghrvg
-    htthhosehshhhophhifhihrdgtohhmpdhrtghpthhtohepphgtrghsrghrvghtthhosehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:7VlDaXzFk_xFOzM9wyohWJMrAS8mn_-V9x9vwIJyL9_s55HbDTkaoA>
-    <xmx:7VlDaZ6tKGZ_8_9P0iRjL7rzQ4vSBHG4oqLkVRebGiId151JAcsGJw>
-    <xmx:7VlDaXWWly6HxkWmLN5fCBzbXsihDCBrhvT5lPlJTujmOrMG-xFqWA>
-    <xmx:7VlDaRIqm_r6eD26rG5f4jlWQYECR5ZDSmRUtgGIdYgFCy33q76mtw>
-    <xmx:7VlDaU3oJB_F0H6a1TTJnkFi5pgaaRa38-pmAxsDNkj7R48AwP-pCZiG>
+    gvrhhnpefhteegveelvdevkeegveetvdfgheffveeivefgffduveetfeetiefgveffteet
+    udenucffohhmrghinhepvhgrrhhirggslhgvfihouhhluggsvghnvggtvghsshgrrhihrd
+    dqihhtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    ghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpe
+    hsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphht
+    thhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epshgthhifrggssehlihhnuhigqdhmieekkhdrohhrghdprhgtphhtthhopehophhohhho
+    rhgvlhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhih
+    hnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:YGVDaV6gIzl0fBnEk4DAuS4DXf8aMvaebmIOVmSjmYnxFVtKaCaFew>
+    <xmx:YGVDaYFKJtluPPCcXmvod4tCJW-40kwOf8UmfolKlPSR_sKIgZNZrw>
+    <xmx:YGVDadWc4UlyMllRGU7o-89vbZy_RaUcjwWKKNLPiPMxV5pZvPPICg>
+    <xmx:YGVDaUV1FvWGhOPuDKID1z4jvY90EMwHYh05zVs7PXTxid4ET38t-Q>
+    <xmx:YGVDaU8MGBncDpVYpNe7XL4vOo72hd00mO0KX4Hw-DWpLKN58-XXaZ_r>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Dec 2025 20:33:33 -0500 (EST)
+ 17 Dec 2025 21:22:23 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Paulo Casaretto via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  Torsten =?utf-8?Q?B=C3=B6gershausen?=
- <tboegi@web.de>,  Jeff King
- <peff@peff.net>,  "Paulo Casaretto (Shopify)"
- <paulo.casaretto@shopify.com>,  Paulo Casaretto <pcasaretto@gmail.com>
-Subject: Re: [PATCH v2] lockfile: add PID file for debugging stale locks
-In-Reply-To: <xmqqbjjwzkd4.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	18 Dec 2025 09:47:35 +0900")
-References: <pull.2011.git.1764688047077.gitgitgadget@gmail.com>
-	<pull.2011.v2.git.1765997966593.gitgitgadget@gmail.com>
-	<xmqqbjjwzkd4.fsf@gitster.g>
-Date: Thu, 18 Dec 2025 10:33:32 +0900
-Message-ID: <xmqq7bukzi8j.fsf@gitster.g>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Andreas Schwab
+ <schwab@linux-m68k.org>,  Ondrej Pohorelsky <opohorel@redhat.com>,
+  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/4] sideband: introduce an "escape hatch" to allow
+ control characters
+In-Reply-To: <2615abd8c5d5c55486cf5885c47e09e52fad61b8.1765981422.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Wed, 17 Dec 2025
+	14:23:40 +0000")
+References: <pull.1853.git.1736878772.gitgitgadget@gmail.com>
+	<pull.1853.v2.git.1765981422.gitgitgadget@gmail.com>
+	<2615abd8c5d5c55486cf5885c47e09e52fad61b8.1765981422.git.gitgitgadget@gmail.com>
+Date: Thu, 18 Dec 2025 11:22:22 +0900
+Message-ID: <xmqqy0n0y1ep.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,19 +98,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> As this is about lockfile, you need to decide what should happen
-> when an older version of Git, which is unaware of this new world
-> order where .git/index.pid.lock declares ".git/index is being
-> updated; you should not touch it!", comes to the repository.  You,
-> as a user of the updated Git, do want them to stop interferring with
-> the operation on the repository your new Git is making, and it means
-> you should have some way to telling them "do not touch---you do not
-> even understand what is in this repository!".
+> diff --git a/Documentation/config/sideband.txt b/Documentation/config/sideband.txt
+> new file mode 100644
+> index 0000000000..3fb5045cd7
+> --- /dev/null
+> +++ b/Documentation/config/sideband.txt
+> @@ -0,0 +1,5 @@
+> +sideband.allowControlCharacters::
+> +	By default, control characters that are delivered via the sideband
+> +	are masked, to prevent potentially unwanted ANSI escape sequences
+> +	from being sent to the terminal. Use this config setting to override
+> +	this behavior.
 
-Ah, sorry, I take this back.  We are not replacing index.lock with
-something else; we are adding index.pid.lock in addition; older
-versions of Git would simply ignore the new file, still notice
-index.lock and stop.  So no need for extensions, either.
+Two thoughts.
 
+ - Users may want to say "I trust this remote host" or "I trust this
+   remote repository".  For that, something similar to what we do to
+   `http.variable` to allow `http.<url>.variable` to take precedence
+   over `http.variable` would be necessary.
+
+ - It may no longer matter but a remote repository that may send
+   messages as strings encoded in ISO/IEC 2022 would need to set
+   this, merely to make the messages human-readable.  There may be
+   other reasons the trusted repositories want to send "escape
+   sequences".
+
+It might even be a good idea to make the default setting of this
+variable "allow", except for the initial connections to repositories
+(i.e., "git clone $URL", and "git fetch/ls-remote $URL" with an
+explicit $URL without using a nickname recorded in our .git/config),
+as visiting a potentially malicious remote repository you are not
+familiar with may not be uncommon, and users may deserve protection
+over inconvenience.
+
+But once the user establishes a working relationship with a remote
+repository, would it be a lot more common to trust the contents
+there than be on the lookout that the repository may spew bad
+strings of bytes at your standard error stream, I have to wonder.
