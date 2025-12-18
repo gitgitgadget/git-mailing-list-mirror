@@ -1,225 +1,113 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A228B2264C0
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 02:57:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314F13A1E63
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 03:14:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766026656; cv=none; b=FDErivMyj7l74Cl7hROs8nbNIuwGHaKEm7hOxjzobhXkFoBP4uHBIFAULGGo1MLZ5bl21a+lTdEqzlg6FDKRleAFkdrX30jd4Qu+kaQcMMfrx0T+W1PkT+z+hgZ3+n+1zDb7QtGOEFhgQJ3+qSbr5feEG4QeM9uK+g3IuK2gBlc=
+	t=1766027647; cv=none; b=F+jppuIFTAZSNZLyEesS6eVzhJ1gluQh4HhGfnzjsC489Lg21mpnqUAFYEoqyv39BtfdxiOlBRz1s/V5Hz9xStAuPb8278gXiBgv0DHGDf5z9fSNVMXitn8gxrTJjdcv7LV6lEav2aL3G68GqmJzKr2gvviQG+hQG0qD9/KHjWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766026656; c=relaxed/simple;
-	bh=jWk1AADiKgrRVDPEXeSrrwe1y5PwszT71E49NjFuKdc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YMJssAqQyptjA5qO92aaqMvqBwJTNPb6wZ5tFH/xvqENn9zUL9JqwGu1Jk+/yshjL0RxF4cE2EvafmkE8Fur9DKq13O0Dw6LlulMpixM9a0keMBuCJHWvDRZ42jnYDDLj4b8+aPDPuI/whgLSLxWb5GWmcnEqNCF/yRpAYVMKqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VFDh/UI9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pv1VliLb; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1766027647; c=relaxed/simple;
+	bh=jx6qEdflQo2yFP3ubtrzyq/BatQzhlNuWyGn16M1/30=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=mZi39gcSfgrJ/E4OOq+/PujLD1tq4nZ/2ZdQGJiLge/NN7HPtJ6v76ndXcgcHCpvjEy0yJTjNlgZT8Du59zqMyib3UGLyXuVx3xcg+qQSU6bu5K6QpiZfhlAAiBJdUycCJeO2vO41YlouZeShZ70jgDl4Zhnhd8UsDiTI78tazc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j8tQc0cI; arc=none smtp.client-ip=209.85.222.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VFDh/UI9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pv1VliLb"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id BFB1AEC016D;
-	Wed, 17 Dec 2025 21:57:32 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 17 Dec 2025 21:57:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1766026652; x=1766113052; bh=i6nW+KjEck
-	3wZQdgaUqrMzlbaFbG/ci0qPoSE59HrWU=; b=VFDh/UI9Js+1slbR5conOJE9uS
-	aSL565BI7/0Cn2aDGfQPF9ADUT7sDawrwDY8E7raDbJ6IAih3B49v220UuXNONq4
-	HDhfvskbiTLZ6mbNTs9aTj8kjlX36eUfmpMl78Q+xQlXbRqvdr6jqmd0Xcn/icWf
-	LSFjo8hZhmyo0DmiXy4URJc3CqfhoouIIcS8W2KGS9eLWEPYpsyBAfCbkpc9RYF9
-	TXprbfujk19+Oagrf8FIbCdpcU8iixKKBdaPEg3daQImb5ke4NqPdXkOUK30enzs
-	AmWIlurCuMZyLL7UeVcm7Et9irRr6rXB3j4EGRDlAVOn1FaYZzjx4mS6018w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766026652; x=1766113052; bh=i6nW+KjEck3wZQdgaUqrMzlbaFbG/ci0qPo
-	SE59HrWU=; b=pv1VliLbo9xrdON0hNCYnM/2LQPZFwida2WOdGcfXGnYthQlX1t
-	50Wka4cxlXgEgxT3fu9uA1cyjxNMld1L1HLSg2ZNnTVSCZGJ6sdUPpCmqjv56Ec3
-	rzGr/bKuJavHgy9WU2u3NJw5dFR3Ec7oqhmfqySNzUh23OQLcCze1OErPnjj+yqr
-	SizUb+yuhhqHIqwSEP/A5uNmI8NV6NJr5HlfJozLn8MRlqepWeHN2uBHu6bLtHgr
-	HhwJCFsjVqeKjv0YYBXXgoeukCU48F4P7mzDM0LKc23uMpEcpR9wIpPU14EcdF9q
-	phNB2bfAItkzLwZijbfrXSKRzdVuk6NLbJg==
-X-ME-Sender: <xms:nG1DaVL6tZyz42XFG7h639xhoauxV58_ALnxN94GI0eUnoBz3pSJrw>
-    <xme:nG1DaYIBKHuMM2BOULv96kI0007cnpdcU1grx5K9wkDrU2nAWVFTXBQwiDUGwgFCA
-    CqklH_gXGYYEQX00TzMFBLP9loXLJolBnJzuHavQq_M93gYfhyP4w>
-X-ME-Received: <xmr:nG1DaSt-Je-FFc0wgB_xWkIjxkEy6kpn-Gz0jsPMUme98FITO54hfr19tMd1dhjNStakV0AvMUVREFVFB_aJaIVntCaOnoxpBw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggedvlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeduledvteegfffhledvgeekgfduueehlefguddutddutedvieeljeethfejleef
-    tdenucffohhmrghinhepohgsjhgvtghtqdhfihhlvgdrtgifpdhouggsrdgtfidpphgrtg
-    hkfhhilhgvrdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
-    fhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpd
-    hmohguvgepshhmthhpohhuthdprhgtphhtthhopegrphhlrghtthhnvghrsehnvhhiughi
-    rgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:nG1DaVRoFfV7Cyj67WNNo6i9va_o5Z4p9hxQV2NBf5V6fClE-MyIPA>
-    <xmx:nG1DaYMZikiW_cHVUOaR2EvvFpjETjdc-0IViBFcpnccxiJ0N2OCyA>
-    <xmx:nG1DaabcEmOe_o9uTza-PCGtKMdVjKVtYIgmQQjGP0SCPNEyTnDPDA>
-    <xmx:nG1DaSwqOAZOn-hulzXd70uxX_I6AW8OIPYs9auQxNo378HLQ7zyrA>
-    <xmx:nG1DadyBrfKYqb45-Lhm6faUP714BQMZVbCXnLyI2T94OZmzDeqRiprd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Dec 2025 21:57:32 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aaron Plattner <aplattner@nvidia.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: What's cooking in git.git (Dec 2025, #03)
-In-Reply-To: <f4ba7e89-4717-4b36-921f-56537131fd69@nvidia.com> (Aaron
-	Plattner's message of "Wed, 17 Dec 2025 12:26:58 -0800")
-References: <xmqq4ipwc7y2.fsf@gitster.g>
-	<f4ba7e89-4717-4b36-921f-56537131fd69@nvidia.com>
-Date: Thu, 18 Dec 2025 11:57:30 +0900
-Message-ID: <xmqqtsxoxzs5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j8tQc0cI"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8bb6a27d3edso19168985a.3
+        for <git@vger.kernel.org>; Wed, 17 Dec 2025 19:14:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766027645; x=1766632445; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=4Gf5ydPHNztZEI3QcypadQOsfOm7/9Cg44wcs0R7jSU=;
+        b=j8tQc0cIolCNU0z3RCb0a9P4MhMxg6za8wry/8Rqnk4QQmb8kwagNhEHcIY2ThIn8A
+         cNROQZzYbEl9TWwuL5H1RXhbrjlYVgJA2f566icstM3xMITGg7dBuQENzvboFqoJTk4z
+         PhYsvkpho7kvNeKBUtubR54oHXLzlQBKNrGu01KyTXDqrq6sbd1VpHOG6T6Cse2E3k61
+         365IRGGPZA+WtHq51/otkzPnvCSbnUci4MAiGaFvs3whRbvLraknYd/8aeJivCngHf60
+         WJXiZptZ9N0s7aPXLsPchhr916cP5Q9ff8Jc1RbxtAM4XAydv48PfikFYl+GFdB771/w
+         WcWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766027645; x=1766632445;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4Gf5ydPHNztZEI3QcypadQOsfOm7/9Cg44wcs0R7jSU=;
+        b=rJjGPFtr5gyHE3KPf79tBMYux5ElAwOuFoBbXtgmGtLhemm8UCixp6eWvnTOIGzps1
+         h+GxGVEZlLaQy1EqwKRTcQtVIko+zUmy/K3El5dkNLzLel1anupyRGmFihvXImo+fUTw
+         H3B+dCu+rvxxxgH4wYkLG7+frCOOWnpXxDCdMAPjP2mDhuSpjbArHOBNX/lXElIFni7k
+         3CJpEWYaF26iJgzVk+FC+pqYaRC2jhVJxn3s0FNRPQNPJQj3Pdik2AvXSVA3vcGoosUs
+         vB5AIBUwWAR/3yj44jhK2whiF82MUa0jpfnn1OqAp+fIGSdBy68qFQeGbaSgs7AqZ34S
+         sfJg==
+X-Gm-Message-State: AOJu0YyuSJZXXeHgWWYh3jdkRNY0w+vs3HhgzKvWY1gMNMSRwH3LTT3L
+	oZirzO1VM/Rrxy0fEXwagF5fA6ygtAYb91BhbHog8Vnnej1089Pk0dNZz1KQ9R/lC08=
+X-Gm-Gg: AY/fxX5ySMso4IPkCn/aepA8ZzVsJx1FCIwFw1UHE/0IK0ygiloW8f5ZBfkwjIa8XaE
+	i3vwZVEpN5pOmSiAB5VXjz29QFHYyTb7VRVASttM7BG/ynrGU3Oztd76L/Z8gsdR7tHZV0of77K
+	7zCxqSVoEuhqX3mJvKOa9dvj7gqqziLQPXZ2Auc74n8svNvJXSH/IcpOvDFvVrOKgIPmrLk09zb
+	FvZOR/jUkU9bWpV2l97IjwUfVjxNs6KNdefF5FmUBM8V281syJGhqZ9R1YA/yGAoSPe8nYUmhzF
+	Wflmj8rD8rrO7L5Ikmn4t4xA1MZ4eM6NxT6EkT61GLqFzXaE3WMzavYEWyhSe37ELMR03vbIKAH
+	Hcyp8oFbSoTyzMhZLZFeCxfSwxGbbFrPtje5MXrTKgkoiBK20kZ8OYfR4w+wL7VVU5peyL/4rpY
+	tq9+JwK3H+R+EyCnk=
+X-Google-Smtp-Source: AGHT+IFr/ZQgttf+TZsaSzbio8Odz0MYYA76SLzfdViLwadf2/GbiepzIUa1pJJC47v7kztRmz2wXg==
+X-Received: by 2002:a05:620a:2a09:b0:8b2:ed71:deda with SMTP id af79cd13be357-8bb3a39dfe7mr2652222985a.84.1766027644599;
+        Wed, 17 Dec 2025 19:14:04 -0800 (PST)
+Received: from [127.0.0.1] ([172.174.166.193])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8beeb5c3d2fsm83572685a.10.2025.12.17.19.14.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Dec 2025 19:14:04 -0800 (PST)
+Message-Id: <pull.2131.git.git.1766027643744.gitgitgadget@gmail.com>
+From: "AZero13 via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 18 Dec 2025 03:14:03 +0000
+Subject: [PATCH] open: check fd_flags value before calling fcntl
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: AZero13 <gfunni234@gmail.com>,
+    AZero13 <gfunni234@gmail.com>
 
-Aaron Plattner <aplattner@nvidia.com> writes:
+From: AZero13 <gfunni234@gmail.com>
 
-> I'm pretty sure the problem is when do_oid_object_info_extended() 
-> substitutes the blank oi here:
->
-> 	if (!oi)
-> 		oi = &blank_oi;
->
-> and then packfile_store_read_object_info() compares it to its own local 
-> blank oi:
->
-> 	static struct object_info blank_oi = OBJECT_INFO_INIT;
+Otherwise, fcntl can be called with invalid fd_flags.
 
-Ahh, that's an unusual mistake.
+Signed-off-by: Greg Funni <gfunni234@gmail.com>
+---
+    open: check fd_flags value before calling fcntl
+    
+    Otherwise, fcntl can be called with invalid fd_flags.
+    
+    Signed-off-by:Greg Funni gfunni234@gmail.com
 
-The following was done on top of 'seen', but would it help?  We
-shouldn't have to use the stand-in "blank" thing to begin with.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2131%2FAZero13%2Ffixopen-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2131/AZero13/fixopen-v1
+Pull-Request: https://github.com/git/git/pull/2131
 
-Besides, explicitly handling the NULL case would reduce the
-potential chance of errors that somebody accidentally writes into
-blank_oi, making its contents dirty.
+ compat/open.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-
-
-
- object-file.c |  8 ++++----
- odb.c         | 29 +++++++++++++----------------
- packfile.c    |  3 +--
- 3 files changed, 18 insertions(+), 22 deletions(-)
-
-diff --git c/object-file.c w/object-file.c
-index af1c3f972d..6280e42f34 100644
---- c/object-file.c
-+++ w/object-file.c
-@@ -426,7 +426,7 @@ int odb_source_loose_read_object_info(struct odb_source *source,
- 	unsigned long size_scratch;
- 	enum object_type type_scratch;
+diff --git a/compat/open.c b/compat/open.c
+index 37ae2b1aeb..b313bcd364 100644
+--- a/compat/open.c
++++ b/compat/open.c
+@@ -44,8 +44,8 @@ int git_open_cloexec(const char *name, int flags)
  
--	if (oi->delta_base_oid)
-+	if (oi && oi->delta_base_oid)
- 		oidclr(oi->delta_base_oid, source->odb->repo->hash_algo);
- 
- 	/*
-@@ -437,13 +437,13 @@ int odb_source_loose_read_object_info(struct odb_source *source,
- 	 * return value implicitly indicates whether the
- 	 * object even exists.
- 	 */
--	if (!oi->typep && !oi->sizep && !oi->contentp) {
-+	if (!oi || (!oi->typep && !oi->sizep && !oi->contentp)) {
- 		struct stat st;
--		if (!oi->disk_sizep && (flags & OBJECT_INFO_QUICK))
-+		if ((!oi || !oi->disk_sizep) && (flags & OBJECT_INFO_QUICK))
- 			return quick_has_loose(source->loose, oid) ? 0 : -1;
- 		if (stat_loose_object(source->loose, oid, &st, &path) < 0)
- 			return -1;
--		if (oi->disk_sizep)
-+		if (oi && oi->disk_sizep)
- 			*oi->disk_sizep = st.st_size;
- 		return 0;
+ 		if (!o_cloexec && 0 <= fd && fd_cloexec) {
+ 			/* Opened w/o O_CLOEXEC?  try with fcntl(2) to add it */
+-			int flags = fcntl(fd, F_GETFD);
+-			if (fcntl(fd, F_SETFD, flags | fd_cloexec))
++			int fd_flags = fcntl(fd, F_GETFD);
++			if (fd_flags < 0 || fcntl(fd, F_SETFD, fd_flags | fd_cloexec))
+ 				fd_cloexec = 0;
+ 		}
  	}
-diff --git c/odb.c w/odb.c
-index 01a9d2e70f..8278ef39a0 100644
---- c/odb.c
-+++ w/odb.c
-@@ -680,34 +680,31 @@ static int do_oid_object_info_extended(struct object_database *odb,
- 				       const struct object_id *oid,
- 				       struct object_info *oi, unsigned flags)
- {
--	static struct object_info blank_oi = OBJECT_INFO_INIT;
- 	const struct cached_object *co;
- 	const struct object_id *real = oid;
- 	int already_retried = 0;
- 
--
- 	if (flags & OBJECT_INFO_LOOKUP_REPLACE)
- 		real = lookup_replace_object(odb->repo, oid);
- 
- 	if (is_null_oid(real))
- 		return -1;
- 
--	if (!oi)
--		oi = &blank_oi;
--
- 	co = find_cached_object(odb, real);
- 	if (co) {
--		if (oi->typep)
--			*(oi->typep) = co->type;
--		if (oi->sizep)
--			*(oi->sizep) = co->size;
--		if (oi->disk_sizep)
--			*(oi->disk_sizep) = 0;
--		if (oi->delta_base_oid)
--			oidclr(oi->delta_base_oid, odb->repo->hash_algo);
--		if (oi->contentp)
--			*oi->contentp = xmemdupz(co->buf, co->size);
--		oi->whence = OI_CACHED;
-+		if (oi) {
-+			if (oi->typep)
-+				*(oi->typep) = co->type;
-+			if (oi->sizep)
-+				*(oi->sizep) = co->size;
-+			if (oi->disk_sizep)
-+				*(oi->disk_sizep) = 0;
-+			if (oi->delta_base_oid)
-+				oidclr(oi->delta_base_oid, odb->repo->hash_algo);
-+			if (oi->contentp)
-+				*oi->contentp = xmemdupz(co->buf, co->size);
-+			oi->whence = OI_CACHED;
-+		}
- 		return 0;
- 	}
- 
-diff --git c/packfile.c w/packfile.c
-index ce6716fbea..3ffd6c7240 100644
---- c/packfile.c
-+++ w/packfile.c
-@@ -2132,7 +2132,6 @@ int packfile_store_read_object_info(struct packfile_store *store,
- 				    struct object_info *oi,
- 				    unsigned flags UNUSED)
- {
--	static struct object_info blank_oi = OBJECT_INFO_INIT;
- 	struct pack_entry e;
- 	int rtype;
- 
-@@ -2143,7 +2142,7 @@ int packfile_store_read_object_info(struct packfile_store *store,
- 	 * We know that the caller doesn't actually need the
- 	 * information below, so return early.
- 	 */
--	if (oi == &blank_oi)
-+	if (!oi)
- 		return 0;
- 
- 	rtype = packed_object_info(store->source->odb->repo, e.p, e.offset, oi);
 
-
+base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
+-- 
+gitgitgadget
