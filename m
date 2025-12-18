@@ -1,118 +1,84 @@
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4692381ACA
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 18:13:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1921F4606
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 18:18:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766081611; cv=none; b=Gt5jENZb7zENuZhU1FnBE0HBXz5QgXUHth5Ow7J+pqXo4t4RD5qlNVQvhEGzNdUil7D0KjebUd3lNjbMETP0u0VMYsbm3Wnzgq+b3QOjm0tM1oIlz2U91GQe77T5BpnyfXtGPvKLKTLyZrTHVBPeLL9tnFeh+wUNsPxH7fOqcRk=
+	t=1766081927; cv=none; b=JBjrfAWYwWdain9jlz+2JqLre84mRXrTniFuiUdQe7lcp7dLDS5FUmGpz6JYqJCDIFVzmjlErNmsn2iGCHGamcf+u3kLN+E8SN3UvagPedj9YgCyIx4cIiEZGhz0GKY0fdERlOhHmKtkBHE00g/Dm/BxA6xmV5qHS9w/uWeQbzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766081611; c=relaxed/simple;
-	bh=hIFwzd7gys8aSchb9yImG+eRm24S/NGFDD6FpGm5+IY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bmhANJjMW+LzGSFbH7KFQudY0yccyygVKJfpwlYaPqnOQAmEuN9ybPYP5VO+yDak6PzHmRBRqDuxNHZRv1C1wNnC04af/DPzcVYzJe8Sw1WFVSJ759UBqJj9nQnXE4rywljiL42FK8cKyfI57bjEmRId6JdIM1URsWOlhwUSuzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.103] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4dXJgl0W7czRpKW;
-	Thu, 18 Dec 2025 19:13:23 +0100 (CET)
-Message-ID: <8826825b-79ad-4700-aeb5-71e7847ca5dc@kdbg.org>
-Date: Thu, 18 Dec 2025 19:13:22 +0100
+	s=arc-20240116; t=1766081927; c=relaxed/simple;
+	bh=P6R87T3WyT9WL+1Lj3jwcGe2t/bgw/wxeZvhKGV8Wi4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=e55kC0LS9snIPpi2fzi8gO0En89HYvY1iOJUHttcsLP7cxspk8M3o2+FAI2RDQIdKsgch89J+5WTpLuc+O074VVXsyxefdnrjJjSEce1w/mMZqMPpQIKLNLe8LstqY/9yDX5+Rg/Svg0HqOY4lJbR1PmvJnP+vcjVRKk9GbHPXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-88a2ce041b2so1023596d6.0
+        for <git@vger.kernel.org>; Thu, 18 Dec 2025 10:18:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766081924; x=1766686724;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=yywYPUyruW2Xo3mmTUiisROpoXgd55nwL26xPyZXvqA=;
+        b=Rs8hsPWwgr/HGuNVpllcpWfhqYsZ9vB8ylTv26WrXz0TxeaOVs25lyyCQGZxfiWoR7
+         1WbL4AwVUbOPgwMjm1YsIdC1Oug+bg6A8iqsnTI+hWOZDppXZLDSQ1wLvagVsX6o6Hkw
+         8EX1StXeGzJJJ8wSqYgDvZ3amQbzZOKpct11I+mTKDLoAGsqLfY1sVLekjl+kqBuHi3P
+         //ztsNCDI8TxJEaYKnH1PBQ/7q2Px8rv5piuTtHeAtUD4orR44mRYrdFpVTy/5ME+wVg
+         uAFTrPVw+yrTERxEhay9JiDW91Awp63ypp4a3hpGjqu7/W2tZXeCle3Hq2+4J/LllonI
+         HgdA==
+X-Gm-Message-State: AOJu0Yxl6RGuX/CFelNyhX7WNXBmtBOgBkm9qnsfOoR7ayHjzpn2btQv
+	/loMuKbVZ/wKLO/P+qSeWeYqUFQ00qIPdSdJeIObIfVekReI6FIK4vnQyRPNsG86AgJC34Jfi9M
+	1xE8wsk1U48o/Evoiyeqx7NpXps8CLd/fzMkM
+X-Gm-Gg: AY/fxX6j3lIvfW19E1Zr0auHzNL0nXHk14AFq1RV/ogkAE7JtMVTdy51SVG34h+xc3w
+	FAqBaeBddLD6glng4wB1lHWq13LiA9eZKLTEP4ZgBOZwbFr7tLv8G935C/0Ve+1kquflj5MZHoY
+	d6UAbrYl4Xp6Kgy+fs0boSifjWhdyH2Bjjui0iAgCEWgk1fcZ2chz8iodDM/D5e7P349WzX9cH4
+	I6hsUTUIyG5R/dhDZ3r/5C1rEJVB6OcbSLVoyl+BSZ3fbbxZihbpmNcKRD9JvS2vGdqvMUVuJJz
+	2YEwp1IxnRTtE1+TkgCKfJRqElQu
+X-Google-Smtp-Source: AGHT+IFqzAsggKK8pDkqre6FWxUMMRxsLRKC9SGwtMTf12Ik17PfEmwJJMUPjcyKepi5MHZIMQKJLEyOyB9fN9eaqG8=
+X-Received: by 2002:ad4:5c8a:0:b0:70d:e7e1:840f with SMTP id
+ 6a1803df08f44-88d83f58bcamr7887586d6.3.1766081923557; Thu, 18 Dec 2025
+ 10:18:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/18] mingw: implement `readlink()`
-Content-Language: en-US
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc: Karsten Blees via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-References: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
- <8fef8220f4d60b48358882fbc961c4604eab3abf.1765980535.git.gitgitgadget@gmail.com>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <8fef8220f4d60b48358882fbc961c4604eab3abf.1765980535.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <pull.2132.git.git.1766071566022.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2132.git.git.1766071566022.gitgitgadget@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 18 Dec 2025 13:18:32 -0500
+X-Gm-Features: AQt7F2ro2GkhHMsBdtDMuyc0UMpQFC3IhaDfRf2CrbLbD7VkTzzFf8G_4NM_JSU
+Message-ID: <CAPig+cRsKGERBk2pVotrKhhy5FCmmrQODTJEgkO8GuTY2SLbiA@mail.gmail.com>
+Subject: Re: [PATCH] repository: cache->squash_msg is freed twice
+To: AZero13 via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Greg Funni <gfunni234@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Am 17.12.25 um 15:08 schrieb Karsten Blees via GitGitGadget:
-> From: Karsten Blees <blees@dcon.de>
-> 
-> Implement `readlink()` by reading NTFS reparse points via the
-> `read_reparse_point()` function that was introduced earlier to determine
-> the length of symlink targets. Works for symlinks and directory
-> junctions. If symlinks are disabled, fail with `ENOSYS`.
-
-This last sentence is obsolete, I think, because I cannot see how the
-patch achieves a failure with ENOSYS.
-
-> 
-> Signed-off-by: Karsten Blees <blees@dcon.de>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Thu, Dec 18, 2025 at 10:26=E2=80=AFAM AZero13 via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> Thankfully, it is set to NULL, so no security consequences.
+> However, this is still a mistake that must be rectified.
+>
+> Signed-off-by: Greg Funni <gfunni234@gmail.com>
 > ---
->  compat/mingw-posix.h |  3 +--
->  compat/mingw.c       | 24 ++++++++++++++++++++++++
->  2 files changed, 25 insertions(+), 2 deletions(-)
-> 
-> diff --git a/compat/mingw-posix.h b/compat/mingw-posix.h
-> index 0939feff27..896aa976b1 100644
-> --- a/compat/mingw-posix.h
-> +++ b/compat/mingw-posix.h
-> @@ -121,8 +121,6 @@ struct utsname {
->   * trivial stubs
->   */
->  
-> -static inline int readlink(const char *path UNUSED, char *buf UNUSED, size_t bufsiz UNUSED)
-> -{ errno = ENOSYS; return -1; }
->  static inline int symlink(const char *oldpath UNUSED, const char *newpath UNUSED)
->  { errno = ENOSYS; return -1; }
->  static inline int fchmod(int fildes UNUSED, mode_t mode UNUSED)
-> @@ -197,6 +195,7 @@ int setitimer(int type, struct itimerval *in, struct itimerval *out);
->  int sigaction(int sig, struct sigaction *in, struct sigaction *out);
->  int link(const char *oldpath, const char *newpath);
->  int uname(struct utsname *buf);
-> +int readlink(const char *path, char *buf, size_t bufsiz);
->  
->  /*
->   * replacements of existing functions
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 5d2a8c247c..b407a2ac07 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -2698,6 +2698,30 @@ int link(const char *oldpath, const char *newpath)
->  	return 0;
->  }
->  
-> +int readlink(const char *path, char *buf, size_t bufsiz)
-> +{
-> +	WCHAR wpath[MAX_PATH];
-> +	char tmpbuf[MAX_PATH];
-> +	int len;
-> +	DWORD tag;
-> +
-> +	if (xutftowcs_path(wpath, path) < 0)
-> +		return -1;
-> +
-> +	if (read_reparse_point(wpath, TRUE, tmpbuf, &len, &tag) < 0)
-> +		return -1;
-> +
-> +	/*
-> +	 * Adapt to strange readlink() API: Copy up to bufsiz *bytes*, potentially
-> +	 * cutting off a UTF-8 sequence. Insufficient bufsize is *not* a failure
-> +	 * condition. There is no conversion function that produces invalid UTF-8,
-> +	 * so convert to a (hopefully large enough) temporary buffer, then memcpy
-> +	 * the requested number of bytes (including '\0' for robustness).
-> +	 */
-> +	memcpy(buf, tmpbuf, min(bufsiz, len + 1));
-> +	return min(bufsiz, len);
-> +}
-> +
->  pid_t waitpid(pid_t pid, int *status, int options)
+> diff --git a/repository.c b/repository.c
+> @@ -349,7 +349,6 @@ out:
+>  static void repo_clear_path_cache(struct repo_path_cache *cache)
 >  {
->  	HANDLE h = OpenProcess(SYNCHRONIZE | PROCESS_QUERY_INFORMATION,
+> -       FREE_AND_NULL(cache->squash_msg);
+>         FREE_AND_NULL(cache->squash_msg);
+>         FREE_AND_NULL(cache->merge_msg);
+>         FREE_AND_NULL(cache->merge_rr);
 
--- Hannes
-
+This mistake has been present since =C3=86var added this function in
+759f340738 (repository.c: free the "path cache" in repo_clear(),
+2022-03-04), so it isn't the result of someone else coming along and
+adding a new field to the structure which needs freeing but then
+botching the call to FREE_AND_NULL(). Moreover, this function does
+free all the freeable members of repo_path_cache, hence, nothing is
+being leaked, so it must have just been a silly copy/paste mistake in
+the first place. Hence, this change makes sense.
