@@ -1,122 +1,170 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DBC320A0C
-	for <git@vger.kernel.org>; Thu, 18 Dec 2025 06:22:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1362264AA
+	for <git@vger.kernel.org>; Thu, 18 Dec 2025 06:28:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766038974; cv=none; b=hlswHzLnXOuGJeZQ69R55ugJpGho45DFso+EaMmgATrHsjtHVA9zIpG/kAStN5m+ynfH/fA8gPU9Q6GBNHHwsYo1uYIg0Yg1XX8GdI+oPXQfNnbQZRGMSbIE/aSmHmICGb1m5XAoJQEHLs23US/ibqbvTxo9m4f9ka5iHGrXtpQ=
+	t=1766039307; cv=none; b=Afp7QwiTLP9V+rR4B5j4kQfC286oGQTHZLQk54+CHTAGzLrPkM0UFshTJ4U/fNT1takugHFQn0hfsnLbTQ/BOTcTsSYSQqX70E2q0AeCMeVm8QNJDG6H37ylh7A/ZYA8IqV3ueFeCvk1AS6ddnyDHU7LObXX5zr636FMC5DGhoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766038974; c=relaxed/simple;
-	bh=uzOhh2oW4WksDxDWraU/k2utkDf2G4LySfhKx/1AnGc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SUTiZS7PZfkKJPZTD6tDH7mfuXuk+GY3QuTYdq+DobdHzYYoqEwDovGGISac9RWxZyVGMgBkPoBK5M2bcKC3wlehAcX9gLG+HKKnUcbkgOaEe1WyNeCOWehbLCmorRhjtenUB/nNMEenKbwWCN4p/+VJdQaYcvJDKYGq5FXrUKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NX69Y1Qu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ndPwtoeM; arc=none smtp.client-ip=202.12.124.149
+	s=arc-20240116; t=1766039307; c=relaxed/simple;
+	bh=132u8uAoJEVOni2Svzagv2Aa8GO42b3kw1GHpNIISnQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NSZ8DG1lkknT0JU70jWvvbuScPXNqvc8oUP9uuWffe67l4OwxlA08P4tlvtjg8tGDpCENxqb3+272jQLJXpfYKCLiPOOM8HW3daHIdza5qiFikG/Rpg5DhWERQtxhAXnTQsCbFMLbuJrMbUWuHADK+sq40Nk2/2FGbvOFzJOfyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=o80sfCKK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bdoPi4vH; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NX69Y1Qu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ndPwtoeM"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 201401D00066;
-	Thu, 18 Dec 2025 01:22:50 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Thu, 18 Dec 2025 01:22:50 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="o80sfCKK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bdoPi4vH"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 86C8B7A0177;
+	Thu, 18 Dec 2025 01:28:23 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Thu, 18 Dec 2025 01:28:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1766038969; x=1766125369; bh=X9Q53G1O51
-	FRQeBdXcaDh7MTkYAfFuqkEwJs1d+ljms=; b=NX69Y1QuOSxngZDkXF9+vi91hv
-	XqWpwbPgeJ7gWyWU38mP+ps7ttU4YIy9vKDfx4BhjrhKuNa5+xLAL6w5CWU/CFp8
-	In3c6XD3bZOryJYq3nLPlkRtpkMVnx7pbwNv70mdNr6CeqrJg8I9TCHPStQj0zXr
-	LdEfaA0wy9Siaak4dgDSkxtwCwmssxeJ4e3nachFmP7rQ8gqJawa1zRbdOBR1bZs
-	Fmo5nqaQmHaZ7Z53gLOkEwWpRIqF7GoBpYewcJghHiQbR6C37pfGc8OWs9acTCF8
-	WqeMAeFlgdeGtIMJZ5NAXOwTUlrxKbHra+5BNMl35agf0HohIP4BowiUduzw==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1766039303; x=1766125703; bh=crZjYHehSB
+	HtgIyduMUFt1NZS88wr1oUB8cQmejSqPg=; b=o80sfCKKI7GC6IW3sd+xhncsMW
+	45fTZqIgR6KIPXBIWzuDr2mPVgD0Mr/z3+RuwIqqkMb1C6UwdczcIs3+PWQWmxBF
+	urVtI0U0qANFT+rIGCzl8ffBQIZHiHGpsw5zRSTdNkPUpwR4gOnraK9sBmuVZdwy
+	2NbT35SySV1c8PHBzw/fZZQP7A6oFeuvywDD8o5lvqpXRR95gYw9wKvEXbvh03ub
+	ALK9q9EN/66nGfqL8x9HkURIhY7guFjYb1RjLctyiJeTUym982Y3KxHTralg2iW/
+	FY+Wbw8Rupef1/T/piayfcRtXzLlFzzxUnATDesrQor99BMeTAh2p8yhwx/Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766038969; x=1766125369; bh=X9Q53G1O51FRQeBdXcaDh7MTkYAfFuqkEwJ
-	s1d+ljms=; b=ndPwtoeM9308ao809w81Hos1TV1DsCE4fRGhXHGLsYHDqdu1CDm
-	XCqw/p/4QuvCNKdudtVEKjsXl88qhfAbjvzCGgyoY/GIn9PkPkrlBNVdtnPG/RDh
-	wQGLqhPkyeB+H/chehHAVC4buXZXWxXN507/IBSnhht7jYp2qsJHuEiNW+Avn/DN
-	Xcs4cqLZje0n4cl7KkYqvWqKB6uDC0micgBFAL3+KKgg5I5pGyzovzRK9cDEaXdV
-	E6K5dB30M2FtyYTjWcdxlFH3Ip2lfihr27dx3kBEhkvR5+OwgVUDMoDf7aLdG1kg
-	im5dpDfzZmOobxl5QQ1sXbedqzltso9/LOA==
-X-ME-Sender: <xms:uZ1DaSXTfZMruWfL1U8iRNyA5bYsxnFn1S6tBsC-rOmiCa8hleB1xg>
-    <xme:uZ1DaWAcNEY7IbobyV0HAKMt-YQLoGw3qMICGYI0yr2p_qRVMYyMmXJrb-tD90lr5
-    0UiJKtDmkLnWJi8N-iWujsG_e6ItY3s1AAKoCmSbjDCkegCUHpIJA>
-X-ME-Received: <xmr:uZ1DaTxdrFKvVzgPAJ9AfLoOnMkv41uV9NnZPFe39L3GPYR74NSJ_5u-HHTQZLLZY5518f59XXGsJ9EMkohtcXwr2ArhZra1D-_xMnruNQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggeeilecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1766039303; x=1766125703; bh=crZjYHehSBHtgIyduMUFt1NZS88w
+	r1oUB8cQmejSqPg=; b=bdoPi4vHJKsLjBbf6Os3SCgtnjw5IFVTjZ/f6alD5KIn
+	0bJO9My9kfD7G6s+qzbySJTACiH4V2TRrzWg4068XttfbxN+BidbYvThN/YlXELX
+	xcsIEHa5GrsX5TNdofhTpD8MvHBd4iW734kqxjD20/3pRJ27z/mBYmZrLF2xDD9C
+	59OV7ruotffyl2AqBbOmReqmp/9+LMBBCn2EL870ljtxsCeBUdWJugp8FlbF5oeQ
+	ASkKLmo4lWLOuEioFXVokckG4drMC7sGGGQJ/1TbjHxL1jJqZvf5VZLr1ATdhprD
+	p93SJfzs3NFacbTYTAHIWDKxc1b2hawGLWnOImneRQ==
+X-ME-Sender: <xms:B59DacN3Luo9D757hrYFAnCMQIgqr0NsXtaxZSHWVGXupjD7WGXllA>
+    <xme:B59DaaYn-KiGKJxEQrDD8BsE8otr4I5O6gc5iNecpH93DxW8LIw7RI9W_UukM_5-V
+    cOuL5U-jz9Ky979xmrJ1LjxY5TD20xw80Ku9ZVDQNPynRDZR0oS0w>
+X-ME-Received: <xmr:B59DaQoOzpoIz3mDbi0heASHukcEjpWeRTpXOSTegDFQigemYrJiThF_yRKJucw_6gpvW-IacE7Ztlwde-eimNglzYnT0vIgNI9oYfIcNg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeggeejtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopegrphhlrghtthhnvghrsehnvhhiughirgdr
-    tghomh
-X-ME-Proxy: <xmx:uZ1DaTAeQvMlkiSjKpVZhsxcMHEn3RYS0-yHNATXmqpO5_k8ciqnKw>
-    <xmx:uZ1DaQZ259goW_mfv1ybaPWqGhF4ry0JgMJGPaZOXI2U_Nn0Qu-FYw>
-    <xmx:uZ1DabglsFoBD-6SBOlHb26ZfYy9b2W4OOlI9qY90BRX4qpf3-ocQg>
-    <xmx:uZ1DaS5pVqIRtOrIUfnA8UbpjCMNg1peH1jlPit79giSTD9fu2S2RA>
-    <xmx:uZ1DaSor1xhIPlBFEGur2ZAWu4DCOKh-mup_AQF2uIjar7YP_OzvjKGx>
+    hrpefhufffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnheptd
+    fgueevveetjedvgfelheeivdffhfdtjeetteejudehfeehueffjeejtddvhedunecuffho
+    mhgrihhnpehprggtkhgvugdrihhsnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhho
+    uggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+    dprhgtphhtthhopegrphhlrghtthhnvghrsehnvhhiughirgdrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:B59DaeZ5W5B5QqRM_lROQfNxqUmp2lYlxRHe1P9Uco4yAL81DlXLFQ>
+    <xmx:B59DaYQG4eTbDSzLBR4pw_ZzEqIgnu6HBHEh4Xoi-1FhUj-7v4QNgg>
+    <xmx:B59DaV7f6yMuBiCa0ryfmVFIJ__p404vEeAGH1W59T4OYUbYuyutyA>
+    <xmx:B59DadyYlxKNYQCkhlGaNZPDwtmowtu0ttQrFaYVbHZluOsFFnrK9A>
+    <xmx:B59DaaB6RQ-O4mWB9c3RcwlYv1C1eI-1dQg3CaSS3Yg0pmPlD-EB8nlm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Dec 2025 01:22:48 -0500 (EST)
+ 18 Dec 2025 01:28:22 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fa2a279b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 18 Dec 2025 06:22:47 +0000 (UTC)
-Date: Thu, 18 Dec 2025 07:22:44 +0100
+	by mail (OpenSMTPD) with ESMTPSA id 904da0ab (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 18 Dec 2025 06:28:21 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Aaron Plattner <aplattner@nvidia.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2025, #03)
-Message-ID: <aUOdtDrmtGtQg596@pks.im>
-References: <xmqq4ipwc7y2.fsf@gitster.g>
- <f4ba7e89-4717-4b36-921f-56537131fd69@nvidia.com>
- <xmqqtsxoxzs5.fsf@gitster.g>
+Subject: [PATCH 0/8] Improvements for reading object info
+Date: Thu, 18 Dec 2025 07:28:10 +0100
+Message-Id: <20251218-b4-pks-odb-read-object-info-improvements-v1-0-81c8368492be@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqtsxoxzs5.fsf@gitster.g>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPqeQ2kC/x3NQQrCMBBG4auUWTuQjC2KVxEXTfNHR2kSklIKp
+ Xc3dPlt3tupoigqPbqdClatmmKDvXQ0fcb4BqtvJjEyWLEDu57zr3LyjgtGz8l9MS2sMSTWOZe
+ 0YkZcKhuYq0W4y80LtVwuCLqdq+frOP7wo/0AegAAAA==
+X-Change-ID: 20251215-b4-pks-odb-read-object-info-improvements-0e031ef827d2
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, 
+ Aaron Plattner <aplattner@nvidia.com>
+X-Mailer: b4 0.14.3
 
-On Thu, Dec 18, 2025 at 11:57:30AM +0900, Junio C Hamano wrote:
-> Aaron Plattner <aplattner@nvidia.com> writes:
-> 
-> > I'm pretty sure the problem is when do_oid_object_info_extended() 
-> > substitutes the blank oi here:
-> >
-> > 	if (!oi)
-> > 		oi = &blank_oi;
-> >
-> > and then packfile_store_read_object_info() compares it to its own local 
-> > blank oi:
-> >
-> > 	static struct object_info blank_oi = OBJECT_INFO_INIT;
-> 
-> Ahh, that's an unusual mistake.
-> 
-> The following was done on top of 'seen', but would it help?  We
-> shouldn't have to use the stand-in "blank" thing to begin with.
-> 
-> Besides, explicitly handling the NULL case would reduce the
-> potential chance of errors that somebody accidentally writes into
-> blank_oi, making its contents dirty.
+Hi,
 
-Yeah, indeed I've already found that regression myself and got it
-cooking in a local patch series. I was holding off from sending that
-series because there was a minor conflict with an in-flight one. But
-I'll take this opportunity and send it out now.
+this patch series contains various small improvements for reading object
+info for either loose or packed objects. These improvements were split
+out of a larger patch series where I'm about to introduce a new generic
+`odb_for_each_object()` function.
 
-Thanks for the report and your initial triaging, Junio!
+This series has a conflict with ps/packfile-store-in-odb-source. I
+decided to not make this a dependency though because those two topics
+are independent from one another, and I expect that this series here
+will be merged down faster than the conflicting one. Furthermore, the
+conflict itself is quite minor:
+
+diff --cc packfile.c
+index 8daa5a5ee7,ce6716fbea..0000000000
+--- a/packfile.c
++++ b/packfile.c
+@@@ -2157,10 -2132,11 +2151,10 @@@ int packfile_store_read_object_info(str
+  				    struct object_info *oi,
+  				    unsigned flags UNUSED)
+  {
+ -	static struct object_info blank_oi = OBJECT_INFO_INIT;
+  	struct pack_entry e;
+ -	int rtype;
+ +	int ret;
+  
+- 	if (!find_pack_entry(store->odb->repo, oid, &e))
++ 	if (!find_pack_entry(store, oid, &e))
+  		return 1;
+  
+  	/*
+@@@ -2549,9 -2555,8 +2571,9 @@@ int packfile_store_read_object_stream(s
+  	oi.sizep = &size;
+  
+  	if (packfile_store_read_object_info(store, oid, &oi, 0) ||
+ -	    oi.u.packed.is_delta ||
+ +	    oi.u.packed.type == PACKED_OBJECT_TYPE_REF_DELTA ||
+ +	    oi.u.packed.type == PACKED_OBJECT_TYPE_OFS_DELTA ||
+- 	    repo_settings_get_big_file_threshold(store->odb->repo) >= size)
++ 	    repo_settings_get_big_file_threshold(store->source->odb->repo) >= size)
+  		return -1;
+  
+  	in_pack_type = unpack_object_header(oi.u.packed.pack,
+
+I'd thus propose to merge this series via an evil merge, but if this
+proves to be burdensome I'm happy to defer it to a later point. Just let
+me know and I'll adapt accordingly, thanks!
+
+This also fixes the issue reported in <f4ba7e89-4717-4b36-921f-56537131fd69@nvidia.com>.
 
 Patrick
+
+---
+Patrick Steinhardt (8):
+      object-file: always set OI_LOOSE when reading object info
+      packfile: always declare object info to be OI_PACKED
+      packfile: extend `is_delta` field to allow for "unknown" state
+      packfile: always populate pack-specific info when reading object info
+      packfile: disentangle return value of `packed_object_info()`
+      packfile: skip unpacking object header for disk size requests
+      packfile: fix short-circuiting of empty requests
+      packfile: drop repository parameter from `packed_object_info()`
+
+ builtin/cat-file.c     |  3 +--
+ builtin/pack-objects.c |  4 +--
+ commit-graph.c         |  2 +-
+ object-file.c          | 13 ++++++++--
+ odb.h                  | 18 +++++++++++--
+ pack-bitmap.c          |  3 +--
+ packfile.c             | 69 +++++++++++++++++++++++++++++++-------------------
+ packfile.h             |  7 +++--
+ 8 files changed, 80 insertions(+), 39 deletions(-)
+
+
+---
+base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
+change-id: 20251215-b4-pks-odb-read-object-info-improvements-0e031ef827d2
+
