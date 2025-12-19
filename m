@@ -1,133 +1,178 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C82425A2DE
-	for <git@vger.kernel.org>; Fri, 19 Dec 2025 08:04:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575FE3090E0
+	for <git@vger.kernel.org>; Fri, 19 Dec 2025 08:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766131453; cv=none; b=ZPLz/JU55ZFONgZ8kXSglEtCajOcbAvFjfCEH/ifw1z4st+GUwJ5qVhBBxbZstBY2yxDVONyfhpZ1Xx/PBcjjoFdPMNRDGIdabKlcbIaQ5woETPB4LWyIXgyzgVpUZHpw1GYmvTWFBIB0u2/F8K/je9aO4Ru3iR9T0lbaXV//2w=
+	t=1766132268; cv=none; b=nnPdrNbSeSbHMEJ7hxNVily3JOOXFgDkBsThWEBDGwBHJUNHZJkHySERvH2nmoza7FokGG0LV8fDz0WlqDtgSNYWWsg0TZz3Jfsw7K3tkWyhgCXikmMRbVf1OkrOaBGtLj6bn8puRscR/em07oADxmWl0jvk23eaPSR6UyLyiaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766131453; c=relaxed/simple;
-	bh=4qB7t/ZsHzwkTZOQ87gh+zQN9l1S/Dzi96qvamrUlZQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=la7z2E25xhy1iM2DruOMWjidoIGhfQb3Ke2weg1updLqanqcwndx7wFb0qmXNYUn4Y4+V0RgpD7xjbws0GELBlBssTKXVSG5swW8fudxRMpV8OjuK6pVFpbUs9yJPjdSDR/6yylJGEujtV9U4PB++rEtEv9q3TULmtPni19hYoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=M4VrB0Hw; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1766132268; c=relaxed/simple;
+	bh=rYKaycptqQ7No3OSTFHTLwie5L9pkOzwAmAK1GB2Ylc=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=PL/WN/1z7NRQVO9IBUrcAvT/CNQ3p4OuYL7XWV6ICycz2ydKCiuHvpRk/T2ieDSmI2C1Bt+2nySZtbFEwOHs0avFSEzVYKc5SHoa6TKbBZlYagEBpNqHyh+SnUTdWGUYkCg838PjBf7KGMDuZoTaDKAryPmW/hizhpLaBq5fduo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SNjWMYVP; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="M4VrB0Hw"
-Received: (qmail 396467 invoked by uid 109); 19 Dec 2025 08:04:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=4qB7t/ZsHzwkTZOQ87gh+zQN9l1S/Dzi96qvamrUlZQ=; b=M4VrB0Hwzo5LRuoB/pf4KymsXvPOW47taWaxdQYoRCcjbW7ORR3EiAyU9tN+rSPwIp7O7DatOEdF951jteAEL8TD4H3yuyTjk6itybxEh7HCH2LLFJQDqQAjTE+nq6yLajuhjDw4WDzmkc4U25Dv4BVJ+c+V3oIywJ0x9+iA0bmd7qVmPd2t+rJAweyiicHCLs2ggVs9thZfbv3cenBKDU8Zu775BTJvSbZA/sFVitnQFWdqlByd2HNbEgIq4Sdc5+u/k5LsE42Dp0HRk+u0f+Yh+lOZYbErtqYJFFg0PsFgDa+oPGpSx24hrDKEYn6ADhg/ri0HPInIaAXVMSowwQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 Dec 2025 08:04:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 530392 invoked by uid 111); 19 Dec 2025 08:04:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Dec 2025 03:04:14 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 19 Dec 2025 03:04:09 -0500
-From: Jeff King <peff@peff.net>
-To: Daniel Stenberg <daniel@haxx.se>
-Cc: git@vger.kernel.org, Matthew John Cheetham <mjcheetham@outlook.com>
-Subject: Re: [PATCH 0/3] test-suite fixes for upcoming curl 8.18.0
-Message-ID: <20251219080409.GC3784564@coredump.intra.peff.net>
-References: <20251218121120.GA3252258@coredump.intra.peff.net>
- <613s97no-7021-pp15-79s4-302o39p7n5r8@unkk.fr>
- <sn7p46s1-4o20-q05n-173r-s6716s8145q6@unkk.fr>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SNjWMYVP"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-29f1bc40b35so27202205ad.2
+        for <git@vger.kernel.org>; Fri, 19 Dec 2025 00:17:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766132266; x=1766737066; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3afrJnLGKOtVkwK99kzXdFsSGCqdcUMRdapLIoy3bfo=;
+        b=SNjWMYVPeWLbO63c90wbEQAf3PlsMtrd3jJk35SdkfgLFsi2QH95iA5Ei4kSmtxmyY
+         30Dkx+Z2dDaGmEiIvr8S502qdmFGMCK1DRxEdlqLnNnUW5UssjOCfBqeN9IPeE6Kg+zk
+         g2SsgL3hzS9C1HhDp86kzepBZ2qQrPsWuGvXRISlWcvL8Dzh8YjMG5/N7zZ/9lYhBzbX
+         UjfV098MeQXe/l3Y5bWB0Z6mntngxoW+h92Tnsc+vOxH5qqFPQN4qT73tt4WTAFXvEjR
+         EtNVE7GAJ3pnnbli3ViKW5jBgK+Jou9QxKiICFPaAmnt33wN/v015gVJAeF0hTViT5R2
+         3UMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766132266; x=1766737066;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3afrJnLGKOtVkwK99kzXdFsSGCqdcUMRdapLIoy3bfo=;
+        b=EbDSMXUve7y/v/7JygkSUS3OG3TqDvSQbY8AVIc1L+ZZc0Aj3u69F88KiV/GsL3zMv
+         /wxJ1slL1/+aCJrlXY0XolpcAC7AWVGTh36NK29ZdM2m46F1J2L6qb3hZQhBZg7ZrsJI
+         fxlzSyGdtcMbw/vTcDxG5xz0NpC/YPsDdFPzWDvoeWnjSMEhMzXlcFOSRm8+qTM1p6PR
+         wEdjRMhRRNJrM8zMaCcjUn14g7z5d+F22YtaSUWR/KGiroxUgtYOixfNKc0JYlikbCNK
+         qLyM7h0RwHm2yRV/5iSmWX3u7WKagQzuZf+f1LsE8oWhjtBG6JlhKBfQNM/Veucnv3o+
+         loww==
+X-Gm-Message-State: AOJu0YwtoXcpGuhhcPUtTn3qYDawnOX23T9dnrKCvDt5EbH+DNvrDRiq
+	QA0KTRhaiOjMT/34DI44O28hWPnvP0M6Gnj+aJzAb6KhFazGRxnMvfwIPOjQaltc
+X-Gm-Gg: AY/fxX4oHdu+3vhNjKqfgB29Cqar1GLQYWgXljCzJX+kD+bOq9Jol+VlfhfQAA8rWp/
+	d9jyd4VeNOJRAo8u4bJzHelSI1tbmKpGCQdCXaPCUG7TSc3HCMnsBNv87R14RqjAQ7hCbmmoZXX
+	DB5HU3kI09SHkBNhhR16b6/HUqASq6/YIjce4REAFV/4N7GOLothzvzfHOqE9Eo56fxbN2bDshX
+	VsDTS0snK/N7tnJliuaXRQ7VGZdLugGMKFVk/TpgNy8xrVNjUQ29dQY2JBxjbX39+PJdsH3pz/3
+	IOdb1IxR6pgL2KNQqtslSCIoG1X/XaJuYivhO2iRoSxhsrNfSvdKYSCqt/F7cxWw90AgzAxFn5u
+	7w59tIrIyaO4FU/Fj5Ht/8LO0gnIs8/8MBrQPf8iqQ7vsiWeh+wT+75c/nHSgyigZicmRGiocp4
+	OOK0IkoTZWSmkr
+X-Google-Smtp-Source: AGHT+IF2fFLTmqUcKv62GKrGe96HRfCR8h9P0bUB8EEdEG0tBt+O4mj1hGYEN3E8e6oadk9KszK1RQ==
+X-Received: by 2002:a05:7022:458e:b0:119:e56b:c75b with SMTP id a92af1059eb24-121722e4529mr2634924c88.32.1766132265918;
+        Fri, 19 Dec 2025 00:17:45 -0800 (PST)
+Received: from [127.0.0.1] ([52.161.75.162])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121724de25dsm4633088c88.7.2025.12.19.00.17.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Dec 2025 00:17:45 -0800 (PST)
+Message-Id: <pull.2133.git.git.1766132264231.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 19 Dec 2025 08:17:44 +0000
+Subject: [PATCH] diff: add --no-indicators option
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <sn7p46s1-4o20-q05n-173r-s6716s8145q6@unkk.fr>
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-On Thu, Dec 18, 2025 at 05:49:27PM +0100, Daniel Stenberg wrote:
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-> On Thu, 18 Dec 2025, Daniel Stenberg wrote:
-> 
-> > >  [3/3]: t5563: relax whitespace assumptions for unfolded headers
-> 
-> > I did not fully consider the impact this might have on users such as
-> > you. Allow me to rework that a little bit further and get the former
-> > white-space behavior back. Thanks!
-> 
-> I just merged a fix [1] into curl that should restore the unfolding behavior
-> to match previous releases. It would be awesome if you could verify.
-> 
-> [1] = https://github.com/curl/curl/commit/9941e7c95bf26f00fd87888a
+Add --no-indicators to replace '+', '-', and ' ' indicators in the
+left margin with spaces. Colors are preserved, allowing diffs to be
+distinguished by color alone.
 
-Thanks, I took a look at it. Unfortunately I think it only gets us
-halfway there. It drops the extra space when folding this:
+This is useful when copy-pasting diff output, as the indicators no
+longer need to be manually removed.
 
-  printf 'Foo: bar\r\n'
-  printf ' \r\n'
-  printf ' baz\r\n'
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+    diff: add '--no-indicators' option
 
-which will yield:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2133%2FHaraldNordgren%2Fno-indicators-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2133/HaraldNordgren/no-indicators-v1
+Pull-Request: https://github.com/git/git/pull/2133
 
-  Foo: bar baz
+ diff.c                 | 17 +++++++++++++++++
+ t/t4000-diff-format.sh | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+)
 
-and it fixes the first of Git's failing tests. But if we swap out the space for a tab
-like this:
-
-  printf 'Foo: bar\r\n'
-  printf ' \r\n'
-  printf '\tbaz\r\n'
-
-then we get collapsed whitespace, but it's a tab. I.e.:
-
-  Foo: bar\tbaz
-
-(where "\t" is a literal tab). I think that does violate the standard
-(which says it should become spaces). I think in most headers the
-grammar allows OWS/RWS fields that are spaces or tabs, so in theory it
-shouldn't matter. But I wouldn't be surprised if that causes some
-surprises in the real world.
-
-Sadly the input buffer to http_parse_headers() is const, so we can't
-just write a space over the original tab. ;) But I think rather than
-walking back to preserve that final leading whitespace byte, we could
-just always add in our own space separately, like this:
-
-diff --git a/lib/http.c b/lib/http.c
-index ea62219542..eaa8bf73c2 100644
---- a/lib/http.c
-+++ b/lib/http.c
-@@ -4388,6 +4388,7 @@ static CURLcode http_parse_headers(struct Curl_easy *data,
-     {
-       /* preserve the whole original header piece size */
-       size_t header_piece = consumed;
-+      bool did_unfold = false;
+diff --git a/diff.c b/diff.c
+index 436da250eb..668ba349fe 100644
+--- a/diff.c
++++ b/diff.c
+@@ -5290,6 +5290,20 @@ static int diff_opt_char(const struct option *opt,
+ 	return 0;
+ }
  
-       if(data->state.leading_unfold) {
-         /* immediately after an unfold, keep only a single whitespace */
-@@ -4398,17 +4399,18 @@ static CURLcode http_parse_headers(struct Curl_easy *data,
-           blen--;
-         }
-         if(consumed) {
--          if(iblen > blen) {
--            /* take one step back */
--            consumed++;
--            buf--;
--            blen++;
--          }
-           data->state.leading_unfold = FALSE; /* done now */
-+          did_unfold = TRUE;
-         }
-       }
- 
-       if(consumed) {
-+        if (did_unfold) {
-+          result = curlx_dyn_addn(&data->state.headerb, " ", 1);
-+          if(result)
-+            return result;
-+        }
++static int diff_opt_no_indicators(const struct option *opt,
++				  const char *arg, int unset)
++{
++	struct diff_options *options = opt->value;
 +
-         result = curlx_dyn_addn(&data->state.headerb, buf, consumed);
-         if(result)
-           return result;
++	BUG_ON_OPT_NEG(unset);
++	BUG_ON_OPT_ARG(arg);
++
++	options->output_indicators[OUTPUT_INDICATOR_NEW] = ' ';
++	options->output_indicators[OUTPUT_INDICATOR_OLD] = ' ';
++	options->output_indicators[OUTPUT_INDICATOR_CONTEXT] = ' ';
++	return 0;
++}
++
+ static int diff_opt_color_moved(const struct option *opt,
+ 				const char *arg, int unset)
+ {
+@@ -5828,6 +5842,9 @@ struct option *add_diff_options(const struct option *opts,
+ 		OPT_INTEGER_F(0, "inter-hunk-context", &options->interhunkcontext,
+ 			      N_("show context between diff hunks up to the specified number of lines"),
+ 			      PARSE_OPT_NONEG),
++		OPT_CALLBACK_F(0, "no-indicators", options, NULL,
++			       N_("do not show '+', '-' and ' ' indicators in the left margin"),
++			       PARSE_OPT_NONEG | PARSE_OPT_NOARG, diff_opt_no_indicators),
+ 		OPT_CALLBACK_F(0, "output-indicator-new",
+ 			       &options->output_indicators[OUTPUT_INDICATOR_NEW],
+ 			       N_("<char>"),
+diff --git a/t/t4000-diff-format.sh b/t/t4000-diff-format.sh
+index 32b14e3a71..1863553056 100755
+--- a/t/t4000-diff-format.sh
++++ b/t/t4000-diff-format.sh
+@@ -95,6 +95,38 @@ test_expect_success 'git diff-files --patch --no-patch does not show the patch'
+ 	test_must_be_empty err
+ '
+ 
++cat >expected_no_indicators <<\EOF
++diff --git a/path0 b/path0
++old mode 100644
++new mode 100755
++--- a/path0
+++++ b/path0
++@@ -1,3 +1,3 @@
++ Line 1
++ Line 2
++ line 3
++ Line 3
++diff --git a/path1 b/path1
++deleted file mode 100755
++--- a/path1
+++++ /dev/null
++@@ -1,3 +0,0 @@
++ Line 1
++ Line 2
++ line 3
++EOF
++
++test_expect_success 'git diff-files --no-indicators replaces +/- with spaces' '
++	git diff-files -p --no-indicators >actual &&
++	compare_diff_patch expected_no_indicators actual
++'
++
++test_expect_success 'git diff-files --no-indicators --color preserves colors' '
++	git diff-files -p --no-indicators --color --ws-error-highlight=none >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	grep -F "<RED> line 3<RESET>" actual &&
++	grep -F "<GREEN> Line 3<RESET>" actual
++'
+ 
+ # Smudge path2/path3 so that dirstat has something to show
+ date >path2/path3
 
--Peff
+base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
+-- 
+gitgitgadget
