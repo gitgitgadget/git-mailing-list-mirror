@@ -1,84 +1,86 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB46B2BE7AD
-	for <git@vger.kernel.org>; Fri, 19 Dec 2025 06:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2CB42049
+	for <git@vger.kernel.org>; Fri, 19 Dec 2025 06:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766125481; cv=none; b=Y85lpr7YuFJ24eW8ai9xVpQyqs1/4uMq9mGBfzTTkQ3ZtDsbyT7noAoQ3JnjZPOoHoZpzLcNJS68R4wkbHlI88XZT0cPMI9tvPbZKJ9KXhXXgxStK7OeXWJigSMS5uQi9FWWTwiz9lfztoMOfJiSXmQGHNaGgdlm1+WlkWpPR1c=
+	t=1766125571; cv=none; b=Ds9M7VWVccTGwKX1LWFA1BOZhTviHvp9geJAdoWv41fw3D8iYg5xummvy3FgbUoyyNcZqMwYFKXo2UDORDjLcT3uCCuzxLzR+MSDmtgdWAS5Cl6+fim4emKMj37jvaJUbfk0Niq9lHBjyLn7WlXH8jBoYV9BVRv/T9YJD1uxp7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766125481; c=relaxed/simple;
-	bh=Zf87Uv94KyLq4Gc40h8AjSePIcwXTuO3neJzilyE/7Y=;
+	s=arc-20240116; t=1766125571; c=relaxed/simple;
+	bh=V2nXNBdoaDXKsnk5C7fiqXpMgLLHhrjGb+wvjLp2eYs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o3S/H8BeTS5qLYL2ougZfHKojNdACw1xw/0j5hSjbut208t033BtmAVa+Qmt1xpWX0L6H2u8CJHVJKGttlfw9XC3H5U0I8reFC4xUtaalTGeVMimllgooxme+1F4tAFxffmbp5TRENMZMY1kv4F7volgB8BiyM4AUUQJAJFB0cU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=INYbVcdz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LM7c5m7p; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZCNEuTWXiv6K6OI/uSIOjmMSq6QLy/n1fH3EvE0hoOcsl+8yCtCwDnBg75lZs7aKf19MjZmj5lpuxuGqci9pKzkCWFK0hEbuSSVUHrpGjfGvZbnRAi75QC7JAinODvWwnM643QsBhNSUweeUWXXI1q+BhUI1YFBJ6SyRaG9a6Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m/Cjwu3X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z05a7unU; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="INYbVcdz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LM7c5m7p"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id E0D1C1D00162;
-	Fri, 19 Dec 2025 01:24:36 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m/Cjwu3X";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z05a7unU"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 22F651D00169;
+	Fri, 19 Dec 2025 01:26:04 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Fri, 19 Dec 2025 01:24:37 -0500
+  by phl-compute-03.internal (MEProxy); Fri, 19 Dec 2025 01:26:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1766125476; x=1766211876; bh=GOyRJNZXc1
-	pCE/UNVRhBrk9hJ6e1qEvSfADLoPo/bfs=; b=INYbVcdzvy1xgvr/tOBJHnF38q
-	rB2/TSxU6ZXMT4MFueM0r5UKL9hPHOkp6wDga41rBNo96U6c9tMNVUA2dBzMi0d+
-	rBQaV4x/LZE1f0T8+FRpaWYfpLODYoF5itRYP0fQW4Yw02F886Ee0dwbnncDO7EV
-	WmNx2jzwgChan5CXivdmU1qR4yKs2h1lxqupcVsJ/2vbEAoJzo0T56w9ZgXiZ8JX
-	RK1fOkXhUh107ROCI+6GmYAoQdr3YbSBJHnRbiWNlgjGY5xIIvWLcshzKfeKRCZl
-	UHbmYTIs0t8JDz7cE87QyRimoGgJqHhiJPAmmin0w/FNmRcjo0aDojRyg/4w==
+	:subject:to:to; s=fm1; t=1766125563; x=1766211963; bh=Re6WHnSk0G
+	3yZF9+0VnY2HnWnyWv5vO8ARx0BahiVNk=; b=m/Cjwu3XTE4jMheDonnr9yKtew
+	LZ8mijiOb2HctoHeBP9TFaozfvNyMqQS7tm0x8TchQpIf0UALYjKZFiK48GnFUk+
+	fU7JdkRoxCKZbZCnTGilxDqeGkGN3bPAvZsJXhIg3EyFpIpGifXvjiGABvPH3gDX
+	S8mIwvKc92EF+kPAWIebrMr4Vs2xUYtNK6jbfKkvh9inbhqtH3M7RffMDSfGjf0u
+	5nLgfA5uLj3XZ4lRH8JeV5bqItrnDQ2/tUx+IFwBic5lvsb7DKZw/T4L6vYrDuQy
+	mINxWJnV/sOrDiLIBpGIczUEd9YpRJKLP2tsFCqFlDchVsShsegsAr59Fczw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766125476; x=1766211876; bh=GOyRJNZXc1pCE/UNVRhBrk9hJ6e1qEvSfAD
-	LoPo/bfs=; b=LM7c5m7plyx4s6Ho0yKba+vDsSTzuQmn3z+H0DP4BXQUqyuDZBq
-	LKQeSyT6pqa2GPcXlq8O+j9qO6GaDyQEi99fln1wknDl7koQFBKnFQFry6tbU4YP
-	I1u+R2nzG9j3kDVSfkNG174lkAsPox5Gc2lYH/Ubsa2mmXlLwrnKnX/QTa4jdzWn
-	ygXkaw2yGMfg2/cpFasbpX2htIBw05WpsadkqsSykPHR/qXP95zaMhgApp2tYj1q
-	lfWzfn1Oj5oL+rLNn7YwCrsEeLNu5Y5j/dNCe+dGa4rjFtU5cSAGHtYRpgjl+E0K
-	yP6L26lL/oviFgF/IBc7yBeeUPRU2qs3T4A==
-X-ME-Sender: <xms:pO9EaaUe3rGcmoBsJwa7fXr_qfcAKzGXtMeecZGlngEBK4711vDY6A>
-    <xme:pO9EadkKZgSEYpB3dKemcI4zLY252ltgMD5l9auYsecuiCNnDqQRX-4KX2zTvLJks
-    kNUWFP8AT0yVMsiWTa8yRnLnSNTEx3gxceb7aYvg8h5_j-obzEUBaI>
-X-ME-Received: <xmr:pO9EaTaiJykwMFQ9z9N-m1qeM5xzq_M3qF8co6Dg4Z3PjGoQhpj9VeaSMgtFU3rC3-AP1UjNrfyv3oeW1I9mHr0c5PiBI5mv1SiryHAPnjaNIw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegjeehjecutefuodetggdotefrod
+	1766125563; x=1766211963; bh=Re6WHnSk0G3yZF9+0VnY2HnWnyWv5vO8ARx
+	0BahiVNk=; b=Z05a7unU8kKwES/ByAIJGlSsFhnxxEwcUnGzkXl6d1DFJuseTFc
+	xGzTus8AQi/z5BYVx5idhDyjt2Zgy2JdAGb4ng/ZfX610Hm5DL2Y7naYZtpE9ng3
+	vOAW1HkcJXzpbE49xyRkl7JjNQkl/+VTi9Ir/wyXYcPKEYxNksVqVLio3Jog/HdK
+	PUH3W4A6ncqXuRj0ri5VyhVkP4Y3DCZPFjieQHccl0ebtBpkcbra8yD4rts8Fa9A
+	or34GPttKCNLJEiixScvIlQRM0vkV/5/P4VLiGZh33S0QSQLZbia9SXNQxWVQIUz
+	LGJDylg7i/rozNnj8yiEUPAnkkY3+WRuuoA==
+X-ME-Sender: <xms:--9Eaf9ym9muyh4i3lV9k2hOIO5-tpFE61JxOMzjifVrfN-OxBn4qw>
+    <xme:--9EaSvRw9jWbDc44vXXI5YYdzkmmIjwPnHZ5kx2jN0T5cRDkyHw8o3MNCbS_axQL
+    vuWJZerw9zfi--koNoG14WBF8CqDQEWnHTj7TbrFyq5HlSB5tmyEA>
+X-ME-Received: <xmr:--9EaSC_2sSActNPmdNVKHPfciN815sww5NpfkkG36WfraO9Uu_6Kpug0fKKm2R9yTm41TbdMXxJijuyeJjQx3_E-nsb8rnAOH5qm1XN1ABlZA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegjeehkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgv
-    tghordgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvodhgihhthhhusgesghhmrg
-    hilhdrtghomh
-X-ME-Proxy: <xmx:pO9EaQOjhFh8P5sABwn1B9kRIbNalsTVAk6EmdSJmaAg2aDw4r-RPA>
-    <xmx:pO9EaQZQ82j7UaD1JQaSA73p69blWqlG7rxfFV6138OVCmPiPWyFHw>
-    <xmx:pO9EaW3EnJG81KK1hknamXXmfxdWxZRMIKb0f8XUy5c5Zrb010VKUA>
-    <xmx:pO9EaeejoPqrrzcwgSJeLpHn-1cV8hAE6yncClpteeUCYISRJda6rA>
-    <xmx:pO9EaZYa9heQ7QTJ01_zV4HrVmWUP0VoZuebGVYaOfIipLeyYwCimTYk>
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
+    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:--9EaaUueiO7CSsQwiVyPvplVnwa2H73Q-PNrQzeyyxJsprzaM2ONQ>
+    <xmx:--9EaQBQS6THOxPTDL-AVIMvHGBzlC5zU_rpTBHkkx38EGM_ZFdCXg>
+    <xmx:--9Ead9dh6wd3EIKBZcEM2gFduMQFDbjnmgcsPSXBXXTikvs_TNVnw>
+    <xmx:--9EaXFleIfJ9UsCX4VxP4V9ks7JbFgm_1pfyj8OTIR0poHevkI_xg>
+    <xmx:--9EaVgNmEFtzyOgmeVjSYDO2dPJn_tAXkLqgTxs4JTYTu8KOZ-qNB_Y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Dec 2025 01:24:35 -0500 (EST)
+ 19 Dec 2025 01:26:02 -0500 (EST)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e481cccf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 19 Dec 2025 06:24:33 +0000 (UTC)
-Date: Fri, 19 Dec 2025 07:24:29 +0100
+	by mail (OpenSMTPD) with ESMTPSA id c09816ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 19 Dec 2025 06:26:01 +0000 (UTC)
+Date: Fri, 19 Dec 2025 07:25:58 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rust: build correctly without GNU sed
-Message-ID: <aUTvneg9W-6ba4Ev@pks.im>
-References: <a33f4e5118938300bcd5b2991feeee855a1c8f86.1766100330.git.ben.knoble+github@gmail.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/3] builtin/repack: avoid rewriting up-to-date MIDX
+Message-ID: <aUTv9g9QxJ3aSGuL@pks.im>
+References: <20251208-pks-skip-noop-rewrite-v1-0-430d52dba9f0@pks.im>
+ <20251210-pks-skip-noop-rewrite-v2-0-f813a9e44f28@pks.im>
+ <xmqqsedhe78q.fsf@gitster.g>
+ <aTvFOlhtPHgWQC5L@pks.im>
+ <aURvuLcIVpBSIhiE@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,51 +89,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a33f4e5118938300bcd5b2991feeee855a1c8f86.1766100330.git.ben.knoble+github@gmail.com>
+In-Reply-To: <aURvuLcIVpBSIhiE@nand.local>
 
-On Thu, Dec 18, 2025 at 06:25:44PM -0500, D. Ben Knoble wrote:
-> From e509b5b8be (rust: support for Windows, 2025-10-15), we check
-> cargo's information to decide which library to build. However, that
-> check mistakenly used "sed -s" ("consider files as separate rather than
-> as a single, continuous long stream"), which is a GNU extension. The
-> build thus fails on macOS with "meson -Drust=enabled", which comes with
-> BSD-derived sed.
+On Thu, Dec 18, 2025 at 04:18:48PM -0500, Taylor Blau wrote:
+> Thanks, both. The new version of these patches looks good to me. FYI I
+> am going out of office beginning tomorrow through the end of the year.
+> In case it's easier to queue, it's fine to drop my 3.2 patches from
+> 'seen' and take Patrick's v2 as-is.
 > 
-> Instead, use the intended "sed -n" and print the matching section of the
-> output. This failure mode likely went unnoticed on systems with GNU sed
-> (common for developer machines and CI) because, in those instances, the
-> output being matched by case is the full cargo output (which either
-> contains the string "-windows-" or doesn't).
+> I plan on sending a new round of 3.2 in the first week of the new year
+> and don't mind it being dropped in the meantime, especially if it makes
+> things easier for the maintainer.
 
-Yeah, I guess that's what happened indeed. I seem to have confused "-s"
-for "--silent" with "-n" when I wrote this.
+Thanks for your review!
 
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> Helped-by: Patrick Steinhardt <ps@pks.im>
+> Enjoy the holidays everyone!
 
-I'd say that it was you two folks who figured this out, I didn't really
-help much :) But I won't complain.
-
-> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> ---
->  src/cargo-meson.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/src/cargo-meson.sh b/src/cargo-meson.sh
-> index 3998db0435..38728a3711 100755
-> --- a/src/cargo-meson.sh
-> +++ b/src/cargo-meson.sh
-> @@ -26,7 +26,7 @@
->  	exit $RET
->  fi
->  
-> -case "$(cargo -vV | sed -s 's/^host: \(.*\)$/\1/')" in
-> +case "$(cargo -vV | sed -n 's/^host: \(.*\)$/\1/p')" in
->  	*-windows-*)
->  		LIBNAME=gitcore.lib;;
->  	*)
-
-Yup, this looks exactly like discussed. Thanks, the fix looks good to
-me!
+Likewise, enjoy your holidays and see you next year!
 
 Patrick
