@@ -1,201 +1,115 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8394329C41
-	for <git@vger.kernel.org>; Fri, 19 Dec 2025 14:09:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF5F27587E
+	for <git@vger.kernel.org>; Fri, 19 Dec 2025 14:27:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766153389; cv=none; b=VzAKeOpqjiNKTJNuGNzTcvKL09U0e1PMRl4bj2xfh8slrgG2p2A/XXYc7Wl8cgNSkO12q/+QZxRlgsb7NPRDdTDELhmtW46SEU5MxbzybojuU6Bo84KQPbErKxKEJZFr4KNtsJog0qfbRNNr2Bv2o7a81WJvR0fg+adfwsLJk7c=
+	t=1766154448; cv=none; b=O7R7i53f+AS1Gr50QMdWUxEbKE54nPgb5KCf7LO+KDgaqk8s2kUgi8EUHY3LYS3jOp2LnOR2UdQ/zNfY4+E33BPn6mvHGnKuj3Jyed8fS/Vv0IOGi+gH4f5k0f1CGI5UORL47CActj5t9NT/L7GYboRF68z4WNWX1kYLVN8aKVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766153389; c=relaxed/simple;
-	bh=JTW1kZC6fWEWg+16tHtjxLzej+xHzTrTAr9XC6CqBE4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KVIdIQ8NEeEwGKgiK770R2+l/dpOk0tUOOD8B5bJ3P6KUhQKJ22vP2oR44KGHJ52olNmo2eVJwOIdwVXe0nYWmYJx7ENxPTRFkAtIQVlcaso4hDm5h1WcItur0tbj4wNyFIOPGMguweNGvoZeXITAX1X1/w/j7VryiZRngLoKRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KjlctI5r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LpitkXcs; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1766154448; c=relaxed/simple;
+	bh=jPi2zAILAy+idmwR3XNPqe1UGiIHhLyx8OcM1Ur0rRM=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=HGl2ggK9grN48p1DVS9JWCSgbujp9o6MM7vgfpZ6A4ICTDcZe++DfliZltxiVd19SNFgZmBiobNFfAztWUguIgv+OJLvBy4jMoE7wpPVhh6b7cINNFCF2oSvOS0SmPFPawdeRr3ZriZndeBU/3+ZtieLLJizwI+eIq0jCsiFVn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nhEfwmzv; arc=none smtp.client-ip=209.85.221.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KjlctI5r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LpitkXcs"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C726C1400077;
-	Fri, 19 Dec 2025 09:09:46 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 19 Dec 2025 09:09:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1766153386;
-	 x=1766239786; bh=FdGB9HwXdYeybk9P1TCyKZfdQBwf5hDpIkzVBeK3xbo=; b=
-	KjlctI5r+D6pKUANqBLE3CMekgGHF7W10xwDGx4ZPg5pU7BkaaoUGqsaKlT1Ml7i
-	INaozfUaJaE6o8nbbCuiCTjeArtqMjuhA0vPicGEhfH1NFH9E7eLZm0QncPGC+5h
-	aN024GsuJwal3WIa8A7yuACQiazGDS8FXX5MkApfeAvstTGF0zlqgxqz+DrziRfs
-	WQlaFHcvuaNepq1QpB+mFn8vW+ZOmdFe898EEp0YeV8JNzVxjzsgisXPnegBXq5R
-	kitAxJW8tZQPtFpKKVqRfUIwU+7QEjFDfuIOwO00HnBNo79gYniItBl0qbFHejB/
-	MX4zmTYS+sLipit58U908Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766153386; x=
-	1766239786; bh=FdGB9HwXdYeybk9P1TCyKZfdQBwf5hDpIkzVBeK3xbo=; b=L
-	pitkXcs/oSvybUybP9rvjeaqKXjsOOrCP95wf0vyxYbXXmZCEV4tvmoqJ8DEFyRE
-	C7gPIwUQnFi3W5O+gq9zQeEPfLy3h0q/TIXaBKTLsIB8qaiOpWK4sdtnX32h+lc3
-	FvBeVCLqz7ocNikQG1PbeBeXqBqnzZbOl8JMZBCrTbMky6B1ycZad3FdLMe2tEMI
-	ibCibLICaQqbmzhFfgg2QBiYYGyD6tOWFi5tR0Cznve6gmsYj0DI5F9S2t1ef8v4
-	+hPEuLdsiAkFlhCiR7M1BI2YQ1C4X5lXFb8Kk4q1oHDb3EN6cJ0wd14WzoRVUrSn
-	3GVgdz1zUD8Xu/T/gdhCw==
-X-ME-Sender: <xms:qlxFaRPwII_TcJUUHzc6UjUckgnBNbXfa5_laWQLY6RqSCtXUFisEQ>
-    <xme:qlxFad9nJMkD6447gvX11lApizkTSwOYJmV2k8ogfSAxA-XAutgoLRKM8gnnUGz_F
-    qG4iaxQlv6u_Vy5-XwOefITA_vx_Cfw-aIbb7pf30MsiLfosbkctQ>
-X-ME-Received: <xmr:qlxFaW4ipaVKBqwKpIB0A12JH0OLkDPESAQQvdGFQDoFE3mmgsmg9gyXKUztBsVjrKVpo_SyN-q_2qPl2XY1A4QyueJP1okgGzusn2npAKf0lw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegkeehtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehmrghilhessggvhigvrhhmrghtthhhihgrshdruggvpdhrtghpth
-    htohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthho
-    pehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhope
-    hmrghrthhinhhvohhniiesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:qlxFab56XuY_5YCDjoewtv1jsmbyjNimUevMbOoZQwrodfGN9ID20A>
-    <xmx:qlxFaXpHbGY-Qull9RZecREVPpkrcGKlDblschjjHns3OFqE2rjgoA>
-    <xmx:qlxFaUPrfce3ogtnFCju7a10clDN7wI8xxXj28LLTTsEucbpHiYYfw>
-    <xmx:qlxFaX0y3ZTPIG8juU8FhK1QkaHEpUeVgBsvpOkDfhz4fPrKzb2hfg>
-    <xmx:qlxFaaoLBrFIX0l2k9CqI3wlf3iOFoTbVexGLn2Dvbud4H3nh4jk5bNt>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Dec 2025 09:09:44 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d0cd6689 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 19 Dec 2025 14:09:43 +0000 (UTC)
-Date: Fri, 19 Dec 2025 15:09:39 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Matthias Beyer <mail@beyermatthias.de>, phillip.wood@dunelm.org.uk,
-	Martin von Zweigbergk <martinvonz@gmail.com>, git@vger.kernel.org,
-	Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH RFC 00/11] Introduce git-history(1) command for easy
- history editing
-Message-ID: <aUVcowmpU7VMLpE4@pks.im>
-References: <CANiSa6gXbrZaMLVq-AAg38sm+7qgzn4w98WWowLtUHA2P+BdLw@mail.gmail.com>
- <aKs3tqjE510MF0T-@pks.im>
- <aMsWL2cSoytbmRjA@szeder.dev>
- <4m6rmefbv4hftclimitz5rp6yapswjtnjsxymrsdkuan4jbg3u@dm5jzdiq5cxz>
- <bc01706e-b9cc-4cd4-953a-971a3ccd6c79@gmail.com>
- <paqf2ko6kcm5qdcqxqz57qu6gjw3vf6boabjsryeugfnlzzb7z@4dzqo6jug6l2>
- <a6efc710-4062-4955-8fe8-bb6d428a44c1@gmail.com>
- <xmqqms3qh13e.fsf@gitster.g>
- <aUVDax0PbkaXGB61@pks.im>
- <aUVaEPGoOkATQGl3@szeder.dev>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nhEfwmzv"
+Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-42fbc3056afso998327f8f.2
+        for <git@vger.kernel.org>; Fri, 19 Dec 2025 06:27:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766154445; x=1766759245; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oByltxcBsNPtvIkfle3QXsFQpb/izb38eBsHMAlbOlU=;
+        b=nhEfwmzv2MWiYCLe3lB7V5LTqKovsUxpIJtT526r4XauQ68Nj/8eNAmKqMm9qhjL6I
+         93o8oshZBQwgoq42pfsJhX4at5jxtYg9p/XHRfkVyuUud6ma7EqArdFoZocnvcqJWb0/
+         GpkWbuJQo3NrumaYOiAtSxsriVT0+dRiH40I0vNds4fWyiiBbzYRi44nIZ/zssc4fKwr
+         +YpUW6OJIn2+Sv3HKRACQeYOASWibTjVKJdMO1FepQtfIbums0Fcu67S+qtCqlulfANi
+         CuHVo00FHTI296D0Np7xWtpXq7NM72jgIELAIjDGKR1qh8z3QY16/vlFZUa47ZZLWg6E
+         lXgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766154445; x=1766759245;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oByltxcBsNPtvIkfle3QXsFQpb/izb38eBsHMAlbOlU=;
+        b=VA6Qb6B6BxqrL1ME+C24qGb9BuQtBPtLIaSRx13As/8tgXS02kFtoEtU5RZX4eMbBn
+         ut4cQOT6Rd0Bhsvog9Yu57aEsuKy8PqvLYAWhF5Tdz2Bi5wVeCHQHBCjOP5mv4MbCS/2
+         S/paNSRc84jQodJze7Flu1+qcPIQTWPhk2BvTh9oZ5stkVd4s7ClHQbCLfUUbaMpHa0Y
+         h56GByNCs/rnAYWVBCUAfvE+RKeqagkKxomrFSmZSBpwPod91CYhRYrUt0HX5jBFlbP4
+         4EiMz5yia7TVTJ7R9j9wXS1/uD237Jq7KOHYHI4LBzdpiLHhCKHOcs/dIXWRG028CWS+
+         uz1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVxJCdVzXyTzKLDpAR+vdHWpRTOkcQQYPXliSJl9hXUUI6rpieM/aVu+SxZSHgDCTmFAEM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCUoXVaw5lq5UjiLsqNEDsI605ykpSHyeJNn/r98VamxErxCaj
+	slDDVdvvNYvX3wheiehA7wQsHBpFs7wm1IGTprg3DDGXmK3mQg2bq+p5
+X-Gm-Gg: AY/fxX6sX2tFLKtUBIM2Is73TclQ4cnQk7jRZzyFNaCFGKmF8FRx3qgq87iha09bulF
+	UEfvqsMD81Hb12gjRcM9/E2W0Iles7yj6Cu6koJ49VMLrHUAJiAMmlE6SaZ+18rJsTGqYclciUF
+	PuQRREhmM1ZVJL7NOZnrxIHMztgtEQPeqGvSiXNUNbMFDQ9MzWEbx9o+rNSnRn/kbibdYHEPTW0
+	kcB3FQQ/Ti7O5pDRr9UFPb88BKThPXJG2+Ea9++zfCVB0t0uTbORtPzynzUoUZ5h15blVb4o1ZH
+	p76WksTRnr6vUttSDwlzoqkiXHoUv8pGxOrsq6T9fQXkVUE99blTNkxffLAioOGWWLyoRZ1PNsr
+	JH2qqJEA1CRK7RIKgMxaiy5/lf7mubwRfsR9AuTQjoV2SPr2Fwt2u4r1K3e5Zp5TJhOIWbH5AcV
+	rWRPnX3FqsinVbY9F4GWjJpZCaWqXUJMFDKTSMKWkHb601/cdj9unCrqJeUnpYG6Q7CA==
+X-Google-Smtp-Source: AGHT+IHc0zP7w5+Ois451Ka2q6+Vc6mkDhv3JwdTyAQOepjMthpIh0JV3OvE5JDEHZ0ydAaSs39LOQ==
+X-Received: by 2002:a05:6000:4008:b0:431:2cb:d335 with SMTP id ffacd0b85a97d-4324e4fab82mr2929853f8f.34.1766154445150;
+        Fri, 19 Dec 2025 06:27:25 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4324ea2267fsm5134636f8f.12.2025.12.19.06.27.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Dec 2025 06:27:24 -0800 (PST)
+Message-ID: <f141e335-9729-4f09-86b2-12a39f24837a@gmail.com>
+Date: Fri, 19 Dec 2025 14:27:20 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aUVaEPGoOkATQGl3@szeder.dev>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] diff: add --no-indicators option
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: collin.funk1@gmail.com, git@vger.kernel.org, gitgitgadget@gmail.com,
+ phillip.wood@dunelm.org.uk
+References: <035238d7-f98a-4072-a363-9a57650abb95@gmail.com>
+ <20251219114602.96489-1-haraldnordgren@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20251219114602.96489-1-haraldnordgren@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Dec 19, 2025 at 02:58:40PM +0100, SZEDER Gábor wrote:
-> On Fri, Dec 19, 2025 at 01:22:03PM +0100, Patrick Steinhardt wrote:
-> > On Wed, Dec 10, 2025 at 11:18:29PM +0900, Junio C Hamano wrote:
-> > > Phillip Wood <phillip.wood123@gmail.com> writes:
-> > > 
-> > > >> Its mostly because I don't like too much magic and because I think being
-> > > >> explicit is always better than not.
-> > > >> 
-> > > >> So from my POV, I would expect "the simple case" to be "the simple CLI
-> > > >> call" and if I want the tool to do magic and "rewrite all the
-> > > >> things"^tm, that I would need to specify a flag for that.
-> > > >
-> > > > Thanks, that's useful to know. I'd assumed rewriting all the branches 
-> > > > descended from the rewritten commit was the natural thing do do but 
-> > > > clearly not everyone thinks it is.
-> > > 
-> > > It probably depends on the way one looks at the tool, as a building
-> > > block (in which case less magic may be preferrable) or a complete
-> > > solution for one part of workflow.  I probably fall into former camp
-> > > more often than other people, but for this particular one, I tend to
-> > > think it is less confusing if we moved all branch refs away from the
-> > > commits that are obsoleted by rewriting/replaying.
-> > 
-> > Okay, so the majority of folks here seem to favor rewriting all
-> > dependent branches, which is also the default that JJ uses here, and
-> > git-replay(1) does it, too.
+On 19/12/2025 11:46, Harald Nordgren wrote:
+> Hi Phillip!
 > 
-> I can't find the word "conflict" in this subthread, so let me bring
-> back that little history snippet from around the beginning of the
-> subthread:
+> Yeah, getting rid of the extra space in the beginning would be preferable,
+> I can take a look at that assuming that this has any chance of getting merged.
+
+I can't say whether any given patch will be merged or not. All I can say 
+is that if there is support for an idea on the mailing list and someone 
+submits a sensible implementation then it is likely to be merged. If 
+people on the mailing list are generally unconvinced something is a good 
+idea then it is unlikely to be merged.
+
+If you want to restore some lines from a previous version of the file 
+then it would be worth trying out "git restore -p" as Ben suggested. If 
+there is some other use for this then it would be helpful to understand 
+a bit more about it. I'm struggling to see why it would be useful to be 
+able to copy and paste a mixture of insertions and deletions without the 
+'+' and '-' indicators. There was some discussion a while ago about 
+being able to view just the new version of the file[1] would it make 
+sense to just show the old or new version when the indicators are omitted?
+
+Thanks
+
+Phillip
+
+[1] 
+https://lore.kernel.org/git/CAHk-=wgh8emJn-+FtxN=m_SCPiP6cGKHU-5ozzV9tWBMxn+xcA@mail.gmail.com
+
+> Harald
 > 
->   Let's suppose I have this piece of history, I'm on 'branch2', and I
->   drop commit B.  Which commits will be rewritten and which branches
->   will be repointed?
->   
->      A---B---C---D   branch1
->               \   \
->                \   E---F   branch2
->                 \       \
->                  \       G---H---I   branch3
->                   \
->                    J---K---L   branch4
-> 
-> If we were to rewrite all dependent branches after dropping commit B,
-> then besides 'branch2' we would rewrite 'branch1', 'branch3' and
-> 'branch4' as well, right?
-> 
-> Now, let's suppose that dropping B would cause conflicts when
-> rewriting commits G, H, I, J, K and L.
-> 
-> When does the user have to resolve these conflicts?
 
-In the current proposed subcommands there cannot be any conflicts, as
-both reword and split do not change the resulting trees.
-
-> If not right now, then how exactly will those dependent branches be
-> rewritten?  (I understand jj can store conflicts and they can be
-> resolved later...  But are we there yet?)
-
-No, we aren't. I think Elijah wants to work on that, and I agree that
-for a subset of commands it might be a required feature.
-
-> > the set of branches that we'd need to rewrite is any one
-> > branch that points into that range. It keeps the UI simple as the user
-> > still only has to think about a singular commit, should be sufficiently
-> > fast to compute in most cases, and it allows mega-merge workflows like
-> > JJ supports.
-> > 
-> > Does that make sense to everyone? If so, I'll revise my stance and will
-> > adapt the current implementation to do exactly that.
-> 
-> I would very much prefer that the tool would only rewrite branches
-> that I explicitly allowed to be rewritten, with an '--all' option that
-> would allow the rewrite of all dependent branches.
-> 
-> Or at the very least there must be an escape hatch.
-
-I agree a 100% about there being an escape hatch. You really don't want
-to rewrite dependent branches in all cases. I'll include an option that
-allows users to pick what to either:
-
-  - Rewrite all dependent branches.
-
-  - Rewrite only the currently checked-out branch or reference.
-
-  - Only give us what _would_ happen, so basically git-replay(1)'s
-    "--ref-action=print" mode.
-
-Thanks!
-
-Patrick
