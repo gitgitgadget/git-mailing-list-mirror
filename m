@@ -1,120 +1,113 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326D335950
-	for <git@vger.kernel.org>; Fri, 19 Dec 2025 07:39:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE1E267AF6
+	for <git@vger.kernel.org>; Fri, 19 Dec 2025 07:50:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766129993; cv=none; b=ALVDWL6X8c5PKOlCTjk3FeBlD3NZBsx2f5MfbvU8HJzCiuWOp4W8TlrwtHyxSXoBDmrWmLdR2AQ0NEf4PP6U+gB6NPWarxerMNHYUfnKo3SeHK9fZl6cVeUphIx7Aj6bL9QBGneZeleBsBhUQNqUaHaWGlYOZvItNlS29zG2cXw=
+	t=1766130607; cv=none; b=fTRx/YN0WRXfMEJokUS1kLX9evjuF3nduSlZLG4n6cDsiUfEaKi7QeHNfLfe4iDBQZ1vxDlQdPRYdOK0CZ5wZu0GXFVk+4eu+xdMyLyYq0Tva7Q6chulwr/sd3ppMiKu/Zm6IagZubL24pjXQjkNx1GsQshKdi0QJk2B2Qh3fF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766129993; c=relaxed/simple;
-	bh=FtK22ozs+z/mS99fYdYUBXgzVmutMUi+2Zhh8//H1jw=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=glbcAxA45KmV6JE6vQJADWTX+oGlXy2BGYjgS8xkXFVdtanu1enR8KMddoaqrRmWy/6tjI4KiwEUm4dYJSvEfd7z5XgbOKt1RNk5etDN9xFum7SMgcYvPSyesRClSn1IMrsFB43RHzpIUCTbnsF2gh6vl6IQsYd0ZJn0EJUcHpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=dUV86br6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LjsfUjBx; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1766130607; c=relaxed/simple;
+	bh=ZTBphQgz4d+NMpLNCl1Cra36i0YIaUdDEzBiD6JBCzU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kaDeaXWbwlFjaYntSnW+2rMcnM8eqs4c694+7V9fIfjhQH1oBZmaPQ9QapX6v1UrnkpzXffFL4zAtoWo4ZXzMJ9vdj6fXqojPIGGoDuNW6zH8GVGjwKE38126gwpOYumDgVjRto0BqqlW28oIttNsuW6FOIjbi5RL41kE4R6p0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=e1jkZYmx; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="dUV86br6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LjsfUjBx"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 576351D00168;
-	Fri, 19 Dec 2025 02:39:51 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Fri, 19 Dec 2025 02:39:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1766129991;
-	 x=1766216391; bh=FtK22ozs+z/mS99fYdYUBXgzVmutMUi+2Zhh8//H1jw=; b=
-	dUV86br6UojsiS41+LHCyh5ldWkV95j0iJu5mMbB6LVqihm0CUU6Hd8lguOHJemV
-	yGuL5YAxLRQE4kk49mjfFUvOsGvuWEGtwou9DSbyX3OvPvNiKzNa3KzNXYnDg42R
-	Z1khp433j+T4NIU+TPb0dRY0UprxTIi3u/nPCJN1BBNJ+pyRvAM01qWWyX5TtSjg
-	HUSn8IJf7ERj7aw3GAhmUI9mjxCY1TQlS1wCWZ9MK0KW9C4qZtfW6uYn6rAIhBUL
-	BBvxkEuE6h+XYVH1AU0b0rYKzRGUVuprbhS7SpUaqHHL1rVzrXex4g6dYYzvWxci
-	IRQqYSjQw8TeAMDXUWaE2g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766129991; x=
-	1766216391; bh=FtK22ozs+z/mS99fYdYUBXgzVmutMUi+2Zhh8//H1jw=; b=L
-	jsfUjBxNs0c2bcrkMHG/x9AkRovRMbWr5xtghJqmUp0vrezs/7d/jnA9zb3XNBNx
-	WczMbi6o3BQG2TRqG3Z+d3Xv+/MqnPTtqirRVG/2sdHk28AKrao5I+IbgnrcMahB
-	c5UcfzB3VWK/G+0XAAQPMe2XB4AHjEis8O/S3jmOTwJe+tACE5n5r5po1/HkpV12
-	LK0E0kqH98b8OEpb7bAy5WA8LJn+17pepvEz+82JrQMfBqZ7tEC4W0oQgfzwwWMx
-	fhS0so8xiKeTu4oiMWOX+2XXcXCe7T2UNbxaaL/IllAZmbEPXC/ToKW6a8eQ+x0U
-	rTuPDrmCM0Uyki20YvJxg==
-X-ME-Sender: <xms:RwFFafbtMMTRqBz4bTD5D7uyjslfCbquWwP4NK3_vuJgLFXX_Us4sc8>
-    <xme:RwFFaZMp9wxOHS63jObyoX2eY__TSong3E4V0J9--dn6y0ShyuZis_OpDVGTL9SPF
-    fztHCV2SkXE4wxgP1Iw7CaRr0JJjRDNRWWCqbp8iyiSOwtL2cE1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegjeejvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
-    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohephedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdp
-    rhgtphhtthhopegrphhlrghtthhnvghrsehnvhhiughirgdrtghomhdprhgtphhtthhope
-    hpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:RwFFaTedvLzhAzhvyLjvZqt6979ycp9IkSj7G84HWSHmliCr2UPphw>
-    <xmx:RwFFaauE4_eIRRKmjncBc_9jemK8es9RhBHTAvdH8gD58fe1QWrnUg>
-    <xmx:RwFFacnbysHqXnGvieltEG_eFxrOaN02nop7d9fHr3aR6EgMdQ4pjQ>
-    <xmx:RwFFaUyEHrSRs11IDw-VuVYDvwoCekYeqbikssoaGMc3rJHl9Jdzug>
-    <xmx:RwFFaXqvgxeaXcxdKBfTaEtpuY6QkQ2hmVi7Laj9ZlOzwUKimsU4Tv-e>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 0DF231EA0066; Fri, 19 Dec 2025 02:39:51 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="e1jkZYmx"
+Received: (qmail 396442 invoked by uid 109); 19 Dec 2025 07:50:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ZTBphQgz4d+NMpLNCl1Cra36i0YIaUdDEzBiD6JBCzU=; b=e1jkZYmx5xRUp79PNq2xWZbq5NIyA8VzA8N4we/sJlev6Dq9FJDjM+DrB3lKyDYS2chvgOwo9yMmWwdacLZoY35Okg3ab27MJfuNBF7dw1DYMoVnX5/pcaO3qGYp509acIcnh+4X8RXrX17BpZpXcslGlyRsaT4O6Wngayd4n4ZvdYVZvXuVTZi7xYnYJ8Iwkb3stuzdGHuYrs4j3HyMeb+fIxkAwkbl/osPDL60p2m2x0Bw7EL5l9M7Fye+fTNLTUBa+WJ9clyHqQtsHcqDxyAliXVO9a60xzdzi4F/I42ElMR8z1QQG2J4Pu7QR6HJ3sF62yUHF61LlZ6X80bi2g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 19 Dec 2025 07:50:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 530305 invoked by uid 111); 19 Dec 2025 07:50:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Dec 2025 02:50:06 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 19 Dec 2025 02:50:02 -0500
+From: Jeff King <peff@peff.net>
+To: Daniel Stenberg <daniel@haxx.se>
+Cc: git@vger.kernel.org, Matthew John Cheetham <mjcheetham@outlook.com>
+Subject: Re: [PATCH 0/3] test-suite fixes for upcoming curl 8.18.0
+Message-ID: <20251219075002.GB3784564@coredump.intra.peff.net>
+References: <20251218121120.GA3252258@coredump.intra.peff.net>
+ <613s97no-7021-pp15-79s4-302o39p7n5r8@unkk.fr>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AVz_chKN6izs
-Date: Fri, 19 Dec 2025 08:39:31 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Cc: "Aaron Plattner" <aplattner@nvidia.com>,
- "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
- "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <4d084712-dc9a-4824-b840-4d78831d9da9@app.fastmail.com>
-In-Reply-To: <aUPbgCSTgWJAe0wu@Carlos-MacBook-Air.local>
-References: <xmqqpl8cxy0j.fsf@gitster.g>
- <a31e054e-0eb2-48b9-a802-3592a737d1e3@nvidia.com>
- <0e860421-8f8c-4bf9-8ad8-82fe269a7a9d@app.fastmail.com>
- <aUPbgCSTgWJAe0wu@Carlos-MacBook-Air.local>
-Subject: Re: [PATCH] odb: do not use "blank" substitute for NULL
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <613s97no-7021-pp15-79s4-302o39p7n5r8@unkk.fr>
 
-On Thu, Dec 18, 2025, at 11:59, Carlo Marcelo Arenas Bel=C3=B3n wrote:
-> On Thu, Dec 18, 2025 at 09:02:59AM -0800, Kristoffer Haugsbakk wrote:
->>[snip]
->>
->> This project typically does not use that trailer/tag.
->
-> While factually correct, I think the "why" is more interesting in this=
- case.
-> anf the answer IMHO is: not, because it is not needed.
->
-> % git describe 385e18810f10
-> v2.52.0-25-g385e18810f
->
-> shows that this bug is only present after 2.52.0 was released so unles=
-s you
-> are using unreleased version of git (ex: some development version, inc=
-luding
-> ones that are based on "next"), there is no need to "backport" this fi=
-x, as
-> the next version you will use will include it.
+On Thu, Dec 18, 2025 at 01:37:11PM +0100, Daniel Stenberg wrote:
 
-So the Linux Kernel (presumably) uses `Fixes` for backporting and/or
-does *not* use it for commits that fix changes that have not been
-released yet. Got it.
+> >  [1/3]: t5551: handle trailing slashes in expected cookies output
+> 
+> This is all benign. As you correctly observed, we no longer keep the
+> "original" cookie path around and only work with the sanitized version - so
+> that's the one stored now. It was already the one used for actual
+> comparisons so apart from the change in storage, it *should* not cause any
+> problems.
+
+OK, good. I did wonder if there might be some subtle behavior change
+under the hood, but figured you probably knew what you were doing
+(especially since the normalization was the point of that commit, and
+not some unexpected side effect).
+
+> >  [2/3]: t5563: add missing end-of-line in HTTP header
+> 
+> I believe I made some code checks a little stricter: header lines MUST end
+> with at CR or LF (or both) to be treated as a valid one. Your fix for this
+> should be good also for older libcurl versions.
+
+Makes sense. I think it's accurate to call what our test was doing
+garbage that we happened to be lucky was accepted, and the new curl
+behavior will not hurt any real world cases.
+
+> >  [3/3]: t5563: relax whitespace assumptions for unfolded headers
+> 
+> This one is material for me to rethink.
+> 
+> I had to completely change our header unfolding logic because we learned
+> that we did not apply it early enough, so some header parsing was wrongly
+> done on pre-unfolded data. In this process, I also changed the logic that
+> appends the following line on the previous line. To avoid having to keep a
+> state, I decided to just append the second line onto the first one without
+> trying to reduce the whitespace characters to a single one.
+> 
+> I did not fully consider the impact this might have on users such as you.
+> Allow me to rework that a little bit further and get the former white-space
+> behavior back. Thanks!
+
+I do think you're following the standards in including the extra space,
+so that part isn't wrong per se. But it may be kinder to do a bit of
+whitespace collapsing. I dunno.
+
+The more fundamental change is that a CURLOPT_HEADERFUNCTION callback is
+now fed unfolded headers, rather than getting the lines piecemeal (and
+having to do the unfolding itself).
+
+So I'm not sure that we should be worried about a case where old code
+preferred the unfolded but whitespace-collapsed headers, and will be
+broken if curl does not keep doing that. There was no such code, because
+curl was not unfolding at all!
+
+The only code which would confused is a callback that did its own
+unfolding and somehow implemented it differently than curl does (which
+is what happened here). But every caller should be prepared to take
+unfolded data, since after all the server could have avoided folding in
+the first place.
+
+So I dunno. While we did see "breakage" here, I am inclined to think it
+was mostly about how intimate and brittle the tests were, and that any
+real world use would not run into this.
+
+I'd like to think it probably doesn't matter much in the real world
+considering the deprecated status of folding in the first place, but
+that might be too optimistic. ;)
+
+-Peff
