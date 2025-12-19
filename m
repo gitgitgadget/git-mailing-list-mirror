@@ -1,103 +1,97 @@
-Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB1C2D7384
-	for <git@vger.kernel.org>; Fri, 19 Dec 2025 09:17:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC34829D291
+	for <git@vger.kernel.org>; Fri, 19 Dec 2025 09:34:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766135885; cv=none; b=R3Glwsid10qm0wBkK0DJIkpm9VzHtf0KpnH2dmlTzLyp9/FvvpwQi+/smBJPnltufVxK6TO4gN4QjOJ+FoNshYi9zIeKwPuAWIR8I20IL3anT7pcOo7UbQRhAzwSewyE7VhRX+/h5YO6lHkdmYqUbmRh2AxsMnyW7osrZo2TDaA=
+	t=1766136870; cv=none; b=iZKARhi3feMzM1wkeEli4EJXmdO9rcTxr+WMcVhLNpWLDFZg8qsYRBzkNu94S4RtmnLzDPSkX1JnUtf+Y0u6ppEnXN/o4oUlHvdKkDvDJg3myqq+NC2j3LMfwncWfoBLRSe6vH2u2eA7Pmqr+koz8tYJiAjMFCnqdXEMGmjC9Kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766135885; c=relaxed/simple;
-	bh=53M/Lm2j+GKUuF5DVx6uGSkLOq4IsXiSppINJL2NAYk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LZlr9Ai6fJZ3pzWELkMaIzqPzBV+FhXEr5XWi31M49AlgJu7YMMsqqgDcud1p5R2JlATh5eTeTvfcNEIFtOu5ophsngPhQmboDLL3W/4X6x60o8aNLn784ubtWq/ax93IcOK0w5pghrLafBmLyKvd3GezJuh64/7ZqOWwQiRdQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=tBk+m2hX; arc=none smtp.client-ip=95.215.58.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1766136870; c=relaxed/simple;
+	bh=AsLu+UNyWkBDyP0tXjm02Nhh/0mOiHLbNWWFwzYJuUk=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=bJUouZ7Ouep/8dyY+6kJfrX8gId7vaqRwUL4qSweNbjxsuR92PJVOb6n1T0+T+WuAwyovHGw0VB5aNEU94Kq13kdXDgqeJoKBsMDL4Od36/R8wUZIFGAGdnOmAeAi3TZFlPKN1FDZVtYra8I4F9SH3mXcXFcqUzaiyBN3lrpp+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=dCge9739; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=whamBDo1; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="tBk+m2hX"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1766135877;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=fTngoWDNSSIe9ujO+vPQ/ae/+498PjmRY2ic6Y25KQ0=;
-	b=tBk+m2hXgoAklOnNHMaqXWdAngJ/awPds6CuXmw5a+KqjzdeYkGwCNDPMoGyH+iiknwTfq
-	LvqZE8hIY4CyrvG6x9m4EnybwxUGI/fhoMJu4pQ5c23skPuoA7n9A7fELQXYEn4LzUcZd3
-	hTY7wmaPw01/gX4hQgp8z0YlmSqkJjM=
-From: Toon Claes <toon@iotcl.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, Junio C Hamano
- <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] git-compat-util: introduce MEMZERO_ARRAY() macro
-In-Reply-To: <f02b628f-b9d7-4436-88ee-3255e02cb0f3@web.de>
-References: <20251210-toon-cocci-memzero-v1-0-ae916a79065b@iotcl.com>
- <20251210-toon-cocci-memzero-v1-1-ae916a79065b@iotcl.com>
- <xmqqtsxxg0z4.fsf@gitster.g> <f02b628f-b9d7-4436-88ee-3255e02cb0f3@web.de>
-Date: Fri, 19 Dec 2025 10:17:33 +0100
-Message-ID: <878qeyhlua.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="dCge9739";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="whamBDo1"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 238B27A005A;
+	Fri, 19 Dec 2025 04:34:27 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Fri, 19 Dec 2025 04:34:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1766136867;
+	 x=1766223267; bh=AsLu+UNyWkBDyP0tXjm02Nhh/0mOiHLbNWWFwzYJuUk=; b=
+	dCge9739mXyDjPEL5lOIAAv1Rb7H87PTAGpBFJsD8mwhT1A6dufsa7JJDkIrG+X7
+	KlLhb9S+HZ8Ge4Wk6800F6mUqt3toxzeoopy0tnqUZc3SD/FHntK2k/MzuU2u6iy
+	AlqMUpSSQQRBqIalbcjOhsw4DFRitq11mGj6BnMkPmS02amGUdH0zg2tTOxEiFkO
+	6kWYMEoz+btxd9QiZw6djU+8adPYsagOWBUUlgXJbAvFagsjyxxIbnlYi51r2Awt
+	8Fltq7e76e4YlCKo11vhy2QqWLLZTALB04b2TLFFAybtK1kuwkHgWphlBolDeXf4
+	qhsaBZkr9Mqs32N2bVIxhg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1766136867; x=1766223267; bh=A
+	sLu+UNyWkBDyP0tXjm02Nhh/0mOiHLbNWWFwzYJuUk=; b=whamBDo1soqrtnn9W
+	sHSyjruLSPtztS5YYcqcIgs2hHaDEQ1dcMz6j/2VSUGNnXFiNYDjwRfMzpzf7ub2
+	l0UFE3I0YR65+K+YBeizz6G5gDaQYw4myO7BcpZr7hH4lAGbmbY/PeTCR1bIhXyX
+	nN3tIe3lh6xMSwmZr3ALmE05CScmift/ZTS4iUXvUxbuyhAlL5liYldpy7pjmUZd
+	BwUSKLz8rnecamG4ipVQt0iTc9WEdlEyAq5QxvD7ZYDb+QZemxdgF7gdtXnNFOTE
+	p2HgiWbMu00jNWzsJk0oslG4RNkdNOcCxOj6henZe6SRHItVn3uxreFzPzdOzCrv
+	OZ3yA==
+X-ME-Sender: <xms:IhxFaSnbEsw5rOi2eGV02Xl4YB7lCfxYCvs_6c6yu5_JHNuRjTBFMww>
+    <xme:IhxFaUr6SEiAKsmPf6UC8IrmHwCsQk_W9SbUgeaB--3EEzJzyDOafr4M_6I-RINnA
+    ayZk8F0Ku8rRRITI2YNAr7MVh68bljTH8EmXlbDo1OxcESDAgLgGg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegjeelhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhsthho
+    fhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkh
+    hksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepvdeigedtgfetgefh
+    ffetteeludevheetfeekffehheefieehudekveelveffhfejnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
+    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdr
+    tghomhdprhgtphhtthhopehjvggrnhdqnhhovghlrdgrvhhilhgrsehstggrnhhtvggthh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:IhxFaXiRJrw8hXTVgoQcUbRbVB__iBLhwa2s7KrOtMhdiA4ovUxYKQ>
+    <xmx:IhxFabxDiNZ1um6jBt9DRYAii25BBNUjw6nNswGL8fo9S8uQh5p1aA>
+    <xmx:IhxFaaI6kahOqEez89N8SGVF0YSzyA0eb23y8Oke_ul-G-c-JZmg0g>
+    <xmx:IhxFaSQEbdTITsfwk0aDOPxUV7iRJtT5S8pYYiDnOTRJe4Vc5LRcRg>
+    <xmx:IxxFacV1X8s5KutO-VpejrE1zU9jtg4tEDh0io5ADnVOXL0EKjAOhncz>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id CF86B1EA0066; Fri, 19 Dec 2025 04:34:26 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Migadu-Flow: FLOW_OUT
+X-ThreadId: A7cBr0QabPqZ
+Date: Fri, 19 Dec 2025 10:34:05 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jean-noel.avila@scantech.com>,
+ "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Message-Id: <9dfb1888-aca9-4ba9-bfca-49dbd1074025@app.fastmail.com>
+In-Reply-To: <843711d8-00c5-4747-972e-e705e14d85b4@app.fastmail.com>
+References: <pull.2016.git.1765830229824.gitgitgadget@gmail.com>
+ <031d7b41-b6d3-450c-925e-cddaf2e7aa85@app.fastmail.com>
+ <876ee36d-610b-4df6-9297-96b38f106c6c@scantech.com>
+ <843711d8-00c5-4747-972e-e705e14d85b4@app.fastmail.com>
+Subject: Re: [PATCH] doc: flock of small fixes to various documentation files
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On Thu, Dec 18, 2025, at 09:05, Kristoffer Haugsbakk wrote:
+>>[snip]
 
-> On 12/11/25 4:18 AM, Junio C Hamano wrote:
->> Toon Claes <toon@iotcl.com> writes:
->>=20
->>> +@@
->>> +- memset(ptr, \( 0x0 \| 0 \), n * \( sizeof(T)
->>> +-                                 \| sizeof(*ptr)
->>> +-                                 \) )
->>> ++ MEMZERO_ARRAY(ptr, n)
->>=20
->> Shouldn't we be also catching
->>=20
->> 	memset(array, '\0', sizeof(array[0]) * ARRAY_SIZE(array));
->>=20
->> in addition to "0" and "0x0"?
->
-> Good idea to match "sizeof(ptr[...])", even though we currently don't have
-> matching code.
-
-I didn't include that because I didn't see any case that would be
-covered by that. But it's good to include it anyway to capture future
-code.
-
-> Good idea also to match "'\0'".  There's code with that pattern in
-> compat/regex/.
-
-Good find, I didn't think about that.
-
-> You can drop "0x0", though, "0" matches it already (at least for me, I ha=
-ve
-> "spatch version 1.3-dirty compiled with OCaml version 5.1.1" from
-> Homebrew).
-
-Nice!
-
-> If you put parentheses around "n" in the pre-image then Coccinelle will
-> remove them if present and still match code without them.
-
-Well, that's not what I am seeing. With parentheses around "n", it
-didn't match the case in builtin/last-modified.c on my machine. I'm
-using spatch v1.3
-
-> They are no longer needed without the multiplication. Their removal
-> would improve the result for ewah/bitmap.c.
-
-I agree it would be an improvement. Using `\( (n) \| n \)` does the
-trick for all cases I've found.
-
-
---=20
-Cheers,
-Toon
+This is in `next` now anyway.
