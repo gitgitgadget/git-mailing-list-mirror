@@ -1,108 +1,103 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76D12EE5F4
-	for <git@vger.kernel.org>; Fri, 19 Dec 2025 08:57:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB1C2D7384
+	for <git@vger.kernel.org>; Fri, 19 Dec 2025 09:17:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766134632; cv=none; b=Rkla1FkryN1dlx1IBJ1SKPl88AyNk3FV+KOr4P8yWqFWCCmneRd6fxnVathcZ66Ih6cCIeDJfcmTIQOgiaHxP5sMAyGVDkxbzKlk9y2cTUHobmmOEmF8GiK0ZYqRvVsEMUKHdWgYKbpt3wlak649G0wxuTIshhMTkZPgfZck5Jk=
+	t=1766135885; cv=none; b=R3Glwsid10qm0wBkK0DJIkpm9VzHtf0KpnH2dmlTzLyp9/FvvpwQi+/smBJPnltufVxK6TO4gN4QjOJ+FoNshYi9zIeKwPuAWIR8I20IL3anT7pcOo7UbQRhAzwSewyE7VhRX+/h5YO6lHkdmYqUbmRh2AxsMnyW7osrZo2TDaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766134632; c=relaxed/simple;
-	bh=oKnAquJQ7DIsdHNeo2hWWA8i4VmQDu2aCc3baIb2WkQ=;
+	s=arc-20240116; t=1766135885; c=relaxed/simple;
+	bh=53M/Lm2j+GKUuF5DVx6uGSkLOq4IsXiSppINJL2NAYk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hKCQNzdnDjXi+qS9xioKPxhFLDz2CQKykhEwoMybXK4z1zqU9SfO5V6kG+uCTKXb+yuXexMSVFgc7ntPGrWiVZnuwjINDa1cxJHwgTwcKuV7RZtrQol1LluIHefe8xY7Zae0q7dtCbeXQuNEfz2TRVnU5za9paet521NQbyuQME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nFjO59FN; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version:Content-Type; b=LZlr9Ai6fJZ3pzWELkMaIzqPzBV+FhXEr5XWi31M49AlgJu7YMMsqqgDcud1p5R2JlATh5eTeTvfcNEIFtOu5ophsngPhQmboDLL3W/4X6x60o8aNLn784ubtWq/ax93IcOK0w5pghrLafBmLyKvd3GezJuh64/7ZqOWwQiRdQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=tBk+m2hX; arc=none smtp.client-ip=95.215.58.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nFjO59FN"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2a0d0788adaso13787485ad.3
-        for <git@vger.kernel.org>; Fri, 19 Dec 2025 00:57:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766134630; x=1766739430; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=oAY4Fyckc4/X/mKASmJp038el1EsDWYgVFsz4v5zkoU=;
-        b=nFjO59FNGs02uaIaoe/BBFwKiFnaw8QYRwdvwYHmJHluawoCbHJ5txPSC4qz7ahzRY
-         7Hxx/krPwHPEOfu0JS8Uq+u4LWTzOjQ3zQ5VisOtAXTq2CRZ5Led1o1hbE3ItGjctPkq
-         J9jRStriindhfvmqW/Otya2Pv/iZQrQdkcpKIOuNpdfxcKBL2PtGOoS+q0oo+hfuBCOz
-         OHQUnDuIcITooEpXyijNrtZ3vK7sFj4ElslQ9DEG1caeym3jgKx57nsCGbCagIfpa0a7
-         eQI6pzSpvhaE7gEoFsHpd4r+/GfJLSeEFi5czYfl/dNlm5jwkT35I/dTj443dH31B3yE
-         Q1YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766134630; x=1766739430;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=oAY4Fyckc4/X/mKASmJp038el1EsDWYgVFsz4v5zkoU=;
-        b=w6l4Ls6I5jUFRR51YgRTZeIRz/t7YfWfURbXbRPbEBSct/ho/QdPvl/1QPZLf9LMwZ
-         x559PaJyqZvHlP9QpOZWYZXaBIeqjO96mU3Tgt9busIDrmC3dMZQVZ1B0nWrafCQ+QAK
-         SuksDH0AsTJlx1rM2UKS0G2NINiakF7gJ/7wGSFEl8fOwAFKukIpvNkmwvvT27yHWzz0
-         saUWvKyb+y83sEKxyuja7Slz1/vGRWBTnjpexVb+C97UUkhIAtkzjDPxBY0+EzpcEuFi
-         hQgVcljUf0sdcc/eEb1cQ7KYYXV8Re9Uo8CfupgiweeWsMMZ4Sr5Onp425gEnkJACP3g
-         fmVg==
-X-Gm-Message-State: AOJu0Yyj1lno67mKJ70yFkQziCPxYW47WHpl93Uj8JliVVvszto+6VLt
-	lxarXHJj4EViU+WFgY9t+A78tUMjWw1r6RalYFwVMDYgzaT2eq/7gJ5k
-X-Gm-Gg: AY/fxX59Av23dAz4B/liwTh3ZJV2g6YB6OtAvYug9rdtCp68LzYJ3HRtvTZNoVd6V7d
-	OChyqNvEAeDngSjGbOSLePCb8gThl+gYSaLoWFsMJaTH6lJth+KFFfRPh2QZHC7yvsjL+zpWaht
-	HvzFSfHyhCnrO7J30V30KOpaVfn536EZoUQP8Y6kY9/N5dAaJgF3jElaiYw2ZMJPyXzgVcWKi7/
-	75injqX9aNdj0SEu3uWsX3uFJg+8pOggU6THCBCrEnu5MOz7LdMX6/+3uyin7L8cR5JLLU2NwMg
-	U2QN8itrqkfKS43r3wqbZ93DFxkzR7mqJj6kGYrCTVGV0dPEpuB5Hw6XxUCJzvcpHLcJexZj88V
-	OgirNGM6m5812WSK+uGVi+ShMb7jMFwnSy34rmhx1XIfEcjolVW7e6zD1z4ShREPFccpK
-X-Google-Smtp-Source: AGHT+IHrTNe6xts3enwFHH3lK6gmwraVnSEG9tj9O4uQelV1QzyLgUNAiHqHdHeUxh7A9sqzU54u9g==
-X-Received: by 2002:a17:903:32cf:b0:2a2:dc3f:be4c with SMTP id d9443c01a7336-2a2f220d883mr20675895ad.10.1766134629618;
-        Fri, 19 Dec 2025 00:57:09 -0800 (PST)
-Received: from fedora ([2601:646:8081:3770::fde9])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3d4cb48sm16214865ad.64.2025.12.19.00.57.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Dec 2025 00:57:09 -0800 (PST)
-From: Collin Funk <collin.funk1@gmail.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH] diff: add --no-indicators option
-In-Reply-To: <pull.2133.git.git.1766132264231.gitgitgadget@gmail.com>
-References: <pull.2133.git.git.1766132264231.gitgitgadget@gmail.com>
-Date: Fri, 19 Dec 2025 00:57:08 -0800
-Message-ID: <87qzsqaly3.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="tBk+m2hX"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1766135877;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fTngoWDNSSIe9ujO+vPQ/ae/+498PjmRY2ic6Y25KQ0=;
+	b=tBk+m2hXgoAklOnNHMaqXWdAngJ/awPds6CuXmw5a+KqjzdeYkGwCNDPMoGyH+iiknwTfq
+	LvqZE8hIY4CyrvG6x9m4EnybwxUGI/fhoMJu4pQ5c23skPuoA7n9A7fELQXYEn4LzUcZd3
+	hTY7wmaPw01/gX4hQgp8z0YlmSqkJjM=
+From: Toon Claes <toon@iotcl.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, Junio C Hamano
+ <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] git-compat-util: introduce MEMZERO_ARRAY() macro
+In-Reply-To: <f02b628f-b9d7-4436-88ee-3255e02cb0f3@web.de>
+References: <20251210-toon-cocci-memzero-v1-0-ae916a79065b@iotcl.com>
+ <20251210-toon-cocci-memzero-v1-1-ae916a79065b@iotcl.com>
+ <xmqqtsxxg0z4.fsf@gitster.g> <f02b628f-b9d7-4436-88ee-3255e02cb0f3@web.de>
+Date: Fri, 19 Dec 2025 10:17:33 +0100
+Message-ID: <878qeyhlua.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Migadu-Flow: FLOW_OUT
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
+> On 12/11/25 4:18 AM, Junio C Hamano wrote:
+>> Toon Claes <toon@iotcl.com> writes:
+>>=20
+>>> +@@
+>>> +- memset(ptr, \( 0x0 \| 0 \), n * \( sizeof(T)
+>>> +-                                 \| sizeof(*ptr)
+>>> +-                                 \) )
+>>> ++ MEMZERO_ARRAY(ptr, n)
+>>=20
+>> Shouldn't we be also catching
+>>=20
+>> 	memset(array, '\0', sizeof(array[0]) * ARRAY_SIZE(array));
+>>=20
+>> in addition to "0" and "0x0"?
 >
-> Add --no-indicators to replace '+', '-', and ' ' indicators in the
-> left margin with spaces. Colors are preserved, allowing diffs to be
-> distinguished by color alone.
->
-> This is useful when copy-pasting diff output, as the indicators no
-> longer need to be manually removed.
->
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> ---
->     diff: add '--no-indicators' option
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2133%2FHaraldNordgren%2Fno-indicators-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2133/HaraldNordgren/no-indicators-v1
-> Pull-Request: https://github.com/git/git/pull/2133
->
->  diff.c                 | 17 +++++++++++++++++
->  t/t4000-diff-format.sh | 32 ++++++++++++++++++++++++++++++++
->  2 files changed, 49 insertions(+)
+> Good idea to match "sizeof(ptr[...])", even though we currently don't have
+> matching code.
 
-Would a 'sed' command work for this? Something like:
+I didn't include that because I didn't see any case that would be
+covered by that. But it's good to include it anyway to capture future
+code.
 
-    $ git diff --color=always HEAD~ \
-        | sed -E '/^(\x1b\[[0-9;]*m)*(-{3} a|\+{3} b)/b
-                  s/^((\x1b\[[0-9;]*m)*)[-+]/\1 /'
+> Good idea also to match "'\0'".  There's code with that pattern in
+> compat/regex/.
 
-My impression is that indicators are wanted for diff's most (all?) of
-the time.
+Good find, I didn't think about that.
 
-Collin
+> You can drop "0x0", though, "0" matches it already (at least for me, I ha=
+ve
+> "spatch version 1.3-dirty compiled with OCaml version 5.1.1" from
+> Homebrew).
+
+Nice!
+
+> If you put parentheses around "n" in the pre-image then Coccinelle will
+> remove them if present and still match code without them.
+
+Well, that's not what I am seeing. With parentheses around "n", it
+didn't match the case in builtin/last-modified.c on my machine. I'm
+using spatch v1.3
+
+> They are no longer needed without the multiplication. Their removal
+> would improve the result for ewah/bitmap.c.
+
+I agree it would be an improvement. Using `\( (n) \| n \)` does the
+trick for all cases I've found.
+
+
+--=20
+Cheers,
+Toon
