@@ -1,166 +1,135 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DFD33F397
-	for <git@vger.kernel.org>; Fri, 19 Dec 2025 12:22:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011B533F39F
+	for <git@vger.kernel.org>; Fri, 19 Dec 2025 12:25:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766146941; cv=none; b=arUMU3p85jucfXQmcHqzpre7Xwzox9JMYUKK1ny6FTmIAF+WT73cS2DjWQN9YTXqumw8MG9X/oZTDggrBBypHSKJjsJlU/g3ZoKi4C0BuWbiQAltsJ6gXOXH629Wjl3pVMIs5EjGPvlnoNEwDnlXMW5phTpAj91e7cd9L4C7uwU=
+	t=1766147125; cv=none; b=fJ18UCHoebTq/K+OBSMl60gCxUna8wFNM/ay8XfwRFzSj9RHyBunQk2prFVNKs72HNiwESxcNXW8a5O+DHCyrkFA4Ywgio3uL5HUOY8070vzukzVmYiTxQUsuxIACD3sSsa9Cq+xllvKmzch2kAMJb5LoNAAL4i87SbTiZJE7sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766146941; c=relaxed/simple;
-	bh=70if7tEa8RrKNX7aKk7Qf9R2TkRnFVCYgnxsuBgLfy4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rw0zxRKAEP1sqjMcKvzLkXpeHiDXhZTQMW1z3jYCUHy0DFwxfsJJPj4LWLhddhAWZRq4H1oCNfVUqSgI+PVHIpZzLSWPZ6+9/o5DlK9WT3UrfnVFoUPv23vf+yj6mM2+2l9xTmiJ3XHyDhZ6djVR903KfDiNpcYsbv8MRD6Ibfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UC4Mlg2y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F3s5+PsD; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1766147125; c=relaxed/simple;
+	bh=mt+plnwlMVjBTVQKRp7cWx7fbVF2fUK/PyrbqWqqtdo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eET4/GToRNUTg/SQRwt4Awpqy+VxBqVvioAeoH8cdvrVOm3xKTKWtmXxb4WJ2NBTQaEdQBODeVShowmMc7ziUdeKrwaK8n1ZnlC9KHmFqcjiI4JH0tmouguIzXwDtwg7VL4sxU8UAO2ng6mLzC7JwuF8OoP234vG0Dd0xTm5bbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mYFDsd9d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t3zR0HbU; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UC4Mlg2y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F3s5+PsD"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 664321400070;
-	Fri, 19 Dec 2025 07:22:14 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Fri, 19 Dec 2025 07:22:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1766146934; x=1766233334; bh=AcUllKLHcJ
-	Kmjt8aTq5gQU1FhsjbMa+HTf/OK7uQUS8=; b=UC4Mlg2ylu9bWvwE8QYrBqqfAS
-	lUAcWmeYcU6+ATY9DdQxaqDwlW2NovI2/tRxZvVul/qw2NHzINdsbdALr+A2DQCx
-	IjEkp/REYglAnUTabIdJAYFdxO9U0KLQYz1uEOjVlR1pYab30w5QxCTJSTEJ5kjp
-	9TZmQyyHIC1h/s7tYMCaZDCkmCEfNcRxtcabDj35yXMocZFz1oGqjXyaQSiT8S/J
-	KxEgA/xR/EY2GAEFRVM++58iArgzglGtw6AZCM/NnEzcKLcrP5DBVQCRmgMUIs9O
-	WokxYeniVwcErG9LPc/9cEhYmypbfk1OMzLlAtyDf6JQvQtp1MqJwZWKc0zg==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mYFDsd9d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t3zR0HbU"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9D5577A0091;
+	Fri, 19 Dec 2025 07:25:19 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Fri, 19 Dec 2025 07:25:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1766147119;
+	 x=1766233519; bh=jahvqqJ2XN6/oDj9X2BHnP9JbdjiKbCp649mmMEGwR0=; b=
+	mYFDsd9do4ceeHR6I2NtLELx83JDEJy4ph+rchRklwpUKmCUXEy1mGbEk2qcN5mC
+	tejeqDkDRwoIEx0/18D3/3McspiWTGDp96XduiowUtvMfv+dhgvwhbnzYArBJk9x
+	tHSDJ+HN8qFc1ur4v4cotP4VxUEVrT6sMSB8X09ffSA5rkTUpgReRgmFLfoC2zyO
+	wh20g/CtLezJuENby/hGT+rPNjq+Om0SlxFzRp2Jqc+4C1XJ7WPxWWp2lRWt/wNZ
+	Ihsih8Qw0A2nUOk9Bd86XJxRVCPpg26LbofDWLSlR9s+L3pbcMguZtNloaVrFgo9
+	uRpSR7DrsmCrhq9/G50PaA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766146934; x=1766233334; bh=AcUllKLHcJKmjt8aTq5gQU1FhsjbMa+HTf/
-	OK7uQUS8=; b=F3s5+PsDnT9UfGEX6NX7EdAih2erVFSY3ESqK50ByTMSrPtps3h
-	vOuQ0ALGOCxT9HN8dkidSTaCn4KzXPEMp01Nu2VhxewWGbzENLuZLZVFlHBC3j/R
-	HVXMR6FkmdGu6qc22eRT931hRO3fg1MoQVFhWQekPlq77oR4H16/gXMnKYYJEd31
-	ZBr3zeNezCNXO0SEwmUoMQeuE5lUyX3YBleiBVoaW5Y5DyCdi7FH+mmrKUXZ3QH0
-	Qt+LbvQ2bP3QZNsFz2h7u9dcIxEHRQxc7/vZGGBcFGpjp0eokVI2Ueg1jeT+dNN7
-	v6/077tID7i1bG7V+Q17obg02zsyLy2W8+g==
-X-ME-Sender: <xms:dUNFaXpQU_J7UNgPlKYolQEezOWpNT80Um4UKI7Yzeg09mnhFwjmaQ>
-    <xme:dUNFabr9J3lAmr0xGv41WIZH2K-_QK2guzCRpxOtcfSVidNKM11I3j0Z0Mt1DeJHe
-    b0F7N9Aco26jqngaNHQDMUvFQ63NJzXlVxYqFt1vxFhNJ4BgqjelQ>
-X-ME-Received: <xmr:dUNFaa2yst8_de1023gmAL3099EAosl1Nud1jw6kmSChCXBGY-3mjbv0a8RiFObbBMsH9FFsBNUueIHsoL-gDIoLIFtlLEJT4VODorsK8TwLKw>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766147119; x=
+	1766233519; bh=jahvqqJ2XN6/oDj9X2BHnP9JbdjiKbCp649mmMEGwR0=; b=t
+	3zR0HbUjTNH0kqBVgjGKwsvY7Z2fA/LfApd4ew9wOwRwO606Ki+1VOZR3u8pfgTW
+	54WS/EFrYQoinG55LSDZ52HDTzEf8M+3bBQmjf05dkV/2KeVUu1f81zy7XMYUilC
+	qcz2TbW5lWisJZ4B9O2GwdHj3JvkXPTRLF295eMHJ6oc71GlRGCP6jdy3EBwJp8O
+	7vhej5K0h/mihmy/Yysb3r50mCWt6/GGVbXrIGRldYz6L22WJjqTRribR91RxE8Y
+	VcoVoJfelzly+xouEONbCAZX2owPHu0zyod9psjQta8Xku/ApJd51+Nf6hpSB4O7
+	mdxROrVqh+S12wN4dKk1A==
+X-ME-Sender: <xms:L0RFaerc05HbhOFvKnjciya9418xJx_OvINGSzjoqGXIb1GWu1khTA>
+    <xme:L0RFaQWN2Pq8y8pDBZK9cvsBJ7qr5SQpuUzmw941GPijBdqTESMbAOuCw5DBvl9q8
+    IRTf16BwTNolnW_DkQUQwsJepU6tuI_lUZkTPk_XmXiJZkCwnmj4g>
+X-ME-Received: <xmr:L0RFadDjRfzFNiSKM5MsLl1F3cSZEHuFo9yr8xSeuavWVeKRPtnfxtYP-m0MIs9gaQ_RlVZXcEurxqE43Wcg8GSJwJ52zwCYzg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegkedvlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehmrghilhessggvhigvrhhmrghtthhhihgrshdruggvpdhrtghpthhtohepphhhihhllh
-    hiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepnhgvfihrvghn
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
-    pehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmrghrthhinhhvohhn
-    iiesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:dUNFaZF_0WlZn0IXnoXnFO_TGXeck8hQmQLHCeFWh0giwfpgu_6p5w>
-    <xmx:dUNFaVHnPiFi28TeFl3TrNJ1f0P0mP94zf29-ejOn3aeyEOtQ3erxQ>
-    <xmx:dUNFac4j-1rOlMOm04kLfDnVAewfXSZp0goMnTuRiKGIcv03CY2ZHQ>
-    <xmx:dUNFaawnH4wdRPAkzZ07VdyVV8vFJW8-s1cT5QU46KMdMdkaDcL__Q>
-    <xmx:dkNFabsib4CezwYEUiUOplgAD-ERZe3UL80kTSEJlGbKYFBtn5C12Pt2>
-Feedback-ID: i197146af:Fastmail
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtgho
+    mhdprhgtphhtthhopegrphhlrghtthhnvghrsehnvhhiughirgdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhs
+    rdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:L0RFaU1PHHwk_N6uU2eqcPvAhCDDpeu8PhR55aytDMJOHqfCiNYV5A>
+    <xmx:L0RFaf3Avo53q0N9qAIUE3g0nEEzrSfPb2CD9Ny5fdsHT1iT30srqQ>
+    <xmx:L0RFaZCYBwf_16uK8EMlk6eO0dhHNlEzcqn5vWF__RTZfXWWUT2Opw>
+    <xmx:L0RFae7LFWT-pmu5qjBOoitgFpXIwrInQXx4j8UYjR0_DqCx7TGvSQ>
+    <xmx:L0RFaa_b74iiTFHRrDlYvNz8VmfiEt0iLRnBk3sre1mciPhEZKSe1FPb>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Dec 2025 07:22:12 -0500 (EST)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dff29e40 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 19 Dec 2025 12:22:11 +0000 (UTC)
-Date: Fri, 19 Dec 2025 13:22:03 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-	Matthias Beyer <mail@beyermatthias.de>, phillip.wood@dunelm.org.uk,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Martin von Zweigbergk <martinvonz@gmail.com>, git@vger.kernel.org,
-	Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH RFC 00/11] Introduce git-history(1) command for easy
- history editing
-Message-ID: <aUVDax0PbkaXGB61@pks.im>
-References: <20250819-b4-pks-history-builtin-v1-0-9b77c32688fe@pks.im>
- <CANiSa6gXbrZaMLVq-AAg38sm+7qgzn4w98WWowLtUHA2P+BdLw@mail.gmail.com>
- <aKs3tqjE510MF0T-@pks.im>
- <aMsWL2cSoytbmRjA@szeder.dev>
- <4m6rmefbv4hftclimitz5rp6yapswjtnjsxymrsdkuan4jbg3u@dm5jzdiq5cxz>
- <bc01706e-b9cc-4cd4-953a-971a3ccd6c79@gmail.com>
- <paqf2ko6kcm5qdcqxqz57qu6gjw3vf6boabjsryeugfnlzzb7z@4dzqo6jug6l2>
- <a6efc710-4062-4955-8fe8-bb6d428a44c1@gmail.com>
- <xmqqms3qh13e.fsf@gitster.g>
+ 19 Dec 2025 07:25:18 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,  "Aaron
+ Plattner"
+ <aplattner@nvidia.com>,  git@vger.kernel.org,  "Patrick Steinhardt"
+ <ps@pks.im>
+Subject: Re: [PATCH] odb: do not use "blank" substitute for NULL
+In-Reply-To: <4d084712-dc9a-4824-b840-4d78831d9da9@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Fri, 19 Dec 2025 08:39:31 +0100")
+References: <xmqqpl8cxy0j.fsf@gitster.g>
+	<a31e054e-0eb2-48b9-a802-3592a737d1e3@nvidia.com>
+	<0e860421-8f8c-4bf9-8ad8-82fe269a7a9d@app.fastmail.com>
+	<aUPbgCSTgWJAe0wu@Carlos-MacBook-Air.local>
+	<4d084712-dc9a-4824-b840-4d78831d9da9@app.fastmail.com>
+Date: Fri, 19 Dec 2025 21:25:17 +0900
+Message-ID: <xmqq4ipmwtea.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqms3qh13e.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Dec 10, 2025 at 11:18:29PM +0900, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
-> >> Its mostly because I don't like too much magic and because I think being
-> >> explicit is always better than not.
-> >> 
-> >> So from my POV, I would expect "the simple case" to be "the simple CLI
-> >> call" and if I want the tool to do magic and "rewrite all the
-> >> things"^tm, that I would need to specify a flag for that.
-> >
-> > Thanks, that's useful to know. I'd assumed rewriting all the branches 
-> > descended from the rewritten commit was the natural thing do do but 
-> > clearly not everyone thinks it is.
-> 
-> It probably depends on the way one looks at the tool, as a building
-> block (in which case less magic may be preferrable) or a complete
-> solution for one part of workflow.  I probably fall into former camp
-> more often than other people, but for this particular one, I tend to
-> think it is less confusing if we moved all branch refs away from the
-> commits that are obsoleted by rewriting/replaying.
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-Okay, so the majority of folks here seem to favor rewriting all
-dependent branches, which is also the default that JJ uses here, and
-git-replay(1) does it, too.
+> On Thu, Dec 18, 2025, at 11:59, Carlo Marcelo Arenas Belón wrote:
+>> On Thu, Dec 18, 2025 at 09:02:59AM -0800, Kristoffer Haugsbakk wrote:
+>>>[snip]
+>>>
+>>> This project typically does not use that trailer/tag.
+>>
+>> While factually correct, I think the "why" is more interesting in this case.
+>> anf the answer IMHO is: not, because it is not needed.
+>>
+>> % git describe 385e18810f10
+>> v2.52.0-25-g385e18810f
+>>
+>> shows that this bug is only present after 2.52.0 was released so unless you
+>> are using unreleased version of git (ex: some development version, including
+>> ones that are based on "next"), there is no need to "backport" this fix, as
+>> the next version you will use will include it.
+>
+> So the Linux Kernel (presumably) uses `Fixes` for backporting and/or
+> does *not* use it for commits that fix changes that have not been
+> released yet. Got it.
 
-There is one major difference between git-replay(1) and git-history(1)
-though: the former works with revision ranges, whereas the latter does
-not. By using revision ranges we avoid the problem I have mentioned in a
-different branch of this discussion, which is that we have no easy way
-to figure out which branches we'd have to touch in the first place. This
-is because we simply walk the revision range there and then look at
-which of our references point into that range. That's simple enough.
+I do not run, and I am not involved in, the Linux Kernel project.  I
+am not sure if "is this fix something backporting folks should care
+about?" is the criterion they use in their project, but if it is, I
+think it does make a certain sense.
 
-But in our case we're not working with ranges, we are working with a
-singular commit. In my head this meant that we'd have to basically do a
-revision walk that starts from all of our branches so that we can figure
-out which of them would eventually reach the commit that we are about to
-rewrite. And that of course doesn't scale.
+I have mentioned my displeasure with use of "Fixes" in _this_
+project before, but that was primarily based on the fact that you do
+not really know if a proposed commit really fixes or makes something
+else worse until your alleged "fix" cooks sufficiently long in the
+field, and I find it distasteful to make such an unsure thing easier
+to mechanically process.
 
-Now we could of course also introduce ranges into git-history(1). That
-would indeed solve the issue, as we can reuse the same architecture as
-we already have in git-replay(1). But I don't really want to go there as
-it is leaking complexity to the user: they want to rewrite a single
-commit, why should they have to think about ranges?
-
-But now that I've thought about the problem a bit I think we can avoid
-that issue by implicitly identifying the range: it's all the commits
-between the commit we're about to rewrite and HEAD. So, same as with
-git-replay(1), the set of branches that we'd need to rewrite is any one
-branch that points into that range. It keeps the UI simple as the user
-still only has to think about a singular commit, should be sufficiently
-fast to compute in most cases, and it allows mega-merge workflows like
-JJ supports.
-
-Does that make sense to everyone? If so, I'll revise my stance and will
-adapt the current implementation to do exactly that.
-
-Thanks for the discussion!
-
-Patrick
+Thanks.
