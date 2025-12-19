@@ -1,122 +1,89 @@
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71D2305976
-	for <git@vger.kernel.org>; Fri, 19 Dec 2025 11:05:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8B93358CA
+	for <git@vger.kernel.org>; Fri, 19 Dec 2025 11:46:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766142337; cv=none; b=dapcLkQPtokGJ7k2ThPykWGnogxp/ZFd8jL+k9QJoIV3kK6lv27T78QdpxNWCChm9NGhKLpLUL8dbIXrHX17w/AGzbT2HLmeqjqOQ6kNIjhRUyhPDWptN/R22LBT47lIjw5dTemjvUPol38Ia6CIeb3xsyeIZHmvMX1g+il+5og=
+	t=1766144768; cv=none; b=bVttnxJGnyA1nSXShoA6IM2hYhCXG/3O/ChE0N2dV6i33jbEsOY3/bvwJnbr8i4zp7Ncql7Npoa54n9OBFdwU6wdTyOcuqjDnFKnDB1xi76sWw2+J3HqK3x77QkhcW0iFtp+uaQZRYsNOfgbPPfS0ZA3i23b2z3IGj/gVjYBBRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766142337; c=relaxed/simple;
-	bh=uUwwbfbx0gBbCk6THljxf4vNe4ZIVJ2TUr+eynAu2cM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XMUYnqBFiS2m1RlXfrkZp8Y6aB6dYzXXFIq2mALSic//xDwPERwe0kY0AXB6KXt/HV/FhskuxK0GQRA7mIIJfIDKvoDErp8eVOXEU7rjRfdESIeAfkCy6Gpc/jDEVNiZDI5lRwgq0yJ1XfzOWp75+jvxfnRQ6RAFwMkvJWLZXss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fDVC3r8p; arc=none smtp.client-ip=209.85.167.41
+	s=arc-20240116; t=1766144768; c=relaxed/simple;
+	bh=uoSao9/7Xr+3WDUMIYalw4mWHmR2Kp06JzJ1dsJu5dw=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=pa8mz9a0pmvUtgpE6AXEXFze4Lqw32IHGXTFy3mHweC+3iIbNOxtTBNTxcGQKkfRSJxMdHlP0VeXLXwkzVGAqA0lK7xQa3pAwr7sEP/7hORVlUPaDQ+EHuFgHyn4Wr7TyEWc5nDQ7grDe963ARzsK+2HJOndMlp/v4bxlJPD5jI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gt6CspPx; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fDVC3r8p"
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-597d57d8bb3so1323497e87.3
-        for <git@vger.kernel.org>; Fri, 19 Dec 2025 03:05:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gt6CspPx"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5942bac322dso1969071e87.0
+        for <git@vger.kernel.org>; Fri, 19 Dec 2025 03:46:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766142334; x=1766747134; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1766144764; x=1766749564; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uUwwbfbx0gBbCk6THljxf4vNe4ZIVJ2TUr+eynAu2cM=;
-        b=fDVC3r8p2ywoeJsNfeGOCPIYNOhn21JzFEb2gQ3CnIZdNIw4KZrVKuzbm7p/4Xp4yS
-         UlB31PF4Na2xM2zvcOv+2mjhJUnjPw41S1PkXRCbWDZId0AecpFFl0mVWEG0F6kS1dqT
-         vEsfS1+8usz8naR6EitaFuLAb1UwN4ljgMj+1leqwg/uEhRqleo2EJBdvHDeQ/zleLah
-         gYePOL81MGKT6Kg4JrrFhqwWsvQEsdFEFUdqfi98VKBge+fYbZMYtOYY1F7+rkp/2kqC
-         YXuwwgdDSG5b7Q6XVZfm0LH4+4zuiWWMpEs6emoOREhPAbvzKmg/CiCnOvSOufgxQkcM
-         U1kA==
+        bh=uoSao9/7Xr+3WDUMIYalw4mWHmR2Kp06JzJ1dsJu5dw=;
+        b=gt6CspPx/sJYJZOOopApJ2ay9NgytStc0tuPHvXt26Swm0Ov86I6kbOv15/gO6xMY1
+         FWmeSSLRaLDppm1SMIyfnLaaes4T6MYb7VV8ElwY0/ybVQFW/MatqY7FH7zUeTU8MsVE
+         khctB+zqE5NSTX6EOaRX/x0OgH9xHavayLTSKOhhNcCJSI1f90nbr3EPRTCgEqtSMyUZ
+         jO49aKiYEqOlJONRUzlw6ji1vHo+5L6gHcn4rrIRe4fCfelVGU3/Bjjcc5BlQoNCYOu0
+         qpu/4KNl1zw3qo1hwI6/szaKewI+U+GDfVLHQYCyTMfZm0+snGJkXjZm49Zq597FbcY+
+         Htmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766142334; x=1766747134;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1766144764; x=1766749564;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=uUwwbfbx0gBbCk6THljxf4vNe4ZIVJ2TUr+eynAu2cM=;
-        b=IvrKQVPykfdOVpUITr4RF3kN7luUYtQvkdUwxQJvyxij1d6p5Fr4r+LWPawXUm20Fv
-         rmGAbuOkwrICL9dViwlRHEPEzUf/dDodrcySVRlvPUu87I3nlhDLsXGwYAAgFW5OE4Ol
-         gnLmJl7K6Xm+AvusyEDtOXtrlGtab9ROzlebv3aw3Cq33GqAbN7s8SZ7mgtiGExp2J33
-         NSATKN7DIjwiY7k123wWog8ZjqhlYbsBgFltxinUhqcGORphThrU4CHkyTZXMtRA429W
-         ikFvBMolRycdzICmse1SIlwR6XEkau5GNYFxGwDbWdLkdHOSiNuEE0aSvTzZhNKDObgE
-         oKGg==
-X-Forwarded-Encrypted: i=1; AJvYcCWRcA8rWIVmqAFInKWP7ouT93CJjYB2qLqhjWOREEEojyewanf0zx92+Xnfns1kJkcFrgU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxG+JbWxx/SSmwDzoJOMHED2i7nYMTu3nV46kIHdDHWz8XWJpoa
-	cUk41qONIZAbvchGIyI/tkGXWAqgedBztqNFuFld1DCM3UelyT8KWefkEQrmWvFKo3olZbysMxz
-	ji1K5ZuXFxG5WFDXcAHxG0bJFnU/1UNi7a8jr
-X-Gm-Gg: AY/fxX668cX3Rkm7FTeUKt/0xeB/8wvStCQ8e4gjmyBnvLd8NNT+AK8UBQSUKaarlf6
-	hG3x9zV1ShTd8EIjCff2P8NLRpcl14H4ZYr4+MHWnevkOH74uSWKGFX9N4TUe951jneHm9h/qd/
-	SUjIDDeTDaps0VPLDXmEQqCJgkoh3hPo1XO6MSrYIGQPcTj14DSWyYWpwJCSp0MUgZus+8SwE0y
-	G/aQ3ZA8cWfJhe7cnGFKfWHQ4qAkW88Lk8PxC4HXRPj62ccHsFPxFfbryPY8b9ga7oPIo62
-X-Google-Smtp-Source: AGHT+IHyROkJ6EjucyCwfZTYccIKmsCGsxQNMxrd44n6nVGGcxDe44wUDyFsXhJszZDIF1WM7ScH/lgzCnp0sZh3lO0=
-X-Received: by 2002:a05:6512:3991:b0:598:dea9:4f4d with SMTP id
- 2adb3069b0e04-59a17d68066mr814957e87.53.1766142333485; Fri, 19 Dec 2025
- 03:05:33 -0800 (PST)
+        bh=uoSao9/7Xr+3WDUMIYalw4mWHmR2Kp06JzJ1dsJu5dw=;
+        b=Gr1wQfC/72AD3L81/mcB/M/ht5boWMTgWVxesfrgYAlcQjYmpnWAN+HJn6sQIxx1vk
+         K+zw0cKRP5LmmfAJd3g+OXKaefyx1EIhdvsV3fGllPOfz0vKcCaagVgdHZG3LP1Yi6zk
+         GFf7tStdOW0ad9J6dtUpj7tELF7DLCwwKff8YaPPiaaMkdzS3+jjWACpO6M4snVhcCD0
+         Kj1HwJje2VPNRTpKj34H7kOTNwim7t9fhh+aCRkKmt6NNmItMMkXg+/vWK0QnO8iktmz
+         wQV0v3CFtGyajgmqjeg4xi9kjnX8xbppaSILpUFfTHYjz7e76W9vZBZUOVaYz096zKEe
+         HFrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUPhyxgZSjWAQr/p8Bc6Rz8xwa/FAehnOuHQQdeBWQkN4V4wGCAP56NNrkLl7GOxkdsf4A=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzFfuRp0LUGMmbrhEN+2q81uotg32pgw9tuuT6sTMMGS8lGsvo7
+	dyfnzpVW+oOi5AZPzk/FiSxXEHXrEhp3NikrFHziw9IEZbK1mrwlH452
+X-Gm-Gg: AY/fxX7uGIHa68XZOYdEJ1F6m0mDL+TkrCoGMSf54N+QLbKVNgS2DeD9fJo2mBtHC0l
+	U6zxGl83TiT7GQjh1wzQzbqTtUXeFd281Bip9y4A/poG4TiGZNIJRTWD27skSdZ/GiGqFMBTw0y
+	FMClCAn9kOjudeXecR0q1bwYl62yxhd8/65ycN7VVfV3ssSyc8K2hx3zB2WyThOw5POZ/d8xdAN
+	Pgw189QF0TgbU8HjmLvBiMFhz/Qd5rIrHWrgJxUkwnLQ43y9ZtUkC/QFbyzyDmKDpHVA4XKOSPq
+	nHm4UaT1MqF+zEJpMKWnDfKYQgN01eij5gx6vU82IW9t+9ZSHaDNOqAM7MGtm4dr7e/o++LH+L6
+	sAYh1WaLLAhQVHY4BixEvPs4rM6qmDz4n3WcHFl8vrUxHq25P+aCFQZZSUSICD3HuUb5iZu9SeI
+	EOEakwiEqyYtdDGGIMuQYI5F+nhdP1FttssageuFTHK6BJ+HIXK8Yn0HZ+JuDmVFzhuwA+lN8=
+X-Google-Smtp-Source: AGHT+IGVe1l+eW20H45VhOM3PqWG/fwhXs3eXvueg4K6CgYYtVU8tjXdUCJDDuFCJmE9/h9t11X+gg==
+X-Received: by 2002:a05:6512:234b:b0:598:ef4a:b9f1 with SMTP id 2adb3069b0e04-59a17d09277mr1129987e87.14.1766144763882;
+        Fri, 19 Dec 2025 03:46:03 -0800 (PST)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a185dd8f3sm650155e87.36.2025.12.19.03.46.03
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 19 Dec 2025 03:46:03 -0800 (PST)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: phillip.wood123@gmail.com
+Cc: collin.funk1@gmail.com,
+	git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com,
+	phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] diff: add --no-indicators option
+Date: Fri, 19 Dec 2025 12:46:02 +0100
+Message-Id: <20251219114602.96489-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <035238d7-f98a-4072-a363-9a57650abb95@gmail.com>
+References: <035238d7-f98a-4072-a363-9a57650abb95@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAG-pPd-4StfLAsassx-fqzavHJkAmi8P5UkgvqE3Yz-yGJ7GUw@mail.gmail.com>
- <03034879-2d8e-4ab1-96ff-ff125e7d059e@gmail.com>
-In-Reply-To: <03034879-2d8e-4ab1-96ff-ff125e7d059e@gmail.com>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Fri, 19 Dec 2025 03:05:21 -0800
-X-Gm-Features: AQt7F2r5tNufn7MSjiiWasqcMJ_JbfXkqNT9htCnqv5wkSjokOVK9FjEAfTTcEU
-Message-ID: <CAPx1Gvfuacq0rt-6LymiEUUdeKsE0+s8x2x66_zD=zatWui0RQ@mail.gmail.com>
-Subject: Re: changes for adding new features --snapshot,
-To: phillip.wood@dunelm.org.uk
-Cc: Abdullah <abdullahindo888@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Dec 19, 2025 at 2:41=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
-> It would be helpful if there was a commit message explaining what this
-> new feature is and why it is needed. There are some comments in the code
-> explaining what it does but not why it is useful. Given that a commit is
-> a snapshot of the working copy I'm not sure why you'd want to save an
-> additional copy.
+Hi Phillip!
 
-To be a bit more precise, a commit is just a little bit more than
-a snapshot of all staged files: it consists of a *tree object*, which
-is this snapshot, plus a *commit object*, which contains metadata
-to explain who made the commit, when, and why, and what
-commit(s) come immediately before the new commit.
+Yeah, getting rid of the extra space in the beginning would be preferable,
+I can take a look at that assuming that this has any chance of getting merged.
 
-The sample code itself makes copies of some (but not all)
-staged files, rather than a complete snapshot of all staged
-files. Abdullah is probably under the impression that Git
-saves only *changed* files, and that the staging area therefore
-contains only these changed files, but that's not the case: every
-snapshot contains *every* file.
+Harald
 
-This takes no extra disk space because of Git's clever method
-of storing snapshots. The code in the diff does not make use of
-this clever method; instead, it makes clumsy actual copies,
-which generally do take up extra disk space. That's presumably
-why there's a `--name-only` diff here:
-
->> git diff --name-only --cached | xargs -I{} cp --parents {} \"%s\"
-
-To make a Git-style snapshot containing all files but using
-no extra space, we could more simply run `git commit-tree`,
-which produces the tree hash ID; we'd then save that somewhere
-that Git can find it so that Git won't garbage collect the tree
-later. The obvious place to save it is in a tag-like reference
-(perhaps an actual tag, perhaps some new `refs/snaps/`
-space or similar). But it's probably superior simply to create
-an actual commit, without putting it on any branch, in the
-same way that `git stash` makes commits but puts them on
-no branch.
-
-In any case, you (Phillip) are right that this doesn't explain
-the use case for these extra "snapshot" commits or trees.
-I rather suspect that the intended use is better-served simply
-by making a branch (as often seems to me to be the cases
-for which people use `git stash`...).
-
-Chris
