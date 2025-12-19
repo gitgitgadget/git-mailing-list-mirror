@@ -1,178 +1,220 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575FE3090E0
-	for <git@vger.kernel.org>; Fri, 19 Dec 2025 08:17:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC0D214A8B
+	for <git@vger.kernel.org>; Fri, 19 Dec 2025 08:27:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766132268; cv=none; b=nnPdrNbSeSbHMEJ7hxNVily3JOOXFgDkBsThWEBDGwBHJUNHZJkHySERvH2nmoza7FokGG0LV8fDz0WlqDtgSNYWWsg0TZz3Jfsw7K3tkWyhgCXikmMRbVf1OkrOaBGtLj6bn8puRscR/em07oADxmWl0jvk23eaPSR6UyLyiaY=
+	t=1766132858; cv=none; b=ecrxZ1SNng1lWcb4lTcfa1WxUyKWHlm59xOao/Lmz1v4b0eH/NT4Mv7g7Xp1zTB9LRD+DDQjkBUaiq+WZdRBoAMWwEEnSXjsTo1LE1Q4oTF57m8I7lFXCqJ/BlnUqk5svfr8F5kVbC+Ly5RaMKQ598UXdw5/wfYN0e2b9FR0MhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766132268; c=relaxed/simple;
-	bh=rYKaycptqQ7No3OSTFHTLwie5L9pkOzwAmAK1GB2Ylc=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=PL/WN/1z7NRQVO9IBUrcAvT/CNQ3p4OuYL7XWV6ICycz2ydKCiuHvpRk/T2ieDSmI2C1Bt+2nySZtbFEwOHs0avFSEzVYKc5SHoa6TKbBZlYagEBpNqHyh+SnUTdWGUYkCg838PjBf7KGMDuZoTaDKAryPmW/hizhpLaBq5fduo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SNjWMYVP; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1766132858; c=relaxed/simple;
+	bh=KS5Xkk7bRjkuAacNXK8lW08Al10zu9eDJ+hh96wXxic=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TVKsZncNDr/OALHoiZVo8BowcAGFvHoCneO1gcQMw1q0rUJcU3SU54MXZzD6Q+P8+Pm2q9bGVd7ce16F+KAQNByOcjIL6eaIM9zC2453qDQ0+MKlvE4LR8umNj8thRsul5V1TghMCNtS3DGtNpwAovtdz/9dduV+CnktDeifeg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=A4sChABa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C7FFCvIW; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SNjWMYVP"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-29f1bc40b35so27202205ad.2
-        for <git@vger.kernel.org>; Fri, 19 Dec 2025 00:17:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766132266; x=1766737066; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=3afrJnLGKOtVkwK99kzXdFsSGCqdcUMRdapLIoy3bfo=;
-        b=SNjWMYVPeWLbO63c90wbEQAf3PlsMtrd3jJk35SdkfgLFsi2QH95iA5Ei4kSmtxmyY
-         30Dkx+Z2dDaGmEiIvr8S502qdmFGMCK1DRxEdlqLnNnUW5UssjOCfBqeN9IPeE6Kg+zk
-         g2SsgL3hzS9C1HhDp86kzepBZ2qQrPsWuGvXRISlWcvL8Dzh8YjMG5/N7zZ/9lYhBzbX
-         UjfV098MeQXe/l3Y5bWB0Z6mntngxoW+h92Tnsc+vOxH5qqFPQN4qT73tt4WTAFXvEjR
-         EtNVE7GAJ3pnnbli3ViKW5jBgK+Jou9QxKiICFPaAmnt33wN/v015gVJAeF0hTViT5R2
-         3UMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766132266; x=1766737066;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3afrJnLGKOtVkwK99kzXdFsSGCqdcUMRdapLIoy3bfo=;
-        b=EbDSMXUve7y/v/7JygkSUS3OG3TqDvSQbY8AVIc1L+ZZc0Aj3u69F88KiV/GsL3zMv
-         /wxJ1slL1/+aCJrlXY0XolpcAC7AWVGTh36NK29ZdM2m46F1J2L6qb3hZQhBZg7ZrsJI
-         fxlzSyGdtcMbw/vTcDxG5xz0NpC/YPsDdFPzWDvoeWnjSMEhMzXlcFOSRm8+qTM1p6PR
-         wEdjRMhRRNJrM8zMaCcjUn14g7z5d+F22YtaSUWR/KGiroxUgtYOixfNKc0JYlikbCNK
-         qLyM7h0RwHm2yRV/5iSmWX3u7WKagQzuZf+f1LsE8oWhjtBG6JlhKBfQNM/Veucnv3o+
-         loww==
-X-Gm-Message-State: AOJu0YwtoXcpGuhhcPUtTn3qYDawnOX23T9dnrKCvDt5EbH+DNvrDRiq
-	QA0KTRhaiOjMT/34DI44O28hWPnvP0M6Gnj+aJzAb6KhFazGRxnMvfwIPOjQaltc
-X-Gm-Gg: AY/fxX4oHdu+3vhNjKqfgB29Cqar1GLQYWgXljCzJX+kD+bOq9Jol+VlfhfQAA8rWp/
-	d9jyd4VeNOJRAo8u4bJzHelSI1tbmKpGCQdCXaPCUG7TSc3HCMnsBNv87R14RqjAQ7hCbmmoZXX
-	DB5HU3kI09SHkBNhhR16b6/HUqASq6/YIjce4REAFV/4N7GOLothzvzfHOqE9Eo56fxbN2bDshX
-	VsDTS0snK/N7tnJliuaXRQ7VGZdLugGMKFVk/TpgNy8xrVNjUQ29dQY2JBxjbX39+PJdsH3pz/3
-	IOdb1IxR6pgL2KNQqtslSCIoG1X/XaJuYivhO2iRoSxhsrNfSvdKYSCqt/F7cxWw90AgzAxFn5u
-	7w59tIrIyaO4FU/Fj5Ht/8LO0gnIs8/8MBrQPf8iqQ7vsiWeh+wT+75c/nHSgyigZicmRGiocp4
-	OOK0IkoTZWSmkr
-X-Google-Smtp-Source: AGHT+IF2fFLTmqUcKv62GKrGe96HRfCR8h9P0bUB8EEdEG0tBt+O4mj1hGYEN3E8e6oadk9KszK1RQ==
-X-Received: by 2002:a05:7022:458e:b0:119:e56b:c75b with SMTP id a92af1059eb24-121722e4529mr2634924c88.32.1766132265918;
-        Fri, 19 Dec 2025 00:17:45 -0800 (PST)
-Received: from [127.0.0.1] ([52.161.75.162])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121724de25dsm4633088c88.7.2025.12.19.00.17.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Dec 2025 00:17:45 -0800 (PST)
-Message-Id: <pull.2133.git.git.1766132264231.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 19 Dec 2025 08:17:44 +0000
-Subject: [PATCH] diff: add --no-indicators option
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="A4sChABa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C7FFCvIW"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 784551400081;
+	Fri, 19 Dec 2025 03:27:35 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 19 Dec 2025 03:27:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1766132855; x=1766219255; bh=w+I3oS+HYT
+	r5a/cn7H+3ybNUinuvEk1SjzSVEr6cUbM=; b=A4sChABaDSVyjrkoSvM8jvQ8ks
+	wnRFjiqxyt5A8i4SoI1NYHLLxuF3Iocx23fA4x1oTkHvLy9zywW4Z2SFQszVXZdU
+	DL55p3tgJYA1jCCud8ODKScIl60G2hyPep6UrE+c3BtoB/UTTNxosFg/9zcuz2lk
+	E/049mmJThwDNB+ZBoR2OyfkAOIdNmwmz0iTxD22GZSKbHx7A7AEs17oiC+Q4ve9
+	Zkt5KAZgJpn9lXidwxniy4W0+b/BQUYmLfWHOAMCfasl2wul2UamUi/gdw/IXhz1
+	204O4QncOWwDTjWDkeKqvH16R5y2r8mKR9S57Z89rbMyTbE21Cgmk3raRB/w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1766132855; x=1766219255; bh=w+I3oS+HYTr5a/cn7H+3ybNUinuvEk1SjzS
+	VEr6cUbM=; b=C7FFCvIWY0BcP1Ctb+v/bBdQumWtQ5KkZmCHpwYrTFO8xXgA2KW
+	3neUkhoaCh/LG50USvEWZvrnObTHqBARYxQGkN8aHkXxaH6knmCS100K7MeRSn2j
+	0B1+M0La34HTgd1zZvfpB6wIR2Zt2x9jC+o5q/roBnPk/rfYTvfXxEuFCgT6yc/q
+	USd0ZQNb8SfNDFor3C1oCsYLgHseT68PI+ZgIvfatQigDpSh0+ZIpaiTu3uYZu6z
+	p5rRnQm1LfLiCjketVDBL/zy3fuRBxcOsfuToV43EMou/lLV5bkgKTNEbNFLKS/m
+	i9jWLkrL73GsqO9OxvXmjkePh4frj1b6b3g==
+X-ME-Sender: <xms:dwxFaft9Ko_a80OAn4zGsn0fhfrHBq3UmThfAcO5rLk86b1gCPwqQA>
+    <xme:dwxFaX4dfaFB5V34AYZ3hjYEWdtiW7lm2Gve_OZb2XGIQUP5vH9wIQyHYpuwtqiI0
+    L6ei-lWEczJA6SMfTK_lcxud7tfAF6nAvEvolsKhHyg23xPH4NlhiI>
+X-ME-Received: <xmr:dwxFaQLLatMIH2IUPwWqfHVsDyBjivr_J4bdkIOxKsBVYNLyvm_e3RPKFiTvO1WazeqNMdGQU0CI2fk72YQ0Twg_XFbihxJsig>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegjeekvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehmrghtthhhvgifhhhughhhvghsleefgeesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:dwxFaX6_fsGq0hg3H1DOBfmrKF3Dx4p8oHAe4jT_D3MGTp-W_fstmw>
+    <xmx:dwxFaTw4jHnDRtVtZp3Tk-fL4LjRLEDeoVFqpOBzDQCAkpen_Yy4Ag>
+    <xmx:dwxFabZaG6WxE1e6a5eKKqesjY9elyRedDJjS0zZsohTnHptEDGOwQ>
+    <xmx:dwxFaVQtwMGi8J4eXzwn1VfTL-zZp_zgPFFApVH_3w2i-si1hA4JtQ>
+    <xmx:dwxFaT5R6X9gXdtdXSt0QUNylnLMDq_CI6tpBFLs2BEVCr8sHGuWXtGd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 19 Dec 2025 03:27:35 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Matthew Hughes <matthewhughes934@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/1] maintenance: add config option for config-file
+In-Reply-To: <20251218184751.31209-2-matthewhughes934@gmail.com> (Matthew
+	Hughes's message of "Thu, 18 Dec 2025 18:48:19 +0000")
+References: <20251218184751.31209-1-matthewhughes934@gmail.com>
+	<20251218184751.31209-2-matthewhughes934@gmail.com>
+Date: Fri, 19 Dec 2025 17:27:33 +0900
+Message-ID: <xmqqike2x4ei.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Matthew Hughes <matthewhughes934@gmail.com> writes:
 
-Add --no-indicators to replace '+', '-', and ' ' indicators in the
-left margin with spaces. Colors are preserved, allowing diffs to be
-distinguished by color alone.
+> This is to allow splitting out this configuration from the global config
+> file, e.g.:
 
-This is useful when copy-pasting diff output, as the indicators no
-longer need to be manually removed.
+I cannot guess what "this" refers to in this sentence.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
-    diff: add '--no-indicators' option
+>     # in ~/.config/git/config
+>     [include]
+>         path = maintenance.config
+>     [maintenance]
+>         # use a separate files for reads/writes from
+>         # 'git maintenance {un,}register'
+>         configFile = ~/.config/git/maintenance.config
+>
+>     # in ~/.config/git/maintenance.config
+>     [maintenance]
+>         repo = /path/to/some/repo
+>         repo = /path/to/another/repo
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2133%2FHaraldNordgren%2Fno-indicators-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2133/HaraldNordgren/no-indicators-v1
-Pull-Request: https://github.com/git/git/pull/2133
+You are burdening your readers too heavily.  After reading the above
+three times and then trying to guess what you are trying to do for
+several minutes, what I am guessing is:
 
- diff.c                 | 17 +++++++++++++++++
- t/t4000-diff-format.sh | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 49 insertions(+)
+ * maintenance.configFile specifies an additional file to which
+   maintenance.repo configuration items are written out when "git
+   maintenance register/unregister" works.  
 
-diff --git a/diff.c b/diff.c
-index 436da250eb..668ba349fe 100644
---- a/diff.c
-+++ b/diff.c
-@@ -5290,6 +5290,20 @@ static int diff_opt_char(const struct option *opt,
- 	return 0;
- }
- 
-+static int diff_opt_no_indicators(const struct option *opt,
-+				  const char *arg, int unset)
-+{
-+	struct diff_options *options = opt->value;
-+
-+	BUG_ON_OPT_NEG(unset);
-+	BUG_ON_OPT_ARG(arg);
-+
-+	options->output_indicators[OUTPUT_INDICATOR_NEW] = ' ';
-+	options->output_indicators[OUTPUT_INDICATOR_OLD] = ' ';
-+	options->output_indicators[OUTPUT_INDICATOR_CONTEXT] = ' ';
-+	return 0;
-+}
-+
- static int diff_opt_color_moved(const struct option *opt,
- 				const char *arg, int unset)
- {
-@@ -5828,6 +5842,9 @@ struct option *add_diff_options(const struct option *opts,
- 		OPT_INTEGER_F(0, "inter-hunk-context", &options->interhunkcontext,
- 			      N_("show context between diff hunks up to the specified number of lines"),
- 			      PARSE_OPT_NONEG),
-+		OPT_CALLBACK_F(0, "no-indicators", options, NULL,
-+			       N_("do not show '+', '-' and ' ' indicators in the left margin"),
-+			       PARSE_OPT_NONEG | PARSE_OPT_NOARG, diff_opt_no_indicators),
- 		OPT_CALLBACK_F(0, "output-indicator-new",
- 			       &options->output_indicators[OUTPUT_INDICATOR_NEW],
- 			       N_("<char>"),
-diff --git a/t/t4000-diff-format.sh b/t/t4000-diff-format.sh
-index 32b14e3a71..1863553056 100755
---- a/t/t4000-diff-format.sh
-+++ b/t/t4000-diff-format.sh
-@@ -95,6 +95,38 @@ test_expect_success 'git diff-files --patch --no-patch does not show the patch'
- 	test_must_be_empty err
- '
- 
-+cat >expected_no_indicators <<\EOF
-+diff --git a/path0 b/path0
-+old mode 100644
-+new mode 100755
-+--- a/path0
-++++ b/path0
-+@@ -1,3 +1,3 @@
-+ Line 1
-+ Line 2
-+ line 3
-+ Line 3
-+diff --git a/path1 b/path1
-+deleted file mode 100755
-+--- a/path1
-++++ /dev/null
-+@@ -1,3 +0,0 @@
-+ Line 1
-+ Line 2
-+ line 3
-+EOF
-+
-+test_expect_success 'git diff-files --no-indicators replaces +/- with spaces' '
-+	git diff-files -p --no-indicators >actual &&
-+	compare_diff_patch expected_no_indicators actual
-+'
-+
-+test_expect_success 'git diff-files --no-indicators --color preserves colors' '
-+	git diff-files -p --no-indicators --color --ws-error-highlight=none >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	grep -F "<RED> line 3<RESET>" actual &&
-+	grep -F "<GREEN> Line 3<RESET>" actual
-+'
- 
- # Smudge path2/path3 so that dirstat has something to show
- date >path2/path3
+ * "git config" is not affected, so "git config set --global
+   --append maintenance.repo foo" would still write into the
+   per-user configuration file.
 
-base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
--- 
-gitgitgadget
+ * Also, the general config API does not pay maintenance.configFile
+   at all, so setting it does not affect "git config list", for
+   example.
+
+ * You'd need an extra "[include] path = maintenance.config" in the
+   configuration file because of the previous point.
+
+Am I following you well so far?  Giving an explanation on your
+_intent_, along with the sample configuration, would help your
+readers, and I would expect something with a similar degree of
+detail as above in the log message.
+
+> My motivation for this is that I track my global config in git, so I'd
+> like to avoid changes in there that depend on specific repos/workflows
+> that I'm working with.
+
+I am not sure if singling out "maintenance" is the right approach to
+solve that issue.  If we had a mechanism to have two per-user
+configuration file, where one is read-only (as far as Git is
+concerned) which is covered/overlayed with a separate read-write
+file, not just "maintenance register/unregister" but all other
+things that writes into "git config" would use that overlayed file
+without touching the base configuration that is read-only.  Wouldn't
+that be closer to what you want?
+
+> Signed-off-by: Matthew Hughes <matthewhughes934@gmail.com>
+> ---
+>  builtin/gc.c           |  8 ++++++++
+>  t/t7900-maintenance.sh | 13 +++++++++++++
+>  2 files changed, 21 insertions(+)
+
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 92c6e7b954..257cceecf6 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -2124,6 +2124,10 @@ static int maintenance_register(int argc, const char **argv, const char *prefix,
+>  		usage_with_options(builtin_maintenance_register_usage,
+>  				   options);
+>  
+> +	if (config_file == NULL) {
+> +		repo_config_get_pathname(the_repository, "maintenance.configFile", &config_file);
+> +	}
+
+ * Comparison with 0 or NULL should be spelled "if (!config_file)"
+   (meaning, 'is NULL') or "if (config_file)" (meaning, 'not NULL'),
+   in this project.
+
+ * This project omits {} around a single statement block.
+
+ * The function call is overly long. wrap to comfortably fit on
+   80-column terminal after getting quoted in an e-mail review twice
+   or so, which means ~72 columns is the practical width limit.
+
+	repo_config_get_pathname(the_repository,
+        			"maintenance.configFile", &config_file);
+
+> +test_expect_success 'register and unregister config from maintenance.configFile' '
+> +	test_when_finished git config --global --unset-all maintenance.configFile &&
+> +
+> +	git config set --global maintenance.configFile ./maintenance.config &&
+> +	git maintenance register &&
+> +	pwd >>expect &&
+
+Readers would wonder "To what existing contents is this being
+appended?  Do we have something that we care?"  If not, do not use
+">>" to mislead them.
+
+Would the output of the pwd command match what "maintenance
+register" writes into the file even on Windows?  We often see
+breakage between $(pwd) and $PWD and I can never get this right
+without looking at past discussions.
+
+> +	git config get --file ./maintenance.config maintenance.repo >actual &&
+> +	test_cmp expect actual &&
+
+For this particular case, would it be sufficient to ask
+
+    git config get --all --no-includes --file maintenance.config \
+	maintenance.repo
+
+    git config get --all --no-includes --file ./git/config \
+	maintenance.repo
+
+and see if the former gives output and the latter does not, or
+something?
+
+Making sure the maintenance.repo file gets written is good, but for
+your purpose, it is equally if not more important that the base
+configuration file is not affected, no?
+
+> +	git maintenance unregister &&
+> +	test_must_be_empty ./maintenance.config
+
+Ditto.
+
+> +'
+> +
+>  test_expect_success 'register with no value for maintenance.repo' '
+>  	cp .git/config .git/config.orig &&
+>  	test_when_finished mv .git/config.orig .git/config &&
