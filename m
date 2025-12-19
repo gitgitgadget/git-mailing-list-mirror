@@ -1,136 +1,106 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF0133EAFF
-	for <git@vger.kernel.org>; Fri, 19 Dec 2025 15:00:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D4432AAA9
+	for <git@vger.kernel.org>; Fri, 19 Dec 2025 15:03:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766156416; cv=none; b=iw3YFIsZmnq4fEfAI8eIRPTFKtOhF62IRy4ZtDKC/OeuJ7QqetvkkI0VGS5rgqzQHVsNFYNf4n+ngQcr0zneWSHjjz/GobIFWhMf0+omogiRc3ozNAHF9KtDlOmI2mLv47UTI66qwqh5nWTtr5HJmfzJIB/Lr9NkZdIM9bvU4Uo=
+	t=1766156586; cv=none; b=sj2oFVfMIuLzwg1u8etNWQVVkikfv69nTRp33yO2IMFiZo7WS/iVCFWPtWUzfiO0VRXRdDzg7t/uNAjnLvgj+2aPrE29gD6a4g9m8+dmngqGB7w3CqHkeJURau6gmtOShu6UreBAdYKhKmFte1ZeGPLxY6GMXIxSdjx2NAYeQPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766156416; c=relaxed/simple;
-	bh=k2XEVi8M2Rc6YmP9+H+RIFOMOGMb0o8owl36Iaj6QmY=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=BZUB+1H7B2ukFUmRdDrMDxF7sAtAYXYfcBEAm0YQTmaYuSDoB9181ihtFgNXD0Hhj1VP5y81dYsjHJdOme7b7EplXZXnwe8RdvsT5+MdxsR9G8OtPRMmBpEaAfiKjltmlMd9hE5ddYXNN3/zutaTRDFqaiCrY7m8qUPT/CTNer8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hdNp32G7; arc=none smtp.client-ip=209.85.160.169
+	s=arc-20240116; t=1766156586; c=relaxed/simple;
+	bh=CZhlJNNXIjuofr+hcna2bzs4SOhiLJ0lwm1hzA9+6UE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KKpFqoPpBMXt3fN7KCiksOC6yZ85OLHiU7EXavCVacRmSvlJPxEgDOosXSFN9t+OzCQXgNovbZbeBfRbcqHsqbtqJx3pPZZzX+P1xvE0vwjPfPD7DBFadoWK4DDQoWmHDQYiBlwVkuJCZk66bHiKm/jSfU5LFXOKyEdcihsxHtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DVMs88At; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hdNp32G7"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-4f1b147eaa9so14206591cf.3
-        for <git@vger.kernel.org>; Fri, 19 Dec 2025 07:00:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DVMs88At"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-37b9728a353so23296011fa.0
+        for <git@vger.kernel.org>; Fri, 19 Dec 2025 07:03:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766156410; x=1766761210; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=c6F2BgqE/CNqxSv+DMW8HPBnGZQ8GJiPdb4TjBtp0Og=;
-        b=hdNp32G7mE+BzxDYugW2qTzAFzHcAs48+DJmx+YIHdWxhKJTuz1rglBsE58dYxEk5T
-         uMfsSyVOm28YmXE5uSoty9tuXFx4pNA8212M6ieB2CBAPS87MNaz8at7aeP07iENpUq7
-         4wRhs3pQWOV9fHNxTLivpfWwjHv74RCDTkmnwlMFQDXHullGxNOUdDaf/DqAdRLky7IA
-         NcdWexnF/qSNGZhQRpKOzsgyafEorS4/K+JNtl1zehq7c0K70ALXZZF6XWIWCzBEwY78
-         yRNAGTBUd26dwh0zVsrW0sjRE++np8l7gxp0x0BphfrVMNunReoysTfCwhxo3YUOpXlD
-         lS4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766156410; x=1766761210;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1766156582; x=1766761382; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=c6F2BgqE/CNqxSv+DMW8HPBnGZQ8GJiPdb4TjBtp0Og=;
-        b=pA9UcXSjtG0x3rtNDDVc7T3LRLgeI8wRnY2uNakZ6pdqWRFJpMdSMto3zI3kuTu9AE
-         qVgVRTo21ds17VxSUvYRufu6frx/WNqfDXF7CuoQXOo5ye6TRPQ6PUWgd7h+ekUJT7ps
-         0LbPNHGmws08EtH6SpkK5N9Zyce/9XYjMBmyZkZT7+SCGDgU4cXGCheQtrs6ij2Zv8Ag
-         Z1Zd1v24NTxGOztcUP++15ACZ96BPDe/7OVS119APeveGutfndZCJDclX0MYddfoxcJx
-         8WOfDEsRYkBJQJ86CBwoY7oX0fTMPE/3/mFNrfuLeJEhQcfLI5HYYjwbWEQGw9sohh/V
-         FA0Q==
-X-Gm-Message-State: AOJu0Yw8yRdsVI0XCyJcpySgzhCQgqb8nA29mlcF/5sP5J+//JaAAVdy
-	EvpKdM1RwzUuOwlcrt/Ka0brGtrPc78lpxfiYCMt3F16ZwGWSUJQKhDsEQSxYQ==
-X-Gm-Gg: AY/fxX6XehGvC8y+XQ3J+R+U/+LHQybAU55neaosBwitXRS7ovrIXeLgoQ8t+4Bm/Q4
-	/cFISAJiHYdkvXr1qaqkIJwqdWx/Y3TWeP+ANpRwH0zi4qQhVv5+IChPjoP7k8dToXzcwAwNn8d
-	INF/92l5VmQ31R82kmO3Qxk3cet0th7e87yD6h8eukWrzG9vSrjdsAEW8DxVhTsiqfMkpN3D433
-	hrerJFgM6iOLnz+EJXmq2t0QOtkDpQHcZ/XlFVijrC5f1rVZbkIlQ+uw4ukw9DqKAQWWkSAd88U
-	/xe+YL6eUTuRzqxA30jX2Z3KSj+NCubnSC4xtwygmxNkfHz6Wv+SKfGuSbkjDSlU7e8D3TYRIHI
-	Uy+w387peOD5eaQuXKTIK2UzWAlqq9HR5zKZi8/bQ/F/NeA3BslZBupJ79caWDHIGaEIvcozX4h
-	BWFEEjCO2GZyM1V3I=
-X-Google-Smtp-Source: AGHT+IGuHG2ULT1oCkpK9wTV1fFRZTCK5LqZXy9RyRwz/bNQNQC1ZpcRpT6E1mQCsrDXUkiH1mNCPg==
-X-Received: by 2002:ac8:5746:0:b0:4f1:df6f:6399 with SMTP id d75a77b69052e-4f4abcf6820mr43389771cf.14.1766156408532;
-        Fri, 19 Dec 2025 07:00:08 -0800 (PST)
-Received: from [127.0.0.1] ([172.208.126.103])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88d997aed21sm24832456d6.30.2025.12.19.07.00.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Dec 2025 07:00:07 -0800 (PST)
-Message-Id: <pull.2135.git.git.1766156407442.gitgitgadget@gmail.com>
-From: "Sam Bostock via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 19 Dec 2025 15:00:07 +0000
-Subject: [PATCH] worktree: clarify --expire applies to missing worktrees
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=RY9Axv7MN4sql6Z8ggxWKLYeKqOGH7feR2jHJ8aHCWI=;
+        b=DVMs88AtktBQy3yZBckDX51qaq6Yv8GD/A2JGcbC78Dv2e4RoRi0L7HTDVU9BhhFuV
+         PxMqA+ExilQWhdTO4tRCwyQ+yxGwVLS2cteANCyHpFji6qjEWbyPHp8qkoAiaY1bvvq4
+         UlUwqVnn1wRHHEQPIf8IJwPI+6luCYhvnc+wJhoNHh0nalB7PBSL/sL5kJuL3u9rrfc7
+         ZUHTNIsEBaR5dEZ6PtfBOOgPiZoKaRRcyFInPXraEoOu6PJBAgb3cZI4NOQO9+1ZdOXO
+         UFL0EYdhg6ym7g/MlwfA9gYT0tWF4Ql6Q1FPoiA7iKTALuddsb0DaQTyyQ8UhGhG1yhY
+         5tLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766156582; x=1766761382;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=RY9Axv7MN4sql6Z8ggxWKLYeKqOGH7feR2jHJ8aHCWI=;
+        b=V9MRVPnhNwzPCF7ZL7JhBL0MaRpZb8pPf7Coy3GaJnwyRBDQ3/7lDgWpO4E/zcm/C/
+         AytvEW/3pxriwZhQQpPF+G7uL0nWJlywj6I4KFbjnMJr/Skj38PZMwGvbR7C3Q/afqgs
+         PN1m0aRs1kUTY2Tcqp3rM5BeSMW6NK81j9CnkbIwvnuAj+opfqbjMdqrrnCAhd5duaIw
+         nMY/VsMALa0T29G8vIPemTha07YiSKnphaKRKKVOHVz3dy43Fav4xKV0r8gtB/dVhg3l
+         n9/y0HkAVhDxfQWIMYGYN/D94xwyXJdF29PVHgGzmDuTLylFuikBgwaLfOONHLwGwwFq
+         78nw==
+X-Forwarded-Encrypted: i=1; AJvYcCXSMtcdTR2GiiieRcx7gjSjE5c6Coi2bwIkrZRdziO9YygsR233m77P+zoD/xBEHn5iiJk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhjviCG9R4l6ejrg0tyr42dRztvW/L03Nx0DQJ3R4+JwBeZ/ez
+	NfbUsgqKmgBQXoRSh96BHVsYVXYH66OZPaB5pMHpVKypGpcGhbq7ZV6Bl884tOHedbQ3jo9/c/S
+	8HraCr4y9hMx/dwa+FXK0rWPsmaTxxQA=
+X-Gm-Gg: AY/fxX52s1cBzviHot/FF3NP66wunndPeHtxX3yXgoyAZcjfh3R6C76kd/DzfGy8GVa
+	+prcYcaF+5oQGpWCdnwq66cXL+g/OePkl24KIUgAZWuEIv3LjR6+/wEVQsMX9FN3bJTfhcOZxph
+	b4A8QISvLzLkOFI8+7cekLqsQbf7OqNU/uFMFL+gQ8IlLw2LVhc3hZodB2BxlngqWqn6l9yem6G
+	qZPoU7jmKVl9YviDG6si/zCGRgYIg3QSLOSz6HRA8+j1EXHRmJrKKWieyv9UXxMkZa14mt4
+X-Google-Smtp-Source: AGHT+IFL0hki9gGXSrCmhwt21t9SfK+nAVU5r8Eam2Lhy8RTCpCaw5mOLZkM1qwwRl+28KdKN0x2TePzUVLG49/ldVY=
+X-Received: by 2002:a05:651c:241:b0:37a:3189:e7b9 with SMTP id
+ 38308e7fff4ca-3812158e5b2mr9166161fa.16.1766156581780; Fri, 19 Dec 2025
+ 07:03:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Sam Bostock <sam.bostock@shopify.com>,
-    Sam Bostock <sam.bostock@shopify.com>
+References: <CAPx1GvdNQbHY0avQ_Gt4bkLiuNHPW80E0v1vxrwyQYDD=zpc0g@mail.gmail.com>
+ <20251219145447.22234-1-haraldnordgren@gmail.com>
+In-Reply-To: <20251219145447.22234-1-haraldnordgren@gmail.com>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Fri, 19 Dec 2025 07:02:50 -0800
+X-Gm-Features: AQt7F2olSFgkh-hGiLxHxLthWQ0yNJ1LhNW7t-E13i3gjY4erUznBlhdyhMVgtY
+Message-ID: <CAPx1Gvcc6P08F=HiqWOMcWjGtv1TsqeS3aR=GtzVxpMBzorqFw@mail.gmail.com>
+Subject: Re: [PATCH] diff: add --no-indicators option
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: collin.funk1@gmail.com, git@vger.kernel.org, gitgitgadget@gmail.com, 
+	phillip.wood@dunelm.org.uk
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Sam Bostock <sam.bostock@shopify.com>
+On Fri, Dec 19, 2025 at 6:54=E2=80=AFAM Harald Nordgren
+<haraldnordgren@gmail.com> wrote:
+> Hi Chris!
+>
+> Thanks for the idea, but that doesn't seem fast at all =F0=9F=98=85
 
-The `--expire` option for `git worktree list` and `git worktree prune`
-only affects worktrees whose working directory path no longer exists.
-The help text did not make this clear, and the documentation
-inconsistently used "unused" for prune but "missing" for list.
+It's terrifically easy to script. Instead of:
 
-This updates the help text and documentation to consistently describe
-these as "missing worktrees".
+    git show $rev -- $path
 
-Signed-off-by: Sam Bostock <sam@sambostock.ca>
----
-    worktree: clarify --expire applies to missing worktrees
+you need:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2135%2Fsambostock%2Fexpire-missing-worktrees-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2135/sambostock/expire-missing-worktrees-v1
-Pull-Request: https://github.com/git/git/pull/2135
+    git show ${rev}^:$path >$path.old
+    git show ${rev}:$path >$path.new
 
- Documentation/git-worktree.adoc | 2 +-
- builtin/worktree.c              | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+which in sh/bash is (you can fancy this up some):
 
-diff --git a/Documentation/git-worktree.adoc b/Documentation/git-worktree.adoc
-index f272f79783..402d363064 100644
---- a/Documentation/git-worktree.adoc
-+++ b/Documentation/git-worktree.adoc
-@@ -271,7 +271,7 @@ mismatch, even if the links are correct.
- With `list`, output additional information about worktrees (see below).
- 
- `--expire <time>`::
--	With `prune`, only expire unused worktrees older than _<time>_.
-+	With `prune`, only expire missing worktrees older than _<time>_.
- +
- With `list`, annotate missing worktrees as prunable if they are older than
- _<time>_.
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index fbdaf2eb2e..82fcbfeccf 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -252,7 +252,7 @@ static int prune(int ac, const char **av, const char *prefix,
- 		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
- 		OPT__VERBOSE(&verbose, N_("report pruned working trees")),
- 		OPT_EXPIRY_DATE(0, "expire", &expire,
--				N_("expire working trees older than <time>")),
-+				N_("expire missing working trees older than <time>")),
- 		OPT_END()
- 	};
- 
-@@ -1070,7 +1070,7 @@ static int list(int ac, const char **av, const char *prefix,
- 		OPT_BOOL(0, "porcelain", &porcelain, N_("machine-readable output")),
- 		OPT__VERBOSE(&verbose, N_("show extended annotations and reasons, if available")),
- 		OPT_EXPIRY_DATE(0, "expire", &expire,
--				N_("add 'prunable' annotation to worktrees older than <time>")),
-+				N_("add 'prunable' annotation to missing worktrees older than <time>")),
- 		OPT_SET_INT('z', NULL, &line_terminator,
- 			    N_("terminate records with a NUL character"), '\0'),
- 		OPT_END()
+    rev=3D$(git rev-parse "$1") || exit
+    path=3D$2
 
-base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
--- 
-gitgitgadget
+followed by the two "git show" commands. Using ${rev}^ gets
+you the raw hash ID of the specified revision followed by the
+caret / hat suffix, which means "parent of the given rev", so
+all you need to specify to the mini-script is the same rev you'd
+pass to "git show" and the path name.
+
+(I don't need this often enough to bother with the script,
+I just type in the commands.)
+
+Chris
