@@ -1,93 +1,205 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4D233B6CF
-	for <git@vger.kernel.org>; Fri, 19 Dec 2025 15:23:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8F512B94
+	for <git@vger.kernel.org>; Fri, 19 Dec 2025 16:01:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766157820; cv=none; b=QhDzz3fmPKipPyCnoenaZ+do5qBQua3ZzO97Ni7+Bd7auuPbj0PX0R7kq2dQqj0KE1IJuu9+XHVuvRIymf6ca6xhWe6uQLahJ4umHXkl+tj5OyRNTEgRh7yfVOobh4Ox8iivvgh7C0SUENAjXPWiBLJR8NY+NIVuohg94Oo0XgE=
+	t=1766160113; cv=none; b=FaFELjZGrZNTB0h2azw4R7FMyjxGJBSTM0HtPO7sS8bt08e2IJ5UAFpq68Y7R8zx3Oiv42Cnog/gv35LJTuiShbmefwYIagw+gmxcl0HrfjbvR6mbTS1Mb5ZJtXCfYmad08SuGQ7cHD1SzW/fIMDD007YyJST2i3hWOBouCYeO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766157820; c=relaxed/simple;
-	bh=Wu4iLCNTNC34TGPMkZg7IvTCn+6uswTOGr+Zmy1p/to=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ucD8SNIJ6lv4IflS/bYUen4Lnoh9t6aVHuei5KkV9ePAzu1ChtCCyBKe9dSlOQefwgu3XnfYKkEoOotUuSd8TFnyeO/ZO8qadpkyREdRcVzxP65/McpaxjVtAsc1ZbyO9RwkAuZt4wURt8fVCqQBLA0o+63rG4eTY+ABtXXr7c8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LYaOjcmi; arc=none smtp.client-ip=209.85.167.54
+	s=arc-20240116; t=1766160113; c=relaxed/simple;
+	bh=lcRMM5LLLb8VJTKHdjczRT25EV6xWirWnG1mmIig5Pk=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=jj1Bp7PmBHdVVyAjXBeoYJDKJ6Pt0qG+W5XGZKRn/+kx+3ueEZP3CCQ2a+RD8e8rak2nUnD49zQhDm8ctfE80PJAe9Rex5zGeRFCeRPhtTCsXqOVYyAcdBuHXdghJYPaRU57+biYgXpwBBq60pfwyGbuGbnZrWnd6Vy1U9XxET8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E1XbPdT/; arc=none smtp.client-ip=209.85.210.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LYaOjcmi"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-594270ec7f9so2206417e87.3
-        for <git@vger.kernel.org>; Fri, 19 Dec 2025 07:23:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E1XbPdT/"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-7b8e49d8b35so2399319b3a.3
+        for <git@vger.kernel.org>; Fri, 19 Dec 2025 08:01:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766157817; x=1766762617; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1766160110; x=1766764910; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Wu4iLCNTNC34TGPMkZg7IvTCn+6uswTOGr+Zmy1p/to=;
-        b=LYaOjcmiuilOsqAPKMwUKWK7YOLzVhQqUf3mwaCaVf27A7QdZLUeR+jY5C39m7yNmf
-         CkhI3WoFCIf8sOaUEK3/rq1hNsfe4COB3H9b9Qwuxw8taSJJmZarHI/7+jQMalwQK9e3
-         GWHLfK9YmRMFhSqeoPsRh0xksyP1L33hAyZ1/hddKLChMNePXneJxbhHXxB43dOlAXqg
-         DLySzJl5Ltukcpxd7ZRlglQCO/poY2/I9D9Yp155hYLwI85X8RbGcNPj+FBykhpN+D8A
-         bJ2AWHWTHupnaBAbDu1CdiFOtzoNKSG523xs2ektVTC83EvZ3k+ShIggo5cw15GYzurh
-         cQCw==
+        bh=N7tvL0IVEa1KXlyCbJk7wlqVi2n7fLbN9ol/gld39ns=;
+        b=E1XbPdT/UyyqIHr1ZXhWXIgW3lVqCpAr4DNoz0uELJexf8ot4Mo2POMS6evjc4mW6M
+         uKgOeeclZOxq07CHMAMoQF2F62jCDKVaElluFr4oeh0DN9oZvb6uCSCsTHf5VlAkDLrc
+         X/B2v/g+KUsGjqgw9yOeektjcn/3t3RPVeiM048ZqgyU8maqbzOUJEIES9Hef9og+VlA
+         l2oAK7GuqU+C9aYLILQudjBaUcDeRajidrB/zXF+okWkFU6tlQnLHR9g/BxitMWEAn9/
+         YmXTx9ywcJzknikQsmtAJ+X/wgQuA/RoaaZlDoRtMaGKntVkfC1h1y2o78XNSuu9HGMy
+         r5mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766157817; x=1766762617;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1766160110; x=1766764910;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Wu4iLCNTNC34TGPMkZg7IvTCn+6uswTOGr+Zmy1p/to=;
-        b=pYxafvVB2zDqiw4WASL1hsdrh+z6VQZePmoHBMd9MoRlb34Hto7VHiRqL61WnioEIT
-         MUEyvyQ2zlh20o8HNX9mXVOgh6SOTh46+lvSkS2GaXFCtNf1FWxI+zwvlJPSAtkRPUer
-         fAiMuc5qn9VF75OhxC6wX6JvQImXMZBZxppaqhjsxG3qY0SoNXniGxnZFBSED6wc665e
-         aTmLQt6h4My2nNKHWVOCVM7enztTyVd7g7sbCvuMGyhBj/SfWd42KjaMoXZAFsxKCOsu
-         5Fm5Dq//iKn0VjSe54ya5fh/vjN75TU7pFS8ZLvbKDJ3KaqKTpblNJ51Wp7czwMgL9RX
-         GltQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWPToaZ4WIci0jok1NzNjDLFGGN600TiZrv1qYYCPsvLXcGGgPTwwY+AtvIcmtDBW7SkoY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyAPTcN2AVDyKWEEpiDQt/0sxtcMbIpQxkJkqfroYJLzPIpgs8y
-	dVng11tOBMZsjC/pS2yY/L4ru0xaCsPNxIZYz+Sr1sdPZcFAiRV3X33T
-X-Gm-Gg: AY/fxX7YBmlX+qgIzu1toUAAjsItiWk5mltGU42AA5xhpwzsde2Y8MrHcPw+8ARW0+y
-	Vt+jLF6QLyLbmwBU9mgS9eDlz/I36Hy+2LYFyOibaN0zplg+Caq7JFpRs82OxkSCgU6QqxSPu8f
-	u9e9XFOj6sgL/GzueYq91XmoyiBd1kxT9Wr0auHzpnPgIo/GrRqXLQDZ9IOtzwaRRZAjx1fePeq
-	PheFGBT8G7jm8SdHf6HNV5jIcKJlbqdzS3e8E80uSk7gRL19PkZBCIIcJ5nl/Bqs6QaV6cIJzs9
-	uOsfTnHbGX1HEiyW4xBl4tn2gaybGecUKqNeDryReP/AYZ/wPE7hg+bFSkjqVRgDhKnjWmT4HsU
-	mqj2rmDmCczTcO4laTNKlbKt/GECcPFyAbAVg7hiDig6XiWtbdkZ+Z9I8lSefjYZtOk9TjS9jdA
-	BYCGPGwB1a6B2g5PSXxmPAiMhbov+IrXhwTlCAbqjsIrS7qd27qe5Bi3WOkStRVrGJJUIEB86HW
-	EcDrvZLNw==
-X-Google-Smtp-Source: AGHT+IFLQp32FlDGwFtHdC+fslO5YUR7DvZZslY9ga+NfFXyFjJZXUQ0MwSUpfseFOHaXH8niLJmLQ==
-X-Received: by 2002:a05:6512:3c8b:b0:598:ef90:3e87 with SMTP id 2adb3069b0e04-59a17d1c18amr1346904e87.18.1766157816592;
-        Fri, 19 Dec 2025 07:23:36 -0800 (PST)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a1861f7f5sm762250e87.72.2025.12.19.07.23.35
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 19 Dec 2025 07:23:36 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: chris.torek@gmail.com
-Cc: collin.funk1@gmail.com,
-	git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com,
-	phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] diff: add --no-indicators option
-Date: Fri, 19 Dec 2025 16:23:35 +0100
-Message-Id: <20251219152335.28448-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <CAPx1Gvcc6P08F=HiqWOMcWjGtv1TsqeS3aR=GtzVxpMBzorqFw@mail.gmail.com>
-References: <CAPx1Gvcc6P08F=HiqWOMcWjGtv1TsqeS3aR=GtzVxpMBzorqFw@mail.gmail.com>
+        bh=N7tvL0IVEa1KXlyCbJk7wlqVi2n7fLbN9ol/gld39ns=;
+        b=AiIaDo/I32Y8+OfGfLDS0UXdEwCcvN6Z39uU8zsj3Z0bxeuwvR2TGMsaWTpuGVIAip
+         RWz2MWm80LjvQmpO/sCxBHD3HIjaQzBXKa4DupAfG4QFNjjjBMObDRqXIA0ltmdY6hon
+         9kpphaC871Xv8h0sn5pPbNZ2qXUwt1gfGPBBvJA877G5uT3BXpUL0L5BaRevicBUPwf0
+         jCDh+qGr4ITT4Jsli7jn002PKo0fHn2V9OiHaZC6tkCoL+XDgRcs9EKRQAGyVzUl6IbF
+         lMQZZ2s2x3+hWI6IqmWRzyYyzP/eqkgFl0fFLGp0rKWK1TMIPuaNcPnkkpDzEuXHAqmv
+         uuCA==
+X-Gm-Message-State: AOJu0Yx+YRKY075TZbiVSwchMF6q2OM/gn1nZD50oDzbMsGLX9PybprU
+	lby2YaxfIwZRyAbQN1TsXx2tn2Hd2U8WKewpZW0bVaTnAg55c+KwnzpNLc0EOQ==
+X-Gm-Gg: AY/fxX7HL5149zgacfKVquTN4INEsgeS8473VwBbJ9W8RYpR/x+XMmg5AtVsNkGJTzq
+	ygLJgVv6aCJA+sN41xENQdgimYL14Sd4nIeB8cJGry6DfWMDDZYuX/FgpDn38CvS9TaK7eiu0qK
+	1F2sv/Hk1BF/U2H6Tq4M1B2vUYZnhrf9MTrmUsp5V59+zBVXcGS/geBkJ1SDBAtvNb1whSW3eCF
+	dinDnLC0Jj0uG1KMhjfvcwzE5mjVF23JkArhX78THE4qxUH4OAZsaNxfqSjyjUkysMv1qR6ET/C
+	jT3DOZxkVzezau2WUrW0TjBa/kLrOQKqENgfLU9nTG67jxFx2js1Q6mf1lDNxWgIC9VbLPNl4bD
+	Lpei3E2dk0gQNBNvhVv1BSIlAaYk0vm/XDp80UAjO9dq9onwDYd30eYrsmDL1RNabpbX57lyXcd
+	FQz8j//MnRGMZhB+C7NrE8wv0kCg==
+X-Google-Smtp-Source: AGHT+IHZupUjYhrtQ92D1PX66yo1k8e08pVORSboGBEW6jv5amVuYoshhRLI1RCRJdJFkdYjWyr9Fg==
+X-Received: by 2002:a05:6a00:1f04:b0:7e8:43f5:bd26 with SMTP id d2e1a72fcca58-7ff67455837mr3219460b3a.59.1766160108578;
+        Fri, 19 Dec 2025 08:01:48 -0800 (PST)
+Received: from [127.0.0.1] ([172.184.220.210])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7ff7b5236b5sm2818949b3a.29.2025.12.19.08.01.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Dec 2025 08:01:47 -0800 (PST)
+Message-Id: <pull.2134.v2.git.git.1766160106521.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2134.git.git.1766097223647.gitgitgadget@gmail.com>
+References: <pull.2134.git.git.1766097223647.gitgitgadget@gmail.com>
+From: "Sam Bostock via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 19 Dec 2025 16:01:46 +0000
+Subject: [PATCH v2] bundle-uri: validate that bundle entries have a uri
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Sam Bostock <sam.bostock@shopify.com>,
+    Sam Bostock <sam.bostock@shopify.com>
 
-Hi Chris!
+From: Sam Bostock <sam.bostock@shopify.com>
 
-Thanks! I get that we can wrap things in scripts, but I find that it
-doesn't help when working with a team. Other people don't like
-homemade bash scripts.
+When a bundle list config file has a typo like 'url' instead of 'uri',
+or simply omits the uri field, the bundle entry is created but
+bundle->uri remains NULL. This causes a segfault when copy_uri_to_file()
+passes the NULL to starts_with().
 
-It's much easier to convince someone to use a feaute when it's built-
-into git itself. Just my experience.
+Signed-off-by: Sam Bostock <sam@sambostock.ca>
+---
+    bundle-uri: validate that bundle entries have a uri
+    
+    Changes since v1:
+    
+     * Updated summarize_bundle() to print # uri = (missing) as a comment
+       instead of silently omitting the line.
 
-Harald
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2134%2Fsambostock%2Fvalidate-bundle-uri-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2134/sambostock/validate-bundle-uri-v2
+Pull-Request: https://github.com/git/git/pull/2134
+
+Range-diff vs v1:
+
+ 1:  3d8a014490 ! 1:  fb66352093 bundle-uri: validate that bundle entries have a uri
+     @@ bundle-uri.c: static int summarize_bundle(struct remote_bundle_info *info, void
+      -	fprintf(fp, "\turi = %s\n", info->uri);
+      +	if (info->uri)
+      +		fprintf(fp, "\turi = %s\n", info->uri);
+     ++	else
+     ++		fprintf(fp, "\t# uri = (missing)\n");
+       
+       	if (info->creationToken)
+       		fprintf(fp, "\tcreationToken = %"PRIu64"\n", info->creationToken);
+
+
+ bundle-uri.c                | 24 +++++++++++++++++++++++-
+ t/t5750-bundle-uri-parse.sh | 26 ++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+), 1 deletion(-)
+
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 57cccfc6b8..3b2e347288 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -89,7 +89,10 @@ static int summarize_bundle(struct remote_bundle_info *info, void *data)
+ {
+ 	FILE *fp = data;
+ 	fprintf(fp, "[bundle \"%s\"]\n", info->id);
+-	fprintf(fp, "\turi = %s\n", info->uri);
++	if (info->uri)
++		fprintf(fp, "\turi = %s\n", info->uri);
++	else
++		fprintf(fp, "\t# uri = (missing)\n");
+ 
+ 	if (info->creationToken)
+ 		fprintf(fp, "\tcreationToken = %"PRIu64"\n", info->creationToken);
+@@ -267,6 +270,19 @@ int bundle_uri_parse_config_format(const char *uri,
+ 		result = 1;
+ 	}
+ 
++	if (!result) {
++		struct hashmap_iter iter;
++		struct remote_bundle_info *bundle;
++
++		hashmap_for_each_entry(&list->bundles, &iter, bundle, ent) {
++			if (!bundle->uri) {
++				error(_("bundle list at '%s': bundle '%s' has no uri"),
++				      uri, bundle->id ? bundle->id : "<unknown>");
++				result = 1;
++			}
++		}
++	}
++
+ 	return result;
+ }
+ 
+@@ -751,6 +767,12 @@ static int fetch_bundle_uri_internal(struct repository *r,
+ 		return -1;
+ 	}
+ 
++	if (!bundle->uri) {
++		error(_("bundle '%s' has no uri"),
++		      bundle->id ? bundle->id : "<unknown>");
++		return -1;
++	}
++
+ 	if (!bundle->file &&
+ 	    !(bundle->file = find_temp_filename())) {
+ 		result = -1;
+diff --git a/t/t5750-bundle-uri-parse.sh b/t/t5750-bundle-uri-parse.sh
+index 80a3f83ffb..294f9d9c64 100755
+--- a/t/t5750-bundle-uri-parse.sh
++++ b/t/t5750-bundle-uri-parse.sh
+@@ -286,4 +286,30 @@ test_expect_success 'parse config format edge cases: creationToken heuristic' '
+ 	grep "could not parse bundle list key creationToken with value '\''bogus'\''" err
+ '
+ 
++test_expect_success 'parse config format: bundle with missing uri' '
++	cat >input <<-\EOF &&
++	[bundle]
++		version = 1
++		mode = all
++	[bundle "missing-uri"]
++		creationToken = 1
++	EOF
++
++	test_must_fail test-tool bundle-uri parse-config input 2>err &&
++	grep "bundle '\''missing-uri'\'' has no uri" err
++'
++
++test_expect_success 'parse config format: bundle with url instead of uri' '
++	cat >input <<-\EOF &&
++	[bundle]
++		version = 1
++		mode = all
++	[bundle "typo"]
++		url = https://example.com/bundle.bdl
++	EOF
++
++	test_must_fail test-tool bundle-uri parse-config input 2>err &&
++	grep "bundle '\''typo'\'' has no uri" err
++'
++
+ test_done
+
+base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
+-- 
+gitgitgadget
