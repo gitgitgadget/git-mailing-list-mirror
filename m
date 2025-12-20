@@ -1,41 +1,41 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B842307AF2
-	for <git@vger.kernel.org>; Sat, 20 Dec 2025 10:16:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF43273D84
+	for <git@vger.kernel.org>; Sat, 20 Dec 2025 10:16:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766225771; cv=pass; b=Vo/S9k6mqPLyFWckSyCb3CiMUaThC03o91lgOr8iOJAnEEk+rMoOJOx/wSpVmmTlOAyw4bH/g0cNO/zQrfndl5lwBDb7ZCzrDAtaGGWKNVdyN3qq7KQ9DMpxEmoCN0+nHfPLTPUVOknhlqEo9c6yWlf/MdlCTIKifRjMPyyiQT4=
+	t=1766225775; cv=pass; b=dsBC//vl5OlH1x7wGi1XBKC7wJijii5zKovTxpC6k+2SMms34Nl9Ah0i0TYkmdJHy1vqJ9uL2bCXwxsnP2JeLxkIrfP5DNmoRiOa3spMtlCx4+IV3jJcUKdf6roOgeq92uiSzzdNzM1AHEA/dOWWhaLnEbIGblshvwpfjQJ5wGY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766225771; c=relaxed/simple;
-	bh=u5feBEqlEcgvbNz+KJnO80jB3CiMRihm5u3fvy6cCUA=;
+	s=arc-20240116; t=1766225775; c=relaxed/simple;
+	bh=fnev7uCKVZtoqga0Z1ssjQ//SvS0zkR6SreYSXRF46U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMoBxWzVp5LU/RnHugPWGYysR/b3ZOhfUB1KG0+VYtz85s0sU2l8WgrRk0jrSp8MEmIvFArlqTElBmheKXuh+u2EXkcPgHdd640/GY3q+Q9DVw2HxvViGMNFE/ZFai295PzjKiFDCOK5n+mIKkYooUKlQoHQj1+s8UhZeZ1hlE0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=NIxeORbw; arc=pass smtp.client-ip=136.143.188.12
+	 MIME-Version; b=iiwLXf4+Qs401A6EVixw8tGijs/jCsrAs6g3HvdjVVSuQFCNFV2wQOi8dgKVbomctZuspew7Ha8fO8aVKPX56p0S79TJtSrfRonUTlGGq1E7ZzIw/vCQqRglPqFv3uZ+bGQ3QoO5A7tWz4iYCnuHhYYOsyc0C6zrWcx1qLpo2Rc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=OTFEhjGp; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="NIxeORbw"
-ARC-Seal: i=1; a=rsa-sha256; t=1766225753; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="OTFEhjGp"
+ARC-Seal: i=1; a=rsa-sha256; t=1766225757; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=eHI+F4RB+TvKAli/NqmlJH/5ZbFOKUg5F5TTDLrC0bUOHQzpRgAWQ5wJIdoYGOGhNMPZyXenkOskkLCr0fWyt065uMdUA6z923WLM4jv1UqInGqnsNzbD+E2RKbnG8VsZ7OJugcOjUr7E5zKfyigmr3GaOCaxQpKqWMkNzhalTc=
+	b=Vt5LPKt5aJLOAgtvLdcEoUbLDjAvsnH4QGdJ5uZ76npsx5mSyn34xkLEn/ncF7cUhugoBcQCTcQZiL9UJZyqstjlMiI+IZ1Nwa9pfjhLUdzXrKM1h3KlCDBS8csxVHe5LTX5jtBvtkG1bHM/So9l2uP4mIFasFRVdtox9rCTACs=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1766225753; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=spoBC+T/1BHjti/FhJgnBYjbgSlOzZjhjyTweSQpE28=; 
-	b=Bf3UWkHKhQG9GhfU93hL/GHHoXc/LmUcR1ih2dawN3FPo6KwDTGmX9vYR+DqsCFnu7FRsFu0/++nk8MYCPCBMo1hE+JVaSKr314kVlL6y2YSdik/VCQC8zK9qlUouDdl8bz74f1//Yc6G7CP90Hv8iH14sgWg4tN193RSvMKuCU=
+	t=1766225757; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=L+uf1to0k3f0n9BBWfRxf44sm544fNws/V4SB2hBxWY=; 
+	b=Gfxbo/75JXXhedYy+S+CSE0Vi8Y2hG6092yYFv5M0vCcDsg6R4OPzrJQtnIT9AyVXR5nuM3V3f/RZPhajT92h+6YrEjZvNKPCTiJBY7LgEkp0aM7QscnbXb1Z6E9vf59FuWGqFeIuHYNQjdkG3/RjPm9CspEpFMQx3OC+FQyFFs=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1766225753;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1766225757;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=spoBC+T/1BHjti/FhJgnBYjbgSlOzZjhjyTweSQpE28=;
-	b=NIxeORbwWL63x3Gd/4lak8iHzQWNVnD2yvNUxIxrHBGnPGFwte2TfS8KAJZzWpwu
-	R3bPW326RCW09lQt/f2t8ReQVpaFVUUA+bAF1hRlg+yXr1zl/x3MGWRfvuG+ZwdGezb
-	lukW/yt+TnTIz++E6i2aQ3jgEe1T7T5T8HMl4Ltc=
-Received: by mx.zohomail.com with SMTPS id 1766225750744613.8952647431661;
-	Sat, 20 Dec 2025 02:15:50 -0800 (PST)
+	bh=L+uf1to0k3f0n9BBWfRxf44sm544fNws/V4SB2hBxWY=;
+	b=OTFEhjGp6I6z8uO603urTPojwP7cp7d/n0YVMAHM1ZhY6F/2QzAU9xhKbCVqJONH
+	tQNyOCnCna0vdGi8C1cbKQtBC7MPhZga8CYdEXFrMBTdJhc+fiILJ9CvafmWKQ53ld/
+	G8XAk4R8ncWRlAtmUpQl6rd6mKZbG3ZyAUuI7u0M=
+Received: by mx.zohomail.com with SMTPS id 1766225755646621.9677188420716;
+	Sat, 20 Dec 2025 02:15:55 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -48,10 +48,11 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v7 02/11] submodule: always validate gitdirs inside submodule_name_to_gitdir
-Date: Sat, 20 Dec 2025 12:15:19 +0200
-Message-ID: <20251220101528.1227487-3-adrian.ratiu@collabora.com>
+	Adrian Ratiu <adrian.ratiu@collabora.com>,
+	Brandon Williams <bwilliams.eng@gmail.com>
+Subject: [PATCH v7 03/11] builtin/submodule--helper: add gitdir command
+Date: Sat, 20 Dec 2025 12:15:20 +0200
+Message-ID: <20251220101528.1227487-4-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251220101528.1227487-1-adrian.ratiu@collabora.com>
 References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
@@ -65,77 +66,55 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Move the ad-hoc validation checks sprinkled across the source tree,
-after calling submodule_name_to_gitdir() into the function proper,
-which now always validates the gitdir before returning it.
+This exposes the gitdir name computed by submodule_name_to_gitdir()
+internally, to make it easier for users and tests to interact with it.
 
-This simplifies the API and helps to:
-1. Avoid redundant validation calls after submodule_name_to_gitdir().
-2. Avoid the risk of callers forgetting to validate.
-3. Ensure gitdir paths provided by users via configs are always valid
-   (config gitdir paths are added in a subsequent commit).
+Next commit will add a gitdir configuration, so this helper can also be
+used to easily query that config or validate any gitdir path the user
+sets (submodule_name_to_git_dir now runs the validation logic, since
+our previous commit).
 
-The validation function can still be called as many times as needed
-outside submodule_name_to_gitdir(), for example we keep two calls
-which are still required, to avoid parallel clone races by re-running
-the validation in builtin/submodule-helper.c.
-
+Based-on-patch-by: Brandon Williams <bwilliams.eng@gmail.com>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- builtin/submodule--helper.c |  4 ----
- submodule.c                 | 12 ++++--------
- 2 files changed, 4 insertions(+), 12 deletions(-)
+ builtin/submodule--helper.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 13b5e4ed68..f1fc098614 100644
+index f1fc098614..3bc139ff9c 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -1699,10 +1699,6 @@ static int clone_submodule(const struct module_clone_data *clone_data,
- 		clone_data_path = to_free = xstrfmt("%s/%s", repo_get_work_tree(the_repository),
- 						    clone_data->path);
- 
--	if (validate_submodule_git_dir(sm_gitdir, clone_data->name) < 0)
--		die(_("refusing to create/use '%s' in another submodule's "
--		      "git dir"), sm_gitdir);
--
- 	if (!file_exists(sm_gitdir)) {
- 		if (clone_data->require_init && !stat(clone_data_path, &st) &&
- 		    !is_empty_dir(clone_data_path))
-diff --git a/submodule.c b/submodule.c
-index 40a5c6fb9d..f645372a18 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2166,11 +2166,6 @@ int submodule_move_head(const char *path, const char *super_prefix,
- 			struct strbuf gitdir = STRBUF_INIT;
- 			submodule_name_to_gitdir(&gitdir, the_repository,
- 						 sub->name);
--			if (validate_submodule_git_dir(gitdir.buf,
--						       sub->name) < 0)
--				die(_("refusing to create/use '%s' in another "
--				      "submodule's git dir"),
--				    gitdir.buf);
- 			connect_work_tree_and_git_dir(path, gitdir.buf, 0);
- 			strbuf_release(&gitdir);
- 
-@@ -2349,9 +2344,6 @@ static void relocate_single_git_dir_into_superproject(const char *path,
- 		die(_("could not lookup name for submodule '%s'"), path);
- 
- 	submodule_name_to_gitdir(&new_gitdir, the_repository, sub->name);
--	if (validate_submodule_git_dir(new_gitdir.buf, sub->name) < 0)
--		die(_("refusing to move '%s' into an existing git dir"),
--		    real_old_git_dir);
- 	if (safe_create_leading_directories_const(the_repository, new_gitdir.buf) < 0)
- 		die(_("could not create directory '%s'"), new_gitdir.buf);
- 	real_new_git_dir = real_pathdup(new_gitdir.buf, 1);
-@@ -2600,4 +2592,8 @@ void submodule_name_to_gitdir(struct strbuf *buf, struct repository *r,
- 	 */
- 	repo_git_path_append(r, buf, "modules/");
- 	strbuf_addstr(buf, submodule_name);
-+
-+	if (validate_submodule_git_dir(buf->buf, submodule_name) < 0)
-+		die(_("refusing to create/use '%s' in another submodule's "
-+		      "git dir"), buf->buf);
+@@ -1204,6 +1204,22 @@ static int module_summary(int argc, const char **argv, const char *prefix,
+ 	return ret;
  }
+ 
++static int module_gitdir(int argc, const char **argv, const char *prefix UNUSED,
++			 struct repository *repo)
++{
++	struct strbuf gitdir = STRBUF_INIT;
++
++	if (argc != 2)
++		usage(_("git submodule--helper gitdir <name>"));
++
++	submodule_name_to_gitdir(&gitdir, repo, argv[1]);
++
++	printf("%s\n", gitdir.buf);
++
++	strbuf_release(&gitdir);
++	return 0;
++}
++
+ struct sync_cb {
+ 	const char *prefix;
+ 	const char *super_prefix;
+@@ -3583,6 +3599,7 @@ int cmd_submodule__helper(int argc,
+ 		NULL
+ 	};
+ 	struct option options[] = {
++		OPT_SUBCOMMAND("gitdir", &fn, module_gitdir),
+ 		OPT_SUBCOMMAND("clone", &fn, module_clone),
+ 		OPT_SUBCOMMAND("add", &fn, module_add),
+ 		OPT_SUBCOMMAND("update", &fn, module_update),
 -- 
 2.51.2
 
