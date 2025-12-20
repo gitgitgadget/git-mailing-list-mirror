@@ -1,83 +1,88 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAD11547E7
-	for <git@vger.kernel.org>; Sat, 20 Dec 2025 06:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE951D798E
+	for <git@vger.kernel.org>; Sat, 20 Dec 2025 06:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766210593; cv=none; b=WJC8VPCbtzUPeCIqswy90Ena4XXoxECRl9YHd0y/wym1IuLwPbgRNCdGwHxl+AAE0vDEpqeqQIaudVtV8XgC/kvnWFc76QwbUBNEc3dUwOvB0uuv/InBYpuHRIaBc0jFPl0zODgo1UTbZTbuIzlPkIcw3BsI3ayqScBJu0gqc0E=
+	t=1766210848; cv=none; b=trGXJ7PDrdRQko1fUEoKZLJcwSJdUZReiPSaabXMYwqHN4QcjR/hxT1b9ww61N9zfxTEuubTwyk4lupr6ZNUMvHfwd5AS3Ns4QduCYc6cyEag8sgj658F2960v4Pipmx/SBUuo0vpCKt9T8au76DuXCWmGxWbPWOssopFOdhDn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766210593; c=relaxed/simple;
-	bh=xZ9TD+k/0/Gz0d7KlP1NRFOq1n6xYyS+lPH9xehceTY=;
+	s=arc-20240116; t=1766210848; c=relaxed/simple;
+	bh=tLcXcwYpFvtmcYMEc16ziok2v3pNJGvbY1XarWT9vIs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EgenGCDNIu72A4et7Mf6fGzsf7Cw5u5YbEuifZHqt6HhHcgkE43OSx7ioOoX411u7iLdhVVaevhIXz/U/0ZeAwm7E0F9NXus+0MqE3cmOtccxqo2mmlOtnVtAF1s5SVFzfmOeJX6j98DAvxeT5E/mGmEDoui3/XIhm1Nr3rnMno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NiFANB4y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WxvRGGwR; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=ebdzgLIueMkR3cjMzLRT5punbA6p7ueNq5MxaHTgCgb2cUJdsmNSyAGJieUd1+WVhW8p4A2a+Yoy9W1kDEWWLTCiE0V0VMWB2cxhJItPk36vXxLZbdViWA4yxbYz3eY7olFTO2IqLMW9OfHb/dOigueKfAmhMp/JbdQrhVrASok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MpBqMN/C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xc7g/Fg7; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NiFANB4y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WxvRGGwR"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id D724CEC013B;
-	Sat, 20 Dec 2025 01:03:07 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Sat, 20 Dec 2025 01:03:07 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MpBqMN/C";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xc7g/Fg7"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id D6EAEEC0075;
+	Sat, 20 Dec 2025 01:07:25 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Sat, 20 Dec 2025 01:07:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1766210587; x=1766296987; bh=Sdl1l9seay
-	cojD8RZfuNef6bH94o7PGGLEhDFwvVzho=; b=NiFANB4yRyqeRF3UuryL1oOSsB
-	W5TCPZHL37YLgiqNueJxGy3ohnAutI7KxuNUfvYvV1jHolCPVdwsxK3oI51RcRPZ
-	fsBp8CmRf55LGbdG9ilyF6GnQxjSTEijOOyrGhwUfmeiZ+UO8Nw9cDmYRg9wGK2f
-	yREp6SAlxwlUo9DnIAzU63wwUoQwatVqojbU596DeA+JzWfHa+t94WDNI7TT0I0f
-	WKdOHpAR5ZDVOGZpZwXwaw0QRMddKkJXCiI6swfc3hw/kM/J0HVBgNYG83M1IpKq
-	2H4S4DWW2vBdBGTIORC/hQ6xZhsvps+lDOdDtoq0LK1mpQUn8QZd7Hd0ThBw==
+	:subject:to:to; s=fm3; t=1766210845; x=1766297245; bh=k3d6NneTHx
+	bMWqI+TX28mNRS7G81oVIfWhpTU36imTI=; b=MpBqMN/CLr7iDQRImoFA7Nhj47
+	djbkh80VTTVcXOUkLTzoDq23WBmVbp2mr4DJfFwgk/N3vG7gKqlW4DvYwH/Hji2x
+	bjuVuOIk3rKPBdsi22LbxifJZSRFzw9UyS8dNWveUOZU78L4+w8qawGF/knqO5Gn
+	501vg4DPnYX2tE5GQUoK3f6iKP5soNW40hNokP9WlF2HWwxRoq1v6DOVMp+ngtwg
+	NwPkZoI1JdRJ4TrV80oHh3BJ2RJqWPx3ZVZSG6jWRDFcr8mHVxh1itZsQTedvV8u
+	FS2q2ZK5RiUBa/8vQPfK986DuFVhfZiKs5SGKPwrAyw2cPytDZuKs/Y6pXKQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766210587; x=1766296987; bh=Sdl1l9seaycojD8RZfuNef6bH94o7PGGLEh
-	DFwvVzho=; b=WxvRGGwRB5rT9g+Yps5EwELUW0ZZkccbJAOV66CJi5ZnELLDg4F
-	89GhPGIk3MAaj8gAd+9LZncQRexLgI8U3ecIuV8vIoIvjCyVylmacO9UDtdNSp1e
-	YwCaZ6oqnTrKSAPjLX7Bdim2JXOLB+0TNyuypWp4U6TsUWwVuBoDD9NG+llRfl7V
-	TMpgfNZtK3Fr6PpriqKXwV94m3Uc7C6baUVrqFdCmMqsRdBXmK5V50JBthtzEIUp
-	FgYBhknj8A8BM8yfIW4SeEQyXQ5QNldL49rSOa7kIJhYWq8EiZvno0vtkhr4yGDN
-	moQBbnMwuDvfFjF3Bd2yF/b6j6xE+WyRzKA==
-X-ME-Sender: <xms:GzxGaTS9EgsSkpsueirC708g34_SXlxGsDlFRIaoiTlNaYy3kNx97w>
-    <xme:GzxGabwHFnTf0oLc3SrQCthG5igbmLSbwR_kGEn3WkmcD9m8x1_Ys6QIQno7lc68T
-    X9XhlkLGGVfXSfnVfNEuhUL-dOuRhKzLsfvjv_KVVN-FxGuf4xRrbk>
-X-ME-Received: <xmr:GzxGad1Ajs_4vSVau2jUE7MImrCQzi5Ml7-mJWB7O6aalW1rBknf7cfc6le182Sa5SwSMNf05asWoO9V1WgAzNFQkF4ueqG8Uw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehtdegudcutefuodetggdotefrod
+	1766210845; x=1766297245; bh=k3d6NneTHxbMWqI+TX28mNRS7G81oVIfWhp
+	TU36imTI=; b=xc7g/Fg7iXu7Mqz1ZaNLuEjsAcw7covpshxqceqxBPwBM33Flaj
+	Ti0Hl6wAK3SZftO4ZYhGkFzqWuaR2jk4536ZwbuKTsf8uKYUXEcRnOb13Av7QBws
+	YR9m9rsd3PvDWTvMwSvp4ZJHsEuCjTADaEv5e5Krw3Cm/Gy+L8USRKc+yfgxw5Tb
+	PWZx7tzmX1Osx1SFkpD27Cxc/R/T/I5vEu6naLvKv8Rsc0OPT9SSLlfvf2NNxt99
+	QcGRTEMK0CS85NdrbgFxnf4grzRBBFVHf5O4nfQdtmlz4YBQKYxlPUAO92KWQms0
+	etw0s1m23rcAsYiwaNW/eElk3Jiiv1j517w==
+X-ME-Sender: <xms:HT1Gafe2Wt7eFdN2QJVVp-U8Zu1SpkolHS5ewygLMdibxRKBqdY4RA>
+    <xme:HT1GacG34iXeXeGXp_IPXL6_MN2N9kYaa2n63pWxIJbOEa33uF3Ns2wUkVRKD7GLF
+    jtrpo8v5-ztrKp1zil5lkgwLxdy8iXdALKq8GFP0U4Rk-ascOEiAw>
+X-ME-Received: <xmr:HT1GaQ02njn6rRiTOay4lxou0FEgPGt8aSVmWrEZ_sluCfda36HBVFPDm3jqCJ4S0dwL69ynNTjRvWTa3sq77kADir9RLApIAA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehtdegvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:GzxGaR46tHgrMAj8h6JwUELlC-ggRgxuNXEuzN84lTzyiQHva3Oo9A>
-    <xmx:GzxGaYXo3JUw4DbKfSOWjCCb9c0DJp4l1XSH5lW2cAf950gLTgosVg>
-    <xmx:GzxGaYDMKEf_L-xTMbDJ9mnsHfe7D1OD06QOSRUpmBAwluEJweMTnQ>
-    <xmx:GzxGaf4lBQJSU8an24rAP5udMul7Pviz1CtcvbdoGwhnGxec-vWpNw>
-    <xmx:GzxGaVU9O209N-kVEyEot8Te410UxpiT-vn2RC2mh8glDtUaxZcnOVPq>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    shhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehsrghmrd
+    gsohhsthhotghksehshhhophhifhihrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:HT1GacnbiUxTDrafv4VOufs3QhkQxeoDKfuSdT1tOaiJGqtFN_EBUQ>
+    <xmx:HT1GaY_nipKNCcms0MIbStXedLuBFlH6Jy8Ho1aHIiCRVAqu3pATGw>
+    <xmx:HT1GaZpr_65EEqlqz1rPyQeOtKHMg2Ok2x_zYhZ1XVJVY8FXhrV7nw>
+    <xmx:HT1GaZl0nhFhhG7Uuew866ZluQyVxE5s8jio1Gpxj6yDFFVfhikf6w>
+    <xmx:HT1GaZM70Li5PTzccp7SJb3l69jkf7gaGfrO4ORO3Gc2KC5fm_9VD_CJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 20 Dec 2025 01:03:07 -0500 (EST)
+ 20 Dec 2025 01:07:25 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org,  gitgitgadget@gmail.com
-Subject: Re: [PATCH] diff: add --no-indicators option
-In-Reply-To: <20251219190828.50839-1-haraldnordgren@gmail.com> (Harald
-	Nordgren's message of "Fri, 19 Dec 2025 20:08:28 +0100")
-References: <xmqq8qeywuno.fsf@gitster.g>
-	<20251219190828.50839-1-haraldnordgren@gmail.com>
-Date: Sat, 20 Dec 2025 15:03:06 +0900
-Message-ID: <xmqqzf7du1ut.fsf@gitster.g>
+To: "Sam Bostock via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Sam
+ Bostock <sam.bostock@shopify.com>
+Subject: Re: [PATCH v2 1/2] worktree: clarify --expire applies to missing
+ worktrees
+In-Reply-To: <ddd4191ecb391e10bf4b123f699384a3d609b4a8.1766168169.git.gitgitgadget@gmail.com>
+	(Sam Bostock via GitGitGadget's message of "Fri, 19 Dec 2025 18:16:08
+	+0000")
+References: <pull.2135.git.git.1766156407442.gitgitgadget@gmail.com>
+	<pull.2135.v2.git.git.1766168169.gitgitgadget@gmail.com>
+	<ddd4191ecb391e10bf4b123f699384a3d609b4a8.1766168169.git.gitgitgadget@gmail.com>
+Date: Sat, 20 Dec 2025 15:07:24 +0900
+Message-ID: <xmqqqzspu1nn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,23 +92,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
+"Sam Bostock via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Maybe I missed your point about GNU or BSD, could you explain more about that?
+> From: Sam Bostock <sam.bostock@shopify.com>
+>
+> The `--expire` option for `git worktree list` and `git worktree prune`
+> only affects worktrees whose working directory path no longer exists.
+> The help text did not make this clear, and the documentation
+> inconsistently used "unused" for prune but "missing" for list.
 
-When I talk/think about what "git diff" should and should not do, I
-remind myself that not many things under the sun are truly novel.
-After all, long before Git was invented, people had used "diff" to
-compare old and new versions of the same thing to extract the
-differences.  When proposing a new feature X in "git diff", it would
-support the idea very well if these implementations of "diff" that
-way predates Git itself has a simliar feature already.  On the other
-hand, if the vanilla "diff" used outside the context of Git lack
-such feature X, it is more likely that X is an ill-thought-out
-misfeature that they didn't want, than people who have been working
-on these implementations of "diff" (not "git diff", but GNU or BSD
-or others) were dumb enough that they did not think of the feature X
-themselves.
+Well analyzed and described.
 
-That was why I asked if there are precedents, either in GNU or BSD
-implementations of "diff".
+> This updates the help text and documentation to consistently describe
+> these as "missing worktrees".
+
+We phrase it more like "Update the help text and documentation to
+...", as if you are asking somebody sitting on the keyboard to make
+that change.
+
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index fbdaf2eb2e..82fcbfeccf 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -252,7 +252,7 @@ static int prune(int ac, const char **av, const char *prefix,
+>  		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
+>  		OPT__VERBOSE(&verbose, N_("report pruned working trees")),
+>  		OPT_EXPIRY_DATE(0, "expire", &expire,
+> -				N_("expire working trees older than <time>")),
+> +				N_("expire missing working trees older than <time>")),
+
+"expire" -> "prune" or "remove".  As the user already said "prune"
+when they run "git worktree prune -h", using a different and more
+common verb "remove" to explain the action might be more helpful
+than saying "prune".
+
+Thanks.
