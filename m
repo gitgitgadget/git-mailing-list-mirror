@@ -1,147 +1,117 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7830825A2DE
-	for <git@vger.kernel.org>; Mon, 22 Dec 2025 22:05:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F97C25A2DE
+	for <git@vger.kernel.org>; Mon, 22 Dec 2025 22:06:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766441129; cv=none; b=UJacxY3UBpV8BbJEbwr7GxvCvxxRxGcBNrnhLueL/ZlL8VSZZBEbLy4NeF9q77wmN5GOw3tj31cXlcE5xOkd9ReqIyvkMc2XJkQT//c9OZDMiXgdixoU/Mo0dVlL4fCNbrG2xb5iGEf0mJ/QIXHmKb/aVM76u3//Uem3dYGXV6k=
+	t=1766441220; cv=none; b=JkECZp75onwT7gNaG9LFqNs6LH0HpdM4Vo0T9/yjA6VGR3InfPPQ3kfil2/pLe+GqoB/v6FVy1ktpQN0E66zQZZicHqmx2DDZj+9gR/zjofq8vVJtatafmmDMANLa3o+v3nbl+L9KgEP5jqARoViHOeHs1RySQ+s0gtaKyotIi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766441129; c=relaxed/simple;
-	bh=9bCDAQs4r4OCa6UpFpZ3ahUjEvw1+XgpxkRQ5unl4Ik=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CcbOWPm4dLOyBCWEXjFrb1sLdn1uPUJBoLP9z1ETyYpehsVOyW+x2UAfWI7RsCqynG7flCDRD0cuf9FdWAUL1qFZ0NoHWbNECwdMdDuBmH/AXnIA+gwEurv+jv/YDeE0xQaZWdD6d5XeWNCOvZtXcmidq7jeeP6q3Iu9qmm+z8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Cefw5/f3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sgxBHAxj; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1766441220; c=relaxed/simple;
+	bh=YDIeNJnP3mkZROWVcA9GFsgSpRCq9QrTzCnsX/k5SiU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FXNmfdAgeQhGtiZAx1v+Tp/Ur34XXD5b0oO3vk+CwDa1kmNlGrrqQ1z4kk8olbDs7HrZTbow3eiTd5o1kc9l6/wLyQhOyRol50bPiHn+1Ecs149tU/Sja5U9V3b/pIPBeKOrGvRAKH96xOfdoSdijOZ+5KtnuP9cm04a8EekNJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mRmvP87N; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Cefw5/f3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sgxBHAxj"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AE6677A0073;
-	Mon, 22 Dec 2025 17:05:26 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 22 Dec 2025 17:05:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1766441126;
-	 x=1766527526; bh=ZmEz4u3TKDb50j23to+KxQHi4UMflvQ7UTVcozmKD6o=; b=
-	Cefw5/f3am7ZoizyjxYy47B9KdOYfgKHxhSJQLJlFjWh9Viq7SN23x+NIwrlhMPo
-	JPmbSNx5qxjVLOfyBWmp24klOyBsQlluikPVFwYyJwB+oYaXFPKmBH9aWtswhvLx
-	jZWafNH5w+uegiPdEhVT6dNJj6LBUNLp8hJl8pn/QmQPYh6lPvAe51p87LtuG2jV
-	LLCKWp17G7ojNDLM0N1652Ny1Yp/UTWQLbRQ8RNbEHqoW5ZWUYMPxO7hiJnZcHhs
-	oBUrfsiUvGmY+lWZMAoDRQ7ZfrNDbctA/bDR79OqMqMhnhfRYPyvtIk5Q4cCcKTS
-	fHzyhBGckuIXFKuYTZJCIg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766441126; x=
-	1766527526; bh=ZmEz4u3TKDb50j23to+KxQHi4UMflvQ7UTVcozmKD6o=; b=s
-	gxBHAxjc7r+oB2wcd4prDMVgWP9v/XQpzjyIFrzJRg68EbLr5JIAGzvdLCvCNplc
-	XbJUyWbvWLy+4jvt0sQNEg8SZk3QqDJsPnGfvs8MFY6YpawVRScQzqU2XUvp9jss
-	rx7MVp86TiMCXpFTrLXBs7wehHWy93HRnLc1Ab6IR3uo4NyDIWN5mGOdvZaRrM6E
-	e4UcBSdl29neIWOY0SYwuD0RthGvG2WhN2ZMx89jfjoLXin225spPaT1thgNl2W3
-	X67EGqcEzitDEDebgev+t0C2WjHOHB1qANou2h+kMQycdD+XbGMrwO3C8QAxZZW1
-	1zpzT3qb5Jc1F5hROUdkg==
-X-ME-Sender: <xms:psBJaU5PKHJIzTbBPq389anBRx2x1jtrLMmzjprS2gLjWEcv8GXfbG0>
-    <xme:psBJacy-fq3Dul1wK8HbJrjWiRKvIXVAFcr7H69f_z84N6U5EpXLiUkgqcy_BDFWP
-    EVws6evX-QHhBm6wVhoeJcKNB7sxE8fzUjeH95Ddyv1oEP9E9QPXw>
-X-ME-Received: <xmr:psBJabwXhS0PG28l1stz_RBG-djGd9JcpZA2eSW-gIipyNNu7NKv0nPM1zuT9n8b-Nd3LXXENF5zJ1o8Q0cB5Yd1jFAMIAuTkUbBr6aqAy_Wys53eNnqX90>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehkedtlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
-    cuvffnffculdefhedmnecujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdej
-    necuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhenucggtffrrghtthgvrhhnpefhgfeglefhjeekgfetleetjefhteeiheegfedt
-    udduffegjefhkeetudeggffhkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
-    rghilhdrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohgu
-    vgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopegthhhrihhsthhirghnrd
-    gtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrgefudesghhmrg
-    hilhdrtghomh
-X-ME-Proxy: <xmx:psBJaUwt72NZHRkYTnAWrYb-a8tpSGe5Wv9IPO5Odm3z-Jlcc--Avw>
-    <xmx:psBJaVZOrk4CSl5VtFAuKKB6xtCkVbPGUCi9lizZzOLpH-eJjcTRSA>
-    <xmx:psBJaVX43OnJqf2ICf3BZoa68DSLmXQOwn8Yhd0COsu--dCHh0ZiZw>
-    <xmx:psBJaThixxRL_wLQIeI3gX_sE1irLycvlNwfma3u9iyjYxQkQh2hTA>
-    <xmx:psBJaYCmAhy_qL0PigfxuILFLiOX7UNVejJV5c9pwX0lDQJBifzWkx27>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Dec 2025 17:05:25 -0500 (EST)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	christian.couder@gmail.com,
-	newren@gmail.com,
-	Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: [PATCH 2/2] t3650: add more regression tests for failure conditions
-Date: Mon, 22 Dec 2025 23:04:43 +0100
-Message-ID: <replay_regression_tests.141@msgid.xyz>
-X-Mailer: git-send-email 2.52.0.10.g08704017180
-In-Reply-To: <CV_replay_die_descr.13f@msgid.xyz>
-References: <CV_replay_die_descr.13f@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mRmvP87N"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7a9c64dfa8aso3377986b3a.3
+        for <git@vger.kernel.org>; Mon, 22 Dec 2025 14:06:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766441219; x=1767046019; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CHgf8k5GUi9ZPpMhTKYADChOsyNPOIWwGhqGfgqCK38=;
+        b=mRmvP87N1N/WIgrMKDZj5d9rO6TcKUOVj8oFLEsddc8jdacWCGmkl0PFyWzF+QBC9A
+         fi68q7+2nNp6i/+818077FvzSvDm8TTskMHi7AGGU29H7se+3Rpjwh/LdQF5otRxMv/B
+         uk9dmV0r3hW/+nOXimLGkh4My8/aTnfX/0DrO9CdSXHNx7NirWfpE09tDIyRTDGTj3lJ
+         a1B4BIv0Bu4CEGk/xJ0cVu7kNtWasMBbUP5fMOvYn6HWKAuwBPsuPlLPYnMedFsd4iir
+         +drUvyYdJItYxpfYoJmS0KJgAwTcdFddURdIXAeYufs9QpHyUCEKMBOVB44tHhmsaq0c
+         x/ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766441219; x=1767046019;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=CHgf8k5GUi9ZPpMhTKYADChOsyNPOIWwGhqGfgqCK38=;
+        b=NjioiwHvpYphcsv3cRLsyXo0WfLrTaBApeXguQgHPMtTR6WzXbcrpHTkH+4RmB5Vjb
+         1pi8xzWfN1PRuH/eXkmmeWo1iNs0VK+3J3NuHUKEqfjFyl2gBIcAbSoS3sDgYVRRSvGe
+         DVOOCxJsa04zg0YuM6yEXXM3xARG2TpfsxrKru6SSaVHdPXtOjC+I+rLBtUFlDucY8cp
+         QBAWnBL+tr849sLP9VAkOs742BqqjTIrapQb/0qkPVXXnYweF1eqAQExcFbz4Lq2ZId4
+         kj1taoaBO+ffj4GdvXJf1eoSrM8cDqprAqDSd3blZwP10MdkLGcYnnJpYGyMUAVz6QRK
+         hMFg==
+X-Gm-Message-State: AOJu0YxH9wG53iev2car2EhIi2i6fLep2A6VA3PsLtNpMPCm65cpym81
+	CKS25ibdcOMOKOC5rNsWYkp02ty+/1PksGdBGyA72kJE3IMpkJNdJikak3tlxV85i55NRIw6fjK
+	0QcgD5v9HAqbsfWd5eHfaW4IaCWTHk9J3jqYp
+X-Gm-Gg: AY/fxX5Cp4kjvBhzj0rNdV2hxgFl+DxrJbQZ3jbKHSCHonKwEpT/pRHmEEPQZn0HB48
+	uDJi29lVznlSHWfWCk6+2ARQo8rUVPdYhN3UlaVsKtCxsMSCHZPDaEIqcHQwLryc5ud/pKLctwa
+	EEiFTN399b6M5LD3DsRrT8uTK7Q30dVjg9mQpm+42S1MfP9MksMzSIKim1FSD6i8npw2tzxgbGR
+	LCpYSBqvFvvsamPOMQosiXW0pHE1q/oXFg1cQYO6dw7miR7HRchkD3Wgu2dCYLI/2AQGaBg+ZuZ
+	y+ypFeOWqYFYP8dXYfstjtU4fmLl
+X-Google-Smtp-Source: AGHT+IFya0gIXS8bF089D2iFKATXOhjUE084jPolD2BF//nVuh5UId1hf/VyYQ7Bk4CrCK26AyHwZIe1C1B/QhKrUD8=
+X-Received: by 2002:a05:6a20:a128:b0:366:2714:7e8a with SMTP id
+ adf61e73a8af0-376aa0ed32amr12208004637.67.1766441218705; Mon, 22 Dec 2025
+ 14:06:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <xmqq5xb0yqj9.fsf@gitster.g> <CALnO6CDm2K0Bn43gjXTvYqJ8gbX+8eZK1YPn1gwuThizK6d5VQ@mail.gmail.com>
+ <xmqqtsyjxp63.fsf@gitster.g>
+In-Reply-To: <xmqqtsyjxp63.fsf@gitster.g>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 22 Dec 2025 17:06:47 -0500
+X-Gm-Features: AQt7F2pigtzVFFxCdAGKMh2vdaTl5XS9wAXu1W_UhkGhEPGNHvvXk7LeM5ytm0s
+Message-ID: <CALnO6CA4N5yC3oHmtihdyB5mprB_GMbfiLgi+XeY5DyGK97Pcw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2025, #07; Sun, 23)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Mon, Nov 24, 2025 at 1:26=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+>
+> > On Sun, Nov 23, 2025 at 11:59=E2=80=AFPM Junio C Hamano <gitster@pobox.=
+com> wrote:
+> >
+> >> --------------------------------------------------
+> >> [New Topics]
+> >>
+> >> * jc/optional-path (2025-11-20) 3 commits
+> >>  - config: really treat missing optional path as not configured
+> >>  - config: really pretend missing :(optional) value is not there
+> >>  - config: mark otherwise unused function as file-scope static
+> >>
+> >>  "git config get --path" segfaulted on an ":(optional)path" that
+> >>  does not exist, which has been corrected.
+> >>
+> >>  Will merge to 'next'?
+> >>  source: <xmqqikf47ajk.fsf@gitster.g>
+> >
+> > Any interest in also marking this for 2.52.1? It's unlikely to be used
+> > much yet, but since the segfault affects several invocations (git
+> > blame, etc.) it will be irritating to folks who try the recently
+> > released version.
+>
+> Yes, this is a clear regression-fix material.  The branch you are
+> commenting on is designed to be merge-able anywhere the original
+> topic that had the segfault can be (or has been) merged, by building
+> directly on top of ccfcaf39 (parseopt: values of pathname type can
+> be prefixed with :(optional), 2025-09-28), which was the tip of the
+> original topic.
 
-There isn’t much test coverage for basic failure conditions. Let’s add
-a few more since these are simple to write and remove if they become
-obsolete.
+I noticed a .1 was never released. I'm not sure what the
+protocol/process/etiquette is, but figured I'd bump this in your inbox
+;)
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- t/t3650-replay-basics.sh | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+I saw your other recent mail about family things, so no rush of course.
 
-diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-index bfe8e01da49..c543d55857b 100755
---- a/t/t3650-replay-basics.sh
-+++ b/t/t3650-replay-basics.sh
-@@ -67,6 +67,33 @@ test_expect_success '--advance with invalid commit-ish' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'option --onto or --advance is mandatory' '
-+	cat >expect <<-\EOF &&
-+	error: option --onto or --advance is mandatory
-+	EOF
-+	# First line is the error; rest is Usage
-+	test_must_fail git replay topic1..topic2 >&1 2>&1 |
-+		head -1 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'no base or negative ref gives no-replaying down to root error' '
-+	cat >expect <<-\EOF &&
-+	fatal: replaying down to root commit is not supported yet!
-+	EOF
-+	test_must_fail git replay --onto=topic1 topic2 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'options --advance and --contained cannot be used together' '
-+	cat >expect <<-EOF &&
-+	fatal: options ${SQ}--advance${SQ} and ${SQ}--contained${SQ} cannot be used together
-+	EOF
-+	test_must_fail git replay --advance=main --contained \
-+		topic1..topic2 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'using replay to rebase two branches, one on top of other' '
- 	git replay --onto main topic1..topic2 >result &&
- 
--- 
-2.52.0.10.g08704017180
-
+--=20
+D. Ben Knoble
