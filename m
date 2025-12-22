@@ -1,127 +1,109 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2C1313546
-	for <git@vger.kernel.org>; Mon, 22 Dec 2025 11:56:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADCE2D97BB
+	for <git@vger.kernel.org>; Mon, 22 Dec 2025 13:19:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766404580; cv=none; b=tZrBmcdkz2XxL+QihAuhfQU3gAuD0yiC6wCMSNOr0RKVmI+qdGVIAVFgdsKxRZ6hwn7Yea5Ik+6lRMY0fhU8j7OoBZXK60NcS59S3A3OksGKGNjTulQ9R/T55cNl+u52JTbGHswpiPE+RBhZq+2HmzyGW27tXBQmUI3L9L9isSc=
+	t=1766409562; cv=none; b=ixKbC2Jv9tjfObvAKotn/gnmIEQvBDSqp13/nA7qLajx8xZ51R7ktbxLwp8Fub1Z/y6BgodfieX1Y3P363k1xhrI+wk1j2Z5PXoMwrZ4PdPdHCcqZh5zu4PPdNhtlpcrPzRoKM/PqzdFEwlVw0O/4VYD/COzhpbhWg0Kw3XRAr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766404580; c=relaxed/simple;
-	bh=S9nQSXumO+NSKRVoAmq5hTBZ/PwAMFZyBS3/1BIBQ4E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A6Jt2LzULOzGaF67OKM/jVNRMX8wjhNYuCR6ACd19Tb9q6xhU0AP3qTZU4fLaYhEejB7SlcW0IM1gqpYmw1r0uLA+SPI2BHseHQp14F0xyqAiyOJUioGZMJASvsap/T3FPS87SEZTfzTwJXzVB6LoDUqQUgjUvTMvSjAqqhJf4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=o+PP/Aol; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1766409562; c=relaxed/simple;
+	bh=1W3OG+1N7RXVIpjLhxFqGA+efNtKT569lYB5Y9flQP0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UZVT3F2MlAreHTprRE7FCE3uA+/N0/Wz4zIDGON5HceHjNHPNmyMUS58D2C8qGsWyLFgVt1mAIh50F1jm6paOmpNFNf46x1/52TYOz4iD/zRIFubmCudBtSY62hZQOw0Jrd96kdhjxFubqCwwEciYDlpuORE/ifEAeBB3H9dPXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hucyZXSC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HCDXE7S+; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="o+PP/Aol"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1766404571;
-	bh=S9nQSXumO+NSKRVoAmq5hTBZ/PwAMFZyBS3/1BIBQ4E=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=o+PP/AolApheYl64Z6SrFrkzRZOuigSXENmgJOQ4Ch+fgMYsP83Gk2VZ9GpZxRvsB
-	 /IFa6Rl3bcy9AM3+Winciv1h1P2w+Mubd2kFmePznI108aApX+AXbfd2PqXRjVnZ/y
-	 IzNuMZFsWYyfIzMTlVK+HlGshaTQfgnxJKmg60VvOL9H2/Jzr0YJT+Aa7YwgeICnj4
-	 L739mgnzLkYiMuK1wHGhRBSw2iJOb8LsaDxy+RddBzNSvK0TgDT1wVFnuwRcOyRyU/
-	 RuGNyrKKDcrubtlX+kLblfq9RiiSKTPvXOE0OvZHaHICC0ijin1V9Wwwrw50jLhB+C
-	 LHxGz7quRz1psxKERxq16x9YBpfKzGaFQHWeejtKcZ6xD0ahWu2ETduRrTMp2i+Nlh
-	 6uxumX+4HC85IXQ2nDDL9BTpq0QgCd3+aiqFcRZuT81hDlh58VnFyn1V1aE/8R+eHi
-	 sL8OrUiiRkCNVwuFW7tMFZK+T8FFYfNXQWHHAQyMA2hs9GV/ayo
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ba1b:ae29:eab2:5aae])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2E2EC20007;
-	Mon, 22 Dec 2025 11:56:11 +0000 (UTC)
-Date: Mon, 22 Dec 2025 11:56:09 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Zhelyo Zhelev <zhelyo@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [BUG] git restore: typo in error message "could not resolve
- ource"
-Message-ID: <aUkx2XYCP75GrCsS@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Zhelyo Zhelev <zhelyo@gmail.com>, git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hucyZXSC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HCDXE7S+"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3B5E91D000E9;
+	Mon, 22 Dec 2025 08:19:19 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 22 Dec 2025 08:19:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1766409559; x=1766495959; bh=vhbPqngp8+
+	6NKRTFuV4TPTLM8/vQrhbwjOh4t6MfGbg=; b=hucyZXSCVfa1T8zhA5yISBdPIK
+	U+H7VkhxLGoki4qR39zbRZPeiU35iI1PT0lLObyCtLgcxEPeHMwD+WAhME09tp6R
+	cNmyVDLp3Wvby1cFcgH9XiqExPLJ/qXcCKo3Z3ct0eFkwr+Eu3sLuEHGf/60nUAO
+	1UDC/8uzZGlwIPvrwFIx3mjHbbNiseFoI6WhOuMf7rjdw9Dg+8r4RD3LrXl+TSPU
+	lm4+hXiGGdgFRW3T1CMzLEA1TE9X15ktrQXFAmaQ8jl6Iwze8RJvw+OhqvPa37D1
+	BaJsokBJFaPm5oYsKyn8PTDVTKi2R7AYQ1/1Ra13qy882P+hsGayf0zVX71A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1766409559; x=1766495959; bh=vhbPqngp8+6NKRTFuV4TPTLM8/vQrhbwjOh
+	4t6MfGbg=; b=HCDXE7S+fZCyjTkowh1+wQMZROfAInM7DM38EgsohJ0NOWlQGp2
+	tMkfp7xnX1OUmlhOym4aU//i/rP1UxR8u8Sk0vx6hKyAh6IfaLFV3BEDeBFUCotc
+	qbDWj2EB50zyQMfTOml7cgW4i+i4YGEpS+dIMpDLagFnCBFbChwjtG30iJaWMuHx
+	hBpQEtQdecSfJCcJtKQGwkULpOitML7jRFYBSn2+M+AgzxrIJxSEOmtrXGteT2CU
+	PRHBB/Sz0B2r9wcZZKVRpvcTyD/YYgPmkW7Sh9J4l4a/CNW5Uf2VPKcPMOtJAqAi
+	TTBSKbUGHd6mD45IDLCJ/1Nmc2IRdYR8O4A==
+X-ME-Sender: <xms:VkVJaTyhgCPRUnVQsY7a5WQ8zcMPtudkkgiB6QugRm33O9RmJuB7jQ>
+    <xme:VkVJaSRPH71f8Q7qj4OVX03J_bnantfwuVbspfzOE-6wJVsoTPVQXkW8mxNhht5vA
+    vWz0bIL4iRR0xdfK7C64zpB4lOe489A6Bhvg5BsJ_CeJaQfhm2FeA>
+X-ME-Received: <xmr:VkVJaSUYiUJaSEcumFZY3cAH9XoWtiZWckTVc07Ke_MYCcNtUblxPvurlhuW-3Ctu5Of4AZt3PY3X5is0UywXo8D45oxCp6DbQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehjedtgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
+    htvgdrnhgvthdprhgtphhtthhopeiihhgvlhihohesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:VkVJacaTTLFZwYqmKg7lm_9dBc7En_FCB0LO9h1-Doy0opvqne6XRg>
+    <xmx:VkVJaQ0FKOYOchVVJvAFiXp85s7GdOyhiW75AHCOWOQ4gNQmiGrY1A>
+    <xmx:VkVJaWgiJjDqTJ-eAq8U2iBT4m6_HwJ6kmfgUEcDw5Sv1otfXnpBBw>
+    <xmx:VkVJacYp8TJvDT4J1GMZ0MUf9L5DSffEKdSMxQEj6j0VWsuf3sGMTg>
+    <xmx:V0VJaXl9W4WFFiJZxSsz7uJDw-AFyRoFYQSIGIPKXIdHgezxz9JgpDKk>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Dec 2025 08:19:18 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Zhelyo Zhelev <zhelyo@gmail.com>,  git@vger.kernel.org
+Subject: Re: [BUG] git restore: typo in error message "could not resolve ource"
+In-Reply-To: <aUkx2XYCP75GrCsS@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Mon, 22 Dec 2025 11:56:09 +0000")
 References: <CAMxgZ8KqU9BUJ6T7DLct3CaEh9EYdcMO=dBAMPyQsb=knekSuQ@mail.gmail.com>
+	<aUkx2XYCP75GrCsS@fruit.crustytoothpaste.net>
+Date: Mon, 22 Dec 2025 22:19:17 +0900
+Message-ID: <xmqqbjjqslgq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DJidtQVQ4j/Z3jMP"
-Content-Disposition: inline
-In-Reply-To: <CAMxgZ8KqU9BUJ6T7DLct3CaEh9EYdcMO=dBAMPyQsb=knekSuQ@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---DJidtQVQ4j/Z3jMP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> So I think this is functioning as designed and isn't actually a typo in
+> Git.  The code appears to be in `builtin/checkout.c`:
+>
+>     builtin/checkout.c:                     die(_("could not resolve %s"), opts->from_treeish);
+>
+> That shows that it prints "could not resolve" and then the thing it
+> tried to resolve as a branch.
 
-On 2025-12-22 at 09:16:07, Zhelyo Zhelev wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->=20
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> I executed the following command in repository: git restore -source
-> my_base_branch
-> I have reproduced this on both Windows (git version 2.52.0.windows.1)
-> and Ubuntu (git version 2.52.0).
+Hilarious.
 
-I can also reproduce this using Git 2.51.0.338.gd7d06c2dae8 on Debian
-unstable.
+We probably should give a pair of quotes around '%s' like other
+messages, and that is what CodingGuidelines asks us to do.  In the
+section of "Error Messages", we find this.
 
-> What did you expect to happen? (Expected behavior)
-> The error message should be:
-> fatal: could not resolve source
->=20
-> What happened instead? (Actual behavior)
-> The error message is:
-> fatal: could not resolve ource
->=20
-> What's different between what you expected and what actually happened?
-> There is a typo in the displayed error message - the first letter 's'
-> is missing from the word "source" in the output.
+ - Enclose the subject of an error inside a pair of single quotes,
+   e.g. `die(_("unable to open '%s'"), path)`.
 
-I think this is due to a typo in your command and I'll explain why it
-happens.
-
-You wrote `git restore -source`, not `git restore --source`.  Most
-programs use double dashes for long options, including Git.  Part of the
-reason the second dash is necessary is that `-source` is interpreted as
-`-s ource`, or the equivalent of `--source=3Dource`.  Git was confused
-because `ource` didn't match any revision it could check out and
-obviously that's because you didn't intend that at all.
-
-So I think this is functioning as designed and isn't actually a typo in
-Git.  The code appears to be in `builtin/checkout.c`:
-
-    builtin/checkout.c:                     die(_("could not resolve %s"), =
-opts->from_treeish);
-
-That shows that it prints "could not resolve" and then the thing it
-tried to resolve as a branch.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---DJidtQVQ4j/Z3jMP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaUkx2QAKCRB8DEliiIei
-gQmZAQCNEs8aOAttPRov50GxuXjjIRjFJ80rtZDECAYzNwO8dgD9GsUm0UFrTDfL
-YIITo7ACh1MO1dOwWYqEP6pDfy4JZQY=
-=1Xha
------END PGP SIGNATURE-----
-
---DJidtQVQ4j/Z3jMP--
+Thanks.
