@@ -1,120 +1,103 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46049299A8F
-	for <git@vger.kernel.org>; Mon, 22 Dec 2025 21:51:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB4030FF1C
+	for <git@vger.kernel.org>; Mon, 22 Dec 2025 21:56:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766440316; cv=none; b=BcQYo9rqs97Pf/cjB7hHSQJflcJIRG7VJVZxPp6+r+YDjPGkHrGZD5tiHPIfSfTVOTKcgO/3NIubJyf6i4Ma6ot4O4XH54PRX3VIRt/Re5pwd7rpN39S8KQ9MsF0PuPdEcEu/6LjeVRfz5CwkkbPYAZ0PdNOramaJZVKyH3h82U=
+	t=1766440617; cv=none; b=m8zUt2cBapCZnAKyZeDvhtFjfG98frerQfaWVh2UCDQjJRkMMLBdPU2THBbAZ4oZ/YglyQ/CupMfnZCw/RJufPVR8NWFQY1OXfui9ifYMDF/e0vjoE2zeb10PrPTLepVa/hT+J7c3w+fjlwW2l3vS5N610THPkj6/jUrIpa8GBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766440316; c=relaxed/simple;
-	bh=fWrVhEgkR4qM/m4ZM8TOhOwv/+TGSQkSQDLWROXQ2Q4=;
+	s=arc-20240116; t=1766440617; c=relaxed/simple;
+	bh=hiYf/JDTI0tuGJopRjZao0dJDo1dBaGNqC7SLb1XZuA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XgpbV7Uolwi5cNWzK3jrTdPYH7h2c09wE7FfJtnwzITHeo5VeYss4lfKE63sP63YqyVmakweRr/Gu1I0RULqvxnrv7EEULqqciDjdlggpM0NlDE+yKG+fiA684KnN198EyPZTgBUvVrcis1r7VuOxTkgWc4Z9NGHHDUcOEpW2oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DLkUSbAP; arc=none smtp.client-ip=209.85.216.51
+	 To:Cc:Content-Type; b=h/2/6Ay8meJx53/kUZz92trxCAXlq0vAQf1/AMXG+4+prpqDFr4MnGrOEqmzxUi8osD9m7BtQ4Lj6DFSEMMYtCPjNQbKMyrMe94maiw8VuS5u7Ka9nagKwX/87Bs3uwjVuIlvAUMe1vFOab0g3/wWpqpQbuRx2VGxbEk6t/ZRiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JasBlnz/; arc=none smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DLkUSbAP"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-34c3cb504efso4749404a91.2
-        for <git@vger.kernel.org>; Mon, 22 Dec 2025 13:51:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JasBlnz/"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-7aa9be9f03aso3664393b3a.2
+        for <git@vger.kernel.org>; Mon, 22 Dec 2025 13:56:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766440314; x=1767045114; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1766440614; x=1767045414; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5xVQuD0y9BHZ2GBtjb6QvI2d5ABaj2ZzvqnrHtytKC0=;
-        b=DLkUSbAPeYgX2Nqiliek8ez8l/RZwT2YIfqj/LaO3uPL0a2UzYcF2IvvPzbp9oyOGw
-         5y9k4hhBpA7jmixbRywIdlxUX237BxMZBl0qG3Cp7723nhhkxazdXkM7O2B445wybswo
-         xlveUmyZkVvLOC1gLaV518JIzr6hmn7ozUN9cWMhYuDIvZDe5294W94WmbNcb5nK7zFQ
-         UANtFk1HNjjUYIJKOb9y+8bx4kZlwbE4AdI+95RPQtwXpAuxOTAG0kqeUkJeI4vhEkQ1
-         9kOEw6j2W2EwLAbYLHo95qzKBD6zLwlj4n8Tk4/TmLB8zGmn9WvXohgIHiDhd283BR1f
-         wy3Q==
+        bh=fXwJHpJQM82z9fwARb9m5Q5vW6O30IKecnlxci6D4lI=;
+        b=JasBlnz/PBDeaue6TssmkQO+iGOeTNf8Zotfb1B6/w/mBc3lPGa5p7UFl+2qvxLVW6
+         bwBiWo/wW1sUkIF23DXoXUX3602v/CAhfOoVbxxSKqo+1hHWIXsGCihq5lbfNKJDueQx
+         XJatFCczh9skDfl9rKCqt163SUtKGHkvkq5waEp9+62+fKY7Tg28ukpAgMGvDEr7pt2y
+         UuRSKd64E4rQo32gDBSIMO2VFR8yp/CCDhW/U0HrgZ1dzyJ8fuL6BOPXe3UfUGlKDQQW
+         zNG4oeS9T1HvoD3askBsaCz0PxZ/IjJFlJB69IFGd26+16ONNC7NG5WVSN1K6LVoSX9T
+         6W3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766440314; x=1767045114;
+        d=1e100.net; s=20230601; t=1766440614; x=1767045414;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=5xVQuD0y9BHZ2GBtjb6QvI2d5ABaj2ZzvqnrHtytKC0=;
-        b=Xo0tiXOccqOQoKnzVtib5LFkZA5ZSKEG3BM5X+TmadWh02KQvhxuR9T6IW5siP1RX9
-         sh/dq8G8vM/0e/PbO04wmK4RNDjFQCS1sk77H5HM1MVHXDmBtubW0Xpml+nf7AHI6odd
-         QRgpCjXSoXQOLmwKB3xjL/NXVbCgtEFc+wC7n9qX7OZ2B/gwMVt1qNZyjtg33kI1cjoV
-         fDdJzi4qcUIlc6gp81ScFBIpQCCy10AA7vmjVqKesJ6LQgK6HM+N9dpvhtGLtCFmGqnu
-         bpnVVLUmSenvrQf+xiK1r81lHmmlJL8yNmPOjm9aw6ULMdOV04wGyr565YGDb8zlQ/4n
-         vcyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWHSbHCe7hg2ccSwV6OuqsvHKdy+99H5SqpALhe413pwMDzmVlbxSVd7JtdIh4F9Se1M4o=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz8AtmwmJDRMX1uwK0US7O6/6jTUN5a7bDeHBrwJD9veniQRhmd
-	BWvYh3x+KeqNRwvEFGbbmgujCvETFcJH5fkUoALi9fXKUDLqVsKtAcxgZa1LTNIOIR5neLcdFZq
-	kJ6REDtnrtXLp8UyTp7DxvB6gAwmmSo+Bj3udso4=
-X-Gm-Gg: AY/fxX6P6OJcnJGj/JY7ZPjcPGK9hvn81OW1HHulh+ZW1ZkGu02BpD9ItUy0nf45FVz
-	XKMmybi5b/6eNNOl1mHdiN7kPRUAL0wn+3Vjv63OgHVu9M+CbkscxtYAvmVFrwaLeEt9ECUtttQ
-	ri8ZyKv+b+KBOkpr/mVgAyCP71GoeRPLVIqnG6SnE+NysMgycDiQm/lnotHgT63Ptj8PKk2OdvT
-	dQP+5En4yT3mErm/2u1JIWg/rr/EY4k8ktSOdD87euXQWe4tHxgk7JUvwrvxIF7RBIEs4vV2aGX
-	Qoim0aRHINFYeeIfdLxPWExQfJZM
-X-Google-Smtp-Source: AGHT+IGbIJvJJNgS6ukPROAq/MqsLL8TSGrQS5TieC+4rbHsus2OmyQZdXQnV5yhLK84238oHBeEXY2vIw7JI4teVv0=
-X-Received: by 2002:a17:90b:3d89:b0:340:d569:d295 with SMTP id
- 98e67ed59e1d1-34e921b092emr10900792a91.24.1766440314592; Mon, 22 Dec 2025
- 13:51:54 -0800 (PST)
+        bh=fXwJHpJQM82z9fwARb9m5Q5vW6O30IKecnlxci6D4lI=;
+        b=RisLAm6spapz5NYc6HcpjyNxupIAtxKkYO+6w88IngNbBeawQugZxgqIt2DMNv55rp
+         LOQVP+x7W/HHTkLo+Wed4mKzPMDTlTuVkIXvoFQVSilewAZlLqGnRxh0NzZdVYKz26Yk
+         0U80trxcGpqShHmNAOKMXwcZL9BmhcZTUAGoBtW4ZaC1eaC+vsbFn/DDWEnTyiqEqSeu
+         /+HmtxabfesiDqD8uLEfjgLVGj+Ae+VQQWUh/iF64YGrlHE0IeSQ+pYaA1jtjfrKNVlA
+         X1o+PNO96SaO5qlnI+TfEbxzD+Pa63J/+6x9VXHVGUpYpGSdAs1CVU3kSqp8FwNZX04r
+         E76Q==
+X-Gm-Message-State: AOJu0Yxj1dpNWVQFMXl5Ic8lj5DTwK4ndfApEB70yINZXUfQ47uBXnt+
+	pHUobNY6eqkMG+nD+Hx8EPZf3XK7iqctqFcnqSnssSgbZyB57UOIr5RduGF5tMSPXiCRkBzH65m
+	0BgAuYh6hEmBC9F/7g2f87nxPbMqBhj/SY+EN
+X-Gm-Gg: AY/fxX6LnkXKEcM94KmomLeFJITFAjF9RP5cDBAwElksvmoviHzXe0kdLLMogC6qJRN
+	Ki6CttTX+fUsRfwqTiq7muowBWc6b/x42LxE6KQrXaKzvT+ZY4Iqc8VSWYVZ5h/az68yO8Ceg6w
+	QDGfhneehefJoJ0NKzW0yUvbPIfJlhd9NdvyEDn9uLU/lb9yIAjjhEOBi0QbG0NU7jHCL0zOTIZ
+	y25ICDBI7gEU4XAUhJtVNfQ1WqySTW8qoIfGq2c5+2XiDpgPhFkXmMWGlnk8VBivb1u9MCKtQxd
+	rM4oqs3VMX6yiXQvGJHfBPUbmPwc
+X-Google-Smtp-Source: AGHT+IG4GZ/aY8ue/GO9Sp+zQH9ObOLbrosBt/53r012Up28WPZjMZe/wQbkN7LWwZigKrVu3nhW/1eFbvFziBZBLgc=
+X-Received: by 2002:a05:6a20:6a08:b0:342:1f0:9af3 with SMTP id
+ adf61e73a8af0-376a81dcc3dmr11087787637.29.1766440614573; Mon, 22 Dec 2025
+ 13:56:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251218184751.31209-1-matthewhughes934@gmail.com>
- <20251218184751.31209-2-matthewhughes934@gmail.com> <xmqqike2x4ei.fsf@gitster.g>
- <fmj4be365s6jczb6p2ccb6a6vh64bltgfl5neshu6g7hrabzeb@twzrzmprhotf>
-In-Reply-To: <fmj4be365s6jczb6p2ccb6a6vh64bltgfl5neshu6g7hrabzeb@twzrzmprhotf>
+References: <CAHnEOG2o784dk+OpkGt-1qjRJb34=sFMJvh-JRJ3v+GNBxFywQ@mail.gmail.com>
+In-Reply-To: <CAHnEOG2o784dk+OpkGt-1qjRJb34=sFMJvh-JRJ3v+GNBxFywQ@mail.gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 22 Dec 2025 16:51:43 -0500
-X-Gm-Features: AQt7F2qGUQbIvkrdf0yvJUJfeI4wgtXWdmyP1DDHSAUQiPwKyeF6PdORQ2RlpSc
-Message-ID: <CALnO6CD7Q1-vBKkeB81G04=MT5kSH4-Hm72cSP4hBuU+fDDR6g@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/1] maintenance: add config option for config-file
-To: Matthew Hughes <matthewhughes934@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Date: Mon, 22 Dec 2025 16:56:43 -0500
+X-Gm-Features: AQt7F2oRwcklm3LH6afIRrJooS2lzqxBmh_fwctbnqyNFsynCS0IOn0Ofy5al9k
+Message-ID: <CALnO6CAYaOQBOg+8pUZk95frML5tod+N_n3avxASRL10sLtwwA@mail.gmail.com>
+Subject: Re: Metadata for merge conflicts during rebase (to aid rustc) and
+ potential for better user experience?
+To: =?UTF-8?Q?Esteban_K=C3=BCber?= <esteban@kuber.com.ar>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Dec 22, 2025 at 3:55=E2=80=AFAM Matthew Hughes
-<matthewhughes934@gmail.com> wrote:
+On Mon, Dec 22, 2025 at 9:31=E2=80=AFAM Esteban K=C3=BCber <esteban@kuber.c=
+om.ar> wrote:
 >
-> > I am not sure if singling out "maintenance" is the right approach to
-> > solve that issue.  If we had a mechanism to have two per-user
-> > configuration file, where one is read-only (as far as Git is
-> > concerned) which is covered/overlayed with a separate read-write
-> > file, not just "maintenance register/unregister" but all other
-> > things that writes into "git config" would use that overlayed file
-> > without touching the base configuration that is read-only.  Wouldn't
-> > that be closer to what you want?
->
-> Indeed a read-only config as you described would be a more general soluti=
-on,
-> and a better one than focusing on single commands like this change does. =
-I'm
-> now curious if a similar idea has been discussed in the past? I'll go hav=
-e a
-> look in the history of this mailing list.
->
-> That leads me to think my proposed change is too narrow in scope, and ris=
-ks
-> dividing functionality: where some commands are taught to consider the se=
-parate
-> types of configuration, while others are not.
->
-> For background: I singled out "maintenance" only because it's the first g=
-it
-> command that I can remember seeing that was writing to my global config
-> (outside of "config" itself).
+> The questions I have are:
+>  - can I *avoid* `--points-at` in any way to identify what branch we're
+>    rebasing onto?
 
-FWIW, I also include my gitconfig in version control, and the way I
-manage this is with
+According to "git help rebase", ORIG_HEAD is not reliable but @{1} should b=
+e.
 
-    [include]
-            path =3D ~/.gitconfig.local
+>  - is there already a better way to identify if the rebase was triggered =
+by
+>    `git rebase` or `git pull` (configured to rebase)?
 
-If I run "git maintenance register", I then move the added
-configuration lines to ~/.gitconfig.local. It's a bit of a hassle, but
-not much (I don't frequently add new repos to the set).
+I haven't studied the internals on this yet, but I think the common
+pattern is to look at REBASE_HEAD vs. MERGE_HEAD.
+
+>  - if neither of the above has a "yes" answer, would git consider *adding=
+*
+>    that information, both for third-parties as well as to extend its own =
+UI?
+
+I think "git status" already shows some of this (maybe not the
+branches in question, but certainly the "it looks like you're in the
+middle of a rebase/merge/cherry-pick/etc.").
 
 --=20
 D. Ben Knoble
