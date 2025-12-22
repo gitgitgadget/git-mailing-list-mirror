@@ -1,84 +1,90 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA921B4224
-	for <git@vger.kernel.org>; Mon, 22 Dec 2025 04:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED6B23F429
+	for <git@vger.kernel.org>; Mon, 22 Dec 2025 04:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766378450; cv=none; b=rTv3EExaL6o3fmHiQ9xVRi0lc8Th+m53GxzAWmmgJnKOlNHdbf9TtK0MMaFmveYdgiRyNm1vEGow0sD9ZRnyVhZKzw5fZW1ylO14a034rNwiJBo+8wb68riAWxdIEt/IIMrqwJFNXX5Nb7ev5wP1cznm6EVlROetOODf+Lem2qg=
+	t=1766378563; cv=none; b=rGK0ZdzB2DnP9ReXC35cV0JVgl7JGDKZebUpu5DU6Lc/jHzI5VU4wlH9D4VohGHcHUHpMge71hWwWNrBSOspJTnKhZA4wMuYp4QhZkSYlxqR/zXBP88iYbrMo3nf7wJAZgX7P4s3o8cpX1W9mzoRKxUTsi5M5VZeHhyw+c/MKw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766378450; c=relaxed/simple;
-	bh=/yB3pCpaw9JzAEZm3t9zBXc6Dy2FD3Ta4LqBbpyYu/M=;
+	s=arc-20240116; t=1766378563; c=relaxed/simple;
+	bh=XvqNfBrSJC4iltsTmWUj/2kWspUBClfGi7Voske6ivk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jRmrw61mEfNHMK1Us2mYo36pWAnEh+azCGoQQ0PL9kCgObX7ghom4n7z3drDbFda2DiIZfz4SX/qMUYoJk++glPU9OxFB1yUY1T6fWDXrfbS83G3+WeuJXNflDIeC/8DsvQLixkHOgqgcaMq6IQA0VFh67KZw2dSLQpBqKqUIH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cihDlGOw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SsETUn+O; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=UTfms/lgEHGR0MRm6jyW/Ee9YExeHZsjtnF53mFdmxejHhpEB80gOcSIA7cdjNe24xz866Hpiflq6MwxlKOFNI4WnZYA/mFgfSbR0Qn2VHu0rZNSp6Zyqr3JUeglzq2ILUCRTRsR3tbws5iNLpLzBkON+Ipg6pW8YXEx9FnPdAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TKfsbV+F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wZXOx+Nv; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cihDlGOw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SsETUn+O"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0A89A7A00BF;
-	Sun, 21 Dec 2025 23:40:47 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TKfsbV+F";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wZXOx+Nv"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 408167A005B;
+	Sun, 21 Dec 2025 23:42:40 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Sun, 21 Dec 2025 23:40:47 -0500
+  by phl-compute-08.internal (MEProxy); Sun, 21 Dec 2025 23:42:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1766378446; x=1766464846; bh=3ncW/D2V5z
-	3KOHrwEJkIbykUSLRy64MloV/fdfw9SI8=; b=cihDlGOwIHVoIipxgznQ0u/F0F
-	TPd1jM814+vPglGClYquMhJw2oyOeZaR5uufz0Sfs8FYhcNbI4rBnFl21LUwoUaS
-	J2bcZOSmgoc+fkmzAiob3rKiYsG4zqkGluj+RM+cdAldO8T7r8bRiM+mnD3QptvC
-	sxOxxBmVGqZFVzTVsXXfannt+RyKIEH5gr/9EBmySza07SLirXOhZFu7lyY8lrby
-	gAGXGjEiN61w+NYL272P1ErFdaIX1lb7SRVot/vhotzWC0DWR/yIvSi3sT/ZjMec
-	znjNZuY6PzGerQSj5B7+0MbzbeCV6baUvv6/5/JCQI0WENUqbS0MYHmIFIZA==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1766378560;
+	 x=1766464960; bh=XvqNfBrSJC4iltsTmWUj/2kWspUBClfGi7Voske6ivk=; b=
+	TKfsbV+FbjJwM7tETRkM4PflGAjkZ3TSynHE7Uca4Vsj49//8nNhndD5+qT6UWYw
+	mVHSp460fwHY/sRpQ6LhJxMSuhQMp4hVjKqSwHNVxjVAHtnwHf0PekKbxcpjCstj
+	TflaGXa/7lnlNzJ0RUBztqu1hUyoQ2w5aMsa+y/m1pKkFODEkPjnZTux89QOviC5
+	KnKlcTZdXYLtGnxb57CqmW6TAtl8s28fa95l5tuoIY8ShQPkAQf+tzezT2AEhkre
+	+VMc73UcHpsOx9hfUAQ7DRTl52KsVsjz+c09zAzrI5LRQeO2SvM9LJUHIG7/5Nak
+	T8tOZALjAEHuCSnxiQHTZA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766378446; x=1766464846; bh=3ncW/D2V5z3KOHrwEJkIbykUSLRy64MloV/
-	fdfw9SI8=; b=SsETUn+O+4n//neN2mj5YfDyJqaSHUZt+LcfdD2hFQ50UEsux85
-	KKQ4XkN/d7ZTAiS/negdlaYBj2ckosxI5qd1eCc2e6C6DCwgOOSbmhg10QSrRI7F
-	FDIOS/g4mhbFsAD4oakNmMWHGO389hCU4SVwrzbwTLnwR2E2ugr3uiqDPZb/7QeY
-	PiqcMDTKMwWeinz87C0iTal5PmbJrKQUg+ZvQm/L4WewtYUSDjW6J82jeWFUh3a2
-	vUjpbYtrAjkNglz9ASou3nkiPaMpqPjGqOtiCMaOh9tJzmCxmnbuh8EZkKgcC9Xg
-	yYpgvuYuIHVCbify0xSu+i7EZ76uaet/wPw==
-X-ME-Sender: <xms:zstIaVCgfhoMVhJAWlaIGHnmdjaQBzGvPmS57HN1qt2ZdwWV1_WAlg>
-    <xme:zstIaaji4JhvpQx-BxHWvuk19ZXtJiLz1DJMLW9O8txPH5C-x0MqTANKtE6ap7dGL
-    dlCOK9Ofu7oin4bEwQ-4PV9gDCjnsf9qK3ZZaVfgtuyvyE_K4Ftvg>
-X-ME-Received: <xmr:zstIaVl_LTRaOovZfhZ3D-TSToMe18ElNBSIkRYELCmh99CZFvlvDIfrmsjio6A-B1aTS43nPx_KEP2r6DXKnrbfiN_vRAl3SQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehiedttdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766378560; x=
+	1766464960; bh=XvqNfBrSJC4iltsTmWUj/2kWspUBClfGi7Voske6ivk=; b=w
+	ZXOx+NvqjItrzNtLTPwHJyN6Xdn3o4TOXT1Kt5+yGx6blXMMZJOuuResz3C/ccHP
+	Cv0+kgmB4qWsDy7R3OQKX8rVR1hmP2oGQcFrSz3AnOJ1XQDDfAibzH6R6fzray2J
+	c50C1JXLM9KBgTmAF10ViXOYTSii8e968jAgK8yy/k3DsZ7/s0BamYm4oslkuwTr
+	BbmUm2m8oC583OJJqf6Ay+OCKLWlcmphXagNZI73NVMhIDyx5jy53nFQWorYc7z/
+	geXA1cfnya/qGQdBKtM7R9QfVLdcmA+sPoH9k+2FMN2l46bp/2FMo3GQVYb9ZIc5
+	B+h5ZIjok5EPIiuVC3tDw==
+X-ME-Sender: <xms:P8xIaUiGcnjWIRhejdgkUzV_IwAFdaxfS9ujfGwrp4g2CaF1S4XPFQ>
+    <xme:P8xIaT7D9ILBYVlww99TnsPzkHWztn9iyDktosInzZYd2I_5HGFN_er01VmGiGizp
+    sOX_-Qkk53NMGZm_zgMhIFLMg7S7RzOXiGj4G13GTkWzIqS4xwZvw>
+X-ME-Received: <xmr:P8xIaUZo2w1brjbpBTwmVB3SVZVHh9K0sQjBSAqpJM3QPhXj1xlSLzsu24JT4BS0bAAxmppBrO_HlJ93Cn4EhZVw8DUBKP8D6Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehiedtudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    tggvrghsvggsvghinhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:zstIaeo89YSBamg1PuR6h-Npv3VeXrQ9Im4eGSwB9n-4R6s8kT-Z5A>
-    <xmx:zstIaWFhHrJVkzUsUjQPHqv5lMc6bwr9c4DAjtHqPFT5xK1AZcUr9Q>
-    <xmx:zstIaSzqblSGt_sUk59-53tReBKu3yfkrBjphkDruPzozT9WF_v4Ew>
-    <xmx:zstIaTpQGCp79vPo5zGSGEfY6U9ZysYWB-cM1zW4qc5x90ycbQFSHA>
-    <xmx:zstIadHu7lXF_SgBvrLI2vVbD5mOY7Y0DgTTp12nqVtR6kJ7cfLD7K_M>
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:QMxIaQ50Q2A5TE5-Z1GOkodMYX36crMtXx5oS3Zeg2BnHrIiMs6uhw>
+    <xmx:QMxIafC6-uxWuTXpjImIEOt81khhsYFi3TEJGgY_KkXDcYUUV7ZbLw>
+    <xmx:QMxIaeeR8aM5SSLiHIa7OGYb5TcG-6RMH76uFEF7CJtgYqmhOO_oeQ>
+    <xmx:QMxIaWLxHQDb305O5l6_3JcXTkt11rX_AKJkK-y_tgP9D3Vy9pru3A>
+    <xmx:QMxIaSVYGGiiyclpBiORD8dtiP8nmZBR1pR-v5f0597kznybZdKpp6xe>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 21 Dec 2025 23:40:46 -0500 (EST)
+ 21 Dec 2025 23:42:39 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Pasteley Absurda via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Pasteley Absurda <ceasebeing@gmail.com>
-Subject: Re: [PATCH] checkout: add remoteBranchTemplate config for DWIM
- branch names
-In-Reply-To: <pull.2136.git.git.1766332796836.gitgitgadget@gmail.com>
-	(Pasteley Absurda via GitGitGadget's message of "Sun, 21 Dec 2025
-	15:59:56 +0000")
-References: <pull.2136.git.git.1766332796836.gitgitgadget@gmail.com>
-Date: Mon, 22 Dec 2025 13:40:45 +0900
-Message-ID: <xmqqtsxjruwi.fsf@gitster.g>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Josh Soref" <gitgitgadget@gmail.com>,  git@vger.kernel.org,
+  =?utf-8?Q?Jean-No=C3=ABl?=
+ AVILA <jn.avila@free.fr>
+Subject: Re: [PATCH v2 2/2] doc: correct minor wording issues
+In-Reply-To: <80146290-bbe3-4da4-b951-04399bc2fd03@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Sun, 21 Dec 2025 18:13:18 +0100")
+References: <pull.2016.git.1765830229824.gitgitgadget@gmail.com>
+	<pull.2016.v2.git.1766170456.gitgitgadget@gmail.com>
+	<a3a76d448ac2871834576be6d79e4704aae11f35.1766170456.git.gitgitgadget@gmail.com>
+	<80146290-bbe3-4da4-b951-04399bc2fd03@app.fastmail.com>
+Date: Mon, 22 Dec 2025 13:42:38 +0900
+Message-ID: <xmqqms3brutd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,50 +92,26 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"Pasteley Absurda via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-> From: pasteley <ceasebeing@gmail.com>
+> On Fri, Dec 19, 2025, at 19:54, Jean-Noël Avila via GitGitGadget wrote:
+>> From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+>>
+>> * use imperative mood for consistency in options descriptions
+>> * add missing parenthesis
+>> * reword verbose phrase in git-repack.adoc
+>>
+>> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 >
-> Add checkout.remoteBranchTemplate to apply a template pattern when
-> searching for remote branches during checkout DWIM and when creating
-> remote branches with push.autoSetupRemote.
+> I have reviewed these changes in v1 since the changes are the same but
+> split into two commits instead of one.
 >
-> Template uses printf-style placeholders (%s for branch name). For
-> example, with "feature/%s", checking out "foo"
-> searches for "origin/feature/foo" and creates local "foo"
-> tracking it. Pushing with autoSetupRemote creates "origin/feature/bar"
-> from local "bar".
->
-> Useful when remote branches use prefixes but local branches don't.
+> Acked-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-It fells that this is presented backwards.  The usefulness of the
-layout that names local branches deliberately differently from their
-remote counterparts needs to be justified first.  Only after that,
-we can consider adding extra mechanism to support such a layout.
+Thanks for reviewing.
 
-
-Once "git checkout foo" is taught to do the same as "git checkout -b
-extra-foo -t origin/foo", it would create
-
-	[branch "extra-foo"] 
-		remote = origin
-		merge = refs/heads/foo
-
-but the push side would need extra work, and that is why you needed
-to muck with the push refspec.  But then what should happen when the
-user is using "we do not bother remembering what branches to push
-there; the remote repository remembers that for us", aka "matching
-push"?
-
-Most of the problems is what you are creating by using an unusual
-layout to name local branches differently from the remote
-counterpart.  You do not have to, and then all the problems you
-created with that layout goes away, without this patch.
-
-So, I am not sure if this is a good idea to begin with.  At least, I
-am not yet convinced.
-
-Thanks.
-
+I've also reviewed the v2 hours ago and the patches are now already
+in 'next'.
