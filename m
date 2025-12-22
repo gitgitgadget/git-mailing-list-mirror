@@ -1,184 +1,120 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150ED50276
-	for <git@vger.kernel.org>; Mon, 22 Dec 2025 18:27:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46049299A8F
+	for <git@vger.kernel.org>; Mon, 22 Dec 2025 21:51:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766428069; cv=none; b=H1fRXDA/+A1IpjJUx9ytQmAzpYuMUJ6BHehfPbP/XKp6qIR5SkcHpjStE1S1g+ySLowtLAt8LoWrp12IPM7D3p8tsnXybbUPuLVMXCGJhMwSnOsiyudZewoTl7Z3aHrrKnztYzy4ydaa02l+rEDxjheLd5GhUWBPnNq85moQdNc=
+	t=1766440316; cv=none; b=BcQYo9rqs97Pf/cjB7hHSQJflcJIRG7VJVZxPp6+r+YDjPGkHrGZD5tiHPIfSfTVOTKcgO/3NIubJyf6i4Ma6ot4O4XH54PRX3VIRt/Re5pwd7rpN39S8KQ9MsF0PuPdEcEu/6LjeVRfz5CwkkbPYAZ0PdNOramaJZVKyH3h82U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766428069; c=relaxed/simple;
-	bh=BbPV8X8NZCcBq3DfdKuk1dX/4rw+34LTkubR4Capt0s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ECbo34hKmpVzA6y66abcOqzSgzyEG5+aQdXJMcqjzR/Ei6KW+DRQaR3q+baEta5HjlWwYDPkeRwvHDaPszN2u7Plu1vj1mexpoA9kInIVLveqsq+x0Jb1pSOdoxQBqlYBlDyQuzvHkEvphXtQSisTfUt87Ug5c13dy33gEF1ntE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LrRLX5hD; arc=none smtp.client-ip=209.85.218.49
+	s=arc-20240116; t=1766440316; c=relaxed/simple;
+	bh=fWrVhEgkR4qM/m4ZM8TOhOwv/+TGSQkSQDLWROXQ2Q4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XgpbV7Uolwi5cNWzK3jrTdPYH7h2c09wE7FfJtnwzITHeo5VeYss4lfKE63sP63YqyVmakweRr/Gu1I0RULqvxnrv7EEULqqciDjdlggpM0NlDE+yKG+fiA684KnN198EyPZTgBUvVrcis1r7VuOxTkgWc4Z9NGHHDUcOEpW2oU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DLkUSbAP; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LrRLX5hD"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b7ffbf4284dso505874766b.3
-        for <git@vger.kernel.org>; Mon, 22 Dec 2025 10:27:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DLkUSbAP"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-34c3cb504efso4749404a91.2
+        for <git@vger.kernel.org>; Mon, 22 Dec 2025 13:51:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766428066; x=1767032866; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=17ygnN4mgWzFfLjafNewI+SZe+AB2wI68jlzc7ASW7s=;
-        b=LrRLX5hDbOOKx98IV6Lp8/VGHE2DwGkDGKzEhp7a3OTPE8DGQyomlD03uvxFi8meu3
-         RPQCSmb2S8BVxhdH4SedXLgMA4pCO5bsR2Ej/uzyBl43RtKx4FBCvMoys2a8a+1wUz8g
-         eJauNpCcUuXc1u6K5RplO5EYZBB1Be1bQxWkC/0I3pwMBvvNo0sUElln5XHyAnQAyF3X
-         DAcLO4l6obVNH7RKLvREAk90ajjPkMwMxf2RujMd3wyycQw3In/ycWp0O4ZH2N4NcSub
-         A2N7vX7AAAJHoHcAZJSXaCxoPZBxVzF9iCtuiEhcdiugLLrVbrhAuf0h+hlsfmtqXm4p
-         scVQ==
+        d=gmail.com; s=20230601; t=1766440314; x=1767045114; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5xVQuD0y9BHZ2GBtjb6QvI2d5ABaj2ZzvqnrHtytKC0=;
+        b=DLkUSbAPeYgX2Nqiliek8ez8l/RZwT2YIfqj/LaO3uPL0a2UzYcF2IvvPzbp9oyOGw
+         5y9k4hhBpA7jmixbRywIdlxUX237BxMZBl0qG3Cp7723nhhkxazdXkM7O2B445wybswo
+         xlveUmyZkVvLOC1gLaV518JIzr6hmn7ozUN9cWMhYuDIvZDe5294W94WmbNcb5nK7zFQ
+         UANtFk1HNjjUYIJKOb9y+8bx4kZlwbE4AdI+95RPQtwXpAuxOTAG0kqeUkJeI4vhEkQ1
+         9kOEw6j2W2EwLAbYLHo95qzKBD6zLwlj4n8Tk4/TmLB8zGmn9WvXohgIHiDhd283BR1f
+         wy3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766428066; x=1767032866;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=17ygnN4mgWzFfLjafNewI+SZe+AB2wI68jlzc7ASW7s=;
-        b=h82XCCYKxjRylpVscIIg/U8IsQ7rv1gSD2meCPL6olHRBrGSzEf3BB4fNdUdB1RkCj
-         BzAX6QhkLl2JUa4v96h+F/gzfekUO1NuKG14IU7EDZ3b6/ojftSd67dZ0X7SQbiTh2yE
-         U4dI4I91oJ/IO0zTnXXiRW8ZkCo2uVor7He4bzZsZK2YM/v7+kndIQ/WtPAMCiCVj1t6
-         l9qxVcdEy8mtfzTNZ3svqwtITnoqzBLxqf9xjgm5boZxx2bKknEaEWsaB2FeRX4zl4yE
-         /1pGbYPfsCS2VimWkEUcb9s69/tLt9HYuwARndeaJfMb6ZeW/x8l0dYzJjs/18cdvZqu
-         zKGA==
-X-Gm-Message-State: AOJu0YyqCDUFMd/H6tiQcH+Gn+MUU9bPv5Gh5WY2yExL0GZHK1/W1OVp
-	d4mIqUfOLlQlcJsWaCDe7c974kPlb/Fk5RK2yZcdzhY/fzofES+ygrIT
-X-Gm-Gg: AY/fxX5BeCaJacpAGwSvDGYLR/jANLjnSQ6zdH3TFRhm9VXNOVCQuRvQF9x83wC08qZ
-	ZaokmYdCTVM2RT/ctZqccCR9IGjNEgyhRQ/CUEWzT9HplQqTrRiOmDNX610duv+yDweWhqCUf3b
-	jHSi/JbX685aD4EbaPSMSRmxNPREper7dh6VSQ7feU0Uy+tjmpLN7Tc8Lcz/QH2xP7bONwEUHRk
-	vJ+HJ268ef+Gdcjm72g3DmMmIHKOVIZWHMvoH2y/GVeQnti6AkNOwZtUB8dOWAfQhg0vwn/5EJQ
-	3F664h16Z9CmwuOw1UELfanFhp7cuOzc701lJoJC09a0uyjOR9eR/sJ67fFhlturrgWKoCjLQh+
-	QIvSmCPCFbMAQKAYHfMvqVR1ulX/CrZ2lv3yb5H4G7qQJQFNAWh5g6KNQRkBsIbZVG1Q7x5Cgc3
-	HF5Z64Gsdc5rw9inTxAT66UwJblZD595JExQ==
-X-Google-Smtp-Source: AGHT+IHLOgXU6qFalOdJ8yX76SfBbY0hm0fRnJPUMRvJyIdWkmVw5LqE+L+rwgsQSVj4GCaaJ6KEHg==
-X-Received: by 2002:a17:907:9713:b0:b73:d7dc:ddc5 with SMTP id a640c23a62f3a-b8036f123e0mr1160865666b.2.1766428066035;
-        Mon, 22 Dec 2025 10:27:46 -0800 (PST)
-Received: from [192.168.1.134] ([178.224.218.125])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-64b90f53c51sm11144044a12.3.2025.12.22.10.27.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Dec 2025 10:27:45 -0800 (PST)
-Message-ID: <7246f693-2047-4218-8103-8143e01032f0@gmail.com>
-Date: Mon, 22 Dec 2025 19:27:44 +0100
+        d=1e100.net; s=20230601; t=1766440314; x=1767045114;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=5xVQuD0y9BHZ2GBtjb6QvI2d5ABaj2ZzvqnrHtytKC0=;
+        b=Xo0tiXOccqOQoKnzVtib5LFkZA5ZSKEG3BM5X+TmadWh02KQvhxuR9T6IW5siP1RX9
+         sh/dq8G8vM/0e/PbO04wmK4RNDjFQCS1sk77H5HM1MVHXDmBtubW0Xpml+nf7AHI6odd
+         QRgpCjXSoXQOLmwKB3xjL/NXVbCgtEFc+wC7n9qX7OZ2B/gwMVt1qNZyjtg33kI1cjoV
+         fDdJzi4qcUIlc6gp81ScFBIpQCCy10AA7vmjVqKesJ6LQgK6HM+N9dpvhtGLtCFmGqnu
+         bpnVVLUmSenvrQf+xiK1r81lHmmlJL8yNmPOjm9aw6ULMdOV04wGyr565YGDb8zlQ/4n
+         vcyQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWHSbHCe7hg2ccSwV6OuqsvHKdy+99H5SqpALhe413pwMDzmVlbxSVd7JtdIh4F9Se1M4o=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz8AtmwmJDRMX1uwK0US7O6/6jTUN5a7bDeHBrwJD9veniQRhmd
+	BWvYh3x+KeqNRwvEFGbbmgujCvETFcJH5fkUoALi9fXKUDLqVsKtAcxgZa1LTNIOIR5neLcdFZq
+	kJ6REDtnrtXLp8UyTp7DxvB6gAwmmSo+Bj3udso4=
+X-Gm-Gg: AY/fxX6P6OJcnJGj/JY7ZPjcPGK9hvn81OW1HHulh+ZW1ZkGu02BpD9ItUy0nf45FVz
+	XKMmybi5b/6eNNOl1mHdiN7kPRUAL0wn+3Vjv63OgHVu9M+CbkscxtYAvmVFrwaLeEt9ECUtttQ
+	ri8ZyKv+b+KBOkpr/mVgAyCP71GoeRPLVIqnG6SnE+NysMgycDiQm/lnotHgT63Ptj8PKk2OdvT
+	dQP+5En4yT3mErm/2u1JIWg/rr/EY4k8ktSOdD87euXQWe4tHxgk7JUvwrvxIF7RBIEs4vV2aGX
+	Qoim0aRHINFYeeIfdLxPWExQfJZM
+X-Google-Smtp-Source: AGHT+IGbIJvJJNgS6ukPROAq/MqsLL8TSGrQS5TieC+4rbHsus2OmyQZdXQnV5yhLK84238oHBeEXY2vIw7JI4teVv0=
+X-Received: by 2002:a17:90b:3d89:b0:340:d569:d295 with SMTP id
+ 98e67ed59e1d1-34e921b092emr10900792a91.24.1766440314592; Mon, 22 Dec 2025
+ 13:51:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] checkout: add remoteBranchTemplate config for DWIM branch
- names
-To: Junio C Hamano <gitster@pobox.com>,
- Pasteley Absurda via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.2136.git.git.1766332796836.gitgitgadget@gmail.com>
- <xmqqtsxjruwi.fsf@gitster.g>
-Content-Language: en-US
-From: pasteley <ceasebeing@gmail.com>
-In-Reply-To: <xmqqtsxjruwi.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20251218184751.31209-1-matthewhughes934@gmail.com>
+ <20251218184751.31209-2-matthewhughes934@gmail.com> <xmqqike2x4ei.fsf@gitster.g>
+ <fmj4be365s6jczb6p2ccb6a6vh64bltgfl5neshu6g7hrabzeb@twzrzmprhotf>
+In-Reply-To: <fmj4be365s6jczb6p2ccb6a6vh64bltgfl5neshu6g7hrabzeb@twzrzmprhotf>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 22 Dec 2025 16:51:43 -0500
+X-Gm-Features: AQt7F2qGUQbIvkrdf0yvJUJfeI4wgtXWdmyP1DDHSAUQiPwKyeF6PdORQ2RlpSc
+Message-ID: <CALnO6CD7Q1-vBKkeB81G04=MT5kSH4-Hm72cSP4hBuU+fDDR6g@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/1] maintenance: add config option for config-file
+To: Matthew Hughes <matthewhughes934@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-You're right that same-named branches are the ideal Git workflow, and I
-agree this patch should not encourage drifting away from that model.
-
-The motivation here is for cases where the name mismatch is imposed by
-external constraints, not chosen by developers. For example:
-
-1. Server-side policies/hooks that require a namespace on the remote
-    (e.g. `team/*`, `users/<id>/*`, `release/*`).
-2. Hosting / mirroring setups where remote branches live under a fixed
-    prefix for organizational or access-control reasons.
-3. Migrations where the remote branch layout is constrained by the
-    target system, while local developer workflows assume short names.
-
-In these scenarios developers do not create the problem, they inherit it.
-The alternative today is to type the prefixed remote name everywhere and
-give up DWIM convenience (e.g. `git checkout foo` no longer does the
-"natural" thing).
-
-This remains opt-in via `checkout.remoteBranchTemplate`, so only workflows
-that explicitly configure it change behavior; defaults stay unchanged.
-Explicit operations still bypass the template (e.g. `-b/-c <name>` and an
-explicit push refspec keep full user control).
-
-Git already supports name mismatches in a few places:
-* `remote.<name>.fetch` allows arbitrary mappings for remote refs.
-* `branch.<name>.merge` can track a differently named remote branch.
-* `push.default=upstream` pushes to the configured upstream even if names
-   differ.
-
-However, configuring `remote.<name>.push` does not solve the DWIM checkout
-problem: users still need to know the full remote branch name to check it
-out, and wildcard push refspecs can have surprising scope (they can match
-many branches unless the user is always explicit). This patch keeps the
-scope narrow: it only affects cases where Git is already "guessing" the
-remote side (checkout/switch/worktree --guess-remote, and automatic
-upstream setup).
-
-> Once "git checkout foo" is taught to do the same as "git checkout -b
-> extra-foo -t origin/foo", it would create:
+On Mon, Dec 22, 2025 at 3:55=E2=80=AFAM Matthew Hughes
+<matthewhughes934@gmail.com> wrote:
 >
-> [branch "extra-foo"]
-> remote = origin
-> merge = refs/heads/foo
+> > I am not sure if singling out "maintenance" is the right approach to
+> > solve that issue.  If we had a mechanism to have two per-user
+> > configuration file, where one is read-only (as far as Git is
+> > concerned) which is covered/overlayed with a separate read-write
+> > file, not just "maintenance register/unregister" but all other
+> > things that writes into "git config" would use that overlayed file
+> > without touching the base configuration that is read-only.  Wouldn't
+> > that be closer to what you want?
+>
+> Indeed a read-only config as you described would be a more general soluti=
+on,
+> and a better one than focusing on single commands like this change does. =
+I'm
+> now curious if a similar idea has been discussed in the past? I'll go hav=
+e a
+> look in the history of this mailing list.
+>
+> That leads me to think my proposed change is too narrow in scope, and ris=
+ks
+> dividing functionality: where some commands are taught to consider the se=
+parate
+> types of configuration, while others are not.
+>
+> For background: I singled out "maintenance" only because it's the first g=
+it
+> command that I can remember seeing that was writing to my global config
+> (outside of "config" itself).
 
-Yes, but only for the DWIM path where Git derives the remote branch. When
-the user explicitly names the local branch, we do not apply the template.
+FWIW, I also include my gitconfig in version control, and the way I
+manage this is with
 
-> But then what should happen when the user is using "matching push"?
+    [include]
+            path =3D ~/.gitconfig.local
 
-While `push.default=matching` has been deprecated since Git 2.0 (~ 2014),
-we still can handle this corner case by detecting the incompatibility
-and providing a clear error message.
+If I run "git maintenance register", I then move the added
+configuration lines to ~/.gitconfig.local. It's a bit of a hassle, but
+not much (I don't frequently add new repos to the set).
 
-Thanks for the thorough review,
-pasteley
-
-On 22/12/2025 5:40 AM, Junio C Hamano wrote:
-> "Pasteley Absurda via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: pasteley <ceasebeing@gmail.com>
->>
->> Add checkout.remoteBranchTemplate to apply a template pattern when
->> searching for remote branches during checkout DWIM and when creating
->> remote branches with push.autoSetupRemote.
->>
->> Template uses printf-style placeholders (%s for branch name). For
->> example, with "feature/%s", checking out "foo"
->> searches for "origin/feature/foo" and creates local "foo"
->> tracking it. Pushing with autoSetupRemote creates "origin/feature/bar"
->> from local "bar".
->>
->> Useful when remote branches use prefixes but local branches don't.
-> It fells that this is presented backwards.  The usefulness of the
-> layout that names local branches deliberately differently from their
-> remote counterparts needs to be justified first.  Only after that,
-> we can consider adding extra mechanism to support such a layout.
->
->
-> Once "git checkout foo" is taught to do the same as "git checkout -b
-> extra-foo -t origin/foo", it would create
->
-> 	[branch "extra-foo"]
-> 		remote = origin
-> 		merge = refs/heads/foo
->
-> but the push side would need extra work, and that is why you needed
-> to muck with the push refspec.  But then what should happen when the
-> user is using "we do not bother remembering what branches to push
-> there; the remote repository remembers that for us", aka "matching
-> push"?
->
-> Most of the problems is what you are creating by using an unusual
-> layout to name local branches differently from the remote
-> counterpart.  You do not have to, and then all the problems you
-> created with that layout goes away, without this patch.
->
-> So, I am not sure if this is a good idea to begin with.  At least, I
-> am not yet convinced.
->
-> Thanks.
->
+--=20
+D. Ben Knoble
