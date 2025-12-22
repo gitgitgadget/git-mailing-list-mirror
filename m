@@ -1,118 +1,114 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D8C3016F1
-	for <git@vger.kernel.org>; Sun, 21 Dec 2025 17:13:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DE18003D
+	for <git@vger.kernel.org>; Mon, 22 Dec 2025 02:59:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766337236; cv=none; b=OLMuYstoZc1eglykaz5U73zEoeMFhfPhzzRMAbEhJoM9T7wedB+1bmXuAattFdikVOwjiFX6m8xqK/C83iqFOO1iE6VJM/x31D/B5Ze6YItAz0K0oElk5A8FX0D3COJ/dDOp69E46MXUQlASnRCL8oPnMeoynUuiaD39feIwVrE=
+	t=1766372387; cv=none; b=Kikc5oU0C08UL7NE1OmRayvm1o4rqdnkH8Bwm2xtPWR9dhSwLm16PA0oP9al/NIE5JlMSkUgQcoTsHsmIZabQezbJpFRxeM3IIk18x+DLz1LC8qYjPFmPj5JOUfY7hEcSW6I3XKhOMkHVGcAXM6A6KKHjC2hzkX16XGb8YYfsR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766337236; c=relaxed/simple;
-	bh=+Rd9E0RWFY9ETP872HvdeCOWbtrOK61bkzOp2xX7gy8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=R+2hudibyAHfqgRdYPYxbtQIFDU05HQyIeUod5jcR234vPa8SkawoijSNj87qC/QBFaC8TueDmEqWcgtoWZpRjscMiR8hJvyONd5VK+eNJYTjwD9JFUviMBPxVCyatXgVGiIfg/ATGB68Ro2YkEnLot4z0fz2XZ3zOHlLyw8Cc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=U0m1l/EA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rI+6hWQm; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1766372387; c=relaxed/simple;
+	bh=DbsGFjyi5hYd/2IeNPjyn96HaCBPugXk9WGz9WqFcxk=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=TSDcIxjlpC0KAZuz+FZwHycZ8PmLGswGlSYMEBGX18k8fQGLtZ0Mz7NQdU/In3c1I8diQEIGMK2P3m7plFOEpi/4dDBqCjpryOkv97CnYgpcVtw132q6F3fX2UWh6u8Omn0y49RJ9TmktpbyQNGrSayPhJ3tUCVVOh+VLiR8E+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aK5v2Wbn; arc=none smtp.client-ip=74.125.224.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="U0m1l/EA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rI+6hWQm"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 023081D00091;
-	Sun, 21 Dec 2025 12:13:53 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Sun, 21 Dec 2025 12:13:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1766337233;
-	 x=1766423633; bh=wov5WODmhOac3vGaOAlYFjt7TcUUrMMrJhfhVV6WUh4=; b=
-	U0m1l/EA8j0lVt5nWCrvI0LSPt12oH4yVzRrh0PVnuqGeQVU0R+8Z5EnBn9HKqBr
-	dWTLbDVIvQq+d8OUr60T9pOpbprKMPCamntfk7kZD9hTs2VAYKdqEC46xt20lr9E
-	Lzt3RDCGvt7cq6bQnLveTT0+xTpi58x5kff+ZyOJMirPI0vP21cCYHpyu44cJnH1
-	Rtl5Hovt3F74UHjDWgi4FFpYK3A2ZLIRoW6Tj+eK/hSInLXBjaFcKfWXl7C35+Xk
-	/WrGn+S07YxyPnCsRG4VN3hC5n43wk1jSBSfRBfBVWHcN4eHeYTM0chG5j18qC/r
-	LLkoIQf24XhgO8Wke9zwqg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766337233; x=
-	1766423633; bh=wov5WODmhOac3vGaOAlYFjt7TcUUrMMrJhfhVV6WUh4=; b=r
-	I+6hWQmwCDwS2x94ReJiBaZn7vscDkWwGhjk7xpwreuGMTtzKmciJhlUQNcg6Y17
-	qfwe363JDWNuhf+s7de+OqVLDyMJWxxAZXC84HKqor3x3QXO6xI/4ryDUV9OK6Lq
-	Uke7GAYFTPthg5jLHg3RTWW3VYHTklOv6jCYSJASn7nhvSTTKBKJt0BVgejVbnmT
-	s4IVUlrm42zykg9cbpg2LA/iniECu4ICRCKJZ9H9+mgNLQLuWOI7uetPWqcOL8NX
-	jowxZGHn87+emxwiv4A4V1ePUl2x2dABHcUkWzDRS5OvFnftESv9/aKhUXK4C4bS
-	cEGeG8hYu46jD8pnhekNw==
-X-ME-Sender: <xms:0SpIadv4m31PpTTME8XQz3oL3rQHuqWyE2GCPyejTb2y5Ogj-UHHl90>
-    <xme:0SpIaRSLcMx-Dm27KAYqVIuHTtQlo1TyOtAqPXaetB0Hl8Tfcj4ft7k-sqMZfF6ai
-    yISH9TQ6YDx_TzpI3BgCasNuvIP2Zebb5LPWrULe9Z3muUyOLRfBUM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehgeeifecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
-    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
-    hiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhr
-    tghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:0SpIaRrezf9gf1bmxYdyIvBvFLnpTaDRRw5pS-SLRDgdkCEcAggPEg>
-    <xmx:0SpIabZw9RQvlZfZhf5T-lYm7RdRnzopVls97oxxsT11mP8Qu94Ctw>
-    <xmx:0SpIaRT97ZVPjFIyLkr1Ja6V7C-qHVSxQVjefWbsY04veXKzCnmJQg>
-    <xmx:0SpIaa46tljjzB36mTnMXA8T2QZHWa7vif-MQ3n5T99htwkLXKomHw>
-    <xmx:0SpIaUkPc2wyYD6LvlSNmXed3emh3Jm2_L4cvixIWTJWz_aVygLmQ9sL>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id B2A2A1EA0068; Sun, 21 Dec 2025 12:13:53 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aK5v2Wbn"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-6446704997cso2834863d50.2
+        for <git@vger.kernel.org>; Sun, 21 Dec 2025 18:59:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766372385; x=1766977185; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=DbsGFjyi5hYd/2IeNPjyn96HaCBPugXk9WGz9WqFcxk=;
+        b=aK5v2WbnBESdusPzZbMTmhj69x1J4Vqe+shpR6tB9fHwDjIR42vK7Yu0AMsodsgq+c
+         +aaT2AWl1M5Sq4n/ro9rSGtHtvD4tNBlDbuxe9M96qvUFhPp+9XvVW5vGjaaeNB1Y/uU
+         fz4U/G/qpZckSnK/NARLtk8G5MVRjMyQiGZd+RAEnapB8OdKvws9euLq/7sjydMCWRz6
+         rk5zLHDDKdDxedPlM3mtxdacEYw6nUGMyMZ464KHnJzcutDbluTJQdGW6pgfSJG9ov6/
+         +CkCgts1CUsYiVZrvHiqqKkvP8c3ESQtygn1IgQfxw36rtY5rLlAOANwqMblpYnm7ZrP
+         vutg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766372385; x=1766977185;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DbsGFjyi5hYd/2IeNPjyn96HaCBPugXk9WGz9WqFcxk=;
+        b=b/65N5dh6J/IhfymRDaf2l1g7eXZug9F8JHlxP/oKN1P5dkuAs/u2U+RLy6eNSkCT9
+         I0jXm14HvUvqD9qxwr+eswqeoCI0j9gn1KDOWz+VFrdfVaE86QrbS6+DzV3dAIC3lRQN
+         6D4o/CqXhnrYU681Zdx5vzRTifnH3y8Ugrx8qO2Z4/k05N1OYl+kYicNJLO1KSu7NrpO
+         z2hCRC7uvLtaI2g0bV53T/qS+o2CQ1oqvBorXct82tCo0FIEeOA+zji4ccyb4G0uyXLl
+         cxrIgJiVnSaXBJgYttQnaOphC2doVeXaD1nxAdRZeu9l9HHtNuufHYimFaiPqSflXrGS
+         i72A==
+X-Gm-Message-State: AOJu0YwPKTYQi1IbUUhhmwmLS2+NWBiPBk8r1yRY0PkF2jLfVRhhBP90
+	UVqs3RuaC67T3CqgzmXpn/gXyDxqxiZGLHmZ7nS9sbvydqz1sDy8q9l0UMfzvKWKHksrFmYxox4
+	ccLBphrh2CPryVUQg30InEW+cIJ2K84wiOaWp
+X-Gm-Gg: AY/fxX47RoJj6VJpunpLKQXLSZ75XwcdPl3s9wheHkem4zOS92Il5Ty1EwQq0V59CSH
+	c9aMzb+5Q5YYGZ3eovFp9frr0n0casRvhy/OjemWsTlNt7uKHEk9IZuoDMtHYlTXMSHk+DpoC3R
+	Ac6dz+iaJVJRTZzW7dEf8hpucRfsLd+JWJg/jJi2wo1T95SIXHBIu5a1ySn3mv6Aro85GdOQEQA
+	ELXDwdRnp1rIPOMXrmUMIab7ZYqF+cckutJngfAF2qNzUgS29HBYmjW6mZ1WldF4Lj0tvCdiWu0
+	5Q==
+X-Google-Smtp-Source: AGHT+IFvBdl0O9pQOV+m7ykHtCDzayGBPDFzZQj+exURKqEQcXYGN57l9gxc8CB6s1vhQFA1IZnr/WlBzC8IzNPgnC4=
+X-Received: by 2002:a53:ccc6:0:b0:63f:9a42:f21 with SMTP id
+ 956f58d0204a3-6466a83770cmr6005883d50.19.1766372385144; Sun, 21 Dec 2025
+ 18:59:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A2fY4G7fiZDF
-Date: Sun, 21 Dec 2025 18:13:33 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-Message-Id: <ff43e66c-359f-4493-9da5-a089f15d3cf7@app.fastmail.com>
-In-Reply-To: 
- <31694ab9d337d68294a5710d55fc4f7e1ff6f83a.1766170456.git.gitgitgadget@gmail.com>
-References: <pull.2016.git.1765830229824.gitgitgadget@gmail.com>
- <pull.2016.v2.git.1766170456.gitgitgadget@gmail.com>
- <31694ab9d337d68294a5710d55fc4f7e1ff6f83a.1766170456.git.gitgitgadget@gmail.com>
-Subject: Re: [PATCH v2 1/2] doc: fix asciidoc markup issues in several files
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+From: Klaus Sembritzki <klausem@gmail.com>
+Date: Mon, 22 Dec 2025 03:59:34 +0100
+X-Gm-Features: AQt7F2r5fJWHi4N79O7YHNCNfDR7TXH10sDaHBJRWjSGribvzZbu19TRq_0x0NU
+Message-ID: <CADMnYXDqHYLjDBT8D3-VqctY1fG8ag+Nb+eeopuOvmmWNho4UA@mail.gmail.com>
+Subject: The alignment problem is now solved for LLMs
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Dec 19, 2025, at 19:54, Jean-No=C3=ABl Avila via GitGitGadget wr=
-ote:
-> From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
->
-> * fix incorrect use of backticks for markup in
->   git-checkout.adoc, git-worktree.adoc
-> * switch tabs to spaces	in git-send-email.adoc list items
->
-> Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
+Dear all,
 
-I have reviewed these changes in v1 since the changes are the same but
-split into two commits instead of one.
+I am happy to inform you that the alignment problem is now solved for
+LLMs. It is published here:
+https://gist.github.com/gre-42/857f74235fa62be7f2641c3e9f1dabc5
 
-Beyond what the commit message says the only other thing is:
+# Solving the LLM alignment problem
 
->[snip]
-> ---smtp-ssl-cert-path::
-> +--smtp-ssl-cert-path <path>::
->  	Path to a store of trusted CA certificates for SMTP SSL/TLS
->  	certificate validation (either a directory that has been processed
->  	by `c_rehash`, or a single file containing one or more PEM format
+The well-known alignment problem of LLMs can be solved in the following manner.
 
-I only mention this for completeness (of the review).
+## LLMs used as world models
 
-Acked-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+LLMs should be viewed as black box systems, taking an input and
+producing an output.
+
+### Low-dimensional input and output vectors
+
+Both, input and output, should be restricted to single sentences or
+function graphs (with an x-axis and a y-axis). The sentences should
+additionally adhere to rigid sentence templates. This makes it
+possible to compare output sentences to gold standard data.
+
+### Model evaluation by splitting data into training and test data
+
+Additionally, data should be split into training and test data, as is
+common practice in machine learning.
+
+### Implementation hints
+
+- You can get curated data from [an encyclopedia](https://www.britannica.com/).
+- You can avoid overfitting by fuzzing. This generates different input
+data that should generate the same output (regularization).
+- You can train domain-specific models with dedicated (reduced) input
+fields instead of fuzzing or regularization.
+- Unlearning selected input data generates different models without
+exploding storage requirements.
+
+## LLMs used for summarizing text
+
+LLMs should not be used for summarizing text, as they employ causal
+filters for what can be viewed as low-pass filtering. Instead,
+dedicated text summarizers like the modified Edmundson summarizer
+should be used. [One such implementation is available on
+GitHub](https://gist.github.com/gre-42/79b763019a9a14b9e5d19d4855c466f8).
+
+Cheers,
+Klaus
