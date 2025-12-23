@@ -1,105 +1,229 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C9134104C
-	for <git@vger.kernel.org>; Tue, 23 Dec 2025 12:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766492634; cv=none; b=gAnu/BpIMurYNqzagraH1Vt4oJXJCIyYbcUM/QX0uDuBV2zS2ngOOJ3kaS5givlHgA5uFb1Jd9eoELP1lg45BDbi9lARvrTSPqNPUl77r/j9QiPXmg59lmhIyHsRreyO473bXiTpUlG7C2nNQv8VwXbWuG6Y4xbG0tOjkAC7JI8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766492634; c=relaxed/simple;
-	bh=9d69LNUN4helacsy2BIzedUhQmTILLe+KYhOmDlMzAQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VrIA7+CIs/et0nGwKlG/IXznApC1vWVYbFarX8Gj2ITCquxl84t9LN45uLPEfbg0Sv7g3C9IwmSr4pK+i3RPtkHNJtEAZnSE1WPapC1fPBlgJVy3buc6AiNVgn8Qi7DAzgXzBesUKcZGIKjFwPUJKuykBypbOTMMsfmXYI48WGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MzFujfCw; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DF82F5474
+	for <git@vger.kernel.org>; Tue, 23 Dec 2025 13:28:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1766496512; cv=pass; b=dvG+8hfNowMl0vAkd8L1rS56Nt+Ah/OfftKiE961dph6cmNQdQVEsRAQ5GyDwL5tnjP28xHMv6UofhP6yFaT+k3xjCnK1oNvVmF2IIC4wsV6S4Rc86Qn486R+VeQwtpSvNSPRSZjpn7g9vyvNjWnclgiZKW76wt8XCGIX7y1iU8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1766496512; c=relaxed/simple;
+	bh=vc1WXsay3Ut+aTsoMeD4/rRZjsGaLYFKg9rA0CnciJM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=llVwZx9LTB4SNji+MS+x/UINYDTVV0vV70FPv7mMDUq61p9F3eBrSRogH83/5m9PSQAP/6dzusc4KirdZ3PJhJ17mQPBME0QbOH7vqbyD5way/dz9Z1BylJmXPPRHMQbnKeh3Lh2IwuPfL1rXiF3zFdqg2YU9K7qYMJlGt5LPHk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=GP1rzaMB; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MzFujfCw"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-59431f57bf6so4981971e87.3
-        for <git@vger.kernel.org>; Tue, 23 Dec 2025 04:23:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766492631; x=1767097431; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nM14fX9ZxefHZGwQeosT38R5dLQcWSZtl3Ohocm1p5c=;
-        b=MzFujfCwydQlH/zy82cIpj4TWRNz3foIXlYGzFgLE8lG+w6cKJFPXQg584f2e27VPH
-         d/Vah4e2+17LxKRs4NsDJDc2MhZ3MZdafjXIJbuvvN7jaIHU8zSHxRM4B3GVG8vDW4jg
-         E+m/96SVMfQwEMl9sd1B423NqJTirob93ymjSQ541V38RXi/VpVrLlIfjFcECk1NTQGJ
-         l89F4C8+TQ3/EFE1Z6Oh+m9cC3xBs+Ivd0DDEbGmZTtzztoiqvzOinvTn8xFaN4zCpQR
-         StBzWYxgCyxt2g/OqDgbvN31ZQ6SYm+RCmlXZCDRqtisG6F2aoqSXV6erYUdo6OroF3d
-         h3uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766492631; x=1767097431;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=nM14fX9ZxefHZGwQeosT38R5dLQcWSZtl3Ohocm1p5c=;
-        b=r+K4s47EChtVm7BMTAS9Ndg3ein7sJ2dYpkSikpd6c3Uzu9s2jSlfmdqmkQM69dcXa
-         rcHIIUScdkESyT2/5VHmQ3UXw+PpTXje5ceLtXC2lWzAGqzstVIPXZEteIL9rWyEBK5m
-         kkbE6dNYL+ZTYcHa4l2XnV38dehYtcBOx7PNiO9KO1ITkeOZ1lWyayTIUtzlgewqbvFp
-         Nir6E8i2qALbhwgRTFvdYAl6PYzrr2RFkXS3jSjhpjqjcugKBGs9DWU+HWKwViNG6AEw
-         WL7/HZZL/zK9vGQig2GF/S31CIgUoxxB8SHnxDIdyZhKjQip8SZFesTfjwaTRfC87XBe
-         biXw==
-X-Gm-Message-State: AOJu0Yza4yW8Kg7vY3/ZffJdlE7MpcKErO1UP04yTN+SZBrLq2daCIAf
-	pZXbNE/D78Lddhs/0wOyMOJbDaBH2LJNSDdG49IeRsdryPex9gXrN1wZEmaea9KUAKvcU7Ov2Fd
-	bVplMJZywDVOgSg5SotpNUL8TsTxP03NZ5PaJ
-X-Gm-Gg: AY/fxX7TtfZ856HsDy63BRRhmw5olLUn3CuoY6KKj/de1ur+1GYXaDZg9E4i244xoFD
-	lwtqvdImhqpvgmd44cWQtzHOjIRz9DdnV6IH4mjyE93iAe4EbdMnZdhDO6GwaHQ4sN5Y+vtc97x
-	Hydd/6G4BuT0xTadJJF9kZzxH8qLcB7ghxGOfHxYuqS0FRSP+PgQ5chix6DNxhwLQy7rLEtEzHO
-	PuUhFl+ViS0/cvKjzqPWLX+nGRH9ort/zcrpUXk9AWoKHnRM3Kh9nw9xQsHwr8FYneS8Sk7
-X-Google-Smtp-Source: AGHT+IFUDSLG767PKXvBiuFFe02LqKZO+jYaLRQGbqiYaALxPHqyTAZ6OJ4SB0Yzqj7eKtJqe7mLdZSP0qy5fKNs4Fw=
-X-Received: by 2002:a05:6512:33d4:b0:598:853e:72f9 with SMTP id
- 2adb3069b0e04-59a17d65319mr5336400e87.51.1766492630762; Tue, 23 Dec 2025
- 04:23:50 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="GP1rzaMB"
+ARC-Seal: i=1; a=rsa-sha256; t=1766496501; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=afLsFm5OmZ4zilS3QPPVE3o9VGXJlr045AN591vfic66v5GWxtEuqJHqmlB5kxtkDj2Ja1YdrUcotboZFwsqQI3CM8UPW/okxHT4ucGwMFEVC1Jc9W8JLJc2mrX0wzI/dBMpfu4vi2T4wrrwraK9Yvboe7/gOaH9hxeZTH5feR8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1766496501; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=O76tEy+w2kbTW+3GDomgqXD4zBGiRSwdQZP6SPubwi0=; 
+	b=fjjk4auKk6R5fWgPtbGvI9HTwCHNMq5VmigSqUQSIvASw9ceFy0YOJjUyAS49yaNlE6mopBSN6UIowbgHYSHgndyuH7w9H/L1/Z1iTNBXwBFp+lgFfTizo0/R7Uv3c71QSVJVK/x1lPYyLOoOi0lS6O0pwOsHocaBWu26RnIDgo=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1766496501;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=O76tEy+w2kbTW+3GDomgqXD4zBGiRSwdQZP6SPubwi0=;
+	b=GP1rzaMBak7UOAeXt1aObqV38KzO2XvYk5sLky+3EQUzN0nmssderfGsIvdUlSvA
+	uTwVHreYgdI5vOs5Il2OITsv0kELHP9OQnXkBpUjkkJr5TnOXFZIOHlp6fzsapaaQ3/
+	tcCYvG2ntf62p25O43LzhPsomBOXVPXyfUPuLdIU=
+Received: by mx.zohomail.com with SMTPS id 1766496499755882.7131347277146;
+	Tue, 23 Dec 2025 05:28:19 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH] ws: add new tab-between-non-ws check
+Date: Tue, 23 Dec 2025 15:27:56 +0200
+Message-ID: <20251223132756.604036-1-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.51.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251223102422.36853-1-haraldnordgren@gmail.com> <20251223113602.63000-1-haraldnordgren@gmail.com>
-In-Reply-To: <20251223113602.63000-1-haraldnordgren@gmail.com>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Tue, 23 Dec 2025 04:23:39 -0800
-X-Gm-Features: AQt7F2paqNwzsr9G8Fa9tqYvNfKq34b6dY3Llt1CrLb3tS1V2cRZUHYXnTlBoUY
-Message-ID: <CAPx1GvfrQNao78WYfadttM=B8iyXKfxYaxTyX5w_MLZt2_bU4w@mail.gmail.com>
-Subject: Re: [PATCH] status: show default branch comparison when tracking
- non-default branch
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org, gitgitgadget@gmail.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-On Tue, Dec 23, 2025 at 3:36=E2=80=AFAM Harald Nordgren
-<haraldnordgren@gmail.com> wrote:
-> Once the users runs that suggested command
->
->         git push --set-upstream origin ahead_of_main_status__tmp2
->
-> then the 'branch.<name>.merge' and 'branch.<name>.remote' no longer hold =
-the reference to "upstream/HEAD".
+This adds a new check to detect HT in the middle of sentences that
+should have been a SP, as suggested by Junio in
+https://public-inbox.org/git/xmqqy0mwsedz.fsf@gitster.g/
 
-Right.
+The check is a bit complex because we want to detect places where
+a SP was intended and the naive before/after character check can
+issue false positives in cases like "a\tb".
 
-And, as Junio noted, to:
+The new check is enabled for Documentation/**/*.adoc, where these
+kinds of mistakes were seen in practice.
 
->> learn the other, the destination of a push of this branch, would
->> involve poking at remote.pushdefault, branch.<name>.pushRemote,
->> branch.<name>.remote to find out which remote repository it goes,
->> and then remote.<remote>.push to find out where this branch goes,
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+---
+This is based on the latest master branch.
+Pushed to GitHub: https://github.com/10ne1/git/tree/dev/aratiu/whitespace-new-test-v1
+CI run: https://github.com/10ne1/git/actions/runs/20457905508
+---
+ .gitattributes             |  2 +-
+ t/t4015-diff-whitespace.sh | 56 ++++++++++++++++++++++++++++++++++++++
+ ws.c                       | 32 ++++++++++++++++++++++
+ ws.h                       |  1 +
+ 4 files changed, 90 insertions(+), 1 deletion(-)
 
-That is, there are some separate configuration items that can change
-where `git push` goes.
+diff --git a/.gitattributes b/.gitattributes
+index 700743c3f5..d3c40a038b 100644
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -7,7 +7,7 @@
+ *.py text eol=lf diff=python
+ *.bat text eol=crlf
+ CODE_OF_CONDUCT.md -whitespace
+-/Documentation/**/*.adoc text eol=lf whitespace=trail,space,incomplete
++/Documentation/**/*.adoc text eol=lf whitespace=trail,space,incomplete,tab-between-non-ws
+ /command-list.txt text eol=lf
+ /GIT-VERSION-GEN text eol=lf
+ /mergetools/* text eol=lf
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 3c8eb02e4f..afe95f5209 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -2440,4 +2440,60 @@ test_expect_success 'combine --ignore-blank-lines with --function-context 2' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'check tab between non-whitespace (tab-between-non-ws: off)' '
++	git config core.whitespace "-tab-between-non-ws" &&
++	printf "1234567\tb" >x &&
++	git add x &&
++	git diff --cached --check
++'
++
++test_expect_success 'check tab between non-whitespace at tab stop (tab-between-non-ws: on)' '
++	git config core.whitespace "tab-between-non-ws,tabwidth=8" &&
++	printf "1234567\tb" >x &&
++	git add x &&
++	test_must_fail git diff --cached --check
++'
++
++test_expect_success 'check tab between non-whitespace not at tab stop (tab-between-non-ws: on)' '
++	git config core.whitespace "tab-between-non-ws,tabwidth=8" &&
++	printf "a\tb" >x &&
++	git add x &&
++	git diff --cached --check
++'
++
++test_expect_success 'check tab between non-whitespace with tabwidth=4 (tab-between-non-ws: on)' '
++	git config core.whitespace "tab-between-non-ws,tabwidth=4" &&
++	printf "123\tb" >x &&
++	git add x &&
++	test_must_fail git diff --cached --check
++'
++
++test_expect_success 'check tab between non-whitespace with tabwidth=4 (tab-between-non-ws: on)' '
++	git config core.whitespace "tab-between-non-ws,tabwidth=4" &&
++	printf "1234\tb" >x &&
++	git add x &&
++	git diff --cached --check
++'
++
++test_expect_success 'check multiple tabs with one error (tab-between-non-ws: on)' '
++	git config core.whitespace "tab-between-non-ws,tabwidth=8" &&
++	printf "a\t1234567\tb" >x &&
++	git add x &&
++	test_must_fail git diff --cached --check
++'
++
++test_expect_success 'check tab at beginning of line (tab-between-non-ws: on)' '
++	git config core.whitespace "tab-between-non-ws,tabwidth=8" &&
++	printf "\ta" >x &&
++	git add x &&
++	git diff --cached --check
++'
++
++test_expect_success 'check tab at end of line(tab-between-non-ws: on)' '
++	git config core.whitespace "tab-between-non-ws,-trailing-space,tabwidth=8" &&
++	printf "a\t" >x &&
++	git add x &&
++	git diff --cached --check
++'
++
+ test_done
+diff --git a/ws.c b/ws.c
+index 6cc2466c0c..fcd81250ad 100644
+--- a/ws.c
++++ b/ws.c
+@@ -26,6 +26,7 @@ static struct whitespace_rule {
+ 	{ "blank-at-eol", WS_BLANK_AT_EOL, 0 },
+ 	{ "blank-at-eof", WS_BLANK_AT_EOF, 0 },
+ 	{ "tab-in-indent", WS_TAB_IN_INDENT, 0, 1 },
++	{ "tab-between-non-ws", WS_TAB_BETWEEN_NON_WS, 0 },
+ 	{ "incomplete-line", WS_INCOMPLETE_LINE, 0, 0 },
+ };
+ 
+@@ -140,6 +141,11 @@ char *whitespace_error_string(unsigned ws)
+ 			strbuf_addstr(&err, ", ");
+ 		strbuf_addstr(&err, "tab in indent");
+ 	}
++	if (ws & WS_TAB_BETWEEN_NON_WS) {
++		if (err.len)
++			strbuf_addstr(&err, ", ");
++		strbuf_addstr(&err, "tab between non-whitespace characters");
++	}
+ 	if (ws & WS_INCOMPLETE_LINE) {
+ 		if (err.len)
+ 			strbuf_addstr(&err, ", ");
+@@ -228,6 +234,32 @@ static unsigned ws_check_emit_1(const char *line, int len, unsigned ws_rule,
+ 		written = i;
+ 	}
+ 
++	if (ws_rule & WS_TAB_BETWEEN_NON_WS) {
++		/*
++		 * A tab surrounded by non-whitespace characters is a typo candidate
++		 * (a space might have been intended). This checks for a tab that
++		 * would be expanded to a single space, which is when it appears at
++		 * a column that is one less than a multiple of the tabwidth.
++		 */
++		int col = 0;
++		int tabwidth = ws_tab_width(ws_rule);
++
++		if (!tabwidth)
++			BUG("a known tabwidth is required by WS_TAB_BETWEEN_NON_WS");
++
++		for (i = 0; i < len; i++) {
++			if (line[i] == '\t') {
++				if (i > 0 && i < len - 1 &&
++				    !isspace(line[i - 1]) && !isspace(line[i + 1]) &&
++				    (col % tabwidth) == (tabwidth - 1))
++					result |= WS_TAB_BETWEEN_NON_WS;
++				col += tabwidth - (col % tabwidth);
++			} else {
++				col++;
++			}
++		}
++	}
++
+ 	if (stream) {
+ 		/*
+ 		 * Now the rest of the line starts at "written".
+diff --git a/ws.h b/ws.h
+index 06d5cb73f8..35475fd320 100644
+--- a/ws.h
++++ b/ws.h
+@@ -16,6 +16,7 @@ struct strbuf;
+ #define WS_BLANK_AT_EOF         (1<<10)
+ #define WS_TAB_IN_INDENT        (1<<11)
+ #define WS_INCOMPLETE_LINE      (1<<12)
++#define WS_TAB_BETWEEN_NON_WS   (1<<13)
+ 
+ #define WS_TRAILING_SPACE       (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
+ #define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB|8)
+-- 
+2.51.2
 
-Using `git push --set-upstream` sets ones that affect `git pull`, `git stat=
-us`,
-and `git push`, but it's possible to set ones that affect only `git push`.
-
-That still leaves `git status` with the problem you (Harald) have observed,
-so perhaps the path forward is to have `git status` check things like
-branch.<name>.pushRemote to see if they exist and differ from
-branch.<name>.remote.
-
-Chris
