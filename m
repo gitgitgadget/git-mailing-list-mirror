@@ -1,117 +1,133 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F97C25A2DE
-	for <git@vger.kernel.org>; Mon, 22 Dec 2025 22:06:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6527C34CDD
+	for <git@vger.kernel.org>; Tue, 23 Dec 2025 00:51:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766441220; cv=none; b=JkECZp75onwT7gNaG9LFqNs6LH0HpdM4Vo0T9/yjA6VGR3InfPPQ3kfil2/pLe+GqoB/v6FVy1ktpQN0E66zQZZicHqmx2DDZj+9gR/zjofq8vVJtatafmmDMANLa3o+v3nbl+L9KgEP5jqARoViHOeHs1RySQ+s0gtaKyotIi8=
+	t=1766451098; cv=none; b=R1JKLItjZXBZMqMnyXsCbOntJRZ+V1l13XszKKyuaYIsD3dvKnUwAojM4lhbmF6SXy5CnQkJsCoPIXeUHg6LQ+9H9flMI/JR/jOTbEbMJWfyDkxIGKTkSlTX26mEpyPMtpHq4MRjgJlfOHu+OSM23fwRhi0TJxCF5sFk35RC8AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766441220; c=relaxed/simple;
-	bh=YDIeNJnP3mkZROWVcA9GFsgSpRCq9QrTzCnsX/k5SiU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FXNmfdAgeQhGtiZAx1v+Tp/Ur34XXD5b0oO3vk+CwDa1kmNlGrrqQ1z4kk8olbDs7HrZTbow3eiTd5o1kc9l6/wLyQhOyRol50bPiHn+1Ecs149tU/Sja5U9V3b/pIPBeKOrGvRAKH96xOfdoSdijOZ+5KtnuP9cm04a8EekNJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mRmvP87N; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1766451098; c=relaxed/simple;
+	bh=MXaLQ9ZIbR/XhIOYFL0zYnKlxNRj5r4RbXNYfzjya34=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WJms8UzAnZK9hKG+7OB5GjhU4l3fbhHLld+CJA/H17O8SnbeA8ghubKGMNrZKaGndCzyalxGjEHBA2YbtDOpdF4kMw+HnO0K6vdD0I4ikm/JIvLRmxu3lKudh3u1WLuHsmcxFBTL/lU/aFDRATk/cr0wLfmW+JnfEfgvuUnEPIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZBOfzkpm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=toC2ZtT2; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mRmvP87N"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7a9c64dfa8aso3377986b3a.3
-        for <git@vger.kernel.org>; Mon, 22 Dec 2025 14:06:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766441219; x=1767046019; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CHgf8k5GUi9ZPpMhTKYADChOsyNPOIWwGhqGfgqCK38=;
-        b=mRmvP87N1N/WIgrMKDZj5d9rO6TcKUOVj8oFLEsddc8jdacWCGmkl0PFyWzF+QBC9A
-         fi68q7+2nNp6i/+818077FvzSvDm8TTskMHi7AGGU29H7se+3Rpjwh/LdQF5otRxMv/B
-         uk9dmV0r3hW/+nOXimLGkh4My8/aTnfX/0DrO9CdSXHNx7NirWfpE09tDIyRTDGTj3lJ
-         a1B4BIv0Bu4CEGk/xJ0cVu7kNtWasMBbUP5fMOvYn6HWKAuwBPsuPlLPYnMedFsd4iir
-         +drUvyYdJItYxpfYoJmS0KJgAwTcdFddURdIXAeYufs9QpHyUCEKMBOVB44tHhmsaq0c
-         x/ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766441219; x=1767046019;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=CHgf8k5GUi9ZPpMhTKYADChOsyNPOIWwGhqGfgqCK38=;
-        b=NjioiwHvpYphcsv3cRLsyXo0WfLrTaBApeXguQgHPMtTR6WzXbcrpHTkH+4RmB5Vjb
-         1pi8xzWfN1PRuH/eXkmmeWo1iNs0VK+3J3NuHUKEqfjFyl2gBIcAbSoS3sDgYVRRSvGe
-         DVOOCxJsa04zg0YuM6yEXXM3xARG2TpfsxrKru6SSaVHdPXtOjC+I+rLBtUFlDucY8cp
-         QBAWnBL+tr849sLP9VAkOs742BqqjTIrapQb/0qkPVXXnYweF1eqAQExcFbz4Lq2ZId4
-         kj1taoaBO+ffj4GdvXJf1eoSrM8cDqprAqDSd3blZwP10MdkLGcYnnJpYGyMUAVz6QRK
-         hMFg==
-X-Gm-Message-State: AOJu0YxH9wG53iev2car2EhIi2i6fLep2A6VA3PsLtNpMPCm65cpym81
-	CKS25ibdcOMOKOC5rNsWYkp02ty+/1PksGdBGyA72kJE3IMpkJNdJikak3tlxV85i55NRIw6fjK
-	0QcgD5v9HAqbsfWd5eHfaW4IaCWTHk9J3jqYp
-X-Gm-Gg: AY/fxX5Cp4kjvBhzj0rNdV2hxgFl+DxrJbQZ3jbKHSCHonKwEpT/pRHmEEPQZn0HB48
-	uDJi29lVznlSHWfWCk6+2ARQo8rUVPdYhN3UlaVsKtCxsMSCHZPDaEIqcHQwLryc5ud/pKLctwa
-	EEiFTN399b6M5LD3DsRrT8uTK7Q30dVjg9mQpm+42S1MfP9MksMzSIKim1FSD6i8npw2tzxgbGR
-	LCpYSBqvFvvsamPOMQosiXW0pHE1q/oXFg1cQYO6dw7miR7HRchkD3Wgu2dCYLI/2AQGaBg+ZuZ
-	y+ypFeOWqYFYP8dXYfstjtU4fmLl
-X-Google-Smtp-Source: AGHT+IFya0gIXS8bF089D2iFKATXOhjUE084jPolD2BF//nVuh5UId1hf/VyYQ7Bk4CrCK26AyHwZIe1C1B/QhKrUD8=
-X-Received: by 2002:a05:6a20:a128:b0:366:2714:7e8a with SMTP id
- adf61e73a8af0-376aa0ed32amr12208004637.67.1766441218705; Mon, 22 Dec 2025
- 14:06:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZBOfzkpm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="toC2ZtT2"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7A9C01D0004B;
+	Mon, 22 Dec 2025 19:51:24 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 22 Dec 2025 19:51:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1766451084;
+	 x=1766537484; bh=TGzOxeW/w8uhi77DXsuMr+WwTf5pKdSF3sUv7zfAMSs=; b=
+	ZBOfzkpmKB9AbW3E82NyvjggISka6M+tCAXX13z4h+vLmmVWI+S/fSGGQbDySreM
+	nrlM5ytrayEzmU10qlNCY5FKM4o7uG/IW4s/GqJFKgXzzNSi1I1ouK1sYuYirxTh
+	Ulvvfqd4z7diNQ0S9GDH05eoD+nevF7HYm5x6cB+U5SFO+42GkvGVOCLwMPeVEfT
+	nrrKrdKGg9l7hNbpgnar3K4jOMrIf6Su3fwjoUHyT4+dowg2wCD2bJLw2tJmHrt7
+	3f7y6vU/uncXq+oD2CMUxlet9r28hCSgRB8DbpoGWzA+woqeMvJr0QwoIz0x24Sq
+	BcXRk6cjaxEDMXaaUNBc0w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766451084; x=
+	1766537484; bh=TGzOxeW/w8uhi77DXsuMr+WwTf5pKdSF3sUv7zfAMSs=; b=t
+	oC2ZtT2jVLrWciZ9E/uGjhJWjLdoJ9FWLu6pF5+UPj8D78d9Qq3CgWcOJ0WPvDcf
+	vM4YQ7HV4zsh0eBf3l3pBA3UTvWZALhwE0dCgga3ddNDqw/vt0pFipvTUuDiLhwx
+	dQeCq/T4kPHI+9ddvkAKTs+4U7jMQIj21Ty/PC+i+rVSQoGurCLftBKHfHIWmGaf
+	a4fHj4DjCRy/4eTXfJl4nDOmedhosfGM6Jkw8mlpXyh6khC59AXuv3YB/t4N/uFS
+	0JfLxJW46kjZApzp8xraoWt/jPKaNRdIHmapJqVunPpptHaDk3Vhmw00KogiPYHL
+	jFYIXuykwBt1znfQETQ4g==
+X-ME-Sender: <xms:jOdJabkSowandOSKX8lRHCAjgzPG6X8biZd4J2dP20Qo531_UOKhWA>
+    <xme:jOdJaV3v-2ktT9OChi7OfnkCUaag3IS4zxdbhM7Ycvy1DBhs4YGOvdFYa9eGwzXp-
+    qRdJv2H8Pe_hSsivKImWM8Oo3qrJaNsSzW_II2okf9owJZkXxyK>
+X-ME-Received: <xmr:jOdJaWqG-DbA6qktLXREzosP89fnpISN-twL_G8ycQbUENzbgVOSxpamvlUFnt7wcCcLs1ml3hW-QHoch_9c21FK0ffE3pxG_Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehkeegvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptggvrghsvggsvghinhhgsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:jOdJaSeFbF92__ZbAi2aIY6ctxthErFR3Dh75A7Euqx_aYtH6C-xxw>
+    <xmx:jOdJaVrxCmCVwRNdvlJgg9jrJNKHLiuhmuncJQgbfpdFaaVoDqPkcg>
+    <xmx:jOdJaTHtDZM2WG9GFHvok1b3XT4sC2clfrOjD4XrnVNxQg-6js4gYA>
+    <xmx:jOdJaVsXH88qpk_dypS2PNtq-joU5CVvB3LkYQdKWAAXv6du7vw7pA>
+    <xmx:jOdJaSIVcq6kZuCh0k3SK4ZpkOHDGZZRbMXivJxq54TTZCZAOeFiXt19>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Dec 2025 19:51:23 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: pasteley <ceasebeing@gmail.com>
+Cc: Pasteley Absurda via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH] checkout: add remoteBranchTemplate config for DWIM
+ branch names
+In-Reply-To: <7246f693-2047-4218-8103-8143e01032f0@gmail.com> (pasteley's
+	message of "Mon, 22 Dec 2025 19:27:44 +0100")
+References: <pull.2136.git.git.1766332796836.gitgitgadget@gmail.com>
+	<xmqqtsxjruwi.fsf@gitster.g>
+	<7246f693-2047-4218-8103-8143e01032f0@gmail.com>
+Date: Tue, 23 Dec 2025 09:51:22 +0900
+Message-ID: <xmqqy0muqaut.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqq5xb0yqj9.fsf@gitster.g> <CALnO6CDm2K0Bn43gjXTvYqJ8gbX+8eZK1YPn1gwuThizK6d5VQ@mail.gmail.com>
- <xmqqtsyjxp63.fsf@gitster.g>
-In-Reply-To: <xmqqtsyjxp63.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 22 Dec 2025 17:06:47 -0500
-X-Gm-Features: AQt7F2pigtzVFFxCdAGKMh2vdaTl5XS9wAXu1W_UhkGhEPGNHvvXk7LeM5ytm0s
-Message-ID: <CALnO6CA4N5yC3oHmtihdyB5mprB_GMbfiLgi+XeY5DyGK97Pcw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2025, #07; Sun, 23)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Nov 24, 2025 at 1:26=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+pasteley <ceasebeing@gmail.com> writes:
+
+> 1. Server-side policies/hooks that require a namespace on the remote
+>     (e.g. `team/*`, `users/<id>/*`, `release/*`).
+> 2. Hosting / mirroring setups where remote branches live under a fixed
+>     prefix for organizational or access-control reasons.
+> 3. Migrations where the remote branch layout is constrained by the
+>     target system, while local developer workflows assume short names.
 >
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
->
-> > On Sun, Nov 23, 2025 at 11:59=E2=80=AFPM Junio C Hamano <gitster@pobox.=
-com> wrote:
-> >
-> >> --------------------------------------------------
-> >> [New Topics]
-> >>
-> >> * jc/optional-path (2025-11-20) 3 commits
-> >>  - config: really treat missing optional path as not configured
-> >>  - config: really pretend missing :(optional) value is not there
-> >>  - config: mark otherwise unused function as file-scope static
-> >>
-> >>  "git config get --path" segfaulted on an ":(optional)path" that
-> >>  does not exist, which has been corrected.
-> >>
-> >>  Will merge to 'next'?
-> >>  source: <xmqqikf47ajk.fsf@gitster.g>
-> >
-> > Any interest in also marking this for 2.52.1? It's unlikely to be used
-> > much yet, but since the segfault affects several invocations (git
-> > blame, etc.) it will be irritating to folks who try the recently
-> > released version.
->
-> Yes, this is a clear regression-fix material.  The branch you are
-> commenting on is designed to be merge-able anywhere the original
-> topic that had the segfault can be (or has been) merged, by building
-> directly on top of ccfcaf39 (parseopt: values of pathname type can
-> be prefixed with :(optional), 2025-09-28), which was the tip of the
-> original topic.
+> In these scenarios developers do not create the problem, they inherit it.
 
-I noticed a .1 was never released. I'm not sure what the
-protocol/process/etiquette is, but figured I'd bump this in your inbox
-;)
+Nobody stops you from interacting with projects like the above, and
+locally name branches you store your work in users/pasteley/topic-1
+instead of topic-1, no?
 
-I saw your other recent mail about family things, so no rush of course.
+> While `push.default=matching` has been deprecated since Git 2.0 (~ 2014),
+> we still can handle this corner case by detecting the incompatibility
+> and providing a clear error message.
 
---=20
-D. Ben Knoble
+I do not know if you are confused, or if you are citing somebody
+else's description that is confused, but the word "deprecated" in
+the above statement is misused.  So is "corner case".
+
+When we talk about deprecation, the deprecated feature is something
+that is not useful for anybody to adopt because there are better
+alternatives available, we wish there is no need to support the
+users, and we hope we can remove it eventually someday.  The
+matching push does not fall into that category at all.
+
+What we did in Git 2.0 was to change the default from matching to
+simple, because the matching is the most useful for those who
+publish their changes, and for those who are merely participating
+somebody else's project, it is not suited.  The matching push is
+also harder to use properly if a project has multiple people who
+push to a single repository (i.e., central repository approach).
+The default was switched to make life easier for more people.  It
+did not diminish the usefulness of the matching mode for the
+developers for whom the matching was the most useful mode.
