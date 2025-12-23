@@ -1,111 +1,214 @@
-Received: from flow-a4-smtp.messagingengine.com (flow-a4-smtp.messagingengine.com [103.168.172.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE43F1C84B8
-	for <git@vger.kernel.org>; Tue, 23 Dec 2025 21:00:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6136413635E
+	for <git@vger.kernel.org>; Tue, 23 Dec 2025 22:54:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766523662; cv=none; b=DjOpR8LabjIQCeOaSiZM7IxdAREStZJWlh2tqMGif0CeThQ1hnlJBOy8upzIUQ/+QrO9x9SM8Y6law3x0XOOXINIMn2eUJWfG6E2cB91doOgSykWlnZ85HTk/y6UlbRGJyqrW1zwliZQ74feCpjL+IhbMendwdh2TaEFljKGnA0=
+	t=1766530452; cv=none; b=f/TL8Ove2ZTKEpVzmItjQBksyJpWBf76xvRGfkVtg+K+EijjYYLc5wSkgkoPHDGCRF0rjBYh5P8tCc0rkNDcQ829n8SWh/NyAq0OeP8f7Cir3+PGWj1hisRcgWN7GS84JsD4m1by6UHovD57b66W/lUlTlGPb5TN7g64lv/r74s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766523662; c=relaxed/simple;
-	bh=tsnov6d5ot1dmcYLM/elzd2wUqt5r34XzFJ3PqgX3Z8=;
-	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:MIME-Version:
-	 Content-Type; b=nZlBNlxzarmQaCIIYg3TtE0+HvJt6kBqcyS0uEMh1FYMjP1HA18upO39dIauIlzVVE0dZ5eyKZr4qWzPAaIg8J9rKodGJN0FYrFJXjcl//Cd/dgMfTLa2q3dNUESm+yyNbqhHDLMya5GsZoMGzi9PpPT7jftS7QKugF4KdB3ni0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=akOD05B7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZG2MYnGg; arc=none smtp.client-ip=103.168.172.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1766530452; c=relaxed/simple;
+	bh=ErurR+MPopirwO2toO1MARBtK4JdqcjJ308hH4RFm6Q=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=TpgtGM9qEvLJHod5Yw2uR4sNW8B6y7MO6R1KwyfZbogFQBAVWzCXLULnU3XwqOt7yA8VUkaLSQwjw6XQdm2wywAegraUQ23SMMWQQIKD1rLuS1PgGkxAKSJOy2mUZt/DRxTBQ2NtzXpVOyVhVxtZjQmRp0UsBOl7aQ17vclOuJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HujnXmKz; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="akOD05B7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZG2MYnGg"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailflow.phl.internal (Postfix) with ESMTP id ED35E1380272;
-	Tue, 23 Dec 2025 16:00:58 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 23 Dec 2025 16:00:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=fm1; t=1766523658; x=1766527258; bh=15lYGVZoCoX+OYwplLRNW
-	NrYEwSP5gSJPaSauAixJWM=; b=akOD05B7vrXkxxc3TD59M8AO7z38I83FwNbh9
-	daE3BGPfCVxwePLUrFXk9WPWft7bcSY3ESky5pzzDo4wyTyLwEynwpMqK6LX3vaX
-	tPFZnAa75Nbk4QzcUYZ/s13Ir/38DqPFpnJQ/x+cX8F+GqlXrsrvCkT3gluhqx98
-	K5oE/mGzphxnC7O1HgJIsIx4XhCbEAAzvnW1dbbrvekp2QIT7AfCmmP410tfHXd0
-	61j1UNK/mdX3WrOeUuB6mnaKHvxQNfp9aR4UlvsZbhwG9uNV5+j9/bfW9uvCMYRF
-	SzB8TiR5VVJoVZ9QStAttDKzAw7yaW4GW7B19Tgjpl95rCmsg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766523658; x=1766527258; bh=15lYGVZoCoX+OYwplLRNWNrYEwSP5gSJPaS
-	auAixJWM=; b=ZG2MYnGg2wcQINy/lG8gCRhFTb2Z5jo4x+bjXikdV3stf837/FG
-	fI2p+y1umRd6hvpLfwbF0WAPIFu9Myr6W7GYdrKD6rjTFAQsN47xE8Ykse0Vmpqb
-	xxTvOKlr/0zVrOw5+0WcnZ15jVOdP2tgytKQ759MOIX/5KVYRhJgxP71SoQ+6eoJ
-	0PkXjv4WcAxBlntycGu4yJF8YPvDx9Qb7uGRAaDemgSic5yTL7+j7p21fcdNQU0x
-	VNTBvzPLP8MTEEt2ygnji5VkYx05YmV1Mw3DMnBYZpPM9nnakfbS0nZw7T7qooyn
-	TAp94WozUCkGVk/YgvjPA5mG7/soxUDE5Zw==
-X-ME-Sender: <xms:CgNLabWY_vY0EEH9kkDIn20KvoUtyHSC7AfjuyDC3DWyUOoVXbbafg>
-    <xme:CgNLaZlCCX3_ierRe_hih1099jntRxFoUDLhhR_PFha0ebEK2boGGzgFAHfeOSD21
-    JMdeleyo6S36jFQPwmWC1Sj9gE0Uabmdu2-OQMBtMo-IqbFb1UxSWE>
-X-ME-Received: <xmr:CgNLaVDHG9Ywklp0YM4ji36aMUdIj2KTFJxU6VwiQ45Zr-DaxXRkfu37SknBAJC7ir7qQjYZGPvSBcJimPuQoOaAPox1jJTv>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeitdekhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujgffkfggtgesthdtredttddttd
-    enucfhrhhomheptehnughrvgifucevhhhithgvshhtvghruceorghnuggthhhisehfrghs
-    thhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepkeeivdekheetudduudevteduge
-    ffheehkeegvefhvdeigeduffduuddtfeffleeinecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomheprghnuggthhhisehfrghsthhmrghilhdrtghomh
-    dpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhu
-    iihujhhkrgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhg
-X-ME-Proxy: <xmx:CgNLaRcGgGT97KlT4u7Hk8UC2pSeW1KP51nj9eSfUmj21Z3x1ObnfA>
-    <xmx:CgNLaYK_9UjMAVtKxsJ6FZC98pceQaRy_pKXhRtdTzr3MCpaWYQGiQ>
-    <xmx:CgNLacdBIcDY1qA5ngEttVvUVesMLmStU42Tzd0zBV0Zq_sKm09iQw>
-    <xmx:CgNLaX1-SsDXMo-JvQmXT5IjMr4c6aE6vqhVO65RX4owvQK6-PwVaA>
-    <xmx:CgNLaWR-bsIeW_Nl4J4-3g3JPJ0QF6ZjTFSvCsojaTVlkEnQ9K-sIdnQ>
-Feedback-ID: i4e2e486a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Dec 2025 16:00:58 -0500 (EST)
-From: Andrew Chitester <andchi@fastmail.com>
-To: juzujka@gmail.com
-Cc: git@vger.kernel.org
-Subject: Re: Error in the manual
-In-Reply-To: <CABd08tVFKDoBtdBsPHaE=Zocoj6H8yuhk86Bg+99zB_H7+r2BA@mail.gmail.com>
-Date: Tue, 23 Dec 2025 16:00:54 -0500
-Message-ID: <87sed09am1.fsf@fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HujnXmKz"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2a09d981507so38963185ad.1
+        for <git@vger.kernel.org>; Tue, 23 Dec 2025 14:54:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766530450; x=1767135250; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tWXSF17JvZF3MOzAQGFAUoHbFHcLvFqdDt2mZpyxDW8=;
+        b=HujnXmKzxPdmkOtOXcdkF8P4w/R8T2/Ruc/F1HGWiqXa7nvKgepFbv5zkzNMlxKvBE
+         y9gGy8VCbYyuAHmI3QSzYrTVDEV+zv49AzTqY86w/ACiHBsYPjWlhejIs9RqBH9aNRJ/
+         3NR4We3M+59gWYrEkCUz6M/SKzg7V/ljNdXsHgAomOKIDA+I20YSKypJ2ARN1qo7jW/h
+         rvi41ulc0m14ONmZTJycl5tX7gSMVfef9xsZsSIJKCzsot4FahFf4AZk2yU5ScynXQiw
+         0g2RBVnM9ZATPfD9B13n3DvDGiDkXCCUdV1iAsbttndSnoYjohGrLfxgfMwbP9LspkIB
+         SLFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766530450; x=1767135250;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=tWXSF17JvZF3MOzAQGFAUoHbFHcLvFqdDt2mZpyxDW8=;
+        b=dVGuKxAU7Bg6fNMHtKQE2gwVh+7CkEb4JAOdZ7vYZZSlk1skyxAWpHEr+ftfEDonk3
+         qxjTfJQnCenGtyevmbSONOTlE74wmr/6H9KARpzoLbJMfPU7qQocHE5Ffi/CV75OYTGb
+         bX1XonoMw1+nMVnamBWImvlU6/XPWyYemHVcnbh49iuEEG2JZpsZeJGd56E+1lABnD2h
+         oWYJsMcBv3jDtnKnpQtl45EQCYUCwMz4Ns10wk+2cRC/nqlHt2+wp3nSi0fo3k3AFu1k
+         k5AtLb6JYVIBeE4Cu4xK7ztGXCq/Wi07h0uyEwX+pZlEHEAAcvqeDzvuQP8JphKooxlt
+         lcKA==
+X-Gm-Message-State: AOJu0YzS8tstTQE2hl3emO/6HhxSCwQV6ikIc4DaC89qheNdzFpZ9gDw
+	lC+q94akpw657AA4zrQzIkDWwLICSeKkCA/dRCEb9lRCmwWfW2hN1QLy8q0PYg==
+X-Gm-Gg: AY/fxX45X9w1CgJw1QekazXOutE+gWZIH6FwWnRoY1prmdLjIumSseZRNfIqJKLeSaR
+	dREk6j/q917/6m4o87YwoQ7upCpKdeCfOt7VkjlpzV/z8MLkJPmgUxyObtIhHqGEFWTAfAH808K
+	BapJOT/9/qzSJXPvpeIeOR8Ddh7CcZU1cm85EYRGsMdaxIkDIkY1Ctauvt2nzHDPpl2Rm296A8z
+	H1oD7DA632IwJoqfwR2GneaylxmdazQQhPaNBw6rBPNXSQbDhKYrOuiI8WHXsG1D+5YLTrzuetw
+	tKx0Oin+tDlUYC2qeidjxqBgO3GavKwUK6giwQYpY0tefhuQGfPe4nfKP8c7sD2fXqmdAIyoX4h
+	cF9UIJA55jYPImDqXkC2ScIutyVsec1A6ZMKl9V5ufU7PvK7bbsCjlVg1GLbD6MaHrKDNoYYd+W
+	prBWMwUIpWPAl0
+X-Google-Smtp-Source: AGHT+IGyjl1uYB7yhGI73LLF9mWowSSRC1OuDHgqaDyb/L/S8qk8GDuzbJIQo9yz5FenT2fvM/Ygyg==
+X-Received: by 2002:a17:903:1a85:b0:29e:e5e6:247c with SMTP id d9443c01a7336-2a2cab16390mr207386335ad.14.1766530449965;
+        Tue, 23 Dec 2025 14:54:09 -0800 (PST)
+Received: from [127.0.0.1] ([52.160.166.71])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3d4d858sm138334395ad.57.2025.12.23.14.54.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Dec 2025 14:54:09 -0800 (PST)
+Message-Id: <pull.2138.v2.git.git.1766530448.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2138.git.git.1766451217075.gitgitgadget@gmail.com>
+References: <pull.2138.git.git.1766451217075.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 23 Dec 2025 22:54:06 +0000
+Subject: [PATCH v2 0/2] status: show default branch comparison when tracking non-default branch
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
 
-I'm not seeing how this is an error. The manual page for git-remote
-seems to address what `set-url` does and what `add` does.
+cc: Chris Torek chris.torek@gmail.com
 
-> Hello, there is an error in the manual.
+Harald Nordgren (2):
+  status: show comparison with upstream default branch
+  Simplify default branch comparison logic
 
-Hello.
+ remote.c                 |  83 +++++++++++++
+ t/t6040-tracking-info.sh | 246 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 329 insertions(+)
 
-> $git remote --help
-> or im my case I enter incorrect command
-> $git remote list
->
-> The help message:
->
-> usage: git remote [-v | --verbose]
-> ...
->   or: git remote set-url --add <name> <newurl>
->
-> If to type command according to help message, the error appears:
->
-> $ git remote --add gitverse https://repository.domain/MyName/MyRepository
-> error: unknown option `add' ...
 
-You didn't use the command offered in the help message:
+base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2138%2FHaraldNordgren%2Fahead_of_main_status-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2138/HaraldNordgren/ahead_of_main_status-v2
+Pull-Request: https://github.com/git/git/pull/2138
 
-$ git remote set-url --add
+Range-diff vs v1:
 
-Use it to add a url to a remote. As far as I can tell everything is
-working and documented correctly here.
+ 1:  c27a806dc9 ! 1:  a3800aed18 status: show default branch comparison when tracking non-default branch
+     @@ Metadata
+      Author: Harald Nordgren <haraldnordgren@gmail.com>
+      
+       ## Commit message ##
+     -    status: show default branch comparison when tracking non-default branch
+     +    status: show comparison with upstream default branch
+      
+     -    When a branch tracks a non-default remote branch (e.g.,
+     -    origin/feature), git status now also displays how the branch
+     -    compares to the default branch (origin/main or upstream/main).
+     -    This helps users understand if their branch has drifted from the
+     -    main development line even when it's in sync with its tracking
+     -    branch.
+     +    "git status" on a branch that follows a remote branch compares
+     +    commits on the current branch and the remote-tracking branch it
+     +    builds upon, to show "ahead" (i.e. you have built new history,
+     +    while others are not touching it), "behind" (i.e. you haven't
+     +    added any work since you were in-sync, while others have added
+     +    their work on the branch), "diverged" (i.e. you have commits
+     +    that you haven't pushed out, while others have added commits).
+      
+     -    The comparison is shown as a separate line after the tracking
+     -    branch status:
+     +    When you fork a branch 'feature' from the 'main' branch of the
+     +    remote, but then create 'feature' branch at the remote and push
+     +    there, while you still occasionally pull from or rebase onto
+     +    their 'main', you'd also want to know how much you have diverged
+     +    from 'main', in addition to how your 'feature' and their
+     +    'feature' compares. Currently the comparison with 'main' is not
+     +    given, making it hard to know when to start thinking about
+     +    rebasing onto the upstream default branch.
+     +
+     +    Show two sets of comparison: one with the tracking branch (as
+     +    before), and another with the upstream's default branch (what
+     +    their HEAD points to, typically 'main' or 'master'). The latter
+     +    comparison appears on a separate line after the tracking branch
+     +    status, using the same format:
+          - "Ahead of 'origin/main' by N commits" when purely ahead
+          - "Behind 'origin/main' by N commits" when purely behind
+          - "Diverged from 'origin/main' by N commits" when diverged
+      
+          Example output when tracking a feature branch:
+     -
+              On branch feature
+              Your branch is ahead of 'origin/feature' by 2 commits.
+                (use "git push" to publish your local commits)
+      
+              Ahead of 'origin/main' by 5 commits.
+      
+     -    The default branch is determined dynamically by checking:
+     +    The upstream default branch is determined by checking symbolic refs:
+          1. refs/remotes/upstream/HEAD (if upstream remote exists)
+          2. refs/remotes/origin/HEAD (fallback)
+      
+          This works with any default branch name (main, master, develop,
+          etc.) as long as the symbolic ref is configured. The comparison
+          is also shown when the branch is up-to-date with its tracking
+     -    branch but differs from the default branch.
+     +    branch but differs from the upstream default branch.
+      
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+      
+     @@ remote.c: int stat_tracking_info(struct branch *branch, int *num_ours, int *num_
+       	return stat_branch_pair(branch->refname, base, num_ours, num_theirs, abf);
+       }
+       
+     -+static const char *get_default_remote_ref(char **full_ref_out)
+     ++static char *get_default_remote_ref(char **full_ref_out)
+      +{
+      +	int flag;
+      +	const char *resolved;
+     @@ remote.c: int stat_tracking_info(struct branch *branch, int *num_ours, int *num_
+      +static int is_default_remote_branch(const char *name)
+      +{
+      +	char *default_full = NULL;
+     -+	const char *default_short;
+     ++	char *default_short;
+      +	int result = 0;
+      +
+      +	default_short = get_default_remote_ref(&default_full);
+     @@ remote.c: int stat_tracking_info(struct branch *branch, int *num_ours, int *num_
+      +
+      +	result = !strcmp(name, default_short);
+      +
+     ++	free(default_short);
+      +	free(default_full);
+      +	return result;
+      +}
+     @@ remote.c: int stat_tracking_info(struct branch *branch, int *num_ours, int *num_
+      +{
+      +	int default_ours = 0, default_theirs = 0;
+      +	char *default_full = NULL;
+     -+	const char *default_short;
+     ++	char *default_short;
+      +
+      +	default_short = get_default_remote_ref(&default_full);
+      +	if (!default_short)
+     @@ remote.c: int stat_tracking_info(struct branch *branch, int *num_ours, int *num_
+      +
+      +	if (stat_branch_pair(branch_refname, default_full,
+      +			     &default_ours, &default_theirs, abf) <= 0) {
+     ++		free(default_short);
+      +		free(default_full);
+      +		return;
+      +	}
+     @@ remote.c: int stat_tracking_info(struct branch *branch, int *num_ours, int *num_
+      +			default_short, default_ours + default_theirs);
+      +	}
+      +
+     ++	free(default_short);
+      +	free(default_full);
+      +}
+      +
+ -:  ---------- > 2:  417f2075fb Simplify default branch comparison logic
+
+-- 
+gitgitgadget
