@@ -1,126 +1,105 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C572E03EC
-	for <git@vger.kernel.org>; Tue, 23 Dec 2025 10:24:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120E263CB
+	for <git@vger.kernel.org>; Tue, 23 Dec 2025 10:52:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766485467; cv=none; b=J8adV5ygbbExiickhAUBUGjkbDmCCPx0QLh56yKrxNt7lSx6CxkdPKBjpr5hPNBOVQ7Tnt44DLmehrel+AJhJJ7U/pIC+hVcq+hXoG9W11axEkMEhxifxOM7aOF4Qahz0PnT91EAb2+49yjLEjkXOHsTV60/xiCfTxEz2Ffdi0s=
+	t=1766487139; cv=none; b=jlCaC+7bEYhqVgqAcJplxLmfqaNMy5U6uJs3RumUEq0paJnmErmSmpvARCD/cWdTTstk82c0ndrPULnQx10v34rSR8G9q5no5wAIe+gyeGGJWHmmhdEp4Ehh9LH6tPXFLiMIVXXN2PHfqFsR9CA4xvVKv3i83Qsqh5ZcWmAIjRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766485467; c=relaxed/simple;
-	bh=N1gs+vBrRtQcEqb9vh17pmcEKjouFmRNGukbIj+BAlA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=T329pLVbDijSlN/WqwjP2FnOjfyAGRLog7NcQeUN5BDikvPKjpBMpc164IUL6QxVsCUPrLo85UQNw9Gj0sO3QLKwc1yAd+2xrkeHlsjylKyOJKyYNDiuj2m424UW2841Hw5NWpKhBDVKp8w0i5kruSRFX16wmuxEPWAGZ4Jyahs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ih6R3RV8; arc=none smtp.client-ip=209.85.208.179
+	s=arc-20240116; t=1766487139; c=relaxed/simple;
+	bh=8AEihbiQG4bgKU1ARxszOieI/nrnpIiQmtFCtIXaV8I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=T5BolIUyVAJri3skgi/hMJq7wPuS3PmQWd5AqmJ5WGuC6pvlzBMKTi5KhCx3v/J5dYerwgAmdNysweoERi1wYO0mVGomoefqMp9n0gN4tVhoCwZ+w6MZhmElrb6DTVLh/zOETGc4+QejtluimVVWQke1YnW5bCgopzBep479ghU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J2pFbsKr; arc=none smtp.client-ip=209.85.128.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ih6R3RV8"
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-37a2dced861so57559271fa.1
-        for <git@vger.kernel.org>; Tue, 23 Dec 2025 02:24:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J2pFbsKr"
+Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-477563e28a3so30987145e9.1
+        for <git@vger.kernel.org>; Tue, 23 Dec 2025 02:52:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766485464; x=1767090264; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vArvQ5o/9lopa5tcacx/U2aoSi3H1kkb+xtRQ0Bk7JM=;
-        b=ih6R3RV8L28uflLtYY5IbMcOgtp3PQRNYl3lgK6TBgDTREDYQUWg5K3bCeW+o6Mxsq
-         b81poZozAQGdcpBm8PoSPtpTl9J82TWLgRPX+os97loXQR2Af04SEmiL/xTddpe8eYuZ
-         7T1BjVqdV45AZbXmK1DmmZRA8mxWCiJLqhDWbbWlw7YZe2mMQ2EEqThayp0o4bu7y24d
-         unEzkwCkBZZNtKHkCvZgcG4MiCQKKHh92DiM6Eh9i9/behw28A+xH1gd64VzUFrgCx8K
-         FO/sIun+ljD2g8oQn8Kk9zKe7WMR1tS1VsS/K1bOOBVCgka6tN/WGvz5y9dQ7qLiVzA6
-         /UbQ==
+        d=gmail.com; s=20230601; t=1766487136; x=1767091936; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=BJtvGsSWmcIY4hvD/MEe94dUknSX+gBI3nUlvglGUPA=;
+        b=J2pFbsKrlWE1cinagH8oULA8PlMFLqhN09nsYlREOcMKxYvY1GW5aA7ufVSQti0Bp0
+         hc5BJq5hweZJgBmYs+iC+BTuMMST4gtmiRDyuRW7owtH7xclcT6D/m0JkzJ3RFWiXd/Q
+         WbSw38EHUe62dHbAjsf76Ur8v5P+SrY1O3LNdtMLI5P+HW44HVhZmIvBUDO5t3EO2diK
+         zKF2XiF0uweJoM5KAAGXc1H1xi7MzSC5eN9zxztXlxI/c4x+6yKDIOi0LB5/w5G9Vho3
+         UpK/VgCdLLYWww+lpLrTtH9fa6He7zArLl9u903T4jrY5cFb64f3gaR4u3KeZcfHnAqN
+         XcCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766485464; x=1767090264;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=vArvQ5o/9lopa5tcacx/U2aoSi3H1kkb+xtRQ0Bk7JM=;
-        b=kOnC76eDXNb6dMN4kHbKEjrdUuZ3FufDDypc7ZP0+tgxIT2hYOOvKEnZ8xUv4hrTiZ
-         mHXgvksH2tye/avZmTxQUoRFVfKGlBSyqqgsom1aOtwR6S7gaXgWeAYW+RtoGpd/ClDq
-         5/6PBR57BF1uPOqMeHDcD33O09wSbkQs0r2H+qXS7LFeHfsoO59BCAuGcGtXPf5qDHcY
-         UcMzVvd48UQMi9HslmsNZeJ9viZfNOZqlABnYnpdVcUGq8bo6w3qtBYgSNu6bxHHScM8
-         Y+6tI7CXdwooRj5h9x7/jHnAIosi+qD8CmgF/OaVluTTYoJl9lZrtPwCNBy7IVxmiJla
-         GEfQ==
-X-Gm-Message-State: AOJu0Yxh0jA2xAyfuJ9NB8+zxT4Z/NR/1RyrBEKm7VAgrmlNQgQOeDIZ
-	LNL3JAo2YJpBMjACAiAUeRQcUFUhf5ssJRNBC+gU5h6WwE4LWz5btDQ7
-X-Gm-Gg: AY/fxX4iF/dSeLdX0gapQ4ItdC8t0rZ7BSpJZme1nBsZKYbMYeS8JZvGiCkKAiAGH9S
-	feen5FyFyFgEabJSPW46Zn8TtDneFtkUH0xJegqsWO1tq8oNwUXlkkrJwS/7HMhuG21kFM16MDb
-	dkrLVzCTyIecJyslo6AOj1SeJAJ6Qpd03TFfRAPAgcCFsDVRYlI7Q5qj1TXNkSL734W2UOWOjPu
-	bA4rTm6EHPRXSQMyT4o4DZIan/JDxH6Cbxyse8YSdeGY5yO3J7FozRnI8HT9kz9exfhfxFb7clX
-	ZPurDsWdmU0zaz8Ll2W02hgjxB+N52W0Ug8h4w2Yx7b8T6xMpddK55N/GI7GYl7/Rh6/fxf3/AE
-	OzzBZh6shKU6YxeAGYaxI3iSknfjCS0j3fdOwLEMMr8ZoNOI8LWRCQR2SB6ot/cKpISa33SW4T0
-	tnVPa2o1t6QOiwyc/+iTlowNEDaMkBMx4xgsayGorXwazROp0GuADdg8fRV9lNSfOGjnufqG4=
-X-Google-Smtp-Source: AGHT+IFcRO0WUTzTYf4kK94xMe4rrB45HXzHi8akUd+v7+42FuJQ7cP8qE97nHGieuA/l5W4yyWuNg==
-X-Received: by 2002:a2e:a986:0:b0:37a:2c13:87c1 with SMTP id 38308e7fff4ca-381207762e2mr47919741fa.4.1766485463386;
-        Tue, 23 Dec 2025 02:24:23 -0800 (PST)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-381224ffc47sm31628731fa.11.2025.12.23.02.24.22
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 23 Dec 2025 02:24:23 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com
-Subject: Re: [PATCH] status: show default branch comparison when tracking non-default branch
-Date: Tue, 23 Dec 2025 11:24:22 +0100
-Message-Id: <20251223102422.36853-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <xmqqy0mtpxti.fsf@gitster.g>
-References: <xmqqy0mtpxti.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1766487136; x=1767091936;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BJtvGsSWmcIY4hvD/MEe94dUknSX+gBI3nUlvglGUPA=;
+        b=lSGFCa1naViY1EGMdqlriVSL2MiCYPzpS8fYrRzlt+kkYhouYZ/7gI4nz8F2gmEo0+
+         gHuX7z2Qn2WcPnsNmBQZ4WISSJI7X42CcTfsrlheIcKmnKWItbIQxSVcV7JPGOf4GTVD
+         IPKKPNF31+nz0B/aiMHKCUUTcDaSxmR+/7UFq9+j3vpC4F07AJn/K5Vic6z7uk8+SKSt
+         K4AacJnhsbtLqpEFXBe0gmG8QRJK5znboI5awXGuanTfmqWg3hCavxZ0RkWgV7AHHR44
+         DlHmp02wjRGKs0+wCBGyax1OHLal/B9SyIRi03KqcA4UQffkACvhGKObW8fE0iJEgJna
+         58rQ==
+X-Gm-Message-State: AOJu0YzoR987kjmDvj/Yx0/02K0DIJ83AEtu6T+0CcI79NQCF4GhPQI4
+	Yx3TvTGiqajbHjh4oz/SU9pfIJT4KUl1fwz7dKNFmdA5AHxrM6ap6tdo
+X-Gm-Gg: AY/fxX5zEQpr7EMa7IUgVtLPgtxkNdTjsbk/4Ssvym1n14BTsEq2FiinKOffcYYczhA
+	+oGeaiveNZnyHQVKmoeQ+nnmgZz+s4hP1YfNIOHfZEMC6QfXaodIUE2Bly3/kFA9jNb/H6zNaPz
+	qeycgeBJ/F8xSi3gPWgs+4UPqL3+YhSwADCtIIfqepSeV/YoU0Nso+iMkjwKeUr7jFpf0xiHZLh
+	Iz1wjKsQW471jEnBkMLoI24OXYM3K0ZcTZFM8d0dReHSMvI02NXDH37kE/gS56RbTD1Eo29rGQ/
+	hDG0/bKBpvD0nJYqnjEWh3Lj5pQ3U2t/NkENfeSgXzA6GVHEOUZFgELb7kCNGGqW7KWTNRWXSjf
+	r8gaQL2z27BdGZdSI6o/kREI3fEMt9VVyHjQm7gFY8AbaSLlFsIfxuSD5WGT4qa2Shfq2c46LXR
+	nUpPs9u+1xx484QNKH1zYCkY8nETuRUmrLdscQe+48nW+2SE1DjW27KZfz/zVj913uvA==
+X-Google-Smtp-Source: AGHT+IGcNmmgXIMK2xKDMbt/ukYAJSjeJ+IpLVTjz0Y7yziwQ1DkcQD/VM622gToYRH3pkGMrGzcmA==
+X-Received: by 2002:a05:600c:8718:b0:477:9d88:2da6 with SMTP id 5b1f17b1804b1-47d18b0ad6fmr135668685e9.0.1766487136220;
+        Tue, 23 Dec 2025 02:52:16 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47be2724fe8sm342041795e9.1.2025.12.23.02.52.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Dec 2025 02:52:15 -0800 (PST)
+Message-ID: <a5822145-5a5c-4a2b-84b9-7c061b3bab97@gmail.com>
+Date: Tue, 23 Dec 2025 10:52:13 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] replay: die descriptively when invalid commit-ish
+To: Junio C Hamano <gitster@pobox.com>, kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+ christian.couder@gmail.com, newren@gmail.com,
+ Siddharth Asthana <siddharthasthana31@gmail.com>
+References: <CV_replay_die_descr.13f@msgid.xyz>
+ <replay_die_descr.140@msgid.xyz> <xmqqikdxriw3.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqikdxriw3.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> In other words, exactly the same way as what we show with the
-> tracking branch?
+On 23/12/2025 03:12, Junio C Hamano wrote:
+> kristofferhaugsbakk@fastmail.com writes:
 > 
-> The triangular workflow involves two remote things.  One is where
-> you pull from to catch up.  After building on top, you push to
-> somewhere else to publish your work.  This may be a different branch
-> in the same repository you pull from, or a branch in a completely
-> different repository.  What you pushed out may be processed by
-> others and may come back in the branch you pull from eventually to
-> complete the triangle.
-> 
-> In such a triangular workflow, comparison with these two remote
-> things may be needed. One with the branch you forked your work from
-> to know how much work _other_ people added to the branch to learn
-> when to start thinking about catching up, and with the branch you
-> are pushing your work to to know how much work you are holding
-> locally without pushing out.
+> How many callers use this function?  I am wondering if it is better
+> to give a better message at the caller(s), rather than here, where
+> we lack context to tell something like "You gave string 'ource' as
+> the argument to the '--onto' option, but 'ource' does not name any
+> commit" (in other words, "for what our caller is trying to peel
+> <name> to a commit").
 
-Yes, it's the same as when tracking master/main, but with far less complexity for the end-user. For many years I have had the habit of running these on my feature branches:
+There are only two callers so I think that is a good idea. If you give 
+an invalid commit name to "--advance" then it dies with
 
-	git checkout -b feature_branch
-	git branch --set-upstream-to origin/$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+     fatal: argument to --advance must be a reference
 
-	# To merge in other's code early
-	git pull --rebase origin $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+so arguably we only need to check the return value when parsing "--onto"
 
-	# To push to correct branch, because I'm tracking default instead "feature_branch"
-	git push origin $(git rev-parse --abbrev-ref HEAD)
+Thanks
 
-I have found this very hard to explain the benefits of this to other developers. Git is already scary to many, they are afraid of losing work, so they would rather not mess with the tracking branches and break the regular "git push" functionality.
+Phillip
 
-For me, I feel blind of I can't see how my branch compares the master/main at all times.
-
-> I am not sure what you mean by the word "default" here, though.
-> 
-> You seem to be using the "what would a new user get when they clone
-> the remote (by virtue of their HEAD pointing at that branch)", but
-> I am not sure if that is a good way to determine the other remote
-> thing to compare with.
->
-> Even if one remote branch you pull from (but not push to) has a name
-> that is not one of those usual ones like 'main', 'master', 'trunk',
-> 'default'
-
-Agreed, this should be as agnostic as possible. "Default" might be me using GitHub terminology. However, it seems that 'git symbolic-ref refs/remotes/upstream/HEAD' always produces the desires result, so for the sake of discussion we can call it "upstream/HEAD" instead of "default".
-
-Harald
