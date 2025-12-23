@@ -1,85 +1,57 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8940F327BE4
-	for <git@vger.kernel.org>; Tue, 23 Dec 2025 13:32:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766496775; cv=none; b=U+3naWKfAs0lE9jOZtLn6/AHLcWgEoldyF50sICNzeoh699zWkaJHUbulUMcDLxbf0fkXfghXP3zoSsWdVp9W0m8wUivW0kJ5G9XDWaoErd+4mNB1ddTPAsDg6N2W2DtFi2B1HKaZIpSIAVpS5WzjbGNunULMteXad71Q1bZEto=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766496775; c=relaxed/simple;
-	bh=OkhvwgGuL1gkmfyWnl0lH9zKL46Foq+EtbprFrVHh1U=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D9618FC80
+	for <git@vger.kernel.org>; Tue, 23 Dec 2025 13:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1766496961; cv=pass; b=a0nqeJ2MZl/7liWcks7Zplu1zGwD8twQY88XrHgeGmmwxDuDuUy1AFn0pYwdp0YxHmw+OPvwx20kQAtTUYmg1XBF121maYfrcBeDbCuFcz515EztUNAgUwKlHu0KY6fxf7szJ0M3eIukAuXAOknD/hV3RVYs2cDHExmkvNKWDU0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1766496961; c=relaxed/simple;
+	bh=AXfwTDhfxHQ3PJdaZaNW4pOb6jmjHSREIOZOL7EnNq0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RHbA/yLcH5RWeZpzf+YWU8HAyblRZKTxloJsaxcwcHB93g/qTuVritunVrNILO9JP24jRe8frJEIAEIcDc9IsQHqFwyTa0DmHZ64P15V4jga7yJgjJPJNd7Dm1uLYwAm3nj/S3u+vlK+dtzd2oxKhouiVwXnzu3iTPmeu/BRZP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WfwDseRt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=y2k0ucZt; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=sdJ8okn8DEbc03nCoqT1GLuR9NCeqAhQ18MI3+MKhr+jdetVjSBtpYcYxT4tQJqssDb89/oYGruIO19MDw5lT08WF5FEDDPNNLBjFGTPu0gIpEO+/kLHgACO2GtyWfOVANoGiECgGtW6cLf/qro2nPbPGnLSQEh7mB9EfBE3KeI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=fgHYREq7; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WfwDseRt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="y2k0ucZt"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B868F140000E;
-	Tue, 23 Dec 2025 08:32:50 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 23 Dec 2025 08:32:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1766496770; x=1766583170; bh=72bPOY4oRQ
-	err6wLuSUaNfid13YzGZzn7g/CZsk1W1s=; b=WfwDseRtazKQ6r2uEkLDkP8nol
-	sNHA5GLxccqjnbXylInnwEpXSq8krrpNoAsOi6tlbjcTlDLULOF7RkfuasfBQCE5
-	G/4spDHuIKqsH35tX6S2zWwEuTN7Ky+PX73NcwJs9/pkVukHYWLFfIgtd+xjRKEJ
-	cvK5zQADzuKZ8mzXeplzal71ChbscEyeETV5PgWmXiq6MUcvZYcfpma/79IabHra
-	hWwH0ahUQFYc1N/NvSzbbvRxjfcokxCY4ngjdzIf6cKXJ/J9379zp/M4a4f6X4iS
-	ggld9ls78RU+I7Qg48FxqLuHq5R8Jp02xb8zgHjCzynHUtQDR0isSlp86GWQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766496770; x=1766583170; bh=72bPOY4oRQerr6wLuSUaNfid13YzGZzn7g/
-	CZsk1W1s=; b=y2k0ucZthOdOGI0xQQA7NXjSf4SG2tdBMIYMLlvDI3PstMxFIU1
-	yK37xv7nmHtQ1/RlbMQGCaQvXBdwFFmPRCVr0x6N+lRJU448FzEhIFcTU6kV2Qtw
-	5hnW1aCchgdwWAlEPtI+uV+/lEQ3PpJJucMtpswj7eRzp/fLfDThdJu5AD+HxtX0
-	doWWpyUO2bX3xgI6Lr3KgU2N7LqfcHR1VURSgUYonCYD6pUI511h1BI1CjHZSoWn
-	P+wOg3zOsiQAV7EwdDPExNm2acbMOb/6tKFPakuVuGX3KlfnS0tftvecfGU15hLU
-	HExk6vZ0iWF60i9KfWGu/ulOu3iCrkL/gqw==
-X-ME-Sender: <xms:AppKabu0aNoelGi-UMqFr8V2iRw_otrEytpAYkuTT7PWP_NoJ7S6Lw>
-    <xme:AppKaTe2hzqP9yFgje2mVXJp4FBiaw_Nni9uyr-GLyGZji2ynTlz0cP-v7e9-KFsG
-    cUDCmddWW_J1V1U-1vFA0yUZKXe68lflK7OxdXQp1l7k52yP6XvXj8>
-X-ME-Received: <xmr:AppKaTwNHPRAdcqr2wmn_cJUSfVhK1so50FS3YhIyPzTpicVQTu9F7UyiqiFhFvmUJQVM-KMv5ChHAyiF34_4n7nBluAkuNdIA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehleelhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:AppKaZGYRThg5UBZ5cHS4ODr-8k4EMhYM5yr4W6LTnckwxDn4qw1Tg>
-    <xmx:AppKaXxxoY0sAHsNX-R471u7t9AoqEbM_N9F2mYu6FDdtWpi85RpWA>
-    <xmx:AppKaasHmc5i2OKSJI6orpGWV0Gnh_S_IKO3tCl6wtJDn_tS9xPaYQ>
-    <xmx:AppKaU35mlf8t4X2Tc-wnbk-P-eI4TIKVcT5qr9hgUYhvejB17KKLw>
-    <xmx:AppKaZvFIStMOTNIDVry-2k7nbfb-aHjLeia7wcF1O9JODFHKKjPoo5O>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Dec 2025 08:32:50 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org,  gitgitgadget@gmail.com
-Subject: Re: [PATCH] status: show default branch comparison when tracking
- non-default branch
-In-Reply-To: <20251223102422.36853-1-haraldnordgren@gmail.com> (Harald
-	Nordgren's message of "Tue, 23 Dec 2025 11:24:22 +0100")
-References: <xmqqy0mtpxti.fsf@gitster.g>
-	<20251223102422.36853-1-haraldnordgren@gmail.com>
-Date: Tue, 23 Dec 2025 22:32:49 +0900
-Message-ID: <xmqqtsxhpblq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="fgHYREq7"
+ARC-Seal: i=1; a=rsa-sha256; t=1766496943; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=bY17tmdTTHcqGEkSTspf6379HoSyKZpCvuJYwiAkeFEpsPIbOQmpYnuMh+KPffQ8XZ2vcqyKkQd+GEsW08yLrrnkVG9eVz/pRtb6cp6VU89hPNygtMwkacJN2bQmyzAA437ulRvlkUDdqRxQSPD4i2BP93t8s+WiVGL1+8Kv9Iw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1766496943; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=ZyhBkbKFKvUFQ6L3qZiVJe/mAm/CVPdsF2MrBP9gamQ=; 
+	b=QGCrX/VBKtE2X++8OMpZVhpHYCAVecaIK4INrY7+B8WkucixR08TwYP1XYgH8ZAkIIGqT6D0db3OgAhK1QVJhgJnGSNlat0bLwwr+KE30Hp/suWZ0joUR6gPO5qHw+muz/zq1k8DuKpjvHxXI695JUy6u9Sr76Vc/70q+Q6BtBw=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1766496943;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=ZyhBkbKFKvUFQ6L3qZiVJe/mAm/CVPdsF2MrBP9gamQ=;
+	b=fgHYREq7B6D7i3JCcaoc/8FYkNLbq0ddnQ8+oZLRCRji2ssdTYKjSiZH2TUWGkj6
+	Q9huFWnCiGx7oC4WIWPz6U70DoX5mBYm/Vkfq/Ou0y42KRIToApkrn+0dMHSqasK4kw
+	pD78sHesGe9HzXmdMWMJ28KGEaU602HDTM3I2+4A=
+Received: by mx.zohomail.com with SMTPS id 1766496940769436.5783100806585;
+	Tue, 23 Dec 2025 05:35:40 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>, Rodrigo
+ Damazio Bovendorp <rdamazio@google.com>, Jeff King <peff@peff.net>, Aaron
+ Schrab <aaron@schrab.com>, Jonathan Nieder <jrnieder@gmail.com>, Patrick
+ Steinhardt <ps@pks.im>, Josh Steadmon <steadmon@google.com>, Ben Knoble
+ <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v7 04/11] submodule: introduce
+ extensions.submodulePathConfig
+In-Reply-To: <xmqqy0mwsedz.fsf@gitster.g>
+References: <20250816213642.3517822-1-adrian.ratiu@collabora.com>
+ <20251220101528.1227487-1-adrian.ratiu@collabora.com>
+ <20251220101528.1227487-5-adrian.ratiu@collabora.com>
+ <xmqqy0mwsedz.fsf@gitster.g>
+Date: Tue, 23 Dec 2025 15:35:35 +0200
+Message-ID: <87y0mtwcbc.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,36 +59,37 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-ZohoMailClient: External
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
-
->> You seem to be using the "what would a new user get when they clone
->> the remote (by virtue of their HEAD pointing at that branch)", but
->> I am not sure if that is a good way to determine the other remote
->> thing to compare with.
->>
->> Even if one remote branch you pull from (but not push to) has a name
->> that is not one of those usual ones like 'main', 'master', 'trunk',
->> 'default'
+On Sun, 21 Dec 2025, Junio C Hamano <gitster@pobox.com> wrote:
+> Adrian Ratiu <adrian.ratiu@collabora.com> writes:
 >
-> Agreed, this should be as agnostic as possible. "Default" might be
-> me using GitHub terminology. However, it seems that 'git
-> symbolic-ref refs/remotes/upstream/HEAD' always produces the
-> desires result, so for the sake of discussion we can call it
-> "upstream/HEAD" instead of "default".
+> This comment is not about the primary contents of this series, but
+> I notice that the whitespace immediately after "errors like" is not
+> a SP but a HT here.
+>
+>> +* Encounter errors like	`refusing to create ... in another submodule's git dir`
+>    123456701234567012345670
+>
+> I have already alluded to it as a #leftoverbit in a different topic,
+> but we probably want to have a new whitespace error class to detect
+> a HT in the middle of a sentence that should have been a SP.
+>
+> Perhaps the rule would be something like a HT that is at the column
+> that is at (tab-width - 1) modulo tab-width (default 8, but the
+> usual attribute applies), that is surrounded by non-whitespace
+> characters on both sides.
+>
+> I may be counting off-by-one, though ;-) The quoted problematic line
+> has, labeling the leftmost column as 1, the HT at the 24th column.
+>
+>  cf. https://lore.kernel.org/git/xmqq5xa76z0o.fsf@gitster.g/
 
-I didn't exactly question the terminology, but was wondering more
-about the wisdom of using remotes/*/HEAD.
+I think the algorithm you pointed out is sound, seems to work, so I sent
+a separate patch for it:
 
-If a project uses the same remote repository to maintain its
-maintenance and development tracks, their HEAD might point at the
-'main' (used for development), but some of your branches you used to
-work on fixes that can later be merged to the maintenance track, it
-is likely that you'll fork from their 'maint', and while you keep
-polishing your fixes, you may push your 'fix' branch to their 'fix'
-branch.  Comparing your 'fix' with their 'fix' is what we already
-do, and it gives two thirds of what you need, but the missing
-comparison is with their 'maint', not with their HEAD that points at
-their 'main'.
+https://public-inbox.org/git/20251223132756.604036-1-adrian.ratiu@collabora.com/T/#u
 
-Thanks.
+Will fix the whitespace in this series on the next re-roll.
+
+Thanks!
