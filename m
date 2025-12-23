@@ -1,64 +1,64 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3123254A2
-	for <git@vger.kernel.org>; Tue, 23 Dec 2025 11:11:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE3D32D44F
+	for <git@vger.kernel.org>; Tue, 23 Dec 2025 11:11:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766488301; cv=none; b=gK4FpwWNX5eJPOhC9FtxIutolAWYHnW7bw2FvTMNoYh5+yAxXZwMh/bgfNPPm3rZAKqXOkzB/zuZlJRDklx6mJSRs+VgKzmiUJoWKEhfJjAbwTngLd7hc/Ji546ZGijD2JdwqToH3yV69q0Vqq/m6LE4Ugn8GQNTYtfJYGuCrJQ=
+	t=1766488303; cv=none; b=TRmET09MitPJavx2r9c+oMkgqSN+v3gT1Px312lN9MjteAPmghDKPQ1ZDXg7thbFNcXp57OtUDqvLgF05GI1EdhpG+RErxU9Mgphl/RYHxwp87aX/Oa/YykwigTUZ3qvlhyo3nS3AvcQPR25DCXNDkQKcnwtaHTYpk+zm5yuTBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766488301; c=relaxed/simple;
-	bh=S7t4OIE/7mIbFBpIs5Lufc++h6LqeVIDALSfK06E3Wc=;
+	s=arc-20240116; t=1766488303; c=relaxed/simple;
+	bh=onAXcl5NY7lFz5YNdz7GAnmrbp0pO7tLLVr+S4bwwb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xfk43ayplMXuZvWNmrk741xC06A7hXllW+mmMWWXqgTbmRagkUQNurn5twVBkxeksxtb9RAa+IHXTvp5VCF0g9slyG7EsUo0vVdzRXXtNpZ4+r2JJBTQXf4rYt0IAmG0+hsLbLpTWVOgWObf2louRuSiaOoSMupDWIWXW3LQQEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PxFTxMXW; arc=none smtp.client-ip=209.85.128.53
+	 MIME-Version; b=QMcu8vAdPYMBL5I2EQQfpUv5z5KRsmkl/co2SwjZrsDRCqDb9nBFqsSpHkAbhtHkjTm9Rb0FZpG57AYmPfoKlkkH4Vnr7qLQ9shMuFGFl4XPbZTihwlIS/jROJvNwjYWGGWJ2qNYAd9BQdZEn78yx0cmEqG8y0iCosSwsiAJ1tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mCL3Yl8N; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PxFTxMXW"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-477a2ab455fso48428775e9.3
-        for <git@vger.kernel.org>; Tue, 23 Dec 2025 03:11:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mCL3Yl8N"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-431048c4068so2734626f8f.1
+        for <git@vger.kernel.org>; Tue, 23 Dec 2025 03:11:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766488296; x=1767093096; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1766488298; x=1767093098; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kstQLa7z6+9GsPcKk9eo0+iJ/ZOvZmL53Dbf+oC1/ps=;
-        b=PxFTxMXWwFDSeNn/dwpbcShC2iYpXXckf0Yws6+FplEnowydcJgppHZgImoIMZk1J+
-         8BnRWgXAirw8EgoVWC3N4wH6SkjhjvXJogrZdg7Dbh8zYuQfwf2VXu46A3KdU57spUB9
-         kqfKVJDqtbDoxBeYeErcjqqTk+NkIw1BlLM3c9BYVuJmwa4MMqIPMB8CBFnJAL9aGR7H
-         x9EboxsVfCcTk/s1jWMBvfCK4gqu2Q8Vf3XxFuVbGG4XpJwdQYnjCw9gcIYxgdibgDab
-         zh0+R/Z6n4e3td5bylsx94nJTJFE/em6BoCwlryo30w3VsL6AHqTHVHpLrKGK6le50N+
-         HuYA==
+        bh=Rrpy84mQ/GqJZt0JX++RJkh0pMBQNFO7IUA7rh/X2Yg=;
+        b=mCL3Yl8NJeuDniYIs0cVTqXcvluyEAxzOXiVWUdSI5dYFcRsw8EpI0hDxnlHndj7bW
+         gp7EsClOR2/4NhR0mcUCpCb6rJeIMXlR++o85Ttt86OHX3ioatlLyRdi0SqWcFEAv/ko
+         R52jDtNrtS+WO76ADaXHiWRb5spembgTtVwdRoLj2axf9VqyUyhITH7eykNK3iIXhJDj
+         hkCUEQO4LQZF3melEHB8twjN2WD7NY/CShQJznpn3uiD+wJ/9+hvrTIXDJY8OVz968Ek
+         YFfetmpazl4XoGkaIkcoRQwvfUGOp3HdGYW1WYw/ac2FZrmoyoNyTvPR1fVKs+1+ex18
+         BwfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766488296; x=1767093096;
+        d=1e100.net; s=20230601; t=1766488298; x=1767093098;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=kstQLa7z6+9GsPcKk9eo0+iJ/ZOvZmL53Dbf+oC1/ps=;
-        b=emFo9vjCrounBM5zZeKg9Femub+QfwZUp2/j90YN+bHIBb00GdGHh2i7kHl0VS5omS
-         X49YC8d1DysiE/JmRV0O+Mbk1/Q6OBECx9eMGvKpM5ExvpLGePUbMz07a0SDdpzeBSy5
-         T4ykaIVvQptPjHn6O64IG67EOmouLjtQa9byysekZIcVHe9/iuK2aobyvPeGDvLRBWls
-         DH3cMaEx4pN+8C++bBjyhTQ2uHQpYDnnDfc4C9e8rgXL6o0WLH0yy8GrYSHBnCtGe/cK
-         rY2Owgmarj3KcP6ZbCh2PGIKZPM2nJPGCfvrbwAaDnPRdllbJLwSELSGxMdEX3i4QFhs
-         G4xg==
-X-Gm-Message-State: AOJu0Yw+VqR0mbbPUz6EX4crKZLkc89Oe9XAtEkNJAHeGDZ9aYMGejf6
-	ocSwYb/5uRoUu2Ejd8UggDROxaMLamaOmbBukioGs2sC6HkUPzoaswZMazYaOw==
-X-Gm-Gg: AY/fxX6KygToTmYZpA5CG0EMooYYrjPC5Kw39DLBtA1YV8y+zHCFhuT2EXa9v9V3ohg
-	QxBxoG1me9S0hI4Q/xc03P7Xh/8RDyfXXrmGljQ2GIA02EgY2DHMUELUmBtmtD9UOVGW7g2SOgp
-	4fzF4wO8pUMUOzO6h/uEpD77NV6xS8C4d6kIj5yv4jw6HKlt+8PA2oZJK9NAGiIxZnJW2ILr/yQ
-	h79tyr10Z53EGZQO/7o51obv4hrNekC5qbFTmDhCvDMMCfXJ0WYqwtliwL338FCay3xVzwe8ca0
-	lsxPBcWelQSXCFtEPP/lZYhIzqhcq5GUzOoM0WY/ei9QcEbDe8XilXjDZsJMeMKC1/xCg+/1+qg
-	kaPV3sP3LitikZQzcU4I0OER1nytaoYQVnxbvUrdwK9UMz9NmTq5P7qdo3JgaVGNeUrWgxOgxpD
-	GUomHw69D5/CzptG95f8WHuHZ0tDPPSl416m73Nrb1G0BMEfIvijQUBjF6LtL0lJiZAFISHSAhx
-	xGqb51BoEtP/200ouH8QVJxBdA=
-X-Google-Smtp-Source: AGHT+IEpZ/bvY7y08thejEfqnLF3uPXwtHiEyUyf+uh21B5YJHR3jczbp0FWTF2jxtRpsNH5HIVNkA==
-X-Received: by 2002:a5d:5f54:0:b0:431:abb:942f with SMTP id ffacd0b85a97d-4324e708ed8mr17383025f8f.54.1766488296330;
-        Tue, 23 Dec 2025 03:11:36 -0800 (PST)
+        bh=Rrpy84mQ/GqJZt0JX++RJkh0pMBQNFO7IUA7rh/X2Yg=;
+        b=CWKQcNpUQBlR+WLTUEX6+TZ3bNcCD0/dYbQokDvHFSDKh9i7ypCN0k/nPq7omwnFF9
+         QZ8FsjgJ22gC1J678r8aSpBZuhxVK0MSsRvFWtqqd2OUn+n4YDtH0BxpSCzjhy6Jmwt9
+         NHbCRKPdU5m1sTpqCyXHCxvfw5U2p0K16MFmCWrPGu1v1urMEKGsO5uRfK9Tsig450bc
+         7hFEydr22HcyOkgjUq906L6A60glGvP4J54oCG+hpCC3590mDD6meZ7sN7S+GH61syHr
+         3yyMkYEdW9Zr1pfhUim+caTF/qTJBEcz/ilWazBmFVqXvFT7IrwaJto+ubDBQNKK6Ofg
+         YUOQ==
+X-Gm-Message-State: AOJu0Yypd0hB0YOI/HsM/iM3wNoSCn/YlASSost9dDho/vIbHt6hEIza
+	XHPLn/dNvAFiGaQcZMd60VduPRmFHY4IU46lbd/tRyHf0LXI4M/Zbmx6SAiZOA==
+X-Gm-Gg: AY/fxX5iT73v8BaXhQh5LoVS+4gAstuWiAktkilEDgqLliCAO+ggrjEBL0OiZERHjYL
+	TqaqHMacgT1UaCcMkleLPGf318MDxIUwP0/z5xvuz4/S6J7eZwPW3NGt0OX9hageAVVp8SPEszR
+	VnC3zrrODXb1FiB5Sde/y56CYHswJrgS4kcjTr3eDp6Q2HJvRAVBSVt1mLY3rNNuFWi9kdn+aM4
+	EWRkyCcaPVlKEpqiaUoj++jrNhNrB/nRQwBNT9swTaQ8/eDiVg7HT6e5uGaDpU0gMVOwe5+LfRL
+	XqjvzG2y1JwdzBv1S0YEWOPlVcoe2OtcZFlxy3Ytmvzclgus6EcC9Xm7j1rZHxaeUNMffaFOzpV
+	Kpi1MA0qCgfdzAfdE1v7GO0r3yuT5rrO2kcpEXytDURMaFpsbDg4E9mVjpMRKYEJRnaIwNkVTBj
+	OyiiFKe3Mf5ptQyWRlQ3QKof4HtYVVlWqt5mh0+P9XHxO5oJFbpcm5bkU59ORVUOy9jNCTwSjDN
+	KfTwNV7kZxEvK5SOGxYvzMOGEY/ilYa36qHxA==
+X-Google-Smtp-Source: AGHT+IFozuUgTOg94qU0EGRIIiO9m4nqsMM5FYvrSB/Gq40Od9YCTlU5ajIFSF0dxKt4dGOAvITe/w==
+X-Received: by 2002:a05:6000:2389:b0:430:fe6c:b1aa with SMTP id ffacd0b85a97d-432448c9ddemr21229938f8f.26.1766488297747;
+        Tue, 23 Dec 2025 03:11:37 -0800 (PST)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4324ea227e0sm27932795f8f.17.2025.12.23.03.11.35
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4324ea227e0sm27932795f8f.17.2025.12.23.03.11.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Dec 2025 03:11:35 -0800 (PST)
+        Tue, 23 Dec 2025 03:11:36 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -68,9 +68,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 3/9] clone: make filter_options local to cmd_clone()
-Date: Tue, 23 Dec 2025 12:11:07 +0100
-Message-ID: <20251223111113.47473-4-christian.couder@gmail.com>
+Subject: [PATCH 4/9] fetch: make filter_options local to cmd_fetch()
+Date: Tue, 23 Dec 2025 12:11:08 +0100
+Message-ID: <20251223111113.47473-5-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.52.0.319.gfcaffa7898
 In-Reply-To: <20251223111113.47473-1-christian.couder@gmail.com>
 References: <20251223111113.47473-1-christian.couder@gmail.com>
@@ -83,82 +83,209 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 The `struct list_objects_filter_options filter_options` variable used
-in "builtin/clone.c" to store the parsed filters specified by
+in "builtin/fetch.c" to store the parsed filters specified by
 `--filter=<filterspec>` is currently a static variable global to the
 file.
 
-As we are going to use it more in a following commit, it could become
-a bit less easy to understand how it's managed.
+As we are going to use it more in a following commit, it could become a
+bit less easy to understand how it's managed.
 
-To avoid that, let's make it clear that it's owned by cmd_clone() by
+To avoid that, let's make it clear that it's owned by cmd_fetch() by
 moving its definition into that function and making it non-static.
 
-The only additional change to make this work is to pass it as an
-argument to checkout(). So it's a small quite cheap cleanup anyway.
+This requires passing a pointer to it through the prepare_transport(),
+do_fetch(), backfill_tags(), fetch_one_setup_partial(), and fetch_one()
+functions, but it's quite straightforward.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/clone.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ builtin/fetch.c | 48 +++++++++++++++++++++++++++---------------------
+ 1 file changed, 27 insertions(+), 21 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index b19b302b06..186e5498d4 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -77,7 +77,6 @@ static struct string_list option_required_reference = STRING_LIST_INIT_NODUP;
- static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
- static int max_jobs = -1;
- static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 288d3772ea..b984173447 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -97,7 +97,6 @@ static struct strbuf default_rla = STRBUF_INIT;
+ static struct transport *gtransport;
+ static struct transport *gsecondary;
+ static struct refspec refmap = REFSPEC_INIT_FETCH;
 -static struct list_objects_filter_options filter_options = LIST_OBJECTS_FILTER_INIT;
- static int config_filter_submodules = -1;    /* unspecified */
- static int option_remote_submodules;
+ static struct string_list server_options = STRING_LIST_INIT_DUP;
+ static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
  
-@@ -634,7 +633,9 @@ static int git_sparse_checkout_init(const char *repo)
- 	return result;
+@@ -1449,7 +1448,8 @@ static void add_negotiation_tips(struct git_transport_options *smart_options)
+ 	smart_options->negotiation_tips = oids;
  }
  
--static int checkout(int submodule_progress, int filter_submodules,
-+static int checkout(int submodule_progress,
-+		    struct list_objects_filter_options *filter_options,
-+		    int filter_submodules,
- 		    enum ref_storage_format ref_storage_format)
+-static struct transport *prepare_transport(struct remote *remote, int deepen)
++static struct transport *prepare_transport(struct remote *remote, int deepen,
++					   struct list_objects_filter_options *filter_options)
  {
- 	struct object_id oid;
-@@ -723,9 +724,9 @@ static int checkout(int submodule_progress, int filter_submodules,
- 			strvec_pushf(&cmd.args, "--ref-format=%s",
- 				     ref_storage_format_to_name(ref_storage_format));
+ 	struct transport *transport;
  
--		if (filter_submodules && filter_options.choice)
-+		if (filter_submodules && filter_options->choice)
- 			strvec_pushf(&cmd.args, "--filter=%s",
--				     expand_list_objects_filter_spec(&filter_options));
-+				     expand_list_objects_filter_spec(filter_options));
+@@ -1473,9 +1473,9 @@ static struct transport *prepare_transport(struct remote *remote, int deepen)
+ 		set_option(transport, TRANS_OPT_UPDATE_SHALLOW, "yes");
+ 	if (refetch)
+ 		set_option(transport, TRANS_OPT_REFETCH, "yes");
+-	if (filter_options.choice) {
++	if (filter_options->choice) {
+ 		const char *spec =
+-			expand_list_objects_filter_spec(&filter_options);
++			expand_list_objects_filter_spec(filter_options);
+ 		set_option(transport, TRANS_OPT_LIST_OBJECTS_FILTER, spec);
+ 		set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
+ 	}
+@@ -1493,7 +1493,8 @@ static int backfill_tags(struct display_state *display_state,
+ 			 struct ref_transaction *transaction,
+ 			 struct ref *ref_map,
+ 			 struct fetch_head *fetch_head,
+-			 const struct fetch_config *config)
++			 const struct fetch_config *config,
++			 struct list_objects_filter_options *filter_options)
+ {
+ 	int retcode, cannot_reuse;
  
- 		if (option_single_branch >= 0)
- 			strvec_push(&cmd.args, option_single_branch ?
-@@ -903,6 +904,7 @@ int cmd_clone(int argc,
- 	enum transport_family family = TRANSPORT_FAMILY_ALL;
- 	struct string_list option_config = STRING_LIST_INIT_DUP;
- 	int option_dissociate = 0;
+@@ -1507,7 +1508,7 @@ static int backfill_tags(struct display_state *display_state,
+ 	cannot_reuse = transport->cannot_reuse ||
+ 		deepen_since || deepen_not.nr;
+ 	if (cannot_reuse) {
+-		gsecondary = prepare_transport(transport->remote, 0);
++		gsecondary = prepare_transport(transport->remote, 0, filter_options);
+ 		transport = gsecondary;
+ 	}
+ 
+@@ -1713,7 +1714,8 @@ static int commit_ref_transaction(struct ref_transaction **transaction,
+ 
+ static int do_fetch(struct transport *transport,
+ 		    struct refspec *rs,
+-		    const struct fetch_config *config)
++		    const struct fetch_config *config,
++		    struct list_objects_filter_options *filter_options)
+ {
+ 	struct ref_transaction *transaction = NULL;
+ 	struct ref *ref_map = NULL;
+@@ -1873,7 +1875,7 @@ static int do_fetch(struct transport *transport,
+ 			 * the transaction and don't commit anything.
+ 			 */
+ 			if (backfill_tags(&display_state, transport, transaction, tags_ref_map,
+-					  &fetch_head, config))
++					  &fetch_head, config, filter_options))
+ 				retcode = 1;
+ 		}
+ 
+@@ -2198,20 +2200,21 @@ static int fetch_multiple(struct string_list *list, int max_children,
+  * Fetching from the promisor remote should use the given filter-spec
+  * or inherit the default filter-spec from the config.
+  */
+-static inline void fetch_one_setup_partial(struct remote *remote)
++static inline void fetch_one_setup_partial(struct remote *remote,
++					   struct list_objects_filter_options *filter_options)
+ {
+ 	/*
+ 	 * Explicit --no-filter argument overrides everything, regardless
+ 	 * of any prior partial clones and fetches.
+ 	 */
+-	if (filter_options.no_filter)
++	if (filter_options->no_filter)
+ 		return;
+ 
+ 	/*
+ 	 * If no prior partial clone/fetch and the current fetch DID NOT
+ 	 * request a partial-fetch, do a normal fetch.
+ 	 */
+-	if (!repo_has_promisor_remote(the_repository) && !filter_options.choice)
++	if (!repo_has_promisor_remote(the_repository) && !filter_options->choice)
+ 		return;
+ 
+ 	/*
+@@ -2220,8 +2223,8 @@ static inline void fetch_one_setup_partial(struct remote *remote)
+ 	 * filter-spec as the default for subsequent fetches to this
+ 	 * remote if there is currently no default filter-spec.
+ 	 */
+-	if (filter_options.choice) {
+-		partial_clone_register(remote->name, &filter_options);
++	if (filter_options->choice) {
++		partial_clone_register(remote->name, filter_options);
+ 		return;
+ 	}
+ 
+@@ -2230,14 +2233,15 @@ static inline void fetch_one_setup_partial(struct remote *remote)
+ 	 * explicitly given filter-spec or inherit the filter-spec from
+ 	 * the config.
+ 	 */
+-	if (!filter_options.choice)
+-		partial_clone_get_default_filter_spec(&filter_options, remote->name);
++	if (!filter_options->choice)
++		partial_clone_get_default_filter_spec(filter_options, remote->name);
+ 	return;
+ }
+ 
+ static int fetch_one(struct remote *remote, int argc, const char **argv,
+ 		     int prune_tags_ok, int use_stdin_refspecs,
+-		     const struct fetch_config *config)
++		     const struct fetch_config *config,
++		     struct list_objects_filter_options *filter_options)
+ {
+ 	struct refspec rs = REFSPEC_INIT_FETCH;
+ 	int i;
+@@ -2249,7 +2253,7 @@ static int fetch_one(struct remote *remote, int argc, const char **argv,
+ 		die(_("no remote repository specified; please specify either a URL or a\n"
+ 		      "remote name from which new revisions should be fetched"));
+ 
+-	gtransport = prepare_transport(remote, 1);
++	gtransport = prepare_transport(remote, 1, filter_options);
+ 
+ 	if (prune < 0) {
+ 		/* no command line request */
+@@ -2304,7 +2308,7 @@ static int fetch_one(struct remote *remote, int argc, const char **argv,
+ 	sigchain_push_common(unlock_pack_on_signal);
+ 	atexit(unlock_pack_atexit);
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+-	exit_code = do_fetch(gtransport, &rs, config);
++	exit_code = do_fetch(gtransport, &rs, config, filter_options);
+ 	sigchain_pop(SIGPIPE);
+ 	refspec_clear(&rs);
+ 	transport_disconnect(gtransport);
+@@ -2329,6 +2333,7 @@ int cmd_fetch(int argc,
+ 	const char *submodule_prefix = "";
+ 	const char *bundle_uri;
+ 	struct string_list list = STRING_LIST_INIT_DUP;
 +	struct list_objects_filter_options filter_options = LIST_OBJECTS_FILTER_INIT;
- 	int option_filter_submodules = -1; /* unspecified */
- 	struct string_list server_options = STRING_LIST_INIT_NODUP;
- 	const char *bundle_uri = NULL;
-@@ -1625,9 +1627,13 @@ int cmd_clone(int argc,
- 		return 1;
+ 	struct remote *remote = NULL;
+ 	int all = -1, multiple = 0;
+ 	int result = 0;
+@@ -2594,7 +2599,7 @@ int cmd_fetch(int argc,
+ 		trace2_region_enter("fetch", "negotiate-only", the_repository);
+ 		if (!remote)
+ 			die(_("must supply remote when using --negotiate-only"));
+-		gtransport = prepare_transport(remote, 1);
++		gtransport = prepare_transport(remote, 1, &filter_options);
+ 		if (gtransport->smart_options) {
+ 			gtransport->smart_options->acked_commits = &acked_commits;
+ 		} else {
+@@ -2616,12 +2621,12 @@ int cmd_fetch(int argc,
+ 	} else if (remote) {
+ 		if (filter_options.choice || repo_has_promisor_remote(the_repository)) {
+ 			trace2_region_enter("fetch", "setup-partial", the_repository);
+-			fetch_one_setup_partial(remote);
++			fetch_one_setup_partial(remote, &filter_options);
+ 			trace2_region_leave("fetch", "setup-partial", the_repository);
+ 		}
+ 		trace2_region_enter("fetch", "fetch-one", the_repository);
+ 		result = fetch_one(remote, argc, argv, prune_tags_ok, stdin_refspecs,
+-				   &config);
++				   &config, &filter_options);
+ 		trace2_region_leave("fetch", "fetch-one", the_repository);
+ 	} else {
+ 		int max_children = max_jobs;
+@@ -2727,5 +2732,6 @@ int cmd_fetch(int argc,
  
- 	junk_mode = JUNK_LEAVE_REPO;
--	err = checkout(submodule_progress, filter_submodules,
-+	err = checkout(submodule_progress,
-+		       &filter_options,
-+		       filter_submodules,
- 		       ref_storage_format);
- 
+  cleanup:
+ 	string_list_clear(&list, 0);
 +	list_objects_filter_release(&filter_options);
-+
- 	string_list_clear(&option_not, 0);
- 	string_list_clear(&option_config, 0);
- 	string_list_clear(&server_options, 0);
+ 	return result;
+ }
 -- 
 2.52.0.319.gfcaffa7898
 
