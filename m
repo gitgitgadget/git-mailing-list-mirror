@@ -1,85 +1,121 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A02C1A9F8C
-	for <git@vger.kernel.org>; Tue, 23 Dec 2025 14:44:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766501095; cv=none; b=NPuhC+W3Mf90fg9+DYsVc9bcdaYnmQWdKsGqXAWZN7YsZ2mMWKhOMwtJRtCQ2l5o+iBCQuV9t8qPSDQXpW95fP6xRi/vQbSME0mj0nofdAaUBvHphACH/mUF2LkQjVAQYqWZL30078StlUJudL02NsA5P+HyBRxzler3Yb15H+s=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766501095; c=relaxed/simple;
-	bh=ly+QEwRlbLeOJa4Ex3ZfgBWQXdypHxFccwyurVLRZps=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=MjCjm6MtbX+siRkY1jGXUhmbT3DcJVDdgHoOH3l0wQPDLDFdrV383+4lHKfJOV90zpw1+2neN6EoWKnAWVQ3LjcedCC0C9+DfWqiD6oRl6Qo8u76zeCS9M5wdvNF/bVCc2KPxrbPy0qtzXNrXaRt4r+vc/MtQRl+94egesZrrik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K5h73sZr; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E582D8DC4
+	for <git@vger.kernel.org>; Tue, 23 Dec 2025 19:28:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.175
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1766518107; cv=pass; b=XDEbMcslfPZLWSeDE0Z9gE7WOm/+ntm8I7Q/ZwVGo0LD10jugyLOxNCv86yfISO/fa2QLIXz+i1qevyGu05u3/0B0sMUBPZ5flo+ZkH5RlHll0u//Ttf546gEcyNF1sCpp6Irs4TovEj0UfPoG9poPK4yOOaSe3Za9LGoy+daLM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1766518107; c=relaxed/simple;
+	bh=nqUeuZVf/m28hKSgvhTNzQhBXcri0aNgGQd6hGVfYXc=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=q7D+yo2YYe5KcEtJWj7B6p+mC8uQCunLBY2RywBgj6p2Vb7Z3BzfFtZ+m+U5JIGzzopvuuHPCAoy/NTD7xcsRM/28N4ESrjMhJ0tvbkgW7ruF3rYJNRSBdZpicaw5gEyK2x1Z31n8AsLmVPUCeoAC1ckBOdK2ibKoH7eKM/zjQY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G51WMCIe; arc=pass smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K5h73sZr"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-bc09b3d3afeso2879666a12.0
-        for <git@vger.kernel.org>; Tue, 23 Dec 2025 06:44:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G51WMCIe"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-b9a2e3c4afcso254068a12.1
+        for <git@vger.kernel.org>; Tue, 23 Dec 2025 11:28:25 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1766518105; cv=none;
+        d=google.com; s=arc-20240605;
+        b=j77IwfLWlFjuLkz257kub2Vyqg2Zh9gbK4pcx95za7OXODM5F0Ewb8V79hRs9xQpL+
+         dyb6SK1CLhvEvahqHpMfUggpQCEbuSe5oSvZEM3LYtfBvcyAEuMn3okrS8cQtbDAcsTN
+         fx3dgXZJ2SRlCrO+jbf4bk4EjEkPSlLjEO+qj+RtmXs42NxBxqBrJQD8NH35lzZPgPu0
+         2J9/h6Nq1lLcrMBWy6ViCfeZIBLbsMpiak5Puvpwqx5J+rK3qK8Em3J9wsBnz5DinmM3
+         1/OCLn0XzBSVdDHEB8Xk/G9iizBxtcCII4WEn5gDlP4ZWjpH+JlrusWGW1v4BbJv72Jg
+         ZRtA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=F8t5SIyLWKxPOvVdCn3gpUyPqk6CCv4iZcQuByb9/RM=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=abYZPexXRUqHKgndLyV7s4i2ZBwJdkHVjSomuqOS1DUUokHefa1UWYk6EC81f+xTBZ
+         GjqIxj1Xr9ZlrNIqzlglfZdnyT8M4rGhTbf+V+vDboRsP+FG0NWwaQY64QMchtUCRqTT
+         3gLtPVhECnSw6nfoJNsZ9uRVL5Fxyy5VhYOkloID8qFHCvhbLhGlvmSJ0rBptp4LJ2uk
+         JZuRrjCaX5y6O9y6RREB6U+566QewnUd5U0mn45eUst3qO6wcVqdAaiRa+Xy1jSUPtqC
+         l8jk00uT3xvqKnVrcjqhtgvaT59RaGf0/A0kXDtEEilbEFv3Czcf/lUOo0HWTZo2qi/l
+         yN+A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766501093; x=1767105893; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1766518105; x=1767122905; darn=vger.kernel.org;
         h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=ly+QEwRlbLeOJa4Ex3ZfgBWQXdypHxFccwyurVLRZps=;
-        b=K5h73sZrWziYDbiGIaCiqwwICPfHs/UZbOg3A28uc0E/h+Siyr4kZUIYAnmzYCHatC
-         PjtS8893XtomRrRfO6p8eUpVXT4vVptuFZFodpIj4Ih4vwkuYGZP8DsRbyAGpNNW87o6
-         Puqksj6WHV+Iadxls8grTbPzJ3/6c6GDgLLUf8OiXRz+h8gBXQuuXausIgZwk5p1iJ2L
-         kgE2UC5YCU6prijos0/WLFREeOl+hoiApuhIPX67yvzpc32wmBUPeKX8K1H0tjUwR67i
-         XWyuZt84db7MluGTBWSv2TzubTv0tM816JKf9Vgu2jYp0X17iWXq09qkYlpRbPMHtRvg
-         n2EQ==
+        bh=F8t5SIyLWKxPOvVdCn3gpUyPqk6CCv4iZcQuByb9/RM=;
+        b=G51WMCIeN0UQ8EzJgxF/hnECrvKmiZJUz+E8D8SaSi0joRWN37sqLv10U05Kmu39lc
+         HWHNOXebAFkd4l/83HZEkbiD64XfrCrkk6afmxChk9iMeAtzKmq2CjAI6pJvolWQ5Q5j
+         EUQfYKn+o+5KKFzJd7CeXkRDgYMoKHco5QRvlnXrYpta4c+l1AKw0E1U5oLpiKi5Ulxp
+         v02ydMA/9mDwt+gH8Ga+ruGIU9ZPTu8+74Qmb2XV4ZY9bsb73soQ0DCZ4qZf7xmj6VWy
+         rC7MdVCqGMtd0yf7MBthY+krDvhmCdgKFL+Bfc2ypVLxFhoaK0krSGSrucMEHs+rqZaS
+         UVDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766501093; x=1767105893;
+        d=1e100.net; s=20230601; t=1766518105; x=1767122905;
         h=to:subject:message-id:date:from:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ly+QEwRlbLeOJa4Ex3ZfgBWQXdypHxFccwyurVLRZps=;
-        b=VmgH0g8/g7TxZv0ygprISPvvOVb6bnAwhhJ0FySszxqPl0NqNGJ2OcpdVvs3LOeEqD
-         bnE8p4EmtHSEwsM8lMRNp0+iRtRA1oPsUbNt4iG3+Cux82xu7oQvV3oAXQ8K+rO9XQey
-         oGgF0cxinPvM5W2q0WbHZZ62gDGHle0rnkkHUwfmgjlc0OPc3/87xwrXbRtl/4CpudyH
-         elS7+50VzLEuWFwnItCNQzqIUy9fVYW60MJqOYN23RQyggTyjDMpGNRtQ6S87ceuK7q2
-         QvdWdU84nRynMlY2hUJ06SMITrNSR/K+pVbcxaWWp3sVwtlW1LATTV90T7+4uEVRmdkS
-         gXaQ==
-X-Gm-Message-State: AOJu0YxD1Gj9yCMdfxlRVpGF/54gVHTepPtevX8R7VYvBFGQOlfsk4QS
-	/xZGwNutzqeJddZXBbrncY4Xu91VE0vEJv/dDV3R/b7WMR7uZ5ACUMAmJD5PdoFZc0mOqz45Xvg
-	6Mhj/TgMCvSC4tiGPu/7ZV+eXYCjCOjYwBxTA
-X-Gm-Gg: AY/fxX5kN4/CBGnQQngJWw5sz7D+dynFKItKqtKT6p3xvztGHL+GR03A/4RFuyiQbwa
-	9MSUCHN0ynTk0JGT3w97BWCEEU0zp9mbkce+/e83GHvBm+0BCf9q4psNYXTBEgRuJp56BVEMeaw
-	Idwv2sVxk+fz83cCkGMkc/uqzUFfFDQhIohHuehtM6tJz9F0puKO9FOzHONe4MItYddXZ3GxhSz
-	PBIGzQTyuQ4Ol3FkaGP/NOQCaVsumjoy24sQx9JzxKskUsEc0H60Jg+kFa5lhFmN5J7eTopLvaL
-	Vfmqbt/9ZKoAXicbY9jhAJwvamDeEWCWgpA9dGFLfqHANz1v6q0wInPkVNs4uA==
-X-Google-Smtp-Source: AGHT+IFm2j4Ym/JDmFfZEr6eWWOgTPRBbRaNGvkXM6MDtPlj8rzBYQ961ssVxjYWz/5h58cKUxCYIWaCRgVZm3iObvs=
-X-Received: by 2002:a05:693c:839b:10b0:2ae:5bb5:5732 with SMTP id
- 5a478bee46e88-2b05ec6b69fmr11525061eec.29.1766501093225; Tue, 23 Dec 2025
- 06:44:53 -0800 (PST)
+        bh=F8t5SIyLWKxPOvVdCn3gpUyPqk6CCv4iZcQuByb9/RM=;
+        b=OdIuqTPEigTz1ioFCnJz5PSt5DsbWljkEvim6XaeR0PPbge23UIR3SbFcFO4LNtBrs
+         82xKB6me0kPM3/57pnS14oTMpvNsFUaIxeipxA13zyEwx/jrau8YOmvmCXWVKUSpqDR/
+         qv7Y7wFgndcjAlOt5svZFyAQK0XP/E5gNtbUowYjQ2AMl8fmoje/La13eQnVCKCaOmYn
+         El1Z/SFM7+IJLGyNlb+lsYjPYZVWr+4dikYwaHQhyAsrzA1H5bIMSQT2UvEcc3BOcneE
+         RepYL7sirjjCXHQxGGHwKH2Xr1efGOji0Oq3UvRQaEYfXT/cOjBEpccJHExKJ18gp/Zj
+         MXmg==
+X-Gm-Message-State: AOJu0YwSf4HE8A7wTNAO4osh6bfIzxyUY/g5yAY1NtMjUWqi6kpHH3Sw
+	cyLoJ6HadfH/zFtcnPZS2vJ3ZICK3ibjjzCzQDnKsXLu2mhOiKgDBjFZlrk0YN8B78lAsZ4zFyr
+	bp79GNdr9DGJl7I3QShQ3cvDSZ1QkfUSMtK1F
+X-Gm-Gg: AY/fxX40kGtvK6v7Lb+Lg9pkbnLYYIbo/O8VKzA4T8Zw+Sy+OPPux4gUWxl9ogZFJx4
+	5Wn+HWAkGRue5kP5HWV2ZGNcUWNaDwSi7sobtuvLuoNPYxqYdtaWP96gfIWFfmN4TA3ZMhte2Qh
+	M/n8fj51X7RtkG6RT7WuRl2n/n8k2jsJsh+xICDVpAnkZ3s3u78HXGI5Q1Z5KuubYo+q9CSUOS4
+	Jgsp/R2IgmHowTH3IkgDqVcht/kdQWN/NHzXsp8ih0Jcw1yeLzYaDDNJZgZz6fM2ZXL5tbMs1AG
+	PKrvuPrU/nKsceoqgknJ2iZr7Nocnh8x8lu6uwM=
+X-Google-Smtp-Source: AGHT+IEjMVoI2kSNAFv/qq/4UF9x0cmVqvm9IejvUeMegqd0nTP1cBxCPWiSu95jsspv6zkSVLKP+DFHUZ5grlFhCgY=
+X-Received: by 2002:a05:7300:e7a9:b0:2ae:5dc2:3b14 with SMTP id
+ 5a478bee46e88-2b05ebf25d0mr9442125eec.2.1766518104737; Tue, 23 Dec 2025
+ 11:28:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Deveshi Dwivedi <deveshigurgaon@gmail.com>
-Date: Tue, 23 Dec 2025 20:14:41 +0530
-X-Gm-Features: AQt7F2qiFIZmVFLATUSLUe2dX2n6EleMW7mO3VWFsMzzwTbQY-PF0HGlV9-CYxo
-Message-ID: <CAG7UgERJa8ktfetWty6A_0VL=s=yzfi-y0mLEta-NvQcd-0aDA@mail.gmail.com>
-Subject: Introduction and interest in Git - Deveshi Dwivedi
+From: Egor Ibragimov <juzujka@gmail.com>
+Date: Tue, 23 Dec 2025 22:28:12 +0300
+X-Gm-Features: AQt7F2qT0rJ6DARHGglOx9tY_DIIGB8M2JRvjAXAynr1VyuxnKcriM1r27DxEPc
+Message-ID: <CABd08tVFKDoBtdBsPHaE=Zocoj6H8yuhk86Bg+99zB_H7+r2BA@mail.gmail.com>
+Subject: Error in the manual
 To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-Hi all,
-I'm Deveshi Dwivedi, a fourth year Computer Science undergraduate from India.
+Hello, there is an error in the manual.
 
-I'm excited to be here and wanted to introduce myself. I've been
-interested in open source for a few years now and have contributed to
-a few organizations in the past. I'm currently exploring Git and would
-really like to start contributing to it, particularly as I'm
-interested in GSoC 2026.
+$git remote --help
+or im my case I enter incorrect command
+$git remote list
 
-I have been reading through the documentation and the "Hacking Git"
-article to get familiar with the codebase. I have set up the
-repository locally and run the test suite successfully. I am hoping to
-start with some small contributions and learn along the way.
+The help message:
 
-Looking forward to being part of the community.
+usage: git remote [-v | --verbose]
+...
+  or: git remote set-url --add <name> <newurl>
 
-Thanks,
-Deveshi
+If to type command according to help message, the error appears:
+
+$ git remote --add gitverse https://repository.domain/MyName/MyRepository
+error: unknown option `add' ...
+
+The correct command is
+
+$ git remote add gitverse https://repository.domain/MyName/MyRepository
+
+And the correct help message is
+
+   or: git remote set-url add <name> <newurl>
+
+In the manpage the same error too.
+
+$ git -v
+git version 2.43.0
+
+-- 
+Egor Ibragimov
+juzujka@gmail.com
++7-916-807-5378
