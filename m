@@ -1,44 +1,44 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from mout.web.de (mout.web.de [212.227.15.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FBF2D24B7
-	for <git@vger.kernel.org>; Wed, 24 Dec 2025 17:03:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7172F290A
+	for <git@vger.kernel.org>; Wed, 24 Dec 2025 17:03:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766595815; cv=none; b=bLwu245w2Um33tK7/4jU9B/x9cChrUv+EP2lt2DPKNVcHPi8dLsX7Jywz3zslMJXCriEgNuC4X5ullkUkDgTShOBBOoXy6FvEcscecA6JCGy7wNjov8jxfjoj2DbkN2xEfBK/E+au6K9xOTIYuJGVy51vZUeAX4H0pxgXrG7Qgg=
+	t=1766595816; cv=none; b=acYonRX5Mihr5Q+bQCHROXdRq/S893m3+S77w+0SwTm75WhJ4Wlnd2jAIS+SHxtvHkGwq3iDtF5CAtNpMK8pvMQ6YmxO1q6VlPbXVAkzfLrYrzpomlIebFSdSclrLCtJghaB6uJGKsf3HMF4NEJSxjcLGGtHIrwI1sWkQy+/iBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766595815; c=relaxed/simple;
-	bh=esdpSwEYlbH37rg0PxISPGKkR9ss7aqt3W+QiLK/2Ls=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Di96ItITvD4Y9PAgfxFvf3RGiYoFZN1H5CiXkDMZdz0oTqzpmmM/D9MdOyq7m88/H3T0prNxq30tIaWIaK1V9o5pD6l6Yh7NSmTxyUwzhWxwdryQ7n2RKnJOC6tBnJ4ZSHZsxD0XQcfgT2ZrAmVMppXbki2spnhwMDlJH5oKnRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=rSpiqh1w; arc=none smtp.client-ip=212.227.15.3
+	s=arc-20240116; t=1766595816; c=relaxed/simple;
+	bh=2K9wO268HzdGjBcZHaGxEemOWzfS4tNPBAn61Zg6VR0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=IUqta7b9UUNIrEWW8u/VXbFPgN5T0HwMiWrS2mHFCO3uy4vSIFyw0LzUOdEsbBGlCetuM0uyS3g8go/9oHVVdIPRffZhgKvYV3Wu+Hr/Yyh3Nws6JnrEA/M66enZ1Om1ZIpjOk6Q9z4ujwvgaaE193YfeUEkErX9cgpXWwAj/y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=tWObGqt3; arc=none smtp.client-ip=212.227.15.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="rSpiqh1w"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="tWObGqt3"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1766595808; x=1767200608; i=l.s.r@web.de;
-	bh=KiZPOElNTK9G2pjdUCNdioBEdaW+9+IOYu092VLIc4Y=;
-	h=X-UI-Sender-Class:From:To:Subject:Date:Message-ID:In-Reply-To:
+	s=s29768273; t=1766595809; x=1767200609; i=l.s.r@web.de;
+	bh=UoSq2YQkGRljHq0VjNvC4hvpr55YHk5xDu9avMCXtZQ=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
 	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=rSpiqh1wlw5IXbWFk1mmBTW234AYMJMquwvziSXVAfQ65a/nJwVIvFh6lV1rfXfx
-	 J7ZICbW6+DdpFAD9K6ZOiSmeb/X1yOJcRsevKeiycLAxMM4RaKdQkqvFoa7z7b9v6
-	 x0bruvWqQz+/Ne+Bg2Ex1wnRE13+rhWpb1FZvve7ClAirj1R8Q46HDDugcC73d9Ko
-	 yAagn/gwi2t1CepwUlMyv1Z17AwXT7JLll5ApL5unKxEuJYGIfhga/UuwXch7UwzM
-	 X2BL9sZGE0suEs4ZZqw5k9C8rN2/RHUalSNgbinJUav6yilIeAfP7FTRSzdMBDIXJ
-	 nWSy0ixPLjZl2KSwGw==
+	b=tWObGqt36i6UeHQkmYM4FEv39x+jIOH/tM4kFHFC7CoG/ZzKeG+lBSgCaoVEVzyi
+	 RgWBXH4YYrJplTytp8s5XEXrDcf18tmYyaWPV6cy+9vgG0huGd3vB2vuJqt10zpnI
+	 BS5cJiPzfed4NYUQNX1h5dJucgUi0o9mbbn2bqt+Lw/EL5u5K076eu0sVKBnlZz8x
+	 hfcu3vHisGY8HA0hFEAGqL4oBl2NKUBImVnx6tSS5WINVITsWgwYBGG59JRwpwunw
+	 9h3UTfbII8Sxc2ZPMV38/D6/vEcy+tyBR0fi1Q1eCV0zGvEF6EOCQ936rlSCE61Wn
+	 6fHoh7WLhX2Sf77rlA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from Mini-von-Rene.speedport.ip ([79.203.30.2]) by smtp.web.de
  (mrweb005 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 1MNORC-1vJePq3Lfm-00QNGz for <git@vger.kernel.org>; Wed, 24 Dec 2025 18:03:28
- +0100
+ 1N14pS-1vxR8N1poA-013ogj; Wed, 24 Dec 2025 18:03:29 +0100
 From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
-Subject: [PATCH 04/14] name-rev: use commit_stack
-Date: Wed, 24 Dec 2025 18:03:17 +0100
-Message-ID: <20251224170327.68049-5-l.s.r@web.de>
+Cc: Rene Scharfe <l.s.r@web.de>
+Subject: [PATCH 11/14] shallow: use commit_stack
+Date: Wed, 24 Dec 2025 18:03:24 +0100
+Message-ID: <20251224170327.68049-12-l.s.r@web.de>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224170327.68049-1-l.s.r@web.de>
 References: <20251224170327.68049-1-l.s.r@web.de>
@@ -50,141 +50,238 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:oz+3KZ25qIFd7M8JDA9WO8v2RHT4TrEE82fEEUMwKhedVMydRpu
- +IBCvnbpOlEJSiaZIav4eDN4wALSglvE4Gzf7imIysgOqaP3z27ebjRpHPIIN+H8UXQRmw+
- CDO5AlNGrkh3XXYXXJTbiOB1+SKS5oXwR+2G7fgKHzqfVEi8eTvzEEtNqyafprtMC7oLB60
- a/TjuDnK9VAE8SAY49EvA==
+X-Provags-ID: V03:K1:QiSINOP3YWTozf5cQxhwjWL8BhWR1Zi+A1cJqq7z0KpQekiPLrN
+ NhhelhWQVTtTd7lYE0l+MdQN9uICURZgZxLQNm49ZkfmHSpVqCeH3CQWvVsmDysIcp5Su2y
+ TqG4zwH2eqauwK0RbZotePq+mifqfq6yr0x5ZecnGvvuxsqM1qfYser4fUWHVhztPEwvGiu
+ B6JihbR0AqA5PwA637lYQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:+usWqQiM+2Q=;YcKOK4ghjJlmFnqtDWR0o85CVhd
- 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
+UI-OutboundReport: notjunk:1;M01:P0:e7nXf5kErbA=;7wu9k+pQIm+ecomxESzxwUDrc5b
+ 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
 
-Simplify the code by using commit_stack instead of open-coding it.
+From: Rene Scharfe <l.s.r@web.de>
+
+Replace a commit array implementation with commit_stack.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- builtin/name-rev.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ shallow.c | 44 +++++++++++++++++---------------------------
+ shallow.h |  4 ++--
+ 2 files changed, 19 insertions(+), 29 deletions(-)
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 615f7d1aae..6188cf98ce 100644
-=2D-- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -180,8 +180,7 @@ static void name_rev(struct commit *start_commit,
+diff --git a/shallow.c b/shallow.c
+index 186e9178f3..c870efcefc 100644
+=2D-- a/shallow.c
++++ b/shallow.c
+@@ -471,6 +471,7 @@ void prepare_shallow_info(struct shallow_info *info, s=
+truct oid_array *sa)
  {
- 	struct prio_queue queue;
- 	struct commit *commit;
--	struct commit **parents_to_queue =3D NULL;
--	size_t parents_to_queue_nr, parents_to_queue_alloc =3D 0;
-+	struct commit_stack parents_to_queue =3D COMMIT_STACK_INIT;
- 	struct rev_name *start_name;
-=20
- 	repo_parse_commit(the_repository, start_commit);
-@@ -206,7 +205,7 @@ static void name_rev(struct commit *start_commit,
- 		struct commit_list *parents;
- 		int parent_number =3D 1;
-=20
--		parents_to_queue_nr =3D 0;
-+		parents_to_queue.nr =3D 0;
-=20
- 		for (parents =3D commit->parents;
- 				parents;
-@@ -238,22 +237,18 @@ static void name_rev(struct commit *start_commit,
- 								string_pool);
- 				else
- 					parent_name->tip_name =3D name->tip_name;
--				ALLOC_GROW(parents_to_queue,
--					   parents_to_queue_nr + 1,
--					   parents_to_queue_alloc);
--				parents_to_queue[parents_to_queue_nr] =3D parent;
--				parents_to_queue_nr++;
-+				commit_stack_push(&parents_to_queue, parent);
- 			}
- 		}
-=20
- 		/* The first parent must come out first from the prio_queue */
--		while (parents_to_queue_nr)
-+		while (parents_to_queue.nr)
- 			prio_queue_put(&queue,
--				       parents_to_queue[--parents_to_queue_nr]);
-+				       commit_stack_pop(&parents_to_queue));
- 	}
-=20
- 	clear_prio_queue(&queue);
--	free(parents_to_queue);
-+	commit_stack_clear(&parents_to_queue);
+ 	trace_printf_key(&trace_shallow, "shallow: prepare_shallow_info\n");
+ 	memset(info, 0, sizeof(*info));
++	commit_stack_init(&info->commits);
+ 	info->shallow =3D sa;
+ 	if (!sa)
+ 		return;
+@@ -503,6 +504,7 @@ void clear_shallow_info(struct shallow_info *info)
+ 	free(info->shallow_ref);
+ 	free(info->ours);
+ 	free(info->theirs);
++	commit_stack_clear(&info->commits);
  }
 =20
- static int subpath_matches(const char *path, const char *filter)
+ /* Step 4, remove non-existent ones in "theirs" after getting the pack */
+@@ -733,19 +735,13 @@ void assign_shallow_commits_to_refs(struct shallow_i=
+nfo *info,
+ 	free(shallow);
+ }
+=20
+-struct commit_array {
+-	struct commit **commits;
+-	size_t nr, alloc;
+-};
+-
+ static int add_ref(const struct reference *ref, void *cb_data)
+ {
+-	struct commit_array *ca =3D cb_data;
+-	ALLOC_GROW(ca->commits, ca->nr + 1, ca->alloc);
+-	ca->commits[ca->nr] =3D lookup_commit_reference_gently(the_repository,
+-							     ref->oid, 1);
+-	if (ca->commits[ca->nr])
+-		ca->nr++;
++	struct commit_stack *cs =3D cb_data;
++	struct commit *commit =3D lookup_commit_reference_gently(the_repository,
++							       ref->oid, 1);
++	if (commit)
++		commit_stack_push(cs, commit);
+ 	return 0;
+ }
+=20
+@@ -770,7 +766,7 @@ static void post_assign_shallow(struct shallow_info *i=
+nfo,
+ 	uint32_t **bitmap;
+ 	size_t dst, i, j;
+ 	size_t bitmap_nr =3D DIV_ROUND_UP(info->ref->nr, 32);
+-	struct commit_array ca;
++	struct commit_stack cs =3D COMMIT_STACK_INIT;
+=20
+ 	trace_printf_key(&trace_shallow, "shallow: post_assign_shallow\n");
+ 	if (ref_status)
+@@ -793,9 +789,8 @@ static void post_assign_shallow(struct shallow_info *i=
+nfo,
+ 	}
+ 	info->nr_theirs =3D dst;
+=20
+-	memset(&ca, 0, sizeof(ca));
+-	refs_head_ref(get_main_ref_store(the_repository), add_ref, &ca);
+-	refs_for_each_ref(get_main_ref_store(the_repository), add_ref, &ca);
++	refs_head_ref(get_main_ref_store(the_repository), add_ref, &cs);
++	refs_for_each_ref(get_main_ref_store(the_repository), add_ref, &cs);
+=20
+ 	/* Remove unreachable shallow commits from "ours" */
+ 	for (i =3D dst =3D 0; i < info->nr_ours; i++) {
+@@ -808,7 +803,7 @@ static void post_assign_shallow(struct shallow_info *i=
+nfo,
+ 		for (j =3D 0; j < bitmap_nr; j++)
+ 			if (bitmap[0][j]) {
+ 				/* Step 7, reachability test at commit level */
+-				int ret =3D repo_in_merge_bases_many(the_repository, c, ca.nr, ca.com=
+mits, 1);
++				int ret =3D repo_in_merge_bases_many(the_repository, c, cs.nr, cs.ite=
+ms, 1);
+ 				if (ret < 0)
+ 					exit(128);
+ 				if (!ret) {
+@@ -820,7 +815,7 @@ static void post_assign_shallow(struct shallow_info *i=
+nfo,
+ 	}
+ 	info->nr_ours =3D dst;
+=20
+-	free(ca.commits);
++	commit_stack_clear(&cs);
+ }
+=20
+ /* (Delayed) step 7, reachability test at commit level */
+@@ -830,22 +825,17 @@ int delayed_reachability_test(struct shallow_info *s=
+i, int c)
+ 		struct commit *commit =3D lookup_commit(the_repository,
+ 						      &si->shallow->oid[c]);
+=20
+-		if (!si->commits) {
+-			struct commit_array ca;
+-
+-			memset(&ca, 0, sizeof(ca));
++		if (!si->commits.nr) {
+ 			refs_head_ref(get_main_ref_store(the_repository),
+-				      add_ref, &ca);
++				      add_ref, &si->commits);
+ 			refs_for_each_ref(get_main_ref_store(the_repository),
+-					  add_ref, &ca);
+-			si->commits =3D ca.commits;
+-			si->nr_commits =3D ca.nr;
++					  add_ref, &si->commits);
+ 		}
+=20
+ 		si->reachable[c] =3D repo_in_merge_bases_many(the_repository,
+ 							    commit,
+-							    si->nr_commits,
+-							    si->commits,
++							    si->commits.nr,
++							    si->commits.items,
+ 							    1);
+ 		if (si->reachable[c] < 0)
+ 			exit(128);
+diff --git a/shallow.h b/shallow.h
+index ad591bd139..1c0787de1d 100644
+=2D-- a/shallow.h
++++ b/shallow.h
+@@ -1,6 +1,7 @@
+ #ifndef SHALLOW_H
+ #define SHALLOW_H
+=20
++#include "commit.h"
+ #include "lockfile.h"
+ #include "object.h"
+ #include "repository.h"
+@@ -69,8 +70,7 @@ struct shallow_info {
+ 	int *need_reachability_test;
+ 	int *reachable;
+ 	int *shallow_ref;
+-	struct commit **commits;
+-	size_t nr_commits;
++	struct commit_stack commits;
+ };
+=20
+ void prepare_shallow_info(struct shallow_info *, struct oid_array *);
 =2D-=20
 2.52.0
 
