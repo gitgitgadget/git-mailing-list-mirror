@@ -1,70 +1,70 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D54F332EC0
-	for <git@vger.kernel.org>; Wed, 24 Dec 2025 09:31:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202C5332EB7
+	for <git@vger.kernel.org>; Wed, 24 Dec 2025 09:31:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766568673; cv=none; b=OKvrIHpKo4NSIwTbZ196O6dMxatGo/hPKOXhVMnC7ogme/1ru4lhhyXfOx6wgCLMFe0XKMBiP3Co1lCfsrlGDQCj80DWqaHY/U3dxmvuJzOzQH55eEondOrcA+91+5zY3CHTycHf9PFear4W9hcxA9ebFE5SPlYMBK5Wb40DbNY=
+	t=1766568673; cv=none; b=I2XzTg6w8jmAXVMnOhu0lnJJ5q+egcBo3V5a0sNMHmXRPrT5wq/1lAL9T7R5taaRx4VTKhCmkSJm1T73mSzi70ZJh9dKEkegaCM9wMrp0HNLAKLdYgxzFDevaRenuFVNYLybHGJW129pgADrhCSre/C/cbe8q9e3micXefxOUfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1766568673; c=relaxed/simple;
-	bh=olXSpMFt9hAOLB3xsCFG60EeHYKe6/5tDFJKC4AYkK4=;
+	bh=MMyGEqA2dNGnNngUW17cNMS6p/QxHG3zNwdVAxCJh8w=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=BS62QjdfKSnjMr1D1axMTQ2KKSfvfSdFEsLtoElFWbgWozcOqReRvnuhF+p4bqKFP1g4NcMvkZClanpXuKqLGz3Fw0XweXd0CaDZu/Ihnh+S/bftOuzSULsBaFGOU9GpHBPNWEUHZxwXaCgfx7M/jfaI/tagfieUPfGUe1IYRrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ewlcyrzb; arc=none smtp.client-ip=209.85.215.173
+	 MIME-Version:To:Cc; b=OrpQuBX4n4BG4ut3+kua+nnNhvl6JFlCoxdc35kQCpQ17ZM6ruYcFtPTw54U0AqgH61exXmgFYCI2hKA5gWm15AIBNVAKkg5ScqzlQpO4om1yspFG15Oj3edWN+muHNntL9Ab42Cvf3duDJfWGOL1uxEjDSxqu2R6995c7XGE5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eqohRp05; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ewlcyrzb"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-c06cb8004e8so4640415a12.0
-        for <git@vger.kernel.org>; Wed, 24 Dec 2025 01:31:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eqohRp05"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2a07f8dd9cdso62534755ad.1
+        for <git@vger.kernel.org>; Wed, 24 Dec 2025 01:31:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766568670; x=1767173470; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1766568669; x=1767173469; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=87FO33ycJoRW4/p4RjOFV29Otf8eIYFHCwHjBiNEPBo=;
-        b=EwlcyrzbB3J8RtnSUYqRRaAvqf9TxAE4+b7OEu1od0i+xcOUmyGsmQ395SSVYUR3+I
-         qhDYW1e1DWcQ6Q2GPJ+e+ug1jU1IYg1NmRYF83BBeHOE1Txg0g4YQ/IBwW669zuzK3Wq
-         rpzmHEbWm4YVQIpE9PXveIrNMOSUB7KSOUekcObpVE8LpJMcGtahKSWebL2oeo/Txi2/
-         CaUNefFCv8jQUcgZPRAmI4DSl+JRz6nguqmYUVZ+1xI0Udig7AEXXhRRC9Fy9Ft0nFxd
-         iS+/Ekl+TtBRUqLYyrNv6IS9PNfTuLze1rymwbknm9FHR7tLZsbhCDHgxq7WZPpBDxJy
-         HpXg==
+        bh=NJM8Fvvm4JVu8q5tOpyLZwjaBbWHg/Q824d3a8dQF10=;
+        b=eqohRp05oclDWvLxwdQ3LnXiopjRnELB7U+068TrVgZRE1N8xYgtg9Bqr9Zt8ALKgJ
+         TbYmJox7GvmMhKGRKOhxyLpDOblU4oeSlvgMztBfB6xEFAvc0TlB8NhVEG8sb9jl2SSO
+         UJ1Q4Jr4t/Ob9oDjnUblWKp0Fi3jF1yArbnc3Igifj9iZKQL9VvX8IdZSCqvJyssyAh/
+         SGb8ZwKrKB3ai4enKMF0QAnbi0eL2LqGDvlyPkQVUmpUv8JJTXFS2/UOVwCvg2Zwm23m
+         DxmiFlz5HvMbydc+Wf/sfIvZzBK8MfZY0F0K1Jk1/vC0nFbQHUyP8TX40ADnZmoIN/MF
+         gwBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766568670; x=1767173470;
+        d=1e100.net; s=20230601; t=1766568669; x=1767173469;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=87FO33ycJoRW4/p4RjOFV29Otf8eIYFHCwHjBiNEPBo=;
-        b=gG5atgzCPvKmvrxCG1lwVysVIFV4EdOn4VW10wz2aOetBnsTnYsyTqjcrTMFjvKEk2
-         WEYV/ppEXfXx/7mEIKLgiWdB1GXFQu7D8dXjI45Wwgb55jT4PQO3N/k3mGfCy1a9fleD
-         kb+6STV7nvUtMSZZ4xCCNbe+jZtRnJ7b09KHv1n/eAfzZj5rCDxU+TjoGcloz5m3gheY
-         61ADHLlf+uvOlXFlq9AIhHJ0qHyRIvhk04xW+aU748XjGmyPBRLURO5PQGVSTc5EAzL6
-         tLEjYHGiIu1IvJ8mYsAwu3O82C4Jxt8VYzFlpHsysQYKaoBlmxeh8BXBnj4ptjVupQs/
-         6DBg==
-X-Gm-Message-State: AOJu0YxrY52I/4uBo9kfcXIYbf/nt4lK4doqxCu4cizjbrKrFvq/516q
-	XIzrMjTbZjAIgBZv85Q1Y3uqLAeQhnot2y3g6MHrEhue/pFdzqhxDgMy8NxWwyO4
-X-Gm-Gg: AY/fxX413UuNQLHRQI9Zv1C/7W4EMYJHHS59zRuk50Qxjjuq3k172fZgdsxtjspQcC5
-	HsMyq6jwfDYgHxHE71l6/6qDM0X/hhpGlRIokE79IZ2LoARQgW1h7zYn2SQmVG0J7n3Do1g+9zf
-	PCcYatYXAkLP9QCIaJUbpcQQOQcHCf9umef2YeH7Pkgdl9/7zA9isPtbLinN4q8S7WiWYt+WZ5Z
-	U8Pf/qaTLOTsvgPxjgn8pngDLC0DxFeYUu48WP6r7ZYTaysfPKD9Ml9p5f/f8j1dX8cvv8pkiEz
-	deuu73R3SnnsU6FNjgIs6FH6YLS6P4/f19ZIAdFO6w7q4n0SLc/fbbGGciljo4EaLADX+9buzOK
-	WF7m2hM88VDjysscp6JYuKiVYJKW+d4XLV2ynxxRCn7RuMQJk86kjPCVC+XJFPf36+Vr+rGe3ev
-	wafgC3S+MrqCJV
-X-Google-Smtp-Source: AGHT+IFHitpmU6uOPswDdZ9V3L8O2w/RnuLK6BjMOzslp2hW7r0pYwj7out4nFG94z/mmzWIdcwLkA==
-X-Received: by 2002:a05:7022:2093:b0:11b:b064:f606 with SMTP id a92af1059eb24-121722f5f71mr14166479c88.26.1766568669985;
-        Wed, 24 Dec 2025 01:31:09 -0800 (PST)
+        bh=NJM8Fvvm4JVu8q5tOpyLZwjaBbWHg/Q824d3a8dQF10=;
+        b=qPZPwXfLDRi/hZKVZWrmHwxBgf6iBUOtQYaFWkecIH76oIo4jAOrpoHm6vIaK1Eyra
+         ynTEu7QDYhB0tPerCXAVxygVdYn+gvGs+k4/pumg9lzWeO1ShfSubNTTpBYQZnzgmsO8
+         JESQIvfMTvgnTUHW8Pz1l6iAaJKs8ba2N78TcYsfFBo4s8EL8IchzDgeDib4TJasCKWM
+         Vd9O+DhnKr45cLCS92u3NGQK1L8RzWuRMBzmVmEdncgz2p+oO0fZq92OPQzhu7aW+fyr
+         5gvVbzvvqwszGGVz+Tgx3UrcUHvrQ8pJ4BNEJ5f1DC3cb75w1rvbmHUDk59C+45L7x5h
+         K7aA==
+X-Gm-Message-State: AOJu0YwxxQiXZG42GeMU+9iCkfVO2DI8+KCUEyxVJ+PiPfEKiUHpcY4K
+	0evfj3fvXcdb4CTvr1buWY+cTbM3XKPARycWi7gaKKJbKFa+RC6gXf13ilGmPj2Q
+X-Gm-Gg: AY/fxX5ikJKfbjwMFpRtekdTMrZRkRItkSEetIMb+Xgvk8heiiWOmP6bbOrC5XWP1bD
+	I8LhNMo6EDv66vBjmdbjUDomqWtlMamZmET4ME17dW4lTIKSi9PA/TKQf+Zzd5NzlV6jSvBNXGb
+	VxPoIgz1+h2Liy8km3PgFupKHWguoGkkh4xqMS+K6M+2Mhkb9bxuWGBFgf6QbBrsmxOOCOcta5y
+	JWtcyYkL9vAcDH7bIIqc7sdz8+5iObmAbZIgMN//Ne80EEvonaDtPlSAucQEriiJtkwgsT1ueat
+	V5M8LpuaXwqui/GDJ89+m74xbilpgn50IicddvaCfVysgMjQmcvZikc1Eu+Uf3yTG65/USj5hAx
+	0N3JzKxd0navFscUpyWFUllfegGTXa9gfy0QD9nqITiS+qAZS443VbgCbWgiKYNcZfLQv4azszc
+	aqp8DOr1nxtJTZ
+X-Google-Smtp-Source: AGHT+IFdcjtdNpsjOR07fJqe6P7yPBd+4S+iy1uch8o/MWnA26ISYeN2gvjQzaMNI4OWyGy9fg9s7A==
+X-Received: by 2002:a05:7022:6988:b0:119:e56b:98a4 with SMTP id a92af1059eb24-121722b71f2mr21408950c88.11.1766568668585;
+        Wed, 24 Dec 2025 01:31:08 -0800 (PST)
 Received: from [127.0.0.1] ([68.220.57.107])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121724cfd95sm64269265c88.1.2025.12.24.01.31.09
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121724cfdd0sm66634341c88.4.2025.12.24.01.31.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Dec 2025 01:31:09 -0800 (PST)
-Message-Id: <417f2075fb876cbf5a00cd9877fb867ceddf7f6d.1766568665.git.gitgitgadget@gmail.com>
+        Wed, 24 Dec 2025 01:31:07 -0800 (PST)
+Message-Id: <a3800aed18e576e42de273c9dae0e25bbe26ac6a.1766568665.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2138.v3.git.git.1766568665.gitgitgadget@gmail.com>
 References: <pull.2138.v2.git.git.1766530448.gitgitgadget@gmail.com>
 	<pull.2138.v3.git.git.1766568665.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 24 Dec 2025 09:31:04 +0000
-Subject: [PATCH v3 2/3] Simplify default branch comparison logic
+Date: Wed, 24 Dec 2025 09:31:03 +0000
+Subject: [PATCH v3 1/3] status: show comparison with upstream default branch
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,143 +80,473 @@ Cc: Harald Nordgren <haraldnordgren@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-This maintains the same functionality while reducing ref resolution calls
-from multiple to one, and eliminating unnecessary memory allocations.
+"git status" on a branch that follows a remote branch compares
+commits on the current branch and the remote-tracking branch it
+builds upon, to show "ahead" (i.e. you have built new history,
+while others are not touching it), "behind" (i.e. you haven't
+added any work since you were in-sync, while others have added
+their work on the branch), "diverged" (i.e. you have commits
+that you haven't pushed out, while others have added commits).
+
+When you fork a branch 'feature' from the 'main' branch of the
+remote, but then create 'feature' branch at the remote and push
+there, while you still occasionally pull from or rebase onto
+their 'main', you'd also want to know how much you have diverged
+from 'main', in addition to how your 'feature' and their
+'feature' compares. Currently the comparison with 'main' is not
+given, making it hard to know when to start thinking about
+rebasing onto the upstream default branch.
+
+Show two sets of comparison: one with the tracking branch (as
+before), and another with the upstream's default branch (what
+their HEAD points to, typically 'main' or 'master'). The latter
+comparison appears on a separate line after the tracking branch
+status, using the same format:
+- "Ahead of 'origin/main' by N commits" when purely ahead
+- "Behind 'origin/main' by N commits" when purely behind
+- "Diverged from 'origin/main' by N commits" when diverged
+
+Example output when tracking a feature branch:
+    On branch feature
+    Your branch is ahead of 'origin/feature' by 2 commits.
+      (use "git push" to publish your local commits)
+
+    Ahead of 'origin/main' by 5 commits.
+
+The upstream default branch is determined by checking symbolic refs:
+1. refs/remotes/upstream/HEAD (if upstream remote exists)
+2. refs/remotes/origin/HEAD (fallback)
+
+This works with any default branch name (main, master, develop,
+etc.) as long as the symbolic ref is configured. The comparison
+is also shown when the branch is up-to-date with its tracking
+branch but differs from the upstream default branch.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- remote.c | 59 ++++++++++++++++++--------------------------------------
- 1 file changed, 19 insertions(+), 40 deletions(-)
+ remote.c                 | 104 +++++++++++++++++
+ t/t6040-tracking-info.sh | 246 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 350 insertions(+)
 
 diff --git a/remote.c b/remote.c
-index b2a1e980b1..f3831ef3be 100644
+index 59b3715120..b2a1e980b1 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -2267,41 +2267,17 @@ static char *get_default_remote_ref(char **full_ref_out)
- 	return NULL;
+@@ -2237,6 +2237,98 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+ 	return stat_branch_pair(branch->refname, base, num_ours, num_theirs, abf);
  }
  
--static int is_default_remote_branch(const char *name)
--{
--	char *default_full = NULL;
--	char *default_short;
--	int result = 0;
--
--	default_short = get_default_remote_ref(&default_full);
--	if (!default_short)
--		return 0;
--
--	result = !strcmp(name, default_short);
--
--	free(default_short);
--	free(default_full);
--	return result;
--}
--
- static void format_default_branch_comparison(struct strbuf *sb,
- 					     const char *branch_refname,
-+					     const char *default_full,
-+					     const char *default_short,
- 					     enum ahead_behind_flags abf)
- {
- 	int default_ours = 0, default_theirs = 0;
--	char *default_full = NULL;
--	char *default_short;
--
--	default_short = get_default_remote_ref(&default_full);
--	if (!default_short)
--		return;
- 
- 	if (stat_branch_pair(branch_refname, default_full,
--			     &default_ours, &default_theirs, abf) <= 0) {
--		free(default_short);
--		free(default_full);
-+			     &default_ours, &default_theirs, abf) <= 0)
- 		return;
--	}
- 
- 	strbuf_addstr(sb, "\n");
- 
-@@ -2324,9 +2300,6 @@ static void format_default_branch_comparison(struct strbuf *sb,
- 			   default_ours + default_theirs),
- 			default_short, default_ours + default_theirs);
- 	}
--
--	free(default_short);
--	free(default_full);
- }
- 
++static char *get_default_remote_ref(char **full_ref_out)
++{
++	int flag;
++	const char *resolved;
++	static const char *remotes[] = { "upstream", "origin", NULL };
++	int i;
++
++	for (i = 0; remotes[i]; i++) {
++		struct strbuf head_ref = STRBUF_INIT;
++		strbuf_addf(&head_ref, "refs/remotes/%s/HEAD", remotes[i]);
++
++		resolved = refs_resolve_ref_unsafe(
++			get_main_ref_store(the_repository),
++			head_ref.buf,
++			RESOLVE_REF_READING,
++			NULL, &flag);
++
++		strbuf_release(&head_ref);
++
++		if (resolved && (flag & REF_ISSYMREF)) {
++			if (full_ref_out)
++				*full_ref_out = xstrdup(resolved);
++			return refs_shorten_unambiguous_ref(
++				get_main_ref_store(the_repository), resolved, 0);
++		}
++	}
++
++	return NULL;
++}
++
++static int is_default_remote_branch(const char *name)
++{
++	char *default_full = NULL;
++	char *default_short;
++	int result = 0;
++
++	default_short = get_default_remote_ref(&default_full);
++	if (!default_short)
++		return 0;
++
++	result = !strcmp(name, default_short);
++
++	free(default_short);
++	free(default_full);
++	return result;
++}
++
++static void format_default_branch_comparison(struct strbuf *sb,
++					     const char *branch_refname,
++					     enum ahead_behind_flags abf)
++{
++	int default_ours = 0, default_theirs = 0;
++	char *default_full = NULL;
++	char *default_short;
++
++	default_short = get_default_remote_ref(&default_full);
++	if (!default_short)
++		return;
++
++	if (stat_branch_pair(branch_refname, default_full,
++			     &default_ours, &default_theirs, abf) <= 0) {
++		free(default_short);
++		free(default_full);
++		return;
++	}
++
++	strbuf_addstr(sb, "\n");
++
++	if (default_ours > 0 && default_theirs == 0) {
++		strbuf_addf(sb,
++			Q_("Ahead of '%s' by %d commit.\n",
++			   "Ahead of '%s' by %d commits.\n",
++			   default_ours),
++			default_short, default_ours);
++	} else if (default_theirs > 0 && default_ours == 0) {
++		strbuf_addf(sb,
++			Q_("Behind '%s' by %d commit.\n",
++			   "Behind '%s' by %d commits.\n",
++			   default_theirs),
++			default_short, default_theirs);
++	} else if (default_ours > 0 && default_theirs > 0) {
++		strbuf_addf(sb,
++			Q_("Diverged from '%s' by %d commit.\n",
++			   "Diverged from '%s' by %d commits.\n",
++			   default_ours + default_theirs),
++			default_short, default_ours + default_theirs);
++	}
++
++	free(default_short);
++	free(default_full);
++}
++
  /*
-@@ -2340,7 +2313,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+  * Return true when there is anything to report, otherwise false.
+  */
+@@ -2248,6 +2340,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
  	const char *full_base;
  	char *base;
  	int upstream_is_gone = 0;
--	int show_default_branch_comparison;
-+	char *default_full = NULL;
-+	char *default_short = NULL;
++	int show_default_branch_comparison;
  
  	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
  	if (sti < 0) {
-@@ -2352,7 +2326,13 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+@@ -2258,6 +2351,9 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 
  	base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
  					    full_base, 0);
- 
--	show_default_branch_comparison = !is_default_remote_branch(base);
-+	default_short = get_default_remote_ref(&default_full);
-+	if (default_short && !strcmp(base, default_short)) {
-+		free(default_short);
-+		free(default_full);
-+		default_short = NULL;
-+		default_full = NULL;
-+	}
- 
++
++	show_default_branch_comparison = !is_default_remote_branch(base);
++
  	if (upstream_is_gone) {
  		strbuf_addf(sb,
-@@ -2365,8 +2345,6 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 			_("Your branch is based on '%s', but the upstream is gone.\n"),
+@@ -2269,6 +2365,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
  		strbuf_addf(sb,
  			_("Your branch is up to date with '%s'.\n"),
  			base);
--		if (show_default_branch_comparison)
--			format_default_branch_comparison(sb, branch->refname, abf);
++		if (show_default_branch_comparison)
++			format_default_branch_comparison(sb, branch->refname, abf);
  	} else if (abf == AHEAD_BEHIND_QUICK) {
  		strbuf_addf(sb,
  			    _("Your branch and '%s' refer to different commits.\n"),
-@@ -2383,8 +2361,6 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+@@ -2285,6 +2383,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
  		if (advice_enabled(ADVICE_STATUS_HINTS))
  			strbuf_addstr(sb,
  				_("  (use \"git push\" to publish your local commits)\n"));
--		if (show_default_branch_comparison)
--			format_default_branch_comparison(sb, branch->refname, abf);
++		if (show_default_branch_comparison)
++			format_default_branch_comparison(sb, branch->refname, abf);
  	} else if (!ours) {
  		strbuf_addf(sb,
  			Q_("Your branch is behind '%s' by %d commit, "
-@@ -2396,8 +2372,6 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+@@ -2296,6 +2396,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
  		if (advice_enabled(ADVICE_STATUS_HINTS))
  			strbuf_addstr(sb,
  				_("  (use \"git pull\" to update your local branch)\n"));
--		if (show_default_branch_comparison)
--			format_default_branch_comparison(sb, branch->refname, abf);
++		if (show_default_branch_comparison)
++			format_default_branch_comparison(sb, branch->refname, abf);
  	} else {
  		strbuf_addf(sb,
  			Q_("Your branch and '%s' have diverged,\n"
-@@ -2412,10 +2386,15 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+@@ -2310,6 +2412,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
  		    advice_enabled(ADVICE_STATUS_HINTS))
  			strbuf_addstr(sb,
  				_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
--		if (show_default_branch_comparison)
--			format_default_branch_comparison(sb, branch->refname, abf);
++		if (show_default_branch_comparison)
++			format_default_branch_comparison(sb, branch->refname, abf);
  	}
-+
-+	if (default_short && !upstream_is_gone && sti >= 0 && abf != AHEAD_BEHIND_QUICK)
-+		format_default_branch_comparison(sb, branch->refname, default_full,
-+						 default_short, abf);
-+
  	free(base);
-+	free(default_short);
-+	free(default_full);
  	return 1;
- }
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index 0b719bbae6..e2bd48f858 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -21,6 +21,7 @@ test_expect_success setup '
+ 	git clone . test &&
+ 	(
+ 		cd test &&
++		git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main &&
+ 		git checkout -b b1 origin &&
+ 		git reset --hard HEAD^ &&
+ 		advance d &&
+@@ -292,4 +293,249 @@ test_expect_success '--set-upstream-to @{-1}' '
+ 	test_cmp expect actual
+ '
  
++test_expect_success 'setup for ahead of non-main tracking branch' '
++	(
++		cd test &&
++		git checkout -b feature origin/main &&
++		advance feature1 &&
++		git push origin feature &&
++		git checkout -b work --track origin/feature &&
++		advance work1 &&
++		advance work2
++	)
++'
++
++test_expect_success 'status shows ahead of both tracked branch and origin/main' '
++	(
++		cd test &&
++		git checkout work >/dev/null &&
++		git status --long -b | head -5
++	) >actual &&
++	cat >expect <<-\EOF &&
++On branch work
++Your branch is ahead of '\''origin/feature'\'' by 2 commits.
++  (use "git push" to publish your local commits)
++
++Ahead of '\''origin/main'\'' by 3 commits.
++EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'checkout shows ahead of both tracked branch and origin/main' '
++	(
++		cd test &&
++		git checkout main >/dev/null &&
++		git checkout work 2>&1 | grep -E "(Switched|Your branch|Ahead of)" | head -3
++	) >actual &&
++	cat >expect <<-\EOF &&
++Switched to branch '\''work'\''
++Your branch is ahead of '\''origin/feature'\'' by 2 commits.
++Ahead of '\''origin/main'\'' by 3 commits.
++EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'status tracking origin/main shows only main' '
++	(
++		cd test &&
++		git checkout b4 >/dev/null &&
++		git status --long -b
++	) >actual &&
++	test_grep "ahead of .origin/main. by 2 commits" actual &&
++	test_grep ! "Ahead of" actual
++'
++
++test_expect_success 'setup for ahead of tracked but diverged from main' '
++	(
++		cd test &&
++		git checkout origin/main &&
++		git checkout -b oldfeature &&
++		advance oldfeature1 &&
++		git push origin oldfeature &&
++		git checkout origin/main &&
++		advance main_newer &&
++		git push origin HEAD:main &&
++		git checkout -b work2 --track origin/oldfeature &&
++		advance work2_commit
++	)
++'
++
++test_expect_success 'status shows ahead of tracked and diverged from origin/main' '
++	(
++		cd test &&
++		git checkout work2 >/dev/null &&
++		git status --long -b | head -5
++	) >actual &&
++	cat >expect <<-\EOF &&
++On branch work2
++Your branch is ahead of '\''origin/oldfeature'\'' by 1 commit.
++  (use "git push" to publish your local commits)
++
++Diverged from '\''origin/main'\'' by 3 commits.
++EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'setup for diverged from tracked but behind main' '
++	(
++		cd test &&
++		git fetch origin &&
++		git checkout origin/main &&
++		git checkout -b work2b &&
++		git branch --set-upstream-to=origin/oldfeature &&
++		git checkout origin/main &&
++		advance main_extra &&
++		git push origin HEAD:main
++	)
++'
++
++test_expect_success 'status shows diverged from tracked and behind origin/main' '
++	(
++		cd test &&
++		git checkout work2b >/dev/null &&
++		git status --long -b | head -6
++	) >actual &&
++	cat >expect <<-\EOF &&
++On branch work2b
++Your branch and '\''origin/oldfeature'\'' have diverged,
++and have 1 and 1 different commits each, respectively.
++  (use "git pull" if you want to integrate the remote branch with yours)
++
++Behind '\''origin/main'\'' by 1 commit.
++EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'setup for behind tracked but ahead of main' '
++	(
++		cd test &&
++		git fetch origin &&
++		git checkout origin/main &&
++		git checkout -b feature3 &&
++		advance feature3_1 &&
++		advance feature3_2 &&
++		advance feature3_3 &&
++		git push origin feature3 &&
++		git checkout -b work3 --track origin/feature3 &&
++		git reset --hard HEAD~2
++	)
++'
++
++test_expect_success 'status shows behind tracked and ahead of origin/main' '
++	(
++		cd test &&
++		git checkout work3 >/dev/null &&
++		git status --long -b | head -5
++	) >actual &&
++	cat >expect <<-\EOF &&
++On branch work3
++Your branch is behind '\''origin/feature3'\'' by 2 commits, and can be fast-forwarded.
++  (use "git pull" to update your local branch)
++
++Ahead of '\''origin/main'\'' by 1 commit.
++EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'setup upstream remote preference' '
++	(
++		cd test &&
++		git remote add upstream ../. &&
++		git fetch upstream &&
++		git symbolic-ref refs/remotes/upstream/HEAD refs/remotes/upstream/main
++	)
++'
++
++test_expect_success 'status prefers upstream remote over origin for comparison' '
++	(
++		cd test &&
++		git checkout work >/dev/null &&
++		git status --long -b | head -5
++	) >actual &&
++	cat >expect <<-\EOF &&
++On branch work
++Your branch is ahead of '\''origin/feature'\'' by 2 commits.
++  (use "git push" to publish your local commits)
++
++Diverged from '\''upstream/main'\'' by 5 commits.
++EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'setup for up to date with tracked but ahead of default' '
++	(
++		cd test &&
++		git checkout origin/feature &&
++		git checkout -b synced_feature --track origin/feature &&
++		git checkout origin/main &&
++		advance main_ahead &&
++		git push origin HEAD:main
++	)
++'
++
++test_expect_success 'status shows up to date with tracked but diverged from default' '
++	(
++		cd test &&
++		git checkout synced_feature >/dev/null &&
++		git status --long -b | head -4
++	) >actual &&
++	cat >expect <<-\EOF &&
++On branch synced_feature
++Your branch is up to date with '\''origin/feature'\''.
++
++Diverged from '\''upstream/main'\'' by 3 commits.
++EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'setup for up to date with tracked but ahead of origin/main' '
++	(
++		cd test &&
++		git remote remove upstream &&
++		git checkout origin/feature &&
++		git checkout -b synced_feature2 --track origin/feature &&
++		git checkout origin/main &&
++		advance main_ahead2 &&
++		git push origin HEAD:main
++	)
++'
++
++test_expect_success 'status shows up to date with tracked but diverged from origin/main' '
++	(
++		cd test &&
++		git checkout synced_feature2 >/dev/null &&
++		git status --long -b | head -4
++	) >actual &&
++	cat >expect <<-\EOF &&
++On branch synced_feature2
++Your branch is up to date with '\''origin/feature'\''.
++
++Diverged from '\''origin/main'\'' by 5 commits.
++EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'setup for up to date with tracked but purely ahead of origin/main' '
++	(
++		cd test &&
++		git checkout origin/feature &&
++		git checkout -b synced_feature3 --track origin/feature
++	)
++'
++
++test_expect_success 'status shows up to date with tracked but shows default branch comparison' '
++	(
++		cd test &&
++		git checkout synced_feature3 >/dev/null &&
++		git status --long -b | head -4
++	) >actual &&
++	cat >expect <<-\EOF &&
++On branch synced_feature3
++Your branch is up to date with '\''origin/feature'\''.
++
++Diverged from '\''origin/main'\'' by 5 commits.
++EOF
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 gitgitgadget
 
