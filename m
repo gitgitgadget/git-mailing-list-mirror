@@ -1,115 +1,114 @@
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DBA80C02
-	for <git@vger.kernel.org>; Wed, 24 Dec 2025 03:32:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15D5261B96
+	for <git@vger.kernel.org>; Wed, 24 Dec 2025 03:37:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766547162; cv=none; b=uAo1+aYKrU2AhvRn7iv9xD5ShrUoTfDemNfKYTNzSR4Xa7t+fPJz1FsK5c4N8wkp9/2dvJFUFBHyw63F+sw/xyU8La8bU/GYrlkY5jygJlfqogXr6d2+wqQomvsnNzEmjSdQ+3f2HPQcN6MN27mgyzyYcf3Q42tnK6xbKagbM7A=
+	t=1766547452; cv=none; b=TVJH+zZkVnxG1ZxyP30ZxfbBrQO/CsrkLxo+GYJMAgfHrNm1QhIs8bOS/BOe9PQQ23vr+BTvpQp0LyL6E4NIPFiYfutE6aLy9AlV/XLl+q+8yh+KiTvHOw7MTJ/P2SDzM/XM+g6B5rxqwphDWkSt8yYKTdsq1tzxQBTv+4qoVoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766547162; c=relaxed/simple;
-	bh=TXt8T2mYYwgHfHe9SrxecauUVC43fQ0RuAAQkCsIGwU=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=sQahOsSuBuCTT3JJFyLAu8vtKN4XAvG9Wpho1Gb8X1OPN+GY7Bv1tpy5CE4XfRB0CQnQDP7pkA0t/B2xkcPIfxWQn3+SdiAtBIk/Gg257wl+PhZcWMhvxpx/YvcfxHMq1G4tR+wY20JY/sK5oo61N3jNykHn0tNX7IIfd93fFKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YXBZNI3X; arc=none smtp.client-ip=209.85.161.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1766547452; c=relaxed/simple;
+	bh=81nUqH2JYJv4WbP4nrUJPK2iwmm4HiKXwrDIZDRKbqc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fZAV3nyBbFTIPTeACEf3L+xiRQI9oqtK4xt9YnZ3RddVyOVcfjq0172YouNFFAr6BXESEWG/7MdDwVwCBqITc/ft9Kv0qAeppJrOX73CCon0YOWt08/VG8pSwpHaPBaMtbpkO2MC74gznOdq3/we8yUmVItWGqa4CzWPSkhfgho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YTyiSn/H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m8fKlWnP; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YXBZNI3X"
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-65cfb4beabcso3286070eaf.3
-        for <git@vger.kernel.org>; Tue, 23 Dec 2025 19:32:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766547159; x=1767151959; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=GhKCL8u6m0ttg9TjHxOXe+22h6wFngN7xVZUIovk3sk=;
-        b=YXBZNI3XM6dgyABRv412u6iKKr7Voxt4+6KJCg7AGuin3qDCURZlFOGnwCYCaMCPck
-         eFxRuS94g20EQfVdPGTRHO1PBpOSQjPaOyiZlBt07lPEg9lRPIyOz/vZoKt9JKeeRGcm
-         ti7HplBjjAnglM0AnkYrL6J6gIjhiBdaG7CB7X2zGK++DCRN2ysny/4b74JBkK1REkka
-         bbSK/MyrBMITw+v1lPeN2qXvftYqjkB9a+S6Gh6uM5BzO9sFpg2kMRFf3rS8uJn5a7tD
-         H3hUaHOEkMRITxlfJglgOApIjMLHsxK++U1jBohACFxCW9LMIdlXDfX7zJ0Kqhfv/VYm
-         SJgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766547159; x=1767151959;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GhKCL8u6m0ttg9TjHxOXe+22h6wFngN7xVZUIovk3sk=;
-        b=lWQerZzxgKVubUCiB0xwVySLESzCNBVn5a1eX8MyiXnqOhoE5UnnHorcibfcrOuvTk
-         BW3K36YxwHGXO2D3VHUFXnYNXCJ5podFHAFwsUPUSUxDDmtv86kdINX9DpAB+s9EWaxn
-         ZwzBNta1Nbz1vvsqK8pH4vgTojRjBbettxJQ94qFk/zuK4LB+rMuCy8vDv8weUqgAnRR
-         +0vuCyAqqJDsuIqaAzoSz5jBCYq6BVARAxmIsBx8AarS4YXNs2TGpz6m4M39IMnlWkra
-         WPYO7CB8S3W3huAiK34qUqTfex/48ghdV4AAMauntkpz52etlmK+S8Azn8grz1KOStHo
-         CPew==
-X-Gm-Message-State: AOJu0YzKrBKuzBp7VA4OJ7cdpm+PfyiiOmGu5eGuzszgrW6svEFJPX+A
-	Ipyja7mKXEelHLUwKUNGrRMHliVltlg7yAzEOUsBMdacfS7DFD3uK7ifXDhmnxJ6sj2+n7m1teY
-	pFVrxZgC35y/4OiriHDCQyclowEDR+FIv5MBA
-X-Gm-Gg: AY/fxX4yEHomm9+mihDL0Wp5Qn63tIXERB+0kru1QZk8/yByTfSIGKX8LzVoEBGHdgD
-	exIy0UV1GRmCsE/34tnimVQ5KK9F9XhPctXWacJ+k2nl4ncAG9rtncuPBbDvOoszJKQa/ZH/nwd
-	uhgmQyUrDdA3In4d5WGBqJNZhQqmrN7Q9jivI+TcsMeJ19lApC9C21TYd+w+mM2ZKGGKcSpicAc
-	OGsqLS1vKzEBQQPZ/ahMkH4jApjcPCvfmGACsH5TdDuweuYF9IBU7SWu6jYWiv883kUkB3EIeQP
-	Pv4f4SJO2vJZS24/cxV9xzSGcKwF
-X-Google-Smtp-Source: AGHT+IH1iOe6pcaujMbZ64966q5lWqJtvUrUPC6K14r9RcqleV+nkANEcu0UC8Gp7vKa2hNp2JZ/cICYZzHH7L4k+Ak=
-X-Received: by 2002:a05:6820:f00c:b0:65b:2944:7318 with SMTP id
- 006d021491bc7-65d0eb2fed8mr7844990eaf.38.1766547159059; Tue, 23 Dec 2025
- 19:32:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YTyiSn/H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m8fKlWnP"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9C1ED1D000BB;
+	Tue, 23 Dec 2025 22:37:28 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 23 Dec 2025 22:37:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1766547448; x=1766633848; bh=2JQGi4y8Is
+	Is4YtVh37OrgYiWTPHVMmhRJoRBb72YO0=; b=YTyiSn/HBGDRSnOtQYRqPTYtey
+	hoGCpIVgXf6LDF0eRlWRHIgJFsMZPFkfnKSxMNiGpfMtxQ4VuTBakCUAYaMqZxUb
+	3iH89MPhy4rdny/tRdje8Iewa+FTPuY/g4Adniqjqsh4qUm9DwO7W/V3dQbGZNzk
+	d2trnfLm1bY7kJzQabIMlYUSn62BQThGrkgooyR0PS0weaXCOSqexWo/PD19v6Eb
+	CZwqs9ER/7xYxrcMGtkNRzEHLTWj4XbilLio47IkPE54EKAHsLz/ZgGKZIqRqYoP
+	K3Sl37+tUcVmNqLf4pmGJy8HOJ+OWNlHY370SOImTX5rFxlDLnYX/bleLH9w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1766547448; x=1766633848; bh=2JQGi4y8IsIs4YtVh37OrgYiWTPHVMmhRJo
+	RBb72YO0=; b=m8fKlWnPezDicFakCsApx62yM6NJhnOEvxoeLCLO60V9tODjR6X
+	KOyll3hNy5LyQ+7QHN6Yis642tIxxF4OsOrdlFg3P/hqiSjUbpRTBx/Fv5X8iWpy
+	AXt+9TPuV469mefOXGQ/8LoMVPT9a0u/y7NxAWcOuUvUtFGCV24YTstAWN7f+fop
+	kWFUGhBwSzh5PoPoTpGCxpu4vofLjW4AsdN68tbMfW5qLFY5v47OnxSSeeOwmEjH
+	4aq7HvZB6e2npVC1dCF5PfsKeNrSTwuelQLd1XuKROPmoLnLdSB3m9wvWwjbZJSD
+	kbuLTHFfJ5hZsj21NLA1m9VCkfV9LtXKNAQ==
+X-ME-Sender: <xms:-F9LaYzk455F9NFY_xxuTTL4HKaAE8vJdMmcZSP-zBpK4OyYl480wA>
+    <xme:-F9Laf9Y33YNG5zo7R1LXVLXK1_sS3WGwmEzyJnuAZis7BPqfi0eUZrpVeeXdIfwf
+    Mneq3WFLu6g27v756JUgSzuH-cH_Nd05TNQ4wFBknC8pmBjsUtG>
+X-ME-Received: <xmr:-F9LaUJZ5byr3XcbBJP2v3GdAo-Jbp7Nq66qi9jv5x9SyZHyTQZzl2R-Bp0Y0RCj0iRpIus918nMgb1yq6ALPhUsEQJ89RQ_zQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeiudeigecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhi
+    khdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvg
+    htpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:-F9Lade8neSLjxm7HAvKiwY43OBeXI8kcvs-8NHZkgWZttsbuwBrmg>
+    <xmx:-F9Lab9gfP0N7P5sVvxD32lumS-No6KT5KKEUzxXZuB_pFxTGPotfg>
+    <xmx:-F9LaSrqJA6zTYLqa4aP0EUY8oH5hlNMLjbww0wROh7iS4L6BGMQhQ>
+    <xmx:-F9LaYDm2YhpHFxul7eRIYy5RFdIQ86briE1Ku6sqlKH2dLcBP6z9Q>
+    <xmx:-F9LacjKJsLnPj8GPPz-HTJEnx3LXMieX4ZHVCps4U0m-wOe5EpR4Oa8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 23 Dec 2025 22:37:27 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Jeff King <peff@peff.net>,  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: Possible regression: lost diagnostic message when pushing
+ non-commit objects to refs/heads/*
+In-Reply-To: <CABPp-BGL2tJR4dPidQuFcp-X0_VkVTknCY-0Zgo=jHVGv_P=wA@mail.gmail.com>
+	(Elijah Newren's message of "Tue, 23 Dec 2025 19:32:28 -0800")
+References: <CABPp-BGL2tJR4dPidQuFcp-X0_VkVTknCY-0Zgo=jHVGv_P=wA@mail.gmail.com>
+Date: Wed, 24 Dec 2025 12:37:26 +0900
+Message-ID: <xmqqikdwo8i1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 23 Dec 2025 19:32:28 -0800
-X-Gm-Features: AQt7F2pBCDML_MBu6m2ppVGaY-A-5ob8RgQyHMclVZQTQqpfZU8E7SU6Nrk-k40
-Message-ID: <CABPp-BGL2tJR4dPidQuFcp-X0_VkVTknCY-0Zgo=jHVGv_P=wA@mail.gmail.com>
-Subject: Possible regression: lost diagnostic message when pushing non-commit
- objects to refs/heads/*
-To: Git Mailing List <git@vger.kernel.org>, Karthik Nayak <karthik.188@gmail.com>
-Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi,
+Elijah Newren <newren@gmail.com> writes:
 
-git used to have better diagnostics about pushing non-commit objects
-to refs/heads/*, dating all the way back to c3b0dec509fe (Be more
-careful about updating refs, 2008-01-15):
+> Bisecting shows that this
+> started with commit 9d2962a7c44 ("receive-pack: use batched reference
+> updates", 2025-05-19).  That commit message to me suggests that while
+> error handling was necessarily changed, that dropping the errors was
+> not intentional:
+>
+> ```
+> As using batched updates requires the error handling to be moved to the
+> end of the flow, create and use a 'struct strset' to track the failed
+> refs and attribute the correct errors to them.
+> ```
+>
+> But it's possible I'm reading it wrong.  Was it intentional, or is
+> this a regression?
 
-$ git --version && git push . tagit:old
-git version 2.50.1
-Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
-remote: error: cannot update ref 'refs/heads/old': trying to write
-non-commit object d19968fcf0d3193147b827c9e89668d619afd01e to branch
-'refs/heads/old'
-To .
- ! [remote rejected] tagit -> old (failed to update ref)
-error: failed to push some refs to '.'
+The topic bisect found was supposed to be purely performance
+optimization, and we should take any changes in behaviour as
+regressions.
 
-Unfortunately, the "trying to write non-commit object" error is no longer shown:
-
-$ git --version && git push . tagit:old
-git version 2.51.0
-Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
-To .
- ! [remote rejected] tagit -> old (invalid new value provided)
-error: failed to push some refs to '.'
-
-The relevant error message is still part of the code:
-$ git grep "write non-commit object" -- '*.c'
-refs/files-backend.c:                           "trying to write
-non-commit object %s to branch '%s'",
-refs/reftable-backend.c:                        strbuf_addf(err,
-_("trying to write non-commit object %s to branch '%s'"),
-
-but the error message isn't displayed.  Bisecting shows that this
-started with commit 9d2962a7c44 ("receive-pack: use batched reference
-updates", 2025-05-19).  That commit message to me suggests that while
-error handling was necessarily changed, that dropping the errors was
-not intentional:
-
-```
-As using batched updates requires the error handling to be moved to the
-end of the flow, create and use a 'struct strset' to track the failed
-refs and attribute the correct errors to them.
-```
-
-But it's possible I'm reading it wrong.  Was it intentional, or is
-this a regression?
+Thanks.
