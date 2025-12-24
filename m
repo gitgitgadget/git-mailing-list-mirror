@@ -1,99 +1,108 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AF92836A0
-	for <git@vger.kernel.org>; Wed, 24 Dec 2025 10:24:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403C925F98B
+	for <git@vger.kernel.org>; Wed, 24 Dec 2025 10:38:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766571885; cv=none; b=FCAGwhiplcB43aGj6+Xz46b0iGVUeiVYayquqfQl/PBKSl7rrQ319FZa2X3JTSdi/qE0o3olGfd0fJUTtAN1cPwpXoPpcRAqrxoZZ3kBp8uJ3mXhPuh/CpUwlAtG/dno90hVryERx8w3sHxEo70MKPqRsNsPB7IRCZDuyHiUy1k=
+	t=1766572719; cv=none; b=X9bJPPnTgs/oAosntKjOlCBcPJKHXCfWG5iimqYB9etpuJQgdHlL9vFAbKnbgGcMSKXFiRCn7wdcytrnxYrZ7lQ537x/bCsBtMufzo6badnvyoEfsloijRsWAZZHltyNBKLVpPqhZrYld5exHa60TFz2FDUoZH+5/92j51IC+tA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766571885; c=relaxed/simple;
-	bh=DLJ5cEnr6QAxBf4yGm3t96HZdy9WEedamrXXH3SPoQQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U783G3Xi0g4XKlNhfDB8c+ui7TGgFH4aed1HUIYlWxYoDYbytewFNaiU8rOVOKg5KQH6n2HCOWoibSzt1V/wXpvSMejSYXS9w3wR273JWz3sJ02xi+4jt8r53+r3e9B2xbN0sya6YE0m86sYNE6aH4eeJd7CrDXiJfZ45CWthGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YhgnClYE; arc=none smtp.client-ip=209.85.167.48
+	s=arc-20240116; t=1766572719; c=relaxed/simple;
+	bh=AmRol9o1f1oXuwoWczFo3ujMAe7xQZ7TSkAMk6N971c=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=bB692cU93u17f36OCWgJYWUsiKVNPq1y1csur6AcJbwGK/WH9z9Y89dy+WhRIljmgBTJLhNfyE1YSTKjwlQLNNWrDAUU4qboc0qvt3p2/6NbKGqVCnooP7QpKkGYMkSE95RypoNxp3ko0dLGGQHqeQzBtTZcN9iQpq+6EvDdw+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FhEoe8oc; arc=none smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YhgnClYE"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-59577c4c7c1so6244300e87.1
-        for <git@vger.kernel.org>; Wed, 24 Dec 2025 02:24:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FhEoe8oc"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-88a288811a4so65957126d6.3
+        for <git@vger.kernel.org>; Wed, 24 Dec 2025 02:38:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766571882; x=1767176682; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1766572717; x=1767177517; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DLJ5cEnr6QAxBf4yGm3t96HZdy9WEedamrXXH3SPoQQ=;
-        b=YhgnClYEZdlvXuBxmiCY19qxnJUarzIQxsCWq0iJrFhASMR19QQfTSuLs+zTPJ3i0H
-         WewnZckTW+UV5zVk0L/inQfeOoMRjXHhvV1iVGfaqkZHl+Lh0TSDi6vtcom7otdf16s7
-         whljdOB7HOtMkh+XP4eZwv6ad8gzvKOgZjYCrIjLt6q2tWJ65wM0zhX/fQXJ53rqVs1S
-         Ilv1TDe+sOSyM8RIg3hNt2pnImIBBTxNV1itwflruN1M6rFPa32POouvJG9IlRuqJhz+
-         HCRZPWdXvoxW+jcICO0YVRAzewrVwP0iouGlT/nUBuKOiEzOoVM5rIb4xtHcUXcWeuqE
-         FzlA==
+        bh=2C6mm2u9FO12i40ANrOqlqF+IonW4HKjohSLaZZYG04=;
+        b=FhEoe8ocT944qQG356MnV2ajk/L785YXMwM/5l2F5DExsasPha6YhtmMf1p6086krL
+         2vt6HOvtkC9CfEPCMeqJPSh9mAJKIlswLQ29T4bMD1sJQSC1jQvXsNmEPuV9p8uXtkSc
+         ZnkGYa8nDOcv+cHIoSdIAGI1bXYyAki4KFd0T0qXm3QmsoRx66xVBwyjrbV3J4mebsw9
+         +nej3dKluk4nCQhvo3morkJe65TGt6rqKasIo/PjEXdFws5JGIa3FjgH3xeZ//X6AM3m
+         4+iRcVjSgJxtQW9a7QLfoAExDV3exLvm1OUgUoravc9emi+os/96uCiHMNsaNhpE27bx
+         fSfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766571882; x=1767176682;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1766572717; x=1767177517;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=DLJ5cEnr6QAxBf4yGm3t96HZdy9WEedamrXXH3SPoQQ=;
-        b=o/eP6wyo4mptX7xzM3uoWzPeINag7TurMuK4kXddsqenhBuO1qtkkRLtvAj/Jtrkpb
-         TbU05lA2YihtpnfjAoYELpiKd2qgfMogkKny09NJvYI9n1ycVeH0DYJdXHTK2ysTh9Di
-         iW1D9KxnCIaIoK9kWRYnjrS08wbUUdKJsNyseXBRJ5qL1rfl05CpAOPtVoqTviTS2r7B
-         O8fJ5GhtqfGy/oSgLfh8cg+oZ4yOLk0bMJfdZG/hAm5eHLdoRHxNrv3PVmv73GKFUMwW
-         lmjxJhhle6/2mtz5YrNHiXaUbaMs77jmqpjARU7cl5MAfsarOPU9IpiEQpqUR1xH+V8d
-         wSZQ==
-X-Gm-Message-State: AOJu0YyWKvz9Qv8fqP5cwU9kDKOashhNNkqZkFhV8IkevdW3jgR9tUdd
-	C71e6dgeli0fmSmBiqT1uajOkElTwwvFDvm0xY09nkXqrbSnhPNrK2Yq
-X-Gm-Gg: AY/fxX4ZhcelqNTeYKid9AwaxBjlSU3ch2xT+1ECEVzDzPs1k+6fNnUvXzZUWl3EriF
-	FdT43B9vqRusUorgXwJ924vmwqjG9JuS/bgvbIasqIZxaRudn5IRfg6yELLRljp61050dviXgqU
-	6tcRioaVT0vbPTW7yED/74gJkYSv79wKlpjia18YPZAmye7jCVjI4C5W1dQEnjV6Stqt2FxL0lF
-	Bwq+exUXku55EhKmSOuKy2nuPStEpAvGn3gLiE6wi+68m9vaAE89BJVi9JWjJud1ifom1rAfbHY
-	Q+KKHokVK8guajuHh91ednOcA5wddK0cdzDJpXlv3eYaDcEiIVmx+mYdSGj2u9NJTx1d71YGXtF
-	AcLASJ5hq+KzeWmKmzj/aX0ZVprbiN8pCkR08r3Oas1oxu/Ym/usWIQ2VYEGL+gaJ6fhmEeGia0
-	/IFY5LXl8kACN4Dp0GMOeOZckWv8vOBFlFJJTQmBc/D/s3VK8W9KsO
-X-Google-Smtp-Source: AGHT+IE2yFC1PPhiMG/WNJRyI7XziWC5Ky8ICYmWsIq5hug3HMj12I3H6hW0Vz5V73SJ5Y7R9VjsZw==
-X-Received: by 2002:ac2:4e0a:0:b0:597:d7e4:4e8f with SMTP id 2adb3069b0e04-59a17d22910mr5631942e87.7.1766571881977;
-        Wed, 24 Dec 2025 02:24:41 -0800 (PST)
-Received: from localhost.localdomain ([2a00:801:7ab:287a:2dd4:6f70:cc:78bb])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a185dd1e9sm4766730e87.23.2025.12.24.02.24.41
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 24 Dec 2025 02:24:41 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com,
-	ychin.macvim@gmail.com
-Subject: Re: [PATCH] status: show default branch comparison when tracking non-default branch
-Date: Wed, 24 Dec 2025 11:24:40 +0100
-Message-Id: <20251224102440.66208-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <xmqqqzskodqe.fsf@gitster.g>
-References: <xmqqqzskodqe.fsf@gitster.g>
+        bh=2C6mm2u9FO12i40ANrOqlqF+IonW4HKjohSLaZZYG04=;
+        b=C8Bq+Gwcmv8EG8oIXaMb645BYAqeqQFRJrevRgmqpg7TidLwolVZM8FNNYTv2HBs6I
+         bzIYIfSbUwajRaH2DbDeHvaTQTru8prbzdg2O11J8al7O1KPr4vIWaRdpngHQpN03/U/
+         EKVeFObmWEIonMcjZXlt3KX5EaDQvwd41gtoGWEXL8GcRfRXwJ+5uCq1CSEPclyaNTJD
+         iJ7UnNh5Q306tHsSJu44Wn8EM/rrANIC3tuuw9ZQ0OTb8rd7fnx35tlmdOLsyTdYwYSU
+         FJz6IyTRnmqhTfznfoB0zZN1JLTJWlfI52evZ7SG3+vV0BsbfxfsbCDChw/VXMSl6+fw
+         5QKw==
+X-Gm-Message-State: AOJu0YzD+SOlY9OhWFq0McjWYY7FEXthg82qyv1RWxOyrgBhc2ppgdV6
+	k5+Y19rDpi2DJMaRN8kx5sbEOTgV6M1qgV9sJ8VxPBj2aviZqHQm69DREDNEHpfg
+X-Gm-Gg: AY/fxX7pTDy9gOTfST+/7+uBmE7FIvAKh6upQz9aA1kR2XH8EY7k+YeRCwOUjviOfVd
+	pwqb3LbNMTmlavVNtenBfZJ/NYriOcV5V7GcArIPjrEYnuNeWqaYaEWFK7xpag17+KnxGDHaelG
+	G4Yn3njl66YyTDmpg/ZdbFRxCGTiRvgljOb4XdA3qUoncr3PGeoslwvIV+ED6l+NbAbX+gh18wG
+	ljC3tP84M2Gx/y5hXdzLHIdgFXErqJhK8fBpWAjISLy3/wJiac9ObnxLethW5i/dO2fE4i3hVI4
+	u95ggj3hoUWnPnPTcba5fnpBttTNt1Gx2vhjo5jDtFW1TWhzM1sumenExaQ1EyJc7NQXjz8IRAH
+	x98dQDZtAc/2I6q+xrjPMvE17tN78/1oVdXqqe91lNzbYhpW4Y7nHa1PYb/PlMNGEMayDh4yVo4
+	q/Ry107/nNV4vq
+X-Google-Smtp-Source: AGHT+IGjqQ0U6jWbVziDspRHxzpv3w+1m+MB2v7xdeEnjpC03UIHh4bIUQSh7+FxjqIce/4mh/Sf6Q==
+X-Received: by 2002:ad4:5c8a:0:b0:880:4272:9a5b with SMTP id 6a1803df08f44-88d83d66e33mr293548376d6.50.1766572716696;
+        Wed, 24 Dec 2025 02:38:36 -0800 (PST)
+Received: from [127.0.0.1] ([64.236.153.98])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88d9680c323sm121844686d6.13.2025.12.24.02.38.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Dec 2025 02:38:36 -0800 (PST)
+Message-Id: <pull.2138.v5.git.git.1766572715.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2138.v4.git.git.1766571587.gitgitgadget@gmail.com>
+References: <pull.2138.v4.git.git.1766571587.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 24 Dec 2025 10:38:30 +0000
+Subject: [PATCH v5 0/5] status: show default branch comparison when tracking non-default branch
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
 
-> This series seems to punt on
-> determining both repository and branch and instead uses a hardcoded
-> "upstream" (or "origin") and "HEAD", which is not satisfactory.
+cc: Chris Torek chris.torek@gmail.com cc: Yee Cheng Chin
+ychin.macvim@gmail.com cc: "brian m. carlson" sandals@crustytoothpaste.net
 
-I have made a change to the code to not assume "upstream" or "origin" as remote names. Now there is a config setting 'repo.settings.statusGoalBranch' to enable this the check.
+Harald Nordgren (5):
+  status: show comparison with upstream default branch
+  Simplify default branch comparison logic
+  Use repo.settings.statusGoalBranch config for status comparison
+  Rename default_remote to goal_branch
+  Add warning for malformed statusGoalBranch config
 
-I side-stepped the discussion about pushRemotes since what Yee Cheng Chin brought up seems to kill the possibility of determining comparison branch dynamically. Let me know what you think of the latest code and I can handle it if needed 🤗
-
-> I don't have that much of an opinion on per-repo / per-branch
-> configuration but I just wanted to point out that some branches would
-> benefit from the ability to turn this off. Perhaps it could be a two
-> layered setting that could be both configured per-repo / per-branch
-> but I don't know if this makes it too complicated.
-
-I skipped this for now because I couldn't find a precedent in the sourc code for config settings that are "on repo-wide, but turned off for some branches". I could dig into this if we need it. I would like to hear Junio C Hamano's thoughts on this specific thing too 🤗
+ remote.c                 |  92 +++++++++++
+ t/t6040-tracking-info.sh | 340 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 432 insertions(+)
 
 
-Harald
+base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2138%2FHaraldNordgren%2Fahead_of_main_status-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2138/HaraldNordgren/ahead_of_main_status-v5
+Pull-Request: https://github.com/git/git/pull/2138
+
+Range-diff vs v4:
+
+ 1:  a3800aed18 = 1:  a3800aed18 status: show comparison with upstream default branch
+ 2:  417f2075fb = 2:  417f2075fb Simplify default branch comparison logic
+ 3:  c9ec5d9610 = 3:  c9ec5d9610 Use repo.settings.statusGoalBranch config for status comparison
+ 4:  0e308141da = 4:  0e308141da Rename default_remote to goal_branch
+ -:  ---------- > 5:  441678939f Add warning for malformed statusGoalBranch config
+
+-- 
+gitgitgadget
