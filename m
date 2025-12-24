@@ -1,69 +1,70 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8300230F939
-	for <git@vger.kernel.org>; Wed, 24 Dec 2025 10:19:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C9C313555
+	for <git@vger.kernel.org>; Wed, 24 Dec 2025 10:19:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766571592; cv=none; b=TsLsmiLldEPFyyStrkzdC+IEviEFSb3LhGZrLoXeZaKicU4Ghb+0NxfvISkkGXhaboEXz+vggSLAlBOOhTnsrc4Ecr/s+RjspCJmDwKo5xX2lwoLUDOfDO15DqzJ7j51579YwbyDbxdQDimD5pHKYx26Gc05Ooi0mtTN4e3ioeI=
+	t=1766571594; cv=none; b=XCzgIpbNW6ZZvUd42W38iA8Ffk6amY/voddN5K03f9rwlSPBDgM3evc82XAR0PEinzsJi1tv8sy/cApFuW1YUvxBF5LXCcnC5PUIbhKpjfAv1oTAPtgn/pPQAT4F3UuB5VuVUAPeK17ZArDtvWQVr9n8CjyxgVsXIJpTRtX4gRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766571592; c=relaxed/simple;
-	bh=FpJqTSVTeLZZgNTLo6SuFgxF5TgjSpB7ulU2QcCfKbk=;
+	s=arc-20240116; t=1766571594; c=relaxed/simple;
+	bh=olXSpMFt9hAOLB3xsCFG60EeHYKe6/5tDFJKC4AYkK4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OPQs31IQGkF5wgRGfOEkMgvHoeLiWTUjoVpmaCAyEZcFkqbxa0gX97zfIdHBSHTQcBuV9tS0/ZFsKNY4+7FFY8At5wPBTCkKQe2cgP4zEvr/UaJloIKIPW0ULWjtNcmE28nO4pFYWFdgfX7XcmuFaTSwfPw0jJ7i/+faM6/I4k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IoO8Wzvr; arc=none smtp.client-ip=209.85.222.181
+	 MIME-Version:To:Cc; b=npttX5uzSB+lKv6iyn4Y7Y1TTo+atFak7Hnz5qejh9W0Um5ZrQ5BiFnoT5VFd8iV+BE1HK5zM+pHeS4L8ApGvA2iDQ7peqB4Nll2JRQXXlC/kh2kQzQN31weE9lf4BYaYH5y16YAVZum4mAYYIvhJMBRRWw+aB6o+kR5A0qBoOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RMMa0eEK; arc=none smtp.client-ip=209.85.222.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IoO8Wzvr"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8b2ea2b9631so598356785a.3
-        for <git@vger.kernel.org>; Wed, 24 Dec 2025 02:19:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RMMa0eEK"
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8b22b1d3e7fso568969585a.3
+        for <git@vger.kernel.org>; Wed, 24 Dec 2025 02:19:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766571589; x=1767176389; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1766571591; x=1767176391; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Kg7PcIVpBoVEosQxL1KXF2jR0OU8lXjc/yJlWf5Gq7w=;
-        b=IoO8Wzvr9/MaBx5pzD5rbp+xWPKZ48oAui2lpeviUZk44GpYGR9hftQ3Wyc0VkBaUp
-         4WxduE/xD7KBsj3L6nZpfxUG6735bTcuOC4wUG3iqItltnv/MvIFRjNpr+IQmCocmFnv
-         OIVJeUWYKzVkvbVBsAYa/wZ07auqyLE1baIK6WLnqloMSjw/H4tGJTFVM67Gbv4EO3sw
-         7oAx1H/OKVZwgMD6a2uGlO/hqt+ZbbTyNV3HWhl42Q3m7W9PMgBMlJ/ouCGd24ZokIOq
-         2AXrvNY8n0OGcCTdbpOvJGxjNaGejy2VwsWQoZOGHe8N5t7XtJgwFdXR4yu0ZYAW2pBC
-         ygyw==
+        bh=87FO33ycJoRW4/p4RjOFV29Otf8eIYFHCwHjBiNEPBo=;
+        b=RMMa0eEKI1QYV2eE15cPLiVv/uUkRpzDaSO5fw6xFeIAJl6wqLHdeYEaFiO71kptom
+         tTikd9ATc9fUmMTHePlbeuOmU5x6C9BCMUQfyCpYs825pO7Q6OwQowF8LeYL0T1tOMhY
+         /SYwqvxnKdrXrCF10GEOd4mrvu1PNW3T58pjzOKqAuGVjiowX2j03F7t2+47ldzqM/8T
+         gpQ82L7wi7npaGxXu1C0QvM4AxFTTN4B+86XOxIIAi01csvE5CIJiLdqlvawnwAnJekH
+         GW2NUl/j9m257egbCQbVMXIRHqQHKNH4V40ebk5f5dqgEI8ICFlBFCDSaxp40I81m917
+         aVug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766571589; x=1767176389;
+        d=1e100.net; s=20230601; t=1766571591; x=1767176391;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Kg7PcIVpBoVEosQxL1KXF2jR0OU8lXjc/yJlWf5Gq7w=;
-        b=rdmyBmQXa16XJj5LMgDDcgTOym6dtlujy817mHu54fVTR5qR5RgpzDVGFwNu1+pBcO
-         KgeZY31bMrWFguDGoyCLeqJpZFbLEMoNQpNiiRe18gD3LWPdeF+Bqgnz7cDaWouDgFDF
-         RBn3GkiygSxh1Szyz3qKpCD21IhDiZ6zKGRHLIkkGMtWQryx8KOcSkvq4d0zo/2grUQS
-         SeNopl9rr9XWYeIz/v2ZxFerFzWfxHp7z1TxcXNE0I7d7/x7ZuKP2QVZeZTBovHLQVvz
-         nmw0tj49nH3scSTCuidZ96wzf/tMSUZeJvTmWNMA26tRFl/GCT3paUmWSII2kDZznEwb
-         6BGA==
-X-Gm-Message-State: AOJu0YyHo3EBFaAjYPGpjtqGCUhNk2zliRbwYBDeG8QQbLBkqNTBtgWM
-	47a/52+hZZ0lsqKXqhSOeSt4oIHkPBkJxK4Xm9CLLVb8HOzJEjBpZSQTqYKutw==
-X-Gm-Gg: AY/fxX7iTPC+Vj1uMFozAlWr/d3PzeHqejteN8wNp2D5hR3VUQ0e9xPXE6Cp4hXPLq+
-	AWHpPbvTmuYa6UnWH/mSGzS4LlJLdQyH/BVkd39bM0D1ChucR97Qgbv9FKVwcYouhHXYRB/PZsZ
-	8N6XS8aPztxzSx4EvCCfqzik1FdlFxOGhHiEggmiu+rQyrcnRo5M39FyQMAdavvX6MP5Lnr9E3k
-	pNsQDch5QTvcwcaM3X9WKD3E1ROcOwg6/DkFAtYmnHK9GSxlkoa+ba5kLY6d67SQQCVDIBE3MSw
-	3NfpTBbELKgK6d9oipb2neBgCyHKIV+QjecXHm+g5H7fJ+MtOopwmpFFz8JR5KYdVXLX9GtaofW
-	3CVivJM3PNamAYvuFGo4nV3cEnvvUS+Sk2dimxMDCD3gTYBhOqv2B8uD4O+R+eWm/y8XescjTFn
-	KAChWtIqqXt4eaMA==
-X-Google-Smtp-Source: AGHT+IFfTTD2svx1DLv1GVHnLylm5UnpR71PB1/GMKzT8DfDA8bZwX+ouqT2HZs003wpVQ9hiAxEDQ==
-X-Received: by 2002:a05:620a:4454:b0:8bb:a346:8c89 with SMTP id af79cd13be357-8c08fd22339mr2458260085a.56.1766571588962;
-        Wed, 24 Dec 2025 02:19:48 -0800 (PST)
+        bh=87FO33ycJoRW4/p4RjOFV29Otf8eIYFHCwHjBiNEPBo=;
+        b=SaXetrPjNQNU+WQEDB6FHcIRIJks/0x22oMRoW0/jkbD/RfeN2SX041svKlGnJDlAw
+         ltqszMhX7fO2QBzUKhCkdA5gE73xtn+kSTdHA31vGTrw6f4L4ukbdJeWHc7C0eJSUoES
+         QilHLFETWIuWrIri6o17k13EWh581umlj890xSwh9hr4xFt1HJuWkCMBpss4F+mBpQ43
+         kqDTV/7WgLfmMwIrhQmmKAO9875wbIEHxNkaEYeaZ1s/c+RpmOEiaTtDlcpDAV/y9Ir2
+         d4TAwhlrqO5vemOgu0WIiK4mEjORhS+u56wQmBGLjH65vyah4NZ0TbuulEneT49wL+62
+         XKEw==
+X-Gm-Message-State: AOJu0Yx72wcmMKfa+U6bA5dZ2Hgoi1BaoJfg87ixSCSFTpnL2t5h70tr
+	tCouysfb+TAwAQML/3IXtWoNrMytARGn7vcWliSQ7OxlU6iM5AGEhD2z7Hkfxg==
+X-Gm-Gg: AY/fxX5uRveMQCyCNeoC7M4oFKGPSTX2ze8DPAtHpKEdujLN+kVaceu8PDmzSYyM/GN
+	BN7bClYqE4VXrPptp/wD2nf0TFp71hmd31yCRyjiWIGC2FaH5bDYtlok0WDxhQQJVB9gqUiECdi
+	tLkhbMoaBqAjJN5VD+zUuviX+h94OvAUrw43OvtpFo20Gulyt3G/m/l1YOXvQVzb8SP/fNEjROK
+	Pq0Zx6KWY5FLN8K07e90sKIWd46M9axaJ5ZbLCNuuaOkb1ePVkmrqcxRARPg9TWzYvOmWupDLV7
+	3DFnSPhyhKR35E4EuwbCWTDjX3A6KtVcHtqQIPzk9pkr63a9St3EqlUR7VTD6TtmObVRC6/3n+k
+	0Cu/2gGh80LS/O4Oe4/XP1pV0y4Ortuj5tIgF/dcSA6A601eDLh3rrzQWlh6PL38sBCPWmIxpIa
+	tFJR0ggdpOBd/NRA==
+X-Google-Smtp-Source: AGHT+IEDjeFeTz/sRkvYcFY5esSN04Mk3gp3pZ3zfCM05TXrYVKb35ErZ1CtT7eiu+L4qWdBkVyu2w==
+X-Received: by 2002:a05:620a:1996:b0:862:f354:ec3b with SMTP id af79cd13be357-8c08fab9c87mr2436553685a.61.1766571591335;
+        Wed, 24 Dec 2025 02:19:51 -0800 (PST)
 Received: from [127.0.0.1] ([64.236.142.144])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c095b79b32sm1263834185a.0.2025.12.24.02.19.48
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c096783657sm1455545785a.1.2025.12.24.02.19.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Dec 2025 02:19:48 -0800 (PST)
-Message-Id: <pull.2138.v4.git.git.1766571587.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2138.v3.git.git.1766568665.gitgitgadget@gmail.com>
+        Wed, 24 Dec 2025 02:19:50 -0800 (PST)
+Message-Id: <417f2075fb876cbf5a00cd9877fb867ceddf7f6d.1766571587.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2138.v4.git.git.1766571587.gitgitgadget@gmail.com>
 References: <pull.2138.v3.git.git.1766568665.gitgitgadget@gmail.com>
+	<pull.2138.v4.git.git.1766571587.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 24 Dec 2025 10:19:43 +0000
-Subject: [PATCH v4 0/4] status: show default branch comparison when tracking non-default branch
+Date: Wed, 24 Dec 2025 10:19:45 +0000
+Subject: [PATCH v4 2/4] Simplify default branch comparison logic
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,33 +75,148 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-cc: Chris Torek chris.torek@gmail.com cc: Yee Cheng Chin
-ychin.macvim@gmail.com cc: "brian m. carlson" sandals@crustytoothpaste.net
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Harald Nordgren (4):
-  status: show comparison with upstream default branch
-  Simplify default branch comparison logic
-  Use repo.settings.statusGoalBranch config for status comparison
-  Rename default_remote to goal_branch
+This maintains the same functionality while reducing ref resolution calls
+from multiple to one, and eliminating unnecessary memory allocations.
 
- remote.c                 |  92 ++++++++++++
- t/t6040-tracking-info.sh | 317 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 409 insertions(+)
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+ remote.c | 59 ++++++++++++++++++--------------------------------------
+ 1 file changed, 19 insertions(+), 40 deletions(-)
 
-
-base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2138%2FHaraldNordgren%2Fahead_of_main_status-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2138/HaraldNordgren/ahead_of_main_status-v4
-Pull-Request: https://github.com/git/git/pull/2138
-
-Range-diff vs v3:
-
- 1:  a3800aed18 = 1:  a3800aed18 status: show comparison with upstream default branch
- 2:  417f2075fb = 2:  417f2075fb Simplify default branch comparison logic
- 3:  c9ec5d9610 = 3:  c9ec5d9610 Use repo.settings.statusGoalBranch config for status comparison
- -:  ---------- > 4:  0e308141da Rename default_remote to goal_branch
-
+diff --git a/remote.c b/remote.c
+index b2a1e980b1..f3831ef3be 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2267,41 +2267,17 @@ static char *get_default_remote_ref(char **full_ref_out)
+ 	return NULL;
+ }
+ 
+-static int is_default_remote_branch(const char *name)
+-{
+-	char *default_full = NULL;
+-	char *default_short;
+-	int result = 0;
+-
+-	default_short = get_default_remote_ref(&default_full);
+-	if (!default_short)
+-		return 0;
+-
+-	result = !strcmp(name, default_short);
+-
+-	free(default_short);
+-	free(default_full);
+-	return result;
+-}
+-
+ static void format_default_branch_comparison(struct strbuf *sb,
+ 					     const char *branch_refname,
++					     const char *default_full,
++					     const char *default_short,
+ 					     enum ahead_behind_flags abf)
+ {
+ 	int default_ours = 0, default_theirs = 0;
+-	char *default_full = NULL;
+-	char *default_short;
+-
+-	default_short = get_default_remote_ref(&default_full);
+-	if (!default_short)
+-		return;
+ 
+ 	if (stat_branch_pair(branch_refname, default_full,
+-			     &default_ours, &default_theirs, abf) <= 0) {
+-		free(default_short);
+-		free(default_full);
++			     &default_ours, &default_theirs, abf) <= 0)
+ 		return;
+-	}
+ 
+ 	strbuf_addstr(sb, "\n");
+ 
+@@ -2324,9 +2300,6 @@ static void format_default_branch_comparison(struct strbuf *sb,
+ 			   default_ours + default_theirs),
+ 			default_short, default_ours + default_theirs);
+ 	}
+-
+-	free(default_short);
+-	free(default_full);
+ }
+ 
+ /*
+@@ -2340,7 +2313,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 	const char *full_base;
+ 	char *base;
+ 	int upstream_is_gone = 0;
+-	int show_default_branch_comparison;
++	char *default_full = NULL;
++	char *default_short = NULL;
+ 
+ 	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, 0, abf);
+ 	if (sti < 0) {
+@@ -2352,7 +2326,13 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 	base = refs_shorten_unambiguous_ref(get_main_ref_store(the_repository),
+ 					    full_base, 0);
+ 
+-	show_default_branch_comparison = !is_default_remote_branch(base);
++	default_short = get_default_remote_ref(&default_full);
++	if (default_short && !strcmp(base, default_short)) {
++		free(default_short);
++		free(default_full);
++		default_short = NULL;
++		default_full = NULL;
++	}
+ 
+ 	if (upstream_is_gone) {
+ 		strbuf_addf(sb,
+@@ -2365,8 +2345,6 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 		strbuf_addf(sb,
+ 			_("Your branch is up to date with '%s'.\n"),
+ 			base);
+-		if (show_default_branch_comparison)
+-			format_default_branch_comparison(sb, branch->refname, abf);
+ 	} else if (abf == AHEAD_BEHIND_QUICK) {
+ 		strbuf_addf(sb,
+ 			    _("Your branch and '%s' refer to different commits.\n"),
+@@ -2383,8 +2361,6 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 		if (advice_enabled(ADVICE_STATUS_HINTS))
+ 			strbuf_addstr(sb,
+ 				_("  (use \"git push\" to publish your local commits)\n"));
+-		if (show_default_branch_comparison)
+-			format_default_branch_comparison(sb, branch->refname, abf);
+ 	} else if (!ours) {
+ 		strbuf_addf(sb,
+ 			Q_("Your branch is behind '%s' by %d commit, "
+@@ -2396,8 +2372,6 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 		if (advice_enabled(ADVICE_STATUS_HINTS))
+ 			strbuf_addstr(sb,
+ 				_("  (use \"git pull\" to update your local branch)\n"));
+-		if (show_default_branch_comparison)
+-			format_default_branch_comparison(sb, branch->refname, abf);
+ 	} else {
+ 		strbuf_addf(sb,
+ 			Q_("Your branch and '%s' have diverged,\n"
+@@ -2412,10 +2386,15 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 		    advice_enabled(ADVICE_STATUS_HINTS))
+ 			strbuf_addstr(sb,
+ 				_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
+-		if (show_default_branch_comparison)
+-			format_default_branch_comparison(sb, branch->refname, abf);
+ 	}
++
++	if (default_short && !upstream_is_gone && sti >= 0 && abf != AHEAD_BEHIND_QUICK)
++		format_default_branch_comparison(sb, branch->refname, default_full,
++						 default_short, abf);
++
+ 	free(base);
++	free(default_short);
++	free(default_full);
+ 	return 1;
+ }
+ 
 -- 
 gitgitgadget
+
