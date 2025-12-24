@@ -1,98 +1,104 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D23422D7B1
-	for <git@vger.kernel.org>; Wed, 24 Dec 2025 08:21:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE6B8460
+	for <git@vger.kernel.org>; Wed, 24 Dec 2025 09:31:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766564480; cv=none; b=CmYLrYzhIudOdqfA58fGZAkwe2t8tfaT82JhikzKJYu6kvtf0vfv8Ekz6Dt+hJtofRpySxW2p5qKr+QqHYSxIFNaHHhvn5S2D6b0qkCUs9FYAq0bGJEtZNxqUjtTh1s2oUI8AuVXpYTZWJL7VA6nT0comC1cr5f82KIUk0+bTF4=
+	t=1766568670; cv=none; b=bvj0hdiymFmnciuFD/4kNMVrqRXOeZYcM43uz7HUGOZQoIqhhe0Bv/uSYHJa9eUfvitrJx53XjyJxrB14QWnOc9Wi6n07vGpro6bEApxCycwwufii4PgeYEDYi1J1PY5/BM/+WSaHxjqSOVm4HUTiHfT2Yp8436b3satGlvz9NE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766564480; c=relaxed/simple;
-	bh=37Hpi8fXlY214/DUotRuuaHjZYC8V9fhz7nZBoV6aY8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O3ry7DggBc6i2v32SYOHVDMIUXQ1mb+MEFuTL9nUuidq2XmnfPD5M7TyrWdpp5GRrNu+EJZQQiMFWhnXMv5ifjyTMmxtP6Z7MGHIjbOcssvtVT8bz9jQkVPHVFPW3jCFDN4BcGTzLmeahYs7pLanIbANdorHS9UjZFMWcgYlOfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JTIj57eS; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1766568670; c=relaxed/simple;
+	bh=L/6dhl8ojT3j+X6GOijim8C1EVdPC4Q9BxqGTtp1NSQ=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=XsAA0ea4D6s+BO4Vr9fgXfEtYuHXhOGczc/Fh151J95kiYnkYejUXCe7pGWbt2nkDDj9W++yM9tMRXaJ5MoD6gMpUCt+ylOxC7I2CR1JU5wFU/P9e3+RcZf+fo6jZmO4kWHsNGgs2Wu8wY8YaWWY2VyEJ6x0XmM3QCrMTviNpCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KaTejUV+; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JTIj57eS"
-Received: (qmail 431207 invoked by uid 109); 24 Dec 2025 08:21:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=37Hpi8fXlY214/DUotRuuaHjZYC8V9fhz7nZBoV6aY8=; b=JTIj57eS29MHqwPtElvPaSdAVXylx2KbapWNu4C0s8O8tdTp2MhE3gvY0sG1HK8MddAaXWObKp6yAk57sLeMC1YCfTwhQinu7p5S7feZF/qZYUSEYYGiE9AUgcyZig9d56srHkXnZ5edCHxs3FSFjbZEQP6UGZeDfrgvkWIXgjE9ZET6sOi3G3FiQGresA7GwqAc4PRInt7lp04brk1PzVDKYs0d9Qzv9/3gcGkKCtdFL5VFLmCgZjhCxqEZEuGTgxtwErz2m+IM2HNZ0x+0RG3rvTiB7Yk3Mf8iyxGapm77V7w0vDIhgyS3NUjAjyACIzOioymTMyoh25MqX+Kz2Q==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Dec 2025 08:21:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 601151 invoked by uid 111); 24 Dec 2025 08:21:21 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 Dec 2025 03:21:21 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 24 Dec 2025 03:21:16 -0500
-From: Jeff King <peff@peff.net>
-To: Elijah Newren <newren@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: Possible regression: lost diagnostic message when pushing
- non-commit objects to refs/heads/*
-Message-ID: <20251224082116.GA1946629@coredump.intra.peff.net>
-References: <CABPp-BGL2tJR4dPidQuFcp-X0_VkVTknCY-0Zgo=jHVGv_P=wA@mail.gmail.com>
- <20251224081214.GA1879908@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KaTejUV+"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-bf1b402fa3cso5845595a12.3
+        for <git@vger.kernel.org>; Wed, 24 Dec 2025 01:31:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766568667; x=1767173467; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MNc1wZMYKyybnTIeJqXWLJT3xaq3Trpdb67+A7AsZHQ=;
+        b=KaTejUV+/NjLdRcKprsYg56WWDLr3u06gB2sdGukcTCnyx/yZO9wPOxXLJ1McdWBMp
+         h/HWumPg4tO4cKWLPYIqIkbyZT3Z0mUDNgn8PHmI7no3ewC5b1sVuoz8/LQzZ8Jl6Nsr
+         q/6h+3VmDNxXfuE8+tTLSx6W44I3hTIGKVA2XkIzGXcYhLo334tF6/5MHJbFnVljvCij
+         gEw/HWlbsM2/nUDCXr5RrtLLQGoDesD54nr3rpcnw2x50eTUYzJHu8njdlZspiFBjGU+
+         q43UcpnO5aLQvh/gdg9xKueFRXqYJ3wXRhy6Q4cjRACHTgr4KsVL8pDLstFBMLkFNh8R
+         9WtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766568667; x=1767173467;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=MNc1wZMYKyybnTIeJqXWLJT3xaq3Trpdb67+A7AsZHQ=;
+        b=qcKZr7UKmG59rcjUXHBjUeZECVg3pCbewWMQdxgPglu6hOV5YPf2Tdziyc0uiy68jv
+         rh0cOKWMChVMXM+8gTpfPAkxt/s56E3xInFrEBEij8GJX+BTu03YVBuOin/x3oAIotwA
+         k5gHhS6Vh98dorulrHPc17weWIfGf/aVPk62DGWG556CrEFX390+7QgH/v2G7fAQGIsi
+         kIFSd82HrRqR78HzvdagrKcvnV7Xz/Ji2ae+vhGQTVtVo+Ka/XOPu1ZA5/aizPopQjM8
+         lBv36FLle8Hql2iVKrvqe0G4AH7MxlfLUuHQSBW1xntCOrWnycbEYJnjz02ciPHQ/NYn
+         0Nqg==
+X-Gm-Message-State: AOJu0YwrE5M6gfEfS4DrPs957rQ6DFl1+gvOUz/IhUoAwZT1Pf0IFlB6
+	cf5AkU7l75MYfZVT8NC2LkXxDKCF6B7nQjRlXOraB0S5HhNLPgIfJP0Oe0fMellO
+X-Gm-Gg: AY/fxX71Vm/+8g3GdYMGB5E2F2f0gTCC4EHQ4lmug5KlULNPjpRg1yuD/6zJmcvy2eI
+	Fkbbp65VAEFxY1ItjcjMm7vYGWEZJkZBdoA2AflvPkA7mE1Sg6BLEISGTQ0of4YsxezqgWzaBa1
+	gk0zgnMVpVZHuMqIYv8eKmkYFloarq/SgUPuUfVAmKj1JQjsWN4Lfmlos97fQ9kHqTwsdTxdrFo
+	bqmQTAUFdSHm5WJfotkIbt8k37Aw6F0pNAVVWL0eyXrvtoiZY1mHunhFf8J9BC64Rg7kizu3Fk9
+	i6/7VkZqb/boPGl9HkcPUeNwK2NuvOUsFxOvbjgQoqFknh7N052wZBQAcl4qKcJRbIplO6APbWK
+	dFaDa5r3ZyrXUs61GnFEYIkswHPVnlrYxyMizXuwOVyqOldZMknzXkjBfY2IMSgik4/XfW1EgwP
+	BEvqy56L/SmjLY
+X-Google-Smtp-Source: AGHT+IEgUkKgBMW0VmIbTxZ11LY2yVD8JZ5twr9t+XhNTD78DjqRcHeDAMU9TaQbqEG/BQ3THc86Qw==
+X-Received: by 2002:a05:7022:e04:b0:11b:d211:3a64 with SMTP id a92af1059eb24-1217213fb1fmr21287972c88.0.1766568667156;
+        Wed, 24 Dec 2025 01:31:07 -0800 (PST)
+Received: from [127.0.0.1] ([68.220.57.107])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1217253c0c6sm75025280c88.12.2025.12.24.01.31.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Dec 2025 01:31:06 -0800 (PST)
+Message-Id: <pull.2138.v3.git.git.1766568665.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2138.v2.git.git.1766530448.gitgitgadget@gmail.com>
+References: <pull.2138.v2.git.git.1766530448.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 24 Dec 2025 09:31:02 +0000
+Subject: [PATCH v3 0/3] status: show default branch comparison when tracking non-default branch
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251224081214.GA1879908@coredump.intra.peff.net>
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
 
-On Wed, Dec 24, 2025 at 03:12:14AM -0500, Jeff King wrote:
+cc: Chris Torek chris.torek@gmail.com cc: Yee Cheng Chin
+ychin.macvim@gmail.com cc: "brian m. carlson" sandals@crustytoothpaste.net
 
-> But in the new batched world that allows partial-batch failures, we
-> throw it away. The problem (at least for the files backend) is this code
-> in files_transaction_prepare():
-> 
->           ret = lock_ref_for_update(refs, update, i, transaction,
->                                     head_ref, &refnames_to_check,
->                                     err);
->           if (ret) {
->                   if (ref_transaction_maybe_set_rejected(transaction, i, ret)) {
->                           strbuf_reset(err);
->                           ret = 0;
-> 
->                           continue;
->                   }
->                   goto cleanup;
->           }
+Harald Nordgren (3):
+  status: show comparison with upstream default branch
+  Simplify default branch comparison logic
+  Use repo.settings.statusGoalBranch config for status comparison
 
-BTW, you found the regression via receive-pack, but as you can see here
-it is really a problem for any batched ref-update caller that sets the
-ALLOW_FAILURE flag. So the original sin is not from the commit you found
-via bisect, but 23fc8e4f61 (refs: implement batch reference update
-support, 2025-04-08). And it affects fetch, too:
+ remote.c                 |  93 ++++++++++++
+ t/t6040-tracking-info.sh | 317 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 410 insertions(+)
 
-  $ git.v2.50.0 fetch . v1.0.0:refs/heads/foo
-  error: cannot update ref 'refs/heads/foo': trying to write non-commit object f665776185ad074b236c00751d666da7d1977dbe to branch 'refs/heads/foo'
-  From .
-   ! [new tag]               v1.0.0     -> foo  (unable to update local ref)
 
-  $ git.v2.51.0 fetch . v1.0.0:refs/heads/foo
-  From .
-   * [new tag]               v1.0.0     -> foo
-  error: fetching ref refs/heads/foo failed: invalid new value provided
+base-commit: c4a0c8845e2426375ad257b6c221a3a7d92ecfda
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2138%2FHaraldNordgren%2Fahead_of_main_status-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2138/HaraldNordgren/ahead_of_main_status-v3
+Pull-Request: https://github.com/git/git/pull/2138
 
-Actually, I think there is another bug lurking there for fetch. We do
-not even mark the failure in the status output anymore!
+Range-diff vs v2:
 
-And I guess "update-ref --batch-updates" suffers from the same lack of
-detail:
+ 1:  a3800aed18 = 1:  a3800aed18 status: show comparison with upstream default branch
+ 2:  417f2075fb = 2:  417f2075fb Simplify default branch comparison logic
+ -:  ---------- > 3:  c9ec5d9610 Use repo.settings.statusGoalBranch config for status comparison
 
-  $ echo create refs/heads/foo v1.0.0 | git update-ref --batch-updates --stdin
-  rejected refs/heads/foo f665776185ad074b236c00751d666da7d1977dbe 0000000000000000000000000000000000000000 invalid new value provided
-
-though it is not technically a regression since the option to ask for
-ALLOW_FAILURE did not even exist before --batch-updates. It would be
-nice if it gave more details (whether to stderr or in the
-machine-readable output).
-
--Peff
+-- 
+gitgitgadget
