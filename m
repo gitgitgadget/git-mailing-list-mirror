@@ -1,44 +1,44 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1AA2E8B84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37F82D5959
 	for <git@vger.kernel.org>; Wed, 24 Dec 2025 17:03:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766595814; cv=none; b=PscSRwGvoUpscs3U4UACesn6qvXBwQsOzJmQ8sn4TTA+saBAVd0DONYVnIDtcqXMpK3jeE3w/OUh+RxeaBWTG+e1PzutVZx1xQy2aFgrR5je54c3/p48zh3oQOsYQao7Ee9nthtGg8kgXNUj6x4e/+4K/P3GPm4BT+WauUNtpp8=
+	t=1766595814; cv=none; b=UC/ZoOs1GuZui49OX/oiejcqeyjHDCA721Poou1XJRGOVIwbhUeDsAhfOxX6Lz2FqpJkPy/4c+rYauxNE02zjwTPssFDP2wiFSDSY5WrXnZ+KWb7J/Xza3whbUM2PB3C4qYJ/1SeFoYxgnn3mDg1pdd6n8b/w/EucdHL/XqfqVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1766595814; c=relaxed/simple;
-	bh=F62nHEpt2GSxySkQUOZpYvhmzGq9hmk7ngvqpynGlw4=;
+	bh=ccg+AUo34yXCQSMnGsMU3o7uz3wZGpyW9BiP37VqRlo=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pBibv+zlEka+1ryc78Xz+YWheJVPSH3Me+j1nZ9FOZM62RM/ooiaOl70u/wLKMtapRzzdwfdZhDm74+KWq6CA2fN9PbPnCFD2L8U0kc67EBIibe5SnHC5z7avbApVINiV7EI2XhqhxbyVAuqG4DQfPmfMghMnCkoA24uaYx7VX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=LvX65TJk; arc=none smtp.client-ip=212.227.15.4
+	 MIME-Version:Content-Type; b=fCwrpBaNW0mUPGFce8xImblvlH7WcEpHGyAoBOOxU260lLX2lzMmSvBbnVzgsnhMEA+s2mnOM32KbgyCy0uwh/X6rWkkoOAdASdY8F8/7QB25onFhHw/zYGcU0VTF2APptySs4CuESMFMmY7dC4bv2xFbGkPfPFHzXV0lQDwEw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=K0Jd0oV1; arc=none smtp.client-ip=212.227.15.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="LvX65TJk"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="K0Jd0oV1"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
 	s=s29768273; t=1766595809; x=1767200609; i=l.s.r@web.de;
-	bh=S6v8KiHaTV0ysupi5rGRAlHcRjiuH3KdYHSBH6LVP0o=;
+	bh=pExLzgVJJJMzNe7UIz1VaFtcRTG0/edpNaN0Cl/8aSw=;
 	h=X-UI-Sender-Class:From:To:Subject:Date:Message-ID:In-Reply-To:
 	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=LvX65TJkiVfQImYBOlm1FUVqlsQbHQhKWpOZsvRZsaTGimRTsHMtRmPm5q/VN/i9
-	 OZUWssvZMTCmXzpO6BP5hA/ZuRfYHxqafod9eqxEm0phWE7DgH721eVnHe4nCFGTg
-	 QPSj7TvR/d/fI3pZ2uz7oDzSWlKhw4O+u8vnwpBcWq69ImyOPUkpO/AvhUQ3urx+U
-	 yjgLrCSEnQcTKvOSe/3MNUAH7UNRCaOFQrK5wrnX6vTvKVHxt8mcsq4LtmZ8A76zR
-	 SSWSIIXWLttSDgEXaMEofBUyqwpFOSaaC4N+1edUKz89c6M5gl7p7uVWYm7EilmNl
-	 4WE5HMBr8Z6e4CTVMg==
+	b=K0Jd0oV1y5bcDvLbi3SAoqRUyTyH1Hpi/Ozax6kM6nU1lR095M8IrGAELSmNK7Lp
+	 D43lucwdhgd3JwXz3/Ye72/zG6aI1Uw7CgVmf2WYs3gXoNysYtCBmOU5RU0dV+AfR
+	 ilQjUdYTlkv5rnC/4y613/Q7gqKn9s0444pVljnbmuMYfZmmJrYduHausoAdwTtG+
+	 t0zLCbgcUeCfDIXt6LBU2HVqmnmRhbUecb5kBo9R2jTgjFNEh7GNqE0l2nnEtKD3j
+	 50TkElABI5TlGbcLShftsSds5qVOue7gu/EM2tpVWdztlPRqKt2e+OiShU2r/5KaM
+	 k9DJVFjG9V3irKnKgQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from Mini-von-Rene.speedport.ip ([79.203.30.2]) by smtp.web.de
  (mrweb005 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 1MKuOP-1vDt7N3iFJ-00K4Q2 for <git@vger.kernel.org>; Wed, 24 Dec 2025 18:03:28
+ 1MCGSU-1vhqBn0eAM-00AsgT for <git@vger.kernel.org>; Wed, 24 Dec 2025 18:03:29
  +0100
 From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
-Subject: [PATCH 05/14] remote: use commit_stack for local_commits
-Date: Wed, 24 Dec 2025 18:03:18 +0100
-Message-ID: <20251224170327.68049-6-l.s.r@web.de>
+Subject: [PATCH 08/14] test-reach: use commit_stack
+Date: Wed, 24 Dec 2025 18:03:21 +0100
+Message-ID: <20251224170327.68049-9-l.s.r@web.de>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251224170327.68049-1-l.s.r@web.de>
 References: <20251224170327.68049-1-l.s.r@web.de>
@@ -50,177 +50,193 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:6Bi7heCuVBNST1qvsQ0NbSxTRNurPBhr69n2YYoQxHyMu6YOmCK
- aCZ5+OcCdMWx0ob2pSTWII/NaEcJnACz3QQL80tiuRDn7at8wBOoKSxzmUF/4vEyh+Cxz1c
- zccGFyoOpiB7Sy820p2g+zss7ddt/GUCIl7QKfzfHp1nxkqlw2e2JBhSPYqCrTVsavqpHzn
- uTFEjQWwSZgcaCAlpl0hA==
+X-Provags-ID: V03:K1:bAPBOMOsg96n1EjBM5WKUoIpOhzcTEYIOSng+7VUUc0soRhmbc4
+ HJLoVZuDe7+TnkoSGSB+E3P+0rYop1+SwkiQnSqFtqzx8KiiXbZUHshi30fTb7qsyOUZiAM
+ DfJMwCksErRdTNuV/N5kES01pPLevOzorefLKvlxDrqfXEcPHh/u5XewgFg1VxJS5Bfo6kZ
+ mGmEGX0PEKAaxDzJypqbQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:bfCuV8IrNok=;OICc3fAWXLRk6gL4WhVsafAXQry
- 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
- lZyMchh1MXUrKh0bA=
+UI-OutboundReport: notjunk:1;M01:P0:9YXbD0SuLFY=;O6btaBeGIbkRcBuy0dIDB5rnZPW
+ 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
+ yamP/cY7qhqY42sCI1JKMkOXBbcNtN+uEwd3/7
 
-Replace a commit array implementation with commit_stack.
+Use commit_stack instead of open-coding it.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- remote.c | 39 ++++++---------------------------------
- 1 file changed, 6 insertions(+), 33 deletions(-)
+ t/helper/test-reach.c | 34 ++++++++++++++--------------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index 59b3715120..af888e3f20 100644
-=2D-- a/remote.c
-+++ b/remote.c
-@@ -2544,36 +2544,9 @@ static int remote_tracking(struct remote *remote, c=
-onst char *refname,
+diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
+index c58c93800f..feabeb29c2 100644
+=2D-- a/t/helper/test-reach.c
++++ b/t/helper/test-reach.c
+@@ -34,8 +34,8 @@ int cmd__reach(int ac, const char **av)
+ 	struct commit *A, *B;
+ 	struct commit_list *X, *Y;
+ 	struct object_array X_obj =3D OBJECT_ARRAY_INIT;
+-	struct commit **X_array, **Y_array;
+-	size_t X_nr, X_alloc, Y_nr, Y_alloc;
++	struct commit_stack X_stack =3D COMMIT_STACK_INIT;
++	struct commit_stack Y_stack =3D COMMIT_STACK_INIT;
+ 	struct strbuf buf =3D STRBUF_INIT;
+ 	struct repository *r =3D the_repository;
+=20
+@@ -46,10 +46,6 @@ int cmd__reach(int ac, const char **av)
+=20
+ 	A =3D B =3D NULL;
+ 	X =3D Y =3D NULL;
+-	X_nr =3D Y_nr =3D 0;
+-	X_alloc =3D Y_alloc =3D 16;
+-	ALLOC_ARRAY(X_array, X_alloc);
+-	ALLOC_ARRAY(Y_array, Y_alloc);
+=20
+ 	while (strbuf_getline(&buf, stdin) !=3D EOF) {
+ 		struct object_id oid;
+@@ -88,15 +84,13 @@ int cmd__reach(int ac, const char **av)
+=20
+ 			case 'X':
+ 				commit_list_insert(c, &X);
+-				ALLOC_GROW(X_array, X_nr + 1, X_alloc);
+-				X_array[X_nr++] =3D c;
++				commit_stack_push(&X_stack, c);
+ 				add_object_array(orig, NULL, &X_obj);
+ 				break;
+=20
+ 			case 'Y':
+ 				commit_list_insert(c, &Y);
+-				ALLOC_GROW(Y_array, Y_nr + 1, Y_alloc);
+-				Y_array[Y_nr++] =3D c;
++				commit_stack_push(&Y_stack, c);
+ 				break;
+=20
+ 			default:
+@@ -112,16 +106,16 @@ int cmd__reach(int ac, const char **av)
+ 		       repo_in_merge_bases(the_repository, A, B));
+ 	else if (!strcmp(av[1], "in_merge_bases_many"))
+ 		printf("%s(A,X):%d\n", av[1],
+-		       repo_in_merge_bases_many(the_repository, A, X_nr, X_array, 0));
++		       repo_in_merge_bases_many(the_repository, A, X_stack.nr, X_stack.=
+items, 0));
+ 	else if (!strcmp(av[1], "is_descendant_of"))
+ 		printf("%s(A,X):%d\n", av[1], repo_is_descendant_of(r, A, X));
+ 	else if (!strcmp(av[1], "get_branch_base_for_tip"))
+-		printf("%s(A,X):%d\n", av[1], get_branch_base_for_tip(r, A, X_array, X_=
+nr));
++		printf("%s(A,X):%d\n", av[1], get_branch_base_for_tip(r, A, X_stack.ite=
+ms, X_stack.nr));
+ 	else if (!strcmp(av[1], "get_merge_bases_many")) {
+ 		struct commit_list *list =3D NULL;
+ 		if (repo_get_merge_bases_many(the_repository,
+-					      A, X_nr,
+-					      X_array,
++					      A, X_stack.nr,
++					      X_stack.items,
+ 					      &list) < 0)
+ 			exit(128);
+ 		printf("%s(A,X):\n", av[1]);
+@@ -159,8 +153,8 @@ int cmd__reach(int ac, const char **av)
+ 		const int reachable_flag =3D 1;
+ 		int count =3D 0;
+ 		struct commit_list *current;
+-		struct commit_list *list =3D get_reachable_subset(X_array, X_nr,
+-								Y_array, Y_nr,
++		struct commit_list *list =3D get_reachable_subset(X_stack.items, X_stac=
+k.nr,
++								Y_stack.items, Y_stack.nr,
+ 								reachable_flag);
+ 		printf("get_reachable_subset(X,Y)\n");
+ 		for (current =3D list; current; current =3D current->next) {
+@@ -169,8 +163,8 @@ int cmd__reach(int ac, const char **av)
+ 				    oid_to_hex(&list->item->object.oid));
+ 			count++;
+ 		}
+-		for (size_t i =3D 0; i < Y_nr; i++) {
+-			if (Y_array[i]->object.flags & reachable_flag)
++		for (size_t i =3D 0; i < Y_stack.nr; i++) {
++			if (Y_stack.items[i]->object.flags & reachable_flag)
+ 				count--;
+ 		}
+=20
+@@ -185,7 +179,7 @@ int cmd__reach(int ac, const char **av)
+ 	strbuf_release(&buf);
+ 	free_commit_list(X);
+ 	free_commit_list(Y);
+-	free(X_array);
+-	free(Y_array);
++	commit_stack_clear(&X_stack);
++	commit_stack_clear(&Y_stack);
  	return 0;
  }
-=20
--/*
-- * The struct "reflog_commit_array" and related helper functions
-- * are used for collecting commits into an array during reflog
-- * traversals in "check_and_collect_until()".
-- */
--struct reflog_commit_array {
--	struct commit **item;
--	size_t nr, alloc;
--};
--
--#define REFLOG_COMMIT_ARRAY_INIT { 0 }
--
--/* Append a commit to the array. */
--static void append_commit(struct reflog_commit_array *arr,
--			  struct commit *commit)
--{
--	ALLOC_GROW(arr->item, arr->nr + 1, arr->alloc);
--	arr->item[arr->nr++] =3D commit;
--}
--
--/* Free and reset the array. */
--static void free_commit_array(struct reflog_commit_array *arr)
--{
--	FREE_AND_NULL(arr->item);
--	arr->nr =3D arr->alloc =3D 0;
--}
--
- struct check_and_collect_until_cb_data {
- 	struct commit *remote_commit;
--	struct reflog_commit_array *local_commits;
-+	struct commit_stack *local_commits;
- 	timestamp_t remote_reflog_timestamp;
- };
-=20
-@@ -2605,7 +2578,7 @@ static int check_and_collect_until(const char *refna=
-me UNUSED,
- 		return 1;
-=20
- 	if ((commit =3D lookup_commit_reference(the_repository, n_oid)))
--		append_commit(cb->local_commits, commit);
-+		commit_stack_push(cb->local_commits, commit);
-=20
- 	/*
- 	 * If the reflog entry timestamp is older than the remote ref's
-@@ -2633,7 +2606,7 @@ static int is_reachable_in_reflog(const char *local,=
- const struct ref *remote)
- 	struct commit *commit;
- 	struct commit **chunk;
- 	struct check_and_collect_until_cb_data cb;
--	struct reflog_commit_array arr =3D REFLOG_COMMIT_ARRAY_INIT;
-+	struct commit_stack arr =3D COMMIT_STACK_INIT;
- 	size_t size =3D 0;
- 	int ret =3D 0;
-=20
-@@ -2664,8 +2637,8 @@ static int is_reachable_in_reflog(const char *local,=
- const struct ref *remote)
- 	 * Check if the remote commit is reachable from any
- 	 * of the commits in the collected array, in batches.
- 	 */
--	for (chunk =3D arr.item; chunk < arr.item + arr.nr; chunk +=3D size) {
--		size =3D arr.item + arr.nr - chunk;
-+	for (chunk =3D arr.items; chunk < arr.items + arr.nr; chunk +=3D size) {
-+		size =3D arr.items + arr.nr - chunk;
- 		if (MERGE_BASES_BATCH_SIZE < size)
- 			size =3D MERGE_BASES_BATCH_SIZE;
-=20
-@@ -2674,7 +2647,7 @@ static int is_reachable_in_reflog(const char *local,=
- const struct ref *remote)
- 	}
-=20
- cleanup_return:
--	free_commit_array(&arr);
-+	commit_stack_clear(&arr);
- 	return ret;
- }
-=20
 =2D-=20
 2.52.0
 
