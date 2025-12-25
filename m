@@ -1,60 +1,127 @@
-Received: from outbound.qs.icloud.com (p-east3-cluster3-host6-snip4-10.eps.apple.com [57.103.86.63])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107D922097
-	for <git@vger.kernel.org>; Thu, 25 Dec 2025 00:01:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.86.63
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF372E040E
+	for <git@vger.kernel.org>; Thu, 25 Dec 2025 08:00:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766620886; cv=none; b=tNl9MdAsWlFia7n25j1HwRJdA5UO/eNj4y13O/KIKMnYqCXGK69DwwY4C6u5eYE3PeF2Q/RUVCHOEHGd0XVsDONT1Mj5PZdAM2Td49gik7JsK+saYn9prbtD+IRh9DleR4pCti1xsSm1CL+ZSUZgnVeu9TaPwKM4O5BWp4bnOqU=
+	t=1766649648; cv=none; b=Vg0J9i5RsSeEkilPySPYdJ60u2zM6PKAnNEUZMQvvppqvoUicaYFF/9IzsWd7IRg9CxbiAuk8vr7AZEzRXrP5ZWZqCmK42iy6h96l/l3e4ML5EhKPdfEMi3KX3HTloxjnAFnG5MAmbzwX1aM8wbZulPZySmryBTc3t5z9C2k8pU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766620886; c=relaxed/simple;
-	bh=rbl8LDAWiDfrlCVApSzBqFA7hPa154zO+DvlaCIUcok=;
-	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=kY95ApytH4ZGXJcMRel7/W/sweHxPLnNWMzinwlPNQopoowz81UeIi26igkgEW3BE0X/VRWj8it1DlVV9hpdsoDw/myIL/F+DhRMnyuxK3K2NPtCnjKFsgkcK6iLyMPZZwTKuoUWpO8lOd8HXa2cJ8T6ZBHlKsw+lbU3SKwILuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=Q1H+rAml; arc=none smtp.client-ip=57.103.86.63
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	s=arc-20240116; t=1766649648; c=relaxed/simple;
+	bh=hQo3JWig3dKI9UpuHF+sDQTivRUuXCETs3NJAZOjORk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dsG2JsX0a26YwYEJt3KY8dPAt0SFn3KJ/opnl0ed/ymJIsuZhoG1psMZM3h4vg09yV9cmsjhkMxVZGH5LKaCCyK2YOr+T6kX7VdJw1w9p0YcJl57i3ERgIipbTI50o2l6WI0nr8Ud3THYj9TL90pJWe/N5o+zeLYeDhmvaORUZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ebq2d4jY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P8QeWyme; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="Q1H+rAml"
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-east-2d-100-percent-11 (Postfix) with ESMTPS id 315F71800141
-	for <git@vger.kernel.org>; Thu, 25 Dec 2025 00:01:23 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; bh=rbl8LDAWiDfrlCVApSzBqFA7hPa154zO+DvlaCIUcok=; h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:x-icloud-hme; b=Q1H+rAml8BNKeLAPoNsciC0mEF/2BNNqIrSuGjatEdi0EtAb6K1v/CADGmntk7f2wKVDXF34/ns2/2GYZhrtNrqbujkHqj/IfPjH0klR4xZDu4YFZ0TPlXub7NTPYOJAhu3Yb+lHhU1Wd2azCKIj9L2L3Aj7xiq1fkkIx/U8m/858hpg+KY7hAqBsxlxsGCEy33WJUPO/pohTSnbHQshVGxzFP2ipmLz5CJTTPGfcnzNTkzMKvMfavSWuxFT2gaTBq8AWdWYKlj65my5JbnwDDywF0T0ry02LxEYTBNyfkFXATa2WhBRpBunUJmySDyxq6+FizzTKx11zt7C8zYmfQ==
-Received: from smtpclient.apple (unknown [17.57.155.37])
-	by p00-icloudmta-asmtp-us-east-2d-100-percent-11 (Postfix) with ESMTPSA id 52A761800164
-	for <git@vger.kernel.org>; Thu, 25 Dec 2025 00:01:22 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-From: austinimei33@icloud.com
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ebq2d4jY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P8QeWyme"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7D8177A0115;
+	Thu, 25 Dec 2025 03:00:44 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 25 Dec 2025 03:00:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1766649644; x=1766736044; bh=GkegSI0iUb
+	FQmW2vl25LTTEfCacgCHI2GrkgzCKMxmw=; b=ebq2d4jYn+5eDBV4pKAlJMZhqL
+	XZpR75oJ/HniBJxdrL64Bs7oHn6pw8G99kBiyUwQVOfgURf9PE8KdG5GCI3bSs9k
+	FjWym7unu4it2/9fUpgvoSu311mccQj2Jdd6s3S88x4fQ2hSy9Fd/yhWEDMx8Zq8
+	OiUqlfOkbAzMPRU1T3uH5bRNFGWDYIX8iLqud6XPeL+aB3mU44AoQ+7lCm4iUSqr
+	zQ0yS2ruDrQp63FYCQ3kIxCJlrA/bwMuVsPXgfHVdIqmdGt0UYleKxCEfO5GGswU
+	Si5GHQAA4e9nb3OCaUG63k+5DKwe/ahNzWgX4AoX5tcMl+V+LT7mCP/W7/4Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1766649644; x=1766736044; bh=GkegSI0iUbFQmW2vl25LTTEfCacgCHI2Grk
+	gzCKMxmw=; b=P8QeWymelOL2MfJdvQp1qvhHVDl75O770zoIJ6u6lJNr5LEoFyK
+	0KMtUNxRy6HDg3iWkgOCSzvi6fSQMt+jBpbMlxVxFca4zPO18X788bFJPNfWG0lt
+	nsBc49DmKZNucf3UsjETbCVAAw+q/uOXRvautVoT0YiUuH/d+fnlFm903kTj3s9H
+	bNTLNC0OmXKvxS+sewYCr6y61WrxkaqvjTLFGjfhtVLP/mXRYXyV61ABVoK7TOeF
+	Sg23po27XcKLFbF/VB7PWFCgu0KUrUxoVpSXXl1vH5oHELP53+k3BIC+WMgVdRCv
+	fMpOls3GB6q58wWFhQaA53CmnYtZOWl3neA==
+X-ME-Sender: <xms:LO9MaTW2zUh4KM-SXTNT6dKIeSByZiykBSkYp6E0pi954rioZs-yoA>
+    <xme:LO9MaSnzVCMiYXegQt9znwty4MoBXGQiIDnezMVwE6lztDTWqBMILj9UxcgEq5sO2
+    IRBlpO-2I5tWe6Xi5UViU3QdotzrpGvVpbJN6Qr6zXh55GMyiR1ZQ>
+X-ME-Received: <xmr:LO9MaUZsWINmOe7UbTYSkz0CkWTWnOdILrUAhNfr4IOI01L-D1QQceQpbQOvgD_1zHpl1erfPTlflJkbETWp2gou3CnA7GDFOA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeihedthecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    hhgrrhgrlhgunhhorhgughhrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:LO9MadMLlbvcU44qFawdcBGA_CL3TtUirLSyO3PYhdk6u9hq61dmfA>
+    <xmx:LO9MaZbQ2lTQEnLVwvXzQywBx3i-xCm4eScJecuL-GaELg9LRqdHpQ>
+    <xmx:LO9Mab3hb2WU8px4iortJUBxi07yO2Ba41yEjP6DdLdkDMLoCjIyAQ>
+    <xmx:LO9Maff-mT2zMPWyAQES_A1z3zDLaY0eau7yblcSQFMx6zJGisUs8g>
+    <xmx:LO9Maf5lHXTMZm6wBceRuv4hxTNYYASNGWqXaZQncG0eLf52Y8YP9wn0>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 25 Dec 2025 03:00:44 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v6 0/6] status: show default branch comparison when
+ tracking non-default branch
+In-Reply-To: <pull.2138.v6.git.git.1766619672.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Wed, 24 Dec 2025 23:41:06
+	+0000")
+References: <pull.2138.v5.git.git.1766572715.gitgitgadget@gmail.com>
+	<pull.2138.v6.git.git.1766619672.gitgitgadget@gmail.com>
+Date: Thu, 25 Dec 2025 17:00:42 +0900
+Message-ID: <xmqqms37m1n9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Date: Wed, 24 Dec 2025 16:00:50 -0800
-Subject: I'm being hacked 
-Message-Id: <F3FABEE9-9387-44EC-8A0F-938367B5D05E@icloud.com>
-To: git@vger.kernel.org
-X-Mailer: iPhone Mail (23C55)
-X-Authority-Info: v=2.4 cv=APDnIYrM c=1 sm=1 tr=0 ts=694c7ed3 cx=c_apl:c_pps
- a=bsP7O+dXZ5uKcj+dsLqiMw==:117 a=bsP7O+dXZ5uKcj+dsLqiMw==:17
- a=kj9zAlcOel0A:10 a=wP3pNCr1ah4A:10 a=x7bEGLp0ZPQA:10 a=5boR-pOWHtsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=HjUR6Urv2rj5MffzQoQA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: jBkgHr7FYAD_ZQQoFsJz00tlEa9C9BqK
-X-Proofpoint-GUID: jBkgHr7FYAD_ZQQoFsJz00tlEa9C9BqK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI0MDIxNyBTYWx0ZWRfX1Cj8XERo/3gP
- xcHtDDQI0512hQbpb6oKKpnZlMbjosTlAqAoIq0at8PYuU+JSPWXesrNdrxWU273okD1sn+X5z0
- vNa5/DXu/u1etLUqx1IiUSKQlGzCIU4sQwmffz0ZZyiD7IiDGsae/0RhHh0Vwx+oWW9CKSNlA3i
- d764fNFXHc4Lw7Md9QX4PLzxps6VwnvmfUjSTegS5LadOp//8TbkVxk/Ty05bryk2Md+m09qQ8B
- H30B9YHs+LZ3nNoIU9XktDKrqQ1Ve67tmaWH3Q7GlDjp7WQapuuP+xuCOc1NkUKEhyLRnwKScJk
- SMabcK7qwpbVBTnDClx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-24_04,2025-12-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1011
- spamscore=0 mlxlogscore=501 suspectscore=0 phishscore=0 malwarescore=0
- mlxscore=0 bulkscore=0 adultscore=0 classifier=spam authscore=0 adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512240217
-X-JNJ: AAAAAAABUVWGYvZK6HJawzlIvxAwiEoK3WnZspuoNFNfzM7DiW+tqcvunF3NE2gGOFO/GU1eQbhDwq50pI/1/Pig/gZnnQ6CbdiFBfc3f8q34KAMOh5O7s+kJWBGBUWUJX3pMVpKtObkcSl42nskQDFothiaibaEliVmWli8RJd/KAV5th3BSUiLIf6uINGLrZj8nvv5Z2CEN193XTiyK99DT3mUw/MQL6DIvRk6/lh1owpjsJD3N1wOsVgZ4XDaghG4CXD+2XhFk9QGJufulqA25SnOxFPnn/p8yUe6IMVTLciDIa7eMWg2dqwwv1eEIcsJbbCBzh1mkPu41gr+fyPXXS5aVJEfm0y+ckNKJ+8NaicwTHGjJDiEIVos31KmBFBOHgsBZa4slFKVdGML1LGa4cybEoiEAmcAoJS4VqSBRvLDV1fFfOWIq6U+0se2MlrocKopLFuIqK9Gx2kS9FZJq9AwdUc72cE4KEaw471m788ZfmfG4cvxzePOVWfkCKX/GMp7NbCf54tPYLGrvBfilQLXEMS2KZgyTAJTG7aGwS4DNlXvrnH1ZOunaxkzC9YGLzB9kbr4P+8Skg==
+MIME-Version: 1.0
+Content-Type: text/plain
 
-I'm being monotred illegally
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> cc: Chris Torek chris.torek@gmail.com cc: Yee Cheng Chin
+> ychin.macvim@gmail.com cc: "brian m. carlson" sandals@crustytoothpaste.net
+>
+> Harald Nordgren (6):
+>   status: show comparison with upstream default branch
+>   Simplify default branch comparison logic
+>   Use repo.settings.statusGoalBranch config for status comparison
+>   Rename default_remote to goal_branch
+>   Add warning for malformed statusGoalBranch config
+>   Change config key to status.compareBranch
+
+It seems that [v6 6/6] smells like an "oops, what I did in [v6 3/6]
+was wrong, and this is an incremental fix on top of it".
+
+Please don't.
+
+When presenting your topic to the list, rather, after you finish a
+series and the end result reaches a satisfactory state, please look
+back and polish patches to hide such mistakes in the middle, pretend
+as if you are a perfect developer who wrote a logical progression of
+patches that goes straight to the goal without stumbling around,
+taking detours, and making mistakes you need to correct in a later
+step.  Detours may have been taken when you initially wrote the
+series, and it may show the "true history" from your point of view,
+but to others (and the most importantly, to those who read "git log
+-p" later in order to extend your work to suit their needs better),
+they are merely distracting.
+
+The titles in [2-6/6] by the way do not seem to follow the
+established convention, like [1/6] does, i.e. "status: show
+comparison...", use an area prefix "<area>:", followed by a
+short-summary that is not capitalized.
+
+Thanks.
