@@ -1,123 +1,99 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B8B2C11E4
-	for <git@vger.kernel.org>; Thu, 25 Dec 2025 23:38:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7E21F03D2
+	for <git@vger.kernel.org>; Fri, 26 Dec 2025 01:59:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766705920; cv=none; b=lRyZb2HvXhJy2GWuYEVnPIK+m1dmkELR6347rklxJAmhfIO1L1OFWaZ1Sg3Kkrh+EztPt5yF+eyVzRy3gQ4bMeY5cE7xb44IscGHYA9Ls1t47WNhq8MrwTXLvnp2jVx9wHj4ddTAmkUkGLjRIF6sQ+YhNpHI2lqLjCycYnOjaSA=
+	t=1766714372; cv=none; b=mDhuYFwaejRV0Zt7lLk1cK6YohKyLIRaXYTXSOzfBaKeIMcx8hQTH2ZIyMeqzY+CYtp7Itp8Tq4nmXdRUDQg69PV7rWb+VFkSOh4IPXnzq73pTTkVp7d9K2hWDqYf5xeNTttlWXcBFRM1/OYq7DPkpuO4tmTTm5larjkGW1Y36E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766705920; c=relaxed/simple;
-	bh=eDHqEZCJb8/5E2ZfDbhafwa9f+/M+QwDDLU3b/tEbQ0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J/JkP6FCx5r6Sho5tEz5tj5aer0JJzfBXxT3rEIcTWHGkDciUAUC+OHsWHIlVXdxAGdnu9J/NGpGhcdYKAXmqbjyM6GEC+rnu0WKNEvPPuZ7lbzhAuYOFLUsMbGd02Rnr+6RdHlDdYeV/X7YYfqoLY+JWrs6ELTmmQpxORWdAHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=oq9YHOkf; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1766714372; c=relaxed/simple;
+	bh=rMtw6rdIkougvNVL8R0VnOCX4iYnMkQPv6MbSLppfIk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NggfcOIvLKYb4oBwGkBgH4P1H3Yg+zNHYdR+6cN1KiPISlyjFdwgsATVbN/k1+3RJZ8pGkum5j4f6e2r6bT5wpDyR7Z2wwUT8/5iP+XtNl6vuTs+nMpUzvG1ZiiHIaol6gG2LMCfDaBPNkLDPuCq/xJLh/XXqYOAA9qEyNTojNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NAER/jOy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HjEDIz+I; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="oq9YHOkf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1766705911;
-	bh=eDHqEZCJb8/5E2ZfDbhafwa9f+/M+QwDDLU3b/tEbQ0=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=oq9YHOkfUC2nWnZnQfg+zUZvVHF5fAQOW9iQa519YTyeBnLa2T+8YVu7E5NnYoCsp
-	 uW2PV81zfrXWsUA0u/BALc7nLfaN24ajcLWvvMgD7nHHO14cxGDfHhwXx9D/MIgr+N
-	 w3NQlBvt3bs0QN44KcUb6LvH3y62+w+H0Qn+xQwXVyqLco/J9ihEfyMvHlbZU9kZO+
-	 3fB3rDG/p8Qfqu0rwictSqFAXDmlnkfB2rMWPoR9zttf/r1u8cpwS9GOy9vL24Q2JF
-	 +1FDXWlqy8LtixUc/BxKSbaczi4TUEyi2CqCgcrt1BD0jKdW6/2XEgQBsdgzrzi9BI
-	 Vibx2zbg8wZKVmOWq76a9VR+wPnF/Qew3s0+sRZTacXzPDeURiaFw/SwPCfdQeGUik
-	 WqBsyeYjqzHkVB2z2+D0WBoPPTyieVItH8akZmXX1/UDy4sKQS882v53UtzWBSgc23
-	 U5ljxPLQ38uiafIrbIMKJq3K5PAGcYEpvg9xRZS7vJiHbZhFoyp
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f8c8:2944:974d:642f])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4C64020079;
-	Thu, 25 Dec 2025 23:38:31 +0000 (UTC)
-Date: Thu, 25 Dec 2025 23:38:30 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Martin Fick <mfick@nvidia.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Slow git pack-refs --all
-Message-ID: <aU3K9lGbHw68Vv5U@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Martin Fick <mfick@nvidia.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <CH3PR12MB9026B5872FD42F031970074BC2B3A@CH3PR12MB9026.namprd12.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NAER/jOy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HjEDIz+I"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id C42151D00031;
+	Thu, 25 Dec 2025 20:59:28 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 25 Dec 2025 20:59:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1766714368; x=1766800768; bh=rMtw6rdIko
+	ugvNVL8R0VnOCX4iYnMkQPv6MbSLppfIk=; b=NAER/jOyk9fQWLF7Tlf2SuQ3P5
+	N3gsPzhJobSkWzvGS3il+UNZ+SpEdhks2sW2WHbrebneMIsKQegVugn/j1IMR6ni
+	unfLE8QV9gpj6+2JgoPVztSQIJqShtKxPyqUGrfgx05sGKal8zfylthVt9a7igH2
+	BgrHJ4YR2DR7mxGXP/RVQDa4Gd0LgGIBi92Rm6OaHxIfaA2qtPMGlk2jLXfk7LYT
+	Vo/nYJ6kTRjCHnQ9PFA9FoFxu/m0WqaRSsW/ua66+dRVb6SQApmlZcKmkVCzKjjU
+	bLSCe/JFqY/R5rJmEW1QQsXVreD5ROmTLjqQXxkkt7xJhdWwh//0PpImn93A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1766714368; x=1766800768; bh=rMtw6rdIkougvNVL8R0VnOCX4iYnMkQPv6M
+	bSLppfIk=; b=HjEDIz+IaEb5577fBPqbLLsX7UAkn8I86aZZ5nhsnR/VSmdrjPp
+	BHO2mN9Nw95FcCpPJ7L/HxFSeWXW6xkJqdrKK9ZI5DQqFuCw+1rTXOpbmw30Lm4v
+	bJZRql2FYXIMifeZ/JSCAQoEw+taondaK+BM5CVlMXaUJw/tR3GjuQ8xBV5Z1U3G
+	lPqnmb0N+R9NRcS3SKyReSS9eesTkTn2iHqwFfybutHpwqCdUBIoSWHzHUTREjVq
+	LuqECR7HlRlaypCN7Sp7ttsSyNPLPoT/JpvgIrfqrYOfbysjBUkvj6VhPAO8ayMf
+	g4oZewUkqEgWCoiWEGIdIlkZSvjRGS+Gu7g==
+X-ME-Sender: <xms:AOxNaZ5Wdr4zW9swZOgBPsY7fhb0nPiafJCC3I3l_Ki1uzr0P46JMg>
+    <xme:AOxNad6VC6v_eS9SVw_-9OET7O7i7WXq5TZ3y1FdKrLvsNTMP92bBbhmcW65KMxoY
+    3PfZWQsCku7tgl2IS2k1IV0xt2YrCFXUmQGg8WYkD7ZG1GMKakYWg>
+X-ME-Received: <xmr:AOxNaVdRJldnJXBSblu_ZpZUSKxqo56b5tI_NiXBp7zEAdEaPFALrApnhg_yT-A3NmZUOhzbiJntbFVh94eJBPqP4M6ErGxN7w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeijedvtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:AOxNaRDauM87iLA46mSco2IWRb393hBM4skB5RylkodaI4OkCJ2t5Q>
+    <xmx:AOxNaY9uoBkaUfYBA1Isa3mADJ2KHOVM9Ca81zmC8QVqrHIBljk5Mg>
+    <xmx:AOxNacLaDUnSPG-8rhMHB-iPP6_EFnCkHdnFizuh0ixc50trMRYkAw>
+    <xmx:AOxNaRiEM_w2kN96MaCDeT7uUJ7AueOiFvg75XyeR5M2gD7WnPBX5w>
+    <xmx:AOxNaU_qpEzHAjti07br6LxihsR7YXScaPV6MvqV0ThRhMZ7diKVD6kb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 25 Dec 2025 20:59:28 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: git@vger.kernel.org,  gitgitgadget@gmail.com
+Subject: Re: [PATCH] status: show default branch comparison when tracking
+ non-default branch
+In-Reply-To: <20251225094556.5944-1-haraldnordgren@gmail.com> (Harald
+	Nordgren's message of "Thu, 25 Dec 2025 10:45:56 +0100")
+References: <xmqqms37m1n9.fsf@gitster.g>
+	<20251225094556.5944-1-haraldnordgren@gmail.com>
+Date: Fri, 26 Dec 2025 10:59:26 +0900
+Message-ID: <xmqqikdum29t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7NyIB1DnU5168lAu"
-Content-Disposition: inline
-In-Reply-To: <CH3PR12MB9026B5872FD42F031970074BC2B3A@CH3PR12MB9026.namprd12.prod.outlook.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
---7NyIB1DnU5168lAu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Got it! I'd rather just squash all the commits then, the total diff is
+> quite small still.
 
-On 2025-12-25 at 22:13:54, Martin Fick wrote:
-> Although the packed-refs file is large, copying it takes less than 1s,
-> so there isn't a writing throughput issue with the filesystem.
-> Additionally, jgit can pack-refs --all in under 20s on the same repo,
-> so I don't believe there is an issue locking the 200 loose refs
-> either. When observing the filesystem, I do see the packed-refs.new
-> growing at a rate that seems slower than expected as if much more is
-> happening while writing this file, than just writing the file.
->=20
-> An strace shows about 200+ open("./objects..") calls interspersed
-> between around ~26K write() calls. I am surprised to see pack-refs
-> reading objects at all.
+Well, that is quite different from what I meant, but let's see what
+others may say.
 
-I think this is from `should_pack_ref`:
-
-    /* Do not pack broken refs: */
-    if (!ref_resolves_to_object(ref->name, refs->base.repo, ref->oid, ref->=
-flags))
-    	return 0;
-
-So Git is going to need to verify that the object at least exists.  I
-don't know why we would need to _open_ them, however.  Perhaps someone
-else has ideas.
-
-> Although the repository is not in terrible shape before packing refs
-> (~1500 loose objects, 37pack files). Surprisingly, repacking the repo
-> first does speed it up so that packing refs then takes under 20s.
->=20
-> This repository is on NFS.
-
-That's almost certainly part of your performance problem, too.  Loading
-a single pack file and index is going to be way, way faster than making
-lots of network calls to open 37 pack file and 37 index files, plus at
-least stat some loose objects.
-
-I will note that at least some forges always have Git write pack files
-and try to avoid loose objects altogether since that almost always
-improves performance.  You may want to set `receive.unpackLimit` to 1 to
-see if that helps in the general case.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---7NyIB1DnU5168lAu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaU3K9QAKCRB8DEliiIei
-gbTtAQCjXklCuvVp1rghlKGdSQKJjcdmMYdOAX/w4pSqO/NgtgEA/QcC7q0TtONY
-gV8dlauTRPUgeILxOi5VP4AFynr17A4=
-=JhpK
------END PGP SIGNATURE-----
-
---7NyIB1DnU5168lAu--
+Happy holidays.
