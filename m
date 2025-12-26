@@ -1,120 +1,83 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A83A43147
-	for <git@vger.kernel.org>; Fri, 26 Dec 2025 17:15:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F132192E4
+	for <git@vger.kernel.org>; Fri, 26 Dec 2025 18:57:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766769337; cv=none; b=OZDAasx+QMyGSzKqafvqX/V0FzKrd3ADh8oFptUhZDuli9Wvk3W08tWruqxCJO9L2mIisYLeoMmue8s2Zd3QhvQrZId88xultLdgXaHiQ7Duo4P4p9OS8wi556EMAsiQg1eb7VjOtC+HDkbdfYpAQ8qTpZOSzl+ObYKMC3uZbUA=
+	t=1766775453; cv=none; b=aWtJaAZPnjbtLDETVjTfAKpnMtCObXaRF8aROLLDB885en87I86ue6GPET4MtLNPgRwKHoQX6nekaehG5VhGJ7TJDxKCH4gHoZ376QCmssqLUx6CVf8w50jS1IJO1YzUCJaPz+wlrNpK5N5bTMFepoQViptqzAGhmUeJnWCWBVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766769337; c=relaxed/simple;
-	bh=Ly5TbsdK7J7fvGP5hmpSEZrzoewb020WdepcIKCMXuU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b2cp1fjogVfoePOsHV1GYSmvXY++mTMgqwIKrVIHsIp4QHCiiOsdy0vPBvlCt6FJN6B2yAMuWuW4phs8ZdFRQhmdX6cAxEbzYHGfU+dndyYhUd3XGyoJI/BjcLkDfmzoG+USd6yQLCbfkiys3NMyLeEQg/hXISWdPPoBdd0xmes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=jemldfy3; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1766775453; c=relaxed/simple;
+	bh=jomqV4k73+yIvk5O8Q1uiTLcpQhpVIMCbT9wqqnNoYA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jDyIw4yeVJVGTtS/3nnTAIF7pFMeTHtOhejZukuX5fnZlMfWTBe9m3MwQ0OlLUNin5WggZ2Gdi5HmaMOOQtxm/AZtDXo84zy7YUeorOq8Jdaw9MU8AOsdq2V6qXdvL2yANEdk4TYjENZeFQpdA7pVcr/F8tE521Gi6ZWB0spisw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c1S78bJy; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="jemldfy3"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1766769333;
-	bh=Ly5TbsdK7J7fvGP5hmpSEZrzoewb020WdepcIKCMXuU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=jemldfy3Qd5KaL1OA4cZm424AtOafWjlGll9RnzqJRZ2fSNApp6GjmcrcnvlFCxVC
-	 XV0d8tLA7ugsAxQDR8C78CqAybVmgPFNEGpRPmpBOxqcPWuyKAIS3HYxdVPxfKKZQx
-	 A7vq7O5GEBbqYfk7kD0SOpuktQ9WRz3ypO2gjNx0FhP7I9dRuWgl7D4dqMGjGKSxch
-	 X5Snzr1kHQ19quK2yztlPY7Gx5+HVoVoNLPXZHo8FwjSrJevxFFnBiBpfgs/ygaCdb
-	 CTxZpZrAymhw9bXKdLXzmzsOH3F+Ob0jMHy2z5DFSzu7mLRe1VHE21Pv8D8i+NmoHl
-	 b5OGF8pGZ+2wNeVLvk6m2Yj5/weMhabjYmF1vdZ4WXMibskZF+CpCRKZhcAwaNMzTp
-	 V5MextRMCUEGD/ZzDwhSXmZ5ecJkdOX+42dVqfg5jP28BsEqGyCu3XvGfJ9kKza6ai
-	 /jvRT9GGWy2kCzpk2jlvoBSTLugPcGPo40aD/fkrjWIQoTfLc4v
-Received: from fruit.crustytoothpaste.net (unknown [99.209.153.22])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1B97D200B1;
-	Fri, 26 Dec 2025 17:15:33 +0000 (UTC)
-Date: Fri, 26 Dec 2025 17:15:31 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: Martin Fick <mfick@nvidia.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Slow git pack-refs --all
-Message-ID: <aU7Cs2pXiXInfBh4@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Martin Fick <mfick@nvidia.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <CH3PR12MB9026B5872FD42F031970074BC2B3A@CH3PR12MB9026.namprd12.prod.outlook.com>
- <aU3K9lGbHw68Vv5U@fruit.crustytoothpaste.net>
- <20251226044507.GA1971832@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c1S78bJy"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2a099233e8dso61394565ad.3
+        for <git@vger.kernel.org>; Fri, 26 Dec 2025 10:57:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766775450; x=1767380250; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jomqV4k73+yIvk5O8Q1uiTLcpQhpVIMCbT9wqqnNoYA=;
+        b=c1S78bJyX3y/MbRTLkqnMbc/drxYNCcDiB5sM5x3Yjk9JJmZ6jp3VTP2tZDvZtjZRj
+         b2UEnTah6b3bo7OFw7QbGHGczSF3gWCgyxDC3ezms330xGX73nbYIfM6a7zAsYubM+x8
+         xw77chT5Ujyjjq8baQC1FrKbQWHArsjwoRoV5a8uxOCoX4JcB6WQmjpOn9YTbmuwHejt
+         wr2u7h9ahQY9hA3l4X27XgVJZc96FgqJu2abDtO68nqj7axc1vDiwwTCZbLzI8DzcI5J
+         7sC8WJ3R7cxzI357uDcioPPO2J5XUYs8goZFnDv6AJPLvmmGX5DcnwvA/oLsZm0+OVNa
+         vLsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766775450; x=1767380250;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=jomqV4k73+yIvk5O8Q1uiTLcpQhpVIMCbT9wqqnNoYA=;
+        b=auulH57B8pMJqhD3NOdZnY1IfA76aDANLeOsy4QVYm8XIDxnhWymcjquj7+MKPt/pe
+         Kbq9owtxCQKYLrK13NEGa72UegqkF+O6IWUkVLhPMRF3DWzsUW7QRymwI6nTn8pyjsQj
+         xWhLcB8wPPzcfkCKrGn7zvRhCUeS1wj4YjqX2r06y/ssAfm73GLDjVQfK89+NG6+Diwm
+         UflVXKROFr2D9v+iTO6EPCf55MRcbQN2anXjhuUEZcHI192XxtAxlsp0mQUyAh5mgZzZ
+         KrEzcWDJ8RNy03CJYZTJ1aBrV64k2xwoUHUcFYIL0Oknb0bkkyspDyoSo62gVaAUtGev
+         7ZwA==
+X-Gm-Message-State: AOJu0YyDaay8k0INfWIHYmXPAk4asVm/dmBgaJ6u5p64eNloPua8uG6m
+	86fTE+RQ8TpgBExqiF3l+7xAIvlDtDv8bRO1ck4Oecn4iWYWEj1kHtxw
+X-Gm-Gg: AY/fxX4qizKw3Qx+kQLvTAq0GQzxTmWFd4DanepfwJ8S+BP/xbhBq4mRimEbbvn27Me
+	aGZWliyFWu2e8qH5T8nK4K12atf1lf6TOU40gRmKMEm0XLMQvK30WL8qvRP2pRJrVg1+ivHPhKV
+	29DHtsiO/ra4rP+Ja8h3ltV0mikT3X8R+f0aFaJNtI08+bfGu78D4m9+vjiPgU+iD/whYmNlazy
+	MIYR/rdVikih/WPUIw/QJyQBfWJ5yiFN8tmZF6CbjY8Gjnl06Ye8MGdCGRjwfS5aKYqM9ONAZKs
+	CUNYWe5CBJlaaMmirJy1lCUSTP5ZD22sk0za4NJ/hS0cnPu0wq/6rhuWYUYmgEHH2MkRw73utig
+	WOC9dlwGrmppXIZ9I5tEknEA0OveRsCEXm1EpnYf+rJ8NJ3aJBgKwC72HSwHvY9wfFMO3BmHq5v
+	fg/stUYneixFsiv1497Mqx8BwXDVP7ju5QflJ4LsS083fkp4rXIuk=
+X-Google-Smtp-Source: AGHT+IFO3S+ArbXSjlcNDYm+ME8hDT0eCEL8g63dl/R8H9kxJDbbPBmvcD9cvOqVyKOKQ4qoW6ycaA==
+X-Received: by 2002:a17:903:244f:b0:29f:3042:407f with SMTP id d9443c01a7336-2a2f2227091mr225271995ad.21.1766775449854;
+        Fri, 26 Dec 2025 10:57:29 -0800 (PST)
+Received: from archlinux ([182.75.25.162])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3c8279esm207528675ad.28.2025.12.26.10.57.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Dec 2025 10:57:29 -0800 (PST)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org
+Subject: Re: [Bug] With "[remotes] group = a b c", "git push group" does not work
+Date: Sat, 27 Dec 2025 00:27:25 +0530
+Message-ID: <20251226185725.51201-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.51.2
+In-Reply-To: <xmqqiki0ivgy.fsf@gitster.g>
+References: <xmqqiki0ivgy.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="y6s6dvLP4e1b6kH+"
-Content-Disposition: inline
-In-Reply-To: <20251226044507.GA1971832@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 8bit
 
+Hi Junio,
 
---y6s6dvLP4e1b6kH+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I will be working on this.
 
-On 2025-12-26 at 04:45:07, Jeff King wrote:
-> On Thu, Dec 25, 2025 at 11:38:30PM +0000, brian m. carlson wrote:
->=20
-> > I think this is from `should_pack_ref`:
-> >=20
-> >     /* Do not pack broken refs: */
-> >     if (!ref_resolves_to_object(ref->name, refs->base.repo, ref->oid, r=
-ef->flags))
-> >     	return 0;
-> >=20
-> > So Git is going to need to verify that the object at least exists.  I
-> > don't know why we would need to _open_ them, however.  Perhaps someone
-> > else has ideas.
->=20
-> The packed-refs file stores tag-peeling information. So pack-refs opens
-> the object for any newly written ref via peel_object(), which has to at
-> least read the header to get the type. That call happens via
-> write_with_updates() in packed-backend.c.
->=20
->   If we wanted to be really pedantic, anything in refs/heads/ should not
->   point to a non-commit and thus should never need to be peeled. I'm not
->   sure if we want to embed that assumption in this code path, though
->   (nor would it necessarily help Martin's case if the refs are not in
->   refs/heads anyway).
-
-I don't think that would be a good idea.  I know that people definitely
-do updates of the loose refs by hand (although they should not) and so
-it's entirely possible for them to contain invalid values, such as
-having branches contain non-commit objects.
-
-I wonder if reftable would avoid the need for this kind of expensive
-check since it would already have the data peeled if need be and
-wouldn't need to recompute the values.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---y6s6dvLP4e1b6kH+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaU7CswAKCRB8DEliiIei
-gUTkAQDQoQJs4NtA/9t0sux2/zWXqh6bKOBF8T0MLUw27gBiTwEA2zLdZuOvwL6y
-GhfPBhLJdMR2HwyW+ITV/L0QTD1xrQw=
-=RPlZ
------END PGP SIGNATURE-----
-
---y6s6dvLP4e1b6kH+--
+Best,
+Usman Akinyemi
