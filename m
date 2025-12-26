@@ -1,41 +1,41 @@
 Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F308479
-	for <git@vger.kernel.org>; Fri, 26 Dec 2025 12:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA974280312
+	for <git@vger.kernel.org>; Fri, 26 Dec 2025 12:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766751903; cv=pass; b=myWgHOCEogCXwyGoxIuewtAhGsUZZXBqBAD6fQCnel8+tFiuVyI+Mu8avKBPEtw+Rr0EiBDLCsTDelMQVYWT+pINOW5vFy+kgN8ixCi61diym8qCOJBP9Kzesor4xptlV5PJDBwJJHnsyegUCbGL3tOD0ukiNtNVgPQZ5w+tNFw=
+	t=1766751905; cv=pass; b=iSPwO+BOBz8gnOC8HTdoy1nxVN6IcenhCa6vb8sMsUx3TdikRoZkl6XoOIXD5mUDd3JlzqPTJ4/i4Tk8qlJKQfEJXJbLeDJQAvAVqQOcBcj39EC5+dFkWJaWI14nbXI3zFJC5Puw9UKO+wvBZYLCd9jGDckvA87ykoram7MZXp4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766751903; c=relaxed/simple;
-	bh=DrSH/MT+7dBnLhfNcZctwW4ampzA7QDVHobw6VCzAWI=;
+	s=arc-20240116; t=1766751905; c=relaxed/simple;
+	bh=8iTRYTDXnb4cvsulfEHDUVsi/ep1f6ZFkMlQKB/5xeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qKLUa/gdeY2XuiQ689e/spZcKaRTnUYBTumaAxJJIJO/zfO6y3Kya07UMGliZNpjmbpTsQLIWI6mkBLCh2OoTBkJ49XvqNEjBgZnZg4iXwLPvr1bUESo8APrxt6yzDzovX0G/MLD5HUXbi4if74t0v8prL9jCJjr5eS9sZIL+A4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=G3pdllrj; arc=pass smtp.client-ip=136.143.188.112
+	 MIME-Version:Content-Type; b=lm8LtA9/fYbOr+9dXoB7kwHx41Wco3GUrApVrvLdTrfACY1Tk1JX8XRjqNud1tV5HW5RlsRqN6aRfIHWXBxvCJILZh5ke0z8jQPHtOHyoozcVwc42tDYCElnKn0Dwm2fsRhlOTpS0ZFD0bKAoQGD8fz//4bm6oisXVrdcqWOH3k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=LW77FXuB; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="G3pdllrj"
-ARC-Seal: i=1; a=rsa-sha256; t=1766751889; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="LW77FXuB"
+ARC-Seal: i=1; a=rsa-sha256; t=1766751891; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=hS9/lG1WyYlk3capbzAJeagLQKTctyE9U9x9BifoAMMRgY8rWkI13bA71xlPuLOfAl5HhDPk/K3V4IliaP3zL92aVdvmDy1Q7FJxAWD7OBb82dbb9azCloW/yYRHMxeI28cZyrnzHFwJD6t1fJGhwg5giUol88lK8EdjCtnwiFE=
+	b=crewv6td7TgDxztrTo/7GRpT3Gn2976qv5wwH+4rAfdRVAtZIbXfflftvAki+GQMpdzRfj8W/QfPICRVaFf5vdAIWoa9C0z+tkAuSe4d3GugqAG5LsSXoJlIJaGurGn6/fa5elilToG2pvNNocOzp8BomuwO5yIaev5s5TtMrhQ=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1766751889; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=tv58cmcn09MqXAz1rYSiQDzQtEIgn+FZSWWb2/GwC9c=; 
-	b=TgHGZIcSDg3BN9GjHI8+oGY4UCOYbGch/blnU+UTpiLSiiQ7w+xOKhJCrIw8zSTbF8/KPaHnyiS1GBz6+N6blF+YN/PrL0Cx/TY+0VrpN7gJTachYwhE0HSuOjAZ+bi9biEQYWP/CZKoh5Si7VNR732bdl6HsqYPcpfVN2aFkc0=
+	t=1766751891; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=rIt5FYRgpVXxrpnt8uPU75aFgLDigzqv0jfb7l8L7pY=; 
+	b=jp09itXRuHReCfbHkKenwa78Rb2jsXaul7SDgVW2NVY4Zi9QiclGIPWJ8hIXpb0CyRXBVg59BQ/nkmm5/Eisf4NTTgy3ykNoKWG4MrfXbW3lhujcztULCXyLYsKQNHlX8G0la6fY1sXz5+O1i3YcyQEQXJFeiZovjnU3wVZ+PWY=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1766751889;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1766751891;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
 	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=tv58cmcn09MqXAz1rYSiQDzQtEIgn+FZSWWb2/GwC9c=;
-	b=G3pdllrjdD+m5co4e6qJOazlrvmnQhCd/KpZAtsYQHoF2BI+vYxORa1XlsgdagBF
-	ptxxqGEDzPtGpx5C5Y85aU6vvUbZkTpOIawz0bejKgB9pZc6EJuCwFwu7fq0WagN445
-	Yy+Uc3hB5vmilAGHu9NbPqIqWSU7Xe1Df9SRt/yM=
-Received: by mx.zohomail.com with SMTPS id 1766751886810823.9440595254063;
-	Fri, 26 Dec 2025 04:24:46 -0800 (PST)
+	bh=rIt5FYRgpVXxrpnt8uPU75aFgLDigzqv0jfb7l8L7pY=;
+	b=LW77FXuB9isRKmvlQeggd9TuJIHtRhI754HV39sgR3OKz6vqmZji4GnfJzSi00ay
+	4rusBsMg75maWHnHWgaIsCZXgVQWp1EeWSrwum/zSSUOrp1QcAB5j7+CHuOLza12aYB
+	lRAurLCu3AoBlHRP5lwCZi6HCAfHfNrWsbN9NIc4=
+Received: by mx.zohomail.com with SMTPS id 1766751889984821.2589417914375;
+	Fri, 26 Dec 2025 04:24:49 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -48,9 +48,9 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>
-Subject: [PATCH v6 04/11] hook: convert 'post-rewrite' hook in sequencer.c to hook API
-Date: Fri, 26 Dec 2025 14:23:27 +0200
-Message-ID: <20251226122334.16687-5-adrian.ratiu@collabora.com>
+Subject: [PATCH v6 05/11] transport: convert pre-push to hook API
+Date: Fri, 26 Dec 2025 14:23:28 +0200
+Message-ID: <20251226122334.16687-6-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251226122334.16687-1-adrian.ratiu@collabora.com>
 References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
@@ -67,82 +67,132 @@ X-ZohoMailClient: External
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Replace the custom run-command calls used by post-rewrite with
-the newer and simpler hook_run_opt(), which does not need to
-create a custom 'struct child_process' or call find_hook().
-
-Another benefit of using the hook API is that hook_run_opt()
-handles the SIGPIPE toggle logic.
+Move the pre-push hook from custom run-command invocations to
+the new hook API which doesn't require a custom child_process
+structure and signal toggling.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- sequencer.c | 42 +++++++++++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ transport.c | 89 +++++++++++++++++++++++++++--------------------------
+ 1 file changed, 45 insertions(+), 44 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 5476d39ba9..71ed31c774 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1292,32 +1292,40 @@ int update_head_with_reflog(const struct commit *old_head,
- 	return ret;
+diff --git a/transport.c b/transport.c
+index c7f06a7382..6d0f02be5d 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1316,65 +1316,66 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
+ 	die(_("Aborting."));
  }
  
-+static int pipe_from_strbuf(int hook_stdin_fd, void *pp_cb, void *pp_task_cb UNUSED)
-+{
-+	struct hook_cb_data *hook_cb = pp_cb;
-+	struct strbuf *to_pipe = hook_cb->options->feed_pipe_ctx;
-+	int ret;
-+
-+	if (!to_pipe)
-+		BUG("pipe_from_strbuf called without feed_pipe_ctx");
-+
-+	ret = write_in_full(hook_stdin_fd, to_pipe->buf, to_pipe->len);
-+	if (ret < 0 && errno != EPIPE)
-+		return ret;
-+
-+	return 1; /* done writing */
-+}
-+
- static int run_rewrite_hook(const struct object_id *oldoid,
- 			    const struct object_id *newoid)
- {
+-static int run_pre_push_hook(struct transport *transport,
+-			     struct ref *remote_refs)
+-{
+-	int ret = 0, x;
+-	struct ref *r;
 -	struct child_process proc = CHILD_PROCESS_INIT;
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
- 	int code;
- 	struct strbuf sb = STRBUF_INIT;
--	const char *hook_path = find_hook(the_repository, "post-rewrite");
++struct feed_pre_push_hook_data {
+ 	struct strbuf buf;
+-	const char *hook_path = find_hook(the_repository, "pre-push");
++	const struct ref *refs;
++};
  
 -	if (!hook_path)
 -		return 0;
-+	strbuf_addf(&sb, "%s %s\n", oid_to_hex(oldoid), oid_to_hex(newoid));
++static int pre_push_hook_feed_stdin(int hook_stdin_fd, void *pp_cb UNUSED, void *pp_task_cb)
++{
++	struct feed_pre_push_hook_data *data = pp_task_cb;
++	const struct ref *r = data->refs;
++	int ret = 0;
  
--	strvec_pushl(&proc.args, hook_path, "amend", NULL);
+-	strvec_push(&proc.args, hook_path);
+-	strvec_push(&proc.args, transport->remote->name);
+-	strvec_push(&proc.args, transport->url);
++	if (!r)
++		return 1; /* no more refs */
+ 
 -	proc.in = -1;
--	proc.stdout_to_stderr = 1;
--	proc.trace2_hook_name = "post-rewrite";
-+	opt.feed_pipe_ctx = &sb;
-+	opt.feed_pipe = pipe_from_strbuf;
-+
-+	strvec_push(&opt.args, "amend");
-+
-+	code = run_hooks_opt(the_repository, "post-rewrite", &opt);
+-	proc.trace2_hook_name = "pre-push";
++	data->refs = r->next;
  
--	code = start_command(&proc);
--	if (code)
--		return code;
--	strbuf_addf(&sb, "%s %s\n", oid_to_hex(oldoid), oid_to_hex(newoid));
+-	if (start_command(&proc)) {
+-		finish_command(&proc);
+-		return -1;
++	switch (r->status) {
++	case REF_STATUS_REJECT_NONFASTFORWARD:
++	case REF_STATUS_REJECT_REMOTE_UPDATED:
++	case REF_STATUS_REJECT_STALE:
++	case REF_STATUS_UPTODATE:
++		return 0; /* skip refs which won't be pushed */
++	default:
++		break;
+ 	}
+ 
 -	sigchain_push(SIGPIPE, SIG_IGN);
--	write_in_full(proc.in, sb.buf, sb.len);
--	close(proc.in);
- 	strbuf_release(&sb);
--	sigchain_pop(SIGPIPE);
--	return finish_command(&proc);
-+	return code;
- }
++	if (!r->peer_ref)
++		return 0;
  
- void commit_post_rewrite(struct repository *r,
+-	strbuf_init(&buf, 256);
++	strbuf_reset(&data->buf);
++	strbuf_addf(&data->buf, "%s %s %s %s\n",
++		    r->peer_ref->name, oid_to_hex(&r->new_oid),
++		    r->name, oid_to_hex(&r->old_oid));
+ 
+-	for (r = remote_refs; r; r = r->next) {
+-		if (!r->peer_ref) continue;
+-		if (r->status == REF_STATUS_REJECT_NONFASTFORWARD) continue;
+-		if (r->status == REF_STATUS_REJECT_STALE) continue;
+-		if (r->status == REF_STATUS_REJECT_REMOTE_UPDATED) continue;
+-		if (r->status == REF_STATUS_UPTODATE) continue;
++	ret = write_in_full(hook_stdin_fd, data->buf.buf, data->buf.len);
++	if (ret < 0 && errno != EPIPE)
++		return ret; /* We do not mind if a hook does not read all refs. */
+ 
+-		strbuf_reset(&buf);
+-		strbuf_addf( &buf, "%s %s %s %s\n",
+-			 r->peer_ref->name, oid_to_hex(&r->new_oid),
+-			 r->name, oid_to_hex(&r->old_oid));
++	return 0;
++}
+ 
+-		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
+-			/* We do not mind if a hook does not read all refs. */
+-			if (errno != EPIPE)
+-				ret = -1;
+-			break;
+-		}
+-	}
++static int run_pre_push_hook(struct transport *transport,
++			     struct ref *remote_refs)
++{
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
++	struct feed_pre_push_hook_data data;
++	int ret = 0;
++
++	strvec_push(&opt.args, transport->remote->name);
++	strvec_push(&opt.args, transport->url);
+ 
+-	strbuf_release(&buf);
++	strbuf_init(&data.buf, 0);
++	data.refs = remote_refs;
+ 
+-	x = close(proc.in);
+-	if (!ret)
+-		ret = x;
++	opt.feed_pipe = pre_push_hook_feed_stdin;
++	opt.feed_pipe_cb_data = &data;
+ 
+-	sigchain_pop(SIGPIPE);
++	ret = run_hooks_opt(the_repository, "pre-push", &opt);
+ 
+-	x = finish_command(&proc);
+-	if (!ret)
+-		ret = x;
++	strbuf_release(&data.buf);
+ 
+ 	return ret;
+ }
 -- 
 2.51.2
 
