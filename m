@@ -1,123 +1,118 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829BA17A31C
-	for <git@vger.kernel.org>; Fri, 26 Dec 2025 02:11:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBFF28504D
+	for <git@vger.kernel.org>; Fri, 26 Dec 2025 03:28:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766715115; cv=none; b=QTZ8AeV98ra3bDYRAZ4TyabRM0RBUnmRmy9JvIFUoI1HBUVfClseJxHs1Z+dQGVI1Ly8H+VEB4Zy7cSN6TES+elXYyycgEBSdmgPHx/Cq4KrpD45QE2gcaumCTdokTppQ6+AUERMzB5Z2oM1biZ1jMqS8DmwHBA9tX0zLpvNUB0=
+	t=1766719705; cv=none; b=t1Qikkr6hyb/YLnUHgUME2MNYYR1RUSOw5WmJazTaK3no5Fr/ovWLO6viprh/Iuor/bGN7rPWC65vEk2oAdL5BUVJr0NcKuaJkO2lvRFMbELJslAYtMvZl8koJWKsf48lKYAyraDVRS4GnbwkaZnka4uSxFSyhPfnRChf5m3lbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766715115; c=relaxed/simple;
-	bh=bziOUsyJcpQ9x+bDm2+Glf9CXE/CfPSfPuHP7oG6+uI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OFxPGI5O9CL1+gZJDdzwlDJXwI8LfHNRDL0oTw91C+YPGl8w6ksNIXQW/BYXq79ATzZv1pnbhir05bAPZ7Oj1T0r8NdB/xvLm0McPe5VHe9Mynbsr9rTXDqoarDKUwwLQSpsMQuDYwoeYPoSvJdkGedD9OUlX1HgpAgYxWhzR00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NOXlXDBw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ertdwgvj; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1766719705; c=relaxed/simple;
+	bh=sUE5latcjfPcQlWFCohUVwf3CYYh5dXyKjHa6PJYFzU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ix8PoX5V3MIAu2gOZ/o+zfqT1DdHX2Rye8JnKBV8c3MVKzIK/k8Li+FuxBk7/s59sf5V73/+SSWtAWz8NTEjBrPTbO7XZTsJKwc3IeY4VWKM6JFufW+cG5XduIoyUZh0RHuZAQjsDQFyyOUVgMVF+FsvLmCKfJcTjpS1NKbNsAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZHL6leRS; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NOXlXDBw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ertdwgvj"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id C362C1D00030;
-	Thu, 25 Dec 2025 21:11:50 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 25 Dec 2025 21:11:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1766715110; x=1766801510; bh=GBuVjwIrEO
-	WtGNXDhnvZT+tJh7zuZAeGjYl/DXu9PbI=; b=NOXlXDBwQUCzj8Txo3yk/ScYyN
-	rs+lHAztxOfqyNastuBD0hdB+Fs8x8Oq4BrSUvD3hTVTVwgDb2tEow/rkd8y9ziR
-	+ZlthCF0uBIiL/gPE5pXGXXXr+rdgdJkAxinwKFWeC6W+m5IrJIWSXRiFSijoF/p
-	8NNipd6EYfwVQrHaemuB0Rki6t952fFMcvLxOsrfAw/cbrCiGUcT0zjCOuwndN4u
-	65o6nivpvhDWeggLku6ibkRugsIyqcJQPC8fqiGSkScK90OgT9Pd+C9f70cF9R3B
-	KGQcyrh228dkcbE1Z6udC4Pm0BpGYDqCGbOLTuXB5wPuNjGiPXZeXncBCl1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1766715110; x=1766801510; bh=GBuVjwIrEOWtGNXDhnvZT+tJh7zuZAeGjYl
-	/DXu9PbI=; b=ErtdwgvjZn+WaXGIvfOwYQrqlrd8YZDPKiOFdqUJn4PYRlAsOEj
-	qcl2kOs6tuThm4oIo2/u7IYPj/wG3BAtyNijXdd1f3X8mgfWBDue0u0HcgUdQVHm
-	FZ6YpnwDh9Tz4WrkN7ihYcxhie5n/4PDirhwpQYNpWJ06gEKZmVAeXcDInMbJ8vB
-	vfTrwjdlr/w5jjBs5DbEuBkfntAFSZ+NfAExKKAhxQ8AYPhrWkvAvWJmMWZii9ZT
-	K+sm3mZ+U9nB2Eo+D3bzEDkASwtkt4OzrrnI5c1mkuVD1ScOhjZrwWbjz+w9z/t8
-	PAFMLshlIu9oIvUZlpEtN1ao5IUW7YMFLUA==
-X-ME-Sender: <xms:5u5NaSC0vfvaeKBzGXHaEhvCSReAgBDPaFc3CDVrWE9jEhO_7BN1jQ>
-    <xme:5u5NaT9p7B4u2B_dIXsnpSGNk7ZMTbLUoeu9XR7Y2XaW00O3O71YOWa9rmwOMR9cE
-    dpjR7p7Y4xvaq8iaiSW7pxGveibTMPdnhxxUNGDByoU3uTnd8SX8h8>
-X-ME-Received: <xmr:5u5NaS9yyW2Uc-ut51C8uUc0DeSx_etugTLBILe2jr6wuz-1tl3NlooWi3YRlrxmrl526FCTBrMt6MHnFCbP4zlAR2cFZzYtrQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeijedvfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehsohhrghgrnhhovhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:5u5Naadbeqk5ZXfp0hkx6jbGH4HoWNdIQ2dqVedWnuQ5NHanyxIojQ>
-    <xmx:5u5NabGLxtESDOIAbla30DaEKTJiYOKr0ljMZc0ByyYkvy2SRzWODQ>
-    <xmx:5u5NaYcByALbY43eoZWQmIYzETPCsKlJPNKLXI8wLsZi0iZXErLoiw>
-    <xmx:5u5NaVH6zshSccR0z4j5P235XioNrLNyQjUYT2Neovzh6zeMJ96RZQ>
-    <xmx:5u5NaT94o94NOf9w_InpQEk2hMx39HuW2IUCK-B3r8rnooxOBqN44MGZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 25 Dec 2025 21:11:50 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Sergey Organov <sorganov@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Why git branch --show-current ignores -v?
-In-Reply-To: <xmqq8qeqm1tp.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	26 Dec 2025 11:09:06 +0900")
-References: <87h5tev918.fsf@osv.gnss.ru> <xmqq8qeqm1tp.fsf@gitster.g>
-Date: Fri, 26 Dec 2025 11:11:49 +0900
-Message-ID: <xmqq1pkim1p6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZHL6leRS"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2a09757004cso88953085ad.3
+        for <git@vger.kernel.org>; Thu, 25 Dec 2025 19:28:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766719703; x=1767324503; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m+DJEsjkbr1TckBgrvJwPavlbZf6JBoXJq/3nIGELPg=;
+        b=ZHL6leRSdFeTnl2vxJ5L/2zgTFtJ0vA+4/5lCUO3QJHRk1D0HQt1CdjqZhpB2vX3Ob
+         uV6Q8LPbiPeD7Sr29JdxiioE/efOg6t9nzJm4VjM1evDkbkhlg6ofUh3onbntUUr03ht
+         vRoLW+07eopcc973GutDUfT+iKVgFWm4T0qdxQ5n3RTMkorv7mDPGQSUgpwXNryg7OkJ
+         +alABlnG8uqxagVr+N7tOkZl/D6DAMOrDKNad37N85LipT2lmm5d0wdETZvJqsniGicL
+         7xHAHp0B8+L0wd6wYPIRYjsO1aGKVlAFLYzPibVE/QAfWpT6c9F28HGBMeXC6kmit+Xq
+         PrxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766719703; x=1767324503;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=m+DJEsjkbr1TckBgrvJwPavlbZf6JBoXJq/3nIGELPg=;
+        b=Zy9S+Q93QBVNvCOM9YDwvf/DMNhzaQQr/VDLwQc3SOUk9WHW5WiHQ9Jr8RZRg9p4zR
+         hM3WPrXNgfxuyjh6Hbwwp9rGqMbRxGHO3dLg+tJNPqRyrsuhT3/fPvv5LI9WRa8fek7p
+         4fEpORLPmPx27oFyMtxUb/yHZgIEekKCnPdkHSkbq8Xj2jsUnO7XIdwIfY9PRnOiyRRE
+         Zct0P5suAwjia2259Z49/kYimu99BFNzhcgDdmYwgEWeWM1G8/q2psuLJ7EBQEue1VJ2
+         nrD78F19Ko+ZmUxgh02qrf+FDQ3lOjyFgTDtLpABUeUrcGlZbidMMdEkbFLJ0rDJe9Ve
+         dseA==
+X-Gm-Message-State: AOJu0Yx77LaGPtj2bwo1rba/Evvgm9zxL6pOh9i6O52Bk/GHdXQbGvMs
+	5VdRooBoifaarsLr7etUw1tlBE4wC5upyu70d5kUfep7GiUmGtpWKkmzOyRqaS8B
+X-Gm-Gg: AY/fxX7hGM0h5hHhdjLHk6QAxwOFV5jKCpHGDokLrs/ksdfbzbUPdVkHASi8k+7o399
+	xJc63SZzGuxXpcoi2ONVtsBL4MKHfA4tb/Y4KEy2vGWQt34SW1UpDfKOOxiJB4YfCnuWmTs6XiJ
+	5M20xxMOr1yGIEFK3OjVgdmZEMldsZZoJekDgYKA+jop+3hEMgnQ1LiSi0V4hz2k5NdsWf20Cd4
+	SYb9yoDDXg+yZvHDBVN1UEn7viF2HZKgo/Er9H+xPLhH1hbTGiJU5IpQ6c/A7Q9ACiQO7/9XuXb
+	zhYUIVu4X8lKwU7aIfp1WiHfVHaSDVbfEkWJ0CjtwGuXZos0zZldMLzgvwymU0D7L3tsf2vEKFO
+	c/sfr6FJLQlVi+VWvuMcHBQ4nfkFp58ZH7cO3NblBF18Gk473mpD6CcKzMX/fWTJsEKYH66DSEk
+	/I+v8OhwdZTJMPD3LDRxmw2tQNZuaWxXyT
+X-Google-Smtp-Source: AGHT+IGX+GqYU4nQ1hBlKPneODyaMaicaNPCcDRfKSR8b2R6UFJVp1zBAT+QCiVbbK+1qAd+4RUf5A==
+X-Received: by 2002:a17:902:dad0:b0:295:9db1:ff32 with SMTP id d9443c01a7336-2a2f2b53d65mr179895565ad.48.1766719703423;
+        Thu, 25 Dec 2025 19:28:23 -0800 (PST)
+Received: from Fedora-Gink ([2405:201:c005:b959:acb7:a699:c03a:f9fa])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a2f3c74490sm189293405ad.5.2025.12.25.19.28.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Dec 2025 19:28:23 -0800 (PST)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	sorganov@gmail.com,
+	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Subject: [PATCH] branch: Remove unnecessary verbose flag
+Date: Fri, 26 Dec 2025 08:58:04 +0530
+Message-ID: <20251226032804.596058-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <xmqq1pkim1p6.fsf@gitster.g>
+References: <xmqq1pkim1p6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+The --show-current option doesn't know how to handle verbose
+logic. In such a case, we want the program to die when both flags
+are used together.
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> It looks useful and natural for "git branch --show-current -v[v]" to
->> verbosely describe current branch, similar to what --list does. Is there
->> sound reason why -v is not supported by --show-current?
->
-> The "--show-current" feature was invented merely for those who
-> somehow found it ugly to use "git symbolic-ref HEAD" when a user
-> wants to learn what the current branch was.  If I have to guess,
-> nobody thought about it as a way to get the same output as "--list"
-> but restricted to the single current branch.  Hence nobody felt the
-> need to support any option that the "--list" operation supported,
-> including "-v".  IOW, nobody shared your "It looks useful" so far,
-> especially among the people who knew where the "--show-current"
-> option came from.
->
-> I do not think anybody terribly objects if somebody teaches "-v" to
-> make "git branch --show-current" more verbose, and other "--list"
-> operations in general, but I suspect that the exact contents in the
-> verbose output may have to be different from that of "--list".  For
-> one thing, as "--show-current" limits its output to the current
-> branch, the two-place indent "git branch --list" gives its output is
-> not there, and "-v" would probably not want to add it.
+Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+---
+ builtin/branch.c  | 2 ++
+ t/t3200-branch.sh | 4 ++++
+ 2 files changed, 6 insertions(+)
 
-Forgot to say something much more important.  
+diff --git a/builtin/branch.c b/builtin/branch.c
+index c577b5d20f..433c213dc0 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -860,6 +860,8 @@ int cmd_branch(int argc,
+ 		ret = delete_branches(argc, argv, delete > 1, filter.kind, quiet);
+ 		goto out;
+ 	} else if (show_current) {
++		if (filter.verbose)
++			die(_("options '%s' and '%s' cannot be used together"), "--show-current", "-v");
+ 		print_current_branch_name();
+ 		ret = 0;
+ 		goto out;
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index c58e505c43..5bb49de9c2 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1716,4 +1716,8 @@ test_expect_success 'errors if given a bad branch name' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'git branch --show-current rejects -v' '
++	test_must_fail git branch --show-current -v
++'
++
+ test_done
+-- 
+2.52.0
 
-Commands should complain when users give them input that they do not
-understand.  If "git branch --show-current -v" silently eats "-v", I
-would say it is a bug.
-
-Unless we define that the current output is already verbose, that
-is.
-
-Thanks.
