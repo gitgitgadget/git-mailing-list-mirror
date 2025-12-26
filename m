@@ -1,41 +1,41 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8214C8479
-	for <git@vger.kernel.org>; Fri, 26 Dec 2025 12:25:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3A131DD98
+	for <git@vger.kernel.org>; Fri, 26 Dec 2025 12:25:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766751909; cv=pass; b=fvEcS+8UGs8uRkKlSVN79xzEbpuOOyeok+aALSvGvEMVyDVyiOFKyXyuclgLN5sJWX6heUCL7qE34pG1FFBKPJ4CLRwzileDTMLazcMZED24KsqMjdN5hRG1VjJ/J7s+EkjVGdB+17mWRPuiQOl21VLy+TqVrXPZi7Pa+8zxdZ8=
+	t=1766751913; cv=pass; b=DNIe+zSjP88LpsEo6Z+8vB6StksfNv8fSsplqBtrIgy4anJQcmffmQ+eVZfErFKRvan2iaVhIOjwSrIL6PU//yqFLRE0+AEWW/srB3jPmGJkLPTUCWNhH6opSI5WRqc1lzod8AfaM7DfSj4GmrZLlv13t0WOBguLO8vFnfJDJqE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766751909; c=relaxed/simple;
-	bh=NQCeuaio6FpWLfd1OY/2DkeUvubBV6+3rym3p9appFg=;
+	s=arc-20240116; t=1766751913; c=relaxed/simple;
+	bh=HaR/74dJ9U/IC9xWkp8pQH4L+zh+495uPpuLRJ4zb9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OWmn1uaD/C8h+uiX/iKr79hozxc38MNEsHDCVVQRT8maWfWaCYUaZ/CiNqU/KfPQyGVat69W3cAD5syiLwBvt88wQZybXVtmYSd8M3rY2ZEUKJ0gGvqSA9cbbEXFOy3QBr32vRDKBL0BWYP5sH4XtMp9klL25p5cMHK0vpYuB2k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=ZsCYEJVH; arc=pass smtp.client-ip=136.143.188.112
+	 MIME-Version; b=Dg7F5B7FFN6EMQaEqOYZbIXuClLN9IzhaVkfEf0/vCX2JlXVQXR2MlbLbBRcROB7ffDlyy4Zbsk7coAuD4QE0HpsZFFYFQexPpFUWJiZTWk9hExJfDucwTnf/hLpnKV65AdJRpXlpZ8iHrXbGOKQP5RWW804AxLYArGO6Xuaqds=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=h9PuanLU; arc=pass smtp.client-ip=136.143.188.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="ZsCYEJVH"
-ARC-Seal: i=1; a=rsa-sha256; t=1766751895; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="h9PuanLU"
+ARC-Seal: i=1; a=rsa-sha256; t=1766751897; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=k4VZp5QuJTYapVBFPuJkcHN4DH/bNFp5OChxZK8LQNUwbqpo5K2fzE1YUYyjaz6wqLv/wMMHAmmzBbhyjOoryi9PM73ciiSAxuc/DRn0h7fot9Fisz6xjQ9Xux72ZOgnqP1fVPOyVvjAO1J03s7El4OPJTeigt+UqB0sUqY/tcs=
+	b=n+Ca40wDehskUT+XncBcE12kO/rFX3r12dSEEhF2bZNOK+LRwQTdYcZGgYZQK2uHqThz1bNh3rrFVKkq8Wy69XwyHh/d3ofvjtur967uisLvrHPw//GuZLcoNvXJQ7DnhOcqvdMdwYR6JFVBqTAnYlTACNm6UqHhJgwpm7pmNbc=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1766751895; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=w60LiQibhAFLDQXZUia0iInpgYhsEtHJio4xZXE4jXU=; 
-	b=htzsrpz0pDCdp1eDl6KoAv/Ia8o5orw4RYgDUTDeGSCTDbMg0HocZQ6B4LEaesVKLHn2M8oXddsRk3AJmh6niFkLx2U2mjEqqUZO0zUFkEfhJokZFgc0Lo8y3HMm8gpDEtNXa1kFeM3rF2mMmOZ91ttx8aRqEfmeG00pbZni87o=
+	t=1766751897; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=wxNGi05G3H3s3mNa3fs+987bxg1lXv1kCj2z9082oVQ=; 
+	b=jLw7uV61d27TPOS5PZn4tFRSjEC66tHQ+oVJSsmsTVFbN7FQsmTC7okp+ia5pc6pvz8D+2sYcZdgkkFfgQuWU93HqT0JTk6DXNJVI/64N3s0R6oKta000BAk1D33Z1O7Ejmdu39/wfti70eWVHUjx0evUgO639zu5PG7tqqi4WE=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
 	dmarc=pass header.from=<adrian.ratiu@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1766751895;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1766751897;
 	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=w60LiQibhAFLDQXZUia0iInpgYhsEtHJio4xZXE4jXU=;
-	b=ZsCYEJVHkCo4bAnuTbeSUK3vR+gn5CBwm/DSSh+Y9ESNYvggQQvH+T6DIp+4lFTH
-	dSvMaTMlmh1TENmVwpaZFBye8+iDegerI5KFjQHP8Pb68c7qo7KGxGUKNyZKB94g29D
-	aQemdZV3DqPkKnmxlKteu93jSFeIUtT15plsxffo=
-Received: by mx.zohomail.com with SMTPS id 1766751893364900.2724656581504;
-	Fri, 26 Dec 2025 04:24:53 -0800 (PST)
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=wxNGi05G3H3s3mNa3fs+987bxg1lXv1kCj2z9082oVQ=;
+	b=h9PuanLUp8dH561ae7suajXbl0ogr/JYoSj1i6I4c+9moK0SU09D4yEPP0Mfwuxj
+	pOWrkGOyCxzwrvqsAcwPGGBz0BH2ht570FBNadV8nM5hgPz6/hCYT0xJWehkcuUJBN8
+	iDT/mTFPy2WKxJwJag/k4nSo7dKkqeLkMZUe8YWc=
+Received: by mx.zohomail.com with SMTPS id 1766751896436271.5029964207122;
+	Fri, 26 Dec 2025 04:24:56 -0800 (PST)
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 To: git@vger.kernel.org
 Cc: Emily Shaffer <emilyshaffer@google.com>,
@@ -46,12 +46,10 @@ Cc: Emily Shaffer <emilyshaffer@google.com>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>,
-	Emily Shaffer <nasamuffin@google.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
-Subject: [PATCH v6 06/11] reference-transaction: use hook API instead of run-command
-Date: Fri, 26 Dec 2025 14:23:29 +0200
-Message-ID: <20251226122334.16687-7-adrian.ratiu@collabora.com>
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH v6 07/11] hook: allow overriding the ungroup option
+Date: Fri, 26 Dec 2025 14:23:30 +0200
+Message-ID: <20251226122334.16687-8-adrian.ratiu@collabora.com>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251226122334.16687-1-adrian.ratiu@collabora.com>
 References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
@@ -62,153 +60,100 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-Convert the reference-transaction hook to the new hook API,
-so it doesn't need to set up a struct child_process, call
-find_hook or toggle the pipe signals.
+When calling run_process_parallel() in run_hooks_opt(), the
+ungroup option is currently hardcoded to .ungroup = 1.
 
-The stdin feed callback is processing one ref update per
-call. I haven't noticed any performance degradation due
-to this, however we can batch as many we want in each call,
-to ensure a good pipe throughtput (i.e. the child does not
-wait after stdin).
+This causes problems when ungrouping should be disabled, for
+example when sideband-reading collated output from child hooks,
+because sideband-reading and ungrouping are mutually exclusive.
 
-Helped-by: Emily Shaffer <nasamuffin@google.com>
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Thus a new hook.h option is added to allow overriding.
+
+The existing ungroup=1 behavior is preserved in the run_hooks()
+API and the "hook run" command. We could modify these to take
+an option if necessary, so I added two code comments there.
+
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
 ---
- refs.c | 100 ++++++++++++++++++++++++++++++---------------------------
- 1 file changed, 52 insertions(+), 48 deletions(-)
+ builtin/hook.c | 6 ++++++
+ commit.c       | 3 +++
+ hook.c         | 5 ++++-
+ hook.h         | 5 +++++
+ 4 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/refs.c b/refs.c
-index 046b695bb2..e06e0cb072 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2422,68 +2422,72 @@ static int ref_update_reject_duplicates(struct string_list *refnames,
- 	return 0;
- }
+diff --git a/builtin/hook.c b/builtin/hook.c
+index 7afec380d2..73e7b8c2e8 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -43,6 +43,12 @@ static int run(int argc, const char **argv, const char *prefix,
+ 	if (!argc)
+ 		goto usage;
  
--static int run_transaction_hook(struct ref_transaction *transaction,
--				const char *state)
-+struct transaction_feed_cb_data {
-+	size_t index;
-+	struct strbuf buf;
-+};
++	/*
++	 * All current "hook run" use-cases require ungrouped child output.
++	 * If this changes, a hook run argument can be added to toggle it.
++	 */
++	opt.ungroup = 1;
 +
-+static int transaction_hook_feed_stdin(int hook_stdin_fd, void *pp_cb, void *pp_task_cb)
+ 	/*
+ 	 * Having a -- for "run" when providing <hook-args> is
+ 	 * mandatory.
+diff --git a/commit.c b/commit.c
+index 709c9eed58..2527f15d9d 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1978,6 +1978,9 @@ int run_commit_hook(int editor_is_used, const char *index_file,
+ 		strvec_push(&opt.args, arg);
+ 	va_end(args);
+ 
++	/* All commit hook use-cases require ungrouping child output. */
++	opt.ungroup = 1;
++
+ 	opt.invoked_hook = invoked_hook;
+ 	return run_hooks_opt(the_repository, name, &opt);
+ }
+diff --git a/hook.c b/hook.c
+index 5ddd7678d1..00a1e2ad22 100644
+--- a/hook.c
++++ b/hook.c
+@@ -153,7 +153,7 @@ int run_hooks_opt(struct repository *r, const char *hook_name,
+ 		.tr2_label = hook_name,
+ 
+ 		.processes = 1,
+-		.ungroup = 1,
++		.ungroup = options->ungroup,
+ 
+ 		.get_next_task = pick_next_hook,
+ 		.start_failure = notify_start_failure,
+@@ -198,6 +198,9 @@ int run_hooks(struct repository *r, const char *hook_name)
  {
--	struct child_process proc = CHILD_PROCESS_INIT;
--	struct strbuf buf = STRBUF_INIT;
--	const char *hook;
--	int ret = 0;
-+	struct hook_cb_data *hook_cb = pp_cb;
-+	struct ref_transaction *transaction = hook_cb->options->feed_pipe_ctx;
-+	struct transaction_feed_cb_data *feed_cb_data = pp_task_cb;
-+	struct strbuf *buf = &feed_cb_data->buf;
-+	struct ref_update *update;
-+	size_t i = feed_cb_data->index++;
-+	int ret;
+ 	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
  
--	hook = find_hook(transaction->ref_store->repo, "reference-transaction");
--	if (!hook)
--		return ret;
-+	if (i >= transaction->nr)
-+		return 1; /* No more refs to process */
- 
--	strvec_pushl(&proc.args, hook, state, NULL);
--	proc.in = -1;
--	proc.stdout_to_stderr = 1;
--	proc.trace2_hook_name = "reference-transaction";
-+	update = transaction->updates[i];
- 
--	ret = start_command(&proc);
--	if (ret)
--		return ret;
-+	if (update->flags & REF_LOG_ONLY)
-+		return 0;
- 
--	sigchain_push(SIGPIPE, SIG_IGN);
-+	strbuf_reset(buf);
- 
--	for (size_t i = 0; i < transaction->nr; i++) {
--		struct ref_update *update = transaction->updates[i];
-+	if (!(update->flags & REF_HAVE_OLD))
-+		strbuf_addf(buf, "%s ", oid_to_hex(null_oid(the_hash_algo)));
-+	else if (update->old_target)
-+		strbuf_addf(buf, "ref:%s ", update->old_target);
-+	else
-+		strbuf_addf(buf, "%s ", oid_to_hex(&update->old_oid));
- 
--		if (update->flags & REF_LOG_ONLY)
--			continue;
-+	if (!(update->flags & REF_HAVE_NEW))
-+		strbuf_addf(buf, "%s ", oid_to_hex(null_oid(the_hash_algo)));
-+	else if (update->new_target)
-+		strbuf_addf(buf, "ref:%s ", update->new_target);
-+	else
-+		strbuf_addf(buf, "%s ", oid_to_hex(&update->new_oid));
- 
--		strbuf_reset(&buf);
-+	strbuf_addf(buf, "%s\n", update->refname);
- 
--		if (!(update->flags & REF_HAVE_OLD))
--			strbuf_addf(&buf, "%s ", oid_to_hex(null_oid(the_hash_algo)));
--		else if (update->old_target)
--			strbuf_addf(&buf, "ref:%s ", update->old_target);
--		else
--			strbuf_addf(&buf, "%s ", oid_to_hex(&update->old_oid));
-+	ret = write_in_full(hook_stdin_fd, buf->buf, buf->len);
-+	if (ret < 0 && errno != EPIPE)
-+		return ret;
- 
--		if (!(update->flags & REF_HAVE_NEW))
--			strbuf_addf(&buf, "%s ", oid_to_hex(null_oid(the_hash_algo)));
--		else if (update->new_target)
--			strbuf_addf(&buf, "ref:%s ", update->new_target);
--		else
--			strbuf_addf(&buf, "%s ", oid_to_hex(&update->new_oid));
-+	return 0; /* no more input to feed */
-+}
++	/* All use-cases of this API require ungrouping. */
++	opt.ungroup = 1;
 +
-+static int run_transaction_hook(struct ref_transaction *transaction,
-+				const char *state)
-+{
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
-+	struct transaction_feed_cb_data feed_ctx = { 0 };
-+	int ret = 0;
- 
--		strbuf_addf(&buf, "%s\n", update->refname);
-+	strvec_push(&opt.args, state);
- 
--		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
--			if (errno != EPIPE) {
--				/* Don't leak errno outside this API */
--				errno = 0;
--				ret = -1;
--			}
--			break;
--		}
--	}
-+	opt.feed_pipe = transaction_hook_feed_stdin;
-+	opt.feed_pipe_ctx = transaction;
-+	opt.feed_pipe_cb_data = &feed_ctx;
- 
--	close(proc.in);
--	sigchain_pop(SIGPIPE);
--	strbuf_release(&buf);
-+	strbuf_init(&feed_ctx.buf, 0);
-+
-+	ret = run_hooks_opt(transaction->ref_store->repo, "reference-transaction", &opt);
- 
--	ret |= finish_command(&proc);
-+	strbuf_release(&feed_ctx.buf);
- 	return ret;
+ 	return run_hooks_opt(r, hook_name, &opt);
  }
  
+diff --git a/hook.h b/hook.h
+index 2169d4a6bd..78a1a44690 100644
+--- a/hook.h
++++ b/hook.h
+@@ -34,6 +34,11 @@ struct run_hooks_opt
+ 	 */
+ 	int *invoked_hook;
+ 
++	/**
++	 * Allow hooks to set run_processes_parallel() 'ungroup' behavior.
++	 */
++	unsigned int ungroup:1;
++
+ 	/**
+ 	 * Path to file which should be piped to stdin for each hook.
+ 	 */
 -- 
 2.51.2
 
