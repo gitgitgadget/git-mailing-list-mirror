@@ -1,83 +1,196 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847887080E
-	for <git@vger.kernel.org>; Fri, 26 Dec 2025 10:58:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766746732; cv=none; b=F4ho/pw47orAzCSX5VVxBEAwkJQZJDQkYaFfyYTM5QoDELxvuDY/I60X1Mt/bPUsRwg/BnHk2V5f0gWbUnxjO8MEBHkEAy7EeTRXNy5HRPq12n6HhLGcyHVfBzBknEHeUwI8/Ho5ClCCObdecrljpBXlfVw563qq/8Ey01d6Sdk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766746732; c=relaxed/simple;
-	bh=LjFrayKgMrmbdp9NdLypkG5g2aDDN1TRVjgixhd8Qsk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rTuzpS9RdBRuW0jVwSEZgPFE0WPXofYPez7g5LJWq0rkFqL5z6DmqyzanzochNdMz3oPD3olp018Ja78sI78e6JnF4j5OFWzK52tP5ArDGrmdv4XvUyf5E8SlozT0dL8eOP2dVobDAzdsjJe5yfNGAhsd/pa6Chth1iYLeIMMAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lbD8Smsi; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A274F8479
+	for <git@vger.kernel.org>; Fri, 26 Dec 2025 12:24:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1766751891; cv=pass; b=FJ5lfChVu5G7UohLUpi2H8q7eIaCDjTMfl1Dr+UeOpbB0dIIt7CIgtv0iuDUOAgVa4AJ3Cp8Yw97WsPaXSVIT62M+o8MwLRV+zHA3pOpqTOoj6wZk6daogPYO69W1RFBCizaSNSOEdQWBCFNqsIDtCKDXzUBsvTibx7CWGDsckQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1766751891; c=relaxed/simple;
+	bh=urkh/eYGdk3Kj/X+2SA/lK0yb9WpBb3OqIrJv/CR7vk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=kHn1kQOlRA1OXnNlKJn3VYckjcyRrGjhschyJcupGlscOzP7g4ZryZ8ch7064Rqnhsmuy04WHscEwvs8tkoLR9fa87DDt9+BgP1JiVtWi1g4YOiA1YXXQeYRAv5xNJLG2XoJSzS6EgOAmJap9BBkF2Aggb024oWlzPzvaH7rt1E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=ZVmhOXFy; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lbD8Smsi"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5958187fa55so5428034e87.3
-        for <git@vger.kernel.org>; Fri, 26 Dec 2025 02:58:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766746728; x=1767351528; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LjFrayKgMrmbdp9NdLypkG5g2aDDN1TRVjgixhd8Qsk=;
-        b=lbD8SmsioAatQvlzxAQKRma/74OTxy7+aTffEqeLYdhRaBurSjomZuo6fgJ7zfHzRU
-         VIzdeIbpSaR4JxbfRpsgq6R/9HkuR0uEkzu1dB4P7z2vcSCp8Mj69weUEOQ3NNuuxBlG
-         TYM3EmMChSGpndZJqbQQVyOLecFv3voAOgnvfW8z2znE45+BIGxg8pey4fq6sOnbxWQU
-         KP2AC+sUxo6dqd4PkuovEVSEfK0heJnC/nh+UX2ps0TIiwQETNjowJM05TY85vxsZgSj
-         qsw8ByZdfrSjlb+E60A4xFIj5HFfFk/wT5lDr0bPPbJjflhi+oZhkelicalexLl3ZVzX
-         cjQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766746728; x=1767351528;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=LjFrayKgMrmbdp9NdLypkG5g2aDDN1TRVjgixhd8Qsk=;
-        b=G97EzZeKyK4Y28xyb4uCYnsXdFzdSUKeM/uFUUnVS8ygzVfk9oevKzhdWzQe0OlYBW
-         qkw2y5payl8w8wo1eemyVGjwdsYoN0ns2/iAV4wavLiCogNyHE+yH/us6bFSVuy959jB
-         pEFjrXnxAFL0V/rKuYEkLnT/d76nvxX/rIq/0fpzhfYElMxPWZXVsefngOLrPtmFEfUu
-         F1cbtGMtGGLRLez2EEJpEGfBEpNgChAiRF2JeuuU5XT063xyqfjH7wSv462MANGVjJQC
-         IWFda20TMnTiqoyLLBmv3hqi8rt7ZmpVS7LPtEpfkexbfvai6zCL7Q6wkS5a8j/JG+3v
-         9TsA==
-X-Gm-Message-State: AOJu0YxJl/N6E6S4/ke2oCSI5M+XUHJSJWMEUBI7lz0qZ/RU6ZmVbsWw
-	glmV2ojGDvYLVIOvzPJSrG8BBAITklwpXL2jCtzO/G8x6v1bqLQO2MRd
-X-Gm-Gg: AY/fxX6wa0HI32wY358IL8MMYjTi6omWpsO8EJrYGn9DhXg0kBVThz9sx5t4we3rsCk
-	ZB5B8193PQdhN6or7VEIYT6Ych5FwekCUxsC1iY2G6MCFaub6kpP9nTo5u77/Fdhkqep/pEAr/t
-	uSdvwqRpRgJdv+Viwr3EVYQjG/LVk8HgNt7k/46Hlmt9MxxUgHLROacdTNy3WOrcqqcyH8zMjc7
-	n9XgRiozpGQFFA6QfeNUQaST5cctpAmU1jdoZQxb4WgK0DoSrZFTbC3s3UUhTPVwh82XxgwfzQ/
-	eGAcA6gpkVSl6ljAfRrmVogFNSy7bMUL4CmQJVnkAi/46wO651JmjO86Rgz0AmBcHvcEtEg7Kr2
-	xwAt2tAFftdTi1ljvxWlK0k6Q/a9Pp4ZxAyHZ/u3b4RlB+UdoTxoa+9l9g3J3ooBptETPKChaqB
-	9Y2eWx4dTbv81FOUbyqGr/xRPXzrr/mwDcara2uQ4hHwtY6jly7g/w4bu0kK8riJy4E5qAw+8=
-X-Google-Smtp-Source: AGHT+IFbQnN23kKAFQDEOuGJWFy+NBqlyhawsa9fzgZtO282Hv0WRbq3vKrmGSKxgW9oc1GaosizQA==
-X-Received: by 2002:ac2:4e04:0:b0:597:d764:7443 with SMTP id 2adb3069b0e04-59a17d34de8mr7574723e87.22.1766746728254;
-        Fri, 26 Dec 2025 02:58:48 -0800 (PST)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a185d5eb2sm6450200e87.1.2025.12.26.02.58.47
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 26 Dec 2025 02:58:47 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com
-Subject: Re: [PATCH] status: show default branch comparison when tracking non-default branch
-Date: Fri, 26 Dec 2025 11:58:46 +0100
-Message-Id: <20251226105846.75864-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <xmqqikdum29t.fsf@gitster.g>
-References: <xmqqikdum29t.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="ZVmhOXFy"
+ARC-Seal: i=1; a=rsa-sha256; t=1766751875; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=KPiSm88QSc+1wCC3UPGd2LixoygpuOhWMpcj9g7Usw7vfdXXSeAHXVsXz6IDOMNFLPC1BGs833PGfHCLUJNGzQp1tlW9Eqwx7MhoRJsbqib5rbuoq/5C10he3OPk3Xb4MU9BTX3CRMFzeP3uk5PQ8L/f80mHKKzMESa2BKlV0rU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1766751875; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=tOFI4GdW/N/tmSCIZDpEpQWB3vYvO1JmSCSClhOxYZg=; 
+	b=K3fH/aUCTtAlw+5BIJbcZN+42Dk1u80jWSCHuJNNIBjUXaZ3SFJVyKE1F0618dGZUoFJkj1Qe65pyFwWpvndpU4myCAMWKMcYPJSjlBnRQg5w196AUF9F1FD3ONqBTT10AiL8GxJftpTR5dxlx6B12n2B5yJfdyRGqSMUDJxbSc=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1766751875;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=tOFI4GdW/N/tmSCIZDpEpQWB3vYvO1JmSCSClhOxYZg=;
+	b=ZVmhOXFyMfL3t3WHXw3PqP2rqAKULpP/sNRkoGKQBumB5blLY8+9Ns176ML+KCtR
+	6unhvx8t2MdAGrTkh/ITQ0Fg3HFxrE2TLQLw2TtaiF+cC2Gatt+/QgO3q2SdbZRcN+V
+	FLRqeCFqHrXYAFvKXRhXmjNnuclHtr1OANXQR25Y=
+Received: by mx.zohomail.com with SMTPS id 1766751873089270.7906733448634;
+	Fri, 26 Dec 2025 04:24:33 -0800 (PST)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: git@vger.kernel.org
+Cc: Emily Shaffer <emilyshaffer@google.com>,
+	Rodrigo Damazio Bovendorp <rdamazio@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Josh Steadmon <steadmon@google.com>,
+	Ben Knoble <ben.knoble@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>
+Subject: [PATCH v6 00/11] Convert remaining hooks to hook.h
+Date: Fri, 26 Dec 2025 14:23:23 +0200
+Message-ID: <20251226122334.16687-1-adrian.ratiu@collabora.com>
+X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
+References: <20250925125352.1728840-1-adrian.ratiu@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Thanks, I appreciate all your help! I feel like a bit of a bull in a china shop here.
+Hello everyone,
 
+This series finishes the hook.[ch] conversion for the remaining hooks in
+preparation for adding config-based hooks and enabling parallel hook
+execution where possible (that will be a separate series from this one).
 
-Merry Christmas!
+v6 is minor refresh for some last nits. Details + range-diff below.
+
+It is based on the latest master branch. There are no conflicts with
+next and seen branches, the code is available on GitHub [1] and a
+successful CI run [2] is also provided.
+
+1: https://github.com/10ne1/git/tree/dev/aratiu/hooks-conversion-v6
+2: https://github.com/10ne1/git/actions/runs/20436908624
+
+Changes in v6:
+* Last commit cb state is new allocated on the stack (Patrick)
+* Small loop variable and brace fixes (Patrick)
+
+Range-diff v5 -> v6:
+ 1:  8c16f1bcbf =  1:  8c16f1bcbf run-command: add first helper for pp child states
+ 2:  5e6e05ba92 =  2:  5e6e05ba92 run-command: add stdin callback for parallelization
+ 3:  3669acfe6a =  3:  3669acfe6a hook: provide stdin via callback
+ 4:  bf9d8680e4 =  4:  bf9d8680e4 hook: convert 'post-rewrite' hook in sequencer.c to hook API
+ 5:  bdcc1cff34 =  5:  bdcc1cff34 transport: convert pre-push to hook API
+ 6:  9c1d5e8726 =  6:  9c1d5e8726 reference-transaction: use hook API instead of run-command
+ 7:  0b986bf0fb =  7:  0b986bf0fb hook: allow overriding the ungroup option
+ 8:  5f07d07acc =  8:  5f07d07acc run-command: allow capturing of collated output
+ 9:  c4ff1e2270 =  9:  c4ff1e2270 hooks: allow callers to capture output
+10:  15c831ca15 = 10:  15c831ca15 receive-pack: convert update hooks to new API
+11:  4bd2c2974a ! 11:  432dc14871 receive-pack: convert receive hooks to hook API
+    @@ builtin/receive-pack.c: struct receive_hook_feed_state {
+     -		finish_async(&muxer);
+      
+     -	sigchain_pop(SIGPIPE);
+    --
+    --	return finish_command(&proc);
+    --}
+     +	state->cmd = cmd;
+      
+    +-	return finish_command(&proc);
+    +-}
+    +-
+     -static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
+     -{
+     -	struct receive_hook_feed_state *state = state_;
+    @@ builtin/receive-pack.c: static int run_receive_hook(struct command *commands,
+     -	if (feed_receive_hook(&state, NULL, NULL))
+     +	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+     +	struct command *iter = commands;
+    -+	struct receive_hook_feed_state *feed_state;
+    ++	struct receive_hook_feed_state feed_state;
+     +	int ret;
+     +
+     +	/* if there are no valid commands, don't invoke the hook at all. */
+    @@ builtin/receive-pack.c: static int run_receive_hook(struct command *commands,
+     -	return status;
+     +
+     +	if (push_options) {
+    -+		int i;
+    -+		for (i = 0; i < push_options->nr; i++)
+    ++		for (int i = 0; i < push_options->nr; i++)
+     +			strvec_pushf(&opt.env, "GIT_PUSH_OPTION_%d=%s", i,
+     +				     push_options->items[i].string);
+     +		strvec_pushf(&opt.env, "GIT_PUSH_OPTION_COUNT=%"PRIuMAX"",
+     +					     (uintmax_t)push_options->nr);
+    -+	} else
+    ++	} else {
+     +		strvec_push(&opt.env, "GIT_PUSH_OPTION_COUNT");
+    ++	}
+     +
+     +	if (tmp_objdir)
+     +		strvec_pushv(&opt.env, tmp_objdir_env(tmp_objdir));
+    @@ builtin/receive-pack.c: static int run_receive_hook(struct command *commands,
+     +		opt.consume_output = hook_output_to_sideband;
+     +
+     +	/* set up stdin callback */
+    -+	feed_state = xmalloc(sizeof(struct receive_hook_feed_state));
+    -+	feed_state->cmd = commands;
+    -+	feed_state->skip_broken = skip_broken;
+    -+	feed_state->report = NULL;
+    -+	strbuf_init(&feed_state->buf, 0);
+    -+	opt.feed_pipe_cb_data = feed_state;
+    ++	feed_state.cmd = commands;
+    ++	feed_state.skip_broken = skip_broken;
+    ++	feed_state.report = NULL;
+    ++	strbuf_init(&feed_state.buf, 0);
+    ++	opt.feed_pipe_cb_data = &feed_state;
+     +	opt.feed_pipe = feed_receive_hook_cb;
+     +
+     +	ret = run_hooks_opt(the_repository, hook_name, &opt);
+     +
+    -+	strbuf_release(&feed_state->buf);
+    -+	FREE_AND_NULL(opt.feed_pipe_cb_data);
+    ++	strbuf_release(&feed_state.buf);
+     +
+     +	return ret;
+      }
+
+Adrian Ratiu (3):
+  run-command: add first helper for pp child states
+  reference-transaction: use hook API instead of run-command
+  hook: allow overriding the ungroup option
+
+Emily Shaffer (8):
+  run-command: add stdin callback for parallelization
+  hook: provide stdin via callback
+  hook: convert 'post-rewrite' hook in sequencer.c to hook API
+  transport: convert pre-push to hook API
+  run-command: allow capturing of collated output
+  hooks: allow callers to capture output
+  receive-pack: convert update hooks to new API
+  receive-pack: convert receive hooks to hook API
+
+ builtin/hook.c              |   6 +
+ builtin/receive-pack.c      | 270 +++++++++++++++---------------------
+ commit.c                    |   3 +
+ hook.c                      |  29 +++-
+ hook.h                      |  51 +++++++
+ refs.c                      | 100 ++++++-------
+ run-command.c               | 142 +++++++++++++++----
+ run-command.h               |  38 +++++
+ sequencer.c                 |  42 +++---
+ t/helper/test-run-command.c |  67 ++++++++-
+ t/t0061-run-command.sh      |  38 +++++
+ transport.c                 |  89 ++++++------
+ 12 files changed, 583 insertions(+), 292 deletions(-)
+
+-- 
+2.51.2
+
