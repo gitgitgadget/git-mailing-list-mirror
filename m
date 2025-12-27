@@ -1,41 +1,42 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548B07DA66
-	for <git@vger.kernel.org>; Sat, 27 Dec 2025 07:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6613A1E9A
+	for <git@vger.kernel.org>; Sat, 27 Dec 2025 07:44:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766821007; cv=none; b=BFQbKR3bhD7XYGbpgXWPNXhr259VGM4qDm8KxobI6gNFMeUnnvGKCuZ79zQiFSggSxDiKQ+fSQ3zI5HHjepcHFOcNwd+oY2K5kg0BJk3eckn57nbSflgz2v5gHDSPyF2blE86yrWl5cjWQIULxNl/il9Y7B/5Y9p8wCm9hNad9o=
+	t=1766821454; cv=none; b=NaknyiQxh0cyPuHHvIMyUBazI06nI1hBYJTXmL2yhxG7rGBlkktbzjeFoEtd+6pFNvi5s/wNwOg/NS5ofAU988emrhEGEQMR+79UPkGs9vzPLWcbKlTHaa/7/pgGFjM791vLxrWRzXodmHtMdhNTWirpcTimdGcWwbQLGnPXPk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766821007; c=relaxed/simple;
-	bh=RSC9B9Oz5UaAq1JB4ro9ajXKyR1aAfxCvwOYJujWyqg=;
+	s=arc-20240116; t=1766821454; c=relaxed/simple;
+	bh=jjfQLmdsBxuiywwIp2oivcPQBGf+3CkWmOgppfeuwHY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aKVL4hcVco//+CokT2b46LPLLiJFNgmb0gpcCO4eAFYXIUmHHP1hx1XVkP6/rFOmUp3nc1oPBCS4gAhw0kZCGguoOn+o02EVgoMTSPsyV2cTCvFawMJ4vtffMbgDMBHWf6Am48aeV8NWQozTkSftDqqXecboCbAsCPYPoVP0q+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HvIrIWIJ; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=rZBYZPhnoHSUTcytwFndEDRzL1DwCEaC2UUvsJmvYq9KwwkLd9Y7ofMRWtbRiNy/dJ8Qs8rbTu+isCTOIFVERlhIdvaMZ1x1UBIxQ3roZUc+1bblduMJeFF07bByPn1c9bgSc9CyEgSVXPm0h8nxDNp7BbcBjhqFRjMasE2+rD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Vs0Jj99Z; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HvIrIWIJ"
-Received: (qmail 495646 invoked by uid 109); 27 Dec 2025 07:36:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=RSC9B9Oz5UaAq1JB4ro9ajXKyR1aAfxCvwOYJujWyqg=; b=HvIrIWIJeDr0DCF7n8kIgQD2EpSpw9Y+PxPEVfLymerbo7R4EMvSqOzqgoVqd00nUTNPExfeIPr45TYwVE80aU2r/Z/+G6BzrWgX9OL7oXZggccI+NBoJh2sAtg3w4f9MD5fHIGVR41Mn9bUo7x+ru/y7sAUKbFCFX+HnPbNoUslKG5YGzHD5pxyfB5OaPW0fzAVDUNsb9tGPhKHemIeImlpGnQTcshSk3A9tRBQUfO5mjLFbtnQEN9hlPHjMx1f6B6JMWCEetL3CjJn4Gxj3N6SK6afgM1OdZ/ciwhWHqdqguLRSc57Q9nBdZRhx+yO4nPVsCbli0TfcBZI29ZIUA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Vs0Jj99Z"
+Received: (qmail 495670 invoked by uid 109); 27 Dec 2025 07:44:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=jjfQLmdsBxuiywwIp2oivcPQBGf+3CkWmOgppfeuwHY=; b=Vs0Jj99ZJkrSXAUo87/+naVSCBtD9Mg/+uH+4dPpQTcQYQWsLV6F00VAM6GVNsNOFM9nH3pStJcD2hB4plsdwJq+JOv/6pEHBWT/vpxqYoIwM+k4f2Eq/u2j+py+2vsOJ4i0HQDXGRKXj8RsCMcqfEeh98HjiqLg2nykdJkxz4z2iKfqmy6xB2uD/e8Hw3TFWIAS/Ej71skqWg1387gRbPMFOysdExHPojXtVLuy3pQR/smooza4+e4VIuQmJ8blXXM/i93WcUzAjnRGXzDSHwy64pxBwbpm1aYaVnx0C04jWXl+V70BAd12mbBW3l2c4yl+EFVMFOKasS6Z5q5bng==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 27 Dec 2025 07:36:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 27 Dec 2025 07:44:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 642893 invoked by uid 111); 27 Dec 2025 07:36:39 -0000
+Received: (qmail 642964 invoked by uid 111); 27 Dec 2025 07:44:15 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 27 Dec 2025 02:36:39 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 27 Dec 2025 02:44:15 -0500
 Authentication-Results: peff.net; auth=none
-Date: Sat, 27 Dec 2025 02:36:34 -0500
+Date: Sat, 27 Dec 2025 02:44:11 -0500
 From: Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Martin Fick <mfick@nvidia.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Slow git pack-refs --all
-Message-ID: <20251227073634.GA2071715@coredump.intra.peff.net>
-References: <CH3PR12MB9026B5872FD42F031970074BC2B3A@CH3PR12MB9026.namprd12.prod.outlook.com>
- <aU3K9lGbHw68Vv5U@fruit.crustytoothpaste.net>
- <20251226044507.GA1971832@coredump.intra.peff.net>
- <aU7Cs2pXiXInfBh4@fruit.crustytoothpaste.net>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: Possible regression: lost diagnostic message when pushing
+ non-commit objects to refs/heads/*
+Message-ID: <20251227074411.GB2071715@coredump.intra.peff.net>
+References: <CABPp-BGL2tJR4dPidQuFcp-X0_VkVTknCY-0Zgo=jHVGv_P=wA@mail.gmail.com>
+ <20251224081214.GA1879908@coredump.intra.peff.net>
+ <CAOLa=ZSOZz9aGFFeD7tiQ+PRwkMosjcoxfTSk52fQeQq0ghgaw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,38 +45,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aU7Cs2pXiXInfBh4@fruit.crustytoothpaste.net>
+In-Reply-To: <CAOLa=ZSOZz9aGFFeD7tiQ+PRwkMosjcoxfTSk52fQeQq0ghgaw@mail.gmail.com>
 
-On Fri, Dec 26, 2025 at 05:15:31PM +0000, brian m. carlson wrote:
+On Fri, Dec 26, 2025 at 11:48:19AM -0500, Karthik Nayak wrote:
 
-> >   If we wanted to be really pedantic, anything in refs/heads/ should not
-> >   point to a non-commit and thus should never need to be peeled. I'm not
-> >   sure if we want to embed that assumption in this code path, though
-> >   (nor would it necessarily help Martin's case if the refs are not in
-> >   refs/heads anyway).
+> > And then receive-pack can either dump it via rp_error(), giving the same
+> > behavior as the old version. Or it can stick it into the per-ref status
+> > field. The latter feels more "right" in the sense that the error
+> > messages can be reliably attached to specific ref updates in the
+> > machine-readable output (rather than appearing willy-nilly on stderr or
+> > sideband 2). But I'd guess it would make the output rather unwieldy.
 > 
-> I don't think that would be a good idea.  I know that people definitely
-> do updates of the loose refs by hand (although they should not) and so
-> it's entirely possible for them to contain invalid values, such as
-> having branches contain non-commit objects.
+> The second option would be more useful to the user too. Since they can
+> act upon that specific update.
 
-Yeah, that matches my inclination.
+The trouble is that the low-level code constructing the "err" buffer is
+aimed at writing a human-readable message. So you get the whole string like:
 
-> I wonder if reftable would avoid the need for this kind of expensive
-> check since it would already have the data peeled if need be and
-> wouldn't need to recompute the values.
+  cannot update ref 'refs/heads/foo': trying to write non-commit object
+  d19968fcf0d3193147b827c9e89668d619afd01e to branch 'refs/heads/foo'
 
-It does the same amount of peeling, but it's amortized across more
-operations (i.e., whatever did those ref updates in the first place)
-rather than during the pack operation. And of course there really is no
-pack operation per se with reftables, but I believe it avoids re-peeling
-when rewriting entries during compaction.
+That's already somewhat redundant by itself, because
+lock_ref_for_update(), the intermediate caller that sticks "cannot
+update ref 'foo':" on the front of the string, does not know that its
+helper function write_ref_to_lockfile() has already put "foo" in the
+error message is returned.
 
-It might actually do fewer object accesses overall if the ref-writing
-operations have already loaded the objects in question (and thus it
-knows whether they're tags or not, and may even have parsed tags in
-memory). It can also do more in some cases (e.g., two loose writes will
-peel for each write, whereas the files backend only bothers to peel
-during packing).
+And we get one layer worse when we attach that whole thing to
+machine-readable output associated with the ref "foo".
+
+There's probably some clean-up possible here, but it will have to be
+done very carefully. If we can check that all of the callers of
+write_ref_to_lockfile() mention the refname in their error messages, for
+example, then we can simplify what write_ref_to_lockfile() puts in its
+error messages.
+
+I'll let you decide how you want to proceed, but IMHO it would be OK to
+handle the immediate regression fix by just going back to dumping the
+error messages to stderr. And then further cleanup can come on top.
+
+> Yeah, I can polish what you've send. I'll work on it and send something
+> soon-ish (I'm taking some time off, but its hard to stay away from the
+> laptop).
+
+Sounds good. Enjoy your holiday!
 
 -Peff
