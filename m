@@ -1,109 +1,88 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA4B3A1E86
-	for <git@vger.kernel.org>; Sat, 27 Dec 2025 21:49:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BEA2417C2
+	for <git@vger.kernel.org>; Sun, 28 Dec 2025 09:16:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766872201; cv=none; b=LiWMgvha1MoM9GU/OppVeCq/BGtAL3Mi8Kkllel9XI3KZ+bMtiBMPVItjXMeREUvutZCkbSLWogu/OsxH/cyz/+IJfAsSZrDwq3kEQk045KouYdQc4CoT5RY+2W7p/m+HJVuRpnkO+HqFuK3o1ET0BCruTIkZVZtsE2Y1huPIAg=
+	t=1766913373; cv=none; b=Vfuw5ZKedyuK6f9tvHahnfxfU/mHXAJoyXwftjJHzE9osVmzkP/zFMh9NHsPOlUCeQt+UlAFKArw+WCXz2LV1k/YfkeEVsOMCvsEURpmzaTI2hZ0FxwlhOSlCA7ESrYB2h9I9itzW3YJD+58v/D0I6Kif1zBRJBXaJFFlwEoSLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766872201; c=relaxed/simple;
-	bh=e2ZoGF3rl/AfuF2adgB9KLB5zYjXSgpuz2Hmgw7LdH8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bVcqfInfgiIfAmCi8dkItTqZyk1nDUuCm+zjymSdwYLqmKSgGpKjZYsNgb8MySl9526c4kds546kCNrlU+pin0hrIjMSMnwo+/JnSUPh3aaI6s3tUR5xSU77nxfWTIq6V58cruP+BmfG8UEOAu3CwgNoZmhIhdjhycXtVC4AcdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PMOcjeVW; arc=none smtp.client-ip=209.85.218.53
+	s=arc-20240116; t=1766913373; c=relaxed/simple;
+	bh=F7rdMJ108U55hcfUJQyJtFaPGIK9Uv8n36o7CVAMuWg=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=ARfyBGDWURByjok6NQKSDMswfDij9R0Bu2lPgy4duFPDN0UHzX1wFNgamSbzfweEGAfOQNjWZVRunk/Sgr7J3xVtG+Q+E4duiVYqi2YBaLhEPwQdsHdVXICZtOrcAk4+mOhcbfXnQW6UbbuKD7HqGBdqvEgqnA3VVF8d9diSkW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KA8E/40f; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PMOcjeVW"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b7277324204so1212236466b.0
-        for <git@vger.kernel.org>; Sat, 27 Dec 2025 13:49:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KA8E/40f"
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-59911cb8c3cso9165639e87.2
+        for <git@vger.kernel.org>; Sun, 28 Dec 2025 01:16:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766872197; x=1767476997; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MdvWBLVXLi5AxckRe3pJIlkePErHkq2IH0ov2uHBLxQ=;
-        b=PMOcjeVWBARYkwXNuS+jLJsVfzzI1VYeTptfeGlRvEWv7lKDGr2Thnm0v+vy8OCaJI
-         vaEFVCxhtNMw+M3lVs4pAzygcjC+nDtVXZUeyGQRWdRuS8CnqpegKmKwKcjPiepRpKVa
-         BgmZwqws8jhtJYACNUTaKeXDW3p3NSnSkcZ1N651WUC1Kf5oR4Hzj/G6Oyr4wYcjOPBz
-         wX49FvMPo47YvTttPd1QZBuZicVZtZ71N4jxL/01F5zzBL/dWhEdtjKJ5hf7AJz3jfoV
-         EWIFLkOGGjkyMZVsg8ib9/kjD0AuBvC2ut6dJYFg3BMsDTkgEXzxjkYumykYwcpPeqcd
-         LbiQ==
+        d=gmail.com; s=20230601; t=1766913369; x=1767518169; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F7rdMJ108U55hcfUJQyJtFaPGIK9Uv8n36o7CVAMuWg=;
+        b=KA8E/40fJndBBoOazJg+Wqe078TqDI3vzmRuSzVIOgz11nMDqN84q0aBbOBYuri/7C
+         d55Dho56YX5ZYdlMh57RISejW7cTZU7bPGLXJ61R0eJumBfyL1EOEFJiHI3Mz9vpQRHK
+         oR2GjO9ukifIwSKZYPD15HDnICq0W5yTcm1bp1vqTlT5NZfAOlxJRNK1TmEh7abzlJ0C
+         UybdQ3QDPQf53+VFDQGeYCmUKSlE68WBcmjSZ6eHObfCWhUfxrtkeNRmlLP26ae2yK34
+         eSUJhYkJeLesqFOICvEFsgB1R7pNUH2P63JlTv84PfoRRM8zvs6rRxLMnOEPgkP5j/xK
+         rsdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766872197; x=1767476997;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MdvWBLVXLi5AxckRe3pJIlkePErHkq2IH0ov2uHBLxQ=;
-        b=rY4LS5XvaynQmj2dpgVNfse//rAxJJjvymMezHEp3BEy2dAZ+N1J/NyGLQIeGZuGdv
-         m2PdJd3uRf8cbo/OuSTd6hbbEt1U89tNknKKIz+RgzoCRmH7KIi7NuQX7KYP0QUq/zOn
-         6grYgaKlZZ7iZo8QsDrMGHqjl+Lfqzm9LVzgvHjPMX1Osx5x3+RQXDGafpBelzSNdORR
-         B0YFC0YsC+auXKXWvggtdB92yPLNS8vPL46iHbwtvlMUbMztD0XcaaZ43LD+aokwIJin
-         ROySIUebz7wP60q2G0hOdNv6OqnAZ358Fk7bHSX5Op4RrCWG1wR+/ehV0KlZtdqFGRZG
-         d70Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWJKBYtlHNyFO2RjOVgDwf3qAdlTOG8q+DWtCTWqv3TLCr70Oo2csJbPCGV53RxRQXxOwc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXnia2Ua4W9CbzJv1LVcOye3Rfi4jutcr5SkVHdJYnYHMZmDLZ
-	8W+JuhkM4K7Aecnayztb1WHhjr33hh649J2YjGS6pHmrPRMYxuWfduFj+D7D8g==
-X-Gm-Gg: AY/fxX4UXwkVjlm2FnwZVEbl9A34U+Z7NCCSsUGuiONEFWpcL52JIfs5+xrN3SkTGhJ
-	0cQtorrTtge1WXB54PFJn3t9C3IgDBb+Gf2dmvQLJEyUd4hMys6sgsuJ96ViGCMNeSTpOa4A0Dq
-	sPJjYkUP97aM30FALQuWrACU2+JeRddN1xsnxxjEFg13QLR/robsBJf3WXtjdoe35GmsbMY/Ehl
-	HM625LEPkADDdeEtqW8gdLzmSP2EHzSiOBYnf4/U20GTfeJl4XHSocSVEE4G0qsrL7AayVuIDVT
-	oCUvBrGYYwxRwr849WtjIx1Y7CcWH6gaftI7yiYvEO61MWbrH686HP8IHF6c37gg8oMRJQx92T4
-	eUXFlGTuy7+LEQ/uLcwVFj8nw32hNzyZZI22w/5ibUaj7SGkEDChOrojbRAA9rYt1AS7ZO9x0z6
-	lesiEII4Buvis95RvmpTcFE8LTkXhII3uRW30syyoZvEaCG3ou
-X-Google-Smtp-Source: AGHT+IEe+/BENpMkqO1rybrn9PdkiWVFTuuygyVzEPqEP+kSe6D3/OWFUXWIJxQodxw2pttTlRSjzw==
-X-Received: by 2002:a17:907:7638:b0:b80:6ddc:7dcd with SMTP id a640c23a62f3a-b806ddc842amr1567497366b.31.1766872197259;
-        Sat, 27 Dec 2025 13:49:57 -0800 (PST)
-Received: from raspi.lan (94-21-109-218.pool.digikabel.hu. [94.21.109.218])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-64b9ef904bcsm26363918a12.22.2025.12.27.13.49.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Dec 2025 13:49:56 -0800 (PST)
-Date: Sat, 27 Dec 2025 22:49:55 +0100
-From: Gabor Gombas <gombasgg@gmail.com>
-To: Hadmut Danisch <hadmut@danisch.de>
-Cc: rsbecker@nexbridge.com,
-	'Michal =?iso-8859-2?Q?Such=E1nek'?= <msuchanek@suse.de>,
-	git@vger.kernel.org
-Subject: Re: Git destroys u+s and g+s directory modes
-Message-ID: <aVBUg289AKC0HIVx@lan>
-Mail-Followup-To: Hadmut Danisch <hadmut@danisch.de>,
-	rsbecker@nexbridge.com,
-	'Michal =?iso-8859-2?Q?Such=E1nek'?= <msuchanek@suse.de>,
-	git@vger.kernel.org
-References: <eb36360d-f539-4f77-b175-57330ef05eac@danisch.de>
- <aU_lqe2Z47STv68O@kitsune.suse.cz>
- <008901dc773c$f05508c0$d0ff1a40$@nexbridge.com>
- <74793560-49ae-494e-afff-9b833dd25d1c@danisch.de>
+        d=1e100.net; s=20230601; t=1766913369; x=1767518169;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=F7rdMJ108U55hcfUJQyJtFaPGIK9Uv8n36o7CVAMuWg=;
+        b=Xi8hPZK2TqD84xi0D1hAID4om7RV8z464+nV8wTX7qDcmyGslb2fKbQx8XWUqp73MK
+         nxPOmIhnWDHZ4/GWBkAnJvU7bJ51O0DRv8iKl1WSfJGsgbc7q+CYXG2qGksHToeHL9NQ
+         TfjuvgD/QwbOjHie3OPA3L6sos58ik72mQDz43HEn6XhGEQscfYi/dQDr+cJyq7u1zIw
+         21IpNxZLDXfkolcoybQK8d2IsASC7O1KptnT/GMw+RATHC1jSu3BDo3Ru3Ggq95z66w9
+         zs0yR3cx7PgQbhVoCsscD/K2Hkqv9vG30zi5StpDEisjWuZLg60hTi/wLbbhjQdmL4di
+         FKTw==
+X-Gm-Message-State: AOJu0YzMeL9ehQfR4bWh8+Ffn8eZSnwgdQwOZo2oS1j5SbL5Kb/aEgNq
+	ALcIm5NIgfGHpHBwa/8X84juBnB6l4GqDD+pSMQiebWaQzcLj4SkEJmf
+X-Gm-Gg: AY/fxX5jsIcyS0tFbrBWh+IOZrZJmKHD1frOxAWlW6qw3vSZuOJaekEAsQ+DvO90n5v
+	WlUVuHtWlPGtmctRgKxAH7pC17u2icj+nz7Mdnjfqyi1N21wxcW/4XmB/T8333RfoI8PArMdvyA
+	8CXuUnkGkogqTXt7/z6apgFD8T6VaisVcizKUYSKiGFOL7x5ed7a3et4CIYaCLHkJmD4MOxNoq1
+	Wn0CcUC51PRCWiGpSEMP+l4kcKT0Bay9mSB7T9bV6IQ+ROCP/4zugedxl4D3VXpoZ//PO8CBMbu
+	f2jnciNRiFZUNdXnMjXRopwmXNtA2lnsvJ105ebjiggv1IQrx5KiMZh4dLbCj0iQ2WncAnjl9dy
+	gT+22I04W3p2YVNGfzY3t3h5AFDnViPHZ6bqwgU9XhL/E50/8dcl1fmETU4Vo/nKb8wnkbSvTjY
+	Nz/VdR3KN6FBR1NVZupeOUK9YD2OaXOjhBJYLyMBvHfg10NPwYQit1a+5CFatT+qaUZCAP2bE=
+X-Google-Smtp-Source: AGHT+IHiNt8Bsvqz7Yd2wKta0AdGfekJeWUJCFOFQheV2my31KSpMcjaXlXYHW1cX6shUdRV5wp5HQ==
+X-Received: by 2002:a05:6512:2390:b0:594:34c4:a325 with SMTP id 2adb3069b0e04-59a17d66a47mr8973201e87.46.1766913369080;
+        Sun, 28 Dec 2025 01:16:09 -0800 (PST)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a18618a35sm8287972e87.66.2025.12.28.01.16.08
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 28 Dec 2025 01:16:08 -0800 (PST)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitgitgadget@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	ychin.macvim@gmail.com,
+	chris.torek@gmail.com,
+	sandals@crustytoothpaste.net,
+	haraldnordgren@gmail.com
+Subject: Code review?
+Date: Sun, 28 Dec 2025 10:16:07 +0100
+Message-Id: <20251228091607.14896-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <pull.2138.v8.git.git.1766666006561.gitgitgadget@gmail.com>
+References: <pull.2138.v8.git.git.1766666006561.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <74793560-49ae-494e-afff-9b833dd25d1c@danisch.de>
+Content-Transfer-Encoding: 8bit
 
-On Sat, Dec 27, 2025 at 03:40:11PM +0100, Hadmut Danisch wrote:
+Hi!
 
-> This does not solve the problem, since ACLs do not propagate into newly
-> created subdirectories, as group ownership with S_ISGID flag does.
-> 
-> 
-> Please try to understand the problem before trying to solve it.
+Could I get some code review on this? Maybe it's ready to be merged?
 
-Well, default ACLs may very well be the solution to your problem,
-because git does not understand ACLs, so it would leave them alone. Of
-coure, managing ACLs at scale have their fair share of problems, so
-YMMV. The problem with the permission bits is git trying to be clever
-and thinking it can manage them - but as often, trying to be clever ends
-up not being clever at all. Unfortunately, there does not seem to be a
-configuration option to tell git to leave permission bits alone.
-core.filemode is the closest one, but what you want is the opposite
-behavior - what you want is not ignoring the executable bit, but
-ignoring everything _except_ the executable bit. Maybe you can try to
-make a patch...
 
-Regards,
-Gabor
+Harald
