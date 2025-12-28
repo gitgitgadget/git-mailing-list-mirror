@@ -1,122 +1,102 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABB11F956
-	for <git@vger.kernel.org>; Sun, 28 Dec 2025 14:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90DD252917
+	for <git@vger.kernel.org>; Sun, 28 Dec 2025 15:41:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766933870; cv=none; b=Ws47RpzJLkuC6OP6vrBJE6WuczWReUdgwaAuQt1VgW5AQQ2JTkBNObnDHfc8IWymVBva7bgEXx8s85DM+NGNkmC2pJzLu5Sq4NkdgL2XjUmxjMh+AGpWimDu5AJVfUmcuJD7stzK0QsBxsa92NOu7w+ZTQpX4UztTO4GJ8EwHe8=
+	t=1766936489; cv=none; b=fKjFj3RP8d7fFLIno9XnrBS8KFxu+AGMMnP0/JH0Q/ydUdvE1grDh+Z1fRW3xCw3cQKMKN4CspRBrK3P+O89YIg8drC1KZXsnPKXR/gwbNhIZDxmE2pSF3d+UvRuS2KOPsCUvZP3QGriMyhstTKabKZMsiA+cO+g3s0k71VDUPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766933870; c=relaxed/simple;
-	bh=49NRUu2EHYDjEJNezFz8wa4UKP+9gWX3bFFWSNHp9zE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PaxfQBart8teElqOgiWU6b4EAJAK6rne3/w89NuBbTaMs4w66l9l/w7c4AqCv18+Lam3OTgAe7v5nCL3hdJozqETPwm1R5XVDx7xeZYYkGRzC3N5b6F6fkRfakFx8F9VpC7P1NoDhj+/mv9inx8cEMY8s5oQmJOUy81XhRnI0p4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NeDLDTzq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zDkLYRcP; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1766936489; c=relaxed/simple;
+	bh=SK32Cs8/4/JPwdxTnZx1+rD+Rz++UUch+ViJ/DBuEGY=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=gdioEnV9tw2jDlVI6ARzK7IBNcWH8ZLcrNcPltaiUtW2uYanZziolFMdhxg9VGNrGavWM9WgWnUAwfTDZLk/dpi9T1ckw4b/WupYeF0b1rlSE2DvMTxwo27zGFDQCqvqv2tKtjgdYWJGmQP9b95lGdwkOudKQUt8ycD4lEprMwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aFcV45Xo; arc=none smtp.client-ip=209.85.222.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NeDLDTzq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zDkLYRcP"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7C801EC00CD;
-	Sun, 28 Dec 2025 09:57:47 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Sun, 28 Dec 2025 09:57:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1766933867; x=1767020267; bh=3LcQ/lwAy8
-	B40sUVz/2UdwHyQNZM9wib0CP2NONbtMc=; b=NeDLDTzq0doH3m3FtS4I26QKa+
-	9aq5tXgDaLxl04a3t7eK6PYNlLITfwcQq9Ukb7eDrzjrl2YPjGPr/SUUlmzZiHDi
-	zXJ5aLsZDXOg4HXbRwkV2b1g2L5lODjHEVT/QT2x+sFQ7lmhYntpYPbTRLB9JnUM
-	jqg1D3Z/dtndSoZjlNWfw4MusbYeFJeso0+gOGOvEsxxUfG0E+gg9hCaBWICET+6
-	E7839XQiWxRxunbOWV7LqFTCrPuSQVMuOUrmuB3KRGiRe9/rFZ8Y5ujP1s3zNGV8
-	aVMuYBfJrBqeSZtzomVSIfTgpbL/n3TUp9/DsbQoJ2Q3iRH4R1hCJNDj5SSw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1766933867; x=1767020267; bh=3LcQ/lwAy8B40sUVz/2UdwHyQNZM9wib0CP
-	2NONbtMc=; b=zDkLYRcP/KqMMEMjtpNWwrhL/lB9bY2RTrVhZQLxTxbcPhr2q1n
-	OqD04Bw4jXuTErw0w7WMK8xwroJhnCW5F03F+Jiqwr776lss0jZ/YAgxmzBfKqCG
-	vTMTMRqu6rk1fz2QxDDR2sXnplarhYu4oCyiCmB+h3N4vqiTs9GhCHaRKY+wpgvk
-	8BUPfqgVCK5Y2PmXkC2EuD7zhhh4KQNe/9bzqaqM9Ac9YbJlekMzLqgsZplX1VhM
-	tjOErm1B7VgFYzmDtdQDYsuMoHtwAmxWphzdd15V8JfTSRixTWz7lOBX1OneLbLO
-	BWJG2OoxN2ESn8hUY/fjp1kR3fydLknJI9A==
-X-ME-Sender: <xms:a0VRaeaupfNzqjDS7DlJ32htpLAr3DictcThOrYwnq0MKGt5BkjQtw>
-    <xme:a0VRab8poLbojqFNVvpr7y_vALr711YWX4uVZQll3ygz-92FOC33nKaIk5CLNm-be
-    ebmHXlz_A16ohYKeJLFgLMxHp2Jdu8dDagqyUHB-QvB7bFMf6KHYw>
-X-ME-Received: <xmr:a0VRaVhu557_hnszQ8MmBXJD5CXdkXakvxSFbGTKjWxlC88g9j7VdizZwvNZ3Nx1iKkwTD2qiaqnSxX9n79DNrOnkYODuWtQwA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdejgeehiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    thhrohgvlhhssehthhhomhhsvghnrdhiohdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:a0VRaTdBDkwZpMhiuhQBk-x37e677fP2c8G2hQOU23QyyvPxTdMzWg>
-    <xmx:a0VRaUp880_IuS51tB9OWpf_fR1NUmJvELui_tt-HhgCvRy2lHJGQA>
-    <xmx:a0VRaQB7eRRFmEJOiY2AS4MYriJJWubgm9Aj9b8i3W7g7Uhms0fpQA>
-    <xmx:a0VRaZZFaFuK7vSbg5zPJXSaNMCGYUn0IUMgyMb9hJ9ik70SrUBO_g>
-    <xmx:a0VRaSL6Ft56Tayx--35Igsqh92SlnhUD9UjdUsVsSIX9T-r6n9i5MKu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 28 Dec 2025 09:57:46 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Troels Thomsen via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Troels Thomsen <troels@thomsen.io>
-Subject: Re: [PATCH] receive-pack: fix crash on out-of-namespace symref
-In-Reply-To: <pull.2144.git.git.1766850014289.gitgitgadget@gmail.com> (Troels
-	Thomsen via GitGitGadget's message of "Sat, 27 Dec 2025 15:40:14
-	+0000")
-References: <pull.2144.git.git.1766850014289.gitgitgadget@gmail.com>
-Date: Sun, 28 Dec 2025 23:57:45 +0900
-Message-ID: <xmqqfr8uk61i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aFcV45Xo"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8b2d56eaaceso1021607285a.0
+        for <git@vger.kernel.org>; Sun, 28 Dec 2025 07:41:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766936486; x=1767541286; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hE8FPFVJ+cYbtmyr8bUReJBmzkLttGQJtBUZeIk+ayo=;
+        b=aFcV45XolO6RvNTTlJAnb6tt9rPSyhXd27MYQbNKe49dsEW4jRbFKnD/teLOgJ5jmA
+         kShkljWlSFs/51w2lCTn+B5fjoq/jlsJ8meW/L4LRp8SoswADenrG8MRIacJcd7ZXAqp
+         QjoVoav6nWSxf4pnNwDSNcB9KS8rKBJ3bPR/x5QgB6sleXjJzR0VPnmV8vnFkhn9zdbU
+         C21uIxe2a/7672x8pT9JW3mB6qmK0OZFRYOEmtM1HvXQIJ/1Mag/0PPBZc8JDWMLxOkO
+         wM0pMdTs3PaW7TSE5M5jQiRv6FXjScGiiMdTcJ45ETumgp/bZkAQOR1nAgBG0+IhnRfM
+         TLvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766936486; x=1767541286;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hE8FPFVJ+cYbtmyr8bUReJBmzkLttGQJtBUZeIk+ayo=;
+        b=bHErDWHefbsPUgMpM2jP678c3tEZ3NLdYpQfib1cmHrcR1X8ghZUr6bRcM4aTSdf1N
+         3HF6DaXJ8FsAErVFp4IYIA3YeyzQVNaxBRBEj/qhgRFuhjgCbvjNvpFHayYPqEeGNskU
+         e5eCvXV0rmhr0V7uqR3Cp9HBoxM6cRmhI9vB8UEdCLYgK6zfLGs5x+hZg5jPe6qyFb9V
+         U5to7HdC4RWl3ar65kXDIR1pJBnmJDf27/s8BfKm6KyTkPRWszfve9Wy4t3baoVG9MNF
+         bh4OVnks32XVZwdR2ZqLsUHM4tRVlbsd0PzwCwdzPilNgxkIcmzDxm7OVttewZby8a9/
+         jQ+A==
+X-Gm-Message-State: AOJu0YwywKV4QQRb5SU2XEQK0Ydu3kFE65qWokRaSmrGZ1gPfsbV5wAY
+	EOXbLmXGpIxx2m00drfJJYhnn4wwqR5hAR3NOcCVaHLO411Dlm2V0CW9uSITUQ==
+X-Gm-Gg: AY/fxX4P/+cKYFcd22ej+pLeNM38LlwfLh1h3uEHkpIw8JB+M13hfbKEIN25cIDNW9y
+	Vh65Zvu4eSPoykxJMXcnl0JMSSSiq0K+agG37HlebSXDqj5piMMnopR39GmMqD5dVMc1Ao4gG5H
+	dDeEXi/aJJS2AqYxQygJGJL4Tsklrm6PmqluBmy9Ep9NsfmSFg1jIIVwEJREN1FdcDdK8g0TgVu
+	5Mz3WWoW6UR9xPFriNglDGE6nNf/hes8TvFQC8GT+OHvzcP+4smHD7uyO1Rgfh0XIX3xFAG8N0N
+	SN4TmZiZmhjBx4vMd9RApKGQZsN0QE5JF1kZ8yMFCkEnPwCuVL1IoJEOzBGvqjkKMe6rl0RPNb1
+	2tioZ5hLfXxpMQM50y7mNRPqUByPYhqPwcQFwyaKwpG20MX+vcN9MWLvsB4gymgNI3dk4wePsmY
+	2QRUG4pbD9ec8=
+X-Google-Smtp-Source: AGHT+IGgtRXArM5vCWO8NQxoQxHd1vF9KncVtRhZqA6XRUcTWXY1dWSNmb2QtE/nvsJjOG8ohDCpdQ==
+X-Received: by 2002:a05:620a:2994:b0:89f:7feb:fd71 with SMTP id af79cd13be357-8c08f664ba8mr4098189085a.19.1766936485727;
+        Sun, 28 Dec 2025 07:41:25 -0800 (PST)
+Received: from [127.0.0.1] ([40.76.239.96])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c09688dcedsm2189248085a.12.2025.12.28.07.41.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Dec 2025 07:41:24 -0800 (PST)
+Message-Id: <pull.2138.v9.git.git.1766936483.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2138.v8.git.git.1766666006561.gitgitgadget@gmail.com>
+References: <pull.2138.v8.git.git.1766666006561.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 28 Dec 2025 15:41:21 +0000
+Subject: [PATCH v9 0/2] status: show comparison with configured goal branch
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
 
-"Troels Thomsen via GitGitGadget" <gitgitgadget@gmail.com> writes:
+cc: Chris Torek chris.torek@gmail.com cc: Yee Cheng Chin
+ychin.macvim@gmail.com cc: "brian m. carlson" sandals@crustytoothpaste.net
 
-> From: Troels Thomsen <troels@thomsen.io>
->
-> `check_aliased_update_internal()` detects when a symbolic ref and its
-> target are being updated in the same push. It does this by building a
-> list of ref names without the optional namespace prefix. When a symbolic
-> ref within a namespace points to a ref outside the namespace,
-> `strip_namespace()` returns NULL which leads to a segfault.
->
-> A NULL check preventing this particular issue was repurposed in
-> ded8393610. Rather than reintroducing it, we can instead build a list of
-> fully qualified ref names. This prevents the crash, preserves the
-> consistency check from da3efdb17b, and allows updates to all symbolic
-> refs.
->
-> Signed-off-by: Troels Thomsen <troels@thomsen.io>
-> ---
->     receive-pack: fix crash on out-of-namespace symref
+Harald Nordgren (2):
+  status: show comparison with configured goal branch
+  improve tests
 
-Fixing crash is certainly a good thing, but when the namespace is
-segregated and receive-pack wants to get updates only within the
-given namespace, would presence of such a cross namespace symref
-cause updates outside the namespace through the symref, defeating
-the point of setting up a namespace in the first place?
+ remote.c                 |  92 +++++++++++
+ t/t6040-tracking-info.sh | 339 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 431 insertions(+)
 
-I am not objecting to the new behaviour, but am not sure if it is a
-sensible one.  You _might_ be able to argue that an attempt to update
-underlying refs outside the namespace through such a symbolic ref
-should result in an error (i.e., a fix to the current crashing
-behaviour is to die in a controlled way).
 
-Thoughts?
+base-commit: 7c7698a654a7a0031f65b0ab0c1c4e438e95df60
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2138%2FHaraldNordgren%2Fahead_of_main_status-v9
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2138/HaraldNordgren/ahead_of_main_status-v9
+Pull-Request: https://github.com/git/git/pull/2138
+
+Range-diff vs v8:
+
+ 1:  7e2574d5ae = 1:  ecfe122585 status: show comparison with configured goal branch
+ -:  ---------- > 2:  53bab23737 improve tests
+
+-- 
+gitgitgadget
