@@ -1,54 +1,54 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D4C2E413
-	for <git@vger.kernel.org>; Sun, 28 Dec 2025 11:46:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABB11F956
+	for <git@vger.kernel.org>; Sun, 28 Dec 2025 14:57:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766922398; cv=none; b=bMh4KRB8NTx0H68FhFxdQqmbzfrzKn9VVULlSmNtBhvJ5O0wZNU74ZwqV37N0xF8O4vIHDUYkZVxEDImiqneogYahI06i6gHLdfxEg1Rn1Xqc699+gAMwF4jy2l4b1lnEf6UneumQARavCJLYVpytmBohyVLY/FzLAEsE7ykRGc=
+	t=1766933870; cv=none; b=Ws47RpzJLkuC6OP6vrBJE6WuczWReUdgwaAuQt1VgW5AQQ2JTkBNObnDHfc8IWymVBva7bgEXx8s85DM+NGNkmC2pJzLu5Sq4NkdgL2XjUmxjMh+AGpWimDu5AJVfUmcuJD7stzK0QsBxsa92NOu7w+ZTQpX4UztTO4GJ8EwHe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766922398; c=relaxed/simple;
-	bh=d9BiSrdLyATm7V3Z+V0E9JTBc69t7iW/EthrJGYIDXU=;
+	s=arc-20240116; t=1766933870; c=relaxed/simple;
+	bh=49NRUu2EHYDjEJNezFz8wa4UKP+9gWX3bFFWSNHp9zE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dyuWrqphhUf8qY5oTGSqm7HWTSYQ2z/CNy9439b8ORgwYboLo48ShdqIThSc1U2TmzwWJ2SnGHy4JObXMcXgq5kQaxKTIhTRcXJvHsN36vfMkrSfVlXBi4ZX+1um4tDkrvMsvmp6HMG1E1DR9f5bH6T7orlWMztBaSYYM/H3B7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GFnq9gPz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TUuiS8kS; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=PaxfQBart8teElqOgiWU6b4EAJAK6rne3/w89NuBbTaMs4w66l9l/w7c4AqCv18+Lam3OTgAe7v5nCL3hdJozqETPwm1R5XVDx7xeZYYkGRzC3N5b6F6fkRfakFx8F9VpC7P1NoDhj+/mv9inx8cEMY8s5oQmJOUy81XhRnI0p4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NeDLDTzq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zDkLYRcP; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GFnq9gPz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TUuiS8kS"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NeDLDTzq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zDkLYRcP"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id A37F71D00384;
-	Sun, 28 Dec 2025 06:46:35 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sun, 28 Dec 2025 06:46:35 -0500
+	by mailfout.phl.internal (Postfix) with ESMTP id 7C801EC00CD;
+	Sun, 28 Dec 2025 09:57:47 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Sun, 28 Dec 2025 09:57:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1766922395; x=1767008795; bh=r0RKIQjeno
-	jHtcUrVBv07JRMxvu5YiPwGkNcD6c3AV8=; b=GFnq9gPzr8Ltyowr2owtO4zepY
-	Kyit7nK6yknuX52sk6Oe3BCXSIEYKpYkB6B7t64OPfdSQvKUYpNEQ+Js+QzWPkJ/
-	P1wmZG523JZkzdi/7jel764YG9zpOo8+5p5JjzkgAzKE+F7QyNdK7ODkiwalUCNR
-	YPKSc+WzAfsgDoEhTi+cC8fIHug0Uh3XrRsIYQOkwrDitc2m4ec2WEIvIsDreVof
-	CSzVvJu9KYh7hd742fjcw7t0UP/6DtH5t5v4vr1c0dEF7vR1kRdRzrJarCice9n0
-	0AZvJlGrvFoOx0dpbMZIQjqAwAg2bF0O0bfNbiQ6BQoecbFX2ZQtVekM3gHQ==
+	:subject:to:to; s=fm1; t=1766933867; x=1767020267; bh=3LcQ/lwAy8
+	B40sUVz/2UdwHyQNZM9wib0CP2NONbtMc=; b=NeDLDTzq0doH3m3FtS4I26QKa+
+	9aq5tXgDaLxl04a3t7eK6PYNlLITfwcQq9Ukb7eDrzjrl2YPjGPr/SUUlmzZiHDi
+	zXJ5aLsZDXOg4HXbRwkV2b1g2L5lODjHEVT/QT2x+sFQ7lmhYntpYPbTRLB9JnUM
+	jqg1D3Z/dtndSoZjlNWfw4MusbYeFJeso0+gOGOvEsxxUfG0E+gg9hCaBWICET+6
+	E7839XQiWxRxunbOWV7LqFTCrPuSQVMuOUrmuB3KRGiRe9/rFZ8Y5ujP1s3zNGV8
+	aVMuYBfJrBqeSZtzomVSIfTgpbL/n3TUp9/DsbQoJ2Q3iRH4R1hCJNDj5SSw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1766922395; x=1767008795; bh=r0RKIQjenojHtcUrVBv07JRMxvu5YiPwGkN
-	cD6c3AV8=; b=TUuiS8kSZ+wkqOUxRqOMtKhBqEkln+xYitPm9D+yLzDlHBplqa9
-	qgZ0zrtPI2mxQPT6MgxC57lJJVLeqx8xKduSiJGUPvBicmzDVbbipqqsNDAJCJPU
-	vFYgXCC7UYsgsSL3NZR7oazo2s5RWNbVSZswsyiivjxth8r6HgcwVBSWqX6ZEeAr
-	WpDZhi6nRJyO5i1BpnPRnhL4+P8wVPXD0gtZmTpY8/4xy0MVH+YLLPTEItV03Lir
-	rjuXLnvR3BP0MGut/OKMb3A1SrCw0mCjaSIyNYXB9+ETZk03as2YlZOWJIU1VM/8
-	JZcF3uoaBRvatYHiP3D9Ppc72+hv6+fmrXw==
-X-ME-Sender: <xms:mxhRaa71q6bYBGxy60-OSuGQV8AkZgpMzAjkYZS9N_cAs6xfBn-DFw>
-    <xme:mxhRaa6viDmtrrdKZLuNP315xNzeBNKOGZ6lgCKfIClxYH1WIUxMHRbSF91a2taAR
-    e7rpiOHye0RXAui-CWuDYS89lsmGewlVeyywjzimoyZnytEI6HODSM>
-X-ME-Received: <xmr:mxhRaecuW5Px1rOouFt3EPD2MQAOi2ePVgwTnmPdpl-xpA42VcKrnY1dr6qdXy3r7JCPM0hRoOKvU_x9UEq_t5E5XnbudJYIMA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdejgedukecutefuodetggdotefrod
+	1766933867; x=1767020267; bh=3LcQ/lwAy8B40sUVz/2UdwHyQNZM9wib0CP
+	2NONbtMc=; b=zDkLYRcP/KqMMEMjtpNWwrhL/lB9bY2RTrVhZQLxTxbcPhr2q1n
+	OqD04Bw4jXuTErw0w7WMK8xwroJhnCW5F03F+Jiqwr776lss0jZ/YAgxmzBfKqCG
+	vTMTMRqu6rk1fz2QxDDR2sXnplarhYu4oCyiCmB+h3N4vqiTs9GhCHaRKY+wpgvk
+	8BUPfqgVCK5Y2PmXkC2EuD7zhhh4KQNe/9bzqaqM9Ac9YbJlekMzLqgsZplX1VhM
+	tjOErm1B7VgFYzmDtdQDYsuMoHtwAmxWphzdd15V8JfTSRixTWz7lOBX1OneLbLO
+	BWJG2OoxN2ESn8hUY/fjp1kR3fydLknJI9A==
+X-ME-Sender: <xms:a0VRaeaupfNzqjDS7DlJ32htpLAr3DictcThOrYwnq0MKGt5BkjQtw>
+    <xme:a0VRab8poLbojqFNVvpr7y_vALr711YWX4uVZQll3ygz-92FOC33nKaIk5CLNm-be
+    ebmHXlz_A16ohYKeJLFgLMxHp2Jdu8dDagqyUHB-QvB7bFMf6KHYw>
+X-ME-Received: <xmr:a0VRaVhu557_hnszQ8MmBXJD5CXdkXakvxSFbGTKjWxlC88g9j7VdizZwvNZ3Nx1iKkwTD2qiaqnSxX9n79DNrOnkYODuWtQwA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdejgeehiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
@@ -58,27 +58,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdejgedukecutefuodetgg
     htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
     thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
     dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    hhgrrhgrlhgunhhorhgughhrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:mxhRaWCQChJsJwXx0zHgDEWiPBPigMK18noV9ez8rJD2-iwtRc1lXg>
-    <xmx:mxhRaZ_u9jHFeNJjdqFQToLOGNvvzsbgjnU6Nnggcad0n7REsESjXg>
-    <xmx:mxhRaZLBsEs88xsvlAhwySnOSufx1FKmAW_iHOiRgfWro8CycIEh1w>
-    <xmx:mxhRaaiqrp6Qc9Poi4ujLWQ46uWBTVmByXRw3dZdDY5xTElZQrDC-A>
-    <xmx:mxhRaSr2rfhHLjAF6a4sgrx435cwLAsNxC-eDoVA7gNmjxZvA1XCno1O>
+    thhrohgvlhhssehthhhomhhsvghnrdhiohdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:a0VRaTdBDkwZpMhiuhQBk-x37e677fP2c8G2hQOU23QyyvPxTdMzWg>
+    <xmx:a0VRaUp880_IuS51tB9OWpf_fR1NUmJvELui_tt-HhgCvRy2lHJGQA>
+    <xmx:a0VRaQB7eRRFmEJOiY2AS4MYriJJWubgm9Aj9b8i3W7g7Uhms0fpQA>
+    <xmx:a0VRaZZFaFuK7vSbg5zPJXSaNMCGYUn0IUMgyMb9hJ9ik70SrUBO_g>
+    <xmx:a0VRaSL6Ft56Tayx--35Igsqh92SlnhUD9UjdUsVsSIX9T-r6n9i5MKu>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 28 Dec 2025 06:46:35 -0500 (EST)
+ 28 Dec 2025 09:57:46 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v8] status: show comparison with configured goal branch
-In-Reply-To: <pull.2138.v8.git.git.1766666006561.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Thu, 25 Dec 2025
-	12:33:26 +0000")
-References: <pull.2138.v7.git.git.1766655947789.gitgitgadget@gmail.com>
-	<pull.2138.v8.git.git.1766666006561.gitgitgadget@gmail.com>
-Date: Sun, 28 Dec 2025 20:46:33 +0900
-Message-ID: <xmqqjyy6kew6.fsf@gitster.g>
+To: "Troels Thomsen via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Troels Thomsen <troels@thomsen.io>
+Subject: Re: [PATCH] receive-pack: fix crash on out-of-namespace symref
+In-Reply-To: <pull.2144.git.git.1766850014289.gitgitgadget@gmail.com> (Troels
+	Thomsen via GitGitGadget's message of "Sat, 27 Dec 2025 15:40:14
+	+0000")
+References: <pull.2144.git.git.1766850014289.gitgitgadget@gmail.com>
+Date: Sun, 28 Dec 2025 23:57:45 +0900
+Message-ID: <xmqqfr8uk61i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,109 +87,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Troels Thomsen via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> +test_expect_success 'status shows ahead of both tracked branch and origin/main' '
-> +	(
-> +		cd test &&
-> +		git checkout work >/dev/null &&
+> From: Troels Thomsen <troels@thomsen.io>
+>
+> `check_aliased_update_internal()` detects when a symbolic ref and its
+> target are being updated in the same push. It does this by building a
+> list of ref names without the optional namespace prefix. When a symbolic
+> ref within a namespace points to a ref outside the namespace,
+> `strip_namespace()` returns NULL which leads to a segfault.
+>
+> A NULL check preventing this particular issue was repurposed in
+> ded8393610. Rather than reintroducing it, we can instead build a list of
+> fully qualified ref names. This prevents the crash, preserves the
+> consistency check from da3efdb17b, and allows updates to all symbolic
+> refs.
+>
+> Signed-off-by: Troels Thomsen <troels@thomsen.io>
+> ---
+>     receive-pack: fix crash on out-of-namespace symref
 
-What is this redirecction for?
+Fixing crash is certainly a good thing, but when the namespace is
+segregated and receive-pack wants to get updates only within the
+given namespace, would presence of such a cross namespace symref
+cause updates outside the namespace through the symref, defeating
+the point of setting up a namespace in the first place?
 
-> +		git config status.goalBranch origin/main &&
-> +		git status --long -b
-> +	) >actual &&
+I am not objecting to the new behaviour, but am not sure if it is a
+sensible one.  You _might_ be able to argue that an attempt to update
+underlying refs outside the namespace through such a symbolic ref
+should result in an error (i.e., a fix to the current crashing
+behaviour is to die in a controlled way).
 
-Instead of redirecting the whole thing, if you are grabbing the
-output from "git status", do it more like this, probably:
-
-	(
-		cd test &&
-		... &&
-		git status --long --branch >../actual
-	)
-
-> +	cat >expect <<-\EOF &&
-
-Looking up what "<<-\EOF" means, it makes little sense to have these
-lines ...
-
-> +On branch work
-> +Your branch is ahead of '\''origin/feature'\'' by 2 commits.
-> +  (use "git push" to publish your local commits)
-> +
-> +Ahead of '\''origin/main'\'' by 3 commits.
-> +
-> +nothing to commit, working tree clean
-> +EOF
-
-... abut the left edge of the page.  Unlike <<\EOF, the dash sign
-tells the shell that it should remove the leading tab from the line
-before feeding "cat", and the point of using that construct "<<-\EOF"
-to begin with is so that you can indent the here doc to the same
-level as the command text.  IOW, you use "<<-\EOF" only because you
-want to avoid these ugly lines that are sticking to the left, like
-the above.  Instead you can do this:
-
-	cat >expect <<-\EOF &&
-	On branch work
-	Your branch is ...
-	  (use "git push" ...
-	...
-	EOF
-
-and the shell strips the leading tabs from these lines.
-
-> +	test_cmp expect actual
-> +'
-
-
-> +test_expect_success 'checkout shows ahead of both tracked branch and origin/main' '
-> +	(
-> +		cd test &&
-> +		git checkout main >/dev/null &&
-> +		git config status.goalBranch origin/main &&
-> +		git checkout work 2>&1
-
-Likewise.
-
-> +	) >actual &&
-> +	cat >expect <<-\EOF &&
-> +Switched to branch '\''work'\''
-> +Your branch is ahead of '\''origin/feature'\'' by 2 commits.
-> +  (use "git push" to publish your local commits)
-> +
-> +Ahead of '\''origin/main'\'' by 3 commits.
-> +EOF
-
-Likewise.
-
-Also, doesn't $SQ work here, i.e.
-
-	cat >expect <<-EOF &&
-	Switched to branch ${SQ}work${SQ}
-	Your branch is ahead of ${SQ}...${SQ} by 2 commits.
-	...
-	EOF
-
-As you want interpolation if you go this route, we lose quote from
-the end of here-doc token and write "<<-EOF" here, instead of
-"<<-\EOF".
-
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'status tracking origin/main shows only main' '
-> +	(
-> +		cd test &&
-> +		git checkout b4 >/dev/null &&
-> +		git status --long -b
-
-Likewise.
-
-> +	) >actual &&
-> +	test_grep "ahead of .origin/main. by 2 commits" actual &&
-> +	test_grep ! "Ahead of" actual
-> +'
-
-I'll stop here.
+Thoughts?
