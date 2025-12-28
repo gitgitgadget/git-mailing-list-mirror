@@ -1,44 +1,44 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from mout.web.de (mout.web.de [212.227.15.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AB723A58F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2551239594
 	for <git@vger.kernel.org>; Sun, 28 Dec 2025 18:10:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766945462; cv=none; b=sCGoqiV0tKIMCv8FiqaP4/I9Kp4Av9ZhpG6U9S3v0XrIFhqD0yxdzzvxTHFnx7/CzS/7myD+IJB8Cuw1T1gyzGFnP5KFp/EnEn/igRvwzh0WzI+0ebC2y0QakUVSCoEju4xvi2xuo1o5MxDhQ/M02loCalK7UvH0h6X3DqZ3Saw=
+	t=1766945462; cv=none; b=XtMnptKGFGA79+BCWPIZ1R1vS8G5/royIq4Lk7Hz0LxcCU8xBWDdZZLC7n4sDwIBZVluLITJT91kOjqH29E9QC0l3/mrqN9XfJP++swWb2FJqNq5GsdK4mVLgzK65+CHJzkNbpgIJTov0QIQbOXhgWdHaqe3IVDbwEhwV9jKLn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1766945462; c=relaxed/simple;
-	bh=38Z/E6B4aVqtfaHAS5IndFk9jewa/NrLQgG1LOi6LHA=;
+	bh=vPi7vWrejtl6HNwCOD6dup0MQDcq0LF45t5YhAL1KkA=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hHm6Zw8/skNyBuTUcI0rChbkaJDyXcLoOrFTAwZDBGeLM8OzjW10v+COD8PVdQIbGkFIWzsfGPhvib9kCcslTAvKTDkG6x9rT1wI7q1fpeVY53gSyfLeLt53gztrfvscLdLcWArLjyQeFFNsxHz2gM5tY7Q2Q7pqa2hHwGfZyrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=eHz/+wq+; arc=none smtp.client-ip=212.227.15.3
+	 MIME-Version:Content-Type; b=n1tK+E8VgZEggTNFY+9IvZQURMZy9PB2F2lNNI+VEYGhixPAulLjxNpiJm6YhWR2u5m2HnM7u3twwvigy/exX95elnd/GYH7SygUpOE1FZC9fgdHtw5ON0xtdTGlaEu4IFc6FtCKOGL07vlNyWYk6K6B+JgulWCwczuQkGCobck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=OFsoTShH; arc=none smtp.client-ip=212.227.15.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="eHz/+wq+"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="OFsoTShH"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
 	s=s29768273; t=1766945452; x=1767550252; i=l.s.r@web.de;
-	bh=8p/3fcPvSHwUsko9rxKcpoxQjBnyD2VDTv3nJe+JwZo=;
+	bh=Och4HuY9/2RYBcejp7KymQCZdk1YKlrTDbpu7Jh7lO0=;
 	h=X-UI-Sender-Class:From:To:Subject:Date:Message-ID:In-Reply-To:
 	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=eHz/+wq+T3cuvbHhZxf+Ch25FKweCHxemM3hpqpIte+1mM6ecC+2h5dkEsqmJrrn
-	 ZxJaSY9p1goTnZW/IeKggEPIolo9r/nd6DxS3CXAcDT0h7yq9VOtDQ42CQh5SBNNd
-	 5NWsYaW7GiUpNVlRie5Wu5zACZlAO93jvPJDwy306EpRZkD0kRfauVCeIa1GLjXZ8
-	 +JSQAGNYxEkc7l2u8kFvwEZFCdToewzOn2neWlh0uaxWBYIHwtcTfl08106DTkDH1
-	 lB8jBfWv9ztoH8k3ePgrJ4gcaAo1iFXSL0Bd+tDz2Pbqjdw/V1kAkwoprEi8lZaqY
-	 S90TfmZiJWUKSYyEaw==
+	b=OFsoTShHduo4KO+pO5go58vjbFB0slbVUH7OdOe75Rcwtt7P3wzguaYPCheXE1lo
+	 fMuUocf5CJlXlgwe0CfStSP2FKXKe+0lZV1BrD5RuhKlvb1ZzwutOoPX7bWhf4KaC
+	 ar4X5I6+UKPDHE2IfaL3Guhm3+Oa3W2028tl1rPzBIKQwLCq4j6F78Vc5ZXaBGxtm
+	 +PKc2yse3Rq4EjfqbnSRWEM27dC66qqKbZZwtWL+pfO5DLpFG4LICQ/A4XD/JpLkX
+	 9/r2CGAojb43rDMbSSIhooB2idkLL0dSFslFF5NFVpGCTrDhXpLVjHRA3nmwsC2Bh
+	 aSiC3h2hklhx8UCyIA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from Mini-von-Rene.speedport.ip ([79.203.18.156]) by smtp.web.de
  (mrweb005 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 1M6YNJ-1vXRK63lUn-007snk for <git@vger.kernel.org>; Sun, 28 Dec 2025 19:10:51
+ 1MAtwr-1vkcao49bl-00CGVw for <git@vger.kernel.org>; Sun, 28 Dec 2025 19:10:52
  +0100
 From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
-Subject: [PATCH 3/4] tag: support arbitrary repositories in parse_tag()
-Date: Sun, 28 Dec 2025 19:10:50 +0100
-Message-ID: <20251228181051.68724-4-l.s.r@web.de>
+Subject: [PATCH 4/4] tag: stop using the_repository
+Date: Sun, 28 Dec 2025 19:10:51 +0100
+Message-ID: <20251228181051.68724-5-l.s.r@web.de>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251228181051.68724-1-l.s.r@web.de>
 References: <20251228181051.68724-1-l.s.r@web.de>
@@ -50,260 +50,130 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:MRxkCc7zwnrDtDGG1Hemhs+ZMSSZNvRLwnbKUdl2frV5NLvCwMu
- xX9tcXRkMZodCH7K4ERgMxwi8x28vSquJy8sTjh0l/rNgDNwQ/4G/kDW+OJjDKFMYn9Jy5M
- Fbkv0w0DiKnYrKHNman82i1L9wPvrMdJdpJnNi9Vn9a4LuFjg3EIGD3kjjwRgXN9Rn4sB13
- 48zg4P0uVql9EmXEuilBA==
+X-Provags-ID: V03:K1:2LJb5CbsbXvGGEyV5aNG1ZhxnTjc38m1fip8BPjduft04MKeis9
+ 5THTo9Q+TNBmIDGjlt67TU1Q5sx5sPTOnuF8AzZo5/ruG5pfPNj3fAOHhaop1Ubuxga4WLC
+ 5ecAxlOvarq33cHwhRk3IZ2zc1ujhxwb5GqGWaMgUOTQ975MO7c3BwYwbEMvyucY08pu+Mm
+ 6TZpRWqLCQ1hEGypaWzmQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:d8yN7XATvrM=;GPahKYikGh6lvWZAyk3kizZKB2N
- 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
+UI-OutboundReport: notjunk:1;M01:P0:QvduymJMan8=;ViUnXf6Kx7ryT0rJCESSfrffIQX
+ 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
+ UKIzzhy9048Y6zNwg=
 
-Allow callers of parse_tag() pass in the repository to use.  Let most of
-them pass in the_repository to get the same result as before.  One of
-them has stopped using the_repository in ef9b0370da (sha1-name.c: store
-and use repo in struct disambiguate_state, 2019-04-16); let it pass in
-its stored repository.
+gpg_verify_tag() shows the passed in object name on error.  Both callers
+provide one.  It falls back to abbreviated hashes for future callers
+that pass in a NULL name.  DEFAULT_ABBREV is default_abbrev, which in
+turn is a global variable that's populated by git_default_config() and
+only available with USE_THE_REPOSITORY_VARIABLE.
+
+Don't let that hypothetical hold us back from getting rid of
+the_repository in tag.c.  Fall back to full hashes, which are more
+appropriate for error messages anyway.  This allows us to stop setting
+USE_THE_REPOSITORY_VARIABLE.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- builtin/describe.c     | 6 +++---
- builtin/pack-objects.c | 2 +-
- fsck.c                 | 2 +-
- object-name.c          | 2 +-
- ref-filter.c           | 2 +-
- tag.c                  | 8 ++++----
- tag.h                  | 2 +-
- walker.c               | 2 +-
- 8 files changed, 13 insertions(+), 13 deletions(-)
+ tag.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 443546aaac..989a78d715 100644
-=2D-- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -112,13 +112,13 @@ static int replace_name(struct commit_name *e,
-=20
- 		if (!e->tag) {
- 			t =3D lookup_tag(the_repository, &e->oid);
--			if (!t || parse_tag(t))
-+			if (!t || parse_tag(the_repository, t))
- 				return 1;
- 			e->tag =3D t;
- 		}
-=20
- 		t =3D lookup_tag(the_repository, oid);
--		if (!t || parse_tag(t))
-+		if (!t || parse_tag(the_repository, t))
- 			return 0;
- 		*tag =3D t;
-=20
-@@ -335,7 +335,7 @@ static void append_name(struct commit_name *n, struct =
-strbuf *dst)
- {
- 	if (n->prio =3D=3D 2 && !n->tag) {
- 		n->tag =3D lookup_tag(the_repository, &n->oid);
--		if (!n->tag || parse_tag(n->tag))
-+		if (!n->tag || parse_tag(the_repository, n->tag))
- 			die(_("annotated tag %s not available"), n->path);
- 	}
- 	if (n->tag && !n->name_checked) {
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 1ce8d6ee21..ca44b7894f 100644
-=2D-- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3293,7 +3293,7 @@ static void add_tag_chain(const struct object_id *oi=
-d)
-=20
- 	tag =3D lookup_tag(the_repository, oid);
- 	while (1) {
--		if (!tag || parse_tag(tag) || !tag->tagged)
-+		if (!tag || parse_tag(the_repository, tag) || !tag->tagged)
- 			die(_("unable to pack objects reachable from tag %s"),
- 			    oid_to_hex(oid));
-=20
-diff --git a/fsck.c b/fsck.c
-index 138fffded9..fae18d8561 100644
-=2D-- a/fsck.c
-+++ b/fsck.c
-@@ -474,7 +474,7 @@ static int fsck_walk_tag(struct tag *tag, void *data, =
-struct fsck_options *optio
- {
- 	const char *name =3D fsck_get_object_name(options, &tag->object.oid);
-=20
--	if (parse_tag(tag))
-+	if (parse_tag(the_repository, tag))
- 		return -1;
- 	if (name)
- 		fsck_put_object_name(options, &tag->tagged->oid, "%s", name);
-diff --git a/object-name.c b/object-name.c
-index fed5de5153..8b862c124e 100644
-=2D-- a/object-name.c
-+++ b/object-name.c
-@@ -449,7 +449,7 @@ static int show_ambiguous_object(const struct object_i=
-d *oid, void *data)
- 	} else if (type =3D=3D OBJ_TAG) {
- 		struct tag *tag =3D lookup_tag(ds->repo, oid);
-=20
--		if (!parse_tag(tag) && tag->tag) {
-+		if (!parse_tag(ds->repo, tag) && tag->tag) {
- 			/*
- 			 * TRANSLATORS: This is a line of ambiguous
- 			 * tag object output. E.g.:
-diff --git a/ref-filter.c b/ref-filter.c
-index d7454269e8..c318f9ca0e 100644
-=2D-- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2866,7 +2866,7 @@ static int match_points_at(struct oid_array *points_=
-at,
- 	while (obj && obj->type =3D=3D OBJ_TAG) {
- 		struct tag *tag =3D (struct tag *)obj;
-=20
--		if (parse_tag(tag) < 0) {
-+		if (parse_tag(the_repository, tag) < 0) {
- 			obj =3D NULL;
- 			break;
- 		}
 diff --git a/tag.c b/tag.c
-index 9373c49d06..9daeaf2a78 100644
+index 9daeaf2a78..2f12e51024 100644
 =2D-- a/tag.c
 +++ b/tag.c
-@@ -13,6 +13,7 @@
- #include "gpg-interface.h"
- #include "hex.h"
- #include "packfile.h"
-+#include "repository.h"
+@@ -1,4 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
 =20
- const char *tag_type =3D "tag";
+ #include "git-compat-util.h"
+@@ -58,7 +57,7 @@ int gpg_verify_tag(struct repository *r, const struct ob=
+ject_id *oid,
+ 		return error("%s: cannot verify a non-tag object of type %s.",
+ 				name_to_report ?
+ 				name_to_report :
+-				repo_find_unique_abbrev(r, oid, DEFAULT_ABBREV),
++				oid_to_hex(oid),
+ 				type_name(type));
 =20
-@@ -203,7 +204,7 @@ int parse_tag_buffer(struct repository *r, struct tag =
-*item, const void *data, u
- 	return 0;
- }
+ 	buf =3D odb_read_object(r->objects, oid, &type, &size);
+@@ -66,7 +65,7 @@ int gpg_verify_tag(struct repository *r, const struct ob=
+ject_id *oid,
+ 		return error("%s: unable to read file.",
+ 				name_to_report ?
+ 				name_to_report :
+-				repo_find_unique_abbrev(r, oid, DEFAULT_ABBREV));
++				oid_to_hex(oid));
 =20
--int parse_tag(struct tag *item)
-+int parse_tag(struct repository *r, struct tag *item)
- {
- 	enum object_type type;
- 	void *data;
-@@ -212,8 +213,7 @@ int parse_tag(struct tag *item)
+ 	ret =3D run_gpg_verify(buf, size, flags);
 =20
- 	if (item->object.parsed)
- 		return 0;
--	data =3D odb_read_object(the_repository->objects, &item->object.oid,
--			       &type, &size);
-+	data =3D odb_read_object(r->objects, &item->object.oid, &type, &size);
- 	if (!data)
- 		return error("Could not read %s",
- 			     oid_to_hex(&item->object.oid));
-@@ -222,7 +222,7 @@ int parse_tag(struct tag *item)
- 		return error("Object %s not a tag",
- 			     oid_to_hex(&item->object.oid));
- 	}
--	ret =3D parse_tag_buffer(the_repository, item, data, size);
-+	ret =3D parse_tag_buffer(r, item, data, size);
- 	free(data);
- 	return ret;
- }
-diff --git a/tag.h b/tag.h
-index 55c2d0792b..534687c4ca 100644
-=2D-- a/tag.h
-+++ b/tag.h
-@@ -13,7 +13,7 @@ struct tag {
- };
- struct tag *lookup_tag(struct repository *r, const struct object_id *oid)=
-;
- int parse_tag_buffer(struct repository *r, struct tag *item, const void *=
-data, unsigned long size);
--int parse_tag(struct tag *item);
-+int parse_tag(struct repository *r, struct tag *item);
- void release_tag_memory(struct tag *t);
- struct object *deref_tag(struct repository *r, struct object *, const cha=
-r *, int);
- int gpg_verify_tag(struct repository *r, const struct object_id *oid,
-diff --git a/walker.c b/walker.c
-index 409b646578..2891563b03 100644
-=2D-- a/walker.c
-+++ b/walker.c
-@@ -115,7 +115,7 @@ static int process_commit(struct walker *walker, struc=
-t commit *commit)
-=20
- static int process_tag(struct walker *walker, struct tag *tag)
- {
--	if (parse_tag(tag))
-+	if (parse_tag(the_repository, tag))
- 		return -1;
- 	return process(walker, tag->tagged);
- }
 =2D-=20
 2.52.0
 
