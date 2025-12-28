@@ -1,98 +1,96 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-05.mail-europe.com (mail-05.mail-europe.com [85.9.206.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934E5242D79
-	for <git@vger.kernel.org>; Sun, 28 Dec 2025 20:16:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D6416EB42
+	for <git@vger.kernel.org>; Sun, 28 Dec 2025 20:40:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.9.206.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766952979; cv=none; b=uZJokcCu/cFtrTh+eFLecLCvMDe7I1mYtlaSQwPpY3C/do8nUcbnuzQeVXjrePFfkg1bBGrVQBWisII6qg4JPUgrQOxoLR68lhoVJLL/D/MZxu9EWgU+PAnhB+qZm+fn+VrqL+h2MN3n3t2X91Y6h5OYBmNksqaAjVzbFVUNEQY=
+	t=1766954429; cv=none; b=RkWxTPGlt2fMS4nHX093WRWfUSecJONJEdAMjRkoHpMUnrBc1IkzY6kZkTXPuO9zx8rDRs6qV6/2l1MFlRWH4wtNHg2OBxNdDlbDqLs4oDdMXhyGxWdbQacpiyCTZj5jOFBFDMyRsE45fAsfWauXkLlo0fX/M65g+1btW4aHLrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766952979; c=relaxed/simple;
-	bh=ed8xpDAUsLeaCRpDnjz1KIjAM0qxJz/vzInz8ozXasU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZooAqYGlalSgNiS9KByS8cFxSHsxEJfx7CUr8oWjA9mCP8HFHJxbSHvHY3QhwDq4FBUCdt6s1Cf2SOqdUVG6LUXKrH6ykJl0nw8YL1GYPX9con5KT1V4ZtmFO+gesVsraZFUjPAeq3eEFLnQQjyrU5AVRxHazfrI7IqCVUqLBHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OKggVgam; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1766954429; c=relaxed/simple;
+	bh=t3u+wFwx1LouesvrQEEV6ZTjOE/hzw2nuonpEph8vEc=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=rXUfqsWmtsbXllp8Af/ZCscXzQ6X2IS02E3WtuDm1wJZ59n0HvogiLgzQR8mRVum5gn8vb24vOBPKboayoDCqGUAjEQL+esU4rjrvEn52CgSJY4VvEG7ODjrkVvWrwonmHbFu105Ako+eEsy6nLxKk9NwEGI+Wtt94EUGO+4a2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wolfietech.xyz; spf=pass smtp.mailfrom=wolfietech.xyz; dkim=pass (2048-bit key) header.d=wolfietech.xyz header.i=@wolfietech.xyz header.b=D4zN/FPV; arc=none smtp.client-ip=85.9.206.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wolfietech.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wolfietech.xyz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OKggVgam"
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-37b8aa5adf9so54039971fa.1
-        for <git@vger.kernel.org>; Sun, 28 Dec 2025 12:16:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766952975; x=1767557775; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ed8xpDAUsLeaCRpDnjz1KIjAM0qxJz/vzInz8ozXasU=;
-        b=OKggVgamn4g4BGVx6/hwaUfwXxF6LpMzNgCHLjSw0mzY8T8EUEy14nI3H5APX2DE0W
-         0jrdBhZDdBaMPbzpJICZJXP6SgUB/o5hJ7Vz86Ffe0DpoMKBv5PyUdAH4XDx215gVZq1
-         /SUhMxw5IYwNnMCJmglPtW74e/jVBf4HRkDwpb4wye8Rsw4xbTBLCOA/3XMk3kgmRg/9
-         3WGGcPYeK07khojIN4MmTDCOoH04l7fSGFyPi2PhPzpvYDIfOo0PAAa4h7Js6P79W6Ik
-         B/7yD1BRsdbjZEjX5Ke2iJgB5P5rexujz3Ri7yNWUHows9hxgB5I4tjWrB8Trt9s4wUR
-         jIgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766952975; x=1767557775;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=ed8xpDAUsLeaCRpDnjz1KIjAM0qxJz/vzInz8ozXasU=;
-        b=lzWZLuqxbdbTq0g3G4vhO16hq/5eKmPA8sYknkp6ceCzItd51rDBU/BsnP/83byy+1
-         UgLI3BZik237C7/gP0qVqtXGu9XfTYbm3WaAah/K6fvKGfeF0Ea5F3r+afjigLgPT1hT
-         HxE435uCr7YLiq/Jtrofp8UuZrGi3gEFSMR3OTOyv0c8/foSP4DOwu8DbrGc2BRrMylX
-         EJruC4SfI30u34CA3BaSWM1xthmOU+eqiPQmU6VWIoXHDM88p2yuQJm7YUe9XtSQygsG
-         qbVObobyNeVj3V5PG7yJKYHVaxmkCWcL2sSEeBp1bTkVPjF8YuMnaTLWFL8PpLaDVcx5
-         Q0Hw==
-X-Forwarded-Encrypted: i=1; AJvYcCWmw4xMDrnr+6bkEjojhIsx5ltYnoTX49r8/eJA3M2lgd7AlunahiccG+a+T3pM+1kQqhQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YweqLSdhF2OaJF4ySdXAgZtlv+hGjlzP/adAdTYRTJF+ziQZXuE
-	EFli7psk2n8nRteJ7eccIdz+svtdAt4isJZNsPBzmxq8hpMP/wQR5y9/
-X-Gm-Gg: AY/fxX49VzBRkrrlXMeB+ROFb9G8kadSqHRwscTM4Q7sn7iN5VzBNROGDxlXX0/pJyA
-	OraZ8HYVr801otRBqvRq6GNqU8LV6U90PWyuusgNRkOH2IwcTRVmpatS6pn9EFzl4FjXhxh6nFP
-	7tRh2IhTq7g8bxmLx+mY6qO3S9scdOD9seyZqN6vYBYG9EWV2xgvJz+yAr7KuhJ00y8Aq6NLK2+
-	51fcobYEdXGN+FxhGK2/A6XQnezSegNc18QgbsWAnTcIJG8r6Gq+ou1XPezJPVc5AUZisgBxpCV
-	MIBJluRukzgCL2c4IeEYXuo0MSBx5LrBSetWPvD9aqoYS7f4qyvJ7JgaQMaPVXrYrDWUPphdoEC
-	QgzNKnNa8AGfXAUUruVM1AVDYyUB6lQf8TzSzijUHszvohLCK2MYgDleNb7EFc1cX3cdoQhYX9C
-	Te9nceN/XWd7QWLJC6jz3Cnhfe7U3lnQ6mXYT0Pbcb7ssUqaNxuCq0wqGBGlVQED7RuBZMSmA=
-X-Google-Smtp-Source: AGHT+IFuyVHuqUNlw5zG7ki9pHAm6DoxAYkNoICHxEFT6wl1OVW1bYEUojmZ26M9YGGI3CMfY99j1w==
-X-Received: by 2002:a05:651c:1546:b0:37b:a664:acde with SMTP id 38308e7fff4ca-3812161c9bfmr93322201fa.32.1766952975267;
-        Sun, 28 Dec 2025 12:16:15 -0800 (PST)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3812262ccfasm73301981fa.26.2025.12.28.12.16.14
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 28 Dec 2025 12:16:14 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: chris.torek@gmail.com,
-	git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com,
-	sandals@crustytoothpaste.net,
-	ychin.macvim@gmail.com
-Subject: Code review?
-Date: Sun, 28 Dec 2025 21:16:13 +0100
-Message-Id: <20251228201613.83476-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <xmqqbjjijt2u.fsf@gitster.g>
-References: <xmqqbjjijt2u.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=wolfietech.xyz header.i=@wolfietech.xyz header.b="D4zN/FPV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wolfietech.xyz;
+	s=protonmail; t=1766954414; x=1767213614;
+	bh=t3u+wFwx1LouesvrQEEV6ZTjOE/hzw2nuonpEph8vEc=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=D4zN/FPVDZ1HTb1ISTMyhEBDs+NZbOEJFwrSuXw3FRVPGP0ZkfAZ/TA6tDls3b0np
+	 um7J7jHhrHoMKvKbRZeUfxvm2a/22mJL26RRJf19uhRybVPMebIeL/Csdd6WT2mRKi
+	 KSA3kbzf2a33EzGAHE4IyLyuuo0G+REC4e6ZhoMhZJpKjFOlkZaTI6VY/UDgQ+5PXv
+	 DLOtPpt8GtMPPsyvhsh4XczQkVmQHCuSdvvkWIuv2BRTAbYzNinZmcwFpCP1cKEhPd
+	 CtcflE+C/N7sV6cnvqS5/+qdpuSIRErXYN4pvVWZvxvVCVz6xJjkKDyM2qtvq0INI4
+	 pOhLiZttXv/+w==
+Date: Sun, 28 Dec 2025 20:40:10 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: Terrence | Wolf1098 <Wolf1098@wolfietech.xyz>
+Subject: Git MSI Download Alternative
+Message-ID: <KFiSIrIS7eM0dD67pvLae9ATOgPSyhL6ypLLaB2NTCX4k7AxDIbDGVTn1y35OO6O5wieHLL8NWkAxhgXF4uTd3HxqXN9JQzv2x996pXjsP8=@wolfietech.xyz>
+Feedback-ID: 17620940:user:proton
+X-Pm-Message-ID: 17325b3a46c2993f7a6216d9dabeb57c57a7275e
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------9369a38d6ce1c23d717debf3b409eea1ba2fb2839f6651f2c1e6da027835f8dc"; charset=utf-8
 
-Hi!
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------9369a38d6ce1c23d717debf3b409eea1ba2fb2839f6651f2c1e6da027835f8dc
+Content-Type: multipart/mixed;boundary=---------------------5de5405eaee5c5f83c5218b372fceafb
 
-The config variable solves to problem of finding which ”goal branch” to compare to, which I otherwise find unsolvable. I took it from the previous discussion that trying to extract the default branch from the remote is not a good idea.
+-----------------------5de5405eaee5c5f83c5218b372fceafb
+Content-Type: multipart/alternative;boundary=---------------------1e5e257a798b996c08b3ef5b7c78590e
 
-Is the solution through using the remote/pushRemote?
+-----------------------1e5e257a798b996c08b3ef5b7c78590e
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-If that’s the solution they are set per branch (as I understand it), so each time checking out a new branch this ”goal branch” comparison would be lost and has to be configured again. That ruins the feature.
+Is it possible to get an MSI(x) install of github so that it can be instal=
+led via provisioning, or gpo rules in ad?
+-----------------------1e5e257a798b996c08b3ef5b7c78590e
+Content-Type: multipart/related;boundary=---------------------b7395596712cd7f03d2913d991167c9b
 
-Looking at the git repositories I have on my machine, none of them have pushRemote set up. And the remote setting is pointing to my fork, never to upstream, I think most people have it like that.
+-----------------------b7395596712cd7f03d2913d991167c9b
+Content-Type: text/html;charset=utf-8
+Content-Transfer-Encoding: base64
 
-I appreciate all the help so far! Happy new year!
+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE0
+cHg7Ij5JcyBpdCBwb3NzaWJsZSB0byBnZXQgYW4gTVNJKHgpIGluc3RhbGwgb2YgZ2l0aHViIHNv
+IHRoYXQgaXQgY2FuIGJlIGluc3RhbGxlZCB2aWEgcHJvdmlzaW9uaW5nLCBvciBncG8gcnVsZXMg
+aW4gYWQ/PC9kaXY+CjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsg
+Zm9udC1zaXplOiAxNHB4OyIgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrIHByb3Rv
+bm1haWxfc2lnbmF0dXJlX2Jsb2NrLWVtcHR5Ij4KICAgIDxkaXYgY2xhc3M9InByb3Rvbm1haWxf
+c2lnbmF0dXJlX2Jsb2NrLXVzZXIgcHJvdG9ubWFpbF9zaWduYXR1cmVfYmxvY2stZW1wdHkiPjwv
+ZGl2PgogICAgCiAgICAgICAgICAgIDxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Js
+b2NrLXByb3RvbiBwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay1lbXB0eSI+CiAgICAgICAgCiAg
+ICAgICAgICAgIDwvZGl2Pgo8L2Rpdj48ZGl2Pgo8L2Rpdj4=
+-----------------------b7395596712cd7f03d2913d991167c9b--
+-----------------------1e5e257a798b996c08b3ef5b7c78590e--
+-----------------------5de5405eaee5c5f83c5218b372fceafb--
+
+--------9369a38d6ce1c23d717debf3b409eea1ba2fb2839f6651f2c1e6da027835f8dc
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wrsEARYKAG0FgmlRlZwJEEOZArY0ro4BRRQAAAAAABwAIHNhbHRAbm90YXRp
+b25zLm9wZW5wZ3Bqcy5vcmdlELXs/UY5ysd61an8pyzqGXEtL+xTp70FWtz9
+rRo8URYhBLr8hGxK4BV3xzBOXUOZArY0ro4BAABcvAEA5Qzl3Xoj2LbpkunQ
+CnxBXzMA48m+fST9DntX4fvpycYBAK7qoiaeSFSP4TB5j6XgN0cPgRPVwaWe
+vcjFpZ10qnEG
+=c260
+-----END PGP SIGNATURE-----
 
 
-Harald
+--------9369a38d6ce1c23d717debf3b409eea1ba2fb2839f6651f2c1e6da027835f8dc--
+
