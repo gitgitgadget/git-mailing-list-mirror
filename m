@@ -1,257 +1,406 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CC21AE877
-	for <git@vger.kernel.org>; Mon, 29 Dec 2025 18:09:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E26274B26
+	for <git@vger.kernel.org>; Mon, 29 Dec 2025 18:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767031751; cv=none; b=dDM0FZTn9Qor8g24xtgSz9r5FCfv3AIIxoLkDhRg2NTuEB0IxGIBHZENuZr271bq8rfGXq1KhswzUg71+GJB2NQnGQGp2Omx8XX1OLzVTqMC+g3fgDKcH7YAkElbmE7pUDo4uS6aOGjFYZPsk9b0tSMSxXwAIhGj2MZSBzixe+w=
+	t=1767033789; cv=none; b=HWfnDZVcWBkcl7QzrXJsYoaGxdNitA3xnRlHut6kCxDhCWqOoLfLDAZseqymViBxEDU5Zq8IEpgTnKBvFVsZf7Oy/CXHq4L2Ie4IkdZB38EgfWOTm2NgXg382g1sc2j/LM6zu79Wr0KCb1Rjh1J27iyPOg3N24stj4s1EgLxSlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767031751; c=relaxed/simple;
-	bh=4t1mC5VuGHXAakbZYEJevnGkWz7r5Dts0767AbRrOB4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=kBli2qsbgF7+JPPdeDSBAE+A8c9I11XRp2Zd8fNru4vUlfeXg/8s3x4X+NsjrJELc+S4JgRiNii1e1+D3Ly4yDWOA6x5hqdmVtCmWd2V5U57OndyhCZSvd4Ms0chzqOYebaNxy0Xnoou8adQOOj6eic6taQgZi033C+0/QWYIuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dSGwCf2N; arc=none smtp.client-ip=209.85.222.178
+	s=arc-20240116; t=1767033789; c=relaxed/simple;
+	bh=MAPgXrxt7b0XccbkkAtOb14d0Ek+LPbNJTvb5taH+lU=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=VZnBiA3ecxDXbms1SWMdGxEu7khSgplWP5OJX87l+Pw9c4S5uTQizEwAGnfY+wXgLJ2YpbuKmjPzjpPED0L75Z2VTUKaFoWkBLauExmxo40424RDb0LIMEC6oFjjxZ0QhI+lw7FvYvKPNho8QWHGNUFYTxHt2XExadTBHUTfiwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GDlpqWxm; arc=none smtp.client-ip=209.85.219.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dSGwCf2N"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8b1bfd4b3deso832804085a.2
-        for <git@vger.kernel.org>; Mon, 29 Dec 2025 10:09:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GDlpqWxm"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-88ffcb14e11so50701126d6.0
+        for <git@vger.kernel.org>; Mon, 29 Dec 2025 10:43:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767031749; x=1767636549; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=gUAL1XODmgZ+l/lrVD8ySxgug9mrWzkyA89sL5ZYRsI=;
-        b=dSGwCf2NmeCHH3vTJQwQMVfcevz7P2RxDUkSzTJiwngvu8pQOI64dY335as/sashGK
-         g8NSosw56axMk0RnsIjwAg0ZVu6QCG2w+Sa1C7s/BE5Ez24Ik1Jx4XkKOU3v0hkz++21
-         Inw94KDfexqx1uKLC1fKhSM0pyHwPMHoxiftrwVY/Ij5S6VzUvoRRBeNhpggEqWrOrTO
-         g4R5RAJFdHa6jvzNwjdaOvTh230JwImQWXkPcWd6+TnirTuMT09SfLbwGqOeNDjRrnz1
-         CqTtfU+PpCBRC5JwF+T7tj3999tCcE9Ip6AmyT46t9obbyKGzysLkG96nxH37X+Snlv9
-         9Jxg==
+        d=gmail.com; s=20230601; t=1767033786; x=1767638586; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=yTZja+x93az0UKXVY9V6f5wF+CUHhU53V0YZrHEF5bU=;
+        b=GDlpqWxme59S2Y5kZ9w+aotQQQN2UQ8CPZ+uB/Xzdrw3RiI1CD4ARM4TpxF+/P6fp8
+         tE0iY3XeRGD5ZiYhGXTbjw9GHRSVOoZmLJIDYZJctcAgGMqg4AnXUN9RoE14CeB8IhVh
+         WCvLtQ7CUThO11wbXeaNvbnk0RNRnWaRKW8u0Anr+tz/1nySFo//5Hg6RtKmKdb/FpCd
+         fNpsowYJUJHywGF64pslQFfpm+C7v28r/EQsCnbO67ufkPFlGUH7NRyGKuhlch07N6js
+         SNfijfuJ2vhQmkSoUnzcmwRarFZHUL2GFj53GxTNKC4xnHU+76E7tOvq04O7SgTT9oAZ
+         137Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767031749; x=1767636549;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gUAL1XODmgZ+l/lrVD8ySxgug9mrWzkyA89sL5ZYRsI=;
-        b=CzBYo6QhBPgiT5dGU7h3m6MZpQGEh9Mqqn9anKj+HaQ15i49xjLZRqv109Gw0qP1Dk
-         Yqzvr7ld1mZTz3MjY9xMrIWqkpO3FzOjpXgR0naPApU9bbPQvyD2TYJAym+wH+ej8AFT
-         4SMNRp7EdzSnoC4FkBaFmuHG10/0BB+xWruNXKrQbJ3Pa3Nq0afFfK6A0AfLDgvxA6g/
-         VPHSDuA5RpXhRTFPbPfeHg5XaG8bvD3xvUfZYTabBGJJeKTkFF+EINpd+fgF32EPegwi
-         uWXdksFh3VQmGOdFcOnIt0XEOiWvirFOA1fgNBiM5d2BZ+kJYY7UOVCkjFkf88ql3t3I
-         WhVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUfFn5uoVWV9NCx/LQuDCbS9+OXEsw9zB0iend5vrdu6pEwq+EkLfZvautwojjtXcCPftY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyxLAT3ZNExN8Lk2ZiyvB1ijnrKcdfsxriWuwVjOzTyh29rqBKi
-	ERqq04EzVI4GXG9WTmAwN2/7AisBnB+gqcxyg77/kUq429+rpEtccshiqNjOQQvN
-X-Gm-Gg: AY/fxX4r8e/hNgY/CY46Op5vdM66k5UvY1oJEWttxgB56VPP4SaL4R9GSWQfp/NiiXr
-	la5PcHXzbBb0GAUeNwB/lbyFXilw+8pMJe2eAnfEjzEtaEx9xURYkA67IOKCh2xgsILBbdoUofm
-	9XHPzkgaFeVQYYSTgzABdXXeIYAp1iISlqEFM4+mo15mEauODPcH6ezH5l/be0CpjTmC5VZdJ55
-	Pza8+dxQb1DaSFzLdvqh9TkK1NQHDaNEEl7V/LboTYoYOOEjLtjbT8ewcajTAwEon2ETV8r5nNT
-	PdSNq3Zsxhlu1PA9W8Y3MpasdivUjAn+NilGfkLnsLYCk3GmfRDvXU9d+J4DnNSeDE1iOC+N1ch
-	Ij20CYSA5uL7oBqSEjJHcsQlD6vDwaFhTIBRJvoJh0tH/F1TVbvF8IaRuBUjrmJkqrREumdxg+Q
-	SIPKknZ8tojGm+8P4Y2eSCUy7PnCUdFSquKuTjZcdSll6VGDt/enXRyG1X80R8fiR4Nmc1
-X-Google-Smtp-Source: AGHT+IFGGQhdFqqEw66GD17W9BhJPFgwvjZFIAkNSNr0qi+fOF3HGslk3VyW8kfjSH1PvmjrdBy7Xg==
-X-Received: by 2002:a05:620a:2914:b0:8b2:62f9:9fd8 with SMTP id af79cd13be357-8c090501d58mr4227534485a.61.1767031748655;
-        Mon, 29 Dec 2025 10:09:08 -0800 (PST)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c096787536sm2437172885a.4.2025.12.29.10.09.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Dec 2025 10:09:08 -0800 (PST)
-Message-ID: <01d09293-4b60-4a47-9350-73b1ff796c9a@gmail.com>
-Date: Mon, 29 Dec 2025 13:09:07 -0500
+        d=1e100.net; s=20230601; t=1767033786; x=1767638586;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yTZja+x93az0UKXVY9V6f5wF+CUHhU53V0YZrHEF5bU=;
+        b=j3P4vgPN374uKXHRUEfYucUykbz5bwP4LQdMFVy7YJPHED2m6fXytQGT9o4ohcOTXh
+         epKNOss8X06+jQscYBj5Zt/wSvF+zSoCmbh1tM1KHvvX+2ZJyQFHMmSUH/hNcPA4KTe7
+         7jUHlAVqWVZAtngNtIOlOeRGNqN0nia2lfc+Lhqu33RDQdKl12QPZVLIGxexjf8lkx5e
+         wndl7Qchlkt23R+KaNsdx3IlqhImWQBZkBkTPXH/Bkew1xC2nVHnoqmPvStI7qVpPQRo
+         BtM6bfSwwPA5jnP2xqxj3D5croVYu+vZxmLy7/u1ZHX2RlzoPTK9EjHrRi5TUv9UPYqB
+         wlKg==
+X-Gm-Message-State: AOJu0Yzd3UU/zUR0dfMaWjiQUvS+MvpLGAEs5xQ09sl2NQ2b7siE+iNw
+	hMhxuY+LuK/wvRX1KtvwL30wg8lgfaPLfKQM1jwlcqclWlaDMtbo7APyFtNp90Pj
+X-Gm-Gg: AY/fxX49acRaFTyo4bX+2/uEuKRphlW+/YcUj3aym7LL32gJ6cO1Yz6otFIsIkUY321
+	Z5LwqkVFHlDVuQ8gyaQYcFF188HqZ15YAqs7PGw+wFVydWtHZPDQyPoHRwbsY+oo1I2xNVWNRsF
+	hUwSrXO1j9NwUKr39r1k9gEiovRdh/zEqKhQ0Z/0Y7AMsVG1P1Ny94keAxYcSoZAFL0JH+o3i5N
+	Zliy0/rj5i6cWB1wavgDSNxdf9ZMJFNm2pcfkcJGnpddqRXReeTP42KLAPuX0jyOdzjhAcBvJ1I
+	CrwWWawtyPHggtVBI234gREOPIYMNe3ildaG0p6XFV5WeelQoBxrGCBUrzNPTT0X8a9Hs3fGyWA
+	W67b1UL1+T3hsZHCslPcuXGL7F49c84dfoJk9a8tEbqJjqGC/vV/ER73Ao/6gjREx6KwAQoOb4w
+	WSWoUFtXZ1SeS7JQ==
+X-Google-Smtp-Source: AGHT+IHh6n9g9aIBIrkJZb5+9jwT+WHP9xj95nGg/yYkJ4vj69wyKiPodkAU14/6wVg3ED6BSibXAQ==
+X-Received: by 2002:a05:622a:1e85:b0:4ee:4aa5:4bc8 with SMTP id d75a77b69052e-4f4abdbe4bamr534193141cf.64.1767033785488;
+        Mon, 29 Dec 2025 10:43:05 -0800 (PST)
+Received: from [127.0.0.1] ([172.183.131.17])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4f4ac563f66sm220632321cf.15.2025.12.29.10.43.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Dec 2025 10:43:04 -0800 (PST)
+Message-Id: <pull.2023.git.1767033783800.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 29 Dec 2025 18:43:03 +0000
+Subject: [PATCH] merge-ort: fix corner case recursive submodule/directory
+ conflict handling
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] show-branch: use prio_queue
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Git List <git@vger.kernel.org>
-References: <70ed751e-fc3c-4cb4-a4fd-26094a9f622e@web.de>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <70ed751e-fc3c-4cb4-a4fd-26094a9f622e@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
 
-On 12/26/2025 2:44 AM, René Scharfe wrote:
-> Building a list using commit_list_insert_by_date() has quadratic worst
-> case complexity.  Avoid it by using prio_queue.
+From: Elijah Newren <newren@gmail.com>
 
-Excellent idea.
+At GitHub, a few repositories were triggering errors of the form:
 
-> That number is not limited, though, and in pathological cases like the
-> one in p6010 we see a sizable improvement:
-> 
-> Test                      v2.52.0           HEAD
-> ------------------------------------------------------------------
-> 6010.4: git show-branch   2.19(2.19+0.00)   0.03(0.02+0.00) -98.6%
+    git: merge-ort.c:3037: process_renames: Assertion `newinfo && !newinfo->merged.clean' failed.
+    Aborted (core dumped)
 
-I love to see improvements like this, even if the construction is
-unlikely to exist in reality. I do think it's likely to be valuable
-for some large repos with many parallel branches.
+While these may look similar to both
+    a562d90a350d (merge-ort: fix failing merges in special corner case,
+                  2025-11-03)
+and
+    f6ecb603ff8a (merge-ort: fix directory rename on top of source of other
+                  rename/delete, 2025-08-06)
+the cause is different and in this case the problem is not an
+over-conservative assertion, but a bug before the assertion where we did
+not update all relevant state appropriately.
 
-Indeed, I tested this patch against a monorepo with lots of merges
-with hyperfine, getting this output:
+It sadly took me a really long time to figure out how to get a simple
+reproducer for this one.  It doesn't really have that many moving parts,
+but there are multiple pieces of background information needed to
+understand it.
 
-Benchmark 1: old
-  Time (mean ± σ):      3.303 s ±  0.146 s    [User: 0.058 s, System: 0.069 s]
-  Range (min … max):    3.162 s …  3.631 s    10 runs
+First of all, when we have two files added at the same path, merge-ort
+does a two-way merge of those files.  If we have two directories added
+at the same path, we basically do the same thing (taking the union of
+files, and two-way merging files with the same name).  But two-way
+merging requires components of the same type.  We can't merge the
+contents of a regular file with a directory, or with a symlink, or with
+a submodule.  Nor can any of those other types be merged with each
+other, e.g. merging a submodule with a directory is a bad idea.  When
+two paths have the same name but their types do not match, merge-ort is
+forced to move one of them to an alternate filename (using the
+unique_path() function).
 
-Benchmark 2: new
-  Time (mean ± σ):     141.7 ms ±   3.2 ms    [User: 30.5 ms, System: 93.1 ms]
-  Range (min … max):   137.5 ms … 149.4 ms    19 runs
+Second, if two commits being merged have more than one merge-base,
+merge-ort will merge the merge-bases to create a virtual merge-base, and
+use that as the base commit.
 
-Summary
-  new ran
-   23.31 ± 1.15 times faster than old
+Third, one of the really important optimizations in merge-ort is trivial
+tree-level resolution (roughly meaning merging trees without recursing
+into them).  This optimization has some nuance to it that is important
+to the current bug, and to understand it, it helps to first look at the
+high-level overview of how merge-ort runs; there are basically three
+high-level functions that the work is divided between:
+    collect_merge_info() - walks the top-level trees getting individual
+                           paths of interest
+    detect_renames() - detect renames between paths in order to match up
+                       paths for three-way merging
+    process_entries() - does a few things of interest:
+      * three-way merging of files,
+      * other special handling (e.g. adjusting paths with conflicting
+        types to avoid path collisions)
+      * as it finishes handling all the files within a subdirectory,
+        writes out a new tree object for that directory
 
-> -static struct commit *interesting(struct commit_list *list)
-> +static struct commit *interesting(struct prio_queue *queue)
->  {
-> -	while (list) {
-> -		struct commit *commit = list->item;
-> -		list = list->next;
-> +	for (size_t i = 0; i < queue->nr; i++) {
-> +		struct commit *commit = queue->array[i].data;
-...
-> -static void join_revs(struct commit_list **list_p,
-> +static void join_revs(struct prio_queue *queue,
->  		      struct commit_list **seen_p,
->  		      int num_rev, int extra)
->  {
->  	int all_mask = ((1u << (REV_SHIFT + num_rev)) - 1);
->  	int all_revs = all_mask & ~((1u << REV_SHIFT) - 1);
->  
-> -	while (*list_p) {
-> +	while (queue->nr) {
->  		struct commit_list *parents;
-> -		int still_interesting = !!interesting(*list_p);
-> -		struct commit *commit = pop_commit(list_p);
-> +		int still_interesting = !!interesting(queue);
-> +		struct commit *commit = prio_queue_peek(queue);
+If it were not for renames, we could just always do tree-level merging
+whenever the tree on at least one side was unmodified.  Unfortunately,
+we need to recurse into trees to determine whether there are renames.
+However, we can also do tree-level merging so long as there aren't any
+*relevant* renames (another merge-ort optimization), which we can
+determine without recursing into trees.
 
-Most of the changes are obvious replacements.
+We would also be able to do tree-level merging if we somehow apriori
+knew what renames existed, by only recursing into the trees which we
+could otherwise trivially merge if they contained files involved in
+renames.  That might not seem useful, because we need to find out the
+renames and we have to recurse into trees to do so, but when you find
+out that the process_entries() step is more computationally expensive
+than the collect_merge_info() step, it yields an interesting strategy:
+   * run collect_merge_info()
+   * run detect_renames()
+   * cache the renames()
+   * restart -- rerun collect_merge_info(), using the cached renames to
+     only recurse into the needed trees
+   * we already have the renames cached so no need to re-detect
+   * run process_entries() on the reduced list of paths
+which was implemented back in 7bee6c100431 (merge-ort: avoid recursing
+into directories when we don't need to, 2021-07-16)  Crucially, this
+restarting only occurs if the number of paths we could skip recursing
+into exceeds the number we still need to recurse into by some safety
+factor (wanted_factor in handle_deferred_entries()); forgetting this
+fact is a great way to repeatedly fail to create a minimal testcase for
+several days and go down alternate wrong paths).
 
-> +		bool get_pending = true;
+Now, I earlier summarized this optimization as "merging trees without
+recursing into them", but this optimization does not require that all
+three sides of history has a directory at a given path.  So long as the
+tree on one side matches the tree in the base version, we can decide to
+resolve in favor of whatever the other side of history has at that path
+-- be it a directory, a file, a submodule, or a symlink.  Unfortunately,
+the code in question didn't fully realize this, and was written assuming
+the base version and both sides would have a directory at the given
+path, as can be seen by the "ci->filemask == 0" comment in
+resolve_trivial_directory_merge() that was added as part of 7bee6c100431
+(merge-ort: avoid recursing into directories when we don't need to,
+2021-07-16).  A few additional lines of code are needed to handle cases
+where we have something other than a directory on the other side of
+history.
 
-But this is a new variable. Let's see how it's used.
-)
-> @@ -253,8 +254,14 @@ static void join_revs(struct commit_list **list_p,
->  			if (mark_seen(p, seen_p) && !still_interesting)
->  				extra--;
->  			p->object.flags |= flags;
-> -			commit_list_insert_by_date(p, list_p);
-> +			if (get_pending)
-> +				prio_queue_replace(queue, p);
-> +			else
-> +				prio_queue_put(queue, p);
-> +			get_pending = false;
->  		}
-> +		if (get_pending)
-> +			prio_queue_get(queue);
+But, knowing that resolve_trivial_directory_merge() doesn't have
+sufficient state updating logic doesn't show us how to trigger a bug
+without combining with the other bits of information we provided above.
+Here's a relevant testcase:
+   * branches A & B
+   * commit A1: adds "folder" as a directory with files tracked under it
+   * commit B1: adds "folder" as a submodule
+   * commit A2: merges B1 into A1, keeping "folder" as a directory
+     (and in fact, with no changes to "folder" since A1), discarding the
+     submodule
+   * commit B2: merges A1 into B1, keeping "folder" as a submodule
+     (and in fact, with no changes to "folder" since B1), discarding the
+     directory
+Here, if we try to merge A2 & B2, the logic proceeds as follows:
+   * we have multiple merge-bases: A1 & B1.  So we have to merge those
+     to get a virtual merge base.
+   * due to "folder" as a directory and "folder" as a submodule, the
+     path collision logic triggers and renames "folder" as a submodule
+     to "folder~Temporary merge branch 2" so we can keep it alongside
+     "folder" as a directory.
+   * we now have a virtual merge base (containing both "folder"
+     directory and a "folder~Temporary merge branch 2" submodule) and
+     can now do the outer merge
+   * in the first step of the outer merge, we attempt to defer recursing
+     into folder/ as a directory, but find we need to for rename
+     detection.
+   * in rename detection, we note that "folder~Temporary merge branch 2"
+     has the same hash as "folder" as a submodule in B2, which means we
+     have an exact rename.
+   * after rename detection, we discover no path in folder/ is needed
+     for renames, and so we can cache renames and restart.
+   * after restarting, we avoid recursing into "folder/" and realize we
+     can resolve it trivially since it hasn't been modified.  The
+     resolution removes "folder/", leaving us only "folder" as a
+     submodule from commit B2.
+   * After this point, we should have a rename/delete conflict on
+     "folder~Temporary merge branch 2" -> "folder", but our marking of
+     the merge of "folder" as clean broke our ability to handle that and
+     in fact triggers an assertion in process_renames().
 
-What's missing from this context is the loop iterating over
-the commit's parents. Here's the full context here:
+When there was a df_conflict (directory/"file" conflict, where "file"
+could be submodule or regular file or symlink), ensure
+resolve_trivial_directory_merge() handles it properly.  In particular:
+  * do not pre-emptively mark the path as cleanly merged if the
+    remaining path is a file; allow it to be processed in
+    process_entries() later to determine if it was clean
+  * clear the parts of dirmask or filemask corresponding to the matching
+    sides of history, since we are resolving those away
+  * clear the df_conflict bit afterwards; since we cleared away the two
+    matching sides and only have one side left, that one side can't
+    have a directory/file conflict with itself.
 
-	while (queue->nr) {
-		struct commit_list *parents;
-		int still_interesting = !!interesting(queue);
-		struct commit *commit = prio_queue_peek(queue);
-		bool get_pending = true;
-		int flags = commit->object.flags & all_mask;
+Also add the above minimal testcase showcasing this bug to t6422, **with
+a sufficient number of paths under the folder/ directory to actually
+trigger it**.  (I wish I could have all those days back from all the
+wrong paths I went down due to not having enough files under that
+directory...)
 
-		if (!still_interesting && extra <= 0)
-			break;
+I know this commit has a very high ratio of lines in the commit message
+to lines of comments, and a relatively high ratio of comments to actual
+code, but given how long it took me to track down, on the off chance
+that we ever need to further modify this logic, I wanted it thoroughly
+documented for future me and for whatever other poor soul might end up
+needing to read this commit message.
 
-		mark_seen(commit, seen_p);
-		if ((flags & all_revs) == all_revs)
-			flags |= UNINTERESTING;
-		parents = commit->parents;
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    merge-ort: fix corner case recursive submodule/directory conflict
+    handling
+    
+    This bug dates back to ort's introduction, in particular with
+    7bee6c100431 (merge-ort: avoid recursing into directories when we don't
+    need to, 2021-07-16).
 
-		while (parents) {
-			struct commit *p = parents->item;
-			int this_flag = p->object.flags;
-			parents = parents->next;
-			if ((this_flag & flags) == flags)
-				continue;
-			repo_parse_commit(the_repository, p);
-			if (mark_seen(p, seen_p) && !still_interesting)
-				extra--;
-			p->object.flags |= flags;
-			if (get_pending)
-				prio_queue_replace(queue, p);
-			else
-				prio_queue_put(queue, p);
-			get_pending = false;
-		}
-		if (get_pending)
-			prio_queue_get(queue);
-	}
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2023%2Fnewren%2Ffix-submodule-merge-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2023/newren/fix-submodule-merge-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2023
 
-The important thing here is that we are _peeking_ at the
-current commit and then doing the following:
+ merge-ort.c                          | 35 ++++++++++-
+ t/t6422-merge-rename-corner-cases.sh | 86 ++++++++++++++++++++++++++++
+ 2 files changed, 120 insertions(+), 1 deletion(-)
 
- 1. Replace the current top of the queue with the first parent.
- 2. Insert any later parents into the queue as new elements.
- 3. If no parents exist, then remove the current top.
+diff --git a/merge-ort.c b/merge-ort.c
+index 9e85a5e60a..2b837a58c3 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -1502,11 +1502,44 @@ static void resolve_trivial_directory_merge(struct conflict_info *ci, int side)
+ 	VERIFY_CI(ci);
+ 	assert((side == 1 && ci->match_mask == 5) ||
+ 	       (side == 2 && ci->match_mask == 3));
++
++	/*
++	 * Since ci->stages[0] matches ci->stages[3-side], resolve merge in
++	 * favor of ci->stages[side].
++	 */
+ 	oidcpy(&ci->merged.result.oid, &ci->stages[side].oid);
+ 	ci->merged.result.mode = ci->stages[side].mode;
+ 	ci->merged.is_null = is_null_oid(&ci->stages[side].oid);
++
++	/*
++	 * Because we resolved in favor of "side", we are no longer
++	 * considering the paths which matched (i.e. had the same hash) any
++	 * more.  Strip the matching paths from both dirmask & filemask.
++	 * Another consequence of merging in favor of side is that we can no
++	 * longer have a directory/file conflict either..but there's a slight
++	 * nuance we consider before clearing it.
++	 *
++	 * In most cases, resolving in favor of the other side means there's
++	 * no conflict at all, but if we had a directory/file conflict to
++	 * start, and the directory is resolved away, the remaining file could
++	 * still be part of a rename.  If the remaining file is part of a
++	 * rename, then it may also be part of a rename conflict (e.g.
++	 * rename/delete or rename/rename(1to2)), so we can't
++	 * mark it as a clean merge if we started with a directory/file
++	 * conflict and still have a file left.
++	 *
++	 * In contrast, if we started with a directory/file conflict and
++	 * still have a directory left, no file under that directory can be
++	 * part of a rename, otherwise we would have had to recurse into the
++	 * directory and would have never ended up within
++	 * resolve_trivial_directory_merge() for that directory.
++	 */
++	ci->dirmask &= (~ci->match_mask);
++	ci->filemask &= (~ci->match_mask);
++	assert(!ci->filemask || !ci->dirmask);
+ 	ci->match_mask = 0;
+-	ci->merged.clean = 1; /* (ci->filemask == 0); */
++	ci->merged.clean = !ci->df_conflict || ci->dirmask;
++	ci->df_conflict = 0;
+ }
+ 
+ static int handle_deferred_entries(struct merge_options *opt,
+diff --git a/t/t6422-merge-rename-corner-cases.sh b/t/t6422-merge-rename-corner-cases.sh
+index f14c0fb30e..e18d5a227d 100755
+--- a/t/t6422-merge-rename-corner-cases.sh
++++ b/t/t6422-merge-rename-corner-cases.sh
+@@ -1439,4 +1439,90 @@ test_expect_success 'rename/rename(1to2) with a binary file' '
+ 	)
+ '
+ 
++# Testcase preliminary submodule/directory conflict and submodule rename
++#   Commit O: <empty, or additional irrelevant stuff>
++#   Commit A1: introduce "folder" (as a tree)
++#   Commit B1: introduce "folder" (as a submodule)
++#   Commit A2: merge B1 into A1, but keep folder as a tree
++#   Commit B2: merge A1 into B1, but keep folder as a submodule
++#   Merge A2 & B2
++test_setup_submodule_directory_preliminary_conflict () {
++	git init submodule_directory_preliminary_conflict &&
++	(
++		cd submodule_directory_preliminary_conflict &&
++
++		# Trying to do the A2 and B2 merges above is slightly more
++		# challenging with a local submodule (because checking out
++		# another commit has the submodule in the way).  Instead,
++		# first create the commits with the wrong parents but right
++		# trees, in the order A1, A2, B1, B2...
++		#
++		# Then go back and create new A2 & B2 with the correct
++		# parents and the same trees.
++
++		git commit --allow-empty -m orig &&
++
++		git branch A &&
++		git branch B &&
++
++		git checkout B &&
++		mkdir folder &&
++		echo A>folder/A &&
++		echo B>folder/B &&
++		echo C>folder/C &&
++		echo D>folder/D &&
++		echo E>folder/E &&
++		git add folder &&
++		git commit -m B1 &&
++
++		git commit --allow-empty -m B2 &&
++
++		git checkout A &&
++		git init folder &&
++		(
++			cd folder &&
++			>Z &&
++			>Y &&
++			git add Z Y &&
++			git commit -m "original submodule commit"
++		) &&
++		git add folder &&
++		git commit -m A1 &&
++
++		git commit --allow-empty -m A2 &&
++
++		NewA2=$(git commit-tree -p A^ -p B^ -m "Merge B into A" A^{tree}) &&
++		NewB2=$(git commit-tree -p B^ -p A^ -m "Merge A into B" B^{tree}) &&
++		git update-ref refs/heads/A $NewA2 &&
++		git update-ref refs/heads/B $NewB2
++	)
++}
++
++test_expect_success 'submodule/directory preliminary conflict' '
++	test_setup_submodule_directory_preliminary_conflict &&
++	(
++		cd submodule_directory_preliminary_conflict &&
++
++		git checkout A^0 &&
++
++		test_expect_code 1 git merge B^0 &&
++
++		# Make sure the index has the right number of entries
++		git ls-files -s >actual &&
++		test_line_count = 2 actual &&
++
++		# The "folder" as directory should have been resolved away
++		# as part of the merge.  The "folder" as submodule got
++		# renamed to "folder~Temporary merge branch 2" in the
++		# virtual merge base, resulting in a
++		#    "folder~Temporary merge branch 2" -> "folder"
++		# rename in the outermerge for the submodule, which then
++		# becomes part of a rename/delete conflict (because "folder"
++		# as a submodule was deleted in A2).
++		submod=$(git rev-parse A:folder) &&
++		printf "160000 $submod 1\tfolder\n160000 $submod 2\tfolder\n" >expect &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
 
-This replacement of the first parent is like a removal and a put,
-but avoids a double-sift. That's a small optimization, but likely
-worth the complexity you're using here.
-
-> @@ -639,7 +646,8 @@ int cmd_show_branch(int ac,
->  {
->  	struct commit *rev[MAX_REVS], *commit;
->  	char *reflog_msg[MAX_REVS] = {0};
-> -	struct commit_list *list = NULL, *seen = NULL;
-> +	struct commit_list *seen = NULL;
-> +	struct prio_queue queue = { compare_commits_by_commit_date };
-
-This confirms that the queue sorts by date instead of acting like
-a stack (if there was no sort specified).
-
-> -			commit_list_insert_by_date(commit, &list);
-> +			prio_queue_put(&queue, commit);
-...
-> -		join_revs(&list, &seen, num_rev, extra);
-> +		join_revs(&queue, &seen, num_rev, extra);
-...
-> -	free_commit_list(list);
-> +	clear_prio_queue(&queue);
-
-More standard replacements. Good.
-
-> diff --git a/t/perf/p6010-merge-base.sh b/t/perf/p6010-merge-base.sh
-> index 54f52fa23e..08212dd037 100755
-> --- a/t/perf/p6010-merge-base.sh
-> +++ b/t/perf/p6010-merge-base.sh
-> @@ -83,9 +83,9 @@ build_history2 () {
->  test_expect_success 'setup' '
->  	max_level=15 &&
->  	build_history $max_level | git fast-import --export-marks=marks &&
-> -	git tag one &&
-> +	git branch one &&
->  	build_history2 $max_level | git fast-import --import-marks=marks --force &&
-> -	git tag two &&
-> +	git branch two &&
-
-These replacements of tags with branches does not impede any
-other tests that use 'one' or 'two', but is necessary for the
-functionality of 'git show-branch'. OK.
-
-> +test_perf 'git show-branch' '
-> +	git show-branch one two
-> +'
-
-Thanks for expanding the performance tests.
-
-This patch LGTM.
-
--Stolee
-
+base-commit: b31ab939fe8e3cbe8be48dddd1c6ac0265991f45
+-- 
+gitgitgadget
