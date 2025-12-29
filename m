@@ -1,90 +1,257 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77BC259CBD
-	for <git@vger.kernel.org>; Mon, 29 Dec 2025 12:17:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CC21AE877
+	for <git@vger.kernel.org>; Mon, 29 Dec 2025 18:09:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767010656; cv=none; b=ih1G8mcgYe+b/Vdkqa88p8NsfJ7dx5Y8Lijsd8MsOCg+QnS8icTz0XRfPyGX+OscbggTDxvMtu15IvcGM+jefX8hawojaPHVwHcbfZjsOqEPoOo7eLZoDg0hq9uO8QGOvG/oHFMdBjpQnTaPoomfyu9d7tEVpqBHMwgWMHxLtz8=
+	t=1767031751; cv=none; b=dDM0FZTn9Qor8g24xtgSz9r5FCfv3AIIxoLkDhRg2NTuEB0IxGIBHZENuZr271bq8rfGXq1KhswzUg71+GJB2NQnGQGp2Omx8XX1OLzVTqMC+g3fgDKcH7YAkElbmE7pUDo4uS6aOGjFYZPsk9b0tSMSxXwAIhGj2MZSBzixe+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767010656; c=relaxed/simple;
-	bh=ngP6BLAQpSoMWSlYtxcZXn4CHP/AEtpxIyeyekaum8k=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=fLJogaAQbkYgwDoseZwOVkk8GsitjVOwkONP3/2pKyTaX7H3rJnqoQ6CNbp9axVO/UcGF8d4VytPEDOzvo19TcQv/1BWRaRDVDWRSYDZ16MA8oNPwIUrb8V1ecNkYPf9sNJTXH+0OUbriK4k2IsCwKc+7eJfP7n5lSYVrdbd9qE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LDirHtLO; arc=none smtp.client-ip=209.85.208.179
+	s=arc-20240116; t=1767031751; c=relaxed/simple;
+	bh=4t1mC5VuGHXAakbZYEJevnGkWz7r5Dts0767AbRrOB4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=kBli2qsbgF7+JPPdeDSBAE+A8c9I11XRp2Zd8fNru4vUlfeXg/8s3x4X+NsjrJELc+S4JgRiNii1e1+D3Ly4yDWOA6x5hqdmVtCmWd2V5U57OndyhCZSvd4Ms0chzqOYebaNxy0Xnoou8adQOOj6eic6taQgZi033C+0/QWYIuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dSGwCf2N; arc=none smtp.client-ip=209.85.222.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LDirHtLO"
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-37bac34346dso66777401fa.2
-        for <git@vger.kernel.org>; Mon, 29 Dec 2025 04:17:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dSGwCf2N"
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8b1bfd4b3deso832804085a.2
+        for <git@vger.kernel.org>; Mon, 29 Dec 2025 10:09:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767010653; x=1767615453; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ngP6BLAQpSoMWSlYtxcZXn4CHP/AEtpxIyeyekaum8k=;
-        b=LDirHtLO4UU1CjWt/Rk4sROQAYJpDwtuT8q/uZ/eF3F1AQDISlZncI8ZiRiajPPlsN
-         xJoLgNSMdhUHqw3jNlFw8Fr5sO4YtOgv2yxIyDGR0biHlb7aIhmDqUNfa6aR25phMlq6
-         fZjiAw5VQ98Uo3szmdQw6ZiceOvWyGgewRrwC3h82vxpnvFm+j1rOcAhdQIIO+nF+QZL
-         /gQt+GUq+bmhc03sCcg+fiou/DJFYtUidcISG8Ok3U05hPcXmiIix+Npo+B9T8y4FBAo
-         kFYZRMhsD5f5CCi9yCzbyEuAmK3AcQbwDo4r9rwidIDy0Vi5TTbYsyyFhzyfhoitT23H
-         HSEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767010653; x=1767615453;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=gmail.com; s=20230601; t=1767031749; x=1767636549; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ngP6BLAQpSoMWSlYtxcZXn4CHP/AEtpxIyeyekaum8k=;
-        b=TGBxHcQ49bewopAyYMD0eoD70owwQmC7XTx5FJ00oJdsUIKhR7KhCMCTkA0KW4yql8
-         vFQIsZPaIpUfSTJ1wPZRgrPmUUdA6QP0XK7FCicsa3z7aboktKivdZud9Ed2nehckSTi
-         80glq6M5vvsEsXn19ivrbRkGeNBYt+2Xc0Tmd7ZhvGUiwKjkjsxIT18rCWGCGTXqp/Vu
-         b3aXf31Hwpc+d8TB8+g0eyDkyLELxgPf2YgU+5yE8Ui3MpElYneYhClbWMC6lsx8wc0A
-         C0mTEVgbHaHCtMs81e/6bFo/kK4wQKqB7VkoRWqW5RLvDptjTtV2NUyw+Zl4iSC0yUL+
-         EQmA==
-X-Forwarded-Encrypted: i=1; AJvYcCWU+vpBvNhbsglGZJf6h4sUZ7usjHdI98hN0MU2ERZ9BjBQSPKKQg5b915f397J9/GZwkw=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx8aTwVifT9jiv+2I4x44Bs0fehxyWi7W/y8mZOl+6X0CSa2NJn
-	CYIycmP1Vm40ehE98sv4aCMnqtH9psMbTkPJoI5X4rYc9/+Ue8os3oYH
-X-Gm-Gg: AY/fxX77jFN+pOc2/iH8lfDW9jV7ttvmxIuULDN35CFgWJxdA8yKs5lus41VtpkC6Cz
-	RdN8R71F9/TV73ZB4LRAq5YDq+n36b5fqQZP9pr1B7WvqoZ360CHkPSzA0Q6vODe7U/oUWJyrRN
-	thNHPPc95tJ0nYMwkLQeoHqb7/auO0Jl3bZTLWxfLo+gpGObxPlHn6+IfWfCjlbZq7vs1o2Y9pD
-	6hZHDy8SC46Py6rTM1/fb8fjGZpwyMU7LJ3MZqQdiD+r0cB4tBpf+bUD/bSz6S9OIscn/mU2Z1l
-	Z3LY4tIXoGLrV1Bwe0LI/wiZdDItZhw4PE54ac13XB156XpPaWiyIma3aNRK6MCSbPoUUObzo7r
-	6sSntyiuW8mvtfP7O6rmbZg0CaZHsPvnwxKHQNSk9lRC5DuPL0sNs0P7vdp+P3Se6UVv0H2zZ2J
-	ZX0jfJ2Mc1c+dZ1GchUy2cZUCHZLYI4TlkPd3fMfbp2GvKL5FXBYHjiFjzxzW+O7f3WOUeV8g=
-X-Google-Smtp-Source: AGHT+IEodIR4SGEnLw3zSnPBkLrOZ8IysQOFqYStQzahuBwFQWwXGYIcCkOpFuPMmlSeEWPkFPCouA==
-X-Received: by 2002:a05:651c:146f:b0:37a:2c11:2c5c with SMTP id 38308e7fff4ca-3812166cf67mr85032691fa.37.1767010652752;
-        Mon, 29 Dec 2025 04:17:32 -0800 (PST)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3812262b2c0sm86366411fa.27.2025.12.29.04.17.31
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 29 Dec 2025 04:17:32 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: ben.knoble@gmail.com
-Cc: chris.torek@gmail.com,
-	git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	gitster@pobox.com,
-	haraldnordgren@gmail.com,
-	sandals@crustytoothpaste.net,
-	ychin.macvim@gmail.com
-Subject: Triangular workflows
-Date: Mon, 29 Dec 2025 13:17:31 +0100
-Message-Id: <20251229121731.90086-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <B70285B3-5197-404C-AA4D-AA3E6FEEE321@gmail.com>
-References: <B70285B3-5197-404C-AA4D-AA3E6FEEE321@gmail.com>
+        bh=gUAL1XODmgZ+l/lrVD8ySxgug9mrWzkyA89sL5ZYRsI=;
+        b=dSGwCf2NmeCHH3vTJQwQMVfcevz7P2RxDUkSzTJiwngvu8pQOI64dY335as/sashGK
+         g8NSosw56axMk0RnsIjwAg0ZVu6QCG2w+Sa1C7s/BE5Ez24Ik1Jx4XkKOU3v0hkz++21
+         Inw94KDfexqx1uKLC1fKhSM0pyHwPMHoxiftrwVY/Ij5S6VzUvoRRBeNhpggEqWrOrTO
+         g4R5RAJFdHa6jvzNwjdaOvTh230JwImQWXkPcWd6+TnirTuMT09SfLbwGqOeNDjRrnz1
+         CqTtfU+PpCBRC5JwF+T7tj3999tCcE9Ip6AmyT46t9obbyKGzysLkG96nxH37X+Snlv9
+         9Jxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767031749; x=1767636549;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gUAL1XODmgZ+l/lrVD8ySxgug9mrWzkyA89sL5ZYRsI=;
+        b=CzBYo6QhBPgiT5dGU7h3m6MZpQGEh9Mqqn9anKj+HaQ15i49xjLZRqv109Gw0qP1Dk
+         Yqzvr7ld1mZTz3MjY9xMrIWqkpO3FzOjpXgR0naPApU9bbPQvyD2TYJAym+wH+ej8AFT
+         4SMNRp7EdzSnoC4FkBaFmuHG10/0BB+xWruNXKrQbJ3Pa3Nq0afFfK6A0AfLDgvxA6g/
+         VPHSDuA5RpXhRTFPbPfeHg5XaG8bvD3xvUfZYTabBGJJeKTkFF+EINpd+fgF32EPegwi
+         uWXdksFh3VQmGOdFcOnIt0XEOiWvirFOA1fgNBiM5d2BZ+kJYY7UOVCkjFkf88ql3t3I
+         WhVQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUfFn5uoVWV9NCx/LQuDCbS9+OXEsw9zB0iend5vrdu6pEwq+EkLfZvautwojjtXcCPftY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyxLAT3ZNExN8Lk2ZiyvB1ijnrKcdfsxriWuwVjOzTyh29rqBKi
+	ERqq04EzVI4GXG9WTmAwN2/7AisBnB+gqcxyg77/kUq429+rpEtccshiqNjOQQvN
+X-Gm-Gg: AY/fxX4r8e/hNgY/CY46Op5vdM66k5UvY1oJEWttxgB56VPP4SaL4R9GSWQfp/NiiXr
+	la5PcHXzbBb0GAUeNwB/lbyFXilw+8pMJe2eAnfEjzEtaEx9xURYkA67IOKCh2xgsILBbdoUofm
+	9XHPzkgaFeVQYYSTgzABdXXeIYAp1iISlqEFM4+mo15mEauODPcH6ezH5l/be0CpjTmC5VZdJ55
+	Pza8+dxQb1DaSFzLdvqh9TkK1NQHDaNEEl7V/LboTYoYOOEjLtjbT8ewcajTAwEon2ETV8r5nNT
+	PdSNq3Zsxhlu1PA9W8Y3MpasdivUjAn+NilGfkLnsLYCk3GmfRDvXU9d+J4DnNSeDE1iOC+N1ch
+	Ij20CYSA5uL7oBqSEjJHcsQlD6vDwaFhTIBRJvoJh0tH/F1TVbvF8IaRuBUjrmJkqrREumdxg+Q
+	SIPKknZ8tojGm+8P4Y2eSCUy7PnCUdFSquKuTjZcdSll6VGDt/enXRyG1X80R8fiR4Nmc1
+X-Google-Smtp-Source: AGHT+IFGGQhdFqqEw66GD17W9BhJPFgwvjZFIAkNSNr0qi+fOF3HGslk3VyW8kfjSH1PvmjrdBy7Xg==
+X-Received: by 2002:a05:620a:2914:b0:8b2:62f9:9fd8 with SMTP id af79cd13be357-8c090501d58mr4227534485a.61.1767031748655;
+        Mon, 29 Dec 2025 10:09:08 -0800 (PST)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c096787536sm2437172885a.4.2025.12.29.10.09.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Dec 2025 10:09:08 -0800 (PST)
+Message-ID: <01d09293-4b60-4a47-9350-73b1ff796c9a@gmail.com>
+Date: Mon, 29 Dec 2025 13:09:07 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] show-branch: use prio_queue
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ Git List <git@vger.kernel.org>
+References: <70ed751e-fc3c-4cb4-a4fd-26094a9f622e@web.de>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <70ed751e-fc3c-4cb4-a4fd-26094a9f622e@web.de>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi Ben!
+On 12/26/2025 2:44 AM, René Scharfe wrote:
+> Building a list using commit_list_insert_by_date() has quadratic worst
+> case complexity.  Avoid it by using prio_queue.
 
-That would be very nice, thanks!
+Excellent idea.
 
+> That number is not limited, though, and in pathological cases like the
+> one in p6010 we see a sizable improvement:
+> 
+> Test                      v2.52.0           HEAD
+> ------------------------------------------------------------------
+> 6010.4: git show-branch   2.19(2.19+0.00)   0.03(0.02+0.00) -98.6%
 
-Harald
+I love to see improvements like this, even if the construction is
+unlikely to exist in reality. I do think it's likely to be valuable
+for some large repos with many parallel branches.
+
+Indeed, I tested this patch against a monorepo with lots of merges
+with hyperfine, getting this output:
+
+Benchmark 1: old
+  Time (mean ± σ):      3.303 s ±  0.146 s    [User: 0.058 s, System: 0.069 s]
+  Range (min … max):    3.162 s …  3.631 s    10 runs
+
+Benchmark 2: new
+  Time (mean ± σ):     141.7 ms ±   3.2 ms    [User: 30.5 ms, System: 93.1 ms]
+  Range (min … max):   137.5 ms … 149.4 ms    19 runs
+
+Summary
+  new ran
+   23.31 ± 1.15 times faster than old
+
+> -static struct commit *interesting(struct commit_list *list)
+> +static struct commit *interesting(struct prio_queue *queue)
+>  {
+> -	while (list) {
+> -		struct commit *commit = list->item;
+> -		list = list->next;
+> +	for (size_t i = 0; i < queue->nr; i++) {
+> +		struct commit *commit = queue->array[i].data;
+...
+> -static void join_revs(struct commit_list **list_p,
+> +static void join_revs(struct prio_queue *queue,
+>  		      struct commit_list **seen_p,
+>  		      int num_rev, int extra)
+>  {
+>  	int all_mask = ((1u << (REV_SHIFT + num_rev)) - 1);
+>  	int all_revs = all_mask & ~((1u << REV_SHIFT) - 1);
+>  
+> -	while (*list_p) {
+> +	while (queue->nr) {
+>  		struct commit_list *parents;
+> -		int still_interesting = !!interesting(*list_p);
+> -		struct commit *commit = pop_commit(list_p);
+> +		int still_interesting = !!interesting(queue);
+> +		struct commit *commit = prio_queue_peek(queue);
+
+Most of the changes are obvious replacements.
+
+> +		bool get_pending = true;
+
+But this is a new variable. Let's see how it's used.
+)
+> @@ -253,8 +254,14 @@ static void join_revs(struct commit_list **list_p,
+>  			if (mark_seen(p, seen_p) && !still_interesting)
+>  				extra--;
+>  			p->object.flags |= flags;
+> -			commit_list_insert_by_date(p, list_p);
+> +			if (get_pending)
+> +				prio_queue_replace(queue, p);
+> +			else
+> +				prio_queue_put(queue, p);
+> +			get_pending = false;
+>  		}
+> +		if (get_pending)
+> +			prio_queue_get(queue);
+
+What's missing from this context is the loop iterating over
+the commit's parents. Here's the full context here:
+
+	while (queue->nr) {
+		struct commit_list *parents;
+		int still_interesting = !!interesting(queue);
+		struct commit *commit = prio_queue_peek(queue);
+		bool get_pending = true;
+		int flags = commit->object.flags & all_mask;
+
+		if (!still_interesting && extra <= 0)
+			break;
+
+		mark_seen(commit, seen_p);
+		if ((flags & all_revs) == all_revs)
+			flags |= UNINTERESTING;
+		parents = commit->parents;
+
+		while (parents) {
+			struct commit *p = parents->item;
+			int this_flag = p->object.flags;
+			parents = parents->next;
+			if ((this_flag & flags) == flags)
+				continue;
+			repo_parse_commit(the_repository, p);
+			if (mark_seen(p, seen_p) && !still_interesting)
+				extra--;
+			p->object.flags |= flags;
+			if (get_pending)
+				prio_queue_replace(queue, p);
+			else
+				prio_queue_put(queue, p);
+			get_pending = false;
+		}
+		if (get_pending)
+			prio_queue_get(queue);
+	}
+
+The important thing here is that we are _peeking_ at the
+current commit and then doing the following:
+
+ 1. Replace the current top of the queue with the first parent.
+ 2. Insert any later parents into the queue as new elements.
+ 3. If no parents exist, then remove the current top.
+
+This replacement of the first parent is like a removal and a put,
+but avoids a double-sift. That's a small optimization, but likely
+worth the complexity you're using here.
+
+> @@ -639,7 +646,8 @@ int cmd_show_branch(int ac,
+>  {
+>  	struct commit *rev[MAX_REVS], *commit;
+>  	char *reflog_msg[MAX_REVS] = {0};
+> -	struct commit_list *list = NULL, *seen = NULL;
+> +	struct commit_list *seen = NULL;
+> +	struct prio_queue queue = { compare_commits_by_commit_date };
+
+This confirms that the queue sorts by date instead of acting like
+a stack (if there was no sort specified).
+
+> -			commit_list_insert_by_date(commit, &list);
+> +			prio_queue_put(&queue, commit);
+...
+> -		join_revs(&list, &seen, num_rev, extra);
+> +		join_revs(&queue, &seen, num_rev, extra);
+...
+> -	free_commit_list(list);
+> +	clear_prio_queue(&queue);
+
+More standard replacements. Good.
+
+> diff --git a/t/perf/p6010-merge-base.sh b/t/perf/p6010-merge-base.sh
+> index 54f52fa23e..08212dd037 100755
+> --- a/t/perf/p6010-merge-base.sh
+> +++ b/t/perf/p6010-merge-base.sh
+> @@ -83,9 +83,9 @@ build_history2 () {
+>  test_expect_success 'setup' '
+>  	max_level=15 &&
+>  	build_history $max_level | git fast-import --export-marks=marks &&
+> -	git tag one &&
+> +	git branch one &&
+>  	build_history2 $max_level | git fast-import --import-marks=marks --force &&
+> -	git tag two &&
+> +	git branch two &&
+
+These replacements of tags with branches does not impede any
+other tests that use 'one' or 'two', but is necessary for the
+functionality of 'git show-branch'. OK.
+
+> +test_perf 'git show-branch' '
+> +	git show-branch one two
+> +'
+
+Thanks for expanding the performance tests.
+
+This patch LGTM.
+
+-Stolee
+
