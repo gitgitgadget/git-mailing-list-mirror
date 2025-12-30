@@ -1,88 +1,90 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392722E5418
-	for <git@vger.kernel.org>; Tue, 30 Dec 2025 15:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E24831813A
+	for <git@vger.kernel.org>; Tue, 30 Dec 2025 15:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767107025; cv=none; b=lxkCSDBX64F18kFWsoGY38FutjYlqR9OzmEirrncPN436ex1dskqR9LTyuvD8mG84uN7Io6kVe8HHhCutoCBqnzwwSoxrZe1e/t04zPhGSMTBjwjklpk8jn+8hW6+wHAGh1mSW6de0qFtFngdsgAtZOeVNNHthDzY2WrNAPYVX4=
+	t=1767107044; cv=none; b=QS96M+kpTPDqzKAfh9aYE3CcTzgQqb/+7tD299m95CPjTo2Dj1bFwHQWhbWf33DeOk1QGCbErXBoM9sVZQU6lNtuGQToK8C3Irz1VEQjE0ZsOuy+EzHBVefdNXts05UeGHKitiwz8lx1BFLx8YTpqxt+o2nTkPO3nPuKCIjWfgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767107025; c=relaxed/simple;
-	bh=kQCDr+hyF4UIxeTocPDucf9WbtjvHwcfv4DK1WmF5V4=;
+	s=arc-20240116; t=1767107044; c=relaxed/simple;
+	bh=Aul3bpEcVlbdjodaowNiwKXQAoWhMidzOXvA8PuHkZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ReUkf0+0PoPqswTfqYy45skLq5z7VoAGwGlsmYO/sa4Cy3y2ezhMcK/+4I+e1KpkDeAm7LMzZQa2snkGaVJQp/VMCXCmVju5IsSTZ7gdW/HAhHHWpSmwcbFmZ5Qva+2XkxcmpMEMR1ifySFJS1CW4LpttWTRfxvjKKYRNnrx6rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=FHMaVzN6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JnZwwUei; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=bKcuGo0vKnPFMXFps8VVSK6TlIq+6+snKyxUSfZhp/td/l6jg4JrtxN/g40cNhL6mAeU9aWm3DOxVhYMF49isLXXMEytNU/ohnw9Sk8Iuznh2bY0f1MvXoNliKi5O/6Qpoz9Tb6Yx/K3rKEjgVWEUlpRy6enllMCfDiv5EFGhAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=dcQ3ewuy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Tuomoc0o; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="FHMaVzN6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JnZwwUei"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6A2121D00033;
-	Tue, 30 Dec 2025 10:03:42 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="dcQ3ewuy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tuomoc0o"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9064D1D00019;
+	Tue, 30 Dec 2025 10:04:01 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 30 Dec 2025 10:03:42 -0500
+  by phl-compute-10.internal (MEProxy); Tue, 30 Dec 2025 10:04:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1767107022;
-	 x=1767193422; bh=ffIwbrwJxvX3Km0AKt9EvoUYNWJ0T4wer1fMZ5Hy5eM=; b=
-	FHMaVzN66IdnqiIhWVUjB80DsgRy8BSz6RMJi+WeHWbEvRqF4UABcy8q4wFmHL5u
-	rigGj45oFnixNjWb3rIgz19tHkItikK0JlyRsOYewoGia5TjGEO2I0/PD2VWnSka
-	q5HXIyNjbbj6h07hJBbFIr3KeYmSK4zo/oOrDIHLz/5rwDjoj/5mPpcgofC0rm9U
-	eUF03ERwaj3pZ4By3ILurJSfEvY8gohxAbUGvFisYFCL+ZcTkaBAoFP6tqIT9LWE
-	VCbtsYe2NJKAwukONbz/gm24Fgjo5NbF/kj+xngxmpRlSGZTlC21WanW6xJ3iJxn
-	G/d+ua6mDCBP3Y4d193oHA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767107041;
+	 x=1767193441; bh=C/I/o6W+rPURarGGl9u6CKqJ3fNWUybwBjN0NW+jes4=; b=
+	dcQ3ewuywuH20L3z7MMLD4BqnvkUAYrNFhU+RsuZ0suilwSKvJKW6Gw1HOHSoDlp
+	9jbsvnwxw58oEs8sT1JIolAAxcrkJ+XPVl5bfcXADJFpWjS1d8UF/gqsUCCFB2O1
+	faV6DLcFzjYlRampAQyviZd3bQI1StKAKZ/fjJEFOoYy92guwlV+00+vsVn1RLAy
+	r9MGuz4b6vGovNVpdQogzXyJA5nQwyAYsECOG8J8AbttIzaTzYc/s98M5o8b2jXG
+	ico730hGYC6Lmg/pUdMp2BB5/El3Lg4PZGSWPcow3U/jTiAAD6jpiZfigy9cdb/Q
+	atiDygBGfHKc0t5v5WPtRw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767107022; x=
-	1767193422; bh=ffIwbrwJxvX3Km0AKt9EvoUYNWJ0T4wer1fMZ5Hy5eM=; b=J
-	nZwwUeix/eNACzalBVqKsRnVbxaYMZ0JeuJLWU+QjnZAbdAqNf/cNbyEhwOYltlN
-	QSR0EkZHWSeSPbS/Kbjc7qC2ESgiWo8W4UY6kRkINoCWhPJ03Q7HfLD+ngyaobZz
-	8XXV3YBpuABXqp4tBbN8XLtVwmz/oHLI6VA6dn+Frfce7wVCuUSZuVlXoyFdP7Ed
-	zTXczqPv11eHGGznPhoie4lsnMRlr/L0EuIhEah3rEXVcem4+l8mjPqIy4w83gYE
-	HtV+qTk7rpoUfpDVUjN6sf+DvIaJNdAi9gdTqYn1kd70gqhilv3ThHCzuMxk8Xoy
-	H3oq/QHyA54jiwfVYWQ9Q==
-X-ME-Sender: <xms:zulTaXKxKZ2oNtc40wSjdrmYaEc1VXNOPgQCjFIOmVeVj8yRcso7x30>
-    <xme:zulTaUdpMrUg5eDJz-tbw8sdjuL5FYHXXc5My_-IdOvIIJ6UQBLUgm5FO_GyQ07xF
-    jMWwEO52lFM2ChBXi2I1Zz8paO_WxiNoG_MRHgB_TkIm6i5Jcib_w>
-X-ME-Received: <xmr:zulTaW9s9naYltAVrJ8g1Ig9gcCZOQdbqjmJWcsls8wnLKOnSOsxb-CVMTKECHdrTcGwiofY7amybGjaYSqBfqi4cYt5KQqgAQ7ZO6cyTixdpjqNWS882iU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdektdefvdcutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767107041; x=
+	1767193441; bh=C/I/o6W+rPURarGGl9u6CKqJ3fNWUybwBjN0NW+jes4=; b=T
+	uomoc0oqA6A03HOkXtk6fgaAHJcE0Ygy2b+fJCabmeFkVrfb7+73U6OLT+0rrnpM
+	Q90MsdoXUiXzSrKpKNNf8hNVpyb6jGM6EqHMeSn9TQLaN6IdDvXe4n2B+gy14A/m
+	hovi13/bDhoiglirGk7OIHK09/oJjPRltidjdh7up6SO2w35CGT891h0IP9UdE7U
+	dZxB444YeVhrJw/5d8z+JpXUAuzeeNqJWG9mS4gnouLXEGhcs1Uan0fhaG97+GK7
+	8mHSPKbweOAPOzuPmmkd59i6cChq9afOWRHgKGDnS222Xlw29DZ109lDqwDjkRoC
+	d6K7MFkTudQWbc8qIo+zQ==
+X-ME-Sender: <xms:4elTaXxcgdQu-jJQ3iEhUSmDOGQDAdD0vhrNc4umMHeTvD0MFPExZO4>
+    <xme:4elTaf82Kw0P83yjQRhDVo79QjMj1z6rfc60dPZ-401BUZyvwqRLoHsjRLGi3SL6n
+    RrREWlqEXGzKL9OINU-mGL-y8HrDAjM0ZzXl5-544jSkSwVGZeoCg>
+X-ME-Received: <xmr:4elTafhYmIuRRLILe4k6Xd06h1yX3GHPf48CJCXX1fkkKSPsQ_rwz7nc-4aCAreEmhu7WrK0iAaMojp8OGWdeASJVW03lzv9t7ccsNLmCmWxA0jk5rpMHwA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdektdeffecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
     cuvffnffculddvfedmnecujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdej
     necuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
     drtghomhenucggtffrrghtthgvrhhnpedulefgueeiueetkeelieefgedufeehteekhfej
     ffekvdeuhedtvefhkeeikefhgfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
-    hluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthho
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthho
     fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtth
-    hopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    hopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
     rhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmh
     gvpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhm
     pdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiug
     guhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhh
-    ihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhk
-X-ME-Proxy: <xmx:zulTaRoE3NNHlmToXtvlmAxuqT8-nrFF2xOXoQLOdnzkc1F53ozqIg>
-    <xmx:zulTabCRXUJTCw8zSqq-98S3du8iNI-Eo9V1L6zHAnICATz4pdv_zA>
-    <xmx:zulTaTwsyT9VxTDe37y2a1MOZ8Ht8iUxD8PxlxJeHrqzNSkgPRdwmw>
-    <xmx:zulTaY2Z-aC3Vm9Lo04PMsm0wyUvYGiKU8C3LnDvm9aLQ6SZ3yzwog>
-    <xmx:zulTaeQWD1PQp-VYxnYBfw3HvxDoibMace68PWUIgh_SAssI03HRc7-Y>
+    ihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:4elTaWERurY-59dv8bF6mJO6KIXZij5yh9MQ-laeXv699JFB4XHGYA>
+    <xmx:4elTae_nHJAJ-FOFvGZhP8OvG7gJgNxH24bKtpZvcD8prsKkhLZuEg>
+    <xmx:4elTadx1bPX42_og9TWMYf-exgmD1SrCqyDmYeziAprkZdrh1eQViA>
+    <xmx:4elTaaOUbvMD5DwswECWcDFYfvlV4p1pljdoT2lnCC_4TUkwYkD3jQ>
+    <xmx:4elTaQPB6NqlWV5o7jpG0zpqdidpFXW4UBxhjWDkTQMIE9j3f3lHjICf>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Dec 2025 10:03:40 -0500 (EST)
+ 30 Dec 2025 10:03:59 -0500 (EST)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	christian.couder@gmail.com,
 	newren@gmail.com,
 	Siddharth Asthana <siddharthasthana31@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 3/5] replay: die descriptively when invalid commit-ish is given
-Date: Tue, 30 Dec 2025 16:01:49 +0100
-Message-ID: <V2_replay_die_descr.17e@msgid.xyz>
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 4/5] replay: die if we cannot parse object
+Date: Tue, 30 Dec 2025 16:01:50 +0100
+Message-ID: <V2_die_cannot_parse_obj.17f@msgid.xyz>
 X-Mailer: git-send-email 2.52.0.10.g08704017180
 In-Reply-To: <V2_CV_replay_die_descr.17b@msgid.xyz>
 References: <CV_replay_die_descr.13f@msgid.xyz> <V2_CV_replay_die_descr.17b@msgid.xyz>
@@ -97,175 +99,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Giving an invalid commit-ish to `--onto` makes git-replay(1) fail with:
+`parse_object` can return `NULL`. That will in turn make
+`repo_peel_to_type` return the same.
 
-    fatal: Replaying down to root commit is not supported yet!
+Let’s die fast and descriptively with the `*_or_die` variant.
 
-Going backwards from this point:
-
-1. `onto` is `NULL` from `determine_replay_mode`;
-2. that function in turn calls `peel_committish`; and
-3. here we return `NULL` if `repo_get_oid` fails.
-
-Let’s die immediately with a descriptive error message instead.
-
-Doing this also provides us with a descriptive error if we “forget” to
-provide an argument to `--onto` (but we really do unintentionally):[1]
-
-    $ git replay --onto ^main topic1
-    fatal: '^main' is not a valid commit-ish
-
-Note that the `--advance` case won’t be triggered in practice because
-of the “argument to --advance must be a reference” check (see the
-previous test, and commit).
-
-† 1: The argument to `--onto` is mandatory and the option parser accepts
-     both `--onto=<name>` (stuck form) and `--onto name`. The latter
-     form makes it easy to unintentionally pass something to the option
-     when you really meant to pass a positional argument.
-
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
-    v2:
+    v2: [new]
     
-    Let’s use a slightly longer subject line in the commit message so that it
-    looks more like a full sentence (no dropped/implied words).[1]
+    See: https://lore.kernel.org/git/xmqqikdxriw3.fsf@gitster.g/
     
-    Also remove the test for `--advance` which is now wrong because of the
-    previous commit/patch. And reword the commit message now that only `--onto`
-    is relevant in practice.
-    
-    There was also feedback about *where* to give this error:[2]
-    
-    > How many callers use this function?  I am wondering if it is better
-    > to give a better message at the caller(s), rather than here, where
-    > we lack context to tell something like "You gave string 'ource' as
-    > the argument to the '--onto' option, but 'ource' does not name any
-    > commit" (in other words, "for what our caller is trying to peel
-    > <name> to a commit").
-    
-    But I opted to keep the check here by using the new `mode` parameter to
-    provide the context; it is either `--onto` or `--advance`.
-    
-    Also remove the “not supported yet” now that `*onto` cannot be `NULL` at
-    this point. I wasn’t confident enough to pull the trigger on that in the
-    first round. But after Elijah’s comment[3] I feel like I understand the code
-    well enough.
-    
-    Also change the test to use printf since it’s only one line. That will be
-    in line with the later commits/patches here.
-    
-    🔗 1: https://lore.kernel.org/git/xmqqecolrip7.fsf@gitster.g/
-    🔗 2: https://lore.kernel.org/git/xmqqikdxriw3.fsf@gitster.g/
-    🔗 3: https://lore.kernel.org/git/CABPp-BEcJqjD4ztsZo2FTZgWT5ZOADKYEyiZtda+d0mSd1quPQ@mail.gmail.com/
+    With the `*_or_die` function we don’t have to check it at the call site.
 
- builtin/replay.c         | 15 +++++++--------
- t/t3650-replay-basics.sh |  7 +++++++
- 2 files changed, 14 insertions(+), 8 deletions(-)
+ builtin/replay.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/replay.c b/builtin/replay.c
-index 35813140e99..07a6767ade1 100644
+index 07a6767ade1..ca5a14de4c7 100644
 --- a/builtin/replay.c
 +++ b/builtin/replay.c
-@@ -25,17 +25,19 @@ static const char *short_commit_name(struct repository *repo,
- {
- 	return repo_find_unique_abbrev(repo, &commit->object.oid,
- 				       DEFAULT_ABBREV);
- }
- 
--static struct commit *peel_committish(struct repository *repo, const char *name)
-+static struct commit *peel_committish(struct repository *repo,
-+				      const char *name,
-+				      const char *mode)
- {
+@@ -34,11 +34,11 @@ static struct commit *peel_committish(struct repository *repo,
  	struct object *obj;
  	struct object_id oid;
  
  	if (repo_get_oid(repo, name, &oid))
--		return NULL;
-+		die(_("'%s' is not a valid commit-ish for %s"), name, mode);
- 	obj = parse_object(repo, &oid);
+ 		die(_("'%s' is not a valid commit-ish for %s"), name, mode);
+-	obj = parse_object(repo, &oid);
++	obj = parse_object_or_die(repo, &oid, name);
  	return (struct commit *)repo_peel_to_type(repo, name, 0, obj,
  						  OBJ_COMMIT);
  }
  
-@@ -170,11 +172,11 @@ static void populate_for_onto_or_advance_mode(struct repository *repo,
- 		die(_("need some commits to replay"));
- 
- 	die_for_incompatible_opt2(!!onto_name, "--onto",
- 				  !!*advance_name, "--advance");
- 	if (onto_name) {
--		*onto = peel_committish(repo, onto_name);
-+		*onto = peel_committish(repo, onto_name, "--onto");
- 		if (rinfo.positive_refexprs <
- 		    strset_get_size(&rinfo.positive_refs))
- 			die(_("all positive revisions given must be references"));
- 		*update_refs = xcalloc(1, sizeof(**update_refs));
- 		**update_refs = rinfo.positive_refs;
-@@ -191,11 +193,11 @@ static void populate_for_onto_or_advance_mode(struct repository *repo,
- 			free(*advance_name);
- 			*advance_name = fullname;
- 		} else {
- 			die(_("argument to --advance must be a reference"));
- 		}
--		*onto = peel_committish(repo, *advance_name);
-+		*onto = peel_committish(repo, *advance_name, "--advance");
- 		if (rinfo.positive_refexprs > 1)
- 			die(_("cannot advance target with multiple sources because ordering would be ill-defined"));
- 	}
- 	strset_clear(&rinfo.negative_refs);
- 	strset_clear(&rinfo.positive_refs);
-@@ -349,13 +351,10 @@ int cmd_replay(int argc,
- 
- 	populate_for_onto_or_advance_mode(repo, &revs.cmdline,
- 					  onto_name, &advance_name,
- 					  &onto, &update_refs);
- 
--	if (!onto) /* FIXME: Should handle replaying down to root commit */
--		die("Replaying down to root commit is not supported yet!");
--
- 	if (prepare_revision_walk(&revs) < 0) {
- 		ret = error(_("error preparing revisions"));
- 		goto cleanup;
- 	}
- 
-@@ -367,11 +366,11 @@ int cmd_replay(int argc,
- 	while ((commit = get_revision(&revs))) {
- 		const struct name_decoration *decoration;
- 		khint_t pos;
- 		int hr;
- 
--		if (!commit->parents)
-+		if (!commit->parents) /* FIXME: Should handle replaying down to root commit */
- 			die(_("replaying down to root commit is not supported yet!"));
- 		if (commit->parents->next)
- 			die(_("replaying merge commits is not supported yet!"));
- 
- 		last_commit = pick_regular_commit(repo, commit, replayed_commits,
-diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-index 7dea62f064f..d4399aa1662 100755
---- a/t/t3650-replay-basics.sh
-+++ b/t/t3650-replay-basics.sh
-@@ -56,10 +56,17 @@ test_expect_success 'argument to --advance must be a reference' '
- 	oid=$(git rev-parse main) &&
- 	test_must_fail git replay --advance=$oid topic1..topic2 2>actual &&
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--onto with invalid commit-ish' '
-+	printf "fatal: ${SQ}refs/not-valid${SQ} is not " >expect &&
-+	printf "a valid commit-ish for --onto\n" >>expect &&
-+	test_must_fail git replay --onto=refs/not-valid topic1..topic2 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'using replay to rebase two branches, one on top of other' '
- 	git replay --onto main topic1..topic2 >result &&
- 
- 	test_line_count = 1 result &&
- 
+ static char *get_author(const char *message)
 -- 
 2.52.0.10.g08704017180
 
