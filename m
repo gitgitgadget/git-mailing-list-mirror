@@ -1,870 +1,108 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF3B4594A
-	for <git@vger.kernel.org>; Tue, 30 Dec 2025 13:47:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F9B23F417
+	for <git@vger.kernel.org>; Tue, 30 Dec 2025 14:32:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767102472; cv=none; b=ZPWV6NTxcjnxauqnY/UQ9IOVTHyTsc9qr7XOmt+umfHNgtQyqEsHQ85m2WHt8+/1DS30fT+NiEr7mKTUsMTuXX+FTqsNBnIXa9/AQXSZKF0mXZ/sIT4spfXJ3JL71YkbVooHyI1rShdATY9fvc8w6/YweyLrlBTrJWAu47oLk9A=
+	t=1767105171; cv=none; b=s6bkHmn9Y4DD5JSYwsL8KloI9LU6nSbPWshADDC7DvWYwbYcu+J9MMtyABhDq9633WXhaIKgAu9ZrYZw3iMUtNdtJIV6gIROLhn96UiWALCnTa0MJq8Oc09Mz37FwT/KjjQemuQ5GnWR494LaTVyuS6M0ylrJvZ2LCxIcDgElOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767102472; c=relaxed/simple;
-	bh=vK8OtwfkORlIjJqjDxu5kn1D4SiuUCJeGtOcXrhWHNY=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=NFd8Lz40x/gyvRWJD9nouzEJjHs7zcOUXbgrgBV8ZXxSMZ3gcCc1VVMHIPnXG3Ql65TYicilzsOQec3+96FuD8SnfQYgCoVHbMBu4WWs14jSnugVNshkFKo0MbKnK9fGWQLsFNzQgcDESFOPuaZ798g0sDpsK+qf6jTi9zdJPFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jcedX2wn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c7Yb6igO; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1767105171; c=relaxed/simple;
+	bh=Y96dXppD1Kc/nxfphB8V8wkvaLl82OFO1brr5yu6l7c=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=AyueslcoSVPuWj3fSKMQ7xswtD2+wFdvFANLW1vS/RR8mQwJc8uhe1sBeQTYIeS0ET4INZKuwoTWpP7xuhZ4euQBzgIBGls4XT17Xt7bipxal/xywD1n2/7QqJP+1dMcUAKZRfrYSuoYs8IwtxH6Z/zqBEaXFoRec77g2Y1v+18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=1/VguJaO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J4skjC9t; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jcedX2wn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c7Yb6igO"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9F38E7A0101;
-	Tue, 30 Dec 2025 08:47:47 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Tue, 30 Dec 2025 08:47:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1767102467; x=1767188867; bh=Pq3o3F6sdZx0hTPn9xarvcU8Pc27jhX9
-	C/YLBSZ0728=; b=jcedX2wn7+NhSRADwUTIV0/iU0J7MfM9eyDsducB/38t2c/3
-	TbnNbrHYd+ol9rCRe9RDtTeD5yU/UzwQsh2qaIbBXVvs/lsS7/s4Wj+71GDkFB7X
-	Ai2nbDnwE1k8keZSckx5hQ1cLoY96txtIhjUwSJTwZTeVOP+pwqsMuQWubNaJYUS
-	xlYrQVvb9y5ioUidLlbBljuwMHwy7LggQZy4xvbAca5Hd4LNsayc8W2czMhA4SmW
-	5yFLS9B4z7FRJiKwjM2VklGJU8zLRWuTmtiFKbrIbBDft+/wDDUgdYb1t8yseAZt
-	zaJXf9mBiTn4EKK+M2Oh1pfAnvfFdlkawY2NyA==
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="1/VguJaO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J4skjC9t"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 054157A0085;
+	Tue, 30 Dec 2025 09:32:48 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Tue, 30 Dec 2025 09:32:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+	 t=1767105168; x=1767191568; bh=geLAmyci/BVdizmWZUflGMpzpor6fGe/
+	JcYIcqHsBlk=; b=1/VguJaOzaAA1ajHn6JYTVDjI5d2yaohqSBpJQFYzqWgGXeN
+	OxUvAXFuz1/VLjIRxYWOl0L7f6jrtYw2AeuzZPhZwukMxgkwm1/1CyxmD4jZwc1L
+	3aviaHcNF1gqWW3BHWtosZ12Iu81CyIpfyB9pMoA3jOr4AoOz22tXnOrFmlQTDmQ
+	bP0yXBwaA3zevluSH8KSKw8YTwUnFsDpWnkSxkDDsp1+d3knwG/Pb54jeOTlXOcP
+	+GTNnb+GnyMN39Vuxs5qeOhXDLTIQnyl8fL5Jh+SAkEoVa9EQqDMI2or6IGuY6WY
+	QCw2YsLWWqSBaJfJRF7tJFA7in5ZnH3nKtJy1g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767102467; x=
-	1767188867; bh=Pq3o3F6sdZx0hTPn9xarvcU8Pc27jhX9C/YLBSZ0728=; b=c
-	7Yb6igOgj2EZvbBn3lv27e6ouoqATqq6zpxTqKJMPACjdok5eKIV3E1xgonle2cM
-	TlXfir0gYRAF1JUOOVkQekbRAkUBRNQbdxvlS6EGM+0aDTe+HPX5iZYzbr4IWota
-	qeEzd8sXPgbpOO4OZ+lx94Ozgo/pACdGCaYEzfz8AaURafkXrV0HXQwIZ8dvgU35
-	MyffqwjwQKdWWc5fYvsBi4ecXNncb784HWxIhV86ElUAiotJPX+hx6VG1FI/97oa
-	8L9fp3KxeLTdqLO3ywZ9lLQ3aVLAbmb6c/yaHyzM7EsP8Du+0xWOg49byI/2fJDl
-	1MluNcm2gP51BDWqoU0cQ==
-X-ME-Sender: <xms:A9hTafHdbdrqhQ3qAGjlh-gRmLqa-UeRVCm9JWLK3UXs-figC6SY-Q>
-    <xme:A9hTaTz9KwCoUgobwBZTQMt3thlVxsenxyIGkFZkg3I8EQA-DAHJe_8f5Y-fAF3wV
-    6CMs3PEXckJmCONc5lXF1O3R4JgaxvTJJhAR-AFl_P9pZ5GgSI37TE>
-X-ME-Received: <xmr:A9hTaejCDEgiBoP8rPzVCz_-L2EpkDozFPNTwqkXL-P8FaXoelpuLogRRNJLVbul1kFrgSffxeixSrbtzpJndUW34lwHhNr4YA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdektddukecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767105168; x=
+	1767191568; bh=geLAmyci/BVdizmWZUflGMpzpor6fGe/JcYIcqHsBlk=; b=J
+	4skjC9tkYH11XDe6ArWzyYmcUvTBPzB8oqqUTMqpYHo8TowRNcoQLRo8av/p1erP
+	Wj2hqCPzPLZhUTq5sMKcv7lQ1i27Jbyj2RluhxCggf4CPoFqrJnGRnasxJsXQbB5
+	GGv63IUitLYTCs291q3GnqCiDkgmePi5hkAiyUI4FcqQBDA6y2ZpfjSGR2X+Iojx
+	RQGA7UVHXL6uwhRh9fXD5OdE+PH/sdB0ZenIRxLFIAuum2689HCuVpBxxrzpKVOf
+	wdQrI3Hm9vgPBr9UExQoaSS/LTPV8WDtLJp7H3Qh90RUJvweUXheFuaNzcRLPZ1z
+	MT6a6hW0iZNC4vMQqpEqw==
+X-ME-Sender: <xms:kOJTaRp4X2GlIFcfM9J6jm5uTyd6mjpAOU-4HyxOSpgI9HjJ-L5SuTQ>
+    <xme:kOJTaedSFFviWf80y0B4fYwKoD0B8lXC5WK1ZcXx3kg-KNzw9KN7KCYU21KIUTYtA
+    BXCZlg41SrFzs3RzQgn-KOb529fy-HbI-9LZh2saz51Jk9NgWrRyQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdektddvjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecufghrlhcuvffnffculdejmdenucfjughrpefhvffufffkfg
-    ggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhi
-    thhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheptddtvdffleejve
-    fhjeeigfelffefjefgfeegjeelheekffegiedvkedvkeeiledunecuffhomhgrihhnpehk
-    vghrnhgvlhdrohhrghdpohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtohhmpdhgih
-    hthhhusgdrtghomhdpghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlfihnsehlfihnrdhnvghtpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:A9hTaWzwNesQxIQ4RnQZJybaah7xoBzp_msEQNQXncKFBl8vFEg57g>
-    <xmx:A9hTaZLh6VHPQyBZAFEFc4HXpbMvce98ynILSxcZDbvq9cXmuQYl1Q>
-    <xmx:A9hTaVS4Z5oVrODHnz30w5eYZpJnD2KW-0LpT4c1WxX5xJDMfxFtGQ>
-    <xmx:A9hTaZr9ByEvWwixIHabP_piyLKW5Dihn_NM2WDrEsCrfJBJASmeEg>
-    <xmx:A9hTaRehtDsiARfDtq9WLU28He4HQ05espfLXUJWDvZR2rSRrvoD5mQ7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Dec 2025 08:47:46 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Dec 2025, #09)
-X-master-at: 68cb7f9e92a5d8e9824f5b52ac3d0a9d8f653dbe
-X-next-at: f8a7f5d287e066c1aa17ad0b3043598cd432f923
-Date: Tue, 30 Dec 2025 22:47:45 +0900
-Message-ID: <xmqqa4z0f5dq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
+    grmhgvqeenucggtffrrghtthgvrhhnpeefteeghfegfeevleeguddvkeetheeiveffudej
+    lefgudffffejleffffeludekjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofh
+    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoheptghh
+    rhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfi
+    hrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgr
+    nhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrgh
+X-ME-Proxy: <xmx:kOJTaftfhICvBSKKB0eE2w0A7v_GJNV7b7WCNZOIgLsQHumEvE0DLA>
+    <xmx:kOJTaR-KnVEFT-ULbejIIYMVygxQdSOqN5EKZVVmm_71to7qbLjQyw>
+    <xmx:kOJTaS1m1bV9ycovs0PplfOrT4sEE88Fyz3hhvZjZ0NtWtzC2-pUTA>
+    <xmx:kOJTaeBIIWFWKOFp-uT3l58HZvLnJDqyMNq-5F07WPb5uVLsfmD_fQ>
+    <xmx:kOJTaUBpRZ4RMRypEEgLiOREjhuez2_LX6HtYM9c3wIUZuJYUk84e91y>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id A88311EA0066; Tue, 30 Dec 2025 09:32:48 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* dk/ci-rust-fix (2025-12-18) 2 commits
-  (merged to 'next' on 2025-12-22 at 5f7e5b040b)
- + rust: build correctly without GNU sed
- + Merge branch 'ps/ci-rust' into dk/ci-rust-fix
-
- Build fix.
- source: <a33f4e5118938300bcd5b2991feeee855a1c8f86.1766100330.git.ben.knoble+github@gmail.com>
-
-
-* gf/clear-path-cache-cleanup (2025-12-18) 1 commit
-  (merged to 'next' on 2025-12-22 at 748d7c2c93)
- + repository: remove duplicate free of cache->squash_msg
-
- Code clean-up.
- source: <pull.2132.v2.git.git.1766072952115.gitgitgadget@gmail.com>
-
-
-* gf/maintenance-is-needed-fix (2025-12-18) 1 commit
-  (merged to 'next' on 2025-12-22 at a84d7e8a32)
- + refs: dereference the value of the required pointer
-
- Brown-paper-bag fix to a recently graduated
- 'kn/maintenance-is-needed' topic.
- source: <pull.2130.git.git.1766074249443.gitgitgadget@gmail.com>
-
-
-* jc/object-read-stream-fix (2025-12-17) 2 commits
-  (merged to 'next' on 2025-12-23 at b26856ce64)
- + odb: do not use "blank" substitute for NULL
- + Merge branch 'ps/object-read-stream' into jc/object-read-stream-fix
- (this branch is used by ps/read-object-info-improvements.)
-
- Fix a performance regression in recently graduated topic.
- source: <xmqqpl8cxy0j.fsf@gitster.g>
-
-
-* jk/test-curl-updates (2025-12-18) 2 commits
-  (merged to 'next' on 2025-12-23 at ef92594ee8)
- + t5563: add missing end-of-line in HTTP header
- + t5551: handle trailing slashes in expected cookies output
-
- Update HTTP tests to adjust for changes in curl 8.18.0
- source: <20251218121120.GA3252258@coredump.intra.peff.net>
-
-
-* js/test-func-comment-fix (2025-12-18) 1 commit
-  (merged to 'next' on 2025-12-22 at 5eadd4ae77)
- + test_detect_ref_format: fix comment
-
- Comment fix.
- source: <pull.2019.git.1766071259531.gitgitgadget@gmail.com>
-
-
-* js/test-symlink-windows (2025-12-17) 10 commits
-  (merged to 'next' on 2025-12-22 at 3eaa789d0d)
- + t7800: work around the MSYS path conversion on Windows
- + t6423: introduce Windows-specific handling for symlinking to /dev/null
- + t1305: skip symlink tests that do not apply to Windows
- + t1006: accommodate for symlink support in MSYS2
- + t0600: fix incomplete prerequisite for a test case
- + t0301: another fix for Windows compatibility
- + t0001: handle `diff --no-index` gracefully
- + mingw: special-case `open(symlink, O_CREAT | O_EXCL)`
- + apply: symbolic links lack a "trustable executable bit"
- + t9700: accommodate for Windows paths
- (this branch is used by js/prep-symlink-windows and js/symlink-windows.)
-
- Prepare test suite for Git for Windows that supports symbolic
- links.
- source: <pull.2009.v4.git.1765981126.gitgitgadget@gmail.com>
-
-
-* jt/doc-rev-list-filter-provided-objects (2025-12-15) 1 commit
-  (merged to 'next' on 2025-12-22 at 31970a567d)
- + docs: clarify git-rev-list(1) --filter behavior
-
- Document "rev-list --filter-provided-objects" better.
- source: <20251215200512.2694155-1-jltobler@gmail.com>
-
-
-* jt/repo-struct-more-objinfo (2025-12-17) 7 commits
-  (merged to 'next' on 2025-12-22 at d04904c31c)
- + builtin/repo: add object disk size info to structure table
- + builtin/repo: add disk size info to keyvalue stucture output
- + builtin/repo: add inflated object info to structure table
- + builtin/repo: add inflated object info to keyvalue structure output
- + builtin/repo: humanise count values in structure output
- + strbuf: split out logic to humanise byte values
- + builtin/repo: group per-type object values into struct
-
- More object database related information are shown in "git repo
- structure" output.
- source: <20251217175404.37963-1-jltobler@gmail.com>
-
-
-* mh/doc-core-attributesfile (2025-12-17) 1 commit
-  (merged to 'next' on 2025-12-22 at 5d68c3ef97)
- + docs: note the type of core.attributesfile
-
- Doc update.
- source: <20251217195917.25710-1-matthewhughes934@gmail.com>
-
-
-* ps/repack-avoid-noop-midx-rewrite (2025-12-10) 3 commits
-  (merged to 'next' on 2025-12-22 at 0d3b9de55c)
- + midx-write: skip rewriting MIDX with `--stdin-packs` unless needed
- + midx-write: extract function to test whether MIDX needs updating
- + midx: fix `BUG()` when getting preferred pack without a reverse index
-
- Even when there is no changes in the packfile and no need to
- recompute bitmaps, "git repack" recomputed and updated the MIDX
- file, which has been corrected.
- source: <20251210-pks-skip-noop-rewrite-v2-0-f813a9e44f28@pks.im>
-
---------------------------------------------------
-[New Topics]
-
-* dd/t5403-modernise (2025-12-29) 1 commit
- - t5403: use test_path_is_file instead of test -f
-
- Test micro-clean-up.
-
- Will merge to 'next'.
- source: <20251229185737.2328-1-deveshigurgaon@gmail.com>
-
-
-* ds/diff-lazy-fetch-with-name-only-fix (2025-12-29) 1 commit
- - diff: avoid segfault with freed entries
-
- Running "git diff" with "--name-only" and other options that allows
- us not to look at the blob contents, while objects that are lazily
- fetched from a promisor remote, caused use-after-free, which has
- been corrected.
-
- Will merge to 'next'.
- source: <pull.2027.git.1767044697712.gitgitgadget@gmail.com>
-
-
-* en/fsck-snapshot-ref-state (2025-12-29) 1 commit
- - fsck: snapshot default refs before object walk
-
- "git fsck" used inconsistent set of refs to show a confused
- warning, which has been corrected.
-
- Will merge to 'next'?
- source: <pull.2026.git.1767035549378.gitgitgadget@gmail.com>
-
-
-* en/ort-recursive-d-f-conflict-fix (2025-12-29) 1 commit
- - merge-ort: fix corner case recursive submodule/directory conflict handling
-
- The ort merge machinery was hit an assertion failure in a history
- with criss-cross merges renamed a directory and a non-directory,
- which has been corrected.
-
- Will merge to 'next'.
- source: <pull.2023.git.1767033783800.gitgitgadget@gmail.com>
-
-
-* rs/tag-wo-the-repository (2025-12-28) 4 commits
- - tag: stop using the_repository
- - tag: support arbitrary repositories in parse_tag()
- - tag: support arbitrary repositories in gpg_verify_tag()
- - tag: use algo of repo parameter in parse_tag_buffer()
-
- Code clean-up.
-
- Will merge to 'next'.
- source: <20251228181051.68724-1-l.s.r@web.de>
-
---------------------------------------------------
-[Cooking]
-
-* kh/replay-invalid-onto-advance (2025-12-22) 2 commits
- - t3650: add more regression tests for failure conditions
- - replay: die descriptively when invalid commit-ish
-
- Test coverage of "git replay" has been improved.
-
- Expecting a rework on the bottom patch.
- source: <CV_replay_die_descr.13f@msgid.xyz>
-
-
-* bc/checkout-error-message-fix (2025-12-24) 1 commit
-  (merged to 'next' on 2025-12-28 at d807c22e01)
- + checkout: quote invalid treeish in error message
-
- Message fix.
-
- Will merge to 'master'.
- source: <20251224203253.881129-1-sandals@crustytoothpaste.net>
-
-
-* cc/lop-filter-auto (2025-12-23) 9 commits
- - fetch-pack: wire up and enable auto filter logic
- - promisor-remote: keep advertised filter in memory
- - list-objects-filter-options: implement auto filter resolution
- - list-objects-filter-options: support 'auto' mode for --filter
- - doc: fetch: document `--filter=<filter-spec>` option
- - fetch: make filter_options local to cmd_fetch()
- - clone: make filter_options local to cmd_clone()
- - promisor-remote: allow a client to store fields
- - promisor-remote: refactor initialising field lists
-
- "auto filter" logic for large-object promisor remote.
-
- Comments?
- source: <20251223111113.47473-1-christian.couder@gmail.com>
-
-
-* rs/commit-stack (2025-12-24) 14 commits
- - commit-reach: use commit_stack
- - commit-graph: use commit_stack
- - commit: add commit_stack_grow()
- - shallow: use commit_stack
- - pack-bitmap-write: use commit_stack
- - commit: add commit_stack_init()
- - test-reach: use commit_stack
- - remote: use commit_stack for src_commits
- - remote: use commit_stack for sent_tips
- - remote: use commit_stack for local_commits
- - name-rev: use commit_stack
- - midx: use commit_stack
- - log: use commit_stack
- - revision: export commit_stack
-
- Code clean-up, unifying various hand-rolled "list of commit
- objects" and use the commit_stack API.
-
- Will merge to 'next'?
- source: <20251224170327.68049-1-l.s.r@web.de>
-
-
-* rs/parse-config-expiry-simplify (2025-12-27) 1 commit
-  (merged to 'next' on 2025-12-30 at 138de1df67)
- + config: use git_parse_int() in git_config_get_expiry_in_days()
-
- Code clean-up.
-
- Will merge to 'master'.
- source: <1bd3c7f3-fcf6-4d8e-aa38-c15e3d51ce4c@web.de>
-
-
-* rs/show-branch-prio-queue (2025-12-25) 1 commit
-  (merged to 'next' on 2025-12-28 at 99d21acd7b)
- + show-branch: use prio_queue
-
- Code clean-up.
-
- Will merge to 'master'.
- source: <70ed751e-fc3c-4cb4-a4fd-26094a9f622e@web.de>
-
-
-* tt/receive-pack-oo-namespace-symref-fix (2025-12-27) 1 commit
- - receive-pack: fix crash on out-of-namespace symref
-
- "git receive-pack", when namespace is involved, segfaulted when a
- symbolic ref cross the namespace boundary.
-
- Comments?
- source: <pull.2144.git.git.1766850014289.gitgitgadget@gmail.com>
-
-
-* sb/bundle-uri-without-uri (2025-12-19) 1 commit
- - bundle-uri: validate that bundle entries have a uri
-
- Diagnose invalid bundle-URI that lack the URI entry, instead of
- crashing.
-
- Will merge to 'next'?
- source: <pull.2134.v2.git.git.1766160106521.gitgitgadget@gmail.com>
-
-
-* sb/doc-worktree-prune-expire-improvement (2025-12-19) 2 commits
- - worktree: use 'prune' instead of 'expire' in help text
- - worktree: clarify --expire applies to missing worktrees
-
- The help text and the documentation for the "--expire" option of
- "git worktree [list|prune]" have been improved.
-
- Expecting a reroll.
- source: <pull.2135.v2.git.git.1766168169.gitgitgadget@gmail.com>
-
-
-* ja/doc-synopsis-style-more (2025-12-20) 5 commits
- - doc: convert git-remote to synopsis style
- - doc: convert git stage to use synopsis block
- - doc: convert git-status tables to AsciiDoc format
- - doc: convert git-status to synopsis style
- - doc: fix t0450-txt-doc-vs-help to select only first synopsis block
-
- More doc style updates.
-
- Will merge to 'next'?
- source: <pull.2020.git.1766258187.gitgitgadget@gmail.com>
-
-
-* js/symlink-windows (2025-12-17) 19 commits
- - mingw: special-case index entries for symlinks with buggy size
- - mingw: emulate `stat()` a little more faithfully
- - mingw: try to create symlinks without elevated permissions
- - mingw: add support for symlinks to directories
- - mingw: implement basic `symlink()` functionality (file symlinks only)
- - mingw: implement `readlink()`
- - mingw: allow `mingw_chdir()` to change to symlink-resolved directories
- - mingw: support renaming symlinks
- - mingw: handle symlinks to directories in `mingw_unlink()`
- - mingw: add symlink-specific error codes
- - mingw: change default of `core.symlinks` to false
- - mingw: factor out the retry logic
- - mingw: compute the correct size for symlinks in `mingw_lstat()`
- - mingw: teach dirent about symlinks
- - mingw: let `mingw_lstat()` error early upon problems with reparse points
- - mingw: drop the separate `do_lstat()` function
- - mingw: implement `stat()` with symlink support
- - mingw: don't call `GetFileAttributes()` twice in `mingw_lstat()`
- - Merge branch 'js/prep-symlink-windows' into js/symlink-windows
- (this branch uses js/prep-symlink-windows.)
-
- Upstream symbolic link support on Windows from Git-for-Windows.
-
- Expecting review responses.
- cf. <19030791-dafa-4a63-985b-9cdf423bfd1b@kdbg.org>
- source: <pull.2018.git.1765980535.gitgitgadget@gmail.com>
-
-
-* pc/lockfile-pid (2025-12-17) 1 commit
- - lockfile: add PID file for debugging stale locks
-
- Allow recording process ID of the process that holds the lock next
- to a lockfile for diagnosis.
- source: <pull.2011.v2.git.1765997966593.gitgitgadget@gmail.com>
-
-
-* js/neuter-sideband (2025-12-17) 4 commits
- - sideband: add options to allow more control sequences to be passed through
- - sideband: do allow ANSI color sequences by default
- - sideband: introduce an "escape hatch" to allow control characters
- - sideband: mask control characters
-
- Invalidate control characters in sideband messages, to avoid
- terminal state getting messed up.
-
- Comments?
- cf. <aS-D5lD2Kk6BHNIl@fruit.crustytoothpaste.net>
- source: <pull.1853.v2.git.1765981422.gitgitgadget@gmail.com>
-
-
-* ps/read-object-info-improvements (2025-12-18) 8 commits
- - packfile: drop repository parameter from `packed_object_info()`
- - packfile: skip unpacking object header for disk size requests
- - packfile: disentangle return value of `packed_object_info()`
- - packfile: always populate pack-specific info when reading object info
- - packfile: extend `is_delta` field to allow for "unknown" state
- - packfile: always declare object info to be OI_PACKED
- - object-file: always set OI_LOOSE when reading object info
- - Merge branch 'jc/object-read-stream-fix' into ps/read-object-info-improvements
-
- The object-info API has been cleaned up.
-
- Comments?
- source: <20251218-b4-pks-odb-read-object-info-improvements-v2-0-62e3e49072bc@pks.im>
-
-
-* tb/macos-iconv-workarounds (2025-12-15) 6 commits
- . config.mak.uname: activate ICONV_RESTART_RESET if needed
- . Makefile: make all darwin into config.mak.uname
- . utf8.c: prepare workaround for iconv under macOS 14/15
- . Merge branch 'rs/macos-iconv-workaround' into tb/macos-iconv-workarounds
- . config.mak.uname: use iconv from Homebrew on macOS
- . Makefile: add NO_HOMEBREW
-
- The iconv library on macOS fails to correctly handle stateful
- ISO/IEC 2022 encoded strings.  Work it around instead of replacing
- it wholesale from homebrew.
-
- RFC.
- needs to be debased from older rs/macos-iconv-workaround topic.
- source: <20251215204524.1946518-1-tboegi@web.de>
-
-
-* js/prep-symlink-windows (2025-12-16) 6 commits
- - trim_last_path_component(): avoid hard-coding the directory separator
- - strbuf_readlink(): support link targets that exceed PATH_MAX
- - strbuf_readlink(): avoid calling `readlink()` twice in corner-cases
- - init: do parse _all_ core.* settings early
- - mingw: do resolve symlinks in `getcwd()`
- - Merge branch 'js/test-symlink-windows' into js/prep-symlink-windows
- (this branch is used by js/symlink-windows.)
-
- Further preparation to upstream symbolic link support on Windows.
-
- Expecting review responses.
- cf. <xmqqcy3wh8d1.fsf@gitster.g>
- source: <pull.2017.git.1765899229.gitgitgadget@gmail.com>
-
-
-* ap/http-probe-rpc-use-auth (2025-11-12) 1 commit
- - remote-curl: Use auth for probe_rpc() requests too
-
- source: <20251112223722.376330-1-aplattner@nvidia.com>
-
-
-* ps/packfile-store-in-odb-source (2025-12-17) 12 commits
- - packfile: move MIDX into packfile store
- - packfile: refactor `find_pack_entry()` to work on the packfile store
- - packfile: inline `find_kept_pack_entry()`
- - packfile: only prepare owning store in `packfile_store_prepare()`
- - packfile: only prepare owning store in `packfile_store_get_packs()`
- - packfile: move packfile store into object source
- - packfile: refactor misleading code when unusing pack windows
- - packfile: refactor kept-pack cache to work with packfile stores
- - packfile: pass source to `prepare_pack()`
- - packfile: create store via its owning source
- - Merge branch 'ps/odb-misc-fixes' into ps/packfile-store-in-odb-source
- - Merge branch 'ps/object-read-stream' into ps/packfile-store-in-odb-source
- (this branch uses ps/odb-misc-fixes.)
-
- The packfile_store data structure is moved from object store to odb
- source.
-
- Comments?
- source: <20251218-b4-pks-pack-store-via-source-v2-0-62849007ce21@pks.im>
-
-
-* rs/macos-iconv-workaround (2025-12-24) 2 commits
-  (merged to 'next' on 2025-12-28 at 94ed776719)
- + macOS: use iconv from Homebrew if needed and present
- + macOS: make Homebrew use configurable
-
- Workaround the "iconv" shipped as part of macOS, which is broken
- handling stateful ISO/IEC 2022 encoded strings.
-
- Will merge to 'master'.
- source: <ce030c90-f635-42b5-82e1-814cd4c29505@web.de>
-
-
-* lo/repo-info-keys (2025-12-09) 3 commits
- - repo: add new flag --keys to git-repo-info
- - repo: add a default output format to enum output_format
- - Merge branch 'lo/repo-struct-z' into lo/repo-info-keys
-
- "git repo info" learns "--keys" action to list known keys.
-
- Comments?
- source: <20251209194616.61620-1-lucasseikioshiro@gmail.com>
-
-
-* sb/doc-update-ref-markup-fix (2025-12-08) 1 commit
- - doc: fix `update-ref` `symref-create` formatting
-
- Doc mark-up fix.
-
- Will merget to 'next'.
- source: <pull.2123.git.git.1765261419802.gitgitgadget@gmail.com>
-
-
-* ps/odb-misc-fixes (2025-12-10) 3 commits
- - odb: properly close sources before freeing them
- - builtin/gc: fix condition for whether to write commit graphs
- - Merge branch 'ps/object-source-management' into ps/odb-misc-fixes
- (this branch is used by ps/packfile-store-in-odb-source.)
-
- Miscellaneous fixes on object database layer.
-
- Comments?
- source: <20251211-odb-related-fixes-v2-0-bdf875ce51fc@pks.im>
-
-
-* ps/clar-integers (2025-12-06) 3 commits
- - gitattributes: disable blank-at-eof errors for clar test expectations
- - t/unit-tests: demonstrate use of integer comparison assertions
- - t/unit-tests: update clar to 39f11fe
-
- Import newer version of "clar", unit testing framework.
-
- Comments?
- source: <20251206-b4-pks-clar-update-v2-0-9a14b10c1a36@pks.im>
-
-
-* tb/incremental-midx-part-3.2 (2025-12-06) 17 commits
- - midx: enable reachability bitmaps during MIDX compaction
- - midx: implement MIDX compaction
- - t/helper/test-read-midx.c: plug memory leak when selecting layer
- - midx-write.c: factor fanout layering from `compute_sorted_entries()`
- - midx-write.c: enumerate `pack_int_id` values directly
- - midx-write.c: extract `fill_pack_from_midx()`
- - midx-write.c: introduce `midx_pack_perm()` helper
- - git-compat-util.h: introduce `u32_add()`
- - midx: do not require packs to be sorted in lexicographic order
- - midx-write.c: introduce `struct write_midx_opts`
- - midx-write.c: don't use `pack_perm` when assigning `bitmap_pos`
- - t/t5319-multi-pack-index.sh: fix copy-and-paste error in t5319.39
- - git-multi-pack-index(1): align SYNOPSIS with 'git multi-pack-index -h'
- - git-multi-pack-index(1): remove non-existent incompatibility
- - builtin/multi-pack-index.c: make '--progress' a common option
- - midx: split `get_midx_checksum()` by adding `get_midx_hash()`
- - midx: mark `get_midx_checksum()` arguments as const
-
- Further work on incremental repacking using MIDX/bitmap
-
- Expecting a reroll.
- cf. <aTd+fxpflcLuJXDn@nand.local>
- source: <cover.1765053054.git.me@ttaylorr.com>
-
-
-* yc/histogram-hunk-shift-fix (2025-12-06) 1 commit
- - xdiff: re-diff shifted change groups when using histogram algorithm
-
- The final clean-up phase of the diff output could turn the result of
- histogram diff algorithm suboptimal, which has been corrected.
-
- Comments?
- source: <pull.2120.git.git.1765054287938.gitgitgadget@gmail.com>
-
-
-* jk/parse-int (2025-11-30) 5 commits
- - fsck: use parse_unsigned_from_buf() for parsing timestamp
- - cache-tree: use parse_int_from_buf()
- - parse: add functions for parsing from non-string buffers
- - parse: prefer bool to int for boolean returns
- - Merge branch 'jk/asan-bonanza' into jk/parse-int
-
- Introduce a more robust way to parse a decimal integer stored in a
- piece of memory that is not necessarily terminated with NUL (which
- Asan strict-string-check complains even when use of strtol() is
- safe due to varified existence of whitespace after the digits).
-
- Expecting a reroll.
- cf. <aTFvKOHlm4zfT9dU@pks.im>
- cf. <4d83375b-76e2-4420-80dd-6a04d3201532@gmail.com>
- source: <20251130131351.GA198697@coredump.intra.peff.net>
-
-
-* tc/last-modified-options-cleanup (2025-11-26) 4 commits
- - fixup! last-modified: document option --max-depth
- - last-modified: document how depth is handled better
- - last-modified: document option --max-depth
- - last-modified: handle and document NUL termination
-
- The "-z" and "--max-depth" documentation (and implementation of
- "-z") in the "git last-modified" command have been updated.
-
- Expecting a reroll.
- source: <20251126-toon-last-modified-zzzz-v1-0-608350df0caa@iotcl.com>
-
-
-* pw/replay-drop-empty (2025-12-18) 2 commits
- - replay: drop commits that become empty
- - Merge branch 'ps/history' into pw/replay-drop-empty
- (this branch uses ps/history.)
-
- "git replay" is taught to drop commits that become empty (not the
- ones that are empty in the original).
-
- On hold, until the base topic gains consensus and stabilizes.
- source: <375adc4e941f3bb22a2b12ee26a083951ed724dd.1766076625.git.phillip.wood@dunelm.org.uk>
-
-
-* sp/shallow-time-boundary (2025-11-23) 1 commit
- - shallow: set borders which are all reachable after clone shallow since
-
- The set of shallow boundary "git clone --shallow-since" leaves
- contained commits that are not on the boundary, which has been
- corrected.
-
- Comments?
- source: <pull.2107.v2.git.git.1763926552033.gitgitgadget@gmail.com>
-
-
-* kn/ref-location (2025-12-01) 2 commits
- - refs: add GIT_REF_URI to specify reference backend and directory
- - refs: support obtaining ref_store for given dir
-
- A mechanism to specify what reference backend to use and store
- references in which directory is introduced, which would likely to
- be useful during ref migration.
-
- Comments?
- source: <20251201-kn-alternate-ref-dir-v3-0-c11b946bc2fa@gmail.com>
-
-
-* dw/config-global-list (2025-10-09) 4 commits
- - config: keep bailing on unreadable global files
- - config: read global scope via config_sequence
- - config: test home and xdg files in `list --global`
- - cleanup_path: force forward slashes on Windows
-
- "git config --list --global", unlike "git config --list", did not
- consult both of the two possible per-user sources of the
- configuration files, i.e. $HOME/.gitconfig and the XDG one, which
- has been corrected.
-
- Expecting a reroll.
- cf. <20251122020047.GB3947@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
- source: <pull.1938.git.1760058849.gitgitgadget@gmail.com>
-
-
-* lc/rebase-trailer (2025-11-05) 4 commits
- - rebase: support --trailer
- - trailer: append trailers in-process and drop the fork to `interpret-trailers`
- - trailer: move process_trailers to trailer.h
- - interpret-trailers: factor out buffer-based processing to process_trailers()
-
- Refactor code paths to run "interpret-trailers" from "git
- commit/tag" and use it in "git rebase".
-
- Expecting a reroll.
- cf. <19a8fe42354.3909481a3912041.7970296104893780556@linux.beauty>
- source: <20251105142944.73061-1-me@linux.beauty>
-
-
-* jc/exclude-with-gitignore (2025-11-04) 1 commit
- - dir.c: do not be fooled by :(exclude) pathspec elements
-
- "git add ':(exclude)foo.o'" is clearly a request not to add 'foo.o',
- but the command complained about listing an ignored path foo.o on
- the command line, which has been corrected.
-
- Comments?
- source: <xmqqtsz9o3cn.fsf@gitster.g>
-
-
-* bc/sha1-256-interop-02 (2025-11-17) 15 commits
- - object-file-convert: always make sure object ID algo is valid
- - rust: add a small wrapper around the hashfile code
- - rust: add a new binary object map format
- - rust: add functionality to hash an object
- - rust: add a build.rs script for tests
- - hash: expose hash context functions to Rust
- - write-or-die: add an fsync component for the object map
- - csum-file: define hashwrite's count as a uint32_t
- - rust: add additional helpers for ObjectID
- - hash: add a function to look up hash algo structs
- - rust: add a hash algorithm abstraction
- - rust: add a ObjectID struct
- - hash: use uint32_t for object_id algorithm
- - conversion: don't crash when no destination algo
- - repository: require Rust support for interoperability
-
- The code to maintain mapping between object names in multiple hash
- functions is being added, written in Rust.
- source: <20251117221621.2863243-1-sandals@crustytoothpaste.net>
-
-
-* ar/run-command-hook (2025-12-26) 11 commits
-  (merged to 'next' on 2025-12-28 at 048cdffe21)
- + receive-pack: convert receive hooks to hook API
- + receive-pack: convert update hooks to new API
- + hooks: allow callers to capture output
- + run-command: allow capturing of collated output
- + hook: allow overriding the ungroup option
- + reference-transaction: use hook API instead of run-command
- + transport: convert pre-push to hook API
- + hook: convert 'post-rewrite' hook in sequencer.c to hook API
- + hook: provide stdin via callback
- + run-command: add stdin callback for parallelization
- + run-command: add first helper for pp child states
-
- Use hook API to replace ad-hoc invocation of hook scripts with the
- run_command() API.
-
- Will merge to 'master'.
- source: <20251226122334.16687-1-adrian.ratiu@collabora.com>
-
-
-* je/doc-reset (2025-12-18) 4 commits
- - doc: git-reset: clarify `git reset <pathspec>`
- - doc: git-reset: clarify `git reset [mode]`
- - doc: git-reset: clarify intro
- - doc: git-reset: reorder the forms
-
- Documentation updates.
-
- Will merge to 'next'?
- source: <cover.1766103827.git.ben.knoble+github@gmail.com>
-
-
-* ps/history (2025-12-03) 13 commits
- - builtin/history: implement "split" subcommand
- - cache-tree: allow writing in-memory index as tree
- - add-patch: allow disabling editing of hunks
- - add-patch: add support for in-memory index patching
- - add-patch: remove dependency on "add-interactive" subsystem
- - add-patch: split out `struct interactive_options`
- - add-patch: split out header from "add-interactive.h"
- - builtin/history: implement "reword" subcommand
- - builtin: add new "history" command
- - replay: stop using `the_repository`
- - replay: extract logic to pick commits
- - wt-status: provide function to expose status for trees
- - Merge branch 'pw/replay-exclude-gpgsig-fix' into ps/history
- (this branch is used by pw/replay-drop-empty.)
-
- "git history" history rewriting UI.
-
- What's the status of this topic?
- source: <20251203-b4-pks-history-builtin-v7-0-9e9f849bfd0e@pks.im>
-
-
-* ms/doc-worktree-side-by-side (2025-10-10) 2 commits
- - doc: git-worktree: Add side by side branch checkout example
- - doc: git-worktree: Link to examples
-
- Document "git worktree add" and use of out-of-tree worktrees with
- examples.
-
- Expecting a reroll.
- cf. <CAPig+cSNesf0UwS4=Bxe-Qn+G9y3YYPyOK+7y3q8QJk+o7jaVg@mail.gmail.com>
- source: <a203b35538847f3c9358a5ae26fb4ebea5734cfc.1759420102.git.msuchanek@suse.de>
-
-
-* ar/submodule-gitdir-tweak (2025-12-20) 11 commits
- - submodule: detect conflicts with existing gitdir configs
- - submodule: hash the submodule name for the gitdir path
- - submodule: fix case-folding gitdir filesystem collisions
- - submodule--helper: fix filesystem collisions by encoding gitdir paths
- - builtin/credential-store: move is_rfc3986_unreserved to url.[ch]
- - submodule--helper: add gitdir migration command
- - submodule: allow runtime enabling extensions.submodulePathConfig
- - submodule: introduce extensions.submodulePathConfig
- - builtin/submodule--helper: add gitdir command
- - submodule: always validate gitdirs inside submodule_name_to_gitdir
- - submodule--helper: use submodule_name_to_gitdir in add_submodule
-
- Avoid local submodule repository directory paths overlapping with
- each other by encoding submodule names before using them as path
- components.
-
- Comments?
- source: <20251220101528.1227487-1-adrian.ratiu@collabora.com>
-
---------------------------------------------------
-[Discarded]
-
-* wm/complete-git-short-opts (2025-11-26) 1 commit
- - completion: complete "git -<TAB>" with short options
-
- The command line completion script (in contrib/) learned to
- complete "git -<TAB>" to give single-letter options like "-C".
-
- Will discard.  We do not complete single-letter options themselves.
- cf. <xmqqo6onjfwl.fsf@gitster.g>
- source: <pull.2100.v2.git.git.1764174391776.gitgitgadget@gmail.com>
+X-ThreadId: AkV22KuyfT4B
+Date: Tue, 30 Dec 2025 15:31:47 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Elijah Newren" <newren@gmail.com>,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, "Christian Couder" <christian.couder@gmail.com>,
+ "Siddharth Asthana" <siddharthasthana31@gmail.com>
+Message-Id: <3914e3cc-d90b-4992-8c15-889c34c52a25@app.fastmail.com>
+In-Reply-To: 
+ <CABPp-BEcJqjD4ztsZo2FTZgWT5ZOADKYEyiZtda+d0mSd1quPQ@mail.gmail.com>
+References: <CV_replay_die_descr.13f@msgid.xyz>
+ <CABPp-BEcJqjD4ztsZo2FTZgWT5ZOADKYEyiZtda+d0mSd1quPQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] replay: die descriptively when invalid commit-ish
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Dec 24, 2025, at 04:03, Elijah Newren wrote:
+> On Mon, Dec 22, 2025 at 2:04=E2=80=AFPM <kristofferhaugsbakk@fastmail.=
+com> wrote:
+>>[snip]
+>
+> Thanks for working on this.  I have nothing to add beyond what others
+> have already commented on the series, except that I can maybe answer
+> one question...
+>
+>[snip]
+
+Thanks for explaining! I=E2=80=99ve removed this code in version 2.
