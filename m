@@ -1,91 +1,86 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63780A55
-	for <git@vger.kernel.org>; Tue, 30 Dec 2025 05:00:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCEF8222587
+	for <git@vger.kernel.org>; Tue, 30 Dec 2025 05:23:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767070831; cv=none; b=fXUmQ/qivQWBTAdqndwchpX61XsTdjkaMdiiC5m+gobOIBYSY0lJx0c7wn9sWnLRQfOcax7pUXnV20RdJ5AvLZMwn5B7FYVhgNovvEky1dlWio7t7fM95SbqVpwgSVykDscD7zUPFM4CQLz/tDxUCx0daZ0lf/PaGll8iBsi+/M=
+	t=1767072217; cv=none; b=SJryTMJd9MXdIuxIHeWVhMYVxJvlZsPnyM8hbLuIuT83gF2Q4Me2+xgr+PiTXKhwvs73o0mjaU9VnK/JndsKepmHcSLFfarOnj9WF+aI//a6xm9imbBHM4Ra9eUYckOjPnztejlD3jIY1V/mth5HHGk8NERA6wSfpq2jYZLKQt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767070831; c=relaxed/simple;
-	bh=blfc/j3uD/gaGXFxJvcZpnpP2VvLS4DWJYYA895IsoI=;
+	s=arc-20240116; t=1767072217; c=relaxed/simple;
+	bh=wkORI/eDZOZqsRSIDv2kAfg5akU6nPQIbUG6R3aOxSE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uoHwZA5phaNp0tuqGJ2kcHrtMNKCqXlsKktxtE4OupzRHX+MhVMoI+l4I3pj7AezabvcmKREV6ncXcnFAqlNvDPhOCUCOdb7ynExIiXaa5sakKg94AM9V27xqtaUZA262CR2ki4Q0dLnAo2EV712NCQlS6k0G1k2ZF8g0gC0BCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F7P39q7C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YxwDda2Z; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=nLrOD+7H8ci5cmZw8/xszCnAXWcGphglLP1j2IDNHUm18BnsP9lve4JVK3O4JKx4SHFRCROIQPHCU6nZ2R9S/VPeqLpOrL7+Gb8+JFHVZlqRzpURo/fyICCojtIAUeKncfIwDRuDnb3WFHXRplDZLNbs1H/+mHn8/8dBvcaC2uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gfWNXJli; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KAJbvTaa; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F7P39q7C";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YxwDda2Z"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 981187A0122;
-	Tue, 30 Dec 2025 00:00:28 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gfWNXJli";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KAJbvTaa"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0F0B71D00116;
+	Tue, 30 Dec 2025 00:23:34 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 30 Dec 2025 00:00:28 -0500
+  by phl-compute-03.internal (MEProxy); Tue, 30 Dec 2025 00:23:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1767070828; x=1767157228; bh=7KV6h7oAYn
-	Xd2ruF1TbHVC1pWd2LwCYtCTxbhWeCMoY=; b=F7P39q7Cpjr4S1LUbWf8wfMPSG
-	WlO8qkV8+erWo2zORaAH2Iv55BEaKPV73+Y9BIky2c3iRau2FM0Y/SkclQws57zf
-	/zU8KX3R0UnfEeNS9TecVqYZlFvc7h2x13zmwsvOsfC2O5MkDyispsb5zCyn4nm2
-	28fQA/ucIZYbmRJqC+mu8fOwVWd93NwWlFSnxPBOdxIsaICl2SahaKSgE41Zb55d
-	XN6PbESADRrsGkI0xGCFtQvbICmTxwoTagJundYXXHwO81hsBbhQoWuavl4GLjdn
-	IHLX/G7XBpFyDcOKjr8zBiDMS8u+XnUgDez15C9/Z9hXxitsz6TgBLmLkg8A==
+	:subject:to:to; s=fm1; t=1767072213; x=1767158613; bh=ywkDkxAF1t
+	J0TSJrzeUtVUGPYaXyRhfam0bXqDgwaLM=; b=gfWNXJlil+RJUrEHxTiwusJiyA
+	hohA7cluT5jKn3iEGXXYZuqlziK5iA6+S6xAxoFISamYE+inwC8wEOLJGHObX0jd
+	VDuyKG4xo8zyFAAGk0UkSWMb+851xCjVLYbYCX2Eg9ScfICN5sfBFRLT/MCA9muN
+	MZogvi79esYSe3G+TLVuS+yEOiJWN0xNIhm69h4dTNC8I4LtssytfcKyIKxjew/f
+	qwUaIoXKV+tWNghAwR86ehoAfw47hhMROsSQLrqXoiKs3QZfmMWTtkKf5JWqTpEc
+	WyI4kUIssr/DGxTfunC8SVfbz67EzsT/5QUTSXnkya4x8L74ZLlEXrGlT/lQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767070828; x=1767157228; bh=7KV6h7oAYnXd2ruF1TbHVC1pWd2LwCYtCTx
-	bhWeCMoY=; b=YxwDda2Zft4rj2YDE6zk6nTVgGJNelfiOtI8tfLheMKKZKlPv1W
-	l8eltEa32RCXGFMGxC+Db6NCo198EIHRjyin23GYAi/O6mIn1uAmqzXMnxvcpigL
-	AiIlcHLZecflIgA/kiK45GwVkXq8nZvC7FDm5Qjs6SvYv11O78JlUDjQp2ijHV/n
-	d/V03o14LKAYlPqG0Gx2rMZumeqs7TXXF4Lnhq8x0fNfEpo4mdHVTHmzWsklqpAf
-	MFd97tIYDmp33Bc2mLPRAQ9BeuhVq5WN+rEAiMpxXrvEIVU9k3CjxbBYiHmgBasW
-	IpvKEuinh8z9WTkjjr4IJXGP8qdkDN1QswQ==
-X-ME-Sender: <xms:bFxTaU-EYKCKFXN6vmfC9TVKYaVYaYUNwLy4dSh29pv_8hw9L4keWw>
-    <xme:bFxTaQaRPHIzftFkJezeRK-mAKt_LlPNgfCI2rmj6c1EVN5nlKUZo2jYg8HHUz7Ql
-    RCLzqeC-4AT3RE3dqd7d2P1UyXZ00wbt-nN2TprThOAAhfeszdaKec>
-X-ME-Received: <xmr:bFxTaT1-YDwbKUVj-NweZum1kmMIGVeOLbeK5vTjNkgyIDZqPesQX0YdMKyN-rmMMls-TbveKLhWR-_M646uEYR4rrUKXGPMow>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdejleduvdcutefuodetggdotefrod
+	1767072213; x=1767158613; bh=ywkDkxAF1tJ0TSJrzeUtVUGPYaXyRhfam0b
+	XqDgwaLM=; b=KAJbvTaas1+8MuoEILet4P8tPw04hmd83djghqxXdhdiPZPOW6d
+	f8Ge6Kdfeaxx99ZDbi6Yv4Xnha+vqLU0eqPOg+zv8iJm3g/jWzfuJYL0D4vIceqa
+	BC8/92+w1ZkqSGZchHQHJWcK5cKzyEr8wcwPkdSYqWSNhwPPTuO3i1dxaz+zdsqK
+	1RoVEqL7YIycxYf4hj/2BKOG5OIKCAMc8/TOusQRJD6RYlR5IyrJ4pQZu373o5g/
+	2g1zlAHmHPMCdHt+AmGOZphMpbKe1pwmLwaKcyj0QcBVrEgi1dM1V6KqdI0hchRn
+	dJj6makQ6dwX1zV5YYyoD+IzRnZ0PWMqqoQ==
+X-ME-Sender: <xms:1WFTafXifJStXgdxR2q3cpK6tk6rBLYB8Zmxy2pdQBEThF93rzTCUA>
+    <xme:1WFTaeemHTgjD560UamC8zT9L-Kr0tLm4fkO5Fxzjk_d36Kn8qguzfh3NC5mScHQ8
+    264aZfQ9h0vqhKlJvTjtvYcZdvSQiR642-X3R1NtXgEDRg69CI98A>
+X-ME-Received: <xmr:1WFTaTstmloXip3dPZtQvLJDVVNwZSH50E7w_lbQ1M-ECvo1ZumeDXXkdnf7J8M0b-f1DLWWRFDsb_irNm1TlmMniGP1ONJWxA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdejledujecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpefgfeduueevffefvdeigeeuledvueejffdtjefhfeevvedufedvteeuvdeludeh
-    veenucffohhmrghinhepmhhitghrohhsohhfthdrtghomhdpshhtrhgsuhhfrdgtfienuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpoh
-    huthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhohhgrnhhnvghs
-    rdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhgihhtghgrug
-    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehkrghrshhtvghnrdgslhgvvghssehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:bFxTabb9qZDHm25BhuKtwXKVXuF10CUwrE-ksnGOXSCyjyf8cf0CoA>
-    <xmx:bFxTabJZkHAMbhJpeyUpIRMo2rkQ71k0fYZzNyeLiG9QvbT27fb0Fg>
-    <xmx:bFxTaaE7VDl87AfKgenz2xNv0WrSJXdF-anl3LhY8QAhfuJekN3yKA>
-    <xmx:bFxTaSuA5LrRTscA-UM-bnboFBPpdREKjWkyi6RDE2erN2S-xnWgiw>
-    <xmx:bFxTaaYvE2B0ZJwqy0ALlRbFGhJQHR9W5Poh5X9Ds9HxodDYpwexO6GT>
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhithhhuhgssehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehjuhhlihgrsehjvhhnshdrtggrpdhrtghpthhtohepjhhnrdgrvhhilhgrse
+    hfrhgvvgdrfhhrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:1WFTaV9uTXr_0bnu2Ble1aP4jr5A_pc7DmuaeurvDwlistS5vy4SnA>
+    <xmx:1WFTaW0Vy_rcEOuQTBMcCVWnxH8XG0HJn6SpE8ZV8UMW8JivM8sIPw>
+    <xmx:1WFTaSBnMIipzVDbxdrCo0ySdpY9HpJ0QNdktnlzx28gG16zeOF64g>
+    <xmx:1WFTaafw-6B7s6OHvlfnvTjKAtFtdOfqnR-o_c-q0T1v8T8WoIEgYw>
+    <xmx:1WFTaeacEEaW1HjeDz8riKVyDEX5GBEhAp22dcokdUpHaG7UUKi4kozn>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Dec 2025 00:00:27 -0500 (EST)
+ 30 Dec 2025 00:23:33 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Karsten Blees via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Karsten
- Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH 4/5] strbuf_readlink(): support link targets that exceed
- PATH_MAX
-In-Reply-To: <aUU8O6ltrNj-FmjZ@pks.im> (Patrick Steinhardt's message of "Fri,
-	19 Dec 2025 12:51:23 +0100")
-References: <pull.2017.git.1765899229.gitgitgadget@gmail.com>
-	<db1feb2293d20532f9468ab63ede43d4fc620203.1765899229.git.gitgitgadget@gmail.com>
-	<aULB3wCFGsbZbuSw@pks.im>
-	<5778a03b-2e33-9224-e051-664c2d530fc3@gmx.de>
-	<aUU8O6ltrNj-FmjZ@pks.im>
-Date: Tue, 30 Dec 2025 14:00:26 +0900
-Message-ID: <xmqqcy3wh8d1.fsf@gitster.g>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: git@vger.kernel.org,  Julia Evans <julia@jvns.ca>,  =?utf-8?Q?Jean-No?=
+ =?utf-8?Q?=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH v2 4/4] doc: git-reset: clarify `git reset <pathspec>`
+In-Reply-To: <d6582dc53ca852ef01421d2dd2c446dadb731dad.1766103827.git.ben.knoble+github@gmail.com>
+	(D. Ben Knoble's message of "Thu, 18 Dec 2025 19:23:56 -0500")
+References: <pull.1991.git.1760731558.gitgitgadget@gmail.com>
+	<cover.1766103827.git.ben.knoble+github@gmail.com>
+	<d6582dc53ca852ef01421d2dd2c446dadb731dad.1766103827.git.ben.knoble+github@gmail.com>
+Date: Tue, 30 Dec 2025 14:23:31 +0900
+Message-ID: <xmqqwm24fsq4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,77 +90,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
 
->> > This makes me wonder whether we have a better way to figure out the
->> > actual size of the buffer that we ultimately need to allocate. But
->> > reading through readlink(3p) doesn't indicate anything, and I'm not sure
->> > whether we can always rely on lstat(3p) to return the correct size for
->> > symlink contents on all platforms.
->> > 
->> > One thing that _is_ noted though is that calling the function with a
->> > buffer size larger than SSIZE_MAX is implementation-defined. It does
->> > make me a bit uneasy in that light to grow indefinitely.
->> > 
->> > Which makes me wonder whether Windows has a limit for the symlink
->> > contents that we could enforce in theory so that we can reasonably turn
->> > this into a bounded loop again?
->> 
->> https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation
->> suggests that the maximum permissible target path should be 32,768. But
->> that's not _quite_ correct, as
->> `../t/../Documentation/RelNotes/../../README.md` is a perfectly valid (if
->> awkward) symlink target.
->> 
->> Still, I would say that 32,768 would make for a fine (still insanely high,
->> but not so high as to allow malicious symlinks to cause memory problems)
->> limit.
->> 
->> Sound good?
->> Johannes
->
-> Sounds good to me, thanks!
+>  `git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]`::
+> -	Interactively select hunks in the difference between the index
+> -	and _<tree-ish>_ (defaults to `HEAD`).  The chosen hunks are applied
+> -	in reverse to the index.
+> +	Interactively select changes from the difference between the index
+> +	and the specified commit or tree (which defaults to `HEAD`).
+> +	The chosen changes are added to the index.
 
-As this is a generic codepath in strbuf.c, platforms that do not
-honor Microsoft's promise cited above can break the assumption made
-here by going beyond 32k, no?
+The previous iteration said "changes are unstaged", implying that
+the changes are removed from the index.  But now it says the changes
+are added to the index.  Which one?
 
-I am OK if this infinite loop had our own "we are growing the buffer
-very long and still getting not-enough-buf error; let's give up"
-termination condition.
+I think neither is correct.  I wasn't involved in the design of the
+behaviour of "reset -p", but IIUC,
 
-IOW, a simpler alternative may be
+    git reset -p
+    git reset -p HEAD
 
----- >8 ----
-Subject: strbuf_readlink(): do not trust PATH_MAX
+show "git diff --cached HEAD" (i.e., what damage you will cause if
+you commit what is in the index), so chosen hunks will be reverted
+out of the index if you say "y" to "reset -p" prompt.
 
-We have been bitten before by platforms that sets PATH_MAX way too
-low, far below the length of paths they comfortably support.  The
-strbuf_readlink() limits the link targets to PATH_MAX, which is a
-code path that is broken by such platforms.
+On the other hand, 
 
-Raise the limit to 32kB, which matches the limit of a
-platform with such a problem [*].
+    git reset -p COMMIT
 
- * https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation
+for COMMIT that is not HEAD gives "git diff -R --cached COMMIT"
+(i.e., the changes to take you closer to the named commit), so
+chosen hunks will participate in the next commit if you commit after
+completing this "reset -p" session.
 
- strbuf.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+    The contents in the index are modified using the chosen hunks.
 
-diff --git c/strbuf.c w/strbuf.c
-index 7fb7d12ac0..1c7659bcd2 100644
---- c/strbuf.c
-+++ w/strbuf.c
-@@ -566,7 +566,11 @@ ssize_t strbuf_write(struct strbuf *sb, FILE *f)
- 	return sb->len ? fwrite(sb->buf, 1, sb->len, f) : 0;
- }
- 
--#define STRBUF_MAXLINK (2*PATH_MAX)
-+/*
-+ * Do not use PATH_MAX, as some platforms sets it too low;
-+ * 32kB matches what Windows has as the real limit for a pathnname.
-+ */
-+#define STRBUF_MAXLINK (2 * (1 << 15))
- 
- int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
- {
+is the best description I can come up with.
+
+The actual prompt asks "unstage this hunk?" when operating against
+HEAD, while the prompt changes to "apply this hunk to index?" when
+opeating against a commit that is not HEAD, so it might be simpler
+not to say anything about the direction of the application (i.e.,
+how the chosen hunks are used to modify the index) in this
+paragraph, like the above example, may be a viable option.
