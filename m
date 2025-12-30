@@ -1,156 +1,296 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E2C1D5147
-	for <git@vger.kernel.org>; Tue, 30 Dec 2025 15:37:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBD12264D5
+	for <git@vger.kernel.org>; Tue, 30 Dec 2025 16:04:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767109070; cv=none; b=jNvsruBXtkbXxJkUk6GofaHvnGpy4k9GHs1nW2VdsPYaeJ66yMKW6hfpFFFEaIlWeZrAQSh+hj4zpVrSRyB/DgEOZw+PaWig95F0LhoFX+iy2VKxm0Y35zz+JhDKnHJQ53faolJxtE/0BTjvpHarvTlIaA8ZJ+2uaUVY+DVXf+8=
+	t=1767110696; cv=none; b=GbxXCRLAjLHTSCPDP7Qaw5+yzryclA3M4Uk75mTu/KSLLW7/bopLptk5/y+LLMrA/JyS01TH1SNcC8fJVLX+glyeGSJa1qHqLTCjTdXzjagGqT9h0nrRDcP5/LiC8Y5FKeG32WWL1QmvQXtoy6Tx7fI/mMPMr9J7vizuKwfF+k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767109070; c=relaxed/simple;
-	bh=+gb9rfEAB3gS3/gyry94Dq9zmFtICyHjCCkEiFuTe04=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=n/lHDfLtB9lA+TkHj/MzTiQAaRiSCUHwqdWe2KYiHCwEoUkfBYZ0m4q1kEe1t2M+k3xz0X2F49pBo/yjSWxjp7PLo97HvSWrYQbSXAyRc6zd4gzRkNykNOUa5/GTCJqmha/FrvbGp9svMEPiSiAV2GO6RFu8gmxUkUSLhAaoypg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NH8Ns7Hm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QvWJWyOY; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1767110696; c=relaxed/simple;
+	bh=6+Fk9PKtxEB4F7dxa3ExCG5p9HZDnV/dG2iYUELhet4=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=BP6/MSmRx0WmnQnUo4gTm1ntWEbyYoapC4y2LtPmVQg5vGTxaarK0YLt34+lICqjSgjmS8biFvQEG+FDv4oDJw9tHpP1FhaHc9Wqk9VZGQJGGSPDB3aNQ/nLPF/LaXspZa8YtZQ3kkkkLjbUGumo9dyTs8AJhl/DbhISTW0beWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=WyObanTz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PeaA2Hpu; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NH8Ns7Hm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QvWJWyOY"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8F8047A0085;
-	Tue, 30 Dec 2025 10:37:47 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 30 Dec 2025 10:37:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1767109067; x=1767195467; bh=Ux8Z1Dh6ox
-	ydS1TgWW0uFK3UFj7wW/MlyznwXybvhSg=; b=NH8Ns7HmEKe9DPMrJsC4aH9gFZ
-	LVRF9Ka/W7e2oqrnGlzuv68nbGIhbykq6LsVcBEg0YEseS5GVLzYWxZMf1xBAsZL
-	H8zmE51rLQ9hGAdmAJnzYSkqs9NMdNkE5V+tOvARepU6nhegF5vQh6GV78ph5l21
-	qq3UVFd2W5XVUaK7fCi2v4t51YP+3mLUVAdFH67Az2Dejft2ksssPvHnFYrAlrmJ
-	YhIXW51mfBkrh1zBp13//UNFjjZegnhXq2o2NtU+tjPEmkO3Ya5lwZsmYUB5pwH4
-	JnYtB/ez17sTcieguxcyhH9Fq11B04QJ3vu41mGkGUpZqbv5Xe1qEzrzX53g==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="WyObanTz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PeaA2Hpu"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id BA3851D000B8;
+	Tue, 30 Dec 2025 11:04:52 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Tue, 30 Dec 2025 11:04:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767110692;
+	 x=1767197092; bh=djy8nIqBvipEX8VhFcDCLBQ95ytQFU4GbT5U3i94QYY=; b=
+	WyObanTz31Z0h17TQiYuf0AEsz3MY34WFow0JbrGpIZ+Kl1mrksjaPI0llVz1u1n
+	7iPPs/A1aACosW2QW2TZMu6cbPjXj7HGKciGlWoVP4Ycqb9Bebyq3cs+zXy3i9Vt
+	W/2QbY1siWddkISVBZ9Nc8/HjRynjDP/dWsl87Sg4iTIsPBo71554Y5PsOHRjoGU
+	Fq+iTM/h7ESmGoKy1Ao8H0BkAnSQ9q8tFtAPTKqIT1tT6wQJ+47cKUVsiWabO3K3
+	k4/XjtZMzhAgbwzFD4MgLyh/g8k3AcqZv+STmiyhH9Uy+mJGh079w2W9W85n47El
+	gfI1eISNt9W83dj2Adrb1Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767109067; x=1767195467; bh=Ux8Z1Dh6oxydS1TgWW0uFK3UFj7wW/Mlyzn
-	wXybvhSg=; b=QvWJWyOY9xyMMOu26kbn1RgPXhX86L3CEpmOFF5p3MsCBrrQ3EF
-	GexW4DAfh9shtjdwvWFz7V5rM4r5CiVJC0Fej2Q9/vNK/bt4AQbMb4oEAmdn9K0o
-	Rgj+jAqRjo7BalFH0cFXc6Fp8Fszn4h4piWrB8wHxGPehmuC9rNyswbcFnMbb1hW
-	wjNtL7EE++o7uItbwllyJ2n4ZQf4hfJ/Tsf3wDs7Dk4wJANXCZzLtVz8GMLfNlt3
-	zsBdRFGi+OMY/mCpxARfei0maiaHNEm7QzZWeUoUnXupUk8Cnr/oWdykmVi/En/b
-	t0MHR/3Zn9uS8fVWDsEQ0X6kiCe5d7H0dtg==
-X-ME-Sender: <xms:y_FTacEHyqjv7ORPxNgWkWJOQTHg51Odegh7mkxagAqPJozJn0VzhQ>
-    <xme:y_FTacVzF0ixae2Pflz4HTGY4AgqOi4jUkTD2c_BZrcIgN-i9FkHYDhJg5EDmJEFZ
-    KxzfPXznUOjFgvPxqZCy6gn1s14k9in1NGJ3AruTZiYoSiwVw>
-X-ME-Received: <xmr:y_FTabJWhcGi_CB8KhHxk64iiDSxb7RWxva4fj3N665SAPwiN5wKN6aIz8xntf9rU-6jSkFF-o-WlvEEcD1tN_k9XGzgF8tsPw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdektdegtdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767110692; x=
+	1767197092; bh=djy8nIqBvipEX8VhFcDCLBQ95ytQFU4GbT5U3i94QYY=; b=P
+	eaA2HpuBbViMOmzi8ltBeyBLWgRNP47Z+Yv5hLyoycYNqcgUsY+3ZtdPN6Uk5mF+
+	R0aMWMZsIBrVOUBhTZV5mdvS77GGPL8LJ6oP23TmxXvdTsaixq+7HfEut7U3ElCH
+	B28Hh/KOYNRVZWv4Y4aozvNs9zUVhwK4YMrYFFUoJZNnHuztrkWOl42anWRURkzU
+	NCsmmDb1A4rBzfSzxfwZhOznGUa0JyGauBeU2lJcgQu0L5KWUrfVpCnqzErGkTww
+	am+lJvHGkCfYewJPklyT3I/RcUHhh7p4/L0bWu3R1HU1M41IsSx4aW2MpwZjn/wQ
+	VLgaqVpHwG0QesgZslWeQ==
+X-ME-Sender: <xms:JPhTaepR3v4_W5GNzvXx-jFpwshm0D10bw3RDOFpTi9EaQe7mBjcF5Q>
+    <xme:JPhTaXfwh43LxAmUWmz3cvxG7T7F3APFkY_wrEF_dO9ghsHa91LqW6bW9L_Xuem0u
+    a-PaowpP7pQ4ig2oZaFi502kEvJufl2RBogu2g2YdkzTvazkpkCR0k>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdektdeghecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    ghhithhhuhgssehprghulhhishgrghgvvghkrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:y_FTac_j4VL_VOiN1a0AWMMJssnkFbZBb1R7F86NPqN8QAfSzzYxwQ>
-    <xmx:y_FTaeIu724sS4lNVZZ4srOWlFLCqVsjbRhZonJrKdW1n9sgUn7A9Q>
-    <xmx:y_FTaRlQ5KJhMyV6UWan6vW4-_bTZmSc7Kjp5A4Ygsekj2O-g5PLRw>
-    <xmx:y_FTaSOkI4jsEUkYgWGmrE8oNzBO6OZrPGGoKdTr5_2tFz4NWk3d_g>
-    <xmx:y_FTaXImmm6OrDfL2mzeDeYCEOFL58tE4kXSTTYkJWXcd7e7ZcGmKNUr>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Dec 2025 10:37:47 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Paul Tarjan <github@paulisageek.com>
-Subject: Re: [PATCH v2] fsmonitor: implement filesystem change listener for
- Linux
-In-Reply-To: <pull.2147.v2.git.git.1767096494372.gitgitgadget@gmail.com> (Paul
-	Tarjan via GitGitGadget's message of "Tue, 30 Dec 2025 12:08:14
-	+0000")
-References: <pull.2147.git.git.1767082450088.gitgitgadget@gmail.com>
-	<pull.2147.v2.git.git.1767096494372.gitgitgadget@gmail.com>
-Date: Wed, 31 Dec 2025 00:37:45 +0900
-Message-ID: <xmqq5x9of0ae.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:JPhTaXGaDW-79DXXKwl0yE0giW6faiwh-aWImxifIYOc5L8ghvzLbg>
+    <xmx:JPhTacHLgsgOor02lig30LUpN7ZCpfJA-bjTbTlZbx3dV5W661UWow>
+    <xmx:JPhTacOiDYEpSQGkC670a7osfGidivDqCKjNARVCP0R4ix76RaIcXA>
+    <xmx:JPhTaTEAX2O0I5monUo9oB3Kv9GcgA_T5MJskBlHzGS4qSSsaCqrAA>
+    <xmx:JPhTaRlmQX7rUtB1PxlcuCxd_kvrOCZCiR1UQU96yBLE7w8_QQ1-3U-I>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 70FCF1EA0066; Tue, 30 Dec 2025 11:04:52 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: ArCNidGKT4nk
+Date: Tue, 30 Dec 2025 17:04:21 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: "Elijah Newren" <newren@gmail.com>
+Message-Id: <9fae6398-cdc5-4ccf-8bd6-47425efb0c5b@app.fastmail.com>
+In-Reply-To: <pull.2023.git.1767033783800.gitgitgadget@gmail.com>
+References: <pull.2023.git.1767033783800.gitgitgadget@gmail.com>
+Subject: Re: [PATCH] merge-ort: fix corner case recursive submodule/directory conflict
+ handling
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for a quick turnaround, but it would be more efficient if you
-hunted all the leaks yourself, instead of getting a report for one
-issue and updating the patch to fix that one issue.
+> [PATCH] merge-ort: fix corner case recursive submodule/directory confl=
+ict handling
 
-Here is what I am getting these:
+s/corner case/corner case in/ ?
 
-    $ make SANITIZE=address CC=clang && cd t && sh t7527-*.sh -i -v
+On Mon, Dec 29, 2025, at 19:43, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+>
+> At GitHub, a few repositories were triggering errors of the form:
+>
+>     git: merge-ort.c:3037: process_renames: Assertion `newinfo &&
+> !newinfo->merged.clean' failed.
+>     Aborted (core dumped)
+>
+> While these may look similar to both
+>     a562d90a350d (merge-ort: fix failing merges in special corner case,
+>                   2025-11-03)
+> and
+>     f6ecb603ff8a (merge-ort: fix directory rename on top of source of =
+other
+>                   rename/delete, 2025-08-06)
+> the cause is different and in this case the problem is not an
+> over-conservative assertion, but a bug before the assertion where we d=
+id
+> not update all relevant state appropriately.
+>
+> It sadly took me a really long time to figure out how to get a simple
+> reproducer for this one.  It doesn't really have that many moving part=
+s,
+> but there are multiple pieces of background information needed to
+> understand it.
+>
+> First of all, when we have two files added at the same path, merge-ort
+> does a two-way merge of those files.  If we have two directories added
+> at the same path, we basically do the same thing (taking the union of
+> files, and two-way merging files with the same name).  But two-way
+> merging requires components of the same type.  We can't merge the
+> contents of a regular file with a directory, or with a symlink, or with
+> a submodule.  Nor can any of those other types be merged with each
+> other, e.g. merging a submodule with a directory is a bad idea.  When
+> two paths have the same name but their types do not match, merge-ort is
+> forced to move one of them to an alternate filename (using the
+> unique_path() function).
+>
+> Second, if two commits being merged have more than one merge-base,
+> merge-ort will merge the merge-bases to create a virtual merge-base, a=
+nd
+> use that as the base commit.
+>
+> Third, one of the really important optimizations in merge-ort is trivi=
+al
+> tree-level resolution (roughly meaning merging trees without recursing
+> into them).  This optimization has some nuance to it that is important
+> to the current bug, and to understand it, it helps to first look at the
+> high-level overview of how merge-ort runs; there are basically three
+> high-level functions that the work is divided between:
+>     collect_merge_info() - walks the top-level trees getting individual
+>                            paths of interest
+>     detect_renames() - detect renames between paths in order to match =
+up
+>                        paths for three-way merging
+>     process_entries() - does a few things of interest:
+>       * three-way merging of files,
+>       * other special handling (e.g. adjusting paths with conflicting
+>         types to avoid path collisions)
+>       * as it finishes handling all the files within a subdirectory,
+>         writes out a new tree object for that directory
+>
+> If it were not for renames, we could just always do tree-level merging
+> whenever the tree on at least one side was unmodified.  Unfortunately,
+> we need to recurse into trees to determine whether there are renames.
+> However, we can also do tree-level merging so long as there aren't any
+> *relevant* renames (another merge-ort optimization), which we can
+> determine without recursing into trees.
+>
+> We would also be able to do tree-level merging if we somehow apriori
 
-Note that "-i" is to say "stop at the first one".
+s/apriori/a priori/
 
+> knew what renames existed, by only recursing into the trees which we
+> could otherwise trivially merge if they contained files involved in
+> renames.  That might not seem useful, because we need to find out the
+> renames and we have to recurse into trees to do so, but when you find
+> out that the process_entries() step is more computationally expensive
+> than the collect_merge_info() step, it yields an interesting strategy:
+>    * run collect_merge_info()
+>    * run detect_renames()
+>    * cache the renames()
+>    * restart -- rerun collect_merge_info(), using the cached renames to
+>      only recurse into the needed trees
+>    * we already have the renames cached so no need to re-detect
+>    * run process_entries() on the reduced list of paths
+> which was implemented back in 7bee6c100431 (merge-ort: avoid recursing
+> into directories when we don't need to, 2021-07-16)  Crucially, this
 
-expecting success of 7527.12 'create some files':
-        test_when_finished clean_up_repo_and_stop_daemon &&
+Missing period before =E2=80=9CCrucially=E2=80=9D.
 
-        start_daemon --tf "$PWD/.git/trace" &&
+> restarting only occurs if the number of paths we could skip recursing
+> into exceeds the number we still need to recurse into by some safety
+> factor (wanted_factor in handle_deferred_entries()); forgetting this
+> fact is a great way to repeatedly fail to create a minimal testcase for
+> several days and go down alternate wrong paths).
 
-        create_files &&
+Missing open paren?
 
-        test-tool fsmonitor-client query --token 0 &&
+>
+> Now, I earlier summarized this optimization as "merging trees without
+> recursing into them", but this optimization does not require that all
+> three sides of history has a directory at a given path.  So long as the
+> tree on one side matches the tree in the base version, we can decide to
+> resolve in favor of whatever the other side of history has at that path
+> -- be it a directory, a file, a submodule, or a symlink.  Unfortunatel=
+y,
+> the code in question didn't fully realize this, and was written assumi=
+ng
+> the base version and both sides would have a directory at the given
+> path, as can be seen by the "ci->filemask =3D=3D 0" comment in
+> resolve_trivial_directory_merge() that was added as part of 7bee6c1004=
+31
+> (merge-ort: avoid recursing into directories when we don't need to,
+> 2021-07-16).  A few additional lines of code are needed to handle cases
+> where we have something other than a directory on the other side of
+> history.
+>
+> But, knowing that resolve_trivial_directory_merge() doesn't have
+> sufficient state updating logic doesn't show us how to trigger a bug
+> without combining with the other bits of information we provided above.
+> Here's a relevant testcase:
+>    * branches A & B
+>    * commit A1: adds "folder" as a directory with files tracked under =
+it
+>    * commit B1: adds "folder" as a submodule
+>    * commit A2: merges B1 into A1, keeping "folder" as a directory
+>      (and in fact, with no changes to "folder" since A1), discarding t=
+he
+>      submodule
+>    * commit B2: merges A1 into B1, keeping "folder" as a submodule
+>      (and in fact, with no changes to "folder" since B1), discarding t=
+he
+>      directory
+> Here, if we try to merge A2 & B2, the logic proceeds as follows:
+>    * we have multiple merge-bases: A1 & B1.  So we have to merge those
+>      to get a virtual merge base.
+>    * due to "folder" as a directory and "folder" as a submodule, the
+>      path collision logic triggers and renames "folder" as a submodule
+>      to "folder~Temporary merge branch 2" so we can keep it alongside
+>      "folder" as a directory.
+>    * we now have a virtual merge base (containing both "folder"
+>      directory and a "folder~Temporary merge branch 2" submodule) and
+>      can now do the outer merge
+>    * in the first step of the outer merge, we attempt to defer recursi=
+ng
+>      into folder/ as a directory, but find we need to for rename
+>      detection.
+>    * in rename detection, we note that "folder~Temporary merge branch =
+2"
+>      has the same hash as "folder" as a submodule in B2, which means we
+>      have an exact rename.
+>    * after rename detection, we discover no path in folder/ is needed
+>      for renames, and so we can cache renames and restart.
+>    * after restarting, we avoid recursing into "folder/" and realize we
+>      can resolve it trivially since it hasn't been modified.  The
+>      resolution removes "folder/", leaving us only "folder" as a
+>      submodule from commit B2.
+>    * After this point, we should have a rename/delete conflict on
+>      "folder~Temporary merge branch 2" -> "folder", but our marking of
+>      the merge of "folder" as clean broke our ability to handle that a=
+nd
+>      in fact triggers an assertion in process_renames().
+>
+> When there was a df_conflict (directory/"file" conflict, where "file"
+> could be submodule or regular file or symlink), ensure
+> resolve_trivial_directory_merge() handles it properly.  In particular:
+>   * do not pre-emptively mark the path as cleanly merged if the
 
-        grep "^event: dir1/new$" .git/trace &&
-        grep "^event: dir2/new$" .git/trace &&
-        grep "^event: new$"      .git/trace
+s/pre-emptively/preemptively/ (according to Merriam Webster)
 
-fsmonitor-daemon is watching '/home/gitster/w/git.git/t/trash directory.t7527-builtin-fsmonitor'
-builtin:0.1039108.20251230T123036.129805Z:0/event: dir1/new
-event: dir1/new
-event: dir2/new
-event: dir2/new
-event: new
-event: new
-HEAD is now at 1d1edcb initial
-Removing dir1/new
-Removing dir2/new
-Removing new
-not ok 12 - create some files
-#
-#               test_when_finished clean_up_repo_and_stop_daemon &&
-#
-#               start_daemon --tf "$PWD/.git/trace" &&
-#
-#               create_files &&
-#
-#               test-tool fsmonitor-client query --token 0 &&
-#
-#               grep "^event: dir1/new$" .git/trace &&
-#               grep "^event: dir2/new$" .git/trace &&
-#               grep "^event: new$"      .git/trace
-#
-1..12
+>     remaining path is a file; allow it to be processed in
+>     process_entries() later to determine if it was clean
+>   * clear the parts of dirmask or filemask corresponding to the matchi=
+ng
+>     sides of history, since we are resolving those away
+>   * clear the df_conflict bit afterwards; since we cleared away the two
+>     matching sides and only have one side left, that one side can't
+>     have a directory/file conflict with itself.
+>
+> Also add the above minimal testcase showcasing this bug to t6422, **wi=
+th
+> a sufficient number of paths under the folder/ directory to actually
+> trigger it**.  (I wish I could have all those days back from all the
+> wrong paths I went down due to not having enough files under that
+> directory...)
 
-=================================================================
-==git==1039073==ERROR: LeakSanitizer: detected memory leaks
+:)
 
-Direct leak of 40 byte(s) in 1 object(s) allocated from:
-    #0 0x55c18d8d4042 in calloc (git+0x8c042) (BuildId: 4097db008a82663ae0b3398128a7ab4e09bbdd21)
-    #1 0x55c18dc10f14 in xcalloc wrapper.c:154:8
-    #2 0x55c18d945f72 in kh_init_str builtin/fsmonitor--daemon.c:656:1
-    #3 0x55c18d945828 in do_handle_client builtin/fsmonitor--daemon.c:871:10
-    #4 0x55c18d945191 in handle_client builtin/fsmonitor--daemon.c:987:11
-    #5 0x55c18dc283e2 in worker_thread__do_io compat/simple-ipc/ipc-unix-socket.c:532:9
-    #6 0x55c18dc27a7f in worker_thread_proc compat/simple-ipc/ipc-unix-socket.c:606:9
-    #7 0x55c18d8d64f4 in void* ThreadStartFunc<false>(void*) lsan_interceptors.cpp.o
-    #8 0x7fe358257b7a in start_thread nptl/pthread_create.c:448:8
-    #9 0x7fe3582d57b7 in __GI___clone3 misc/../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+>
+> I know this commit has a very high ratio of lines in the commit message
+> to lines of comments, and a relatively high ratio of comments to actual
+> code, but given how long it took me to track down, on the off chance
+> that we ever need to further modify this logic, I wanted it thoroughly
+> documented for future me and for whatever other poor soul might end up
+> needing to read this commit message.
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+>[snip]
