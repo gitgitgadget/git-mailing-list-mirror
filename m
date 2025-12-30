@@ -1,76 +1,78 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F9B23F417
-	for <git@vger.kernel.org>; Tue, 30 Dec 2025 14:32:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EA7238C0A
+	for <git@vger.kernel.org>; Tue, 30 Dec 2025 14:32:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767105171; cv=none; b=s6bkHmn9Y4DD5JSYwsL8KloI9LU6nSbPWshADDC7DvWYwbYcu+J9MMtyABhDq9633WXhaIKgAu9ZrYZw3iMUtNdtJIV6gIROLhn96UiWALCnTa0MJq8Oc09Mz37FwT/KjjQemuQ5GnWR494LaTVyuS6M0ylrJvZ2LCxIcDgElOY=
+	t=1767105182; cv=none; b=by+y6x5fdA+hEOQBGnLa+/+jdOmsNpLhdQACRf/xQTg3olSaAbOkk23AxFxOXQ1djbWvGcEUeFlN7T7Cg8AqNyxGqbX60wzkuALds/WPtklbOXxcwN5B2xPFPf0hUivPLCQCkkJ2IE27j+6we2jc4Yc6+7Z8P3gyDMx4C963FtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767105171; c=relaxed/simple;
-	bh=Y96dXppD1Kc/nxfphB8V8wkvaLl82OFO1brr5yu6l7c=;
+	s=arc-20240116; t=1767105182; c=relaxed/simple;
+	bh=QLTTeZBQVpXU5E8/txaxLNQ8xu9d88bYWhnmoW73QaQ=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=AyueslcoSVPuWj3fSKMQ7xswtD2+wFdvFANLW1vS/RR8mQwJc8uhe1sBeQTYIeS0ET4INZKuwoTWpP7xuhZ4euQBzgIBGls4XT17Xt7bipxal/xywD1n2/7QqJP+1dMcUAKZRfrYSuoYs8IwtxH6Z/zqBEaXFoRec77g2Y1v+18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=1/VguJaO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J4skjC9t; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	 Subject:Content-Type; b=j6SRQpSCa7N/EyqMQ7dVw+qH4tBUKimhxI1M4sJwOY7nZEm5txvvmVq5IFFeu4VRtT6rim16v2saKle9ikS8P+tFD71coGQPqpt24KUnzmlx5Qz4Up7miIDAJZcL962WwNYBwxMYaMwr+W48vPEFFKHsTVq0FGK7CKE9Iz6W2R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Ev6fdSqH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OWWkghQB; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="1/VguJaO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J4skjC9t"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Ev6fdSqH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OWWkghQB"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 054157A0085;
-	Tue, 30 Dec 2025 09:32:48 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id C4F9C1D00063;
+	Tue, 30 Dec 2025 09:32:58 -0500 (EST)
 Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 30 Dec 2025 09:32:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1767105168; x=1767191568; bh=geLAmyci/BVdizmWZUflGMpzpor6fGe/
-	JcYIcqHsBlk=; b=1/VguJaOzaAA1ajHn6JYTVDjI5d2yaohqSBpJQFYzqWgGXeN
-	OxUvAXFuz1/VLjIRxYWOl0L7f6jrtYw2AeuzZPhZwukMxgkwm1/1CyxmD4jZwc1L
-	3aviaHcNF1gqWW3BHWtosZ12Iu81CyIpfyB9pMoA3jOr4AoOz22tXnOrFmlQTDmQ
-	bP0yXBwaA3zevluSH8KSKw8YTwUnFsDpWnkSxkDDsp1+d3knwG/Pb54jeOTlXOcP
-	+GTNnb+GnyMN39Vuxs5qeOhXDLTIQnyl8fL5Jh+SAkEoVa9EQqDMI2or6IGuY6WY
-	QCw2YsLWWqSBaJfJRF7tJFA7in5ZnH3nKtJy1g==
+  by phl-compute-06.internal (MEProxy); Tue, 30 Dec 2025 09:32:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767105178;
+	 x=1767191578; bh=3ipXhgK8hKfjII7NqsKjHwoZFxvkylZRHbE+XPkMVec=; b=
+	Ev6fdSqHNAr59O6Cijinstp1WHUGKIiDhxnUl1P9HNNd/ZmlcdbWpVyrbQnrkm6B
+	j5QrQs/exosN0t7aMom43IBqg886Lf5SCq5g0ieTr9UEoq940YPI/8FvJL2IK22V
+	lu9BmbDM1y6hSiCmMM9Oa+dDVaDlOxcQbxM83wikS47xeV9sUpXwEyD1xN9pGASN
+	j8y3nw6YzeVeqRayXmEyN3Uuw2MRW2EOeSJMqNgwFBKKTxR58plj7v0hXnMQb0LF
+	G6zktttAC/bB29ZWiwKtHq7ZiL4GCw+PeHv5/EQeoKAqrizhqoPN3bmB7gYJZVhL
+	ohSFKzl35q+13eYcmc5Hhg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767105168; x=
-	1767191568; bh=geLAmyci/BVdizmWZUflGMpzpor6fGe/JcYIcqHsBlk=; b=J
-	4skjC9tkYH11XDe6ArWzyYmcUvTBPzB8oqqUTMqpYHo8TowRNcoQLRo8av/p1erP
-	Wj2hqCPzPLZhUTq5sMKcv7lQ1i27Jbyj2RluhxCggf4CPoFqrJnGRnasxJsXQbB5
-	GGv63IUitLYTCs291q3GnqCiDkgmePi5hkAiyUI4FcqQBDA6y2ZpfjSGR2X+Iojx
-	RQGA7UVHXL6uwhRh9fXD5OdE+PH/sdB0ZenIRxLFIAuum2689HCuVpBxxrzpKVOf
-	wdQrI3Hm9vgPBr9UExQoaSS/LTPV8WDtLJp7H3Qh90RUJvweUXheFuaNzcRLPZ1z
-	MT6a6hW0iZNC4vMQqpEqw==
-X-ME-Sender: <xms:kOJTaRp4X2GlIFcfM9J6jm5uTyd6mjpAOU-4HyxOSpgI9HjJ-L5SuTQ>
-    <xme:kOJTaedSFFviWf80y0B4fYwKoD0B8lXC5WK1ZcXx3kg-KNzw9KN7KCYU21KIUTYtA
-    BXCZlg41SrFzs3RzQgn-KOb529fy-HbI-9LZh2saz51Jk9NgWrRyQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767105178; x=
+	1767191578; bh=3ipXhgK8hKfjII7NqsKjHwoZFxvkylZRHbE+XPkMVec=; b=O
+	WWkghQBHjeO8w3FhGryUTeJEP8m6xbP/AMLGt9e5Bb+gBlq5pGTFKXpGezzxyCPr
+	n0RqYYZLL7OPV5s76x3lSK63/1UaKv/lzp6F79j8kqlpzbOSfh9ZlsKKCPPAOeju
+	9vhZPFM32nHJzv6HUGnzTYP7h/qUDPSwl/HkVUryLlqplD9VQUGf8ZL/ZGQ8ss+3
+	gKOkKsX0eDHxZsKlXgS9qZoy7Ykhm1Ml1KkiRQ2CmzFAhVPhng/EqVsCRI6ni/Dd
+	+kxxOFpudRUnJtCCKx7HmMDPoKWcLw+hQJpjTODd0T2uSqGOXXYuxwYywgHvSnuR
+	ImQcFgz7zcBVOReIfAv5w==
+X-ME-Sender: <xms:muJTac5VCukPJDflQLX6IOEpqmDo5_ZlQJkdp5QQgLFvqMW6XzUHa-g>
+    <xme:muJTaYtw9BupDPxXGoGmjmK0ko9AZ7bDxmrsdHOBjK43Ip1Pco8aGaOxR-8BXqyAT
+    FPdkAY1VWf7gOj4UymZw8_kiNIkfuKTQSXULWZtq6XdEjhDX-Aa1Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdektddvjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
-    grmhgvqeenucggtffrrghtthgvrhhnpeefteeghfegfeevleeguddvkeetheeiveffudej
-    lefgudffffejleffffeludekjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofh
-    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoheptghh
-    rhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfi
-    hrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgr
-    nhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrgh
-X-ME-Proxy: <xmx:kOJTaftfhICvBSKKB0eE2w0A7v_GJNV7b7WCNZOIgLsQHumEvE0DLA>
-    <xmx:kOJTaR-KnVEFT-ULbejIIYMVygxQdSOqN5EKZVVmm_71to7qbLjQyw>
-    <xmx:kOJTaS1m1bV9ycovs0PplfOrT4sEE88Fyz3hhvZjZ0NtWtzC2-pUTA>
-    <xmx:kOJTaeBIIWFWKOFp-uT3l58HZvLnJDqyMNq-5F07WPb5uVLsfmD_fQ>
-    <xmx:kOJTaUBpRZ4RMRypEEgLiOREjhuez2_LX6HtYM9c3wIUZuJYUk84e91y>
-Feedback-ID: i2671468f:Fastmail
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepjedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghl
+    mhdrohhrghdruhhkpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepshhiugguhhgrrhhthhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhg
+X-ME-Proxy: <xmx:muJTaajm-flx202sK-KT2vf_gJtyqbUGhJlFUTx2Yf3TLUIywLBRYg>
+    <xmx:muJTaVGFz5laoy6xOwHsjaCpDVJeuaotvqrLeX4LHshwyh07Se45ig>
+    <xmx:muJTaR_lqIc_Q9Hus39z8b4lUSszpXRYTYsqZBAm4LLBUMGRqCn_Hg>
+    <xmx:muJTaUxjwCmuWPNkzRRyUkFmhV9eADV1TbHohQrki91BbSQxeDIJAA>
+    <xmx:muJTadCpjVRpx3pXcjLLfF2e7044w4JhtiDLrq5rVq5Fx_Mqp9GgOyKk>
+Feedback-ID: i8b11424c:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id A88311EA0066; Tue, 30 Dec 2025 09:32:48 -0500 (EST)
+	id 16EAD1EA0066; Tue, 30 Dec 2025 09:32:57 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -79,30 +81,45 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-ThreadId: AkV22KuyfT4B
-Date: Tue, 30 Dec 2025 15:31:47 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Elijah Newren" <newren@gmail.com>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, "Christian Couder" <christian.couder@gmail.com>,
+Date: Tue, 30 Dec 2025 15:30:14 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
+ "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
+ "Christian Couder" <christian.couder@gmail.com>,
+ "Elijah Newren" <newren@gmail.com>,
  "Siddharth Asthana" <siddharthasthana31@gmail.com>
-Message-Id: <3914e3cc-d90b-4992-8c15-889c34c52a25@app.fastmail.com>
-In-Reply-To: 
- <CABPp-BEcJqjD4ztsZo2FTZgWT5ZOADKYEyiZtda+d0mSd1quPQ@mail.gmail.com>
+Message-Id: <0377eefd-ae66-4501-84ac-ca2fb8b0cdbe@app.fastmail.com>
+In-Reply-To: <a5822145-5a5c-4a2b-84b9-7c061b3bab97@gmail.com>
 References: <CV_replay_die_descr.13f@msgid.xyz>
- <CABPp-BEcJqjD4ztsZo2FTZgWT5ZOADKYEyiZtda+d0mSd1quPQ@mail.gmail.com>
-Subject: Re: [PATCH 0/2] replay: die descriptively when invalid commit-ish
+ <replay_die_descr.140@msgid.xyz> <xmqqikdxriw3.fsf@gitster.g>
+ <a5822145-5a5c-4a2b-84b9-7c061b3bab97@gmail.com>
+Subject: Re: [PATCH 1/2] replay: die descriptively when invalid commit-ish
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 24, 2025, at 04:03, Elijah Newren wrote:
-> On Mon, Dec 22, 2025 at 2:04=E2=80=AFPM <kristofferhaugsbakk@fastmail.=
-com> wrote:
->>[snip]
+On Tue, Dec 23, 2025, at 11:52, Phillip Wood wrote:
+> On 23/12/2025 03:12, Junio C Hamano wrote:
+>> kristofferhaugsbakk@fastmail.com writes:
+>>
+>> How many callers use this function?  I am wondering if it is better
+>> to give a better message at the caller(s), rather than here, where
+>> we lack context to tell something like "You gave string 'ource' as
+>> the argument to the '--onto' option, but 'ource' does not name any
+>> commit" (in other words, "for what our caller is trying to peel
+>> <name> to a commit").
 >
-> Thanks for working on this.  I have nothing to add beyond what others
-> have already commented on the series, except that I can maybe answer
-> one question...
+> There are only two callers so I think that is a good idea. If you give
+> an invalid commit name to "--advance" then it dies with
 >
->[snip]
+>      fatal: argument to --advance must be a reference
+>
+> so arguably we only need to check the return value when parsing "--ont=
+o"
 
-Thanks for explaining! I=E2=80=99ve removed this code in version 2.
+Well spotted. My change would give a worse error message
+for `--advance`.
+
+I=E2=80=99ve made the move-line change that Junio suggested in version 2.
+
+Thanks.
