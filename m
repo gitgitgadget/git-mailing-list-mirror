@@ -1,191 +1,156 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A965B26ED3A
-	for <git@vger.kernel.org>; Tue, 30 Dec 2025 15:04:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E2C1D5147
+	for <git@vger.kernel.org>; Tue, 30 Dec 2025 15:37:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767107073; cv=none; b=MBL4ARluHErz317JaKNOXwW2PziZbDMZiBYVF0Ac9cPFbhkBrQA2h2D7E3AladxocZlpgkWTa5YfZ7GK7K7pcrlH78dgd5iW6R7nxU+uX99QsHCpIf74QC90jlars4ESmmmm7aCYd1jBbG1lNymRDGs0gUibS52EqxsNz3f9cPg=
+	t=1767109070; cv=none; b=jNvsruBXtkbXxJkUk6GofaHvnGpy4k9GHs1nW2VdsPYaeJ66yMKW6hfpFFFEaIlWeZrAQSh+hj4zpVrSRyB/DgEOZw+PaWig95F0LhoFX+iy2VKxm0Y35zz+JhDKnHJQ53faolJxtE/0BTjvpHarvTlIaA8ZJ+2uaUVY+DVXf+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767107073; c=relaxed/simple;
-	bh=rHk+bhmGCg+0/64NvsEa7EfZhL4PeQgvTA5HraZm0Rc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dAVIqMcYZCwHdlO84t6JzIY8XMk+CNC+G8UepkaQOdkupBfsmrmRz5FURoIK3R4RsYrmem1Ce8Y679YP6krhFXUHfriem7mhSzn7ldjs8FoSQRV7V0kC5K1Kj4KtfvYzi54lXllgrRThH1IWDNpxI5XiWzu8YA4j7nrvQca7GSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=LBkPH541; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eTRfYEiL; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1767109070; c=relaxed/simple;
+	bh=+gb9rfEAB3gS3/gyry94Dq9zmFtICyHjCCkEiFuTe04=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=n/lHDfLtB9lA+TkHj/MzTiQAaRiSCUHwqdWe2KYiHCwEoUkfBYZ0m4q1kEe1t2M+k3xz0X2F49pBo/yjSWxjp7PLo97HvSWrYQbSXAyRc6zd4gzRkNykNOUa5/GTCJqmha/FrvbGp9svMEPiSiAV2GO6RFu8gmxUkUSLhAaoypg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NH8Ns7Hm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QvWJWyOY; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="LBkPH541";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eTRfYEiL"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id B79511D00067;
-	Tue, 30 Dec 2025 10:04:20 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 30 Dec 2025 10:04:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1767107060;
-	 x=1767193460; bh=mj9/P2it8jLU3YLHyhk920Rd8npHFBCwxD/7gsD0v8A=; b=
-	LBkPH541O97vMjUGcnkylLEhls5JoPMpATIJJc4ZrgcSc5LKvgEWl/vPQss3cTWE
-	W3g/UOeFCifUrX3Nk5JEQEuPREbDj6RK3zgwOp5l7WQAVgMhR51S68kEG4qE4tal
-	pe6+tFdBZV8Ovi4Yf2f7t+kfB/5IPIHaCUAq/IOJzTNllDgIhtxRxd5mqdaFddE6
-	UpyMse9xs6JM+Ov/B2NzPpD59IY/rBplRVoYg7YZxRH7EQF3pEikTG+QzeNUm6JC
-	hCfYRK96jnoHHUKEW5XWt0EyR94VUIKVVgupo/mhPX54W07OzNXcGtfJRvFyXzhB
-	LUZ6ZIRBBisV9U3u8GlraQ==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NH8Ns7Hm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QvWJWyOY"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8F8047A0085;
+	Tue, 30 Dec 2025 10:37:47 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 30 Dec 2025 10:37:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1767109067; x=1767195467; bh=Ux8Z1Dh6ox
+	ydS1TgWW0uFK3UFj7wW/MlyznwXybvhSg=; b=NH8Ns7HmEKe9DPMrJsC4aH9gFZ
+	LVRF9Ka/W7e2oqrnGlzuv68nbGIhbykq6LsVcBEg0YEseS5GVLzYWxZMf1xBAsZL
+	H8zmE51rLQ9hGAdmAJnzYSkqs9NMdNkE5V+tOvARepU6nhegF5vQh6GV78ph5l21
+	qq3UVFd2W5XVUaK7fCi2v4t51YP+3mLUVAdFH67Az2Dejft2ksssPvHnFYrAlrmJ
+	YhIXW51mfBkrh1zBp13//UNFjjZegnhXq2o2NtU+tjPEmkO3Ya5lwZsmYUB5pwH4
+	JnYtB/ez17sTcieguxcyhH9Fq11B04QJ3vu41mGkGUpZqbv5Xe1qEzrzX53g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767107060; x=
-	1767193460; bh=mj9/P2it8jLU3YLHyhk920Rd8npHFBCwxD/7gsD0v8A=; b=e
-	TRfYEiLTSmtmLdEzqmgqtycy7lgFHX+vcHD0VlfiPSPLQAcJKGT6Kh29w/WGur3V
-	bpn3m3tWzv5uz1AFy78/PuQGdy/Uap8I5VMykTwRxCvFAAhwV25/yyavItk8kjBK
-	KrwNxbwyyPzAfVMdiOcSU1lrQks6BsHFeQ0goMnHFGCYaCgm1NHQxfzuurkosG78
-	oWkEqDlckh9nd/yjzLlmkGDdZlTn5Exd+Z5sgM7dSBPvFDFif6eqv3rExn+IEu1M
-	x9Ou7RHdRriP0dRqxWz/AspDDBpMifEZzyoYDbfG6LDxh9lHCrEXkEe124wrdXaZ
-	BSKBYuQgsS8NUL7y+z1kQ==
-X-ME-Sender: <xms:9OlTaSTX_nPfDsG6soAUolbT0GZmd0QKbxwkMBKm2dB8-PAwX5cdj7w>
-    <xme:9OlTaRFi6ckd6uBqySK_pKuqp1ifo1VZJFVeY1VIHg0vnmRcWiWij4GEmS-bFoHLz
-    mFWnBj_zWC_yqrY76ud3Sooj2LM2uKX9eIqHWXUtJoktXhYRN79LA>
-X-ME-Received: <xmr:9OlTaXHWmzJJ22JAAb5YsloNdxYQLoLfYAYqshy234ohEUqRZqeYVYPzQDEnychR_jUMB_lmm8TQqNDMEf1B-1s-xEKqjQ4Eekr4rjBEXPjvyGhQmCUCbz4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdektdeffecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767109067; x=1767195467; bh=Ux8Z1Dh6oxydS1TgWW0uFK3UFj7wW/Mlyzn
+	wXybvhSg=; b=QvWJWyOY9xyMMOu26kbn1RgPXhX86L3CEpmOFF5p3MsCBrrQ3EF
+	GexW4DAfh9shtjdwvWFz7V5rM4r5CiVJC0Fej2Q9/vNK/bt4AQbMb4oEAmdn9K0o
+	Rgj+jAqRjo7BalFH0cFXc6Fp8Fszn4h4piWrB8wHxGPehmuC9rNyswbcFnMbb1hW
+	wjNtL7EE++o7uItbwllyJ2n4ZQf4hfJ/Tsf3wDs7Dk4wJANXCZzLtVz8GMLfNlt3
+	zsBdRFGi+OMY/mCpxARfei0maiaHNEm7QzZWeUoUnXupUk8Cnr/oWdykmVi/En/b
+	t0MHR/3Zn9uS8fVWDsEQ0X6kiCe5d7H0dtg==
+X-ME-Sender: <xms:y_FTacEHyqjv7ORPxNgWkWJOQTHg51Odegh7mkxagAqPJozJn0VzhQ>
+    <xme:y_FTacVzF0ixae2Pflz4HTGY4AgqOi4jUkTD2c_BZrcIgN-i9FkHYDhJg5EDmJEFZ
+    KxzfPXznUOjFgvPxqZCy6gn1s14k9in1NGJ3AruTZiYoSiwVw>
+X-ME-Received: <xmr:y_FTabJWhcGi_CB8KhHxk64iiDSxb7RWxva4fj3N665SAPwiN5wKN6aIz8xntf9rU-6jSkFF-o-WlvEEcD1tN_k9XGzgF8tsPw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdektdegtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
-    cuvffnffculdefhedmnecujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdej
-    necuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
-    drtghomhenucggtffrrghtthgvrhhnpefhgfeglefhjeekgfetleetjefhteeiheegfedt
-    udduffegjefhkeetudeggffhkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
-    rghilhdrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohgu
-    vgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopegthhhrihhsthhirghnrd
-    gtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehsihguughhrghrthhhrghsthhhrghnrgefudesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdho
-    rhhgrdhukh
-X-ME-Proxy: <xmx:9OlTafTyX8wGB7cLFjDfhkYGQraCdPfzYHEuQ7bJmEnREcGn-aTe1A>
-    <xmx:9OlTaYIgGth9tOpEXkrQoriuwL9QkdnCqWZzEWD4S7zzf3OP5ksmew>
-    <xmx:9OlTaaan-i6YlEhcEqT2tXgsWBUGPjZZerRGN6cunRIlLsMo9ay6vA>
-    <xmx:9OlTaa9hpJ8yaHepaGsFNhy_TF_Jyy-ixVuQEVH2yac839TvIcUp_g>
-    <xmx:9OlTadaji0B9xoAJHAt9-5KO0_Wjnt8qjf4DhFufwyVUsoefJ5apKXg->
-Feedback-ID: i8b11424c:Fastmail
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    ghhithhhuhgssehprghulhhishgrghgvvghkrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:y_FTac_j4VL_VOiN1a0AWMMJssnkFbZBb1R7F86NPqN8QAfSzzYxwQ>
+    <xmx:y_FTaeIu724sS4lNVZZ4srOWlFLCqVsjbRhZonJrKdW1n9sgUn7A9Q>
+    <xmx:y_FTaRlQ5KJhMyV6UWan6vW4-_bTZmSc7Kjp5A4Ygsekj2O-g5PLRw>
+    <xmx:y_FTaSOkI4jsEUkYgWGmrE8oNzBO6OZrPGGoKdTr5_2tFz4NWk3d_g>
+    <xmx:y_FTaXImmm6OrDfL2mzeDeYCEOFL58tE4kXSTTYkJWXcd7e7ZcGmKNUr>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Dec 2025 10:04:19 -0500 (EST)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	christian.couder@gmail.com,
-	newren@gmail.com,
-	Siddharth Asthana <siddharthasthana31@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 5/5] t3650: add more regression tests for failure conditions
-Date: Tue, 30 Dec 2025 16:01:51 +0100
-Message-ID: <V2_replay_regression_tests.180@msgid.xyz>
-X-Mailer: git-send-email 2.52.0.10.g08704017180
-In-Reply-To: <V2_CV_replay_die_descr.17b@msgid.xyz>
-References: <CV_replay_die_descr.13f@msgid.xyz> <V2_CV_replay_die_descr.17b@msgid.xyz>
+ 30 Dec 2025 10:37:47 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Paul Tarjan <github@paulisageek.com>
+Subject: Re: [PATCH v2] fsmonitor: implement filesystem change listener for
+ Linux
+In-Reply-To: <pull.2147.v2.git.git.1767096494372.gitgitgadget@gmail.com> (Paul
+	Tarjan via GitGitGadget's message of "Tue, 30 Dec 2025 12:08:14
+	+0000")
+References: <pull.2147.git.git.1767082450088.gitgitgadget@gmail.com>
+	<pull.2147.v2.git.git.1767096494372.gitgitgadget@gmail.com>
+Date: Wed, 31 Dec 2025 00:37:45 +0900
+Message-ID: <xmqq5x9of0ae.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Thanks for a quick turnaround, but it would be more efficient if you
+hunted all the leaks yourself, instead of getting a report for one
+issue and updating the patch to fix that one issue.
 
-There isn’t much test coverage for basic failure conditions. Let’s add
-a few more since these are simple to write and remove if they become
-obsolete.
+Here is what I am getting these:
 
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+    $ make SANITIZE=address CC=clang && cd t && sh t7527-*.sh -i -v
 
-Notes (series):
-    v2:
-    
-    Improve test `option --onto or --advance is mandatory`. Phillip pointed out
-    that using a pipe loses the return value. Instead let’s test the whole
-    output by just appending `git replay -h` to `expect`.
-    
-    Also “normalize” to just using echo/printf for the `expect` since these are
-    just oneliner errors.
-    
-    Also add two more tests (at the end).
+Note that "-i" is to say "stop at the first one".
 
- t/t3650-replay-basics.sh | 40 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
 
-diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-index d4399aa1662..c0c59ae6938 100755
---- a/t/t3650-replay-basics.sh
-+++ b/t/t3650-replay-basics.sh
-@@ -41,10 +41,17 @@ test_expect_success 'setup' '
- 
- 	git switch main &&
- 	test_commit L &&
- 	test_commit M &&
- 
-+	git switch --detach topic4 &&
-+	test_commit N &&
-+	test_commit O &&
-+	git switch -c topic-with-merge topic4 &&
-+	test_merge P O --no-ff &&
-+	git switch main &&
-+
- 	git switch -c conflict B &&
- 	test_commit C.conflict C.t conflict
- '
- 
- test_expect_success 'setup bare' '
-@@ -63,10 +70,43 @@ test_expect_success '--onto with invalid commit-ish' '
- 	printf "a valid commit-ish for --onto\n" >>expect &&
- 	test_must_fail git replay --onto=refs/not-valid topic1..topic2 2>actual &&
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'option --onto or --advance is mandatory' '
-+	echo "error: option --onto or --advance is mandatory" >expect &&
-+	test_might_fail git replay -h >>expect &&
-+	test_must_fail git replay topic1..topic2 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'no base or negative ref gives no-replaying down to root error' '
-+	echo "fatal: replaying down to root commit is not supported yet!" >expect &&
-+	test_must_fail git replay --onto=topic1 topic2 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'options --advance and --contained cannot be used together' '
-+	printf "fatal: options ${SQ}--advance${SQ} " >expect &&
-+	printf "and ${SQ}--contained${SQ} cannot be used together\n" >>expect &&
-+	test_must_fail git replay --advance=main --contained \
-+		topic1..topic2 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'cannot advance target ... ordering would be ill-defined' '
-+	echo "fatal: cannot advance target with multiple sources because ordering would be ill-defined" >expect &&
-+	test_must_fail git replay --advance=main main topic1 topic2 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'replaying merge commits is not supported yet' '
-+	echo "fatal: replaying merge commits is not supported yet!" >expect &&
-+	test_must_fail git replay --advance=main main..topic-with-merge 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'using replay to rebase two branches, one on top of other' '
- 	git replay --onto main topic1..topic2 >result &&
- 
- 	test_line_count = 1 result &&
- 
--- 
-2.52.0.10.g08704017180
+expecting success of 7527.12 'create some files':
+        test_when_finished clean_up_repo_and_stop_daemon &&
 
+        start_daemon --tf "$PWD/.git/trace" &&
+
+        create_files &&
+
+        test-tool fsmonitor-client query --token 0 &&
+
+        grep "^event: dir1/new$" .git/trace &&
+        grep "^event: dir2/new$" .git/trace &&
+        grep "^event: new$"      .git/trace
+
+fsmonitor-daemon is watching '/home/gitster/w/git.git/t/trash directory.t7527-builtin-fsmonitor'
+builtin:0.1039108.20251230T123036.129805Z:0/event: dir1/new
+event: dir1/new
+event: dir2/new
+event: dir2/new
+event: new
+event: new
+HEAD is now at 1d1edcb initial
+Removing dir1/new
+Removing dir2/new
+Removing new
+not ok 12 - create some files
+#
+#               test_when_finished clean_up_repo_and_stop_daemon &&
+#
+#               start_daemon --tf "$PWD/.git/trace" &&
+#
+#               create_files &&
+#
+#               test-tool fsmonitor-client query --token 0 &&
+#
+#               grep "^event: dir1/new$" .git/trace &&
+#               grep "^event: dir2/new$" .git/trace &&
+#               grep "^event: new$"      .git/trace
+#
+1..12
+
+=================================================================
+==git==1039073==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 40 byte(s) in 1 object(s) allocated from:
+    #0 0x55c18d8d4042 in calloc (git+0x8c042) (BuildId: 4097db008a82663ae0b3398128a7ab4e09bbdd21)
+    #1 0x55c18dc10f14 in xcalloc wrapper.c:154:8
+    #2 0x55c18d945f72 in kh_init_str builtin/fsmonitor--daemon.c:656:1
+    #3 0x55c18d945828 in do_handle_client builtin/fsmonitor--daemon.c:871:10
+    #4 0x55c18d945191 in handle_client builtin/fsmonitor--daemon.c:987:11
+    #5 0x55c18dc283e2 in worker_thread__do_io compat/simple-ipc/ipc-unix-socket.c:532:9
+    #6 0x55c18dc27a7f in worker_thread_proc compat/simple-ipc/ipc-unix-socket.c:606:9
+    #7 0x55c18d8d64f4 in void* ThreadStartFunc<false>(void*) lsan_interceptors.cpp.o
+    #8 0x7fe358257b7a in start_thread nptl/pthread_create.c:448:8
+    #9 0x7fe3582d57b7 in __GI___clone3 misc/../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
