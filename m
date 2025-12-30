@@ -1,83 +1,91 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9D8B640
-	for <git@vger.kernel.org>; Tue, 30 Dec 2025 04:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63780A55
+	for <git@vger.kernel.org>; Tue, 30 Dec 2025 05:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767069517; cv=none; b=knVcIGvrUlkCB9rbYsY6mNYhARUEuP55dvQjbSCviD9oa/M9GA5UaAdu1gmupuOXvxJfn5NkTbJ3HVlXbVYi7lyh2v9BxOfA0LQcNbJEmRp6EsYoRkU1pZcMnYPqxj+brOTZDZZ6ANKQ46nhaovGNMzl67PDG0O/d8VPGYVM/eE=
+	t=1767070831; cv=none; b=fXUmQ/qivQWBTAdqndwchpX61XsTdjkaMdiiC5m+gobOIBYSY0lJx0c7wn9sWnLRQfOcax7pUXnV20RdJ5AvLZMwn5B7FYVhgNovvEky1dlWio7t7fM95SbqVpwgSVykDscD7zUPFM4CQLz/tDxUCx0daZ0lf/PaGll8iBsi+/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767069517; c=relaxed/simple;
-	bh=TGhfWG+vXE+fF4YEOfyzqHov8Nod2vV502e+YwP6mTM=;
+	s=arc-20240116; t=1767070831; c=relaxed/simple;
+	bh=blfc/j3uD/gaGXFxJvcZpnpP2VvLS4DWJYYA895IsoI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tWm3RppVjBRJ/UkV4PjJbJ3V9ns02D3LSPloHFOTYOhTosdJMnO56ugoqGdAQbBe1tQ5LrC11SpwnX2WOiURalV1z9ZMiUvGrxw5z5TeaofK9j8CWVHybFDyQ97Yv78klNqkKfNSfpxeILGhMU/49S0PfHhOpEBbT7yMO0FAS74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ay3ZfjSR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N+VtAe+z; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=uoHwZA5phaNp0tuqGJ2kcHrtMNKCqXlsKktxtE4OupzRHX+MhVMoI+l4I3pj7AezabvcmKREV6ncXcnFAqlNvDPhOCUCOdb7ynExIiXaa5sakKg94AM9V27xqtaUZA262CR2ki4Q0dLnAo2EV712NCQlS6k0G1k2ZF8g0gC0BCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F7P39q7C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YxwDda2Z; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ay3ZfjSR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N+VtAe+z"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F7P39q7C";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YxwDda2Z"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 119F37A00D7;
-	Mon, 29 Dec 2025 23:38:33 -0500 (EST)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 981187A0122;
+	Tue, 30 Dec 2025 00:00:28 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 29 Dec 2025 23:38:33 -0500
+  by phl-compute-02.internal (MEProxy); Tue, 30 Dec 2025 00:00:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1767069512; x=1767155912; bh=j+MEPocBLT
-	tZqy9RrxB9yP5w2s0n2URZjMU4CYPNeb0=; b=Ay3ZfjSRziokP8/bdSF5CCBba3
-	5roJljVxyftefVZRV24K9p3u4vFtodlS4w8AJ757Ra+WjvnUn1VEFNxZWCOd27Dr
-	mcZXdNFg9Kn4ZL17rCTTuCsqcvQeU1ukb2Zj7D3a6HH2jhaVdrdTiPVPOIf3YtBj
-	5Essh/foqB034YCWpY8DDxhIh+6GYzzm6JbETqsWyIyIJT53S74Xa3AnrKvz7uzV
-	ne+jW0CRiEHmZbGYuQIBsBp20bJVkhOLolh7Fuf95OXMJX9tS6j1TkHQG7fI+phu
-	ns/pe/jz9M+g2Z3n82iT7Ds0YxHtht8kBnGoRD6M1XM445ZctcvzcLNiImKw==
+	:subject:to:to; s=fm1; t=1767070828; x=1767157228; bh=7KV6h7oAYn
+	Xd2ruF1TbHVC1pWd2LwCYtCTxbhWeCMoY=; b=F7P39q7Cpjr4S1LUbWf8wfMPSG
+	WlO8qkV8+erWo2zORaAH2Iv55BEaKPV73+Y9BIky2c3iRau2FM0Y/SkclQws57zf
+	/zU8KX3R0UnfEeNS9TecVqYZlFvc7h2x13zmwsvOsfC2O5MkDyispsb5zCyn4nm2
+	28fQA/ucIZYbmRJqC+mu8fOwVWd93NwWlFSnxPBOdxIsaICl2SahaKSgE41Zb55d
+	XN6PbESADRrsGkI0xGCFtQvbICmTxwoTagJundYXXHwO81hsBbhQoWuavl4GLjdn
+	IHLX/G7XBpFyDcOKjr8zBiDMS8u+XnUgDez15C9/Z9hXxitsz6TgBLmLkg8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767069512; x=1767155912; bh=j+MEPocBLTtZqy9RrxB9yP5w2s0n2URZjMU
-	4CYPNeb0=; b=N+VtAe+zD0sqce4qRriaLeY/VpmJI3iRVxWPIWQYk6vZZx/Mw2f
-	dMkQxfdj8wmdSzl6UC0B67Mp68SLXu0/hDWHQ3AwGPNhhdnPHJ4/8H4B8TROJ6YM
-	gCwcGSXUuQACnc7gtuHrrx7J8nJ6QDz1QIviWMc0FSIfuiZ/+f8l0bbDfiHydBC5
-	1hKTMfKMx535KCJLWcdlQp6XspnWqR2G4hhenEjrHUCXG0IYIlD/KPqP7oIWrkDx
-	rbKITYV6epvczgsZ/21VbSdcfqqWxwN6CL8oLLhRL7uZiAKEDq+ztlDxhrAqdZ2J
-	5Cvhz0bTqUNjJ3IAKyUTFsh0X3eAm/EvbEg==
-X-ME-Sender: <xms:SFdTafFg1y3jX9jXBva2L20pvwvKbmOM8oTMuZU37LRQ8_HkZb3R2w>
-    <xme:SFdTaTWNJ8Uo-pQofB3iKE8pWx1ZI6o7r1Iavc4Dlx2qE2IvaQvAzg0bzPCHN9who
-    s2PBBq0u9EzaYbvFbNDqCj7HIqFO967YgcXJxxqmXpQFntYLqTAcw>
-X-ME-Received: <xmr:SFdTaWLLegt2e2zQz5lNsaJWSRdvKBiYtlkSjntHoieDgQygmUPoHHWluYzG3Ynbd8qcLOCJ70yZNhobVm_r0A6sPW1dDzYtKg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdejledtkecutefuodetggdotefrod
+	1767070828; x=1767157228; bh=7KV6h7oAYnXd2ruF1TbHVC1pWd2LwCYtCTx
+	bhWeCMoY=; b=YxwDda2Zft4rj2YDE6zk6nTVgGJNelfiOtI8tfLheMKKZKlPv1W
+	l8eltEa32RCXGFMGxC+Db6NCo198EIHRjyin23GYAi/O6mIn1uAmqzXMnxvcpigL
+	AiIlcHLZecflIgA/kiK45GwVkXq8nZvC7FDm5Qjs6SvYv11O78JlUDjQp2ijHV/n
+	d/V03o14LKAYlPqG0Gx2rMZumeqs7TXXF4Lnhq8x0fNfEpo4mdHVTHmzWsklqpAf
+	MFd97tIYDmp33Bc2mLPRAQ9BeuhVq5WN+rEAiMpxXrvEIVU9k3CjxbBYiHmgBasW
+	IpvKEuinh8z9WTkjjr4IJXGP8qdkDN1QswQ==
+X-ME-Sender: <xms:bFxTaU-EYKCKFXN6vmfC9TVKYaVYaYUNwLy4dSh29pv_8hw9L4keWw>
+    <xme:bFxTaQaRPHIzftFkJezeRK-mAKt_LlPNgfCI2rmj6c1EVN5nlKUZo2jYg8HHUz7Ql
+    RCLzqeC-4AT3RE3dqd7d2P1UyXZ00wbt-nN2TprThOAAhfeszdaKec>
+X-ME-Received: <xmr:bFxTaT1-YDwbKUVj-NweZum1kmMIGVeOLbeK5vTjNkgyIDZqPesQX0YdMKyN-rmMMls-TbveKLhWR-_M646uEYR4rrUKXGPMow>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdejleduvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    shhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomh
-X-ME-Proxy: <xmx:SFdTab-yeoma7FshM3rOFLLMmVQlEeEA9DjaIqvpkAYJXFI3saVzMw>
-    <xmx:SFdTaRLrKt264mMndct4Dd6fZ8tx2vjkXRAfJxFfAo-OUX_qDJPCTw>
-    <xmx:SFdTaYmQplk8R60ddOSCfokZNbOVLvuXLsgq0lmtvyRtUCnYVW7t3Q>
-    <xmx:SFdTadOz_WWD4hprmIMrqeKK02I_lUrjBkBxve4Y3ceKcj8Qnss3pw>
-    <xmx:SFdTaRpApxKzIQ4B4_rGhRgc99bwa-3jSh-SDm8TEUTVMD94Aj-GFyuC>
+    gvrhhnpefgfeduueevffefvdeigeeuledvueejffdtjefhfeevvedufedvteeuvdeludeh
+    veenucffohhmrghinhepmhhitghrohhsohhfthdrtghomhdpshhtrhgsuhhfrdgtfienuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhohhgrnhhnvghs
+    rdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhgihhtghgrug
+    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehkrghrshhtvghnrdgslhgvvghssehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:bFxTabb9qZDHm25BhuKtwXKVXuF10CUwrE-ksnGOXSCyjyf8cf0CoA>
+    <xmx:bFxTabJZkHAMbhJpeyUpIRMo2rkQ71k0fYZzNyeLiG9QvbT27fb0Fg>
+    <xmx:bFxTaaE7VDl87AfKgenz2xNv0WrSJXdF-anl3LhY8QAhfuJekN3yKA>
+    <xmx:bFxTaSuA5LrRTscA-UM-bnboFBPpdREKjWkyi6RDE2erN2S-xnWgiw>
+    <xmx:bFxTaaYvE2B0ZJwqy0ALlRbFGhJQHR9W5Poh5X9Ds9HxodDYpwexO6GT>
 Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Dec 2025 23:38:32 -0500 (EST)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 30 Dec 2025 00:00:27 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH] diff: avoid segfault with freed entries
-In-Reply-To: <pull.2027.git.1767044697712.gitgitgadget@gmail.com> (Derrick
-	Stolee via GitGitGadget's message of "Mon, 29 Dec 2025 21:44:57
-	+0000")
-References: <pull.2027.git.1767044697712.gitgitgadget@gmail.com>
-Date: Tue, 30 Dec 2025 13:38:30 +0900
-Message-ID: <xmqqtsx8h9dl.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Karsten Blees via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Karsten
+ Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH 4/5] strbuf_readlink(): support link targets that exceed
+ PATH_MAX
+In-Reply-To: <aUU8O6ltrNj-FmjZ@pks.im> (Patrick Steinhardt's message of "Fri,
+	19 Dec 2025 12:51:23 +0100")
+References: <pull.2017.git.1765899229.gitgitgadget@gmail.com>
+	<db1feb2293d20532f9468ab63ede43d4fc620203.1765899229.git.gitgitgadget@gmail.com>
+	<aULB3wCFGsbZbuSw@pks.im>
+	<5778a03b-2e33-9224-e051-664c2d530fc3@gmx.de>
+	<aUU8O6ltrNj-FmjZ@pks.im>
+Date: Tue, 30 Dec 2025 14:00:26 +0900
+Message-ID: <xmqqcy3wh8d1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,18 +95,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> The more elaborate explanation is that within diffcore_std(), we may
-> skip the initial prefetch due to the output format (--name-only in the
-> test) and go straight to diffcore_skip_stat_unmatch().
+>> > This makes me wonder whether we have a better way to figure out the
+>> > actual size of the buffer that we ultimately need to allocate. But
+>> > reading through readlink(3p) doesn't indicate anything, and I'm not sure
+>> > whether we can always rely on lstat(3p) to return the correct size for
+>> > symlink contents on all platforms.
+>> > 
+>> > One thing that _is_ noted though is that calling the function with a
+>> > buffer size larger than SSIZE_MAX is implementation-defined. It does
+>> > make me a bit uneasy in that light to grow indefinitely.
+>> > 
+>> > Which makes me wonder whether Windows has a limit for the symlink
+>> > contents that we could enforce in theory so that we can reasonably turn
+>> > this into a bounded loop again?
+>> 
+>> https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation
+>> suggests that the maximum permissible target path should be 32,768. But
+>> that's not _quite_ correct, as
+>> `../t/../Documentation/RelNotes/../../README.md` is a perfectly valid (if
+>> awkward) symlink target.
+>> 
+>> Still, I would say that 32,768 would make for a fine (still insanely high,
+>> but not so high as to allow malicious symlinks to cause memory problems)
+>> limit.
+>> 
+>> Sound good?
+>> Johannes
+>
+> Sounds good to me, thanks!
 
-That's very interesting.  We have code to fetch on-demand when it
-turns out that the initial prefetch shouldn't have been skipped and
-we need contents, so in that sense, the condition to skip the
-initial prefetch does not have to be precise, but we may want to see
-if we can have a single helper function that exactly tells us if we
-need to look at the contents or not.  I think we had a few changes
-that made the definition of "diff status is based on contents" in
-the past few releases, not for the purpose of this prefetch skipping
-but to set the exit status.
+As this is a generic codepath in strbuf.c, platforms that do not
+honor Microsoft's promise cited above can break the assumption made
+here by going beyond 32k, no?
+
+I am OK if this infinite loop had our own "we are growing the buffer
+very long and still getting not-enough-buf error; let's give up"
+termination condition.
+
+IOW, a simpler alternative may be
+
+---- >8 ----
+Subject: strbuf_readlink(): do not trust PATH_MAX
+
+We have been bitten before by platforms that sets PATH_MAX way too
+low, far below the length of paths they comfortably support.  The
+strbuf_readlink() limits the link targets to PATH_MAX, which is a
+code path that is broken by such platforms.
+
+Raise the limit to 32kB, which matches the limit of a
+platform with such a problem [*].
+
+ * https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation
+
+ strbuf.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git c/strbuf.c w/strbuf.c
+index 7fb7d12ac0..1c7659bcd2 100644
+--- c/strbuf.c
++++ w/strbuf.c
+@@ -566,7 +566,11 @@ ssize_t strbuf_write(struct strbuf *sb, FILE *f)
+ 	return sb->len ? fwrite(sb->buf, 1, sb->len, f) : 0;
+ }
+ 
+-#define STRBUF_MAXLINK (2*PATH_MAX)
++/*
++ * Do not use PATH_MAX, as some platforms sets it too low;
++ * 32kB matches what Windows has as the real limit for a pathnname.
++ */
++#define STRBUF_MAXLINK (2 * (1 << 15))
+ 
+ int strbuf_readlink(struct strbuf *sb, const char *path, size_t hint)
+ {
