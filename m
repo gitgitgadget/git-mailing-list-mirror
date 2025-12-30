@@ -1,115 +1,87 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9C12765FF
-	for <git@vger.kernel.org>; Tue, 30 Dec 2025 14:33:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2C72C17B6
+	for <git@vger.kernel.org>; Tue, 30 Dec 2025 14:43:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767105234; cv=none; b=beLDDkByW7rMo7JoiOLYLrsL5oMvWA/LWaztNfjsXfkD/MmuhAqwGAmnYAFUbJIfpDbRI0WeXZh+HqxOOHFIu9lOJTusfxWwR0JM4zI+lk6ZPwpn5qr+CS84vVUE3n+r6p5I6seK99IgDZIXHBAz7MppmulM+sAGJ1FjC7E4KP8=
+	t=1767105823; cv=none; b=Cwmr9A0Gkad++xx+b0HQi/n1W3gzCruAepDxA6iosBXBUtJ9y/SRJ3+h5d/La8yui4Fuu+T948pb+MuouEf6+sZ4ClI6d48sCGJ1vLpkujQf6OrN77GQGcx9cnYKPGAOy/YZO7UQB9bYN9xSVKMpktccWr6I0LlcTX91GtIF3Ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767105234; c=relaxed/simple;
-	bh=dsy6V7snh577wZ3ZxDsSdfcd8MO8ZgmgPkzDEEKq+jU=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Ijc52B4d5vF1FJ7Lq1vJlutxUjaY3lX7MNBogBAbe1McrAx3yYPiVmAa3ZN4nV/2lQ1ky9pCUunSrDAm6plPT0L58XHm3PcVhbp3RnFNcZlBG/2AfmEjb/s1T4Rk6WzBUSHua8N/e0WxyG2btJC5lZZmIPyT6iA+DUJVPW8uy0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=es5MQVjI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lBb20Yi4; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1767105823; c=relaxed/simple;
+	bh=r5bLgs4+px2htPq8gWM0pxmb+XfKvvn2s76ltEpSqv0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=H+NuUFEFzB6euYsdd4iaUSypdvP5o3ceiO1piKzMJB9MC2Al0dbb+wNjZoK+sSHSIMKJIqTAlRnjT1IiUejzy3nicYmoZaDj9GHk/LYXQFupHl+8GMor4WBAbrx0Klot+1VYP6DKmzGT1JJuud+H/AVr97YdMnDyDlDgts1BYfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M2E8VTNK; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="es5MQVjI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lBb20Yi4"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 88CB21D0009D;
-	Tue, 30 Dec 2025 09:33:52 -0500 (EST)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-06.internal (MEProxy); Tue, 30 Dec 2025 09:33:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1767105232; x=1767191632; bh=CgkauNRlQVarGERyazJn2+LV+Rcs+o8C
-	0ZPYHzl8QZw=; b=es5MQVjIBCVFETkRLkYIZZOW2ysaCQZQFgqK49eRR3J51dnY
-	pCmFLp8HojiYy74XR09W5K/FfqUztkfXjKuDCDCGUHzN1rxoKH3pMhvOHfko9f8q
-	yntVpQYoKBGsY+U8oce912OKypkOcnLoq2/Tk4mLqQ4MgSq/6J8TqGKoQoRfbcLp
-	TSxSDfglbA5rHa7oMyMdtuMhgcMKTyUIDBKSuaaZvkHB9VoDLXDfjMBG8XmYWi3L
-	4Fegs262A/Fh0C3nxRmdcqqEQ8h1LnfgRLOVFz/FrEmlLzfu2f9L6no54IuYTGRR
-	3a7z6tIopaQGiNPTF1io3CXayByGOcixz+jh+g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767105232; x=
-	1767191632; bh=CgkauNRlQVarGERyazJn2+LV+Rcs+o8C0ZPYHzl8QZw=; b=l
-	Bb20Yi4oTKrDscEeNcLjPDfwVP9RCmxnH30qdIaqV74RIFciATRoL4d2/0zKOfTm
-	AWF7sf2GDngA+LdWo6XQFSt+qbtin3Tc7sBLDcz72cQlzZuvWNaF7H7h7dgPQUOa
-	D0MZUIPsIvBirf5MZimeyYbk6JFGvyqPZZEHfL5UcQsyT6j8CGcdAaOnWQtbasPL
-	0MaVoUr8ZAqSFfRvgshRNNV93OHe6ZvzJbuSZiaVpy8GjKrqRaPuE7joBACNuovG
-	VuSgajQKcLdgT69wrPNWBRjmXVOiVRKBTiI4IdrFJLx2PaHTlJm51m2mK6Wf+JNz
-	mBE+o92st+z4kHNIFqSiQ==
-X-ME-Sender: <xms:0OJTaRBpT0593O_B7xd1VFJbngmu1JW5CiUBdlv1yw4uKr2ztD6dGPI>
-    <xme:0OJTaaXvgkZiycRI3PIGAd-NAjdRuoYJIfXJz1V9BNCH66D96Li7kvBhqSbiadZpH
-    0S1z0g8wQJxXzZrcDL9cx2BFyrDLoWHNpyvhSqGQEo4eD4c1e5CCA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdektddvjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
-    grmhgvqeenucggtffrrghtthgvrhhnpeefteeghfegfeevleeguddvkeetheeiveffudej
-    lefgudffffejleffffeludekjeenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepkhhrihhsthhofhhf
-    vghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrh
-    hishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihr
-    vghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhhthhgrshhthhgrnh
-    grfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrgh
-X-ME-Proxy: <xmx:0OJTafAwhsDWF3YkVLYM-hOdT-s0vrQO3RjqffKE-49KVBDHhKygfA>
-    <xmx:0OJTaQeVilV0NzKhY2emjwopEMraG5a-0TYoLeQo96j6LMiQtqUkPw>
-    <xmx:0OJTaZk0YnAODPJTEKbATB9dxR7AT3FFPraraKYjwQv-2xn2zSlLqw>
-    <xmx:0OJTaXHf6z6dneIxYR8j89AGidNVABarieTgmqsCFUb3nfQuRKLVJw>
-    <xmx:0OJTaUcQV3W3L9fAOhyOys8eWCrxhvc8miaQdbwq_cKzRcfWeC5E-Dt8>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 08C1C1EA0066; Tue, 30 Dec 2025 09:33:52 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M2E8VTNK"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-7b852bb31d9so11872422b3a.0
+        for <git@vger.kernel.org>; Tue, 30 Dec 2025 06:43:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767105820; x=1767710620; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=r5bLgs4+px2htPq8gWM0pxmb+XfKvvn2s76ltEpSqv0=;
+        b=M2E8VTNKQyVG48e11c+mkXsPxU4o6sGfURVn+WjDRBxHHSFdEugR+qfrZ1d1R94Joe
+         EwdR4wCV+ld+Om7+duGx3x6Kmp7lz54ifPgACxEwys174B7YpSYS+tFpQXA2EaKtCEci
+         Ea8n3PGs5xSsIw4CqOdu05hgD6lKl160UDbs3dyX5qDR5fBwWuV3l7ZjyzytFSLH1VgV
+         eLujHKoLjvqfiq5+CKuURqJy0Fji3+yj83wj0hOZQbu8qSu353X33aAs6oIpae2B+nBw
+         3YBpFc6tV4MXCAnpVXjne7yLgQTkr63QZ91Pzo/QO8jmA3nYLhh8i3z0pXl1qxHKCpc3
+         jV5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767105820; x=1767710620;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=r5bLgs4+px2htPq8gWM0pxmb+XfKvvn2s76ltEpSqv0=;
+        b=t5Op1mzfIeQ2XJ7iwo+WeDD/j9zwQSAmmx/F9b22l+ScUwOiqt8j/+n2ew3hvCWdDi
+         zr2llUoW9lXcEoF1n2ZpKV+4Sa8aVjAeRFWDmZA6G/P2f4V8yowaQbvr1vPo0d0Sm2Gg
+         DiaOvWSH9oAApx02sy+VzvfbBtaMxfgrzQ8gPgtISJuOsqp59sQmv6kw/MgUxORXqrca
+         VH7Hsx6N+5kgx5VDimB77KH+4nowsa6DJcPjs3ChuQ6T+/ZVdJBpqwWwnno305BILNKp
+         YUC4lQlon7XC5plLZPzYferN1eE5OdOFyLJQl1RUk6xSRrv3jHyQSaySSWIJl3u7ANd2
+         iG9Q==
+X-Gm-Message-State: AOJu0Yz+LO7EAdihwqcHkZ7AG8kRR2OZcrixwZb+6Feqaiz6ztdJff7v
+	qz5+wCzhWiM3OLNRUldc1TgK+nQpE60DL0uT/ixUcYSxZqsNZV+IkT6mpBUom4pN
+X-Gm-Gg: AY/fxX67tHxQVRw8lsWt0bSbduTN1zsgE/CudHm7b4xplxAo2Ejl1soPoIlkfDhUi7C
+	WjANJKfI0x6lxguwpesJFTDupWt/TnZNOVxPruJCeqggwcIlsJiCIbtVDlDtrYfs1ZWgdGTxupt
+	DHS5ZJHnbSzNXYIcedhB0Hwxu1xEpOxzMJzmrQGJqQkKnGcCuMIt2oTG+NumePH2NWjvpBAxnB1
+	retGXcT5wHPYpb74TRXnXWOBxsniNQi+C9TOlWAvBw8wXuzQIMkYi9Ne/RVvRo93Piw+Y6kJD4M
+	LsHq7/yUb8IAULuOJOcAGzMv06q9Lk1eCWzlnD54jbXRtx4EbKFQJqfNPIxPGN+5C8y1kpbl6MO
+	9EqkA9bKZpbUjUUxTFuW/tosL3spssxIdYrU0EYuAUY23wTo2Bq9OIDpF94xFTGjn/42FHa+z4U
+	T8CIVU9uXPTDa5+5Z1p1VQI87WzhMB6+Xa
+X-Google-Smtp-Source: AGHT+IHgWkhnOcWfxunhq9M180ATyZ3kL1C4/86GgMDwHLOC+Mb0C2mJlagCQ1gGHRIyixv3ZRIcVg==
+X-Received: by 2002:a05:6a21:33a9:b0:366:14ac:e1e3 with SMTP id adf61e73a8af0-376ab5da545mr33478157637.73.1767105819975;
+        Tue, 30 Dec 2025 06:43:39 -0800 (PST)
+Received: from Fedora-Gink ([2405:201:c005:b959:acb7:a699:c03a:f9fa])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-34e70d4f7ffsm33462389a91.1.2025.12.30.06.43.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Dec 2025 06:43:39 -0800 (PST)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2025, #09)
+Date: Tue, 30 Dec 2025 20:13:29 +0530
+Message-ID: <20251230144329.14869-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <xmqqa4z0f5dq.fsf@gitster.g>
+References: <xmqqa4z0f5dq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Aw450i4YyXKZ
-Date: Tue, 30 Dec 2025 15:33:31 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org
-Cc: "Christian Couder" <christian.couder@gmail.com>,
- "Elijah Newren" <newren@gmail.com>,
- "Siddharth Asthana" <siddharthasthana31@gmail.com>
-Message-Id: <105d610f-f002-4ae5-96a6-f83595aba19d@app.fastmail.com>
-In-Reply-To: <65d19cff-33cd-4209-af3d-6a518254019a@gmail.com>
-References: <CV_replay_die_descr.13f@msgid.xyz>
- <replay_regression_tests.141@msgid.xyz>
- <65d19cff-33cd-4209-af3d-6a518254019a@gmail.com>
-Subject: Re: [PATCH 2/2] t3650: add more regression tests for failure conditions
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Dec 23, 2025, at 11:58, Phillip Wood wrote:
->>[snip]
->> +test_expect_success 'option --onto or --advance is mandatory' '
->> +	cat >expect <<-\EOF &&
->> +	error: option --onto or --advance is mandatory
->> +	EOF
->> +	# First line is the error; rest is Usage
->> +	test_must_fail git replay topic1..topic2 >&1 2>&1 |
->> +		head -1 >actual &&
->
-> Using a pipe means we lose the return value of test_must_fail here so
-> the test wont fail if the command succeeds. Everything else looks good
+The following patch [1] was about to be queued,
+I might have missed if something had changed
 
-Thanks. That=E2=80=99s kind of subtle for me. I=E2=80=99ll fix.
+but I thought an email would be appropriate here.
 
-I=E2=80=99ll just test for the full output instead of the first line.
+1-https://lore.kernel.org/git/xmqqldiplvyd.fsf@gitster.g/T/#mc3a7dc4cbe02d23e52bf938c800f579b49174a0b
+
+Thank you
+
+- Jayatheerth
