@@ -1,107 +1,186 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011058.outbound.protection.outlook.com [52.101.52.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F10F70808
-	for <git@vger.kernel.org>; Wed, 31 Dec 2025 05:12:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767157936; cv=none; b=EaLDIJ4d6TSfhDQhR9/cUdP8+V2fmw7TBxOFF6/T9rJlt0SVtN9YKDqSJtmZr/kxhuVovMT6X5I+lmFEy3GzSojUfhJFYlPjx9nwgzHECdPM0AOypSqAcPvCUu8KhHuT0jL4cWTZM0w5W1CkGAogDrzjyf4oq3zcX0KTjUBDx+0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767157936; c=relaxed/simple;
-	bh=YRcC8H66X32Ob/fGMFnW3JRsk6QVBme4XpLWXwZCN7I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CT17enokt6WKUzmNcVoPrYGcNBufANyolBfgK3NI11FzWQ/hMyuN1Cu5BVNkURCJdQqLTzaf/jlSUGUUYFHYOj1XxmibTI6wRmDknOwF5NP81DB7eNmkgyhlJgoqWsXe7rF/+2yvLLwGJUp0rIiU5rr3etVX4UbT0o7OPEdNMgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GEr9Y6gE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cDqaxp6x; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D89D18CBE1
+	for <git@vger.kernel.org>; Wed, 31 Dec 2025 05:39:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.58
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1767159600; cv=fail; b=NCCHIyKzjO0vs51n/dkViPZXYG3EGyb5hp7tDUUYrXnhzH8P/p+YyGCxHIU6muBxc4lAqBiCJy9Btp4qYKTTzcSSRmWp0lbx1X8IeCNroftcaBxjgI5+SlbK4SuxuNjNjvp+7yea/+/xCFX2vHtqQN00oWWbJyYRxYDmTMCXR+w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1767159600; c=relaxed/simple;
+	bh=oFYbMEIGsDh2FHvy+Iga6MOF1PebdNUwjyevmX/4yfo=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=KA9QHjfBsulwg0wyaMsieM9Te4tWWq9/VOtCIyLQhkgnRRZ7C8Lf72VmbjGzJTyeUNc5U2hwyzCqFp0uepYNJpZA4Z7AChhhAsb8v0SF+vTmr9nlxpVc67UWNY1KraGdSj/vHmLiF8qEsgF943P+S5E/YB4cOeGHkFr/eR0CvBI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=JRyAwnV3; arc=fail smtp.client-ip=52.101.52.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GEr9Y6gE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cDqaxp6x"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 489A1EC0080;
-	Wed, 31 Dec 2025 00:12:10 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 31 Dec 2025 00:12:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1767157930; x=1767244330; bh=fcSRJFayef
-	roXIgvFD6QNh5SpwoflD7WuBCsN/CbPf0=; b=GEr9Y6gEi+oVqbMPg9U1bjEOtA
-	9M7yLTDahpBSwbRc4G3v/t9SrY4ej40OHtjGpUSKML7XsjTGCHdiXLy/qT9QxHBe
-	00fgDXwr7H9lAm4+cLNdV0+AwNzD+Iz6nML06O7H0Ou8mDtN8uVJlgilP++vIP4r
-	gbifOVGOl9AzvcCqXMyDE1pW+ON8JjDgEpDppa1Nn3l7O+YRskAcRt82+oQd3LFE
-	q2UMjCRUR4zNIfAaGeVQfkdO24sdxvJ9RP/9kV3HHg7ABrTmlvFRbdJq2h5ySFmO
-	WFq6/N+BwCZQailIrbCVDHwtm1B1dNYASX1Z2sukXo9xyabFfnGdfEhLTgRQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767157930; x=1767244330; bh=fcSRJFayefroXIgvFD6QNh5SpwoflD7WuBC
-	sN/CbPf0=; b=cDqaxp6xUk+nuim6Vp6HlW1v7DSxdQO+tretOjRMNqcLJ8Ilxyq
-	ltWeFqjY/8AJheevKLorls4WTf/B9Nmvbvc22hpcPJIGasY11g6cF7QqbF7/CP5e
-	+NIolOC7bMPcK5c+4WfxZ/SiVGxEAwHQMlvCeTEle3GqLc9QjZvUo2ebK2Wu85LI
-	DL2wgn6QeEe0SkytbanDfm2eEiDkmzzKR1+RiWZ+4YdNKa23tsXnGsE3wSzuLHb5
-	CZXYNJVO7MNwxT7GBo1fYhMGV1+Uk05aN0x6G1alNCQFqJA7VvY+piZ0VQ9dv/z1
-	MZF+HCNHthjbJgf+BB9swMKlJI8KhKaCVRA==
-X-ME-Sender: <xms:qbBUaVlqynNYRyBNwoHZbFoxkU6NGgKoAXZOVVArpMG_tonVsy1ekQ>
-    <xme:qbBUaXsk9HvNXJwqBVYsyHYxD53o4lgYrVyAGvN74dw0fVYV7FCi22anzVczNZohy
-    F1k8E4pTOGp6nylwdefsa-WEybuzO3qdHdzE1c_05zSWqtMokswjw>
-X-ME-Received: <xmr:qbBUaT-dMA4z7vaLGv9tzdHAH6GXLwSbSX4PZehvuArIGpvhICtx6Hf_8DodZdDLbJCkq4g6hpAR57nsyEW7i67bRr4nYl83Sg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekvddtfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegrshhmrgguvghushestghouggvfihrvggtkhdrohhrgh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    lhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepjhhulhhmsehsohhurhgtvghphhhilh
-    gvrdhfrhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:qbBUaRO4rtUEKzZT00G-S8eILOXchtDcXdE1GIx81oadCXypnTj4OA>
-    <xmx:qbBUaREvX1VwxG6H-Qrx8v5gOKOMQKw2k9qiiA9yAcqSRVLtbMO9Ww>
-    <xmx:qbBUafSpeAPiZIafcOHkBOLb2x4vBXMs-4tsIn30r7cm3FbIGEW2mQ>
-    <xmx:qbBUaevcOn47R63Ql4f5MIwLzNT1Tv5Ymf5Q0gvXcxCFcuyqYs7ABA>
-    <xmx:qrBUaVifCcgmvsMf3EiW03-BShWgfjy-YPb_Yfc1QA8Nnf1URV1ix4qA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 31 Dec 2025 00:12:09 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dominique Martinet <asmadeus@codewreck.org>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-  Julien Moutinho
- <julm@sourcephile.fr>
-Subject: Re: [RFC PATCH] builtin/format-patch: print a warning for skipped
- merge commits?
-In-Reply-To: <20251231034217.2498648-1-asmadeus@codewreck.org> (Dominique
-	Martinet's message of "Wed, 31 Dec 2025 12:42:17 +0900")
-References: <20251231034217.2498648-1-asmadeus@codewreck.org>
-Date: Wed, 31 Dec 2025 14:12:07 +0900
-Message-ID: <xmqqo6nfdyl4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="JRyAwnV3"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=c+7i6UrEsI2TjY+xjG2YSNn2HuuJPBvA5FO/aUzObIrfHgu1yjOwtT5r2GZb19aS88tWjeLrkyu6rHI35gNmIv94HR3wRHw6jIWz2Dcncnpcfrk5mXQaePtrmoBh1mC58wLm0MztMVQIj03KC8nUUCsVrjS0IJ96ctk+1uR+IFV4RzhwbpvUj5DH956jCpTNik9W+puKNNE/IRulU6I6VXwzZDuvU+xcnF+rR3+ivbYXCFeXbC732bPTOyikya+C2R9+PZDKEPdGcAXvV2Y9fMXrShq+8bhP7L8tnsF5Y2KHbkN9PIzkf1s1qksfMrRD2+OEREoCTJ+tdNKZJ+BeVw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OFQ5AGZCt0jjZjaR4rM+2M5I18Vyd6DmZzGA5LZ+Ah0=;
+ b=AG6/On9RPvCVSWTmDxNdtdOMrTUVqS12WolZapeK5C3zFEZaU11Gc4xYeqAmpwm0cG8VpQ1sFePmNlu94bbPZjycBXr53pe4S3cT7Ssmsr9PAMukqYItprSUNQjf8FO4BWXV42YAY+Y8T4Ynmbz+C6wkpPivvNQGsGd3QjAnD+15Vx3PCM22+pJtJ8WdQtTSfNZjZnTwJ7iMFw2oD4BoxdJcMfOZ26oOgSte/1ugyE9ke/7MtcZexPBefCuC+FJfAcrim5tvL5NAFHx2znSDopmvRv0FBPqjnSGWgHXoqpqmKJpgqSPt5ex+0L9xLTXm01hZt07FLT6YdS25ATn7Gg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OFQ5AGZCt0jjZjaR4rM+2M5I18Vyd6DmZzGA5LZ+Ah0=;
+ b=JRyAwnV3dlfgoeotsQI64MenZJuMlFJuSKq4XJvK33ssORgvAIEP1SCQG8g/JBM46O6g9fylKpZ0fmCdgySi3UkV5U/mG6TGmGXe5E6Hsa3UbXRHalBUTjo8I0ff6DQcYgxEMxygBbBrSre96+ix+ZcShPkl/bz/9Ea825FNxPnlQgJMiFXjV6f5yFQblsscZN6Ut70AOa+B1Hsa95RBzTNZczzHaBs6Rj16FQKHdTJJ9TTg1wfupO8BjatXafnMgIkxw8BOd6Qr8jkqEV7Jcl1Q5idGQeGHpfiBLipnQXKOBhLYGSLyDukwfgJga/rcGLHDbY5EY2FCbgTlXGnyDA==
+Received: from CH3PR12MB9026.namprd12.prod.outlook.com (2603:10b6:610:125::15)
+ by DS0PR12MB8367.namprd12.prod.outlook.com (2603:10b6:8:fd::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.14; Wed, 31 Dec
+ 2025 05:39:56 +0000
+Received: from CH3PR12MB9026.namprd12.prod.outlook.com
+ ([fe80::7e83:9747:5352:4af2]) by CH3PR12MB9026.namprd12.prod.outlook.com
+ ([fe80::7e83:9747:5352:4af2%6]) with mapi id 15.20.9456.013; Wed, 31 Dec 2025
+ 05:39:55 +0000
+From: Martin Fick <mfick@nvidia.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+CC: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Slow git pack-refs --all
+Thread-Topic: Slow git pack-refs --all
+Thread-Index: AQHcdebABRaVmXg1XEKj998vyrImTLUzA1gAgAg9YvE=
+Date: Wed, 31 Dec 2025 05:39:55 +0000
+Message-ID:
+ <CH3PR12MB90260871D7B0D3516FCF3DCBC2BDA@CH3PR12MB9026.namprd12.prod.outlook.com>
+References:
+ <CH3PR12MB9026B5872FD42F031970074BC2B3A@CH3PR12MB9026.namprd12.prod.outlook.com>
+ <aU3K9lGbHw68Vv5U@fruit.crustytoothpaste.net>
+In-Reply-To: <aU3K9lGbHw68Vv5U@fruit.crustytoothpaste.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB9026:EE_|DS0PR12MB8367:EE_
+x-ms-office365-filtering-correlation-id: 4870768b-ef99-432c-4b97-08de482f0777
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|376014|366016|1800799024|38070700021;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?t4K5bW2xVUFQaacobRamxxDxNNmd5sea6TI0pXOBWgkrnhvDda8ffzm8sP?=
+ =?iso-8859-1?Q?NOKPVDFnIBErJ6+jqV6yR9SSL+BNYKjJkE5CFXEKa8Py3Kcyb9Z2tBhVJn?=
+ =?iso-8859-1?Q?YYE7niXJQfwHzYrrUCwhivPZaRXh2Nnz0PFQdX/OqLxjNdW8Kj1sw6//kk?=
+ =?iso-8859-1?Q?M/HwuJBeDYG1jpaownEv5ZBEPthqH3EJbBwhc9t8pXkzbjQaRUE12pBv+7?=
+ =?iso-8859-1?Q?20PxcVYu2zBE4snGIhNHJm1a1gSvVRwemAZOtNaEBo9DJrmtwCYRpFGNro?=
+ =?iso-8859-1?Q?zwwsPFFr8bNlWqr8S1LpSIZtuZHH+QVO+ujomALDhBE47i2yRDBJ+U7MjP?=
+ =?iso-8859-1?Q?GcV1PzSFc9XQx9gBZrRAnqGAYLGqjFw7Tra6adgbBfNmtnk3ZOS0rkHxQl?=
+ =?iso-8859-1?Q?y26W/OeiQcYirFMGzkFLYveHZmMMsK+KMnDRgs3gxKzb5lLyIw2nlaBdPo?=
+ =?iso-8859-1?Q?3UVD9pVvJLKCdLtchrrSK5mOsBgyJECz91n/DZOqi0Jq/VJRjadmKwnNFz?=
+ =?iso-8859-1?Q?SR5ud5/a/g9qDd0qksp8zK/LHRTRRWN3Kfij/PsTELs8QQlCRiyWBanszA?=
+ =?iso-8859-1?Q?vkVAAS2NlHL7GXocFucxWu98EeZrmfp9DB+rE46jLAhM5nK1iTdVOkddAl?=
+ =?iso-8859-1?Q?Rhzjkb123w2IxBaIoJnCzOTSm3I3lL5zeEdlVweIgLBLfyyAKtEN7rkBko?=
+ =?iso-8859-1?Q?t1Zd5j8lgr5Ff3dbDIMLsCA5in7LtkGQzrxzw4ZQlHMupf3lUUeFVCoixg?=
+ =?iso-8859-1?Q?VuxldV2aLElo1X9s/x/zlIJBULiQbm7FtWF8nq4Ip4y5o56ON3xu3SAnaz?=
+ =?iso-8859-1?Q?CCrwmuQ+0KAEXjn7b7TF7m4DIKxpVTMkzYEkzyCet3Tjawmfwq2IeyqN7i?=
+ =?iso-8859-1?Q?wLbS9+0kkwXez9n+9y1cYvceCekAV/8Di+607ytXNN5CpfGlvVWH6T8kMm?=
+ =?iso-8859-1?Q?zmMmLGVLSy2RJItcxQUETM0AYqMC/DiiXZMLLuP5f9Vhq5HnkpAOm7a9lt?=
+ =?iso-8859-1?Q?n8zqlcHRCLKH2iZqK3L7sZAeODjV6cRx/CAIOWUwiZMSSPgfxflsc0gqBJ?=
+ =?iso-8859-1?Q?Yf/0M7mXpxEYPiGsF7fA7iGWA4KdoDWwD0z8rSVJ+6lRFsQTaAGx+6Tis+?=
+ =?iso-8859-1?Q?7rhyYfXhaQYmoCpmzRYcfUA1iW++FGbMXNBbrLmqb4eYW0zPsa1WIhZ2e2?=
+ =?iso-8859-1?Q?pjClbDT4pnI3w52pSa4QykxCUYRu1Q8f36rHiJfmigTK2BVLZNoOEZOBJi?=
+ =?iso-8859-1?Q?6LWLC/2XbUpzjcRVI9veFUf144Q5Yte8nX6MB3B0Ql69on1oTwS6c5apl6?=
+ =?iso-8859-1?Q?wp/SZq9IeMsTquaG9lKOMIeLDp2N5DxvNeRiIwkyEpH/6Ari9IZxXweR9p?=
+ =?iso-8859-1?Q?3ZxKP6Ewh8U1XHBxu9Kiw6e4ZjxA2lObt+HjBTIFRY3OPXv2as0J5NC0cy?=
+ =?iso-8859-1?Q?T2NFz9dLq3su6jYeK5JWwQPwnMFTmgVENA2o9DrMUmke2bfry0k8Z3JHpz?=
+ =?iso-8859-1?Q?ALvO1Hb+A+Xgs3qTQTkLReZgjrmudchZ8qm8gg6FXAhYFqQElDdJYk3Bl8?=
+ =?iso-8859-1?Q?jP296m4SzpfAL68J8FJz6e/KQbWg?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB9026.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?Rbnyr8820Ej0RH238lIDAL6wNx8lYGBuIvLegeUFeqeaKlT6aJywIOi22p?=
+ =?iso-8859-1?Q?H6UZi52PLKKXfkMVIfamCdK7KfrZ5M8WZJq5UbfkyKyzRSe67VqLNhmqgZ?=
+ =?iso-8859-1?Q?KKldUO2Rvihuf1Vn9OvSVc2XJk93EZECtRgllmHqamkAUepMtIuCi+FZcy?=
+ =?iso-8859-1?Q?dcXOPTlxTbcj/ixuxtBc/ZPxlCy8jlVl/njdVZoA9iPgy9yjeetEE2eprc?=
+ =?iso-8859-1?Q?DtN6Igz9XWsSBH+XPpwucVJ3EyTzXmO2BtVDDDf4o4J+FpN48Ok1rSusPy?=
+ =?iso-8859-1?Q?BoIa7jNcqXMJcNGjlI2SG5CZ29WLS1yoPzLPiOHMEPqyCCraGANOwBlYdH?=
+ =?iso-8859-1?Q?EUWT+PRhWpHrJn0A25fp1zR6Mj4sfQJ8z8RizbCzAsS0C1KWLEkQ6YKRUb?=
+ =?iso-8859-1?Q?JFOmKKZVDnAXJ3wHrT6dvXz1+m3FlcAGWj1mfXMTuajnVe+suneHizkfGb?=
+ =?iso-8859-1?Q?B/DArAg5gu5zISUEqyTYdMGW2ZSoYz/qYSUKbUcASNcrvVlblUW321FA0Q?=
+ =?iso-8859-1?Q?eWkiRH5/bTY3/ZXaVGNOWlR8/2QCilQv2CP6Vd6dBarnd40xAfWE1S2Ni8?=
+ =?iso-8859-1?Q?6SVAYUH8TnYN28vVdlC0ChhMTOdG1u4ITN/K/e/k/ryifeobPO0adasgYZ?=
+ =?iso-8859-1?Q?ESdjmg+Y1KtWYf4udbQeqgmUXc4Ma/SrOT3D1Y4ljFpey28/dTs0JhxAjD?=
+ =?iso-8859-1?Q?3fBWqOWMQ+45jXPZZZwNjyA/kfcNKvkn9Cyby93A00wc7cCg3mS+2gMhTX?=
+ =?iso-8859-1?Q?6Na9tso8XrP71YtMIVxLUwc7AizsCx10J/zFpgv6+7mEt7ERQ4bo6Ce1Rz?=
+ =?iso-8859-1?Q?c3T8jW1qxsTLOYcB/hdpkEdlS8H7wk+LO4oAj/PbD3FmAnmg/dMKZa/Kv5?=
+ =?iso-8859-1?Q?pRULYKX6XjnMDRW0GELTzvHaHQu1JYF/FuejgZcQ9baq2U88hIr+uTxcC4?=
+ =?iso-8859-1?Q?mOePzC8JE7azF+i/BmXb5KT8N2SUCsmxLD5vmCqneaxGPIrCR4svwaED3F?=
+ =?iso-8859-1?Q?T+d5ZDtj+ET42RUlZ5GBB+abASNERQkZzkp2kwzx8tK2YONRq6NmnUqw7F?=
+ =?iso-8859-1?Q?rnEYh2srOEyzgFQXQeiPD1bCn0i6P51bi5cbWDBOdhW9ViHcs+y+zcPB6y?=
+ =?iso-8859-1?Q?c2kgR4gj/mYxRER9dOpJBp0Kprs92ReR9Oe4jKK6JI2dvUhF14PYg23ePI?=
+ =?iso-8859-1?Q?gGy2FUJpCECoda74rbYQdgcBnSt6sK3H0wr+nPuCi6ATTMj7CyAk0NOlpR?=
+ =?iso-8859-1?Q?yPSfCEzPEe/hhJze46v4AFCWDhrSZ2QSeU1JsTiBDp1fxojA/NQ0VUZtQK?=
+ =?iso-8859-1?Q?Evin3dERXkL+ee3LRLYpAAF3rueJ+ZihLacTQDpVr8OrzhfX/BFRL0kLGR?=
+ =?iso-8859-1?Q?JIzYvrvCIDQ30PeZF5OGKsX4xKOEfhITkn+0X1IGpj1FxBOafYnraZtktF?=
+ =?iso-8859-1?Q?exrQ1aSxEHMgKk4z1NSrmjWpwJXzId22Y4NkoIkkcTVw59s6Xo8/YICsvz?=
+ =?iso-8859-1?Q?HTR+Najn7szo1qGcvwF4AkbfZXz1DPCVW+bFebd9O7F9hO93Bsq6Ql+LnJ?=
+ =?iso-8859-1?Q?UkGExlCbGiA4IiqwLqA9farUtL+5fKHY+MvRLy/O2DvpNSx6oJYigt/Ozq?=
+ =?iso-8859-1?Q?0AW04WxFlMD9KU9PB2K9+DUUe9gWOJZDcQ90qJcuFqHLe2dwj5glq8KZKS?=
+ =?iso-8859-1?Q?+sBZeozUJSbB58o6kkdnWcCeOZL6wQQBMrCykZTBeCRfn/FJy0YPKLGBI9?=
+ =?iso-8859-1?Q?NjuVvJIbx8orNPVrSCx8AxVv51G5yk3XF+D83rCvUXQ2VB?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9026.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4870768b-ef99-432c-4b97-08de482f0777
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Dec 2025 05:39:55.8891
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: sHw7QdCazflsCmuuvsa+0nzahEYrkTuNC7b1PsYAy50b9u2f1U8jbQILmvEUESxuYGJFRE2aUsvoqA+LdUNdjw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8367
 
-Dominique Martinet <asmadeus@codewreck.org> writes:
-
-> This RFC patch illustrates how we could easily print a warning, but
-> perhaps the warning would only make sense if no other commit has been
-> formatted?
-
-Yeah, when nothing is shown but the given range is not empty, it
-would not be too annoying to give an advice message.
-
-On the other hand, I do not think it is a good idea to say anything
-extra when the user gave a range "trunk..mytopic" that has repeated
-back-merges from trunk into mytopic, to format what s/he worked on
-the mytopic branch.  They _expect_ these back-merges to be ignored,
-and it would be purely an unwanted noise.
-
-Thanks.
+>From: brian m. carlson=0A=
+> Sent: Thursday, December 25, 2025 4:38 PM=0A=
+> On 2025-12-25 at 22:13:54, Martin Fick wrote:=0A=
+>> Although the repository is not in terrible shape before packing refs=0A=
+>> (~1500 loose objects, 37pack files). Surprisingly, repacking the repo=0A=
+>> first does speed it up so that packing refs then takes under 20s.=0A=
+>>=0A=
+>> This repository is on NFS.=0A=
+=0A=
+> That's almost certainly part of your performance problem, too.  Loading=
+=0A=
+> a single pack file and index is going to be way, way faster than making=
+=0A=
+> lots of network calls to open 37 pack file and 37 index files, plus at=0A=
+> least stat some loose objects.=0A=
+>=0A=
+> I will note that at least some forges always have Git write pack files=0A=
+> and try to avoid loose objects altogether since that almost always=0A=
+> improves performance.  You may want to set `receive.unpackLimit` to 1 to=
+=0A=
+> see if that helps in the general case.=0A=
+=0A=
+This would not explain why jgit can pack-refs much faster, since it has to =
+deal with these NFS latencies also. In my experience with jgit, we generall=
+y don't see performance issues unless packfile counts exceed 300 or so on N=
+FS, definitely not with only 37 of them. It could be that git is doing some=
+ things less efficiently here, but I would be pretty surprised if git could=
+ not also perform well typically on NFS with only 37 packfiles. I don't thi=
+nk that 200 something object lookups, should ever take 3+mins, even on NFS,=
+ and even with way more packfiles than this. To be that slow, it would have=
+ to take about 1s per lookup! Something really seems fishy here to me. I ha=
+ve to think that somehow it isn't these reads that are slow, but I can't ex=
+plain what else it would be?=0A=
+=0A=
+-Martin=0A=
+=0A=
