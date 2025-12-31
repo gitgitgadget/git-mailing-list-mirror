@@ -1,65 +1,65 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04852199EAD
-	for <git@vger.kernel.org>; Wed, 31 Dec 2025 22:20:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9AA28690
+	for <git@vger.kernel.org>; Wed, 31 Dec 2025 23:40:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767219603; cv=none; b=FpEC35KLI3Bcxc9IUjpH/ybmyL3MuQE27HJymuhY0LsKiJ79Ey59p0RZe3ogk4+S7VysL3yTGkfciV/pmEmje1/tGvVRLraJcBjlW8CEkeomtIL/ymaMwOUOhkG9/bqHoB7/QTuCwie0tOZ2LAx0hry5Ro00pRLAv4PLR58JMpY=
+	t=1767224417; cv=none; b=ry+rqyHhiRInao13DPdg5QJf5e6Nuye97KeQ0bU9ODfrF3maa/sAThe511vN/ORQGONvq8tZUaMEjise2GfMsqpLuC4XOYUECW8GPNRlyHlcCmXrHvJzhqu/D65y5vupeVzfOPfJayzn/14Eb0rLH3zeA4cG7vzZ2AOadAcsi6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767219603; c=relaxed/simple;
-	bh=exdoQUMu/sXuPTvrw1zDsVLxp6iB0QLp7uvHpFiVfDk=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=OtHdeDr7OK0k25Gk23WMkSnxaqu9PsJmwYnbKednvwJsxAftKF/ofO7T1TKP2utRSvzQdYGUazqzsAF5WDqDRwvrE57suFY/gSTjfA+ZlrSJ/yfC09DFhzmZ+Pq0ZAhuSMbijKCsTw91cXZh3MiT6kYUNx+UKHaZn5UIXDxrtbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bw2Us7wl; arc=none smtp.client-ip=209.85.222.176
+	s=arc-20240116; t=1767224417; c=relaxed/simple;
+	bh=cekGd23AKJs3tGhuRmAgFLGtG6wXNQxE54+h8Epo0es=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Zr6MHv3BdaZbkpv9EjK6nXKubUC+lMYNhbP+02Hd9L7ZIlCYMpB2ksYDWntvr2mj6A8snDF61T7vWcSwC4ndxDBHQFD42hznEnMAwC72j/8CEU+iMUyQY6mFz7Q+jtzUDkkXx/2/FTfy3lVh7XLR/EFEMFIjxdoutzf2Zca9AQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wlj0qNTK; arc=none smtp.client-ip=209.85.219.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bw2Us7wl"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8bb6a27d3edso1136549585a.3
-        for <git@vger.kernel.org>; Wed, 31 Dec 2025 14:20:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wlj0qNTK"
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-88a32bf0248so87658696d6.0
+        for <git@vger.kernel.org>; Wed, 31 Dec 2025 15:40:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767219600; x=1767824400; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767224413; x=1767829213; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GbnzYAkekE6RZEPau1Hm5ba0mBKA0zjME8KZEpPsiRk=;
-        b=Bw2Us7wl3Pe0JSDtk5caZNt+UB++8iZ/RRLB/jxu1uXn5E080zpNMV16EtID4aYyCw
-         J5+5VwnfFOZl5qEHpfxA+CB4nQvMWvv3gNce1RESO6qyspqxvwcQlUw9nS9bqVXbmV+6
-         bb6JSpKc5KbmxUGVT9yxICnjqUAWJr2oUr6/MafZUEB7+IQ4z5ndPW3oTXJad4UZbv7I
-         0TsnCJNZ1uFHzWstqfBp8edfpHUiL4jhtVJt7/eAeThtAQa4bWiWz4jhF1DJfO94LXSX
-         FVKB55TDkFtWaMIfBKWTol49cO/OPgeYRRLNiBbFJoXbtqtjO4VUGp5Kmx8U+6fItzwl
-         3u6w==
+        bh=fhlnEqOY//ofDqPAO7bSYI8hKovEyec3pXSj51rJPMU=;
+        b=Wlj0qNTKs7TEJrVcqc7WxErqkPMNkUwtJpFqJj7z4PGVJ+EBrgj+eRQnKp2RMWwiuj
+         CWqUrPeKECDfPLXhh2JzBMPRY/lQpSJICalBL9Wa2DC66Z3nTrB2FNncjo1iUbuCqkX0
+         aBADvwiDII12/PEHXK6EoHvbMq2x23IunCsXixhkz5N8CocCyX1J8zQEZiiTTp74U0E0
+         t+WPfTJFz69QEah9hLkyncuTTEGlWkht3d99kTmZ4BKmX7PUQUFuxG+yV1CcREeFPZCd
+         qQuQggUtt79zofBxv/OTU36qUT8gBKx5L1kCd2sVfP1qi8zjOsda/Hk+Gcm+/O+2r3t1
+         VIjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767219600; x=1767824400;
+        d=1e100.net; s=20230601; t=1767224413; x=1767829213;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GbnzYAkekE6RZEPau1Hm5ba0mBKA0zjME8KZEpPsiRk=;
-        b=kZkdC8h72uY4DmPRiLAU9zX/tBY1VG+TW7YxjYX7NlIpAhwAEkuvM2AGAuSc5f1pBt
-         X5JbVe94S39hwKKdBfHmoCmMwpqhK61trq95f2tk1s4IYxMv0QFxGlW1S0ETWUCMM4f/
-         jxpzMwkYgTm9A73d8P+54rErx70StVm4lQdo6x11mgTbOweis9zkcZJdL2B5FERU19ND
-         j5TwLpElGwZLLjKXkly4nSmIv09XvDdXyyirZUfu52LrnE96Axu+ZNWLMfrms+ISvkIG
-         RTFIjeCaZiah9Vy+oWyIw8nYKjplrFokSkevLoI31jwR4rx4XgavcRmuEwYDSFL5ubXl
-         E6rQ==
-X-Gm-Message-State: AOJu0YwwD2I0vKi/xe4VIo0IT497dUOzfuW9aPfLF6NX1vQ+SOGh0P4L
-	zBtwdcri/eT+sWkRa2I8JfDNn7+9uU6YWsVzaU4oLSgKsFhDlHrikt2jVpjfvg==
-X-Gm-Gg: AY/fxX6tM0fNCjyycP+H5trjM7ZNBPdhLtB9K1XlMceRDZCaMAA5Nf47AzEzuZppzcP
-	r4eywfYoWSxt4vg/gYcbiVcqN8TEWhu1rLc172LUupzOOK5ZLytvBD2WNw64L4UG8XKC8Q1TjQA
-	XtB8+0mtNbSwCv1HJiGWmbJC4FFKz5CHZo2No5Y1o3vg4xdWCSetNl0jHcwfSXVXM4N6WVwZFaW
-	DN5PAOOa6okOYbw7NR+xUDmpVZo/ZQFrlk/9BPvRCX0PCOR1puXhG7FVLxqmt/it2mAvZxgW7Ie
-	th4ZlWg6rOcTIiOAhCh2obgjVCNrFZsTuX+vPDgv/Y08vaZBRKsEPYM6zM5Pyza6QKXGekAoQI/
-	l5x9MsW7L5P+7q5ks2WaY3y26Yb/At+ed6PQqPlq3oXs/4GTp1gfJWw2M+dXlQG5pK6i0QVeQkj
-	jbjlWE3QgZQqIF
-X-Google-Smtp-Source: AGHT+IE01RHAPDWW4bovHCax5ZAJWih3HJtWamVVS8VUoGsurDV0hBPJuEUUh5P4D+fifeTlBSTAeg==
-X-Received: by 2002:a05:620a:40d1:b0:8b2:e6b1:a9a6 with SMTP id af79cd13be357-8c08f654cfdmr5678528785a.17.1767219600331;
-        Wed, 31 Dec 2025 14:20:00 -0800 (PST)
-Received: from [127.0.0.1] ([172.172.87.85])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8c09688e400sm2876383385a.14.2025.12.31.14.19.59
+        bh=fhlnEqOY//ofDqPAO7bSYI8hKovEyec3pXSj51rJPMU=;
+        b=phnM3zIXHdY5/PmCswPRIR1SFbK6Oy/zK3rW85F86GfeECqMuFOXQJ4E707zupkARI
+         IhrEbBQx9ldIbHed15yVVEFw9SHiASDrVNr24Rw4ZDg8ekkQ6J9a0Y/yHlSXBV3FLLfU
+         zyuk+zEA0E1ujlw9lDbGRyfsqEAECzlR6OIw51qdV0LPzm1GyoAabpDSV5xQtD2iduk8
+         FPp8xQPTLEDNMsUTpzEtH30qASvzTl/H9Ubtm61XeqZ5HE4/5u2H/feuJZaUuTi6knkr
+         fbV4Of5qMNFRvvn5l/dfzcjSDI9/2obXitWS9uSPHzx+QEzAgHdV+vtQvrl0Pai/Dlof
+         X6Kw==
+X-Gm-Message-State: AOJu0YxXLdsEpKIyE2HTEQ98FucIFdJLnWqXwFc/OyeMQ5ZXVH5X9tFX
+	8Dv7655n4sigbpw7rlf7BlEIX+EyD61EhQBMdVXkBg2JbAzqFys1ep9j2rQGiQ==
+X-Gm-Gg: AY/fxX4EGSsr9om45loCMwWnPraMdeOngeBMejLDlf3er5VoDiahN6JJU2m7lRBgvaH
+	JwwAhXb9jWm7OR9Qbax9lJxgJYho0NztSpdyld3z03nDBu9qW+DYvL03rP8j4GIYP7mtlNYxGdC
+	CS+GO7aqe9RZrzx/Ezm7u0RWU3AuvwxvgVo9y6RmGP8fJrM2h3iQ9+IlSEdQJ8TtNgzPWQqE8Qs
+	AhOXGIp54stg8ALSkY8jSHa88J2YZZBmB5ZzIswO1P3yr82vaFnbOCx9IqIAa0qKSkT3bPAIKFd
+	fc23GG/JNDyTtWrmth2zbg2QBZwoPl21IUAEa8soUFKTymgC5//Rfe9Fd9Vp15qxT4qM1UZAHsE
+	qNN9tBDlPtY3A6krBhQ2WDrv80RHFopya8ol9N4xhpttqfaZA12FHcRxMKTcHNWf5kRYXYhocQI
+	G2NgeDnGCiquC5
+X-Google-Smtp-Source: AGHT+IF3jSUhbVu5GTpAmZeE6SGuWnf0ccTqYxprPa+d4DkBXMWrTxd7MyFJDYyOrULd9+Y3ShwMhw==
+X-Received: by 2002:a0c:fbc4:0:b0:888:fc37:f9b7 with SMTP id 6a1803df08f44-88d820414a8mr405212376d6.25.1767224412964;
+        Wed, 31 Dec 2025 15:40:12 -0800 (PST)
+Received: from [127.0.0.1] ([40.76.119.209])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88d96240314sm275962326d6.7.2025.12.31.15.40.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Dec 2025 14:19:59 -0800 (PST)
-Message-Id: <pull.2149.git.git.1767219599334.gitgitgadget@gmail.com>
+        Wed, 31 Dec 2025 15:40:11 -0800 (PST)
+Message-Id: <pull.2150.git.git.1767224411233.gitgitgadget@gmail.com>
 From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 31 Dec 2025 22:19:59 +0000
-Subject: [PATCH] t7800: fix racy "difftool --dir-diff syncs worktree" test
+Date: Wed, 31 Dec 2025 23:40:11 +0000
+Subject: [PATCH] t7527: fix flaky fsmonitor event tests with retry logic
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,138 +75,157 @@ Cc: Paul Tarjan <github@paulisageek.com>,
 
 From: Paul Tarjan <github@paulisageek.com>
 
-The "difftool --dir-diff syncs worktree without unstaged change" test
-fails intermittently, particularly on Windows CI.
+The fsmonitor event tests (edit, create, delete, rename, etc.) were
+flaky because there can be a race between the daemon writing events
+to the trace file and the test's grep commands checking for them.
 
-The test modifies a file in difftool's temp directory via an extcmd
-script and expects the change to be synced back to the worktree. The
-sync-back detection relies on git's change detection mechanisms.
-
-The root cause is that the original file content and the replacement
-content have identical sizes:
-
-  - Original: "main\ntest\na\n" = 12 bytes
-  - New:      "new content\n"   = 12 bytes
-
-When difftool creates the temporary index (wtindex), the cache entries
-have sd_size = 0 (zero-initialized via make_cache_entry with no
-refresh). Git's ie_modified() is designed to handle this by calling
-ce_modified_check_fs() for content hashing when sd_size is 0.
-
-However, Windows has known filesystem issues that may cause this to
-fail intermittently:
-
- - UNRELIABLE_FSTAT: Windows fstat() on open files may not return the
-   same information as lstat() after close (config.mak.uname:506)
-
- - NTFS timestamp issues: The racy-git documentation notes that NTFS
-   is "still broken" regarding timestamp granularity between in-core
-   and on-disk representations (Documentation/technical/racy-git.adoc)
-
- - Attribute caching: Windows GetFileAttributesExW may cache results
-
-Fix this by changing the replacement content to "modified content\n"
-(17 bytes), ensuring the change is detected at the earliest size
-comparison in match_stat_data(), bypassing any platform-specific edge
-cases in the more complex code paths.
-
-Note: Other tests with same-size file patterns (t0010-racy-git.sh,
-t2200-add-update.sh, t1701-racy-split-index.sh) are not vulnerable
-because they use normal Git index operations with proper racy git
-detection. The difftool case is unique due to its ephemeral wtindex
-created via make_cache_entry() without full stat refresh.
+Add a retry_grep() helper function (similar to retry_until_success
+in lib-git-p4.sh) that retries grep with a timeout, and use it in
+all event-checking tests to wait for one expected event before
+checking the rest.
 
 Signed-off-by: Paul Tarjan <github@paulisageek.com>
 ---
-    t7800: fix racy "difftool --dir-diff syncs worktree" test
+    t7527: fix flaky fsmonitor event tests with retry logic
     
-    In
-    https://github.com/git/git/actions/runs/20624095002/job/59231745784#step:5:416
-    this test failed for me on an unrelated commit. I had Claude look into
-    it and it thought that this could be a racy git problem. I'm skeptical
-    but a) I don't know the source well enough and b) the fix is low risk so
-    I thought I'd send it to you folks. Everything below is the AI generated
-    explanation.
+    This failed in
+    https://github.com/git/git/actions/runs/20628166110/job/59242063331 on
+    an unrelated commit.
     
-    The "difftool --dir-diff syncs worktree without unstaged change" test
-    fails intermittently, particularly on Windows CI.
+    The fsmonitor event tests (edit, create, delete, rename, etc.) were
+    flaky because there can be a race between the daemon writing events to
+    the trace file and the test's grep commands checking for them.
     
-    The test modifies a file in difftool's temp directory via an extcmd
-    script and expects the change to be synced back to the worktree. The
-    sync-back detection relies on git's change detection mechanisms.
-    
-    The root cause is that the original file content and the replacement
-    content have identical sizes:
-    
-     * Original: "main\ntest\na\n" = 12 bytes
-     * New: "new content\n" = 12 bytes
-    
-    When difftool creates the temporary index (wtindex), the cache entries
-    have sd_size = 0 (zero-initialized via make_cache_entry with no
-    refresh). Git's ie_modified() is designed to handle this by calling
-    ce_modified_check_fs() for content hashing when sd_size is 0.
-    
-    However, Windows has known filesystem issues that may cause this to fail
-    intermittently:
-    
-     * UNRELIABLE_FSTAT: Windows fstat() on open files may not return the
-       same information as lstat() after close (config.mak.uname:506)
-    
-     * NTFS timestamp issues: The racy-git documentation notes that NTFS is
-       "still broken" regarding timestamp granularity between in-core and
-       on-disk representations (Documentation/technical/racy-git.adoc)
-    
-     * Attribute caching: Windows GetFileAttributesExW may cache results
-    
-    Fix this by changing the replacement content to "modified content\n" (17
-    bytes), ensuring the change is detected at the earliest size comparison
-    in match_stat_data(), bypassing any platform-specific edge cases in the
-    more complex code paths.
-    
-    Note: Other tests with same-size file patterns (t0010-racy-git.sh,
-    t2200-add-update.sh, t1701-racy-split-index.sh) are not vulnerable
-    because they use normal Git index operations with proper racy git
-    detection. The difftool case is unique due to its ephemeral wtindex
-    created via make_cache_entry() without full stat refresh.
-    
-    Signed-off-by: Paul Tarjan github@paulisageek.com
+    Add a retry_grep() helper function (similar to retry_until_success in
+    lib-git-p4.sh) that retries grep with a timeout, and use it in all
+    event-checking tests to wait for one expected event before checking the
+    rest.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2149%2Fptarjan%2Fclaude%2Ffix-difftool-test-DDxDC-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2149/ptarjan/claude/fix-difftool-test-DDxDC-v1
-Pull-Request: https://github.com/git/git/pull/2149
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2150%2Fptarjan%2Fclaude%2Ffix-fsmonitor-test-jsXoE-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2150/ptarjan/claude/fix-fsmonitor-test-jsXoE-v1
+Pull-Request: https://github.com/git/git/pull/2150
 
- t/t7800-difftool.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t7527-builtin-fsmonitor.sh | 51 +++++++++++++++++++-----------------
+ 1 file changed, 27 insertions(+), 24 deletions(-)
 
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index bf0f67378d..8a91ff3603 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -647,21 +647,21 @@ test_expect_success SYMLINKS 'difftool --dir-diff --symlinks without unstaged ch
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 409cd0cd12..68a10a2100 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -408,9 +408,8 @@ move_directory() {
+ # ensure we are getting the OS notifications and do not try to confirm what
+ # is reported by `git status`.
+ #
+-# We run a simple query after modifying the filesystem just to introduce
+-# a bit of a delay so that the trace logging from the daemon has time to
+-# get flushed to disk.
++# We use retry_grep to handle races between the daemon writing events
++# to the trace file and our check.
+ #
+ # We `reset` and `clean` at the bottom of each test (and before stopping the
+ # daemon) because these commands might implicitly restart the daemon.
+@@ -422,6 +421,24 @@ clean_up_repo_and_stop_daemon () {
+ 	rm -f .git/trace
+ }
+ 
++# Retry a grep up to RETRY_TIMEOUT times until it succeeds.
++#
++RETRY_TIMEOUT=5
++
++retry_grep () {
++	nr_tries_left=$RETRY_TIMEOUT
++	until grep "$1" "$2" 2>/dev/null
++	do
++		if test $nr_tries_left -eq 0
++		then
++			grep "$1" "$2"
++			return
++		fi
++		nr_tries_left=$(($nr_tries_left - 1))
++		sleep 1
++	done
++}
++
+ test_expect_success 'edit some files' '
+ 	test_when_finished clean_up_repo_and_stop_daemon &&
+ 
+@@ -429,9 +446,7 @@ test_expect_success 'edit some files' '
+ 
+ 	edit_files &&
+ 
+-	test-tool fsmonitor-client query --token 0 &&
+-
+-	grep "^event: dir1/modified$"  .git/trace &&
++	retry_grep "^event: dir1/modified$" .git/trace &&
+ 	grep "^event: dir2/modified$"  .git/trace &&
+ 	grep "^event: modified$"       .git/trace &&
+ 	grep "^event: dir1/untracked$" .git/trace
+@@ -444,9 +459,7 @@ test_expect_success 'create some files' '
+ 
+ 	create_files &&
+ 
+-	test-tool fsmonitor-client query --token 0 &&
+-
+-	grep "^event: dir1/new$" .git/trace &&
++	retry_grep "^event: dir1/new$" .git/trace &&
+ 	grep "^event: dir2/new$" .git/trace &&
+ 	grep "^event: new$"      .git/trace
+ '
+@@ -458,9 +471,7 @@ test_expect_success 'delete some files' '
+ 
+ 	delete_files &&
+ 
+-	test-tool fsmonitor-client query --token 0 &&
+-
+-	grep "^event: dir1/delete$" .git/trace &&
++	retry_grep "^event: dir1/delete$" .git/trace &&
+ 	grep "^event: dir2/delete$" .git/trace &&
+ 	grep "^event: delete$"      .git/trace
+ '
+@@ -472,9 +483,7 @@ test_expect_success 'rename some files' '
+ 
+ 	rename_files &&
+ 
+-	test-tool fsmonitor-client query --token 0 &&
+-
+-	grep "^event: dir1/rename$"  .git/trace &&
++	retry_grep "^event: dir1/rename$" .git/trace &&
+ 	grep "^event: dir2/rename$"  .git/trace &&
+ 	grep "^event: rename$"       .git/trace &&
+ 	grep "^event: dir1/renamed$" .git/trace &&
+@@ -489,9 +498,7 @@ test_expect_success 'rename directory' '
+ 
+ 	mv dirtorename dirrenamed &&
+ 
+-	test-tool fsmonitor-client query --token 0 &&
+-
+-	grep "^event: dirtorename/*$" .git/trace &&
++	retry_grep "^event: dirtorename/*$" .git/trace &&
+ 	grep "^event: dirrenamed/*$"  .git/trace
  '
  
- write_script modify-right-file <<\EOF
--echo "new content" >"$2/file"
-+echo "modified content" >"$2/file"
- EOF
+@@ -502,9 +509,7 @@ test_expect_success 'file changes to directory' '
  
- run_dir_diff_test 'difftool --dir-diff syncs worktree with unstaged change' '
- 	test_when_finished git reset --hard &&
- 	echo "orig content" >file &&
- 	git difftool -d $symlinks --extcmd "$PWD/modify-right-file" branch &&
--	echo "new content" >expect &&
-+	echo "modified content" >expect &&
- 	test_cmp expect file
+ 	file_to_directory &&
+ 
+-	test-tool fsmonitor-client query --token 0 &&
+-
+-	grep "^event: delete$"     .git/trace &&
++	retry_grep "^event: delete$" .git/trace &&
+ 	grep "^event: delete/new$" .git/trace
  '
  
- run_dir_diff_test 'difftool --dir-diff syncs worktree without unstaged change' '
- 	test_when_finished git reset --hard &&
- 	git difftool -d $symlinks --extcmd "$PWD/modify-right-file" branch &&
--	echo "new content" >expect &&
-+	echo "modified content" >expect &&
- 	test_cmp expect file
+@@ -515,9 +520,7 @@ test_expect_success 'directory changes to a file' '
+ 
+ 	directory_to_file &&
+ 
+-	test-tool fsmonitor-client query --token 0 &&
+-
+-	grep "^event: dir1$" .git/trace
++	retry_grep "^event: dir1$" .git/trace
  '
  
+ # The next few test cases exercise the token-resync code.  When filesystem
 
 base-commit: 68cb7f9e92a5d8e9824f5b52ac3d0a9d8f653dbe
 -- 
