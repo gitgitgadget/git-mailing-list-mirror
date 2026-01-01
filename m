@@ -1,380 +1,119 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2771AA7A6
-	for <git@vger.kernel.org>; Thu,  1 Jan 2026 00:19:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F433481DD
+	for <git@vger.kernel.org>; Thu,  1 Jan 2026 00:27:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767226769; cv=none; b=GE4YKMc1gOkbRR5owx2O+LUf5pZDb6NxyZ5gA5ns3/+aeIkaStqZ0QM9ydLZIJFRn2R521sn7IUe6DZHlPryl2M0+v+siaF6wGUuKTtANCDk/9Yquo2ecburSgFCUCgzVyjh8mbANFcUINR2mJ02HNpzafa7vhsB8egLR/Lbqt0=
+	t=1767227272; cv=none; b=gDfy+la9ZSlMisN42hisiuEGOMk6opJh/wqiYW2uG2PQz79NQSdwXcvGtoeKlOfas4qvdMuNIBSo6KJOL+is81MmAknFm1eGB1gkkHxMuUelQ3tei59uMBHOee3iRtKaIGkAAGGJXO+VEnCp9/HQd2vG4efw+5oUVDuixZjfojk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767226769; c=relaxed/simple;
-	bh=hBbFFixBguI6J7m7Xhlg29gv2SIe90JlSbZPSY8ZDw4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=AqhcPUaMfnVZXm7RmEGTvngEt1fiTaNkSBj38kwCYLMVG8dczJmY5O2+SHh3XAiWBIu7/TFAFlIrhAAqVsnYoHNrRP3vC+3TZiSibHuLV87TbJxTX2RVTFm7iq3/uA13hF6Zvhaox6MRt/f37a73bqBn+Bp40n+jvH/dwhiDaaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iuQSudIT; arc=none smtp.client-ip=209.85.167.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767227272; c=relaxed/simple;
+	bh=dhBa0N6kjWMnFaj/nIYv+9P04Mv5JTg9/m9UamZzKYY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oExHBjfSaymQEG1DrohaeU/hRreJ1y4/Fs0R70X2DUKMsEaVaYefW+Yegsnl8V4YeLfgEDQouMUA9lEi98XYJJODWpuWO//6qeTOMSHEvqaO/64tZrNDUDohpjbQX6JCqUtRUbAComW2fpFNx+nh4cSuUEAo3P0qvqJJoqXhZFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GE0J95EU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pTesTJ1l; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iuQSudIT"
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-455a461ab6eso3457671b6e.2
-        for <git@vger.kernel.org>; Wed, 31 Dec 2025 16:19:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767226766; x=1767831566; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Vh1e28G63inVQr68ouGNWc+QmgEQGmw5YdYAA34UNzU=;
-        b=iuQSudIT83C/ITXPp5T4r8G+Wu9QNWnvUER6smIe4CNrKYCUaCZO9rTUSTbDuKjX6q
-         C2Pu51aDxQEBo5XiPwW+Xq7rlKgZA8UAzAt6JNGKCdxb6w1NLf1QEyIDaquQkURlGdzt
-         /l0QnoCNxMg/ncJpQAL9i6lX6jwu4OwJ1yhOtAqvHf0vSSW/jlS14cbltryNzOEo55s4
-         Tu8idHQ8SsHt3tp+Bo2dgsuGOMxZP5pyjmbGGXiZlLIFwPht3x0n45LuOGT1EcLG8d7x
-         5GMUbZicB45wxuLbQWewXAhJoJEYM8tL+sXhBAW91SpokJzRiBdszb+WQ5CKFttUmwha
-         nFiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767226766; x=1767831566;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Vh1e28G63inVQr68ouGNWc+QmgEQGmw5YdYAA34UNzU=;
-        b=BLlABv51FliF0TeU41Ev/WQxzfHsYhNL+8CjACshLuX2vWrVvHI941sVes+D/FM4a5
-         m45LbL6Gec2Usi2MeI/6unRppeVcXzuFLyLJTJMupBpogWT4te7T9AO1U4MohzzpETzg
-         25860ELIfPvf5PAq9rE4AEWjaXkBb2V1T3gjPl6kH96/kdLL3SH7YhUjNLhw2K0+ymxw
-         y+F4maIpzPKCUZq8wB4IJNtrcqfgRED1ojedsxKjZ0Jcpoux0YgJy4tjkaewhbHhIZ07
-         5kM/lwwYg8xn6m+hJxNgyRf47pCPmy3u5KK+nNN0w3aB3qJjceCt/rSWEJcxKneA4lKR
-         vweA==
-X-Gm-Message-State: AOJu0Ywlttl+rpBk6BB3Z5xBcpV+p1xJ2fP0FhR4lUJIAcQHPgUZUUAh
-	ChlQdbMPZbdDtwFR/dYkPPhlB5pO+fva1AMPmlkq8qx99zWH+tjvIxuT9ND7LCKt
-X-Gm-Gg: AY/fxX6VTivitBIxlXCv/50mi29berrxByYswWBrriqp+xmAdgwdmIBd2AhdesZXI9a
-	VM1eLz7NoKfOEzuk+/DVg3U1qqR38JpqCGrh/rFptEVY26fXvWHU4uYLPKOscgz/OsQtELEgRoA
-	u9GaRx+suW6ZluFkgkRuJv9YgdE22Z7pltu4gIsFScPXEq6FpM7AX/Mt376qTvQDLITzGflY3nL
-	DJxhUOstypOjribkR/LV4TKlF3CHQ+f5jnNONDBh5lON2mN+Rof9fms7g0HvzVMw2XnWw7jrZwn
-	oKAgm2jYNVCE5B7IT/aCd9QsRFBZAj+ZlAtLQgD6RCvPO4/Y3Rqx1CY1jafSXLo1w7lP0z320XS
-	6nfUhhZgIh61bh7K9KpIOdUmxTMXUA14BwXbDzdDq29UJqxbvBc+QTPtvRZOkW6wLAOBkoMsrXF
-	VWDeT+jx2BccNE
-X-Google-Smtp-Source: AGHT+IEUfG/pgeRnesKzwD8TNDnTdJz734W65s1znDU/jX0Z+BLwrFTMXFRe149ItNv5IEPQHDDfAw==
-X-Received: by 2002:a05:6808:8c6:b0:459:b48b:d50d with SMTP id 5614622812f47-459b48c8ecfmr6042937b6e.23.1767226766264;
-        Wed, 31 Dec 2025 16:19:26 -0800 (PST)
-Received: from [127.0.0.1] ([52.242.243.96])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-45a098b133csm614369b6e.13.2025.12.31.16.19.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Dec 2025 16:19:24 -0800 (PST)
-Message-Id: <pull.2150.v2.git.git.1767226763360.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2150.git.git.1767224411233.gitgitgadget@gmail.com>
-References: <pull.2150.git.git.1767224411233.gitgitgadget@gmail.com>
-From: "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 01 Jan 2026 00:19:23 +0000
-Subject: [PATCH v2] t7527: fix flaky fsmonitor event tests with retry logic
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GE0J95EU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pTesTJ1l"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9C14C140004E;
+	Wed, 31 Dec 2025 19:27:47 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 31 Dec 2025 19:27:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1767227267; x=1767313667; bh=3SuFvxGIwD
+	V3/Q7MRqMs0ZjtAMekkGYHSzcWvM3T684=; b=GE0J95EUcXlDLG3PniyUpBRbZH
+	fvWitBiV88RXPVLSGnaekKId+tsS3y7XDxZ9BTea6mW5XAFORhQkcxMde20BM9jl
+	a4EWYVrkBJXK0tLTxkPvGaNSs9zVS208Ucq79wk/y7jt5VWTQUkLtMGZ9I3EyBK6
+	IlVkPuC553Sde49L2LM9f/F67gJ4UtLlHjG1NFSWexPtBQKlqrJC9zCaGjT19xfX
+	suqzLzjd/Li9K/dnZgUBrkYIqdXa56FFa1FJ4VcIxNMg5OQ0gpYcvzcAyUBlrNoY
+	4D/dvfKfo+stJWhuyK/rd2gCgAYwh1ZLt63ZNRarBJIRhTYc69F5nPp84l/g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767227267; x=1767313667; bh=3SuFvxGIwDV3/Q7MRqMs0ZjtAMekkGYHSzc
+	WvM3T684=; b=pTesTJ1lfrXI2tmf+A5QQtOyb9tTIAXN8UBimGv58AT1Nhhb7jY
+	qffw0T3+/1YOXwia/9ZjfGqeIJw26ejX/tHiVmVXnX/33sw5OvgfOiaI1E7uMi1i
+	2S667qxBrC/bdpbjXWu4S6wWpnsOovNafZQAq9DecaClaM+iqJYEE0z9FE2zppo1
+	21CYgVStg/gGdK3Y1vLuIPKSWH5mISutQj458LPvUupBuZ88SZvewXCWKArnPPeP
+	m8o/NGsuYUmf+TRwXbJ+b2q2706IQ+QWO0i/eoAvXBwZ4pnH8bEv/T9Pr44BXMEv
+	raZ5oyyq9ViN2MFPPIP7BevIis5rWCSOVrQ==
+X-ME-Sender: <xms:g79VaRvYGIPxBjK4o_dI3hEW2yyInRi6Sgdf_MOEJu-QZoMecHY1jg>
+    <xme:g79VaR49cngHeW1QBopLeeTxkqIbt2ZRVHvBkD88HxyN51DAtj6UCke8BKOJPZedW
+    C7q4lRA9tbKpENnTKodMHeq8zuwqEGEkaNPkxK1R7m7GAyflJo59w>
+X-ME-Received: <xmr:g79VaSICs3vwu2t3AZ51ZQFidmmQ5tSTrx3F32vP4lqoyRCzQGNXAKI0Vce5q4_Dh1pkWS7x-DfIktQa8rDWeXlf9d8jY9hwsw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekgeefgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
+    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
+    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
+    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
+    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggvvhgvshhh
+    ihhguhhrghgrohhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:g79VaR74RNvKJcx25EgeQFjOLR_SobcTE0DDuIYHa26FAZaMyj60Xg>
+    <xmx:g79VaVwUUn0I5fkxPrJlA67nbH7mZHnlq8x7hErgl5RRH2bPJ_5hVQ>
+    <xmx:g79VaVbUnrFPXz8__lEhB9HkDl-6hmwfCu56A2w7aJc9_6C1dezJxQ>
+    <xmx:g79VaXS2gBTM7bgOMgktjI7LyYPBYhY97D78b82GmhC2svczsvUypg>
+    <xmx:g79Vad44Bo38Lcf7hfGX92XaULuyKMb2uDSd0PZ9ZS7irDXPiKB549GY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 31 Dec 2025 19:27:47 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] [GSoC] t5403: use test_path_is_file instead of test -f
+In-Reply-To: <20251229185737.2328-1-deveshigurgaon@gmail.com> (Deveshi
+	Dwivedi's message of "Mon, 29 Dec 2025 18:57:37 +0000")
+References: <20251229185737.2328-1-deveshigurgaon@gmail.com>
+Date: Thu, 01 Jan 2026 09:27:45 +0900
+Message-ID: <xmqqjyy2dvni.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Paul Tarjan <github@paulisageek.com>,
-    Paul Tarjan <github@paulisageek.com>
+Content-Type: text/plain
 
-From: Paul Tarjan <github@paulisageek.com>
+Deveshi Dwivedi <deveshigurgaon@gmail.com> writes:
 
-The fsmonitor event tests (edit, create, delete, rename, etc.) were
-flaky because there can be a race between the daemon writing events
-to the trace file and the test's grep commands checking for them.
+> Replace 'test -f' with the test_path_is_file in
+> t5403-post-checkout-hook.sh. This helper provides better error
+> messages when tests fail, making it easier to debug issues.
 
-Add a retry_grep() helper function (similar to retry_until_success
-in lib-git-p4.sh) that retries grep with a timeout, and use it in
-all event-checking tests to wait for one expected event before
-checking the rest.
+All true, so I'll queue the patch.  Thanks.
 
-Signed-off-by: Paul Tarjan <github@paulisageek.com>
----
-    t7527: fix flaky fsmonitor event tests with retry logic
-    
-    This failed in
-    https://github.com/git/git/actions/runs/20628166110/job/59242063331 on
-    an unrelated commit.
-    
-    The fsmonitor event tests (edit, create, delete, rename, etc.) were
-    flaky because there can be a race between the daemon writing events to
-    the trace file and the test's grep commands checking for them.
-    
-    Add a retry_grep() helper function (similar to retry_until_success in
-    lib-git-p4.sh) that retries grep with a timeout, and use it in all
-    event-checking tests to wait for one expected event before checking the
-    rest.
-    
-    Changes since v1:
-    
-     * Use retry_grep for all event checks, not just the first one (any
-       event can be delayed)
+A #leftoverbit is to think about what this test checks, if it
+makes sense, and if we can do better.  The expected outcome of this
+clone is stable, so the input fed to the hook should also be stable.
+With the same brain-cycle to write a test that checks the existence
+of the output file (i.e., proving that the hook was run), we should
+be able to concoct a test that validates the contents of the output.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2150%2Fptarjan%2Fclaude%2Ffix-fsmonitor-test-jsXoE-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2150/ptarjan/claude/fix-fsmonitor-test-jsXoE-v2
-Pull-Request: https://github.com/git/git/pull/2150
-
-Range-diff vs v1:
-
- 1:  6fafc812e1 ! 1:  c275732e95 t7527: fix flaky fsmonitor event tests with retry logic
-     @@ t/t7527-builtin-fsmonitor.sh: test_expect_success 'edit some files' '
-      -	test-tool fsmonitor-client query --token 0 &&
-      -
-      -	grep "^event: dir1/modified$"  .git/trace &&
-     +-	grep "^event: dir2/modified$"  .git/trace &&
-     +-	grep "^event: modified$"       .git/trace &&
-     +-	grep "^event: dir1/untracked$" .git/trace
-      +	retry_grep "^event: dir1/modified$" .git/trace &&
-     - 	grep "^event: dir2/modified$"  .git/trace &&
-     - 	grep "^event: modified$"       .git/trace &&
-     - 	grep "^event: dir1/untracked$" .git/trace
-     ++	retry_grep "^event: dir2/modified$"  .git/trace &&
-     ++	retry_grep "^event: modified$"       .git/trace &&
-     ++	retry_grep "^event: dir1/untracked$" .git/trace
-     + '
-     + 
-     + test_expect_success 'create some files' '
-      @@ t/t7527-builtin-fsmonitor.sh: test_expect_success 'create some files' '
-       
-       	create_files &&
-     @@ t/t7527-builtin-fsmonitor.sh: test_expect_success 'create some files' '
-      -	test-tool fsmonitor-client query --token 0 &&
-      -
-      -	grep "^event: dir1/new$" .git/trace &&
-     +-	grep "^event: dir2/new$" .git/trace &&
-     +-	grep "^event: new$"      .git/trace
-      +	retry_grep "^event: dir1/new$" .git/trace &&
-     - 	grep "^event: dir2/new$" .git/trace &&
-     - 	grep "^event: new$"      .git/trace
-     ++	retry_grep "^event: dir2/new$" .git/trace &&
-     ++	retry_grep "^event: new$"      .git/trace
-       '
-     + 
-     + test_expect_success 'delete some files' '
-      @@ t/t7527-builtin-fsmonitor.sh: test_expect_success 'delete some files' '
-       
-       	delete_files &&
-     @@ t/t7527-builtin-fsmonitor.sh: test_expect_success 'delete some files' '
-      -	test-tool fsmonitor-client query --token 0 &&
-      -
-      -	grep "^event: dir1/delete$" .git/trace &&
-     +-	grep "^event: dir2/delete$" .git/trace &&
-     +-	grep "^event: delete$"      .git/trace
-      +	retry_grep "^event: dir1/delete$" .git/trace &&
-     - 	grep "^event: dir2/delete$" .git/trace &&
-     - 	grep "^event: delete$"      .git/trace
-     ++	retry_grep "^event: dir2/delete$" .git/trace &&
-     ++	retry_grep "^event: delete$"      .git/trace
-       '
-     + 
-     + test_expect_success 'rename some files' '
-      @@ t/t7527-builtin-fsmonitor.sh: test_expect_success 'rename some files' '
-       
-       	rename_files &&
-     @@ t/t7527-builtin-fsmonitor.sh: test_expect_success 'rename some files' '
-      -	test-tool fsmonitor-client query --token 0 &&
-      -
-      -	grep "^event: dir1/rename$"  .git/trace &&
-     +-	grep "^event: dir2/rename$"  .git/trace &&
-     +-	grep "^event: rename$"       .git/trace &&
-     +-	grep "^event: dir1/renamed$" .git/trace &&
-     +-	grep "^event: dir2/renamed$" .git/trace &&
-     +-	grep "^event: renamed$"      .git/trace
-      +	retry_grep "^event: dir1/rename$" .git/trace &&
-     - 	grep "^event: dir2/rename$"  .git/trace &&
-     - 	grep "^event: rename$"       .git/trace &&
-     - 	grep "^event: dir1/renamed$" .git/trace &&
-     ++	retry_grep "^event: dir2/rename$"  .git/trace &&
-     ++	retry_grep "^event: rename$"       .git/trace &&
-     ++	retry_grep "^event: dir1/renamed$" .git/trace &&
-     ++	retry_grep "^event: dir2/renamed$" .git/trace &&
-     ++	retry_grep "^event: renamed$"      .git/trace
-     + '
-     + 
-     + test_expect_success 'rename directory' '
-      @@ t/t7527-builtin-fsmonitor.sh: test_expect_success 'rename directory' '
-       
-       	mv dirtorename dirrenamed &&
-     @@ t/t7527-builtin-fsmonitor.sh: test_expect_success 'rename directory' '
-      -	test-tool fsmonitor-client query --token 0 &&
-      -
-      -	grep "^event: dirtorename/*$" .git/trace &&
-     +-	grep "^event: dirrenamed/*$"  .git/trace
-      +	retry_grep "^event: dirtorename/*$" .git/trace &&
-     - 	grep "^event: dirrenamed/*$"  .git/trace
-     ++	retry_grep "^event: dirrenamed/*$"  .git/trace
-       '
-       
-     + test_expect_success 'file changes to directory' '
-      @@ t/t7527-builtin-fsmonitor.sh: test_expect_success 'file changes to directory' '
-       
-       	file_to_directory &&
-     @@ t/t7527-builtin-fsmonitor.sh: test_expect_success 'file changes to directory' '
-      -	test-tool fsmonitor-client query --token 0 &&
-      -
-      -	grep "^event: delete$"     .git/trace &&
-     +-	grep "^event: delete/new$" .git/trace
-      +	retry_grep "^event: delete$" .git/trace &&
-     - 	grep "^event: delete/new$" .git/trace
-     ++	retry_grep "^event: delete/new$" .git/trace
-       '
-       
-     + test_expect_success 'directory changes to a file' '
-      @@ t/t7527-builtin-fsmonitor.sh: test_expect_success 'directory changes to a file' '
-       
-       	directory_to_file &&
-
-
- t/t7527-builtin-fsmonitor.sh | 79 +++++++++++++++++++-----------------
- 1 file changed, 41 insertions(+), 38 deletions(-)
-
-diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-index 409cd0cd12..e7b4065469 100755
---- a/t/t7527-builtin-fsmonitor.sh
-+++ b/t/t7527-builtin-fsmonitor.sh
-@@ -408,9 +408,8 @@ move_directory() {
- # ensure we are getting the OS notifications and do not try to confirm what
- # is reported by `git status`.
- #
--# We run a simple query after modifying the filesystem just to introduce
--# a bit of a delay so that the trace logging from the daemon has time to
--# get flushed to disk.
-+# We use retry_grep to handle races between the daemon writing events
-+# to the trace file and our check.
- #
- # We `reset` and `clean` at the bottom of each test (and before stopping the
- # daemon) because these commands might implicitly restart the daemon.
-@@ -422,6 +421,24 @@ clean_up_repo_and_stop_daemon () {
- 	rm -f .git/trace
- }
- 
-+# Retry a grep up to RETRY_TIMEOUT times until it succeeds.
-+#
-+RETRY_TIMEOUT=5
-+
-+retry_grep () {
-+	nr_tries_left=$RETRY_TIMEOUT
-+	until grep "$1" "$2" 2>/dev/null
-+	do
-+		if test $nr_tries_left -eq 0
-+		then
-+			grep "$1" "$2"
-+			return
-+		fi
-+		nr_tries_left=$(($nr_tries_left - 1))
-+		sleep 1
-+	done
-+}
-+
- test_expect_success 'edit some files' '
- 	test_when_finished clean_up_repo_and_stop_daemon &&
- 
-@@ -429,12 +446,10 @@ test_expect_success 'edit some files' '
- 
- 	edit_files &&
- 
--	test-tool fsmonitor-client query --token 0 &&
--
--	grep "^event: dir1/modified$"  .git/trace &&
--	grep "^event: dir2/modified$"  .git/trace &&
--	grep "^event: modified$"       .git/trace &&
--	grep "^event: dir1/untracked$" .git/trace
-+	retry_grep "^event: dir1/modified$" .git/trace &&
-+	retry_grep "^event: dir2/modified$"  .git/trace &&
-+	retry_grep "^event: modified$"       .git/trace &&
-+	retry_grep "^event: dir1/untracked$" .git/trace
- '
- 
- test_expect_success 'create some files' '
-@@ -444,11 +459,9 @@ test_expect_success 'create some files' '
- 
- 	create_files &&
- 
--	test-tool fsmonitor-client query --token 0 &&
--
--	grep "^event: dir1/new$" .git/trace &&
--	grep "^event: dir2/new$" .git/trace &&
--	grep "^event: new$"      .git/trace
-+	retry_grep "^event: dir1/new$" .git/trace &&
-+	retry_grep "^event: dir2/new$" .git/trace &&
-+	retry_grep "^event: new$"      .git/trace
- '
- 
- test_expect_success 'delete some files' '
-@@ -458,11 +471,9 @@ test_expect_success 'delete some files' '
- 
- 	delete_files &&
- 
--	test-tool fsmonitor-client query --token 0 &&
--
--	grep "^event: dir1/delete$" .git/trace &&
--	grep "^event: dir2/delete$" .git/trace &&
--	grep "^event: delete$"      .git/trace
-+	retry_grep "^event: dir1/delete$" .git/trace &&
-+	retry_grep "^event: dir2/delete$" .git/trace &&
-+	retry_grep "^event: delete$"      .git/trace
- '
- 
- test_expect_success 'rename some files' '
-@@ -472,14 +483,12 @@ test_expect_success 'rename some files' '
- 
- 	rename_files &&
- 
--	test-tool fsmonitor-client query --token 0 &&
--
--	grep "^event: dir1/rename$"  .git/trace &&
--	grep "^event: dir2/rename$"  .git/trace &&
--	grep "^event: rename$"       .git/trace &&
--	grep "^event: dir1/renamed$" .git/trace &&
--	grep "^event: dir2/renamed$" .git/trace &&
--	grep "^event: renamed$"      .git/trace
-+	retry_grep "^event: dir1/rename$" .git/trace &&
-+	retry_grep "^event: dir2/rename$"  .git/trace &&
-+	retry_grep "^event: rename$"       .git/trace &&
-+	retry_grep "^event: dir1/renamed$" .git/trace &&
-+	retry_grep "^event: dir2/renamed$" .git/trace &&
-+	retry_grep "^event: renamed$"      .git/trace
- '
- 
- test_expect_success 'rename directory' '
-@@ -489,10 +498,8 @@ test_expect_success 'rename directory' '
- 
- 	mv dirtorename dirrenamed &&
- 
--	test-tool fsmonitor-client query --token 0 &&
--
--	grep "^event: dirtorename/*$" .git/trace &&
--	grep "^event: dirrenamed/*$"  .git/trace
-+	retry_grep "^event: dirtorename/*$" .git/trace &&
-+	retry_grep "^event: dirrenamed/*$"  .git/trace
- '
- 
- test_expect_success 'file changes to directory' '
-@@ -502,10 +509,8 @@ test_expect_success 'file changes to directory' '
- 
- 	file_to_directory &&
- 
--	test-tool fsmonitor-client query --token 0 &&
--
--	grep "^event: delete$"     .git/trace &&
--	grep "^event: delete/new$" .git/trace
-+	retry_grep "^event: delete$" .git/trace &&
-+	retry_grep "^event: delete/new$" .git/trace
- '
- 
- test_expect_success 'directory changes to a file' '
-@@ -515,9 +520,7 @@ test_expect_success 'directory changes to a file' '
- 
- 	directory_to_file &&
- 
--	test-tool fsmonitor-client query --token 0 &&
--
--	grep "^event: dir1$" .git/trace
-+	retry_grep "^event: dir1$" .git/trace
- '
- 
- # The next few test cases exercise the token-resync code.  When filesystem
-
-base-commit: 68cb7f9e92a5d8e9824f5b52ac3d0a9d8f653dbe
--- 
-gitgitgadget
+> Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
+> ---
+>  t/t5403-post-checkout-hook.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
+> index 978f240cda..1462e3365b 100755
+> --- a/t/t5403-post-checkout-hook.sh
+> +++ b/t/t5403-post-checkout-hook.sh
+> @@ -109,7 +109,7 @@ test_expect_success 'post-checkout hook is triggered by clone' '
+>  	echo "$@" >"$GIT_DIR/post-checkout.args"
+>  	EOF
+>  	git clone --template=templates . clone3 &&
+> -	test -f clone3/.git/post-checkout.args
+> +	test_path_is_file clone3/.git/post-checkout.args
+>  '
+>  
+>  test_done
