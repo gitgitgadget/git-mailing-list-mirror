@@ -1,271 +1,138 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF8C1F875A
-	for <git@vger.kernel.org>; Thu,  1 Jan 2026 21:04:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDDE304BCB
+	for <git@vger.kernel.org>; Thu,  1 Jan 2026 22:32:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767301445; cv=none; b=hLDpzY+mwDwA5NSmhs3TwDh61KNtTzhuWZFgdS4sMbMxYsZ6Oa6yqP306tEbAItWm4LIa4HJtofQU17SZzwqwgSLCC2fxe0onSHt3ySnfTZqlx8T/FiqaG45TXohgmwPWM2itm06+G3wTjY7OqamxvhWqiGVm77X3YRV9GAO+RI=
+	t=1767306777; cv=none; b=X8hp7+oa2t/j1mlgiI55UgSllxyK7vLQw08fRUBqXSyS8uPSnXEeVN4rezqOoq4wSKRvXyeCYm/QEtla47h1ygp/m2DbP+rtTYXAx6+dTKAmhr0yjgZ9IIBgCdiXFdL+M5/7CVt+JXJQsPUJ2WBo04ZOnehv8PZWIyNbKfVUvvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767301445; c=relaxed/simple;
-	bh=r2sq1/PDZsoNNxoobMzItdoqfsxMnelJ5qldcTMaYqU=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=VYbl7jHN6Ig4krUfWuB0xkozn1vEuaFcRvvS/W8og4n7yby2DnHFY1j5uBeZ0w9cTqtrpiu8yryKkkBA2eR6kyqV9O2YQ3tsgq+MOgPPoDCVqZHdxgjyv3iF1r3iwsSFdjbedEDOnqGSsIWSC1SHa+G+l16FDDACFgV2YGQA7kA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MhIySJ8R; arc=none smtp.client-ip=209.85.221.47
+	s=arc-20240116; t=1767306777; c=relaxed/simple;
+	bh=uKZBes3MwRage7toRChQlSCL3nNC4YN1kv8dY8mYlKY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=I8zob71F/VlDHIxCPEFT+4+P3NgDupWaWsuuXZdBxsN8Y1utjliGK9cSxYgwQoEUSnDLVsvcY3pIgSuSlUi7ANYgtBfH2ZoE5/PUR8W3DvnyZIOR+uISIO8s8sdjOuA8+r3KyZhmHqSgTh3Npm8UrlNoMOjj4WFo0CWqG8sbC34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hjrqoKFL; arc=none smtp.client-ip=209.85.216.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MhIySJ8R"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-42fb0fc5aa9so4760837f8f.1
-        for <git@vger.kernel.org>; Thu, 01 Jan 2026 13:04:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hjrqoKFL"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-34c27d14559so9119624a91.2
+        for <git@vger.kernel.org>; Thu, 01 Jan 2026 14:32:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767301440; x=1767906240; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=H+MLscVSC7p/rA49ScFczHa4gh3vq/+mmI7QUWwA5xg=;
-        b=MhIySJ8RWUeyByEDOqCpa9qqIH0FF9HxHuXwBQC+EI+WCcE1/yGSVmiNv5D4TCLQeT
-         6lJjqpzX0kSxCRZRGe1oeN2Y0wdPTTi9aUuXogIqoP/kO6zNWfHL1/i3XD6PmDR4VJIC
-         EYTDO+8SRMVByErdIh0liH1I4TeG9jBp5P7L7OZyJrQA68iRZ91qg1g6D5+wn28kn82V
-         91DOgMLUauG36SZhpZuIJ4/lwoyxw7iySZHlCKp9WBA00NkmOVuNdbc029nfeFd3H6J7
-         FjvLhJvTAc9w77UfO/mmbxXC67GgYLLWn9qAvyr35NhV5MON8bgHbI/qpJyTB/PjVC1W
-         UelQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767301440; x=1767906240;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1767306775; x=1767911575; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=H+MLscVSC7p/rA49ScFczHa4gh3vq/+mmI7QUWwA5xg=;
-        b=J15oIYW27/NZwxj3p63bs66GlsfSs5uImp1DNcSsstrvA+vuzcF9W8BvQgurtjlqV8
-         dXimjDlF8qrM4z3RiXNTuNmb+KUIk1+fjjFQwUj8nQJKD+u8OhBfir776LyRsxl4MQTW
-         BQ60ffNTMSIKkICCN9g2eHuWtN/ZWHxgtKRB5pdVu4MM9TUx1qeG59oDFuiPxM7KBQyM
-         Q4G35HDbBSqKSXo3I9xHhrMt8tbYkQbBq3X1yvX5fb1ivWD7NVcD+qr9lo6T/oZwS89r
-         tqApGrGsU3/xRgoH9XLuYC3eXE5csf+mLMkcZYJaU6GPMmNN79b3QD/qzX7gyFRd5Gkl
-         sN/Q==
-X-Gm-Message-State: AOJu0YyVIFQzFmXKjyLkdhuGZWAUKJW4uX00F530IuZDN6dLgFSGCq8i
-	CyMl/eB8GxuzVNyC+1u7BSZCQtcXZbXAoYX6CG6eiU5l2hmpKXFXs750fxRyeXi2
-X-Gm-Gg: AY/fxX7Qkqnst81cVfdV3FnVAdbHKEKBxqHbiFi4OPRzhM6idHrBiEra4DBihkpdlN1
-	Pa826WymY5pkVDLVbeMfgs9kzMcPb9KePgUZEQuhtxTZodBJcLXaFDTck9Xfr15PzEewahM0LTM
-	+ZZYtriDDLARdmvbk2rLAFpvcncilUbxeope1XfuAKSOdLGqhw+CBUB9muwoRd5CFa7TSI8PvWd
-	klyemv0mO+ChOrQ131AYYmZG4GZ4ibusvGMwTo5LFRkZAYcRzN7feY/axmWm2pYzpAyukr9igXE
-	9pRi7Eyl9gwxlLIpd4Ab1UrizcynReJEuaiJchOfALHIu25oV6w62J8kC9b7YMAfofaIUhlgZJq
-	UQZGdz7ZFmkX5zYgDD6Fjn5306ZdsJvl3z9jA4rHkld+J6YlezJU3FkArcX9IeMjm3JW94OAFTq
-	TD4s+MhJ5z4dJyg2a2vNAT5ou+VytwGI37PACqmw==
-X-Google-Smtp-Source: AGHT+IGp/N3tCclrkzy+GcIz4WyEbV7Dci6xLety8h4fA9OTFjlfvAUn+8WJQ03v7qH+sy3Socfv8g==
-X-Received: by 2002:a05:6000:178e:b0:425:769e:515a with SMTP id ffacd0b85a97d-4324e50b8fdmr52546996f8f.42.1767301439961;
-        Thu, 01 Jan 2026 13:03:59 -0800 (PST)
-Received: from localhost ([105.117.11.89])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43264613923sm66328841f8f.26.2026.01.01.13.03.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jan 2026 13:03:59 -0800 (PST)
-Date: Thu, 1 Jan 2026 22:04:08 +0100
-From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [GSoC PATCH v2] add -p: show user's hunk decision when selecting
- hunks
-Message-ID: <aVbgkySezz8YV6sN@Adekunles-MacBook-Air.local>
+        bh=lp7xnnAVVTDYRB2A828jQWAcyY11Xe+8LOVJ5Gmb5wA=;
+        b=hjrqoKFLzcH3HoWBOHISs8UXgnRBwvp07qOh11BUGvkfcyo3L06QZF7uEYQOat7j2l
+         1ti8lfx/AfjtFWdT6lJNP734OTygnD74MZkasKUm9kp3O/4gW37YXERIwvV6DN9puyyh
+         Ofp6NrpppGS9ZHbcmT43Rp0gss72ILy9beGnubHo/FhnNxKzo6laqfuiHOowj80DqjNh
+         OPWhHuzjKaHsN/P2iAGZIxZfXbHGwNyiod6wFCRFYRo7WGkhfAQlD7apK+zaJPQVcPwi
+         cktnaAKf/ohwrZkcsRYD3GJ98H3i3XQvpFyUdYS8i0BPC7rySvSAJ28f4OWSxFhDt9ED
+         qnoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767306775; x=1767911575;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=lp7xnnAVVTDYRB2A828jQWAcyY11Xe+8LOVJ5Gmb5wA=;
+        b=ns0CKlq/rAHc1KOgfJcQT4d9CRsTxgPdDNoJ2x+XMvOokIUDa6kDN199lcwvQJST3A
+         ajQRbjojxZcwfg41U7K4mQGXwkM4MOLvf3B9+eqeKyxVH/r3AN8PlzTrrtnk/+zyn0iR
+         CwIVvOvBtphlsLcOX/y3UqIZWnQ6coNzKSavBjl1mEQn+qFEH7EB/Jwa1RDm2/4t/K0d
+         EgdK4iy22kgfQqpmzg+4GrQHvhshNZpPIg9SPqsWiyJleTajykSWf5bo7paR0f9qPgy+
+         RRzAwzfmOh1rWxuRxCzDIQQ8OPkSYQAw3dx9J4OcGpY5ocWTc4TDKPKXdY+GLbfci6nb
+         wC7w==
+X-Gm-Message-State: AOJu0Yy8YFjJ8a+V+9ThVzC/+nA5cqELC5ueFyMBp4KUwn2IY3qSwCMQ
+	iFmUoHoF6ixvR4ehnA+CAhe2HdvkYcuCL/mNBj9xwNnhtlYvFKX7BLbpuDnG6MEXGV8I/A0fWn7
+	vwrBu1N6x8r8aO8WQmxLppv+P8alZjR4=
+X-Gm-Gg: AY/fxX6eN8Z3PP/XQxlQOBtLvz13SjE3Vk5pb4R9g1iCV3L12aZkI8272d+pqaDb01z
+	2YCroHBSToU9r/aZWq94JgB/airyu7wxGexfUvP7npIsz0fqnQXyolGto2qB4pIpIy0fcRGAnYO
+	/uv70kf0e7dcbe0dkcMsq5bt/N7Yd+TGyDtNwhzZ5S5LaGCITPEwmOypCL4aQTBmiLOc4rEN08O
+	Vtqe5Bq+0jGP8HhPg00kXsRhCyCId/9noC1QUASPQr2YlhEZM49RRImgL3JnkFGjY/VerEXegXU
+	BUARqo4=
+X-Google-Smtp-Source: AGHT+IFr+wf5ppBAdlGLrMR0baXHi9MRqnHRFncqWxSCfRfc5Xp4awoRPSO9ZxxdzMRgfcc7bAH7TiB81msdkoRbnEE=
+X-Received: by 2002:a17:90b:2689:b0:34c:3501:d11c with SMTP id
+ 98e67ed59e1d1-34e921f0ba6mr33692090a91.37.1767306774908; Thu, 01 Jan 2026
+ 14:32:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aSxQhqwzT34hIjV8@Adekunles-MacBook-Air.local>
+References: <pull.1991.git.1760731558.gitgitgadget@gmail.com>
+ <cover.1766103827.git.ben.knoble+github@gmail.com> <d6582dc53ca852ef01421d2dd2c446dadb731dad.1766103827.git.ben.knoble+github@gmail.com>
+ <xmqqwm24fsq4.fsf@gitster.g>
+In-Reply-To: <xmqqwm24fsq4.fsf@gitster.g>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Date: Thu, 1 Jan 2026 17:32:44 -0500
+X-Gm-Features: AQt7F2pCzORK2ao9s1WZh4pHkpRNdjrk_AYd356kdwltTrsqehvGaz2tEM9VZ2Q
+Message-ID: <CALnO6CDDqwC-YpL6c7Ed1yD+xBuzTxAZo867AUue7=iAo5adNQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] doc: git-reset: clarify `git reset <pathspec>`
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Julia Evans <julia@jvns.ca>, 
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When a user is interactively deciding which hunks to use or skip for
-staging, unstaging, stashing etc, there is no way to know the
-decision previously chosen for a hunk when navigating through the
-previous and next hunks using K/J respectively.
+On Tue, Dec 30, 2025 at 12:23=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
+>
+> >  `git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]`::
+> > -     Interactively select hunks in the difference between the index
+> > -     and _<tree-ish>_ (defaults to `HEAD`).  The chosen hunks are appl=
+ied
+> > -     in reverse to the index.
+> > +     Interactively select changes from the difference between the inde=
+x
+> > +     and the specified commit or tree (which defaults to `HEAD`).
+> > +     The chosen changes are added to the index.
+>
+> The previous iteration said "changes are unstaged", implying that
+> the changes are removed from the index.  But now it says the changes
+> are added to the index.  Which one?
 
-Improve the UI to explicitly show if a user has previously decided to
-use a hunk (by pressing 'y') or skip the hunk (by pressing 'n').
-This will improve clarity when and aid the navigation process for the
-user.
+Ah, I think I really mean that _changes_ are added. The change might
+be an addition (+) or subtraction (-) in patch terms, so some changes
+may result in the index having fewer modifications relative to the
+working tree or something. But it's not
+very clear, and certainly a bit pedantic.
 
-Reported-by: Reported-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
----
-Changes in v2:
---------------
-- Modified subject to indicate GSoC participation and user's hunk decision.
-- Modified the code to detect the user's decision for each front-end set
-  that uses the interactive patch machinery
-- Changes the decision phrase to 'previous decision: _decision_' from
-  'Selected/Deselected'
-- Placed the decision phrase before the [choices] instead of after the [choices].
- add-patch.c | 84 ++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 47 insertions(+), 37 deletions(-)
+> I think neither is correct.  I wasn't involved in the design of the
+> behaviour of "reset -p", but IIUC,
+>
+>     git reset -p
+>     git reset -p HEAD
+>
+> show "git diff --cached HEAD" (i.e., what damage you will cause if
+> you commit what is in the index), so chosen hunks will be reverted
+> out of the index if you say "y" to "reset -p" prompt.
 
-diff --git a/add-patch.c b/add-patch.c
-index 173a53241e..bc7a340d21 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -42,10 +42,10 @@ static struct patch_mode patch_mode_add = {
- 	.apply_args = { "--cached", NULL },
- 	.apply_check_args = { "--cached", NULL },
- 	.prompt_mode = {
--		N_("Stage mode change [y,n,q,a,d%s,?]? "),
--		N_("Stage deletion [y,n,q,a,d%s,?]? "),
--		N_("Stage addition [y,n,q,a,d%s,?]? "),
--		N_("Stage this hunk [y,n,q,a,d%s,?]? ")
-+		N_("Stage mode change%s[y,n,q,a,d%s,?]? "),
-+		N_("Stage deletion%s[y,n,q,a,d%s,?]? "),
-+		N_("Stage addition%s[y,n,q,a,d%s,?]? "),
-+		N_("Stage this hunk%s[y,n,q,a,d%s,?]? ")
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for staging."),
-@@ -64,10 +64,10 @@ static struct patch_mode patch_mode_stash = {
- 	.apply_args = { "--cached", NULL },
- 	.apply_check_args = { "--cached", NULL },
- 	.prompt_mode = {
--		N_("Stash mode change [y,n,q,a,d%s,?]? "),
--		N_("Stash deletion [y,n,q,a,d%s,?]? "),
--		N_("Stash addition [y,n,q,a,d%s,?]? "),
--		N_("Stash this hunk [y,n,q,a,d%s,?]? "),
-+		N_("Stash mode change%s[y,n,q,a,d%s,?]? "),
-+		N_("Stash deletion%s[y,n,q,a,d%s,?]? "),
-+		N_("Stash addition%s[y,n,q,a,d%s,?]? "),
-+		N_("Stash this hunk%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for stashing."),
-@@ -88,10 +88,10 @@ static struct patch_mode patch_mode_reset_head = {
- 	.is_reverse = 1,
- 	.index_only = 1,
- 	.prompt_mode = {
--		N_("Unstage mode change [y,n,q,a,d%s,?]? "),
--		N_("Unstage deletion [y,n,q,a,d%s,?]? "),
--		N_("Unstage addition [y,n,q,a,d%s,?]? "),
--		N_("Unstage this hunk [y,n,q,a,d%s,?]? "),
-+		N_("Unstage mode change%s[y,n,q,a,d%s,?]? "),
-+		N_("Unstage deletion%s[y,n,q,a,d%s,?]? "),
-+		N_("Unstage addition%s[y,n,q,a,d%s,?]? "),
-+		N_("Unstage this hunk%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for unstaging."),
-@@ -111,10 +111,10 @@ static struct patch_mode patch_mode_reset_nothead = {
- 	.apply_check_args = { "--cached", NULL },
- 	.index_only = 1,
- 	.prompt_mode = {
--		N_("Apply mode change to index [y,n,q,a,d%s,?]? "),
--		N_("Apply deletion to index [y,n,q,a,d%s,?]? "),
--		N_("Apply addition to index [y,n,q,a,d%s,?]? "),
--		N_("Apply this hunk to index [y,n,q,a,d%s,?]? "),
-+		N_("Apply mode change to index%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply deletion to index%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply addition to index%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply this hunk to index%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for applying."),
-@@ -134,10 +134,10 @@ static struct patch_mode patch_mode_checkout_index = {
- 	.apply_check_args = { "-R", NULL },
- 	.is_reverse = 1,
- 	.prompt_mode = {
--		N_("Discard mode change from worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard deletion from worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard addition from worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard this hunk from worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard mode change from worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard deletion from worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard addition from worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard this hunk from worktree%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for discarding."),
-@@ -157,10 +157,10 @@ static struct patch_mode patch_mode_checkout_head = {
- 	.apply_check_args = { "-R", NULL },
- 	.is_reverse = 1,
- 	.prompt_mode = {
--		N_("Discard mode change from index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard deletion from index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard addition from index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard this hunk from index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard mode change from index and worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard deletion from index and worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard addition from index and worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard this hunk from index and worktree%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for discarding."),
-@@ -179,10 +179,10 @@ static struct patch_mode patch_mode_checkout_nothead = {
- 	.apply_for_checkout = 1,
- 	.apply_check_args = { NULL },
- 	.prompt_mode = {
--		N_("Apply mode change to index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply deletion to index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply addition to index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply this hunk to index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Apply mode change to index and worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply deletion to index and worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply addition to index and worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply this hunk to index and worktree%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for applying."),
-@@ -202,10 +202,10 @@ static struct patch_mode patch_mode_worktree_head = {
- 	.apply_check_args = { "-R", NULL },
- 	.is_reverse = 1,
- 	.prompt_mode = {
--		N_("Discard mode change from worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard deletion from worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard addition from worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard this hunk from worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard mode change from worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard deletion from worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard addition from worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard this hunk from worktree%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for discarding."),
-@@ -224,10 +224,10 @@ static struct patch_mode patch_mode_worktree_nothead = {
- 	.apply_args = { NULL },
- 	.apply_check_args = { NULL },
- 	.prompt_mode = {
--		N_("Apply mode change to worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply deletion to worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply addition to worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply this hunk to worktree [y,n,q,a,d%s,?]? "),
-+		N_("Apply mode change to worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply deletion to worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply addition to worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply this hunk to worktree%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for applying."),
-@@ -1448,6 +1448,7 @@ static int patch_update_file(struct add_p_state *s,
- 	ssize_t i, undecided_previous, undecided_next, rendered_hunk_index = -1;
- 	struct hunk *hunk;
- 	char ch;
-+	const char *hunk_use_decision;
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	int colored = !!s->colored.len, quit = 0, use_pager = 0;
- 	enum prompt_mode_type prompt_mode_type;
-@@ -1564,8 +1565,17 @@ static int patch_update_file(struct add_p_state *s,
- 			      (uintmax_t)(file_diff->hunk_nr
- 						? file_diff->hunk_nr
- 						: 1));
-+		if (file_diff->hunk_nr) {
-+			if (hunk->use == USE_HUNK)
-+				hunk_use_decision = _(" (previous decision: use) ");
-+			else if (hunk->use == SKIP_HUNK)
-+				hunk_use_decision = _(" (previous decision: skip) ");
-+			else
-+				hunk_use_decision = " ";
-+
-+		}
- 		printf(_(s->mode->prompt_mode[prompt_mode_type]),
--		       s->buf.buf);
-+			hunk_use_decision, s->buf.buf);
- 		if (*s->s.reset_color_interactive)
- 			fputs(s->s.reset_color_interactive, stdout);
- 		fflush(stdout);
--- 
-2.39.5 (Apple Git-154)
+Indeed. I was actually expecting to see the reverse hunks here, so I
+was surprised to see the staged hunks.
 
+> On the other hand,
+>
+>     git reset -p COMMIT
+>
+> for COMMIT that is not HEAD gives "git diff -R --cached COMMIT"
+> (i.e., the changes to take you closer to the named commit), so
+> chosen hunks will participate in the next commit if you commit after
+> completing this "reset -p" session.
+
+Hm. I can see how this behaves nearly the opposite of the former. Yikes.
+
+>     The contents in the index are modified using the chosen hunks.
+>
+> is the best description I can come up with.
+>
+> The actual prompt asks "unstage this hunk?" when operating against
+> HEAD, while the prompt changes to "apply this hunk to index?" when
+> opeating against a commit that is not HEAD, so it might be simpler
+> not to say anything about the direction of the application (i.e.,
+> how the chosen hunks are used to modify the index) in this
+> paragraph, like the above example, may be a viable option.
+
+Yeah, I think so. Will send a new version with this update.
