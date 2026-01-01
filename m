@@ -1,119 +1,89 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F433481DD
-	for <git@vger.kernel.org>; Thu,  1 Jan 2026 00:27:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F62D70808
+	for <git@vger.kernel.org>; Thu,  1 Jan 2026 08:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767227272; cv=none; b=gDfy+la9ZSlMisN42hisiuEGOMk6opJh/wqiYW2uG2PQz79NQSdwXcvGtoeKlOfas4qvdMuNIBSo6KJOL+is81MmAknFm1eGB1gkkHxMuUelQ3tei59uMBHOee3iRtKaIGkAAGGJXO+VEnCp9/HQd2vG4efw+5oUVDuixZjfojk=
+	t=1767254923; cv=none; b=NSsoIfewkB8LYz1YefM0FlMwRAkecrfxwNPCnqaXp3mbjXdyT7GrQcaj9al1mR6cSWbHEAVcnuCzmZz8enpyBAhy8IzHa9qNbkNsX1v1X3Ig39+A518mrQKkZ3+0eWbZ/SpeNxdxUPKoZ0NwpxxjX4P3Pli/uEU01kMVOyiohCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767227272; c=relaxed/simple;
-	bh=dhBa0N6kjWMnFaj/nIYv+9P04Mv5JTg9/m9UamZzKYY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oExHBjfSaymQEG1DrohaeU/hRreJ1y4/Fs0R70X2DUKMsEaVaYefW+Yegsnl8V4YeLfgEDQouMUA9lEi98XYJJODWpuWO//6qeTOMSHEvqaO/64tZrNDUDohpjbQX6JCqUtRUbAComW2fpFNx+nh4cSuUEAo3P0qvqJJoqXhZFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GE0J95EU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pTesTJ1l; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1767254923; c=relaxed/simple;
+	bh=+FvlftOWwEf28w+4vb2TG0bSvMk1OSYDPh/zImBt5kk=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=R4jfel7SIOAl3K4AQalpbesumHWK+C2NetcHmGq64SRU8U45LfW6zqUEd2x0SXtgMO0H+ImHcCGxUyugjTfMlz4EauWy2czMvmMbtWDhIiBnzr3l+Mml5gAzZQaNT0VNGVyZXmm1uliZ7jI1k06qt/2DDuZK3qRUsOtrVrNEb60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hq0CPlDL; arc=none smtp.client-ip=74.125.224.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GE0J95EU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pTesTJ1l"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9C14C140004E;
-	Wed, 31 Dec 2025 19:27:47 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 31 Dec 2025 19:27:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1767227267; x=1767313667; bh=3SuFvxGIwD
-	V3/Q7MRqMs0ZjtAMekkGYHSzcWvM3T684=; b=GE0J95EUcXlDLG3PniyUpBRbZH
-	fvWitBiV88RXPVLSGnaekKId+tsS3y7XDxZ9BTea6mW5XAFORhQkcxMde20BM9jl
-	a4EWYVrkBJXK0tLTxkPvGaNSs9zVS208Ucq79wk/y7jt5VWTQUkLtMGZ9I3EyBK6
-	IlVkPuC553Sde49L2LM9f/F67gJ4UtLlHjG1NFSWexPtBQKlqrJC9zCaGjT19xfX
-	suqzLzjd/Li9K/dnZgUBrkYIqdXa56FFa1FJ4VcIxNMg5OQ0gpYcvzcAyUBlrNoY
-	4D/dvfKfo+stJWhuyK/rd2gCgAYwh1ZLt63ZNRarBJIRhTYc69F5nPp84l/g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767227267; x=1767313667; bh=3SuFvxGIwDV3/Q7MRqMs0ZjtAMekkGYHSzc
-	WvM3T684=; b=pTesTJ1lfrXI2tmf+A5QQtOyb9tTIAXN8UBimGv58AT1Nhhb7jY
-	qffw0T3+/1YOXwia/9ZjfGqeIJw26ejX/tHiVmVXnX/33sw5OvgfOiaI1E7uMi1i
-	2S667qxBrC/bdpbjXWu4S6wWpnsOovNafZQAq9DecaClaM+iqJYEE0z9FE2zppo1
-	21CYgVStg/gGdK3Y1vLuIPKSWH5mISutQj458LPvUupBuZ88SZvewXCWKArnPPeP
-	m8o/NGsuYUmf+TRwXbJ+b2q2706IQ+QWO0i/eoAvXBwZ4pnH8bEv/T9Pr44BXMEv
-	raZ5oyyq9ViN2MFPPIP7BevIis5rWCSOVrQ==
-X-ME-Sender: <xms:g79VaRvYGIPxBjK4o_dI3hEW2yyInRi6Sgdf_MOEJu-QZoMecHY1jg>
-    <xme:g79VaR49cngHeW1QBopLeeTxkqIbt2ZRVHvBkD88HxyN51DAtj6UCke8BKOJPZedW
-    C7q4lRA9tbKpENnTKodMHeq8zuwqEGEkaNPkxK1R7m7GAyflJo59w>
-X-ME-Received: <xmr:g79VaSICs3vwu2t3AZ51ZQFidmmQ5tSTrx3F32vP4lqoyRCzQGNXAKI0Vce5q4_Dh1pkWS7x-DfIktQa8rDWeXlf9d8jY9hwsw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekgeefgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggvvhgvshhh
-    ihhguhhrghgrohhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:g79VaR74RNvKJcx25EgeQFjOLR_SobcTE0DDuIYHa26FAZaMyj60Xg>
-    <xmx:g79VaVwUUn0I5fkxPrJlA67nbH7mZHnlq8x7hErgl5RRH2bPJ_5hVQ>
-    <xmx:g79VaVbUnrFPXz8__lEhB9HkDl-6hmwfCu56A2w7aJc9_6C1dezJxQ>
-    <xmx:g79VaXS2gBTM7bgOMgktjI7LyYPBYhY97D78b82GmhC2svczsvUypg>
-    <xmx:g79Vad44Bo38Lcf7hfGX92XaULuyKMb2uDSd0PZ9ZS7irDXPiKB549GY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 31 Dec 2025 19:27:47 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Deveshi Dwivedi <deveshigurgaon@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] [GSoC] t5403: use test_path_is_file instead of test -f
-In-Reply-To: <20251229185737.2328-1-deveshigurgaon@gmail.com> (Deveshi
-	Dwivedi's message of "Mon, 29 Dec 2025 18:57:37 +0000")
-References: <20251229185737.2328-1-deveshigurgaon@gmail.com>
-Date: Thu, 01 Jan 2026 09:27:45 +0900
-Message-ID: <xmqqjyy2dvni.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hq0CPlDL"
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-6466d8fd383so8778015d50.2
+        for <git@vger.kernel.org>; Thu, 01 Jan 2026 00:08:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767254921; x=1767859721; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+FvlftOWwEf28w+4vb2TG0bSvMk1OSYDPh/zImBt5kk=;
+        b=Hq0CPlDLTixMzQukanbY2nud/IzHxPPxwXVgfovFH9oNhMPzIHxvj7IZdY/uTPgZAL
+         gJu4JCQGNRQYAzxiF5GAuoJSg9gRfoPyYENJ/nApggl1tqf/5Ae2DdHjTCmRIMeKG2/k
+         OgbkOESTnECcY6x8/3a1TcCNRuHBBKeNKwVV6E1bYWDesEL2hVqn85hdp431HdItb7Z6
+         nfmBC8/Vt2dTmzAiZ1leax8T6yAnauKSt27cOnAfS0u0/MLMxn6kquzty2YO8IKxC4Iq
+         77Ma+NiKGJOJ2/YtPbp+VXPLGf6FWSs17XNRujND4+7K0Rb/jb9GiakfoXqEC31U3B+z
+         QbxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767254921; x=1767859721;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+FvlftOWwEf28w+4vb2TG0bSvMk1OSYDPh/zImBt5kk=;
+        b=BMP4ZQwKDs3QhYkiyBwURS9MTok4GeUvZRp2GvQxfFlx4wfJTu2eUKxw6n3GT2RqFZ
+         gH4Gcj1ymQIkJ+/QVfsIUGsbByGAhoMKHCvEzt4SioPMKeMxFQYWDp9Sl2/UCa22nL29
+         Lza/ARAicCYLzwtq167PjimZZEERVPliGxTQ/N7zGVJsye5ZMaqKOv1XagirwawEU5rN
+         0GodfjOb5l+BVEVoAYKfit1GP0JpZwlhdlHaVSRl3kO2V6rmi8Zzovx2PIPhd5AT4YFa
+         Lc9nMpUvP8eXj1WjajfLufunSCHlEAzFog9MJYrfP2VyDZjRH7Tu+9iELl8483q+G25o
+         VkKA==
+X-Gm-Message-State: AOJu0YwXbNHOMwAo9z0mrBQAYYbgCyv9QhMYBiI8rVo6taYXwcx0MTS4
+	XSdGqb4REY2znfukk4ECAe5X+bDAHdxEpY6H0IRYhcSbCbvCso7SGYfeOiY/9v0yHfhYwUw4ySt
+	xulFib58h9xtCHUrkXjAD6KpE4CCD3a/gs9KTIRA=
+X-Gm-Gg: AY/fxX4k/29U8wtZenviz51hX33GrqlGK0hf7a0FhMcQvede5axS/D85cg2nrN7r42x
+	U7cd5fP6ezrNnHxVtjvUXNsCiwrX/j9o+/yW7fEYV8ocr9aKeg0PE0UIXIpwcZx4EduUp/JM0uZ
+	mA7nSwXbkZdmMLzj5iBBc35MP34QeXFc7TCypMiQWKc+TaVI8QVBkVo4pH8CwBoT99QAHwGjluj
+	Ev0makcA+KE1yuAOG2NUhYWN3Ugr3xGkacxPFLx+pms67Dlgubf+JNC5VMWxMyGpqs=
+X-Google-Smtp-Source: AGHT+IHcFb4Y1slwCnlB/YhA1zIsfybGOzP9PB8R9zk1Y+KmS2qCb2jmDmZU4Uxo6qffbQcBFpS/7EHSkuBjxpIOV1I=
+X-Received: by 2002:a53:b484:0:b0:645:5aed:324f with SMTP id
+ 956f58d0204a3-6466a913857mr20995930d50.80.1767254920934; Thu, 01 Jan 2026
+ 00:08:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Thu, 1 Jan 2026 13:38:29 +0530
+X-Gm-Features: AQt7F2qL05B8VJo_O42vOgVHVVmSvKqQ2J9Yg82DgHWuYVgvSlSIhrdGiaxfGFg
+Message-ID: <CALE2CrQDyN6XcFgkMREmyvywqpuO1_+gt1oehJ8qX3i6b9q1hw@mail.gmail.com>
+Subject: [GSoC] Introduction
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Deveshi Dwivedi <deveshigurgaon@gmail.com> writes:
+Hello everyone,
 
-> Replace 'test -f' with the test_path_is_file in
-> t5403-post-checkout-hook.sh. This helper provides better error
-> messages when tests fail, making it easier to debug issues.
+I=E2=80=99m Pushkar Singh from India, and I=E2=80=99m interested in contrib=
+uting to
+Git as part of GSoC.
 
-All true, so I'll queue the patch.  Thanks.
+So far, I=E2=80=99ve built Git from source, run the test suite, and started
+exploring =E2=80=9CHacking Git=E2=80=9D along with the contribution documen=
+tation.
+I=E2=80=99ve also been following discussions on this mailing list to
+understand the workflow and review culture.
 
-A #leftoverbit is to think about what this test checks, if it
-makes sense, and if we can do better.  The expected outcome of this
-clone is stable, so the input fed to the hook should also be stable.
-With the same brain-cycle to write a test that checks the existence
-of the output file (i.e., proving that the hook was run), we should
-be able to concoct a test that validates the contents of the output.
+Right now, I=E2=80=99m focusing on the test suite and documentation areas t=
+o
+get comfortable, and I plan to start making small, meaningful
+contributions as I learn more about the codebase.
 
-> Signed-off-by: Deveshi Dwivedi <deveshigurgaon@gmail.com>
-> ---
->  t/t5403-post-checkout-hook.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
-> index 978f240cda..1462e3365b 100755
-> --- a/t/t5403-post-checkout-hook.sh
-> +++ b/t/t5403-post-checkout-hook.sh
-> @@ -109,7 +109,7 @@ test_expect_success 'post-checkout hook is triggered by clone' '
->  	echo "$@" >"$GIT_DIR/post-checkout.args"
->  	EOF
->  	git clone --template=templates . clone3 &&
-> -	test -f clone3/.git/post-checkout.args
-> +	test_path_is_file clone3/.git/post-checkout.args
->  '
->  
->  test_done
+I look forward to learning from you all and contributing to Git.
+
+Thanks,
+Pushkar Singh
