@@ -1,400 +1,357 @@
-Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1E5C8CE
-	for <git@vger.kernel.org>; Fri,  2 Jan 2026 15:18:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A312BF3CA
+	for <git@vger.kernel.org>; Fri,  2 Jan 2026 16:33:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767367129; cv=none; b=EGUDIphzci7nobOV1qb+wfXjz8nKKB29eXN6BUp9YLBBeR/mg3c1FmrDTNW/1SeBsw3XoOUtw8JuFhMV975pgOcv++/eEpmFPWKIIEKFxmJGg3etjw+1CEUdrjh/0rAq2tXRXmS2uyFyde/4Ebg51VnTgGraD6c618kaECZC20w=
+	t=1767371582; cv=none; b=jDilRj2Igke1y02rssPvK44KqU4OSJLpQs37UfTjHf3Zi3b5fPXDFli2obb5wVENKBxBV1b+IiJldeTCYjyGYC6Ff1521IbYVpE+e1FzCs+auYDKPxjVQ+6ptJFnuCnqHufTH4//YaqqwDm29e0sTjCJMk0xBHBDvQHIa+zN+lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767367129; c=relaxed/simple;
-	bh=+zd71ilJAW+1F5MolzCtMYt2iDFs8RpfLUTagWJt4l8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DlaiZHjgN0mPrc8mL4J4mwC2Kbveh5kGWGIynKTJUAKgScWZi/XevDHbq+mdzbkIEOW5RlORAR96IBek8vAfji1Ji1rhD1O04tQ1LKMAbpHeaFncjrA0FUzsoojPPl6EhE/jjtuneE4EPAozI3PTfIEJgWAg/YgANvAl6a3EgK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TuYJOVgX; arc=none smtp.client-ip=209.85.221.65
+	s=arc-20240116; t=1767371582; c=relaxed/simple;
+	bh=2Pr5heAbwU7gMEgBXwhA8J4LRmjI7K65Dr50elIQ9NU=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=Jhsw9szfD2xSZm8CcVHtYcE171opowAzBpkBsuC+97YwTJysq+94nGfdYD6Vwz1Lv5i/0/KEVd03sOmsZXu/FwBrcY3jPWyFUTbW9kJd1uVgryvWqIOG/jSGmY1UNpJ0SXjJj+j11sQaK3bmGy+FXGWHnmjsv0kxCEVUzaN6cRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FyGQfsjo; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TuYJOVgX"
-Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-430f3ef2d37so9830738f8f.3
-        for <git@vger.kernel.org>; Fri, 02 Jan 2026 07:18:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FyGQfsjo"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-42b3d7c1321so7210547f8f.3
+        for <git@vger.kernel.org>; Fri, 02 Jan 2026 08:33:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767367126; x=1767971926; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=SuR2o/XQ/5hsO75+wE5dSU8GTZdi8IrqozGAb8oglJE=;
-        b=TuYJOVgXD9VIWrV7866WckagzE+RR9dl22hlCqvrl6B53nbRR/YMAj8yMeTWeXHGF1
-         8KCWQFLOiZxq+SvEzjP/We48VdYZvohl1jeBekH93YtqVrGi0XA7+QrWhgkS7VD+6RZu
-         bp54SiGJPZQWarBRSB9MLIKJZ/pA6yFMdoHldgRAIAx4B4OuunsvXK+iPWJ2fPecInwN
-         3+/2jFgHGMvJaD8Qk+7wmvltFLZcGNr1j++2cEc16bq67k80ZDaBk5q9H+wrPsIVK6IW
-         6tkVTSMbgct8axBUwPTzrKC1awbWRdyVatIJ1pWP9Nu95CaWFUr21stT/6sqR4m2C98N
-         +XXA==
+        d=gmail.com; s=20230601; t=1767371579; x=1767976379; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=w07oOyGOImBzXDLI1FQJowtyl4JmLbx8p1Igh4p7qH4=;
+        b=FyGQfsjoYe+p5fpWft+snw6UdpQJ8u27mj5aMGYRy4PDgDwQ8KRzGHohk9uUw+V3az
+         70JzFduBafK3o5Ni7yPrjBCbo1MHXC9DtDPkp01aZn0WcAkAmkD/zyPN3nrKQphkvR4e
+         GduVt1uupgjcLFnITevOkq8Hsk1aADZ77QmhYrPsPVWL261edKtsiVkHTocbhQ+VjX22
+         QAxXS2ca5dzXs4SYbMn12cgt+HhznukgkKisS24c/X5k5TZqwV4kGTvOz+DZqWL/mHiF
+         5Gw2mjib0s/Ps1b2W677CNdqweK8G2WzsllPLwpwDThlQnYCPUDXsfNjQjsOhC4jbTHa
+         iicA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767367126; x=1767971926;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1767371579; x=1767976379;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SuR2o/XQ/5hsO75+wE5dSU8GTZdi8IrqozGAb8oglJE=;
-        b=PTR0Pst+lbmH/HRG6awxOXnSYrOUH2Vk5S8VfBgZOgRNq4fwI8FOSkAFls7ddnOVhm
-         070HDcDF6IgQ7xSIPsmWxCFyhHjLed/pWsC2zsYROxB86SCrNoCQ8SLo4GQDaczV+AN3
-         C0pJtAQ1201ZjdRBI3gX+FTqOUCbkVeuaejbYNKo8vq/AvTsMGObLVCAp9HtUkBQyT4C
-         OElYo6VTwFwfPYGibqMWbYpmM2V1rBQi4p98Q7kv5+wzD+0u1xuD3IzAw3cjnksKaje7
-         zqwqaE6RIgAIrzAke3SMi9/cRUv5N4YM2NiYjDk2+zA8K3o86FqbK+7HJNoWW5HjYM2/
-         iStg==
-X-Forwarded-Encrypted: i=1; AJvYcCVYsme7YPwkqCUsfP4t3Lkg6VAtKphv2m6BoZ96X3/LXBiCggR4j2C4W/xxBaLx8bZx55g=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQdOApivHA01LiWq6ge84S+SiFBw/M5hkfml5OX6QKmpDPQjbI
-	LQ0HHXjCPrI8+iSsmiXP30di8/5kKFgfyq9jDVZ/4y/yHecFOhFs05De
-X-Gm-Gg: AY/fxX6hBmdvFWYHmRLYnn3BH0cOKgz40WedNEYqRfLjDodfDbk/AgaHBIETQLaGg6/
-	JJyP86/1Lz2jlfuW17wD6uxV+rMtjxVjpvG33SYBb/DdSHbOXtoOoYWXHM4GhauoZAowtAC48Xj
-	iAII8h7lCfFNg9z3NNZ/P35ax/xWqJ2gn6zKjiFyPKFOfuAFOPD/fthFpyqyaROknmQOoXMDCZ6
-	exJtcExa9cfJutpyPU7J3En3hyYZJhQUddXAOMU62KtAqgR2IPsH6mD1pDiyJonyT4tWVM33jGv
-	bRhQ8ib8CRoKFwzbQdBblNq2Gkgh6a2JMTyyzCGJFuEkldipYyz+4Pr/5QoRPWan+SqtS7vfyJU
-	nlG7OficE0Waeo+bLIy98Zusj6PVjFgWnqs7APQhBWCsQIXvmHlR+gqwvwshRoC8vKQiWwnrCQ9
-	97Bfw2+FgUFaHtyUYMTH0OpyD0r+Ben7jiFp2UeuhsUtcOqiw48qKl8crsRtIcODbnrg==
-X-Google-Smtp-Source: AGHT+IGgT0AST0//DjiF90XiY7sj1vK+wEtU6yJMBcXHN9QCNFaybx9oZtWKN0y2gcXt5kWxus4CVQ==
-X-Received: by 2002:a05:6000:26cf:b0:42f:ba58:6599 with SMTP id ffacd0b85a97d-4324e4fd943mr51599050f8f.35.1767367125380;
-        Fri, 02 Jan 2026 07:18:45 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4324eaa08d9sm85194284f8f.30.2026.01.02.07.18.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Jan 2026 07:18:44 -0800 (PST)
-Message-ID: <6526c419-c60c-49d2-9c1a-52be7aca82f0@gmail.com>
-Date: Fri, 2 Jan 2026 15:18:43 +0000
+        bh=w07oOyGOImBzXDLI1FQJowtyl4JmLbx8p1Igh4p7qH4=;
+        b=UJiYZPCkN2bjdEg0KchDaaPwYAmadVQZxV0MCnLI0MjfnZ4l8/fJWvslIuo+/dv1CF
+         1UHwzrArdwYu1PmHTeGK19SDiv7BVzwLvngjRgwJjF/j8DMkxO3YNOuGpVhOD3mi9UcG
+         MZXDPEhkYkFXNFCJVv9ddnwcizD/5e8QDizHDFtJs/7sKbXJ8JJ0HdhbkCHn1BhZsCGx
+         Y/YeZGH7Ze0jf0JoHhxxYWWAPtN6RDNmq+SGtFku1o5vFjkCTH5yZ8OAwg7NSi7BfU+r
+         KpDnM8FqKZ4JGwOlbO+E9TeBhMAYWla66vn2lrgv3mVpy+TDg5R8SWaGKK8Dk2lfoPCU
+         +j7g==
+X-Gm-Message-State: AOJu0YxFpIrlbU5oHubwCg2VSFF5MGFpzq+18UKJzBFXsMlFLtAzdkHd
+	mqprw4ewo7eebJjpT+FZBcHYLt4XHBKObArQw2ssJyidXUSq+7eAM/CP
+X-Gm-Gg: AY/fxX5Y3C05DgWyRoKuVFRZrhUdxyxAUSi1HtH7RoQP5CR0vZ+TreqKn41ZQfu0vSl
+	ANzcb8BLJ0WwA1i1bpEULVioaDGHvXekitjgFtl41/sTX/OKa1VzjK89Stl8+CAqkDuXW8+gI22
+	eh5/N2EFt4vw5c0rj6xieMGBjbCLyUJShafiB//OjYItkjnqv7SdJUmxyhN26aGjeBWIskomuI1
+	OwJrA8zNZ6wK5URRE9fFR4pe4k6XDjPZCfRlKTeCywmi5bshr6K5kEI1RqktxSDmwI9YOt1mC/t
+	7T41HlxdVTgi1GXrrkEXpKi2k7u7bzLphTVq2ddrE2p9D4T8jNX2jla6aR1OK1K5o2ICsLxaruh
+	nG9y4reTQungvM291iOSLY5sivak55Ciu5DCFidwUeLl9Ayn+SfKdc9LpY76jPqChiPGFc1lgh5
+	zbiMA=
+X-Google-Smtp-Source: AGHT+IEJUhlb72ZgJ4OURfNXXTS5tM8micdZT4j1oiBzEH487GzaOH+6mv0qjynXVtfmTQy7aBtwOA==
+X-Received: by 2002:a05:6000:178c:b0:431:104:6daf with SMTP id ffacd0b85a97d-4324e709ab3mr63001440f8f.54.1767371579008;
+        Fri, 02 Jan 2026 08:32:59 -0800 (PST)
+Received: from ubuntu ([105.117.2.49])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4324ea1b1b1sm84752489f8f.3.2026.01.02.08.32.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Jan 2026 08:32:58 -0800 (PST)
+Date: Fri, 2 Jan 2026 16:32:50 +0000
+From: Olamide Caleb Bello <belkid98@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com, Christian Couder <christian.couder@gmail.com>,
+	Usman Akinyemi <usmanakinyemi202@gmail.com>,
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: [Outreachy PATCH v2] environment: move "core.attributesFile" into
+ repo-setting
+Message-ID: <aVfzMsN2ouY3UBFG@ubuntu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v11] status: show comparison with push remote tracking
- branch
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
- Junio C Hamano <gitster@pobox.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>,
- "brian m . carlson" <sandals@crustytoothpaste.net>
-References: <pull.2138.v10.git.git.1767110888.gitgitgadget@gmail.com>
- <pull.2138.v11.git.git.1767352663477.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <pull.2138.v11.git.git.1767352663477.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aUO7jQQAERTe5xYc@ubuntu>
 
-Hi Harald
+When handling multiple repositories within the same process, relying on
+global state for accessing the "core.attributesFile" configuration can
+lead to incorrect values being used. It also makes it harder to isolate
+repositories and hinders the libification of git.
+The functions `bootstrap_attr_stack()` and `git_attr_val_system()`
+retrieve "core.attributesFile" via `git_attr_global_file()`
+which reads from global state `git_attributes_file`.
 
-On 02/01/2026 11:17, Harald Nordgren via GitGitGadget wrote:
-> From: Harald Nordgren <haraldnordgren@gmail.com>
-> 
-> "git status" on a branch that follows a remote branch compares
-> commits on the current branch and the remote-tracking branch it
-> builds upon, to show "ahead", "behind", or "diverged" status.
-> 
-> When working on a feature branch that tracks a remote feature branch,
-> but you also want to track progress relative to the push remote's
-> tracking branch (which may differ from the upstream branch), git status
-> now shows an additional comparison.
+Move the "core.attributesFile" configuration into the
+`struct repo_settings` instead of relying on the global state.
+A new function `repo_settings_get_attributesfile_path()` is added
+and used to retrieve this setting in a repository-scoped manner.
+The functions to retrieve "core.attributesFile" are replaced with
+the new accessor function `repo_settings_get_attributesfile_path()`
+This improves multi-repository behaviour and aligns with the goal of
+libifying of Git.
 
-This is great and it is really good that it is now using the default 
-push destination rather than a custom config key.
+Note that in `bootstrap_attr_stack()`, the `index_state` is used only
+if it exists, else we default to `the_repository`.
 
-> When a push remote is configured (via branch.<name>.pushRemote or
-> remote.pushDefault) git status shows both the comparison with the
-> upstream tracking branch (as before) and an additional comparison with
-> the push remote's tracking branch, if it differs from the upstream
-> tracking branch.
+Based-on-patch-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
+---
+The link to the GitHub CI is provided below
+https://github.com/git/git/actions/runs/20661817110
 
-Looking at the tests, it seems that the extra information is shown 
-whenever the upstream branch differs from the default push destination 
-even if they are on the same remote. I think that is sensible but this 
-paragraph should be updated to reflect the fact that one does not need 
-to set either of the "pushDefault" config settings to benefit from this.
+Changes in v2:
+--------------
+- Renamed the variable in the repo-settings struct to `attributes_file_path`
+- Modified the comment section of the accessor function declaration to
+  indicate the core.attributesFile is read via repo config.
 
-> The push branch comparison appears on a separate
-> line after the upstream branch status, using the same format:
-> - "Ahead of 'origin/feature' by N commits" when purely ahead
-> - "Behind 'origin/feature' by N commits" when purely behind
-> - "Diverged from 'origin/feature' by N commits" when diverged
+Range diff vs v1:
+-----------------
+1:  4975f77cde ! 1:  fc1dbec892 environment: move "core.attributesfile" into repo-setting
+    @@ Commit message
+         Note that in `bootstrap_attr_stack()`, the `index_state` is used only
+         if it exists, else we default to `the_repository`.
+     
+    -    Reported-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+    +    Based-on-patch-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+         Mentored-by: Christian Couder <christian.couder@gmail.com>
+         Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+         Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
+    @@ attr.c: static void bootstrap_attr_stack(struct index_state *istate,
+      	if (*stack)
+      		return;
+     @@ attr.c: static void bootstrap_attr_stack(struct index_state *istate,
+    - 		push_stack(stack, e, NULL, 0);
+      	}
+      
+    --	/* home directory */
+    + 	/* home directory */
+     -	if (git_attr_global_file()) {
+     -		e = read_attr_from_file(git_attr_global_file(), flags);
+     +	if (istate && istate->repo)
+    @@ repo-settings.c: void repo_settings_clear(struct repository *r)
+      	struct repo_settings empty = REPO_SETTINGS_INIT;
+      	FREE_AND_NULL(r->settings.fsmonitor);
+      	FREE_AND_NULL(r->settings.hooks_path);
+    -+	FREE_AND_NULL(r->settings.git_attributes_file);
+    ++	FREE_AND_NULL(r->settings.attributes_file_path);
+      	r->settings = empty;
+      }
+      
+    @@ repo-settings.c: void repo_settings_reset_shared_repository(struct repository *r
+      }
+     +const char *repo_settings_get_attributesfile_path(struct repository *repo)
+     +{
+    -+	if (!repo->settings.git_attributes_file) {
+    -+		if (repo_config_get_pathname(repo, "core.attributesfile", &repo->settings.git_attributes_file))
+    -+			repo->settings.git_attributes_file = xdg_config_home("attributes");
+    ++	if (!repo->settings.attributes_file_path) {
+    ++		if (repo_config_get_pathname(repo, "core.attributesfile", &repo->settings.attributes_file_path))
+    ++			repo->settings.attributes_file_path = xdg_config_home("attributes");
+     +	}
+    -+	return repo->settings.git_attributes_file;
+    ++	return repo->settings.attributes_file_path;
+     +}
+     
+      ## repo-settings.h ##
+    @@ repo-settings.h: struct repo_settings {
+      	unsigned long big_file_threshold;
+      
+      	char *hooks_path;
+    -+	char *git_attributes_file;
+    ++	char *attributes_file_path;
+      };
+      #define REPO_SETTINGS_INIT { \
+      	.shared_repository = -1, \
+    @@ repo-settings.h: int repo_settings_get_shared_repository(struct repository *repo
+     +/*
+     + * Read the value for "core.attributesfile".
+     + * Defaults to xdg_config_home("attributes") if the core.attributesfile
+    -+ * isn't available.
+    ++ * which is set via repo config isn't available.
+     + */
+     +const char *repo_settings_get_attributesfile_path(struct repository *repo);
+     +
 
-I'm wondering why we don't reuse the existing messages - I don't see how 
-using a different wording for the push destination compared to the 
-upstream branch benefits the user. We should adjust the hints that are 
-shown so that we only recommend pulling from the upstream branch and 
-only recommend pushing to the default push destination but the 
-comparisons should be the same. Also I don't find the message "Diverged 
-from 'origin/feature' by N commits' very helpful, I'd find it more 
-useful if it gave the ahead/behind count like we do for the upstream branch.
+ attr.c          | 19 +++++++++----------
+ attr.h          |  3 ---
+ builtin/var.c   |  2 +-
+ environment.c   |  6 ------
+ environment.h   |  1 -
+ repo-settings.c | 10 ++++++++++
+ repo-settings.h |  8 ++++++++
+ 7 files changed, 28 insertions(+), 21 deletions(-)
 
-> Example output when tracking upstream/main with pushRemote set to origin:
->      On branch feature
->      Your branch is ahead of 'upstream/main' by 2 commits.
->        (use "git pull" if you want to integrate the remote branch with yours)
-
-Is this a typo? - why are we recommending "git pull" when our branch is 
-ahead of the upstream branch?
-
->      Ahead of 'origin/feature' by 5 commits.
-
-It would be nice to have a hint suggesting the user runs "git push" here.
-
-> The comparison is only shown when a push remote is configured and the
-> push remote's tracking branch differs from the upstream tracking branch.
-
-Looking at the tests, only the second half of that sentence appears to 
-be true.
-
-> diff --git a/remote.c b/remote.c
-> index 59b3715120..2317725f7d 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -2237,6 +2237,81 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
->   	return stat_branch_pair(branch->refname, base, num_ours, num_theirs, abf);
->   }
->   
-> +static char *get_remote_push_branch(struct branch *branch, char **full_ref_out)
-> +{
-> +	const char *push_remote;
-> +	const char *resolved;
-> +	int flag;
-> +	struct strbuf ref_buf = STRBUF_INIT;
-> +	char *ret = NULL;
-> +
-> +	if (!branch)
-> +		return NULL;
-> +
-> +	push_remote = pushremote_for_branch(branch, NULL);
-> +	if (!push_remote)
-> +		return NULL;
-> +
-> +	strbuf_addf(&ref_buf, "refs/remotes/%s/%s", push_remote, branch->name);
-
-Shouldn't we be taking account of the push and fetch refspecs here? 
-There is no guarantee that $branch maps to refs/remotes/$remote/$branch. 
-To take a silly example, if we have
-
-     remote.$remote.fetch = 
-refs/heads/$branch:refs/remotes/$remote/abc-$branch
-     remote.$remote.pull = refs/heads/$branch:refs/heads/xyz-$branch
-
-Then we should be using "refs/remotes/$remote/abc-xyz-$branch" in the 
-message above as "$branch" will be pushed to "xyz-$branch" on the remote 
-which is fetched to "$remote/abc-xyz-$branch"
-
-> +
-> +	resolved = refs_resolve_ref_unsafe(
-> +		get_main_ref_store(the_repository),
-> +		ref_buf.buf,
-> +		RESOLVE_REF_READING,
-> +		NULL, &flag);
-
-As we don't use flag we can pass NULL - see the documentation for this 
-function in refs.h
-
-> +static void format_push_branch_comparison(struct strbuf *sb,
-> +					     const char *branch_refname,
-> +					     const char *push_full,
-> +					     const char *push_short,
-> +					     enum ahead_behind_flags abf)
-> +{
-> +	int push_ahead = 0, push_behind = 0;
-> +	int stat_result;
-> +
-> +	stat_result = stat_branch_pair(branch_refname, push_full,
-> +				       &push_ahead, &push_behind, abf);
-> +	if (stat_result < 0)
-> +		return;
-> +
-> +	strbuf_addstr(sb, "\n");
-
-As I said above it would be nice if we could use the existing messages 
-here. Can we have a separate preparatory patch that refactors 
-fromat_tracking_info() so that we can use the same messages for the 
-upstream branch and the default push destination?
-
-> @@ -2311,6 +2387,19 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
->   			strbuf_addstr(sb,
->   				_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
->   	}
-> +
-> +	if (!upstream_is_gone && sti >= 0 && abf != AHEAD_BEHIND_QUICK) {
-
-Why do we handle AHEAD_BEHIND_QUICK differently to the upstream branch? 
-Surely it would be useful to tell the user whether the branch is up to 
-date with the default push destination or not?
-
-> diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-> index 0b719bbae6..f27ae719ad 100755
-> --- a/t/t6040-tracking-info.sh
-> +++ b/t/t6040-tracking-info.sh
-> [...]
-> +test_expect_success 'status shows ahead of both origin/main and feature branch' '
-> +	(
-> +		cd test &&
-> +		git checkout -b feature2 origin/main &&
-> +		git push origin HEAD &&
-> +		advance work &&
-> +		git status >../actual
-> +	) &&
-> +	cat >expect <<-EOF &&
-> +	On branch feature2
-> +	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
-> +	  (use "git push" to publish your local commits)
-
-Why are we still suggesting pushing to the upstream branch when we know 
-the user is pushing to a different remote branch?
-
-> +	Ahead of ${SQ}origin/feature2${SQ} by 1 commit.
-
-Why aren't we suggesting to use "git push" here?
-
-Thanks for working on this. With a few tweaks it will be a really useful 
-improvement to "git status"
-
-Phillip
-
-> +	nothing to commit, working tree clean
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'checkout shows ahead of both origin/main and feature branch' '
-> +	(
-> +		cd test &&
-> +		git checkout feature2 >../actual
-> +	) &&
-> +	cat >expect <<-EOF &&
-> +	Your branch is ahead of ${SQ}origin/main${SQ} by 1 commit.
-> +	  (use "git push" to publish your local commits)
-> +
-> +	Ahead of ${SQ}origin/feature2${SQ} by 1 commit.
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'setup for ahead of tracked but diverged from main' '
-> +	(
-> +		cd test &&
-> +		git checkout -b feature4 origin/main &&
-> +		advance work1 &&
-> +		git checkout origin/main &&
-> +		advance work2 &&
-> +		git push origin HEAD:main &&
-> +		git checkout feature4 &&
-> +		advance work3
-> +	)
-> +'
-> +
-> +test_expect_success 'status shows diverged from origin/main and ahead of feature branch' '
-> +	(
-> +		cd test &&
-> +		git checkout feature4 &&
-> +		git branch --set-upstream-to origin/main &&
-> +		git push origin HEAD &&
-> +		advance work &&
-> +		git status >../actual
-> +	) &&
-> +	cat >expect <<-EOF &&
-> +	On branch feature4
-> +	Your branch and ${SQ}origin/main${SQ} have diverged,
-> +	and have 3 and 1 different commits each, respectively.
-> +	  (use "git pull" if you want to integrate the remote branch with yours)
-> +
-> +	Ahead of ${SQ}origin/feature4${SQ} by 1 commit.
-> +
-> +	nothing to commit, working tree clean
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'setup upstream remote' '
-> +	(
-> +		cd test &&
-> +		git remote add upstream ../. &&
-> +		git fetch upstream &&
-> +		git config remote.pushDefault origin
-> +	)
-> +'
-> +
-> +test_expect_success 'status with upstream remote and push.default set to origin' '
-> +	(
-> +		cd test &&
-> +		git checkout -b feature5 upstream/main &&
-> +		git push origin &&
-> +		advance work &&
-> +		git status >../actual
-> +	) &&
-> +	cat >expect <<-EOF &&
-> +	On branch feature5
-> +	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
-> +	  (use "git push" to publish your local commits)
-> +
-> +	Ahead of ${SQ}origin/feature5${SQ} by 1 commit.
-> +
-> +	nothing to commit, working tree clean
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'status with upstream remote and push.default set to origin and diverged' '
-> +	(
-> +		cd test &&
-> +		git checkout -b feature6 upstream/main &&
-> +		advance work &&
-> +		git push origin &&
-> +		git reset --hard upstream/main &&
-> +		advance work &&
-> +		git status >../actual
-> +	) &&
-> +	cat >expect <<-EOF &&
-> +	On branch feature6
-> +	Your branch is ahead of ${SQ}upstream/main${SQ} by 1 commit.
-> +	  (use "git push" to publish your local commits)
-> +
-> +	Diverged from ${SQ}origin/feature6${SQ} by 2 commits.
-> +
-> +	nothing to commit, working tree clean
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'status with upstream remote and push branch up to date' '
-> +	(
-> +		cd test &&
-> +		git checkout -b feature7 upstream/main &&
-> +		git push origin &&
-> +		git status >../actual
-> +	) &&
-> +	cat >expect <<-EOF &&
-> +	On branch feature7
-> +	Your branch is up to date with ${SQ}upstream/main${SQ}.
-> +
-> +	Your branch is up to date with ${SQ}origin/feature7${SQ}.
-> +
-> +	nothing to commit, working tree clean
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'checkout shows push branch up to date' '
-> +	(
-> +		cd test &&
-> +		git checkout feature7 >../actual
-> +	) &&
-> +	cat >expect <<-EOF &&
-> +	Your branch is up to date with ${SQ}upstream/main${SQ}.
-> +
-> +	Your branch is up to date with ${SQ}origin/feature7${SQ}.
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
->   test_done
-> 
-> base-commit: 68cb7f9e92a5d8e9824f5b52ac3d0a9d8f653dbe
+diff --git a/attr.c b/attr.c
+index 4999b7e09d..b081400c18 100644
+--- a/attr.c
++++ b/attr.c
+@@ -879,14 +879,6 @@ const char *git_attr_system_file(void)
+ 	return system_wide;
+ }
+ 
+-const char *git_attr_global_file(void)
+-{
+-	if (!git_attributes_file)
+-		git_attributes_file = xdg_config_home("attributes");
+-
+-	return git_attributes_file;
+-}
+-
+ int git_attr_system_is_enabled(void)
+ {
+ 	return !git_env_bool("GIT_ATTR_NOSYSTEM", 0);
+@@ -912,6 +904,8 @@ static void bootstrap_attr_stack(struct index_state *istate,
+ {
+ 	struct attr_stack *e;
+ 	unsigned flags = READ_ATTR_MACRO_OK;
++	const char *attributes_file_path;
++	struct repository *repo;
+ 
+ 	if (*stack)
+ 		return;
+@@ -927,8 +921,13 @@ static void bootstrap_attr_stack(struct index_state *istate,
+ 	}
+ 
+ 	/* home directory */
+-	if (git_attr_global_file()) {
+-		e = read_attr_from_file(git_attr_global_file(), flags);
++	if (istate && istate->repo)
++		repo = istate->repo;
++	else
++		repo = the_repository;
++	attributes_file_path = repo_settings_get_attributesfile_path(repo);
++	if (attributes_file_path) {
++		e = read_attr_from_file(attributes_file_path, flags);
+ 		push_stack(stack, e, NULL, 0);
+ 	}
+ 
+diff --git a/attr.h b/attr.h
+index a04a521092..956ce6ba62 100644
+--- a/attr.h
++++ b/attr.h
+@@ -232,9 +232,6 @@ void attr_start(void);
+ /* Return the system gitattributes file. */
+ const char *git_attr_system_file(void);
+ 
+-/* Return the global gitattributes file, if any. */
+-const char *git_attr_global_file(void);
+-
+ /* Return whether the system gitattributes file is enabled and should be used. */
+ int git_attr_system_is_enabled(void);
+ 
+diff --git a/builtin/var.c b/builtin/var.c
+index cc3a43cde2..fd577f2930 100644
+--- a/builtin/var.c
++++ b/builtin/var.c
+@@ -72,7 +72,7 @@ static char *git_attr_val_system(int ident_flag UNUSED)
+ 
+ static char *git_attr_val_global(int ident_flag UNUSED)
+ {
+-	char *file = xstrdup_or_null(git_attr_global_file());
++	char *file = xstrdup_or_null(repo_settings_get_attributesfile_path(the_repository));
+ 	if (file) {
+ 		normalize_path_copy(file, file);
+ 		return file;
+diff --git a/environment.c b/environment.c
+index a770b5921d..ed7d8f42d9 100644
+--- a/environment.c
++++ b/environment.c
+@@ -53,7 +53,6 @@ char *git_commit_encoding;
+ char *git_log_output_encoding;
+ char *apply_default_whitespace;
+ char *apply_default_ignorewhitespace;
+-char *git_attributes_file;
+ int zlib_compression_level = Z_BEST_SPEED;
+ int pack_compression_level = Z_DEFAULT_COMPRESSION;
+ int fsync_object_files = -1;
+@@ -363,11 +362,6 @@ static int git_default_core_config(const char *var, const char *value,
+ 		return 0;
+ 	}
+ 
+-	if (!strcmp(var, "core.attributesfile")) {
+-		FREE_AND_NULL(git_attributes_file);
+-		return git_config_pathname(&git_attributes_file, var, value);
+-	}
+-
+ 	if (!strcmp(var, "core.bare")) {
+ 		is_bare_repository_cfg = git_config_bool(var, value);
+ 		return 0;
+diff --git a/environment.h b/environment.h
+index 51898c99cd..3512a7072e 100644
+--- a/environment.h
++++ b/environment.h
+@@ -152,7 +152,6 @@ extern int assume_unchanged;
+ extern int warn_on_object_refname_ambiguity;
+ extern char *apply_default_whitespace;
+ extern char *apply_default_ignorewhitespace;
+-extern char *git_attributes_file;
+ extern int zlib_compression_level;
+ extern int pack_compression_level;
+ extern unsigned long pack_size_limit_cfg;
+diff --git a/repo-settings.c b/repo-settings.c
+index 195c24e9c0..cc53a3cd3b 100644
+--- a/repo-settings.c
++++ b/repo-settings.c
+@@ -5,6 +5,7 @@
+ #include "midx.h"
+ #include "pack-objects.h"
+ #include "setup.h"
++#include "path.h"
+ 
+ static void repo_cfg_bool(struct repository *r, const char *key, int *dest,
+ 			  int def)
+@@ -158,6 +159,7 @@ void repo_settings_clear(struct repository *r)
+ 	struct repo_settings empty = REPO_SETTINGS_INIT;
+ 	FREE_AND_NULL(r->settings.fsmonitor);
+ 	FREE_AND_NULL(r->settings.hooks_path);
++	FREE_AND_NULL(r->settings.attributes_file_path);
+ 	r->settings = empty;
+ }
+ 
+@@ -230,3 +232,11 @@ void repo_settings_reset_shared_repository(struct repository *repo)
+ {
+ 	repo->settings.shared_repository_initialized = 0;
+ }
++const char *repo_settings_get_attributesfile_path(struct repository *repo)
++{
++	if (!repo->settings.attributes_file_path) {
++		if (repo_config_get_pathname(repo, "core.attributesfile", &repo->settings.attributes_file_path))
++			repo->settings.attributes_file_path = xdg_config_home("attributes");
++	}
++	return repo->settings.attributes_file_path;
++}
+diff --git a/repo-settings.h b/repo-settings.h
+index d477885561..1209e1db83 100644
+--- a/repo-settings.h
++++ b/repo-settings.h
+@@ -68,6 +68,7 @@ struct repo_settings {
+ 	unsigned long big_file_threshold;
+ 
+ 	char *hooks_path;
++	char *attributes_file_path;
+ };
+ #define REPO_SETTINGS_INIT { \
+ 	.shared_repository = -1, \
+@@ -99,4 +100,11 @@ int repo_settings_get_shared_repository(struct repository *repo);
+ void repo_settings_set_shared_repository(struct repository *repo, int value);
+ void repo_settings_reset_shared_repository(struct repository *repo);
+ 
++/*
++ * Read the value for "core.attributesfile".
++ * Defaults to xdg_config_home("attributes") if the core.attributesfile
++ * which is set via repo config isn't available.
++ */
++const char *repo_settings_get_attributesfile_path(struct repository *repo);
++
+ #endif /* REPO_SETTINGS_H */
+-- 
+2.52.0.210.g7f9f2609ac.dirty
 
