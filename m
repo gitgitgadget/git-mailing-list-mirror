@@ -1,152 +1,140 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DDA2EDD4D
-	for <git@vger.kernel.org>; Fri,  2 Jan 2026 11:26:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E090D207A32
+	for <git@vger.kernel.org>; Fri,  2 Jan 2026 13:56:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767353167; cv=none; b=raUMXiRvloJZT7MqxVzRasm4a74mfMPtlvuZo37Pzk433Z5T68p8e6lmppwBx1I0nCpxOG+Moek5jJYuIB0TkJPXDaU1rP3hOo90hwMNkbV7BW/wfDskVEbQXvOCFKH0Am6xIIHp/RzY7v5J9Eh5A/IK4fXxRxUg9bfGG0LSM1k=
+	t=1767362189; cv=none; b=ImOlnuUGgMSIwlnxjwFGiaS5IJAQHxAaJfSBbCakV7bysIOk6NM5fl/j21YOGAPPAzrK/K5G6EpQsdxhaTXGKdvsIvoFgIK8F/htbIkZ6wSXBN6BtmCb4ne7wUG6VPCge5Zv3h1T2HXsX7yTfoArY8M2uCCZFPPoSf6ap2s3zc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767353167; c=relaxed/simple;
-	bh=WJ8CbukeHkJcmOk3ef5eT3H77xhlRPaE2OdZhB3FTbk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nI46qIisbJp9t9md2oF6Du9UxvGlx5VMi8vajUp0FJ6IIEw2TAuXxGYzrm3NzBLTF2NKB66DVY53jQeU9+Shxs+KNKn0odIDnHJsHP2UiJdyyuTGEwJhV3TTeW2CgysbbirtKfVZYQyP2mOZ4ESnSi0Puq7O5YUs2e+2/Wl6WS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V0l2pF1P; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767362189; c=relaxed/simple;
+	bh=9WStvtVUE53Ps7prFMs9ZtQ8U2xc34LJHZ9MzU1RF2Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BfNKIHbSWqzeom0ae5ILiXG+UMcn7KSySmXImmqMmvQW+GUAP54PK+e9MU7gU/B8RVaFI3g9XXD6jYvbH2IP49jQIQEWvCiGxFRRc11ZTSkoiOfeNGjXHvpbu5Ihav/PUMy/fkqYmoEoIA8q0h7BFpNVqIPzMWmj25Fp56kPAfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=lpdr38/B; arc=none smtp.client-ip=212.27.42.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V0l2pF1P"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2a12ed4d205so105493175ad.0
-        for <git@vger.kernel.org>; Fri, 02 Jan 2026 03:26:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767353163; x=1767957963; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=B5QjEx9p2blB+Y3EWwlhQoGb03FABBw/4I9jnu9hqoQ=;
-        b=V0l2pF1PZyV4obFAoP2TCDza76b3efSYhn4wIBY1DVxehe3WLmrK/P6slP+NNWfEpA
-         16IlLP7AJn+XhhpyUK0gUWLMKm2AYt+FDnjkxOnrV5+Y8cS35xGNkP34nSlSG5AZ2sS9
-         xe0yQXa0iDw3FYo3EodmYXxxe9m1PXVkwiu4EBCFtD3ZauwfFhOk62z/MISYM6cSCkdz
-         yDxbGuvQjUJ61jRRnF6IiXXCwE/igbgeWTfQihyvdrt3SflBDXrGo/miVlPg3YioA6o8
-         f20r/CnBiGH0yAM6jPyJkkBeh3Z0781ubdjEisG5Pcbc19FEEeGJ4W+IFVUtNVZ79jE8
-         OsnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767353163; x=1767957963;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B5QjEx9p2blB+Y3EWwlhQoGb03FABBw/4I9jnu9hqoQ=;
-        b=LkvxPZCMCrdUlvhOiYZL5dEtPVsxeJHsJqrAR5HAIZvUBEH2HrrnHs/BYTG4uu+2lo
-         TxzH4T0kaTTGCPAZW2h2VPf/+eQVvBYDnztT8xNn3J3UA53+zLEacoeUDdmlZH9sMEiJ
-         kEuFfczbagXKEgc9Ab58XpGq5i5NcgEn1nnH13x3K8hCOgdDpDUbg4OxjGaECcDM5o0Q
-         YANp+miHPexerjBB/VOabnjqgYla0YXEroC6TXrqNr+qn7cyAQRrIX0hyufpWE95nIXr
-         rRU5Au005PJXcon80aEQ0op2t4NnOexA6Q+/aG+mf6icqIIikqhr5JQHNj10IrwGhrdM
-         vEmg==
-X-Gm-Message-State: AOJu0YxVB7FoI71y4+nEOU4OoVb/vYHuWRxm8hBWp7mka22LSRE8Zp4K
-	ADC0SpxcK1znq59YtdFzDNBYccub0iXYexV7HlMSZXH5byL+bNd7xY4olTAX2oeXi+9GhxVRDWF
-	4fb387K03WsKARFyTH0/rWJ26HwtVhqA=
-X-Gm-Gg: AY/fxX6L2Q0uuJMB1JQ5MrvZg2B1mRIDq6Fqj2euWqmP7hdNDKaAxbGG6j5ks/ek3wv
-	JL2Hjk75dw2eERjXmhdpzJXZKBdrCkvm0a44vb8LW+k+2PEpZlTPZcc0FvBsHFomkuFHiX0EYqN
-	AbzPs7wmRsFB9ir8CzsUOlfR62ANR6djrivY7riTyjD/+X7C6AYH+hrqcTty145WZUEFOqkMZ6D
-	eZDEXfy8AFKCV0H7iBQbTe6uOd2/bqD+mGxbANhEpL8hjbm2tpvr/IHvCEe/vEtWpjEPaPPq37J
-X-Google-Smtp-Source: AGHT+IFeexJLPoWMrMqK6Q2rOml09Us7u+WvwCaOxE6T/X4TuO4fBh4BWo5hIdkTol9aus4qSvpi6Crniyx8ZOip/vg=
-X-Received: by 2002:a05:7022:6294:b0:11b:9b9f:427a with SMTP id
- a92af1059eb24-121722b4fdfmr39861902c88.21.1767353162637; Fri, 02 Jan 2026
- 03:26:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="lpdr38/B"
+Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 5D4C2DF9386
+	for <git@vger.kernel.org>; Fri,  2 Jan 2026 14:49:57 +0100 (CET)
+Received: from piment-oiseau.localnet (unknown [IPv6:2a01:e0a:d1:f360:4bd1:2f22:1bf8:44cb])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp2-g21.free.fr (Postfix) with ESMTPSA id 169182003E8;
+	Fri,  2 Jan 2026 14:49:46 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1767361790;
+	bh=9WStvtVUE53Ps7prFMs9ZtQ8U2xc34LJHZ9MzU1RF2Y=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=lpdr38/B85B5Yfb10UBm5+JcGMEV7cd47taOYbCBYuiq6OO0wbiOMz6UyqCYWyQgA
+	 BPRyogX5jlu5UvuqJkK3T7Fg1Mg0DQQRfic2nQWML99+5nZcC3sxehfad/8+mis2Gt
+	 pSyQ3OlG/HfB8InOxq4Oa28vlwMn6zmcjFU+Rp3J6wmsYUZg6MKUMW3uzQxfJln7Ib
+	 jLns6F27yBq8/Q24Ues1HRwUqnDJw7hnUs4RaeNzGPxTLyeG+NIqdiEHL80jyPXio0
+	 PBS/cUOF5pJcsVofkEGhb+9S3Sc0Yx5gIKa6gU+rlb398I3OL6w1s9ZWDmjr637av9
+	 faR4il4PkWwcA==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: Julia Evans <julia@jvns.ca>, Junio C Hamano <gitster@pobox.com>,
+ "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Subject: Re: [PATCH v3 2/4] doc: git-reset: clarify intro
+Date: Fri, 02 Jan 2026 14:49:45 +0100
+Message-ID: <5953760.DvuYhMxLoT@piment-oiseau>
+In-Reply-To:
+ <f90be8559f7d1d8362077a6f888687ee8be063b4.1767307382.git.ben.knoble+github@gmail.com>
+References:
+ <cover.1766103827.git.ben.knoble+github@gmail.com>
+ <cover.1767307382.git.ben.knoble+github@gmail.com>
+ <f90be8559f7d1d8362077a6f888687ee8be063b4.1767307382.git.ben.knoble+github@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <aUO7jQQAERTe5xYc@ubuntu> <CAOLa=ZRDFdZJWsq5JOckRgfF2V0Whv-jCxbpgeRi80NOs0oTDQ@mail.gmail.com>
-In-Reply-To: <CAOLa=ZRDFdZJWsq5JOckRgfF2V0Whv-jCxbpgeRi80NOs0oTDQ@mail.gmail.com>
-From: Bello Olamide <belkid98@gmail.com>
-Date: Fri, 2 Jan 2026 12:26:04 +0100
-X-Gm-Features: AQt7F2rZ2D8RJqHGMlEajCf5O8lAzKWIp6qZnfbloNESr7xQe22FdxMh-KQXnCg
-Message-ID: <CAD=f0L8K+Ou6Kg5gUEqQpNzbSi-FHMsovOKtJN2hzjFYHywiPQ@mail.gmail.com>
-Subject: Re: [Outreachy PATCH] environment: move "core.attributesFile" into repo-setting
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, 
-	Christian Couder <christian.couder@gmail.com>, Usman Akinyemi <usmanakinyemi202@gmail.com>, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-On Fri, 2 Jan 2026 at 09:48, Karthik Nayak <karthik.188@gmail.com> wrote:
->
-> Olamide Caleb Bello <belkid98@gmail.com> writes:
->
-> > When handling multiple repositories within the same process, relying on
-> > global state for accessing the "core.attributesFile" configuration can
-> > lead to incorrect values being used. It also makes it harder to isolate
-> > repositories and hinders the libification of git.
-> > The functions `bootstrap_attr_stack()` and `git_attr_val_system()`
-> > retrieve "core.attributesFile" via `git_attr_global_file()`
-> > which reads from global state `git_attributes_file`.
-> >
-> > Move the "core.attributesFile" configuration into the
-> > `struct repo_settings` instead of relying on the global state.
-> > A new function `repo_settings_get_attributesfile_path()` is added
-> > and used to retrieve this setting in a repository-scoped manner.
-> > The functions to retrieve "core.attributesFile" are replaced with
-> > the new accessor function `repo_settings_get_attributesfile_path()`
-> > This improves multi-repository behaviour and aligns with the goal of
-> > libifying of Git.
-> >
-> > Note that in `bootstrap_attr_stack()`, the `index_state` is used only
-> > if it exists, else we default to `the_repository`.
-> >
-> > Based-on-patch-by: Ayush Chandekar <ayu.chandekar@gmail.com>
-> > Mentored-by: Christian Couder <christian.couder@gmail.com>
-> > Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> > Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
-> > ---
-> > The link to the GitHub CI is provided below
-> > https://github.com/cloobTech/git/actions/runs/20284228144
-> >
-> >  attr.c          | 20 +++++++++-----------
-> >  attr.h          |  3 ---
-> >  builtin/var.c   |  2 +-
-> >  environment.c   |  6 ------
-> >  environment.h   |  1 -
-> >  repo-settings.c | 10 ++++++++++
-> >  repo-settings.h |  8 ++++++++
-> >  7 files changed, 28 insertions(+), 22 deletions(-)
->
-> The change is very welcome. Apart from some small comments below, the
-> patch looks good.
->
-> [snip]
->
-> > diff --git a/repo-settings.h b/repo-settings.h
-> > index d477885561..362f355267 100644
-> > --- a/repo-settings.h
-> > +++ b/repo-settings.h
-> > @@ -68,6 +68,7 @@ struct repo_settings {
-> >       unsigned long big_file_threshold;
-> >
-> >       char *hooks_path;
-> > +     char *git_attributes_file;
-> >  };
-> >  #define REPO_SETTINGS_INIT { \
-> >       .shared_repository = -1, \
->
-> It would make more sense to rename this variable to
-> `attributes_file_path`, that would better denote what is actually stored
-> here and syncs better with `repo_settings_get_attributesfile_path`.
->
-> > @@ -99,4 +100,11 @@ int repo_settings_get_shared_repository(struct repository *repo);
-> >  void repo_settings_set_shared_repository(struct repository *repo, int value);
-> >  void repo_settings_reset_shared_repository(struct repository *repo);
-> >
-> > +/*
-> > + * Read the value for "core.attributesfile".
-> > + * Defaults to xdg_config_home("attributes") if the core.attributesfile
-> > + * isn't available.
->
-> While it is obvious, it would be nice to point out that
-> `core.attributesfile` is set via config.
->
-Thank you for the review Karthik.
-I will send an updated version with the changes.
+Le jeudi 1 janvier 2026, 23:43:57 heure normale d=E2=80=99Europe centrale D=
+=2E Ben=20
+Knoble a =C3=A9crit :
+> From: Julia Evans <julia@jvns.ca>
+>=20
+> From user feedback, there were several points of confusion:
+>=20
+> - What "tree-ish", "entries", "working tree", "HEAD", and "index" mean
+>   ("I have no clue what the index is", "I've been using git for 20 years
+>   and still don't know what a tree-ish is"). Avoid using these terms
+>   where it makes sense.
+> - What "optionally modifying index and working tree to match" means
+>   ("to match what?" "optionally based on what?")
+>   Remove this from the intro, we can say it later when giving more
+>   details.
+> - One user suggested that "The <tree-ish>/<commit> defaults to HEAD
+>   in all forms." should be repeated later on, since it's easy to miss.
+>   Instead say that HEAD is the default in each case later.
+>=20
+> Another issue is that `git reset` consistently describes the action
+> it does as "Reset ...", commands should not use their name to describe
+> themselves, and that the word "mode" is used to mean several different
+> things on this page.
+>=20
+> Address these by being more clear about two use cases for `git reset`
+> ("to undo operations" and "to update staged files"), and explaining what
+> the conditions are for each case instead of forcing the user to figure
+> out the pattern is in first form vs the other 3 forms.
+>=20
+> Signed-off-by: Julia Evans <julia@jvns.ca>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+> ---
+>  Documentation/git-reset.adoc | 13 ++++++++-----
+>  1 file changed, 8 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/Documentation/git-reset.adoc b/Documentation/git-reset.adoc
+> index 9843682e81..71e8f52430 100644
+> --- a/Documentation/git-reset.adoc
+> +++ b/Documentation/git-reset.adoc
+> @@ -3,7 +3,7 @@ git-reset(1)
 
-Bello.
+There are `HEAD` that passed through the style checks.
+
+>=20
+>  NAME
+>  ----
+> -git-reset - Reset current HEAD to the specified state
+> +git-reset - Set HEAD or the index to a known state
+>=20
+
+Here
+
+>  SYNOPSIS
+>  --------
+> @@ -15,10 +15,13 @@ git reset (--patch | -p) [<tree-ish>] [--]=20
+[<pathspec>...]
+>=20
+>  DESCRIPTION
+>  -----------
+> -In the first form, set the current branch head (`HEAD`) to _<commit>_,
+> -optionally modifying index and working tree to match.
+> -The _<tree-ish>_/_<commit>_ defaults to `HEAD` in all forms.
+> -In the last three forms, copy entries from _<tree-ish>_ to the index.
+> +`git reset` does either of the following:
+> +
+> +1. `git reset [<mode>] <commit>` changes which commit HEAD points to. Th=
+is=20
+makes
+
+And here.
+
+> +   it possible to undo various Git operations, for example commit, merge,
+> +   rebase, and pull.
+> +2. When you specify files or directories or pass `--patch`, `git reset`=
+=20
+updates
+> +   the staged version of the specified files.
+>=20
+>  `git reset [<mode>] [<commit>]`::
+>  	This form resets the current branch head to _<commit>_ and
+
+Thanks
+
+
