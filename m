@@ -1,140 +1,231 @@
-Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CDE1DFF0
-	for <git@vger.kernel.org>; Fri,  2 Jan 2026 09:39:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C17225762
+	for <git@vger.kernel.org>; Fri,  2 Jan 2026 09:49:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767346791; cv=none; b=juVrZBTGIDHPn5YsoSdkTcYGdRTdrte4JAsY+yUlAAMzWotEU2ARN0Hc3eBu+s92wr+8zLqASxh++4FP/JMvo7fKhaWanNill9PMAlwR4oDBrP2Pd283JCMRDVc2M4VMhG7VQegATg6frEi1PEvhf1hCP0HVr/iTDMTeFCGbiEw=
+	t=1767347376; cv=none; b=gMLtA951aqSniOMLfc0OB1apqTEnCZMTvVhlRiB8PChkrOfVr30TMtCb2W0rue5VXzGgKHmVi7m5d1aff2/BI84pqrIFiQXpGXp+j6RO9m6oBkYSGHSBgTgeMGIMns+ZmDfQvzkgo4wGMMSzScb6nR4YOU8JYkArmKbXZhKTALo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767346791; c=relaxed/simple;
-	bh=75QK88HR9R/OS5T277hxCt5IJ9TjW7iaSN4zlTuvDRI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kHmBI6QpW7g0cfiNSQ6/w7ZN8RN1BOHdN9J4m+Rn5ICyFc27NjuAFIYAwkonj+cynKuL2XwRiufm1w5R+Rm0rdtCr+zcu7zcO9AhywJQpya0D299LXaW0UmTpF8Mzi2+3js7uTSoU5ueZnjgwqAFvD6kY4CWdWsDqaDm+vy/wM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DIdaJtBQ; arc=none smtp.client-ip=74.125.224.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767347376; c=relaxed/simple;
+	bh=bWhxgEe5nYqjMWvm0ETeyFuLjj/SBJ7NZ2UkwBg0qjg=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=cAWX4CPccpZMDT8l+qJaKkKrYA5Hrx1UnW04FuhtKfdtnjpg0q44CAr7c7qOuDPyQsuH72XS/I83nwrYOjPmEiIr7Euh7zJKCBDDHxf68hb011SaN11grOepahNPp0zbwh7byx5ij33uStDv+dbI7ElTIGHfjVgJF3iBhtS9PHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=t6r7c9Vq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CcVSlncZ; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DIdaJtBQ"
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-6446c2bbfe3so9415637d50.1
-        for <git@vger.kernel.org>; Fri, 02 Jan 2026 01:39:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767346789; x=1767951589; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6Ajq+ZUytI9Ec6FFmqrsH0cahN4k4Q8l4eM783FbRBU=;
-        b=DIdaJtBQykXo7V9Tp1y8CbNkCfnOH5D0fgOHDCY4Kf2rvG89tvqig6tNIewWfcc1yK
-         9zymHhsn3DKscZoFI2fNWXdJmYdbO169u5bdW2n3NkOuCyRwthzwCJqs4bo4pkoWHRLi
-         2uPlo+jwmo7r1nnPV0SsopEtw8baaQj/c/gYYQu4SofFfFkKUY9AOkUrSHRu6RwkzReq
-         /Ip5NAczvm2uM0GQdxxcANKMF9fwmeLamalT42hHKxnUUolns7706f/MnYr5j+s+MI4n
-         e7GrV2f3U60Rm8gpTCQSlmyyKm7nHjlKzOnN5Ew7ECDrEPnDoE+8u4JIEmDM8AnJiCZW
-         4k1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767346789; x=1767951589;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=6Ajq+ZUytI9Ec6FFmqrsH0cahN4k4Q8l4eM783FbRBU=;
-        b=MTp4CrQYBK9ubP3vaHjnwjDO5cEY6kX9wN6nWpOzknMfJiH4iQvQa8LS8FQP/+P7a+
-         +yblvKk1oveOQCK2XNKFotV6FnwzdR3ZLLBcsFibLeHF8hEBbLnuLScJf6SdkEJ4ryG5
-         ciiZdQBGxk8iGQCZF9gg2gOxTLwyrQsC7p9gYMhGHcNBawpkBMQ5Ysiefen5Xel8Uaco
-         942eu3XCBx/v5zccxuz3/KV2vqef4SfwORYZ6zOo7/nLKvljJopI5/i2ryjb9cgVELge
-         KZGpAKFh+VgCXy9RZ4cBkhCLprbXnPumOt4mTsLnTh5hWpmRyiiXnz4qBwIpyWK432TP
-         wX3A==
-X-Gm-Message-State: AOJu0Yxmn4b1TgzgwjfY0jPggE8lCyBxzaJd6B9N7o6I7s9xdjGr/sGZ
-	s0VfEVygnT7hS7S01GRbNaB2CYBDKuC/ZMQgBiLytlA740fLzVa7CUeG1uoPsFDl/zg4wlNLwu7
-	0OsrOg+lVSQ2PhAsMtH4matwY6NkTpvpGFqRZf3w=
-X-Gm-Gg: AY/fxX79IOyO2rNsxiFrY2l0Lhgc6uHXQjqsyBI69Mo3N4I7sKntM6QV9xfSRRkNMT0
-	yUdi1gs9ztMPlKsI1KmcaCicCk424OyVGrkQbbgMFgc2F93iCSPYKGJtPcp/6v1cI+tpk+DKNTw
-	rkwcIlmbM7B9dNJRNXg+W3T6wAaYoRsmU55tCy+je9AQAZ53gLuvkKtx94Xl5P0uuUuuZzSwXow
-	MJKEhoZDdjdpv2SQW2myt86gG7eTVhygzzEdaOtbaSusQc+6H8ZV3TpDfJ8guFOrg==
-X-Google-Smtp-Source: AGHT+IFkdsF5bnoeGC1VZTRCLVvZ5EPtyf78vpyj+JG1FK2oUK5swQQrmadkZNnP56HESEdOq7HGJe6fCEDB3XN09fA=
-X-Received: by 2002:a05:690e:1918:b0:646:81e0:1340 with SMTP id
- 956f58d0204a3-64681e015a5mr27483651d50.71.1767346789221; Fri, 02 Jan 2026
- 01:39:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="t6r7c9Vq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CcVSlncZ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8D61D7A009C;
+	Fri,  2 Jan 2026 04:49:32 -0500 (EST)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-06.internal (MEProxy); Fri, 02 Jan 2026 04:49:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767347372;
+	 x=1767433772; bh=YwLBQD6Oc/veDUUtJzDRQPCwBQZghXkUxeVe58ggAVY=; b=
+	t6r7c9VqiTNUDyi4O08k/89e02tbUebEr86IH+sCCISfemuxi1r9vbvKglbLxuOF
+	iirLdd6JNcR5KO1WXaUDy8xQsQRcJR/HlvMU1EINtPNIBfFr83ShufPBmVs6E+h7
+	N+nO143yITWGIroCZrQEEzeFOw1mms1mlX4wmS/P4TnbQWjBtiZUAKehOv/yUtGN
+	Ml9cj1dwqS3O7YNhlvKQ2YR9pCgn60afE8aPoq/IV+3ARlZodIOv/E/8mwJyiA0V
+	uw0yisSw5IK0SzxpLAnw39l3PjfV3lVpPtc9hva6jRr/fBxLKbMjVI+oHrxjslHs
+	srt5GRGTUyEzW1GV00EAeQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767347372; x=
+	1767433772; bh=YwLBQD6Oc/veDUUtJzDRQPCwBQZghXkUxeVe58ggAVY=; b=C
+	cVSlncZEWNR2VK54jF3TsnhTLnj6wMhlLbBbXrgAXSkGjj59vQAQdsWZxozKdhCh
+	cx2pHbvv3U3A/lCDfF0U056w+wW29sF3T3KcJ4d2FrSMWJ6aRrugmrfD40MFr5oG
+	r6PIYRxqn3+ws3UjNGEXaCfv0gNstjUi1YIgjM0ZskXgETdeth5aQc2ckkBmz2t+
+	osIZjU9grSsZbuq61Ni8V2AiILOPC4vUY0MTE56Q6qFy6v+klZm8uacsPfL+44oa
+	80/6WpXkhmAo5baImvjCmsj2HlAhqkMLA21V1RAwywdFd6cD3vnqZIJH+FnFS8ec
+	q9vum76EP/xHuqG2U3aNw==
+X-ME-Sender: <xms:rJRXaSoQnYllrqR7xbP902z0YVXrbg1Vo_FIEeTswTiC6iKCOhqbxA8>
+    <xme:rJRXabdxrOLwvRIMaIAh4lUCfl2H973fOfX7PTSqxpkTb3QaJEiVPADtj3rjdRTrw
+    h3ze37qv01CezxKRXZ73w5rSPD-LHnJ2PqAMCfF9kMm_7FPdoerQw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekkeefgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohephhgrrhgrlhgunhhorhgughhrvghnsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:rJRXaTQk7OPljEVlY2OYNvG3d-iuNjSHZVCDpVpKXDtIuTdf4ZszvQ>
+    <xmx:rJRXaSkwIoXDkmzIfC5jbBAvInYA29KT6lvwwgN6fI0kUBOs42eTAA>
+    <xmx:rJRXaTSN4Ad0zVdW51X7MyNPym8Cie5BcXfFodIT-UKs5rQhE2TOtA>
+    <xmx:rJRXaQMl_6uGQ1EwRllj-sIkEEKwJ0zPRImp6bM30_UOdaDDN7KAug>
+    <xmx:rJRXaTUFJP5Oe7mQ4Vl-aMikJFe4Cjl8DqMQgpMeIOazEqSqqG7xW0xP>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 3732E1EA0068; Fri,  2 Jan 2026 04:49:32 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260102062029.18210-1-pushkarkumarsingh1970@gmail.com> <CAOLa=ZQrKO-Aeoa_9E9Gi3rzM2AuVETDT4sUEuc0V8XQUyk4Pw@mail.gmail.com>
-In-Reply-To: <CAOLa=ZQrKO-Aeoa_9E9Gi3rzM2AuVETDT4sUEuc0V8XQUyk4Pw@mail.gmail.com>
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Date: Fri, 2 Jan 2026 15:09:37 +0530
-X-Gm-Features: AQt7F2o0TqIMH4j6t7BemwAI3qXPm23PFN_oFzCSCUEQU4CXnvj6n2v9_f5xLwA
-Message-ID: <CALE2CrRkKneSJL_F-mF_aTBzbGwW8c5A+qSU+8etQdbB=o2wJg@mail.gmail.com>
-Subject: Re: [PATCH] t1300: use test helpers instead of shell primitives
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: AFA_5TjvXxjF
+Date: Fri, 02 Jan 2026 10:48:46 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Harald Nordgren" <haraldnordgren@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org, "Josh Soref" <gitgitgadget@gmail.com>
+Message-Id: <757d6df5-7834-4ff2-8302-8edd8e990970@app.fastmail.com>
+In-Reply-To: <20260101233839.17639-1-haraldnordgren@gmail.com>
+References: <xmqqh5t5c4lj.fsf@gitster.g>
+ <20260101233839.17639-1-haraldnordgren@gmail.com>
+Subject: Re: Another look?
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Karthik,
+On Fri, Jan 2, 2026, at 00:38, Harald Nordgren wrote:
+>> Again this seems to do a "step 1 goes in a direction, step 2 fixes
+>> its mistake, step 3 changes course" drunken-man's walk.
+>>
+>> The same advice to restructure them into a logical incremental
+>> progression that moves the codebase in one consistent direction to
+>> eventually reach the goal at the end applies.
+>
+> Isn't programming always bit of drunken-man's walk?
 
-Thank you for the review!
+We don=E2=80=99t have to present the chain of code changes as they =E2=80=
+=9Creally
+happened=E2=80=9D. An alternative is to present what will eventually be =
+the
+final version as if you had both a borderline perfect plan, foresight,
+and execution. And that=E2=80=99s the convention in this project. Becaus=
+e that=E2=80=99s
+the natural progression of a patch series; each iteration you get help
+to arrive at what looks like the perfect iteration. (Until someone finds
+a off-by-one error two years later?)
 
-You=E2=80=99re right, I should have clarified that `test -f` checks for a
-regular file and `test -h` checks for a symbolic link. I=E2=80=99ll update
-the commit message accordingly and send a v2.
+What *really happened* is always fiction in any case.
 
-Thanks again!
-Pushkar
+> I'm very hesitant to restructure my history before I am confident I wi=
+ll
+> not need any of the old work later -- I would hate to lose history if I
+> make a mistake.
+>
+> One option is to keep my code backed up on a separate branch locally, =
+but
+> this gets problematic as I add more work (endless cherry-picking and
+> squashing) between local branches before submitting new patches. So no=
+w you
+> know some of my reasoning. I'm not saying I'm right, but it's a bit
+> fear-based.
 
-On Fri, Jan 2, 2026 at 2:39=E2=80=AFPM Karthik Nayak <karthik.188@gmail.com=
-> wrote:
+To make a snapshot of each version seems inevitable in my book since you
+are encouraged to include a range-diff (and optionally also an
+interdiff) between each iteration.
+
+Now you of course have the backup of each version because you can
+download the patches that you yourself posted. But that=E2=80=99s more w=
+ork then
+just snapshotting each version, for me at least.
+
+> With that said, my idea has always been to squash everything into a si=
+ngle
+> commit before merging this. The whole diff is not that big. I can spli=
+t it
+> into code in one commit and tests in another.
 >
-> pushkarkumarsingh1970@gmail.com writes:
+> As a side-note: In my day job we only allow "squash and merge" on our
+> GitHub. This gives devs the flexibility to treat their branches as a W=
+IP
+> area before merging, but still gives a pristine git history after merg=
+e.
+> This feels to me like a good trade-offs. But again, happy to take
+> instructions on how to do better.
+
+If that=E2=80=99s a good trade off, what are the variables involved in t=
+he trade
+off? So far it seems like:
+
+1. Flexibility to iterate like you want
+2. A final history without any back-and-forth noise (pristine/sober
+   walk)
+
+But a third variable here is
+
+3. A series of logically separated commits
+
+And you don=E2=80=99t get that with that approach. And a good final hist=
+ory is
+very important in many people=E2=80=99s eyes.
+
+People call this mandatory squash strategy some word similar to *clean*
+presumably because there is no back-and-forth noise. That=E2=80=99s the =
+memetic
+contagion. But there are other adjectives as well:
+
+=E2=80=A2 Bloated: When the mandated squash strategy forces different co=
+ncerns
+  (code formatting, whitespace formatting, refactor, bug fix, ...) to be
+  truncated into one commit
+=E2=80=A2 Lossy: When so many commits get squashed that you cannot, with=
+ any
+  amount of analysis, piece together what lines in the commit message
+  correspond to some part of the diff (especially likely to happen if
+  (1) the squash commit message is a bullet list and (2) the commit
+  messages are just things like =E2=80=9CWIP=E2=80=9D and =E2=80=9Cfix=E2=
+=80=9D)
+
+Someone might argue that the squash merges will not be large because the
+pull requests are not large and the tasks are not large. Or they should
+not be. But that demands more of both the project/task management and
+the pull request management:
+
+1. Better project management foresight and planning. Notice that we have
+   traded the rewriting commits strategy of =E2=80=9Cperfect plan, fores=
+ight,
+   and execution=E2=80=9D for demanding more foresight from project
+   management. Just because we have mandated no more than one commit per
+   pull request or patch series.
+
+   And =E2=80=9Cperfect plan, foresight, and execution=E2=80=9D is not e=
+ven a
+   requirement. Just a contrast to the one-commit requirement. A project
+   could allow contributors to both present =E2=80=9Cperfect plan, fores=
+ight,
+   and execution=E2=80=9D series as well as messy series, with the latte=
+r being
+   squashed at the integrator=E2=80=99s/reviewer=E2=80=99s/mantainer=E2=80=
+=99s discretion.
+2. Divide changes into more pull requests or patch series. At least with
+   vanilla GitHub that causes overhead as you have to manually link all
+   the pull requests. You might also have to manually link the pull
+   requests using URLs if the target branch of the PR does not do it for
+   you.
+
+   On the other hand you might have little or no overhead with some
+   =E2=80=9Cstacked PR=E2=80=9D tool.
+
+The one-commit rule works just as well if not better[1] than the
+alternatives in theory. The problem is that the theory demands much more
+from project management and pull request handling.
+
+=E2=80=A0 1: Part of the motivation is often avoiding merge commits. And=
+ if
+     merge commits always cause point deductions then a perfectly
+     executed squash merge strategy will always win over some strategy
+     involving true merges.
+
+     Although I would personally choose a rebase-with-trailer strategy
+     over squash merges here; rebase the series/PR and add a trailer to
+     each commit which links to the series/PR.
+
 >
-> > From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-> >
-> > Replace plain "test -f" checks with "test_path_is_file" and symbolic
->
-> So 'test -f' checks for regular files
->
-> > link checks with "test_path_is_symlink". The test framework helpers
->
-> and 'test -h' check for symlinks. Would be nice to also mention the
-> latter.
->
-> > provide clearer diagnostics and better consistency across the test
-> > suite.
->
-> > Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-> > ---
-> >  t/t1300-config.sh | 8 ++++----
-> >  1 file changed, 4 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-> > index 358d636379..9850fcd5b5 100755
-> > --- a/t/t1300-config.sh
-> > +++ b/t/t1300-config.sh
-> > @@ -1232,12 +1232,12 @@ test_expect_success SYMLINKS 'symlinked configu=
-ration' '
-> >       test_when_finished "rm myconfig" &&
->
-> Tangent: Not your patch's responsibility, but we should also remove
-> 'notyet' :)
->
-> >       ln -s notyet myconfig &&
-> >       git config --file=3Dmyconfig test.frotz nitfol &&
-> > -     test -h myconfig &&
-> > -     test -f notyet &&
-> > +     test_path_is_symlink myconfig &&
-> > +     test_path_is_file notyet &&
-> >       test "z$(git config --file=3Dnotyet test.frotz)" =3D znitfol &&
-> >       git config --file=3Dmyconfig test.xyzzy rezrov &&
-> > -     test -h myconfig &&
-> > -     test -f notyet &&
-> > +     test_path_is_symlink myconfig &&
-> > +     test_path_is_file notyet &&
-> >       cat >expect <<-\EOF &&
-> >       nitfol
-> >       rezrov
-> > --
-> > 2.43.0
->
-> The patch looks good. We have two files, one being a regular file and
-> another being a symlink to that regular file and we simple need to
-> ensure that they exist.
+>>[snip]
