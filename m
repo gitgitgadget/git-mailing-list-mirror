@@ -1,332 +1,141 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26471EEA49
-	for <git@vger.kernel.org>; Fri,  2 Jan 2026 18:51:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0989F1EB9FA
+	for <git@vger.kernel.org>; Fri,  2 Jan 2026 18:52:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767379862; cv=none; b=quTJplWK31dLQDddUkPGTJ7Ijqzg8qcXjkyl9lAllnOsFFK8ky++w0ZW2YeP89IMZAhroawhZFe7AFagWkkkVSehjx5es9PYPBQ96fy9TGuI0rSwB/rJjnjtohojyx3Oo0XAeBOA1qmEszXXNk2rtG83VpSKdNG2Kf6VlyBDMN4=
+	t=1767379948; cv=none; b=lFazMOZCZ/1vqYE7k7EiWSAlFmvDi9lzr0WPE83ZIi2HTXLV1GWCNbvt9ehfoLxgpu77NLQQBOaiwFogKn76gcl9X9wbtLz7f+tom7oU4n4hW1E6ZRAVsD37jRWcXcPb3yfsjrgZhZITOtQxj5LQIij+xKzOgP/tJEh1M29AJ30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767379862; c=relaxed/simple;
-	bh=H/YLyyFDNKymDjQ2ND6IWqbTRuchSahNXDf3jYKWZfY=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=k6S0iaK7ZqMpvWmLlVWgLdhqIP423x7kJkLhSLN6KtpX+Di6QrKGJGKcJ51qX4VHFj4ct/OZ1ClQO+JIP2m9bxUlZqkIB824M/Gsf/mGD+B40CWMTrJK1ybGQCpKstue0SYdqjF6IK+KmMJ8CHviTVGeWtSzqdmr5gJiw5hvLpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gFGCw0pF; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1767379948; c=relaxed/simple;
+	bh=3mHHPSGusAlD3WK8aZVxuun8d03uHip8K8Hhurrn1iY=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=QtWbCIBUrJvXAhTHuiYv1IbOXd5tXf2U/ABs7YbWaJoNn5XglpMJS8g+R+Yd0pGL32t7GGgGs8aIdwGWb0Of+f2z27AgN1jRcyUbv9fRknlTCCRGbRqL/n/4uCzBf3DI1/kCwPqk82YIGR0O1rKPOmoSyPSMLiE1GlhImyXJbEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fXwtEafm; arc=none smtp.client-ip=209.85.215.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gFGCw0pF"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4779cc419b2so97088805e9.3
-        for <git@vger.kernel.org>; Fri, 02 Jan 2026 10:51:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fXwtEafm"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-c2dc870e194so4727291a12.2
+        for <git@vger.kernel.org>; Fri, 02 Jan 2026 10:52:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767379859; x=1767984659; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NXfBYZhzHjFgMi/mcM3BcXWpSKpPIUN7o/DnFZN0Mts=;
-        b=gFGCw0pFIP9AlEsB8uIFWolsFnujIUowSQYM+Ql9NYse0/67Mbysb8dEFYVy4IjHFG
-         n9ZoeYVCc5/FaH5/G+PNxfxLWf80jCBzstHmKPzXjrkzJFKrC/TELpHJ/24xyb5hsIpF
-         6sb5Idt/8lbz6VaqpUd2vpGISnYxg/4f3Sy23hmAUxmAeoPgQ68XA3y+gVsgnkf7PCls
-         LThyIRishli1kX+0/pILCM/CbWg8ps4WrCp6DjNcKd9lmELjE8d1wdWCiBGWaiHO2M+h
-         N8hbeTOhg7lFkNAMQpPodoOfYyYjclYpHvu3Nha3TaVrfO4nIq254oW5M8cSST3OW73i
-         DyGw==
+        d=gmail.com; s=20230601; t=1767379946; x=1767984746; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=u5tKSCq9b5LYGeNmCqic4RRV5DXw9Go7DUnLgd5dldc=;
+        b=fXwtEafmcAAoTssza/V+Lu6f1VlhmB9CB6X//9XRiY0Ja3hbbS0+2cZ9sCUW/DOMT3
+         NuyM6lmiEmxE6iNFf51J6B2lR6Q03ibTAI2AJqobvf+g1V8v0JFtnlyA0lqzHycKiPbl
+         nZHLpnBCW5ApZ1Rc14VXQpOSPn2CEmiohW9krQueLyzEOb4ytv3RcMFybJ6WWNIsEr+N
+         mKNPXb0QOXay89vIMJecThXi2LzRPoRDZAQ40yqmah/nTG/TsmideLapbolYH5STwRMv
+         0qSfrRqRHlJU9BVyhBSeteFgoeUsAWC2DMPl96dFqR7KK1RBKZ3wGaSWX+Z+WrqDBI3t
+         vVdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767379859; x=1767984659;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1767379946; x=1767984746;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NXfBYZhzHjFgMi/mcM3BcXWpSKpPIUN7o/DnFZN0Mts=;
-        b=Xkg6D9MAPe9s3FVYkCqWLJoI9m5DwJKYuKZRSHApTrQP2xLYiRBhX+b4/prW49vmpW
-         D9NiqKIFypx/gHWFkEEgq8eIzlMF4x3dAqinPTZhg8hGwCouvUE9imdxJPlrgEIevLbP
-         CjR/93dE5tiE7EZo0FCeNndMPCVl36dQ0XgzHjyyA1BzG3CbEyzSN6+Uw8k3Lm9b3plA
-         8BtxDIMVJHJ5Tf+rAOXdTn0VfhXeKfhMzLLmbj8wwgKdrCA7aLJSniwy7t/QWdTz1sEe
-         C91BCYbl20Ds8Boz4S93fRSulo38GGqW8WJYg2VY7aD9h/ULs6NNZvZ6Nv8wQpFsnlvh
-         gAcA==
-X-Gm-Message-State: AOJu0Yx4EKmNkuVr9JOvVO2ExOlHKNDZV3KBkhpS9WCJAeyw7EEw311U
-	p35E1BnJiNrPjJ758W3lEfQqdi8vgc0WM7Yk1ldndccSWv+bP3QZll4qAbOMuW1x
-X-Gm-Gg: AY/fxX7wyd41WHA9is8t9rOSB28dIcXx+IRThvtYY1PPX9KJQy+BefATP7vKEQdGfZY
-	97S5LFxATU1o9YMV1S3R+kAWe6DJek8aSciFZdFp/Zfrbb/eWmserMJ/e4sUeYBB61SwX224QaN
-	yMEPytUzMiuGPU2NqD6I1X+oTaWIyN4YrsDy0q8+5vaAjTRT2FDRbBM8C5Si98vn05Wu3O9U204
-	/gDx9kN/g24gBjkY422wYhJVX4ilIzcjCaiSb/1hCqqqOlH+pXQJMjcqTJ6X+6a0RITsa7OrQCE
-	jRef7Rb0MkEzxNnRwa4cWzjY2+7d4BljN8Pvi7pR7cgYTIrAoW3L+2Iw2EZ36YDiOLexMFeVoAh
-	jzVjJ6CKHIyq7DWEOpXwiuyETUyibdf86Zyo1nyYtdh5cIwywR3DZ6yrALs+zXRCq2iFXhhOV82
-	sTTrh4pubP211hZJ5yic07leQbwg==
-X-Google-Smtp-Source: AGHT+IFNQRTtuf1/+TPp9YqkWYv3t1VxXpwZLkOYAr47Cyr4RaeKD/oXrkpgwNDl1vapIEGx+NxB5A==
-X-Received: by 2002:a5d:5392:0:b0:42f:edb6:3642 with SMTP id ffacd0b85a97d-4324e704c03mr43907423f8f.60.1767379858462;
-        Fri, 02 Jan 2026 10:50:58 -0800 (PST)
-Received: from localhost ([105.117.2.49])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4324e9ba877sm86914748f8f.0.2026.01.02.10.50.54
+        bh=u5tKSCq9b5LYGeNmCqic4RRV5DXw9Go7DUnLgd5dldc=;
+        b=qa9pbGBGcNGOG5mmwgn/+Jvh3wcwbLjCcy7BOhXejZR/kDp+m7YmHNZaVdcRRpR/py
+         9K9NrmHCl0W7CLk0ZIopr1Uv/Fy8MrLRgtX6JcdFIRKjWuX2Kc1uhOo4MlC7BbmUzGIn
+         Dx0b2vxJ2oeGMx4aiz2RMRnBq2mc/L4bFh7e4LKWpGVNIJLg2Occn6xc8pqK+qdo4Bh+
+         VIiNg1N8dg9b+OUt2t/2kbJEKmlQ8Yz2S7hKgJ3Xnu8KM6ON1U6VguR/4nk9LjbdY2WM
+         G6ctCM7j8pssOI9ZRq89CmjVTHsLJk+90rIqjy9+jWUf4Kt61I1qHhMkO64DtUizJQbG
+         V7HQ==
+X-Gm-Message-State: AOJu0Yxv7arNvlLmEFVFKLrpAbaJrpOOFQVkbA0a4xNZV6lKG+G1FvJo
+	RhhJay2jHz5orqZM0cJfkDkX0vhx8pEiGsddht5wrG5GQz6aaFfVuoffQRYSHA==
+X-Gm-Gg: AY/fxX5c6Ygz1hpydAx4DyrmQffFxSfI67oGc//6rjPGWat5iXFVmQR3NM8hQ5NqwNl
+	Hn8gcTVLRAdvfAlnGyN4tc4GnN3rVlwkHmoym0GYECH6Juwc5Ufbpko8HMDcIaBjcxOidGXAAUu
+	d5SQmzkJC5gK5VD6Sq2dqppcNhc4qe+4CYEXO+fasOGegWVEauyoKuggdX7Hr6OWGL4t/P8YWNk
+	KJf53T+aqBNNi9NPNV6uK+r3kgoaYBYgRx0cS6llN9qorKILL5H/40cpi9LnlkBeKZTsI4t44C1
+	mCTD34oEFzRxb2Y4B0Uy/CGWXYwARAGaU+Yn1bhXC5UCwGYMrWAWNAtltBPNNemZkwScqmlnYyS
+	uAzJDDjv4uS2qDIoc0CsHPP30G/6OYpu76iUOwYtsIAF0WMqkzgeqU23CieKZqPoe3nDhC5iujt
+	oxkN1gPNmPApPjbw+yUXvKCCm+
+X-Google-Smtp-Source: AGHT+IEqiywduzDeUB1fR+g5c+Cr8ZxO5OvUjdIrKCGJg7mE9yH1fXDLpKMFnQ2i9qOrSiUifcNW/g==
+X-Received: by 2002:a05:7301:9a83:b0:2ab:8ef5:df2 with SMTP id 5a478bee46e88-2b05ec97f3emr23310333eec.35.1767379945685;
+        Fri, 02 Jan 2026 10:52:25 -0800 (PST)
+Received: from [127.0.0.1] ([57.151.128.130])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b140c42de6sm1540509eec.19.2026.01.02.10.52.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jan 2026 10:50:58 -0800 (PST)
-Date: Fri, 2 Jan 2026 19:51:05 +0100
-From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [GSoC PATCH v3] add -p: show user's hunk decision when selecting
- hunks
-Message-ID: <aVgTmYhosEiGG3th@Adekunles-MacBook-Air.local>
+        Fri, 02 Jan 2026 10:52:25 -0800 (PST)
+Message-Id: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
+From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 02 Jan 2026 18:52:14 +0000
+Subject: [PATCH 00/10] Xdiff cleanup part 3
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aVbgkySezz8YV6sN@Adekunles-MacBook-Air.local>
+To: git@vger.kernel.org
+Cc: Ezekiel Newren <ezekielnewren@gmail.com>
 
-When a user is interactively deciding which hunks to use or skip for
-staging, unstaging, stashing etc, there is no way to know the
-decision previously chosen for a hunk when navigating through the
-previous and next hunks using K/J respectively.
+Patch series summary:
 
-Improve the UI to explicitly show if a user has previously decided to
-use a hunk (by pressing 'y') or skip the hunk (by pressing 'n').
-This will improve clarity when and aid the navigation process for the
-user.
+ * patch 1: Introduce the ivec type
+ * patch 2: Create the function xdl_do_classic_diff()
+ * patches 3-4: generic cleanup
+ * patches 5-8: convert from dstart/dend (in xdfile_t) to
+   delta_start/delta_end (in xdfenv_t)
+ * patches 9-10: move xdl_cleanup_records(), and related, from xprepare.c to
+   xdiffi.c
 
-Reported-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
----
+Things that will be addressed in future patch series:
 
-Changes in v2:
---------------
-- Modified t3701-add-interactive.sh for conform to new changes
+ * Make xdl_cleanup_records() easier to read
+ * convert recs/nrec into an ivec
+ * convert changed to an ivec
+ * remove reference_index/nreff from xdfile_t and turn it into an ivec
+ * splitting minimal_perfect_hash out as its own ivec
+ * improve the performance of the classifier and parsing/hashing lines
 
- add-patch.c                | 84 +++++++++++++++++++++-----------------
- t/t3701-add-interactive.sh | 14 +++----
- 2 files changed, 54 insertions(+), 44 deletions(-)
+=== before this patch series typedef struct s_xdfile { xrecord_t *recs;
+size_t nrec; ptrdiff_t dstart, dend; bool *changed; size_t *reference_index;
+size_t nreff; } xdfile_t;
 
-diff --git a/add-patch.c b/add-patch.c
-index 173a53241e..bc7a340d21 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -42,10 +42,10 @@ static struct patch_mode patch_mode_add = {
- 	.apply_args = { "--cached", NULL },
- 	.apply_check_args = { "--cached", NULL },
- 	.prompt_mode = {
--		N_("Stage mode change [y,n,q,a,d%s,?]? "),
--		N_("Stage deletion [y,n,q,a,d%s,?]? "),
--		N_("Stage addition [y,n,q,a,d%s,?]? "),
--		N_("Stage this hunk [y,n,q,a,d%s,?]? ")
-+		N_("Stage mode change%s[y,n,q,a,d%s,?]? "),
-+		N_("Stage deletion%s[y,n,q,a,d%s,?]? "),
-+		N_("Stage addition%s[y,n,q,a,d%s,?]? "),
-+		N_("Stage this hunk%s[y,n,q,a,d%s,?]? ")
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for staging."),
-@@ -64,10 +64,10 @@ static struct patch_mode patch_mode_stash = {
- 	.apply_args = { "--cached", NULL },
- 	.apply_check_args = { "--cached", NULL },
- 	.prompt_mode = {
--		N_("Stash mode change [y,n,q,a,d%s,?]? "),
--		N_("Stash deletion [y,n,q,a,d%s,?]? "),
--		N_("Stash addition [y,n,q,a,d%s,?]? "),
--		N_("Stash this hunk [y,n,q,a,d%s,?]? "),
-+		N_("Stash mode change%s[y,n,q,a,d%s,?]? "),
-+		N_("Stash deletion%s[y,n,q,a,d%s,?]? "),
-+		N_("Stash addition%s[y,n,q,a,d%s,?]? "),
-+		N_("Stash this hunk%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for stashing."),
-@@ -88,10 +88,10 @@ static struct patch_mode patch_mode_reset_head = {
- 	.is_reverse = 1,
- 	.index_only = 1,
- 	.prompt_mode = {
--		N_("Unstage mode change [y,n,q,a,d%s,?]? "),
--		N_("Unstage deletion [y,n,q,a,d%s,?]? "),
--		N_("Unstage addition [y,n,q,a,d%s,?]? "),
--		N_("Unstage this hunk [y,n,q,a,d%s,?]? "),
-+		N_("Unstage mode change%s[y,n,q,a,d%s,?]? "),
-+		N_("Unstage deletion%s[y,n,q,a,d%s,?]? "),
-+		N_("Unstage addition%s[y,n,q,a,d%s,?]? "),
-+		N_("Unstage this hunk%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for unstaging."),
-@@ -111,10 +111,10 @@ static struct patch_mode patch_mode_reset_nothead = {
- 	.apply_check_args = { "--cached", NULL },
- 	.index_only = 1,
- 	.prompt_mode = {
--		N_("Apply mode change to index [y,n,q,a,d%s,?]? "),
--		N_("Apply deletion to index [y,n,q,a,d%s,?]? "),
--		N_("Apply addition to index [y,n,q,a,d%s,?]? "),
--		N_("Apply this hunk to index [y,n,q,a,d%s,?]? "),
-+		N_("Apply mode change to index%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply deletion to index%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply addition to index%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply this hunk to index%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for applying."),
-@@ -134,10 +134,10 @@ static struct patch_mode patch_mode_checkout_index = {
- 	.apply_check_args = { "-R", NULL },
- 	.is_reverse = 1,
- 	.prompt_mode = {
--		N_("Discard mode change from worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard deletion from worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard addition from worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard this hunk from worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard mode change from worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard deletion from worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard addition from worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard this hunk from worktree%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for discarding."),
-@@ -157,10 +157,10 @@ static struct patch_mode patch_mode_checkout_head = {
- 	.apply_check_args = { "-R", NULL },
- 	.is_reverse = 1,
- 	.prompt_mode = {
--		N_("Discard mode change from index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard deletion from index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard addition from index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard this hunk from index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard mode change from index and worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard deletion from index and worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard addition from index and worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard this hunk from index and worktree%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for discarding."),
-@@ -179,10 +179,10 @@ static struct patch_mode patch_mode_checkout_nothead = {
- 	.apply_for_checkout = 1,
- 	.apply_check_args = { NULL },
- 	.prompt_mode = {
--		N_("Apply mode change to index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply deletion to index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply addition to index and worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply this hunk to index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Apply mode change to index and worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply deletion to index and worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply addition to index and worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply this hunk to index and worktree%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for applying."),
-@@ -202,10 +202,10 @@ static struct patch_mode patch_mode_worktree_head = {
- 	.apply_check_args = { "-R", NULL },
- 	.is_reverse = 1,
- 	.prompt_mode = {
--		N_("Discard mode change from worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard deletion from worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard addition from worktree [y,n,q,a,d%s,?]? "),
--		N_("Discard this hunk from worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard mode change from worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard deletion from worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard addition from worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Discard this hunk from worktree%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for discarding."),
-@@ -224,10 +224,10 @@ static struct patch_mode patch_mode_worktree_nothead = {
- 	.apply_args = { NULL },
- 	.apply_check_args = { NULL },
- 	.prompt_mode = {
--		N_("Apply mode change to worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply deletion to worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply addition to worktree [y,n,q,a,d%s,?]? "),
--		N_("Apply this hunk to worktree [y,n,q,a,d%s,?]? "),
-+		N_("Apply mode change to worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply deletion to worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply addition to worktree%s[y,n,q,a,d%s,?]? "),
-+		N_("Apply this hunk to worktree%s[y,n,q,a,d%s,?]? "),
- 	},
- 	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
- 			     "will immediately be marked for applying."),
-@@ -1448,6 +1448,7 @@ static int patch_update_file(struct add_p_state *s,
- 	ssize_t i, undecided_previous, undecided_next, rendered_hunk_index = -1;
- 	struct hunk *hunk;
- 	char ch;
-+	const char *hunk_use_decision;
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	int colored = !!s->colored.len, quit = 0, use_pager = 0;
- 	enum prompt_mode_type prompt_mode_type;
-@@ -1564,8 +1565,17 @@ static int patch_update_file(struct add_p_state *s,
- 			      (uintmax_t)(file_diff->hunk_nr
- 						? file_diff->hunk_nr
- 						: 1));
-+		if (file_diff->hunk_nr) {
-+			if (hunk->use == USE_HUNK)
-+				hunk_use_decision = _(" (previous decision: use) ");
-+			else if (hunk->use == SKIP_HUNK)
-+				hunk_use_decision = _(" (previous decision: skip) ");
-+			else
-+				hunk_use_decision = " ";
-+
-+		}
- 		printf(_(s->mode->prompt_mode[prompt_mode_type]),
--		       s->buf.buf);
-+			hunk_use_decision, s->buf.buf);
- 		if (*s->s.reset_color_interactive)
- 			fputs(s->s.reset_color_interactive, stdout);
- 		fflush(stdout);
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 4285314f35..e856683496 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -527,7 +527,7 @@ test_expect_success 'goto hunk 1 with "g 1"' '
- 	_10
- 	+15
- 	_20
--	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
-+	(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
- 	EOF
- 	test_write_lines s y g 1 | git add -p >actual &&
- 	tail -n 7 <actual >actual.trimmed &&
-@@ -540,7 +540,7 @@ test_expect_success 'goto hunk 1 with "g1"' '
- 	_10
- 	+15
- 	_20
--	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
-+	(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
- 	EOF
- 	test_write_lines s y g1 | git add -p >actual &&
- 	tail -n 4 <actual >actual.trimmed &&
-@@ -554,7 +554,7 @@ test_expect_success 'navigate to hunk via regex /pattern' '
- 	_10
- 	+15
- 	_20
--	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
-+	(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
- 	EOF
- 	test_write_lines s y /1,2 | git add -p >actual &&
- 	tail -n 5 <actual >actual.trimmed &&
-@@ -567,7 +567,7 @@ test_expect_success 'navigate to hunk via regex / pattern' '
- 	_10
- 	+15
- 	_20
--	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
-+	(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
- 	EOF
- 	test_write_lines s y / 1,2 | git add -p >actual &&
- 	tail -n 4 <actual >actual.trimmed &&
-@@ -579,11 +579,11 @@ test_expect_success 'print again the hunk' '
- 	tr _ " " >expect <<-EOF &&
- 	+15
- 	 20
--	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? @@ -1,2 +1,3 @@
-+	(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? @@ -1,2 +1,3 @@
- 	 10
- 	+15
- 	 20
--	(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
-+	(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]?_
- 	EOF
- 	test_write_lines s y g 1 p | git add -p >actual &&
- 	tail -n 7 <actual >actual.trimmed &&
-@@ -810,7 +810,7 @@ test_expect_success 'colors can be overridden' '
- 	<BOLD>-old<RESET>
- 	<BLUE>+new<RESET>
- 	<CYAN> more-context<RESET>
--	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>
-+	<YELLOW>(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>
- 	EOF
- 	test_cmp expect actual
- '
+typedef struct s_xdfenv { xdfile_t xdf1, xdf2; } xdfenv_t;
+
+=== after this patch series typedef struct s_xdfile { xrecord_t *recs;
+size_t nrec; bool *changed; size_t *reference_index; size_t nreff; }
+xdfile_t;
+
+typedef struct s_xdfenv { xdfile_t xdf1, xdf2; size_t delta_start,
+delta_end; size_t mph_size; } xdfenv_t;
+
+Ezekiel Newren (10):
+  ivec: introduce the C side of ivec
+  xdiff: make classic diff explicit by creating xdl_do_classic_diff()
+  xdiff: don't waste time guessing the number of lines
+  xdiff: let patience and histogram benefit from xdl_trim_ends()
+  xdiff: use xdfenv_t in xdl_trim_ends() and xdl_cleanup_records()
+  xdiff: cleanup xdl_trim_ends()
+  xdiff: replace xdfile_t.dstart with xdfenv_t.delta_start
+  xdiff: replace xdfile_t.dend with xdfenv_t.delta_end
+  xdiff: remove dependence on xdlclassifier from xdl_cleanup_records()
+  xdiff: move xdl_cleanup_records() from xprepare.c to xdiffi.c
+
+ Makefile           |   1 +
+ compat/ivec.c      | 113 ++++++++++++++++++
+ compat/ivec.h      |  52 +++++++++
+ meson.build        |   1 +
+ xdiff/xdiffi.c     | 221 +++++++++++++++++++++++++++++++++---
+ xdiff/xdiffi.h     |   1 +
+ xdiff/xhistogram.c |   7 +-
+ xdiff/xpatience.c  |   7 +-
+ xdiff/xprepare.c   | 277 ++++++++-------------------------------------
+ xdiff/xtypes.h     |   3 +-
+ xdiff/xutils.c     |  20 ----
+ xdiff/xutils.h     |   1 -
+ 12 files changed, 432 insertions(+), 272 deletions(-)
+ create mode 100644 compat/ivec.c
+ create mode 100644 compat/ivec.h
+
+
+base-commit: 66ce5f8e8872f0183bb137911c52b07f1f242d13
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2156%2Fezekielnewren%2Fxdiff-cleanup-3-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2156/ezekielnewren/xdiff-cleanup-3-v1
+Pull-Request: https://github.com/git/git/pull/2156
 -- 
-2.39.5 (Apple Git-154)
-
+gitgitgadget
