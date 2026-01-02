@@ -1,70 +1,69 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE5528750B
-	for <git@vger.kernel.org>; Fri,  2 Jan 2026 18:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0528630F7F0
+	for <git@vger.kernel.org>; Fri,  2 Jan 2026 18:52:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767379958; cv=none; b=dwWruUGCR5OpV4Q8tQDOBUT0XxYhf6ZDhcLTp3I4okF9IZw2ENttk08ToXWjvfNRXUDylWfdUZd0XXwD/IC6OOBaSzAWTHa8hgVXTNYqI9aXedPKzFmLYQxRUMBozbD+fzKg5tgOfxBQM6fzeqdN8WhLVf4OpZRkmJrTUjjUwVY=
+	t=1767379959; cv=none; b=cy0EAtaBGVhMzE44Ii30dlmLhFCIDRmGCOgxvXjD3IW6XcQ8G1Gp/SShpBADO9q5O2YPEhDkQeDg6hhjkOADGwrNpw908+mYQafJT/aLNW1g4qFj2MXF7ZCWZXhxLCknDGtFjmfr+j1vUjcVL+h/nOWkDHoLumNxbq05ZRXMz2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767379958; c=relaxed/simple;
-	bh=cKvn1nfW1xo3l9En9enLJsx6d5XsLu1GDRDk0Pg66zc=;
+	s=arc-20240116; t=1767379959; c=relaxed/simple;
+	bh=rz186hU345Vk9q52PuK95ac9rPAaJ0487EpR+SWsiWc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=LjYCKfUIGNQ0+G4chG+NZKe6o/6LS2ewjO5bVVvJ+GmWS+GohE8TqlK3bwk6Wf4ZXD3YOGJVYxqeyxb2vAdsXFAOWi/sc+6okSFUzYNVQUBrNoyybyP1PZAmmxxCh1vBuoRT7LlUzdJihLGiERp8GXUFG0ra+C9zeGwLUW7cLGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hbNL/O6D; arc=none smtp.client-ip=209.85.215.177
+	 MIME-Version:To:Cc; b=uaXiKTCw7jp064v5IMDwxQ53EhWQCpvcwWII0oeShwckWk9i1cZY98xvrBZ0/+LFvZ1vNocCmpGn30vOeusyqrpwNXx/ak/D5Z0TXqDUfTMWeJL8PIJsfO4qx7uPBd10lSrUasMwrsPavrQ9lmBDDQB+OrQFjMZkwHNcSQLPHTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hFF6S2eX; arc=none smtp.client-ip=209.85.215.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hbNL/O6D"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-c06cb8004e8so9706036a12.0
-        for <git@vger.kernel.org>; Fri, 02 Jan 2026 10:52:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hFF6S2eX"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-bf5ac50827dso7918198a12.2
+        for <git@vger.kernel.org>; Fri, 02 Jan 2026 10:52:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767379955; x=1767984755; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1767379957; x=1767984757; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RSQx5hEPwZVO4ipId7pQ7Lr2LnSlwA+qROR+34+B3T8=;
-        b=hbNL/O6DQ6XHdxkvFhoU9n9B7CIxKwksTSCgGXzHOE4p1Yj/aNn352xwrOqdOfI7jT
-         xlXl9/GJPDnFcjeLee3sA4vs5ecsWoz3Hep206msDTogPVtW2/u9pVDdG4XW65EtONJG
-         f37wZ/WILrYYr9ewFuKHs3vDaUsYPsscA8+Ae5wypkLXLYRj5xuy4O5g5s/apgQtqE7g
-         F7C82koLUdDOOk6/Sy69uh8938rB8zdqMrNaIw53TAMpMdHDXYhXex444DZPJvu0nfkG
-         vs3Gb/LbHjfgOHJGgcvVfuwT5LtIpTi65K4gr5pGaSdhFPk19eSlM+6aJq6ZgFgpfvjo
-         ShUw==
+        bh=Cal86+DZOrC7m/vSYbC15u0qpCuA1KJdsCoNFmNotJs=;
+        b=hFF6S2eXUWXmij2iCnppwXU6lVLHUIi+1WpPRjqyNBJMWJgOAc87mIn6WL/8tTsh0W
+         wVIp4OllGYRtysl8hNWRYSAP3p0PwEZxk5UPWpVp32ZNtpITgmc4TJS2bU2s5uC+uK2q
+         0ntEhMU4k3wMNzjGTyFDPVRLF0FekyYLL8lVMiAKLFprcpvxnzB2ps5qRIcAWiqR9kmt
+         w+qlQARKMTbhPoOmLxNc80uNgFVl1PCUjB6dXZXivwIemVZLoKv94kBfDE2ULlUiJ4HN
+         bOnme96xX0yVXIg49XmRzou7XYZLA549xBcxWEe/Gr+eDhLyJuLUx0BNPn5Y/fZyKUaR
+         xe8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767379955; x=1767984755;
+        d=1e100.net; s=20230601; t=1767379957; x=1767984757;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=RSQx5hEPwZVO4ipId7pQ7Lr2LnSlwA+qROR+34+B3T8=;
-        b=VEzIKshjpDHwGSTFzXPGh3FPdZKzRvaeLdV+NfSEj5rSN+iGiKhfPNyGQOIFfPgz88
-         9g/e65PzblfSOYvvT2p1kYcoeqQ3jsv/z6uT2oOJM6UJoVk0yPvYOMtEUGWV1t57sbdd
-         2qagKCLpWJuXBVXp+nSea4dA730nqvUa5FP9Q4qfF9/8HkA4nHvzg1jQmHAq3Fnk6oUw
-         Bmk+F2P0l+G5UZdNEBnv140spmB6kCD5wX6G2C4hszlEds4eUGm1/QGW/L3SJESSiSPQ
-         77YgLsHPpfkGImJWIxr/0/G7Vk/W4OyVZSROzSJXFwBIiAXZoJToHaUg6HZgPj+dszp7
-         vQhA==
-X-Gm-Message-State: AOJu0YwF/Ds7AmJUPfkkOvIa8OSfxXtC80BaOUo45cyxPY9Gb8m7/Wqj
-	G/yf2IzHbCioHF1VIFKItvsfCpXnOZCQ4aZUmzv1ZVTbxZaDPasU+rr53f92zQ==
-X-Gm-Gg: AY/fxX59OnkTX0rJ9AsE0ZLxf5c4tWIg7iT6cN072dAci6lbgTzDu5OOoLboJHrmVDw
-	jbLuqh0SWX05gZy++k+uoudWrFYXER8ZsxILHGTl+/d/Vnw/peyudXBAqoBNN1fihGOq1q9VpHt
-	zhTQj4zNe3loZCbdLo2R6YFu9NMIftKFqUntwdB/8RY5BL9+e2D0GCAYSIV+hWpPuASBZjLXMNe
-	1+LxWIDT8h/gcKIBeG+aIY75qb5O9YIXvJjWTSd7kw/MUq1u3aWyxPe9YwXpEFdGPhkYqm07d4v
-	pss5Wrz9oBqn7qJeZQ8EJwKbANbSWWy6DRZLuYrZ6E1eo1zAs12tjn1QEab+Dpf6GTRltDbTqup
-	SiDs7QXocRzXjIvSA98wDLM1g8RNAIO/xkQfqpm1wpAhKZvHz83autEiD4elgKxTNbUQUneTzIk
-	4ElvmWAxNKEy0Mlg==
-X-Google-Smtp-Source: AGHT+IFca4Mm8cE6dJbusoBSVJZdM8ZiqXKyniNrrsuQfUR1fs/d/0aAAmLi7g/BQs7CwvCS6hInTA==
-X-Received: by 2002:a05:7301:fc09:b0:2ae:6146:37ab with SMTP id 5a478bee46e88-2b05ebd86camr23353306eec.1.1767379955199;
-        Fri, 02 Jan 2026 10:52:35 -0800 (PST)
+        bh=Cal86+DZOrC7m/vSYbC15u0qpCuA1KJdsCoNFmNotJs=;
+        b=o35uHfeRQLnYvgccEN3Kgc9//mdFi2LfEm9jTYo/qStNg5oeVm35EKsqIEWOT0w1m1
+         vfaoLrQjlglnL9bL75r6ZrUURM9aFDWg/v6CeKRK2Bpynf87/iYyy9Z3LR0tigBGE1oo
+         Q0XvB32j3s4oTwJZ1TusQDmrddxQ/e6RbL9F6DDc5y9X5K+s+7lwN4KT0JMEhbRhvKmL
+         EFbMEItvAkpyhoIXN1f40MvY6Q/SgxpTfq8LIvT30DREX5Ldk9F1UJJQFwketYHaMG2N
+         iz7H1u65VzuJ5j6r3usReL7F+Xy3daMGNAlQbZNFCfGjwx7H9DD+YT9exY7t9I0B5c0t
+         +wxQ==
+X-Gm-Message-State: AOJu0YzLlm63xPOdnJoENnkRAATYajFrjltqQj9/RjpgL90aZFYcdpxY
+	X3zyKPxVy8YMMJw2sfsAZEckTT6FTFnBeRpQ987H+bBsFlM8H4VAXlXNbSHt+A==
+X-Gm-Gg: AY/fxX7xr7VsHRsgkHcyc3p81L8geVdSb3XTMcZ2Mrd0hWNczG1rHCz8hcKiznvAlxI
+	GUBw0EnB5IFY92qgY8T7yr9C6/5eFPC56QqhTFeH6WRef1Y3mQIEKnlmzTTjPd/vSNCfMwY22ev
+	o2pENPcc37dr2LSoKBIJRyK1I29LdBosdnC1omTOrSwZ87vG3zBb61g/HeIgrKHpsUBoz/UrKvP
+	iH9lBgo1b3OpUexyX7yFVcasMBD8pWBxYoOZ5DnoKnmoaRgDJg+ON/L20UFVCK5JRgxgM10rme/
+	w976ku8OP5MBoHWkLFt42k4vYKNBUFEyx6cO9oUl4QmxD+1K/3DNFQZGOODVfSky1qRQjP4hqEb
+	JuKcKlKXWD3urtlYBqnd7MT/RMW9Al6jKHLxHG7W8rUkRRjlRuMzK+k7oGIeTOmFYGZPc9DZar/
+	VaXUVxE5fLDMBBLA==
+X-Google-Smtp-Source: AGHT+IFChSa1N5llYv8OOUZdNl8szHuTU4rVizBNxFMgzmU4X2OTkeapzgzYZg5/iKwetlhq5hJs1Q==
+X-Received: by 2002:a05:7300:de07:b0:2ae:51ae:5cf3 with SMTP id 5a478bee46e88-2b05ebd0d80mr31712666eec.6.1767379956616;
+        Fri, 02 Jan 2026 10:52:36 -0800 (PST)
 Received: from [127.0.0.1] ([57.151.128.130])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b140c42e8bsm1598246eec.26.2026.01.02.10.52.34
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b140c42d9esm1554623eec.11.2026.01.02.10.52.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jan 2026 10:52:34 -0800 (PST)
-Message-Id: <d74722538b693fb26e8684f9dd3fbc319a2a575e.1767379944.git.gitgitgadget@gmail.com>
+        Fri, 02 Jan 2026 10:52:36 -0800 (PST)
+Message-Id: <d0ef5b23c4483c32069594374489234d48050384.1767379944.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
 References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
 From: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 02 Jan 2026 18:52:21 +0000
-Subject: [PATCH 07/10] xdiff: replace xdfile_t.dstart with
- xdfenv_t.delta_start
+Date: Fri, 02 Jan 2026 18:52:22 +0000
+Subject: [PATCH 08/10] xdiff: replace xdfile_t.dend with xdfenv_t.delta_end
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,136 +79,149 @@ Cc: Ezekiel Newren <ezekielnewren@gmail.com>,
 
 From: Ezekiel Newren <ezekielnewren@gmail.com>
 
-Placing delta_start in xdfenv_t instead of xdfile_t provides a more
-appropriate context since this variable only makes sense with a pair
-of files. View with --color-words.
+View with --color-words. Same argument as delta_start.
 
 Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
 ---
- xdiff/xhistogram.c |  4 ++--
- xdiff/xpatience.c  |  4 ++--
- xdiff/xprepare.c   | 17 +++++++++--------
- xdiff/xtypes.h     |  3 ++-
- 4 files changed, 15 insertions(+), 13 deletions(-)
+ xdiff/xhistogram.c |  7 +++++--
+ xdiff/xpatience.c  |  7 +++++--
+ xdiff/xprepare.c   | 19 ++++++++++---------
+ xdiff/xtypes.h     |  3 +--
+ 4 files changed, 21 insertions(+), 15 deletions(-)
 
 diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
-index 5ae1282c27..eb6a52d9ba 100644
+index eb6a52d9ba..b4d6f88748 100644
 --- a/xdiff/xhistogram.c
 +++ b/xdiff/xhistogram.c
-@@ -365,6 +365,6 @@ out:
+@@ -364,7 +364,10 @@ out:
+ 
  int xdl_do_histogram_diff(xpparam_t const *xpp, xdfenv_t *env)
  {
++	ptrdiff_t dend1 = env->xdf1.nrec - 1 - env->delta_end;
++	ptrdiff_t dend2 = env->xdf2.nrec - 1 - env->delta_end;
++
  	return histogram_diff(xpp, env,
--		env->xdf1.dstart + 1, env->xdf1.dend - env->xdf1.dstart + 1,
--		env->xdf2.dstart + 1, env->xdf2.dend - env->xdf2.dstart + 1);
-+		env->delta_start + 1, env->xdf1.dend - env->delta_start + 1,
-+		env->delta_start + 1, env->xdf2.dend - env->delta_start + 1);
+-		env->delta_start + 1, env->xdf1.dend - env->delta_start + 1,
+-		env->delta_start + 1, env->xdf2.dend - env->delta_start + 1);
++		env->delta_start + 1, dend1 - env->delta_start + 1,
++		env->delta_start + 1, dend2 - env->delta_start + 1);
  }
 diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
-index 2bce07cf48..bd0ffbb417 100644
+index bd0ffbb417..5b8bb34d2b 100644
 --- a/xdiff/xpatience.c
 +++ b/xdiff/xpatience.c
-@@ -374,6 +374,6 @@ static int patience_diff(xpparam_t const *xpp, xdfenv_t *env,
+@@ -373,7 +373,10 @@ static int patience_diff(xpparam_t const *xpp, xdfenv_t *env,
+ 
  int xdl_do_patience_diff(xpparam_t const *xpp, xdfenv_t *env)
  {
++	ptrdiff_t dend1 = env->xdf1.nrec - 1 - env->delta_end;
++	ptrdiff_t dend2 = env->xdf2.nrec - 1 - env->delta_end;
++
  	return patience_diff(xpp, env,
--		env->xdf1.dstart + 1, env->xdf1.dend - env->xdf1.dstart + 1,
--		env->xdf2.dstart + 1, env->xdf2.dend - env->xdf2.dstart + 1);
-+		env->delta_start + 1, env->xdf1.dend - env->delta_start + 1,
-+		env->delta_start + 1, env->xdf2.dend - env->delta_start + 1);
+-		env->delta_start + 1, env->xdf1.dend - env->delta_start + 1,
+-		env->delta_start + 1, env->xdf2.dend - env->delta_start + 1);
++		env->delta_start + 1, dend1 - env->delta_start + 1,
++		env->delta_start + 1, dend2 - env->delta_start + 1);
  }
 diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index 06b6a6f804..e88468e74c 100644
+index e88468e74c..d3cdb6ac02 100644
 --- a/xdiff/xprepare.c
 +++ b/xdiff/xprepare.c
 @@ -173,7 +173,6 @@ static int xdl_prepare_ctx(mmfile_t *mf, xdfile_t *xdf, uint64_t flags) {
  
  	xdf->changed += 1;
  	xdf->nreff = 0;
--	xdf->dstart = 0;
- 	xdf->dend = xdf->nrec - 1;
+-	xdf->dend = xdf->nrec - 1;
  
  	return 0;
-@@ -287,7 +286,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
+ 
+@@ -267,6 +266,8 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
+ 	uint8_t *action1 = NULL, *action2 = NULL;
+ 	bool need_min = !!(cf->flags & XDF_NEED_MINIMAL);
+ 	int ret = 0;
++	ptrdiff_t dend1 = xe->xdf1.nrec - 1 - xe->delta_end;
++	ptrdiff_t dend2 = xe->xdf2.nrec - 1 - xe->delta_end;
+ 
+ 	/*
+ 	 * Create temporary arrays that will help us decide if
+@@ -286,7 +287,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
  	 */
  	if ((mlim = xdl_bogosqrt((long)xe->xdf1.nrec)) > XDL_MAX_EQLIMIT)
  		mlim = XDL_MAX_EQLIMIT;
--	for (i = xe->xdf1.dstart, recs = &xe->xdf1.recs[xe->xdf1.dstart]; i <= xe->xdf1.dend; i++, recs++) {
-+	for (i = xe->delta_start, recs = &xe->xdf1.recs[xe->delta_start]; i <= xe->xdf1.dend; i++, recs++) {
+-	for (i = xe->delta_start, recs = &xe->xdf1.recs[xe->delta_start]; i <= xe->xdf1.dend; i++, recs++) {
++	for (i = xe->delta_start, recs = &xe->xdf1.recs[xe->delta_start]; i <= dend1; i++, recs++) {
  		rcrec = cf->rcrecs[recs->minimal_perfect_hash];
  		nm = rcrec ? rcrec->len2 : 0;
  		action1[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
-@@ -295,7 +294,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
+@@ -294,7 +295,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
  
  	if ((mlim = xdl_bogosqrt((long)xe->xdf2.nrec)) > XDL_MAX_EQLIMIT)
  		mlim = XDL_MAX_EQLIMIT;
--	for (i = xe->xdf2.dstart, recs = &xe->xdf2.recs[xe->xdf2.dstart]; i <= xe->xdf2.dend; i++, recs++) {
-+	for (i = xe->delta_start, recs = &xe->xdf2.recs[xe->delta_start]; i <= xe->xdf2.dend; i++, recs++) {
+-	for (i = xe->delta_start, recs = &xe->xdf2.recs[xe->delta_start]; i <= xe->xdf2.dend; i++, recs++) {
++	for (i = xe->delta_start, recs = &xe->xdf2.recs[xe->delta_start]; i <= dend2; i++, recs++) {
  		rcrec = cf->rcrecs[recs->minimal_perfect_hash];
  		nm = rcrec ? rcrec->len1 : 0;
  		action2[i] = (nm == 0) ? DISCARD: (nm >= mlim && !need_min) ? INVESTIGATE: KEEP;
-@@ -306,10 +305,10 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
- 	 * false, or become true.
+@@ -306,9 +307,9 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
  	 */
  	xe->xdf1.nreff = 0;
--	for (i = xe->xdf1.dstart, recs = &xe->xdf1.recs[xe->xdf1.dstart];
-+	for (i = xe->delta_start, recs = &xe->xdf1.recs[xe->delta_start];
- 	     i <= xe->xdf1.dend; i++, recs++) {
+ 	for (i = xe->delta_start, recs = &xe->xdf1.recs[xe->delta_start];
+-	     i <= xe->xdf1.dend; i++, recs++) {
++	     i <= dend1; i++, recs++) {
  		if (action1[i] == KEEP ||
--		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xe->xdf1.dstart, xe->xdf1.dend))) {
-+		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xe->delta_start, xe->xdf1.dend))) {
+-		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xe->delta_start, xe->xdf1.dend))) {
++		    (action1[i] == INVESTIGATE && !xdl_clean_mmatch(action1, i, xe->delta_start, dend1))) {
  			xe->xdf1.reference_index[xe->xdf1.nreff++] = i;
  			/* changed[i] remains false, i.e. keep */
  		} else
-@@ -318,10 +317,10 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
- 	}
+@@ -318,9 +319,9 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfenv_t *xe) {
  
  	xe->xdf2.nreff = 0;
--	for (i = xe->xdf2.dstart, recs = &xe->xdf2.recs[xe->xdf2.dstart];
-+	for (i = xe->delta_start, recs = &xe->xdf2.recs[xe->delta_start];
- 	     i <= xe->xdf2.dend; i++, recs++) {
+ 	for (i = xe->delta_start, recs = &xe->xdf2.recs[xe->delta_start];
+-	     i <= xe->xdf2.dend; i++, recs++) {
++	     i <= dend2; i++, recs++) {
  		if (action2[i] == KEEP ||
--		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xe->xdf2.dstart, xe->xdf2.dend))) {
-+		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xe->delta_start, xe->xdf2.dend))) {
+-		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xe->delta_start, xe->xdf2.dend))) {
++		    (action2[i] == INVESTIGATE && !xdl_clean_mmatch(action2, i, xe->delta_start, dend2))) {
  			xe->xdf2.reference_index[xe->xdf2.nreff++] = i;
  			/* changed[i] remains false, i.e. keep */
  		} else
-@@ -348,7 +347,7 @@ static void xdl_trim_ends(xdfenv_t *xe)
- 		size_t mph1 = xe->xdf1.recs[i].minimal_perfect_hash;
- 		size_t mph2 = xe->xdf2.recs[i].minimal_perfect_hash;
+@@ -357,8 +358,7 @@ static void xdl_trim_ends(xdfenv_t *xe)
+ 		size_t mph1 = xe->xdf1.recs[xe->xdf1.nrec - 1 - i].minimal_perfect_hash;
+ 		size_t mph2 = xe->xdf2.recs[xe->xdf2.nrec - 1 - i].minimal_perfect_hash;
  		if (mph1 != mph2) {
--			xe->xdf1.dstart = xe->xdf2.dstart = (ssize_t)i;
-+			xe->delta_start = (ssize_t)i;
- 			lim -= i;
+-			xe->xdf1.dend = xe->xdf1.nrec - 1 - i;
+-			xe->xdf2.dend = xe->xdf2.nrec - 1 - i;
++			xe->delta_end = i;
  			break;
  		}
-@@ -370,6 +369,8 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
- 		    xdfenv_t *xe) {
+ 	}
+@@ -370,6 +370,7 @@ int xdl_prepare_env(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
  	xdlclassifier_t cf;
  
-+	xe->delta_start = 0;
-+
+ 	xe->delta_start = 0;
++	xe->delta_end = 0;
+ 
  	if (xdl_prepare_ctx(mf1, &xe->xdf1, xpp->flags) < 0) {
  
- 		return -1;
 diff --git a/xdiff/xtypes.h b/xdiff/xtypes.h
-index 979586f20a..bda1f85eb0 100644
+index bda1f85eb0..a939396064 100644
 --- a/xdiff/xtypes.h
 +++ b/xdiff/xtypes.h
-@@ -48,7 +48,7 @@ typedef struct s_xrecord {
+@@ -48,7 +48,6 @@ typedef struct s_xrecord {
  typedef struct s_xdfile {
  	xrecord_t *recs;
  	size_t nrec;
--	ptrdiff_t dstart, dend;
-+	ptrdiff_t dend;
+-	ptrdiff_t dend;
  	bool *changed;
  	size_t *reference_index;
  	size_t nreff;
-@@ -56,6 +56,7 @@ typedef struct s_xdfile {
+@@ -56,7 +55,7 @@ typedef struct s_xdfile {
  
  typedef struct s_xdfenv {
  	xdfile_t xdf1, xdf2;
-+	size_t delta_start;
+-	size_t delta_start;
++	size_t delta_start, delta_end;
  } xdfenv_t;
  
  
