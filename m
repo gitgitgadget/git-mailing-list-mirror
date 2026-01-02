@@ -1,152 +1,140 @@
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
+Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94B93C1F
-	for <git@vger.kernel.org>; Fri,  2 Jan 2026 09:09:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CDE1DFF0
+	for <git@vger.kernel.org>; Fri,  2 Jan 2026 09:39:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767344979; cv=none; b=jkhD51mcwWsIoOEUkXkk4ZiLSOSrl28h+oVd0XTK/iVbxtiu3JFvhbCN4rAimtr+jL+QXpbNwduk+qSUZg+VZm5X/ATFhOedZLvsJTPlz9kevKv13KEnc4CekJEjHAupr624jS2TkYK0KeqFAHDcxmrJBFH0d7vCvqPQ+umWJ5A=
+	t=1767346791; cv=none; b=juVrZBTGIDHPn5YsoSdkTcYGdRTdrte4JAsY+yUlAAMzWotEU2ARN0Hc3eBu+s92wr+8zLqASxh++4FP/JMvo7fKhaWanNill9PMAlwR4oDBrP2Pd283JCMRDVc2M4VMhG7VQegATg6frEi1PEvhf1hCP0HVr/iTDMTeFCGbiEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767344979; c=relaxed/simple;
-	bh=dpcytT51cK6RztIgjqlGDWFhNcIJ5/EqQFBmPBcqRKQ=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=Ob5IlKDaqbDY/DXyoDm1u7PdVcqQYCawzX8iN0JazA1lsBvKxX1mDGIEvRmDnXxpDR+S+gqLIuf42RbYuy7g98GwJbE2kFZDZ5rvkn0+bbAIMgMz9h8Q+srbfNV8f/fCzQZT1KVWUslrnPWy8hq+cO0briv2GX5s7kTijglCvHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J9JzTJGl; arc=none smtp.client-ip=209.85.222.41
+	s=arc-20240116; t=1767346791; c=relaxed/simple;
+	bh=75QK88HR9R/OS5T277hxCt5IJ9TjW7iaSN4zlTuvDRI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kHmBI6QpW7g0cfiNSQ6/w7ZN8RN1BOHdN9J4m+Rn5ICyFc27NjuAFIYAwkonj+cynKuL2XwRiufm1w5R+Rm0rdtCr+zcu7zcO9AhywJQpya0D299LXaW0UmTpF8Mzi2+3js7uTSoU5ueZnjgwqAFvD6kY4CWdWsDqaDm+vy/wM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DIdaJtBQ; arc=none smtp.client-ip=74.125.224.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J9JzTJGl"
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-93f63c8592cso8950758241.1
-        for <git@vger.kernel.org>; Fri, 02 Jan 2026 01:09:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DIdaJtBQ"
+Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-6446c2bbfe3so9415637d50.1
+        for <git@vger.kernel.org>; Fri, 02 Jan 2026 01:39:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767344977; x=1767949777; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tB6RzbQykVoJJ0K5Ua218DeUisHO8hXw4s8orNaVwZI=;
-        b=J9JzTJGlY/zXH6OLzetMiTx1Xh00E5nPMuSmfBkHb0qElHkfv3U4aoYvBY8pdObvNC
-         KtGpkv8Ehma/23SkieDc64fp4KGL+MsAeZjVvqTZTF1k/hI4UNa/ZMflkRCINhTN0q3P
-         UVB+BHW9aySm35ArEYtFmJO+rQOZ7rG0kUjFjvo7SljIk7Ogqdfo9c5dXwPuvT/NgehK
-         ulcM1BjfkrjTts3Ol3Y1xW8fwdCMXjMXJEuejCzB5LYCtIVOoznQEHVwgC+nrBIB+ox6
-         m7+c746wXN3fkJwkH9zOFjgE42Q1P/dEhe+Zhkl/yaKAtsjAWblE3x7eGGOD5DKuYw52
-         48cg==
+        d=gmail.com; s=20230601; t=1767346789; x=1767951589; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6Ajq+ZUytI9Ec6FFmqrsH0cahN4k4Q8l4eM783FbRBU=;
+        b=DIdaJtBQykXo7V9Tp1y8CbNkCfnOH5D0fgOHDCY4Kf2rvG89tvqig6tNIewWfcc1yK
+         9zymHhsn3DKscZoFI2fNWXdJmYdbO169u5bdW2n3NkOuCyRwthzwCJqs4bo4pkoWHRLi
+         2uPlo+jwmo7r1nnPV0SsopEtw8baaQj/c/gYYQu4SofFfFkKUY9AOkUrSHRu6RwkzReq
+         /Ip5NAczvm2uM0GQdxxcANKMF9fwmeLamalT42hHKxnUUolns7706f/MnYr5j+s+MI4n
+         e7GrV2f3U60Rm8gpTCQSlmyyKm7nHjlKzOnN5Ew7ECDrEPnDoE+8u4JIEmDM8AnJiCZW
+         4k1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767344977; x=1767949777;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tB6RzbQykVoJJ0K5Ua218DeUisHO8hXw4s8orNaVwZI=;
-        b=gMqlgm39L/iGkWR/1J5QCBDXB/E2c8h9G8GMdfXH28gd/IKOa0u8/52oYFDJo4zcyN
-         /xeqjnvbJdFWP4nVEualy03t9rrQrxGvhkmAJkZ9wbdRBar+c/LHKS522uVM6Oh6xxyD
-         T69MWgvl8kb7bgLDBzLs0M9SRoT4rjZoOKmceuzsxOAdi6rEGR9L/fVfxPj5bXw5ELBq
-         TDueIFnUCIauor5YrH50thio8wR91FeIIJdwlX27H1xdWyEAVQT8OLdRSu9RCEX59Xl4
-         occnBULfyIRTavOCtyX96wRtQF2/Bmy2XRQgwpuY0ne9AnZeYxORUCl4qyfH0XjjElbD
-         arKQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVMRVrtmjHEbMGXFk5Av2TMtKUWPI3dOCcZJZC18Hu4JYb12xshSrLhglXwxQjboBqhMlU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxDqFuCQSfajQvs/72Xu7jgjUAKICHMvxwnhkndvanuIls5MH+v
-	i6AuM14INNmjdR8PR4AdGDDylAQFw6sbO+8v+oHjQMt8mAKUFuf0XZ7uKZtj9LHfULW6N/9T8TL
-	yBK9PLNg3XmcSsXfUWf0NETrJbye6mt9NffcaA0A=
-X-Gm-Gg: AY/fxX67+sK9DQsIYqFyEpGoQO3UODSksO9Ul6S2szcHKc7srdXlGPEWJg5IqiGaf+p
-	n46aBhRchTrESQhgTOxIPCRbBexB1Ah0A2sm9UUoQ1KBapFkfOEffdaCGUlXX8GSmhubpHM3EaN
-	ljP96nGaGrWD/G7Rzruk+opx25/U8Sg7563Dpp3UYOT7h9y7BikszQqPwfy9tJ9vhjpGcLWglD0
-	G7XsMief17ouzjGWRrUNYM/g0hoBporEaLkdyk2tJSeVj3poSqIYLzg1pFH71QigUCBHmBgzzcj
-	XGELxSDxhu9waHvQbvr4P3Xb2SfPDA==
-X-Google-Smtp-Source: AGHT+IFNGyfnAypEJkcX5ConlRp37Q3MuK9hTdzKcOe0pLKUG/aUinN73rI4Tc830DqiDKLs4ichcQN89K9Vz+kD9MI=
-X-Received: by 2002:a05:6102:510a:b0:5e0:d009:e4d7 with SMTP id
- ada2fe7eead31-5eb0237d823mr15198208137.1.1767344976880; Fri, 02 Jan 2026
- 01:09:36 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 2 Jan 2026 04:09:35 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 2 Jan 2026 04:09:35 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260102062029.18210-1-pushkarkumarsingh1970@gmail.com>
-References: <20260102062029.18210-1-pushkarkumarsingh1970@gmail.com>
+        d=1e100.net; s=20230601; t=1767346789; x=1767951589;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=6Ajq+ZUytI9Ec6FFmqrsH0cahN4k4Q8l4eM783FbRBU=;
+        b=MTp4CrQYBK9ubP3vaHjnwjDO5cEY6kX9wN6nWpOzknMfJiH4iQvQa8LS8FQP/+P7a+
+         +yblvKk1oveOQCK2XNKFotV6FnwzdR3ZLLBcsFibLeHF8hEBbLnuLScJf6SdkEJ4ryG5
+         ciiZdQBGxk8iGQCZF9gg2gOxTLwyrQsC7p9gYMhGHcNBawpkBMQ5Ysiefen5Xel8Uaco
+         942eu3XCBx/v5zccxuz3/KV2vqef4SfwORYZ6zOo7/nLKvljJopI5/i2ryjb9cgVELge
+         KZGpAKFh+VgCXy9RZ4cBkhCLprbXnPumOt4mTsLnTh5hWpmRyiiXnz4qBwIpyWK432TP
+         wX3A==
+X-Gm-Message-State: AOJu0Yxmn4b1TgzgwjfY0jPggE8lCyBxzaJd6B9N7o6I7s9xdjGr/sGZ
+	s0VfEVygnT7hS7S01GRbNaB2CYBDKuC/ZMQgBiLytlA740fLzVa7CUeG1uoPsFDl/zg4wlNLwu7
+	0OsrOg+lVSQ2PhAsMtH4matwY6NkTpvpGFqRZf3w=
+X-Gm-Gg: AY/fxX79IOyO2rNsxiFrY2l0Lhgc6uHXQjqsyBI69Mo3N4I7sKntM6QV9xfSRRkNMT0
+	yUdi1gs9ztMPlKsI1KmcaCicCk424OyVGrkQbbgMFgc2F93iCSPYKGJtPcp/6v1cI+tpk+DKNTw
+	rkwcIlmbM7B9dNJRNXg+W3T6wAaYoRsmU55tCy+je9AQAZ53gLuvkKtx94Xl5P0uuUuuZzSwXow
+	MJKEhoZDdjdpv2SQW2myt86gG7eTVhygzzEdaOtbaSusQc+6H8ZV3TpDfJ8guFOrg==
+X-Google-Smtp-Source: AGHT+IFkdsF5bnoeGC1VZTRCLVvZ5EPtyf78vpyj+JG1FK2oUK5swQQrmadkZNnP56HESEdOq7HGJe6fCEDB3XN09fA=
+X-Received: by 2002:a05:690e:1918:b0:646:81e0:1340 with SMTP id
+ 956f58d0204a3-64681e015a5mr27483651d50.71.1767346789221; Fri, 02 Jan 2026
+ 01:39:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 2 Jan 2026 04:09:35 -0500
-X-Gm-Features: AQt7F2p__6vT8T4C84YWODhqCky9W1defBwJDXN88ieDoz5ChohXzr11TZ46SUk
-Message-ID: <CAOLa=ZQrKO-Aeoa_9E9Gi3rzM2AuVETDT4sUEuc0V8XQUyk4Pw@mail.gmail.com>
+References: <20260102062029.18210-1-pushkarkumarsingh1970@gmail.com> <CAOLa=ZQrKO-Aeoa_9E9Gi3rzM2AuVETDT4sUEuc0V8XQUyk4Pw@mail.gmail.com>
+In-Reply-To: <CAOLa=ZQrKO-Aeoa_9E9Gi3rzM2AuVETDT4sUEuc0V8XQUyk4Pw@mail.gmail.com>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Fri, 2 Jan 2026 15:09:37 +0530
+X-Gm-Features: AQt7F2o0TqIMH4j6t7BemwAI3qXPm23PFN_oFzCSCUEQU4CXnvj6n2v9_f5xLwA
+Message-ID: <CALE2CrRkKneSJL_F-mF_aTBzbGwW8c5A+qSU+8etQdbB=o2wJg@mail.gmail.com>
 Subject: Re: [PATCH] t1300: use test helpers instead of shell primitives
-To: pushkarkumarsingh1970@gmail.com, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000008b04190647641150"
-
---0000000000008b04190647641150
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-pushkarkumarsingh1970@gmail.com writes:
+Hi Karthik,
 
-> From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Thank you for the review!
+
+You=E2=80=99re right, I should have clarified that `test -f` checks for a
+regular file and `test -h` checks for a symbolic link. I=E2=80=99ll update
+the commit message accordingly and send a v2.
+
+Thanks again!
+Pushkar
+
+On Fri, Jan 2, 2026 at 2:39=E2=80=AFPM Karthik Nayak <karthik.188@gmail.com=
+> wrote:
 >
-> Replace plain "test -f" checks with "test_path_is_file" and symbolic
-
-So 'test -f' checks for regular files
-
-> link checks with "test_path_is_symlink". The test framework helpers
-
-and 'test -h' check for symlinks. Would be nice to also mention the
-latter.
-
-> provide clearer diagnostics and better consistency across the test
-> suite.
-
-> Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-> ---
->  t/t1300-config.sh | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+> pushkarkumarsingh1970@gmail.com writes:
 >
-> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-> index 358d636379..9850fcd5b5 100755
-> --- a/t/t1300-config.sh
-> +++ b/t/t1300-config.sh
-> @@ -1232,12 +1232,12 @@ test_expect_success SYMLINKS 'symlinked configuration' '
->  	test_when_finished "rm myconfig" &&
-
-Tangent: Not your patch's responsibility, but we should also remove
-'notyet' :)
-
->  	ln -s notyet myconfig &&
->  	git config --file=myconfig test.frotz nitfol &&
-> -	test -h myconfig &&
-> -	test -f notyet &&
-> +	test_path_is_symlink myconfig &&
-> +	test_path_is_file notyet &&
->  	test "z$(git config --file=notyet test.frotz)" = znitfol &&
->  	git config --file=myconfig test.xyzzy rezrov &&
-> -	test -h myconfig &&
-> -	test -f notyet &&
-> +	test_path_is_symlink myconfig &&
-> +	test_path_is_file notyet &&
->  	cat >expect <<-\EOF &&
->  	nitfol
->  	rezrov
-> --
-> 2.43.0
-
-The patch looks good. We have two files, one being a regular file and
-another being a symlink to that regular file and we simple need to
-ensure that they exist.
-
---0000000000008b04190647641150
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 678149d97468534a_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1sWGkwNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN1ZJQy85UXhwbjNBbzVrcTdCYk04czM0UlRXRXR0dgpMNkc0ZWhaeHZI
-SVhiQnpBMm43SloxRFE0RHI0aERETDZiaXhzdXdRTk8ydEl4VFhnUHZnTmRIenZTTDZ5OXFCCm93
-d3JXcTRzc3lNZEgwd1NhSW1ETWVPSHE5Y3oxcG53d0hJb2t5SXZRKzI0Z3M3UlJzOWI2cDR3V3Zh
-b09BU3YKUEJUaFFVMjByTzFEVDllTDNaT0UrSzA4WFNQL0I5Tlkwb3lxQXc5YUVCbm9OUVQ5SXFC
-UDVUQURSeWN4ZlBSdwp6a3dESzBCaE9xR3RScVNxRUFOQ1ZsbEF2S0hNRDJ1TFpwQ1BYWXRjRzJU
-REt5OEZFSVV0UmdManZNYXhQM01rCnljR04zSnpwRnN6aFUvTEhOekFOUlA2dmtsbGtYSUJ4Yldx
-bWhLRG1DUklKMEdrTzdGZ21GN3V1R0NueFRWeG4KT2dzM0JEbnlieU1DV1g0R1h5ek1Ob1ZMWVYw
-aE1kcU4xVkQ0NGZEVmJZajFWbHN5TEtOWjA3NlJ5aGxBbFlmRAp2Z3UvYk9lbUxhTkZmYWZ1aDFT
-V2hFREtCVGdTYlY2UzlPemVlT0tTM0xSZ3RKUEY4dHRvUUFPYjVVNjdQVkZCCit1TEtZQk1KK09U
-Syt0QWg5ZENVN3hGaGhDdHo0SURseXF2Qy9XUT0KPTh6NHYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000008b04190647641150--
+> > From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+> >
+> > Replace plain "test -f" checks with "test_path_is_file" and symbolic
+>
+> So 'test -f' checks for regular files
+>
+> > link checks with "test_path_is_symlink". The test framework helpers
+>
+> and 'test -h' check for symlinks. Would be nice to also mention the
+> latter.
+>
+> > provide clearer diagnostics and better consistency across the test
+> > suite.
+>
+> > Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+> > ---
+> >  t/t1300-config.sh | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> > index 358d636379..9850fcd5b5 100755
+> > --- a/t/t1300-config.sh
+> > +++ b/t/t1300-config.sh
+> > @@ -1232,12 +1232,12 @@ test_expect_success SYMLINKS 'symlinked configu=
+ration' '
+> >       test_when_finished "rm myconfig" &&
+>
+> Tangent: Not your patch's responsibility, but we should also remove
+> 'notyet' :)
+>
+> >       ln -s notyet myconfig &&
+> >       git config --file=3Dmyconfig test.frotz nitfol &&
+> > -     test -h myconfig &&
+> > -     test -f notyet &&
+> > +     test_path_is_symlink myconfig &&
+> > +     test_path_is_file notyet &&
+> >       test "z$(git config --file=3Dnotyet test.frotz)" =3D znitfol &&
+> >       git config --file=3Dmyconfig test.xyzzy rezrov &&
+> > -     test -h myconfig &&
+> > -     test -f notyet &&
+> > +     test_path_is_symlink myconfig &&
+> > +     test_path_is_file notyet &&
+> >       cat >expect <<-\EOF &&
+> >       nitfol
+> >       rezrov
+> > --
+> > 2.43.0
+>
+> The patch looks good. We have two files, one being a regular file and
+> another being a symlink to that regular file and we simple need to
+> ensure that they exist.
