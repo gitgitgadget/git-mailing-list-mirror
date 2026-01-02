@@ -1,140 +1,192 @@
-Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E090D207A32
-	for <git@vger.kernel.org>; Fri,  2 Jan 2026 13:56:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
+Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11DE313286
+	for <git@vger.kernel.org>; Fri,  2 Jan 2026 14:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767362189; cv=none; b=ImOlnuUGgMSIwlnxjwFGiaS5IJAQHxAaJfSBbCakV7bysIOk6NM5fl/j21YOGAPPAzrK/K5G6EpQsdxhaTXGKdvsIvoFgIK8F/htbIkZ6wSXBN6BtmCb4ne7wUG6VPCge5Zv3h1T2HXsX7yTfoArY8M2uCCZFPPoSf6ap2s3zc0=
+	t=1767364099; cv=none; b=f7/64dJWNIc+OxujxreSTOp1/YpZgIGGkBIi4f0rXJ7tLEdgljm+yqmeNrYhbnvAEFBboPLv3Oh6spxrsZAz74NgC+Qv/WstrlQYk5dTHdhdOYkDnUwZt9x5m0vRl2hY3jQlMPSshE0fuRl43AX356HoTovFbmiGMLLHQ2quwGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767362189; c=relaxed/simple;
-	bh=9WStvtVUE53Ps7prFMs9ZtQ8U2xc34LJHZ9MzU1RF2Y=;
+	s=arc-20240116; t=1767364099; c=relaxed/simple;
+	bh=NVc5g2lUsswo75X8FkZmpCLq+G122rBSo6bxE1smrvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BfNKIHbSWqzeom0ae5ILiXG+UMcn7KSySmXImmqMmvQW+GUAP54PK+e9MU7gU/B8RVaFI3g9XXD6jYvbH2IP49jQIQEWvCiGxFRRc11ZTSkoiOfeNGjXHvpbu5Ihav/PUMy/fkqYmoEoIA8q0h7BFpNVqIPzMWmj25Fp56kPAfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=lpdr38/B; arc=none smtp.client-ip=212.27.42.9
+	 MIME-Version:Content-Type; b=mDNzY+8eqCznQz8vHEZ0YqkW1vG9AhfM1EV8JR06fJN9VMsL+UhYGq++6Povkz9MeVLpRfPqvw59NmV4vnk/SLdiQAgd50I6Zd4CfBz1RRWOIzbUtFVvQNdD0k+Nairh9P/YCXe57XEpRL5q43C1K/E5g1DWNfWIed9XJN2tb7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=n/eGp6E1; arc=none smtp.client-ip=212.27.42.2
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="lpdr38/B"
-Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 5D4C2DF9386
-	for <git@vger.kernel.org>; Fri,  2 Jan 2026 14:49:57 +0100 (CET)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="n/eGp6E1"
 Received: from piment-oiseau.localnet (unknown [IPv6:2a01:e0a:d1:f360:4bd1:2f22:1bf8:44cb])
 	(Authenticated sender: jn.avila@free.fr)
-	by smtp2-g21.free.fr (Postfix) with ESMTPSA id 169182003E8;
-	Fri,  2 Jan 2026 14:49:46 +0100 (CET)
+	by smtp2-g21.free.fr (Postfix) with ESMTPSA id 9BE272003D6;
+	Fri,  2 Jan 2026 15:28:09 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1767361790;
-	bh=9WStvtVUE53Ps7prFMs9ZtQ8U2xc34LJHZ9MzU1RF2Y=;
+	s=smtp-20201208; t=1767364094;
+	bh=NVc5g2lUsswo75X8FkZmpCLq+G122rBSo6bxE1smrvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lpdr38/B85B5Yfb10UBm5+JcGMEV7cd47taOYbCBYuiq6OO0wbiOMz6UyqCYWyQgA
-	 BPRyogX5jlu5UvuqJkK3T7Fg1Mg0DQQRfic2nQWML99+5nZcC3sxehfad/8+mis2Gt
-	 pSyQ3OlG/HfB8InOxq4Oa28vlwMn6zmcjFU+Rp3J6wmsYUZg6MKUMW3uzQxfJln7Ib
-	 jLns6F27yBq8/Q24Ues1HRwUqnDJw7hnUs4RaeNzGPxTLyeG+NIqdiEHL80jyPXio0
-	 PBS/cUOF5pJcsVofkEGhb+9S3Sc0Yx5gIKa6gU+rlb398I3OL6w1s9ZWDmjr637av9
-	 faR4il4PkWwcA==
+	b=n/eGp6E1KVBf6jfr8deeuM31RLH40+XhNSvGZXAM1YLPiX7VTTeoWT2IpNfKGna+Y
+	 i1Hw3Jfv/dc419kxJZj4l2kswTS9BEWFr9x1+N6jqWr950lqtSeHwRN97rQdomQia/
+	 zvoLxInr5yeHyDrpJ2hoCirBJbNWQirTiIIV5wd1XE/ExXLdkCBek7IrwY02qYGgeC
+	 vNQmtK7v6PrNNkjq5X3AND/aaTgaeE0tXihhzKk2AZko56s9uLJyvCBAjgdhA7QBKm
+	 asBQO/zn7L1SMcCdVLrddmKi+ysJeDYPIU4JUOWsShi2rqpXEI+cRJfMMhDy2yW/OQ
+	 On0dx8qz6JtdA==
 From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
 To: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble+github@gmail.com>
 Cc: Julia Evans <julia@jvns.ca>, Junio C Hamano <gitster@pobox.com>,
- "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Subject: Re: [PATCH v3 2/4] doc: git-reset: clarify intro
-Date: Fri, 02 Jan 2026 14:49:45 +0100
-Message-ID: <5953760.DvuYhMxLoT@piment-oiseau>
+ "D. Ben Knoble" <ben.knoble+github@gmail.com>,
+ Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v3 3/4] doc: git-reset: clarify `git reset [mode]`
+Date: Fri, 02 Jan 2026 15:28:09 +0100
+Message-ID: <1943073.tdWV9SEqCh@piment-oiseau>
 In-Reply-To:
- <f90be8559f7d1d8362077a6f888687ee8be063b4.1767307382.git.ben.knoble+github@gmail.com>
+ <89c87c14aabfe91489af4a7afa5246ec20776e0b.1767307382.git.ben.knoble+github@gmail.com>
 References:
  <cover.1766103827.git.ben.knoble+github@gmail.com>
  <cover.1767307382.git.ben.knoble+github@gmail.com>
- <f90be8559f7d1d8362077a6f888687ee8be063b4.1767307382.git.ben.knoble+github@gmail.com>
+ <89c87c14aabfe91489af4a7afa5246ec20776e0b.1767307382.git.ben.knoble+github@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="utf-8"
 
-Le jeudi 1 janvier 2026, 23:43:57 heure normale d=E2=80=99Europe centrale D=
-=2E Ben=20
-Knoble a =C3=A9crit :
+On Thursday, 1 January 2026 23:43:58 CET D. Ben Knoble wrote:
 > From: Julia Evans <julia@jvns.ca>
->=20
-> From user feedback, there were several points of confusion:
->=20
-> - What "tree-ish", "entries", "working tree", "HEAD", and "index" mean
->   ("I have no clue what the index is", "I've been using git for 20 years
->   and still don't know what a tree-ish is"). Avoid using these terms
->   where it makes sense.
-> - What "optionally modifying index and working tree to match" means
->   ("to match what?" "optionally based on what?")
->   Remove this from the intro, we can say it later when giving more
->   details.
-> - One user suggested that "The <tree-ish>/<commit> defaults to HEAD
->   in all forms." should be repeated later on, since it's easy to miss.
->   Instead say that HEAD is the default in each case later.
->=20
-> Another issue is that `git reset` consistently describes the action
-> it does as "Reset ...", commands should not use their name to describe
-> themselves, and that the word "mode" is used to mean several different
-> things on this page.
->=20
-> Address these by being more clear about two use cases for `git reset`
-> ("to undo operations" and "to update staged files"), and explaining what
-> the conditions are for each case instead of forcing the user to figure
-> out the pattern is in first form vs the other 3 forms.
->=20
+> 
+> From user feedback, there was some confusion about the differences
+> between the modes, including:
+> 
+> 1. Sometimes it says "index" and sometimes "index file".
+>    Fix by replacing "index file" with "index".
+> 2. Many comments about not being able to understand what `--merge` does.
+>    Fix by mentioning obscure situations, since that seems to be what
+>    it's for. Most folks will use `git <cmd> --abort`.
+> 3. Issues telling the difference between --soft and --mixed, as well as
+>    --keep. Leave --keep alone because I couldn't understand its use case,
+>    but change `--soft` / `--mixed` / `--hard` as follows:
+> 
+> --mixed is the default, so put it first.
+> 
+> Describe --soft/--mixed/--hard with the following structure:
+> 
+> * Start by saying what happens to the files in the working directory,
+>   because the thing users want to avoid most is irretrievably losing
+>   changes to their working directory files.
+> * Then describe what happens to the staging area. Right now it seems to
+>   frame leaving the index alone as being a sort of neutral action.
+>   I think this is part of what's confusing users, because in Git when
+>   you update HEAD, Git almost always updates the index to match HEAD.
+>   So leaving the index unchanged while updating HEAD is actually quite
+>   unusual, and it deserves to be flagged.
+> * Finally, give an example for --soft to explain a common use case.
+> 
 > Signed-off-by: Julia Evans <julia@jvns.ca>
 > Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
 > ---
->  Documentation/git-reset.adoc | 13 ++++++++-----
->  1 file changed, 8 insertions(+), 5 deletions(-)
->=20
+>  Documentation/git-reset.adoc | 44 ++++++++++++++++++++----------------
+>  1 file changed, 24 insertions(+), 20 deletions(-)
+> 
 > diff --git a/Documentation/git-reset.adoc b/Documentation/git-reset.adoc
-> index 9843682e81..71e8f52430 100644
+> index 71e8f52430..6de0d524c3 100644
 > --- a/Documentation/git-reset.adoc
 > +++ b/Documentation/git-reset.adoc
-> @@ -3,7 +3,7 @@ git-reset(1)
-
-There are `HEAD` that passed through the style checks.
-
->=20
->  NAME
->  ----
-> -git-reset - Reset current HEAD to the specified state
-> +git-reset - Set HEAD or the index to a known state
->=20
-
-Here
-
->  SYNOPSIS
->  --------
-> @@ -15,10 +15,13 @@ git reset (--patch | -p) [<tree-ish>] [--]=20
-[<pathspec>...]
->=20
->  DESCRIPTION
->  -----------
-> -In the first form, set the current branch head (`HEAD`) to _<commit>_,
-> -optionally modifying index and working tree to match.
-> -The _<tree-ish>_/_<commit>_ defaults to `HEAD` in all forms.
-> -In the last three forms, copy entries from _<tree-ish>_ to the index.
-> +`git reset` does either of the following:
-> +
-> +1. `git reset [<mode>] <commit>` changes which commit HEAD points to. Th=
-is=20
-makes
-
-And here.
-
-> +   it possible to undo various Git operations, for example commit, merge,
-> +   rebase, and pull.
-> +2. When you specify files or directories or pass `--patch`, `git reset`=
-=20
-updates
-> +   the staged version of the specified files.
->=20
+> @@ -24,42 +24,46 @@ DESCRIPTION
+>     the staged version of the specified files.
+> 
 >  `git reset [<mode>] [<commit>]`::
->  	This form resets the current branch head to _<commit>_ and
+> -	This form resets the current branch head to _<commit>_ and
+> -	possibly updates the index (resetting it to the tree of _<commit>_) 
+and
+> -	the working tree depending on _<mode>_. Before the operation, 
+`ORIG_HEAD`
+> -	is set to the tip of the current branch. If _<mode>_ is omitted,
+> -	defaults to `--mixed`. The _<mode>_ must be one of the following:
+> +	Set the current branch head (`HEAD`) to point at _<commit>_.
+> +	Depending on _<mode>_, also update the working directory and/or 
+index
+> +	to match the contents of _<commit>_.
+> +	_<commit>_ defaults to `HEAD`.
+> +	Before the operation, `ORIG_HEAD` is set to the tip of the current 
+branch.
+> ++
+> +The _<mode>_ must be one of the following (default `--mixed`):
+>  +
+> ---
+> -`--soft`::
+> -	Does not touch the index file or the working tree at all (but
+> -	resets the head to _<commit>_, just like all modes do). This leaves
+> -	all your changed files "Changes to be committed", as `git status`
+> -	would put it.
+> 
+> +--
+>  `--mixed`::
+> -	Resets the index but not the working tree (i.e., the changed files
+> -	are preserved but not marked for commit) and reports what has not
+> -	been updated. This is the default action.
+> +	Leaves your working directory unchanged.
+> +	Updates the index to match the new HEAD, so nothing will be staged.
+
+Please use imperative mood here, and use `HEAD`.
+
+>  +
+>  If `-N` is specified, removed paths are marked as intent-to-add (see
+>  linkgit:git-add[1]).
+> 
+> +`--soft`::
+> +	Leave your working tree files and the index unchanged.
+> +	For example, if you have no staged changes, you can use
+> +	`git reset --soft HEAD~5; git commit`
+> +	to combine the last 5 commits into 1 commit. This works even with
+> +	changes in the working tree, which are left untouched, but such 
+usage
+> +	can lead to confusion.
+> +
+>  `--hard`::
+> -	Resets the index and working tree. Any changes to tracked files in 
+the
+> -	working tree since _<commit>_ are discarded.  Any untracked files or
+> -	directories in the way of writing any tracked files are simply 
+deleted.
+> +	Overwrites all files and directories with the version from 
+_<commit>_,
+> +	and may overwrite untracked files. Tracked files not in _<commit>_ 
+are
+> +	removed so that the working tree matches _<commit>_.
+> +	Updates the index to match the new HEAD, so nothing will be staged.
+
+Here too.
+
+> 
+>  `--merge`::
+> +	Mainly exists to reset unmerged index entries, like those left 
+behind by
+> +	`git am -3` or `git switch -m` in certain situations.
+
+Personal preference, please insert this context sentence after the main 
+description of the action. Could you also change the mood of the description 
+to imperative?
+
+
+>  	Resets the index and updates the files in the working tree that are
+>  	different between _<commit>_ and `HEAD`, but keeps those which are
+>  	different between the index and working tree (i.e. which have 
+changes
+>  	which have not been added).
+>  	If a file that is different between _<commit>_ and the index has
+>  	unstaged changes, reset is aborted.
+> -+
+> -In other words, `--merge` does something like a `git read-tree -u -m 
+<commit>`,
+> -but carries forward unmerged index entries.
+> 
+>  `--keep`::
+>  	Resets index entries and updates files in the working tree that are
 
 Thanks
+
 
 
