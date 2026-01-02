@@ -1,75 +1,68 @@
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786F13A1E9C
-	for <git@vger.kernel.org>; Thu,  1 Jan 2026 23:38:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AD728DC4
+	for <git@vger.kernel.org>; Fri,  2 Jan 2026 00:27:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767310725; cv=none; b=Se2rda6prSkrA5pJexxYvV+akMxUOTL0uMrlsMiOh2bE/JbmcAqzEjJaeU2KR3OMQj3W3FXNC0yfj+stYAWNHyeSuFb8SWSpx4i+ZPrOIz3YwOFJE6ZGHveTAx8+ZVPUs7b2BxJAECb+z/GnLGO1KkV/2wn19lWVS53I332cUMU=
+	t=1767313669; cv=none; b=BVIW3EbBJIKAmB0sE6+8ZW1vYu4RLYrSoXTVUBFUFxWUlTJvhx1XM9Vw7b95RoomvtSWg78fYbqC/2LjubtVSpVqQmOcOgWcCd/mOshzdYyFxUudC5b6ROJsFLROj+8dzYIY70U1foXOS1nPblYmTFBLLUCfU4BEbsUSq5Es1CM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767310725; c=relaxed/simple;
-	bh=M4vUHSLaRyUDcUWBYhAD7AwttnqdptpuRzs18S1HT3U=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=peaxoLoCSgrtF8Vttj8MEd7UlV5bZWSYCRrI+m1M3lIVw0OkXYf9FLjcS74hCTcwMepF4S8tGQPVxFNcBgjSIw04F5bd+Y1xot2qVFk7AZUOTBwRDUjHSyDoKXT6+694PNAXHOQf+VQ1TfEZFQj0eCExuxF1oINKI8qgjQaH1Bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cpd9A/s8; arc=none smtp.client-ip=209.85.167.47
+	s=arc-20240116; t=1767313669; c=relaxed/simple;
+	bh=3Inoe4Fi81E3UTafc6eJd2IOmh+tgtUxRPZkfqP536s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=njyETlb1hHcUDfuhc+PmSVCmoQPPoCvVIVWkc5Qm69kyg3GDdkyxrqMs1mxYSlkb4WYImyCVojPDvOiKbXCGmcaFlJZXU8JFq+uchmPPPYApt1PX+5+g8syOF/wPacblPJDdaKLzQq/EAZDuvBIuIQib95DZgmfr94Nf7PLVTec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cU+rxe7+; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cpd9A/s8"
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-59583505988so17870065e87.1
-        for <git@vger.kernel.org>; Thu, 01 Jan 2026 15:38:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cU+rxe7+"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-47796a837c7so74953185e9.0
+        for <git@vger.kernel.org>; Thu, 01 Jan 2026 16:27:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767310721; x=1767915521; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8sgDFLAkxvbKpsYc0gAUUEpLzoQ9vBqrGM5XW760qXg=;
-        b=cpd9A/s8genzWZWAhsLFLrntoE9MdTTTCvKebHwDGIld06Pg+g/Kn/hxCnqaMo3EaT
-         fqCS2MLahyO1Ti2evjtedc3q4eCzO1Q01fxvvSIvm8s+UHo0p/Egg/8ddyEzCzLf0xmx
-         wbxRo+fo05mWgQ1uhUhHN+Fu3l7wx55G2SyzyDn1lBYlXmTjf9q6QIdRl2kv2tGK0HxB
-         4yLr6+XBhaeUj3m2D8fhSQyLI5P5/4nML0All/xkCfF5ETbBrxAo0XNROtzqa2b5WNf1
-         n1qqnqPE24Mr6DqjbisDyiKIZD55AUr0LYkVAKDfR276ktTSxSzJHTEbF5Lpr5lUJa0I
-         aVnw==
+        d=gmail.com; s=20230601; t=1767313666; x=1767918466; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cGCKBP2Wg8BaV3sb1yOT7FkYS5Cw9Sv72de7BXzZvc0=;
+        b=cU+rxe7+oQUwRgR6j7RELthhur36IqnouMeUfZbv0mf8LWNam4ppoTZsv5gSvoefxL
+         FuvbdjlC5wRf9n4nMebPR2S6q9lYJC2JGqSZMP/vzUzx5NlVTYzZ7HQ+9DAQMLPY/gFY
+         q9gq9lY7b9HRH/1jLUUTcLLN5UBPx7ZD22sbkN+2hWOVBD/kOkFE/ZR6H5RDml6OqZCh
+         6U7S/5bmMv61IXWFrQHFMmiZaMQjvpa8ZWp0l9JmV1GopWUOHSFMq1bhpjeObnxqO6l5
+         8ZxUbjuU2mJZvaKnzw1ad7I4136WxcdAXivaEQrlNPUbqc4tIDOm03weIgD067YxCcPj
+         91JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767310721; x=1767915521;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8sgDFLAkxvbKpsYc0gAUUEpLzoQ9vBqrGM5XW760qXg=;
-        b=DNlUkDHoYlRmSRNWsWiLBK1m80be0KU72zymzgemeyI1ReDqCb3pokkIddr9HwbqsU
-         mruh4p1mgXYqJ4WWYznRqWRM0YyqLf66u0dTZsIUPLsWZoi0zSO9XFGEQhflZl53qLYf
-         RsnrAle0VXan1ZTgJlxq3hUdkUns7lBl2Bo0ZVcKR6WB4iJlpRKvwB05Fgd8g5+wiTe3
-         dj9UJpfn+9FO9UgHNGX9cFA977pJvlXpnCR70wIcGPbnXFBNUoUjXIwMjT0bi7BKYNNg
-         QWm6zycKfoAq0Cvlx/8lpipF9ZN5g7BKFd0ILQcErCPZ35guZBEyjsAciOj+l6UTdXBK
-         e3Ew==
-X-Gm-Message-State: AOJu0YwKMmPbGSKXJO21CJsQWbV/PJ3WvrogHuUBSwjWA4tYXK4MFcNb
-	atVl82N4TSE8YorCY7dkiq3AuzCcmhk/U7D/n0L89/24WVjLyWR5xfdI
-X-Gm-Gg: AY/fxX4sAcplrGBz1S9YxhgrSgG6Pmcrn8kcTYSalK6oefxEyfeUtoYsSye0JhH3wVC
-	oTsHQU7xDBvSvxVEQpPNPC4pIoWUeE4vuqYPdLSbgNd9AQIiXKnqm5M2WHQSCr50OW3eF7Aec6D
-	YxctEMRvQbvWvjpjDNZeGx8NczN4a2YvXdKRxx5+ymvs51eGELeLtgkCGI8pH9lNTnzk4600Ei2
-	agJ4uoSCOYKooQXOKoepYJ2LS+8HtvICa558roDAzj95wpNGqD6oG1C2n/5FsWlnq/A3Q90tF0G
-	NW2twtPopzmZtqH9DTt4/Spc7IwQnAdERRBVWTyWzFPaBVuHzViUXZN0oFxs/ZWopVx2HSSmGmM
-	KZBOthy0hcJGpZBpaoxQckAmzvLeiK1K01iTW/d0PzQJq2DNgkBGeqYaFpYt6Giq4gCBvu1Z9DW
-	MG+DFXkiypvNJlK6wUWbOF3j6izxtwsXWWpOIBPcixWuiedy/VhIQFO2hhGV4JE3p2IwRA8bssH
-	va/OsA=
-X-Google-Smtp-Source: AGHT+IE0nJ0N0Pm4C2XFLdz0MpPPkFeVGVdZF9/4A8asgPOcvSHK5h72nVfNo+qw9UXdUXEEHlyt5w==
-X-Received: by 2002:a05:6512:3e1d:b0:597:d764:206 with SMTP id 2adb3069b0e04-59a17d66f88mr13709328e87.20.1767310721284;
-        Thu, 01 Jan 2026 15:38:41 -0800 (PST)
-Received: from localhost.localdomain (h-85-24-230-171.A753.priv.bahnhof.se. [85.24.230.171])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a18618cf9sm12086977e87.57.2026.01.01.15.38.40
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 01 Jan 2026 15:38:40 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com
-Subject: Another look?
-Date: Fri,  2 Jan 2026 00:38:39 +0100
-Message-Id: <20260101233839.17639-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <xmqqh5t5c4lj.fsf@gitster.g>
-References: <xmqqh5t5c4lj.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1767313666; x=1767918466;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cGCKBP2Wg8BaV3sb1yOT7FkYS5Cw9Sv72de7BXzZvc0=;
+        b=ikFMDpXwnBPb9H1TO1yMDU3Hf1FVkYB245LTjWG9fTopgQdIMNc373n4eguJ4Phto7
+         6Ifh2vY3ihBdS3nns62mGraXAzjo2874LRC8DPKfjz0+mDLYrP/T+UEN5VtQIByfYQTl
+         Kz2d+N9XxXcwggupbktOLsPWA5q7wInF6wM7/anfXhmGfXhyrYZYIw0Teqta+jx3+xSF
+         uTfEcv5vTw4Nsexq0Ea0mzO2SSwsXI5ftnhteF95hquJ7DU3KQ7rdF/eLGSc1MkESfZt
+         3egnmu8UndiY+Faw08V9UlDIQmm34v6D13dOriGDJ+jcwycKVjHZYiYZPwYZesgJTV+x
+         6VXg==
+X-Gm-Message-State: AOJu0YxQJFrhKpwJF5RJFmiVW01wGwsXCaV1Vm+RTNKZ++JedQaPLX7f
+	3jhqZkGkQne3KoXTVpSOgvxyIFjQxzBr6u8IpPWqjCgBvTTcqKLM+m2Mpi6tQ/lp
+X-Gm-Gg: AY/fxX6a06g2X0rhs1UThuZF6dm8sy9e9IbrLBH2fw7G6Nf4t5gJiOHn4DztyRoqdLs
+	GcQ7H+y5qF0w6Fy7LrueJYXWZS6ner1YIfWXbTI7yPHI2Pu4EDipLdHUc9wvv53bHPP5I/Bf2Hq
+	StJ1o7o/Gp7J+U87Kco50G4RIzo1Z/yxl/v80MvHjcMQcbdkiSCJ+HHgPBh3r54k8FgCwXTZ495
+	Cu/uA1C7NJv6EBajEggjxOyWpTV8xD/1jKn7GFnngmvTdm4rRFPBn2kR/1rkJF2ww+EQS2Ok+bJ
+	l4CUVR8Pjn94X3C2BkSGa0GHXRWtaT7QujbDo4g6xSpTze7HUp1lFcAft4feA7GwD6HBaFmfxc9
+	FCEyHxkEA3mpqW6XA318A97NS6b/GG6W/ATdLyiF0DHRoqGqzi5sr7vC6ZC7zgQSLItImDHeISm
+	aF6CiDuuQzZXM=
+X-Google-Smtp-Source: AGHT+IG+/ot+r42BX8nsv/YpVhRBulAGFbOEU3UIdj6vseHFYOP3ynsmkwLK06Y6QL5yQLGAiASDNQ==
+X-Received: by 2002:a05:600c:474d:b0:477:97ca:b727 with SMTP id 5b1f17b1804b1-47d1957d7e6mr458012545e9.19.1767313665657;
+        Thu, 01 Jan 2026 16:27:45 -0800 (PST)
+Received: from fedora.lan ([2a0d:6fc1:2:c000:95b3:4a19:75dc:a979])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d19362345sm715700585e9.6.2026.01.01.16.27.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Jan 2026 16:27:45 -0800 (PST)
+From: Rostislav Krasny <rostiprodev@gmail.com>
+To: git@vger.kernel.org
+Cc: Rostislav Krasny <rostiprodev@gmail.com>
+Subject: [PATCH 0/1] compat: modernize and simplify byte swapping functions
+Date: Fri,  2 Jan 2026 02:27:34 +0200
+Message-ID: <20260102002735.31390-1-rostiprodev@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,42 +71,102 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> Again this seems to do a "step 1 goes in a direction, step 2 fixes
-> its mistake, step 3 changes course" drunken-man's walk.
->
-> The same advice to restructure them into a logical incremental
-> progression that moves the codebase in one consistent direction to
-> eventually reach the goal at the end applies.
+When I read sha256/block/sha256.c I noticed it uses both the htonl macro and
+the get_be32() static inline function. I was surprised how different the
+implementations of those two kindred things are. When GCC or Clang is used the
+htonl macro is translated into the __builtin_bswap32() call, which is assembled
+into one single CPU instruction, in the case of x86. And the original
+implementation of the get_be32() function used eight bitwise operations. Even
+if the compiler can optimize that code it's still less readable and more error
+prone.
 
-Isn't programming always bit of drunken-man's walk?
+The main reason it was implemented so complicated is UB when conversion of a
+pointer to one object type into a pointer of a different object type is used.
+On the other hand, memcpy is protected from such UB and this allows us to make
+that code simpler and even more optimal, in some cases.
 
-I'm very hesitant to restructure my history before I am confident I will
-not need any of the old work later -- I would hate to lose history if I
-make a mistake.
+Additionally I made a few more small improvements related to the same
+functionality.
 
-One option is to keep my code backed up on a separate branch locally, but
-this gets problematic as I add more work (endless cherry-picking and
-squashing) between local branches before submitting new patches. So now you
-know some of my reasoning. I'm not saying I'm right, but it's a bit
-fear-based.
+I've measured performance of the original and the new code on my Intel
+Xeon W-2135 based computer in Fedora 43 Linux with:
 
-With that said, my idea has always been to squash everything into a single
-commit before merging this. The whole diff is not that big. I can split it
-into code in one commit and tests in another.
+* glibc 2.42-5.fc43
+* gcc   15.2.1-5.fc43
+* clang 21.1.7-1.fc43
 
-As a side-note: In my day job we only allow "squash and merge" on our
-GitHub. This gives devs the flexibility to treat their branches as a WIP
-area before merging, but still gives a pristine git history after merge.
-This feels to me like a good trade-offs. But again, happy to take
-instructions on how to do better.
+I used the following code for these measurements:
 
-> I see you are now using pushremote_for_branch() that is already used
-> by branch_get_push().  If that gives us "the other thing" that we
-> would want to compare, instead of adding yet another configuration
-> variable users need to be aware of, that is really good.
+#include <inttypes.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include <time.h>
 
-Thanks for the encouragement! I put a lot of work into the tests as well,
-I hope they tell the story of what this code achieves now.
+#include "bswap.h"
 
+#define ITERATIONS 1000000
+#define BUF_SIZE 8192
 
-Harald
+int main() {
+    uint8_t buffer[BUF_SIZE];
+    uint64_t sum = 0;
+
+    for (int i = 0; i < BUF_SIZE; i++) {
+        buffer[i] = (uint8_t)i;
+    }
+
+    clock_t start = clock();
+
+    for (int i = 0; i < ITERATIONS; i++) {
+        // use a volatile pointer to force the compiler to read memory
+        volatile uint8_t *p = buffer; 
+        for (int j = 0; j < BUF_SIZE - 8; j++) {
+            sum += get_be64((const void*)(p + j));
+        }
+    }
+    
+    clock_t end = clock();
+    double time_taken = (double)(end - start) / CLOCKS_PER_SEC;
+
+    printf("Time taken: %f seconds\n", time_taken);
+    printf("Checksum: %" PRIu64 "\n", sum);
+
+    return 0;
+}
+
+And these are the results:
+
+GCC 15.2.1
+version |  -Os     |  -O0     |  -O1     |  -O2     |  -O3
+================================================================
+        | 3.721806 |72.342204 |11.956021 | 3.119833 | 0.919873  
+original| 3.726111 |72.326920 |11.963618 | 3.128222 | 0.921128  
+        | 3.719791 |72.328175 |11.949108 | 3.130956 | 0.920296         
+================================================================
+        | 3.719899 |17.177719 | 3.005065 | 3.120747 | 0.920609  
+new     | 3.714785 |17.168950 | 3.004978 | 3.119227 | 0.918851  
+        | 3.716782 |17.145386 | 3.009364 | 3.119573 | 0.920030  
+================================================================
+
+Clang 21.1.7
+version |  -Os     |  -O0     |  -O1     |  -O2     |  -O3
+================================================================
+        | 3.690718 |62.916338 | 3.017460 | 3.768443 | 3.778840  
+original| 3.686283 |62.965916 | 3.014674 | 3.777897 | 3.774776  
+        | 3.687775 |62.850648 | 3.003496 | 3.766108 | 3.765313         
+================================================================
+        | 3.681818 |16.753385 | 3.008131 | 2.075271 | 2.076090  
+new     | 3.687184 |16.737982 | 3.004365 | 2.071597 | 2.074507  
+        | 3.683960 |16.765067 | 2.999775 | 2.075354 | 2.075759  
+================================================================
+
+Rostislav Krasny (1):
+  compat: modernize and simplify byte swapping functions
+
+ compat/bswap.h | 74 ++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 44 insertions(+), 30 deletions(-)
+
+-- 
+2.52.0
+
