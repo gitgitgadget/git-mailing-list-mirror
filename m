@@ -1,328 +1,153 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB56F17A2E6
-	for <git@vger.kernel.org>; Sat,  3 Jan 2026 16:30:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A1828CF5F
+	for <git@vger.kernel.org>; Sat,  3 Jan 2026 20:29:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767457819; cv=none; b=kuZTFBfTmxzmwc6h3Jq6AhqlogxzYu0kvncxJE49fSRNjfCk7z5oG6VvaCT4T8HGlXpk0gOYce2nJ3ENrYDwfV59CXcOakBlLQl7C4p1x3gMc7+ZU+jTWNtqGIarbt22xMif/0MbGwM853NixSP1nWSgIsRRX4rBSeko5bbGw1o=
+	t=1767472191; cv=none; b=m+kKDNRsdQtXX6yURiYjicBqnusx8sNqTY4ckf6LH2FD6k5b6p4MoxZrGA8OJ64rSs8sIQ0YYEV+TnTBOU2KTwiQ/r8vrcfVoOK2m8TCaKKTrhFJBxm00iEFAGFs8LiEuOVHQx+W/ol+Gah2P7jcSZuzAjX39xqQUIGBMzGDoCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767457819; c=relaxed/simple;
-	bh=rlnm2b9OCMuEkl45CSoBsR9wWDrZieH5qeAQlsU1l/E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tQzjiL0Vg6utZLh+Lqx+m1LKuovDbXFaPiYAIY8bCQHYBx/NYfvJydGCll95N2qnM7g/LlbSqkj+eb3kXUDoCObhaHNCiE1yR1KrzyZ7hyT9f/wgHN8Ivg1pOozEX7ez+f/qyXZzhGcT0zItDXCGDAeznI8PXRH9UrHFio9SwAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=paultarjan-com.20230601.gappssmtp.com header.i=@paultarjan-com.20230601.gappssmtp.com header.b=xd5atzXg; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=paultarjan.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767472191; c=relaxed/simple;
+	bh=seiY989IJQQ0YV72nla539iks4UziAd2GNhwCQNKJuU=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=W4qLJ1bigICafK9CftB0W0i78Wl5IQTG/U7/Uj9sA+cHBOAjz/SiTKccsWElDIFh2m+zqhZ5Gn3TdmaqlwipFjtcBLIq9zqfLnbb9ysY02JQ6+nP+KT/ox3Gv2NO4pzvHw5tLqSsFl+cg8JLvpKOUrTeUe+59WJnYkrNgCPBo84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=YqXSMLHu; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=paultarjan-com.20230601.gappssmtp.com header.i=@paultarjan-com.20230601.gappssmtp.com header.b="xd5atzXg"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-78fb5764382so97641427b3.0
-        for <git@vger.kernel.org>; Sat, 03 Jan 2026 08:30:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=paultarjan-com.20230601.gappssmtp.com; s=20230601; t=1767457815; x=1768062615; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8YcZyACKEGTj057/xAKOrXFjDOUFSABMd+v719gFOFw=;
-        b=xd5atzXgoKWzreoFLZP2vcVeudcYCG9ZrVgb4b28N1+KiPfgQ4T6WpCTtwwbf0hYLZ
-         JlzS2IrYclD+F0NyQZzzcxp0fZInpHRtmESMBIzXdPQ1/THFkACBaCRb9+LWD1XFUxcw
-         SCHqN9mdetTmQwXAVrHQQGgS4yjuGJelEIEzlAI0YSufVdMWsNvhDj0a+co33mPTGB4H
-         9S7HrgZkgsqGXYzyD7GcGds7Njvb6RqxS3dIvNx+3oUQyMrm928zcumNv2zSO6SuN9rY
-         zQ9vyoe0CjP9kKbASD5MpTJ+ktGSXFik8knVdqNWceaPv8sm2PMVE+BB3QIOOgApOoeR
-         Ij7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767457815; x=1768062615;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8YcZyACKEGTj057/xAKOrXFjDOUFSABMd+v719gFOFw=;
-        b=Ujd0s6w4KJKcaiKK91rtHge09KSUu5Y/CGJLL8nNfTgqrP+iUne7OWbf/w+PEro1GO
-         RTHJvSnxyCQ7yPPVyGq89IRiNZL3PDilA8qkIZZhy8M+wA1/iRS+rsTKLSIz4KT455r9
-         X2i+onbwaNt3+MY4DR2ri2wLxxeOF+mimQtMH6BHjlsDCXvH6YMsW0qljinbzS+1Y+YJ
-         vu8c6zdpnU6dxh6a31jR+JSHxVoasn/hIftTblrva2XlPVIk5eUZa1H1PHfrfYNQqoXN
-         ZRwk7Ln6LXsvOaRLm3dNgQAMb9rEzxo6Oi+MUMriqdyBvfH3BJ+LIMklh/aA/G8TotvS
-         7uEg==
-X-Forwarded-Encrypted: i=1; AJvYcCXxDdRW79SwYUJLPg1Bl3xHFglz7ho4aXcy9DfEpnZTgKTL5A5RnU2qD/lZG0hSHeiwHd8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxRROAYNP+t0v4ZN/EmwExrN+lIt/fe1sCOSBhSosG6Yyw9psCv
-	//HX1wmi6jL3MEzbEcXStJXFcM+w52QSrC98PZWQIoTBS3J1KmnQGMUBnnk1X4ymSNjPEtFOyc4
-	Lhcvfr8ZjRV12I0OwsO6GbSP+Ek1f/l0=
-X-Gm-Gg: AY/fxX4cktE7xy3Yck5wTo9UamBcTE1U4akDQWx+k2IjLm+E9T/3bZPxKP/HwJlToPM
-	guOkb8GafQZBg5OUCKiCU01epprwcCVxuzFPlQd/NX4BsDy8sKfiB8fqR6GinSrX+kapELdZj9L
-	vJRg8jnWPeIhlrXdmNff54AsfGtzdR/lSD8yNg4+Dk3/Um9kQsmSAACfijBxQHBe1TlananmNrN
-	AdJfUPIGqe+Xqi5d4jZa6Q4HmHzoSN8IILSU3/5wdXGjTrTmKdh+As9KXzIEsbXXKPcqHHNmKGj
-	q6l1JlL1qmFJAjuMhK2yD9jaW2Vvx/qdc7h9Hg==
-X-Google-Smtp-Source: AGHT+IH0VszTI+gr8CPKbWxywSky1feWXkG5RHJc+aBjBEpaLnx3q0fXu0pC6+RmOhBGg7hJZDZY35JoBcgdB5DmtGc=
-X-Received: by 2002:a05:690c:7409:b0:787:e9bc:fad5 with SMTP id
- 00721157ae682-78fb40294e1mr360913317b3.33.1767457815482; Sat, 03 Jan 2026
- 08:30:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="YqXSMLHu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1767472187; x=1768076987;
+	i=johannes.schindelin@gmx.de;
+	bh=seiY989IJQQ0YV72nla539iks4UziAd2GNhwCQNKJuU=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=YqXSMLHubdmObfDjdFMlUbXlc2Bhw9lLuYZUh4TRMcLXdxyuGAnkXBt4FQSCUGc5
+	 5CJ2ZWB88gUiED+kKLOyU6RJJxTYfC9ql5DDfs66VkMBC7O1zAK5j8Gy7hiMbJmwA
+	 TyB+xsEHLZAr6+D+5dP5sDdCRyaI30az0vBcNhO4u+lMiBnZNKp7r71X740/nJMcf
+	 diY/DqU0QYcVCVimTkQR4HlHjyAO1HbQwJe+O+2PXFFcK4OAPMUutiAVUZiSD+Dpy
+	 eNB0THlFgsT6BLs8sSKQrQ4ztTDbXYHMs6wSQBFcocz0a74WY3x81EkUoooOl+JWq
+	 iponca5Ulqj6GdY+MA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.213.219]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N7zBR-1vyQWG16OJ-012OFe; Sat, 03
+ Jan 2026 21:29:47 +0100
+Date: Sat, 3 Jan 2026 21:29:45 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Paul Tarjan <paul@paultarjan.com>
+cc: phillip.wood@dunelm.org.uk, 
+    Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+    Paul Tarjan <github@paulisageek.com>
+Subject: Re: [PATCH v2] t7800: fix racy "difftool --dir-diff syncs worktree"
+ test
+In-Reply-To: <CALvWuB79v3i3zU_g1swqQVS-fH1f-U8Ptr9Z9ObAUgeFJHx++A@mail.gmail.com>
+Message-ID: <1e39f5d3-6b4a-f832-8328-f82ece12deff@gmx.de>
+References: <pull.2149.git.git.1767219599334.gitgitgadget@gmail.com> <pull.2149.v2.git.git.1767292068036.gitgitgadget@gmail.com> <02749b7d-e9a4-4894-a50c-91a7c1a22d84@gmail.com> <CALvWuB79v3i3zU_g1swqQVS-fH1f-U8Ptr9Z9ObAUgeFJHx++A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2149.git.git.1767219599334.gitgitgadget@gmail.com>
- <pull.2149.v2.git.git.1767292068036.gitgitgadget@gmail.com> <02749b7d-e9a4-4894-a50c-91a7c1a22d84@gmail.com>
-In-Reply-To: <02749b7d-e9a4-4894-a50c-91a7c1a22d84@gmail.com>
-From: Paul Tarjan <paul@paultarjan.com>
-Date: Sat, 3 Jan 2026 06:30:04 -1000
-X-Gm-Features: AQt7F2q3tBSV3DzQZ_X2J4dMAa33NRQC6mKWt430UIaji7Pa2u274dL9LPaDa28
-Message-ID: <CALvWuB79v3i3zU_g1swqQVS-fH1f-U8Ptr9Z9ObAUgeFJHx++A@mail.gmail.com>
-Subject: Re: [PATCH v2] t7800: fix racy "difftool --dir-diff syncs worktree" test
-To: phillip.wood@dunelm.org.uk
-Cc: Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Paul Tarjan <github@paulisageek.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:jy7nJeylZ3kPIefKQwqUhL8kE0oYwmn9Xd8rhsF0LHnB13PIp50
+ O3Zd47Tbr9dOGXm83aurVXZfivpoq1o9OdtOd7iOR8uWZulcv/lOukUyxHEQ23oZeqoOMSy
+ sUW7ZEqSoVLDVS7gyf7SyVT/8TT8nnzGVaLCmZz1w6BsFCOnIuFehLMqQrc652vdmbSqDSn
+ nD11q9gSCuE3883ct41aQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:uEw3y1CZbWw=;OZM1+laBgYJ7PyOCUXpWw7hH90n
+ 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
 
-I've updated the commit and PR summary for your comments. Should I
-re-run /submit to send a no-op patch or leave it as is until code
-changes are needed?
+Hi Paul,
 
-On Fri, Jan 2, 2026 at 11:39=E2=80=AFPM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> Hi Paul
->
-> On 01/01/2026 18:27, Paul Tarjan via GitGitGadget wrote:
-> > From: Paul Tarjan <github@paulisageek.com>
-> >
-> > The "difftool --dir-diff syncs worktree without unstaged change" test
-> > fails intermittently, particularly on Windows CI.
->
-> Thanks for working on this. I've seen it fail a lot in Windows CI runs -
-> does it fail on other platforms as well?
+On Sat, 3 Jan 2026, Paul Tarjan wrote:
 
-I did a cursory grep through the Github actions and didn't find any
-other failures for this. The fact that you have seen it too means this
-is more widespread. I was merely reacting to the fact that it failed
-on my unrelated diff.
+> I've updated the commit and PR summary for your comments. Should I
+> re-run /submit to send a no-op patch or leave it as is until code
+> changes are needed?
 
-My guess is this will start failing more once my fsmonitor for linux
-merges in since it will be yet another platform to fail on.
+I believe that the change you intended for v2 (adding the "Reviewed-by"
+trailer) accidentally made it to the cover letter only, not to the commit
+message where it wants to live.
 
->
-> > The test modifies a file in difftool's temp directory via an extcmd
-> > script and expects the change to be synced back to the worktree. The
-> > sync-back detection relies on git's change detection mechanisms.
-> >
-> > The root cause is that the original file content and the replacement
-> > content have identical sizes:
-> >
-> >    - Original: "main\ntest\na\n" =3D 12 bytes
-> >    - New:      "new content\n"   =3D 12 bytes
-> >
-> > When difftool creates the temporary index (wtindex), the cache entries
-> > have sd_size =3D 0 (zero-initialized via make_cache_entry with no
-> > refresh). Git's ie_modified() is designed to handle this by calling
-> > ce_modified_check_fs() for content hashing when sd_size is 0.
-> > > However, Windows has known filesystem issues that may cause this to
-> > fail intermittently:
-> >
-> >   - UNRELIABLE_FSTAT: Windows fstat() on open files may not return the
-> >     same information as lstat() after close (config.mak.uname:506)
->
-> As I understand it the test is flaky because the file is updated without
-> changing any of the stat fields that git looks at. How does that relate
-> to fstat() returning different data to lstat()? Also doesn't
-> UNRELIABLE_FSTAT exist so that we can work around the problem?
+Also, I would like to suggest to replace the non-URL
+"git-for-windows/git#5132" with the actual URL:
+https://github.com/git-for-windows/git/issues/5132. Remember: Commit
+messages are not usually read on GitHub (and some very vocal Git
+contributors actually refuse to use GitHub for their contributions).
 
-You're right, the UNRELIABLE_FSTAT reference was misapplied here. That
-flag addresses a different issue (fstat vs lstat discrepancies on open
-files). The actual problem is simpler: when file size and mtime both
-match, stat-based detection fails entirely. I'll remove this from the
-commit message.
-
->
-> >   - NTFS timestamp issues: The racy-git documentation notes that NTFS
-> >     is "still broken" regarding timestamp granularity between in-core
-> >     and on-disk representations (Documentation/technical/racy-git.adoc)
->
-> That comment is specifically talking about linux so how does it relate
-> to a test that is flaky on Windows?
-
-You're right - I conflated unrelated documentation. Looking at CI
-history, the failure was only observed on Windows (win test (8)). The
-root cause is Windows-specific: Git relies on inode changes as a
-fallback when other stat fields match, but Windows lacks inodes.
-Johannes linked git-for-windows#5132 showing this affects real users,
-not just tests.
-
->
-> >   - Attribute caching: Windows GetFileAttributesExW may cache results
->
-> When git refreshes the index it calls lstat() on each path in the index.
-> GitFileAttributesExW() provides an API like readir() which returns paths
-> in an arbitary order and it also resolves symbolic links so I'm having a
-> hard time understating where it is called by git. (There was a post [1]
-> on reddit recently about using GitFileAttributesExW in this context)
->
-> [1]
-> https://www.reddit.com/r/rust/comments/1prkzqg/writing_the_fastest_implem=
-entation_of_git_status/
-
-This was speculation on my part that doesn't hold up. The actual
-mechanism is straightforward: changed_files() in difftool runs
-update-index --really-refresh and diff-files against a temporary
-index. When size and mtime match, no change is detected. The Windows
-API details aren't relevant. I'll remove this from the explanation.
-
->
-> > Fix this by changing the replacement content to "modified content\n"
-> > (17 bytes), ensuring the change is detected at the earliest size
-> > comparison in match_stat_data(), bypassing any platform-specific edge
-> > cases in the more complex code paths.
->
-> This stops the test from being flaky but it is a real bug. If the user
-> is modifying the files interactively then they're unlikely to be able to
-> update the file fast enough to be affected but if anyone is scripting
-> like the test does then they might be affected.
-
-Agreed completely. This fix was to make the lives of git developers
-easier, not its users. The fix addresses the symptom, not the cause.
-The difftool creates its wtindex via make_cache_entry() and the
-subsequent refresh/diff-files path doesn't trigger content comparison
-when stat data matches. Anyone scripting difftool with modifications
-that preserve file size could hit this silently.
-
->
-> Thanks
->
-> Phillip
->
-> > Note: Other tests with same-size file patterns (t0010-racy-git.sh,
-> > t2200-add-update.sh, t1701-racy-split-index.sh) are not vulnerable
-> > because they use normal Git index operations with proper racy git
-> > detection. The difftool case is unique due to its ephemeral wtindex
-> > created via make_cache_entry() without full stat refresh.
-> >
-> > Signed-off-by: Paul Tarjan <github@paulisageek.com>
-> > ---
-> >      t7800: fix racy "difftool --dir-diff syncs worktree" test
-> >
-> >      In
-> >      https://github.com/git/git/actions/runs/20624095002/job/5923174578=
-4#step:5:416
-> >      this test failed for me on an unrelated commit. I had Claude look =
-into
-> >      it and it thought that this could be a racy git problem. I'm skept=
-ical
-> >      but a) I don't know the source well enough and b) the fix is low r=
-isk so
-> >      I thought I'd send it to you folks. Everything below is the AI gen=
-erated
-> >      explanation.
-> >
-> >      The "difftool --dir-diff syncs worktree without unstaged change" t=
-est
-> >      fails intermittently, particularly on Windows CI.
-> >
-> >      The test modifies a file in difftool's temp directory via an extcm=
-d
-> >      script and expects the change to be synced back to the worktree. T=
-he
-> >      sync-back detection relies on git's change detection mechanisms.
-> >
-> >      The root cause is that the original file content and the replaceme=
-nt
-> >      content have identical sizes:
-> >
-> >       * Original: "main\ntest\na\n" =3D 12 bytes
-> >       * New: "new content\n" =3D 12 bytes
-> >
-> >      When difftool creates the temporary index (wtindex), the cache ent=
-ries
-> >      have sd_size =3D 0 (zero-initialized via make_cache_entry with no
-> >      refresh). Git's ie_modified() is designed to handle this by callin=
-g
-> >      ce_modified_check_fs() for content hashing when sd_size is 0.
-> >
-> >      However, Windows has known filesystem issues that may cause this t=
-o fail
-> >      intermittently:
-> >
-> >       * UNRELIABLE_FSTAT: Windows fstat() on open files may not return =
-the
-> >         same information as lstat() after close (config.mak.uname:506)
-> >
-> >       * NTFS timestamp issues: The racy-git documentation notes that NT=
-FS is
-> >         "still broken" regarding timestamp granularity between in-core =
-and
-> >         on-disk representations (Documentation/technical/racy-git.adoc)
-> >
-> >       * Attribute caching: Windows GetFileAttributesExW may cache resul=
-ts
-> >
-> >      Fix this by changing the replacement content to "modified content\=
-n" (17
-> >      bytes), ensuring the change is detected at the earliest size compa=
-rison
-> >      in match_stat_data(), bypassing any platform-specific edge cases i=
-n the
-> >      more complex code paths.
-> >
-> >      Note: Other tests with same-size file patterns (t0010-racy-git.sh,
-> >      t2200-add-update.sh, t1701-racy-split-index.sh) are not vulnerable
-> >      because they use normal Git index operations with proper racy git
-> >      detection. The difftool case is unique due to its ephemeral wtinde=
-x
-> >      created via make_cache_entry() without full stat refresh.
-> >
-> >      Signed-off-by: Paul Tarjan github@paulisageek.com Reviewed-by: Joh=
-annes
-> >      Schindelin Johannes.Schindelin@gmx.de
-> >
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2=
-149%2Fptarjan%2Fclaude%2Ffix-difftool-test-DDxDC-v2
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2149=
-/ptarjan/claude/fix-difftool-test-DDxDC-v2
-> > Pull-Request: https://github.com/git/git/pull/2149
-> >
-> > Range-diff vs v1:
-> >
-> >   1:  dd5b774451 =3D 1:  98bc88f336 t7800: fix racy "difftool --dir-dif=
-f syncs worktree" test
-> >
-> >
-> >   t/t7800-difftool.sh | 6 +++---
-> >   1 file changed, 3 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-> > index bf0f67378d..8a91ff3603 100755
-> > --- a/t/t7800-difftool.sh
-> > +++ b/t/t7800-difftool.sh
-> > @@ -647,21 +647,21 @@ test_expect_success SYMLINKS 'difftool --dir-diff=
- --symlinks without unstaged ch
-> >   '
-> >
-> >   write_script modify-right-file <<\EOF
-> > -echo "new content" >"$2/file"
-> > +echo "modified content" >"$2/file"
-> >   EOF
-> >
-> >   run_dir_diff_test 'difftool --dir-diff syncs worktree with unstaged c=
-hange' '
-> >       test_when_finished git reset --hard &&
-> >       echo "orig content" >file &&
-> >       git difftool -d $symlinks --extcmd "$PWD/modify-right-file" branc=
-h &&
-> > -     echo "new content" >expect &&
-> > +     echo "modified content" >expect &&
-> >       test_cmp expect file
-> >   '
-> >
-> >   run_dir_diff_test 'difftool --dir-diff syncs worktree without unstage=
-d change' '
-> >       test_when_finished git reset --hard &&
-> >       git difftool -d $symlinks --extcmd "$PWD/modify-right-file" branc=
-h &&
-> > -     echo "new content" >expect &&
-> > +     echo "modified content" >expect &&
-> >       test_cmp expect file
-> >   '
-> >
-> >
-> > base-commit: 68cb7f9e92a5d8e9824f5b52ac3d0a9d8f653dbe
->
->
+Ciao,
+Johannes
