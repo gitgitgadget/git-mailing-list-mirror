@@ -1,122 +1,133 @@
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1939821CFFD
-	for <git@vger.kernel.org>; Sat,  3 Jan 2026 10:04:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49E722D4E9
+	for <git@vger.kernel.org>; Sat,  3 Jan 2026 10:47:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767434650; cv=none; b=QM5HAeHe36wXb8+2wS34dUiOeXx6ujn9RWDDm9/9sh5f1R94e3a+Oj33mdLo+XHJSbza8RCE6BXBA+Qkpjif3GY92aaRZ8u7KH80va0QcgMe83UyzO4RvtA44TxZOc9omAkGXmEl+xpTdWtGjC6NyxVOMN/0DpllEb/BMEAWj3s=
+	t=1767437271; cv=none; b=bgxy/CVFFiC7/PLkk7rMXdbLgBmxmYX+CgNHiOTxmwLFTnLIhR0/hRVN1HusobzUH6PGFS8AuuKFZ6wnudISa2leHY82+GLn3cKGlv75BsdLdpr3JvxxBPg4VDOKxvoRrinkOOLKdj8RtKhh2//94l7A6eloxhXpJnTCKIwY2pQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767434650; c=relaxed/simple;
-	bh=czxPj9UHjYuvOCmbhhPiv9J+ydrWzRfUtENoI5aCb28=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mk8bZ0AstREdijgtYKNbfF1xfkw2xdj6wILmQe/yj8/kW1dwl0d56/d1cpb3+TP7ZUkuHDkSyhRPQvCXhO1h/4eCbZFL5auwv8DIiJwy/NrsK8Qp1nIP/sDLtYQk2eX/rdMmlTaVtA7ejp+xXz0/o4U3oMgn9pkjsS/bW3+O+LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m48lx9cy; arc=none smtp.client-ip=209.85.128.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767437271; c=relaxed/simple;
+	bh=GEVlwcrUGJX6esyt3GT3uuJxMSQGuPCkfe7s/oJF2Gc=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=ijt7K+3ritF+3vuG8QD4sPnzQ4SDtqDRLKkNkKtGAKOIiGBKHSzvtxvYkqDyZ4s4VHwfUA+xdJ2kOTCTRJnt3d8i9YbYFS0ZsxTb/KxSdL2XM8X8C8Wj4rA7SlDetftSd4s8u9beaHq7WlU23Ph538Jgp1hJgw8ib0PgN4RDM5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=letterty.com; spf=pass smtp.mailfrom=letterty.com; dkim=pass (2048-bit key) header.d=letterty.com header.i=@letterty.com header.b=kz0sMQdu; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=letterty.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=letterty.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m48lx9cy"
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-47d5e021a53so20579975e9.3
-        for <git@vger.kernel.org>; Sat, 03 Jan 2026 02:04:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=letterty.com header.i=@letterty.com header.b="kz0sMQdu"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-88a2f2e5445so164893806d6.1
+        for <git@vger.kernel.org>; Sat, 03 Jan 2026 02:47:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767434643; x=1768039443; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8c4Avd0jswT1AGUWDRpEXlqbycDvud6i5r62X3kPB5U=;
-        b=m48lx9cy985Ww0nR2s2eOyHZUV5bOgc6UpzsH1OVvGwHxinabNMT+x/bIVk1pBmRgB
-         6Iuk4dZw3HWTs569NtB0fQlmUf+K3Xz909XTuEzsHxmNSS1nzCXAj4isLm2b3lNc3OuP
-         4lnMkapBkc2QnrQbNHoTbJKCwymrKhjCqKuL4njoAys2Zpw9IKilr7zb4YngytjXZlhZ
-         NAgN/mreDZZxl3bgwr0K6PdYoCx6PknwRHTFxhimARAWHl6YR2tMhVXU3BPUQ4JUDkEa
-         daUwrBDTnG0KGeFty07dxIk9wOhXsN8vxzps9TaPnaxGoliEZ7nYPi7H3jpIBXAuK2bm
-         Cf/w==
+        d=letterty.com; s=google; t=1767437268; x=1768042068; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=zwJLJRWImEaGX8kIPesE0yva/f+qt2Gs55sOPEAtjdU=;
+        b=kz0sMQduXLIiDTicphiIYQqjElbS1pMCWPyvBKcTzI58w9E4DR1b4bdsj124aspDrK
+         +EgCmhnT7XkPjkoBeQ2cGVNkiIgXvellW4L+5DeOnMZqTBTBY6AwP5p1okx/zbdXhS/4
+         Ihr7Ho2KnV5X/o0TfuqsxYB54ZoQk946jZHRtoxEOAs2lnF/321jpmkXg3IE6XepLBYY
+         cbFo4TccnYqpmy+gedI+sD9NrxwicpjwdQEeK6CLk3VAlJvovNeqFwHxVuBGNdzK5nzG
+         DfJJw0+53/TllwGCuELmZZH8YorMoyelbiaI/xY5cqJ6OvBEs6UkFO5kOXvX4mNuPixn
+         h+gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767434643; x=1768039443;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8c4Avd0jswT1AGUWDRpEXlqbycDvud6i5r62X3kPB5U=;
-        b=wPvHaJAdXECMhjBgglaW5EHqnGI+mRHpM3A3aOMZmkRO5Iq4tw6vR2Ek/TWRGpa53P
-         MnRd4HjfoYSfFl1pAfzq22kmKdF2R+B4vEQf4EQoQtBnEtOAMEwWCXMRXeTzolGtQh09
-         L+FLMXEeVVNPoA/8qcs87ixMDxDg9hH29pNbTwo69mU04WAjoDcdkH7cLTHMs/gSQU5+
-         P0SUnJVa85Nlvhei54Wv406wWewpGuZPvFAHiqf5bSh55w4k7Sqfspm9NKdqQUJX4PY2
-         x73x4782IBrps6llxiAvo+TWXTDUq3XhmY2R7845EK/XrEvHECG7aOgfJJEHd4V0rQFa
-         LWyg==
-X-Forwarded-Encrypted: i=1; AJvYcCU+V1fitf8bZBd1GitM4lvU8HENlJJfGQQxuYrzC7jiaOnbVWBz0Hc2iHEfCraDJ9H/L0E=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzR1f/MRlyEft2sN8PWDi3VbLph0Sir8W3DezPFOaASZ0V+KIR1
-	hFH/xZeMDJDnL20rBj7vu+Bl6SarRjEOL4kOy33qr7bJAPDswm4CGSgt
-X-Gm-Gg: AY/fxX63XLvwJaleIQHhekKytUUPH4lBhphGpl6+Ve4tA3txXtp+EL68/OC36ETjPwN
-	6AK/HdmgDhCEMzfbjRhACbafvJVzNvVDAMFAFRZmig88OUVJPy9xsGBY1ojDRpLHefgmuG2K5X3
-	xZYEUcJgaBTwdasTAspqe8S9U5oX/SDzMDa6oqWGZXe9dQyOTh+LJrEsXuJmEzD99oO152R3oSC
-	TobQvjnP9IfAQG+fYxpQAYZ1ts56guiE6J8NFBzNipg43mHT8yoYvlmYD4/ijJ4WJ9dd/OcQknE
-	mCZD9nGfR/SmQduWS02vjh5Bv9beaTm3zVac01TxyaLsSoLZ7Wz1VjWir7AIohpfWs7882ghKqo
-	0MGEQPlnZPAQnxw6KS6ULhImZ5XHpM1YUZfnyu15/k67HgWW7xhk7TrzsAOxNs4QjqZWw3fcpAa
-	jn1eNeLHLuE6e+4uwzvagC1Z0xROK7HGxjVeQXmL3pvOiFOInWpyYyGcMgszBLZX2HSo116o0sq
-	cFd
-X-Google-Smtp-Source: AGHT+IH5DQEEGnPx+T5byACn+D99mZGzkEw8FyEPpXVj8EEp5j7bvRIymu9sSuMfVVjfWQSpwE6g3w==
-X-Received: by 2002:a05:600c:4506:b0:477:9392:8557 with SMTP id 5b1f17b1804b1-47d1957711fmr506324675e9.18.1767434643114;
-        Sat, 03 Jan 2026 02:04:03 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5? ([2a0a:ef40:627:1f01:b22b:2092:b7ed:c8f5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d6ba3af58sm15744245e9.2.2026.01.03.02.04.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 03 Jan 2026 02:04:02 -0800 (PST)
-Message-ID: <9d3407a6-7d88-4f30-9961-5b21b059e1b0@gmail.com>
-Date: Sat, 3 Jan 2026 10:04:01 +0000
+        d=1e100.net; s=20230601; t=1767437268; x=1768042068;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zwJLJRWImEaGX8kIPesE0yva/f+qt2Gs55sOPEAtjdU=;
+        b=b/WfS+WPosnI8cZbDNp73xfHiFAdoFsG5SWl75mPiNPKkxAB4VlPzS5FkqO90MXt1g
+         SQst2t6udVgxX6aftEr/+PuLT2jCOwBOg/3C6yPcTlZraGB6MJpkT+0tHGw+4wcEzgEH
+         bGdaKxbC4/f+W7gQrSUmLhBlk+IeCzV6UAzLJ5L47TQKXknGUTeH4hP5QaXuD2ba63ar
+         42lqfg7Ca8jhAf2FIsbO6RYE/VBXJL05ldQuV6FY33jTAutoDCcQxSH7O7+GPrreWdXq
+         hbY0jaLGAfbXBV0Xqn0yKMAO9ydWe06KtpMmJEkyavsz0Q2ZrHfrPTEUGYLdD/jpLaVR
+         bnjA==
+X-Gm-Message-State: AOJu0Yzltq24lGZyxAe0CKt2avvpocuX50R6qBnrF3D56JewczE27OID
+	1cywykm967sd5As0xXUtRWFz4ejLQ1WEh/STFTQudgp+UArIvZPHHxqG3kTtQb+DccpMQg7qPPl
+	/d/z2G4oE1Ipm4SPz/PswIXTwsJKrgHJ+dUnshmZk5jVQZ+45OE68m6Y=
+X-Gm-Gg: AY/fxX7x4b9ie76Y6oGpJPI/WNKKSAb1YxMbz2CS6y/Y6s2qTh2xeqk/rFTLfmelCmh
+	rCeFxRAa5Fn+HcwMSlgV49nkZsxyOEeVnuYWf75YG6CltfWecM6RN9qef25a1ngFNJIffN/eysm
+	NljSEp4ai/p7jOb1cJUBoq5myJv3MuR/Z10TLD7OEnWhgRe284JTDQ+n0MtfN/exrfKDVqR3G3z
+	te/GMONlp2xghe2VvSme2wcZsy56+yZDJVOSfs6brBGJ7OcrZfSxEXZztgWzU6v5UJZ+b8=
+X-Google-Smtp-Source: AGHT+IEYjfpyuTzKfMRAqMSWxGv5Gm1OrXT2rOmfIE61C+4Z/g+L3iTq20QTEWuBKzsUmcQQaqjwG1U5AZy1DQHjkAw=
+X-Received: by 2002:a05:6214:401b:b0:87c:2c0d:309e with SMTP id
+ 6a1803df08f44-88d8369e76emr852248566d6.37.1767437267592; Sat, 03 Jan 2026
+ 02:47:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Another look?
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: ben.knoble@gmail.com, git@vger.kernel.org, gitgitgadget@gmail.com,
- gitster@pobox.com, kristofferhaugsbakk@fastmail.com,
- phillip.wood@dunelm.org.uk, sandals@crustytoothpaste.net
-References: <6526c419-c60c-49d2-9c1a-52be7aca82f0@gmail.com>
- <20260102202738.82432-1-haraldnordgren@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260102202738.82432-1-haraldnordgren@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Artur Pyrogovskyi <arp@letterty.com>
+Date: Sat, 3 Jan 2026 02:47:36 -0800
+X-Gm-Features: AQt7F2rtmKBZ__m6S2r0gg9urfzuE3YRywMHDLYVXuebTkSdpjA3XrtMRFkY7DM
+Message-ID: <CALiS03_X4kA47-bimcovqAsTDXOM-KbKUAApM5xHdYzk9kqkbQ@mail.gmail.com>
+Subject: bug report: git status -z doesn't respect status.relativePaths=true
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 02/01/2026 20:27, Harald Nordgren wrote:
-> 
->> Shouldn't we be taking account of the push and fetch refspecs here? There
->> is no guarantee that $branch maps to refs/remotes/$remote/$branch. To take
->> a silly example, if we have
->>
->>       remote.$remote.fetch =
->> refs/heads/$branch:refs/remotes/$remote/abc-$branch remote.$remote.pull =
->> refs/heads/$branch:refs/heads/xyz-$branch
->>
->> Then we should be using "refs/remotes/$remote/abc-xyz-$branch" in the
->> message above as "$branch" will be pushed to "xyz-$branch" on the remote
->> which is fetched to "$remote/abc-xyz-$branch"
-> 
-> I don't understand this one, can you maybe explain how to code will need to
-> change?
+According to the man page of git-status: "-z Terminate entries with
+NUL, instead of LF."
 
-You want to display the remote tracking ref that tracks ref on the 
-remote that we push to. When git pushes $branch to $remote it checks if 
-any of the push refspecs remote.$remote.push match $branch. If there is 
-a match then the branch name is mapped according to the refspec and that 
-it the ref that is updated in the remote repository. It then takes that 
-ref and checks the fetch refspecs remote.$remote.fetch and if it finds a 
-match it maps the ref we've pushed to a remote tracking ref in the local 
-repository.
+However, it ignores status.relativePaths=true and always shows absolute paths.
 
-It looks like you can find where we would push a branch to with 
-remote_ref_for_branch() and you can map that to a remote tracking ref 
-with tracking_for_push_dest(). We could use branch_get_push() but does 
-more than just map the refs as it checks push.default to see whether 
-"git push" would actually push the branch.
+Repro steps:
+$ mkdir test-repo && cd test-repo && git init .
+$ mkdir subdir && touch subdir/test-file.txt && cd subdir && git add
+test-file.txt
+$ git -c status.relativePaths=true status --porcelain=2
+1 A. N... 000000 100644 100644
+0000000000000000000000000000000000000000
+e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 test-file.txt
+$ git -c status.relativePaths=true status --porcelain=2 -z
+1 A. N... 000000 100644 100644
+0000000000000000000000000000000000000000
+e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 subdir/test-file.txt%
 
-Thanks
+--porcelain=2 is for convenience here; the bug is present with or without it.
 
-Phillip
+Here's the full bug report:
 
+What did you do before the bug happened? (Steps to reproduce your issue)
+
+$ git -c status.relativePaths=true status -z
+
+What did you expect to happen? (Expected behavior)
+
+I expect this to show relative paths, just as this shows relative paths:
+
+$ git -c status.relativePaths=true status
+
+What happened instead? (Actual behavior)
+
+It shows absolute paths, not just terminating entries with NUL as manpage says.
+
+What's different between what you expected and what actually happened?
+
+I expect that when I use -z option with status,
+the only thing that changes is the line separator.
+
+However, for some reason, -z also enforces absolute paths
+and ignores status.relativePaths option.
+
+[System Info]
+git version:
+git version 2.52.0
+cpu: arm64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+rust: disabled
+feature: fsmonitor--daemon
+libcurl: 8.7.1
+zlib: 1.2.12
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+uname: Darwin 24.6.0 Darwin Kernel Version 24.6.0: Wed Nov  5 21:33:58
+PST 2025; root:xnu-11417.140.69.705.2~1/RELEASE_ARM64_T6000 arm64
+compiler info: clang: 17.0.0 (clang-1700.4.4.1)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
+
+Artur
