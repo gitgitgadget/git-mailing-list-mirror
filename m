@@ -1,171 +1,137 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3606222597
-	for <git@vger.kernel.org>; Sun,  4 Jan 2026 19:40:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704853C465
+	for <git@vger.kernel.org>; Sun,  4 Jan 2026 19:48:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767555626; cv=none; b=qdC07QXSQEenodqUqAs8K4kLnLT89VEf7FsQ9Kkwk9ViMA2Jb/xaxMhIVrheQJ9KkWO0u1oPgb0paY3QczH3agWxgZeIbGSqN8ndA5LP3vhzKzFMXfBi6r9GM0EpmKT/KdDf46EwkmYOKe+ESKYlo0LwIYU3nZs/vSx4dgLv4ik=
+	t=1767556099; cv=none; b=h7vyXETSxvTmw4unYqCRzbn6680DtYM8shGiXeWBgmgSeNNq6naIeBvUZW9ON8TIzgyY0AK3/rpF9rFebkQywNaVJItgcxf5x+x4JTebEp/6pyZJy2jKg5CBNZyruV9NqDm0fw1jS6/8NZlX7VgdEqjdfm81DIIBZwxozIlqBeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767555626; c=relaxed/simple;
-	bh=2u8tWEZTnftOupvJ8Ws7Q5LzJsVEWEbdLI7zZwJkdpc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CPa/nfGeMaJXxSebCgge1Lcx7di/UwXX4Rpjc4fpJj2m8g4phEvq9fKmJ4ViqdvszlcCXGW2zhwE8rY/0V6cQ2WOweuzFzGOIMWDrMa8qNBE9nnp9GUqT0N821gWNCq2CqAvm2vKS9RgKOJF98StXsVY8n6SngaP+8DtQpYzwj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=uwItlGWC; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1767556099; c=relaxed/simple;
+	bh=nE14aKBAja8zPwVG/wSI/p+Hhnx1VpXqMI3StCDM8xk=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=r2W5OPLhSIF/y3wcRw8RaUwCsjya2as1vexqHg90c+FE1NoaJowYoH/frBr3JlsinZOfT6/ZBaLQHJ+JzLIVNZJBx323uBrciIDZD58Q0LfrxDfy5FSK5IDXAXOq4OFCPIBfj3394MUJ15NlTaLGkA6AJ6foscFyjdDLWpz2ydQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GTZ/GlKb; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="uwItlGWC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1767555616;
-	bh=2u8tWEZTnftOupvJ8Ws7Q5LzJsVEWEbdLI7zZwJkdpc=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=uwItlGWC5QmcmgbvUUth4i6mFsyYoA1TzzTFHFh7I4WOoqZRY4hjXlDi5DUXQS+FJ
-	 F7Ww35eqp51Mv6EJgbFe9QBJt4pU9GZQok+6yxbiebEclyoGfbq66d54f8zhzUEbLz
-	 xR1HoLFxiht+zN/YllA1iVkb11Eflta1C4Ys+w72LMapv670sCuuSrz9CFlf5dgJep
-	 Ph5z8LAG+/HpKYXmo4cNJDyjMYv15aGvP23Hpwy4hG1KcrXk9hCjvRlAseHPwHUQ7i
-	 ZjVFwrXKRoV7msFg0iSwdWU56jUg39PoRFZ5IMzg1nbkgvvxFDv7cBb+f5i4ZavpDf
-	 TWO3y6n/FrKmym73BC1UBpkQKa9rgqkdpEIBhCGVfOO+PXX/3vZ84UEGYixjsPPBKp
-	 s/hnaPdte2dHNIcyjcE/ulWYzDmafpCvPOWTleeQAGcZ0Wk+c0vqoJjfKcPaDSTGBE
-	 1s/0xiuVkyXeH3NTWyY36utoq18mBcRs0cz9hpElymTskC5dvk+
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:d4c0:104f:6ae5:8a31])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8216B200B5;
-	Sun,  4 Jan 2026 19:40:16 +0000 (UTC)
-Date: Sun, 4 Jan 2026 19:40:14 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Matthieu Beauchamp-Boulay via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Matheus Tavares <matheus.tavb@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Matthieu Beauchamp-Boulay <matthieu.beauchamp.boulay@gmail.com>
-Subject: Re: [PATCH] ignores: handle non UTF-8 exclude files
-Message-ID: <aVrCHr_NRDqNjPn0@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Matthieu Beauchamp-Boulay via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Matheus Tavares <matheus.tavb@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Matthieu Beauchamp-Boulay <matthieu.beauchamp.boulay@gmail.com>
-References: <pull.2157.git.git.1767478617198.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GTZ/GlKb"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-7aab061e7cbso17801090b3a.1
+        for <git@vger.kernel.org>; Sun, 04 Jan 2026 11:48:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767556097; x=1768160897; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TWvyt5vqC+PBw3BgzokctFQZadkV/5i0hW2m7qcYPwY=;
+        b=GTZ/GlKbPSV07xBan3ME83hptULW1Jh9IS72pcM5RVTlfYZUki3FGuj1Hz1NGQJ0tz
+         tKNY/5CYZgiQpoDFV0U1NnEd0dC8AvoZCSCGTYk4+BB6VO2vqfDt1iMnaIDqZqfEzFht
+         rXpGGCuln2+juZuTQmHf0At9xKM3Q9puf9HW/9y2bQcGHafHX/IV9CZVsGWdGrwu8wkM
+         0wX67yqex9I0MrNZqT8Tc9MTuGuH8+vPg0GjErBUm73k6vNUzg+ptJR4dOw0i9X5vPdu
+         DTdm9kbV58OyxftzGeUVc3u04MFcbhYuDOOZuXc4TD+fq2J7iXR5qRccoerX022eBt1k
+         WI7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767556097; x=1768160897;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TWvyt5vqC+PBw3BgzokctFQZadkV/5i0hW2m7qcYPwY=;
+        b=Ap/816XzzC3r1Dv30m2TdLY90Rb/Z/uzHawr8ezgH7RkZDAJEcg+CJfStOn9bx7Hmw
+         a13Hu0LiVXbnNHDghpL8rd5FON9HN464SyV9xlSCW6izpfXu/oi9E2tQdInEVZoB+lSV
+         e0EQZHeOERxxeigipXw4Xw6fbQF27NrumSFixtQXV+oTQ3NkpxEws8ZW1B3txuTptA9n
+         AaJXrQjkOf3clAP3IlpEqzkFtg4sDWBQ9nqnLlSzv3x06JxPMLGo6/GbxXljsoEaJ236
+         vSwgrTatLk1+S20SfRRAHwY2vLaXTDjCSsUXgHfULl4bjHr0owPRHyL85P00vy+VJDfF
+         eG1A==
+X-Gm-Message-State: AOJu0Yxn0/baez2MOK0iG+JEHFSB4XCapMwnP/O9k8iZ1Od07x6Frk82
+	RhDHBKZv+uI5euEewo+861IBDD98E4yM8s5wREdFHipKY51DtmghHY3Fto178g==
+X-Gm-Gg: AY/fxX7HmQtm2UNIJ5FP2FRYOIHJB4Y60Mj61yc6O2Vf1JAl25TqI4UFJ5b12M1/7WK
+	t64qP1YXrmVUwGxv1HqMQGhnXfbR6yDMxednaNDCHRJAhnXY8fhneydrcjgFwXpMeTf0F8JqrXG
+	R2XL2cAC67nFf0jUKnQ7su3cnykwiagWETRB5/XmncVnaCxAJJPC1BeXnqegduQva3qwLecay0z
+	0aDrwTYMJDPSYyF2woNxJ/ZQzeY1Iu2kdmnHWdEWMeanzZggd9QkxCU56tklLOMo8kxVGqgjjGl
+	UDYEOlsRzuukYXS5wU4qAWq86keMrKvfKGROxcIji5yHXqahGlfBDTqu8tWAG6m5YxoPecadUw9
+	4nSTDTIP3MDqMnOGp1N3EeJaZFsx+9UaOBzYTR+aFusyLwGoC91HS84xNbzMnwszyiSUZADRf3x
+	+PGf9J5MYn/I9EIWDHOkbMD37LNJEOIT/F
+X-Google-Smtp-Source: AGHT+IEz00YLmcLAKTMQkfP6+CoGAw8Z/3mHAWZmZFKuRHqsZrhawgfCIpk3xvfzFd9/LUIMoiG2nw==
+X-Received: by 2002:a05:6a20:244f:b0:34e:409e:eea0 with SMTP id adf61e73a8af0-376a75ef1d1mr53015190637.12.1767556097524;
+        Sun, 04 Jan 2026 11:48:17 -0800 (PST)
+Received: from Pushkar.xu.edu.in ([125.22.10.154])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c1e79620bd3sm39555821a12.4.2026.01.04.11.48.15
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 04 Jan 2026 11:48:16 -0800 (PST)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: git@vger.kernel.org
+Subject: [PATCH v4] t1300: use test helpers instead of test builtins
+Date: Sun,  4 Jan 2026 19:47:59 +0000
+Message-ID: <20260104194812.15134-1-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260104124255.15609-1-pushkarkumarsingh1970@gmail.com>
+References: <20260104124255.15609-1-pushkarkumarsingh1970@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/e7rKvfowdzGRJQi"
-Content-Disposition: inline
-In-Reply-To: <pull.2157.git.git.1767478617198.gitgitgadget@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 8bit
 
+Replace test -f and test -h checks with test_path_is_file and
+test_path_is_symlink. Using the test framework helpers provides clearer
+diagnostics and keeps tests consistent across the suite.
 
---/e7rKvfowdzGRJQi
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+---
+Changes in v4:
+- Update commit message to avoid calling `test` a shell primitive
+- No code changes
 
-On 2026-01-03 at 22:16:57, Matthieu Beauchamp-Boulay via GitGitGadget wrote:
-> When reading exclude files, git assumes it is encoded in UTF-8 and will
-> fail to apply patterns if it isn't. This is a silent failure as no warning
-> or errors are shown to the users. This is a problem that can take a while
-> to diagnose as many users will not think of checking the encoding of their
-> file and may believe their patterns are wrong instead. Users may also
-> accidentally commit undesired files.
+ t/t1300-config.sh             | 8 ++++----
+ t/t2021-checkout-overwrite.sh | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-This isn't actually true.  Git allows arbitrary byte sequences in the
-file because Git allows filenames to have arbitrary byte sequences, just
-like Unix.
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 358d636379..9850fcd5b5 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -1232,12 +1232,12 @@ test_expect_success SYMLINKS 'symlinked configuration' '
+ 	test_when_finished "rm myconfig" &&
+ 	ln -s notyet myconfig &&
+ 	git config --file=myconfig test.frotz nitfol &&
+-	test -h myconfig &&
+-	test -f notyet &&
++	test_path_is_symlink myconfig &&
++	test_path_is_file notyet &&
+ 	test "z$(git config --file=notyet test.frotz)" = znitfol &&
+ 	git config --file=myconfig test.xyzzy rezrov &&
+-	test -h myconfig &&
+-	test -f notyet &&
++	test_path_is_symlink myconfig &&
++	test_path_is_file notyet &&
+ 	cat >expect <<-\EOF &&
+ 	nitfol
+ 	rezrov
+diff --git a/t/t2021-checkout-overwrite.sh b/t/t2021-checkout-overwrite.sh
+index a5c03d5d4a..38c41ae373 100755
+--- a/t/t2021-checkout-overwrite.sh
++++ b/t/t2021-checkout-overwrite.sh
+@@ -27,7 +27,7 @@ test_expect_success 'checkout commit with dir must not remove untracked a/b' '
+ 	git rm --cached a/b &&
+ 	git commit -m "un-track the file" &&
+ 	test_must_fail git checkout start &&
+-	test -f a/b
++	test_path_is_file a/b
+ '
+ 
+ test_expect_success 'create a commit where dir a/b changed to symlink' '
+@@ -49,7 +49,7 @@ test_expect_success 'checkout commit with dir must not remove untracked a/b' '
+ 
+ test_expect_success SYMLINKS 'the symlink remained' '
+ 
+-	test -h a/b
++	test_path_is_symlink a/b
+ '
+ 
+ test_expect_success 'cleanup after previous symlink tests' '
+-- 
+2.43.0
 
-> On Windows, this happens if a user uses Windows PowerShell to create the
-> file, which results in a UTF-16LE file with a BOM. This issue was discuss=
-ed
-> here https://github.com/git-for-windows/git/issues/3329. An example of
-> where a user was confused that his exclude file was not working is cited
-> https://github.com/git-for-windows/git/issues/3227.
-
-Ah, yes, here's the problem.  UTF-16LE is used on Windows, and on
-Windows, Git stores pathnames as if they were converted into UTF-8, so
-you do need to write the filenames in UTF-8 in the ignore file.
-
-> A minimal fix should at least warn the user if git cannot properly decode
-> the exclude file. Ideally, git would handle any given Unicode file.
-
-As I mentioned, the file isn't necessarily in UTF-8 or Unicode.  Here's
-an example shell script to demonstrate (requires a non-macOS Unix):
-
-----
-#!/bin/sh
-
-rm -fr test-repo
-git init --object-format=3Dsha256 test-repo
-cd test-repo
-touch abc.txt
-touch "$(printf '\220')"
-printf '\220\n' >.gitignore
-git add .
-git status
-git ls-files -io --exclude-standard
-----
-
-I'll point out that all of this is also true for things like config
-files (which are also used in `.gitmodules`) and `.gitattributes` files.
-If we wanted to make a change, we would be wise to make it everywhere.
-
-However, if we wanted to force `.gitignore` to UTF-8, we'd need to have
-an escape mechanism to write non-UTF-8 sequences, and as far as I know,
-we don't.
-
-> First, check if a BOM is present. If it is, decode the file to UTF-8.
-> If no BOM is detected, then try to parse the file as UTF-8. If that fails,
-> attempt to decode the file using the working tree encoding of the file,
-> if any. If that fails, print a warning to tell the user that the exclude
-> file could not be decoded and skip the file.
-
-We do not accept and strip BOMs in UTF-8 files elsewhere (including in
-things like `git diff` output), so we should not do so here, either.
-For Unicode files, if there is no BOM, then the standard is that it's
-assumed to automatically be UTF-8, so a BOM is superfluous and not
-recommended.
-
-> diff --git a/t/lib-encoding.sh b/t/lib-encoding.sh
-> index 2dabc8c73e..1b1cc357ba 100644
-> --- a/t/lib-encoding.sh
-> +++ b/t/lib-encoding.sh
-> @@ -23,3 +23,11 @@ write_utf32 () {
->  	fi &&
->  	iconv -f UTF-8 -t UTF-32
->  }
-> +
-> +write_encoded () {
-> +  iconv -f UTF-8 -t "$1"
-> +}
-> +
-> +write_bom () {
-> +  echo "$@" | perl -pe 's/\s+//g; $_=3Dpack("H*", $_)'
-> +}
-> \ No newline at end of file
-
-We place newlines at the end of our text files unless there's a good
-reason no to.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---/e7rKvfowdzGRJQi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.8 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaVrCHgAKCRB8DEliiIei
-gZHFAP927ZWl81iKkLIuu+HDN+JT4zPXTi1UcDhtORPIdN6fZgD/aBdjwyf5hRka
-IYJIWgG1WKt7RDFPrKskP2GCxLQTYAs=
-=dRDY
------END PGP SIGNATURE-----
-
---/e7rKvfowdzGRJQi--
