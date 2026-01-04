@@ -1,119 +1,119 @@
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-08.mail-europe.com (mail-08.mail-europe.com [57.129.93.249])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19902749DF
-	for <git@vger.kernel.org>; Sun,  4 Jan 2026 10:27:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0151C69D
+	for <git@vger.kernel.org>; Sun,  4 Jan 2026 10:33:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.129.93.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767522475; cv=none; b=Fsq/Nn3voYdFG8tKBLhP+crJrIGYCs+9alehKlYZ9jbK58HDQRcltAAs3WrO8gu+zJx5lobdMTeb+UKRT6nwHHIRfsSuc00dgQufca72hgrNdx62Y9WWdvnyvgBIXNTUZZIKRqOlUzPIneRBh6blgLAOFuirOWh1kBoXpCJZXJ8=
+	t=1767522815; cv=none; b=sptAx4FeJzhc8LgyMeoMTj2hz5B+KM8CTLI83KfJr1m9ej6mtys6dR1jufNCCt3k4jCIxkvmFcYLAfPoyC2ouaSvguCChlxyznxg/KZv4TXjUOHD6itbatX8BmptMcFHBaME/UAgPHjJ4MejPk3JldMUdtVXkY/7hIyG93YedyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767522475; c=relaxed/simple;
-	bh=gbLr9LjaMMn7If0pVCcOe0LjKSoi5uC27M8Owgvljc8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Q3BvmT2Dh7br0zOj7eT+hwp3eGLstXQoMh+tfSsTQIBqnwR4d/jP93cvPO3mMpV/1eKPSkOiFKRsO3/puo+328QI7AsWQ2MivWiGThK9W5N2xTesUiPRAckXk37H08E3HrYibcbZW0tlqrdsohBbS3VjeDB2FCb9Avv+Jo/UVAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JqFxTuHV; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767522815; c=relaxed/simple;
+	bh=+rpw0n7bb+age8cmSsmIhJqLjFAeefaOF3UZWoUYu7U=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=rGnKyBNn6RiTL47ng4AWSH1rSI5KlT4yrSnqTIpG6dAIr/sNUWmWLWXriLeWg6FECYVEHbD4SU+9gwfVMLMyY7vT3SqWyK0RNZHq49neWBi3Tp05tcDtwZCKFsB2sMw6a5ZaDvchzcdKW5ZAmwcHoxNkFNdN65Epk2tFFmP+jzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=c057OcHF; arc=none smtp.client-ip=57.129.93.249
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JqFxTuHV"
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-595825c8eb3so13349457e87.0
-        for <git@vger.kernel.org>; Sun, 04 Jan 2026 02:27:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767522472; x=1768127272; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gbLr9LjaMMn7If0pVCcOe0LjKSoi5uC27M8Owgvljc8=;
-        b=JqFxTuHV598xCG0nW4wcCwzgeoVuQq5F8ujiPOQAi4keUfwS1WtR/fa/IcWqla5BPQ
-         tz9r+UyxZeWPg62A+wqmU2NjviV826a2xFuBwlODknAqk4hvivIcVYc0U60NYU1wDuxB
-         WLspJ0SEg0jhMI84Ev9kZAkTAfpuJfiQONxm6wJFmzZLnSOOYRGjZ+VY9LRe0uc6xyrL
-         gxhWai4NY7Fi1QYT0e2KrB8ngGWouVhWWVriA5iqGZmdkSGXQsB/qK1gTIfT8UQiXAOo
-         tHNLhCYhGT3M6sr2zDlqcKEqyY/9StwN/YtkuBJ5VcPqJuF+iadguJIsnUoRSYosjwyA
-         2CCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767522472; x=1768127272;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=gbLr9LjaMMn7If0pVCcOe0LjKSoi5uC27M8Owgvljc8=;
-        b=RJsXk7G5R2PrjVsdYClhDDGqyGWWu287WkLL7mR9UJ+H48UwNGpo+rpWm0mXLALg+K
-         jyK5QeAoypnL2JBaAHC24rQE7Wuhb+WSrUgchz7lRrhH+Y0ioZ/bCM/ZpvPWdca5SIpA
-         EnevYwWjemFJOrVxrhrQoKzoH/P0QaxBiD7+JD0s4bL/TMdcFeA9YnZt/QdJ9zxRG193
-         LshSVJ5L2QkMlvBCdQJV0GKB45obGy/HHVXQO1N7mjacy5CaF/Ol3xXi96yAuapj/yTL
-         vdHzWiQcObTRQaQtXqAmZE+N+Vjq/Vfr5gr8RomROBtM/OwhA/5bWqRnmvu5bLOFlSIO
-         5LZQ==
-X-Gm-Message-State: AOJu0YzK5PTeMOYbggzMUNDSsjYMLAk4S49fiVxbeU9idp7/Tzat4QTB
-	TnCn7/p/AxElKjEKQEy4hd6Pkl2ls/8vqhBr0p2/tZQyNmmZKyoD8LIu
-X-Gm-Gg: AY/fxX4yI981x3xbtoSgJ9o6/wq+aOkymQbKNDz0adDEN1jVNhyQVZuPd9LzZzRBF/z
-	VzUuA+fvJrcJSc6AlEoiOfQlryBVW9ZzSuaiGRoMmSDy4gEM5tO2Ho1PZHL+faRsmgI34F9Afnu
-	UJx5RZXQjQgFlsvcQ3PELMjxH4LsmK59gkoN8IvoW1tMe7fQcUetzSWV9yrRkgpSMY7bAeF3CHD
-	JS+CzPC9v5hwy9cF1CXtiHwQr4YUttg7ZgazOrDPaGFDuvzzZCTRsXZ+t1kU9ZJF8jLerShJgKW
-	32WL3gyXEZzcPuuDfVZ8LsYKkTbJLjUBGsy7n2Qwp1z3hCDqrnxV/ebFhyRrxfX/fiwRyZoPGro
-	w6Pyt4B2ZSntcn4BO3dIraYT33/ZNFH59/Yg+bJtwFKLq0buJVGr9mjynqrjaYfmLerBbZ8V6de
-	lBeLQgG3hun5W0nqQ/Qv1raAHEpMN35p/VdZ12X2+rKExNl/5ft+wZ9Oa3DwXjZedoD/GWKwM=
-X-Google-Smtp-Source: AGHT+IHp7g2JvDSVoZ2TjETjMhSB4k0n0E0tZHmJ5hHcjqOWDFBiSJ5vsamK6iwQedPOdQMBTFM9MQ==
-X-Received: by 2002:ac2:4c49:0:b0:594:2a0f:916f with SMTP id 2adb3069b0e04-59a17d5dd7amr15446527e87.43.1767522471546;
-        Sun, 04 Jan 2026 02:27:51 -0800 (PST)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a185d5e5csm13777638e87.15.2026.01.04.02.27.50
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 04 Jan 2026 02:27:50 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com
-Subject: Another look?
-Date: Sun,  4 Jan 2026 11:27:49 +0100
-Message-Id: <20260104102749.30950-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <xmqq8qeeng7c.fsf@gitster.g>
-References: <xmqq8qeeng7c.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="c057OcHF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1767522796; x=1767781996;
+	bh=+rpw0n7bb+age8cmSsmIhJqLjFAeefaOF3UZWoUYu7U=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=c057OcHF6+eykr46R1ZSQrKIThupMLRQrlRnq7BP7Yd4e7r3Giy2DfWahZWp/Lk5q
+	 yhCuIIr6qKaGJH3dTyRWDMqGIwJRfawQBo+GGeYET4hnyVkCDqRo+7NzmaTRfkcN4H
+	 JaDOD1lPpxNfL5b8Z8EfZBbWZOLULHjckQPmP+vzu2Em7BC89/A4Y08X/U46L/RxlM
+	 tqFbdgHtGOsG/ogTbE0b556qZDhxRWrNGxLPS/0nd2i9/Qw3VJugqq9nyZT6qJGLbd
+	 Cw+jVNmc/l8UekOTETLlXDx4JdDPxqKW6F+JwmtMfWWdXLHI5mP9Oyxim+a3GCG+vK
+	 5E/iriv3V4r7w==
+Date: Sun, 04 Jan 2026 10:33:12 +0000
+To: Junio C Hamano <gitster@pobox.com>
+From: Tsahi Elkayam <Tsahi.Elkayam@protonmail.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>, "ps@pks.im" <ps@pks.im>
+Subject: Re: [PATCH] reftable/iter: fix undefined behavior in indexed_table_ref_iter_next
+Message-ID: <aHbWlZCRqQoHJ3jf12sxAyC7dEuzxCJ82PCtxH1RLcE23XSa7n8jl3yyoJ382TZ45H4pTuewB4WR72yL_zVzadotQ8UIVOBXpIkld45Ieew=@protonmail.com>
+In-Reply-To: <W6v12kkhI_qyFV03jZJriHkrs5pYt8tHCD4ve0bWxikUYAGasvwwWDV3Df67dM2ttRh49EECD_Ph84NbtpxE1Opv-Z03UcE7vtbMjsYhfWs=@protonmail.com>
+References: <Q0zfHYp-_TO2h_5PXPG9KjHwpMKIf2o2u2dsaoAjIsScmA3W6t7IvqIEeLfM7auEFIQyazlNnA3MGAuS4AANF0yfEBJAjkU1bWp-NH9m89U=@protonmail.com> <xmqqy0menlc3.fsf@gitster.g> <W6v12kkhI_qyFV03jZJriHkrs5pYt8tHCD4ve0bWxikUYAGasvwwWDV3Df67dM2ttRh49EECD_Ph84NbtpxE1Opv-Z03UcE7vtbMjsYhfWs=@protonmail.com>
+Feedback-ID: 35521663:user:proton
+X-Pm-Message-ID: b5d4ba3a0126abd32fe27b734de1c8f2cf592159
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> And if the new calling convention is to let the caller be responsible for
-> calling stat_tracking_info() and figuring out the base branch name, it
-> probably is also better to have the caller handle upstream_is_gone case.
-> This is especially true if your plan is to reuse this "branch comparison"
-> helper to compare a branch with another branch that is *NOT* its upstream
-> (e.g., where the result is pushed to).
+Hi Junio,
 
-Done, will be in the next patch!
+Thank you very much for your feedback. It is a great honor for me to receiv=
+e a response from you.
 
-> IOW, it smells to me that leaving "sti" as a parameter to this function
-> is an incomplete refactoring---I say "smell" because I haven't seen the
-> other, new, caller that will be added in the future step of this patch
-> series.
->
-> [...]
->
-> As the code already handled !sti, which is equivalent to (!theirs &&
-> !ours), in the original, !theirs here meant (!theirs && ours), which is
-> (ahead && !behind) in the new world order, which we see a few lines below.
+I apologize for the formatting issues in my previous email. I am a new deve=
+loper and still learning the community's workflow. English is not my native=
+ language, and I mistakenly added indentation when composing the email, whi=
+ch I now realize corrupted the patch.
 
-This sounds reasonable, however, if I replace '!sti' with 'ahead && !behind'
-then old tests are breaking, one why to avoid them breaking is to switch the
-order of these cases, to this, would that be acceptable?
+I will send a corrected Version 2 (v2) of the patch shortly, ensuring that =
+the format is preserved correctly.
 
-``` } else if (abf == AHEAD_BEHIND_QUICK) { strbuf_addf(sb, _("Your
-branch and '%s' refer to different commits.\n"), branch_name); if
-(advice_enabled(ADVICE_STATUS_HINTS)) strbuf_addf(sb, _(" (use \"%s\" for
-details)\n"), "git status --ahead-behind"); } else if (!theirs && !ours) {
-strbuf_addf(sb, _("Your branch is up to date with '%s'.\n"), branch_name);
-```
+Thank you for your patience and for the "lesson learned."
 
-> Do not compare with 0 for equality. Instead write it like so:
-
-Good point! I will upate it!
-
-Thanks for you continued attention to this, much appreciated!
+Best regards, Tsahi
 
 
 
-Harald
+
+Sent with Proton Mail secure email.
+
+On Sunday, January 4th, 2026 at 12:22 PM, Tsahi Elkayam <Tsahi.Elkayam@prot=
+onmail.com> wrote:
+
+>=20
+>=20
+> So I did messed up
+> sorry lesson learned
+> but still...
+> wow very exciting
+>=20
+>=20
+> Sent from Proton Mail for iOS.
+>=20
+> -------- Original Message --------
+> On Sunday, 01/04/26 at 04:49 Junio C Hamano gitster@pobox.com wrote:
+>=20
+> Tsahi Elkayam Tsahi.Elkayam@protonmail.com writes:
+>=20
+> > The indexed_table_ref_iter_next() function accesses ref->value.val2
+> > without first checking the ref's value_type. This is undefined behavior
+> > when the ref is not of type REFTABLE_REF_VAL2.
+> >=20
+> > The correct pattern is already used in filtering_ref_iterator_next()
+> > which checks value_type before accessing the appropriate union member.
+> > Apply the same pattern here:
+> >=20
+> > - Check for REFTABLE_REF_VAL2 before accessing val2 members
+> > - Add missing check for REFTABLE_REF_VAL1 to handle single-value refs
+> >=20
+> > This was marked with a "/* BUG */" comment indicating the issue was
+> > known but not yet fixed.
+> >=20
+> > Signed-off-by: Tsahi Elkayam Tsahi.Elkayam@protonmail.com
+> > ---
+> > reftable/iter.c | 13 ++++++++-----
+> > 1 file changed, 8 insertions(+), 5 deletions(-)
+> >=20
+> > diff --git a/reftable/iter.c b/reftable/iter.c
+> > index 2ecc52b336..2eee65bb1e 100644
+> > --- a/reftable/iter.c
+> > +++ b/reftable/iter.c
+>=20
+>=20
+> What are these lines with two-whitespace indent about? When sending
+> a patch purely for discussion (because the actual change may be iffy
+> or dangerous), we sometimes deliberately corrupt the patch not to
+> apply mechanically, but this patch does not seem to be such a
+> "request for discussion" patch.
