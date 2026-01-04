@@ -1,122 +1,116 @@
-Received: from mail.codeberg.eu (aburayama.m.codeberg.org [217.197.91.161])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BCF14A60C
-	for <git@vger.kernel.org>; Sun,  4 Jan 2026 05:13:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.197.91.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A9C290F
+	for <git@vger.kernel.org>; Sun,  4 Jan 2026 05:32:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767503613; cv=none; b=N97KpC1gO/tuAmoIdlb05ZK4DFJlQ5omEzMAofEjfcEBABpJe6ZKjvZPcYwFYPRCO3Eg+57MpupFJIqHgWbKxO33wTNEfTYgWY+k3/yA8nJDHDS3jtPRFOeZ1XkihDsjAHO5hCPo1L3jUUXc+a4zZtYzDHyAGCUHC5Fa30wgefs=
+	t=1767504758; cv=none; b=Ytz/kBPPg910c42gPjh7V80Q/hWP2ir7b443BDPBRKXHj3n2bgFWsljUVuDkuuOsL0WjtL2iCeg+ORaLa2e40yF4ySCbkKjgtnBik8lw3Ky379xct6Bw7WNE5QqwyNlu38IO/GOJxGoF6uPX4JkvkRUmNKVnjhR0eXds0JbVUuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767503613; c=relaxed/simple;
-	bh=o4JBuPGEsmlWfHgER9gqZfmaXqIAXcLJW9WoH1rtvgY=;
-	h=Message-ID:Date:MIME-Version:Subject:References:To:From:
-	 In-Reply-To:Content-Type; b=mpaIT9rZR8UAxz4K2qrWIUOVWWMjxsO5JfyCGqOJ1moJV+PSvePCRVWCIJd4otszO8RJMu4E3v+EwTRBeV3RM3r+9A4tEmPtYPWJ1bRZpYZ4lnqlmKwPEepgBcawQLijci/9HnKkYplOif8ppjBA7A+pB1N5MI0CBgA3THx8LLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=codeberg.org; spf=pass smtp.mailfrom=codeberg.org; dkim=pass (2048-bit key) header.d=codeberg.org header.i=@codeberg.org header.b=xP/3xKVd; dkim=permerror (0-bit key) header.d=codeberg.org header.i=@codeberg.org header.b=UVl02wvB; arc=none smtp.client-ip=217.197.91.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=codeberg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codeberg.org
+	s=arc-20240116; t=1767504758; c=relaxed/simple;
+	bh=h9AA7p7/8sSRfP2/Z8oxSPWWtVJLGQlNIapWv2Fl9bI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Df3dq7yZI/8i7uF0u+FVDsXtG0YneisGde1gQEj3kHdeYfXNd5Q2tV4lwXy6C1X2cEAc3TUbDyWUIMDFnSZn6lC4hOFBIyeMzgW4d4zVj3EUG/bekYzZO0KmR0OqegNtt+V0dMEo7M40jjY7GslID2xsM7nNtO8zdpPpK0GhU4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ru7vjO/A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0EfEm1AZ; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codeberg.org header.i=@codeberg.org header.b="xP/3xKVd";
-	dkim=permerror (0-bit key) header.d=codeberg.org header.i=@codeberg.org header.b="UVl02wvB"
-DKIM-Signature: v=1; a=rsa-sha256; s=202510r; d=codeberg.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1767503608; bh=H/Rb9Vf5YZM1PbIHDN6/i2i
-	f+akXhsUZtS7hxtCJOrk=; b=xP/3xKVdsPdykqQPFmHUyFsfQbSKXHt7lwBLs7wJ48jITR64DP
-	NzVgGI3ZrAEs68SGg4clL2k6vUdt7N+CXlUPO7oqpfDaPkB3Qt/RuSDC9eyxYs53NCUmVTi5moe
-	qYnB5mBN99VjFKNstvk8/j3qesq86CVDtxleY/Ystd3NqpHxKLyRsBnSwYCHMCaUi0x4kUNqt6c
-	sb/oPza5KulXnHB86Hle2gzlG+eRFnGgDBgW6p6YfLidDH5yULgsV3Ugy9dYnS86qYE3fQM31jr
-	elfbHyibNxH+e2woGgROS/cjY7sZY4PAXHyAjGw9WCyFvEeUFA1d2PYRADMjlsqyCTQ==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202510e; d=codeberg.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1767503608; bh=H/Rb9Vf5YZM1PbIHDN6/i2i
-	f+akXhsUZtS7hxtCJOrk=; b=UVl02wvBiCu4TbEGiJ/NLn52r1GXR96s4eSoP3etzk4mQc9CI3
-	Xhp2KHctt1MIiesJYfWfqebQaFO9vl5stcCg==;
-Message-ID: <03f96860-29fc-42a7-a220-c3ec65eb8516@codeberg.org>
-Date: Sun, 4 Jan 2026 06:13:27 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ru7vjO/A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0EfEm1AZ"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 550161D00090;
+	Sun,  4 Jan 2026 00:32:35 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Sun, 04 Jan 2026 00:32:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1767504755; x=1767591155; bh=XaaIBKC852
+	K2SQN/WxVYQZScR2EzRvcLme8dN4J+q6c=; b=ru7vjO/ADy6vaQ3p0IxettPAun
+	UQqdnScYC/toJQHltxEM1xvOIY2h3bJedC68OfLvYPbc0803HLaDQstAZNnTcQ8U
+	DBBaIRtnP1w70UAk/E64Zirw1hZi5mRRjpb4oLPb20ZKDSpDWIHoFjDlj9RUsU+V
+	frFF+y5Ye39bjoNrSRyon67yMT8/Hu64KhyR5cyhK89+tSYPhLzJrpLQFdrK/x6f
+	6yZhx+QvnYCRc/jvw//73cLYaYZt2ZJj+cwOTBckycweTaSOP1KiKNIWbfTWpbyr
+	l/ubw2uA9TZQXK40UAOuVnS2MAMpCV4sxlG8Rgg7b4GuZtmOhFiUgJTb6kIw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767504755; x=1767591155; bh=XaaIBKC852K2SQN/WxVYQZScR2EzRvcLme8
+	dN4J+q6c=; b=0EfEm1AZmpDzg5fsGuefj8Q3qoLNSNuiW6b6FbKQdUVC47yTB9l
+	hv4i3efobHmNwHIFUrw8nSY5zZdp1RnMxGXRVTHpHQ3S7Ng47iLtfgJPEE2xMQXs
+	HHrIsGnoOZ9jVwbTLCko7dwv0W54KjjrXTm+GZJkQsInbzwvaGh5oRBSSqTHnRFx
+	YqHSPSzvbvMHGkKu2pFgydmi/lbhll6BqYZ/zzI1k40ObRPVWw8YitPHw+TUteDU
+	88w5+6KBhcYr9TQK6s+A9YyAj1wjVsqsgW6IUEUA7i2vD9NaVht5M2DO2KtegbgY
+	KagB8xZY7dJ/n2we6q2ArZsOpN11kqs7TdQ==
+X-ME-Sender: <xms:c_tZaQUUqFCJnVC1_yQJfOJzECZcXt8AljmZvJU13z_8mzEhKdD_Jw>
+    <xme:c_tZabnEV4fBPA86osV5QA8OruzwdWxypK4ADAPAJzMRaEUaPuQFhLrWkOCpmNAk_
+    KG-JPWSAOU9D-0VcbqWhIYqP2NBPoBej8PiDTpO800FKTmsQ15Exw>
+X-ME-Received: <xmr:c_tZaZYGk7EIVrSlnEjJL0gkrwfui4549XES9JLgqqsQGHXVMHgi5jWTCCDj3HAbe-uUkVu7w6XGuGyL-vMKZZ-90Gvkyso2ffEFRKk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelfeehlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    vgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:c_tZaeOf7LLbhpqPY66qCRhF70GpXlf_46Z6SvCrDYLKBUg4KhKONg>
+    <xmx:c_tZaWY767KHVEArSTPyccZJcptqpVUgszU3AhngE7NyQqZw-YTuEA>
+    <xmx:c_tZaU08JAr-xrrAS3Qowmf0YgvM1ABZ4621ofd7dRf70C2z0_vbpg>
+    <xmx:c_tZaUfugcQN2tv7vXGqnFJwooNDd-BJFWQFOwrfnSosShTEicKcBw>
+    <xmx:c_tZaU4Ecg8bQqdusXs-QIPCCGtcN82tF3QrKHjH062_5MnkHupbhLis>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 4 Jan 2026 00:32:34 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 01/10] ivec: introduce the C side of ivec
+In-Reply-To: <adf1395d201e916f23accc7644d21aff4f58368b.1767379944.git.gitgitgadget@gmail.com>
+	(Ezekiel Newren via GitGitGadget's message of "Fri, 02 Jan 2026
+	18:52:15 +0000")
+References: <pull.2156.git.git.1767379944.gitgitgadget@gmail.com>
+	<adf1395d201e916f23accc7644d21aff4f58368b.1767379944.git.gitgitgadget@gmail.com>
+Date: Sun, 04 Jan 2026 14:32:33 +0900
+Message-ID: <xmqq4ip2ndse.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: git-last-modified weirdness
-Content-Language: en-US, en-JM
-References: <406222e6-d10b-47d8-a177-de5912db4512@codeberg.org>
-To: git@vger.kernel.org
-From: Gusted <gusted@codeberg.org>
-In-Reply-To: <406222e6-d10b-47d8-a177-de5912db4512@codeberg.org>
-X-Forwarded-Message-Id: <406222e6-d10b-47d8-a177-de5912db4512@codeberg.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Hi,
+"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Resending this mail as it looks like it might not have arrived (couldn't 
-find
-it in the mailing list archive).
+> +	if (new_capacity == 0) {
+> +		free(self->ptr);
+> +		self->ptr = NULL;
 
-For Forgejo, I wanted to look into using git-last-modified to gain extra
-performance for larger repositories where this can often result in being 
-(one
-of) the slowest git operation. However I noticed some problems that 
-looks to
-be bugs.
+	if (!new_capacity)
+		FREE_AND_NULL(self->ptr);
+	else
+		...;
 
-I've ran all the following commands on the following Git repository, on Git
-v2.52.0 (Arch Linux) and my git config does not enable or disable any 
-feature
-that should've impacted the any of the following observations.
+> +void ivec_free(void *self_)
+> +{
+> +	struct IVec_c_void *self = self_;
+> +
+> +	free(self->ptr);
+> +	self->ptr = NULL;
 
-$ tmp=$(mktemp -d)
-$ git clone https://codeberg.org/forgejo/forgejo $tmp
-$ cd tmp
+Likewise.  Otherwise the code will fail coccicheck.
 
-During some experiments I noticed it being slower for some files. An 
-example:
+> +	self->length = 0;
+> +	self->capacity = 0;
+> +	// DO NOT MODIFY element_size!!!
 
-$ hyperfine --warmup 5 'git log --max-count=1 DCO' 'git last-modified DCO'
-Benchmark 1: git log --max-count=1 DCO
-   Time (mean ± σ):      86.9 ms ±   0.8 ms    [User: 70.1 ms, System: 
-15.6 ms]
-   Range (min … max):    85.5 ms …  88.3 ms    34 runs
-
-Benchmark 2: git last-modified DCO
-   Time (mean ± σ):     151.3 ms ±   4.3 ms    [User: 133.4 ms, System: 
-15.9 ms]
-   Range (min … max):   145.4 ms … 167.1 ms    19 runs
-
-
-
-This might be me misunderstanding the feature, but it looks to me this 
-cannot
-be used for paths that is inside a directory. The following two commands 
-yield
-the same output:
-
-$ git last-modified -- web_src
-24019ef5e83fd7bed7f31ad09dd8d5f26b4bdc69        web_src
-$ git last-modified -- web_src/svg
-24019ef5e83fd7bed7f31ad09dd8d5f26b4bdc69        web_src
-
-Where I expected the latter command to return the last commit of 
-web_src/svg.
-
-
-
-I'm not sure why I tried this, but I can trigger a BUG when giving it some
-nonsense input:
-
-$ git last-modified fb06ce04173d47aaaa498385621cba8b8dfd7584
-BUG: builtin/last-modified.c:456: paths remaining beyond boundary in
-last-modified
-[1]    690163 IOT instruction (core dumped)  git last-modified
-
-`fb06ce04173d47aaaa498385621cba8b8dfd7584` is the tree commit id of 
-web_src. I
-suppose this should've returned a nice error message or blank output. It 
-does
-give a blank output when you specify a valid path:
-
-$ git last-modified fb06ce04173d47aaaa498385621cba8b8dfd7584 web_src
-
-Kind regards,
-Gusted
+	/* A single-liner comment in our codebase looks like this */
 
