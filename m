@@ -1,85 +1,88 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A6541C63
-	for <git@vger.kernel.org>; Sun,  4 Jan 2026 06:03:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3EC23D7DE
+	for <git@vger.kernel.org>; Sun,  4 Jan 2026 06:28:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767506594; cv=none; b=R5y7EMxbvArXt33tQjN0oXtBi81cxLYK1RVPGbD6bpDym6v4L0Y4JhfAZbtP1UWOZpH+0CoQfe4Wnn6cBTSifZ7I+PHe3nlAlq9NEpl+VSvmhFe5qtpDoztDnkj5CnTkr5HcIjwT2r/ukfMIkk0aaLgELlQ1taVq1ZycCIaj5JI=
+	t=1767508115; cv=none; b=RtABi7ZNQ9zDP5shKPe7o1KbGckF55zDtgbZtPCw8d4s8o2v/i89fnOp02Urxj0VktixCxd3AglXe9gddB+KNCD37gq16yLULPyZh4+VFNVpKMlSKLJYlCGelmM+FSyUrl5Ayx5+bf3ZBkJHQY2rQY/pl8l/R8l9NUuMkqhn/yU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767506594; c=relaxed/simple;
-	bh=99qDEWCwyRZXePvHj8p3n2ZP48YsGUD7cydAFJQX7O8=;
+	s=arc-20240116; t=1767508115; c=relaxed/simple;
+	bh=HlHwftn37kAKTQ0MTVhzqiusAIwTTZe32/zT6tI/iTQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sPmdSU1Sm3QVBpV0xNUMf2hU4OddpBvU094jGM0i6G5WvCgWsP4F2J4B/qjSBORMRTqONA7phgCUvHNEO4nvBLx977auSzG5zjJXdqLocuT1Bamq5qhX1QxljWY93My1N3LTZsiWsdMgM/el5DOKMuuwhNu0bGeaw1OsgRLocq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TqgDixXk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dkMY31HY; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=JBUeBEhTReCzOoOHAgYKlKMj2HVKZf7xGP8BpK69ODkKjq+LjB5xFiV7XqPwfeQPt7H+AQhcJKJ0DFoR7zZwuLskEWyTfscGVyxHekoNm0hs8RoNBO4Vz2j9ZnswHDoXYF+Aqf1iqE+tRpKiuc6y1PwgIxlyi75AnI4TEVdEeCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oao8GjCe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jz1exXdB; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TqgDixXk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dkMY31HY"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 29CE21D00085;
-	Sun,  4 Jan 2026 01:03:11 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oao8GjCe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jz1exXdB"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 419717A00EC;
+	Sun,  4 Jan 2026 01:28:31 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Sun, 04 Jan 2026 01:03:11 -0500
+  by phl-compute-01.internal (MEProxy); Sun, 04 Jan 2026 01:28:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1767506591; x=1767592991; bh=kwDPA23vlY
-	kTl08Qv/QF85O3BaEyU/WFnbFvuQQrW1c=; b=TqgDixXk7dubzyWQCZzeUXvrEP
-	jz9Ys4MJ8+9/+bAhIt4BpizGbpNXGHIQyQJb0Ipg+beJKG//Xh36zdo7jQGAwUaC
-	etNImHA7ZILUsHsBON/VU1vkDG4Meryaoiw3LtdENIKakoU2Pc0FonGLWlfQPOE7
-	2TgDzSZkaUkiOF9PHmtKAvVVBxls7QzDtBKYOvp12kLIOe/NsYwLBpEFMvK0K7ww
-	mz39kGf441HXo37VRR+DequTSyL/PZkzc/JY5/r9tjb5sK1GLb8vJrNH2TCszQ6z
-	EbUefVZsBhBbT/MPCuPQcFuIk0e6+P8bnooeAGw2H09RsAzLEUXea8CW1oJQ==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1767508111;
+	 x=1767594511; bh=aMd4PMi8DoZWkAWzAz6wx6pZh3N8GWi3vXP5cfNlvTE=; b=
+	oao8GjCeABJlqkHnuxpji/Ef2xBwVvV+jbw68C9pFZ9ouKUeeAXn1casB4L/DrG0
+	CBnY5OClQyTOlvr9ZEZnpVRLLBIv8K4ipLRBivE2FsVoIKlF2h4MzGMo5RGa0YQ1
+	WFZB5irKHItUnc++6bSHxMR2PSIfolbhSrK26x9zNEUn4A7aDltIMYXkLvcW3820
+	ayheKzTQ1MdwIq5R5Bgx7sZaOZpO2OSAXqn4muLhAW+pWAePZjCtyCWqeliN5TtU
+	YORYcWm1Mz/86NYAUtET6HW+DoC6/LrIi2brspU3QPwFD4rH5adfPgY08ibvABnN
+	7KmrPyjWBoOc+0soHq9Hgw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767506591; x=1767592991; bh=kwDPA23vlYkTl08Qv/QF85O3BaEyU/WFnbF
-	vuQQrW1c=; b=dkMY31HYvfCdFxmbhnSR6Cly8N4fbcO9Pk6V80Bm+RGofz6rBuB
-	dl32btN99heanevmxrQh2JUWCbNd1D9CrjHElYT4dHH84P/LsXA6rIz6Dzdgyf1u
-	i162q64mVAAyRoeXDSgK+N58EEYfnymhBTpcUcxrL+CwrEtfSl4uyNJORWH+dgVQ
-	UXZDB7FjxQCdKK3ZIl4rUi3TXvwIlen4H0lIMzyCcC0tn4JCLN+favDYd7t1AqR1
-	h7niC5M20WTQWh5qmHxnS3GYBZ5/pwqVeGuaHNfGNz2WhoOihrd1qFi4kPCo9DEZ
-	iZZ/kFSxaEzqV0Q9pbPaGsDLHNznt+pRu9g==
-X-ME-Sender: <xms:ngJaaWevatT5F6uXzzx9biHAIJv3LRfBwPl2SajOqv5gjdgfn0WfsQ>
-    <xme:ngJaaXEfJGt06-J46mHfDXq8xP6WoBh3D2OHDwtAj3YoH7Ki3YusWDiBdcsfNyHp9
-    37ovBX9m070ivp8OUsuVl_Ox0zBe1x0RdH67bAY_8r78z3sZHof>
-X-ME-Received: <xmr:ngJaaf1736_ZDvCHtDImwvEfPy7K_QIKCXe37YNukDuM66cIUpOd8xNF07jZGclxNd_5M1QJZQah2ONz_WHQ4BErw3002L7-gh6nZ2M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelfeeihecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767508111; x=
+	1767594511; bh=aMd4PMi8DoZWkAWzAz6wx6pZh3N8GWi3vXP5cfNlvTE=; b=J
+	z1exXdBsE/mqpm+ueGendVMfuTFVuwpHr3nC2QAw9HQUQMYihMVup0noIyP7jNgL
+	BhGj9Wjkh4oWIJOYpYSYa4DWS2IWqWWIKAOwvo+MI8nYk2U3nC9qftM2/ExpBF7t
+	4P9tYENpXOw7+KqEjvnYjj3KISjHfRw7X08abEcOD7Z8KtMAkz9L7E2vsf2pNrTY
+	3afTF4rJDh3JPUArRpW6QrELAHJwKKUtEpxrWwLP3Mx7eGvyuDH6iGkD3Ev94FBi
+	1aQOU3pMJOGwQpmMGeLlhIYOKdXNpFr6GVWg6iHWmUQALq/MmPZldndG9EyhW8UN
+	9/x4za9anJsho2X6gJhIg==
+X-ME-Sender: <xms:jwhaaUEjElB0T-bIWRbkaLDZQRcqQ4eRHUCjyYDdnfPnFlmDk55_9Q>
+    <xme:jwhaaUNPflyTDleajnhBud1y6KwxUYKgywQjIjNnHwb6RD5yr-josZWiaIpl3shhx
+    3vhBThrBu5EsZakuhmrHXDHonBtx6ejAz19cOz3CLRreTIh9TNCEA>
+X-ME-Received: <xmr:jwhaaWeE1KsO-ECR0lImgKK-JJOaIUTFwDxRK-7WBfaSQ0goGFj7_yxnaawN0kIlcguwy6jPFhcnguVxlU8qy7GbWRYp7eXxl95zVxA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelfeejtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegrsghrrghhrghmrgguvghkuhhnlhgvhedtsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguud
-    dvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:ngJaaflCauQLhrmIdBY8UJRG2k0irCFECSnREDh3IXLSTUISZysWDg>
-    <xmx:ngJaaf_2C5oxjX-oqAufTdTR7mGRrS2m_jDGTAzIiKNAokV-p4YMuQ>
-    <xmx:ngJaaUqeETCGLPSlLbhXvBJFBphiRGv9_2e5UEyTaxMcoowySrp_ZQ>
-    <xmx:ngJaaYkpKLphh8ptDY2Ui1wjky5Vox8gWkrtAdRWaEFiBwQJMMx2Sw>
-    <xmx:nwJaaW22QwHdtjRn5ida9VyZ3VoMKnOyRqaFk2qMU6etKT9_IhJ2KU8n>
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepgeeghfdufeekgeeuiefgjefhjedvjeevtdehgeeuudekgfeileefueetjeei
+    ueelnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhrnhhivgguvghrsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohephhgvrghthhguuhhtthhonhesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:jwhaaRsUBv8ub2OyrM1x96dJlxIFS9klnRoFbNhQLC0lWtFpV2aMaQ>
+    <xmx:jwhaaXmOoDOVX4Oju8V3ps2yYzBNqY8zjbTX2HCq7lJgC1B6lhv_SQ>
+    <xmx:jwhaaTy55YQ2hX2LAwrwS4gmQ7JJ25Hh2FRW2Sef8S_du_H0ygFjWA>
+    <xmx:jwhaaZMOxRtpdUd1XAK7sQ5oHnm5GPBTBi7fKuzsyEgEggmwfAx_yA>
+    <xmx:jwhaaQ-GAXzePFiM-vnQdf4rUp0pEfpoPnqoW_pi56rKX05oUEKfcJPF>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 4 Jan 2026 01:03:10 -0500 (EST)
+ 4 Jan 2026 01:28:30 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Re: [GSoC PATCH v3] add -p: show user's hunk decision when
- selecting hunks
-In-Reply-To: <aVgTmYhosEiGG3th@Adekunles-MacBook-Air.local> (Abraham Samuel
-	Adekunle's message of "Fri, 2 Jan 2026 19:51:05 +0100")
-References: <aVgTmYhosEiGG3th@Adekunles-MacBook-Air.local>
-Date: Sun, 04 Jan 2026 15:03:09 +0900
-Message-ID: <xmqqzf6tncde.fsf@gitster.g>
+To: =?utf-8?Q?Heath_Dutton=F0=9F=95=B4=EF=B8=8F_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  jrnieder@gmail.com,  Heath =?utf-8?B?RHV0dG9u?=
+ =?utf-8?B?8J+VtO+4jw==?=
+ <heathdutton@gmail.com>
+Subject: Re: [PATCH] doc: define timestamp in pack protocol grammar
+In-Reply-To: <pull.2154.git.git.1767496120852.gitgitgadget@gmail.com> (Heath
+	Dutton's message of "Sun, 04 Jan 2026 03:08:40 +0000")
+References: <pull.2154.git.git.1767496120852.gitgitgadget@gmail.com>
+Date: Sun, 04 Jan 2026 15:28:29 +0900
+Message-ID: <xmqqv7hhnb76.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,81 +90,47 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Abraham Samuel Adekunle <abrahamadekunle50@gmail.com> writes:
+"Heath Dutton🕴️ via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> When a user is interactively deciding which hunks to use or skip for
-> staging, unstaging, stashing etc, there is no way to know the
-> decision previously chosen for a hunk when navigating through the
-> previous and next hunks using K/J respectively.
+> From: =?UTF-8?q?Heath=20Dutton=F0=9F=95=B4=EF=B8=8F?=
+>  <heathdutton@gmail.com>
+
+This name is expected to be identical to ...
+
+> The grammar for depth-request uses 'timestamp' but never defines it,
+> unlike 'depth' which is properly defined as '1*DIGIT'. Add the missing
+> definition.
 >
-> Improve the UI to explicitly show if a user has previously decided to
-> use a hunk (by pressing 'y') or skip the hunk (by pressing 'n').
-> This will improve clarity when and aid the navigation process for the
-> user.
+> Signed-off-by: Heath Dutton <heathdutton@gmail.com>
+
+... what we have here.  There is something weird going on after the
+name before the e-mail on the in-body From: line, though?
+
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2154%2Fheathdutton%2Fhd%2Fdoc-protocol-timestamp-40000018-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2154/heathdutton/hd/doc-protocol-timestamp-40000018-v1
+> Pull-Request: https://github.com/git/git/pull/2154
 >
-> Reported-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
-> ---
+>  Documentation/gitprotocol-pack.adoc | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> Changes in v2:
-> --------------
-> - Modified t3701-add-interactive.sh for conform to new changes
+> diff --git a/Documentation/gitprotocol-pack.adoc b/Documentation/gitprotocol-pack.adoc
+> index 837b691c89..7ad63322c2 100644
+> --- a/Documentation/gitprotocol-pack.adoc
+> +++ b/Documentation/gitprotocol-pack.adoc
+> @@ -273,6 +273,7 @@ out of what the server said it could do with the first 'want' line.
+>    additional-want   =  PKT-LINE("want" SP obj-id)
+>  
+>    depth             =  1*DIGIT
+> +  timestamp         =  1*DIGIT
 
-Here is how "cd t && sh t3701-add-interactive.sh -i -v" ends for me.
+OK.
 
-expecting success of 3701.50 'print again the hunk (PAGER)':
-        test_when_finished "git reset" &&
-        cat >expect <<-EOF &&
-        <GREEN>+<RESET><GREEN>15<RESET>
-         20<RESET>
-        <BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>PAGER <CYAN>@@ -1,2 +1,3 @@<RESET>
-        PAGER  10<RESET>
-        PAGER <GREEN>+<RESET><GREEN>15<RESET>
-        PAGER  20<RESET>
-        <BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>
-        EOF
-        test_write_lines s y g 1 P |
-        (
-                GIT_PAGER="sed s/^/PAGER\ /" &&
-                export GIT_PAGER &&
-                test_terminal git add -p >actual
-        ) &&
-        tail -n 7 <actual | test_decode_color >actual.trimmed &&
-        test_cmp expect actual.trimmed
+It was added at 569e554b (upload-pack: add deepen-since to cut
+shallow repos based on time, 2016-06-12) by Duy for deepen-since
+which is parsed using parse_timestamp() that is a fancier name for
+strtoumax(), so 1*DIGIT sounds fine.
 
---- expect      2026-01-04 06:01:25.931220332 +0000
-+++ actual.trimmed      2026-01-04 06:01:26.079845771 +0000
-@@ -1,7 +1,7 @@
- <GREEN>+<RESET><GREEN>15<RESET>
-  20<RESET>
--<BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>PAGER <CYAN>@@ -1,2 +1,3 @@<RESET>
-+<BOLD;BLUE>(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>PAGER <CYAN>@@ -1,2 +1,3 @@<RESET>
- PAGER  10<RESET>
- PAGER <GREEN>+<RESET><GREEN>15<RESET>
- PAGER  20<RESET>
--<BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>
-+<BOLD;BLUE>(1/2) Stage this hunk (previous decision: use) [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>
-not ok 50 - print again the hunk (PAGER)
-#
-#               test_when_finished "git reset" &&
-#               cat >expect <<-EOF &&
-#               <GREEN>+<RESET><GREEN>15<RESET>
-#                20<RESET>
-#               <BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>PAGER <CYAN>@@ -1,2 +1,3 @@<RESET>
-#               PAGER  10<RESET>
-#               PAGER <GREEN>+<RESET><GREEN>15<RESET>
-#               PAGER  20<RESET>
-#               <BOLD;BLUE>(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? <RESET>
-#               EOF
-#               test_write_lines s y g 1 P |
-#               (
-#                       GIT_PAGER="sed s/^/PAGER\ /" &&
-#                       export GIT_PAGER &&
-#                       test_terminal git add -p >actual
-#               ) &&
-#               tail -n 7 <actual | test_decode_color >actual.trimmed &&
-#               test_cmp expect actual.trimmed
-#
-1..50
+Thanks.
