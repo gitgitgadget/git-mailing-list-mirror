@@ -1,91 +1,86 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69319243969
-	for <git@vger.kernel.org>; Sun,  4 Jan 2026 02:19:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CDA2727E2
+	for <git@vger.kernel.org>; Sun,  4 Jan 2026 02:27:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767493163; cv=none; b=EyxnY/TC++Eky+lQrU2KZqj1QVc9Jl/BK+meyUAMyRQLrQ5+3/NeIOgaU037zfTU96BnVPdjMBrw3GL4PxGDbFwbWrT7xXIIWq1BhdplG6KNotDbSsJhkrqwe+Otl4m/i7jwtvAkgbPCOFkN5nlEm3cL8BK9I19l3tm/j548nGA=
+	t=1767493627; cv=none; b=K0fUBUeicxzenoMeGUL1i1NjgtlwOLkljm+AiFSF/ccxiqsoY5H9lvldfisz3u2+jXmkh3cJ6OyCitnQJVIbb++Ys2+PtMRL9aQ/iyNqJTAebzrIaubi95GhYNVhNaMlK6c8Y5NP0I7KYWiG+4g5qUG6UvWOQbGvX5CmSUrbo4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767493163; c=relaxed/simple;
-	bh=S/a1pfdBPRvMEU+pMflXCYiUV3+x3BGHcS3y5my9VA4=;
+	s=arc-20240116; t=1767493627; c=relaxed/simple;
+	bh=C3CZW2Pf/MhtjIG6t991yTEmKamKu06aXlMU7XeB4kc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lXwMUxQn5yM/6yUhmFQEjwhXiESTJRXd2WmOjsAqdHw8XgcpplZmNYx2/KdolyCMmLGqqu+CkgTQ+/I0L5Bnuv0cKARmt1n3+c+O7xwzNd3T8ND0SfUk/UnhDrDdGJHDpeo7ZIwyecx6tfpAJ1Fe+xyUcLd0uam/dtlyBlFr58A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CGhbhC71; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JLc0Nw8k; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=kEiFBesJ+TXqvGMSL8wIJQBEzZOK/8QO1FDbM7Gds8iVXlsvzVSblpwE79gZdsfKlNxz1G3w411nxSLUf4opG5+r/O88ghdL5gt+7Xh/Iv3IGiVW+VRRGHiBA/B8LhDXq7FGDRLGF2hp4STFLk/tITgDVGTgoangMOwWqBq2I3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HImSsNDR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Phfmhvco; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CGhbhC71";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JLc0Nw8k"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 590E27A00D5;
-	Sat,  3 Jan 2026 21:19:20 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sat, 03 Jan 2026 21:19:20 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HImSsNDR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Phfmhvco"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id F0E3A1D0008A;
+	Sat,  3 Jan 2026 21:27:03 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Sat, 03 Jan 2026 21:27:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1767493160;
-	 x=1767579560; bh=S/a1pfdBPRvMEU+pMflXCYiUV3+x3BGHcS3y5my9VA4=; b=
-	CGhbhC71fZmvzUJiHDFMdVQMk4xSRxghMfT5euryzV9fql5u9H6as3czV6fqD6XH
-	Uzdn/9K7hQ6zmwtV5YyhruLa0o8yM1O/qSlJz7gYzH4mhVm2lgBA/pQg2mJ8UmTj
-	WtvFg/ZU+2yb7GjbTef2nMo9fE3bI277ljfWGT/qnHodIELu0BUhEZj37q/YLTwU
-	cMtq+mAvYNBYgw0PnCiuxhJhVrP0iJ4m5CdfJM3y6uauoZPWlcyr+3L+MNT+aY0p
-	vLN4FhI2/2ktGzFDqgLrBz/qSfoQh9/vvydZjFvLsxAfCCv9oUC31NjsHlcnh7+P
-	UW7KEh5GRC7XP1HU4nM/wg==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1767493623; x=1767580023; bh=YL7k0lpU4L
+	fXcKMdqzv1wkJNIOp+GvuRe22NGkfNA80=; b=HImSsNDRU4WAu56pLSE9lNnc64
+	yCqW0VDDjpnKbjJM+QdYQu1JtfrAWUUeKTDNwy4OU7MfCQwkiNNr17D/sPU4j/Ep
+	1UiH8CJ6OOYpZLd3mmlne+z8s9v2rewQvO7XFjk3OnfhqApzar8hzouO1XUCDOjK
+	pDWV6auGT0DfuJyRHIwcWII8wTnNQWlJazzR6V8l/DL6tj08L1aTgDKwLBkMJwQb
+	bPwf3xeX0VZU2y6FsuiAeDZysP9GO9bQPBNj0kmYexsX0PKyTvxH+N0N/avFmEG2
+	672xMtnh7Oczn8lcHeG6CeU1GN1qaLey+AbIFhm7CF5Xu+LNSpfIXbi0lQjw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767493160; x=
-	1767579560; bh=S/a1pfdBPRvMEU+pMflXCYiUV3+x3BGHcS3y5my9VA4=; b=J
-	Lc0Nw8k09IAEl9i2QSUnR9kVQd9/Ov7+3qLwERXKnxTR+JXEv+iPqKS3oKIKztOZ
-	ClUEyjM87wHZDISPU+ys85I3e7kLG7b96D2aabtfmVKtwJP/Oy/ceD4t41SOvd6h
-	UO1JLZnZCCBH6AGj54BlsNttx7a1HKahammu6WK2lb4ZwQA5IY/ROhGmjBrVFYP6
-	TQc3ayQIc9LaNwk8feHhdB6l7qV0wSGKIcaRF8rAh51vLSBVH4gPSCtGNhcv+YcK
-	W99X4u5rHh8U79BAjVvkafG+0dtjRdRrWl278SWfTouCL65K/1dgpzjXMO7kPCAN
-	QVlFtFTF5/5YO8uR07GiA==
-X-ME-Sender: <xms:KM5ZaaVCcD2qQokAticBIHEHUUzAF5XPYvG7eFCVKQ6byPrRtYQMEw>
-    <xme:KM5ZaaTfOYKv5rpvui8HIYMQlh0f_9vjUxsJML3e-lqp2hKTPVUeSjQx6AnxV4UFY
-    Ob0LfJmk9bwXfuWJRaeu2xcNVWEjtO47a-Zlozm8QvXOBYpKH-eHw>
-X-ME-Received: <xmr:KM5ZaYPrhB0YjIycoQC0h7JNIgq2hMoVzM0lvF2KFJYB-6bywQl8DFADGCRtjqPr3tK46kP_ofPAX1Ds1irTkrJWOl2d69QGFBkewxs>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767493623; x=1767580023; bh=YL7k0lpU4LfXcKMdqzv1wkJNIOp+GvuRe22
+	NGkfNA80=; b=PhfmhvcotAXfH6007vNa/pRJ7mMVf1dEOyh/EGI0WVdjdR00RNt
+	JWDjLdrsZdvTZmavOv1I0SAu0//qtIbMF7/BzmRagRVdTlewCh8KJt0U1YuGbxRf
+	HPzOcovfmte6f8Pb/mvr/3pIrsC5Ik/H+sM/84wx5mzxcpB5xBEcKCLsANAr1ftY
+	KMxsTUr7kQVYHgrkmMXf9ZONQTTDly9X4sP8jaCqPkIq33fgyWQrWmO/oX6zFzlW
+	IVvijxbGiFz5ycXvbjlNen6VlIhVwxo+n0XcZIKEFi33Gfp9UEHTsoU+vmkrrwFf
+	39qIvGK0b4qYU5WBLjgVIh+XF2gmsi3tCjg==
+X-ME-Sender: <xms:9s9ZaZw8zMggofhxoR_qH1WRb1hYuICFKR6k2iVoDDJF4dU-mBKIhQ>
+    <xme:9s9Zac83qxzNqU8Mxt2jlUklf21xK1yZVCkOHPyGyB3W0xXxcvlIh5ramRSH91-Yn
+    kgFQBwAIh2eTvADmla_ox7dv0ZmKyjw5gtbst8aPNX-9VEftWXeYA>
+X-ME-Received: <xmr:9s9ZadIXokapZf4oSYgg0Hx9dsgSRZ_RjM0KCG3z5enhh0vLIf9pibXvz7Uz96Bu4ucIy3c0cr4LY1UBwuadXl1MAKRYFqjQKvt4Luw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelfedvudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgruhhlsehprghulhhtrghrjhgrnhdrtghomhdprh
-    gtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhdrshdrrhesfi
-    gvsgdruggvpdhrtghpthhtohepghhithhhuhgssehprghulhhishgrghgvvghkrdgtohhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:KM5ZaYRo4ZdibVcmwvi7F2bgFjJRpMsffeY7rMaroGcAyjUFIAw9VQ>
-    <xmx:KM5ZaWjnBWc6wF_CVKHwMhiAZh10mJXTbcqq5Z-F5CWig_b3JLdeGQ>
-    <xmx:KM5ZaR8Wez7-LJwTjCudm1mq2lv8EaZqnNFgQ2rer_sqw0DI_H5Oxg>
-    <xmx:KM5ZadG75IQ6uJ1zhAHHg9Slkp9csstIX8byqMu4JvfSvGmSiZOV-w>
-    <xmx:KM5ZaU7M4CceROXt3C36-6lhhy47WtinDRQZ-0yeHwn7i4j--ghEVW4l>
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegrshhmrgguvghushestghouggvfihrvggtkhdrohhrgh
+    dprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprh
+    gtphhtthhopehjuhhlmhesshhouhhrtggvphhhihhlvgdrfhhrpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:9s9ZaSdA8Km-rwUNCBs_Yel2ZL79AO-agFuOPhhyIlI2MoZvHC0VKg>
+    <xmx:9s9Zac8pWJFCMZnmnzWpVo-D-MRagFXrTpvClvnRwuCqr4ZoAPeqTA>
+    <xmx:9s9ZafrlHbQ67EhynkD1VgrDe4SR6aGKBQTdW5zAfpg0UeuIHVnZ3A>
+    <xmx:9s9ZaRD-2Wl2oqBbntAM2J8n9OYIjkqSbcasSzb2qMEPEdDsZcN0Xg>
+    <xmx:989ZaTqL61uHKjgDvmCHyN4zpgdHYjgJl79xC87E0ykU6JkvMjDxd4Jk>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 3 Jan 2026 21:19:19 -0500 (EST)
+ 3 Jan 2026 21:27:02 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Paul Tarjan <paul@paultarjan.com>
-Cc: Paul Tarjan via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Paul
- Tarjan
- <github@paulisageek.com>
-Subject: Re: [PATCH v2] fsmonitor: fix khash memory leak in do_handle_client
-In-Reply-To: <CALvWuB6MW8g3Vd1-gKkZa_r86o0-t3gGazLSvsoBO4m6jjubeQ@mail.gmail.com>
-	(Paul Tarjan's message of "Thu, 1 Jan 2026 15:24:27 -1000")
-References: <pull.2148.git.git.1767098576384.gitgitgadget@gmail.com>
-	<pull.2148.v2.git.git.1767191943962.gitgitgadget@gmail.com>
-	<xmqqbjjdc4d0.fsf@gitster.g>
-	<CALvWuB6MW8g3Vd1-gKkZa_r86o0-t3gGazLSvsoBO4m6jjubeQ@mail.gmail.com>
-Date: Sun, 04 Jan 2026 11:19:18 +0900
-Message-ID: <xmqq344mqfvd.fsf@gitster.g>
+To: Dominique Martinet <asmadeus@codewreck.org>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?=
+ Scharfe
+ <l.s.r@web.de>,  Julien Moutinho <julm@sourcephile.fr>
+Subject: Re: [RFC PATCH] builtin/format-patch: print a warning for skipped
+ merge commits?
+In-Reply-To: <aVkKmcER2K8D9U4T@codewreck.org> (Dominique Martinet's message of
+	"Sat, 3 Jan 2026 21:24:57 +0900")
+References: <aVkKmcER2K8D9U4T@codewreck.org>
+Date: Sun, 04 Jan 2026 11:27:01 +0900
+Message-ID: <xmqqy0mep0y2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,36 +88,25 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Paul Tarjan <paul@paultarjan.com> writes:
+Dominique Martinet <asmadeus@codewreck.org> writes:
 
-> On Thu, Jan 1, 2026 at 1:14 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> "Paul Tarjan via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->> > From: Paul Tarjan <github@paulisageek.com>
->> >
->> > The do_handle_client() function allocates a khash table to de-duplicate
->> > pathnames when responding to client requests. However, kh_release_str()
->> > was used instead of kh_destroy_str(). The release function only frees
->> > internal arrays (flags, keys, vals) but not the struct itself, which is
->> > allocated by kh_init_str() via xcalloc. This caused a 40-byte leak per
->> > client request.
->> >
->> > Fix by using kh_destroy_str() which properly frees both internal arrays
->> > and the struct itself. Also move the cleanup to the cleanup section and
->> > initialize shown to NULL so that kh_destroy_str() is safe to call on all
->> > exit paths.
->> >
->> > Signed-off-by: Paul Tarjan <github@paulisageek.com>
->> > ---
->>
->> This is already in v4 of the other larger fsmonitor-linux patch,
->> right?
->
-> Correct. I sent it separately since it is currently a bug in existing
-> code and you might want to merge it sooner.
+> Okay, I can see this being confusing to people not used to format-patch
+> even with a range, but I agree it'll be annoying more often than not in
+> general so I'm fine with this.
 
-Thanks.
+Yup, nobody stays to be newbie forever ;-).
+
+> It makes it a bit cumbersome to print details about the commit(s) being
+> skipped though, so it's probably simpler to do a generic message like
+> "No patch generated. Note merge commits are skipped." like this?
+
+Or queue these merge commits in another commit list instead of a
+single boolean "seen_merge".  The warning is issued only on the
+error path, so as long as accumulation phase is cheap enough to
+record information necessary to later create detailed messages, the
+location you added a single warning() call can call a new helper
+function that gives more details like commit log messages, etc., if
+we wanted to.  Or seen_merge can become a counter and the warning
+message can become a simpler "skipped %d merges".
