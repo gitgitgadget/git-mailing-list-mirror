@@ -1,101 +1,109 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from flow-a8-smtp.messagingengine.com (flow-a8-smtp.messagingengine.com [103.168.172.143])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2EC178372
-	for <git@vger.kernel.org>; Sun,  4 Jan 2026 15:34:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BDD4204E
+	for <git@vger.kernel.org>; Sun,  4 Jan 2026 16:16:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.143
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767540869; cv=none; b=hCH88OuAYqm9tvukuhiZBqLxFpe9WwFsrkg+Y263BL+J7xJtgjU1WpkxfxCFmfEG3aea5ijFD0KpOo6aIoOLNl6vTasuntnD6WKx2/JJZ4eedy+I8q6VrWezc6pQunlxa5FbKJBTFXXt1x0XEs4g97BU9Ab2nsZLp0qKtiH/Yo4=
+	t=1767543377; cv=none; b=LfqHxb6Wap27IGvYq5fvoFmhHZPq+ustgenhF/xtEZSRX0gh9GF51tiBAHbDFDwGc4EgF4Y8AKtEJfcNF5YJxkmRAlEPoNikkwagiRS9usDyFmW++CAaklP6wzS51P+IYXr+DeeS5mKvtQ+wa/Wumt/N63Se3f2ifnapBHR5lr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767540869; c=relaxed/simple;
-	bh=QnBlSu6CQWcLqmsziItGdlEsP1SKs4Ny1XUz+j7nSQA=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=XztdQnMQ5iVbobhb1AEji4c3nNzZHBeO1OjmAeVIj6fewEr7ccHLrP/AmYAGxXqTojzyWrHvSXvV0CNbN2VInpPpG6qS33GVDllLuG/zb9uEl54HlUYy64rRK2OrvavyxHbZWkpngdyeu2zj/LmP741dvdIr+rvSyCibuYBlsr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wx0L8T9j; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767543377; c=relaxed/simple;
+	bh=HJ6pj7+pqnhonWe0IpNrQByTc/3i2zUVMEjK4TTfVKc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=RDuy8JxuusBRXcWtf8M99Bc26WaAH7TfCnBxMk0m1H+DmmeSwmUlcOAeca7xnsWA3bFZklVyyibHR+ZQoFXMCWDQBHBrH4EjXi2/A16XgWnv1tzqT75nuRlx1RtlFIbIUGQqs3yRMhQhxdvWstQ5Ye6ZViQJ5WYEai7Mua87N5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=f+zMfTVH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LNLFd6Vp; arc=none smtp.client-ip=103.168.172.143
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wx0L8T9j"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-477ba2c1ca2so144276235e9.2
-        for <git@vger.kernel.org>; Sun, 04 Jan 2026 07:34:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767540866; x=1768145666; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QnBlSu6CQWcLqmsziItGdlEsP1SKs4Ny1XUz+j7nSQA=;
-        b=Wx0L8T9jPVozYv8il6KATD4AAok82y97RwlYSaNRhR2+en1Nkgg7zCmN9tb0K/7B5C
-         NKZbli0B8fVgxkxEdih8FGoCTgeRSUSUeTTmtd34paqxc2YEqER7pUEkaBsVSGCltuc+
-         6lwzdkhFgBOwgDti0jjcvxKOfXGuPG0bQYOv02dKAVgWU5vED/pUlLSxURlEQd6YwrzO
-         nZAZksv6YSznB2O6ZQxJorFmzqsqv4f7ja49IoWPktpaLR0Cwa0LPG6OOf9JuJd1OknC
-         bwpKf/teikG8g4w0GozIzUcrFI829bjwSMcazXl7IrIGA6SSMjawlpYIf6CTU/MIls3f
-         Zx9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767540866; x=1768145666;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QnBlSu6CQWcLqmsziItGdlEsP1SKs4Ny1XUz+j7nSQA=;
-        b=seR+E6eTJu3pGTOqfDjl5+J7BTlh482UvhYTf1P6T6vSBYYobclaoN8K6423HALFTw
-         iwqG11iDNDmX8Mx4WG7xiH4lcqLi0Sb5A6zrrrTxbDVdHDb+HBxEOfQsmyqqdQluoHgB
-         wfaROadvKNdEBtTsF2L1bXYh1JJmBcdzu1nN0vSAZdKJEYxldGonHsxJoJXdsEcay8/j
-         d/hAb58xFNGjBfNIWX16M+8qQH2fLXxvGVy2+dtaUlbI8JQdhK1d5QZxglx7WRs8oFDl
-         fUd2fvw8OxLCNdDrSS911AD0NhLCPYecUhbIGlmkuTSbtA0zllyWk8k4w4r2nzcCEIsF
-         loZQ==
-X-Gm-Message-State: AOJu0YzKgbZA8aUTHF7uJrjQUrIHOCWp8mXbdZ7Hyeup1HzGTJSyNb3P
-	HTXZEHl8Hqt2BBDu07NM4IGYFEH+XvS8ARiSX06JxZX0iRFeDPFBwNKlmwQde0JZ
-X-Gm-Gg: AY/fxX5K+M/Ak6s4UGxlIoodauoHjKqlfiZJf9qPfxuTy7MXuULA5hP3ki1910ZLJiA
-	L3ds79/IbFksLTZrofTlD2n2wIaFOOfrmSDP657ejiKkwq40dq9ZaxxBk6MWAoRwzBAlN5TlqUm
-	CaUjR0z/A1JF4con7YL7xCjvmZCkiwtm1aCjNi8ml5FsBrqz4uSSLdrVS7nJi4Yk5IXd8jTE6T2
-	BvjApxIr14IAqn2CboSPn09qKPyRPDRcsWM49fmo3VyO0jBsUeFTiMFZQDiZkapOOyguQ3VIfhY
-	XHikyrsafO3WSfdewq+sJ6rOpWJajxIFcSpLp113z1i3zjuhXR6kU0O2TM7EOU1BiglghG+CK6c
-	5x2AlZXM36fg8eKFrd0Lys9M+ZDQ5hzzcN/j9wGtXE9yrLme9rQiwV5xK2r8Rd/BVjFFHAp6g19
-	krCcOtNwr1pLBcIIE=
-X-Google-Smtp-Source: AGHT+IHfrjzo49H/0+Q4q8WlR6K2WsLGV9lGN1a5hM1Qnklnu5m/qeEsexdY+pzfLoewKqV1PsY3tQ==
-X-Received: by 2002:a05:600c:444b:b0:477:9814:6882 with SMTP id 5b1f17b1804b1-47d1953b77fmr513204305e9.5.1767540866000;
-        Sun, 04 Jan 2026 07:34:26 -0800 (PST)
-Received: from localhost ([102.88.77.11])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d6ba3af58sm40880235e9.2.2026.01.04.07.34.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Jan 2026 07:34:25 -0800 (PST)
-Date: Sun, 4 Jan 2026 16:34:36 +0100
-From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="f+zMfTVH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LNLFd6Vp"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailflow.phl.internal (Postfix) with ESMTP id 7A4DF1380329;
+	Sun,  4 Jan 2026 11:16:13 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Sun, 04 Jan 2026 11:16:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm2; t=1767543373; x=1767546973; bh=PgKIK7ovZ70nnB09RnpBY
+	V7JWLQrOFmvUyiAf81BEkg=; b=f+zMfTVHY6byFTWcSahRdvek+RA4ITchRBgRL
+	uecubmzgKaTS7FiZ5EZ9qiNSDFPoAFjHrBKOv3vfBowY2lUZ1MD1Jd8qKhqWMyQa
+	WCiIuLjUTG7exIfrcaYnG+3HTPMZfA3fMqI23+qHZVHMn1ZgG3q231O1VsshN/1r
+	452/11xQwb3Qz5LrmsXA/3oyslyVD6pkBRZIAEw3glhGdSl2gCf9iMjooA/ctXd1
+	pl23cE8QwAHKbdw6KccV8Dv2oaS9tXUnynC6Gv734yL5Ww0hcqHwvgPeqsyJFEtI
+	1P0/76QpdGhq1njZz4toTcL+jQGLXZHUnXYrqDQqWhZlz/8Pg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767543373; x=1767546973; bh=PgKIK7ovZ70nnB09RnpBYV7JWLQrOFmvUyi
+	Af81BEkg=; b=LNLFd6VpRhY1R6rQaeQVKbhsQVs6+xukBFluxrVwL0s+0KCh6dP
+	8YxbE9xsxOEaHfTsX6HDSoxpiAUdXRe0vKZuiJ1Zr4oSrOgdUEuqFb3u1TlB1/Ly
+	JkgUsxgEp2r2mfdD/k9cQXMtyEVpXv/6gnBKd8NVnsdJ4gmd/EDkI17LXfOxbQd4
+	0/jQKLiD6e2a0SKUIRc5s0Xy7LBwB72ngo2jJLCB3Ql8MlM8k8ZzG1/hVNLnSrIw
+	MHpa/a5ro9/fSzfx/tmfNiNj1lIxbUJwtQ+2ruYpqm2K2f5LZFAzy9x66LnlGFet
+	hX9yVUgRzOsg3KiHECqi3HfCpp8pMcPm2kg==
+X-ME-Sender: <xms:TZJaacwVLU9EPHsa-viCjK646gyUexOvF2kGEFkxwDOs1VrfHATbNQ>
+    <xme:TZJaaWQvaxA_FkpT4UyNcUl8VMsfhQOJMU9TinWUFuAxBaDJwBg9ix1ZxbAGZXDxK
+    GkffSdyD_zfG5TUg9WPF4Kquu0mMVr0X9ZfIWISWXXj9mhcyvll25Ux>
+X-ME-Received: <xmr:TZJaab_7r-ZRUzroFHCZw6CSxzoS5laYbPWHOk7X79i1g5n8kq8KUijv31Gb1iXwEuW5wgPasY3wsp9bKIWozFTJ5pQkYgeZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelgeekkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgggfestdekredtredttd
+    enucfhrhhomheptehnughrvgifucevhhhithgvshhtvghruceorghnuggthhhisehfrghs
+    thhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepleffgeeviedvtdeutdejvedvfe
+    efvefftddvlefggfehfedvieefgfegjeetheeknecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomheprghnuggthhhisehfrghsthhmrghilhdrtghomh
+    dpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrnhgutghhihesfhgrsh
+    htmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:TZJaaVoTCjNPkHnItc--GaDqzzUAVkNwLVirZ1LqTO6F1uJWV3jlMQ>
+    <xmx:TZJaaQmXa5VeHwCfIn3BEnKNYiSfF2KmwmbWAu1vGvWT0dsy02XqKA>
+    <xmx:TZJaaUJQZfBjfuPa_xfLvMhY6cMbSwp6MKKNC3762T86euJ9jjBMLg>
+    <xmx:TZJaadwqq3WFoxxAXK37T7b4luxv8yDZzfWgzb6L0oZannqGDDZKlw>
+    <xmx:TZJaadtILex3yp9b44oA1XPCtl_-v6ASXXR6vsTCWaq3_EsjIOGv2ubb>
+Feedback-ID: i4e2e486a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 4 Jan 2026 11:16:07 -0500 (EST)
+From: Andrew Chitester <andchi@fastmail.com>
 To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Pushkar Singh <pushkarkumarsingh1970@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3] t1300: use test helpers instead of test builtins
-Message-ID: <aVqIjHIi6aKvFYXg@Adekunles-MacBook-Air.local>
+Cc: Andrew Chitester <andchi@fastmail.com>
+Subject: [GSoC PATCH] t1420-lost-found.sh: use test_path_is_file for error logging
+Date: Sun,  4 Jan 2026 11:15:04 -0500
+Message-ID: <20260104161536.45384-1-andchi@fastmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260104124255.15609-1-pushkarkumarsingh1970@gmail.com>
+Content-Transfer-Encoding: 8bit
 
->This version updates the commit message to avoid calling `test` a shell
->primitive, as suggested.
+This test will fail silently without giving any error message. Use
+test_path_is_file in place of test -f to ensure this test errors with a
+message.
 
->Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
->---
+Signed-off-by: Andrew Chitester <andchi@fastmail.com>
+---
+ t/t1420-lost-found.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Hello Pushkar,
+diff --git a/t/t1420-lost-found.sh b/t/t1420-lost-found.sh
+index 2fb2f44f02..5fbb1d10ed 100755
+--- a/t/t1420-lost-found.sh
++++ b/t/t1420-lost-found.sh
+@@ -29,8 +29,8 @@ test_expect_success 'lost and found something' '
+ 	git reset --hard HEAD^ &&
+ 	git fsck --lost-found &&
+ 	test 2 = $(ls .git/lost-found/*/* | wc -l) &&
+-	test -f .git/lost-found/commit/$(cat lost-commit) &&
+-	test -f .git/lost-found/other/$(cat lost-other)
++	test_path_is_file .git/lost-found/commit/$(cat lost-commit) &&
++	test_path_is_file .git/lost-found/other/$(cat lost-other)
+ '
+ 
+ test_done
+-- 
+2.52.0
 
-I think the right approach to send an updated version after modifying your commit
-message is to modify your commit message to INCLUDE the recommendation, not change
-the commit message to the recommendation alone.
-Then under these three dashes after the 'Signed-off-by:', (---), which is here,
-where I am currently replying to you, you state what you changed in the new version
-compared to the previous version.
-
-e.g
-
-Changes in v3:
-- Modified commit message to ...
-- Modified subject to use builtin instead of primitive
-
-
-Thanks
-Abraham.
