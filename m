@@ -1,92 +1,119 @@
-Received: from mail-4325.protonmail.ch (mail-4325.protonmail.ch [185.70.43.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429322749DF
-	for <git@vger.kernel.org>; Sun,  4 Jan 2026 10:22:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19902749DF
+	for <git@vger.kernel.org>; Sun,  4 Jan 2026 10:27:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767522147; cv=none; b=iow9gQqjvOaPvb/d6QQl8xZpjbEvu4qWuPwnGuGxFLJuvl2qfLuj+exrCrvrs1n7abUfNvESzIYgIwOpzu4Fr588/X0fRg6O2TADe3inuUm562fiVGhZHr3UX6J4asi7k6DfFcEvnCeN/b2LZop9Pr+Xv8I4DkgsdJY4saBV4AI=
+	t=1767522475; cv=none; b=Fsq/Nn3voYdFG8tKBLhP+crJrIGYCs+9alehKlYZ9jbK58HDQRcltAAs3WrO8gu+zJx5lobdMTeb+UKRT6nwHHIRfsSuc00dgQufca72hgrNdx62Y9WWdvnyvgBIXNTUZZIKRqOlUzPIneRBh6blgLAOFuirOWh1kBoXpCJZXJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767522147; c=relaxed/simple;
-	bh=UJ8/BdJCDkIiJ9EY4ol+MyuXBjvigUKVcRq/vvLP92E=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Oh8xQt58hJtdoUT/QIVA9rxrOriRHO9cOk/rOyFnl4lYPO34T/Ra8zyijmxCLRoMGxACS1t0GA0De69FX45AbyrZ7I29kBDHlyYuXfZNCVdCcQ6oaDqOUbn9hVW8i6TKwfbBzR2/F9fapuSEVdb2/qZq1eXaGRKSW/7Zi0NwMJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=hdJB4mn/; arc=none smtp.client-ip=185.70.43.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1767522475; c=relaxed/simple;
+	bh=gbLr9LjaMMn7If0pVCcOe0LjKSoi5uC27M8Owgvljc8=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Q3BvmT2Dh7br0zOj7eT+hwp3eGLstXQoMh+tfSsTQIBqnwR4d/jP93cvPO3mMpV/1eKPSkOiFKRsO3/puo+328QI7AsWQ2MivWiGThK9W5N2xTesUiPRAckXk37H08E3HrYibcbZW0tlqrdsohBbS3VjeDB2FCb9Avv+Jo/UVAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JqFxTuHV; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="hdJB4mn/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1767522137; x=1767781337;
-	bh=7C9DOHKBf9E+JdphVOi61IbtRI78LQDSTgkqEz0bewM=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=hdJB4mn/b8hWxCrDdqqUz8GSfR1+q+RD64fj5StedORZF15nqedJRZwBkTYMOiGAw
-	 +6RVTC2B2sDlozXBTA483YocX8m1Ue4DXNdNzlJevW5RI2YK8juTBPJhq81Y7pV/20
-	 hzWvdtAoGWe1dgiTdraXERHYzKnc5YgWDgDTlxkBM+5jYSNPqk8dyo4GQHILe5KLtM
-	 UzUvA9ZpvDfwFZyBtNGe7FJGKBwOXkKhqJ3zAnDf49xhHt9Qgl21gux9RdRIg9R+mz
-	 0pat0gKQTf4+xZCabMlzx9TuSzU8/0bWh/+oDZiYmYsF6G5koSJQ2WA5sDf25GvaVd
-	 ZiISDZImMv++A==
-Date: Sun, 04 Jan 2026 10:22:14 +0000
-To: Junio C Hamano <gitster@pobox.com>
-From: Tsahi Elkayam <Tsahi.Elkayam@protonmail.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>, "ps@pks.im" <ps@pks.im>
-Subject: Re: [PATCH] reftable/iter: fix undefined behavior in indexed_table_ref_iter_next
-Message-ID: <W6v12kkhI_qyFV03jZJriHkrs5pYt8tHCD4ve0bWxikUYAGasvwwWDV3Df67dM2ttRh49EECD_Ph84NbtpxE1Opv-Z03UcE7vtbMjsYhfWs=@protonmail.com>
-In-Reply-To: <xmqqy0menlc3.fsf@gitster.g>
-References: <Q0zfHYp-_TO2h_5PXPG9KjHwpMKIf2o2u2dsaoAjIsScmA3W6t7IvqIEeLfM7auEFIQyazlNnA3MGAuS4AANF0yfEBJAjkU1bWp-NH9m89U=@protonmail.com> <xmqqy0menlc3.fsf@gitster.g>
-Feedback-ID: 35521663:user:proton
-X-Pm-Message-ID: 47caa95ada0de2bf05ca304fb17bf7d57c6cac06
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JqFxTuHV"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-595825c8eb3so13349457e87.0
+        for <git@vger.kernel.org>; Sun, 04 Jan 2026 02:27:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767522472; x=1768127272; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gbLr9LjaMMn7If0pVCcOe0LjKSoi5uC27M8Owgvljc8=;
+        b=JqFxTuHV598xCG0nW4wcCwzgeoVuQq5F8ujiPOQAi4keUfwS1WtR/fa/IcWqla5BPQ
+         tz9r+UyxZeWPg62A+wqmU2NjviV826a2xFuBwlODknAqk4hvivIcVYc0U60NYU1wDuxB
+         WLspJ0SEg0jhMI84Ev9kZAkTAfpuJfiQONxm6wJFmzZLnSOOYRGjZ+VY9LRe0uc6xyrL
+         gxhWai4NY7Fi1QYT0e2KrB8ngGWouVhWWVriA5iqGZmdkSGXQsB/qK1gTIfT8UQiXAOo
+         tHNLhCYhGT3M6sr2zDlqcKEqyY/9StwN/YtkuBJ5VcPqJuF+iadguJIsnUoRSYosjwyA
+         2CCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767522472; x=1768127272;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=gbLr9LjaMMn7If0pVCcOe0LjKSoi5uC27M8Owgvljc8=;
+        b=RJsXk7G5R2PrjVsdYClhDDGqyGWWu287WkLL7mR9UJ+H48UwNGpo+rpWm0mXLALg+K
+         jyK5QeAoypnL2JBaAHC24rQE7Wuhb+WSrUgchz7lRrhH+Y0ioZ/bCM/ZpvPWdca5SIpA
+         EnevYwWjemFJOrVxrhrQoKzoH/P0QaxBiD7+JD0s4bL/TMdcFeA9YnZt/QdJ9zxRG193
+         LshSVJ5L2QkMlvBCdQJV0GKB45obGy/HHVXQO1N7mjacy5CaF/Ol3xXi96yAuapj/yTL
+         vdHzWiQcObTRQaQtXqAmZE+N+Vjq/Vfr5gr8RomROBtM/OwhA/5bWqRnmvu5bLOFlSIO
+         5LZQ==
+X-Gm-Message-State: AOJu0YzK5PTeMOYbggzMUNDSsjYMLAk4S49fiVxbeU9idp7/Tzat4QTB
+	TnCn7/p/AxElKjEKQEy4hd6Pkl2ls/8vqhBr0p2/tZQyNmmZKyoD8LIu
+X-Gm-Gg: AY/fxX4yI981x3xbtoSgJ9o6/wq+aOkymQbKNDz0adDEN1jVNhyQVZuPd9LzZzRBF/z
+	VzUuA+fvJrcJSc6AlEoiOfQlryBVW9ZzSuaiGRoMmSDy4gEM5tO2Ho1PZHL+faRsmgI34F9Afnu
+	UJx5RZXQjQgFlsvcQ3PELMjxH4LsmK59gkoN8IvoW1tMe7fQcUetzSWV9yrRkgpSMY7bAeF3CHD
+	JS+CzPC9v5hwy9cF1CXtiHwQr4YUttg7ZgazOrDPaGFDuvzzZCTRsXZ+t1kU9ZJF8jLerShJgKW
+	32WL3gyXEZzcPuuDfVZ8LsYKkTbJLjUBGsy7n2Qwp1z3hCDqrnxV/ebFhyRrxfX/fiwRyZoPGro
+	w6Pyt4B2ZSntcn4BO3dIraYT33/ZNFH59/Yg+bJtwFKLq0buJVGr9mjynqrjaYfmLerBbZ8V6de
+	lBeLQgG3hun5W0nqQ/Qv1raAHEpMN35p/VdZ12X2+rKExNl/5ft+wZ9Oa3DwXjZedoD/GWKwM=
+X-Google-Smtp-Source: AGHT+IHp7g2JvDSVoZ2TjETjMhSB4k0n0E0tZHmJ5hHcjqOWDFBiSJ5vsamK6iwQedPOdQMBTFM9MQ==
+X-Received: by 2002:ac2:4c49:0:b0:594:2a0f:916f with SMTP id 2adb3069b0e04-59a17d5dd7amr15446527e87.43.1767522471546;
+        Sun, 04 Jan 2026 02:27:51 -0800 (PST)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a185d5e5csm13777638e87.15.2026.01.04.02.27.50
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 04 Jan 2026 02:27:50 -0800 (PST)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com
+Subject: Another look?
+Date: Sun,  4 Jan 2026 11:27:49 +0100
+Message-Id: <20260104102749.30950-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <xmqq8qeeng7c.fsf@gitster.g>
+References: <xmqq8qeeng7c.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-So I did messed up
-sorry lesson learned
-but still...
-wow very exciting=20
+> And if the new calling convention is to let the caller be responsible for
+> calling stat_tracking_info() and figuring out the base branch name, it
+> probably is also better to have the caller handle upstream_is_gone case.
+> This is especially true if your plan is to reuse this "branch comparison"
+> helper to compare a branch with another branch that is *NOT* its upstream
+> (e.g., where the result is pushed to).
 
+Done, will be in the next patch!
 
-Sent from Proton Mail for iOS.
-
--------- Original Message --------
-On Sunday, 01/04/26 at 04:49 Junio C Hamano <gitster@pobox.com> wrote:
-Tsahi Elkayam <Tsahi.Elkayam@protonmail.com> writes:
-
->   The indexed_table_ref_iter_next() function accesses ref->value.val2
->   without first checking the ref's value_type. This is undefined behavior
->   when the ref is not of type REFTABLE_REF_VAL2.
+> IOW, it smells to me that leaving "sti" as a parameter to this function
+> is an incomplete refactoring---I say "smell" because I haven't seen the
+> other, new, caller that will be added in the future step of this patch
+> series.
 >
->   The correct pattern is already used in filtering_ref_iterator_next()
->   which checks value_type before accessing the appropriate union member.
->   Apply the same pattern here:
+> [...]
 >
->    - Check for REFTABLE_REF_VAL2 before accessing val2 members
->    - Add missing check for REFTABLE_REF_VAL1 to handle single-value refs
->
->   This was marked with a "/* BUG */" comment indicating the issue was
->   known but not yet fixed.
->
->   Signed-off-by: Tsahi Elkayam <Tsahi.Elkayam@protonmail.com>
->   ---
->    reftable/iter.c | 13 ++++++++-----
->    1 file changed, 8 insertions(+), 5 deletions(-)
->
->   diff --git a/reftable/iter.c b/reftable/iter.c
->   index 2ecc52b336..2eee65bb1e 100644
->   --- a/reftable/iter.c
->   +++ b/reftable/iter.c
+> As the code already handled !sti, which is equivalent to (!theirs &&
+> !ours), in the original, !theirs here meant (!theirs && ours), which is
+> (ahead && !behind) in the new world order, which we see a few lines below.
 
-What are these lines with two-whitespace indent about?  When sending
-a patch purely for discussion (because the actual change may be iffy
-or dangerous), we sometimes deliberately corrupt the patch not to
-apply mechanically, but this patch does not seem to be such a
-"request for discussion" patch.
+This sounds reasonable, however, if I replace '!sti' with 'ahead && !behind'
+then old tests are breaking, one why to avoid them breaking is to switch the
+order of these cases, to this, would that be acceptable?
+
+``` } else if (abf == AHEAD_BEHIND_QUICK) { strbuf_addf(sb, _("Your
+branch and '%s' refer to different commits.\n"), branch_name); if
+(advice_enabled(ADVICE_STATUS_HINTS)) strbuf_addf(sb, _(" (use \"%s\" for
+details)\n"), "git status --ahead-behind"); } else if (!theirs && !ours) {
+strbuf_addf(sb, _("Your branch is up to date with '%s'.\n"), branch_name);
+```
+
+> Do not compare with 0 for equality. Instead write it like so:
+
+Good point! I will upate it!
+
+Thanks for you continued attention to this, much appreciated!
 
 
+
+Harald
