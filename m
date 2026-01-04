@@ -1,111 +1,113 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812961DE4CD
-	for <git@vger.kernel.org>; Sun,  4 Jan 2026 02:54:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570FD225A3B
+	for <git@vger.kernel.org>; Sun,  4 Jan 2026 03:08:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767495292; cv=none; b=S+Q9bmIzzQ9sooVYX28sF0LxXVzbTiOZtvmhWHBNexeSw1aOvf5gvZvVDtdDWe8G8Hz1MoW9dv5Qk6OlYTgx9wNY+d9hG3KY2FzyNTbuTTLfK4eds/43boen25MsDZy7oUA/5KzaKNZwpbX4RM54U8tbB1bBW9RUs+cZBM894NA=
+	t=1767496126; cv=none; b=Xv2xbTTrCk5FcONUE/9h1Eg0YxKuc9lkJA3fU3v+7QA0XFwfUKvDo2LWaOjEGpJp3PLbZ2MoWQnE/eISev1Wx1x8cq14/ns6+JsRo8F/vCChFXuTHZKIjJlV8h0clul7rwxTGbLl2eICxHi+1rU16zzFOmE0T9VAr5+J4eBofmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767495292; c=relaxed/simple;
-	bh=ZMVxekd9pUugdlzab+jhdvQVxIjzpwodgfi/jPHzPUQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oBKZQCeQhgrXB/lUPvuLafNPgSRc4JE1YmLgookANGq7zxIqT6u1Wdcx+n3SqFabZx3ls65v6KVPjU+v/vRZdyMBhl3cM2kD8pGV8j8LnRoTVQkgE7EkFHqDPGv9EChK9FGuY08UD9b6kHTAPFthpCLZBrBu2eLquFxNcIxlPYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VOcPpACw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nmfu/Xzz; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1767496126; c=relaxed/simple;
+	bh=Qhm5C2jFt36lRHSBnG3Sdnv+LbyUsA4uUrHKE3zK9r0=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=s+bvd3wGo1fj7QOSDDx72rnPaYVuMHI+w5FyvggCBFID8Pogw1ZMrqgOglCoybkJ4d1jWkGvW2jy6mAi5J1YkvF47oYIzJYo4b4kFWv0b9sBDg7QuCfW5N8NgSfT2yRt7pN6sPt7hGLZCSKdvYjTNa/Dq3NLuM/vomfU+oHuIf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DSVhS6ui; arc=none smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VOcPpACw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nmfu/Xzz"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id AADDE1D00012;
-	Sat,  3 Jan 2026 21:54:47 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Sat, 03 Jan 2026 21:54:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1767495287; x=1767581687; bh=QgYda2POM8
-	a1+sfv4fTSCWqj51H/vf31e9xB0Stfbeo=; b=VOcPpACwSa5AgPAHZPfD5AxLg5
-	sS1Go7MSBn2NWe6tzwmNin3npgtAKw10tzyj4ckNLWQ40aArnCCqAWOCdLB3VZYf
-	lkWIsPgFgZ6mrYmfAn7xg07JbuQ2W1Ps7xiQ4QaxhCYeOR/xJ4H6qWxXIDL46Kxv
-	55yGYqAzq22r/stM8NEQWU0hn4jstSxAY9Bhp9Pi6EYOSZ41xPn1PKZmPMnjrX2v
-	bp5L1aQ/DPSbt+b4gcwN+DnYdyT8CrUBrrfbmOXm5Jl+jU4JTmgkBRd4bV4C1Aa8
-	p4DXezQoqDoQcChj43kbhDF5t6VmHy1s6yNCSHCu/ii6VzUYQM+ediivwVUA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767495287; x=1767581687; bh=QgYda2POM8a1+sfv4fTSCWqj51H/vf31e9x
-	B0Stfbeo=; b=Nmfu/XzzsreYpCsMOM12IstbJn+f79NalbpyQZoUS8y6D7Fkxhy
-	duPpmlxAdMcrfSuFSGMgTheVo4JyNFoAnFj8kpiE+WYLh2LW9YMlaAxy8rGYb73A
-	4ZbdcAP7SabploB6ckP0arn4OWSz3++OTsAnPsCBfhBiuKFfUAgPZ4QhZVL+wNBW
-	nQug5WxoMaZ7iaRHUER4KWCgSSS5+klweq15SJNxv6buJj7v7+c3BjaueXNCnvP7
-	QoEXlUW1LGMMBF/1nvSShBQqkl6Ez7uEth6s3cHrmcbRrmEwEv6sjFnzSHdzJVAO
-	j8K1LhrB3KYJbP3bxz3fA3e6GV3qAl2xhlg==
-X-ME-Sender: <xms:d9ZZabBvVLx4dNlf61Iud-rIaF_RTtbzbhYKCKFOeyWu01ftxgIiUg>
-    <xme:d9ZZaVPv_Jl33zUOBoIaoFv1kExdoCfGsTu46yG0-4bHrWJfhMvLqus3Q-N2wtaqQ
-    fiFV_qowFdEV-fj4j7xsQkZL047ZseqtGVW_FD2NVh6xWOpxGnI>
-X-ME-Received: <xmr:d9ZZaQbT_bJdEXGwhH2wZnBdPZ-CAviP6W_7bPYDJsLSm5-OtN7Vv51HvLfTBFn2-CwoDBN-YbUxcW3HMRFmwc-Z_Jjz7zK1tPhvoqM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelfedvjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    mhgrthhhvghushdrthgrvhgssehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnh
-    hnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepmhgrthhthhhi
-    vghurdgsvggruhgthhgrmhhprdgsohhulhgrhiesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:d9ZZaUutH-MM7MOpAZCxze5DWuXz0NH7XJiDnSgcm6dl5c8d3kOz-A>
-    <xmx:d9ZZaSP6x1vSqo80NBRAPjO5p5HtWhOEUYsAYaZZZzUrae2wRlsmdA>
-    <xmx:d9ZZab4RVUDR0L14HgkJAMQaujhIf2LEYT1q7JrDZHZoHCFIDlXSXg>
-    <xmx:d9ZZaYS4Wf-pTeF9ByqEbdfbd4t-2VSU91tiHusz2Q7yp37GGHNQXA>
-    <xmx:d9ZZaZe1zZjRZeRhguInkOURNfYzWRYpbQFvKeLewGDT0C3wSMNSNDTA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 3 Jan 2026 21:54:47 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Matthieu Beauchamp-Boulay via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Matheus Tavares <matheus.tavb@gmail.com>,
-  Johannes Schindelin <johannes.schindelin@gmx.de>,  Matthieu
- Beauchamp-Boulay <matthieu.beauchamp.boulay@gmail.com>
-Subject: Re: [PATCH] ignores: handle non UTF-8 exclude files
-In-Reply-To: <pull.2157.git.git.1767478617198.gitgitgadget@gmail.com>
-	(Matthieu Beauchamp-Boulay via GitGitGadget's message of "Sat, 03 Jan
-	2026 22:16:57 +0000")
-References: <pull.2157.git.git.1767478617198.gitgitgadget@gmail.com>
-Date: Sun, 04 Jan 2026 11:54:46 +0900
-Message-ID: <xmqqsecmnl3d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DSVhS6ui"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-45392215f74so4542503b6e.3
+        for <git@vger.kernel.org>; Sat, 03 Jan 2026 19:08:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767496124; x=1768100924; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=6H7Esj2bFpZMO2OHNn3xV58vk0Xsn8FOFT8B49xSemY=;
+        b=DSVhS6uihKWjb89KpNGpDIhdhNTh7flIkps9F7eX17/C4Cip0ZGtjqKXm/vJW+b3/U
+         sVGSvc57NXPwpt5w7Vnr2ZjCGjUrmauvsbcxJo0IIQ2KAl/j2N2+hmfR6V0vBk/AQyXv
+         FBhPDiMP/xyUBCDD4gdk8Rzc3Nn7avIIt/pTJaPrWSt8IR54R2DEHaiUNk4rhPdFs6Vm
+         6Qetmr4fQob6vfb4qgC3zflF4kr2B3Y2NTIvGSm+1J8eifXCPCzgDGv29Dh+cjy7a+Ph
+         BxLOAbfZeQcmN/jCXks+uQvXqYYAErrH5FxczGIzVX1J6ZJYCfRgASrxru3WxYsHeyIw
+         MVUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767496124; x=1768100924;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6H7Esj2bFpZMO2OHNn3xV58vk0Xsn8FOFT8B49xSemY=;
+        b=nFxmJx7zwbOAzrviWCns30/7Nke3GhIat2ojUeZPKNoVF0nuWTTdvtNhPLyvik+RhO
+         /KvNo6m86sSpgsifuzoFQKSmFqppctx5QGUbs0TLSPNhaMKFfCE2SwNlfsDXL1TDE83s
+         zyeFj8SGPxi7ZYQXRjBrzlvUofkcEKaNbwaLWw43g3ST2NRqw7AFgXIb1Ebrfc1eAuFm
+         +vD96b9RqASttJqROt251TMsHCiooCeXi6Wigo/B26VPskWGCJDt/+1tLY9ZGyY4Dabd
+         gbJUzJnAgOdADTLloY9QAXBGyC7lfPAJ2hQbfYbYlNjHeYXnCXxZ1EwAHhUdGWR3cS4u
+         0YAA==
+X-Gm-Message-State: AOJu0YyDX4sarw5Ocz70n/SB8sFdX7vKj7JUgwhe+j/3oiPQgBU54Zvx
+	RzA0cebc5BG5QU5UpjiA9KLVk7uQwoKrS8FCSYGl5MEKOqMdGZK0372IGGIJCw==
+X-Gm-Gg: AY/fxX74jciJma1g3Te/Yxm9FR5mem+beXJaqvdGdX8K/wix62tt+2z4dOjIyhi2eZF
+	rGHUBh16W4t/x//8vVg8nlI9OOMZPqPLgSjMLsHXmxM2GcpzAcvHdL+pzHmB/95PTyO5pmrtHix
+	BmlpJRlILvnk+55mv+TsGsKSZE1gNdO9CW9E+IJ4vWSifKfXyXOuAqQ+e7DWca9HZcP6WxY//sA
+	wEbR0UKZJXEoKxpZyyv+Slv22xFbZiubMjpSt6wDcfrAcVGd8+HvjQzcy0orWkem0A1OlsoVo0M
+	xQ35wSS1gNfV/HYSPcCUcKiL2UwK9v3jTAQlJBefn9bYe6o/TZ3uDCT6a3AtNKIHZyE7BYA17V/
+	TjiNZ9wpLOFHim8Zfb8ylFWkDJb0f1DiNtGqdg5xBm53nNWDQxlQZhS2kPP3sTYQ9tMu/zlW15q
+	RBsPp2LnbY7grMNQ==
+X-Google-Smtp-Source: AGHT+IEGcaV9h3uP/xorwf0ONjuzNYc0XUtllKMYHmCq9sG/1eAFjwByoNLOCMvCqpvRbbYmEhZWGw==
+X-Received: by 2002:a05:6830:4492:b0:7ca:c842:fe0 with SMTP id 46e09a7af769-7cc668e94b4mr30152484a34.8.1767496123722;
+        Sat, 03 Jan 2026 19:08:43 -0800 (PST)
+Received: from [127.0.0.1] ([52.173.237.210])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7cc66727e37sm31602062a34.1.2026.01.03.19.08.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 03 Jan 2026 19:08:42 -0800 (PST)
+Message-Id: <pull.2154.git.git.1767496120852.gitgitgadget@gmail.com>
+From: "Heath =?UTF-8?Q?Dutton=F0=9F=95=B4=EF=B8=8F?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 04 Jan 2026 03:08:40 +0000
+Subject: [PATCH] doc: define timestamp in pack protocol grammar
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: jrnieder@gmail.com,
+    Heath =?UTF-8?Q?Dutton=F0=9F=95=B4=EF=B8=8F?= <heathdutton@gmail.com>,
+    =?UTF-8?q?Heath=20Dutton=F0=9F=95=B4=EF=B8=8F?=
+ <heathdutton@gmail.com>
 
-"Matthieu Beauchamp-Boulay via GitGitGadget"
-<gitgitgadget@gmail.com> writes:
+From: =?UTF-8?q?Heath=20Dutton=F0=9F=95=B4=EF=B8=8F?=
+ <heathdutton@gmail.com>
 
-> From: Matthieu Beauchamp-Boulay <matthieu.beauchamp.boulay@gmail.com>
->
-> When reading exclude files, git assumes it is encoded in UTF-8 and will
-> fail to apply patterns if it isn't.
+The grammar for depth-request uses 'timestamp' but never defines it,
+unlike 'depth' which is properly defined as '1*DIGIT'. Add the missing
+definition.
 
-Is it true?  I thought we assume that the exclude patters are
-written in such a way to match the encoding of the pathnames,
-whatever used on the platform that our calls to readdir(3) returns.
-Some platforms may have compat/ code to convert these paths and
-force use of UTF-8, but please do not write such platform local
-conventions as if it were universal characteristics of our system.
+Signed-off-by: Heath Dutton <heathdutton@gmail.com>
+---
+    doc: define timestamp in pack protocol grammar
+    
+    Fixes https://git.issues.gerritcodereview.com/issues/40000018
 
-"ignores" -> "exclude" on the title, as that is the canonical word
-we use in the codebase to refer to the ignore mechanism.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2154%2Fheathdutton%2Fhd%2Fdoc-protocol-timestamp-40000018-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2154/heathdutton/hd/doc-protocol-timestamp-40000018-v1
+Pull-Request: https://github.com/git/git/pull/2154
 
+ Documentation/gitprotocol-pack.adoc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/gitprotocol-pack.adoc b/Documentation/gitprotocol-pack.adoc
+index 837b691c89..7ad63322c2 100644
+--- a/Documentation/gitprotocol-pack.adoc
++++ b/Documentation/gitprotocol-pack.adoc
+@@ -273,6 +273,7 @@ out of what the server said it could do with the first 'want' line.
+   additional-want   =  PKT-LINE("want" SP obj-id)
+ 
+   depth             =  1*DIGIT
++  timestamp         =  1*DIGIT
+ 
+   filter-request    =  PKT-LINE("filter" SP filter-spec)
+ ----
+
+base-commit: 68cb7f9e92a5d8e9824f5b52ac3d0a9d8f653dbe
+-- 
+gitgitgadget
