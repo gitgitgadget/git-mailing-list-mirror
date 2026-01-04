@@ -1,140 +1,118 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9D1A55
-	for <git@vger.kernel.org>; Sun,  4 Jan 2026 19:33:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A2E84039
+	for <git@vger.kernel.org>; Sun,  4 Jan 2026 19:40:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767555200; cv=none; b=myaJCXX39VfgGcsQ3ILJF+rd9viTFGOsEI227QwkEM5MHCyJIdD+3B284Dm4rcIgb8TfF2deKDccy4MeLqQbtzHXaeCsKHDatxZuo30rd6YnxHvRqjbEIDxa6Bs+FIwmbWDVeNkTiNhgWM+FE6ikIIrWpTS4StgdppptoiDYZ08=
+	t=1767555619; cv=none; b=Xm1wFr3Ah7ohSAttvaZe8SndNBE0/8157VjJrGbt2HwcQTDZTxZTfE9YotKmxeqnfl1/ySYaELu83irlFnv4dhTb7ebDVXeLolbFJBFkbl4Aa8CZ8b9Ah5oukkSX7w5sF/8hExG1QHRPtbVShPNa87XiHNN+7ZWTzMrRqWOr2KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767555200; c=relaxed/simple;
-	bh=cHyTX69d+CppTj1iig4AHVKdeWH0lCVPqogz2opKphg=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=hGHRcmmBgTPzj2b8WAkuFC2+iK6FgOW18PCRt12/UusQBikZVJeY4Qd8DkpvtPK5UA+HnX8X69XRriyGC3x+U/XN2yIDvZw/iCOIEULc+5wg3aFYsvN3uyOniZkygu3ONEQDXfLa71XxB7OF8T9kZWKDFvSI8UEsZ1lsJOL9bo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ies57C9j; arc=none smtp.client-ip=209.85.214.179
+	s=arc-20240116; t=1767555619; c=relaxed/simple;
+	bh=AM7QXDxOQkrCsc0U70/iR7hmAUkLISBD6RCclN1xROI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pkDROPMPGeIWnYU2tZPkAzwL/QoeiYA2B1VKl2JH0FowgRKgbuRjKHHJ09M4KieQ5xdTV7rvc+05g13ILxNS0+lrm8rvG1qJxILeJOYgWqCn3yxtp0NWK8iLRdhvLO6+zgLCU/hRTuEjhY7jVo8VewR02ODHhMQZ17q2RJqB8PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iwxHR4MN; arc=none smtp.client-ip=209.85.128.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ies57C9j"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2a07fac8aa1so145227235ad.1
-        for <git@vger.kernel.org>; Sun, 04 Jan 2026 11:33:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iwxHR4MN"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-787d5555274so122537467b3.1
+        for <git@vger.kernel.org>; Sun, 04 Jan 2026 11:40:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767555198; x=1768159998; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:content-language:to
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1767555617; x=1768160417; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dq6yyYnaGN5ri8y6rWS+O+vCg2QXr9J66SsNwPgCsQg=;
-        b=ies57C9jfXArk5PjZEviZaUpENx03S3Fqhyjxi8qFXhQUKA0i9WhAbbXMz8O0f4rBB
-         YcQ/N4N+n1ZEe9IXogmrNb6urQQxMeXmAuC5uTXmIKtw2gwoN1ZP6AsKdDoBM/wuLvK0
-         wkuV8kJYMlks+V4Cum7eBbcxfbamchf6LTL6MRUStG/OiYrca+6n17oICG4+T5LdVLYi
-         7FYER0vbo7Tuk3XWHkHOaezxNkh50ubQKXt0cyyunHlhciC48n4LCG7Pj0j/c8LX4e7N
-         SEnFIV3SXoYdtFc3/rUYAYrnl4wZLjFZxwU0Srs5ggsq3oIJT8UtCVLwZ9ce9uRZt2+B
-         1juQ==
+        bh=AM7QXDxOQkrCsc0U70/iR7hmAUkLISBD6RCclN1xROI=;
+        b=iwxHR4MNfUjAD053pYCZttlRQWy2u2AxYTmlYZDcBwOgXm2MZNrO5/aeSxO/HDbfLj
+         Cn+YowA8hJBCkPVB0r7M/DfZ6uNNHw/w+FWdti/HYWv0UnFih0DJhAjk0HEn52WGdW5A
+         xmFHQs2RLE9fYKixfLDkohkMivI4e9ZuG3TlOxKfMq2qQm9iC5Q4LJFz+0++/zUKeHXI
+         jib11+piAO5DBUq7Yj39enlNloFHBJ3wbFWQgXITOHxP32wV80qEgvtv/21NUxxY16dA
+         rKUMuvW/eJiOqgXZlMskghRgfJJ/hToUUPZZQB1OjAll2ERkUcT+L+vrr1EXUXbWlFa2
+         92HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767555198; x=1768159998;
-        h=content-transfer-encoding:subject:from:content-language:to
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dq6yyYnaGN5ri8y6rWS+O+vCg2QXr9J66SsNwPgCsQg=;
-        b=Bsb2w9tFR9QoddxwAu/+nDTzkBz3IN2DWLD21gdvrpo0f6R+dkoBiqFbsmpPdZhY4Q
-         sW/bFP9PXEDUXJeghW7CBzlre0/4F+acNxkCaAsrMnUK5sEXwHPW9MulKs0n4FLLkICV
-         KifdrTpLuMYxby3sMSkvfKfvUcrCV+SYXXfRI4UuZydVZfu+7Yo/laLutAK1hgoZ9knc
-         u34mtbiS+E4EpHitZ4y9WuApyNP754Dk1iSz0lxfXwybsqe4YMD3EJAjgG6y7r3402XM
-         7+zPsBfP1h6/g4KDSJoB788YeufXB8MHB0Ko9Y5BvSNrUVjJFQMHONyE+Tww/Xzc7qem
-         qiCw==
-X-Gm-Message-State: AOJu0YzaZURFzMAgusejyR0qvhRN/nfFIgbKgO+/rFtKiBrLJYmB2aAL
-	Hp+ocH4XKdFlSlkcKBjKqVt8gUFBnNcV7lVK8jWPvAcVW+dcBeYIBVRQc8Txuw==
-X-Gm-Gg: AY/fxX7yof/XVnmRP1ZTeJzMj2EsB/pc+u5ryyMtMwZqfYhkXi+PixOUT7ra5C000MC
-	UwlinBEm1o13c29oB/s/Gj7Sbdyl68ZJSkL2APvRJjkHV+OhJ59X+DVwUS5GpIta1tv7LyGz9yD
-	2RiR05caJ8RZgpZUuHxMLZCv+AtSC86kyHtz9Re0bxtcrwbqwpRCaeVqsmy2nRPoMVa1wuv+aj8
-	2LLVCliqs+Qj/tMeCjo1y825GD9Q8PoENLwwCn0e+W7bRS3lXT8PdltmzGdT+aqdRnnACHObzdY
-	N2cEPbT81pXZzGSK2rVOkoy/LpJoT6PIxfyCatRvPXCtdgrJ7LHGygv7BoD/vKUSaMBvKqTIco9
-	260Tr97QfmnIboftL4shRxhf5jxqr2fnOfB/u3TJAd6YWqOsNjQPJk6caNDCPkE837v+aCINJNU
-	KO1qbrW2IG9a5SSjOiNNDBiQS6o/4bc61Afe+1jxT04OmmtQ==
-X-Google-Smtp-Source: AGHT+IG0hj1BuHT33XU3dBSKmkpNvbt+ds0r07MwXZYXcMzA2FZZ1+4YY5yL4WtcXdd8IUuYq62m0A==
-X-Received: by 2002:a05:7023:c087:b0:11d:f5d5:f699 with SMTP id a92af1059eb24-121722abe01mr35298278c88.20.1767555198217;
-        Sun, 04 Jan 2026 11:33:18 -0800 (PST)
-Received: from [192.168.1.99] (23-93-72-44.fiber.dynamic.sonic.net. [23.93.72.44])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b140c42e38sm9594196eec.34.2026.01.04.11.33.17
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 Jan 2026 11:33:17 -0800 (PST)
-Message-ID: <292537bb-e903-4baa-929c-6ffd0bf55a8e@gmail.com>
-Date: Sun, 4 Jan 2026 11:33:17 -0800
+        d=1e100.net; s=20230601; t=1767555617; x=1768160417;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=AM7QXDxOQkrCsc0U70/iR7hmAUkLISBD6RCclN1xROI=;
+        b=NSG7menfDTaGRHLo9zTs9/oAmehEHLB0NsRfxM/gLaZVQeGOhXa1UwRPs5Bip6o/zc
+         C/DzFXu9g3t7dCRIv7g1T6LNF5Eror4in3dWK3ClHZdRRfphQI6DSoQ31TESX8Q+TRZy
+         wqn5M3fs8XcYTEf2L11USw6of6ECdKiv7OMpzbZQF3OM3PH6KWjAjIaZbWLXqL+ns23l
+         eF/Vdhb5eoCdGS1Cs0MvA+tKmRgKyjyQMsoW1FxM+ppziFrJaKLiZUEL6k4o+mV+UEaH
+         6pRYxju7MUpo3uwWSCxu3txGI/i3984zoYFeuUV7lWAI8CX+97PRgTuiNihqKYO8Yzr0
+         MQVA==
+X-Gm-Message-State: AOJu0YzDH5xYP653dphfPBBxxKb62zPhG43lVobUtcPJ001B3/URpDCK
+	ffIyGTHj2thm8OShta4ZHJi41CasmucAY/PWtolawYQXNqxQQ4u9Wg24xW7RWe074yhvJI0xmLl
+	271e+vCuoVY4QqYt/I8GDmLx27mqo5C0=
+X-Gm-Gg: AY/fxX4JekS7MftncMV33in7QteaWLOFK01Pvg8jb26rU+exNl3alA/+zQB0+J/qXWd
+	goZIPr7PRILEzyrSeaLzsneJ6UuD/xJdeS8qTs6O+sij3O2xVhJnEIMAAMmkSs38lWpUYwqQKmP
+	oDg6+mY9FYJBtRq6NdWQLfs2sXUTTujVR47BAj/E9uXFQIbPKUi7vblddBf2Ti51Z2crKAxWaF/
+	RMGj+BZ+mzhfolxNCuJhvNdLxnbv97N7q2mt8XxR1MOPqjpkeW0wNb1CWuYD0ktW+OvQvA=
+X-Google-Smtp-Source: AGHT+IHKUFcBGqodelsV2uTBLZkU4AqC83GeEi/S5ZIFFW6NR/+OAMZFmXY6fL/df0GmZ4XiN94WmXti+b7/ffUCi/0=
+X-Received: by 2002:a05:690e:1881:b0:646:7da0:3a96 with SMTP id
+ 956f58d0204a3-6467da03affmr34507338d50.50.1767555617149; Sun, 04 Jan 2026
+ 11:40:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-Content-Language: en-US
-From: Jon Forrest <nobozo@gmail.com>
-Subject: Inconsistent Behavior in 'git add' (git 2.52.0)
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260104124255.15609-1-pushkarkumarsingh1970@gmail.com> <aVqIjHIi6aKvFYXg@Adekunles-MacBook-Air.local>
+In-Reply-To: <aVqIjHIi6aKvFYXg@Adekunles-MacBook-Air.local>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Mon, 5 Jan 2026 01:10:05 +0530
+X-Gm-Features: AQt7F2oXdPDdwDu6k5euF6VbDNS8ZiK_6lvQWFvEKKNWTic1feZw-dIOyzhx5w8
+Message-ID: <CALE2CrQoXZjkpd+Lswd=qME9nkmUGu3HK8XacZ+Xz6Y2w+=t3A@mail.gmail.com>
+Subject: Re: [PATCH v3] t1300: use test helpers instead of test builtins
+To: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-A while back (6 Sep 2025) I submitted a report about how running
+Hi Abraham,
 
-	git add x bogus_file
+Thanks for pointing that out.
 
-where 'x' exists but 'bogus_file' doesn't results
-in 'x' not being added to the index. Peff was kind
-enough to explain that the presence of even 1 invalid file invalidates
-the whole 'git add' command, no matter how many valid files
-are included. OK, fine.
+Understood. I should keep the commit message itself focused on the change,
+and describe what was updated between versions under the `---` section.
 
-This morning I was experimenting with what happens if a file
-is specified on a 'git add' command line where the file exists
-but is in a .gitignore file. I was expecting the same behavior
-as when the file doesn't exist at all. Here's what happened:
+I will send a v4 with the commit message adjusted accordingly and include a
+"Changes in v4" note below the separator.
 
-% ls -l file1 jon
--rw-r--r-- 1 jonf 15 Dec 30 15:36 file1
--rw-r--r-- 1 jonf  0 Jan  4 11:19 jon
+Thanks for the clarification.
+Pushkar
 
-% git check-ignore -v file1
-.gitignore:2:file1      file1
-
-So far, so good. Both file1 and jon exist, but file1 is
-in .gitignore. Just for yuks, I start with a clean repo.
-
-% git init
-Initialized empty Git repository in /tmp/fish/.git/
-
-The index is empty, as shown by
-% git ls-files --cached
-%
-
-I then ran
-
-% git add file1 jon
-git add file1 jon
-The following paths are ignored by one of your .gitignore files:
-file1
-
-Again, this is exactly what I expected. But, running
-'% git ls-files --cached' shows
-
-jon
-
-This is *not* what I expected. I expected the 'git add' command to
-not add anything to the index, the same way it behaved when I tried
-to add a file that doesn't exist (see the beginning of this message).
-But, apparently specifying a missing file is considered a different
-kind of error than specifying an ignored file.
-
-Once again, I'm wondering if this is expected behavior.
-
-Cordially,
-Jon Forrest
-
-
-
-
-
-
-
-
-
-
+On Sun, Jan 4, 2026 at 9:04=E2=80=AFPM Abraham Samuel Adekunle
+<abrahamadekunle50@gmail.com> wrote:
+>
+> >This version updates the commit message to avoid calling `test` a shell
+> >primitive, as suggested.
+>
+> >Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+> >---
+>
+> Hello Pushkar,
+>
+> I think the right approach to send an updated version after modifying you=
+r commit
+> message is to modify your commit message to INCLUDE the recommendation, n=
+ot change
+> the commit message to the recommendation alone.
+> Then under these three dashes after the 'Signed-off-by:', (---), which is=
+ here,
+> where I am currently replying to you, you state what you changed in the n=
+ew version
+> compared to the previous version.
+>
+> e.g
+>
+> Changes in v3:
+> - Modified commit message to ...
+> - Modified subject to use builtin instead of primitive
+>
+>
+> Thanks
+> Abraham.
