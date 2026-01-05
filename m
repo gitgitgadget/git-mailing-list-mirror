@@ -1,116 +1,137 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7976C236A8B
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 21:55:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD4E2D8782
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 22:13:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767650140; cv=none; b=HgmoHx12Evs7U/kXRyIqtwWsCl8onzcxbkMehIWEPMVx1oZU6mlZPpW7t7xnNTHc/RcgxZeV1HGhUTy1MgABRmcpXwGkqNdSnZDS50AVjajFOJthLjYkzJZs3f++A4W0C/4tBU0Bv6pZpYab8F2dVGWYp7CkHrmbZVcYAUONwKo=
+	t=1767651190; cv=none; b=LoLGaJVkvbmF2bAZzWNO97fqM242htq5p7SrqyKBKI9LkROp4L+lSeAEPGag2Ow3E1vUGju3kN9E0bWz7vl8WwbPBzcHRU4lmmuwmOFglxIUS7s3tcNuAOti8ypcHknMFLa21/R72m+qEKgVvfutGlWTUpqoh2QYIXjsKFcqKJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767650140; c=relaxed/simple;
-	bh=0d8qAk8f3olkxeKgaxRBT06y4ijCEfh8nsrAyODXUBo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EseC1Y924HX9DvmfRQVvSOiONvUk3tiUefOhJdSsHv3kXtfU1ShoOzGUsbTkXMT+quy8w9eEzWuz4WMiZS2g61t6tEfM0XfBxZKkOQLgHvjwaOmb1rVfx6NUG30+6x/OqTMWHqABD6r/C5Q6cXoHfnOceFJveDn5VsiG7CVQEw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X78v58bB; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767651190; c=relaxed/simple;
+	bh=mjvNrsOFXQVFPODFdo6NYmdzdqYKj8sMcKMK5ljCP3A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EYfQaduW0YSZDPpvfkghE7qgour/G20f8Jery5pFX/jVyhtM8LICUUTBMH9HMPpXV0QBKX5I5U9Pm1OJJP+nndp3t6cHx+JAuwcGIF8gOocneoDA7uqmD0YYNe+7/8nKbuONpFyUIZA7ka7VaNJItFnyjMB7SST8pPR51xrEY0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lm+g2pPz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nGPeExRB; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X78v58bB"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-34ab8e0df53so393251a91.3
-        for <git@vger.kernel.org>; Mon, 05 Jan 2026 13:55:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767650139; x=1768254939; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0d8qAk8f3olkxeKgaxRBT06y4ijCEfh8nsrAyODXUBo=;
-        b=X78v58bB0E6gKg/EUEWOtEG1Jcjp8jrWwVF6jgqUtNJ80Bl03gswMgHIbAoijdKhtz
-         +muoPXMZFzulfDh/P7Ov9GkiyoF36lMtXpgh/aUEZ/wL+H65+KpcLaYq5+mGh95Qu/B2
-         nql+ad0imxYaPPf0MDNkfoFBVbEHjxaOGH9eVVjYZDaCTZzuunwkPWEq5XKwp5BMSP2k
-         Zu/fB+4W3yUGtysjKq8CCmNTw4OOrQqZe2chCJKg7e9+mTRdn5p3gIy9CrY3dM99QHkb
-         eoddzhXKU35MZM+Nm7dKOH4Mx/KJdJYqaxZyRNlhjWBpaUQxwg7Jw90l97p14vaD4aeq
-         Jr5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767650139; x=1768254939;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=0d8qAk8f3olkxeKgaxRBT06y4ijCEfh8nsrAyODXUBo=;
-        b=Eap6L5fEpZ5yhtu4De4q2IExh7OzT+Hayuep8HHwkAcE4v0cTcaqzlQDSDt2iLd3aX
-         i5gwhPNVjlsREHUxxjKXH7qhb8XXqSmxo10LlxRpExv/D1Mg3Q4Wn1DCDtpHl/Erjy/Q
-         Mh+VgTC/JrepSZO9cjgxtQJYSdcVO2lZfVYvuuukFmvFiIldoH9YoSvtsOvMFtmJE/j9
-         Lvkcgq+wI04AI0BIfQZGWPieDa2nBXPzS62QBzdrfvqWCOEIdnI3S6CX8z7tl3kRCao4
-         p6E5N56VNjS5L3RuY9HmsqCTktAv+GoTxGNkO5mD4I+MsmXVvZG62yoBEq5YYrF6P8Vs
-         HzVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXwiJYMEQUYCAYpYN8yHxg/mtUG7P//Ke9ppqAe1/0lY20TXDcPO6/mkoxRc5Hae9PSv/k=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzF/xMC/RQtl/7/02j7Uvnl6MYc9O3s7yLEk/cdw27SunI2YEJV
-	rsaqCAobfH+5z12pdWygh2NAXla3qoFUwgVexfNXdXgtI7NShsdn7Mi4RPladXIxgHxY+aMQiHR
-	cMx3W9Fbbu3k4uGh68ZhjdM0Ms2cSqoE=
-X-Gm-Gg: AY/fxX4SRPigLqMNnt03CWqnhCZ4uPKixwmDpVM2zIXOBaqBDx/0gbCTdtWITs+9Ino
-	O7EDz4YEuUMvLxigcKGw9RjAWUMNdqDSbcWHLJTTs7Uwx46culSK6yKBaLqdukYTkngFntMf1v3
-	0WWXmKpuBo/4484uvifybSAefD9xju6YNwsAO4xz3wjquBMEMDsziDjw2ijSwwRKhWYpLkiRiyU
-	w0hu51P2UT0FoqkvwRo+4l2MLP1pz4h3BBXb+yywtYrPRydISW/VUDA1DkKKh9US40hZy1wdYrp
-	YyIf96w=
-X-Google-Smtp-Source: AGHT+IGqSXPAQ3ATloYf4rQLgt85WuJ5ygD9MlXijk9G7gQa0UsBwr3XH5H0AR3/+GyJXnLEs9ArBsRRX7asC4tXC7c=
-X-Received: by 2002:a17:90b:3908:b0:34c:fbf0:fa55 with SMTP id
- 98e67ed59e1d1-34f5f2f6929mr510371a91.21.1767650138686; Mon, 05 Jan 2026
- 13:55:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lm+g2pPz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nGPeExRB"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 734AE7A00A7;
+	Mon,  5 Jan 2026 17:13:06 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Mon, 05 Jan 2026 17:13:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1767651186; x=1767737586; bh=Gdp6KIwlnC
+	YcRj2s6o6Okep0Nbj/sU9wTKfGottQklE=; b=Lm+g2pPzs2T+yXHMv0tPcNqGTy
+	6rocbds2a7a1Jm5obFFSqNwOIXOJ5bq93TBm8m02V6499z+RG7EBIC/aN8jpCQht
+	dy1N8YIZ6rMjkkARiYyLcddqslk8zFzTZMZwLqu4eXxSk9qRfDbp+I15owJS1g6A
+	+VGl1Sok5zxGiHCj2Y2asVrslMuH2OI+SdxTxUK9Z6lvbd9bTrNyPPBkWVWbsHaj
+	ROdnzfMYHQXuIaCZk9SFnjUopxBnNagmmfd4N8xzB9S628xuFod2nUrebP9U425Q
+	tKaMU2aMu9oTUpWTPq72z5uFDmbWY46VdZDLFzZiihEzOnsy18eDj+4Z2xbQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767651186; x=1767737586; bh=Gdp6KIwlnCYcRj2s6o6Okep0Nbj/sU9wTKf
+	GottQklE=; b=nGPeExRBhZhrNmsZ0R1wh2mXYMH11dY4wVsY6kcHIux3Ve5Gc2E
+	Y/fdSzy2eLPhqqnqOKJLfERIUZvaXMSUKK8GOGAiTcZKlCyGA4WswE33RQ1vRnya
+	5f/1hTmQfQEj6Gxu9DYijRr+n/dRp4pZl6Pr498aOpUUOANLiMYOk5zLiUttpGSr
+	szAALZ/JwI1HxSocyWTV6W+Ql/d4nguNaLkqH2k5Qat9GlnCUrtB3dpfq0BlYXrV
+	t9Y3lsV4hL43it17ZICWl+aLxoHKG9tpR5wpWPHzK+TcdObNdKsOYkW6m8JCHzNP
+	4SAsXuMRdXBvgKXCMpBryiC8iAdYkqhJoDw==
+X-ME-Sender: <xms:cjdcaRadx9w04Byec_FLqRNkWXMz_6EOrdizuz25FRuyeO5FHqlORA>
+    <xme:cjdcafZmlp_dHUGw6PRSM-dtg1VOInZ6U-pOXLvDK21kxPFai6SoNOs3ZFxnormY1
+    aX2G73BdpyGGhJzcJ1TUc29_oEpRLr9XszJwsff0FmAzTgox1UigA>
+X-ME-Received: <xmr:cjdcaY_oPMCvL1NPCF-ltJa2OtS2ypnQx5v5fW8VBzC2ed-7qopyRKedDDF2xyvHOBjB7VkslIhepj9J5zRDJ2cDCQRA06fMFIhTXi4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelkeegjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:cjdcaeiM09EL3G6T795uaiJ59AX7SsIPBGPenBX0ezRB2yJhx2sa7Q>
+    <xmx:cjdcaYekzCqSVGnnd_6DFze06Dp8D1x_L3SqoDZDsC3ep4JuLNWq1g>
+    <xmx:cjdcaVql_SFA9PHWKxMdvrbbBV3jCiphtF6-_9iKKUdmmGFLVFqwWQ>
+    <xmx:cjdcadBWcV6T2AcYr_8XAyNS--edk__5-Khjce_hacbTPxT1punuzw>
+    <xmx:cjdcaYe38_ClL0OBJgi0vgI39lqB3eOg99MzY5dBo_Vts7xolT_SIzza>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 Jan 2026 17:13:05 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: git@vger.kernel.org,  gitgitgadget@gmail.com
+Subject: Re: Another look?
+In-Reply-To: <20260105131654.88348-1-haraldnordgren@gmail.com> (Harald
+	Nordgren's message of "Mon, 5 Jan 2026 14:16:54 +0100")
+References: <xmqqldickzva.fsf@gitster.g>
+	<20260105131654.88348-1-haraldnordgren@gmail.com>
+Date: Tue, 06 Jan 2026 07:13:04 +0900
+Message-ID: <xmqq5x9flndb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqh5t5c4lj.fsf@gitster.g> <20260101233839.17639-1-haraldnordgren@gmail.com>
-In-Reply-To: <20260101233839.17639-1-haraldnordgren@gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 5 Jan 2026 16:55:26 -0500
-X-Gm-Features: AQt7F2phm_E9O7Mdeasi7Vi8pQw41TU9ohAF3tHtE1DjQAJFyta6KPmR7m6IzJ0
-Message-ID: <CALnO6CCw-LiFa6kx7C6xRyZOTr_AkAzWQz4UZasT=kWX=-vSXQ@mail.gmail.com>
-Subject: Re: Another look?
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: gitster@pobox.com, git@vger.kernel.org, gitgitgadget@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Jan 1, 2026 at 6:38=E2=80=AFPM Harald Nordgren <haraldnordgren@gmai=
-l.com> wrote:
+Harald Nordgren <haraldnordgren@gmail.com> writes:
+
+>> Please don't.  Unless my assumption, which is that in the old code
+>> "!sti" and "!ours && !theirs" is equivalent, is wrong, all you need
+>> to do around that part is to first check "if (!ours && !theirs)" and
+>> say "your branch is up to date with...", and then have the check
+>> "else if (abf == ABQ)" next.  That way, when we check abf we know
+>> the branches are different.
 >
-> > Again this seems to do a "step 1 goes in a direction, step 2 fixes
-> > its mistake, step 3 changes course" drunken-man's walk.
-> >
-> > The same advice to restructure them into a logical incremental
-> > progression that moves the codebase in one consistent direction to
-> > eventually reach the goal at the end applies.
+> It seems to be an incorrect assumption. This code change breaks several
+> tests including old ones:
+
+
+
 >
-> Isn't programming always bit of drunken-man's walk?
+> ```
+> diff --git a/remote.c b/remote.c
+> index 1f87b85b22..8db4fcd7b5 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -2303,7 +2303,7 @@ static void format_branch_comparison(struct strbuf *sb,
+>  				     enum branch_mode_flags advice_flags,
+>  				     int show_divergence_advice)
+>  {
+> -	if (!sti) {
+> +	if (!ours && !theirs) {
+>  		strbuf_addf(sb,
+>  			_("Your branch is up to date with '%s'.\n"),
+>  			branch_name);
+> ```
 >
-> I'm very hesitant to restructure my history before I am confident I will
-> not need any of the old work later -- I would hate to lose history if I
-> make a mistake.
 >
-> One option is to keep my code backed up on a separate branch locally, but
+> Harald
 
-Git will already do this, more or less! See "git reflog". No need to worry =
-:)
+That is unexpected.
 
-I don't fear-driven development to lead to optimal results ;)
+Looking at what stat_branch_pair() does, before returning 0, the
+function always clears *num_theirs and *num_ours, so there is
+something else going on.
 
-> As a side-note: In my day job we only allow "squash and merge" on our
-> GitHub. This gives devs the flexibility to treat their branches as a WIP
-> area before merging, but still gives a pristine git history after merge.
-> This feels to me like a good trade-offs. But again, happy to take
-> instructions on how to do better.
-
-I think others have covered this, but you can both "branch is WIP" and
-"clean history" by iterating within a PR. The GitHub UI does not make
-this particularly nice [1], but my recipe is essentially
-
-1. Make changes
-2. Post range-diff [2] and force-push
-
-[1]: https://benknoble.github.io/blog/2025/03/17/more-range-diff/
-[2]: https://benknoble.github.io/blog/2024/10/04/copy-range-diff/
-
---=20
-D. Ben Knoble
+If your caller is *not* initializing ours and theirs, and if it is
+not detecting an error return from stat_tracking_info, and the test
+code is trying to see when stat_branch_info() signals failure by
+returning -1, then I can understand why the above change makes a
+difference (i.e., your code above with or without sti -> ours/theirs
+change is broken), but then, that should be handled at the caller of
+stat_tracking_info() by noticing its return value being negative, I
+would have to say.
