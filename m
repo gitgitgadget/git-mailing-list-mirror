@@ -1,108 +1,195 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DA9221FBD
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 13:16:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65676148850
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 13:16:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767619019; cv=none; b=qQeLW2Fkh5XwelQuyLprLbcbNmFgv0yP1MgJs0DA9IZAwgcLzkBXMhMoyv7UWnd6E1qj7O6doUZaOSgVQstxvwbp4EqPmpe7l2WB59G+OLTv4syOCBgUu3Ovb2W/qWZ7fdxjZUIG+x4vPlvrjZooe0F8zKNQR7iCoiZFu/Aqeqk=
+	t=1767619021; cv=none; b=izcHsUEFbAtEzcZ+HmDJAJDL2WFM23OAZ2VjTOn6DU6rxY2Gbg2HiRWNKKRpnCkHf6EdS4Ekdjs9z+qIysl6UPPN7QEnd2K5mbgwrAUMNKeadYOsOqBUiQW1sLglU9owQiMON4lNHmfv1fXnwATOzTF84Qk2rsk7EiXI8Epoh1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767619019; c=relaxed/simple;
-	bh=gqwIlp1afjSxkX7FXOSVU/4Prja7v4bdi58G//HUQsI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=vCUEKuzoagcLOBGes881I7C9akijEJgdVAEVMZHTlE5t8mEYoerW7w98w3w1QnHUzBprZaNWobB4SkVuaIt2eBOvBItGiVXPugQxluX83CEzKeUENI8hDlZz9uPkZ+6ie9HmwjsdJLGDHYKS176r1hrRMrXejOpA8VO2anGDaHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EsPHnNJo; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1767619021; c=relaxed/simple;
+	bh=Ajh7/AT8XhltXVJ6+sJwOkchVi08jH5C61Fi5IduNEM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=o7QcodcTMvboSogMTAK7yrApyUDX5XW/IciVzGSBFUjYEkSwdINzVP78PwROw2IRI7Q8sjtWLoshH35nvwnAMgHTktmLD2BlRHAapRdjG0/TD3m6PNp5pRI0wl2ksTYevjGDLqqZmuCsPE6NUl+872qXkgGpO/2Xfd/ngqWYAZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QqGizliQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VImbD+/4; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EsPHnNJo"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-594330147efso16321562e87.2
-        for <git@vger.kernel.org>; Mon, 05 Jan 2026 05:16:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767619016; x=1768223816; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zWOfxfYufk9zUhSnoU3xxcCVaqii3XScSUkw04mDn3o=;
-        b=EsPHnNJo5Yh3tUYxuHBvLVP5nZP2KI9+IndSIGPezUlIhLwIhyxuzW1JYRzL/0ft0s
-         lUYpW9x38x6olLzV/GS2BRnznFYZD3gBQqA3exK1mKV4WuNpUV1jvSiHeg8hvI4sljdD
-         0wzNdRGbWZmLuZ/n3ck5PCrb31JapmAT/p4iGueUCSNt61iu15jdNUi9rvANldQd1qyT
-         Ao3yx1GchpwgA7EfuNQ254I57DOBlyE4e7ELr4XrZzfX1/JfKEsLP0oD15LRFDhss2/i
-         nTN/fw2fBeWVCW8Vr5/GSOGuH3tKSW+flg736e2Wr8CE+Wedz2ESu3zewcaXfpgOV6Qt
-         ZstA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767619016; x=1768223816;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=zWOfxfYufk9zUhSnoU3xxcCVaqii3XScSUkw04mDn3o=;
-        b=WQMkK9ZLV5MKhEpbtF6oGw4gd3UQCObossLr733XR9ch+AwZvdcZHO9pJRCjRBpn6r
-         K06nG8CnS6gog1DFlL6BcWMfHskU0yyNwXDgbX99rLt09jhlyuZOoIgbjmIDQSlzHxAn
-         Oe0dMltri7i6MLko7vMqVgXIHCSYozW1B9t5WjKHcAk4sHapN0wHjvAbQSVpdXUMQGv4
-         1M0TKdeE0rFyLuH66Yw/uHk+2PUP/T7/4DeAVenmoK/mbWySrj0ADI4pxJqwtDvt3L0v
-         3w9jmHkmbpKVi2DMpq8I1rWVla4qQNlT6GsA+mLmt7scEKf9FTBenRpSpt/TRCXeyvov
-         HNHA==
-X-Gm-Message-State: AOJu0YwAxpC4Op7gdljeN+68pRQdoPU3MGYTgqdyDtlqC84Odr3VAeps
-	3tqZ4fZlS2dldnPN2vWe5F8mzgtP0hN6H3QEONNWJWTePxm8SECuI91WeNNKMg==
-X-Gm-Gg: AY/fxX60t9mq/XGdrvmgS70Jz/aw+J/U0j90QezR3M6rFAMem/VkUj1AZ2wc9oqFKaz
-	fk6A4C9+n/f98JHTY9zYy0onWVrR57NmgHI4kUw23HZ8FuwdlnOT72RJd9WTXkpq8W1m/3heMen
-	kIfZnLmqcAcO6PtQXJBI19Oq1r9lTWvA8AYPinzQEZeg7oFfuN6p/nCi1n0nQJKZQ7kJ70gNvdw
-	nPjg18a9UycbPydDc/ge8+LlcvS8QThz5vvCwv3PBgY5FjTf+gGFhVOQRN2VpLVXNg2EQNpxnId
-	jDxf8WGgRHpftZPkMFFO9v960knvvllCzLFQpCDq6GxCG7C37olGgivDG0qF6SvLKB4zBvVj/n/
-	dJAmHP3aop70hhmSGdcuMTx2XFp0RJmJP35RAr84i0vMldSOl565Ixnj76ZFnniNODgrYl1BHot
-	ugNDAFyQivAQ5f9CkRCiLRmsp1yR/qaNNGNzJfMjVS06U9jhhWDeF4fSfvRT+Y3u69zRQaP6TS2
-	IjXVp0OLm2Pq3o=
-X-Google-Smtp-Source: AGHT+IE+2Slij6Ia/GYXtLm/LhwOIoOsHlEU4rEhq8xpe7PhryRXK/vnIhldWvnjAJDmZovfo9D3pg==
-X-Received: by 2002:a05:6512:31d1:b0:598:853e:871f with SMTP id 2adb3069b0e04-59a17de08e2mr17132847e87.51.1767619015613;
-        Mon, 05 Jan 2026 05:16:55 -0800 (PST)
-Received: from localhost.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a1861f4e4sm14402345e87.83.2026.01.05.05.16.55
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 05 Jan 2026 05:16:55 -0800 (PST)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com
-Subject: Another look?
-Date: Mon,  5 Jan 2026 14:16:54 +0100
-Message-Id: <20260105131654.88348-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <xmqqldickzva.fsf@gitster.g>
-References: <xmqqldickzva.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QqGizliQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VImbD+/4"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C89FF7A00FF;
+	Mon,  5 Jan 2026 08:16:57 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Mon, 05 Jan 2026 08:16:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1767619017;
+	 x=1767705417; bh=rFPzpokg/R9M2bA+MwmWxx5pxzfkUvywDL7HVHc26Vo=; b=
+	QqGizliQcGPp5DJ1r1dTaWc2jT0QYs+gZAfBSFU5DXG+g/dfU7Tk37HFyRaWqZRO
+	2qSuqXpcVCys1jGPMbZKBOLu5KyThsNYJW2i6SEUWms3Lcg7d8XnID0m9yKGZ8Dk
+	JUWKWsSCrvTvFw8Pqv2cNP0u4/vPnWkSj2T7bNUsYwse/P4wYzd73OW4P9HT/uM3
+	yKoo2rwIQC0Gx5tpdiYBm23SFKfAlTzyXONybzn8aUlot9DNMasfesUdhGrItM3O
+	N4YMuVeJZNEuXT078rnXmY+sJ2wcmqkpyMQfGO28oozVAF4dIK88B7i7xdIAE+Mv
+	GggAS3V9LS6sj1KxQuOuag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1767619017; x=
+	1767705417; bh=rFPzpokg/R9M2bA+MwmWxx5pxzfkUvywDL7HVHc26Vo=; b=V
+	ImbD+/4qWdTNEO0X/crqciDMk9xBcNuw1zF8RyihM2cw/8DTi0Mp4CScB+rH4bEq
+	5VU7m+hmFwXfzkL8NxwasBOEb5mW5rOUTQV/CPuYhqM5L5Cmhrtm0bOr0MN/ENnF
+	mNCuFN4jcF8yaUH511er4huegmgmjphHQ5tddLQs0GrqHXkZXzVhDy7eeRnPzjXl
+	TyyMy91i7nALtm0ddbDiflMVyYm8VBUx+mDnrYaJoawztzlMeqQBUCoJ6O/1O1sa
+	Xc5/djTmplxKgjoXP7Gpa+0JSGfSks5e1fJfiGl25ueRvG8eIPpNQa7zihGNLTH+
+	m2LlrB2h1SqwLpQIc5Zwg==
+X-ME-Sender: <xms:yblbaQlV8yWFM2g2W0buqsTY_Eh6mNM4Hiv-d9GiwtYWciy8hdjDeQ>
+    <xme:yblbaV3q4NHTsKqbDA0M2vJM9ZwGviZpH9i7wvFeKPly54oX-rFwbh4Zh82_N15gU
+    CZL9jE1dPTNvFrUgHpUurJtUcJqSgn4FgrbNsGmmpXv5mbWu-pT>
+X-ME-Received: <xmr:yblbacRNWFeRt5MH-6mm_hNKke8nhLSMw1Fau3QVxQfdPNWI9bx3XrCFFydasEolac7CnLG6BezcJBRPn22g_Je7k92kxkIXDl2B0eiS>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeljeeflecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
+    ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelte
+    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:yblbaXt9AVeIY9ImhC0dEeHoWG33tDck1ntkajxM6hWAUyXqZvh_Mg>
+    <xmx:yblbaRZtiaOmeC1D8h0WAdp_n356iMDeuWSw8NCPZEQE3cnYf3A2Bw>
+    <xmx:yblbacshZVvkSJb_PNQ7xywTL7L3J60jIXxH17qFwgs2PZGmfrkd5g>
+    <xmx:yblbaTF4JNMj51nextfbP5-yzBpGAvdQssqpZHjM3sBVQ-oD8kw6fQ>
+    <xmx:yblbaaueHbF_INOpVulmxvUR9QCQla9GO3Nf5S8mYv92RxfHMRi2ebpa>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 Jan 2026 08:16:56 -0500 (EST)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id e82fba81 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 5 Jan 2026 13:16:56 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Mon, 05 Jan 2026 14:16:43 +0100
+Subject: [PATCH 3/5] repack-promisor: extract function to finalize
+ repacking
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260105-pks-geometric-repack-with-promisors-v1-3-c4660573437e@pks.im>
+References: <20260105-pks-geometric-repack-with-promisors-v1-0-c4660573437e@pks.im>
+In-Reply-To: <20260105-pks-geometric-repack-with-promisors-v1-0-c4660573437e@pks.im>
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>
+X-Mailer: b4 0.14.3
 
-> Please don't.  Unless my assumption, which is that in the old code
-> "!sti" and "!ours && !theirs" is equivalent, is wrong, all you need
-> to do around that part is to first check "if (!ours && !theirs)" and
-> say "your branch is up to date with...", and then have the check
-> "else if (abf == ABQ)" next.  That way, when we check abf we know
-> the branches are different.
+We're about to add a second caller that wants to finalize repacking of
+promisor objects. Split out the function which does this to prepare for
+that.
 
-It seems to be an incorrect assumption. This code change breaks several
-tests including old ones:
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ repack-promisor.c | 69 +++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 39 insertions(+), 30 deletions(-)
 
-```
-diff --git a/remote.c b/remote.c
-index 1f87b85b22..8db4fcd7b5 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2303,7 +2303,7 @@ static void format_branch_comparison(struct strbuf *sb,
- 				     enum branch_mode_flags advice_flags,
- 				     int show_divergence_advice)
+diff --git a/repack-promisor.c b/repack-promisor.c
+index ee6e0669f6..125038d92e 100644
+--- a/repack-promisor.c
++++ b/repack-promisor.c
+@@ -34,39 +34,17 @@ static int write_oid(const struct object_id *oid,
+ 	return 0;
+ }
+ 
+-void repack_promisor_objects(struct repository *repo,
+-			     const struct pack_objects_args *args,
+-			     struct string_list *names, const char *packtmp)
++static void finish_repacking_promisor_objects(struct repository *repo,
++					      struct child_process *cmd,
++					      struct string_list *names,
++					      const char *packtmp)
  {
--	if (!sti) {
-+	if (!ours && !theirs) {
- 		strbuf_addf(sb,
- 			_("Your branch is up to date with '%s'.\n"),
- 			branch_name);
-```
+-	struct write_oid_context ctx;
+-	struct child_process cmd = CHILD_PROCESS_INIT;
+-	FILE *out;
+ 	struct strbuf line = STRBUF_INIT;
++	FILE *out;
+ 
+-	prepare_pack_objects(&cmd, args, packtmp);
+-	cmd.in = -1;
+-
+-	/*
+-	 * NEEDSWORK: Giving pack-objects only the OIDs without any ordering
+-	 * hints may result in suboptimal deltas in the resulting pack. See if
+-	 * the OIDs can be sent with fake paths such that pack-objects can use a
+-	 * {type -> existing pack order} ordering when computing deltas instead
+-	 * of a {type -> size} ordering, which may produce better deltas.
+-	 */
+-	ctx.cmd = &cmd;
+-	ctx.algop = repo->hash_algo;
+-	for_each_packed_object(repo, write_oid, &ctx,
+-			       FOR_EACH_OBJECT_PROMISOR_ONLY);
+-
+-	if (cmd.in == -1) {
+-		/* No packed objects; cmd was never started */
+-		child_process_clear(&cmd);
+-		return;
+-	}
+-
+-	close(cmd.in);
++	close(cmd->in);
+ 
+-	out = xfdopen(cmd.out, "r");
++	out = xfdopen(cmd->out, "r");
+ 	while (strbuf_getline_lf(&line, out) != EOF) {
+ 		struct string_list_item *item;
+ 		char *promisor_name;
+@@ -96,7 +74,38 @@ void repack_promisor_objects(struct repository *repo,
+ 	}
+ 
+ 	fclose(out);
+-	if (finish_command(&cmd))
++	if (finish_command(cmd))
+ 		die(_("could not finish pack-objects to repack promisor objects"));
+ 	strbuf_release(&line);
+ }
++
++void repack_promisor_objects(struct repository *repo,
++			     const struct pack_objects_args *args,
++			     struct string_list *names, const char *packtmp)
++{
++	struct write_oid_context ctx;
++	struct child_process cmd = CHILD_PROCESS_INIT;
++
++	prepare_pack_objects(&cmd, args, packtmp);
++	cmd.in = -1;
++
++	/*
++	 * NEEDSWORK: Giving pack-objects only the OIDs without any ordering
++	 * hints may result in suboptimal deltas in the resulting pack. See if
++	 * the OIDs can be sent with fake paths such that pack-objects can use a
++	 * {type -> existing pack order} ordering when computing deltas instead
++	 * of a {type -> size} ordering, which may produce better deltas.
++	 */
++	ctx.cmd = &cmd;
++	ctx.algop = repo->hash_algo;
++	for_each_packed_object(repo, write_oid, &ctx,
++			       FOR_EACH_OBJECT_PROMISOR_ONLY);
++
++	if (cmd.in == -1) {
++		/* No packed objects; cmd was never started */
++		child_process_clear(&cmd);
++		return;
++	}
++
++	finish_repacking_promisor_objects(repo, &cmd, names, packtmp);
++}
 
+-- 
+2.52.0.508.g883dcfc63e.dirty
 
-Harald
