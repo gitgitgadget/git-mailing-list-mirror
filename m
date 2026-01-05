@@ -1,129 +1,142 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85FE2356BE
-	for <git@vger.kernel.org>; Mon,  5 Jan 2026 03:24:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A32320393
+	for <git@vger.kernel.org>; Mon,  5 Jan 2026 03:36:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767583462; cv=none; b=q4uLaqwCj4MyFk2mynJh1mhZ2YFl+aArQlAx+141UwY039klAxC0wvwFS8Pwf3vkrpk313eVEubhxRJ8vazPWaL8fqOOb6Fg/59sq+WhDhkjDi1V+/IqeeszQfCVtY2tHnrn2aFss2poO4xMOhU7K/Vvn5+oEnHETpkgt3ewoEQ=
+	t=1767584194; cv=none; b=s96o84l643bz9PwQxpBao1/KFExmsuUBfA/uiY725852+epOngSJcqaMfjMi5sVOk87rqYc/rNDL5er4LjW2ob59sOLCBKePMURFLBGDe/NUCwPyOHEJKG2LkjL/mxR4JDJdEgzU9AWMJ3TShQ5Csfsi2IWy12LH9aF08clFIyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767583462; c=relaxed/simple;
-	bh=0GKiwTKtpluCUdJ2PJfkFVZhysyCxsuLvgaC9XXg4KE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=s0wZKiZb+2ZzxmieyRG2yvUl3XtXVqjahZEC7NeN4OIOJnm6Qr8N5ckDZ9s1sVemymIpkMWLBXgvt9M9T/f1fe4cMX4lUa2g346CGRAGwui0O96YnA4owcl8p1CP9LGl9GMXJLfdhjfFCg7mz+LhDZiysao/ic0V2KoglfyyRak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J5INMUnQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hfX8HPZp; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1767584194; c=relaxed/simple;
+	bh=+pE1PFODYOKR4744lXoRWVvJepC3Ta9EI9CiquSOR0w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VnbjJHMeUSA+KDZdTNO+yWngZaHy5QF4qpuKsoub9Cuav//EcC93aPrzZPeNmSMg42OEJn8pmDkeoKC3caYKX1rPrjYPo996w6Vo1jTKTLoWP4MWItHl8/PPO0f+nCVeRf4YHMRtCSrvRRijDT0Evie/N4Gz3/YkXYme85okBgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land; spf=pass smtp.mailfrom=howdoi.land; dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b=VktcT4kO; arc=none smtp.client-ip=185.226.149.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=howdoi.land
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=howdoi.land
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J5INMUnQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hfX8HPZp"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1F7291D00039;
-	Sun,  4 Jan 2026 22:24:19 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sun, 04 Jan 2026 22:24:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1767583458; x=1767669858; bh=3V8eRXVkoH
-	37iB3MtcM2GjaS6Z3o/K4A0fZ4SGYOGaE=; b=J5INMUnQ7ZSjEapGrT0kGY0Gns
-	ZTW636+aBTkmQ7SflC6+AFIKDJaYiDrGXG094V2YJMn5/qz/y2O9qcwYQaXUGKJm
-	mxUkKon0eTTip1bOoLAgl3IdlfnfM7E1QU6YmE0BpWEMZYx7ZH0SfUPueDkkAt81
-	obw8wgwb5y0K3brc4oXXesWEA+t40AgiZGbfsBKmCaKi3ppal7eN7+ANdGUG7Duh
-	ZV1+kpQDcAc8xsfh1skd/Y+toZ7bEN9cWuSODgdTBS27t80GVPxJSex5K2yviFTy
-	XyAj+jzz+HnUtZ5vYuVP9NerhIg/QSJKvdRaoHy9TnQ+txFnX2DRPgJDYC4w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1767583458; x=1767669858; bh=3V8eRXVkoH37iB3MtcM2GjaS6Z3o/K4A0fZ
-	4SGYOGaE=; b=hfX8HPZpf7Ya6XD/sly/zkfnaWlKSHKp02MD1pKJgpwYulDnFoY
-	QHpXFKw/5udaYoeWR8VRHwzzF4BE0PVKGYoPDSmMgfLbMvm7evjoWIBmILyBEX2q
-	paqNF6yfuVPYtow5X/vp83PuEs5WZnAwxNi7KPYDYl9x4jaskVMzAyiSUIHvDZvU
-	Bald27FI3pRHFNYqqKPYs3xa4M8COJ9wFjcNw9iJcB728kymg1URiDGPN9fDX6RT
-	iBdugnyTLkzM8hL4VINWegVh67QBCUdaadfGSHyjzzfN1CYB/L0X/ciEWRNq170x
-	QCGExhxQmwt3sR8KM2ISOzl8CxK3CsqBwIQ==
-X-ME-Sender: <xms:4i5baTZ-ltN-mt9vbytnnAKvMHCind0naYyRqmmCXpHDZADz0PVyvQ>
-    <xme:4i5baZ04Eiz18Og3owQg9s-0Pzv-rQIPeb8hdcOlr6NVUXHFE_YLx7aXdA4mFRg53
-    DKeoCbKuQ5WEPFgkR-6qJoq6P-oHUB8QjAAmP2cojfMMYMgCsIM>
-X-ME-Received: <xmr:4i5baTUx2a2xMHO5z18582vI7iV1a8PBsllOcEGFg1dX_E9FHhbf8hI5RTvEO3MfuTzVclUy81kZuYgRgOQXp4doiHRdIIHdu1gAbXg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeliedvudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegrnhgutghhihesfhgrshhtmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:4i5baTUVVmOD5rn_oxVWr0SZp_KrGjqHYbiYZKg1NEC_HNiMjs7Jlw>
-    <xmx:4i5baSch8o-u5M1F1ALL6r2aKdyC4DVZ-K8R8IoD7DOjHDah6TDqtg>
-    <xmx:4i5bacWoZkBP4daZ8J7ue9Ekp4-xEREWMzaJ0UXRG_ShLsHfzNXabw>
-    <xmx:4i5babfjxYAmCZBn6-imWHvcN4E8q0nAq9lzeT8RnFm6l_QYEK_GrQ>
-    <xmx:4i5baR85L5HUfpNYY3V-uUiQWfj1dE29UGLAMMc6IlppMHsbMCTR_pIY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 4 Jan 2026 22:24:18 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Andrew Chitester <andchi@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [GSoC PATCH] t1420-lost-found.sh: use test_path_is_file for
- error logging
-In-Reply-To: <20260104161536.45384-1-andchi@fastmail.com> (Andrew Chitester's
-	message of "Sun, 4 Jan 2026 11:15:04 -0500")
-References: <20260104161536.45384-1-andchi@fastmail.com>
-Date: Mon, 05 Jan 2026 12:24:17 +0900
-Message-ID: <xmqq4ip0n3mm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=howdoi.land header.i=@howdoi.land header.b="VktcT4kO"
+Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1vcbOF-00EjUE-KM
+	for git@vger.kernel.org; Mon, 05 Jan 2026 04:36:19 +0100
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=howdoi.land
+	; s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
+	bh=w5J/2K9U/0rUzflVkcNj+zSVcEOfEiyNuugcXtntTGc=; b=VktcT4kOtfetOiyyfGvvh145ig
+	KDMDV/kBtVPNdCe5xH66kGlV79diobJ5us7+Xq2QtbkbRBQlrvsjRVm3ADak5dBCLPdu7FNxYuSpA
+	VTmSYqQFTmktj48I51oWzjMgQKDf3NuFpbwKcM7UIHOk23sghMiBSxz167h1VAHNzx4CSPcJxojGo
+	Rlo8IlhWFw++jnCUA2h/Vs+eOmTQLlVkNHDlD+2huEALha69FmazlXvLFJsh5csZ4gFKNQCr8QVTx
+	0Ytww96gBMJ12FRwdGqol6bb5iDaiWXSJcyPzVGUNCO1/RJIGrtmcBAZVhf4uzGix+Sg/zNKaNRM2
+	ZxqeevqA==;
+Received: from [10.9.9.72] (helo=submission01.runbox)
+	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <ask+git@howdoi.land>)
+	id 1vcbOF-0001Cr-70; Mon, 05 Jan 2026 04:36:19 +0100
+Received: by submission01.runbox with esmtpsa  [Authenticated ID (1204229)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1vcbOB-001Dad-OH; Mon, 05 Jan 2026 04:36:15 +0100
+Message-ID: <4a9c1a5f-336a-472c-af1d-7011fad776a6@howdoi.land>
+Date: Sun, 4 Jan 2026 21:36:13 -0600
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Bug] Git subtree regression
+To: george@mail.dietrich.pub
+Cc: git@vger.kernel.org
+References: <e25b4d76-c1b5-4b6b-ba77-e1e2f7243ce9@howdoi.land>
+ <20260104142733.2334796-1-george@mail.dietrich.pub>
+Content-Language: en-US
+From: Colin Stagner <ask+git@howdoi.land>
+In-Reply-To: <20260104142733.2334796-1-george@mail.dietrich.pub>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Andrew Chitester <andchi@fastmail.com> writes:
+On 1/4/26 08:27, george@mail.dietrich.pub wrote:
 
-> This test will fail silently without giving any error message. Use
-> test_path_is_file in place of test -f to ensure this test errors with a
-> message.
->
-> Signed-off-by: Andrew Chitester <andchi@fastmail.com>
-> ---
->  t/t1420-lost-found.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t1420-lost-found.sh b/t/t1420-lost-found.sh
-> index 2fb2f44f02..5fbb1d10ed 100755
-> --- a/t/t1420-lost-found.sh
-> +++ b/t/t1420-lost-found.sh
-> @@ -29,8 +29,8 @@ test_expect_success 'lost and found something' '
->  	git reset --hard HEAD^ &&
->  	git fsck --lost-found &&
->  	test 2 = $(ls .git/lost-found/*/* | wc -l) &&
-> -	test -f .git/lost-found/commit/$(cat lost-commit) &&
-> -	test -f .git/lost-found/other/$(cat lost-other)
-> +	test_path_is_file .git/lost-found/commit/$(cat lost-commit) &&
-> +	test_path_is_file .git/lost-found/other/$(cat lost-other)
->  '
+> It does seem one component was added differently, as a non-merge commit, which seems break things.
 
-Looks correct, but given that what these tests want to ensure is
-that underneath .git/lost-found there are only these two expected
-files, I have to wonder if the output of "ls" here is expected to be
-very stable.  I.e. if we rewrote the whole thing to something like
-...
+> ```
+> # Create a LINEAR squash commit for subB (simulating cherry-pick of just the squash commit)
+> # This is the key pattern that triggers the bug - a squash commit as a regular linear commit
+> (
+>      cd monorepo
+>      mkdir -p subB
+>      git -C ../subB archive HEAD | tar -x -C subB
+>      git add subB
+>      # Create a squash-style commit with subtree trailers but as a LINEAR commit
+>      # Trailers must be in the last paragraph, separated by blank line
+>      subB_short=$(git -C ../subB rev-parse --short HEAD)
+>      subB_full=$(git -C ../subB rev-parse HEAD)
+>      git commit -F - <<EOF
+> Squashed 'subB/' content from commit $subB_short
+> git-subtree-dir: subB
+> git-subtree-split: $subB_full
+> EOF
+> )
+> ```
 
-	ls .git/lost-found/*/* >actual &&
-	cat >expect <<-EOF &&
-	.git/lost-found/commit/$(cat lost-commit)
-	.git/lost-found/other/$(cat lost-other)
-	EOF
-	test_cmp expect actual
+Yes, this is very likely to cause breakage.
 
-... would it be a more direct way to say that and is easier to
-understand to our readers.
+Normally,
+
+     git subtree merge -P subA --squash
+
+makes two commits, in this order:
+
+1. Squashed 'subA/' content from commit f00...
+2. Merge commit (1) as 'subA'
+
+Commit 1 updates the subtree but does *not* rewrite paths. If you `git 
+show` one, you will see that it has files like
+
+     subA1
+     subA2
+
+and *not* subA/subA1.
+
+The path rewrite actually takes place in Commit 2 (the merge), via the 
+`-Xsubtree` merge strategy option.
+
+`should_ignore_subtree_split_commit` tries to search for commits like 
+(1), which all have the `git-subtree-*` trailer. Normally, these commits 
+either have:
+
+* no parents, if they result from a new `git subtree add --squash`; OR
+
+* only parents which are also "Squashed 'subA/' content," if
+   they result from a follow-up `git subtree merge --squash`
+
+We can safely ignore these commits—and all of their parents—during a 
+`subtree split` if they belong to a different subtree.
+
+Of course, that heuristic doesn't work if the commit has been rebased 
+onto other unrelated history—which is what happened in your repo.
+
+I suspect the best way out may be to remove the 
+`should_ignore_subtree_split_commit` heuristic entirely. It is mostly 
+useful for repos that use `split --rejoin` a lot, and the check itself 
+is slow. WDYT?
+
+
+> How the first two commits show up as verified, unlike the other times when I normally do `git subtree add --squash` and push directly to main, they show up as unverified.
+
+git v2.51.0 also adds --gpg-sign compatibility to subtree. Perhaps this 
+is what you are seeing?
+
+
+> It seems you also need to add `clock` as a remote and fetch it:
+
+Ah, thanks.
+
+Personally, I'm a big advocate for the monorepo layout. In my 
+experience, it makes almost every task easier and faster.
+
+Colin
 
